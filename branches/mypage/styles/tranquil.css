@@ -1,0 +1,5102 @@
+/* Tranquil style for TIKI based on the SubSilver style */
+
+body {
+	background-color:    #FFFFCC;
+	/* Scrollbar styles only for IE 5.5+ */
+	/*
+	scrollbar-face-color: #DEE3E7;scrollbar-highlight-color: #FFFFFF;scrollbar-shadow-color: #DEE3E7;
+	scrollbar-3dlight-color: #D1D7DC;  scrollbar-arrow-color:  #00CC99;  scrollbar-track-color: #FFFFCC;
+	scrollbar-darkshadow-color: #98AAB1;
+	*/
+	margin-top:   0px;
+	margin-left:   0px;
+	margin-bottom:   0px;
+	margin-right:   0px;
+}
+
+/* GENERAL LAYOUT EXPLANATION
+ *
+ * The tiki application is enclosed as a whole in tiki-main tiki-main contains three divs: tiki-top,
+ * tiki-mid and tiki-botthat will be used for the header, application and footer.
+ *
+ * tiki-mid contains a 3-column table, the columns are called (ids) leftcolumn, centercolumn and rightcolumn
+ * Finally centercolumn contains tiki-center where the main area of the application is displayed.
+ *
+ */
+
+/****************** GENERAL LAYOUT *****************************************/
+
+/* This div encloses the whole Tiki application */
+DIV#tiki-main {
+	background:    #FFFFCC;
+	height:   100%;
+	width:   100%;
+	margin-top:   0px;
+	margin-bottom:   0px;
+	margin-right:   0px;
+	margin-left:   0px;
+}
+
+/* This is the header */
+DIV#tiki-top {
+	background:    #FFFFCC;
+	color:   #663300; /**dark brown**/
+	padding-right:   0px;
+	width:   100%;
+	padding-top:   10px;
+	padding-bottom:   4px;
+}
+
+DIV#tiki-top a {
+	color:    #663300; /**dark brown**/
+	text-decoration:   none;
+}
+
+/* This is the middle */
+DIV#tiki-mid {
+	background:    #FFFFCC;
+	height:   auto;
+	padding-bottom:   0px;
+}
+
+/* And this is the footer */
+DIV#tiki-bot {
+	padding-top:    10px;
+	margin-top:   0px;
+	background:   #FFFFCC;
+	padding-bottom:   15px;
+}
+
+/* The three columns */
+TD#leftcolumn {
+	vertical-align:    top;
+	background:   #FFFFCC;
+	width:   180px;
+}
+
+TD#rightcolumn {
+	vertical-align:    top;
+	background:   #FFFFCC;
+	width:   180px;
+}
+
+TD#centercolumn {
+	background:    #FFFFCC;
+	vertical-align:   top;
+	width:   100%;
+	padding : 0 5px;
+}
+
+/* And this is what lies inside the centercolumn */
+DIV#tiki-center {
+}
+
+div#debugconsole {
+	position:    absolute;
+	background-color:   #eeddcc;
+	color:   #009000;
+	top:   0px;
+	left:   20px;
+	right:   310px;
+	height:   auto;
+	width:   auto;
+	z-index:   1;
+	padding:   5px;
+	border:   6px ridge #996600;
+	font-size:   12px;
+}
+
+span.on-option {
+	color: #00C000;
+}
+
+span.off-option {
+	color: #005000;
+}
+
+/************* GENERAL STYLE PROPERTIES **********************************************/
+
+/* BOXES boxes are used to present a box with a title bar and content, they are used for modules and they
+   are also used in the rankings, admin screen etc.
+   The box class is used for modules while the cbox class is used for other boxes
+*/
+
+/* Boxes used for modules (modules are those boxes in the left/right columns) */
+div.box {
+	background:    #FFFFCC;
+	margin-left:   4px;
+	margin-right:   4px;
+	margin-top:   4px;
+	margin-bottom:   10px;
+	border:   1px solid black;
+	padding-bottom:   10px;
+	overflow:   hidden;
+	width:   170px;
+}
+
+/* Boxes are divided in title and data, this is the title */
+h3.box-title, div.box-title {
+	background-color:    #00CC99;
+	border:   #FFFFCC;
+	border-style:   solid;
+	height:   28px;
+	border-width:   0px;
+	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   13px;
+	color:   black;
+	font-weight:   bold;
+	overflow:   hidden;
+	text-align:   center;
+	padding-left:   0px;
+	padding-right:   0px;
+	margin-bottom:   0px; margin-top: 0;
+	width:   170px;
+}
+
+div.box-title table {
+    width: 100%;
+}
+
+/* And this is the data */
+div.box-data {
+	overflow:    hidden;
+	background:   #FFFFCC;
+	margin-left:   5px;
+	margin-right:   5px;
+	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	color:   #663300;
+	width:   170px;
+}
+
+/* When modules display a list of items each item is enclosed in a cell with the following style */
+TD.module {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   10px;
+	color:   black;
+	text-align:   left;
+}
+
+/* Links in modules */
+.linkmodule {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	color:   black;
+	background:   #FFFFCC;
+	text-decoration:   none;
+}
+
+.linkmodule:active {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	background:   #FFFFCC;
+	color:   black;
+	text-decoration:   none;
+}
+
+.linkmodule:hover {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	color:   #00CC99;
+	text-decoration:   underline;
+	background:   #FFFFCC;
+}
+
+/* Now the boxes for the rest of Tiki (non-modules */
+div.cbox {
+	background:    #FFFFCC;
+	margin-left:   4px;
+	margin-right:   4px;
+	margin-top:   4px;
+	margin-bottom:   0px;
+	border:   1px solid black;
+	padding-bottom:   10px;
+	overflow:   hidden;
+	width:   99%;
+}
+
+/* Boxes are divided in title and data, this is the title */
+div.cbox-title {
+	background-color:    #00CC99;
+	border:   #FFFFCC;
+	border-style:   solid;
+	height:   28px;
+	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   13px;
+	color:   black;
+	font-weight:   bold;
+	overflow:   hidden;
+	text-align:   center;
+	padding-left:   0px;
+	padding-right:   0px;
+	margin-bottom:   0px;
+	width:   99%;
+}
+
+/* When there's a link in a cbox-title */
+.cboxtlink {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	color:   black;
+	text-decoration:   none;
+}
+
+.cboxtlink:active {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	color:   black;
+	text-decoration:   none;
+}
+
+.cboxtlink:hover {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	color:   #00CC99;
+	text-decoration:   underline;
+}
+
+/* And this is the data */
+div.cbox-data {
+	overflow:    hidden;
+	background:   #FFFFCC;
+	margin-left:   5px;
+	margin-right:   5px;
+	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	color:   #663300;
+	width:   99%;
+}
+
+/* Some boxes are identified by an ID, for example the  boxes in the main application menu, we set display to
+   none to make the menu appear collapsed initially, change this to 'block' if you want it to be extended fully */
+
+/* Menus */
+/* Separators are used to separate menu areas in the application menu and user created menus*/
+div.separator {
+	background:    #FFFFCC;
+	color:   #663300;
+	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   10px;
+	font-weight:   bold;
+	margin-left:   2px;
+	margin-right:   2px;
+	margin-top:   6px;
+	margin-bottom:   2px;
+	width:   90%;
+}
+
+/* Links in menus */
+.linkmenu {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	color:   black;
+	background:   #FFFFCC;
+	text-decoration:   none;
+}
+
+.linkmenu:active {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	background:   #FFFFCC;
+	color:   black;
+	text-decoration:   none;
+}
+
+.linkmenu:hover {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	color:   #00CC99;
+	text-decoration:   underline;
+	background:   #FFFFCC;
+}
+/* style for rss lists in modules or in wiki */
+.rsslist {
+  background-color: #ffffff;
+  margin: 0;
+  margin-right: 10px;
+  padding: 1px;
+  border: 1px solid #dadac9;
+}
+.rssitem {
+  padding: 1px 6px 1px 6px;
+  border-top: 1px dashed #dadac9;
+}
+.rssitem:first-child {
+  border-top: 0;
+}
+.rssdate {
+  color: #999999;
+  font-style: italic;
+}
+
+
+/* Links to extend/collapse menus */
+.separator {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   10px;
+	font-weight:   bold;
+	color:   #663300;
+	text-decoration:   none;
+}
+
+.separator:active {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   10px;
+	font-weight:   bold;
+	color:   #663300;
+	text-decoration:   none;
+}
+
+.separator:hover {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   10px;
+	font-weight:   bold;
+	color:   #00CC99;
+	text-decoration:   none;
+}
+
+/* Links to collapse menus for example the main menu can be completely collapsed*/
+.flip {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   13px;
+	color:   black;
+	text-decoration:   none;
+}
+
+.flip:active {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   13px;
+	color:   black;
+	text-decoration:   none;
+}
+
+.flip:hover {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   13px;
+	color:   #FFFFCC;
+	text-decoration:   none;
+}
+
+/* Banners of type text (textadds) are displayed as links using the following style */
+.bannertext {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	color:   #663300;
+	text-decoration:   none;
+}
+
+.bannertext:active {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	color:   #663300;
+	text-decoration:   none;
+}
+
+.bannertext:hover {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	color:   #00CC99;
+	text-decoration:   none;
+}
+
+/* Some boxes uses thumbnails this is the image style */
+div.imagerank {
+	margin-left:    5px;
+	margin-right:   5px;
+	margin-bottom:   10px;
+	margin-top:   10px;
+}
+
+/* A simple box is just a div with a border around and some margin 
+ * used for example in the admin screen */
+div.simplebox {
+	margin-left:    1px;
+	margin-right:   1px;
+	margin-top:   5px;
+	margin-bottom:   5px;
+	padding-left:   2px;
+	padding-top:   2px;
+	padding-bottom:   2px;
+	padding-right:   2px;
+	border:   1px solid black;
+	background:   #FFFFCC;
+	width:   97%;
+	font-family:   Verdana, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+}
+
+/* Prevent forms from generating unwanted padding or margins */
+FORM {
+	margin:    0px 0px 0px 0px;
+	padding-bottom:   0px;
+	padding-left:   0px;
+	padding-right:   0px;
+	padding-top:   0px;
+}
+
+/* General form elements */
+input, textarea, select {
+	color:    #000000;
+	font-family:   Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+}
+
+input {
+	text-indent: 2px;
+}
+
+/* General tables */
+/* These styles apply to tables used to display common listings such as the wiki page listing, last changes,
+   listings in admin screens, etc. */
+
+/* Cells where nothing is specified */
+TD {
+	color:    Black;
+	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	vertical-align:   top;
+}
+
+/* Cells in forms without background color (inside a div for example) */
+.form td {
+	color:    Black;
+	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	vertical-align:   top;
+	text-align:   left;
+}
+/* Cells in forms using a background color */
+.formcolor td {
+	color:    Black;
+	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
+	background:   #FFFFCC;
+	font-size:   11px;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+/* The table */
+TABLE.normal {
+	border-color:    #663300;
+	border-style:   solid;
+	border-width:   2px;
+	width:   98%;
+}
+
+TABLE.normalnoborder {
+	width: 98%;
+}
+
+/* Table headings */
+TD.heading {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	color:   #663300;
+	font-size:   11px;
+	font-weight:   bold;
+	background-color:   #00CC99;
+	height:   25px;
+	padding-left:   2px;
+	padding-right:   5px;
+}
+
+th {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	color:   #663300;
+	font-size:   11px;
+	font-weight:   bold;
+	background-color:   #00CC99;
+	height:   25px;
+	padding-left:   2px;
+	padding-right:   5px;
+}
+
+TD.button {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	color:   #663300;
+	font-size:   11px;
+	font-weight:   bold;
+	background-color:   #00CC99;
+	height:   25px;
+	padding-left:   2px;
+	padding-right:   5px;
+	text-align:   center;
+	vertical-align:   middle;
+}
+
+/* Links to view an object from a table listing objects can be generalized to this link */
+.tablename {
+	font-weight:    bold;
+	font-size:   12px;
+	letter-spacing:   1px;
+	color:   #663300
+}
+
+a.tablename {
+	text-decoration:    none;
+	color:   #663300;
+}
+
+a.tablename:hover {
+	text-decoration: underline;
+}
+
+/* Links in table headings */
+.tableheading {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	color:   #663300;
+	font-size:   11px;
+	font-weight:   bold;
+	text-decoration:   none;
+}
+
+.tableheading:active {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	color:   #663300;
+	font-size:   11px;
+	font-weight:   bold;
+	text-decoration:   none;
+}
+
+.tableheading:hover {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	color:   #FFCCCC;
+	font-size:   11px;
+	font-weight:   bold;
+	text-decoration:   none;
+}
+
+/* When a find button is provided for a listing the table form is displayed in a table with the following style */
+table.findtable {
+	width:    97%;
+	margin-bottom:   20px;
+	padding-bottom:   10px;
+}
+
+.findtable td {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+}
+
+/* Tables odd rows */
+tr.odd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   Black;
+	background-color:   #FFFFCC;
+	vertical-align:   top;
+	text-align:   left;
+}
+tr.odd:hover {
+background-color: #FFF7E6;
+}
+tr.even {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #00CC99;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+tr.even:hover {
+background-color: #FFF7E6;
+}
+
+TD.odd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   Black;
+	background-color:   #FFFFCC;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+TD.even {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #00CC99;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+TD.third {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   Black;
+	background-color:   #996633;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+/* Titles */
+/* When the page title is a link this is the style */
+.pagetitle {
+	font-weight:    bold;
+	font-size:   26px;
+	font-family:   "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	color:   #663300;
+}
+
+a.pagetitle {
+	font-weight:    bold;
+	font-size:   26px;
+	font-family:   "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	text-decoration:   none;
+	color:   #663300;
+}
+
+a.pagetitle:hover {
+	font-weight:    bold;
+	font-size:   26px;
+	font-family:   "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	text-decoration:   underline;
+	color:   #00CC99;
+}
+
+/* Non-linking titles (three levels) */
+H1 {
+	font-weight:    bold;
+	font-size:   26px;
+	font-family:   "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	color:   #663300;
+}
+
+H2 {
+	font-weight:    bold;
+	font-size:   22px;
+	font-family:   "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	color:   #663300;
+}
+
+H3 {
+	font-weight:    bold;
+	font-size:   20px;
+	font-family:   "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	color:   #663300;
+}
+
+/* Links where no special link style apply (usually with the general application background) */
+.link {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	color:   #663300;
+	text-decoration:   none;
+}
+
+.link:active {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	color:   #663300;
+	text-decoration:   none;
+}
+
+.link:hover {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	color:   #00CC99;
+	text-decoration:   underline;
+}
+
+/* Search results display a date using the following style*/
+div.searchdate {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   10px;
+	color:   Black;
+}
+
+/* Pagination for listings */
+.mini {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   9px;
+	color:   Black;
+}
+
+/* prev & next buttons in pagination */
+.prevnext {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   #663300;
+}
+
+.prevnext:active {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   #663300;
+}
+
+.prevnext:hover {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   #00CC99;
+}
+
+/* Warning background/color */
+.attention {
+	color: red;
+}
+
+/***********************************************  THE WIKI ***********************************************************/
+div.titlebar {
+	background:    #FFFFCC;
+	color:   #663300;
+	font-weight:   bold;
+	border:   1px solid black;
+	padding-left:   1px;
+	padding-right:   1px;
+	padding-top:   1px;
+	padding-bottom:   1px;
+	margin:   1px 1px;
+	width:   99%;
+	clear:   both;
+}
+
+/* The bar where the actions for a page are displayed */
+DIV#page-bar {
+	margin-left: 5px;
+}
+
+/* Wiki action buttons (the buttons displayed at the end of each page to edit/print/remove/etc a page */
+.button2, .button3 {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   10px;
+	color:   Black;
+	font-weight:   bold;
+	background:   #FFFFCC;
+	border:   1px solid black;
+	padding-left:   0.1em;
+	padding-right:   0.1em;
+	padding-top:   0.1em;
+	padding-bottom:   0.1em;
+	margin:   0.0ex 0px;
+}
+.button3 {
+  border-radius : 5px 5px 0 0;
+  -moz-border-radius : 5px 5px 0 0;
+  -khtml-border-radius : 5px 5px 0 0;
+}
+.button3 .linkbut {
+  border-radius : 5px 5px 0 0;
+  -moz-border-radius : 5px 5px 0 0;
+  -khtml-border-radius : 5px 5px 0 0;
+  padding-bottom : 2px;
+  border-bottom : 0;
+}
+
+/* Links in buttons */
+.linkbut {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	color:   #663300;
+	background:   #FFFFCC;
+	text-decoration:   none;
+}
+
+.linkbut:active {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	background:   #FFFFCC;
+	color:   #663300;
+	text-decoration:   none;
+}
+
+.linkbut:hover {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	color:   #00CC99;
+	background:   #FFFFCC;
+	text-decoration:   underline;
+}
+
+/* When a cached version of an external link is displayed */
+div.cache {
+	background:    #FFFFCC;
+	border:   1px solid black;
+	padding-left:   0.1em;
+	padding-right:   0.1em;
+	padding-top:   0.1em;
+	padding-bottom:   0.1em;
+	margin:   0.1ex 0px;
+	width:   100%;
+}
+
+div.cachedpage {
+	border:    1px solid black;
+	padding-left:   0.1em;
+	padding-right:   0.1em;
+	padding-top:   0.1em;
+	padding-bottom:   0.1em;
+	margin:   0.1ex 0px;
+	width:   100%;
+}
+
+/* When an external link is cached a small link to the cached version (cache) is displayed using this style */
+.wikicache {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   9px;
+	color:   #663300;
+	text-decoration:   none;
+}
+
+.wikicache:active {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   9px;
+	color:   #663300;
+	text-decoration:   none;
+}
+
+.wikicache:hover {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   9px;
+	color:   #00CC99;
+	text-decoration:   none;
+}
+
+table.wikitable {
+	border: 1px solid black;
+}
+
+td.wikicell {
+	background-color: #EFEFEF;
+}
+
+/* Text in wiki pages is displayed using the following style */
+body.wikitext, div.wikitext {
+	background:    #FFFFCC;
+	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   13px;
+	padding-left:   1px;
+	padding-right:   1px;
+	padding-top:   1px;
+	padding-bottom:   1px;
+	margin-left:   1px;
+	margin-right:   1px;
+	margin-top:   5px;
+	margin-bottom:   5px;
+	width:   98%;
+	clear:   both;
+}
+div.wikitext {
+	border:   0px solid black;
+}
+.wikitopline table { width: 100% }
+
+/* Links to wiki pages */
+.wiki {
+	color: #663300 !important;
+}
+
+.wiki:hover {
+	color: #00CC99;
+}
+
+/* Date displayed for last modification date of pages */
+p.editdate {
+	color:    black;
+	font-size:   smaller;
+	font-family:   "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+#description {
+  font-size : 10px !important;
+  padding-left:   10px;
+  color:   #333300;
+}
+/* The edit-help used to display the wiki syntax when editing a page */
+div.wiki-edithelp {
+	background:    white;
+	border:   1px solid black;
+	font-size:   smaller;
+	padding:   6pt;
+}
+
+/******************************************************* IMAGE GALLERIES **********************************************/
+
+/* Image gallery listing (the screen displaying the list of available file galleries */
+TABLE.galtable {
+        border-collapse: collapse;
+        width: 100%;
+}
+
+/* The form to create or edit a gallery */
+table.creategalform {
+	border-color:    #663300;
+	border-style:   solid;
+	border-width:   2px;
+	width:   98%;
+}
+
+td.galform {
+	color:    Black;
+	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
+	background:   #FFFFCC;
+	font-size:   11px;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+/* The table with the listing */
+table.gallerylisting {
+	border-color:    #663300;
+	border-style:   solid;
+	border-width:   2px;
+	width:   98%;
+}
+
+td.gallistheading {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	color:   #663300;
+	font-size:   11px;
+	font-weight:   bold;
+	background-color:   #00CC99;
+	height:   25px;
+	padding-left:   2px;
+	padding-right:   5px;
+}
+
+/* links in gallery heading */
+.gallistheading {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	color:   #663300;
+	font-size:   11px;
+	font-weight:   bold;
+	text-decoration:   none;
+}
+
+.gallistheading:active {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	color:   #663300;
+	font-size:   11px;
+	font-weight:   bold;
+	text-decoration:   none;
+}
+
+.gallistheading:hover {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	color:   #FFCCCC;
+	font-size:   11px;
+	font-weight:   bold;
+	text-decoration:   none;
+}
+
+/* Columns for the gallery listing */
+td.gallistnameodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   Black;
+	background-color:   #FFFFCC;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.gallistnameeven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   Black;
+	background-color:   #FFFFCC;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.gallistdescriptionodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   Black;
+	background-color:   #FFFFCC;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.gallistdescriptioneven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   Black;
+	background-color:   #FFFFCC;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.gallistcreatedodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #FFFFCC;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.gallistcreatedeven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #00CC99;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.gallistlastModifodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #FFFFCC;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.gallistlastModifeven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #00CC99;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.gallistuserodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   Black;
+	background-color:   #996633;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.gallistusereven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   Black;
+	background-color:   #996633;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.gallistimagesodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #FFFFCC;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   right;
+}
+
+td.gallistimageseven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #00CC99;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   right;
+}
+
+td.gallisthitsodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   Black;
+	background-color:   #996633;
+	vertical-align:   top;
+	text-align:   right;
+}
+
+td.gallisthitseven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   Black;
+	background-color:   #996633;
+	vertical-align:   top;
+	text-align:   right;
+}
+
+td.gallistactionsodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #FFFFCC;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.gallistactionseven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #00CC99;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+/* The gallery name is a link to browsing the gallery */
+.galname {
+	font-weight:    bold;
+	font-size:   12px;
+	letter-spacing:   1px;
+	color:   #663300
+}
+
+a.galname {
+	text-decoration:    none;
+	color:   #663300;
+}
+
+a.galname:hover {
+	text-decoration: underline;
+}
+
+/* General links for galleries */
+.gallink {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	color:   #663300;
+	text-decoration:   none;
+}
+
+.gallink:active {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	color:   #663300;
+	text-decoration:   none;
+}
+
+.gallink:hover {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	color:   #FFCCCC;
+	text-decoration:   underline;
+}
+
+/* Prev and next buttons in gallery listings */
+.galprevnext {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   #663300;
+}
+
+.galprevnext:active {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   #663300;
+}
+
+.galprevnext:hover {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   #FFCCCC;
+}
+
+/* Listing images in a gallery (non-graphical browsing) */
+
+/* The table listing images in the gallery */
+table.listgallery {
+	border-color:    #663300;
+	border-style:   solid;
+	border-width:   2px;
+	width:   98%;
+}
+
+/* The headings in the table listing gallery images */
+td.listgalheading {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	color:   #663300;
+	font-size:   11px;
+	font-weight:   bold;
+	background-color:   #00CC99;
+	height:   25px;
+	padding-left:   2px;
+	padding-right:   5px;
+}
+
+/* Links in the headings of the table listing gallery images */
+.listgalheading {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	color:   #663300;
+	font-size:   11px;
+	font-weight:   bold;
+	text-decoration:   none;
+}
+
+.listgalheading:active {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	color:   #663300;
+	font-size:   11px;
+	font-weight:   bold;
+	text-decoration:   none;
+}
+
+.listgalheading:hover {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	color:   #FFCCCC;
+	font-size:   11px;
+	font-weight:   bold;
+	text-decoration:   none;
+}
+
+/* Columns in the table listing gallery images */
+td.listgalidodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   Black;
+	background-color:   #FFFFCC;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.listgalideven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   Black;
+	background-color:   #FFFFCC;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.listgalnameodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   Black;
+	background-color:   #FFFFCC;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.listgalnameeven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   Black;
+	background-color:   #FFFFCC;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.listgalcreatedodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #FFFFCC;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.listgalcreatedeven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #00CC99;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.listgalhitsodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #FFFFCC;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   right;
+}
+
+td.listgalhitseven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #00CC99;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   right;
+}
+
+td.listgaluserodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #FFFFCC;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.listgalusereven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #00CC99;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.listgalfilesizeodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #FFFFCC;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   right;
+}
+
+td.listgalfilesizeeven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #00CC99;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   right;
+}
+
+/* The image name is a link to the image */
+.imagename {
+	font-weight:    bold;
+	font-size:   12px;
+	letter-spacing:   1px;
+	color:   #663300
+}
+
+a.imagename {
+	text-decoration:    none;
+	color:   #663300;
+}
+
+a.imagename:hover {
+	text-decoration: underline;
+}
+
+/* Gallery description */
+div.galdesc {
+	background:    #FFFFCC;
+	border:   1px solid black;
+	padding-left:   0.8em;
+	padding-right:   0.8em;
+	padding-top:   0.5em;
+	padding-bottom:   0.5em;
+	margin:   0.5ex 0px;
+	width:   97%;
+	clear:   both;
+}
+
+/* Browsing an image gallery */
+/* This styles set the presentation for browsing an image gallery (viewing,navigating thumbs */
+
+/* Container for the whole gallery */
+div.browsegallery {
+	background:    White;
+	width:   100%;
+}
+
+/* You can set a different background color for odd and even rows in the thumbnails table */
+/* Thumbnails in odd rows are shown inside oddthumb tds */
+TD.oddthumb {
+	background: #FFFFCC;
+}
+
+TD.eventhumb {
+	background: #FFFFCC;
+}
+
+/* Gallery Title */
+div.gallerytitle {
+	font-weight:    bold;
+	font-size:   26px;
+	font-family:   "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	color:   #00CC99;
+}
+
+div.adminoptions {
+	margin-top:    5px;
+	margin-bottom:   5px;
+	padding-top:   10px;
+	padding-bottom:   10px;
+}
+
+div.sortoptions {
+	margin-top:    5px;
+	margin-bottom:   5px;
+	padding-top:   10px;
+	padding-bottom:   10px;
+}
+
+span.sorttitle {
+}
+
+span.sortoptions {
+}
+
+/* Container for thumbnails */
+div.thumbnails {
+	border:    1px solid Black;
+	margin-top:   10px;
+	margin-bottom:   10px;
+}
+
+/* Thumbnails images */
+img.athumb {
+	border: 1px solid Silver;
+}
+
+.caption {
+}
+
+/* No records found text  (displayed in the table when no records */
+p.norecords {
+	font-weight: bold;
+}
+
+/* Browsing an image */
+table.imageinfo {
+	border-color:    #663300;
+	border-style:   solid;
+	border-width:   2px;
+	width:   98%;
+}
+
+td.imageinfo {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   Black;
+	background-color:   #FFFFCC;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+/* The whole container for the browse image screen (may be useful for a fancy background) */
+div.browseimage {
+	background:    White;
+	width:   100%;
+}
+
+div.imagetitle {
+	font-weight:    bold;
+	font-size:   26px;
+	font-family:   "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	color:   #663300;
+}
+
+div.gallerylink {
+}
+
+div.showimage {
+	text-align:    center;
+	margin-top:   5px;
+	margin-bottom:   5px;
+}
+
+div.imageinfo {
+	text-align:    center;
+	margin-top:   10px;
+	margin-bottom:   10px;
+}
+
+td.imageinfo {
+}
+
+table.tableinfo {
+	text-align: center;
+}
+
+div.linksinfo {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   9px;
+	color:   Black;
+	text-align:   center;
+	border:   1px solid black;
+	margin-top:   10px;
+	margin-bottom:   10px;
+}
+
+/******************************************************* WEBLOGS **********************************************************/
+
+/* The blog name in the blog listing */
+.blogname {
+	font-weight:    bold;
+	font-size:   12px;
+	letter-spacing:   1px;
+	color:   #663300
+}
+
+a.blogname {
+	text-decoration:    none;
+	color:   #663300;
+}
+
+a.blogname:hover {
+	text-decoration: underline;
+}
+
+/* General links for blogs */
+.bloglink {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	color:   #663300;
+	text-decoration:   none;
+}
+
+.bloglink:active {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	color:   #663300;
+	text-decoration:   none;
+}
+
+.bloglink:hover {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	color:   #FFCCCC;
+	text-decoration:   underline;
+}
+
+/* Prev and next buttons in blog listings */
+.blogprevnext {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   #663300;
+}
+
+.blogprevnext:active {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   #663300;
+}
+
+.blogprevnext:hover {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   #FFCCCC;
+}
+
+/* The table listing blogs & so */
+table.bloglist {
+	border-color:    #663300;
+	border-style:   solid;
+	border-width:   2px;
+	width:   98%;
+}
+
+/* The headings in the table listing blogs */
+td.bloglistheading {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	color:   #663300;
+	font-size:   11px;
+	font-weight:   bold;
+	background-color:   #00CC99;
+	height:   25px;
+	padding-left:   2px;
+	padding-right:   5px;
+}
+
+/* Links in the headings of the table listing gallery images */
+.bloglistheading {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	color:   #663300;
+	font-size:   11px;
+	font-weight:   bold;
+	text-decoration:   none;
+}
+
+.bloglistheading:active {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	color:   #663300;
+	font-size:   11px;
+	font-weight:   bold;
+	text-decoration:   none;
+}
+
+.bloglistheading:hover {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	color:   #FFCCCC;
+	font-size:   11px;
+	font-weight:   bold;
+	text-decoration:   none;
+}
+
+/* Columns in the table listing gallery images */
+td.bloglistnameodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   Black;
+	background-color:   #FFFFCC;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.bloglistnameeven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   Black;
+	background-color:   #FFFFCC;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.bloglistdescriptionodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   Black;
+	background-color:   #FFFFCC;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.bloglistdescriptioneven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   Black;
+	background-color:   #FFFFCC;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.bloglistcreatedodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #FFFFCC;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.bloglistcreatedeven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #00CC99;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.bloglistlastModifodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #FFFFCC;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   right;
+}
+
+td.bloglistlastModifeven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #00CC99;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   right;
+}
+
+td.bloglistuserodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #FFFFCC;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.bloglistusereven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #00CC99;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.bloglistpublicodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #FFFFCC;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   right;
+}
+
+td.bloglistpubliceven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #00CC99;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   right;
+}
+
+td.bloglistpostsodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #FFFFCC;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   right;
+}
+
+td.bloglistpostseven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #00CC99;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   right;
+}
+
+td.bloglistvisitsodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #FFFFCC;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   right;
+}
+
+td.bloglistvisitseven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #00CC99;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   right;
+}
+
+td.bloglistactivityodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #FFFFCC;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   right;
+}
+
+td.bloglistactivityeven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #00CC99;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   right;
+}
+
+td.bloglistactionsodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #FFFFCC;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.bloglistactionseven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #00CC99;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+/* Form to edit weblogs or to post into weblogs */
+table.editblogform {
+	border-color:    #663300;
+	border-style:   solid;
+	border-width:   2px;
+	width:   98%;
+}
+
+td.editblogform {
+	color:    Black;
+	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
+	background:   #FFFFCC;
+	font-size:   11px;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+/* Weblog visualization */
+
+/* The header of a weblog post */
+div.posthead {
+	background-color:    #00CC99;
+	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   13px;
+	color:   black;
+	font-weight:   bold;
+	overflow:   hidden;
+	border:   1px solid black;
+	border-bottom:   0px;
+	text-align:   center;
+	padding-left:   0px;
+	padding-right:   0px;
+	margin-bottom:   0px;
+}
+
+/* The font used in the heading of the weblog */
+span.posthead {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   13px;
+	font-weight:   bold;
+	color:   white;
+}
+
+/* Links in the weblog post heading (edit/remove) */
+/* When there's a link in a cbox-title */
+.blogt {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	color:   #663300;
+	text-decoration:   none;
+}
+
+.blogt:active {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	color:   #663300;
+	text-decoration:   none;
+}
+
+.blogt:hover {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	color:   #FFCCCC;
+	text-decoration:   underline;
+}
+
+/* The post body */
+div.postbody {
+	overflow:    hidden;
+	background:   #FFFFCC;
+	border:   1px solid black;
+	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	color:   #663300;
+	padding-left:   5px;
+	padding-top:   5px;
+	padding-bottom:   5px;
+	margin-bottom:   10px;
+}
+
+/* The weblog title */
+div.blogtitle {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	color:   #663300;
+	font-size:   11px;
+	font-weight:   bold;
+	background-color:   #00CC99;
+	height:   25px;
+	padding-left:   2px;
+	padding-right:   5px;
+	margin-top:   10px;
+	border:   1px solid black;
+	border-bottom:   0px;
+}
+
+/* The weblog information */
+div.bloginfo {
+	background:    white;
+	border:   1px solid black;
+	padding-left:   0.8em;
+	padding-right:   0.8em;
+	padding-top:   0.5em;
+	padding-bottom:   0.5em;
+	margin-bottom:   10px;
+	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	clear:   both;
+}
+
+/* Weblog description */
+div.blogdesc {
+	background:    white;
+	border:   1px solid black;
+	padding-left:   0.8em;
+	padding-right:   0.8em;
+	padding-top:   0.5em;
+	padding-bottom:   0.5em;
+	margin-bottom:   10px;
+	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	clear:   both;
+}
+
+/* Links to post/edit/rss feed for the webelog are contained inside this div */
+div.blogtools {
+	background:    white;
+	border:   1px solid black;
+	padding-left:   0.8em;
+	padding-right:   0.8em;
+	padding-top:   0.5em;
+	padding-bottom:   0.5em;
+	margin-bottom:   10px;
+	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   10px;
+	clear:   both;
+}
+
+/**************************************************** FILE GALLERIES ****************************************************/
+
+/* The form to create or edit a gallery */
+table.editfgalform {
+	border-color:    #663300;
+	border-style:   solid;
+	border-width:   2px;
+	width:   98%;
+}
+
+td.editfgalform {
+	color:    Black;
+	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
+	background:   #FFFFCC;
+	font-size:   11px;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+/* The table with the listing */
+table.listfgal {
+	border-color:    #663300;
+	border-style:   solid;
+	border-width:   2px;
+	width:   98%;
+}
+
+td.listfgalheading {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	color:   #663300;
+	font-size:   11px;
+	font-weight:   bold;
+	background-color:   #00CC99;
+	height:   25px;
+	padding-left:   2px;
+	padding-right:   5px;
+}
+
+/* links in gallery heading */
+.llisfgalheading {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	color:   #663300;
+	font-size:   11px;
+	font-weight:   bold;
+	text-decoration:   none;
+}
+
+.llisfgalheading:active {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	color:   #663300;
+	font-size:   11px;
+	font-weight:   bold;
+	text-decoration:   none;
+}
+
+.llisfgalheading:hover {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	color:   #FFCCCC;
+	font-size:   11px;
+	font-weight:   bold;
+	text-decoration:   none;
+}
+
+/* Columns for the gallery listing */
+td.listfgalnameodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   Black;
+	background-color:   #FFFFCC;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.listfgalnameeven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   Black;
+	background-color:   #FFFFCC;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.listfgaldescriptionodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #FFFFCC;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.listfgaldescriptioneven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #00CC99;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.listfgalcreatedodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #FFFFCC;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.listfgalcreatedeven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #00CC99;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.listfgallastModifodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #FFFFCC;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.listfgallastModifeven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #00CC99;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.listfgaluserodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #FFFFCC;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   right;
+}
+
+td.listfgalusereven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #00CC99;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   right;
+}
+
+td.listfgalfilesodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #FFFFCC;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   right;
+}
+
+td.listfgalfileseven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #00CC99;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   right;
+}
+
+td.listfgalvisitsodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #FFFFCC;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   right;
+}
+
+td.listfgalvisitseven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #00CC99;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   right;
+}
+
+td.listfgalactionsodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #FFFFCC;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.listfgalactionseven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #00CC99;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+/* The gallery name is a link to browsing the gallery */
+a.fgalname {
+	font-weight:    bold;
+	font-size:   12px;
+	letter-spacing:   1px;
+	color:   #663300
+}
+
+a.fgalname {
+	text-decoration:    none;
+	color:   #663300;
+}
+
+a.fgalname:hover {
+	text-decoration: underline;
+}
+
+/* General links for galleries */
+.fgallink {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	color:   #663300;
+	text-decoration:   none;
+}
+
+.fgallink:active {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	color:   #663300;
+	text-decoration:   none;
+}
+
+.fgallink:hover {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	color:   #FFCCCC;
+	text-decoration:   underline;
+}
+
+/* Prev and next buttons in gallery listings */
+.fgalprevnext {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   #663300;
+}
+
+.fgalprevnext:active {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   #663300;
+}
+
+.fgalprevnext:hover {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   #FFCCCC;
+}
+
+/* Listing contents of a file gallery (listing files) */
+div.fgaldesc {
+	background:    #FFFFCC;
+	border:   1px solid black;
+	padding-left:   0.8em;
+	padding-right:   0.8em;
+	padding-top:   0.5em;
+	padding-bottom:   0.5em;
+	margin:   0.5ex 0px;
+	width:   97%;
+	clear:   both;
+}
+
+table.listfiles {
+	border-color:    #663300;
+	border-style:   solid;
+	border-width:   2px;
+	width:   98%;
+}
+
+td.listfilesheading {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	color:   #663300;
+	font-size:   11px;
+	font-weight:   bold;
+	background-color:   #00CC99;
+	height:   25px;
+	padding-left:   2px;
+	padding-right:   5px;
+}
+
+.llistfileslink {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	color:   #663300;
+	font-size:   11px;
+	font-weight:   bold;
+	text-decoration:   none;
+}
+
+.llistfileslink:active {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	color:   #663300;
+	font-size:   11px;
+	font-weight:   bold;
+	text-decoration:   none;
+}
+
+.llistfileslink:hover {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	color:   #FFCCCC;
+	font-size:   11px;
+	font-weight:   bold;
+	text-decoration:   none;
+}
+
+td.listfilesnameodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   Black;
+	background-color:   #FFFFCC;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.listfilesnameeven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   Black;
+	background-color:   #FFFFCC;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.listfilesdescriptionodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #FFFFCC;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.listfilesdescriptioneven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #00CC99;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.listfilesidodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   Black;
+	background-color:   #FFFFCC;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.listfilesideven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   Black;
+	background-color:   #FFFFCC;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.listfilesfilenameodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #FFFFCC;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.listfilesfilenameeven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #00CC99;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.listfilesfilesizeodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #FFFFCC;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   right;
+}
+
+td.listfilesfilesizeeven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #00CC99;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   right;
+}
+
+td.listfilescreatedodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #FFFFCC;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.listfilescreatedeven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #00CC99;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.listfilesdlsodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #FFFFCC;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   right;
+}
+
+td.listfilesdlseven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #00CC99;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   right;
+}
+
+td.listfilesnameodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #FFFFCC;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.listfilesnameeven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #00CC99;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.listfilesuserodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #FFFFCC;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.listfilesusereven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #00CC99;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.listfilesactionsodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #FFFFCC;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.listfilesactionseven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #00CC99;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+/****************************************************** CMS ***************************************************************/
+
+/* The article title bar */
+div.articletitle {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	color:   #663300;
+	font-size:   11px;
+	font-weight:   bold;
+	background-color:   #00CC99;
+	height:   25px;
+	border:   0px solid black;
+	border-bottom:   0px;
+	padding-left:   0.8em;
+	padding-right:   0.8em;
+	padding-top:   0.5em;
+	padding-bottom:   0.5em;
+	margin-top:   5px;
+	clear:   both;
+}
+
+/* The article heading */
+div.articleheading {
+	background:    #FFFFCC;
+	border:   1px solid black;
+	padding-left:   0.8em;
+	padding-right:   0.8em;
+	padding-top:   0.5em;
+	padding-bottom:   0.5em;
+	border-bottom:   0px;
+	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	clear:   both;
+}
+
+div.articletrailer {
+	background:    #FFFFCC;
+	border:   1px solid black;
+	border-bottom:   1px solid black;
+	border-top:   thin solid blue;
+	margin-bottom:   20px;
+	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	clear:   both;
+}
+
+/* Text in the article heading */
+div.articleheadingtext {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	display: inline;
+}
+
+/* The body */
+div.articlebody {
+	background:    white;
+	border:   0px solid black;
+	padding-left:   0.8em;
+	padding-right:   0.8em;
+	padding-top:   0.5em;
+	padding-bottom:   0.5em;
+	margin:   10px 0px;
+	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	clear:   both;
+}
+
+/* The article title */
+span.titlea {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   18px;
+	font-weight:   bold;
+}
+
+/* The author, date and number of reads */
+span.titleb {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   10px;
+}
+
+/* The trailer */
+span.trailer {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   10px;
+	font-weight:   bold;
+}
+
+.trailer {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	color:   #663300;
+	text-decoration:   none;
+}
+
+.trailer:active {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	color:   #663300;
+	text-decoration:   none;
+}
+
+.trailer:hover {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	color:   #FFCCCC;
+	text-decoration:   underline;
+}
+
+/* The list of articles */
+table.listarticles {
+	border-color:    #663300;
+	border-style:   solid;
+	border-width:   2px;
+	width:   98%;
+}
+
+td.listartheading {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	color:   #663300;
+	font-size:   11px;
+	font-weight:   bold;
+	background-color:   #00CC99;
+	height:   25px;
+	padding-left:   2px;
+	padding-right:   5px;
+}
+
+/* links in article listing heading */
+.llistart {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	color:   #663300;
+	font-size:   11px;
+	font-weight:   bold;
+	text-decoration:   none;
+}
+
+.llistart:active {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	color:   #663300;
+	font-size:   11px;
+	font-weight:   bold;
+	text-decoration:   none;
+}
+
+.llistart:hover {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	color:   #FFCCCC;
+	font-size:   11px;
+	font-weight:   bold;
+	text-decoration:   none;
+}
+
+/* Columns for the articles listing */
+td.listarttitleodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   Black;
+	background-color:   #FFFFCC;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.listarttitleeven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   Black;
+	background-color:   #FFFFCC;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.listarttopicodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #FFFFCC;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.listarttopiceven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #00CC99;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.listartpublishDateodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #FFFFCC;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.listartpublishDateeven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #00CC99;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.listartauthorodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #FFFFCC;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.listartauthoreven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #00CC99;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.listartreadsodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #FFFFCC;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   right;
+}
+
+td.listartreadseven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #00CC99;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   right;
+}
+
+td.listarthasimageodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #FFFFCC;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.listarthasimageeven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #00CC99;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.listartuseimageodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #FFFFCC;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.listartuseimageeven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #00CC99;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.listartactionsodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #FFFFCC;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.listartactionseven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #00CC99;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.listartsizeodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #FFFFCC;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   right;
+}
+
+td.listartsizeeven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #00CC99;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   right;
+}
+
+a.artname {
+	font-weight:    bold;
+	font-size:   12px;
+	letter-spacing:   1px;
+	color:   #663300
+}
+
+a.artname {
+	text-decoration:    none;
+	color:   #663300;
+}
+
+a.artname:hover {
+	text-decoration: underline;
+}
+
+.artprevnext {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   #663300;
+}
+
+.artprevnext:active {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   #663300;
+}
+
+.artprevnext:hover {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   #FFCCCC;
+}
+
+/******************************************************* CALENDAR **********************************************************/
+
+/* LINKS TO DAYS IN THE CALENDAR */
+.day {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   9px;
+	text-decoration:   none;
+	color:   #663300;
+}
+
+.day:active {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   9px;
+	text-decoration:   none;
+	color:   #663300;
+}
+
+.day:hover {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   9px;
+	color:   #00CC99;
+	text-decoration:   underline;
+}
+
+.day:link {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   9px;
+	text-decoration:   none;
+	color:   #663300;
+}
+
+.day:visited {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   9px;
+	text-decoration:   none;
+	color:   #663300;
+}
+
+/* LINKS FOR TODAY */
+.today {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   9px;
+	text-decoration:   none;
+	color:   #663300;
+	font-weight:   bold;
+	text-decoration:   none;
+}
+
+.today:active {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   9px;
+	text-decoration:   none;
+	color:   #663300;
+	font-weight:   bold;
+	text-decoration:   none;
+}
+
+.today:hover {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   9px;
+	color:   #00CC99;
+	text-decoration:   underline;
+	font-weight:   bold;
+}
+
+/* Links to change month, year or go to today */
+.nav {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   9px;
+	text-decoration:   none;
+	color:   #663300;
+	font-weight:   bold;
+	text-decoration:   none;
+}
+
+.nav:active {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   9px;
+	text-decoration:   none;
+	color:   #663300;
+	font-weight:   bold;
+	text-decoration:   none;
+}
+
+.nav:hover {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   9px;
+	color:   #00CC99;
+	text-decoration:   underline;
+	font-weight:   bold;
+}
+
+.changedate {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   8px;
+	background:   #FFFFCC;
+	color:   #663300;
+	font-weight:   bold;
+}
+
+.date {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   9px;
+	background:   #FFFFCC;
+	color:   Black;
+	font-weight:   bold;
+}
+
+/*************************************************** COMMENTS **************************************************************/
+
+/* Links to open and close the comments area */
+.opencomlink {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	color:   #663300;
+	text-decoration:   none;
+}
+
+.opencomlink:active {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	color:   #663300;
+	text-decoration:   none;
+}
+
+.opencomlink:hover {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	color:   #FFCCCC;
+	text-decoration:   underline;
+}
+
+/* The whole comment area when it is visible and when it is not */
+#comzone {
+	display:    none;
+	margin-left:   1px;
+	margin-right:   1px;
+	margin-top:   5px;
+	margin-bottom:   5px;
+	padding-left:   2px;
+	padding-right:   2px;
+}
+
+#comzoneopen {
+	display:    block;
+	margin-left:   1px;
+	margin-right:   1px;
+	margin-top:   5px;
+	margin-bottom:   5px;
+	padding-left:   2px;
+	padding-right:   2px;
+}
+
+/* Post comment form */
+div.commentspost {
+	display:    inherit;
+	border:   1px solid black;
+	margin-top:   10px;
+	margin-right:   10px;
+	padding-right:   0px;
+	padding-top:   0px;
+	padding-bottom:   0px;
+	margin-bottom:   10px;
+	width:   99%;
+}
+
+/* Cell in the post form */
+TD.comform {
+	color:    Black;
+	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
+	background:   #FFFFCC;
+	font-size:   11px;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+/* Help box*/
+div.commentsedithelp {
+	background:    white;
+	border:   1px solid black;
+	font-size:   smaller;
+	width:   98%;
+}
+
+/* The toolbar where the ordering number of comments and find box are found */
+div.commentstoolbar {
+	background:    #FFFFCC;
+	color:   black;
+	margin-bottom:   20px;
+	width:   98%;
+	border:   1px solid black;
+	padding-top:   2px;
+	padding-left:   2px;
+}
+/* The comment title */
+span.commentstitle {
+	font-weight:    bold;
+	font-size:   12px;
+	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
+	width:   100%;
+}
+
+/* The comment */
+div.commentscomment {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	margin-bottom:   20px;
+	width:   98%;
+}
+/* The header for a comment */
+div.commentheader {
+	background:    #FFFFCC;
+	border:   0px solid black;
+	font-size:   11px;
+	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
+	width:   98%;
+}
+
+/* The text */
+div.commenttext {
+	font-size:    11px;
+	margin-left:   5px;
+	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
+	width:   98%;
+}
+
+/* Links in comments */
+.commentslink {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	color:   #663300;
+	text-decoration:   none;
+}
+
+.commentslink:active {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	color:   #663300;
+	text-decoration:   none;
+}
+
+.commentslink:hover {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	color:   #FFCCCC;
+	text-decoration:   underline;
+}
+
+/* Links in the comment header */
+.commentshlink {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	color:   #663300;
+	text-decoration:   none;
+}
+
+.commentshlink:active {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	color:   #663300;
+	text-decoration:   none;
+}
+
+.commentshlink:hover {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	color:   #FFCCCC;
+	text-decoration:   underline;
+}
+
+.comments .normal {
+	width: 100%;
+}
+
+/************************************************************ CHAT *********************************************************/
+table.chatroom {
+	border-color:    #663300;
+	border-style:   solid;
+	border-width:   2px;
+	width:   98%;
+}
+
+td.chatchannels {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	background:   #FFFFCC;
+	font-size:   11px;
+	color:   black;
+}
+
+td.chatarea {
+	padding-left:    0px;
+	margin-left:   0px;
+	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	color:   black;
+	background:   #FFFFFF;
+}
+
+table.chatform {
+	border-color:    #663300;
+	border-style:   solid;
+	border-width:   2px;
+	width:   98%;
+	border-top:   0px;
+}
+
+td.tdchatform {
+	color:    Black;
+	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
+	background:   #FFFFCC;
+	font-size:   11px;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+span.chnormal {
+	color:    black;
+	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+}
+
+span.chuser {
+	color:    black;
+	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	font-weight:   bold;
+}
+
+/********************************************************** RSS MODULES *****************************************************/
+.rsslink {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   10px;
+	color:   #663300;
+	text-decoration:   none;
+}
+
+.rsslink:active {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   10px;
+	color:   #663300;
+	text-decoration:   none;
+}
+
+.rsslink:hover {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   10px;
+	color:   #00CC99;
+	text-decoration:   none;
+}
+
+/********************************************************** POLLS ********************************************************/
+div.pollresults {
+	background:    white;
+	border:   1px solid black;
+	width:   100%;
+	margin-top:   5px;
+	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   14px;
+}
+
+table.pollresults {
+	width: 98%;
+}
+
+td.pollr {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	color:   black;
+}
+/* MODULES */
+
+/***************************************************** FORUMS *****************************************************/
+/* Prev next buttons using for pagination in forum listing topic listing etc */
+.forumprevnext {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   #663300;
+}
+
+.forumprevnext:active {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   #663300;
+}
+
+.forumprevnext:hover {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   #FFCCCC;
+}
+
+/* Title for the forums page */
+div.forumspagetitle {
+	margin-top:    10px;
+	margin-bottom:   40px;
+}
+
+.forumspagetitle {
+	font-weight:    bold;
+	font-size:   26px;
+	font-family:   "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	color:   #663300;
+}
+
+a.forumspagetitle {
+	font-weight:    bold;
+	font-size:   26px;
+	font-family:   "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	text-decoration:   none;
+	color:   #663300;
+}
+
+a.forumspagetitle:hover {
+	font-weight:    bold;
+	font-size:   26px;
+	font-family:   "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
+	text-decoration:   underline;
+	color:   #00CC99;
+}
+
+/* Table containing the forum listing */
+table.forumstable {
+	border-color:    #663300;
+	border-style:   solid;
+	border-width:   2px;
+	width:   97%;
+}
+
+/* The heading in the list of forums showing name,topics,posts,users,age,visits,lastpost */
+td.forumheading {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	color:   #663300;
+	font-size:   11px;
+	font-weight:   bold;
+	background-color:   #00CC99;
+	height:   25px;
+	padding-left:   2px;
+	padding-right:   5px;
+}
+
+/* Links in forum headings */
+.lforumheading {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	color:   #663300;
+	font-size:   11px;
+	font-weight:   bold;
+	text-decoration:   none;
+}
+
+.lforumheading:active {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	color:   #663300;
+	font-size:   11px;
+	font-weight:   bold;
+	text-decoration:   none;
+}
+
+.lforumheading:hover {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	color:   #FFCCCC;
+	font-size:   11px;
+	font-weight:   bold;
+	text-decoration:   none;
+}
+
+/* Even rows in forums table */
+td.forumstableeven {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	background-color:   #FFFFCC;
+	height:   30px;
+	text-align:   left;
+}
+
+td.forumstableinfoeven {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	background-color:   #00CC99;
+	text-align:   right;
+	height:   30px;
+}
+
+/* Odd rows in forums table */
+td.forumstableodd {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	height:   30px;
+	background-color:   #FFFFCC;
+	text-align:   left;
+}
+
+td.forumstableinfoodd {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	background-color:   #FFFFCC;
+	height:   30px;
+	text-align:   right;
+}
+
+/* The forum name is a link to the forum topics */
+.forumname {
+	font-weight:    bold;
+	font-size:   12px;
+	letter-spacing:   1px;
+	color:   #663300
+}
+
+a.forumname {
+	text-decoration:    none;
+	color:   #663300;
+}
+
+a.forumname:hover {
+	text-decoration: underline;
+}
+
+/* If the user can admin the forum then a small link with admin is displayed */
+.admlink {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   9px;
+	color:   #663300;
+}
+
+.admlink:active {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   9px;
+	color:   #663300;
+}
+
+.admlink:hover {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   9px;
+	color:   #FFCCCC;
+}
+
+/* Links to show/hide the posting form, edit forum or return to forum listing */
+.forumbutlink {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   #663300;
+}
+
+.forumbutlink:active {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   #663300;
+}
+
+.forumbutlink:hover {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   #FFCCCC;
+}
+
+/* Table with the posting form */
+table.forumformtable {
+	border-color:    #663300;
+	border-style:   solid;
+	border-width:   2px;
+	width:   97%;
+}
+
+/* Cells in the posting form */
+td.forumform {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	background-color:   #FFFFCC;
+}
+
+/* Cells for the forum topics listing */
+td.topictitleodd {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	background-color:   #FFFFCC;
+	height:   30px;
+}
+
+td.topictitleeven {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	background-color:   #FFFFCC;
+	height:   30px;
+}
+
+td.topicrepliesodd {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	background-color:   #FFFFCC;
+	height:   30px;
+	text-align:   right;
+}
+
+td.topicreplieseven {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	background-color:   #00CC99;
+	height:   30px;
+	text-align:   right;
+}
+
+td.topicreadsodd {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	background-color:   #996633;
+	height:   30px;
+	text-align:   right;
+}
+
+td.topicreadseven {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	background-color:   #996633;
+	height:   30px;
+	text-align:   right;
+}
+
+td.topicscoreodd {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	background-color:   #FFFFCC;
+	height:   30px;
+	text-align:   right;
+}
+
+td.topicscoreeven {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	background-color:   #00CC99;
+	height:   30px;
+	text-align:   right;
+}
+
+td.topiclastpostodd {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	background-color:   #996633;
+	height:   30px;
+	text-align:   right;
+}
+
+td.topiclastposteven {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	background-color:   #996633;
+	height:   30px;
+	text-align:   right;
+}
+
+td.topicauthorodd {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	background-color:   #FFFFCC;
+	height:   30px;
+	text-align:   right;
+}
+
+td.topicauthoreven {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	background-color:   #00CC99;
+	height:   30px;
+	text-align:   right;
+}
+
+table.viewthread {
+	border-color:    #663300;
+	border-style:   solid;
+	border-width:   2px;
+	width:   97%;
+}
+
+td.viewthreadl {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	background-color:   #FFFFCC;
+	height:   30px;
+	vertical-align:   top;
+}
+
+td.viewthreadr {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	background-color:   #FFFFCC;
+	height:   30px;
+	vertical-align:   top;
+}
+
+/* Table showign the threads for a topic */
+table.threads {
+	border-color:    #663300;
+	border-style:   solid;
+	border-width:   2px;
+	width:   97%;
+}
+
+/* Cells for the threads table */
+td.threadsevenl {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #00CC99;
+	vertical-align:   top;
+}
+
+td.threadsevenr {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	font-size:   13px;
+	background-color:   #00CC99;
+	vertical-align:   top;
+}
+
+td.threadsoddl {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #FFFFCC;
+	vertical-align:   top;
+}
+
+td.threadsoddr {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	font-size:   13px;
+	background-color:   #FFFFCC;
+	vertical-align:   top;
+}
+
+td.threadseparator {
+	background-color:    #996633;
+	height:   5px;
+}
+
+#forumpost {
+	display: none;
+}
+
+#forumpostopen {
+	display: block;
+}
+
+div.forumtoolbar {
+	background:    #996633;
+	width:   100%;
+	margin-bottom:   20px;
+	border:   0px;
+}
+
+td.forumtoolbar {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	color:   black;
+	font-size:   11px;
+	font-weight:   bold;
+	text-decoration:   none;
+	vertical-align:   bottom;
+}
+
+.toolbarlink {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	color:   black;
+	font-size:   11px;
+	font-weight:   bold;
+	text-decoration:   none;
+}
+
+.toolbarlink:active {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	color:   black;
+	font-size:   11px;
+	font-weight:   bold;
+	text-decoration:   none;
+}
+
+.toolbarlink:hover {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	color:   black;
+	font-size:   11px;
+	font-weight:   bold;
+	text-decoration:   none;
+}
+
+/* Links to vote */
+.forumvotelink {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   #663300;
+}
+
+.forumvotelink:active {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   #663300;
+}
+
+.forumvotelink:hover {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   #00CC99;
+}
+
+/************************************************ CATEGORIES **************************************************************/
+
+/* Table containing the category path */
+table.tcategpath {
+	border-spacing:    0px;
+	padding-right:   0px;
+	margin-bottom:   10px;
+	border-color:   #663300;
+	border-style:   solid;
+	border-width:   2px;
+	width:   97%;
+}
+
+td.tdcategpath {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	color:   #663300;
+	font-size:   13px;
+	font-weight:   bold;
+	background-color:   #00CC99;
+	height:   25px;
+	padding-left:   2px;
+	margin:   0px;
+	border-spacing:   0px;
+	padding-right:   5px;
+}
+
+/* Links to up/top categories */
+.categpath {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   #663300;
+	text-decoration:   none;
+}
+
+.categpath:active {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   #663300;
+	text-decoration:   none;
+}
+
+.categpath:hover {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   #FFCCCC;
+	text-decoration:   underline;
+}
+
+/* Table with the subcategories */
+table.subcats {
+	padding-top:    20px;
+	padding-bottom:   20px;
+	width:   98%;
+	border-spacing:   0px;
+	padding-right:   0px;
+	margin-bottom:   10px;
+	border-color:   #663300;
+	border-style:   solid;
+	border-width:   2px;
+}
+
+td.tdsubcat {
+	width: 25%;
+}
+
+/* Links to subcategories */
+.categlink {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	color:   #663300;
+	text-decoration:   none;
+}
+
+.categlink:active {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	color:   #663300;
+	text-decoration:   none;
+}
+
+.categlink:hover {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	color:   #FFCCCC;
+	text-decoration:   underline;
+}
+
+table.catobjects {
+	width:    98%;
+	border-spacing:   0px;
+	padding-right:   0px;
+	margin-bottom:   10px;
+	border-color:   #663300;
+	border-style:   solid;
+	border-width:   0px;
+}
+
+td.categobjectsnameeven, td.categobjectsnameodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	background-color:   #00CC99;
+}
+
+td.categobjectsdataeven, td.categobjectsdataodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	background-color:   #FFFFCC;
+}
+
+.catname {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	color:   #663300;
+	text-decoration:   none;
+}
+
+.catname:active {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	color:   #663300;
+	text-decoration:   none;
+}
+
+.catname:hover {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	color:   #FFCCCC;
+	text-decoration:   underline;
+}
+
+/***************************************************** FAQS **************************************************************/
+/* The list of questions */
+div.faqlistquestions {
+	background:    #FFFFFF;
+	color:   black;
+	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	border:   1px solid black;
+	width:   98%;
+	padding-top:   5px;
+	padding-bottom:   5px;
+}
+
+/* Container for question-answer block */
+div.faqqa {
+	background:    #FFFFCC;
+	color:   black;
+	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	width:   97%;
+	border:   1px solid black;
+	margin-bottom:   20px;
+	padding-top:   5px;
+	padding-bottom:   5px;
+	padding-left:   5px;
+}
+
+/* The question */
+div.faqquestion {
+	margin-bottom:    5px;
+	font-family:   Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	width:   97%;
+}
+
+/* The answer */
+div.faqanswer {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	width:   97%;
+}
+
+/***************************************************** QUIZZES **************************************************************/
+div.questionblock {
+	border:    1px solid black;
+	background:   white;
+	margin-bottom:   10px;
+}
+
+div.quizquestion {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	margin-bottom:   5px;
+}
+
+div.quizoptions {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+}
+
+div.quizdescription {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	border:   1px solid black;
+	background:   white;
+	margin-bottom:   10px;
+}
+
+div.quizanswer {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	border:   1px solid black;
+	background:   white;
+	margin-bottom:   10px;
+}
+
+/***************************************************** SHOUTBOX **************************************************************/
+div.shoutboxmsg {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	border:   1px solid black;
+	background:   white;
+	margin-bottom:   0px;
+	padding-left:   2px;
+	padding-top:   1px;
+	padding-bottom:   1px;
+}
+
+div.shoutboxmodmsg {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   10px;
+	margin-bottom:   4px;
+	padding-left:   2px;
+	padding-top:   1px;
+	padding-bottom:   1px;
+	width: 95%;
+}
+
+textarea.tshoutbox {
+	background-color:    white;
+	border-bottom:   #5e5d63 1px solid;
+	border-left:   #5e5d63 1px solid;
+	border-right:   #5e5d63 1px solid;
+	border-top:   #5e5d63 1px solid;
+	color:   #000000;
+	font-family:   verdana, tahoma, arial, helvetica, sans-serif;
+	font-size:   10px;
+}
+
+/*************************************************** DIRECTORY ***************************************************/
+/* The list of categories */
+div.dircategs {
+	border:    0.5px solid black;
+	padding-bottom:   5px;
+	padding-top:   5px;
+	padding-left:   5px;
+}
+
+/* Links to categories */
+.dirlink {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   black;
+	text-decoration:   underline;
+	font-weight:   bold;
+}
+
+.dirlink:hover {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   #636363;
+	text-decoration:   underline;
+	font-weight:   bold;
+}
+
+/* Links to subcategories */
+.dirsublink {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   10px;
+	color:   black;
+	text-decoration:   underline;
+}
+
+.dirsublink:hover {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   10px;
+	color:   #636363;
+	text-decoration:   underline;
+}
+
+/* The list of sites in any category */
+div.dirlistsites {
+	padding-left:    5px;
+	padding-top:   5px;
+	padding-bottom:   10px;
+	border:   0.5px solid black;
+	margin-top:   10px;
+	width:   100%;
+}
+
+/* each site in the list of sites */
+div.dirsite {
+	margin-bottom: 10px;
+}
+
+span.dirsitedesc {
+}
+
+span.dirsitetrail {
+	font-size: 10px;
+}
+
+span.dirsitecats {
+}
+
+/* Links to sites */
+.dirsitelink {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   black;
+	text-decoration:   underline;
+}
+
+.dirsitelink:hover {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   #636363;
+	text-decoration:   underline;
+}
+
+/* Related categories */
+div.dirrelated {
+	margin-top:    10px;
+	border:   0.5px solid black;
+	padding-top:   5px;
+	padding-bottom:   5px;
+	padding-left:   5px;
+	margin-left:   5px;
+}
+
+/* Footer with stats for the directory */
+td.dirfooter {
+	font-size: 9px;
+}
+
+div.dirfooter {
+	margin-top:    10px;
+	border:   1px solid black;
+}
+
+/*************************************************** MESSAGES ***************************************************/
+/* Links for priority colors */
+td.prio1 {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	padding-left:   2px;
+	background-color:   #00FFBF;
+}
+
+td.prio2 {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	padding-left:   2px;
+	background-color:   #00EAB0;
+}
+
+td.prio3 {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	padding-left:   2px;
+	background-color:   #00BC8D;
+}
+
+td.prio4 {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	padding-left:   2px;
+	background-color:   #00A179;
+}
+
+td.prio5 {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	padding-left:   2px;
+	background-color:   #008161;
+}
+
+/* Div containing links to flag/unflag messages when reading a message */
+div.messureadflag {
+	background-color:    #CCCCCC;
+	padding-left:   5px;
+}
+
+/* Header when reading a message */
+div.messureadhead {
+	background-color:    #DEDEDE;
+	margin-top:   2px;
+}
+
+/* Message body when reading */
+div.messureadbody {
+	margin-top: 5px;
+}
+
+/* Links to read emails (the subject in the mailbox listing) */
+.readlink {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   10px;
+	color:   black;
+	text-decoration:   underline;
+}
+
+.readlink:hover {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   10px;
+	color:   #636363;
+	text-decoration:   underline;
+}
+
+/* calendar styles */
+#calendar
+{
+width:100%;
+}
+
+.Cal0, .Cal1, .Cal2 {
+	border-top:    1px dashed #cccccc;
+	color:   #425262;
+	font-size:   10px;
+	padding-right:   0px;
+}
+
+.Cal0:before {
+	content: "? ";
+}
+
+.Cal1:before {
+	content:    "+ ";
+	background-color:   #FFCC77;
+}
+
+.Cal2:before {
+	content:    "X ";
+	background-color:   #eeeeaa;
+}
+/* misc cal styles */
+.caltitle {
+	font-weight:    bold;
+	color:   #425262;
+}
+
+.caltab {
+	padding-left:    10px;
+	padding-right:   10px;
+	border:   1px solid #666666;
+	border-bottom:   2px solid #aeaeae;
+	margin-right:   6px;
+}
+
+a.caltab {
+	text-decoration:    none;
+	font-weight:   bold;
+	font-size:   11px;
+	background-color:   #dedede;
+	color:   #000000;
+}
+
+a.caltab:hover {
+	background-color:    #efefaf;
+	border-bottom:   2px solid #dedede;
+}
+
+.caltabon {
+	padding-left:    10px;
+	padding-right:   10px;
+	background-color:   #ffffff;
+	border:   1px solid #666666;
+	border-bottom:   2px solid #FFFFFF;
+	margin-right:   6px;
+}
+
+a.caltabon {
+	text-decoration:    none;
+	font-weight:   bold;
+	font-size:   11px;
+	color:   #000000;
+}
+
+a.caltabon:hover {
+	background-color: transparent;
+}
+
+div#tab, div#tabcal, div#tabnav {
+	margin-top:    10px;
+	margin-left:   30px;
+}
+
+div#tab {
+	margin-bottom: 1px;
+}
+
+div.tabcal, div.tabnav {
+	padding:    10px;
+	background-color:   #ffffff;
+	border:   1px solid #666666;
+	border-bottom:   1px solid #aeaeae;
+	font-size:   11px;
+}
+
+/* checkboxes background is required for rollover display */
+.calcheckbox {
+	background-color: #ffffff;
+}
+
+.caltoggle {
+	font-size:    9px;
+	margin-bottom:   7px;
+}
+
+/* style of the popup background in case of transparent styles */
+#opaque {
+	background-color: #FFFFCC;
+}
+
+.calfocus {
+	font-size:    9px;
+	background-color:   transparent;
+}
+
+.calfocus a {
+	text-decoration:    none;
+	color:   #000000;
+}
+
+.calfocuson {
+	font-size:    9px;
+	background-color:   #f3e498;
+}
+
+.calfocuson a {
+	text-decoration:    none;
+	color:   #000000;
+}
+
+.Calwiki {
+	border-top:    1px dashed #cccccc;
+	font-size:   10px;
+	padding-left:   3px;
+	padding-right:   3px;
+	margin-top:   0;
+}
+
+.Calwiki a {
+	color: #443F39;
+}
+
+.Calwiki:before {
+	content:    "w";
+	font-family:   monospace;
+	background-color:   #ffffff;
+}
+
+.Calblog {
+	border-top:    1px dashed #cccccc;
+	font-size:   10px;
+	padding-left:   3px;
+	padding-right:   3px;
+}
+
+.Calblog a {
+	color: #443039;
+}
+
+.Calblog:before {
+	content:    "b";
+	font-family:   monospace;
+	background-color:   #ffffff;
+}
+
+.Calgal {
+	border-top:    1px dashed #cccccc;
+	font-size:   10px;
+	padding-left:   3px;
+	padding-right:   3px;
+}
+
+.Calgal a {
+	color: #303F49;
+}
+
+.Calgal:before {
+	content:    "i";
+	font-family:   monospace;
+	background-color:   #ffffff;
+}
+
+.Calart {
+	border-top:    1px dashed #cccccc;
+	font-size:   10px;
+	padding-left:   3px;
+	padding-right:   3px;
+}
+
+.Calart a {
+	color: #304F30;
+}
+
+.Calart:before {
+	content:    "a";
+	font-family:   monospace;
+	background-color:   #ffffff;
+}
+
+.Calforum {
+	border-top:    1px dashed #cccccc;
+	font-size:   10px;
+	padding-left:   3px;
+	padding-right:   3px;
+}
+
+.Calforum a {
+	color: #304F30;
+}
+
+.Calforum:before {
+	content:    "o";
+	font-family:   monospace;
+	background-color:   #ffffff;
+}
+
+.Caldir {
+	border-top:    1px dashed #cccccc;
+	font-size:   10px;
+	padding-left:   3px;
+	padding-right:   3px;
+}
+
+.Caldir a {
+	color: #304F30;
+}
+
+.Caldir:before {
+	content:    "d";
+	font-family:   monospace;
+	background-color:   #ffffff;
+}
+
+.Calfgal {
+	border-top:    1px dashed #cccccc;
+	font-size:   10px;
+	padding-left:   3px;
+	padding-right:   3px;
+}
+
+.Calfgal a {
+	color: #304F30;
+}
+
+.Calfgal:before {
+	content:    "f";
+	font-family:   monospace;
+	background-color:   #ffffff;
+}
+
+.Calfaq {
+	border-top:    1px dashed #cccccc;
+	font-size:   10px;
+	padding-left:   3px;
+	padding-right:   3px;
+}
+
+.Calfaq a {
+	color: #304F30;
+}
+
+.Calfaq:before {
+	content:    "q";
+	font-family:   monospace;
+	background-color:   #ffffff;
+}
+
+.Calquiz {
+	border-top:    1px dashed #cccccc;
+	font-size:   10px;
+	padding-left:   3px;
+	padding-right:   3px;
+}
+
+.Calquiz a {
+	color: #304F30;
+}
+
+.Calquiz:before {
+	content:    "z";
+	font-family:   monospace;
+	background-color:   #ffffff;
+}
+
+.Caltrack {
+	border-top:    1px dashed #cccccc;
+	font-size:   10px;
+	padding-left:   3px;
+	padding-right:   3px;
+}
+
+.Caltrack a {
+	color: #304F30;
+}
+
+.Caltrack:before {
+	content:    "t";
+	font-family:   monospace;
+	background-color:   #ffffff;
+}
+
+.Calsurv {
+	border-top:    1px dashed #cccccc;
+	font-size:   10px;
+	padding-left:   3px;
+	padding-right:   3px;
+}
+
+.Calsurv a {
+	color: #304F30;
+}
+
+.Calsurv:before {
+	content:    "s";
+	font-family:   monospace;
+	background-color:   #ffffff;
+}
+
+.Calnl {
+	border-top:    1px dashed #cccccc;
+	font-size:   10px;
+	padding-left:   3px;
+	padding-right:   3px;
+}
+
+.Calnl a {
+	color: #304F30;
+}
+
+.Calnl:before {
+	content:    "n";
+	font-family:   monospace;
+	background-color:   #ffffff;
+}
+
+.Caleph {
+	border-top:    1px dashed #cccccc;
+	font-size:   10px;
+	padding-left:   3px;
+	padding-right:   3px;
+}
+
+.Caleph a {
+	color: #304F30;
+}
+
+.Caleph:before {
+	content:    "e";
+	font-family:   monospace;
+	background-color:   #ffffff;
+}
+
+.Calchart {
+	border-top:    1px dashed #cccccc;
+	font-size:   10px;
+	padding-left:   3px;
+	padding-right:   3px;
+}
+
+.Calchart a {
+	color: #304F30;
+}
+
+.Calchart:before {
+	content:    "c";
+	font-family:   monospace;
+	background-color:   #ffffff;
+}
+
+
+.calweb {
+	font-weight:    bold;
+	font-size:   10px;
+	text-decoration:   none;
+	padding-left:   3px;
+	padding-right:   3px;
+	color:   #336699;
+}
+
+.calweb:hover {
+	color: #996633;
+}
+
+.calprio1 {
+	background-color: #DAE0E0;
+}
+
+.calprio2 {
+	background-color: #DADCDC;
+}
+
+.calprio3 {
+	background-color: #DAD0D0;
+}
+
+.calprio4 {
+	background-color: #DACACA;
+}
+
+.calprio5 {
+	background-color: #DAC0D0;
+}
+
+.calprio6 {
+	background-color: #DABABA;
+}
+
+.calprio7 {
+	background-color: #DAB0B0;
+}
+
+.calprio8 {
+	background-color: #DAAAAA;
+}
+
+.calprio9 {
+	background-color: #DA9A9A;
+}
+div.tabrow {
+	margin-left: 29px;
+	background-color: #efefef;
+	border: 1px solid #787878;
+	border-bottom: 0;
+	font-size: 11px;
+}
+td.middle {
+	vertical-align: middle; 
+}
+.daterow {
+  padding : 0 5px;
+  border : 1px outset #ddd;
+  background-color : #ddd;
+}
+.daterow:hover {
+  background-color : #fff;
+  cursor : pointer;
+}
+.daterow:active {
+  border : 1px inset #ddd;
+}
+.mininotes {
+	font-size: 80%;
+	color:#666666;
+}
+.opaque
+{
+	background-color: #ffffff;
+	width: auto;
+	border: 1px solid #666666;
+	padding: 1px; 
+}
+.opaque .box-title,
+.opaque, .box-data 
+{
+	width: auto;
+}
+.calcontent {
+	min-height: 60px;
+}
+.viewmodeon {
+	padding-left:   0px;
+	padding-right:   0px;
+}
+.viewmodeoff {
+	padding-left:   0px;
+	padding-right:   0px;
+}
+a.viewmodeon img {
+	margin: 0;
+padding: 0;
+}
+a.viewmodeoff img {
+	margin: 0;
+padding: 0;
+}
+#caltable {
+	width: 100%;
+}
+
+/*
+ * help zone
+ */
+
+div#edithelpzone {
+	display: none;
+}
+
+div#attzone {
+	display:    none;
+	margin-top:   10px;
+}
+
+div#attzoneopen {
+	display:    block;
+	margin-top:   10px;
+}
+
+.highlight {
+	background-color:    #FFAAAA;
+	color:   #000000;
+}
+
+/*
+ * Caption in tables.
+ * Currently in Attachments and comments only.
+ */
+caption {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	font-weight:   bold;
+	text-align:   right;
+}
+
+/* trees */
+div.tree {
+	text-align:    left;
+	padding-left:   1.5em;
+}
+/* Root of tree (outer div) */
+div.tree#top {
+	border:    1px outset #00E000;
+	padding:   10px 1.5em 20px 1.5em;
+}
+
+/* Wiki editpage textarea */
+textarea.wikiedit {
+	width: 100%;
+}
+/* help links style */
+a.tikihelp, a.tikihelp:visited {
+	color:    inherit;
+	border:   inherit;
+	background-color:   inherit;
+	font-size:   inherit;
+	font-weight:   inherit;
+	margin:   inherit;
+	padding:   inherit;
+	text-decoration:   inherit;
+	vertical-align: text-top;
+}
+
+a.tikihelp:hover {
+	color:    #224466;
+	border:   inherit;
+	background-color:   inherit;
+	font-size:   inherit;
+	font-weight:   inherit;
+	margin:   inherit;
+	padding:   inherit;
+	cursor:   help;
+	text-decoration:   inherit;
+	vertical-align: text-top;
+}
+.catblock {
+  border: 1px solid #aaaaaa;
+}
+.catlists {
+  border-top: 1px solid #ffffff;
+  padding: 1px 6px 1px 6px;
+  background-color: none;
+  color: #666666;
+}
+.catlists:last-child {
+  border-bottom: 1px solid #ffffff;
+}
+.catlists:hover {
+  background-color: #dedede;
+}
+.cattitle {
+  color: #000000;
+  font-weight: bold;
+}
+.catlists a.link {
+  color: #666666;
+  padding: 0px 4px 0px 4px;
+  border: 1px solid #aaaaaa;
+  border-radius: 6px;
+  -moz-border-radius: 6px;
+  -khtml-border-radius: 6px;
+}
+.catlists a.link:hover {
+  color: #000000;
+}
+/* TikiIntegrator: By default copy rules dialog not shown */
+div#rules-copy-panel {
+    display: none;
+}
+
+/*
+** JsCalendar wrapper
+*/
+#datrigger {
+  border: 2px outset #666666;
+  padding: 1px 3px 1px 5px;
+  margin: 2px;
+  cursor: pointer;
+  font-weight:bold;
+}
+
+table.commentinfo { width: 100%; background-color: #FFF7E6; }
+div#loadstats {
+  background-color: #dedede;
+  font-size: 70%;
+  color: #666666;
+  padding: 5px;
+}
+
+/* phplayers style */
+.box-data table {
+  width: 100%;
+}
+.mdkverbar  {
+  margin: 0px;
+}
+.mdksubmenu {
+  z-index: 999;
+  position: absolute;
+  left: 0;  
+  top: 0;
+  background-color: #FFFFFF;
+  visibility: hidden;
+}
+.mdksubmenu table {
+  width: auto;
+} 
+  
+.mdksubframe  {
+  z-index: 1000; 
+  position: relative;
+  display: block;
+  border: 1px solid #000000;
+} 
+
+.mdkitem  {
+  border-top: 1px solid #dedede;
+  position: relative;
+  text-align: left;
+  white-space: nowrap;
+} 
+  
+.mdkitem a  {
+  padding: 2px 5px 2px 5px;
+  position: relative;
+  display: block;
+  text-decoration: none;
+}
+
+.mdkitem a:visited  {
+}
+
+.mdkitem a:hover  {
+  padding: 2px 5px 1px 5px;
+}
+
+.mdkitem a:active {
+  color: #993300;
+} 
+  
+.mdkitem .mdkfwdarr {
+  position: absolute;
+  top: 5px;
+  right: 12px;
+}
+
+.toc {
+}
+.toc li {
+  margin-top: 3px;
+}
+.tocnav {
+  background-color: #ededed;
+  margin-bottom: 16px;
+} 
+.tocnav table {
+  width: 100%;
+  background-color: #ffffff;
+}
+.tocnav a {
+  font-size: 90%;
+  color: #424242; 
+}
+/* for jscalendar */
+.calendar {
+  z-index: 200;
+} 
+
+
+/* TikiIntegrator: By default copy rules dialog not shown */
+div#rules-copy-panel {
+    display: none;
+}
+
+/* ASSORTED  */
+
+#clear {
+	clear:both;
+	}
+	
+/********************************** JUKEBOX *****************************************/
+
+.jukeboxname {
+	font-weight:    bold;
+	font-size:   12px;
+	letter-spacing:   1px;
+	color:   #006699
+}
+
+a.jukeboxname {
+	text-decoration:    none;
+	color:   #006699;
+}
+
+a.jukeboxname:hover {
+	text-decoration: underline;
+}
+
+/* General links for blogs */
+.jukeboxlink {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	color:   #00639C;
+	text-decoration:   none;
+}
+
+.jukeboxlink:active {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	color:   #00639C;
+	text-decoration:   none;
+}
+
+.jukeboxlink:hover {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   11px;
+	color:   red;
+	text-decoration:   underline;
+}
+
+/* Prev and next buttons in blog listings */
+.jukeboxprevnext {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   #006396;
+}
+
+.jukeboxprevnext:active {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   #006396;
+}
+
+.jukeboxprevnext:hover {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   #006396;
+}
+
+/* The table listing blogs & so */
+table.jukeboxlist {
+	border-color:    #00639C;
+	border-style:   solid;
+	border-width:   2px;
+	width:   98%;
+}
+
+/* The headings in the table listing blogs */
+td.jukeboxlistheading {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	color:   #FFA34F;
+	font-size:   11px;
+	font-weight:   bold;
+	background-color:   #006699;
+	height:   25px;
+	background-image:   url(subsilver/cellpic3.gif);
+	padding-left:   2px;
+	padding-right:   5px;
+}
+
+/* Links in the headings of the table listing gallery images */
+.jukeboxlistheading {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	color:   #FFA34F;
+	font-size:   11px;
+	font-weight:   bold;
+	text-decoration:   none;
+}
+
+.jukeboxlistheading:active {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	color:   #FFA34F;
+	font-size:   11px;
+	font-weight:   bold;
+	text-decoration:   none;
+}
+
+.jukeboxlistheading:hover {
+	font-family:    Verdana, Arial, Helvetica, sans-serif;
+	color:   #FF860D;
+	font-size:   11px;
+	font-weight:   bold;
+	text-decoration:   none;
+}
+
+/* Columns in the table listing gallery images */
+td.jukeboxlistnameodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   Black;
+	background-color:   #EFEFEF;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.jukeboxlistnameeven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   Black;
+	background-color:   #EFEFEF;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.jukeboxlistdescriptionodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   Black;
+	background-color:   #EFEFEF;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.jukeboxlistdescriptioneven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	color:   Black;
+	background-color:   #EFEFEF;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.jukevoxlistcreatedodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #DEE7E7;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.jukeboxlistcreatedeven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #DEE7E7;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.jukeboxlistlastModifodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #DEE7E7;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   right;
+}
+
+td.jukeboxlistlastModifeven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #DEE7E7;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   right;
+}
+
+td.jukeboxlistuserodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #DEE7E7;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.jukeboxlistusereven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #DEE7E7;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.jukeboxlisttracksodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #DEE7E7;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   right;
+}
+
+td.jukeboxlisttrackseven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #DEE7E7;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   right;
+}
+
+td.jukeboxlistvisitsodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #DEE7E7;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   right;
+}
+
+td.jukeboxlistvisitseven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #DEE7E7;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   right;
+}
+
+td.jukeboxlistactionsodd {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #DEE7E7;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+td.jukeboxlistactionseven {
+	font-family:    Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:   12px;
+	background-color:   #DEE7E7;
+	color:   Black;
+	vertical-align:   top;
+	text-align:   left;
+}
+
+TABLE.admin {
+  width: 100%;
+}
+
+/* tiki tabs */
+
+.tabmark {
+	display: inline;
+	font-size: 85%;
+	background-color: #dddddd;
+	border: 1px solid #666666;
+	margin: 0px;
+	margin-right: 5px;
+	padding: 1px 0px 1px 0px;
+	border-radius : 5px 5px 0 0;
+	-moz-border-radius : 5px 5px 0 0;  
+	-khtml-border-radius : 5px 5px 0 0;
+}
+.tabmark a { 
+	border-radius : 5px 5px 0 0;
+	-moz-border-radius : 5px 5px 0 0; 
+	-khtml-border-radius : 5px 5px 0 0;
+	border-bottom : 0; 
+	color: #666666;
+	font-weight: 700 !important;
+	padding: 1px 5px 1px 5px;
+}
+.tabmark a:active {
+	background-color: white;
+	color: red;
+}
+.tabmark a:hover {
+	color: black;
+	background-color: #CCCCCC;
+}
+.tabcontent {
+	z-index : 200;
+	position: relative;
+	border: 1px solid #999999;
+	padding: 6px 2px 2px 2px;
+	margin-bottom: 25px;
+	background-color: #eeeeee;
+	border-radius: 0px 4px 4px 4px;
+	-moz-border-radius: 0px 4px 4px 4px;
+	-khtml-border-radius: 0px 4px 4px 4px;
+	width: 100%;
+}
+
+
+/* trackers specific style */
+
+.statuson {
+  padding: 1px;
+  margin: 1px;
+  border: 1px inset #666666;
+  border-radius: 20px;
+  -moz-border-radius: 20px;
+  -khtml-border-radius: 20px;
+  vertical-align: middle;
+  background-color: #bbaa99;
+}
+.statusoff {
+  padding: 1px;
+  margin: 2px;
+  vertical-align: middle;
+}
+
+/**** coloration for c o d e plugin *****/
+.codelisting 
+{ font-family : monospace;
+padding : 2ex;
+background-color : #00CC99; /**green**/
+margin : 1ex;
+border : 1px dashed #adacaf; }
+
+/* Version Plugin Style */
+
+.versions {
+border-top : 1px dashed #999999;
+border-bottom : 1px dashed #999999;
+min-height : 142px;
+}
+.versionav {
+display : inline;
+float : right;
+border-left : 1px dashed #999999;
+}
+.versionav .button2 {
+display : block;
+border : 0;
+border-bottom : 1px dashed #999999;
+background-color : none;
+}
+.versionav .button2 .linkbut {
+border : 0;
+background-color : inherit;
+padding : 0 10px;
+}
+.versionav .highlight {
+background-color : #cccccc;
+font-weight : bold;
+}
+.versiontitle {
+font-weight : bold;
+border-bottom : 1px dashed #999999;
+border-left : 1px dashed #999999;
+padding : 2px 30px;
+float : right;
+}
+
+/* wiki diff styles */
+.diff div {border-top: 1px solid black}
+.diffheader{background-color:#00CC99; font-weight: bold;}
+.diffadded {background-color:#ccffcc;}
+.diffdeleted {background-color:#ffcccc;}
+.diffinldel {background-color:#ffcccc; text-decoration: line-through;}
+.diffbody{background-color:#FFFFCC;}
+.diffchar {color: red;}
+
+/**** coloration for QUOTE plugin *****/
+.quoteheader {
+margin: 10px 5px 0px 5px;
+padding: 4px;
+border-width: 1px 1px 0px 1px;
+border-style: solid;
+border-color: #A9B8C2;
+color: black;
+font-weight: bold;
+background-color: #A9B8C2;
+font-size: 8pt;
+}
+.quotebody {
+margin: 0px 5px 10px 5px;
+padding: 5px;
+border-color: #A9B8C2;
+border-width: 0px 1px 1px 1px;
+border-style: solid;
+color: black;
+background-color: #edeeef;
+}
+
+/* tiki-admin menu */
+div.admbox {
+  border: 2px solid #00CC99; height: 100px; width: 100px;
+  text-align: center; float: left; margin: 5px; font-size: 8pt;
+}
+div.admbox:hover { background-color: #E9ECEF; }
+div.admbox img { margin-top: 20px; }
+
+.tellafriend {text-align:right;}
+
+.highlight_word_0{color:black;background-color: #ffff66;}
+.highlight_word_1{color:black;background-color: #ff9999;}
+.highlight_word_2{color:black;background-color: #A0FFFF;}
+.highlight_word_3{color:black;background-color: #ff66ff;}
+.highlight_word_4{color:black;background-color: #99ff99;}
+
+/* Lists in modules */
+.box-data ol,
+.box-data ul {margin-left: -1em;padding-right: 1em}
+/* IE */
+* html .box-data ol {margin-left: 3em;}
+* html .box-data ul {margin-left: 2em;}
+/* IE7 */
+*:first-child+html .box-data ol,
+*:first-child+html .box-data ul {margin-left: 3em;}
+
+/* Module-flip img */
+
+h3.box-title {
+	position: relative;
+}
+
+.box a.flipmodtitle img {
+	display: block;
+	position: absolute;
+	right: 2px;
+	top: 2px;
+	border: 1px solid transparent;
+}
+
+a.flipmodtitle:hover img {
+	border: 1px solid #ffffcc !important;
+}
+/* end of css file */

@@ -1,0 +1,1 @@
+{tr}An object was added to category{/tr} {$categoryName}

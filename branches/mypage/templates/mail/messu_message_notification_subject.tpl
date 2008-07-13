@@ -1,0 +1,1 @@
+{tr}New message arrived from %s{/tr}
