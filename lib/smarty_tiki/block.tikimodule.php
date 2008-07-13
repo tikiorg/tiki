@@ -53,10 +53,6 @@ function smarty_block_tikimodule($params, $content, &$smarty) {
 	}
 	if (!isset($decorations) || $decorations != 'n') $decorations = 'y';
 
-	if (isset($prefs['user_flip_modules']) && ($prefs['user_flip_modules'] != 'module')) {
-		$flip = $prefs['user_flip_modules'];
-	}
-
 	$smarty->assign('module_overflow', $overflow);
 	$smarty->assign('module_title', $title);
 	$smarty->assign('module_name', $name);

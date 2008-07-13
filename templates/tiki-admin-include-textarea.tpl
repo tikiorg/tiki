@@ -1,10 +1,6 @@
-<div class="rbox" name="tip">
-	<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
-	<div class="rbox-data" name="tip">
-	  {tr}Text area (that apply throughout many features){/tr}
-        </div>
-</div>
-<br />
+{remarksbox type="tip" title="{tr}Tip{/tr}"}
+  {tr}Text area (that apply throughout many features){/tr}
+{/remarksbox}
 
 <div class="cbox">
   <div class="cbox-title">

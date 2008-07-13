@@ -13,7 +13,7 @@ if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== false) {
 // Otherwise you will be ok.
 $api_tiki       = 'adodb';
 $db_tiki     = 'mysql';
-$dbversion_tiki = '1.10';
+$dbversion_tiki = '2.0';
 $host_tiki   = 'localhost';
 $user_tiki   = 'root';
 $pass_tiki   = '';
@@ -109,7 +109,9 @@ href="http://doc.tikiwiki.org/">the documentation</a> for more information.</p>
 }
 if (preg_match('/^adodb$/i', $api_tiki)) {
 	TikiInit::prependIncludePath('lib/adodb');
-	TikiInit::prependIncludePath('lib/pear');
+	if (strpos(ini_get('include_path'),'lib/pear') !== 0) 
+		TikiInit::prependIncludePath('lib/pear');
+
 	#error_reporting (E_ALL);       # show any error messages triggered
 	define('ADODB_FORCE_NULLS', 1);
 	define('ADODB_ASSOC_CASE', 2);

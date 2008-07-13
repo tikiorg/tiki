@@ -116,11 +116,6 @@ hosting provider.  Normally Tiki tables won't conflict with other product names{
 	  </table>
 	  </form>
 <p>&nbsp;</p>
-<h2>{tr}Other Options{/tr}</h2>	  
-<ul>
-<li><a href="tiki-install.php?restart=1{if $multi}&amp;multi={$multi}{/if}{if $lang}&amp;lang={$lang}{/if}" class="link">{tr}Restart the installer{/tr}</a>.</li>
-</ul>
-<p>&nbsp;</p>
 	{else}
 	  {* we do have a database connection *}
 	  {if $dbdone eq 'n'}
@@ -197,12 +192,12 @@ hosting provider.  Normally Tiki tables won't conflict with other product names{
 <table class="normal" cellpadding="5">
 	<tr><th>{tr}To upgrade from{/tr}:</th><th>{tr}Use this script{/tr}:</th></tr>
 	<tr class="odd">
-		<td>1.10.x</td>
-		<td>tiki_1.9to1.10</td>
+		<td>2.0.x</td>
+		<td>tiki_1.9to2.0</td>
 	</tr>
 	<tr class="even">
 		<td>1.9.x or<br/>1.8.x</td>
-		<td>tiki_1.8to1.9<br />{tr}Then rerun the installer using tiki_1.9to1.10.{/tr}</td>
+		<td>tiki_1.8to1.9<br />{tr}Then rerun the installer using tiki_1.9to2.0.{/tr}</td>
 	</tr>
 	<tr class="odd">
 		<td>1.7.x</td>
@@ -221,8 +216,9 @@ hosting provider.  Normally Tiki tables won't conflict with other product names{
 <br />
 <h2>{tr}Other Options{/tr}</h2>
 <ul>
-	<li><a href="tiki-install.php?restart=1{if $multi}&amp;multi={$multi}{/if}{if $lang}&amp;lang={$lang}{/if}" class="link">{tr}Restart the installer{/tr}</a>.</li>
+	{if $tikidb_is20}
 	<li><a href="tiki-index.php" class="link">{tr}Do nothing and enter Tiki{/tr}</a>.</li>
+	{/if}
 	<li><a href="tiki-install.php?reset=yes{if $lang}&amp;lang={$lang}{/if}" class="link">{tr}Reset database connection settings{/tr}</a>.</li>
 </ul>
 <p>&nbsp;</p>
@@ -286,9 +282,6 @@ hosting provider.  Normally Tiki tables won't conflict with other product names{
 <h2>{tr}Important Information{/tr}</h2>
 {tr}Please read the following notes before entering Tikiwiki.{/tr}
 <p>&nbsp;</p>
-<h3><img src="pics/icons/information.png" alt="{tr}Note{/tr}" style="vertical-align:middle"/> {tr}Installation Script{/tr}</h3>
-{tr}This install script may be potentially harmful. We recommend that you disable the script before entering Tiki. To restore the script for reuse, follow the instructions in tiki-install.php.{/tr}
-<p>&nbsp;</p>
 <h3><img src="pics/icons/information.png" alt="{tr}Note{/tr}" style="vertical-align:middle"/> {tr}Memory{/tr}</h3>
 {tr}TikiWiki requires <strong>at least</strong> 16MB of PHP memory for script execution. Use the <strong>memory_limit</strong> key in your <strong>php.ini </strong> file (for example: memory_limit = 16M) and restart your webserver{/tr}.
 <p>{tr}Allocating too little memory will cause TikiWiki to display blank pages{/tr}.</p>
@@ -322,13 +315,14 @@ hosting provider.  Normally Tiki tables won't conflict with other product names{
 
 <p>&nbsp;</p>
 <h2>{tr}Entering TikiWiki{/tr}</h2>
-{if isset($smarty.post.scratch)}{tr}You have completed the TikiWiki installation{/tr}{else}{tr}You have completed the TikiWiki upgrade{/tr}{/if}. {tr}Use one of these links to continue{/tr}:
 <ul>
- <li><a href="tiki-install.php?kill=1" class="link">{tr}Disable the installation script and enter TikiWiki{/tr}.</a> <strong>({tr}Recommended{/tr})</strong></li>
- <li><a href="tiki-index.php" class="link">{tr}Enter TikiWiki <em>without</em> disabling the installation script{/tr}.</a></li>
- <li><a href="tiki-install.php?reset=yes{if $multi}&amp;multi={$multi}{/if}{if $lang}&amp;lang={$lang}{/if}" class="link">{tr}Reset database connection settings{/tr}.</a></li>
- <li><a href="tiki-install.php{if $multi}?multi={$multi}{/if}{if $lang}{if $multi}&amp;{else}?{/if}lang={$lang}{/if}" class="link">{tr}Go back and run another install/upgrade script{/tr}.</a> {tr}Do not use your browser's Back button.{/tr}</li>
- <li><a href="tiki-install.php?restart=1{if $multi}&amp;multi={$multi}{/if}{if $lang}&amp;lang={$lang}{/if}" class="link">{tr}Restart the installer{/tr}</a>.</li>
+ <li><a href="tiki-change_password.php?user=admin" class="link">{tr}Change the administrator password{/tr}</a>. {tr}Old password{/tr}: <em>admin</em></li>
+</ul>
+<p>&nbsp;</p>
+<h3>{tr}Continue in installer{/tr}</h3>
+<ul>
+ <li><a href="tiki-install.php{if $multi}?multi={$multi}{/if}{if $lang}{if $multi}&amp;{else}?{/if}lang={$lang}{/if}" class="link">{tr}Go back and run another install/upgrade script{/tr}</a>. {tr}Do not use your browser's Back button.{/tr}</li>
+ <li><a href="tiki-install.php?reset=yes{if $multi}&amp;multi={$multi}{/if}{if $lang}&amp;lang={$lang}{/if}" class="link">{tr}Reset database connection settings{/tr}</a>.</li>
 </ul>
 
 

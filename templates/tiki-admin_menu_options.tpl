@@ -48,9 +48,7 @@
 {/foreach}
 </select>
 {if $option_groups|@count ge '2'}
-<div class="rbox" name="tip">
-<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
-<div class="rbox-data" name="tip">{tr}Use Ctrl+Click to select multiple groups.{/tr}</div>
+{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple groups.{/tr}{/remarksbox}
 {/if}
 </td></tr>
 {if $prefs.feature_userlevels eq 'y'}
@@ -308,10 +306,7 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
 <br />
 <a name="import"></a>
 <h2>{tr}Import CSV data{/tr}</h2>
-<div class="rbox" name="tip">
-	<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>
-	<div class="rbox-data" name="tip">{tr}To add new options to the menu set the optionId field to 0. To remove an option set the remove field to 'y'.{/tr}</div>
-</div>
+{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}To add new options to the menu set the optionId field to 0. To remove an option set the remove field to 'y'.{/tr}{/remarksbox}
 <form action="tiki-admin_menu_options.php" method="post" enctype="multipart/form-data">
 <input type="hidden" name="menuId" value="{$menuId}" />
 {tr}File{/tr}: <input name="csvfile" type="file" />

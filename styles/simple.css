@@ -4,7 +4,7 @@
  * 'Simple' style for Tikiwiki - simple and easy to understand yet pleasant for your eye !
  * Enables font re-sizing in all browsers, aims to be standards compliant and WCAG 1.0 compatible (not yet).
  * Uses *lite - an ultimate source ordered layout solution by luci as a base.
- * Comments/suggestions e-mail to luci[-at-]sh.ground.cz
+ * Comments/suggestions e-mail to luci2008[-at-]ground.cz
  * For more info feel free to visit http://www.ground.cz/luci/css/lite
  * We also try to make better templates (*.tpl files in templates/styles/simple) towards xhtml 1.0 strict validity.
  * For proper CSS2 syntax and possible values see e.g. http://www.zvon.org/xxl/CSS2Reference/Output/
@@ -19,7 +19,7 @@
 
 body {
 	/* setting up the background. the color, then bg image and its form of repeating. */
-	background: #ffffff url("simple/bg.png") top center repeat-y;
+	background: #ffffff top center repeat-y;
 	/* shorthand for default font setting. size in percentage and font-family here */
 	font-family: "Trebuchet MS", "Luxi Sans", "Lucida Grande", Tahoma, helvetica, sans-serif;
 	font-size: 80% !important;/* the body font-size must be in percents to scale the fonts in IE properly */
@@ -101,6 +101,8 @@ a:hover {
 /* headings */
 h1 {
   font-size: 2em;
+  font-family: "Times New Roman", Times, serif;
+  letter-spacing: 0.1em;
   text-align: center;
 }
 
@@ -111,7 +113,8 @@ img {
 
 /* tables */
 table {
-  border: dashed 1px #69c;
+  background-color: #E1EBF0;
+  border: solid 1px #69c;
   font-size: 1em;
   width: 100%;
 }
@@ -138,6 +141,7 @@ table.email {
 table.email td.body {
   border: dashed 1px #69c;
 }
+td.button {text-align: right}
 
 /* Description on wiki pages */
 small {
@@ -157,6 +161,12 @@ hr {
   border-left: none;
   border-right: none;
   height: 1px;
+}
+
+/* Form fieldsets */
+fieldset {
+  padding: 0.2em;
+  margin-bottom: 0.2em;
 }
 
 /* All input elements */
@@ -346,14 +356,14 @@ ul, ol {
  * modules
  */
 .box {
- background-color: #def;
+ background-color: #E1EBF0;
  border: none;
  margin: 0.2em;
  overflow: hidden;
  padding: 0;
 }
 h3.box-title, div.box-title {
- background: #abcdef;
+ background: #9FC1CF;
  border-bottom: solid 0 #abcdef;
  overflow: hidden;
  text-align: center;
@@ -362,9 +372,9 @@ div.box-title table {
  width: 100%;
 }
 .box-data { /* data content of the module box */
- border-bottom: dashed 0.2em #abcdef;
- border-left: dashed 0.2em #abcdef;
- border-right: dashed 0.2em #abcdef;
+ border-bottom: solid 2px #abcdef;
+ border-left: solid 2px #abcdef;
+ border-right: solid 2px #abcdef;
  padding: 0.4em;
  padding-bottom: 0.6em;
 }
@@ -599,7 +609,7 @@ body.wikitext {
 }
 .wikitopline {
   border: 1px dashed #abcdef;
-  background-color: #f0f9ff;
+  background-color: #E1EBF0;
 }
 .wiki-edithelp {
   display: none;
@@ -959,4 +969,9 @@ h3.box-title {
 a.flipmodtitle:hover img {
 	border: 1px solid #f0f9ff !important;
 }
+
+/* floating blocks */
+.floatleft {float: left}
+.floatright {float: right}
+
 /* end of css file */

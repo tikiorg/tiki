@@ -7,7 +7,7 @@
 <rdf:Description
     rdf:about="{$uri}"
     dc:identifer="{$uri}"
-    dc:title="{if $blog_data.use_title eq 'y'}{$post_info.title} {tr}posted by{/tr} {$post_info.user} on {$post_info.created|tiki_short_datetime}{else}{$post_info.created|tiki_short_datetime} {tr}posted by{/tr} {$post_info.user}{/if}"
+    dc:title="{if $blog_data.use_title eq 'y'}{$post_info.title} {tr}Posted by{/tr} {$post_info.user} on {$post_info.created|tiki_short_datetime}{else}{$post_info.created|tiki_short_datetime} {tr}Posted by{/tr} {$post_info.user}{/if}"
     trackback:ping="{$uri2}" />
 </rdf:RDF>
 -->
@@ -33,9 +33,9 @@
 
 <div class="postinfo">
 {if $blog_data.use_title eq 'y'}
-	<small> {tr}posted by{/tr} {$post_info.user} {tr}on{/tr} {$post_info.created|tiki_short_datetime}</small>
+	<small> {tr}Posted by{/tr} {$post_info.user} {tr}on{/tr} {$post_info.created|tiki_short_datetime}</small>
 {else}
-	<small> {tr}posted by{/tr} {$post_info.user}</small>
+	<small> {tr}Posted by{/tr} {$post_info.user}</small>
 {/if}
 </div>
 <div stlye="float:right">
@@ -69,7 +69,7 @@
 {/if}
 </small>
 <a href='tiki-print_blog_post.php?postId={$postId}'><img src='pics/icons/printer.png' border='0' alt='{tr}Print{/tr}' title='{tr}Print{/tr}' width='16' height='16' /></a>
-<a href='tiki-send_blog_post.php?postId={$postId}'><img src='pics/icons/email.png' border='0' alt='{tr}email this post{/tr}' title='{tr}email this post{/tr}' width='16' height='16' /></a>
+<a href='tiki-send_blog_post.php?postId={$postId}'><img src='pics/icons/email.png' border='0' alt='{tr}Email This Post{/tr}' title='{tr}Email This Post{/tr}' width='16' height='16' /></a>
 </div>
 </div>
 {if $post_info.trackbacks_from_count > 0}

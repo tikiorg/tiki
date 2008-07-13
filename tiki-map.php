@@ -6,7 +6,9 @@ include_once('lib/map/map_query.php');
 
 if (!function_exists('ms_newMapObj')) {
   $msg = tra("You must first setup MapServer");
-  $access->display_error(basename(__FILE__), $msg);
+  $smarty->assign('msg',$msg);
+  $smarty->display('error.tpl');
+	die;
 }
 
 if ($prefs['feature_maps'] != 'y') {
@@ -44,9 +46,11 @@ $smarty->assign('tiki_p_map_edit',$tiki_p_map_edit);
 if (isset($_REQUEST['mapfile'])) {
   // Validate to prevent displaying any file
   if (strstr($_REQUEST["mapfile"], '..')) {
-	$smarty->assign('errortype', 401);
+		$smarty->assign('errortype', 401);
     $msg = tra("You do not have permission to do that");
-    $access->display_error(basename(__FILE__), $msg);
+    $smarty->assign('msg',$msg);
+  	$smarty->display('error.tpl');
+		die;
   }
   $mapfile = $_REQUEST['mapfile'];
 } else {
@@ -58,7 +62,9 @@ $map_path = preg_replace("/\/?$/","/",$prefs['map_path']);
 //checking the mapfile
 if (!is_file($map_path.$mapfile) || preg_match("/(\/\.)/", $map_path.$mapfile)) {
   $msg = tra("invalid mapfile name").$map_path.$mapfile;
-  $access->display_error(basename(__FILE__), $msg);
+  $smarty->assign('msg',$msg);
+  $smarty->display('error.tpl');
+	die;
 }
 		      
 // user defined error handling function to handle errors in loading mapfile
@@ -107,8 +113,10 @@ function userErrorHandler ($errno, $errmsg, $filename, $linenum, $vars)
      $msg.='<img src="pics/icons/wrench.png" border="0" alt="'.tra("edit").'" title="'.tra("edit").'" width="16" height="16" />';
      $msg.='</a>';
   }
-  
-  $access->display_error(basename(__FILE__), $msg);
+  $smarty->assign('msg',$msg);
+  $smarty->display('error.tpl');
+	die;
+
 }
 
 $old_error_handler = set_error_handler("userErrorHandler");

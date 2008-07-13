@@ -7,10 +7,6 @@
 // details.
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER['SCRIPT_NAME'],'tiki-setup.php')!=FALSE) {
-  header('location: index.php');
-  exit;
-}
 
 class TikiSetup extends TikiInit {
 
@@ -133,41 +129,39 @@ $errors
 							$install_link = '?multi='.urlencode($tikidomain);
 						}
             if (!TikiSetup::isWindows()) {
-                print "You may either chmod the directories above manually to 777, or run one of the sets of commands below.
-<b><a href='tiki-install.php$install_link'>Proceed to the Tiki installer</a></b> after you run the commands below.
+                            print "Your options:
 
-If you cannot become root, and are NOT part of the group $wwwgroup:
-    \$ bash
-    \$ cd $docroot
-    \$ chmod +x setup.sh
-    \$ ./setup.sh yourlogin yourgroup 02777
-    Tip: You can find your group using the command 'id'.
 
-If you cannot become root, but are a member of the group $wwwgroup:
-    \$ bash
-    \$ cd $docroot
-    \$ chmod +x setup.sh
-    \$ ./setup.sh mylogin $wwwgroup</i>
+	1- With FTP access:
+		a) Change the permissions (chmod) of the directories to 777.
+		b) Create any missing directories
+		c) <a href='tiki-install.php$install_link'>Execute the Tiki installer again</a> (Once you have executed these commands, this message will disappear!)
 
-If you can become root:
-    \$ bash
-    \$ cd $docroot
-    \$ chmod +x setup.sh
-    \$ su -c './setup.sh $wwwuser'
+	or
 
+	2- With shell (SSH) access, you can run the command below.
+
+		a) Run setup.sh and follow the instructions:
+			\$ bash
+			\$ cd $docroot
+			\$ chmod +x setup.sh
+			\$ ./setup.sh
+
+		The script will offer you options depending on your server configuration.
+
+		b) <a href='tiki-install.php$install_link'>Execute the Tiki installer again</a> (Once you have executed these commands, this message will disappear!)
+
+
+<hr>
 If you have problems accessing a directory, check the open_basedir entry in
 $PHP_CONFIG_FILE_PATH/php.ini or $httpd_conf.
 
-Once you have executed these commands, this message will disappear!
+<hr>
 
-Note: If you cannot become root, you will not be able to delete certain
-files created by apache, and will need to ask your system administrator
-to delete them for you if needed.
+<a href='http://doc.tikiwiki.org/Installation' target='_blank'>Consult the tikiwiki.org installation guide</a> if you need more help or <a href='http://tikiwiki.org/tiki-forums.php' target='_blank'>visit the forums</a>
 
-<a href='http://tikiwiki.org/InstallTiki' target='_blank'>Consult the tikiwiki.org installation guide</a> if you need more help.
-
-<b><a href='tiki-install.php'>Proceed to the Tiki installer</a></b> if you've completed the steps above.
 </pre></body></html>";
+
             }
 
             exit;

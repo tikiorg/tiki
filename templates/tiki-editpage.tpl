@@ -162,11 +162,11 @@ window.onload = timeIt;
 </div>
 {/if}
 
-{if $prefs.feature_wysiwyg eq 'y' and $prefs.wysiwyg_optional eq 'y'}
+{if $prefs.feature_wysiwyg eq 'y' and $prefs.wysiwyg_optional eq 'y' and !$preview and $staging_preview neq 'y' and !isset($hdr)}
   {if $wysiwyg ne 'y'}
-    <span class="button2">{self_link _class='linkbut' wysiwyg='y' onclick="needToConfirm = false;"}{tr}Use wysiwyg editor{/tr}{/self_link}</span>
+    <span class="button2" onclick="needToConfirm = false;">{self_link _class='linkbut' wysiwyg='y'}{tr}Use wysiwyg editor{/tr}{/self_link}</span>
   {else}
-    <span class="button2">{self_link _class='linkbut' wysiwyg='n' onclick="needToConfirm = false;"}{tr}Use normal editor{/tr}{/self_link}</span>
+    <span class="button2" onclick="needToConfirm = false;">{self_link _class='linkbut' wysiwyg='n'}{tr}Use normal editor{/tr}{/self_link}</span>
   {/if}
 {/if}
 
@@ -359,7 +359,7 @@ function searchrep() {
 <tr class="formcolor">
   <td>&nbsp;</td>
   <td>
-    <input type="submit" class="wikiaction" name="do_suck" value="{tr}Import{/tr}" />&nbsp;
+    <input type="submit" class="wikiaction" name="do_suck" value="{tr}Import{/tr}" onclick="needToConfirm=false;" />&nbsp;
     <input type="checkbox" name="parsehtml" {if $parsehtml eq 'y'}checked="checked"{/if}/>&nbsp;
     {tr}Try to convert HTML to wiki{/tr}
   </td>

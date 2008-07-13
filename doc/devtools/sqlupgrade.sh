@@ -10,7 +10,7 @@ FIND='/usr/bin/find'
 SED='/bin/sed'
 MYSQL='/usr/bin/mysql'
 
-UPGRADE="tiki_1.9to1.10.sql"
+UPGRADE="tiki_1.9to2.0.sql"
 if [ ! -d 'db' ]; then
 	echo "You must launch this script from your (multi)tiki root dir."
 	exit 0

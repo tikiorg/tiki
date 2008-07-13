@@ -6,7 +6,7 @@
 # ./convertsqls.sh domain.com/subdomain/
 
 
-VERSION="1.10"
+VERSION="2.0"
 
 if [ -z $1 ]; then
 	echo "Usage: ./convertsqls.sh <host> <tikiversion>"

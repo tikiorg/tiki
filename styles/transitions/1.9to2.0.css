@@ -304,11 +304,10 @@ td.third {
 /* Style for Site Identity */
 
 #sitesearchbar {
+	float: right;
         padding: 5px;
         text-align: right;
 }
-
-
 
 #site_report {
  text-align: center;
@@ -440,7 +439,7 @@ h3.box-title {
  * added July 2008 for wikiplugin_remarksbox etc */
 
 .rbox {
-	margin: 1em .3em;
+	margin: 1em .3em 2em .3em;
 }
 
 .rbox-title {

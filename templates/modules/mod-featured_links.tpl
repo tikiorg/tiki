@@ -7,7 +7,7 @@
     {section name=ix loop=$featuredLinks}
 	<li>
      {if $featuredLinks[ix].type eq 'f'}
-	 	<a class="linkmodule" href="tiki-featured_link.php?type={$featuredLinks[ix].type}&amp;url={$featuredLinks[ix].url|escape:"url"}"{$featuredLinks[ix].title}</a>
+	 	<a class="linkmodule" href="tiki-featured_link.php?type={$featuredLinks[ix].type}&amp;url={$featuredLinks[ix].url|escape:"url"}">{$featuredLinks[ix].title}</a>
      {else}
 	 	<a class="linkmodule" {if $featuredLinks[ix].type eq 'n'}target='_blank'{/if} href="{$featuredLinks[ix].url}">{$featuredLinks[ix].title}</a>
 	{/if}

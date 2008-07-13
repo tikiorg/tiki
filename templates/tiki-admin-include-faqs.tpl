@@ -1,9 +1,5 @@
 
-<div class="rbox" name="tip">
-<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
-<div class="rbox-data" name="tip">{tr}To add/remove FAQs, look for "Admin FAQs" under "FAQs" on the application menu, or{/tr} <a class="rbox-link" href="tiki-list_faqs.php">{tr}Click Here{/tr}</a>.</div>
-</div>
-<br />
+{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}To add/remove FAQs, look for "Admin FAQs" under "FAQs" on the application menu, or{/tr} <a class="rbox-link" href="tiki-list_faqs.php">{tr}Click Here{/tr}</a>.{/remarksbox}
 
 <div class="cbox">
   <div class="cbox-title">

@@ -110,15 +110,10 @@
 </div>
 
 {if $filegals_manager eq 'y'}
-<div class="rbox" name="tip">
-  <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>
-  <div class="rbox-data" name="tip">{tr}Be carefull to set the right permissions on the files you link to{/tr}.</div>
-</div>
+{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Be careful to set the right permissions on the files you link to{/tr}.{/remarksbox}
 {/if}
 {if isset($fileChangedMessage) and $fileChangedMessage neq ''}
-<div class="rbox" name="tip">
-  <div class="rbox-title" name="note">{tr}Note{/tr}</div>
-  <div class="rbox-data" name="note">
+  {remarksbox type="note" title="{tr}Note{/tr}"}
     {$fileChangedMessage}
     <form method="post" action="{$smarty.server.PHP_SELF}{if $filegals_manager eq 'y'}?filegals_manager=y{/if}">
       <input type="hidden" name="galleryId" value="{$galleryId|escape}" />
@@ -126,8 +121,7 @@
       {tr}Your comment{/tr} ({tr}optional{/tr}): <input type="text" name="comment" size="40" />
       {icon _id='accept' _tag='input_image'}
     </form>
-  </div>
-</div>
+  {/remarksbox}
 {/if}
 
 <div class="navbar" align="right">
@@ -144,10 +138,10 @@
 
 {foreach from=$fgal_diff item=fgp_prop key=fgp_name name=change}
 {if $smarty.foreach.change.first}
-<div class="rbox" name="tip">
-<div class="rbox-title" name="tip">{tr}Modifications{/tr}</div>
+<div class="rbox tip">
+<div class="rbox-title tip">{tr}Modifications{/tr}</div>
 {/if}
-<div class="rbox-data" name="warning">{tr}Property <b>{$fgp_name}</b> Changed{/tr}</div>
+<div class="rbox-data warning">{tr}Property <b>{$fgp_name}</b> Changed{/tr}</div>
 {if $smarty.foreach.change.last}
 </div>
 {/if}

@@ -50,7 +50,7 @@
             <span class="posthead">
               {if $use_title eq 'y'}
                 <small> 
-                  {tr}posted by{/tr} {$listpages[ix].user|userlink}  
+                  {tr}Posted by{/tr} {$listpages[ix].user|userlink}  
                   {if $show_avatar eq 'y'}
                     {$listpages[ix].avatar}
                   {/if} 
@@ -58,7 +58,7 @@
                 </small>
               {else}
                 <small> 
-                  {tr}posted by{/tr} {$listpages[ix].user} 
+                  {tr}Posted by{/tr} {$listpages[ix].user} 
                   {if $show_avatar eq 'y'}
                     {$listpages[ix].avatar}
                   {/if}
@@ -134,7 +134,7 @@
 
           <td style='text-align:right'>
             <a href='tiki-print_blog_post.php?postId={$listpages[ix].postId}'>{icon _id='printer' alt='{tr}Print{/tr}'}</a>
-            <a href='tiki-send_blog_post.php?postId={$listpages[ix].postId}'>{icon _id='email' alt='{tr}email this post{/tr}'}</a>
+            <a href='tiki-send_blog_post.php?postId={$listpages[ix].postId}'>{icon _id='email' alt='{tr}Email This Post{/tr}'}</a>
           </td>
         </tr>
       </table>

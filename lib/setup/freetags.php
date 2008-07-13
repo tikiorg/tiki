@@ -7,10 +7,7 @@
 // details.
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER['SCRIPT_NAME'],'tiki-setup.php')!=FALSE) {
-  header('location: index.php');
-  exit;
-}
+$access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
 if ( isset($section) and isset($sections[$section])) {
 	include_once ('lib/freetag/freetaglib.php');
@@ -24,25 +21,25 @@ if ( isset($section) and isset($sections[$section])) {
 			$smarty->assign('freetag_error', tra('You have mistyped the anti-bot verification code; please try again.'));
 			$smarty->assign_by_ref('freetag_msg', $_POST['addtags']);
 		} elseif (isset($here['itemkey']) and isset($_REQUEST[$here['itemkey']])) {
-			$freetaglib->tag_object($userid, $_REQUEST[$here['itemkey']], "$section ".$_REQUEST[$here['key']], $_POST['addtags']);
+			$freetaglib->tag_object($userid, $_REQUEST[$here['itemkey']], sprintf($here['itemObjectType'], $_REQUEST[$here['key']]), $_POST['addtags']);
 		} elseif (isset($here['key']) and isset($_REQUEST[$here['key']])) {
-			$freetaglib->tag_object($userid, $_REQUEST[$here['key']], $section, $_POST['addtags']);
+			$freetaglib->tag_object($userid, $_REQUEST[$here['key']], $here['objectType'], $_POST['addtags']);
 		}
 	}
 	if (($tiki_p_admin == 'y' || $tiki_p_unassign_freetags == 'y') && isset($_REQUEST['delTag'])) {
 		if (isset($here['itemkey']) and isset($_REQUEST[$here['itemkey']])) {
-			$freetaglib->delete_object_tag($_REQUEST[$here['itemkey']], $section, $_REQUEST['delTag']);
+			$freetaglib->delete_object_tag($_REQUEST[$here['itemkey']], sprintf($here['itemObjectType'], $_REQUEST[$here['key']]), $_REQUEST['delTag']);
 		} elseif (isset($here['key']) and isset($_REQUEST[$here['key']])) {
-			$freetaglib->delete_object_tag($_REQUEST[$here['key']], $section, $_REQUEST['delTag']);
+			$freetaglib->delete_object_tag($_REQUEST[$here['key']], $here['objectType'], $_REQUEST['delTag']);
 		}
 		$url = $tikilib->httpPrefix().str_replace('&delTag='.urlencode($_REQUEST['delTag']), '', $_SERVER['REQUEST_URI']);
 		header("Location: $url");
 		die;
 	}
 	if (isset($here['itemkey']) and isset($_REQUEST[$here['itemkey']])) {
-		$tags = $freetaglib->get_tags_on_object($_REQUEST[$here['itemkey']], "$section ".$_REQUEST[$here['key']]);
+		$tags = $freetaglib->get_tags_on_object($_REQUEST[$here['itemkey']], sprintf($here['itemObjectType'], $_REQUEST[$here['key']]));
 	} elseif (isset($here['key']) and isset($_REQUEST[$here['key']])) {
-		$tags = $freetaglib->get_tags_on_object($_REQUEST[$here['key']], $section);
+		$tags = $freetaglib->get_tags_on_object($_REQUEST[$here['key']], $here['objectType']);
 	} else {
 		$tags = array();
 	}

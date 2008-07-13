@@ -33,6 +33,7 @@ class UsersLib extends TikiLib {
     var $groupperm_cache;
     var $groupinclude_cache;
     var $userobjectperm_cache; // used to cache queries in object_has_one_permission()
+    var $get_object_permissions_for_user_cache;
 
     function UsersLib($db) {
 	$this->TikiLib($db);
@@ -41,6 +42,7 @@ class UsersLib extends TikiLib {
 	$this->usergroups_cache = array();
 	$this->groupperm_cache = array(array());
 	$this->groupinclude_cache = array();
+    $this->get_object_permissions_for_user_cache = array();
     }
 
     function set_admin_pass($pass) {
@@ -163,6 +165,11 @@ class UsersLib extends TikiLib {
 	return $ret;
     }
 	function get_object_permissions_for_user ($objectId, $objectType, $user) {
+		$params = md5($objectId . $objectType . $user);
+		//Check the cache for these parameters
+		if (array_key_exists($params, $this->get_object_permissions_for_user_cache)) {
+			return $this->get_object_permissions_for_user_cache[$params];
+		}
 		$objectId = md5($objectType . strtolower($objectId));
 		$bindvars = array($objectId, $objectType);
 		$groups = $this->get_user_groups($user);
@@ -173,6 +180,8 @@ class UsersLib extends TikiLib {
 		while ($res = $result->fetchRow()) {
 			$ret[] = $res['permName'];
 		}
+		//Cache the result for this set of parameters
+		$this->get_object_permissions_for_user_cache[$params] = $ret;
 		return $ret;
 	}
 

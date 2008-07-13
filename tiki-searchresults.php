@@ -11,7 +11,7 @@ require_once ('tiki-setup.php');
 require_once('lib/ajax/ajaxlib.php');
 
 require_once ('lib/searchlib.php'); 
-$auto_query_args = array('initial','maxRecords','sort_mode','find','lang');
+$auto_query_args = array('initial','maxRecords','sort_mode','find','lang','highlight','where', 'words');
 $smarty->assign('headtitle',tra('Search results'));
 
 $searchlib = &new SearchLib($tikilib->db);

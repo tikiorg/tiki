@@ -26,9 +26,9 @@
 <span class="posthead">
 {if $blog_data.use_title eq 'y'}
 	{$post_info.title}<br />
-	<small> {tr}posted by{/tr} {$post_info.user} on {$post_info.created|tiki_short_datetime}</small>
+	<small> {tr}Posted by{/tr} {$post_info.user} on {$post_info.created|tiki_short_datetime}</small>
 {else}
-	{$post_info.created|tiki_short_datetime}<small> {tr}posted by{/tr} {$post_info.user}</small>
+	{$post_info.created|tiki_short_datetime}<small> {tr}Posted by{/tr} {$post_info.user}</small>
 {/if}
 </span>
 </td><td align="right">
@@ -53,6 +53,6 @@
 </small>
 </td><td style='text-align:right'>
 <a href='tiki-print_blog_post.php?postId={$postId}'>{icon _id='printer' alt='{tr}Print{/tr}'}</a>
-<a href='tiki-send_blog_post.php?postId={$postId}'>{icon _id='email' alt='{tr}email this post{/tr}'}</a>
+<a href='tiki-send_blog_post.php?postId={$postId}'>{icon _id='email' alt='{tr}Email This Post{/tr}'}</a>
 </td></tr></table>
 </div>

@@ -141,7 +141,7 @@ class TikiAccessLib extends TikiLib {
      */
     function check_script($scriptname, $page) {
       global $smarty, $prefs;
-      if (strpos($scriptname,$page) !== FALSE) {
+      if (basename($scriptname) == $page) {
       	if ($prefs['feature_redirect_on_error'] == 'y') {
       		$this->redirect(''.$prefs['tikiIndex']);
       		die;

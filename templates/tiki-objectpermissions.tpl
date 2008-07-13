@@ -16,12 +16,9 @@
 	<legend class="heading"><a href="#"><span>{tr}View Permissions{/tr}</span></a></legend>
 {/if}
 {if $filegals_manager ne 'y'}
-<div class="rbox" name="warning">
-<div class="rbox-title" name="warning">{tr}Warning{/tr}</div>  
-<div class="rbox-data" name="warning">{tr}These permissions override any global permissions or category permissions affecting this object.{/tr}<br />
+{remarksbox type="warning" title="{tr}Warning{/tr}"}{tr}These permissions override any global permissions or category permissions affecting this object.{/tr}<br />
 {if $tiki_p_admin eq 'y'}{tr}To edit global permissions <a class="rbox-link" href="tiki-admingroups.php">click here</a>.{/tr}{/if}
-</div>
-</div>
+{/remarksbox}
 {/if}
 <h2>{tr}Current permissions for this object{/tr}</h2>
 <table class="normal">
@@ -44,11 +41,8 @@
 
 <h2>{tr}Current permissions for categories that this object belongs to{/tr}:</h2>
 {if !empty($page_perms) && !empty($categ_perms)}
-<div class="rbox" name="warning">
-<div class="rbox-title" name="warning">{tr}Warning{/tr}</div>  
-<div class="rbox-data" name="warning">{tr}These permissions do not apply. Special permissions apply.{/tr}
-</div>
-</div>
+{remarksbox type="warning" title="{tr}Warning{/tr}"}{tr}These permissions do not apply. Special permissions apply.{/tr}
+{/remarksbox}
 {/if}
 <table class="normal">
 <tr>
@@ -74,16 +68,13 @@
 
 <fieldset {if $prefs.feature_tabs eq 'y'}id="content2"  class="tabcontent" style="clear:both;display:block; margin-left:0;"{/if}>
 {if $prefs.feature_tabs neq 'y'}
-	<legend class="heading"><a href="#"><span>{tr}Edit Permission{/tr}</span></a></legend>
+	<legend class="heading"><a href="#"><span>{tr}Edit Permissions{/tr}</span></a></legend>
 {/if}
 <form method="post" action="tiki-objectpermissions.php{if $filegals_manager eq 'y'}?filegals_manager=y{/if}">
 {if $filegals_manager ne 'y'}
-<div class="rbox" name="warning">
-<div class="rbox-title" name="warning">{tr}Warning{/tr}</div>  
-<div class="rbox-data" name="warning">{tr}These permissions override any global permissions or category permissions affecting this object.{/tr}<br />
+{remarksbox type="warning" title="{tr}Warning{/tr}"}{tr}These permissions override any global permissions or category permissions affecting this object.{/tr}<br />
 {if $tiki_p_admin eq 'y'}{tr}To edit global permissions <a class="rbox-link" href="tiki-admingroups.php">click here</a>.{/tr}{/if}
-</div>
-</div>
+{/remarksbox}
 {/if}
 <h2>{tr}Current permissions for this object{/tr}</h2>
 <table class="normal">
@@ -148,7 +139,13 @@
 {cycle print=false values="even,odd"}
 {section name=prm loop=$perms}
 <tr class="{cycle advance=true}">
-  <td class="{cycle advance=false}" title="{$perms[prm].permName|escape}"><input type="checkbox" name="perm[]" value="{$perms[prm].permName|escape}" title="{$perms[prm].permName|escape}"/></td><td class="{cycle advance=false}">{$perms[prm].permName|escape}<br /><i>{tr}{$perms[prm].permDesc|escape}{/tr}</i></td>
+  <td class="{cycle advance=false}" title="{$perms[prm].permName|escape}">
+    <input type="checkbox" name="perm[]" value="{$perms[prm].permName|escape}" title="{$perms[prm].permName|escape}"/>
+  </td>
+  <td class="{cycle advance=false}">
+    {tr}{$perms[prm].permDesc|escape}{/tr}
+    <div class="subcomment">{$perms[prm].permName|escape}</div>
+  </td>
 	</tr>
 {/section}
 </table></td>

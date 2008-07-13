@@ -22,7 +22,7 @@
     {/section}
 </ul>
     <form name="bookmarks" action="{$ownurl}" method="post">
-    <input style="font-size: 9px;" type="submit" name="bookmark_mark" value="{tr}mark{/tr}" />
+    <input style="font-size: 9px;" type="submit" name="bookmark_mark" value="{tr}Mark{/tr}" />
     <input style="font-size: 9px;" type="text" size="8" name="bookmark_urlname" />
     <input style="font-size: 9px;" type="submit" name="bookmark_create_folder" value="{tr}New{/tr}" />
     </form>

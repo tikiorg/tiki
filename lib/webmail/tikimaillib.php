@@ -2,6 +2,8 @@
 /** Extension htmlMimeMail
   * set some default params (mainly utf8 as titi is utf8) + use the mailCharset pref from a user
   */
+global $access;
+$access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 include_once("lib/webmail/htmlMimeMail.php");
 
 class TikiMail extends HtmlMimeMail {

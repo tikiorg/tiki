@@ -8,6 +8,10 @@
 $local_php = 'db/local.php';
 if (is_file($local_php)) {
     require_once($local_php);
+	
+	if( $dbversion_tiki == '1.10' ) {
+		$dbversion_tiki = '2.0';
+	}
 }
 
 class TikiDB {

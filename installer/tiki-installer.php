@@ -9,11 +9,6 @@
 // To (re-)enable this script the file has to be named tiki-installer.php and the following four lines
 // must start with two '/' and 'stopinstall:'. (Make sure there are no spaces inbetween // and stopinstall: !)
 
-//stopinstall: header ("Status: 410 Gone"); /* PHP3 */
-//stopinstall: header ("HTTP/1.0 410 Gone"); /* PHP4 */
-//stopinstall: header ('location: index.php');
-//stopinstall: die('gone');
-
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -58,7 +53,7 @@ function has_tiki_db( $dbTiki )
 	return in_array( 'users_users', list_tables( $dbTiki ) );
 }
 
-function has_tiki_db_110( $dbTiki )
+function has_tiki_db_20( $dbTiki )
 {
 	return in_array( 'tiki_pages_translation_bits', list_tables( $dbTiki ) );
 }
@@ -130,7 +125,7 @@ function process_sql_file($file,$db_tiki) {
 	$smarty->assign_by_ref('failedcommands', $failedcommands);
 }
 
-function write_local_php($dbb_tiki,$host_tiki,$user_tiki,$pass_tiki,$dbs_tiki,$dbversion_tiki="1.10") {
+function write_local_php($dbb_tiki,$host_tiki,$user_tiki,$pass_tiki,$dbs_tiki,$dbversion_tiki="2.0") {
 	global $local;
 	global $db_tiki;
 	if ($dbs_tiki and $user_tiki) {
@@ -462,7 +457,7 @@ function load_sql_scripts() {
 	//echo $dbversion_tiki . "---";
 
 	while ($file = readdir($h)) {
-        	if (preg_match('#1\..*to1\..*\.sql$#',$file) || preg_match('#secdb#',$file)) {
+        	if (preg_match('#1\..*to.*\.sql$#',$file) || preg_match('#secdb#',$file)) {
                 	$files[] = $file;
         	}
 	}
@@ -471,42 +466,6 @@ function load_sql_scripts() {
 	sort($files);
 	reset($files);
 	$smarty->assign('files', $files);
-}
-
-function check_password() {
-	global $logged, $dbTiki, $multi;
-
-	$logged = 'n';
-	$pass = $_REQUEST['pass'];
-	$query = "select email from users_users where lower(login) = 'admin'";
-	$result = $dbTiki->Execute($query);
-
-	if (!$result->numRows()) {
-		$logged = 'n';
-		$_SESSION["install-logged-$multi"] = '';
-		return array('num'=>1,'mes'=>"No admin account set.");
-	} else {
-		$res = $result->fetchRow();
-		$hash[] = md5('admin' . $pass . $res['email']);
-		$hash[] = md5('admin' . $pass);
-		$hash[] = md5($pass);
-		// next verify the password with 2 hashes methods, the old one (pass???)) and the new one (login.pass;email)
-		$query = "select login, hash from users_users where lower(login) = 'admin'";
-		$result = $dbTiki->Execute($query);
-
-		$res = $result->fetchRow();
-		if ($res) {
-			$hash[] = crypt($pass, $res['hash']);
-		}
-
-		if ($res  && in_array($res['hash'], $hash)) {
-			$logged = 'y';
-			$_SESSION["install-logged-$multi"] = 'y';
-			return array('num'=>0,'mes'=>"admin logged in.");
-		} else {
-			return array('num'=>1,'mes'=>"Incorrect password");
-		}
-	}
 }
 
 // from PHP manual (ini-get function example)
@@ -558,6 +517,8 @@ if ($virtuals and isset($_REQUEST['multi']) and in_array($_REQUEST['multi'],$vir
 	$multi = '';
 }
 
+$_SESSION["install-logged-$multi"] = 'y';
+
 // Init smarty
 $smarty = new Smarty_Tikiwiki();
 $smarty->load_filter('pre', 'tr');
@@ -570,7 +531,7 @@ if ($language != 'en')
 	$smarty->assign('lang', $language);
 
 // Tiki Database schema version
-$tiki_version = '1.10';
+$tiki_version = '2.0';
 $smarty->assign('tiki_version', $tiki_version);
 
 // Available DB Servers
@@ -585,7 +546,6 @@ if ( function_exists('mssql_connect') ) $dbservers['mssql'] = 'MSSQL';
 $smarty->assign_by_ref('dbservers', $dbservers);
 
 $errors = '';
-$logged = false;
 
 // changed to path_translated 28/4/04 by damian
 // for IIS compatibilty
@@ -637,9 +597,10 @@ if (!file_exists($local)) {
 	if (!isset($db_tiki)) {
 		//upgrade from 1.7.X
 		//$db_tiki="mysql";
-		//upgrade from 1.10 : if no db is specified, use the first db that this php installation can handle
+		//upgrade from 2.0 : if no db is specified, use the first db that this php installation can handle
 		$db_tiki = reset($dbservers);
 		write_local_php($db_tiki,$host_tiki,$user_tiki,$pass_tiki,$dbs_tiki);
+		$_SESSION[$cookie_name] = 'admin';
 	}
 
 	if ($db_tiki == 'sybase') {
@@ -661,9 +622,6 @@ if (!file_exists($local)) {
 			$smarty->assign('dbcon', 'n');
 			$tikifeedback[] = array('num'=>1,'mes'=>$dbTiki->ErrorMsg());
 		} else {
-			$smarty->assign( 'tikidb_created',  has_tiki_db( $dbTiki ) );
-			$smarty->assign( 'tikidb_is110',  has_tiki_db_110( $dbTiki ) );
-
 			$dbcon = true;
 			if (!isset($_REQUEST['reset'])) {
 				$smarty->assign('dbcon', 'y');
@@ -675,10 +633,6 @@ if (!file_exists($local)) {
 		}
 	}
 }
-
-
-// next lines checks if there is a admin account in the db
-$admin_acc = 'n';
 
 if ($dbcon) {
 	has_admin();
@@ -719,11 +673,16 @@ if ((!$dbcon or (isset($_REQUEST['resetdb']) and $_REQUEST['resetdb']=='y' &&
 		} else {
 			$dbcon = true;
 			$smarty->assign('dbcon', 'y');
-			$smarty->assign( 'tikidb_created',  has_tiki_db( $dbTiki ) );
-			$smarty->assign( 'tikidb_is110',  has_tiki_db_110( $dbTiki ) );
 			write_local_php($_REQUEST['db'], $_REQUEST['host'], $_REQUEST['user'], $_REQUEST['pass'], $_REQUEST['name']);
+			$_SESSION[$cookie_name] = 'admin';
 		}
 	}
+}
+
+if( $dbcon )
+{
+	$smarty->assign( 'tikidb_created',  has_tiki_db( $dbTiki ) );
+	$smarty->assign( 'tikidb_is20',  has_tiki_db_20( $dbTiki ) );
 }
 
 if ( isset($_REQUEST['restart']) ) $_SESSION["install-logged-$multi"] = '';
@@ -734,24 +693,7 @@ load_profiles();
 //Load SQL scripts
 load_sql_scripts();
 
-// If no admin account then allow the creation of an admin account
-if ($admin_acc == 'n' && isset($_REQUEST['createadmin'])) {
-	if ($_REQUEST['pass1'] == $_REQUEST['pass2']) {
-		$hash = md5($_REQUEST['pass1']);
-		//$query = "delete from users_users where login='admin'";
-		//$dbTiki->Execute($query);
-		$pass1 = addslashes($_REQUEST['pass1']);
-		$query = "insert into users_users(login,password,hash) values('admin','$pass1','$hash')";
-		$dbTiki->Execute($query);
-		$admin_acc = 'y';
-	}
-}
-
 $smarty->assign('admin_acc', $admin_acc);
-
-// Since we do have an admin account the user must login to
-// use the install script
-if ( isset($_REQUEST['login']) ) $tikifeedback[] = check_password();
 
 // If no admin account then we are logged
 if ( $admin_acc == 'n' ) $_SESSION["install-logged-$multi"] = 'y';
@@ -766,16 +708,15 @@ if ( is_object($dbTiki) && isset($_SESSION["install-logged-$multi"]) && $_SESSIO
 		process_sql_file('tiki-'.$dbversion_tiki.'-'.$db_tiki.'.sql', $db_tiki);
 		$smarty->assign('dbdone', 'y');
 		if ( isset($_REQUEST['profile']) ) process_sql_file('profiles/'.$_REQUEST['profile'], $db_tiki);
+		$_SESSION[$cookie_name] = 'admin';
 	}
 
 	if ( isset($_REQUEST['update']) ) {
-		$is19 = ! has_tiki_db_110($dbTiki);
+		$is19 = ! has_tiki_db_20($dbTiki);
 		process_sql_file($_REQUEST['file'], $db_tiki);
 
-		if( $_REQUEST['file'] == 'tiki_1.9to1.10.sql' && $is19 ) {
-			$dbTiki->Execute( "INSERT INTO users_grouppermissions (groupName, permName, value) SELECT groupName, 'tiki_p_edit_categorized', '' FROM users_grouppermissions WHERE permName = 'tiki_p_view_categories'" );
+		if( $_REQUEST['file'] == 'tiki_1.9to2.0.sql' && $is19 ) {
 			$dbTiki->Execute( "INSERT INTO users_grouppermissions (groupName, permName, value) SELECT groupName, 'tiki_p_view_categorized', '' FROM users_grouppermissions WHERE permName = 'tiki_p_view_categories'" );
-			$dbTiki->Execute( "INSERT INTO users_objectpermissions (groupName, permName, objectType, objectId) SELECT groupName, 'tiki_p_edit_categorized', objectType, objectId FROM users_objectpermissions WHERE permName = 'tiki_p_view_categories'" );
 			$dbTiki->Execute( "INSERT INTO users_objectpermissions (groupName, permName, objectType, objectId) SELECT groupName, 'tiki_p_view_categorized', objectType, objectId FROM users_objectpermissions WHERE permName = 'tiki_p_view_categories'" );
 		}
 		$smarty->assign('dbdone', 'y');

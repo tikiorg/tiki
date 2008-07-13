@@ -105,7 +105,7 @@ function taginsert(area_name,tagid)
   </div>
   {/if}
 
-  {if $prefs.feature_template_zoom eq 'y'}
+  {if $prefs.feature_template_zoom eq 'y' && $zoom_enable eq 'y'}
   <div class='helptool-zoom'
   {if (!isset($zoom_mode) || $zoom_mode eq 'n') and $prefs.quicktags_over_textarea neq 'y'}
 	style="float: left"

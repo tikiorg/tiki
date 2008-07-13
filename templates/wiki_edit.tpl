@@ -17,7 +17,7 @@
 		{if $zoom_mode eq 'n'}
 		<div style='float:left; margin-right:5px'>{include file='textareasize.tpl' area_name='editwiki' formId='editpageform' ToolbarSet='Tiki'}</div>
 		{/if}
-		{include file=tiki-edit_help_tool.tpl area_name='editwiki'}
+		{include file=tiki-edit_help_tool.tpl area_name='editwiki' zoom_enable='y}
 	</div>
 	{if $zoom_mode eq 'n' and $prefs.quicktags_over_textarea neq 'y'}</td><td style="border:0;">{/if}
 	<textarea id='editwiki' class='wikiedit' name='edit' rows='{$rows}' cols='{$cols}' style='width:99%'>{$pagedata|escape:'htmlall':'UTF-8'}</textarea>

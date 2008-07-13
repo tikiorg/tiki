@@ -20,7 +20,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 require_once("Date.php");
 class TikiDate extends Date {
 	var $trad = array("January","February","March","April","May","June","July","August","September","October","November","December","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday","Mon","Tue","Wed","Thu","Fri","Sat","Sun","of");
-
+	var $translated_trad = array();
+	
 	/**
 	 * Default constructor
 	 */
@@ -42,11 +43,16 @@ class TikiDate extends Date {
 		// For each strings in $words array...
 		$return = '';
 		foreach ( $words as $w ) {
-			if ( in_array($w, $this->trad) ) {
-				// ... either we have a date element that needs a translation
-				$return .= tra($w,'',true);
+			if (array_key_exists($w, $this->translated_trad)) {
+                // ... we've loaded this previously
+				$return .= $this->translated_trad["$w"];
+			} else if ( in_array($w, $this->trad) ) {
+				// ... or we have a date element that needs a translation
+				$t = tra($w,'',true);
+				$this->translated_trad["$w"] = $t;
+				$return .= $t;
 			} else {
-				// ... either we have a string that should not be translated
+				// ... or we have a string that should not be translated
 				$return .= $w;
 			}
 		}

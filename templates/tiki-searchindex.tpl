@@ -74,7 +74,7 @@
 </div>
 
 {* PAGINATION *}
-{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links} 
+{pagination_links cant=$cant_results step=$maxRecords offset=$offset}{/pagination_links} 
 {* END OF PAGINATION *}
 
 {/if}

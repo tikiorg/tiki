@@ -125,10 +125,7 @@
 </div>
 
 {if isset($saved_msg) && $saved_msg neq ''}
-<div class="rbox" name="tip">
-  <div class="rbox-title" name="note">{tr}Note{/tr}</div>
-  <div class="rbox-data" name="note">{$saved_msg}</div>
-</div>
+{remarksbox type="note" title="{tr}Note{/tr}"}{$saved_msg}{/remarksbox}
 {/if}
 
 <div class="navbar" style="clear: both; text-align: right">

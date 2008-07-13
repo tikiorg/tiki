@@ -9,10 +9,7 @@
 // RULE1: $prefs does not contain serialized values. Only the database contains serialized values.
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER['SCRIPT_NAME'],'tiki-setup.php')!=FALSE) {
-  header('location: index.php');
-  exit;
-}
+$access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
 // Initialize prefs for which we want to use the site value (they will be prefixed with 'site_')
 // ( this is also used in tikilib, not only when reloading prefs )
@@ -841,10 +838,6 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['feature_copyright']='n';
 	$prefs['feature_multimedia']='n';
 
-	# mypage
-	$prefs['feature_mypage'] = 'n';
-	$prefs['feature_mypage_mandatory_category'] = -1;
-
 	# swffix
 	$prefs['feature_swffix'] = 'n';
 
@@ -876,6 +869,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['error_reporting_adminonly'] = 'y';
 	$prefs['error_reporting_level'] = 0;
 	$prefs['smarty_notice_reporting'] = 'n';
+	$prefs['smarty_security'] = 'n';
 	$prefs['feature_ajax'] = 'n';
 	$prefs['feature_antibot'] = 'n';
 	$prefs['feature_banners'] = 'n';
@@ -1035,7 +1029,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['wiki_3d_adjust_camera'] = '';
 	$prefs['wiki_3d_autoload'] = '';
 	$prefs['feature_sefurl'] = 'n';
-	$prefs['pref_syntax'] = '1.9';
+	$prefs['pref_syntax'] = '2.0';
 	$prefs['feature_mootools'] = 'n';
 	$prefs['javascript_enabled'] = 'n';
 	$prefs['feature_comments_post_as_anonymous'] = 'n';
@@ -1046,6 +1040,9 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 
 	# Tiki Profiles
 	$prefs['profile_sources'] = 'http://profiles.tikiwiki.org/profiles';
+
+	# Minichat
+	$prefs['feature_minichat'] = 'n';
 
 	// Special default values
 

@@ -11,10 +11,6 @@
 
 // This script may only be included - so its better to die if called directly.
 // Should generally be instatiated from tiki-setup.php
-if (strpos($_SERVER['SCRIPT_NAME'],'tiki-setup.php')!=FALSE) {
-  header('location: index.php');
-  exit;
-}
 
 class TWVersion {
 	var $branch;		// Development cycle
@@ -34,7 +30,7 @@ class TWVersion {
 		$this->branch 	= 'unstable';
 
 		// Set everything else, including defaults.
-		$this->version 	= '1.10.0b1';
+		$this->version 	= '2.0RC1';
 		$this->star		= 'Arcturus';
 		$this->release 	= $this->version;
 		$this->releases	= array();
@@ -43,6 +39,68 @@ class TWVersion {
 
 		// Check for CVS or not
 		$this->cvs	= is_dir('CVS') ? 'y' : 'n';
+	}
+	// Returns an array of all used Tiki stars.
+	function tikiStars() {
+		return array(
+				1=>'Spica',
+				2=>'Shaula',
+				3=>'Ras Algheti',
+				4=>'Capella',
+				5=>'Antares',
+				6=>'Pollux',
+				7=>'Mira',
+				8=>'Regulus',
+				9=>'Tau Ceti',
+				10=>'Era Carinae',
+				11=>'Polaris',
+				12=>'Sirius',
+				13=>'Arcturus'
+				);
+	}
+
+	// Returns an array of all valid versions of Tikiwiki.
+	function tikiVersions() {
+		// These are all the valid release versions of Tiki.
+		// Newest version goes at the end.
+		// Release Managers should update this array before
+		// release.
+		return array(
+				1=>'1.9.1',
+				2=>'1.9.1.1',
+				3=>'1.9.2',
+				4=>'1.9.3.1',
+				5=>'1.9.3.2',
+				6=>'1.9.4',
+				7=>'1.9.5',
+				8=>'1.9.6',
+				9=>'1.9.7',
+				10=>'1.9.8',
+				11=>'1.9.8.1',
+				12=>'1.9.8.2',
+				13=>'1.9.8.3',
+				14=>'1.9.9',
+				15=>'1.9.10',
+				16=>'1.9.10.1',
+				17=>'1.10.0b1',
+				18=>'2.0',
+				);
+	}
+
+	// Gets the latest star used by Tiki.
+	function getStar() {
+		$stars = $this->tikiStars();
+		$star = $stars[count($stars)];
+
+		return $star;
+	}
+
+	// Determines the currently-running version of Tikiwiki.
+	function getVersion() {
+		$versions = $this->tikiVersions();
+		$version = $versions[count($versions)];
+
+		return $version;
 	}
 
 	// Pulls the list of releases in the current branch of Tikiwiki from

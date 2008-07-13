@@ -8,12 +8,7 @@
 <a href="tiki-edit_templates.php?template=tiki-admin_dsn.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}tiki-admin_dsn tpl{/tr}">{icon _id='shape_square_edit' alt='{tr}Edit template{/tr}'}</a>
 {/if}</h1>
 
-<br />
-<div class="rbox" name="tip">
-<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
-<div class="rbox-data" name="tip">{tr}Use Admin DSN to define the database to be used by the SQL plugin.{/tr}</div>
-</div>
-<br />
+{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Admin DSN to define the database to be used by the SQL plugin.{/tr}{/remarksbox}
 
 <h2>{tr}Create/edit dsn{/tr}</h2>
 <form action="tiki-admin_dsn.php" method="post">

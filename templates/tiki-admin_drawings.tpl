@@ -10,11 +10,7 @@
 <a href="tiki-edit_templates.php?template=tiki-admin_drawings.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}Admin Drawings tpl{/tr}">{icon _id='shape_square_edit' alt='{tr}Edit template{/tr}'}</a>
 {/if}</h1>
 
-<div class="rbox" name="tip">
-<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>
-<div class="rbox-data" name="tip">{tr}To create a drawing in a Wiki page, use {literal}{draw name=foo}{/literal}, where foo is the name of the drawing. After saving, click on the drawing link.{/tr}</div>
-</div>
-<br />
+{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}To create a drawing in a Wiki page, use {literal}{draw name=foo}{/literal}, where foo is the name of the drawing. After saving, click on the drawing link.{/tr}{/remarksbox}
 
 {if $preview eq 'y'}
 <h2>{tr}Preview{/tr}</h2>

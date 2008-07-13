@@ -7,10 +7,7 @@
 // details.
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER['SCRIPT_NAME'],'tiki-setup.php')!=FALSE) {
-  header('location: index.php');
-  exit;
-}
+$access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
 $sections = array(
 	'wiki page' => array(
@@ -23,11 +20,11 @@ $sections = array(
 		'feature' => 'feature_blogs',
 		'key' => 'blogId',
 		'itemkey' => 'postId',
-		'objectType' =>'blog',
+		'objectType' =>'blog post',
 	),
 	'file_galleries' => array(
 		'feature' => 'feature_file_galleries',
-		'key' => 'page',
+		'key' => 'galleryId',
 		'itemkey' => 'fileId',
 		'objectType' =>'file gallery',
 		'itemObjectType' => 'file',
@@ -163,11 +160,6 @@ $sections = array(
 	),
 	'swffix' => array(
 		'feature' => 'feature_swffix',
-	),
-	'workflow' => array(
-		'feature' => 'feature_workflow',
-		'key' => '',
-		'itemkey' => '',
 	),
 );
 

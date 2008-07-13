@@ -22,15 +22,12 @@
 	{include file=tiki-preview_post.tpl}
 {/if}
 
-  <div class="rbox" name="tip">
-  <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
-  <div class="rbox-data" name="tip">{tr}If you want to use images please save the post first and you will be able to edit/post images. Use the &lt;img&gt; snippet to include uploaded images in the textarea editor or use the image URL to include images using the WYSIWYG editor. {/tr}</div>
-  </div>
+{remarksbox type="tip" title="{tr}Tip{/tr}"}
+  {tr}If you want to use images please save the post first and you will be able to edit/post images. Use the &lt;img&gt; snippet to include uploaded images in the textarea editor or use the image URL to include images using the WYSIWYG editor. {/tr}
   {if $wysiwyg eq 'n' and $prefs.wysiwyg_optional eq 'y'}
-    <div class="rbox-data" name="tip">{tr}Use ...page... to separate pages in a multi-page post{/tr}</div>
+    <hr />{tr}Use ...page... to separate pages in a multi-page post{/tr}
   {/if}
-
-  <br />
+{/remarksbox}
 
 <form enctype="multipart/form-data" name='blogpost' method="post" action="tiki-blog_post.php" id ='editpageform'>
 <input type="hidden" name="wysiwyg" value="{$wysiwyg|escape}" />

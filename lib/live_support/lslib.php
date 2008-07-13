@@ -1,4 +1,5 @@
 <?php
+$access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
 class Lslib extends TikiLib {
 	function Lslib($db) {

@@ -191,7 +191,7 @@ class DCSLib extends TikiLib {
 				.')';
 
 			$result = $this->query($query, $bindvars);
-			$contentId = $this->getOne('select max(`contentId`) from `tiki_content` where `description` = ?', $bindvars);
+			$contentId = $this->getOne('select max(`contentId`) from `tiki_content` where `description` = ? and `contentLabel` = ?', $bindvars);
 		}
 
 		return $contentId;

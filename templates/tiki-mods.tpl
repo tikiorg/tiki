@@ -13,15 +13,9 @@
 </span>
 {/if}
 
-<br /><br />
-
-<div class="rbox" name="tip">
-  <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
-  <div class="rbox-data" name="tip">
+{remarksbox type="tip" title="{tr}Tip{/tr}"}
     {tr}Tiki "mods" are additional features not included in the public release. Learn more at <a target="tikihelp" href="http://mods.tikiwiki.org">mods.tikiwiki.org</a>.{/tr}
-  </div>
-</div>
-<br />
+{/remarksbox}
 
 {if $iswritable}
 <div class="simplebox" style="color:#009900;">{icon _id=information.png style="vertical-align:middle;"} <b>{tr}Attention{/tr}</b><br />{tr}Apache has the right to write in your file tree, which enables the installation, removal or upgrade of packages. When you are done with those operations, think to fix those permissions back to a safe state (by using "./fixperms fix" for example).{/tr}</div>

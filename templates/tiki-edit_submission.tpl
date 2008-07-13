@@ -22,13 +22,9 @@
 <a class="linkbut" href="tiki-list_submissions.php">{tr}List Submissions{/tr}</a>
 </div>
 
-<div class="rbox" name="tip">
-  <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
-</div>
-
-<div class="rbox-data" name="tip">
+{remarksbox type="tip" title="{tr}Tip{/tr}"}
   {tr}Use ...page... to separate pages in a multi-page post{/tr}
-</div>
+{/remarksbox}
 
 <form enctype="multipart/form-data" method="post" action="tiki-edit_submission.php" id='editpageform'>
 <input type="hidden" name="subId" value="{$subId|escape}" />

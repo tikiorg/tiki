@@ -22,15 +22,9 @@
 <a class="linkbut" href="tiki-view_articles.php">{tr}View Articles{/tr}</a>
 </div>
 
-<div class="rbox" name="tip">
-  <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
-</div>
-
-<div class="rbox-data" name="tip">
+{remarksbox type="tip" title="{tr}Tip{/tr}"}
   {tr}Use ...page... to separate pages in a multi-page post{/tr}
-</div>
-
-<br />
+{/remarksbox}
 
 {if $preview}
 {include file="tiki-preview_article.tpl"}
@@ -110,7 +104,7 @@
 </select>
 </td></tr>
 <tr id='show_image_1' {if $types.$type.show_image eq 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor"><td>{tr}Own Image{/tr}</td><td><input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
-<input name="userfile1" type="file" /></td></tr>
+<input name="userfile1" type="file" onchange="document.getElementById('useImage').checked = true;"/></td></tr>
 {if $hasImage eq 'y'}
   <tr class="formcolor"><td>{tr}Own Image{/tr}</td><td>{$image_name} [{$image_type}] ({$image_size} bytes)</td></tr>
   {if $tempimg ne 'n'}
@@ -120,7 +114,7 @@
   {/if}
 {/if}
 <tr id='show_image_2' {if $types.$type.show_image eq 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor"><td>{tr}Use own image{/tr}</td><td>
-<input type="checkbox" name="useImage" {if $useImage eq 'y'}checked='checked'{/if}/>
+<input type="checkbox" name="useImage" id="useImage" {if $useImage eq 'y'}checked='checked'{/if}/>
 </td></tr>
 <tr id='show_image_3' {if $types.$type.show_image eq 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor"><td>{tr}Float text around image{/tr}</td><td>
 <input type="checkbox" name="isfloat" {if $isfloat eq 'y'}checked='checked'{/if}/>

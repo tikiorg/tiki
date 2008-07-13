@@ -260,10 +260,7 @@ name="eponymousGroups" {if $prefs.eponymousGroups eq 'y'}checked="checked"{/if}/
 </div>
 <div class="cbox-data">
 
-<div class="rbox" name="tip"></div>
-<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>
-<div class="rbox-data" name="tip">{tr}You also need to upload the <a target="_blank" href="http://esup-phpcas.sourceforge.net/">phpCAS library</a> separately to lib/phpcas/.{/tr}</div>
-
+{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}You also need to upload the <a target="_blank" href="http://esup-phpcas.sourceforge.net/">phpCAS library</a> separately to lib/phpcas/.{/tr}{/remarksbox}
 
 <form action="tiki-admin.php?page=login" method="post">
 <table class="admin">

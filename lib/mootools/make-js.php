@@ -1,6 +1,7 @@
 #!/usr/bin/php
 <?php
 
+if( isset( $_SERVER['REQUEST_METHOD'] ) ) die;
 require_once("packer/class.JavaScriptPacker.php");
 
 function compact_files($header, $srcdir, $files, $destination_packed, $destination) {

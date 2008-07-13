@@ -25,24 +25,22 @@
 #    - create the checksum file: copy doc/devtools/tiki-create_md5.php in tiki root 
 #        and load that page in your browser
 #
-# 0/ Setup the lines in the configuration section just below with your own
-#    identity and settings (note that the script could be used on other projects)
-#
 # 1/ Create and test pre-release packages by executing the script with the release
 #    version as argument, using the format major.minor.sub 
-#    ./tikirelease.sh 1.9.preRC3
+#    bash tikirelease.sh 3.0.preRC3 branches/3.0
 #
 # 2/ Test the produced tarball and share the testing : you need at least 3 install 
 #    from 3 different people
 # 
-# 3/ After testing, tag the release with instructions on http://tikiwiki.org/TikiCvsTags
-#    cvs -d:ext:mose@tikiwiki.cvs.sf.net:/cvsroot/tikiwiki rtag -r BRANCH-1-9 REL-1-9-RC3 fulltiki
+# 3/ After testing, tag the release
+#    ex: svn copy https://tikiwiki.svn.sourceforge.net/svnroot/tikiwiki/branches/3.0 https://tikiwiki.svn.sourceforge.net/svnroot/tikiwiki/tags/3.0.RC3
 #    
-# 4/ Uncomment the second "RELTAG=" line and the "grep -rl" line as instructed below
-#
-# 5/ Execute the script with the release version as argument, using the format
-#    major.minor.sub (like in 1.9.RC3)
+# 4/ Build the release tarballs
+#    bash tikirelease.sh 3.0.RC3 tags/3.0.RC3
 #    
+# 5/ Test the produced tarball and share the testing : you need at least 3 install 
+#    from 3 different people
+# 
 # 6/ When the tarball is tested once you can copy-paste the produced line to upload
 #    both .gz and .bz2 to sourceforge
 #    
@@ -72,31 +70,27 @@
 # start of configuration
 # change here what you need to fit your environment
 
-CVSROOT=":ext:$USER@tikiwiki.cvs.sf.net:/cvsroot/tikiwiki"
+SVNROOT="https://tikiwiki.svn.sourceforge.net/svnroot/tikiwiki"
 WORKDIR="/home/$USER/tikipack"
 MODULE="tikiwiki"
-
-# when creating pre-release packages, change RELTAG to the correct branch (ex:BRANCH-1-9)
-# comment this line when ready to release (step 3)
-RELTAG="BRANCH-1-9"
 
 # end of configuration
 # ############################################################
 
-if [ -z $1 ]; then
-echo "Usage: tikirelease.sh <release-tag>"
-	echo "  separated by dots like in 1.9.RC3"
+if [ -z $2 ]; then
+echo "Usage: tikirelease.sh <release-version> <svn-relative-path>"
+	echo "  <release-version> in separated by dots like in 2.0.RC1"
+	echo "  <svn-relative-path> as in subversion (ex: branches/2.0 , tags/2.0)"
 	exit 0
 fi
 
 OLDIR=`pwd`
 VER=$1
-
-# when ready to release (step 3), uncomment this line
-# RELTAG="REL-`echo $VER | tr '.' '-'`"
+RELTAG=$2
 
 # ############################################################
 
+mkdir -p $WORKDIR
 cd $WORKDIR
 
 if [ -d $VER ]; then
@@ -104,9 +98,11 @@ if [ -d $VER ]; then
 fi
 mkdir $VER
 cd $VER
-cvs -z3 -q -d $CVSROOT co -d $MODULE-$VER -r $RELTAG $MODULE
+svn export $SVNROOT/$RELTAG $MODULE-$VER
 find $MODULE-$VER -name CVS -type d | xargs -- rm -rf
+find $MODULE-$VER -name .svn -type d | xargs -- rm -rf
 find $MODULE-$VER -name .cvsignore -type f -exec rm -f {} \;
+find $MODULE-$VER -name .svnignore -type f -exec rm -f {} \;
 find $MODULE-$VER -name Thumbs.db -exec rm -f {} \;
 find $MODULE-$VER -type d -exec chmod 775 {} \;
 find $MODULE-$VER -type f -exec chmod 664 {} \;
@@ -121,38 +117,9 @@ rm -rf $MODULE-$VER/SPIDERCORE
 rm -rf $MODULE-$VER/Smarty
 rm -rf $MODULE-$VER/templates_c/%*
 
-# uncomment for real release: remove all instances of "(CVS)" in templates
-# grep -rl ' (CVS)' $MODULE-$VER/templates | xargs -- perl -pi -e "s/ \(CVS\)//"
-# or that one for the pre-release test tarball
-# grep -rl ' (CVS)' $MODULE-$VER/templates | xargs -- perl -pi -e "s/ \(CVS\)/ (pre-release)/"
-chmod 775 $MODULE-$VER/setup.sh
-cd $MODULE-$VER && ./setup.sh && cd ..
-
 tar -czf $MODULE-$VER.tar.gz $MODULE-$VER
 tar -cjf $MODULE-$VER.tar.bz2 $MODULE-$VER
 zip -r $MODULE-$VER.zip $MODULE-$VER
-
-# ############################################################
-# special operation for a lighter tikiwiki
-# 
-# cp -rp $MODULE-$VER tikilight_$VER
-# find tikilight_$VER/img/avatars/ -type f -name '*.gif' | grep -v 000 | xargs -- rm -f
-# rm -rf tikilight_$VER/img/custom
-# find tikilight_$VER/lang -type f -name language.php | grep -v "/en/" | xargs -- rm -rf
-# rm -rf tikilight_$VER/lib/Galaxia/docs
-# rm -rf tikilight_$VER/calendar/iCal
-# rm -rf tikilight_$VER/lib/pear/SOAP/example
-# find tikilight_$VER/lib/pdflib/fonts -type f -name "*.afm" | grep -v php_Helvetica | grep -v php_Courier | xargs -- rm -f
-# find tikilight_$VER/templates/styles/* -type d | grep -v elegant | grep -v moreneat | xargs -- rm -rf
-# find tikilight_$VER/styles/* -type d | grep -v elegant | grep -v moreneat | xargs -- rm -rf
-# find tikilight_$VER/styles/ -type f -name "*.css" | grep -v elegant | grep -v moreneat | xargs -- rm -f
-# tar -czf $MODULE-$VER.light.tar.gz tikilight_$VER
-# tar -cjf $MODULE-$VER.light.tar.bz2 tikilight_$VER
-# zip -r $MODULE-$VER.light.zip tikilight_$VER
-# echo ""
-# echo "To upload the light archives, copy-paste and exectue the following line at will (depending on SF's mood):"
-# echo "cd $WORKDIR/$VER; lftp -u anonymous,release@tikiwiki.org -e 'cd incoming;put $MODULE-$VER.light.tar.gz;put $MODULE-$VER.light.tar.bz2;put $MODULE-$VER.light.zip;quit;' upload.sf.net"
-# ############################################################
 
 echo ""
 echo "To upload the archives, copy-paste and exectue the following line at will (depending on SF's mood):"

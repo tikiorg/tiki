@@ -8,12 +8,8 @@
 {icon _id='shape_square_edit' alt='{tr}Edit template{/tr}'}</a>{/if}
 </h1>
 
-<div class="rbox" name="tip">
-<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
-<div class="rbox-data" name="tip">{tr}To <a class="rbox-link" target="tikihelp" href="http://security.tikiwiki.org/tiki-contact.php">report any security issues</a>.{/tr}
-</div>
-</div>
-<br />
+{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}To <a class="rbox-link" target="tikihelp" href="http://security.tikiwiki.org/tiki-contact.php">report any security issues</a>.{/tr}{/remarksbox}
+
 <h2>{tr}PHP settings{/tr}</h2>
 <table class="normal">
 <tr><th class="heading">{tr}PHP variable{/tr}</th>

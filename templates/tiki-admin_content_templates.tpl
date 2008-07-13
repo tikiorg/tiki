@@ -8,11 +8,7 @@
 <a href="tiki-edit_templates.php?template=tiki-admin_content_templates.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}Admin Content Templates Template{/tr}">{icon _id='shape_square_edit' alt='{tr}Edit template{/tr}'}</a>
 {/if}</h1>
 
-<div class="rbox" name="tip">
-  <div class="rbox-title" name="tip">Tip</div>  
-  <div class="rbox-data" name="tip">Use the Administration page of each enabled feature to allow the use of content templates.</div>
-</div>
-<br />
+{remarksbox type="tip" title="Tip"}Use the Administration page of each enabled feature to allow the use of content templates.{/remarksbox}
 
 {if $preview eq 'y'}
 <h2>{tr}Preview{/tr}</h2>

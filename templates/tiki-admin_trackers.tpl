@@ -86,7 +86,6 @@
 </table>
 {include file="tiki-pagination.tpl"}
 </div>
-</div>
 
 {* --- tab with form --- *}
 <a name="mod"></a>
@@ -121,12 +120,6 @@
 	</div>
 	<br />
 	<textarea id="trackerDescription" name="description" rows="4" cols="40">{$description|escape}</textarea>
-	<br />
-	{tr}Use Ratings:{/tr}<input type="checkbox" name="useRatings" {if $useRatings eq 'y'}checked="checked"{/if} onclick="toggleSpan('ratingoptions');" />
-		<span id="ratingoptions" style="display:{if $useRatings eq 'y'}inline{else}none{/if};">
-			{tr}with values{/tr} <input type="text" name="ratingOptions" value="{if $ratingOptions}{$ratingOptions}{else}-2,-1,0,1,2{/if}" />
-			{tr}and display rating results in listing?{/tr} <input type="checkbox" name="showRatings" {if $showRatings eq 'y'}checked="checked"{/if} />
-		</span>
 	</td>
 </tr>
 {include file=categorize.tpl colsCategorize=2}
@@ -316,11 +309,11 @@ categories = {$catsdump}
 <tr class="formcolor"><td>{tr}Separator{/tr}</td><td><input type="text" name="separator" value="," /></td></tr>
 <tr class="formcolor"><td>{tr}Delimitors{/tr}</td><td><input type="text" name="delimitorL" value='"' /><input type="text" name="delimitorR" value='"' /></td></tr>
 <tr class="formcolor"><td>{tr}Carriage Return inside Field Value{/tr}</td><td><input type="text" name="CR" value='%%%' /></td></tr>
-<tr class="formcolor"><td>{tr}Parse{/tr}</td><td><input type="checkbox" name="parse"></td></tr>
+<tr class="formcolor"><td>{tr}Parse{/tr}</td><td><input type="checkbox" name="parse" /></td></tr>
 <tr class="formcolor"><td>{tr}Info{/tr}</td><td><input name="showItemId" type="checkbox" checked="checked" />itemId
-<br /><input type="checkbox" name="showStatus"{if $info.showStatus eq 'y'} checked="checked"{/if}>{tr}status{/tr}
-<br /><input type="checkbox" name="showCreated"{if $info.showCreated eq 'y'} checked="checked"{/if}>{tr}created{/tr}
-<br /><input type="checkbox" name="showLastModif"{if $info.showLastModif eq 'y'} checked="checked"{/if}>{tr}lastModif{/tr}
+<br /><input type="checkbox" name="showStatus"{if $info.showStatus eq 'y'} checked="checked"{/if} />{tr}status{/tr}
+<br /><input type="checkbox" name="showCreated"{if $info.showCreated eq 'y'} checked="checked"{/if} />{tr}created{/tr}
+<br /><input type="checkbox" name="showLastModif"{if $info.showLastModif eq 'y'} checked="checked"{/if} />{tr}lastModif{/tr}
 <tr class="formcolor"><td>{tr}Fields{/tr}</td><td><input type="radio" name="which" value="list"/> {tr}Fields visible in items list{/tr}
 <br /><input type="radio" name="which" value="ls"/> {tr}Fields searchable or visible in items list{/tr}
 <br /><input type="radio" name="which" value="item"/> {tr}Fields visible in an item view{/tr} 

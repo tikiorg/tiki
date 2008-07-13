@@ -1,11 +1,7 @@
 {* $Id$ *}
 
 {if $prefs.feature_search_stats eq 'y'}
-  <div class="rbox" name="tip">
-    <div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
-    <div class="rbox-data" name="tip">{tr}Search stats{/tr} {tr}can be seen on page{/tr} <a class='rbox-link' target='tikihelp' href='tiki-search_stats.php'>{tr}Search stats{/tr}</a> {tr}in Admin menu{/tr}</div>
-  </div>
-  <br /> 
+  {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Search stats{/tr} {tr}can be seen on page{/tr} <a class='rbox-link' target='tikihelp' href='tiki-search_stats.php'>{tr}Search stats{/tr}</a> {tr}in Admin menu{/tr}{/remarksbox}
 {/if}
 
 <div class="cbox">

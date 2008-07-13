@@ -16,7 +16,7 @@
 {if $smarty.section.user.index % 2}
 <tr>
 <td class="odd">
-<a class="link" href="tiki-map.phtml?mapfile={$files[user]}">{$files[user]}</a>
+<a class="link" href="tiki-map.php?mapfile={$files[user]}">{$files[user]}</a>
 </td>
 <td class="odd">
 {if $tiki_p_map_edit eq 'y'}
@@ -42,7 +42,7 @@
 {else}
 <tr>
 <td class="even">
-<a class="link" href="tiki-map.phtml?mapfile={$files[user]}">{$files[user]}</a>
+<a class="link" href="tiki-map.php?mapfile={$files[user]}">{$files[user]}</a>
 </td>
 <td class="even">
 {if $tiki_p_map_edit eq 'y'}
@@ -83,23 +83,35 @@
 {assign var=area_name value="mapdata"}
 <a class="link" href="tiki-map_edit.php?mapfile={$mapfile}&mode=editing">{tr}Reload{/tr}</a>&nbsp;&nbsp;
 <a class="link" href="tiki-map_history.php?mapfile={$mapfile}">{tr}History{/tr}</a><br />
+
 <table class="normal">
 <tr class="formcolor">
 <td>
-{include file="textareasize.tpl" area_name='mapdata' formId='editpageform'}<br /><br />
-{include file=tiki-edit_help_tool.tpl}<br /><br />
-</td><td>
-<textarea id='mapdata' class="wikiedit" name="pagedata" rows="{$rows}" wrap="virtual" cols="{$cols}">{$pagedata|escape}</textarea>
-<input type="hidden" name="rows" value="{$rows}"/>
-<input type="hidden" name="cols" value="{$cols}"/>
-<input type="hidden" name="mapfile" value="{$mapfile}" />
-<input type="hidden" name="mode" value="{$mode}" />
-</td></tr>
+<div id='edit-zone'>
+	{if $prefs.quicktags_over_textarea neq 'y'}<table style="border:0; width:100%"><tr><td style="border:0;">{/if}
+	<div id='textarea-toolbar' style='padding:3px; font-size:10px; {if $prefs.quicktags_over_textarea neq 'y'}float:left;{/if}'>
+		<div style='float:left; margin-right:5px'>{include file='textareasize.tpl' area_name='mapdata' formId='editpageform' ToolbarSet='Tiki'}</div>
+		{include file=tiki-edit_help_tool.tpl area_name='mapdata'}
+	</div>
+	{if $prefs.quicktags_over_textarea neq 'y'}</td><td style="border:0;">{/if}
+	<textarea id='mapdata' class='wikiedit' name='pagedata' rows='{$rows}' wrap='virtual' cols='{$cols}' style='width:99%'>{$pagedata|escape}</textarea>
+	<input type="hidden" name="rows" value="{$rows}"/>
+	<input type="hidden" name="cols" value="{$cols}"/>
+	<input type="hidden" name="mapfile" value="{$mapfile}" />
+	<input type="hidden" name="mode" value="{$mode}" />
+	{if $prefs.quicktags_over_textarea neq 'y'}</td></tr></table>{/if}
+</div>
+</td>
+</tr>
 </table>
+
 <div align="center">
 <input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}" /> 
 </div>
 </form>
+
+
+
 {if $tiki_p_map_delete eq 'y'}
 <hr />
 <div align="center">

@@ -8,9 +8,9 @@
 <span class="posthead">
 {if $blog_data.use_title eq 'y'}
 	{$post_info.title}<br />
-	<small> {tr}posted by{/tr} {$post_info.user} on {$post_info.created|tiki_short_datetime}</small>
+	<small> {tr}Posted by{/tr} {$post_info.user} on {$post_info.created|tiki_short_datetime}</small>
 {else}
-	{$post_info.created|tiki_short_datetime}<small> {tr}posted by{/tr} {$post_info.user}</small>
+	{$post_info.created|tiki_short_datetime}<small> {tr}Posted by{/tr} {$post_info.user}</small>
 {/if}
 </span>
 </td></tr></table>

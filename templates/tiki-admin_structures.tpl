@@ -116,12 +116,8 @@
 <tr>
    <td class="formcolor">{tr}Tree{/tr}:<br />(optional)</td>
    <td colspan="2" class="formcolor"><textarea rows="5" cols="60" name="tree" style="width:95%"></textarea>
-    <div class="rbox" name="tip">
-    <div class="rbox-title" name="tip">{tr}Note{/tr}</div>  
-    <div class="rbox-data" name="tip">{tr}Use single spaces to indent structure levels{/tr}</div>
-    </div>
-    <br />
-</td>
+		{remarksbox type="tip" title="{tr}Note{/tr}"}{tr}Use single spaces to indent structure levels{/tr}{/remarksbox}
+   </td>
 </tr>    
 {if $tiki_p_view_categories eq 'y'}
 {include file=categorize.tpl}

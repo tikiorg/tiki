@@ -52,10 +52,7 @@
     {/section}
     </select>
 {if $categs|@count ge '2'}
-<div class="rbox" name="tip">
-<div class="rbox-title" name="tip">{tr}Tip{/tr}</div>  
-<div class="rbox-data" name="tip">{tr}Use Ctrl+Click to select multiple categories.{/tr}</div>
-<br /></div>
+{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple categories.{/tr}{/remarksbox}
 {/if}
     </td>
   </tr>

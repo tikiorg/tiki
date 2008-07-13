@@ -285,6 +285,7 @@ div.box-data {
 	padding : 5px;
 	font-size : 10px;
 }
+div.box-data select {width: 150px}
 div.separator, div.separatorline {
 	background-color: #FFFFFF;
 	color : black;

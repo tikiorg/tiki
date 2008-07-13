@@ -12,6 +12,7 @@ echo  '<?xml version="1.0" encoding="UTF-8"?>';
 </head>
 <body style="background:#101070; color:white;">
 <script type="text/javascript">
+<!--//--><![CDATA[//><!--
 var target;
 function handleListChange(theList) {
     var numSelected = theList.selectedIndex;
@@ -20,6 +21,7 @@ function handleListChange(theList) {
         theList.selectedIndex = 0;
     }
 }
+//--><!]]>
 </script>
 
 <form name="characters">

@@ -7,10 +7,8 @@
 // details.
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER['SCRIPT_NAME'],'tiki-setup.php')!=FALSE) {
-	header('location: index.php');
-	exit;
-}
+$access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
+
 if ($prefs['feature_categories'] == 'y') {
 	global $categlib; include_once('lib/categories/categlib.php');
 	// pick up the objectType from cat_type is set or from section
