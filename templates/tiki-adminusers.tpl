@@ -121,14 +121,14 @@ class="prevnext">{tr}All{/tr}</a>
 <table class="normal">
 <tr>
 <td class="heading auto">{if $users}
-	<input name="switcher" title="{tr}Select All{/tr}" type="checkbox" id="clickall" onclick="switchCheckboxes(this.form,'checked[]',this.checked)"/>
-{*  Used to  be javascript/document.write here - following comment left for posterity. Test for smarty var $javascript_enabled instead if still needed - jonnyb july 2008
+  <script type='text/javascript'>
+  <!--
   // check / uncheck all.
   // in the future, we could extend this to happen serverside as well for the convenience of people w/o javascript.
   // for now those people just have to check every single box
   document.write("<input name=\"switcher\" title=\"{tr}Select All{/tr}\" id=\"clickall\" type=\"checkbox\" onclick=\"switchCheckboxes(this.form,'checked[]',this.checked)\"/>");
   //-->                     
-  </script>*}{/if}
+  </script>{/if}
 </td>
 <td class="heading">&nbsp;</td>
 <td class="heading"><a class="tableheading" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={if $sort_mode eq 'login_desc'}login_asc{else}login_desc{/if}">{tr}User{/tr}</a></td>
@@ -213,6 +213,7 @@ class="prevnext">{tr}All{/tr}</a>
   </select><br /><input type="submit" value="{tr}OK{/tr}" />
   <input type="hidden" name="set_default_groups" value="{$set_default_groups_mode}" />
   {/if}
+  </p>
 {/if}
   </td></tr>
   </table>

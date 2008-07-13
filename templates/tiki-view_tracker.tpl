@@ -99,7 +99,11 @@
 {/if}
 {if $tiki_p_admin_trackers eq 'y'}
 <td class="heading" width="15">
-	<input name="switcher" id="clickall2" title="{tr}Select All{/tr}" type="checkbox" onclick="switchCheckboxes(this.form,'action[]',this.checked)"/>
+<script type='text/javascript'>
+<!--//--><![CDATA[//><!--
+document.write("<input name=\"switcher\" id=\"clickall2\" title=\"{tr}Select All{/tr}\" type=\"checkbox\" onclick=\"switchCheckboxes(this.form,'action[]',this.checked)\"/>");
+//--><!]]>
+</script>
 </td>
 {/if}
 
@@ -333,7 +337,12 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {* -------------------- category -------------------- *}
 {elseif $field_value.type eq 'e'}
 {if !empty($field_value.options_array[2]) && ($field_value.options_array[2] eq '1' or $field_value.options_array[2] eq 'y')}
-<div class="categSelectAll"><input type="checkbox" id="clickall" onclick="switchCheckboxes(this.form,'ins_cat_{$field_value.fieldId}[]',this.checked)"/>{tr}Select All{/tr}</div>{/if}
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+document.write('<div  class="categSelectAll"><input type="checkbox" id="clickall" onclick="switchCheckboxes(this.form,\'ins_cat_{$field_value.fieldId}[]\',this.checked)"/>{tr}Select All{/tr}</div>');
+//--><!]]>
+</script>
+{/if}
 {assign var=fca value=$field_value.options}
 {if $field_value.options_array[1] eq 'm' or $field_value.options_array[1] eq 'd'}
 	<select name="ins_cat_{$field_value.fieldId}[]"{if $field_value.options_array[1] eq 'm'} multiple="multiple"{/if}>
