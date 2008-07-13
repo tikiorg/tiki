@@ -1,7 +1,7 @@
 <div style="margin:10px 30px;">
 
 
-<h1>{tr}Tiki installer{/tr} v{$tiki_version} BETA <a title='help' href='http://doc.tikiwiki.org/Installation' target="help"><img border='0' src='img/icons/help.gif' alt="{tr}Help{/tr}" /></a></h1>
+<h1>{tr}Tiki installer{/tr} v{$tiki_version_name} <a title='help' href='http://doc.tikiwiki.org/Installation' target="help"><img border='0' src='img/icons/help.gif' alt="{tr}Help{/tr}" /></a></h1>
 <hr />
 {if $tikifeedback}
 <br />{section name=n loop=$tikifeedback}

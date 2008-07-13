@@ -533,6 +533,7 @@ if ($language != 'en')
 // Tiki Database schema version
 $tiki_version = '2.0';
 $smarty->assign('tiki_version', $tiki_version);
+$smarty->assign('tiki_version_name', $tiki_version . ' RC2');
 
 // Available DB Servers
 $dbservers = array();
