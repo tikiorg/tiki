@@ -75,7 +75,7 @@
 	{include file="babelfish.tpl"}
 {/if}
 
-<div id="power" style="text-align: center">
+<div id="power">
 	{tr}Powered by{/tr} <a target="_blank" href="http://info.tikiwiki.org" title="{tr}This is{/tr} TikiWiki CMS/Groupware &#169; 2002&#8211;2008, {tr}The TikiWiki community{/tr}">{tr}TikiWiki CMS/Groupware{/tr}</a>
 </div>
 
