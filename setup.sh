@@ -36,8 +36,7 @@ else
 fi
 
 if [ -z $1 ]; then
-	echo -n "Command [fix,open]: "
-	read COMMAND
+	COMMAND=fix
 else
 	COMMAND=$1
 fi
