@@ -1,233 +1,163 @@
-# $Header: /cvsroot/tikiwiki/tiki/setup.sh,v 1.42.2.4 2008-03-04 16:43:35 chriscramer Exp $
+# $Header: /cvsroot/tikiwiki/tiki/fixperms.sh,v 1.9.2.2 2008-02-07 21:59:14 lphuberdeau Exp $
 
 # Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 # All Rights Reserved. See copyright.txt for details and a complete list of authors.
 # Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-# List of directories affected by this script:
-DIRS="backups db dump files img/wiki img/wiki_up img/trackers installer modules/cache temp temp/cache templates_c templates styles maps whelp mods tiki_tests/tests"
+# This file is a replacement for setup.sh
+# in test in 1.9 version
+
+DIRS="backups db dump img/wiki img/wiki_up img/trackers modules/cache temp temp/cache templates_c templates styles maps whelp mods files tiki_tests/tests"
 
 if [ -d 'lib/Galaxia' ]; then
 	DIRS=$DIRS" lib/Galaxia/processes"
 fi
 
-if [ -d 'lib/equation' ]; then
-	DIRS=$DIRS" lib/equation/tmp"
-	DIRS=$DIRS" lib/equation/pictures"
-fi
-
-
 AUSER=nobody
 AGROUP=nobody
-RIGHTS=02775
 VIRTUALS=""
-
-UNAME=`uname | cut -c 1-6`
+USER=`whoami`
 
 if [ -f /etc/debian_version ]; then
 	AUSER=www-data
 	AGROUP=www-data
-fi
-
-if [ -f /etc/redhat-release ]; then
+elif [ -f /etc/redhat-release ]; then
 	AUSER=apache
 	AGROUP=apache
-fi
-
-if [ -f /etc/gentoo-release ]; then
+elif [ -f /etc/gentoo-release ]; then
 	AUSER=apache
 	AGROUP=apache
-fi
-
-if [ -f /etc/SuSE-release ]; then
-        AUSER=wwwrun
-        AGROUP=www
-fi
-
-if [ "$UNAME" = "CYGWIN" ]; then
-	AUSER=SYSTEM
-	AGROUP=SYSTEM
-fi
-
-if [ -z "$1" ]; then
-	cat <<EOF
-This script assigns necessary permissions for the directories that the
-webserver writes files to. It also creates the (initially empty) cache 
-directories, if necessary.
-
-Usage sh $0 user [group] [rights] [list of virtual host domains]
-
-For example, if apache is running as user $AUSER and group $AGROUP (can be found in phpinfo),
- and if you are running as user $USER, type:
-
-  su -c 'sh $0 $USER $AGROUP'
- 
-This will allow you to delete certain files/directories without becoming root.
-  
-Or, if you can't become root, but are a member of the group apache runs under
-(for example: $AGROUP), you can type:
-
-  sh $0 $USER $AGROUP
-
-Be aware, that you probably have to do a 
-
-  chown -R $USER *
-
-if your tiki runs in a PHP-safe-mode environment.
-
-If you can't become root, and are not a member of the apache group, but if
-your system uses ACL's (check with "mount | grep acl"), then type:
-
-  sh $0 -acl $USER $AGROUP
-
-If you can't become root, and are not a member of the apache group, and
-your system does not support ACL's then type:
-
-  sh $0 $USER yourgroup 02777
-
-Replace yourgroup with your default group. Tip: You can find your group using the command 'id'.
-
-If you are on a shared hosting account, you can't become root, and your 
-group is probably the same as your user name. The following should work for you:
-
-  sh $0 $USER $USER 02777
-
-
-NOTE: If you do execute on of the three last commands, you will not be able 
-to delete certain files created by apache, and will need to ask your system
-administrator to delete them for you if needed. However, you may still be able to 
-rename (move) them.
-
-
----MultiTiki---
-More information here:
-http://doc.tikiwiki.org/MultiTiki
-
-To use Tiki's multi-site capability (virtual hosts from a single DocumentRoot)
-add a list of domains to the command to create all the needed directories.
-For example:
-
-  su -c 'sh $0 $USER $AGROUP $RIGHTS domain1 domain2 domain3'
-
-or, if you can't become root:
-
-  sh $0 $USER $AGROUP 02777 domain1 domain2 domain3
-
-
----Mods----
-More information here:
-http://mods.tikiwiki.org/
-
-special for mods installer
-
-  sh $0 $AUSER all
-
-will change perms on all tiki files so you can use the tikimods power.
-Remember to run the perms setup again when mods installer use if done.
-  
-	sh $0 $USER $AGROUP 
-
-EOF
-	exit 1
-fi
-
-if [ "$1" = "-acl" ]; then
-	ACL=1
-	shift
 else
-	ACL=0
-fi
-
-if [ -n "$1" ]; then
-	AUSER=$1
-	shift
-fi
-if [ -n "$1" ]; then
-	if [ $1 = "all" ]; then
-		chown -R $AUSER *
-		exit 0
+	UNAME=`uname | cut -c 1-6`
+	if [ "$UNAME" = "CYGWIN" ]; then
+		AUSER=SYSTEM
+		AGROUP=SYSTEM
 	fi
-	AGROUP=$1
-	shift
-fi
-if [ -n "$1" ]; then
-	RIGHTS=$1
-	shift
 fi
 
-if [ -n "$1" ]; then
-	VIRTUALS=$@
-	touch db/virtuals.inc
+if [ -z $1 ]; then
+	echo -n "Command [fix,open]: "
+	read COMMAND
+else
+	COMMAND=$1
 fi
 
-# Create directories as needed
-for dir in $DIRS; do
-	if [ ! -d $dir ]; then
-		echo Creating directory "$dir"
-		mkdir -p $dir
-	fi
-	for vdir in $VIRTUALS; do
-		if [ ! -d "$dir/$vdir" ]; then
-			echo Creating directory "$dir/$vdir"
-			mkdir -p "$dir/$vdir"
+if [ "$COMMAND" = 'fix' ]; then
+	if [ "$USER" = 'root' ]; then
+		echo -n "User [$AUSER]: "
+		read REPLY 
+		if [ -n "$REPLY" ]; then
+			AUSER=$REPLY
 		fi
-		echo $vdir >> db/virtuals.inc
-		cat db/virtuals.inc | sort | uniq > db/virtuals.inc_new
-		rm -f db/virtuals.inc && mv db/virtuals.inc_new db/virtuals.inc
-	done
-done
-
-# Create htaccees files as needed
-if [ ! -e "templates_c/_htaccess" ]; then
-	if [ ! -e "templates_c/.htaccess" ]; then
-		echo '<FilesMatch "*">
-	order deny,allow
-	deny from all
-</FilesMatch>' > templates_c/_htaccess
-	fi
-fi
-
-# Create index.php files as needed
-if [ ! -e "templates_c/index.php" ]; then
-	echo '<?php
-
-// This file was generated by setup.sh script
-
-// Copyright (c) 2002-2006, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
-// All Rights Reserved. See copyright.txt for details and a complete list of authors.
-// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-
-// This redirects to the site root to prevent directory browsing
-
-header ("location: ../tiki-index.php");
-die;
-
-?>' > templates_c/index.php
-fi
-
-# Set ownerships of the directories
-chown -R $AUSER *
-
-if [ -n "$AGROUP" ]; then
-	if [ $ACL = 1 ] ; then
-		setfacl -R -m g:${AGROUP}:rwx $DIRS
-		setfacl -m g:${AGROUP}:rwx robots.txt
 	else
-		chgrp -R $AGROUP $DIRS
-        	chgrp $AGROUP robots.txt
+		echo "You are not root or you are on a shared hosting account. You can now:
+
+1- ctrl-c to break now.
+
+or
+
+2- If you press enter to continue, you will probably get some error messages but it (the script) will 
+still fix what it can according to the permissions of your user. This script will now ask you some 
+questions. If you don't know what to answer, just press enter to each question (to use default value)"
+	
+		read 
+		AUSER=$USER
 	fi
+
+	echo -n "Group [$AGROUP]: "
+	read REPLY
+	if [ -n "$REPLY" ]; then
+		AGROUP=$REPLY
+	fi
+
+	echo -n "Multi []: "
+	read VIRTUALS
+
+	if [ -n "$VIRTUALS" ]; then
+		touch db/virtuals.inc
+		for vdir in $VIRTUALS; do
+			echo $vdir >> db/virtuals.inc
+			cat db/virtuals.inc | sort | uniq > db/virtuals.inc_new
+			rm -f db/virtuals.inc && mv db/virtuals.inc_new db/virtuals.inc
+		done
+	fi
+
+	echo "Checking dirs : "
+	for dir in $DIRS; do
+		echo -n "  $dir ... "
+		if [ ! -d $dir ]; then
+			echo -n " Creating directory"
+			mkdir -p $dir
+		fi
+		echo " ok."
+		if [ -n $VIRTUALS ]; then
+			for vdir in $VIRTUALS; do
+				echo -n "  $dir/$vdir ... "
+				if [ ! -d "$dir/$vdir" ]; then
+					echo -n " Creating Directory"
+					mkdir -p "$dir/$vdir"
+				fi
+				echo " ok."
+			done
+		fi
+	done
+
+	echo -n "Fix global perms ..."
+	chown -R $AUSER:$AGROUP .
+	echo -n " chowned ..."
+
+#	find . ! -regex '.*^\(devtools\).*' -type f -exec chmod 644 {} \;	
+#	echo -n " files perms fixed ..."
+#	find . -type d -exec chmod 755 {} \;
+#	echo " dirs perms fixed ... done"
+
+	chmod -R a-x .
+	chmod -R u=rwX .
+	chmod -R go=rX .
+
+	echo " done."
+
+	echo -n "Fix special dirs ..."
+	if [ "$USER" = 'root' ]; then
+		chmod -R g+w $DIRS
+	else
+		chmod -R go+w $DIRS
+	fi
+
+#	chmod 664 robots.txt tiki-install.php
+	echo " done."
+
+elif [ "$COMMAND" = 'open' ]; then
+	if [ "$USER" = 'root' ]; then
+		echo -n "User [$AUSER]: "
+		read REPLY
+		if [ -n "$REPLY" ]; then
+			AUSER=$REPLY
+		fi		
+		echo -n "Open global perms ..."
+		chown -R $AUSER .
+		echo " done"
+	else
+		echo "You are not root or you are on a shared hosting account. You can now:
+
+1- ctrl-c to break now.
+
+or
+
+2- If you press enter to continue, you will probably get some error messages but it (the script) will 
+still fix what it can according to the permissions of your user. This script will now ask you some 
+questions. If you don't know what to answer, just press enter to each question (to use default value)"
+
+		read 
+		echo -n "Open global perms ..."
+#		find . -type d -exec chmod 777 {} \;
+#		find . -type f -exec chmod 666 {} \;
+		chmod -R a=rwX .
+		echo " done"
+	fi
+else
+	echo "Type 'fix' or 'open' as command argument."
 fi
-
-if [ $ACL = 0 ] ; then
-	chmod -R $RIGHTS $DIRS
-	chmod $RIGHTS robots.txt
-	chmod $RIGHTS tiki-install.php
-fi
-
-chown $AUSER robots.txt
-
-# by setting the rights to tiki-install.php file, tiki-installer can be used in most cases to disable execution of the script
-chown $AUSER tiki-install.php
 
 exit 0
 
