@@ -364,10 +364,8 @@ or
 2- With shell (SSH) access, you can run the command below.
 
 	a) To run setup.sh, follow the instructions:
-		\$ bash
 		\$ cd $docroot
-		\$ chmod +x setup.sh
-		\$ ./setup.sh
+		\$ sh ./setup.sh
 
 		The script will offer you options depending on your server configuration.
 
@@ -720,6 +718,16 @@ if ( is_object($dbTiki) && isset($_SESSION["install-logged-$multi"]) && $_SESSIO
 			$dbTiki->Execute( "INSERT INTO users_objectpermissions (groupName, permName, objectType, objectId) SELECT groupName, 'tiki_p_view_categorized', objectType, objectId FROM users_objectpermissions WHERE permName = 'tiki_p_view_categories'" );
 		}
 		$smarty->assign('dbdone', 'y');
+	}
+
+	// Try to activate Apache htaccess file by renaming _htaccess into .htaccess
+	// Do nothing (but warn the user to do it manually) if:
+	//   - there is no  _htaccess file,
+	//   - there is already an existing .htaccess (that is not necessarily the one that comes from TikiWiki),
+	//   - the rename does not work (e.g. due to filesystem permissions)
+	//
+	if ( file_exists('_htaccess') && ( file_exists('.htaccess') || ! @rename('_htaccess', '.htaccess') ) ) {
+		$smarty->assign('htaccess_error', 'y');
 	}
 }
 $smarty->assign_by_ref('tikifeedback', $tikifeedback);

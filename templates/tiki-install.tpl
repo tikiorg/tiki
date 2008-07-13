@@ -303,6 +303,11 @@ hosting provider.  Normally Tiki tables won't conflict with other product names{
 	{/if}			
 <p>&nbsp;</p>
 
+{if isset($htaccess_error)}
+<h3><img src="pics/icons/information.png" alt="{tr}Note{/tr}" style="vertical-align:middle"/> {tr}Security{/tr}</h3>
+{tr}To increase your TikiWiki installation - and if you are using Apache web server - you should rename the <strong>_htaccess</strong> file into <strong>.htaccess</strong> (this file is in the main directory){/tr}.
+{/if}
+
 {if isset($smarty.post.scratch)}
 <h3><img src="pics/icons/information.png" alt="{tr}Note{/tr}" style="vertical-align:middle"/> {tr}Installation{/tr}</h3>
 {tr}If this is a first time installation, go to <strong>tiki-admin.php</strong> after login to start configuring your new Tiki installation{/tr}.
