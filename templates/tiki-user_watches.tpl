@@ -15,17 +15,32 @@
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use "watches" to monitor wiki pages or other objects.{/tr} {tr}Watch new items by clicking the {icon _id=eye} button on specific pages.{/tr}{/remarksbox}
 
-{if $prefs.feature_articles eq 'y' and $tiki_p_read_article eq 'y'}
+{if $add_options|@count > 0}
 <h2>{tr}Add Watch{/tr}</h2>
 <form action="tiki-user_watches.php" method="post">
 <table class="normal">
 <tr>
 <td class="formcolor">{tr}Event{/tr}:</td>
 <td class="formcolor">
-<select name="event">
-<option value="article_submitted">{tr}A user submits an article{/tr}</option>
+<select name="event" onchange="document.getElementById('lang_list').style.visibility = (this.value == 'wiki_page_in_lang_created') ? '' : 'hidden'">
+	<option>{tr}Select event type{/tr}</option>
+	{foreach key=event item=label from=$add_options}
+		<option value="{$event|escape}">{$label|escape}</option>
+	{/foreach}
 </select>
 </td>
+</tr>
+<tr id="lang_list" style="visibility: hidden">
+	<td class="formcolor">{tr}Language{/tr}</td>
+	<td class="formcolor">
+		<select name="langwatch">
+			{section name=ix loop=$languages}
+				<option value="{$languages[ix].value|escape}">
+				  {$languages[ix].name}
+				</option>
+			{/section}
+		</select>
+	</td>
 </tr>
 <tr><td class="formcolor">&nbsp;</td>
 <td class="formcolor"><input type="submit" name="add" value="{tr}Add{/tr}" /></td>
@@ -101,19 +116,3 @@
 {tr}Perform action with checked{/tr}: <input type="submit" name="delete" value=" {tr}Delete{/tr} ">
 {/if}
 </form>
-
-<br />
-
-{if $prefs.feature_user_watches_translations eq 'y'}
-<form method="post" action="tiki-user_watches.php">
-	{tr}Watch language wiki page creations{/tr}:
-	<select name="langwatch">
-		{section name=ix loop=$languages}
-			<option value="{$languages[ix].value|escape}">
-			  {$languages[ix].name}
-			</option>
-		{/section}
-	</select>
-	<input type="submit" value="{tr}Add watch{/tr}"/>
-</form>
-{/if}

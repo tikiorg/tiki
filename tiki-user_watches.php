@@ -30,18 +30,24 @@ if( $prefs['feature_user_watches_translations'] ) {
 	$smarty->assign_by_ref('languages', $languages);
 }
 
-if (isset($_POST['langwatch']) && $prefs['feature_user_watches_translations'] ) {
-	$valid = false;
+$add_options = array();
+if( $prefs['feature_articles'] == 'y' )
+	$add_options['articles_submitted'] = tra('A user submits an article');
+if( $prefs['feature_user_watches_translations'] == 'y' )
+	$add_options['wiki_page_in_lang_created'] = tra('A new page is created in a language');
+
+$smarty->assign( 'add_options', $add_options );
+
+if( isset($_POST['langwatch']) )
+{
 	foreach( $languages as $lang )
 		if( $_POST['langwatch'] == $lang['value'] ) {
-			$valid = $lang;
+			$langwatch = $lang;
 			break;
 		}
-	
-	if( $valid ) {
-		$tikilib->add_user_watch( $user, 'wiki_page_in_lang_created', $lang['value'], 'lang', tra('Language watch') . ": {$lang['name']}", "tiki-user_watches.php" );
-	}
 }
+else
+	$langwatch = null;
 
 if (isset($_REQUEST['id'])) {
   $area = 'deluserwatch';
@@ -55,9 +61,27 @@ if (isset($_REQUEST['id'])) {
 
 if (isset($_REQUEST["add"])) {
 	if (isset($_REQUEST['event'])) {
-		$watch_object = "*";
-		$tikilib->add_user_watch($user, $_REQUEST['event'], $watch_object, 'article',  "*", "tiki-view_articles.php");
-		$_REQUEST['event'] = '';
+		switch( $_REQUEST['event'] )
+		{
+		case 'articles_submitted':
+			$watch_object = "*";
+			$watch_type = 'article';
+			$watch_label = '*';
+			$watch_url = "tiki-view_articles.php";
+			break;
+		case 'wiki_page_in_lang_created':
+			$watch_object = $langwatch['value'];
+			$watch_type = 'wiki page';
+			$watch_label = tra('Language watch') . ": {$lang['name']}";
+			$watch_url = "tiki-user_watches.php";
+			break;
+		}
+
+		if( isset( $watch_object ) )
+		{
+			$tikilib->add_user_watch($user, $_REQUEST['event'], $watch_object, $watch_type, $watch_label, $watch_url);
+			$_REQUEST['event'] = '';
+		}
 	} else {
 		foreach ($_REQUEST['cat_categories'] as $cat) {
 			if ($cat > 0)
