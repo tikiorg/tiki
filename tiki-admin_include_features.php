@@ -127,5 +127,7 @@ if (!empty($_REQUEST['tabs'])) {
 	$smarty->assign('tabs', $_REQUEST['tabs']=='on'?'n':'');
 }
 
+$smarty->assign('php_major_version', substr(PHP_VERSION, 0, strpos(PHP_VERSION, '.')));
+
 ask_ticket('admin-inc-features');
 ?>

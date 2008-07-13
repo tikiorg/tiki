@@ -393,8 +393,8 @@
 						<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Communication+Center" target="tikihelp" class="tikihelp" title="{tr}Communications (send/receive objects){/tr}">{/if} {tr}Communications (send/receive objects){/tr} {if $prefs.feature_help eq 'y'}</a>{/if} </span>
 					</div>
 					<div class="float_r" style="width: 49%; text-align: left; float: right">
-						<span class="checkbox"><input type="checkbox" name="feature_tikitests"			{if $prefs.feature_tikitests eq 'y'}checked="checked"{/if}/></span>
-						<span class="label"> {tr}TikiTests{/tr} </span>
+						<span class="checkbox"><input type="checkbox" name="feature_tikitests"{if $php_major_version lt 5} disabled="disabled"{/if}{if $prefs.feature_tikitests eq 'y'} checked="checked"{/if}/></span>
+						<span class="label"> {tr}TikiTests{/tr}{if $php_major_version lt 5} ({tr}requires PHP5 or more{/tr}) {/if}</span>
 					</div>
 				</div>
 			</fieldset>
