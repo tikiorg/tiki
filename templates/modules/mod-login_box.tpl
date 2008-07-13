@@ -1,5 +1,20 @@
 {* $Id$ *}
 {if $do_not_show_login_box ne 'y'}
+{* test for caps lock*}
+{literal}
+<script language="Javascript">
+<!--
+function capLock(e){
+ kc = e.keyCode?e.keyCode:e.which;
+ sk = e.shiftKey?e.shiftKey:((kc == 16)?true:false);
+ if(((kc >= 65 && kc <= 90) && !sk)||((kc >= 97 && kc <= 122) && sk))
+  document.getElementById('divCapson').style.visibility = 'visible';
+ else
+  document.getElementById('divCapson').style.visibility = 'hidden';
+}
+// -->
+</script>
+{/literal}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Login{/tr}"}{/if}
 {tikimodule title=$tpl_module_title name="login_box" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox}
     {if $user}
@@ -90,7 +105,9 @@
           <input type="text" name="email" id="login-email" size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}" /></div>
           {/if}
           <div><label for="login-pass">{tr}Password{/tr}:</label><br />
-          <input type="password" name="pass" id="login-pass" size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}" /></div>
+          <input onkeypress="capLock(event)" type="password" name="pass" id="login-pass" size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}" />
+		  <div id="divCapson" style="visibility:hidden">{icon _id=error style="vertical-align:middle"} {tr}CapsLock is on.{/tr}</div>
+		  </div>
           {if $prefs.rememberme ne 'disabled'}
             {if $prefs.rememberme eq 'always'}
               <input type="hidden" name="rme" id="login-remember" value="on" />

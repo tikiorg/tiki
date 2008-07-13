@@ -1,4 +1,20 @@
+{* test for caps lock*}
+{literal}
+<script language="Javascript">
+<!--
+function capLock(e){
+ kc = e.keyCode?e.keyCode:e.which;
+ sk = e.shiftKey?e.shiftKey:((kc == 16)?true:false);
+ if(((kc >= 65 && kc <= 90) && !sk)||((kc >= 97 && kc <= 122) && sk))
+  document.getElementById('divCapson').style.visibility = 'visible';
+ else
+  document.getElementById('divCapson').style.visibility = 'hidden';
+}
+// -->
+</script>
+{/literal}
 <h2>{tr}Register as a new user{/tr}</h2>
+<div id="divCapson" style="visibility:hidden">{icon _id=error style="vertical-align:middle"} {tr}CapsLock is on.{/tr}</div>
 <br />
 {if $prefs.feature_ajax eq 'y'}
   <script src="lib/registration/register_ajax.js" type="text/javascript"></script>
@@ -44,11 +60,11 @@
 
       {if $prefs.useRegisterPasscode eq 'y'}
         <tr><td class="formcolor">{tr}Passcode to register (not your user password){/tr}:</td>
-	<td class="formcolor"><input type="password" name="passcode" /></td></tr>
+	<td class="formcolor"><input type="password" name="passcode" onkeypress="capLock(event)" /></td></tr>
       {/if}
  
       <tr><td class="formcolor">{tr}Password{/tr}:</td>
-      <td class="formcolor"><input style="float:left" id='pass1' type="password" name="pass"
+      <td class="formcolor"><input style="float:left" id='pass1' type="password" name="pass" onkeypress="capLock(event)" 
         {if $prefs.feature_ajax eq 'y'}onKeyUp="check_pass()"{/if}/>&nbsp;
 	  {if $prefs.feature_ajax ne 'y' and $prefs.min_pass_length > 1}<em>{tr}Minimum {$prefs.min_pass_length} characters long{/tr}</em>.<br />{/if}
 	  {if $prefs.feature_ajax ne 'y' and $prefs.pass_chr_num eq 'y'}<em>{tr}Password must contain both letters and numbers{/tr}</em>.{/if}
@@ -56,7 +72,7 @@
       </tr>
 
       <tr><td class="formcolor">{tr}Repeat password{/tr}:</td>
-      <td class="formcolor"><input style="float:left" id='pass2' type="password" name="passAgain"
+      <td class="formcolor"><input style="float:left" id='pass2' type="password" name="passAgain" onkeypress="capLock(event)" 
         {if $prefs.feature_ajax eq'y'}onKeyUp="check_pass()"{/if}/>{if $prefs.feature_ajax eq'y'}<div style="float:left" id="checkpass"></div>{/if}</td>
       </tr>
 
