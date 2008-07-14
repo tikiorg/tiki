@@ -45,22 +45,6 @@ class UsersLib extends TikiLib {
     $this->get_object_permissions_for_user_cache = array();
     }
 
-    function set_admin_pass($pass) {
-	global $prefs;
-
-	$query = "select `email` from `users_users` where `login` = ?";
-	$email = $this->getOne($query, array('admin'));
-	$hash = $this->hash_pass($pass);
-
-	if ($prefs['feature_clear_passwords'] == 'n')
-	    $pass = '';
-
-	$query = "update `users_users` set `password` = ?, hash = ?
-	    where `login` = ?";
-	$result = $this->query($query, array($pass, $hash, 'admin'));
-	return true;
-    }
-
     function assign_object_permission($groupName, $objectId, $objectType, $permName) {
 	$objectId = md5($objectType . strtolower($objectId));
 
