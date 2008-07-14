@@ -184,6 +184,7 @@ if (isset($_REQUEST['users_defaults'])) {
 }
 
 $smarty->assign("phpcas_enabled", $phpcas_enabled);
+$smarty->assign('gd_lib_found', function_exists('gd_info') ? 'y' : 'n' );
 
 // Get list of available languages
 $languages = array();
