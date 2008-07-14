@@ -24,7 +24,7 @@ function wikiplugin_posts($data,$params) {
 
 	$blog = $tikilib->get_blog($blogId);
 	$posts = $bloglib->list_blog_posts($blogId, '', $max);
-	$smarty->assign('blog_title', $blog['title']);
+	$smarty->assign('blog', $blog);
 	$smarty->assign('posts', $posts['data']);
 	return "~np~ ".$smarty->fetch('tiki-list_blog_posts.tpl')." ~/np~";
 }
