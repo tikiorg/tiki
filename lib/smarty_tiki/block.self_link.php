@@ -49,7 +49,7 @@ function smarty_block_self_link($params, $content, &$smarty, $repeat = false) {
       // Complete _script path if needed
       if ( isset($params['_script']) ) {
         if ( $params['_script'] != '' && $_SERVER['PHP_SELF'][0] == '/' && strpos($params['_script'], '/') === false ) {
-          $params['_script'] = dirname($_SERVER['PHP_SELF']).'/'.$params['_script'];
+          $params['_script'] = ( $_SERVER['PHP_SELF'] == '/' ? '' : dirname($_SERVER['PHP_SELF']) ).'/'.$params['_script'];
         }
         if ( $params['_script'] == $_SERVER['PHP_SELF'] ) {
           $params['_script'] = '';
