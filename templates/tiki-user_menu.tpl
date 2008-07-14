@@ -9,19 +9,14 @@
 
 {if $opensec > 0}
 {assign var=sectionType value=$chdata.type}
-{php}
-global $smarty;
-$opensec = $smarty->get_template_vars('opensec');
-$sectionType= $smarty->get_template_vars('sectionType');
-if ($sectionType == 's' or $sectionType == 'r') {
-	$sectionType = 0;
-}
-while ($opensec > $sectionType) {
-	--$opensec;
-	echo '</div>';
-}
-$smarty->assign('opensec', $opensec);
-{/php}
+{if $sectionType eq 's' or $sectionType eq 'r'}{assign var=sectionType value=0}{/if}
+{if $opensec > $sectionType}
+{assign var=m value=$opensec-$sectionType}
+{section loop=$menu_channels name=close max=$m}
+	   </div>
+{/section}
+{assign var=opensec value=$sectionType}
+{/if}
 {/if}
 
 <div class="separator{$sep}">
@@ -78,14 +73,10 @@ $smarty->assign('opensec', $opensec);
 {/foreach}
 
 {if $opensec > 0}
-{php}
-global $smarty;
-$opensec = $smarty->get_template_vars('opensec');
-while ($opensec) {
-	--$opensec;
-	echo '</div>';
-}
-{/php}
+{section loop=$menu_channels name=close max=$opensec}
+	</div>
+{/section}
+{assign var=opensec value=0}
 {/if}
 
 {* --------------------Dynamic menus *}
