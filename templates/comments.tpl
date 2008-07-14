@@ -234,10 +234,15 @@
 	{/section}
 
 	<table class="normal">
+		{if empty($user)}
+			<tr>
+				<td class="formcolor">{tr}Your name{/tr}:</td>
+				<td class="formcolor"><input type="text" maxlength="50" size="50" id="anonymous_name" name="anonymous_name" /></td>
+			</tr>
+		{/if}
 		<tr>
 			<td class="formcolor">
-				<label for="comments-title">{tr}Title{/tr}: </label>
-				<div class="attention">{tr}Required{/tr}</div>
+				<label for="comments-title">{tr}Title{/tr} <span class="attention">({tr}required{/tr})</span>: </label>
 			</td>
 			<td class="formcolor">
 				<input type="text" size="50" name="comments_title" id="comments-title" value="{$comment_title|escape}" />
@@ -328,9 +333,6 @@
 			</td>
 
 			<td class="formcolor">
-			{if empty($user)}
-				{tr}Enter your name{/tr}:&nbsp;<input type="text" maxlength="50" size="12" id="anonymous_name" name="anonymous_name" />
-			{/if}
 				<input type="submit" name="comments_previewComment" value="{tr}Preview{/tr}" {if empty($user)}onclick="setCookie('anonymous_name',document.getElementById('anonymous_name').value);"{/if} />
 				<input type="submit" name="comments_postComment" value="{tr}Post{/tr}" {if empty($user)}onclick="setCookie('anonymous_name',document.getElementById('anonymous_name').value);"{/if} />
 				{if !empty($user) && $prefs.feature_comments_post_as_anonymous eq 'y'}
