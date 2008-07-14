@@ -1584,6 +1584,8 @@ ALTER TABLE users_users DROP KEY openid_url_59;
 ALTER TABLE `tiki_user_watches` DROP PRIMARY KEY;
 ALTER TABLE `tiki_user_watches` ADD PRIMARY KEY  (`user`(50),event,object(100),email(50));
 
+DELETE FROM `tiki_mail_events` WHERE `email` IS NULL;
+
 INSERT INTO tiki_user_watches (event,object,email,`type`,url,title)
 SELECT event, object, email, 'wiki','tiki-lastchanges.php', 'Any wiki page is changed' FROM tiki_mail_events tme WHERE event='wiki_page_changes';
 INSERT INTO tiki_user_watches (event, object,email,`type`,url,title)
