@@ -457,6 +457,10 @@ $cat_objid = $page;
 include_once('tiki-section_options.php');
 
 $smarty->assign('cached_page','n');
+$parse_options = array(
+	'is_html' => $info['is_html'],
+	'language' => $info['lang']
+);
 if(isset($info['wiki_cache'])) {$prefs['wiki_cache']=$info['wiki_cache'];}
 if($prefs['wiki_cache']>0) {
     $cache_info = $wikilib->get_cache_info($page);
@@ -464,11 +468,11 @@ if($prefs['wiki_cache']>0) {
 	$pdata = $cache_info['cache'];
 	$smarty->assign('cached_page','y');
     } else {
-	$pdata = $tikilib->parse_data($info['data'],$info['is_html']);
+	$pdata = $tikilib->parse_data($info['data'], $parse_options);
 	$wikilib->update_cache($page,$pdata);
     }
 } else {
-    $pdata = $tikilib->parse_data($info['data'],$info['is_html']);
+    $pdata = $tikilib->parse_data($info['data'], $parse_options);
 }
 
 $smarty->assign_by_ref('parsed',$pdata);

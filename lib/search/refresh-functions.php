@@ -110,7 +110,7 @@ function refresh_index($object_type, $object_id = null) {
 		$index_type = 'wiki';
 		$f_id = 'pageName';
 		$f_content = array('data', 'description', 'pageName');
-		array_unshift($filtering_expr, '$content = $tikilib->parse_data($content, $res["is_html"]);');
+		array_unshift($filtering_expr, '$content = $tikilib->parse_data($content, array("is_html" => $res["is_html"]));');
 		$wiki_html = ', `is_html`';
 		break;
 

@@ -21,7 +21,7 @@ function smarty_block_wiki($params, $content, &$smarty)
 		} else {
 		  $isHtml = false;
 		}
-		return $tikilib->parse_data($content,$isHtml);
+		return $tikilib->parse_data($content, array('is_html' => $isHtml));
 }
 
 ?>

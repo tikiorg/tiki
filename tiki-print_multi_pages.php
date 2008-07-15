@@ -61,7 +61,7 @@ if ( isset($_REQUEST["print"]) || isset($_REQUEST["display"])) {
 		}
 
 		$page_info = $tikilib->get_page_info($page);
-		$page_info['parsed'] = $tikilib->parse_data($page_info['data'], $page_info['is_html']);
+		$page_info['parsed'] = $tikilib->parse_data($page_info['data'], array('is_html' => $page_info['is_html']));
 		$pages[] = $page_info;
 	}
 	foreach ($printstructures as $structureId) {
@@ -71,7 +71,7 @@ if ( isset($_REQUEST["print"]) || isset($_REQUEST["display"])) {
 			if ($struct_page['pos'] != '' && $struct_page['last'] == 1)
 				continue;
 			$page_info = $tikilib->get_page_info($struct_page['pageName']);
-			$page_info['parsed'] = $tikilib->parse_data($page_info['data'], $page_info['is_html']);
+			$page_info['parsed'] = $tikilib->parse_data($page_info['data'], array('is_html' => $page_info['is_html']));
 			$page_info['pos'] = $struct_page['pos'];
 			$page_info['h'] = empty($struct_page['pos'])? 0: count(explode('.', $struct_page['pos']));
 			$h = $page_info['h'] + 5;

@@ -140,7 +140,7 @@ if (isset($_REQUEST["preview"])) {
 		$info["datatxt"] = '';
 	}
 	if (!empty($_REQUEST["usedTpl"])) {
-		$smarty->assign('dataparsed', $tikilib->parse_data($info["data"], false, true));
+		$smarty->assign('dataparsed', $tikilib->parse_data($info["data"], array('absolute_links' => true)));
 		$smarty->assign('subject', $info["subject"]);
 		$info["dataparsed"]  = $smarty->fetch("newsletters/".$_REQUEST["usedTpl"]);
 	        if (stristr($info['dataparsed'], "<body>") === false) {
@@ -148,7 +148,7 @@ if (isset($_REQUEST["preview"])) {
         	}
 		$smarty->assign("usedTpl", $_REQUEST["usedTpl"]);
 	} else {
-		$info["dataparsed"] = "<html><body>".$tikilib->parse_data($info["data"], false, true)."</body></html>";
+		$info["dataparsed"] = "<html><body>".$tikilib->parse_data($info["data"], array('absolute_links' => true))."</body></html>";
 	}
 	$smarty->assign('info', $info);
 }
@@ -167,11 +167,11 @@ if (isset($_REQUEST["save"])) {
         $smarty->assign('datatxt', $_REQUEST["datatxt"]);
 	$parsed = '';
 	if (!empty($_REQUEST["usedTpl"])) {
-		$smarty->assign('dataparsed', $tikilib->parse_data($_REQUEST["data"], false, true));
+		$smarty->assign('dataparsed', $tikilib->parse_data($_REQUEST["data"], array('absolute_links' => true)));
 		$smarty->assign('subject', $_REQUEST["subject"]);
 		$parsed = $smarty->fetch("newsletters/".$_REQUEST["usedTpl"]);
 	} else {
-		$parsed = $tikilib->parse_data($_REQUEST["data"], false, true);
+		$parsed = $tikilib->parse_data($_REQUEST["data"], array('absolute_links' => true));
 	}
 	if (empty($parsed) && !empty($_REQUEST['datatxt'])) {
 		$parsed = $_REQUEST['datatxt'];
@@ -207,7 +207,7 @@ if (isset($_REQUEST["send"])) {
 	$mail = new TikiMail();	
 	
 	if (stristr($_REQUEST["dataparsed"], "<body>") === false) {
-		$html = "<html><body>".$tikilib->parse_data($_REQUEST["dataparsed"], false, true)."</body></html>";
+		$html = "<html><body>".$tikilib->parse_data($_REQUEST["dataparsed"], array('absolute_links' => true))."</body></html>";
 	} else {
 		$html = $_REQUEST["dataparsed"];
 	}

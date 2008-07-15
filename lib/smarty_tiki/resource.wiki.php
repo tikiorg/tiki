@@ -22,7 +22,7 @@ function smarty_resource_wiki_source($page, &$tpl_source, &$smarty) {
 	if (empty($info)) {
 		return false;
 	}
-	$tpl_source = $tikilib->parse_data($info['data'],$info['is_html']);
+	$tpl_source = $tikilib->parse_data($info['data'], array('is_html' => $info['is_html']));
 	return true;
 }
 
