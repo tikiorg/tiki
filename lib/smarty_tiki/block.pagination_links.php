@@ -207,7 +207,7 @@ function smarty_block_pagination_links($params, $url, &$smarty, $repeat) {
 			}
 		}
 
-		if ( $prefs['direct_pagination'] == 'y' ) {
+		if ( $prefs['direct_pagination'] == 'y' && $nb_pages > 1 ) {
 			$html .= "\n<br />";
 			$last_dots = false;
 			$page_num = floor($real_offset / $params['step']);
