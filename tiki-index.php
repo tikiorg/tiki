@@ -508,13 +508,7 @@ $smarty->assign_by_ref('description',$info['description']);
 if ( isset($_REQUEST['saved_msg']) && $info['user'] == $user ) {
 	// Generate the 'Page has been saved...' message
 	require_once('lib/smarty_tiki/modifier.userlink.php');
-	$smarty->assign('saved_msg',
-		sprintf(
-			tra('%s - Version %d of this page has been saved by %s.'),
-			TikiLib::date_format($prefs['long_date_format'].' '.$prefs['long_time_format'], $info['lastModif']),
-			$info['version'], smarty_modifier_userlink($info['user'])
-		)
-	);
+	$smarty->assign('saved_msg', sprintf( tra('Page saved (version %d).'), $info['version'] ) );
 }
 
 // Comments engine!
