@@ -1433,12 +1433,13 @@ class TrackerLib extends TikiLib {
 		return $total;
 	}
 
-	function import_csv($trackerId, $csvHandle, $replace = true, $dateFormat='', $encoding='UTF8') {
+	function import_csv($trackerId, $csvHandle, $replace = true, $dateFormat='', $encoding='UTF8', $csvDelimiter=',') {
 		global $tikilib;
 		$tracker_info = $this->get_tracker_options($trackerId);
-		if (($header = fgetcsv($csvHandle,100000)) === FALSE) {
+		if (($header = fgetcsv($csvHandle,100000,  $csvDelimiter)) === FALSE) {
 			return 'Illegal first line';
 		}
+	
 		$max = count($header);
 		for ($i = 0; $i < $max; $i++) {
 			if ($encoding == 'ISO-8859-1') {
@@ -1452,7 +1453,7 @@ class TrackerLib extends TikiLib {
 		$total = 0;
 		$need_reindex = array();
 		$fields = $this->list_tracker_fields($trackerId, 0, -1, 'position_asc', '');
-		while (($data = fgetcsv($csvHandle,100000)) !== FALSE) {
+		while (($data = fgetcsv($csvHandle,100000,  $csvDelimiter)) !== FALSE) {
 			$status = $tracker_info['defaultStatus'];
 			$itemId = 0;
 			$created = $tikilib->now;
@@ -1491,6 +1492,7 @@ class TrackerLib extends TikiLib {
 				$replace = false;
 			}
 			$need_reindex[] = $itemId;
+
 			if (!empty($cats)) {
 				foreach ($cats as $c) {
 					$this->categorized_item($trackerId, $itemId, "item $itemId", $cats);

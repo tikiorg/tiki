@@ -27,7 +27,7 @@ if (isset($_FILES['importfile']) && is_uploaded_file($_FILES['importfile']['tmp_
 	$total = 'Incorrect file';
 	$fp = @ fopen($_FILES['importfile']['tmp_name'], "rb");
 	if ($fp) {
-		$total = $trklib->import_csv($_REQUEST["trackerId"],$fp, true, isset($_REQUEST['dateFormat'])? $_REQUEST['dateFormat']: '', isset($_REQUEST['encoding'])? $_REQUEST['encoding']: 'UTF8');
+		$total = $trklib->import_csv($_REQUEST["trackerId"],$fp, true, isset($_REQUEST['dateFormat'])? $_REQUEST['dateFormat']: '', isset($_REQUEST['encoding'])? $_REQUEST['encoding']: 'UTF8', isset($_REQUEST['separator'])? $_REQUEST['separator']:',');
 	}
 	fclose($fp);
 	if (!is_numeric($total)) {

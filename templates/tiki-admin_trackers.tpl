@@ -329,6 +329,7 @@ categories = {$catsdump}
 <form action="tiki-import_tracker.php?trackerId={$trackerId}" method="post" enctype="multipart/form-data">
 <table class="normal">
 <tr class="formcolor"><td>{tr}File{/tr}</td><td><input name="importfile" type="file" /></td></tr>
+<tr class="formcolor"><td>{tr}Separator{/tr}</td><td><input name="separator" type="text" value="," /></td></tr>
 <tr class="formcolor"><td>{tr}Date Format{/tr}</td><td>
 <input type="radio" name="dateFormat" value="mm/dd/yyyy" checked="ckecked" />{tr}month{/tr}/{tr}day{/tr}/{tr}year{/tr}(01/31/2008)<br />
 <input type="radio" name="dateFormat" value="dd/mm/yyyy" />{tr}day{/tr}/{tr}month{/tr}/{tr}year{/tr}(31/01/2008)<br />
