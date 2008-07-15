@@ -11,20 +11,16 @@
 {if $chdata.type ne 'o' and  $chdata.type ne '-'}
 
 {if $opensec > 0}
-{assign var=sectionType value=$chdata.type}
-{php}
-global $smarty;
-$opensec = $smarty->get_template_vars('opensec');
-$sectionType= $smarty->get_template_vars('sectionType');
-if ($sectionType == 's' or $sectionType == 'r') {
-	$sectionType = 0;
-}
-while ($opensec > $sectionType) {
-	--$opensec;
-	echo '</ul></li>';
-}
-$smarty->assign('opensec', $opensec);
-{/php}
+	{if $chdata.type eq 's' or $chdata.type eq 'r'}
+		{assign var=sectionType value=0}
+	{else}
+		{assign var=sectionType value=$chdata.type}
+	{/if}
+	{if $opensec > $sectionType}
+		{assign var=nb_opensec value=$opensec-$sectionType}
+		{repeat count=$nb_opensec}</ul></li>{/repeat}
+		{assign var=opensec value=$sectionType}
+	{/if}
 {/if}
 
 <li class="option{$chdata.optionId} menuSection menuSection{$opensec} menuLevel{$opensec}{if $chdata.selected} selected{/if}{if $chdata.selectedAscendant} selectedAscendant{/if}">
@@ -50,14 +46,8 @@ $smarty->assign('opensec', $opensec);
 {/foreach}
 
 {if $opensec > 0}
-{php}
-global $smarty;
-$opensec = $smarty->get_template_vars('opensec');
-while ($opensec) {
-	--$opensec;
-	echo '</ul></li>';
-}
-{/php}
+	{repeat count=$opensec}</ul></li>{/repeat}
+	{assign var=opensec value=0}
 {/if}
 
 </ul>
