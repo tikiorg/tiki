@@ -2811,6 +2811,7 @@ CREATE TABLE "tiki_menus" (
   "name" varchar(200) default '' NOT NULL,
   "description" clob,
   "type" char(1) default NULL,
+  "icon" varchar(200) default NULL,
   PRIMARY KEY (menuId)
 ) ENGINE=MyISAM  ;
 
