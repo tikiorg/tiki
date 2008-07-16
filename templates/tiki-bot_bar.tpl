@@ -1,17 +1,9 @@
-{* $Id$ *}
-{if ($prefs.feature_site_report eq 'y' && $tiki_p_site_report eq 'y') || ($prefs.feature_site_send_link eq 'y' and $prefs.feature_tell_a_friend eq 'y' and $tiki_p_tell_a_friend eq 'y')}
-<div id="site_report">
-{if ($prefs.feature_site_report eq 'y' && $tiki_p_site_report eq 'y')}
-<a href="tiki-tell_a_friend.php?report=y&amp;url={$smarty.server.REQUEST_URI|escape:'url'}">{tr}Report to Webmaster{/tr}</a>
-{/if}
-{if ($prefs.feature_site_send_link eq 'y' and $prefs.feature_tell_a_friend eq 'y' and $tiki_p_tell_a_friend eq 'y')}
-<a href="tiki-tell_a_friend.php?url={$smarty.server.REQUEST_URI|escape:'url'}">{tr}Send a link{/tr}</a>
-{/if}
-</div>
-{/if}
-
 {if $prefs.feature_bot_logo eq 'y'}{eval var=$prefs.bot_logo_code}{/if}
-
+{if ($prefs.feature_site_report eq 'y' && $tiki_p_site_report eq 'y')}
+	<div id="site_report">
+		<a href="tiki-tell_a_friend.php?report=y&amp;url={$smarty.server.REQUEST_URI|escape:'url'}">{tr}Report to Webmaster{/tr}</a>
+	</div>
+{/if}
 {if $prefs.feature_bot_bar_icons eq 'y'}
 	<div id="power" style="text-align: center">
 		<a href="http://tikiwiki.org/" title="Tikiwiki"><img style="border: 0; vertical-align: middle" alt="{tr}Powered by{/tr} Tikiwiki" src="img/tiki/tikibutton2.png" /></a>
@@ -27,9 +19,7 @@
 		<a href="http://www.hawhaw.de/" title="HAWHAW"><img style="border: 0; vertical-align: middle" alt="{tr}powered by{/tr} HAWHAW" src="img/poweredbyhawhaw.gif"  /></a>		
 		{/if}		
 	</div>
-
 {/if}
-
 {if $prefs.feature_bot_bar_rss eq 'y'}
 	<div id="rss" style="text-align: center">
 		{if $prefs.feature_wiki eq 'y' and $prefs.rss_wiki eq 'y' and $tiki_p_view eq 'y'}
@@ -70,15 +60,19 @@
 		{/if}
 	</div>
 {/if}
-
+<div id="credits">
+{include file="credits.tpl"}
+{if $prefs.feature_topbar_date eq 'y'}
+	{if $prefs.feature_calendar eq 'y' and $tiki_p_view_calendar eq 'y'}
+	<a href="tiki-calendar.php">{$smarty.now|tiki_short_datetime}</a>
+	{else}
+	{$smarty.now|tiki_short_datetime}
+	{/if}
+{/if}
+</div>
 {if $prefs.feature_babelfish eq 'y' or $prefs.feature_babelfish_logo eq 'y'}
 	{include file="babelfish.tpl"}
 {/if}
-
-<div id="power">
-	{tr}Powered by{/tr} <a target="_blank" href="http://info.tikiwiki.org" title="{tr}This is{/tr} TikiWiki CMS/Groupware &#169; 2002&#8211;2008, {tr}The TikiWiki community{/tr}">{tr}TikiWiki CMS/Groupware{/tr}</a>
-</div>
-
 {if $prefs.feature_bot_bar_debug eq 'y'}
 <div id="loadstats" style="text-align: center">
 	<small>[ {tr}Execution time{/tr}: {elapsed} {tr}secs{/tr} ] &nbsp; [ {tr}Memory usage{/tr}: {memusage} ] &nbsp; [ {$num_queries} {tr}database queries used in {/tr} {$elapsed_in_db|truncate:3:''} secs ] &nbsp; [ GZIP {$gzip} ] &nbsp; [ {tr}Server load{/tr}: {$server_load} ]</small>

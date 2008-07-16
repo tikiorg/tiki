@@ -1,6 +1,11 @@
+{* $Id$ *}
+{* Template for Tikiwiki site identity header *}
 {if $filegals_manager ne 'y' and $print_page ne 'y'}
-{if $prefs.feature_sitesearch eq 'y' and $prefs.feature_search eq 'y' and $tiki_p_search eq 'y'}
-		<div id="sitesearchbar"{if $prefs.feature_sitelogo neq 'y' and $prefs.feature_sitead neq 'y' and $prefs.feature_fullscreen eq 'y' and $filegals_manager ne 'y' and $print_page ne 'y'}{if $smarty.session.fullscreen neq 'y'}style="margin-right: 80px"{/if}{/if}>{if $prefs.feature_search_fulltext eq 'y'}
+	{if $prefs.feature_sitemycode eq 'y' && ($prefs.sitemycode_publish eq 'y' or $tiki_p_admin eq 'y')}
+		{eval var=$prefs.sitemycode}{* here will be parsed the custom site header code *}
+	{/if}
+	{if $prefs.feature_sitesearch eq 'y' and $prefs.feature_search eq 'y' and $tiki_p_search eq 'y'}
+		<div id="sitesearchbar">{if $prefs.feature_search_fulltext eq 'y'}
 		{include file="tiki-searchresults.tpl"
 									searchNoResults="false"
 									searchStyle="menu"
@@ -10,15 +15,22 @@
 									searchStyle="menu"
 									searchOrientation="horiz"}{/if}
 		</div>{* search the site *}
-{/if}
-{/if}
-{if $prefs.feature_sitemenu eq 'y'}
-	{if $prefs.feature_phplayers eq 'y'}
-		{phplayers id=$prefs.feature_topbar_id_menu type=horiz}
-	{else}
-		{menu id=$prefs.feature_topbar_id_menu type=horiz css=y}
+	{/if}
+	{if $prefs.feature_sitelogo eq 'y'}
+		<div id="sitelogo" style="{if $prefs.sitelogo_bgcolor ne ''}background-color: {$prefs.sitelogo_bgcolor}; {/if}text-align: {$prefs.sitelogo_align};{if $prefs.sitelogo_bgstyle} background: {$prefs.sitelogo_bgstyle};{/if}">
+			<a href="./" title="{$prefs.sitelogo_title}"><img src="{$prefs.sitelogo_src}" alt="{$prefs.sitelogo_alt}" style="border: none" /></a>
+		</div>{* site logo *}
+	{/if}
+	{if $prefs.feature_sitead eq 'y' and $print_page ne 'y'}
+		<div id="sitead" align="center">
+			{if $prefs.feature_sitead eq 'y' && ($prefs.sitead_publish eq 'y' or $tiki_p_admin eq 'y')}{eval var=$prefs.sitead}{/if}
+		</div>{* optional ads (banners) *}
+	{/if}
+	{if $prefs.feature_site_login eq 'y'}
+		{include file="tiki-site_header_login.tpl"}
 	{/if}
 {/if}
+
 {if $prefs.feature_siteloc eq 'y' and $prefs.feature_breadcrumbs eq 'y'}
 		<div id="sitelocbar">
 			<small>{if $prefs.feature_siteloclabel eq 'y'}{tr}Location : {/tr}{/if}{if
@@ -54,4 +66,9 @@
 		</div>{* bar with location indicator *}
 	{if $trail}{breadcrumbs	type="desc"	loc="site" crumbs=$trail}{
 	 else}{breadcrumbs type="desc" loc="site" crumbs=$crumbs}{/if}
+{/if}
+{if $prefs.feature_sitenav eq 'y'}
+		<div id="sitenavbar">
+			{eval var=$prefs.sitenav_code}
+		</div>{* site navigation bar/phplayers menu *}
 {/if}

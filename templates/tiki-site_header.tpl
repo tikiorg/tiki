@@ -1,74 +1,63 @@
 {* $Id$ *}
 {* Template for Tikiwiki site identity header *}
-{if $filegals_manager ne 'y' and $print_page ne 'y'}
-	{if $prefs.feature_sitemycode eq 'y' && ($prefs.sitemycode_publish eq 'y' or $tiki_p_admin eq 'y')}
-		{eval var=$prefs.sitemycode}{* here will be parsed the custom site header code *}
+{if $prefs.feature_sitemycode eq 'y' && ($prefs.sitemycode_publish eq 'y' or $tiki_p_admin eq 'y')}
+	{if $prefs.feature_sitead eq 'y' && ($prefs.sitead_publish eq 'y' or $tiki_p_admin eq 'y')}
+		<div id="sitead" class="floatright">
+			{eval var=$prefs.sitead}
+		</div>
+		<div id="customcodewith_ad">
+			{eval var=$prefs.sitemycode}{* here will be parsed the 400px-wide custom site header code *}
+		</div>
+		{else}
+		<div id="customcode">
+			{eval var=$prefs.sitemycode}
+		</div>
 	{/if}
-	{if $prefs.feature_sitesearch eq 'y' and $prefs.feature_search eq 'y' and $tiki_p_search eq 'y'}
-		<div id="sitesearchbar">{if $prefs.feature_search_fulltext eq 'y'}
-		{include file="tiki-searchresults.tpl"
-									searchNoResults="false"
-									searchStyle="menu"
-									searchOrientation="horiz"}{else}
-		{include file="tiki-searchindex.tpl"
-									searchNoResults="false"
-									searchStyle="menu"
-									searchOrientation="horiz"}{/if}
-		</div>{* search the site *}
+{/if}
+{* Site logo left or right, and sitead or not. *}
+{if $prefs.feature_sitelogo eq 'y' and $prefs.sitelogo_align neq 'center'}
+<div class="clearfix" id="sioptions">
+	{if $prefs.feature_sitelogo eq 'y' and $prefs.sitelogo_align eq 'left'}
+		{if $prefs.feature_sitead eq 'y' && ($prefs.sitead_publish eq 'y' or $tiki_p_admin eq 'y')}
+		<div id="sitead" class="floatright">{eval var=$prefs.sitead}</div>
+		{/if}
+		<div id="sitelogo" class="floatleft" {if $prefs.sitelogo_bgcolor ne ''}style="background-color: {$prefs.sitelogo_bgcolor};"{/if}>
+		<a href="./" title="{$prefs.sitelogo_title}"><img src="{$prefs.sitelogo_src}" alt="{$prefs.sitelogo_alt}" style="border: none" /></a>
+	</div>
 	{/if}
-	{if $prefs.feature_sitelogo eq 'y'}
-		<div id="sitelogo" style="{if $prefs.sitelogo_bgcolor ne ''}background-color: {$prefs.sitelogo_bgcolor}; {/if}text-align: {$prefs.sitelogo_align};{if $prefs.sitelogo_bgstyle} background: {$prefs.sitelogo_bgstyle};{/if}">
-			<a href="./" title="{$prefs.sitelogo_title}"><img src="{$prefs.sitelogo_src}" alt="{$prefs.sitelogo_alt}" style="border: none" /></a>
-		</div>{* site logo *}
+	{if $prefs.feature_sitelogo eq 'y' and $prefs.sitelogo_align eq 'right'}
+		{if $prefs.feature_sitead eq 'y' && ($prefs.sitead_publish eq 'y' or $tiki_p_admin eq 'y')}
+		<div id="sitead" class="floatleft">{eval var=$prefs.sitead}</div>
+		{/if}
+		<div id="sitelogo" class="floatright"{if $prefs.sitelogo_bgcolor ne ''} style="background-color: {$prefs.sitelogo_bgcolor};" {/if}>
+		<a href="./" title="{$prefs.sitelogo_title}"><img src="{$prefs.sitelogo_src}" alt="{$prefs.sitelogo_alt}" style="border: none" /></a>
+	</div>
 	{/if}
-	{if $prefs.feature_sitead eq 'y' and $print_page ne 'y'}
-		<div id="sitead" align="center">
-			{if $prefs.feature_sitead eq 'y' && ($prefs.sitead_publish eq 'y' or $tiki_p_admin eq 'y')}{eval var=$prefs.sitead}{/if}
-		</div>{* optional ads (banners) *}
-	{/if}
-	{if $prefs.feature_site_login eq 'y'}
-		{include file="tiki-site_header_login.tpl"}
-	{/if}
+</div>
 {/if}
 
-{if $prefs.feature_siteloc eq 'y' and $prefs.feature_breadcrumbs eq 'y'}
-		<div id="sitelocbar">
-			<small>{if $prefs.feature_siteloclabel eq 'y'}{tr}Location : {/tr}{/if}{if
-	$trail}{breadcrumbs
-			type="trail"
-			loc="site"
-			crumbs=$trail}{breadcrumbs
-							type="pagetitle"
-							loc="site"
-							crumbs=$trail}{else}<a title="{tr}{$crumbs[0]->description}{/tr}" href="{$crumbs[0]->url}" accesskey="1">{$crumbs[0]->title}</a>
-		{if $structure eq 'y'}
-			{section loop=$structure_path name=ix}
-				{$prefs.site_crumb_seper|escape:"html"}
-				{if $structure_path[ix].pageName ne $page or $structure_path[ix].page_alias ne $page_info.page_alias}
-			<a href="tiki-index.php?page_ref_id={$structure_path[ix].page_ref_id}">
-				{/if}
-				{if $structure_path[ix].page_alias}
-					{$structure_path[ix].page_alias}
-				{else}
-					{if $beingStaged eq 'y' and $prefs.wikiapproval_hideprefix == 'y'}{$approvedPageName}{else}{$structure_path[ix].pageName}{/if}
-				{/if}
-				{if $structure_path[ix].pageName ne $page or $structure_path[ix].page_alias ne $page_info.page_alias}
-					</a>
-				{/if}
-			{/section}
-		{else}
-			{if $page ne ''}{$prefs.site_crumb_seper|escape:"html"} {if $beingStaged eq 'y' and $prefs.wikiapproval_hideprefix == 'y'}{$approvedPageName}{else}{$page}{/if}
-			{elseif $title ne ''}{$prefs.site_crumb_seper|escape:"html"} {$title}
-			{elseif $thread_info.title ne ''}{$prefs.site_crumb_seper|escape:"html"} {$thread_info.title}
-			{elseif $forum_info.name ne ''}{$prefs.site_crumb_seper|escape:"html"} {$forum_info.name}{/if}
+{* Sitelogo centered, and sitead: to work in small vertical space, ad (halfbanner) is floated left; a second bannerzone is floated right. *}
+{if $prefs.feature_sitelogo eq 'y' and $prefs.sitelogo_align eq 'center'}
+<div class="clearfix" id="sioptionscentered">
+	{if $prefs.feature_sitead eq 'y' && ($prefs.sitead_publish eq 'y' or $tiki_p_admin eq 'y')}
+	<div class="floatright"><div id="bannertopright">{banner zone='topright'}</div></div>{/if}
+	{if $prefs.feature_sitead eq 'y' && ($prefs.sitead_publish eq 'y' or $tiki_p_admin eq 'y')}
+		<div id="sitead" class="floatleft" {*style="width: 300px"*}>{eval var=$prefs.sitead}</div>
 		{/if}
-	{/if}</small>
-		</div>{* bar with location indicator *}
-	{if $trail}{breadcrumbs	type="desc"	loc="site" crumbs=$trail}{
-	 else}{breadcrumbs type="desc" loc="site" crumbs=$crumbs}{/if}
+	<div id="sitelogo"{if $prefs.sitelogo_bgcolor ne ''} style="background-color: {$prefs.sitelogo_bgcolor};" {/if}><a href="./" title="{$prefs.sitelogo_title}"><img src="{$prefs.sitelogo_src}" alt="{$prefs.sitelogo_alt}" style="border: none" /></a>
+	</div>	
+</div>
 {/if}
-{if $prefs.feature_sitenav eq 'y'}
-		<div id="sitenavbar">
-			{eval var=$prefs.sitenav_code}
-		</div>{* site navigation bar/phplayers menu *}
+
+{* No sitelogo but a sitead: ad is centered. *}
+{if $prefs.feature_sitelogo eq 'n'}
+	{if $prefs.feature_sitead eq 'y' && ($prefs.sitead_publish eq 'y' or $tiki_p_admin eq 'y')}
+	<div align="center">
+	{eval var=$prefs.sitead}</div>
+	{/if}
+{/if}
+{if $filegals_manager ne 'y' and $print_page ne 'y'}
+{if $prefs.feature_site_login eq 'y'}
+	{include file="tiki-site_header_login.tpl"}
+{/if}
 {/if}
