@@ -271,7 +271,7 @@
 {elseif $field_value.type eq 'R'}
 	{section name=jx loop=$field_value.options_array}
 		<input type="radio" name="{$field_value.ins_id}" value="{$field_value.options_array[jx]|escape}" {if $field_value.value eq $field_value.options_array[jx] or $field_value.defaultvalue eq $field_value.options_array[jx]}checked="checked"{/if} id="{$field_value.ins_id}" />
-		<label for="{$field_value.ins_id}">{$field_value.options_array[jx]|escape}</label>
+		<label for="{$field_value.ins_id}">{tr}{$field_value.options_array[jx]}{/tr}</label>
 {/section}
 
 {* -------------------- checkbox -------------------- *}
