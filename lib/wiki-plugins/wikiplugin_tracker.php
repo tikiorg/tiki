@@ -147,7 +147,15 @@ function wikiplugin_tracker($data, $params) {
 				foreach ($flds['data'] as $fl) {
 					// store value to display it later if form
 					// isn't fully filled.
-					if ($flds['data'][$cpt]['type'] == 'f') {
+					if ($flds['data'][$cpt]['type'] == 's' && $flds['data'][$cpt]['name'] == 'Rating') {
+						if (isset($_REQUEST['track'][$fl['fieldId']])) {
+							$newItemRate = $_REQUEST['track'][$fl['fieldId']];
+							$newItemRateField = $fl['fieldId'];
+						} else {
+							$newItemRate = NULL;
+						}
+
+					} elseif ($flds['data'][$cpt]['type'] == 'f') {
 						$ins_id = 'track_'.$fl['fieldId'];
 						if (isset($_REQUEST[$ins_id.'Day'])) {
 							if (empty($_REQUEST['$ins_id'.'Hour'])) {
@@ -260,6 +268,9 @@ function wikiplugin_tracker($data, $params) {
 					}
 					$rid = $trklib->replace_item($trackerId,$itemId,$ins_fields, $status, $ins_categs);
 					$trklib->categorized_item($trackerId, $rid, $mainfield, $ins_categs);
+					if (isset($newItemRate)) {
+						$trklib->replace_rating($trackerId, $rid, $newItemRateField, $user, $newItemRate);
+					}
 					if (!empty($email)) {
 						$emailOptions = split("\|", $email);
 						if (is_numeric($emailOptions[0])) {
