@@ -21,7 +21,7 @@ if ($tiki_p_view_calendar != 'y') {
 	require_once ('tiki-rss_error.php');
 }
 
-$feed = "calendars";
+$feed = "calendar";
 $calendarIds=array();
 if (isset($_REQUEST["calendarIds"])) {
     $calendarIds = $_REQUEST["calendarIds"];
@@ -36,10 +36,8 @@ if (isset($_REQUEST["calendarIds"])) {
 $output = $rsslib->get_from_cache($uniqueid);
 
 if ($output["data"]=="EMPTY") {
-	$tmp = tra("Tiki RSS feed for calendars");
-	$title = (!empty($title_rss_calendars)) ? $title_rss_calendars : $tmp;
-	$tmp = tra("Upcoming events.");
-	$desc = (!empty($desc_rss_calendars)) ? $desc_rss_calendars : $tmp;
+	$title = tra("Tiki RSS feed for calendars");
+	$desc = tra("Upcoming events.");
 	$id = "calitemId";
 	$titleId = "name";
 	$descId = "body";
