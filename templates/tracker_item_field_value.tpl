@@ -46,15 +46,8 @@
 			{if $field_value.options_array[4] eq '1' and $showlinks ne 'n' and $list_mode ne 'csv'}
 				<a href="tiki-view_tracker_item.php?itemId={$tid}&amp;trackerId={$field_value.options_array[0]}">
 			{/if}
-			{if isset($field_value.otherField)}
-				{assign var='field_value.otherField.value' value=$tlabel}
-				{include file="tracker_item_field_value.tpl" field_value=$field_value.otherField showlinks=n}
-			{elseif $list_mode eq 'y'}
-				{$tlabel|truncate:255:"..."}
-			{else}
-				{$tlabel}
-			{/if}
-			{if $field_value.options_array[4] eq '1' and $showlinks ne 'n' and $list_mode ne 'csv'}
+			{$tlabel}
+			{if $field_value.options_array[4] eq '1' and $showlinks ne 'n'and $list_mode ne 'csv'}
 				</a>
 			{/if}
 			{if $list_mode ne 'csv' and count($field_value.links) > 1}

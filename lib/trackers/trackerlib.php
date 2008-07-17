@@ -815,7 +815,8 @@ class TrackerLib extends TikiLib {
 			case 'l':
 				if ( isset($fopt['options_array'][2]) && isset($fil[$fopt['options_array'][2]]) && ($lst = $fil[$fopt['options_array'][2]]) && isset($fopt['options_array'][3])) {
 					$opts[1] = split(':', $fopt['options_array'][1]);
-					$fopt['links'] = $this->get_join_values($itemId, array_merge(array($fopt['options_array'][2]), array($fopt['options_array'][1]), array($fopt['options_array'][3])));
+					$finalFields = explode('|', $fopt['options_array'][3]);
+					$fopt['links'] = $this->get_join_values($itemId, array_merge(array($fopt['options_array'][2]), array($fopt['options_array'][1]), array($finalFields[0])), $fopt['options_array'][0], $finalFields);
 					$fopt['trackerId'] = $fopt['options_array'][0];
 				}
 				if (isset($fopt['links']) && count($fopt['links']) == 1) { //if a computed field use it
@@ -1439,7 +1440,6 @@ class TrackerLib extends TikiLib {
 		if (($header = fgetcsv($csvHandle,100000,  $csvDelimiter)) === FALSE) {
 			return 'Illegal first line';
 		}
-	
 		$max = count($header);
 		for ($i = 0; $i < $max; $i++) {
 			if ($encoding == 'ISO-8859-1') {
@@ -1492,7 +1492,6 @@ class TrackerLib extends TikiLib {
 				$replace = false;
 			}
 			$need_reindex[] = $itemId;
-
 			if (!empty($cats)) {
 				foreach ($cats as $c) {
 					$this->categorized_item($trackerId, $itemId, "item $itemId", $cats);
@@ -2549,7 +2548,8 @@ class TrackerLib extends TikiLib {
 		}
 		return $emails;
 	}
-	function get_join_values($itemId, $fieldIds) {
+	function get_join_values($itemId, $fieldIds, $finalTrackerId='', $finalFields='', $separator=' ') {
+		global $smarty;
 		$select[] = "`tiki_tracker_item_fields` t0";
 		$where[] = " t0.`itemId`=?";
 		$bindVars[] = $itemId;
@@ -2568,7 +2568,22 @@ class TrackerLib extends TikiLib {
 		$result = $this->query($query, $bindVars);
 		$ret = array();
 		while ($res = $result->fetchRow()) {
-			$ret[$res['itemId']] = $res['value'];
+			$field_value = $this->get_tracker_field($res['fieldId']);
+			$field_value['value'] = $res['value'];
+			$smarty->assign('field_value', $field_value);
+			$ret[$res['itemId']] = $smarty->fetch('tracker_item_field_value.tpl');
+			if (is_array($finalFields) && count($finalFields)) {
+				$i = 0;
+				foreach ($finalFields as $f) {
+					if (!$i++)
+						continue;
+					$field_value = $this->get_tracker_field($f);
+					$ff = $this->get_item_value($finalTrackerId, $res['itemId'], $f);;
+					$field_value['value'] = $ff;
+					$smarty->assign('field_value', $field_value);
+					$ret[$res['itemId']] .= $separator.$smarty->fetch('tracker_item_field_value.tpl');
+				}
+			}
 		}
 		return $ret;
 	}
