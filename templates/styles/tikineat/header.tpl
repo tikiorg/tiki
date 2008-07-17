@@ -55,21 +55,7 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 <!--[if lt IE 7]> <link rel="StyleSheet" href="css/ie6.css" type="text/css" /> <![endif]-->
 
 {* --- phplayers block --- *}
-{if $prefs.feature_phplayers eq 'y'}
-<link rel="StyleSheet" href="lib/phplayers/layerstreemenu.css" type="text/css"></link>
-<link rel="StyleSheet" href="lib/phplayers/layerstreemenu-hidden.css" type="text/css" />
-<script type="text/javascript">
-<!--//--><![CDATA[//><!--
-var numl;var toBeHidden;
-{php} include_once ("lib/phplayers/libjs/layersmenu-browser_detection.js"); global $LayersMenu, $TreeMenu, $PHPTreeMenu, $PlainMenu;{/php}
-//--><!]]>
-</script>
-<script type="text/javascript" src="lib/phplayers/libjs/layersmenu-library.js"></script>
-{* lets try this *}
-<script type="text/javascript" src="lib/phplayers/libjs/layersmenu.js"></script>
-{* will it work now ? (luci) *}
-<script type="text/javascript" src="lib/phplayers/libjs/layerstreemenu-cookies.js"></script>
-{/if}
+{if isset($phplayers_headers)}{$phplayers_headers}{/if}
 
 {*-- css menus block --*}
 <link rel="StyleSheet" href="css/cssmenu_vert.css" type="text/css"></link>
