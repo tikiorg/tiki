@@ -11,7 +11,7 @@
         <td class="heading" colspan="2"
             align="center">{tr}General Preferences{/tr}</td>
       </tr>
-	<tr><td width="40%" class="form">{tr}Tikiwiki version{/tr} : </td><td class="form">{$tiki_version}</td></tr>
+	<tr><td width="40%" class="form">{tr}Tikiwiki version{/tr} : </td><td class="form">{$tiki_version}<br /><span class="button2"><a class="linkbut" href="tiki-install.php">{tr}Reset or upgrade your database{/tr}</a></span></td></tr>
 	<tr><td colspan="2"><hr /></td></tr>
 
       <tr>
