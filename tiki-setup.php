@@ -119,6 +119,7 @@ if ( $prefs['feature_wysiwyg'] == 'y' ) {
 	if ( ! isset($_SESSION['wysiwyg']) ) $_SESSION['wysiwyg'] = 'n';
 	$smarty->assign_by_ref('wysiwyg', $_SESSION['wysiwyg']);
 }
+if ( $prefs['feature_phplayers'] == 'y' ) require_once('lib/setup/phplayers.php');
 
 $smarty->assign_by_ref('phpErrors', $phpErrors);
 $smarty->assign_by_ref('num_queries', $num_queries);
