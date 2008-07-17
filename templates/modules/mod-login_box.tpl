@@ -1,9 +1,8 @@
 {* $Id$ *}
 {if $do_not_show_login_box ne 'y'}
-{* test for caps lock*}
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
 {literal}
-<script language="Javascript">
-<!--
 function capLock(e){
  kc = e.keyCode?e.keyCode:e.which;
  sk = e.shiftKey?e.shiftKey:((kc == 16)?true:false);
@@ -12,9 +11,9 @@ function capLock(e){
  else
   document.getElementById('divCapson').style.visibility = 'hidden';
 }
-// -->
-</script>
 {/literal}
+//--><!]]>
+</script>
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Login{/tr}"}{/if}
 {tikimodule title=$tpl_module_title name="login_box" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox}
     {if $user}
