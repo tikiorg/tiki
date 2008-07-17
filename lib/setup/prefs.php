@@ -1027,7 +1027,6 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['wiki_3d_adjust_camera'] = '';
 	$prefs['wiki_3d_autoload'] = '';
 	$prefs['feature_sefurl'] = 'n';
-	$prefs['pref_syntax'] = '2.0';
 	$prefs['feature_mootools'] = 'n';
 	$prefs['javascript_enabled'] = 'n';
 	$prefs['feature_comments_post_as_anonymous'] = 'n';
@@ -1098,10 +1097,4 @@ $smarty->assign_by_ref('prefs', $prefs);
 // Define the special maxRecords global var
 $maxRecords = $prefs['maxRecords'];
 $smarty->assign_by_ref('maxRecords', $maxRecords);
-
-// DEPRECATED: Use $prefs array instead of each global vars to access prefs ; this will be removed soon
-if ($prefs['pref_syntax'] == '1.9') {
-	extract($prefs);
-	foreach ($prefs as $k=>$v) $smarty->assign($k, $v);
-}
 

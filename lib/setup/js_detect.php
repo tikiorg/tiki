@@ -16,9 +16,3 @@ if ( isset($_SESSION['tiki_cookie_jar']) && isset($_SESSION['tiki_cookie_jar']['
 	// Set a session var to be able to generate non-javascript code if there is no javascript, when noscript tag is not useful enough
 	$headerlib->add_js("setSessionVar('javascript_enabled','y');");
 }
-
-if ($prefs['pref_syntax'] == '1.9') {
-	$javascript_enabled = $prefs['javascript_enabled'];
-	$smarty->assign('javascript_enabled', $prefs['javascript_enabled']);
-}
-
