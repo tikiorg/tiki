@@ -65,7 +65,9 @@ class Smarty_Tikiwiki extends Smarty {
 		if ( ($tpl = $this->get_template_vars('mid')) && ( $_smarty_tpl_file == 'tiki.tpl' || $_smarty_tpl_file == 'tiki-print.tpl' || $_smarty_tpl_file == 'tiki_full.tpl' ) ) {
 
 			// Set the last mid template to be used by AJAX to simulate a 'BACK' action
-			$this->assign('last_mid_template', $_SESSION['last_mid_template']);
+			if ( isset($_SESSION['last_mid_template']) ) {
+				$this->assign('last_mid_template', $_SESSION['last_mid_template']);
+			}
 			$_SESSION['last_mid_template'] = $tpl;
 
 			// Enable Template Zoom

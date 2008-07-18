@@ -35,7 +35,7 @@
 //
 // $Id: net_pop3.php,v 1.4 2005-08-08 22:44:53 rlpowell Exp $
 
-require_once('Net/Socket.php');
+require_once('lib/pear/Net/Socket.php');
 
 
 
@@ -185,7 +185,7 @@ class Net_POP3 {
 
     function _raiseError($msg, $code =-1)
     {
-    include_once 'PEAR.php';
+    include_once 'lib/pear/PEAR.php';
     return PEAR::raiseError($msg, $code);
     }
 
