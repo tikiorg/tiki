@@ -7,7 +7,7 @@
 function tra($content, $lg='', $no_interactive = false) {
 	global $prefs;
 
-	if ($content) {
+	if ($content != '') {
 		if ($prefs['lang_use_db'] != 'y') {
 			global $lang;
 			if ($lg != "") {

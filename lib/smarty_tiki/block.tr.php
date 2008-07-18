@@ -18,7 +18,7 @@ if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== false) {
 include_once('lib/init/tra.php');
 
 function smarty_block_tr($params, $content, &$smarty) {
-	if (empty($content) )
+	if ($content == '')
 		return;
 	if (empty($params['lang'])) {
 		$lang = '';
