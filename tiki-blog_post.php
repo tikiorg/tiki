@@ -25,8 +25,15 @@ if ($prefs['feature_blogs'] != 'y') {
 	die;
 }
 
+if (isset($_REQUEST['blogId'])) {
+	$blogId = $_REQUEST['blogId'];
+	$blog_data = $tikilib->get_blog($blogId);
+} else {
+	$blogId = 0;
+}
+
 // Now check permissions to access this page
-if ((empty($_REQUEST['blogId']) && $tiki_p_blog_post != 'y') || (!empty($_REQUEST["blogId"]) && !$tikilib->user_has_perm_on_object($user, $_REQUEST['blogId'], 'blog', 'tiki_p_blog_post'))) {
+if (!($tiki_p_blog_admin == 'y' || (empty($blogId) && $tiki_p_blog_post == 'y') || (!empty($blogId) && $blog_data['public']== 'y' && $tikilib->user_has_perm_on_object($user, $blogId, 'blog', 'tiki_p_blog_post')))) {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied you cannot post"));
 
@@ -39,14 +46,6 @@ if ( $prefs['feature_wysiwyg'] == 'y' &&
 	|| ( isset($_REQUEST['wysiwyg']) && $_REQUEST['wysiwyg'] == 'y' )
 ) $smarty->assign('wysiwyg', 'y');
 else $smarty->assign('wysiwyg', 'n');
-
-if (isset($_REQUEST["blogId"])) {
-	$blogId = $_REQUEST["blogId"];
-
-	$blog_data = $tikilib->get_blog($_REQUEST["blogId"]);
-} else {
-	$blogId = 0;
-}
 
 $smarty->assign('blogId', $blogId);
 
