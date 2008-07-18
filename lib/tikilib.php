@@ -2713,12 +2713,13 @@ function add_pageview() {
     }
 
     function list_blogs_user_can_post($user) {
+	global $tiki_p_blog_admin, $user;
 	$query = "select * from `tiki_blogs` order by `title` asc";
 	$result = $this->query($query);
 	$ret = array();
 
 	while ($res = $result->fetchRow()) {
-	   if( $this->user_has_perm_on_object($user, $res['blogId'], 'blog', 'tiki_p_blog_post'))
+		if( (!empty($user) and $user == $res['user']) || $tiki_p_blog_admin == 'y' || ($res['public'] == 'y' && $this->user_has_perm_on_object($user, $res['blogId'], 'blog', 'tiki_p_blog_post')))
 			$ret[] = $res;
 	}
 	return $ret;
