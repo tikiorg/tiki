@@ -18,7 +18,7 @@ function capLock(e){
 {tikimodule title=$tpl_module_title name="login_box" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox}
     {if $user}
       <div>{tr}Logged in as{/tr}: <span style="white-space: nowrap">{$user|userlink}</span></div>
-      <p style="text-align: center"><a class="linkmodule linkbut" href="tiki-logout.php">{tr}Logout{/tr}</a></p>
+      <div style="text-align: center"><a class="linkmodule linkbut" href="tiki-logout.php">{tr}Logout{/tr}</a></div>
       {if $tiki_p_admin eq 'y'}
         <form action="{if $prefs.https_login eq 'encouraged' || $prefs.https_login eq 'required' || $prefs.https_login eq 'force_nocheck'}{$base_url_https}{/if}{$prefs.login_url}" method="post"{if $prefs.desactive_login_autocomplete eq 'y'} autocomplete="off"{/if}>
          <fieldset>
@@ -30,7 +30,7 @@ function capLock(e){
           <sup><a class="linkmodule tikihelp" href="tiki-admin_modules.php"
           title="{tr}Paramaters{/tr}: $input_size {tr}applicable for this item{/tr}"><small><strong>?</strong></small></a></sup>
          {/if}
-          <p style="text-align: center"><button type="submit" name="actsu">{tr}Switch{/tr}</button></p>
+          <div style="text-align: center"><button type="submit" name="actsu">{tr}Switch{/tr}</button></div>
          </fieldset>
         </form>
       {/if}
@@ -111,33 +111,33 @@ function capLock(e){
             {if $prefs.rememberme eq 'always'}
               <input type="hidden" name="rme" id="login-remember" value="on" />
             {else}
-              <p style="text-align: center"><label for="login-remember">{tr}Remember me{/tr}</label> <input type="checkbox" name="rme" id="login-remember" value="on" /></p>
+              <div style="text-align: center"><label for="login-remember">{tr}Remember me{/tr}</label> <input type="checkbox" name="rme" id="login-remember" value="on" /></div>
             {/if}
           {/if}
-          <p style="text-align: center"><button type="submit" name="login">{tr}Login{/tr}</button></p>
+          <div style="text-align: center"><button type="submit" name="login">{tr}Login{/tr}</button></div>
        </fieldset>
           
           {if $prefs.forgotPass eq 'y' and $prefs.allowRegister eq 'y' and $prefs.change_password eq 'y'}
-            <p>[ <a class="linkmodule" href="tiki-register.php" title="{tr}Click here to register{/tr}">{tr}Register{/tr}</a> | <a class="linkmodule" href="tiki-remind_password.php" title="{tr}Click here if you've forgotten your password{/tr}">{tr}I forgot my pass{/tr}</a> ]</p>
+            <div>[ <a class="linkmodule" href="tiki-register.php" title="{tr}Click here to register{/tr}">{tr}Register{/tr}</a> | <a class="linkmodule" href="tiki-remind_password.php" title="{tr}Click here if you've forgotten your password{/tr}">{tr}I forgot my pass{/tr}</a> ]</div>
           {/if}
           {if $prefs.forgotPass eq 'y' and $prefs.allowRegister ne 'y' and $prefs.change_password eq 'y'}
-            <p><a class="linkmodule" href="tiki-remind_password.php" title="{tr}Click here if you've forgotten your password{/tr}">{tr}I forgot my password{/tr}</a></p>
+            <div><a class="linkmodule" href="tiki-remind_password.php" title="{tr}Click here if you've forgotten your password{/tr}">{tr}I forgot my password{/tr}</a></div>
           {/if}
           {if ($prefs.forgotPass ne 'y' or $prefs.change_password ne 'y') and $prefs.allowRegister eq 'y'}
-            <p><a class="linkmodule" href="tiki-register.php" title="{tr}Click here to register{/tr}">{tr}Register{/tr}</a></p>
+            <div><a class="linkmodule" href="tiki-register.php" title="{tr}Click here to register{/tr}">{tr}Register{/tr}</a></div>
           {/if}
           {if ($prefs.forgotPass ne 'y' or $prefs.change_password ne 'y') and $prefs.allowRegister ne 'y'}
           &nbsp;
           {/if}
           {if $prefs.feature_switch_ssl_mode eq 'y' && ($prefs.https_login eq 'allowed' || $prefs.https_login eq 'encouraged')}
-          <p>
+          <div>
             <a class="linkmodule" href="{$base_url_http}{$prefs.login_url}" title="{tr}Click here to login using the default security protocol{/tr}">{tr}Standard{/tr}</a> |
             <a class="linkmodule" href="{$base_url_https}{$prefs.login_url}" title="{tr}Click here to login using a secure protocol{/tr}">{tr}Secure{/tr}</a>
-          </p>
+          </div>
           {/if}
           {if $prefs.feature_show_stay_in_ssl_mode eq 'y' && $show_stay_in_ssl_mode eq 'y'}
-                <p><label for="login-stayssl">{tr}Stay in ssl Mode{/tr}:</label>?
-                <input type="checkbox" name="stay_in_ssl_mode" id="login-stayssl" {if $stay_in_ssl_mode eq 'y'}checked="checked"{/if} /></p>
+                <div><label for="login-stayssl">{tr}Stay in ssl Mode{/tr}:</label>?
+                <input type="checkbox" name="stay_in_ssl_mode" id="login-stayssl" {if $stay_in_ssl_mode eq 'y'}checked="checked"{/if} /></div>
           {/if}
 
       {if $prefs.feature_show_stay_in_ssl_mode neq 'y' || $show_stay_in_ssl_mode neq 'y'}
