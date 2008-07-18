@@ -1027,7 +1027,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['wiki_3d_adjust_camera'] = '';
 	$prefs['wiki_3d_autoload'] = '';
 	$prefs['feature_sefurl'] = 'n';
-	$prefs['feature_mootools'] = 'n';
+	$prefs['feature_mootools'] = 'y'; // Needed for shadowbox
 	$prefs['javascript_enabled'] = 'n';
 	$prefs['feature_comments_post_as_anonymous'] = 'n';
 	$prefs['feature_template_zoom'] = 'y';
