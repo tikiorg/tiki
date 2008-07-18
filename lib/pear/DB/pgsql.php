@@ -19,9 +19,9 @@
  * @author     Rui Hirokawa <hirokawa@php.net>
  * @author     Stig Bakken <ssb@php.net>
  * @author     Daniel Convissor <danielc@php.net>
- * @copyright  1997-2005 The PHP Group
+ * @copyright  1997-2007 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: Id: pgsql.php,v 1.136 2007/06/29 13:10:40 aharvey Exp 
+ * @version    CVS: $Id: pgsql.php,v 1.138 2007/09/21 13:40:41 aharvey Exp $
  * @link       http://pear.php.net/package/DB
  */
 
@@ -41,9 +41,9 @@ require_once 'DB/common.php';
  * @author     Rui Hirokawa <hirokawa@php.net>
  * @author     Stig Bakken <ssb@php.net>
  * @author     Daniel Convissor <danielc@php.net>
- * @copyright  1997-2005 The PHP Group
+ * @copyright  1997-2007 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.7.12
+ * @version    Release: 1.7.13
  * @link       http://pear.php.net/package/DB
  */
 class DB_pgsql extends DB_common
@@ -193,7 +193,7 @@ class DB_pgsql extends DB_common
      *     'portability' => DB_PORTABILITY_ALL,
      * );
      * 
-     * $db =& DB::connect($dsn, $options);
+     * $db = DB::connect($dsn, $options);
      * if (PEAR::isError($db)) {
      *     die($db->getMessage());
      * }
@@ -676,7 +676,7 @@ class DB_pgsql extends DB_common
         $repeat = false;
         do {
             $this->pushErrorHandling(PEAR_ERROR_RETURN);
-            $result =& $this->query("SELECT NEXTVAL('${seqname}')");
+            $result = $this->query("SELECT NEXTVAL('${seqname}')");
             $this->popErrorHandling();
             if ($ondemand && DB::isError($result) &&
                 $result->getCode() == DB_ERROR_NOSUCHTABLE) {
