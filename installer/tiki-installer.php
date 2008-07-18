@@ -71,7 +71,7 @@ function process_sql_file($file,$db_tiki) {
 	}
 
 	$command = '';
-	if(!$fp = fopen("db/$file", "r")) {
+	if ( !is_file("db/$file") || !$fp = fopen("db/$file", "r") ) {
 		print('Fatal: Cannot open db/'.$file);
 		exit(1);
 	}
@@ -576,13 +576,10 @@ if ($errors) {
 TikiInit::prependIncludePath('lib/adodb');
 TikiInit::prependIncludePath('lib/pear');
 
-
 define('ADODB_FORCE_NULLS', 1);
 define('ADODB_ASSOC_CASE', 2);
 define('ADODB_CASE_ASSOC', 2); // typo in adodb's driver for sybase?
-include_once ('adodb.inc.php');
-//include_once ('adodb-pear.inc.php'); //really needed?
-
+include_once ('lib/adodb/adodb.inc.php');
 
 // next block checks if there is a local.php and if we can connect through this.
 // sets $dbcon to false if there is no valid local.php
@@ -700,7 +697,7 @@ if ( $admin_acc == 'n' ) $_SESSION["install-logged-$multi"] = 'y';
 $smarty->assign('dbdone', 'n');
 $smarty->assign('logged', $logged);
 
-if ( is_object($dbTiki) && isset($_SESSION["install-logged-$multi"]) && $_SESSION["install-logged-$multi"] == 'y' ) {
+if ( isset($dbTiki) && is_object($dbTiki) && isset($_SESSION["install-logged-$multi"]) && $_SESSION["install-logged-$multi"] == 'y' ) {
 	$smarty->assign('logged', 'y');
 
 	if ( isset($_REQUEST['scratch']) ) {
