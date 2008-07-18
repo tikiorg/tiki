@@ -1170,6 +1170,26 @@ function get_included_groups($group, $recur=true) {
 
 	$userId = $this->getOne("select `userId`  from `users_users` where `login` = ?", array($user));
 
+	$groupTracker = $this->get_tracker_usergroup( $user );
+	if( $groupTracker && $groupTracker['usersTrackerId'] ) {
+		global $trklib;
+		if( ! $trklib ) require_once 'lib/trackers/trackerlib.php';
+
+		$itemId = $trklib->get_item_id( $groupTracker['usersTrackerId'], $groupTracker['usersFieldId'], $user );
+		if( $itemId )
+			$trklib->remove_tracker_item( $itemId );
+	}
+
+	$tracker = $this->get_usertracker( $userId );
+	if( $tracker && $tracker['usersTrackerId'] ) {
+		global $trklib;
+		if( ! $trklib ) require_once 'lib/trackers/trackerlib.php';
+
+		$itemId = $trklib->get_item_id( $tracker['usersTrackerId'], $tracker['usersFieldId'], $user );
+		if( $itemId )
+			$trklib->remove_tracker_item( $itemId );
+	}
+
 	$query = "delete from `users_users` where ". $this->convert_binary()." `login` = ?";
 	$result = $this->query($query, array( $user ) );
 	$query = "delete from `users_usergroups` where `userId`=?";
