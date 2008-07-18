@@ -67,7 +67,7 @@ function get_conflicts( $localPath )
 function find_last_merge( $localPath, $source )
 {
 	$short = preg_quote( short( $source ), '/' );
-	$pattern = "/^\\[MRG\\].*$short\s+\d+\s+to\s+(\d+)/";
+	$pattern = "/^\\[MRG\\].*$short'?\s+\d+\s+to\s+(\d+)/";
 
 	$descriptorspec = array(
 		0 => array( 'pipe', 'r' ),
@@ -101,12 +101,12 @@ function find_last_merge( $localPath, $source )
 
 function merge( $localPath, $source, $from, $to )
 {
+	$short = short( $source );
 	$source = escapeshellarg( $source );
 	$from = (int) $from;
 	$to = (int) $to;
 	passthru( "svn merge $source -r$from:$to" );
 
-	$short = short( $source );
 	$message = "[MRG] Automatic merge, $short $from to $to";
 	file_put_contents( 'svn-commit.tmp', $message );
 }
