@@ -14,9 +14,9 @@
  * @package    PEAR
  * @author     Stig Bakken <ssb@php.net>
  * @author     Greg Beaver <cellog@php.net>
- * @copyright  1997-2006 The PHP Group
+ * @copyright  1997-2008 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: Id: Install.php,v 1.132 2007/06/11 05:32:14 cellog Exp 
+ * @version    CVS: $Id: Install.php,v 1.141 2008/05/13 18:32:29 cellog Exp $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 0.1
  */
@@ -34,9 +34,9 @@ require_once 'PEAR/Command/Common.php';
  * @package    PEAR
  * @author     Stig Bakken <ssb@php.net>
  * @author     Greg Beaver <cellog@php.net>
- * @copyright  1997-2006 The PHP Group
+ * @copyright  1997-2008 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.6.1
+ * @version    Release: 1.7.2
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 0.1
  */
@@ -347,10 +347,6 @@ Run post-installation scripts in package <package>, if any exist.
         if (PEAR::isError($ini)) {
             return $ini;
         }
-        $fp = @fopen($phpini, 'wb');
-        if (!$fp) {
-            return PEAR::raiseError('cannot open php.ini "' . $phpini . '" for writing');
-        }
         $line = 0;
         if ($type == 'extsrc' || $type == 'extbin') {
             $search = 'extensions';
@@ -384,6 +380,10 @@ Run post-installation scripts in package <package>, if any exist.
             $newini[] = $enable . '="' . $binary . '"' . (OS_UNIX ? "\n" : "\r\n");
         }
         $newini = array_merge($newini, array_slice($ini['all'], $line));
+        $fp = @fopen($phpini, 'wb');
+        if (!$fp) {
+            return PEAR::raiseError('cannot open php.ini "' . $phpini . '" for writing');
+        }
         foreach ($newini as $line) {
             fwrite($fp, $line);
         }
@@ -516,7 +516,7 @@ Run post-installation scripts in package <package>, if any exist.
 
     function doInstall($command, $options, $params)
     {
-        if (!class_exists('PEAR/PackageFile.php')) {
+        if (!class_exists('PEAR_PackageFile')) {
             require_once 'PEAR/PackageFile.php';
         }
         if (empty($this->installer)) {
@@ -563,7 +563,7 @@ Run post-installation scripts in package <package>, if any exist.
                     continue;
                 }
                 if ($reg->packageExists($pf->getPackage(), $pf->getChannel()) &&
-                      version_compare($pf->getVersion(), 
+                      version_compare($pf->getVersion(),
                       $reg->packageInfo($pf->getPackage(), 'version', $pf->getChannel()),
                       '<=')) {
                     if ($this->config->get('verbose')) {
@@ -608,9 +608,13 @@ Run post-installation scripts in package <package>, if any exist.
                     }
                 }
             }
-            $abstractpackages = 
+            $abstractpackages =
+                array_map(array($reg, 'parsedPackageNameToString'), $abstractpackages);
+        } elseif (count($abstractpackages)) {
+            $abstractpackages =
                 array_map(array($reg, 'parsedPackageNameToString'), $abstractpackages);
         }
+
 
         $packages = array_merge($abstractpackages, $otherpackages);
         if (!count($packages)) {
@@ -620,6 +624,7 @@ Run post-installation scripts in package <package>, if any exist.
 
         $this->downloader = &$this->getDownloader($this->ui, $options, $this->config);
         $errors = array();
+        $binaries = array();
         $downloaded = array();
         $downloaded = &$this->downloader->download($packages);
         if (PEAR::isError($downloaded)) {
@@ -655,6 +660,7 @@ Run post-installation scripts in package <package>, if any exist.
             return true;
         }
         $extrainfo = array();
+        $binaries = array();
         foreach ($downloaded as $param) {
             PEAR::staticPushErrorHandling(PEAR_ERROR_RETURN);
             $info = $this->installer->install($param, $options);
@@ -684,6 +690,7 @@ Run post-installation scripts in package <package>, if any exist.
                     } else {
                         $instpkg = &$instreg->getPackage($pkg->getPackage(), $pkg->getChannel());
                     }
+
                     foreach ($instpkg->getFilelist() as $name => $atts) {
                         $pinfo = pathinfo($atts['installed_as']);
                         if (!isset($pinfo['extension']) ||
@@ -700,29 +707,31 @@ Run post-installation scripts in package <package>, if any exist.
                             break;
                         }
                     }
-                    foreach ($binaries as $pinfo) {
-                        PEAR::staticPushErrorHandling(PEAR_ERROR_RETURN);
-                        $ret = $this->enableExtension(array($pinfo[0]), $param->getPackageType());
-                        PEAR::staticPopErrorHandling();
-                        if (PEAR::isError($ret)) {
-                            $extrainfo[] = $ret->getMessage();
-                            if ($param->getPackageType() == 'extsrc' ||
-                                  $param->getPackageType() == 'extbin') {
-                                $exttype = 'extension';
+                    if (count($binaries)) {
+                        foreach ($binaries as $pinfo) {
+                            PEAR::staticPushErrorHandling(PEAR_ERROR_RETURN);
+                            $ret = $this->enableExtension(array($pinfo[0]), $param->getPackageType());
+                            PEAR::staticPopErrorHandling();
+                            if (PEAR::isError($ret)) {
+                                $extrainfo[] = $ret->getMessage();
+                                if ($param->getPackageType() == 'extsrc' ||
+                                      $param->getPackageType() == 'extbin') {
+                                    $exttype = 'extension';
+                                } else {
+                                    ob_start();
+                                    phpinfo(INFO_GENERAL);
+                                    $info = ob_get_contents();
+                                    ob_end_clean();
+                                    $debug = function_exists('leak') ? '_debug' : '';
+                                    $ts = preg_match('Thread Safety.+enabled', $info) ? '_ts' : '';
+                                    $exttype = 'zend_extension' . $debug . $ts;
+                                }
+                                $extrainfo[] = 'You should add "' . $exttype . '=' .
+                                    $pinfo[1]['basename'] . '" to php.ini';
                             } else {
-                                ob_start();
-                                phpinfo(INFO_GENERAL);
-                                $info = ob_get_contents();
-                                ob_end_clean();
-                                $debug = function_exists('leak') ? '_debug' : '';
-                                $ts = preg_match('Thread Safety.+enabled', $info) ? '_ts' : '';
-                                $exttype = 'zend_extension' . $debug . $ts;
+                                $extrainfo[] = 'Extension ' . $instpkg->getProvidesExtension() .
+                                    ' enabled in php.ini';
                             }
-                            $extrainfo[] = 'You should add "' . $exttype . '=' .
-                                $pinfo[1]['basename'] . '" to php.ini';
-                        } else {
-                            $extrainfo[] = 'Extension ' . $instpkg->getProvidesExtension() .
-                                ' enabled in php.ini';
                         }
                     }
                 }
@@ -852,6 +861,7 @@ Run post-installation scripts in package <package>, if any exist.
         }
         $reg = &$this->config->getRegistry();
         $newparams = array();
+        $binaries = array();
         $badparams = array();
         foreach ($params as $pkg) {
             $channel = $this->config->get('default_channel');
@@ -890,7 +900,7 @@ Run post-installation scripts in package <package>, if any exist.
                 if (isset($parsed['group'])) {
                     $group = $info->getDependencyGroup($parsed['group']);
                     if ($group) {
-                        $installed = &$reg->getInstalledGroup($group);
+                        $installed = $reg->getInstalledGroup($group);
                         if ($installed) {
                             foreach ($installed as $i => $p) {
                                 $newparams[] = &$installed[$i];
@@ -910,6 +920,7 @@ Run post-installation scripts in package <package>, if any exist.
         // for circular dependencies like subpackages
         $this->installer->setUninstallPackages($newparams);
         $params = array_merge($params, $badparams);
+        $binaries = array();
         foreach ($params as $pkg) {
             $this->installer->pushErrorHandling(PEAR_ERROR_RETURN);
             if ($err = $this->installer->uninstall($pkg, $options)) {
@@ -925,6 +936,7 @@ Run post-installation scripts in package <package>, if any exist.
                     if ($instbin = $pkg->getInstalledBinary()) {
                         continue; // this will be uninstalled later
                     }
+
                     foreach ($pkg->getFilelist() as $name => $atts) {
                         $pinfo = pathinfo($atts['installed_as']);
                         if (!isset($pinfo['extension']) ||
@@ -941,29 +953,31 @@ Run post-installation scripts in package <package>, if any exist.
                             break;
                         }
                     }
-                    foreach ($binaries as $pinfo) {
-                        PEAR::staticPushErrorHandling(PEAR_ERROR_RETURN);
-                        $ret = $this->disableExtension(array($pinfo[0]), $pkg->getPackageType());
-                        PEAR::staticPopErrorHandling();
-                        if (PEAR::isError($ret)) {
-                            $extrainfo[] = $ret->getMessage();
-                            if ($pkg->getPackageType() == 'extsrc' ||
-                                  $pkg->getPackageType() == 'extbin') {
-                                $exttype = 'extension';
+                    if (count($binaries)) {
+                        foreach ($binaries as $pinfo) {
+                            PEAR::staticPushErrorHandling(PEAR_ERROR_RETURN);
+                            $ret = $this->disableExtension(array($pinfo[0]), $pkg->getPackageType());
+                            PEAR::staticPopErrorHandling();
+                            if (PEAR::isError($ret)) {
+                                $extrainfo[] = $ret->getMessage();
+                                if ($pkg->getPackageType() == 'extsrc' ||
+                                      $pkg->getPackageType() == 'extbin') {
+                                    $exttype = 'extension';
+                                } else {
+                                    ob_start();
+                                    phpinfo(INFO_GENERAL);
+                                    $info = ob_get_contents();
+                                    ob_end_clean();
+                                    $debug = function_exists('leak') ? '_debug' : '';
+                                    $ts = preg_match('Thread Safety.+enabled', $info) ? '_ts' : '';
+                                    $exttype = 'zend_extension' . $debug . $ts;
+                                }
+                                $this->ui->outputData('Unable to remove "' . $exttype . '=' .
+                                    $pinfo[1]['basename'] . '" from php.ini', $command);
                             } else {
-                                ob_start();
-                                phpinfo(INFO_GENERAL);
-                                $info = ob_get_contents();
-                                ob_end_clean();
-                                $debug = function_exists('leak') ? '_debug' : '';
-                                $ts = preg_match('Thread Safety.+enabled', $info) ? '_ts' : '';
-                                $exttype = 'zend_extension' . $debug . $ts;
+                                $this->ui->outputData('Extension ' . $pkg->getProvidesExtension() .
+                                    ' disabled in php.ini', $command);
                             }
-                            $this->ui->outputData('Unable to remove "' . $exttype . '=' .
-                                $pinfo[1]['basename'] . '" from php.ini', $command);
-                        } else {
-                            $this->ui->outputData('Extension ' . $pkg->getProvidesExtension() .
-                                ' disabled in php.ini', $command);
                         }
                     }
                 }
@@ -1041,6 +1055,9 @@ Run post-installation scripts in package <package>, if any exist.
         $result = &$downloader->download(array($params[0]));
         if (PEAR::isError($result)) {
             return $result;
+        }
+        if (!isset($result[0])) {
+            return $this->raiseError('unable to unpack ' . $params[0]);
         }
         $pkgfile = &$result[0]->getPackageFile();
         $pkgname = $pkgfile->getName();
@@ -1128,7 +1145,7 @@ Run post-installation scripts in package <package>, if any exist.
                 if ($dorest) {
                     $rest = &$this->config->getREST('1.0', array());
                     $installed = array_flip($reg->listPackages($channel));
-                    $latest = $rest->listLatestUpgrades($base, 
+                    $latest = $rest->listLatestUpgrades($base,
                         $this->config->get('preferred_state', null, $channel), $installed,
                         $channel, $reg);
                 } else {

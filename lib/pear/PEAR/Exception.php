@@ -17,9 +17,9 @@
  * @author     Hans Lellelid <hans@velum.net>
  * @author     Bertrand Mansion <bmansion@mamasam.com>
  * @author     Greg Beaver <cellog@php.net>
- * @copyright  1997-2006 The PHP Group
+ * @copyright  1997-2008 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: Id: Exception.php,v 1.28 2007/05/07 01:58:54 cellog Exp 
+ * @version    CVS: $Id: Exception.php,v 1.29 2008/01/03 20:26:35 cellog Exp $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 1.3.3
  */
@@ -93,9 +93,9 @@
  * @author     Hans Lellelid <hans@velum.net>
  * @author     Bertrand Mansion <bmansion@mamasam.com>
  * @author     Greg Beaver <cellog@php.net>
- * @copyright  1997-2006 The PHP Group
+ * @copyright  1997-2008 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.6.1
+ * @version    Release: 1.7.2
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 1.3.3
  *

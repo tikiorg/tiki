@@ -13,9 +13,9 @@
  * @category   pear
  * @package    PEAR
  * @author     Greg Beaver <cellog@php.net>
- * @copyright  1997-2006 The PHP Group
+ * @copyright  1997-2008 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: Id: 11.php,v 1.12 2007/06/19 04:31:49 cellog Exp 
+ * @version    CVS: $Id: 11.php,v 1.14 2008/04/11 01:16:40 dufuz Exp $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 1.4.3
  */
@@ -31,9 +31,9 @@ require_once 'PEAR/REST.php';
  * @category   pear
  * @package    PEAR
  * @author     Greg Beaver <cellog@php.net>
- * @copyright  1997-2006 The PHP Group
+ * @copyright  1997-2008 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.6.1
+ * @version    Release: 1.7.2
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 1.4.3
  */
@@ -49,9 +49,9 @@ class PEAR_REST_11
         $this->_rest = &new PEAR_REST($config, $options);
     }
 
-    function listAll($base, $dostable, $basic = true)
+    function listAll($base, $dostable, $basic = true, $searchpackage = false, $searchsummary = false, $channel = false)
     {
-        $categorylist = $this->_rest->retrieveData($base . 'c/categories.xml');
+        $categorylist = $this->_rest->retrieveData($base . 'c/categories.xml', false, false, $channel);
         if (PEAR::isError($categorylist)) {
             return $categorylist;
         }
@@ -64,7 +64,7 @@ class PEAR_REST_11
         foreach ($categorylist['c'] as $progress => $category) {
             $category = $category['_content'];
             $packagesinfo = $this->_rest->retrieveData($base .
-                'c/' . urlencode($category) . '/packagesinfo.xml');
+                'c/' . urlencode($category) . '/packagesinfo.xml', false, false, $channel);
 
             if (PEAR::isError($packagesinfo)) {
                 continue;
@@ -204,9 +204,9 @@ class PEAR_REST_11
      * @param string $base base URL of the server
      * @return array of categorynames
      */
-    function listCategories($base)
+    function listCategories($base, $channel = false)
     {
-        $categorylist = $this->_rest->retrieveData($base . 'c/categories.xml');
+        $categorylist = $this->_rest->retrieveData($base . 'c/categories.xml', false, false, $channel);
         if (PEAR::isError($categorylist)) {
             return $categorylist;
         }
@@ -228,7 +228,7 @@ class PEAR_REST_11
      * @param boolean $info also download full package info
      * @return array of packagenames
      */
-    function listCategory($base, $category, $info=false)
+    function listCategory($base, $category, $info = false, $channel = false)
     {
         if ($info == false) {
             $url = '%s'.'c/%s/packages.xml';
@@ -238,9 +238,9 @@ class PEAR_REST_11
         $url = sprintf($url,
                     $base,
                     urlencode($category));
-            
+
         // gives '404 Not Found' error when category doesn't exist
-        $packagelist = $this->_rest->retrieveData($url);
+        $packagelist = $this->_rest->retrieveData($url, false, false, $channel);
         if (PEAR::isError($packagelist)) {
             return $packagelist;
         }

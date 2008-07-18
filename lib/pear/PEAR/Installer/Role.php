@@ -13,9 +13,9 @@
  * @category   pear
  * @package    PEAR
  * @author     Greg Beaver <cellog@php.net>
- * @copyright  1997-2006 The PHP Group
+ * @copyright  1997-2008 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: Id: Role.php,v 1.16 2006/10/31 02:54:41 cellog Exp 
+ * @version    CVS: $Id: Role.php,v 1.20 2008/01/03 20:26:36 cellog Exp $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 1.4.0a1
  */
@@ -29,9 +29,9 @@ require_once 'PEAR/XMLParser.php';
  * @category   pear
  * @package    PEAR
  * @author     Greg Beaver <cellog@php.net>
- * @copyright  1997-2006 The PHP Group
+ * @copyright  1997-2008 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.6.1
+ * @version    Release: 1.7.2
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 1.4.0a1
  */
@@ -54,7 +54,7 @@ class PEAR_Installer_Role
             if (!$info['config_vars']) {
                 continue;
             }
-            $config->_addConfigVars($info['config_vars']);
+            $config->_addConfigVars($class, $info['config_vars']);
         }
     }
 
@@ -219,11 +219,11 @@ class PEAR_Installer_Role
             $dir = dirname(__FILE__) . '/Role';
         }
         if (!file_exists($dir) || !is_dir($dir)) {
-            return PEAR::raiseError("registerRoles: opendir($dir) failed");
+            return PEAR::raiseError("registerRoles: opendir($dir) failed: does not exist/is not directory");
         }
         $dp = @opendir($dir);
         if (empty($dp)) {
-            return PEAR::raiseError("registerRoles: opendir($dir) failed");
+            return PEAR::raiseError("registerRoles: opendir($dir) failed: $php_errmsg");
         }
         while ($entry = readdir($dp)) {
             if ($entry{0} == '.' || substr($entry, -4) != '.xml') {

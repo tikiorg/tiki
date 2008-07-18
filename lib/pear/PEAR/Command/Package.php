@@ -16,9 +16,9 @@
  * @author     Stig Bakken <ssb@php.net>
  * @author     Martin Jansen <mj@php.net>
  * @author     Greg Beaver <cellog@php.net>
- * @copyright  1997-2006 The PHP Group
+ * @copyright  1997-2008 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: Id: Package.php,v 1.124 2007/04/19 03:04:16 cellog Exp 
+ * @version    CVS: $Id: Package.php,v 1.128 2008/03/29 21:06:58 dufuz Exp $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 0.1
  */
@@ -36,7 +36,7 @@ require_once 'PEAR/Command/Common.php';
  * @author     Stig Bakken <ssb@php.net>
  * @author     Martin Jansen <mj@php.net>
  * @author     Greg Beaver <cellog@php.net>
- * @copyright  1997-2006 The PHP Group
+ * @copyright  1997-2008 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/PEAR
@@ -301,7 +301,7 @@ used for automated conversion or learning the format.
         if (!class_exists('PEAR_Common')) {
             require_once 'PEAR/Common.php';
         }
-        if (!class_exists('PEAR/PackageFile.php')) {
+        if (!class_exists('PEAR_PackageFile')) {
             require_once 'PEAR/PackageFile.php';
         }
         $a = &new PEAR_PackageFile($config, $debug, $tmpdir);
@@ -374,10 +374,9 @@ used for automated conversion or learning the format.
         } else {
             $valid = $info->validate(PEAR_VALIDATE_PACKAGING);
         }
-        $err = array();
-        $warn = array();
-        if (!$valid) {
-            foreach ($info->getValidationWarnings() as $error) {
+        $err = $warn = array();
+        if ($errors = $info->getValidationWarnings()) {
+            foreach ($errors as $error) {
                 if ($error['level'] == 'warning') {
                     $warn[] = $error['message'];
                 } else {
@@ -751,7 +750,7 @@ used for automated conversion or learning the format.
         $a = &new PEAR_Installer($ui);
         return $a;
     }
-    
+
     /**
      * For unit testing purposes
      */
@@ -763,7 +762,7 @@ used for automated conversion or learning the format.
                 include_once 'PEAR/Command/Packaging.php';
             }
         }
-        
+
         if (class_exists('PEAR_Command_Packaging')) {
             $a = &new PEAR_Command_Packaging($ui, $config);
         } else {

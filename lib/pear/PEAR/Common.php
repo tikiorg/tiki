@@ -15,9 +15,9 @@
  * @author     Stig Bakken <ssb@php.net>
  * @author     Tomas V. V. Cox <cox@idecnet.com>
  * @author     Greg Beaver <cellog@php.net>
- * @copyright  1997-2006 The PHP Group
+ * @copyright  1997-2008 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: Id: Common.php,v 1.159 2007/06/10 04:16:51 cellog Exp 
+ * @version    CVS: $Id: Common.php,v 1.160 2008/01/03 20:26:34 cellog Exp $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 0.1.0
  * @deprecated File deprecated since Release 1.4.0a1
@@ -126,9 +126,9 @@ $GLOBALS['_PEAR_Common_script_phases'] = array('pre-install', 'post-install', 'p
  * @author     Stig Bakken <ssb@php.net>
  * @author     Tomas V. V. Cox <cox@idecnet.com>
  * @author     Greg Beaver <cellog@php.net>
- * @copyright  1997-2006 The PHP Group
+ * @copyright  1997-2008 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.6.1
+ * @version    Release: 1.7.2
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 1.4.0a1
  * @deprecated This class will disappear, and its components will be spread

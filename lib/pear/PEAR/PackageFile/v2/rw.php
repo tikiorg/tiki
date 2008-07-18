@@ -13,9 +13,9 @@
  * @category   pear
  * @package    PEAR
  * @author     Greg Beaver <cellog@php.net>
- * @copyright  1997-2006 The PHP Group
+ * @copyright  1997-2008 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: Id: rw.php,v 1.20 2007/04/04 03:28:16 cellog Exp 
+ * @version    CVS: $Id: rw.php,v 1.22 2008/01/18 22:47:49 cellog Exp $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 1.4.0a8
  */
@@ -27,9 +27,9 @@ require_once 'PEAR/PackageFile/v2.php';
  * @category   pear
  * @package    PEAR
  * @author     Greg Beaver <cellog@php.net>
- * @copyright  1997-2006 The PHP Group
+ * @copyright  1997-2008 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.6.1
+ * @version    Release: 1.7.2
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 1.4.0a8
  */
@@ -1367,7 +1367,7 @@ class PEAR_PackageFile_v2_rw extends PEAR_PackageFile_v2
         }
         $opt = array('attribs' => array('name' => $name, 'prompt' => $prompt));
         if ($default !== null) {
-            $opt['default'] = $default;
+            $opt['attribs']['default'] = $default;
         }
         $this->_isValid = 0;
         $r = $this->_mergeTag($r, $opt,

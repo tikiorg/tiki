@@ -1,27 +1,35 @@
 <?php
-//
-// +----------------------------------------------------------------------+
-// | PHP Version 5                                                        |
-// +----------------------------------------------------------------------+
-// | Copyright (c) 1997-2004 The PHP Group                                |
-// +----------------------------------------------------------------------+
-// | This source file is subject to version 3.0 of the PHP license,       |
-// | that is bundled with this package in the file LICENSE, and is        |
-// | available through the world-wide-web at the following url:           |
-// | http://www.php.net/license/3_0.txt.                                  |
-// | If you did not receive a copy of the PHP license and are unable to   |
-// | obtain it through the world-wide-web, please send a note to          |
-// | license@php.net so we can mail you a copy immediately.               |
-// +----------------------------------------------------------------------+
-// | Author: Greg Beaver <cellog@php.net>                                 |
-// |                                                                      |
-// +----------------------------------------------------------------------+
-//
-// Id: Validator.php,v 1.102 2007/06/10 04:16:51 cellog Exp 
+/**
+ * PEAR_PackageFile_v2, package.xml version 2.0, read/write version
+ *
+ * PHP versions 4 and 5
+ *
+ * LICENSE: This source file is subject to version 3.0 of the PHP license
+ * that is available through the world-wide-web at the following URI:
+ * http://www.php.net/license/3_0.txt.  If you did not receive a copy of
+ * the PHP License and are unable to obtain it through the web, please
+ * send a note to license@php.net so we can mail you a copy immediately.
+ *
+ * @category   pear
+ * @package    PEAR
+ * @author     Greg Beaver <cellog@php.net>
+ * @copyright  1997-2008 The PHP Group
+ * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
+ * @version    CVS: $Id: Validator.php,v 1.106 2008/03/28 22:23:41 dufuz Exp $
+ * @link       http://pear.php.net/package/PEAR
+ * @since      File available since Release 1.4.0a8
+ */
 /**
  * Private validation class used by PEAR_PackageFile_v2 - do not use directly, its
  * sole purpose is to split up the PEAR/PackageFile/v2.php file to make it smaller
- * @author Greg Beaver <cellog@php.net>
+ * @category   pear
+ * @package    PEAR
+ * @author     Greg Beaver <cellog@php.net>
+ * @copyright  1997-2008 The PHP Group
+ * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
+ * @version    Release: 1.7.2
+ * @link       http://pear.php.net/package/PEAR
+ * @since      Class available since Release 1.4.0a8
  * @access private
  */
 class PEAR_PackageFile_v2_Validator
@@ -71,7 +79,8 @@ class PEAR_PackageFile_v2_Validator
         }
         if (!isset($this->_packageInfo['attribs']['version']) ||
               ($this->_packageInfo['attribs']['version'] != '2.0' &&
-               $this->_packageInfo['attribs']['version'] != '2.1')) {
+               $this->_packageInfo['attribs']['version'] != '2.1')
+        ) {
             $this->_noPackageVersion();
         }
         $structure =
@@ -109,8 +118,9 @@ class PEAR_PackageFile_v2_Validator
               isset($test['dependencies']['required']) &&
               isset($test['dependencies']['required']['pearinstaller']) &&
               isset($test['dependencies']['required']['pearinstaller']['min']) &&
-              version_compare('1.6.1',
-                $test['dependencies']['required']['pearinstaller']['min'], '<')) {
+              version_compare('1.7.2',
+                $test['dependencies']['required']['pearinstaller']['min'], '<')
+        ) {
             $this->_pearVersionTooLow($test['dependencies']['required']['pearinstaller']['min']);
             return false;
         }
@@ -130,18 +140,13 @@ class PEAR_PackageFile_v2_Validator
         if (array_key_exists('_lastversion', $test)) {
             unset($test['_lastversion']);
         }
-        if (!$this->_stupidSchemaValidate($structure,
-                                          $test, '<package>')) {
+        if (!$this->_stupidSchemaValidate($structure, $test, '<package>')) {
             return false;
         }
         if (empty($this->_packageInfo['name'])) {
             $this->_tagCannotBeEmpty('name');
         }
-        if (isset($this->_packageInfo['uri'])) {
-            $test = 'uri';
-        } else {
-            $test = 'channel';
-        }
+        $test = isset($this->_packageInfo['uri']) ? 'uri' :'channel';
         if (empty($this->_packageInfo[$test])) {
             $this->_tagCannotBeEmpty($test);
         }
@@ -476,11 +481,11 @@ class PEAR_PackageFile_v2_Validator
             }
             if (!in_array($this->_packageInfo['stability']['release'],
                   array('snapshot', 'devel', 'alpha', 'beta', 'stable'))) {
-                $this->_invalidState('release', $this->_packageinfo['stability']['release']);
+                $this->_invalidState('release', $this->_packageInfo['stability']['release']);
             }
             if (!in_array($this->_packageInfo['stability']['api'],
                   array('devel', 'alpha', 'beta', 'stable'))) {
-                $this->_invalidState('api', $this->_packageinfo['stability']['api']);
+                $this->_invalidState('api', $this->_packageInfo['stability']['api']);
             }
         }
     }
@@ -1325,7 +1330,7 @@ class PEAR_PackageFile_v2_Validator
             }
             if (is_array($rel) && array_key_exists('filelist', $rel)) {
                 if ($rel['filelist']) {
-                    
+
                     $this->_validateFilelist($rel['filelist'], true);
                 }
             }
@@ -1346,7 +1351,7 @@ class PEAR_PackageFile_v2_Validator
         $this->_stack->push(__FUNCTION__, 'error',
             array('version' => $version),
             'This package.xml requires PEAR version %version% to parse properly, we are ' .
-            'version 1.6.1');
+            'version 1.7.2');
     }
 
     function _invalidTagOrder($oktags, $actual, $root)
@@ -1859,7 +1864,17 @@ class PEAR_PackageFile_v2_Validator
             fclose($fp);
             $contents = file_get_contents($file);
         }
-        $tokens = token_get_all($contents);
+
+        // Silence this function so we can catch PHP Warnings and show our own custom message
+        $tokens = @token_get_all($contents);
+        if (isset($php_errormsg)) {
+            $pn = $this->_pf->getPackage();
+            $this->_stack->push(__FUNCTION__, 'warning',
+                    array('file' => $file, 'package' => $pn),
+                    'in %file%: Could not process file for unkown reasons,' .
+                    ' possibly a PHP parse error in %file% from %package%');
+
+        }
 /*
         for ($i = 0; $i < sizeof($tokens); $i++) {
             @list($token, $data) = $tokens[$i];
@@ -1956,7 +1971,7 @@ class PEAR_PackageFile_v2_Validator
                     if (version_compare(zend_version(), '2.0', '<')) {
                         if (in_array(strtolower($data),
                             array('public', 'private', 'protected', 'abstract',
-                                  'interface', 'implements', 'throw') 
+                                  'interface', 'implements', 'throw')
                                  )) {
                             $this->_stack->push(__FUNCTION__, 'warning', array(
                                 'file' => $file),

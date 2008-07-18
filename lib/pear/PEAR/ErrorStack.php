@@ -21,9 +21,9 @@
  * @category   Debugging
  * @package    PEAR_ErrorStack
  * @author     Greg Beaver <cellog@php.net>
- * @copyright  2004-2006 Greg Beaver
+ * @copyright  2004-2008 Greg Beaver
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: Id: ErrorStack.php,v 1.27 2007/06/10 04:34:19 cellog Exp 
+ * @version    CVS: $Id: ErrorStack.php,v 1.28 2008/01/03 20:26:35 cellog Exp $
  * @link       http://pear.php.net/package/PEAR_ErrorStack
  */
 
@@ -132,12 +132,12 @@ define('PEAR_ERRORSTACK_ERR_OBJTOSTRING', 2);
  * $local_stack = new PEAR_ErrorStack('MyPackage');
  * </code>
  * @author     Greg Beaver <cellog@php.net>
- * @version    1.6.1
+ * @version    1.7.2
  * @package    PEAR_ErrorStack
  * @category   Debugging
- * @copyright  2004-2006 Greg Beaver
+ * @copyright  2004-2008 Greg Beaver
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: Id: ErrorStack.php,v 1.27 2007/06/10 04:34:19 cellog Exp 
+ * @version    CVS: $Id: ErrorStack.php,v 1.28 2008/01/03 20:26:35 cellog Exp $
  * @link       http://pear.php.net/package/PEAR_ErrorStack
  */
 class PEAR_ErrorStack {

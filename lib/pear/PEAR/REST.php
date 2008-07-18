@@ -13,9 +13,9 @@
  * @category   pear
  * @package    PEAR
  * @author     Greg Beaver <cellog@php.net>
- * @copyright  1997-2006 The PHP Group
+ * @copyright  1997-2008 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: Id: REST.php,v 1.22 2007/06/10 04:16:51 cellog Exp 
+ * @version    CVS: $Id: REST.php,v 1.31 2008/05/13 18:03:36 cellog Exp $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 1.4.0a1
  */
@@ -32,9 +32,9 @@ require_once 'lib/pear/PEAR/XMLParser.php';
  * @category   pear
  * @package    PEAR
  * @author     Greg Beaver <cellog@php.net>
- * @copyright  1997-2006 The PHP Group
+ * @copyright  1997-2008 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.6.1
+ * @version    Release: 1.7.2
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 1.4.0a1
  */
@@ -59,14 +59,14 @@ class PEAR_REST
      *                    parsed using PEAR_XMLParser
      * @return string|array
      */
-    function retrieveCacheFirst($url, $accept = false, $forcestring = false)
+    function retrieveCacheFirst($url, $accept = false, $forcestring = false, $channel = false)
     {
         $cachefile = $this->config->get('cache_dir') . DIRECTORY_SEPARATOR .
             md5($url) . 'rest.cachefile';
         if (file_exists($cachefile)) {
             return unserialize(implode('', file($cachefile)));
         }
-        return $this->retrieveData($url, $accept, $forcestring);
+        return $this->retrieveData($url, $accept, $forcestring, $channel);
     }
 
     /**
@@ -77,7 +77,7 @@ class PEAR_REST
      *                    parsed using PEAR_XMLParser
      * @return string|array
      */
-    function retrieveData($url, $accept = false, $forcestring = false)
+    function retrieveData($url, $accept = false, $forcestring = false, $channel = false)
     {
         $cacheId = $this->getCacheId($url);
         if ($ret = $this->useLocalCache($url, $cacheId)) {
@@ -85,7 +85,7 @@ class PEAR_REST
         }
         if (!isset($this->_options['offline'])) {
             $trieddownload = true;
-            $file = $this->downloadHttp($url, $cacheId ? $cacheId['lastChange'] : false, $accept);
+            $file = $this->downloadHttp($url, $cacheId ? $cacheId['lastChange'] : false, $accept, $channel);
         } else {
             $trieddownload = false;
             $file = false;
@@ -266,7 +266,7 @@ class PEAR_REST
      *
      * @access public
      */
-    function downloadHttp($url, $lastmodified = null, $accept = false)
+    function downloadHttp($url, $lastmodified = null, $accept = false, $channel = false)
     {
         $info = parse_url($url);
         if (!isset($info['scheme']) || !in_array($info['scheme'], array('http', 'https'))) {
@@ -286,7 +286,7 @@ class PEAR_REST
             $path = $info['path'];
         }
         $proxy_host = $proxy_port = $proxy_user = $proxy_pass = '';
-        if ($this->config->get('http_proxy')&& 
+        if ($this->config->get('http_proxy')&&
               $proxy = parse_url($this->config->get('http_proxy'))) {
             $proxy_host = isset($proxy['host']) ? $proxy['host'] : null;
             if (isset($proxy['scheme']) && $proxy['scheme'] == 'https') {
@@ -308,6 +308,7 @@ class PEAR_REST
         } else {
             $request = "GET $path HTTP/1.1\r\n";
         }
+        $request .= "Host: $host:$port\r\n";
 
         $ifmodifiedsince = '';
         if (is_array($lastmodified)) {
@@ -320,10 +321,10 @@ class PEAR_REST
         } else {
             $ifmodifiedsince = ($lastmodified ? "If-Modified-Since: $lastmodified\r\n" : '');
         }
-        $request .= "Host: $host:$port\r\n" . $ifmodifiedsince .
-            "User-Agent: PEAR/1.6.1/PHP/" . PHP_VERSION . "\r\n";
-        $username = $this->config->get('username');
-        $password = $this->config->get('password');
+        $request .= $ifmodifiedsince .
+            "User-Agent: PEAR/1.7.2/PHP/" . PHP_VERSION . "\r\n";
+        $username = $this->config->get('username', null, $channel);
+        $password = $this->config->get('password', null, $channel);
         if ($username && $password) {
             $tmp = base64_encode("$username:$password");
             $request .= "Authorization: Basic $tmp\r\n";
@@ -335,6 +336,7 @@ class PEAR_REST
         if ($accept) {
             $request .= 'Accept: ' . implode(', ', $accept) . "\r\n";
         }
+        $request .= "Accept-Encoding:\r\n";
         $request .= "Connection: close\r\n";
         $request .= "\r\n";
         if ($proxy_host != '') {

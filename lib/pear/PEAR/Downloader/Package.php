@@ -13,9 +13,9 @@
  * @category   pear
  * @package    PEAR
  * @author     Greg Beaver <cellog@php.net>
- * @copyright  1997-2006 The PHP Group
+ * @copyright  1997-2008 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: Id: Package.php,v 1.110 2007/05/31 03:51:08 cellog Exp 
+ * @version    CVS: $Id: Package.php,v 1.113 2008/03/29 14:18:36 dufuz Exp $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 1.4.0a1
  */
@@ -52,9 +52,9 @@ define('PEAR_DOWNLOADER_PACKAGE_PHPVERSION', -1004);
  * @category   pear
  * @package    PEAR
  * @author     Greg Beaver <cellog@php.net>
- * @copyright  1997-2006 The PHP Group
+ * @copyright  1997-2008 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.6.1
+ * @version    Release: 1.7.2
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 1.4.0a1
  */
@@ -280,7 +280,7 @@ class PEAR_Downloader_Package
         return $this->_downloader;
     }
 
-    function getType() 
+    function getType()
     {
         return $this->_type;
     }
@@ -827,7 +827,7 @@ class PEAR_Downloader_Package
     }
 
     function getParsedPackage()
-    {   
+    {
         if (isset($this->_packagefile) || isset($this->_parsedname)) {
             return array('channel' => $this->getChannel(),
                 'package' => $this->getPackage(),
@@ -1153,7 +1153,7 @@ class PEAR_Downloader_Package
 
     /**
      * Detect duplicate package names with differing versions
-     * 
+     *
      * If a user requests to install Date 1.4.6 and Date 1.4.7,
      * for instance, this is a logic error.  This method
      * detects this situation.
@@ -1166,17 +1166,18 @@ class PEAR_Downloader_Package
     {
         $existing = array();
         foreach ($params as $i => $param) {
-            if (!isset($existing[$param->getChannel() . '/' . $param->getPackage()])) {
-                $existing[$param->getChannel() . '/' . $param->getPackage()] = array();
+            $package = $param->getPackage();
+            $channel = $param->getChannel();
+            $group   = $param->getGroup();
+            if (!isset($existing[$channel . '/' . $package])) {
+                $existing[$channel . '/' . $package] = array();
             }
-            if (!isset($existing[$param->getChannel() . '/' . $param->getPackage()]
-                [$param->getGroup()])) {
-                $existing[$param->getChannel() . '/' . $param->getPackage()]
-                    [$param->getGroup()] = array();
+            if (!isset($existing[$channel . '/' . $package][$group])) {
+                $existing[$channel . '/' . $package][$group] = array();
             }
-            $existing[$param->getChannel() . '/' . $param->getPackage()]
-                [$param->getGroup()][] = $i;
+            $existing[$channel . '/' . $package][$group][] = $i;
         }
+
         $indices = array();
         foreach ($existing as $package => $groups) {
             foreach ($groups as $group => $dupes) {
@@ -1185,6 +1186,7 @@ class PEAR_Downloader_Package
                 }
             }
         }
+
         $indices = array_unique($indices);
         foreach ($indices as $index) {
             $errorparams[] = $params[$index];
@@ -1467,7 +1469,7 @@ class PEAR_Downloader_Package
             }
             $this->_downloader->log(3, 'Downloading "' . $param . '"');
             $file = $this->_downloader->downloadHttp($param, $this->_downloader->ui,
-                $dir, $callback);
+                $dir, $callback, null, false, $this->getChannel());
             $this->_downloader->popErrorHandling();
             if (PEAR::isError($file)) {
                 if (!empty($saveparam)) {
@@ -1837,7 +1839,7 @@ class PEAR_Downloader_Package
         }
         if (isset($info['deprecated']) && $info['deprecated']) {
             $this->_downloader->log(0,
-                'WARNING: "' . 
+                'WARNING: "' .
                     $this->_registry->parsedPackageNameToString(
                             array('channel' => $info['info']->getChannel(),
                                   'package' => $info['info']->getPackage()), true) .

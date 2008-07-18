@@ -14,9 +14,9 @@
  * @package    PEAR
  * @author     Stig Bakken <ssb@php.net>
  * @author     Greg Beaver <cellog@php.net>
- * @copyright  1997-2006 The PHP Group
+ * @copyright  1997-2008 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: Id: Builder.php,v 1.31 2007/01/10 05:32:51 cellog Exp 
+ * @version    CVS: $Id: Builder.php,v 1.34 2008/05/12 23:43:21 cellog Exp $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 0.1
  * 
@@ -36,9 +36,9 @@ require_once 'PEAR/PackageFile.php';
  * @package    PEAR
  * @author     Stig Bakken <ssb@php.net>
  * @author     Greg Beaver <cellog@php.net>
- * @copyright  1997-2006 The PHP Group
+ * @copyright  1997-2008 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.6.1
+ * @version    Release: 1.7.2
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since PHP 4.0.2
  * @see        http://pear.php.net/manual/en/core.ppm.pear-builder.php
@@ -270,14 +270,21 @@ class PEAR_Builder extends PEAR_Common
         if (is_object($descfile)) {
             $pkg = $descfile;
             $descfile = $pkg->getPackageFile();
+            if (is_a($pkg, 'PEAR_PackageFile_v1')) {
+                $dir = dirname($descfile);
+            } else {
+                $dir = $pkg->_config->get('temp_dir') . '/' . $pkg->getName();
+                // automatically delete at session end
+                $this->addTempFile($dir);
+            }
         } else {
             $pf = &new PEAR_PackageFile($this->config);
             $pkg = &$pf->fromPackageFile($descfile, PEAR_VALIDATE_NORMAL);
             if (PEAR::isError($pkg)) {
                 return $pkg;
             }
+            $dir = dirname($descfile);
         }
-        $dir = dirname($descfile);
         $old_cwd = getcwd();
         if (!file_exists($dir) || !is_dir($dir) || !chdir($dir)) {
             return $this->raiseError("could not chdir to $dir");
@@ -346,12 +353,12 @@ class PEAR_Builder extends PEAR_Common
             $configure_command,
             $make_command,
             "$make_command INSTALL_ROOT=\"$inst_dir\" install",
-            "find \"$inst_dir\" -ls"
+            "find \"$inst_dir\" | xargs ls -dils"
             );
         if (!file_exists($build_dir) || !is_dir($build_dir) || !chdir($build_dir)) {
             return $this->raiseError("could not chdir to $build_dir");
         }
-        putenv('PHP_PEAR_VERSION=1.6.1');
+        putenv('PHP_PEAR_VERSION=1.7.2');
         foreach ($to_run as $cmd) {
             $err = $this->_runCommand($cmd, $callback);
             if (PEAR::isError($err)) {

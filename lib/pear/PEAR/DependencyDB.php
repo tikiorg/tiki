@@ -14,9 +14,9 @@
  * @package    PEAR
  * @author     Tomas V. V. Cox <cox@idecnet.com>
  * @author     Greg Beaver <cellog@php.net>
- * @copyright  1997-2006 The PHP Group
+ * @copyright  1997-2008 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: Id: DependencyDB.php,v 1.35 2007/01/06 04:03:32 cellog Exp 
+ * @version    CVS: $Id: DependencyDB.php,v 1.37 2008/01/03 20:26:35 cellog Exp $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 1.4.0a1
  */
@@ -34,9 +34,9 @@ $GLOBALS['_PEAR_DEPENDENCYDB_INSTANCE'] = array();
  * @package    PEAR
  * @author     Greg Beaver <cellog@php.net>
  * @author     Tomas V.V.Cox <cox@idec.net.com>
- * @copyright  1997-2006 The PHP Group
+ * @copyright  1997-2008 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.6.1
+ * @version    Release: 1.7.2
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 1.4.0a1
  */
@@ -421,9 +421,15 @@ class PEAR_DependencyDB
             return $depdb;
         }
         $packages = $this->_registry->listAllPackages();
+        if (PEAR::isError($packages)) {
+            return $packages;
+        }
         foreach ($packages as $channel => $ps) {
             foreach ($ps as $package) {
                 $package = $this->_registry->getPackage($package, $channel);
+                if (PEAR::isError($package)) {
+                    return $package;
+                }
                 $this->_setPackageDeps($depdb, $package);
             }
         }

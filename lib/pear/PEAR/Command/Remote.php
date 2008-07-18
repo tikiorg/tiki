@@ -15,9 +15,9 @@
  * @package    PEAR
  * @author     Stig Bakken <ssb@php.net>
  * @author     Greg Beaver <cellog@php.net>
- * @copyright  1997-2006 The PHP Group
+ * @copyright  1997-2008 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: Id: Remote.php,v 1.105 2007/06/22 13:49:30 cellog Exp 
+ * @version    CVS: $Id: Remote.php,v 1.107 2008/04/11 01:16:40 dufuz Exp $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 0.1
  */
@@ -35,9 +35,9 @@ require_once 'PEAR/REST.php';
  * @package    PEAR
  * @author     Stig Bakken <ssb@php.net>
  * @author     Greg Beaver <cellog@php.net>
- * @copyright  1997-2006 The PHP Group
+ * @copyright  1997-2008 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.6.1
+ * @version    Release: 1.7.2
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 0.1
  */
@@ -210,7 +210,7 @@ parameter.
         if (PEAR::isError($parsed)) {
             return $this->raiseError('Invalid package name "' . $package . '"');
         }
-        
+
         $channel = $parsed['channel'];
         $this->config->set('default_channel', $channel);
         $chan = $reg->getChannel($channel);
@@ -220,7 +220,7 @@ parameter.
         if ($chan->supportsREST($this->config->get('preferred_mirror')) &&
               $base = $chan->getBaseURL('REST1.0', $this->config->get('preferred_mirror'))) {
             $rest = &$this->config->getREST('1.0', array());
-            $info = $rest->packageInfo($base, $parsed['package']);
+            $info = $rest->packageInfo($base, $parsed['package'], $channel);
         } else {
             $r = &$this->config->getRemote();
             $info = $r->call('package.info', $parsed['package']);
@@ -272,11 +272,11 @@ parameter.
               $base = $chan->getBaseURL('REST1.1', $this->config->get('preferred_mirror'))) {
             // use faster list-all if available
             $rest = &$this->config->getREST('1.1', array());
-            $available = $rest->listAll($base, $list_options);
+            $available = $rest->listAll($base, $list_options, true, false, false, $chan->getName());
         } elseif ($chan->supportsREST($this->config->get('preferred_mirror')) &&
               $base = $chan->getBaseURL('REST1.0', $this->config->get('preferred_mirror'))) {
             $rest = &$this->config->getREST('1.0', array());
-            $available = $rest->listAll($base, $list_options);
+            $available = $rest->listAll($base, $list_options, true, false, false, $chan->getName());
         } else {
             $r = &$this->config->getRemote();
             if ($channel == 'pear.php.net') {
@@ -337,11 +337,11 @@ parameter.
               $base = $chan->getBaseURL('REST1.1', $this->config->get('preferred_mirror'))) {
             // use faster list-all if available
             $rest = &$this->config->getREST('1.1', array());
-            $available = $rest->listAll($base, $list_options, false);
+            $available = $rest->listAll($base, $list_options, false, false, false, $chan->getName());
         } elseif ($chan->supportsREST($this->config->get('preferred_mirror')) &&
               $base = $chan->getBaseURL('REST1.0', $this->config->get('preferred_mirror'))) {
             $rest = &$this->config->getREST('1.0', array());
-            $available = $rest->listAll($base, $list_options, false);
+            $available = $rest->listAll($base, $list_options, false, false, false, $chan->getName());
         } else {
             $r = &$this->config->getRemote();
             if ($channel == 'pear.php.net') {
@@ -414,7 +414,7 @@ parameter.
                     $inst_state = $reg->packageInfo($name, 'release_state', $channel);
                     $local = $installed['version'].' ('.$inst_state.')';
                 }
-                
+
                 $packageinfo = array(
                     $channel,
                     $name,
@@ -512,10 +512,10 @@ parameter.
         if ($chan->supportsREST($this->config->get('preferred_mirror')) &&
               $base = $chan->getBaseURL('REST1.0', $this->config->get('preferred_mirror'))) {
             $rest = &$this->config->getREST('1.0', array());
-            $available = $rest->listAll($base, false, false, $package, $summary);
+            $available = $rest->listAll($base, false, false, $package, $summary, $chan->getName());
         } else {
             $r = &$this->config->getRemote();
-            $available = $r->call('package.search', $package, $summary, true, 
+            $available = $r->call('package.search', $package, $summary, true,
                 $this->config->get('preferred_state') == 'stable', true);
         }
         if (PEAR::isError($available)) {

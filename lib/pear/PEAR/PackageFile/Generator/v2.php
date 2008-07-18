@@ -14,9 +14,9 @@
  * @package    PEAR
  * @author     Greg Beaver <cellog@php.net>
  * @author     Stephan Schmidt (original XML_Serializer code)
- * @copyright  1997-2006 The PHP Group
+ * @copyright  1997-2008 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: Id: v2.php,v 1.37 2007/06/10 04:16:51 cellog Exp 
+ * @version    CVS: $Id: v2.php,v 1.39 2008/05/13 05:29:24 cellog Exp $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 1.4.0a1
  */
@@ -33,9 +33,9 @@ require_once 'lib/pear/System.php';
  * @package    PEAR
  * @author     Greg Beaver <cellog@php.net>
  * @author     Stephan Schmidt (original XML_Serializer code)
- * @copyright  1997-2006 The PHP Group
+ * @copyright  1997-2008 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.6.1
+ * @version    Release: 1.7.2
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 1.4.0a1
  */
@@ -114,7 +114,7 @@ http://pear.php.net/dtd/package-2.0.xsd',
      */
     function getPackagerVersion()
     {
-        return '1.6.1';
+        return '1.7.2';
     }
 
     /**
@@ -213,6 +213,7 @@ http://pear.php.net/dtd/package-2.0.xsd',
                 if (!file_exists($file)) {
                     return $packager->raiseError("File does not exist: $fname");
                 } else {
+                    $origperms = fileperms($file);
                     $tfile = $packageDir . DIRECTORY_SEPARATOR . $fname;
                     unset($orig['attribs']);
                     if (count($orig)) { // file with tasks
@@ -245,6 +246,7 @@ http://pear.php.net/dtd/package-2.0.xsd',
                         System::mkdir(array('-p', dirname($tfile)));
                         copy($file, $tfile);
                     }
+                    chmod($tfile, $origperms);
                     $filelist[$i++] = $tfile;
                     $this->_packagefile->setFileAttribute($fname, 'md5sum', md5_file($tfile), $i - 1);
                     $packager->log(2, "Adding file $fname");
@@ -354,7 +356,7 @@ http://pear.php.net/dtd/package-2.0.xsd',
             }
             $this->options['beautifyFilelist'] = true;
         }
-        $arr['attribs']['packagerversion'] = '1.6.1';
+        $arr['attribs']['packagerversion'] = '1.7.2';
         if ($this->serialize($arr, $options)) {
             return $this->_serializedData . "\n";
         }
@@ -873,7 +875,7 @@ http://pear.php.net/dtd/package-2.0.xsd',
 // | Authors: Stephan Schmidt <schst@php-tools.net>                       |
 // +----------------------------------------------------------------------+
 //
-//    Id: v2.php,v 1.37 2007/06/10 04:16:51 cellog Exp 
+//    $Id: v2.php,v 1.39 2008/05/13 05:29:24 cellog Exp $
 
 /**
  * error code for invalid chars in XML name

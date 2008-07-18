@@ -14,9 +14,9 @@
  * @package    PEAR
  * @author     Stig Bakken <ssb@php.net>
  * @author     Greg Beaver <cellog@php.net>
- * @copyright  1997-2006 The PHP Group
+ * @copyright  1997-2008 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: Id: Config.php,v 1.53 2007/06/11 05:11:53 cellog Exp 
+ * @version    CVS: $Id: Config.php,v 1.56 2008/01/03 20:26:36 cellog Exp $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 0.1
  */
@@ -33,9 +33,9 @@ require_once 'PEAR/Command/Common.php';
  * @package    PEAR
  * @author     Stig Bakken <ssb@php.net>
  * @author     Greg Beaver <cellog@php.net>
- * @copyright  1997-2006 The PHP Group
+ * @copyright  1997-2008 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.6.1
+ * @version    Release: 1.7.2
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 0.1
  */
@@ -350,6 +350,8 @@ and uninstall).
         $config->noRegistry();
         $config->set('php_dir', $windows ? "$root\\pear\\php" : "$root/pear/php", 'user');
         $config->set('data_dir', $windows ? "$root\\pear\\data" : "$root/pear/data");
+        $config->set('www_dir', $windows ? "$root\\pear\\www" : "$root/pear/www");
+        $config->set('cfg_dir', $windows ? "$root\\pear\\cfg" : "$root/pear/cfg");
         $config->set('ext_dir', $windows ? "$root\\pear\\ext" : "$root/pear/ext");
         $config->set('doc_dir', $windows ? "$root\\pear\\docs" : "$root/pear/docs");
         $config->set('test_dir', $windows ? "$root\\pear\\tests" : "$root/pear/tests");

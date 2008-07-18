@@ -13,9 +13,9 @@
  * @category   pear
  * @package    PEAR
  * @author     Greg Beaver <cellog@php.net>
- * @copyright  2005-2006 The PHP Group
+ * @copyright  2005-2008 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: Id: Pickle.php,v 1.6 2006/05/12 02:38:58 cellog Exp 
+ * @version    CVS: $Id: Pickle.php,v 1.8 2008/01/29 03:21:01 cellog Exp $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 1.4.1
  */
@@ -31,9 +31,9 @@ require_once 'PEAR/Command/Common.php';
  * @category   pear
  * @package    PEAR
  * @author     Greg Beaver <cellog@php.net>
- * @copyright  2005-2006 The PHP Group
+ * @copyright  2005-2008 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.6.1
+ * @version    Release: 1.7.2
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 1.4.1
  */
@@ -115,7 +115,7 @@ generate both package.xml.
         if (!class_exists('PEAR_Common')) {
             require_once 'PEAR/Common.php';
         }
-        if (!class_exists('PEAR/PackageFile.php')) {
+        if (!class_exists('PEAR_PackageFile')) {
             require_once 'PEAR/PackageFile.php';
         }
         $a = &new PEAR_PackageFile($config, $debug, $tmpdir);

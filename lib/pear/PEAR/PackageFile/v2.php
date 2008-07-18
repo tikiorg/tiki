@@ -13,9 +13,9 @@
  * @category   pear
  * @package    PEAR
  * @author     Greg Beaver <cellog@php.net>
- * @copyright  1997-2006 The PHP Group
+ * @copyright  1997-2008 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: Id: v2.php,v 1.140 2007/06/03 04:22:13 cellog Exp 
+ * @version    CVS: $Id: v2.php,v 1.143 2008/05/13 05:28:51 cellog Exp $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 1.4.0a1
  */
@@ -27,9 +27,9 @@ require_once 'PEAR/ErrorStack.php';
  * @category   pear
  * @package    PEAR
  * @author     Greg Beaver <cellog@php.net>
- * @copyright  1997-2006 The PHP Group
+ * @copyright  1997-2008 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.6.1
+ * @version    Release: 1.7.2
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 1.4.0a1
  */
@@ -121,7 +121,7 @@ class PEAR_PackageFile_v2
      *
      * - package name
      * - channel name
-     * - dependencies 
+     * - dependencies
      * @var boolean
      * @access private
      */
@@ -1172,6 +1172,9 @@ class PEAR_PackageFile_v2
         $this->flattenFilelist();
         if ($contents = $this->getContents()) {
             $ret = array();
+            if (!isset($contents['dir'])) {
+                return false;
+            }
             if (!isset($contents['dir']['file'][0])) {
                 $contents['dir']['file'] = array($contents['dir']['file']);
             }
@@ -1566,7 +1569,7 @@ class PEAR_PackageFile_v2
                         if (strtolower($dep['name']) == strtolower($package) &&
                               $depchannel == $channel) {
                             return true;
-                        }  
+                        }
                     }
                 }
             }
@@ -1584,7 +1587,7 @@ class PEAR_PackageFile_v2
                             if (strtolower($dep['name']) == strtolower($package) &&
                                   $depchannel == $channel) {
                                 return true;
-                            }  
+                            }
                         }
                     }
                 }
@@ -1644,7 +1647,8 @@ class PEAR_PackageFile_v2
                 );
             foreach (array('required', 'optional') as $type) {
                 $optional = ($type == 'optional') ? 'yes' : 'no';
-                if (!isset($this->_packageInfo['dependencies'][$type])) {
+                if (!isset($this->_packageInfo['dependencies'][$type])
+                    || empty($this->_packageInfo['dependencies'][$type])) {
                     continue;
                 }
                 foreach ($this->_packageInfo['dependencies'][$type] as $dtype => $deps) {

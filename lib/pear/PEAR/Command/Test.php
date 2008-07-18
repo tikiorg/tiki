@@ -15,9 +15,9 @@
  * @author     Stig Bakken <ssb@php.net>
  * @author     Martin Jansen <mj@php.net>
  * @author     Greg Beaver <cellog@php.net>
- * @copyright  1997-2006 The PHP Group
+ * @copyright  1997-2008 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: Id: Test.php,v 1.23 2007/06/13 17:46:36 cellog Exp 
+ * @version    CVS: $Id: Test.php,v 1.27 2008/01/03 20:26:36 cellog Exp $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 0.1
  */
@@ -35,9 +35,9 @@ require_once 'PEAR/Command/Common.php';
  * @author     Stig Bakken <ssb@php.net>
  * @author     Martin Jansen <mj@php.net>
  * @author     Greg Beaver <cellog@php.net>
- * @copyright  1997-2006 The PHP Group
+ * @copyright  1997-2008 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.6.1
+ * @version    Release: 1.7.2
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 0.1
  */
@@ -143,7 +143,7 @@ Run regression tests with PHP\'s regression testing script (run-tests.php).',
                 if (PEAR::isError($pname)) {
                     return $this->raiseError($pname);
                 }
- 
+
                 $package = &$reg->getPackage($pname['package'], $pname['channel']);
                 if (!$package) {
                     return PEAR::raiseError('Unknown package "' .
@@ -157,8 +157,8 @@ Run regression tests with PHP\'s regression testing script (run-tests.php).',
                     }
 
                     if (isset($options['phpunit']) && preg_match('/AllTests\.php\\z/i', $name)) {
-                        $params = array($atts['installed_as']);
-                        break;
+                        $params[] = $atts['installed_as'];
+                        continue;
                     } elseif (!preg_match('/\.phpt\\z/', $name)) {
                         continue;
                     }
@@ -174,34 +174,49 @@ Run regression tests with PHP\'s regression testing script (run-tests.php).',
                                                 '-maxdepth', $depth,
                                                 '-name', 'AllTests.php'));
                     if (count($dir)) {
-                        $tests = $dir;
-                        break;
+                        foreach ($dir as $p) {
+                            $p = realpath($p);
+                            if (!count($tests) ||
+                                  (count($tests) && strlen($p) < strlen($tests[0]))) {
+                                // this is in a higher-level directory, use this one instead.
+                                $tests = array($p);
+                            }
+                        }
                     }
+                    continue;
                 }
                 $dir = System::find(array($p, '-type', 'f',
                                             '-maxdepth', $depth,
                                             '-name', '*.phpt'));
                 $tests = array_merge($tests, $dir);
             } else {
-                if (isset($options['phpunit']) && preg_match('/AllTests\.php\\z/i', $p)) {
-                    $tests = array($p);
-                    break;
+                if (isset($options['phpunit'])) {
+                    if (preg_match('/AllTests\.php\\z/i', $p)) {
+                        $p = realpath($p);
+                        if (!count($tests) ||
+                              (count($tests) && strlen($p) < strlen($tests[0]))) {
+                            // this is in a higher-level directory, use this one instead.
+                            $tests = array($p);
+                        }
+                    }
+                    continue;
                 }
 
-                if (!file_exists($p)) {
-                    if (!preg_match('/\.phpt\\z/', $p)) {
-                        $p .= '.phpt';
-                    }
-                    $dir = System::find(array(dirname($p), '-type', 'f',
-                                                '-maxdepth', $depth,
-                                                '-name', $p));
-                    $tests = array_merge($tests, $dir);
-                } else {
+                if (file_exists($p) && preg_match('/\.phpt$/', $p)) {
                     $tests[] = $p;
+                    continue;
                 }
+
+                if (!preg_match('/\.phpt\\z/', $p)) {
+                    $p .= '.phpt';
+                }
+                $dir = System::find(array(dirname($p), '-type', 'f',
+                                            '-maxdepth', $depth,
+                                            '-name', $p));
+                $tests = array_merge($tests, $dir);
             }
         }
-        
+
         $ini_settings = '';
         if (isset($options['ini'])) {
             $ini_settings .= $options['ini'];
@@ -221,7 +236,7 @@ Run regression tests with PHP\'s regression testing script (run-tests.php).',
         if (isset($options['realtimelog']) && file_exists('run-tests.log')) {
             unlink('run-tests.log');
         }
-        
+
         if (isset($options['tapoutput'])) {
             $tap = '1..' . $tests_count . "\n";
         }
@@ -256,12 +271,12 @@ Run regression tests with PHP\'s regression testing script (run-tests.php).',
                 $this->ui->log($result->getMessage());
                 continue;
             }
-            
+
             if (isset($options['tapoutput'])) {
                 $tap .= $result[0] . ' ' . $i . $result[1] . "\n";
                 continue;
             }
-            
+
             if (isset($options['realtimelog'])) {
                 $fp = @fopen('run-tests.log', 'a');
                 if ($fp) {

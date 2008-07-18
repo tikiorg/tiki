@@ -15,9 +15,9 @@
  * @author     Stig Bakken <ssb@php.net>
  * @author     Tomas V. V. Cox <cox@idecnet.com>
  * @author     Greg Beaver <cellog@php.net>
- * @copyright  1997-2006 The PHP Group
+ * @copyright  1997-2008 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    CVS: Id: Registry.php,v 1.166 2007/06/16 18:41:59 cellog Exp 
+ * @version    CVS: $Id: Registry.php,v 1.171 2008/05/14 04:16:08 cellog Exp $
  * @link       http://pear.php.net/package/PEAR
  * @since      File available since Release 0.1
  */
@@ -41,9 +41,9 @@ define('PEAR_REGISTRY_ERROR_CHANNEL_FILE', -6);
  * @author     Stig Bakken <ssb@php.net>
  * @author     Tomas V. V. Cox <cox@idecnet.com>
  * @author     Greg Beaver <cellog@php.net>
- * @copyright  1997-2006 The PHP Group
+ * @copyright  1997-2008 The PHP Group
  * @license    http://www.php.net/license/3_0.txt  PHP License 3.0
- * @version    Release: 1.6.1
+ * @version    Release: 1.7.2
  * @link       http://pear.php.net/package/PEAR
  * @since      Class available since Release 1.4.0a1
  */
@@ -141,15 +141,20 @@ class PEAR_Registry extends PEAR
                            $pecl_channel = false)
     {
         parent::PEAR();
+        $this->setInstallDir($pear_install_dir);
+        $this->_pearChannel = $pear_channel;
+        $this->_peclChannel = $pecl_channel;
+        $this->_config = false;
+    }
+
+    function setInstallDir($pear_install_dir = PEAR_INSTALL_DIR)
+    {
         $ds = DIRECTORY_SEPARATOR;
         $this->install_dir = $pear_install_dir;
         $this->channelsdir = $pear_install_dir.$ds.'.channels';
         $this->statedir = $pear_install_dir.$ds.'.registry';
         $this->filemap  = $pear_install_dir.$ds.'.filemap';
         $this->lockfile = $pear_install_dir.$ds.'.lock';
-        $this->_pearChannel = $pear_channel;
-        $this->_peclChannel = $pecl_channel;
-        $this->_config = false;
     }
 
     function hasWriteAccess()
@@ -175,9 +180,12 @@ class PEAR_Registry extends PEAR
         return is_writeable($this->install_dir);
     }
 
-    function setConfig(&$config)
+    function setConfig(&$config, $resetInstallDir = true)
     {
         $this->_config = &$config;
+        if ($resetInstallDir) {
+            $this->setInstallDir($config->get('php_dir'));
+        }
     }
 
     function _initializeChannelDirs()
@@ -795,6 +803,7 @@ class PEAR_Registry extends PEAR
             }
 
             if (!is_resource($this->lock_fp)) {
+                $this->lock_fp = null;
                 return $this->raiseError("could not create lock file" .
                                          (isset($php_errormsg) ? ": " . $php_errormsg : ""));
             }
@@ -805,6 +814,9 @@ class PEAR_Registry extends PEAR
                     case LOCK_UN: $str = 'unlock';    break;
                     default:      $str = 'unknown';   break;
                 }
+                //is resource at this point, close it on error.
+                fclose($this->lock_fp);
+                $this->lock_fp = null;
                 return $this->raiseError("could not acquire $str lock ($this->lockfile)",
                                          PEAR_REGISTRY_ERROR_LOCK);
             }
@@ -1116,8 +1128,8 @@ class PEAR_Registry extends PEAR
         }
         if (!in_array('__uri', $channellist)) {
             $channellist[] = '__uri';
-        }
-        
+        } 
+   
         natsort($channellist);
         return $channellist;
     }
@@ -1767,10 +1779,10 @@ class PEAR_Registry extends PEAR
             return $e;
         }
         $ret = &$this->_getChannel($channel, $noaliases);
+        $this->_unlock();
         if (!$ret) {
             return PEAR::raiseError('Unknown channel: ' . $channel);
         }
-        $this->_unlock();
         return $ret;
     }
 
