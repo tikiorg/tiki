@@ -73,15 +73,21 @@ function wikiplugin_trackeritemfield($data, $params) {
 			return $dataelse;
 		}
 	}
-
 	if (isset($fields)) {
-		if (empty($fields)) {
-			$fields = $trklib->list_tracker_fields($trackerId, 0, -1);
-			$fields = $fields['data'];
-		} else {
+		$all_fields = $trklib->list_tracker_fields($trackerId, 0, -1);
+		$all_fields = $all_fields['data'];
+		if (!empty($fields)) {
 			$fields = split(':', $fields);
+			foreach ($all_fields as $i=>$fopt) {
+				if (!in_array($fopt['fieldId'], $fields)) {
+					unset($all_fields[$i]);
+				}
+			}
+			if (empty($all_fields)) {
+				return tra('Incorrect param');
+			}
 		}
-		$field_values = $trklib->get_item_fields($trackerId, $itemId, $fields, $itemUser);
+		$field_values = $trklib->get_item_fields($trackerId, $itemId, $all_fields, $itemUser);
 		foreach ($field_values as $field_value) {
 			if (($field_value['type'] == 'p' && $field_value['options_array'][0] == 'password') || ($field_value['isHidden'] != 'n' && $field_value['isHidden'] != 'c'))
 				continue;
