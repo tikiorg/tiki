@@ -806,14 +806,14 @@ div.cbox {
 .rbox-title {}
 .rbox-data {}
 
-.rbox-title[name="warning"] {}
-.rbox-data[name="warning"] {}
+.warning .rbox-title {}
+.warning .rbox-data {}
 
-.rbox-title[name="tip"],
-.rbox-data[name="tip"] {}
+.tip .rbox-title,
+.tip .rbox-data {}
 
-.rbox-title[name="comment"],
-.rbox-data[name="comment"] {}
+.comment .rbox-title,
+.comment .rbox-data {}
 
 
 div.simplebox {

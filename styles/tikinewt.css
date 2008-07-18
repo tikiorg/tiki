@@ -779,7 +779,7 @@ div.simplebox {
 .rbox-data {
   padding: 2px;
 }
-.rbox-title, .rbox-title[name="warning"] { 
+.rbox-title, .warning .rbox-title { 
   border: 0;
   border-radius-topright: 1ex;
   -moz-border-radius-topright: 1ex;
@@ -794,28 +794,28 @@ div.simplebox {
 }
 
 .rbox-data, 
-.rbox-data[name="warning"] {
+.warning .rbox-data {
   background: #eeee99;
   border: 1px solid #DDDDCC;
 }
 
-.rbox-title[name="note"] {
+.note .rbox-title {
   background: #CCCCDD;
 }
 
-.rbox-data[name="note"] {
+.note .rbox-data {
   background: #ECECEF;
   border: 1px solid #CCCCDD;
 }
 
-.rbox-title[name="comment"],
-.rbox-title[name="tip"], 
+.comment .rbox-title,
+.tip .rbox-title, 
 .rbox-title.tip {
   background: #CCCCDD;
 }
 
-.rbox-data[name="comment"],
-.rbox-data[name="tip"],
+.comment .rbox-data,
+.tip .rbox-data,
 .rbox-data.tip {            
   background: #ECEFEC;
   border: 1px solid #CCDDCC;
