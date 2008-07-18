@@ -19,7 +19,7 @@
 //
 // Id: Socket.php,v 1.31 2007/05/04 04:30:29 chagenbu Exp 
 
-require_once 'PEAR.php';
+require_once 'lib/pear/PEAR.php';
 
 define('NET_SOCKET_READ',  1);
 define('NET_SOCKET_WRITE', 2);

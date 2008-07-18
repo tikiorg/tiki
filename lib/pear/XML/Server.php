@@ -40,7 +40,7 @@
 /**
  * Pull in the XML_RPC class
  */
-require_once 'XML/RPC.php';
+require_once 'lib/pear/XML/RPC.php';
 
 
 /**

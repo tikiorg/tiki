@@ -24,8 +24,8 @@
 /**
  * Needed for error handling
  */
-require_once 'PEAR.php';
-require_once 'PEAR/Config.php';
+require_once 'lib/pear/PEAR.php';
+require_once 'lib/pear/PEAR/Config.php';
 
 $GLOBALS['_PEAR_DEPENDENCYDB_INSTANCE'] = array();
 /**

@@ -61,12 +61,12 @@ define('DATE_ERROR_INVALIDFORMATSTRING', 5);
 // }}}
 // {{{ Includes
 
-require_once 'PEAR.php';
+require_once 'lib/pear/PEAR.php';
 
 /**
  * Load Date_TimeZone
  */
-require_once 'Date/TimeZone.php';
+require_once 'lib/pear/Date/TimeZone.php';
 
 /**
  * Load Date_Calc

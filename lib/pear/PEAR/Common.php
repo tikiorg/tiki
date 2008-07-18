@@ -26,7 +26,7 @@
 /**
  * Include error handling
  */
-require_once 'PEAR.php';
+require_once 'lib/pear/PEAR.php';
 
 // {{{ constants and globals
 

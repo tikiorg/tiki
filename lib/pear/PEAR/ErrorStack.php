@@ -975,7 +975,7 @@ class PEAR_ErrorStack {
      */
     function raiseError()
     {
-        require_once 'PEAR.php';
+        require_once 'lib/pear/PEAR.php';
         $args = func_get_args();
         return call_user_func_array(array('PEAR', 'raiseError'), $args);
     }

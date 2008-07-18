@@ -24,11 +24,11 @@
 /**
  * Required for error handling
  */
-require_once 'PEAR.php';
-require_once 'PEAR/Registry.php';
-require_once 'PEAR/Installer/Role.php';
-require_once 'System.php';
-require_once 'PEAR/Remote.php';
+require_once 'lib/pear/PEAR.php';
+require_once 'lib/pear/PEAR/Registry.php';
+require_once 'lib/pear/PEAR/Installer/Role.php';
+require_once 'lib/pear/System.php';
+require_once 'lib/pear/PEAR/Remote.php';
 
 /**
  * Last created PEAR_Config instance.

@@ -26,12 +26,12 @@
 /**
  * Include Auth_Container base class
  */
-require_once "Auth/Container.php";
+require_once "lib/pear/Auth/Container.php";
 
 /**
  * Include PEAR class for error handling
  */
-require_once "PEAR.php";
+require_once "lib/pear/PEAR.php";
 
 /**
  * Storage driver for fetching login data from an IMAP server

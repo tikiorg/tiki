@@ -20,7 +20,7 @@
 //
 // Id: NNTP.php,v 1.4 2007/02/04 20:09:41 mose Exp 
 
-require_once 'PEAR.php';
+require_once 'lib/pear/PEAR.php';
 
 define('PEAR_NNTP_ALL',   0);
 define('PEAR_NNTP_NAMES', 1);

@@ -24,8 +24,8 @@
 /**
  * needed for PEAR_Error
  */
-require_once 'PEAR.php';
-require_once 'PEAR/Config.php';
+require_once 'lib/pear/PEAR.php';
+require_once 'lib/pear/PEAR/Config.php';
 
 /**
  * This is a class for doing remote operations against the central

@@ -27,7 +27,7 @@
 /**
  * Obtain the PEAR class so it can be extended from
  */
-require_once 'PEAR.php';
+require_once 'lib/pear/PEAR.php';
 
 
 // {{{ constants

@@ -51,7 +51,7 @@ function installer_is_accessible()
 	TikiInit::prependIncludePath('lib/pear');
 
 	include_once("db/local.php");
-	include_once ('adodb.inc.php');
+	include_once('lib/adodb/adodb.inc.php');
 
 	$dbTiki = &ADONewConnection($db_tiki);
 	if( ! $dbTiki->Connect( $host_tiki, $user_tiki, $pass_tiki, $dbs_tiki ) )

@@ -28,15 +28,15 @@
 /**
  * Include PEAR File_Passwd package
  */
-require_once "File/Passwd.php";
+require_once "lib/pear/File/Passwd.php";
 /**
  * Include Auth_Container base class
  */
-require_once "Auth/Container.php";
+require_once "lib/pear/Auth/Container.php";
 /**
  * Include PEAR package for error handling
  */
-require_once "PEAR.php";
+require_once "lib/pear/PEAR.php";
 
 /**
  * Storage driver for fetching login data from an encrypted password file.

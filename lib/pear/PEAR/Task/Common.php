@@ -201,7 +201,7 @@ class PEAR_Task_Common
 
     function throwError($msg, $code = -1)
     {
-        include_once 'PEAR.php';
+        include_once 'lib/pear/PEAR.php';
         return PEAR::raiseError($msg, $code);
     }
 }

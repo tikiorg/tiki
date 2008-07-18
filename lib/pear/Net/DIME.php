@@ -20,7 +20,7 @@
 // Id: DIME.php,v 1.5 2002/09/29 01:55:16 shane Exp 
 //
 
-require_once 'PEAR.php';
+require_once 'lib/pear/PEAR.php';
 /**
  *
  *  DIME Encoding/Decoding

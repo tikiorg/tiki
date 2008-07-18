@@ -20,8 +20,8 @@
 // THIS FILE IS DEPRECATED IN FAVOR OF DEPENDENCY2.PHP, AND IS NOT USED IN THE INSTALLER
 // Id: Dependency.php,v 1.42 2006/03/26 23:25:56 cellog Exp 
 
-require_once "PEAR.php";
-require_once "OS/Guess.php";
+require_once "lib/pear/PEAR.php";
+require_once "lib/pear/OS/Guess.php";
 
 define('PEAR_DEPENDENCY_MISSING',        -1);
 define('PEAR_DEPENDENCY_CONFLICT',       -2);

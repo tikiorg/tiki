@@ -23,8 +23,8 @@
 /**
  * base class
  */
-require_once 'PEAR.php';
-require_once 'Console/Getopt.php';
+require_once 'lib/pear/PEAR.php';
+require_once 'lib/pear/Console/Getopt.php';
 
 $GLOBALS['_System_temp_files'] = array();
 

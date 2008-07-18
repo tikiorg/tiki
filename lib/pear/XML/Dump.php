@@ -19,7 +19,7 @@
 /**
  * Pull in the XML_RPC class
  */
-require_once 'XML/RPC.php';
+require_once 'lib/pear/XML/RPC.php';
 
 
 /**
@@ -70,7 +70,7 @@ class XML_RPC_Dump
     function generateDump($value, $nLevel = 0)
     {
         if (!is_object($value) && get_class($value) != 'xml_rpc_value') {
-            require_once 'PEAR.php';
+            require_once 'lib/pear/PEAR.php';
             PEAR::raiseError('Tried to dump non-XML_RPC_Value variable' . "\r\n",
                              0, PEAR_ERROR_PRINT);
             if (is_object($value)) {
@@ -93,7 +93,7 @@ class XML_RPC_Dump
             $ret = $this->genScalar($value->scalarval(), $nLevel);
             break;
         default:
-            require_once 'PEAR.php';
+            require_once 'lib/pear/PEAR.php';
             PEAR::raiseError('Illegal type "' . $value->kindOf()
                              . '" in XML_RPC_Value' . "\r\n", 0,
                              PEAR_ERROR_PRINT);

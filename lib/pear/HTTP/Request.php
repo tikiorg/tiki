@@ -47,7 +47,7 @@
 /**
  * PEAR and PEAR_Error classes (for error handling)
  */
-require_once 'PEAR.php';
+require_once 'lib/pear/PEAR.php';
 /**
  * Socket class
  */

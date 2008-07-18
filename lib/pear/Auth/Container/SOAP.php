@@ -26,15 +26,15 @@
 /**
  * Include Auth_Container base class
  */
-require_once "Auth/Container.php";
+require_once "lib/pear/Auth/Container.php";
 /**
  * Include PEAR package for error handling
  */
-require_once "PEAR.php";
+require_once "lib/pear/PEAR.php";
 /**
  * Include PEAR SOAP_Client
  */
-require_once 'SOAP/Client.php';
+require_once 'lib/pear/SOAP/Client.php';
 
 /**
  * Storage driver for fetching login data from SOAP

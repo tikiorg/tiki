@@ -47,12 +47,12 @@
 /**
  * Get the Date class
  */
-require_once 'Date.php';
+require_once 'lib/pear/Date.php';
 
 /**
  * Get the Date_Calc class
  */
-require_once 'Date/Calc.php';
+require_once 'lib/pear/Date/Calc.php';
 
 // }}}
 // {{{ Constants

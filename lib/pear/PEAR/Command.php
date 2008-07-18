@@ -24,9 +24,9 @@
 /**
  * Needed for error handling
  */
-require_once 'PEAR.php';
-require_once 'PEAR/Frontend.php';
-require_once 'PEAR/XMLParser.php';
+require_once 'lib/pear/PEAR.php';
+require_once 'lib/pear/PEAR/Frontend.php';
+require_once 'lib/pear/PEAR/XMLParser.php';
 
 /**
  * List of commands and what classes they are implemented in.

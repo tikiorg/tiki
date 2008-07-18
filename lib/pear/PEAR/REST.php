@@ -23,8 +23,8 @@
 /**
  * For downloading xml files
  */
-require_once 'PEAR.php';
-require_once 'PEAR/XMLParser.php';
+require_once 'lib/pear/PEAR.php';
+require_once 'lib/pear/PEAR/XMLParser.php';
 
 /**
  * Intelligently retrieve data, following hyperlinks if necessary, and re-directing

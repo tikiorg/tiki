@@ -24,8 +24,8 @@
 /**
  * for error handling
  */
-require_once 'PEAR.php';
-require_once 'PEAR/Config.php';
+require_once 'lib/pear/PEAR.php';
+require_once 'lib/pear/PEAR/Config.php';
 
 define('DETAILED', 1);
 putenv("PHP_PEAR_RUNTESTS=1");
