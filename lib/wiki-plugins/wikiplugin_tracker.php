@@ -597,8 +597,10 @@ function wikiplugin_tracker($data, $params) {
 				}
 			}
 			if (!empty($tpl)) {
+				$smarty->security = true;
 				$back .= $smarty->fetch($tpl);
 			} elseif (!empty($wiki)) {
+				$smarty->security = true;
 				$back .= $smarty->fetch('wiki:'.$wiki);
 			}
 			if ($prefs['feature_antibot'] == 'y' && empty($user)) {

@@ -3487,6 +3487,7 @@ CREATE TABLE "tiki_menus" (
   "name" varchar(200) default '' NOT NULL,
   "description" text default '',
   "type" char(1) default NULL NULL,
+  "icon" varchar(200) default NULL NULL,
   PRIMARY KEY (menuId)
 ) ENGINE=MyISAM  
 go

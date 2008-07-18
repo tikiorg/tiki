@@ -122,12 +122,9 @@
         <tr>
           <td>
             <small>
-              <a class="link" href="tiki-view_blog_post.php?blogId={$blogId}&amp;postId={$listpages[ix].postId}">
-                {tr}Permalink{/tr}
-              </a>
+              <a class="link" href="tiki-view_blog_post.php?blogId={$blogId}&amp;postId={$listpages[ix].postId}">{tr}Permalink{/tr}</a>
               {if $allow_comments eq 'y' and $prefs.feature_blogposts_comments eq 'y'}
-                {$listpages[ix].comments} {tr}comments{/tr}
-                  [<a class="link" href="tiki-view_blog_post.php?find={$find}&amp;blogId={$blogId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;postId={$listpages[ix].postId}&amp;show_comments=1">{tr}View Comments{/tr}</a>]
+                <a class="link" href="tiki-view_blog_post.php?find={$find}&amp;blogId={$blogId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;postId={$listpages[ix].postId}&amp;show_comments=1">{$listpages[ix].comments} {tr}comments{/tr}</a>
               {/if}
             </small>
           </td>

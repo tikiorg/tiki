@@ -15,6 +15,7 @@
 	deny from all
 </FilesMatch>
 
+<IfModule mod_rewrite.c>
 RewriteEngine On
 
 # direct one-word access
@@ -80,3 +81,5 @@ RewriteRule     ^([^/\.]+)$    tiki-index.php?page=$1                   [QSA,L]
 # how to redierct to a wiki page on a not found error: take away the comment + adapt the pagename 
 # ErrorDocument 404 tiki-index.php?page=Page+not+found
 
+</IfModule>
+# End of rewrite rules

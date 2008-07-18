@@ -357,6 +357,8 @@ function wikiplugin_trackerlist($data, $params) {
 			} elseif (empty($tpl)) {
 				$tpl = '';
 			}
+			if (!empty($tpl))
+				$smarty->security = true;
 			$smarty->assign('tpl', $tpl);
 			
 			$smarty->assign_by_ref('max', $max);

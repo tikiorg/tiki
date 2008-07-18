@@ -1990,7 +1990,7 @@ function add_pageview() {
     // FILE GALLERIES ////
     /*shared*/
     function list_files($offset, $maxRecords, $sort_mode, $find) {
-		return $this->get_files($offset, $maxRecords, $sort_mode, $find);
+		return $this->get_files($offset, $maxRecords, $sort_mode, $find,$recursive=true);
     }
 
     /*shared*/
