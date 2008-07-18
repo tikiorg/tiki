@@ -1,14 +1,9 @@
 {* $Id$ *}
-<h1><a  class="pagetitle" href="tiki-article_types.php">{tr}Admin Article Types{/tr}</a>
+{title url="tiki-article_types.php" help=Articles}{tr}Admin Article Types{/tr}{/title}
 
-{if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}Articles" target="tikihelp" class="tikihelp" title="{tr}Admin Article Types{/tr}">
-{icon _id='help'}</a>{/if}
-{if $prefs.feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-article_types.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Article Types tpl{/tr}">
-{icon _id='shape_square_edit' alt='{tr}Edit template{/tr}'}</a>{/if}</h1>
+<h2>{tr}List of types{/tr}</h2>
 
-<a href="javascript:toggle('wiki-edithelp')">{tr}show help{/tr}</a>
+<span class="button2"><a class="linkbut" href="javascript:toggle('wiki-edithelp')">{tr}show help{/tr}</a></span>
 <div class="wiki-edithelp" id="wiki-edithelp" style="display:none;">
 <b>{tr}Name{/tr}</b> - {tr}Shows up in the drop down list of article types{/tr}<br />
 <b>{tr}Rate{/tr}</b> - {tr}Allow ratings by the author{/tr}<br />
@@ -32,7 +27,6 @@
 <b>{tr}Creator can edit{/tr}</b> - {tr}The person who submits an article of this type can edit it{/tr}<br />
 <b>{tr}Delete{/tr}</b> - {tr}Delete this type{/tr}<br />
 </div>
-<h2>{tr}List of types{/tr}</h2>
 <form enctype="multipart/form-data" action="tiki-article_types.php" method="post">
 <table class="normal">
 <tr>
@@ -97,9 +91,9 @@
 </tr>
 {/section}
 </table>
-<br />
 <input type="submit" name="update_type" value="{tr}Save{/tr}" /><br />
-<br />
+
+<h3>{tr}Create a new type{/tr}</h3>
 <input type="text" name="new_type" /><input type="submit" name="add_type" value="{tr}Create a new type{/tr}" />
 
 </form>
