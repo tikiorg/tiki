@@ -4,7 +4,7 @@
 {if $remarksbox_title ne ''}
 	<div class="rbox-title">
 {if $remarksbox_icon ne 'none'}
-		{icon _id=$remarksbox_icon vertical-align="middle"}
+		{icon _id=$remarksbox_icon style='vertical-align="middle"'}
 {/if}
 		<span>{$remarksbox_title}</span>
 	</div>
