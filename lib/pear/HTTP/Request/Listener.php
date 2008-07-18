@@ -39,7 +39,7 @@
  * @author      Alexey Borzov <avb@php.net>
  * @copyright   2002-2007 Richard Heyes
  * @license     http://opensource.org/licenses/bsd-license.php New BSD License
- * @version     CVS: Id: Listener.php,v 1.3 2007/05/18 10:33:31 avb Exp 
+ * @version     CVS: $Id: Listener.php,v 1.3 2007/05/18 10:33:31 avb Exp $
  * @link        http://pear.php.net/package/HTTP_Request/ 
  */
 
@@ -52,7 +52,7 @@
  * @category    HTTP
  * @package     HTTP_Request
  * @author      Alexey Borzov <avb@php.net>
- * @version     Release: 1.4.1
+ * @version     Release: 1.4.2
  */
 class HTTP_Request_Listener 
 {
