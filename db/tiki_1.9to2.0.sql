@@ -1788,3 +1788,6 @@ UPDATE `users_permissions` SET `admin`='y' WHERE `permName` = 'tiki_p_admin_tiki
 
 #2008-07-11 nyloth
 UPDATE `tiki_preferences` SET `value`='n' WHERE `name`='feature_wysiwyg' AND `value`='default';
+
+#2008-07-20 mstef
+insert into tiki_preferences (name, value) values ('summary_rss_blogs','n');

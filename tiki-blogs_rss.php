@@ -43,7 +43,12 @@ if ($output["data"]=="EMPTY") {
 	$changes = $bloglib -> list_all_blog_posts(0, $prefs['max_rss_blogs'], $dateId.'_desc', '', $now);
 	$tmp = array();
 	foreach ($changes["data"] as $data)  {
-		$data["$descId"] = $tikilib->parse_data($data["$descId"]);
+      global $bloglib;
+      if($prefs['summary_rss_blogs'] == "y") {
+         $data["$descId"] = $tikilib->parse_data($bloglib->get_page($data["$descId"],1));
+      } else {
+         $data["$descId"] = $tikilib->parse_data($data["$descId"]);
+      }
 		$tmp[] = $data;
 	}
 	$changes["data"] = $tmp;

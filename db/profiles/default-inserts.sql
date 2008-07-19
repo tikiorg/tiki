@@ -229,6 +229,7 @@ INSERT INTO tiki_preferences VALUES ('max_rss_directories','10');
 INSERT INTO tiki_preferences VALUES ('max_rss_articles','10');
 INSERT INTO tiki_preferences VALUES ('max_rss_blog','10');
 INSERT INTO tiki_preferences VALUES ('max_rss_blogs','10');
+INSERT INTO tiki_preferences VALUES ('summary_rss_blogs','n');
 INSERT INTO tiki_preferences VALUES ('max_rss_file_galleries','10');
 INSERT INTO tiki_preferences VALUES ('max_rss_file_gallery','10');
 INSERT INTO tiki_preferences VALUES ('max_rss_forum','10');
