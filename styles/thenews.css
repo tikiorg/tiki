@@ -25,7 +25,7 @@ html>body {
 	text-align: left;
 }
 
-body#fullscreen {}
+body.fullscreen {}
 
 a,
 a:visited {
@@ -344,7 +344,7 @@ div#sitead {
 	
 }
 
-#fullscreen #col1 {
+.fullscreen #col1 {
 	margin-left: 30px !important;
 	margin-right: 30px !important;
 }
@@ -391,7 +391,7 @@ a.flip img {
 	text-decoration: none;
 }
 
-#fullscreen .tellafriend {
+.fullscreen .tellafriend {
 	margin-right: 100px;
 	margin-top: 2px;
 }

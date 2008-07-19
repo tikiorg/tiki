@@ -187,9 +187,9 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 </head>
 
 <body {if isset($section) and $section eq 'wiki page' and $prefs.user_dbl eq 'y' and $dblclickedit eq 'y' and $tiki_p_edit eq 'y'}ondblclick="location.href='tiki-editpage.php?page={$page|escape:"url"}';"{/if}
-onload="{if $prefs.feature_tabs eq 'y'}tikitabs({if $cookietab neq ''}{$cookietab}{else}1{/if},5);{/if}{if $msgError} javascript:location.hash='msgError'{/if}"
-{if $section} class="tiki_{$section}"{/if}
-{if $smarty.session.fullscreen eq 'y'} id="fullscreen"{/if}>
+ onload="{if $prefs.feature_tabs eq 'y'}tikitabs({if $cookietab neq ''}{$cookietab}{else}1{/if},5);{/if}{if $msgError} javascript:location.hash='msgError'{/if}"
+{if $section or $smarty.session.fullscreen eq 'y'}class="
+{if $section}tiki_{$section}{/if} {if $smarty.session.fullscreen eq 'y'}fullscreen{/if}"{/if}>
 <ul class="jumplinks">
  <li><a href="#tiki-center">{tr}Jump to Content{/tr}</a></li>
  {*<li><a href="#nav">{tr}Jump to Navigation{/tr}</a></li>

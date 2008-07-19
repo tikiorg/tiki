@@ -17,7 +17,7 @@ body {
 	font-family: "Trebuchet MS", "Bitstream Vera Sans", sans-serif}
 
 html>body {font-size: 74% !important}
-body#fullscreen { }
+body.fullscreen { }
 
 a,
 a:visited {
@@ -228,7 +228,7 @@ ul.jumplinks a:focus, ul.jumplinks a:active {
 	text-align: left;
 	font-size: 1em}					
 
-#fullscreen #col1 {
+.fullscreen #col1 {
 	margin-left: 30px !important;
 	margin-right: 30px !important}
 	
@@ -401,7 +401,7 @@ a.flip img {display: none}
 
 .tellafriend a:hover {}
 
-#fullscreen .tellafriend {
+.fullscreen .tellafriend {
 	margin-right: 100px;
 	margin-top: 2px}
 

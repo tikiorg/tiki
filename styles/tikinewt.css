@@ -322,7 +322,7 @@ div#sitead {
 	background-color: transparent;
 }
 
-#fullscreen #col1 {
+.fullscreen #col1 {
 	margin-left: 30px !important;
 	margin-right: 30px !important;
 }
@@ -2689,7 +2689,7 @@ table.default td {
 	color: #225566;
 }
 
-#fullscreen .tellafriend {
+.fullscreen .tellafriend {
 	margin-right: 100px;
 	margin-top: 2px;
 }
