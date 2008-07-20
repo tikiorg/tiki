@@ -95,7 +95,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['feature_wiki_userpage'] = 'y';
 	$prefs['feature_wiki_userpage_prefix'] = 'UserPage';
 	$prefs['feature_wiki_usrlock'] = 'n';
-	$prefs['feature_wiki_save_draft'] = 'y';
+	$prefs['feature_wiki_save_draft'] = 'n'; // Broken in 2.0 RC2 http://dev.tikiwiki.org/wish1888
 	$prefs['feature_wikiwords'] = 'y';
 	$prefs['feature_wikiwords_usedash'] = 'y';
 	$prefs['mailin_autocheck'] = 'n';

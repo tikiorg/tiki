@@ -551,7 +551,7 @@ name="w_displayed_default"{if $prefs.w_displayed_default eq 'y'} checked="checke
     <tr><td class="form">{tr}Similar:{/tr}</td><td><input type="checkbox" name="feature_likePages" {if $prefs.feature_likePages eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Rankings:{/tr}</td><td><input type="checkbox" name="feature_wiki_rankings" {if $prefs.feature_wiki_rankings eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Undo:{/tr}</td><td><input type="checkbox" name="feature_wiki_undo" {if $prefs.feature_wiki_undo eq 'y'}checked="checked"{/if}/></td></tr>
-    <tr><td class="form">{tr}Save Draft:{/tr}</td><td><input type="checkbox" name="feature_wiki_save_draft" {if $prefs.feature_wiki_save_draft eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}Save Draft:{/tr} ({tr}Requires AJAX{/tr}) ({tr}Experimental{/tr}) </td><td><input type="checkbox" name="feature_wiki_save_draft" {if $prefs.feature_wiki_save_draft eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}MultiPrint:{/tr}</td><td><input type="checkbox" name="feature_wiki_multiprint" {if $prefs.feature_wiki_multiprint eq 'y'}checked="checked"{/if}/></td></tr>
 {*    <tr><td class="form">{tr}PDF generation:{/tr}</td><td><input type="checkbox" name="feature_wiki_pdf" {if $prefs.feature_wiki_pdf eq 'y'}checked="checked"{/if}/></td></tr> *}
     <tr><td class="form">{tr}Comments:{/tr}</td><td><input type="checkbox" name="feature_wiki_comments" {if $prefs.feature_wiki_comments eq 'y'}checked="checked"{/if}/></td></tr>
