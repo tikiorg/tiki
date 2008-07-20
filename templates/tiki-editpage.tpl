@@ -317,14 +317,16 @@ function searchrep() {
 {/if}
 </td></tr>
 {else}
-<tr class="formcolor">
-	<td>{tr}Translation request{/tr}:</td>
-	<td>
-		<input type="hidden" name="lang" value="{$lang|escape}"/>
-		<input type="checkbox" name="translation_critical" id="translation_critical"{if $translation_critical} checked="checked"{/if}/>
-		<label for="translation_critical">{tr}Send urgent translation request.{/tr}</label>
-	</td>
-</tr>
+	{if $trads|@count > 1}
+	<tr class="formcolor">
+		<td>{tr}Translation request{/tr}:</td>
+		<td>
+			<input type="hidden" name="lang" value="{$lang|escape}"/>
+			<input type="checkbox" name="translation_critical" id="translation_critical"{if $translation_critical} checked="checked"{/if}/>
+			<label for="translation_critical">{tr}Send urgent translation request.{/tr}</label>
+		</td>
+	</tr>
+	{/if}
 {/if}
 {/if}
 {if $page|lower neq 'sandbox'}

@@ -1233,6 +1233,13 @@ if ($prefs['feature_wikiapproval'] == 'y') {
 	}
 }
 
+if( $prefs['feature_multilingual'] == 'y' ) {
+	global $multilinguallib;
+	include_once('lib/multilingual/multilinguallib.php');
+	$trads = $multilinguallib->getTranslations('wiki page', $info['page_id'], $page, $info['lang']);
+	$smarty->assign('trads', $trads);
+}
+
 // Get edit session timeout in minutes
 $smarty->assign('edittimeout', (ini_get('session.gc_maxlifetime') / 60 ));
 
