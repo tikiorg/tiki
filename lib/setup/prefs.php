@@ -464,7 +464,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['messu_mailbox_size'] = '0';
 	$prefs['messu_archive_size'] = '200';
 	$prefs['messu_sent_size'] = '200';
-	$prefs['allowmsg_by_default'] = 'n';
+	$prefs['allowmsg_by_default'] = 'y';
 	$prefs['allowmsg_is_optional'] = 'y';
 
 	# newsreader
