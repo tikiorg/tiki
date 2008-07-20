@@ -250,7 +250,7 @@ class TikiAccessLib extends TikiLib {
      */
 
     function authorize_rss($rssrights) {
-       global $tikilib, $userlib, $user, $prefs;
+       global $tikilib, $userlib, $user, $prefs, $smarty;
        $result=array('msg' => tra("Permission denied you cannot view this section"), 'header' => 'n');
        
        // allow admin
@@ -291,8 +291,13 @@ class TikiAccessLib extends TikiLib {
        list($res,$rest)=$userlib->validate_user_tiki($user, $pass, false, false);
        if ($res==USER_VALID) {
           $perms = $userlib->get_user_permissions($user);
+          foreach ($perms as $perm) {
+             eval('global $' . $perm . ';');
+             $$perm = 'y';
+             $smarty->assign($perm, 'y');
+          }
           foreach ($rssrights as $perm) {
-             if (in_array($perm, $perms)) {
+             if ($$perm == 'y') {
                 // if user/password and the appropriate rights are correct, allow.
                 return;
              }
