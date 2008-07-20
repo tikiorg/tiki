@@ -797,7 +797,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	# layout
 	$prefs['feature_left_column'] = 'y';
 	$prefs['feature_right_column'] = 'y';
-	$prefs['feature_top_bar'] = 'y';
+	$prefs['feature_top_bar'] = 'n';
 	$prefs['feature_bot_bar'] = 'y';
 	$prefs['feature_bot_bar_icons'] = 'n';
 	$prefs['feature_bot_bar_debug'] = 'n';
