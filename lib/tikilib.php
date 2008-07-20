@@ -67,9 +67,11 @@ class TikiLib extends TikiDB {
 
    //handle url embedded user:pass
    $spliturl=parse_url($url);
-   $aSettingsRequest["pass"]=$spliturl['user'];
-   $aSettingsRequest["user"]=$spliturl['pass'];
-   $url=str_replace($spliturl['user'].":".$spliturl['pass']."@", null, $url);
+   if(!empty($spliturl['user']) && !empty($spliturl['pass'])) {
+      $aSettingsRequest["pass"]=$spliturl['pass'];
+      $aSettingsRequest["user"]=$spliturl['user'];
+      $url=str_replace($spliturl['user'].":".$spliturl['pass']."@", null, $url);
+   }
 
 	if (!preg_match("/^[-_a-zA-Z0-9:\/\.\?&;=\+~%,]*$/",$url)) return false;
 
