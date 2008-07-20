@@ -14,6 +14,3 @@
 # 
 # You may execute this command as often as you like, 
 # and may safely ignore any error messages that appear.
-
-#2008-07-20 mstef
-insert into tiki_preferences (name, value) values ('summary_rss_blogs','n');
