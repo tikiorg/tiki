@@ -237,6 +237,72 @@ class TikiAccessLib extends TikiLib {
         exit();
     }
 
+    /**
+     * Authorizes access to Tiki RSS feeds via user/password embedded in a URL
+     * e.g. https://joe:secret@localhost/tiki/tiki-calendars_rss.php?ver=2
+     *              ~~~~~~~~~~
+     *
+     * @param array the permissions that needs to be checked against (e.g. tiki_p_view)
+     *
+     * @return null if authorized, otherwise an array(msg,header)
+     *              where msg can be displayed, and header decides whether to 
+     *              send 401 Unauthorized headers.
+     */
+
+    function authorize_rss($rssrights) {
+       global $tikilib, $userlib, $user, $prefs;
+       $result=array('msg' => tra("Permission denied you cannot view this section"), 'header' => 'n');
+       
+       // allow admin
+       print $tiki_p_admin;
+       if($userlib->user_has_permission($user,'tiki_p_admin')) {
+          return;
+       }
+
+       // if current user has appropriate rights, allow.
+       foreach($rssrights as $perm) {
+          if($userlib->user_has_permission($user,$perm)) {
+             return;
+          }
+       }
+
+       // deny if no basic auth allowed.
+       if($prefs['rss_basic_auth'] != 'y') {
+          return $result;
+       }
+
+       //login is needed to access the contents
+       $https_mode = isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on';
+
+       //refuse to authenticate in plaintext if https_login_required.
+       if ($prefs['https_login_required'] == 'y' && !$https_mode) {
+          $result['msg']=tra("For the security of your password direct access to the feed is only available via https");
+          return $result;
+       }
+
+       //http basic auth headers if no user specified in http header.
+       if (empty($_SERVER['PHP_AUTH_USER'])) {
+          $result['header']='y';
+          return $result;
+       }
+
+       $user = $_SERVER['PHP_AUTH_USER'] ;
+       $pass = $_SERVER['PHP_AUTH_PW'] ;
+       list($res,$rest)=$userlib->validate_user_tiki($user, $pass, false, false);
+       if ($res==USER_VALID) {
+          $perms = $userlib->get_user_permissions($user);
+          foreach ($rssrights as $perm) {
+             if (in_array($perm, $perms)) {
+                // if user/password and the appropriate rights are correct, allow.
+                return;
+             }
+          }
+       } 
+
+       //try to (re)authenticate the user
+       $result['header']='y';
+       return $result;
+    }
 }
 
 $access = new TikiAccessLib($dbTiki);

@@ -198,6 +198,12 @@
 	    {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Enabling caching will override existing permissions - all content will be public. Enable this option <strong>only</strong> if your syndicated content should be public.{/tr}{/remarksbox}
 	  </td>
         </tr>
+        <tr>
+          <td class="form">{tr}Allow Basic Authentication for RSS feeds{/tr}</td>
+          <td>
+            <input type="checkbox" name="rss_basic_auth" onclick="flip('rssbasicauth');"{if $prefs.rss_basic_auth eq 'y'} checked="checked"{/if} />{remarksbox type="comment" title="{tr}Comment{/tr}"}{tr}This potentially leaks passwords over unencrypted links, it is intended for private and enterprise settings, you should consider to also set https_login=required.{/tr}{/remarksbox}
+	  </td>
+        </tr>
         <tr><td colspan="2">&nbsp;</td></tr>
         <tr>
           <td colspan="2" class="button"><input type="submit" name="rss" value="{tr}Apply{/tr}" /></td>

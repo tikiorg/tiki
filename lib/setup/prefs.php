@@ -604,6 +604,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['rssfeed_css'] = 'y';
 	$prefs['rssfeed_publisher'] = '';
 	$prefs['rssfeed_img'] = 'img/tiki.jpg';
+	$prefs['rss_basic_auth'] = 'n';
 
 	# maps
 	$prefs['feature_maps'] = 'n';
