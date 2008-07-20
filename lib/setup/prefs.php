@@ -565,14 +565,14 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['feature_charts'] = 'n';
 
 	# rss
-	$prefs['rss_forums'] = 'y';
-	$prefs['rss_forum'] = 'y';
-	$prefs['rss_directories'] = 'y';
-	$prefs['rss_articles'] = 'y';
-	$prefs['rss_blogs'] = 'y';
-	$prefs['rss_image_galleries'] = 'y';
-	$prefs['rss_file_galleries'] = 'y';
-	$prefs['rss_wiki'] = 'y';
+	$prefs['rss_forums'] = 'n';
+	$prefs['rss_forum'] = 'n';
+	$prefs['rss_directories'] = 'n';
+	$prefs['rss_articles'] = 'n';
+	$prefs['rss_blogs'] = 'n';
+	$prefs['rss_image_galleries'] = 'n';
+	$prefs['rss_file_galleries'] = 'n';
+	$prefs['rss_wiki'] = 'n';
 	$prefs['rss_image_gallery'] = 'n';
 	$prefs['rss_file_gallery'] = 'n';
 	$prefs['rss_blog'] = 'n';
