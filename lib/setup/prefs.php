@@ -420,7 +420,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['feature_community_friends_permission'] = 'n';
 	$prefs['feature_community_friends_permission_dep'] = '2';
 	$prefs['change_language'] = 'y';
-	$prefs['change_theme'] = 'y';
+	$prefs['change_theme'] = 'n';
 	$prefs['login_is_email'] = 'n';
 	$prefs['validateUsers'] = 'n';
 	$prefs['validateEmail'] = 'n';
