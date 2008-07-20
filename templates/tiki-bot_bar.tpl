@@ -13,7 +13,7 @@
 {if $prefs.feature_bot_logo eq 'y'}{eval var=$prefs.bot_logo_code}{/if}
 
 {if $prefs.feature_bot_bar_icons eq 'y'}
-	<div id="power" style="text-align: center">
+	<div id="power_icons" style="text-align: center">
 		<a href="http://tikiwiki.org/" title="Tikiwiki"><img style="border: 0; vertical-align: middle" alt="{tr}Powered by{/tr} Tikiwiki" src="img/tiki/tikibutton2.png" /></a>
 		<a href="http://www.php.net/" title="PHP"><img style="border: 0; vertical-align: middle" alt="{tr}Powered by{/tr} PHP" src="img/php.png" /></a>
 		<a href="http://smarty.php.net/" title="Smarty"><img style="border: 0; vertical-align: middle" alt="{tr}Powered by{/tr} Smarty" src="img/smarty.gif"  /></a>
@@ -75,7 +75,7 @@
 	{include file="babelfish.tpl"}
 {/if}
 
-<div id="power" style="text-align: center">
+<div id="power">
 	{tr}Powered by{/tr} <a target="_blank" href="http://info.tikiwiki.org" title="{tr}This is{/tr} TikiWiki CMS/Groupware &#169; 2002&#8211;2008, {tr}The TikiWiki community{/tr}">{tr}TikiWiki CMS/Groupware{/tr}</a>
 </div>
 
