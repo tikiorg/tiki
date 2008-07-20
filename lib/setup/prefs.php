@@ -595,6 +595,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['max_rss_tracker'] = 10;
 	$prefs['max_rss_trackers'] = 10;
 	$prefs['max_rss_calendar'] = 10;
+	$prefs['summary_rss_blogs'] = 'n';
 	$prefs['rssfeed_default_version'] = '2';
 	$prefs['rssfeed_language'] =  'en-us';
 	$prefs['rssfeed_editor'] = '';
