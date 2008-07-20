@@ -51,7 +51,6 @@ class TikiLib extends TikiDB {
     function httprequest($url, $reqmethod = "GET") {
 	global $prefs;
 	// test url :
-	if (!preg_match("/^[-_a-zA-Z0-9:\/\.\?&;=\+~%,]*$/",$url)) return false;
 	// rewrite url if sloppy # added a case for https urls
 	if ( (substr($url,0,7) <> "http://") and
 		(substr($url,0,8) <> "https://")
@@ -65,6 +64,15 @@ class TikiLib extends TikiDB {
 	if (substr_count($url, "/") < 3) {
 	    $url .= "/";
 	}
+
+   //handle url embedded user:pass
+   $spliturl=parse_url($url);
+   $aSettingsRequest["pass"]=$spliturl['user'];
+   $aSettingsRequest["user"]=$spliturl['pass'];
+   $url=str_replace($spliturl['user'].":".$spliturl['pass']."@", null, $url);
+
+	if (!preg_match("/^[-_a-zA-Z0-9:\/\.\?&;=\+~%,]*$/",$url)) return false;
+
 	// Proxy settings
 	if ($prefs['use_proxy'] == 'y') {
 	    $aSettingsRequest["proxy_host"]=$prefs['proxy_host'];
