@@ -965,7 +965,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 
 	$prefs['bot_logo_code'] = '';
 	$prefs['feature_blogposts_pings'] = '';
-	$prefs['feature_create_webhelp'] = '';
+	$prefs['feature_create_webhelp'] = 'n';
 	$prefs['feature_forums_search'] = '';
 	$prefs['feature_forums_tiki_search'] = '';
 	$prefs['feature_trackbackpings'] = 'n';
