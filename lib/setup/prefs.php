@@ -431,7 +431,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['lowercase_username'] = 'n';
 	$prefs['max_username_length'] = '50';
 	$prefs['min_username_length'] = '1';
-	$prefs['users_prefs_allowMsgs'] = 'n';
+	$prefs['users_prefs_allowMsgs'] = 'y';
 	$prefs['users_prefs_country'] = '';
 	$prefs['users_prefs_diff_versions'] = 'n';
 	$prefs['users_prefs_display_timezone'] = 'Local';
@@ -442,7 +442,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['users_prefs_mess_archiveAfter'] = '0';
 	$prefs['users_prefs_mess_maxRecords'] = '10';
 	$prefs['users_prefs_mess_sendReadStatus'] = 'n';
-	$prefs['users_prefs_minPrio'] = '6';
+	$prefs['users_prefs_minPrio'] = '3';
 	$prefs['users_prefs_mytiki_blogs'] = 'y';
 	$prefs['users_prefs_mytiki_gals'] = 'y';
 	$prefs['users_prefs_mytiki_items'] = 'y';
