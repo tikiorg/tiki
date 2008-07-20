@@ -7332,6 +7332,11 @@ if (!$simple_wiki) {
 			    return $this->date_format('%Y-%m-%dT%H:%M:%S%O', $timestamp, $user);
 			}
 
+			function get_compact_iso8601_datetime($timestamp, $user = false) {
+             // no dashes and no tz info - latter should be fixed
+			    return $this->date_format('%Y%m%dT%H%M%S', $timestamp, $user);
+			}
+
 			function list_languages($path = false, $short=null, $all=false) {
 			    $languages = array();
 

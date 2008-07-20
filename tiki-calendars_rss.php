@@ -81,12 +81,12 @@ if ($output["data"]=="EMPTY") {
 	$cur_time = explode(',', $tikilib->date_format('%Y,%m,%d,%H,%M,%S', $publishDate));
 	$items = $calendarlib->list_raw_items($calendars, "", $tikilib->now, $tikilib->make_time($cur_time[3], $cur_time[4], $cur_time[5], $cur_time[1], $cur_time[2], $cur_time[0]+1), 0, $maxCalEntries);
 
-	require_once("lib/smarty_tiki/modifier.tiki_long_datetime.php");
-	require_once("lib/smarty_tiki/modifier.isodate.php");
+	require_once("lib/smarty_tiki/modifier.tiki_short_datetime.php");
+	require_once("lib/smarty_tiki/modifier.compactisodate.php");
 
 	for ($i = 0; $i < sizeof($items); $i++) {
-		$start_d = smarty_modifier_isodate($items[$i]["start"]);
-		$end_d = smarty_modifier_isodate($items[$i]["end"]);
+		$start_d = smarty_modifier_compactisodate($items[$i]["start"]);
+		$end_d = smarty_modifier_compactisodate($items[$i]["end"]);
 	
 		$items[$i]["body"] = "<div class=\"vevent\"> <span class=\"summary\">" . $items[$i]["name"] . "</span>"."<br />\n";
  	    $items[$i]["body"] .=  "<abbr class=\"dtstart\" title=\"" .$start_d ."\">" .tra("Start:") . " " .smarty_modifier_tiki_long_datetime($items[$i]["start"]) . "</abbr>" ."<br />\n";
