@@ -5,18 +5,18 @@
 	</div>
 {/if}
 {if $prefs.feature_bot_bar_icons eq 'y'}
-	<div id="power_icons" style="text-align: center">
-		<a href="http://tikiwiki.org/" title="Tikiwiki"><img style="border: 0; vertical-align: middle" alt="{tr}Powered by{/tr} Tikiwiki" src="img/tiki/tikibutton2.png" /></a>
-		<a href="http://www.php.net/" title="PHP"><img style="border: 0; vertical-align: middle" alt="{tr}Powered by{/tr} PHP" src="img/php.png" /></a>
-		<a href="http://smarty.php.net/" title="Smarty"><img style="border: 0; vertical-align: middle" alt="{tr}Powered by{/tr} Smarty" src="img/smarty.gif"  /></a>
-		<a href="http://adodb.sourceforge.net/" title="ADOdb"><img style="border: 0; vertical-align: middle" alt="{tr}Powered by{/tr} ADOdb" src="img/adodb.png" /></a>
-		<a href="http://www.w3.org/Style/CSS/" title="CSS"><img style="border: 0; vertical-align: middle" alt="{tr}Made with{/tr} CSS" src="img/css1.png" /></a>
-		<a href="http://www.w3.org/RDF/" title="RDF"><img style="border: 0; vertical-align: middle" alt="{tr}Powered by{/tr} RDF" src="img/rdf.gif"  /></a>
+	<div id="power_icons">
+		<a href="http://tikiwiki.org/" title="Tikiwiki"><img alt="{tr}Powered by{/tr} Tikiwiki" src="img/tiki/tikibutton2.png" /></a>
+		<a href="http://www.php.net/" title="PHP"><img alt="{tr}Powered by{/tr} PHP" src="img/php.png" /></a>
+		<a href="http://smarty.php.net/" title="Smarty"><img alt="{tr}Powered by{/tr} Smarty" src="img/smarty.gif"  /></a>
+		<a href="http://adodb.sourceforge.net/" title="ADOdb"><img alt="{tr}Powered by{/tr} ADOdb" src="img/adodb.png" /></a>
+		<a href="http://www.w3.org/Style/CSS/" title="CSS"><img alt="{tr}Made with{/tr} CSS" src="img/css1.png" /></a>
+		<a href="http://www.w3.org/RDF/" title="RDF"><img alt="{tr}Powered by{/tr} RDF" src="img/rdf.gif"  /></a>
 		{if $prefs.feature_phplayers eq 'y'}
-		<a href="http://phplayersmenu.sourceforge.net/" title="PHP Layers Menu"><img style="border: 0; vertical-align: middle" alt="{tr}powered by{/tr} The PHP Layers Menu System" src="lib/phplayers/LOGOS/powered_by_phplm.png"  /></a>		
+		<a href="http://phplayersmenu.sourceforge.net/" title="PHP Layers Menu"><img alt="{tr}powered by{/tr} The PHP Layers Menu System" src="lib/phplayers/LOGOS/powered_by_phplm.png"  /></a>		
 		{/if}
 		{if $prefs.feature_mobile eq 'y'}
-		<a href="http://www.hawhaw.de/" title="HAWHAW"><img style="border: 0; vertical-align: middle" alt="{tr}powered by{/tr} HAWHAW" src="img/poweredbyhawhaw.gif"  /></a>		
+		<a href="http://www.hawhaw.de/" title="HAWHAW"><img alt="{tr}powered by{/tr} HAWHAW" src="img/poweredbyhawhaw.gif"  /></a>		
 		{/if}		
 	</div>
 {/if}

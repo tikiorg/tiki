@@ -513,6 +513,15 @@ div #page-bar
   font-size: 7pt;
 }
 
+#power_icons {
+	 text-align: center
+}
+
+#power_icons img {
+	border: 0;
+	vertical-align: middle
+}
+
 #fullscreenbutton {
   float: right;
 	position: absolute;
