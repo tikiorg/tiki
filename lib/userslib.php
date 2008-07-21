@@ -2580,7 +2580,7 @@ function get_included_groups($group, $recur=true) {
 		while ($res = $result->fetchRow()) { $ret[] = $res['type']; }
 		return $ret;									
 	}
-	function send_validation_email($name, $apass, $email, $again='', $second='') {
+	function send_validation_email($name, $apass, $email, $again='', $second='', $chosenGroup='') {
 		global $tikilib, $prefs, $smarty;
 		$foo = parse_url($_SERVER['REQUEST_URI']);
 		$foo1 = str_replace('tiki-register', 'tiki-login_validate',$foo['path']);
@@ -2604,6 +2604,9 @@ function get_included_groups($group, $recur=true) {
 				return false;
 			}
 		} elseif ($prefs['validateRegistration'] == 'y') {
+			if (!empty($chosenGroup)) {
+				$smarty->assign_by_ref('chosenGroup', $chosenGroup);
+			}
 			$mail_data = $smarty->fetch('mail/moderate_validation_mail.tpl');
 			$mail_subject = $smarty->fetch('mail/moderate_validation_mail_subject.tpl');
 			if ($prefs['sender_email'] == NULL or !$prefs['sender_email']) {

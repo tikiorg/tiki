@@ -178,7 +178,7 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && (isset($_REQUEST
 		}
 		if($prefs['validateUsers'] == 'y' || (isset($prefs['validateRegistration']) && $prefs['validateRegistration'] == 'y')) {
 			$apass = addslashes(md5($tikilib->genPass()));
-			$userlib->send_validation_email($_REQUEST['name'], $apass, $_REQUEST['email']);
+			$userlib->send_validation_email($_REQUEST['name'], $apass, $_REQUEST['email'], '', '', isset($_REQUEST['chosenGroup'])?$_REQUEST['chosenGroup']:'');
 			
 			$userlib->add_user($_REQUEST["name"],$apass,$_REQUEST["email"],$_REQUEST["pass"], false, 'n', $openid_url);
 			if (isset($_REQUEST['chosenGroup']) && $userlib->get_registrationChoice($_REQUEST['chosenGroup']) == 'y') {
