@@ -66,10 +66,10 @@ function queryError( $query, &$error, $values = null, $numrows = -1,
         $result = $this->db->Execute($query, $values);
     else
         $result = $this->db->SelectLimit($query, $numrows, $offset, $values);
+
     $this->stopTimer($starttime);
 
-    if (!$result )
-    {
+    if (!$result ) {
         $error = $this->db->ErrorMsg();
         $result=false;
     }
@@ -84,45 +84,36 @@ function queryError( $query, &$error, $values = null, $numrows = -1,
 // Queries the database reporting an error if detected
 // 
 function query($query = null, $values = null, $numrows = -1,
-        $offset = -1, $reporterrors = true )
+		$offset = -1, $reporterrors = true )
 {
-    if ( $query == null ) {
-        $query = $this->_sql;
-    }
-    $numrows = intval($numrows);
-    $offset = intval($offset);
-    $this->convert_query($query);
-    $this->convert_query_table_prefixes($query);
+	if ( $query == null ) {
+		$query = $this->_sql;
+	}
+	$numrows = intval($numrows);
+	$offset = intval($offset);
+	$this->convert_query($query);
+	$this->convert_query_table_prefixes($query);
 
-    //echo "query: $query <br />";
-    //echo "<pre>";
-    //print_r($values);
-    //echo "\n";
+	$starttime=$this->startTimer();
+	if ($numrows == -1 && $offset == -1)
+		$result = $this->db->Execute($query, $values);
+	else
+		$result = $this->db->SelectLimit($query, $numrows, $offset, $values);
 
-    $starttime=$this->startTimer();
-    if ($numrows == -1 && $offset == -1)
-        $result = $this->db->Execute($query, $values);
-    else
-        $result = $this->db->SelectLimit($query, $numrows, $offset, $values);
-    $this->stopTimer($starttime);
+	$this->stopTimer($starttime);
 
-    //print_r($result);
-    //echo "\n</pre>\n";
+	if (!$result ) {
+		if ($reporterrors) {
+			$this->sql_error($query, $values, $result);
+		}
+	}
 
-    if (!$result )
-    {
-        if ($reporterrors)
-        {
-            $this->sql_error($query, $values, $result);
-        }
-    }
-
-    //count the number of queries made
-    global $num_queries;
-    $num_queries++;
-    //$this->debugger_log($query, $values);
-    $this->_sql = null;
-    return $result;
+	//count the number of queries made
+	global $num_queries;
+	$num_queries++;
+	//$this->debugger_log($query, $values);
+	$this->_sql = null;
+	return $result;
 }
 
 /**
@@ -137,40 +128,33 @@ function setQuery( $sql ) {
 
 // Gets one column for the database.
 function getOne($query, $values = null, $reporterrors = true, $offset = 0) {
-    $this->convert_query($query);
-    $this->convert_query_table_prefixes($query);
+	$this->convert_query($query);
+	$this->convert_query_table_prefixes($query);
 
-    //echo "<pre>";
-    //echo "query: $query \n";
-    //print_r($values);
-    //echo "\n";
-    $starttime=$this->startTimer();
-    $result = $this->db->SelectLimit($query, 1, $offset, $values);
+	$starttime=$this->startTimer();
+	$result = $this->db->SelectLimit($query, 1, $offset, $values);
 
-    //echo "\n</pre>\n";
-    if (!$result) {
-        if ($reporterrors) {
-                $this->sql_error($query, $values, $result);
-		return false;
-        } else {
-	        $this->stopTimer($starttime);
-                return $result;
-        }
-    }
+	if (!$result) {
+		if ($reporterrors) {
+			$this->sql_error($query, $values, $result);
+			$res = false;
+		}
+	} else {
+		$res = $result->fetchRow();
+	}
 
-    $res = $result->fetchRow();
-    $this->stopTimer($starttime);
+	$this->stopTimer($starttime);
 
-    //count the number of queries made
-    global $num_queries;
-    $num_queries++;
-    //$this->debugger_log($query, $values);
+	//count the number of queries made
+	global $num_queries;
+	$num_queries++;
+	//$this->debugger_log($query, $values);
 
-    if ($res == false)
-        return (NULL); //simulate pears behaviour
+	if ($res == false)
+		return (NULL); //simulate pears behaviour
 
-    list($key, $value) = each($res);
-    return $value;
+	list($key, $value) = each($res);
+	return $value;
 }
 
 
