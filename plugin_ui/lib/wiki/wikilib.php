@@ -681,13 +681,15 @@ class WikiLib extends TikiLib {
 	sort($files);
 	if ($with_help) {
 		global $cachelib;
-		if (!$cachelib->isCached('plugindesc')) {
+		if (true || !$cachelib->isCached('plugindesc')) {
 			$plugins = array();
 			foreach ($files as $pfile) {
-					$pinfo['file'] = $pfile;
-				$pinfo["help"] = $this->get_plugin_description($pfile);
+				$pinfo['file'] = $pfile;
+				$pinfo["help"] = $this->get_plugin_description($pfile, $enabled);
 				$pinfo["name"] = strtoupper(str_replace(".php", "", str_replace("wikiplugin_", "", $pfile)));
-				$plugins[] = $pinfo;
+
+				if( $enabled )
+					$plugins[] = $pinfo;
 			}
 			$cachelib->cacheItem("plugindesc",serialize($plugins));
 		} else {
@@ -702,24 +704,27 @@ class WikiLib extends TikiLib {
     //
     // Call 'wikiplugin_.*_description()' from given file
     //
-    function get_plugin_description($file) {
+    function get_plugin_description($file, &$enabled) {
     	global $tikilib;
         $data = '';
-        $fp = fopen(PLUGINS_DIR . '/' . $file, 'r');
-        while(!feof($fp)) {
-              $data .= fread($fp,4096);
-        }
-        fclose($fp);
+		require_once PLUGINS_DIR . '/' . $file;
+
         $func_name = str_replace('.php', '', $file). '_help';
-    	if (!preg_match('#.*?function\s+' . $func_name .
-    	                '[\s|^]*\([\s|^]*\)[\s|^]*(.+)#msi', $data, $prematch)
-    	    || !preg_match('#\{((?:(?R)|[^{}]+)+)}#ms',
-    	            $prematch[1], $matches)) {
-    	   return '';
-    	}
-        $fun = create_function('', $matches[1]);
-        $ret = $tikilib->parse_data($fun());
-        return $ret;
+		if( ! function_exists( $func_name ) )
+			return;
+
+		$ret = $func_name();
+
+		$enabled = true;
+
+		if( is_array( $ret ) ) {
+			global $smarty;
+
+			$smarty->assign( 'plugin', $ret );
+			return $smarty->fetch( 'tiki-plugin_help.tpl' );
+		}
+		else
+			return $tikilib->parse_data($ret);
     }
 
 	// get all modified pages for a user (if actionlog is not clean
