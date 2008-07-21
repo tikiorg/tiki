@@ -6,6 +6,7 @@
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
+
 function get_tables( $dbTiki )
 {
 	static $list = array();
@@ -51,7 +52,7 @@ function installer_is_accessible()
 	TikiInit::prependIncludePath('lib/pear');
 
 	include_once("db/local.php");
-	include_once('lib/adodb/adodb.inc.php');
+	include_once ('adodb.inc.php');
 
 	$dbTiki = &ADONewConnection($db_tiki);
 	if( ! $dbTiki->Connect( $host_tiki, $user_tiki, $pass_tiki, $dbs_tiki ) )
@@ -100,8 +101,20 @@ if ( installer_is_accessible() ) {
 	$admin_acc = 'y';
 	include_once("installer/tiki-installer.php");
 } else {
+
+print "<html><body>
+<h1>Security Alert!</h1>
+<p>The Tiki installer can be used only by a site adminstrator. Please <a href='tiki-login.php'>login as an administrator</a> first.</p>
+</body></html>";
+exit;
+
+		/*
+
 	header( 'Location: index.php' );
 	exit;
-}
+*/
+
+
+	}
 
 ?>
