@@ -18,7 +18,7 @@ define('SF_CACHE',48); # in hours
 define('DEFAULT_TAG','bugs');
 
 function wikiplugin_sf_help() {
-	return tra("Automatically creates a link to the appropriate SourceForge object").":<br />~np~{SF(aid=>,adit=>,groupid=>)}".tra("text")."{SF}~/np~";
+	return tra("Automatically creates a link to the appropriate ))SourceForge(( object").":<br />~np~{SF(aid=>,adit=>,groupid=>)}".tra("text")."{SF}~/np~";
 }
 
 function get_artifact_label($gid,$atid,$aid,$reload=false) {

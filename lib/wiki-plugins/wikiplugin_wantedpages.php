@@ -29,7 +29,7 @@ function wikiplugin_wantedpages_help() {
 	$help .= tra("possible values: ")."sep / co / br\n";
 	$help .= "level | ".tra("empty string")." | " . tra("Filter the list of wanted pages according to page_regex or custom filter. The default value is the site's __current__ page_regex.<br />");
 	$help .= tra("possible values: ")."strict / full / complete / custom\n";
-	$help .= tra("Custom-Level-Regex") . " | ".tra("empty string")." | " . tra("A custom filter for wanted pages to be listed (only used when level=>custom).<br />");
+	$help .= "))".tra("Custom-Level-Regex") . "(( | ".tra("empty string")." | " . tra("A custom filter for wanted pages to be listed (only used when level=>custom).<br />");
 	$help .= tra("possible values: ") . tra("a valid regex-expression (PCRE)") . "\n";
 	$help .= "||^";
     return $help;
