@@ -100,7 +100,7 @@ function get_conflicts( $localPath )
 	return $list;
 }
 
-function find_last_merge( $localPath, $source )
+function find_last_merge( $path, $source )
 {
 	$short = preg_quote( short( $source ), '/' );
 	$pattern = "/^\\[(MRG|BRANCH)\\].*$short'?\s+\d+\s+to\s+(\d+)/";
@@ -110,7 +110,9 @@ function find_last_merge( $localPath, $source )
 		1 => array( 'pipe', 'w' ),
 	);
 
-	$process = proc_open( "svn log --stop-on-copy", $descriptorspec, $pipes, $localPath );
+	$ePath = escapeshellarg( $path );
+
+	$process = proc_open( "svn log --stop-on-copy $ePath", $descriptorspec, $pipes );
 	$rev = 0;
 
 	if( is_resource( $process ) )
@@ -145,6 +147,14 @@ function merge( $localPath, $source, $from, $to )
 
 	$message = "[MRG] Automatic merge, $short $from to $to";
 	file_put_contents( 'svn-commit.tmp', $message );
+}
+
+function incorporate( $working, $source )
+{
+	$working = escapeshellarg( $working );
+	$source = escapeshellarg( $source );
+
+	passthru( $command = "svn merge $working $source" );
 }
 
 function branch( $source, $branch, $revision )
