@@ -39,7 +39,7 @@ if( $conflicts->length > 0 )
 	error( $message );
 }
 
-$revision = (int) $local->entry->commit['revision'];
+$revision = (int) get_info($source)->entry->commit['revision'];
 
 // Do merge
 info( "Merging..." );
