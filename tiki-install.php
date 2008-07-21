@@ -100,8 +100,15 @@ if ( installer_is_accessible() ) {
 	$admin_acc = 'y';
 	include_once("installer/tiki-installer.php");
 } else {
+print "<html><body>
+<h1>Security Alert!</h1>
+<p>The Tiki installer can be used only by a site adminstrator. Please <a href='tiki-login.php'>login as an administrator</a> first.</p>
+</body></html>";
+exit;
+/*
 	header( 'Location: index.php' );
 	exit;
+*/	
 }
 
 ?>
