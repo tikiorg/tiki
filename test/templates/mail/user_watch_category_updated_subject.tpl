@@ -1,1 +1,0 @@
-{tr}Category{/tr} {$categoryName} {tr}updated{/tr}
