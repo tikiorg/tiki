@@ -28,7 +28,7 @@ function capLock(e){
           <input type="text" name="username" id="login-switchuser" size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}" />
          {if $prefs.feature_help eq 'y'}
           <sup><a class="linkmodule tikihelp" href="tiki-admin_modules.php"
-          title="{tr}Paramaters{/tr}: $input_size {tr}applicable for this item{/tr}"><small><strong>?</strong></small></a></sup>
+          title="{tr}Parameters{/tr}: $input_size {tr}applicable for this item{/tr}"><small><strong>?</strong></small></a></sup>
          {/if}
           <div style="text-align: center"><button type="submit" name="actsu">{tr}Switch{/tr}</button></div>
          </fieldset>

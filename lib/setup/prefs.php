@@ -95,7 +95,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['feature_wiki_userpage'] = 'y';
 	$prefs['feature_wiki_userpage_prefix'] = 'UserPage';
 	$prefs['feature_wiki_usrlock'] = 'n';
-	$prefs['feature_wiki_save_draft'] = 'y';
+	$prefs['feature_wiki_save_draft'] = 'n'; // Broken in 2.0 RC2 http://dev.tikiwiki.org/wish1888
 	$prefs['feature_wikiwords'] = 'y';
 	$prefs['feature_wikiwords_usedash'] = 'y';
 	$prefs['mailin_autocheck'] = 'n';
@@ -157,7 +157,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['wikiapproval_prefix'] = '*';
 	$prefs['wikiapproval_delete_staging'] = 'n';
 	$prefs['wikiapproval_master_group'] = '';
-	$prefs['wiki_edit_section'] = 'n';
+	$prefs['wiki_edit_section'] = 'y';
 
 	# wysiwyg
 	$prefs['feature_wysiwyg'] = 'n';
@@ -430,7 +430,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['lowercase_username'] = 'n';
 	$prefs['max_username_length'] = '50';
 	$prefs['min_username_length'] = '1';
-	$prefs['users_prefs_allowMsgs'] = 'n';
+	$prefs['users_prefs_allowMsgs'] = 'y';
 	$prefs['users_prefs_country'] = '';
 	$prefs['users_prefs_diff_versions'] = 'n';
 	$prefs['users_prefs_display_timezone'] = 'Local';
@@ -441,7 +441,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['users_prefs_mess_archiveAfter'] = '0';
 	$prefs['users_prefs_mess_maxRecords'] = '10';
 	$prefs['users_prefs_mess_sendReadStatus'] = 'n';
-	$prefs['users_prefs_minPrio'] = '6';
+	$prefs['users_prefs_minPrio'] = '3';
 	$prefs['users_prefs_mytiki_blogs'] = 'y';
 	$prefs['users_prefs_mytiki_gals'] = 'y';
 	$prefs['users_prefs_mytiki_items'] = 'y';
@@ -463,7 +463,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['messu_mailbox_size'] = '0';
 	$prefs['messu_archive_size'] = '200';
 	$prefs['messu_sent_size'] = '200';
-	$prefs['allowmsg_by_default'] = 'n';
+	$prefs['allowmsg_by_default'] = 'y';
 	$prefs['allowmsg_is_optional'] = 'y';
 
 	# newsreader
@@ -564,14 +564,14 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['feature_charts'] = 'n';
 
 	# rss
-	$prefs['rss_forums'] = 'y';
-	$prefs['rss_forum'] = 'y';
-	$prefs['rss_directories'] = 'y';
-	$prefs['rss_articles'] = 'y';
-	$prefs['rss_blogs'] = 'y';
-	$prefs['rss_image_galleries'] = 'y';
-	$prefs['rss_file_galleries'] = 'y';
-	$prefs['rss_wiki'] = 'y';
+	$prefs['rss_forums'] = 'n';
+	$prefs['rss_forum'] = 'n';
+	$prefs['rss_directories'] = 'n';
+	$prefs['rss_articles'] = 'n';
+	$prefs['rss_blogs'] = 'n';
+	$prefs['rss_image_galleries'] = 'n';
+	$prefs['rss_file_galleries'] = 'n';
+	$prefs['rss_wiki'] = 'n';
 	$prefs['rss_image_gallery'] = 'n';
 	$prefs['rss_file_gallery'] = 'n';
 	$prefs['rss_blog'] = 'n';
@@ -798,7 +798,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	# layout
 	$prefs['feature_left_column'] = 'y';
 	$prefs['feature_right_column'] = 'y';
-	$prefs['feature_top_bar'] = 'y';
+	$prefs['feature_top_bar'] = 'n';
 	$prefs['feature_bot_bar'] = 'y';
 	$prefs['feature_bot_bar_icons'] = 'n';
 	$prefs['feature_bot_bar_debug'] = 'n';
@@ -966,7 +966,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 
 	$prefs['bot_logo_code'] = '';
 	$prefs['feature_blogposts_pings'] = '';
-	$prefs['feature_create_webhelp'] = '';
+	$prefs['feature_create_webhelp'] = 'n';
 	$prefs['feature_forums_search'] = '';
 	$prefs['feature_forums_tiki_search'] = '';
 	$prefs['feature_trackbackpings'] = 'n';

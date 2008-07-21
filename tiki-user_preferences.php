@@ -377,7 +377,7 @@ $tikilib->get_user_preference($userwatch, 'mess_maxRecords', 20);
 $tikilib->get_user_preference($userwatch, 'mess_archiveAfter', 0);
 $tikilib->get_user_preference($userwatch, 'mess_sendReadStatus', 0);
 $tikilib->get_user_preference($userwatch, 'allowMsgs', 'y');
-$tikilib->get_user_preference($userwatch, 'minPrio', 6);
+$tikilib->get_user_preference($userwatch, 'minPrio', 3);
 $tikilib->get_user_preference($userwatch, 'theme', '');
 $tikilib->get_user_preference($userwatch, 'language', $prefs['language']);
 $tikilib->get_user_preference($userwatch, 'realName', '');
