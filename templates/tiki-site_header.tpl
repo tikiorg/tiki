@@ -1,5 +1,6 @@
-{* $Id$ *}
+{* $Id: tiki-site_header.tpl 12965 2008-05-26 02:22:25Z chibaguy $ *}
 {* Template for Tikiwiki site identity header *}
+<div id="header-top">
 {if $prefs.feature_sitemycode eq 'y' && ($prefs.sitemycode_publish eq 'y' or $tiki_p_admin eq 'y')}
 	{if $prefs.feature_sitead eq 'y' && ($prefs.sitead_publish eq 'y' or $tiki_p_admin eq 'y')}
 		<div id="sitead" class="floatright">
@@ -60,4 +61,15 @@
 {if $prefs.feature_site_login eq 'y'}
 	{include file="tiki-site_header_login.tpl"}
 {/if}
+{/if}
+</div>{*  end div#header-top *}
+{* navbar and search *}
+<div class="clearfix" id="tiki-top">
+	{include file="tiki-top_bar.tpl"}
+</div>
+{* topbar custom code *}
+{if $prefs.feature_siteidentity eq 'y' and $prefs.feature_topbar_custom_code}
+<div class="clearfix" id="topbar_custom_code">
+	{eval var=$prefs.feature_topbar_custom_code}
+</div>
 {/if}
