@@ -411,10 +411,11 @@ SCRIPT;
 	
 	if( $tiki_p_edit == 'y' )
 		$form = <<<FORM
-<form method="post" action="tiki-annotation_edit.php">
+<form method="post" action="tiki-wikiplugin_edit.php">
 	<div style="display:none">
 		<input type="hidden" name="page" value="$page"/>
-		<input type="hidden" name="annotation" value="$uid"/>
+		<input type="hidden" name="type" value="annotation"/>
+		<input type="hidden" name="index" value="$uid"/>
 		<textarea id="$cid-content" name="content"></textarea>
 	</div>
 	<p><input type="submit" value="$labelSave"/></p>
@@ -445,7 +446,7 @@ $form
 <script type="text/javascript">
 var toCreate$uid = $annotations;
 function todo$uid() {
-for( k in toCreate$uid )
+for( k = 0; k < toCreate$uid.length; ++k )
 	createAnnotation( toCreate{$uid}[k], '$cid' );
 
 	serializeAnnotations( annotations, '$cid' );
