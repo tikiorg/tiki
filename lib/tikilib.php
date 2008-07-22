@@ -6569,7 +6569,7 @@ if (!$simple_wiki) {
 			//
 			if ( $nb_last_hdr > 0 && $hdrlevel <= $nb_last_hdr ) {
 				$hdr_structure[$nb_hdrs] = array_slice($last_hdr, 0, $hdrlevel);
-				if ( $show_title_level[$hdrlevel] || ! $need_autonumbering ) {
+				if ( !empty($show_title_level[$hdrlevel]) || ! $need_autonumbering ) {
 					//
 					// Increment the level number only if :
 					//     - the last title of the same level number has a displayed number
