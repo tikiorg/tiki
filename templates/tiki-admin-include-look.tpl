@@ -121,9 +121,9 @@
         	</table>
 	</fieldset>
 
-	{* --- Customize Site Logo --- *}
+	{* --- Customize Site Logo and Site Titile--- *}
 	<fieldset>
-					<legend><a href="#"><span>{tr}Site Logo{/tr}</span></a></legend>
+					<legend><a href="#"><span>{tr}Site Logo and Title{/tr}</span></a></legend>
 
 				<table class="admin">
 				
@@ -159,6 +159,13 @@
 				<tr>
 					<td class="form"><label for="sitelogo_alt">{tr}Alt. description (e.g. for text browsers){/tr}:</label></td>
 					<td><input type="text" name="sitelogo_alt" id="sitelogo_alt" value="{$prefs.sitelogo_alt}" size="50" maxlength="50" /></td>
+				<tr>
+					<td class="form"><label for="sitetitle">{tr}Site title{/tr}:</label></td>
+					<td><input type="text" name="sitetitle" id="sitetitle" value="{$prefs.sitetitle}" size="50" maxlength="50" /></td>
+				</tr>
+				<tr>
+					<td class="form"><label for="sitesubtitle">{tr}Site subtitle{/tr}:</label></td>
+					<td><input type="text" name="sitesubtitle" id="sitesubtitle" value="{$prefs.sitesubtitle}" size="50" maxlength="50" /></td>
 				</tr>
 				</table>
 </fieldset>                                

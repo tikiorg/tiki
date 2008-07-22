@@ -532,3 +532,11 @@ div #page-bar
 	padding: 0 4px;
 	cursor: pointer;
 }
+
+#sitetitle {
+	font-size: 2.4em;
+}
+
+#sitesubtitle {
+	font-size:1.6em;
+}
