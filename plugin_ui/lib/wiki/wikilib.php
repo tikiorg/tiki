@@ -709,22 +709,43 @@ class WikiLib extends TikiLib {
         $data = '';
 		require_once PLUGINS_DIR . '/' . $file;
 
-        $func_name = str_replace('.php', '', $file). '_help';
+		// If info function exists, it means the improved method is available
+        $func_name = str_replace('.php', '', $file). '_info';
 		if( ! function_exists( $func_name ) )
-			return;
+		{
+			$enabled = true;
 
-		$ret = $func_name();
+			$func_name = str_replace('.php', '', $file). '_help';
+			if( ! function_exists( $func_name ) )
+				return false;
 
-		$enabled = true;
-
-		if( is_array( $ret ) ) {
-			global $smarty;
-
-			$smarty->assign( 'plugin', $ret );
-			return $smarty->fetch( 'tiki-plugin_help.tpl' );
+			$ret = $func_name();
+			return $tikilib->parse_data($ret);
 		}
 		else
-			return $tikilib->parse_data($ret);
+		{
+			global $smarty;
+			$enabled = true;
+
+			$ret = $func_name();
+
+			if( isset( $ret['prefs'] ) )
+			{
+				global $prefs;
+
+				// If the plugin defines required preferences, they should all be to 'y'
+				foreach( $ret['prefs'] as $pref )
+					if( ! isset( $prefs[$pref] ) || $prefs[$pref] != 'y' )
+					{
+						$enabled = false;
+						return;
+					}
+			}
+
+			$smarty->assign( 'plugin', $ret );
+			$smarty->assign( 'plugin_name', strtoupper( substr( $file, 11, -4 ) ) );
+			return $smarty->fetch( 'tiki-plugin_help.tpl' );
+		}
     }
 
 	// get all modified pages for a user (if actionlog is not clean
