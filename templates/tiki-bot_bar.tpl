@@ -6,12 +6,12 @@
 {/if}
 {if $prefs.feature_bot_bar_icons eq 'y'}
 	<div id="power_icons">
-		<a href="http://tikiwiki.org/" title="Tikiwiki"><img style="border: 0; vertical-align: middle" alt="{tr}Powered by{/tr} Tikiwiki" src="img/tiki/tikibutton2.png" /></a>
-		<a href="http://www.php.net/" title="PHP"><img style="border: 0; vertical-align: middle" alt="{tr}Powered by{/tr} PHP" src="img/php.png" /></a>
-		<a href="http://smarty.php.net/" title="Smarty"><img style="border: 0; vertical-align: middle" alt="{tr}Powered by{/tr} Smarty" src="img/smarty.gif"  /></a>
-		<a href="http://adodb.sourceforge.net/" title="ADOdb"><img style="border: 0; vertical-align: middle" alt="{tr}Powered by{/tr} ADOdb" src="img/adodb.png" /></a>
-		<a href="http://www.w3.org/Style/CSS/" title="CSS"><img style="border: 0; vertical-align: middle" alt="{tr}Made with{/tr} CSS" src="img/css1.png" /></a>
-		<a href="http://www.w3.org/RDF/" title="RDF"><img style="border: 0; vertical-align: middle" alt="{tr}Powered by{/tr} RDF" src="img/rdf.gif"  /></a>
+		<a href="http://tikiwiki.org/" title="Tikiwiki"><img alt="{tr}Powered by{/tr} Tikiwiki" src="img/tiki/tikibutton2.png" /></a>
+		<a href="http://www.php.net/" title="PHP"><img alt="{tr}Powered by{/tr} PHP" src="img/php.png" /></a>
+		<a href="http://smarty.php.net/" title="Smarty"><img alt="{tr}Powered by{/tr} Smarty" src="img/smarty.gif"  /></a>
+		<a href="http://adodb.sourceforge.net/" title="ADOdb"><img alt="{tr}Powered by{/tr} ADOdb" src="img/adodb.png" /></a>
+		<a href="http://www.w3.org/Style/CSS/" title="CSS"><img alt="{tr}Made with{/tr} CSS" src="img/css1.png" /></a>
+		<a href="http://www.w3.org/RDF/" title="RDF"><img alt="{tr}Powered by{/tr} RDF" src="img/rdf.gif"  /></a>
 		{if $prefs.feature_phplayers eq 'y'}
 		<a href="http://phplayersmenu.sourceforge.net/" title="PHP Layers Menu"><img alt="{tr}powered by{/tr} The PHP Layers Menu System" src="lib/phplayers/LOGOS/powered_by_phplm.png"  /></a>		
 		{/if}
@@ -73,14 +73,9 @@
 {if $prefs.feature_babelfish eq 'y' or $prefs.feature_babelfish_logo eq 'y'}
 	{include file="babelfish.tpl"}
 {/if}
-<<<<<<< .working
-=======
-
 <div id="power">
 	{tr}Powered by{/tr} <a target="_blank" href="http://info.tikiwiki.org" title="{tr}This is{/tr} TikiWiki CMS/Groupware &#169; 2002&#8211;2008, {tr}The TikiWiki community{/tr}">{tr}TikiWiki CMS/Groupware{/tr}</a>
 </div>
-
->>>>>>> .merge-right.r13786
 {if $prefs.feature_bot_bar_debug eq 'y'}
 <div id="loadstats" style="text-align: center">
 	<small>[ {tr}Execution time{/tr}: {elapsed} {tr}secs{/tr} ] &nbsp; [ {tr}Memory usage{/tr}: {memusage} ] &nbsp; [ GZIP {$gzip} ] &nbsp; [ {tr}Server load{/tr}: {$server_load} ]</small>
