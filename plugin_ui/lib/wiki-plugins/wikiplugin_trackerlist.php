@@ -7,6 +7,177 @@ function wikiplugin_trackerlist_help() {
 	return $help;
 }
 
+function wikiplugin_trackerlist_info() {
+	return array(
+		'name' => tra('Tracker List'),
+		'description' => tra('Displays the output of a tracker content, fields are indicated with numeric ids.'),
+		'prefs' => array( 'feature_trackers' ),
+		'body' => tra('Notice'),
+		'params' => array(
+			'trackerId' => array(
+				'required' => true,
+				'name' => tra('Tracker ID'),
+				'description' => tra('Tracker ID'),
+			),
+			'fields' => array(
+				'required' => true,
+				'name' => tra('Fields'),
+				'description' => tra('Colon-separated list of field IDs to be displayed. Example: 2:4:5'),
+			),
+			'sort' => array(
+				'required' => false,
+				'name' => tra('Sort'),
+				'description' => tra('y|n'),
+			),
+			'popup' => array(
+				'required' => false,
+				'name' => tra('Popup'),
+				'description' => tra('Colon-separated list of fields to display on click. Example: 6:7'),
+			),
+			'stickypopup' => array(
+				'required' => false,
+				'name' => tra('Sticky Popup'),
+				'description' => tra('y|n'),
+			),
+			'showtitle' => array(
+				'required' => false,
+				'name' => tra('Show Title'),
+				'description' => tra('y|n'),
+			),
+			'showlinks' => array(
+				'required' => false,
+				'name' => tra('Show Links'),
+				'description' => tra('y|n'),
+			),
+			'showdesc' => array(
+				'required' => false,
+				'name' => tra('Show Description'),
+				'description' => tra('y|n'),
+			),
+			'shownbitems' => array(
+				'required' => false,
+				'name' => tra('shownbitems'),
+				'description' => tra('y|n'),
+			),
+			'showinitials' => array(
+				'required' => false,
+				'name' => tra('Show Initials'),
+				'description' => tra('y|n'),
+			),
+			'showstatus' => array(
+				'required' => false,
+				'name' => tra('Show Status'),
+				'description' => tra('y|n'),
+			),
+			'showcreated' => array(
+				'required' => false,
+				'name' => tra('Show Creation Date'),
+				'description' => tra('y|n'),
+			),
+			'showlastmodif' => array(
+				'required' => false,
+				'name' => tra('Show Last Modification'),
+				'description' => tra('y|n'),
+			),
+			'showfieldname' => array(
+				'required' => false,
+				'name' => tra('Show Field Name'),
+				'description' => tra('y|n'),
+			),
+			'status' => array(
+				'required' => false,
+				'name' => tra('Status Filter'),
+				'description' => tra('Which item status to list. o = open, p = pending, c = closed. Valid values: o|p|c|op|oc|pc|opc.'),
+			),
+			'sort_mode' => array(
+				'required' => false,
+				'name' => tra('Sort Mode'),
+				'description' => tra('?'),
+			),
+			'max' => array(
+				'required' => false,
+				'name' => tra('Max'),
+				'description' => tra('?'),
+			),
+			'filterfield' => array(
+				'required' => false,
+				'name' => tra('Filter Field'),
+				'description' => tra('Colon separated list of fields to allow filtering on.'),
+			),
+			'filtervalue' => array(
+				'required' => false,
+				'name' => tra('Filter Value'),
+				'description' => tra('?'),
+			),
+			'exactvalue' => array(
+				'required' => false,
+				'name' => tra('Exact Value'),
+				'description' => tra('?'),
+			),
+			'checkbox' => array(
+				'required' => false,
+				'name' => tra('Checkbox'),
+				'description' => tra('?'),
+			),
+			'goIfOne' => array(
+				'required' => false,
+				'name' => tra('goIfOne'),
+				'description' => tra('?'),
+			),
+			'more' => array(
+				'required' => false,
+				'name' => tra('More'),
+				'description' => tra('y|n'),
+			),
+			'moreurl' => array(
+				'required' => false,
+				'name' => tra('More URL'),
+				'description' => tra('?'),
+			),
+			'view' => array(
+				'required' => false,
+				'name' => tra('View'),
+				'description' => tra('?'),
+			),
+			'tpl' => array(
+				'required' => false,
+				'name' => tra('Template'),
+				'description' => tra('?'),
+			),
+			'wiki' => array(
+				'required' => false,
+				'name' => tra('Wiki'),
+				'description' => tra('?'),
+			),
+			'view_user' => array(
+				'required' => false,
+				'name' => tra('View User'),
+				'description' => tra('?'),
+			),
+			'itemId' => array(
+				'required' => false,
+				'name' => tra('Item ID'),
+				'description' => tra('?'),
+			),
+			'url' => array(
+				'required' => false,
+				'name' => tra('URL'),
+				'description' => tra('?'),
+			),
+			'ldelim' => array(
+				'required' => false,
+				'name' => tra('Left Deliminator'),
+				'description' => tra('?'),
+			),
+			'rdelim' => array(
+				'required' => false,
+				'name' => tra('Right Deliminator'),
+				'description' => tra('?'),
+			),
+		),
+	);
+}
+
 function wikiplugin_trackerlist($data, $params) {
 	global $smarty, $tikilib, $dbTiki, $userlib, $tiki_p_admin_trackers, $prefs, $_REQUEST, $tiki_p_view_trackers, $user, $page, $tiki_p_tracker_vote_ratings, $tiki_p_tracker_view_ratings, $trklib, $tiki_p_traker_vote_rating;
 	require_once("lib/trackers/trackerlib.php");

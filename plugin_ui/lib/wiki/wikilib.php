@@ -681,7 +681,7 @@ class WikiLib extends TikiLib {
 	sort($files);
 	if ($with_help) {
 		global $cachelib;
-		if (true || !$cachelib->isCached('plugindesc')) {
+		if (!$cachelib->isCached('plugindesc')) {
 			$plugins = array();
 			foreach ($files as $pfile) {
 				$pinfo['file'] = $pfile;
