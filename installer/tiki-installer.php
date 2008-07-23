@@ -125,7 +125,7 @@ function process_sql_file($file,$db_tiki) {
 	$smarty->assign_by_ref('failedcommands', $failedcommands);
 }
 
-function write_local_php($dbb_tiki,$host_tiki,$user_tiki,$pass_tiki,$dbs_tiki,$dbversion_tiki="2.0") {
+function write_local_php($dbb_tiki,$host_tiki,$user_tiki,$pass_tiki,$dbs_tiki,$dbversion_tiki="3.0") {
 	global $local;
 	global $db_tiki;
 	if ($dbs_tiki and $user_tiki) {
@@ -455,13 +455,13 @@ function load_sql_scripts() {
 	//echo $dbversion_tiki . "---";
 
 	while ($file = readdir($h)) {
-        	if (preg_match('#1\..*to.*\.sql$#',$file) || preg_match('#secdb#',$file)) {
+        	if (preg_match('#\d\..*to.*\.sql$#',$file) || preg_match('#secdb#',$file)) {
                 	$files[] = $file;
         	}
 	}
 
 	closedir ($h);
-	sort($files);
+	rsort($files);
 	reset($files);
 	$smarty->assign('files', $files);
 }
@@ -592,8 +592,6 @@ if (!file_exists($local)) {
 	if ( $dbversion_tiki == '1.10' ) $dbversion_tiki = '2.0';
 
 	if (!isset($db_tiki)) {
-		//upgrade from 1.7.X
-		//$db_tiki="mysql";
 		//upgrade from 2.0 : if no db is specified, use the first db that this php installation can handle
 		$db_tiki = reset($dbservers);
 		write_local_php($db_tiki,$host_tiki,$user_tiki,$pass_tiki,$dbs_tiki);

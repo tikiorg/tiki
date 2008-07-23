@@ -191,6 +191,10 @@ hosting provider.  Normally Tiki tables won't conflict with other product names{
 		    <tr><td>
 <table class="normal" cellpadding="5">
 	<tr><th>{tr}To upgrade from{/tr}:</th><th>{tr}Use this script{/tr}:</th></tr>
+	<tr class="even">
+		<td>3.0.x</td>
+		<td>tiki_2.0to3.0</td>
+	</tr>
 	<tr class="odd">
 		<td>2.0.x</td>
 		<td>tiki_1.9to2.0</td>
