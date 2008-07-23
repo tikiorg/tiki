@@ -157,7 +157,7 @@ function wikiplugin_tracker($data, $params) {
 					} elseif (($flds['data'][$cpt]['type'] == 'u' || $flds['data'][$cpt]['type'] == 'g' || $flds['data'][$cpt]['type'] == 'I') && ($flds['data'][$cpt]['options_array'][0] == '1' || $flds['data'][$cpt]['options_array'][0] == '2') && $tiki_p_admin_trackers != 'y' && empty($_REQUEST['track'][$fl['fieldId']])) {
 						if (empty($itemId) && ($flds['data'][$cpt]['options_array'][0] == '1' || $flds['data'][$cpt]['options_array'][0] == '2')) {
 							if ($flds['data'][$cpt]['type'] == 'u')
-								$_REQUEST['track'][$fl['fieldId']] = $user;
+								$_REQUEST['track'][$fl['fieldId']] = empty($user)?(empty($_REQUEST['name'])? '':$_REQUEST['name']):$user;
 							elseif ($flds['data'][$cpt]['type'] == 'g')
 								$_REQUEST['track'][$fl['fieldId']] = $group;
 							elseif ($flds['data'][$cpt]['type'] == 'I')
