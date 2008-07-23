@@ -180,7 +180,16 @@ class Smarty_Tikiwiki extends Smarty {
 		$_smarty_compile_id = $prefs['language'] . $_smarty_compile_id;
 		return parent::clear_cache($_smarty_tpl_file, $_smarty_cache_id, $_smarty_compile_id, $_smarty_exp_time);
 	}
-	function display($resource_name, $cache_id=null, $compile_id = null) {
+	function display($resource_name, $cache_id=null, $compile_id = null, $content_type = 'text/html; charset=utf-8') {
+		//
+		// By default, display is used with text/html content in UTF-8 encoding
+		// If you want to output other data from smarty,
+		//   - either use fetch() / fetchLang()
+		//   - or set $content_type to '' (empty string) or another content type.
+		//
+		if ( $content_type != '' && ! headers_sent() ) {
+			header('Content-Type: '.$content_type);
+		}
 		return parent::display($resource_name, $cache_id, $compile_id);
 	}
 	// Returns the file name associated to the template name

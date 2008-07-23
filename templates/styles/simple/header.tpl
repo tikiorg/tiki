@@ -49,9 +49,6 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 {* --- jscalendar block --- *}
 {if $prefs.feature_jscalendar eq 'y' and $uses_jscalendar eq 'y'}
 <link rel="StyleSheet" href="lib/jscalendar/calendar-system.css" type="text/css"></link>
-<script type="text/javascript"><!--
-{if $prefs.feature_phplayers eq 'y'}{php} include_once ("lib/phplayers/libjs/layersmenu-browser_detection.js"); {/php}{/if}
-// --></script>
 <script type="text/javascript" src="lib/jscalendar/calendar.js"></script>
 {if $jscalendar_langfile}
 <script type="text/javascript" src="lib/jscalendar/lang/calendar-{$jscalendar_langfile}.js"></script>
@@ -62,18 +59,7 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 {/if}
 
 {* --- phplayers block --- *}
-{if $prefs.feature_phplayers eq 'y'}
-<link rel="StyleSheet" href="lib/phplayers/layerstreemenu.css" type="text/css"></link>
-<style type="text/css"><!-- @import url("lib/phplayers/layerstreemenu-hidden.css"); //--></style>
-<script type="text/javascript"><!--
-{php} include_once ("lib/phplayers/libjs/layersmenu-browser_detection.js"); {/php}
-// --></script>
-<script type="text/javascript" src="lib/phplayers/libjs/layersmenu-library.js"></script>
-{*
-<script type="text/javascript" src="lib/phplayers/libjs/layersmenu.js"></script>
-*}
-<script type="text/javascript" src="lib/phplayers/libjs/layerstreemenu-cookies.js"></script>
-{/if}
+{if isset($phplayers_headers)}{$phplayers_headers}{/if}
 
 {* --- Firefox RSS icons --- *}
 {if $prefs.feature_wiki eq 'y' and $prefs.rss_wiki eq 'y'}

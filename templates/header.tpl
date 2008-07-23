@@ -1,4 +1,4 @@
-{php}header('Content-Type: text/html; charset=utf-8');{/php}{* --- IMPORTANT: If you edit this (or any other TPL file) file via the Tiki built-in TPL editor (tiki-edit_templates.php), all the javascript will be stripped. This will cause problems. (Ex.: menus stop collapsing/expanding).
+{* --- IMPORTANT: If you edit this (or any other TPL file) file via the Tiki built-in TPL editor (tiki-edit_templates.php), all the javascript will be stripped. This will cause problems. (Ex.: menus stop collapsing/expanding).
 
 You should only modify header.tpl via a text editor through console, or ssh, or FTP edit commands. And only if you know what you are doing ;-)
 
@@ -55,21 +55,7 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 <!--[if lt IE 7]> <link rel="StyleSheet" href="css/ie6.css" type="text/css" /> <![endif]-->
 
 {* --- phplayers block --- *}
-{if $prefs.feature_phplayers eq 'y'}
-<link rel="StyleSheet" href="lib/phplayers/layerstreemenu.css" type="text/css"></link>
-<link rel="StyleSheet" href="lib/phplayers/layerstreemenu-hidden.css" type="text/css" />
-<script type="text/javascript">
-<!--//--><![CDATA[//><!--
-var numl;var toBeHidden;
-{php} include_once ("lib/phplayers/libjs/layersmenu-browser_detection.js"); global $LayersMenu, $TreeMenu, $PHPTreeMenu, $PlainMenu;{/php}
-//--><!]]>
-</script>
-<script type="text/javascript" src="lib/phplayers/libjs/layersmenu-library.js"></script>
-{* lets try this *}
-<script type="text/javascript" src="lib/phplayers/libjs/layersmenu.js"></script>
-{* will it work now ? (luci) *}
-<script type="text/javascript" src="lib/phplayers/libjs/layerstreemenu-cookies.js"></script>
-{/if}
+{if isset($phplayers_headers)}{$phplayers_headers}{/if}
 
 {*-- css menus block --*}
 <link rel="StyleSheet" href="css/cssmenu_vert.css" type="text/css"></link>

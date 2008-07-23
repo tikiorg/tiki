@@ -35,7 +35,7 @@ name="eponymousGroups" {if $prefs.eponymousGroups eq 'y'}checked="checked"{/if}/
 <tr><td class="form">{tr}Use tracker for more group information{/tr}:</td><td><input type="checkbox" name="groupTracker" {if $prefs.groupTracker eq 'y'}checked="checked"{/if} /></td></tr>
 
 <tr><td class="form">{tr}Request passcode to register{/tr}:</td><td><input type="checkbox" name="useRegisterPasscode" {if $prefs.useRegisterPasscode eq 'y'}checked="checked"{/if}/><input type="text" name="registerPasscode" value="{$prefs.registerPasscode|escape}"/></td></tr>
-<tr><td class="form">{tr}Prevent automatic/robot registration{/tr}{php}if (!function_exists("gd_info")){ {/php} {tr} - Php GD library required{/tr}{php}}{/php}:</td><td><input type="checkbox" name="rnd_num_reg" {if $prefs.rnd_num_reg eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Prevent automatic/robot registration:{/tr}</td><td><input type="checkbox" name="rnd_num_reg"{if $gd_lib_found neq 'y'} disabled="disabled"{/if}{if $prefs.rnd_num_reg eq 'y'} checked="checked"{/if}/>{if $gd_lib_found neq 'y'} {tr} - Php GD library required{/tr}{/if}</td></tr>
 <tr><td class="form">{tr}Use login as email{/tr}:</td><td><input type="checkbox" name="login_is_email" {if $prefs.login_is_email eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Validate users by email{/tr}:</td><td><input type="checkbox" name="validateUsers" {if $prefs.validateUsers eq 'y'}checked="checked"{/if}/>
 {if empty($prefs.sender_email)}

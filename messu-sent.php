@@ -78,9 +78,8 @@ if (isset($_REQUEST["download"])) {
 	}
 	$smarty->assign_by_ref('items', $items);
 
-	header("Content-type: application/download ");
-    header("Content-Disposition: attachment; filename=tiki-msg-sent-".time("U").".txt ");
-	$smarty->display("messu-download.tpl");
+	header("Content-Disposition: attachment; filename=tiki-msg-sent-".time("U").".txt ");
+	$smarty->display('messu-download.tpl', null, null, 'application/download');
 	die;
 }
 
