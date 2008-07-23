@@ -92,7 +92,7 @@ if ($prefs['session_db'] == 'y') {
 	unset($pass_tiki);
 	unset($dbs_tiki);
 	ini_set('session.save_handler','user');
-	include('session/adodb-session.php');
+	include_once('lib/adodb/session/adodb-session.php');
 }
 
 // Only accept PHP's session ID in URL when the request comes from the tiki server itself

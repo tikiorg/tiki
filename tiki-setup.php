@@ -14,7 +14,19 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 /* Automatically set params used for absolute URLs - BEGIN */
 
-$tmp = dirname(str_replace(realpath(dirname(__FILE__)),'',realpath($_SERVER['SCRIPT_FILENAME'])));
+$tiki_setup_dir = realpath(dirname(__FILE__));
+$tiki_script_filename = realpath($_SERVER['SCRIPT_FILENAME']);
+
+// On some systems, SCRIPT_FILENAME contains the full path to the cgi script that 
+//   calls the script we are looking for. In this case, we have to fallback to 
+//   PATH_TRANSLATED. This one may be wrong on some systems, this is why SCRIPT_FILENAME
+//   is tried first.
+
+if ( substr($tiki_script_filename, 0, strlen($tiki_setup_dir)) != $tiki_setup_dir ) {
+	$tiki_script_filename = realpath($_SERVER['PATH_TRANSLATED']);
+}
+$tmp = dirname(str_replace($tiki_setup_dir,'',$tiki_script_filename));
+
 if ($tmp != '/') {
         $dir_level = substr_count($tmp,"/");
 } else {
@@ -23,7 +35,7 @@ if ($tmp != '/') {
 unset($tmp);
 
 $tikiroot = dirname($_SERVER['PHP_SELF']);
-$tikipath = dirname($_SERVER['SCRIPT_FILENAME']);
+$tikipath = dirname($tiki_script_filename);
 
 if ($dir_level > 0) {
         $tikiroot = preg_replace('#(/[^/]+){'.$dir_level.'}$#','',$tikiroot);

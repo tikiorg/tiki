@@ -5,7 +5,7 @@ require_once('tiki-setup.php');
  * This script convert templates with the old preferences $truc to $pref.truc by getting the currently existing prefs keys.
  * Use with caution !
  * Copy it to the root of you're tiki, and run it with:
- * php convert_templates_prefs-1.10.php
+ * php convert_templates_prefs-2.0.php
  */
 
 /* customize this to the directory you want to convert */

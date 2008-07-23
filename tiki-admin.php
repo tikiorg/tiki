@@ -86,17 +86,17 @@ if (isset($_REQUEST["page"])) {
 	if ($adminPage == "features") {
 		$admintitle = "Features"; //get_strings tra("Features")
 		$description = "Enable/disable Tiki features here, but configure them elsewhere"; //get_strings tra("Enable/disable Tiki features here, but configure them elsewhere") TODO FOR EACH DESCRIPTION
-		$helpUrl = "Features Admin";
+		$helpUrl = "Features+Admin";
 		include_once ('tiki-admin_include_features.php');
 	} else if ($adminPage == "general") {
 		$admintitle = "General";//get_strings tra("General")
 		$description = "General preferences and settings";//get_strings tra("General preferences and settings")
-		$helpUrl = "General Admin";
+		$helpUrl = "General+Admin";
 		include_once ('tiki-admin_include_general.php');
 	} else if ($adminPage == "login") {
 		$admintitle = "Login";//get_strings tra("Login")
 		$description = "User registration, login and authentication";//get_strings tra("User registration, login and authentication")
-		$helpUrl = "Login Config";
+		$helpUrl = "Login+Config";
 		include_once ('tiki-admin_include_login.php');
 	} else if ($adminPage == "wiki") {
 		$admintitle = "Wiki";//get_strings tra("Wiki")
@@ -105,6 +105,7 @@ if (isset($_REQUEST["page"])) {
 	} else if ($adminPage == "wikiatt") {
 		$admintitle = "Wiki Attachments";//get_strings tra("Wiki Attachments")
 		$description = "Wiki attachments";//get_strings tra("Wiki attachments")
+                $helpUrl = "Wiki+Config";
 		include_once ('tiki-admin_include_wikiatt.php');
 	} else if ($adminPage == "gal") {
 		$admintitle = "Image Galleries";//get_strings tra("Image Galleries")
@@ -131,6 +132,7 @@ if (isset($_REQUEST["page"])) {
 		include_once ('tiki-admin_include_blogs.php');
 	} else if ($adminPage == "forums") {
 		$admintitle = "Forums";//get_strings tra("Forums")
+                $helpUrl = "Forum+Admin";
 		$description = "Forums settings";//get_strings tra("Forums settings")
 		include_once ('tiki-admin_include_forums.php');
 	} else if ($adminPage == "faqs") {
@@ -151,6 +153,7 @@ if (isset($_REQUEST["page"])) {
 		include_once ('tiki-admin_include_rss.php');
 	} else if ($adminPage == "directory") {
 		$admintitle = "Directory";//get_strings tra("Directory")
+                $helpUrl = "Directory+Admin";
 		$description = "Directory settings";//get_strings tra("Directory settings")
 		include_once ('tiki-admin_include_directory.php');
 	} else if ($adminPage == "userfiles") {
@@ -169,6 +172,7 @@ if (isset($_REQUEST["page"])) {
 		include_once ('tiki-admin_include_metatags.php');
 	} else if ($adminPage == "search") {
 		$admintitle = "Search";//get_strings tra("Search")
+                $helpUrl = "Search";
 		$description = "Search settings";//get_strings tra("Search settings")
 		include_once ('tiki-admin_include_search.php');
 	} else if ($adminPage == "score") {
@@ -177,11 +181,12 @@ if (isset($_REQUEST["page"])) {
 		include_once ('tiki-admin_include_score.php');
 	} else if ($adminPage == "community") {
 		$admintitle = "Community";//get_strings tra("Community")
+                $helpUrl = "Community";
 		$description = "Community settings";//get_strings tra("Community settings")
 		include_once ('tiki-admin_include_community.php');
 	} else if ($adminPage == "messages") {
 		$admintitle = "Messages";//get_strings tra("Site Identity")
-		$helpUrl = "Inter-User Messages";
+		$helpUrl = "Inter-User+Messages";
 		$description = "User Messages";// already translated
 		include_once ('tiki-admin_include_messages.php');
 	} else if ($adminPage == "calendar") {
@@ -210,7 +215,7 @@ if (isset($_REQUEST["page"])) {
 	} else if ($adminPage == "wysiwyg") {
 		$admintitle = "wysiwyg";//get_strings tra("i18n")
 		$description = "Wysiwyg editor";//get_strings tra("i18n")
-		$helpUrl = "Wysiwyg Editor Admin";
+		$helpUrl = "Wysiwyg+Editor+Admin";
 		include_once ('tiki-admin_include_wysiwyg.php');
 	} else if ($adminPage == "copyright") {
 		$admintitle = "Copyright";//get_strings tra("i18n")
@@ -230,12 +235,12 @@ if (isset($_REQUEST["page"])) {
 	} else if ($adminPage == "look") {
 		$admintitle = "Look &amp; Feel";//get_strings tra("Look &amp; Feel")
 		$description = "Customize look and feel of your Tiki";//get_strings tra("Customize look and feel of your Tiki")
-		$helpUrl = "Look and Feel";
+		$helpUrl = "Look+and+Feel+admin";
 		include_once ('tiki-admin_include_look.php');
 	} else if ($adminPage == "textarea") {
 		$admintitle = "Text area";//get_strings tra("Text area")
 		$description = "Text area";//get_strings tra("Text area")
-		$helpUrl = "Text area";
+		$helpUrl = "Text+area";
 		include_once ('tiki-admin_include_textarea.php');
 	} else if ($adminPage == "multimedia") {
 		$admintitle = "Multimedia";//get_strings tra("Multimedia")
@@ -245,12 +250,12 @@ if (isset($_REQUEST["page"])) {
 	} else if ($adminPage == "ads") {
 		$admintitle = "Site Ads and Banners";// this is already translated
 		$description = "Configure Site Ads and Banners";//get_strings tra("Configure Site Ads and Banners")
-		$helpUrl = "Site Ads and Banners";
+		$helpUrl = "Look+and+Feel+admin";
 		include_once ('tiki-admin_include_ads.php');
 	} else if ($adminPage == "profiles") {
 		$admintitle = "Profiles";
 		$description = "Install predefined configuration profiles and add-ons.";
-		$helpUrl = "Profile installation";
+		$helpUrl = "Profiles";
 		include_once ('tiki-admin_include_profiles.php');
 	}
 

@@ -38,22 +38,8 @@ function user_is_admin( $dbTiki, $name )
 
 function installer_is_accessible()
 {
-	global $cookie_name;
+	global $cookie_name, $dbTiki, $db_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tiki;
 
-	if( ! file_exists( 'db/local.php' ) )
-	{
-		$cookie_name = 'tiki-user-tikiwiki';
-		return true;
-	}
-
-	include_once("lib/init/initlib.php");
-	TikiInit::prependIncludePath('lib/adodb');
-	TikiInit::prependIncludePath('lib/pear');
-
-	include_once("db/local.php");
-	include_once('lib/adodb/adodb.inc.php');
-
-	$dbTiki = &ADONewConnection($db_tiki);
 	if( ! $dbTiki->Connect( $host_tiki, $user_tiki, $pass_tiki, $dbs_tiki ) )
 		return false;
 
@@ -78,7 +64,7 @@ function installer_is_accessible()
 		unset($pass_tiki);
 		unset($dbs_tiki);
 		ini_set('session.save_handler','user');
-		include('session/adodb-session.php');
+		include_once('lib/adodb/session/adodb-session.php');
 	}
 
 	session_start();
@@ -95,16 +81,42 @@ function installer_is_accessible()
 	return false;
 }
 
-if ( installer_is_accessible() ) {
+$cookie_name = '';
+if ( file_exists( 'db/local.php' ) ) {
+
+	include_once("lib/init/initlib.php");
+	require_once('lib/setup/tikisetup.class.php');
+	TikiInit::prependIncludePath('lib/adodb');
+	TikiInit::prependIncludePath('lib/pear');
+
+	include('db/local.php');
+	include_once('adodb.inc.php');
+	$dbTiki = &ADONewConnection($db_tiki);
+
+} else {
+	$cookie_name = 'tiki-user-tikiwiki';
+}
+
+if ( $cookie_name != '' || installer_is_accessible() ) {
 	$logged = true;
 	$admin_acc = 'y';
 	include_once("installer/tiki-installer.php");
 } else {
-	print "<html><body>
-	<h1>Security Alert!</h1>
-	<p>The Tiki installer can be used only by a site adminstrator. Please <a href='tiki-login.php'>login as an administrator</a> first.</p>
-	</body></html>";
-	exit;
+	require_once("setup_smarty.php");
+	require_once("lib/tikilib.php");
+	include_once('lib/init/tra.php');
+	$tikilib = new TikiLib($dbTiki);
+	require_once("lib/userslib.php");
+	$userlib = new UsersLib($dbTiki);
+	require_once("lib/tikiaccesslib.php");
+	$access = new TikiAccessLib();
+	require_once('lib/setup/prefs.php');
+	require_once('lib/setup/language.php');
+
+	echo tra("<html><body>\n<h1>Security Alert!</h1>\n");
+	echo tra('<p>The Tiki installer can be used only by a site adminstrator. Please login as an administrator first.</p>');
+	$smarty->display('tiki-login.tpl');
+	echo '</body></html>';
 }
 
 ?>

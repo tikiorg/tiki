@@ -7852,7 +7852,7 @@ function detect_browser_language() {
 	}
 
     // Check better language
-    // Priority has been changed in 1.10 to that defined in RFC 4647
+    // Priority has been changed in 2.0 to that defined in RFC 4647
     $aproximate_lang = '';
     foreach ($supported as $supported_lang) {
 	$lang = strtolower($supported_lang);

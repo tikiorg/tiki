@@ -133,8 +133,6 @@ class cssLib extends TikiLib {
 
 	/**
 	 *  Find the version of Tiki that a CSS is compatible with
-	 *  @returns int the version number, eg 109 for v1.9, 110 for v1.10
-	 *  or false if the version isn't specified
 	 *
 	 *  @TODO: cache the results
 	 *  @TODO: only read the first 30 lines or so of the file
