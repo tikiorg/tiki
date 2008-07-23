@@ -762,7 +762,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['feature_custom_home'] = 'n';
 
 	# site identity
-	$prefs['feature_siteidentity'] = 'n';
+	$prefs['feature_siteidentity'] = 'y';
 	$prefs['site_crumb_seper'] = '>';
 	$prefs['site_nav_seper'] = '|';
 	$prefs['feature_sitemycode'] = 'n';
