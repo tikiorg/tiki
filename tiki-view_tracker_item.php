@@ -1187,10 +1187,6 @@ include_once ('tiki-section_options.php');
 
 $smarty->assign('uses_tabs', 'y');
 
-if ($prefs['feature_jscalendar']) {
-	$smarty->assign('uses_jscalendar', 'y');
-}
-
 ask_ticket('view-trackers-items');
 
 if ( $prefs['feature_ajax'] == 'y' ) {

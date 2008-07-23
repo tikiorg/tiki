@@ -763,9 +763,6 @@ $smarty->assign_by_ref('groups', $groups);
 include_once('tiki-section_options.php');
 
 $smarty->assign('uses_tabs', 'y');
-if ($prefs['feature_jscalendar']) {
-	$smarty->assign('uses_jscalendar', 'y');
-}
 $smarty->assign('show_filters', 'n');
 if(count($fields['data'])>0) {
 foreach ($fields['data'] as $it) {

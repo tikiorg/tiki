@@ -64,12 +64,12 @@
 {if $edit}
 <table cellpadding="0" cellspacing="0" border="0" style="border:0;">
 <tr><td style="border:0;padding-top:2px;vertical-align:middle">
-{if $prefs.feature_jscalendar ne 'y'}
+{if $prefs.feature_jscalendar neq 'y' or $prefs.javascript_enabled neq 'y'}
 <a href="#" onclick="document.f.Time_Hour.selectedIndex=(document.f.Time_Hour.selectedIndex+1);">{icon _id='plus_small' align='left' width='11' height='8'}</a>
 {/if}
 </td>
 <td rowspan="2" style="border:0;padding-top:2px;vertical-align:middle">
-{if $prefs.feature_jscalendar eq 'y'}
+{if $prefs.feature_jscalendar eq 'y' and $prefs.javascript_enabled eq 'y'}
 {jscalendar id="start" date=$calitem.start fieldname="save[date_start]" align="Bc" showtime='n'}
 {else}
 {html_select_date prefix="start_date_" time=$calitem.start field_order=$prefs.display_field_order start_year=$prefs.calendar_start_year end_year=$prefs.calendar_end_year}
@@ -85,7 +85,7 @@
 <a href="#" onclick="document.f.start_Minute.selectedIndex=(document.f.start_Minute.selectedIndex+1);">{icon _id='plus_small' align='left' width='11' height='8'}</a>
 </td></tr>
 <tr><td style="border:0;vertical-align:middle">
-{if $prefs.feature_jscalendar ne 'y'}
+{if $prefs.feature_jscalendar neq 'y' or $prefs.javascript_enabled neq 'y'}
 <a href="#" onclick="document.f.Time_Hour.selectedIndex=(document.f.Time_Hour.selectedIndex-1);">{icon _id='minus_small' align='left' width='11' height='8'}</a>
 {/if}
 </td><td style="border:0;vertical-align:middle">
@@ -105,12 +105,12 @@
 <input type="hidden" name="save[end_or_duration]" value="end" id="end_or_duration" />
 <table cellpadding="0" cellspacing="0" border="0" style="border:0;display:block;" id="end_date"> 
 <tr><td style="border:0;padding-top:2px;vertical-align:middle">
-{if $prefs.feature_jscalendar ne 'y'}
+{if $prefs.feature_jscalendar neq 'y' or $prefs.javascript_enabled neq 'y'}
 <a href="#" onclick="document.f.Time_Hour.selectedIndex=(document.f.Time_Hour.selectedIndex+1);">{icon _id='plus_small' align='left' width='11' height='8'}</a>
 {/if}
 </td>
 <td rowspan="2" style="border:0;vertical-align:middle">
-{if $prefs.feature_jscalendar eq 'y'}
+{if $prefs.feature_jscalendar eq 'y' and $prefs.javascript_enabled eq 'y'}
 {jscalendar id="end" date=$calitem.end fieldname="save[date_end]" align="Bc" showtime='n'}
 {else}
 {html_select_date prefix="end_date_" time=$calitem.end field_order=$prefs.display_field_order  start_year=$prefs.calendar_start_year end_year=$prefs.calendar_end_year}
@@ -128,7 +128,7 @@
 <td rowspan="2" style="border:0;padding-top:2px;vertical-align:middle"><a href="#" onclick="document.getElementById('end_or_duration').value='duration';flip('end_duration');flip('end_date');return false;">{tr}Duration{/tr}</a></td>
 </tr>
 <tr><td style="border:0;vertical-align:middle">
-{if $prefs.feature_jscalendar ne 'y'}
+{if $prefs.feature_jscalendar neq 'y' or $prefs.javascript_enabled neq 'y'}
 <a href="#" onclick="document.f.Time_Hour.selectedIndex=(document.f.Time_Hour.selectedIndex-1);">{icon _id='minus_small' align='left' width='11' height='8'}</a>
 {/if}
 </td><td style="border:0;vertical-align:middle">

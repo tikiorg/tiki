@@ -130,7 +130,6 @@ $smarty->assign('lock', false);
 $smarty->assign('edit_page', 'n');
 $smarty->assign('forum_mode', 'n');
 $smarty->assign('uses_tabs', 'n');
-$smarty->assign('uses_jscalendar', 'n');
 $smarty->assign('uses_phplayers', 'n');
 $smarty->assign('wiki_extras', 'n');
 
