@@ -87,14 +87,13 @@ $calendarViewGroups = (isset($_SESSION['CalendarViewGroups'])) ? $_SESSION['Cale
 $calendarViewList = $_SESSION['CalendarViewList'];
 $calendarGroupByItem = $_SESSION['CalendarGroupByItem'];
 
-global $calendar_firstDayofWeek;
-if ($calendar_firstDayofWeek == 'user') {
+if ($prefs['calendar_firstDayofWeek'] == 'user') {
   $firstDayofWeek = (int)tra('First day of week: Sunday (its ID is 0) - translators you need to localize this string!');
   if ( $firstDayofWeek < 1 || $firstDayofWeek > 6 ) {
     $firstDayofWeek = 0;
   } 
 } else {
-  $firstDayofWeek = $calendar_firstDayofWeek;
+  $firstDayofWeek = $prefs['calendar_firstDayofWeek'];
 } 
 $smarty->assign('firstDayofWeek', $firstDayofWeek);
 
