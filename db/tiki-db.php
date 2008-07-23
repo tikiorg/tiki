@@ -74,7 +74,7 @@ if (is_file('db/virtuals.inc')) {
 		$tikidomain = $multi;
 	}
 }
-$re  = include_once('db/'.$local_php);
+$re = include('db/'.$local_php);
 if ( $re === FALSE) {
 	print '<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -107,6 +107,9 @@ href="http://doc.tikiwiki.org/">the documentation</a> for more information.</p>
 ';
 	exit;
 }
+
+if ( $dbversion_tiki == '1.10' ) $dbversion_tiki = '2.0';
+
 if (preg_match('/^adodb$/i', $api_tiki)) {
 	TikiInit::prependIncludePath('lib/adodb');
 	if (strpos(ini_get('include_path'),'lib/pear') !== 0) 
