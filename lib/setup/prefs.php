@@ -547,7 +547,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['calendar_view_tab'] = 'n';
 	$prefs['calendar_firstDayofWeek'] = 'user';
 	$prefs['calendar_timespan'] = '5';
-	$prefs['feature_jscalendar'] = 'n';
+	$prefs['feature_jscalendar'] = 'y';
 	$prefs['feature_action_calendar'] = 'n';
 	$prefs['calendar_start_year'] = '+0';
 	$prefs['calendar_end_year'] = '+3';
