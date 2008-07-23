@@ -74,7 +74,7 @@ if (is_file('db/virtuals.inc')) {
 		$tikidomain = $multi;
 	}
 }
-$re = include('db/'.$local_php);
+$re = include($local_php);
 if ( $re === FALSE) {
 	print '<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
