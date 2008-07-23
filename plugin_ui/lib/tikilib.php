@@ -6569,7 +6569,7 @@ if (!$simple_wiki) {
 			//
 			if ( $nb_last_hdr > 0 && $hdrlevel <= $nb_last_hdr ) {
 				$hdr_structure[$nb_hdrs] = array_slice($last_hdr, 0, $hdrlevel);
-				if ( $show_title_level[$hdrlevel] || ! $need_autonumbering ) {
+				if ( !empty($show_title_level[$hdrlevel]) || ! $need_autonumbering ) {
 					//
 					// Increment the level number only if :
 					//     - the last title of the same level number has a displayed number
@@ -7852,7 +7852,7 @@ function detect_browser_language() {
 	}
 
     // Check better language
-    // Priority has been changed in 1.10 to that defined in RFC 4647
+    // Priority has been changed in 2.0 to that defined in RFC 4647
     $aproximate_lang = '';
     foreach ($supported as $supported_lang) {
 	$lang = strtolower($supported_lang);

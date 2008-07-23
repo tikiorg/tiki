@@ -3,9 +3,9 @@
 {if $prefs.feature_articles eq 'y'}
 {if !isset($tpl_module_title)}
 {if $nonums eq 'y'}
-{eval var="<a href=\"tiki-view_articles.php?topic=$topicId&type=$type\">{tr}Last `$module_rows` articles{/tr}</a>" assign="tpl_module_title"}
+{eval var="<a href=\"tiki-view_articles.php?topic=$topicId&amp;type=$type\">{tr}Last `$module_rows` articles{/tr}</a>" assign="tpl_module_title"}
 {else}
-{eval var="<a href=\"tiki-view_articles.php?topic=$topicId&type=$type\">{tr}Last articles{/tr}</a>" assign="tpl_module_title"}
+{eval var="<a href=\"tiki-view_articles.php?topic=$topicId&amp;type=$type\">{tr}Last articles{/tr}</a>" assign="tpl_module_title"}
 {/if}
 {/if}
 {tikimodule title=$tpl_module_title name="last_articles" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox}

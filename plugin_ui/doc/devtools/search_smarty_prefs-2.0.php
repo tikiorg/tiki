@@ -4,7 +4,7 @@ require_once('tiki-setup.php');
 /*
  * This script search in php files every $smarty->assign("truc" where truc is a preference key
  * Copy it to the root of you're tiki, and run it with:
- * php search_smarty_prefs-1.10.php
+ * php search_smarty_prefs-2.0.php
  */
 
 /* customize this to the directory you want to scan */

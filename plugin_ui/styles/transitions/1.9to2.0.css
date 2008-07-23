@@ -533,6 +533,14 @@ div #page-bar
 	cursor: pointer;
 }
 
+#sitetitle {
+	font-size: 2.4em;
+}
+
+#sitesubtitle {
+	font-size:1.6em;
+}
+
 .plugin-desc {
 	padding: 5px;
 }

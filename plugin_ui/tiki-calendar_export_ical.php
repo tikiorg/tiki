@@ -39,7 +39,7 @@ foreach (array_keys($calendars["data"]) as $i) {
 	$calendars["data"][$i]["individual"] = $userlib->object_has_one_permission($i, 'calendar');
 }
 $smarty->assign('calendars',$calendars["data"]);
-$smarty->assign('uses_jscalendar','y');
+
 // export calendar //
 if (isset($_REQUEST["calendarId"]) && $_REQUEST["calendarId"] && $_REQUEST["export"]=='y') {
 	// get calendar events 

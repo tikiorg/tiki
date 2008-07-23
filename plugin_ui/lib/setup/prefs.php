@@ -206,7 +206,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['feature_blog_heading'] = 'y';
 
 	# filegals
-	$prefs['feature_file_galleries'] = 'n';
+	$prefs['feature_file_galleries'] = 'y';
 	$prefs['home_file_gallery'] = 0;
 	$prefs['fgal_use_db'] = 'y';
 	$prefs['fgal_batch_dir'] = '';
@@ -547,7 +547,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['calendar_view_tab'] = 'n';
 	$prefs['calendar_firstDayofWeek'] = 'user';
 	$prefs['calendar_timespan'] = '5';
-	$prefs['feature_jscalendar'] = 'n';
+	$prefs['feature_jscalendar'] = 'y';
 	$prefs['feature_action_calendar'] = 'n';
 	$prefs['calendar_start_year'] = '+0';
 	$prefs['calendar_end_year'] = '+3';
@@ -726,7 +726,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['feature_html_pages'] = 'n';
 
 	# use filegals for image inclusion
-	$prefs['feature_filegals_manager'] = 'n';
+	$prefs['feature_filegals_manager'] = 'y';
 
 	# contact & mail
 	$prefs['feature_contact'] = 'n';

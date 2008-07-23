@@ -205,7 +205,7 @@ class="prevnext">{tr}All{/tr}</a>
 {/section}
 </select>
 {/if}
-<span class="button2"><a href="{if $grouptrackerid}tiki-admin_tracker_fields.php?trackerId={$userstrackerid}{else}tiki-admin_trackers.php{/if}" class="linkbut">{tr}Admin{/tr} {$ugr}</a>
+<span class="button2"><a href="{if $userstrackerid}tiki-admin_tracker_fields.php?trackerId={$userstrackerid}{else}tiki-admin_trackers.php{/if}" class="linkbut">{tr}Admin{/tr} {$ugr}</a>
 </td></tr>
 <tr class="formcolor"><td>{tr}Users Information Tracker Fields Asked at Registration Time<br />(fieldIds separated with :){/tr}</td>
 <td><input type="text" size="40" name="registrationUsersFieldIds" value="{$registrationUsersFieldIds|escape}" /></td></tr>
@@ -231,8 +231,6 @@ class="prevnext">{tr}All{/tr}</a>
 {else}
 {tr}choose a field ...{/tr}
 {/if}
-{else}
-{tr}choose a group tracker ...{/tr}
 {/if}
 <br /><br />
 {/if}

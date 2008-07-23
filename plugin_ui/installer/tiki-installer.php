@@ -589,6 +589,7 @@ if (!file_exists($local)) {
 } else {
 	// include the file to get the variables
 	include ($local);
+	if ( $dbversion_tiki == '1.10' ) $dbversion_tiki = '2.0';
 
 	if (!isset($db_tiki)) {
 		//upgrade from 1.7.X

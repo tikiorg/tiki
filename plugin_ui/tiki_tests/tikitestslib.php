@@ -57,8 +57,13 @@ function test_callback($buffer) {
 		$dom->appendChild($element_test);
 	} else {
 		$dom = DOMDocument::loadXML($xml);
-		$element_test = $dom->getElementsByTagName('test')->item(0);
-		if ($element_test == NULL) {
+		if ($dom) {
+			$element_test = $dom->getElementsByTagName('test')->item(0);
+			if ($element_test == NULL) {
+				return $buffer;
+			}
+		} else {
+			// Can't read the XML file go out
 			return $buffer;
 		}
 	}
