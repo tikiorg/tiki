@@ -172,6 +172,7 @@ if (isset($_REQUEST["page"])) {
 		include_once ('tiki-admin_include_metatags.php');
 	} else if ($adminPage == "search") {
 		$admintitle = "Search";//get_strings tra("Search")
+                $helpUrl = "Search";
 		$description = "Search settings";//get_strings tra("Search settings")
 		include_once ('tiki-admin_include_search.php');
 	} else if ($adminPage == "score") {
@@ -180,6 +181,7 @@ if (isset($_REQUEST["page"])) {
 		include_once ('tiki-admin_include_score.php');
 	} else if ($adminPage == "community") {
 		$admintitle = "Community";//get_strings tra("Community")
+                $helpUrl = "Community";
 		$description = "Community settings";//get_strings tra("Community settings")
 		include_once ('tiki-admin_include_community.php');
 	} else if ($adminPage == "messages") {
