@@ -379,7 +379,7 @@ div.cbox-data {
 	font-size : 10px;
 	color : black;
 	width : 100%;
-}
+	padding: 3px}
 
 /** rbox: remarks box (note/warning/tip/comment) */
 .rbox {
@@ -477,7 +477,9 @@ table.forumformtable, table.viewthread, table.jukeboxlist {
 table.normalnoborder {
 	border: none;
 }
-
+table.admin td {
+	padding-left: 2px;
+}
 /* Cells in forms without background color (inside a div for example) */
 .form td {
 	background-color : transparent;
