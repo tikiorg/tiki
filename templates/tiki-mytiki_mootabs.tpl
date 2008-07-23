@@ -17,13 +17,6 @@
 		<div id="user_information">
 		</div>
 
-		{if $prefs.feature_ajax eq "y" && $prefs.feature_mootools eq "y" && $prefs.users_prefs_mytiki_pages eq "y"}
-		<h5><a {ajax_href template=tiki-mypages.tpl
-		htmlelement=user_pages}tiki-mypages.php{/ajax_href}>{tr}My Pages{/tr}</a></h5>
-		<div id="user_pages">
-		</div>
-		{/if}
-
 		{if $prefs.feature_messages eq 'y' and $tiki_p_messages eq 'y'}
 		<h5><a {ajax_href template=messu-mailbox.tpl
 		htmlelement=user_messages}messu-mailbox.php{/ajax_href}><img  border="0" src="img/mytiki/messages.gif" alt="{tr}Messages{/tr}" />{tr}Messages{/tr}<small>({$unread})</small></a></h5>
