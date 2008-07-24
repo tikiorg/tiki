@@ -78,6 +78,15 @@ if (isset($_REQUEST['action'])) {
 		}
 	}
 }
+if ( !empty($_REQUEST['submit_mult']) && isset($_REQUEST['checked'])) {
+	$action = $_REQUEST['submit_mult'];
+	check_ticket('categpermissions');
+	foreach ($_REQUEST['checked'] as $check) {
+		$where = split(' ', $check, 3);
+		$userlib->remove_object_permission($where[2], $where[0], 'category', $where[1]);
+	}
+		
+}
 
 // Now we have to get the individual page permissions if any
 $category_perms = $userlib->get_object_permissions($categId, 'category');
@@ -99,6 +108,7 @@ $smarty->assign_by_ref('perms', $perms['data']);
 // Get the category path
 $path = $categlib->get_category_path($categId);
 $smarty->assign_by_ref('path', $path);
+ask_ticket('categpermission');
 
 $smarty->assign('mid', 'tiki-categpermissions.tpl');
 $smarty->display("tiki.tpl");
