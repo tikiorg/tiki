@@ -343,6 +343,10 @@ span.user-box-text {
 	color: black;
 }
 
+#power {
+	font-size: 10px;
+}
+	
 /* When modules display a list of items each item is enclosed in a cell with the following style */
 TD.module {
 	font-size : 10px;
