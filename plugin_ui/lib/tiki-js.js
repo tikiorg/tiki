@@ -1239,3 +1239,94 @@ function wordCount(maxSize, source, cpt, message) {
 	}
 }
 
+function show_plugin_form( type, index, pageName, args )
+{
+	var target = document.getElementById( type + index );
+	var content = target.innerHTML;
+
+	var form = build_plugin_form( type, index, pageName, args );
+
+	target.innerHTML = '';
+	target.appendChild( form );
+}
+
+function build_plugin_form( type, index, pageName, args )
+{
+	var form = document.createElement( 'form' );
+	form.method = 'post';
+	form.action = 'tiki-wikiplugin_edit.php';
+
+	var hiddenPage = document.createElement( 'input' );
+	hiddenPage.type = 'hidden';
+	hiddenPage.name = 'page';
+	hiddenPage.value = pageName;
+	form.appendChild( hiddenPage );
+
+	var hiddenType = document.createElement( 'input' );
+	hiddenType.type = 'hidden';
+	hiddenType.name = 'type';
+	hiddenType.value = type;
+	form.appendChild( hiddenType );
+
+	var hiddenIndex = document.createElement( 'input' );
+	hiddenIndex.type = 'hidden';
+	hiddenIndex.name = 'index';
+	hiddenIndex.value = index;
+	form.appendChild( hiddenIndex );
+
+	var meta = tiki_plugins[type];
+
+	var header = document.createElement( 'h3' );
+	header.innerHTML = meta.name;
+	form.appendChild( header );
+
+	var desc = document.createElement( 'div' );
+	desc.innerHTML = meta.description;
+	form.appendChild( desc );
+
+	var table = document.createElement( 'table' );
+	table.className = 'normal';
+	form.appendChild( table );
+
+	for( i in meta.params )
+	{
+		var row = document.createElement( 'tr' );
+		var label = document.createElement( 'td' );
+		var field = document.createElement( 'td' );
+		row.className = 'formcolor';
+
+		label.innerHTML = meta.params[i].name;
+		if( meta.params[i].required )
+			label.style.fontWeight = 'bold';
+
+		var input = document.createElement( 'input' );
+		input.type = 'text';
+		input.name = 'params[' + i + ']';
+		if( args[i] )
+			input.value = args[i];
+
+		var desc = document.createElement( 'div' );
+		desc.style.fontSize = 'x-small';
+		desc.innerHTML = meta.params[i].description;
+
+		field.appendChild( input );
+		field.appendChild( desc );
+		row.appendChild( label );
+		row.appendChild( field );
+		table.appendChild( row );
+	}
+
+	var submitRow = document.createElement( 'tr' );
+	var submitCell = document.createElement( 'td' );
+	var submit = document.createElement( 'input' );
+
+	submit.type = 'submit';
+	table.appendChild( submitRow );
+	submitRow.appendChild( submitCell );
+	submitCell.colSpan = 2;
+	submitCell.appendChild( submit );
+	submitCell.className = 'submit';
+
+	return form;
+}
+
