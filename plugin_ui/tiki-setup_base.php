@@ -245,6 +245,7 @@ $vartype['rolename'] = 'char';
 $vartype['type'] = 'string';
 $vartype['userole'] = 'int';
 $vartype['focus'] = 'string';
+$vartype['filegals_manager'] = 'vars';
 
 function varcheck($array) {
   global $patterns, $vartype, $prefs;

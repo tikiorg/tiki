@@ -186,10 +186,14 @@
       {* build link *}
       {capture assign=link}{strip}
         {if $files[changes].isgal eq 1}
-          href="tiki-list_file_gallery.php?galleryId={$files[changes].id}{if $filegals_manager eq 'y'}&amp;filegals_manager=y{/if}"
+          href="tiki-list_file_gallery.php?galleryId={$files[changes].id}{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}"
         {else}
-          {if $filegals_manager eq 'y'}
-            href="javascript:window.opener.SetUrl('{$url_path}tiki-download_file.php?fileId={$files[changes].id}&display');javascript:window.close() ;"  title="{tr}Download{/tr}"
+          {if $filegals_manager neq ''}
+            {assign var=seturl value="`$url_path`tiki-download_file.php?fileId=`$files[changes].id`&display"}
+
+            {* Note: When using this code inside FCKeditor, SetMyUrl function is not defined and we use FCKeditor SetUrl native function *}
+            href="javascript:if (typeof window.opener.SetMyUrl != 'undefined') window.opener.SetMyUrl('{$filegals_manager|escape}','{$seturl}'); else window.opener.SetUrl('{$seturl}'); javascript:window.close();"  title="{tr}Download{/tr}"
+
           {elseif $tiki_p_download_files eq 'y'}
             {if $gal_info.type eq 'podcast' or $gal_info.type eq 'vidcast'}
               href="{$download_path}{$files[changes].path}" title="{tr}Download{/tr}"

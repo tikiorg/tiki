@@ -841,7 +841,7 @@ if ( is_array($all_galleries) && count($all_galleries) > 0 ) {
 	$gallery_path_str = '';
 	foreach ( $gallery_path as $dir_id ) {
 		if ( $gallery_path_str != '' ) $gallery_path_str .= ' &nbsp;&gt;&nbsp;';
-		$gallery_path_str .= '<a href="tiki-list_file_gallery.php?galleryId='.$dir_id[0].( isset($_REQUEST['filegals_manager']) ? '&amp;filegals_manager=y' : '').'">'.$dir_id[1].'</a>';
+		$gallery_path_str .= '<a href="tiki-list_file_gallery.php?galleryId='.$dir_id[0].( ( isset($_REQUEST['filegals_manager']) && $_REQUEST['filegals_manager'] != '' ) ? '&amp;filegals_manager='.urlencode($_REQUEST['filegals_manager']) : '').'">'.$dir_id[1].'</a>';
 	}
 }
 
@@ -871,8 +871,8 @@ if ( $_REQUEST['galleryId'] != 0 ) {
 include_once('fgal_listing_conf.php');
 
 // Display the template
-if ( isset($_REQUEST['filegals_manager']) && $_REQUEST['filegals_manager'] == 'y' ) {
-	$smarty->assign('filegals_manager','y');
+if ( isset($_REQUEST['filegals_manager']) && $_REQUEST['filegals_manager'] != '' ) {
+	$smarty->assign('filegals_manager', $_REQUEST['filegals_manager']);
 	$smarty->display('tiki_full.tpl');
 } else {
 	$smarty->display('tiki.tpl');

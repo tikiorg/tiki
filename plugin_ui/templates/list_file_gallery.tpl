@@ -44,7 +44,7 @@
     {/if}
       <div style="padding:1px; overflow-x:auto; overflow-y:hidden;">
 
-      <form name="fgalformid" id="fgalform" method="post" action="{$smarty.server.PHP_SELF}{if $filegals_manager eq 'y'}?filegals_manager=y{/if}">
+      <form name="fgalformid" id="fgalform" method="post" action="{$smarty.server.PHP_SELF}{if $filegals_manager neq ''}?filegals_manager={$filegals_manager|escape}{/if}">
         <input type="hidden" name="galleryId" value="{$gal_info.galleryId|escape}" />
         <input type="hidden" name="find" value="{$find|escape}" />
 
