@@ -41,15 +41,23 @@
 <th class="heading">{self_link _class="tableheading" _sort_arg='sort_mode' _sort_field='user'}{tr}User{/tr}{/self_link}</th>
 <th class="heading">{self_link _class="tableheading" _sort_arg='sort_mode' _sort_field='ip'}{tr}Ip{/tr}{/self_link}</th>
 <th class="heading">{self_link _class="tableheading" _sort_arg='sort_mode' _sort_field='comment'}{tr}Comment{/tr}{/self_link}</th>
+<th class="heading">{tr}Action{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=changes loop=$lastchanges}
 <tr class="{cycle}">
-<td>&nbsp;{$lastchanges[changes].lastModif|tiki_short_datetime}&nbsp;</td>
-<td>&nbsp;<a href='tiki-index.php?page={$lastchanges[changes].pageName|escape:"url"}' class="tablename" title="{$lastchanges[changes].pageName}">{$lastchanges[changes].pageName|truncate:$prefs.wiki_list_name_len:"...":true|escape}</a> 
+<td>{$lastchanges[changes].lastModif|tiki_short_datetime}</td>
+<td><a href="{$lastchanges[changes].pageName|sefurl}" class="tablename" title="{$lastchanges[changes].pageName}">{$lastchanges[changes].pageName|truncate:$prefs.wiki_list_name_len:"...":true|escape}</a> 
+</td>
+
+<td>{tr}{$lastchanges[changes].action|escape}{/tr}</td>
+<td>{$lastchanges[changes].user|userlink}</td>
+<td>{$lastchanges[changes].ip}</td>
+<td>{$lastchanges[changes].comment}</td>
+<td>
 {if $tiki_p_wiki_view_history eq 'y'} 
 {if $lastchanges[changes].version}
-(<a class="link" href='tiki-pagehistory.php?page={$lastchanges[changes].pageName|escape:"url"}'>{tr}hist{/tr}</a> {tr}v{/tr}{$lastchanges[changes].version})
+<a class="link" href='tiki-pagehistory.php?page={$lastchanges[changes].pageName|escape:"url"}'>{icon _id='page_white_stack' alt='{tr}History{/tr}'}</a>{tr}v{/tr}{$lastchanges[changes].version}
 &nbsp;<a class="link" href='tiki-pagehistory.php?page={$lastchanges[changes].pageName|escape:"url"}&amp;preview={$lastchanges[changes].version}' title="{tr}View{/tr}">v</a>&nbsp;
 {if $tiki_p_rollback eq 'y'}
 <a class="link" href='tiki-rollback.php?page={$lastchanges[changes].pageName|escape:"url"}&amp;version={$lastchanges[changes].version}' title="{tr}Rollback{/tr}">b</a>&nbsp;
@@ -59,15 +67,10 @@
 {if $tiki_p_wiki_view_source eq 'y'}
 <a class="link" href='tiki-pagehistory.php?page={$lastchanges[changes].pageName|escape:"url"}&amp;source={$lastchanges[changes].version}' title="{tr}Source{/tr}">s</a>{/if}
 {elseif $lastchanges[changes].versionlast}
-(<a class="link" href='tiki-pagehistory.php?page={$lastchanges[changes].pageName|escape:"url"}'>{tr}hist{/tr}</a>)
+<a class="link" href='tiki-pagehistory.php?page={$lastchanges[changes].pageName|escape:"url"}'>{icon _id='page_white_stack' alt='{tr}History{/tr}'}</a>
 {/if}
 {/if}
 </td>
-
-<td>{tr}{$lastchanges[changes].action|escape}{/tr}</td>
-<td>&nbsp;{$lastchanges[changes].user|userlink}&nbsp;</td>
-<td>&nbsp;{$lastchanges[changes].ip}&nbsp;</td>
-<td>&nbsp;{$lastchanges[changes].comment}&nbsp;</td>
 
 </tr>
 {sectionelse}
