@@ -23,6 +23,7 @@ function smarty_block_title($params, $content, &$smarty, $repeat)
   global $prefs;
   global $smarty;
   global $tiki_p_view_templates, $tiki_p_edit_templates, $tiki_p_admin;
+  include_once('lib/smarty_tiki/function.icon.php');
 
   if ( $repeat || $content == '' ) return;
 
