@@ -60,10 +60,14 @@
     {* build link *}
     {capture assign=link}{strip}
       {if $files[changes].isgal eq 1}
-        href="tiki-list_file_gallery.php?galleryId={$files[changes].id}{if $filegals_manager eq 'y'}&amp;filegals_manager=y{/if}&amp;view=browse"
+        href="tiki-list_file_gallery.php?galleryId={$files[changes].id}{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}&amp;view=browse"
       {else}
-        {if $filegals_manager eq 'y'}
-          href="javascript:window.opener.SetUrl('{$url_path}tiki-download_file.php?fileId={$files[changes].id}&display');javascript:window.close() ;"
+        {if $filegals_manager neq ''}
+          {assign var=seturl value="`$url_path`tiki-download_file.php?fileId=`$files[changes].id`&display"}
+
+          {* Note: When using this code inside FCKeditor, SetMyUrl function is not defined and we use FCKeditor SetUrl native function *}
+          href="javascript:if (typeof window.opener.SetMyUrl != 'undefined') window.opener.SetMyUrl('{$filegals_manager|escape}','{$seturl}'); else window.opener.SetUrl('{$seturl}'); javascript:window.close();"
+
         {elseif $tiki_p_download_files eq 'y'}
           {if $gal_info.type eq 'podcast' or $gal_info.type eq 'vidcast'}
             href="{$download_path}{$files[changes].path}"
@@ -82,7 +86,7 @@
         <div class="thumbimagecontener" style="width:{$thumbnail_size}px; height:{$thumbnailcontener_size}px">
           <div class="thumbimage">
             <div class="thumbimagesub" style="width:{$thumbnail_size}px;">{assign var=key_type value=$files[changes].type|truncate:9:'':true}
-              <a {$link}{if $prefs.feature_shadowbox eq 'y'} rel="shadowbox[gallery];type={if $key_type eq 'image/png' or $key_type eq 'image/jpe' or $key_type eq 'image/gif'}img{else}iframe{/if}" title="{if $files[changes].name neq ''}{$files[changes].name|escape}{/if}{if $files[changes].description neq ''} ({$files[changes].description|escape}){/if}"{/if}{if $over_infos neq ''} {popup fullhtml="1" text=$over_infos|escape:"javascript"|escape:"html"}{/if}>
+              <a {$link}{if $prefs.feature_shadowbox eq 'y' && $filegals_manager eq ''} rel="shadowbox[gallery];type={if $key_type eq 'image/png' or $key_type eq 'image/jpe' or $key_type eq 'image/gif'}img{else}iframe{/if}" title="{if $files[changes].name neq ''}{$files[changes].name|escape}{/if}{if $files[changes].description neq ''} ({$files[changes].description|escape}){/if}"{/if}{if $over_infos neq ''} {popup fullhtml="1" text=$over_infos|escape:"javascript"|escape:"html"}{/if}>
                 <img src="tiki-download_file.php?fileId={$files[changes].id}&amp;thumbnail&amp;max={$thumbnail_size}" />
               </a>
             </div>

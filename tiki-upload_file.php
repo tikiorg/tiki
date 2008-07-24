@@ -374,8 +374,8 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 // Display the template
 $smarty->assign('mid','tiki-upload_file.tpl');
-if ( isset($_REQUEST['filegals_manager']) && $_REQUEST['filegals_manager'] == 'y' ) {
-	$smarty->assign('filegals_manager','y');
+if ( isset($_REQUEST['filegals_manager']) && $_REQUEST['filegals_manager'] != '' ) {
+	$smarty->assign('filegals_manager', $_REQUEST['filegals_manager']);
 	$smarty->display("tiki-print.tpl");
 }  else {
 	$smarty->display("tiki.tpl");

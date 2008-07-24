@@ -56,7 +56,7 @@
 	{eval var=$prefs.sitead}</div>
 	{/if}
 {/if}
-{if $filegals_manager ne 'y' and $print_page ne 'y'}
+{if $filegals_manager eq '' and $print_page ne 'y'}
 {if $prefs.feature_site_login eq 'y'}
 	{include file="tiki-site_header_login.tpl"}
 {/if}

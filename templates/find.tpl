@@ -3,7 +3,7 @@
 {*
   parameters used in this template:
 
-  * filegals_manager      : If value = 'y' adds hidden input filegals_manager value=y
+  * filegals_manager      : If value not empty, adds hidden input filegals_manager value=$filegals_manager
   * _sort_mode             : If value = 'y' adds hidden input sort_mode value=$sort_mode
 
   * what                  : Change form title. Default value (if $what empty) is "Find". If $what is not empty, the text presented is $what content
@@ -24,7 +24,7 @@
 <div class="findtable">
 <form method="post" action="{$smarty.server.PHP_SELF}">
 
-{if $filegals_manager eq 'y'}<input type="hidden" name="filegals_manager" value="y" />{/if}
+{if $filegals_manager neq ''}<input type="hidden" name="filegals_manager" value="{$filegals_manager|escape}" />{/if}
 {if $_sort_mode eq 'y'}<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />{/if}
 
 {query _type='form_input' maxRecords='NULL' type='NULL' find='NULL' topic='NULL' lang='NULL' exact_match='NULL' categId='NULL' filegals_manager='NULL' save='NULL'}

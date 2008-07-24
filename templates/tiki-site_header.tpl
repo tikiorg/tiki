@@ -1,4 +1,4 @@
-{* $Id: tiki-site_header.tpl 12965 2008-05-26 02:22:25Z chibaguy $ *}
+{* $Id$ *}
 {* Template for Tikiwiki site identity header *}
 <div id="header-top">
 {if $prefs.feature_sitemycode eq 'y' && ($prefs.sitemycode_publish eq 'y' or $tiki_p_admin eq 'y')}
@@ -63,7 +63,7 @@
 	{eval var=$prefs.sitead}</div>
 	{/if}
 {/if}
-{if $filegals_manager ne 'y' and $print_page ne 'y'}
+{if $filegals_manager eq '' and $print_page ne 'y'}
 {if $prefs.feature_site_login eq 'y'}
 	{include file="tiki-site_header_login.tpl"}
 {/if}

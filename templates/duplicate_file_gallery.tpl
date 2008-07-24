@@ -1,7 +1,7 @@
 {* $Id$ *}
 {if $tiki_p_create_file_galleries eq 'y'}
 <h2>{tr}Duplicate File Gallery{/tr}</h2>
-<form action="tiki-list_file_gallery.php{if $filegals_manager eq 'y'}?filegals_manager=y{/if}" method="post">
+<form action="tiki-list_file_gallery.php{if $filegals_manager neq ''}?filegals_manager={$filegals_manager}{/if}" method="post">
   <table class="normal">
     <tr class="formcolor"><td>{tr}Name{/tr}</td><td><input type="text" size="50" name="name" value="{$name|escape}" /></td></tr>
     <tr class="formcolor"><td>{tr}Description{/tr}</td><td><textarea name="description" rows="4" cols="40">{$description|escape}</textarea></td></tr>
