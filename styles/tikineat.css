@@ -179,7 +179,7 @@ label {
 
 /*********************** SITE IDENTITY HEADER ************************************/
 
-#sitesearchbar {
+#sitesearchbar, #siteloginbar {
 	font-size: 10px;
 	padding: 5px;
 	text-align: right;
