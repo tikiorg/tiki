@@ -186,7 +186,7 @@ if (isset($_REQUEST["save"])) {
 		$parsed = "<html><body>$parsed</body></html>";
 	}
 	$smarty->assign('dataparsed',$parsed);
-	
+
 	$smarty->assign('subject', $_REQUEST["subject"]);
 	$cant = count($subscribers);
 	$smarty->assign('subscribers', $cant);
@@ -225,7 +225,7 @@ if (isset($_REQUEST["send"])) {
 	} else {
 		$users = $nllib->get_all_subscribers($_REQUEST["nlId"], $nl_info["unsubMsg"]);
 	}
-	
+
 	$nllib->memo_subscribers_edition($editionId, $users);
 	$sender_email = $prefs['sender_email'];
 	foreach ($users as $us) {
@@ -238,34 +238,34 @@ if (isset($_REQUEST["send"])) {
 		if ($userEmail == "") {
 			$userEmail = $userlib->get_user_by_email($email);
 		}
-	
+
 		if ($userEmail) {
 			$mail->setUser($userEmail);
 		} else {
 			$userEmail = '';
 		}
-			$mail->setFrom($sender_email);
-			$mail->setSubject($_REQUEST["subject"]); // htmlMimeMail memorised the encoded subject 
-			$languageEmail = ! $userEmail ? $prefs['site_language'] : $tikilib->get_user_preference($userEmail, "language", $prefs['site_language']);
-			if ($nl_info["unsubMsg"] == 'y') {
-				$unsubmsg = $nllib->get_unsub_msg($_REQUEST["nlId"], $email, $languageEmail, $us["code"], $userEmail);
-				if (stristr($html, "</body>") === false) {
-					$msg = $html.nl2br($unsubmsg);
-				} else {
-					$msg = str_replace("</body>", nl2br($unsubmsg)."</body>", $html);
-				}
+		$mail->setFrom($sender_email);
+		$mail->setSubject($_REQUEST["subject"]); // htmlMimeMail memorised the encoded subject 
+		$languageEmail = ! $userEmail ? $prefs['site_language'] : $tikilib->get_user_preference($userEmail, "language", $prefs['site_language']);
+		if ($nl_info["unsubMsg"] == 'y') {
+			$unsubmsg = $nllib->get_unsub_msg($_REQUEST["nlId"], $email, $languageEmail, $us["code"], $userEmail);
+			if (stristr($html, "</body>") === false) {
+				$msg = $html.nl2br($unsubmsg);
 			} else {
-				$msg = $html;
+				$msg = str_replace("</body>", nl2br($unsubmsg)."</body>", $html);
 			}
-			$mail->setHtml($msg, $txt.strip_tags($unsubmsg));
-			$mail->buildMessage();
-			if ($mail->send(array($email))) {
-				$sent++;
-				$nllib->delete_edition_subscriber($editionId, $us);
-			} else {
-				$errors[] = array("user"=>$userEmail, "email"=>$email);
-				$nllib->mark_edition_subscriber($editionId, $us);
-			}
+		} else {
+			$msg = $html;
+		}
+		$mail->setHtml($msg, $txt.strip_tags($unsubmsg));
+		$mail->buildMessage();
+		if ($mail->send(array($email))) {
+			$sent++;
+			$nllib->delete_edition_subscriber($editionId, $us);
+		} else {
+			$errors[] = array("user"=>$userEmail, "email"=>$email);
+			$nllib->mark_edition_subscriber($editionId, $us);
+		}
 	}
 
 	$smarty->assign('sent', $sent);
