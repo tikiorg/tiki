@@ -1239,18 +1239,18 @@ function wordCount(maxSize, source, cpt, message) {
 	}
 }
 
-function show_plugin_form( type, index, pageName, args )
+function show_plugin_form( type, index, pageName, args, bodyContent )
 {
 	var target = document.getElementById( type + index );
 	var content = target.innerHTML;
 
-	var form = build_plugin_form( type, index, pageName, args );
+	var form = build_plugin_form( type, index, pageName, args, bodyContent );
 
 	target.innerHTML = '';
 	target.appendChild( form );
 }
 
-function build_plugin_form( type, index, pageName, args )
+function build_plugin_form( type, index, pageName, args, bodyContent )
 {
 	var form = document.createElement( 'form' );
 	form.method = 'post';
@@ -1315,6 +1315,27 @@ function build_plugin_form( type, index, pageName, args )
 		row.appendChild( field );
 		table.appendChild( row );
 	}
+
+	var bodyRow = document.createElement( 'tr' );
+	var bodyCell = document.createElement( 'td' );
+	var bodyField = document.createElement( 'textarea' );
+	var bodyDesc = document.createElement( 'div' );
+
+	if( meta.body )
+		bodyDesc.innerHTML = meta.body;
+	else
+		bodyRow.style.display = 'none';
+
+	bodyField.name = 'content';
+	bodyField.value = bodyContent;
+
+	bodyRow.className = 'formcolor';
+	
+	table.appendChild( bodyRow );
+	bodyRow.appendChild( bodyCell );
+	bodyCell.appendChild( bodyDesc );
+	bodyCell.appendChild( bodyField );
+	bodyCell.colSpan = '2';
 
 	var submitRow = document.createElement( 'tr' );
 	var submitCell = document.createElement( 'td' );
