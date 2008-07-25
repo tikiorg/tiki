@@ -11,7 +11,10 @@ body {
 	background: #fff url(feb12/pagebg.jpg) repeat-x}
 	
 html>body {font-size: 75% !important}
-body.fullscreen {background: #fff url(feb12/pagebg.jpg) repeat-x 0 -137px}
+
+*:first-child+html body {font-size: 74% !important}
+
+body#fullscreen {background: #fff url(feb12/pagebg.jpg) repeat-x 0 -137px}
 
 a, a:visited { 
 	background: inherit;
@@ -117,9 +120,10 @@ input[type=submit],
 .button input,
 input[type=reset] {
 	vertical-align: middle;	
-	font-weight: bold;
 	margin: 2px;
 	vertical-align: middle}
+	
+*:first-child+html input { font-weight: normal }
 
 button:hover,
 input[type=submit]:hover,
@@ -137,6 +141,7 @@ select {
 
 select[multiple] {height: 10em}
 select[name="theme"] {width: 165px}
+select#general-timezone {width: 380px}
 #col1 select[type=file] {font-size: .95em}
 small {font-size: 0.8em}
 label {margin: 0 2px}
@@ -421,6 +426,7 @@ a.flip img {display: none}
 	margin: 0}
 	
 * html .horbaritem a,
+* html .horbaritem a:link,
 * html .horbaritem a:visited {font-size: 1.3em }
 
 .horbaritem a:hover {
@@ -440,6 +446,9 @@ a.flip img {display: none}
 	background: #FFFFFF;
 	visibility: hidden;
 	margin-top: 10px}
+
+* html .mdksubmenu {margin-top: 0}
+*:first-child+html .mdksubmenu { margin-top: 0 }
 
 .mdksubmenu table {
 	width: auto} 
@@ -1302,9 +1311,11 @@ table.commentinfo {}
 	margin-top: 5px;
 	padding: 0;
 	background: #F9FCFF;
-	font-size: 1.1em}
+	font-size: 1em;
+	font-weight: normal}
 	
 * html .post .postbody {font-size: 1em}
+*:first-child+html .postbody {width: 50em !important}
 
 .postbody-content {padding: 8px }
 
@@ -1317,11 +1328,12 @@ table.commentinfo {}
 	padding-top: 2px}
 
 .post .postbody-title .checkbox { float: left}
+*:first-child+html .postbody { width: 45em }
 
 .post .postbody-title .title {
 	float: left;
 	color: #29677B;
-	font-weight: bold;
+	/*font-weight: bold;*/
 	font-size: 1.2em;
 	margin-left: 5px;
 	margin-top: 3px;
@@ -1452,7 +1464,7 @@ span.commentstitle {
 
 .subcomment { margin-left: 10px}
 div.commentsedithelp { background: #ffcfcf; color: black; border: 1px solid #ff0000; text-align: center; font-weight: bold}
-
+textarea#editpost2 {font-size: .9em}
 /***** Categories *****/
 
 table.tcategpath {}

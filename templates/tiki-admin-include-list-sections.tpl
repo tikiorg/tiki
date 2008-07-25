@@ -13,7 +13,7 @@
 		{tr}{$crumbs[$crumb]->description}{/tr}
 		{help crumb=$crumbs[$crumb]}
 	</div>
-	<div class="cbox-data">
+	<div class="clearfix cbox-data">
 		<a href="tiki-admin.php?page=general" class="admbox" style="background-image: url('pics/large/icon-configuration48x48.png')">
 			<img src="pics/trans.png" alt="{tr}General{/tr}" title="{tr}General{/tr}" /><span>{tr}General{/tr}</span>
 		</a>

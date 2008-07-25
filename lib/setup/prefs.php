@@ -631,7 +631,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['rememberme'] = 'disabled';
 	$prefs['remembertime'] = 7200;
 	$prefs['feature_clear_passwords'] = 'n';
-	$prefs['feature_crypt_passwords'] = 'tikihash';
+	$prefs['feature_crypt_passwords'] = 'crypt-md5';
 	$prefs['feature_challenge'] = 'n';
 	$prefs['min_user_length'] = 1;
 	$prefs['min_pass_length'] = 1;

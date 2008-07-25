@@ -1024,6 +1024,11 @@ class TrackerLib extends TikiLib {
 				}
 			}
 
+			// Normalize on/y on a checkbox
+			if ($ins_fields["data"][$i]["type"] == 'c' && $ins_fields['data'][$i]['value'] == 'on') {
+				$ins_fields['data'][$i]['value'] = 'y';
+			}
+
 			if ( $ins_fields["data"][$i]["type"] == 'M' && $ins_fields["data"][$i]["options_array"][0] >= '3' && isset($ins_fields["data"][$i]['value'])) {
 					$itId = $itemId ? $itemId : $new_itemId;
 					$old_file = $this->get_item_value($trackerId, $itemId, $ins_fields["data"][$i]['fieldId']);
