@@ -162,7 +162,8 @@ class SearchLib extends TikiLib {
 
 		    $bindJoin[] = $objType;
 
-		    $forbiddenCatList = $categlib->list_forbidden_categories();
+		    $forbiddenCatList = $categlib->list_forbidden_categories(0, '', 'tiki_p_search_categorized');
+
 		    $forbiddenCatStr = '';
 		    if (count($forbiddenCatList) > 0) {
 			$forbiddenCatStr = '?' . str_repeat(',?',count($forbiddenCatList)-1);
