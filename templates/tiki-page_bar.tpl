@@ -17,14 +17,13 @@
           {tr}Edit{/tr}
         </a>
       </span>
-{else}
-    {if $prefs.feature_source eq 'y' and $tiki_p_wiki_view_source eq 'y'}
-      <span class="button2" >
+{/if}
+{if $prefs.feature_source eq 'y' and $tiki_p_wiki_view_source eq 'y'}
+	<span class="button2" >
       <a href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;source=0" class="linkbut">
         {tr}Source{/tr}
       </a>
-      </span>
-    {/if}
+	</span>
 {/if}
 
 {if $page|lower ne 'sandbox'}
