@@ -120,6 +120,7 @@ function process_sql_file($file,$db_tiki) {
 		}
 	}
 	$dbTiki->Execute("update `tiki_preferences` set `value`=`value`+1 where `name`='lastUpdatePrefs'");
+	unset($_SESSION['s_prefs']);
 
 	$smarty->assign_by_ref('succcommands', $succcommands);
 	$smarty->assign_by_ref('failedcommands', $failedcommands);
