@@ -10,8 +10,13 @@ body {
 	font-family: Verdana, Helvetica, Geneva, Arial, sans-serif;
 	margin: 0;
 	padding: 0;
-	font-size: 62.5%;
+	font-size: 60% !important;
 	color: #000;
+}
+
+*:first-child+html
+body {
+	font-size: 70% !important;
 }
 
 #main {
@@ -42,27 +47,27 @@ h1, h2, h3, h4, h5, h6 {
 	margin-bottom: 3px;
 }
 h1 {
-	font-size: 260%;
+	font-size: 220%;
 	color: #436976;
 }
 h2 {
-	font-size: 200%;
+	font-size: 180%;
 	color: #234956;
 }
 h3 {
-	font-size: 160%;
+	font-size: 140%;
 	color: #032936;
 }
 h4 {
-	font-size: 130%;
-	color: #032936;
-}
-h5 {
 	font-size: 120%;
 	color: #032936;
 }
-h6 {
+h5 {
 	font-size: 110%;
+	color: #032936;
+}
+h6 {
+	font-size: 100%;
 	color: #032936;
 }
 
@@ -99,7 +104,6 @@ button,
 input,
 textarea,
 select {
-	font-size: 1.2em;
 	color: #112233;
 	margin: 1px;
 }
@@ -361,7 +365,7 @@ a.flip img {
 	padding-left: 5px;
 	padding-bottom: 0;
 	border-left: 1px solid #8CACBB;
-	font-size: .9em;
+/*	font-size: .9em;*/
 }
 
 /* IE */
@@ -380,9 +384,7 @@ a.flip img {
 #c1c2 #col2 {
 	background-color: transparent;
 	width: 180px;
-	text-align: left;/*
-	border-right: 1px solid #8CACBB;*/
-	font-size: 1.1em
+	text-align: left;
 }
 
 #col2 .content {
@@ -572,6 +574,7 @@ div#attzoneopen, div#comzoneopen {display: block; margin-top: 10px;}
 div#edithelpzone {display: none;}
 #rules-copy-panel {display: none;}
 .clear, #clear {clear: both;}
+br.clear {clear: both; height: 0}
 .clearfix:after {
     content: "."; 
     display: block; 
@@ -717,10 +720,15 @@ div.box-data {
 	overflow: hidden;
 }
 
-.box-data ol,
-.box-data ul {
-	padding-right: 1em;
-	overflow: hidden}
+.box-data ol {padding-left: 2em; margin-top: 0; margin-bottom: 0;}
+.box-data ul {padding-left: 0; margin-top: 0; margin-bottom: 0; list-style:none;}
+/* IE */
+* html .box-data ol {margin-left: 0em;}
+* html .box-data ul {margin-left: 0em;}
+/* IE7 */
+*:first-child+html .box-data ol {margin-left: 0em;}
+*:first-child+html .box-data ul {margin-left: 0em;}
+
 
 td.module {
 	font-size: .95em;
@@ -829,11 +837,13 @@ table {
 
 td {
 	color: #000000;
-	font-size: 1em;/*
-	_font-size: 11px;*/
+	font-size: 1em;
 	vertical-align: top;
 	text-align: left;
 }
+
+* html td,
+* html th { font-size: 11px }
 
 th {
 	color: black;
@@ -1045,6 +1055,7 @@ td.third {
 	text-align: center;
 }
 
+* html td.third { font-size: 13px }
 /** Tabs **/
 /* Style for tikitabs */
 .tabs {
@@ -1133,10 +1144,10 @@ form.admin .tabs {
 	margin: 10px 1px 0 0 !important;
 	padding: 0 !important;
 }
-
+/*
 div.content {
 	padding: 3px;
-}
+}*/
 
 div.content .tabs {
 	margin: 0;
@@ -1667,7 +1678,6 @@ div.blogtools {
 
 div.posthead {
 	color: black;
-	overflow: hidden;
 	padding: 0 10px;
 }
 
@@ -1688,15 +1698,12 @@ span.posthead small {
 
 .blogt {  }
 
-div.postbody {
-	overflow: hidden;
+.blogpost .postbody {
 	border-top: 1px solid #AEAEAE;
 	border-bottom: 1px solid #AEAEAE;
 	font-size: .95em;
 	color: black;
-	padding: 10px;
-	width: auto;
-}
+	padding: 10px}
 
 /***** Forums *****/
 
@@ -1790,42 +1797,56 @@ td.forumtoolbar {
 /* forums new */
 .post .postbody {
 	clear: both;
-	width: 100%;
 	border: solid 1px #E7EAED;
 	border-top: solid 1px gray;
 	margin: 0;
 	margin-top: 5px;
-	padding: 3px 0px 3px 0px;
+	padding: 0;
 	background-color: #F9FCFF;
-	font-size: 1.1em;
-	_font-size: 11px;
+	/*font-size: 1.1em;*/
 }
+
 * html .post .postbody {font-size: 11px}
-.post .postbody-title {
+*:first-child+html .post .postbody {width: 67em !important}
+
+.postbody-title {
 	display: block;
+	clear: both;
 	background-color: #E0EAF4; 
-	border-bottom: 1px solid #ACCCDD;
-	margin-bottom: 4px;
-	height: 100%;
-	overflow: auto;
-	padding-top: 2px;
+	border-top: 1px solid #8CACBB;
+	border-bottom: 1px solid #8CACBB;
+	padding-bottom: 4px;
 }
+
 .post .postbody-title .checkbox { float: left; }
 .post .postbody-title .title {
-	float: left;
+	/*float: left;*/
 	color: #29677B;
 	font-weight: bold;
 	font-size: 1em;
 	margin-left: 5px;
 	margin-top: 3px;
 }
+#col1 .post .postbody .content {
+	color: #000000;
+	background: #E7E9EA !important;
+	height: 100%;/*
+	padding: 0 3px 3px;*/
+	text-align: left;
+	width: 100%}
+
 .post .author {	
-	text-align: right;
+	float: left;
+	text-align: left;
 	vertical-align: top;
+	width: 25%;
+	height: 100%;
+	background:#F7F9FA;
+	border-right: 1px solid #8CACBB;
+	border-bottom: 1px solid #8CACBB;
 }
 .post .author_post_info {
 	display: block;
-	background-color: #E0EAF4;
 	padding: 0 2px 2px 2px;
 }
 .post .author_info .icons { display: block; }
@@ -1833,26 +1854,27 @@ td.forumtoolbar {
 
 .post .author_post_info_on { font-style: italic; }
 .post .author_info {
-	float: right;
-	background-color: #F0F8FF;
+	display: block;
+	/*background-color: #F0F8FF;*/
 	padding: 0 2px 2px 2px;
 	margin-left: 5px;
-	border-left: 1px solid #D7E5F3;
-	border-bottom: 1px solid #D7E5F3;
+	/*border-left: 1px solid #D7E5F3;
+	border-bottom: 1px solid #D7E5F3;*/
 }
 .commentStyle_headers .author_info { float: left; }
 .post .postbody-title .actions {
 	float: right;
 	font-size: 1em;
 }
-.post .postbody .content {
-	float: left;
-	padding: 0px 3px 3px 3px;
-	width: 100%;
-	height: 100%;
-	text-align: left;
-	color: #000000;
-}
+
+.postbody-content {
+	float: right;
+	width: 73%;
+	min-height: 4em;
+	margin: 2px}
+
+/*.postbody .content .quoteheader {}
+.postbody .content .quotebody {display: block}*/
 .post .postbody .attachments {
 	clear: both;
 	border-top: 1px dotted #D9D9D9;
@@ -1876,13 +1898,10 @@ td.forumtoolbar {
 	padding: 0 2px 0 2px;
 }
 .post .avatar {
-	float: right;
 	margin-bottom: 5px;
 	margin-left: 4px;
-	padding: 3px;
-	border: 1px solid #ACCCDD;
-	background-color: #E0EAF4;
-}
+	padding: 3px}
+
 .sub_comment { padding-left: 20px; }
 .sub_comment_area {
 	clear: both;
@@ -1952,6 +1971,8 @@ div.commentsedithelp {
 	text-align: center;
 	font-weight: bold;
 }
+
+textarea#editpost2 {font-size: .97em}
 
 /***** Categories *****/
 

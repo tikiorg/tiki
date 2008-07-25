@@ -1584,6 +1584,7 @@ table.commentinfo {background: #F0F0F0}
 	width: 100%}
 
 * html .post .postbody {font-size: 11px}
+*:first-child+html .postbody { width: 55em }
 	
 #col1 .post .postbody .content {
 	color: #D8D8D8;
@@ -1738,6 +1739,8 @@ div.commentsedithelp {
 	border: 1px solid #ff0000;
 	text-align: center;
 	font-weight: bold}
+	
+textarea#editpost2 {font-size: 1em}
 
 /***** Categories *****/
 

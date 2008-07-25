@@ -21,7 +21,7 @@ body {
 
 
 html>body {
-	font: 84.5% Georgia, serif;
+	font: /*84.5%*/74%;
 	text-align: left;
 }
 
@@ -144,6 +144,8 @@ input[type=submit]:hover,
 	background: #E6E6F8;
 }
 
+#col2 input { width: 100px }
+
 input[type=checkbox] {border: 0;}
 
 * html .findtable input { font-size: 1em;}
@@ -169,22 +171,15 @@ small {
 label {
 	cursor: pointer;
 }
+
+/*
 ul, ol {
 
 	}
 	
-* html ul,
-* html ol {
-
-}
-
 li {
 	
-}
-
-* html li {
-	height:1%;
-}
+}*/
 
 /***** Pasic Page Layout 
 	Including Site Header *****/
@@ -749,7 +744,8 @@ h3.box-title {
 	border: 1px solid transparent;
 	background: #fff}
 	
-* html #col3 .box:hover a.flipmodtitle img {right: 30px}
+* html #col2 a.flipmodtitle img {right: 8px}
+* html #col3 a.flipmodtitle img {right: 20px}
 
 * html .box a.flipmodtitle img {border: none}
 a.flipmodtitle:hover img {border: 1px solid #AAAAAA !important}
@@ -767,7 +763,17 @@ a.flipmodtitle:hover img {border: 1px solid #AAAAAA !important}
 }
 
 .box-data ol,
-.box-data ul {padding-right: 1em}
+.box-data ul {padding-right: .6em}
+
+.box-data ol {padding-left: 2em; margin-top: 0; margin-bottom: 0;}
+.box-data ul {padding-left: 0; margin-top: 0; margin-bottom: 0}
+/* IE */
+* html .box-data ol {margin-left: 0em}
+* html .box-data ul {margin-left: 1em}
+/* IE7 */
+*:first-child+html .box-data ol {margin-left: 0}
+*:first-child+html .box-data ul {margin-left: 1em}
+
 
 .box-data ul li {
 	list-style: square;
@@ -1156,6 +1162,8 @@ span#description {
 	font-size: 125%;
 	line-height: 1.5em;
 }
+
+* body .wikitext { font-size: 100% }
 
 .wikitext h1, 
 .wikitext h2, 
@@ -1623,9 +1631,9 @@ td.forumtoolbar {
 table.commentinfo {}
 
 /* forums new */
+
 .post .postbody {
 	clear: both;
-	width: 100%;
 	border: solid 1px #E7EAED;
 	border-top: solid 1px gray;
 	margin: 0;
@@ -1634,6 +1642,8 @@ table.commentinfo {}
 	background-color: #F9FCFF;	font-size: 1.1em;}
 	
 * html .post .postbody {font-size: 11px}
+*:first-child+html .postbody { width: 55em }
+
 .post .postbody-title {
 	display: block;
 	background-color: #E0EAF4; 
@@ -2221,7 +2231,8 @@ table.default	td {
 
 a.admbox {
 	border: 1px solid #AAAAAA;
-	background-color: #6C6C6C}
+	background-color: #6C6C6C;
+	color: white}
 
 a.admbox:hover, a.admbox:focus, a.admbox:active  {
 	background-color: #B2B2B2;
