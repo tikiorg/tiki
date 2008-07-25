@@ -138,8 +138,6 @@ if (isset($_REQUEST["preview"])) {
  		$info["datatxt"] = $_REQUEST["datatxt"];
 		//For the hidden input
 		$smarty->assign('datatxt',$_REQUEST["datatxt"]);
-		//For the display
-		$info["datatxt"] = preg_replace ( "/\n/", "<br>", $info["datatxt"] );
 	} else {
 		$info["datatxt"] = '';
 	}
@@ -197,15 +195,15 @@ if (isset($_REQUEST["save"])) {
 $smarty->assign('emited', 'n');
 if (!empty($_REQUEST['datatxt']))
    $txt = $_REQUEST['datatxt'];
-if (empty($txt)&&!empty($_REQUEST["data"]))
-	{
-		//No txt message is explicitely provided -> 
-		//Create one with the html Version & remove Wiki tags
-		$txt = strip_tags(str_replace(array("\r\n","&nbsp;") , array("\n"," ") , $_REQUEST["data"]));
-		$txt=ereg_replace("[^ a-zA-Z0-9]*!",'\n',$txt);
-		$txt=ereg_replace("!!",'\n',$txt);
-		$txt=ereg_replace("!!!",'\n',$txt);
-	}
+if (empty($txt)&&!empty($_REQUEST["data"])) {
+	//No txt message is explicitely provided -> 
+	//Create one with the html Version & remove Wiki tags
+	$txt = strip_tags(str_replace(array("\r\n","&nbsp;") , array("\n"," ") , $_REQUEST["data"]));
+	$txt=preg_replace('/^!!!(.*?)$/m',"\n$1\n",$txt);
+	$txt=preg_replace('/^!!(.*?)$/m',"\n$1\n",$txt);
+	$txt=preg_replace('/^!(.*?)$/m',"\n$1\n",$txt);
+	$smarty->assign('txt', $txt);
+}
 
 
 if (isset($_REQUEST["send"])) {
