@@ -258,7 +258,7 @@ if (isset($_REQUEST["send"])) {
 			$msg = $html;
 		}
 		$mail->setHtml($msg, $txt.strip_tags($unsubmsg));
-		$mail->buildMessage();
+		$mail->buildMessage(array('text_encoding'=>'8bit'));
 		if ($mail->send(array($email))) {
 			$sent++;
 			$nllib->delete_edition_subscriber($editionId, $us);
