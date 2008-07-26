@@ -1315,7 +1315,7 @@ table.commentinfo {}
 	font-weight: normal}
 	
 * html .post .postbody {font-size: 1em}
-*:first-child+html .postbody {width: 50em !important}
+*:first-child+html .postbody {min-width: 100% !important}
 
 .postbody-content {padding: 8px }
 
@@ -1464,7 +1464,8 @@ span.commentstitle {
 
 .subcomment { margin-left: 10px}
 div.commentsedithelp { background: #ffcfcf; color: black; border: 1px solid #ff0000; text-align: center; font-weight: bold}
-textarea#editpost2 {font-size: .9em}
+textarea#editpost2 {font-size: 1em}
+
 /***** Categories *****/
 
 table.tcategpath {}
