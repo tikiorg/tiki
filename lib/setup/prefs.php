@@ -227,7 +227,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['fgal_list_id'] = 'n';
 	$prefs['fgal_list_type'] = 'y';
 	$prefs['fgal_list_name'] = 'n';
-	$prefs['fgal_list_description'] = 'y';
+	$prefs['fgal_list_description'] = 'o';
 	$prefs['fgal_list_size'] = 'y';
 	$prefs['fgal_list_created'] = 'o';
 	$prefs['fgal_list_lastmodif'] = 'y';
@@ -235,7 +235,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['fgal_list_author'] = 'o';
 	$prefs['fgal_list_last_user'] = 'o';
 	$prefs['fgal_list_comment'] = 'o';
-	$prefs['fgal_list_files'] = 'y';
+	$prefs['fgal_list_files'] = 'o';
 	$prefs['fgal_list_hits'] = 'o';
 	$prefs['fgal_list_lockedby'] = 'a';
 	$prefs['fgal_show_path'] = 'y';
