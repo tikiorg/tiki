@@ -65,7 +65,7 @@
 {if $prefs.feature_gmap eq 'y'}
 <a href="tiki-admin.php?page=gmap" title="{tr}Google Maps{/tr}" class="link"><img border="0" src="pics/large/google_maps.png" alt="{tr}Google Maps{/tr}" width="32" height="32" /></a>
 {/if}
-<a href="tiki-admin.php?page=i18n" title="{tr}i18n{/tr}" class="link"><img border="0" src="pics/large/i18n.png" alt="{tr}i18n{/tr}" width="32" height="32" /></a>
+<a href="tiki-admin.php?page=i18n" title="{tr}Internationalization{/tr}" class="link"><img border="0" src="pics/large/i18n.png" alt="{tr}Internationalization{/tr}" width="32" height="32" /></a>
 {if $prefs.feature_wysiwyg eq 'y'}
 <a href="tiki-admin.php?page=wysiwyg" title="{tr}Wysiwyg editor{/tr}" class="link"><img border="0" src="pics/large/wysiwyg.png" alt="{tr}Wysiwyg editor{/tr}" width="32" height="32" /></a>
 {/if}

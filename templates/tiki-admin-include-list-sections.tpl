@@ -93,7 +93,7 @@
       <img src="pics/trans.png" alt="{tr}Google Maps{/tr}" title="{tr}Google Maps{/tr}{if $prefs.feature_gmap ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Google Maps{/tr}</span>
     </a>
     <a href="tiki-admin.php?page=i18n" class="admbox" style="background-image: url('pics/large/i18n48x48.png')">
-      <img src="pics/trans.png" alt="{tr}i18n{/tr}" title="{tr}i18n{/tr}" /><span>{tr}i18n{/tr}</span>
+      <img src="pics/trans.png" alt="{tr}Internationalization{/tr}" title="{tr}Internationalization{/tr}" /><span>{tr}Internationalization{/tr}</span>
     </a>
     <a href="tiki-admin.php?page=wysiwyg" class="admbox{if $prefs.feature_wysiwyg ne 'y'} off{/if}" style="background-image: url('pics/large/wysiwyg48x48.png')">
       <img src="pics/trans.png" alt="{tr}Wysiwyg{/tr}" title="{tr}Wysiwyg{/tr}{if $prefs.feature_wysiwyg ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Wysiwyg{/tr}</span>
