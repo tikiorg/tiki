@@ -17,7 +17,8 @@ function smarty_block_ajax_href($params, $content, &$smarty, $repeat) {
     if ( $prefs['feature_ajax'] != 'y' || $prefs['javascript_enabled'] == 'n' ) {
 	return " href=\"$url\" ";
     } else {
-	return " href=\"#\" onclick=\"loadComponent('$url','$template','$htmlelement');return false;\" ";
+	$max_tikitabs = 5; // Same value as in header.tpl, <body> tag onload's param
+	return " href=\"#\" onclick=\"loadComponent('$url','$template','$htmlelement',$max_tikitabs);return false;\" ";
     }
 }
 
