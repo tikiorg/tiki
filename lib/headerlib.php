@@ -149,14 +149,14 @@ class HeaderLib {
 		}
 
 		if (count($this->js)) {
-			$back.= "<script type=\"text/javascript\">\n<!--\n";
+			$back.= "<script type=\"text/javascript\">\n<!--//--><![CDATA[//><!--\n";
 			foreach ($this->js as $x=>$js) {
 				$back.= "// js $x \n";
 				foreach ($js as $j) {
 					$back.= "$j\n";
 				}
 			}
-			$back.= "-->\n</script>\n\n";
+			$back.= "//--><!]]>\n</script>\n\n";
 		}
 		
 		if (count($this->rssfeeds)) {
