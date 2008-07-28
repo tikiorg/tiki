@@ -366,7 +366,6 @@ or
 	a) To run setup.sh, follow the instructions:
 		\$ bash
 		\$ cd $docroot
-		\$ chmod +x setup.sh
 		\$ sh setup.sh
 
 		The script will offer you options depending on your server configuration.
