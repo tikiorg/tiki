@@ -27,6 +27,8 @@ if (isset($_REQUEST["confirm_subscription"])) {
 		$smarty->assign('confirm', 'y');
 
 		$smarty->assign('nl_info', $conf);
+	} else {
+		$smarty->assign('confirm', 'f');	// Signal failure
 	}
 }
 
@@ -38,6 +40,8 @@ if (isset($_REQUEST["unsubscribe"])) {
 		$smarty->assign('unsub', 'y');
 
 		$smarty->assign('nl_info', $conf);
+	} else {
+		$smarty->assign('unsub', 'f');	// Signal failure
 	}
 }
 
