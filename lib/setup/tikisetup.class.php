@@ -145,7 +145,7 @@ $errors
 			\$ bash
 			\$ cd $docroot
 			\$ chmod +x setup.sh
-			\$ ./setup.sh
+			\$ sh setup.sh
 
 		The script will offer you options depending on your server configuration.
 
