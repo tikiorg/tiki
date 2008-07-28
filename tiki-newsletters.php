@@ -135,7 +135,12 @@ if (!isset($_REQUEST["offset"])) {
 if (isset($_REQUEST["noshowlist"])) {
 	$showlist = 'n';
 } else {
-	$showlist = 'y';
+	// No need to display an empty list to people who can't subscribe
+	if ( $tiki_p_subscribe_newsletters != 'y' ) {
+		$showlist = 'n';
+	} else {
+		$showlist = 'y';
+	}
 }
 
 $smarty->assign('showlist',$showlist);
