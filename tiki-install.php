@@ -28,14 +28,6 @@ function get_pref( $dbTiki, $name, $default )
 	return $default;
 }
 
-function user_is_admin( $dbTiki, $name )
-{
-	$result = $dbTiki->query( "SELECT COUNT(*) FROM users_users u INNER JOIN users_usergroups g ON u.userId = g.userId WHERE login = ?", array( $name ) );
-
-	$count = reset( $result->fetchRow() );
-	return $count > 0;
-}
-
 function installer_is_accessible()
 {
 	global $cookie_name, $dbTiki, $db_tiki, $host_tiki, $user_tiki, $pass_tiki, $dbs_tiki;
@@ -49,7 +41,10 @@ function installer_is_accessible()
 		return true;
 	
 	$session_type = get_pref( $dbTiki, 'session_db', 'n' );
-	$cookie_name = 'tiki-user-' . get_pref( $dbTiki, 'cookie_name', 'tikiwiki' );
+	$cookie_name = get_pref( $dbTiki, 'cookie_name', 'tikiwiki' );
+
+	// Clean cookie name, the same way it's done in tiki-setup_base.php
+	$cookie_name = 'tiki-user-'.ereg_replace("[^a-zA-Z0-9]", "", $cookie_name);
 
 	if ($session_type == 'y') {
 		include('db/local.php');
@@ -72,7 +67,7 @@ function installer_is_accessible()
 	if( ! isset( $_SESSION[$cookie_name] ) )
 		return false;
 	
-	if( user_is_admin( $dbTiki, $_SESSION[$cookie_name] ) )
+	if( $_SESSION[$cookie_name] == 'admin' )
 		return true;
 
 	global $db_tiki;
