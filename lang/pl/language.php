@@ -7544,6 +7544,7 @@ $lang=Array(
 "Subscription confirmed!" => "Subskrypcja potwierdzona!",
 "Subscribe to Newsletter" => "Subskrybuj biuletyn",
 "Subscribe to This Newsletter" => "Subskrybuj",
+"Subscribe to this Newsletter" => "Subskrybuj",
 "Back to list of articles" => "Powróć do wykazu artykułów",
 "Notes" => "Notatki",
 "Write a note" => "Napisz natatkę",

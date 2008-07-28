@@ -7084,6 +7084,7 @@ $lang=Array(
 "Subscription confirmed!" => "Abonnement best&auml;tigt!",
 "Subscribe to Newsletter" => "Newsletter abonnieren",
 "Subscribe to This Newsletter" => "Abonnieren",
+"Subscribe to this Newsletter" => "Abonnieren",
 "Available Newsletters" => "Verf&uuml;gbare Newsletter",
 "Select news group" => "Newsgroup ausw&auml;hlen",
 "Back to servers" => "Zur&uuml;ck zur Server&uuml;bersicht",

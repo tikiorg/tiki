@@ -7475,6 +7475,7 @@ $lang=Array(
 "Subscription confirmed!" => "訂閱已確認!",
 "Subscribe to Newsletter" => "訂閱電子報",
 "Subscribe to This Newsletter" => "訂閱",
+"Subscribe to this Newsletter" => "訂閱",
 "Select news group" => "選擇 news 討論群",
 "Back to servers" => "返回伺服器列表",
 "Msgs" => "訊息",

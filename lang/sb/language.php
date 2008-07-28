@@ -7474,6 +7474,7 @@ $lang=Array(
 "Your email address was removed from the list of subscriptors." => "Email adres blong iu hemi bin tekaotem from disfala list long olketa subscriptor.",
 "Subscribe to Newsletter" => "Subscribe go long niusleta",
 "Subscribe to This Newsletter" => "Subscribe",
+"Subscribe to this Newsletter" => "Subscribe",
 "Select news group" => " nius grup",
 "Back to servers" => "Go baek long olketa server",
 "Back to groups" => "Go baek long olketa grup",

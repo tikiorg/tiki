@@ -7422,6 +7422,7 @@ $lang=Array(
 "Your email address was removed from the list of subscriptors." => "Your\nemail address was removed from the list of subscriptors.",
 "Subscribe to Newsletter" => "Subscribe to newsletter",
 "Subscribe to This Newsletter" => "Subscribe",
+"Subscribe to this Newsletter" => "Subscribe",
 "Newsgroup" => "ニュースグループ",
 "Configure news servers" => "ネットニュースの設定",
 "Select a news server to browse" => "ニュースサーバを選択する",

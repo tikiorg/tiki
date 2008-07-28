@@ -5965,6 +5965,7 @@ $lang=Array(
 "Subscription confirmed!" => "Votre inscription est confirmée!",
 "Subscribe to Newsletter" => "S'abonner à une lettre d'informations",
 "Subscribe to This Newsletter" => "S'abonner à cette lettre d'informations",
+"Subscribe to this Newsletter" => "S'abonner à cette lettre d'informations",
 "Available Newsletters" => "Lettres d'informations disponibles",
 "Select news group" => "Choisir un groupe de news",
 "Back to servers" => "Retour au serveur",

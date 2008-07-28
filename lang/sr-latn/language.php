@@ -7303,6 +7303,7 @@ $lang=Array(
 "Subscription confirmed!" => "Upis potvrđen!",
 "Subscribe to Newsletter" => "Upišite se na novine",
 "Subscribe to This Newsletter" => "Upis",
+"Subscribe to this Newsletter" => "Upis",
 "Select news group" => "Odaberite grupo novosti",
 "Back to servers" => "Nazad na servere",
 "Msgs" => "Poruka",

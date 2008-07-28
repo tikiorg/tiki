@@ -56,7 +56,7 @@
 {/if}
 <tr>
   <td class="even">&nbsp;</td>
-  <td class="even"><input type="submit" name="subscribe" value="{tr}Subscribe to This Newsletter{/tr}" /></td>
+  <td class="even"><input type="submit" name="subscribe" value="{tr}Subscribe to this Newsletter{/tr}" /></td>
 </tr>
 {/if}
 </table>

@@ -7107,6 +7107,7 @@ $lang=Array(
 "Subscription confirmed!" => "Inschrijving bevestigd!",
 "Subscribe to Newsletter" => "Zich op nieuwsbrief abonneren",
 "Subscribe to This Newsletter" => "Abonneren",
+"Subscribe to this Newsletter" => "Abonneren",
 "Available Newsletters" => "Beschikbare nieuwsbrieven",
 "Select news group" => "Selecteren nieuwsgroep",
 "Back to servers" => "Terug naar de servers",
