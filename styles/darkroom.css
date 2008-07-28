@@ -17,6 +17,8 @@ body {
 	font-family: "Trebuchet MS", "Bitstream Vera Sans", sans-serif}
 
 html>body {font-size: 74% !important}
+*:first-child+html body {font-size: 72% !important;
+}
 body.fullscreen { }
 
 a,
@@ -39,7 +41,7 @@ h1, h2, h3, h4 {
 	padding: 0}
 
 h1 {
-	font-size: 1.8em;
+	font-size: 1.7em;
 	margin:0pt 10px 3px}
 
 h2 {font-size: 1.6em}
@@ -866,9 +868,14 @@ a.flipmodtitle:hover img {border: 1px solid #818181 !important}
 .rbox-title {
 	text-align: left;
 	padding: 3px;
-	font-weight: bold}
+	font-weight: bold;
+	background: transparent;
+	border: 0}
 
-.rbox-data {padding: 3px}
+.rbox-data {
+	padding: 3px;
+	background: transparent;
+	border: 0}
 
 .rbox a {text-decoration: underline}
 
@@ -1339,11 +1346,13 @@ div.code {
 	font-weight: bold}
 
 /* Quote plugin */
-div.quoteheader {margin-left: 20px}
+div.quoteheader {
+	margin-left: 20px;
+	margin-right: 10px}
 
 div.quotebody {
 	font-style: italic;
-	margin: 0 5px 10px 5px;
+	margin: 0 10px 10px 5px;
 	padding: 5px;
 	background: #696969;
 	color: #F5F5F5}
@@ -1580,11 +1589,15 @@ table.commentinfo {background: #F0F0F0}
 	width: 100%}
 
 .post .postbody {
+	clear: both;
 	background: #343434;
-	width: 100%}
+	width: 100%;
+	min-width: 100%;
+	margin: 0;
+	border: 0}
 
 * html .post .postbody {font-size: 11px}
-*:first-child+html .postbody { width: 55em }
+*:first-child+html .post .postbody {min-width: 100% !important}
 	
 #col1 .post .postbody .content {
 	color: #D8D8D8;
@@ -1593,22 +1606,26 @@ table.commentinfo {background: #F0F0F0}
 	float: left;
 	padding: 0 3px 3px 3px !important;
 	margin: 0 !important;
-	width: 100% !important;
+	width: 100%;
+	min-width: 100% !important;
 	height: 100%;
 	text-align: left;
-	color: #D8D8D8/*#3F3F3F*/}
+	color: #D8D8D8}
 	
 .post .postbody .content p { margin: 5px 10px }
 		
 .post .postbody-title {
+	background-color: inherit;
 	background: #343434 url(darkroom/button.png) repeat-x;
+	border-bottom: 0;
+	overflow: hidden;
 	color: #D8D8D8}
 
 .post .postbody-title .checkbox { float: left}
 
 .post .postbody-title .title {
 	float: left;
-	color: #29677B;
+	color: #D8D8D8;
 	font-weight: bold;
 	font-size: 1.1em;
 	margin-left: 5px;
@@ -1631,9 +1648,14 @@ table.commentinfo {background: #F0F0F0}
 	border: none;
 	padding-left: 4px;
 	padding-bottom: 4px}
+	
+.post .author_info {
+	background-color: #575757;
+	border: 0}
 
 .post .author_info .icons { display: block}
 .post .author_info .icons .actions { margin-right: 10px}
+.post .author_post_info {background-color: #575757}
 .post .author_post_info_on { font-style: italic}
 
 .commentStyle_headers .author_info { float: left}
@@ -1641,13 +1663,16 @@ table.commentinfo {background: #F0F0F0}
 .post .postbody-title .actions {
 	float: right;
 	font-size: .9em}
+	
+.postbody-content {min-width: 100%; margin: 5px}
+*:first-child+html .postbody-content {min-width: 73%}
 
 .post .postbody .attachments {
 	clear: both;
 	border-top: 1px dotted #D9D9D9;
 	margin-top: 5px}
 
-.post .postbody .attachments img { vertical-align: text-bottom}
+.post .postbody .attachments img {vertical-align: text-bottom}
 
 .post .postfooter .actions,
 .post .postfooter .status {
@@ -1655,18 +1680,18 @@ table.commentinfo {background: #F0F0F0}
 	margin-left: 5px;
 	vertical-align: top}
 
-.post .postfooter .status { font-size: 10px}
+.post .postfooter .status {font-size: 10px}
 
 .post .postfooter {
 	float: right;
 	text-align: right}
 
-.post .inner > .postfooter { clear: both}
+.post .inner > .postfooter {clear: both}
 
 .post .contribution {
 	background-color: #F0F8FF;
 	border: 1px solid #D7E5F3;
-	padding: 0 2px 0 2px}
+	padding: 0 2px}
 
 .post .avatar {
 	float: right;
@@ -1711,7 +1736,7 @@ table.commentinfo {background: #F0F0F0}
 .nb_replies {white-space: nowrap}
 
 .post_preview,
-.top_post { margin-bottom: 15px}
+.top_post {margin-bottom: 15px}
 /*.post .postbody .signature { float: left}*/
 
 /* Comments */
@@ -1740,7 +1765,9 @@ div.commentsedithelp {
 	text-align: center;
 	font-weight: bold}
 	
-textarea#editpost2 {font-size: 1em}
+textarea#editpost2 {
+	width: 100%;
+	font-size: 1em}
 
 /***** Categories *****/
 

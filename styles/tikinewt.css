@@ -145,8 +145,8 @@ input[type=submit]:hover,
 	cursor: pointer;
 }
 
-.findtable input {
-	_font-size: 1em;
+* html .findtable input {
+	font-size: 1em;
 }
 
 fieldset {
@@ -362,8 +362,7 @@ a.flip img {
 #c1c2 #wrapper #col1 #tiki-center {
 	background: #F3F6F9;
 	margin: 0;
-	padding-left: 5px;
-	padding-bottom: 0;
+	padding: 0 5px;
 	border-left: 1px solid #8CACBB;
 /*	font-size: .9em;*/
 }
@@ -1795,6 +1794,7 @@ td.forumtoolbar {
 	color: black;
 }
 /* forums new */
+
 .post .postbody {
 	clear: both;
 	border: solid 1px #E7EAED;
@@ -1802,12 +1802,11 @@ td.forumtoolbar {
 	margin: 0;
 	margin-top: 5px;
 	padding: 0;
-	background-color: #F9FCFF;
-	/*font-size: 1.1em;*/
+	background-color: #F9FCFF
 }
 
 * html .post .postbody {font-size: 11px}
-*:first-child+html .post .postbody {width: 67em !important}
+*:first-child+html .post .postbody {min-width: 100% !important}
 
 .postbody-title {
 	display: block;
@@ -1830,10 +1829,10 @@ td.forumtoolbar {
 #col1 .post .postbody .content {
 	color: #000000;
 	background: #E7E9EA !important;
-	height: 100%;/*
-	padding: 0 3px 3px;*/
+	height: 100%;
+	padding: 0;
 	text-align: left;
-	width: 100%}
+	width: 100% !important}
 
 .post .author {	
 	float: left;
@@ -1871,7 +1870,10 @@ td.forumtoolbar {
 	float: right;
 	width: 73%;
 	min-height: 4em;
-	margin: 2px}
+	margin: 2px;
+}
+	
+*:first-child+html .postbody-content {min-width: 73%}
 
 /*.postbody .content .quoteheader {}
 .postbody .content .quotebody {display: block}*/
@@ -1972,7 +1974,7 @@ div.commentsedithelp {
 	font-weight: bold;
 }
 
-textarea#editpost2 {font-size: .97em}
+textarea#editpost2 {font-size: 1.1em}
 
 /***** Categories *****/
 
@@ -2660,7 +2662,7 @@ div#ajaxLoading {
 #shadowbox_title {
 	height: auto !important;
 	padding: 0;
-	overflow: display}
+	overflow: visible;}
 
 #shadowbox_title_inner{
 	height: auto !important;

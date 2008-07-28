@@ -5317,7 +5317,7 @@ function add_pageview() {
 		$attrib .= 'target="_blank" ';
 	if ($prefs['feature_wiki_ext_icon'] == 'y') {
 		$attrib .= 'class="wiki external" ';
-		$ext_icon = "<img border=\"0\" class=\"externallink\" src=\"img/icons/external_link.gif\" alt=\"external link\" />";
+		$ext_icon = "<img border=\"0\" class=\"externallink\" src=\"img/icons/external_link.gif\" alt=\" (external link)\" />";
 	} else {
 		$attrib .= 'class="wiki" ';
 		$ext_icon = "";
@@ -6083,8 +6083,10 @@ function add_pageview() {
 		//   then also resize the image server-side, because it will generally imply less data to download from the user
 		//   (i.e. speed up the page download) and a better image quality (browser resize algorithms are quick but bad)
 		//
-		if ( $imgdata['width'] ) $imgdata['src'] .= '&amp;x='.$imgdata['width'];
-		if ( $imgdata['height'] ) $imgdata['src'] .= '&amp;y='.$imgdata['height'];
+		//   Note: ctype_digit is used to ensure there is only digits in width and height strings (e.g. to avoid '50%', ...)
+		//
+		if ( (int)$imgdata['width'] > 0 && ctype_digit($imgdata['width']) ) $imgdata['src'] .= '&amp;x='.$imgdata['width'];
+		if ( (int)$imgdata['height'] > 0 && ctype_digit($imgdata['height']) ) $imgdata['src'] .= '&amp;y='.$imgdata['height'];
 	}
 	if ( $imgdata['width'] ) $imgdata_dim .= ' width="' . $imgdata['width'] . '"';
 	if ( $imgdata['height'] ) $imgdata_dim .= ' height="' . $imgdata['height'] . '"';
@@ -6161,7 +6163,7 @@ function add_pageview() {
 	    } else {
 			$class = 'class="wiki external"';
 	    	if ($prefs['feature_wiki_ext_icon'] == 'y') {
-		    	$ext_icon = "<img border=\"0\" class=\"externallink\" src=\"img/icons/external_link.gif\" alt=\"external link\" />";
+		    	$ext_icon = "<img border=\"0\" class=\"externallink\" src=\"img/icons/external_link.gif\" alt=\" (external link)\" />";
 	    	}
 		   	$rel='external';
 	    }

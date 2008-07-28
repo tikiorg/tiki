@@ -144,8 +144,7 @@ $errors
 		a) Run setup.sh and follow the instructions:
 			\$ bash
 			\$ cd $docroot
-			\$ chmod +x setup.sh
-			\$ ./setup.sh
+			\$ sh setup.sh
 
 		The script will offer you options depending on your server configuration.
 

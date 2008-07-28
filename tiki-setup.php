@@ -12,6 +12,12 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
+// Enable Versioning
+// Please update the specified class below at release time, as well as
+// adding new release to http://tikiwiki.org/{$branch}.version file
+include_once ('lib/setup/twversion.class.php');
+$TWV = new TWVersion();
+
 /* Automatically set params used for absolute URLs - BEGIN */
 
 $tiki_setup_dir = realpath(dirname(__FILE__));
@@ -161,13 +167,7 @@ $smarty->assign('base_url_https', $base_url_https);
 $smarty->assign('show_stay_in_ssl_mode', $show_stay_in_ssl_mode);
 $smarty->assign('stay_in_ssl_mode', $stay_in_ssl_mode);
 
-// Enable Versioning
-// Please update the specified class below at release time, as well as
-// adding new release to http://tikiwiki.org/{$branch}.version file
-include_once ('lib/setup/twversion.class.php');
-$TWV = new TWVersion();
 $smarty->assign('tiki_version', $TWV->version);
 $smarty->assign('tiki_branch', $TWV->branch);
 $smarty->assign('tiki_star', $TWV->star);
 $smarty->assign('tiki_uses_cvs', $TWV->cvs);
-

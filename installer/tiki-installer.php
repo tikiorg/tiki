@@ -366,7 +366,7 @@ or
 
 	a) To run setup.sh, follow the instructions:
 		\$ cd $docroot
-		\$ sh ./setup.sh
+		\$ sh setup.sh
 
 		The script will offer you options depending on your server configuration.
 

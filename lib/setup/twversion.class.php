@@ -40,6 +40,12 @@ class TWVersion {
 		// Check for CVS or not
 		$this->cvs	= is_dir('CVS') ? 'y' : 'n';
 	}
+
+	function getBaseVersion()
+	{
+		return preg_replace( "/^(\d+\.\d+).*$/", '$1', $this->version );
+	}
+
 	// Returns an array of all used Tiki stars.
 	function tikiStars() {
 		return array(
