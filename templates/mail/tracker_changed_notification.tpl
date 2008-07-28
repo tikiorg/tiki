@@ -1,5 +1,7 @@
 {if $mail_action eq 'deleted'}
 {tr}ItemID {$mail_itemId} was deleted in the tracker {$mail_trackerName}{/tr}
+{elseif $mail_action eq 'status'}
+{tr}New status ItemID {$mail_itemId} for the tracker {$mail_trackerName}:{/tr} {if $status eq 'o'}{tr}open{/tr}{elseif $status eq 'p'}{tr}pending{/tr}{elseif $status eq 'c'}{tr}closed{/tr}{/if}
 {else}
 {$mail_action}
 {tr}View the tracker item at:{/tr} {$mail_machine_raw}/tiki-view_tracker_item.php?trackerId={$mail_trackerId}&offset=0&sort_mode=lastModif_desc&itemId={$mail_itemId}
