@@ -485,15 +485,16 @@ class SearchLib extends TikiLib {
 			'pageName' => 'a.`title`',
 			'search' => array('a.`title`', 'a.`heading`', 'a.`body`'),
 
-			'permNameObj' => 'tiki_p_read_article',
-			'permNameGlobal' => 'tiki_p_topic_read',
+			'permNameGlobal' => 'tiki_p_read_article',
+			'permNameObj' => 'tiki_p_topic_read',
 			'objectType' => 'topic',
 			'objectKeyPerm' => 'a.`topicId`',
 			'objectKeyGroup' => 'a.`articleId`',
 			'objectKeyCat' => 'a.`articleId`',
 		);
 
-		return $this->_find($search_articles, $words, $offset, $maxRecords, $fulltext);
+		$res = $this->_find($search_articles, $words, $offset, $maxRecords, $fulltext);
+		return $res;
 	}
 
 	function find_posts($words = '', $offset = 0, $maxRecords = -1, $fulltext = false) {
