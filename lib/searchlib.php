@@ -485,8 +485,8 @@ class SearchLib extends TikiLib {
 			'pageName' => 'a.`title`',
 			'search' => array('a.`title`', 'a.`heading`', 'a.`body`'),
 
-			'permNameGlobal' => 'tiki_p_read_article',
-			'permNameObj' => 'tiki_p_topic_read',
+			'permNameObj' => 'tiki_p_read_article',
+			'permNameGlobal' => 'tiki_p_topic_read',
 			'objectType' => 'topic',
 			'objectKeyPerm' => 'a.`topicId`',
 			'objectKeyGroup' => 'a.`articleId`',
