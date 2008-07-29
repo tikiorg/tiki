@@ -590,8 +590,7 @@ a.phplmselected:hover {color: #AAAAAA}
 div.separator, div.separatorline {
 	color: #F5F5F5;
 	display: block;
-	padding: 5px 4px 4px 10px;
-	width: 140px}
+	padding: 5px 4px 4px 10px}
 
 div.separator:hover,
 div.option a.linkmenu:hover {
@@ -807,7 +806,7 @@ a.flipmodtitle:hover img {border: 1px solid #818181 !important}
 
 .box-data { 
 	background: #474747;
-	padding: 2px 4px 2px 4px;
+	padding: 2px 2px;
 	color: #DCDCDC;
 	line-height:1.4em;
 	margin: 8px;
@@ -883,7 +882,8 @@ a.flipmodtitle:hover img {border: 1px solid #818181 !important}
 .warning .rbox-data { }
 
 .tip .rbox-title,
-.tip .rbox-data {
+.tip .rbox-data,
+.note .rbox-data {
 	background: #000;
 	border: none;
 	color: #fffff0}
@@ -892,7 +892,6 @@ a.flipmodtitle:hover img {border: 1px solid #818181 !important}
 .comment .rbox-data {}
 
 .note .rbox-title {}
-.note .rbox-data {}
 
 div.simplebox {
 	background: #696969;
@@ -1460,6 +1459,10 @@ div.articlesource {
 	font-style: italic;
 	font-size: 90%}
  
+div.articletrailer .wikitopline {
+	background: #4E4E4E url(darkroom/button.png) top left repeat-x;
+	width: 100%}
+
 /***** Blogs *****/
 
 div.blogheading {
@@ -1756,6 +1759,8 @@ span.commentstitle {
 
 /* Find */
 .subcomment {margin-left: 10px}
+.findtitle {float: left;}
+.findtable {padding: 15px 0;}
 
 /* Help box*/
 div.commentsedithelp {
