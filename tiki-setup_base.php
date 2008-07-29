@@ -124,7 +124,9 @@ function make_clean(&$var,$gpc=false) {
 		}
 	} else {
 		if ($gpc) $var = stripslashes($var);
-		$var = RemoveXSS($var);
+		if ( ! isset($_SERVER['SCRIPT_FILENAME']) || basename($_SERVER['SCRIPT_FILENAME']) != 'tiki-admin.php' ) {
+			$var = RemoveXSS($var);
+		}
 	}
 }
 
