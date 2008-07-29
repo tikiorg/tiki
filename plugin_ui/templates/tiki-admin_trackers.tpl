@@ -90,7 +90,7 @@
 {* --- tab with form --- *}
 <a name="mod"></a>
 <div id="content{cycle name=content assign=focustab}{$focustab}"{if $prefs.feature_tabs eq 'y'} class="tabcontent" style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
-<h2>{tr}Create/Edit Trackers{/tr}</h2>
+<h2>{if $trackerId}{tr}Edit Tracker{/tr}{else}{tr}Create Trackers{/tr}{/if}</h2>
 {if $trackerId}
 <div class="simplebox">
 <a title="{tr}Permissions{/tr}" class="link" href="tiki-objectpermissions.php?objectName={$name|escape:"url"}&amp;objectType=tracker&amp;permType=trackers&amp;objectId={$trackerId}">

@@ -61,7 +61,7 @@ foreach ( $fgal_options as $k_gal => $v ) {
 	$k_prefs = 'fgal_'.$k_gal;
 
 	// Only check the current gallery value if the feature (in global prefs) is enabled
-	$fgal_options[$k_gal]['value'] = ( $prefs[$k_prefs] == 'y' && isset($gal_info) ) ? $gal_info[$k_gal] : $prefs[$k_prefs];
+	$fgal_options[$k_gal]['value'] = ( $prefs[$k_prefs] == 'y' && isset($gal_info) && isset($gal_info[$k_gal]) ) ? $gal_info[$k_gal] : $prefs[$k_prefs];
 }
 
 $smarty->assign_by_ref('fgal_options', $fgal_options);

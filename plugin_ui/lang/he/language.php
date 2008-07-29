@@ -7321,6 +7321,7 @@ $lang=Array(
 "Subscription confirmed!" => "ההרשמה אושרה!",
 "Subscribe to Newsletter" => "הרשמה לחדשון",
 "Subscribe to This Newsletter" => "הרשמה",
+"Subscribe to this Newsletter" => "הרשמה",
 "First" => "ראשון",
 "Assign permissions to " => "הקצאת הרשאות עבור ",
 "Back" => "אחורה",

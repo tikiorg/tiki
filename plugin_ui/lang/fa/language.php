@@ -7291,6 +7291,7 @@ $lang=Array(
 "Subscription confirmed!" => "عضصويت تاييد شد",
 "Subscribe to Newsletter" => "عضويت در خبرنامه",
 "Subscribe to This Newsletter" => "عضويت",
+"Subscribe to this Newsletter" => "عضويت",
 "Available Newsletters" => "خبرنامه‌هاي موجود",
 "Select news group" => "انتخاب گروه خبري",
 "Back to servers" => "بازگشت به سرورها",

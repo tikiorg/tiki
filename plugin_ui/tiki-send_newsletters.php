@@ -138,8 +138,6 @@ if (isset($_REQUEST["preview"])) {
  		$info["datatxt"] = $_REQUEST["datatxt"];
 		//For the hidden input
 		$smarty->assign('datatxt',$_REQUEST["datatxt"]);
-		//For the display
-		$info["datatxt"] = preg_replace ( "/\n/", "<br>", $info["datatxt"] );
 	} else {
 		$info["datatxt"] = '';
 	}
@@ -188,7 +186,7 @@ if (isset($_REQUEST["save"])) {
 		$parsed = "<html><body>$parsed</body></html>";
 	}
 	$smarty->assign('dataparsed',$parsed);
-	
+
 	$smarty->assign('subject', $_REQUEST["subject"]);
 	$cant = count($subscribers);
 	$smarty->assign('subscribers', $cant);
@@ -197,15 +195,15 @@ if (isset($_REQUEST["save"])) {
 $smarty->assign('emited', 'n');
 if (!empty($_REQUEST['datatxt']))
    $txt = $_REQUEST['datatxt'];
-if (empty($txt)&&!empty($_REQUEST["data"]))
-	{
-		//No txt message is explicitely provided -> 
-		//Create one with the html Version & remove Wiki tags
-		$txt = strip_tags(str_replace(array("\r\n","&nbsp;") , array("\n"," ") , $_REQUEST["data"]));
-		$txt=ereg_replace("[^ a-zA-Z0-9]*!",'\n',$txt);
-		$txt=ereg_replace("!!",'\n',$txt);
-		$txt=ereg_replace("!!!",'\n',$txt);
-	}
+if (empty($txt)&&!empty($_REQUEST["data"])) {
+	//No txt message is explicitely provided -> 
+	//Create one with the html Version & remove Wiki tags
+	$txt = strip_tags(str_replace(array("\r\n","&nbsp;") , array("\n"," ") , $_REQUEST["data"]));
+	$txt=preg_replace('/^!!!(.*?)$/m',"\n$1\n",$txt);
+	$txt=preg_replace('/^!!(.*?)$/m',"\n$1\n",$txt);
+	$txt=preg_replace('/^!(.*?)$/m',"\n$1\n",$txt);
+	$smarty->assign('txt', $txt);
+}
 
 
 if (isset($_REQUEST["send"])) {
@@ -227,7 +225,7 @@ if (isset($_REQUEST["send"])) {
 	} else {
 		$users = $nllib->get_all_subscribers($_REQUEST["nlId"], $nl_info["unsubMsg"]);
 	}
-	
+
 	$nllib->memo_subscribers_edition($editionId, $users);
 	$sender_email = $prefs['sender_email'];
 	foreach ($users as $us) {
@@ -240,34 +238,34 @@ if (isset($_REQUEST["send"])) {
 		if ($userEmail == "") {
 			$userEmail = $userlib->get_user_by_email($email);
 		}
-	
+
 		if ($userEmail) {
 			$mail->setUser($userEmail);
 		} else {
 			$userEmail = '';
 		}
-			$mail->setFrom($sender_email);
-			$mail->setSubject($_REQUEST["subject"]); // htmlMimeMail memorised the encoded subject 
-			$languageEmail = ! $userEmail ? $prefs['site_language'] : $tikilib->get_user_preference($userEmail, "language", $prefs['site_language']);
-			if ($nl_info["unsubMsg"] == 'y') {
-				$unsubmsg = $nllib->get_unsub_msg($_REQUEST["nlId"], $email, $languageEmail, $us["code"], $userEmail);
-				if (stristr($html, "</body>") === false) {
-					$msg = $html.nl2br($unsubmsg);
-				} else {
-					$msg = str_replace("</body>", nl2br($unsubmsg)."</body>", $html);
-				}
+		$mail->setFrom($sender_email);
+		$mail->setSubject($_REQUEST["subject"]); // htmlMimeMail memorised the encoded subject 
+		$languageEmail = ! $userEmail ? $prefs['site_language'] : $tikilib->get_user_preference($userEmail, "language", $prefs['site_language']);
+		if ($nl_info["unsubMsg"] == 'y') {
+			$unsubmsg = $nllib->get_unsub_msg($_REQUEST["nlId"], $email, $languageEmail, $us["code"], $userEmail);
+			if (stristr($html, "</body>") === false) {
+				$msg = $html.nl2br($unsubmsg);
 			} else {
-				$msg = $html;
+				$msg = str_replace("</body>", nl2br($unsubmsg)."</body>", $html);
 			}
-			$mail->setHtml($msg, $txt.strip_tags($unsubmsg));
-			$mail->buildMessage();
-			if ($mail->send(array($email))) {
-				$sent++;
-				$nllib->delete_edition_subscriber($editionId, $us);
-			} else {
-				$errors[] = array("user"=>$userEmail, "email"=>$email);
-				$nllib->mark_edition_subscriber($editionId, $us);
-			}
+		} else {
+			$msg = $html;
+		}
+		$mail->setHtml($msg, $txt.strip_tags($unsubmsg));
+		$mail->buildMessage(array('text_encoding'=>'8bit'));
+		if ($mail->send(array($email))) {
+			$sent++;
+			$nllib->delete_edition_subscriber($editionId, $us);
+		} else {
+			$errors[] = array("user"=>$userEmail, "email"=>$email);
+			$nllib->mark_edition_subscriber($editionId, $us);
+		}
 	}
 
 	$smarty->assign('sent', $sent);

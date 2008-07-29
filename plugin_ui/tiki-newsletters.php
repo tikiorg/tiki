@@ -27,6 +27,8 @@ if (isset($_REQUEST["confirm_subscription"])) {
 		$smarty->assign('confirm', 'y');
 
 		$smarty->assign('nl_info', $conf);
+	} else {
+		$smarty->assign('confirm', 'f');	// Signal failure
 	}
 }
 
@@ -38,6 +40,8 @@ if (isset($_REQUEST["unsubscribe"])) {
 		$smarty->assign('unsub', 'y');
 
 		$smarty->assign('nl_info', $conf);
+	} else {
+		$smarty->assign('unsub', 'f');	// Signal failure
 	}
 }
 
@@ -135,7 +139,12 @@ if (!isset($_REQUEST["offset"])) {
 if (isset($_REQUEST["noshowlist"])) {
 	$showlist = 'n';
 } else {
-	$showlist = 'y';
+	// No need to display an empty list to people who can't subscribe
+	if ( $tiki_p_subscribe_newsletters != 'y' ) {
+		$showlist = 'n';
+	} else {
+		$showlist = 'y';
+	}
 }
 
 $smarty->assign('showlist',$showlist);

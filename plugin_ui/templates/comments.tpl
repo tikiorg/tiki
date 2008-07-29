@@ -205,7 +205,7 @@
 	{$msgError}</div><br />{/if}
 
 	{if $comment_preview eq 'y'}
-	<div class="post_preview">
+	<div class="clearfix post_preview">
 		{if $forum_mode neq 'y'}<b>{tr}Preview{/tr}</b>{/if}
 		<div class="post"><div class="inner"><span class="corners-top"><span></span></span><div class="postbody">
 			<div class="postbody-title"><div class="title">{$comments_preview_title}</div></div>
@@ -217,6 +217,7 @@
 	  		</div>
 		</div><span class="corners-bottom"><span></span></span></div></div>
 	</div>
+{*	<br class="clear" />*}
 	{/if}
 
 	<form enctype="multipart/form-data" method="post" action="{$comments_father}" id='editpostform'>

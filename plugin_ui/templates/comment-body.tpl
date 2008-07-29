@@ -1,7 +1,7 @@
 {* $Id$ *}
 <div class="clearfix content">
 
-	<div class="author">
+	<div class="clearfix author">
 
 	{if $thread_style != 'commentStyle_headers'}
 		{if $forum_info.ui_avatar eq 'y' and $comment.userName|avatarize}

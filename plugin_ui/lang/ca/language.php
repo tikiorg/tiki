@@ -7807,6 +7807,7 @@ $lang=Array(
 "Subscription confirmed!" => "Subscripció confirmada!",
 "Subscribe to Newsletter" => "Subscriure a butlletí",
 "Subscribe to This Newsletter" => "Subscriu",
+"Subscribe to this Newsletter" => "Subscriu",
 "Available Newsletters" => "Butlletins disponibles",
 "Select news group" => "Selecciona un grup de notícies",
 "Back to servers" => "tornar a servidors",

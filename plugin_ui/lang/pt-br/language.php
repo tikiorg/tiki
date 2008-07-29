@@ -2987,6 +2987,7 @@ $lang=Array(
 // "Not sent" => "Not sent",
 // "Subscribe to Newsletter" => "Subscribe to Newsletter",
 // "Subscribe to This Newsletter" => "Subscribe to This Newsletter",
+// "Subscribe to this Newsletter" => "Subscribe to This Newsletter",
 // "Add a news server" => "Add a news server",
 // "Edit news server" => "Edit news server",
 "View Permissions" => "Ver permissões",

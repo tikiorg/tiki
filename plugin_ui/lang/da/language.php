@@ -7448,6 +7448,7 @@ $lang=Array(
 "Subscription confirmed!" => "Abonnement bekræftiget!",
 "Subscribe to Newsletter" => "Abonner på nyhedsbrev",
 "Subscribe to This Newsletter" => "Abonner",
+"Subscribe to this Newsletter" => "Abonner",
 "Select news group" => "Vælg nyhedsgruppe",
 "Back to servers" => "Tilbage til servere",
 "Msgs" => "Beskeder",

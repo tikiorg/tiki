@@ -7436,6 +7436,7 @@ $lang=Array(
 "Subscription confirmed!" => "Подписка подтверждена!",
 "Subscribe to Newsletter" => "Подписаться на рассылку",
 "Subscribe to This Newsletter" => "Подписаться",
+"Subscribe to this Newsletter" => "Подписаться",
 "Select news group" => "Выберите группу новостей",
 "Back to servers" => "Вернуться к серверам",
 "Msgs" => "Сообщ",

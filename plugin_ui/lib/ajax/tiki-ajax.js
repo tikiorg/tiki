@@ -1,6 +1,6 @@
-function loadComponent(url, template, htmlelement) {
-    xajaxRequestUri = url;
-    xajax_loadComponent(template, htmlelement);      
+function loadComponent(url, template, htmlelement, max_tikitabs) {
+	xajaxRequestUri = url;
+	xajax_loadComponent(template, htmlelement, max_tikitabs);
 }
 if (typeof xajax != "undefined") {
 	xajax.loadingFunction = function() {

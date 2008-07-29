@@ -21,7 +21,7 @@
   *                  {include file="find.tpl" find_show_languages='y' find_show_categories='y' find_show_num_rows='y'} 
   *}
 
-<div class="findtable">
+<div class="clearfix findtable">
 <form method="post" action="{$smarty.server.PHP_SELF}">
 
 {if $filegals_manager neq ''}<input type="hidden" name="filegals_manager" value="{$filegals_manager|escape}" />{/if}
@@ -29,7 +29,8 @@
 
 {query _type='form_input' maxRecords='NULL' type='NULL' find='NULL' topic='NULL' lang='NULL' exact_match='NULL' categId='NULL' filegals_manager='NULL' save='NULL'}
 
-<label class="findtitle" for="findwhat">
+<div class="findtitle">
+<label for="findwhat">
   {if empty($what)}
     {tr}Find{/tr}
   {else}
@@ -37,11 +38,14 @@
   {/if}
 </label>
 <input type="text" name="find" id="findwhat" value="{$find|escape}" />
+</div>
 {if isset($exact_match)}
-  <label class="findtitle" for="findexactmatch">
+  <div class="findtitle">
+  <label for="findexactmatch">
     {tr}Exact&nbsp;match{/tr}
   </label>
   <input type="checkbox" name="exact_match" id="findexactmatch" {if $exact_match ne 'n'}checked="checked"{/if}/>
+  </div>
 {/if}
 {if !empty($types)}
 	<div class="findtitle findtypes">
@@ -86,14 +90,16 @@
 	</div>
 {/if}
 {if $find_show_num_rows eq 'y'}
-  <label class="findtitle" for="findnumrows">
+  <div class="findtitle">
+  <label for="findnumrows">
     {tr}Number of displayed rows{/tr}
   </label>
   <input type="text" name="maxRecords" id="findnumrows" value="{$maxRecords|escape}" size="3" />
+  </div>
 {/if}
 <div class="findtitle findsubmit">
   <input type="submit" name="search" value="{tr}Find{/tr}" />
 </div>
 </form>
 </div>
- 
+<div class="clear"></div>

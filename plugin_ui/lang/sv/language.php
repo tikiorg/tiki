@@ -7455,6 +7455,7 @@ $lang=Array(
 "Subscription confirmed!" => "Prenumerationen bekräftad!",
 "Subscribe to Newsletter" => "Prenumerera på ett nyhetsbrev",
 "Subscribe to This Newsletter" => "Prenumerera",
+"Subscribe to this Newsletter" => "Prenumerera",
 "Select news group" => "Välj en nyhetsgrupp",
 "Back to servers" => "Åter till servrar",
 "Msgs" => "Medelanden",

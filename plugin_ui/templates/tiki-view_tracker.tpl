@@ -377,7 +377,7 @@ document.write('<div  class="categSelectAll"><input type="checkbox" id="clickall
 {/if}
 
 {* -------------------- text field / email -------------------- *}
-{elseif $field_value.type eq 't' || $field_value.type eq 'm'}
+{elseif $field_value.type eq 't'}
 {if $field_value.isMultilingual ne "y"}
 {if $field_value.options_array[2]}<span class="formunit">{$field_value.options_array[2]}&nbsp;</span>{/if}
 <input type="text" name="{$field_value.ins_id}" {if $field_value.options_array[1]}size="{$field_value.options_array[1]}" maxlength="{$field_value.options_array[1]}"{/if} value="{if $input_err}{$field_value.value}{else}{$defaultvalues.$fid|escape}{/if}" />
@@ -410,6 +410,10 @@ document.write('<div  class="categSelectAll"><input type="checkbox" id="clickall
       {$field_value.description|escape|nl2br}
     {/if}
 	{/if}
+
+{* -------------------- email -------------------- *}
+{elseif $field_value.type eq 'm'}
+{include file=tracker_item_field_input.tpl}
 
 {* -------------------- textarea -------------------- *}
 {elseif $field_value.type eq 'a'}

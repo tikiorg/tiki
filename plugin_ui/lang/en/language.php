@@ -5645,6 +5645,7 @@ $lang=Array(
 // "Subscription confirmed!" => "Subscription confirmed!",
 // "Subscribe to Newsletter" => "Subscribe to Newsletter",
 // "Subscribe to This Newsletter" => "Subscribe to This Newsletter",
+// "Subscribe to this Newsletter" => "Subscribe to This Newsletter",
 // "Available Newsletters" => "Available Newsletters",
 // "Select news group" => "Select news group",
 // "Back to servers" => "Back to servers",

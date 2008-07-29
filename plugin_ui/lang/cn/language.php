@@ -8061,6 +8061,7 @@ $lang=Array(
 "Subscription confirmed!" => "订阅已确认!",
 "Subscribe to Newsletter" => "订阅电子期刊",
 "Subscribe to This Newsletter" => "订阅",
+"Subscribe to this Newsletter" => "订阅",
 "Select news group" => "选择新闻讨论组",
 "Back to servers" => "返回服务器列表",
 "Msgs" => "消息",

@@ -1,5 +1,10 @@
 <?php
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  header("location: index.php");
+  exit;
+}
 include_once(GALAXIA_LIBRARY.'/src/common/Observable.php');
+
 //!! Abstract class representing the base of the API
 //! An abstract class representing the API base
 

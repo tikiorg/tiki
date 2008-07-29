@@ -110,6 +110,12 @@ function wikiplugin_trackeritemfield($data, $params) {
 			$test = false;
 
 		if (($val = $trklib->get_item_value($trackerId, $itemId, $fieldId)) !== false) {
+			if ($field['type'] == 'c' && !empty($value)) {
+				if (strtolower($value) == 'on')
+					$value = 'y';
+				if (strtolower($val) == 'on')
+					$val = 'y';
+			}
 			if ($test && empty($val)) {
 				return $dataelse;
 			} elseif ($test && !empty($value) && $value == $val) {

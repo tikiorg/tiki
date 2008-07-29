@@ -121,6 +121,5 @@
 <input type="submit" name="allper" value="{tr}Update{/tr}" />
 </form>
 </div>
-</div>
 <br />
 </form>

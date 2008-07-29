@@ -157,13 +157,26 @@ global $ajaxlib;
 $ajaxlib = new TikiAjax();
 $ajaxlib->registerFunction("loadComponent");
 
-function loadComponent($template, $htmlElementId) {
-    global $smarty, $ajaxlib;
+function loadComponent($template, $htmlElementId, $max_tikitabs = 0) {
+    global $smarty, $ajaxlib, $prefs;
     $objResponse = new xajaxResponse();
     
     if ($ajaxlib->templateIsRegistered($template)) {
+
 	$content = $smarty->fetch($template);
 	$objResponse->addAssign($htmlElementId, "innerHTML", $content);
+
+	// Handle TikiTabs in order to display only the current tab in the XAJAX response
+	// This has to be done here, since it is tikitabs() is usually called when loading the <body> tag
+	//   which is not done again when replacing content by the XAJAX response
+	//
+	$max_tikitabs = (int)$max_tikitabs;
+	if ( $max_tikitabs > 0 && $prefs['feature_tabs'] == 'y' ) {
+		global $cookietab;
+		$tab = ( $cookietab != '' ) ? (int)$cookietab : 1;
+		$objResponse->addScript("tikitabs($tab,$max_tikitabs);");
+	}
+
     } else {
 	$objResponse->addAlert(sprintf(tra("Template %s not registered"),$template));
     }

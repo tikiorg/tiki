@@ -7454,6 +7454,7 @@ $lang=Array(
 "Subscription confirmed!" => "Tilaus varmistettu!",
 "Subscribe to Newsletter" => "Tilaa uutislehti",
 "Subscribe to This Newsletter" => "Tilaa",
+"Subscribe to this Newsletter" => "Tilaa",
 "Available Newsletters" => "Saatavilla olevat Uutislehdet",
 "Select news group" => "Valitse uutisryhmä",
 "Back to servers" => "Takaisin palvelimelle",

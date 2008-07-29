@@ -7476,6 +7476,7 @@ $lang=Array(
 "Subscription confirmed!" => "Assinatura confirmada!",
 "Subscribe to Newsletter" => "Assine o comunicado",
 "Subscribe to This Newsletter" => "Inscrever-se",
+"Subscribe to this Newsletter" => "Inscrever-se",
 "Select news group" => "seleccionar grupo de news",
 "Back to servers" => "Voltar aos servidores",
 "Msgs" => "Mens",

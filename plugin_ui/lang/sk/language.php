@@ -7333,6 +7333,7 @@ $lang=Array(
 "Subscription confirmed!" => "Přihlásenie k odberu potvrdené!",
 "Subscribe to Newsletter" => "Prihlásiť sa k odberu newsletteru",
 "Subscribe to This Newsletter" => "Přihlásiť sa k odberu",
+"Subscribe to this Newsletter" => "Přihlásiť sa k odberu",
 "Select news group" => "Vybrať news group",
 "Back to servers" => "Späť na servery",
 "Msgs" => "Správ",
