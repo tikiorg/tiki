@@ -2025,7 +2025,7 @@ INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) V
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('89a8cf7a58ed8459054b06cc6c1386ef', './tiki-g-user_instances.php', '2.0RC3', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('fcb1cc7893018f1f7aadecb8b001c207', './tiki-information.php', '2.0RC3', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('82385d9bbe7157976fa9ee9a34cb1d2a', './tiki-modules.php', '2.0RC3', 0);
-INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('700d1e935b36005ac0b5fdc75a979a8d', './installer/tiki-installer.php', '2.0RC3', 0);
+INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('0701133e0177a490bc90a530164fb7d6', './installer/tiki-installer.php', '2.0RC3', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('3e0e74e9c1c280d3cc6e8ae0f14ad87a', './installer/index.php', '2.0RC3', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('7108cbf384f2677d847c1009b76ba6b5', './tiki-edit_css.php', '2.0RC3', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('e435d57692f7497ea34173e0c8e5daf7', './tiki-received_articles.php', '2.0RC3', 0);
