@@ -605,12 +605,7 @@ a.forumnameread {
 .tableheading, .gallistheading, .listgalheading, .bloglistheading,
 .llisfgalheading, .llistfileslink, .llistart, .lforumheading {
 }
-
-table.findtable {
-	margin-bottom : 1px;
-	padding-bottom : 10px;
-}
-.findtable td { }
+.findtitle {float: left;}
 
 /* Odd rows in several listings */
 tr.odd {
@@ -2192,5 +2187,18 @@ span.minichat_nick {
 
 #sitelogo {
   background-color: white;
+}
+.clearfix:after {
+    content: "."; 
+    display: block; 
+    height: 0; 
+    clear: both; 
+    visibility: hidden;
+}
+/* Hides from IE-mac \*/
+* html .clearfix {height: 1%;}
+/* End hide from IE-mac */
+.clear {
+	clear: both;
 }
 /* end of css file */
