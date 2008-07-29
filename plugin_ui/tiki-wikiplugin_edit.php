@@ -66,7 +66,7 @@ while( false !== $pos = strpos( $current, "{{$type}(", $pos + 1 ) )
 		}
 
 		// Replace the content
-		$content = $before . "\n" . $content . $after;
+		$content = $before . $content . $after;
 
 		$tikilib->update_page( $page, $content, tra('Image annotations changed.'), $user, $_SERVER['REMOTE_ADDR'] );
 	}
