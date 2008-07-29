@@ -74,7 +74,7 @@
 
 </tr>
 {sectionelse}
-<tr><td class="even" colspan="6">
+<tr><td class="even" colspan="7">
 <b>{tr}No records found{/tr}</b>
 </td></tr>
 {/section}
