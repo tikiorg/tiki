@@ -4,7 +4,8 @@
 {tr}{$mail_user} <{$mail_email}> has requested a new password on {$mail_site}, but you need to validate his account first{/tr}
 {else}
 {$mail_user} <{$mail_email}> {tr}has requested an account on{/tr} {$mail_site}
-{if isset($chosenGroup)}{tr}Group:{/tr} {$chosenGroup}{/if}
+{if isset($chosenGroup)}
+{tr}Group:{/tr} {$chosenGroup}{/if}
 {/if}
 
 {tr}To validate that account, please follow the link:{/tr}
