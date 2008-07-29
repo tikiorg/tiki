@@ -33,9 +33,9 @@ function RemoveXSS($val) {
 	}
 
 	// now the only remaining whitespace attacks are \t, \n, and \r
-	$ra_as_tag_only = array('script', 'embed', 'object', 'applet', 'meta', 'iframe', 'frame', 'frameset', 'ilayer', 'layer', 'bgsound', 'base');
+	$ra_as_tag_only = array('style', 'script', 'embed', 'object', 'applet', 'meta', 'iframe', 'frame', 'frameset', 'ilayer', 'layer', 'bgsound', 'base');
 	$ra_as_attribute = array('onabort', 'onactivate', 'onafterprint', 'onafterupdate', 'onbeforeactivate', 'onbeforecopy', 'onbeforecut', 'onbeforedeactivate', 'onbeforeeditfocus', 'onbeforepaste', 'onbeforeprint', 'onbeforeunload', 'onbeforeupdate', 'onblur', 'onbounce', 'oncellchange', 'onchange', 'onclick', 'oncontextmenu', 'oncontrolselect', 'oncopy', 'oncut', 'ondataavailable', 'ondatasetchanged', 'ondatasetcomplete', 'ondblclick', 'ondeactivate', 'ondrag', 'ondragend', 'ondragenter', 'ondragleave', 'ondragover', 'ondragstart', 'ondrop', 'onerror', 'onerrorupdate', 'onfilterchange', 'onfinish', 'onfocus', 'onfocusin', 'onfocusout', 'onhelp', 'onkeydown', 'onkeypress', 'onkeyup', 'onlayoutcomplete', 'onload', 'onlosecapture', 'onmousedown', 'onmouseenter', 'onmouseleave', 'onmousemove', 'onmouseout', 'onmouseover', 'onmouseup', 'onmousewheel', 'onmove', 'onmoveend', 'onmovestart', 'onpaste', 'onpropertychange', 'onreadystatechange', 'onreset', 'onresize', 'onresizeend', 'onresizestart', 'onrowenter', 'onrowexit', 'onrowsdelete', 'onrowsinserted', 'onscroll', 'onselect', 'onselectionchange', 'onselectstart', 'onstart', 'onstop', 'onsubmit', 'onunload','ondragdrop', 'dynsrc');
-	$ra_as_content = array('style', 'vbscript', 'expression', 'xml', 'blink', 'link', 'mocha', 'livescript');
+	$ra_as_content = array('vbscript', 'expression', 'xml', 'blink', 'link', 'mocha', 'livescript');
 	$ra_javascript = array('javascript');
 	$ra_style = array('style');
 
@@ -44,7 +44,7 @@ function RemoveXSS($val) {
 		|| RemoveXSSregexp($ra_as_attribute, $val)
 		|| RemoveXSSregexp($ra_as_content, $val, '[\.\\\+\*\?\[\^\]\$\(\)\{\}\=\!\<\|\:;\-\/`#"\']')
 		|| RemoveXSSregexp($ra_javascript, $val, '', '', true)
-		|| RemoveXSSregexp($ra_style, $val, '', '=')
+		|| RemoveXSSregexp($ra_style, $val, '[^a-z0-9]', '=')
 	);
 
 	return $val;
@@ -74,6 +74,9 @@ function RemoveXSSregexp(&$ra, &$val, $prefix = '', $suffix = '', $allow_spaces 
 	$pattern_end = '/i';
 	if ( $suffix != '' ) {
 		$pattern_end = '(' . $pattern_sep . '\s*' . $suffix . ')' . $pattern_end;
+		if ( $suffix == '=' ) $replacement_end = $suffix;
+	} else {
+		$replacement_end = '';
 	}
 
 	for ($i = 0; $i < sizeof($ra); $i++) {
@@ -84,10 +87,10 @@ function RemoveXSSregexp(&$ra, &$val, $prefix = '', $suffix = '', $allow_spaces 
 			}
 			$pattern .= $ra[$i][$j];
 		}
-		$pattern .= '/i';
+		$pattern .= $pattern_end;
 		$replacement = ( $prefix != '' ) ? '\\1' : '';
 		$replacement .= substr($ra[$i], 0, 2).'<x>'.substr($ra[$i], 2); // add in <> to nerf the tag
-		$val = preg_replace($pattern, $replacement, $val); // filter out the hex tags
+		$val = preg_replace($pattern, $replacement.$replacement_end, $val); // filter out the hex tags
 		if ($val_before == $val) {
 			// no replacements were made, so exit the loop
 			$found = false;
