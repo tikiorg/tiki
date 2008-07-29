@@ -64,6 +64,7 @@ function wikiplugin_proposal($data, $params) {
 
 	static $passes;
 	$smarty->assign( 'passes', ++$passes );
+	$smarty->assign( 'params', $params );
 	$content = $smarty->fetch( 'wiki-plugins/wikiplugin_proposal.tpl' );
 
 	return "~np~$content~/np~";
