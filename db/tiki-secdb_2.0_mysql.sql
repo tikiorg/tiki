@@ -531,7 +531,7 @@ INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) V
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('66b3e768387f67fb19d3794634a87404', './lib/score/scorelib.php', '2.0RC3', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('6560843dc38e3b3725689f83267ca163', './lib/score/index.php', '2.0RC3', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('0ce3b3d87191e92b90ceaaaff4b9d73c', './lib/score/events.php', '2.0RC3', 0);
-INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('0d8ea4092b5af5264d0a67564bd150c0', './lib/setup/twversion.class.php', '2.0RC3', 0);
+INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('6519a8f20f1f0dc40510522014274bbb', './lib/setup/twversion.class.php', '2.0RC3', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('d31f5438ad11248a7e1a9972df156708', './lib/setup/menus.php', '2.0RC3', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('f7e0507b0f451b43a1891bd468136a40', './lib/setup/site_closed.php', '2.0RC3', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('388f50e0c8004ba6192c9c3255d6552b', './lib/setup/last_update.php', '2.0RC3', 0);
