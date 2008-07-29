@@ -40,11 +40,12 @@ function RemoveXSS($val) {
 	$ra_style = array('style');
 
 	// keep replacing as long as the previous round replaced something
-	while ( RemoveXSSregexp($ra_as_tag_only, $val, '(\<|\[\\\\xC0\]\[\\\\xBC\])') );
-	while ( RemoveXSSregexp($ra_as_attribute, $val) );
-	while ( RemoveXSSregexp($ra_as_content, $val, '[\.\\\+\*\?\[\^\]\$\(\)\{\}\=\!\<\|\:;\-\/`#"\']') );
-	while ( RemoveXSSregexp($ra_javascript, $val, '', '', true) );
-	while ( RemoveXSSregexp($ra_style, $val, '', '=') );
+	while ( RemoveXSSregexp($ra_as_tag_only, $val, '(\<|\[\\\\xC0\]\[\\\\xBC\])')
+		|| RemoveXSSregexp($ra_as_attribute, $val)
+		|| RemoveXSSregexp($ra_as_content, $val, '[\.\\\+\*\?\[\^\]\$\(\)\{\}\=\!\<\|\:;\-\/`#"\']')
+		|| RemoveXSSregexp($ra_javascript, $val, '', '', true)
+		|| RemoveXSSregexp($ra_style, $val, '', '=')
+	);
 
 	return $val;
 }
