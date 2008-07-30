@@ -8,7 +8,7 @@
 function wikiplugin_articles_help() {
         $help = tra("Includes articles listing into a wiki page");
         $help .= "<br />";
-        $help .= tra("~np~{ARTICLES(max=>3, topic=>topicName, topicId=>id, type=>type, categId=>Category parent ID, lang=>en, sort=>columnName_asc|columnName_desc)}{ARTICLES}~/np~");
+        $help .= tra("~np~{ARTICLES(max=>3, topic=>topicName, topicId=>id, type=>type, categId=>Category parent ID, lang=>en, sort=>columnName_asc|columnName_desc), quiet=>y|n}{ARTICLES}~/np~");
 
         return $help;
 }
@@ -45,6 +45,10 @@ function wikiplugin_articles($data,$params) {
 
 	if (!isset($lang))
 		$lang = '';
+
+	if (!isset($quiet))
+		$quiet = 'n';
+	$smarty->assign_by_ref('quiet', $quiet);
 
 	include_once("lib/commentslib.php");
 	$commentslib = new Comments($dbTiki);
