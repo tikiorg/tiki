@@ -697,7 +697,7 @@ class SearchLib extends TikiLib {
 	  global $prefs, $user;
 	  if ($prefs['feature_articles']  == 'y'  && count($words) >0) {
 	    $query="select distinct s.`page`, s.`location`, s.`last_update`, s.`count`,
-	    	a.`heading`,a.`nbreads`,a.`publishDate`,a.`title` from
+	    	a.`heading`,a.`nbreads`,a.`publishDate`,a.`title`,a.`topicId` from
 		`tiki_searchindex` s, `tiki_articles` a where `searchword` in
 		(".implode(',',array_fill(0,count($words),'?')).") and
 		s.`location`='article' and
@@ -706,7 +706,8 @@ class SearchLib extends TikiLib {
 	    $cant=0;
 	    $ret=array();
 	    while ($res = $result->fetchRow()) {
-	     if($this->user_has_perm_on_object($user,$res['page'],'article','tiki_p_read_article', 'tiki_p_search_categorized')) {
+	     if($this->user_has_perm_on_object($user,$res['page'],'article','tiki_p_read_article', 'tiki_p_search_categorized') 
+			&& (empty($res['topicId']) || $this->user_has_perm_on_object($user, $res['topicId'], 'topic', 'tiki_p_topic_read'))) {
 		++$cant;
 	      $href = "tiki-read_article.php?articleId=".urlencode($res["page"]);
 	      $ret[] = array(
