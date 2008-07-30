@@ -309,12 +309,6 @@ function searchrep() {
 {if $translationOf}
 <input type="hidden" name="translationOf" value="{$translationOf|escape}"/>
 {/if}
-{if $diff_style}
-<input type="hidden" name="diff_style" value="{$diff_style|escape}"/>
-<input type="hidden" name="oldver" value="{$diff_oldver|escape}"/>
-<input type="hidden" name="newver" value="{$diff_newver|escape}"/>
-<input type="hidden" name="source_page" value="{$source_page|escape}"/>
-{/if}
 </td></tr>
 {else}
 	{if $trads|@count > 1}
@@ -324,6 +318,12 @@ function searchrep() {
 			<input type="hidden" name="lang" value="{$lang|escape}"/>
 			<input type="checkbox" name="translation_critical" id="translation_critical"{if $translation_critical} checked="checked"{/if}/>
 			<label for="translation_critical">{tr}Send urgent translation request.{/tr}</label>
+			{if $diff_style}
+			<input type="hidden" name="diff_style" value="{$diff_style|escape}"/>
+			<input type="hidden" name="oldver" value="{$diff_oldver|escape}"/>
+			<input type="hidden" name="newver" value="{$diff_newver|escape}"/>
+			<input type="hidden" name="source_page" value="{$source_page|escape}"/>
+			{/if}
 		</td>
 	</tr>
 	{/if}

@@ -7,7 +7,11 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 function smarty_modifier_explode($delimiter, $string, $limit = null) {
-	return explode($delimiter, $string, $limit);
+	if ( $limit == null ) {
+		return explode($delimiter, $string);
+	} else {
+		return explode($delimiter, $string, $limit);
+	}
 }
 
 ?>

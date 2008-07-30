@@ -23,19 +23,19 @@
 {if $sep eq 'line'}{assign var=sep value=''}{/if}
 {if $menu_info.type eq 'e' or $menu_info.type eq 'd'}
 	{if $prefs.feature_menusfolderstyle eq 'y'}
-	{assign var="name" value=icnmenu$cname}
+	{assign var="icon_name" value=icnmenu$cname}
 	<a class='separator' href="javascript:icntoggle('menu{$cname}');" title="{tr}Toggle options{/tr}">
 		{if $menu_info.type ne 'd'}
 			{if empty($menu_info.icon)}
-				{icon _id="ofolder" alt='Toggle' name="$name"}
+				{icon _id="ofolder" alt='Toggle' name="$icon_name"}
 			{else}
-				<img src="{$menu_info.oicon}" border="0" alt='{tr}Toggle{/tr}' name="{$name}" />
+				<img src="{$menu_info.oicon}" border="0" alt='{tr}Toggle{/tr}' name="{$icon_name}" />
 			{/if}
 		{else}
 			{if empty($menu_info.icon)}
-				{icon _id="folder" alt='Toggle' name="$name"}
+				{icon _id="folder" alt='Toggle' name="$icon_name"}
 			{else}
-				<img src="{$menu_info.icon}" border="0" alt='{tr}Toggle{/tr}' name="{$name}" />
+				<img src="{$menu_info.icon}" border="0" alt='{tr}Toggle{/tr}' name="{$icon_name}" />
 			{/if}
 		{/if}
 	</a>

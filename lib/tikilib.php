@@ -5493,7 +5493,12 @@ function add_pageview() {
 			return $data;
 		}
 	}
-    
+
+	// Converts &lt;x&gt; (<x> tag using HTML entities) into the tag <x>. This tag comes from the input sanitizer (XSS filter).
+	// This is not HTML valid and avoids using <x> in a wiki text,
+	//   but hide '<x>' text inside some words like 'style' that are considered as dangerous by the sanitizer.
+	$data = str_replace('&lt;x&gt;', '<x>', $data);
+
 	// Replace dynamic content occurrences
 	if (preg_match_all("/\{content +id=([0-9]+)\}/", $data, $dcs)) {
 	    $temp_max = count($dcs[0]);

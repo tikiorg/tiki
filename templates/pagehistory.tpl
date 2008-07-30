@@ -2,9 +2,9 @@
    {if $translation_mode ne 'y'}
      <h2>{tr}Comparing version {$old.version} with version {$new.version}{/tr}</h2>     
    {else}
-     <P/>
+     <p>
      {tr}Changes that need to be reproduced are highlighted below.{/tr}
-     <P/>
+     </p>
    {/if}
    <table class="normal diff">
    {if $translation_mode eq 'n'}
@@ -40,7 +40,6 @@
      <td colspan="2" valign="top" ><div class="wikitext">{$old.data}</div></td>
      <td colspan="2" valign="top" ><div class="wikitext">{$new.data}</div></td>
    </tr>
-   </table>
 {/if}
 
 {if $diff_style eq 'unidiff'}
@@ -78,9 +77,12 @@
  <div class="diffheader">{tr}Versions are identical{/tr}</div>
  {/if}
 </td></tr>
-</table>
 {/if}
 
 {if $diff_style && $diff_style neq 'unidiff' && $diff_style neq 'sideview'}
-  {if $diffdata}{$diffdata}{else}<tr><td colspan="3">{tr}Versions are identical{/tr}</td></tr></table>{/if}
+  {if $diffdata}{$diffdata}{else}<tr><td colspan="3">{tr}Versions are identical{/tr}</td></tr>{/if}
+{/if}
+
+{if $diff_style}
+   </table>
 {/if}
