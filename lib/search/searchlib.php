@@ -493,7 +493,7 @@ class SearchLib extends TikiLib {
             $cant1=0;
             $ret1=array();
             while ($res = $result->fetchRow()) {
-	     if($this->user_has_perm_on_object($user,$res["page"],'tracker','tiki_p_view_trackers')) {
+				if($this->user_has_perm_on_object($user,$res["page"],'tracker','tiki_p_view_trackers', 'tiki_p_search_categorized')) {
               ++$cant1;
               $href = "tiki-view_tracker.php?trackerId=".urlencode($res["page"]);
               $ret1[] = array(
@@ -529,7 +529,7 @@ class SearchLib extends TikiLib {
 	      $result=$this->query($query,$words,$maxRecords,$offset);
 	      $cant2=0;
 	      while ($res = $result->fetchRow()) {
-	       if($this->user_has_perm_on_object($user,$res['trackerId'],'tracker','tiki_p_view_trackers') &&
+	       if($this->user_has_perm_on_object($user,$res['trackerId'],'tracker','tiki_p_view_trackers', 'tiki_p_search_categorized') &&
 			($res["status"] == 'o' || ($res["status"] == 'p'  && $tiki_p_view_trackers_pending == "y") || ($res["status"] == 'c'  && $tiki_p_view_trackers_closed == "y"))) {
               ++$cant2;
 		  list($itemId, $fieldId) = split("#", $res["page"]);
@@ -571,7 +571,7 @@ class SearchLib extends TikiLib {
             $cant=0;
             $ret=array();
             while ($res = $result->fetchRow()) {
-	     if($this->user_has_perm_on_object($user,$res['page'],'image gallery','tiki_p_view_image_gallery')) {
+	     if($this->user_has_perm_on_object($user,$res['page'],'image gallery','tiki_p_view_image_gallery', 'tiki_p_search_categorized')) {
               ++$cant;
               $href = "tiki-browse_gallery.php?galleryId=".urlencode($res["page"]);
               $ret[] = array(
@@ -605,7 +605,7 @@ class SearchLib extends TikiLib {
             $ret=array();
             while ($res = $result->fetchRow()) {
 	     // gallery system are only for admin - img has the gallery perm
-	     if(($res['galleryId'] == 0 && $tiki_p_admin == 'y') || ($res['galleryId'] != 0 && $this->user_has_perm_on_object($user,$res['galleryId'],'image gallery','tiki_p_view_image_gallery'))) {
+	     if(($res['galleryId'] == 0 && $tiki_p_admin == 'y') || ($res['galleryId'] != 0 && $this->user_has_perm_on_object($user,$res['galleryId'],'image gallery','tiki_p_view_image_gallery', 'tiki_p_search_categorized'))) {
               ++$cant;
               $href = "tiki-browse_image.php?imageId=".urlencode($res["page"]);
               $ret[] = array(
@@ -638,7 +638,7 @@ class SearchLib extends TikiLib {
             $cant=0;
             $ret=array();
             while ($res = $result->fetchRow()) {
-	     if($this->user_has_perm_on_object($user,$res['page'],'blog','tiki_p_read_blog')) {
+	     if($this->user_has_perm_on_object($user,$res['page'],'blog','tiki_p_read_blog', 'tiki_p_search_categorized')) {
               ++$cant;
               $href = "tiki-view_blog.php?blogId=".urlencode($res["page"]);
               $ret[] = array(
@@ -673,7 +673,7 @@ class SearchLib extends TikiLib {
             $cant=0;
             $ret=array();
             while ($res = $result->fetchRow()) {
-	     if($this->user_has_perm_on_object($user,$res['blogId'],'blog','tiki_p_read_blog')) {
+	     if($this->user_has_perm_on_object($user,$res['blogId'],'blog','tiki_p_read_blog', 'tiki_p_search_categorized')) {
               ++$cant;
               $href = "tiki-view_blog_post.php?blogId=".urlencode($res["blogId"])."&amp;postId=".urlencode($res["page"]);
               $ret[] = array(
@@ -706,7 +706,7 @@ class SearchLib extends TikiLib {
 	    $cant=0;
 	    $ret=array();
 	    while ($res = $result->fetchRow()) {
-	     if($this->user_has_perm_on_object($user,$res['page'],'article','tiki_p_read_article')) {
+	     if($this->user_has_perm_on_object($user,$res['page'],'article','tiki_p_read_article', 'tiki_p_search_categorized')) {
 		++$cant;
 	      $href = "tiki-read_article.php?articleId=".urlencode($res["page"]);
 	      $ret[] = array(
@@ -739,7 +739,7 @@ class SearchLib extends TikiLib {
 	  $cant=0;
 	  $ret=array();
           while ($res = $result->fetchRow()) {
-	   if($this->user_has_perm_on_object($user,$res["page"],'wiki page','tiki_p_view')) {
+	   if($this->user_has_perm_on_object($user,$res["page"],'wiki page','tiki_p_view', 'tiki_p_search_categorized')) {
             $href = "tiki-index.php?page=".urlencode($res["page"]);
             ++$cant;
             $ret[] = array(
@@ -773,7 +773,7 @@ class SearchLib extends TikiLib {
             $cant=0;
             $ret=array();
             while ($res = $result->fetchRow()) {
-	     if($this->user_has_perm_on_object($user,$res["page"],'directory','tiki_p_view_directory')) {
+	     if($this->user_has_perm_on_object($user,$res["page"],'directory','tiki_p_view_directory', 'tiki_p_search_categorized')) {
               ++$cant;
               $href = "tiki-directory_browse.php?parent=".urlencode($res["page"]);
               $ret[] = array(
@@ -810,7 +810,7 @@ class SearchLib extends TikiLib {
             $ret=array();
             while ($res = $result->fetchRow()) {
 	     // only permissions on directory - have to find out first?
-	     if($this->user_has_perm_on_object($user,$res["page"],'directory','tiki_p_view_directory')) {
+	     if($this->user_has_perm_on_object($user,$res["page"],'directory','tiki_p_view_directory', 'tiki_p_search_categorized')) {
               ++$cant;
               $href = "tiki-directory_browse.php?parent=".urlencode($res["categId"]);
               $ret[] = array(
@@ -845,7 +845,7 @@ class SearchLib extends TikiLib {
             $cant=0;
             $ret=array();
             while ($res = $result->fetchRow()) {
-	     if($this->user_has_perm_on_object($user,$res["page"],'faq','tiki_p_view_faqs')) {
+	     if($this->user_has_perm_on_object($user,$res["page"],'faq','tiki_p_view_faqs', 'tiki_p_search_categorized')) {
               ++$cant;
               $href = "tiki-view_faq.php?faqId=".urlencode($res["page"]);
               $ret[] = array(
@@ -880,7 +880,7 @@ class SearchLib extends TikiLib {
             $cant=0;
             $ret=array();
             while ($res = $result->fetchRow()) {
-	     if($this->user_has_perm_on_object($user,$res["faqId"],'faq','tiki_p_view_faqs')) {
+	     if($this->user_has_perm_on_object($user,$res["faqId"],'faq','tiki_p_view_faqs', 'tiki_p_search_categorized')) {
               ++$cant;
               $href = "tiki-view_faq.php?faqId=".urlencode($res["faqId"]);
               $ret[] = array(
@@ -922,7 +922,7 @@ class SearchLib extends TikiLib {
             $cant=0;
             $ret=array();
             while ($res = $result->fetchRow()) {
-	     if($this->user_has_perm_on_object($user,$res["page"],'forum','tiki_p_forum_read')) {
+	     if($this->user_has_perm_on_object($user,$res["page"],'forum','tiki_p_forum_read', 'tiki_p_search_categorized')) {
               ++$cant;
               $href = "tiki-view_forum.php?forumId=".urlencode($res["page"]);
               $ret[] = array(
@@ -964,7 +964,7 @@ class SearchLib extends TikiLib {
 	  $cant=0;
 	  $ret=array();
 	  while ($res = $result->fetchRow()) {
-	   if($this->user_has_perm_on_object($user,$res["object"],'forum','tiki_p_forum_read')) {
+	   if($this->user_has_perm_on_object($user,$res["object"],'forum','tiki_p_forum_read', 'tiki_p_search_categorized')) {
           ++$cant;
 	    $href = "tiki-view_forum_thread.php?comments_parentId=".urlencode($res["page"])."&amp;forumId=".urlencode($res["object"]);
 	    $ret[] = array(
@@ -997,7 +997,7 @@ class SearchLib extends TikiLib {
 	  $cant = 0;
 	  $ret = array();
 	  while ($res = $result->fetchRow()) {
-	   if($this->user_has_perm_on_object($user,$res["page"],'file gallery','tiki_p_download_files') && $this->user_has_perm_on_object($user,$res["page"],'file gallery','tiki_p_view_file_gallery')) {
+	   if($this->user_has_perm_on_object($user,$res["page"],'file gallery','tiki_p_download_files', 'tiki_p_search_categorized') && $this->user_has_perm_on_object($user,$res["page"],'file gallery','tiki_p_view_file_gallery', 'tiki_p_search_categorized')) {
 	    ++$cant;
 	    $href = "tiki-download_file.php?fileId=".urlencode($res["page"]);
 	    $ret[] = array(
