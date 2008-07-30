@@ -28,14 +28,16 @@ function smarty_modifier_escape($string, $esc_type = 'html', $char_set = 'ISO-88
 {
     switch ($esc_type) {
         case 'html':
-	    // Remove sanitization tags since the dangerous content will be converted into HTML entities
-            $string = str_replace('<x>', '', $string);
-            return htmlspecialchars($string, ENT_QUOTES, $char_set);
+            $return = htmlspecialchars($string, ENT_QUOTES, $char_set);
+	    // Convert back sanitization tags into real tags to avoid them to be displayed
+            $return = str_replace('&lt;x&gt;', '<x>', $return);
+	    return $return;
 
         case 'htmlall':
-	    // Remove sanitization tags since the dangerous content will be converted into HTML entities
-            $string = str_replace('<x>', '', $string);
-            return htmlentities($string, ENT_QUOTES, $char_set);
+            $return = htmlentities($string, ENT_QUOTES, $char_set);
+	    // Convert back sanitization tags into real tags to avoid them to be displayed
+            $return = str_replace('&lt;x&gt;', '<x>', $return);
+	    return $return;
 
         case 'url':
             return rawurlencode($string);
