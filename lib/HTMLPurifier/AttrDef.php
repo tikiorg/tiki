@@ -54,18 +54,15 @@ class HTMLPurifier_AttrDef
      * 
      * @warning This processing is inconsistent with XML's whitespace handling
      *          as specified by section 3.3.3 and referenced XHTML 1.0 section
-     *          4.7.  Compliant processing requires all line breaks normalized
-     *          to "\n", so the fix is not as simple as fixing it in this
-     *          function.  Trim and whitespace collapsing are supposed to only
-     *          occur in NMTOKENs.  However, note that we are NOT necessarily
-     *          parsing XML, thus, this behavior may still be correct.
+     *          4.7.  However, note that we are NOT necessarily
+     *          parsing XML, thus, this behavior may still be correct. We
+     *          assume that newlines have been normalized.
      * 
      * @public
      */
     function parseCDATA($string) {
         $string = trim($string);
-        $string = str_replace("\n", '', $string);
-        $string = str_replace(array("\r", "\t"), ' ', $string);
+        $string = str_replace(array("\n", "\t", "\r"), ' ', $string);
         return $string;
     }
     
@@ -80,6 +77,14 @@ class HTMLPurifier_AttrDef
         // if overloaded, it is *necessary* for you to clone the
         // object (usually by instantiating a new copy) and return that
         return $this;
+    }
+    
+    /**
+     * Removes spaces from rgb(0, 0, 0) so that shorthand CSS properties work
+     * properly. THIS IS A HACK!
+     */
+    function mungeRgb($string) {
+        return preg_replace('/rgb\((\d+)\s*,\s*(\d+)\s*,\s*(\d+)\)/', 'rgb(\1,\2,\3)', $string);
     }
     
 }
