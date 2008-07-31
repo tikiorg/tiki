@@ -5,7 +5,8 @@
 {if $edit_page eq 'y'}
   {if $wysiwyg eq 'n' or $prefs.wysiwyg_wiki_parsed eq 'y' or $prefs.wysiwyg_wiki_semi_parsed eq 'y'} {* Show this button only in normal editing mode *}
     <span class="button2">
-      <a href="#edithelp" onclick="javascript:flip('edithelpzone'); return true;" name="edithelp" class="linkbut">{tr}Wiki Help{/tr}</a>
+      <a href="#edithelp" onclick="javascript:show('edithelpzone');hide('wikiplhelp-tab');show('wikihelp-tab'); return true;" name="edithelp" class="linkbut">{tr}Wiki Help{/tr}</a>
+      <a href="#edithelp" onclick="javascript:show('edithelpzone');hide('wikihelp-tab');show('wikiplhelp-tab'); return true;" name="edithelp" class="linkbut">{tr}Plugin Help{/tr}</a>
     </span>
   {/if}
 {else}
