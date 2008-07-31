@@ -586,7 +586,7 @@ class CalendarLib extends TikiLib {
 		return true;
 	}
 
-	function upcoming_events($maxrows = -1, $calendarId = 0, $maxDays = -1, $order = 'start_asc', $priorDays = 0) {
+	function upcoming_events($maxrows = -1, $calendarId = 0, $maxDays = -1, $order = 'start_asc') {
 		$cond = '';
 		$bindvars = array();
 		if(is_array($calendarId) && count($calendarId) > 0) {
@@ -595,14 +595,12 @@ class CalendarLib extends TikiLib {
 				$cond = $cond." or i.`calendarId` = ? ";
 			}
 			$cond = $cond.")";
-			$bindvars = array_merge( $bindvars, $calendarId );
+			$bindvars += $calendarId;
 		} elseif (!is_array($calendarId) and $calendarId > 0) {
 			$cond = $cond." and i.`calendarId` = ? ";
-			$bindvars[] = $calendarId;
+			$bindvars += array($calendarId);
 		}
-		$cond .= " and `end` >= (unix_timestamp(now()) - ?*3600*34)";
-		$bindvars[] = $priorDays;
-
+		$cond .= " and `end` >= (unix_timestamp(now()))";
 		if($maxDays > 0)
 		{
 			$maxSeconds = ($maxDays * 24 * 60 * 60);
