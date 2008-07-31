@@ -392,7 +392,7 @@ div.cbox-data {
 .rbox-data {
   padding: 2px;
 }
-.rbox-title, .warning .rbox-title { 
+.rbox-title, .rbox-title[name="warning"] { 
   border: 0;
   border-radius-topright : 1ex;
   -moz-border-radius-topright : 1ex;
@@ -405,21 +405,21 @@ div.cbox-data {
   font-weight : bold;
   background-color: #eeee99;
 }
-.rbox-data, .warning .rbox-data {
+.rbox-data, .rbox-data[name="warning"] {
   background-color: #eeee99;
   border: 1px solid #DDDDCC;
 }
-.note .rbox-title {
+.rbox-title[name="note"] {
   background-color: #CCCCDD;
 }
-.note .rbox-data {
+.rbox-data[name="note"] {
   background-color: #ECECEF;
   border: 1px solid #CCCCDD;
 }
-.comment, .tip .rbox-title, .rbox-title.tip {
+.rbox-title[name="comment"], .rbox-title[name="tip"], .rbox-title.tip {
   background-color: #CCCCDD;
 }
-.rbox-data[name="comment"], .tip .rbox-data, .rbox-data.tip {            
+.rbox-data[name="comment"], .rbox-data[name="tip"], .rbox-data.tip {            
   background-color: #ECEFEC;
   border: 1px solid #CCDDCC;
 }
@@ -605,7 +605,12 @@ a.forumnameread {
 .tableheading, .gallistheading, .listgalheading, .bloglistheading,
 .llisfgalheading, .llistfileslink, .llistart, .lforumheading {
 }
-.findtitle {float: left;}
+
+table.findtable {
+	margin-bottom : 1px;
+	padding-bottom : 10px;
+}
+.findtable td { }
 
 /* Odd rows in several listings */
 tr.odd {
@@ -2188,17 +2193,9 @@ span.minichat_nick {
 #sitelogo {
   background-color: white;
 }
-.clearfix:after {
-    content: "."; 
-    display: block; 
-    height: 0; 
-    clear: both; 
-    visibility: hidden;
+
+.sub {
+	padding-left: 5em !important;
 }
-/* Hides from IE-mac \*/
-* html .clearfix {height: 1%;}
-/* End hide from IE-mac */
-.clear {
-	clear: both;
-}
+
 /* end of css file */

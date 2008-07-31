@@ -2799,4 +2799,8 @@ padding-left: 18px;
   width: auto;
 }
 
+.sub {
+	padding-left: 5em !important;
+}
+
 /***** End of file ******/
