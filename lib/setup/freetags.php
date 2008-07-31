@@ -21,11 +21,7 @@ if ( isset($section) and isset($sections[$section])) {
 			$smarty->assign('freetag_error', tra('You have mistyped the anti-bot verification code; please try again.'));
 			$smarty->assign_by_ref('freetag_msg', $_POST['addtags']);
 		} elseif (isset($here['itemkey']) and isset($_REQUEST[$here['itemkey']])) {
-			if(isset($here['objectType']) and $here['objectType']=="blog post") {
-				$freetaglib->tag_object($userid, $_REQUEST[$here['itemkey']], "blog post", $_REQUEST[$here['key']]), $_POST['addtags']);
-			} else {
-				$freetaglib->tag_object($userid, $_REQUEST[$here['itemkey']], sprintf($here['itemObjectType'], $_REQUEST[$here['key']]), $_POST['addtags']);
-			}
+			$freetaglib->tag_object($userid, $_REQUEST[$here['itemkey']], sprintf($here['itemObjectType'], $_REQUEST[$here['key']]), $_POST['addtags']);
 		} elseif (isset($here['key']) and isset($_REQUEST[$here['key']])) {
 			$freetaglib->tag_object($userid, $_REQUEST[$here['key']], $here['objectType'], $_POST['addtags']);
 		}
