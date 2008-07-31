@@ -118,18 +118,18 @@
 {* -------------------- Multimedia -------------------- *}
 {elseif $field_value.type eq 'M'}
 	{if $field_value.value ne ''}	
-	{if  $field_value.options_array[1] ne '' }
+	{if isset($cur_field.options_array[1]) and $field_value.options_array[1] ne '' }
 		{assign var='Height' value=$prefs.MultimediaDefaultHeight}
 	{else}
 		{assign var='Height' value=$field_value.options_array[1]}
 	{/if}
-	{if  $field_value.options_array[2] ne '' }
-		{assign var='Lenght' value=$field_value.options_array[2]}
+	{if isset($cur_field.options_array[2]) and $field_value.options_array[2] ne '' }
+		{assign var='Length' value=$field_value.options_array[2]}
 	{else}
-		{assign var='Lenght' value=$prefs.MultimediaDefaultLength}
+		{assign var='Length' value=$prefs.MultimediaDefaultLength}
 	{/if}
 	{if $ModeVideo eq 'y' } { assign var="Height" value=$Height+$prefs.VideoHeight}{/if}
-	{include file=multiplayer.tpl url=$field_value.value w=$Lenght h=$Height video=$ModeVideo}
+	{include file=multiplayer.tpl url=$field_value.value w=$Length h=$Height video=$ModeVideo}
 	{/if}
 
 {* -------------------- file -------------------- *}

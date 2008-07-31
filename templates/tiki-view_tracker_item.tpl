@@ -445,14 +445,14 @@ document.write('<div class="categSelectAll"><input type="checkbox" id="clickall"
 
 
 	{assign var='Height' value=$prefs.MultimediaDefaultHeight}
-	{assign var='Lenght' value=$prefs.MultimediaDefaultLength}
+	{assign var='Length' value=$prefs.MultimediaDefaultLength}
 
 	{if $cur_field.value ne ''}
-	{if  $cur_field.options_array[1] ne '' } { $Lenght=$cur_field.options_array[1] }{/if}
-	{if  $cur_field.options_array[2] ne '' } { $Height=$cur_field.options_array[2] }{/if}
-	{if $ModeVideo eq 'y' } { assign var="Height" value=$Height+$prefs.VideoHeight}{/if}
-	{include file=multiplayer.tpl url=$cur_field.value w=$Lenght h=$Height video=$ModeVideo}
-{/if}
+		{if isset($cur_field.options_array[1]) and $cur_field.options_array[1] ne '' } { assign var=Length value=$cur_field.options_array[1] }{/if}
+		{if isset($cur_field.options_array[2]) and $cur_field.options_array[2] ne '' } { assign var=Height value=$cur_field.options_array[2] }{/if}
+		{if $ModeVideo eq 'y' } { assign var="Height" value=$Height+$prefs.VideoHeight}{/if}
+		{include file=multiplayer.tpl url=$cur_field.value w=$Length h=$Height video=$ModeVideo}
+	{/if}
 {/if}
 {elseif $cur_field.type eq 'U'}
 <input type="text" name="ins_{$cur_field.id}" value="{$cur_field.value}" />
