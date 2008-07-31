@@ -2000,7 +2000,7 @@ function add_pageview() {
     // FILE GALLERIES ////
     /*shared*/
     function list_files($offset, $maxRecords, $sort_mode, $find) {
-		return $this->get_files($offset, $maxRecords, $sort_mode, $find,$recursive=true);
+		return $this->get_files($offset, $maxRecords, $sort_mode, $find, -1, false, false, true, true, false, false, true, true);
     }
 
     /*shared*/
