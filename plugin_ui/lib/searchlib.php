@@ -493,7 +493,8 @@ class SearchLib extends TikiLib {
 			'objectKeyCat' => 'a.`articleId`',
 		);
 
-		return $this->_find($search_articles, $words, $offset, $maxRecords, $fulltext);
+		$res = $this->_find($search_articles, $words, $offset, $maxRecords, $fulltext);
+		return $res;
 	}
 
 	function find_posts($words = '', $offset = 0, $maxRecords = -1, $fulltext = false) {

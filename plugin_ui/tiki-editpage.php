@@ -49,7 +49,6 @@ if (isset($_REQUEST['save']) && (!$user || $user == 'anonymous') && $prefs['feat
 
 $smarty->assign( 'translation_mode', (isNewTranslationMode() || isUpdateTranslationMode()) ?'y':'n' );
 
-
 // If from quickedit module and page is blank, tell user -- instead of editing the default page
 if ((isset($_REQUEST["quickedit"])) && ($_REQUEST["page"] == ''))  {
 		$smarty->assign('msg', tra("You must specify a page name, it will be created if it doesn't exist."));

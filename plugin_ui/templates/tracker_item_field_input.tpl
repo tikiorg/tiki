@@ -128,13 +128,13 @@
 		<input type="text" name="{$field_value.ins_id}" value="{$field_value.value}" />
 	{/if}
 	{assign var='Height' value=$prefs.MultimediaDefaultHeight}
-	{assign var='Lenght' value=$prefs.MultimediaDefaultLength}
+	{assign var='Length' value=$prefs.MultimediaDefaultLength}
 
 	{if $field_value.value ne ''}	
-		{if  $field_value.options_array[1] ne '' } {assign var=$Lenght value=$field_value.options_array[1] }{/if}
-		{if  $field_value.options_array[2] ne '' } {assign var=$Height value=$field_value.options_array[2] }{/if}
+		{if isset($cur_field.options_array[1]) and $field_value.options_array[1] ne '' } {assign var=$Length value=$field_value.options_array[1] }{/if}
+		{if isset($cur_field.options_array[2]) and $field_value.options_array[2] ne '' } {assign var=$Height value=$field_value.options_array[2] }{/if}
 		{if $ModeVideo eq 'y' } { assign var="Height" value=$Height+$prefs.VideoHeight}{/if}
-		{include file=multiplayer.tpl url=$field_value.value w=$Lenght h=$Height video=$ModeVideo}
+		{include file=multiplayer.tpl url=$field_value.value w=$Length h=$Height video=$ModeVideo}
 	{/if}
 
 {* -------------------- file -------------------- *}
@@ -271,7 +271,7 @@
 {elseif $field_value.type eq 'R'}
 	{section name=jx loop=$field_value.options_array}
 		<input type="radio" name="{$field_value.ins_id}" value="{$field_value.options_array[jx]|escape}" {if $field_value.value eq $field_value.options_array[jx] or $field_value.defaultvalue eq $field_value.options_array[jx]}checked="checked"{/if} id="{$field_value.ins_id}" />
-		<label for="{$field_value.ins_id}">{tr}{$field_value.options_array[jx]}{/tr}</label>
+		<label for="{$field_value.ins_id}">{$field_value.options_array[jx]|escape}</label>
 {/section}
 
 {* -------------------- checkbox -------------------- *}

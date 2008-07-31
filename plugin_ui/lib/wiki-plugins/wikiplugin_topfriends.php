@@ -10,7 +10,7 @@ function wikiplugin_topfriends($data, $params) {
 	if($prefs['feature_friends'] != 'y') {
 		return ' ';  
 	}
-	extract ($params);
+	extract ($params, EXTR_SKIP);
 
 	if(!(isset($limit) && $limit <> '')) {
 		$limit = 5;

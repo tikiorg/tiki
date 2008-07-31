@@ -110,8 +110,7 @@ questions. If you don't know what to answer, just press enter to each question (
 #	find . -type d -exec chmod 755 {} \;
 #	echo " dirs perms fixed ... done"
 
-	chmod -R u=rwX .
-	chmod -R go=rX .
+	chmod -R u=rwX,go=rX .
 
 	echo " done."
 

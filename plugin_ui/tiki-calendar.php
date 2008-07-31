@@ -205,6 +205,7 @@ if ( $display_tz == '' ) $display_tz = 'UTC';
 $curtikidate->setTZbyID($display_tz);
 $curtikidate->setLocalTime($dloop,$mloop,$yloop,0,0,0,0);
 
+$smarty->assign('display_tz', $display_tz);
 
 for ($i = 0; $i <= $numberofweeks; $i++) {
   $weeks[] = $curtikidate->getWeekOfYear();

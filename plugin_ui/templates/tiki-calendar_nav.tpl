@@ -37,27 +37,27 @@
 {if $viewmode eq "day"}
 <a href="{$myurl}?todate={$daybefore}" title="&laquo; {tr}Day{/tr}" class="prev">&laquo;</a>
 <a href="{$myurl}?todate={$dayafter}" title="{tr}Day{/tr} &raquo;" class="next">&raquo;</a>
-{$viewstart|tiki_date_format:"%B %e"}
+{$viewstart|tiki_date_format:"%B %e"} {$display_tz}
 {elseif $viewmode eq "week"}
 <a href="{$myurl}?todate={$weekbefore}" title="&laquo; {tr}Week{/tr}" class="prev">&laquo;</a>
 <a href="{$myurl}?todate={$weekafter}" title="{tr}Week{/tr} &raquo;" class="next">&raquo;</a>
-{$viewstart|tiki_date_format:"%B %e"} - {$viewend|tiki_date_format:"%B %e"}
+{$viewstart|tiki_date_format:"%B %e"} - {$viewend|tiki_date_format:"%B %e"} {$display_tz}
 {elseif $viewmode eq "month"}
 <a href="{$myurl}?todate={$monthbefore}" title="&laquo; {tr}Month{/tr}" class="prev">&laquo;</a>
 <a href="{$myurl}?todate={$monthafter}" title="{tr}Month{/tr}&raquo;" class="next">&raquo;</a>
-{$daystart|tiki_date_format:"%B %Y"}
+{$daystart|tiki_date_format:"%B %Y"} {$display_tz}
 {elseif $viewmode eq "quarter"}
 <a href="{$myurl}?todate={$quarterbefore}" title="&laquo; {tr}Quarter{/tr}" class="prev">&laquo;</a>
 <a href="{$myurl}?todate={$quarterafter}" title="{tr}Quarter{/tr} &raquo;" class="next">&raquo;</a>
-{$daystart|tiki_date_format:"%B %e"} - {$dayend|tiki_date_format:"%B %e"}
+{$daystart|tiki_date_format:"%B %e"} - {$dayend|tiki_date_format:"%B %e"} {$display_tz}
 {elseif $viewmode eq "semester"}
 <a href="{$myurl}?todate={$semesterbefore}" title="&laquo; {tr}Semester{/tr}" class="prev">&laquo;</a>
 <a href="{$myurl}?todate={$semesterafter}" title="{tr}Semester{/tr} &raquo;" class="next">&raquo;</a>
-{$daystart|tiki_date_format:"%B %e"} - {$dayend|tiki_date_format:"%B %e"}
+{$daystart|tiki_date_format:"%B %e"} - {$dayend|tiki_date_format:"%B %e"} {$display_tz}
 {elseif $viewmode eq "year"}
 <a href="{$myurl}?todate={$yearbefore}" title="&laquo; {tr}Year{/tr}" class="prev">&laquo;</a>
 <a href="{$myurl}?todate={$yearafter}" title="{tr}Year{/tr} &raquo;" class="next">&raquo;</a>
-{$daystart|tiki_date_format:"%Y"}
+{$daystart|tiki_date_format:"%Y"} {$display_tz}
 {/if}
 </div>
 

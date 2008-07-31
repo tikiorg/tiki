@@ -109,7 +109,7 @@ if ( $cookie_name != '' || installer_is_accessible() ) {
 	require_once('lib/setup/language.php');
 
 	echo tra("<html><body>\n<h1>Security Alert!</h1>\n");
-	echo tra('<p>The Tiki installer can be used only by a site adminstrator. Please login as an administrator first.</p>');
+	echo tra('<p>The Tiki installer can be used only by the site administrator. Please login as the administrator first.</p>');
 	$smarty->display('tiki-login.tpl');
 	echo '</body></html>';
 }

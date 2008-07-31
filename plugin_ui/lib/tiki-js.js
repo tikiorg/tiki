@@ -131,10 +131,18 @@ function toggleSpan(id) {
 }
 
 function toggleBlock(id) {
-	if (document.getElementById(id).style.display == "block") {
-		document.getElementById(id).style.display = "none";
-	} else {
+	if (document.getElementById(id).style.display == "none") {
 		document.getElementById(id).style.display = "block";
+	} else {
+		document.getElementById(id).style.display = "none";
+	}
+}
+
+function toggleTrTd(id) {
+	if (document.getElementById(id).style.display == "none") {
+		document.getElementById(id).style.display = "";
+	} else {
+		document.getElementById(id).style.display = "none";
 	}
 }
 
@@ -1224,7 +1232,7 @@ window.name = 'tiki';
 
 /* Function to add image from filegals in non wysiwyg editor */
 /* must be here when ajax is activated                       */
-function SetMyUrl(area, url) {
+function SetMyUrl(area,url) {
   str = "{img src=" + url + " }\n";
   insertAt(area, str);
 }

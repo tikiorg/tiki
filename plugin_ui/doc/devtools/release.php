@@ -32,13 +32,18 @@ if( ! preg_match( "/^\d+\.\d+$/", $version ) )
 $isPre = strpos( $subrelease, 'pre' ) === 0;
 
 if( $isPre )
+{
 	$subrelease = substr( $subrelease, 3 );
+	$pre = 'pre';
+}
+else
+	$pre = '';
 
 if( empty( $subrelease ) )
 {
 	$branch = "branches/$version";
 	$tag = "tags/$version";
-	$packageVersion = $version;
+	$packageVersion = $version . ".$pre";
 	$secdbVersion = $version;
 
 }
@@ -46,7 +51,7 @@ else
 {
 	$branch = "branches/$version";
 	$tag = "tags/$version$subrelease";
-	$packageVersion = "$version.$subrelease";
+	$packageVersion = "$version.$pre$subrelease";
 	$secdbVersion = "$version$subrelease";
 }
 
@@ -69,7 +74,7 @@ else
 
 	$revision = (int) get_info( ROOT )->entry->commit['revision'];
 
-	`svn copy $fb -r$revision $ft`;
+	`svn copy $fb -r$revision $ft -m "[REL] Tagging release"`;
 
 	`bash $script $packageVersion $tag`;
 

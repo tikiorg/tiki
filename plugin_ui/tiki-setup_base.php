@@ -116,6 +116,7 @@ require_once("lib/breadcrumblib.php");
 // ------------------------------------------------------
 // DEAL WITH XSS-TYPE ATTACKS AND OTHER REQUEST ISSUES
 
+require_once('lib/setup/sanitization.php');
 function make_clean(&$var,$gpc=false) {
 	if ( is_array($var) ) {
 		foreach ( $var as $key=>$val ) {
@@ -123,13 +124,9 @@ function make_clean(&$var,$gpc=false) {
 		}
 	} else {
 		if ($gpc) $var = stripslashes($var);
-		$var = preg_replace("~</?\s*(embed|object|applet)[^>]*>~si","",$var);
-		if (preg_match("~</?\s*script[^>]*>?~si",$var)) {
-			$var = preg_replace("~</?\s*script[^>]*>?~si","",$var);
-			make_clean($var);
+		if ( ! isset($_SERVER['SCRIPT_FILENAME']) || basename($_SERVER['SCRIPT_FILENAME']) != 'tiki-admin.php' ) {
+			$var = RemoveXSS($var);
 		}
-		$var = preg_replace('~(inhibited_|on)(mouseover|mouseout|load|click|dblclick|focus|mousedown|mouseup|mousemove|mouseenter|mouseleave|blur|change|keydown|keypress|keyup|abort|dragdrop|error|load|move|reset|resize|select|submit|unload)(\s*)?=~si','inhibited_$2$3=',$var);
-		$var = preg_replace('~(=\s*["\']?\s*)javascript\s*:~si','$1inhibited_js:',$var);
 	}
 }
 
@@ -295,6 +292,8 @@ $_REQUEST = array_merge($_COOKIE, $_GET, $_POST, $_ENV, $_SERVER);
 if (!empty($_REQUEST['highlight'])) {
 	if (is_array($_REQUEST['highlight'])) $_REQUEST['highlight'] = '';
 	$_REQUEST['highlight'] = htmlspecialchars($_REQUEST['highlight']);
+	// Convert back sanitization tags into real tags to avoid them to be displayed
+	$_REQUEST['highlight'] = str_replace('&lt;x&gt;', '<x>', $_REQUEST['highlight']);
 }
 // ---------------------------------------------------------------------
 if (isset($_SERVER["REQUEST_URI"])) {

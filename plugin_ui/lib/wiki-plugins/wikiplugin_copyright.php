@@ -25,7 +25,6 @@ function wikiplugin_copyright($data, $params) {
 		return '';
 	}
 
-	//extract($params);
 	$result = '';
 
 	$copyrights = $copyrightslib->list_copyrights($_REQUEST['page']);

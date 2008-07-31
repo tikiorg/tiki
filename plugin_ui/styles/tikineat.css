@@ -2201,4 +2201,8 @@ span.minichat_nick {
 .clear {
 	clear: both;
 }
+
+.sub {
+	padding-left: 5em !important;
+}
 /* end of css file */
