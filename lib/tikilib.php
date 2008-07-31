@@ -5033,7 +5033,7 @@ function add_pageview() {
 
     // This recursive function handles pre- and no-parse sections and plugins
     function parse_first(&$data, &$preparsed, &$noparsed, $real_start_diff='0') {
-	global $dbTiki;
+	global $dbTiki, $smarty, $tiki_p_edit;
 
 	if( strlen( $data ) <= 1 )
 	{
@@ -5158,11 +5158,13 @@ function add_pageview() {
 		// Normal plugins
 
 		// Construct plugin file pathname
+		$plugin_name = strtolower($plugins[1]);
 		$php_name = 'lib/wiki-plugins/wikiplugin_';
-		$php_name .= strtolower($plugins[1]). '.php';
+		$php_name .= $plugin_name . '.php';
 
 		// Construct plugin function name
-		$func_name = 'wikiplugin_' . strtolower($plugins[1]);
+		$func_name = 'wikiplugin_' . $plugin_name;
+		$func_name_info = $func_name . '_info';
 
 		$params_string = $plugins[2];
 
@@ -5200,6 +5202,13 @@ function add_pageview() {
 		if (file_exists($php_name)) {
 		    include_once ($php_name);
 
+			static $plugin_indexes = array();
+
+			if( ! array_key_exists( $plugin_name, $plugin_indexes ) )
+				$plugin_indexes[$plugin_name] = 0;
+
+			$current_index = ++$plugin_indexes[$plugin_name];
+
 		    // We store CODE stuff out of the way too, but then process it as a plugin as well.
 		    if( preg_match( '/^ *\{CODE\(/', $plugin_start ) )
 		    {
@@ -5223,6 +5232,13 @@ function add_pageview() {
 
 			$ret = $func_name($plugin_data, $arguments, $real_start_diff + $pos+strlen($plugin_start));
 		    }
+
+			if( function_exists( $func_name_info ) && $tiki_p_edit == 'y' ) {
+				include_once('lib/smarty_tiki/function.icon.php');
+				global $headerlib, $page;
+				$headerlib->add_jsfile( 'tiki-jsplugin.php?plugin=' . urlencode( $plugin_name ) );
+				$ret = '<div><div style="float:right;"><a href="javascript:void(0)" onclick="show_plugin_form(\'' . addslashes($plugin_name) . '\', ' . addslashes($current_index) . ', \'' . addslashes($page) . '\', ' . htmlentities(json_encode($arguments)) . ', ' . htmlentities(json_encode(trim($plugin_data))) . ');this.style.display=\'none\'">'.smarty_function_icon(array('_id'=>'page_edit', 'alt'=>tra('Edit Plugin')), $smarty).'</a></div><div id="' . $plugin_name . $current_index . '">' . $ret . '</div></div>';
+			}
 		} else {
 		    // Handle nested plugins.
 		    $this->parse_first($plugin_data, $preparsed, $noparsed);

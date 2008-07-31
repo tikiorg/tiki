@@ -6,7 +6,6 @@
 <div id="wikihelp-tab">
 {if count($plugins) ne 0 and !($wysiwyg ne 'y' and $prefs.wysiwyg_wiki_parsed ne 'y' and $prefs.wysiwyg_wiki_semi_parsed ne 'y')}
   <div style="text-align: right;">
-    <a href="javascript:hide('wikihelp-tab');show('wikiplhelp-tab');" onclick="needToConfirm = false;">{tr}Show Plugins Help{/tr}</a>
     <a title="{tr}Close{/tr}" href="javascript:flip('edithelpzone');">{icon _id=minus_small alt="{tr}Close{/tr}" width="11" height="8"}</a>
   </div>
 {/if}
@@ -96,7 +95,6 @@
 {if count($plugins) ne 0}
 <div id="wikiplhelp-tab" style="display:none;">
   <div style="text-align: right;">
-    <a href="javascript:hide('wikiplhelp-tab');show('wikihelp-tab');">{tr}Show Text Formatting Rules{/tr}</a>
     <a title="{tr}Close{/tr}" href="javascript:flip('edithelpzone');">{icon _id=minus_small alt="{tr}Close{/tr}" width="11" height="8"}</a>
   </div>
 <br />

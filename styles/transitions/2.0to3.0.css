@@ -3,3 +3,30 @@ The following CSS classes were added to Tiki between v2.0 and v3.0
 They should be added to themes (possibly with tweaks) to make the theme v3.0 ready
 */
 
+.plugin-desc {
+	padding: 5px;
+}
+
+.plugin-sample {
+	padding: 5px;
+	font-family: monospace;
+}
+
+.plugin-sample .plugin-param {
+	padding-left: 15px;
+}
+
+.plugin-form-float {
+	position: fixed;
+	left: 15%;
+	right: 15%;
+	top: 10%;
+	max-height: 80%;
+	overflow: auto;
+
+	background: white;
+
+	padding: 10px;
+
+	border: solid 2px black;
+}
