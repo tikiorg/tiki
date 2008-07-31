@@ -42,11 +42,6 @@ function wikiplugin_annotation_info() {
 				'name' => tra('Height'),
 				'description' => tra('Image height.'),
 			),
-			'height' => array(
-				'required' => true,
-				'name' => tra('Height'),
-				'description' => tra('Image height.'),
-			),
 			'align' => array(
 				'required' => false,
 				'name' => tra('Alignment'),
