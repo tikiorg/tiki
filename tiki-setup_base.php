@@ -292,6 +292,8 @@ $_REQUEST = array_merge($_COOKIE, $_GET, $_POST, $_ENV, $_SERVER);
 if (!empty($_REQUEST['highlight'])) {
 	if (is_array($_REQUEST['highlight'])) $_REQUEST['highlight'] = '';
 	$_REQUEST['highlight'] = htmlspecialchars($_REQUEST['highlight']);
+	// Convert back sanitization tags into real tags to avoid them to be displayed
+	$_REQUEST['highlight'] = str_replace('&lt;x&gt;', '<x>', $_REQUEST['highlight']);
 }
 // ---------------------------------------------------------------------
 if (isset($_SERVER["REQUEST_URI"])) {
