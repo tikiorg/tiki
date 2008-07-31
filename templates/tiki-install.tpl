@@ -287,7 +287,7 @@ hosting provider.  Normally Tiki tables won't conflict with other product names{
 {tr}Please read the following notes before entering Tikiwiki.{/tr}
 <p>&nbsp;</p>
 <h3><img src="pics/icons/information.png" alt="{tr}Note{/tr}" style="vertical-align:middle"/> {tr}Memory{/tr}</h3>
-{tr}TikiWiki requires <strong>at least</strong> 16MB of PHP memory for script execution. Use the <strong>memory_limit</strong> key in your <strong>php.ini </strong> file (for example: memory_limit = 16M) and restart your webserver{/tr}.
+{tr}TikiWiki requires <strong>at least</strong> 32MB of PHP memory for script execution. Use the <strong>memory_limit</strong> key in your <strong>php.ini </strong> file (for example: memory_limit = 32M) and restart your webserver{/tr}.
 <p>{tr}Allocating too little memory will cause TikiWiki to display blank pages{/tr}.</p>
 {if $php_memory_limit <= 0}
 	<div style="border-style: solid; border-width: 1; padding: 5px; background-color: #a9ff9b;">
