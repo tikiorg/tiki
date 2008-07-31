@@ -541,15 +541,4 @@ div #page-bar
 	font-size:1.6em;
 }
 
-.plugin-desc {
-	padding: 5px;
-}
 
-.plugin-sample {
-	padding: 5px;
-	font-family: monospace;
-}
-
-.plugin-sample .plugin-param {
-	padding-left: 15px;
-}

@@ -1250,6 +1250,59 @@ function show_plugin_form( type, index, pageName, args, bodyContent )
 	target.appendChild( form );
 }
 
+function popup_plugin_form( type )
+{
+	var container = document.createElement( 'div' );
+	container.className = 'plugin-form-float';
+	
+	var minimize = document.createElement( 'a' );
+	var icon = document.createElement( 'img' );
+	minimize.appendChild( icon );
+	minimize.href = 'javascript:void(0)';
+	container.appendChild( minimize );
+	icon.src = 'images/fullscreen_minimize.gif';
+	icon.style.position = 'absolute';
+	icon.style.top = '0px';
+	icon.style.right = '0px';
+	icon.style.border = 'none';
+
+	var form = build_plugin_form(
+		type,
+		0,
+		'',
+		{},
+		''
+	);
+
+	form.onsubmit = function()
+	{
+		var meta = tiki_plugins[type];
+		var params = [];
+
+		for( var k in meta.params )
+		{
+			var val = form['params[' + k + ']'].value;
+
+			if( val != '' )
+				params.push( k + '=>"' + val + '"' );
+		}
+
+		var blob = '{' + type.toUpperCase() + '(' + params.join(',') + ')}' + form.content.value + '{' + type.toUpperCase() + '}';
+
+		insertAt( 'editwiki', blob );
+
+		document.body.removeChild( container );
+		return false;
+	}
+
+	minimize.onclick = function() {
+		document.body.removeChild( container );
+	};
+
+	document.body.appendChild( container );
+	container.appendChild( form );
+}
+
 function build_plugin_form( type, index, pageName, args, bodyContent )
 {
 	var form = document.createElement( 'form' );

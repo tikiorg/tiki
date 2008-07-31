@@ -731,7 +731,7 @@ class WikiLib extends TikiLib {
 
 			if( isset( $ret['prefs'] ) )
 			{
-				global $prefs;
+				global $prefs, $headerlib;
 
 				// If the plugin defines required preferences, they should all be to 'y'
 				foreach( $ret['prefs'] as $pref )
