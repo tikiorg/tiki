@@ -39,9 +39,13 @@ foreach ($rawcals["data"] as $cal_id=>$cal_data) {
 }
 
 $events = array();
-if (!empty($viewable))  $events = $calendarlib->upcoming_events($module_rows,
-    array_intersect(isset($module_params["calendarId"]) ? array($module_params["calendarId"]) : $calIds, $viewable),
-    isset($module_params["maxDays"]) ? $module_params["maxDays"] : 365);
+if (!empty($viewable))
+	$events = $calendarlib->upcoming_events($module_rows,
+		array_intersect(isset($module_params["calendarId"]) ? array($module_params["calendarId"]) : $calIds, $viewable),
+		isset($module_params["maxDays"]) ? $module_params["maxDays"] : 365,
+		'start_asc', 
+		isset($module_params["priorDays"]) ? (int) $modile_params["priorDays"] : 0
+	);
 $smarty->assign('modUpcomingEvents', $events);
 $smarty->assign('maxlen', isset($module_params["maxlen"]) ? $module_params["maxlen"] : 0);
 $smarty->assign('nonums', isset($module_params["nonums"]) ? $module_params["nonums"] : 'n');
