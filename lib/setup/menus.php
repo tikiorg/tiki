@@ -31,7 +31,6 @@ setDisplayMenu('wikimenu');
 setDisplayMenu('homeworkmenu');
 setDisplayMenu('srvmenu');
 setDisplayMenu('trkmenu');
-setDisplayMenu('jukeboxmenu');
 setDisplayMenu('quizmenu');
 setDisplayMenu('formenu');
 setDisplayMenu('dirmenu');
