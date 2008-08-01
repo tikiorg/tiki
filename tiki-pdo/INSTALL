@@ -1,0 +1,132 @@
+This directory contains source code to TikiWiki CMS/Groupware
+
+
+TikiWiki CMS/Groupware is Free and Open Source Software (FOSS). It is a community-driven project. 
+It exists and improves by the participation of people just like YOU.
+
+
+
+IMPORTANT LINKS
+---------------
+* General information & overview
+  http://info.tikiwiki.org
+  
+* Official TikiWiki documentation website
+  http://doc.tikiwiki.org
+  
+* Forums & community
+  http://tikiwiki.org/tiki-forums.php
+
+* Developers
+  http://dev.tikiwiki.org
+    
+* Themes & styling
+  http://themes.tikiwiki.org
+  
+* Security
+  http://security.tikiwiki.org
+  
+* IRC chat channel: #tikiwiki on irc.freenode.net
+  http://irc.tikiwiki.org/
+
+
+
+INSTALLATION
+------------
+The rest of this document includes parts of the online documentation that
+might be enough to get you running TikiWiki. For more details, please see:
+ http://doc.tikiwiki.org/Installation
+
+
+Before you get started it is a good idea to know:
+
+    * Your database name, database user name and password
+    * Your Apache user and group ID (e.g. www-user and www-data)
+
+
+If you are using the RPM that is available you can skip down to browser-based
+installation.
+
+These are notes on how to setup and configure TikiWiki.
+
+
+----------------------------
+Step one: unpack the archive
+----------------------------
+Unpack the TikiWiki files to the document root of where you want it installed,
+e.g. /var/www/tiki/ 
+
+To unpack the bz2 file, use:
+tar xjf tikiwiki-[version].tar.bz2
+
+
+
+-----------------------------------------
+Step two: run setup.sh to set permissions
+-----------------------------------------
+CHMOD the file setup.sh to 755.
+
+# chmod 755 setup.sh
+
+
+Run .setup and follow the instructions
+
+# ./setup.sh
+
+
+
+--------------------------------------------------------------------
+Step three: run htaccess.sh to make tiki more secure (OPTIONAL STEP)
+--------------------------------------------------------------------
+NOTE: you only should do this if the settings of your servers allow the usage
+of .htaccess files. But you can try it out, if it doesn't work for you, you
+can revert the changes with one step.
+
+CHMOD the file htaccess.sh to 755. "chmod 755 htaccess.sh"
+
+Usage ./htaccess.sh [off]
+
+If you call the script without parameters, it renames all the files named
+_htaccess to .htaccess, making them functional. If you get problems with
+active .htaccess files, just call the script with the parameter off to rename
+the .htaccess files back to _htaccess. That's it!
+
+
+
+------------------------------
+Step four: browser-based setup
+------------------------------
+* create a database for TikiWiki
+  - often using PhpMyAdmin and MySQL
+  - or on the command line "mysqladmin create dbname"
+    the database name is usually called "tikiwiki" 
+* Point your browser to the web address that corresponds to the file
+  tiki-install.php (e.g. http://localhost/tiki/tiki-install.php)
+* Follow the instructions there
+  you'll need the password and user name for your database 
+* use a profile to populate your database.
+  default values are very minimal, and basicEnabled maybe suits more
+  immediate use
+* To log into TikiWiki for the first time:
+  - user: admin
+  - password: admin
+
+
+------------------------------
+Step five: configure your site
+------------------------------
+Next you can configure TikiWiki to your suit needs:
+
+* Choose which features you want enabled
+  - go to tiki-admin.php by clicking on the "Admin" or "Admin Home" link
+  on the left side of your screen 
+* (Optionally) create groups of users that share permissions
+* Assign appropriate permissions 
+
+
+Good luck and have fun with TikiWiki CMS/Groupware!
+
+
+ps:
+Now you may want to come to http://tikiwiki.org and join the community!
+
