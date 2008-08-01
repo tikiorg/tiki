@@ -8,7 +8,7 @@
 {/if}
 {if $http or $curl}
 {remarksbox type="notice" title="{tr}Notice{/tr}"}
-{if $http}{tr}PECL HTPP extension present{/tr}{/if}
+{if $http}{tr}PECL HTPP extension present{/tr}<br/>{/if}
 {if $curl}{tr}cURL extension present{/tr}{/if}
 {/remarksbox}
 {/if}
