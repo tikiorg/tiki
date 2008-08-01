@@ -186,13 +186,14 @@ if ($calendarViewMode == 'month' || $calendarViewMode == 'quarter' || $calendarV
 	$daystart = TikiLib::make_time(0,0,0, $focus_month, $focus_day, $focus_year);
 }
 $viewstart = $daystart; // viewstart is the beginning of the display, daystart is the beginning of the selected period
+//echo "VIEWSTART=$viewstart<br/>";
 
 if ( $calendarViewMode == 'month' ||
 	 $calendarViewMode == 'quarter' ||
 	 $calendarViewMode == 'semester' ||
 	 $calendarViewMode == 'year' ) {
 
-   $TmpWeekday = TikiLib::date_format("%w", $viewstart);
+  $TmpWeekday = TikiLib::date_format("%w", $viewstart);
 
    // prepare for select first day of week (Hausi)
    if ( $firstDayofWeek == 1 ) {
@@ -221,7 +222,7 @@ if ( $calendarViewMode == 'month' ||
 
 		// TikiLib::make_time() used with timezones doesn't support day = 0
 		// This supposes that $viewstart's day == 1, as defined above
-		$viewstart_d = Date_Calc::daysInMonth($viewstart_m, $viewstart_y) - ( $TmpWeekday - 1 );
+		$viewstart_d = cal_days_in_month(CAL_GREGORIAN ,$viewstart_m, $viewstart_y) - ( $TmpWeekday - 1 );
 
 		$viewstart = TikiLib::make_time(0, 0, 0, $viewstart_m, $viewstart_d, $viewstart_y);
 	}

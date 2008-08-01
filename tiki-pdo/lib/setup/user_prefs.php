@@ -74,7 +74,8 @@ if ($prefs['users_prefs_display_timezone'] == 'Site' || (isset($user_preferences
 		} else {
 			$prefs['display_timezone'] = $_COOKIE['local_tz'];
 		}
-		if ( ! Date_TimeZone::isValidID($prefs['display_timezone']) ) {
+		//FIXME verify (Sept)
+		if (!in_array($prefs['display_timezone'],timezone_abbreviations_list())) {
 			$prefs['display_timezone'] = $prefs['server_timezone'];
 		}
 	} else {

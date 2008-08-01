@@ -553,7 +553,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['calendar_end_year'] = '+3';
 
 	# dates
-	$prefs['server_timezone'] = $tikidate->tz->getID();
+	$prefs['server_timezone'] = $tikidate->format("T");
 	$prefs['long_date_format'] = '%A %d of %B, %Y';
 	$prefs['long_time_format'] = '%H:%M:%S %Z';
 	$prefs['short_date_format'] = '%a %d of %b, %Y';
