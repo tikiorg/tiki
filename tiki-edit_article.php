@@ -46,7 +46,7 @@ if (isset($_REQUEST["templateId"]) && $_REQUEST["templateId"] > 0) {
 	$_REQUEST["body"] = $template_data["content"];
 }
 
-$smarty->assign('allowhtml', 'on');
+$smarty->assign('allowhtml', 'y');
 $publishDate = $tikilib->now;
 $cur_time = explode(',', $tikilib->date_format('%Y,%m,%d,%H,%M,%S', $publishDate));
 $expireDate = $tikilib->make_time($cur_time[3], $cur_time[4], $cur_time[5], $cur_time[1], $cur_time[2], $cur_time[0]+1);
@@ -66,6 +66,7 @@ $smarty->assign('hasImage', 'n');
 $smarty->assign('image_name', '');
 $smarty->assign('image_type', '');
 $smarty->assign('image_size', '');
+$smarty->assign('image_data', '');
 $smarty->assign('image_x', 0);
 $smarty->assign('image_y', 0);
 $smarty->assign('heading', '');
@@ -362,10 +363,7 @@ if (isset($_REQUEST['save']) && empty($errors)) {
 		$imgtype = $_FILES['userfile1']['type'];
 		$imgsize = $_FILES['userfile1']['size'];
 		$imgname = $_FILES['userfile1']['name'];
-		$topiccachefile = $prefs['tmpDir'];
-		if ($tikidomain) { $topiccachefile.= "/$tikidomain"; }
-		$topiccachefile.= "/article.".$_REQUEST["id"];
-		@unlink($topiccachefile);
+		@$artlib->delete_image_cache($_REQUEST["id"]);
 	}
 
 	// Parse $edit and eliminate image references to external URIs (make them internal)
@@ -423,6 +421,7 @@ $smarty->assign_by_ref('types', $types);
 if ($prefs['feature_cms_templates'] == 'y' && $tiki_p_use_content_templates == 'y') {
 	$templates = $tikilib->list_templates('cms', 0, -1, 'name_asc', '');
 }
+
 $smarty->assign_by_ref('templates', $templates["data"]);
 
 if ($prefs['feature_multilingual'] == 'y') {
