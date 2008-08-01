@@ -111,7 +111,7 @@
 					</div>
 					<div class="float_l" style="width: 49%; text-align: left; float: left">
 						<span class="checkbox"><input type="checkbox" name="feature_actionlog" {if $prefs.feature_actionlog eq 'y'}checked="checked"{/if}/></span>
-						<span class="label">{if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Action Log" target="tikihelp" class="tikihelp" title="{tr}Action Log{/tr}: {tr}Action Log{/tr}">{/if}{tr}Action log setting{/tr}{if $prefs.feature_help eq 'y'}</a>{/if}</span>
+						<span class="label">{if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Action+Log" target="tikihelp" class="tikihelp" title="{tr}Action Log{/tr}: {tr}Action Log{/tr}">{/if}{tr}Action log setting{/tr}{if $prefs.feature_help eq 'y'}</a>{/if}</span>
 					</div>
 					<div class="float_r" style="width: 49%; text-align: left; float: right">
 						<span class="checkbox"><input type="checkbox" name="feature_contribution"{if $prefs.feature_contribution eq 'y'} checked="checked"{/if}/></span>
@@ -193,7 +193,7 @@
 				<div class="admin">
 					<div class="float_l" style="width: 49%; text-align: left; float: left">
 						<span class="checkbox"><input type="checkbox" name="feature_jscalendar" {if $prefs.feature_jscalendar eq 'y'}checked="checked"{/if}/></span>
-						<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}JsCalendar" target="tikihelp" class="tikihelp" title="{tr}JsCalendar{/tr}">{/if} {tr}JavaScript popup date selector{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
+						<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Js+Calendar" target="tikihelp" class="tikihelp" title="{tr}JsCalendar{/tr}">{/if} {tr}JavaScript popup date selector{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
 					</div>
 					<div class="float_r" style="width: 49%; text-align: left; float: right">
 						<span class="checkbox"><input type="checkbox" name="feature_phplayers" {if $prefs.feature_phplayers eq 'y'}checked="checked"{/if}/></span>
@@ -246,7 +246,7 @@
 					</div>
 					<div class="float_r" style="width: 49%; text-align: left; float: right">
 						<span class="checkbox"><input type="checkbox" name="feature_morcego" {if $prefs.feature_morcego eq 'y'}checked="checked"{/if}/></span>
-						<span class="label">{if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Wiki3D" target="tikihelp" class="tikihelp" title="{tr}Morcego 3D browser{/tr}: {tr}Morcego 3D browser{/tr}">{/if}{tr}Morcego 3D browser{/tr}{if $prefs.feature_help eq 'y'}</a>{/if}</span>
+						<span class="label">{if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Wiki+3D" target="tikihelp" class="tikihelp" title="{tr}Morcego 3D browser{/tr}: {tr}Morcego 3D browser{/tr}">{/if}{tr}Morcego 3D browser{/tr}{if $prefs.feature_help eq 'y'}</a>{/if}</span>
 					 </div>
 					<div class="float_l" style="width: 49%; text-align: left; float: left">
 						<span class="checkbox"><input type="checkbox" name="feature_wysiwyg" {if $prefs.feature_wysiwyg eq 'y'}checked="checked"{/if}/></span>
