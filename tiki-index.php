@@ -166,7 +166,7 @@ $smarty->assign('page_ref_id', $page_ref_id);
 
 
 
-if (!$tikilib->page_exists($page) && function_exists('utf8_encore') && $tikilib->page_exists(utf8_encode($page))) {
+if (!$tikilib->page_exists($page) && function_exists('utf8_encode') && $tikilib->page_exists(utf8_encode($page))) {
     $page = $_REQUEST["page"] = utf8_encode($page);
 }
 
