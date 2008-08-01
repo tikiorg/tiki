@@ -614,6 +614,7 @@ name="w_displayed_default"{if $prefs.w_displayed_default eq 'y'} checked="checke
 
     {include file='wiki_authors_style.tpl' wiki_authors_style=$prefs.wiki_authors_style}
 
+    <tr><td class="form">{tr}Wiki authors style by page settings:{/tr}</td><td><input type="checkbox" name="wiki_authors_style_by_page" {if $prefs.wiki_authors_style_by_page eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Protect email against spam:{/tr}</td><td><input type="checkbox" name="feature_wiki_protect_email" {if $prefs.feature_wiki_protect_email eq 'y'}checked="checked"{/if}/></td></tr> 
     <tr><td class="form">{tr}When viewing a page, if it doesn't exist and has one like page, automatic redirection to this like page:{/tr}</td><td><input type="checkbox" name="feature_wiki_1like_redirection" {if $prefs.feature_wiki_1like_redirection eq 'y'}checked="checked"{/if}/></td></tr>
      <tr><td class="form">{tr}Show/hide heading icon displayed before the heading:{/tr}</td><td><input type="checkbox" name="feature_wiki_show_hide_before" {if $prefs.feature_wiki_show_hide_before eq 'y'}checked="checked"{/if}/></td></tr>

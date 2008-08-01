@@ -106,6 +106,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['wikiLicensePage'] = '';
 	$prefs['wikiSubmitNotice'] = '';
 	$prefs['wiki_authors_style'] = 'classic';
+	$prefs['wiki_authors_style_by_page'] = 'n';
 	$prefs['wiki_show_version'] = 'n';
 	$prefs['wiki_bot_bar'] = 'n';
 	$prefs['wiki_cache'] = 0;
