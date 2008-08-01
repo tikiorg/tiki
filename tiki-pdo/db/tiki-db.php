@@ -110,22 +110,9 @@ href="http://doc.tikiwiki.org/">the documentation</a> for more information.</p>
 
 if ( $dbversion_tiki == '1.10' ) $dbversion_tiki = '2.0';
 
-if (preg_match('/^adodb$/i', $api_tiki)) {
-	TikiInit::prependIncludePath('lib/adodb');
-	if (strpos(ini_get('include_path'),'lib/pear') !== 0) 
-		TikiInit::prependIncludePath('lib/pear');
-
 	#error_reporting (E_ALL);       # show any error messages triggered
-	define('ADODB_FORCE_NULLS', 1);
-	define('ADODB_ASSOC_CASE', 2);
-	define('ADODB_CASE_ASSOC', 2); // typo in adodb's driver for sybase?
-	require_once ('lib/adodb/adodb.inc.php');
-	include_once ('lib/adodb/adodb-pear.inc.php');
-	//include_once('adodb-error.inc.php');
-	//include_once('adodb-errorhandler.inc.php');
-	//include_once('adodb-errorpear.inc.php');
-
 	if ($db_tiki == 'pgsql') {
+		//FIXME
 		$db_tiki = 'postgres7';
 	}
 
@@ -134,26 +121,17 @@ if (preg_match('/^adodb$/i', $api_tiki)) {
 		ini_set('sybct.min_server_severity', '11');
 	}
 
-	$ADODB_FETCH_MODE = ADODB_FETCH_ASSOC;
+$dbTiki = new PDO("$db_tiki:host=$host_tiki;dbname=$dbs_tiki", $user_tiki, $pass_tiki);
+$dbTiki->setAttribute(PDO::ATTR_CASE,PDO::CASE_NATURAL);
+$dbTiki->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_WARNING);
+$dbTiki->setAttribute(PDO::ATTR_ORACLE_NULLS,PDO::NULL_EMPTY_STRING);
+$dbTiki->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY,false);
 
-// ADODB_FETCH_BOTH appears to be buggy for null values
-} else {
-	// Database connection for the tiki system
-	include_once ('lib/pear/DB.php');
-}
+$pq = $dbTiki->prepare('select `login` from `users_users` limit 1');
+$result = $pq->execute();
+$pq->closeCursor();
 
-//doesn't work with adodb. adodb doesn't let you inherit
-/*
-class tikiDB extends ADOConnection {
-  var $dbversion;
-}
-*/
-$dsn = "$db_tiki://$user_tiki:$pass_tiki@$host_tiki/$dbs_tiki";
-//$dsn = "mysql://$user_tiki@$pass_tiki(localhost)/$dbs_tiki";
-$dbTiki = &ADONewConnection($db_tiki);
-
-if (!@$dbTiki->Connect($host_tiki, $user_tiki, $pass_tiki, $dbs_tiki) 
-		or (!@$dbTiki->Execute('select `login` from `users_users` limit 1'))) {
+if ( $result === FALSE ) {
 	print '<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -170,7 +148,8 @@ if (!@$dbTiki->Connect($host_tiki, $user_tiki, $pass_tiki, $dbs_tiki)
 				<h1><font color="red">Tikiwiki is unable to connect to the database.</font> <a title="help" href="http://doc.tikiwiki.org/Installation" target="help"><img border="0" src="img/icons/help.gif" alt="Help" /></a></h1>
 ';
 	print '<p>The following error message was returned:<div class="simplebox">';
-	print $dbTiki->ErrorMsg();
+	$errors = $dbTiki->errorInfo();
+	print $errors[2];
 	print '</div></p><p>Things to check:<ul><li>Is your database up and running?</li><li>Are your database login credentials correct?</li><li>Did you complete the Tiki Installer?</li></ul>
 <p>Please see <a href="http://doc.tikiwiki.org/">the documentation</a> for more information.</p>
 </div>
@@ -189,7 +168,7 @@ if (!@$dbTiki->Connect($host_tiki, $user_tiki, $pass_tiki, $dbs_tiki)
 }
 
 if ($db_tiki == 'sybase') {
-	$dbTiki->Execute('set quoted_identifier on');
+	$dbTiki->exec('set quoted_identifier on');
 }
 
 // set db version
@@ -211,6 +190,6 @@ unset ($dbs_tiki);
 
 function close_connection() {
 	global $dbTiki;
-	$dbTiki->Close();
+	$dbTiki= NULL;
 }
 ?>
