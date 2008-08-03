@@ -10,6 +10,9 @@
 #    - update changelog.txt (from SVN commit logs)
 #    - update copyright.txt (we _need_ a way to automate this - it was omitted for 1.9.2 release)
 #    - update README
+#    - update all links in the application to the online documentation
+#    - before first Release Candidate, proceed to the cleanup of admin panels (ex.: making sure all 
+#      settings are in the appropriate tab, etc.) 
 #    - run doc/devtools/securitycheck.php and check each "potentially unsafe" file.
 #    - run doc/devtools/diffsql.sh to make sure tiki.sql and upgrade script from 
 #        previous version give the same db structure (but not necessarily the same data).
