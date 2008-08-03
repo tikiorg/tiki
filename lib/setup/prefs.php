@@ -106,6 +106,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['wikiLicensePage'] = '';
 	$prefs['wikiSubmitNotice'] = '';
 	$prefs['wiki_authors_style'] = 'classic';
+	$prefs['wiki_authors_style_by_page'] = 'n';
 	$prefs['wiki_show_version'] = 'n';
 	$prefs['wiki_bot_bar'] = 'n';
 	$prefs['wiki_cache'] = 0;
@@ -631,7 +632,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['rememberme'] = 'disabled';
 	$prefs['remembertime'] = 7200;
 	$prefs['feature_clear_passwords'] = 'n';
-	$prefs['feature_crypt_passwords'] = 'crypt-md5';
+	$prefs['feature_crypt_passwords'] = (CRYPT_MD5 == 1)? 'crypt-md5': 'tikihash';
 	$prefs['feature_challenge'] = 'n';
 	$prefs['min_user_length'] = 1;
 	$prefs['min_pass_length'] = 1;
@@ -1007,19 +1008,8 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['blogues_feature_copyrights'] = '';
 	$prefs['faqs_feature_copyrights'] = '';
 	$prefs['feature_contributor_wiki'] = '';
-	$prefs['feature_jukebox_files'] = '';
 	$prefs['freetags_3d_adjust_camera'] = '';
 	$prefs['https_login_required'] = '';
-	$prefs['jukebox_album_list_created'] = '';
-	$prefs['jukebox_album_list_description'] = '';
-	$prefs['jukebox_album_list_genre'] = '';
-	$prefs['jukebox_album_list_lastmodif'] = '';
-	$prefs['jukebox_album_list_title'] = '';
-	$prefs['jukebox_album_list_tracks'] = '';
-	$prefs['jukebox_album_list_user'] = '';
-	$prefs['jukebox_album_list_visits'] = '';
-	$prefs['jukebox_list_order'] = '';
-	$prefs['jukebox_list_user'] = '';
 	$prefs['maxRowsGalleries'] = '';
 	$prefs['replimaster'] = '';
 	$prefs['rowImagesGalleries'] = '';

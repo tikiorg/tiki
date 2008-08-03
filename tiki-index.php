@@ -250,11 +250,11 @@ details */
 $page = $info['pageName'];
 
 // Get the authors style for this page
-$wiki_authors_style = ( $info['wiki_authors_style'] != '' ) ? $info['wiki_authors_style'] : $prefs['wiki_authors_style'];
+$wiki_authors_style = ( $prefs['wiki_authors_style_by_page'] == 'y' && $info['wiki_authors_style'] != '' ) ? $info['wiki_authors_style'] : $prefs['wiki_authors_style'];
 $smarty->assign('wiki_authors_style', $wiki_authors_style);
 
 // Get the contributors for this page
-if (isset($prefs['wiki_authors_style']) && $prefs['wiki_authors_style'] != 'classic') {
+if ( $prefs['wiki_authors_style'] != 'classic' ) {
 	$contributors = $wikilib->get_contributors($page, $info['user']);
 	$smarty->assign('contributors',$contributors);
 }

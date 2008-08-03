@@ -572,7 +572,7 @@ name="w_displayed_default"{if $prefs.w_displayed_default eq 'y'} checked="checke
     <tr><td class="form">{tr}Use page description:{/tr}</td><td><input type="checkbox" name="feature_wiki_description" {if $prefs.feature_wiki_description eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Show page title:{/tr}</td><td><input type="checkbox" name="feature_page_title" {if $prefs.feature_page_title eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Show page ID:{/tr}</td><td><input type="checkbox" name="feature_wiki_pageid" {if $prefs.feature_wiki_pageid eq 'y'}checked="checked"{/if}/></td></tr>
-    <tr><td class="form">{tr}Cache wiki pages (global):{/tr}</td><td>
+    <tr><td class="form">{tr}Cache wiki pages (global):{/tr}<a target="_blank" href="http://dev.tikiwiki.org/bug1291"> ({tr}bug{/tr})</td><td>
     <select name="wiki_cache">
     <option value="0" {if $prefs.wiki_cache eq 0}selected="selected"{/if}>0 ({tr}no cache{/tr})</option>
     <option value="60" {if $prefs.wiki_cache eq 60}selected="selected"{/if}>1 {tr}minute{/tr}</option>
@@ -614,6 +614,7 @@ name="w_displayed_default"{if $prefs.w_displayed_default eq 'y'} checked="checke
 
     {include file='wiki_authors_style.tpl' wiki_authors_style=$prefs.wiki_authors_style}
 
+    <tr><td class="form">{tr}Wiki authors style by page settings:{/tr}</td><td><input type="checkbox" name="wiki_authors_style_by_page" {if $prefs.wiki_authors_style_by_page eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Protect email against spam:{/tr}</td><td><input type="checkbox" name="feature_wiki_protect_email" {if $prefs.feature_wiki_protect_email eq 'y'}checked="checked"{/if}/></td></tr> 
     <tr><td class="form">{tr}When viewing a page, if it doesn't exist and has one like page, automatic redirection to this like page:{/tr}</td><td><input type="checkbox" name="feature_wiki_1like_redirection" {if $prefs.feature_wiki_1like_redirection eq 'y'}checked="checked"{/if}/></td></tr>
      <tr><td class="form">{tr}Show/hide heading icon displayed before the heading:{/tr}</td><td><input type="checkbox" name="feature_wiki_show_hide_before" {if $prefs.feature_wiki_show_hide_before eq 'y'}checked="checked"{/if}/></td></tr>

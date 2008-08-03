@@ -34,7 +34,6 @@ if (isset($_REQUEST["features"])) {
 		"feature_debug_console",
 		"feature_directory",
 		"feature_drawings",
-		"feature_dynamic_content",
 		"feature_edit_templates",
 		"feature_events",
 		"feature_faqs",
@@ -48,9 +47,6 @@ if (isset($_REQUEST["features"])) {
 		"feature_games",
 		"feature_gmap",
 		"feature_purifier",
-		"feature_help",
-		"feature_hotwords",
-		"feature_hotwords_nw",
 		"feature_html_pages",
 		"feature_integrator",
 		"feature_intertiki",
@@ -80,7 +76,6 @@ if (isset($_REQUEST["features"])) {
 		"feature_surveys",
 		"feature_tasks",
 		"feature_trackers",
-		"feature_use_quoteplugin",
 		"feature_mytiki",
 		"feature_userPreferences",
 		"feature_user_bookmarks",
@@ -101,9 +96,7 @@ if (isset($_REQUEST["features"])) {
 		"feature_swffix",
 		"layout_section",
 		"user_assigned_modules",
-		"feature_filegals_manager",
 		"feature_sefurl",
-		"feature_comments_post_as_anonymous",
 		"feature_tikitests"
 	);
 

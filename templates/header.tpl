@@ -97,7 +97,8 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 {/if}
 
 {if $prefs.feature_mootools eq "y"}
-<script type="text/javascript" src="lib/mootools/mootools.js"></script>
+<script type="text/javascript" src="lib/mootools/mootools-1.2-core.js"></script>
+<script type="text/javascript" src="lib/mootools/mootools-1.2-more.js"></script>
 {if $mootools_windoo eq "y"}
 <script type="text/javascript" src="lib/mootools/extensions/windoo/windoo.js"></script>
 {/if}
