@@ -169,9 +169,9 @@ class Tiki_Profile
 		if( is_array( $value ) )
 			foreach( $value as $v )
 				$array = array_merge( $array, $this->traverseForReferences( $v ) );
-		elseif( preg_match( '/^\$((([^:]+):)?(([^:]+):))?(.+)$/', $value, $parts ) )
+		elseif( preg_match( '/^\$(((\w+):)?((\w+):))?(\w+)$/', $value, $parts ) )
 			$array[] = $this->convertReference( $parts );
-		elseif( preg_match_all( '/\$profileobject:((([^:]+):)?(([^:]+):))?([^\$]+)\$/', $value, $parts, PREG_SET_ORDER ) )
+		elseif( preg_match_all( '/\$profileobject:(((\w+):)?((\w+):))?(\w+)\$/', $value, $parts, PREG_SET_ORDER ) )
 			foreach( $parts as $row )
 				$array[] = $this->convertReference( $row );
 
@@ -215,7 +215,7 @@ class Tiki_Profile
 		if( is_array( $data ) )
 			foreach( $data as &$sub )
 				$this->replaceReferences( $sub );
-		elseif( preg_match( '/^\$((([^:]+):)?(([^:]+):))?(.+)$/', $data, $parts ) )
+		elseif( preg_match( '/^\$(((\w+):)?((\w+):))?(\w+)$/', $data, $parts ) )
 		{
 			$object = $this->convertReference( $parts );
 			$serialized = Tiki_Profile_Object::serializeNamedObject( $object );
@@ -225,7 +225,7 @@ class Tiki_Profile
 
 			$data = self::$known[$serialized];
 		}
-		elseif( preg_match_all( '/\$profileobject:((([^:]+):)?(([^:]+):))?([^\$]+)\$/', $data, $parts, PREG_SET_ORDER ) )
+		elseif( preg_match_all( '/\$profileobject:(((\w+):)?((\w+):))?(\w+)\$/', $data, $parts, PREG_SET_ORDER ) )
 			foreach( $parts as $row )
 			{
 				$object = $this->convertReference( $row );
@@ -449,14 +449,14 @@ class Tiki_Profile_Object
 		if( is_array( $value ) )
 			foreach( $value as $v )
 				$array = array_merge( $array, $this->traverseForReferences( $v ) );
-		elseif( preg_match( '/^\$((([^:]+):)?(([^:]+):))?(.+)$/', $value, $parts ) )
+		elseif( preg_match( '/^\$(((\w+):)?((\w+):))?(\w+)$/', $value, $parts ) )
 		{
 			$ref = $this->profile->convertReference( $parts );
 			if( $this->profile->domain == $ref['domain']
 				&& $this->profile->profile == $ref['profile'] )
 				$array[] = $ref['object'];
 		}
-		elseif( preg_match_all( '/\$profileobject:((([^:]+):)?(([^:]+):))?([^\$]+)\$/', $value, $parts, PREG_SET_ORDER ) )
+		elseif( preg_match_all( '/\$profileobject:(((\w+):)?((\w+):))?(\w+)\$/', $value, $parts, PREG_SET_ORDER ) )
 		{
 			foreach( $parts as $row )
 			{
