@@ -1,6 +1,6 @@
 #!/bin/sh
 # $Id$
-# written and maintained by mose@tikiwiki.org
+# originally written by mose (mose.com) 
 #
 # HOWTO release Tikiwiki ?
 # --------------------------
