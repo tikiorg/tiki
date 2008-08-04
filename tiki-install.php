@@ -14,6 +14,9 @@ function installer_is_accessible()
 	return true;
 }
 
+if( file_exists( 'db/lock' ) )
+	die( 'Installer disabled. Remove \'db/lock\' to enable the installer.' );
+
 session_start();
 
 if ( file_exists( 'db/local.php' ) ) {

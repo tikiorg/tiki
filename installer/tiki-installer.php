@@ -721,6 +721,21 @@ if ( is_object($dbTiki) && isset($_SESSION["install-logged-$multi"]) && $_SESSIO
 		$smarty->assign('dbdone', 'y');
 	}
 }
+
+if( isset( $_GET['lockenter'] ) )
+{
+	touch( 'db/lock' );
+	header( 'Location: tiki-index.php' );
+	exit;
+}
+
+if( isset( $_GET['lockchange'] ) )
+{
+	touch( 'db/lock' );
+	header( 'Location: tiki-change_password.php?user=admin' );
+	exit;
+}
+
 $smarty->assign_by_ref('tikifeedback', $tikifeedback);
 
 $php_memory_limit = return_bytes(ini_get('memory_limit'));
