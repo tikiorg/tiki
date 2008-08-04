@@ -51,6 +51,7 @@
 <tr><td width="20%" class="{cycle advance=false}"><strong>{tr}Italic text{/tr}</strong></td><td class="{cycle}"> 2 {tr}single quotes{/tr} "'".  {tr}Example{/tr} ''{tr}text{/tr}'' = <em>text</em></td></tr>
 <tr><td class="{cycle advance=false}"><strong>{tr}Centered text{/tr}</strong></td><td class="{cycle}"> 2 {tr}colons{/tr} ":". {tr}Example{/tr} ::{tr}some text{/tr}:</td></tr>
 <tr><td class="{cycle advance=false}"><strong>{tr}Underlined text{/tr}</strong></td><td class="{cycle}"> 3 {tr}equals{/tr} "=". {tr}Example{/tr} ==={tr}text{/tr}===</td></tr>
+<tr><td class="{cycle advance=false}"><strong>{tr}Deleted text{/tr}</strong></td><td class="{cycle}"> {tr}2 dashes{/tr} "-". {tr}Example{/tr} --{tr}text{/tr}--</td></tr>
 <tr><td class="{cycle advance=false}"><strong>{tr}Text box{/tr}</strong></td><td class="{cycle}"> {tr}One carat{/tr} "^". {tr}Creates a box with the data{/tr}. {tr}Example{/tr} "^{tr}Box content{/tr}^"</td></tr>
 <tr><td class="{cycle advance=false}"><strong>{tr}Title bar{/tr}</strong></td><td class="{cycle}"> "-={tr}Title{/tr}=-" {tr}creates a title bar{/tr}.</td></tr>
 <tr><td class="{cycle advance=false}"><strong>{tr}Colored text{/tr}</strong></td><td class="{cycle}"> "~~#FFEE33:{tr}some text{/tr}~~" {tr}or{/tr}  "~~yellow:{tr}some text{/tr}~~". {tr}Will display using the indicated HTML color or color name{/tr}</td></tr>

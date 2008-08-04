@@ -5872,6 +5872,8 @@ function add_pageview() {
 		$data = preg_replace("/===([^\=]+)===/", "<span style=\"text-decoration:underline;\">$1</span>", $data);
 		// Center text
 		$data = preg_replace("/::(.+?)::/", "<div align=\"center\">$1</div>", $data);
+		// Strike text
+		$data = preg_replace("/--([^\=]+)--/", "<del>$1</del>", $data);
 	}
 
     // definitively put out the protected words ))protectedWord((
