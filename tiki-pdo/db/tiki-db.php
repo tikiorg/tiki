@@ -43,7 +43,6 @@ Setup of virtual tikis is done using setup.sh script
 -----------------------------------------------------------
 -> Multi-tiki trick for virtualhosting
 
-$tikidomain variable is set to :
 or TIKI_VIRTUAL
     That is set in apache virtual conf : SetEnv TIKI_VIRTUAL myvirtual
 or SERVER_NAME
@@ -125,7 +124,7 @@ $dbTiki = new PDO("$db_tiki:host=$host_tiki;dbname=$dbs_tiki", $user_tiki, $pass
 $dbTiki->setAttribute(PDO::ATTR_CASE,PDO::CASE_NATURAL);
 $dbTiki->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_WARNING);
 $dbTiki->setAttribute(PDO::ATTR_ORACLE_NULLS,PDO::NULL_EMPTY_STRING);
-$dbTiki->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY,false);
+//$dbTiki->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY,false);
 
 $pq = $dbTiki->prepare('select `login` from `users_users` limit 1');
 $result = $pq->execute();

@@ -172,7 +172,8 @@ if (isset($_REQUEST["wikifeatures"])) {
 	'wiki_show_version',
 	'feature_wiki_import_page',
 	'wiki_edit_section',
-  'feature_actionlog_bytes',
+	'feature_actionlog_bytes',
+	'wiki_authors_style_by_page',
 	);
 	foreach ($pref_toggles as $toggle) {
 		simple_set_toggle($toggle);

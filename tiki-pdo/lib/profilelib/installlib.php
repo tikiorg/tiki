@@ -160,7 +160,7 @@ class Tiki_Profile_Installer
 		global $userlib;
 
 		if( ! $userlib->group_exists( $groupName ) )
-			$user->add_group( $groupName, $info['description'] );
+			$userlib->add_group( $groupName, $info['description'] );
 
 		foreach( $permissions as $perm => $v )
 			if( $v == 'y' )

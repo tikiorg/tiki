@@ -325,7 +325,11 @@ hosting provider.  Normally Tiki tables won't conflict with other product names{
 <p>&nbsp;</p>
 <h2>{tr}Entering TikiWiki{/tr}</h2>
 <ul>
+{if isset($smarty.post.update)}
+<li><a href="tiki-index.php" class="link">{tr}Enter TikiWiki{/tr}</a>
+{else}
  <li><a href="tiki-change_password.php?user=admin" class="link">{tr}Login as the administrator{/tr}</a><br />{tr}You will be prompted to select a new administrator password.{/tr} {tr}Old password{/tr}: <em>admin</em></li>
+{/if}
 </ul>
 <p>&nbsp;</p>
 <h3>{tr}Continue in installer{/tr}</h3>

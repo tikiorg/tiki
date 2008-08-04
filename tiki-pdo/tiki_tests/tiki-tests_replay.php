@@ -188,6 +188,10 @@ function verif_url($url, $use_tidy = TRUE) {
 	return $result;
 }
 
+if (isset($_REQUEST['filename'])) {
+	$_REQUEST['filename'] = str_replace("<x>","",$_REQUEST['filename']);
+}
+
 if (isset($_REQUEST['action'])) {
 	$smarty->assign("filename",$_REQUEST['filename']);
 	$xml = file_get_contents("tiki_tests/tests/".$_REQUEST['filename']);

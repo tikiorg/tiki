@@ -133,7 +133,8 @@ elseif (isset($_REQUEST["newadminpass"])) {
 }
 
 // Get list of time zones
-$smarty->assign_by_ref("timezones", $GLOBALS['_DATE_TIMEZONE_DATA']);
+//$smarty->assign_by_ref("timezones", $GLOBALS['_DATE_TIMEZONE_DATA']);
+$smarty->assign_by_ref("timezones", TikiDate::getTimeZoneList());
 
 // Get information for alternate homes
 $smarty->assign("home_forum_url", "tiki-view_forum.php?forumId=" . $prefs['home_forum']);

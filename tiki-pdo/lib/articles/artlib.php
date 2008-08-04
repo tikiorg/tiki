@@ -213,6 +213,8 @@ class ArtLib extends TikiLib {
 				$title, $authorName, (int) $topicId, $topicName, (int) $size, $useImage, $imgname, $imgtype, (int) $imgsize, $imgdata, $isfloat,
 				(int) $image_x, (int) $image_y, $heading, $body, (int) $publishDate, (int) $expireDate, (int) $this->now, $user, $type, (float) $rating, 
 				$topline, $subtitle, $linkto, $image_caption, $lang, (int) $articleId ) );
+				// Clear article image cache because image may just have been changed
+				$this->delete_image_cache($articleId);
 		} else {
 		    // Fixed query. -rlpowell
 		    // Insert the article
@@ -593,6 +595,23 @@ $show_expdate, $show_reads, $show_size, $show_topline, $show_subtitle, $show_lin
 		}
 return true;
 	}
+
+	function delete_image_cache($articleId) {
+		global $prefs;
+		// Input validation: articleID must be a number, and not 0 
+		if(!ctype_digit("$articleId") || !($articleId>0)) {
+			return false;
+		}
+		$article_image_cache = $prefs['tmpDir'];
+		if ($tikidomain) { $article_image_cache.= "/$tikidomain"; }
+		$article_image_cache.= "/article.".$articleId;
+		if ( @unlink($article_image_cache) ) {
+			return true;
+		}else{
+			return false;
+		}
+	}
+
 }
 
 global $dbTiki;

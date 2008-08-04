@@ -16,6 +16,12 @@ if (isset($_REQUEST["textareasetup"])) {
 ask_ticket('admin-inc-textarea');
 
     $pref_toggles = array(
+	"feature_hotwords",
+	"feature_hotwords_nw",
+	"feature_dynamic_content",
+	"feature_filegals_manager",
+	"feature_use_quoteplugin",
+	"feature_comments_post_as_anonymous",
 	"feature_smileys",
 	"popupLinks",
 	"feature_autolinks",

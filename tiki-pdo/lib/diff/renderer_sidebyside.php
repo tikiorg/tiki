@@ -25,7 +25,6 @@ class Text_Diff_Renderer_sidebyside extends Tiki_Text_Diff_Renderer {
 
     function _endDiff()
     {
-        echo '</table>';
         $val = ob_get_contents();
         ob_end_clean();
         return $val;

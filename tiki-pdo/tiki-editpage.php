@@ -735,14 +735,15 @@ if(isset($_REQUEST["description"])) {
   $description = $_REQUEST["description"];
 }
 
-if ( isset($_REQUEST['wiki_authors_style']) && $tiki_p_admin_wiki == 'y' ) {
-	$wiki_authors_style = $_REQUEST['wiki_authors_style'];
-} elseif ( isset($info['wiki_authors_style']) ) {
-	$wiki_authors_style = $info['wiki_authors_style'];
-} else {
-	$wiki_authors_style = '';
+$wiki_authors_style = '';
+if ( $prefs['wiki_authors_style_by_page'] == 'y' ) {
+	if ( isset($_REQUEST['wiki_authors_style']) && $tiki_p_admin_wiki == 'y' ) {
+		$wiki_authors_style = $_REQUEST['wiki_authors_style'];
+	} elseif ( isset($info['wiki_authors_style']) ) {
+		$wiki_authors_style = $info['wiki_authors_style'];
+	}
+	$smarty->assign('wiki_authors_style', $wiki_authors_style);
 }
-$smarty->assign('wiki_authors_style', $wiki_authors_style);
 
 if($is_html) {
     $smarty->assign('allowhtml','y');

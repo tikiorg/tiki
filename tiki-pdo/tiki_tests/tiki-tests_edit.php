@@ -108,8 +108,13 @@ function save_test($urls,$file,$options) {
 	fclose($fd);
 }
 
+if (isset($_REQUEST['filename'])) {
+	$_REQUEST['filename'] = str_replace("<x>","",$_REQUEST['filename']);
+} 
+
 $xml = file_get_contents("tiki_tests/tests/".basename($_REQUEST['filename']));
-if ($xml == '') {
+
+if ($xml == '' or $xml == false) {
 	$smarty->assign('msg', tra("The TikiTests Replay File is Empty"));
 	$smarty->display("error.tpl");
 	die();
@@ -117,7 +122,7 @@ if ($xml == '') {
 	$dom = DOMDocument::loadXML($xml);
 	$element_test = $dom->getElementsByTagName('test')->item(0);
 	if ($element_test == NULL) {
-		$smarty->assign('msg', tra("The TikiTests Replay File is Empty"));
+		$smarty->assign('msg', tra("The TikiTests Replay File has an error"));
 		$smarty->display("error.tpl");
 		die();
 	}
@@ -153,7 +158,7 @@ foreach($urls as $url) {
 		$result[$count] = get_url($url,$options['use_tidy'] == 'y');
 		if ($edit and is_string($_REQUEST['xpath'][$count]) and trim($_REQUEST['xpath'][$count]) != '') {
 			$result[$count]['xpath'] = trim($_REQUEST['xpath'][$count]);
-		} else {
+		} elseif ($edit) {
 			unset($result[$count]['xpath']);
 		}
 	}

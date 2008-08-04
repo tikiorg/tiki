@@ -166,7 +166,7 @@ $smarty->assign('page_ref_id', $page_ref_id);
 
 
 
-if (!$tikilib->page_exists($page) && $tikilib->page_exists(utf8_encode($page))) {
+if (!$tikilib->page_exists($page) && function_exists('utf8_encode') && $tikilib->page_exists(utf8_encode($page))) {
     $page = $_REQUEST["page"] = utf8_encode($page);
 }
 
@@ -250,11 +250,11 @@ details */
 $page = $info['pageName'];
 
 // Get the authors style for this page
-$wiki_authors_style = ( $info['wiki_authors_style'] != '' ) ? $info['wiki_authors_style'] : $prefs['wiki_authors_style'];
+$wiki_authors_style = ( $prefs['wiki_authors_style_by_page'] == 'y' && $info['wiki_authors_style'] != '' ) ? $info['wiki_authors_style'] : $prefs['wiki_authors_style'];
 $smarty->assign('wiki_authors_style', $wiki_authors_style);
 
 // Get the contributors for this page
-if (isset($prefs['wiki_authors_style']) && $prefs['wiki_authors_style'] != 'classic') {
+if ( $prefs['wiki_authors_style'] != 'classic' ) {
 	$contributors = $wikilib->get_contributors($page, $info['user']);
 	$smarty->assign('contributors',$contributors);
 }

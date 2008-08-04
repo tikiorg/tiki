@@ -10,23 +10,21 @@ if (is_file($local_php)) {
 	}
 }
 
-class TikiPDOStatement extends PDOStatement {
-	var $pdo;
+class TikiResult extends PDOStatement {
 	var $result;
+	var $numrows;
 
-	function __construct ($pdostatement) {
-		$this->pdo = $pdostatement;
-		$this->result = $pdostatement->fetchAll();
+	function __construct ($result) {
+		$this->result = &$result;
+		$this->numrows = count ($this->result);
 	}
 
 	function fetchRow($mode) {
-		$tmp = current($this->result);
-		next($this->result);
-		return $tmp;
+		return array_shift($this->result);
 	}
 
 	function numRows() {
-		return sizeof($this->result);
+		return $this->numrows;
 	}
 }
 
@@ -45,7 +43,7 @@ class TikiDB {
 		}
 
 		$this->db=$db;
-		$this->db->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY);
+		//$this->db->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY);
 		$this->driver = $db->getAttribute(PDO::ATTR_DRIVER_NAME);
 	}
 
@@ -57,8 +55,8 @@ class TikiDB {
 	function stopTimer($starttime) {
 		global $elapsed_in_db;
 		list($micro, $sec) = explode(' ', microtime());
-		$now=$micro + $sec;
-		$elapsed_in_db+=$now - $starttime;
+		$now = $micro + $sec;
+		$elapsed_in_db += $now - $starttime;
 	}
 
 	function qstr($str) {
@@ -82,7 +80,6 @@ class TikiDB {
 		if ($numrows < 0) $numrows = '18446744073709551615';
 		$sql .= " LIMIT $offsetStr$numrows";
 
-		//echo "QUERY=$query<br/>";
 		$starttime=$this->startTimer();
 
 		$pq = $this->db->prepare($query);
@@ -93,14 +90,11 @@ class TikiDB {
 		if ($values) {
 			$count = 1;
 			foreach($values as $value) {
-				//echo "bind var $count, value= $value<br/>";
 				$pq->bindValue($count++,$value,is_int($value)?(PDO::PARAM_INT):(PDO::PARAM_STR)) ;
 			}
 		}
 
 		$result = $pq->execute();
-
-		//echo "Error :<pre>".print_r($pq->errorInfo(),true)."</pre>";
 
 		$this->stopTimer($starttime);
 
@@ -111,7 +105,7 @@ class TikiDB {
 			return false;
 		} else {
 			$this->sql_error_msg = "";
-			$tmp = new TikiPDOStatement($pq);
+			$tmp = new TikiResult($pq->fetchAll());
 			$pq->closeCursor();
 			return $tmp;
 		}
@@ -162,10 +156,7 @@ class TikiDB {
 		error_reporting(E_ALL);
 		$result = $this->query($query, $values, 1, $offset);
 		$res = $result->fetchRow();
-		//echo "getone ";
-		//print_r($res);echo "<br/>";
 			list($key, $value) = each($res);
-		//	echo "getOne value=$value<br/>";
 			return $value;
 
 		if (!$res) {
@@ -175,7 +166,6 @@ class TikiDB {
 			return (NULL); //simulate pears behaviour
 		}
 	}
-
 
 	// Reports SQL error from PEAR::db object.
 	function sql_error($query, $values, $result) {

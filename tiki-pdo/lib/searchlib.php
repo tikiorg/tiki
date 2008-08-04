@@ -254,6 +254,7 @@ class SearchLib extends TikiLib {
 			// taking first 240 chars of text can bring broken html tags, better remove all tags.
 			global $tikilib;
 			$ret[] = array(
+				'name' => $res['name'],
 				'pageName' => $res["pageName"],
 				'data' => $tikilib->get_snippet($res['data'], isset($res['is_html'])? $res['is_html']:'n'),
 				'hits' => $res["hits"],
@@ -476,7 +477,7 @@ class SearchLib extends TikiLib {
 	function find_articles($words = '', $offset = 0, $maxRecords = -1, $fulltext = false) {
 		static $search_articles = array(
 			'from' => '`tiki_articles` a',
-			'name' => 'a.`title`',
+			'name' => 'a.`topicId`',
 			'data' => 'a.`heading`',
 			'hits' => 'a.`nbreads`',
 			'lastModif' => 'a.`publishDate`',
@@ -485,16 +486,29 @@ class SearchLib extends TikiLib {
 			'pageName' => 'a.`title`',
 			'search' => array('a.`title`', 'a.`heading`', 'a.`body`'),
 
-			'permNameGlobal' => 'tiki_p_read_article',
-			'permNameObj' => 'tiki_p_topic_read',
-			'objectType' => 'topic',
-			'objectKeyPerm' => 'a.`topicId`',
-			'objectKeyGroup' => 'a.`articleId`',
-			'objectKeyCat' => 'a.`articleId`',
+			//'permNameGlobal' => 'tiki_p_read_article',
+			//'permNameObj' => 'tiki_p_topic_read',
+			//'objectType' => 'topic',
+			//'objectKeyPerm' => 'a.`topicId`',
+			//'objectKeyGroup' => 'a.`articleId`',
+			//'objectKeyCat' => 'a.`articleId`',
+			'permName' => 'tiki_p_read_article',
+			'objectType' =>'article',
+			'objectKey'=>'`articleId`'
 		);
 
 		$res = $this->_find($search_articles, $words, $offset, $maxRecords, $fulltext);
-		return $res;
+		$ret = array('cant'=>$res['cant'], 'data'=>array());
+		global $user;
+		foreach ($res['data'] as $r) {
+			if (empty($r['name']) || $this->user_has_perm_on_object($user, $r['name'], 'topic', 'tiki_p_topic_read')) {
+				$r['name'] = $r['pageName'];
+				$ret['data'][] = $r;
+			} else {
+				--$ret['cant'];
+			}
+		}
+		return $ret;
 	}
 
 	function find_posts($words = '', $offset = 0, $maxRecords = -1, $fulltext = false) {

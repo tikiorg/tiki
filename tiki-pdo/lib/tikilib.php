@@ -4523,7 +4523,7 @@ function add_pageview() {
 
 		// Handle special display_timezone values
 		if ( isset($user_preferences[$my_user]['display_timezone'])
-			&& ! Date_TimeZone::isValidID($user_preferences[$my_user]['display_timezone'])
+			&& ! TikiDate::isValidID($user_preferences[$my_user]['display_timezone'])
 		) {
 			unset($user_preferences[$my_user]['display_timezone']);
 		}
@@ -6201,19 +6201,25 @@ function add_pageview() {
 			//$link2 = str_replace("?","\?",$link2);
 			//$link2 = str_replace("&","\&",$link2);
 			$link2 = str_replace("/", "\/", preg_quote($link));
-			$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)\|([^\]\|]+)\|([^\]]+)\]/"; //< last param here is nocache
-			$data = preg_replace($pattern, "<a $class $rel $target href=\"$link\" rel=\"$2 $rel\">$1</a>$ext_icon", $data);
-			$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)\|([^\]]+)\]/";//< last param here ($2) is for relation (rel) attribute (e.g. shadowbox)
-			$data = preg_replace($pattern, "<a $class $rel $target href=\"$link\" rel=\"$2 $rel\">$1</a>$ext_icon $cosa", $data);
+			$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)\|([^\]\|]+)\|([^\]]+)\]/"; //< last param expected here is always nocache
+			$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$2 $rel\">$1</a>$ext_icon", $data);
+			$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)\|([^\]]+)\]/";//< last param here ($2) is used for relation (rel) attribute (e.g. shadowbox) or nocache
+			preg_match($pattern, $data, $matches);
+			if ($matches[2]=='nocache') {
+				$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$rel\">$1</a>$ext_icon", $data);
+			} else {
+				$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$2 $rel\">$1</a>$ext_icon $cosa", $data);
+			}
 			$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)\]/";
-			$data = preg_replace($pattern, "<a $class $rel $target href=\"$link\" rel=\"$rel\">$1</a>$ext_icon $cosa", $data);
+			$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$rel\">$1</a>$ext_icon $cosa", $data);
 			$pattern = "/(?<!\[)\[$link2\]/";
-			$data = preg_replace($pattern, "<a $class $rel $target href=\"$link\" rel=\"$rel\">$link</a>$ext_icon $cosa", $data);
+			$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$rel\">$link</a>$ext_icon $cosa", $data);
 	    } else {
 			//$link2 = str_replace("/","\/",$link);
 			//$link2 = str_replace("?","\?",$link2);
 			//$link2 = str_replace("&","\&",$link2);
 			$link2 = str_replace("/", "\/", preg_quote($link));
+			$data = str_replace("|nocache", "", $data);
 
 			$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)\|([^\]]+)\]/";
 			$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$2 $rel\">$1</a>$ext_icon", $data);
@@ -7251,7 +7257,7 @@ if (!$simple_wiki) {
 				} elseif ( $_user ) {
 					// ... else, get the user timezone preferences from DB
 					$tz = $this->get_user_preference($_user, 'display_timezone');
-					if ( ! Date_TimeZone::isValidID($tz) ) {
+					if ( ! TikiDate::isValidID($tz) ) {
 						$tz = $prefs['server_timezone'];
 					}
 				}
@@ -7320,7 +7326,7 @@ if (!$simple_wiki) {
 
 				// If user timezone is not also in UTC, convert the date
 				if ( $tz != 'UTC' ) {
-					$tikidate->convertTZByID($tz);
+					$tikidate->setTZByID($tz);
 				}
 				return $tikidate->format($format);
 			}

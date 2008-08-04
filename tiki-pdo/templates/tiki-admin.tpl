@@ -29,9 +29,9 @@ Add a value in first check when you create a new admin page. *}
 
 <a name="morelinks"></a>
 <br style="clear:both" />
-<span class="button2"><a href="#morelinks" onclick="flip('morelinks');return true;" class="linkbut">{tr}More Links{/tr}</a></span><br />
+<span class="button2"><a href="#morelinks" class="linkbut">{tr}More Links{/tr}</a></span><br />
 
-<div class="cbox" id="morelinks" style="display:{if isset($smarty.session.tiki_cookie_jar.show_morelinks) and $smarty.session.tiki_cookie_jar.show_morelinks eq 'y'}block{else}none{/if};">
+<div class="cbox" id="morelinks" style="display:block;">
 <div class="cbox-title">{tr}Crosslinks to other features and settings{/tr}</div>
 <div class="cbox-data">
 {tr}Other sections{/tr}:<br />
@@ -56,6 +56,7 @@ href="tiki-admin_shoutbox_words.php">{tr}Shoutbox Words{/tr}</a> {/if}
 {tr}Administration features{/tr}:<br />
 <a href="tiki-adminusers.php">{tr}Users{/tr}</a> 
 <a href="tiki-admingroups.php">{tr}Groups{/tr}</a> 
+<a href="tiki-admin.php?page=profiles">{tr}Profiles{/tr}</a>
 <a href="tiki-admin_security.php">{tr}Security{/tr}</a> 
 <a href="tiki-admin_system.php">{tr}System{/tr}</a> 
 <a href="tiki-syslog.php">{tr}SysLogs{/tr}</a> 
