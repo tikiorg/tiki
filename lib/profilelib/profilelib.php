@@ -311,6 +311,11 @@ class Tiki_Profile
 			else
 				$description = '';
 
+			if( array_key_exists( 'include', $data ) )
+				$include = (array) $data['include'];
+			else
+				$include = array();
+
 			$objects = array();
 			if( isset( $data['objects'] ) )
 				foreach( $data['objects'] as $o )
@@ -334,6 +339,7 @@ class Tiki_Profile
 				'objects' => $objects,
 				'general' => array(
 					'description' => $description,
+					'include' => $include,
 				),
 			);
 		}

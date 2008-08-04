@@ -162,6 +162,14 @@ class Tiki_Profile_Installer
 		if( ! $userlib->group_exists( $groupName ) )
 			$userlib->add_group( $groupName, $info['description'] );
 
+		if( count( $info['include'] ) )
+		{
+			$userlib->remove_all_inclusions( $groupName );
+			
+			foreach( $info['include'] as $included )
+				$userlib->group_inclusion( $groupName, $included );
+		}
+
 		foreach( $permissions as $perm => $v )
 			if( $v == 'y' )
 				$userlib->assign_permission_to_group( $perm, $groupName );
