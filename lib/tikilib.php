@@ -5873,7 +5873,7 @@ function add_pageview() {
 		// Center text
 		$data = preg_replace("/::(.+?)::/", "<div align=\"center\">$1</div>", $data);
 		// Strike text
-		$data = preg_replace("/--([^\=]+)--/", "<del>$1</del>", $data);
+		$data = preg_replace("/--([^\-]+)--/", "<del>$1</del>", $data);
 	}
 
     // definitively put out the protected words ))protectedWord((
