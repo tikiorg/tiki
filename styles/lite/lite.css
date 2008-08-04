@@ -14,17 +14,17 @@
 body {
 	display: table;/* keep "display: table" here to push the right column to the right when some unwrappable stuff appears in the center column */
 	font-family: sans-serif;
-	font-size: 80% !important;/* the body font-size must be in percents to scale the fonts in IE properly */
+	font-size: 80%;/* the body font-size must be in percents to scale the fonts in IE properly */
 	margin: 0; padding: 0;
 	width: 100%;/* this is needed to keep the width to the maximum available */
 }
 html>body {
-	font-size: 0.75em !important;/* redefine the body font-size for all modern browsers - ignored by old IEs */
+	font-size: 0.75em;/* redefine the body font-size for all modern browsers - ignored by old IEs */
 }
 /* and this is a special workaround for IE 7 */
 *:first-child+html
 body {
-	font-size: 80% !important;
+	font-size: 80%;
 }
 
 /* *** THE MAIN LAYOUT *** */
