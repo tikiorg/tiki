@@ -7,6 +7,9 @@ require_once( 'Horde/Yaml/Exception.php' );
 
 class Tiki_Profile
 {
+	const SHORT_PATTERN = '/^\$((([\w\.-]+):)?((\w+):))?(\w+)$/';
+	const LONG_PATTERN = '/\$profileobject:((([\w\.-]+):)?((\w+):))?(\w+)\$/';
+
 	private $url;
 	private $pageUrl;
 	private $domain;
@@ -120,17 +123,51 @@ class Tiki_Profile
 		$content = substr( $content, $begin + 2 );
 		$this->pageContent = $content;
 
-		$base = strpos( $content, '{CODE(caption=>YAML' );
-		$begin = strpos( $content, ')}', $base ) + 2;
-		$end = strpos( $content, '{CODE}', $base );
+		$pos = 0;
 
-		if( false === $base || false === $begin || false === $end )
-			return false;
+		$this->data = array();
 
-		$yaml = substr( $content, $begin, $end - $begin );
+		while( false !== $base = strpos( $content, '{CODE(caption=>YAML', $pos ) )
+		{
+			$begin = strpos( $content, ')}', $base ) + 2;
+			$end = strpos( $content, '{CODE}', $base );
+			$pos = $end;
 
-		$this->data = Horde_Yaml::load( $yaml );
+			if( false === $base || false === $begin || false === $end )
+				return false;
+
+			$yaml = substr( $content, $begin, $end - $begin );
+
+			$data = Horde_Yaml::load( $yaml );
+
+			foreach( $data as $key => $value )
+			{
+				if( array_key_exists( $key, $this->data ) )
+					$this->data[$key] = $this->mergeData( $this->data[$key], $value );
+				else
+					$this->data[$key] = $value;
+			}
+		}
+
 		$this->getObjects();
+	} // }}}
+
+	function mergeData( $old, $new ) // {{{
+	{
+		if( is_array( $old ) && is_array( $new ) )
+		{
+			foreach( $new as $key => $value )
+			{
+				if( is_numeric( $key ) )
+					$old[] = $value;
+				else
+					$old[$key] = $value;
+			}
+
+			return $old;
+		}
+		else
+			return $new;
 	} // }}}
 
 	function getNamedObjects() // {{{
@@ -169,9 +206,9 @@ class Tiki_Profile
 		if( is_array( $value ) )
 			foreach( $value as $v )
 				$array = array_merge( $array, $this->traverseForReferences( $v ) );
-		elseif( preg_match( '/^\$(((\w+):)?((\w+):))?(\w+)$/', $value, $parts ) )
+		elseif( preg_match( self::SHORT_PATTERN, $value, $parts ) )
 			$array[] = $this->convertReference( $parts );
-		elseif( preg_match_all( '/\$profileobject:(((\w+):)?((\w+):))?(\w+)\$/', $value, $parts, PREG_SET_ORDER ) )
+		elseif( preg_match_all( self::LONG_PATTERN, $value, $parts, PREG_SET_ORDER ) )
 			foreach( $parts as $row )
 				$array[] = $this->convertReference( $row );
 
@@ -215,7 +252,7 @@ class Tiki_Profile
 		if( is_array( $data ) )
 			foreach( $data as &$sub )
 				$this->replaceReferences( $sub );
-		elseif( preg_match( '/^\$(((\w+):)?((\w+):))?(\w+)$/', $data, $parts ) )
+		elseif( preg_match( self::SHORT_PATTERN, $data, $parts ) )
 		{
 			$object = $this->convertReference( $parts );
 			$serialized = Tiki_Profile_Object::serializeNamedObject( $object );
@@ -225,7 +262,7 @@ class Tiki_Profile
 
 			$data = self::$known[$serialized];
 		}
-		elseif( preg_match_all( '/\$profileobject:(((\w+):)?((\w+):))?(\w+)\$/', $data, $parts, PREG_SET_ORDER ) )
+		elseif( preg_match_all( self::LONG_PATTERN, $data, $parts, PREG_SET_ORDER ) )
 			foreach( $parts as $row )
 			{
 				$object = $this->convertReference( $row );
@@ -449,14 +486,14 @@ class Tiki_Profile_Object
 		if( is_array( $value ) )
 			foreach( $value as $v )
 				$array = array_merge( $array, $this->traverseForReferences( $v ) );
-		elseif( preg_match( '/^\$(((\w+):)?((\w+):))?(\w+)$/', $value, $parts ) )
+		elseif( preg_match( Tiki_Profile::SHORT_PATTERN, $value, $parts ) )
 		{
 			$ref = $this->profile->convertReference( $parts );
 			if( $this->profile->domain == $ref['domain']
 				&& $this->profile->profile == $ref['profile'] )
 				$array[] = $ref['object'];
 		}
-		elseif( preg_match_all( '/\$profileobject:(((\w+):)?((\w+):))?(\w+)\$/', $value, $parts, PREG_SET_ORDER ) )
+		elseif( preg_match_all( Tiki_Profile::LONG_PATTERN, $value, $parts, PREG_SET_ORDER ) )
 		{
 			foreach( $parts as $row )
 			{
