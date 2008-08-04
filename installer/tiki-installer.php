@@ -17,8 +17,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 error_reporting (E_ALL);
 
-session_start();
-
 include_once("lib/init/initlib.php");
 
 // Define and load Smarty components
