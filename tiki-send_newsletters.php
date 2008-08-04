@@ -22,6 +22,13 @@ if ($prefs['feature_newsletters'] != 'y') {
 	die;
 }
 
+if ($tiki_p_send_newsletters != 'y') {
+	$smarty->assign('errortype', 401);
+	$smarty->assign('msg', tra("You do not have permission to use this feature"));
+	$smarty->display("error.tpl");
+	die;
+}
+
 if (!isset($_REQUEST["nlId"])) {
 	$_REQUEST["nlId"] = 0;
 }
