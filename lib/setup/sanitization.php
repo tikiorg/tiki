@@ -57,7 +57,7 @@ function RemoveXSS($val) {
 	// keep replacing as long as the previous round replaced something
 	while ( RemoveXSSregexp($ra_as_tag_only, $val, '(\<|\[\\\\xC0\]\[\\\\xBC\])')
 		|| RemoveXSSregexp($ra_as_attribute, $val)
-		|| RemoveXSSregexp($ra_as_content, $val, '[\.\\\+\*\?\[\^\]\$\(\)\{\}\=\!\<\|\:;\-\/`#"\']')
+		|| RemoveXSSregexp($ra_as_content, $val, '[\.\\\+\*\?\[\^\]\$\(\)\{\}\=\!\<\|\:;\-\/`#"\']', '(?![a-z0-9])')
 		|| RemoveXSSregexp($ra_javascript, $val, '', ':', true)
 		|| RemoveXSSregexp($ra_style, $val, '[^a-z0-9]', '=')
 	);
@@ -90,8 +90,13 @@ function RemoveXSSregexp(&$ra, &$val, $prefix = '', $suffix = '', $allow_spaces 
 
 	$pattern_end = '/i';
 	if ( $suffix != '' ) {
-		$pattern_end = '(' . $pattern_sep . '\s*' . $suffix . ')' . $pattern_end;
-		if ( $suffix == '=' || $suffix == ':' ) $replacement_end = $suffix;
+		if ( $suffix == '=' || $suffix == ':' ) {
+			$replacement_end = $suffix;
+			$pattern_end = '(' . $pattern_sep . '\s*' . $suffix . ')' . $pattern_end;
+		} else {
+			$replacement_end = '';
+			$pattern_end = $suffix . $pattern_end;
+		}
 	} else {
 		$replacement_end = '';
 	}
