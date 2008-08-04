@@ -23,6 +23,27 @@ function wikiplugin_alink_help() {
         return tra("Puts a link to an anchor in a wiki page. Use in conjunction with the ANAME plugin, which sets the location and name of the anchor").":<br />~np~{ALINK(aname=>anchorname,pagename=>Wiki Page Name)}".tra("linktext")."{ALINK}~/np~<br />pagename is optional; if it is not present, links into the current file.";
 }
 
+function wikiplugin_alink_info() {
+	return array(
+		'name' => tra('Anchor Link'),
+		'description' => tra('Creates a link to an anchor within a page. Anchors can be created using the ANAME plugin.'),
+		'prefs' => array(),
+		'body' => tra('Anchor link label.'),
+		'params' => array(
+			'aname' => array(
+				'required' => true,
+				'name' => 'Anchor name',
+				'description' => tra('The anchor name as defined in the ANAME plugin.'),
+			),
+			'pagename' => array(
+				'required' => false,
+				'name' => tra('Page name'),
+				'description' => tra('The name of the wiki page containing the anchor.'),
+			),
+		),
+	);
+}
+
 function wikiplugin_alink($data, $params)
 {
         global $multilinguallib, $tikilib, $prefs;

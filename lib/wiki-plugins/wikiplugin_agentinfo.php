@@ -9,6 +9,15 @@ function wikiplugin_agentinfo_help() {
         return tra("Displays browser client info").":<br />~np~{AGENTINFO(info=>IP or SVRSW or BROWSER)/}~/np~";
 }
 
+function wikiplugin_agentinfo_info() {
+	return array(
+		'name' => tra( 'User-Agent Info' ),
+		'description' => tra( 'Displays various information about the client.' ),
+		'prefs' => array(),
+		'params' => array(),
+	);
+}
+
 function wikiplugin_agentinfo($data, $params) {
 	
 	extract ($params,EXTR_SKIP);

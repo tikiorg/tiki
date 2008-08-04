@@ -21,6 +21,16 @@ function wikiplugin_aname_help() {
         return tra("Puts an anchor into a wiki page. Use in conjunction with the ALINK plugin, which makes links to the anchor").":<br />~np~{ANAME()}anchorname{ANAME}~/np~";
 }
 
+function wikiplugin_aname_info() {
+	return array(
+		'name' => tra('Anchor Name'),
+		'description' => tra('Inserts an anchor in th wiki page. Anchors can be linked to using the ALINK plugin.'),
+		'prefs' => array(),
+		'body' => tra('The name of the anchor.'),
+		'params' => array(),
+	);
+}
+
 function wikiplugin_aname($data, $params)
 {
         global $tikilib;
