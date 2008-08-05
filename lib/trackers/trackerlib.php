@@ -815,7 +815,8 @@ class TrackerLib extends TikiLib {
 			case 'l':
 				if ( isset($fopt['options_array'][2]) && isset($fil[$fopt['options_array'][2]]) && ($lst = $fil[$fopt['options_array'][2]]) && isset($fopt['options_array'][3])) {
 					$opts[1] = split(':', $fopt['options_array'][1]);
-					$fopt['links'] = $this->get_join_values($itemId, array_merge(array($fopt['options_array'][2]), array($fopt['options_array'][1]), array($fopt['options_array'][3])));
+					$finalFields = explode('|', $fopt['options_array'][3]);
+					$fopt['links'] = $this->get_join_values($itemId, array_merge(array($fopt['options_array'][2]), array($fopt['options_array'][1]), array($finalFields[0])), $fopt['options_array'][0], $finalFields);
 					$fopt['trackerId'] = $fopt['options_array'][0];
 				}
 				if (isset($fopt['links']) && count($fopt['links']) == 1) { //if a computed field use it
@@ -896,7 +897,7 @@ class TrackerLib extends TikiLib {
 		include_once('lib/categories/categlib.php');
 		include_once('lib/notifications/notificationlib.php');
 
-		if ($itemId && $itemId!=0) {
+		if (!empty($itemId)) {
 			$oldStatus = $this->getOne("select `status` from `tiki_tracker_items` where `itemId`=?", array($itemId));
 			if ($status) {
 				$query = "update `tiki_tracker_items` set `status`=?,`lastModif`=? where `itemId`=?";
@@ -1235,7 +1236,7 @@ class TrackerLib extends TikiLib {
 		// Don't send a notification if this operation is part of a bulk import
 		if(!$bulk_import) {
 			$options = $this->get_tracker_options( $trackerId );
-			$watchers = $this->get_notification_emails($trackerId, $itemId, $options, $new_itemId);
+			$watchers = $this->get_notification_emails($trackerId, $itemId, $options, $new_itemId, $status, isset($oldStatus)?$oldStatus: '');
 
 			if (count($watchers) > 0) {
 				if( array_key_exists( "simpleEmail", $options ) ) {
@@ -1266,6 +1267,7 @@ class TrackerLib extends TikiLib {
 					if (count($parts) > 1)
 						unset ($parts[count($parts) - 1]);
 					$smarty->assign('mail_machine_raw', $this->httpPrefix(). implode('/', $parts));
+					$smarty->assign_by_ref('status', $status);
 					foreach ($watchers as $watcher) {
 						if ($itemId) {
 							$mail_action = "\r\n".tra('Item Modification', $watcher['language'])."\r\n\r\n";
@@ -1277,6 +1279,8 @@ class TrackerLib extends TikiLib {
 						}
 						$smarty->assign('mail_action', $mail_action);
 						$smarty->assign('mail_data', $the_data);
+						if (isset($watcher['action']))
+							$smarty->assign('mail_action', $watcher['action']);
 
 
 						$mail_data = $smarty->fetchLang($watcher['language'], 'mail/tracker_changed_notification.tpl');
@@ -1438,10 +1442,10 @@ class TrackerLib extends TikiLib {
 		return $total;
 	}
 
-	function import_csv($trackerId, $csvHandle, $replace = true, $dateFormat='', $encoding='UTF8') {
+	function import_csv($trackerId, $csvHandle, $replace = true, $dateFormat='', $encoding='UTF8', $csvDelimiter=',') {
 		global $tikilib;
 		$tracker_info = $this->get_tracker_options($trackerId);
-		if (($header = fgetcsv($csvHandle,100000)) === FALSE) {
+		if (($header = fgetcsv($csvHandle,100000,  $csvDelimiter)) === FALSE) {
 			return 'Illegal first line';
 		}
 		$max = count($header);
@@ -1457,7 +1461,7 @@ class TrackerLib extends TikiLib {
 		$total = 0;
 		$need_reindex = array();
 		$fields = $this->list_tracker_fields($trackerId, 0, -1, 'position_asc', '');
-		while (($data = fgetcsv($csvHandle,100000)) !== FALSE) {
+		while (($data = fgetcsv($csvHandle,100000,  $csvDelimiter)) !== FALSE) {
 			$status = $tracker_info['defaultStatus'];
 			$itemId = 0;
 			$created = $tikilib->now;
@@ -2269,7 +2273,7 @@ class TrackerLib extends TikiLib {
 		$type['m'] = array(
 			'label'=>tra('email'),
 			'opt'=>true,
-			'help'=>tra('Email address options: 0|1|2 where 0 puts the address as plain text, 1 does a hex encoded mailto link (more difficult for web spiders to pick it up and spam) and 2 does the normal href mailto.') );
+			'help'=>tra('Email address options: 0|1|2,o,p,c where the first param=0 puts the address as plain text, 1 does a hex encoded mailto link (more difficult for web spiders to pick it up and spam) and 2 does the normal href mailto. The second param=o watches status becoming open. The third param=p watches status becomin pending. The fourth param=c watches status becoming closed') );
 		$type['M'] = array(
 			'label'=>tra('multimedia'),
 			'opt'=>true,
@@ -2469,9 +2473,9 @@ class TrackerLib extends TikiLib {
 		}
 		return $field;
 	}
-	function get_notification_emails($trackerId, $itemId, $options, $newItemId=0) {
+	function get_notification_emails($trackerId, $itemId, $options, $newItemId=0, $status='', $oldStatus='') {
 		$watchers_global = $this->get_event_watches('tracker_modified',$trackerId);
-		$watchers_local = $this->get_local_notifications($itemId, $newItemId);
+		$watchers_local = $this->get_local_notifications($itemId, $newItemId, $status, $oldStatus);
 		$watchers_item = $itemId? $this->get_event_watches('tracker_item_modified',$itemId, array('trackerId'=>$trackerId)): array();
 		$watchers_outbound = array();
 		if( array_key_exists( "outboundEmail", $options ) && $options["outboundEmail"] ) {
@@ -2536,23 +2540,38 @@ class TrackerLib extends TikiLib {
 		return $ret;
 	}
 	/* return all the emails that are locally watching an item */
-	function get_local_notifications($itemId, $newItemId=0) {
-		global $tikilib, $userlib, $user_preferences;
+	function get_local_notifications($itemId, $newItemId=0, $status='', $oldStatus='') {
+		global $tikilib, $userlib, $user_preferences, $prefs;
 		$emails = array();
+		// user field watching item
 		$res = $this->get_item_values_by_type($itemId?$itemId:$newItemId, 'u');
-		if (!is_array($res))
-			return $emails;
-		foreach ($res as $f) {
-			if (isset($f['options_array'][0]) && ($f['options_array'][0] == 1 || $f['options_array'][0] == 2) && empty($itemId))
-				continue;//do not send email on a new item for a creator/modif field
-			if (isset($f['options_array'][1]) && $f['options_array'][1] == 1) {
-				$tikilib->get_user_preferences($f['value'], array('email', 'user', 'language', 'mailCharset'));
-				$emails[] = array('email'=>$userlib->get_user_email($f['value']), 'user'=>$f['value'], 'language'=>$user_preferences[$f['value']]['language'], 'mailCharset'=>$user_preferences[$f['value']]['mailCharset']);
+		if (is_array($res)) {
+			foreach ($res as $f) {
+				if (isset($f['options_array'][0]) && ($f['options_array'][0] == 1 || $f['options_array'][0] == 2) && empty($itemId))
+					continue;//do not send email on a new item for a creator/modif field
+				if (isset($f['options_array'][1]) && $f['options_array'][1] == 1) {
+					$tikilib->get_user_preferences($f['value'], array('email', 'user', 'language', 'mailCharset'));
+					$emails[] = array('email'=>$userlib->get_user_email($f['value']), 'user'=>$f['value'], 'language'=>$user_preferences[$f['value']]['language'], 'mailCharset'=>$user_preferences[$f['value']]['mailCharset']);
+				}
+			}
+		}
+		// email field watching status change
+		if ($status != $oldStatus) {
+			$res = $this->get_item_values_by_type($itemId?$itemId:$newItemId, 'm');
+			if (is_array($res)) {
+				foreach ($res as $f) {
+					if ((isset($f['options_array'][1]) && $f['options_array'][1] == 'o' && $status == 'o')
+						|| (isset($f['options_array'][2]) && $f['options_array'][2] == 'p' && $status == 'p')
+						|| (isset($f['options_array'][3]) && $f['options_array'][3] == 'c' && $status == 'c')) {
+						$emails[] = array('email'=> $f['value'], 'user'=>'', 'language'=>$prefs['language'], 'mailCharset'=>$prefs['users_prefs_mailCharset'], 'action'=>'status');	
+					}
+				}
 			}
 		}
 		return $emails;
 	}
-	function get_join_values($itemId, $fieldIds) {
+	function get_join_values($itemId, $fieldIds, $finalTrackerId='', $finalFields='', $separator=' ') {
+		global $smarty;
 		$select[] = "`tiki_tracker_item_fields` t0";
 		$where[] = " t0.`itemId`=?";
 		$bindVars[] = $itemId;
@@ -2571,7 +2590,22 @@ class TrackerLib extends TikiLib {
 		$result = $this->query($query, $bindVars);
 		$ret = array();
 		while ($res = $result->fetchRow()) {
-			$ret[$res['itemId']] = $res['value'];
+			$field_value = $this->get_tracker_field($res['fieldId']);
+			$field_value['value'] = $res['value'];
+			$smarty->assign('field_value', $field_value);
+			$ret[$res['itemId']] = $smarty->fetch('tracker_item_field_value.tpl');
+			if (is_array($finalFields) && count($finalFields)) {
+				$i = 0;
+				foreach ($finalFields as $f) {
+					if (!$i++)
+						continue;
+					$field_value = $this->get_tracker_field($f);
+					$ff = $this->get_item_value($finalTrackerId, $res['itemId'], $f);;
+					$field_value['value'] = $ff;
+					$smarty->assign('field_value', $field_value);
+					$ret[$res['itemId']] .= $separator.$smarty->fetch('tracker_item_field_value.tpl');
+				}
+			}
 		}
 		return $ret;
 	}
