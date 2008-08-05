@@ -391,6 +391,13 @@ class Tiki_Profile
 		$this->objects = $classified;
 		return $this->objects;
 	} // }}}
+
+	function removeSymbols() // {{{
+	{
+		global $tikilib;
+		$tikilib->query( "DELETE FROM tiki_profile_symbols WHERE domain = ? AND profile = ?",
+			array( $this->domain, $this->profile ) );
+	} // }}}
 }
 
 class Tiki_Profile_Object

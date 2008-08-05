@@ -59,6 +59,25 @@ function showDetails( id, domain, profile ) { // {{{
 					p.innerHTML = "A version of this profile is already installed.";
 					p.style.fontWeight = 'bold';
 					cell.appendChild(p);
+
+					var form = document.createElement( 'form' );
+					var p = document.createElement('p');
+					var submit = document.createElement('input');
+					var hidden = document.createElement('input');
+					form.method = 'post';
+					form.action = document.location.href;
+
+					form.appendChild(p);
+					submit.type = 'submit';
+					submit.name = 'forget';
+					submit.value = 'Forget Past Installation';
+					p.appendChild(submit);
+					hidden.type = 'hidden';
+					hidden.name = 'url';
+					hidden.value = data.url;
+					p.appendChild(hidden);
+
+					cell.appendChild(form);
 				}
 				else if( data.installable )
 				{
