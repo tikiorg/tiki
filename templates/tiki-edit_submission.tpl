@@ -29,7 +29,7 @@
 <form enctype="multipart/form-data" method="post" action="tiki-edit_submission.php" id='editpageform'>
 <input type="hidden" name="subId" value="{$subId|escape}" />
 <input type="hidden" name="previewId" value="{$previewId|escape}" />
-<input type="hidden" name="changeImage" value="{$changeImage|escape}" />
+<input type="hidden" name="imageIsChanged" value="{$imageIsChanged|escape}" />
 <input type="hidden" name="image_data" value="{$image_data|escape}" />
 <input type="hidden" name="useImage" value="{$useImage|escape}" />
 <input type="hidden" name="image_type" value="{$image_type|escape}" />
@@ -96,11 +96,14 @@
 <input name="userfile1" type="file" onchange="document.getElementById('useImage').checked = true;"/></td></tr>
 {if $hasImage eq 'y'}
   <tr class="formcolor"><td>{tr}Own Image{/tr}</td><td>{$image_name} [{$image_type}] ({$image_size} bytes)</td></tr>
-  {if $tempimg ne 'n'}
-    <tr class="formcolor"><td>{tr}Own Image{/tr}</td><td>
-    <img alt="{tr}Article image{/tr}" border="0" src="{$tempimg}" {if $image_x > 0}width="{$image_x}"{/if}{if $image_y > 0 }height="{$image_y}"{/if}/>
-    </td></tr>
-  {/if}
+	<tr class="formcolor">
+		<td>{tr}Own Image{/tr}</td>
+  	{if $imageIsChanged eq 'y'}
+			<td><img alt="{tr}Article image{/tr}" border="0" src="article_image.php?image_type=preview&amp;id={$previewId}" /></td>
+		{else}
+			<td><img alt="{tr}Article image{/tr}" border="0" src="article_image.php?image_type=submission&amp;id={$subId}" /></td>
+		{/if}
+	</tr>
 {/if}
 <tr id='show_image_2' {if $types.$type.show_image eq 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor"><td>{tr}Use own image{/tr} *</td><td>
 <input type="checkbox" name="useImage" id="useImage" {if $useImage eq 'y'}checked='checked'{/if}/>
