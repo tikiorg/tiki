@@ -14,6 +14,27 @@ function wikiplugin_article_help() {
 
         return $help;
 }
+
+function wikiplugin_article_info() {
+	return array(
+		'name' => tra('Article'),
+		'description' => tra('Includes an article\'s content within the page.'),
+		'prefs' => array( 'feature_article' ),
+		'params' => array(
+			'Field' => array(
+				'required' => false,
+				'name' => tra('Field'),
+				'description' => tra('The article field to display. Default field is Heading.'),
+			),
+			'Id' => array(
+				'required' => false,
+				'name' => tra('Article ID'),
+				'description' => tra('The article to display. If no value is provided, most recent article will be used.'),
+			),
+		),
+	);
+}
+
 function wikiplugin_article($data, $params) {
 	global $tikilib,$user,$userlib;
 	include_once('lib/stats/statslib.php');

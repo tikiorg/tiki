@@ -13,6 +13,56 @@ function wikiplugin_articles_help() {
         return $help;
 }
 
+function wikiplugin_articles_info() {
+	return array(
+		'name' => tra('Article List'),
+		'description' => tra('Includes a list of articles within the page.'),
+		'prefs' => array( 'feature_article' ),
+		'params' => array(
+			'max' => array(
+				'required' => false,
+				'name' => tra('Articles displayed'),
+				'description' => tra('The amount of articles to display in the list.'),
+			),
+			'topic' => array(
+				'required' => false,
+				'name' => tra('Topic name'),
+				'description' => tra('The name of the topic.'),
+			),
+			'topicId' => array(
+				'required' => false,
+				'name' => tra('Topic ID'),
+				'description' => tra('The ID of the topic.'),
+			),
+			'type' => array(
+				'required' => false,
+				'name' => tra('Type'),
+				'description' => tra('?'),
+			),
+			'categId' => array(
+				'required' => false,
+				'name' => tra('Category ID'),
+				'description' => tra('The ID of the category to list from.'),
+			),
+			'lang' => array(
+				'required' => false,
+				'name' => tra('Language'),
+				'description' => tra('The article language to list.'),
+			),
+			'sort' => array(
+				'required' => false,
+				'name' => tra('Sort order'),
+				'description' => tra('The column and order of the sort in columnName_asc or columnName_desc format.'),
+			),
+			'quiet' => array(
+				'required' => false,
+				'name' => tra('Quiet'),
+				'description' => tra('?'),
+			),
+		),
+	);
+}
+
 function wikiplugin_articles($data,$params) {
 	global $smarty, $tikilib, $prefs, $tiki_p_read_article, $tiki_p_articles_read_heading, $dbTiki, $pageLang;
 
