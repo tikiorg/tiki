@@ -5510,10 +5510,18 @@ function add_pageview() {
 		}
 	}
 
+
+	/* <x> XSS Sanitization handling */
+
 	// Converts &lt;x&gt; (<x> tag using HTML entities) into the tag <x>. This tag comes from the input sanitizer (XSS filter).
 	// This is not HTML valid and avoids using <x> in a wiki text,
 	//   but hide '<x>' text inside some words like 'style' that are considered as dangerous by the sanitizer.
 	$data = str_replace('&lt;x&gt;', '<x>', $data);
+
+        // Fix false positive in wiki syntax
+        //   It can't be done in the sanitizer, that can't know if the input will be wiki parsed or not
+        $data = preg_replace('/(\{img [^\}]+li)<x>(nk[^\}]+\})/i', '\\1\\2', $data);
+
 
 	// Replace dynamic content occurrences
 	if (preg_match_all("/\{content +id=([0-9]+)\}/", $data, $dcs)) {
@@ -6065,22 +6073,25 @@ function add_pageview() {
 	preg_match_all("/(\{img [^\}]+\})/", $data, $pages);
 
 	foreach (array_unique($pages[1])as $page_parse) {
-	    $parts = $this->split_tag( $page_parse);
+		$parts = $this->split_tag( $page_parse);
 
-	    $imgdata = array();      // pre-set preferences
-	    $imgdata["src"] = '';
-	    $imgdata["height"] = '';
-	    $imgdata["width"] = '';
-	    $imgdata["link"] = '';
-	    $imgdata["rel"] = '';
-	    $imgdata["title"] = '';
-	    $imgdata["align"] = '';
-	    $imgdata["desc"] = '';
-	    $imgdata["imalign"] = '';
-          $imgdata["alt"] = '';
-          $imgdata["usemap"] = '';
-          $imgdata["class"] = '';
-	    $imgdata = $this->split_assoc_array( $parts, $imgdata);
+		$imgdata = array();      // pre-set preferences
+		$imgdata["src"] = '';
+		$imgdata["height"] = '';
+		$imgdata["width"] = '';
+		$imgdata["lnk"] = '';
+		$imgdata["rel"] = '';
+		$imgdata["title"] = '';
+		$imgdata["align"] = '';
+		$imgdata["desc"] = '';
+		$imgdata["imalign"] = '';
+		$imgdata["alt"] = '';
+		$imgdata["usemap"] = '';
+		$imgdata["class"] = '';
+	  	$imgdata = $this->split_assoc_array( $parts, $imgdata );
+
+		// Support both 'link' and 'lnk' syntax
+		if ( isset($imgdata['link']) && $imgdata['lnk'] == '' ) $imgdata['lnk'] = $imgdata['link'];
 
 			if (stristr(str_replace(' ', '', $imgdata["src"]),'javascript:')) {
 				$imgdata["src"]  = '';
@@ -6131,14 +6142,14 @@ function add_pageview() {
 
 	    $repl .= ' />';
 
-	    if ($imgdata["link"]) {
+	    if ($imgdata["lnk"]) {
 			$imgtarget= '';
-			if ($prefs['popupLinks'] == 'y' && (preg_match('#^([a-z0-9]+?)://#i', $imgdata['link']) || preg_match('#^www\.([a-z0-9\-]+)\.#i',$imgdata['link']))) {
+			if ($prefs['popupLinks'] == 'y' && (preg_match('#^([a-z0-9]+?)://#i', $imgdata['lnk']) || preg_match('#^www\.([a-z0-9\-]+)\.#i',$imgdata['lnk']))) {
 				$imgtarget = ' target="_blank"';
 			}
 			if ($imgdata['rel']) $linkrel = ' rel="'.$imgdata['rel'].'"';
 			if ($imgdata['title']) $linktitle = ' title="'.$imgdata['title'].'"';
-			$repl = '<a href="'.$imgdata["link"].'"'.$linkrel.$imgtarget.$linktitle.'>' . $repl . '</a>';
+			$repl = '<a href="'.$imgdata["lnk"].'"'.$linkrel.$imgtarget.$linktitle.'>' . $repl . '</a>';
 	    }
 
 	    if ($imgdata["desc"]) {
