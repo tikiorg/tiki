@@ -79,8 +79,8 @@
 <h2>{tr}Current permissions for this object{/tr}</h2>
 <table class="normal">
 <tr>
-	<th class="heading" colspan="2">{tr}Permission{/tr}</th>
-	<th class="heading">{tr}Group{/tr}</th>
+	<th class="heading" colspan="2">{tr}Permissions{/tr}</th>
+	<th class="heading">{tr}Groups{/tr}</th>
 	<th class="heading" width="20px">{tr}Action{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
@@ -131,11 +131,11 @@
 
 <table class="normal">
 	<tr>
-		<th class="heading">{tr}Permission{/tr}</th>
-		<th class="heading" colspan="2">{tr}Groups{/tr}</th>
+		<th class="heading">{tr}Permissions{/tr}</th>
+		<th class="heading">{tr}Groups{/tr}</th>
 	</tr>
 <tr>
-<td width="45%"><table width="100%">
+<td><table width="100%">
 {cycle print=false values="even,odd"}
 {section name=prm loop=$perms}
 <tr class="{cycle advance=true}">
@@ -143,14 +143,15 @@
     <input type="checkbox" name="perm[]" value="{$perms[prm].permName|escape}" title="{$perms[prm].permName|escape}"/>
   </td>
   <td class="{cycle advance=false}">
-    {tr}{$perms[prm].permDesc|escape}{/tr}
-    <div class="subcomment">{$perms[prm].permName|escape}</div>
+    {$perms[prm].permName|escape}
   </td>
-	</tr>
+  <td class="{cycle advance=false}">
+    <div class="subcomment">{tr}{$perms[prm].permDesc|escape}{/tr}</div>
+  </td>
+  </tr>
 {/section}
 </table></td>
-<td style="vertical-align: top;">{tr}to group{/tr}:</td>
-<td width="45%"><table width="100%">
+<td><table width="100%">
 {cycle print=false values="even,odd"}
 {section name=grp loop=$groups}
 <tr class="{cycle advance=true}">
