@@ -572,7 +572,7 @@ div#attzone, div#comzone {	display: none;	margin-top: 10px;}
 div#attzoneopen, div#comzoneopen {display: block; margin-top: 10px;}
 div#edithelpzone {display: none;}
 #rules-copy-panel {display: none;}
-.clear, #clear {clear: both;}
+.clear, #clear {clear: both !important;}
 br.clear {clear: both; height: 0}
 .clearfix:after {
     content: "."; 
