@@ -5642,6 +5642,11 @@ function add_pageview() {
 	// Handle ~pre~...~/pre~ sections
 	$data = preg_replace(';~pre~(.*?)~/pre~;s', '<pre>$1</pre>', $data);
 
+	// Strike-deleted text --text--
+	if (!$simple_wiki) {
+		$data = preg_replace("/--(.+?)--/", "<del>$1</del>", $data);
+	}
+
 	// Handle comment sections
 	$data = preg_replace(';~tc~(.*?)~/tc~;s', '', $data);
 	$data = preg_replace(';~hc~(.*?)~/hc~;s', '<!-- $1 -->', $data);
@@ -5869,11 +5874,9 @@ function add_pageview() {
 		// Replace colors ~~foreground[,background]:text~~
 		$data = preg_replace("/\~\~([^\:\,]+)(,([^\:]+))?:([^\~]+)\~\~/", "<span style=\"color:$1; background:$3\">$4</span>", $data);
 		// Underlined text
-		$data = preg_replace("/===([^\=]+)===/", "<span style=\"text-decoration:underline;\">$1</span>", $data);
+		$data = preg_replace("/===(.+?)===/", "<span style=\"text-decoration:underline;\">$1</span>", $data);
 		// Center text
 		$data = preg_replace("/::(.+?)::/", "<div align=\"center\">$1</div>", $data);
-		// Strike text
-		$data = preg_replace("/--([^\-]+)--/", "<del>$1</del>", $data);
 	}
 
     // definitively put out the protected words ))protectedWord((
