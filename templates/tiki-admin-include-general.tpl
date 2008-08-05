@@ -99,10 +99,10 @@
 	  </tr><tr>
 	  <td class="form"><label for="log_mail">{tr}Log Mail in Tiki Logs:{/tr}</label></td>
 	  <td><input type="checkbox" name="log_mail"{if $prefs.log_mail eq 'y'} checked="checked"{/if} />
-	  {tr}only queries using more than seconds:{/tr} <input type="text" name="log_sql_perf_min" value="{$prefs.log_sql_perf_min}" /></td>
 	  </tr><tr>
 	  <td class="form"><label for="log_sql">{tr}Log SQL:{/tr}</label></td>
 	  <td><input type="checkbox" name="log_sql"{if $prefs.log_sql eq 'y'} checked="checked"{/if} /></td>
+	  {tr}only queries using more than seconds:{/tr} <input type="text" name="log_sql_perf_min" value="{$prefs.log_sql_perf_min}" /></td>
       </tr><tr>
       <td class="form"><label for="general-charset">{tr}Default charset for sending mail:{/tr}</label></td>
       <td><select name="default_mail_charset" id="general-charset">
