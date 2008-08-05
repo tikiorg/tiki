@@ -232,26 +232,26 @@ if (isset($_REQUEST["preview"])) {
 		$file_name = $_FILES['userfile1']['name'];
 		// Simple check if it's an image file
 		if (preg_match('/\.(gif|png|jpe?g)$/i',$file_name)) {
-		$fp = fopen($_FILES['userfile1']['tmp_name'], "rb");
-		$data = fread($fp, filesize($_FILES['userfile1']['tmp_name']));
-		fclose ($fp);
+			$fp = fopen($_FILES['userfile1']['tmp_name'], "rb");
+			$data = fread($fp, filesize($_FILES['userfile1']['tmp_name']));
+			fclose ($fp);
 
-		$imgtype = $_FILES['userfile1']['type'];
-		$imgsize = $_FILES['userfile1']['size'];
-		$imgname = $_FILES['userfile1']['name'];
-		$smarty->assign('image_data', urlencode($data));
-		$smarty->assign('image_name', $imgname);
-		$smarty->assign('image_type', $imgtype);
-		$smarty->assign('image_size', $imgsize);
-		$hasImage = 'y';
-		$smarty->assign('hasImage', 'y');
-		// Create preview cache image, for display afterwards
-		$cachefile = $prefs['tmpDir'];
-		if ($tikidomain) { $cachefile.= "/$tikidomain"; }
-		$cachefile.= "/article_preview.".$previewId;
-		if (move_uploaded_file($_FILES['userfile1']['tmp_name'], $cachefile)) {
-			$smarty->assign('imageIsChanged', 'y');
-		}
+			$imgtype = $_FILES['userfile1']['type'];
+			$imgsize = $_FILES['userfile1']['size'];
+			$imgname = $_FILES['userfile1']['name'];
+			$smarty->assign('image_data', urlencode($data));
+			$smarty->assign('image_name', $imgname);
+			$smarty->assign('image_type', $imgtype);
+			$smarty->assign('image_size', $imgsize);
+			$hasImage = 'y';
+			$smarty->assign('hasImage', 'y');
+			// Create preview cache image, for display afterwards
+			$cachefile = $prefs['tmpDir'];
+			if ($tikidomain) { $cachefile.= "/$tikidomain"; }
+			$cachefile.= "/article_preview.".$previewId;
+			if (move_uploaded_file($_FILES['userfile1']['tmp_name'], $cachefile)) {
+				$smarty->assign('imageIsChanged', 'y');
+			}
 		}
 	}
 
