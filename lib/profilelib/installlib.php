@@ -10,6 +10,7 @@ class Tiki_Profile_Installer
 		'wiki_page' => 'Tiki_Profile_InstallHandler_WikiPage',
 		'category' => 'Tiki_Profile_InstallHandler_Category',
 		'file_gallery' => 'Tiki_Profile_InstallHandler_FileGallery',
+		'module' => 'Tiki_Profile_InstallHandler_Module',
 	);
 
 	function __construct() // {{{
@@ -732,6 +733,54 @@ class Tiki_Profile_InstallHandler_FileGallery extends Tiki_Profile_InstallHandle
 		$this->obj->replaceReferences( $input );
 		
 		return $filegallib->replace_file_gallery( $input );
+	}
+} // }}}
+
+class Tiki_Profile_InstallHandler_Module extends Tiki_Profile_InstallHandler // {{{
+{
+	function getData()
+	{
+		if( $this->data )
+			return $this->data;
+
+		$defaults = array(
+			'cache' => 0,
+			'rows' => 10,
+			'groups' => array(),
+			'params' => array(),
+		);
+
+		$data = array_merge(
+			$defaults,
+			$this->obj->getData()
+		);
+
+		$data['groups'] = serialize( $data['groups'] );
+		$data['params'] = http_build_query( $data['params'], '', '&' );
+
+		return $this->data = $data;
+	}
+
+	function canInstall()
+	{
+		$data = $this->getData();
+		if( ! isset( $data['name'], $data['position'], $data['order'] ) )
+			return false;
+
+		return true;
+	}
+
+	function _install()
+	{
+		global $modlib;
+		if( ! $modlib ) require_once 'lib/modules/modlib.php';
+
+		$data = $this->getData();
+		$data['position'] = ($data['position'] == 'left') ? 'l' : 'r';
+
+		$this->obj->replaceReferences( $data );
+		
+		return $modlib->assign_module( 0, $data['name'], null, $data['position'], $data['order'], $data['cache'], $data['rows'], $data['groups'], $data['params'] );
 	}
 } // }}}
 
