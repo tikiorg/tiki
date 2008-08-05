@@ -61,6 +61,7 @@ if (isset($_REQUEST["new_prefs"])) {
         "site_closed_msg",
         "helpurl",
         "tiki_version_check_frequency",
+		'log_sql_perf_min',
     );
 
     foreach ($pref_simple_values as $svitem) {
