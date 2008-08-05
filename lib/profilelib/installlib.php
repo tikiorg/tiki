@@ -9,6 +9,7 @@ class Tiki_Profile_Installer
 		'tracker_item' => 'Tiki_Profile_InstallHandler_TrackerItem',
 		'wiki_page' => 'Tiki_Profile_InstallHandler_WikiPage',
 		'category' => 'Tiki_Profile_InstallHandler_Category',
+		'file_gallery' => 'Tiki_Profile_InstallHandler_FileGallery',
 	);
 
 	function __construct() // {{{
@@ -655,6 +656,82 @@ class Tiki_Profile_InstallHandler_Category extends Tiki_Profile_InstallHandler /
 		}
 
 		return $id;
+	}
+} // }}}
+
+class Tiki_Profile_InstallHandler_FileGallery extends Tiki_Profile_InstallHandler // {{{
+{
+	function getData()
+	{
+		if( $this->data )
+			return $this->data;
+
+		$defaults = array(
+			'owner' => 'admin',
+			'public' => 'n',
+		);
+
+		$conversions = array(
+			'owner' => 'user',
+			'max_rows' => 'maxRows',
+			'parent' => 'parentId',
+		);
+
+		$data = $this->obj->getData();
+
+		$data = Tiki_Profile::convertLists( $data, array(
+			'flags' => 'y',
+		) );
+
+		$column = isset( $data['column'] ) ? $data['column'] : array();
+		$popup = isset( $data['popup'] ) ? $data['popup'] : array();
+
+		$both = array_intersect( $column, $popup );
+		$column = array_diff( $column, $both );
+		$popup = array_diff( $popup, $both );
+
+		foreach( $both as $value )
+			$data["show_$value"] = 'a';
+		foreach( $column as $value )
+			$data["show_$value"] = 'y';
+		foreach( $popup as $value )
+			$data["show_$value"] = 'o';
+
+		unset( $data['popup'] );
+		unset( $data['column'] );
+
+		$data = array_merge( $defaults, $data );
+
+		foreach( $conversions as $old => $new )
+			if( array_key_exists( $old, $data ) )
+			{
+				$data[$new] = $data[$old];
+				unset( $data[$old] );
+			}
+
+		unset( $data['galleryId'] );
+
+		return $this->data = $data;
+	}
+
+	function canInstall()
+	{
+		$data = $this->getData();
+		if( ! isset( $data['name'] ) )
+			return false;
+
+		return true;
+	}
+
+	function _install()
+	{
+		global $filegallib;
+		if( ! $filegallib ) require_once 'lib/filegals/filegallib.php';
+
+		$input = $this->getData();
+		$this->obj->replaceReferences( $input );
+		
+		return $filegallib->replace_file_gallery( $input );
 	}
 } // }}}
 
