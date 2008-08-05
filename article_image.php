@@ -9,6 +9,12 @@
 // application to display an image from the database with 
 // option to resize the image dynamically creating a thumbnail on the fly.
 
+// This handles three types of images, depending on the image_type parameter: 
+// "article": Images for articles
+// "submission": Images for article submissions
+// "preview": Images for article and article submissions previews
+// Any other value is invalid
+
 require_once ('tiki-setup.php');
 
 if ($prefs['feature_articles'] != 'y') {
@@ -33,18 +39,47 @@ if (!isset($_REQUEST["id"])) {
 include_once ('lib/init/initlib.php');
 include_once ('tiki-setup_base.php');
 
-$topiccachefile = $prefs['tmpDir'];
+switch ($_REQUEST["image_type"]) {
+	case "article":
+		$image_cache_prefix="article";
+		break;
+	case "submission":
+		$image_cache_prefix="article_submission";
+		break;
+	case "preview":
+		$image_cache_prefix="article_preview";
+		break;
+	default:
+		die;
+}
 
-if ($tikidomain) { $topiccachefile.= "/$tikidomain"; }
-$topiccachefile.= "/article.".$_REQUEST["id"];
+$cachefile = $prefs['tmpDir'];
+if ($tikidomain) { $cachefile.= "/$tikidomain"; }
+$cachefile.= "/$image_cache_prefix.".$_REQUEST["id"];
 
-if (is_file($topiccachefile) and (!isset($_REQUEST["reload"]))) {
-	$size = getimagesize($topiccachefile);
-	header ("Content-type: ".$size['mime']); /* do not backport to 1.8 */
-	readfile($topiccachefile);
+// If cached file exists, display cached file
+if (is_file($cachefile) and (!isset($_REQUEST["reload"]))) {
+	$size = getimagesize($cachefile);
+	header ("Content-type: ".$size['mime']);
+	readfile($cachefile);
 	die();
 } else {
-	$data = $tikilib->get_article_image($_REQUEST["id"]);
+	// Create cached file from database data for articles or submissions
+	switch ($_REQUEST["image_type"]) {
+		case "article":
+			$data = $tikilib->get_article_image($_REQUEST["id"]);
+			break;
+		case "submission":
+			$data = $tikilib->get_submission($_REQUEST["id"]);
+			break;
+		case "preview":
+			// We can't get the data from the database. No fallback solution.
+			// No image displayed
+			break;
+		default:
+			// Invalid value
+			die;
+	}
 	// if blank then die, otherwise we offer to download strangeness
 	// this also catches invalid id's
 	if (!$data) {
@@ -53,15 +88,15 @@ if (is_file($topiccachefile) and (!isset($_REQUEST["reload"]))) {
 	$type = $data["image_type"];
 	$data = $data["image_data"];
 	if ($data["image_data"]) {
-		$fp = fopen($topiccachefile,"wb");
+		$fp = fopen($cachefile,"wb");
 		fputs($fp,$data);
 		fclose($fp);
 	}
 }
 
 header ("Content-type: $type");
-if (is_file($topiccachefile)) {
-	readfile($topiccachefile);
+if (is_file($cachefile)) {
+	readfile($cachefile);
 } else {
 	echo $data;
 }

@@ -13,7 +13,8 @@
     <tr><td  valign="top">
     {if $useImage eq 'y'}
       {if $hasImage eq 'y'}
-        <img alt="{tr}Article image{/tr}" border="0" src="article_image.php?id={$articleId}" />
+        <img alt="{tr}Article image{/tr}" border="0" src="article_image.php?image_type=article&amp;id={$articleId}" 
+				{if $image_x > 0}width="{$image_x}"{/if}{if $image_y > 0 }height="{$image_y}"{/if} />
       {else}
         <img alt="{tr}Topic image{/tr}" border="0" src="topic_image.php?id={$topicId}" />
       {/if}

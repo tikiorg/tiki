@@ -9,7 +9,6 @@
 // Initialization
 $section = 'cms';
 require_once ('tiki-setup.php');
-
 include_once ('lib/articles/artlib.php');
 
 if ($prefs['feature_freetags'] == 'y') {
@@ -44,8 +43,18 @@ if (isset($_REQUEST["subId"])) {
 	$subId = 0;
 }
 
+// We need separate numbering of previews, since we access preview images by this number
+if (isset($_REQUEST["previewId"])) {
+	$previewId = $_REQUEST["previewId"];
+} else {
+	$previewId = rand();
+}
+
 $smarty->assign('subId', $subId);
 $smarty->assign('articleId', $subId);
+$smarty->assign('previewId', $previewId);
+$smarty->assign('imageIsChanged', ($_REQUEST["imageIsChanged"]=='y')?'y':'n');
+
 $smarty->assign('allowhtml', 'y');
 $publishDate = $tikilib->now;
 $expireDate = $tikilib->make_time(0,0,0,$tikilib->date_format("%m"), $tikilib->date_format("%d"), $tikilib->date_format("%Y")+1);
@@ -122,15 +131,9 @@ if (isset($_REQUEST["subId"])) {
 	$imgname = $article_data["image_name"];
 
 	if ($hasImage == 'y') {
-		$tmpfname = $prefs['tmpDir'] . "/articleimage" . "." . $_REQUEST["subId"];
-		$fp = fopen($tmpfname, "wb");
-		if ($fp) {
-			fwrite($fp, $data);
-			fclose ($fp);
-			$smarty->assign('tempimg', $tmpfname);
-		} else {
-			$smarty->assign('tempimg', 'n');
-		}
+		$smarty->assign('tempimg', 'article_image.php?image_type=submission&amp;id='.$_REQUEST["articleId"]);
+	} else {
+		$smarty->assign('tempimg', 'n');
 	}
 
 	$body = $article_data["body"];
@@ -228,21 +231,11 @@ if (isset($_REQUEST["preview"])) {
 		
 		$file_name = $_FILES['userfile1']['name'];
 		// Simple check if it's an image file
-		if (preg_match('/\.(gif|png|jpe?g)$/i',$file_name)) {			
-		$file_tmp_name = $_FILES['userfile1']['tmp_name'];
-		$tmp_dest = $prefs['tmpDir'] . "/" . $file_name.".tmp";
-		if (!move_uploaded_file($file_tmp_name, $tmp_dest)) {
-			$smarty->assign('msg', tra('Errors detected'));
-			$smarty->display("error.tpl");
-			die();
-		}
-		
-
-		$fp = fopen($tmp_dest, "rb");
-		$data = fread($fp, filesize($tmp_dest));
-		
+		if (preg_match('/\.(gif|png|jpe?g)$/i',$file_name)) {
+		$fp = fopen($_FILES['userfile1']['tmp_name'], "rb");
+		$data = fread($fp, filesize($_FILES['userfile1']['tmp_name']));
 		fclose ($fp);
-		unlink($tmp_dest);
+
 		$imgtype = $_FILES['userfile1']['type'];
 		$imgsize = $_FILES['userfile1']['size'];
 		$imgname = $_FILES['userfile1']['name'];
@@ -252,20 +245,16 @@ if (isset($_REQUEST["preview"])) {
 		$smarty->assign('image_size', $imgsize);
 		$hasImage = 'y';
 		$smarty->assign('hasImage', 'y');
+		// Create preview cache image, for display afterwards
+		$cachefile = $prefs['tmpDir'];
+		if ($tikidomain) { $cachefile.= "/$tikidomain"; }
+		$cachefile.= "/article_preview.".$previewId;
+		if (move_uploaded_file($_FILES['userfile1']['tmp_name'], $cachefile)) {
+			$smarty->assign('imageIsChanged', 'y');
+		}
 		}
 	}
 
-	if ($hasImage == 'y') {
-		$tmpfname = $prefs['tmpDir'] . "/articleimage" . "." . $_REQUEST["subId"];
-		$fp = fopen($tmpfname, "wb");
-		if ($fp) {
-			fwrite($fp, $data);
-			fclose ($fp);
-			$smarty->assign('tempimg', $tmpfname);
-		} else {
-			$smarty->assign('tempimg', 'n');
-		}
-	}
 
 	$smarty->assign('heading', $_REQUEST["heading"]);
 	$smarty->assign('edit_data', 'y');
@@ -397,17 +386,6 @@ if (isset($_REQUEST["save"]) || isset($_REQUEST["submit"])) {
                                       , $isfloat
                                     );
 
-	/*
-  $links = $tikilib->get_links($body);
-  $notcachedlinks = $tikilib->get_links_nocache($body);
-  $cachedlinks = array_diff($links, $notcachedlinks);
-  $tikilib->cache_links($cachedlinks); 
-
-  $links = $tikilib->get_links($heading);
-  $notcachedlinks = $tikilib->get_links_nocache($heading);
-  $cachedlinks = array_diff($links, $notcachedlinks);
-  $tikilib->cache_links($cachedlinks); 
-*/
 	$cat_type = 'submission';
 	$cat_objid = $subid;
 	$cat_desc = substr($_REQUEST["heading"], 0, 200);
@@ -415,6 +393,11 @@ if (isset($_REQUEST["save"]) || isset($_REQUEST["submit"])) {
 	$cat_href = "tiki-edit_submission.php?subId=" . $cat_objid;
 	include_once ("categorize.php");
 	include_once ("freetag_apply.php");
+	// Remove image cache because image may have changed, and we
+	// don't want to show the old image
+	@$artlib->delete_image_cache("submission",$subId);
+	// Remove preview cache because it won't be used any more
+	@$artlib->delete_image_cache("preview",$previewId);
 	if ( isset($_REQUEST["save"]) && $tiki_p_autoapprove_submission == 'y' ) {
 		$artlib->approve_submission($subid);
 		header ("location: tiki-view_articles.php");
@@ -432,6 +415,7 @@ $_SESSION["thedate"] = $tikilib->now;
 $topics = $artlib->list_topics();
 $smarty->assign_by_ref('topics', $topics);
 
+// get list of valid types
 $types = $artlib->list_types_byname();
 $smarty->assign_by_ref('types', $types);
 

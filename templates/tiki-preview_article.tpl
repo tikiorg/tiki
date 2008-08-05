@@ -24,10 +24,15 @@
 <tr><td  valign="top">
 {if $useImage eq 'y'}
   {if $hasImage eq 'y'}
-    {if $articleId gt 0}
-      <img alt="{tr}Article image{/tr}" border="0" src="article_image.php?id={$articleId}" />
+    {if $imageIsChanged eq 'y'}
+      <img alt="{tr}Article image{/tr}" border="0" src="article_image.php?image_type=preview&amp;id={$previewId}" 
+			{if $image_x > 0}width="{$image_x}"{/if}{if $image_y > 0 }height="{$image_y}"{/if} />
     {else}
-      <img alt="{tr}Article image{/tr}" border="0" src="{$tempimg}" />
+			{if $subId}
+      	<img alt="{tr}Article image{/tr}" border="0" src="article_image.php?image_type=submission&amp;id={$subId}" />
+			{else}
+      	<img alt="{tr}Article image{/tr}" border="0" src="article_image.php?image_type=article&amp;id={$articleId}" />
+			{/if}
     {/if}
   {else}
     <img alt="{tr}Topic image{/tr}" border="0" src="topic_image.php?id={$topicId}" />

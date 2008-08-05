@@ -59,6 +59,8 @@ if (isset($_REQUEST["articleId"])) {
 	$smarty->assign('image_name', $article_data["image_name"]);
 	$smarty->assign('image_type', $article_data["image_type"]);
 	$smarty->assign('image_size', $article_data["image_size"]);
+	$smarty->assign('image_x', $article_data["image_x"]);
+	$smarty->assign('image_y', $article_data["image_y"]);
 	$smarty->assign('image_data', urlencode($article_data["image_data"]));
 	$smarty->assign('reads', $article_data["nbreads"]);
 	$smarty->assign('size', $article_data["size"]);

@@ -214,7 +214,7 @@ class ArtLib extends TikiLib {
 				(int) $image_x, (int) $image_y, $heading, $body, (int) $publishDate, (int) $expireDate, (int) $this->now, $user, $type, (float) $rating, 
 				$topline, $subtitle, $linkto, $image_caption, $lang, (int) $articleId ) );
 				// Clear article image cache because image may just have been changed
-				$this->delete_image_cache($articleId);
+				$this->delete_image_cache("article",$articleId);
 		} else {
 		    // Fixed query. -rlpowell
 		    // Insert the article
@@ -593,18 +593,31 @@ $show_expdate, $show_reads, $show_size, $show_topline, $show_subtitle, $show_lin
 				$msgs[] = sprintf(tra('Error line: %d'), $line);
 			}
 		}
-return true;
+		return true;
 	}
 
-	function delete_image_cache($articleId) {
+	function delete_image_cache($image_type,$imageId) {
 		global $prefs;
-		// Input validation: articleID must be a number, and not 0 
-		if(!ctype_digit("$articleId") || !($articleId>0)) {
+		// Input validation: imageId must be a number, and not 0 
+		if(!ctype_digit("$imageId") || !($imageId>0)) {
 			return false;
+		}
+		switch ($image_type) {
+			case "article":
+				$image_cache_prefix="article";
+				break;
+			case "submission":
+				$image_cache_prefix="article_submission";
+				break;
+			case "preview":
+				$image_cache_prefix="article_preview";
+				break;
+			default:
+				return false;
 		}
 		$article_image_cache = $prefs['tmpDir'];
 		if ($tikidomain) { $article_image_cache.= "/$tikidomain"; }
-		$article_image_cache.= "/article.".$articleId;
+		$article_image_cache.= "/$image_cache_prefix.".$imageId;
 		if ( @unlink($article_image_cache) ) {
 			return true;
 		}else{
