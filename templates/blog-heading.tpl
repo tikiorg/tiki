@@ -5,7 +5,7 @@
 <div class="bloginfo">
 {tr}Created by{/tr} {$creator|userlink}{tr} on {/tr}{$created|tiki_short_datetime}<br />
 {tr}Last post{/tr} {$lastModif|tiki_short_datetime}<br />
-<span style="float:right;">
+<span class="blogactions">
 		{if $tiki_p_blog_post eq "y"}
 		{if ($user and $creator eq $user) or $tiki_p_blog_admin eq "y" or $public eq "y"}
 		<a class="bloglink" href="tiki-blog_post.php?blogId={$blogId}">{icon _id='pencil_add' alt='{tr}Post{/tr}'}</a>

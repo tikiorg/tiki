@@ -512,3 +512,7 @@ div #page-bar
   text-align: center;
   font-size: 7pt;
 }
+
+.blogactions {
+	float:right;
+}
