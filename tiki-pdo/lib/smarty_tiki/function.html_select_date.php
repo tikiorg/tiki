@@ -79,12 +79,21 @@ function smarty_function_html_select_date($params, &$smarty)
     $field_order      = 'MDY';
     /* String printed between the different fields. */
     $field_separator = "\n";
+	/* Allow empty date fields. */
+	$all_empty       = null;
+	$day_empty       = null;
+	$month_empty     = null;
+	$year_empty      = null;
 
     extract($params);
 	if (!$time) $time = time();
+	if (isset($all_empty)) 
+		$day_empty = $month_empty = $year_empty = $all_empty;
 
   	// If $time is not in format yyyy-mm-dd
-  	if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $time)) {
+  	// if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $time)) {
+	// Had to replace the search to accommodate "--" empty time setting.
+  	if (!(preg_match('/^\d{0,4}-/', $time) || preg_match('/-\d{0,2}/', $time) || preg_match('/-$/', $time))) {
   		// then $time is empty or unix timestamp or mysql timestamp
   		// using smarty_make_timestamp to get an unix timestamp and
   		// strftime to make yyyy-mm-dd
@@ -115,6 +124,10 @@ function smarty_function_html_select_date($params, &$smarty)
     if ($display_months) {
         $month_names = array();
         $month_values = array();
+		if(isset($month_empty)) {
+			$month_names[''] = $month_empty;
+			$month_values[''] = 'null';
+		}
 
         for ($i = 1; $i <= 12; $i++) {
 
@@ -146,7 +159,7 @@ function smarty_function_html_select_date($params, &$smarty)
         
         $month_result .= smarty_function_html_options(array('output'     => $month_names,
                                                             'values'     => $month_values,
-                                                            'selected'   => $month_values[$time[1]-1],
+                                                            'selected'   => (int)$time[1] ? $month_values[$time[1]-1] : '',
                                                             'print_result' => false),
                                                       $smarty);
         
@@ -155,6 +168,10 @@ function smarty_function_html_select_date($params, &$smarty)
 
     if ($display_days) {
         $days = array();
+		if (isset($day_empty)) {
+			$days[''] = $day_empty;
+			$day_values[''] = 'null';
+		}
         for ($i = 1; $i <= 31; $i++) {
             $days[] = sprintf($day_format, $i);
             $day_values[] = sprintf($day_value_format, $i);
@@ -205,6 +222,12 @@ function smarty_function_html_select_date($params, &$smarty)
                 rsort($years, SORT_NUMERIC);
             }
 
+			$yearvals = $years;
+			if(isset($year_empty)) {
+				array_unshift($years, $year_empty);
+				array_unshift($yearvals, 'null');
+			}
+
             $year_result .= '<select name="' . $year_name . '"';
             if (null !== $year_size){
                 $year_result .= ' size="' . $year_size . '"';
@@ -217,7 +240,7 @@ function smarty_function_html_select_date($params, &$smarty)
             }
             $year_result .= '>'."\n";
             $year_result .= smarty_function_html_options(array('output' => $years,
-                                                               'values' => $years,
+                                                               'values' => $yearvals,
                                                                'selected'   => $time[0],
                                                                'print_result' => false),
                                                          $smarty);

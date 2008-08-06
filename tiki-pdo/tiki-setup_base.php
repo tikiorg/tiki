@@ -171,6 +171,7 @@ $patterns['char']  = "/^(pref:)?[-,_a-zA-Z0-9]*$/"; // sort_mode
 $patterns['string']  = "/^<\/?(b|strong|small|br *\/?|ul|li|i)>|[^<>\";#]*$/"; // find, and such extended chars
 $patterns['stringlist']  = "/^[^<>\"#]*$/"; // to, cc, bcc (for string lists like: user1;user2;user3)
 $patterns['vars']  = "/^[-_a-zA-Z0-9]*$/"; // for variable keys
+$patterns['dotvars']  = "/^[-_a-zA-Z0-9\.]*$/"; // same pattern as a variable key, but that may contain a dot
 $patterns['hash'] = "/^[a-z0-9]*$/"; // for hash reqId in live support
 // needed for the htmlpage inclusion in tiki-editpage
 $patterns['url'] = "/^(https?:\/\/)?[^<>\"']*$/"; // needed for the htmlpage inclusion in tiki-editpage
@@ -243,6 +244,7 @@ $vartype['type'] = 'string';
 $vartype['userole'] = 'int';
 $vartype['focus'] = 'string';
 $vartype['filegals_manager'] = 'vars';
+$vartype['ver'] = 'dotvars'; // filename hash for drawlib + rss type for rsslib
 
 function varcheck($array) {
   global $patterns, $vartype, $prefs;
@@ -273,7 +275,8 @@ function varcheck($array) {
 	          or ($vartype["$rq"] == 'char') and !preg_match($patterns['char'],$rv)
 	          or ($vartype["$rq"] == 'hash') and !preg_match($patterns['hash'],$rv)
 	          or ($vartype["$rq"] == 'string') and !preg_match($patterns['string'],$rv)
-	          or ($vartype["$rq"] == 'stringlist') and !preg_match($patterns['stringlist'],$rv))
+	          or ($vartype["$rq"] == 'stringlist') and !preg_match($patterns['stringlist'],$rv)
+	          or ($vartype["$rq"] == 'dotvars') and !preg_match($patterns['dotvars'],$rv))
 	        {
 						return(tra("Notice: invalid variable value:")." $rq = <font color='red'>".htmlspecialchars($rv)."</font>");
 	        }

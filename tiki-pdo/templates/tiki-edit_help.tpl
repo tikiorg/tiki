@@ -51,9 +51,10 @@
 <tr><td width="20%" class="{cycle advance=false}"><strong>{tr}Italic text{/tr}</strong></td><td class="{cycle}"> 2 {tr}single quotes{/tr} "'".  {tr}Example{/tr} ''{tr}text{/tr}'' = <em>text</em></td></tr>
 <tr><td class="{cycle advance=false}"><strong>{tr}Centered text{/tr}</strong></td><td class="{cycle}"> 2 {tr}colons{/tr} ":". {tr}Example{/tr} ::{tr}some text{/tr}:</td></tr>
 <tr><td class="{cycle advance=false}"><strong>{tr}Underlined text{/tr}</strong></td><td class="{cycle}"> 3 {tr}equals{/tr} "=". {tr}Example{/tr} ==={tr}text{/tr}===</td></tr>
+<tr><td class="{cycle advance=false}"><strong>{tr}Deleted text{/tr}</strong></td><td class="{cycle}"> {tr}2 dashes{/tr} "-". {tr}Example{/tr} --{tr}text{/tr}--</td></tr>
 <tr><td class="{cycle advance=false}"><strong>{tr}Text box{/tr}</strong></td><td class="{cycle}"> {tr}One carat{/tr} "^". {tr}Creates a box with the data{/tr}. {tr}Example{/tr} "^{tr}Box content{/tr}^"</td></tr>
 <tr><td class="{cycle advance=false}"><strong>{tr}Title bar{/tr}</strong></td><td class="{cycle}"> "-={tr}Title{/tr}=-" {tr}creates a title bar{/tr}.</td></tr>
-<tr><td class="{cycle advance=false}"><strong>{tr}Colored text{/tr}</strong></td><td class="{cycle}"> "~~#FFEE33:{tr}some text{/tr}~~" {tr}or{/tr}  "~~yellow:{tr}some text{/tr}~~". {tr}Will display using the indicated HTML color or color name{/tr}</td></tr>
+<tr><td class="{cycle advance=false}"><strong>{tr}Colored text{/tr}</strong></td><td class="{cycle}"> "~~#FFEE33:{tr}some text{/tr}~~" {tr}or{/tr}  "~~yellow:{tr}some text{/tr}~~". {tr}Will display using the indicated HTML color or color name. Color name can contain two colors separated by a comma. In this case, the first color would be the foreground and the second one the background.{/tr}</td></tr>
 <tr><td class="{cycle advance=false}"><strong>{tr}Lists{/tr}</strong></td><td class="{cycle}"> * {tr}for bullet lists{/tr}, # {tr}for numbered lists{/tr}, ;{tr}Word{/tr}{tr}definition{/tr} {tr}for definiton lists{/tr}</td></tr>
 <tr><td class="{cycle advance=false}"><strong>{tr}Indentation{/tr}</strong></td><td class="{cycle}">+, ++ {tr}Creates an indentation for each plus(useful in list to continue at the same level){/tr}</td></tr>
 <tr><td class="{cycle advance=false}"><strong>{tr}Headings{/tr}</strong></td><td class="{cycle}"> "!", "!!", "!!!" {tr}make headings{/tr}</td></tr>

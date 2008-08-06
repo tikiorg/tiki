@@ -39,6 +39,16 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 		exit;
 	} // }}}
 
+	if( isset($_POST['forget'], $_POST['url']) ) { // {{{
+		require_once 'lib/profilelib/profilelib.php';
+
+		$profile = new Tiki_Profile( $_POST['url'] );
+		$profile->removeSymbols();
+		
+		header( 'Location: ' . $_SERVER['REQUEST_URI'] );
+		exit;
+	} // }}}
+
 	if( isset($_POST['install'], $_POST['url']) ) { // {{{
 		require_once 'lib/profilelib/profilelib.php';
 		require_once 'lib/profilelib/installlib.php';

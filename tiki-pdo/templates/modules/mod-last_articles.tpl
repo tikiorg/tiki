@@ -18,7 +18,7 @@
 				<div class="date">{$modLastArticles[ix].publishDate|tiki_short_date}</div>
 			{/if}
 			{if isset($showImg)}
-			{if $modLastArticles[ix].hasImage eq 'y'}<div class="image"><img alt="" src="article_image.php?id={$modLastArticles[ix].articleId}" width="{$showImg}" /></div>{elseif $modLastArticles[ix].topicId}<div class="image"><img alt="" src="topic_image.php?id={$modLastArticles[ix].topicId}" width="{$showImg}" /></div>{/if}
+			{if $modLastArticles[ix].hasImage eq 'y'}<div class="image"><img alt="" src="article_image.php?id={$modLastArticles[ix].articleId}" width="{$showImg}" /></div>{elseif $modLastArticles[ix].topicId}<div class="image"><img alt="" src="article_image.php?image_type=topic&amp;id={$modLastArticles[ix].topicId}" width="{$showImg}" /></div>{/if}
 			{/if}
 		</div>		
 		{/if}

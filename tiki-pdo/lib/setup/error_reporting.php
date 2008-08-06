@@ -13,7 +13,11 @@ if ( $prefs['error_reporting_level'] == 1 ) $prefs['error_reporting_level'] = ( 
 elseif ( $prefs['error_reporting_adminonly'] == 'y' and $tiki_p_admin != 'y' ) $prefs['error_reporting_level'] = 0;
 error_reporting($prefs['error_reporting_level']);
 
-if ( $prefs['log_sql'] == 'y' ) $dbTiki->LogSQL();
+if ( $prefs['log_sql'] == 'y' ) {
+	$dbTiki->LogSQL();
+	global $ADODB_PERF_MIN;
+	$ADODB_PERF_MIN = $prefs['log_sql_perf_min'];
+}
 
 $tikifeedback = array();
 

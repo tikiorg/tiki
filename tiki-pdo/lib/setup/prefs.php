@@ -956,6 +956,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['feature_purifier'] = 'n';
 	$prefs['feature_shadowbox'] = 'y';
 	$prefs['log_sql'] = 'n';
+	$prefs['log_sql_perf_min'] = '0.05';
 	$prefs['log_mail'] = 'n';
 
 	$prefs['case_patched'] = 'n';

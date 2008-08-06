@@ -11,6 +11,27 @@ function wikiplugin_avatar_help() {
 	return tra("Displays the user Avatar").":<br />~np~{AVATAR(page=>SomeWikiPage,float=>left|right)}".tra("username")."{AVATAR}~/np~";
 }
 
+function wikiplugin_avatar_info() {
+	return array(
+		'name' => tra('Avatar'),
+		'description' => tra('Displays the user Avatar'),
+		'prefs' => array(),
+		'body' => tra('username'),
+		'params' => array(
+			'page' => array(
+				'required' => false,
+				'name' => tra('Page'),
+				'description' => tra('The wiki page the avatar will link to.'),
+			),
+			'float' => array(
+				'required' => false,
+				'name' => tra('Float'),
+				'description' => tra('left|right'),
+			),
+		),
+	);
+}
+
 function wikiplugin_avatar($data, $params) {
 	global $tikilib;
 

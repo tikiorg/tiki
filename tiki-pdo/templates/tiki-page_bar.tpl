@@ -6,6 +6,7 @@
   {if $wysiwyg eq 'n' or $prefs.wysiwyg_wiki_parsed eq 'y' or $prefs.wysiwyg_wiki_semi_parsed eq 'y'} {* Show this button only in normal editing mode *}
     <span class="button2">
       <a href="#edithelp" onclick="javascript:show('edithelpzone');hide('wikiplhelp-tab');show('wikihelp-tab'); return true;" name="edithelp" class="linkbut">{tr}Wiki Help{/tr}</a>
+	</span><span class="button2">
       <a href="#edithelp" onclick="javascript:show('edithelpzone');hide('wikihelp-tab');show('wikiplhelp-tab'); return true;" name="edithelp" class="linkbut">{tr}Plugin Help{/tr}</a>
     </span>
   {/if}
@@ -41,7 +42,7 @@
 {if !$lock and ($tiki_p_admin_wiki eq 'y' or (($tiki_p_lock eq 'y') and ($prefs.feature_wiki_usrlock eq 'y')))}
 <span class="button2"><a href="tiki-index.php?page={$page|escape:"url"}&amp;action=lock" class="linkbut">{tr}Lock{/tr}</a></span>
 {/if}
-{if $tiki_p_admin_wiki eq 'y'}
+{if $tiki_p_admin_wiki eq 'y' or $tiki_p_assign_perm_wiki_page eq 'y'}
 <span class="button2"><a href="tiki-objectpermissions.php?objectId={$page|escape:"url"}&amp;objectName={$page|escape:"url"}&amp;objectType=wiki+page&amp;permType=wiki" class="linkbut">{tr}Perms{/tr}</a></span>
 {/if}
 

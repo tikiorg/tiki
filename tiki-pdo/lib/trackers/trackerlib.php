@@ -2234,7 +2234,7 @@ class TrackerLib extends TikiLib {
 		$type['f'] = array(
 			'label'=>tra('date and time'),
 			'opt'=>true,
-			'help'=>tra('Date Time options: date_time,year0,year1 where date_time=d|dt(default), d displays only date, year0 is the first year, year1 the last'));
+			'help'=>tra('Date and Time options: [d|dt],[startyear],[endyear],[blank] where d=date only|dt=date+time(default), startyear is the first year in date range, endyear the last, blank allows a blank date (mandatory must be off).  Example: "d,2000,2009,blank" sets a date only field from 2000 through 2009, allowing blank dates.'));
 		$type['j'] = array(
 			'label'=>tra('jscalendar'),
 			'opt'=>true,

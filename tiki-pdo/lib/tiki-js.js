@@ -1287,12 +1287,15 @@ function popup_plugin_form( type )
 		var meta = tiki_plugins[type];
 		var params = [];
 
-		for( var k in meta.params )
+		if( meta.params.length )
 		{
-			var val = form['params[' + k + ']'].value;
+			for( var k in meta.params )
+			{
+				var val = form['params[' + k + ']'].value;
 
-			if( val != '' )
-				params.push( k + '=>"' + val + '"' );
+				if( val != '' )
+					params.push( k + '=>"' + val + '"' );
+			}
 		}
 
 		var blob = '{' + type.toUpperCase() + '(' + params.join(',') + ')}' + form.content.value + '{' + type.toUpperCase() + '}';
@@ -1349,32 +1352,38 @@ function build_plugin_form( type, index, pageName, args, bodyContent )
 	table.className = 'normal';
 	form.appendChild( table );
 
-	for( i in meta.params )
+	if( meta.params.length )
 	{
-		var row = document.createElement( 'tr' );
-		var label = document.createElement( 'td' );
-		var field = document.createElement( 'td' );
-		row.className = 'formcolor';
+		for( i in meta.params )
+		{
+			if( ! meta.params[i] )
+				continue;
 
-		label.innerHTML = meta.params[i].name;
-		if( meta.params[i].required )
-			label.style.fontWeight = 'bold';
+			var row = document.createElement( 'tr' );
+			var label = document.createElement( 'td' );
+			var field = document.createElement( 'td' );
+			row.className = 'formcolor';
 
-		var input = document.createElement( 'input' );
-		input.type = 'text';
-		input.name = 'params[' + i + ']';
-		if( args[i] )
-			input.value = args[i];
+			label.innerHTML = meta.params[i].name;
+			if( meta.params[i].required )
+				label.style.fontWeight = 'bold';
 
-		var desc = document.createElement( 'div' );
-		desc.style.fontSize = 'x-small';
-		desc.innerHTML = meta.params[i].description;
+			var input = document.createElement( 'input' );
+			input.type = 'text';
+			input.name = 'params[' + i + ']';
+			if( args[i] )
+				input.value = args[i];
 
-		field.appendChild( input );
-		field.appendChild( desc );
-		row.appendChild( label );
-		row.appendChild( field );
-		table.appendChild( row );
+			var desc = document.createElement( 'div' );
+			desc.style.fontSize = 'x-small';
+			desc.innerHTML = meta.params[i].description;
+
+			field.appendChild( input );
+			field.appendChild( desc );
+			row.appendChild( label );
+			row.appendChild( field );
+			table.appendChild( row );
+		}
 	}
 
 	var bodyRow = document.createElement( 'tr' );

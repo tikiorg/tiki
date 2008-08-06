@@ -41,6 +41,78 @@ function wikiplugin_attach_help() {
     return $help;
 }
 
+function wikiplugin_attach_info() {
+	return array(
+		'name' => tra( 'Attachment' ),
+		'description' => tra("Displays an attachment or a list of them"),
+		'prefs' => array( 'feature_wiki_attachments' ),
+		'body' => tra("Comment"),
+		'params' => array(
+    		'name' => array(
+				'required' => false,
+				'name' => tra('Name'),
+				'description' => tra("Gives the name of the attached file to link to"),
+			),
+    		'file' =>array(
+				'required' => false,
+				'name' => tra('File'),
+				'description' => tra("Same as name"),
+			),
+    		'page' => array(
+				'required' => false,
+				'name' => tra('Page'),
+				'description' => tra("Gives the name of another page the attached file is on. The file on that page is linked to instead. Only works with wiki pages"),
+			),
+    		'showdesc' => array(
+				'required' => false,
+				'name' => tra('Show description'),
+				'description' => tra("Shows the description as the link text instead of the file name"),
+			),
+    		'bullets' => array(
+				'required' => false,
+				'name' => tra('Bullets'),
+				'description' => tra("Makes the list of attachments a bulleted list"),
+			),
+    		'image' =>array(
+				'required' => false,
+				'name' => tra('Image'),
+				'description' => tra("Says that this file is an image, and should be displayed inline using the img tag"),
+			),
+    		'inline' =>array(
+				'required' => false,
+				'name' => tra('Inline'),
+				'description' => tra("Puts the stuff between {ATTACH} tags as the link text instead of the file name or description"),
+			),
+    		'all' => array(
+				'required' => false,
+				'name' => tra('All'),
+				'description' => tra("Shows all attachments from the whole wiki"),
+			),
+    		'num' => array(
+				'required' => false,
+				'name' => tra('Number'),
+				'description' => tra("Gives the number, in the list of attachments, of the attachment to link to"),
+			),
+    		'id' => array(
+				'required' => false,
+				'name' => tra('ID'),
+				'description' => tra("Gives the actual id of the attachment to link in. You probably should never use this"),
+			),
+    		'dls' => array(
+				'required' => false,
+				'name' => tra('Downloads'),
+				'description' => tra("Puts the number of downloads in the alt comment"),
+			),
+    		'icon' =>array(
+				'required' => false,
+				'name' => tra('Show icon'),
+				'description' => tra("Shows a file icon"),
+			),
+
+		),
+	);
+}
+
 function wikiplugin_attach($data, $params) {
     global $atts;
     global $mimeextensions;

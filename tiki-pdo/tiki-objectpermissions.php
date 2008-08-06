@@ -19,16 +19,13 @@ $perm = 'tiki_p_assign_perm_'.str_replace(' ', '_', $_REQUEST['objectType']);
 if ($_REQUEST['objectType'] == 'wiki page') {
 	if ($tiki_p_admin_wiki == 'y') {
 		$special_perm = 'y';
-	} else if ($prefs['wiki_creator_admin'] == 'y') {
-		include_once ('lib/wiki/wikilib.php');
-		$creator = $wikilib->get_creator($_REQUEST['objectName']);
-		if ($creator && $user && ($creator == $user)) {
-			$special_perm = 'y';
-		}
+	} else {
+		$info = $tikilib->get_page_info($_REQUEST['objectName']);
+		$tikilib->get_perm_object($_REQUEST['objectId'], $_REQUEST['objectType'], $info);
 	}
+} else {
+	$tikilib->get_perm_object($_REQUEST['objectId'], $_REQUEST['objectType']);
 }
-
-$tikilib->get_perm_object($_REQUEST['objectId'], $_REQUEST['objectType']);
 
 if (!($tiki_p_admin_objects == 'y' || (isset($$perm) && $$perm == 'y') ||(isset($special_perm) && $special_perm == 'y'))) {
 	$smarty->assign('errortype', 401);

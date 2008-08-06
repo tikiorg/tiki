@@ -1,4 +1,5 @@
 <?php
+// $Id: /cvsroot/tikiwiki/tiki/tiki-objectpermissions.php,v 1.25.2.2 2008-03-11 15:17:54 nyloth Exp $
 
 /* Displays a remarks box
  * Use:
@@ -28,7 +29,7 @@ function wikiplugin_remarksbox($data, $params) {
 	
 	// there probably is a better way @todo this
 	// but for now i'm escaping the html in ~np~s as the parser is adding odd <p> tags
-	$ret = '~np~'.smarty_block_remarksbox($params, '~/np~'.tra($data).'~np~', &$smarty).'~/np~';
+	$ret = '~np~'.smarty_block_remarksbox($params, '~/np~'.tra($data).'~np~', $smarty).'~/np~';
 	return $ret;
 }
 

@@ -611,7 +611,6 @@ ALTER TABLE tiki_forums  CHANGE name name varchar(255);
 ALTER TABLE tiki_comments CHANGE title title varchar(255);
 
 #sylvieg 2007/05/23
-ALTER TABLE users_users ADD email_due int(14) default NULL AFTER pass_due;
 ALTER TABLE users_users ADD unsuccessful_logins int(14) default 0;
 
 #sylvieg 2007/05/25

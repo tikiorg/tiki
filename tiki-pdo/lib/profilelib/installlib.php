@@ -9,6 +9,8 @@ class Tiki_Profile_Installer
 		'tracker_item' => 'Tiki_Profile_InstallHandler_TrackerItem',
 		'wiki_page' => 'Tiki_Profile_InstallHandler_WikiPage',
 		'category' => 'Tiki_Profile_InstallHandler_Category',
+		'file_gallery' => 'Tiki_Profile_InstallHandler_FileGallery',
+		'module' => 'Tiki_Profile_InstallHandler_Module',
 	);
 
 	function __construct() // {{{
@@ -161,6 +163,14 @@ class Tiki_Profile_Installer
 
 		if( ! $userlib->group_exists( $groupName ) )
 			$userlib->add_group( $groupName, $info['description'] );
+
+		if( count( $info['include'] ) )
+		{
+			$userlib->remove_all_inclusions( $groupName );
+			
+			foreach( $info['include'] as $included )
+				$userlib->group_inclusion( $groupName, $included );
+		}
 
 		foreach( $permissions as $perm => $v )
 			if( $v == 'y' )
@@ -647,6 +657,130 @@ class Tiki_Profile_InstallHandler_Category extends Tiki_Profile_InstallHandler /
 		}
 
 		return $id;
+	}
+} // }}}
+
+class Tiki_Profile_InstallHandler_FileGallery extends Tiki_Profile_InstallHandler // {{{
+{
+	function getData()
+	{
+		if( $this->data )
+			return $this->data;
+
+		$defaults = array(
+			'owner' => 'admin',
+			'public' => 'n',
+		);
+
+		$conversions = array(
+			'owner' => 'user',
+			'max_rows' => 'maxRows',
+			'parent' => 'parentId',
+		);
+
+		$data = $this->obj->getData();
+
+		$data = Tiki_Profile::convertLists( $data, array(
+			'flags' => 'y',
+		) );
+
+		$column = isset( $data['column'] ) ? $data['column'] : array();
+		$popup = isset( $data['popup'] ) ? $data['popup'] : array();
+
+		$both = array_intersect( $column, $popup );
+		$column = array_diff( $column, $both );
+		$popup = array_diff( $popup, $both );
+
+		foreach( $both as $value )
+			$data["show_$value"] = 'a';
+		foreach( $column as $value )
+			$data["show_$value"] = 'y';
+		foreach( $popup as $value )
+			$data["show_$value"] = 'o';
+
+		unset( $data['popup'] );
+		unset( $data['column'] );
+
+		$data = array_merge( $defaults, $data );
+
+		foreach( $conversions as $old => $new )
+			if( array_key_exists( $old, $data ) )
+			{
+				$data[$new] = $data[$old];
+				unset( $data[$old] );
+			}
+
+		unset( $data['galleryId'] );
+
+		return $this->data = $data;
+	}
+
+	function canInstall()
+	{
+		$data = $this->getData();
+		if( ! isset( $data['name'] ) )
+			return false;
+
+		return true;
+	}
+
+	function _install()
+	{
+		global $filegallib;
+		if( ! $filegallib ) require_once 'lib/filegals/filegallib.php';
+
+		$input = $this->getData();
+		$this->obj->replaceReferences( $input );
+		
+		return $filegallib->replace_file_gallery( $input );
+	}
+} // }}}
+
+class Tiki_Profile_InstallHandler_Module extends Tiki_Profile_InstallHandler // {{{
+{
+	function getData()
+	{
+		if( $this->data )
+			return $this->data;
+
+		$defaults = array(
+			'cache' => 0,
+			'rows' => 10,
+			'groups' => array(),
+			'params' => array(),
+		);
+
+		$data = array_merge(
+			$defaults,
+			$this->obj->getData()
+		);
+
+		$data['groups'] = serialize( $data['groups'] );
+		$data['params'] = http_build_query( $data['params'], '', '&' );
+
+		return $this->data = $data;
+	}
+
+	function canInstall()
+	{
+		$data = $this->getData();
+		if( ! isset( $data['name'], $data['position'], $data['order'] ) )
+			return false;
+
+		return true;
+	}
+
+	function _install()
+	{
+		global $modlib;
+		if( ! $modlib ) require_once 'lib/modules/modlib.php';
+
+		$data = $this->getData();
+		$data['position'] = ($data['position'] == 'left') ? 'l' : 'r';
+
+		$this->obj->replaceReferences( $data );
+		
+		return $modlib->assign_module( 0, $data['name'], null, $data['position'], $data['order'], $data['cache'], $data['rows'], $data['groups'], $data['params'] );
 	}
 } // }}}
 

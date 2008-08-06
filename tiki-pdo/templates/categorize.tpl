@@ -1,7 +1,9 @@
 {if $prefs.feature_categories eq 'y' and (count($categories) gt 0 or $tiki_p_admin_categories eq 'y')}
+{if $notable neq 'y'}
 <tr class="formcolor">
  <td>{tr}Categorize{/tr}</td>
  <td{if $colsCategorize} colspan="{$colsCategorize}"{/if}>
+ {/if}
 {if $mandatory_category >= 0}
   <div id="categorizator">
 {else}
@@ -36,7 +38,9 @@
     <a href="tiki-admin_categories.php" class="link">{tr}Admin Categories{/tr}</a>
   {/if}
   </div>
+	{if $notable neq 'y'}
   </td>
 </tr>
+  {/if}
 {/if}
 

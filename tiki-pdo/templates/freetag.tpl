@@ -20,7 +20,7 @@
 <input type="text" id="tagBox" name="freetag_string" value="{$taglist|escape}" style="width:98%" />
 <br />
 {foreach from=$tag_suggestion item=t}
-<a href="javascript:addTag('{$t|escape:'javascript'}');">{$t}</a> 
+<a href="javascript:addTag('{$t|escape:'javascript'}');" onclick="javascript:needToConfirm=false">{$t}</a> 
 {/foreach}
 
   </div>
