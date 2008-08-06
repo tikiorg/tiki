@@ -121,10 +121,10 @@
 			<input type="hidden" name="lockedby" value="{$fileInfo.lockedby|escape}" \>
 		{else}
 			{tr}File Gallery:{/tr}
-			<select name="galleryId[]">
+			<select name="galleryId[]" style="width:150px">
 			{section name=idx loop=$galleries}
 				{if ($galleries[idx].individual eq 'n') or ($galleries[idx].individual_tiki_p_upload_files eq 'y')}
-				<option  value="{$galleries[idx].id|escape}" {if $galleries[idx].id eq $galleryId}selected="selected"{/if}>{$galleries[idx].name}</option>
+				<option value="{$galleries[idx].id|escape}" {if $galleries[idx].id eq $galleryId}selected="selected"{/if}>{$galleries[idx].name}</option>
 				{/if}
 			{/section}
 			</select>
