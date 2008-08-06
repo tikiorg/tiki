@@ -15,6 +15,7 @@
 // "topic": Images for topics associated to articles
 // "preview": Images for article and article submissions previews
 // Any other value is invalid
+// If image_type has no value, we default to "article" to preserve previous behaviour
 
 require_once ('tiki-setup.php');
 
@@ -39,6 +40,11 @@ if (!isset($_REQUEST["id"])) {
 
 include_once ('lib/init/initlib.php');
 include_once ('tiki-setup_base.php');
+
+// If image_type has no value, we default to "article" to preserve previous behaviour
+if(!isset($_REQUEST["image_type"])) {
+	$_REQUEST["image_type"]="article";
+}
 
 switch ($_REQUEST["image_type"]) {
 	case "article":
