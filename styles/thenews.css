@@ -121,14 +121,9 @@ input[type=password] {
 
 }
 
-input[type=submit],
-input[type=file],
-input[type=reset],
-select {
-	
-}
 button,
 input[type=submit],
+.submitbutton,
 .button input,
 input[type=reset] {
 	border: 1px solid #4C4C4C;
@@ -139,6 +134,7 @@ input[type=reset] {
 
 button:hover,
 input[type=submit]:hover,
+.submitbutton:hover,
 .button input:hover {
 	cursor: pointer;
 	background: #E6E6F8;

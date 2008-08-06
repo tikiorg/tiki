@@ -109,6 +109,7 @@ input[type=password] {
 	width: 120px}
 
 input[type=submit],
+.submitbutton,
 input[type=file],
 input[type=reset],
 select {
@@ -117,6 +118,7 @@ select {
 
 button,
 input[type=submit],
+.submitbutton,
 .button input,
 input[type=reset] {
 	vertical-align: middle;	
@@ -127,6 +129,7 @@ input[type=reset] {
 
 button:hover,
 input[type=submit]:hover,
+.submitbutton:hover,
 .button input:hover {
 	background: #FFFFFF;
 	cursor: pointer}

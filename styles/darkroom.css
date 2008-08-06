@@ -122,13 +122,9 @@ input[type=password] {
 	font-size: 0.9em;
 	cursor: text}
 
-/*input[type=submit],
-input[type=file],
-input[type=reset],
-select {}*/
-
 button,
 input[type=submit],
+.submitbutton,
 .button input,
 input[type=reset] {
 	background:#4E4E4E url(darkroom/button.png) top left repeat-x;
@@ -142,6 +138,7 @@ input[type=reset] {
 
 button:hover,
 input[type=submit]:hover,
+.submitbutton:hover,
 .button input:hover {
 	border: 1px solid #B2B2B2;
 	text-decoration: none}

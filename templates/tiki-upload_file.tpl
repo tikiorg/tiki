@@ -132,9 +132,8 @@
 		{/if}
 
 		{if !$editFileId and $tiki_p_batch_upload_files eq 'y'}
-			{tr}Batch upload:{/tr}
+			{tr}Unzip all zip files:{/tr}
 			<input type="checkbox" name="isbatch[]" />
-			<i>{tr}Unzip all zip files{/tr}</i>
 			<br/>
 		{/if}
 
