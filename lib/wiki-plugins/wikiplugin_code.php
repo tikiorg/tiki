@@ -6,6 +6,47 @@ function wikiplugin_code_help() {
 	return tra($help);
 }
 
+function wikiplugin_code_info() {
+	return array(
+		'name' => tra('Code'),
+		'description' => tra('Displays a snippet of code'),
+		'prefs' => array(),
+		'body' => tra('code'),
+		'params' => array(
+			'caption' => array(
+				'required' => false,
+				'name' => tra('Caption'),
+				'description' => tra('Code snippet label.'),
+			),
+			'wrap' => array(
+				'required' => false,
+				'name' => tra('Word Wrap'),
+				'description' => tra('0|1, Enable word wrapping on the code to avoid breaking the layout.'),
+			),
+			'colors' => array(
+				'required' => false,
+				'name' => tra('Colors'),
+				'description' => tra('Syntax highlighting to use. May not be used with line numbers. Available: php, html, sql, javascript, css, java, c, doxygen, delphi, ...'),
+			),
+			'ln' => array(
+				'required' => false,
+				'name' => tra('Line numbers'),
+				'description' => tra('0|1, may not be used with colors.'),
+			),
+			'wiki' => array(
+				'required' => false,
+				'name' => tra('Wiki syntax'),
+				'description' => tra('0|1, parse wiki syntax within the code snippet.'),
+			),
+			'rtl' => array(
+				'required' => false,
+				'name' => tra('Right to left'),
+				'description' => tra('0|1, switch the text display from left to right to right to left'),
+			),
+		),
+	);
+}
+
 function wikiplugin_code($data, $params) {
 	if ( is_array($params) ) {
 		extract($params, EXTR_SKIP);
