@@ -25,6 +25,16 @@ class Tiki_Profile_Installer
 			return $type;
 	} // }}}
 
+	public static function convertObject( $type, $id ) // {{{
+	{
+		global $tikilib;
+
+		if( $type == 'wiki page' && is_numeric( $id ) )
+			return $tikilib->get_page_name_from_id( $id );
+		else
+			return $id;
+	} // }}}
+
 	function __construct() // {{{
 	{
 		global $tikilib;
@@ -194,6 +204,7 @@ class Tiki_Profile_Installer
 			foreach( $data['permissions'] as $perm => $v )
 			{
 				$data['type'] = self::convertType( $data['type'] );
+				$data['id'] = Tiki_Profile_Installer::convertObject( $data['type'], $data['id'] );
 
 				if( $v == 'y' )
 					$userlib->assign_object_permission( $groupName, $data['id'], $data['type'], $perm );
@@ -670,6 +681,7 @@ class Tiki_Profile_InstallHandler_Category extends Tiki_Profile_InstallHandler /
 			list( $type, $object ) = $item;
 
 			$type = Tiki_Profile_Installer::convertType( $type );
+			$object = Tiki_Profile_Installer::convertObject( $type, $object );
 			$categlib->categorize_any( $type, $object, $id );
 		}
 
