@@ -65,12 +65,12 @@ alt="{if $show_image_caption and $image_caption}{$image_caption}{else}{tr}Articl
 border="0" src="article_image.php?id={$articleId}"{if $image_x > 0} width="{$image_x}"{/if}{if $image_y > 0 } height="{$image_y}"{/if} /></a>
 	{else}
 <img {if $isfloat eq 'y'}style="margin-right:4px;float:left;"{else}class="articleimage"{/if} 
-alt="{tr}Topic image{/tr}" border="0" src="topic_image.php?id={$topicId}" />
+alt="{tr}Topic image{/tr}" border="0" src="article_image.php?image_type=preview&amp;id={$topicId}" />
 	{/if}
 	{else}
 	{section name=it loop=$topics}
 		{if ($topics[it].topicId eq $topicId) and ($topics[it].image_size > 0)}
-<img {if $isfloat eq 'y'}style="margin-right:4px;float:left;"{else}class="articleimage"{/if} alt="{$topicName}" border="0" src="topic_image.php?id={$topicId}" />
+<img {if $isfloat eq 'y'}style="margin-right:4px;float:left;"{else}class="articleimage"{/if} alt="{$topicName}" border="0" src="article_image.php?image_type=preview&amp;id={$topicId}" />
 		{/if}
 	{/section}
 {/if}

@@ -142,12 +142,6 @@ if (isset($_REQUEST["articleId"]) and $_REQUEST["articleId"] > 0) {
 	$data = $article_data["image_data"];
 	$imgname = $article_data["image_name"];
 
-	if ($hasImage == 'y') {
-		$smarty->assign('tempimg', 'article_image.php?image_type=article&amp;id='.$_REQUEST["articleId"]);
-	} else {
-		$smarty->assign('tempimg', 'n');
-	}
-
 	$body = $article_data["body"];
 	$heading = $article_data["heading"];
 	$smarty->assign('parsed_body', $tikilib->parse_data($body));

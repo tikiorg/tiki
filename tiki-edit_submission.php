@@ -130,12 +130,6 @@ if (isset($_REQUEST["subId"])) {
 	$data = $article_data["image_data"];
 	$imgname = $article_data["image_name"];
 
-	if ($hasImage == 'y') {
-		$smarty->assign('tempimg', 'article_image.php?image_type=submission&amp;id='.$_REQUEST["articleId"]);
-	} else {
-		$smarty->assign('tempimg', 'n');
-	}
-
 	$body = $article_data["body"];
 	$heading = $article_data["heading"];
 

@@ -63,7 +63,7 @@ border="0" src="article_image.php?image_type=article&amp;id={$listpages[ix].arti
 $listpages[ix].image_caption}{$listpages[ix].image_caption}{else}{$listpages[ix].topicName}{/if}"><img 
 {if $listpages[ix].isfloat eq 'y'}style="margin-right:4px;float:left;"{else}class="articleimage"{/if} 
 alt="{if $listpages[ix].show_image_caption and $listpages[ix].image_caption}{$listpages[ix].image_caption}{else}{$listpages[ix].topicName}{/if}" 
-border="0" src="topic_image.php?id={$listpages[ix].topicId}" /></a>
+border="0" src="article_image.php?image_type=topic&amp;id={$listpages[ix].topicId}" /></a>
 {/if}
 {else}
 {section name=it loop=$topics}
@@ -72,7 +72,7 @@ border="0" src="topic_image.php?id={$listpages[ix].topicId}" /></a>
 $listpages[ix].image_caption}{$listpages[ix].image_caption}{else}{$listpages[ix].topicName}{/if}"><img 
 {if $listpages[ix].isfloat eq 'y'}style="margin-right:4px;float:left;"{else}class="articleimage"{/if} 
 alt="{if $listpages[ix].show_image_caption and $listpages[ix].image_caption}{$listpages[ix].image_caption}{else}{$listpages[ix].topicName}{/if}" 
-border="0" src="topic_image.php?id={$listpages[ix].topicId}" /></a>
+border="0" src="article_image.php?image_type=topic&amp;id={$listpages[ix].topicId}" /></a>
 {/if}
 {/section}
 {/if}

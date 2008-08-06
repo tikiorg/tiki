@@ -16,10 +16,10 @@
         <img alt="{tr}Article image{/tr}" border="0" src="article_image.php?image_type=article&amp;id={$articleId}" 
 				{if $image_x > 0}width="{$image_x}"{/if}{if $image_y > 0 }height="{$image_y}"{/if} />
       {else}
-        <img alt="{tr}Topic image{/tr}" border="0" src="topic_image.php?id={$topicId}" />
+        <img alt="{tr}Topic image{/tr}" border="0" src="article_image.php?image_type=topic&amp;id={$topicId}" />
       {/if}
     {else}
-      <img alt="{tr}Topic image{/tr}" border="0" src="topic_image.php?id={$topicId}" />
+      <img alt="{tr}Topic image{/tr}" border="0" src="article_image.php?image_type=topic&amp;id={$topicId}" />
     {/if}
     </td><td  valign="top">
       <span class="articleheading">{$parsed_heading}</span>

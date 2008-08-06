@@ -36,7 +36,7 @@
 <td class="{cycle advance=false}"><a class="link" href="tiki-view_articles.php?topic={$topics[user].topicId}">{$topics[user].name}</a></td>
 <td class="{cycle advance=false}">
 {if $topics[user].image_size}
-<img alt="{tr}topic image{/tr}" border="0" src="topic_image.php?id={$topics[user].topicId}&amp;reload=1" />
+<img alt="{tr}topic image{/tr}" border="0" src="article_image.php?image_type=topic&amp;id={$topics[user].topicId}&amp;reload=1" />
 {else}
 &nbsp;
 {/if}
