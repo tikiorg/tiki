@@ -143,7 +143,11 @@
 		<tr><td class="formcolor">{tr}Comment{/tr}:</td><td  class="formcolor"><input type="text" name="comment" value="" size="40" /></td></tr>
 	{/if}
 
-	<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="upload" value="{if $editFileId}{tr}Save{/tr}{else}{tr}Upload{/tr}{/if}" />{if !empty($fileInfo.lockedby) and $user ne $fileInfo.lockedby}{icon _id="lock" class="" alt=""}<span class="attention">{tr}The file is locked by {$fileInfo.lockedby}{/tr}</span>{/if}</td></tr>
+	<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="upload" value="{if $editFileId}{tr}Save{/tr}{else}{tr}Upload{/tr}{/if}" />{if !empty($fileInfo.lockedby) and $user ne $fileInfo.lockedby}{icon _id="lock" class="" alt=""}<span class="attention">{tr}The file is locked by {$fileInfo.lockedby}{/tr}</span>{/if}
+	
+	<span class="rbox-data">{tr}Note: Maximum file size is limited to{/tr}: {$max_file_upload_size|kbsize}</span>
+	
+	</td></tr>
 	</table>
 	</form>
 	</div>
