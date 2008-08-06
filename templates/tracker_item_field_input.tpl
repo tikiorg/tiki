@@ -233,7 +233,6 @@
 
 {* -------------------- date and time -------------------- *}
 {elseif $field_value.type eq 'f'}
-{$field_value.value}
 	{* ----- Start year --- *}
 	{if isset($field_value.options_array[1]) and $field_value.options_array[1] ne ''}
 		{assign var=start value=$field_value.options_array[1]}
