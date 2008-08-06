@@ -21,6 +21,22 @@ function wikiplugin_equation_help() {
     return $help;
 }
 
+function wikiplugin_equation_info() {
+	return array(
+		'name' => tra('Equation'),
+		'description' => tra('Renders an equation written in LaTeX syntax as an image.'),
+		'prefs' => array(),
+		'body' => tra('equation'),
+		'params' => array(
+			'size' => array(
+				'required' => false,
+				'name' => tra('Size'),
+				'description' => tra('Percentage of increase from normal size. 100 produces the default size. 200 produces an image twice as large.'),
+			),
+		),
+	);
+}
+
 function wikiplugin_equation($data, $params) {
     extract ($params, EXTR_SKIP);
     if (empty($size)) $size = 100;

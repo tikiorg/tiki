@@ -16,6 +16,42 @@ function wikiplugin_div_help() {
 	return tra("Insert a division block on wiki page").":<br />~np~{DIV(class=>class, type=>div|span|pre|i|b|tt|blockquote, align=>left|right|center|justify, bg=>color, width=>num[%], float=>left|right])}".tra("text")."{DIV}~/np~";
 }
 
+function wikiplugin_div_info() {
+	return array(
+		'name' => tra('Div'),
+		'description' => tra("Insert a division block on wiki page"),
+		'prefs' => array(),
+		'body' => tra('text'),
+		'params' => array(
+			'bg' => array(
+				'required' => false,
+				'name' => tra('Background color'),
+				'description' => tra('As defined by CSS, name or Hex code.'),
+			),
+			'width' => array(
+				'required' => false,
+				'name' => tra('Box width'),
+				'description' => tra('In pixels or percentage. Default value is 100%.'),
+			),
+			'align' => array(
+				'required' => false,
+				'name' => tra('Text Alignment'),
+				'description' => tra('left|right|center|justify'),
+			),
+			'float' => array(
+				'required' => false,
+				'name' => tra('Float Position'),
+				'description' => tra('left|right, for box with width lesser than 100%, make text wrap around the box.'),
+			),
+			'class' => array(
+				'required' => false,
+				'name' => tra('CSS Class'),
+				'description' => tra('Apply custom CSS class to the box.'),
+			),
+		),
+	);
+}
+
 function wikiplugin_div($data, $params) {
 
 	extract ($params,EXTR_SKIP);

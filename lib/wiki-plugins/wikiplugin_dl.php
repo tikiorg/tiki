@@ -3,6 +3,18 @@
 function wikiplugin_dl_help() {
 	return tra("Creates a definition list").":<br />~np~{DL()}".tra("term").":".tra("definition")."{DL}~/np~ - ''".tra("one definition per line")."''";
 }
+
+function wikiplugin_db_info() {
+	return array(
+		'name' => tra('Definition List'),
+		'description' => tra("Creates a definition list"),
+		'prefs' => array(),
+		'body' => tra('One entry per line. Each line is in "Term: Definition" format.'),
+		'params' => array(
+		),
+	);
+}
+
 function wikiplugin_dl($data, $params) {
 	global $tikilib;
 
