@@ -132,6 +132,7 @@ input[type=radio] {
 
 button,
 input[type=submit],
+.submitbutton,
 .button input {
 	border: 1px solid #46596f;
 	background: #C7D0D9;
@@ -140,6 +141,7 @@ input[type=submit],
 
 button:hover,
 input[type=submit]:hover,
+.submitbutton:hover,
 .button input:hover {
 	background: #FFFFFF;
 	cursor: pointer;
