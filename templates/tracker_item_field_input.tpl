@@ -233,6 +233,7 @@
 
 {* -------------------- date and time -------------------- *}
 {elseif $field_value.type eq 'f'}
+{$field_value.value}
 	{* ----- Start year --- *}
 	{if isset($field_value.options_array[1]) and $field_value.options_array[1] ne ''}
 		{assign var=start value=$field_value.options_array[1]}
@@ -241,7 +242,7 @@
 	{else}
 		{assign var=start value=-4}
 	{/if}	
-	{if $field_value.year < $start}
+	{if $field_value.year > 0 and $field_value.year < $start}
 			{assign var=start value=$field_value.year}
 	{/if}
 
@@ -254,7 +255,7 @@
 		{assign var=end value=+4}
 	{/if}
 	{if $field_value.year > $end}
-		{assign var=start value=$field_value.year}
+		{assign var=end value=$field_value.year}
 	{/if}
 
 	{if $field_value.value eq ''}
