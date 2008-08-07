@@ -186,7 +186,7 @@ class Tiki_Profile_Installer
 		global $userlib;
 
 		if( ! $userlib->group_exists( $groupName ) )
-			$userlib->add_group( $groupName, $info['description'] );
+			$userlib->add_group( $groupName, $info['description'], $info['home'], $info['user_tracker'], $info['group_tracke'], implode( ':', $info['registration_fields'] ), $info['user_signup'], $info['default_category'], $info['theme'] );
 
 		if( count( $info['include'] ) )
 		{

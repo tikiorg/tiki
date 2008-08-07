@@ -306,15 +306,25 @@ class Tiki_Profile
 				if( strpos( $key, 'tiki_p_' ) !== 0 )
 					unset( $permissions[$key] );
 
-			if( array_key_exists( 'description', $data ) )
-				$description = $data['description'];
-			else
-				$description = '';
-
-			if( array_key_exists( 'include', $data ) )
-				$include = (array) $data['include'];
-			else
-				$include = array();
+			$defaultInfo = array(
+				'description' => '',
+				'home' => '',
+				'user_tracker' => 0,
+				'group_tracker' => 0,
+				'user_signup' => 'n',
+				'default_category' => 0,
+				'theme' => '',
+				'registration_fields' => array(),
+				'include' => array(),
+			);
+			foreach( $defaultInfo as $key => $value )
+				if( array_key_exists( $key, $data ) )
+				{
+					if( is_array( $value ) )
+						$defaultInfo[$key] = (array) $data[$key];
+					else
+						$defaultInfo[$key] = $data[$key];
+				}
 
 			$objects = array();
 			if( isset( $data['objects'] ) )
@@ -337,10 +347,7 @@ class Tiki_Profile
 			$groups[$groupName] = array(
 				'permissions' => $permissions,
 				'objects' => $objects,
-				'general' => array(
-					'description' => $description,
-					'include' => $include,
-				),
+				'general' => $defaultInfo,
 			);
 		}
 
