@@ -371,6 +371,8 @@ include_once ('tiki-section_options.php');
 
 ask_ticket('upload-file');
 
+$smarty->assign("max_file_upload_size", ini_get('upload_max_filesize'));
+
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
