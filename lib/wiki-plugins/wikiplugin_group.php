@@ -11,6 +11,27 @@ function wikiplugin_group_help() {
 	{GROUP(groups=>Registered)}wiki text{ELSE}alternate text for other groups{GROUP}~/np~";
 	return $help;
 }
+
+function wikiplugin_group_info() {
+	return array(
+		'name' => tra('Group'),
+		'description' => tra("Display wiki text if user is in one of listed groups"),
+		'body' => tra('Wiki text to display if conditions are met. The body may contain {ELSE}. Text after the marker will be displayed to users not matching the condition.'),
+		'params' => array(
+			'groups' => array(
+				'required' => false,
+				'name' => tra('Allowed Groups'),
+				'description' => tra('Pipe separated list of groups allowed to view the block. ex: Admins|Developers'),
+			),
+			'notgroups' => array(
+				'required' => false,
+				'name' => tra('Denied Groups'),
+				'description' => tra('Pipe separated list of groups denied from viewing the block. ex: Anonymous|Managers'),
+			),
+		),
+	);
+}
+
 function wikiplugin_group($data, $params) {
 	global $user, $tikilib;
 	$dataelse = '';
