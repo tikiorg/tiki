@@ -31,6 +31,46 @@ function wikiplugin_module_help() {
 	return tra("Displays a module inlined in page").":<br />~np~{MODULE(module=>,float=>left|right|none,decorations=>y|n,flip=>y|n,max=>,np=>0|1,args...)}{MODULE}~/np~";
 }
 
+function wikiplugin_module_info() {
+	return array(
+		'name' => tra('Insert Module'),
+		'description' => tra("Displays a module inlined in page. More parameters can be added, not supported by UI."),
+		'prefs' => array( 'wikiplugin_module' ),
+		'params' => array(
+			'module' => array(
+				'required' => true,
+				'name' => tra('Module Name'),
+				'description' => tra('Module name as known in Tikiwiki.'),
+			),
+			'float' => array(
+				'required' => false,
+				'name' => tra('Float'),
+				'description' => tra('left|right|none'),
+			),
+			'decoration' => array(
+				'required' => false,
+				'name' => tra('Decoration'),
+				'description' => tra('y|n'),
+			),
+			'flip' => array(
+				'required' => false,
+				'name' => tra('Flip'),
+				'description' => tra('y|n'),
+			),
+			'max' => array(
+				'required' => false,
+				'name' => tra('Max'),
+				'description' => tra('y|n'),
+			),
+			'np' => array(
+				'required' => false,
+				'name' => tra('np'),
+				'description' => tra('0|1'),
+			),
+		),
+	);
+}
+
 function wikiplugin_module($data, $params) {
 	global $tikilib, $cache_time, $smarty, $dbTiki, $prefs, $ranklib, $tikidomain, $user, $tiki_p_tasks, $tiki_p_create_bookmarks, $imagegallib;
 
