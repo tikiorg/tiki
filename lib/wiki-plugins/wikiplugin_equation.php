@@ -17,7 +17,7 @@
 
 function wikiplugin_equation_help() {
     $help  = tra("Renders an equation written in LaTeX syntax as a png.  Optional parameter size defaults to 100 and is the percentage of the normal size, i.e., size=200 indicates an equation 2x the normal size").":\n";
-    $help .= tra("Example").":<br />~np~{EQUATION(size=<size>)}".tra("equation")."{EQUATION}~/np~";
+    $help .= tra("Example").":<br />~np~{EQUATION(size=&lt;size&gt;)}".tra("equation")."{EQUATION}~/np~";
     return $help;
 }
 
