@@ -169,11 +169,13 @@ class Tiki_Profile_Installer
 		
 		$this->installed[$profile->url] = $profile;
 
-		foreach( $profile->getPreferences() as $pref => $value )
-			$tikilib->set_preference( $pref, $value );
-
 		foreach( $profile->getObjects() as $object )
 			$this->getInstallHandler( $object )->install();
+
+		$preferences = $profile->getPreferences();
+		$profile->replaceReferences( $preferences );
+		foreach( $preferences as $pref => $value )
+			$tikilib->set_preference( $pref, $value );
 
 		$permissions = $profile->getPermissions();
 		$profile->replaceReferences( $permissions );
