@@ -8,6 +8,27 @@ function wikiplugin_lang_help() {
 	return tra("Displays the text only if the language matchs")." lang/notlang:<br />~np~{LANG([not]lang=>code[+code+...])}".tra("text")."{LANG}~/np~";
 }
 
+function wikiplugin_lang_info() {
+	return array(
+		'name' => tra('Language'),
+		'description' => tra("Displays the text only if the language matchs"),
+		'prefs' => array( 'feature_multilingual' ),
+		'body' => tra('text'),
+		'params' => array(
+			'lang' => array(
+				'required' => false,
+				'name' => tra('Language'),
+				'description' => tra('List of languages for which the block is displayed. Languages use the two letter language codes (ex: en, fr, es, ...). Multiple languages can be specified by separating codes by + signs.'),
+			),
+			'notlang' => array(
+				'required' => false,
+				'name' => tra('Not Language'),
+				'description' => tra('List of languages for which the block is not displayed. Languages use the two letter language codes (ex: en, fr, es, ...). Multiple languages can be specified by separating codes by + signs.'),
+			),
+		),
+	);
+}
+
 function wikiplugin_lang($data, $params) {
 	global $prefs;
 

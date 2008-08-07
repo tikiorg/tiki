@@ -9,6 +9,21 @@ function wikiplugin_lastmod_help() {
         return tra("The last_mod plugin replaces itself with last modification time of the named wiki page, or the current page if no name given").":<br />~np~{LASTMOD(page=>pagename)/}~/np~";
 }
 
+function wikiplugin_lastmod_info() {
+	return array(
+		'name' => tra('Last Modification'),
+		'description' => tra("The last_mod plugin replaces itself with last modification time of the named wiki page, or the current page if no name given"),
+		'prefs' => array(),
+		'params' => array(
+			'page' => array(
+				'required' => false,
+				'name' => tra('Page'),
+				'description' => tra('Page name to display information of. Default value is current page.'),
+			),
+		),
+	);
+}
+
 function wikiplugin_lastmod($data, $params) {
 
 	global $tikilib;

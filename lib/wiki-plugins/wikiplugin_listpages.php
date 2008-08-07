@@ -7,6 +7,72 @@ function wikiplugin_listpages_help() {
 
 	return $help;
 }
+
+function wikiplugin_listpages_info() {
+	return array(
+		'name' => tra('List Pages'),
+		'description' => tra('List wiki pages.'),
+		'prefs' => array(),
+		'params' => array(
+			'offset' => array(
+				'required' => false,
+				'name' => tra('Result Offset'),
+				'description' => tra('Result number at which the listing should start.'),
+			),
+			'max' => array(
+				'required' => false,
+				'name' => tra('Result Count'),
+				'description' => tra('Amount of results displayed in the list.'),
+			),
+			'initial' => array(
+				'required' => false,
+				'name' => tra('Initial'),
+				'description' => tra('txt'),
+			),
+			'showNameOnly' => array(
+				'required' => false,
+				'name' => tra('Show Name Only'),
+				'description' => tra('y|n'),
+			),
+			'categId' => array(
+				'required' => false,
+				'name' => tra('Category'),
+				'description' => tra('Category ID'),
+			),
+			'structHead' => array(
+				'required' => false,
+				'name' => tra('Structure Head'),
+				'description' => tra('y|n'),
+			),
+			'showPageAlias' => array(
+				'required' => false,
+				'name' => tra('Show Page Alias'),
+				'description' => tra('y|n'),
+			),
+			'find' => array(
+				'required' => false,
+				'name' => tra('Find'),
+				'description' => tra('txt'),
+			),
+			'exact_match' => array(
+				'required' => false,
+				'name' => tra('Exact Match'),
+				'description' => tra('y|n, related to Find.'),
+			),
+			'only_orphan_pages' => array(
+				'required' => false,
+				'name' => tra('Only Orphan Pages'),
+				'description' => tra('y|n'),
+			),
+			'for_list_pages' => array(
+				'required' => false,
+				'name' => tra('For List Pages'),
+				'description' => tra('y|n'),
+			),
+		),
+	);
+}
+
 function wikiplugin_listpages($data, $params) {
 	global $prefs, $tiki_p_view, $tikilib, $smarty;
 
