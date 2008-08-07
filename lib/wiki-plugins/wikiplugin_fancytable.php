@@ -19,6 +19,27 @@ function wikiplugin_fancytable_help() {
 	return tra("Displays the data using the Tikiwiki odd/even table style").":<br />~np~{FANCYTABLE(head=>,headclass=>)}".tra("cells")."{FANCYTABLE}~/np~ - ''".tra("heads and cells separated by ~|~")."''";
 }
 
+function wikiplugin_fancytable_info() {
+	return array(
+		'name' => tra('Fancy Table'),
+		'description' => tra("Displays the data using the Tikiwiki odd/even table style"),
+		'prefs' => array(),
+		'body' => tra('One row per line, cells separated by ~|~.'),
+		'params' => array(
+			'head' => array(
+				'required' => false,
+				'name' => tra('Heading row'),
+				'description' => tra('Heading row of the table, same format as the body section.'),
+			),
+			'headclass' => array(
+				'required' => false,
+				'name' => tra('Heading CSS Class'),
+				'description' => tra('CSS Class to apply on the heading row.'),
+			),
+		),
+	);
+}
+
 function wikiplugin_fancytable($data, $params) {
 	global $tikilib;
 
