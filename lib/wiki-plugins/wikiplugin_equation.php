@@ -25,7 +25,7 @@ function wikiplugin_equation_info() {
 	return array(
 		'name' => tra('Equation'),
 		'description' => tra('Renders an equation written in LaTeX syntax as an image.'),
-		'prefs' => array(),
+		'prefs' => array('wikiplugin_equation'),
 		'body' => tra('equation'),
 		'params' => array(
 			'size' => array(

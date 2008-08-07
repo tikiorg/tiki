@@ -12,7 +12,7 @@ function wikiplugin_lang_info() {
 	return array(
 		'name' => tra('Language'),
 		'description' => tra("Displays the text only if the language matchs"),
-		'prefs' => array( 'feature_multilingual' ),
+		'prefs' => array( 'feature_multilingual', 'wikiplugin_lang' ),
 		'body' => tra('text'),
 		'params' => array(
 			'lang' => array(

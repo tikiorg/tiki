@@ -22,7 +22,7 @@ function wikiplugin_countdown_info() {
 	return array(
 		'name' => tra('Countdown'),
 		'description' => tra('Displays a countdown from now until the specified date.'),
-		'prefs' => array(),
+		'prefs' => array('wikiplugin_countdown'),
 		'body' => tra('Text to append to the countdown.'),
 		'params' => array(
 			'enddate' => array(

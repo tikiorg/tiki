@@ -115,7 +115,7 @@
 		return array(
 			'name' => tra('Backlinks'),
 			'description' => tra('List all pages linking to the specified page.'),
-			'prefs' => array( 'feature_wiki' ),
+			'prefs' => array( 'feature_wiki', 'wikiplugin_backlinks' ),
 			'params' => array(
 				'page' => array(
 					'required' => false,

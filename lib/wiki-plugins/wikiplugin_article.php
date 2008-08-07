@@ -19,7 +19,7 @@ function wikiplugin_article_info() {
 	return array(
 		'name' => tra('Article'),
 		'description' => tra('Includes an article\'s content within the page.'),
-		'prefs' => array( 'feature_article' ),
+		'prefs' => array( 'feature_article', 'wikiplugin_article' ),
 		'params' => array(
 			'Field' => array(
 				'required' => false,

@@ -10,7 +10,7 @@ function wikiplugin_code_info() {
 	return array(
 		'name' => tra('Code'),
 		'description' => tra('Displays a snippet of code'),
-		'prefs' => array(),
+		'prefs' => array('wikiplugin_code'),
 		'body' => tra('code'),
 		'params' => array(
 			'caption' => array(

@@ -26,7 +26,7 @@ function wikiplugin_gauge_info() {
 	return array(
 		'name' => tra('Gauge'),
 		'description' => tra('Displays a graphical gauge'),
-		'prefs' => array(),
+		'prefs' => array('wikiplugin_gauge'),
 		'body' => tra('description'),
 		'params' => array(
 			'value' => array(

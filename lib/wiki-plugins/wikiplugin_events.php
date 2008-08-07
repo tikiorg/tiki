@@ -12,7 +12,7 @@ function wikiplugin_events_info() {
 	return array(
 		'name' => tra('Events'),
 		'description' => tra('Includes the list of events from a calendar in the page.'),
-		'prefs' => array( 'feature_calendar', 'feature_events' ),
+		'prefs' => array( 'feature_calendar', 'feature_events', 'wikiplugin_events' ),
 		'params' => array(
 			'calendarid' => array(
 				'required' => true,

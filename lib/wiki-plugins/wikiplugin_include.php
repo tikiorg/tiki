@@ -42,7 +42,7 @@ function wikiplugin_include_info() {
 	return array(
 		'name' => tra('Include'),
 		'description' => tra('Include a page\'s content.'),
-		'prefs' => array(),
+		'prefs' => array('wikiplugin_include'),
 		'params' => array(
 			'page' => array(
 				'required' => true,

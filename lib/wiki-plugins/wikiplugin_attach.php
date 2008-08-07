@@ -45,7 +45,7 @@ function wikiplugin_attach_info() {
 	return array(
 		'name' => tra( 'Attachment' ),
 		'description' => tra("Displays an attachment or a list of them"),
-		'prefs' => array( 'feature_wiki_attachments' ),
+		'prefs' => array( 'feature_wiki_attachments', 'wikiplugin_attach' ),
 		'body' => tra("Comment"),
 		'params' => array(
     		'name' => array(
