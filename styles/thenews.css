@@ -1684,10 +1684,10 @@ table.commentinfo {}
 	float: right;
 	font-size: 10px;
 }
-.post .postbody .content {
+#c1c2 #wrapper #col1 .content .post .postbody .content {
 	float: left;
 	padding: 0px 3px 3px 3px;
-	width: 100%;
+	width: 100% !important;
 	height: 100%;
 	text-align: left;
 	color: #000000;
