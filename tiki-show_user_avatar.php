@@ -7,12 +7,13 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 require 'tiki-setup.php';
-if( $prefs['feature_minichat'] != 'y' ) {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_articles");
+if( $prefs['feature_userPreferences'] != 'y' ) {
+	$smarty->assign('msg', tra("This feature is disabled").": feature_userPreferences");
 
 	$smarty->display("error.tpl");
 	die;
 }
+include_once ('lib/userprefs/userprefslib.php');
 
 // application to display an image from the database with 
 // option to resize the image dynamically creating a thumbnail on the fly.
