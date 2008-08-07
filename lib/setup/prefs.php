@@ -745,6 +745,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['feature_babelfish'] = 'n';
 	$prefs['feature_babelfish_logo'] = 'n';
 	$prefs['quantify_changes'] = 'n';
+	$prefs['feature_sync_language'] = 'n';
 
 	# html header
 	$prefs['metatag_keywords'] = '';
