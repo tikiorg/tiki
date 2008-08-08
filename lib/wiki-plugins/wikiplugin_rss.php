@@ -8,6 +8,41 @@ function wikiplugin_rss_help() {
 	return tra("~np~{~/np~RSS(id=>feedId:feedId2,max=>3,date=>1,desc=>1,author=>1)}{RSS} Insert rss feed output into a wikipage");
 }
 
+function wikiplugin_rss_info() {
+	return array(
+		'name' => tra('RSS Feed'),
+		'description' => tra('Inserts an RSS feed output.'),
+		'prefs' => array( 'wikiplugin_rss' ),
+		'params' => array(
+			'id' => array(
+				'required' => true,
+				'name' => tra('IDs'),
+				'description' => tra('List of feed IDs separated by colons. ex: feedId:feedId2'),
+			),
+			'max' => array(
+				'required' => false,
+				'name' => tra('Result Count'),
+				'description' => tra('Amount of results displayed.'),
+			),
+			'date' => array(
+				'required' => false,
+				'name' => tra('Date'),
+				'description' => tra('0|1'),
+			),
+			'desc' => array(
+				'required' => false,
+				'name' => tra('Description'),
+				'description' => tra('0|1'),
+			),
+			'author' => array(
+				'required' => false,
+				'name' => tra('Author'),
+				'description' => tra('0|1'),
+			),
+		),
+	);
+}
+
 function rss_sort($a,$b) {
 	if (isset($a["pubDate"])) {
   	$datea=strtotime($a["pubDate"]);

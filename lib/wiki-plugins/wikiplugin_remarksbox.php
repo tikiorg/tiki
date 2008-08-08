@@ -23,6 +23,37 @@ function wikiplugin_remarksbox_help() {
 		tra('remarks text').'{REMARKSBOX}~/np~';
 }
 
+function wikiplugin_remarksbox_info() {
+	return array(
+		'name' => tra('Remarks Box'),
+		'description' => tra('Displays a comment, tip, note or warning box'),
+		'prefs' => array( 'wikiplugin_remarksbox' ),
+		'body' => tra('remarks text'),
+		'params' => array(
+			'type' => array(
+				'required' => true,
+				'name' => tra('Type'),
+				'description' => tra('tip|comment|note|warning'),
+			),
+			'title' => array(
+				'required' => true,
+				'name' => tra('title'),
+				'description' => tra('Label displayed above the remark.'),
+			),
+			'highlight' => array(
+				'required' => false,
+				'name' => tra('Highlight'),
+				'description' => tra('y|n'),
+			),
+			'icon' => array(
+				'required' => false,
+				'name' => tra('Icon'),
+				'description' => tra('Icon ID.'),
+			),
+		),
+	);
+}
+
 function wikiplugin_remarksbox($data, $params) {
 	global $smarty;
 	require_once('lib/smarty_tiki/block.remarksbox.php');
