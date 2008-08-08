@@ -11,6 +11,41 @@ function wikiplugin_map_help() {
 	return tra("Displays a map").":<br />~np~{MAP(mapfile=>,extents=>,size=>,width=>,height=>) /}~/np~";
 }
 
+function wikiplugin_map_info() {
+	return array(
+		'name' => tra('Map'),
+		'description' => tra('Displays a map'),
+		'prefs' => array( 'feature_maps', 'wikiplugin_map' ),
+		'params' => array(
+			'mapfile' => array(
+				'required' => true,
+				'name' => tra('Map File'),
+				'description' => tra('?'),
+			),
+			'extents' => array(
+				'required' => false,
+				'name' => tra('Extents'),
+				'description' => tra('?'),
+			),
+			'size' => array(
+				'required' => false,
+				'name' => tra('Size'),
+				'description' => tra('?'),
+			),
+			'width' => array(
+				'required' => false,
+				'name' => tra('Width'),
+				'description' => tra('?'),
+			),
+			'height' => array(
+				'required' => false,
+				'name' => tra('Height'),
+				'description' => tra('?'),
+			),
+		),
+	);
+}
+
 function wikiplugin_map($data, $params) {
 	global $tikilib, $prefs;
 

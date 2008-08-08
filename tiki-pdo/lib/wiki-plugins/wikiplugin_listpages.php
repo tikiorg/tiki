@@ -12,7 +12,7 @@ function wikiplugin_listpages_info() {
 	return array(
 		'name' => tra('List Pages'),
 		'description' => tra('List wiki pages.'),
-		'prefs' => array(),
+		'prefs' => array('wikiplugin_listpages'),
 		'params' => array(
 			'offset' => array(
 				'required' => false,

@@ -23,7 +23,7 @@ function wikiplugin_fancytable_info() {
 	return array(
 		'name' => tra('Fancy Table'),
 		'description' => tra("Displays the data using the Tikiwiki odd/even table style"),
-		'prefs' => array(),
+		'prefs' => array('wikiplugin_fancytable'),
 		'body' => tra('One row per line, cells separated by ~|~.'),
 		'params' => array(
 			'head' => array(

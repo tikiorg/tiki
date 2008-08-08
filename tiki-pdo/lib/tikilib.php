@@ -5033,7 +5033,7 @@ function add_pageview() {
 
     // This recursive function handles pre- and no-parse sections and plugins
     function parse_first(&$data, &$preparsed, &$noparsed, $real_start_diff='0') {
-	global $dbTiki, $smarty, $tiki_p_edit;
+	global $dbTiki, $smarty, $tiki_p_edit, $prefs;
 
 	if( strlen( $data ) <= 1 )
 	{
@@ -5202,38 +5202,68 @@ function add_pageview() {
 		if (file_exists($php_name)) {
 		    include_once ($php_name);
 
-			static $plugin_indexes = array();
-
-			if( ! array_key_exists( $plugin_name, $plugin_indexes ) )
-				$plugin_indexes[$plugin_name] = 0;
-
-			$current_index = ++$plugin_indexes[$plugin_name];
-
-		    // We store CODE stuff out of the way too, but then process it as a plugin as well.
-		    if( preg_match( '/^ *\{CODE\(/', $plugin_start ) )
-		    {
-			$ret = $func_name($plugin_data, $arguments);
-
-			// Pull the np out.
-			preg_match( "/~np~(.*)~\/np~/s", $ret, $stuff );
-
-			if( count( $stuff ) > 0 )
+			if( function_exists( $func_name_info ) )
 			{
-			    $key = md5($this->genPass());
-			    $noparsed["key"][] =  "/". preg_quote($key)."/";
-			    $noparsed["data"][] = $stuff[1];
+				$plugin_enabled = true;
+				$meta = $func_name_info();
 
-			    $ret = preg_replace( "/~np~.*~\/np~/s", $key, $ret );
+				if( isset( $meta['prefs'] ) )
+				{
+					foreach( $meta['prefs'] as $pref )
+						if( $prefs[$pref] != 'y' )
+						{
+							$plugin_enabled = false;
+							break;
+						}
+
+					$plugin_editable = $plugin_enabled && $tiki_p_edit == 'y' && $prefs['wiki_edit_plugin'] == 'y';
+				}
+			}
+			else
+			{
+				$plugin_enabled = true;
+				$plugin_editable = false;
 			}
 
-		    } else {
-			// Handle nested plugins.
-			$this->parse_first($plugin_data, $preparsed, $noparsed, $real_start_diff + $pos+strlen($plugin_start));
+			if( $plugin_enabled ) {
+				static $plugin_indexes = array();
 
-			$ret = $func_name($plugin_data, $arguments, $real_start_diff + $pos+strlen($plugin_start));
-		    }
+				if( ! array_key_exists( $plugin_name, $plugin_indexes ) )
+					$plugin_indexes[$plugin_name] = 0;
 
-			if( function_exists( $func_name_info ) && $tiki_p_edit == 'y' ) {
+				$current_index = ++$plugin_indexes[$plugin_name];
+
+				// We store CODE stuff out of the way too, but then process it as a plugin as well.
+				if( preg_match( '/^ *\{CODE\(/', $plugin_start ) )
+				{
+					$ret = $func_name($plugin_data, $arguments);
+
+					// Pull the np out.
+					preg_match( "/~np~(.*)~\/np~/s", $ret, $stuff );
+
+					if( count( $stuff ) > 0 )
+					{
+						$key = md5($this->genPass());
+						$noparsed["key"][] =  "/". preg_quote($key)."/";
+						$noparsed["data"][] = $stuff[1];
+
+						$ret = preg_replace( "/~np~.*~\/np~/s", $key, $ret );
+					}
+
+				} else {
+					// Handle nested plugins.
+					$this->parse_first($plugin_data, $preparsed, $noparsed, $real_start_diff + $pos+strlen($plugin_start));
+
+					$ret = $func_name($plugin_data, $arguments, $real_start_diff + $pos+strlen($plugin_start));
+				}
+			} else {
+				// Handle nested plugins.
+				$this->parse_first($plugin_data, $preparsed, $noparsed);
+
+				$ret = tra( "__WARNING__: Plugin disabled $plugin! " ) . $plugin_data;
+			}
+
+			if( $plugin_editable ) {
 				include_once('lib/smarty_tiki/function.icon.php');
 				global $headerlib, $page;
 				$headerlib->add_jsfile( 'tiki-jsplugin.php?plugin=' . urlencode( $plugin_name ) );

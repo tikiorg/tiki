@@ -19,7 +19,7 @@ function wikiplugin_box_info() {
 	return array(
 		'name' => tra('Box'),
 		'description' => tra('Insert theme styled box on wiki page'),
-		'prefs' => array(),
+		'prefs' => array('wikiplugin_box'),
 		'body' => tra('text'),
 		'params' => array(
 			'title' => array(

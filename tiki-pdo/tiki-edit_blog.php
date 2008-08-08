@@ -83,22 +83,6 @@ if (!isset($lastModif)) {
 	$smarty->assign('lastModif', $lastModif);
 }
 
-if (isset($_REQUEST["heading"])and $tiki_p_edit_templates) {
-	$heading = $_REQUEST["heading"];
-} else {
-	$n = $smarty->get_filename('blog-heading.tpl', 'r');
-	@$fp = fopen($n, 'r');
-	if ($fp) {
-		$heading = fread($fp, filesize($n));
-		@fclose($fp);
-	} else
-		$heading = '';
-}
-
-$smarty->assign_by_ref('heading', $heading);
-$users = $userlib->list_all_users();
-$smarty->assign_by_ref('users', $users);
-
 if (isset($_REQUEST["blogId"]) && $_REQUEST["blogId"] > 0) {
 	// Check permission
 	$data = $tikilib->get_blog($_REQUEST["blogId"]);
@@ -121,10 +105,28 @@ if (isset($_REQUEST["blogId"]) && $_REQUEST["blogId"] > 0) {
 	$smarty->assign('show_avatar',$data["show_avatar"]);
 	$smarty->assign('use_find', $data["use_find"]);
 	$smarty->assign('maxPosts', $data["maxPosts"]);
-	$smarty->assign('heading', $data["heading"]);
 	$smarty->assign('creator', $data["user"]);
 
 }
+
+if (isset($_REQUEST["heading"]) and $tiki_p_edit_templates == 'y') {
+	// Sanatization cleanup
+	$heading = preg_replace('/st<x>yle="[^"]*"/', 'style_dangerous', $_REQUEST["heading"]);
+} elseif (!isset($data["heading"])) {
+	$n = $smarty->get_filename('blog-heading.tpl', 'r');
+	@$fp = fopen($n, 'r');
+	if ($fp) {
+		$heading = fread($fp, filesize($n));
+		@fclose($fp);
+	} else
+		$heading = '';
+} else {
+	$heading = $data["heading"];
+}
+
+$smarty->assign_by_ref('heading', $heading);
+$users = $userlib->list_all_users();
+$smarty->assign_by_ref('users', $users);
 
 $category_needed = false;
 if (isset($_REQUEST["save"]) && $prefs['feature_categories'] == 'y' && $prefs['feature_blog_mandatory_category'] >=0 && (empty($_REQUEST['cat_categories']) || count($_REQUEST['cat_categories']) <= 0)) {
@@ -142,9 +144,6 @@ if (isset($_REQUEST["save"]) && $prefs['feature_categories'] == 'y' && $prefs['f
 	$allow_comments = isset($_REQUEST["allow_comments"]) ? 'y' : 'n';
 	$show_avatar = isset($_REQUEST['show_avatar']) ? 'y' : 'n';	
 	$use_find = isset($_REQUEST['use_find']) ? 'y' : 'n';
-
-	// 'heading' was assumed set. -rlpowell
-	$heading = isset($_REQUEST['heading']) ? $_REQUEST['heading'] : '';
 
 	$bid = $bloglib->replace_blog($_REQUEST["title"],
 	    $_REQUEST["description"], $_REQUEST["creator"], $public,

@@ -13,7 +13,7 @@ function wikiplugin_flash_info() {
 	return array(
 		'name' => tra('Flash video'),
 		'description' => tra('Displays a SWF on the wiki page'),
-		'prefs' => array(),
+		'prefs' => array('wikiplugin_flash'),
 		'params' => array(
 			'movie' => array(
 				'required' => true,

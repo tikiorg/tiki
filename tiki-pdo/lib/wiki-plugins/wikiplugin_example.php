@@ -22,7 +22,7 @@ function wikiplugin_example_info() {
 	return array(
 		'name' => tra('Example'),
 		'description' => tra('Sample plugin.'),
-		'prefs' => array( 'feature_example' ),
+		'prefs' => array( 'wikiplugin_example' ),
 		'body' => tra('text'),
 		'params' => array(
 			'face' => array(

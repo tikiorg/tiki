@@ -20,6 +20,22 @@ function wikiplugin_mono_help() {
 	return tra("Displays the data using a monospace font").":<br />~np~{MONO(font=>}".tra("text")."{MONO}~/np~";
 }
 
+function wikiplugin_mono_info() {
+	return array(
+		'name' => tra('Monospace'),
+		'description' => tra("Displays the data using a monospace font"),
+		'prefs' => array( 'wikiplugin_mono' ),
+		'body' => tra('text'),
+		'params' => array(
+			'font' => array(
+				'required' => false,
+				'name' => tra('Font'),
+				'description' => tra('Font name as known in browsers.'),
+			),
+		),
+	);
+}
+
 function wikiplugin_mono($data, $params) {
 	global $tikilib;
 

@@ -26,7 +26,7 @@ function wikiplugin_category_info() {
 	return array(
 		'name' => tra('Category'),
 		'description' => tra("Insert list of items for the current/given category into wiki page"),
-		'prefs' => array( 'feature_categories' ),
+		'prefs' => array( 'feature_categories', 'wikiplugin_category' ),
 		'params' => array(
 			'id' => array(
 				'required' => false,

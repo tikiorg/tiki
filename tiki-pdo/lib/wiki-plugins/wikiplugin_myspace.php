@@ -7,6 +7,21 @@ function wikiplugin_myspace_help() {
         return tra("Displays a SWF myspace mp3 playlist on the wiki page").":<br />~np~{MYSPACE(page=>myspace_page)}{MYSPACE}~/np~";
 }
 
+function wikiplugin_myspace_info() {
+	return array(
+		'name' => tra('MySpace'),
+		'description' => tra("Displays a SWF myspace mp3 playlist on the wiki page"),
+		'prefs' => array( 'wikiplugin_myspace' ),
+		'params' => array(
+			'page' => array(
+				'required' => true,
+				'name' => tra('MySpace Page'),
+				'description' => 'MySpace page name.',
+			),
+		),
+	);
+}
+
 function wikiplugin_myspace($data, $params) {
 	
 	extract ($params,EXTR_SKIP);

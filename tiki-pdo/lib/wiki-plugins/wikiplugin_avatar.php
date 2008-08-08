@@ -15,7 +15,7 @@ function wikiplugin_avatar_info() {
 	return array(
 		'name' => tra('Avatar'),
 		'description' => tra('Displays the user Avatar'),
-		'prefs' => array(),
+		'prefs' => array('wikiplugin_avatar'),
 		'body' => tra('username'),
 		'params' => array(
 			'page' => array(

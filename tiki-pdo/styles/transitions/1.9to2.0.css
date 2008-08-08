@@ -545,3 +545,6 @@ div #page-bar
 	padding-left: 5em !important;
 }
 
+.blogactions {
+	float:right;
+}

@@ -13,7 +13,7 @@ function wikiplugin_center_info() {
 	return array(
 		'name' => tra('Center'),
 		'description' => tra("Centers the plugin content in the wiki page"),
-		'prefs' => array(),
+		'prefs' => array('wikiplugin_center'),
 		'body' => tra('text'),
 		'params' => array(
 		),

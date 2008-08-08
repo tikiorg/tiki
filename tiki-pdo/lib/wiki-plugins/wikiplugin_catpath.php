@@ -20,7 +20,7 @@ function wikiplugin_catpath_info() {
 	return array(
 		'name' => tra('Category Path'),
 		'description' => tra("Insert the full category path for each category that this wiki page belongs to"),
-		'prefs' => array( 'feature_categories'),
+		'prefs' => array( 'feature_categories', 'wikiplugin_catpath' ),
 		'params' => array(
 			'divider' => array(
 				'required' => false,

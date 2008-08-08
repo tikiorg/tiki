@@ -24,6 +24,22 @@ function wikiplugin_miniquiz_help() {
 	return $help;
 }
 
+function wikiplugin_miniquiz_info() {
+	return array(
+		'name' => tra('Mini Quiz'),
+		'description' => tra('Displays a miniquiz'),
+		'prefs' => array( 'feature_trackers', 'wikiplugin_miniquiz' ),
+		'body' => tra('Instructions::Feedback'),
+		'params' => array(
+			'trackerId' => array(
+				'required' => true,
+				'name' => tra('Tracker'),
+				'description' => tra('Tracker ID'),
+			),
+		),
+	);
+}
+
 function rcmp($a, $b) { return mt_rand(-1, 1); }
 function shuf(&$ar) { srand((double) microtime() * 10000000); uksort($ar, "rcmp"); }
 
