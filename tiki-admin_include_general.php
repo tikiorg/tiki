@@ -35,7 +35,8 @@ if (isset($_REQUEST["new_prefs"])) {
         "user_show_realnames",
 		"log_sql",
 		"log_mail",
-		"smarty_security"
+		"smarty_security",
+		"feature_pear_date",
     );
 
     foreach ($pref_toggles as $toggle) {
@@ -134,7 +135,7 @@ elseif (isset($_REQUEST["newadminpass"])) {
 }
 
 // Get list of time zones
-$smarty->assign_by_ref("timezones", $GLOBALS['_DATE_TIMEZONE_DATA']);
+$smarty->assign_by_ref("timezones", TikiDate::getTimeZoneList());
 
 // Get information for alternate homes
 $smarty->assign("home_forum_url", "tiki-view_forum.php?forumId=" . $prefs['home_forum']);

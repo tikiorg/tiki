@@ -453,7 +453,7 @@ if ($prefs['feature_messages'] == 'y' && $tiki_p_messages == 'y') {
 	$smarty->assign('unread', $unread);
 }
 
-$smarty->assign_by_ref("timezones", $GLOBALS['_DATE_TIMEZONE_DATA']);
+$smarty->assign_by_ref("timezones", TikiDate::getTimeZoneList());
 
 $smarty->assign('userPageExists', 'n');
 if ($prefs['feature_wiki'] == 'y' and $prefs['feature_wiki_userpage'] == 'y') {

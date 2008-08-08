@@ -97,6 +97,10 @@
 						{tr}smarty notice reporting{/tr}
       </td>
 	  </tr><tr>
+		<tr>
+		<td class="form"><label for="feature_pear_date">{tr}Use PEAR::Date library:{/tr}</label></td>
+		<td><input type="checkbox" name="feature_pear_date"{if $prefs.feature_pear_date eq 'y'} checked="checked"{/if} /></td>
+		</tr><tr>
 	  <td class="form"><label for="log_mail">{tr}Log Mail in Tiki Logs:{/tr}</label></td>
 	  <td><input type="checkbox" name="log_mail"{if $prefs.log_mail eq 'y'} checked="checked"{/if} />
 	  </tr><tr>

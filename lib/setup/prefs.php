@@ -627,7 +627,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['calendar_end_year'] = '+3';
 
 	# dates
-	$prefs['server_timezone'] = $tikidate->tz->getID();
+	$prefs['server_timezone'] = $tikidate->getTimezoneId();
 	$prefs['long_date_format'] = '%A %d of %B, %Y';
 	$prefs['long_time_format'] = '%H:%M:%S %Z';
 	$prefs['short_date_format'] = '%a %d of %b, %Y';
@@ -1107,6 +1107,9 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 
 	# Minichat
 	$prefs['feature_minichat'] = 'n';
+
+	# Pear::Date
+	$prefs['feature_pear_date'] = 'y';
 
 	// Special default values
 

@@ -6,10 +6,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-require_once('lib/tikidate.php');
 require_once('lib/tikidblib.php');
 require_once('lib/init/tra.php');
-$tikidate = new TikiDate();
 
 //performance collecting:
 //require_once ('lib/tikidblib-debug.php');
@@ -4523,7 +4521,7 @@ function add_pageview() {
 
 		// Handle special display_timezone values
 		if ( isset($user_preferences[$my_user]['display_timezone'])
-			&& ! Date_TimeZone::isValidID($user_preferences[$my_user]['display_timezone'])
+			&& ! TikiDate::TimezoneIsValidId($user_preferences[$my_user]['display_timezone'])
 		) {
 			unset($user_preferences[$my_user]['display_timezone']);
 		}
@@ -7303,7 +7301,7 @@ if (!$simple_wiki) {
 				} elseif ( $_user ) {
 					// ... else, get the user timezone preferences from DB
 					$tz = $this->get_user_preference($_user, 'display_timezone');
-					if ( ! Date_TimeZone::isValidID($tz) ) {
+					if ( ! TikiDate::TimezoneIsValidId($tz) ) {
 						$tz = $prefs['server_timezone'];
 					}
 				}
