@@ -713,7 +713,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['pass_due'] = -1;
 	$prefs['email_due'] = -1;
 	$prefs['unsuccessful_logins'] = 20;
-	$prefs['rnd_num_reg'] = 'n';
+	$prefs['rnd_num_reg'] = 'y';
 	$prefs['generate_password'] = 'n';
 	$prefs['auth_method'] = 'tiki';
 	$prefs['auth_pear'] = 'tiki';
