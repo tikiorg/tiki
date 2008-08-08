@@ -17,6 +17,28 @@
 function wikiplugin_countdown_help() {
 	return tra("Example").":<br />~np~{COUNTDOWN(enddate=>April 1 2004[,locatetime=>on])}".tra("text")."{COUNTDOWN}~/np~";
 }
+
+function wikiplugin_countdown_info() {
+	return array(
+		'name' => tra('Countdown'),
+		'description' => tra('Displays a countdown from now until the specified date.'),
+		'prefs' => array(),
+		'body' => tra('Text to append to the countdown.'),
+		'params' => array(
+			'enddate' => array(
+				'required' => true,
+				'name' => tra('End date'),
+				'description' => tra('Target date. Multiple formats accepted.'),
+			),
+			'locatetime' => array(
+				'required' => false,
+				'name' => tra('Locate Time'),
+				'description' => tra('on|off'),
+			),
+		),
+	);
+}
+
 function wikiplugin_countdown($data, $params) {
 	global $tikilib, $tikidate;
 	extract ($params,EXTR_SKIP);

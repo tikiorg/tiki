@@ -57,6 +57,10 @@
 			{if $prefs.feature_best_language eq 'y'}checked="checked"{/if}/></td>
         </tr><tr>
 		
+			<td class="form"><label for="feature_sync_language">{tr}Page language forces to display strings in the same language{/tr}:</label></td>
+			<td><input type="checkbox" name="feature_sync_language" id="feature_sync_language"
+			{if $prefs.feature_sync_language eq 'y'}checked="checked"{/if}/></td>
+        </tr><tr>
 		
 			<td class="form"><label for="feature_detect_language">{tr}Detect browser language{/tr}:</label></td>
 			<td><input type="checkbox" name="feature_detect_language" id="feature_detect_language"

@@ -15,7 +15,28 @@
  * wiki page.
  */
 function wikiplugin_example_help() {
+	/* This function style is deprecated. */
 	return tra("Example").":<br />~np~{EXAMPLE(face=> size=>)}".tra("text")."{EXAMPLE}~/np~";
+}
+function wikiplugin_example_info() {
+	return array(
+		'name' => tra('Example'),
+		'description' => tra('Sample plugin.'),
+		'prefs' => array( 'feature_example' ),
+		'body' => tra('text'),
+		'params' => array(
+			'face' => array(
+				'required' => true,
+				'name' => tra('Face'),
+				'description' => tra('Font family to use.'),
+			),
+			'size' => array(
+				'required' => true,
+				'name' => tra('Size'),
+				'description' => tra('As defined by CSS.'),
+			),
+		),
+	);
 }
 function wikiplugin_example($data, $params) {
 	extract ($params,EXTR_SKIP);

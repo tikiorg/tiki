@@ -16,6 +16,17 @@ function wikiplugin_copyright_help() {
 	return tra("Insert copyright notices").":<br />~np~{COPYRIGHT()}~title~~year~~authors~".tra("text")."{COPYRIGHT}~/np~";
 }
 
+function wikiplugin_copyright_info() {
+	return array(
+		'name' => tra('Copyright'),
+		'description' => tra('Insert copyright notices'),
+		'prefs' => array( 'feature_wiki_copyrights' ),
+		'body' => tra('Pattern to display the copyright in. May contain ~title~, ~year~ and ~authors~.'),
+		'params' => array(
+		),
+	);
+}
+
 function wikiplugin_copyright($data, $params) {
 	global $dbTiki;
 

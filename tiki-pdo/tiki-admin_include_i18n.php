@@ -29,6 +29,7 @@ ask_ticket('admin-inc-i18n');
 		"feature_multilingual",
 		"feature_multilingual_structures",
 		"feature_best_language",
+		'feature_sync_language',
         "feature_detect_language",
 // This option should be re-added to this page, no?
 //		"change_language",

@@ -37,6 +37,32 @@
 function wikiplugin_include_help() {
 	return tra("Include a page").":<br />~np~{INCLUDE(page=> [,start=>] [,stop=>])}{INCLUDE}~/np~";
 }
+
+function wikiplugin_include_info() {
+	return array(
+		'name' => tra('Include'),
+		'description' => tra('Include a page\'s content.'),
+		'prefs' => array(),
+		'params' => array(
+			'page' => array(
+				'required' => true,
+				'name' => tra('Page Name'),
+				'description' => tra('Wiki page name to include.'),
+			),
+			'start' => array(
+				'required' => false,
+				'name' => tra('Start'),
+				'description' => tra('When only a portion of the page should be included, specify the marker from which inclusion should start.'),
+			),
+			'stop' => array(
+				'required' => false,
+				'name' => tra('Stop'),
+				'description' => tra('When only a portion of the page should be included, specify the marker at which inclusion should end.'),
+			),
+		),
+	);
+}
+
 function wikiplugin_include($data, $params) {
 	global $tikilib,$userlib,$user;
     static $included_pages;

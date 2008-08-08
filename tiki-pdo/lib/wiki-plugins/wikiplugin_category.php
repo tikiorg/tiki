@@ -22,6 +22,41 @@ function wikiplugin_category_help() {
 	return tra("Insert list of items for the current/given category into wiki page").":<br />~np~{CATEGORY(id=1+2+3, types=article+blog+faq+fgal+forum+igal+newsletter+event+poll+quiz+survey+tracker+wiki+img, sort=[type|created|name|hits|shuffle]_[asc|desc], sub=y|n, split=|n, and=y|n)}{CATEGORY}~/np~";
 }
 
+function wikiplugin_category_info() {
+	return array(
+		'name' => tra('Category'),
+		'description' => tra("Insert list of items for the current/given category into wiki page"),
+		'prefs' => array( 'feature_categories' ),
+		'params' => array(
+			'id' => array(
+				'required' => false,
+				'name' => tra('Category IDs'),
+				'description' => tra('List of category IDs separated by + signs. ex: 1+2+3. Default will use category of the current page.'),
+			),
+			'types' => array(
+				'required' => false,
+				'name' => tra('Types'),
+				'description' => tra('List of object types to include in the list separated by plus signs. ex: article+blog+faq+fgal+forum+igal+newsletter+event+poll+quiz+survey+tracker+wiki+img'),
+			),
+			'sort' => array(
+				'required' => false,
+				'name' => tra('Sort Order'),
+				'description' => tra('fieldName_asc|fieldName_desc, valid fields: type, created, name, hits, shuffle'),
+			),
+			'split' => array(
+				'required' => false,
+				'name' => tra('Split'),
+				'description' => tra('y|n'),
+			),
+			'and' => array(
+				'required' => false,
+				'name' => tra('And'),
+				'description' => tra('y|n'),
+			),
+		),
+	);
+}
+
 function wikiplugin_category($data, $params) {
 	global $smarty, $prefs, $categlib;
 

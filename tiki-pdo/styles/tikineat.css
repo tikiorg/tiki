@@ -145,12 +145,12 @@ button, input {
 input[type=checkbox], input[type=radio] {
 	border : 0;
 }
-button, input[type=submit], .button input {
+button, input[type=submit], .button input, .submitbutton {
 	border : 1px solid #46596f;
 	background-color: #C7D0D9;
 	font-weight : bold;
 }
-button:hover, input[type=submit]:hover, .button input:hover {
+button:hover, input[type=submit]:hover, .button input:hover, .submitbutton:hover {
 	background-color : #FFFFFF;
 	cursor : pointer;
 }
@@ -2205,4 +2205,10 @@ span.minichat_nick {
 .sub {
 	padding-left: 5em !important;
 }
+
+div.floatleft {
+	float: left;
+	clear: none;
+}
+
 /* end of css file */

@@ -9,6 +9,17 @@ function wikiplugin_center_help() {
 	return tra("Centers the plugin content in the wiki page").":<br />~np~{CENTER()}".tra("text")."{CENTER}~/np~";
 }
 
+function wikiplugin_center_info() {
+	return array(
+		'name' => tra('Center'),
+		'description' => tra("Centers the plugin content in the wiki page"),
+		'prefs' => array(),
+		'body' => tra('text'),
+		'params' => array(
+		),
+	);
+}
+
 function wikiplugin_center($data, $params) {
 	global $tikilib;
 

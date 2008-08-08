@@ -22,6 +22,62 @@ function wikiplugin_gauge_help() {
 	return tra("Displays a graphical GAUGE").":<br />~np~{GAUGE(color=>,bgcolor=>,max=>,value=>,size=>,label=>,labelsize=>,perc=>,height=>)}".tra("description")."{GAUGE}~/np~";
 }
 
+function wikiplugin_gauge_info() {
+	return array(
+		'name' => tra('Gauge'),
+		'description' => tra('Displays a graphical gauge'),
+		'prefs' => array(),
+		'body' => tra('description'),
+		'params' => array(
+			'value' => array(
+				'required' => true,
+				'name' => tra('Value'),
+				'description' => tra('current value (REQUIRED)'),
+			),
+			'max' => array(
+				'required' => false,
+				'name' => tra('Maximum Value'),
+				'description' => tra('Maximum possible value. Default: 100'),
+			),
+			'label' => array(
+				'required' => false,
+				'name' => tra('Label'),
+				'description' => tra('Label displayed on the left side of the gauge.'),
+			),
+			'color' => array(
+				'required' => false,
+				'name' => tra('Color'),
+				'description' => tra('As defined by CSS.'),
+			),
+			'bgcolor' => array(
+				'required' => false,
+				'name' => tra('Background Color'),
+				'description' => tra('As defined by CSS.'),
+			),
+			'size' => array(
+				'required' => false,
+				'name' => tra('Width'),
+				'description' => tra('Bar width in pixels.'),
+			),
+			'labelsize' => array(
+				'required' => false,
+				'name' => tra('Label Width'),
+				'description' => tra('Width in pixels allocated to the label.'),
+			),
+			'perc' => array(
+				'required' => false,
+				'name' => tra('Display Percentage'),
+				'description' => tra('true|false, if true then a percentage is displayed.'),
+			),
+			'height' => array(
+				'required' => false,
+				'name' => tra('Height'),
+				'description' => tra('Bar height in pixels.'),
+			),
+		),
+	);
+}
+
 function wikiplugin_gauge($data, $params) {
 	extract ($params,EXTR_SKIP);
 

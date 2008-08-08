@@ -121,14 +121,9 @@ input[type=password] {
 
 }
 
-input[type=submit],
-input[type=file],
-input[type=reset],
-select {
-	
-}
 button,
 input[type=submit],
+.submitbutton,
 .button input,
 input[type=reset] {
 	border: 1px solid #4C4C4C;
@@ -139,6 +134,7 @@ input[type=reset] {
 
 button:hover,
 input[type=submit]:hover,
+.submitbutton:hover,
 .button input:hover {
 	cursor: pointer;
 	background: #E6E6F8;
@@ -1688,10 +1684,10 @@ table.commentinfo {}
 	float: right;
 	font-size: 10px;
 }
-.post .postbody .content {
+#c1c2 #wrapper #col1 .content .post .postbody .content {
 	float: left;
 	padding: 0px 3px 3px 3px;
-	width: 100%;
+	width: 100% !important;
 	height: 100%;
 	text-align: left;
 	color: #000000;

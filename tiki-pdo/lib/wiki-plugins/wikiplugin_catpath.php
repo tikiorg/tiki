@@ -16,6 +16,26 @@ function wikiplugin_catpath_help() {
 	return tra("Insert the full category path for each category that this wiki page belongs to").":<br />~np~{CATPATH(divider=>,top=>yes|no)}{CATPATH}~/np~";
 }
 
+function wikiplugin_catpath_info() {
+	return array(
+		'name' => tra('Category Path'),
+		'description' => tra("Insert the full category path for each category that this wiki page belongs to"),
+		'prefs' => array( 'feature_categories'),
+		'params' => array(
+			'divider' => array(
+				'required' => false,
+				'name' => tra('Separator'),
+				'description' => tra('String used to separate the categories in the path. Default character is >.'),
+			),
+			'top' => array(
+				'required' => false,
+				'name' => tra('Display top category'),
+				'description' => tra('yes|no, default to no'),
+			),
+		),
+	);
+}
+
 function wikiplugin_catpath($data, $params) {
 	global $dbTiki, $smarty, $tikilib, $prefs, $categlib;
 

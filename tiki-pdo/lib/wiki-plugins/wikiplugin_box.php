@@ -15,6 +15,47 @@ function wikiplugin_box_help() {
 	return tra("Insert theme styled box on wiki page").":<br />~np~{BOX(title=>Title, bg=>color, width=>num[%], align=>left|right|center, float=>|left|right),class=class, id=id}".tra("text")."{BOX}~/np~";
 }
 
+function wikiplugin_box_info() {
+	return array(
+		'name' => tra('Box'),
+		'description' => tra('Insert theme styled box on wiki page'),
+		'prefs' => array(),
+		'body' => tra('text'),
+		'params' => array(
+			'title' => array(
+				'required' => false,
+				'name' => tra('Box title'),
+				'description' => tra('Displayed above the content'),
+			),
+			'bg' => array(
+				'required' => false,
+				'name' => tra('Background color'),
+				'description' => tra('As defined by CSS, name or Hex code.'),
+			),
+			'width' => array(
+				'required' => false,
+				'name' => tra('Box width'),
+				'description' => tra('In pixels or percentage. Default value is 100%.'),
+			),
+			'align' => array(
+				'required' => false,
+				'name' => tra('Text Alignment'),
+				'description' => tra('left|right|center'),
+			),
+			'float' => array(
+				'required' => false,
+				'name' => tra('Float Position'),
+				'description' => tra('left|right, for box with width lesser than 100%, make text wrap around the box.'),
+			),
+			'class' => array(
+				'required' => false,
+				'name' => tra('CSS Class'),
+				'description' => tra('Apply custom CSS class to the box.'),
+			),
+		),
+	);
+}
+
 function wikiplugin_box($data, $params) {
 	global $tikilib;
 	

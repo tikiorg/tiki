@@ -65,7 +65,7 @@ For more information:
 *[http://info.tikiwiki.org/Learn+More|Learn more about TikiWiki].
 *[http://info.tikiwiki.org/Help+Others|Get help], including the [http://doc.tikiwiki.org|official documentation] and [http://www.tikiwiki.org/forums|support forums].
 *[http://info.tikiwiki.org/Join+the+community|Join the TikiWiki community].
-',$tikilib->now,'Tiki initialization');
+',$tikilib->now,'Tiki initialization', 'admin', '0.0.0.0', '', 'en');
 			header('Location: tiki-index.php?page='.$userHomePage);
 		}
 	} else {
@@ -201,6 +201,7 @@ if ($prefs['feature_multilingual'] == 'y' && $use_best_language) { // chose the 
 if (!$info)
 	$info = $tikilib->get_page_info($page);
 
+
 // If the page doesn't exist then display an error
 if(empty($info) && !($user && $prefs['feature_wiki_userpage'] == 'y' && strcasecmp($prefs['feature_wiki_userpage_prefix'].$user, $page) == 0)) {
   if ($user && $prefs['feature_wiki_userpage'] == 'y' && strcasecmp($prefs['feature_wiki_userpage_prefix'], $page) == 0) {
@@ -235,6 +236,10 @@ if(empty($info) && !($user && $prefs['feature_wiki_userpage'] == 'y' && strcasec
 if (empty($info) && $user && $prefs['feature_wiki_userpage'] == 'y' && (strcasecmp($prefs['feature_wiki_userpage_prefix'].$user, $page) == 0 || strcasecmp($prefs['feature_wiki_userpage_prefix'], $page) == 0 )) {
 	header('Location: tiki-editpage.php?page='.$prefs['feature_wiki_userpage_prefix'].$user);
     	die;
+}
+if ($prefs['feature_multilingual'] == 'y' && $prefs['feature_sync_language'] == 'y' && !empty($info['lang'])) {
+	$_SESSION['s_prefs']['language'] = $info['lang'];
+	$prefs['language'] = $info['lang'];
 }
 
 /*Wiki SECURITY warning to optimizers : Although get_page_info is currently

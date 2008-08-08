@@ -110,6 +110,42 @@
             return $sOutput;
         }
     }
+
+	function wikiplugin_backlinks_info() {
+		return array(
+			'name' => tra('Backlinks'),
+			'description' => tra('List all pages linking to the specified page.'),
+			'prefs' => array( 'feature_wiki' ),
+			'params' => array(
+				'page' => array(
+					'required' => false,
+					'name' => tra('Page'),
+					'description' => tra('The page links will point to. Default value is the current page.'),
+				),
+				'info' => array(
+					'required' => false,
+					'name' => tra('Displayed information'),
+					'description' => tra('Pipe separated list of fields to display. ex: hits|user'),
+				),
+				'exclude' => array(
+					'required' => false,
+					'name' => tra('Excluded pages'),
+					'description' => tra('Pipe separated list of pages to be excluded from the listing. ex: HomePage|Sandbox'),
+				),
+				'include_self' => array(
+					'required' => false,
+					'name' => tra('Include Self'),
+					'description' => tra('1|0'),
+				),
+				'noheader' => array(
+					'required' => false,
+					'name' => tra('No Header'),
+					'description' => tra('1|0'),
+				),
+			),
+		);
+	}
+
     function wikiplugin_backlinks($data, $params) {
         $plugin = new wikipluginbacklinks();
         return $plugin->run($data, $params);

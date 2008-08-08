@@ -17,8 +17,24 @@
 
 function wikiplugin_equation_help() {
     $help  = tra("Renders an equation written in LaTeX syntax as a png.  Optional parameter size defaults to 100 and is the percentage of the normal size, i.e., size=200 indicates an equation 2x the normal size").":\n";
-    $help .= tra("Example").":<br />~np~{EQUATION(size=<size>)}".tra("equation")."{EQUATION}~/np~";
+    $help .= tra("Example").":<br />~np~{EQUATION(size=&lt;size&gt;)}".tra("equation")."{EQUATION}~/np~";
     return $help;
+}
+
+function wikiplugin_equation_info() {
+	return array(
+		'name' => tra('Equation'),
+		'description' => tra('Renders an equation written in LaTeX syntax as an image.'),
+		'prefs' => array(),
+		'body' => tra('equation'),
+		'params' => array(
+			'size' => array(
+				'required' => false,
+				'name' => tra('Size'),
+				'description' => tra('Percentage of increase from normal size. 100 produces the default size. 200 produces an image twice as large.'),
+			),
+		),
+	);
 }
 
 function wikiplugin_equation($data, $params) {

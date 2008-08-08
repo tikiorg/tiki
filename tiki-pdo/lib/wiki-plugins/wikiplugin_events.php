@@ -8,6 +8,40 @@ function wikiplugin_events_help() {
 	return tra("~np~{~/np~EVENTS(calendarid=1|2,maxdays=365,max=-1,datetime=1,desc=1)}{EVENTS} Insert rss feed output into a wikipage");
 }
 
+function wikiplugin_events_info() {
+	return array(
+		'name' => tra('Events'),
+		'description' => tra('Includes the list of events from a calendar in the page.'),
+		'prefs' => array( 'feature_calendar', 'feature_events' ),
+		'params' => array(
+			'calendarid' => array(
+				'required' => true,
+				'name' => tra('Calendar ID'),
+				'description' => tra('Numeric'),
+			),
+			'maxdays' => array(
+				'required' => false,
+				'name' => tra('Maximum days'),
+				'description' => tra('Numeric'),
+			),
+			'max' => array(
+				'required' => false,
+				'name' => tra('Maximum Rows'),
+				'description' => tra('Numeric'),
+			),
+			'datetime' => array(
+				'required' => false,
+				'name' => tra('Datetime'),
+				'description' => tra('0|1'),
+			),
+			'desc' => array(
+				'required' => false,
+				'name' => tra('Desc'),
+				'description' => tra('0|1'),
+			),
+		),
+	);
+}
 
 function wikiplugin_events($data,$params) {
 	global $calendarlib;
