@@ -139,7 +139,11 @@ border="0" src="article_image.php?image_type=topic&amp;id={$listpages[ix].topicI
 </div>
 {/if}
 {sectionelse}
-{if $quiet ne 'y'}{tr}No articles.{/tr}{/if}
+{if $quiet ne 'y'}{tr}No articles yet.{/tr}
+
+{if $tiki_p_edit_article eq 'y'}<a href="tiki-edit_article.php">{tr}Add an article{/tr}</a>{/if}
+
+{/if}
 {/section}
 
 {pagination_links cant=$cant step=$maxArticles offset=$offset}{/pagination_links}
