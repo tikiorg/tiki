@@ -1035,7 +1035,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 
 	$prefs['case_patched'] = 'n';
 	$prefs['site_closed'] = 'n';
-	$prefs['site_closed_msg'] = 'Site is closed for maintainance; please come back later.';
+	$prefs['site_closed_msg'] = 'Site is closed for maintenance; please come back later.';
 	$prefs['use_load_threshold'] = 'n';
 	$prefs['load_threshold'] = 3;
 	$prefs['site_busy_msg'] = 'Server is currently too busy; please come back later.';
