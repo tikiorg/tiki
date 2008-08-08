@@ -85,7 +85,7 @@ REPLACE INTO tiki_preferences VALUES ('session_lifetime','0');
 REPLACE INTO tiki_preferences VALUES ('siteTitle','Tikiwiki');
 REPLACE INTO tiki_preferences VALUES ('site_busy_msg','Server is currently too busy, please come back later.');
 REPLACE INTO tiki_preferences VALUES ('site_closed','n');
-REPLACE INTO tiki_preferences VALUES ('site_closed_msg','Site is closed for maintainance, please come back later.');
+REPLACE INTO tiki_preferences VALUES ('site_closed_msg','Site is closed for maintenance, please come back later.');
 REPLACE INTO tiki_preferences VALUES ('tikiIndex','tiki-index.php');
 REPLACE INTO tiki_preferences VALUES ('tmpDir','temp');
 REPLACE INTO tiki_preferences VALUES ('useGroupHome','n');
