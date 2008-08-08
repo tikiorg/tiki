@@ -9,6 +9,31 @@ function wikiplugin_objecthits_help() {
         return tra("Displays object hit info by object and days").":<br />~np~{OBJECTHITS(object=>,type=>,days=>)/}~/np~";
 }
 
+function wikiplugin_objecthits_info() {
+	return array(
+		'name' => tra('Object Hits'),
+		'description' => tra("Displays object hit info by object and days"),
+		'prefs' => array( 'wikiplugin_objecthits' ),
+		'params' => array(
+			'object' => array(
+				'required' => true,
+				'name' => tra( 'Object' ),
+				'description' => tra( 'Object ID' ),
+			),
+			'type' => array(
+				'required' => true,
+				'name' => tra('Type'),
+				'description' => tra('Object Type'),
+			),
+			'days' => array(
+				'required' => false,
+				'name' => tra('Days'),
+				'description' => tra('?'),
+			),
+		),
+	);
+}
+
 function wikiplugin_objecthits($data, $params) {
 	global $tikilib;
 

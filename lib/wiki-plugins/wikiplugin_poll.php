@@ -8,6 +8,23 @@ function wikiplugin_poll_help() {
 	$help.= "~np~{POLL(pollId=>1)}Good Poll{POLL}~/np~";
 	return $help;
 }
+
+function wikiplugin_poll_info() {
+	return array(
+		'name' => tra('Poll'),
+		'description' => tra("Displays the output of a poll, fields are indicated with numeric ids."),
+		'prefs' => array( 'feature_polls', 'wikiplugin_poll' ),
+		'body' => tra('Title'),
+		'params' => array(
+			'pollId' => array(
+				'required' => true,
+				'name' => tra('Poll'),
+				'description' => tra('Poll ID'),
+			),
+		),
+	);
+}
+
 function wikiplugin_poll($data, $params) {
 	global $smarty, $polllib, $trklib, $tikilib, $dbTiki, $userlib, $tiki_p_admin, $prefs, $_REQUEST, $user;
 

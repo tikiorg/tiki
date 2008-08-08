@@ -198,7 +198,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['wikiplugin_mono'] = 'y';
 	$prefs['wikiplugin_myspace'] = 'y';
 	$prefs['wikiplugin_objecthits'] = 'y';
-	$prefs['wikiplugin_pluginmanager'] = 'y';
+	$prefs['wikiplugin_pluginmanager'] = 'n';
 	$prefs['wikiplugin_poll'] = 'y';
 	$prefs['wikiplugin_proposal'] = 'y';
 	$prefs['wikiplugin_quote'] = 'y';
