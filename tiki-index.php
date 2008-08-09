@@ -65,7 +65,7 @@ For more information:
 *[http://info.tikiwiki.org/Learn+More|Learn more about TikiWiki].
 *[http://info.tikiwiki.org/Help+Others|Get help], including the [http://doc.tikiwiki.org|official documentation] and [http://www.tikiwiki.org/forums|support forums].
 *[http://info.tikiwiki.org/Join+the+community|Join the TikiWiki community].
-',$tikilib->now,'Tiki initialization', 'admin', '0.0.0.0', '', 'en');
+',$tikilib->now,'Tiki initialization', 'admin', '0.0.0.0', '', 'en', false, null, 'n', '');
 			header('Location: tiki-index.php?page='.$userHomePage);
 		}
 	} else {
