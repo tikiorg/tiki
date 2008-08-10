@@ -136,7 +136,7 @@
           {elseif $propname eq 'last_user' or $propname eq 'author' or $propname eq 'creator'}
             {assign var=propval value=$propval|username}
           {elseif $propname eq 'size'}
-            {assign var=propval value=$propval|kbsize}
+            {assign var=propval value=$propval|kbsize:true}
           {/if}
     
           {if isset($gal_info.$propkey) and $propval neq '' and ( $gal_info.$propkey eq 'a' or $gal_info.$propkey eq 'o' ) }
@@ -221,7 +221,7 @@
       {elseif $propname eq 'last_user' or $propname eq 'author' or $propname eq 'creator'}
         {assign var=propval value=$propval|userlink}
       {elseif $propname eq 'size'}
-        {assign var=propval value=$propval|kbsize}
+        {assign var=propval value=$propval|kbsize:true}
       {elseif $propname eq 'type'}
         {if $files[changes].isgal eq 1}
           {capture assign=propval}{icon _id='folder' class=''}{/capture}

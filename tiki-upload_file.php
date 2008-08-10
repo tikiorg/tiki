@@ -14,6 +14,8 @@ $section = 'file_galleries';
 require_once ('tiki-setup.php');
 include_once ('lib/categories/categlib.php');
 include_once ('lib/filegals/filegallib.php');
+
+include('lib/filegals/max_upload_size.php');
 @ini_set('max_execution_time', 0); //will not work in safe_mode is on
 
 if ($prefs['feature_file_galleries'] != 'y') {
@@ -370,8 +372,6 @@ include_once('categorize_list.php');
 include_once ('tiki-section_options.php');
 
 ask_ticket('upload-file');
-
-$smarty->assign("max_file_upload_size", ini_get('upload_max_filesize'));
 
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');

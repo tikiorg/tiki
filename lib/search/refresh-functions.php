@@ -88,9 +88,10 @@ function refresh_index($object_type, $object_id = null) {
 		$index_type = 'file';
 		$f_id = 'fileId';
 		$f_content = array('data', 'description', 'name', 'search_data', 'filename', 'comment');
-		$f_other = 'archiveId';
+		$f_other = array('archiveId', 'filetype');
 		$query_where = ' where archiveId = ?';
 		$query_vars = array(0);
+		$fulltext_mimetypes_pattern = '/^text\//i'; // Mimetypes that will be fulltext indexed
 		unset($filtering_expr);
 		break;
 
@@ -162,6 +163,9 @@ function refresh_index($object_type, $object_id = null) {
 		if ( $result ) while ( $res = $result->fetchRow() ) if ( is_array($res) ) {
 			$id = '';
 			$content = '';
+
+			// For performance reasons, do not index all files with fulltext (depending on their mimetypes)
+			if ( $index_type == 'file' && ! preg_match($fulltext_mimetypes_pattern, $res['filetype']) ) $res['data'] = '';
 
 			foreach ( $f_id as $k_id => $v_id ) $id .= (($id!='')?'#':'').$res[(is_string($k_id)?$k_id:$v_id)];
 			foreach ( $f_content as $k_content => $v_content ) $content .= ' '.$res[(is_string($k_content)?$k_content:$v_content)];

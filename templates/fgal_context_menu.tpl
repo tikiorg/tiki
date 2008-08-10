@@ -67,6 +67,9 @@
 		{else}
 			{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='disk_multiple_gray' alt='{tr}Archives{/tr}'}
 		{/if}
+		{assign var=replace_action_title value="{tr}Upload New Version{/tr}"}
+	{else}
+		{assign var=replace_action_title value="{tr}Replace{/tr}"}
 	{/if}
 
 	{* can edit if I am admin or the owner of the file or the locker of the file or if I have the perm to edit file on this gall *}
@@ -81,19 +84,19 @@
 
 				{if $menu_text neq 'y'}</div>{/if}
 				
-				<div class="upspan {if $menu_text eq 'y'}upspantext{/if}" style="display: inline; position:relative{if $menu_text eq 'y'}; position:absolute{else}; float:left{/if}; overflow:hidden" title="{tr}Upload New Version{/tr}">
+				<div class="upspan {if $menu_text eq 'y'}upspantext{/if}" style="display: inline; position:relative{if $menu_text eq 'y'}; position:absolute{else}; float:left{/if}; overflow:hidden" title="{$replace_action_title}">
 					<input type="file" style="position:absolute; z-index:1001; right:0; top:0; font-size:600px; opacity:0; -moz-opacity:0; filter:alpha(opacity=0); cursor:pointer" name="upfile{$files[changes].id}" onchange="this.form.submit(); return false;"/>
-					<a href="#">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='database_refresh' alt='{tr}Upload New Version{/tr}'}</a>
+					<a href="#">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='database_refresh' alt=$replace_action_title}</a>
 				</div>
 
 				{if $menu_text eq 'y'}
 					{* the line above is used to give enough space to the real 'Upload New Version' button *}
-					<a style="visibility: hidden">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='database_refresh' alt='{tr}Upload New Version{/tr}'}</a>
+					<a style="visibility: hidden">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='database_refresh' alt=$replace_action_title}</a>
 				{/if}
 
 			{else}
 				{* for the moment, no-javascript version is simply a link to the edit page where you can also upload *}
-				<a href="tiki-upload_file.php?galleryId={$gal_info.galleryId}&amp;fileId={$files[changes].id}{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='database_refresh' alt='{tr}Upload New Version{/tr}'}</a>
+				<a href="tiki-upload_file.php?galleryId={$gal_info.galleryId}&amp;fileId={$files[changes].id}{if $filegals_manager eq 'y'}&amp;filegals_manager={$filegals_manager|escape}{/if}">{icon _menu_text=$menu_text _menu_icon=$menu_icon _id='database_refresh' alt='{tr}Upload New Version{/tr}'}</a>
 				
 			{/if}
 

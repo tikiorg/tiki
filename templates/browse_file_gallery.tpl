@@ -38,7 +38,7 @@
           {elseif $propname eq 'last_user' or $propname eq 'author' or $propname eq 'creator'}
             {assign var=propval value=$propval|username}
           {elseif $propname eq 'size'}
-            {assign var=propval value=$propval|kbsize}
+            {assign var=propval value=$propval|kbsize:true}
           {/if}
     
           {if isset($gal_info.$propkey) and $propval neq '' and $propname neq 'name' and ( $gal_info.$propkey eq 'a' or $gal_info.$propkey eq 'o' or ( $gal_info.$propkey eq 'y' and $show_details neq 'y' ) ) }
@@ -117,7 +117,7 @@
             {elseif $propname eq 'last_user' or $propname eq 'author' or $propname eq 'creator'}
               {assign var=propval value=$propval|userlink}
             {elseif $propname eq 'size'}
-              {assign var=propval value=$propval|kbsize}
+              {assign var=propval value=$propval|kbsize:true}
             {elseif $propname eq 'description' and $gal_info.max_desc gt 0}
               {assign var=propval value=$propval|truncate:$gal_info.max_desc:"...":false}
             {elseif $propname eq 'lockedby' and $propval neq ''}
