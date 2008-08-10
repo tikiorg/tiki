@@ -23,7 +23,1252 @@ Version 2.0
 <http://tikiwiki.org/ReleaseProcess20>
 ------------------
 
+------------------------------------------------------------------------
+r14148 | lphuberdeau | 2008-08-10 17:46:42 +0200 (dim, 10 aoû 2008) | 1 line
 
+[FIX] Missing feature check
+------------------------------------------------------------------------
+r14146 | nyloth | 2008-08-10 14:53:16 +0200 (dim, 10 aoû 2008) | 1 line
+
+[FIX] installer: test on 16MB of memory (as announced), not 8MB.
+------------------------------------------------------------------------
+r14144 | nyloth | 2008-08-10 14:28:08 +0200 (dim, 10 aoû 2008) | 1 line
+
+[FIX] filegals: fix title from 'Upload New Version' to 'Replace', when no archives for the gallery (instead users are confused and can definitely delete files)
+------------------------------------------------------------------------
+r14142 | nyloth | 2008-08-10 13:37:20 +0200 (dim, 10 aoû 2008) | 1 line
+
+[SEC] XSS sanitization: also handle 'lowsrc', 'codebase' and 'xmlns' html attributes + simplify one of the original regexp patterns
+------------------------------------------------------------------------
+r14141 | nyloth | 2008-08-10 13:35:39 +0200 (dim, 10 aoû 2008) | 1 line
+
+[FIX] filegals: quickfix to not index all files with fulltext (depending on their mimetypes) since it make filegals nearly unusable with binary/images files and tiki (non-mysql) fulltext search.
+------------------------------------------------------------------------
+r14140 | nyloth | 2008-08-10 13:33:32 +0200 (dim, 10 aoû 2008) | 3 lines
+
+[FIX] filegals: show a more correct max upload size info for file upload (follows commit revision 14096 from ricks), especially when using DB storage + fix most important uses of kbsize (units were wrong).
+
+
+------------------------------------------------------------------------
+r14133 | nyloth | 2008-08-09 16:54:33 +0200 (sam, 09 aoû 2008) | 5 lines
+
+[SEC] XSS sanitization fixes + tuning to be less aggressive for inline CSS styles:
+  * don't disable 'style' HTML attribute because it was considered as too aggressive. Now it is only catched as HTML tag but alert() and url() are catched,
+  * move straight replacements handling into the while loop,
+  * fix XSS vulnerabilities using html comments, CDATA, link tags, ?xml tags, ?import tags, spaces in javascript functions names
+
+------------------------------------------------------------------------
+r14126 | ricks99 | 2008-08-08 14:03:45 +0200 (ven, 08 aoû 2008) | 1 line
+
+[FIX]fixed typo "maintenance"
+------------------------------------------------------------------------
+r14111 | sylvieg | 2008-08-07 15:20:36 +0200 (jeu, 07 aoû 2008) | 1 line
+
+[FIX] to have dev.tw.o working with user selector with option email
+------------------------------------------------------------------------
+r14110 | sylvieg | 2008-08-07 15:19:26 +0200 (jeu, 07 aoû 2008) | 1 line
+
+rollback partially 13491(security check) test against the pref user_pref + reinclude the lib to have the avatar back
+------------------------------------------------------------------------
+r14099 | marclaporte | 2008-08-06 17:21:50 +0200 (mer, 06 aoû 2008) | 1 line
+
+[FIX] Remove extra line which is not necessary and causes SQL error message on install. No need to merge up since this will be deprecated in 3.0
+------------------------------------------------------------------------
+r14096 | ricks99 | 2008-08-06 16:15:23 +0200 (mer, 06 aoû 2008) | 1 line
+
+[FIX] show max file upload size when adding files to gallery. we already show for image uploads
+------------------------------------------------------------------------
+r14092 | sylvieg | 2008-08-06 14:35:24 +0200 (mer, 06 aoû 2008) | 1 line
+
+regression: in dev.tw.org, the user modifier tracker field was no more updated
+------------------------------------------------------------------------
+r14085 | sept_7 | 2008-08-06 10:03:22 +0200 (mer, 06 aoû 2008) | 5 lines
+
+[SEC] Fix creation and edition problems on blogs
+ * First problemn was with sanatization of style attribute, now style is replace by style_dangerous.
+ * Second there was a problem with the test of tiki_p_edit_templates :(
+ * Third there was a problem when editing the blog :(
+
+------------------------------------------------------------------------
+r14076 | sylvieg | 2008-08-05 22:31:58 +0200 (mar, 05 aoû 2008) | 1 line
+
+add a message only queries using more than seconds: 0.05 - as since the last adodb upgrade it logs only these queries - bad adodb
+------------------------------------------------------------------------
+r14059 | nyloth | 2008-08-05 09:35:31 +0200 (mar, 05 aoû 2008) | 1 line
+
+[MOD] wiki: support 'lnk' param for img wiki tag to do the same than 'link' but that is not affected by sanitization.
+------------------------------------------------------------------------
+r14056 | nyloth | 2008-08-05 00:15:51 +0200 (mar, 05 aoû 2008) | 1 line
+
+[FIX] sanitization: tune a bit more to avoid some false positive like 'linked' instead of 'link' (for all content keywords).
+------------------------------------------------------------------------
+r14054 | sylvieg | 2008-08-04 23:12:07 +0200 (lun, 04 aoû 2008) | 1 line
+
+backport because missing up fresh install
+------------------------------------------------------------------------
+r14053 | nyloth | 2008-08-04 22:47:17 +0200 (lun, 04 aoû 2008) | 1 line
+
+[FIX] sanitization: fix false positive in sanitization for wiki syntax {img link=}
+------------------------------------------------------------------------
+r14049 | lphuberdeau | 2008-08-04 21:21:09 +0200 (lun, 04 aoû 2008) | 1 line
+
+[MOD] Re-adding installer disable to prevent brute force attacks
+------------------------------------------------------------------------
+r14048 | lphuberdeau | 2008-08-04 21:07:15 +0200 (lun, 04 aoû 2008) | 1 line
+
+[FIX] Simplify installer authentication to request DB credentials
+------------------------------------------------------------------------
+r14046 | sylvieg | 2008-08-04 19:58:27 +0200 (lun, 04 aoû 2008) | 1 line
+
+[FIX]email_due is renamed just after, adn pass_due too
+------------------------------------------------------------------------
+r14039 | nyloth | 2008-08-04 12:04:39 +0200 (lun, 04 aoû 2008) | 1 line
+
+[SEC] security fix on an input var (reported by securfrog)
+------------------------------------------------------------------------
+r14038 | Jyhem | 2008-08-04 11:43:05 +0200 (lun, 04 aoû 2008) | 1 line
+
+[FIX] Security fix: This page should not be displayed without permission check
+------------------------------------------------------------------------
+r14030 | nyloth | 2008-08-03 17:35:16 +0200 (dim, 03 aoû 2008) | 1 line
+
+[FIX] wiki: authors style can't be null in database, so initialize it to the empty string
+------------------------------------------------------------------------
+r14022 | sampaioprimo | 2008-08-03 02:08:23 +0200 (dim, 03 aoû 2008) | 2 lines
+
+translation typo
+
+------------------------------------------------------------------------
+r14021 | sampaioprimo | 2008-08-03 01:55:39 +0200 (dim, 03 aoû 2008) | 2 lines
+
+pt-br translation
+
+------------------------------------------------------------------------
+r14020 | luciash | 2008-08-02 00:47:03 +0200 (sam, 02 aoû 2008) | 1 line
+
+[FIX] respect nocache parameter at second position too (as before adding rel for shadowbox)
+------------------------------------------------------------------------
+r14019 | nyloth | 2008-08-02 00:44:16 +0200 (sam, 02 aoû 2008) | 1 line
+
+[FIX] wiki: make optionnal the 'Wiki authors style by page settings' tfeature that was not in previous stable version, as asked by many people.
+------------------------------------------------------------------------
+r14018 | marclaporte | 2008-08-02 00:32:17 +0200 (sam, 02 aoû 2008) | 1 line
+
+[FIX] Fix link to the documentation
+------------------------------------------------------------------------
+r14017 | marclaporte | 2008-08-02 00:29:21 +0200 (sam, 02 aoû 2008) | 1 line
+
+[FIX] Missing link to the documentation
+------------------------------------------------------------------------
+r14016 | sylvieg | 2008-08-02 00:22:18 +0200 (sam, 02 aoû 2008) | 1 line
+
+[FIX]history : side by side diff was generating an extra </table> (fix asked in 2.0 by marc)
+------------------------------------------------------------------------
+r14015 | marclaporte | 2008-08-02 00:08:54 +0200 (sam, 02 aoû 2008) | 1 line
+
+[FIX] Missing link to the documentation
+------------------------------------------------------------------------
+r14013 | marclaporte | 2008-08-01 23:47:19 +0200 (ven, 01 aoû 2008) | 1 line
+
+[FIX] Missing link to the documentation
+------------------------------------------------------------------------
+r14011 | princessxine | 2008-08-01 23:04:45 +0200 (ven, 01 aoû 2008) | 1 line
+
+[FIX/MOD] Moving some of the options around on the feature page / textarea page.
+------------------------------------------------------------------------
+r14010 | marclaporte | 2008-08-01 23:02:27 +0200 (ven, 01 aoû 2008) | 1 line
+
+[FIX/MOD] No feature addition or removal, just re-ordering the admin panel to be more intuitive. Newer panels have historically been placed at the end. The first panels are now the ones which are always active, then, it's roughly in the same order as in tiki-admin.php?page=features This is in conjunction with princessechristine (SVN) / NefariousC's (IRC) work on tiki-admin.php?page=features and tiki-admin.php?page=textarea
+------------------------------------------------------------------------
+r14008 | sylvieg | 2008-08-01 22:35:07 +0200 (ven, 01 aoû 2008) | 1 line
+
+[FIX]login: some system do not have crypt-md5. In this case go back to tikihash (very conservative) . Perhaps anther method must be choosen?
+------------------------------------------------------------------------
+r14007 | marclaporte | 2008-08-01 21:47:56 +0200 (ven, 01 aoû 2008) | 1 line
+
+[DEL] Remove some old unused jukebox stuff
+------------------------------------------------------------------------
+r14006 | marclaporte | 2008-08-01 21:35:59 +0200 (ven, 01 aoû 2008) | 1 line
+
+[DEL] Remove useless file
+------------------------------------------------------------------------
+r13999 | sept_7 | 2008-08-01 09:42:53 +0200 (ven, 01 aoû 2008) | 2 lines
+
+[FIX] : bug fix reported by amette, TikiTest unusable without this fix.
+
+------------------------------------------------------------------------
+r13995 | marclaporte | 2008-07-31 22:52:05 +0200 (jeu, 31 jui 2008) | 1 line
+
+[FIX] Remove the possibility of hiding the extra admin links as they are very useful, even if not very pretty. 
+------------------------------------------------------------------------
+r13993 | ricks99 | 2008-07-31 22:15:14 +0200 (jeu, 31 jui 2008) | 1 line
+
+[FIX] dont prompt to change admin pw on upgrade -- only for new install.
+------------------------------------------------------------------------
+r13989 | marclaporte | 2008-07-31 21:40:30 +0200 (jeu, 31 jui 2008) | 1 line
+
+[DOC] Adding a link to security bug about this feature to warn people not to activate if they are concerned about this aspect
+------------------------------------------------------------------------
+r13983 | tombombadilom | 2008-07-31 16:56:42 +0200 (jeu, 31 jui 2008) | 2 lines
+
+[Mootools] upgraded to version 1.2 shadow box-mootools.js has been patched to avoid better display
+
+------------------------------------------------------------------------
+r13972 | lphuberdeau | 2008-07-30 18:41:52 +0200 (mer, 30 jui 2008) | 1 line
+
+[REL] SecDB for 2.0RC4
+------------------------------------------------------------------------
+r13969 | nyloth | 2008-07-30 17:59:13 +0200 (mer, 30 jui 2008) | 1 line
+
+[FIX] sanitization: Convert back sanitization tags into real tags to avoid them to be displayed (instead of removing tag).
+------------------------------------------------------------------------
+r13966 | lphuberdeau | 2008-07-30 17:01:00 +0200 (mer, 30 jui 2008) | 1 line
+
+[REL] Changing version numbers
+------------------------------------------------------------------------
+r13965 | nyloth | 2008-07-30 16:41:25 +0200 (mer, 30 jui 2008) | 1 line
+
+[FIX] sanitization: Remove useless sanitization when the whole string will be converted into HTML entities, to be more transparent for the user.
+------------------------------------------------------------------------
+r13963 | sept_7 | 2008-07-30 15:56:56 +0200 (mer, 30 jui 2008) | 2 lines
+
+[UPDATE] : Update HTMLPurifier from 2.1.3 to 2.1.5
+
+------------------------------------------------------------------------
+r13962 | nyloth | 2008-07-30 15:42:13 +0200 (mer, 30 jui 2008) | 1 line
+
+[FIX] sanitization: be less aggressive on 'javascript' keyword
+------------------------------------------------------------------------
+r13961 | sept_7 | 2008-07-30 14:54:29 +0200 (mer, 30 jui 2008) | 3 lines
+
+[ENH] : minimize the call to preg_replace and calculate search pattern only
+        once where applicable.
+
+------------------------------------------------------------------------
+r13960 | sept_7 | 2008-07-30 11:46:18 +0200 (mer, 30 jui 2008) | 2 lines
+
+[FIX] fix the coma bug in sanatization.php... BPB for Nyloth :D
+
+------------------------------------------------------------------------
+r13957 | lphuberdeau | 2008-07-30 01:50:51 +0200 (mer, 30 jui 2008) | 1 line
+
+[REL] SecDB for 2.0RC3
+------------------------------------------------------------------------
+r13956 | lphuberdeau | 2008-07-30 01:49:37 +0200 (mer, 30 jui 2008) | 1 line
+
+[REL] Change version numbers
+------------------------------------------------------------------------
+r13955 | lphuberdeau | 2008-07-30 01:46:32 +0200 (mer, 30 jui 2008) | 1 line
+
+[REL] SecDB for 2.0RC3
+------------------------------------------------------------------------
+r13953 | lphuberdeau | 2008-07-30 01:42:23 +0200 (mer, 30 jui 2008) | 1 line
+
+[REL] Change version numbers
+------------------------------------------------------------------------
+r13952 | lphuberdeau | 2008-07-30 01:26:05 +0200 (mer, 30 jui 2008) | 1 line
+
+[REL] SecDB for 2.0RC3
+------------------------------------------------------------------------
+r13950 | nyloth | 2008-07-30 01:14:44 +0200 (mer, 30 jui 2008) | 1 line
+
+[FIX] sanitization: remove sanitization from tiki-admin.php since users that use those panels are trusted users and they may need to use style tags (or other dangerous tags) in some places like 'Custom Site Header'. Thanx to SEWilco for the report and lphuberdeau for the fix idea)
+------------------------------------------------------------------------
+r13946 | nyloth | 2008-07-29 20:36:15 +0200 (mar, 29 jui 2008) | 1 line
+
+[FIX] sanitization: be less aggressive on 'style' keyword (now only search as a tag or as something that looks like an HTML attribute)
+------------------------------------------------------------------------
+r13944 | nyloth | 2008-07-29 19:42:39 +0200 (mar, 29 jui 2008) | 1 line
+
+[MOD] wiki parsing: small hack to avoid displaying things like 'st<x>yle' for wiki text that has been XSS sanitized.
+------------------------------------------------------------------------
+r13938 | nyloth | 2008-07-29 17:35:41 +0200 (mar, 29 jui 2008) | 1 line
+
+[FIX] sanitization: do everything in the same loop to be sure
+------------------------------------------------------------------------
+r13937 | sampaioprimo | 2008-07-29 16:16:11 +0200 (mar, 29 jui 2008) | 2 lines
+
+pt-br translation
+
+------------------------------------------------------------------------
+r13935 | lphuberdeau | 2008-07-29 15:44:02 +0200 (mar, 29 jui 2008) | 1 line
+
+[FIX] Translation sync got broken along the way
+------------------------------------------------------------------------
+r13934 | sampaioprimo | 2008-07-29 15:00:45 +0200 (mar, 29 jui 2008) | 2 lines
+
+[FIX] smarty var names conflicting
+
+------------------------------------------------------------------------
+r13929 | franck | 2008-07-29 06:51:31 +0200 (mar, 29 jui 2008) | 1 line
+
+[FIX] smarty long datetime ref missing in calendar rss code
+------------------------------------------------------------------------
+r13928 | franck | 2008-07-29 05:58:27 +0200 (mar, 29 jui 2008) | 1 line
+
+[ENH]display the Timezone in the calendar
+------------------------------------------------------------------------
+r13927 | nyloth | 2008-07-29 01:47:16 +0200 (mar, 29 jui 2008) | 1 line
+
+[FIX] explode modifier: fix call to php function when no limit
+------------------------------------------------------------------------
+r13926 | nyloth | 2008-07-29 01:35:25 +0200 (mar, 29 jui 2008) | 1 line
+
+[SEC] improve XSS filter to protect against more attacks (thx to 'Joshua Morin' who reported some vulnerabilities. New code is mainly based on 'RemoveXSS' initially developped by kallahar from quickwired.com and modified for TikiWiki to be less aggressive. When a value may be dangerous, it inserts a fake '<x>' tag inside it to disable it. Please test.
+------------------------------------------------------------------------
+r13919 | nyloth | 2008-07-28 19:51:09 +0200 (lun, 28 jui 2008) | 1 line
+
+[FIX] installer: typo
+------------------------------------------------------------------------
+r13914 | nyloth | 2008-07-28 16:43:34 +0200 (lun, 28 jui 2008) | 1 line
+
+[FIX] installer: replace the user_is_admin function by simply testing if the user is 'admin', since the installer should only be accessible for this user (the function was buggy, because it was accepting any user that was in a group + admin may not be in a group). + fix the cookie name that was not working if it was set with an underscore (it has to be cleaned as in tiki-setup_base).
+------------------------------------------------------------------------
+r13913 | marclaporte | 2008-07-28 13:14:33 +0200 (lun, 28 jui 2008) | 1 line
+
+[FIX] Remove unnecessary line in install instructions (Thanks Nyloth)
+------------------------------------------------------------------------
+r13911 | marclaporte | 2008-07-28 03:59:17 +0200 (lun, 28 jui 2008) | 1 line
+
+[FIX] Improve admin tip (but it's still not great)
+------------------------------------------------------------------------
+r13910 | marclaporte | 2008-07-28 02:31:48 +0200 (lun, 28 jui 2008) | 1 line
+
+[FIX] Like in 1.9.x, on external links: changing the alt from 'external link' to ' (external link)' because it causes a nuisance when copy/pasting from a wiki page (with Firefox but not IE6) to somewhere else and also when using the Tiki newsletter.
+------------------------------------------------------------------------
+r13909 | marclaporte | 2008-07-28 02:09:29 +0200 (lun, 28 jui 2008) | 1 line
+
+[FIX] Changing instructions to use sh setup.sh instead of ./setup.sh
+------------------------------------------------------------------------
+r13907 | nyloth | 2008-07-27 21:52:48 +0200 (dim, 27 jui 2008) | 1 line
+
+[FIX] filegal manager: fix images in wiki pages with height or width set in percentages.
+------------------------------------------------------------------------
+r13903 | nyloth | 2008-07-27 20:09:41 +0200 (dim, 27 jui 2008) | 1 line
+
+[FIX] file galleries: initialisation of explorer and path was broken for a new gallery. It now uses global prefs as other options.
+------------------------------------------------------------------------
+r13901 | nyloth | 2008-07-27 17:09:40 +0200 (dim, 27 jui 2008) | 1 line
+
+[FIX] file galleries: explorer tree was broken in php mode (i.e. not in javascript through phplayers).
+------------------------------------------------------------------------
+r13897 | nyloth | 2008-07-27 12:10:49 +0200 (dim, 27 jui 2008) | 1 line
+
+[FIX] some comments from 1.10 to 2.0
+------------------------------------------------------------------------
+r13895 | chibaguy | 2008-07-26 16:42:26 +0200 (sam, 26 jui 2008) | 1 line
+
+[FIX] Div widths in forum posts (min-width needed for IE7 and FF3, etc.); other forum post fixes. Darkroom also needed text/bg contrast properties when transition CSS is used. 
+------------------------------------------------------------------------
+r13894 | chibaguy | 2008-07-26 06:21:57 +0200 (sam, 26 jui 2008) | 1 line
+
+[FIX] Clear needed to keep post form in place on preview page in *litecss themes.
+------------------------------------------------------------------------
+r13887 | lphuberdeau | 2008-07-25 17:52:36 +0200 (ven, 25 jui 2008) | 1 line
+
+[FIX] No longer read the version number from db/local.php
+------------------------------------------------------------------------
+r13877 | chibaguy | 2008-07-25 09:55:01 +0200 (ven, 25 jui 2008) | 1 line
+
+[FIX] Improved forum and admin pages, module ol and ul, font sizes, etc.
+------------------------------------------------------------------------
+r13864 | nyloth | 2008-07-24 17:12:52 +0200 (jeu, 24 jui 2008) | 1 line
+
+[FIX] filegals: shadowbox was conflicting with filegals_manager in browse view.
+------------------------------------------------------------------------
+r13863 | sylvieg | 2008-07-24 16:37:09 +0200 (jeu, 24 jui 2008) | 1 line
+
+[FIX]tracker: the checkbox in TRACKER has on/n values - in tracker-view_tracker has y/n - making impossible to test in TRACKERITEMFIELD => now normalize to y/n and accept both test value in TRACKERITEMFIELD
+------------------------------------------------------------------------
+r13862 | ricks99 | 2008-07-24 16:18:17 +0200 (jeu, 24 jui 2008) | 1 line
+
+[MOD]make text clearer for initial admin login for new install.
+------------------------------------------------------------------------
+r13861 | chibaguy | 2008-07-24 08:48:46 +0200 (jeu, 24 jui 2008) | 1 line
+
+[FIX] Extra /div tag removed that was causing column problem in *litecss themes.
+------------------------------------------------------------------------
+r13860 | chibaguy | 2008-07-24 04:07:50 +0200 (jeu, 24 jui 2008) | 1 line
+
+[FIX] "Powered by" font size set to match theme.
+------------------------------------------------------------------------
+r13859 | chibaguy | 2008-07-24 03:49:26 +0200 (jeu, 24 jui 2008) | 1 line
+
+[FIX] #siteloginbar styling added (font size, etc.) for consistent look.
+------------------------------------------------------------------------
+r13855 | nyloth | 2008-07-23 22:33:58 +0200 (mer, 23 jui 2008) | 1 line
+
+[SEC] galaxia : avoid using the base script directly.
+------------------------------------------------------------------------
+r13854 | nyloth | 2008-07-23 22:11:18 +0200 (mer, 23 jui 2008) | 1 line
+
+[SEC] backport 'smarty security' fixes from trunk to avoid this feature to break tiki.
+------------------------------------------------------------------------
+r13853 | nyloth | 2008-07-23 21:02:35 +0200 (mer, 23 jui 2008) | 1 line
+
+[SEC] change default password encryption from tikihash (old) to crypt-md5.
+------------------------------------------------------------------------
+r13852 | nyloth | 2008-07-23 20:53:15 +0200 (mer, 23 jui 2008) | 1 line
+
+[FIX] backport commit 13688
+------------------------------------------------------------------------
+r13840 | sylvieg | 2008-07-23 17:22:53 +0200 (mer, 23 jui 2008) | 1 line
+
+[FIX]tracker: For user tracker to work in regsitration
+------------------------------------------------------------------------
+r13839 | nyloth | 2008-07-23 15:59:08 +0200 (mer, 23 jui 2008) | 1 line
+
+[FIX] installer: for upgrades, show a login box instead of a link to the current tiki login box, because there is a huge risk that the current tiki is broken due to new code that is not compatible with the current database schema (which will be updated by the installer, after this login). This avoids admins to be locked into something broken if they forget to login before replacing tikiwiki files by new versions.
+------------------------------------------------------------------------
+r13838 | nyloth | 2008-07-23 15:54:57 +0200 (mer, 23 jui 2008) | 1 line
+
+[FIX] handle dbversion 1.10 that needs to be changed into 2.0.
+------------------------------------------------------------------------
+r13837 | nyloth | 2008-07-23 15:52:58 +0200 (mer, 23 jui 2008) | 1 line
+
+[FIX] use include_once instead of include for adodb-session.php since it can't be included again.
+------------------------------------------------------------------------
+r13836 | nyloth | 2008-07-23 15:51:00 +0200 (mer, 23 jui 2008) | 1 line
+
+[FIX] rename 1.10 to 2.0 in comments
+------------------------------------------------------------------------
+r13835 | nyloth | 2008-07-23 15:49:45 +0200 (mer, 23 jui 2008) | 1 line
+
+[FIX] handle dbversion 1.10 that needs to be changed into 2.0.
+------------------------------------------------------------------------
+r13833 | nyloth | 2008-07-23 15:47:03 +0200 (mer, 23 jui 2008) | 1 line
+
+[FIX] remove wrong comment
+------------------------------------------------------------------------
+r13831 | sylvieg | 2008-07-23 15:19:43 +0200 (mer, 23 jui 2008) | 1 line
+
+backport as TRACKER for user tracker was broken
+------------------------------------------------------------------------
+r13830 | nyloth | 2008-07-23 15:17:22 +0200 (mer, 23 jui 2008) | 1 line
+
+[FIX] remove useless script for 2.0
+------------------------------------------------------------------------
+r13829 | nyloth | 2008-07-23 15:16:41 +0200 (mer, 23 jui 2008) | 1 line
+
+[FIX] move some scripts from 1.10 to 2.0
+------------------------------------------------------------------------
+r13828 | nyloth | 2008-07-23 15:15:12 +0200 (mer, 23 jui 2008) | 1 line
+
+[FIX] move some scripts from 1.10 to 2.0
+------------------------------------------------------------------------
+r13827 | nyloth | 2008-07-23 15:12:02 +0200 (mer, 23 jui 2008) | 1 line
+
+[FIX] use include instead of include_once for local.php since it can be included later again + handle dbversion 1.10 that needs to be changed into 2.0.
+------------------------------------------------------------------------
+r13825 | marclaporte | 2008-07-23 14:57:19 +0200 (mer, 23 jui 2008) | 1 line
+
+[FIX] More fixes of links to doc.tikiwiki.org
+------------------------------------------------------------------------
+r13824 | xavidp | 2008-07-23 14:56:31 +0200 (mer, 23 jui 2008) | 1 line
+
+[FIX]merged changes in 1.9cvs originally by Pablo from precarios.org (pmorenogarcia) to branch2.0
+------------------------------------------------------------------------
+r13823 | marclaporte | 2008-07-23 14:43:55 +0200 (mer, 23 jui 2008) | 1 line
+
+[FIX] Fix many links to the documentation. Need to all be checked.
+------------------------------------------------------------------------
+r13822 | xavidp | 2008-07-23 13:38:39 +0200 (mer, 23 jui 2008) | 1 line
+
+[FIX]changed plana for pàgina everywhere in the language file
+------------------------------------------------------------------------
+r13821 | xavidp | 2008-07-23 13:25:49 +0200 (mer, 23 jui 2008) | 1 line
+
+[FIX] translated some strings by anna from intercanvis.net
+------------------------------------------------------------------------
+r13817 | nyloth | 2008-07-23 12:08:41 +0200 (mer, 23 jui 2008) | 1 line
+
+[FIX] calendar: fix first day of week, which is a pref
+------------------------------------------------------------------------
+r13816 | nyloth | 2008-07-23 12:07:44 +0200 (mer, 23 jui 2008) | 1 line
+
+[FIX] my pages: remove link to tiki-mypages.php since this file has been removed.
+------------------------------------------------------------------------
+r13815 | nyloth | 2008-07-23 10:57:47 +0200 (mer, 23 jui 2008) | 1 line
+
+[FIX] fr translation: try to have something that can be understood in the tikiwiki assistant.
+------------------------------------------------------------------------
+r13814 | ohertel | 2008-07-23 09:59:03 +0200 (mer, 23 jui 2008) | 1 line
+
+fix: frameset was enclosed in <head>
+------------------------------------------------------------------------
+r13813 | ohertel | 2008-07-23 09:55:48 +0200 (mer, 23 jui 2008) | 1 line
+
+de translations
+------------------------------------------------------------------------
+r13812 | chibaguy | 2008-07-23 06:36:20 +0200 (mer, 23 jui 2008) | 1 line
+
+[ENH] A little padding added in table.admin td and .cbox-data (pointed out by Marc).
+------------------------------------------------------------------------
+r13811 | nyloth | 2008-07-23 02:14:33 +0200 (mer, 23 jui 2008) | 1 line
+
+[FIX] tikipath: On some systems, SCRIPT_FILENAME contains the full path to the cgi script that calls the script we are looking for. In this case, we have to fallback to PATH_TRANSLATED.
+------------------------------------------------------------------------
+r13786 | sylvieg | 2008-07-21 20:38:05 +0200 (lun, 21 jui 2008) | 1 line
+
+backport
+------------------------------------------------------------------------
+r13781 | ricks99 | 2008-07-21 16:25:36 +0200 (lun, 21 jui 2008) | 1 line
+
+[MOD] if not logged in as admin, tell user to login (instead of simply showing the homepage).
+------------------------------------------------------------------------
+r13772 | marclaporte | 2008-07-20 23:47:01 +0200 (dim, 20 jui 2008) | 1 line
+
+[MOD] Wiki page draft feature is is broken as of 2.0 RC2: add note about experimental status and need for AJAX. 
+------------------------------------------------------------------------
+r13771 | marclaporte | 2008-07-20 23:13:30 +0200 (dim, 20 jui 2008) | 1 line
+
+[FIX] Create webhelp preference: setting to no by default, otherwise, since it's blank, it sets itself to no upon first modification of tiki-admin.php?page=wiki, causing surprise to the Tiki admin.
+------------------------------------------------------------------------
+r13770 | marclaporte | 2008-07-20 22:56:05 +0200 (dim, 20 jui 2008) | 1 line
+
+[FIX] Remove duplicate preference name and turn on Wiki Section Edit by default, which is a star feature of TikiWiki 2.0 (Possibly the last major wiki feature we were missing).
+------------------------------------------------------------------------
+r13768 | pkdille | 2008-07-20 20:01:52 +0200 (dim, 20 jui 2008) | 1 line
+
+[MOD] bot-bar: decrease "Powered by" font size.
+------------------------------------------------------------------------
+r13765 | marclaporte | 2008-07-20 18:18:16 +0200 (dim, 20 jui 2008) | 1 line
+
+[FIX] typo in login box
+------------------------------------------------------------------------
+r13764 | marclaporte | 2008-07-20 18:11:11 +0200 (dim, 20 jui 2008) | 1 line
+
+[FIX] On new installs, remove ugly/useless top bar. Powered by is now at the bottom, and people don't need us to tell them the date
+------------------------------------------------------------------------
+r13760 | marclaporte | 2008-07-20 17:35:19 +0200 (dim, 20 jui 2008) | 1 line
+
+[FIX] Remove incorrect sql query counter. Please see http://dev.tikiwiki.org/bug1317
+------------------------------------------------------------------------
+r13759 | marclaporte | 2008-07-20 17:13:44 +0200 (dim, 20 jui 2008) | 1 line
+
+[FIX/MOD] Changing default settings so the Inter-User message feature has a real chance to blossom in a community. By default, 1-New users are created with allow messages to y (they can opt out). 2- By default, users receive an email notification of new messages of normal or higher priority (3 or more), which is the common setting for popular Social Networking sites. User can opt out by setting to never.
+------------------------------------------------------------------------
+r13758 | marclaporte | 2008-07-20 16:50:28 +0200 (dim, 20 jui 2008) | 1 line
+
+[FIX] Remove irrelevant tip
+------------------------------------------------------------------------
+r13757 | marclaporte | 2008-07-20 15:58:19 +0200 (dim, 20 jui 2008) | 1 line
+
+[FIX] Like in 1.9.x, RSS feeds will now be off by default until Tiki admins decide to activate.
+------------------------------------------------------------------------
+r13756 | marclaporte | 2008-07-20 15:36:40 +0200 (dim, 20 jui 2008) | 1 line
+
+[FIX] From now on, the default setting for the internal messaging system is that users accept messages, but as before, they can opt-out. The old setting was an unfortunate choice as it's almost a garantee that the community aspect of inter-user messages was going to fail. Indeed, each user would have to change the setting. The current setup is the more common use case, where when a Tiki Admin turns on the Inter-User message features, it's to facilitate communication.
+------------------------------------------------------------------------
+r13754 | marclaporte | 2008-07-20 15:18:54 +0200 (dim, 20 jui 2008) | 1 line
+
+[FIX] Send to appropriate URL to create gallery. Even better would be permission check about being allowed to create a gallery and an alternate message if current user doesn't have sufficient permissions (Ex.: please ask an admin to create an image gallery)
+------------------------------------------------------------------------
+r13752 | marclaporte | 2008-07-20 15:11:05 +0200 (dim, 20 jui 2008) | 1 line
+
+[MOD] Default setup will now be that users can't change theme, which is the most common use case.
+------------------------------------------------------------------------
+r13750 | marclaporte | 2008-07-20 14:49:11 +0200 (dim, 20 jui 2008) | 1 line
+
+[DEL] tiki-view_irc.php has been deleted so templates/tiki-view_irc.tpl should go as well
+------------------------------------------------------------------------
+r13746 | chibaguy | 2008-07-19 12:55:56 +0200 (sam, 19 jui 2008) | 1 line
+
+[FIX] fullscreen body id interfered with CSS menus. 
+------------------------------------------------------------------------
+r13741 | m_stef | 2008-07-19 00:56:53 +0200 (sam, 19 jui 2008) | 2 lines
+
+[FIX] corrected starting time for events, added endtime handling in hcalendar support
+
+------------------------------------------------------------------------
+r13740 | m_stef | 2008-07-19 00:54:20 +0200 (sam, 19 jui 2008) | 3 lines
+
+[ENH] added compactisodate function, is used by a similarily called smarty
+function in hcalendar support.
+
+------------------------------------------------------------------------
+r13739 | m_stef | 2008-07-19 00:43:57 +0200 (sam, 19 jui 2008) | 3 lines
+
+[FIX] changed format to the compact version of isodate, so that the dates can
+be automatically used in vcal/ical dates.
+
+------------------------------------------------------------------------
+r13733 | lphuberdeau | 2008-07-18 22:23:39 +0200 (ven, 18 jui 2008) | 1 line
+
+[REL] Updating secdb
+------------------------------------------------------------------------
+r13721 | nyloth | 2008-07-18 17:40:27 +0200 (ven, 18 jui 2008) | 1 line
+
+[FIX] htaccess: do not try to enable rewrite rules on servers that does not have the Apache module.
+------------------------------------------------------------------------
+r13709 | m_stef | 2008-07-18 13:16:13 +0200 (ven, 18 jui 2008) | 2 lines
+
+[FIX] tiki file galleries RSS feed did not correctly include the publishdate and author
+
+------------------------------------------------------------------------
+r13708 | m_stef | 2008-07-18 13:08:53 +0200 (ven, 18 jui 2008) | 2 lines
+
+[FIX] file galleries RSS feed was empty, list_files did not pass the recursive param
+
+------------------------------------------------------------------------
+r13704 | nyloth | 2008-07-18 01:27:36 +0200 (ven, 18 jui 2008) | 1 line
+
+[FIX] new logo for 2.0 release has a white background
+------------------------------------------------------------------------
+r13702 | sylvieg | 2008-07-17 22:13:48 +0200 (jeu, 17 jui 2008) | 1 line
+
+[FIX]tracker: block {php}{/php} in the tpl/wiki of a pretty tracker
+------------------------------------------------------------------------
+r13697 | sampaioprimo | 2008-07-17 16:36:19 +0200 (jeu, 17 jui 2008) | 2 lines
+
+pt-br translation
+
+------------------------------------------------------------------------
+r13689 | nyloth | 2008-07-16 10:51:03 +0200 (mer, 16 jui 2008) | 1 line
+
+[FIX] smarty self_link: better fix (was impacting major feature - trackers item saving)
+------------------------------------------------------------------------
+r13687 | lphuberdeau | 2008-07-16 10:40:45 +0200 (mer, 16 jui 2008) | 1 line
+
+[REL] Preparing RC2
+------------------------------------------------------------------------
+r13681 | sampaioprimo | 2008-07-15 19:39:01 +0200 (mar, 15 jui 2008) | 2 lines
+
+removed new wiki-plugin from 2.0 (sorry for commiting this after branch was frozen)
+
+------------------------------------------------------------------------
+r13675 | marcoaasilva | 2008-07-15 18:42:13 +0200 (mar, 15 jui 2008) | 3 lines
+
+pt-br translation
+
+
+------------------------------------------------------------------------
+r13674 | sylvieg | 2008-07-15 18:40:02 +0200 (mar, 15 jui 2008) | 1 line
+
+[FIX]newsletter: to see a preview that is white on white background as preview is in simplebox wikitext
+------------------------------------------------------------------------
+r13673 | pkdille | 2008-07-15 16:12:12 +0200 (mar, 15 jui 2008) | 1 line
+
+[FIX] tiki_menus: add table column icon as in tiki_1.9to2.0 script (fix bug from dev.tw.org buglist)
+------------------------------------------------------------------------
+r13669 | chibaguy | 2008-07-15 09:38:47 +0200 (mar, 15 jui 2008) | 1 line
+
+[KIL] Removed from branch 1.9 earlier - no known use.
+------------------------------------------------------------------------
+r13668 | chibaguy | 2008-07-15 09:37:11 +0200 (mar, 15 jui 2008) | 1 line
+
+[KIL] vidiki.css was removed already, so its bg images must follow.
+------------------------------------------------------------------------
+r13665 | marcoaasilva | 2008-07-15 06:10:13 +0200 (mar, 15 jui 2008) | 2 lines
+
+fix pt-br translation
+
+------------------------------------------------------------------------
+r13664 | sampaioprimo | 2008-07-14 20:52:37 +0200 (lun, 14 jui 2008) | 2 lines
+
+[UI] better place to display link to blog comments on blog listing
+
+------------------------------------------------------------------------
+r13663 | sampaioprimo | 2008-07-14 20:45:00 +0200 (lun, 14 jui 2008) | 2 lines
+
+typo (remove underline from blank space)
+
+------------------------------------------------------------------------
+r13662 | sampaioprimo | 2008-07-14 20:39:42 +0200 (lun, 14 jui 2008) | 2 lines
+
+fix pt-br translation
+
+------------------------------------------------------------------------
+r13661 | sampaioprimo | 2008-07-14 20:30:37 +0200 (lun, 14 jui 2008) | 2 lines
+
+[UI] blog title is link to the blog
+
+------------------------------------------------------------------------
+r13660 | sylvieg | 2008-07-14 19:50:44 +0200 (lun, 14 jui 2008) | 1 line
+
+[FIX]{php} do not use {php in tiki menu
+------------------------------------------------------------------------
+r13659 | sampaioprimo | 2008-07-14 19:13:07 +0200 (lun, 14 jui 2008) | 2 lines
+
+[UI] only shows trackbacks if post has some
+
+------------------------------------------------------------------------
+r13658 | sampaioprimo | 2008-07-14 19:04:18 +0200 (lun, 14 jui 2008) | 3 lines
+
+[UI] 'your name' at the top of the comment form
+[UI] string 'required' in the same line of string 'Title' in the comment form
+
+------------------------------------------------------------------------
+r13656 | nyloth | 2008-07-14 13:47:53 +0200 (lun, 14 jui 2008) | 1 line
+
+[SEC] turn on the password brute force protection by allowing only 20 unsuccessful logins by default.
+------------------------------------------------------------------------
+r13650 | nyloth | 2008-07-14 10:16:29 +0200 (lun, 14 jui 2008) | 1 line
+
+[FIX] user watches: delete useless mail events that are not linked to any email before migrating them to new user watches.
+------------------------------------------------------------------------
+r13648 | chibaguy | 2008-07-14 03:25:25 +0200 (lun, 14 jui 2008) | 1 line
+
+[FIX] TikiTests topbar added.
+------------------------------------------------------------------------
+r13647 | marclaporte | 2008-07-13 23:46:07 +0200 (dim, 13 jui 2008) | 1 line
+
+[DEL] This unmaintained profile should have been deleted a long time ago
+------------------------------------------------------------------------
+r13639 | nyloth | 2008-07-13 18:26:09 +0200 (dim, 13 jui 2008) | 1 line
+
+[FIX] AJAX moved to experimental features
+------------------------------------------------------------------------
+r13633 | nyloth | 2008-07-13 17:16:02 +0200 (dim, 13 jui 2008) | 1 line
+
+[FIX] smarty self_link: fix fix
+------------------------------------------------------------------------
+r13630 | nyloth | 2008-07-13 17:03:28 +0200 (dim, 13 jui 2008) | 1 line
+
+[FIX] smarty self_link: fix the case where self_link returns '//tiki-script.php' which is bad when used for Location header (that closes a bug on trackers, when returning to the list after saving an item).
+------------------------------------------------------------------------
+r13629 | lphuberdeau | 2008-07-13 17:02:37 +0200 (dim, 13 jui 2008) | 1 line
+
+[MOD] Preparing installer version
+------------------------------------------------------------------------
+r13626 | nyloth | 2008-07-13 16:18:59 +0200 (dim, 13 jui 2008) | 1 line
+
+[FIX] wysiwyg moved to experimental features
+------------------------------------------------------------------------
+r13622 | nyloth | 2008-07-13 15:40:42 +0200 (dim, 13 jui 2008) | 1 line
+
+[FIX] tikitests: since tikitests does not work in PHP4, disable the checkbox of the feature and explain why.
+------------------------------------------------------------------------
+r13621 | lphuberdeau | 2008-07-13 14:43:06 +0200 (dim, 13 jui 2008) | 1 line
+
+[ROLLBACK] Commit 13612, not a bug fix, see ricks' comments
+------------------------------------------------------------------------
+r13620 | nyloth | 2008-07-13 14:40:26 +0200 (dim, 13 jui 2008) | 1 line
+
+[SVN] add a 'svn:ignore' property for tiki_tests/tests.
+------------------------------------------------------------------------
+r13619 | lphuberdeau | 2008-07-13 14:38:57 +0200 (dim, 13 jui 2008) | 1 line
+
+[ROLLBACK] Commit 13613, behavior change not allowed in RC mode
+------------------------------------------------------------------------
+r13617 | jonnybradley | 2008-07-12 21:33:15 +0200 (sam, 12 jui 2008) | 1 line
+
+[FIX] {remarksbox} layout improvements (part 2)
+------------------------------------------------------------------------
+r13616 | jonnybradley | 2008-07-12 21:30:31 +0200 (sam, 12 jui 2008) | 3 lines
+
+[FIX] XHTML validation fix: removing divs with name attributes - lots of them, apologies for the flood (templates only)
+Implemented {remarksbox} entity throughout - replaced by hand. All the ones i could get to have been tested (couldn't find a few of them - fingers crossed)
+
+------------------------------------------------------------------------
+r13615 | jonnybradley | 2008-07-12 21:13:38 +0200 (sam, 12 jui 2008) | 1 line
+
+[FIX] {remarksbox} layout improvements
+------------------------------------------------------------------------
+r13614 | xavidp | 2008-07-12 19:15:44 +0200 (sam, 12 jui 2008) | 1 line
+
+[FIX]removed duplication of rating checkbox
+------------------------------------------------------------------------
+r13613 | jonnybradley | 2008-07-12 17:40:20 +0200 (sam, 12 jui 2008) | 5 lines
+
+[FIX] Markup not parsed when switching from normal (wiki) to wysiwyg (html) editors (itemId=1831)
+
+More extensive ructions than i had hoped in tiki-editpage.php especially (should be a lib?) but tests ok -  Fine with "Import HTML" option (mostly - fixed in a couple of places) and now you don't loose edits.
+Tested minimally with staging only (seemed ok) but not with translations (as i haven't ever used that)
+Some anomalies such as ! getting converted to H2 but that's how the wiki parser seems to work (should be an option imho) and some images fail, but a significant improvement on what happened before (i.e. no parsing)
+------------------------------------------------------------------------
+r13612 | jonnybradley | 2008-07-12 16:49:47 +0200 (sam, 12 jui 2008) | 4 lines
+
+[FIX] Removing document.write() calls for "Select All" checkboxes (because document.write is evil)
+This will result in some non-functioning checkboxes appearing now for people with JavaScript disabled where they didn't appear before, but this was only on about half of these type of checkboxes.
+If it's important (still?) these should all be surrounded with {if $javascript_enabled} checks but at the moment that var only gets set for people with $prefs['pref_syntax']=='1.9' (for some reason)
+
+------------------------------------------------------------------------
+r13611 | sylvieg | 2008-07-12 12:52:20 +0200 (sam, 12 jui 2008) | 1 line
+
+some tr
+------------------------------------------------------------------------
+r13610 | marclaporte | 2008-07-12 12:49:04 +0200 (sam, 12 jui 2008) | 1 line
+
+[FIX] Remove unneeded permissions because tiki_p_admin is sufficient
+------------------------------------------------------------------------
+r13609 | marclaporte | 2008-07-12 12:29:34 +0200 (sam, 12 jui 2008) | 1 line
+
+[FIX] remove redundant value which was causing sql error on clean install
+------------------------------------------------------------------------
+r13608 | sylvieg | 2008-07-12 12:26:48 +0200 (sam, 12 jui 2008) | 1 line
+
+[FIX]freetag: some fixes to have freetags using the same objects that categorization: more to do
+------------------------------------------------------------------------
+r13607 | sampaioprimo | 2008-07-11 23:25:43 +0200 (ven, 11 jui 2008) | 2 lines
+
+translation
+
+------------------------------------------------------------------------
+r13606 | sylvieg | 2008-07-11 23:18:03 +0200 (ven, 11 jui 2008) | 1 line
+
+title
+------------------------------------------------------------------------
+r13605 | sylvieg | 2008-07-11 23:16:56 +0200 (ven, 11 jui 2008) | 1 line
+
+[FIX}banners: registered can not see banners
+------------------------------------------------------------------------
+r13604 | nyloth | 2008-07-11 22:57:26 +0200 (ven, 11 jui 2008) | 1 line
+
+[FIX] add an ucfirst modifier to make smarty_security work
+------------------------------------------------------------------------
+r13603 | nyloth | 2008-07-11 22:53:26 +0200 (ven, 11 jui 2008) | 2 lines
+
+[SEC] add a feature smarty_security to be able to forbid {php} tags inside smarty templates.
+
+------------------------------------------------------------------------
+r13602 | nyloth | 2008-07-11 22:52:07 +0200 (ven, 11 jui 2008) | 1 line
+
+[FIX] fix changelog instructions
+------------------------------------------------------------------------
+r13601 | marclaporte | 2008-07-11 22:47:01 +0200 (ven, 11 jui 2008) | 1 line
+
+[FIX] typo
+------------------------------------------------------------------------
+r13600 | pkdille | 2008-07-11 22:44:40 +0200 (ven, 11 jui 2008) | 1 line
+
+[UI FIX] objectperms: switch perms and perms descriptions
+------------------------------------------------------------------------
+r13599 | sept_7 | 2008-07-11 22:44:39 +0200 (ven, 11 jui 2008) | 2 lines
+
+[ENH] : put criptic stuff at the end of the page ;p
+
+------------------------------------------------------------------------
+r13598 | sept_7 | 2008-07-11 22:43:46 +0200 (ven, 11 jui 2008) | 2 lines
+
+[FIX] fix security check , use old version of twversion.class.php...
+
+------------------------------------------------------------------------
+r13597 | sampaioprimo | 2008-07-11 22:38:07 +0200 (ven, 11 jui 2008) | 3 lines
+
+[FIX] removed wikiplugin_calendar from branch 2.0, it doesnt work (anyone planning to finish this on trunk or should we remove from 
+there also?)
+
+------------------------------------------------------------------------
+r13595 | lphuberdeau | 2008-07-11 21:56:54 +0200 (ven, 11 jui 2008) | 2 lines
+
+[FIX] Broken build again
+
+------------------------------------------------------------------------
+r13594 | lphuberdeau | 2008-07-11 21:26:14 +0200 (ven, 11 jui 2008) | 2 lines
+
+[FIX] Build broken
+
+------------------------------------------------------------------------
+r13592 | lphuberdeau | 2008-07-11 20:47:53 +0200 (ven, 11 jui 2008) | 2 lines
+
+[REL] SecDB update
+
+------------------------------------------------------------------------
+r13591 | lphuberdeau | 2008-07-11 20:38:29 +0200 (ven, 11 jui 2008) | 1 line
+
+[ROLLBACK] no more string changes at this point
+------------------------------------------------------------------------
+r13590 | Jyhem | 2008-07-11 20:20:29 +0200 (ven, 11 jui 2008) | 1 line
+
+[UI] Just make sure that newbie admins are not stuck (even if they did not read the previous page properly)
+------------------------------------------------------------------------
+r13589 | sylvieg | 2008-07-11 20:07:58 +0200 (ven, 11 jui 2008) | 1 line
+
+title
+------------------------------------------------------------------------
+r13588 | pkdille | 2008-07-11 19:16:16 +0200 (ven, 11 jui 2008) | 1 line
+
+[LANG] get_strings on all language files
+------------------------------------------------------------------------
+r13587 | lphuberdeau | 2008-07-11 19:02:52 +0200 (ven, 11 jui 2008) | 1 line
+
+[FIX] Installer didn't work on new installs using old databases
+------------------------------------------------------------------------
+r13586 | pkdille | 2008-07-11 18:54:20 +0200 (ven, 11 jui 2008) | 1 line
+
+[FIX] dynamic content: fix the request which gave an error when adding an item on tiki-list_contents.php
+------------------------------------------------------------------------
+r13585 | sept_7 | 2008-07-11 18:52:54 +0200 (ven, 11 jui 2008) | 3 lines
+
+[FIX] revert to the original (almost) order of include path...
+maybe we should investigate include path to fix performance issues
+
+------------------------------------------------------------------------
+r13584 | nkoth | 2008-07-11 18:40:43 +0200 (ven, 11 jui 2008) | 2 lines
+
+[MOD] adding tiki_p_view_categorized is ok on upgrade
+
+------------------------------------------------------------------------
+r13583 | lphuberdeau | 2008-07-11 18:35:20 +0200 (ven, 11 jui 2008) | 2 lines
+
+[FIX] Broken link
+
+------------------------------------------------------------------------
+r13582 | sept_7 | 2008-07-11 18:29:05 +0200 (ven, 11 jui 2008) | 3 lines
+
+[FIX] : strange if someone has an idea...
+  even if lib/pear is in the path we need to prepend it :(
+
+------------------------------------------------------------------------
+r13581 | nyloth | 2008-07-11 18:29:04 +0200 (ven, 11 jui 2008) | 1 line
+
+[FIX] better handling of 1.9 to 2.0 for feature_wysiwyg.
+------------------------------------------------------------------------
+r13580 | nkoth | 2008-07-11 18:20:31 +0200 (ven, 11 jui 2008) | 3 lines
+
+[MOD] script to give users tiki_p_edit_categorized may inadvertently give users not intended to have this perm. Better to make admins upgrading to configure perms themselves.
+
+
+------------------------------------------------------------------------
+r13579 | nyloth | 2008-07-11 18:17:24 +0200 (ven, 11 jui 2008) | 1 line
+
+[SVN] set svn external links for third party libs to the revision of branches 2.0 creationi (to avoid evolution of third party libs that could be only compatible with trunk).
+------------------------------------------------------------------------
+r13577 | sylvieg | 2008-07-11 18:02:33 +0200 (ven, 11 jui 2008) | 1 line
+
+[FIX]search : pagination add words too
+------------------------------------------------------------------------
+r13576 | sept_7 | 2008-07-11 17:59:32 +0200 (ven, 11 jui 2008) | 2 lines
+
+[FIX] : roll back : do not translate english (not wanted) 
+
+------------------------------------------------------------------------
+r13575 | lphuberdeau | 2008-07-11 17:57:50 +0200 (ven, 11 jui 2008) | 1 line
+
+[MOD] Improvements in installer
+------------------------------------------------------------------------
+r13574 | sept_7 | 2008-07-11 17:33:54 +0200 (ven, 11 jui 2008) | 2 lines
+
+[ENH] : Add TikiWiki cache for preferences when not logged in (from nkoth)
+
+------------------------------------------------------------------------
+r13573 | jonnybradley | 2008-07-11 17:32:22 +0200 (ven, 11 jui 2008) | 1 line
+
+[MOD] Only show change editor button when not previewing or editing page section
+------------------------------------------------------------------------
+r13572 | lphuberdeau | 2008-07-11 17:29:17 +0200 (ven, 11 jui 2008) | 2 lines
+
+[FIX] Clean-up
+
+------------------------------------------------------------------------
+r13571 | jonnybradley | 2008-07-11 17:28:44 +0200 (ven, 11 jui 2008) | 1 line
+
+[FIX] Adding 1 (and fixing 2) no needToConfirms
+------------------------------------------------------------------------
+r13570 | jonnybradley | 2008-07-11 17:22:19 +0200 (ven, 11 jui 2008) | 1 line
+
+[KIL] removal of htmlarea and popups dirs (unused apart from in templates/styles/simple/tiki-blog_post.tpl where it degrades to the normal wiki editor politely - sorry i can't work out how to replace it with FCKEditor safely - no experience with blogs feature)
+------------------------------------------------------------------------
+r13569 | Jyhem | 2008-07-11 17:17:26 +0200 (ven, 11 jui 2008) | 1 line
+
+[ENH] Usability improvement: tell the initial admin password when it's needed.
+------------------------------------------------------------------------
+r13568 | sept_7 | 2008-07-11 17:17:12 +0200 (ven, 11 jui 2008) | 2 lines
+
+[ENH] : do not translate english (from nkoth)
+
+------------------------------------------------------------------------
+r13567 | sept_7 | 2008-07-11 17:14:00 +0200 (ven, 11 jui 2008) | 2 lines
+
+[ENH] : flip order of include_path so as to reduce disk access (from nktoh) 
+
+------------------------------------------------------------------------
+r13566 | nyloth | 2008-07-11 17:13:19 +0200 (ven, 11 jui 2008) | 1 line
+
+[FIX] remove svn binary mime-type + use username instead of broken userlink+striptags
+------------------------------------------------------------------------
+r13565 | sept_7 | 2008-07-11 17:09:09 +0200 (ven, 11 jui 2008) | 2 lines
+
+[ENH] : cache get_object_permissions_for_user results (from nkoth)
+
+------------------------------------------------------------------------
+r13564 | sept_7 | 2008-07-11 17:06:21 +0200 (ven, 11 jui 2008) | 2 lines
+
+[ENH] : cache locale date strings (from nkoth)
+
+------------------------------------------------------------------------
+r13563 | sylvieg | 2008-07-11 16:57:30 +0200 (ven, 11 jui 2008) | 1 line
+
+[FIX]Banners: shadow icon ads if feature banners not activated
+------------------------------------------------------------------------
+r13561 | ricks99 | 2008-07-11 16:33:02 +0200 (ven, 11 jui 2008) | 1 line
+
+[FIX]malformed html causes links to not appear. fixed by closing the <A>. bug 1862
+------------------------------------------------------------------------
+r13560 | sylvieg | 2008-07-11 16:28:14 +0200 (ven, 11 jui 2008) | 1 line
+
+[FIX]new search pagination
+------------------------------------------------------------------------
+r13559 | lphuberdeau | 2008-07-11 16:19:24 +0200 (ven, 11 jui 2008) | 2 lines
+
+[FIX] Test folder path depended on PHP configuration
+
+------------------------------------------------------------------------
+r13558 | sylvieg | 2008-07-11 16:04:50 +0200 (ven, 11 jui 2008) | 1 line
+
+[FIX]search: pagination was loosing search term
+------------------------------------------------------------------------
+r13557 | Jyhem | 2008-07-11 15:53:21 +0200 (ven, 11 jui 2008) | 1 line
+
+[ENH] Clean-up and improve permissions
+------------------------------------------------------------------------
+r13556 | sylvieg | 2008-07-11 15:44:55 +0200 (ven, 11 jui 2008) | 1 line
+
+notice
+------------------------------------------------------------------------
+r13555 | sylvieg | 2008-07-11 15:39:29 +0200 (ven, 11 jui 2008) | 1 line
+
+[FIX]tracker: fix traker rating+clean code+check perm+avoid security problem by always computing the fieldId
+------------------------------------------------------------------------
+r13553 | pkdille | 2008-07-11 14:23:48 +0200 (ven, 11 jui 2008) | 1 line
+
+[LANG] french translations: some
+------------------------------------------------------------------------
+r13552 | pkdille | 2008-07-11 14:16:09 +0200 (ven, 11 jui 2008) | 1 line
+
+[MOD] tell a friend: putting tag out of a translated string
+------------------------------------------------------------------------
+r13551 | pkdille | 2008-07-11 13:50:54 +0200 (ven, 11 jui 2008) | 1 line
+
+[MOD] typo
+------------------------------------------------------------------------
+r13550 | lphuberdeau | 2008-07-11 13:45:28 +0200 (ven, 11 jui 2008) | 2 lines
+
+[MOD] Installer to use tikiwiki login when database is already created
+
+------------------------------------------------------------------------
+r13549 | lphuberdeau | 2008-07-11 13:44:57 +0200 (ven, 11 jui 2008) | 2 lines
+
+[FIX] SQL error when overwriting DB
+
+------------------------------------------------------------------------
+r13548 | sept_7 | 2008-07-11 13:37:35 +0200 (ven, 11 jui 2008) | 2 lines
+
+[ENH] : remove unused tests
+
+------------------------------------------------------------------------
+r13547 | sept_7 | 2008-07-11 13:37:11 +0200 (ven, 11 jui 2008) | 2 lines
+
+[ENH] put javascript into CDATA section
+
+------------------------------------------------------------------------
+r13546 | pkdille | 2008-07-11 13:36:35 +0200 (ven, 11 jui 2008) | 1 line
+
+[FIX] putting chat functions out of menu 42
+------------------------------------------------------------------------
+r13545 | pkdille | 2008-07-11 11:52:55 +0200 (ven, 11 jui 2008) | 1 line
+
+[MOD] wikiplugin wantedpages: putting breaks out of the translated strings
+------------------------------------------------------------------------
+r13544 | Jyhem | 2008-07-11 11:52:10 +0200 (ven, 11 jui 2008) | 1 line
+
+[FIX] Ooops
+------------------------------------------------------------------------
+r13543 | Jyhem | 2008-07-11 11:22:52 +0200 (ven, 11 jui 2008) | 1 line
+
+[ENH] Sort permissions by permission type
+------------------------------------------------------------------------
+r13542 | luciash | 2008-07-11 10:39:15 +0200 (ven, 11 jui 2008) | 2 lines
+
+[ENH] dont waste site header space and float the search bar on right top
+
+------------------------------------------------------------------------
+r13541 | luciash | 2008-07-11 09:56:16 +0200 (ven, 11 jui 2008) | 2 lines
+
+[MOD] also hide custom code, site logo and ads in print mode and filegals manager
+
+------------------------------------------------------------------------
+r13538 | marclaporte | 2008-07-11 09:42:30 +0200 (ven, 11 jui 2008) | 1 line
+
+[FIX] Like in 1.9.x, simplifying the error message if your permissions are not set up right. Instead of showing you several (but not all) options, it now refers you to just run setup.sh and follow the instructions from there.
+------------------------------------------------------------------------
+r13537 | lphuberdeau | 2008-07-11 09:29:08 +0200 (ven, 11 jui 2008) | 1 line
+
+[MRG] branches/1.10 13525 to 13536
+------------------------------------------------------------------------
+r13535 | sylvieg | 2008-07-10 23:14:58 +0200 (jeu, 10 jui 2008) | 1 line
+
+lost commit between release?
+------------------------------------------------------------------------
+r13534 | sylvieg | 2008-07-10 22:34:08 +0200 (jeu, 10 jui 2008) | 1 line
+
+[FIX]trackerlist: to be able to rate in TRACKERLIST
+------------------------------------------------------------------------
+r13533 | sylvieg | 2008-07-10 21:09:37 +0200 (jeu, 10 jui 2008) | 1 line
+
+[FIX]trackerlist: perms is only set if not admin+ no colspan for rating
+------------------------------------------------------------------------
+r13532 | sylvieg | 2008-07-10 21:00:39 +0200 (jeu, 10 jui 2008) | 1 line
+
+[FIX]trackerlist: rating column heading now showing
+------------------------------------------------------------------------
+r13531 | sampaioprimo | 2008-07-10 20:48:44 +0200 (jeu, 10 jui 2008) | 2 lines
+
+ops... only set the useImage if image field has some value
+
+------------------------------------------------------------------------
+r13530 | luciash | 2008-07-10 20:15:13 +0200 (jeu, 10 jui 2008) | 2 lines
+
+[MOD] new tikilogo image
+
+------------------------------------------------------------------------
+r13529 | lphuberdeau | 2008-07-10 19:50:26 +0200 (jeu, 10 jui 2008) | 2 lines
+
+[FIX] Transition style compatibility
+
+------------------------------------------------------------------------
+r13525 | lphuberdeau | 2008-07-10 19:25:07 +0200 (jeu, 10 jui 2008) | 1 line
+
+[MOD] Fully renaming the 1.10 branch to 2.0
+------------------------------------------------------------------------
+r13524 | lphuberdeau | 2008-07-10 19:23:01 +0200 (jeu, 10 jui 2008) | 2 lines
+
+[FIX] Broke on some pages
+
+------------------------------------------------------------------------
+r13523 | sampaioprimo | 2008-07-10 19:18:56 +0200 (jeu, 10 jui 2008) | 2 lines
+
+[ENH] auto check 'useImage' field when user select an image
+
+------------------------------------------------------------------------
+r13522 | lphuberdeau | 2008-07-10 19:18:32 +0200 (jeu, 10 jui 2008) | 2 lines
+
+[FIX] Make the 2.0 upgrade script visible
+
+------------------------------------------------------------------------
+r13521 | lphuberdeau | 2008-07-10 19:01:25 +0200 (jeu, 10 jui 2008) | 1 line
+
+[MOD] Renaming everything to 2.0... sorry if it breaks stuff
+------------------------------------------------------------------------
+r13520 | luciash | 2008-07-10 18:33:42 +0200 (jeu, 10 jui 2008) | 2 lines
+
+[FIX] prevent overflowing of select in modules
+
+------------------------------------------------------------------------
+r13519 | lphuberdeau | 2008-07-10 18:33:06 +0200 (jeu, 10 jui 2008) | 2 lines
+
+[FIX] Missing occurences
+
+------------------------------------------------------------------------
+r13518 | lphuberdeau | 2008-07-10 18:31:54 +0200 (jeu, 10 jui 2008) | 3 lines
+
+[MOD] Removing mypage for the release
+[FIX] SQL diff
+
+------------------------------------------------------------------------
+r13517 | luciash | 2008-07-10 18:29:20 +0200 (jeu, 10 jui 2008) | 2 lines
+
+[FIX] simple fixes :)
+
+------------------------------------------------------------------------
+r13516 | sylvieg | 2008-07-10 18:27:58 +0200 (jeu, 10 jui 2008) | 1 line
+
+[FIX]menu: to be able to have another same than folder for the folder icon
+------------------------------------------------------------------------
+r13515 | luciash | 2008-07-10 18:21:23 +0200 (jeu, 10 jui 2008) | 2 lines
+
+[FIX] removed closing of div which wasn't open, xhtml fixes
+
+------------------------------------------------------------------------
+r13514 | pkdille | 2008-07-10 17:57:42 +0200 (jeu, 10 jui 2008) | 1 line
+
+[LANG] get_strings
+------------------------------------------------------------------------
+r13513 | nkoth | 2008-07-10 17:46:25 +0200 (jeu, 10 jui 2008) | 2 lines
+
+[MOD] Remove share page feature from this release (incomplete feature)
+
+------------------------------------------------------------------------
+r13512 | Jyhem | 2008-07-10 17:25:15 +0200 (jeu, 10 jui 2008) | 1 line
+
+[FIX] Add missing flags and remove typo flag (Phillippines)
+------------------------------------------------------------------------
+r13511 | pkdille | 2008-07-10 17:21:53 +0200 (jeu, 10 jui 2008) | 1 line
+
+[MOD] pre-release diffsql: first pass. Not finished. tiki_menu_options was copied from 1.9 tiki.sql + 1.9 to 1.10 update dump.
+------------------------------------------------------------------------
+r13510 | sylvieg | 2008-07-10 16:53:06 +0200 (jeu, 10 jui 2008) | 1 line
+
+errortype 401
+------------------------------------------------------------------------
+r13509 | sylvieg | 2008-07-10 16:46:44 +0200 (jeu, 10 jui 2008) | 1 line
+
+[FIX]module: to have the param flip in MODULE more important than the setting
+------------------------------------------------------------------------
+r13508 | franck | 2008-07-10 16:41:17 +0200 (jeu, 10 jui 2008) | 1 line
+
+[FIX] better error handling
+------------------------------------------------------------------------
+r13507 | sylvieg | 2008-07-10 16:41:14 +0200 (jeu, 10 jui 2008) | 1 line
+
+mising commit about the toggle icon
+------------------------------------------------------------------------
+r13506 | franck | 2008-07-10 16:25:36 +0200 (jeu, 10 jui 2008) | 1 line
+
+[FIX] fix link to the map view page
+------------------------------------------------------------------------
+r13505 | sylvieg | 2008-07-10 16:25:14 +0200 (jeu, 10 jui 2008) | 1 line
+
+oops
+------------------------------------------------------------------------
+r13504 | Jyhem | 2008-07-10 16:18:20 +0200 (jeu, 10 jui 2008) | 1 line
+
+[ENH] Mass capitalization
+------------------------------------------------------------------------
+r13503 | franck | 2008-07-10 16:15:26 +0200 (jeu, 10 jui 2008) | 1 line
+
+[FIX] fix link to the map view page
+------------------------------------------------------------------------
+r13502 | franck | 2008-07-10 16:09:20 +0200 (jeu, 10 jui 2008) | 1 line
+
+[FIX] add title to the page map_edit
+------------------------------------------------------------------------
+r13501 | nyloth | 2008-07-10 15:46:35 +0200 (jeu, 10 jui 2008) | 1 line
+
+[SVN] remove executable properties on all files
+------------------------------------------------------------------------
+r13500 | lphuberdeau | 2008-07-10 15:32:40 +0200 (jeu, 10 jui 2008) | 2 lines
+
+[FIX] Inaccurate check performed
+
+------------------------------------------------------------------------
+r13499 | lphuberdeau | 2008-07-10 15:31:59 +0200 (jeu, 10 jui 2008) | 2 lines
+
+[FIX] This one broke install
+
+------------------------------------------------------------------------
+r13498 | franck | 2008-07-10 15:04:46 +0200 (jeu, 10 jui 2008) | 1 line
+
+[FIX] make the edit page look cleaner
+------------------------------------------------------------------------
+r13497 | Jyhem | 2008-07-10 15:01:56 +0200 (jeu, 10 jui 2008) | 1 line
+
+[FIX] The 'Fullscreen Edit' icon in the quicktags makes no sense outside wikipage edition. It's display is now optional
+------------------------------------------------------------------------
+r13496 | sylvieg | 2008-07-10 14:15:32 +0200 (jeu, 10 jui 2008) | 1 line
+
+[FIX]tiki-browse_freetags.php could not be called because the setup called freetags.php
+------------------------------------------------------------------------
+r13495 | nyloth | 2008-07-10 12:46:51 +0200 (jeu, 10 jui 2008) | 1 line
+
+Update changelog.txt for next stable release
+------------------------------------------------------------------------
+r13494 | lphuberdeau | 2008-07-10 12:45:39 +0200 (jeu, 10 jui 2008) | 2 lines
+
+[FIX] Cleaning up comments
+
+------------------------------------------------------------------------
+r13493 | lphuberdeau | 2008-07-10 12:39:47 +0200 (jeu, 10 jui 2008) | 2 lines
+
+[MOD] Update packaging script for SVN
+
+------------------------------------------------------------------------
+r13491 | lphuberdeau | 2008-07-10 11:20:32 +0200 (jeu, 10 jui 2008) | 2 lines
+
+[FIX] Security check pass 1
+
+------------------------------------------------------------------------
 r13489 | m_stef | 2008-07-10 00:35:52 +0200 (jeu, 10 jui 2008) | 4 lines
 
 [bugfix] the Events module didn't show events from all visible calendars, only
