@@ -37,9 +37,9 @@
 {/if}
 	{if $user and $prefs.feature_user_watches eq 'y'}
 		{if $user_watching_gal eq 'n'}
-			<a href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;watch_event=image_gallery_changed&amp;watch_object={$galleryId}&amp;watch_action=add" title="{tr}Monitor this Gallery{/tr}">{html_image file='img/icons/icon_watch.png' border='0' alt="{tr}Monitor this Gallery{/tr}"}</a>
+			<a href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;watch_event=image_gallery_changed&amp;watch_object={$galleryId}&amp;watch_action=add" title="{tr}Monitor this Gallery{/tr}">{icon _id='eye' alt="{tr}Monitor this Gallery{/tr}"}</a>
 		{else}
-			<a href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;watch_event=image_gallery_changed&amp;watch_object={$galleryId}&amp;watch_action=remove" title="{tr}Stop Monitoring this Gallery{/tr}">{html_image file='img/icons/icon_unwatch.png' border='0' alt="{tr}Stop Monitoring this Gallery{/tr}"}</a>
+			<a href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;watch_event=image_gallery_changed&amp;watch_object={$galleryId}&amp;watch_action=remove" title="{tr}Stop Monitoring this Gallery{/tr}">{icon _id='no_eye' alt="{tr}Stop Monitoring this Gallery{/tr}"}</a>
 		{/if}
 	{/if}
 </div>
