@@ -34,7 +34,7 @@
 				<img src="tiki-download_file.php?fileId={$uploads[ix].fileId}&amp;thumbnail=y" />
 			</td>
 			<td>
-				<b>{$uploads[ix].name} ({$uploads[ix].size|kbsize})</b>
+				<b>{$uploads[ix].name} ({$uploads[ix].size|kbsize:true})</b>
 				<div class="button2">
 					<a href="#" onclick="javascript:flip('uploadinfos{$uploads[ix].fileId}');flip('uploadinfos{$uploads[ix].fileId}_close','inline');return false;" class="linkbut">
 						{tr}Additional Info{/tr}
@@ -43,9 +43,9 @@
 				</div>
 				<div style="display:none;" id="uploadinfos{$uploads[ix].fileId}">
 					{tr}You can download this file using{/tr}: <a class="link" href="{$uploads[ix].dllink}">{$uploads[ix].dllink}</a><br />
-					{tr}You can link to the file from a Wiki page using{/tr}: <div class="code">[tiki-download_file.php?fileId={$uploads[ix].fileId}|{$uploads[ix].name} ({$uploads[ix].size|kbsize})]</div>
-					{tr}You can display an image in a Wiki page using{/tr}: <div class="code">&#x7b;img src="{$uploads[ix].dllink}" alt="{$uploads[ix].name} ({$uploads[ix].size|kbsize})"}</div>
-					{tr}You can link to the file from an HTML page using{/tr}: <div class="code">&lt;a href="{$uploads[ix].dllink}"&gt;{$uploads[ix].name} ({$uploads[ix].size|kbsize})&lt;/a&gt;</div>
+					{tr}You can link to the file from a Wiki page using{/tr}: <div class="code">[tiki-download_file.php?fileId={$uploads[ix].fileId}|{$uploads[ix].name} ({$uploads[ix].size|kbsize:true})]</div>
+					{tr}You can display an image in a Wiki page using{/tr}: <div class="code">&#x7b;img src="{$uploads[ix].dllink}" alt="{$uploads[ix].name} ({$uploads[ix].size|kbsize:true})"}</div>
+					{tr}You can link to the file from an HTML page using{/tr}: <div class="code">&lt;a href="{$uploads[ix].dllink}"&gt;{$uploads[ix].name} ({$uploads[ix].size|kbsize:true})&lt;/a&gt;</div>
 				</div>
 			</td>
 		</tr>
@@ -145,7 +145,10 @@
 
 	<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="upload" value="{if $editFileId}{tr}Save{/tr}{else}{tr}Upload{/tr}{/if}" />{if !empty($fileInfo.lockedby) and $user ne $fileInfo.lockedby}{icon _id="lock" class="" alt=""}<span class="attention">{tr}The file is locked by {$fileInfo.lockedby}{/tr}</span>{/if}
 	
-	<span class="rbox-data">{tr}Note: Maximum file size is limited to{/tr}: {$max_file_upload_size|kbsize}</span>
+	<span class="rbox-data">
+		{tr}Note: Maximum file size is limited to:{/tr} {$max_upload_size|kbsize:true:0}
+		{if $tiki_p_admin eq 'y'}{icon _id='information' alt=$max_upload_size_comment style='vertical-align:middle;'}{/if}
+	</span>
 	
 	</td></tr>
 	</table>
