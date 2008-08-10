@@ -294,7 +294,7 @@ hosting provider.  Normally Tiki tables won't conflict with other product names{
 	<div style="border-style: solid; border-width: 1; padding: 5px; background-color: #a9ff9b;">
 		<p align="center"><img src="pics/icons/accept.png" alt="{tr}Success{/tr}" style="vertical-align:middle"/> {tr}Tiki has not detected your PHP memory_limit. This probably means you have no set limit (all is well){/tr}. </p>
 	</div>	
-{elseif $php_memory_limit <= 8 * 1024 * 1024}
+{elseif $php_memory_limit <= 32 * 1024 * 1024}
 	<div style="border-style: solid; border-width: 1; padding: 5px; background-color: #FF0000">
 		<p align="center"><img src="pics/icons/delete.png" alt="alert" style="vertical-align:middle" /> {tr}Tiki has detected your PHP memory limit at{/tr}: {$php_memory_limit|kbsize:true:0}</p>
 	</div>
