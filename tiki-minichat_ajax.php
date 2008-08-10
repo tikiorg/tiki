@@ -2,6 +2,12 @@
 
 require_once('tiki-setup.php');
 
+if($prefs['feature_minichat'] != 'y') {
+    $smarty->assign('msg', tra('This feature is disabled').': feature_minichat');
+    $smarty->display('error.tpl');
+    die;  
+}
+
 header("Pragma: public");
 header("Pragma: no-cache");
 header("Cache-Control: no-cache, must-revalidate, no-store, post-check=0, pre-check=0, max-age=0");
