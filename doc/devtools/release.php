@@ -43,7 +43,9 @@ if( empty( $subrelease ) )
 {
 	$branch = "branches/$version";
 	$tag = "tags/$version";
-	$packageVersion = $version . ".$pre";
+	$packageVersion = $version;
+	if( ! empty( $pre ) )
+		$packageVersion .= ".$pre";
 	$secdbVersion = $version;
 
 }
