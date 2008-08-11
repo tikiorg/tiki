@@ -9,6 +9,42 @@ function wikiplugin_subscribegroup_help() {
 	$help.= "~np~<br />{SUBSCRIBEGROUP(group=, subscribe=text, unsubscribe=text, subscribe_action=Name of subscribe submit button, unsubscribe_action=Name of unsubscribe submit button) /}<br />~/np~";
 	return $help;
 }
+
+function wikiplugin_subscribegroup_info() {
+	return array(
+		'name' => tra('Subscribe Group'),
+		'description' => tra('Subscribe or unsubscribe to a group'),
+		'prefs' => array( 'wikiplugin_subscribegroup' ),
+		'params' => array(
+			'group' => array(
+				'required' => true,
+				'name' => tra('Group Name'),
+				'description' => tra('As known in Tikiwiki'),
+			),
+			'subscribe' => array(
+				'required' => false,
+				'name' => tra('Subscribe Text'),
+				'description' => tra('Subscribe text, containing %s as the placeholder for the group name.'),
+			),
+			'unsubscribe' => array(
+				'required' => false,
+				'name' => tra('Unsubscribe Text'),
+				'description' => tra('Unsubscribe text, containing %s as the placeholder for the group name.'),
+			),
+			'subscribe_action' => array(
+				'required' => false,
+				'name' => tra('Subscribe Action'),
+				'description' => tra('Subscribe button label, containing %s as the placeholder for the group name.'),
+			),
+			'unsubscribe_action' => array(
+				'required' => false,
+				'name' => tra('Unsubscribe Action'),
+				'description' => tra('Unsubscribe button label, containing %s as the placeholder for the group name.'),
+			),
+		),
+	);
+}
+
 function wikiplugin_subscribegroup($data, $params) {
 	global $tiki_p_subscribe_groups, $userlib, $user, $smarty;
 	if (empty($user)) {

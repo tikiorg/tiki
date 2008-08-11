@@ -3,6 +3,22 @@ function wikiplugin_sql_help() {
 	return tra("Run a sql query").":<br />~np~{SQL(db=>dsnname)}".tra("sql query")."{SQL}~/np~";
 }
 
+function wikiplugin_sql_info() {
+	return array(
+		'name' => tra('SQL'),
+		'description' => tra('Run a sql query'),
+		'prefs' => array( 'wikiplugin_sql' ),
+		'body' => tra('sql query'),
+		'params' => array(
+			'db' => array(
+				'required' => true,
+				'name' => tra('DNS Name'),
+				'description' => tra('ADODB DNS'),
+			),
+		),
+	);
+}
+
 function wikiplugin_sql($data, $params) {
 	global $tikilib;
 
