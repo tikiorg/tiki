@@ -1,5 +1,5 @@
 {* $Id$ *}
-
+{strip}
 <div class="cbox">
 	<div class="cbox-title">
 	{tr}{$crumbs[$crumb]->title}{/tr}
@@ -663,3 +663,4 @@
 		<div class="button clear" style="text-align: center"><input type="submit" name="looksetup" value="{tr}Apply{/tr}" /></div>
 	</form>
 </div><!-- cbox end -->
+{/strip}
