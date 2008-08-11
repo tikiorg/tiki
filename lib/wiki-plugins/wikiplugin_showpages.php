@@ -26,6 +26,31 @@ function wikiplugin_showpages_help() {
 	return tra("List wiki pages").":<br />~np~{SHOWPAGES(find=>criteria [, max=>qty] [, display=>name|desc])/}~/np~";
 }
 
+function wikiplugin_showpages_info() {
+	return array(
+		'name' => tra('Show Pages'),
+		'description' => tra('List wiki pages'),
+		'prefs' => array( 'wikiplugin_showpages' ),
+		'params' => array(
+			'find' => array(
+				'required' => true,
+				'name' => tra('Find'),
+				'description' => tra('Search criteria'),
+			),
+			'max' => array(
+				'required' => false,
+				'name' => tra('Result Count'),
+				'description' => tra('Maximum amount of results displayed.'),
+			),
+			'display' => array(
+				'required' => false,
+				'name' => tra('Display'),
+				'description' => tra('name|desc'),
+			),
+		),
+	);
+}
+
 function wikiplugin_showpages($data, $params) {
 	global $tikilib, $prefs;
 

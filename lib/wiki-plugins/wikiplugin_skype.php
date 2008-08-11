@@ -22,8 +22,24 @@ You can change your defaults
 
  */
 
- function wikiplugin_skype_help() {
+function wikiplugin_skype_help() {
         return tra("Clickable Skype link").":<br />~np~{SKYPE(action->call|chat)}name or number{SKYPE}~/np~";
+}
+
+function wikiplugin_skype_info() {
+	return array(
+		'name' => tra('Skype'),
+		'description' => tra('Clickable Skype link'),
+		'prefs' => array( 'wikiplugin_skype' ),
+		'body' => tra('Name or number to call or chat with.'),
+		'params' => array(
+			'action' => array(
+				'required' => false,
+				'name' => tra('Action'),
+				'description' => tra('call|chat'),
+			),
+		),
+	);
 }
 
 function wikiplugin_skype($data, $params) {

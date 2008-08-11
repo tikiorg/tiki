@@ -10,6 +10,22 @@ function wikiplugin_sort_help() {
 	return tra("Sorts the plugin content in the wiki page").":<br />~np~{SORT(sort=>asc|desc|reverse|shuffle)}".tra("data")."{SORT}~/np~ - ''".tra("one data per line")."''";
 }
 
+function wikiplugin_sort_info() {
+	return array(
+		'name' => tra('Sort'),
+		'description' => tra('Sorts the plugin content in the wiki page'),
+		'prefs' => array( 'wikiplugin_sort' ),
+		'body' => tra('Data to sort, one entry per line.'),
+		'params' => array(
+			'sort' => array(
+				'required' => false,
+				'name' => tra('Order'),
+				'description' => tra('asc|desc|shuffle'),
+			),
+		),
+	);
+}
+
 function wikiplugin_sort($data, $params) {
 	global $tikilib;
 

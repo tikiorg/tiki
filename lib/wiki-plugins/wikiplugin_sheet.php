@@ -17,6 +17,23 @@
 function wikiplugin_sheet_help() {
 	return tra("TikiSheet").":<br />~np~{SHEET(id=>)}".tra("Sheet Heading")."{SHEET}~/np~";
 }
+
+function wikiplugin_sheet_info() {
+	return array(
+		'name' => tra('Sheet'),
+		'description' => tra('Displays the content of a spreadsheet in the page.'),
+		'prefs' => array( 'wikiplugin_sheet', 'feature_sheets' ),
+		'body' => tra('Sheet Heading'),
+		'params' => array(
+			'id' => array(
+				'required' => true,
+				'name' => tra('Sheet ID'),
+				'description' => tra('Internal ID of the TikiSheet.'),
+			),
+		),
+	);
+}
+
 function wikiplugin_sheet($data, $params) {
 	global $dbTiki, $tikilib, $tiki_p_edit_sheet, $tiki_p_admin_sheet, $tiki_p_admin, $prefs;
 	extract ($params,EXTR_SKIP);

@@ -21,6 +21,32 @@ function wikiplugin_sf_help() {
 	return tra("Automatically creates a link to the appropriate SourceForge object").":<br />~np~{SF(aid=>,adit=>,groupid=>)}".tra("text")."{SF}~/np~";
 }
 
+function wikiplugin_sf_info() {
+	return array(
+		'name' => tra('SourceForge'),
+		'description' => tra("Automatically creates a link to the appropriate SourceForge object"),
+		'prefs' => array( 'wikiplugin_sf' ),
+		'body' => tra('text'),
+		'params' => array(
+			'aid' => array(
+				'required' => true,
+				'name' => tra('aid??'),
+				'description' => tra('?'),
+			),
+			'adit' => array(
+				'required' => true,
+				'name' => tra('adit??'),
+				'description' => tra('?'),
+			),
+			'groupid' => array(
+				'required' => true,
+				'name' => tra('groupid??'),
+				'description' => tra('?'),
+			),
+		),
+	);
+}
+
 function get_artifact_label($gid,$atid,$aid,$reload=false) {
 	$agent = $_SERVER['HTTP_USER_AGENT'];
 	$cachefile = "temp/sftrackers.cache.$gid.$atid.$aid";
