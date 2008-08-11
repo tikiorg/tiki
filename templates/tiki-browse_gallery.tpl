@@ -24,7 +24,7 @@
     {/if}
   {/if}
   {if $tiki_p_assign_perm_image_gallery eq 'y'}
-  	  <span class="button2"><a href="tiki-objectpermissions.php?objectName={$name|escape:"url"}&amp;objectType=image+gallery&amp;permType=image+galleries&amp;objectId={$galleryId}" class="linkbut"><span class="button2">{tr}Perms{/tr}</span></a>
+  	  <span class="button2"><a href="tiki-objectpermissions.php?objectName={$name|escape:"url"}&amp;objectType=image+gallery&amp;permType=image+galleries&amp;objectId={$galleryId}" class="linkbut">{tr}Perms{/tr}</a></span>
   {/if}
 {/if}
 
