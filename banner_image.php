@@ -12,6 +12,19 @@ if (!isset($_REQUEST["id"])) {
 	die;
 }
 
+$id = (int) $_REQUEST['id'];
+$defaultCache = 'temp';
+$bannercachefile = "$defaultCache/banner.$id";
+
+if (is_file($bannercachefile) and (!isset($_REQUEST["reload"]))) {
+	$size = getimagesize($bannercachefile);
+	$type = $size['mime'];
+
+	header ("Content-type: $type");
+	readfile($bannercachefile);
+	exit;
+}
+
 require_once ('tiki-setup.php');
 
 // CHECK FEATURE BANNERS HERE
@@ -24,7 +37,7 @@ if ($prefs['feature_banners'] != 'y') {
 
 $bannercachefile = $prefs['tmpDir'];
 if ($tikidomain) { $bannercachefile.= "/$tikidomain"; }
-$bannercachefile.= "/banner.".$_REQUEST["id"];
+$bannercachefile.= "/banner.". (int)$_REQUEST["id"];
 
 if (is_file($bannercachefile) and (!isset($_REQUEST["reload"]))) {
 	$size = getimagesize($bannercachefile);
