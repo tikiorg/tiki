@@ -656,7 +656,7 @@ $lang=Array(
 // "Resume the recording" => "Resume the recording",
 // "Stop the recording" => "Stop the recording",
 // "The following files have been successfully uploaded" => "The following files have been successfully uploaded",
-// "Additional Info" => "Additional Info",
+"Additional Info" => "Info additionnelles",
 // "Maximum amount of downloads" => "Maximum amount of downloads",
 // "0 for no limit" => "0 for no limit",
 // "No gallery available." => "No gallery available.",
@@ -7209,5 +7209,8 @@ $lang=Array(
 "Tiki RSS feed for the wiki pages" => "Canal de syndication RSS Tiki pour les pages Wiki",
 "Last modifications to the Wiki." => "Dernières pages Wiki modifiées.",
 "The page is empty" => "La page est vide",
+"Uploading file..." => "Envoi du fichier...",
+"No File to Upload..."=> "Pas de fichier à envoyer...",
+"Add File" => "Ajouter",
 "###end###"=>"###end###");
 ?>

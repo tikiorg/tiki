@@ -21,6 +21,16 @@
 		</div>
 	{/if}
 
+
+	{if $prefs.javascript_enabled eq 'y'}
+	<div id="upload_progress">
+	<iframe id="upload_progress_0" name="upload_progress_0" height="1" width="1" style="border:0px none"></iframe>
+	</div>
+	<div id='progress'>
+	<div id='progress_0'></div>
+	</div>
+	{/if}
+
 	{if count($uploads) > 0}
 		<h2>
 		{if count($uploads) eq 1}
@@ -83,8 +93,6 @@
 	{/if}
 
 	<div align="center">
-	<form enctype="multipart/form-data" action="tiki-upload_file.php{if $filegals_manager neq ''}?filegals_manager={$filegals_manager|escape}{/if}" method="post">
-		{include file=categorize.tpl notable='y'}
 		{capture name=upload_file assign=upload_str}
 		<hr class="clear"/>
 		<div class="clear">
@@ -168,33 +176,35 @@
 		{/if}
 		</div>
 	</div>
+	{if $prefs.javascript_enabled eq 'y'}
+	<input type="hidden" name="upload" />
+	{/if}
 	{/capture}
+	<div id="form">
+	{include file=categorize.tpl notable='y'}
+	<form {if $prefs.javascript_enabled eq 'y'}onsubmit='return false' target='upload_progress_0'{/if} id='file_0' name='file_0' action='tiki-upload_file.php' enctype='multipart/form-data' method='post' style='margin:0px; padding:0px'>
+	<input type="hidden" name="formId" value="0">
 	{$upload_str}
-	{if $prefs.javascript_enabled neq 'y' || ! $editFileId}
-		<script type="text/javascript">
-		<!--//--><![CDATA[//><!--
-		{literal}
-		function add_upload_file(id) {
-			{/literal}
-			document.getElementById(id).innerHTML += '{$upload_str|strip}';
-			{literal}
-		}
-		{/literal}
-		//--><!]]>
-		</script>
-		<div id="multiple_upload">
-		</div>
+	{if $prefs.javascript_enabled neq 'y'}
+	{$upload_str}
+	{$upload_str}
+	<input type="submit" name="upload" value="{if $editFileId}{tr}Save{/tr}{else}{tr}Upload{/tr}{/if}"/>
 	{/if}
+	</form>
+	<div id="multi_1">
+	</div>
 	<hr class="clear"/>
-	<input type="submit" name="upload" value="{if $editFileId}{tr}Save{/tr}{else}{tr}Upload{/tr}{/if}" />
-	{if $prefs.javascript_enabled neq 'y' || !$editFileId}
-		<input class="submitbutton" type="button" onclick="javascript:add_upload_file('multiple_upload')" value="{tr lang=$lang}Add File{/tr}"/>
+	{if $prefs.javascript_enabled eq 'y'}
+	<input class="submitbutton" type="button" onclick="upload('0', 'loader_0')" value="{if $editFileId}{tr}Save{/tr}{else}{tr}Upload{/tr}{/if}"/>
+		{if !$editFileId}
+			<input class="submitbutton" type="button" onclick="javascript:add_upload_file('multiple_upload')" value="{tr lang=$lang}Add File{/tr}"/>
+		{/if}
 	{/if}
+	</div>
 	{if !empty($fileInfo.lockedby) and $user ne $fileInfo.lockedby}
 		{icon _id="lock" class="" alt=""}
 		<span class="attention">{tr}The file is locked by {$fileInfo.lockedby}{/tr}</span>
 	{/if}
-	</form>
 	</div>
 {else}
 	{icon _id=exclamation alt="{tr}Error{/tr}" style="vertical-align:middle;"}
@@ -202,4 +212,54 @@
 	{tr}You have to create a gallery first!{/tr}
 	<p><a class="linkbut" href="tiki-file_galleries.php{if $filegals_manager neq ''}?filegals_manager={$filegals_manager|escape}{/if}">{tr}Create New Gallery{/tr}</a></p>
 {/if}
+	{if $prefs.javascript_enabled neq 'y' || ! $editFileId}
+		<script type="text/javascript">
+		<!--//--><![CDATA[//><!--
+		{literal}
+		var nb_upload = 1;
+		function add_upload_file() {
+			tmp = "<form onsubmit='return false' id='file_"+nb_upload+"' name='file_"+nb_upload+"' action='tiki-upload_file.php' target='upload_progress_"+nb_upload+"' enctype='multipart/form-data' method='post' style='margin:0px; padding:0px'>";
+			{/literal}
+			tmp += '<input type="hidden" name="formId" value="'+nb_upload+'">';
+			tmp += '{$upload_str|strip}';
+			{literal}
+			tmp += '</form><div id="multi_'+(nb_upload+1)+'"></div>';
+			//tmp += '<div id="multi_'+(nb_upload+1)+'"></div>';
+			document.getElementById('multi_'+nb_upload).innerHTML = tmp;
+			document.getElementById('progress').innerHTML += "<div id='progress_"+nb_upload+"'></div>";
+			document.getElementById('upload_progress').innerHTML += "<iframe id='upload_progress_"+nb_upload+"' name='upload_progress_"+nb_upload+"' height='1' width='1' style='border:0px none'></iframe>";
+			nb_upload += 1;
+		}
+
+		function progress(id,msg) {
+//			alert ('progress_'+id);
+			document.getElementById('progress_'+id).innerHTML = msg;
+		}
+
+		function do_submit(n) {
+//				alert(document.getElementById('file_'+n).name);
+			if (document.forms['file_'+n].elements['userfile[]'].value != '') {
+			{/literal}
+				progress(n,"<img src='lib/shadowbox/images/loading.gif'>{tr}Uploading file...{/tr}");
+			{literal}
+				document.getElementById('file_'+n).submit();
+				document.getElementById('file_'+n).reset();
+			} else {
+				progress(n,"{tr}No File to Upload...{/tr}");
+			}
+		}
+
+		function upload(form, loader){
+			//only do this if the form exists
+			n=0;
+			while (document.forms['file_'+n]){
+				do_submit(n);
+				n++;
+			}
+			hide('form');
+		}
+		{/literal}
+		//--><!]]>
+		</script>
+	{/if}
 
