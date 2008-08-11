@@ -953,7 +953,14 @@ class Tiki_Profile_InstallHandler_Menu extends Tiki_Profile_InstallHandler // {{
 			else
 				$column = 'r';
 
-			$modlib->replace_user_module( "menu_$menuId", $data['name'], "{menu id=$menuId}" );
+			$extra = '';
+			if( isset( $data['module_arguments'] ) )
+				foreach( $data['module_arguments'] as $key => $value )
+					$extra .= " $key=$value";
+
+			$content = "{menu id=$menuId$extra}";
+
+			$modlib->replace_user_module( "menu_$menuId", $data['name'], $content );
 			$modlib->assign_module( 0, "menu_$menuId", null, $column, $data['order'], $data['cache'], 10, $data['groups'], '' );
 		}
 
