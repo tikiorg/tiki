@@ -1640,6 +1640,10 @@ class ImageGalsLib extends TikiLib {
 			if ($newsize = $this->rebuild_image($id, $itype, $xsize, $ysize)) {
 				// removed because this causes endless recursion
 				//return $this->get_image($id, $itype, $newsize["xsize"], $newsize["ysize"]);
+
+				// Since the rescaled image is the one we want, we have to switch to its path and data
+				$res['path'] = $this->path;
+				$res['data'] = $this->image;
 			}
 		}
 
