@@ -210,7 +210,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['wikiplugin_skype'] = 'y';
 	$prefs['wikiplugin_sort'] = 'y';
 	$prefs['wikiplugin_split'] = 'y';
-	$prefs['wikiplugin_sql'] = 'y';
+	$prefs['wikiplugin_sql'] = 'n';
 	$prefs['wikiplugin_sub'] = 'y';
 	$prefs['wikiplugin_subscribegroup'] = 'y';
 	$prefs['wikiplugin_subscribegroups'] = 'y';
