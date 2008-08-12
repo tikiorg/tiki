@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-<div class="catblock">
+<div class="catblock clearfix">
   <div class="cattitle">
     {tr}Category{/tr}: {foreach name=for key=id item=title from=$titles}
     <a href="tiki-browse_categories.php?parentId={$id}">{$title|tr_if}</a>
