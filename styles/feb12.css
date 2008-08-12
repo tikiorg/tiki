@@ -407,7 +407,8 @@ a.flip img {display: none}
 * html #tiki-center {font-size: 1em}
 
 #rss {padding: 1em 1em 0}
-#credits {}
+#power {font-size: 90%}
+#credits {display: inline}
 
 /** Border boxes (if any) **/
 	

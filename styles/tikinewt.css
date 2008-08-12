@@ -424,7 +424,8 @@ a.flip img {
 
 }
 
-div#credits {font-size: .9em; text-align: center}
+#power {font-size: .9em; text-align: center}
+div#credits {display: inline}
 
 /* this is needed as a little workaround because MSIE tends to display the footer partly without the background specified */
 .footerbgtrap {

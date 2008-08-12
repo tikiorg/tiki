@@ -1,1 +1,1 @@
-<a href="http://zukakakina.com" title="{tr}Design by{/tr} Gary Cunningham-Lee aka chibaguy">Tikinewt</a> {tr}For{/tr} <a href="http://tikiwiki.org" title="TikiWiki - &#169; 2002&#8211;{$smarty.now|date_format:"%Y"} by the Tiki community">TikiWiki CMS/Groupware</a> | 
+ | {tr}Theme{/tr}: <a href="http://zukakakina.com" title="Design by Gary Cunningham-Lee aka chibaguy">Tikinewt</a>

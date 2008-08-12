@@ -267,7 +267,8 @@ ul.jumplinks a:focus, ul.jumplinks a:active {
 #footer a:visited {font-weight: bold}
 
 #footer a:hover {}
-#credits {margin-top: .5em}
+#power {margin-top: .5em}
+#credits {display: inline}
 .footerbgtrap {}
 
 /* end Type 1 layout */

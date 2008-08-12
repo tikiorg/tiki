@@ -60,21 +60,14 @@
 		{/if}
 	</div>
 {/if}
-<div id="credits">
-{include file="credits.tpl"}
-{if $prefs.feature_topbar_date eq 'y'}
-	{if $prefs.feature_calendar eq 'y' and $tiki_p_view_calendar eq 'y'}
-	<a href="tiki-calendar.php">{$smarty.now|tiki_short_datetime}</a>
-	{else}
-	{$smarty.now|tiki_short_datetime}
-	{/if}
-{/if}
-</div>
 {if $prefs.feature_babelfish eq 'y' or $prefs.feature_babelfish_logo eq 'y'}
 	{include file="babelfish.tpl"}
 {/if}
 <div id="power">
-	{tr}Powered by{/tr} <a target="_blank" href="http://info.tikiwiki.org" title="{tr}This is{/tr} TikiWiki CMS/Groupware &#169; 2002&#8211;2008, {tr}The TikiWiki community{/tr}">{tr}TikiWiki CMS/Groupware{/tr}</a>
+	{tr}Powered by{/tr} <a href="http://info.tikiwiki.org" title="&#169; 2002&#8211;{$smarty.now|date_format:"%Y"} {tr}The TikiWiki Community{/tr}">{tr}TikiWiki CMS/Groupware{/tr}</a> {if $prefs.feature_topbar_version eq 'y'} v{$tiki_version} {if $tiki_uses_cvs eq 'y'} (CVS){/if} -{$tiki_star}- {/if}
+	<div id="credits">
+		{include file="credits.tpl"}
+	</div>
 </div>
 {if $prefs.feature_bot_bar_debug eq 'y'}
 <div id="loadstats" style="text-align: center">
