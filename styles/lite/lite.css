@@ -80,8 +80,7 @@ body {
 
 #c1c2
 	#wrapper
-		#col1
-			.content {
+		#col1> .content {
 				width: auto !important;
 				width /**/:100%;/* workaround for IE 5.x:
 				tables set to 100% width need parent element width of 100% as well*/
