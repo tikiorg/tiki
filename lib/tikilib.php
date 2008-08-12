@@ -3153,9 +3153,11 @@ function add_pageview() {
 	$this->query($query, $bindvars, -1, -1, false);
 	$query = "insert into `tiki_sessions`(`sessionId`,`timestamp`,`user`,`tikihost`) values(?,?,?,?)";
 	$result = $this->query($query, array($sessionId, (int)$this->now, $user,$_SERVER['HTTP_HOST']), -1, -1, false );
-	// clean up adodb sessions as well in case adodb session garbage collection not working
-	$query = "delete from `sessions` where `expiry`<?";
-	$this->query($query, array($oldy));
+	if ($prefs['session_db'] == 'y') {
+		// clean up adodb sessions as well in case adodb session garbage collection not working
+		$query = "delete from `sessions` where `expiry`<?";
+		$this->query($query, array($oldy));
+	}
 	return true;
     }
 

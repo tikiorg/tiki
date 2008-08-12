@@ -264,7 +264,11 @@ if ( $prefs['wiki_authors_style'] != 'classic' ) {
 	$smarty->assign('contributors',$contributors);
 }
 
-$creator = $wikilib->get_creator($page);
+if (isset($info['creator'])) {
+	$creator = $info['creator'];
+} else {
+	$creator = $wikilib->get_creator($page);
+}
 $smarty->assign('creator',$creator);
 
 require_once('tiki-pagesetup.php');
