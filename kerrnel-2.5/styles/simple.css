@@ -1,0 +1,977 @@
+ /*
+ * $Header: /cvsroot/tikiwiki/tiki/styles/simple.css,v 1.56.2.2 2008-01-29 18:19:16 luciash Exp $
+ *
+ * 'Simple' style for Tikiwiki - simple and easy to understand yet pleasant for your eye !
+ * Enables font re-sizing in all browsers, aims to be standards compliant and WCAG 1.0 compatible (not yet).
+ * Uses *lite - an ultimate source ordered layout solution by luci as a base.
+ * Comments/suggestions e-mail to luci2008[-at-]ground.cz
+ * For more info feel free to visit http://www.ground.cz/luci/css/lite
+ * We also try to make better templates (*.tpl files in templates/styles/simple) towards xhtml 1.0 strict validity.
+ * For proper CSS2 syntax and possible values see e.g. http://www.zvon.org/xxl/CSS2Reference/Output/
+ *
+ */
+
+@import "lite/lite.css"; /* here we import *lite as the base */
+
+/* 
+ * redefine the base CSS -- needs to be adjusted for our own style which comes next
+ */
+
+body {
+	/* setting up the background. the color, then bg image and its form of repeating. */
+	background: #ffffff top center repeat-y;
+	/* shorthand for default font setting. size in percentage and font-family here */
+	font-family: "Trebuchet MS", "Luxi Sans", "Lucida Grande", Tahoma, helvetica, sans-serif;
+	font-size: 80% !important;/* the body font-size must be in percents to scale the fonts in IE properly */
+}
+html>body {
+	font-size: 0.75em !important;/* redefine the body font-size for all modern browsers - ignored by old IEs */
+}
+	
+#header {
+	background-color: transparent;
+}
+
+#c1c2 {
+	background-color: transparent;
+}
+
+#c1c2
+	#wrapper {
+		background-color: transparent;
+	}
+
+#c1c2
+	#wrapper
+		#col1 {
+			background-color: transparent;
+		}
+
+#c1c2
+	#wrapper
+		#col1
+			.content {
+				background-color: transparent;
+			}
+
+#c1c2
+	#col2 {
+		background-color: transparent;
+	}
+
+#col3 {
+	background-color: transparent;
+}
+
+/* next comes footer */
+#footer {background-color: transparent}
+.footerbgtrap {background-color: transparent; color: #000}/* this is needed as a little workaround because MSIE tends to display the footer partly without the background specified */
+
+.content {padding: 1em;}/* this takes care of all the content default appearance */
+
+/*div {border-width: 1px; border-style: solid; padding: 10px; margin: 5px}*/ /* <- if you want to debug with outlines, put this at the bottom of your stylesheet  */
+
+/*
+ * end of redefining the base layout 
+ */
+
+
+
+/*** next comes the own styling fun ***/
+
+/*
+ * the first there are going common html elements
+ */
+
+/* default font size for all text in divs. works together with 75% font-size for body */
+div {
+  font-size: 1em;
+}
+
+/* default color for links */
+a {
+  color: #0077cc;
+}
+
+/* default color for hovered links */
+a:hover {
+  color: #0099ee;
+}
+
+/* headings */
+h1 {
+  font-size: 2em;
+  font-family: "Times New Roman", Times, serif;
+  letter-spacing: 0.1em;
+  text-align: center;
+}
+
+/* images have no border by default */
+img {
+  border: 0;
+}
+
+/* tables */
+table {
+  background-color: #E1EBF0;
+  border: solid 1px #69c;
+  font-size: 1em;
+  width: 100%;
+}
+
+table.galtable {
+  border-collapse: collapse;
+}
+
+table.normal td.heading {
+  background-color: #abcdef;
+  font-size: 1em;
+  width: 15px;
+}
+
+table.email td.closeButton {
+  width: 100%;
+}
+table.email td.closeButton form {
+  text-align: right;
+}
+table.email {
+  border:solid 1px #abcdef;
+}
+table.email td.body {
+  border: dashed 1px #69c;
+}
+td.button {text-align: right}
+
+/* Description on wiki pages */
+small {
+  font-size: 0.8em;
+}
+
+/* Prevent forms from generating unwanted padding or margins, aligns content to left */
+form {
+  margin: 0;
+  padding: 0;
+}
+
+/* Horizontal lines */
+hr {
+  border-top: none;
+  border-bottom: solid 0.2em #abcdef;
+  border-left: none;
+  border-right: none;
+  height: 1px;
+}
+
+/* Form fieldsets */
+fieldset {
+  padding: 0.2em;
+  margin-bottom: 0.2em;
+}
+
+/* All input elements */
+input {
+  border: solid 1px #abcdef;
+  line-height: 1.6em;
+  padding: 0.1em;
+  margin-left: 2px;
+  margin-right: 2px;
+  vertical-align: middle;
+}
+
+/* Set font size for one-line text input fields and password fields */
+input[type="text"], input[type="password"] {
+  font-size: 1em;
+}
+/* Same border for them and for textarea too */
+input[type="text"], input[type="password"], textarea {
+  border: solid 1px #abcdef;
+}
+/* Try to have same look for submit buttons, file chooser fields and select dropdowns too */
+input[type="submit"], input[type="file"], select {
+  border: solid 1px #abcdef;
+  background: #f0f9ff;
+  color: #000;
+  font-size: 0.9em;
+  height: 2em;
+  vertical-align: middle;
+}
+
+
+button {
+  border-style: solid;
+  border-width: 1px;
+  border-top-color: #99ccff;
+  border-right-color: #99ccff;
+  border-bottom-color: #99ccff;
+  border-left-color: #99ccff;
+  background: #f6f9fc url("simple/button_bg.png") center center repeat-x;
+  color: #0066cc;
+  font-family: "Trebuchet MS", "Luxi Sans", "Lucida Grande", Tahoma, helvetica, sans-serif;
+  font-size: 0.8em;
+  line-height: 1.6em;
+  margin-left: 2px;
+  margin-right: 2px;
+  padding: 1px;
+  vertical-align: middle;
+}
+button:hover {
+  border-top-color: #000;
+  border-right-color: #000;
+  border-bottom-color: #000;
+  border-left-color: #000;
+  color: #000;
+}
+
+fieldset {
+	border: solid 1px #99ccff;
+	padding: 0.9em;
+}
+
+/* All select elements, NOTE: text-align: start is RTL languages compatible */
+select {
+  _font-size: 1em; /* MSIE workaround for simmilar height like input and submit */
+  text-align: start;
+  _vertical-align: top; /* MSIE workaround for simmilar height like input and submit */
+}
+/*select[name="lang"], select[name="language"] {
+  height: 2em;
+}*/
+select[multiple] {
+  height: 10em;
+}
+
+textarea {
+  padding: 0.1em;
+  width: 98%;
+}
+
+/* by default align items in lists to the left */
+ul, ol {
+	text-align: left;
+}
+
+/*
+ ***** Here we define some IDs *****
+ */
+ 
+/*** These are main parts of the layout ***/
+#mainmenu br { /* do not display line breaks in main menu when we later set links to display: block */
+  display: none;
+}
+
+/* hide attachments, comments and their form */
+#attzone, #comzone {
+  display: none;
+}
+
+/* main calendar table */
+#caltable {
+  border-left: solid 1px #abcdef;
+  border-top: solid 1px #abcdef;
+  border-right: none;
+  border-bottom: none;
+}
+/* main calendar table cells */
+#caltable td {
+  background: #fff;
+  border-right: solid 1px #abcdef;
+  border-bottom: solid 1px #abcdef;
+  padding: 0.1em;
+  vertical-align: top;
+}
+#caltable .calfocuson { /* calendar today */
+  background-color: #fc0;
+  border: solid 1px #000;
+}
+#caltable .calfocuson a { /* calendar focus date links */
+  color: #000;
+}
+#caltable .calfocus a, #caltable .calfocuson a { /* calendar focus date links */
+  text-decoration: none;
+}
+/* content of calendar day */
+.calcontent {
+      min-height: 7em;
+      height: auto !important;
+      height: 7em;
+      min-width: 7em;
+      width: auto !important;
+      width: 7em;
+}
+
+/* Tiki debugger console */
+#debugconsole {
+	background-color: #def;
+	border: solid 1px #000;
+	left: 50%; top: 50%;
+	margin-left: -300px; margin-top: -150px;
+	overflow: auto;
+	position: absolute;
+	width: 600px; height: 300px;
+}
+
+#mod-assistant {
+}
+
+/* TikiIntegrator: By default copy rules dialog not shown */
+#rules-copy-panel {
+  display: none;
+}
+
+/* Site Identity Search Bar */
+#sitesearchbar {
+	padding: 0.4em;
+	text-align: right;
+}
+
+
+/* ASSORTED  */
+
+#clear {
+  clear:both;
+  }
+  
+
+/*
+ ***** Here we define classes *****
+ */
+.hidden {
+ position: absolute; left: -10000px; top: 0px; width: 1px; height: 1px; overflow: hidden;
+}
+.maincontent div div, .maincontent ul, .maincontent h2, .maincontent h3, .maincontent div.wikitext {
+  text-align: start;
+}
+.maincontent table {
+ width: 98%; margin: auto;
+ margin-bottom: 0.2em; text-align: start;
+}
+
+/* we use this e.g. for <br /> to clear all instead of <br clear="all" /> */
+.clear {
+ clear: both;
+}
+
+/*
+ * modules
+ */
+.box {
+ background-color: #E1EBF0;
+ border: none;
+ margin: 0.2em;
+ overflow: hidden;
+ padding: 0;
+}
+h3.box-title, div.box-title {
+ background: #9FC1CF;
+ border-bottom: solid 0 #abcdef;
+ overflow: hidden;
+ text-align: center;
+}
+div.box-title table {
+ width: 100%;
+}
+.box-data { /* data content of the module box */
+ border-bottom: solid 2px #abcdef;
+ border-left: solid 2px #abcdef;
+ border-right: solid 2px #abcdef;
+ padding: 0.4em;
+ padding-bottom: 0.6em;
+}
+.box-data a {
+  text-decoration: none;
+}
+.box-data a:hover {
+  color: #000;
+}
+.box-data a.linkmenu {
+  display: block;
+  background-color: #f0f9ff;
+  border: solid 1px #abcdef;
+  color: #3f3f6f;
+  margin-top: 0.1em;
+  margin-bottom: 0.2em;
+  padding: 0.2em;
+  text-align: start;
+}
+.box-data a.linkmenu:hover {
+ background-color: #fff;
+ border: solid 1px #000;
+ color: #000;
+}
+.box-data a.separator {
+  font-weight: bold;
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+  padding: 0.2em;
+}
+.box-data form {
+  text-align: center;
+}
+.box-data select {width: 120px}
+
+/* custom menus */
+.box-data .option, .box-data .separatorline {
+  font-size: 0.9em;
+  height: 1.2em;
+  text-align: start;
+}
+.box-data .option a.linkmenu {
+  display: inline;
+  background-color: transparent;
+  border: none;
+  color: #07c;
+  font-weight: bold;
+}
+.box-data .option a.linkmenu:hover {
+	background-color: transparent;
+	border: none;
+  color: #000;
+}
+.box-data .separator {
+  text-align: start;
+}
+
+/* tables in modules */
+.box-data table {
+ margin: auto;
+}
+.box-data table td {
+ padding: 0.2em;
+ text-align: start;
+}
+
+/* lists in modules */
+.box-data li {
+ padding: 0.2em;
+ text-align: start;
+}
+
+/*
+ * controls for modules (logged-in users only)
+ */
+.modcontrols { /* group of control buttons */
+ display: block;
+ float: right;
+ width: 64px;
+ height: 16px;
+}
+/* every modcontrol button setting */
+.modcontrols a {
+ display: block;
+ float: left;
+ width: 16px;
+ height: 16px;
+}
+.modcontrols a span {
+ display: none; /*prevents displaying alternative text over control buttons */
+}
+
+.movemodup {
+ background: transparent url("simple/up_out.png") center center no-repeat;
+}
+a:hover.movemodup {
+ background: transparent url("simple/up.png") center center no-repeat;
+}
+
+.movemoddown {
+ background: transparent url("simple/down_out.png") center center no-repeat;
+}
+a:hover.movemoddown {
+ background: transparent url("simple/down.png") center center no-repeat;
+}
+
+.movemodopside {
+ background: transparent url("simple/move_out.png") center center no-repeat;
+}
+a:hover.movemodopside {
+ background: transparent url("simple/move.png") center center no-repeat;
+}
+
+.removemod {
+ background: transparent url("simple/close_out.png") center center no-repeat;
+}
+a:hover.removemod {
+ background: transparent url("simple/close.png") center center no-repeat;
+}
+
+/*
+ * common module tables
+ */
+.box-data table tr td.module {
+}
+
+/*
+ * calendar module table
+ */
+.box-data table tr td {
+}
+.box-data td a.nav { /* navigation links */
+  padding: 0.1em;
+  text-decoration: none;
+}
+.box-data td.fc { /* fc cells */
+  padding: 0;
+}
+.box-data td.fc a { /* calendar dates links */
+  display: block;
+  padding: 0.1em;
+  text-decoration: none;
+}
+.box-data td.fc a.today { /* calendar today link */
+  background-color: #fc0;
+  border: solid 1px #000;
+}
+
+/*
+ * shoutbox messages for both: mod and shoutbox page too
+ */
+.shoutboxmodmsg, div.shoutboxmsg {
+}
+textarea.tshoutbox { /* correct width for shoutboxmod textarea only (needed by msie5) */
+  width: auto;
+}
+
+/*
+ * user (messu) messages
+ */
+div.messureadbody {
+}
+
+/*
+ * common page classes
+ */
+.linkbut {
+ font-size: 0.8em;
+}
+.pagetitle {
+ color: #000;
+ text-decoration: none;
+ display: block;
+ text-align: center;
+ font-size: 1.3em;
+}
+.titlebar {
+ background-color: #abcdef;
+ font-weight: bold;
+}
+/*
+ * calendar
+ */
+.opaque { /* onmouseover info box */
+  background-color: #fff;
+}
+
+/*
+ * content boxes
+ */
+.cbox-title {
+ font-size: medium;
+ text-align: center;
+}
+/*
+ * wiki pages
+ */
+.normal .even { /* table with class normal, even cells */
+  background-color: #f0f9ff;
+}
+.normal .odd { /* table with class normal, odd cells */
+  background-color: #def;
+}
+.simplebox { /* simple box wiki syntax */
+  background-color: #f0f9ff;
+  border: 1px solid #9cf;
+}
+
+.wikitable { /* wiki table syntax */
+  border-left: 1px solid #000;
+  border-top: 1px solid #000;
+  border-right: none;
+  border-bottom: none;
+  margin: auto;
+  padding: 0;
+  width: 90%;
+}
+.wikitable td {
+  border-right: 1px solid #000;
+  border-bottom: 1px solid #000;
+  margin: 0;
+  padding: 0.2em;
+}
+
+.wikitext {
+  background-color: transparent;
+  /*overflow: auto;
+  clip: rect(0,100%,100%,0);*/
+}
+body.wikitext {
+	margin : 5px;
+}
+.wikitopline {
+  border: 1px dashed #abcdef;
+  background-color: #E1EBF0;
+}
+.wiki-edithelp {
+  display: none;
+}
+/*
+ * articles
+ */
+.titlea {
+ font-size: large;
+}
+.titleb {
+ font-size: x-small;
+}
+div.articlebody {
+}
+/*
+ * blogs
+ */
+.blogtitle {
+  font-size: large;
+}
+.postbody {
+}
+/*
+ * image galleries
+ */
+.showimage {
+ text-align: center;
+}
+
+
+/* Warning color */
+.attention {
+  color: #c00;
+}
+/* Highlight color */
+.highlight {
+	background-color: #fc0;
+	padding: 0 2px 0 2px;
+}
+
+/*
+ ***** JS related stuff *****
+ */
+
+/*
+ * PHP Layers Menus
+ */
+.mdkhorbar {
+  color: black;
+  background-color: #def;
+  border: 0px outset #525252;
+}
+
+.horbar {
+  margin-left: 0;
+  border: 0px solid #000000;
+}
+
+.horbar table {
+  border: 0px solid #000000;
+}
+
+.horbaritem a {
+  font-size: 1em;
+  text-decoration: none;
+}
+
+.mdkhorbaritem {
+  float: left;
+  white-space: nowrap;
+  font-size: 1em;
+}
+
+.mdkhorbaritem a {
+  display: block;
+  text-decoration: none;
+}
+
+.mdkhorbaritem a:link {
+  color: #000000;
+}
+
+.mdkhorbaritem a:visited {
+  color: #000000;
+}
+
+.mdkhorbaritem a:hover  {
+  background-color: #abcdef;
+}
+
+.mdkhorbaritem a:active {
+  color: #ff0000;
+}
+
+.mdkverbar {
+  color: black;
+  border: 1px solid #fdfefd;
+}
+
+.mdksubmenu {
+  display: table;
+  position: absolute;
+  background-color: #FFFFFF;
+  margin-left: 15px;
+  visibility: hidden;
+}
+.mdksubmenu table {
+  width: auto;
+}
+
+.mdksubframe  {
+  display: block;
+  border: 0px solid #000000;
+}
+
+.mdkitem  {
+  border-top: 1px solid #aaccee;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.mdkitem a  {
+  background-color: #f0f9ff;
+  padding: 2px 5px 2px 5px;
+  position: relative;/* this is important to display arrows in menus */
+  display: block;
+  text-decoration: none;
+}
+
+.mdkitem a:visited  {
+}
+
+.mdkitem a:hover  {
+  background-color: #fff;
+  padding: 2px 5px 2px 5px;
+}
+
+.mdkitem a:active {
+  color: #000;
+}
+
+/* display arrows in menus */
+.mdkitem .mdkfwdarr {
+  position: absolute;
+  top: 5px;
+  right: 12px;
+}
+
+
+/* tiki tabs */
+#page-bar {
+	border-bottom: solid 1px #000;
+	display: block;
+	float: left;
+	width: 100%;
+}
+.tabmark {
+	display: block;
+	float: left;
+	font-size: 85%;
+	background-color: #abcdef;
+	border: solid 1px transparent;
+	border-bottom: none;
+	margin: 0px;
+	margin-left: 3px;
+	margin-right: 3px;
+	margin-bottom: -1px;
+	padding: 1px 0px 1px 0px;
+}
+.tabmark a { 
+  border-bottom: solid 1px transparent;
+  color: #000;
+  padding: 1px 5px 1px 5px;
+  text-decoration: none;
+}
+.tabmark a:active {
+  background-color: #fff;
+  color: red;
+}
+.tabmark a:hover {
+  color: black;
+  background-color: #f0f9ff;
+}
+
+.tabcontent {
+  border: 1px solid #000;
+  border-top: none;
+  clear: left;
+  padding: 6px 2px 2px 2px;
+  margin-bottom: 25px;
+  background-color: #f0f9ff;
+}
+
+/* trackers specific style */
+
+.statuson {
+  padding: 1px;
+  margin: 1px;
+  border: 1px inset #666666;
+  vertical-align: middle;
+  background-color: #bbaa99;
+}
+.statusoff {
+  padding: 1px;
+  margin: 2px;
+  vertical-align: middle;
+}
+
+.normal {
+  border: solid 1px #abcdef;
+}
+
+.categpath {
+  font-size: x-small;
+}
+
+/* CODE plugin */
+.codelisting {
+  font-family : monospace;
+  padding: 2ex;
+  background-color: #ddeeff;
+  margin: 1ex;
+  border: 1px dashed #adacaf;
+}
+
+/* VERSION plugin */
+.versions {
+  border-top: 1px dashed #999999;
+  border-bottom: 1px dashed #999999;
+  min-height: 142px;
+}
+.versionav {
+  display: inline;
+  float: right;
+  border-left: 1px dashed #999999;
+}
+.versionav .button2 {
+  display: block;
+  border: 0;
+  border-bottom: 1px dashed #999999;
+  background-color: transparent;
+}
+.versionav .button2 .linkbut {
+  border: 0;
+  background-color: inherit;
+  padding: 0 10px;
+}
+.versionav .highlight {
+  background-color: #cccccc;
+  font-weight: bold;
+}
+.versiontitle {
+  font-weight: bold;
+  border-bottom: 1px dashed #999999;
+  border-left: 1px dashed #999999;
+  padding: 2px 30px;
+  float: right;
+}
+
+/* wiki diff styles */
+.diffheader {background-color:#a9b8c2; font-weight: bold;}
+.diff div {border-top: 1px solid #abcdef; }
+.diffadded {background-color: #ccffcc;}
+.diffdeleted {background-color: #ffcccc;}
+.diffinldel {background-color:#ffcccc; text-decoration: line-through;}
+.diffchar {color: red;}
+
+/* QUOTE plugin */
+.quoteheader {
+  margin: 10px 5px 0px 5px;
+  padding: 4px;
+  border-width: 1px 1px 0px 1px;
+  border-style: solid;
+  border-color: #A9B8C2;
+  color: black;
+  font-weight: bold;
+  background-color: #A9B8C2;
+  font-size: 8pt;
+}
+.quotebody {
+  margin: 0px 5px 10px 5px;
+  padding: 5px;
+  border-color: #A9B8C2;
+  border-width: 0px 1px 1px 1px;
+  border-style: solid;
+  color: black;
+  background-color: #edeeef;
+}
+
+/* floating ul/ol lists */
+.floatlist {clear: left; list-style-type: none; margin: 0; padding-left: 0}
+.floatlist li {float: left}
+
+/* tiki-admin menu */
+div.admbox {
+  border: 2px solid #ABCDEF; height: 100px; width: 100px;
+  text-align: center; float: left; margin: 5px;
+}
+div.admbox:hover { background-color: #DDEEFF; }
+div.admbox img { margin-top: 20px; }
+
+/* structures toc */
+ul.toc {margin-left: 0.5em; padding-left: 0.5em; list-style-type: none}
+ul.toc li {margin-left: .2em; padding-left: .2em}
+
+/* jscalendar */
+.daterow {
+  padding : 0 5px;
+  border : 1px outset #ddd;
+  background-color : #ddd;
+}
+.daterow:hover {
+  background-color : #fff;
+  cursor : pointer;
+}
+.daterow:active {
+  border : 1px inset #ddd;
+}
+
+.tellafriend {text-align:right;}
+
+.highlight_word_0{color:black;background-color: #ffff66;}
+.highlight_word_1{color:black;background-color: #ff9999;}
+.highlight_word_2{color:black;background-color: #A0FFFF;}
+.highlight_word_3{color:black;background-color: #ff66ff;}
+.highlight_word_4{color:black;background-color: #99ff99;}
+
+.center {text-align: center;}
+.justify {text-align: justify;}
+.right {text-align: right;}
+
+/* Lists in modules */
+.box-data ol,
+.box-data ul {margin-left: -1em;padding-right: 1em}
+/* IE */
+* html .box-data ol {margin-left: 3em;}
+* html .box-data ul {margin-left: 2em;}
+/* IE7 */
+*:first-child+html .box-data ol {margin-left: 3em;}
+*:first-child+html .box-data ul {margin-left: 2em;}
+
+/* Module-flip img */
+
+h3.box-title {
+	position: relative;
+}
+
+.box a.flipmodtitle img {
+	display: block;
+	position: absolute;
+	right: 2px;
+	top: 2px;
+	border: 1px solid transparent;
+}
+
+a.flipmodtitle:hover img {
+	border: 1px solid #f0f9ff !important;
+}
+
+/* floating blocks */
+.floatleft {float: left}
+.floatright {float: right}
+
+/* end of css file */
