@@ -458,6 +458,10 @@ div#tiki-main #tikimidtbl {
 	font-size: .8em;
 }
 
+.box .box-data table {
+	width: 100%;
+}
+
 a.phplm:link, a.phplm, a.phplm:hover, a.phplm:visited, .phplmnormal a, .phplmnormal a:hover, .phplmnormal a:visited {
 	color: #000000;
 	font-size: .9em;
