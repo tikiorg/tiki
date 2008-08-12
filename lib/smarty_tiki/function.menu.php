@@ -17,7 +17,7 @@ function smarty_function_menu($params, &$smarty)
 	} else {
 		 $smarty->assign('link_on_section', 'n');
 	}
-	if (isset($css)) {
+	if (isset($css) and $prefs['feature_cssmenus'] == 'y') {
 		static $idCssmenu;
 		if (isset($type) && ($type == 'vert' || $type == 'horiz')) {
 			$css = "cssmenu_$type.css";

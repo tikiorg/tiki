@@ -58,8 +58,10 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 {if isset($phplayers_headers)}{$phplayers_headers}{/if}
 
 {*-- css menus block --*}
+{if $prefs.feature_cssmenus eq 'y'}
 <link rel="StyleSheet" href="css/cssmenu_vert.css" type="text/css"></link>
 <link rel="StyleSheet" href="css/cssmenu_horiz.css" type="text/css"></link>
+{/if}
 
 {* --- universaleditbutton.org --- *}
 {if ($editable and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox')) or $tiki_p_admin_wiki eq 'y' or $canEditStaging eq 'y'}
