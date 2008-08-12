@@ -379,7 +379,8 @@ class TikiDB {
 				break;
 
 				case "mysql3":
-					case "mysql": case "mysqli":
+				case "mysql": 
+				case "mysqli":
 				default:
 					$sort = preg_replace('/_asc$/', '` asc', $sort);
 					$sort = preg_replace('/_desc$/', '` desc', $sort);
@@ -434,6 +435,21 @@ class TikiDB {
 			break;
 		}
 	}
+
+	function IfNull($field, $ifNull ) {
+		return " IFNULL($field, $ifNull) "; // if MySQL
+	}
+
+	function Concat() {
+		$s = "";
+		$arr = func_get_args();
+
+		// suggestion by andrew005@mnogo.ru
+		$s = implode(',',$arr);
+		if (strlen($s) > 0) return "CONCAT($s)";
+		else return '';
+	}
+
 
 	function debugger_log($query, $values)
 	{

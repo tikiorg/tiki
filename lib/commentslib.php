@@ -655,8 +655,7 @@ class Comments extends TikiLib {
 		.(( $include_archived ) ? '' : ' and (a.`archived` is null or a.`archived`=?)')
 		." and a.`type` $stickytest ?  and a.`objectType` = 'forum'
 		and a.`parentId` = ? $time_cond group by a.`threadId`";
-	    global $ADODB_LASTDB;
-	    if($ADODB_LASTDB != 'sybase') {
+	    if($this->driver != 'sybase') {
 		$query .=",a.`object`,a.`objectType`,a.`parentId`,a.`userName`,a.`commentDate`,a.`hits`,a.`type`,a.`points`,a.`votes`,a.`average`,a.`title`,a.`data`,a.`hash`,a.`user_ip`,a.`summary`,a.`smiley`,a.`message_id`,a.`in_reply_to`,a.`comment_rating` ";
 	    }
 	    $query .="order by ".$this->convert_sortmode($sort_mode).", `threadId`";
@@ -949,9 +948,7 @@ class Comments extends TikiLib {
 		    if ( $res['comments'] > 0 ) {
 			    $result2 = $this->query(
 				'select * from `tiki_comments` where `object`= ? and `objectType` = ? order by commentDate desc',
-				array($res['forumId'], 'forum', (int)$res['lastPost']),
-				1
-			    );
+				array($res['forumId'], 'forum'));
 			    $res['lastPostData'] = $result2->fetchRow();
 			    $res['lastPost'] = $res['lastPostData']['commentDate'];
 		    } else {
