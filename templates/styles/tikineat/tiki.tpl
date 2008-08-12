@@ -41,11 +41,11 @@
       {if $prefs.feature_left_column eq 'user' or $prefs.feature_right_column eq 'user'}
 			<div id="showhide_columns">
       {if $prefs.feature_left_column eq 'user' && $left_modules|@count > 0 && $show_columns.left_modules ne 'n'}
-				<div style="text-align:left;float:left;"><a class="flip" href="javascript:flip('leftcolumn','table-cell');">
+				<div style="text-align:left;float:left;"><a class="flip" href="#" onclick="toggleCols('leftcolumn','table-cell'); return false">
 		{icon _id=ofolder  name="leftcolumnicn" class="colflip" alt="+/-"}&nbsp;{tr}Show/Hide Left Menus{/tr}&nbsp;</a></div>
       {/if}
       {if $prefs.feature_right_column eq 'user'&& $right_modules|@count > 0 && $show_columns.right_modules ne 'n'}
-				<div style="text-align:right;float:right;"><a class="flip" href="javascript:flip('rightcolumn','table-cell');">
+				<div style="text-align:right;float:right;"><a class="flip" href="#" onclick="toggleCols('rightcolumn','table-cell'); return false">
         &nbsp;{tr}Show/Hide Right Menus{/tr}&nbsp;{icon _id=ofolder name="rightcolumnicn" class="colflip" alt="+/-"}</a></div>
       {/if}
 			</div>
