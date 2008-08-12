@@ -22,6 +22,35 @@
     function wikiplugin_titlesearch_help() {
         return tra("Search the titles of all pages in this wiki").":<br />~np~{TITLESEARCH(search=>Admin,info=>hits|user,exclude=>HomePage|SandBox,noheader=>0)}{TITLESEARCH}~/np~";
     }
+	function wikiplugin_titlesearch_info() {
+		return array(
+			'name' => tra('Title Search'),
+			'description' => tra('Search wiki page titles.'),
+			'prefs' => array( 'wikiplugin_titlesearch' ),
+			'params' => array(
+				'search' => array(
+					'required' => true,
+					'name' => tra('Search Criteria'),
+					'description' => tra('Portion of a page name.'),
+				),
+				'info' => array(
+					'required' => false,
+					'name' => tra('Information'),
+					'description' => tra('hits|user'),
+				),
+				'exclude' => array(
+					'required' => false,
+					'name' => tra('Exclude'),
+					'description' => tra('Pipe separated list of page names to exclude from results.'),
+				),
+				'noheader' => array(
+					'required' => false,
+					'name' => tra('No Header'),
+					'description' => tra('0|1'),
+				),
+			),
+		);
+	}
     class WikiPluginTitleSearch extends PluginsLib {
         var $expanded_params = array("exclude", "info");
         function getDescription() {

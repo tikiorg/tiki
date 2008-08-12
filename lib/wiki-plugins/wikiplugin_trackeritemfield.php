@@ -5,6 +5,53 @@ function wikiplugin_trackeritemfield_help() {
 	$help .= "~np~{TRACKERITEMFIELD(trackerId=1, itemId=1, fieldId=1, fields=1:2, status=o|p|c|op|oc|pc|opc, test=1|0, value=x)}".tra('Wiki text')."{ELSE}".tra('Wiki text')."{TRACKERITEMFIELD}~/np~";
 	return $help;
 }
+
+function wikiplugin_trackeritemfield_info() {
+	return array(
+		'name' => tra('Tracker Item Field'),
+		'description' => tra("Displays the value of a tracker item field or the wiki text if the value of the field is set or has a value(if itemId not specified, use the itemId of the url or the user tracker)."),
+		'prefs' => array( 'wikiplugin_trackeritemfield', 'feature_trackers' ),
+		'body' => tra('Wiki text containing an {ELSE} marker.'),
+		'params' => array(
+			'trackerId' => array(
+				'required' => false,
+				'name' => tra('Tracker ID'),
+				'description' => tra('Numeric value.'),
+			),
+			'itemId' => array(
+				'required' => false,
+				'name' => tra('Item ID'),
+				'description' => tra('Numeric value.'),
+			),
+			'fieldId' => array(
+				'required' => false,
+				'name' => tra('Field ID'),
+				'description' => tra('Numeric value.'),
+			),
+			'fields' => array(
+				'required' => false,
+				'name' => tra('Fields'),
+				'description' => tra('Colon separated list of field IDs.'),
+			),
+			'status' => array(
+				'required' => false,
+				'name' => tra('Status'),
+				'description' => tra('o|p|c|op|oc|pc|opc'),
+			),
+			'test' => array(
+				'required' => false,
+				'name' => tra('Test'),
+				'description' => tra('0|1'),
+			),
+			'value' => array(
+				'required' => true,
+				'name' => tra('Value'),
+				'description' => tra('Value to compare against.'),
+			),
+		),
+	);
+}
+
 function wikiplugin_trackeritemfield($data, $params) {
 	global $userTracker, $group, $user, $userlib, $tiki_p_admin_trackers, $prefs;
 	global $trklib; include_once('lib/trackers/trackerlib.php');

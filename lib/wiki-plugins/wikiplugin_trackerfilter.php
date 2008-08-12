@@ -5,6 +5,43 @@ function wikiplugin_trackerfilter_help() {
   $help .= "~np~{TRACKERFILTER(filters=>2/d:4/r:5,action=>Name of submit button,displayList=y|n,line=y|n,TRACKERLIST_params )}Notice{TRACKERFILTER}~/np~";
   return $help;
 }
+
+function wikiplugin_trackerfilter_info() {
+	return array(
+		'name' => tra('Tracker Filter'),
+		'description' => tra("Filters the items of a tracker, fields are indicated with numeric ids."),
+		'prefs' => array( 'feature_trackers', 'wikiplugin_trackerfilter' ),
+		'body' => tra('notice'),
+		'params' => array(
+			'filters' => array(
+				'required' => true,
+				'name' => tra('Filters'),
+				'description' => tra('2/d:4/r:5'),
+			),
+			'action' => array(
+				'required' => false,
+				'name' => tra('Action'),
+				'description' => tra('Label on the submit button'),
+			),
+			'displayList' => array(
+				'required' => false,
+				'name' => tra('Display List'),
+				'description' => tra('y|n'),
+			),
+			'line' => array(
+				'required' => false,
+				'name' => tra('Line'),
+				'description' => tra('y|n'),
+			),
+			'TRACKERLIST_params' => array(
+				'required' => false,
+				'name' => tra('Tracker List Parameters'),
+				'description' => tra('?'),
+			),
+		),
+	);
+}
+
 function wikiplugin_trackerfilter($data, $params) {
 	global $smarty, $prefs;
 	global $trklib;	include_once('lib/trackers/trackerlib.php');

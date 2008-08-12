@@ -217,7 +217,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['wikiplugin_sup'] = 'y';
 	$prefs['wikiplugin_tag'] = 'y';
 	$prefs['wikiplugin_thumb'] = 'y';
-	$prefs['wikiplugin_titlesearch'] = 'y';
+	$prefs['wikiplugin_titlesearch'] = 'n';
 	$prefs['wikiplugin_topfriends'] = 'y';
 	$prefs['wikiplugin_trackerfilter'] = 'y';
 	$prefs['wikiplugin_trackeritemfield'] = 'y';
