@@ -39,6 +39,8 @@ class Smarty_Tikiwiki extends Smarty {
 		// http://smarty.php.net/manual/en/variable.use.sub.dirs.php
 
 			$this->use_sub_dirs = false;
+			$this->security_settings['MODIFIER_FUNCS'][] = 'addslashes';
+			$this->security_settings['MODIFIER_FUNCS'][] = 'urlencode';
 	}
 
 	function _smarty_include($params) {
