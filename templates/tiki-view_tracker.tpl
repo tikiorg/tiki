@@ -244,7 +244,7 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
 <td>
 <select name="status">
 {foreach key=st item=stdata from=$status_types}
-<option value="{$st}"{if $tracker_info.newItemStatus eq $st} selected="selected"{/if}
+<option value="{$st}" {if $tracker_info.newItemStatus eq $st} selected="selected"{/if}
 style="background-image:url('{$stdata.image}');background-repeat:no-repeat;padding-left:17px;">{$stdata.label}</option>
 {/foreach}
 </select>
