@@ -46,7 +46,7 @@ if ( installer_is_accessible() ) {
 <p><?php echo ( 'The Tiki installer can be used only by the site administrator. Please enter the database credentials as a verification. If you forgot about them, they are located in \'db/local.php\'') ?></p>
 <form method="post" action="tiki-install.php">
 <p><?php echo ( 'Database username' ) ?>: <input type="text" name="dbuser"/></p>
-<p><?php echo ( 'Database password' ) ?>: <input type="text" name="dbpass"/></p>
+<p><?php echo ( 'Database password' ) ?>: <input type="password" name="dbpass"/></p>
 <p><input type="submit" value="Validate"/></p>
 </form>
 </body>
