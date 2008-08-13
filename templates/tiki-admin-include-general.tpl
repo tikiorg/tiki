@@ -97,16 +97,15 @@
 						{tr}smarty notice reporting{/tr}
       </td>
 	  </tr><tr>
-		<tr>
 		<td class="form"><label for="feature_pear_date">{tr}Use PEAR::Date library:{/tr}</label></td>
-		<td><input type="checkbox" name="feature_pear_date"{if $prefs.feature_pear_date eq 'y'} checked="checked"{/if} /></td>
+		<td><input type="checkbox" id="feature_pear_date" name="feature_pear_date"{if $prefs.feature_pear_date eq 'y'} checked="checked"{/if} /></td>
 		</tr><tr>
 	  <td class="form"><label for="log_mail">{tr}Log Mail in Tiki Logs:{/tr}</label></td>
-	  <td><input type="checkbox" name="log_mail"{if $prefs.log_mail eq 'y'} checked="checked"{/if} />
+	  <td><input type="checkbox" id="log_mail" name="log_mail"{if $prefs.log_mail eq 'y'} checked="checked"{/if} /></td>
 	  </tr><tr>
 	  <td class="form"><label for="log_sql">{tr}Log SQL:{/tr}</label></td>
-	  <td><input type="checkbox" name="log_sql"{if $prefs.log_sql eq 'y'} checked="checked"{/if} /></td>
-		<tr><td class "form">{tr}Log queries using more than seconds:{/tr}</td><td><input type="text" name="log_sql_perf_min" value="{$prefs.log_sql_perf_min}" /></td>
+	  <td><input type="checkbox" id="log_sql" name="log_sql"{if $prefs.log_sql eq 'y'} checked="checked"{/if} /></td></tr>
+		<tr><td class="form">{tr}Log queries using more than seconds:{/tr}</td><td><input type="text" name="log_sql_perf_min" value="{$prefs.log_sql_perf_min}" /></td>
       </tr><tr>
       <td class="form"><label for="general-charset">{tr}Default charset for sending mail:{/tr}</label></td>
       <td><select name="default_mail_charset" id="general-charset">
@@ -242,7 +241,7 @@
 
       </tr><tr>
         <td class="form"><label for="feature_help">{tr}Help System{/tr}:</label></td>
-        <td><input type="checkbox" name="feature_help" id="general-feature_help" {if $prefs.feature_help eq 'y'}checked="checked"{/if} /></td>
+        <td><input type="checkbox" name="feature_help" id="feature_help" {if $prefs.feature_help eq 'y'}checked="checked"{/if} /></td>
 
       </tr><tr>
         <td class="form"><label for="general-helpurl">{tr}Help URL{/tr}:</label></td>
