@@ -1,12 +1,4 @@
-<h1><a class="pagetitle" href="tiki-admin_content_templates.php">{tr}Admin templates{/tr}</a>
-  
-{if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}Content+Templates" target="tikihelp" class="tikihelp" title="{tr}Admin Content Templates{/tr}">{icon _id='help'}</a>
-{/if}
-
-{if $prefs.feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-admin_content_templates.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}Admin Content Templates Template{/tr}">{icon _id='shape_square_edit' alt='{tr}Edit template{/tr}'}</a>
-{/if}</h1>
+{title help="Content+Templates"}{tr}Admin templates{/tr}{/title}
 
 {remarksbox type="tip" title="Tip"}Use the Administration page of each enabled feature to allow the use of content templates.{/remarksbox}
 

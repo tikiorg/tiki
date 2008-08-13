@@ -1,12 +1,4 @@
-<h1><a class="pagetitle" href="tiki-admin_menus.php">{tr}Admin Menus{/tr}</a>
-
-{if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}Menus" target="tikihelp" class="tikihelp" title="{tr}Admin Menu Builder{/tr}">{icon _id='help'}</a>
-{/if}
-
-{if $prefs.feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-admin_menus.tpl" target="tikihelp" class="tikihelp" title="{tr}Edit template{/tr}: {tr}Admin Menus Template{/tr}">{icon _id='shape_square_edit' alt='{tr}Edit template{/tr}'}</a>
-{/if}</h1>
+{title help="Menus"}{tr}Admin Menus{/tr}{/title}
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}
   {tr}To use menus in a <a href="tiki-admin_modules.php">module</a>, <a href="tiki-admin.php?page=siteid">Site identity</a> or a template, use {literal}{menu id=x}{/literal}, where x is the ID of the menu.{/tr}

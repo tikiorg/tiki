@@ -1,19 +1,7 @@
 {* $Id$ *}
 {popup_init src="lib/overlib.js"}
 
-<h1><a class="pagetitle" href="tiki-admin_modules.php">{tr}Admin Modules{/tr}</a>
-
-{if $tiki_p_admin eq 'y'}
-<a href="tiki-admin.php?page=module">{icon _id='wrench' alt="{tr}Admin Feature{/tr}" style="vertical-align:bottom"}</a>
-{/if}
-
-{if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}Modules+Admin" target="tikihelp" class="tikihelp" title="{tr}Admin Modules{/tr}">
-{icon _id='help' style="vertical-align:bottom"}</a>{/if}
-
-{if $prefs.feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-admin_modules.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}Admin Modules Template{/tr}">
-{icon _id='shape_square_edit' style="vertical-align:bottom"}</a>{/if}</h1>
+{title help="Modules+Admin" admpage="module"}{tr}Admin Modules{/tr}{/title}
 
 <div class="navbar">
 <a class="linkbut" href="#assign">{tr}Assign Module{/tr}</a>

@@ -21,7 +21,7 @@
 
 </div>
 
-<h1><a class="pagetitle" href="tiki-action_calendar.php">{tr}Tiki Action Calendar{/tr}</a></h1>
+{title}{tr}Tiki Action Calendar{/tr}{/title}
 
 <form id="filtercal" method="get" action="{$myurl}" name="f" style="display:none;">
 <div class="caltitle">{tr}Tools Calendars{/tr}</div>

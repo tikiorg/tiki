@@ -1,12 +1,4 @@
-<h1><a href="tiki-admin_links.php" class="pagetitle">{tr}Featured links{/tr}</a>
-  
-      {if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}FeaturedLinksAdmin" target="tikihelp" class="tikihelp" title="{tr}Admin Featured Links{/tr}">
-{icon _id='help'}</a>{/if}
-
-      {if $prefs.feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-admin_links.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}Admin Featured Links Template{/tr}">
-{icon _id='shape_square_edit' alt='{tr}Edit template{/tr}'}</a>{/if}</h1>
+{title help="FeaturedLinksAdmin"}{tr}Featured links{/tr}{/title}
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}To use these links, you must assign the featured_links <a class="rbox-link" href="tiki-admin_modules.php">module</a>.{/tr}{/remarksbox}
 

@@ -1,4 +1,4 @@
-<h1><a href="tiki-admin_layout.php" class="pagetitle">{tr}Admin layout{/tr}</a></h1>
+{title}{tr}Admin layout{/tr}{/title}
 
 <div class="navbar">
 <a class="linkbut" href="tiki-theme_control.php">Theme control</a>

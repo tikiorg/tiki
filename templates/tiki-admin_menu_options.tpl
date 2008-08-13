@@ -1,9 +1,5 @@
 {* $Id$ *}
-<h1><a class="pagetitle" href="tiki-admin_menu_options.php?menuId={$menuId}">{tr}Admin Menu{/tr}: {$editable_menu_info.name}</a>
-{if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}Menus" target="tikihelp" class="tikihelp" title="{tr}Help{/tr}">
-{icon _id='help'}</a>{/if}
-</h1>
+{title help="Menus" url="tiki-admin_menu_options.php?menuId=$menuId"}{tr}Admin Menu:{/tr} {$editable_menu_info.name}{/title}
 
 <div class="navbar">
 <span class="button2"><a href="tiki-admin_menus.php" class="linkbut">{tr}List menus{/tr}</a></span>
