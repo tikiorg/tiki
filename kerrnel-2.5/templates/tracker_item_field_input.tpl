@@ -128,13 +128,13 @@
 		<input type="text" name="{$field_value.ins_id}" value="{$field_value.value}" />
 	{/if}
 	{assign var='Height' value=$prefs.MultimediaDefaultHeight}
-	{assign var='Lenght' value=$prefs.MultimediaDefaultLength}
+	{assign var='Length' value=$prefs.MultimediaDefaultLength}
 
 	{if $field_value.value ne ''}	
-		{if  $field_value.options_array[1] ne '' } {assign var=$Lenght value=$field_value.options_array[1] }{/if}
-		{if  $field_value.options_array[2] ne '' } {assign var=$Height value=$field_value.options_array[2] }{/if}
+		{if isset($cur_field.options_array[1]) and $field_value.options_array[1] ne '' } {assign var=$Length value=$field_value.options_array[1] }{/if}
+		{if isset($cur_field.options_array[2]) and $field_value.options_array[2] ne '' } {assign var=$Height value=$field_value.options_array[2] }{/if}
 		{if $ModeVideo eq 'y' } { assign var="Height" value=$Height+$prefs.VideoHeight}{/if}
-		{include file=multiplayer.tpl url=$field_value.value w=$Lenght h=$Height video=$ModeVideo}
+		{include file=multiplayer.tpl url=$field_value.value w=$Length h=$Height video=$ModeVideo}
 	{/if}
 
 {* -------------------- file -------------------- *}
@@ -233,23 +233,43 @@
 
 {* -------------------- date and time -------------------- *}
 {elseif $field_value.type eq 'f'}
-	{if isset($field_value.options_array[1])}
+	{* ----- Start year --- *}
+	{if isset($field_value.options_array[1]) and $field_value.options_array[1] ne ''}
 		{assign var=start value=$field_value.options_array[1]}
 	{elseif isset($prefs.calendar_start_year)}
 		{assign var=start value=$prefs.calendar_start_year}
 	{else}
 		{assign var=start value=-4}
 	{/if}
-	{if isset($field_value.options_array[2])}
+	{if isset($field_value.options_array[1]) and $field_value.options_array[1] ne ''}
+		{assign var=start value=$field_value.year}
+	{/if}
+
+	{* ----- End year --- *}
+	{if isset($field_value.options_array[2]) and $field_value.options_array[2] ne ''}
 		{assign var=end value=$field_value.options_array[2]}
 	{elseif isset($prefs.calendar_end_year)}
 		{assign var=end value=$prefs.calendar_end_year}
 	{else}
 		{assign var=end value=+4}
 	{/if}
-	{html_select_date prefix=$field_value.ins_id time=$field_value.value start_year=$start end_year=$end field_order=$prefs.display_field_order}
-	{if $field_value.options_array[0] ne 'd'}
-		{tr}at{/tr} {html_select_time prefix=$field_value.ins_id time=$field_value.value display_seconds=false}
+	{if $field_value.year > $end}
+		{assign var=end value=$field_value.year}
+	{/if}
+
+	{if $field_value.value eq ''}
+		{assign var=time value="--"}
+	{else}
+		{assign var=time value=$field_value.value}
+	{/if}
+	{if $field_value.options_array[0] eq 'd'}
+		{if $field_value.isMandatory ne 'y' and (isset($field_value.options_array[3]) and $field_value.options_array[3] eq 'blank')}
+			{html_select_date prefix=$field_value.ins_id time=$time start_year=$start end_year=$end field_order=$prefs.display_field_order all_empty=" "}
+		{else}
+			{html_select_date prefix=$field_value.ins_id time=$time start_year=$start end_year=$end field_order=$prefs.display_field_order}
+		{/if}
+	{else}
+		{tr}at{/tr} {html_select_time prefix=$field_value.ins_id time=$time display_seconds=false}
 	{/if}
 
 {* -------------------- drop down -------------------- *}

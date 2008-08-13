@@ -25,6 +25,12 @@ $special = false;
 
 if (!isset($_REQUEST['trackerId']) && $prefs['userTracker'] == 'y' && !isset($_REQUEST['user'])) {
 	if (isset($_REQUEST['view']) and $_REQUEST['view'] == ' user') {
+		if (empty($user)) {
+			$smarty->assign(tra("You are not logged in"));
+			$smarty->assign('errortype', '402');
+			$smarty->display("error.tpl");
+			die;
+		}
 		$utid = $userlib->get_tracker_usergroup($user);
 		if(isset($utid['usersTrackerId'])) {
 			$_REQUEST['trackerId'] = $utid['usersTrackerId'];
@@ -342,6 +348,54 @@ foreach($xfields["data"] as $i=>$array) {
 		if ($fields["data"][$i]["type"] == 'f') {
 			$fields["data"][$i]["value"] = '';
 			$ins_fields["data"][$i]["value"] = '';
+			$xxxm = $xxxd = $xxxy = null;
+			if (!isset($_REQUEST["$ins_id" . "Month"])
+				|| empty($_REQUEST["$ins_id" . "Month"])
+				|| $_REQUEST["$ins_id" . "Month"] == 'null')   $xxxm = '00';
+			if (!isset($_REQUEST["$ins_id" . "Day"])
+				|| empty($_REQUEST["$ins_id" . "Day"])
+				|| $_REQUEST["$ins_id" . "Day"] == 'null')     $xxxd = '00';
+			if (!isset($_REQUEST["$ins_id" . "Year"])
+				|| empty($_REQUEST["$ins_id" . "Year"])
+				|| $_REQUEST["$ins_id" . "Year"] == 'null')    $xxxy = '00';
+
+			// If all date fields (month, day, year) are blank, then
+			// that's fine, otherwise, take the date the field is set to.
+			// If the individual field is blank, then set it to today.
+			// If the field is mandatory, then a blank full date is not
+			// allowed, in which case we set it to today's date.
+			if ($xxxm == $xxxd && $xxxd == $xxxy && $xxxy == '00'
+				&& ($fields["data"][$i]['isMandatory'] == 'y'
+				|| (isset($fields["data"][$i]['options_array'][0]) && $fields["data"][$i]['options_array'][0] != 'd')
+				|| ((isset($fields["data"][$i]['options_array'][0]) && $fields["data"][$i]['options_array'][0] == 'd') && (!isset($fields["data"][$i]['options_array'][3]) || $fields["data"][$i]['options_array'][3] != 'blank'))
+				)
+			) {
+				$ins_fields["data"][$i]["value"] = $tikilib->now;
+			} elseif ($xxxm == $xxxd && $xxxd == $xxxy && $xxxy == '00') {
+				$ins_fields["data"][$i]["value"] = '';
+			} else {
+				if ($xxxm != null || $xxxm == '00' && $fields["data"][$i]['isMandatory'] == 'y') {
+					$xxxm = $tikidate->month;
+				} else {
+					$xxxm = $_REQUEST["$ins_id" . "Month"];
+				}
+				if ($xxxd != null || $xxxd == '00' && $fields["data"][$i]['isMandatory'] == 'y') {
+					$xxxd = $tikidate->day;
+				} else {
+					$xxxd = $_REQUEST["$ins_id" . "Day"];
+				}
+				if ($xxxy != null || $xxxy == '00' && $fields["data"][$i]['isMandatory'] == 'y') {
+					$xxxy = $tikidate->year;
+				} else {
+					$xxxy = $_REQUEST["$ins_id" . "Year"];
+				}
+				if ($fields["data"][$i]['options_array'][0] == 'd') {
+					$ins_fields["data"][$i]["value"] = $tikilib->make_time(0, 0, 0, $xxxm, $xxxd, $xxxy);
+				} else {
+					$ins_fields["data"][$i]["value"] = $tikilib->make_time($tikilib->hour, $tikilib->minute, 0, $xxxm, $xxxd, $xxxy);
+				}
+			}
+/******
 			if (isset($_REQUEST["$ins_id" . "Day"])) {
 				if (empty($_REQUEST['$ins_id'.'Hour'])) {
 					$_REQUEST['$ins_id'.'Hour'] = 0;
@@ -354,7 +408,8 @@ foreach($xfields["data"] as $i=>$array) {
 			} else {
 				$ins_fields["data"][$i]["value"] = $tikilib->now;
 			}
-		
+******/		
+
 		} elseif ($fields["data"][$i]["type"] == 'e') {
 			include_once('lib/categories/categlib.php');
 			$k = $ins_fields["data"][$i]['options_array'][0];
@@ -786,7 +841,8 @@ if ($_REQUEST["itemId"]) {
 				} elseif ($fields["data"][$i]["type"] == 'l') {
 					if (isset($fields["data"][$i]["options_array"][3])) {
 						$l = split(':', $fields["data"][$i]["options_array"][1]);
-						$ins_fields["data"][$i]['links'] = $trklib->get_join_values($_REQUEST['itemId'], array_merge(array($fields["data"][$i]["options_array"][2]), $l, array($fields["data"][$i]["options_array"][3])));
+						$finalFields = explode('|', $fields['data'][$i]['options_array'][3]);
+						$ins_fields["data"][$i]['links'] = $trklib->get_join_values($_REQUEST['itemId'], array_merge(array($fields["data"][$i]["options_array"][2]), $l, array($fields["data"][$i]["options_array"][3])), $fields["data"][$i]["options_array"][0], $finalFields);
 
 						if (count($ins_fields["data"][$i]['links']) == 1) {
 							foreach ($ins_fields["data"][$i]['links'] as $linkItemId=>$linkValue) {
@@ -1179,10 +1235,6 @@ if (isset($_REQUEST['status']))
 include_once ('tiki-section_options.php');
 
 $smarty->assign('uses_tabs', 'y');
-
-if ($prefs['feature_jscalendar']) {
-	$smarty->assign('uses_jscalendar', 'y');
-}
 
 ask_ticket('view-trackers-items');
 
