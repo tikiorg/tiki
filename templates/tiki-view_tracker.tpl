@@ -18,7 +18,7 @@
 <a href="tiki-tracker_rss.php?trackerId={$trackerId}"><img src='img/rss.png' border='0' alt='{tr}RSS feed{/tr}' title='{tr}RSS feed{/tr}'  align="right" /></a>
 {/if}
 {if (isset($tiki_p_list_trackers) and $tiki_p_list_trackers eq 'y') or (!isset($tiki_p_list_trackers) and $tiki_p_view_trackers eq 'y')}<span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List Trackers{/tr}</a></span>{/if}
-{if $tiki_p_create_tracker_items eq 'y'}<span class="button2"><a href="tiki-view_tracker.php?trackerId={$trackerId}&cookietab=2" class="linkbut">{tr}Insert New Item{/tr}</a></span>
+{if $tiki_p_create_tracker_items eq 'y'}<span class="button2"><a href="tiki-view_tracker.php?trackerId={$trackerId}&amp;cookietab=2" class="linkbut">{tr}Insert New Item{/tr}</a></span>
 {/if}
 {if $filtervalue}
 <span class="button2"><a href="tiki-view_tracker.php?trackerId={$trackerId}" class="linkbut">{tr}View This Tracker's Items{/tr}</a></span>

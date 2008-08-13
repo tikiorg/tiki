@@ -18,7 +18,7 @@
 
   {if $tiki_p_view_trackers eq 'y'}
     <span class="button2">
-      <a href="tiki-view_tracker.php?trackerId={$trackerId}{if $status}&status={$status}{/if}{if $sort_mode}&amp;sort_mode={$sort_mode}{/if}" class="linkbut">{tr}View This Tracker's Items{/tr}</a>
+      <a href="tiki-view_tracker.php?trackerId={$trackerId}{if $status}&amp;status={$status}{/if}{if $sort_mode}&amp;sort_mode={$sort_mode}{/if}" class="linkbut">{tr}View This Tracker's Items{/tr}</a>
     </span>
   {/if}
 
@@ -345,7 +345,7 @@ document.write('<div class="categSelectAll"><input type="checkbox" id="clickall"
 <table width="100%"><tr>{cycle name="2_$fca" values=",</tr><tr>" advance=false}
 {foreach key=ku item=iu from=$cur_field.$fca name=foreache}
 {assign var=fcat value=$iu.categId }
-<td width="50%" nowrap="nowrap"><input type={if $cur_field.options_array[1] eq "radio"}"radio"{else}"checkbox"{/if} name="ins_cat_{$cur_field.fieldId}[]" value="{$fcat}" {if $cur_field.cat.$fcat eq 'y'}checked="checked"{/if}/>{$iu.name|escape}</td>
+<td width="50%"><input type={if $cur_field.options_array[1] eq "radio"}"radio"{else}"checkbox"{/if} name="ins_cat_{$cur_field.fieldId}[]" value="{$fcat}" {if $cur_field.cat.$fcat eq 'y'}checked="checked"{/if}/>{$iu.name|escape}</td>
 {if !$smarty.foreach.foreache.last}{cycle name="2_$fca"}{else}{if $cur_field.$fca|@count%2}<td></td>{/if}</tr>{/if}
 {/foreach}
 </table>
@@ -397,7 +397,7 @@ document.write('<div class="categSelectAll"><input type="checkbox" id="clickall"
 {include file='tracker_item_field_input.tpl' field_value=$cur_field}
 
 {elseif $cur_field.type eq 'r'}
-<select name="ins_{$cur_field.id}" {if $cur_field.http_request}onchange="selectValues('trackerIdList={$cur_field.http_request[0]}&fieldlist={$cur_field.http_request[3]}&filterfield={$cur_field.http_request[1]}&status={$cur_field.http_request[4]}&mandatory={$cur_field.http_request[6]}&filtervalue='+escape(this.value),'{$cur_field.http_request[5]}')"{/if}>
+<select name="ins_{$cur_field.id}" {if $cur_field.http_request}onchange="selectValues('trackerIdList={$cur_field.http_request[0]}&amp;fieldlist={$cur_field.http_request[3]}&amp;filterfield={$cur_field.http_request[1]}&amp;status={$cur_field.http_request[4]}&amp;mandatory={$cur_field.http_request[6]}&amp;filtervalue='+escape(this.value),'{$cur_field.http_request[5]}')"{/if}>
 {if $cur_field.isMandatory}<option value=""></option>{/if}
 {foreach key=id item=label from=$cur_field.list}
 <option value="{$label|escape}" {if $cur_field.value eq $label}selected="selected"{/if}>{if $cur_field.listdisplay[$id] eq ""}{$label}{else}{$cur_field.listdisplay[$id]}{/if}</option>
@@ -432,7 +432,7 @@ document.write('<div class="categSelectAll"><input type="checkbox" id="clickall"
 <input type="file" name="ins_{$cur_field.id}" /><br />
 {if $cur_field.value ne ''}
 <img src="{$cur_field.value}" alt="n/a" width="{$cur_field.options_array[2]}" height="{$cur_field.options_array[3]}" /><br />
-<a href="tiki-view_tracker_item.php?trackerId={$trackerId}&itemId={$itemId}&fieldId={$cur_field.id}&fieldName={$cur_field.name}&removeImage">{tr}Remove Image{/tr}</a>
+<a href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;fieldId={$cur_field.id}&amp;fieldName={$cur_field.name}&amp;removeImage">{tr}Remove Image{/tr}</a>
 {else}
 <img border="0" src="img/icons/na_pict.gif" alt="n/a" />
 {/if}
@@ -531,7 +531,7 @@ document.write('<div class="categSelectAll"><input type="checkbox" id="clickall"
 {if $cur_field.http_request}
 <script type="text/javascript">
 <!--//--><![CDATA[//><!--
-selectValues('trackerIdList={$cur_field.http_request[0]}&fieldlist={$cur_field.http_request[3]}&filterfield={$cur_field.http_request[1]}&status={$cur_field.http_request[4]}&mandatory={$cur_field.http_request[6]}&filtervalue={$cur_field.http_request[7]|escape:"url"}&selected={$cur_field.http_request[8]|escape:"url"}','{$cur_field.http_request[5]}')
+selectValues('trackerIdList={$cur_field.http_request[0]}&amp;fieldlist={$cur_field.http_request[3]}&amp;filterfield={$cur_field.http_request[1]}&amp;status={$cur_field.http_request[4]}&amp;mandatory={$cur_field.http_request[6]}&amp;filtervalue={$cur_field.http_request[7]|escape:"url"}&amp;selected={$cur_field.http_request[8]|escape:"url"}','{$cur_field.http_request[5]}')
 //--><!]]>
 </script>
 {/if}

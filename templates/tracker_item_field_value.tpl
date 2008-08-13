@@ -1,4 +1,3 @@
-{strip}
 {* $Id$ *}
 {* param: list_mode(csv|y|n, default n), showlinks(y|n, default y), tiki_p_perm for this tracker, $field_value(type,value,displayedvalue,linkId,trackerId,itemId,links,categs,options_array, isMain), item(itemId,trackerId), parse(default y), showpopup, url *}
 
@@ -242,7 +241,7 @@
 		&nbsp;{if $field_value.value >= 0}&nbsp;{/if}{$field_value.value|default:"-"}&nbsp;</b>
 		</span>
 		{if $tiki_p_tracker_vote_ratings eq 'y'}
-			<span nowrap="nowrap"><span class="button2">
+			<span><span class="button2">
 			{if $item.my_rate eq NULL}
 				<b class="linkbut highlight">-</b>
 			{else}
@@ -302,7 +301,6 @@
 {* -------------------- google map -------------------- *}
 {elseif $field_value.type eq 'G'}
 	{if $prefs.feature_gmap eq 'y'}
-{/strip}
 	Google Map : X = {$field_value.x} ; Y = {$field_value.y} ; Zoom = {$field_value.z}
 	<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key={$prefs.gmap_key}" type="text/javascript">
 	</script>
