@@ -54,14 +54,14 @@
 	</tr>
 	
 	<tr>
-   	<td class="form">{tr}Flash Lenght{/tr}:</td><td class="form"><input type="text" name="MultimediaDefaultLength" value="{$prefs.MultimediaDefaultLength|escape}" size=7/></td>
-	<td class="form">{tr}Flash Heigth{/tr}:</td><td class="form"><input type="text" name="MultimediaDefaultHeight" value="{$prefs.MultimediaDefaultHeight|escape}" size=7/></td>
+   	<td class="form">{tr}Flash Length{/tr}:</td><td class="form"><input type="text" name="MultimediaDefaultLength" value="{$prefs.MultimediaDefaultLength|escape}" size=7/></td>
+	<td class="form">{tr}Flash Height{/tr}:</td><td class="form"><input type="text" name="MultimediaDefaultHeight" value="{$prefs.MultimediaDefaultHeight|escape}" size=7/></td>
 	</tr>
 	<tr>
 
 	<tr>
-   	<td class="form">{tr}Video Lenght{/tr}:</td><td class="form"><input type="text" name="VideoLength" value="{$prefs.VideoLength|escape}" size=7/></td>
-	<td class="form">{tr}Video Heigth{/tr}:</td><td class="form"><input type="text" name="VideoHeight" value="{$prefs.VideoHeight|escape}" size=7/></td>
+   	<td class="form">{tr}Video Length{/tr}:</td><td class="form"><input type="text" name="VideoLength" value="{$prefs.VideoLength|escape}" size=7/></td>
+	<td class="form">{tr}Video Height{/tr}:</td><td class="form"><input type="text" name="VideoHeight" value="{$prefs.VideoHeight|escape}" size=7/></td>
 	</tr>
 	<tr>
    	<td class="form">{tr}Preload Delay{/tr}:</td><td class="form"><input type="text" name="PreloadDelay" value="{$prefs.PreloadDelay|escape}" size=7/></td>
