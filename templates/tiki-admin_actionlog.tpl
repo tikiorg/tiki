@@ -1,16 +1,6 @@
 {* $Id$ *}
 
-<h1><a href="tiki-admin_actionlog.php" class="pagetitle">{tr}Action Log{/tr}</a>
-{if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}Action Log" target="tikihelp" class="tikihelp" title="{tr}Action Log{/tr}">
-{icon _id='help'}</a>
-{/if}
-{if $prefs.feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-admin_actionlog.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Admin Groups Template{/tr}">
-{icon _id='shape_square_edit' alt='{tr}Edit template{/tr}'}
-</a>
-{/if}
-</h1>
+{title help="Action log"}{tr}Action Log{/tr}{/title}
 
 {if $prefs.feature_tabs eq 'y'}
 {cycle name=tabs values="1,2" print=false advance=false}

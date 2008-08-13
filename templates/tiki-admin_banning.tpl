@@ -16,15 +16,7 @@
 //--><!]]>
 </script>
 
-<h1><a class="pagetitle" href="tiki-admin_banning.php">{tr}Banning system{/tr}</a>
-
-{if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}Banning+System" target="tikihelp" class="tikihelp" title="{tr}Help on Banning System{/tr}">
-{icon _id='help'}</a>{/if}
-
-{if $prefs.feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-admin_banning.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Admin banning tpl{/tr}">
-{icon _id='shape_square_edit' alt='{tr}Edit template{/tr}'}</a>{/if}</h1>
+{title help="Banning+System"}{tr}Banning system{/tr}{/title}
 
 <h2>{tr}Add or edit a rule{/tr}</h2>
 <form action="tiki-admin_banning.php" name="banningform" method="post">

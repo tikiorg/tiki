@@ -1,7 +1,8 @@
 {popup_init src="lib/overlib.js"}
 {*Smarty template*}
-<h1><a class="pagetitle" href="tiki-admin_chart_items.php">{tr}Admin chart items{/tr}</a>
-</h1><br /><br />
+
+{title}{tr}Admin chart items{/tr}{/title}
+
 <a class="linkbut" href="tiki-admin_charts.php">{tr}charts{/tr}</a>
 <a class="linkbut" href="tiki-admin_charts.php?chartId={$chartId}">{tr}Edit Chart{/tr}</a>
 <a class="linkbut" href="tiki-view_chart.php?chartId={$chartId}">{tr}View{/tr}</a>

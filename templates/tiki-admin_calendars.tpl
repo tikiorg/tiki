@@ -1,8 +1,5 @@
-<h1><a class="pagetitle" href="tiki-admin_calendars.php">{tr}Admin Calendars{/tr}</a>
-{if $tiki_p_admin eq 'y'}
-<a title="{tr}Configure/Options{/tr}" href="tiki-admin.php?page=calendar">{icon _id='wrench' alt='{tr}Configure/Options{/tr}'}</a>
-{/if} 
-</h1>
+{title admpage="calendar"}{tr}Admin Calendars{/tr}{/title}
+
 {* {if $prefs.feature_tabs eq 'y'}
 <div class="tabs">
 <span id="tab1" class="tab tabActive">{tr}List Calendars{/tr}</span>

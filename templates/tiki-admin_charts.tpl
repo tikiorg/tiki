@@ -1,14 +1,7 @@
 {popup_init src="lib/overlib.js"}
 {*Smarty template*}
-<h1><a class="pagetitle" href="tiki-admin_charts.php">{tr}Admin charts{/tr}</a>
-  
-{if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}Charts" target="tikihelp" class="tikihelp" title="{tr}Charts{/tr}">{icon _id='help'}</a>
-{/if}
 
-{if $prefs.feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-admin_charts.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}Admin Charts Template{/tr}">{icon _id='shape_square_edit' alt='{tr}Edit template{/tr}'}</a>
-{/if}</h1>
+{title help="Charts"}{tr}Admin charts{/tr}{/title}
 
 <h2>{tr}Add or edit a chart{/tr} <a class="link" href="tiki-admin_charts.php?where={$where}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;chartId=0">{tr}New{/tr}</a>
 </h2>
@@ -54,7 +47,7 @@
 		<td class="formcolor">{tr}Ranking shows{/tr}</td>
 		<td class="formcolor">
 			<select name="topN">
-			    <option value='0' {if $info.topN eq 0}selected="selected"{/if}>{tr}All items{/tr}</option>
+  	    <option value='0' {if $info.topN eq 0}selected="selected"{/if}>{tr}All items{/tr}</option>
 				<option value='10' {if $info.topN eq 10}selected="selected"{/if}>{tr}Top 10 items{/tr}</option>
 				<option value='20' {if $info.topN eq 20}selected="selected"{/if}>{tr}Top 20 items{/tr}</option>
 				<option value='40' {if $info.topN eq 40}selected="selected"{/if}>{tr}Top 40 items{/tr}</option>
