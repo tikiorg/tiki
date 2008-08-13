@@ -1,8 +1,7 @@
 {* $Id$ *}
 {if $prefs.gal_image_mouseover neq 'n'}{popup_init src="lib/overlib.js"}{/if}
-<h1><a class="pagetitle" href="tiki-browse_gallery.php?galleryId={$galleryId}">
-{tr}Browsing Gallery{/tr}: {$name}
-</a></h1>
+
+{title}{tr}Browsing Gallery:{/tr} {$name}{/title}
 
 <div class="navbar">
 {if $tiki_p_list_image_galleries eq 'y'}

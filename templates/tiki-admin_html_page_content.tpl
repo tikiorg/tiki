@@ -1,10 +1,8 @@
-<h1><a class="pagetitle" href="tiki-admin_html_page_content.php?pageName={$pageName|escape:"url"}">{tr}Admin HTML Page Dynamic Zones{/tr}</a>
+{title}{tr}Admin HTML Page Dynamic Zones{/tr}{/title}
 
-
-
-
+<h2>{tr}Page{/tr}: {$pageName}</h2>
 <br />
-<h2>{tr}Page{/tr}: {$pageName}</h2><br /><br />
+<br />
 <a class="linkbut" href="tiki-admin_html_pages.php">{tr}Admin HTML pages{/tr}</a>
 <a class="linkbut" href="tiki-admin_html_pages.php?pageName={$pageName|escape:"url"}">{tr}Edit this page{/tr}</a>
 <a class="linkbut" href="tiki-page.php?pageName={$pageName|escape:"url"}">{tr}View page{/tr}</a></h1>

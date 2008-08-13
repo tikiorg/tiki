@@ -1,13 +1,6 @@
 {* $Id$ *}
-<h1><a class="pagetitle" href="tiki-admin_forums.php">{tr}Admin Forums{/tr}</a>
- 
-{if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}Forums" target="tikihelp" class="tikihelp" title="{tr}Forums{/tr}">{icon _id='help'}</a>
-{/if}
 
-{if $prefs.feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-admin_forums.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}Admin Forums Template{/tr}">{icon _id='shape_square_edit' alt='{tr}Edit template{/tr}'}</a>
-{/if}</h1>
+{title help="Forums" admpage="forums"}{tr}Admin Forums{/tr}{/title}
 
 <div class="navbar">
 {if $forumId > 0 or $dup_mode eq 'y'}
@@ -21,9 +14,6 @@
 {/if}
 <a href="tiki-forum_import.php" class="linkbut">{tr}Import forums{/tr}</a>
 <a href="#editforums" class="linkbut">{tr}List forums{/tr}</a>
-{if $tiki_p_admin eq 'y'}
-<a title="{tr}Configure/Options{/tr}" href="tiki-admin.php?page=forums">{icon _id='wrench' alt='{tr}Configure/Options{/tr}'}</a>
-{/if}
 </div>
 
 {if $dup_mode != 'y'}

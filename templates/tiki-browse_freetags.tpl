@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-<h1><a href="tiki-browse_freetags.php" class="pagetitle">{tr}Browse related tags{/tr}</a></h1>
+{title}{tr}Browse related tags{/tr}{/title}
 
 {if $prefs.feature_morcego eq 'y' and $prefs.freetags_feature_3d eq 'y'}
   <div class="morcego_embedded">

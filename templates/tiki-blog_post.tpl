@@ -1,5 +1,6 @@
 {popup_init src="lib/overlib.js"}
-<h1><a class="pagetitle" href="tiki-blog_post.php?blogId={$blogId}&amp;postId={$postId}">{tr}Edit Post{/tr}</a></h1>
+
+{title url="tiki-blog_post.php?blogId=$blogId&postId=$postId"}{tr}Edit Post{/tr}{/title}
 
 <div class="navbar">
 {if $prefs.feature_wysiwyg eq 'y' and $prefs.wysiwyg_optional eq 'y'}
