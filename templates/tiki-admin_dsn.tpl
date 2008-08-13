@@ -1,12 +1,4 @@
-<h1><a class="pagetitle" href="tiki-admin_dsn.php">{tr}Admin dsn{/tr}</a> 
-  
-{if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}Admin+DSN" target="tikihelp" class="tikihelp" title="{tr}Admin DSN{/tr}">{icon _id='help'}</a>
-{/if}
-
-{if $prefs.feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-admin_dsn.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}tiki-admin_dsn tpl{/tr}">{icon _id='shape_square_edit' alt='{tr}Edit template{/tr}'}</a>
-{/if}</h1>
+{title help="Admin+DSN"}{tr}Admin dsn{/tr}{/title}
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Admin DSN to define the database to be used by the SQL plugin.{/tr}{/remarksbox}
 

@@ -1,5 +1,5 @@
-<h1><a class="pagetitle" href="tiki-admin_external_wikis.php">{tr}Admin external wikis{/tr}</a>
-  
+{title}{tr}Admin external wikis{/tr}{/title}
+
 {if $prefs.feature_help eq 'y'}
 <a href="{$prefs.helpurl}External+Wikis" target="tikihelp" class="tikihelp" title="{tr}Admin External Wikis{/tr}">{icon _id='help'}</a>
 {/if}
