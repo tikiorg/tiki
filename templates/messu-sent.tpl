@@ -1,12 +1,4 @@
-{title}{tr}Sent Messages{/tr}{/title}
-
-{if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}Inter-User Messages" target="tikihelp" class="tikihelp" title="{tr}Messages{/tr}">{icon _id='help'}</a>
-{/if}
-
-{if $prefs.feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=messu-sent.tpl" target="tikihelp" class="tikihelp">{icon _id='shape_square_edit' alt='{tr}Edit template{/tr}'}</a>
-{/if}</h1>
+{title help="Inter-User Messages"}{tr}Sent Messages{/tr}{/title}
 
 {include file=tiki-mytiki_bar.tpl}
 {include file="messu-nav.tpl"}
