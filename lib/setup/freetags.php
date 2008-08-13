@@ -36,9 +36,9 @@ if ( isset($section) and isset($sections[$section])) {
 		header("Location: $url");
 		die;
 	}
-	if (isset($here['itemkey']) and isset($_REQUEST[$here['itemkey']])) {
+	if (isset($here['itemkey']) and isset($_REQUEST[$here['itemkey']]) and is_int($_REQUEST[$here['itemkey']])) {
 		$tags = $freetaglib->get_tags_on_object($_REQUEST[$here['itemkey']], sprintf($here['itemObjectType'], $_REQUEST[$here['key']]));
-	} elseif (isset($here['key']) and isset($_REQUEST[$here['key']])) {
+	} elseif (isset($here['key']) and isset($_REQUEST[$here['key']]) and is_int($_REQUEST[$here['key']])) {
 		$tags = $freetaglib->get_tags_on_object($_REQUEST[$here['key']], $here['objectType']);
 	} else {
 		$tags = array();

@@ -392,7 +392,7 @@ function get_objects_with_tag_combo($tagArray, $type='', $user = '', $offset = 0
      *	 - 'user' => The unique ID of the person who tagged the object with this tag.
      */ 
 	function get_tags_on_object($itemId, $type, $offset = 0, $maxRecords = -1, $user = NULL) {
-		if (!isset($itemId) || !isset($type) || empty($itemId) || empty($type)) {
+		if (!isset($itemId) || !isset($type) || empty($itemId) || empty($type) || !is_int($itemId) || !is_string($type)) {
 			return false;
 		}
 

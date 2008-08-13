@@ -370,7 +370,9 @@ if (isset($_REQUEST["upload"])) {
 }
 
 // Get the list of galleries to display the select box in the template
-if (isset($_REQUEST["galleryId"][0])) {
+if (isset($_REQUEST["galleryId"]) and is_int($_REQUEST["galleryId"])) {
+	$smarty->assign('galleryId', $_REQUEST["galleryId"]);
+} elseif (isset($_REQUEST["galleryId"][0])) {
 	$smarty->assign('galleryId', $_REQUEST["galleryId"][0]);
 } else {
 	$smarty->assign('galleryId', '');
