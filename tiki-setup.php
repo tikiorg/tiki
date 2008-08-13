@@ -171,6 +171,3 @@ $smarty->assign('tiki_version', $TWV->version);
 $smarty->assign('tiki_branch', $TWV->branch);
 $smarty->assign('tiki_star', $TWV->star);
 $smarty->assign('tiki_uses_cvs', $TWV->cvs);
-
-ini_set('display_errors' , 'on' );
-error_reporting(E_ALL);
