@@ -98,7 +98,6 @@ if (isset($_REQUEST["features"])) {
 		"user_assigned_modules",
 		"feature_sefurl",
 		"feature_tikitests",
-		"feature_pear_date",
 	);
 
 	$pref_byref_values = array(
