@@ -52,7 +52,7 @@ if( ! tiki_plugins )
 	if( ! file_exists( $file ) )
 		continue;
 
-	include $file;
+	require_once $file;
 	if( ! function_exists( $info ) )
 		continue;
 ?>

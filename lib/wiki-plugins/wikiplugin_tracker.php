@@ -9,6 +9,93 @@ function wikiplugin_tracker_help() {
 	$help.= "~np~{TRACKER(trackerId=1, fields=id1:id2:id3, action=Name of submit button, showtitle=n, showdesc=n, showmandatory=n, embedded=n, url=\"http://site.com\", values=val1:val2:val3, sort=n, preview=preview, view=user, tpl=x.tpl,wiki=page,newstatus=o|p|c)}Notice{TRACKER}~/np~";
 	return $help;
 }
+
+function wikiplugin_tracker_info() {
+	return array(
+		'name' => tra('Tracker'),
+		'description' => tra("Displays an input form for tracker submit"),
+		'prefs' => array( 'feature_trackers', 'wikiplugin_tracker' ),
+		'body' => tra('Notice'),
+		'params' => array(
+			'trackerId' => array(
+				'required' => true,
+				'name' => tra('Tracker ID'),
+				'description' => tra('Tracker ID'),
+			),
+			'fields' => array(
+				'required' => true,
+				'name' => tra('Fields'),
+				'description' => tra('Colon-separated list of field IDs to be displayed. Example: 2:4:5'),
+			),
+			'action' => array(
+				'required' => false,
+				'name' => tra('Action'),
+				'description' => tra('Label on the submit button'),
+			),
+			'showtitle' => array(
+				'required' => false,
+				'name' => tra('Show Title'),
+				'description' => tra('y|n'),
+			),
+			'showdesc' => array(
+				'required' => false,
+				'name' => tra('Show Description'),
+				'description' => tra('y|n'),
+			),
+			'showmandatory' => array(
+				'required' => false,
+				'name' => tra('Show Mandatory'),
+				'description' => tra('y|n'),
+			),
+			'embedded' => array(
+				'required' => false,
+				'name' => tra('Embedded'),
+				'description' => tr('y|n'),
+			),
+			'url' => array(
+				'required' => false,
+				'name' => tra('URL'),
+				'description' => tra('?'),
+			),
+			'values' => array(
+				'required' => false,
+				'name' => tra('Values'),
+				'description' => tra('Colon-separated list of values.'),
+			),
+			'sort' => array(
+				'required' => false,
+				'name' => tra('Sort'),
+				'description' => tra('y|n'),
+			),
+			'preview' => array(
+				'required' => false,
+				'name' => tra('Preview'),
+				'description' => tra('preview'),
+			),
+			'view' => array(
+				'required' => false,
+				'name' => tra('View'),
+				'description' => tra('user'),
+			),
+			'tpl' => array(
+				'required' => false,
+				'name' => tra('Template File'),
+				'description' => tra('Name of the template used to display the tracker.'),
+			),
+			'wiki' => array(
+				'required' => false,
+				'name' => tra('Wiki'),
+				'description' => tra('Page name'),
+			),
+			'newstatus' => array(
+				'required' => false,
+				'name' => tra('New Status'),
+				'description' => tra('o|p|c, default status applied to newly created items.'),
+			),
+		),
+	);
+}
+
 function wikiplugin_tracker_name($fieldId, $name, $field_errors) {
 	foreach($field_errors['err_mandatory'] as $f) {
 		if ($fieldId == $f['fieldId'])

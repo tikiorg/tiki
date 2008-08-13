@@ -15,6 +15,42 @@ function wikiplugin_trackerstat_help() {
 	return $help;
 }
 
+function wikiplugin_trackerstat_info() {
+	return array(
+		'name' => tra('Tracker Stats'),
+		'description' => tra("Displays some stat of a tracker content, fields are indicated with numeric ids."),
+		'prefs' => array( 'feature_trackers', 'wikiplugin_trackerstat' ),
+		'body' => tra('Title'),
+		'params' => array(
+			'trackerId' => array(
+				'required' => true,
+				'name' => tra('Tracker ID'),
+				'description' => tra('Tracker ID'),
+			),
+			'fields' => array(
+				'required' => true,
+				'name' => tra('Fields'),
+				'description' => tra('Colon-separated list of field IDs to be displayed. Example: 2:4:5'),
+			),
+			'show_percent' => array(
+				'required' => false,
+				'name' => tra('Show Percentage'),
+				'description' => tra('y|n'),
+			),
+			'show_bar' => array(
+				'required' => false,
+				'name' => tra('Show Bar'),
+				'description' => tra('y|n'),
+			),
+			'status' => array(
+				'required' => false,
+				'name' => tra('Status Filter'),
+				'description' => tra('Which item status to list. o = open, p = pending, c = closed. Valid values: o|p|c|op|oc|pc|opc.'),
+			),
+		),
+	);
+}
+
 function wikiplugin_trackerstat($data, $params) {
 	global $smarty, $prefs, $tiki_p_admin_trackers, $trklib;
 	include_once('lib/trackers/trackerlib.php');

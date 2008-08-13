@@ -6,6 +6,18 @@ function wikiplugin_tr_help() {
 	$help .= "~np~{TR()}string{TR}~/np~";
 	return $help;
 }
+
+function wikiplugin_tr_info() {
+	return array(
+		'name' => tra('Translate'),
+		'description' => tra('Translate a string using Tikiwiki translation table.'),
+		'prefs' => array( 'wikiplugin_tr' ),
+		'body' => tra('string'),
+		'params' => array(
+		),
+	);
+}
+
 function wikiplugin_tr($data) {
 	return tra($data);
 }

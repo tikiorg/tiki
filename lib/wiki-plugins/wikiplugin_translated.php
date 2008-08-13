@@ -10,6 +10,27 @@ function wikiplugin_translated_help() {
 	return tra("Links to a translated content").":<br />~np~{TRANSLATED(flag=>France,lang=>fr)}[url] or ((wikiname)) or ((inter:interwiki)) (use wiki syntax){TRANSLATED}~/np~";
 }
 
+function wikiplugin_translated_info() {
+	return array(
+		'name' => tra('Translated'),
+		'description' => tra('Links to a translated content'),
+		'prefs' => array( 'wikiplugin_translated' ),
+		'body' => tra('[url] or ((wikiname)) or ((inter:interwiki)) (use wiki syntax)'),
+		'params' => array(
+			'lang' => array(
+				'required' => true,
+				'name' => tra('Language'),
+				'description' => tra('Two letter language code of the language, ex: fr'),
+			),
+			'flag' => array(
+				'required' => false,
+				'name' => tra('Flag'),
+				'description' => tra('Country name, ex: France'),
+			),
+		),
+	);
+}
+
 function wikiplugin_translated($data, $params) {
 	extract ($params,EXTR_SKIP);
 	$img = '';
