@@ -15,6 +15,41 @@ function wikiplugin_lsdir_help() {
 	return tra("Lists files in a directory").":<br />~np~{LSDIR(dir=>/dirpath/,urlprefix=>http://localhost/,sort=>name,filter=>.ext,limit=>5)}{LSDIR}~/np~";
 }
 
+function wikiplugin_lsdir_info() {
+	return array(
+		'name' => tra('List Directory'),
+		'description' => tra('Lists files in a directory'),
+		'prefs' => array( 'wikiplugin_lsdir' ),
+		'params' => array(
+			'dir' => array(
+				'required' => true,
+				'name' => tra('Directory'),
+				'description' => tra('Full path to the server-local directory.'),
+			),
+			'urlprefix' => array(
+				'required' => false,
+				'name' => tra('URL Prefix'),
+				'description' => tra('?'),
+			),
+			'sort' => array(
+				'required' => false,
+				'name' => tra('Sort Order'),
+				'description' => tra('name'),
+			),
+			'filter' => array(
+				'required' => false,
+				'name' => tra('Filter'),
+				'description' => tra('.ext'),
+			),
+			'limit' => array(
+				'required' => false,
+				'name' => tra('Limit'),
+				'description' => tra('Maximum amount of files to display'),
+			),
+		),
+	);
+}
+
 function wikiplugin_lsdir($data, $params) {
 	global $tikilib;
 	$dir = '';

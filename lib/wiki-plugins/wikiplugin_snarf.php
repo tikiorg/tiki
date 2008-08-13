@@ -10,6 +10,31 @@ function wikiplugin_snarf_help() {
     return tra("The SNARF plugin replaces itself with the HTML body of a URL.  Arbitrary regex replacement can be done on this content using regex and regexres, the latter being used as the second argument to preg_replace.").":<br />~np~{SNARF(url=>http://www.lojban.org,regex=>;.*<!-- Content -->(.*)<!-- /Content -->.*;, regexres=>$1)}".tra("This data is put in a CODE caption.")."{SNARF}~/np~";
 }
 
+function wikiplugin_snarf_info() {
+	return array(
+		'name' => tra('Snarf'),
+		'description' => tra('Include the content of a remote HTTP page. Regular expression selecting the content portion to include must be specified.'),
+		'prefs' => array( 'wikiplugin_snarf' ),
+		'params' => array(
+			'url' => array(
+				'required' => true,
+				'name' => tra('URL'),
+				'description' => tra('Full URL to the page to include.'),
+			),
+			'regex' => array(
+				'required' => true,
+				'name' => tra('Regular Expression'),
+				'description' => tra('PCRE compliant regular expression'),
+			),
+			'regexres' => array(
+				'required' => false,
+				'name' => tra('Regular Expression Part'),
+				'description' => tra('ex: $1'),
+			),
+		),
+	);
+}
+
 function wikiplugin_snarf($data, $params)
 {
 

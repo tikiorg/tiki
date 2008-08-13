@@ -13,6 +13,22 @@ return tra("Takes regex expressions and parses the content between the REGEX tag
 <br />~np~{REGEX(search=>(WikiPageWithRegexCommands)}".tra("data")."{REGEX}~/np~ - ''".tra("one data per line")."''";
 }
 
+function wikiplugin_regexp_info() {
+	return array(
+		'name' => tra('Regular Expression'),
+		'description' => tra('Takes regex expressions and parses the content between REGEX tags and replaces the text.'),
+		'prefs' => array( 'wikiplugin_regexp' ),
+		'body' => tra('one data per line'),
+		'params' => array(
+			'search' => array(
+				'required' => true,
+				'name' => tra('Search'),
+				'description' => tra('Page name containing the regular expression.'),
+			),
+		),
+	);
+}
+
 function wikiplugin_regex($data, $params) {
 global $tikilib;
 

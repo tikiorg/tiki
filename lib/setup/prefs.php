@@ -170,6 +170,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['wikiplugin_attach'] = 'y';
 	$prefs['wikiplugin_avatar'] = 'y';
 	$prefs['wikiplugin_backlinks'] = 'y';
+	$prefs['wikiplugin_bloglist'] = 'n';
 	$prefs['wikiplugin_box'] = 'y';
 	$prefs['wikiplugin_category'] = 'y';
 	$prefs['wikiplugin_catorphans'] = 'y';
@@ -189,9 +190,11 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['wikiplugin_gauge'] = 'y';
 	$prefs['wikiplugin_group'] = 'y';
 	$prefs['wikiplugin_include'] = 'y';
+	$prefs['wikiplugin_jabber'] = 'n';
 	$prefs['wikiplugin_lang'] = 'y';
 	$prefs['wikiplugin_lastmod'] = 'y';
 	$prefs['wikiplugin_listpages'] = 'y';
+	$prefs['wikiplugin_lsdir'] = 'n';
 	$prefs['wikiplugin_map'] = 'y';
 	$prefs['wikiplugin_miniquiz'] = 'y';
 	$prefs['wikiplugin_module'] = 'y';
@@ -202,12 +205,14 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['wikiplugin_poll'] = 'y';
 	$prefs['wikiplugin_proposal'] = 'y';
 	$prefs['wikiplugin_quote'] = 'y';
+	$prefs['wikiplugin_regex'] = 'n';
 	$prefs['wikiplugin_remarksbox'] = 'y';
 	$prefs['wikiplugin_rss'] = 'y';
 	$prefs['wikiplugin_sf'] = 'y';
 	$prefs['wikiplugin_sheet'] = 'y';
 	$prefs['wikiplugin_showpages'] = 'y';
 	$prefs['wikiplugin_skype'] = 'y';
+	$prefs['wikiplugin_snarf'] = 'n';
 	$prefs['wikiplugin_sort'] = 'y';
 	$prefs['wikiplugin_split'] = 'y';
 	$prefs['wikiplugin_sql'] = 'n';
@@ -228,6 +233,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['wikiplugin_translated'] = 'y';
 	$prefs['wikiplugin_tr'] = 'y';
 	$prefs['wikiplugin_usercount'] = 'y';
+	$prefs['wikiplugin_userlist'] = 'n';
 	$prefs['wikiplugin_versions'] = 'y';
 	$prefs['wikiplugin_vote'] = 'y';
 	$prefs['wikiplugin_wantedpages'] = 'y';

@@ -7,6 +7,27 @@
 function wikiplugin_bloglist_help() {
 	return tra("Use BLOGLIST to include posts from a blog. Syntax is").":<br />~np~{BLOGLIST(Id=n, Items=n)}{BLOGLIST}~/np~<br />" . tra(" where Id is the blog Id and Items is the max number of posts to display"). "<br />" . tra("Ex: ~np~{BLOGLIST(Id=2, Items=15)}{BLOGLIST}~/np~");
 }
+
+function wikiplugin_bloglist_info() {
+	return array(
+		'name' => tra('Blog List'),
+		'description' => tra('Use BLOGLIST to include posts from a blog.'),
+		'prefs' => array( 'feature_blogs', 'wikiplugin_bloglist' ),
+		'params' => array(
+			'Id' => array(
+				'required' => true,
+				'name' => tra('Blog ID'),
+				'description' => tra('Numeric value'),
+			),
+			'Items' => array(
+				'required' => false,
+				'name' => tra('Items'),
+				'description' => tra('Maximum amount of entries to list.'),
+			),
+		),
+	);
+}
+
 function wikiplugin_bloglist($data, $params) {
 	global $tikilib;
 

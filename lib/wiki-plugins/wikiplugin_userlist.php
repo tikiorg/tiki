@@ -10,6 +10,37 @@ function wikiplugin_userlist_help() {
         return tra("Displays a list of registered users").":<br />~np~{USERLIST(sep=>\"SEPARATOR\",max=>MAXROWS,sort=>asc|desc,layout=>table)}substring{USERLIST}~/np~";
 }
 
+function wikiplugin_userlist_info() {
+	return array(
+		'name' => tra('User List'),
+		'description' => tra('Displays a list of registered users'),
+		'prefs' => array( 'wikiplugin_userlist' ),
+		'body' => tra('substring'),
+		'params' => array(
+			'sep' => array(
+				'required' => false,
+				'name' => tra('Separator'),
+				'description' => tra('String to use between elements of the list.'),
+			),
+			'max' => array(
+				'required' => false,
+				'name' => tra('Maximum'),
+				'description' => tra('Result limit.'),
+			),
+			'sort' => array(
+				'required' => false,
+				'name' => tra('Sort Order'),
+				'desctiption' => tra('asc|desc'),
+			),
+			'layout' => array(
+				'required' => false,
+				'name' => tra('Layout'),
+				'description' => tra('table'),
+			),
+		),
+	);
+}
+
 function wikiplugin_userlist($data, $params) {
     global $tikilib;
     global $userlib;

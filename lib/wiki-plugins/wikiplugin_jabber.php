@@ -18,6 +18,35 @@ function wikiplugin_jabber_help() {
 	return tra("Runs a Java applet to access a local Jabber service").":<br />~np~{JABBER(height=>200,width=>200,xmlhostname=>jabber.org,defaultColor=>255,255,255)}{JABBER}~/np~. See lib/wiki-plugins/wikiplugin_jabber.php to make this plugin work";
 }
 
+function wikiplugin_jabber_info() {
+	return array(
+		'name' => tra('Jabber'),
+		'description' => tra('Runs a Java applet to access a local Jabber service'),
+		'prefs' => array( 'wikiplugin_jabber' ),
+		'params' => array(
+			'height' => array(
+				'required' => false,
+				'name' => tra('Height'),
+				'description' => tra('Applet height in pixels'),
+			),
+			'width' => array(
+				'required' => false,
+				'name' => tra(''),
+				'description' => tra('Applet width in pixels'),
+			),
+			'xmlhostname' => array(
+				'required' => false,
+				'name' => tra(''),
+				'description' => tra('jabber.org'),
+			),
+			'defaultColor' => array(
+				'required' => false,
+				'name' => tra('Default Color'),
+				'description' => tra('255,255,255'),
+			),
+		),
+	);
+}
 
 function wikiplugin_jabber($data,$params) {
   global $userlib;
