@@ -6745,7 +6745,7 @@ if (!$simple_wiki) {
 			if ($prefs['wiki_edit_section'] == 'y' && $section == 'wiki page' && $tiki_p_edit == 'y') {
 				global $smarty;
 				include_once('lib/smarty_tiki/function.icon.php');
-				$button = '<div style="float:right;"><a href="tiki-editpage.php?page='.urlencode($page).'&amp;hdr='.$nb_hdrs.'">'.smarty_function_icon(array('_id'=>'page_edit', 'alt'=>tra('Edit Section')), $smarty).'</a></div>';
+				$button = '<div class="icon_edit_section"><a href="tiki-editpage.php?page='.urlencode($page).'&amp;hdr='.$nb_hdrs.'">'.smarty_function_icon(array('_id'=>'page_edit', 'alt'=>tra('Edit Section')), $smarty).'</a></div>';
 			} else {
 				$button = '';
 			}

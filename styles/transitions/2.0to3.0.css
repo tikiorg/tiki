@@ -30,3 +30,7 @@ They should be added to themes (possibly with tweaks) to make the theme v3.0 rea
 
 	border: solid 2px black;
 }
+
+.icon_edit_section {
+	float: right;
+}
