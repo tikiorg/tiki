@@ -34,14 +34,14 @@
 		</tr>
 		<tr>
 			<td class="form">{if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Dynamic+Content" target="tikihelp" class="tikihelp" title="{tr}Dynamic Content System{/tr}">{/if} {tr}Dynamic Content System{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</td>
-			<td><input type="checkbox" name="feature_dynamic_content" id="feature_dynamic_content" {if $prefs.feature_dynamic_content eq 'y'}checked="checked"{/if}/></span></td>
+			<td><input type="checkbox" name="feature_dynamic_content" id="feature_dynamic_content" {if $prefs.feature_dynamic_content eq 'y'}checked="checked"{/if}/></td>
 		</tr>
 		<tr>
 			<td class="form"><label for="feature_comments_post_as_anonymous">{if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Post+Comments+as+Anonymous" target="tikihelp" class="tikihelp" title="{tr}Allow to post comments as Anonymous{/tr}">{/if} {tr}Allow to post comments as Anonymous{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</label></td>
 			<td><input type="checkbox" name="feature_comments_post_as_anonymous" id="feature_comments_post_as_anonymous"{if $prefs.feature_comments_post_as_anonymous eq 'y'}checked="checked"{/if}/></td>
 		</tr>
 		<tr>
-			<td class="form"><label for"feature_hotwords"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Hotwords" target="tikihelp" class="tikihelp" title="{tr}Hotwords{/tr}">{/if} {tr}Hotwords{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</label></td>
+			<td class="form"><label for="feature_hotwords"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Hotwords" target="tikihelp" class="tikihelp" title="{tr}Hotwords{/tr}">{/if} {tr}Hotwords{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</label></td>
 			<td><input type="checkbox" name="feature_hotwords" id="feature_hotwords" {if $prefs.feature_hotwords eq 'y'}checked="checked"{/if}/></td>
 		</tr>
 		<tr>

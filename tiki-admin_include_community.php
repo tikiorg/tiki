@@ -44,6 +44,3 @@ if (isset($_REQUEST["friendshipfeatures"])) {
 */
 
 ask_ticket('admin-inc-community');
-?>
-
-

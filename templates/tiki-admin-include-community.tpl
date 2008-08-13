@@ -83,7 +83,6 @@
       </form>
   </div>
 </div>
-
 {* This is desired feature for future
 <div class="cbox">
   <div class="cbox-title">{tr}Friendship network{/tr}</div>
