@@ -9,10 +9,8 @@
 // Initialization
 require_once ('tiki-setup.php');
 
-// if any of the two rights is not set, yell!
-if ($prefs['feature_edit_templates'] != 'y' ) {
+if ($prefs['feature_edit_templates'] != 'y' && $prefs['feature_view_tpl'] != 'y') {
 	$smarty->assign('msg', tra("Feature disabled"));
-
 	$smarty->display("error.tpl");
 	die;
 }
