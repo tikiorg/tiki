@@ -1,14 +1,4 @@
-<h1><a class="pagetitle" href="messu-compose.php">{tr}Compose message{/tr}</a>
-
-{if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}Inter-User Messages" target="tikihelp" class="tikihelp" title="{tr}Compose Message{/tr}">
-{icon _id='help'}</a>
-{/if}
-
-{if $prefs.feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-edit_article.tpl" target="tikihelp" class="tikihelp">
-{icon _id='shape_square_edit' alt='{tr}Edit template{/tr}'}</a>
-{/if}</h1>
+{title help="Inter-User Messages"}{tr}Compose message{/tr}{/title}
 
 {include file=tiki-mytiki_bar.tpl}
 {include file="messu-nav.tpl"}

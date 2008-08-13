@@ -1,5 +1,4 @@
-{*Smarty template*}
-<h1><a class="pagetitle" href="messu-sent.php">{tr}Sent Messages{/tr}</a>
+{title}{tr}Sent Messages{/tr}{/title}
 
 {if $prefs.feature_help eq 'y'}
 <a href="{$prefs.helpurl}Inter-User Messages" target="tikihelp" class="tikihelp" title="{tr}Messages{/tr}">{icon _id='help'}</a>
