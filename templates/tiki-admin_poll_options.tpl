@@ -1,4 +1,4 @@
-<h1><a class="pagetitle" href="tiki-admin_poll_options.php?pollId={$pollId}">{tr}Admin Polls{/tr}: {$menu_info.title}</a></h1>
+{title url="tiki-admin_poll_options.php?pollId=$pollId"}{tr}Admin Polls:{/tr} {$menu_info.title}{/title}
 
 <a href="tiki-admin_polls.php" class="linkbut">{tr}List polls{/tr}</a>
 <a href="tiki-admin_polls.php?pollId={$pollId}" class="linkbut">{tr}Edit this poll{/tr}</a>

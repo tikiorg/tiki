@@ -1,12 +1,4 @@
-<h1><a class="pagetitle" href="tiki-admin_rssmodules.php">{tr}Admin RSS modules{/tr}</a>
-  
-{if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}RSS+Modules" target="tikihelp" class="tikihelp" title="{tr}Admin RSS Modules{/tr}">
-{icon _id='help'}</a>{/if}
-
-{if $prefs.feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-admin_rssmodules.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}Admin RSSmodules Template{/tr}">
-{icon _id='shape_square_edit'}</a>{/if}</h1>
+{title help="RSS+Modules""}{tr}Admin RSS modules{/tr}{/title}
 
 {remarksbox type="tip" title="{tr}Tips{/tr}"}{tr}This page is to configure settings of RSS feeds read/imported by Tiki. To generate/export RSS feeds, look for "RSS feeds" on the admin panel, or{/tr} <a class="rbox-link" href="tiki-admin.php?page=rss">{tr}Click Here{/tr}</a>.
 <hr>{tr}To use RSS feeds in a text area (Wiki page, etc), a <a class="rbox-link" href="tiki-admin_modules.php">module</a> or a template, use {literal}{rss id=x}{/literal}, where x is the ID of the RSS feed.{/tr}{/remarksbox}

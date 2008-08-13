@@ -1,13 +1,5 @@
 {* $Id$ *}
-<h1><a href="tiki-admin_structures.php" class="pagetitle">{tr}Structures{/tr}</a>
-  
-{if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}Structures" target="tikihelp" class="tikihelp" title="{tr}Structures{/tr}">
-{icon _id='help'}</a>{/if}
-{if $prefs.feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-admin_structures.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}Admin structures template{/tr}">
-{icon _id='shape_square_edit'}</a>
-{/if}</h1>
+{title help="Structures"}{tr}Structures{/tr}{/title}
 
 {if $just_created neq 'n' && $tiki_p_edit_structures == 'y'}
 <br />

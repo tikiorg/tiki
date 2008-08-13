@@ -1,5 +1,5 @@
 {* $Id$ *}
-<h1><a class="pagetitle" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId}">{tr}Admin newsletter subscriptions{/tr}</a></h1>
+{title url="tiki-admin_newsletter_subscriptions.php?nlId=$nlId"}{tr}Admin newsletter subscriptions{/tr}{/title}
 
 <div class="navbar">
 <a class="linkbut" href="tiki-newsletters.php">{tr}List Newsletters{/tr}</a>

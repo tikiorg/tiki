@@ -1,12 +1,4 @@
-<h1><a class="pagetitle" href="tiki-admin_shoutbox_words.php">{tr}Admin Shoutbox Words{/tr}</a>
-  
-{if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}Shoutbox" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Admin Shoutbox Words{/tr}">
-{icon _id='help'}</a>{/if}
-
-{if $prefs.feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-admin_shoutbox_words.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}Admin Shoutbox Words Template{/tr}">
-{icon _id='shape_square_edit' alt='{tr}Edit template{/tr}'}</a>{/if}</h1>
+{title help="Shoutbox"}{tr}Admin Shoutbox Words{/tr}{/title}
 
 <h2>{tr}Add Banned Word{/tr}</h2>
 

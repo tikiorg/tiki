@@ -1,12 +1,4 @@
-<h1><a class="pagetitle" href="tiki-admin_notifications.php">{tr}EMail notifications{/tr}</a>
-
-{if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}Mail+Notifications" target="tikihelp" class="tikihelp" title="{tr}Admin Email Notifications{/tr}">
-{icon _id='help'}</a>{/if}
-
-{if $prefs.feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-admin_notifications.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Admin Notifications Template{/tr}">
-{icon _id='shape_square_edit'}</a>{/if}</h1>
+{title help="Mail+Notifications"}{tr}EMail notifications{/tr}{/title}
 
 {if empty($prefs.sender_email)}<br />
 <div class="highlight simplebox">{icon _id=information.png style="vertical-align:middle"} {tr}You need to set <a href="tiki-admin.php?page=general">Sender Email</a> before creating email notifications.{/tr}</div>
