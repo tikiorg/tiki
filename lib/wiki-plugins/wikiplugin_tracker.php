@@ -50,7 +50,7 @@ function wikiplugin_tracker_info() {
 			'embedded' => array(
 				'required' => false,
 				'name' => tra('Embedded'),
-				'description' => tr('y|n'),
+				'description' => tra('y|n'),
 			),
 			'url' => array(
 				'required' => false,
