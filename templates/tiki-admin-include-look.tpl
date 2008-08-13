@@ -17,8 +17,7 @@
 				<span	id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark tabinactive">
 					<a href="#theme" onclick="javascript:tikitabs({cycle name=tabs},4); return false;">{tr}Theme{/tr}</a>
 				</span>
-				<span	id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" 
-					class="tabmark tabinactive">
+				<span	id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark tabinactive">
 					<a href="#layout" onclick="javascript:tikitabs({cycle name=tabs},4); return false;">{tr}General Layout{/tr}</a>
 				</span>
 				<span	id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark tabinactive">
