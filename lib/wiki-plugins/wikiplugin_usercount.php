@@ -10,6 +10,17 @@ function wikiplugin_usercount_help() {
         return tra("Displays the number of registered users").":<br />~np~{USERCOUNT()}groupname{USERCOUNT}~/np~";
 }
 
+function wikiplugin_usercount_info() {
+	return array(
+		'name' => tra('User Count'),
+		'description' => tra('Displays the number of registered users'),
+		'prefs' => array( 'wikiplugin_usercount' ),
+		'body' => tra('Group name'),
+		'params' => array(
+		),
+	);
+}
+
 function wikiplugin_usercount($data, $params) {
         global $tikilib;
 

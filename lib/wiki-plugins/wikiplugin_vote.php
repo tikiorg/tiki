@@ -9,6 +9,63 @@ function wikiplugin_vote_help() {
 	$help.= "~np~{VOTE(trackerId=>1,fields=>2:4:5,show_percent=>n|y,show_bar=>n|y,status=>o|c|p|op|oc|pc|opc,float=>right|left, show_stat=n|y, show_stat_only_after=n|y, show_creator=y|n)}Title{VOTE}~/np~";
 	return $help;
 }
+
+function wikiplugin_vote_info() {
+	return array(
+		'name' => tra('Vote'),
+		'description' => tra("Displays some stat of a tracker content, fields are indicated with numeric ids."),
+		'prefs' => array( 'feature_trackers', 'wikiplugin_vote' ),
+		'body' => tra('Title'),
+		'params' => array(
+			'trackerId' => array(
+				'required' => true,
+				'name' => tra('Tracker ID'),
+				'description' => tra('Tracker ID'),
+			),
+			'fields' => array(
+				'required' => true,
+				'name' => tra('Fields'),
+				'description' => tra('Colon-separated list of field IDs to be displayed. Example: 2:4:5'),
+			),
+			'show_percent' => array(
+				'required' => false,
+				'name' => tra('Show Percentage'),
+				'description' => tra('y|n'),
+			),
+			'show_bar' => array(
+				'required' => false,
+				'name' => tra('Show Bar'),
+				'description' => tra('y|n'),
+			),
+			'show_stat' => array(
+				'required' => false,
+				'name' => tra('Show Stats'),
+				'description' => tra('y|n'),
+			),
+			'show_stat_only_after' => array(
+				'required' => false,
+				'name' => tra('Show Stats After'),
+				'description' => tra('y|n'),
+			),
+			'show_creator' => array(
+				'required' => false,
+				'name' => tra('Show Creator'),
+				'description' => tra('y|n'),
+			),
+			'status' => array(
+				'required' => false,
+				'name' => tra('Status Filter'),
+				'description' => tra('Which item status to list. o = open, p = pending, c = closed. Valid values: o|p|c|op|oc|pc|opc.'),
+			),
+			'float' => array(
+				'required' => false,
+				'name' => tra('Float'),
+				'description' => tra('left|right'),
+			),
+		),
+	);
+}
+
 function wikiplugin_vote($data, $params) {
 	global $smarty, $tikilib, $user, $prefs, $tiki_p_admin_trackers, $tiki_p_view_trackers, $trklib;
 	include_once('lib/trackers/trackerlib.php');

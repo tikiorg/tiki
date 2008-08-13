@@ -35,6 +35,53 @@ function wikiplugin_wantedpages_help() {
     return $help;
 }
 
+function wikiplugin_wantedpages_info() {
+	return array(
+		'name' => tra('Wanted Pages'),
+		'description' => tra("Lists ''wanted'' wiki pages"),
+		'prefs' => array( 'wikiplugin_wantedpages' ),
+		'body' => tra('Custom level regex. A custom filter for wanted pages to be listed (only used when level=>custom).
+		possible values: a valid regex-expression (PCRE).'),
+		'params' => array(
+			'ignore' => array(
+				'required' => false,
+				'name' => tra('Ignore'),
+				'description' => tra("A wildcard pattern of originating pages to be ignored. (refer to PHP fuction fnmatch() for details)"),
+			),
+			'splitby' => array(
+				'required' => false,
+				'name' => tra('Split By'),
+				'description' => tra("The character, by which ignored patterns are separated. possible values: characters"),
+			),
+			'skipext' => array(
+				'required' => false,
+				'name' => tra('Skip Extension'),
+				'description' => tra("Whether to include external wikis in the list. possible values: ")."0 / 1",
+			),
+			'collect' => array(
+				'required' => false,
+				'name' => tra('Collect'),
+				'description' => tra("Collect either originating or wanted pages in a cell and display them in the second column. possible values: ")."from / to",
+			),
+			'debug' => array(
+				'required' => false,
+				'name' => tra('Debug'),
+				'description' => tra("Switch-on debug output with details about the items. possible values: ")."0 / 1 / 2",
+			),
+			'table' => array(
+				'required' => false,
+				'name' => tra('Table'),
+				'description' => tra("Multiple collected items are separated in distinct table rows, or by comma or line break in one cell. possible values: ")."sep / co / br",
+			),
+			'level' => array(
+				'required' => false,
+				'name' => tra('Level'),
+				'description' => tra("Filter the list of wanted pages according to page_regex or custom filter. The default value is the site's __current__ page_regex."),
+			),
+		),
+	);
+}
+
 class WikiPluginWantedPages extends PluginsLib {
 
 function getDefaultArguments() {

@@ -4,6 +4,21 @@ function wikiplugin_youtube_help() {
         return tra("Display youtube video in a wiki page").":<br />~np~{YOUTUBE(movie=>\"url_to_youtube_video\")}{YOUTUBE}~/np~";
 }
 
+function wikiplugin_youtube_info() {
+	return array(
+		'name' => tra('Youtube'),
+		'description' => tra('Display youtube video in a wiki page'),
+		'prefs' => array( 'wikiplugin_youtube' ),
+		'params' => array(
+			'movie' => array(
+				'required' => true,
+				'name' => 'Movie',
+				'description' => tra('URL to the Youtube video'),
+			),
+		),
+	);
+}
+
 function wikiplugin_youtube($data, $params) {
 	
 	extract ($params,EXTR_SKIP);

@@ -22,6 +22,32 @@ function wikiplugin_versions_help() {
             . tra("This is version 1 info") ."{VERSIONS}~/np~";
 }
 
+function wikiplugin_versions_info() {
+	return array(
+		'name' => tra('Versions'),
+		'description' => tra('Split the text in parts visible only under some conditions'),
+		'prefs' => array( 'wikiplugin_versions' ),
+		'body' => tra('Block of text separated by ---(version x)--- markers. Text before the first marker is used by default.'),
+		'params' => array(
+			'nav' => array(
+				'required' => false,
+				'name' => tra('Navigation'),
+				'description' => 'y|n',
+			),
+			'title' => array(
+				'required' => false,
+				'name' => tra('Title'),
+				'description' => tra('y|n'),
+			),
+			'defaults' => array(
+				'required' => false,
+				'name' => tra('Navigation'),
+				'description' => tra('?'),
+			),
+		),
+	);
+}
+
 function wikiplugin_versions($data, $params) {
 	global $use_best_language, $prefs;
 	if (isset($params) and is_array($params)) {
