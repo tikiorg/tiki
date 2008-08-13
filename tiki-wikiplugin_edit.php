@@ -4,6 +4,9 @@ require 'tiki-setup.php';
 if( ! isset( $_POST['page'], $_POST['content'], $_POST['index'], $_POST['type'], $_SERVER['HTTP_REFERER'] ) )
 	die( 'Missing parameters' );
 
+if( ! isset( $_POST['message'] ) )
+	$_POST['message'] = tra('Plugin modified by editor.');
+
 $page = $_POST['page'];
 
 $plugin = basename( $_POST['type'] );
@@ -68,7 +71,7 @@ while( false !== $pos = strpos( $current, "{{$type}(", $pos + 1 ) )
 		// Replace the content
 		$content = $before . $content . $after;
 
-		$tikilib->update_page( $page, $content, tra('Image annotations changed.'), $user, $_SERVER['REMOTE_ADDR'] );
+		$tikilib->update_page( $page, $content, $_POST['message'], $user, $_SERVER['REMOTE_ADDR'] );
 	}
 }
 

@@ -403,6 +403,7 @@ SCRIPT;
 	$cid = 'container-annotation-' . $uid;
 
 	$labelSave = tra('Save changes to annotations');
+	$message = tra('Image annotations changed.');
 	
 	if( $tiki_p_edit == 'y' )
 		$form = <<<FORM
@@ -411,6 +412,7 @@ SCRIPT;
 		<input type="hidden" name="page" value="$page"/>
 		<input type="hidden" name="type" value="annotation"/>
 		<input type="hidden" name="index" value="$uid"/>
+		<input type="hidden" name="message" value="$message"/>
 		<textarea id="$cid-content" name="content"></textarea>
 	</div>
 	<p><input type="submit" value="$labelSave"/></p>
