@@ -31,14 +31,12 @@ class TikiDB {
 	var $driver; // name of the driver used to access the DB
 	var $sql_error_msg = ""; // The last error message
 
-	function TikiDB($db)
-	{
+	function TikiDB($db) {
 		if (!$db) {
 			die ("Invalid db object passed to TikiDB constructor");
 		}
 
 		$this->db=$db;
-		//$this->db->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY);
 		$this->driver = $db->getAttribute(PDO::ATTR_DRIVER_NAME);
 	}
 
