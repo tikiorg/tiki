@@ -5267,7 +5267,7 @@ function add_pageview() {
 				include_once('lib/smarty_tiki/function.icon.php');
 				global $headerlib, $page;
 				$headerlib->add_jsfile( 'tiki-jsplugin.php?plugin=' . urlencode( $plugin_name ) );
-				$ret = '~np~<div><div style="float:right;"><a href="javascript:void(0)" onclick="show_plugin_form(\'' . addslashes($plugin_name) . '\', ' . addslashes($current_index) . ', \'' . addslashes($page) . '\', ' . htmlentities(json_encode($arguments)) . ', ' . htmlentities(json_encode(trim($plugin_data))) . ');this.style.display=\'none\'">'.smarty_function_icon(array('_id'=>'page_edit', 'alt'=>tra('Edit Plugin')), $smarty).'</a></div><div id="' . $plugin_name . $current_index . '">' . $ret . '</div></div>~/np~';
+				$ret = '~np~<div><div style="float:right;"><a href="javascript:void(0)" onclick="show_plugin_form(\'' . addslashes($plugin_name) . '\', ' . addslashes($current_index) . ', \'' . addslashes($page) . '\', ' . htmlentities(json_encode($arguments)) . ', ' . htmlentities(json_encode(trim($plugin_data))) . ');this.style.display=\'none\'">'.smarty_function_icon(array('_id'=>'page_edit', 'alt'=>tra('Edit Plugin')), $smarty).'</a></div><div id="' . $plugin_name . $current_index . '">~/np~' . $ret . '~np~</div></div>~/np~';
 			}
 		} else {
 		    // Handle nested plugins.
