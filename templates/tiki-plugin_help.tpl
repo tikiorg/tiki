@@ -1,4 +1,3 @@
-<script type="text/javascript" src="tiki-jsplugin.php?plugin={$plugin_name|lower|@urlencode}"></script>
 <h3>{$plugin.name|escape} <a href="javascript:void(0)" onclick="popup_plugin_form('{$plugin_name|lower|@addslashes}')">{tr}Insert{/tr}</a></h3>
 <div class="plugin-desc">
 {$plugin.description}

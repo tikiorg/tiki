@@ -680,7 +680,8 @@ class WikiLib extends TikiLib {
 	}
 	sort($files);
 	if ($with_help) {
-		global $cachelib;
+		global $cachelib, $headerlib;
+		$headerlib->add_jsfile( 'tiki-jsplugin.php' );
 		if (!$cachelib->isCached('plugindesc')) {
 			$plugins = array();
 			foreach ($files as $pfile) {

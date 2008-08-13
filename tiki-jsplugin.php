@@ -1,26 +1,43 @@
 <?php
 
-if( !isset( $_GET['plugin'] ) )
-	exit;
+$all = !isset( $_GET['plugin'] );
 
-$plugin = basename( $_GET['plugin'] );
-$file = 'lib/wiki-plugins/wikiplugin_' . $plugin . '.php';
-$info = "wikiplugin_{$plugin}_info";
+$files = array();
 
-if( file_exists( "temp/cache/wikiplugin_$plugin" ) )
+if( $all )
 {
-	readfile( "temp/cache/wikiplugin_$plugin" );
-	exit;
+	$cache = "temp/cache/wikiplugin_ALL";
+
+	if( file_exists( $cache ) )
+	{
+		readfile( $cache );
+		exit;
+	}
+
+	foreach( glob( 'lib/wiki-plugins/wikiplugin_*.php' ) as $file )
+	{
+		$base = basename( $file );
+		$plugin = substr( $base, 11, -4 );
+
+		$files[$plugin] = $file;
+	}
+}
+else
+{
+	$plugin = basename( $_GET['plugin'] );
+	$file = 'lib/wiki-plugins/wikiplugin_' . $plugin . '.php';
+	$cache = "temp/cache/wikiplugin_$plugin";
+
+	if( file_exists( $cache ) )
+	{
+		readfile( $cache );
+		exit;
+	}
+
+	$files[$plugin] = $file;
 }
 
-if( ! file_exists( $file ) )
-	exit;
-
 include 'tiki-setup.php';
-include $file;
-
-if( ! function_exists( $info ) )
-	exit;
 
 ob_start();
 
@@ -29,12 +46,23 @@ ob_start();
 if( ! tiki_plugins )
 	var tiki_plugins = {};
 
+<?php foreach( $files as $plugin => $file ):
+	$info = "wikiplugin_{$plugin}_info";
+
+	if( ! file_exists( $file ) )
+		continue;
+
+	include $file;
+	if( ! function_exists( $info ) )
+		continue;
+?>
+
 tiki_plugins[<?php echo json_encode( $plugin ) ?>] = <?php echo json_encode( $info() ) ?>;
 
-<?php
+<?php endforeach;
 
 $content = ob_get_contents();
-file_put_contents( "temp/cache/wikiplugin_$plugin", $content );
+file_put_contents( $cache, $content );
 ob_end_flush();
 	
 ?>
