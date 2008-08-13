@@ -97,7 +97,8 @@
 {else}
 <a href="tiki-assignpermission.php?find={$find}&amp;type={$type}&amp;group={$group|escape:url}&amp;sort_mode={$sort_mode}">{tr}Hide{/tr}</a>
 {/if}<br /><br />
-
+</div>
+</form>
 <div {if $advanced_features ne 'y'}style="display:none;"{else}style="display:block;"{/if}>
 <h2>{tr}Create level{/tr}</h2>
 <form method="post" action="tiki-assignpermission.php">
@@ -115,11 +116,10 @@
 <option value="remove">{tr}Remove{/tr}</option>
 </select>
 {tr}all permissions in level{/tr}:  
-<select name="level[]" multiple="yes" size="5">
+<select name="level[]" multiple="multiple" size="5">
 {html_options output=$levels values=$levels selected=$perms[user].level}
 </select>
 <input type="submit" name="allper" value="{tr}Update{/tr}" />
 </form>
 </div>
 <br />
-</form>
