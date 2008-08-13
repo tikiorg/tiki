@@ -198,9 +198,6 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
  {*<li><a href="#nav">{tr}Jump to Navigation{/tr}</a></li>
  <li><a href="#footer">{tr}Jump to Footer{/tr}</a></li>*}
 </ul>
-{if $prefs.minical_reminders>100}
-<iframe width='0' height='0' frameborder="0" src="tiki-minical_reminders.php"></iframe>
-{/if}
 
 {if $prefs.feature_community_mouseover eq 'y'}{popup_init src="lib/overlib.js"}{/if}
 {if $prefs.feature_fullscreen eq 'y' and $filegals_manager eq '' and $print_page ne 'y'}
