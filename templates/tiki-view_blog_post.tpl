@@ -1,12 +1,17 @@
-<h1><a href="tiki-view_blog_post.php?blogId={$post_info.blogId}&amp;postId={$post_info.postId}" class="pagetitle">{tr}Viewing blog post{/tr} - {$blog_data.title}</a></h1>
-<span class="button2"><a class="linkbut" href="tiki-view_blog.php?find={$find}&amp;blogId={$blogId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}">{tr}Return to blog{/tr}</a></span>
+{title help="Blogs"}{tr}Viewing blog post{/tr} - {$blog_data.title}{/title}
+
+<span class="button2">
+  <a class="linkbut" href="tiki-view_blog.php?find={$find}&amp;blogId={$blogId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}">{tr}Return to blog{/tr}</a>
+</span>
 <br /><br />
+
 <div class="posthead">
 {if $blog_data.use_title eq 'y'}
 	<h3>{$post_info.title}</h3>
 {else}
 	<h3>{$post_info.created|tiki_short_datetime}</h3>
 {/if}
+
 {if $prefs.feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y'}
   {if $tags.data|@count >0}
     <div class="freetaglist">
@@ -16,6 +21,7 @@
     </div>
   {/if}
 {/if}
+
 <table ><tr><td align="left">
 <span class="posthead">
 {if $blog_data.use_title eq 'y'}

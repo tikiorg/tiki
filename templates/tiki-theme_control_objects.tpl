@@ -1,14 +1,4 @@
-{*Smarty template*}
-<h1><a class="pagetitle" href="tiki-theme_control_objects.php">{tr}Theme Control Center: Objects{/tr}</a>
-
-{if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}Theme+Control" target="tikihelp" class="tikihelp" title="{tr}ThemeControl Objects{/tr}">
-{icon _id='help'}</a>{/if}
-
-{if $prefs.feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-theme_control_objects.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}theme control objects tpl{/tr}">
-{icon _id='shape_square_edit' alt='{tr}Edit template{/tr}'}</a>{/if}
-</h1>
+{title help="Theme+Control"}{tr}Theme Control Center: Objects{/tr}{/title}
 
 <div class="simplebox">
 <b>{tr}Theme is selected as follows{/tr}:</b><br />

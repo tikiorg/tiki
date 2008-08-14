@@ -1,9 +1,11 @@
-<h1>{tr}Banner stats{/tr}</h1>
+{title help="Banners"}{tr}Banner stats{/tr}{/title}
+
 <a class="linkbut" href="tiki-list_banners.php">{tr}List banners{/tr}</a>
 {if $tiki_p_admin_banners eq 'y'}
-<a class="linkbut" href="tiki-edit_banner.php?bannerId={$bannerId}">{tr}Edit{/tr}</a>
-<a class="linkbut" href="tiki-edit_banner.php">{tr}Create new banner{/tr}</a>
+  <a class="linkbut" href="tiki-edit_banner.php?bannerId={$bannerId}">{tr}Edit{/tr}</a>
+  <a class="linkbut" href="tiki-edit_banner.php">{tr}Create new banner{/tr}</a>
 {/if}
+
 <h2>{tr}Banner Information{/tr}</h2>
 <div class="simplebox">
 <table>

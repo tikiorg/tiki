@@ -1,11 +1,15 @@
-<h1><a href="tiki-send_blog_post.php?postId={$post_info.postId}" class="pagetitle">{tr}Send blog post{/tr}</a></h2>
-<span class="button2"><a class="linkbut" href="tiki-view_blog.php?find={$find}&amp;blogId={$blogId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}">{tr}Return to blog{/tr}</a></span>
+{title help="Blogs"}{tr}Send blog post{/tr}{/title}
+
+<span class="button2">
+  <a class="linkbut" href="tiki-view_blog.php?find={$find}&amp;blogId={$blogId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}">{tr}Return to blog{/tr}</a>
+</span>
 <br /><br />
+
 {if $sent eq 'y'}
-<h3>{tr}A link to this post was sent to the following addresses:{/tr}</h3>
-<div class="wikitext">
-{$addresses}
-</div>
+  <h3>{tr}A link to this post was sent to the following addresses:{/tr}</h3>
+  <div class="wikitext">
+    {$addresses}
+  </div>
 {else}
 	<h3>{tr}Send post to this addresses{/tr}</h3>
 	<form method="post" action="tiki-send_blog_post.php">

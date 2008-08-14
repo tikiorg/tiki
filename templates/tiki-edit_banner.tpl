@@ -1,5 +1,6 @@
 {* $Id$ *}
-{title}{tr}Edit or create banners{/tr}{/title}
+{title help="Banners"}{tr}Edit or create banners{/tr}{/title}
+
 <div class="navbar">
 <a class="linkbut" href="tiki-list_banners.php">{tr}List banners{/tr}</a>
 </div>

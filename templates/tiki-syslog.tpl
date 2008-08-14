@@ -1,25 +1,19 @@
 {* $Id$ *}
-<h1><a class="pagetitle" href="tiki-syslog.php">{tr}SysLog{/tr}</a>
-
-{if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}System+Log" target="tikihelp" class="tikihelp" title="{tr}System log help{/tr}: {tr}system logs{/tr}">
-{icon _id='help'}</a>{/if}
-
-{if $prefs.feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-syslog.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}system logs tpl{/tr}">
-{icon _id='shape_square_edit' alt='{tr}Edit template{/tr}'}</a>{/if}
-</h1>
+{title help="System+Log"}{tr}SysLog{/tr}{/title}
 
 {if $tikifeedback}
-<br />{section name=n loop=$tikifeedback}<div class="simplebox {if $tikifeedback[n].num > 0} highlight{/if}">{$tikifeedback[n].mes}</div>{/section}
+  <br />
+  {section name=n loop=$tikifeedback}
+    <div class="simplebox {if $tikifeedback[n].num > 0} highlight{/if}">{$tikifeedback[n].mes}</div>
+  {/section}
 {/if}
 
 <br /><br />
 
 <form method="get" action="tiki-syslog.php">
-{tr}Clean logs older than{/tr}&nbsp;
-<input type="text" name="months" size="4" /> {tr}months{/tr}
-<input type="submit" value="{tr}Clean{/tr}" name="clean" />
+  {tr}Clean logs older than{/tr}&nbsp;
+  <input type="text" name="months" size="4" /> {tr}months{/tr}
+  <input type="submit" value="{tr}Clean{/tr}" name="clean" />
 </form>
 
 {include file='find.tpl' _sort_mode='y'}

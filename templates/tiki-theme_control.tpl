@@ -1,13 +1,4 @@
-{*Smarty template*}
-<h1><a class="pagetitle" href="tiki-theme_control.php">{tr}Theme Control Center: categories{/tr}</a>
-  
-{if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}Theme+Control" target="tikihelp" class="tikihelp" title="{tr}ThemeControl{/tr}">
-{icon _id='help'}</a>{/if}
-
-{if $prefs.feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-theme_control.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}ThemeControl tpl{/tr}">
-{icon _id='shape_square_edit' alt='{tr}Edit template{/tr}'}</a>{/if}</h1>
+{title help="Theme+Control"}{tr}Theme Control Center: Categories{/tr}{/title}
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}To learn more about <a class="rbox-link" target="tikihelp" href="http://themes.tikiwiki.org">themes</a>.{/tr}{/remarksbox}
 
