@@ -19,7 +19,7 @@ function smarty_function_gallery($params, &$smarty)
         $smarty->trigger_error("assign: missing 'id' parameter");
         return;
     }
-    $img = $tikilib->get_random_image($id);
+    $img = $imagegallib->get_random_image($id);
     print('<div style="text-align: center">');
     if (!isset($hidelink) || $hidelink != 1) {
         print('<a href="tiki-browse_image.php?galleryId='.$img['galleryId'].'&amp;imageId='.$img['imageId'].'">');
