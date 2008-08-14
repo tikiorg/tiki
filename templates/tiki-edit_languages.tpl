@@ -1,7 +1,8 @@
-<h1><a class="pagetitle" href="tiki-edit_languages.php">{tr}Edit or ex/import Languages{/tr}</a></h1>
-[<a href="tiki-edit_languages.php" class="link">{tr}Edit and create Languages{/tr}</a>
-|<a href="tiki-imexport_languages.php" class="link">{tr}Im- Export Languages{/tr}</a>]
-|<a href="tiki-edit_languages.php?interactive_translation_mode={if $interactive_translation_mode eq 'on'}off{else}on{/if}" class="link">{if $interactive_translation_mode eq 'on' }{tr}Toggle interactive translation off{/tr}{else}{tr}Toggle interactive translation on{/tr}{/if} </a>
+{title}{tr}Edit or ex/import Languages{/tr}{/title}
+
+<a class="linkbut" href="tiki-edit_languages.php">{tr}Edit and create Languages{/tr}</a>
+<a class="linkbut" href="tiki-imexport_languages.php">{tr}Im- Export Languages{/tr}</a>
+<a class=linkbut href="tiki-edit_languages.php?interactive_translation_mode={if $interactive_translation_mode eq 'on'}off{else}on{/if}" class="link">{if $interactive_translation_mode eq 'on' }{tr}Toggle interactive translation off{/tr}{else}{tr}Toggle interactive translation on{/tr}{/if} </a>
 
 <table >
 <tr>
