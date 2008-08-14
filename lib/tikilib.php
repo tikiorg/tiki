@@ -1133,6 +1133,7 @@ class TikiLib extends TikiDB {
     }
 
     /*shared*/
+/*
     function get_random_image($galleryId = -1) {
 	$whgal = "";
 	$bindvars = array();
@@ -1165,6 +1166,7 @@ class TikiLib extends TikiDB {
 
 	return ($ret);
     }
+*/ /* Sept */
 
     /*shared*/
     function get_gallery($id) {
@@ -6140,10 +6142,12 @@ function add_pageview() {
 		$imgdata['src'] = $base_host.( $imgdata['src'][0] == '/' ? '' : $url_path ).$imgdata['src'];
 	}
 
-	$detected_lib = '';
 	$imgdata_dim = '';
 	if ( $prefs['feature_filegals_manager'] == 'y' ) {
+		global $detected_lib;
 		include_once('lib/images/images.php');
+	} else {
+		$detected_lib = '';
 	}
 	if ( $detected_lib != '' && ereg('^'.$tikiroot.'tiki-download_file.php\?', $imgdata['src']) ) {
 		// If an image lib has been detected and if we are using an image from a file gallery,
@@ -7947,36 +7951,6 @@ function detect_browser_language() {
     }
 
     return $aproximate_lang;
-}
-
-
-if (!function_exists('file_get_contents')) {
-	function file_get_contents($f) {
-		if (is_file($f)) {
-			ob_start();
-			$retval = @readfile($f);
-			if (false !== $retval) { // no readfile error
-				$retval = ob_get_contents();
-			}
-			ob_end_clean();
-			return $retval;
-		} else {
-			return false;
-		}
-	}
-}
-
-/**
- * Replace floatval()
- *
- * Borrowed from PEAR:PHP_Compat
- * @author      David Irvine <dave@codexweb.co.za>
- * @author      Aidan Lister <aidan@php.net>
- */
-if (!function_exists('floatval')) {
-	function floatval($var) {
-		return (float) $var;
-	}
 }
 
 function alterprefs() {
