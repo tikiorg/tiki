@@ -1,12 +1,4 @@
-<h1><a class="pagetitle" href="tiki-directory_admin_related.php?parent={$parent}">{tr}Admin related categories{/tr}</a>
-  
-      {if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}Directory" target="tikihelp" class="tikihelp" title="{tr}Admin Directory Related {/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
-
-      {if $prefs.feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-directory_admin_related.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}directory admin related tpl{/tr}">
-<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}Edit Tpl{/tr}' /></a>{/if}</h1>
+{title help="Directory" url="tiki-directory_admin_related.php?parent=$parent"}{tr}Admin related categories{/tr}{/title}
 
 {* Display the title using parent *}
 {include file=tiki-directory_admin_bar.tpl}

@@ -1,11 +1,6 @@
 {* $Id$ *}
-<h1><a href="tiki-directory_admin.php" class="pagetitle">{tr}Directory Administration{/tr}</a>
-{if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}Directory" target="tikihelp" class="tikihelp" title="{tr}Directory{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
-{if $prefs.feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-directory_admin.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Admin Directory tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt='{tr}Edit Tpl{/tr}' /></a>{/if}</h1>
+
+{title help="Directory"}{tr}Directory Administration{/tr}{/title}
 
 {include file=tiki-directory_admin_bar.tpl}
 <br />

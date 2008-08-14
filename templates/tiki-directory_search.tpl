@@ -1,4 +1,5 @@
-<h1><a class="pagetitle">{tr}Search results{/tr}</a></h1>
+{title}{tr}Search results{/tr}{/title}
+
 {* The navigation bar *}
 {include file=tiki-directory_bar.tpl}
 <br /><br />

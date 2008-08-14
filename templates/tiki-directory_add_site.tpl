@@ -1,4 +1,5 @@
-<h1><a class="pagetitle" href="tiki-directory_add_site.php?parent={$parent}">{tr}Add a new site{/tr}</a></h1>
+{title url="tiki-directory_add_site.php?parent=$parent"}{tr}Add a new site{/tr}{/title}
+
 {* Display the title using parent *}
 {include file=tiki-directory_bar.tpl}
 <br /><br />

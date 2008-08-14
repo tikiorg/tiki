@@ -1,4 +1,5 @@
-<h1><a class="pagetitle" href="tiki-contact.php">{tr}Contact us{/tr}</a></h1>
+{title}{tr}Contact us{/tr}{/title}
+
 {if $prefs.feature_messages eq 'y' and $tiki_p_messages eq 'y'}
 {if $message}<br />
 <div class="simplebox highlight">{if $sent ne '1'}{icon _id=exclamation style="vertical-align:middle" alt="{tr}Error{/tr}"}{else}{icon _id=accept alt="{tr}OK{/tr}" style="vertical-align:middle;"}{/if} {$message}</div><br />

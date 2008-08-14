@@ -1,13 +1,6 @@
 {* $Id$ *}
-<h1><a class="pagetitle" href="tiki-directory_admin_sites.php?parent={$parent}">{tr}Admin sites{/tr}</a>
-  
-      {if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}Directory" target="tikihelp" class="tikihelp" title="{tr}Admin Directory Sites{/tr}">
-{icon _id='help'}</a>{/if}
 
-      {if $prefs.feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-directory_admin_sites.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Admin Directory Sites tpl{/tr}">
-{icon _id='shape_square_edit' alt='{tr}Edit Tpl{/tr}'}</a>{/if}</h1>
+{title help="Directory" url="tiki-directory_admin_sites.php?parent=$parent"}{tr}Admin sites{/tr}{/title}
 
 {* Display the title using parent *}
 {include file=tiki-directory_admin_bar.tpl}

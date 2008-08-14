@@ -1,7 +1,7 @@
 {* $Id$ *}
 {popup_init src="lib/overlib.js"}
 
-<h1><a class="pagetitle" href="tiki-charts.php">{tr}Charts{/tr}</a></h1>
+{title}{tr}Charts{/tr}{/title}
 
 {if $items or ($find ne '')}
   {include file='find.tpl' _sort_mode='y'}

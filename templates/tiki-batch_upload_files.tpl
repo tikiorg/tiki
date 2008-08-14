@@ -1,5 +1,5 @@
-{* $Header$ *}
-<h1><a href="tiki-batch_upload_files.php" class="pagetitle">{tr}Directory batch upload{/tr}</a></h1>
+{title}{tr}Directory batch upload{/tr}{/title}
+
 <span class="button2">
 {if $galleryId ne ''}
 <a href="tiki-list_file_gallery.php?galleryId={$galleryId}" class="linkbut">

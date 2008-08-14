@@ -1,4 +1,4 @@
-<h1><a href="tiki-contacts.php" class="pagetitle">{tr}Contacts{/tr}</a></h1>
+{title}{tr}Contacts{/tr}{/title}
 
 <div class="page-bar">
 <div style="float:right;margin:5px;">
