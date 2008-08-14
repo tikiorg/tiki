@@ -82,8 +82,7 @@ class TikiDate {
 
 	function format($format) {
 		global $prefs;
-		//FIXME not quite good
-		$format = preg_replace("/([^% ][a-zA-Z])/",'\\\$1',$format);
+		$format = preg_replace("/(?<!%)([a-zA-Z])/",'\\\$1',$format);
 		// Format the date
 		$return = $this->date->format(str_replace($this->search,$this->replace,$format));
 
