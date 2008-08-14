@@ -1,18 +1,4 @@
-<h1><a class="pagetitle" href="tiki-quiz_stats_quiz.php?quizId={$quizId}">{tr}Stats for quiz{/tr}:{$quiz_info.name}</a>
-
-
-<!-- the help link info -->
-  
-      {if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}Quiz" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Edit Quiz Questions{/tr}"><img border='0' src='img/icons/help.gif' alt="{tr}Help{/tr}" /></a>{/if}
-
-<!-- link to tpl -->
-
-     {if $prefs.feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=/tiki-quiz_stats_quiz.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Edit Quiz Stats Tpl{/tr}">
-<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}Edit Tpl{/tr}' /></a>{/if}
-<!-- linkbuttons, they'd be better if they had rollover info -->
-</h1>
+{title help="Quiz"}{tr}Stats for quiz:{/tr} {$quiz_info.name}{/title}
 
 <a class="linkbut" href="tiki-list_quizzes.php">{tr}List Quizzes{/tr}</a>
 <a class="linkbut" href="tiki-quiz_stats.php">{tr}Quiz Stats{/tr}</a>

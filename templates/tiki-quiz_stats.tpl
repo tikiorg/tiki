@@ -1,16 +1,8 @@
 {* $Id$ *}
-<h1><a class="pagetitle" href="tiki-quiz_stats.php">{tr}Stats for quizzes{/tr}</a>
-{if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}Quiz" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Quizzes{/tr}">
-<img border='0' src='img/icons/help.gif' alt="{tr}Help{/tr}" />
-</a>
-{/if}
-{if $prefs.feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-quiz_stats.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}List Quizzes Tpl{/tr}">
-<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}Edit Tpl{/tr}' /></a>{/if}</h1>
+{title help="Quiz"}{tr}Stats for quizzes{/tr}{/title}
 
 <div class="navbar"><a class="linkbut" href="tiki-list_quizzes.php">{tr}List Quizzes{/tr}</a>
-<a class="linkbut" href="tiki-edit_quiz.php">{tr}Admin Quizzes{/tr}</a>
+  <a class="linkbut" href="tiki-edit_quiz.php">{tr}Admin Quizzes{/tr}</a>
 </div>
 
 <h2>{tr}Quizzes{/tr}</h2>

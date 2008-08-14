@@ -1,10 +1,13 @@
 {* $Id$ *}
-<h1><a class="pagetitle" href="tiki-survey_stats.php">{tr}Stats for surveys{/tr}</a></h1>
+
+{title}{tr}Stats for surveys{/tr}{/title}
 
 <div class="navbar">
-<span class="button2"><a class="linkbut" href="tiki-list_surveys.php">{tr}List Surveys{/tr}</a></span>
-<span class="button2"><a class="linkbut" href="tiki-survey_stats.php">{tr}Survey Stats{/tr}</a></span>
-{if $tiki_p_admin_surveys eq 'y'}<span class="button2"><a class="linkbut" href="tiki-admin_surveys.php">{tr}Admin Surveys{/tr}</a></span>{/if}
+  <span class="button2"><a class="linkbut" href="tiki-list_surveys.php">{tr}List Surveys{/tr}</a></span>
+  <span class="button2"><a class="linkbut" href="tiki-survey_stats.php">{tr}Survey Stats{/tr}</a></span>
+  {if $tiki_p_admin_surveys eq 'y'}
+    <span class="button2"><a class="linkbut" href="tiki-admin_surveys.php">{tr}Admin Surveys{/tr}</a></span>
+  {/if}
 </div>
 
 <h2>{tr}Surveys{/tr}</h2>

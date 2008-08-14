@@ -1,12 +1,4 @@
-<h1><a class="pagetitle" href="tiki-view_faq.php?faqId={$faqId}">{$faq_info.title}</a>
-
-{if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}FAQs" target="tikihelp" class="tikihelp" title="{tr}View FAQ{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
-
-{if $prefs.feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-view_faq.tpl" target="tikihelp" class="tikihelp" title="{tr}View FAQ Tpl{/tr}: {tr}Admin Menus tpl{/tr}">
-<img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}Edit Template{/tr}' /></a>{/if}</h1>
+{title help="FAQs"}{tr}{$faq_info.title}{/tr}{/title}
 
 <a class="linkbut" href="tiki-list_faqs.php">{tr}List FAQs{/tr}</a>
 {if $tiki_p_admin_faqs eq 'y'}<a class="linkbut" href="tiki-list_faqs.php?faqId={$faqId}">{tr}Edit this FAQ{/tr}</a> {/if}

@@ -4,13 +4,8 @@
 {* All Rights Reserved. See copyright.txt for details and a complete list of authors. *}
 {* Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details. *}
 
-<!- tiki-quiz_edit.tpl start ->
+{title help="Quiz"}{tr}Edit quiz{/tr}: {$quiz->name}{/title}
 
-<h1><a class="pagetitle" href="tiki-quiz_edit.php?quizId={$quiz->id}">{tr}Edit quiz{/tr}: {$quiz->name}</a>
-{if $prefs.feature_help}
-&nbsp &nbsp &nbsp<a title="{tr}Help{/tr}" href="{$prefs.helpurl}Quiz" target="help"><img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
-{/if}
-</h1>
 <a class="linkbut" href="tiki-list_quizzes.php">{tr}List Quizzes{/tr}</a>
 <a class="linkbut" href="tiki-quiz_stats.php">{tr}Quiz Stats{/tr}</a>
 <a class="linkbut" href="tiki-quiz_stats_quiz.php?quizId={$quiz->id}">{tr}This Quiz Stats{/tr}</a>
