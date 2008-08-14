@@ -1,24 +1,18 @@
-{*Smarty template*}
-<h1><a class="pagetitle" href="tiki-user_tasks.php?">{tr}Tasks{/tr}</a>
+{title help="User+Tasks"}{tr}Tasks{/tr}{/title}
 
-{if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}User+Tasks" target="tikihelp" class="tikihelp" title="{tr}User Tasks{/tr}">
-{icon _id='help'}</a>
-{/if}
-
-{if $prefs.feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-user_tasks.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}User Tasks tpl{/tr}">
-{icon _id='shape_square_edit' alt='{tr}Edit template{/tr}'}</a>
-{/if}</h1>
 {if $prefs.feature_ajax ne 'y' && $prefs.feature_mootools ne 'y'}
-{include file=tiki-mytiki_bar.tpl}
-<br /><br />
+  {include file=tiki-mytiki_bar.tpl}
+  <br /><br />
 {/if}
-<span class="button2"><a class="linkbut" href="tiki-user_tasks.php?show_form=y">{tr}New task{/tr}</a>
+
+<span class="button2">
+  <a class="linkbut" href="tiki-user_tasks.php?show_form=y">{tr}New task{/tr}</a>
 </span>
-<span class="button2"><a class="linkbut" href="tiki-user_tasks.php">{tr}Task list{/tr}</a>
+<span class="button2">
+  <a class="linkbut" href="tiki-user_tasks.php">{tr}Task list{/tr}</a>
 </span>
-{ if $task_admin }
+
+{if $task_admin}
 {if $admin_mode}
 <span class="button2"><a class="linkbut" href="tiki-user_tasks.php?taskId={$taskId}&amp;admin_mode_off=on">{tr}Admin mode off{/tr}</a>
 </span>

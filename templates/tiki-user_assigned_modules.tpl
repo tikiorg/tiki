@@ -1,17 +1,9 @@
-<h1><a class="pagetitle" href="tiki-user_assigned_modules.php">{tr}User assigned modules{/tr}</a>
+{title help="UserAssignedModules"}{tr}User assigned modules{/tr}{/title}
 
-{if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}UserAssignedModules" target="tikihelp" class="tikihelp" title="{tr}User Assigned Modules{/tr}">
-{icon _id='help'}</a>
-{/if}
-
-{if $prefs.feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-user_assigned_modules.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}User Assigned Modules tpl{/tr}">
-{icon _id='shape_square_edit' alt='{tr}Edit template{/tr}'}</a>
-{/if}</h1>
 {if $prefs.feature_ajax ne 'y' && $prefs.feature_mootools ne 'y'}
-{include file=tiki-mytiki_bar.tpl}
+  {include file=tiki-mytiki_bar.tpl}
 {/if}
+
 <div class="navbar">
 <a class="linkbut" href="tiki-user_assigned_modules.php?recreate=1">{tr}Restore defaults{/tr}</a>
 </div>

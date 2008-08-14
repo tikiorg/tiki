@@ -1,30 +1,16 @@
 {* $Id$ *}
 
-<h1>
-  {if $userwatch ne $user}
-    <a class="pagetitle" href="tiki-user_preferences.php?view_user={$userwatch}">{tr}User Preferences{/tr}: {$userwatch}</a>
-  {else}
-    <a class="pagetitle" href="tiki-user_preferences.php">{tr}User Preferences{/tr}</a>
-  {/if}
+{if $userwatch ne $user}
+  {title help="User+Preferences"}{tr}User Preferences:{/tr} {$userwatch}{/title}
+{else}
+  {title help="User+Preferences"}{tr}User Preferences{/tr}{/title}
+{/if}
 
-  {if $prefs.feature_help eq 'y'}
-    <a href="{$prefs.helpurl}User+Preferences" target="tikihelp" class="tikihelp" title="{tr}User Preferences{/tr}">
-      {icon _id='help'}
-    </a>
-  {/if}
-
-  {if $prefs.feature_view_tpl eq 'y'}
-    <a href="tiki-edit_templates.php?template=tiki-user_preferences.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}UserPreferences tpl{/tr}">
-      {icon _id='shape_square_edit' alt='{tr}Edit template{/tr}'}
-    </a>
-  {/if}
-
-  {if $tiki_p_admin_users eq 'y'}
-    <a class="link" href="tiki-assignuser.php?assign_user={$userinfo.login}" title="{tr}Assign Group{/tr}">
-      {icon _id='key' alt="{tr}Assign Group{/tr}"}
-    </a>
-  {/if}
-</h1>
+{if $tiki_p_admin_users eq 'y'}
+  <a class="linkbut" href="tiki-assignuser.php?assign_user={$userinfo.login}" title="{tr}Assign Group{/tr}">
+    {tr}Assign Group{/tr}
+  </a>
+{/if}
 
 {if $userwatch eq $user or $userwatch eq ""}
   {if $prefs.feature_ajax ne 'y' && $prefs.feature_mootools ne 'y'}

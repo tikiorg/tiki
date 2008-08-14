@@ -1,9 +1,9 @@
-{*Smarty template*}
-<h1><a class="pagetitle" href="tiki-usermenu.php">{tr}User Menu{/tr}</a></h1>
+{title help="User+Menu"}{tr}User Menu{/tr}{/title}
+
 {include file=tiki-mytiki_bar.tpl}
 <br />
 {if $prefs.feature_user_bookmarks eq 'y' and $tiki_p_create_bookmarks eq 'y'}
-<a title="({tr}May need to refresh twice to see changes{/tr})" class="link" href="tiki-usermenu.php?addbk=1">{tr}Add top level bookmarks to menu{/tr}</a> 
+  <a title="({tr}May need to refresh twice to see changes{/tr})" class="link" href="tiki-usermenu.php?addbk=1">{tr}Add top level bookmarks to menu{/tr}</a> 
 {/if}
 <h2>{tr}Menus{/tr}</h2>
 

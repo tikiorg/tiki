@@ -1,9 +1,20 @@
-<h1><a class="pagetitle" href="tiki-pick_avatar.php{if $user ne $userwatch}?view_user={$userwatch}{/if}">{if $user ne $userwatch}{tr}Avatar:{/tr} {$userwatch}{else}{tr}Pick your avatar{/tr}{/if}</a></h1>
+{title}
+  {if $user ne $userwatch}
+    {tr}Avatar:{/tr} {$userwatch}
+  {else}
+    {tr}Pick your avatar{/tr}
+  {/if}
+{/title}
+
 
 {if $user eq $userwatch}
-{include file=tiki-mytiki_bar.tpl}
+  {include file=tiki-mytiki_bar.tpl}
 {else}
-<div class="navbar"><span class="button2"><a href="tiki-user_preferences.php?view_user={$userwatch|escape}" class="linkbut">{tr}User Preferences{/tr}</a></span></div>
+  <div class="navbar">
+    <span class="button2">
+      <a href="tiki-user_preferences.php?view_user={$userwatch|escape}" class="linkbut">{tr}User Preferences{/tr}</a>
+    </span>
+  </div>
 {/if}
 
 <h2>{if $user eq $userwatch}{tr}Your current avatar{/tr}{else}{tr}Avatar{/tr}{/if}</h2>

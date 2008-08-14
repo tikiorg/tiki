@@ -1,16 +1,9 @@
 {* $Id$ *}
-<h1><a class="pagetitle" href="tiki-user_watches.php">{tr}User Watches{/tr}</a>
 
-{if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}User+Watches" target="tikihelp" class="tikihelp" title="{tr}User Watches{/tr}">
-{icon _id='help'}</a>
-{/if}
-{if $prefs.feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-user_watches.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}User Watches tpl{/tr}">
-{icon _id='shape_square_edit' alt='{tr}Edit template{/tr}'}</a>
-{/if}</h1>
+{title help="User+Watches"}{tr}User Watches{/tr}{/title}
+
 {if $prefs.feature_ajax ne 'y' && $prefs.feature_mootools ne 'y'}
-{include file=tiki-mytiki_bar.tpl}
+  {include file=tiki-mytiki_bar.tpl}
 {/if}
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use "watches" to monitor wiki pages or other objects.{/tr} {tr}Watch new items by clicking the {icon _id=eye} button on specific pages.{/tr}{/remarksbox}

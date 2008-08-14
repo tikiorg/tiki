@@ -1,5 +1,4 @@
-<h1><a href="tiki-gmap_usermap.php" class="pagetitle">{tr}Users Map{/tr}</a></h1>
-<br /><br />
+{title help="maps"}{tr}Users Map{/tr}{/title}
 
 <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key={$prefs.gmap_key}"></script>
 
