@@ -81,7 +81,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['feature_wiki_paragraph_formatting'] = 'n';
 	$prefs['feature_wiki_paragraph_formatting_add_br'] = 'n';
 	// $prefs['feature_wiki_pdf'] = 'n';
-	$prefs['feature_wiki_pictures'] = 'n';
+	$prefs['feature_wiki_pictures'] = 'y';
 	$prefs['feature_wiki_plurals'] = 'y';
 	$prefs['feature_wiki_print'] = 'y';
 	$prefs['feature_wiki_protect_email'] = 'y';

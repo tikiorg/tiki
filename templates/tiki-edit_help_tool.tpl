@@ -78,7 +78,7 @@ function taginsert(area_name,tagid)
       {if (!isset($zoom_mode) || $zoom_mode eq 'n') and $prefs.quicktags_over_textarea neq 'y'}{cycle name='cycle'|cat:$qtnum}{/if}
     {/section}
 
-  {if ($prefs.feature_filegals_manager eq 'y') and ($prefs.feature_file_galleries eq 'y') and ($tiki_p_list_file_galleries eq 'y') }
+  {if ($prefs.feature_filegals_manager eq 'y') and ($prefs.feature_file_galleries eq 'y') and ($tiki_p_list_file_galleries eq 'y') and ($prefs.feature_wiki_pictures eq 'y')}
     <a title="{tr}Add another image{/tr}" href="#" onclick="javascript:needToConfirm = false;javascript:window.open('{$url_path}tiki-list_file_gallery.php?gallery_id=0&amp;filegals_manager={$area_name}','_blank','menubar=1,scrollbars=1,resizable=1,height=400,width=800');return false;">{icon _id='image' alt='{tr}Add another image{/tr}'}</a>
     {if (!isset($zoom_mode) || $zoom_mode eq 'n') and $prefs.quicktags_over_textarea neq 'y'}{cycle name='cycle'|cat:$qtnum}{/if}
   {/if}
