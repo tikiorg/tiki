@@ -1,24 +1,13 @@
-<h1><a class="pagetitle" href="tiki-list_faqs.php">{tr}FAQs{/tr}</a>
-
-{if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}FAQs" target="tikihelp" class="tikihelp" title="{tr}FAQs{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
-{if $prefs.feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-list_faqs.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}List FAQs Tpl{/tr}">
-<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}Edit Tpl{/tr}' /></a>
-{/if}
-{if $tiki_p_admin eq 'y'}
-<a href="tiki-admin.php?page=faqs" title="{tr}Admin Feature{/tr}">{icon _id='wrench' alt="{tr}Admin Feature{/tr}"}</a>
-{/if}
-</h1>
+{title help="FAQs" admpage="faqs"}{tr}FAQs{/tr}{/title}
 
 {if $tiki_p_admin_faqs eq 'y'}
-{if $faqId > 0}
-<h2>{tr}Edit this FAQ:{/tr} {$title}</h2>
-<a href="tiki-list_faqs.php" class="linkbut">{tr}Create new FAQ{/tr}</a>
-{else}
-<h2>{tr}Create New FAQ:{/tr}</h2>
+  {if $faqId > 0}
+    <h2>{tr}Edit this FAQ:{/tr} {$title}</h2>
+    <a href="tiki-list_faqs.php" class="linkbut">{tr}Create new FAQ{/tr}</a>
+  {else}
+  <h2>{tr}Create New FAQ:{/tr}</h2>
 {/if}
+
 <form action="tiki-list_faqs.php" method="post">
 <input type="hidden" name="faqId" value="{$faqId|escape}" />
 <table class="normal">

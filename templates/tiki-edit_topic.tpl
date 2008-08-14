@@ -1,12 +1,6 @@
 {* $Id$ *}
 
-<h1><a  class="pagetitle" href="tiki-admin_topics.php">{tr}Admin Topics{/tr}</a>
-
-{if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}Articles" target="tikihelp" class="tikihelp" title="{tr}Admin Topics{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}Help{/tr}' />
-</a>{/if}
-</h1>
+{title help="Articles"}{tr}Admin Topics{/tr}{/title}
 
 <h2>{tr}Edit a topic{/tr}</h2>
 

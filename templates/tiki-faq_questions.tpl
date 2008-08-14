@@ -1,10 +1,14 @@
-<h1><a class="pagetitle" href="tiki-faq_questions.php?faqId={$faqId}">{tr}Admin FAQ{/tr}: {$faq_info.title}</a></h1>
-<a href="tiki-list_faqs.php" class="linkbut">{tr}List FAQs{/tr}</a>
-<a href="tiki-view_faq.php?faqId={$faqId}" class="linkbut">{tr}View FAQ{/tr}</a>
-<a href="tiki-list_faqs.php?faqId={$faqId}" class="linkbut">{tr}Edit this FAQ{/tr}</a>
-<a class="linkbut" href="tiki-faq_questions.php?faqId={$faqId}">{tr}New Question{/tr}</a><br />
+{title}{tr}Admin FAQ{/tr}: {$faq_info.title}{/title}
+
+<a class="linkbut" href="tiki-list_faqs.php">{tr}List FAQs{/tr}</a>
+<a class="linkbut" href="tiki-view_faq.php?faqId={$faqId}">{tr}View FAQ{/tr}</a>
+<a class="linkbut" href="tiki-list_faqs.php?faqId={$faqId}">{tr}Edit this FAQ{/tr}</a>
+<a class="linkbut" href="tiki-faq_questions.php?faqId={$faqId}">{tr}New Question{/tr}</a>
 <br />
+<br />
+
 <h2>{if $questionId}{tr}Edit FAQ question{/tr}{else}{tr}Add FAQ question{/tr}{/if}</h2>
+
 <form action="tiki-faq_questions.php" method="post" id="editpageform">
 <input type="hidden" name="questionId" value="{$questionId|escape}" />
 <input type="hidden" name="faqId" value="{$faqId|escape}" />

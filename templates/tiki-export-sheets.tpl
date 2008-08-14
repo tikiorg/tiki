@@ -1,8 +1,9 @@
 <link rel="stylesheet" href="lib/sheet/style.css" type="text/css" />
-<h1><a href="tiki-sheets.php" class="pagetitle">{tr}{$title}{/tr}</a></h1>
+
+{title}{tr}{$title}{/tr}{/title}
 
 <div>
-{$description}
+  {$description}
 </div>
 
 {if $tiki_p_view_sheet eq 'y' || $tiki_p_sheet_admin eq 'y' || $tiki_p_admin eq 'y'}

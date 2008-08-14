@@ -1,7 +1,9 @@
-<h1><a class="pagetitle" href="tiki-edit_structure.php?page_ref_id={$page_ref_id}">
-  {if $editable == 'y'}{tr}Modify Structure{/tr}{else}{tr}Structure{/tr}{/if}: {$structure_name}
-</a></h1>
-<div class="navbar"><a class="linkbut" href="tiki-admin_structures.php" title="{tr}Structures{/tr}">{tr}Structures{/tr}</a></div>
+{title url="tiki-edit_structure.php?page_ref_id=$page_ref_id"}{if $editable == 'y'}{tr}Modify Structure{/tr}{else}{tr}Structure{/tr}{/if}: {$structure_name}{/title}
+
+<div class="navbar">
+  <a class="linkbut" href="tiki-admin_structures.php" title="{tr}Structures{/tr}">{tr}Structures{/tr}</a>
+</div>
+
 {if $remove eq 'y'}
 {tr}You will remove{/tr} '{$removePageName}' {if $page_removable == 'y'}{tr}and its subpages from the structure, now you have two options:{/tr}{else}{tr}and its subpages from the structure{/tr}{/if}
 <ul>

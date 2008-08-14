@@ -3,23 +3,20 @@
 {popup_init src="lib/overlib.js"}
 {include file="tiki-articles-js.tpl"}
 {if $preview}
+{if $preview}
 {include file="tiki-preview_article.tpl"}
 {/if}
-<h1>{if $subId}<a class="pagetitle" href="tiki-edit_submission.php?subId={$subId}">{tr}Edit{/tr}: {$title}</a>{else}<a class="pagetitle" href="tiki-edit_submission.php">{tr}Submit article{/tr}{/if}
+
 {assign var=area_name value="body"}
 
-{if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}Articles" target="tikihelp" class="tikihelp" title="{tr}Help on Articles{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
+{if $subId}
+  {title help="Articles" url="tiki-edit_submission.php?subId=$subId"}{tr}Edit:{/tr} {$title}{/title}
+{else}
+  {title help="Articles"}{tr}Submit article{/tr}{/title}
 {/if}
 
-{if $prefs.feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-edit_submission.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Edit Submissions Tpl{/tr}">
-<img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}Edit Template{/tr}' /></a>
-{/if}</h1>
-
 <div class="navbar">
-<a class="linkbut" href="tiki-list_submissions.php">{tr}List Submissions{/tr}</a>
+  <a class="linkbut" href="tiki-list_submissions.php">{tr}List Submissions{/tr}</a>
 </div>
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}
