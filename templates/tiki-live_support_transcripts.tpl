@@ -1,6 +1,9 @@
-<h1><a href="tiki-live_support_transcripts.php" class="pagetitle">{tr}Support chat transcripts{/tr}</a></h1>
-<a class="link" href="tiki-live_support_admin.php">{tr}back to admin{/tr}</a>
+{title}{tr}Support chat transcripts{/tr}{/title}
+
+<a class="link" href="tiki-live_support_admin.php">{tr}Back to admin{/tr}</a>
+
 <h2>{tr}Support requests{/tr}</h2>
+
 <form method="get" action="tiki-live_support_transcripts.php">
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 <table>

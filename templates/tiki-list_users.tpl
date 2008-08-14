@@ -1,10 +1,7 @@
 {* $Id$ *}
-<h1><a class="pagetitle" href="tiki-list_users.php">{tr}User List{/tr}</a>
 
-{if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}UserList" target="tikihelp" class="tikihelp" title="{tr}User List{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}</h1>
-<br />
+{title help="UserList"}{tr}User List{/tr}{/title}
+
 {$cant_users} {if !$find}{tr}users registered{/tr}{else} {tr}Users{/tr} {tr}like{/tr} "{$find}"{/if}
 
 {include file='find.tpl' _sort_mode='y'}

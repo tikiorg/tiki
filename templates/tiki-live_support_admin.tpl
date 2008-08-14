@@ -1,19 +1,5 @@
-<h1><a class="pagetitle" href="tiki-live_support_admin.php">
-{tr}Live support system{/tr}</a>
+{title help="Live+Support"}{tr}Live support system{/tr}{/title}
 
-  
-      {if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}Live+Support" target="tikihelp" class="tikihelp" title="{tr}Live Support{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
-
-
-
-      {if $prefs.feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-live_support_admin.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Admin Live Support tpl{/tr}">
-<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}Edit Tpl{/tr}' /></a>{/if}
-
-
-</h1>
 <a class="linkbut" {jspopup href="tiki-live_support_console.php"}>{tr}Open operator console{/tr}</a>
 <a class="linkbut" {jspopup width="300" height="450" href="tiki-live_support_client.php"}> {tr}Open client window{/tr}</a>
 <a class="linkbut" href="tiki-live_support_admin.php?show_html">{tr}Generate HTML{/tr}</a>
