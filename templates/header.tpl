@@ -193,7 +193,7 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
  onload="{if $prefs.feature_tabs eq 'y'}tikitabs({if $cookietab neq ''}{$cookietab}{else}1{/if},5);{/if}{if $msgError} javascript:location.hash='msgError'{/if}"
 {if $section or $smarty.session.fullscreen eq 'y'}class="
 {if $section}tiki_{$section}{/if} {if $smarty.session.fullscreen eq 'y'}fullscreen{/if}"{/if}>
-<ul class="jumplinks">
+<ul class="jumplinks" style="position:absolute;top:-9000px;left:-9000px;z-index:9;">
  <li><a href="#tiki-center">{tr}Jump to Content{/tr}</a></li>
  {*<li><a href="#nav">{tr}Jump to Navigation{/tr}</a></li>
  <li><a href="#footer">{tr}Jump to Footer{/tr}</a></li>*}
