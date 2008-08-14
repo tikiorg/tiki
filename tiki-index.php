@@ -759,6 +759,7 @@ if ($prefs['feature_wikiapproval'] == 'y') {
 	}
 }
 
+$ajaxlib->registerTemplate("tiki-show_page.tpl");
 $ajaxlib->processRequests();
 
 // Detect if we have a PDF export mod installed
