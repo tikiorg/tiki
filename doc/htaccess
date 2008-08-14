@@ -41,7 +41,7 @@
 	RewriteRule ^directories/?$        /tiki-directory_browse.php                [L]
 	RewriteRule ^eph/?$                /tiki-eph.php                             [L]
 	RewriteRule ^faqs/?$               /tiki-list_faqs.php                       [L]
-	RewriteRule ^files/?$              /tiki-file_galleries.php                  [L]
+	RewriteRule ^files/?$              /tiki-list_file_gallery.php                  [L]
 	RewriteRule ^forums/?$             /tiki-forums.php                          [L]
 	RewriteRule ^galleries/?$          /tiki-galleries.php                       [L]
 	RewriteRule ^games/?$              /tiki-list_games.php                      [L]

@@ -131,7 +131,7 @@
 {if $prefs.feature_file_galleries eq 'y'}
 <tr><td>{tr}Files{/tr}: </td><td><select name="wikilinks" onchange="setMenuCon(options[selectedIndex].value);return true;">
 <option value=",,,">{tr}Choose{/tr} ...</option>
-<option value="tiki-file_galleries.php,{tr}File galleries{/tr},feature_file_galleries,tiki_p_view_file_gallery">{tr}File galleries{/tr}</option>
+<option value="tiki-list_file_gallery.php,{tr}File galleries{/tr},feature_file_galleries,tiki_p_view_file_gallery">{tr}File galleries{/tr}</option>
 <option value="tiki-upload_file.php,{tr}Upload file{/tr},feature_file_galleries,tiki_p_upload_files">{tr}Upload file{/tr}</option>
 <option value="tiki-file_galleries_rankings.php,{tr}Rankings{/tr},feature_file_galleries_rankings,tiki_p_view_file_gallery">{tr}Rankings{/tr}</option>
 </select></td></tr>

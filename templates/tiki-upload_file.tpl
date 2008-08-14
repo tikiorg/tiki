@@ -210,7 +210,7 @@
 	{icon _id=exclamation alt="{tr}Error{/tr}" style="vertical-align:middle;"}
 	{tr}No gallery available.{/tr}
 	{tr}You have to create a gallery first!{/tr}
-	<p><a class="linkbut" href="tiki-file_galleries.php{if $filegals_manager neq ''}?filegals_manager={$filegals_manager|escape}{/if}">{tr}Create New Gallery{/tr}</a></p>
+	<p><a class="linkbut" href="tiki-list_file_gallery.php{if $filegals_manager neq ''}?filegals_manager={$filegals_manager|escape}{/if}">{tr}Create New Gallery{/tr}</a></p>
 {/if}
 	{if $prefs.javascript_enabled neq 'y' || ! $editFileId}
 		<script type="text/javascript">

@@ -309,12 +309,12 @@
   {if $prefs.feature_menusfolderstyle eq 'y'}
   <a class="separator" href="javascript:icntoggle('filegalmenu');"><img src="img/icons/{$icn_filegalmenu}fo.gif" style="border: 0" name="filegalmenuicn" alt="{tr}FileGalMenu{/tr}"/></a>
   {else}<a class="separator" href="javascript:toggle('filegalmenu');">[-]</a>{/if}
-  <a class="separator" href="tiki-file_galleries.php">{tr}File Galleries{/tr}</a>
+  <a class="separator" href="tiki-list_file_gallery.php">{tr}File Galleries{/tr}</a>
   {if $prefs.feature_menusfolderstyle ne 'y'}<a class="separator" href="javascript:toggle('filegalmenu');">[+]</a>{/if}
   </div>
   <div id="filegalmenu" style="{$mnu_filegalmenu}">
   {if $tiki_p_view_file_gallery eq 'y'}
-  <a href="tiki-file_galleries.php" class="linkmenu">{tr}List galleries{/tr}</a><br />
+  <a href="tiki-list_file_gallery.php" class="linkmenu">{tr}List galleries{/tr}</a><br />
   {/if}
   {if $prefs.feature_file_galleries_rankings eq 'y' and $tiki_p_view_file_gallery eq 'y'}
   <a href="tiki-file_galleries_rankings.php" class="linkmenu">{tr}Rankings{/tr}</a><br />

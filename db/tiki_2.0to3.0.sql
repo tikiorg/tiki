@@ -32,5 +32,8 @@ INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('Deleted','--text--','pics/icons/text_strikethrough.png','faqs');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('Deleted','--text--','pics/icons/text_strikethrough.png','forums');
 
+#2008-08-14 sept
+UPDATE `tiki_menu_options` set `url`='tiki-list_file_gallery.php' where `url`='tiki-file_galleres.php';
+
 #2008-08-14 pkdille
 UPDATE `tiki_menu_options` SET `url` = 'tiki-admin_include_score.php' where `url` = 'tiki-admin_score.php'

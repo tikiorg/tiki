@@ -4,7 +4,7 @@
 {if $galleryId ne ''}
 <a href="tiki-list_file_gallery.php?galleryId={$galleryId}" class="linkbut">
 {else}
-<a href="tiki-file_galleries.php" class="linkbut">
+<a href="tiki-list_file_gallery.php" class="linkbut">
 {/if}
 {tr}Browse file gallery{/tr}</a></span>
 <span class="button2"><a href="tiki-upload_file.php?galleryId={$galleryId}" class="linkbut">{tr}Upload from disk{/tr}</a></span>
