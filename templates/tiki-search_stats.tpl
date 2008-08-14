@@ -1,14 +1,9 @@
 {* $Id$ *}
-<h1><a class="pagetitle" href="tiki-search_stats.php">{tr}Search stats{/tr}</a>
-{if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}SearchStats" target="tikihelp" class="tikihelp" title="{tr}Search Stats{/tr}">
-{icon _id='help'}</a>{/if}
-{if $prefs.feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-search_stats.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}search stats tpl{/tr}">
-{icon _id='shape_square_edit' alt='{tr}Edit template{/tr}'}</a>{/if}</h1>
+
+{title help="SearchStats"}{tr}Search stats{/tr}{/title}
 
 <div class="navbar">
-<a class="linkbut" href="tiki-search_stats.php?clear=1">{tr}Clear Stats{/tr}</a>
+  <a class="linkbut" href="tiki-search_stats.php?clear=1">{tr}Clear Stats{/tr}</a>
 </div>
 
 {include file='find.tpl' _sort_mode='y'}

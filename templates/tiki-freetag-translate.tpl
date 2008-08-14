@@ -1,4 +1,5 @@
-<h1>{tr}Tag translation{/tr}{if isset($data)}: {$data.pageName}{/if}</h1>
+{title}{tr}Tag translation{/tr}{if isset($data)}: {$data.pageName}{/if}{/title}
+
 {if isset($data)}
 <a href="tiki-index.php?page={$objId}" class="linkbut">View page</a>
 {/if}

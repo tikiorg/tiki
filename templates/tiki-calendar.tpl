@@ -1,5 +1,14 @@
 {* $Id$ *}
 {popup_init src="lib/overlib.js"}
+
+{title}
+    {if $displayedcals|@count eq 1}
+      {tr}Calendar{/tr}: {assign var=x value=$displayedcals[0]}{$infocals[$x].name}
+    {else}
+      {tr}Calendar{/tr}
+    {/if}
+{/title}
+
 <div id="calscreen">
 
 <div id="configlinks" style="float:right;margin:5px;">
@@ -56,8 +65,6 @@ none
 		{/if}	
 	{/if}
 </div>
-
-<h1><a class="pagetitle" href="tiki-calendar.php">{if $displayedcals|@count eq 1}{tr}Calendar{/tr}: {assign var=x value=$displayedcals[0]}{$infocals[$x].name}{else}{tr}Calendar{/tr}{/if}</a></h1>
 
 {if count($listcals) >= 1}
 <form id="filtercal" method="get" action="{$myurl}" name="f" style="display:none;">

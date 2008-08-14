@@ -1,6 +1,6 @@
 {* $Id$ *}
 {if !( $searchNoResults ) }
-<h1>{tr}Search results{/tr}:</h1>
+  {title}{tr}Search results{/tr}{/title}
 {/if}
 
 {if !( $searchStyle eq "menu" )}

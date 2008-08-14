@@ -1,10 +1,6 @@
 {* $Id$ *}
 {if !( $searchNoResults ) }
-<h1>{tr}Search results{/tr}
-{if $tiki_p_admin eq 'y'}
-<a href="tiki-admin.php?page=search" title="{tr}Admin Feature{/tr}">{icon _id='wrench' alt="{tr}Admin Feature{/tr}"}</a>
-{/if}
-</h1>
+  {title admpage="search"}{tr}Search results{/tr}{/title}
 {/if}
 
 <div class="nohighlight">
