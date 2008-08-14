@@ -9,16 +9,21 @@
 //Include the code
 require_once ('tiki-setup.php');
 
-require_once ("graph-engine/graph.multiline.php");
-require_once ("graph-engine/gd.php");
-
 if ($prefs['feature_stats'] != 'y') {
+  $smarty->assign('msg', tra("This feature is disabled").": feature_stats");
+  $smarty->display("error.tpl");
 	die;
 }
 
 if ($tiki_p_view_stats != 'y') {
+  $smarty->assign('errortype', 401);
+	$smarty->assign('msg', tra("Permission denied you cannot view this section"));
+  $smarty->display("error.tpl");
 	die;
 }
+
+require_once ("graph-engine/graph.multiline.php");
+require_once ("graph-engine/gd.php");
 
 //Define the object
 $renderer = &new GD_GRenderer(450,300);
