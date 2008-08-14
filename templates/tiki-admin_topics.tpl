@@ -1,12 +1,6 @@
 {* $Id$ *}
-<h1><a  class="pagetitle" href="tiki-admin_topics.php">{tr}Admin Topics{/tr}</a>
 
-{if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}Articles" target="tikihelp" class="tikihelp" title="{tr}Admin Topics{/tr}">
-{icon _id='help'}</a>{/if}
-{if $prefs.feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-admin_topics.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}Admin Topics Template{/tr}">
-{icon _id='shape_square_edit'}</a>{/if}</h1>
+{title help="Articles"}{tr}Admin Topics{/tr}{/title}
 
 <h2>{tr}Create a new topic{/tr}</h2>
 

@@ -1,14 +1,7 @@
 {* $Id$ *}
-<h1><a href="tiki-assignpermission.php?group={$group|escape:url}" class="pagetitle">{tr}Assign permissions to group{/tr}: {$group}</a>
 
-{if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}Permissions+Settings" target="tikihelp" class="tikihelp" title="{tr}Help for Assigning Permissions{/tr}">
-{icon _id='help'}</a>
-{/if}
-{if $prefs.feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-assignpermission.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Edit Article Tpl{/tr}">
-{icon _id='shape_square_edit' alt='{tr}Edit template{/tr}'}</a>
-{/if}</h1>
+{assign var=escgroup value=$group|escape:url}
+{title help="Permissions+Settings" url="tiki-assignpermission.php?group=$escgroup"}{tr}Assign permissions to group:{/tr} {$group}{/title}
 
 <div class="navbar">
 {if $tiki_p_admin eq 'y'} {* only full admins can manage groups, not tiki_p_admin_users *}

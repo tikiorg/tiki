@@ -1,11 +1,6 @@
 {* $Id$ *}
-<h1><a class="pagetitle" href="tiki-admin_surveys.php">{tr}Admin surveys{/tr}</a>
-{if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}Surveys" target="tikihelp" class="tikihelp" title="{tr}Surveys{/tr}">
-{icon _id='help'}</a>{/if}
-{if $prefs.feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-admin_surveys.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}administer surveys template{/tr}">
-{icon _id='shape_square_edit'}</a>{/if}</h1>
+
+{title help="Surveys"}{tr}Admin surveys{/tr}{/title}
 
 <div class="navbar">
 <span class="button2"><a class="linkbut" href="tiki-list_surveys.php">{tr}List Surveys{/tr}</a></span>

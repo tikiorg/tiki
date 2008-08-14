@@ -1,15 +1,6 @@
 {* $Id$ *}
-<h1><a class="pagetitle" href="tiki-admin_tracker_fields.php?trackerId={$trackerId}">{tr}Admin Tracker{/tr}: {$tracker_info.name}</a>
 
-{if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}Adding+fields+to+a+tracker" target="tikihelp" class="tikihelp" title="{tr}Trackers{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
-
-{if $prefs.feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-admin_tracker_fields.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}admin Tracker fields tpl{/tr}">
-<img border='0' src='img/icons/info.gif' alt="{tr}edit{/tr}" /></a>{/if}
-
-</h1>
+{title help="Adding+fields+to+a+tracker" url="tiki-admin_tracker_fields.php?trackerId=$trackerId"}{tr}Admin Tracker:{/tr} {$tracker_info.name}{/title}
 
 <div  class="navbar">
 <span class="button2"><a href="tiki-list_trackers.php" class="linkbut">{tr}List Trackers{/tr}</a></span>

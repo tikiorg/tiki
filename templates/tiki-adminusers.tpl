@@ -1,18 +1,7 @@
 {* $Id$ *}
 {popup_init src="lib/overlib.js"}
-<h1><a href="tiki-adminusers.php" class="pagetitle">{tr}Admin Users{/tr}</a>
 
-{if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}Users+Management" target="tikihelp" class="tikihelp" title="{tr}Admin Users{/tr}">
-{icon _id='help'}</a>{/if}
-{if $prefs.feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-adminusers.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}Admin Users Template{/tr}">
-{icon _id='shape_square_edit'}</a>
-{/if}
-{if $tiki_p_admin eq 'y'}
-<a href="tiki-admin.php?page=login" title="{tr}Admin Feature{/tr}">{icon _id='wrench' alt="{tr}Admin Feature{/tr}"}</a>
-{/if}
-</h1>
+{title help="Users+Management" admpage="login"}{tr}Admin Users{/tr}{/title}
 
 <div class="navbar">
 {if $tiki_p_admin eq 'y'} {* only full admins can manage groups, not tiki_p_admin_users *}
