@@ -85,7 +85,7 @@
   ||  $tiki_p_edit_comments  == 'y')}
   {strip}
   <span class="button2">
-    <a href="#comments" onclick="javascript:flip('comzone');flip('comzone_close','inline');return false;" class="linkbut {if $comments_cant > 0}highlight{/if}">
+    <a href="#comments" onclick="javascript:flip('comzone{$page|@md5}');flip('comzone{$page|@md5}_close','inline');return false;" class="linkbut {if $comments_cant > 0}highlight{/if}">
       {if $comments_cant == 0 or ($tiki_p_read_comments  == 'n' and $tiki_p_post_comments  == 'y')}
         {tr}Add Comment{/tr}
       {elseif $comments_cant == 1}
@@ -93,7 +93,7 @@
       {else}
         {$comments_cant}&nbsp;{tr}comments{/tr}
       {/if}
-    <span id="comzone_close" style="display:{if isset($smarty.session.tiki_cookie_jar.show_comzone) and $smarty.session.tiki_cookie_jar.show_comzone eq 'y'}inline{else}none{/if};">({tr}Hide{/tr})</span>
+    <span id="comzone{$page|@md5}_close" style="display:{if isset($smarty.session.tiki_cookie_jar.show_comzone) and $smarty.session.tiki_cookie_jar.show_comzone eq 'y'}inline{else}none{/if};">({tr}Hide{/tr})</span>
     </a>
   </span>
   {/strip}   
@@ -112,7 +112,7 @@
 
 {strip}
   <span class="button2">
-    <a href="#attachments" onclick="javascript:flip('attzone');flip('attzone_close','inline');return false;" class="linkbut {if $atts|@count > 0}highlight{/if}">
+    <a href="#attachments" onclick="javascript:flip('attzone{$page|@md5}');flip('attzone{$page|@md5}_close','inline');return false;" class="linkbut {if $atts|@count > 0}highlight{/if}">
     {if $atts|@count == 0 || $tiki_p_wiki_attach_files == 'y' && $tiki_p_wiki_view_attachments == 'n' && $tiki_p_wiki_admin_attachments == 'n'}
       {tr}Attach File{/tr}
     {elseif $atts|@count == 1}
@@ -120,7 +120,7 @@
     {else}
       {tr}{$atts|@count} files attached{/tr}
     {/if}
-    <span id="attzone_close" style="display:{if (isset($smarty.session.tiki_cookie_jar.show_attzone) and $smarty.session.tiki_cookie_jar.show_attzone eq
+    <span id="attzone{$page|@md5}_close" style="display:{if (isset($smarty.session.tiki_cookie_jar.show_attzone) and $smarty.session.tiki_cookie_jar.show_attzone eq
 'y') or (!isset($smarty.session.tiki_cookie_jar.show_attzone) and $prefs.w_displayed_default eq 'y')}inline{else}none{/if};">({tr}Hide{/tr})
     </span>
     </a>

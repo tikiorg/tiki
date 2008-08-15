@@ -7,9 +7,9 @@
  || $tiki_p_wiki_attach_files == 'y'}
 {if (isset($smarty.session.tiki_cookie_jar.show_attzone) and $smarty.session.tiki_cookie_jar.show_attzone eq 'y')
 or (!isset($smarty.session.tiki_cookie_jar.show_attzone) and $prefs.w_displayed_default eq 'y')}
-<div id="attzone" style="display:block;">
+<div id="attzone{if $page}{$page|@md5}{/if}" style="display:block;">
 {else}
-<div id="attzone" style="display:none;">
+<div id="attzone{if $page}{$page|@md5}{/if}" style="display:none;">
 {/if}
 
 {* Generate table if view permissions granted
