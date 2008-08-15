@@ -1,0 +1,11 @@
+2004-04-24  Filip Miletic  <f.miletic@ewi.tudelft.nl>
+
+	* language.php ($lang): Yet more translations.
+	($lang): More translations. About 350 messages translated so far.
+	($lang): Translated days of the week. Names of months are nowhere
+	to be found in language.php ?!
+
+2004-04-19  Filip Miletic  <f.miletic@ewi.tudelft.nl>
+
+	* language.php ($lang): More translations.
+
