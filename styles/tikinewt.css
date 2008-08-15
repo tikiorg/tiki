@@ -173,13 +173,6 @@ ul.jumplinks {
 	list-style-type : none;
 }
 
-ul.jumplinks, .jumplinks {
-	position: absolute;
-	top: -9000px;
-	left: -9000px;
-	z-index: 9;
-}
-
 ul.jumplinks a:focus, ul.jumplinks a:active {
 	position: absolute;
 	top: 9010px;
