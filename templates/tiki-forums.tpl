@@ -1,16 +1,13 @@
 {* $Id$ *}
 
-<h1><a class="pagetitle" href="tiki-forums.php">{tr}Forums{/tr}</a>
-{if $tiki_p_admin eq 'y'}
-<a href="tiki-admin.php?page=forums" title="{tr}Admin Feature{/tr}">{icon _id='wrench' alt="{tr}Admin Feature{/tr}"}</a>
-{/if}
-</h1>
+{title help="forums" admpage="forums"}{tr}Forums{/tr}{/title}
 
-<div class="navbar">
 {if $tiki_p_admin_forum eq 'y'}
-<span class="button2"><a href="tiki-admin_forums.php" class="linkbut">{tr}Admin forums{/tr}</a></span>
+  <div class="navbar">
+    <a class="linkbut" href="tiki-admin_forums.php">{tr}Admin forums{/tr}</a>
+  </div>
 {/if}
-</div>
+
 {if $channels or ($find ne '')}
 {if $prefs.feature_forums_search eq 'y' or $prefs.feature_forums_name_search eq 'y'}
   <table class="findtable">

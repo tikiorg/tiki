@@ -1,12 +1,4 @@
-<h1><a href="tiki-list_cache.php" class="pagetitle">{tr}Cache{/tr}</a>
-  
-      {if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}Cache" target="tikihelp" class="tikihelp" title="{tr}Admin Cache{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
-
-      {if $prefs.feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-list_cache.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Admin Cache tpl{/tr}">
-<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}Edit Tpl{/tr}' /></a>{/if}</h1>
+{title help="Cache"}{tr}Cache{/tr}{/title}
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}
 {tr}The cache is used by:{/tr} <a href="tiki-admin.php?page=general">{tr}Use cache for external pages{/tr}</a>
@@ -14,7 +6,7 @@
 
 {include file='find.tpl' _sort_mode='y'}
 
-<div  align="center">
+<div align="center">
 {cycle values="odd,even" print=false}
 <table class="normal">
 <tr>

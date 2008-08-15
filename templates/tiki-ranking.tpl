@@ -1,4 +1,5 @@
-<h1><a class="pagetitle" href="{$rpage}">{tr}Rankings{/tr}</a></h1>
+{title}{tr}Rankings{/tr}{/title}
+
 <form action="{$rpage}" method="post">
 <select name="which">
 {section name=ix loop=$allrankings}

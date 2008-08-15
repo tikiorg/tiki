@@ -1,15 +1,6 @@
 {* $Id$ *}
-<h1><a class="pagetitle" href="tiki-shoutbox.php">{tr}Tiki Shoutbox{/tr}!</a>
 
-{if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}Shoutbox" target="tikihelp" class="tikihelp" title="{tr}Admin Tiki Shoutbox{/tr}">
-{icon _id='help'}</a>
-{/if}
-
-{if $prefs.feature_view_tpl eq 'y' and $tiki_p_edit_templates eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-shoutbox.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Admin Tiki Shoutbox tpl{/tr}">
-{icon _id='shape_square_edit' alt='{tr}Edit template{/tr}'}</a>
-{/if}</h1>
+{title help="Shoutbox"}{tr}Tiki Shoutbox{/tr}{/title}
 
 {if $tiki_p_admin_shoutbox eq 'y'}
 <h2>{tr}Change shoutbox general settings{/tr}</h2>

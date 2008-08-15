@@ -1,7 +1,5 @@
-{*Smarty template*}
-<h1>
-  <a class="pagetitle" href="tiki-notepad_write.php">{tr}Write a note{/tr}</a>
-</h1>
+{title help="Notepad"}{tr}Write a note{/tr}{/title}
+
 {include file=tiki-mytiki_bar.tpl}
 
 <div class="navbar">
