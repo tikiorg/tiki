@@ -15,7 +15,6 @@ class WikiRenderer
 		'setupStructure',
 		'setupContributors',
 		'setupCreator',
-		'setupPermissions',
 		'setupMultilingual',
 		'setupBacklinks',
 		'setupActions',
@@ -33,8 +32,8 @@ class WikiRenderer
 	private $toRestore = array();
 	private $prefRestore = array();
 
-	private $canView = false;
-	private $canUndo = false;
+	public $canView = false;
+	public $canUndo = false;
 
 	function __construct( $info, $user )
 	{
@@ -42,6 +41,61 @@ class WikiRenderer
 		$this->user = $user;
 		$this->page = $info['pageName'];
 	}
+
+	function applyPermissions() // {{{
+	{
+		global $tiki_p_admin, $tikilib, $userlib, $smarty, $user;
+
+		if ($tiki_p_admin != 'y' && $userlib->object_has_one_permission($this->page, 'wiki page')) {
+			$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'wiki');
+			$this->hasPermissions = true;
+			if ($userlib->object_has_permission($this->user, $this->page, 'wiki page', 'tiki_p_admin_wiki')) {
+				foreach ($perms["data"] as $perm) {
+					$perm = $perm["permName"];
+
+					$this->setGlobal( $perm, 'y' );
+				}
+			} else {
+				foreach ($perms["data"] as $perm) {
+					$perm = $perm["permName"];
+					$value = $userlib->object_has_permission($this->user, $this->page, 'wiki page', $perm) ? 'y' : 'n';
+
+					$this->setGlobal( $perm, $value );
+				}
+			}
+		} else {
+			$this->hasPermissions = false;
+		}
+
+		$permissions = $tikilib->get_perm_object( $this->page, 'wiki page', $this->info, false );
+
+		foreach( $permissions as $name => $value )
+			$this->setGlobal( $name, $value );
+
+		$this->canView = $GLOBALS['tiki_p_view'] == 'y';
+
+		$smarty->assign('page_user',$this->info['user']);
+	} // }}}
+
+	function restoreAll() // {{{
+	{
+		global $smarty, $prefs;
+		foreach( $this->toRestore as $name => $value )
+		{
+			$GLOBALS[$name] = $value;
+			$smarty->assign( $name, $value );
+		}
+
+		foreach( $this->prefRestore as $name => $value )
+			$prefs[$name] = $value;
+
+	} // }}}
+
+	function runSetups() // {{{
+	{
+		foreach( $this->prep as $method )
+			$this->$method();
+	} // }}}
 
 	function setPageNumber( $number ) // {{{
 	{
@@ -128,41 +182,6 @@ class WikiRenderer
 		}
 
 		$smarty->assign('creator',$creator);
-	} // }}}
-
-	private function setupPermissions() // {{{
-	{
-		global $tiki_p_admin, $userlib, $smarty, $user;
-
-		if ($tiki_p_admin != 'y' && $userlib->object_has_one_permission($this->page, 'wiki page')) {
-			$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'wiki');
-			$this->hasPermissions = true;
-			if ($userlib->object_has_permission($this->user, $this->page, 'wiki page', 'tiki_p_admin_wiki')) {
-				foreach ($perms["data"] as $perm) {
-					$perm = $perm["permName"];
-
-					$this->setGlobal( $perm, 'y' );
-				}
-			} else {
-				foreach ($perms["data"] as $perm) {
-					$perm = $perm["permName"];
-					$value = $userlib->object_has_permission($this->user, $this->page, 'wiki page', $perm) ? 'y' : 'n';
-
-					$this->setGlobal( $perm, $value );
-				}
-			}
-		} else {
-			$this->hasPermissions = false;
-		}
-
-		$permissions = $tikilib->get_perm_object( $this->page, 'wiki page', $this->info, false );
-
-		foreach( $permissions as $name => $value )
-			$this->setGlobal( $name, $value );
-
-		$this->canView = $GLOBALS['tiki_p_view'] == 'y';
-
-		$smarty->assign('page_user',$this->info['user']);
 	} // }}}
 
 	private function setupMultilingual() // {{{
@@ -420,7 +439,7 @@ class WikiRenderer
 			if ($prefs['feature_categoryobjects'] == 'y') {	    
 				$display_catobjects = $categlib->get_categoryobjects($cats);
 				$smarty->assign('display_catobjects',$display_catobjects);
-			}    
+			}
 		} else {
 			$smarty->assign('is_categorized','n');
 		}
