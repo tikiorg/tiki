@@ -13,8 +13,8 @@
 <body>
 <div id="{$rootid}browse_image">
 {else}
+  {title}{tr}Browsing Image:{/tr}&nbsp;{$name}{/title}
 <div id="{$rootid}browse_image">
-  <h1><a class="pagetitle pixurl" href="{$url_base}{$imageId}">{tr}Browsing Image{/tr}: <span class="noslideshow">{$name}</span><span class="slideshow_i pixurl" style="display: none">#{$imageId}</span></a></h1>
   <p style="float:left;position:absolute;">
     <a class="linkbut" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;offset={$offset}" style="">{tr}Return to Gallery{/tr}</a>
     {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}

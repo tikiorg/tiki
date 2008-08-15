@@ -1,17 +1,6 @@
 {* $Id$ *}
 
-<h1><a href="tiki-galleries.php" class="pagetitle">{tr}Galleries{/tr}</a>
-{if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}Image+Galleries" target="tikihelp" class="tikihelp" title="{tr}Image Gallery{/tr}" >
-{icon _id='help'}</a>
-{/if}
-{if $prefs.feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-galleries.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}galleries tpl{/tr}">
-{icon _id='shape_square_edit' alt='{tr}Edit Tpl{/tr}'}</a>
-{/if}
-{if $tiki_p_admin eq 'y'}
-<a href="tiki-admin.php?page=gal" class="tikihelp">{icon _id='wrench' alt="{tr}Admin Feature{/tr}"}</a>
-{/if}</h1>
+{title help="Image+Galleries" admpage="gal"}{tr}Galleries{/tr}{/title}
 
 {if $tiki_p_create_galleries eq 'y'}
 {if $edit_mode ne 'y' or $galleryId ne 0}<div class="navbar"><a class="linkbut" href="tiki-galleries.php?edit_mode=1&amp;galleryId=0">{tr}Create New Gallery{/tr}</a></div>{/if}

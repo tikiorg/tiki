@@ -1,7 +1,9 @@
 {* $Id$ *}
 {popup_init src="lib/overlib.js"}
 
-<h1><a class="pagetitle" href="tiki-file_archives.php?fileId={$file_info.fileId}">{tr}File Archive{/tr}: {if empty($file_info.name)}{$file_info.filename|escape}{else}{$file_info.name}{/if}</a></h1>
+{title}
+  {tr}File Archive{/tr}: {if empty($file_info.name)}{$file_info.filename|escape}{else}{$file_info.name}{/if}
+{/title}
 
 {if $tiki_p_list_file_galleries eq 'y' or ( ! isset($tiki_p_list_file_galleries) and $tiki_p_view_file_gallery eq 'y' )}
 	<a href="tiki-list_file_gallery.php" class="linkbut" title="{tr}List Galleries{/tr}">{tr}List Galleries{/tr}</a>

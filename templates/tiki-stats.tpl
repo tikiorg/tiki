@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-<h1><a href="tiki-stats.php" class="pagetitle">{tr}Stats{/tr}</a></h1>
+{title help="Stats"}{tr}Stats{/tr}{/title}
 
 <div id="page-bar">
 

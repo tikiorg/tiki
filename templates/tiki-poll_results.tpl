@@ -1,9 +1,12 @@
 {* $Id$ *}
-<h1><a href="tiki-poll_results.php{if !empty($smarty.request.pollId)}?pollId={$smarty.request.pollId}{/if}">{tr}Poll Results{/tr}</a></h1>
+
+{title help="polls" admpage="polls"}{tr}Poll Results{/tr}{/title}
+
 <div class="navbar">
-<span class="button2"><a href="tiki-old_polls.php" class="linkbut">{tr}Polls{/tr}</a></span>
-<span class="button2"><a href="tiki-poll_results.php" class="linkbut">{tr}Top Voted Polls{/tr}</a></span>
+  <span class="button2"><a href="tiki-old_polls.php" class="linkbut">{tr}Polls{/tr}</a></span>
+  <span class="button2"><a href="tiki-poll_results.php" class="linkbut">{tr}Top Voted Polls{/tr}</a></span>
 </div>
+
 {if empty($smarty.request.pollId) and !isset($list_votes)}
 <div align="center">
 <form method="post" action="{$smarty.server.PHP_SELF}">

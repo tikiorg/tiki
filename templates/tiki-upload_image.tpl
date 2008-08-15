@@ -1,27 +1,21 @@
 {* $Id$ *}
-<h1><a href="tiki-upload_image.php{if $galleryId}?galleryId={$galleryId}{/if}" class="pagetitle">{tr}Upload Image{/tr}</a>
 
-{if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}Image+Galleries" target="tikihelp" class="tikihelp" title="{tr}Image Gallery{/tr}">
-{icon _id='help'}</a>
-{/if}
-
-{if $prefs.feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-upload_image.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Image Gallery tpl{/tr}">
-{icon _id='shape_square_edit' alt='{tr}Edit template{/tr}'}</a>
-{/if}</h1>
+{title help="Image+Galleries"}{tr}Upload Image{/tr}{/title}
 
 <div class="navbar">
-<span class="button2">
-{if $galleryId ne ''}
-<a href="tiki-browse_gallery.php?galleryId={$galleryId}" class="linkbut">
-{else}
-<a href="tiki-galleries.php" class="linkbut">
-{/if}
-{tr}Browse gallery{/tr}</a></span>
+  <span class="button2">
+    {if $galleryId ne ''}
+      <a href="tiki-browse_gallery.php?galleryId={$galleryId}" class="linkbut">
+    {else}
+      <a href="tiki-galleries.php" class="linkbut">
+    {/if}
+    {tr}Browse gallery{/tr}</a>
+  </span>
   {if $prefs.feature_gal_batch eq "y" and $tiki_p_batch_upload_image_dir eq 'y'}
     {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner) or $public eq 'y'}
-      <span class="button2"><a href="tiki-batch_upload.php{if $galleryId}?galleryId={$galleryId}{/if}" class="linkbut">{tr}Directory batch{/tr}</a></span>
+      <span class="button2">
+        <a href="tiki-batch_upload.php{if $galleryId}?galleryId={$galleryId}{/if}" class="linkbut">{tr}Directory batch{/tr}</a>
+      </span>
     {/if}
   {/if}
 </div>

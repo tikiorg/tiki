@@ -1,4 +1,8 @@
-<h1><a href="tiki-list_gallery.php?galleryId={$galleryId}" class="pagetitle">{tr}Browsing Gallery{/tr}: {$name}</a></h1>
+{title help="Image+Galleries"}{tr}Browsing Gallery:{/tr}&nbsp;{$name}{/title}
+
+<div class="galdesc">
+  {$description}
+</div>
 
 <div class="navbar">
 {if $system eq 'n'}
@@ -15,11 +19,7 @@
 <a href="tiki-browse_gallery.php?galleryId={$galleryId}" class="linkbut">{tr}Browse Gallery{/tr}</a>
 </div>
 
-<div class="galdesc">
-  {$description}
-</div>
-
-  <h2>{tr}Gallery Images{/tr}</h2>
+<h2>{tr}Gallery Images{/tr}</h2>
 <div align="center">
 <table class="normal">
 <tr>
