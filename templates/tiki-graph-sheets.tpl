@@ -1,7 +1,9 @@
-<h1>{$title}</h1>
+{title help="Spreadsheet"}{$title}{/title}
+
 <p>
-{$description}
+  {$description}
 </p>
+
 {if ($mode eq 'graph')}
 <h2>{tr}Select Graphic Type{/tr}</h2>
 <form method="get" action="tiki-graph_sheet.php">

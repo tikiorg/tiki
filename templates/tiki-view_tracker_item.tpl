@@ -1,6 +1,8 @@
 {* $Id$ *}
 <script type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
-<h1><a class="pagetitle" href="tiki-view_tracker_item.php?itemId={$itemId}">{tr}Tracker Item:{/tr} {$tracker_info.name}</a></h1>
+
+{title help="trackers"}{tr}Tracker Item:{/tr} {$tracker_info.name}{/title}
+
 
 {* --------- navigation ------ *}
 <div class="navbar">

@@ -1,17 +1,23 @@
-<h1><a class="pagetitle" href="tiki-view_chart.php?chartId={$smarty.request.chartId}">{$chart_info.title}</a></h1>
+{title help="charts"}{$chart_info.title}{/title}
+
 {if $chart_info.hits > 0}
-<small>{tr}viewed{/tr} {$chart_info.hits} {tr}times{/tr}</small>
-<br /><br />
+  <small>{tr}viewed{/tr} {$chart_info.hits} {tr}times{/tr}</small>
+  <br /><br />
 {/if}
+
 {if strlen($chart_info.description)}
-{$chart_info.description}<br /><br /><br />
+  {$chart_info.description}
+  <br /><br /><br />
 {/if}
+
 {if $tiki_p_admin_charts eq 'y'}
-<a href="tiki-admin_charts.php?chartId={$smarty.request.chartId}">{icon _id='wrench' alt='{tr}Edit Chart{/tr}'}</a>
+  <a href="tiki-admin_charts.php?chartId={$smarty.request.chartId}">{icon _id='wrench' alt='{tr}Edit Chart{/tr}'}</a>
 {/if}
+
 {if $tiki_p_admin_charts eq 'y' or $tiki_p_suggest_chart_item eq 'y'}
-<a href="tiki-admin_chart_items.php?chartId={$smarty.request.chartId}">{icon _id='text_list_numbers' alt='{tr}Edit Items{/tr}'}</a>
+  <a href="tiki-admin_chart_items.php?chartId={$smarty.request.chartId}">{icon _id='text_list_numbers' alt='{tr}Edit Items{/tr}'}</a>
 {/if}
+
 <a href="tiki-charts.php">{icon _id='table' alt='{tr}List Charts{/tr}'}</a>
 <a class="link" href="tiki-view_chart.php?chartId={$smarty.request.chartId}">{icon _id='chart_line' alt='{tr}Last Chart{/tr}'}</a>
 {if $chart_info.frequency > 0}

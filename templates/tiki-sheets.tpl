@@ -1,23 +1,19 @@
 {* $Id$ *}
-<h1><a href="tiki-sheets.php" class="pagetitle">{tr}TikiSheet{/tr}</a>
-{if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}Spreadsheet" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Tiki Sheet{/tr}">
-{icon _id='help'}</a>{/if}
-{if $prefs.feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-sheets.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}sheets tpl{/tr}">
-{icon _id='shape_square_edit' alt='{tr}Edit template{/tr}'}</a>{/if}
-</h1>
+
+{title help="Spreadsheet"}{tr}TikiSheet{/tr}{/title}
 
 {if $tiki_p_edit_sheet eq 'y'}
 {if $edit_mode eq 'y'}
+
 {if $sheetId eq 0}
-<h2>{tr}Create a sheet{/tr}</h2>
+  <h2>{tr}Create a sheet{/tr}</h2>
 {else}
-<h2>{tr}Edit this sheet:{/tr} {$title}</h2>
-{if $tiki_p_edit_sheet eq 'y'}
-<div class="navbar"><a class="linkbut" href="tiki-sheets.php?edit_mode=1&amp;sheetId=0">{tr}Create New Sheet{/tr}</a></div>
+  <h2>{tr}Edit this sheet:{/tr} {$title}</h2>
+  {if $tiki_p_edit_sheet eq 'y'}
+    <div class="navbar"><a class="linkbut" href="tiki-sheets.php?edit_mode=1&amp;sheetId=0">{tr}Create New Sheet{/tr}</a></div>
+  {/if}
 {/if}
-{/if}
+
 <div align="center">
 {if $individual eq 'y'}
 <a class="gallink" href="tiki-objectpermissions.php?objectName={$name|escape:"url"}&amp;objectType=sheet&amp;permType=sheet&amp;objectId={$sheetId}">{tr}There are individual permissions set for this sheet{/tr}</a>

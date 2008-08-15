@@ -1,5 +1,5 @@
-<h1><a class="pagetitle" href="tiki-view_chart_item.php?itemId={$smarty.request.itemId}">{tr}Item information{/tr}</a>
-</h1>
+{title help="charts"}{tr}Item information{/tr}{/title}
+
 {cycle values="odd,even" print=false}
 <table class="normal">
 <tr>
