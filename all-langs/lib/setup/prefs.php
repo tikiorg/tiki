@@ -985,6 +985,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['feature_morcego'] = 'n';
 	$prefs['feature_multilingual'] = 'n';
 	$prefs['feature_multilingual_structures'] = 'n';
+	$prefs['feature_multilingual_one_page'] = 'n';
 	$prefs['feature_newsletters'] = 'n';
 	$prefs['feature_obzip'] = 'n';
 	$prefs['feature_phplayers'] = 'y'; // Enabled by default for a better file gallery tree explorer
