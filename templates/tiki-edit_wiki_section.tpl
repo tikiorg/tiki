@@ -1,6 +1,10 @@
 {* $Id$ *}
-<h1><a href="tiki-edit_wiki_section.php?object={$object|escape:url}&amp;type={$type|escape:url}{if isset($pos)}&amp;pos={$pos}{/if}{if isset($cell)}&amp;cell={$cell}{/if}{if isset($hdr)}&amp;hdr={$hdr}{/if}">{tr}Edit Section:{/tr}{$title}</a></h1>
-<a href="{$referer}" class="linkbut">{tr}View object{/tr}</a>
+
+{title}{tr}Edit Section:{/tr}&nbsp;{$title}{/title}
+
+<div class="navbar">
+  <a class="linkbut" href="{$referer}">{tr}View object{/tr}</a>
+</div>
 
 {if $preview}
   {include file='tiki-preview.tpl'}

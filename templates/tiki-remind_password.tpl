@@ -1,4 +1,8 @@
-<h1>{tr}I forgot my password{/tr}</h1>
+{title}{tr}I forgot my password{/tr}{/title}
+
+<div class="navbar">
+  <a class="linkbut" href="{$prefs.tikiIndex}">{tr}Return to HomePage{/tr}</a>
+</div>
 
 {if $showmsg ne 'n'}
   {if $showmsg eq 'e'}<span class="warn">{icon _id=exclamation alt="{tr}Error{/tr}" style="vertical-align:middle;align:left;"}{else}{icon _id=accept alt="{tr}OK{/tr}" style="vertical-align:middle;align:left;"} {/if} 
@@ -26,6 +30,3 @@
   </table>
   </form>
 {/if}
-
-<br /><br />
-<a href="{$prefs.tikiIndex}" class="link">{tr}Return to HomePage{/tr}</a>
