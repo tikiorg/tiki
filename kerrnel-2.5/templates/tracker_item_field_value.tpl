@@ -98,7 +98,18 @@
 	{elseif $list_mode eq 'csv'}
 		{$field_value.value}
 	{else}
-		{$field_value.value|escape}
+        {$field_value.value|escape}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		{if $field_value.type eq 'I' and isset($field_value.options_array[1])}
+          {if $field_value.options_array[1] == 1}
+            (<a href="http://{$field_value.value|escape}">http link</a>)
+          {elseif $field_value.options_array[1] == 2}
+            (<a href="https://{$field_value.value|escape}">https link</a>)
+          {elseif $field_value.options_array[1] == 3}
+            (<a href="telnet://{$field_value.value|escape}">telnet link</a>)
+          {elseif $field_value.options_array[1] == 4}
+            (<a href="ssh://{$field_value.value|escape}">secure shell link</a>)
+          {/if}
+		{/if}
 	{/if}
 
 {* -------------------- image -------------------- *}

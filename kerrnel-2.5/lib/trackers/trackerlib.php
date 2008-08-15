@@ -2296,9 +2296,11 @@ class TrackerLib extends TikiLib {
 			'opt'=>true,
 			'help'=>tra('<dl>
 				<dt>Function: Provides a field for entering an IP address.
-				<dt>Usage: <strong>[auto-assign]</strong>
+				<dt>Usage: <strong>[auto-assign][,linkType]</strong>
 				<dt>Description: 
-				<dd><strong>[auto-assign]</strong> will auto-populate the field with the IP address of the user who created the item if set to 1, or will set the field to the IP of the user who last modified the item if set to 2.
+				<dd><strong>[auto-assign]</strong> will auto-populate the field with the IP address of the user who created the item if set to 1, or will set the field to the IP of the user who last modified the item if set to 2;
+				<dd><strong>[linkType]</strong> will make the IP into a URI and linkable with the specified prefix where 0 is unlinked (default), 1 is http://, 2 is https://, 3 is telnet://, and 4 is ssh://;
+				<dd>multiple options must appear in the order specified, separated by commas.
 				</dl>'));
 		$type['y'] = array(
 			'label'=>tra('country selector'),
