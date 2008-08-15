@@ -4,22 +4,19 @@
 {popup_init src="lib/overlib.js"}
 {include file="tiki-articles-js.tpl"}
 
-<h1>{if $articleId}<a class="pagetitle" href="tiki-edit_article.php?articleId={$articleId}">{tr}Edit{/tr}: {$title}</a>{else}<a class="pagetitle" href="tiki-edit_article.php?articleId={$articleId}">{tr}Edit article{/tr}{/if}
 {assign var=area_name value="body"}
 
-{if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}Articles" target="tikihelp" class="tikihelp" title="{tr}Edit Article{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
-{/if}
-
-{if $prefs.feature_edit_templates eq 'y' and $tiki_p_edit_templates eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-edit_article.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Edit Article Tpl{/tr}">
-<img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}Edit Template{/tr}' /></a>
-{/if}</h1>
+{title help="Articles"}
+  {if $articleId}
+    {tr}Edit:{/tr} {$title}
+  {else}
+    {tr}Edit article{/tr}
+  {/if}
+{/title}
 
 <div class="navbar">
-<a class="linkbut" href="tiki-list_articles.php">{tr}List Articles{/tr}</a>
-<a class="linkbut" href="tiki-view_articles.php">{tr}View Articles{/tr}</a>
+  <a class="linkbut" href="tiki-list_articles.php">{tr}List Articles{/tr}</a>
+  <a class="linkbut" href="tiki-view_articles.php">{tr}View Articles{/tr}</a>
 </div>
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}

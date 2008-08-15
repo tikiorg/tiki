@@ -1,17 +1,21 @@
 {* $Id$ *}
 
-<h1><a class="pagetitle" href="tiki-pagehistory.php?page={$page|escape:"url"}{if $preview}&amp;preview={$preview}{elseif $source}&amp;source={$source}{elseif $diff_style}&amp;compare=1&amp;oldver={$old.version}&amp;newver={$new.version}&amp;diff_style={$diff_style}{/if}" title="{tr}History{/tr}">{tr}History{/tr}: {$page}</a></h1>
+{title}{tr}History{/tr}: {$page}{/title}
 
-<div class="navbar"><a href="tiki-index.php?page={$page|escape:url}" class="linkbut" title="{tr}View{/tr}">{tr}View page{/tr}</a></div>
+<div class="navbar">
+  <a href="tiki-index.php?page={$page|escape:url}" class="linkbut" title="{tr}View{/tr}">{tr}View page{/tr}</a>
+</div>
 
 {if $preview}
-<h2>{tr}Preview of version{/tr}: {$preview}
-{if $info.version eq $preview}<small><small>{tr}(current){/tr}</small></small>{/if}
-</h2>
-{if $info.version ne $preview and  $tiki_p_rollback eq 'y'}
-<div class="navbar"><a class="linkbut" href="tiki-rollback.php?page={$page|escape:"url"}&amp;version={$preview}" title="{tr}Rollback{/tr}">{tr}Rollback to this version{/tr}</a></div>
-{/if}
-<div  class="wikitext">{$previewd}</div>
+  <h2>{tr}Preview of version{/tr}: {$preview}
+    {if $info.version eq $preview}<small><small>{tr}(current){/tr}</small></small>{/if}
+  </h2>
+  {if $info.version ne $preview and $tiki_p_rollback eq 'y'}
+    <div class="navbar">
+      <a class="linkbut" href="tiki-rollback.php?page={$page|escape:"url"}&amp;version={$preview}" title="{tr}Rollback{/tr}">{tr}Rollback to this version{/tr}</a>
+    </div>
+  {/if}
+  <div class="wikitext">{$previewd}</div>
 {/if}
 
 {if $source}
@@ -21,14 +25,14 @@
 {if $info.version ne $source and $tiki_p_rollback eq 'y'}
 <div class="navbar"><a class="linkbut" href="tiki-rollback.php?page={$page|escape:"url"}&amp;version={$source}" title="{tr}Rollback{/tr}">{tr}Rollback to this version{/tr}</a></div>
 {/if}
-<div  class="wikitext">{$sourced}</div>
+<div class="wikitext">{$sourced}</div>
 {/if}
 
 {include file=pagehistory.tpl}
 
 <br />
 
-{if (!isset($noHistory))}                                              
+{if (!isset($noHistory))}
 {if $preview || $source || $diff_style}<h2>{tr}History{/tr}</h2>{/if}
 <form action="tiki-pagehistory.php" method="post">
 <input type="hidden" name="page" value="{$page|escape}" />
@@ -102,7 +106,7 @@
 </td>
 {if $prefs.default_wiki_diff_style ne "old" and $history}
 <td class="odd button"><input type="radio" name="oldver" value="0" title="{tr}Compare{/tr}" {if $old.version == $info.version}checked="checked"{/if} /></td>
-<td class="odd button"><input type="radio" name="newver" value="0" title="{tr}Compare{/tr}" {if $new.version == $info.version or !$diff_style}checked="checked"{/if}  /></td>
+<td class="odd button"><input type="radio" name="newver" value="0" title="{tr}Compare{/tr}" {if $new.version == $info.version or !$diff_style}checked="checked"{/if} /></td>
 {/if}
 </tr>
 {cycle values="odd,even" print=false}

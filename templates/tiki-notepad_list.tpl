@@ -1,16 +1,19 @@
-<h1><a class="pagetitle" href="tiki-notepad_list.php">{tr}Notes{/tr}</a></h1>
+{title help="notepad"}{tr}Notes{/tr}{/title}
+
 {if $prefs.feature_ajax ne 'y' && $prefs.feature_mootools ne 'y'}
-{include file=tiki-mytiki_bar.tpl}
+  {include file=tiki-mytiki_bar.tpl}
 {/if}
 
-<div class="navbar"><span class="button2"><a class="linkbut" href="tiki-notepad_write.php">{tr}Write a note{/tr}</a></span></div>
+<div class="navbar">
+  <span class="button2"><a class="linkbut" href="tiki-notepad_write.php">{tr}Write a note{/tr}</a></span>
+</div>
 
 <div style="text-align:center;">
  <div style="height:20px; width:200px; border:1px solid black; background-color:#666666; text-align:left; margin:0 auto;">
     <div style="background-color:red; height:100%; width:{$cellsize}px;"> 
     </div>
   </div>
-<small>{tr}quota{/tr}&nbsp;{$percentage}%</small>
+  <small>{tr}quota{/tr}&nbsp;{$percentage}%</small>
 </div>
 
 {if count($channels) > 0 or $find ne ''}

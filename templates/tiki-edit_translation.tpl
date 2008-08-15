@@ -1,11 +1,11 @@
-<h1>{tr}Translate:{/tr}&nbsp;{if $type eq 'wiki page'}<a href="tiki-index.php?page={$name|escape:'url'}&bl=n">{else}<a href="tiki-read_article.php?articleId={$id}">{/if}{$name}</a> {if isset($languageName)}({$languageName}, {$langpage}){/if}
-{if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}i18n" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Edit Translations{/tr}"><img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
+{title help="i18n"}{tr}Translate:{/tr}&nbsp;{$name}{if isset($languageName)}&nbsp;({$languageName}, {$langpage}){/if}{/title}
+
+{if $type eq 'wiki page'}
+  <a class="linkbut" href="tiki-index.php?page={$name|escape:'url'}&bl=n">{tr}View Page{/tr}</a>
+{else}
+  <a href="tiki-read_article.php?articleId={$id}">{tr}View Article{/tr}</a>
 {/if}
-{if $prefs.feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-edit_translation.tpl" target="tikihelp" class="tikihelp" title="{tr}View template{/tr}: {tr}Edit Translations Template{/tr}"><img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}Edit template{/tr}' /></a>
-{/if}
-</h1>
+
 
 {if $error}
 	<div class="simplebox highlight">

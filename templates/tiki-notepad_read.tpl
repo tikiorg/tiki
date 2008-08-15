@@ -1,4 +1,5 @@
-<h1><a class="pagetitle" href="tiki-notepad_read.php?noteId={$noteId}">{tr}Reading note:{/tr} {$info.name}</a></h1>
+{title help="notepad"}{tr}Reading note:{/tr}&nbsp;{$info.name}{/title}
+
 {include file=tiki-mytiki_bar.tpl}
 
 <span class="button2"><a class="linkbut" href="tiki-notepad_list.php">{tr}List notes{/tr}</a></span>
