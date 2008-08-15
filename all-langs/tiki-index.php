@@ -208,16 +208,6 @@ if ($prefs['feature_multilingual'] == 'y' && $prefs['feature_sync_language'] == 
 	$prefs['language'] = $info['lang'];
 }
 
-/*Wiki SECURITY warning to optimizers : Although get_page_info is currently
-called even if permission is denied, we must still get page's real name
-(case-sensitive) before tiki-pagesetup.php is included. Bug #990242 for
-details */
-// Update the pagename with the canonical name.  This makes it
-// possible to link to a page using any case, but the page is still
-// displayed with the original capitalization.  So if there's a page
-// called 'About Me', then one can conveniently make a link to it in
-// the text as '... learn more ((about me)).'.  When the link is
-// followed, then it still says 'About Me' in the title.
 $page = $info['pageName'];
 
 $pageRenderer = new WikiRenderer( $info, $user );
@@ -226,12 +216,8 @@ $pageRenderer->applyPermissions();
 if( $page_ref_id )
 	$pageRenderer->setStructureInfo( $page_info );
 
-// Get the authors style for this page
-$wiki_authors_style = ( $prefs['wiki_authors_style_by_page'] == 'y' && $info['wiki_authors_style'] != '' ) ? $info['wiki_authors_style'] : $prefs['wiki_authors_style'];
-$smarty->assign('wiki_authors_style', $wiki_authors_style);
-
 // Now check permissions to access this page
-if($tiki_p_view != 'y') {
+if( ! $pageRenderer->canView ) {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg',tra('Permission denied you cannot view this page'));
 	$smarty->display('error.tpl');
@@ -242,6 +228,7 @@ if($tiki_p_view != 'y') {
 if (isset($_REQUEST['convertstructure']) && isset($structs) && count($structs) == 0) {
 	$page_ref_id = $structlib->s_create_page(0, null, $page);
 	header('Location: tiki-index.php?page_ref_id='.$page_ref_id );
+	exit;
 }
 
 if(isset($_REQUEST['copyrightpage'])) {
@@ -265,7 +252,6 @@ if(!in_array($page,$_SESSION['breadCrumb'])) {
     unset($_SESSION['breadCrumb'][$pos]);
     array_push($_SESSION['breadCrumb'],$page);
 }
-//print_r($_SESSION["breadCrumb"]);
 
 
 // Now increment page hits since we are visiting this page
@@ -374,7 +360,7 @@ if($prefs['feature_wiki_attachments'] == 'y') {
 			key_get($area);
 		}
 	}
-    $smarty->assign('atts_show', 'y');
+	$pageRenderer->setShowAttachments( 'y' );
     }
     if(isset($_REQUEST['attach']) && ($tiki_p_wiki_admin_attachments == 'y' || $tiki_p_wiki_attach_files == 'y')) {
 	check_ticket('index');

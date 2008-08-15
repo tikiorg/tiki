@@ -301,6 +301,10 @@ class WikiRenderer
 		$smarty->assign('feature_wiki_pageid', $prefs['feature_wiki_pageid']);
 		$smarty->assign('page_id',$this->info['page_id']);
 
+		// Get the authors style for this page
+		$wiki_authors_style = ( $prefs['wiki_authors_style_by_page'] == 'y' && $this->info['wiki_authors_style'] != '' ) ? $this->info['wiki_authors_style'] : $prefs['wiki_authors_style'];
+		$smarty->assign('wiki_authors_style', $wiki_authors_style);
+
 		$smarty->assign('cached_page','n');
 		$parse_options = array(
 			'is_html' => $this->info['is_html'],
