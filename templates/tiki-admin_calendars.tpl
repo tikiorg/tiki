@@ -69,11 +69,11 @@ href="tiki-objectpermissions.php?objectName={$cal.name|escape:"url"}&amp;objectT
 <a class="prevnext" href="tiki-admin_calendars.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
 {$smarty.section.foo.index_next}</a>&nbsp;
 {/section}
+</div>
 {/if}
 {else}
 <b>{tr}No records found{/tr}</b>
 {/if}
-</div>
 </div>
 
 {* --- tab with form --- *}
