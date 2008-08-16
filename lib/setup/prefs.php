@@ -161,7 +161,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['wiki_edit_section'] = 'y';
 	$prefs['wiki_edit_plugin'] = 'y';
 
-	$prefs['wikiplugin_agentinfo'] = 'y';
+	$prefs['wikiplugin_agentinfo'] = 'n';
 	$prefs['wikiplugin_alink'] = 'y';
 	$prefs['wikiplugin_aname'] = 'y';
 	$prefs['wikiplugin_annotation'] = 'y';

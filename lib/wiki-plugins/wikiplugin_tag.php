@@ -12,6 +12,7 @@ function wikiplugin_tag_help() {
 function wikiplugin_tag_info() {
 	return array(
 		'name' => tra('Tag'),
+		'documentation' => 'PluginTag',
 		'description' => tra('Displays the text between an html tag'),
 		'prefs' => array( 'wikiplugin_tag' ),
 		'body' => tra('text'),

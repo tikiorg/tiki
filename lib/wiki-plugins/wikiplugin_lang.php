@@ -11,6 +11,7 @@ function wikiplugin_lang_help() {
 function wikiplugin_lang_info() {
 	return array(
 		'name' => tra('Language'),
+		'documentation' => 'PluginLang',
 		'description' => tra("Displays the text only if the language matchs"),
 		'prefs' => array( 'feature_multilingual', 'wikiplugin_lang' ),
 		'body' => tra('text'),

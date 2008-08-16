@@ -19,6 +19,7 @@ function wikiplugin_div_help() {
 function wikiplugin_div_info() {
 	return array(
 		'name' => tra('Div'),
+		'documentation' => 'PluginDiv',
 		'description' => tra("Insert a division block on wiki page"),
 		'prefs' => array('wikiplugin_div'),
 		'body' => tra('text'),

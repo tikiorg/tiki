@@ -12,6 +12,7 @@ function wikiplugin_agentinfo_help() {
 function wikiplugin_agentinfo_info() {
 	return array(
 		'name' => tra( 'User-Agent Info' ),
+		'documentation' => 'PluginAgentinfo',
 		'description' => tra( 'Displays various information about the client.' ),
 		'prefs' => array('wikiplugin_agentinfo'),
 		'params' => array(),

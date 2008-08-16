@@ -27,6 +27,7 @@ function wikiplugin_split_help() {
 function wikiplugin_split_info() {
 	return array(
 		'name' => tra('Split'),
+		'documentation' => 'PluginSplit',
 		'description' => tra('Split a page into rows and columns'),
 		'prefs' => array( 'wikiplugin_split' ),
 		'params' => array(

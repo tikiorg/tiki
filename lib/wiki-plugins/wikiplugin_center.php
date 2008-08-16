@@ -12,6 +12,7 @@ function wikiplugin_center_help() {
 function wikiplugin_center_info() {
 	return array(
 		'name' => tra('Center'),
+		'documentation' => 'PluginCenter',
 		'description' => tra("Centers the plugin content in the wiki page"),
 		'prefs' => array('wikiplugin_center'),
 		'body' => tra('text'),

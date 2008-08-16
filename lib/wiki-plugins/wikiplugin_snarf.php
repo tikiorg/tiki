@@ -13,6 +13,7 @@ function wikiplugin_snarf_help() {
 function wikiplugin_snarf_info() {
 	return array(
 		'name' => tra('Snarf'),
+		'documentation' => 'PluginSnarf',
 		'description' => tra('Include the content of a remote HTTP page. Regular expression selecting the content portion to include must be specified.'),
 		'prefs' => array( 'wikiplugin_snarf' ),
 		'params' => array(

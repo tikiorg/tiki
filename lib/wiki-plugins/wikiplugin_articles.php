@@ -16,6 +16,7 @@ function wikiplugin_articles_help() {
 function wikiplugin_articles_info() {
 	return array(
 		'name' => tra('Article List'),
+		'documentation' => 'PluginArticles',
 		'description' => tra('Includes a list of articles within the page.'),
 		'prefs' => array( 'feature_articles', 'wikiplugin_articles' ),
 		'params' => array(

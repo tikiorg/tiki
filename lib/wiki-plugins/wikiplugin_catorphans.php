@@ -19,6 +19,7 @@ function wikiplugin_catorphans_help() {
 function wikiplugin_catorphans_info() {
 	return array(
 		'name' => tra('Category Orphans'),
+		'documentation' => 'PluginCatOrphans',
 		'description' => tra('Display Tiki objects that have not been categorized'),
 		'prefs' => array( 'feature_categories', 'wikiplugin_categories' ),
 		'params' => array(

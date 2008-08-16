@@ -10,6 +10,7 @@ function wikiplugin_trackerlist_help() {
 function wikiplugin_trackerlist_info() {
 	return array(
 		'name' => tra('Tracker List'),
+		'documentation' => 'PluginTrackerList',
 		'description' => tra('Displays the output of a tracker content, fields are indicated with numeric ids.'),
 		'prefs' => array( 'feature_trackers', 'wikiplugin_trackerlist' ),
 		'body' => tra('Notice'),

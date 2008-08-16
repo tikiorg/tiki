@@ -7,6 +7,7 @@ function wikiplugin_thumb_help() {
 function wikiplugin_thumb_info() {
 	return array(
 		'name' => tra('Thumbnail'),
+		'documentation' => 'PluginThumb',
 		'description' => tra('Displays the thumbnail for an image'),
 		'prefs' => array( 'wikiplugin_thumb' ),
 		'body' => tra('description'),
