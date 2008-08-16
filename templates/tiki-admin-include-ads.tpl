@@ -8,8 +8,8 @@
 
 	<form action="tiki-admin.php?page=ads"  onreset="return(confirm('{tr}Cancel Edit{/tr}'))" class="admin" method="post">
 		<div class="heading button" style="text-align: right">
-			<input type="submit" name="looksetup" value="{tr}Apply{/tr}" />
-			<input type="reset" name="looksetupreset" value="{tr}Reset{/tr}" />
+			<input type="submit" name="adssetup" value="{tr}Apply{/tr}" />
+			<input type="reset" name="adssetupreset" value="{tr}Reset{/tr}" />
 		</div>
 
 {if $prefs.feature_tabs eq 'y'}
