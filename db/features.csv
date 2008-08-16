@@ -522,7 +522,7 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 598,users_prefs_display_timezone,140,,users_prefs_display_timezone,simple,,tiki_p_admin,
 599,users_prefs_mess_maxRecords,140,,users_prefs_mess_maxRecords,simple,,tiki_p_admin,
 600,feature_site_send_link,3,,feature_site_send_link,flag,,tiki_p_admin,19
-601,site_style,3,,site_style,simple,,tiki_p_admin,47
+601,site_style,3,,site_style,special,,tiki_p_admin,47
 602,feature_bot_bar,3,,feature_bot_bar,flag,,tiki_p_admin,5
 603,feature_bot_bar_rss,3,,feature_bot_bar_rss,flag,,tiki_p_admin,8
 604,feature_topbar_id_menu,3,,feature_topbar_id_menu,simple,,tiki_p_admin,34
