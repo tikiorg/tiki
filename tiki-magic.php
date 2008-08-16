@@ -62,6 +62,7 @@ $pagefeatures = array($feature);
 $containers = array();
 $hasCategories = false;
 $hasLanguages = false;
+$hasTimezones = false;
 
 if ($featureId != '' && is_numeric($featureId)) {
 	get_features($featureId);
@@ -108,6 +109,9 @@ if ($hasLanguages) {
 	$languages = $tikilib->list_languages(false,null,true);
 	$smarty->assign_by_ref("languages", $languages);
 }
+if ($hasTimezones) {
+	$smarty->assign_by_ref("timezones", TikiDate::getTimeZoneList());
+}
 
 foreach($enumerations as $key=>$value) {
 	$smarty->assign($key, $value);
@@ -120,7 +124,7 @@ $smarty->display("tiki.tpl");
 
 // Recursively get the features underneath the specified feature id.
 function get_features($featureid) {
-	global $magiclib, $pagefeatures, $containers, $enumerations, $hasCategories, $hasLanguages;
+	global $magiclib, $pagefeatures, $containers, $enumerations, $hasCategories, $hasLanguages, $hasTimezones;
 	$features = $magiclib->get_child_features($featureid);
 
 	if ($features) {
@@ -130,6 +134,7 @@ function get_features($featureid) {
 			}
 			if ($feature['feature_type'] == 'limitcategory' || $feature['feature_type'] == 'selectcategory') $hasCategories = true;
 			if ($feature['feature_type'] == 'languages') $hasLanguages = true;
+			if ($feature['feature_type'] == 'timezone') $hasTimezones = true;
 
 			if (array_key_exists($feature['feature_type'], $enumerations)) {
 				$feature['enumeration'] = $enumerations[$feature['feature_type']];

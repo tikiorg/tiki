@@ -38,6 +38,14 @@
 	{* Special cases  *}
 	{elseif $features[feature].enumeration neq ''}
 		<select name="{$features[feature].setting_name}">{foreach item=label key=value from=$features[feature].enumeration}<option value="{$value}"{if $value eq $features[feature].value} selected{/if}>{$label}</option>{/foreach}</select></div>
+	{* Timezone values *}
+	{elseif $features[feature].feature_type eq 'timezone'}
+	<select name="{$features[feature].setting_name}">
+		{foreach key=tz item=tzinfo from=$timezones}
+			{math equation="floor(x / (3600000))" x=$tzinfo.offset assign=offset}{math equation="(x - (y*3600000)) / 60000" y=$offset x=$tzinfo.offset assign=offset_min format="%02d"}
+			<option value="{$tz}"{if $features[feature].value eq $tz} selected="selected"{/if}>{$tz|escape:"html"} (UTC{if $offset >= 0}+{/if}{$offset}h{if $offset_min gt 0}{$offset_min}{/if})</option>
+		{/foreach}
+	</select>
 	{* Limit Category (limit a content item to certain categories) *}
 	{elseif $features[feature].feature_type eq 'limitcategory'}
 		<select name="{$features[feature].setting_name}"><option value="-1" {if $value eq -1 or $value eq ''}selected="selected"{/if}>{tr}None{/tr}</option>
