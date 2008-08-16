@@ -1,3 +1,4 @@
+{if $tiki_p_admin eq 'y'}
 <div id="adminBar">
 <ul class="topLevelAdmin">
 {section name=top loop=$toplevelfeatures}
@@ -14,3 +15,4 @@
 </ul>
 {/if}
 </div>
+{/if}
