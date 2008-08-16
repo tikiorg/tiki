@@ -16,6 +16,13 @@ function get_default_prefs() {
 	if( is_array($prefs) )
 		return $prefs;
 
+	global $cachelib;
+	if( $cachelib->isCached("tiki_default_preferences_cache") )
+	{
+		$prefs = unserialize( $cachelib->getCached("tiki_default_preferences_cache") );
+		return $prefs;
+	}
+
 	global $tikidate, $tikilib;
 	$prefs = array(
 		// tiki and version
@@ -1122,6 +1129,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		}
 	}
 
+	$cachelib->cacheItem("tiki_default_preferences_cache",serialize($prefs));
 	return $prefs;
 }
 
