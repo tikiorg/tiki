@@ -199,6 +199,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['wikiplugin_miniquiz'] = 'y';
 	$prefs['wikiplugin_module'] = 'y';
 	$prefs['wikiplugin_mono'] = 'y';
+	$prefs['wikiplugin_mouseover'] = 'y';
 	$prefs['wikiplugin_myspace'] = 'y';
 	$prefs['wikiplugin_objecthits'] = 'y';
 	$prefs['wikiplugin_pluginmanager'] = 'n';
