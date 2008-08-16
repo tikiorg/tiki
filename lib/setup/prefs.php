@@ -1132,9 +1132,6 @@ if (isset($_SESSION['s_prefs'])) {
 
 	// Reload if there was an update of some prefs
 	$lastUpdatePrefs = $tikilib->getOne("select `value` from `tiki_preferences` where `name`=?", array('lastUpdatePrefs'));
-	if ( ! isset($lastUpdatePrefs) ) {
-		$tikilib->query("insert into `tiki_preferences` (`name`,`value`) values (?,?)", array('lastUpdatePrefs', 0));
-	}
 	if ( empty($_SESSION['s_prefs']['lastReadingPrefs']) || $lastUpdatePrefs > $_SESSION['s_prefs']['lastReadingPrefs'] ) {
 		$_SESSION['need_reload_prefs'] = true;
 	}
@@ -1148,18 +1145,11 @@ if (isset($_SESSION['s_prefs'])) {
 
 } else $_SESSION['need_reload_prefs'] = true;
 
+$defaults = get_default_prefs();
 // Set default prefs only if needed
 if ( ! $_SESSION['need_reload_prefs'] ) {
-	$prefs = $_SESSION['s_prefs'];
+	$modified = $_SESSION['s_prefs'];
 } else {
-	$prefs = get_default_prefs();
-
-	// Find which preferences need to be serialized/unserialized, based on the default values (those with arrays as values)
-	if ( ! isset($_SESSION['serialized_prefs']) ) {
-		$_SESSION['serialized_prefs'] = array();
-		foreach ( $prefs as $p => $v )
-			if ( is_array($v) ) $_SESSION['serialized_prefs'][] = $p;
-	}
 
 	// Find which preferences need to be serialized/unserialized, based on the default values (those with arrays as values)
 	if ( ! isset($_SESSION['serialized_prefs']) ) {
@@ -1169,28 +1159,30 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	}
 
 	// Override default prefs with values specified in database
-	$tikilib->get_db_preferences();
+	$modified = $tikilib->get_db_preferences();
 
 	// Unserialize serialized preferences
 	if ( isset($_SESSION['serialized_prefs']) && is_array($_SESSION['serialized_prefs']) ) {
 		foreach ( $_SESSION['serialized_prefs'] as $p ) {
-			if ( ! is_array($prefs[$p]) ) $prefs[$p] = unserialize($prefs[$p]);
+			if ( ! is_array($modified[$p]) ) $modified[$p] = unserialize($modified[$p]);
 		}
 	}
 
 	// Be absolutely sure we have a value for tikiIndex
-	if ( $prefs['tikiIndex'] == '' ) $prefs['tikiIndex'] = 'tiki-index.php';
+	if ( $modified['tikiIndex'] == '' ) $modified['tikiIndex'] = 'tiki-index.php';
 
 	// Keep some useful sites values available before overriding with user prefs
 	// (they could be used in templates, so we need to set them even for Anonymous)
 	global $user_overrider_prefs;
 	foreach ( $user_overrider_prefs as $uop ) {
-		$prefs['site_'.$uop] = $prefs[$uop];
+		$modified['site_'.$uop] = $modified[$uop];
 	}
 
 	// Assign prefs to the session
-	$_SESSION['s_prefs'] = $prefs;
+	$_SESSION['s_prefs'] = $modified;
 }
+
+$prefs = array_merge( $defaults, $modified );
 
 // Assign the prefs array in smarty, by reference
 $smarty->assign_by_ref('prefs', $prefs);

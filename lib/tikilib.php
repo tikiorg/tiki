@@ -4280,30 +4280,46 @@ class TikiLib extends TikiDB {
 	// This method overrides the prefs with those specified in database
 	//   and should only be used when populating the prefs array in session vars (during tiki-setup.php process)
 	function get_db_preferences() {
-		global $prefs;
+
+		$needLoading = false;
+		$needCache = false;
+
 		// modified to cache for non-logged in users (case where logged out users have no session)
 		if (isset($_SESSION['s_prefs'])) {
-			// logged in
-			$result = $this->query("select `name` ,`value` from `tiki_preferences`");
-			while ( $res = $result->fetchRow() ) {
-				$prefs[$res['name']] = $res['value'];
-				$_SESSION['s_prefs'][$res['name']] = $res['value'];
-			}
-			$_SESSION['s_prefs']['lastReadingPrefs'] = $prefs['lastReadingPrefs'] = $prefs['lastUpdatePrefs'];		
+			$needLoading = true;
 		} else {
 			//logged out
 			global $cachelib; require_once("lib/cache/cachelib.php");
-			if (!$cachelib->isCached("tiki_preferences_cache")) {
-				$result = $this->query("select `name` ,`value` from `tiki_preferences`");
-				while ( $res = $result->fetchRow() ) {
-					$prefs[$res['name']] = $res['value'];
-				}	
-				$prefs['lastReadingPrefs'] = $prefs['lastUpdatePrefs'];
-				$cachelib->cacheItem("tiki_preferences_cache",serialize($prefs));
+			if ($cachelib->isCached("tiki_preferences_cache")) {
+				return unserialize($cachelib->getCached("tiki_preferences_cache"));
 			} else {
-				$prefs = unserialize($cachelib->getCached("tiki_preferences_cache"));
+				$needLoading = true;
+				$needCache = true;
 			}
 		}	
+
+		if( $needLoading ) {
+			$defaults = get_default_prefs();
+			$modified = array();
+
+			// logged in
+			$result = $this->query("select `name` ,`value` from `tiki_preferences`");
+			while ( $res = $result->fetchRow() ) {
+				$name = $res['name'];
+				$value = $res['value'];
+
+				if( !isset($defaults[$name]) || $defaults[$name] != $value )
+					$modified[$name] = $value;
+			}
+
+			$modified['lastReadingPrefs'] = $modified['lastUpdatePrefs'];		
+		}
+
+		if( $needCache ) {
+			$cachelib->cacheItem("tiki_preferences_cache",serialize($modified));
+		}
+
+		return $modified;
 	}
 
 	function get_preferences( $names, $exact_match = false, $no_return = false ) {
