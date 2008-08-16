@@ -37,3 +37,22 @@ UPDATE `tiki_menu_options` set `url`='tiki-list_file_gallery.php' where `url`='t
 
 #2008-08-14 pkdille
 UPDATE `tiki_menu_options` SET `url` = 'tiki-admin_include_score.php' where `url` = 'tiki-admin_score.php'
+
+#2008-08-16 princessxine
+DROP TABLE IF EXISTS `tiki_feature`;
+CREATE TABLE `tiki_feature` (
+  `feature_id` mediumint(9) NOT NULL auto_increment,
+  `feature_name` varchar(150) NOT NULL,
+  `parent_id` mediumint(9) NOT NULL,
+  `status` varchar(12) NOT NULL default 'active',
+  `setting_name` varchar(50) default NULL,
+  `feature_type` varchar(20) NOT NULL default 'feature',
+  `template` varchar(50) default NULL,
+  `permission` varchar(50) default NULL,
+  `ordinal` mediumint(9) NOT NULL default '1',
+  `depends_on` mediumint(9) default NULL,
+  `keyword` varchar(20) default NULL,
+  `feature_count` mediumint(9) NOT NULL default '0',
+  `feature_path` varchar(20) NOT NULL default '0',
+  PRIMARY KEY  (`feature_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=0 ;
