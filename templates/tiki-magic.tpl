@@ -34,7 +34,7 @@
 		<input type="text" size="3" name="{$features[feature].setting_name}" id="{$features[feature].setting_name}" value="{$features[feature].value}"></div>
 	{* Text Area  *}
 	{elseif $features[feature].feature_type eq 'textarea'}
-		<textarea cols="50" rows="5" name="{$features[feature].setting_name}" id="{$features[feature].setting_name}">{$features[feature].value}"</textarea></div>
+		<textarea cols="50" rows="5" name="{$features[feature].setting_name}" id="{$features[feature].setting_name}">{$features[feature].value}</textarea></div>
 	{* Special cases  *}
 	{elseif $features[feature].enumeration neq ''}
 		<select name="{$features[feature].setting_name}">{foreach item=label key=value from=$features[feature].enumeration}<option value="{$value}"{if $value eq $features[feature].value} selected{/if}>{$label}</option>{/foreach}</select></div>
