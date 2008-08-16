@@ -9,6 +9,45 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 class MagicLib extends TikiLib {
 	function MagicLib($db) {
 		$this->TikiLib($db);
+
+		global $prefs;
+		$lastLoad = $prefs['magic_last_load'];
+		$lastMod = filemtime( 'db/features.csv' );
+
+		if( $lastMod > $lastLoad )
+		{
+			$this->reload_features();
+			$this->set_preference( 'magic_last_load', $lastMod );
+		}
+	}
+
+	function reload_features() {
+		$this->query( "DELETE FROM tiki_feature" );
+		
+		$fp = fopen( 'db/features.csv', 'r' );
+		fgetcsv( $fp, 1024, ',', '"' );
+		while( false !== $row = fgetcsv( $fp, 1024, ',', '"' ) )
+		{
+			while( count($row) < 11 )
+				$row[] = '';
+			if( count($row) != 11 )
+				$row = array_slice( $row, 0, 11 );				
+			$query = "INSERT INTO tiki_feature (`feature_id`, `feature_name`, `parent_id`, `status`, `setting_name`, `feature_type`, `template`, `permission`, `ordinal`, `depends_on`, `keyword`) VALUES(" . rtrim(str_repeat(' ?,', count($row)), ',') . ")";
+			$this->query( $query, $row);
+		}
+		fclose( $fp );
+
+		$this->recursive_update( 0 );
+	}
+
+	function recursive_update( $featureid, $path = null ) {
+		$features = $this->get_child_features($featureid);
+		if ($features) {
+			foreach($features as $feature) {
+				$this->update_feature_specials($feature, $path . '/' . $feature['feature_id']);
+				$this->recursive_update($feature['feature_id'], $path . '/' . $feature['feature_id']);
+			}
+		}
 	}
 	
 	function get_child_features($parentid, $featurefilter='') {
