@@ -11,6 +11,1118 @@
 //this script may only be included - so its better to die if called directly.
 $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
+function get_default_prefs() {
+	static $prefs;
+	if( is_array($prefs) )
+		return $prefs;
+
+	global $tikidate, $tikilib;
+	$prefs = array(
+		// tiki and version
+		'tiki_release' => '0',
+		'feature_version_checks' => 'y',
+		'tiki_needs_upgrade' => 'n',
+		'tiki_version_last_check' => 0,
+		'tiki_version_check_frequency' => 604800,
+
+		// wiki
+		'feature_wiki' => 'y',
+		'default_wiki_diff_style' => 'minsidediff',
+		'feature_backlinks' => 'y',
+		'feature_dump' => 'n',
+		'feature_history' => 'y',
+		'feature_lastChanges' => 'y',
+		'feature_likePages' => 'n',
+		'feature_listPages' => 'y',
+		'feature_page_title' => 'y',
+		'feature_sandbox' => 'n',
+		'feature_warn_on_edit' => 'y',
+		'feature_wiki_1like_redirection' => 'y',
+		'feature_wiki_allowhtml' => 'n',
+		'feature_wiki_attachments' => 'n',
+		'feature_wiki_comments' => 'n',
+		'feature_wiki_description' => 'n',
+		'feature_wiki_discuss' => 'n',
+		'feature_wiki_export' => 'n',
+		'feature_wiki_import_page' => 'n',
+		'feature_wiki_footnotes' => 'n',
+		'feature_wiki_icache' => 'n',
+		'feature_wiki_import_html' => 'n',
+		'feature_wiki_monosp' => 'n',
+		'feature_wiki_multiprint' => 'n',
+		'feature_wiki_notepad' => 'n',
+		'feature_wiki_make_structure' => 'n',
+		'feature_wiki_open_as_structure' => 'n',
+		'feature_wiki_pageid' => 'n',
+		'feature_wiki_paragraph_formatting' => 'n',
+		'feature_wiki_paragraph_formatting_add_br' => 'n',
+		// 'feature_wiki_pdf' => 'n',
+		'feature_wiki_pictures' => 'y',
+		'feature_wiki_plurals' => 'y',
+		'feature_wiki_print' => 'y',
+		'feature_wiki_protect_email' => 'y',
+		'feature_wiki_rankings' => 'n',
+		'feature_wiki_ratings' => 'n',
+		'feature_wiki_replace' => 'n',
+		'feature_wiki_show_hide_before' => 'n',
+		'feature_wiki_tables' => 'new',
+		'feature_wiki_templates' => 'n',
+		'feature_wiki_undo' => 'n',
+		'feature_wiki_userpage' => 'y',
+		'feature_wiki_userpage_prefix' => 'UserPage',
+		'feature_wiki_usrlock' => 'n',
+		'feature_wiki_save_draft' => 'n', // Broken in 2.0 RC2 http://dev.tikiwiki.org/wish1888
+		'feature_wikiwords' => 'y',
+		'feature_wikiwords_usedash' => 'y',
+		'mailin_autocheck' => 'n',
+		'mailin_autocheckFreq' => '0',
+		'mailin_autocheckLast' => 0,
+		'warn_on_edit_time' => 2,
+		'wikiHomePage' => 'HomePage',
+		'wikiLicensePage' => '',
+		'wikiSubmitNotice' => '',
+		'wiki_authors_style' => 'classic',
+		'wiki_authors_style_by_page' => 'n',
+		'wiki_show_version' => 'n',
+		'wiki_bot_bar' => 'n',
+		'wiki_cache' => 0,
+		'wiki_comments_default_ordering' => 'points_desc',
+		'wiki_comments_displayed_default' => 'n',
+		'wiki_comments_per_page' => 10,
+		'wiki_creator_admin' => 'n',
+		'wiki_feature_copyrights' => 'n',
+		'wiki_forum_id' => '',
+		'wiki_left_column' => 'y',
+		'wiki_list_backlinks' => 'n',
+		'wiki_list_comment' => 'y',
+		'wiki_list_comment_len' => '200',
+		'wiki_list_description' => 'y',
+		'wiki_list_description_len' => '200',
+		'wiki_list_creator' => 'n',
+		'wiki_list_hits' => 'y',
+		'wiki_list_lastmodif' => 'y',
+		'wiki_list_lastver' => 'n',
+		'wiki_list_links' => 'n',
+		'wiki_list_name' => 'y',
+		'wiki_list_name_len' => '40',
+		'wiki_list_size' => 'n',
+		'wiki_list_status' => 'n',
+		'wiki_list_user' => 'y',
+		'wiki_list_versions' => 'y',
+		'wiki_list_language' => 'n',
+		'wiki_list_categories' => 'n',
+		'wiki_list_categories_path' => 'n',
+		'wiki_list_id' => 'n',
+		'wiki_list_sortorder' => 'pageName',
+		'wiki_list_sortdirection' => 'asc',
+		'wiki_page_regex' => 'strict',
+		'wiki_page_separator' => '...page...',
+		'wiki_page_navigation_bar' => 'bottom',
+		'wiki_actions_bar' => 'bottom',
+		'wiki_pagename_strip' => '',
+		'wiki_right_column' => 'y',
+		'wiki_top_bar' => 'y',
+		'wiki_uses_slides' => 'n',
+		'wiki_watch_author' => 'n',
+		'wiki_watch_comments' => 'y',
+		'wiki_watch_editor' => 'n',
+		'wiki_watch_minor' => 'y',
+		'feature_wiki_history_full' => 'n',
+		'feature_wiki_categorize_structure' => 'n',
+		'feature_wiki_watch_structure' => 'n',
+		'feature_wikiapproval' => 'n',
+		'wikiapproval_prefix' => '*',
+		'wikiapproval_delete_staging' => 'n',
+		'wikiapproval_master_group' => '',
+		'wiki_edit_section' => 'y',
+		'wiki_edit_plugin' => 'y',
+
+		'wikiplugin_agentinfo' => 'n',
+		'wikiplugin_alink' => 'y',
+		'wikiplugin_aname' => 'y',
+		'wikiplugin_annotation' => 'y',
+		'wikiplugin_article' => 'y',
+		'wikiplugin_articles' => 'y',
+		'wikiplugin_attach' => 'y',
+		'wikiplugin_avatar' => 'y',
+		'wikiplugin_backlinks' => 'y',
+		'wikiplugin_bloglist' => 'n',
+		'wikiplugin_box' => 'y',
+		'wikiplugin_category' => 'y',
+		'wikiplugin_catorphans' => 'y',
+		'wikiplugin_catpath' => 'y',
+		'wikiplugin_center' => 'y',
+		'wikiplugin_chart' => 'y',
+		'wikiplugin_code' => 'y',
+		'wikiplugin_copyright' => 'y',
+		'wikiplugin_countdown' => 'y',
+		'wikiplugin_div' => 'y',
+		'wikiplugin_dl' => 'y',
+		'wikiplugin_equation' => 'y',
+		'wikiplugin_events' => 'y',
+		'wikiplugin_example' => 'n',
+		'wikiplugin_fancytable' => 'y',
+		'wikiplugin_flash' => 'y',
+		'wikiplugin_gauge' => 'y',
+		'wikiplugin_group' => 'y',
+		'wikiplugin_include' => 'y',
+		'wikiplugin_jabber' => 'n',
+		'wikiplugin_lang' => 'y',
+		'wikiplugin_lastmod' => 'y',
+		'wikiplugin_listpages' => 'y',
+		'wikiplugin_lsdir' => 'n',
+		'wikiplugin_map' => 'y',
+		'wikiplugin_miniquiz' => 'y',
+		'wikiplugin_module' => 'y',
+		'wikiplugin_mono' => 'y',
+		'wikiplugin_mouseover' => 'y',
+		'wikiplugin_myspace' => 'y',
+		'wikiplugin_objecthits' => 'y',
+		'wikiplugin_pluginmanager' => 'n',
+		'wikiplugin_poll' => 'y',
+		'wikiplugin_proposal' => 'y',
+		'wikiplugin_quote' => 'y',
+		'wikiplugin_regex' => 'n',
+		'wikiplugin_remarksbox' => 'y',
+		'wikiplugin_rss' => 'y',
+		'wikiplugin_sf' => 'y',
+		'wikiplugin_sheet' => 'y',
+		'wikiplugin_showpages' => 'y',
+		'wikiplugin_skype' => 'y',
+		'wikiplugin_snarf' => 'n',
+		'wikiplugin_sort' => 'y',
+		'wikiplugin_split' => 'y',
+		'wikiplugin_sql' => 'n',
+		'wikiplugin_sub' => 'y',
+		'wikiplugin_subscribegroup' => 'y',
+		'wikiplugin_subscribegroups' => 'y',
+		'wikiplugin_sup' => 'y',
+		'wikiplugin_tag' => 'y',
+		'wikiplugin_thumb' => 'y',
+		'wikiplugin_titlesearch' => 'n',
+		'wikiplugin_topfriends' => 'y',
+		'wikiplugin_trackerfilter' => 'y',
+		'wikiplugin_trackeritemfield' => 'y',
+		'wikiplugin_trackerlist' => 'y',
+		'wikiplugin_tracker' => 'y',
+		'wikiplugin_trackerprefill' => 'y',
+		'wikiplugin_trackerstat' => 'y',
+		'wikiplugin_translated' => 'y',
+		'wikiplugin_tr' => 'y',
+		'wikiplugin_usercount' => 'y',
+		'wikiplugin_userlist' => 'n',
+		'wikiplugin_versions' => 'y',
+		'wikiplugin_vote' => 'y',
+		'wikiplugin_wantedpages' => 'y',
+		'wikiplugin_youtube' => 'y',
+
+		// wysiwyg
+		'feature_wysiwyg' => 'n',
+		'wysiwyg_optional' => 'y',
+		'wysiwyg_default' => 'y',
+		'wysiwyg_memo' => 'y',
+		'wysiwyg_wiki_parsed' => 'y',
+		'wysiwyg_wiki_semi_parsed' => 'y',
+		'wysiwyg_toolbar_skin' => 'default',
+		'wysiwyg_toolbar' =>"FitWindow,Templates,-,Cut,Copy,Paste,PasteText,PasteWord,Print,SpellCheck
+Undo,Redo,-,Find,Replace,SelectAll,RemoveFormat,-,Table,Rule,Smiley,SpecialChar,PageBreak,ShowBlocks
+/
+JustifyLeft,JustifyCenter,JustifyRight,JustifyFull,-,OrderedList,UnorderedList,Outdent,Indent,Blockquote
+Bold,Italic,Underline,StrikeThrough,-,Subscript,Superscript,-,tikilink,Link,Unlink,Anchor,-,tikiimage,Flash
+/
+Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
+
+		// wiki3d
+		'wiki_feature_3d' => 'n',
+		'wiki_3d_width' => 500,
+		'wiki_3d_height' => 500,
+		'wiki_3d_navigation_depth' => 1,
+		'wiki_3d_feed_animation_interval' => 500,
+		'wiki_3d_existing_page_color' => '//00CC55',
+		'wiki_3d_missing_page_color' => '//FF5555',
+
+		// blogs
+		'feature_blogs' => 'n',
+		'blog_list_order' => 'created_desc',
+		'home_blog' => 0,
+		'feature_blog_rankings' => 'n',
+		'feature_blog_comments' => 'n',
+		'blog_comments_default_ordering' => 'points_desc',
+		'blog_comments_per_page' => 10,
+		'feature_blogposts_comments' => 'n',
+		'blog_list_user' => 'text',
+		'blog_list_title' => 'y',
+		'blog_list_title_len' => '35',
+		'blog_list_description' => 'y',
+		'blog_list_created' => 'y',
+		'blog_list_lastmodif' => 'y',
+		'blog_list_posts' => 'y',
+		'blog_list_visits' => 'y',
+		'blog_list_activity' => 'n',
+		'feature_blog_mandatory_category' => '-1',
+		'feature_blog_heading' => 'y',
+
+		// filegals
+		'feature_file_galleries' => 'y',
+		'home_file_gallery' => 0,
+		'fgal_use_db' => 'y',
+		'fgal_batch_dir' => '',
+		'fgal_match_regex' => '',
+		'fgal_nmatch_regex' => '',
+		'fgal_use_dir' => '',
+		'fgal_podcast_dir' => 'files',
+		'feature_file_galleries_comments' => 'n',
+		'file_galleries_comments_default_ordering' => 'points_desc',
+		'file_galleries_comments_per_page' => 10,
+		'feature_file_galleries_batch' => 'n',
+		'feature_file_galleries_rankings' => 'n',
+		'fgal_enable_auto_indexing' => 'y',
+		'fgal_asynchronous_indexing' => 'y',
+		'fgal_allow_duplicates' => 'n',
+		'fgal_sort_mode' => '',
+		'feature_file_galleries_author' => 'n',
+		'fgal_list_id' => 'n',
+		'fgal_list_type' => 'y',
+		'fgal_list_name' => 'n',
+		'fgal_list_description' => 'o',
+		'fgal_list_size' => 'y',
+		'fgal_list_created' => 'o',
+		'fgal_list_lastmodif' => 'y',
+		'fgal_list_creator' => 'o',
+		'fgal_list_author' => 'o',
+		'fgal_list_last_user' => 'o',
+		'fgal_list_comment' => 'o',
+		'fgal_list_files' => 'o',
+		'fgal_list_hits' => 'o',
+		'fgal_list_lockedby' => 'a',
+		'fgal_show_path' => 'y',
+		'fgal_show_explorer' => 'y',
+		'fgal_limit_hits_per_file' => 'n',
+		'fgal_prevent_negative_score' => 'n',
+
+		// imagegals
+		'feature_galleries' => 'n',
+		'feature_gal_batch' => 'n',
+		'feature_gal_slideshow' => 'n',
+		'home_gallery' => 0,
+		'gal_use_db' => 'y',
+		'gal_use_lib' => 'imagick',
+		'gal_match_regex' => '',
+		'gal_nmatch_regex' => '',
+		'gal_use_dir' => '',
+		'gal_batch_dir' => '',
+		'feature_gal_rankings' => 'n',
+		'feature_image_galleries_comments' => 'n',
+		'image_galleries_comments_default_order' => 'points_desc',
+		'image_galleries_comments_per_page' => 10,
+		'gal_list_name' => 'y',
+		'gal_list_parent' => 'n',
+		'gal_list_description' => 'y',
+		'gal_list_created' => 'n',
+		'gal_list_lastmodif' => 'y',
+		'gal_list_user' => 'n',
+		'gal_list_imgs' => 'y',
+		'gal_list_visits' => 'y',
+		'feature_image_gallery_mandatory_category' => '-1',
+		'preset_galleries_info' =>'n',
+		'gal_image_mouseover' => 'n',
+
+		// multimedia
+		'ProgressBarPlay' => '//FF8D41',
+		'ProgressBarLoad' => "//A7A7A7",
+		'ProgressBarButton' => "//FF0000",
+		'ProgressBar' => "//C3C3C3",
+		'VolumeOn' => "//21AC2A",
+		'VolumeOff' => "//8EFF8A",
+		'VolumeButton' => 0,
+		'Button' => "//555555",
+		'ButtonPressed' => "//FF00FF",
+		'ButtonOver' => "//B3B3B3",
+		'ButtonInfo' => "//C3C3C3",
+		'ButtonInfoPressed' => "//555555",
+		'ButtonInfoOver' => "//FF8D41",
+		'ButtonInfoText' => "//FFFFFF",
+		'ID3' => "//6CDCEB",
+		'PlayTime' => "//00FF00",
+		'TotalTime' => "//FF2020",
+		'PanelDisplay' => "//555555",
+		'AlertMesg' => "//00FFFF",
+		'PreloadDelay' => 3,
+		'VideoHeight' => 240,
+		'VideoLength' => 300,
+		'ProgressBarPlay' => "//FFFFFF",
+		'URLAppend' => "",
+		'LimitedMsg' => "You are limited to 1 minute",
+		'MaxPlay' => 60,
+		'MultimediaGalerie' => 1,
+		'MultimediaDefaultLength' => 200,
+		'MultimediaDefaultHeight' => 100,
+
+		// forums
+		'feature_forums' => 'n',
+		'home_forum' => 0,
+		'feature_forum_rankings' => 'n',
+		'feature_forum_parse' => 'n',
+		'feature_forum_topics_archiving' => 'n',
+		'feature_forum_replyempty' => 'n',
+		'feature_forum_quickjump' => 'n',
+		'feature_forum_topicd' => 'y',
+		'feature_forums_allow_thread_titles' => 'n',
+		'feature_forum_content_search' => 'y',
+		'feature_forums_name_search' => 'y',
+		'forums_ordering' => 'created_desc',
+		'forum_list_topics' =>  'n',
+		'forum_list_posts' =>  'y',
+		'forum_list_ppd' =>  'n',
+		'forum_list_lastpost' =>  'y',
+		'forum_list_visits' =>  'y',
+		'forum_list_desc' =>  'y',
+		'feature_forum_local_search' => 'n',
+		'feature_forum_local_tiki_search' => 'n',
+		'forum_thread_defaults_by_forum' => 'n',
+		'forum_thread_user_settings' => 'y',
+		'forum_thread_user_settings_keep' => 'n',
+		'forum_comments_per_page' => 20,
+		'forum_comments_no_title_prefix' => 'n',
+		'forum_thread_style' => 'commentStyle_plain',
+		'forum_thread_sort_mode' => 'commentDate_desc',
+
+		// articles
+		'feature_articles' => 'n',
+		'feature_submissions' => 'n',
+		'feature_cms_rankings' => 'n',
+		'feature_cms_print' => 'y',
+		'feature_cms_emails' => 'n',
+		'art_list_title' => 'y',
+		'art_list_title_len' => '20',
+		'art_list_topic' => 'y',
+		'art_list_date' => 'y',
+		'art_list_author' => 'y',
+		'art_list_reads' => 'y',
+		'art_list_size' => 'y',
+		'art_list_expire' => 'y',
+		'art_list_img' => 'y',
+		'art_list_type' => 'y',
+		'art_list_visible' => 'y',
+		'art_view_type' => 'y',
+		'art_view_title' => 'y',
+		'art_view_topic' => 'y',
+		'art_view_date' => 'y',
+		'art_view_author' => 'y',
+		'art_view_reads' => 'y',
+		'art_view_size' => 'y',
+		'art_view_img' => 'y',
+		'feature_article_comments' => 'n',
+		'article_comments_default_ordering' => 'points_desc',
+		'article_comments_per_page' => 10,
+		'feature_cms_templates' => 'n',
+		'cms_bot_bar' => 'y',
+		'cms_left_column' => 'y',
+		'cms_right_column' => 'y',
+		'cms_top_bar' => 'n',
+		'cms_spellcheck' => 'n',
+		'art_home_title' => '',
+
+		// trackers
+		'feature_trackers' => 'n',
+		't_use_db' => 'y',
+		't_use_dir' => '',
+		'groupTracker' => 'n',
+		'userTracker' => 'n',
+		'trk_with_mirror_tables' => 'n',
+
+		// user
+		'feature_userlevels' => 'n',
+		'userlevels' => array('1'=>tra('Simple'),'2'=>tra('Advanced')),
+		'userbreadCrumb' => 4,
+		'user_assigned_modules' => 'n',
+		'user_flip_modules' => 'module',
+		'user_show_realnames' => 'n',
+		'feature_mytiki' => 'y',
+		'feature_userPreferences' => 'n',
+		'feature_user_bookmarks' => 'n',
+		'feature_tasks' => 'n',
+		'w_use_db' => 'y',
+		'w_use_dir' => '',
+		'w_displayed_default' => 'n',
+		'uf_use_db' => 'y',
+		'uf_use_dir' => '',
+		'userfiles_quota' => 30,
+		'feature_usermenu' => 'n',
+		'feature_minical' => 'n',
+		'feature_notepad' => 'n',
+		'feature_userfiles' => 'n',
+		'feature_community_mouseover' => 'n',
+		'feature_community_mouseover_name' => 'y',
+		'feature_community_mouseover_picture' => 'y',
+		'feature_community_mouseover_friends' => 'y',
+		'feature_community_mouseover_score' => 'y',
+		'feature_community_mouseover_country' => 'y',
+		'feature_community_mouseover_email' => 'y',
+		'feature_community_mouseover_lastlogin' => 'y',
+		'feature_community_mouseover_distance' => 'y',
+		'feature_community_list_name' => 'y',
+		'feature_community_list_score' => 'y',
+		'feature_community_list_country' => 'y',
+		'feature_community_list_distance' => 'y',
+		'feature_community_friends_permission' => 'n',
+		'feature_community_friends_permission_dep' => '2',
+		'change_language' => 'y',
+		'change_theme' => 'n',
+		'login_is_email' => 'n',
+		'validateUsers' => 'n',
+		'validateEmail' => 'n',
+		'forgotPass' => 'n',
+		'change_password' => 'y',
+		'available_languages' => array(),
+		'available_styles' => array(),
+		'lowercase_username' => 'n',
+		'max_username_length' => '50',
+		'min_username_length' => '1',
+		'users_prefs_allowMsgs' => 'y',
+		'users_prefs_country' => '',
+		'users_prefs_diff_versions' => 'n',
+		'users_prefs_display_timezone' => 'Local',
+		'users_prefs_email_is_public' => 'n',
+		'users_prefs_homePage' => '',
+		'users_prefs_lat' => '0',
+		'users_prefs_lon' => '0',
+		'users_prefs_mess_archiveAfter' => '0',
+		'users_prefs_mess_maxRecords' => '10',
+		'users_prefs_mess_sendReadStatus' => 'n',
+		'users_prefs_minPrio' => '3',
+		'users_prefs_mytiki_blogs' => 'y',
+		'users_prefs_mytiki_gals' => 'y',
+		'users_prefs_mytiki_items' => 'y',
+		'users_prefs_mytiki_msgs' => 'y',
+		'users_prefs_mytiki_pages' => 'y',
+		'users_prefs_mytiki_tasks' => 'y',
+		'users_prefs_mytiki_workflow' => 'y',
+		'users_prefs_realName' => '',
+		'users_prefs_show_mouseover_user_info' => 'n',
+		'users_prefs_tasks_maxRecords' => '10',
+		'users_prefs_user_dbl' => 'n',
+		'users_prefs_user_information' => 'private',
+		'users_prefs_userbreadCrumb' => '4',
+		'users_prefs_mailCharset' => 'utf-8',
+		'validateRegistration' => 'n',
+
+		// user messages
+		'feature_messages' => 'n',
+		'messu_mailbox_size' => '0',
+		'messu_archive_size' => '200',
+		'messu_sent_size' => '200',
+		'allowmsg_by_default' => 'y',
+		'allowmsg_is_optional' => 'y',
+
+		// newsreader
+		'feature_newsreader' => 'n',
+
+		// freetags
+		'feature_freetags' => 'n',
+		'freetags_browse_show_cloud' => 'y',
+		'freetags_cloud_colors' => '',
+		'freetags_preload_random_search' => 'y',
+		'freetags_browse_amount_tags_in_cloud' => '100',
+		'freetags_browse_amount_tags_suggestion' => '10',
+		'freetags_normalized_valid_chars' => '',
+		'freetags_lowercase_only' => 'y',
+		'freetags_feature_3d' => 'n',
+		'freetags_3d_width' => 500,
+		'freetags_3d_height' => 500,
+		'freetags_3d_navigation_depth' => 1,
+		'freetags_3d_feed_animation_interval' => 500,
+		'freetags_3d_existing_page_color' => '//00CC55',
+		'freetags_3d_missing_page_color' => '//FF5555',
+		'freetags_multilingual' => 'n',
+		'morelikethis_algorithm' => 'basic',
+		'morelikethis_basic_mincommon' => '2',
+
+		// search
+		'feature_search_stats' => 'n',
+		'feature_search' => 'y',
+		'feature_search_fulltext' => 'y',
+		'feature_search_show_forbidden_obj' => 'n',
+		'feature_search_show_forbidden_cat' => 'n',
+		'search_refresh_index_mode' => 'normal',
+		'search_parsed_snippet' => 'y',
+
+		// webmail
+		'feature_webmail' => 'n',
+		'webmail_max_attachment' => 1500000,
+		'webmail_view_html' => 'y',
+
+		// contacts
+		'feature_contacts' => 'n',
+
+		// faq
+		'feature_faqs' => 'n',
+		'feature_faq_comments' => 'y',
+		'faq_comments_per_page' => 10,
+		'faq_comments_default_ordering' => 'points_desc',
+		'faq_prefix' => 'QA',
+
+		// quizzes
+		'feature_quizzes' => 'n',
+
+		// polls
+		'feature_polls' => 'n',
+		'feature_poll_comments' => 'n',
+		'feature_poll_anonymous' => 'n',
+		'poll_comments_default_ordering' => 'points_desc',
+		'poll_comments_per_page' => 10,
+		'poll_list_categories' => 'n',
+		'poll_list_objects' => 'n',
+
+		// surveys
+		'feature_surveys' => 'n',
+
+		// featured links
+		'feature_featuredLinks' => 'n',
+
+		// directories
+		'feature_directory' => 'n',
+		'directory_columns' => 3,
+		'directory_links_per_page' => 20,
+		'directory_open_links' => 'n',
+		'directory_validate_urls' => 'n',
+		'directory_cool_sites' => 'y',
+		'directory_country_flag' => 'y',
+
+		// calendar
+		'feature_calendar' => 'n',
+		'calendar_sticky_popup' => 'n',
+		'calendar_view_mode' => 'month',
+		'calendar_view_tab' => 'n',
+		'calendar_firstDayofWeek' => 'user',
+		'calendar_timespan' => '5',
+		'feature_jscalendar' => 'y',
+		'feature_action_calendar' => 'n',
+		'calendar_start_year' => '+0',
+		'calendar_end_year' => '+3',
+
+		// dates
+		'server_timezone' => $tikidate->getTimezoneId(),
+		'long_date_format' => '%A %d of %B, %Y',
+		'long_time_format' => '%H:%M:%S %Z',
+		'short_date_format' => '%a %d of %b, %Y',
+		'short_time_format' => '%H:%M %Z',
+		'display_field_order' => 'MDY',
+
+		// charts
+		'feature_charts' => 'n',
+
+		// rss
+		'rss_forums' => 'n',
+		'rss_forum' => 'n',
+		'rss_directories' => 'n',
+		'rss_articles' => 'n',
+		'rss_blogs' => 'n',
+		'rss_image_galleries' => 'n',
+		'rss_file_galleries' => 'n',
+		'rss_wiki' => 'n',
+		'rss_image_gallery' => 'n',
+		'rss_file_gallery' => 'n',
+		'rss_blog' => 'n',
+		'rss_tracker' => 'n',
+		'rss_trackers' => 'n',
+		'rss_calendar' => 'n',
+		'rss_mapfiles' => 'n',
+		'rss_cache_time' => '0', // 0 = disabled (default)
+		'max_rss_forums' => 10,
+		'max_rss_forum' => 10,
+		'max_rss_directories' => 10,
+		'max_rss_articles' => 10,
+		'max_rss_blogs' => 10,
+		'max_rss_image_galleries' => 10,
+		'max_rss_file_galleries' => 10,
+		'max_rss_wiki' => 10,
+		'max_rss_image_gallery' => 10,
+		'max_rss_file_gallery' => 10,
+		'max_rss_blog' => 10,
+		'max_rss_mapfiles' => 10,
+		'max_rss_tracker' => 10,
+		'max_rss_trackers' => 10,
+		'max_rss_calendar' => 10,
+		'summary_rss_blogs' => 'n',
+		'rssfeed_default_version' => '2',
+		'rssfeed_language' =>  'en-us',
+		'rssfeed_editor' => '',
+		'rssfeed_webmaster' => '',
+		'rssfeed_creator' => '',
+		'rssfeed_css' => 'y',
+		'rssfeed_publisher' => '',
+		'rssfeed_img' => 'img/tiki.jpg',
+		'rss_basic_auth' => 'n',
+
+		// maps
+		'feature_maps' => 'n',
+		'map_path' => '',
+		'default_map' => '',
+		'map_help' => 'MapsHelp',
+		'map_comments' => 'MapsComments',
+		'gdaltindex' => '',
+		'ogr2ogr' => '',
+		'mapzone' => '',
+
+		// gmap
+		'feature_gmap' => 'n',
+		'gmap_defaultx' => '0',
+		'gmap_defaulty' => '0',
+		'gmap_defaultz' => '17',
+		'gmap_key' => '',
+
+		// auth
+		'allowRegister' => 'n',
+		'eponymousGroups' => 'n',
+		'useRegisterPasscode' => 'n',
+		'registerPasscode' => md5($tikilib->genPass()),
+		'rememberme' => 'disabled',
+		'remembertime' => 7200,
+		'feature_clear_passwords' => 'n',
+		'feature_crypt_passwords' => (CRYPT_MD5 == 1)? 'crypt-md5': 'tikihash',
+		'feature_challenge' => 'n',
+		'min_user_length' => 1,
+		'min_pass_length' => 1,
+		'pass_chr_num' => 'n',
+		'pass_due' => -1,
+		'email_due' => -1,
+		'unsuccessful_logins' => 20,
+		'rnd_num_reg' => 'y',
+		'generate_password' => 'n',
+		'auth_method' => 'tiki',
+		'auth_pear' => 'tiki',
+		'auth_create_user_tiki' => 'n',
+		'auth_create_user_auth' => 'n',
+		'auth_skip_admin' => 'y',
+		'auth_ldap_url' => '',
+		'auth_pear_host' => "localhost",
+		'auth_pear_port' => "389",
+		'auth_ldap_scope' => "sub",
+		'auth_ldap_basedn' => '',
+		'auth_ldap_userdn' => '',
+		'auth_ldap_userattr' => 'uid',
+		'auth_ldap_useroc' => 'inetOrgPerson',
+		'auth_ldap_groupdn' => '',
+		'auth_ldap_groupattr' => 'cn',
+		'auth_ldap_groupoc' => 'groupOfUniqueNames',
+		'auth_ldap_memberattr' => 'uniqueMember',
+		'auth_ldap_memberisdn' => 'y',
+		'auth_ldap_adminuser' => '',
+		'auth_ldap_adminpass' => '',
+		'auth_ldap_version' => 3,
+		'auth_ldap_nameattr' => 'displayName',
+		'https_login' => 'allowed',
+		'feature_show_stay_in_ssl_mode' => 'y',
+		'feature_switch_ssl_mode' => 'y',
+		'https_port' => 443,
+		'http_port' => 80,
+		'login_url' => 'tiki-login.php',
+		'login_scr' => 'tiki-login_scr.php',
+		'register_url' => 'tiki-register.php',
+		'error_url' => 'tiki-error.php',
+		'highlight_group' => '',
+		'cookie_path' => '/',
+		'cookie_domain' => '',
+		'cookie_name' => 'tikiwiki',
+		'user_tracker_infos' => '',
+		'desactive_login_autocomplete' => 'n',
+		'permission_denied_login_box' => 'y',
+		'permission_denied_url' => '',
+
+		// intertiki
+		'feature_intertiki' => 'n',
+		'feature_intertiki_server' => 'n',
+		'feature_intertiki_slavemode' => 'n',
+		'interlist' => array(''),
+		'feature_intertiki_mymaster' => '',
+		'feature_intertiki_import_preferences' => 'n',
+		'feature_intertiki_import_groups' => 'n',
+		'known_hosts' => array(''),
+		'tiki_key' => '',
+		'intertiki_logfile' => '',
+		'intertiki_errfile' => '',
+		'feature_intertiki_sharedcookie' => 'n',
+
+		// search
+		'search_lru_length' => '100',
+		'search_lru_purge_rate' => '5',
+		'search_max_syllwords' => '100',
+		'search_min_wordlength' => '3',
+		'search_refresh_rate' => '5',
+		'search_syll_age' => '48',
+
+		// categories
+		'feature_categories' => 'n',
+		'feature_categoryobjects' => 'n',
+		'feature_categorypath' => 'n',
+		'feature_category_reinforce' => 'y',
+		'feature_category_use_phplayers' => 'y',
+		'categorypath_excluded' => '',
+
+		// games
+		'feature_games' => 'n',
+
+		// html pages
+		'feature_html_pages' => 'n',
+
+		// use filegals for image inclusion
+		'feature_filegals_manager' => 'y',
+
+		// contact & mail
+		'feature_contact' => 'n',
+		'contact_user' => 'admin',
+		'contact_anon' => 'n',
+		'mail_crlf' => 'LF',
+
+		// i18n
+		'feature_detect_language' => 'n',
+		'feature_homePage_if_bl_missing' => 'n',
+		'record_untranslated' => 'n',
+		'feature_best_language' => 'n',
+		'lang_use_db' => 'n',
+		'language' => 'en',
+		'feature_babelfish' => 'n',
+		'feature_babelfish_logo' => 'n',
+		'quantify_changes' => 'n',
+		'feature_sync_language' => 'n',
+
+		// html header
+		'metatag_keywords' => '',
+		'metatag_threadtitle' => '',
+		'metatag_imagetitle' => '',
+		'metatag_freetags' => '',
+		'metatag_description' => '',
+		'metatag_author' => '',
+		'metatag_geoposition' => '',
+		'metatag_georegion' => '',
+		'metatag_geoplacename' => '',
+		'metatag_robots' => '',
+		'metatag_revisitafter' => '',
+		'head_extra_js' => array(),
+		'keep_versions' => 1,
+		'feature_custom_home' => 'n',
+
+		// site identity
+		'feature_siteidentity' => 'y',
+		'site_crumb_seper' => '>',
+		'site_nav_seper' => '|',
+		'feature_sitemycode' => 'n',
+		'sitemycode' => '<div align="center"><b>{tr}Here you can (as an admin) place a piece of custom XHTML and/or Smarty code. Be careful and properly close all the tags before you choose to publish ! (Javascript, applets and object tags are stripped out.){/tr}</b></div>', // must be max. 250 chars now unless it'll change in tiki_prefs db table field value from VARCHAR(250) to BLOB by default
+		'sitemycode_publish' => 'n',
+		'feature_sitelogo' => 'y',
+		'sitelogo_bgcolor' => '',
+		'sitelogo_bgstyle' => '',
+		'sitelogo_align' => 'left',
+		'sitelogo_title' => 'Tikiwiki powered site',
+		'sitelogo_src' => 'img/tiki/tikilogo.png',
+		'sitelogo_alt' => 'Site Logo',
+		'feature_siteloc' => 'y',
+		'feature_sitenav' => 'n',
+		'sitenav' => '{tr}Navigation : {/tr}<a href="tiki-contact.php" accesskey="10" title="">{tr}Contact Us{/tr}</a>',
+		'feature_sitead' => 'y',
+		'sitead' => '',
+		'sitead_publish' => 'n',
+		'feature_breadcrumbs' => 'n',
+		'feature_siteloclabel' => 'y',
+		'feature_sitesearch' => 'y',
+		'feature_site_login' => 'n',
+		'feature_sitemenu' => 'n',
+		'feature_topbar_version' => 'y',
+		'feature_topbar_date' => 'y',
+		'feature_topbar_debug' => 'y',
+		'feature_topbar_id_menu' => '42',
+		'feature_topbar_custom_code' => '',
+		'feature_sitetitle' => 'y',
+		'feature_sitedesc' => 'n',
+		'feature_bot_logo' => 'n',
+
+		// layout
+		'feature_left_column' => 'y',
+		'feature_right_column' => 'y',
+		'feature_top_bar' => 'n',
+		'feature_bot_bar' => 'y',
+		'feature_bot_bar_icons' => 'n',
+		'feature_bot_bar_debug' => 'n',
+		'feature_bot_bar_rss' => 'y',
+		'maxRecords' => 25,
+		'maxArticles' => 10,
+		'maxVersions' => 0,
+		'feature_view_tpl' => 'n',
+		'slide_style' => 'slidestyle.css',
+		'site_favicon' => 'favicon.png',
+		'site_favicon_type' => 'image/png',
+		'style' => 'tikineat.css',
+		'use_context_menu_icon' => 'y',
+		'use_context_menu_text' => 'y',
+		'feature_site_report' => 'n',
+		'feature_site_send_link' => 'n',
+
+		// mods
+		'feature_mods_provider' => 'n',
+		'mods_dir' => 'mods',
+		'mods_server' => 'http://mods.tikiwiki.org',
+
+		// dev
+		'feature_experimental' => 'n',
+
+		// Action logs
+		'feature_actionlog' => 'n',
+		'feature_actionlog_bytes' => 'n',
+
+		// admin
+		'siteTitle' => '',
+		'tmpDir' => 'temp',
+
+		// tell a friend
+		'feature_tell_a_friend' => 'n',
+
+		// copyright
+		'feature_copyright' => 'n',
+		'feature_multimedia' => 'n',
+
+		// swffix
+		'feature_swffix' => 'n',
+
+		// textarea
+		'feature_smileys' => 'y',
+		'popupLinks' => 'y',
+		'feature_autolinks' => 'y',
+		'quicktags_over_textarea' => 'y',
+		'default_rows_textarea_wiki' => '20',
+		'default_rows_textarea_comment' => '6',
+		'default_rows_textarea_forum' => '20',
+		'default_rows_textarea_forumthread' => '10',
+
+		// pagination
+		'direct_pagination' => 'y',
+		'nextprev_pagination' => 'y',
+		'pagination_firstlast' => 'y',
+		'pagination_icons' => 'y',
+		'pagination_fastmove_links' => 'y',
+		'direct_pagination_max_middle_links' => 2,
+		'direct_pagination_max_ending_links' => 0,
+
+		// unsorted features
+		'anonCanEdit' => 'n',
+		'cacheimages' => 'n',
+		'cachepages' => 'n',
+		'count_admin_pvs' => 'y',
+		'default_mail_charset' =>'utf-8',
+		'error_reporting_adminonly' => 'y',
+		'error_reporting_level' => 0,
+		'smarty_notice_reporting' => 'n',
+		'smarty_security' => 'y',
+		'feature_ajax' => 'n',
+		'feature_antibot' => 'n',
+		'feature_banners' => 'n',
+		'feature_banning' => 'n',
+		'feature_comm' => 'n',
+		'feature_contribution' => 'n',
+		'feature_contribution_display_in_comment' => 'y',
+		'feature_contribution_mandatory' => 'n',
+		'feature_contribution_mandatory_blog' => 'n',
+		'feature_contribution_mandatory_comment' => 'n',
+		'feature_contribution_mandatory_forum' => 'n',
+		'feature_debug_console' => 'n',
+		'feature_debugger_console' => 'n',
+		'feature_display_my_to_others' => 'n',
+		'feature_drawings' => 'n',
+		'feature_dynamic_content' => 'n',
+		'feature_edit_templates' => 'n',
+		'feature_editcss' => 'n',
+		'feature_events' => 'n',
+		'feature_friends' => 'n',
+		'feature_fullscreen' => 'n',
+		'feature_help' => 'y',
+		'feature_hotwords' => 'n',
+		'feature_hotwords_nw' => 'n',
+		'feature_integrator' => 'n',
+		'feature_live_support' => 'n',
+		'feature_mailin' => 'n',
+		'feature_menusfolderstyle' => 'y',
+		'feature_mobile' => 'n',
+		'feature_modulecontrols' => 'n',
+		'feature_morcego' => 'n',
+		'feature_multilingual' => 'n',
+		'feature_multilingual_structures' => 'n',
+		'feature_newsletters' => 'n',
+		'feature_obzip' => 'n',
+		'feature_phplayers' => 'y', // Enabled by default for a better file gallery tree explorer
+		'feature_cssmenus' => 'n',
+		'feature_projects' => 'n',
+		'feature_ranking' => 'n',
+		'feature_redirect_on_error' => 'n',
+		'feature_referer_highlight' => 'n',
+		'feature_referer_stats' => 'n',
+		'feature_score' => 'n',
+		'feature_sheet' => 'n',
+		'feature_shoutbox' => 'n',
+		'feature_source' => 'y',
+		'feature_stats' => 'n',
+		'feature_tabs' => 'y',
+		'feature_theme_control' => 'n',
+		'feature_ticketlib' => 'n',
+		'feature_ticketlib2' => 'y',
+		'feature_top_banner' => 'n',
+		'feature_usability' => 'n',
+		'feature_use_quoteplugin' => 'n',
+		'feature_user_watches' => 'n',
+		'feature_user_watches_translations' => 'y',
+		'feature_workflow' => 'n',
+		'feature_xmlrpc' => 'n',
+		'helpurl' => "http://doc.tikiwiki.org/",
+		'layout_section' => 'n',
+		'limitedGoGroupHome' => 'n',
+		'minical_reminders' => 0,
+		'modallgroups' => 'n',
+		'modseparateanon' => 'n',
+		'php_docroot' => 'http://php.net/',
+		'proxy_host' => '',
+		'proxy_port' => '',
+		'sender_email' => '',
+		'feature_site_report_email' => '',
+		'session_db' => 'n',
+		'session_lifetime' => 0,
+		'shoutbox_autolink' => 'n',
+		'show_comzone' => 'n',
+		'system_os' => TikiSetup::os(),
+		'tikiIndex' => 'tiki-index.php',
+		'urlIndex' => '',
+		'useGroupHome' => 'n',
+		'useUrlIndex' => 'n',
+		'use_proxy' => 'n',
+		'user_list_order' => 'score_desc',
+		'webserverauth' => 'n',
+		'feature_purifier' => 'n',
+		'feature_shadowbox' => 'y',
+		'log_sql' => 'n',
+		'log_sql_perf_min' => '0.05',
+		'log_mail' => 'n',
+
+		'case_patched' => 'n',
+		'site_closed' => 'n',
+		'site_closed_msg' => 'Site is closed for maintenance; please come back later.',
+		'use_load_threshold' => 'n',
+		'load_threshold' => 3,
+		'site_busy_msg' => 'Server is currently too busy; please come back later.',
+
+		'bot_logo_code' => '',
+		'feature_blogposts_pings' => '',
+		'feature_create_webhelp' => 'n',
+		'feature_forums_search' => '',
+		'feature_forums_tiki_search' => '',
+		'feature_trackbackpings' => 'n',
+		'feature_wiki_ext_icon' => 'y',
+		'feature_wiki_mandatory_category' => -1,
+		'freetags_3d_autoload' => '',
+		'freetags_3d_camera_distance' => '',
+		'freetags_3d_elastic_constant' => '',
+		'freetags_3d_eletrostatic_constant' => '',
+		'freetags_3d_fov' => '',
+		'freetags_3d_friction_constant' => '',
+		'freetags_3d_node_charge' => '',
+		'freetags_3d_node_mass' => '',
+		'freetags_3d_node_size' => '',
+		'freetags_3d_spring_size' => '',
+		'freetags_3d_text_size' => '',
+		'feature_intertiki_imported_groups' => '',
+		'feature_wiki_history_ip' => 'y',
+		'pam_create_user_tiki' => '',
+		'pam_service' => '',
+		'pam_skip_admin' => '',
+		'shib_affiliation' => '',
+		'shib_create_user_tiki' => '',
+		'shib_group' => 'Shibboleth',
+		'shib_skip_admin' => '',
+		'shib_usegroup' => 'n',
+		'wiki_3d_camera_distance' => '',
+		'wiki_3d_elastic_constant' => '',
+		'wiki_3d_eletrostatic_constant' => '',
+		'wiki_3d_fov' => '',
+		'wiki_3d_friction_constant' => '',
+		'wiki_3d_node_charge' => '',
+		'wiki_3d_node_mass' => '',
+		'wiki_3d_node_size' => '',
+		'wiki_3d_spring_size' => '',
+		'wiki_3d_text_size' => '',
+		'articles_feature_copyrights' => '',
+		'blogues_feature_copyrights' => '',
+		'faqs_feature_copyrights' => '',
+		'feature_contributor_wiki' => '',
+		'freetags_3d_adjust_camera' => '',
+		'https_login_required' => '',
+		'maxRowsGalleries' => '',
+		'replimaster' => '',
+		'rowImagesGalleries' => '',
+		'scaleSizeGalleries' => '',
+		'thumbSizeXGalleries' => '',
+		'thumbSizeYGalleries' => '',
+		'wiki_3d_adjust_camera' => '',
+		'wiki_3d_autoload' => '',
+		'feature_sefurl' => 'n',
+		'feature_mootools' => 'y', // Needed for shadowbox
+		'javascript_enabled' => 'n',
+		'feature_comments_post_as_anonymous' => 'n',
+		'feature_template_zoom' => 'y',
+
+		// TikiTests
+		'feature_tikitests' => 'n',
+
+		// Tiki Profiles
+		'profile_sources' => 'http://profiles.tikiwiki.org/profiles',
+
+		// Minichat
+		'feature_minichat' => 'n',
+
+		// Pear::Date
+		'feature_pear_date' => 'y',
+
+		'feature_bidi' => 'n',
+		'feature_lastup' => 'y',
+		'transition_style_ver' => '1.9',
+	);
+
+	// spellcheck
+	if ( file_exists('lib/bablotron.php') ) {
+		$prefs['lib_spellcheck'] = 'y';
+		$prefs['wiki_spellcheck'] = 'n';
+		$prefs['cms_spellcheck'] = 'n';
+		$prefs['blog_spellcheck'] = 'n';
+	}
+	global $phpcas_enabled;
+	if ( $phpcas_enabled == 'y' ) {
+		$prefs['cas_create_user_tiki'] = 'n';
+		$prefs['cas_skip_admin'] = 'n';
+		$prefs['cas_version'] = '1.0';
+		$prefs['cas_hostname'] = '';
+		$prefs['cas_port'] = '';
+		$prefs['cas_path'] = '';
+	}
+
+	// Special default values
+
+	if ( is_file('styles/'.$tikidomain.'/'.$prefs['site_favicon']) )
+		$prefs['site_favicon'] = 'styles/'.$tikidomain.'/'.$prefs['site_favicon'];
+	elseif ( ! is_file($prefs['site_favicon']) )
+		$prefs['site_favicon'] = false;
+
+	$_SESSION['tmpDir'] = TikiInit::tempdir(); //??
+
+	$prefs['feature_bidi'] = 'n';
+	$prefs['feature_lastup'] = 'y';
+	$prefs['transition_style_ver'] = '1.9';
+
+	// Be sure we have a default value for user prefs
+	foreach ( $prefs as $p => $v ) {
+		if ( substr($p, 0, 12) == 'users_prefs_' ) {
+			$prefs[substr($p, 12)] = $v;
+		}
+	}
+
+	return $prefs;
+}
+
 // Initialize prefs for which we want to use the site value (they will be prefixed with 'site_')
 // ( this is also used in tikilib, not only when reloading prefs )
 $user_overrider_prefs = array('language', 'style', 'userbreadCrumb', 'tikiIndex', 'wikiHomePage');
@@ -40,1096 +1152,7 @@ if (isset($_SESSION['s_prefs'])) {
 if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs = $_SESSION['s_prefs'];
 } else {
-	$prefs=array();
-
-	# tiki and version
-	$prefs['tiki_release'] = '0';
-	$prefs['feature_version_checks'] = 'y';
-	$prefs['tiki_needs_upgrade'] = 'n';
-	$prefs['tiki_version_last_check'] = 0;
-	$prefs['tiki_version_check_frequency'] = 604800;
-
-	# wiki
-	$prefs['feature_wiki'] = 'y';
-	$prefs['default_wiki_diff_style'] = 'minsidediff';
-	$prefs['feature_backlinks'] = 'y';
-	$prefs['feature_dump'] = 'n';
-	$prefs['feature_history'] = 'y';
-	$prefs['feature_lastChanges'] = 'y';
-	$prefs['feature_likePages'] = 'n';
-	$prefs['feature_listPages'] = 'y';
-	$prefs['feature_page_title'] = 'y';
-	$prefs['feature_sandbox'] = 'n';
-	$prefs['feature_warn_on_edit'] = 'y';
-	$prefs['feature_wiki_1like_redirection'] = 'y';
-	$prefs['feature_wiki_allowhtml'] = 'n';
-	$prefs['feature_wiki_attachments'] = 'n';
-	$prefs['feature_wiki_comments'] = 'n';
-	$prefs['feature_wiki_description'] = 'n';
-	$prefs['feature_wiki_discuss'] = 'n';
-	$prefs['feature_wiki_export'] = 'n';
-	$prefs['feature_wiki_import_page'] = 'n';
-	$prefs['feature_wiki_footnotes'] = 'n';
-	$prefs['feature_wiki_icache'] = 'n';
-	$prefs['feature_wiki_import_html'] = 'n';
-	$prefs['feature_wiki_monosp'] = 'n';
-	$prefs['feature_wiki_multiprint'] = 'n';
-	$prefs['feature_wiki_notepad'] = 'n';
-	$prefs['feature_wiki_make_structure'] = 'n';
-	$prefs['feature_wiki_open_as_structure'] = 'n';
-	$prefs['feature_wiki_pageid'] = 'n';
-	$prefs['feature_wiki_paragraph_formatting'] = 'n';
-	$prefs['feature_wiki_paragraph_formatting_add_br'] = 'n';
-	// $prefs['feature_wiki_pdf'] = 'n';
-	$prefs['feature_wiki_pictures'] = 'y';
-	$prefs['feature_wiki_plurals'] = 'y';
-	$prefs['feature_wiki_print'] = 'y';
-	$prefs['feature_wiki_protect_email'] = 'y';
-	$prefs['feature_wiki_rankings'] = 'n';
-	$prefs['feature_wiki_ratings'] = 'n';
-	$prefs['feature_wiki_replace'] = 'n';
-	$prefs['feature_wiki_show_hide_before'] = 'n';
-	$prefs['feature_wiki_tables'] = 'new';
-	$prefs['feature_wiki_templates'] = 'n';
-	$prefs['feature_wiki_undo'] = 'n';
-	$prefs['feature_wiki_userpage'] = 'y';
-	$prefs['feature_wiki_userpage_prefix'] = 'UserPage';
-	$prefs['feature_wiki_usrlock'] = 'n';
-	$prefs['feature_wiki_save_draft'] = 'n'; // Broken in 2.0 RC2 http://dev.tikiwiki.org/wish1888
-	$prefs['feature_wikiwords'] = 'y';
-	$prefs['feature_wikiwords_usedash'] = 'y';
-	$prefs['mailin_autocheck'] = 'n';
-	$prefs['mailin_autocheckFreq'] = '0';
-	$prefs['mailin_autocheckLast'] = 0;
-	$prefs['warn_on_edit_time'] = 2;
-	$prefs['wikiHomePage'] = 'HomePage';
-	$prefs['wikiLicensePage'] = '';
-	$prefs['wikiSubmitNotice'] = '';
-	$prefs['wiki_authors_style'] = 'classic';
-	$prefs['wiki_authors_style_by_page'] = 'n';
-	$prefs['wiki_show_version'] = 'n';
-	$prefs['wiki_bot_bar'] = 'n';
-	$prefs['wiki_cache'] = 0;
-	$prefs['wiki_comments_default_ordering'] = 'points_desc';
-	$prefs['wiki_comments_displayed_default'] = 'n';
-	$prefs['wiki_comments_per_page'] = 10;
-	$prefs['wiki_creator_admin'] = 'n';
-	$prefs['wiki_feature_copyrights'] = 'n';
-	$prefs['wiki_forum_id'] = '';
-	$prefs['wiki_left_column'] = 'y';
-	$prefs['wiki_list_backlinks'] = 'n';
-	$prefs['wiki_list_comment'] = 'y';
-	$prefs['wiki_list_comment_len'] = '200';
-	$prefs['wiki_list_description'] = 'y';
-	$prefs['wiki_list_description_len'] = '200';
-	$prefs['wiki_list_creator'] = 'n';
-	$prefs['wiki_list_hits'] = 'y';
-	$prefs['wiki_list_lastmodif'] = 'y';
-	$prefs['wiki_list_lastver'] = 'n';
-	$prefs['wiki_list_links'] = 'n';
-	$prefs['wiki_list_name'] = 'y';
-	$prefs['wiki_list_name_len'] = '40';
-	$prefs['wiki_list_size'] = 'n';
-	$prefs['wiki_list_status'] = 'n';
-	$prefs['wiki_list_user'] = 'y';
-	$prefs['wiki_list_versions'] = 'y';
-	$prefs['wiki_list_language'] = 'n';
-	$prefs['wiki_list_categories'] = 'n';
-	$prefs['wiki_list_categories_path'] = 'n';
-	$prefs['wiki_list_id'] = 'n';
-	$prefs['wiki_list_sortorder'] = 'pageName';
-	$prefs['wiki_list_sortdirection'] = 'asc';
-	$prefs['wiki_page_regex'] = 'strict';
-	$prefs['wiki_page_separator'] = '...page...';
-	$prefs['wiki_page_navigation_bar'] = 'bottom';
-	$prefs['wiki_actions_bar'] = 'bottom';
-	$prefs['wiki_pagename_strip'] = '';
-	$prefs['wiki_right_column'] = 'y';
-	$prefs['wiki_top_bar'] = 'y';
-	$prefs['wiki_uses_slides'] = 'n';
-	$prefs['wiki_watch_author'] = 'n';
-	$prefs['wiki_watch_comments'] = 'y';
-	$prefs['wiki_watch_editor'] = 'n';
-	$prefs['wiki_watch_minor'] = 'y';
-	$prefs['feature_wiki_history_full'] = 'n';
-	$prefs['feature_wiki_categorize_structure'] = 'n';
-	$prefs['feature_wiki_watch_structure'] = 'n';
-	$prefs['feature_wikiapproval'] = 'n';
-	$prefs['wikiapproval_prefix'] = '*';
-	$prefs['wikiapproval_delete_staging'] = 'n';
-	$prefs['wikiapproval_master_group'] = '';
-	$prefs['wiki_edit_section'] = 'y';
-	$prefs['wiki_edit_plugin'] = 'y';
-
-	$prefs['wikiplugin_agentinfo'] = 'n';
-	$prefs['wikiplugin_alink'] = 'y';
-	$prefs['wikiplugin_aname'] = 'y';
-	$prefs['wikiplugin_annotation'] = 'y';
-	$prefs['wikiplugin_article'] = 'y';
-	$prefs['wikiplugin_articles'] = 'y';
-	$prefs['wikiplugin_attach'] = 'y';
-	$prefs['wikiplugin_avatar'] = 'y';
-	$prefs['wikiplugin_backlinks'] = 'y';
-	$prefs['wikiplugin_bloglist'] = 'n';
-	$prefs['wikiplugin_box'] = 'y';
-	$prefs['wikiplugin_category'] = 'y';
-	$prefs['wikiplugin_catorphans'] = 'y';
-	$prefs['wikiplugin_catpath'] = 'y';
-	$prefs['wikiplugin_center'] = 'y';
-	$prefs['wikiplugin_chart'] = 'y';
-	$prefs['wikiplugin_code'] = 'y';
-	$prefs['wikiplugin_copyright'] = 'y';
-	$prefs['wikiplugin_countdown'] = 'y';
-	$prefs['wikiplugin_div'] = 'y';
-	$prefs['wikiplugin_dl'] = 'y';
-	$prefs['wikiplugin_equation'] = 'y';
-	$prefs['wikiplugin_events'] = 'y';
-	$prefs['wikiplugin_example'] = 'n';
-	$prefs['wikiplugin_fancytable'] = 'y';
-	$prefs['wikiplugin_flash'] = 'y';
-	$prefs['wikiplugin_gauge'] = 'y';
-	$prefs['wikiplugin_group'] = 'y';
-	$prefs['wikiplugin_include'] = 'y';
-	$prefs['wikiplugin_jabber'] = 'n';
-	$prefs['wikiplugin_lang'] = 'y';
-	$prefs['wikiplugin_lastmod'] = 'y';
-	$prefs['wikiplugin_listpages'] = 'y';
-	$prefs['wikiplugin_lsdir'] = 'n';
-	$prefs['wikiplugin_map'] = 'y';
-	$prefs['wikiplugin_miniquiz'] = 'y';
-	$prefs['wikiplugin_module'] = 'y';
-	$prefs['wikiplugin_mono'] = 'y';
-	$prefs['wikiplugin_mouseover'] = 'y';
-	$prefs['wikiplugin_myspace'] = 'y';
-	$prefs['wikiplugin_objecthits'] = 'y';
-	$prefs['wikiplugin_pluginmanager'] = 'n';
-	$prefs['wikiplugin_poll'] = 'y';
-	$prefs['wikiplugin_proposal'] = 'y';
-	$prefs['wikiplugin_quote'] = 'y';
-	$prefs['wikiplugin_regex'] = 'n';
-	$prefs['wikiplugin_remarksbox'] = 'y';
-	$prefs['wikiplugin_rss'] = 'y';
-	$prefs['wikiplugin_sf'] = 'y';
-	$prefs['wikiplugin_sheet'] = 'y';
-	$prefs['wikiplugin_showpages'] = 'y';
-	$prefs['wikiplugin_skype'] = 'y';
-	$prefs['wikiplugin_snarf'] = 'n';
-	$prefs['wikiplugin_sort'] = 'y';
-	$prefs['wikiplugin_split'] = 'y';
-	$prefs['wikiplugin_sql'] = 'n';
-	$prefs['wikiplugin_sub'] = 'y';
-	$prefs['wikiplugin_subscribegroup'] = 'y';
-	$prefs['wikiplugin_subscribegroups'] = 'y';
-	$prefs['wikiplugin_sup'] = 'y';
-	$prefs['wikiplugin_tag'] = 'y';
-	$prefs['wikiplugin_thumb'] = 'y';
-	$prefs['wikiplugin_titlesearch'] = 'n';
-	$prefs['wikiplugin_topfriends'] = 'y';
-	$prefs['wikiplugin_trackerfilter'] = 'y';
-	$prefs['wikiplugin_trackeritemfield'] = 'y';
-	$prefs['wikiplugin_trackerlist'] = 'y';
-	$prefs['wikiplugin_tracker'] = 'y';
-	$prefs['wikiplugin_trackerprefill'] = 'y';
-	$prefs['wikiplugin_trackerstat'] = 'y';
-	$prefs['wikiplugin_translated'] = 'y';
-	$prefs['wikiplugin_tr'] = 'y';
-	$prefs['wikiplugin_usercount'] = 'y';
-	$prefs['wikiplugin_userlist'] = 'n';
-	$prefs['wikiplugin_versions'] = 'y';
-	$prefs['wikiplugin_vote'] = 'y';
-	$prefs['wikiplugin_wantedpages'] = 'y';
-	$prefs['wikiplugin_youtube'] = 'y';
-
-	# wysiwyg
-	$prefs['feature_wysiwyg'] = 'n';
-	$prefs['wysiwyg_optional'] = 'y';
-	$prefs['wysiwyg_default'] = 'y';
-	$prefs['wysiwyg_memo'] = 'y';
-	$prefs['wysiwyg_wiki_parsed'] = 'y';
-	$prefs['wysiwyg_wiki_semi_parsed'] = 'y';
-	$prefs['wysiwyg_toolbar_skin'] = 'default';
-	$prefs['wysiwyg_toolbar'] ="FitWindow,Templates,-,Cut,Copy,Paste,PasteText,PasteWord,Print,SpellCheck
-	Undo,Redo,-,Find,Replace,SelectAll,RemoveFormat,-,Table,Rule,Smiley,SpecialChar,PageBreak,ShowBlocks
-	/
-	JustifyLeft,JustifyCenter,JustifyRight,JustifyFull,-,OrderedList,UnorderedList,Outdent,Indent,Blockquote
-	Bold,Italic,Underline,StrikeThrough,-,Subscript,Superscript,-,tikilink,Link,Unlink,Anchor,-,tikiimage,Flash
-	/
-	Style,FontName,FontSize,-,TextColor,BGColor,-,Source";
-
-	# wiki3d
-	$prefs['wiki_feature_3d'] = 'n';
-	$prefs['wiki_3d_width'] = 500;
-	$prefs['wiki_3d_height'] = 500;
-	$prefs['wiki_3d_navigation_depth'] = 1;
-	$prefs['wiki_3d_feed_animation_interval'] = 500;
-	$prefs['wiki_3d_existing_page_color'] = '#00CC55';
-	$prefs['wiki_3d_missing_page_color'] = '#FF5555';
-
-	# blogs
-	$prefs['feature_blogs'] = 'n';
-	$prefs['blog_list_order'] = 'created_desc';
-	$prefs['home_blog'] = 0;
-	$prefs['feature_blog_rankings'] = 'n';
-	$prefs['feature_blog_comments'] = 'n';
-	$prefs['blog_comments_default_ordering'] = 'points_desc';
-	$prefs['blog_comments_per_page'] = 10;
-	$prefs['feature_blogposts_comments'] = 'n';
-	$prefs['blog_list_user'] = 'text';
-	$prefs['blog_list_title'] = 'y';
-	$prefs['blog_list_title_len'] = '35';
-	$prefs['blog_list_description'] = 'y';
-	$prefs['blog_list_created'] = 'y';
-	$prefs['blog_list_lastmodif'] = 'y';
-	$prefs['blog_list_posts'] = 'y';
-	$prefs['blog_list_visits'] = 'y';
-	$prefs['blog_list_activity'] = 'n';
-	$prefs['feature_blog_mandatory_category'] = '-1';
-	$prefs['feature_blog_heading'] = 'y';
-
-	# filegals
-	$prefs['feature_file_galleries'] = 'y';
-	$prefs['home_file_gallery'] = 0;
-	$prefs['fgal_use_db'] = 'y';
-	$prefs['fgal_batch_dir'] = '';
-	$prefs['fgal_match_regex'] = '';
-	$prefs['fgal_nmatch_regex'] = '';
-	$prefs['fgal_use_dir'] = '';
-	$prefs['fgal_podcast_dir'] = 'files';
-	$prefs['feature_file_galleries_comments'] = 'n';
-	$prefs['file_galleries_comments_default_ordering'] = 'points_desc';
-	$prefs['file_galleries_comments_per_page'] = 10;
-	$prefs['feature_file_galleries_batch'] = 'n';
-	$prefs['feature_file_galleries_rankings'] = 'n';
-	$prefs['fgal_enable_auto_indexing'] = 'y';
-	$prefs['fgal_asynchronous_indexing'] = 'y';
-	$prefs['fgal_allow_duplicates'] = 'n';
-	$prefs['fgal_sort_mode'] = '';
-	$prefs['feature_file_galleries_author'] = 'n';
-	$prefs['fgal_list_id'] = 'n';
-	$prefs['fgal_list_type'] = 'y';
-	$prefs['fgal_list_name'] = 'n';
-	$prefs['fgal_list_description'] = 'o';
-	$prefs['fgal_list_size'] = 'y';
-	$prefs['fgal_list_created'] = 'o';
-	$prefs['fgal_list_lastmodif'] = 'y';
-	$prefs['fgal_list_creator'] = 'o';
-	$prefs['fgal_list_author'] = 'o';
-	$prefs['fgal_list_last_user'] = 'o';
-	$prefs['fgal_list_comment'] = 'o';
-	$prefs['fgal_list_files'] = 'o';
-	$prefs['fgal_list_hits'] = 'o';
-	$prefs['fgal_list_lockedby'] = 'a';
-	$prefs['fgal_show_path'] = 'y';
-	$prefs['fgal_show_explorer'] = 'y';
-	$prefs['fgal_limit_hits_per_file'] = 'n';
-	$prefs['fgal_prevent_negative_score'] = 'n';
-
-	# imagegals
-	$prefs['feature_galleries'] = 'n';
-	$prefs['feature_gal_batch'] = 'n';
-	$prefs['feature_gal_slideshow'] = 'n';
-	$prefs['home_gallery'] = 0;
-	$prefs['gal_use_db'] = 'y';
-	$prefs['gal_use_lib'] = 'imagick';
-	$prefs['gal_match_regex'] = '';
-	$prefs['gal_nmatch_regex'] = '';
-	$prefs['gal_use_dir'] = '';
-	$prefs['gal_batch_dir'] = '';
-	$prefs['feature_gal_rankings'] = 'n';
-	$prefs['feature_image_galleries_comments'] = 'n';
-	$prefs['image_galleries_comments_default_order'] = 'points_desc';
-	$prefs['image_galleries_comments_per_page'] = 10;
-	$prefs['gal_list_name'] = 'y';
-	$prefs['gal_list_parent'] = 'n';
-	$prefs['gal_list_description'] = 'y';
-	$prefs['gal_list_created'] = 'n';
-	$prefs['gal_list_lastmodif'] = 'y';
-	$prefs['gal_list_user'] = 'n';
-	$prefs['gal_list_imgs'] = 'y';
-	$prefs['gal_list_visits'] = 'y';
-	$prefs['feature_image_gallery_mandatory_category'] = '-1';
-	$prefs['preset_galleries_info'] ='n';
-	$prefs['gal_image_mouseover'] = 'n';
-
-	# multimedia
-	$prefs['ProgressBarPlay']='#FF8D41';
-	$prefs['ProgressBarLoad']="#A7A7A7";
-	$prefs['ProgressBarButton']="#FF0000";
-	$prefs['ProgressBar']="#C3C3C3";
-	$prefs['VolumeOn']="#21AC2A";
-	$prefs['VolumeOff']="#8EFF8A";
-	$prefs['VolumeButton']=0;
-	$prefs['Button']="#555555";
-	$prefs['ButtonPressed']="#FF00FF";
-	$prefs['ButtonOver']="#B3B3B3";
-	$prefs['ButtonInfo']="#C3C3C3";
-	$prefs['ButtonInfoPressed']="#555555";
-	$prefs['ButtonInfoOver']="#FF8D41";
-	$prefs['ButtonInfoText']="#FFFFFF";
-	$prefs['ID3']="#6CDCEB";
-	$prefs['PlayTime']="#00FF00";
-	$prefs['TotalTime']="#FF2020";
-	$prefs['PanelDisplay']="#555555";
-	$prefs['AlertMesg']="#00FFFF";
-	$prefs['PreloadDelay']=3;
-	$prefs['VideoHeight']=240;
-	$prefs['VideoLength']=300;
-	$prefs['ProgressBarPlay']="#FFFFFF";
-	$prefs['URLAppend']="";
-	$prefs['LimitedMsg']="You are limited to 1 minute";
-	$prefs['MaxPlay']=60;
-	$prefs['MultimediaGalerie']=1;
-	$prefs['MultimediaDefaultLength']=200;
-	$prefs['MultimediaDefaultHeight']=100;
-
-	# spellcheck
-	if ( file_exists('lib/bablotron.php') ) {
-		$prefs['lib_spellcheck'] = 'y';
-		$prefs['wiki_spellcheck'] = 'n';
-		$prefs['cms_spellcheck'] = 'n';
-		$prefs['blog_spellcheck'] = 'n';
-	}
-
-	# forums
-	$prefs['feature_forums'] = 'n';
-	$prefs['home_forum'] = 0;
-	$prefs['feature_forum_rankings'] = 'n';
-	$prefs['feature_forum_parse'] = 'n';
-	$prefs['feature_forum_topics_archiving'] = 'n';
-	$prefs['feature_forum_replyempty'] = 'n';
-	$prefs['feature_forum_quickjump'] = 'n';
-	$prefs['feature_forum_topicd'] = 'y';
-	$prefs['feature_forums_allow_thread_titles'] = 'n';
-	$prefs['feature_forum_content_search'] = 'y';
-	$prefs['feature_forums_name_search'] = 'y';
-	$prefs['forums_ordering'] = 'created_desc';
-	$prefs['forum_list_topics'] =  'n';
-	$prefs['forum_list_posts'] =  'y';
-	$prefs['forum_list_ppd'] =  'n';
-	$prefs['forum_list_lastpost'] =  'y';
-	$prefs['forum_list_visits'] =  'y';
-	$prefs['forum_list_desc'] =  'y';
-	$prefs['feature_forum_local_search'] = 'n';
-	$prefs['feature_forum_local_tiki_search'] = 'n';
-	$prefs['forum_thread_defaults_by_forum'] = 'n';
-	$prefs['forum_thread_user_settings'] = 'y';
-	$prefs['forum_thread_user_settings_keep'] = 'n';
-	$prefs['forum_comments_per_page'] = 20;
-	$prefs['forum_comments_no_title_prefix'] = 'n';
-	$prefs['forum_thread_style'] = 'commentStyle_plain';
-	$prefs['forum_thread_sort_mode'] = 'commentDate_desc';
-
-	# articles
-	$prefs['feature_articles'] = 'n';
-	$prefs['feature_submissions'] = 'n';
-	$prefs['feature_cms_rankings'] = 'n';
-	$prefs['feature_cms_print'] = 'y';
-	$prefs['feature_cms_emails'] = 'n';
-	$prefs['art_list_title'] = 'y';
-	$prefs['art_list_title_len'] = '20';
-	$prefs['art_list_topic'] = 'y';
-	$prefs['art_list_date'] = 'y';
-	$prefs['art_list_author'] = 'y';
-	$prefs['art_list_reads'] = 'y';
-	$prefs['art_list_size'] = 'y';
-	$prefs['art_list_expire'] = 'y';
-	$prefs['art_list_img'] = 'y';
-	$prefs['art_list_type'] = 'y';
-	$prefs['art_list_visible'] = 'y';
-	$prefs['art_view_type'] = 'y';
-	$prefs['art_view_title'] = 'y';
-	$prefs['art_view_topic'] = 'y';
-	$prefs['art_view_date'] = 'y';
-	$prefs['art_view_author'] = 'y';
-	$prefs['art_view_reads'] = 'y';
-	$prefs['art_view_size'] = 'y';
-	$prefs['art_view_img'] = 'y';
-	$prefs['feature_article_comments'] = 'n';
-	$prefs['article_comments_default_ordering'] = 'points_desc';
-	$prefs['article_comments_per_page'] = 10;
-	$prefs['feature_cms_templates'] = 'n';
-	$prefs['cms_bot_bar'] = 'y';
-	$prefs['cms_left_column'] = 'y';
-	$prefs['cms_right_column'] = 'y';
-	$prefs['cms_top_bar'] = 'n';
-	$prefs['cms_spellcheck'] = 'n';
-	$prefs['art_home_title'] = '';
-
-	# trackers
-	$prefs['feature_trackers'] = 'n';
-	$prefs['t_use_db'] = 'y';
-	$prefs['t_use_dir'] = '';
-	$prefs['groupTracker'] = 'n';
-	$prefs['userTracker'] = 'n';
-	$prefs['trk_with_mirror_tables'] = 'n';
-
-	# user
-	$prefs['feature_userlevels'] = 'n';
-	$prefs['userlevels'] = array('1'=>tra('Simple'),'2'=>tra('Advanced'));
-	$prefs['userbreadCrumb'] = 4;
-	$prefs['user_assigned_modules'] = 'n';
-	$prefs['user_flip_modules'] = 'module';
-	$prefs['user_show_realnames'] = 'n';
-	$prefs['feature_mytiki'] = 'y';
-	$prefs['feature_userPreferences'] = 'n';
-	$prefs['feature_user_bookmarks'] = 'n';
-	$prefs['feature_tasks'] = 'n';
-	$prefs['w_use_db'] = 'y';
-	$prefs['w_use_dir'] = '';
-	$prefs['w_displayed_default'] = 'n';
-	$prefs['uf_use_db'] = 'y';
-	$prefs['uf_use_dir'] = '';
-	$prefs['userfiles_quota'] = 30;
-	$prefs['feature_usermenu'] = 'n';
-	$prefs['feature_minical'] = 'n';
-	$prefs['feature_notepad'] = 'n';
-	$prefs['feature_userfiles'] = 'n';
-	$prefs['feature_community_mouseover'] = 'n';
-	$prefs['feature_community_mouseover_name'] = 'y';
-	$prefs['feature_community_mouseover_picture'] = 'y';
-	$prefs['feature_community_mouseover_friends'] = 'y';
-	$prefs['feature_community_mouseover_score'] = 'y';
-	$prefs['feature_community_mouseover_country'] = 'y';
-	$prefs['feature_community_mouseover_email'] = 'y';
-	$prefs['feature_community_mouseover_lastlogin'] = 'y';
-	$prefs['feature_community_mouseover_distance'] = 'y';
-	$prefs['feature_community_list_name'] = 'y';
-	$prefs['feature_community_list_score'] = 'y';
-	$prefs['feature_community_list_country'] = 'y';
-	$prefs['feature_community_list_distance'] = 'y';
-	$prefs['feature_community_friends_permission'] = 'n';
-	$prefs['feature_community_friends_permission_dep'] = '2';
-	$prefs['change_language'] = 'y';
-	$prefs['change_theme'] = 'n';
-	$prefs['login_is_email'] = 'n';
-	$prefs['validateUsers'] = 'n';
-	$prefs['validateEmail'] = 'n';
-	$prefs['forgotPass'] = 'n';
-	$prefs['change_password'] = 'y';
-	$prefs['available_languages'] = array();
-	$prefs['available_styles'] = array();
-	$prefs['lowercase_username'] = 'n';
-	$prefs['max_username_length'] = '50';
-	$prefs['min_username_length'] = '1';
-	$prefs['users_prefs_allowMsgs'] = 'y';
-	$prefs['users_prefs_country'] = '';
-	$prefs['users_prefs_diff_versions'] = 'n';
-	$prefs['users_prefs_display_timezone'] = 'Local';
-	$prefs['users_prefs_email_is_public'] = 'n';
-	$prefs['users_prefs_homePage'] = '';
-	$prefs['users_prefs_lat'] = '0';
-	$prefs['users_prefs_lon'] = '0';
-	$prefs['users_prefs_mess_archiveAfter'] = '0';
-	$prefs['users_prefs_mess_maxRecords'] = '10';
-	$prefs['users_prefs_mess_sendReadStatus'] = 'n';
-	$prefs['users_prefs_minPrio'] = '3';
-	$prefs['users_prefs_mytiki_blogs'] = 'y';
-	$prefs['users_prefs_mytiki_gals'] = 'y';
-	$prefs['users_prefs_mytiki_items'] = 'y';
-	$prefs['users_prefs_mytiki_msgs'] = 'y';
-	$prefs['users_prefs_mytiki_pages'] = 'y';
-	$prefs['users_prefs_mytiki_tasks'] = 'y';
-	$prefs['users_prefs_mytiki_workflow'] = 'y';
-	$prefs['users_prefs_realName'] = '';
-	$prefs['users_prefs_show_mouseover_user_info'] = 'n';
-	$prefs['users_prefs_tasks_maxRecords'] = '10';
-	$prefs['users_prefs_user_dbl'] = 'n';
-	$prefs['users_prefs_user_information'] = 'private';
-	$prefs['users_prefs_userbreadCrumb'] = '4';
-	$prefs['users_prefs_mailCharset'] = 'utf-8';
-	$prefs['validateRegistration'] = 'n';
-
-	# user messages
-	$prefs['feature_messages'] = 'n';
-	$prefs['messu_mailbox_size'] = '0';
-	$prefs['messu_archive_size'] = '200';
-	$prefs['messu_sent_size'] = '200';
-	$prefs['allowmsg_by_default'] = 'y';
-	$prefs['allowmsg_is_optional'] = 'y';
-
-	# newsreader
-	$prefs['feature_newsreader'] = 'n';
-
-	# freetags
-	$prefs['feature_freetags'] = 'n';
-	$prefs['freetags_browse_show_cloud'] = 'y';
-	$prefs['freetags_cloud_colors'] = '';
-	$prefs['freetags_preload_random_search'] = 'y';
-	$prefs['freetags_browse_amount_tags_in_cloud'] = '100';
-	$prefs['freetags_browse_amount_tags_suggestion'] = '10';
-	$prefs['freetags_normalized_valid_chars'] = '';
-	$prefs['freetags_lowercase_only'] = 'y';
-	$prefs['freetags_feature_3d'] = 'n';
-	$prefs['freetags_3d_width'] = 500;
-	$prefs['freetags_3d_height'] = 500;
-	$prefs['freetags_3d_navigation_depth'] = 1;
-	$prefs['freetags_3d_feed_animation_interval'] = 500;
-	$prefs['freetags_3d_existing_page_color'] = '#00CC55';
-	$prefs['freetags_3d_missing_page_color'] = '#FF5555';
-	$prefs['freetags_multilingual'] = 'n';
-	$prefs['morelikethis_algorithm'] = 'basic';
-	$prefs['morelikethis_basic_mincommon'] = '2';
-
-	# search
-	$prefs['feature_search_stats'] = 'n';
-	$prefs['feature_search'] = 'y';
-	$prefs['feature_search_fulltext'] = 'y';
-	$prefs['feature_search_show_forbidden_obj'] = 'n';
-	$prefs['feature_search_show_forbidden_cat'] = 'n';
-	$prefs['search_refresh_index_mode'] = 'normal';
-	$prefs['search_parsed_snippet'] = 'y';
-
-	# webmail
-	$prefs['feature_webmail'] = 'n';
-	$prefs['webmail_max_attachment'] = 1500000;
-	$prefs['webmail_view_html'] = 'y';
-
-	# contacts
-	$prefs['feature_contacts'] = 'n';
-
-	# faq
-	$prefs['feature_faqs'] = 'n';
-	$prefs['feature_faq_comments'] = 'y';
-	$prefs['faq_comments_per_page'] = 10;
-	$prefs['faq_comments_default_ordering'] = 'points_desc';
-	$prefs['faq_prefix'] = 'QA';
-
-	# quizzes
-	$prefs['feature_quizzes'] = 'n';
-
-	# polls
-	$prefs['feature_polls'] = 'n';
-	$prefs['feature_poll_comments'] = 'n';
-	$prefs['feature_poll_anonymous'] = 'n';
-	$prefs['poll_comments_default_ordering'] = 'points_desc';
-	$prefs['poll_comments_per_page'] = 10;
-	$prefs['poll_list_categories'] = 'n';
-	$prefs['poll_list_objects'] = 'n';
-
-	# surveys
-	$prefs['feature_surveys'] = 'n';
-
-	# featured links
-	$prefs['feature_featuredLinks'] = 'n';
-
-	# directories
-	$prefs['feature_directory'] = 'n';
-	$prefs['directory_columns'] = 3;
-	$prefs['directory_links_per_page'] = 20;
-	$prefs['directory_open_links'] = 'n';
-	$prefs['directory_validate_urls'] = 'n';
-	$prefs['directory_cool_sites'] = 'y';
-	$prefs['directory_country_flag'] = 'y';
-
-	# calendar
-	$prefs['feature_calendar'] = 'n';
-	$prefs['calendar_sticky_popup'] = 'n';
-	$prefs['calendar_view_mode'] = 'month';
-	$prefs['calendar_view_tab'] = 'n';
-	$prefs['calendar_firstDayofWeek'] = 'user';
-	$prefs['calendar_timespan'] = '5';
-	$prefs['feature_jscalendar'] = 'y';
-	$prefs['feature_action_calendar'] = 'n';
-	$prefs['calendar_start_year'] = '+0';
-	$prefs['calendar_end_year'] = '+3';
-
-	# dates
-	$prefs['server_timezone'] = $tikidate->getTimezoneId();
-	$prefs['long_date_format'] = '%A %d of %B, %Y';
-	$prefs['long_time_format'] = '%H:%M:%S %Z';
-	$prefs['short_date_format'] = '%a %d of %b, %Y';
-	$prefs['short_time_format'] = '%H:%M %Z';
-	$prefs['display_field_order'] = 'MDY';
-
-	# charts
-	$prefs['feature_charts'] = 'n';
-
-	# rss
-	$prefs['rss_forums'] = 'n';
-	$prefs['rss_forum'] = 'n';
-	$prefs['rss_directories'] = 'n';
-	$prefs['rss_articles'] = 'n';
-	$prefs['rss_blogs'] = 'n';
-	$prefs['rss_image_galleries'] = 'n';
-	$prefs['rss_file_galleries'] = 'n';
-	$prefs['rss_wiki'] = 'n';
-	$prefs['rss_image_gallery'] = 'n';
-	$prefs['rss_file_gallery'] = 'n';
-	$prefs['rss_blog'] = 'n';
-	$prefs['rss_tracker'] = 'n';
-	$prefs['rss_trackers'] = 'n';
-	$prefs['rss_calendar'] = 'n';
-	$prefs['rss_mapfiles'] = 'n';
-	$prefs['rss_cache_time'] = '0'; // 0 = disabled (default)
-	$prefs['max_rss_forums'] = 10;
-	$prefs['max_rss_forum'] = 10;
-	$prefs['max_rss_directories'] = 10;
-	$prefs['max_rss_articles'] = 10;
-	$prefs['max_rss_blogs'] = 10;
-	$prefs['max_rss_image_galleries'] = 10;
-	$prefs['max_rss_file_galleries'] = 10;
-	$prefs['max_rss_wiki'] = 10;
-	$prefs['max_rss_image_gallery'] = 10;
-	$prefs['max_rss_file_gallery'] = 10;
-	$prefs['max_rss_blog'] = 10;
-	$prefs['max_rss_mapfiles'] = 10;
-	$prefs['max_rss_tracker'] = 10;
-	$prefs['max_rss_trackers'] = 10;
-	$prefs['max_rss_calendar'] = 10;
-	$prefs['summary_rss_blogs'] = 'n';
-	$prefs['rssfeed_default_version'] = '2';
-	$prefs['rssfeed_language'] =  'en-us';
-	$prefs['rssfeed_editor'] = '';
-	$prefs['rssfeed_webmaster'] = '';
-	$prefs['rssfeed_creator'] = '';
-	$prefs['rssfeed_css'] = 'y';
-	$prefs['rssfeed_publisher'] = '';
-	$prefs['rssfeed_img'] = 'img/tiki.jpg';
-	$prefs['rss_basic_auth'] = 'n';
-
-	# maps
-	$prefs['feature_maps'] = 'n';
-	$prefs['map_path'] = '';
-	$prefs['default_map'] = '';
-	$prefs['map_help'] = 'MapsHelp';
-	$prefs['map_comments'] = 'MapsComments';
-	$prefs['gdaltindex'] = '';
-	$prefs['ogr2ogr'] = '';
-	$prefs['mapzone'] = '';
-
-	# gmap
-	$prefs['feature_gmap'] = 'n';
-	$prefs['gmap_defaultx'] = '0';
-	$prefs['gmap_defaulty'] = '0';
-	$prefs['gmap_defaultz'] = '17';
-	$prefs['gmap_key'] = '';
-
-	# auth
-	$prefs['allowRegister'] = 'n';
-	$prefs['eponymousGroups'] = 'n';
-	$prefs['useRegisterPasscode'] = 'n';
-	$prefs['registerPasscode'] = md5($tikilib->genPass());
-	$prefs['rememberme'] = 'disabled';
-	$prefs['remembertime'] = 7200;
-	$prefs['feature_clear_passwords'] = 'n';
-	$prefs['feature_crypt_passwords'] = (CRYPT_MD5 == 1)? 'crypt-md5': 'tikihash';
-	$prefs['feature_challenge'] = 'n';
-	$prefs['min_user_length'] = 1;
-	$prefs['min_pass_length'] = 1;
-	$prefs['pass_chr_num'] = 'n';
-	$prefs['pass_due'] = -1;
-	$prefs['email_due'] = -1;
-	$prefs['unsuccessful_logins'] = 20;
-	$prefs['rnd_num_reg'] = 'y';
-	$prefs['generate_password'] = 'n';
-	$prefs['auth_method'] = 'tiki';
-	$prefs['auth_pear'] = 'tiki';
-	$prefs['auth_create_user_tiki'] = 'n';
-	$prefs['auth_create_user_auth'] = 'n';
-	$prefs['auth_skip_admin'] = 'y';
-	$prefs['auth_ldap_url'] = '';
-	$prefs['auth_pear_host'] = "localhost";
-	$prefs['auth_pear_port'] = "389";
-	$prefs['auth_ldap_scope'] = "sub";
-	$prefs['auth_ldap_basedn'] = '';
-	$prefs['auth_ldap_userdn'] = '';
-	$prefs['auth_ldap_userattr'] = 'uid';
-	$prefs['auth_ldap_useroc'] = 'inetOrgPerson';
-	$prefs['auth_ldap_groupdn'] = '';
-	$prefs['auth_ldap_groupattr'] = 'cn';
-	$prefs['auth_ldap_groupoc'] = 'groupOfUniqueNames';
-	$prefs['auth_ldap_memberattr'] = 'uniqueMember';
-	$prefs['auth_ldap_memberisdn'] = 'y';
-	$prefs['auth_ldap_adminuser'] = '';
-	$prefs['auth_ldap_adminpass'] = '';
-	$prefs['auth_ldap_version'] = 3;
-	$prefs['auth_ldap_nameattr'] = 'displayName';
-	$prefs['https_login'] = 'allowed';
-	$prefs['feature_show_stay_in_ssl_mode'] = 'y';
-	$prefs['feature_switch_ssl_mode'] = 'y';
-	$prefs['https_port'] = 443;
-	$prefs['http_port'] = 80;
-	$prefs['login_url'] = 'tiki-login.php';
-	$prefs['login_scr'] = 'tiki-login_scr.php';
-	$prefs['register_url'] = 'tiki-register.php';
-	$prefs['error_url'] = 'tiki-error.php';
-	$prefs['highlight_group'] = '';
-	$prefs['cookie_path'] = '/';
-	$prefs['cookie_domain'] = '';
-	$prefs['cookie_name'] = 'tikiwiki';
-	$prefs['user_tracker_infos'] = '';
-	$prefs['desactive_login_autocomplete'] = 'n';
-	$prefs['permission_denied_login_box'] = 'y';
-	$prefs['permission_denied_url'] = '';
-	if ( $phpcas_enabled == 'y' ) {
-		$prefs['cas_create_user_tiki'] = 'n';
-		$prefs['cas_skip_admin'] = 'n';
-		$prefs['cas_version'] = '1.0';
-		$prefs['cas_hostname'] = '';
-		$prefs['cas_port'] = '';
-		$prefs['cas_path'] = '';
-	}
-
-	# intertiki
-	$prefs['feature_intertiki'] = 'n';
-	$prefs['feature_intertiki_server'] = 'n';
-	$prefs['feature_intertiki_slavemode'] = 'n';
-	$prefs['interlist'] = array('');
-	$prefs['feature_intertiki_mymaster'] = '';
-	$prefs['feature_intertiki_import_preferences'] = 'n';
-	$prefs['feature_intertiki_import_groups'] = 'n';
-	$prefs['known_hosts'] = array('');
-	$prefs['tiki_key'] = '';
-	$prefs['intertiki_logfile'] = '';
-	$prefs['intertiki_errfile'] = '';
-	$prefs['feature_intertiki_sharedcookie'] = 'n';
-
-	# search
-	$prefs['search_lru_length'] = '100';
-	$prefs['search_lru_purge_rate'] = '5';
-	$prefs['search_max_syllwords'] = '100';
-	$prefs['search_min_wordlength'] = '3';
-	$prefs['search_refresh_rate'] = '5';
-	$prefs['search_syll_age'] = '48';
-
-	# categories
-	$prefs['feature_categories'] = 'n';
-	$prefs['feature_categoryobjects'] = 'n';
-	$prefs['feature_categorypath'] = 'n';
-	$prefs['feature_category_reinforce'] = 'y';
-	$prefs['feature_category_use_phplayers'] = 'y';
-	$prefs['categorypath_excluded'] = '';
-
-	# games
-	$prefs['feature_games'] = 'n';
-
-	# html pages
-	$prefs['feature_html_pages'] = 'n';
-
-	# use filegals for image inclusion
-	$prefs['feature_filegals_manager'] = 'y';
-
-	# contact & mail
-	$prefs['feature_contact'] = 'n';
-	$prefs['contact_user'] = 'admin';
-	$prefs['contact_anon'] = 'n';
-	$prefs['mail_crlf'] = 'LF';
-
-	# i18n
-	$prefs['feature_detect_language'] = 'n';
-	$prefs['feature_homePage_if_bl_missing'] = 'n';
-	$prefs['record_untranslated'] = 'n';
-	$prefs['feature_best_language'] = 'n';
-	$prefs['lang_use_db'] = 'n';
-	$prefs['language'] = 'en';
-	$prefs['feature_babelfish'] = 'n';
-	$prefs['feature_babelfish_logo'] = 'n';
-	$prefs['quantify_changes'] = 'n';
-	$prefs['feature_sync_language'] = 'n';
-
-	# html header
-	$prefs['metatag_keywords'] = '';
-	$prefs['metatag_threadtitle'] = '';
-	$prefs['metatag_imagetitle'] = '';
-	$prefs['metatag_freetags'] = '';
-	$prefs['metatag_description'] = '';
-	$prefs['metatag_author'] = '';
-	$prefs['metatag_geoposition'] = '';
-	$prefs['metatag_georegion'] = '';
-	$prefs['metatag_geoplacename'] = '';
-	$prefs['metatag_robots'] = '';
-	$prefs['metatag_revisitafter'] = '';
-	$prefs['head_extra_js'] = array();
-	$prefs['keep_versions'] = 1;
-	$prefs['feature_custom_home'] = 'n';
-
-	# site identity
-	$prefs['feature_siteidentity'] = 'y';
-	$prefs['site_crumb_seper'] = '>';
-	$prefs['site_nav_seper'] = '|';
-	$prefs['feature_sitemycode'] = 'n';
-	$prefs['sitemycode'] = '<div align="center"><b>{tr}Here you can (as an admin) place a piece of custom XHTML and/or Smarty code. Be careful and properly close all the tags before you choose to publish ! (Javascript, applets and object tags are stripped out.){/tr}</b></div>'; // must be max. 250 chars now unless it'll change in tiki_prefs db table field value from VARCHAR(250) to BLOB by default
-	$prefs['sitemycode_publish'] = 'n';
-	$prefs['feature_sitelogo'] = 'y';
-	$prefs['sitelogo_bgcolor'] = '';
-	$prefs['sitelogo_bgstyle'] = '';
-	$prefs['sitelogo_align'] = 'left';
-	$prefs['sitelogo_title'] = 'Tikiwiki powered site';
-	$prefs['sitelogo_src'] = 'img/tiki/tikilogo.png';
-	$prefs['sitelogo_alt'] = 'Site Logo';
-	$prefs['feature_siteloc'] = 'y';
-	$prefs['feature_sitenav'] = 'n';
-	$prefs['sitenav'] = '{tr}Navigation : {/tr}<a href="tiki-contact.php" accesskey="10" title="">{tr}Contact Us{/tr}</a>';
-	$prefs['feature_sitead'] = 'y';
-	$prefs['sitead'] = '';
-	$prefs['sitead_publish'] = 'n';
-	$prefs['feature_breadcrumbs'] = 'n';
-	$prefs['feature_siteloclabel'] = 'y';
-	$prefs['feature_sitesearch'] = 'y';
-	$prefs['feature_site_login'] = 'n';
-	$prefs['feature_sitemenu'] = 'n';
-	$prefs['feature_topbar_version'] = 'y';
-	$prefs['feature_topbar_date'] = 'y';
-	$prefs['feature_topbar_debug'] = 'y';
-	$prefs['feature_topbar_id_menu'] = '42';
-	$prefs['feature_topbar_custom_code'] = '';
-	$prefs['feature_sitetitle'] = 'y';
-	$prefs['feature_sitedesc'] = 'n';
-	$prefs['feature_bot_logo'] = 'n';
-
-	# layout
-	$prefs['feature_left_column'] = 'y';
-	$prefs['feature_right_column'] = 'y';
-	$prefs['feature_top_bar'] = 'n';
-	$prefs['feature_bot_bar'] = 'y';
-	$prefs['feature_bot_bar_icons'] = 'n';
-	$prefs['feature_bot_bar_debug'] = 'n';
-	$prefs['feature_bot_bar_rss'] = 'y';
-	$prefs['maxRecords'] = 25;
-	$prefs['maxArticles'] = 10;
-	$prefs['maxVersions'] = 0;
-	$prefs['feature_view_tpl'] = 'n';
-	$prefs['slide_style'] = 'slidestyle.css';
-	$prefs['site_favicon'] = 'favicon.png';
-	$prefs['site_favicon_type'] = 'image/png';
-	$prefs['style'] = 'tikineat.css';
-	$prefs['use_context_menu_icon'] = 'y';
-	$prefs['use_context_menu_text'] = 'y';
-	$prefs['feature_site_report'] = 'n';
-	$prefs['feature_site_send_link'] = 'n';
-
-	# mods
-	$prefs['feature_mods_provider'] = 'n';
-	$prefs['mods_dir'] = 'mods';
-	$prefs['mods_server'] = 'http://mods.tikiwiki.org';
-
-	# dev
-	$prefs['feature_experimental'] = 'n';
-
-	# Action logs
-	$prefs['feature_actionlog'] = 'n';
-	$prefs['feature_actionlog_bytes'] = 'n';
-  
-	# admin
-	$prefs['siteTitle'] = '';
-	$prefs['tmpDir'] = 'temp';
-
-	# tell a friend
-	$prefs['feature_tell_a_friend'] = 'n';
-
-	# copyright
-	$prefs['feature_copyright'] = 'n';
-	$prefs['feature_multimedia'] = 'n';
-
-	# swffix
-	$prefs['feature_swffix'] = 'n';
-
-	# textarea
-	$prefs['feature_smileys'] = 'y';
-	$prefs['popupLinks'] = 'y';
-	$prefs['feature_autolinks'] = 'y';
-	$prefs['quicktags_over_textarea'] = 'y';
-	$prefs['default_rows_textarea_wiki'] = '20';
-	$prefs['default_rows_textarea_comment'] = '6';
-	$prefs['default_rows_textarea_forum'] = '20';
-	$prefs['default_rows_textarea_forumthread'] = '10';
-
-	# pagination
-	$prefs['direct_pagination'] = 'y';
-	$prefs['nextprev_pagination'] = 'y';
-	$prefs['pagination_firstlast'] = 'y';
-	$prefs['pagination_icons'] = 'y';
-	$prefs['pagination_fastmove_links'] = 'y';
-	$prefs['direct_pagination_max_middle_links'] = 2;
-	$prefs['direct_pagination_max_ending_links'] = 0;
-
-	# unsorted features
-	$prefs['anonCanEdit'] = 'n';
-	$prefs['cacheimages'] = 'n';
-	$prefs['cachepages'] = 'n';
-	$prefs['count_admin_pvs'] = 'y';
-	$prefs['default_mail_charset'] ='utf-8';
-	$prefs['error_reporting_adminonly'] = 'y';
-	$prefs['error_reporting_level'] = 0;
-	$prefs['smarty_notice_reporting'] = 'n';
-	$prefs['smarty_security'] = 'y';
-	$prefs['feature_ajax'] = 'n';
-	$prefs['feature_antibot'] = 'n';
-	$prefs['feature_banners'] = 'n';
-	$prefs['feature_banning'] = 'n';
-	$prefs['feature_comm'] = 'n';
-	$prefs['feature_contribution'] = 'n';
-	$prefs['feature_contribution_display_in_comment'] = 'y';
-	$prefs['feature_contribution_mandatory'] = 'n';
-	$prefs['feature_contribution_mandatory_blog'] = 'n';
-	$prefs['feature_contribution_mandatory_comment'] = 'n';
-	$prefs['feature_contribution_mandatory_forum'] = 'n';
-	$prefs['feature_debug_console'] = 'n';
-	$prefs['feature_debugger_console'] = 'n';
-	$prefs['feature_display_my_to_others'] = 'n';
-	$prefs['feature_drawings'] = 'n';
-	$prefs['feature_dynamic_content'] = 'n';
-	$prefs['feature_edit_templates'] = 'n';
-	$prefs['feature_editcss'] = 'n';
-	$prefs['feature_events'] = 'n';
-	$prefs['feature_friends'] = 'n';
-	$prefs['feature_fullscreen'] = 'n';
-	$prefs['feature_help'] = 'y';
-	$prefs['feature_hotwords'] = 'n';
-	$prefs['feature_hotwords_nw'] = 'n';
-	$prefs['feature_integrator'] = 'n';
-	$prefs['feature_live_support'] = 'n';
-	$prefs['feature_mailin'] = 'n';
-	$prefs['feature_menusfolderstyle'] = 'y';
-	$prefs['feature_mobile'] = 'n';
-	$prefs['feature_modulecontrols'] = 'n';
-	$prefs['feature_morcego'] = 'n';
-	$prefs['feature_multilingual'] = 'n';
-	$prefs['feature_multilingual_structures'] = 'n';
-	$prefs['feature_newsletters'] = 'n';
-	$prefs['feature_obzip'] = 'n';
-	$prefs['feature_phplayers'] = 'y'; // Enabled by default for a better file gallery tree explorer
-	$prefs['feature_cssmenus'] = 'n';
-	$prefs['feature_projects'] = 'n';
-	$prefs['feature_ranking'] = 'n';
-	$prefs['feature_redirect_on_error'] = 'n';
-	$prefs['feature_referer_highlight'] = 'n';
-	$prefs['feature_referer_stats'] = 'n';
-	$prefs['feature_score'] = 'n';
-	$prefs['feature_sheet'] = 'n';
-	$prefs['feature_shoutbox'] = 'n';
-	$prefs['feature_source'] = 'y';
-	$prefs['feature_stats'] = 'n';
-	$prefs['feature_tabs'] = 'y';
-	$prefs['feature_theme_control'] = 'n';
-	$prefs['feature_ticketlib'] = 'n';
-	$prefs['feature_ticketlib2'] = 'y';
-	$prefs['feature_top_banner'] = 'n';
-	$prefs['feature_usability'] = 'n';
-	$prefs['feature_use_quoteplugin'] = 'n';
-	$prefs['feature_user_watches'] = 'n';
-	$prefs['feature_user_watches_translations'] = 'y';
-	$prefs['feature_workflow'] = 'n';
-	$prefs['feature_xmlrpc'] = 'n';
-	$prefs['helpurl'] = "http://doc.tikiwiki.org/";
-	$prefs['layout_section'] = 'n';
-	$prefs['limitedGoGroupHome'] = 'n';
-	$prefs['minical_reminders'] = 0;
-	$prefs['modallgroups'] = 'n';
-	$prefs['modseparateanon'] = 'n';
-	$prefs['php_docroot'] = 'http://php.net/';
-	$prefs['proxy_host'] = '';
-	$prefs['proxy_port'] = '';
-	$prefs['sender_email'] = '';
-	$prefs['feature_site_report_email'] = '';
-	$prefs['session_db'] = 'n';
-	$prefs['session_lifetime'] = 0;
-	$prefs['shoutbox_autolink'] = 'n';
-	$prefs['show_comzone'] = 'n';
-	$prefs['system_os'] = TikiSetup::os();
-	$prefs['tikiIndex'] = 'tiki-index.php';
-	$prefs['urlIndex'] = '';
-	$prefs['useGroupHome'] = 'n';
-	$prefs['useUrlIndex'] = 'n';
-	$prefs['use_proxy'] = 'n';
-	$prefs['user_list_order'] = 'score_desc';
-	$prefs['webserverauth'] = 'n';
-	$prefs['feature_purifier'] = 'n';
-	$prefs['feature_shadowbox'] = 'y';
-	$prefs['log_sql'] = 'n';
-	$prefs['log_sql_perf_min'] = '0.05';
-	$prefs['log_mail'] = 'n';
-
-	$prefs['case_patched'] = 'n';
-	$prefs['site_closed'] = 'n';
-	$prefs['site_closed_msg'] = 'Site is closed for maintenance; please come back later.';
-	$prefs['use_load_threshold'] = 'n';
-	$prefs['load_threshold'] = 3;
-	$prefs['site_busy_msg'] = 'Server is currently too busy; please come back later.';
-
-	$prefs['bot_logo_code'] = '';
-	$prefs['feature_blogposts_pings'] = '';
-	$prefs['feature_create_webhelp'] = 'n';
-	$prefs['feature_forums_search'] = '';
-	$prefs['feature_forums_tiki_search'] = '';
-	$prefs['feature_trackbackpings'] = 'n';
-	$prefs['feature_wiki_ext_icon'] = 'y';
-	$prefs['feature_wiki_mandatory_category'] = -1;
-	$prefs['freetags_3d_autoload'] = '';
-	$prefs['freetags_3d_camera_distance'] = '';
-	$prefs['freetags_3d_elastic_constant'] = '';
-	$prefs['freetags_3d_eletrostatic_constant'] = '';
-	$prefs['freetags_3d_fov'] = '';
-	$prefs['freetags_3d_friction_constant'] = '';
-	$prefs['freetags_3d_node_charge'] = '';
-	$prefs['freetags_3d_node_mass'] = '';
-	$prefs['freetags_3d_node_size'] = '';
-	$prefs['freetags_3d_spring_size'] = '';
-	$prefs['freetags_3d_text_size'] = '';
-	$prefs['feature_intertiki_imported_groups'] = '';
-	$prefs['feature_wiki_history_ip'] = 'y';
-	$prefs['pam_create_user_tiki'] = '';
-	$prefs['pam_service'] = '';
-	$prefs['pam_skip_admin'] = '';
-	$prefs['shib_affiliation'] = '';
-	$prefs['shib_create_user_tiki'] = '';
-	$prefs['shib_group'] = 'Shibboleth';
-	$prefs['shib_skip_admin'] = '';
-	$prefs['shib_usegroup'] = 'n';
-	$prefs['wiki_3d_camera_distance'] = '';
-	$prefs['wiki_3d_elastic_constant'] = '';
-	$prefs['wiki_3d_eletrostatic_constant'] = '';
-	$prefs['wiki_3d_fov'] = '';
-	$prefs['wiki_3d_friction_constant'] = '';
-	$prefs['wiki_3d_node_charge'] = '';
-	$prefs['wiki_3d_node_mass'] = '';
-	$prefs['wiki_3d_node_size'] = '';
-	$prefs['wiki_3d_spring_size'] = '';
-	$prefs['wiki_3d_text_size'] = '';
-	$prefs['articles_feature_copyrights'] = '';
-	$prefs['blogues_feature_copyrights'] = '';
-	$prefs['faqs_feature_copyrights'] = '';
-	$prefs['feature_contributor_wiki'] = '';
-	$prefs['freetags_3d_adjust_camera'] = '';
-	$prefs['https_login_required'] = '';
-	$prefs['maxRowsGalleries'] = '';
-	$prefs['replimaster'] = '';
-	$prefs['rowImagesGalleries'] = '';
-	$prefs['scaleSizeGalleries'] = '';
-	$prefs['thumbSizeXGalleries'] = '';
-	$prefs['thumbSizeYGalleries'] = '';
-	$prefs['wiki_3d_adjust_camera'] = '';
-	$prefs['wiki_3d_autoload'] = '';
-	$prefs['feature_sefurl'] = 'n';
-	$prefs['feature_mootools'] = 'y'; // Needed for shadowbox
-	$prefs['javascript_enabled'] = 'n';
-	$prefs['feature_comments_post_as_anonymous'] = 'n';
-	$prefs['feature_template_zoom'] = 'y';
-
-	# TikiTests
-	$prefs['feature_tikitests'] = 'n';
-
-	# Tiki Profiles
-	$prefs['profile_sources'] = 'http://profiles.tikiwiki.org/profiles';
-
-	# Minichat
-	$prefs['feature_minichat'] = 'n';
-
-	# Pear::Date
-	$prefs['feature_pear_date'] = 'y';
-
-	// Special default values
-
-	if ( is_file('styles/'.$tikidomain.'/'.$prefs['site_favicon']) )
-		$prefs['site_favicon'] = 'styles/'.$tikidomain.'/'.$prefs['site_favicon'];
-	elseif ( ! is_file($prefs['site_favicon']) )
-		$prefs['site_favicon'] = false;
-
-	$_SESSION['tmpDir'] = TikiInit::tempdir(); //??
-
-	$prefs['feature_bidi'] = 'n';
-	$prefs['feature_lastup'] = 'y';
-	$prefs['transition_style_ver'] = '1.9';
+	$prefs = get_default_prefs();
 
 	// Find which preferences need to be serialized/unserialized, based on the default values (those with arrays as values)
 	if ( ! isset($_SESSION['serialized_prefs']) ) {
@@ -1138,11 +1161,11 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 			if ( is_array($v) ) $_SESSION['serialized_prefs'][] = $p;
 	}
 
-	// Be sure we have a default value for user prefs
-	foreach ( $prefs as $p => $v ) {
-		if ( substr($p, 0, 12) == 'users_prefs_' ) {
-			$prefs[substr($p, 12)] = $v;
-		}
+	// Find which preferences need to be serialized/unserialized, based on the default values (those with arrays as values)
+	if ( ! isset($_SESSION['serialized_prefs']) ) {
+		$_SESSION['serialized_prefs'] = array();
+		foreach ( $prefs as $p => $v )
+			if ( is_array($v) ) $_SESSION['serialized_prefs'][] = $p;
 	}
 
 	// Override default prefs with values specified in database
@@ -1160,6 +1183,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 
 	// Keep some useful sites values available before overriding with user prefs
 	// (they could be used in templates, so we need to set them even for Anonymous)
+	global $user_overrider_prefs;
 	foreach ( $user_overrider_prefs as $uop ) {
 		$prefs['site_'.$uop] = $prefs[$uop];
 	}
