@@ -209,4 +209,4 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 {/if}
 
 {* New admin top bar for 3.0 *}
-{include file="tiki-admin_bar.tpl"
+{include file="tiki-admin_bar.tpl"}
