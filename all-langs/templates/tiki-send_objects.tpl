@@ -1,23 +1,16 @@
 {* $Id$ *}
-<h1><a class="pagetitle" href="tiki-send_objects.php">{tr}Send objects{/tr}</a>
-  
-{if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}Communication+Center" target="tikihelp" class="tikihelp" title="{tr}Help on Communication Center{/tr}">
-{icon _id='help'}</a>{/if}
 
-{if $prefs.feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-send_objects.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Admin Send Objects tpl{/tr}">
-{icon _id='shape_square_edit' alt='{tr}Edit template{/tr}'}</a>{/if}</h1>
+{title help="Communication+Center"}{tr}Send objects{/tr}{/title}
 
 {if $msg}
-<div class="cbox">
-<div class="cbox-title">
-{tr}Transmission results{/tr}
-</div>
-<div class="cbox-data">
-{$msg}
-</div>
-</div>
+  <div class="cbox">
+    <div class="cbox-title">
+      {tr}Transmission results{/tr}
+    </div>
+    <div class="cbox-data">
+      {$msg}
+    </div>
+  </div>
 {/if}
 <br />
 <form method="post" action="tiki-send_objects.php">

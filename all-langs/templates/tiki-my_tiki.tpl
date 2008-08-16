@@ -1,20 +1,6 @@
 {* $Id$ *}
 
-<h1>
-  <a class="pagetitle" href="tiki-my_tiki.php">{tr}My Tiki{/tr}</a>
-
-  {if $prefs.feature_help eq 'y'}
-    <a href="{$prefs.helpurl}MyTiki" target="tikihelp" class="tikihelp" title="{tr}My Tiki{/tr}">
-      {icon _id='help'}
-    </a>
-  {/if}
-
-  {if $prefs.feature_view_tpl eq 'y'}
-    <a href="tiki-edit_templates.php?template=tiki-my_tiki.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}my tiki tpl{/tr}">
-      {icon _id='shape_square_edit' alt='{tr}Edit Template{/tr}'}
-    </a>
-  {/if}
-</h1>
+{title help="MyTiki"}{tr}My Tiki{/tr}{/title}
 
 {if $prefs.feature_mootools eq 'y' and $prefs.feature_ajax eq 'y'}
   {include file=tiki-mytiki_mootabs.tpl}

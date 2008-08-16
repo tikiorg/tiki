@@ -1,5 +1,5 @@
-<h1 class='pagetitle'><a href='#' class='pagetitle'>TikiTests Replay Configuration</a></h1>
-<br/>
+{title help="tests"}{tr}TikiTests Replay Configuration{/tr}{/title}
+
 <h2 class='pagetitle'>TikiTest:{$filename}</h2>
 <br/>
 {if $summary eq 'y' and is_array($result) and sizeof($result) gt 0}

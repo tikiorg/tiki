@@ -214,7 +214,7 @@
 									<label for="sitelogo_src">{tr}Site logo source (image path){/tr}:</label>
 								</td>
 								<td>
-									<input type="text" name="sitelogo_src" id="sitelogo_src" value="{$prefs.sitelogo_src}" size="60" style="width: 90%" />i
+									<input type="text" name="sitelogo_src" id="sitelogo_src" value="{$prefs.sitelogo_src}" size="60" style="width: 90%" />
 								</td>
 							</tr>
 							<tr>

@@ -14,8 +14,9 @@ function test_xpath(index) {
 {/literal}
 //--><!]]>
 </script>
-<h1 class='pagetitle'><a href='#' class='pagetitle'>TikiTests Edit</a></h1>
-<br/>
+
+{title help="tests"}{tr}TikiTests Edit{/tr}{/title}
+
 <h2 class='pagetitle'>TikiTest:{$filename}</h2>
 <br/>
 {include file='tiki-tests_menubar.tpl'}

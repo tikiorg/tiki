@@ -1,8 +1,10 @@
-<h1><a class="pagetitle" href="tiki-edit_languages.php">{tr}Edit or ex/import Languages{/tr}</a></h1>
-[<a href="tiki-edit_languages.php" class="link">{tr}Edit and create Languages{/tr}</a>
-|<a href="tiki-imexport_languages.php" class="link">{tr}Im- Export Languages{/tr}</a>]
+{title}{tr}Edit or ex/import Languages{/tr}{/title}
 
-<table >
+<div class="navbar">
+  <a class="linkbut" href="tiki-edit_languages.php">{tr}Edit and create Languages{/tr}</a>
+</div>
+
+<table>
 <tr>
   <td valign="top" >
   <div class="cbox">
@@ -21,7 +23,7 @@
         </option>
         {/section}
         </select></td></tr>
-  <tr><td align="center" colspan="2"><input type="submit" name="import" value="{tr}import{/tr}" /></td></tr>
+  <tr><td align="center" colspan="2"><input type="submit" name="import" value="{tr}Import{/tr}" /></td></tr>
   {if isset($impmsg)}
   <tr><td align="center" colspan="2">{$impmsg}</td></tr>
   {/if}

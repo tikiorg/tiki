@@ -1,24 +1,32 @@
 {* $Id$ *}
 
-<h1><a href="tiki-view_forum.php?topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;forumId={$forum_info.forumId}" class="pagetitle">{tr}Forum{/tr}: {$forum_info.name}</a>{if $prefs.feature_forum_topics_archiving eq 'y' && $thread_info.archived eq 'y'}<em>({tr}Archived{/tr})</em>{/if}</h1>
+{title help="forums" admpage="forums"}
+  {tr}Forum:{/tr}&nbsp;{$forum_info.name}
+  {if $prefs.feature_forum_topics_archiving eq 'y' && $thread_info.archived eq 'y'}<em>({tr}Archived{/tr})</em>{/if}
+{/title}
 
 {if $unread > 0}
-<a class='link' href='messu-mailbox.php'>{tr}You have{/tr} {$unread} {tr} unread private messages{/tr}<br /><br /></a>
+  <a class='link' href='messu-mailbox.php'>{tr}You have{/tr} {$unread} {tr} unread private messages{/tr}<br /><br /></a>
 {/if}
 
 {if $was_queued eq 'y'}
-{remarksbox type="warning" title="{tr}Information{/tr}" icon="information"}
-{tr}Your message has been queued for approval, the message will be posted after a moderator approves it.{/tr}
-{/remarksbox}
+  {remarksbox type="warning" title="{tr}Information{/tr}" icon="information"}
+    {tr}Your message has been queued for approval, the message will be posted after a moderator approves it.{/tr}
+  {/remarksbox}
 {/if}
 
-{if $post_reported eq 'y'}<br />
-	<div class="simplebox highlight reported_note">{icon _id=information style="vertical-align:middle;align=left"} {tr}The post has been reported and will be reviewed by a moderator.{/tr}</div>
+{if $post_reported eq 'y'}
+  <br />
+	<div class="simplebox highlight reported_note">
+    {icon _id=information style="vertical-align:middle;align=left"} {tr}The post has been reported and will be reviewed by a moderator.{/tr}
+  </div>
 	<br />
 {/if}
 
 {if $tiki_p_admin_forum eq "y"}
-<a class="linkbut" title="{tr}Edit Forum{/tr}" href="tiki-admin_forums.php?forumId={$forumId}">{tr}Edit Forum{/tr}</a><br />
+  <div class="navbar">
+    <a class="linkbut" title="{tr}Edit Forum{/tr}" href="tiki-admin_forums.php?forumId={$forumId}">{tr}Edit Forum{/tr}</a><br />
+  </div>
 {/if}
 
 <a class="link" href="tiki-forums.php">{tr}Forums{/tr}</a>-&gt;<a class="link" href="tiki-view_forum.php?forumId={$forumId}">{$forum_info.name}</a>{if $thread_info.topic.threadId}-&gt;<a class="link" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;forumId={$forumId}&amp;comments_parentId={$thread_info.topic.threadId}">{$thread_info.topic.title}</a>{/if}-&gt;<a class="link" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;forumId={$forumId}&amp;comments_parentId={$smarty.request.comments_parentId}">{$thread_info.title}</a>

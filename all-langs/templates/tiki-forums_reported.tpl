@@ -1,9 +1,11 @@
 {popup_init src="lib/overlib.js"}
-{*Smarty template*}
-<h1><a class="pagetitle" href="tiki-forums_reported.php?forumId={$forumId}">{tr}Reported messages for{/tr}: {$forum_info.name}</a>
-</h1>
-<a class="link" href="tiki-view_forum.php?forumId={$forumId}">{tr}back to forum{/tr}</a>
-<br />
+
+{title help="Forums" admpage="forums"}{tr}Reported messages for forum{/tr}&nbsp;{$forum_info.name}{/title}
+
+<div class="navbar">
+  <a class="linkbut" href="tiki-view_forum.php?forumId={$forumId}">{tr}Back to forum{/tr}</a>
+</div>
+
 <h2>{tr}List of messages{/tr} ({$cant})</h2>
 {* FILTERING FORM *}
 {if $items or ($find ne '')}

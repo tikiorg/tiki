@@ -1,12 +1,11 @@
 {* $Id$ *}
 
-<h1><a class="pagetitle" href="tiki-forum_import.php">{tr}Forum Importer{/tr}</a>
-</h1>
-<a title="{tr}Admin Forums{/tr}" href="tiki-admin_forums.php" class="linkbut">{tr}Admin forums{/tr}</a>
-<a title="{tr}Configure/Options{/tr}" href="tiki-admin.php?page=forums"><img src="img/icons/config.gif" border="0" width="16" height="16" alt="{tr}Configure/Options{/tr}" /></a>
-<a title="{tr}List Forums{/tr}" href="tiki-forums.php" class="linkbut">{tr}List forums{/tr}</a>
-<p> </p>
+{title help="Forums" admpage="forums"}{tr}Forum Importer{/tr}{/title}
 
+<div class="navbar">
+  <a class="linkbut" title="{tr}Admin Forums{/tr}" href="tiki-admin_forums.php">{tr}Admin forums{/tr}</a>
+  <a class="linkbut" title="{tr}List Forums{/tr}" href="tiki-forums.php">{tr}List forums{/tr}</a>
+</div>
 {*
  * If this is a new import, start by selecting the import method and we'll
  * go from there. 

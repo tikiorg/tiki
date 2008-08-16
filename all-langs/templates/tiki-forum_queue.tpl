@@ -1,7 +1,11 @@
 {popup_init src="lib/overlib.js"}
-{*Smarty template*}
-<h1><a class="pagetitle" href="tiki-forum_queue.php?forumId={$forumId}">{tr}Message queue for{/tr}: {$forum_info.name}</a></h1>
-<a class="link" href="tiki-view_forum.php?forumId={$forumId}">{tr}back to forum{/tr}</a>
+
+{title help="forums" admpage="forums"}{tr}Message queue for forum{/tr} {$forum_info.name}{/title}
+
+<div class="navbar">
+  <a class="linkbut" href="tiki-view_forum.php?forumId={$forumId}">{tr}Back to forum{/tr}</a>
+</div>
+
 {if $smarty.request.qId and $form eq 'y'}
 <h3>{tr}Edit queued message{/tr}</h3>
 <form method="post" action="tiki-forum_queue.php">
