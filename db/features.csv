@@ -74,7 +74,7 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 73,Redirect on Error,68,,feature_redirect_on_error,feature,,tiki_p_admin,,,
 74,Fullscreen Mode,68,,feature_fullscreen,feature,,tiki_p_admin,,,
 75,Quick Tags,68,,,system,,tiki_p_admin,,,
-76,I18n,4,,,system,,tiki_p_admin,,,i18n
+76,i18n,4,,,system,,tiki_p_admin,,,i18n
 77,Group Administration,5,,,system,tiki-admingroups,tiki_p_admin,,,
 78,Group Homepages,77,,,configurationgroup,,tiki_p_admin,,,
 79,User Administration,5,,,system,,tiki_p_admin,,,
@@ -301,7 +301,7 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 376,freetags_browse_amount_tags_in_cloud,26,,freetags_browse_amount_tags_in_cloud,simple,,tiki_p_admin,,,Tags
 377,freetags_normalized_valid_chars,26,,freetags_normalized_valid_chars,simple,,tiki_p_admin,,,Tags
 378,freetags_lowercase_only,26,,freetags_lowercase_only,flag,,tiki_p_admin,,,Tags
-379,freetags_multilingual,26,,freetags_multilingual,flag,,tiki_p_admin,,,Tags
+379,freetags_multilingual,26,,freetags_multilingual,flag,,tiki_p_admin,1,,Tags
 380,freetags_preload_random_search,26,,freetags_preload_random_search,flag,,tiki_p_admin,,,Tags
 381,freetags_3d_width,130,,freetags_3d_width,simple,,tiki_p_admin,,,Tags
 382,freetags_3d_node_mass,130,,freetags_3d_node_mass,simple,,tiki_p_admin,,,Tags
@@ -398,18 +398,18 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 474,gmap_key,22,,gmap_key,simple,,tiki_p_admin,,,Gmap
 475,gmap_defaultx,22,,gmap_defaultx,simple,,tiki_p_admin,,,Gmap
 476,gmap_defaultz,22,,gmap_defaultz,simple,,tiki_p_admin,,,Gmap
-477,language,76,,language,simple,,tiki_p_admin,,,
-478,feature_multilingual,76,,feature_multilingual,flag,,tiki_p_admin,,,
-479,available_languages,76,,available_languages,languages,,tiki_p_admin,,,i18n
+477,language,76,,language,languages,1,tiki_p_admin,,,
+478,feature_multilingual,76,,feature_multilingual,flag,2,tiki_p_admin,,,
+479,available_languages,76,,available_languages,languages,3,tiki_p_admin,,,i18n
 480,User Translation Watches,6,,feature_user_watches_translations,flag,,tiki_p_admin,,,
-481,feature_best_language,76,,feature_best_language,flag,,tiki_p_admin,,,i18n
-482,quantify_changes,76,,quantify_changes,flag,,tiki_p_admin,,,
-483,record_untranslated,76,,record_untranslated,flag,,tiki_p_admin,,,
-484,feature_babelfish,76,,feature_babelfish,flag,,tiki_p_admin,,,
-485,feature_detect_language,76,,feature_detect_language,flag,,tiki_p_admin,,,
-486,feature_babelfish_logo,76,,feature_babelfish_logo,flag,,tiki_p_admin,,,
-487,lang_use_db,76,,lang_use_db,flag,,tiki_p_admin,,,
-488,feature_multilingual_structures,76,,feature_multilingual_structures,flag,,tiki_p_admin,,,
+481,feature_best_language,76,,feature_best_language,flag,4,tiki_p_admin,,,i18n
+482,quantify_changes,76,,quantify_changes,flag,12,tiki_p_admin,,,
+483,record_untranslated,76,,record_untranslated,flag,13,tiki_p_admin,,,
+484,feature_babelfish,76,,feature_babelfish,flag,41,tiki_p_admin,,,
+485,feature_detect_language,76,,feature_detect_language,flag,5,tiki_p_admin,,,
+486,feature_babelfish_logo,76,,feature_babelfish_logo,flag,40,tiki_p_admin,,,
+487,lang_use_db,76,,lang_use_db,flag,10,tiki_p_admin,,,
+488,feature_multilingual_structures,76,,feature_multilingual_structures,flag,15,tiki_p_admin,,,
 489,feature_intertiki_imported_groups,103,,feature_intertiki_imported_groups,simple,,tiki_p_admin,,,
 490,tiki_key,103,,tiki_key,simple,,tiki_p_admin,,,
 491,feature_intertiki_import_groups,103,,feature_intertiki_import_groups,flag,,tiki_p_admin,,,
@@ -796,7 +796,7 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 890,Edit,7,,,functionality,tiki-editpage,tiki_p_admin,,,Wiki,
 891,Remove page,7,,,functionality,tiki-removepage,tiki_p_admin,,,Wiki,
 892,Rename page,7,,,functionality,tiki-rename_page,tiki_p_admin,,,Wiki,
-893,Multilingual freetags,76,,freetags_multilingual,flag,,tiki_p_admin,,,i18n,and freetags
+893,Multilingual freetags,76,,freetags_multilingual,flag,20,tiki_p_admin,,,i18n,and freetags
 894,Calendar manual selection of time/date,34,,feature_cal_manual_time,flag,,tiki_p_admin,,,Calendar,
 895,Admin Topics,10,,feature_articles,functionality,tiki-admin_topics,tiki_p_admin_articles,,,Articles
 896,Admin Types,10,,feature_articles,functionality,tiki-article_types,tiki_p_admin_articles,,,Articles
