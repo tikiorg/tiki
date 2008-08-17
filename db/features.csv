@@ -367,7 +367,7 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 442,system_os,1,,system_os,simple,,tiki_p_admin,,,
 443,feature_obzip,1,,feature_obzip,flag,,tiki_p_admin,,,
 444,use_proxy,1,,use_proxy,flag,,tiki_p_admin,,,
-445,maxRecords,1,,maxRecords,simple,,tiki_p_admin,,,Pagination
+445,maxRecords,902,,maxRecords,simple,,tiki_p_admin,,,Pagination
 446,count_admin_pvs,1,,count_admin_pvs,flag,,tiki_p_admin,,,
 447,cachepages,1,,cachepages,flag,,tiki_p_admin,,,
 448,session_lifetime,859,,session_lifetime,simple,,tiki_p_admin,,,
@@ -528,14 +528,14 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 604,feature_topbar_id_menu,3,,feature_topbar_id_menu,simple,,tiki_p_admin,34
 605,sitenav,3,,sitenav,simple,,tiki_p_admin,50,,
 606,feature_site_report_email,3,,feature_site_report_email,simple,,tiki_p_admin,18,,
-608,direct_pagination_max_middle_links,3,,direct_pagination_max_middle_links,simple,,tiki_p_admin,4,,Pagination
+608,direct_pagination_max_middle_links,902,,direct_pagination_max_middle_links,simple,,tiki_p_admin,4,,Pagination
 609,feature_siteidentity,3,,feature_siteidentity,flag,,tiki_p_admin,22,,
 610,use_context_menu_text,3,,use_context_menu_text,flag,,tiki_p_admin,56,,
-611,pagination_firstlast,3,,pagination_firstlast,flag,,tiki_p_admin,42,,Pagination
+611,pagination_firstlast,902,,pagination_firstlast,flag,,tiki_p_admin,42,,Pagination
 612,Site logo source (image path),876,,sitelogo_src,simple,,tiki_p_admin,,,
 613,site_favicon_type,3,,site_favicon_type,simple,,tiki_p_admin,46,,
 614,Site logo title (on mouse over),876,,sitelogo_title,simple,,tiki_p_admin,,,
-615,direct_pagination,3,,direct_pagination,flag,,tiki_p_admin,2,,Pagination
+615,direct_pagination,902,,direct_pagination,flag,,tiki_p_admin,2,,Pagination
 616,style,3,,style,simple,,tiki_p_admin,53,,
 617,sitead,3,,sitead,simple,,tiki_p_admin,48,,
 618,Site Search Bar,879,,feature_sitesearch,feature,,tiki_p_admin,,,
@@ -543,7 +543,7 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 620,feature_topbar_date,3,,feature_topbar_date,flag,,tiki_p_admin,32,,
 621,Content,875,,sitemycode,textarea,,tiki_p_admin,,,
 622,feature_site_report,3,,feature_site_report,flag,,tiki_p_admin,17,,
-623,direct_pagination_max_ending_links,3,,direct_pagination_max_ending_links,simple,,tiki_p_admin,3,,Pagination
+623,direct_pagination_max_ending_links,902,,direct_pagination_max_ending_links,simple,,tiki_p_admin,3,,Pagination
 624,feature_topbar_custom_code,3,,feature_topbar_custom_code,simple,,tiki_p_admin,31,,
 625,use_context_menu_icon,3,,use_context_menu_icon,flag,,tiki_p_admin,55,,
 626,feature_siteloc,3,,feature_siteloc,byref,,tiki_p_admin,23,,
@@ -552,8 +552,8 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 629,Site Login Bar,879,,feature_site_login,feature,,tiki_p_admin,,,
 630,sitead_publish,3,,sitead_publish,flag,,tiki_p_admin,49,,
 631,feature_sitetitle,3,,feature_sitetitle,byref,,tiki_p_admin,27,,
-632,pagination_icons,3,,pagination_icons,flag,,tiki_p_admin,43,,Pagination
-633,pagination_fastmove_links,3,,pagination_fastmove_links,flag,,tiki_p_admin,41,,Pagination
+632,pagination_icons,902,,pagination_icons,flag,,tiki_p_admin,43,,Pagination
+633,pagination_fastmove_links,902,,pagination_fastmove_links,flag,,tiki_p_admin,41,,Pagination
 634,site_favicon,3,,site_favicon,simple,,tiki_p_admin,45,,
 636,slide_style,3,,slide_style,byref,,tiki_p_admin,51,,
 637,feature_right_column,3,,feature_right_column,byref,,tiki_p_admin,16,,
@@ -572,7 +572,7 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 650,Publish,875,,sitemycode_publish,flag,,tiki_p_admin,,,
 651,feature_top_bar,3,,feature_top_bar,flag,,tiki_p_admin,30,,
 652,layout_section,3,,layout_section,flag,,tiki_p_admin,38,,
-653,nextprev_pagination,3,,nextprev_pagination,flag,,tiki_p_admin,40,,Pagination
+653,nextprev_pagination,902,,nextprev_pagination,flag,,tiki_p_admin,40,,Pagination
 654,Site logo background color,876,,sitelogo_bgcolor,simple,,tiki_p_admin,,,
 656,Site logo alignment,3,,sitelogo_align,alignment,,tiki_p_admin,44,,
 657,feature_left_column,3,,feature_left_column,byref,,tiki_p_admin,14,,
@@ -805,3 +805,4 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 899,Wiki structures,7,,,configurationgroup,,tiki_p_admin,,,Structures
 900,Wiki watches,7,,,configurationgroup,,tiki_p_admin,,,Watch
 901,Wiki page discussions (in forums),7,,,configurationgroup,,tiki_p_admin,,,Wiki
+902,Pagination,3,,,configurationgroup,,tiki_p_admin,,,
