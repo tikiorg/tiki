@@ -35,7 +35,7 @@ $template ='tiki-magic';
 // If there's an assigned template for a feature;  show it if the feature has no children (i.e. it's a leaf feature), or if 
 // the feature is a container type (to allow overriding the setting list behaviour).
 // For a feature/system thing; the template shouldn't be used, as that would prevent you from configuring it.
-if ($feature['template'] != '' && ($feature['feature_count'] == 0 || $magiclib->is_container($feature))) {
+if ($feature['template'] != '' && ($feature['feature_count'] == 0)) {
 	// The value of $feature is sometimes clobbered,  so store these values before the include.
 	$is_container = $magiclib->is_container($feature);
 	$template = $feature['template'];
@@ -135,14 +135,13 @@ $smarty->display("tiki.tpl");
 
 $lazyFields = array();
 // Recursively get the features underneath the specified feature id.
-function get_features($featureid) {
+function get_features($featureid, $keepContainers = true) {
 	global $magiclib, $tikilib, $pagefeatures, $containers, $enumerations, $lazyFields;
 	$features = $magiclib->get_child_features($featureid);
 	$cont = array();
 
 	if ($features) {
 		foreach($features as $feature) {
-			// Shuffled this up to avoid doing the set of checks / setting of the enumeration in two places.
 			if ($feature['feature_type'] == 'limitcategory' || $feature['feature_type'] == 'selectcategory') $lazyFields['category'] = true;
 			if ($feature['feature_type'] == 'languages')  $lazyFields['languages'] = true;
 			if ($feature['feature_type'] == 'timezone')  $lazyFields['timezone'] = true;
@@ -154,17 +153,17 @@ function get_features($featureid) {
 				$feature['enumeration'] = $enumerations[$feature['feature_type']];
 			}
 
-			if ($magiclib->is_container($feature)) {
+			if ($keepContainers && $magiclib->is_container($feature) && $feature['feature_count'] > 0) {
 				$cont[] = $feature;
-				continue;
+			} else {
+				$pagefeatures[] = $feature;
+				get_features($feature['feature_id'], false);
 			}
-			
-			$pagefeatures[] = $feature;
 		}
 		foreach($cont as $feature) {
 			$containers[] = $feature;
 			$pagefeatures[] = $feature;
-			get_features($feature['feature_id'], '');
+			get_features($feature['feature_id'], false);
 		}
 	}
 }
