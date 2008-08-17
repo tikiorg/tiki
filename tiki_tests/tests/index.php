@@ -1,4 +1,4 @@
 <?php
-	header ('location: ../../tiki-index.php');
+header ('location: ../../tiki-index.php');
 
 ?>
