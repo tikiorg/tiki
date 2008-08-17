@@ -679,7 +679,7 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 758,Accept dashes and underscores in WikiWords,141,,feature_wikiwords_usedash,flag,,tiki_p_admin,101,,Wiki,
 759,Log bytes changes (+/-) in Action Logs (slows each page modifications),141,,feature_actionlog_bytes,flag,,tiki_p_admin,,,Action+Log,
 760,Save Draft,141,experimental,feature_wiki_save_draft,flag,,tiki_p_admin,,39,Wiki,
-761,History,141,,feature_history,flag,,tiki_p_admin,,,Wiki,
+761,History,897,,feature_history,flag,,tiki_p_admin,,,Wiki,
 762,Show page version,141,,wiki_show_version,flag,,tiki_p_admin,,,,
 763,Undo,141,,feature_wiki_undo,flag,,tiki_p_admin,,,Wiki,
 764,Page navigation bar position (displayed when page break '...page...' are used),141,,wiki_page_navigation_bar,barlocation,,tiki_p_admin,,,,
@@ -731,11 +731,11 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 810,Protect email against spam,141,,feature_wiki_protect_email,flag,,tiki_p_admin,,,Wiki,Text area too
 811,Anonymous editors must input anti-bot code,141,,feature_antibot,flag,,tiki_p_admin,,,Spam+Protection,
 812,Print Page,141,,feature_wiki_print,flag,,tiki_p_admin,,,Wiki,
-813,Diff style,7,,default_wiki_diff_style,wikidiffs,,tiki_p_admin,30,,Wiki,
-814,Never delete versions younger than days,7,,keep_versions,int,,tiki_p_admin,30,,Wiki,
-815,Maximum number of versions for history,7,,maxVersions,int,,tiki_p_admin,30,,Wiki,
-816,IP address displayed in history,7,,feature_wiki_history_ip,flag,,tiki_p_admin,30,,Wiki
-817,"History only for data, description, comment change",7,,feature_wiki_history_full,flag,,tiki_p_admin,30,,Wiki
+813,Diff style,897,,default_wiki_diff_style,wikidiffs,,tiki_p_admin,30,,Wiki,
+814,Never delete versions younger than days,897,,keep_versions,int,,tiki_p_admin,30,,Wiki,
+815,Maximum number of versions for history,897,,maxVersions,int,,tiki_p_admin,30,,Wiki,
+816,IP address displayed in history,897,,feature_wiki_history_ip,flag,,tiki_p_admin,30,,Wiki
+817,"History only for data, description, comment change",897,,feature_wiki_history_full,flag,,tiki_p_admin,30,,Wiki
 818,Enable watch events when I am the editor,7,,wiki_watch_editor,flag,,tiki_p_admin,40,,Wiki
 819,Watch minor,7,,wiki_watch_minor,flag,,tiki_p_admin,40,,Wiki
 820,Enable watches on comments,7,,wiki_watch_comments,flag,,tiki_p_admin,40,,Wiki
@@ -800,3 +800,4 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 894,Calendar manual selection of time/date,34,,feature_cal_manual_time,flag,,tiki_p_admin,,,Calendar,
 895,Admin Topics,10,,feature_articles,functionality,tiki-admin_topics,tiki_p_admin_articles,,,Articles
 896,Admin Types,10,,feature_articles,functionality,tiki-article_types,tiki_p_admin_articles,,,Articles
+897,Wiki History,7,,,configurationgroup,,tiki_p_admin,,,Wiki
