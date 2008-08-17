@@ -684,7 +684,7 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 763,Undo,141,,feature_wiki_undo,flag,,tiki_p_admin,,,Wiki,
 764,Page navigation bar position (displayed when page break '...page...' are used),141,,wiki_page_navigation_bar,barlocation,,tiki_p_admin,,,,
 765,Comments,141,,feature_wiki_comments,flag,,tiki_p_admin,,,,
-766,Categorize structure pages together,141,,feature_wiki_categorize_structure,flag,,tiki_p_admin,,,Structure,
+766,Categorize structure pages together,899,,feature_wiki_categorize_structure,flag,,tiki_p_admin,,,Structure,
 767,Edit section,141,,wiki_edit_section,flag,,tiki_p_admin,,,Wiki,
 768,Cache wiki pages (global),141,,wiki_cache,cachelength,,tiki_p_admin,,,Wiki,http://dev.tikiwiki.org/bug1291
 769,Last changes,141,,feature_lastChanges,flag,,tiki_p_admin,,,Wiki,
@@ -698,7 +698,7 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 777,Export,141,,feature_wiki_export,flag,,tiki_p_admin,,,Wiki,
 778,Pictures,141,,feature_wiki_pictures,flag,,tiki_p_admin,,,Wiki,
 779,Use external link,141,,feature_wiki_ext_icon,flag,,tiki_p_admin,,,,
-780,Open page as structure,141,,feature_wiki_open_as_structure,flag,,tiki_p_admin,,,Structure,
+780,Open page as structure,899,,feature_wiki_open_as_structure,flag,,tiki_p_admin,,,Structure,
 781,Automonospaced text,141,,feature_wiki_monosp,flag,,tiki_p_admin,,,Wiki,Text area too
 782,"When viewing a page, if it doesn't exist and has one like page, automatic redirection to this like page",141,,feature_wiki_1like_redirection,flag,,tiki_p_admin,,,Navigation,
 783,List pages,141,,feature_listPages,flag,,tiki_p_admin,,,Wiki,
@@ -721,9 +721,9 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 800,Show page ID,141,,feature_wiki_pageid,flag,,tiki_p_admin,10,,Wiki,
 801,Edit idle timeout,141,,warn_on_edit_time,idletimeout,,tiki_p_admin,,,,
 802,Tables syntax,141,,feature_wiki_tables,wikitablesyntax,,tiki_p_admin,,,Wiki,
-803,Make structure from page,141,,feature_wiki_make_structure,flag,,tiki_p_admin,,,Structure,
+803,Make structure from page,899,,feature_wiki_make_structure,flag,,tiki_p_admin,,,Structure,
 804,Use WikiWords,898,,feature_wikiwords,flag,,tiki_p_admin,100,,Wiki,
-805,Create webhelp from structure,141,,feature_create_webhelp,flag,,tiki_p_admin,,,Structure,WebHelp
+805,Create webhelp from structure,899,,feature_create_webhelp,flag,,tiki_p_admin,,,Structure,WebHelp
 806,Footnotes,141,,feature_wiki_footnotes,flag,,tiki_p_admin,,,Wiki,
 807,Link plural WikiWords to their singular forms,898,,feature_wiki_plurals,flag,,tiki_p_admin,102,,Wiki,
 808,User's Page,141,,feature_wiki_userpage,flag,,tiki_p_admin,,,,
@@ -736,12 +736,12 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 815,Maximum number of versions for history,897,,maxVersions,int,,tiki_p_admin,30,,Wiki,
 816,IP address displayed in history,897,,feature_wiki_history_ip,flag,,tiki_p_admin,30,,Wiki
 817,"History only for data, description, comment change",897,,feature_wiki_history_full,flag,,tiki_p_admin,30,,Wiki
-818,Enable watch events when I am the editor,7,,wiki_watch_editor,flag,,tiki_p_admin,40,,Wiki
-819,Watch minor,7,,wiki_watch_minor,flag,,tiki_p_admin,40,,Wiki
-820,Enable watches on comments,7,,wiki_watch_comments,flag,,tiki_p_admin,40,,Wiki
-821,Create watch for author on page creation,7,,wiki_watch_author,flag,,tiki_p_admin,40,,Wiki
-822,wiki_forum_id ,7,,wiki_forum_id ,simple,,tiki_p_admin,,,Wiki
-823,Discuss pages on forums,7,,feature_wiki_discuss,flag,,tiki_p_admin,,,Wiki
+818,Enable watch events when I am the editor,900,,wiki_watch_editor,flag,,tiki_p_admin,40,,Wiki
+819,Watch minor,900,,wiki_watch_minor,flag,,tiki_p_admin,40,,Wiki
+820,Enable watches on comments,900,,wiki_watch_comments,flag,,tiki_p_admin,40,,Wiki
+821,Create watch for author on page creation,900,,wiki_watch_author,flag,,tiki_p_admin,40,,Wiki
+822,wiki_forum_id ,901,,wiki_forum_id ,simple,,tiki_p_admin,20,,Wiki
+823,Discuss pages on forums,901,,feature_wiki_discuss,flag,,tiki_p_admin,10,,Wiki
 824,Wiki Home Page,46,,wikiHomePage ,simple,,tiki_p_admin_wiki,,,Navigation
 825,Name length,144,,wiki_list_name_len,int,,tiki_p_admin_wiki,40,,Wiki
 826,Description length,144,,wiki_list_description_len,int,,tiki_p_admin_wiki,40,,Wiki
@@ -802,3 +802,6 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 896,Admin Types,10,,feature_articles,functionality,tiki-article_types,tiki_p_admin_articles,,,Articles
 897,Wiki History,7,,,configurationgroup,,tiki_p_admin,,,Wiki
 898,WikiWords and wiki links,7,,,configurationgroup,,tiki_p_admin,,,Wiki
+899,Wiki structures,7,,,configurationgroup,,tiki_p_admin,,,Structures
+900,Wiki watches,7,,,configurationgroup,,tiki_p_admin,,,Watch
+901,Wiki page discussions (in forums),7,,,configurationgroup,,tiki_p_admin,,,Wiki
