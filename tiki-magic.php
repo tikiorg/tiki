@@ -7,7 +7,6 @@ $featurePage = explode('/', $featureChain);
 $featureId = $featurePage[count($featurePage) - 1];
 
 $feature = $magiclib->get_feature($featureId);
-$smarty->assign('featurechain', $featureChain);
 $smarty->assign('feature', $feature);
 $smarty->assign('title', $feature['feature_name']);
 
@@ -135,12 +134,25 @@ $smarty->display("tiki.tpl");
 function get_features($featureid) {
 	global $magiclib, $pagefeatures, $containers, $enumerations, $hasCategories, $hasLanguages, $hasTimezones;
 	$features = $magiclib->get_child_features($featureid);
+	$cont = array();
 
 	if ($features) {
 		foreach($features as $feature) {
 			if ($magiclib->is_container($feature)) {
+				$cont[] = $feature;
 				$containers[] = $feature;
+				continue;
 			}
+			if ($feature['feature_type'] == 'limitcategory' || $feature['feature_type'] == 'selectcategory') $hasCategories = true;
+			if ($feature['feature_type'] == 'languages') $hasLanguages = true;
+			if ($feature['feature_type'] == 'timezone') $hasTimezones = true;
+
+			if (array_key_exists($feature['feature_type'], $enumerations)) {
+				$feature['enumeration'] = $enumerations[$feature['feature_type']];
+			}
+			$pagefeatures[] = $feature;
+		}
+		foreach($cont as $feature) {
 			if ($feature['feature_type'] == 'limitcategory' || $feature['feature_type'] == 'selectcategory') $hasCategories = true;
 			if ($feature['feature_type'] == 'languages') $hasLanguages = true;
 			if ($feature['feature_type'] == 'timezone') $hasTimezones = true;
