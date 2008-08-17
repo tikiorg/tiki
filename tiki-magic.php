@@ -144,7 +144,6 @@ function get_features($featureid) {
 		foreach($features as $feature) {
 			if ($magiclib->is_container($feature)) {
 				$cont[] = $feature;
-				$containers[] = $feature;
 				continue;
 			}
 			if ($feature['feature_type'] == 'limitcategory' || $feature['feature_type'] == 'selectcategory') $hasCategories = true;
@@ -164,6 +163,7 @@ function get_features($featureid) {
 			if (array_key_exists($feature['feature_type'], $enumerations)) {
 				$feature['enumeration'] = $enumerations[$feature['feature_type']];
 			}
+			$containers[] = $feature;
 			$pagefeatures[] = $feature;
 			get_features($feature['feature_id'], '');
 		}
