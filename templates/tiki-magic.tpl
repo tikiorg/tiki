@@ -1,8 +1,14 @@
 <div id="magicPanel">
 <div class="iconbar">
 	<a title="{tr}Refresh{/tr}" href="tiki-magic.php?featurechain={$feature.feature_path|escape:"url"}&amp;refresh=1">{icon _id='arrow_refresh'}</a>
+	{if $tabs eq 'n'}
+	<a title="{tr}Collapse Tabs{/tr}" href="tiki-magic.php?featurechain={$feature.feature_path|escape:"url"}">{icon _id='no_eye_arrow_down'}</a>
+	{else}
+	<a title="{tr}Expand Tabs{/tr}" href="tiki-magic.php?featurechain={$feature.feature_path|escape:"url"}&amp;tabs=n">{icon _id='eye_arrow_down'}</a>
+	{/if}
 </div>
 <form method="post">
+{if $prefs.feature_tabs eq 'y' and $tabs ne 'n'}
 {assign var=total value=$containers|@count}
 <div class="tabs" style="clear: both;">
 	<span id="tab1" class="tabmark tabactive"><a href="javascript:tikitabs(1,{$total+2});">{$feature.feature_name}</a></span>
@@ -10,6 +16,7 @@
 	<span id="tab{$k+2}" class="tabmark tabinactive"><a href="javascript:tikitabs({$k+2},{$total+2});">{$container.feature_name}</a></span>
 {/foreach}
 </div>
+{/if}
 
 {assign var=counter value=1}
 <fieldset {if $prefs.feature_tabs eq 'y' and $tabs ne 'n'}id="content{$counter}" class="tabcontent" style="clear:both;display:block;"{/if}>

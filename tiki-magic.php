@@ -25,6 +25,10 @@ if( isset( $_REQUEST['refresh'] ) ) {
 	$magiclib->reload_features();
 }
 
+if( isset($_REQUEST['tabs']) && in_array( $_REQUEST['tabs'], array('y','n') ) ) {
+	$smarty->assign( 'tabs', $_REQUEST['tabs'] );
+}
+
 $headerlib->add_cssfile('css/spanky.css');
 $template ='tiki-magic';
 
