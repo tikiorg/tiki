@@ -14,7 +14,7 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 13,Rich Content,2,,,container,,tiki_p_admin,7,,,
 14,Meta Data,2,,,container,,tiki_p_admin,8,,,
 15,Auxillary Functions,2,,,container,,tiki_p_admin,9,,,
-16,Tiki Sheet,13,experimental,feature_sheet,feature,tiki-sheets,tiki_p_admin,,,Spreadsheet
+16,SpreadSheet,13,experimental,feature_sheet,feature,tiki-sheets,tiki_p_admin,,,Spreadsheet
 17,Swiffix,13,experimental,feature_swffix,feature,,tiki_p_admin,,,
 18,Multimedia,13,,feature_multimedia,feature,,tiki_p_admin,,,Multimedia
 19,File Gallery,13,,feature_file_galleries,feature,,tiki_p_admin,,,File Gallery
