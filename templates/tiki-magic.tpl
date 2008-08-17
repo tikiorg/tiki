@@ -18,7 +18,7 @@
 	</div>
 	</div>
 {elseif $features[feature].feature_type eq 'container' || $features[feature].feature_type eq 'configurationgroup' || $features[feature].feature_type eq 'system'}
-	<hr />
+	<hr style="clear: both" />
 	<div class="configSetting"><a name="container{$features[feature].feature_id}"></a><h4 class="configSection">{tr}{$features[feature].feature_name}{/tr}<sub>({$features[feature].feature_id})</sub></h4>
 	</div>
 {* It'd be superfun if you could go to, say, the article list page from the article configuration page; however some of the pages require
