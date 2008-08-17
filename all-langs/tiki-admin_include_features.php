@@ -34,7 +34,6 @@ if (isset($_REQUEST["features"])) {
 		"feature_debug_console",
 		"feature_directory",
 		"feature_drawings",
-		"feature_edit_templates",
 		"feature_events",
 		"feature_faqs",
 		"feature_featuredLinks",

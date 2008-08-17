@@ -1050,7 +1050,7 @@ class ImageGalsLib extends TikiLib {
 	       		g.`created`,g.`lastModif`,g.`visible`,g.`theme`,g.`user`,
        			g.`hits`,g.`maxRows`,g.`rowImages`,g.`thumbSizeX`,
 	 		g.`thumbSizeY`,g.`public`,g.`sortorder`,g.`sortdirection`,
-			g.`galleryimage`,g.`parentgallery`,count(i.`imageId`) as numimages
+			g.`galleryimage`,g.`parentgallery`,count(i.`imageId`) as images
 			from `tiki_galleries` g, `tiki_images` i
 			where i.`galleryId`=g.`galleryId` and
                  	`parentgallery`=? $mid group by 

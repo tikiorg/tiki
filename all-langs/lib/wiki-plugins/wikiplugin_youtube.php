@@ -7,6 +7,7 @@ function wikiplugin_youtube_help() {
 function wikiplugin_youtube_info() {
 	return array(
 		'name' => tra('Youtube'),
+		'documentation' => 'PluginYouTube',
 		'description' => tra('Display youtube video in a wiki page'),
 		'prefs' => array( 'wikiplugin_youtube' ),
 		'params' => array(

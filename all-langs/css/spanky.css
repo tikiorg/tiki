@@ -1,0 +1,86 @@
+div#adminBar {
+	width:100%;
+	background: url("../img/gradient2.png");
+	background-color: #99CCDD;
+	font-size: 0.75em;
+}
+
+div#adminBar a {
+	text-decoration: none;
+	color: #666;
+	font-weight: normal;
+}
+
+div#adminBar ul.topLevelAdmin li {
+	-moz-border-radius-topright: 15px;
+	-webkit-border-top-right-radius: 15px;
+	-moz-border-radius-topleft: 15px;
+	-webkit-border-top-left-radius: 15px;
+}
+
+ul.topLevelAdmin {
+	margin:0px;
+	padding:3px 5px 3px 5px;
+	border-bottom:1px solid rgb(60,118,214);
+}
+
+ul.topLevelAdmin li {
+	display: inline;
+	list-style-type: none;
+	padding:3px 8px 3px 8px;
+}
+
+ul.topLevelAdmin li.current {
+/*	background-color: #B5DAE6; */
+	background-color: rgb(170,211,226);
+	border:1px solid rgb(60,118,214);
+	border-bottom:1px solid rgb(170,211,226);
+}
+div#adminBar ul li.current a  {
+	color: white;
+}
+
+ul.secondLevelAdmin {
+	margin:0px;
+	padding:5px;
+	background: url("../img/gradient4.png");
+	background-position-y: 20px;
+/*	background-color: #B5DAE6; */
+}
+
+ul.secondLevelAdmin li {
+	display: inline;
+	list-style-type: none;
+	padding:5px;
+}
+
+ul.secondLevelAdmin li.special {
+	background: url("../img/gradient3.png");
+}
+
+.formLabel {
+	padding:3px;
+	width:40%;
+	text-align: right;
+	float:left;
+}
+
+h3.configSection {
+	padding:20px 3px 0px 3px;
+	width:30%;
+	text-align: left;
+	float:left;
+	clear:both;
+}
+
+div.configSetting {
+	clear:both;
+}
+
+#masterFeatureList li {color: #777;}
+#masterFeatureList li.container, #masterFeatureList li.configurationgroup {color:black;}
+#masterFeatureList li.feature {color:#77F;}
+#masterFeatureList li.system {color:#7F7;}
+#masterFeatureList li.functionality {color:#F77;}
+
+sub {display:none;}

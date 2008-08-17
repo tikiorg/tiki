@@ -19,6 +19,7 @@ function wikiplugin_copyright_help() {
 function wikiplugin_copyright_info() {
 	return array(
 		'name' => tra('Copyright'),
+		'documentation' => 'PluginCopyright',
 		'description' => tra('Insert copyright notices'),
 		'prefs' => array( 'feature_wiki_copyrights', 'wikiplugin_copyright' ),
 		'body' => tra('Pattern to display the copyright in. May contain ~title~, ~year~ and ~authors~.'),

@@ -11,6 +11,7 @@ function wikiplugin_rss_help() {
 function wikiplugin_rss_info() {
 	return array(
 		'name' => tra('RSS Feed'),
+		'documentation' => 'PluginRSS',
 		'description' => tra('Inserts an RSS feed output.'),
 		'prefs' => array( 'wikiplugin_rss' ),
 		'params' => array(

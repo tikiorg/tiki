@@ -13,6 +13,7 @@ function wikiplugin_translated_help() {
 function wikiplugin_translated_info() {
 	return array(
 		'name' => tra('Translated'),
+		'documentation' => 'PluginTranslated',
 		'description' => tra('Links to a translated content'),
 		'prefs' => array( 'wikiplugin_translated' ),
 		'body' => tra('[url] or ((wikiname)) or ((inter:interwiki)) (use wiki syntax)'),

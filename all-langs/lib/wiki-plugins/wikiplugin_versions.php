@@ -25,6 +25,7 @@ function wikiplugin_versions_help() {
 function wikiplugin_versions_info() {
 	return array(
 		'name' => tra('Versions'),
+		'documentation' => 'PluginVersions',
 		'description' => tra('Split the text in parts visible only under some conditions'),
 		'prefs' => array( 'wikiplugin_versions' ),
 		'body' => tra('Block of text separated by ---(version x)--- markers. Text before the first marker is used by default.'),

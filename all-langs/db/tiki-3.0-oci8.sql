@@ -2590,9 +2590,9 @@ INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`",
 
 INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (82,42,'o','Admin directory','tiki-directory_admin.php',565,'feature_directory','tiki_p_view_directory,tiki_p_validate_links','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (83,42,'s','File Galleries','tiki-file_galleries.php',600,'feature_file_galleries','tiki_p_view_file_gallery','',0);
+INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (83,42,'s','File Galleries','tiki-list_file_gallery.php',600,'feature_file_galleries','tiki_p_view_file_gallery','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (84,42,'o','List galleries','tiki-file_galleries.php',605,'feature_file_galleries','tiki_p_list_file_galleries','',0);
+INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (84,42,'o','List galleries','tiki-list_file_gallery.php',605,'feature_file_galleries','tiki_p_list_file_galleries','',0);
 
 INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (85,42,'o','Rankings','tiki-file_galleries_rankings.php',610,'feature_file_galleries,feature_file_galleries_rankings','tiki_p_list_file_galleries','',0);
 
@@ -2736,7 +2736,7 @@ INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`",
 
 INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (159,42,'o','phpinfo','tiki-phpinfo.php',1215,'','tiki_p_admin','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (161,42,'o','Score','tiki-admin_score.php',1235,'feature_score','tiki_p_admin','',0);
+INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (161,42,'o','Score','tiki-admin_include_score.php',1235,'feature_score','tiki_p_admin','',0);
 
 INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (162,42,'o','Admin mods','tiki-mods.php',1240,'','tiki_p_admin','',0);
 
@@ -5689,6 +5689,8 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('Email Address','[mailto:text|text]','pics/icons/email.png','wiki');
 
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('Deleted','--text--','pics/icons/text_strikethrough.png','wiki');
+
 
 -- maps
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('New wms Metadata','METADATA\r\n		\"wms_name\" \"myname\"\r\n 	"wms_srs" "EPSG:4326"\r\n 	"wms_server_version" " "\r\n 	"wms_layers" "mylayers"\r\n 	"wms_request" "myrequest"\r\n 	"wms_format" " "\r\n 	"wms_time" " "\r\n END', 'pics/icons/tag_blue_add.png','maps');
@@ -5739,6 +5741,8 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('image','{img src= width= height= align= desc= link= }','pics/icons/picture.png','newsletters');
 
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('Deleted','--text--','pics/icons/text_strikethrough.png','newsletters');
+
 
 -- trackers
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('bold','__text__','pics/icons/text_bold.png','trackers');
@@ -5776,6 +5780,8 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('image','{img src= width= height= align= desc= link= }','pics/icons/picture.png','trackers');
 
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('Email Address','[mailto:text|text]','pics/icons/email.png','trackers');
+
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('Deleted','--text--','pics/icons/text_strikethrough.png','trackers');
 
 
 -- blogs
@@ -5815,6 +5821,8 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('Email Address','[mailto:text|text]','pics/icons/email.png','blogs');
 
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('Deleted','--text--','pics/icons/text_strikethrough.png','blogs');
+
 
 -- calendar
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('bold','__text__','pics/icons/text_bold.png','calendar');
@@ -5850,6 +5858,8 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('dynamic variable','%text%','pics/icons/book_open.png','calendar');
 
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('image','{img src= width= height= align= desc= link= }','pics/icons/picture.png','calendar');
+
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('Deleted','--text--','pics/icons/text_strikethrough.png','calendar');
 
 
 -- articles
@@ -5889,6 +5899,8 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('Email Address','[mailto:text|text]','pics/icons/email.png','articles');
 
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('Deleted','--text--','pics/icons/text_strikethrough.png','articles');
+
 
 -- faqs
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('bold','__text__','pics/icons/text_bold.png','faqs');
@@ -5927,6 +5939,8 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('Email Address','[mailto:text|text]','pics/icons/email.png','faqs');
 
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('Deleted','--text--','pics/icons/text_strikethrough.png','faqs');
+
 
 -- forums
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('bold','__text__','pics/icons/text_bold.png','forums');
@@ -5964,6 +5978,8 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('image','{img src= width= height= align= desc= link= }','pics/icons/picture.png','forums');
 
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('Email Address','[mailto:text|text]','pics/icons/email.png','forums');
+
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('Deleted','--text--','pics/icons/text_strikethrough.png','forums');
 
 
 --translated objects table
@@ -6409,6 +6425,26 @@ CREATE TABLE "tiki_profile_symbols" (
   PRIMARY KEY( `domain`, `profile`, `object` ),
   "INDEX"(`named`)
 );
+
+
+DROP TABLE `tiki_feature`;
+
+CREATE TABLE `tiki_feature` (
+  `feature_id` mediumnumber(9) NOT NULL auto_increment,
+  `feature_name` varchar(150) NOT NULL,
+  `parent_id` mediumnumber(9) NOT NULL,
+  `status` varchar(12) default 'active' NOT NULL,
+  `setting_name` varchar(50) default NULL,
+  `feature_type` varchar(20) default 'feature' NOT NULL,
+  `template` varchar(50) default NULL,
+  `permission` varchar(50) default NULL,
+  `ordinal` mediumnumber(9) default '1' NOT NULL,
+  `depends_on` mediumnumber(9) default NULL,
+  `keyword` varchar(20) default NULL,
+  `feature_count` mediumnumber(9) default '0' NOT NULL,
+  `feature_path` varchar(20) default '0' NOT NULL,
+  PRIMARY KEY ("`feature_id`")
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=0 ;
 
 ;
 

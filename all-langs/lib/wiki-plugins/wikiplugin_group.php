@@ -15,6 +15,7 @@ function wikiplugin_group_help() {
 function wikiplugin_group_info() {
 	return array(
 		'name' => tra('Group'),
+		'documentation' => 'PluginGroup',
 		'description' => tra("Display wiki text if user is in one of listed groups"),
 		'body' => tra('Wiki text to display if conditions are met. The body may contain {ELSE}. Text after the marker will be displayed to users not matching the condition.'),
 		'prefs' => array('wikiplugin_group'),

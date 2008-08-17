@@ -213,3 +213,5 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
   {/if}
 {/if}
 
+{include file="tiki-admin_bar.tpl"}
+

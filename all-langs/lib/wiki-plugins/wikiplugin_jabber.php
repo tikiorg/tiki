@@ -21,6 +21,7 @@ function wikiplugin_jabber_help() {
 function wikiplugin_jabber_info() {
 	return array(
 		'name' => tra('Jabber'),
+		'documentation' => 'PluginJabber',
 		'description' => tra('Runs a Java applet to access a local Jabber service'),
 		'prefs' => array( 'wikiplugin_jabber' ),
 		'params' => array(

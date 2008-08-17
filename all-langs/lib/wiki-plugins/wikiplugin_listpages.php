@@ -11,6 +11,7 @@ function wikiplugin_listpages_help() {
 function wikiplugin_listpages_info() {
 	return array(
 		'name' => tra('List Pages'),
+		'documentation' => 'PluginListpages',
 		'description' => tra('List wiki pages.'),
 		'prefs' => array('wikiplugin_listpages'),
 		'params' => array(

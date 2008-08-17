@@ -100,6 +100,7 @@ function wikiplugin_pluginmanager_help() {
 	function wikiplugin_pluginmanager_info() {
 		return array(
 			'name' => tra('Plugin Manager'),
+			'documentation' => 'PluginManager',
 			'description' => tra("Provides a list of plugins on this wiki."),
 			'prefs' => array( 'wikiplugin_pluginmanager' ),
 			'params' => array(

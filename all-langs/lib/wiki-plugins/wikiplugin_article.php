@@ -18,6 +18,7 @@ function wikiplugin_article_help() {
 function wikiplugin_article_info() {
 	return array(
 		'name' => tra('Article'),
+		'documentation' => 'PluginArticle',
 		'description' => tra('Includes an article\'s content within the page.'),
 		'prefs' => array( 'feature_article', 'wikiplugin_article' ),
 		'params' => array(

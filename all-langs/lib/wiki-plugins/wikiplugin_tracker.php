@@ -13,6 +13,7 @@ function wikiplugin_tracker_help() {
 function wikiplugin_tracker_info() {
 	return array(
 		'name' => tra('Tracker'),
+		'documentation' => 'PluginTracker',
 		'description' => tra("Displays an input form for tracker submit"),
 		'prefs' => array( 'feature_trackers', 'wikiplugin_tracker' ),
 		'body' => tra('Notice'),

@@ -21,6 +21,7 @@ function wikiplugin_sheet_help() {
 function wikiplugin_sheet_info() {
 	return array(
 		'name' => tra('Sheet'),
+		'documentation' => 'PluginSheet',
 		'description' => tra('Displays the content of a spreadsheet in the page.'),
 		'prefs' => array( 'wikiplugin_sheet', 'feature_sheets' ),
 		'body' => tra('Sheet Heading'),

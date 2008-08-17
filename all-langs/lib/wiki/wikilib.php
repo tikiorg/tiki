@@ -743,6 +743,10 @@ class WikiLib extends TikiLib {
 					}
 			}
 
+			if( isset( $ret['documentation'] ) && ctype_alnum( $ret['documentation'] ) ) {
+				$ret['documentation'] = "http://doc.tikiwiki.org/{$ret['documentation']}";
+			}
+
 			$smarty->assign( 'plugin', $ret );
 			$smarty->assign( 'plugin_name', strtoupper( substr( $file, 11, -4 ) ) );
 			return $smarty->fetch( 'tiki-plugin_help.tpl' );

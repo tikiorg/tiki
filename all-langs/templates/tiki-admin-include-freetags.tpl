@@ -1,7 +1,3 @@
-{if $prefs.feature_help eq "y"}
-{remarksbox type="tip" title="{tr}Tip{/tr}" icon=accept}{tr}Freetags rock!{/tr}{/remarksbox}
-{/if}
-
   <div id ="Browsing" class="cbox">
     <div class="cbox-title">
       {tr}Freetag Browsing{/tr}

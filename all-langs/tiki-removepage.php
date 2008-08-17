@@ -66,7 +66,7 @@ if (isset($_REQUEST["remove"])) {
 	if (isset($_REQUEST["all"]) && $_REQUEST["all"] == 'on') {
 		$tikilib->remove_all_versions($_REQUEST["page"]);
 
-		header ("location: $base_url");
+		header ("location: tiki-index.php");
 		die;
 	} else {
 		if ($version == "last") {

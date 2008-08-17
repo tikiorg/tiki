@@ -6,6 +6,7 @@ function wikiplugin_sql_help() {
 function wikiplugin_sql_info() {
 	return array(
 		'name' => tra('SQL'),
+		'documentation' => 'PluginSQL',
 		'description' => tra('Run a sql query'),
 		'prefs' => array( 'wikiplugin_sql' ),
 		'body' => tra('sql query'),

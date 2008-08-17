@@ -8,8 +8,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function smarty_function_memusage($params, &$smarty)
 {
-    if (function_exists('memory_get_usage')) {
-      $memusage=memory_get_usage();
+    if (function_exists('memory_get_peak_usage')) {
+      $memusage=memory_get_peak_usage();
     } else {
       $memusage=0;
     }
