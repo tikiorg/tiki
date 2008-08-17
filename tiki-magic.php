@@ -7,6 +7,7 @@ $featurePage = explode('/', $featureChain);
 $featureId = $featurePage[count($featurePage) - 1];
 
 $feature = $magiclib->get_feature($featureId);
+$smarty->assign('featurechain', $featureChain);
 $smarty->assign('feature', $feature);
 $smarty->assign('title', $feature['feature_name']);
 
@@ -19,6 +20,10 @@ if ($$feature['permission'] != 'y' && $tiki_p_admin != 'y') {
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 	$smarty->display("error.tpl");
 	die;
+}
+
+if( isset( $_REQUEST['refresh'] ) ) {
+	$magiclib->reload_features();
 }
 
 $headerlib->add_cssfile('css/spanky.css');

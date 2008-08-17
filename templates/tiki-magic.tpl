@@ -1,3 +1,6 @@
+<div style="float:right">
+	<a title="{tr}Refresh{/tr}" href="tiki-magic.php?featurechain={$featurechain|escape:"url"}&amp;refresh=1">{icon _id='arrow_refresh'}</a>
+</div>
 <form method="post">
 {section name=container loop=$containers}
 <a href="#container{$containers[container].feature_id}">{tr}{$containers[container].feature_name}{/tr}</a> 
