@@ -174,22 +174,22 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 176,"Last year in the dropdown, either year number, or relative to current year (+/- N) (if no jscalendar)",34,,calendar_end_year,simple,,tiki_p_admin,,,Calendar
 177,Default view mode,34,,calendar_view_mode,calendarviewmode,,tiki_p_admin,,,Calendar
 178,feature_categoryobjects,25,,feature_categoryobjects,flag,,tiki_p_admin,,,Category
-179,feature_search_show_forbidden_cat,25,,feature_search_show_forbidden_cat,flag,,tiki_p_admin,,,Category,search as well
-180,feature_category_reinforce,25,,feature_category_reinforce,flag,,tiki_p_admin,,,Category,
-181,feature_categorypath,25,,feature_categorypath,flag,,tiki_p_admin,,,Category,
-182,feature_category_use_phplayers,25,,feature_category_use_phplayers,flag,,tiki_p_admin,,,Category,
-183,Default number of comments per page,122,,article_comments_per_page,simple,,tiki_p_admin,,,Articles,
-184,Comments default ordering,122,,article_comments_default_ordering,commentordering,,tiki_p_admin,,,Articles,
-185,Visible,123,,art_list_visible,flag,,tiki_p_admin,,,Articles,
-186,Type,123,,art_list_type,flag,,tiki_p_admin,,,Articles,
-187,Publish Date,123,,art_list_date,flag,,tiki_p_admin,,,Articles,
-188,Image,123,,art_list_img,flag,,tiki_p_admin,,,Articles,
-189,Language,123,,art_list_lang,flag,,tiki_p_admin,,,Articles,
-190,Expire Date,123,,art_list_expire,flag,,tiki_p_admin,,,Articles,
-191,art_list_reads,123,,art_list_reads,flag,,tiki_p_admin,,,Articles,
-192,Title,123,,art_list_title,flag,,tiki_p_admin,,,Articles,
-193,Title length,123,,art_list_title_len,int,,tiki_p_admin,,,Articles,
-194,Size,123,,art_list_size,flag,,tiki_p_admin,,,Articles,
+179,feature_search_show_forbidden_cat,25,,feature_search_show_forbidden_cat,flag,,tiki_p_admin,,,Category
+180,feature_category_reinforce,25,,feature_category_reinforce,flag,,tiki_p_admin,,,Category
+181,feature_categorypath,25,,feature_categorypath,flag,,tiki_p_admin,,,Category
+182,feature_category_use_phplayers,25,,feature_category_use_phplayers,flag,,tiki_p_admin,,,Category
+183,Default number of comments per page,122,,article_comments_per_page,simple,,tiki_p_admin,,,Articles
+184,Comments default ordering,122,,article_comments_default_ordering,commentordering,,tiki_p_admin,,,Articles
+185,Visible,123,,art_list_visible,flag,,tiki_p_admin,,,Articles
+186,Type,123,,art_list_type,flag,,tiki_p_admin,,,Articles
+187,Publish Date,123,,art_list_date,flag,,tiki_p_admin,,,Articles
+188,Image,123,,art_list_img,flag,,tiki_p_admin,,,Articles
+189,Language,123,,art_list_lang,flag,,tiki_p_admin,,,Articles
+190,Expire Date,123,,art_list_expire,flag,,tiki_p_admin,,,Articles
+191,art_list_reads,123,,art_list_reads,flag,,tiki_p_admin,,,Articles
+192,Title,123,,art_list_title,flag,,tiki_p_admin,,,Articles
+193,Title length,123,,art_list_title_len,int,,tiki_p_admin,,,Articles
+194,Size,123,,art_list_size,flag,,tiki_p_admin,,,Articles
 195,Author,123,,art_list_author,flag,,tiki_p_admin,,,Articles
 196,Topic,123,,art_list_topic,flag,,tiki_p_admin,,,Articles
 197,Spellchecking,124,,cms_spellcheck,flag,,tiki_p_admin,,,Articles
@@ -299,7 +299,7 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 376,freetags_browse_amount_tags_in_cloud,26,,freetags_browse_amount_tags_in_cloud,simple,,tiki_p_admin,,,Tags
 377,freetags_normalized_valid_chars,26,,freetags_normalized_valid_chars,simple,,tiki_p_admin,,,Tags
 378,freetags_lowercase_only,26,,freetags_lowercase_only,flag,,tiki_p_admin,,,Tags
-379,freetags_multilingual,26,,freetags_multilingual,flag,,tiki_p_admin,1,,Tags
+379,Multilingual freetags,26,,freetags_multilingual,flag,,tiki_p_admin,1,feature_multilingual,Tags
 380,freetags_preload_random_search,26,,freetags_preload_random_search,flag,,tiki_p_admin,,,Tags
 381,freetags_3d_width,130,,freetags_3d_width,simple,,tiki_p_admin,,,Tags
 382,freetags_3d_node_mass,130,,freetags_3d_node_mass,simple,,tiki_p_admin,,,Tags
@@ -782,22 +782,22 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 883,Admin Forums,12,,,functionality,tiki-admin_forums,tiki_p_admin,,,Forum
 884,Forum Importer,12,,,functionality,tiki-forum_import,tiki_p_admin,,,Forum
 885,View Tiki Sheet,16,,,functionality,tiki-view_sheets,tiki_p_admin,,,Spreadsheet
-886,Tiki Sheet History,16,,,functionality,tiki-history_sheets,tiki_p_admin,,,Spreadsheet,
-887,Export Tiki Sheet,16,,,functionality,tiki-export_sheet,tiki_p_admin,,,Spreadsheet,
-888,Import Tiki Sheet,16,,,functionality,tiki-import_sheet,tiki_p_admin,,,Spreadsheet,
-889,History,7,,,functionality,tiki-pagehistory,tiki_p_admin,,,Wiki,
-890,Edit,7,,,functionality,tiki-editpage,tiki_p_admin,,,Wiki,
-891,Remove page,7,,,functionality,tiki-removepage,tiki_p_admin,,,Wiki,
-892,Rename page,7,,,functionality,tiki-rename_page,tiki_p_admin,,,Wiki,
-893,Multilingual freetags,76,,freetags_multilingual,flag,,tiki_p_admin,20,,i18n,and freetags
-894,Calendar manual selection of time/date,34,,feature_cal_manual_time,flag,,tiki_p_admin,,,Calendar,
-895,Admin Topics,10,,feature_articles,functionality,tiki-admin_topics,tiki_p_admin_articles,,,Articles,
-896,Admin Types,10,,feature_articles,functionality,tiki-article_types,tiki_p_admin_articles,,,Articles,
-897,Wiki History,7,,,configurationgroup,,tiki_p_admin,,,Wiki,
-898,WikiWords and wiki links,7,,,configurationgroup,,tiki_p_admin,,,Wiki,
-899,Wiki structures,7,,,configurationgroup,,tiki_p_admin,,,Structures,
-900,Wiki watches,7,,,configurationgroup,,tiki_p_admin,,,Watch,
-901,Wiki page discussions (in forums),7,,,configurationgroup,,tiki_p_admin,,,Wiki,
+886,Tiki Sheet History,16,,,functionality,tiki-history_sheets,tiki_p_admin,,,Spreadsheet
+887,Export Tiki Sheet,16,,,functionality,tiki-export_sheet,tiki_p_admin,,,Spreadsheet
+888,Import Tiki Sheet,16,,,functionality,tiki-import_sheet,tiki_p_admin,,,Spreadsheet
+889,History,7,,,functionality,tiki-pagehistory,tiki_p_admin,,,Wiki
+890,Edit,7,,,functionality,tiki-editpage,tiki_p_admin,,,Wiki
+891,Remove page,7,,,functionality,tiki-removepage,tiki_p_admin,,,Wiki
+892,Rename page,7,,,functionality,tiki-rename_page,tiki_p_admin,,,Wiki
+893,Multilingual freetags,76,,freetags_multilingual,flag,,tiki_p_admin,20,feature_freetags,i18n
+894,Calendar manual selection of time/date,34,,feature_cal_manual_time,flag,,tiki_p_admin,,,Calendar
+895,Admin Topics,10,,feature_articles,functionality,tiki-admin_topics,tiki_p_admin_articles,,,Articles
+896,Admin Types,10,,feature_articles,functionality,tiki-article_types,tiki_p_admin_articles,,,Articles
+897,Wiki History,7,,,configurationgroup,,tiki_p_admin,,,Wiki
+898,WikiWords and wiki links,7,,,configurationgroup,,tiki_p_admin,,,Wiki
+899,Wiki structures,7,,,configurationgroup,,tiki_p_admin,,,Structures
+900,Wiki watches,7,,,configurationgroup,,tiki_p_admin,,,Watch
+901,Wiki page discussions (in forums),7,,,configurationgroup,,tiki_p_admin,,,Wiki
 902,Pagination,3,,,configurationgroup,,tiki_p_admin,,
 903,Load postprocessor,115,,,system,tiki-feature-load-postprocessor,tiki_p_admin,,
 904,groupTracker,11,,groupTracker,flag,,tiki_p_admin,,
