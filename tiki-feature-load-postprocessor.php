@@ -13,8 +13,8 @@ if ($tiki_p_admin != 'y') {
 $features = $magiclib->get_child_features(0);
 
 $featurelist = '';
-get_features(0);
-function get_features($featureid, $path) {
+get_features_tree(0);
+function get_features_tree($featureid, $path) {
 	global $magiclib, $featurelist;
 	$features = $magiclib->get_child_features($featureid);
 	if ($features) {
@@ -26,7 +26,7 @@ function get_features($featureid, $path) {
 			}
 			$magiclib->update_feature_specials($feature, $path . '/' . $feature['feature_id']);
 			$featurelist .= "<ul>";
-				get_features($feature['feature_id'], $path . '/' . $feature['feature_id']);
+				get_features_tree($feature['feature_id'], $path . '/' . $feature['feature_id']);
 			$featurelist .= '</ul>';
 			$featurelist .= '</li>';
 		}
