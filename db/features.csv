@@ -383,7 +383,7 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 460,Choices separator:,912,,site_nav_seper,simple,,tiki_p_admin,,,, 
 461,tiki_version_check_frequency,1,,tiki_version_check_frequency,simple,,tiki_p_admin,,,, 
 462,pref_syntax,67,,pref_syntax,simple,,tiki_p_admin,,,, 
-463,PHP error reporting level,67,,error_reporting_level,simple,,tiki_p_admin,,,, 
+463,PHP error reporting level,67,,error_reporting_level,errorreportinglevel,,tiki_p_admin,,,, 
 464,default_mail_charset,1,,default_mail_charset,simple,,tiki_p_admin,,,, 
 465,smarty notice reporting,67,,smarty_notice_reporting,flag,,tiki_p_admin,,,, 
 466,display_timezone,48,,display_timezone,timezone,,tiki_p_admin,,,Time+and+Date,Not sure how/where this is used
