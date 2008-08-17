@@ -8,7 +8,9 @@
 // Initialization
 $section = 'wiki page';
 require_once('tiki-setup.php');
-include_once('lib/structures/structlib.php');
+if( $prefs['feature_wiki_structure'] == 'y' ) {
+	include_once('lib/structures/structlib.php');
+}
 include_once('lib/wiki/wikilib.php');
 include_once('lib/stats/statslib.php');
 include_once('lib/ajax/ajaxlib.php');
@@ -78,93 +80,94 @@ For more information:
 	}
 }
 
-$structure = 'n';
-$smarty->assign('structure',$structure);
-// Feature checks made in the function for structure language
-$structlib->use_user_language_preferences();
+if( $prefs['feature_wiki_structure'] == 'y' ) {
+	$structure = 'n';
+	$smarty->assign('structure',$structure);
+	// Feature checks made in the function for structure language
+	$structlib->use_user_language_preferences();
 
-if (isset($_REQUEST['page_ref_id'])) {
-    // If a structure page has been requested
-    $page_ref_id = $_REQUEST['page_ref_id'];
-} else {
-    // else check if page is the head of a structure 
-    $page_ref_id = $structlib->get_struct_ref_if_head($_REQUEST['page']);
-}
-
-//If a structure page isnt going to be displayed
-if (!isset($page_ref_id)) {
-    //Check to see if its a member of any structures
-    if (isset($_REQUEST['structure']) && !empty($_REQUEST['structure'])) {
-      $struct=$_REQUEST['structure'];
-    } else {
-      $struct='';
-    }
-    //Get the structures this page is a member of
-    $structs = $structlib->get_page_structures($_REQUEST["page"],$struct);
-	$structs_with_perm = array(); 
-	foreach ($structs as $t_structs) {
-		if ($tikilib->user_has_perm_on_object($user,$t_structs['pageName'],'wiki page','tiki_p_view')) {
-			$structs_with_perm[] = $t_structs;
-		}
-	}
-    //If page is only member of one structure, display if requested
-    $single_struct = count($structs_with_perm) == 1; 
-    if ((!empty($struct) || $prefs['feature_wiki_open_as_structure'] == 'y') && $single_struct) {
-      $page_ref_id=$structs_with_perm[0]['req_page_ref_id'];
-      $_REQUEST['page_ref_id']=$page_ref_id;
-    }
-
-}
-
-if(isset($page_ref_id)) {
-    $structure = 'y';
-    $smarty->assign('structure',$structure);
-    $page_info = $structlib->s_get_page_info($page_ref_id);
-    $smarty->assign('page_info', $page_info);
-    $navigation_info = $structlib->get_navigation_info($page_ref_id);
-    $smarty->assign('next_info', $navigation_info['next']);
-    $smarty->assign('prev_info', $navigation_info['prev']);
-    $smarty->assign('parent_info', $navigation_info['parent']);
-    $smarty->assign('home_info', $navigation_info['home']);
-    $page = $page_info['pageName'];
-    $info = null;
-    // others still need a good set page name or they will get confused.
-    // comments of home page were all visible on every structure page
-    $_REQUEST['page']=$page;
-    $structure_path = $structlib->get_structure_path($page_ref_id);
-    $smarty->assign('structure_path', $structure_path);
-    // Need to have showstructs when in more than one struct - for usability reasons 
-	$structs = $structlib->get_page_structures($page);
-	$structs_with_perm = array(); 
-	foreach ($structs as $t_structs) {
-		if ($tikilib->user_has_perm_on_object($user,$t_structs['pageName'],'wiki page','tiki_p_view')) {
-			$structs_with_perm[] = $t_structs;
-		}
-	}    	
-    if ($tikilib->user_has_perm_on_object($user,$navigation_info['home']['pageName'],'wiki page','tiki_p_edit','tiki_p_edit_categorized'))
-		$smarty->assign('struct_editable', 'y');
-	else
-		$smarty->assign('struct_editable', 'n');	
-	// To show position    
-    if (count($structure_path) > 1) {		
-		for ($i = 1; $i < count($structure_path); $i++) {
-			$cur_pos .= $structure_path[$i]["pos"] . "." ;
-		}
-		$cur_pos = substr($cur_pos, 0, strlen($cur_pos)-1);      
+	if (isset($_REQUEST['page_ref_id'])) {
+		// If a structure page has been requested
+		$page_ref_id = $_REQUEST['page_ref_id'];
 	} else {
-		$cur_pos = tra("Top");
+		// else check if page is the head of a structure 
+		$page_ref_id = $structlib->get_struct_ref_if_head($_REQUEST['page']);
 	}
-	$smarty->assign('cur_pos', $cur_pos);	
-} else {
-    $page_ref_id = '';
+
+	//If a structure page isnt going to be displayed
+	if (!isset($page_ref_id)) {
+		//Check to see if its a member of any structures
+		if (isset($_REQUEST['structure']) && !empty($_REQUEST['structure'])) {
+			$struct=$_REQUEST['structure'];
+		} else {
+			$struct='';
+		}
+		//Get the structures this page is a member of
+		$structs = $structlib->get_page_structures($_REQUEST["page"],$struct);
+		$structs_with_perm = array(); 
+		foreach ($structs as $t_structs) {
+			if ($tikilib->user_has_perm_on_object($user,$t_structs['pageName'],'wiki page','tiki_p_view')) {
+				$structs_with_perm[] = $t_structs;
+			}
+		}
+		//If page is only member of one structure, display if requested
+		$single_struct = count($structs_with_perm) == 1; 
+		if ((!empty($struct) || $prefs['feature_wiki_open_as_structure'] == 'y') && $single_struct) {
+			$page_ref_id=$structs_with_perm[0]['req_page_ref_id'];
+			$_REQUEST['page_ref_id']=$page_ref_id;
+		}
+
+	}
+
+	if(isset($page_ref_id)) {
+		$structure = 'y';
+		$smarty->assign('structure',$structure);
+		$page_info = $structlib->s_get_page_info($page_ref_id);
+		$smarty->assign('page_info', $page_info);
+		$navigation_info = $structlib->get_navigation_info($page_ref_id);
+		$smarty->assign('next_info', $navigation_info['next']);
+		$smarty->assign('prev_info', $navigation_info['prev']);
+		$smarty->assign('parent_info', $navigation_info['parent']);
+		$smarty->assign('home_info', $navigation_info['home']);
+		$page = $page_info['pageName'];
+		$info = null;
+		// others still need a good set page name or they will get confused.
+		// comments of home page were all visible on every structure page
+		$_REQUEST['page']=$page;
+		$structure_path = $structlib->get_structure_path($page_ref_id);
+		$smarty->assign('structure_path', $structure_path);
+		// Need to have showstructs when in more than one struct - for usability reasons 
+		$structs = $structlib->get_page_structures($page);
+		$structs_with_perm = array(); 
+		foreach ($structs as $t_structs) {
+			if ($tikilib->user_has_perm_on_object($user,$t_structs['pageName'],'wiki page','tiki_p_view')) {
+				$structs_with_perm[] = $t_structs;
+			}
+		}    	
+		if ($tikilib->user_has_perm_on_object($user,$navigation_info['home']['pageName'],'wiki page','tiki_p_edit','tiki_p_edit_categorized'))
+			$smarty->assign('struct_editable', 'y');
+		else
+			$smarty->assign('struct_editable', 'n');	
+		// To show position    
+		if (count($structure_path) > 1) {		
+			for ($i = 1; $i < count($structure_path); $i++) {
+				$cur_pos .= $structure_path[$i]["pos"] . "." ;
+			}
+			$cur_pos = substr($cur_pos, 0, strlen($cur_pos)-1);      
+		} else {
+			$cur_pos = tra("Top");
+		}
+		$smarty->assign('cur_pos', $cur_pos);	
+	} else {
+		$page_ref_id = '';
+	}
+
+	$smarty->assign('showstructs', $structs_with_perm);
+	$smarty->assign('page_ref_id', $page_ref_id);
 }
 
-$smarty->assign('showstructs', $structs_with_perm);
 $page = $_REQUEST['page'];
 $smarty->assign_by_ref('page',$page);
-$smarty->assign('page_ref_id', $page_ref_id);
-
-
 
 if (!$tikilib->page_exists($page) && function_exists('utf8_encode') && $tikilib->page_exists(utf8_encode($page))) {
     $page = $_REQUEST["page"] = utf8_encode($page);

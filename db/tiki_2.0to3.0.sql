@@ -57,3 +57,6 @@ CREATE TABLE `tiki_feature` (
   PRIMARY KEY  (`feature_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=0 ;
 
+#2008-08-17 lphuberdeau
+UPDATE tiki_menu_options SET section = 'feature_wiki_structure' WHERE optionId = 47;
+

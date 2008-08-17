@@ -14,6 +14,17 @@ if ($tiki_p_admin != 'y') {
 	die;
 }
 
+if($prefs['feature_wiki'] != 'y') {
+    $smarty->assign('msg', tra('This feature is disabled').': feature_wiki');
+    $smarty->display('error.tpl');
+    die;  
+}
+
+if($prefs['feature_wiki_structure'] != 'y') {
+    $smarty->assign('msg', tra('This feature is disabled').': feature_wiki_structure');
+    $smarty->display('error.tpl');
+    die;  
+}
 
 function parse_st($dump) {
 	$bodysep  = '>>>>>>>>>>>>>>>>>>>>>>>>';
