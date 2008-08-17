@@ -22,7 +22,7 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO `users_objectpermissions` (groupName, permName, objectType, objectId) SELECT  groupName, 'tiki_p_search_categorized', objectType , objectId FROM `users_objectpermissions` WHERE permName = 'tiki_p_view_categorized' AND @fgcant = 0;
 
 #2008-08-05 sylvieg
-DELETE FROM tiki_quicktags WHERE taglabel='Deleted' AND taginsert='--text--' AND tagicon='pics/icons/text_strikethrough.png';
+ALTER TABLE tiki_quicktags ADD UNIQUE KEY no_repeats(taglabel(50), taginsert(50), tagicon(100), tagcategory(50));
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('Deleted','--text--','pics/icons/text_strikethrough.png','wiki');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('Deleted','--text--','pics/icons/text_strikethrough.png','newsletters');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('Deleted','--text--','pics/icons/text_strikethrough.png','trackers');
