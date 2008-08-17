@@ -1,4 +1,4 @@
-<form method="POST">
+<form method="post">
 {section name=container loop=$containers}
 <a href="#container{$containers[container].feature_id}">{tr}{$containers[container].feature_name}{/tr}</a> 
 {/section}<br />
@@ -7,7 +7,7 @@
 {* Show a heading for features with the option to enable or disable the feature.  *}
 {if $features[feature].feature_type eq 'feature'}
 	<div class="configSetting"><a name="container{$features[feature].feature_id}"></a><h4 class="configSection">{tr}{$features[feature].feature_name}{/tr}<sub>({$features[feature].feature_id})</sub></h4>
-	<div class="configSetting"><label for="{$features[feature].setting_name}" class="formLabel">{tr}Enabled{/tr}</label><input type="checkbox" name="{$features[feature].setting_name}" id="{$features[feature].setting_name}" value="on"{if $features[feature].value eq 'y'} checked{/if}>{if $features[feature].status eq 'experimental'}<em>{tr}This is an experimental feature{/tr}</em>{/if}
+	<div class="configSetting"><label for="{$features[feature].setting_name}" class="formLabel">{tr}Enabled{/tr}</label><input type="checkbox" name="{$features[feature].setting_name}" id="{$features[feature].setting_name}" value="on"{if $features[feature].value eq 'y'} checked="checked"{/if} />{if $features[feature].status eq 'experimental'}<em>{tr}This is an experimental feature{/tr}</em>{/if}
 {if $features[feature].template neq ''}<a href="{$features[feature].template}.php">{tr}Go{/tr}!</a>{/if}
 {* Check to see if system help is on;  and use that base URL. *}	
 {if $features[feature].keyword neq ''} <a href="http://doc.tikiwiki.org/{$features[feature].keyword}">{tr}Help{/tr}~</a>{/if}
@@ -25,22 +25,22 @@
 	<div class="configSetting"><label for="{$features[feature].setting_name}" class="formLabel">{tr}{$features[feature].feature_name}{/tr}<sub>({$features[feature].feature_id})</sub></label>
 	{* Flags  *}
 	{if $features[feature].feature_type eq 'flag'}
-		<input type="checkbox" name="{$features[feature].setting_name}" id="{$features[feature].setting_name}" value="on"{if $features[feature].value eq 'y'} checked{/if}></div>
+		<input type="checkbox" name="{$features[feature].setting_name}" id="{$features[feature].setting_name}" value="on"{if $features[feature].value eq 'y'} checked="checked"{/if} />
 	{* Simple text fields *}
 	{elseif $features[feature].feature_type eq 'simple' || $features[feature].feature_type eq 'byref'}
-		<input type="text" name="{$features[feature].setting_name}" id="{$features[feature].setting_name}" value="{$features[feature].value}"></div>
+		<input type="text" name="{$features[feature].setting_name}" id="{$features[feature].setting_name}" value="{$features[feature].value}" />
 	{* Numeric fields (like a text field, but shorter) *}
 	{elseif $features[feature].feature_type eq 'int'}
-		<input type="text" size="3" name="{$features[feature].setting_name}" id="{$features[feature].setting_name}" value="{$features[feature].value}"></div>
+		<input type="text" size="3" name="{$features[feature].setting_name}" id="{$features[feature].setting_name}" value="{$features[feature].value}" />
 	{* Text Area  *}
 	{elseif $features[feature].feature_type eq 'textarea'}
-		<textarea cols="50" rows="5" name="{$features[feature].setting_name}" id="{$features[feature].setting_name}">{$features[feature].value}</textarea></div>
+		<textarea cols="50" rows="5" name="{$features[feature].setting_name}" id="{$features[feature].setting_name}">{$features[feature].value}</textarea>
 	{* Special cases  *}
 	{elseif $features[feature].enumeration neq ''}
-		<select name="{$features[feature].setting_name}">{foreach item=label key=value from=$features[feature].enumeration}<option value="{$value}"{if $value eq $features[feature].value} selected{/if}>{$label}</option>{/foreach}</select></div>
+		<select id="{$features[feature].setting_name}" name="{$features[feature].setting_name}">{foreach item=label key=value from=$features[feature].enumeration}<option value="{$value}"{if $value eq $features[feature].value} selected="selected"{/if}>{$label}</option>{/foreach}</select>
 	{* Timezone values *}
 	{elseif $features[feature].feature_type eq 'timezone'}
-	<select name="{$features[feature].setting_name}">
+	<select id="{$features[feature].setting_name}" name="{$features[feature].setting_name}">
 		{foreach key=tz item=tzinfo from=$timezones}
 			{math equation="floor(x / (3600000))" x=$tzinfo.offset assign=offset}{math equation="(x - (y*3600000)) / 60000" y=$offset x=$tzinfo.offset assign=offset_min format="%02d"}
 			<option value="{$tz}"{if $features[feature].value eq $tz} selected="selected"{/if}>{$tz|escape:"html"} (UTC{if $offset >= 0}+{/if}{$offset}h{if $offset_min gt 0}{$offset_min}{/if})</option>
@@ -48,22 +48,22 @@
 	</select>
 	{* Limit Category (limit a content item to certain categories) *}
 	{elseif $features[feature].feature_type eq 'limitcategory'}
-		<select name="{$features[feature].setting_name}"><option value="-1" {if $value eq -1 or $value eq ''}selected="selected"{/if}>{tr}None{/tr}</option>
+		<select id="{$features[feature].setting_name}" name="{$features[feature].setting_name}"><option value="-1" {if $value eq -1 or $value eq ''}selected="selected"{/if}>{tr}None{/tr}</option>
 			<option value="0" {if $value eq 0}selected="selected"{/if}>{tr}All{/tr}</option>
 			{section name=ix loop=$catree}
 			<option value="{$catree[ix].categId|escape}" {if $catree[ix].categId eq $value}selected="selected"{/if}>{$catree[ix].categpath}</option>
 			{/section}
-			</select></div>
+			</select>
 	{* Limit Category (limit a content item to certain categories) *}
 	{elseif $features[feature].feature_type eq 'selectcategory'}
-		<select name="{$features[feature].setting_name}"><option value="-1" {if $value eq -1 or $value eq ''}selected="selected"{/if}>{tr}None{/tr}</option>
+		<select id="{$features[feature].setting_name}" name="{$features[feature].setting_name}"><option value="-1" {if $value eq -1 or $value eq ''}selected="selected"{/if}>{tr}None{/tr}</option>
 			{section name=ix loop=$catree}
 			<option value="{$catree[ix].categId|escape}" {if $catree[ix].categId eq $value}selected="selected"{/if}>{$catree[ix].categpath}</option>
 			{/section}
-			</select></div>
+			</select>
 	{* Placeholder for things that need a custom handler, that I haven't written yet*}
 	{elseif $features[feature].feature_type eq 'languages'}
-		<select name="{$features[feature].setting_name}">
+		<select id="{$features[feature].setting_name}" name="{$features[feature].setting_name}">
 			{section name=ix loop=$languages}
 			<option value="{$languages[ix].value|escape}"{if $features[feature].value eq $languages[ix].value} selected="selected"{/if}>{$languages[ix].name}</option>
 			{/section}
@@ -79,6 +79,7 @@
 <!-- SEXYTODO: Allow checking the box for this.  Right here.  Where it's needed.  p.s. remember to save the value too.  p.p.s. that will involve looking at the depends in addition to each of the features on the page. p.p.p.s sometimes the depended upon setting will be on the same page, so look out for contradictory
 values. -->
 {if $features[feature].depends_on neq 0}{tr}This depends on {/tr}{tr}{$features[feature].depends_on.feature_name}{/tr} ({if $features[feature].depends_on.value eq 'y'}{tr}Enabled{/tr}{else}{tr}Not Enabled{/tr}{/if}){/if}
+{if $features[feature].feature_type eq 'feature'}</div>{/if}
 {/section}
-<input type="submit" name="submit">
+<input type="submit" name="submit" />
 </form>
