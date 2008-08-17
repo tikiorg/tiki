@@ -36,7 +36,7 @@ INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('
 UPDATE `tiki_menu_options` set `url`='tiki-list_file_gallery.php' where `url`='tiki-file_galleries.php';
 
 #2008-08-14 pkdille
-UPDATE `tiki_menu_options` SET `url` = 'tiki-admin_include_score.php' where `url` = 'tiki-admin_score.php'
+UPDATE `tiki_menu_options` SET `url`='tiki-admin_include_score.php' where `url`='tiki-admin_score.php';
 
 #2008-08-16 princessxine
 DROP TABLE IF EXISTS `tiki_feature`;
@@ -56,3 +56,4 @@ CREATE TABLE `tiki_feature` (
   `feature_path` varchar(20) NOT NULL default '0',
   PRIMARY KEY  (`feature_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=0 ;
+
