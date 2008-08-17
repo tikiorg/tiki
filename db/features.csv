@@ -798,3 +798,4 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 892,Rename page,7,,,functionality,tiki-rename_page,tiki_p_admin,,,Wiki,
 893,Multilingual freetags,76,,freetags_multilingual,flag,,tiki_p_admin,,,i18n,and freetags
 894,Calendar manual selection of time/date,34,,feature_cal_manual_time,flag,,tiki_p_admin,,,Calendar,
+
