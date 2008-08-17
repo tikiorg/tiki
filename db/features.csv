@@ -807,3 +807,6 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 901,Wiki page discussions (in forums),7,,,configurationgroup,,tiki_p_admin,,,Wiki
 902,Pagination,3,,,configurationgroup,,tiki_p_admin,,,
 903,Load postprocessor,115,,,system,tiki-feature-load-postprocessor,tiki_p_admin,,,
+904,groupTracker,11,,groupTracker,flag,,tiki_p_admin,,,
+905,groupTracker,11,,userTracker,flag,,tiki_p_admin,,,
+906,user_tracker_infos,11,,user_tracker_infos,flag,,tiki_p_admin,,,
