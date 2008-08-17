@@ -672,7 +672,7 @@ class UsersLib extends TikiLib {
 // Read page AuthPAM at tw.o, it says about a php module required.
 // maybe and if extension line could be added here... module requires $error
 // as reference.
-	if (pam_auth($user, $pass, $error)) {
+	if (pam_auth($user, $pass, &$error)) {
 		return USER_VALID;
 	} else {
 	// Uncomment the following to see errors on that
