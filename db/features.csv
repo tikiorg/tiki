@@ -533,7 +533,7 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 610,use_context_menu_text,3,,use_context_menu_text,flag,,tiki_p_admin,56,,
 611,pagination_firstlast,902,,pagination_firstlast,flag,,tiki_p_admin,42,,Pagination
 612,Site logo source (image path),876,,sitelogo_src,simple,,tiki_p_admin,,,
-613,site_favicon_type,3,,site_favicon_type,simple,,tiki_p_admin,46,,
+613,site_favicon_type,876,,site_favicon_type,simple,,tiki_p_admin,46,,
 614,Site logo title (on mouse over),876,,sitelogo_title,simple,,tiki_p_admin,,,
 615,direct_pagination,902,,direct_pagination,flag,,tiki_p_admin,2,,Pagination
 616,style,3,,style,simple,,tiki_p_admin,53,,
@@ -554,7 +554,7 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 631,feature_sitetitle,3,,feature_sitetitle,byref,,tiki_p_admin,27,,
 632,pagination_icons,902,,pagination_icons,flag,,tiki_p_admin,43,,Pagination
 633,pagination_fastmove_links,902,,pagination_fastmove_links,flag,,tiki_p_admin,41,,Pagination
-634,site_favicon,3,,site_favicon,simple,,tiki_p_admin,45,,
+634,site_favicon,876,,site_favicon,simple,,tiki_p_admin,45,,
 636,slide_style,3,,slide_style,byref,,tiki_p_admin,51,,
 637,feature_right_column,3,,feature_right_column,byref,,tiki_p_admin,16,,
 638,feature_sitenav,3,,feature_sitenav,flag,,tiki_p_admin,26,,
@@ -574,7 +574,7 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 652,layout_section,3,,layout_section,flag,,tiki_p_admin,38,,
 653,nextprev_pagination,902,,nextprev_pagination,flag,,tiki_p_admin,40,,Pagination
 654,Site logo background color,876,,sitelogo_bgcolor,simple,,tiki_p_admin,,,
-656,Site logo alignment,3,,sitelogo_align,alignment,,tiki_p_admin,44,,
+656,Site logo alignment,876,,sitelogo_align,alignment,,tiki_p_admin,44,,
 657,feature_left_column,3,,feature_left_column,byref,,tiki_p_admin,14,,
 658,feature_bot_bar_icons,3,,feature_bot_bar_icons,flag,,tiki_p_admin,7,,
 659,transition_style_ver,3,,transition_style_ver,simple,,tiki_p_admin,54,,
