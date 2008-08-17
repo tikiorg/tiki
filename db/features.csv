@@ -676,7 +676,7 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 755,Force and limit categorization to within subtree of,141,,feature_wiki_mandatory_category,limitcategory,,tiki_p_admin,,,Category,wiki too
 756,Wiki authors style by page settings,141,,wiki_authors_style_by_page,flag,,tiki_p_admin,,,,
 757,Show page title,141,,feature_page_title,flag,,tiki_p_admin,9,,,
-758,Accept dashes and underscores in WikiWords,141,,feature_wikiwords_usedash,flag,,tiki_p_admin,101,,Wiki,
+758,Accept dashes and underscores in WikiWords,898,,feature_wikiwords_usedash,flag,,tiki_p_admin,101,,Wiki,
 759,Log bytes changes (+/-) in Action Logs (slows each page modifications),141,,feature_actionlog_bytes,flag,,tiki_p_admin,,,Action+Log,
 760,Save Draft,141,experimental,feature_wiki_save_draft,flag,,tiki_p_admin,,39,Wiki,
 761,History,897,,feature_history,flag,,tiki_p_admin,,,Wiki,
@@ -722,10 +722,10 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 801,Edit idle timeout,141,,warn_on_edit_time,idletimeout,,tiki_p_admin,,,,
 802,Tables syntax,141,,feature_wiki_tables,wikitablesyntax,,tiki_p_admin,,,Wiki,
 803,Make structure from page,141,,feature_wiki_make_structure,flag,,tiki_p_admin,,,Structure,
-804,Use WikiWords,141,,feature_wikiwords,flag,,tiki_p_admin,100,,Wiki,
+804,Use WikiWords,898,,feature_wikiwords,flag,,tiki_p_admin,100,,Wiki,
 805,Create webhelp from structure,141,,feature_create_webhelp,flag,,tiki_p_admin,,,Structure,WebHelp
 806,Footnotes,141,,feature_wiki_footnotes,flag,,tiki_p_admin,,,Wiki,
-807,Link plural WikiWords to their singular forms,141,,feature_wiki_plurals,flag,,tiki_p_admin,102,,Wiki,
+807,Link plural WikiWords to their singular forms,898,,feature_wiki_plurals,flag,,tiki_p_admin,102,,Wiki,
 808,User's Page,141,,feature_wiki_userpage,flag,,tiki_p_admin,,,,
 809,Spellchecking,141,,wiki_spellcheck,flag,,tiki_p_admin,,,,
 810,Protect email against spam,141,,feature_wiki_protect_email,flag,,tiki_p_admin,,,Wiki,Text area too
@@ -769,7 +769,7 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 848,List displayed by default,7,,wiki_comments_displayed_default,flag,,tiki_p_admin,,,Wiki
 849,Default number of comments per page,7,,wiki_comments_per_page,int,,tiki_p_admin,,,Wiki
 850,Page name display stripper: choose a character that will be used as a delimiter to strip a final part of the page name (only concerns display),7,,wiki_pagename_strip,simple,,tiki_p_admin,,,Wiki
-851,Controls recognition of Wiki links using the two parenthesis Wiki link syntax ((page name)),7,,wiki_page_regex,wikilinkformat,,tiki_p_admin,,,Wiki
+851,Controls recognition of Wiki links using the two parenthesis Wiki link syntax ((page name)),898,,wiki_page_regex,wikilinkformat,,tiki_p_admin,,,Wiki
 852,wysiwyg_wiki_semi_parsed,111,,wysiwyg_wiki_semi_parsed,flag,,tiki_p_admin,,,
 853,wysiwyg_memo,111,,wysiwyg_memo,flag,,tiki_p_admin,,,
 854,wysiwyg_wiki_parsed,111,,wysiwyg_wiki_parsed,flag,,tiki_p_admin,,,
@@ -801,3 +801,4 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 895,Admin Topics,10,,feature_articles,functionality,tiki-admin_topics,tiki_p_admin_articles,,,Articles
 896,Admin Types,10,,feature_articles,functionality,tiki-article_types,tiki_p_admin_articles,,,Articles
 897,Wiki History,7,,,configurationgroup,,tiki_p_admin,,,Wiki
+898,WikiWords and wiki links,7,,,configurationgroup,,tiki_p_admin,,,Wiki
