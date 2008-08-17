@@ -805,3 +805,5 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 906,user_tracker_infos,11,,user_tracker_infos,flag,,tiki_p_admin,,
 907,Enabled,899,,feature_wiki_structure,flag,tiki_p_admin,1,,
 908,Multilingual structures,899,,feature_multilingual_structures,flag,,tiki_p_admin,20,feature_multilingual
+909,feature_search_show_forbidden_cat,70,,feature_search_show_forbidden_cat,flag,,tiki_p_admin,,
+910,Site Search Bar,70,,feature_sitesearch,feature,,tiki_p_admin,,
