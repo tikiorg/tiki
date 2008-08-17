@@ -170,7 +170,6 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 171,Group calendar sticky popup,34,,calendar_sticky_popup,flag,,tiki_p_admin,,,Calendar
 172,"First year in the dropdown, either year number, or relative to current year (+/- N) (if no jscalendar)",34,,calendar_start_year,simple,,tiki_p_admin,,,Calendar
 173,categorypath_excluded,34,,categorypath_excluded,simple,,tiki_p_admin,,,Category
-174,Javascript Date Selector,110,,feature_jscalendar,flag,,tiki_p_admin,,,
 175,First day of the week,34,,calendar_firstDayofWeek,firstdayofweek,,tiki_p_admin,,,Calendar
 176,"Last year in the dropdown, either year number, or relative to current year (+/- N) (if no jscalendar)",34,,calendar_end_year,simple,,tiki_p_admin,,,Calendar
 177,Default view mode,34,,calendar_view_mode,calendarviewmode,,tiki_p_admin,,,Calendar
@@ -228,7 +227,6 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 229,faq_prefix,9,,faq_prefix,simple,,tiki_p_admin,,,FAQ,
 236,User Translation Watches,76,,feature_user_watches_translations,flag,,tiki_p_admin,,,,
 239,user_assigned_modules,91,,user_assigned_modules,flag,,tiki_p_admin,,,,
-257,feature_banners,68,,feature_banners,flag,,tiki_p_admin,,,Banners,
 258,layout_section,3,,layout_section,flag,,tiki_p_admin,39,,,
 264,feature_games,44,experimental,feature_games,feature,,tiki_p_admin,8,,Games,
 277,user_flip_modules,91,,user_flip_modules,byref,,tiki_p_admin,,,,
@@ -419,9 +417,7 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 495,feature_intertiki_sharedcookie,103,,feature_intertiki_sharedcookie,flag,,tiki_p_admin
 496,known_hosts,103,,known_hosts,simple,,tiki_p_admin
 497,intertiki_logfile,103,,intertiki_logfile,simple,,tiki_p_admin
-498,feature_intertiki_sharedcookie,103,,feature_intertiki_sharedcookie,flag,,tiki_p_admin
 499,feature_intertiki_server,103,,feature_intertiki_server,flag,,tiki_p_admin
-500,known_hosts,103,,known_hosts,simple,,tiki_p_admin
 501,intertiki_errfile,103,,intertiki_errfile,simple,,tiki_p_admin
 502,pass_chr_num,134,,pass_chr_num,flag,,tiki_p_admin
 503,lowercase_username,134,,lowercase_username,flag,,tiki_p_admin
@@ -476,7 +472,6 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 552,auth_ldap_memberisdn,138,,auth_ldap_memberisdn,flag,,tiki_p_admin
 553,auth_create_user_auth,138,,auth_create_user_auth,flag,,tiki_p_admin
 554,auth_ldap_useroc,138,,auth_ldap_useroc,simple,,tiki_p_admin
-555,auth_ldap_url,138,,auth_ldap_url,simple,,tiki_p_admin
 556,auth_pear_port,138,,auth_pear_port,simple,,tiki_p_admin
 557,auth_ldap_version,138,,auth_ldap_version,simple,,tiki_p_admin
 558,shib_affiliation,139,,shib_affiliation,simple,,tiki_p_admin
@@ -526,7 +521,7 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 602,feature_bot_bar,3,,feature_bot_bar,flag,,tiki_p_admin,5
 603,feature_bot_bar_rss,3,,feature_bot_bar_rss,flag,,tiki_p_admin,8
 604,feature_topbar_id_menu,3,,feature_topbar_id_menu,simple,,tiki_p_admin,34
-605,sitenav,3,,sitenav,simple,,tiki_p_admin,50,,
+605,sitenav,3,,sitenav,special,,tiki_p_admin,50,,
 606,feature_site_report_email,3,,feature_site_report_email,simple,,tiki_p_admin,18,,
 608,direct_pagination_max_middle_links,902,,direct_pagination_max_middle_links,simple,,tiki_p_admin,4,,Pagination
 609,feature_siteidentity,3,,feature_siteidentity,flag,,tiki_p_admin,22,,
@@ -541,7 +536,7 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 618,Site Search Bar,879,,feature_sitesearch,feature,,tiki_p_admin,,,
 619,bot_logo_code,3,,bot_logo_code,simple,,tiki_p_admin,1,,
 620,feature_topbar_date,3,,feature_topbar_date,flag,,tiki_p_admin,32,,
-621,Content,875,,sitemycode,textarea,,tiki_p_admin,,,
+621,Content,875,,sitemycode,special,,tiki_p_admin,,,
 622,feature_site_report,3,,feature_site_report,flag,,tiki_p_admin,17,,
 623,direct_pagination_max_ending_links,902,,direct_pagination_max_ending_links,simple,,tiki_p_admin,3,,Pagination
 624,feature_topbar_custom_code,3,,feature_topbar_custom_code,simple,,tiki_p_admin,31,,
@@ -571,7 +566,6 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 649,feature_topbar_version,3,,feature_topbar_version,flag,,tiki_p_admin,35,,
 650,Publish,875,,sitemycode_publish,flag,,tiki_p_admin,,,
 651,feature_top_bar,3,,feature_top_bar,flag,,tiki_p_admin,30,,
-652,layout_section,3,,layout_section,flag,,tiki_p_admin,38,,
 653,nextprev_pagination,902,,nextprev_pagination,flag,,tiki_p_admin,40,,Pagination
 654,Site logo background color,876,,sitelogo_bgcolor,simple,,tiki_p_admin,,,
 656,Site logo alignment,876,,sitelogo_align,alignment,,tiki_p_admin,44,,
@@ -640,7 +634,6 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 719,wiki_feature_3d,141,experimental,wiki_feature_3d,flag,,tiki_p_admin,,,
 720,wiki_3d_feed_animation_interval,133,,wiki_3d_feed_animation_interval,simple,,tiki_p_admin,,,Wiki+3D
 721,wiki_3d_missing_page_color,133,,wiki_3d_missing_page_color,simple,,tiki_p_admin,,,Wiki+3D
-722,wiki_3d_feed_animation_interval,133,,wiki_3d_feed_animation_interval,simple,,tiki_p_admin,,,Wiki+3D
 723,wiki_3d_friction_constant,133,,wiki_3d_friction_constant,simple,,tiki_p_admin,,,Wiki+3D
 724,wiki_3d_camera_distance,133,,wiki_3d_camera_distance,simple,,tiki_p_admin,,,Wiki+3D
 725,wiki_3d_node_charge,133,,wiki_3d_node_charge,simple,,tiki_p_admin,,,Wiki+3D
