@@ -20,11 +20,6 @@ if($prefs['feature_wiki'] != 'y') {
     die;  
 }
 
-if($prefs['feature_wiki_structure'] != 'y') {
-    $smarty->assign('msg', tra('This feature is disabled').': feature_wiki_structure');
-    $smarty->display('error.tpl');
-    die;  
-}
 
 function parse_st($dump) {
 	$bodysep  = '>>>>>>>>>>>>>>>>>>>>>>>>';
