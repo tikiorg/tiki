@@ -566,8 +566,8 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 644,feature_sitedesc,3,,feature_sitedesc,byref,,tiki_p_admin,21,,
 645,feature_sitemenu,3,,feature_sitemenu,flag,,tiki_p_admin,25,,
 646,Site logo background style,876,,sitelogo_bgstyle,simple,,tiki_p_admin,,,
-647,feature_breadcrumbs,3,,feature_breadcrumbs,flag,,tiki_p_admin,10,,
-648,feature_view_tpl,3,,feature_view_tpl,flag,,tiki_p_admin,36,,
+647,feature_breadcrumbs,3,experimental,feature_breadcrumbs,flag,,tiki_p_admin,10,,
+648,feature_view_tpl,3,risky,feature_view_tpl,flag,,tiki_p_admin,36,,
 649,feature_topbar_version,3,,feature_topbar_version,flag,,tiki_p_admin,35,,
 650,Publish,875,,sitemycode_publish,flag,,tiki_p_admin,,,
 651,feature_top_bar,3,,feature_top_bar,flag,,tiki_p_admin,30,,
@@ -745,7 +745,7 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 824,Wiki Home Page,46,,wikiHomePage ,simple,,tiki_p_admin_wiki,,,Navigation
 825,Name length,144,,wiki_list_name_len,int,,tiki_p_admin_wiki,40,,Wiki
 826,Description length,144,,wiki_list_description_len,int,,tiki_p_admin_wiki,40,,Wiki
-827,,144,,wiki_list_sortdirection,special,,tiki_p_admin_wiki,51,,Wiki
+827,Ascending/Descending,144,,wiki_list_sortdirection,special,,tiki_p_admin_wiki,51,,Wiki
 828,Hits,144,,wiki_list_hits,flag,,tiki_p_admin_wiki,40,,Wiki
 829,User,144,,wiki_list_user,flag,,tiki_p_admin_wiki,40,,Wiki
 830,Comment length,144,,wiki_list_comment_len,int,,tiki_p_admin_wiki,40,,Wiki
