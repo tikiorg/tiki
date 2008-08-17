@@ -13,9 +13,9 @@ $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 if (isset($_SERVER["SERVER_PORT"])) {
 	if (($_SERVER['SERVER_PORT'] != 80) && ($_SERVER['SERVER_PORT'] != 443)) {
 		if (( isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on' )) {
-			$prefs['https_port'] = (int) $_SERVER['SERVER_PORT'];		
+			$prefs['https_port'] = (int) $_SERVER['SERVER_PORT'];
 		} else {
-			$prefs['http_port'] = (int) $_SERVER['SERVER_PORT'];		
+			$prefs['http_port'] = (int) $_SERVER['SERVER_PORT'];
 		}
 	}
 }
@@ -29,7 +29,7 @@ if ( $prefs['http_port'] == 80 ) $prefs['http_port'] = '';
 // 'force_nocheck' option is used to set all absolute URI to https, but without checking if we are in https
 //    This is useful in certain cases.
 //    For example, this allow to have full HTTPS when using an entrance proxy that will use HTTPS connection with the client browser, but use an HTTP only connection to the server that hosts tikiwiki.
-// 
+//
 $https_mode = false;
 if ( ( isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on' )
 	|| ( $prefs['https_port'] == '' && $_SERVER['SERVER_PORT'] == 443 )
@@ -38,7 +38,7 @@ if ( ( isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on' )
 ) $https_mode = true;
 
 $url_scheme = $https_mode ? 'https' : 'http';
-$url_host = (isset($_SERVER['SERVER_NAME'])) ? $_SERVER['SERVER_NAME']  : $_SERVER['HTTP_HOST'];
+$url_host = (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST']  : $_SERVER['SERVER_NAME'];
 $url_port = $https_mode ? $prefs['https_port'] : $prefs['http_port'];
 $url_path = $tikiroot;
 $base_host = $url_scheme.'://'.$url_host.(($url_port!='')?':'.$url_port:'');
