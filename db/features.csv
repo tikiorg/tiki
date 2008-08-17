@@ -350,8 +350,8 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 427,Fields display order,48,,display_field_order,byref,,tiki_p_admin,,,, 
 428,Default timezone,48,,server_timezone,timezone,,tiki_p_admin,,,Time+and+Date, 
 429,site_closed_msg,1,,site_closed_msg,simple,,tiki_p_admin,,,, 
-430,Use URI as Home Page,46,,useUrlIndex,flag,,tiki_p_admin,,,, 
-431,proxy_host,1,,proxy_host,simple,,tiki_p_admin,,,, 
+430,Use URI as Home Page,78,,useUrlIndex,flag,,tiki_p_admin,,,, 
+431,proxy_host,4,,proxy_host,simple,,tiki_p_admin,,,, 
 432,Long date format,48,,long_date_format,byref,,tiki_p_admin,,,Time+and+Date, 
 433,Short date format,48,,short_date_format,byref,,tiki_p_admin,,,Time+and+Date, 
 434,siteTitle,1,,siteTitle,byref,,tiki_p_admin,,,, 
@@ -364,13 +364,13 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 441,visible to admin only,67,,error_reporting_adminonly,flag,,tiki_p_admin,,,, 
 442,OS,4,,system_os,simple,,tiki_p_admin,10,,, 
 443,Use gzipped output,4,,feature_obzip,flag,,tiki_p_admin,5,,, 
-444,use_proxy,1,,use_proxy,flag,,tiki_p_admin,,,, 
+444,use_proxy,4,,use_proxy,flag,,tiki_p_admin,,,, 
 445,maxRecords,902,,maxRecords,simple,,tiki_p_admin,,,Pagination, 
 446,count_admin_pvs,1,,count_admin_pvs,flag,,tiki_p_admin,,,, 
 447,cachepages,1,,cachepages,flag,,tiki_p_admin,,,, 
 448,session_lifetime,859,,session_lifetime,simple,,tiki_p_admin,,,, 
-449,proxy_port,1,,proxy_port,simple,,tiki_p_admin,,,, 
-450,use_load_threshold,1,,use_load_threshold,flag,,tiki_p_admin,,,, 
+449,proxy_port,4,,proxy_port,simple,,tiki_p_admin,,,, 
+450,use_load_threshold,4,,use_load_threshold,flag,,tiki_p_admin,,,, 
 451,user_show_realnames,1,,user_show_realnames,flag,,tiki_p_admin,,,, 
 452,log_sql,67,,log_sql,flag,,tiki_p_admin,,,, 
 453,Locations separator,912,,site_crumb_seper,simple,,tiki_p_admin,20,,, 
@@ -388,7 +388,7 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 465,smarty notice reporting,67,,smarty_notice_reporting,flag,,tiki_p_admin,,,, 
 466,display_timezone,48,,display_timezone,timezone,,tiki_p_admin,,,Time+and+Date,Not sure how/where this is used
 467,mail_crlf,1,,mail_crlf,simple,,tiki_p_admin,,,, 
-468,log_mail,1,,log_mail,flag,,tiki_p_admin,,,, 
+468,log_mail,4,,log_mail,flag,,tiki_p_admin,,,, 
 469,site_closed,1,,site_closed,flag,,tiki_p_admin,,,, 
 470,Long time format,48,,long_time_format,byref,,tiki_p_admin,,,Time+and+Date, 
 471,urlIndex,911,,urlIndex,simple,,tiki_p_admin,,,, 
@@ -693,7 +693,7 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 779,Use external link,141,,feature_wiki_ext_icon,flag,,tiki_p_admin,,,, 
 780,Open page as structure,899,,feature_wiki_open_as_structure,flag,,tiki_p_admin,2,,Structure, 
 781,Automonospaced text,141,,feature_wiki_monosp,flag,,tiki_p_admin,,,Wiki,Text area too
-782,"When viewing a page, if it doesn't exist and has one like page, automatic redirection to this like page",141,,feature_wiki_1like_redirection,flag,,tiki_p_admin,,,Navigation, 
+782,"When viewing a page, if it doesn't exist and has one like page, automatic redirection to this like page",911,,feature_wiki_1like_redirection,flag,,tiki_p_admin,,,Navigation, 
 783,List pages,141,,feature_listPages,flag,,tiki_p_admin,,,Wiki, 
 784,Users can lock pages (if perm),141,,feature_wiki_usrlock,flag,,tiki_p_admin,,,, 
 785,Page creators are admin of their pages,141,,wiki_creator_admin,flag,,tiki_p_admin,,,, 
@@ -806,88 +806,88 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 907,Wiki structures,899,,feature_wiki_structure,flag,,tiki_p_admin,1,,, 
 908,Multilingual structures,899,,feature_multilingual_structures,flag,,tiki_p_admin,20,feature_multilingual,, 
 910,Site Search Bar,70,,feature_sitesearch,feature,,tiki_p_admin,,,, 
-911,Navigation,3,,,configurationgroup,,tiki_p_admin,,,,
-912,Breadcrumbs,911,,,configurationgroup,,tiki_p_admin,,,,
-913,Plugins,2,,,container,,tiki_p_admin,15
-914,User-Agent Info,913,,wikiplugin_agentinfo,flag,,tiki_p_admin
-915,Anchor Link,913,,wikiplugin_alink,flag,,tiki_p_admin
-916,Anchor Name,913,,wikiplugin_aname,flag,,tiki_p_admin
-917,Image Annotation,913,,wikiplugin_annotation,flag,,tiki_p_admin
-918,Article,913,,wikiplugin_article,flag,,tiki_p_admin
-919,Article List,913,,wikiplugin_articles,flag,,tiki_p_admin
-920,Attachment,913,,wikiplugin_attach,flag,,tiki_p_admin
-921,Avatar,913,,wikiplugin_avatar,flag,,tiki_p_admin
-922,Backlinks,913,,wikiplugin_backlinks,flag,,tiki_p_admin
-923,Blog List,913,,wikiplugin_bloglist,flag,,tiki_p_admin
-924,Box,913,,wikiplugin_box,flag,,tiki_p_admin
-925,Category,913,,wikiplugin_category,flag,,tiki_p_admin
-926,Category Orphans,913,,wikiplugin_catorphans,flag,,tiki_p_admin
-927,Category Path,913,,wikiplugin_catpath,flag,,tiki_p_admin
-928,Center,913,,wikiplugin_center,flag,,tiki_p_admin
-929,Chart,913,,wikiplugin_chart,flag,,tiki_p_admin
-930,Code,913,,wikiplugin_code,flag,,tiki_p_admin
-931,Copyright,913,,wikiplugin_copyright,flag,,tiki_p_admin
-932,Countdown,913,,wikiplugin_countdown,flag,,tiki_p_admin
-933,Div,913,,wikiplugin_div,flag,,tiki_p_admin
-934,Definition List,913,,wikiplugin_dl,flag,,tiki_p_admin
-935,Equation,913,,wikiplugin_equation,flag,,tiki_p_admin
-936,Events,913,,wikiplugin_events,flag,,tiki_p_admin
-937,Example,913,,wikiplugin_example,flag,,tiki_p_admin
-938,Fancy Table,913,,wikiplugin_fancytable,flag,,tiki_p_admin
-939,Flash video,913,,wikiplugin_flash,flag,,tiki_p_admin
-940,Gauge,913,,wikiplugin_gauge,flag,,tiki_p_admin
-941,Group,913,,wikiplugin_group,flag,,tiki_p_admin
-942,Include,913,,wikiplugin_include,flag,,tiki_p_admin
-943,Jabber,913,,wikiplugin_jabber,flag,,tiki_p_admin
-944,Language,913,,wikiplugin_lang,flag,,tiki_p_admin
-945,Last Modification,913,,wikiplugin_lastmod,flag,,tiki_p_admin
-946,List Pages,913,,wikiplugin_listpages,flag,,tiki_p_admin
-947,List Directory,913,,wikiplugin_lsdir,flag,,tiki_p_admin
-948,Map,913,,wikiplugin_map,flag,,tiki_p_admin
-949,Mini Quiz,913,,wikiplugin_miniquiz,flag,,tiki_p_admin
-950,Insert Module,913,,wikiplugin_module,flag,,tiki_p_admin
-951,Monospace,913,,wikiplugin_mono,flag,,tiki_p_admin
-952,Mouse Over,913,,wikiplugin_mouseover,flag,,tiki_p_admin
-953,MySpace,913,,wikiplugin_myspace,flag,,tiki_p_admin
-954,Object Hits,913,,wikiplugin_objecthits,flag,,tiki_p_admin
-955,Plugin Manager,913,,wikiplugin_pluginmanager,flag,,tiki_p_admin
-956,Poll,913,,wikiplugin_poll,flag,,tiki_p_admin
-957,Proposal,913,,wikiplugin_proposal,flag,,tiki_p_admin
-958,Quote,913,,wikiplugin_quote,flag,,tiki_p_admin
-959,Regular Expression,913,,wikiplugin_regex,flag,,tiki_p_admin
-960,Remarks Box,913,,wikiplugin_remarksbox,flag,,tiki_p_admin
-961,RSS Feed,913,,wikiplugin_rss,flag,,tiki_p_admin
-962,SourceForge,913,,wikiplugin_sf,flag,,tiki_p_admin
-963,Sheet,913,,wikiplugin_sheet,flag,,tiki_p_admin
-964,Show Pages,913,,wikiplugin_showpages,flag,,tiki_p_admin
-965,Skype,913,,wikiplugin_skype,flag,,tiki_p_admin
-966,Snarf,913,,wikiplugin_snarf,flag,,tiki_p_admin
-967,Sort,913,,wikiplugin_sort,flag,,tiki_p_admin
-968,Split,913,,wikiplugin_split,flag,,tiki_p_admin
-969,SQL,913,,wikiplugin_sql,flag,,tiki_p_admin
-970,Subscript,913,,wikiplugin_sub,flag,,tiki_p_admin
-971,Subscribe Group,913,,wikiplugin_subscribegroup,flag,,tiki_p_admin
-972,Subscribe Groups,913,,wikiplugin_subscribegroups,flag,,tiki_p_admin
-973,Superscript,913,,wikiplugin_sup,flag,,tiki_p_admin
-974,Tag,913,,wikiplugin_tag,flag,,tiki_p_admin
-975,Thumbnail,913,,wikiplugin_thumb,flag,,tiki_p_admin
-976,Title Search,913,,wikiplugin_titlesearch,flag,,tiki_p_admin
-977,Top Friends,913,,wikiplugin_topfriends,flag,,tiki_p_admin
-978,Translate,913,,wikiplugin_tr,flag,,tiki_p_admin
-979,Tracker,913,,wikiplugin_tracker,flag,,tiki_p_admin
-980,Tracker Filter,913,,wikiplugin_trackerfilter,flag,,tiki_p_admin
-981,Tracker Item Field,913,,wikiplugin_trackeritemfield,flag,,tiki_p_admin
-982,Tracker List,913,,wikiplugin_trackerlist,flag,,tiki_p_admin
-983,Tracker Prefill,913,,wikiplugin_trackerprefill,flag,,tiki_p_admin
-984,Tracker Stats,913,,wikiplugin_trackerstat,flag,,tiki_p_admin
-985,Translated,913,,wikiplugin_translated,flag,,tiki_p_admin
-986,User Count,913,,wikiplugin_usercount,flag,,tiki_p_admin
-987,User List,913,,wikiplugin_userlist,flag,,tiki_p_admin
-988,Versions,913,,wikiplugin_versions,flag,,tiki_p_admin
-989,Vote,913,,wikiplugin_vote,flag,,tiki_p_admin
-990,Wanted Pages,913,,wikiplugin_wantedpages,flag,,tiki_p_admin
-991,Youtube,913,,wikiplugin_youtube,flag,,tiki_p_admin
-992,Allow Anonymous Poll Voting,55,,feature_poll_anonymous,flag,,tiki_p_admin,,,Poll,
-993,Comments,55,,feature_poll_comments,flag,,tiki_p_admin,,,Poll,
-994,Default number of comments per page,55,,poll_comments_per_page,simple,,tiki_p_admin,,,Poll,
-995,Comments default ordering,55,,poll_comments_default_ordering,special,,tiki_p_admin,,,Poll,
+911,Navigation,3,,,configurationgroup,,tiki_p_admin,,,, 
+912,Breadcrumbs,911,,,configurationgroup,,tiki_p_admin,,,, 
+913,Plugins,2,,,container,,tiki_p_admin,15,,, 
+914,User-Agent Info,913,,wikiplugin_agentinfo,flag,,tiki_p_admin,,,, 
+915,Anchor Link,913,,wikiplugin_alink,flag,,tiki_p_admin,,,, 
+916,Anchor Name,913,,wikiplugin_aname,flag,,tiki_p_admin,,,, 
+917,Image Annotation,913,,wikiplugin_annotation,flag,,tiki_p_admin,,,, 
+918,Article,913,,wikiplugin_article,flag,,tiki_p_admin,,,, 
+919,Article List,913,,wikiplugin_articles,flag,,tiki_p_admin,,,, 
+920,Attachment,913,,wikiplugin_attach,flag,,tiki_p_admin,,,, 
+921,Avatar,913,,wikiplugin_avatar,flag,,tiki_p_admin,,,, 
+922,Backlinks,913,,wikiplugin_backlinks,flag,,tiki_p_admin,,,, 
+923,Blog List,913,,wikiplugin_bloglist,flag,,tiki_p_admin,,,, 
+924,Box,913,,wikiplugin_box,flag,,tiki_p_admin,,,, 
+925,Category,913,,wikiplugin_category,flag,,tiki_p_admin,,,, 
+926,Category Orphans,913,,wikiplugin_catorphans,flag,,tiki_p_admin,,,, 
+927,Category Path,913,,wikiplugin_catpath,flag,,tiki_p_admin,,,, 
+928,Center,913,,wikiplugin_center,flag,,tiki_p_admin,,,, 
+929,Chart,913,,wikiplugin_chart,flag,,tiki_p_admin,,,, 
+930,Code,913,,wikiplugin_code,flag,,tiki_p_admin,,,, 
+931,Copyright,913,,wikiplugin_copyright,flag,,tiki_p_admin,,,, 
+932,Countdown,913,,wikiplugin_countdown,flag,,tiki_p_admin,,,, 
+933,Div,913,,wikiplugin_div,flag,,tiki_p_admin,,,, 
+934,Definition List,913,,wikiplugin_dl,flag,,tiki_p_admin,,,, 
+935,Equation,913,,wikiplugin_equation,flag,,tiki_p_admin,,,, 
+936,Events,913,,wikiplugin_events,flag,,tiki_p_admin,,,, 
+937,Example,913,,wikiplugin_example,flag,,tiki_p_admin,,,, 
+938,Fancy Table,913,,wikiplugin_fancytable,flag,,tiki_p_admin,,,, 
+939,Flash video,913,,wikiplugin_flash,flag,,tiki_p_admin,,,, 
+940,Gauge,913,,wikiplugin_gauge,flag,,tiki_p_admin,,,, 
+941,Group,913,,wikiplugin_group,flag,,tiki_p_admin,,,, 
+942,Include,913,,wikiplugin_include,flag,,tiki_p_admin,,,, 
+943,Jabber,913,,wikiplugin_jabber,flag,,tiki_p_admin,,,, 
+944,Language,913,,wikiplugin_lang,flag,,tiki_p_admin,,,, 
+945,Last Modification,913,,wikiplugin_lastmod,flag,,tiki_p_admin,,,, 
+946,List Pages,913,,wikiplugin_listpages,flag,,tiki_p_admin,,,, 
+947,List Directory,913,,wikiplugin_lsdir,flag,,tiki_p_admin,,,, 
+948,Map,913,,wikiplugin_map,flag,,tiki_p_admin,,,, 
+949,Mini Quiz,913,,wikiplugin_miniquiz,flag,,tiki_p_admin,,,, 
+950,Insert Module,913,,wikiplugin_module,flag,,tiki_p_admin,,,, 
+951,Monospace,913,,wikiplugin_mono,flag,,tiki_p_admin,,,, 
+952,Mouse Over,913,,wikiplugin_mouseover,flag,,tiki_p_admin,,,, 
+953,MySpace,913,,wikiplugin_myspace,flag,,tiki_p_admin,,,, 
+954,Object Hits,913,,wikiplugin_objecthits,flag,,tiki_p_admin,,,, 
+955,Plugin Manager,913,,wikiplugin_pluginmanager,flag,,tiki_p_admin,,,, 
+956,Poll,913,,wikiplugin_poll,flag,,tiki_p_admin,,,, 
+957,Proposal,913,,wikiplugin_proposal,flag,,tiki_p_admin,,,, 
+958,Quote,913,,wikiplugin_quote,flag,,tiki_p_admin,,,, 
+959,Regular Expression,913,,wikiplugin_regex,flag,,tiki_p_admin,,,, 
+960,Remarks Box,913,,wikiplugin_remarksbox,flag,,tiki_p_admin,,,, 
+961,RSS Feed,913,,wikiplugin_rss,flag,,tiki_p_admin,,,, 
+962,SourceForge,913,,wikiplugin_sf,flag,,tiki_p_admin,,,, 
+963,Sheet,913,,wikiplugin_sheet,flag,,tiki_p_admin,,,, 
+964,Show Pages,913,,wikiplugin_showpages,flag,,tiki_p_admin,,,, 
+965,Skype,913,,wikiplugin_skype,flag,,tiki_p_admin,,,, 
+966,Snarf,913,,wikiplugin_snarf,flag,,tiki_p_admin,,,, 
+967,Sort,913,,wikiplugin_sort,flag,,tiki_p_admin,,,, 
+968,Split,913,,wikiplugin_split,flag,,tiki_p_admin,,,, 
+969,SQL,913,,wikiplugin_sql,flag,,tiki_p_admin,,,, 
+970,Subscript,913,,wikiplugin_sub,flag,,tiki_p_admin,,,, 
+971,Subscribe Group,913,,wikiplugin_subscribegroup,flag,,tiki_p_admin,,,, 
+972,Subscribe Groups,913,,wikiplugin_subscribegroups,flag,,tiki_p_admin,,,, 
+973,Superscript,913,,wikiplugin_sup,flag,,tiki_p_admin,,,, 
+974,Tag,913,,wikiplugin_tag,flag,,tiki_p_admin,,,, 
+975,Thumbnail,913,,wikiplugin_thumb,flag,,tiki_p_admin,,,, 
+976,Title Search,913,,wikiplugin_titlesearch,flag,,tiki_p_admin,,,, 
+977,Top Friends,913,,wikiplugin_topfriends,flag,,tiki_p_admin,,,, 
+978,Translate,913,,wikiplugin_tr,flag,,tiki_p_admin,,,, 
+979,Tracker,913,,wikiplugin_tracker,flag,,tiki_p_admin,,,, 
+980,Tracker Filter,913,,wikiplugin_trackerfilter,flag,,tiki_p_admin,,,, 
+981,Tracker Item Field,913,,wikiplugin_trackeritemfield,flag,,tiki_p_admin,,,, 
+982,Tracker List,913,,wikiplugin_trackerlist,flag,,tiki_p_admin,,,, 
+983,Tracker Prefill,913,,wikiplugin_trackerprefill,flag,,tiki_p_admin,,,, 
+984,Tracker Stats,913,,wikiplugin_trackerstat,flag,,tiki_p_admin,,,, 
+985,Translated,913,,wikiplugin_translated,flag,,tiki_p_admin,,,, 
+986,User Count,913,,wikiplugin_usercount,flag,,tiki_p_admin,,,, 
+987,User List,913,,wikiplugin_userlist,flag,,tiki_p_admin,,,, 
+988,Versions,913,,wikiplugin_versions,flag,,tiki_p_admin,,,, 
+989,Vote,913,,wikiplugin_vote,flag,,tiki_p_admin,,,, 
+990,Wanted Pages,913,,wikiplugin_wantedpages,flag,,tiki_p_admin,,,, 
+991,Youtube,913,,wikiplugin_youtube,flag,,tiki_p_admin,,,, 
+992,Allow Anonymous Poll Voting,55,,feature_poll_anonymous,flag,,tiki_p_admin,,,Poll, 
+993,Comments,55,,feature_poll_comments,flag,,tiki_p_admin,,,Poll, 
+994,Default number of comments per page,55,,poll_comments_per_page,simple,,tiki_p_admin,,,Poll, 
+995,Comments default ordering,55,,poll_comments_default_ordering,special,,tiki_p_admin,,,Poll, 
