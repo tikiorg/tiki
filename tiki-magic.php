@@ -110,59 +110,58 @@ ask_ticket('tiki_magic');
 $smarty->assign_by_ref('containers', $containers);
 $smarty->assign('features', $pagefeatures);
 
-// lazy load categories when they are needed.
-if ($hasCategories) {
-	include_once ('lib/categories/categlib.php');
-	$catree = $categlib->get_all_categories();
-	$smarty->assign('catree', $catree);
-}
-if ($hasLanguages) {
-	$languages = array();
-	$languages = $tikilib->list_languages(false,null,true);
-	$smarty->assign_by_ref("languages", $languages);
-}
-if ($hasTimezones) {
-	$smarty->assign_by_ref("timezones", TikiDate::getTimeZoneList());
-}
-
-foreach($enumerations as $key=>$value) {
-	$smarty->assign($key, $value);
+// lazy load the values which should be lazy loaded.
+foreach($lazyFields as $field=>$value) {
+	switch ($field) {
+		case 'category':
+			include_once ('lib/categories/categlib.php');
+			$catree = $categlib->get_all_categories();
+			$smarty->assign('catree', $catree);
+			break;
+		case 'language':
+			$languages = array();
+			$languages = $tikilib->list_languages(false,null,true);
+			$smarty->assign_by_ref("languages", $languages);
+			break;
+		case 'timezone':
+			$smarty->assign_by_ref("timezones", TikiDate::getTimeZoneList());
+			break;
+	}
 }
 
 // Display the template
-
 $smarty->assign('mid', 'tiki-magic.tpl');
 $smarty->display("tiki.tpl");
 
+$lazyFields = array();
 // Recursively get the features underneath the specified feature id.
 function get_features($featureid) {
-	global $magiclib, $pagefeatures, $containers, $enumerations, $hasCategories, $hasLanguages, $hasTimezones;
+	global $magiclib, $tikilib, $pagefeatures, $containers, $enumerations, $lazyFields;
 	$features = $magiclib->get_child_features($featureid);
 	$cont = array();
 
 	if ($features) {
 		foreach($features as $feature) {
+			// Shuffled this up to avoid doing the set of checks / setting of the enumeration in two places.
+			if ($feature['feature_type'] == 'limitcategory' || $feature['feature_type'] == 'selectcategory') $lazyFields['category'] = true;
+			if ($feature['feature_type'] == 'languages')  $lazyFields['languages'] = true;
+			if ($feature['feature_type'] == 'timezone')  $lazyFields['timezone'] = true;
+			// add these to the enumeration, as they will only occur once; and this allows no template changes.
+			if ($feature['feature_type'] == 'sitestyle') $enumerations['sitestyle'] = $tikilib->list_styles(); 
+			if ($feature['feature_type'] == 'slideshowstyle') $enumerations['slideshowstyle'] = get_slideshowstyles();
+
+			if (array_key_exists($feature['feature_type'], $enumerations)) {
+				$feature['enumeration'] = $enumerations[$feature['feature_type']];
+			}
+
 			if ($magiclib->is_container($feature)) {
 				$cont[] = $feature;
 				continue;
 			}
-			if ($feature['feature_type'] == 'limitcategory' || $feature['feature_type'] == 'selectcategory') $hasCategories = true;
-			if ($feature['feature_type'] == 'languages') $hasLanguages = true;
-			if ($feature['feature_type'] == 'timezone') $hasTimezones = true;
-
-			if (array_key_exists($feature['feature_type'], $enumerations)) {
-				$feature['enumeration'] = $enumerations[$feature['feature_type']];
-			}
+			
 			$pagefeatures[] = $feature;
 		}
 		foreach($cont as $feature) {
-			if ($feature['feature_type'] == 'limitcategory' || $feature['feature_type'] == 'selectcategory') $hasCategories = true;
-			if ($feature['feature_type'] == 'languages') $hasLanguages = true;
-			if ($feature['feature_type'] == 'timezone') $hasTimezones = true;
-
-			if (array_key_exists($feature['feature_type'], $enumerations)) {
-				$feature['enumeration'] = $enumerations[$feature['feature_type']];
-			}
 			$containers[] = $feature;
 			$pagefeatures[] = $feature;
 			get_features($feature['feature_id'], '');
@@ -223,5 +222,18 @@ function simple_set_int($feature) {
 function byref_set_value($feature, $pref = "") {
 	global $_POST, $tikilib;
 	simple_set_value($feature, $pref);
+}
+
+function get_slideshowstyles() {
+	$slide_styles = array();
+	$h = opendir("styles/slideshows");
+	while ($file = readdir($h)) {
+		if (strstr($file, "css")) {
+			$slide_styles[] = $file;
+		}
+	}
+	closedir ($h);
+			
+	return $slide_styles;
 }
 ?>
