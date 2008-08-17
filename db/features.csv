@@ -806,3 +806,4 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 900,Wiki watches,7,,,configurationgroup,,tiki_p_admin,,,Watch
 901,Wiki page discussions (in forums),7,,,configurationgroup,,tiki_p_admin,,,Wiki
 902,Pagination,3,,,configurationgroup,,tiki_p_admin,,,
+903,Load postprocessor,115,,,system,tiki-feature-load-postprocessor,tiki_p_admin,,,
