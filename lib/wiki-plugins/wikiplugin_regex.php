@@ -13,7 +13,7 @@ return tra("Takes regex expressions and parses the content between the REGEX tag
 <br />~np~{REGEX(search=>(WikiPageWithRegexCommands)}".tra("data")."{REGEX}~/np~ - ''".tra("one data per line")."''";
 }
 
-function wikiplugin_regexp_info() {
+function wikiplugin_regex_info() {
 	return array(
 		'name' => tra('Regular Expression'),
 		'description' => tra('Takes regex expressions and parses the content between REGEX tags and replaces the text.'),
