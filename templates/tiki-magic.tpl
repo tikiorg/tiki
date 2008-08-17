@@ -96,6 +96,6 @@ values. -->
 {if $features[feature].depends_on neq 0}{tr}This depends on {/tr}{tr}{$features[feature].depends_on.feature_name}{/tr} ({if $features[feature].depends_on.value eq 'y'}{tr}Enabled{/tr}{else}{tr}Not Enabled{/tr}{/if}){/if}
 {/section}
 </fieldset>
-<input type="submit" name="submit" />
+<input type="submit" name="submit" value="{tr}Save{/tr}" />
 </form>
 </div>
