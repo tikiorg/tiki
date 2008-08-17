@@ -407,7 +407,7 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 485,feature_detect_language,76,,feature_detect_language,flag,,tiki_p_admin,5,,
 486,feature_babelfish_logo,76,,feature_babelfish_logo,flag,,tiki_p_admin,40,,
 487,lang_use_db,76,,lang_use_db,flag,,tiki_p_admin,10,,
-488,feature_multilingual_structures,76,,feature_multilingual_structures,flag,,tiki_p_admin,15,,
+488,Multilingual structures,76,,feature_multilingual_structures,flag,,tiki_p_admin,15,feature_wiki_structure,
 489,feature_intertiki_imported_groups,103,,feature_intertiki_imported_groups,simple,,tiki_p_admin,,,
 490,tiki_key,103,,tiki_key,simple,,tiki_p_admin,,,
 491,feature_intertiki_import_groups,103,,feature_intertiki_import_groups,flag,,tiki_p_admin,,,
@@ -798,9 +798,10 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 899,Wiki structures,7,,,configurationgroup,,tiki_p_admin,,,Structures,
 900,Wiki watches,7,,,configurationgroup,,tiki_p_admin,,,Watch,
 901,Wiki page discussions (in forums),7,,,configurationgroup,,tiki_p_admin,,,Wiki,
-902,Pagination,3,,,configurationgroup,,tiki_p_admin
-903,Load postprocessor,115,,,system,tiki-feature-load-postprocessor,tiki_p_admin
-904,groupTracker,11,,groupTracker,flag,,tiki_p_admin
-905,groupTracker,11,,userTracker,flag,,tiki_p_admin
-906,user_tracker_infos,11,,user_tracker_infos,flag,,tiki_p_admin
-907,Enabled,899,,feature_wiki_structure,flag,tiki_p_admin,1
+902,Pagination,3,,,configurationgroup,,tiki_p_admin,,
+903,Load postprocessor,115,,,system,tiki-feature-load-postprocessor,tiki_p_admin,,
+904,groupTracker,11,,groupTracker,flag,,tiki_p_admin,,
+905,groupTracker,11,,userTracker,flag,,tiki_p_admin,,
+906,user_tracker_infos,11,,user_tracker_infos,flag,,tiki_p_admin,,
+907,Enabled,899,,feature_wiki_structure,flag,tiki_p_admin,1,,
+908,Multilingual structures,899,,feature_multilingual_structures,flag,,tiki_p_admin,20,feature_multilingual
