@@ -10,7 +10,7 @@
 	<div class="configSetting"><label for="{$features[feature].setting_name}" class="formLabel">{tr}Enabled{/tr}</label><input type="checkbox" name="{$features[feature].setting_name}" id="{$features[feature].setting_name}" value="on"{if $features[feature].value eq 'y'} checked="checked"{/if} />{if $features[feature].status eq 'experimental'}<em>{tr}This is an experimental feature{/tr}</em>{/if}
 {if $features[feature].template neq ''}<a href="{$features[feature].template}.php">{tr}Go{/tr}!</a>{/if}
 {* Check to see if system help is on;  and use that base URL. *}	
-{if $features[feature].keyword neq ''} <a href="http://doc.tikiwiki.org/{$features[feature].keyword}">{tr}Help{/tr}</a>{/if}
+{if $features[feature].keyword neq ''} <a href="http://doc.tikiwiki.org/{$features[feature].keyword}">{tr}Help{/tr}</a>{/if}</div>
 	</div>
 {* Show a heading with a dividing line for things that are containers  *}
 {elseif $features[feature].feature_type eq 'container' || $features[feature].feature_type eq 'configurationgroup' || $features[feature].feature_type eq 'system'}
@@ -69,7 +69,7 @@
 			{/section}
 		</select>
 	{elseif $features[feature].feature_type eq 'special'}
-		This setting requires a special input handler.</div>
+		This setting requires a special input handler.
 	{* Just a reminder for anything else that I might have forgotten *}
 	{else}
 		This is a {$features[feature].feature_type}, and I haven't done anything with it yet.
@@ -79,7 +79,6 @@
 <!-- SEXYTODO: Allow checking the box for this.  Right here.  Where it's needed.  p.s. remember to save the value too.  p.p.s. that will involve looking at the depends in addition to each of the features on the page. p.p.p.s sometimes the depended upon setting will be on the same page, so look out for contradictory
 values. -->
 {if $features[feature].depends_on neq 0}{tr}This depends on {/tr}{tr}{$features[feature].depends_on.feature_name}{/tr} ({if $features[feature].depends_on.value eq 'y'}{tr}Enabled{/tr}{else}{tr}Not Enabled{/tr}{/if}){/if}
-{if $features[feature].feature_type eq 'feature'}</div>{/if}
 {/section}
 <input type="submit" name="submit" />
 </form>
