@@ -14,10 +14,10 @@
 {if $features[feature].template neq ''}<a href="{$features[feature].template}.php">{tr}Go{/tr}!</a>{/if}
 {* Check to see if system help is on;  and use that base URL. *}	
 {if $features[feature].keyword neq ''} <a href="http://doc.tikiwiki.org/{$features[feature].keyword}">{tr}Help{/tr}</a>{/if}
+	</div>
+	</div>
 {* Show a heading with a dividing line for things that are containers  *}
-	</div>
-	</div>
-{elseif $features[feature].feature_type eq 'container' || $features[feature].feature_type eq 'configurationgroup' || $features[feature].feature_type eq 'system'}
+{elseif ($features[feature].feature_type eq 'container' || $features[feature].feature_type eq 'configurationgroup' || $features[feature].feature_type eq 'system') and ($features[feature].feature_count > 0)}
 	<hr style="clear: both" />
 	<div class="configSetting"><a name="container{$features[feature].feature_id}"></a><h4 class="configSection">{tr}{$features[feature].feature_name}{/tr}<sub>({$features[feature].feature_id})</sub></h4>
 	</div>
