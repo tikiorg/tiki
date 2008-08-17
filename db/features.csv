@@ -362,8 +362,8 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 439,limitedGoGroupHome,1,,limitedGoGroupHome,flag,,tiki_p_admin,,,
 440,cacheimages,1,,cacheimages,flag,,tiki_p_admin,,,
 441,error_reporting_adminonly,67,,error_reporting_adminonly,flag,,tiki_p_admin,,,
-442,system_os,1,,system_os,simple,,tiki_p_admin,,,
-443,feature_obzip,1,,feature_obzip,flag,,tiki_p_admin,,,
+442,system_os,4,,system_os,simple,,tiki_p_admin,,,
+443,feature_obzip,4,,feature_obzip,flag,,tiki_p_admin,,,
 444,use_proxy,1,,use_proxy,flag,,tiki_p_admin,,,
 445,maxRecords,902,,maxRecords,simple,,tiki_p_admin,,,Pagination
 446,count_admin_pvs,1,,count_admin_pvs,flag,,tiki_p_admin
