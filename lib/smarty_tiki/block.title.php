@@ -39,8 +39,8 @@ function smarty_block_title($params, $content, &$smarty, $repeat)
           . smarty_function_icon(array('_id' => 'help') , $smarty)
           . "</a>\n";
   }
-  
-  if ( ($prefs['feature_view_tpl'] == 'y' &&  $tiki_p_view_templates) || ($prefs['feature_edit_templates'] == 'y' && $tiki_p_edit_templates ) ) {
+ 
+  if ( ($prefs['feature_view_tpl'] == 'y' &&  $tiki_p_view_templates == 'y') || ($prefs['feature_edit_templates'] == 'y' && $tiki_p_edit_templates == 'y' ) ) {
     $html .= '<a href="tiki-edit_templates.php?template=' . $smarty->_tpl_vars['mid'] . '" target="tikihelp" class="tikihelp" title="' . tra('View tpl:') . ' ' . $content . '">' 
           . smarty_function_icon(array('_id' => 'shape_square_edit', 'alt' => tra('Edit Template')), $smarty)
           . "</a>\n";
