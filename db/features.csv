@@ -22,7 +22,7 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 21,Maps,13,,feature_maps,feature,,tiki_p_admin,,,Maps
 22,Google Maps,13,,feature_gmap,feature,,tiki_p_admin,,,Gmaps
 23,Drawings,13,experimental,feature_drawings,feature,,tiki_p_admin,,,Drawing
-24,Morcego 3D Browser,13,experimental,feature_morcego,feature,,tiki_p_admin,,,Wiki+3D
+24,Morcego 3D Browser (Wiki 3D),13,experimental,feature_morcego,feature,,tiki_p_admin,,,Wiki+3D
 25,Categories,14,,feature_categories,feature,tiki-browse_categories,tiki_p_admin,,,Category
 26,Freetags,14,,feature_freetags,feature,tiki-browse_freetags,tiki_p_admin,,,Tags
 27,Copyright System,14,,feature_copyright,feature,,tiki_p_admin,,,Copyright
@@ -179,29 +179,29 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 180,feature_category_reinforce,25,,feature_category_reinforce,flag,,tiki_p_admin,,,Category,
 181,feature_categorypath,25,,feature_categorypath,flag,,tiki_p_admin,,,Category,
 182,feature_category_use_phplayers,25,,feature_category_use_phplayers,flag,,tiki_p_admin,,,Category,
-183,article_comments_per_page,122,,article_comments_per_page,simple,,tiki_p_admin,,,Articles,
-184,article_comments_default_ordering,122,,article_comments_default_ordering,commentordering,,tiki_p_admin,,,Articles,
-185,art_list_visible,123,,art_list_visible,flag,,tiki_p_admin,,,Articles,
-186,art_list_type,123,,art_list_type,flag,,tiki_p_admin,,,Articles,
-187,art_list_date,123,,art_list_date,flag,,tiki_p_admin,,,Articles,
-188,art_list_img,123,,art_list_img,flag,,tiki_p_admin,,,Articles,
-189,art_list_lang,123,,art_list_lang,flag,,tiki_p_admin,,,Articles,
-190,art_list_expire,123,,art_list_expire,flag,,tiki_p_admin,,,Articles,
+183,Default number of comments per page,122,,article_comments_per_page,simple,,tiki_p_admin,,,Articles,
+184,Comments default ordering,122,,article_comments_default_ordering,commentordering,,tiki_p_admin,,,Articles,
+185,Visible,123,,art_list_visible,flag,,tiki_p_admin,,,Articles,
+186,Type,123,,art_list_type,flag,,tiki_p_admin,,,Articles,
+187,Publish Date,123,,art_list_date,flag,,tiki_p_admin,,,Articles,
+188,Image,123,,art_list_img,flag,,tiki_p_admin,,,Articles,
+189,Language,123,,art_list_lang,flag,,tiki_p_admin,,,Articles,
+190,Expire Date,123,,art_list_expire,flag,,tiki_p_admin,,,Articles,
 191,art_list_reads,123,,art_list_reads,flag,,tiki_p_admin,,,Articles,
-192,art_list_title,123,,art_list_title,flag,,tiki_p_admin,,,Articles,
-193,art_list_title_len,123,,art_list_title_len,int,,tiki_p_admin,,,Articles,
-194,art_list_size,123,,art_list_size,flag,,tiki_p_admin,,,Articles
-195,art_list_author,123,,art_list_author,flag,,tiki_p_admin,,,Articles
-196,art_list_topic,123,,art_list_topic,flag,,tiki_p_admin,,,Articles
-197,cms_spellcheck,124,,cms_spellcheck,flag,,tiki_p_admin,,,Articles
+192,Title,123,,art_list_title,flag,,tiki_p_admin,,,Articles,
+193,Title length,123,,art_list_title_len,int,,tiki_p_admin,,,Articles,
+194,Size,123,,art_list_size,flag,,tiki_p_admin,,,Articles
+195,Author,123,,art_list_author,flag,,tiki_p_admin,,,Articles
+196,Topic,123,,art_list_topic,flag,,tiki_p_admin,,,Articles
+197,Spellchecking,124,,cms_spellcheck,flag,,tiki_p_admin,,,Articles
 198,feature_article_comments,124,,feature_article_comments,flag,,tiki_p_admin,,,Articles
-199,feature_cms_emails,124,,feature_cms_emails,flag,,tiki_p_admin,,,Articles
-200,feature_cms_rankings,124,,feature_cms_rankings,flag,,tiki_p_admin,,,Articles
-201,feature_cms_print,124,,feature_cms_print,flag,,tiki_p_admin,,,Articles
-202,feature_submissions,124,,feature_submissions,flag,,tiki_p_admin,,,Articles
-203,feature_cms_templates,124,,feature_cms_templates,flag,,tiki_p_admin,,,Articles
-204,maxArticles,124,,maxArticles,simple,,tiki_p_admin,,,Articles
-205,art_home_title,124,,art_home_title,simple,,tiki_p_admin,,,Articles
+199,Can specify notification emails when creating an article,124,,feature_cms_emails,flag,,tiki_p_admin,,,Articles
+200,Rankings,124,,feature_cms_rankings,flag,,tiki_p_admin,,,Articles
+201,Print article,124,,feature_cms_print,flag,,tiki_p_admin,,,Articles
+202,Submissions,124,,feature_submissions,flag,,tiki_p_admin,,,Articles
+203,Use templates,124,,feature_cms_templates,flag,,tiki_p_admin,,,Articles
+204,Maximum number of articles in home,124,,maxArticles,simple,,tiki_p_admin,,,Articles
+205,Title,124,,art_home_title,simple,,tiki_p_admin,,,Articles
 206,feature_community_list_name,84,,feature_community_list_name,flag,,tiki_p_admin,,,
 207,feature_community_list_country,84,,feature_community_list_country,flag,,tiki_p_admin,,,
 208,user_list_order,84,,user_list_order,simple,,tiki_p_admin,,,
@@ -798,4 +798,3 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 892,Rename page,7,,,functionality,tiki-rename_page,tiki_p_admin,,,Wiki,
 893,Multilingual freetags,76,,freetags_multilingual,flag,,tiki_p_admin,,,i18n,and freetags
 894,Calendar manual selection of time/date,34,,feature_cal_manual_time,flag,,tiki_p_admin,,,Calendar,
-
