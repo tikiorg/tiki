@@ -128,7 +128,7 @@ class MagicLib extends TikiLib {
 	}
 	
 	function is_container($feature) {
-		return ($feature['feature_type'] == 'container' || $feature['feature_type'] == 'configurationgroup');
+		return ($feature['feature_type'] == 'container' || $feature['feature_type'] == 'configurationgroup') || $feature['feature_type'] == 'system';
 	}
 
 	function is_setting($feature) {
