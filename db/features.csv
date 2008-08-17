@@ -12,7 +12,7 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 11,Trackers,2,,feature_trackers,feature,tiki-list_trackers,tiki_p_admin,5,,Trackers,
 12,Forums,2,,feature_forums,feature,tiki-forums,tiki_p_admin,3,,Forum,
 13,Rich Content,2,,,container,,tiki_p_admin,7,,,
-14,Meta Data,2,,,container,,tiki_p_admin,8,,,
+14,Meta Data,2,,,container,,tiki_p_admin,8,,Meta+Data,
 15,Auxillary Functions,2,,,container,,tiki_p_admin,9,,,
 16,SpreadSheet,13,experimental,feature_sheet,feature,tiki-sheets,tiki_p_admin,,,Spreadsheet
 17,Swiffix,13,experimental,feature_swffix,feature,,tiki_p_admin,,,
@@ -798,3 +798,5 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 892,Rename page,7,,,functionality,tiki-rename_page,tiki_p_admin,,,Wiki,
 893,Multilingual freetags,76,,freetags_multilingual,flag,,tiki_p_admin,,,i18n,and freetags
 894,Calendar manual selection of time/date,34,,feature_cal_manual_time,flag,,tiki_p_admin,,,Calendar,
+895,Admin Topics,10,,feature_articles,functionality,tiki-admin_topics,tiki_p_admin_articles,,,Articles
+896,Admin Types,10,,feature_articles,functionality,tiki-article_types,tiki_p_admin_articles,,,Articles
