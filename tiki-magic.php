@@ -10,6 +10,10 @@ $feature = $magiclib->get_feature($featureId);
 $smarty->assign('feature', $feature);
 $smarty->assign('title', $feature['feature_name']);
 
+/*
+ * $$feature['permission'] is slightly magic.  It's checking the value of the name of the variable that is in feature['permission'].
+ * If feature['permission'] is 'tiki_p_wiki_admin', it is checking if $tiki_p_wiki_admin has the value 'y'.
+ */
 if ($$feature['permission'] != 'y' && $tiki_p_admin != 'y') {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
@@ -71,7 +75,7 @@ if ($featureId != '' && is_numeric($featureId)) {
 	$featureId = 0;
 }
 
-if ($_POST['submit'] != '') {
+if ($_POST['submit'] != '') { /* Warning Level Fix:  Check if the 'submit' is a key first */
 	check_ticket('tiki_magic');
 	foreach($pagefeatures as $feature) {
 		if ($feature['feature_type'] == 'flag') {
