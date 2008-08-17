@@ -36,7 +36,11 @@
 	</fieldset>
 	<fieldset {if $prefs.feature_tabs eq 'y' and $tabs ne 'n'}id="content{$counter}" style="clear:both;display:none;"{/if}>
 {/if}{/foreach}
-	<div class="configSetting"><a name="container{$features[feature].feature_id}"></a><h4 class="configSection">{tr}{$features[feature].feature_name}{/tr}<sub>({$features[feature].feature_id})</sub></h4>
+	{if $features[feature].feature_count eq 0}
+		<div class="configSetting"><h4 class="configSection">{tr}{$features[feature].feature_name}{/tr}<sub>({$features[feature].feature_id})</sub><a name="container{$features[feature].feature_id}" href="tiki-magic.php?featurechain={$features[feature].feature_path|escape:'url'}" title="{tr}Go{/tr}">{icon _id='task_submitted'}</a></h4>
+	{else}
+		<div class="configSetting"><a name="container{$features[feature].feature_id}"></a><h4 class="configSection">{tr}{$features[feature].feature_name}{/tr}<sub>({$features[feature].feature_id})</sub></h4>
+	{/if}
 	</div>
 {* It'd be superfun if you could go to, say, the article list page from the article configuration page; however some of the pages require
 	 additional parameters (i.e. for performing actions on a particular content item), so I'll need to distinguish between the two. *}
