@@ -173,7 +173,7 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 175,First day of the week,34,,calendar_firstDayofWeek,firstdayofweek,,tiki_p_admin,,,Calendar
 176,"Last year in the dropdown, either year number, or relative to current year (+/- N) (if no jscalendar)",34,,calendar_end_year,simple,,tiki_p_admin,,,Calendar
 177,Default view mode,34,,calendar_view_mode,calendarviewmode,,tiki_p_admin,,,Calendar
-178,feature_categoryobjects,25,,feature_categoryobjects,flag,,tiki_p_admin,,,Category,
+178,feature_categoryobjects,25,,feature_categoryobjects,flag,,tiki_p_admin,,,Category
 179,feature_search_show_forbidden_cat,25,,feature_search_show_forbidden_cat,flag,,tiki_p_admin,,,Category,search as well
 180,feature_category_reinforce,25,,feature_category_reinforce,flag,,tiki_p_admin,,,Category,
 181,feature_categorypath,25,,feature_categorypath,flag,,tiki_p_admin,,,Category,
@@ -189,7 +189,7 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 191,art_list_reads,123,,art_list_reads,flag,,tiki_p_admin,,,Articles,
 192,Title,123,,art_list_title,flag,,tiki_p_admin,,,Articles,
 193,Title length,123,,art_list_title_len,int,,tiki_p_admin,,,Articles,
-194,Size,123,,art_list_size,flag,,tiki_p_admin,,,Articles
+194,Size,123,,art_list_size,flag,,tiki_p_admin,,,Articles,
 195,Author,123,,art_list_author,flag,,tiki_p_admin,,,Articles
 196,Topic,123,,art_list_topic,flag,,tiki_p_admin,,,Articles
 197,Spellchecking,124,,cms_spellcheck,flag,,tiki_p_admin,,,Articles
@@ -221,7 +221,7 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 223,directory_columns,33,,directory_columns,simple,,tiki_p_admin,,,Directory
 224,directory_validate_urls,33,,directory_validate_urls,flag,,tiki_p_admin,,,Directory
 225,directory_open_links,33,,directory_open_links,simple,,tiki_p_admin,,,Directory
-226,feature_faq_comments,9,,feature_faq_comments,flag,,tiki_p_admin,,,FAQ,
+226,feature_faq_comments,9,,feature_faq_comments,flag,,tiki_p_admin,,,FAQ
 227,faq_comments_default_ordering,9,,faq_comments_default_ordering,simple,,tiki_p_admin,,,FAQ,
 228,faq_comments_per_page,9,,faq_comments_per_page,simple,,tiki_p_admin,,,FAQ,
 229,faq_prefix,9,,faq_prefix,simple,,tiki_p_admin,,,FAQ,
@@ -236,8 +236,8 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 313,home_file_gallery,125,,home_file_gallery,simple,,tiki_p_admin,,,File+Gallery,
 314,file_galleries_comments_default_ordering,125,,file_galleries_comments_default_ordering,commentordering,,tiki_p_admin,,,File+Gallery,
 315,file_galleries_comments_per_page,125,,file_galleries_comments_per_page,simple,,tiki_p_admin,,,File+Gallery,
-316,fgal_use_db,125,,fgal_use_db,simple,,tiki_p_admin,,,File+Gallery
-317,feature_file_galleries_author,125,,feature_file_galleries_author,flag,,tiki_p_admin,,,File+Gallery
+316,fgal_use_db,125,,fgal_use_db,simple,,tiki_p_admin,,,File+Gallery,
+317,feature_file_galleries_author,125,,feature_file_galleries_author,flag,,tiki_p_admin,,,File+Gallery,
 318,fgal_limit_hits_per_file,125,,fgal_limit_hits_per_file,flag,,tiki_p_admin,,,File+Gallery
 319,feature_file_galleries_batch,125,,feature_file_galleries_batch,flag,,tiki_p_admin,,,File+Gallery
 320,fgal_match_regex,125,,fgal_match_regex,simple,,tiki_p_admin,,,File+Gallery
@@ -366,22 +366,22 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 443,feature_obzip,1,,feature_obzip,flag,,tiki_p_admin,,,
 444,use_proxy,1,,use_proxy,flag,,tiki_p_admin,,,
 445,maxRecords,902,,maxRecords,simple,,tiki_p_admin,,,Pagination
-446,count_admin_pvs,1,,count_admin_pvs,flag,,tiki_p_admin,,,
-447,cachepages,1,,cachepages,flag,,tiki_p_admin,,,
-448,session_lifetime,859,,session_lifetime,simple,,tiki_p_admin,,,
-449,proxy_port,1,,proxy_port,simple,,tiki_p_admin,,,
-450,use_load_threshold,1,,use_load_threshold,flag,,tiki_p_admin,,,
-451,user_show_realnames,1,,user_show_realnames,flag,,tiki_p_admin,,,
-452,log_sql,66,,log_sql,flag,,tiki_p_admin,,,
-453,site_crumb_seper,1,,site_crumb_seper,simple,,tiki_p_admin,,,
-454,helpurl,71,,helpurl,simple,,tiki_p_admin,,,
-455,site_busy_msg,1,,site_busy_msg,simple,,tiki_p_admin,,,
-456,useGroupHome,78,,useGroupHome,flag,,tiki_p_admin,,,
-457,smarty_security,49,,smarty_security,flag,,tiki_p_admin,,,
-458,feature_version_checks,1,,feature_version_checks,flag,,tiki_p_admin,,,
-459,sender_email,1,,sender_email,simple,,tiki_p_admin,,,
-460,site_nav_seper,1,,site_nav_seper,simple,,tiki_p_admin,,,
-461,tiki_version_check_frequency,1,,tiki_version_check_frequency,simple,,tiki_p_admin,,,
+446,count_admin_pvs,1,,count_admin_pvs,flag,,tiki_p_admin
+447,cachepages,1,,cachepages,flag,,tiki_p_admin
+448,session_lifetime,859,,session_lifetime,simple,,tiki_p_admin
+449,proxy_port,1,,proxy_port,simple,,tiki_p_admin
+450,use_load_threshold,1,,use_load_threshold,flag,,tiki_p_admin
+451,user_show_realnames,1,,user_show_realnames,flag,,tiki_p_admin
+452,log_sql,66,,log_sql,flag,,tiki_p_admin
+453,site_crumb_seper,1,,site_crumb_seper,simple,,tiki_p_admin
+454,helpurl,71,,helpurl,simple,,tiki_p_admin
+455,site_busy_msg,1,,site_busy_msg,simple,,tiki_p_admin
+456,useGroupHome,78,,useGroupHome,flag,,tiki_p_admin
+457,smarty_security,49,,smarty_security,flag,,tiki_p_admin
+458,feature_version_checks,1,,feature_version_checks,flag,,tiki_p_admin
+459,sender_email,1,,sender_email,simple,,tiki_p_admin
+460,site_nav_seper,1,,site_nav_seper,simple,,tiki_p_admin
+461,tiki_version_check_frequency,1,,tiki_version_check_frequency,simple,,tiki_p_admin
 462,pref_syntax,49,,pref_syntax,simple,,tiki_p_admin,,,
 463,error_reporting_level,67,,error_reporting_level,simple,,tiki_p_admin,,,
 464,default_mail_charset,1,,default_mail_charset,simple,,tiki_p_admin,,,
@@ -396,24 +396,24 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 474,gmap_key,22,,gmap_key,simple,,tiki_p_admin,,,Gmap
 475,gmap_defaultx,22,,gmap_defaultx,simple,,tiki_p_admin,,,Gmap
 476,gmap_defaultz,22,,gmap_defaultz,simple,,tiki_p_admin,,,Gmap
-477,language,76,,language,languages,1,tiki_p_admin,,,
-478,feature_multilingual,76,,feature_multilingual,flag,2,tiki_p_admin,,,
-479,available_languages,76,,available_languages,languages,3,tiki_p_admin,,,i18n
+477,language,76,,language,languages,,tiki_p_admin,1,,
+478,feature_multilingual,76,,feature_multilingual,flag,,tiki_p_admin,2,,
+479,available_languages,76,,available_languages,languages,,tiki_p_admin,3,,i18n
 480,User Translation Watches,6,,feature_user_watches_translations,flag,,tiki_p_admin,,,
-481,feature_best_language,76,,feature_best_language,flag,4,tiki_p_admin,,,i18n
-482,quantify_changes,76,,quantify_changes,flag,12,tiki_p_admin,,,
-483,record_untranslated,76,,record_untranslated,flag,13,tiki_p_admin,,,
-484,feature_babelfish,76,,feature_babelfish,flag,41,tiki_p_admin,,,
-485,feature_detect_language,76,,feature_detect_language,flag,5,tiki_p_admin,,,
-486,feature_babelfish_logo,76,,feature_babelfish_logo,flag,40,tiki_p_admin,,,
-487,lang_use_db,76,,lang_use_db,flag,10,tiki_p_admin,,,
-488,feature_multilingual_structures,76,,feature_multilingual_structures,flag,15,tiki_p_admin,,,
+481,feature_best_language,76,,feature_best_language,flag,,tiki_p_admin,4,,i18n
+482,quantify_changes,76,,quantify_changes,flag,,tiki_p_admin,12,,
+483,record_untranslated,76,,record_untranslated,flag,,tiki_p_admin,13,,
+484,feature_babelfish,76,,feature_babelfish,flag,,tiki_p_admin,41,,
+485,feature_detect_language,76,,feature_detect_language,flag,,tiki_p_admin,5,,
+486,feature_babelfish_logo,76,,feature_babelfish_logo,flag,,tiki_p_admin,40,,
+487,lang_use_db,76,,lang_use_db,flag,,tiki_p_admin,10,,
+488,feature_multilingual_structures,76,,feature_multilingual_structures,flag,,tiki_p_admin,15,,
 489,feature_intertiki_imported_groups,103,,feature_intertiki_imported_groups,simple,,tiki_p_admin,,,
 490,tiki_key,103,,tiki_key,simple,,tiki_p_admin,,,
 491,feature_intertiki_import_groups,103,,feature_intertiki_import_groups,flag,,tiki_p_admin,,,
 492,feature_intertiki_mymaster,103,,feature_intertiki_mymaster,simple,,tiki_p_admin,,,
-493,interlist,103,,interlist,simple,,tiki_p_admin
-494,feature_intertiki_import_preferences,103,,feature_intertiki_import_preferences,flag,,tiki_p_admin
+493,interlist,103,,interlist,simple,,tiki_p_admin,,,
+494,feature_intertiki_import_preferences,103,,feature_intertiki_import_preferences,flag,,tiki_p_admin,,,
 495,feature_intertiki_sharedcookie,103,,feature_intertiki_sharedcookie,flag,,tiki_p_admin
 496,known_hosts,103,,known_hosts,simple,,tiki_p_admin
 497,intertiki_logfile,103,,intertiki_logfile,simple,,tiki_p_admin
@@ -489,11 +489,11 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 570,https_login,82,,https_login,simple,,tiki_p_admin
 571,messu_sent_size,82,,messu_sent_size,simple,,tiki_p_admin
 572,rememberme,82,,rememberme,simple,,tiki_p_admin
-573,max_username_length,82,,max_username_length,simple,,tiki_p_admin,,,
-574,registerPasscode,82,,registerPasscode,simple,,tiki_p_admin,,,
-575,min_username_length,82,,min_username_length,simple,,tiki_p_admin,,,
-576,feature_crypt_passwords,82,,feature_crypt_passwords,simple,,tiki_p_admin,,,
-577,auth_method,82,,auth_method,simple,,tiki_p_admin,,,
+573,max_username_length,82,,max_username_length,simple,,tiki_p_admin
+574,registerPasscode,82,,registerPasscode,simple,,tiki_p_admin
+575,min_username_length,82,,min_username_length,simple,,tiki_p_admin
+576,feature_crypt_passwords,82,,feature_crypt_passwords,simple,,tiki_p_admin
+577,auth_method,82,,auth_method,simple,,tiki_p_admin
 578,available_languages,82,,available_languages,simple,,tiki_p_admin,,,i18n
 579,cookie_domain,82,,cookie_domain,simple,,tiki_p_admin,,,
 580,highlight_group,82,,highlight_group,simple,,tiki_p_admin,,,
@@ -505,22 +505,22 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 586,http_port,82,,http_port,simple,,tiki_p_admin,,,
 587,cookie_path,82,,cookie_path,simple,,tiki_p_admin,,,
 588,users_prefs_minPrio,140,,users_prefs_minPrio,simple,,tiki_p_admin,,,
-589,users_prefs_mailCharset,140,,users_prefs_mailCharset,simple,,tiki_p_admin,
-590,users_prefs_user_information,140,,users_prefs_user_information,simple,,tiki_p_admin,
-591,users_prefs_tasks_maxRecords,140,,users_prefs_tasks_maxRecords,simple,,tiki_p_admin,
-592,users_prefs_user_dbl,140,,users_prefs_user_dbl,simple,,tiki_p_admin,
-593,users_prefs_userbreadCrumb,140,,users_prefs_userbreadCrumb,simple,,tiki_p_admin,
-594,users_prefs_mess_archiveAfter,140,,users_prefs_mess_archiveAfter,simple,,tiki_p_admin,
-595,users_prefs_diff_versions,140,,users_prefs_diff_versions,simple,,tiki_p_admin,
-596,users_prefs_language,140,,users_prefs_language,simple,,tiki_p_admin,
-597,users_prefs_theme,140,,users_prefs_theme,simple,,tiki_p_admin,
-598,users_prefs_display_timezone,140,,users_prefs_display_timezone,simple,,tiki_p_admin,
-599,users_prefs_mess_maxRecords,140,,users_prefs_mess_maxRecords,simple,,tiki_p_admin,
-600,feature_site_send_link,3,,feature_site_send_link,flag,,tiki_p_admin,19
-601,site_style,3,,site_style,special,,tiki_p_admin,47
-602,feature_bot_bar,3,,feature_bot_bar,flag,,tiki_p_admin,5
-603,feature_bot_bar_rss,3,,feature_bot_bar_rss,flag,,tiki_p_admin,8
-604,feature_topbar_id_menu,3,,feature_topbar_id_menu,simple,,tiki_p_admin,34
+589,users_prefs_mailCharset,140,,users_prefs_mailCharset,simple,,tiki_p_admin,,,
+590,users_prefs_user_information,140,,users_prefs_user_information,simple,,tiki_p_admin,,,
+591,users_prefs_tasks_maxRecords,140,,users_prefs_tasks_maxRecords,simple,,tiki_p_admin,,,
+592,users_prefs_user_dbl,140,,users_prefs_user_dbl,simple,,tiki_p_admin,,,
+593,users_prefs_userbreadCrumb,140,,users_prefs_userbreadCrumb,simple,,tiki_p_admin,,,
+594,users_prefs_mess_archiveAfter,140,,users_prefs_mess_archiveAfter,simple,,tiki_p_admin,,,
+595,users_prefs_diff_versions,140,,users_prefs_diff_versions,simple,,tiki_p_admin,,,
+596,users_prefs_language,140,,users_prefs_language,simple,,tiki_p_admin,,,
+597,users_prefs_theme,140,,users_prefs_theme,simple,,tiki_p_admin,,,
+598,users_prefs_display_timezone,140,,users_prefs_display_timezone,simple,,tiki_p_admin,,,
+599,users_prefs_mess_maxRecords,140,,users_prefs_mess_maxRecords,simple,,tiki_p_admin,,,
+600,feature_site_send_link,3,,feature_site_send_link,flag,,tiki_p_admin,19,,
+601,site_style,3,,site_style,special,,tiki_p_admin,47,,
+602,feature_bot_bar,3,,feature_bot_bar,flag,,tiki_p_admin,5,,
+603,feature_bot_bar_rss,3,,feature_bot_bar_rss,flag,,tiki_p_admin,8,,
+604,feature_topbar_id_menu,3,,feature_topbar_id_menu,simple,,tiki_p_admin,34,,
 605,sitenav,3,,sitenav,special,,tiki_p_admin,50,,
 606,feature_site_report_email,3,,feature_site_report_email,simple,,tiki_p_admin,18,,
 608,direct_pagination_max_middle_links,902,,direct_pagination_max_middle_links,simple,,tiki_p_admin,4,,Pagination
@@ -654,15 +654,15 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 740,feature_wikiapproval,142,,feature_wikiapproval,flag,,tiki_p_admin,,,Staging+and+Approval
 741,wikiapproval_approved_category,142,,wikiapproval_approved_category,selectcategory,,tiki_p_admin,,,Staging+and+Approval
 742,wikiapproval_delete_staging,142,,wikiapproval_delete_staging,flag,,tiki_p_admin,,,Staging+and+Approval
-743,wikiapproval_master_group,142,,wikiapproval_master_group,simple,,tiki_p_admin,,,Staging+and+Approval
-744,wikiapproval_block_editapproved,142,,wikiapproval_block_editapproved,flag,,tiki_p_admin,,,Staging+and+Approval
-745,wikiapproval_outofsync_category,142,,wikiapproval_outofsync_category,selectcategory,,tiki_p_admin,,,Staging+and+Approval
-746,wikiapproval_hideprefix,142,,wikiapproval_hideprefix,flag,,tiki_p_admin,,,Staging+and+Approval
-747,wikiapproval_sync_categories,142,,wikiapproval_sync_categories,flag,,tiki_p_admin,,,Staging+and+Approval
-748,wikiapproval_staging_category,142,,wikiapproval_staging_category,selectcategory,,tiki_p_admin,,,Staging+and+Approval
-749,w_displayed_default,143,,w_displayed_default,flag,,tiki_p_admin,,,
-750,w_use_dir,143,,w_use_dir,simple,,tiki_p_admin,,,
-751,feature_wiki_attachments,143,,feature_wiki_attachments,flag,,tiki_p_admin,,,
+743,wikiapproval_master_group,142,,wikiapproval_master_group,simple,,tiki_p_admin,,,Staging+and+Approval,
+744,wikiapproval_block_editapproved,142,,wikiapproval_block_editapproved,flag,,tiki_p_admin,,,Staging+and+Approval,
+745,wikiapproval_outofsync_category,142,,wikiapproval_outofsync_category,selectcategory,,tiki_p_admin,,,Staging+and+Approval,
+746,wikiapproval_hideprefix,142,,wikiapproval_hideprefix,flag,,tiki_p_admin,,,Staging+and+Approval,
+747,wikiapproval_sync_categories,142,,wikiapproval_sync_categories,flag,,tiki_p_admin,,,Staging+and+Approval,
+748,wikiapproval_staging_category,142,,wikiapproval_staging_category,selectcategory,,tiki_p_admin,,,Staging+and+Approval,
+749,w_displayed_default,143,,w_displayed_default,flag,,tiki_p_admin,,,,
+750,w_use_dir,143,,w_use_dir,simple,,tiki_p_admin,,,,
+751,feature_wiki_attachments,143,,feature_wiki_attachments,flag,,tiki_p_admin,,,,
 752,w_use_db,143,,w_use_db,simple,,tiki_p_admin,,,,
 753,Sandbox,141,,feature_sandbox,flag,,tiki_p_admin,,,Wiki,
 754,Show/hide heading icon displayed before the heading,141,,feature_wiki_show_hide_before,flag,,tiki_p_admin,,,,
@@ -727,13 +727,13 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 813,Diff style,897,,default_wiki_diff_style,wikidiffs,,tiki_p_admin,30,,Wiki,
 814,Never delete versions younger than days,897,,keep_versions,int,,tiki_p_admin,30,,Wiki,
 815,Maximum number of versions for history,897,,maxVersions,int,,tiki_p_admin,30,,Wiki,
-816,IP address displayed in history,897,,feature_wiki_history_ip,flag,,tiki_p_admin,30,,Wiki
-817,"History only for data, description, comment change",897,,feature_wiki_history_full,flag,,tiki_p_admin,30,,Wiki
-818,Enable watch events when I am the editor,900,,wiki_watch_editor,flag,,tiki_p_admin,40,,Wiki
-819,Watch minor,900,,wiki_watch_minor,flag,,tiki_p_admin,40,,Wiki
-820,Enable watches on comments,900,,wiki_watch_comments,flag,,tiki_p_admin,40,,Wiki
-821,Create watch for author on page creation,900,,wiki_watch_author,flag,,tiki_p_admin,40,,Wiki
-822,wiki_forum_id ,901,,wiki_forum_id ,simple,,tiki_p_admin,20,,Wiki
+816,IP address displayed in history,897,,feature_wiki_history_ip,flag,,tiki_p_admin,30,,Wiki,
+817,"History only for data, description, comment change",897,,feature_wiki_history_full,flag,,tiki_p_admin,30,,Wiki,
+818,Enable watch events when I am the editor,900,,wiki_watch_editor,flag,,tiki_p_admin,40,,Wiki,
+819,Watch minor,900,,wiki_watch_minor,flag,,tiki_p_admin,40,,Wiki,
+820,Enable watches on comments,900,,wiki_watch_comments,flag,,tiki_p_admin,40,,Wiki,
+821,Create watch for author on page creation,900,,wiki_watch_author,flag,,tiki_p_admin,40,,Wiki,
+822,wiki_forum_id ,901,,wiki_forum_id ,simple,,tiki_p_admin,20,,Wiki,
 823,Discuss pages on forums,901,,feature_wiki_discuss,flag,,tiki_p_admin,10,,Wiki
 824,Wiki Home Page,46,,wikiHomePage ,simple,,tiki_p_admin_wiki,,,Navigation
 825,Name length,144,,wiki_list_name_len,int,,tiki_p_admin_wiki,40,,Wiki
@@ -775,13 +775,13 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 876,Site Logo and Title,879,,feature_sitelogo,feature,,tiki_p_admin,,,
 877,Site Title,876,,sitetitle,simple,,tiki_p_admin,,,
 878,Site Subtitle,876,,sitesubtitle,simple,,tiki_p_admin,,,
-879,Page Layout Components,3,,,container,,tiki_p_admin,63,,,
-880,List Articles,10,,,functionality,tiki-list_articles,tiki_p_admin,,,Articles,
-881,Edit Article,10,,,functionality,tiki-edit_article,tiki_p_admin,,,Articles,
-882,Create/Edit Trackers,11,,,functionality,tiki-admin_trackers,tiki_p_admin,,,Forum,
-883,Admin Forums,12,,,functionality,tiki-admin_forums,tiki_p_admin,,,Forum,
-884,Forum Importer,12,,,functionality,tiki-forum_import,tiki_p_admin,,,Forum,
-885,View Tiki Sheet,16,,,functionality,tiki-view_sheets,tiki_p_admin,,,Spreadsheet,
+879,Page Layout Components,3,,,container,,tiki_p_admin,63,,
+880,List Articles,10,,,functionality,tiki-list_articles,tiki_p_admin,,,Articles
+881,Edit Article,10,,,functionality,tiki-edit_article,tiki_p_admin,,,Articles
+882,Create/Edit Trackers,11,,,functionality,tiki-admin_trackers,tiki_p_admin,,,Forum
+883,Admin Forums,12,,,functionality,tiki-admin_forums,tiki_p_admin,,,Forum
+884,Forum Importer,12,,,functionality,tiki-forum_import,tiki_p_admin,,,Forum
+885,View Tiki Sheet,16,,,functionality,tiki-view_sheets,tiki_p_admin,,,Spreadsheet
 886,Tiki Sheet History,16,,,functionality,tiki-history_sheets,tiki_p_admin,,,Spreadsheet,
 887,Export Tiki Sheet,16,,,functionality,tiki-export_sheet,tiki_p_admin,,,Spreadsheet,
 888,Import Tiki Sheet,16,,,functionality,tiki-import_sheet,tiki_p_admin,,,Spreadsheet,
@@ -789,17 +789,17 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 890,Edit,7,,,functionality,tiki-editpage,tiki_p_admin,,,Wiki,
 891,Remove page,7,,,functionality,tiki-removepage,tiki_p_admin,,,Wiki,
 892,Rename page,7,,,functionality,tiki-rename_page,tiki_p_admin,,,Wiki,
-893,Multilingual freetags,76,,freetags_multilingual,flag,20,tiki_p_admin,,,i18n,and freetags
+893,Multilingual freetags,76,,freetags_multilingual,flag,,tiki_p_admin,20,,i18n,and freetags
 894,Calendar manual selection of time/date,34,,feature_cal_manual_time,flag,,tiki_p_admin,,,Calendar,
-895,Admin Topics,10,,feature_articles,functionality,tiki-admin_topics,tiki_p_admin_articles,,,Articles
-896,Admin Types,10,,feature_articles,functionality,tiki-article_types,tiki_p_admin_articles,,,Articles
-897,Wiki History,7,,,configurationgroup,,tiki_p_admin,,,Wiki
-898,WikiWords and wiki links,7,,,configurationgroup,,tiki_p_admin,,,Wiki
-899,Wiki structures,7,,,configurationgroup,,tiki_p_admin,,,Structures
-900,Wiki watches,7,,,configurationgroup,,tiki_p_admin,,,Watch
-901,Wiki page discussions (in forums),7,,,configurationgroup,,tiki_p_admin,,,Wiki
-902,Pagination,3,,,configurationgroup,,tiki_p_admin,,,
-903,Load postprocessor,115,,,system,tiki-feature-load-postprocessor,tiki_p_admin,,,
-904,groupTracker,11,,groupTracker,flag,,tiki_p_admin,,,
-905,groupTracker,11,,userTracker,flag,,tiki_p_admin,,,
-906,user_tracker_infos,11,,user_tracker_infos,flag,,tiki_p_admin,,,
+895,Admin Topics,10,,feature_articles,functionality,tiki-admin_topics,tiki_p_admin_articles,,,Articles,
+896,Admin Types,10,,feature_articles,functionality,tiki-article_types,tiki_p_admin_articles,,,Articles,
+897,Wiki History,7,,,configurationgroup,,tiki_p_admin,,,Wiki,
+898,WikiWords and wiki links,7,,,configurationgroup,,tiki_p_admin,,,Wiki,
+899,Wiki structures,7,,,configurationgroup,,tiki_p_admin,,,Structures,
+900,Wiki watches,7,,,configurationgroup,,tiki_p_admin,,,Watch,
+901,Wiki page discussions (in forums),7,,,configurationgroup,,tiki_p_admin,,,Wiki,
+902,Pagination,3,,,configurationgroup,,tiki_p_admin
+903,Load postprocessor,115,,,system,tiki-feature-load-postprocessor,tiki_p_admin
+904,groupTracker,11,,groupTracker,flag,,tiki_p_admin
+905,groupTracker,11,,userTracker,flag,,tiki_p_admin
+906,user_tracker_infos,11,,user_tracker_infos,flag,,tiki_p_admin
