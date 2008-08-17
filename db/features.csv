@@ -391,7 +391,7 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 468,log_mail,1,,log_mail,flag,,tiki_p_admin,,,, 
 469,site_closed,1,,site_closed,flag,,tiki_p_admin,,,, 
 470,long_time_format,48,,long_time_format,byref,,tiki_p_admin,,,Time+and+Date, 
-471,urlIndex,1,,urlIndex,simple,,tiki_p_admin,,,, 
+471,urlIndex,911,,urlIndex,simple,,tiki_p_admin,,,, 
 473,gmap_defaulty,22,,gmap_defaulty,simple,,tiki_p_admin,,,Gmap, 
 474,gmap_key,22,,gmap_key,simple,,tiki_p_admin,,,Gmap, 
 475,gmap_defaultx,22,,gmap_defaultx,simple,,tiki_p_admin,,,Gmap, 
