@@ -1,4 +1,5 @@
-<div style="float:right">
+<div id="magicPanel">
+<div class="iconbar">
 	<a title="{tr}Refresh{/tr}" href="tiki-magic.php?featurechain={$featurechain|escape:"url"}&amp;refresh=1">{icon _id='arrow_refresh'}</a>
 </div>
 <form method="post">
@@ -18,7 +19,7 @@
 	</div>
 {* Show a heading with a dividing line for things that are containers  *}
 {elseif ($features[feature].feature_type eq 'container' || $features[feature].feature_type eq 'configurationgroup' || $features[feature].feature_type eq 'system') and ($features[feature].feature_count > 0)}
-	<hr style="clear: both" />
+	<hr />
 	<div class="configSetting"><a name="container{$features[feature].feature_id}"></a><h4 class="configSection">{tr}{$features[feature].feature_name}{/tr}<sub>({$features[feature].feature_id})</sub></h4>
 	</div>
 {* It'd be superfun if you could go to, say, the article list page from the article configuration page; however some of the pages require
@@ -87,3 +88,4 @@ values. -->
 {/section}
 <input type="submit" name="submit" />
 </form>
+</div>
