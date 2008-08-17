@@ -10,7 +10,7 @@
 	<div class="configSetting"><label for="{$features[feature].setting_name}" class="formLabel">{tr}Enabled{/tr}</label><input type="checkbox" name="{$features[feature].setting_name}" id="{$features[feature].setting_name}" value="on" {if $features[feature].value eq 'y'}checked="checked"{/if} />{if $features[feature].status eq 'experimental'}<em>{tr}This is an experimental feature{/tr}</em>{/if}
 {if $features[feature].template neq ''}<a href="{$features[feature].template}.php">{tr}Go{/tr}!</a>{/if}
 {* Check to see if system help is on;  and use that base URL. *}	
-{if $features[feature].keyword neq ''} <a href="http://doc.tikiwiki.org/{$features[feature].keyword}">{tr}Help{/tr}</a>{/if}</div>
+{if $features[feature].keyword neq ''} <a href="http://doc.tikiwiki.org/{$features[feature].keyword}">{tr}Help{/tr}</a>{/if}
 {* Show a heading with a dividing line for things that are containers  *}
 	</div>
 	</div>
