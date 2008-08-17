@@ -19,7 +19,7 @@
 {/if}
 
 {assign var=counter value=1}
-<fieldset {if $prefs.feature_tabs eq 'y' and $tabs ne 'n'}id="content{$counter}" class="tabcontent" style="clear:both;display:block;"{/if}>
+<fieldset {if $prefs.feature_tabs eq 'y' and $tabs ne 'n'}id="content{$counter}" style="clear:both;display:block;"{/if}>
 {section name=feature loop=$features}
 {* Show a heading for features with the option to enable or disable the feature.  *}
 {if $features[feature].feature_type eq 'feature'}
@@ -34,7 +34,7 @@
 {foreach item=c from=$containers}{if $c.feature_id eq $features[feature].feature_id}
 	{assign var=counter value=$counter+1}
 	</fieldset>
-	<fieldset {if $prefs.feature_tabs eq 'y' and $tabs ne 'n'}id="content{$counter}" class="tabcontent" style="clear:both;display:none;"{/if}>
+	<fieldset {if $prefs.feature_tabs eq 'y' and $tabs ne 'n'}id="content{$counter}" style="clear:both;display:none;"{/if}>
 {/if}{/foreach}
 	<div class="configSetting"><a name="container{$features[feature].feature_id}"></a><h4 class="configSection">{tr}{$features[feature].feature_name}{/tr}<sub>({$features[feature].feature_id})</sub></h4>
 	</div>
