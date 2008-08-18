@@ -35,19 +35,22 @@ $template ='tiki-magic';
 // If there's an assigned template for a feature;  show it if the feature has no children (i.e. it's a leaf feature), or if 
 // the feature is a container type (to allow overriding the setting list behaviour).
 // For a feature/system thing; the template shouldn't be used, as that would prevent you from configuring it.
-if ($feature['template'] != '' && ($feature['feature_count'] == 0)) {
+if ($feature['template'] != '' 
+	&& $feature['feature_count'] == 0 
+	&& $magiclib->is_container($feature) ) {
+
 	// The value of $feature is sometimes clobbered,  so store these values before the include.
-	$is_container = $magiclib->is_container($feature);
 	$template = $feature['template'];
 	
 	include_once($template . '.php');
-	$smarty->assign('mid', $template . '.tpl');
-	
-	// Containers need to display the tiki, and that's just the way it is.
-	if ($is_container) {
+	$mid = $smarty->get_template_vars('mid');
+	if( is_null( $mid ) ) {
+		$smarty->assign('mid', $template . '.tpl');
+		
+		// Containers need to display the tiki, and that's just the way it is.
 		$smarty->display("tiki.tpl");
 	}
-	return;
+	exit;
 }
 
 $enumerations = array();
