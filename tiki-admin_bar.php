@@ -5,7 +5,7 @@ $headerlib->add_cssfile('css/spanky.css');
 $feature = $smarty->get_template_vars('feature');
 
 // If the feature hasn't been set,  try get it from the query string.
-if ($feature == null) {
+if ($feature == null && isset($_REQUEST['featurechain'])) {
 	$featureChain = $_REQUEST['featurechain'];
 } else {
 	$featureChain = $feature['feature_path'];
