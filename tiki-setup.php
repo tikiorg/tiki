@@ -139,9 +139,11 @@ if ( $prefs['feature_wysiwyg'] == 'y' ) {
 }
 if ( $prefs['feature_phplayers'] == 'y' ) require_once('lib/setup/phplayers.php');
 
-include_once('lib/admin/magiclib.php');
-$smarty->assign('feature', $magiclib->get_feature_by_template(substr($tiki_script_filename, strrpos($tiki_script_filename, '/') + 1, -4)));
-require_once('tiki-admin_bar.php');
+if( $tiki_p_admin == 'y' ) {
+	include_once('lib/admin/magiclib.php');
+	$smarty->assign('feature', $magiclib->get_feature_by_template(substr($tiki_script_filename, strrpos($tiki_script_filename, '/') + 1, -4)));
+	require_once('tiki-admin_bar.php');
+}
 
 $smarty->assign_by_ref('phpErrors', $phpErrors);
 $smarty->assign_by_ref('num_queries', $num_queries);
