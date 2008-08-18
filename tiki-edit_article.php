@@ -85,6 +85,7 @@ $smarty->assign('type', 'Article');
 $smarty->assign('rating', 7);
 $smarty->assign('edit_data', 'n');
 $smarty->assign('emails', '');
+$smarty->assign('userEmail', $userlib->get_user_email($user));
 
 // If the articleId is passed then get the article data
 // GGG - You have to check for the actual value of the articleId because it
@@ -170,7 +171,7 @@ if (empty($_REQUEST['emails']) || $prefs['feature_cms_emails'] != 'y')
 elseif (!empty($_REQUEST['emails'])) {
 	$emails = split(',', $_REQUEST['emails']);
 	foreach ($emails as $email) {
-		if (!validate_email($email, 'y'))
+		if (!validate_email($email, $prefs['validateEmail']))
 			$errors[] = tra('Invalid email:').' '.$email;
 	}
 }
@@ -226,6 +227,7 @@ if (isset($_REQUEST["preview"]) or !empty($errors)) {
 	if (!isset($_REQUEST["lang"])) $_REQUEST['lang'] = '';
 	if (!isset($_REQUEST["type"])) $_REQUEST['type'] = '';
 	if (!isset($_REQUEST['emails'])) $_REQUEST['emails'] = '';
+	if (!isset($_REQUEST['from'])) $_REQUEST['from'] = '';
 
   $smarty->assign('topline', $_REQUEST["topline"]);
   $smarty->assign('subtitle', $_REQUEST["subtitle"]);
@@ -243,6 +245,7 @@ if (isset($_REQUEST["preview"]) or !empty($errors)) {
 	$smarty->assign('rating', $_REQUEST["rating"]);
 	$smarty->assign('entrating', floor($_REQUEST["rating"]));
 	$smarty->assign_by_ref('emails', $_REQUEST['emails']);
+	$smarty->assign_by_ref('from', $_REQUEST['from']);
 	$imgname = $_REQUEST["image_name"];
 	$data = urldecode($_REQUEST["image_data"]);
 
@@ -390,7 +393,7 @@ if (isset($_REQUEST['save']) && empty($errors)) {
 	}
 
 	$artid = $artlib->replace_article(strip_tags($_REQUEST["title"], '<a><pre><p><img><hr><b><i>')
-																		, $_REQUEST["authorName"]
+																	, $_REQUEST["authorName"]
 																		, $_REQUEST["topicId"]
 																		, $useImage
 																		, $imgname
@@ -414,6 +417,7 @@ if (isset($_REQUEST['save']) && empty($errors)) {
 																		, $_REQUEST["rating"]
 																		, $isfloat
 																		, $emails
+																		, $_REQUEST['from']
 																		);
 
 	$cat_type = 'article';
