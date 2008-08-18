@@ -910,3 +910,4 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 1015,Group,5,,,configurationgroup,,tiki_p_admin,,,,
 1016,HTTPS/SSL,1005,,,configurationgroup,,tiki_p_admin,,,,
 1017,Other settings,,,,configurationgroup,,tiki_p_admin,,,,
+1018,Administer categories,25,,feature_categories,functionality,tiki-admin_categories,tiki_p_admin,,,,
