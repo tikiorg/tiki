@@ -175,42 +175,7 @@ hosting provider.  Normally Tiki tables won't conflict with other product names{
 		</td><td>
 			{if $tikidb_created}
 			<fieldset>
-		    <table>
-			<tr><td><h2>{tr}Upgrade{/tr}</h2></td></tr>
-			<tr><td><p align="center"><img src="img/silk/sticky.png" alt="warning" style="vertical-align:middle"/> <strong>{tr}Important{/tr}</strong>: {tr}Backup your database with mysqldump, phpmyadmin, or other before upgrading.{/tr}</p>
-			<p>{tr}Update database using script{/tr}: <br />
-			<select name="file" size="{if $files}{$files|@count}{else}3{/if}">
-			{section name=ix loop=$files}
-			<option value="{$files[ix]|escape}">{$files[ix]}&nbsp;</option>
-{sectionelse}
-			<option value="" disabled="disabled">{tr}No scripts available.{/tr}</option>
-			{/section}
-			</select></p>
-			<p align="center"><input type="submit" name="update" value="{tr}Upgrade{/tr}" /></p>
-		    </td></tr>
-		    <tr><td>
-<table class="normal" cellpadding="5">
-	<tr><th>{tr}To upgrade from{/tr}:</th><th>{tr}Use this script{/tr}:</th></tr>
-	<tr class="even">
-		<td>3.0.x</td>
-		<td>tiki_2.0to3.0</td>
-	</tr>
-	<tr class="odd">
-		<td>2.0.x</td>
-		<td>tiki_1.9to2.0</td>
-	</tr>
-	<tr class="even">
-		<td>1.9.x or<br/>1.8.x</td>
-		<td>tiki_1.8to1.9<br />{tr}Then rerun the installer using tiki_1.9to2.0.{/tr}</td>
-	</tr>
-	<tr class="odd">
-		<td>1.7.x</td>
-		<td>{tr}See <a target="help" class="link" href="http://doc.tikiwiki.org/Upgrade+1.7+to+1.8">Tiki database 1.7.x to 1.8x instructions{/tr}</a>.</td>
-	</tr>
-</table>
-			<p>{tr}For information about <strong>tiki-secdb_*.sql</strong> files, please see <a target="help" class="link" href="http://doc.tikiwiki.org/Security+Admin">http://doc.tikiwiki.org/Security+Admin{/tr}</a>.
-
-			
+			<p align="center"><input type="submit" name="update" value="{tr}Automatic update{/tr}" /></p>
 		</td></tr>		
     </table>
 			</fieldset>

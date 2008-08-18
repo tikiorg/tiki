@@ -12,14 +12,19 @@ TikiSetup::prependIncludePath('lib');
 TikiSetup::prependIncludePath('lib/pear');
 require_once('tiki-setup_base.php');
 require_once('installer/installlib.php');
+include 'db/local.php';
 
 $installer = new Installer;
-$installed = $installer->update();
+if( $_SERVER['argc'] == 2 && $_SERVER['argv'][1] == 'install' )
+	$installer->cleanInstall();
+else {
+	$installed = $installer->update();
 
-if( count($installed) ) {
-	echo "Installed...\n";
-	foreach( $installed as $patch )
-		echo "\t$patch\n";
+	if( count($installed) ) {
+		echo "Installed...\n";
+		foreach( $installed as $patch )
+			echo "\t$patch\n";
+	}
 }
 
 ?>

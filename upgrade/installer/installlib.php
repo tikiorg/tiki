@@ -1,34 +1,63 @@
 <?php
+require_once 'lib/setup/twversion.class.php';
 
 class Installer
 {
 	private $patches = array();
+	private $scripts = array();
 
 	function __construct() // {{{
 	{
 		$this->buildPatchList();
+		$this->buildScriptList();
 	} // }}}
 
 	function cleanInstall() // {{{
 	{
-		// FIXME : Should run the converted file
-		$this->runFile( dirname(__FILE__) . '/db/tiki.sql' );
+		global $db_tiki;
+		$TWV = new TWVersion;
+		$dbversion_tiki = $TWV->getBaseVersion();
+
+		$this->runFile( dirname(__FILE__) . '/../db/tiki-'.$dbversion_tiki.'-'.$db_tiki.'.sql' );
 
 		// Base SQL file contains the distribution tiki patches up to this point
-		foreach( $this->patches as $patch )
-			if( preg_match( '/_tiki$/', $patch ) )
+		foreach( $this->patches as $patch ) {
+			if( preg_match( '/_tiki$/', $patch ) ) {
 				$this->recordPatch( $patch );
+			}
+		}
 
 		$this->update();
 	} // }}}
 
 	function update() // {{{
 	{
+		if( ! $this->tableExists( 'tiki_schema' ) ) {
+			// DB not old enough to handle auto update
+
+			// If 1.9
+			if( ! $this->tableExists( 'tiki_minichat' ) ) {
+				$this->runFile( dirname(__FILE__) . '/../db/tiki_1.9to2.0.sql' );
+			}
+
+			$this->runFile( dirname(__FILE__) . '/../db/tiki_2.0to3.0.sql' );
+		}
+
+		$TWV = new TWVersion;
+		$dbversion_tiki = $TWV->getBaseVersion();
+
+		$secdb = dirname(__FILE__) . '/../db/tiki-secdb_' . $dbversion_tiki . '_mysql.sql';
+		if( file_exists( $secdb ) )
+			$this->runFile( $secdb );
+
 		$installed = array();
-		foreach( $this->patches as $patch )
-		{
+		foreach( $this->patches as $patch ) {
 			$this->installPatch( $patch );
 			$installed[] = $patch;
+		}
+
+		foreach( $this->scripts as $script ) {
+			$this->runScript( $script );
 		}
 
 		return $installed;
@@ -36,6 +65,9 @@ class Installer
 
 	private function installPatch( $patch ) // {{{
 	{
+		if( in_array( $patch, $this->patches ) )
+			return;
+
 		$schema = dirname(__FILE__) . "/schema/$patch.sql";
 		$script = dirname(__FILE__) . "/schema/$patch.php";
 
@@ -55,6 +87,18 @@ class Installer
 			$post( $this );
 
 		$this->recordPatch( $patch );
+	} // }}}
+
+	private function runScript( $script ) // {{{
+	{
+		$file = dirname(__FILE__) . "/script/$script.php";
+
+		if( file_exists( $file ) ) {
+			require $file;
+		}
+
+		if( function_exists( $script ) )
+			$script( $this );
 	} // }}}
 
 	private function recordPatch( $patch ) // {{{
@@ -125,10 +169,10 @@ class Installer
 	{
 		global $dbTiki;
 
-		if( $dbTiki ) {
+		if( $dbTiki && method_exists( $dbTiki, 'query' ) ) {
 			return $dbTiki->query( $query, $values );
-		} else {
-			// FIXME : Resolve for when used 
+		} elseif( $dbTiki && method_exists( $dbTiki, 'Execute' ) ) {
+			return $dbTiki->Execute( $query, $values );
 		}
 	} // }}}
 
@@ -142,17 +186,49 @@ class Installer
 
 		$installed = array();
 		$results = $this->query( "SELECT patch_name FROM tiki_schema" );
-		if( ! $results ) {
-			die("Your installation does not support the installer yet. Run db/tiki_2.0to3.0.sql one last time.\n");
-		}
-
-		while( $row = $results->fetchRow() ) {
-			$installed[] = reset($row);
+		if( $results ) {
+			while( $row = $results->fetchRow() ) {
+				$installed[] = reset($row);
+			}
 		}
 
 		$this->patches = array_diff( $this->patches, $installed );
 
 		sort( $this->patches );
+	} // }}}
+
+	private function buildScriptList() // {{{
+	{
+		$files = glob( dirname(__FILE__) . '/script/*.php' );
+		foreach( $files as $file ) {
+			$filename = basename( $file );
+			$this->scripts[] = substr( $filename, 0, -4 );
+		}
+
+		$installed = array();
+		$results = $this->query( "SELECT patch_name FROM tiki_schema" );
+		if( $results ) {
+			while( $row = $results->fetchRow() ) {
+				$installed[] = reset($row);
+			}
+		}
+
+		$this->patches = array_diff( $this->patches, $installed );
+
+		sort( $this->patches );
+	} // }}}
+
+	private function tableExists( $tableName ) // {{{
+	{
+		static $list = array();
+		if( ! count( $list ) )
+		{
+			$result = $this->query( "show tables" );
+			while( $row = $result->fetchRow() )
+				$list[] = reset( $row );
+		}
+
+		return in_array( $tableName, $list );
 	} // }}}
 }
 
