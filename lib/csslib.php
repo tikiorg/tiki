@@ -164,7 +164,7 @@ class cssLib extends TikiLib {
 		$cssversion = $this->version_css($path);
 		// assume default_ver if no @version string
 		$cssversion = $cssversion ? $cssversion : $default_ver;
-		if( $dbversion_tiki == $cssversion || !$cssversion ) { return ''; }
+		if( empty($dbversion_tiki) || $dbversion_tiki == $cssversion || !$cssversion ) { return ''; }
 		return $cssversion."to".$TWV->getBaseVersion().".css";
 	}
 }
