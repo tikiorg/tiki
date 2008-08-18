@@ -23,8 +23,7 @@
 <td class="odd"><a href="tiki-admin_system.php?do=temp_cache" class="link" title="{tr}Empty{/tr}">{icon _id=img/icons/del.gif alt="{tr}Empty{/tr}"}</a></td>
 </tr>
 <tr class="form">
-<td class="even"><b>{tr}All user prefs sessions{/tr}</b></td>
-<td class="even"></td>
+<td class="even" colspan="2"><b>{tr}All user prefs sessions{/tr}</b></td>
 <td class="even"><a href="tiki-admin_system.php?do=prefs" class="link" title="{tr}Empty{/tr}">{icon _id=img/icons/del.gif alt="{tr}Empty{/tr}"}</a></td>
 </tr>
 </table>
