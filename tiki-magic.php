@@ -74,7 +74,15 @@ $enumerations['calendarviewmode'] = array('day'=>tra('Day'), 'week'=>tra('Week')
 $enumerations['firstdayofweek'] = array('6'=>tra('Saturday'),'0'=>tra('Sunday'), '1'=>tra('Monday'),'user'=>tra('Depends user language'));
 $enumerations['errorreportinglevel'] = array ('0'=>tra('No error reporting'),'1'=>tra('Report all PHP errors'),'2'=>tra('Report all errors except notices'));
 
-$enumerations['forumordering'] = array ('created_asc'=>tra('Creation Date (asc)'),'created_desc'=>tra('Creation Date (desc)'),'threads_desc'=>tra('Topics (desc)'));
+$enumerations['forumordering'] = array ('created_asc'=>tra('Creation Date (asc)'),
+										'created_desc'=>tra('Creation Date (desc)'),
+										'threads_desc'=>tra('Topics (desc)'),
+										'comments_desc'=>tra('Threads (desc)'),
+										'lastPost_desc'=>tra('Last post (desc)'),										
+										'hits_desc'=>tra('Visits (desc)'),
+										'name_desc'=>tra('Name (desc)'),
+										'name_asc'=>tra('Name (asc)'),										
+										);
 
 
 
