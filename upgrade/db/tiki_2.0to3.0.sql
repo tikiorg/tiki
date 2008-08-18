@@ -60,3 +60,9 @@ CREATE TABLE `tiki_feature` (
 #2008-08-17 lphuberdeau
 UPDATE tiki_menu_options SET section = 'feature_wiki_structure' WHERE optionId = 47;
 
+#2008-08-18 lphuberdeau
+CREATE TABLE tiki_schema (
+	patch_name VARCHAR(30) PRIMARY KEY,
+	install_date TIMESTAMP
+) ENGINE=MyISAM;
+

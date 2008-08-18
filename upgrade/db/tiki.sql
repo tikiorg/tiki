@@ -5052,3 +5052,10 @@ CREATE TABLE `tiki_feature` (
   `feature_path` varchar(20) NOT NULL default '0',
   PRIMARY KEY  (`feature_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=0 ;
+
+
+CREATE TABLE tiki_schema (
+	patch_name VARCHAR(30) PRIMARY KEY,
+	install_date TIMESTAMP
+) ENGINE=MyISAM;
+
