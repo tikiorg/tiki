@@ -3055,7 +3055,7 @@ class TikiLib extends TikiDB {
 	}
 
 	function update_session($sessionId) {
-		global $user;
+		global $user, $prefs;
 		global $logslib; include_once("lib/logs/logslib.php");
 
 		if ($user === false) $user = '';

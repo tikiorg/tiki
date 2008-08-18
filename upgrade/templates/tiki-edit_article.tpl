@@ -78,7 +78,7 @@
 </select>
 {if $tiki_p_admin_cms eq 'y'}<a href="tiki-article_types.php" class="link">{tr}Admin types{/tr}</a>{/if}
 </td></tr>
-<tr id='use_ratings' {if $types.$type.use_ratings eq 'y'}style="display:;"{else}style="display:none;"{/if}><td class="formcolor">{tr}Rating{/tr}</td><td class="formcolor">
+<tr id='use_ratings' {if $types.$type.use_ratings eq 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor"><td>{tr}Rating{/tr}</td><td>
 <select name='rating'>
 <option value="10" {if $rating eq 10}selected="selected"{/if}>10</option>
 <option value="9.5" {if $rating eq "9.5"}selected="selected"{/if}>9.5</option>
@@ -199,7 +199,15 @@
 <tr class="formcolor"><td>{tr}Allow HTML{/tr}</td><td><input type="checkbox" name="allowhtml" {if $allowhtml eq 'y'}checked="checked"{/if}/></td></tr>
 {/if}
 {if $prefs.feature_cms_emails eq 'y' and $articleId eq 0}
-<tr class="formcolor"><td>{tr}Emails to be notified (separated with commas){/tr}</td><td><input type="text" name="emails" value="{$emails|escape}" size="80" /></td></tr>
+<tr class="formcolor">
+	<td>{tr}Emails to be notified (separated with commas){/tr}</td>
+	<td>
+		<input type="text" name="emails" value="{$emails|escape}" size="80" /><br />
+		{if !empty($userEmail) and $userEmail ne $prefs.sender_email}
+			{tr}From:{/tr} {$userEmail|escape}<input type="radio" name="from" value="{$userEmail|escape}"{if empty($from) or $from eq $userEmail} checked="checked"{/if} /> {$prefs.sender_email|escape}<input type="radio" name="from" value="{$prefs.sender_email|escape}"{if $from eq $prefs.sender_email} checked="checked"{/if} />
+		{/if}
+	</td>
+</tr>
 {/if}
 
 {include file=freetag.tpl}
