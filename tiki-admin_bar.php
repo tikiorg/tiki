@@ -1,5 +1,4 @@
 <?php
-require_once ('tiki-setup.php');
 include_once ('lib/admin/magiclib.php');
 
 $headerlib->add_cssfile('css/spanky.css');

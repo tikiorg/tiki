@@ -307,7 +307,6 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 385,freetags_feature_3d,130,,freetags_feature_3d,flag,,tiki_p_admin,,,Tags, 
 386,freetags_3d_camera_distance,130,,freetags_3d_camera_distance,simple,,tiki_p_admin,,,Tags, 
 387,freetags_3d_fov,130,,freetags_3d_fov,simple,,tiki_p_admin,,,Tags, 
-
 388,freetags_3d_feed_animation_interval,130,,freetags_3d_feed_animation_interval,simple,,tiki_p_admin,,,Tags, 
 389,freetags_3d_node_charge,130,,freetags_3d_node_charge,simple,,tiki_p_admin,,,Tags, 
 390,freetags_3d_navigation_depth,130,,freetags_3d_navigation_depth,simple,,tiki_p_admin,,,Tags, 
