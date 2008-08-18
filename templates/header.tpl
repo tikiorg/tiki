@@ -207,6 +207,3 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 <a href="{$smarty.server.SCRIPT_NAME}{if $fsquery}?{$fsquery|escape:"url":"UTF-8"}&amp;{else}?{/if}fullscreen=y" class="menulink" id="fullscreenbutton">{icon _id=application_get alt="{tr}Fullscreen{/tr}"}</a>
 {/if}
 {/if}
-
-{* New admin top bar for 3.0 *}
-{include file="tiki-admin_bar.tpl"}
