@@ -140,7 +140,7 @@ $smarty->display("tiki.tpl");
 $lazyFields = array();
 // Recursively get the features underneath the specified feature id.
 function get_features($featureid, $keepContainers = true) {
-	global $magiclib, $tikilib, $pagefeatures, $containers, $enumerations, $lazyFields;
+	global $magiclib, $tikilib, $pagefeatures, $containers, $enumerations, $lazyFields, $prefs;
 	$features = $magiclib->get_child_features($featureid);
 	$cont = array();
 
@@ -161,7 +161,9 @@ function get_features($featureid, $keepContainers = true) {
 				$cont[] = $feature;
 			} else {
 				$pagefeatures[] = $feature;
-				get_features($feature['feature_id'], false);
+				$pref = $feature['setting_name'];
+				if( !isset($prefs[$pref]) || $prefs[$pref] == 'y' )
+					get_features($feature['feature_id'], false);
 			}
 		}
 		foreach($cont as $feature) {
