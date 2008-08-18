@@ -6,7 +6,7 @@ Variation of Tikineat theme for TikiWiki CMS/Groupware, based on *litecss.
 /***** XHTML Elements ******/
 
 body {
-	background: #E9ECEF url("tikinewt/bg_vertline.png") 180px 0px repeat-y;
+	background: #E9ECEF;
 	font-family: Verdana, Helvetica, Geneva, Arial, sans-serif;
 	margin: 0;
 	padding: 0;
@@ -19,9 +19,7 @@ body {
 	font-size: 70% !important;
 }
 
-#main {
-	background: transparent url("tikinewt/bg_vertline.png") right top repeat-y;
-}
+#main {}
 
 a,
 a:visited {
@@ -215,18 +213,22 @@ div#tiki-main {
 	background: #dca;
 }
 
-#header {
-	background-color: #E9ECEF;
-}
+#header {background: #E9ECEF}
 
 #header a,
-#header a:visited {
-	text-decoration: none;
-}
+#header a:visited {text-decoration: none}
 
-#header-top {
-	position: relative;
-}
+#header-top {position: relative}
+
+div#sitetitle {
+	font-size: 2.6em;
+	font-weight: bold;
+	margin-left: 40px}
+	
+div#sitesubtitle {
+	font-size: 1.2em;
+	font-weight: bold;
+	margin-left: 40px}
 
 /** Look & Feel (Site Identity) **/
 #siteheader {
@@ -307,10 +309,18 @@ div#sitead {
 #middle {
 	text-align: left;
 	font-size: 1em;
+	margin-bottom: 2px;
 }
-#showhide_columns, .tellafriend {
+
+#showhide_columns {
+	border: 1px solid #8CACBB;
+	margin: 3px 3px -1px 3px
+}
+
+.tellafriend {
 	border-left: 1px solid #8CACBB;
-}
+	border-right: 1px solid #8CACBB;
+	margin: 3px 3px -1px 3px}
 
 #c1c2 {
 	font-size: 1em;
@@ -347,19 +357,17 @@ a.flip img {
 }
 
 #c1c2 #wrapper #col1 {
-	background-color: #E9ECEF;
-}
+	}
 
-#c1c2	#wrapper #col1	.content {
+#c1c2	#wrapper #col1 > .content {
 	background-color: white;
 }
 
 #c1c2 #wrapper #col1 #tiki-center {
 	background: #F3F6F9;
-	margin: 0;
+	margin: 0 3px;
 	padding: 0 5px;
-	border-left: 1px solid #8CACBB;
-/*	font-size: .9em;*/
+	border: 1px solid #8CACBB
 }
 
 /* IE */
@@ -379,6 +387,8 @@ a.flip img {
 	background-color: transparent;
 	width: 180px;
 	text-align: left;
+	border-right: 1px solid #8CACBB;
+	border-bottom: 1px solid #8CACBB;
 }
 
 #col2 .content {
@@ -393,6 +403,7 @@ a.flip img {
 	margin-left: -180px;
 	text-align: left;
 	border-left: 1px solid #8CACBB;
+	border-bottom: 1px solid #8CACBB;
 	
 }
 
@@ -417,8 +428,11 @@ a.flip img {
 
 }
 
-#power {font-size: .9em; text-align: center}
-div#credits {display: inline}
+div#power {
+	font-size: .9em;
+	text-align: center}
+	
+#credits {display: inline}
 
 /* this is needed as a little workaround because MSIE tends to display the footer partly without the background specified */
 .footerbgtrap {
@@ -661,7 +675,7 @@ div.box {
 	overflow: hidden;
 	margin: 3px;
 	border: 1px solid #ACCCDD;
-	width: 174px;
+	width: 172px;
 	text-align: left;
 }
 
@@ -1826,7 +1840,7 @@ td.forumtoolbar {
 	margin-left: 5px;
 	margin-top: 3px;
 }
-#c1c2 #wrapper #col1 .content .post .postbody .content {
+#col1 .post .postbody .content {
 	color: #000000;
 	background: #E7E9EA !important;
 	height: 100%;
