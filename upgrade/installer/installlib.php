@@ -6,6 +6,12 @@ class Installer
 	private $patches = array();
 	private $scripts = array();
 
+	public $installed = array();
+	public $executed = array();
+
+	public $success = array();
+	public $failures = array();
+
 	function __construct() // {{{
 	{
 		$this->buildPatchList();
@@ -50,22 +56,18 @@ class Installer
 		if( file_exists( $secdb ) )
 			$this->runFile( $secdb );
 
-		$installed = array();
-		foreach( $this->patches as $patch ) {
+		$patches = $this->patches;
+		foreach( $patches as $patch ) {
 			$this->installPatch( $patch );
-			$installed[] = $patch;
 		}
 
-		foreach( $this->scripts as $script ) {
+		foreach( $this->scripts as $script )
 			$this->runScript( $script );
-		}
-
-		return $installed;
 	} // }}}
 
 	private function installPatch( $patch ) // {{{
 	{
-		if( in_array( $patch, $this->patches ) )
+		if( ! in_array( $patch, $this->patches ) )
 			return;
 
 		$schema = dirname(__FILE__) . "/schema/$patch.sql";
@@ -86,6 +88,7 @@ class Installer
 		if( function_exists( $post ) )
 			$post( $this );
 
+		$this->installed[] = $patch;
 		$this->recordPatch( $patch );
 	} // }}}
 
@@ -99,6 +102,8 @@ class Installer
 
 		if( function_exists( $script ) )
 			$script( $this );
+
+		$this->executed[] = $script;
 	} // }}}
 
 	private function recordPatch( $patch ) // {{{
@@ -167,12 +172,22 @@ class Installer
 
 	function query( $query, $values = array() ) // {{{
 	{
-		global $dbTiki;
+		global $dbTiki, $tikilib;
 
-		if( $dbTiki && method_exists( $dbTiki, 'query' ) ) {
-			return $dbTiki->query( $query, $values );
+		$error = '';
+		if( $tikilib ) {
+			$result = $tikilib->queryError( $query, $error, $values );
 		} elseif( $dbTiki && method_exists( $dbTiki, 'Execute' ) ) {
-			return $dbTiki->Execute( $query, $values );
+			$result = $dbTiki->Execute( $query, $values );
+			$error = $dbTiki->ErrorMsg();
+		}
+
+		if( $result ) {
+			$this->success[] = $query;
+			return $result;
+		} else {
+			$this->failures[] = array( $query, $error );
+			return false;
 		}
 	} // }}}
 
@@ -204,25 +219,14 @@ class Installer
 			$filename = basename( $file );
 			$this->scripts[] = substr( $filename, 0, -4 );
 		}
-
-		$installed = array();
-		$results = $this->query( "SELECT patch_name FROM tiki_schema" );
-		if( $results ) {
-			while( $row = $results->fetchRow() ) {
-				$installed[] = reset($row);
-			}
-		}
-
-		$this->patches = array_diff( $this->patches, $installed );
-
-		sort( $this->patches );
 	} // }}}
 
 	private function tableExists( $tableName ) // {{{
 	{
-		static $list = array();
-		if( ! count( $list ) )
+		static $list = null;
+		if( is_null( $list ) )
 		{
+			$list = array();
 			$result = $this->query( "show tables" );
 			while( $row = $result->fetchRow() )
 				$list[] = reset( $row );

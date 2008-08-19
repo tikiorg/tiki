@@ -18,13 +18,33 @@ $installer = new Installer;
 if( $_SERVER['argc'] == 2 && $_SERVER['argv'][1] == 'install' )
 	$installer->cleanInstall();
 else {
-	$installed = $installer->update();
+	$installer->update();
 
-	if( count($installed) ) {
-		echo "Installed...\n";
-		foreach( $installed as $patch )
-			echo "\t$patch\n";
+	echo "Patches installed:\n";
+	foreach( $installer->installed as $patch )
+		echo "\t$patch\n";
+
+	echo "Scripts executed:\n";
+	foreach( $installer->executed as $script )
+		echo "\t$script\n";
+	
+	echo "Queries executed successfully: " . count($installer->success) . "\n";
+	echo "Errors:\n";
+	foreach( $installer->failures as $key => $error ) {
+		list( $query, $message ) = $error;
+
+		echo "===== Error $key =====\n$query\n$message\n";
 	}
+
+	echo "\n==========\nPatches installed:\n";
+	foreach( $installer->installed as $patch )
+		echo "\t$patch\n";
+
+	echo "\nScripts executed:\n";
+	foreach( $installer->executed as $script )
+		echo "\t$script\n";
+	
+	echo "\nQueries executed successfully: " . count($installer->success) . "\n";
 }
 
 ?>
