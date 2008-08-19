@@ -247,7 +247,7 @@ class ArtLib extends TikiLib {
 				if (!in_array($n['email'], $nots3))
 					$nots[] = $n;
 			}
-			if (is_array($emails) && empty ($from)) {
+			if (is_array($emails) && (empty ($from) || $from == $prefs['sender_email'])) {
 				foreach ($emails as $n) {
 					if (!in_array($n, $nots3))
 						$nots[] = array('email'=>$n);
@@ -273,12 +273,12 @@ class ArtLib extends TikiLib {
 				    unset ($parts[count($parts) - 1]);
 			    $smarty->assign('mail_machine_raw', $tikilib->httpPrefix(). implode('/', $parts));
 			    sendEmailNotification($nots, "watch", "user_watch_article_post_subject.tpl", $_SERVER["SERVER_NAME"], "user_watch_article_post.tpl");
-			    if (is_array($emails) && !empty($from)) {
-			    	$nots = array();
-			    	foreach ($emails as $n) {
-				  $nots[] = array('email'=>$n);
-				}
-			    	sendEmailNotification($nots, "watch", "user_watch_article_post_subject.tpl", $_SERVER["SERVER_NAME"], "user_watch_article_post.tpl");
+			    if (is_array($emails) && !empty($from) && $from != $prefs['sender_email']) {
+					$nots = array();
+					foreach ($emails as $n) {
+						$nots[] = array('email'=>$n);
+					}
+			    	sendEmailNotification($nots, "watch", "user_watch_article_post_subject.tpl", $_SERVER["SERVER_NAME"], "user_watch_article_post.tpl", $from);
 			    }
 		    }
 	    }
