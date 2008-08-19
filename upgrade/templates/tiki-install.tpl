@@ -221,8 +221,8 @@ hosting provider.  Normally Tiki tables won't conflict with other product names{
 		</p>
 		</div>
     	
-<p><img src="pics/icons/accept.png" alt="{tr}Success{/tr}" style="vertical-align:middle"/> <strong>{if isset($smarty.post.update)}{tr}Upgrade{/tr}{else}{tr}Installation{/tr}{/if} {tr}operations executed successfully{/tr}</strong>: {$succcommands|@count} {tr}SQL queries{/tr}.</p>
-{if $failedcommands|@count > 0}
+<p><img src="pics/icons/accept.png" alt="{tr}Success{/tr}" style="vertical-align:middle"/> <strong>{if isset($smarty.post.update)}{tr}Upgrade{/tr}{else}{tr}Installation{/tr}{/if} {tr}operations executed successfully{/tr}</strong>: {$installer->success|@count} {tr}SQL queries{/tr}.</p>
+{if $installer->failures|@count > 0}
 			<script type="text/javascript">
 			<!--//--><![CDATA[//><!--
 				{literal}
@@ -233,15 +233,16 @@ hosting provider.  Normally Tiki tables won't conflict with other product names{
 			//--><!]]>
 			</script>
 
-<p><img src="pics/icons/delete.png" alt="{tr}Failed{/tr}" style="vertical-align:middle"/> <strong>{tr}Operations failed{/tr}:</strong> {$failedcommands|@count} {tr}SQL queries{/tr}. 
+<p><img src="pics/icons/delete.png" alt="{tr}Failed{/tr}" style="vertical-align:middle"/> <strong>{tr}Operations failed{/tr}:</strong> {$installer->failures|@count} {tr}SQL queries{/tr}. 
 <a href="javascript:sql_failed()">{tr}Display details{/tr}</a>.
 
 <div id="sql_failed_log" style="display:none">
  <p>{tr}During an upgrade, it is normal to have SQL failures resulting with <strong>Table already exists</strong> messages.{/tr}</p>
     		<textarea rows="15" cols="80">
-{section loop=$failedcommands name=ix}
-{$failedcommands[ix]}
-{/section}
+{foreach from=$installer->failures item=item}
+{$item[0]}
+{$item[1]}
+{/foreach}
     		</textarea>
 
 </div>

@@ -702,6 +702,7 @@ if ( isset($dbTiki) && is_object($dbTiki) && isset($_SESSION["install-logged-$mu
 	if ( isset($_REQUEST['scratch']) ) {
 		$installer = new Installer;
 		$installer->cleanInstall();
+		$smarty->assign('installer', $installer);
 		$smarty->assign('dbdone', 'y');
 		if ( isset($_REQUEST['profile']) ) process_sql_file('profiles/'.$_REQUEST['profile'], $db_tiki);
 		$_SESSION[$cookie_name] = 'admin';
@@ -710,6 +711,7 @@ if ( isset($dbTiki) && is_object($dbTiki) && isset($_SESSION["install-logged-$mu
 	if ( isset($_REQUEST['update']) ) {
 		$installer = new Installer;
 		$installer->update();
+		$smarty->assign('installer', $installer);
 		$smarty->assign('dbdone', 'y');
 	}
 
