@@ -18,12 +18,11 @@
 {/if}
   
 {if $tikifeedback}
-<div class="simplebox {if $tikifeedback[n].num > 0} highlight{/if}">{section name=n loop=$tikifeedback}{$tikifeedback[n].mes}<br />{/section}</div>
+{remarksbox type="feedback" title="Feedback"}{section name=n loop=$tikifeedback}{$tikifeedback[n].mes}<br />{/section}{/remarksbox}
 {/if}
 
 {if $added != "" or $discarded != "" or $discardlist != ''}
-<div class="simplebox">
-<h2>{tr}Batch Upload Results{/tr}</h2>
+{remarksbox type="feedback" title="Batch Upload Results"}
 {tr}Updated users{/tr}: {$added}
 {if $discarded != ""}- {tr}Rejected users{/tr}: {$discarded}{/if}
 <br /><br />
@@ -41,18 +40,19 @@
 {$errors[ix]}<br />
 {/section}
 {/if}
-</div>
+{/remarksbox}
 {/if}
 
 {if $prefs.feature_tabs eq 'y'}
 {cycle name=tabs values="1,2,3,4" print=false advance=false reset=true}
 <div class="tabs">
-<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},3);">{tr}Users{/tr}</a></span>
+<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Users{/tr}</a></span>
 {if $userinfo.userId}
-<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},3);">{tr}Edit user{/tr} <i>{$userinfo.login}</i></a></span>
+<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Edit user{/tr} <i>{$userinfo.login}</i></a></span>
 {else}
-<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},3);">{tr}Add a New User{/tr}</a></span>
+<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Add a New User{/tr}</a></span>
 {/if}
+<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Batch Upload{/tr}</a></span>
 </div>
 {/if}
 
@@ -281,25 +281,16 @@ class="prevnext">{tr}All{/tr}</a>
 {if $userinfo.login neq 'admin'}<tr class="formcolor"><td>{tr}Registration{/tr}</td><td>{if $userinfo.registrationDate}{$userinfo.registrationDate|tiki_long_datetime}{/if}</td></tr>{/if}
 <tr class="formcolor"><td>{tr}Last login{/tr}</td><td>{if $userinfo.lastLogin}{$userinfo.lastLogin|tiki_long_datetime}{/if}</td></tr>
 {/if}
-{if $userinfo.userId}
 <tr class="formcolor"><td>&nbsp;</td><td>
+{if $userinfo.userId}
 <input type="hidden" name="user" value="{$userinfo.userId|escape}" />
 <input type="hidden" name="edituser" value="1" />
 <input type="submit" name="submit" value="{tr}Save{/tr}" />
 {else}
-<tr class="formcolor">
-  <td>{tr}Batch upload (CSV file):{/tr} <a {popup text='login,password,email,groups&lt;br /&gt;user1,password1,email1,&quot;group1,group2&quot;&lt;br /&gt;user2, password2,email2'}>{icon _id='help'}</a></td>
-  <td>
-    <input type="file" name="csvlist"/><br /><input type="radio" name="overwrite" value="y" checked="checked" />&nbsp;{tr}Overwrite{/tr}<br /><input type="radio" name="overwrite" value="c"/>&nbsp;{tr}Overwrite but keep the previous login if the login exists in another case{/tr}<br /><input type="radio" name="overwrite" value="n" />&nbsp;{tr}Don't overwrite{/tr}<br />{tr}Overwrite groups:{/tr} <input type="checkbox" name="overwriteGroup" />
-  </td>
-</tr>
-<tr class="formcolor"><td>&nbsp;</td><td>
-<input type="hidden" name="newuser" value="1" />
-<input type="submit" name="submit" value="{tr}Add{/tr}" />
+<input type="submit" name="newuser" value="{tr}Add{/tr}" />
 {/if}
 </td></tr>
 </table>
-</form>
 <br /><br />
 
 {if $prefs.userTracker eq 'y'}
@@ -316,6 +307,27 @@ class="prevnext">{tr}All{/tr}</a>
 <td><input id='genepass' type="text" /></td></tr>
 </table>
 {/if}
+</form>
+</div>
 
+<div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $prefs.feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
+<h2>Batch Upload</h2>
+<form action="tiki-adminusers.php" method="post" enctype="multipart/form-data">
+<table class="normal">
+<tr class="formcolor">
+  <td>{tr}CSV File:{/tr} <a {popup text='login,password,email,groups&lt;br /&gt;user1,password1,email1,&quot;group1,group2&quot;&lt;br /&gt;user2, password2,email2'}>{icon _id='help'}</a></td>
+  <td>
+    <input type="file" name="csvlist"/><br />
+	<input type="radio" name="overwrite" value="y" checked="checked" />&nbsp;{tr}Overwrite{/tr}<br />
+	<input type="radio" name="overwrite" value="c"/>&nbsp;{tr}Overwrite but keep the previous login if the login exists in another case{/tr}<br />
+	<input type="radio" name="overwrite" value="n" />&nbsp;{tr}Don't overwrite{/tr}<br />
+	{tr}Overwrite groups:{/tr} <input type="checkbox" name="overwriteGroup" />
+  </td>
+</tr>
+<tr class="formcolor"><td>&nbsp;</td><td>
+<input type="submit" name="batch" value="{tr}Add{/tr}" />
+</td></tr>
+</table>
+</form>
 </div>
 
