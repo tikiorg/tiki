@@ -69,6 +69,11 @@ function wikiplugin_gauge_info() {
 				'name' => tra('Display Percentage'),
 				'description' => tra('true|false, if true then a percentage is displayed.'),
 			),
+			'showvalue' => array(
+				'required' => false,
+				'name' => tra('Display numeric value'),
+				'description' => tra('true|false, if the numeric value or percentage is displayed after the gauge.'),
+			),
 			'height' => array(
 				'required' => false,
 				'name' => tra('Height'),
@@ -103,6 +108,12 @@ function wikiplugin_gauge($data, $params) {
 
 	if (!isset($perc)) {
 		$perc = false;
+	}
+
+	if (!isset($showvalue)) {
+		$showvalue = true;
+	} else {
+		$showvalue = (bool) $showvalue;
 	}
 	
 	if (!isset($max) or !$max) {
@@ -156,7 +167,7 @@ function wikiplugin_gauge($data, $params) {
 
 	$html  ='<table border="0" cellpadding="0" cellspacing="0"><tr>' . $label_td . '<td width="' . $size . '" height="' . $height . '">';
 	$html .='<table border="0" cellpadding="0" cellspacing="0" width="100%"><tr>' . $h_td . '</tr></table>';
-	$html .='</td>' . $perc_td . '<td>&nbsp;</td></tr>';
+	$html .='</td>' . ($showvalue ? $perc_td : '') . '<td>&nbsp;</td></tr>';
 
 	if (!empty($data)) {
 		$html .= '<tr><td><small>' . $data . '</small></td></tr>';

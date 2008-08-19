@@ -7,6 +7,7 @@
 	{if $prefs.quantify_changes eq 'y' and $mod_translation_quantification}
 		<div>
 			{tr}Up-to-date-ness{/tr}: {$mod_translation_quantification}%
+			{$mod_translation_gauge}
 		</div><br />
 	{/if}
 	{if $mod_translation_better_known or $mod_translation_better_other}
