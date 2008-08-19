@@ -7,6 +7,7 @@
 // details.
 
 // RULE1: $prefs does not contain serialized values. Only the database contains serialized values.
+// RULE2: put array() in default prefs for serialized values
 
 //this script may only be included - so its better to die if called directly.
 $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
@@ -1164,7 +1165,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	// Find which preferences need to be serialized/unserialized, based on the default values (those with arrays as values)
 	if ( ! isset($_SESSION['serialized_prefs']) ) {
 		$_SESSION['serialized_prefs'] = array();
-		foreach ( $prefs as $p => $v )
+		foreach ( $defaults as $p => $v )
 			if ( is_array($v) ) $_SESSION['serialized_prefs'][] = $p;
 	}
 
