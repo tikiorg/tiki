@@ -81,4 +81,3 @@ function close_connection() {
 	global $dbTiki;
 	$dbTiki= NULL;
 }
-?>
