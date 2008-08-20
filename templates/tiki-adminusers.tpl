@@ -310,8 +310,9 @@ class="prevnext">{tr}All{/tr}</a>
 </form>
 </div>
 
+{* ---------------------- tab with upload -------------------- *}
 <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $prefs.feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
-<h2>Batch Upload</h2>
+<h2>{tr}Batch Upload{/tr}</h2>
 <form action="tiki-adminusers.php" method="post" enctype="multipart/form-data">
 <table class="normal">
 <tr class="formcolor">
@@ -330,4 +331,3 @@ class="prevnext">{tr}All{/tr}</a>
 </table>
 </form>
 </div>
-
