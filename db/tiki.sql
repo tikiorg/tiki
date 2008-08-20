@@ -1,24 +1,6 @@
-# $Rev$
-# $Date: 2008-03-16 00:06:59 $
-# $Author: nyloth $
-# $Name: not supported by cvs2svn $
-# phpMyAdmin MySQL-Dump
-# version 2.5.1
-# http://www.phpmyadmin.net/ (download page)
-#
-# Host: localhost
-# Generation Time: Jul 13, 2003 at 02:09 AM
-# Server version: 4.0.13
-# PHP Version: 4.2.3
+# --------------------------------------------------------
 # Database : tikiwiki
 # --------------------------------------------------------
-
-#
-# Table structure for table galaxia_activities
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS galaxia_activities;
 CREATE TABLE galaxia_activities (
@@ -35,14 +17,6 @@ CREATE TABLE galaxia_activities (
   expirationTime int(6) unsigned NOT NULL default '0',
   PRIMARY KEY (activityId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table galaxia_activity_roles
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS galaxia_activity_roles;
 CREATE TABLE galaxia_activity_roles (
@@ -50,14 +24,6 @@ CREATE TABLE galaxia_activity_roles (
   roleId int(14) NOT NULL default '0',
   PRIMARY KEY (activityId,roleId)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table galaxia_instance_activities
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS galaxia_instance_activities;
 CREATE TABLE galaxia_instance_activities (
@@ -69,14 +35,6 @@ CREATE TABLE galaxia_instance_activities (
   status enum('running','completed') default NULL,
   PRIMARY KEY (instanceId,activityId)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table galaxia_instance_comments
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS galaxia_instance_comments;
 CREATE TABLE galaxia_instance_comments (
@@ -91,14 +49,6 @@ CREATE TABLE galaxia_instance_comments (
   timestamp int(14) default NULL,
   PRIMARY KEY (cId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table galaxia_instances
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS galaxia_instances;
 CREATE TABLE galaxia_instances (
@@ -114,14 +64,6 @@ CREATE TABLE galaxia_instances (
   properties longblob,
   PRIMARY KEY (instanceId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table galaxia_processes
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS galaxia_processes;
 CREATE TABLE galaxia_processes (
@@ -135,14 +77,6 @@ CREATE TABLE galaxia_processes (
   normalized_name varchar(80) default NULL,
   PRIMARY KEY (pId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table galaxia_roles
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS galaxia_roles;
 CREATE TABLE galaxia_roles (
@@ -153,14 +87,6 @@ CREATE TABLE galaxia_roles (
   description text,
   PRIMARY KEY (roleId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table galaxia_transitions
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS galaxia_transitions;
 CREATE TABLE galaxia_transitions (
@@ -169,14 +95,6 @@ CREATE TABLE galaxia_transitions (
   actToId int(14) NOT NULL default '0',
   PRIMARY KEY (actFromId,actToId)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table galaxia_user_roles
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS galaxia_user_roles;
 CREATE TABLE galaxia_user_roles (
@@ -185,14 +103,6 @@ CREATE TABLE galaxia_user_roles (
   user varchar(200) NOT NULL default '',
   PRIMARY KEY (roleId,user)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table galaxia_workitems
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS galaxia_workitems;
 CREATE TABLE galaxia_workitems (
@@ -206,14 +116,6 @@ CREATE TABLE galaxia_workitems (
   user varchar(200) default '',
   PRIMARY KEY (itemId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table messu_messages
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 12, 2003 at 08:29 PM
-#
 
 DROP TABLE IF EXISTS messu_messages;
 CREATE TABLE messu_messages (
@@ -235,15 +137,6 @@ CREATE TABLE messu_messages (
   PRIMARY KEY (msgId),
   KEY userIsRead (user, isRead)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table messu_archive (same structure as messu_messages)
-# desc: user may archive his messages to this table to speed up default msg handling
-#
-# Creation: Feb 26, 2005 at 03:00 PM
-# Last update: Feb 26, 2005 at 03:00 PM
-#
 
 DROP TABLE IF EXISTS messu_archive;
 CREATE TABLE messu_archive (
@@ -264,15 +157,6 @@ CREATE TABLE messu_archive (
   priority int(2) default NULL,
   PRIMARY KEY (msgId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table messu_sent (same structure as messu_messages)
-# desc: user may archive his messages to this table to speed up default msg handling
-#
-# Creation: Feb 26, 2005 at 11:00 PM
-# Last update: Feb 26, 2005 at 11:00 PM
-#
 
 DROP TABLE IF EXISTS messu_sent;
 CREATE TABLE messu_sent (
@@ -293,7 +177,6 @@ CREATE TABLE messu_sent (
   priority int(2) default NULL,
   PRIMARY KEY (msgId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
 
 DROP TABLE IF EXISTS sessions;
 CREATE TABLE sessions(
@@ -304,13 +187,6 @@ CREATE TABLE sessions(
   PRIMARY KEY (sesskey),
   KEY expiry (expiry)
 ) ENGINE=MyISAM;
-
-#
-# Table structure for table tiki_actionlog
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 13, 2003 at 12:29 AM
-#
 
 DROP TABLE IF EXISTS tiki_actionlog;
 CREATE TABLE tiki_actionlog (
@@ -334,15 +210,6 @@ CREATE TABLE tiki_actionlog_params (
   KEY (actionId),
   KEY nameValue (name, value(200))
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_articles
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Nov 27, 2006 at 21:53 PM
-# Last check: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_articles;
 CREATE TABLE tiki_articles (
@@ -390,7 +257,6 @@ CREATE TABLE tiki_articles (
   KEY type (type),
   FULLTEXT KEY ft (title,heading,body)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
 
 DROP TABLE IF EXISTS tiki_article_types;
 CREATE TABLE tiki_article_types (
@@ -423,13 +289,6 @@ INSERT IGNORE INTO tiki_article_types(type) VALUES ('Article');
 INSERT IGNORE INTO tiki_article_types(type,use_ratings) VALUES ('Review','y');
 INSERT IGNORE INTO tiki_article_types(type,show_post_expire) VALUES ('Event','n');
 INSERT IGNORE INTO tiki_article_types(type,show_post_expire,heading_only,allow_comments) VALUES ('Classified','n','y','n');
-
-#
-# Table structure for table tiki_banners
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_banners;
 CREATE TABLE tiki_banners (
@@ -464,14 +323,6 @@ CREATE TABLE tiki_banners (
   zone varchar(40) default NULL,
   PRIMARY KEY (bannerId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_banning
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_banning;
 CREATE TABLE tiki_banning (
@@ -490,14 +341,6 @@ CREATE TABLE tiki_banning (
   message text,
   PRIMARY KEY (banId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_banning_sections
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_banning_sections;
 CREATE TABLE tiki_banning_sections (
@@ -505,14 +348,6 @@ CREATE TABLE tiki_banning_sections (
   section varchar(100) NOT NULL default '',
   PRIMARY KEY (banId,section)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_blog_activity
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 12, 2003 at 04:52 PM
-#
 
 DROP TABLE IF EXISTS tiki_blog_activity;
 CREATE TABLE tiki_blog_activity (
@@ -521,15 +356,6 @@ CREATE TABLE tiki_blog_activity (
   posts int(8) default NULL,
   PRIMARY KEY (blogId,day)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_blog_posts
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 12, 2003 at 04:52 PM
-# Last check: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_blog_posts;
 CREATE TABLE tiki_blog_posts (
@@ -549,14 +375,6 @@ CREATE TABLE tiki_blog_posts (
   KEY created (created),
   FULLTEXT KEY ft (data,title)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_blog_posts_images
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_blog_posts_images;
 CREATE TABLE tiki_blog_posts_images (
@@ -568,15 +386,6 @@ CREATE TABLE tiki_blog_posts_images (
   data longblob,
   PRIMARY KEY (imgId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_blogs
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 13, 2003 at 01:07 AM
-# Last check: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_blogs;
 CREATE TABLE tiki_blogs (
@@ -604,14 +413,6 @@ CREATE TABLE tiki_blogs (
   KEY hits (hits),
   FULLTEXT KEY ft (title,description)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_calendar_categories
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 12, 2003 at 07:05 AM
-#
 
 DROP TABLE IF EXISTS tiki_calendar_categories;
 CREATE TABLE tiki_calendar_categories (
@@ -621,14 +422,6 @@ CREATE TABLE tiki_calendar_categories (
   PRIMARY KEY (calcatId),
   UNIQUE KEY catname (calendarId,name(16))
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_calendar_items
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 12, 2003 at 07:43 AM
-#
 
 DROP TABLE IF EXISTS tiki_calendar_items;
 CREATE TABLE tiki_calendar_items (
@@ -651,14 +444,6 @@ CREATE TABLE tiki_calendar_items (
   PRIMARY KEY (calitemId),
   KEY calendarId (calendarId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_calendar_locations
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 12, 2003 at 07:05 AM
-#
 
 DROP TABLE IF EXISTS tiki_calendar_locations;
 CREATE TABLE tiki_calendar_locations (
@@ -669,14 +454,6 @@ CREATE TABLE tiki_calendar_locations (
   PRIMARY KEY (callocId),
   UNIQUE KEY locname (calendarId,name(16))
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_calendar_roles
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_calendar_roles;
 CREATE TABLE tiki_calendar_roles (
@@ -685,14 +462,6 @@ CREATE TABLE tiki_calendar_roles (
   role enum('0','1','2','3','6') NOT NULL default '0',
   PRIMARY KEY (calitemId,username(16),role)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_calendars
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 05, 2003 at 02:03 PM
-#
 
 DROP TABLE IF EXISTS tiki_calendars;
 CREATE TABLE tiki_calendars (
@@ -711,7 +480,6 @@ CREATE TABLE tiki_calendars (
   personal enum ('n', 'y') NOT NULL default 'n',
   PRIMARY KEY (calendarId)
 ) ENGINE=MyISAM ;
-# --------------------------------------------------------
 
 DROP TABLE IF EXISTS tiki_calendar_options;
 CREATE TABLE tiki_calendar_options (
@@ -720,13 +488,6 @@ CREATE TABLE tiki_calendar_options (
 	value varchar(255),
 	PRIMARY KEY (calendarId,optionName)
 ) ENGINE=MyISAM ;
-# --------------------------------------------------------
-#
-# Table structure for table tiki_categories
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 04, 2003 at 09:47 PM
-#
 
 DROP TABLE IF EXISTS tiki_categories;
 CREATE TABLE tiki_categories (
@@ -737,14 +498,6 @@ CREATE TABLE tiki_categories (
   hits int(8) default NULL,
   PRIMARY KEY (categId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_categorized_objects
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Dec 06, 2005 
-#
 
 DROP TABLE IF EXISTS tiki_objects;
 CREATE TABLE tiki_objects (
@@ -760,10 +513,6 @@ CREATE TABLE tiki_objects (
   KEY (type, objectId),
   KEY (itemId, type)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-# Table structure for table `tiki_categorized_objects`
-#
 
 DROP TABLE IF EXISTS `tiki_categorized_objects`;
 CREATE TABLE `tiki_categorized_objects` (
@@ -771,28 +520,12 @@ CREATE TABLE `tiki_categorized_objects` (
   PRIMARY KEY (`catObjectId`)
 ) ENGINE=MyISAM ;
 
-
-#
-# Table structure for table tiki_category_objects
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 13, 2003 at 01:09 AM
-#
-
 DROP TABLE IF EXISTS tiki_category_objects;
 CREATE TABLE tiki_category_objects (
   catObjectId int(12) NOT NULL default '0',
   categId int(12) NOT NULL default '0',
   PRIMARY KEY (catObjectId,categId)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_category_sites
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 07, 2003 at 01:53 AM
-#
 
 DROP TABLE IF EXISTS tiki_object_ratings;
 CREATE TABLE tiki_object_ratings (
@@ -800,14 +533,6 @@ CREATE TABLE tiki_object_ratings (
   pollId int(12) NOT NULL default '0',
   PRIMARY KEY (catObjectId,pollId)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_category_sites
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 07, 2003 at 01:53 AM
-#
 
 DROP TABLE IF EXISTS tiki_category_sites;
 CREATE TABLE tiki_category_sites (
@@ -815,14 +540,6 @@ CREATE TABLE tiki_category_sites (
   siteId int(14) NOT NULL default '0',
   PRIMARY KEY (categId,siteId)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_chart_items
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_chart_items;
 CREATE TABLE tiki_chart_items (
@@ -837,14 +554,6 @@ CREATE TABLE tiki_chart_items (
   average decimal(4,2) default NULL,
   PRIMARY KEY (itemId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_charts
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 06, 2003 at 08:14 AM
-#
 
 DROP TABLE IF EXISTS tiki_charts;
 CREATE TABLE tiki_charts (
@@ -868,14 +577,6 @@ CREATE TABLE tiki_charts (
   created int(14) default NULL,
   PRIMARY KEY (chartId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_charts_rankings
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_charts_rankings;
 CREATE TABLE tiki_charts_rankings (
@@ -889,14 +590,6 @@ CREATE TABLE tiki_charts_rankings (
   raverage decimal(4,2) NOT NULL default '0.00',
   PRIMARY KEY (chartId,itemId,period)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_charts_votes
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_charts_votes;
 CREATE TABLE tiki_charts_votes (
@@ -906,14 +599,6 @@ CREATE TABLE tiki_charts_votes (
   chartId int(14) default NULL,
   PRIMARY KEY (user,itemId)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_chat_channels
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_chat_channels;
 CREATE TABLE tiki_chat_channels (
@@ -927,14 +612,6 @@ CREATE TABLE tiki_chat_channels (
   refresh int(6) default NULL,
   PRIMARY KEY (channelId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_chat_messages
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_chat_messages;
 CREATE TABLE tiki_chat_messages (
@@ -945,14 +622,6 @@ CREATE TABLE tiki_chat_messages (
   timestamp int(14) default NULL,
   PRIMARY KEY (messageId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_chat_users
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_chat_users;
 CREATE TABLE tiki_chat_users (
@@ -961,15 +630,6 @@ CREATE TABLE tiki_chat_users (
   timestamp int(14) default NULL,
   PRIMARY KEY (nickname,channelId)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_comments
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 12, 2003 at 10:56 PM
-# Last check: Jul 11, 2003 at 01:52 AM
-#
 
 DROP TABLE IF EXISTS tiki_comments;
 CREATE TABLE tiki_comments (
@@ -1005,14 +665,6 @@ CREATE TABLE tiki_comments (
   KEY threaded (message_id, in_reply_to, parentId),
   FULLTEXT KEY ft (title,data)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_content
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_content;
 CREATE TABLE tiki_content (
@@ -1021,14 +673,6 @@ CREATE TABLE tiki_content (
   contentLabel varchar(255) NOT NULL default '',
   PRIMARY KEY (contentId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_content_templates
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 12, 2003 at 12:37 AM
-#
 
 DROP TABLE IF EXISTS tiki_content_templates;
 CREATE TABLE tiki_content_templates (
@@ -1038,14 +682,6 @@ CREATE TABLE tiki_content_templates (
   created int(14) default NULL,
   PRIMARY KEY (templateId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_content_templates_sections
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 12, 2003 at 12:37 AM
-#
 
 DROP TABLE IF EXISTS tiki_content_templates_sections;
 CREATE TABLE tiki_content_templates_sections (
@@ -1053,14 +689,6 @@ CREATE TABLE tiki_content_templates_sections (
   section varchar(250) NOT NULL default '',
   PRIMARY KEY (templateId,section)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_cookies
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 10, 2003 at 04:00 AM
-#
 
 DROP TABLE IF EXISTS tiki_cookies;
 CREATE TABLE tiki_cookies (
@@ -1068,14 +696,6 @@ CREATE TABLE tiki_cookies (
   cookie text,
   PRIMARY KEY (cookieId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_copyrights
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_copyrights;
 CREATE TABLE tiki_copyrights (
@@ -1088,14 +708,6 @@ CREATE TABLE tiki_copyrights (
   userName varchar(200) default '',
   PRIMARY KEY (copyrightId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_directory_categories
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 12, 2003 at 08:59 PM
-#
 
 DROP TABLE IF EXISTS tiki_directory_categories;
 CREATE TABLE tiki_directory_categories (
@@ -1112,14 +724,6 @@ CREATE TABLE tiki_directory_categories (
   hits int(12) default NULL,
   PRIMARY KEY (categId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_directory_search
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_directory_search;
 CREATE TABLE tiki_directory_search (
@@ -1127,14 +731,6 @@ CREATE TABLE tiki_directory_search (
   hits int(14) default NULL,
   PRIMARY KEY (term)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_directory_sites
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 12, 2003 at 07:32 PM
-#
 
 DROP TABLE IF EXISTS tiki_directory_sites;
 CREATE TABLE tiki_directory_sites (
@@ -1154,14 +750,6 @@ CREATE TABLE tiki_directory_sites (
   KEY (url),
   FULLTEXT KEY ft (name,description)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_drawings
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 08, 2003 at 05:02 AM
-#
 
 DROP TABLE IF EXISTS tiki_drawings;
 CREATE TABLE tiki_drawings (
@@ -1174,14 +762,6 @@ CREATE TABLE tiki_drawings (
   user varchar(200) default '',
   PRIMARY KEY (drawId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_dsn
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_dsn;
 CREATE TABLE tiki_dsn (
@@ -1190,8 +770,6 @@ CREATE TABLE tiki_dsn (
   dsn varchar(255) default NULL,
   PRIMARY KEY (dsnId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
 
 DROP TABLE IF EXISTS tiki_dynamic_variables;
 CREATE TABLE tiki_dynamic_variables (
@@ -1200,14 +778,6 @@ CREATE TABLE tiki_dynamic_variables (
   PRIMARY KEY (name)
 );
 
-# --------------------------------------------------------
-#
-# Table structure for table tiki_extwiki
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
-
 DROP TABLE IF EXISTS tiki_extwiki;
 CREATE TABLE tiki_extwiki (
   extwikiId int(12) NOT NULL auto_increment,
@@ -1215,15 +785,6 @@ CREATE TABLE tiki_extwiki (
   extwiki varchar(255) default NULL,
   PRIMARY KEY (extwikiId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_faq_questions
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-# Last check: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_faq_questions;
 CREATE TABLE tiki_faq_questions (
@@ -1238,15 +799,6 @@ CREATE TABLE tiki_faq_questions (
   KEY answer (answer(255)),
   FULLTEXT KEY ft (question,answer)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_faqs
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 12, 2003 at 09:09 PM
-# Last check: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_faqs;
 CREATE TABLE tiki_faqs (
@@ -1263,14 +815,6 @@ CREATE TABLE tiki_faqs (
   KEY hits (hits),
   FULLTEXT KEY ft (title,description)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_featured_links
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 12, 2003 at 11:08 PM
-#
 
 DROP TABLE IF EXISTS tiki_featured_links;
 CREATE TABLE tiki_featured_links (
@@ -1282,12 +826,6 @@ CREATE TABLE tiki_featured_links (
   type char(1) default NULL,
   PRIMARY KEY (url)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-# Table structure for table tiki_file_galleries
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 13, 2003 at 01:13 AM
-#
 
 DROP TABLE IF EXISTS tiki_file_galleries;
 CREATE TABLE tiki_file_galleries (
@@ -1328,15 +866,6 @@ CREATE TABLE tiki_file_galleries (
   show_path char(1) default NULL,
   PRIMARY KEY (galleryId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_files
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Nov 02, 2004 at 05:59 PM
-# Last check: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_files;
 CREATE TABLE tiki_files (
@@ -1373,14 +902,6 @@ CREATE TABLE tiki_files (
   KEY hits (hits),
   FULLTEXT KEY ft (name,description,search_data)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_forum_attachments
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_forum_attachments;
 CREATE TABLE tiki_forum_attachments (
@@ -1398,14 +919,6 @@ CREATE TABLE tiki_forum_attachments (
   PRIMARY KEY (attId),
   KEY threadId (threadId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_forum_reads
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 12, 2003 at 07:17 PM
-#
 
 DROP TABLE IF EXISTS tiki_forum_reads;
 CREATE TABLE tiki_forum_reads (
@@ -1415,14 +928,6 @@ CREATE TABLE tiki_forum_reads (
   timestamp int(14) default NULL,
   PRIMARY KEY (user,threadId)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_forums
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 12, 2003 at 11:14 PM
-#
 
 DROP TABLE IF EXISTS tiki_forums;
 CREATE TABLE tiki_forums (
@@ -1485,14 +990,6 @@ CREATE TABLE tiki_forums (
   mandatory_contribution char(1) default NULL,
   PRIMARY KEY (forumId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_forums_queue
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_forums_queue;
 CREATE TABLE tiki_forums_queue (
@@ -1512,14 +1009,6 @@ CREATE TABLE tiki_forums_queue (
   in_reply_to varchar(128) default NULL,
   PRIMARY KEY (qId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_forums_reported
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_forums_reported;
 CREATE TABLE tiki_forums_reported (
@@ -1531,15 +1020,6 @@ CREATE TABLE tiki_forums_reported (
   reason varchar(250) default NULL,
   PRIMARY KEY (threadId)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_galleries
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Sep 18, 2004 at 11:56 PM
-# Last check: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_galleries;
 CREATE TABLE tiki_galleries (
@@ -1580,14 +1060,6 @@ CREATE TABLE tiki_galleries (
   KEY visibleUser (visible, user),
   FULLTEXT KEY ft (name,description)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_galleries_scales
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_galleries_scales;
 CREATE TABLE tiki_galleries_scales (
@@ -1595,14 +1067,6 @@ CREATE TABLE tiki_galleries_scales (
   scale int(11) NOT NULL default '0',
   PRIMARY KEY (galleryId,scale)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_games
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 05, 2003 at 08:23 PM
-#
 
 DROP TABLE IF EXISTS tiki_games;
 CREATE TABLE tiki_games (
@@ -1612,14 +1076,6 @@ CREATE TABLE tiki_games (
   points int(8) default NULL,
   PRIMARY KEY (gameName)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_group_inclusion
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 05, 2003 at 02:03 AM
-#
 
 DROP TABLE IF EXISTS tiki_group_inclusion;
 CREATE TABLE tiki_group_inclusion (
@@ -1627,14 +1083,6 @@ CREATE TABLE tiki_group_inclusion (
   includeGroup varchar(255) NOT NULL default '',
   PRIMARY KEY (groupName(30),includeGroup(30))
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_history
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Mar 30, 2005 at 10:21 PM
-#
 
 DROP TABLE IF EXISTS tiki_history;
 CREATE TABLE tiki_history (
@@ -1653,14 +1101,6 @@ CREATE TABLE tiki_history (
   KEY `user` (`user`),
   KEY(historyId)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_hotwords
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 10, 2003 at 11:04 PM
-#
 
 DROP TABLE IF EXISTS tiki_hotwords;
 CREATE TABLE tiki_hotwords (
@@ -1668,14 +1108,6 @@ CREATE TABLE tiki_hotwords (
   url varchar(255) NOT NULL default '',
   PRIMARY KEY (word)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_html_pages
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_html_pages;
 CREATE TABLE tiki_html_pages (
@@ -1686,14 +1118,6 @@ CREATE TABLE tiki_html_pages (
   created int(14) default NULL,
   PRIMARY KEY (pageName)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_html_pages_dynamic_zones
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_html_pages_dynamic_zones;
 CREATE TABLE tiki_html_pages_dynamic_zones (
@@ -1703,15 +1127,6 @@ CREATE TABLE tiki_html_pages_dynamic_zones (
   content text,
   PRIMARY KEY (pageName,zone)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_images
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Sep 18, 2004 at 08:29 PM
-# Last check: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_images;
 CREATE TABLE tiki_images (
@@ -1734,15 +1149,6 @@ CREATE TABLE tiki_images (
   KEY ti_us (user),
   FULLTEXT KEY ft (name,description)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_images_data
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 12, 2003 at 12:49 PM
-# Last check: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_images_data;
 CREATE TABLE tiki_images_data (
@@ -1758,14 +1164,6 @@ CREATE TABLE tiki_images_data (
   PRIMARY KEY (imageId,xsize,ysize,type),
   KEY t_i_d_it (imageId,type)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_language
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_language;
 CREATE TABLE tiki_language (
@@ -1774,14 +1172,6 @@ CREATE TABLE tiki_language (
   tran tinyblob,
   PRIMARY KEY (source(255),lang)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_languages
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_languages;
 CREATE TABLE tiki_languages (
@@ -1789,16 +1179,8 @@ CREATE TABLE tiki_languages (
   language varchar(255) default NULL,
   PRIMARY KEY (lang)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-INSERT INTO tiki_languages(lang, language) VALUES('en','English');
-# --------------------------------------------------------
 
-#
-# Table structure for table tiki_link_cache
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 12, 2003 at 06:06 PM
-#
+INSERT INTO tiki_languages(lang, language) VALUES('en','English');
 
 DROP TABLE IF EXISTS tiki_link_cache;
 CREATE TABLE tiki_link_cache (
@@ -1810,14 +1192,6 @@ CREATE TABLE tiki_link_cache (
   KEY url (url)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 CREATE INDEX urlindex ON tiki_link_cache (url(250));
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_links
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 12, 2003 at 11:39 PM
-#
 
 DROP TABLE IF EXISTS tiki_links;
 CREATE TABLE tiki_links (
@@ -1826,14 +1200,6 @@ CREATE TABLE tiki_links (
   PRIMARY KEY (fromPage,toPage),
   KEY toPage (toPage)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_live_support_events
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_live_support_events;
 CREATE TABLE tiki_live_support_events (
@@ -1846,14 +1212,6 @@ CREATE TABLE tiki_live_support_events (
   timestamp int(14) default NULL,
   PRIMARY KEY (eventId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_live_support_message_comments
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_live_support_message_comments;
 CREATE TABLE tiki_live_support_message_comments (
@@ -1863,14 +1221,6 @@ CREATE TABLE tiki_live_support_message_comments (
   timestamp int(14) default NULL,
   PRIMARY KEY (cId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_live_support_messages
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_live_support_messages;
 CREATE TABLE tiki_live_support_messages (
@@ -1888,14 +1238,6 @@ CREATE TABLE tiki_live_support_messages (
   email varchar(250) default NULL,
   PRIMARY KEY (msgId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_live_support_modules
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_live_support_modules;
 CREATE TABLE tiki_live_support_modules (
@@ -1903,7 +1245,7 @@ CREATE TABLE tiki_live_support_modules (
   name varchar(90) default NULL,
   PRIMARY KEY (modId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
+
 INSERT INTO tiki_live_support_modules(name) VALUES('wiki');
 INSERT INTO tiki_live_support_modules(name) VALUES('forums');
 INSERT INTO tiki_live_support_modules(name) VALUES('image galleries');
@@ -1911,14 +1253,6 @@ INSERT INTO tiki_live_support_modules(name) VALUES('file galleries');
 INSERT INTO tiki_live_support_modules(name) VALUES('directory');
 INSERT INTO tiki_live_support_modules(name) VALUES('workflow');
 INSERT INTO tiki_live_support_modules(name) VALUES('charts');
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_live_support_operators
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_live_support_operators;
 CREATE TABLE tiki_live_support_operators (
@@ -1935,14 +1269,6 @@ CREATE TABLE tiki_live_support_operators (
   status_since int(14) default NULL,
   PRIMARY KEY (user)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_live_support_requests
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_live_support_requests;
 CREATE TABLE tiki_live_support_requests (
@@ -1962,14 +1288,6 @@ CREATE TABLE tiki_live_support_requests (
   chat_ended int(14) default NULL,
   PRIMARY KEY (reqId)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_logs
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_logs;
 CREATE TABLE tiki_logs (
@@ -1984,29 +1302,12 @@ CREATE TABLE tiki_logs (
   KEY logtype (logtype)
 ) ENGINE=MyISAM;
 
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_mail_events
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 11, 2003 at 05:28 AM
-#
-
 DROP TABLE IF EXISTS tiki_mail_events;
 CREATE TABLE tiki_mail_events (
   event varchar(200) default NULL,
   object varchar(200) default NULL,
   email varchar(200) default NULL
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_mailin_accounts
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jun 17, 2004 at 03:06 PM EST
-#
 
 DROP TABLE IF EXISTS tiki_mailin_accounts;
 CREATE TABLE tiki_mailin_accounts (
@@ -2029,14 +1330,6 @@ CREATE TABLE tiki_mailin_accounts (
   discard_after varchar(255) default NULL,
   PRIMARY KEY (accountId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_menu_languages
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_menu_languages;
 CREATE TABLE tiki_menu_languages (
@@ -2044,14 +1337,6 @@ CREATE TABLE tiki_menu_languages (
   language char(16) NOT NULL default '',
   PRIMARY KEY (menuId,language)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_menu_options
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Nov 21, 2003 at 07:05 AM
-#
 
 DROP TABLE IF EXISTS tiki_menu_options;
 CREATE TABLE tiki_menu_options (
@@ -2068,7 +1353,7 @@ CREATE TABLE tiki_menu_options (
   PRIMARY KEY (optionId),
   UNIQUE KEY uniq_menu (menuId,name(30),url(50),position,section(60),perm(50),groupname(50))
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
+
 INSERT INTO `tiki_menu_options` (`optionId`, `menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (1,42,'o','Home','./',10,'','','',0);
 INSERT INTO `tiki_menu_options` (`optionId`, `menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (3,42,'o','Contact us','tiki-contact.php',20,'feature_contact','','',0);
 INSERT INTO `tiki_menu_options` (`optionId`, `menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (4,42,'o','Stats','tiki-stats.php',23,'feature_stats','tiki_p_view_stats','',0);
@@ -2253,14 +1538,6 @@ INSERT INTO `tiki_menu_options` (`optionId`, `menuId`, `type`, `name`, `url`, `p
 INSERT INTO `tiki_menu_options` (`optionId`, `menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (192,42,'o','List articles','tiki-list_articles.php',360,'feature_articles','tiki_p_articles_read_heading','',0);
 INSERT INTO `tiki_menu_options` (`optionId`, `menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (193,42,'o','Action Log','tiki-admin_actionlog.php',1255,'feature_actionlog','tiki_p_view_actionlog','',0);
 INSERT INTO `tiki_menu_options` (`optionId`, `menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (194,42,'o','Action Log','tiki-admin_actionlog.php',1255,'feature_actionlog','tiki_p_view_actionlog_owngroups','',0);
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_menus
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_menus;
 CREATE TABLE tiki_menus (
@@ -2271,16 +1548,8 @@ CREATE TABLE tiki_menus (
   icon varchar(200) default NULL,
   PRIMARY KEY (menuId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-INSERT INTO tiki_menus (menuId,name,description,type) VALUES ('42','Application menu','Main extensive navigation menu','d');
-# --------------------------------------------------------
 
-#
-# Table structure for table tiki_minical_events
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 09, 2003 at 04:06 AM
-#
+INSERT INTO tiki_menus (menuId,name,description,type) VALUES ('42','Application menu','Main extensive navigation menu','d');
 
 DROP TABLE IF EXISTS tiki_minical_events;
 CREATE TABLE tiki_minical_events (
@@ -2296,14 +1565,6 @@ CREATE TABLE tiki_minical_events (
   reminded char(1) default NULL,
   PRIMARY KEY (eventId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_minical_topics
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_minical_topics;
 CREATE TABLE tiki_minical_topics (
@@ -2318,14 +1579,6 @@ CREATE TABLE tiki_minical_topics (
   isIcon char(1) default NULL,
   PRIMARY KEY (topicId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_modules
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 12, 2003 at 11:44 PM
-#
 
 DROP TABLE IF EXISTS tiki_modules;
 CREATE TABLE tiki_modules (
@@ -2343,20 +1596,12 @@ CREATE TABLE tiki_modules (
   KEY positionType (position, type),
   KEY moduleId (moduleId)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
+
 INSERT INTO tiki_modules (name,position,ord,cache_time,groups) VALUES ('login_box','r',1,0,'a:2:{i:0;s:10:"Registered";i:1;s:9:"Anonymous";}');
 INSERT INTO tiki_modules (name,position,ord,cache_time,params,groups) VALUES ('mnu_application_menu','l',1,0,'flip=y','a:2:{i:0;s:10:"Registered";i:1;s:9:"Anonymous";}');
 INSERT INTO tiki_modules (name,position,ord,cache_time,groups) VALUES ('quick_edit','l',2,0,'a:1:{i:0;s:6:\"Admins\";}');
 INSERT INTO tiki_modules (name,position,ord,cache_time,groups) VALUES ('assistant','l',10,0,'a:2:{i:0;s:10:"Registered";i:1;s:9:"Anonymous";}');
 INSERT INTO tiki_modules (name,position,ord,cache_time,groups) VALUES ('since_last_visit_new','r',40,0,'a:1:{i:0;s:6:\"Admins\";}');
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_newsletter_subscriptions
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_newsletter_subscriptions;
 CREATE TABLE tiki_newsletter_subscriptions (
@@ -2368,14 +1613,6 @@ CREATE TABLE tiki_newsletter_subscriptions (
   isUser char(1) NOT NULL default 'n',
   PRIMARY KEY (nlId,email,isUser)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_newsletter_groups
-#
-# Creation: Jan 18, 2005
-# Last update: Jan 18, 2005
-#
 
 DROP TABLE IF EXISTS tiki_newsletter_groups;
 CREATE TABLE tiki_newsletter_groups (
@@ -2384,14 +1621,6 @@ CREATE TABLE tiki_newsletter_groups (
   code varchar(32) default NULL,
   PRIMARY KEY (nlId,groupName)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_newsletter_included
-#
-# Creation: Sep 25, 2007
-# Last update: Sep 25, 2007
-#
 
 DROP TABLE IF EXISTS tiki_newsletter_included;
 CREATE TABLE tiki_newsletter_included (
@@ -2399,14 +1628,6 @@ CREATE TABLE tiki_newsletter_included (
   includedId int(12) NOT NULL default '0',
   PRIMARY KEY (nlId,includedId)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_newsletters
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_newsletters;
 CREATE TABLE tiki_newsletters (
@@ -2426,14 +1647,6 @@ CREATE TABLE tiki_newsletters (
 	author varchar(200) default NULL,
   PRIMARY KEY (nlId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_newsreader_marks
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_newsreader_marks;
 CREATE TABLE tiki_newsreader_marks (
@@ -2443,14 +1656,6 @@ CREATE TABLE tiki_newsreader_marks (
   timestamp int(14) NOT NULL default '0',
   PRIMARY KEY (`user`(100),serverId,groupName(100))
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_newsreader_servers
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_newsreader_servers;
 CREATE TABLE tiki_newsreader_servers (
@@ -2462,15 +1667,6 @@ CREATE TABLE tiki_newsreader_servers (
   password varchar(200) default NULL,
   PRIMARY KEY (serverId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_page_footnotes
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 12, 2003 at 10:00 AM
-# Last check: Jul 12, 2003 at 10:00 AM
-#
 
 DROP TABLE IF EXISTS tiki_page_footnotes;
 CREATE TABLE tiki_page_footnotes (
@@ -2479,15 +1675,6 @@ CREATE TABLE tiki_page_footnotes (
   data text,
   PRIMARY KEY (`user`(150),pageName(100))
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_pages
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 13, 2003 at 01:52 AM
-# Last check: Jul 12, 2003 at 10:01 AM
-#
 
 DROP TABLE IF EXISTS tiki_pages;
 CREATE TABLE tiki_pages (
@@ -2523,13 +1710,6 @@ CREATE TABLE tiki_pages (
   FULLTEXT KEY ft (pageName,description,data),
   KEY lastModif(lastModif)
 ) ENGINE=MyISAM AUTO_INCREMENT=1;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_page_drafts
-#
-# Creation: March 12, 2006 at 
-#
 
 DROP TABLE IF EXISTS tiki_page_drafts;
 CREATE TABLE tiki_page_drafts (
@@ -2541,14 +1721,6 @@ CREATE TABLE tiki_page_drafts (
   lastModif int(14) default NULL,
   PRIMARY KEY (pageName(120), `user`(120))
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_pageviews
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 13, 2003 at 01:52 AM
-#
 
 DROP TABLE IF EXISTS tiki_pageviews;
 CREATE TABLE tiki_pageviews (
@@ -2556,11 +1728,6 @@ CREATE TABLE tiki_pageviews (
   pageviews int(14) default NULL,
   PRIMARY KEY (day)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_poll_objects
-#
 
 DROP TABLE IF EXISTS tiki_poll_objects;
 CREATE TABLE `tiki_poll_objects` (
@@ -2569,14 +1736,6 @@ CREATE TABLE `tiki_poll_objects` (
   `title` varchar(255) default NULL,
   PRIMARY KEY (`catObjectId`,`pollId`)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_poll_options
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 06, 2003 at 07:57 PM
-#
 
 DROP TABLE IF EXISTS tiki_poll_options;
 CREATE TABLE tiki_poll_options (
@@ -2587,14 +1746,6 @@ CREATE TABLE tiki_poll_options (
   votes int(8) default NULL,
   PRIMARY KEY (optionId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_polls
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 06, 2003 at 07:57 PM
-#
 
 DROP TABLE IF EXISTS tiki_polls;
 CREATE TABLE tiki_polls (
@@ -2605,14 +1756,6 @@ CREATE TABLE tiki_polls (
   publishDate int(14) default NULL,
   PRIMARY KEY (pollId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_preferences
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 12, 2003 at 12:04 PM
-#
 
 DROP TABLE IF EXISTS tiki_preferences;
 CREATE TABLE tiki_preferences (
@@ -2620,14 +1763,6 @@ CREATE TABLE tiki_preferences (
   value text,
   PRIMARY KEY (name)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_private_messages
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_private_messages;
 CREATE TABLE tiki_private_messages (
@@ -2641,14 +1776,6 @@ CREATE TABLE tiki_private_messages (
   key(timestamp),
   PRIMARY KEY (messageId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_programmed_content
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_programmed_content;
 CREATE TABLE tiki_programmed_content (
@@ -2658,14 +1785,6 @@ CREATE TABLE tiki_programmed_content (
   data text,
   PRIMARY KEY (pId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_quiz_question_options
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_quiz_question_options;
 CREATE TABLE tiki_quiz_question_options (
@@ -2675,14 +1794,6 @@ CREATE TABLE tiki_quiz_question_options (
   points int(4) default NULL,
   PRIMARY KEY (optionId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_quiz_questions
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_quiz_questions;
 CREATE TABLE tiki_quiz_questions (
@@ -2694,14 +1805,6 @@ CREATE TABLE tiki_quiz_questions (
   maxPoints int(4) default NULL,
   PRIMARY KEY (questionId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_quiz_results
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_quiz_results;
 CREATE TABLE tiki_quiz_results (
@@ -2712,14 +1815,6 @@ CREATE TABLE tiki_quiz_results (
   answer text,
   PRIMARY KEY (resultId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_quiz_stats
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_quiz_stats;
 CREATE TABLE tiki_quiz_stats (
@@ -2729,14 +1824,6 @@ CREATE TABLE tiki_quiz_stats (
   votes int(10) default NULL,
   PRIMARY KEY (quizId,questionId,optionId)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_quiz_stats_sum
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_quiz_stats_sum;
 CREATE TABLE tiki_quiz_stats_sum (
@@ -2748,14 +1835,6 @@ CREATE TABLE tiki_quiz_stats_sum (
   avgtime decimal(5,2) default NULL,
   PRIMARY KEY (quizId)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_quizzes
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: April 29, 2004
-#
 
 DROP TABLE IF EXISTS tiki_quizzes;
 CREATE TABLE tiki_quizzes (
@@ -2798,14 +1877,6 @@ CREATE TABLE tiki_quizzes (
   passingperct int(4) default 0,
   PRIMARY KEY (quizId, nVersion)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_received_articles
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_received_articles;
 CREATE TABLE tiki_received_articles (
@@ -2834,14 +1905,6 @@ CREATE TABLE tiki_received_articles (
   rating decimal(3,2) default NULL,
   PRIMARY KEY (receivedArticleId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_received_pages
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 09, 2003 at 03:56 AM
-#
 
 DROP TABLE IF EXISTS tiki_received_pages;
 CREATE TABLE tiki_received_pages (
@@ -2856,21 +1919,13 @@ CREATE TABLE tiki_received_pages (
   parent varchar(255) default NULL,
   position tinyint(3) unsigned default NULL,
   alias varchar(255) default NULL,
-  structureName  varchar(250) default NULL,
-  parentName  varchar(250) default NULL,
+  structureName varchar(250) default NULL,
+  parentName varchar(250) default NULL,
   page_alias varchar(250) default '',
   pos int(4) default NULL,
   PRIMARY KEY (receivedPageId),
   KEY structureName (structureName)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_referer_stats
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 13, 2003 at 01:30 AM
-#
 
 DROP TABLE IF EXISTS tiki_referer_stats;
 CREATE TABLE tiki_referer_stats (
@@ -2879,14 +1934,6 @@ CREATE TABLE tiki_referer_stats (
   last int(14) default NULL,
   PRIMARY KEY (referer)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_related_categories
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_related_categories;
 CREATE TABLE tiki_related_categories (
@@ -2894,14 +1941,6 @@ CREATE TABLE tiki_related_categories (
   relatedTo int(10) NOT NULL default '0',
   PRIMARY KEY (categId,relatedTo)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_rss_modules
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 12, 2003 at 10:19 AM
-#
 
 DROP TABLE IF EXISTS tiki_rss_modules;
 CREATE TABLE tiki_rss_modules (
@@ -2917,14 +1956,6 @@ CREATE TABLE tiki_rss_modules (
   PRIMARY KEY (rssId),
   KEY name (name)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_rss_feeds
-#
-# Creation: Oct 14, 2003 at 20:34 PM
-# Last update: Oct 14, 2003 at 20:34 PM
-#
 
 DROP TABLE IF EXISTS tiki_rss_feeds;
 CREATE TABLE tiki_rss_feeds (
@@ -2935,7 +1966,6 @@ CREATE TABLE tiki_rss_feeds (
   cache longblob,
   PRIMARY KEY (name,rssVer)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
 
 DROP TABLE IF EXISTS tiki_searchindex;
 CREATE TABLE tiki_searchindex(
@@ -2967,25 +1997,12 @@ CREATE TABLE tiki_searchwords(
   PRIMARY KEY (syllable,searchword)
 ) ENGINE=MyISAM;
 
-#
-# Table structure for table tiki_search_stats
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 12, 2003 at 10:55 PM
-#
-
 DROP TABLE IF EXISTS tiki_search_stats;
 CREATE TABLE tiki_search_stats (
   term varchar(50) NOT NULL default '',
   hits int(10) default NULL,
   PRIMARY KEY (term)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_secdb
-#
-#
 
 DROP TABLE IF EXISTS tiki_secdb;
 CREATE TABLE tiki_secdb(
@@ -2997,13 +2014,6 @@ CREATE TABLE tiki_secdb(
   KEY sdb_fn (filename)
 ) ENGINE=MyISAM;
 
-#
-# Table structure for table tiki_semaphores
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 13, 2003 at 01:52 AM
-#
-
 DROP TABLE IF EXISTS tiki_semaphores;
 CREATE TABLE tiki_semaphores (
   semName varchar(250) NOT NULL default '',
@@ -3012,14 +2022,6 @@ CREATE TABLE tiki_semaphores (
   timestamp int(14) default NULL,
   PRIMARY KEY (semName)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_sent_newsletters
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_sent_newsletters;
 CREATE TABLE tiki_sent_newsletters (
@@ -3032,11 +2034,6 @@ CREATE TABLE tiki_sent_newsletters (
   datatxt longblob,
   PRIMARY KEY (editionId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_sent_newsletters_errors
-#
 
 DROP TABLE IF EXISTS tiki_sent_newsletters_errors;
 CREATE TABLE tiki_sent_newsletters_errors (
@@ -3046,15 +2043,6 @@ CREATE TABLE tiki_sent_newsletters_errors (
   error char(1) default '',
   KEY (editionId)
 ) ENGINE=MyISAM ;
-# --------------------------------------------------------
-
-
-#
-# Table structure for table tiki_sessions
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 13, 2003 at 01:52 AM
-#
 
 DROP TABLE IF EXISTS tiki_sessions;
 CREATE TABLE tiki_sessions (
@@ -3066,9 +2054,7 @@ CREATE TABLE tiki_sessions (
   KEY user (user),
   KEY timestamp (timestamp)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
 
-# Tables for TikiSheet
 DROP TABLE IF EXISTS tiki_sheet_layout;
 CREATE TABLE tiki_sheet_layout (
   sheetId int(8) NOT NULL default '0',
@@ -3106,13 +2092,6 @@ CREATE TABLE tiki_sheets (
   PRIMARY KEY (sheetId)
 ) ENGINE=MyISAM;
 
-#
-# Table structure for table tiki_shoutbox
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 12, 2003 at 08:21 PM
-#
-
 DROP TABLE IF EXISTS tiki_shoutbox;
 CREATE TABLE tiki_shoutbox (
   msgId int(10) NOT NULL auto_increment,
@@ -3122,11 +2101,6 @@ CREATE TABLE tiki_shoutbox (
   hash varchar(32) default NULL,
   PRIMARY KEY (msgId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_shoutbox_words
-#
 
 DROP TABLE IF EXISTS tiki_shoutbox_words;
 CREATE TABLE tiki_shoutbox_words (
@@ -3134,14 +2108,6 @@ CREATE TABLE tiki_shoutbox_words (
   qty INT DEFAULT '0' NOT NULL ,
   PRIMARY KEY (word)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_structure_versions
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_structure_versions;
 CREATE TABLE tiki_structure_versions (
@@ -3149,14 +2115,6 @@ CREATE TABLE tiki_structure_versions (
   version int(14) default NULL,
   PRIMARY KEY (structure_id)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_structures
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_structures;
 CREATE TABLE tiki_structures (
@@ -3171,14 +2129,6 @@ CREATE TABLE tiki_structures (
   KEY pidpaid (page_id,parent_id),
   KEY page_id (page_id)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_submissions
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Nov 29, 2006 at 08:46 PM
-#
 
 DROP TABLE IF EXISTS tiki_submissions;
 CREATE TABLE tiki_submissions (
@@ -3217,14 +2167,6 @@ CREATE TABLE tiki_submissions (
   isfloat char(1) default NULL,
   PRIMARY KEY (subId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_suggested_faq_questions
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 11, 2003 at 08:52 PM
-#
 
 DROP TABLE IF EXISTS tiki_suggested_faq_questions;
 CREATE TABLE tiki_suggested_faq_questions (
@@ -3236,14 +2178,6 @@ CREATE TABLE tiki_suggested_faq_questions (
   user varchar(200) NOT NULL default '',
   PRIMARY KEY (sfqId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_survey_question_options
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 11, 2003 at 12:55 AM
-#
 
 DROP TABLE IF EXISTS tiki_survey_question_options;
 CREATE TABLE tiki_survey_question_options (
@@ -3253,14 +2187,6 @@ CREATE TABLE tiki_survey_question_options (
   votes int(10) default NULL,
   PRIMARY KEY (optionId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_survey_questions
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 11, 2003 at 11:55 PM
-#
 
 DROP TABLE IF EXISTS tiki_survey_questions;
 CREATE TABLE tiki_survey_questions (
@@ -3275,14 +2201,6 @@ CREATE TABLE tiki_survey_questions (
   average decimal(4,2) default NULL,
   PRIMARY KEY (questionId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_surveys
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 12, 2003 at 07:40 PM
-#
 
 DROP TABLE IF EXISTS tiki_surveys;
 CREATE TABLE tiki_surveys (
@@ -3295,14 +2213,6 @@ CREATE TABLE tiki_surveys (
   status char(1) default NULL,
   PRIMARY KEY (surveyId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_tags
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 06, 2003 at 02:58 AM
-#
 
 DROP TABLE IF EXISTS tiki_tags;
 CREATE TABLE tiki_tags (
@@ -3319,14 +2229,6 @@ CREATE TABLE tiki_tags (
   flag char(1) default NULL,
   PRIMARY KEY (tagName,pageName)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_theme_control_categs
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_theme_control_categs;
 CREATE TABLE tiki_theme_control_categs (
@@ -3334,14 +2236,6 @@ CREATE TABLE tiki_theme_control_categs (
   theme varchar(250) NOT NULL default '',
   PRIMARY KEY (categId)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_theme_control_objects
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_theme_control_objects;
 CREATE TABLE tiki_theme_control_objects (
@@ -3351,14 +2245,6 @@ CREATE TABLE tiki_theme_control_objects (
   theme varchar(250) NOT NULL default '',
   PRIMARY KEY (objId(100), type(100))
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_theme_control_sections
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_theme_control_sections;
 CREATE TABLE tiki_theme_control_sections (
@@ -3366,14 +2252,6 @@ CREATE TABLE tiki_theme_control_sections (
   theme varchar(250) NOT NULL default '',
   PRIMARY KEY (section)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_topics
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 04, 2003 at 10:10 PM
-#
 
 DROP TABLE IF EXISTS tiki_topics;
 CREATE TABLE tiki_topics (
@@ -3387,14 +2265,6 @@ CREATE TABLE tiki_topics (
   created int(14) default NULL,
   PRIMARY KEY (topicId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_tracker_fields
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 08, 2003 at 01:48 PM
-#
 
 DROP TABLE IF EXISTS tiki_tracker_fields;
 CREATE TABLE tiki_tracker_fields (
@@ -3418,14 +2288,6 @@ CREATE TABLE tiki_tracker_fields (
   editableBy text,
   PRIMARY KEY (fieldId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_tracker_item_attachments
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_tracker_item_attachments;
 CREATE TABLE tiki_tracker_item_attachments (
@@ -3444,14 +2306,6 @@ CREATE TABLE tiki_tracker_item_attachments (
   version varchar(40) default NULL,
   PRIMARY KEY (attId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_tracker_item_comments
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 12, 2003 at 08:12 AM
-#
 
 DROP TABLE IF EXISTS tiki_tracker_item_comments;
 CREATE TABLE tiki_tracker_item_comments (
@@ -3463,14 +2317,6 @@ CREATE TABLE tiki_tracker_item_comments (
   posted int(14) default NULL,
   PRIMARY KEY (commentId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_tracker_item_fields
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 12, 2003 at 08:26 AM
-#
 
 DROP TABLE IF EXISTS tiki_tracker_item_fields;
 CREATE TABLE tiki_tracker_item_fields (
@@ -3484,14 +2330,6 @@ CREATE TABLE tiki_tracker_item_fields (
   INDEX lang (lang),
   FULLTEXT KEY ft (value)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_tracker_items
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 12, 2003 at 08:26 AM
-#
 
 DROP TABLE IF EXISTS tiki_tracker_items;
 CREATE TABLE tiki_tracker_items (
@@ -3502,14 +2340,6 @@ CREATE TABLE tiki_tracker_items (
   lastModif int(14) default NULL,
   PRIMARY KEY (itemId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_tracker_options
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 08, 2003 at 01:48 PM
-#
 
 DROP TABLE IF EXISTS tiki_tracker_options;
 CREATE TABLE tiki_tracker_options (
@@ -3518,15 +2348,6 @@ CREATE TABLE tiki_tracker_options (
   value text default NULL,
   PRIMARY KEY (trackerId,name(30))
 ) ENGINE=MyISAM ;
-# --------------------------------------------------------
-
-
-#
-# Table structure for table tiki_trackers
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 12, 2003 at 08:26 AM
-#
 
 DROP TABLE IF EXISTS tiki_trackers;
 CREATE TABLE tiki_trackers (
@@ -3547,14 +2368,6 @@ CREATE TABLE tiki_trackers (
   orderAttachments varchar(255) NOT NULL default 'filename,created,filesize,hits,desc',
   PRIMARY KEY (trackerId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_untranslated
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_untranslated;
 CREATE TABLE tiki_untranslated (
@@ -3565,14 +2378,6 @@ CREATE TABLE tiki_untranslated (
   UNIQUE KEY id (id),
   KEY id_2 (id)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_user_answers
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_user_answers;
 CREATE TABLE tiki_user_answers (
@@ -3582,16 +2387,6 @@ CREATE TABLE tiki_user_answers (
   optionId int(10) NOT NULL default '0',
   PRIMARY KEY (userResultId,quizId,questionId,optionId)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-
-#
-# Table structure for table tiki_user_answers_uploads
-#
-# Creation: Jan 25, 2005 at 07:42 PM
-# Last update: Jan 25, 2005 at 07:42 PM
-#
-
 
 DROP TABLE IF EXISTS tiki_user_answers_uploads;
 CREATE TABLE tiki_user_answers_uploads (
@@ -3605,14 +2400,6 @@ CREATE TABLE tiki_user_answers_uploads (
   PRIMARY KEY (answerUploadId)
 ) ENGINE=MyISAM;
 
-
-#
-# Table structure for table tiki_user_assigned_modules
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 12, 2003 at 08:25 PM
-#
-
 DROP TABLE IF EXISTS tiki_user_assigned_modules;
 CREATE TABLE tiki_user_assigned_modules (
   moduleId int(8) NOT NULL,
@@ -3623,14 +2410,6 @@ CREATE TABLE tiki_user_assigned_modules (
   user varchar(200) NOT NULL default '',
   PRIMARY KEY (name(30),user,position, ord)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_user_bookmarks_folders
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 11, 2003 at 08:35 AM
-#
 
 DROP TABLE IF EXISTS tiki_user_bookmarks_folders;
 CREATE TABLE tiki_user_bookmarks_folders (
@@ -3640,14 +2419,6 @@ CREATE TABLE tiki_user_bookmarks_folders (
   name varchar(30) default NULL,
   PRIMARY KEY (user,folderId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_user_bookmarks_urls
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 11, 2003 at 08:36 AM
-#
 
 DROP TABLE IF EXISTS tiki_user_bookmarks_urls;
 CREATE TABLE tiki_user_bookmarks_urls (
@@ -3660,14 +2431,6 @@ CREATE TABLE tiki_user_bookmarks_urls (
   user varchar(200) NOT NULL default '',
   PRIMARY KEY (urlId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_user_mail_accounts
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_user_mail_accounts;
 CREATE TABLE tiki_user_mail_accounts (
@@ -3685,14 +2448,6 @@ CREATE TABLE tiki_user_mail_accounts (
   smtpPort int(4) default NULL,
   PRIMARY KEY (accountId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_user_menus
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 11, 2003 at 10:58 PM
-#
 
 DROP TABLE IF EXISTS tiki_user_menus;
 CREATE TABLE tiki_user_menus (
@@ -3704,14 +2459,6 @@ CREATE TABLE tiki_user_menus (
   mode char(1) default NULL,
   PRIMARY KEY (menuId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_user_modules
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 05, 2003 at 03:16 AM
-#
 
 DROP TABLE IF EXISTS tiki_user_modules;
 CREATE TABLE tiki_user_modules (
@@ -3721,15 +2468,8 @@ CREATE TABLE tiki_user_modules (
   parse char(1) default NULL,
   PRIMARY KEY (name)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-INSERT INTO tiki_user_modules (name, title, data, parse) VALUES ('mnu_application_menu', 'Menu', '{menu id=42}', 'n');
 
-#
-# Table structure for table tiki_user_notes
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 12, 2003 at 07:52 AM
-#
+INSERT INTO tiki_user_modules (name, title, data, parse) VALUES ('mnu_application_menu', 'Menu', '{menu id=42}', 'n');
 
 DROP TABLE IF EXISTS tiki_user_notes;
 CREATE TABLE tiki_user_notes (
@@ -3743,14 +2483,6 @@ CREATE TABLE tiki_user_notes (
   parse_mode varchar(20) default NULL,
   PRIMARY KEY (noteId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_user_postings
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 13, 2003 at 01:12 AM
-#
 
 DROP TABLE IF EXISTS tiki_user_postings;
 CREATE TABLE tiki_user_postings (
@@ -3761,14 +2493,6 @@ CREATE TABLE tiki_user_postings (
   level int(8) default NULL,
   PRIMARY KEY (user)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_user_preferences
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 13, 2003 at 01:09 AM
-#
 
 DROP TABLE IF EXISTS tiki_user_preferences;
 CREATE TABLE tiki_user_preferences (
@@ -3777,14 +2501,6 @@ CREATE TABLE tiki_user_preferences (
   value varchar(250) default NULL,
   PRIMARY KEY (user,prefName)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_user_quizzes
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_user_quizzes;
 CREATE TABLE tiki_user_quizzes (
@@ -3798,14 +2514,6 @@ CREATE TABLE tiki_user_quizzes (
   userResultId int(10) NOT NULL auto_increment,
   PRIMARY KEY (userResultId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_user_taken_quizzes
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_user_taken_quizzes;
 CREATE TABLE tiki_user_taken_quizzes (
@@ -3813,44 +2521,29 @@ CREATE TABLE tiki_user_taken_quizzes (
   quizId varchar(255) NOT NULL default '',
   PRIMARY KEY (user,quizId(50))
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
 
-
-#
-# Table structure for table tiki_user_tasks_history
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jan 25, 2005 by sir-b & moresun
-#
 DROP TABLE IF EXISTS tiki_user_tasks_history;
 CREATE TABLE tiki_user_tasks_history (
-  belongs_to integer(14) NOT NULL,                   -- the fist task in a history it has the same id as the task id
+  belongs_to integer(14) NOT NULL,                   -- the first task in a history it has the same id as the task id
   task_version integer(4) NOT NULL DEFAULT 0,        -- version number for the history it starts with 0
   title varchar(250) NOT NULL,                       -- title
   description text DEFAULT NULL,                     -- description
-  start integer(14) DEFAULT NULL,                    -- date of the starting, if it is not set than there is not starting date
+  start integer(14) DEFAULT NULL,                    -- date of the starting, if it is not set than there is no starting date
   end integer(14) DEFAULT NULL,                      -- date of the end, if it is not set than there is not dealine
   lasteditor varchar(200) NOT NULL,                  -- lasteditor: username of last editior
   lastchanges integer(14) NOT NULL,                  -- date of last changes
   priority integer(2) NOT NULL DEFAULT 3,                     -- priority
   completed integer(14) DEFAULT NULL,                -- date of the completation if it is null it is not yet completed
   deleted integer(14) DEFAULT NULL,                  -- date of the deleteation it it is null it is not deleted
-  status char(1) DEFAULT NULL,                       -- null := waiting, 
-                                                     -- o := open / in progress, 
-                                                     -- c := completed -> (percentage = 100) 
+  status char(1) DEFAULT NULL,                       -- null := waiting,
+                                                     -- o := open / in progress,
+                                                     -- c := completed -> (percentage = 100)
   percentage int(4) DEFAULT NULL,
   accepted_creator char(1) DEFAULT NULL,             -- y - yes, n - no, null - waiting
   accepted_user char(1) DEFAULT NULL,                -- y - yes, n - no, null - waiting
   PRIMARY KEY (belongs_to, task_version)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
-
-#
-# Table structure for table tiki_user_tasks
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jan 25, 2005 by sir-b & moresun
-#
 DROP TABLE IF EXISTS tiki_user_tasks;
 CREATE TABLE tiki_user_tasks (
   taskId integer(14) NOT NULL auto_increment,        -- task id
@@ -3858,7 +2551,7 @@ CREATE TABLE tiki_user_tasks (
   user varchar(200) NOT NULL DEFAULT '',              -- task user
   creator varchar(200) NOT NULL,                     -- username of creator
   public_for_group varchar(30) DEFAULT NULL,         -- this group can also view the task, if it is null it is not public
-  rights_by_creator char(1) DEFAULT NULL,            -- null the user can delete the task, 
+  rights_by_creator char(1) DEFAULT NULL,            -- null the user can delete the task,
   created integer(14) NOT NULL,                      -- date of the creation
   status char(1) default NULL,
   priority int(2) default NULL,
@@ -3868,15 +2561,6 @@ CREATE TABLE tiki_user_tasks (
   UNIQUE(creator, created)
 ) ENGINE=MyISAM AUTO_INCREMENT=1;
 
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_user_votings
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 11, 2003 at 11:55 PM
-#
-
 DROP TABLE IF EXISTS tiki_user_votings;
 CREATE TABLE tiki_user_votings (
   user varchar(200) NOT NULL default '',
@@ -3884,14 +2568,6 @@ CREATE TABLE tiki_user_votings (
   optionId int(10) NOT NULL default 0,
   PRIMARY KEY (`user`(100),id(100))
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_user_watches
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 12, 2003 at 08:07 AM
-#
 
 DROP TABLE IF EXISTS tiki_user_watches;
 CREATE TABLE tiki_user_watches (
@@ -3906,14 +2582,6 @@ CREATE TABLE tiki_user_watches (
   KEY watchId (watchId),
   PRIMARY KEY (`user`(50),event,object(100),email(50))
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_userfiles
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_userfiles;
 CREATE TABLE tiki_userfiles (
@@ -3930,14 +2598,6 @@ CREATE TABLE tiki_userfiles (
   created int(14) default NULL,
   PRIMARY KEY (fileId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_userpoints
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 11, 2003 at 05:47 AM
-#
 
 DROP TABLE IF EXISTS tiki_userpoints;
 CREATE TABLE tiki_userpoints (
@@ -3945,14 +2605,6 @@ CREATE TABLE tiki_userpoints (
   points decimal(8,2) default NULL,
   voted int(8) default NULL
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_users
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_users;
 CREATE TABLE tiki_users (
@@ -3962,14 +2614,6 @@ CREATE TABLE tiki_users (
   lastLogin int(14) default NULL,
   PRIMARY KEY (user)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_webmail_contacts
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_webmail_contacts;
 CREATE TABLE tiki_webmail_contacts (
@@ -3981,7 +2625,6 @@ CREATE TABLE tiki_webmail_contacts (
   user varchar(200) NOT NULL default '',
   PRIMARY KEY (contactId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
 
 DROP TABLE IF EXISTS tiki_webmail_contacts_groups;
 CREATE TABLE tiki_webmail_contacts_groups (
@@ -3989,14 +2632,6 @@ CREATE TABLE tiki_webmail_contacts_groups (
   groupName varchar(255) NOT NULL,
   PRIMARY KEY (contactId,groupName(200))
 ) ENGINE=MyISAM ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_webmail_messages
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_webmail_messages;
 CREATE TABLE tiki_webmail_messages (
@@ -4008,14 +2643,6 @@ CREATE TABLE tiki_webmail_messages (
   isFlagged char(1) default NULL,
   PRIMARY KEY (accountId,mailId)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_wiki_attachments
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_wiki_attachments;
 CREATE TABLE tiki_wiki_attachments (
@@ -4032,27 +2659,12 @@ CREATE TABLE tiki_wiki_attachments (
   comment varchar(250) default NULL,
   PRIMARY KEY (attId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
-
-#
-# Table structure for table tiki_zones
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_zones;
 CREATE TABLE tiki_zones (
   zone varchar(40) NOT NULL default '',
   PRIMARY KEY (zone)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-#
-# Table structure for table tiki_download
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Apr 15 2004 at 07:42 PM
-#
 
 DROP TABLE IF EXISTS tiki_download;
 CREATE TABLE tiki_download (
@@ -4068,14 +2680,6 @@ CREATE TABLE tiki_download (
   KEY type (type),
   KEY date (date)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table users_grouppermissions
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 11, 2003 at 07:22 AM
-#
 
 DROP TABLE IF EXISTS users_grouppermissions;
 CREATE TABLE users_grouppermissions (
@@ -4084,16 +2688,9 @@ CREATE TABLE users_grouppermissions (
   value char(1) default '',
   PRIMARY KEY (groupName(30),permName)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
 
-insert into users_grouppermissions (groupName,permName) values('Anonymous','tiki_p_view');
 
-#
-# Table structure for table users_groups
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 03, 2003 at 08:57 PM
-#
+INSERT INTO users_grouppermissions (groupName,permName) VALUES('Anonymous','tiki_p_view');
 
 DROP TABLE IF EXISTS users_groups;
 CREATE TABLE users_groups (
@@ -4108,17 +2705,9 @@ CREATE TABLE users_groups (
   registrationUsersFieldIds text,
   userChoice char(1) default NULL,
   groupDefCat int(12) default 0,
-  groupTheme varchar(255) default '',  
+  groupTheme varchar(255) default '',
   PRIMARY KEY (groupName(30))
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table users_objectpermissions
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 12, 2003 at 07:20 AM
-#
 
 DROP TABLE IF EXISTS users_objectpermissions;
 CREATE TABLE users_objectpermissions (
@@ -4128,14 +2717,6 @@ CREATE TABLE users_objectpermissions (
   objectId varchar(32) NOT NULL default '',
   PRIMARY KEY (objectId, objectType, groupName(30),permName)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-
-#
-# Table structure for table users_permissions
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 11, 2003 at 07:22 AM
-#
 
 DROP TABLE IF EXISTS users_permissions;
 CREATE TABLE users_permissions (
@@ -4147,9 +2728,6 @@ CREATE TABLE users_permissions (
   PRIMARY KEY (permName),
   KEY type (type)
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
-# 
-
 
 INSERT INTO users_permissions (permName, permDesc, level, type, admin) VALUES ('tiki_p_admin_calendar', 'Can create/admin calendars', 'admin', 'calendar', 'y');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_add_events', 'Can add events in the calendar', 'registered', 'calendar');
@@ -4408,14 +2986,6 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_map_view_mapfiles', 'Can view contents of mapfiles', 'registered', 'maps');
 
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_use_webmail', 'Can use webmail', 'registered', 'webmail');
-# --------------------------------------------------------
-
-#
-# Table structure for table users_usergroups
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 12, 2003 at 09:31 PM
-#
 
 DROP TABLE IF EXISTS users_usergroups;
 CREATE TABLE users_usergroups (
@@ -4423,18 +2993,10 @@ CREATE TABLE users_usergroups (
   groupName varchar(255) NOT NULL default '',
   PRIMARY KEY (userId,groupName(30))
 ) ENGINE=MyISAM;
-# --------------------------------------------------------
+
 INSERT INTO users_groups (groupName,groupDesc) VALUES ('Anonymous','Public users not logged');
 INSERT INTO users_groups (groupName,groupDesc) VALUES ('Registered','Users logged into the system');
 INSERT INTO users_groups (groupName,groupDesc) VALUES ('Admins','Administrator and accounts managers.');
-# --------------------------------------------------------
-
-#
-# Table structure for table users_users
-#
-# Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 13, 2003 at 01:07 AM
-#
 
 DROP TABLE IF EXISTS users_users;
 CREATE TABLE users_users (
@@ -4469,19 +3031,14 @@ CREATE TABLE users_users (
   KEY registrationDate (registrationDate),
   KEY openid_url (openid_url)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-# --------------------------------------------------------
+
 ### Administrator account
 INSERT INTO users_users(email,login,password,hash) VALUES ('','admin','admin',md5('adminadmin'));
 UPDATE users_users set currentLogin=lastLogin, registrationDate=lastLogin;
 INSERT INTO tiki_user_preferences (user,prefName,value) VALUES ('admin','realName','System Administrator');
 INSERT INTO users_usergroups (userId, groupName) VALUES(1,'Admins');
 INSERT INTO users_grouppermissions (groupName, permName) VALUES ('Admins','tiki_p_admin');
-# --------------------------------------------------------
-# 
 
-#
-# Table structure for table 'tiki_integrator_reps'
-#
 DROP TABLE IF EXISTS tiki_integrator_reps;
 CREATE TABLE tiki_integrator_reps (
   repID int(11) NOT NULL auto_increment,
@@ -4496,14 +3053,8 @@ CREATE TABLE tiki_integrator_reps (
   PRIMARY KEY (repID)
 ) ENGINE=MyISAM;
 
-#
-# Dumping data for table 'tiki_integrator_reps'
-#
 INSERT INTO tiki_integrator_reps VALUES ('1','Doxygened (1.3.4) Documentation','','index.html','doxygen.css','n','y','0','Use this repository as rule source for all your repositories based on doxygened docs. To setup yours just add new repository and copy rules from this repository :)');
 
-#
-# Table structure for table 'tiki_integrator_rules'
-#
 DROP TABLE IF EXISTS tiki_integrator_rules;
 CREATE TABLE tiki_integrator_rules (
   ruleID int(11) NOT NULL auto_increment,
@@ -4520,16 +3071,10 @@ CREATE TABLE tiki_integrator_rules (
   KEY repID (repID)
 ) ENGINE=MyISAM;
 
-#
-# Dumping data for table 'tiki_integrator_rules'
-#
 INSERT INTO tiki_integrator_rules VALUES ('1','1','1','.*<body[^>]*?>(.*?)</body.*','\1','y','n','i','y','Extract code between <body> and </body> tags');
 INSERT INTO tiki_integrator_rules VALUES ('2','1','2','img src=(\"|\')(?!http://)','img src=\1{path}/','y','n','i','y','Fix image paths');
 INSERT INTO tiki_integrator_rules VALUES ('3','1','3','href=(\"|\')(?!(#|(http|ftp)://))','href=\1tiki-integrator.php?repID={repID}&file=','y','n','i','y','Replace internal links to integrator. Don\'t touch an external link.');
 
-#
-# Table structures for table 'tiki_quicktags'
-# 
 DROP TABLE IF EXISTS tiki_quicktags;
 CREATE TABLE tiki_quicktags (
   tagId int(4) unsigned NOT NULL auto_increment,
@@ -4718,7 +3263,7 @@ INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('Email Address','[mailto:text|text]','pics/icons/email.png','forums');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('Deleted','--text--','pics/icons/text_strikethrough.png','forums');
 
-#translated objects table
+# Translated objects table
 DROP TABLE IF EXISTS tiki_translated_objects;
 CREATE TABLE tiki_translated_objects (
   traId int(14) NOT NULL auto_increment,
@@ -4728,11 +3273,6 @@ CREATE TABLE tiki_translated_objects (
   PRIMARY KEY (type, objId),
   KEY traId ( traId )
 ) ENGINE=MyISAM AUTO_INCREMENT=1;
-
-
-#
-# Community tables begin
-#
 
 DROP TABLE IF EXISTS tiki_friends;
 CREATE TABLE tiki_friends (
@@ -4756,7 +3296,6 @@ CREATE TABLE tiki_score (
   expiration int(11) NOT NULL default '0',
   PRIMARY KEY (event)
 ) ENGINE=MyISAM;
-
 
 INSERT INTO tiki_score (event, score, expiration) VALUES ('login',1,0);
 INSERT INTO tiki_score (event, score, expiration) VALUES ('login_remain',2,60);
@@ -4799,30 +3338,11 @@ CREATE TABLE tiki_users_score (
   KEY user (user,event_id,expire)
 ) ENGINE=MyISAM;
 
-
-#
-# Community tables end
-#
-
-#
-# Table structure for table tiki_file_handlers
-#
-# Creation: Nov 02, 2004 at 05:59 PM
-# Last update: Nov 02, 2004 at 05:59 PM
-#
-
 DROP TABLE IF EXISTS tiki_file_handlers;
 CREATE TABLE tiki_file_handlers (
 	mime_type varchar(64) default NULL,
 	cmd varchar(238) default NULL
 ) ENGINE=MyISAM;
-
-#
-# Table structure for table tiki_stats
-#
-# Creation: Aug 04, 2005 at 05:59 PM
-# Last update: Aug 04, 2005 at 05:59 PM
-#
 
 DROP TABLE IF EXISTS tiki_stats;
 CREATE TABLE tiki_stats (
@@ -4832,13 +3352,6 @@ CREATE TABLE tiki_stats (
   hits int(14) NOT NULL default '0',
   PRIMARY KEY (object(200),type,day)
 ) ENGINE=MyISAM;
-
-#
-# Table structure for table tiki_events
-#
-# Creation: Aug 26, 2005 at 06:59 AM - mdavey
-# Last update: Sep 31, 2005 at 12:29 PM - mdavey
-#
 
 DROP TABLE IF EXISTS tiki_events;
 CREATE TABLE tiki_events (
@@ -4856,13 +3369,6 @@ INSERT IGNORE INTO tiki_events(event,file,object,method) VALUES ('user_registers
 INSERT IGNORE INTO tiki_events(callback_type,`order`,event,file,object,method) VALUES ('5', '20', 'user_registers', 'lib/registration/registrationlib.php', 'registrationlib', 'callback_logslib_user_registers');
 INSERT IGNORE INTO tiki_events(callback_type,`order`,event,file,object,method) VALUES ('5', '25', 'user_registers', 'lib/registration/registrationlib.php', 'registrationlib', 'callback_tikiwiki_send_email');
 INSERT IGNORE INTO tiki_events(callback_type,`order`,event,file,object,method) VALUES ('5', '30', 'user_registers', 'lib/registration/registrationlib.php', 'registrationlib', 'callback_tikimail_user_registers');
-
-#
-# Table structure for table tiki_registration_fields
-#
-# Creation: Aug 31, 2005 at 12:57 PM - mdavey
-# Last update: Aug 31, 2005 at 12:57 PM - mdavey
-# 
 
 DROP TABLE IF EXISTS tiki_registration_fields;
 CREATE TABLE tiki_registration_fields (
@@ -4884,6 +3390,7 @@ CREATE TABLE tiki_actionlog_conf (
 PRIMARY KEY (action, objectType),
 KEY (id)
 ) ENGINE=MyISAM;
+
 INSERT IGNORE INTO tiki_actionlog_conf(action, objectType, status) VALUES ('Created', 'wiki page', 'y');
 INSERT IGNORE INTO tiki_actionlog_conf(action, objectType, status) VALUES ('Updated', 'wiki page', 'y');
 INSERT IGNORE INTO tiki_actionlog_conf(action, objectType, status) VALUES ('Removed', 'wiki page', 'y');
@@ -4920,14 +3427,6 @@ INSERT IGNORE INTO tiki_actionlog_conf(action, objectType, status) VALUES ('Post
 INSERT IGNORE INTO tiki_actionlog_conf(action, objectType, status) VALUES ('Updated', 'blog', 'n');
 INSERT IGNORE INTO tiki_actionlog_conf(action, objectType, status) VALUES ('Removed', 'blog', 'n');
 INSERT IGNORE INTO tiki_actionlog_conf(action, objectType, status) VALUES ('Removed', 'file', 'n');
-# --------------------------------------------------------
-
-
-# Table structure for folksonomy tables
-#
-# Creation: Out 16, 2005 - batawata
-# Last update: Out 16, 2005 - batawata
-# 
 
 DROP TABLE IF EXISTS tiki_freetags;
 CREATE TABLE tiki_freetags (
@@ -4949,7 +3448,6 @@ CREATE TABLE tiki_freetagged_objects (
   KEY (user),
   KEY (objectId)
 ) ENGINE=MyISAM;
-
 
 DROP TABLE IF EXISTS tiki_contributions;
 CREATE TABLE tiki_contributions (
@@ -5031,7 +3529,7 @@ CREATE TABLE tiki_profile_symbols (
 	`value` VARCHAR(50) NOT NULL,
 	`named` ENUM('y','n') NOT NULL,
 	`creation_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	PRIMARY KEY( `domain`, `profile`, `object` ),
+	PRIMARY KEY ( `domain`, `profile`, `object` ),
 	INDEX(`named`)
 );
 
@@ -5050,5 +3548,5 @@ CREATE TABLE `tiki_feature` (
   `keyword` varchar(20) default NULL,
   `feature_count` mediumint(9) NOT NULL default '0',
   `feature_path` varchar(20) NOT NULL default '0',
-  PRIMARY KEY  (`feature_id`)
+  PRIMARY KEY (`feature_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1;
