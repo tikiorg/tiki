@@ -259,7 +259,7 @@ class="prevnext">{tr}All{/tr}</a>
 <tr>
 <td class="formcolor auto">{tr}Charset encoding:{/tr}</td><td  class="formcolor auto"><select name="encoding"><option value="UTF-8" selected="selected">{tr}UTF-8{/tr}</option><option value="ISO-8859-1">{tr}ISO-8859-1{/tr}</option></select></td>
 </tr><tr>
-<td class="formcolor auto">{tr}Fields{/tr}</td><td class="formcolor auto">
+<td class="formcolor auto">{tr}Fields:{/tr}</td><td class="formcolor auto">
 <input type="checkbox" name="username" checked="checked" />{tr}Username{/tr}<br />
 <input type="checkbox" name="email"/>{tr}Email{/tr}<br />
 <input type="checkbox" name="lastLogin" />{tr}Last login{/tr}
@@ -269,8 +269,11 @@ class="prevnext">{tr}All{/tr}</a>
 </tr>
 </table>
 
-<h2>{tr}Batch upload (CSV file):{/tr}</h2>
-{tr}Assign users to group:{/tr} {$groupname} <br />{tr}User must already exist.{/tr}<br />{tr}To create users and assign them to groups, got to admin->users{/tr}
+<h2>{tr}Batch upload (CSV file){/tr}</h2>
+<h3>{tr}Assign users to group:{/tr} {$groupname} </h3>
+{remarksbox type="tip" title="{tr}Tip{/tr}"}
+{tr}Each user in the file must already exist.{/tr}<br />{tr}To create users or/and assign them to groups, got to <a href="tiki-adminusers.php">admin->users</a>{/tr}
+{/remarksbox}
 <table class="normal">
 <tr>
 <td class="formcolor auto">{tr}CSV File{/tr}<a {popup text='user<br />user1<br />user2'}>{icon _id='help'}</a></td><td class="formcolor auto"><input name="csvlist" type="file" /></td>
