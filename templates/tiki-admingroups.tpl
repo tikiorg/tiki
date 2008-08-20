@@ -259,7 +259,11 @@ class="prevnext">{tr}All{/tr}</a>
 <tr>
 <td class="formcolor auto">{tr}Charset encoding:{/tr}</td><td  class="formcolor auto"><select name="encoding"><option value="UTF-8" selected="selected">{tr}UTF-8{/tr}</option><option value="ISO-8859-1">{tr}ISO-8859-1{/tr}</option></select></td>
 </tr><tr>
-<td class="formcolor auto"></td><td class="formcolor auto"><input type="checkbox" name="username" checked="checked" />{tr}Username{/tr}<br /><input type="checkbox" name="email"/>{tr}Email{/tr}</td>
+<td class="formcolor auto">{tr}Fields{/tr}</td><td class="formcolor auto">
+<input type="checkbox" name="username" checked="checked" />{tr}Username{/tr}<br />
+<input type="checkbox" name="email"/>{tr}Email{/tr}<br />
+<input type="checkbox" name="lastLogin" />{tr}Last login{/tr}
+</td>
 </tr><tr>
 <td class="formcolor auto"></td><td class="formcolor auto"><input type="submit" name="export" value="{tr}Export{/tr}" /></td>
 </tr>
