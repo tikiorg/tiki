@@ -52,7 +52,7 @@
 {else}
 <span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Add a New User{/tr}</a></span>
 {/if}
-<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Batch Upload{/tr}</a></span>
+<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Import/Export{/tr}</a></span>
 </div>
 {/if}
 
@@ -312,7 +312,7 @@ class="prevnext">{tr}All{/tr}</a>
 
 {* ---------------------- tab with upload -------------------- *}
 <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $prefs.feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
-<h2>{tr}Batch Upload{/tr}</h2>
+<h2>{tr}Batch upload (CSV file):{/tr}</h2>
 <form action="tiki-adminusers.php" method="post" enctype="multipart/form-data">
 <table class="normal">
 <tr class="formcolor">
@@ -330,4 +330,5 @@ class="prevnext">{tr}All{/tr}</a>
 </td></tr>
 </table>
 </form>
+{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}You can export users of a group in <a href="tiki-admingroups.php">admin->groups->a_group</a>{/tr}{/remarksbox}
 </div>
