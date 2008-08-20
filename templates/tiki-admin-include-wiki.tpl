@@ -327,13 +327,13 @@ name="w_displayed_default"{if $prefs.w_displayed_default eq 'y'} checked="checke
     		</td>
     	</tr>
     	<tr>
-    		<td class="form">{tr}Comment{/tr}</td>
+    		<td class="form">{tr}Edit Comments{/tr}</td>
     		<td class="form">
     			<input type="checkbox" name="wiki_list_comment" {if $prefs.wiki_list_comment eq 'y'}checked="checked"{/if} />
     		</td>
     	</tr>
     	<tr>
-		<td class="form">{tr}Comment length:{/tr}</td>
+		<td class="form">{tr}Edit Comments length:{/tr}</td>
 		<td class="form">
 			<input type="text" name="wiki_list_comment_len" value="{$prefs.wiki_list_comment_len}" size="3" />
 		</td>

@@ -330,7 +330,7 @@ function searchrep() {
 {/if}
 {/if}
 {if $page|lower neq 'sandbox'}
-<tr class="formcolor" id="input_edit_summary"><td>{tr}Edit Summary{/tr}:</td><td><input style="width:98%;" class="wikiedit" type="text" name="comment" value="{$commentdata|escape}" /></td></tr>
+<tr class="formcolor" id="input_edit_summary"><td>{tr}Edit Comment{/tr}:</td><td><input style="width:98%;" class="wikiedit" type="text" name="comment" value="{$commentdata|escape}" /></td></tr>
 {if $prefs.wiki_feature_copyrights  eq 'y'}
 <tr class="formcolor"><td>{tr}Copyright{/tr}:</td><td>
 <table border="0">
