@@ -159,6 +159,7 @@ if (isset($_REQUEST["wikifeatures"])) {
 	'feature_backlinks',
 	'feature_likePages',
 	'wiki_uses_slides',
+	'feature_wiki_structure',
 	'feature_wiki_open_as_structure',
 	'feature_wiki_make_structure',
 	'feature_wiki_categorize_structure',
