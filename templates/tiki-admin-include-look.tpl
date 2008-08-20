@@ -539,7 +539,7 @@
 								<td>
 									<textarea id="bot_logo_code" name="bot_logo_code" rows="6" cols="40" style="width: 90%">{$prefs.bot_logo_code|escape}</textarea>
 									<br />
-									<small><em>{tr}Example{/tr}</em>:&lt;div style="text-align: center"&gt;&lt;small&gt;Powered by Tikiwiki&lt;/small&gt;&lt;/div&gt;</small>
+									<small><em>{tr}Example{/tr}</em>:&lt;div style="text-align: center"&gt;&lt;small&gt;Powered by Tikiwiki&lt;/small&gt;&lt;/div&gt;{literal}{wiki}&#123;literal&#125;{MYPLUGIN() /}&#123;/literal&#125;{/wiki}{/literal}</small>
 								</td>
 							</tr>
 							</table>
