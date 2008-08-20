@@ -5116,6 +5116,7 @@ class TikiLib extends TikiDB {
 
 					if( function_exists( $func_name_info ) ) {
 						$plugin_enabled = true;
+						$plugin_editable = false;
 						$meta = $func_name_info();
 
 						if( isset( $meta['prefs'] ) ) {
