@@ -6,6 +6,12 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
+/* params
+ * - link_on_section
+ * - css = use suckerfish menu
+ * - type = vert|horiz
+ * - id = menu ID (mandatory)
+ * - tr = y|n , n means no option translation (default y) */
 function smarty_function_menu($params, &$smarty)
 {
     global $tikilib, $user, $headerlib, $prefs;
@@ -17,6 +23,10 @@ function smarty_function_menu($params, &$smarty)
 	} else {
 		 $smarty->assign('link_on_section', 'n');
 	}
+	if (empty($translate)) {
+		$translate = 'y';
+	}
+	$smarty->assign_by_ref('translate', $translate);
 	if (isset($css) and $prefs['feature_cssmenus'] == 'y') {
 		static $idCssmenu;
 		if (isset($type) && ($type == 'vert' || $type == 'horiz')) {

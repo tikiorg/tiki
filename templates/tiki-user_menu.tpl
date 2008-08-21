@@ -48,7 +48,7 @@
 {else}
 <a href="javascript:icntoggle('menu{$cname}');" class="separator">
 {/if}
-{tr}{$chdata.name}{/tr}
+{if $translate eq 'n'}{$chdata.name|escape}{else}{tr}{$chdata.name}{/tr}{/if}
 </a>
 {if ($menu_info.type eq 'e' or $menu_info.type eq 'd') and $prefs.feature_menusfolderstyle ne 'y'}<a class='separator' href="javascript:toggle('menu{$cname}');">[+]</a>{/if} 
 </div> {* separator *}
@@ -62,7 +62,7 @@
 
 {* ----------------------------- option *}
 {elseif $chdata.type eq 'o'}
-<div class="option{$sep}"><a href="{if $prefs.feature_sefurl eq 'y' and $chdata.sefurl}{$chdata.sefurl}{else}{$chdata.url}{/if}" class="linkmenu">{tr}{$chdata.name}{/tr}</a></div>
+<div class="option{$sep}"><a href="{if $prefs.feature_sefurl eq 'y' and $chdata.sefurl}{$chdata.sefurl}{else}{$chdata.url}{/if}" class="linkmenu">{if $translate eq 'n'}{$chdata.name|escape}{else}{tr}{$chdata.name}{/tr}{/if}</a></div>
 {if $sep eq 'line'}{assign var=sep value=''}{/if}
 
 {* ----------------------------- separator *}
