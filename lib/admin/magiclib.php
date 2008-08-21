@@ -30,8 +30,21 @@ class MagicLib extends TikiLib {
 			if ($row[0] !== null) {
 				while( count($row) < 11 )
 					$row[] = '';
-				if( count($row) != 11 )
-					$row = array_slice( $row, 0, 11 );				
+
+				$row = array(
+					(int) $row[0],
+					(string) $row[1],
+					(int) $row[2],
+					(string) $row[3],
+					(string) $row[4],
+					(string) $row[5],
+					(string) $row[6],
+					(string) $row[7],
+					(int) $row[8],
+					(int) $row[9],
+					(string) $row[10],
+				);
+
 				$query = "INSERT INTO tiki_feature (`feature_id`, `feature_name`, `parent_id`, `status`, `setting_name`, `feature_type`, `template`, `permission`, `ordinal`, `depends_on`, `keyword`) VALUES(" . rtrim(str_repeat(' ?,', count($row)), ',') . ")";
 				$this->query( $query, $row);
 			}
