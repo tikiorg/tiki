@@ -163,6 +163,7 @@
 									<span>{tr}Custom Site Header{/tr}</span>
 								</a>
 							</legend>
+              {remarksbox type="note"}{tr}Activate will only show content for admin. Check Publish to use content for all users.{/tr}{/remarksbox}
 							<table class="admin">
 							<tr>
 								<td class="form">
