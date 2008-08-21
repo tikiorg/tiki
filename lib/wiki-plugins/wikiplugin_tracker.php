@@ -6,7 +6,7 @@
 
 function wikiplugin_tracker_help() {
 	$help = tra("Displays an input form for tracker submit").":\n";
-	$help.= "~np~{TRACKER(trackerId=1, fields=id1:id2:id3, action=Name of submit button, showtitle=n, showdesc=n, showmandatory=n, embedded=n, url=\"http://site.com\", values=val1:val2:val3, sort=n, preview=preview, view=user, tpl=x.tpl,wiki=page,newstatus=o|p|c)}Notice{TRACKER}~/np~";
+	$help.= "~np~{TRACKER(trackerId=1, fields=id1:id2:id3, action=Name of submit button, showtitle=n, showdesc=n, showmandatory=n, embedded=n, url=\"http://site.com\", values=val1:val2:val3, sort=n, preview=preview, view=user, tpl=x.tpl,wiki=page,newstatus=o|p|c, itemId=)}Notice{TRACKER}~/np~";
 	return $help;
 }
 
@@ -56,7 +56,7 @@ function wikiplugin_tracker_info() {
 			'url' => array(
 				'required' => false,
 				'name' => tra('URL'),
-				'description' => tra('?'),
+				'description' => tra('Url used for the field links'),
 			),
 			'values' => array(
 				'required' => false,
@@ -78,15 +78,20 @@ function wikiplugin_tracker_info() {
 				'name' => tra('View'),
 				'description' => tra('user'),
 			),
+			'itemId' =>array(
+				'required' => false,
+				'name' => tra('itemId'),
+				'description' => tra('itemId if you want to edit an item'),
+			),
 			'tpl' => array(
 				'required' => false,
 				'name' => tra('Template File'),
-				'description' => tra('Name of the template used to display the tracker.'),
+				'description' => tra('Name of the template used to display the tracker items.'),
 			),
 			'wiki' => array(
 				'required' => false,
 				'name' => tra('Wiki'),
-				'description' => tra('Page name'),
+				'description' => tra('Name of the wiki page containing the template to display the tracker items.'),
 			),
 			'newstatus' => array(
 				'required' => false,
@@ -136,6 +141,10 @@ function wikiplugin_tracker($data, $params) {
 		$usertracker = true;
 	} elseif (!empty($trackerId) && !empty($_REQUEST['view_user'])) {
 		$itemId = $trklib->get_user_item($trackerId, $tracker, $_REQUEST['view_user']);
+	} elseif (!empty($_REQUEST['itemId'])) {
+		$itemId = $_REQUEST['itemId'];
+		$item = $trklib->get_tracker_item($itemId);
+		$trackerId = $item['trackerId'];
 	}
 	if (!isset($trackerId)) {
 		return $smarty->fetch("wiki-plugins/error_tracker.tpl");
