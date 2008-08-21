@@ -44,7 +44,7 @@
 {/foreach}
 </select>
 {if $option_groups|@count ge '2'}
-{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple groups.{/tr}{/remarksbox}
+{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple groups.{/tr}<br />{tr}Selecting 2 groups means that the option will be seen if the user belongs to the 2 groups. If you want the 2 groups to see the option, create 2 options with one group each.{/tr}{/remarksbox}
 {/if}
 </td></tr>
 {if $prefs.feature_userlevels eq 'y'}
