@@ -162,11 +162,11 @@ window.onload = timeIt;
 </div>
 {/if}
 
-{if $prefs.feature_wysiwyg eq 'y' and $prefs.wysiwyg_optional eq 'y' and !$preview and $staging_preview neq 'y' and !isset($hdr)}
+{if $prefs.feature_wysiwyg eq 'y' and $prefs.wysiwyg_optional eq 'y' and !isset($hdr)}
   {if $wysiwyg ne 'y'}
-    <span class="button2" onclick="needToConfirm = false;">{self_link _class='linkbut' wysiwyg='y'}{tr}Use wysiwyg editor{/tr}{/self_link}</span>
-  {else}
-    <span class="button2" onclick="needToConfirm = false;">{self_link _class='linkbut' wysiwyg='n'}{tr}Use normal editor{/tr}{/self_link}</span>
+	<input type="submit" class="wikiaction" onmouseover="return overlib('{tr}Switch to WYSIWYG editor.{/tr}');" onmouseout="nd();" name="mode_wysiwyg" value="{tr}Use wysiwyg editor{/tr}" onclick="needToConfirm=false;" />
+{else}
+	<input type="submit" class="wikiaction" onmouseover="return overlib('{tr}Switch to normal (wiki) editor.{/tr}');" onmouseout="nd();" name="mode_normal" value="{tr}Use normal editor{/tr}" onclick="needToConfirm=false;" />
   {/if}
 {/if}
 
@@ -240,7 +240,7 @@ window.onload = timeIt;
 {/if}
 </td></tr>
 {/if}
-{if $prefs.feature_smileys eq 'y'&&!$wysiwyg}
+{if $prefs.feature_smileys eq 'y' && ($wysiwyg neq 'y' or $prefs.wysiwyg_wiki_parsed eq 'y')}
 <tr class="formcolor"><td>{tr}Smileys{/tr}:</td><td>
 {include file="tiki-smileys.tpl" area_name='editwiki'}
 </td>
