@@ -94,7 +94,7 @@ class SemanticLib
 	{
 		global $tikilib;
 
-		$result = $tikilib->query( "SELECT fromPage, toPage, reltype FROM tiki_links WHERE reltype LIKE ? AND reltype IS NOT NULL",
+		$result = $tikilib->query( "SELECT fromPage, toPage, reltype FROM tiki_links WHERE reltype LIKE ? AND reltype IS NOT NULL ORDER BY fromPage, toPage",
 			array("%$token%") );
 		
 		$links = array();

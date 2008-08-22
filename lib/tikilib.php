@@ -6895,7 +6895,7 @@ class TikiLib extends TikiDB {
 				$relList = array_merge(
 					$normal[1], 
 					$withDesc[1], 
-					array_fill( 0, count($wikiLinks[2]), null )
+					count($wikiLinks[2]) ? array_fill( 0, count($wikiLinks[2]), null ) : array()
 				);
 			}
 		} else {

@@ -22,6 +22,7 @@
 				{/foreach}
 			</table>
 			<p>
+				<input type="submit" name="list" value="{tr}Show Usage{/tr}"/>
 				<input type="submit" name="remove" value="{tr}Delete{/tr}"/>
 				<input type="submit" name="removeclean" value="{tr}Delete &amp; Unreference{/tr}"/>
 			</p>
@@ -55,6 +56,7 @@
 			{/if}
 		</td>
 		<td>
+			<h2>{tr}New Types{/tr}</h2>
 			<table width="100%">
 				<tr>
 					<th>{tr}Token{/tr}</th>
@@ -68,6 +70,7 @@
 							<div>
 								<input type="hidden" name="select[]" value="{$token|escape}"/>
 								<input type="hidden" name="token" value="{$token|escape}"/>
+								<input type="submit" name="list" value="{tr}Show Usage{/tr}"/>
 								<input type="submit" name="create" value="{tr}Create{/tr}"/>
 								<input type="submit" name="rename" value="{tr}Fix{/tr}"/>
 								<input type="submit" name="clean" value="{tr}Remove{/tr}"/>
@@ -92,3 +95,15 @@
 		</td>
 	</tr>
 </table>
+{foreach from=$link_lists item=links key=token}
+<h2>{if $tokens[$token]}{$tokens[$token].label|escape}{else}{$token|escape}{/if}</h2>
+	{if $links|@count > 0}
+		<ul>
+		{foreach from=$links item=t}
+			<li><a href="tiki-index.php?page={$t.fromPage|escape}">{$t.fromPage|escape}</a> (link to <a href="tiki-index.php?page={$t.toPage|escape}">{$t.toPage|escape}</a>)</li>
+		{/foreach}
+		</ul>
+	{else}
+		<p>{tr}No occurences found.{/tr}</p>
+	{/if}
+{/foreach}

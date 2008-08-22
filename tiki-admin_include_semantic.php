@@ -56,6 +56,9 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 
 $smarty->assign( 'tokens', $semanticlib->getTokens() );
 $smarty->assign( 'new_tokens', $semanticlib->getNewTokens() );
+if( isset($_POST['select']) ) {
+	$smarty->assign( 'select', $_POST['select'] );
+}
 
 if( isset( $_REQUEST['token'] ) && $semanticlib->isValid($_REQUEST['token'])
 	&& ( isset($_POST['create']) || false !== $semanticlib->getToken($_REQUEST['token']) ) ) {
@@ -65,6 +68,20 @@ if( isset( $_REQUEST['token'] ) && $semanticlib->isValid($_REQUEST['token'])
 
 if( isset( $_REQUEST['rename'] ) ) {
 	$smarty->assign( 'rename', $_REQUEST['token'] );
+}
+
+if( isset($_POST['list']) ) {
+	$lists = array();
+
+	$list = array();
+	if( isset( $_POST['select'] ) )
+		$list = (array) $_POST['select'];
+
+	foreach( $list as $token ) {
+		$lists[$token] = $semanticlib->getLinksUsing( $token );
+	}
+
+	$smarty->assign( 'link_lists', $lists );
 }
 
 ask_ticket('admin-inc-semantic');
