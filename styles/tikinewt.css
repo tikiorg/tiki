@@ -152,6 +152,7 @@ input[type=submit]:hover,
 fieldset {
 	border: solid 1px #C7D0D9;
 	padding: 10px;
+	margin: 0px;
 }
 
 textarea {
@@ -796,6 +797,7 @@ div.simplebox {
 /** rbox: remarks box (note/warning/tip/comment) */
 .rbox {
   margin-top: 10px;
+	text-align: left;
 }
 .rbox-data {
   padding: 2px;
@@ -807,6 +809,7 @@ div.simplebox {
   -khtml-border-radius-topright: 1ex;
   font-size: .95em;
   padding: 0 10px;   
+	padding-bottom: 0.35em;
   position: relative;
   display: inline;
   margin: 0;
