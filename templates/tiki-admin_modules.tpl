@@ -202,7 +202,7 @@
 <textarea id='usermoduledata' name="um_data" rows="10" cols="40" style="width:95%">{$um_data|escape}</textarea>
 </td></tr>
 <tr><td class="form"></td><td class="form"><input type="checkbox" name="um_parse" value="y" {if $um_parse eq "y"}checked="checked"{/if} /> {tr}Must be wiki parsed{/tr}</td></tr>
-<tr><td>&nbsp;</td><td><input type="submit" name="um_update" value="{if $um_title eq ''}{tr}Create{/tr}{else}{tr}Edit{/tr}{/if}" /></td></tr>
+<tr><td>&nbsp;</td><td><input type="submit" name="um_update" value="{if $um_title eq ''}{tr}Create{/tr}{else}{tr}Save{/tr}{/if}" /></td></tr>
 </table>
 </form>
 
