@@ -6115,7 +6115,7 @@ class TikiLib extends TikiDB {
 			$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$2 $rel\">$1</a>$ext_icon", $data);
 			$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)\|([^\]]+)\]/";//< last param here ($2) is used for relation (rel) attribute (e.g. shadowbox) or nocache
 			preg_match($pattern, $data, $matches);
-			if ($matches[2]=='nocache') {
+			if (isset($matches[2]) && $matches[2]=='nocache') {
 				$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$rel\">$1</a>$ext_icon", $data);
 			} else {
 				$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$2 $rel\">$1</a>$ext_icon $cosa", $data);
