@@ -337,7 +337,7 @@
 {/section}
 </table>
 <br/>
-<a name="assign"/>
+<a name="assign"></a>
 {if $assign_name eq ''}
 <h2>{tr}Assign new module{/tr}</h2>
 {else}
