@@ -6931,6 +6931,7 @@ class TikiLib extends TikiDB {
 			$query = "insert into `tiki_links`(`fromPage`,`toPage`) values(?, ?)";
 			$result = $this->query($query, array($pageFrom,$pageTo));
 		} else {
+			sort($types);
 			$query = "insert into `tiki_links`(`fromPage`,`toPage`, `reltype`) values(?, ?, ?)";
 			$result = $this->query($query, array( $pageFrom, $pageTo, implode(',', $types) ));
 		}
