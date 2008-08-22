@@ -4617,7 +4617,7 @@ class TikiLib extends TikiDB {
 		if (!$user) $user = 'anonymous';
 		if (empty($wysiwyg)) $wysiwyg = $prefs['wysiwyg_default'];
 		// Collect pages before modifying data
-		$pages = $this->get_pages($data);
+		$pages = $this->get_pages($data, true);
 
 		// This *really* shouldn't be necessary now that the
 		// query itself has been fixed up, and it causes much
@@ -4682,8 +4682,8 @@ class TikiLib extends TikiDB {
 		$this->clear_links($name);
 
 		// Pages are collected before adding slashes
-		foreach ($pages as $a_page) {
-			$this->replace_link($name, $a_page);
+		foreach ($pages as $a_page => $types) {
+			$this->replace_link($name, $a_page, $types);
 		}
 
 		// Update the log
@@ -5807,7 +5807,7 @@ class TikiLib extends TikiDB {
 		// New syntax for wiki pages ((name|desc)) Where desc can be anything
 		// preg_match_all("/\(\(($page_regex)\|(.+?)\)\)/", $data, $pages);
 		// match ((name|desc)) as well as ((name|))
-		preg_match_all("/\(\(($page_regex)\|([^\)]*?)\)\)/", $data, $pages);
+		preg_match_all("/\(([a-z0-9-]+)?\(($page_regex)\|([^\)]*?)\)\)/", $data, $pages);
 
 		$temp_max = count($pages[1]);
 		for ($i = 0; $i < $temp_max; $i++) {
@@ -5818,8 +5818,14 @@ class TikiLib extends TikiDB {
 			// Replace links to external wikis
 			$repl2 = true;
 
-			if (strstr($pages[1][$i], ':')) {
-				$wexs = explode(':', $pages[1][$i]);
+			if( ! empty( $pages[1][$i] ) ) {
+				$reltype = $pages[1][$i];
+			} else {
+				$reltype = null;
+			}
+
+			if (strstr($pages[2][$i], ':')) {
+				$wexs = explode(':', $pages[2][$i]);
 
 				if (count($wexs) == 2) {
 					$wkname = $wexs[0];
@@ -5827,8 +5833,8 @@ class TikiLib extends TikiDB {
 					if ($this->db->getOne("select count(*) from `tiki_extwiki` where `name`=?",array($wkname)) == 1) {
 						$wkurl = $this->db->getOne("select `extwiki`  from `tiki_extwiki` where `name`=?",array($wkname));
 
-						$wkurl = '<a href="' . str_replace('$page', urlencode($wexs[1]), $wkurl). '" class="wiki external">' . $wexs[1] . '</a>';
-						$data = preg_replace($pattern, "$wkurl", $data);
+						$wkurl = '<a href="' . str_replace('$page', urlencode($wexs[1]), $wkurl). '" class="wiki external ' . $reltype . '">' . $wexs[1] . '</a>';
+						$data = preg_replace($pattern, $wkurl, $data);
 						$repl2 = false;
 					}
 				}
@@ -5840,50 +5846,56 @@ class TikiLib extends TikiDB {
 				// text[0] = link description (previous format)
 				// text[1] = timeout in seconds (new field)
 				// text[2..N] = drop
-				$text = explode("|", $pages[5][$i]);
+				$text = explode("|", $pages[6][$i]);
 
-				if ($desc = $this->page_exists_desc($pages[1][$i])) {
+				if ($desc = $this->page_exists_desc($pages[2][$i])) {
 					// why the preg_replace? ex: ((page||Page-Desc)) the desc must stay Page-Desc, and not ))Page-Desc((
 					$desc1 = $desc;
 					$desc = preg_replace("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/s", "$1))$2(($3", $desc);
 					$bestLang = ($prefs['feature_multilingual'] == 'y' && $prefs['feature_best_language'] == 'y')? "&amp;bl=y" : "";
-					$uri_ref = $wikilib->sefurl($pages[1][$i]).$bestLang;
+					$uri_ref = $wikilib->sefurl($pages[2][$i]).$bestLang;
 
 					// check to see if desc is blank in ((page|desc))
 					if (strlen(trim($text[0])) > 0) {
 						$linktext = $text[0];
 					} elseif ($desc != $pages[1][$i]) {
 						// desc is blank; use the page description instead
-						$linktext = $pages[1][$i] . ': ' . $desc;
+						$linktext = $pages[2][$i] . ': ' . $desc;
 					} else {
 						// there is no page description
-						$linktext = $pages[1][$i];
+						$linktext = $pages[2][$i];
 					}
 
-					$repl = '<a title="'.$desc1.'" href="'.$uri_ref.'" class="wiki">' . $linktext . '</a>';
+					$repl = '<a title="'.$desc1.'" href="'.$uri_ref.'" class="wiki ' . $reltype . '">' . $linktext . '</a>';
 
 					// Check is timeout expired?
-					if (isset($text[1]) && (time() - intval($this->page_exists_modtime($pages[1][$i]))) < intval($text[1])) {
+					if (isset($text[1]) && (time() - intval($this->page_exists_modtime($pages[2][$i]))) < intval($text[1])) {
 						// Append small 'new' image. TODO: possible 'updated' image more suitable...
 						$repl .= '&nbsp;<img src="img/icons/new.gif" border="0" alt="'.tra("new","",true).'" />';
 					}
 				} else {
-					$uri_ref = "tiki-editpage.php?page=" . urlencode($pages[1][$i]);
+					$uri_ref = "tiki-editpage.php?page=" . urlencode($pages[2][$i]);
 					if( $prefs['feature_multilingual'] == 'y' && isset( $GLOBALS['pageLang'] ) ) {
 						$uri_ref .= '&amp;lang=' . urlencode($GLOBALS['pageLang']);
 					}
 
-					$repl = (strlen(trim($text[0])) > 0 ? $text[0] : $pages[1][$i]) . '<a href="'.$uri_ref.'" title="'.tra("Create page:","",true)." ".urlencode($pages[1][$i]).'" class="wiki wikinew">?</a>';
+					$repl = (strlen(trim($text[0])) > 0 ? $text[0] : $pages[2][$i]) . '<a href="'.$uri_ref.'" title="'.tra("Create page:","",true)." ".urlencode($pages[2][$i]).'" class="wiki wikinew">?</a>';
 				}
-				$data = preg_replace($pattern, "$repl", $data);
+				$data = preg_replace($pattern, $repl, $data);
 			}
 		}
 
 		// New syntax for wiki pages ((name)) Where name can be anything
-		preg_match_all("/\(\( *($page_regex) *\)\)/", $data, $pages);
+		preg_match_all("/\(([a-z0-9-]+)?\( *($page_regex) *\)\)/", $data, $pages);
 
-		foreach (array_unique($pages[1]) as $page_parse) {
+		foreach ($pages[2] as $idx => $page_parse) {
 			$repl2 = true;
+
+			if( ! empty( $pages[1][$idx] ) ) {
+				$reltype = $pages[1][$idx];
+			} else {
+				$reltype = null;
+			}
 
 			if (strstr($page_parse, ':')) {
 				$wexs = explode(':', $page_parse);
@@ -5894,8 +5906,12 @@ class TikiLib extends TikiDB {
 					if ($this->db->getOne("select count(*) from `tiki_extwiki` where `name`=?",array($wkname)) == 1) {
 						$wkurl = $this->db->getOne("select `extwiki`  from `tiki_extwiki` where `name`=?",array($wkname));
 
-						$wkurl = '<a href="' . str_replace('$page', urlencode($wexs[1]), $wkurl). '" class="wiki external">' . $wexs[1] . '</a>';
-						$data = preg_replace("/\(\($page_parse\)\)/", "$wkurl", $data);
+						$wkurl = '<a href="' . str_replace('$page', urlencode($wexs[1]), $wkurl). '" class="wiki external ' . $reltype . '">' . $wexs[1] . '</a>';
+
+						$pattern = $pages[0][$idx];
+						$pattern = preg_quote($pattern, "/");
+						$pattern = "/" . $pattern . "/";
+						$data = preg_replace($pattern, $wkurl, $data);
 						$repl2 = false;
 					}
 				}
@@ -5904,15 +5920,16 @@ class TikiLib extends TikiDB {
 			if ($repl2) {
 				if ($desc = $this->page_exists_desc($page_parse)) {
 					// why the preg_replace? ex: ((page||Page-Desc)) the desc must stay Page-Desc in the title, and not ))Page-Desc((
-					//$desc = preg_replace("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/s", "$1))$2(($3", $desc);
 					$bestLang = ($prefs['feature_multilingual'] == 'y' && $prefs['feature_best_language'] == 'y')? "&amp;bl=y" : ""; // to choose the best page language
-					$repl = "<a title=\"$desc\" href='" . $wikilib->sefurl($page_parse).$bestLang. "' class='wiki'>$page_parse</a>";
+					$repl = "<a title=\"$desc\" href='" . $wikilib->sefurl($page_parse).$bestLang. "' class='wiki $reltype'>$page_parse</a>";
 				} else {
 					$repl = $page_parse.'<a href="tiki-editpage.php?page=' . urlencode($page_parse). ($prefs['feature_multilingual'] == 'y' && isset($GLOBALS['pageLang'])?('&amp;lang='.urlencode($GLOBALS['pageLang'])):'') . '" title="'.tra("Create page:","",true).' '.urlencode($page_parse).'"  class="wiki wikinew">?</a>';
 				}
 
-				$page_parse_pq = preg_quote($page_parse, "/");
-				$data = preg_replace("/\(\($page_parse_pq\)\)/", "$repl", $data);
+				$pattern = $pages[0][$idx];
+				$pattern = preg_quote($pattern, "/");
+				$pattern = "/" . $pattern . "/";
+				$data = preg_replace($pattern, $repl, $data);
 			}
 		}
 
@@ -6859,20 +6876,46 @@ class TikiLib extends TikiDB {
 		return $data;
 	}
 
-	function get_pages($data) {
+	function get_pages($data,$withReltype = false) {
 		global $page_regex, $prefs;
 
+		preg_match_all("/\(([a-z0-9-]+)?\( *($page_regex) *\)\)/", $data, $normal);
+		preg_match_all("/\(([a-z0-9-]+)?\( *($page_regex) *\|(.+?)\)\)/", $data, $withDesc);
+
 		if ($prefs['feature_wikiwords'] == 'y') {
-			preg_match_all("/\(\( *($page_regex) *\)\)/", $data, $pages2);
-			preg_match_all("/\(\( *($page_regex) *\|(.+?)\)\)/", $data, $pages3);
-			preg_match_all("/([ \n\t\r\,\;]|^)?([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/", $data, $pages);
-			$pages = array_unique(array_merge($pages[2], $pages2[1], $pages3[1]));
+			preg_match_all("/([ \n\t\r\,\;]|^)?([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/", $data, $wikiLinks);
+
+			$pageList = array_merge( $normal[2], $withDesc[2], $wikiLinks[2] );
+			if( $withReltype ) {
+				$relList = array_merge(
+					$normal[1], 
+					$withDesc[1], 
+					array_fill( 0, count($wikiLinks[2]), null )
+				);
+			}
 		} else {
-			preg_match_all("/\(\( *($page_regex) *\)\)/", $data, $pages);
-			preg_match_all("/\(\( *($page_regex) *\|(.+?)\)\)/", $data, $pages2);
-			$pages = array_unique(array_merge($pages[1], $pages2[1]));
+			$pageList = array_merge( $normal[2], $withDesc[2] );
+			if( $withReltype ) {
+				$relList = array_merge(
+					$normal[1], 
+					$withDesc[1]
+				);
+			}
 		}
-		return $pages;
+
+		if( $withReltype ) {
+			$complete = array();
+			foreach( $pageList as $idx => $name ) {
+				if( ! array_key_exists( $name, $complete ) )
+					$complete[$name] = array();
+				if( ! empty( $relList[$idx] ) && ! in_array( $relList[$idx], $complete[$name] ) )
+					$complete[$name][] = $relList[$idx];
+			}
+
+			return $complete;
+		} else {
+			return array_unique( $pageList );
+		}
 	}
 
 	function clear_links($page) {
@@ -6880,11 +6923,17 @@ class TikiLib extends TikiDB {
 		$result = $this->query($query, array($page));
 	}
 
-	function replace_link($pageFrom, $pageTo) {
+	function replace_link($pageFrom, $pageTo, $types = array()) {
 		$query = "delete from `tiki_links` where `fromPage`=? and `toPage`=?";
 		$result = $this->query($query, array($pageFrom,$pageTo));
-		$query = "insert into `tiki_links`(`fromPage`,`toPage`) values(?, ?)";
-		$result = $this->query($query, array($pageFrom,$pageTo));
+
+		if( count($types) == 0 ) {
+			$query = "insert into `tiki_links`(`fromPage`,`toPage`) values(?, ?)";
+			$result = $this->query($query, array($pageFrom,$pageTo));
+		} else {
+			$query = "insert into `tiki_links`(`fromPage`,`toPage`, `reltype`) values(?, ?, ?)";
+			$result = $this->query($query, array( $pageFrom, $pageTo, implode(',', $types) ));
+		}
 	}
 
 	function invalidate_cache($page) {
@@ -6906,7 +6955,7 @@ class TikiLib extends TikiDB {
 
 		$this->invalidate_cache($pageName);
 		// Collect pages before modifying edit_data (see update of links below)
-		$pages = $this->get_pages($edit_data);
+		$pages = $this->get_pages($edit_data, true);
 
 		if (!$this->page_exists($pageName))
 			return false;
@@ -6986,8 +7035,8 @@ class TikiLib extends TikiDB {
 		$this->clear_links($pageName);
 
 		// Pages collected above
-		foreach ($pages as $page) {
-			$this->replace_link($pageName, $page);
+		foreach ($pages as $page => $types) {
+			$this->replace_link($pageName, $page, $types);
 		}
 
 		if (strtolower($pageName) != 'sandbox' && !$minor) {
@@ -7088,7 +7137,7 @@ class TikiLib extends TikiDB {
 			return;
 
 		// Collect pages before modifying edit_data
-		$pages = $this->get_pages($edit_data);
+		$pages = $this->get_pages($edit_data, true);
 
 		if (!$this->page_exists($pageName))
 			return false;
@@ -7115,8 +7164,8 @@ class TikiLib extends TikiDB {
 			$this->clear_links($pageName);
 
 			// Pages are collected at the top of the function before adding slashes
-			foreach ($pages as $page) {
-				$this->replace_link($pageName, $page);
+			foreach ($pages as $page => $types) {
+				$this->replace_link($pageName, $page, $types);
 			}
 		}
 	}

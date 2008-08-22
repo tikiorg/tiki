@@ -60,3 +60,5 @@ CREATE TABLE `tiki_feature` (
 #2008-08-17 lphuberdeau
 UPDATE tiki_menu_options SET section = 'feature_wiki_structure' WHERE optionId = 47;
 
+#2008-08-22 lphuberdeau
+ALTER TABLE tiki_links ADD COLUMN reltype VARCHAR(50);
