@@ -5416,6 +5416,7 @@ class TikiLib extends TikiDB {
 		$is_html = isset($options['is_html']) ? $options['is_html'] : false;
 		$absolute_links = isset($options['absolute_links']) ? $options['absolute_links'] : false;
 		$language = isset($options['language']) ? $options['language'] : '';
+		$noparseplugins = isset($options['noparseplugins']) ? $options['noparseplugins'] : false;
 
 		// if simple_wiki is tru, disable some wiki syntax
 		// basically, allow wiki plugins, wiki links and almost
@@ -5469,7 +5470,9 @@ class TikiLib extends TikiDB {
 		// Handle pre- and no-parse sections and plugins
 		$preparsed = array('data'=>array(),'key'=>array());
 		$noparsed = array('data'=>array(),'key'=>array());
-		$this->parse_first($data, $preparsed, $noparsed);
+		if (!$noparseplugins) {
+			$this->parse_first($data, $preparsed, $noparsed);
+		}
 
 		// Handle |# anchor links by turning them into ALINK module calls.
 		preg_match_all("/\(\(([^)]*\|#[^)]*)\)\)/", $data, $anchors);
@@ -5551,7 +5554,9 @@ class TikiLib extends TikiDB {
 			}
 		}
 
-		$this->parse_first($data, $preparsed, $noparsed);
+		if (!$noparseplugins) {
+			$this->parse_first($data, $preparsed, $noparsed);
+		}
 
 		// Handle ~pre~...~/pre~ sections
 		$data = preg_replace(';~pre~(.*?)~/pre~;s', '<pre>$1</pre>', $data);
