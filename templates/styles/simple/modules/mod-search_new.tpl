@@ -1,7 +1,7 @@
 {* $Id$ *}
 
 {if $prefs.feature_search eq 'y'}
-{tikimodule title="{tr}Search{/tr}" name="search_new" flip=$module_params.flip decorations=$module_params.decorations}
+{tikimodule title="{tr}Search{/tr}" name="search_new" flip=$module_params.flip decorations=$module_params.decorations notitle=$module_params.notitle}
     <form class="forms" method="get" action="tiki-searchindex.php">
     <input id="fuser" name="highlight" size="14" type="text" accesskey="s" /> {tr}in:{/tr}<br />
     <select name="where">

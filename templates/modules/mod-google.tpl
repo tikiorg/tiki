@@ -1,7 +1,7 @@
 {* $Id$ *}
 
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Google Search{/tr}"}{/if}
-{tikimodule title=$tpl_module_title name="google" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox}
+{tikimodule title=$tpl_module_title name="google" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 <form method="get" action="http://www.google.com/search" target="Google" style="margin-bottom:2px;">
   <input type="hidden" name="hl" value="en"/>
   <input type="hidden" name="oe" value="UTF-8"/>

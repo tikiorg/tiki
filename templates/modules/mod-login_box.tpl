@@ -15,7 +15,7 @@ function capLock(e){
 //--><!]]>
 </script>
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Login{/tr}"}{/if}
-{tikimodule title=$tpl_module_title name="login_box" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox}
+{tikimodule title=$tpl_module_title name="login_box" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
     {if $user}
       <div>{tr}Logged in as{/tr}: <span style="white-space: nowrap">{$user|userlink}</span></div>
       <div style="text-align: center"><a class="linkmodule linkbut" href="tiki-logout.php">{tr}Logout{/tr}</a></div>

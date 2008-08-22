@@ -64,7 +64,7 @@ if (count($query)>0) {
 $todaylink=$father."day=".date("d")."&amp;mon=".date("m")."&amp;year=".date("Y");
 {/php}
 
-{tikimodule title="{tr}Calendar{/tr}-{tr}Filter{/tr}" name="calendar" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox}
+{tikimodule title="{tr}Calendar{/tr}-{tr}Filter{/tr}" name="calendar" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
     <table  border="0" cellspacing="0" cellpadding="0">
     <!-- THIS ROW DISPLAYS THE YEAR AND MONTH -->
     <tr>

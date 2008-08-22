@@ -5,7 +5,7 @@
 	{else}
 		{eval var="{tr}Last changes{/tr}" assign="tpl_module_title"}
 	{/if}
-	{tikimodule title=$tpl_module_title name="last_modif_pages" flip=$module_params.flip decorations=$module_params.decorations}
+	{tikimodule title=$tpl_module_title name="last_modif_pages" flip=$module_params.flip decorations=$module_params.decorations notitle=$module_params.notitle}
 		{if $nonums != 'y'}
 			<ol>
 		{else}

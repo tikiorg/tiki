@@ -6,7 +6,7 @@
 {else}
 {eval var="{tr}Last Files{/tr}" assign="tpl_module_title"}
 {/if}
-{tikimodule title=$tpl_module_title name="last_files" flip=$module_params.flip decorations=$module_params.decorations}
+{tikimodule title=$tpl_module_title name="last_files" flip=$module_params.flip decorations=$module_params.decorations notitle=$module_params.notitle}
 {if $nonums != 'y'}<ol>{/if}
     {section name=ix loop=$modLastFiles}
         {if $nonums != 'y'}<li>{/if}

@@ -5,7 +5,7 @@
  *}
 {if $user}
 	{assign var=module_title value=$slvn_info.label}
-	{tikimodule title="$module_title" name="since_last_visit_new" flip=$module_params.flip decorations=$module_params.decorations}
+	{tikimodule title="$module_title" name="since_last_visit_new" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 	<div style="margin-bottom: 5px; text-align:center;">
 		{if $prefs.feature_calendar eq 'y'}
 			<a class="linkmodule" href="tiki-calendar.php?todate={$slvn_info.lastLogin}" title="{tr}click to edit{/tr}">

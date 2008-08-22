@@ -1,7 +1,7 @@
 {* $Id$ *}
 
 {if !isset($tpl_module_title)}{eval assign=tpl_module_title var="{tr}Admin Menu{/tr}"}{/if}
-{tikimodule title="{tr}$tpl_module_title{/tr}" name="admin_menu" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox}
+{tikimodule title="{tr}$tpl_module_title{/tr}" name="admin_menu" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 {if $tiki_p_admin eq 'y' or 
  $tiki_p_admin_chat eq 'y' or
  $tiki_p_admin_categories eq 'y' or
