@@ -533,7 +533,7 @@ function walk_and_parse(&$c, &$src, &$p, $head_url )
  * \param &$c string -- HTML in
  * \param &$src string -- output string
  */
-function parse_html(&$inHtml, &$parseddata) {
+function parse_html($inHtml) {
 	//error_reporting(6143);
 	// Read compiled (serialized) grammar
 	$grammarfile = 'lib/htmlparser/htmlgrammar.cmp';
@@ -549,27 +549,29 @@ function parse_html(&$inHtml, &$parseddata) {
 	$htmlparser = new HtmlParser($inHtml, $grammar, '', 0);
 	$htmlparser->Parse();
 	// Should I try to convert HTML to wiki?
-	$parseddata = '';
+	$out_data = '';
 	$p =  array('stack' => array(), 'listack' => array(), 'first_td' => false);
-	walk_and_parse( $htmlparser->content, $parseddata, $p, '' );
+	walk_and_parse( $htmlparser->content, $out_data, $p, '' );
 	// Is some tags still opened? (It can be if HTML not valid, but this is not reason
 	// to produce invalid wiki :)
 	while (count($p['stack']))
 	{
 		$e = end($p['stack']);
-		$parseddata .= $e['string'];
+		$out_data .= $e['string'];
 		array_pop($p['stack']);
 	}
 	// Unclosed lists r ignored... wiki have no special start/end lists syntax....
 	// OK. Things remains to do:
 	// 1) fix linked images
-	$parseddata = preg_replace(',\[(.*)\|\(img src=(.*)\)\],mU','{img src=$2 link=$1}', $parseddata);
+	$out_data = preg_replace(',\[(.*)\|\(img src=(.*)\)\],mU','{img src=$2 link=$1}', $out_data);
 	// 2) fix remains images (not in links)
-	$parseddata = preg_replace(',\(img src=(.*)\),mU','{img src=$1}', $parseddata);
+	$out_data = preg_replace(',\(img src=(.*)\),mU','{img src=$1}', $out_data);
 	// 3) remove empty lines
-	$parseddata = preg_replace(",[\n]+,mU","\n", $parseddata);
+	$out_data = preg_replace(",[\n]+,mU","\n", $out_data);
 	// 4) remove nbsp's
-	$parseddata = preg_replace(",&#160;,mU"," ", $parseddata);
+	$out_data = preg_replace(",&#160;,mU"," ", $out_data);
+	
+	return $out_data;
 }	// end parse_html
 
 // Suck another page and append to the end of current
@@ -597,15 +599,8 @@ if (isset($_REQUEST['do_suck']) && strlen($suck_url) > 0)
         die;
     }
     // Need to parse HTML?
-    if ($parsehtml == 'y')
-    {
-    	// note by jonnyb - replaced by
-        $parseddata = '';
-    	parse_html(&$sdta, &$parseddata);
-    	// following code moved to parse_html()
-    	
-        // Reassign previous data
-        $sdta = $parseddata;
+    if ($parsehtml == 'y') {
+        $sdta = parse_html($sdta);
     }
     $_REQUEST['edit'] .= $sdta;
 }
@@ -802,7 +797,7 @@ if (isset($_REQUEST['mode_normal'])) {
 	// Parsing page data as first time seeing html page in normal editor
 	$smarty->assign('msg', "Parsing html to wiki");
 	$parsed = '';
-	parse_html($edit_data, &$parsed);
+	$parsed = parse_html($edit_data);
 	$parsed = preg_replace('/\{img src=.*?img\/smiles\/.*? alt=([\w\-]*?)\}/im','(:$1:)', $parsed);	// "unfix" smilies
 	$parsed = preg_replace('/%%%/m',"\n", $parsed);													// newlines
 	$is_html = false;
