@@ -533,7 +533,7 @@ function walk_and_parse(&$c, &$src, &$p, $head_url )
  * \param &$c string -- HTML in
  * \param &$src string -- output string
  */
-function parse_html($inHtml) {
+function parse_html(&$inHtml) {
 	//error_reporting(6143);
 	// Read compiled (serialized) grammar
 	$grammarfile = 'lib/htmlparser/htmlgrammar.cmp';
