@@ -374,7 +374,7 @@
 <tr><td class="formcolor">{tr}Cache Time{/tr} ({tr}secs{/tr})</td><td class="formcolor"><input type="text" name="assign_cache" value="{$assign_cache|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Rows{/tr}</td><td class="formcolor"><input type="text" name="assign_rows" value="{$assign_rows|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Parameters{/tr}</td><td class="formcolor"><input type="text" name="assign_params" value="{$assign_params|escape}" />
-<a {popup text="{tr}Params: specific params to the module and/or general params ('lang', 'flip', 'title', 'decorations', 'section', 'overflow', 'page', 'nobox', 'bgcolor', 'color', 'theme'). Separator between params:'&'. E.g. maxlen=15&nonums=y.{/tr}" width=100 center=true}>{icon _id='help' style="vertical-align:middle"}</a></td></tr>
+<a {popup text="{tr}Params: specific params to the module and/or general params ('lang', 'flip', 'title', 'decorations', 'section', 'overflow', 'page', 'nobox', 'bgcolor', 'color', 'theme'). Separator between params:'&amp;'. E.g. maxlen=15&amp;nonums=y.{/tr}" width=100 center=true}>{icon _id='help' style="vertical-align:middle"}</a></td></tr>
 <tr><td class="formcolor">{tr}Groups{/tr}</td><td class="formcolor">
 {remarksbox type="tip" title="Tip"}{tr}Use Ctrl+Click to select multiple groups.{/tr}{/remarksbox}
 <select multiple="multiple" name="groups[]">
