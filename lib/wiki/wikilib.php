@@ -152,12 +152,19 @@ class WikiLib extends TikiLib {
 		$this->query($query, array( $newName, $tmpName ) );
 
 		// get pages linking to the old page
-		$query = "select `fromPage` from `tiki_links` where `toPage`=?";
+		$query = "select `fromPage`, `reltype` from `tiki_links` where `toPage`=?";
 		$result = $this->query($query, array( $oldName ) );
 
 		$linksToOld=array();
 		while ($res = $result->fetchRow()) {			
 		    $page = $res['fromPage'];
+			$types = $res['reltype'];
+
+			$semantics = array();
+			if( ! empty($types) ) {
+				$semantics = explode(',', $types );
+			}
+
 		    $is_wiki_page = true;
 		    if (substr($page,0,11) == 'objectlink:') {
 		    	$is_wiki_page = false;
@@ -177,12 +184,17 @@ class WikiLib extends TikiLib {
 				$comment_info = $commentslib->get_comment($objectId);
 				$data = $comment_info['data'];
 		    }
-		    $oldName = quotemeta( $oldName );
- 		    if (strstr($newName, " "))
-		    	$data = preg_replace("/(?<= |\n|\t|\r|\,|\;|^)$oldName(?= |\n|\t|\r|\,|\;|$)/", "((".$newName."))", $data);
-		    else
-		    	$data = preg_replace("/(?<= |\n|\t|\r|\,|\;|^)$oldName(?= |\n|\t|\r|\,|\;|$)/", $newName, $data);
-		    $data = preg_replace("/(?<=\(\()$oldName(?=\)\)|\|)/", $newName, $data);
+		    $quotedOldName = preg_quote( $oldName );
+			foreach( $semantics as $sem ) {
+				$data = str_replace( "($sem($oldName", "($sem($newName", $data );
+			}
+
+			if (strstr($newName, " "))
+				$data = preg_replace("/(?<= |\n|\t|\r|\,|\;|^)$quotedOldName(?= |\n|\t|\r|\,|\;|$)/", "((".$newName."))", $data);
+			else
+				$data = preg_replace("/(?<= |\n|\t|\r|\,|\;|^)$quotedOldName(?= |\n|\t|\r|\,|\;|$)/", $newName, $data);
+			$data = preg_replace("/(?<=\(\()$quotedOldName(?=\)\)|\|)/", $newName, $data);
+
 		    if ($is_wiki_page) {
 		    	$query = "update `tiki_pages` set `data`=?,`page_size`=? where `pageName`=?";
 		    	$this->query($query, array( $data,(int) strlen($data), $page));
