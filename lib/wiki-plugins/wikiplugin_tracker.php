@@ -251,7 +251,7 @@ function wikiplugin_tracker($data, $params) {
 						} else {
 							$newItemRate = NULL;
 						}
-					} elseif (($flds['data'][$cpt]['type'] == 'u' || $flds['data'][$cpt]['type'] == 'g' || $flds['data'][$cpt]['type'] == 'I') && ($flds['data'][$cpt]['options_array'][0] == '1' || $flds['data'][$cpt]['options_array'][0] == '2') && $tiki_p_admin_trackers != 'y' && empty($_REQUEST['track'][$fl['fieldId']])) {
+					} elseif (($flds['data'][$cpt]['type'] == 'u' || $flds['data'][$cpt]['type'] == 'g' || $flds['data'][$cpt]['type'] == 'I' || $flds['data'][$cpt]['type'] == 'k') && ($flds['data'][$cpt]['options_array'][0] == '1' || $flds['data'][$cpt]['options_array'][0] == '2') && $tiki_p_admin_trackers != 'y' && empty($_REQUEST['track'][$fl['fieldId']])) {
 						if (empty($itemId) && ($flds['data'][$cpt]['options_array'][0] == '1' || $flds['data'][$cpt]['options_array'][0] == '2')) {
 							if ($flds['data'][$cpt]['type'] == 'u')
 								$_REQUEST['track'][$fl['fieldId']] = empty($user)?(empty($_REQUEST['name'])? '':$_REQUEST['name']):$user;
@@ -259,6 +259,8 @@ function wikiplugin_tracker($data, $params) {
 								$_REQUEST['track'][$fl['fieldId']] = $group;
 							elseif ($flds['data'][$cpt]['type'] == 'I')
 								$_REQUEST['track'][$fl['fieldId']] = isset($_SERVER['REMOTE_ADDR'])?$_SERVER['REMOTE_ADDR']: '';
+							elseif ($flds['data'][$cpt]['type'] == 'k')
+								$_REQUEST['track'][$fl['fieldId']] = isset($_REQUEST['page'])?$_REQUEST['page']: '';
 						} elseif (!empty($itemId) && $flds['data'][$cpt]['options_array'][0] == '2') {
 							if ($flds['data'][$cpt]['type'] == 'u')
 								$_REQUEST['track'][$fl['fieldId']] = $user;

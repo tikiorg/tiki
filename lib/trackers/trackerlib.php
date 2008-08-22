@@ -2303,6 +2303,16 @@ class TrackerLib extends TikiLib {
 				<dt>Description: 
 				<dd><strong>[auto-assign]</strong> will auto-populate the field with the IP address of the user who created the item if set to 1, or will set the field to the IP of the user who last modified the item if set to 2, or will be a free IP for other values.
 				</dl>'));
+		$type['k'] = array(
+			'label'=>tra('page selector'),
+			'opt'=>true,
+			'help'=>tra('<dl>
+				<dt>Function: Allows a section fron the list of pages.
+				<dt>Usage: <strong>auto-assign</strong>
+				<dt>Description:
+				<dd><strong>[auto-assign]</strong> will auto-assign the creator of the item if set to 1
+				<dd>
+				</dl>'));
 		$type['y'] = array(
 			'label'=>tra('country selector'),
 			'opt'=>true,
