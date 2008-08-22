@@ -95,7 +95,7 @@ questions. If you don't know what to answer, just press enter to each question (
 			mkdir -p $dir
 		fi
 		echo " ok."
-		if [ -n $VIRTUALS ]; then
+		if [ -n "$VIRTUALS" ]; then
 			for vdir in $VIRTUALS; do
 				echo -n "  $dir/$vdir ... "
 				if [ ! -d "$dir/$vdir" ]; then
