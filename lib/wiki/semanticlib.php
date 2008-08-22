@@ -19,6 +19,8 @@ class SemanticLib
 			$token = $row['token'];
 			$this->knownTokens[$token] = $row;
 		}
+
+		ksort( $this->knownTokens );
 	} // }}}
 
 	private function loadNewTokens() // {{{
@@ -36,6 +38,9 @@ class SemanticLib
 
 		$result = $tikilib->query( "SELECT DISTINCT reltype FROM tiki_links" );
 		while( $row = $result->fetchRow() ) {
+			if( empty($row['reltype']) )
+				continue;
+
 			$new = array_diff(
 				explode( ',', $row['reltype'] ),
 				$existing
@@ -73,6 +78,12 @@ class SemanticLib
 		return false;
 	} // }}}
 
+	function getTokens() // {{{
+	{
+		$this->loadKnownTokens();
+		return $this->knownTokens;
+	} // }}}
+
 	function getNewTokens() // {{{
 	{
 		$this->loadNewTokens();
@@ -103,7 +114,11 @@ class SemanticLib
 
 		if( $oldName != $newName && false !== $this->getToken( $newName ) )
 			return tra('Semantic token already exists') . ": $newName";
-		if( false !== $this->getToken( $invert ) )
+		if( !$this->isValid( $oldName ) )
+			return tra('Invalid semantic token name') . ": $oldName";
+		if( !$this->isValid( $newName ) )
+			return tra('Invalid semantic token name') . ": $newName";
+		if( false === $this->getToken( $invert ) || $invert == $newName )
 			$invert = null;
 
 		global $tikilib;
@@ -128,19 +143,25 @@ class SemanticLib
 			$this->replaceReferences( $oldName, $newName );
 		}
 
-		unset( $this->knownTokens );
+		unset( $this->knownTokens[$oldName] );
 		$this->knownTokens[$newName] = array(
 			'token' => $newName,
 			'label' => $label,
 			'invert_token' => $invert,
 		);
+		ksort( $this->knownTokens );
 
 		return true;
 	} // }}}
 
-	function replaceReferences( $oldName, $newName ) // {{{
+	private function replaceReferences( $oldName, $newName = null ) // {{{
 	{
 		global $tikilib;
+
+		if( ! $this->isValid( $oldName ) )
+			return tra('Invalid semantic token name') . ": $oldName";
+		if( ! is_null($newName) && ! $this->isValid( $newName ) && $valid )
+			return tra('Invalid semantic token name') . ": $newName";
 
 		$links = $this->getLinksUsing( $oldName );
 
@@ -166,6 +187,15 @@ class SemanticLib
 				$pagesDone[ $link['fromPage'] ] = true;
 			}
 		}
+
+		return true;
+	} // }}}
+
+	function cleanToken( $token ) // {{{
+	{
+		$this->replaceReferences( $token );
+
+		$this->newTokens = array_diff( $this->newTokens, array( $token ) );
 	} // }}}
 
 	function removeToken( $token, $removeReferences = false ) // {{{
@@ -186,6 +216,20 @@ class SemanticLib
 			$this->newTokens[] = $token;
 
 		return true;
+	} // }}}
+
+	function renameToken( $oldName, $newName ) // {{{
+	{
+		$this->replaceReferences( $oldName, $newName );
+
+		$this->newTokens = array_diff( $this->newTokens, array( $oldName ) );
+		if( false === $this->getToken( $newName ) )
+			$this->newTokens[] = $newName;
+	} // }}}
+
+	function isValid( $token ) // {{{
+	{
+		return preg_match( "/^[a-z0-9-]{1,15}\\z/", $token );
 	} // }}}
 }
 
