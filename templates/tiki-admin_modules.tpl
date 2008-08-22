@@ -15,15 +15,169 @@
   {cycle name=tabs values="1,2,3" print=false advance=false reset=true}
   <div class="tabs">
     <span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark tabinactive">
-      <a href="#theme" onclick="javascript:tikitabs({cycle name=tabs},3); return false;">{tr}User Modules{/tr}</a>
+      <a href="#layout" onclick="javascript:tikitabs({cycle name=tabs},3); return false;">{tr}Assign/Edit modules{/tr}</a>
     </span>
     <span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark tabinactive">
-      <a href="#layout" onclick="javascript:tikitabs({cycle name=tabs},3); return false;">{tr}Assign/Edit modules{/tr}</a>
+      <a href="#theme" onclick="javascript:tikitabs({cycle name=tabs},3); return false;">{tr}User Modules{/tr}</a>
     </span>
   </div>
   {cycle name=content values="1,2,3" print=false advance=false reset=true}
 {/if}
 
+<fieldset {if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}"{/if}>
+{if $prefs.feature_tabs neq 'y'}
+  <legend class="heading">
+    <a href="#assign" name="assign">
+<span>
+{tr}Assign/Edit modules{/tr}
+</span>
+    </a>
+  </legend>
+{/if}
+<h2>{tr}Assigned Modules{/tr}</h2>
+<a name="leftmod"></a>
+<table class="normal">
+<caption>{tr}Left Modules{/tr}</caption>
+<tr>
+<td class="heading">{tr}Name{/tr}</td>
+<td class="heading">{tr}Order{/tr}</td>
+<td class="heading">{tr}Cache{/tr}</td>
+<td class="heading">{tr}Rows{/tr}</td>
+<td class="heading">{tr}Parameters{/tr}</td>
+<td class="heading">{tr}Groups{/tr}</td>
+<td class="heading">{tr}Action{/tr}</td>
+</tr>
+{cycle print=false values="even,odd"}
+{section name=user loop=$left}
+<tr>
+<td class="{cycle advance=false}">{$left[user].name|escape}</td>
+<td class="{cycle advance=false}">{$left[user].ord}</td>
+<td class="{cycle advance=false}">{$left[user].cache_time}</td>
+<td class="{cycle advance=false}">{$left[user].rows}</td>
+<td class="{cycle advance=false}">{$left[user].params|escape}</td>
+<td class="{cycle advance=false}">{$left[user].module_groups}</td>
+<td class="{cycle}">
+             <a class="link" href="tiki-admin_modules.php?edit_assign={$left[user].moduleId}#assign" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
+{if $left[0].moduleId ne $left[user].moduleId}
+             <a class="link" href="tiki-admin_modules.php?modup={$left[user].moduleId}#leftmod" title="{tr}Move Up{/tr}">{icon _id='resultset_up'}</a>
+{/if}
+{if $left[user.index_next].moduleId}
+             <a class="link" href="tiki-admin_modules.php?moddown={$left[user].moduleId}#leftmod" title="{tr}Move Down{/tr}">{icon _id='resultset_down'}</a>
+{/if}
+             <a class="link" href="tiki-admin_modules.php?modright={$left[user].moduleId}#rightmod" title="{tr}Move to Right Column{/tr}">{icon _id='arrow_right'}</a>
+             <a class="link" href="tiki-admin_modules.php?unassign={$left[user].moduleId}#leftmod" title="{tr}Unassign{/tr}">{icon _id='cross' alt='{tr}x{/tr}'}</a></td>
+</tr>
+{sectionelse}
+<tr><td colspan="6">
+<b>{tr}No records found{/tr}</b>
+</td></tr>
+{/section}
+</table>
+<br />
+<br />
+<a name="rightmod"></a>
+<table class="normal">
+<caption>{tr}Right Modules{/tr}</caption>
+<tr>
+<td class="heading">{tr}Name{/tr}</td>
+<td class="heading">{tr}Order{/tr}</td>
+<td class="heading">{tr}Cache{/tr}</td>
+<td class="heading">{tr}Rows{/tr}</td>
+<td class="heading">{tr}Parameters{/tr}</td>
+<td class="heading">{tr}Groups{/tr}</td>
+<td class="heading">{tr}Action{/tr}</td>
+</tr>
+{cycle print=false values="even,odd"}
+{section name=user loop=$right}
+<tr>
+<td class="{cycle advance=false}">{$right[user].name|escape}</td>
+<td class="{cycle advance=false}">{$right[user].ord}</td>
+<td class="{cycle advance=false}">{$right[user].cache_time}</td>
+<td class="{cycle advance=false}">{$right[user].rows}</td>
+<td class="{cycle advance=false}">{$right[user].params|escape}</td>
+<td class="{cycle advance=false}">{$right[user].module_groups}</td>
+<td class="{cycle}">
+             <a class="link" href="tiki-admin_modules.php?edit_assign={$right[user].moduleId}#assign" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
+{if $right[0].moduleId ne $right[user].moduleId}
+             <a class="link" href="tiki-admin_modules.php?modup={$right[user].moduleId}#rightmod" title="{tr}Move Up{/tr}">{icon _id='resultset_up'}</a>
+{/if}
+{if $right[user.index_next].moduleId}
+             <a class="link" href="tiki-admin_modules.php?moddown={$right[user].moduleId}#rightmod" title="{tr}Move Down{/tr}">{icon _id='resultset_down'}</a>
+{/if}
+             <a class="link" href="tiki-admin_modules.php?modleft={$right[user].moduleId}#leftmod" title="{tr}Move to Left Column{/tr}">{icon _id='arrow_left'}</a>
+             <a class="link" href="tiki-admin_modules.php?unassign={$right[user].moduleId}#rightmod" title="{tr}Unassign{/tr}">{icon _id='cross' alt='{tr}x{/tr}'}</a></td>
+</tr>
+{sectionelse}
+<tr><td colspan="6">
+<b>{tr}No records found{/tr}</b>
+</td></tr>
+{/section}
+</table>
+<br/>
+<a name="assign"></a>
+{if $assign_name eq ''}
+<h2>{tr}Assign new module{/tr}</h2>
+{else}
+<h2>{tr}Edit this assigned module:{/tr} {$assign_name}</h2>
+{/if}
+{if $preview eq 'y'}
+<h3>{tr}Preview{/tr}</h3>
+{$preview_data}
+{/if}
+<form method="post" action="tiki-admin_modules.php#assign">
+{if !empty($info.moduleId)}<input type="hidden" name="moduleId" value="{$info.moduleId}" />{elseif !empty($moduleId)}<input type="hidden" name="moduleId" value="{$moduleId}" />{/if}
+<table class="normal">
+<tr><td class="formcolor">{tr}Module Name{/tr}</td><td class="formcolor">
+<select name="assign_name">
+{section name=ix loop=$all_modules}
+<option value="{$all_modules[ix]|escape}" {if $assign_name eq $all_modules[ix] || $assign_selected eq $all_modules[ix]}selected="selected"{/if}>{$all_modules[ix]}</option>
+{/section}
+</select>
+</td></tr>
+<!--<tr><td>{tr}Title{/tr}</td><td><input type="text" name="assign_title" value="{$assign_title|escape}" /></td></tr>-->
+<tr><td class="formcolor">{tr}Position{/tr}</td><td class="formcolor">
+<select name="assign_position">
+<option value="l" {if $assign_position eq 'l'}selected="selected"{/if}>{tr}Left{/tr}</option>
+<option value="r" {if $assign_position eq 'r'}selected="selected"{/if}>{tr}Right{/tr}</option>
+</select>
+</td></tr>
+<tr><td class="formcolor">{tr}Order{/tr}</td><td class="formcolor">
+<select name="assign_order">
+{section name=ix loop=$orders}
+<option value="{$orders[ix]|escape}" {if $assign_order eq $orders[ix]}selected="selected"{/if}>{$orders[ix]}</option>
+{/section}
+</select>
+</td></tr>
+<tr><td class="formcolor">{tr}Cache Time{/tr} ({tr}secs{/tr})</td><td class="formcolor"><input type="text" name="assign_cache" value="{$assign_cache|escape}" /></td></tr>
+<tr><td class="formcolor">{tr}Rows{/tr}</td><td class="formcolor"><input type="text" name="assign_rows" value="{$assign_rows|escape}" /></td></tr>
+<tr><td class="formcolor">{tr}Parameters{/tr}</td><td class="formcolor"><input type="text" name="assign_params" value="{$assign_params|escape}" />
+<a {popup text="{tr}Params: specific params to the module and/or general params ('lang', 'flip', 'title', 'decorations', 'section', 'overflow', 'page', 'nobox', 'bgcolor', 'color', 'theme', 'notitle'). Separator between params:'&amp;'. E.g. maxlen=15&amp;nonums=y.{/tr}" width=100 center=true}>{icon _id='help' style="vertical-align:middle"}</a></td></tr>
+<tr><td class="formcolor">{tr}Groups{/tr}</td><td class="formcolor">
+{remarksbox type="tip" title="Tip"}{tr}Use Ctrl+Click to select multiple groups.{/tr}{/remarksbox}
+<select multiple="multiple" name="groups[]">
+{section name=ix loop=$groups}
+<option value="{$groups[ix].groupName|escape}" {if $groups[ix].selected eq 'y'}selected="selected"{/if}>{$groups[ix].groupName|escape}</option>
+{/section}
+</select>
+{if $prefs.modallgroups eq 'y'}
+<div class="simplebox">{icon _id=information.png style="vertical-align:middle;float:left"} {tr}The{/tr} <a class="rbox-link" href="tiki-admin.php?page=module">{tr}Display Modules to All Groups{/tr}</a> {tr}setting will override your selection of specific groups.{/tr}</div><br />{/if}
+</td></tr>
+{if $prefs.user_assigned_modules eq 'y'}
+<tr><td class="formcolor">{tr}Visibility{/tr}</td><td class="formcolor">
+<select name="assign_type">
+<option value="D" {if $assign_type eq 'D'}selected="selected"{/if}>{tr}Displayed now for all eligible users even with personal assigned modules{/tr}</option>
+<option value="d" {if $assign_type eq 'd'}selected="selected"{/if}>{tr}Displayed for the eligible users with no personal assigned modules{/tr}</option>
+<option value="P" {if $assign_type eq 'P'}selected="selected"{/if}>{tr}Displayed now, can't be unassigned{/tr}</option>
+<option value="h" {if $assign_type eq 'h'}selected="selected"{/if}>{tr}Not displayed until a user chooses it{/tr}</option>
+</select>
+<div class="simplebox">
+{icon _id=information.png style="vertical-align:middle;float:left;"}{tr}Because <a class="rbox-link" href="tiki-admin.php?page=module">Users can Configure Modules</a>, select either{/tr} &quot;{tr}Displayed now for all eligible users even with personal assigned modules{/tr}&quot;{tr} or {/tr}&quot;{tr}Displayed now, can't be unassigned{/tr}&quot; {tr}to make sure users will notice any newly assigned modules.{/tr}</div>
+</td></tr>
+{/if}
+<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="preview" value="{tr}Preview{/tr}" /><input type="submit" name="assign" value="{tr}Assign{/tr}" /></td></tr>
+</table>
+</form>
+</fieldset>
 
 <fieldset {if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}"{/if}>
 {if $prefs.feature_tabs neq 'y'}
@@ -247,158 +401,4 @@
 </td></tr></table>
 </fieldset>
 
-<fieldset {if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}"{/if}>
-{if $prefs.feature_tabs neq 'y'}
-  <legend class="heading">
-    <a href="#assign" name="assign">
-<span>
-{tr}Assign/Edit modules{/tr}
-</span>
-    </a>
-  </legend>
-{/if}
-<h2>{tr}Assigned Modules{/tr}</h2>
-<a name="leftmod"></a>
-<table class="normal">
-<caption>{tr}Left Modules{/tr}</caption>
-<tr>
-<td class="heading">{tr}Name{/tr}</td>
-<td class="heading">{tr}Order{/tr}</td>
-<td class="heading">{tr}Cache{/tr}</td>
-<td class="heading">{tr}Rows{/tr}</td>
-<td class="heading">{tr}Parameters{/tr}</td>
-<td class="heading">{tr}Groups{/tr}</td>
-<td class="heading">{tr}Action{/tr}</td>
-</tr>
-{cycle print=false values="even,odd"}
-{section name=user loop=$left}
-<tr>
-<td class="{cycle advance=false}">{$left[user].name|escape}</td>
-<td class="{cycle advance=false}">{$left[user].ord}</td>
-<td class="{cycle advance=false}">{$left[user].cache_time}</td>
-<td class="{cycle advance=false}">{$left[user].rows}</td>
-<td class="{cycle advance=false}">{$left[user].params|escape}</td>
-<td class="{cycle advance=false}">{$left[user].module_groups}</td>
-<td class="{cycle}">
-             <a class="link" href="tiki-admin_modules.php?edit_assign={$left[user].moduleId}#assign" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
-{if $left[0].moduleId ne $left[user].moduleId}
-             <a class="link" href="tiki-admin_modules.php?modup={$left[user].moduleId}#leftmod" title="{tr}Move Up{/tr}">{icon _id='resultset_up'}</a>
-{/if}
-{if $left[user.index_next].moduleId}
-             <a class="link" href="tiki-admin_modules.php?moddown={$left[user].moduleId}#leftmod" title="{tr}Move Down{/tr}">{icon _id='resultset_down'}</a>
-{/if}
-             <a class="link" href="tiki-admin_modules.php?modright={$left[user].moduleId}#rightmod" title="{tr}Move to Right Column{/tr}">{icon _id='arrow_right'}</a>
-             <a class="link" href="tiki-admin_modules.php?unassign={$left[user].moduleId}#leftmod" title="{tr}Unassign{/tr}">{icon _id='cross' alt='{tr}x{/tr}'}</a></td>
-</tr>
-{sectionelse}
-<tr><td colspan="6">
-<b>{tr}No records found{/tr}</b>
-</td></tr>
-{/section}
-</table>
-<br />
-<br />
-<a name="rightmod"></a>
-<table class="normal">
-<caption>{tr}Right Modules{/tr}</caption>
-<tr>
-<td class="heading">{tr}Name{/tr}</td>
-<td class="heading">{tr}Order{/tr}</td>
-<td class="heading">{tr}Cache{/tr}</td>
-<td class="heading">{tr}Rows{/tr}</td>
-<td class="heading">{tr}Parameters{/tr}</td>
-<td class="heading">{tr}Groups{/tr}</td>
-<td class="heading">{tr}Action{/tr}</td>
-</tr>
-{cycle print=false values="even,odd"}
-{section name=user loop=$right}
-<tr>
-<td class="{cycle advance=false}">{$right[user].name|escape}</td>
-<td class="{cycle advance=false}">{$right[user].ord}</td>
-<td class="{cycle advance=false}">{$right[user].cache_time}</td>
-<td class="{cycle advance=false}">{$right[user].rows}</td>
-<td class="{cycle advance=false}">{$right[user].params|escape}</td>
-<td class="{cycle advance=false}">{$right[user].module_groups}</td>
-<td class="{cycle}">
-             <a class="link" href="tiki-admin_modules.php?edit_assign={$right[user].moduleId}#assign" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
-{if $right[0].moduleId ne $right[user].moduleId}
-             <a class="link" href="tiki-admin_modules.php?modup={$right[user].moduleId}#rightmod" title="{tr}Move Up{/tr}">{icon _id='resultset_up'}</a>
-{/if}
-{if $right[user.index_next].moduleId}
-             <a class="link" href="tiki-admin_modules.php?moddown={$right[user].moduleId}#rightmod" title="{tr}Move Down{/tr}">{icon _id='resultset_down'}</a>
-{/if}
-             <a class="link" href="tiki-admin_modules.php?modleft={$right[user].moduleId}#leftmod" title="{tr}Move to Left Column{/tr}">{icon _id='arrow_left'}</a>
-             <a class="link" href="tiki-admin_modules.php?unassign={$right[user].moduleId}#rightmod" title="{tr}Unassign{/tr}">{icon _id='cross' alt='{tr}x{/tr}'}</a></td>
-</tr>
-{sectionelse}
-<tr><td colspan="6">
-<b>{tr}No records found{/tr}</b>
-</td></tr>
-{/section}
-</table>
-<br/>
-<a name="assign"></a>
-{if $assign_name eq ''}
-<h2>{tr}Assign new module{/tr}</h2>
-{else}
-<h2>{tr}Edit this assigned module:{/tr} {$assign_name}</h2>
-{/if}
-{if $preview eq 'y'}
-<h3>{tr}Preview{/tr}</h3>
-{$preview_data}
-{/if}
-<form method="post" action="tiki-admin_modules.php#assign">
-{if !empty($info.moduleId)}<input type="hidden" name="moduleId" value="{$info.moduleId}" />{elseif !empty($moduleId)}<input type="hidden" name="moduleId" value="{$moduleId}" />{/if}
-<table class="normal">
-<tr><td class="formcolor">{tr}Module Name{/tr}</td><td class="formcolor">
-<select name="assign_name">
-{section name=ix loop=$all_modules}
-<option value="{$all_modules[ix]|escape}" {if $assign_name eq $all_modules[ix] || $assign_selected eq $all_modules[ix]}selected="selected"{/if}>{$all_modules[ix]}</option>
-{/section}
-</select>
-</td></tr>
-<!--<tr><td>{tr}Title{/tr}</td><td><input type="text" name="assign_title" value="{$assign_title|escape}" /></td></tr>-->
-<tr><td class="formcolor">{tr}Position{/tr}</td><td class="formcolor">
-<select name="assign_position">
-<option value="l" {if $assign_position eq 'l'}selected="selected"{/if}>{tr}Left{/tr}</option>
-<option value="r" {if $assign_position eq 'r'}selected="selected"{/if}>{tr}Right{/tr}</option>
-</select>
-</td></tr>
-<tr><td class="formcolor">{tr}Order{/tr}</td><td class="formcolor">
-<select name="assign_order">
-{section name=ix loop=$orders}
-<option value="{$orders[ix]|escape}" {if $assign_order eq $orders[ix]}selected="selected"{/if}>{$orders[ix]}</option>
-{/section}
-</select>
-</td></tr>
-<tr><td class="formcolor">{tr}Cache Time{/tr} ({tr}secs{/tr})</td><td class="formcolor"><input type="text" name="assign_cache" value="{$assign_cache|escape}" /></td></tr>
-<tr><td class="formcolor">{tr}Rows{/tr}</td><td class="formcolor"><input type="text" name="assign_rows" value="{$assign_rows|escape}" /></td></tr>
-<tr><td class="formcolor">{tr}Parameters{/tr}</td><td class="formcolor"><input type="text" name="assign_params" value="{$assign_params|escape}" />
-<a {popup text="{tr}Params: specific params to the module and/or general params ('lang', 'flip', 'title', 'decorations', 'section', 'overflow', 'page', 'nobox', 'bgcolor', 'color', 'theme', 'notitle'). Separator between params:'&amp;'. E.g. maxlen=15&amp;nonums=y.{/tr}" width=200 center=true}>{icon _id='help' style="vertical-align:middle"}</a></td></tr>
-<tr><td class="formcolor">{tr}Groups{/tr}</td><td class="formcolor">
-{remarksbox type="tip" title="Tip"}{tr}Use Ctrl+Click to select multiple groups.{/tr}{/remarksbox}
-<select multiple="multiple" name="groups[]">
-{section name=ix loop=$groups}
-<option value="{$groups[ix].groupName|escape}" {if $groups[ix].selected eq 'y'}selected="selected"{/if}>{$groups[ix].groupName|escape}</option>
-{/section}
-</select>
-{if $prefs.modallgroups eq 'y'}
-<div class="simplebox">{icon _id=information.png style="vertical-align:middle;float:left"} {tr}The{/tr} <a class="rbox-link" href="tiki-admin.php?page=module">{tr}Display Modules to All Groups{/tr}</a> {tr}setting will override your selection of specific groups.{/tr}</div><br />{/if}
-</td></tr>
-{if $prefs.user_assigned_modules eq 'y'}
-<tr><td class="formcolor">{tr}Visibility{/tr}</td><td class="formcolor">
-<select name="assign_type">
-<option value="D" {if $assign_type eq 'D'}selected="selected"{/if}>{tr}Displayed now for all eligible users even with personal assigned modules{/tr}</option>
-<option value="d" {if $assign_type eq 'd'}selected="selected"{/if}>{tr}Displayed for the eligible users with no personal assigned modules{/tr}</option>
-<option value="P" {if $assign_type eq 'P'}selected="selected"{/if}>{tr}Displayed now, can't be unassigned{/tr}</option>
-<option value="h" {if $assign_type eq 'h'}selected="selected"{/if}>{tr}Not displayed until a user chooses it{/tr}</option>
-</select>
-<div class="simplebox">
-{icon _id=information.png style="vertical-align:middle;float:left;"}{tr}Because <a class="rbox-link" href="tiki-admin.php?page=module">Users can Configure Modules</a>, select either{/tr} &quot;{tr}Displayed now for all eligible users even with personal assigned modules{/tr}&quot;{tr} or {/tr}&quot;{tr}Displayed now, can't be unassigned{/tr}&quot; {tr}to make sure users will notice any newly assigned modules.{/tr}</div>
-</td></tr>
-{/if}
-<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="preview" value="{tr}Preview{/tr}" /><input type="submit" name="assign" value="{tr}Assign{/tr}" /></td></tr>
-</table>
-</form>
-</fieldset>
 {/strip}
