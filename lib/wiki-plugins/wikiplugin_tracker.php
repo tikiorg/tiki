@@ -6,7 +6,7 @@
 
 function wikiplugin_tracker_help() {
 	$help = tra("Displays an input form for tracker submit").":\n";
-	$help.= "~np~{TRACKER(trackerId=1, fields=id1:id2:id3, action=Name of submit button, showtitle=n, showdesc=n, showmandatory=n, embedded=n, url=\"http://site.com\", values=val1:val2:val3, sort=n, preview=preview, view=user, tpl=x.tpl,wiki=page,newstatus=o|p|c, itemId=)}Notice{TRACKER}~/np~";
+	$help.= "~np~{TRACKER(trackerId=1, fields=id1:id2:id3, action=Name of submit button, showtitle=n, showdesc=n, showmandatory=n, embedded=n, url=\"http://site.com\", values=val1:val2:val3, sort=n, preview=preview, view=user|page, tpl=x.tpl,wiki=page,newstatus=o|p|c, itemId=)}Notice{TRACKER}~/np~";
 	return $help;
 }
 
@@ -76,7 +76,7 @@ function wikiplugin_tracker_info() {
 			'view' => array(
 				'required' => false,
 				'name' => tra('View'),
-				'description' => tra('user'),
+				'description' => tra('user|page'),
 			),
 			'itemId' =>array(
 				'required' => false,
@@ -139,6 +139,8 @@ function wikiplugin_tracker($data, $params) {
 	} elseif (!empty($trackerId) && !empty($view) && $view == 'user') {// the user item of a tracker
 		$itemId = $trklib->get_user_item($trackerId, $tracker);
 		$usertracker = true;
+	} elseif (!empty($trackerId) && !empty($view) && $view == 'page' && !empty($_REQUEST['page']) && ($f = $trklib->get_field_id_from_type($trackerId, 'k', '1%'))) {// the page item
+		$itemId = $trklib->get_item_id($trackerId, $f, $_REQUEST['page']);
 	} elseif (!empty($trackerId) && !empty($_REQUEST['view_user'])) {
 		$itemId = $trklib->get_user_item($trackerId, $tracker, $_REQUEST['view_user']);
 	} elseif (!empty($_REQUEST['itemId'])) {
