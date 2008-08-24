@@ -33,7 +33,13 @@
 </select>
 </td></tr>
 {if $prefs.feature_menusfolderstyle eq 'y'}
-<tr><td class="formcolor">{tr}Path to the folder icon for close sections{/tr}</td><td><input type="text" name="icon" value="{$info.icon}" /><br />{tr}Example:{/tr} styles/mose/pics/icons/folder.png<br />{tr}Provide also a folder icon for open sections with the same name with the letter 'o' before in the same directory (ex: folder.png and ofolder.png){/tr}<br />{tr}Default:{/tr}{icon _id="folder"}</td></tr>
+<tr><td class="formcolor">{tr}Folder Icon{/tr}:</td><td><input type="text" name="icon" value="{$info.icon}" style="width:95%" /><br /><em>{tr}Path and filename of closed folder icon{/tr}</em>.
+
+{remarksbox type="tip" title="{tr}Note{/tr}"}
+  {tr}To use custom folder icons in menus, enter the path to the icon for the <strong>closed</strong> folder.{/tr} {tr}In the same directory, include an icon for the opened folder.{/tr} {tr}The "opened folder" icon name must be identical to the "closed folder" icon name, prefixed with the letter <strong>o</strong>.{/tr}<hr />
+  For example, the default icon is: pics/icons/folder.png {icon _id="folder"}<br />The name of the "open folder" icon is: pics/icons/ofolder.png {icon _id="ofolder"}
+{/remarksbox}
+</td></tr>
 {/if}
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
