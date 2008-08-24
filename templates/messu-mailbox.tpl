@@ -90,6 +90,7 @@ var CHECKBOX_LIST = [{section name=user loop=$items}'msg[{$items[user].msgId}]'{
   <tr><td colspan="7" class="odd">{tr}No messages to display{/tr}<td></tr>
   {/section}
 </table>
+{if $items}
 <p>Perform action with checked:
 <input type="submit" name="delete" value="{tr}Delete{/tr}" />
 <input type="submit" name="archive" value="{tr}Archive{/tr}" />
@@ -101,7 +102,7 @@ var CHECKBOX_LIST = [{section name=user loop=$items}'msg[{$items[user].msgId}]'{
 <option value="isFlagged_n">{tr}Mark as unflagged{/tr}</option>
 </select>
 <input type="submit" name="mark" value="{tr}Mark{/tr}" />
-</p>
+</p>{/if}
 </form>
 <br />
 <div class="mini">
