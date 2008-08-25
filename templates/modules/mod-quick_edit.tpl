@@ -6,7 +6,18 @@
 {if $categId}<input type="hidden" name="categId" value="{$categId}" />{/if}
 {if $templateId}<input type="hidden" name="templateId" value="{$templateId}" />{/if}
 {if $mod_quickedit_heading}<div class="bod-data">{$mod_quickedit_heading}</div>{/if}
-<input type="text" size="{$size}" name="page" />
+<input id="qe-searchpage" type="text" size="{$size}" name="page" />
 <input type="submit" name="quickedit" value="{$submit}" />
 </form>
+<script type="text/javascript">
+{if $prefs.feature_mootools eq 'y'}
+{literal}
+window.addEvent('domready', function() {
+	var o = new Autocompleter.Request.JSON('qe-searchpage', 'tiki-listpages.php', {
+		'postVar': 'find',
+	});
+});
+{/literal}
+{/if}
+</script>
 {/tikimodule}

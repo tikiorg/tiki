@@ -252,8 +252,18 @@ if ( ! empty($multiprint_pages) ) {
 	// disallow robots to index page:
 	$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 	
-	// Display the template
-	$smarty->assign('mid', ($listpages_orphans ? 'tiki-orphan_pages.tpl' : 'tiki-listpages.tpl') );
-	$smarty->display("tiki.tpl");
+	$headers = getallheaders();
+
+	if( $headers['Accept'] == 'application/json' && $prefs['feature_mootools'] == 'y' ) {
+		$pages = array();
+		foreach( $listpages['data'] as $page )
+			$pages[] = $page['pageName'];
+
+		echo json_encode( $pages );
+	} else {
+		// Display the template
+		$smarty->assign('mid', ($listpages_orphans ? 'tiki-orphan_pages.tpl' : 'tiki-listpages.tpl') );
+		$smarty->display("tiki.tpl");
+	}
 }
 ?>
