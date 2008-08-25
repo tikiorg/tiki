@@ -19,7 +19,7 @@
 {/if}
 {/if}
 
-<div class="separator{$sep}{if $chdata.selected} selected{/if}">
+<div class="separator{$sep}{if $chdata.selected} selected{/if}{if $chdata.selectedAscendant} selectedAscendant{/if}">
 {if $sep eq 'line'}{assign var=sep value=''}{/if}
 {if $menu_info.type eq 'e' or $menu_info.type eq 'd'}
 	{if $prefs.feature_menusfolderstyle eq 'y'}
