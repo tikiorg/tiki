@@ -23,6 +23,12 @@ if (isset($module_params["templateId"])) {
 	$templateId = false;
 }
 
+if (isset($module_params['action'])) {
+	$qe_action = $module_params['action'];
+} else {
+	$qe_action = 'tiki-editpage.php';
+}
+
 if (isset($module_params["submit"])) {
 	$submit = $module_params["submit"];
 } else {
@@ -47,6 +53,11 @@ $smarty->assign('categId', $categId);
 $smarty->assign('mod_quickedit_heading', $mod_quickedit_heading);
 $smarty->assign('templateId', $templateId);
 $smarty->assign('size', $size);
+$smarty->assign('qe_action', $qe_action);
 $smarty->assign('submit', $submit);
+
+if( !isset( $qe_usage_counter ) )
+	$qe_usage_counter = 0;
+$smarty->assign('qefield', 'qe-' . ++$qe_usage_counter);
 
 ?>

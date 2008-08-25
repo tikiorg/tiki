@@ -254,7 +254,7 @@ if ( ! empty($multiprint_pages) ) {
 	
 	$headers = getallheaders();
 
-	if( $headers['Accept'] == 'application/json' && $prefs['feature_mootools'] == 'y' ) {
+	if( strpos( $headers['Accept'], 'application/json' ) !== false && $prefs['feature_mootools'] == 'y' ) {
 		$pages = array();
 		foreach( $listpages['data'] as $page )
 			$pages[] = $page['pageName'];
