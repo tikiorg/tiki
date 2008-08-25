@@ -41,10 +41,20 @@ while( false !== $pos = strpos( $current, "{{$type}(", $pos + 1 ) )
 
 	if( $_POST['index'] == $count )
 	{
-		$endparam = strpos( $current, ')}', $pos );
-		if( false === $endparam )
+		$endparamA = strpos( $current, '/}', $pos );
+		$endparamB = strpos( $current, ')}', $pos );
+		if( false === $endparamA && false === $endparamB )
 			die( 'oops.' );
-		$body = $endparam + 2;
+		if( ( false !== $endparamA && false !== $endparamB && $endparamA < $endparamB )
+			|| $endparamB === false )
+		{
+			$current = substr_replace( $current, "}{{$type}}", $endparamA, 2 );
+			$endparam = $endparamA + 1;
+		}
+		else
+			$endparam = $endparamB + 2;
+
+		$body = $endparam;
 		$endbody = strpos( $current, "{{$type}}", $endparam );
 		if( false === $endbody )
 			die( 'oops.' );
