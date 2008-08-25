@@ -1033,8 +1033,8 @@ class ImageGalsLib extends TikiLib {
 		
 		if ($sort_mode == '')
 			$sort_mode = 'name_asc';
-		else		//filesize is for listing images. equivalent is numimages
-			$sort_mode=preg_replace('/(filesize_)/','numimages_',$sort_mode);
+		else		//filesize is for listing images. equivalent is images
+			$sort_mode=preg_replace('/(filesize_)/','images_',$sort_mode);
 
                 if ($find) {
                         $findesc = '%' . $find . '%';

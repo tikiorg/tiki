@@ -77,6 +77,13 @@ div.configSetting {
 	clear:both;
 }
 
+#magicPanel hr {
+	clear:both;
+}
+#magicPanel .iconbar {
+	float:right;
+}
+
 #masterFeatureList li {color: #777;}
 #masterFeatureList li.container, #masterFeatureList li.configurationgroup {color:black;}
 #masterFeatureList li.feature {color:#77F;}

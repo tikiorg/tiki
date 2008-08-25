@@ -92,9 +92,13 @@ function wikiplugin_trackeritemfield($data, $params) {
 			$item = $trklib->get_tracker_item($itemId);
 			$trackerId = $item['trackerId'];
 		}
-		if (empty($itemId) || empty($trackerId)) {
+		if (empty($itemId) && empty($test) && empty($status)) {// need an item
 			return tra('Incorrect param').': itemId';
 		}
+		if (empty($trackerId)) {
+			return tra('Incorrect param').': trackerId';
+		}
+
 		$memoItemId = $itemId;
 		if (!empty($status) && !$trklib->valid_status($status)) {
 			return tra('Incorrect param').': status';

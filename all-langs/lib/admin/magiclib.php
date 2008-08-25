@@ -14,8 +14,7 @@ class MagicLib extends TikiLib {
 		$lastLoad = $prefs['magic_last_load'];
 		$lastMod = filemtime( 'db/features.csv' );
 
-		if( $lastMod > $lastLoad )
-		{
+		if( $lastMod > $lastLoad ) {
 			$this->reload_features();
 			$this->set_preference( 'magic_last_load', $lastMod );
 		}
@@ -26,14 +25,29 @@ class MagicLib extends TikiLib {
 		
 		$fp = fopen( 'db/features.csv', 'r' );
 		fgetcsv( $fp, 1024, ',', '"' );
-		while( false !== $row = fgetcsv( $fp, 1024, ',', '"' ) )
-		{
-			while( count($row) < 11 )
-				$row[] = '';
-			if( count($row) != 11 )
-				$row = array_slice( $row, 0, 11 );				
-			$query = "INSERT INTO tiki_feature (`feature_id`, `feature_name`, `parent_id`, `status`, `setting_name`, `feature_type`, `template`, `permission`, `ordinal`, `depends_on`, `keyword`) VALUES(" . rtrim(str_repeat(' ?,', count($row)), ',') . ")";
-			$this->query( $query, $row);
+		while( false !== $row = fgetcsv( $fp, 1024, ',', '"' ) ) {
+			// Check for empty line should not happend but...
+			if ($row[0] !== null) {
+				while( count($row) < 11 )
+					$row[] = '';
+
+				$row = array(
+					(int) $row[0],
+					(string) $row[1],
+					(int) $row[2],
+					(string) $row[3],
+					(string) $row[4],
+					(string) $row[5],
+					(string) $row[6],
+					(string) $row[7],
+					(int) $row[8],
+					(int) $row[9],
+					(string) $row[10],
+				);
+
+				$query = "INSERT INTO tiki_feature (`feature_id`, `feature_name`, `parent_id`, `status`, `setting_name`, `feature_type`, `template`, `permission`, `ordinal`, `depends_on`, `keyword`) VALUES(" . rtrim(str_repeat(' ?,', count($row)), ',') . ")";
+				$this->query( $query, $row);
+			}
 		}
 		fclose( $fp );
 
@@ -44,8 +58,10 @@ class MagicLib extends TikiLib {
 		$features = $this->get_child_features($featureid);
 		if ($features) {
 			foreach($features as $feature) {
-				$this->update_feature_specials($feature, $path . '/' . $feature['feature_id']);
-				$this->recursive_update($feature['feature_id'], $path . '/' . $feature['feature_id']);
+				if ($feature['feature_id'] > 0) {
+					$this->update_feature_specials($feature, $path . '/' . $feature['feature_id']);
+					$this->recursive_update($feature['feature_id'], $path . '/' . $feature['feature_id']);
+				}
 			}
 		}
 	}
@@ -128,7 +144,7 @@ class MagicLib extends TikiLib {
 	}
 	
 	function is_container($feature) {
-		return ($feature['feature_type'] == 'container' || $feature['feature_type'] == 'configurationgroup');
+		return ($feature['feature_type'] == 'container' || $feature['feature_type'] == 'configurationgroup') || $feature['feature_type'] == 'system';
 	}
 
 	function is_setting($feature) {

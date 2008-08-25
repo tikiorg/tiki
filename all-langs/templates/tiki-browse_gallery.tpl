@@ -88,7 +88,7 @@
 			{if $showdescription=='y'}{$item.description}<br />{/if}
 			{if $showcreated=='y'}{tr}Created{/tr}: {$item.created|tiki_short_date}<br />{/if}
 			{if $showuser=='y'}{tr}User{/tr}: {$item.user|userlink}<br />{/if}
-			{if $showxysize=='y' || $showfilesize=='y'}({$item.numimages} Images){/if}
+			{if $showxysize=='y' || $showfilesize=='y'}({$item.images} Images){/if}
 			{if $showhits=='y'}[{$item.hits} {if $item.hits == 1}{tr}Hit{/tr}{else}{tr}Hits{/tr}{/if}]<br />{/if}
                         </small>
 	  </td>

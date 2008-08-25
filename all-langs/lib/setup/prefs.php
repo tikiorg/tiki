@@ -7,6 +7,7 @@
 // details.
 
 // RULE1: $prefs does not contain serialized values. Only the database contains serialized values.
+// RULE2: put array() in default prefs for serialized values
 
 //this script may only be included - so its better to die if called directly.
 $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
@@ -51,6 +52,7 @@ function get_default_prefs() {
 		'feature_wiki_description' => 'n',
 		'feature_wiki_discuss' => 'n',
 		'feature_wiki_export' => 'n',
+		'feature_wiki_structure' => 'y',
 		'feature_wiki_import_page' => 'n',
 		'feature_wiki_footnotes' => 'n',
 		'feature_wiki_icache' => 'n',
@@ -63,7 +65,6 @@ function get_default_prefs() {
 		'feature_wiki_pageid' => 'n',
 		'feature_wiki_paragraph_formatting' => 'n',
 		'feature_wiki_paragraph_formatting_add_br' => 'n',
-		// 'feature_wiki_pdf' => 'n',
 		'feature_wiki_pictures' => 'y',
 		'feature_wiki_plurals' => 'y',
 		'feature_wiki_print' => 'y',
@@ -245,8 +246,8 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'wiki_3d_height' => 500,
 		'wiki_3d_navigation_depth' => 1,
 		'wiki_3d_feed_animation_interval' => 500,
-		'wiki_3d_existing_page_color' => '//00CC55',
-		'wiki_3d_missing_page_color' => '//FF5555',
+		'wiki_3d_existing_page_color' => '#00CC55',
+		'wiki_3d_missing_page_color' => '#FF5555',
 
 		// blogs
 		'feature_blogs' => 'n',
@@ -539,8 +540,8 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'freetags_3d_height' => 500,
 		'freetags_3d_navigation_depth' => 1,
 		'freetags_3d_feed_animation_interval' => 500,
-		'freetags_3d_existing_page_color' => '//00CC55',
-		'freetags_3d_missing_page_color' => '//FF5555',
+		'freetags_3d_existing_page_color' => '#00CC55',
+		'freetags_3d_missing_page_color' => '#FF5555',
 		'freetags_multilingual' => 'n',
 		'morelikethis_algorithm' => 'basic',
 		'morelikethis_basic_mincommon' => '2',
@@ -1164,7 +1165,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	// Find which preferences need to be serialized/unserialized, based on the default values (those with arrays as values)
 	if ( ! isset($_SESSION['serialized_prefs']) ) {
 		$_SESSION['serialized_prefs'] = array();
-		foreach ( $prefs as $p => $v )
+		foreach ( $defaults as $p => $v )
 			if ( is_array($v) ) $_SESSION['serialized_prefs'][] = $p;
 	}
 

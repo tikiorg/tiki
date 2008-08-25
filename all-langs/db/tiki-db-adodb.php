@@ -82,4 +82,3 @@ function close_connection() {
 	global $dbTiki;
 	$dbTiki->Close();
 }
-?>

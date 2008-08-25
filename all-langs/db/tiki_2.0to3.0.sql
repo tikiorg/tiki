@@ -22,7 +22,7 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO `users_objectpermissions` (groupName, permName, objectType, objectId) SELECT  groupName, 'tiki_p_search_categorized', objectType , objectId FROM `users_objectpermissions` WHERE permName = 'tiki_p_view_categorized' AND @fgcant = 0;
 
 #2008-08-05 sylvieg
-DELETE FROM tiki_quicktags WHERE taglabel='Deleted' AND taginsert='--text--' AND tagicon='pics/icons/text_strikethrough.png';
+ALTER TABLE tiki_quicktags ADD UNIQUE KEY no_repeats(taglabel(50), taginsert(50), tagicon(100), tagcategory(50));
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('Deleted','--text--','pics/icons/text_strikethrough.png','wiki');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('Deleted','--text--','pics/icons/text_strikethrough.png','newsletters');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('Deleted','--text--','pics/icons/text_strikethrough.png','trackers');
@@ -55,5 +55,15 @@ CREATE TABLE `tiki_feature` (
   `feature_count` mediumint(9) NOT NULL default '0',
   `feature_path` varchar(20) NOT NULL default '0',
   PRIMARY KEY  (`feature_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=0 ;
+) ENGINE=MyISAM AUTO_INCREMENT=1;
 
+#2008-08-17 lphuberdeau
+UPDATE tiki_menu_options SET section = 'feature_wiki_structure' WHERE optionId = 47;
+
+#2008-08-22 lphuberdeau
+ALTER TABLE tiki_links ADD COLUMN reltype VARCHAR(50);
+CREATE TABLE tiki_semantic_tokens (
+	token VARCHAR(15) PRIMARY KEY,
+	label VARCHAR(25) NOT NULL,
+	invert_token VARCHAR(15)
+) ENGINE=MyISAM ;

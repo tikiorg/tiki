@@ -109,7 +109,7 @@ class TikiDB {
 	function query($query = null, $values = null, 
 			$numrows = -1, $offset = -1, $reporterrors = true ) {
 
-		$result = $this->_query($query,$values, $nunrows, $offset);
+		$result = $this->_query($query,$values, $numrows, $offset);
 		if (!$result ) {
 			if ($reporterrors) {
 				$this->sql_error($query, $values, $result);
@@ -124,7 +124,7 @@ class TikiDB {
 	function queryError( $query, &$error, $values = null, 
 			$numrows = -1, $offset = -1 ) {
 
-		$result = $this->_query($query,$values, $nunrows, $offset);
+		$result = $this->_query($query,$values, $numrows, $offset);
 		if (!$result ) {
 			$error = $this->sql_error_msg ;
 			return false;
@@ -149,10 +149,10 @@ class TikiDB {
 		error_reporting(E_ALL);
 		$result = $this->query($query, $values, 1, $offset);
 		$res = $result->fetchRow();
+		if ($res) {
 			list($key, $value) = each($res);
 			return $value;
-
-		if (!$res) {
+		} else {
 			if ($reporterrors) {
 				$this->sql_error($query, $values, $result);
 			}

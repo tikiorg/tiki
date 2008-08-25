@@ -57,11 +57,8 @@ if ( !empty($_REQUEST['submit_mult']) && isset($_REQUEST["checked"]) ) {
 				$smarty->display("error.tpl");
 				die;
 			}
-			$area = 'listpages_delete';
-			if ( $prefs['feature_ticketlib2'] != 'y' or ( isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]) ) ) {
-				key_check($area);
-				foreach ( $_REQUEST["checked"] as $check ) $tikilib->remove_all_versions($check);
-			} else key_get($area, '<b>'.tra("Delete those pages:").'</b><br />'.implode('<br />', $_REQUEST["checked"]));
+			foreach ( $_REQUEST["checked"] as $check )
+				$tikilib->remove_all_versions($check);
 			break;
 			
 		case 'print_pages':

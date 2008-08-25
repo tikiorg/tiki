@@ -10,6 +10,8 @@
  or ($tracker_info.writerCanModify eq 'y' and $user and $my eq $user) or ($tracker_info.writerCanModify eq 'y' and $group and $ours eq $group))}
 	{if empty($url)}
 		{assign var=urll value="tiki-view_tracker_item.php?itemId=`$item.itemId`&amp;trackerId=`$item.trackerId`&amp;show=view"}
+	{elseif strstr($url, 'itemId')}
+		{assign var=urll value=$url|regex_replace:"/itemId=?/":"itemId=`$item.itemId`"}
 	{else}
 		{assign var=urll value=$url}
 	{/if}

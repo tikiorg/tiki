@@ -8,7 +8,9 @@
 // Initialization
 $section = 'wiki page';
 require_once('tiki-setup.php');
-include_once('lib/structures/structlib.php');
+if( $prefs['feature_wiki_structure'] == 'y' ) {
+	include_once('lib/structures/structlib.php');
+}
 include_once('lib/wiki/wikilib.php');
 include_once('lib/stats/statslib.php');
 include_once('lib/ajax/ajaxlib.php');
@@ -79,42 +81,44 @@ For more information:
 	}
 }
 
-$structure = 'n';
-$smarty->assign('structure',$structure);
-// Feature checks made in the function for structure language
-$structlib->use_user_language_preferences();
+if( $prefs['feature_wiki_structure'] == 'y' ) {
+	$structure = 'n';
+	$smarty->assign('structure',$structure);
+	// Feature checks made in the function for structure language
+	$structlib->use_user_language_preferences();
 
-if (isset($_REQUEST['page_ref_id'])) {
-    // If a structure page has been requested
-    $page_ref_id = $_REQUEST['page_ref_id'];
-} else {
-    // else check if page is the head of a structure 
-    $page_ref_id = $structlib->get_struct_ref_if_head($_REQUEST['page']);
-}
-
-//If a structure page isnt going to be displayed
-if (!isset($page_ref_id)) {
-    //Check to see if its a member of any structures
-    if (isset($_REQUEST['structure']) && !empty($_REQUEST['structure'])) {
-      $struct=$_REQUEST['structure'];
-    } else {
-      $struct='';
-    }
-    //Get the structures this page is a member of
-    $structs = $structlib->get_page_structures($_REQUEST["page"],$struct);
-	$structs_with_perm = array(); 
-	foreach ($structs as $t_structs) {
-		if ($tikilib->user_has_perm_on_object($user,$t_structs['pageName'],'wiki page','tiki_p_view')) {
-			$structs_with_perm[] = $t_structs;
-		}
+	if (isset($_REQUEST['page_ref_id'])) {
+		// If a structure page has been requested
+		$page_ref_id = $_REQUEST['page_ref_id'];
+	} else {
+		// else check if page is the head of a structure 
+		$page_ref_id = $structlib->get_struct_ref_if_head($_REQUEST['page']);
 	}
-    //If page is only member of one structure, display if requested
-    $single_struct = count($structs_with_perm) == 1; 
-    if ((!empty($struct) || $prefs['feature_wiki_open_as_structure'] == 'y') && $single_struct) {
-      $page_ref_id=$structs_with_perm[0]['req_page_ref_id'];
-      $_REQUEST['page_ref_id']=$page_ref_id;
-    }
 
+	//If a structure page isnt going to be displayed
+	if (!isset($page_ref_id)) {
+		//Check to see if its a member of any structures
+		if (isset($_REQUEST['structure']) && !empty($_REQUEST['structure'])) {
+			$struct=$_REQUEST['structure'];
+		} else {
+			$struct='';
+		}
+		//Get the structures this page is a member of
+		$structs = $structlib->get_page_structures($_REQUEST["page"],$struct);
+		$structs_with_perm = array(); 
+		foreach ($structs as $t_structs) {
+			if ($tikilib->user_has_perm_on_object($user,$t_structs['pageName'],'wiki page','tiki_p_view')) {
+				$structs_with_perm[] = $t_structs;
+			}
+		}
+		//If page is only member of one structure, display if requested
+		$single_struct = count($structs_with_perm) == 1; 
+		if ((!empty($struct) || $prefs['feature_wiki_open_as_structure'] == 'y') && $single_struct) {
+			$page_ref_id=$structs_with_perm[0]['req_page_ref_id'];
+			$_REQUEST['page_ref_id']=$page_ref_id;
+		}
+
+	}
 }
 
 if(isset($page_ref_id)) {
@@ -131,6 +135,7 @@ if(isset($page_ref_id)) {
 }
 
 $page = $_REQUEST['page'];
+$smarty->assign_by_ref('page',$page);
 
 if (!$tikilib->page_exists($page) && function_exists('utf8_encode') && $tikilib->page_exists(utf8_encode($page))) {
     $page = $_REQUEST["page"] = utf8_encode($page);

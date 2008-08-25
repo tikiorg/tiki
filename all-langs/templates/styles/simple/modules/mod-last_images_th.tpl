@@ -1,7 +1,7 @@
 {* $Id$ *}
 
 {if $prefs.feature_galleries eq 'y'}
-  {tikimodule title="{tr}Last Images{/tr}" name="last_images_th" flip=$module_params.flip decorations=$module_params.decorations}
+  {tikimodule title="{tr}Last Images{/tr}" name="last_images_th" flip=$module_params.flip decorations=$module_params.decorations notitle=$module_params.notitle}
   {section name=ix loop=$modLastImages}
     {if $smarty.section.ix.index < $module_rows}
        <div style="text-align:center">

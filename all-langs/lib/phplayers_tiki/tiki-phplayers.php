@@ -35,7 +35,7 @@ class TikiPhplayers extends TikiLib {
 			return array('', 0);
 		}
 	}
-	function mkMenuEntry($idMenu, &$curOption, $sectionLevel='') {
+	function mkMenuEntry($idMenu, &$curOption, $sectionLevel='', $translate='y') {
 		global $tikilib, $wikilib, $mylevel, $prefs;
 		global $menulib; include_once('lib/menubuilder/menulib.php');
 		$menu_info = $tikilib->get_menu($idMenu);
@@ -59,7 +59,9 @@ class TikiPhplayers extends TikiLib {
 		$realKey = 0;
 		$level = 0;
 		foreach ($channels['data'] as $key=>$cd) {
-			$cd["name"] = tra($cd["name"]);
+			if ($translate != 'n') {
+				$cd["name"] = tra($cd["name"]);
+			}
 			if ($cd['type'] == 'o') {
 				$res .= $indented;
 			} elseif ($cd['type'] == 's' or $cd['type'] == 'r') {

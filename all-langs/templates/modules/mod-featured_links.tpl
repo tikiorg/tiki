@@ -2,7 +2,7 @@
 
 {if $prefs.feature_featuredLinks eq 'y'}
 	{if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Featured links{/tr}"}{/if}
-	{tikimodule title=$tpl_module_title name="featured_links" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox}
+	{tikimodule title=$tpl_module_title name="featured_links" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 	{if $nonums != 'y'}<ol>{else}<ul>{/if}
     {section name=ix loop=$featuredLinks}
 	<li>

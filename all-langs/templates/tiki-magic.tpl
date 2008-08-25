@@ -1,22 +1,46 @@
+<div id="magicPanel">
+<div class="iconbar">
+	<a title="{tr}Refresh{/tr}" href="tiki-magic.php?featurechain={$feature.feature_path|escape:"url"}&amp;refresh=1">{icon _id='arrow_refresh'}</a>
+	{if $tabs eq 'n'}
+	<a title="{tr}Collapse Tabs{/tr}" href="tiki-magic.php?featurechain={$feature.feature_path|escape:"url"}">{icon _id='no_eye_arrow_down'}</a>
+	{else}
+	<a title="{tr}Expand Tabs{/tr}" href="tiki-magic.php?featurechain={$feature.feature_path|escape:"url"}&amp;tabs=n">{icon _id='eye_arrow_down'}</a>
+	{/if}
+</div>
 <form method="post">
-{section name=container loop=$containers}
-<a href="#container{$containers[container].feature_id}">{tr}{$containers[container].feature_name}{/tr}</a> 
-{/section}<br />
+{if $prefs.feature_tabs eq 'y' and $tabs ne 'n'}
+{assign var=total value=$containers|@count}
+<div class="tabs" style="clear: both;">
+	<span id="tab1" class="tabmark tabactive"><a href="javascript:tikitabs(1,{$total+2});">{$feature.feature_name}</a></span>
+{foreach item=container key=k from=$containers}
+	<span id="tab{$k+2}" class="tabmark tabinactive"><a href="javascript:tikitabs({$k+2},{$total+2});">{$container.feature_name}</a></span>
+{/foreach}
+</div>
+{/if}
 
+{assign var=counter value=1}
+<fieldset {if $prefs.feature_tabs eq 'y' and $tabs ne 'n'}id="content{$counter}" style="clear:both;display:block;"{/if}>
 {section name=feature loop=$features}
 {* Show a heading for features with the option to enable or disable the feature.  *}
 {if $features[feature].feature_type eq 'feature'}
 	<div class="configSetting"><a name="container{$features[feature].feature_id}"></a><h4 class="configSection">{tr}{$features[feature].feature_name}{/tr}<sub>({$features[feature].feature_id})</sub></h4>
 	<div class="configSetting"><label for="{$features[feature].setting_name}" class="formLabel">{tr}Enabled{/tr}</label><input type="checkbox" name="{$features[feature].setting_name}" id="{$features[feature].setting_name}" value="on" {if $features[feature].value eq 'y'}checked="checked"{/if} />{if $features[feature].status eq 'experimental'}<em>{tr}This is an experimental feature{/tr}</em>{/if}
-{if $features[feature].template neq ''}<a href="{$features[feature].template}.php">{tr}Go{/tr}!</a>{/if}
+{if ($features[feature].template neq '') and ($features[feature].value eq 'y')} <a href="{$features[feature].template}.php">{tr}Go{/tr}!</a>{/if} 
 {* Check to see if system help is on;  and use that base URL. *}	
-{if $features[feature].keyword neq ''} <a href="http://doc.tikiwiki.org/{$features[feature].keyword}">{tr}Help{/tr}</a>{/if}
-{* Show a heading with a dividing line for things that are containers  *}
+{if $features[feature].keyword neq ''} <a href="http://doc.tikiwiki.org/{$features[feature].keyword}" title="{tr}Help{/tr}">{icon _id=help style="vertical-align:middle"}</a>{/if}
 	</div>
 	</div>
 {elseif $features[feature].feature_type eq 'container' || $features[feature].feature_type eq 'configurationgroup' || $features[feature].feature_type eq 'system'}
-	<hr />
-	<div class="configSetting"><a name="container{$features[feature].feature_id}"></a><h4 class="configSection">{tr}{$features[feature].feature_name}{/tr}<sub>({$features[feature].feature_id})</sub></h4>
+{foreach item=c from=$containers}{if $c.feature_id eq $features[feature].feature_id}
+	{assign var=counter value=$counter+1}
+	</fieldset>
+	<fieldset {if $prefs.feature_tabs eq 'y' and $tabs ne 'n'}id="content{$counter}" style="clear:both;display:none;"{/if}>
+{/if}{/foreach}
+	{if $features[feature].feature_count eq 0}
+		<div class="configSetting"><h4 class="configSection">{tr}{$features[feature].feature_name}{/tr}<sub>({$features[feature].feature_id})</sub><a name="container{$features[feature].feature_id}" href="tiki-magic.php?featurechain={$features[feature].feature_path|escape:'url'}" title="{tr}Go{/tr}">{icon _id='task_submitted'}</a></h4>
+	{else}
+		<div class="configSetting"><a name="container{$features[feature].feature_id}"></a><h4 class="configSection">{tr}{$features[feature].feature_name}{/tr}<sub>({$features[feature].feature_id})</sub></h4>
+	{/if}
 	</div>
 {* It'd be superfun if you could go to, say, the article list page from the article configuration page; however some of the pages require
 	 additional parameters (i.e. for performing actions on a particular content item), so I'll need to distinguish between the two. *}
@@ -80,7 +104,9 @@
 {/if}
 <!-- SEXYTODO: Allow checking the box for this.  Right here.  Where it's needed.  p.s. remember to save the value too.  p.p.s. that will involve looking at the depends in addition to each of the features on the page. p.p.p.s sometimes the depended upon setting will be on the same page, so look out for contradictory
 values. -->
-{if $features[feature].depends_on neq 0}{tr}This depends on {/tr}{tr}{$features[feature].depends_on.feature_name}{/tr} ({if $features[feature].depends_on.value eq 'y'}{tr}Enabled{/tr}{else}{tr}Not Enabled{/tr}{/if}){/if}
+{if $features[feature].depends_on neq 0}{tr}Requires  {/tr}{tr}{$features[feature].depends_on.feature_name}{/tr} ({if $features[feature].depends_on.value eq 'y'}{tr}Enabled{/tr}{else}{tr}Not Enabled{/tr}{/if}).{/if}
 {/section}
-<input type="submit" name="submit" />
+</fieldset>
+<input type="submit" name="submit" value="{tr}Save{/tr}" />
 </form>
+</div>

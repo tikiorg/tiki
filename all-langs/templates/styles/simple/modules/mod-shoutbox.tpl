@@ -1,7 +1,7 @@
 {* $Id$ *}
 
 {if $prefs.feature_shoutbox eq 'y' and $tiki_p_view_shoutbox eq 'y'}
-	{tikimodule title="{tr}Shoutbox{/tr}" name="shoutbox" flip=$module_params.flip decorations=$module_params.decorations}
+	{tikimodule title="{tr}Shoutbox{/tr}" name="shoutbox" flip=$module_params.flip decorations=$module_params.decorations notitle=$module_params.notitle}
 		{if $tiki_p_post_shoutbox eq 'y'}
 			{js_maxlength textarea=shout_msg maxlength=255}
 			<form action="{$shout_ownurl}" method="post" onsubmit="return verifyForm(this);">

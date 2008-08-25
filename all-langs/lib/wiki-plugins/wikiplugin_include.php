@@ -66,7 +66,7 @@ function wikiplugin_include_info() {
 
 function wikiplugin_include($data, $params) {
 	global $tikilib,$userlib,$user;
-    static $included_pages;
+    static $included_pages, $data;
 
 	$max_times = 5;
     extract ($params,EXTR_SKIP);

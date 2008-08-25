@@ -202,7 +202,7 @@ class MenuLib extends TikiLib {
 		}
 		if ($pos !== false) {
 			$last = $pos + $lg;
-			if ($last >= strlen($url) || $url['last'] == '#' || $url['last'] == '?' || $url['last'] == '&') {
+			if ($last >= strlen($url) || $url[$last] == '#' || $url[$last] == '?' || $url[$last] == '&') {
 				return true;
 			}
 		}

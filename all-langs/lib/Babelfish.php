@@ -165,7 +165,7 @@ class Babelfish {
 	function logo($lang = 'en') {
  	    $lang = substr($lang,0,2);
 
-		static $s = "<script language=\"JavaScript1.2\" src=\"http://www.altavista.com/static/scripts/translate_%s.js\"></script>";
+	static $s = "<script type=\"text/javascript\" charset=\"UTF-8\" language=\"JavaScript1.2\" src=\"http://uk.babelfish.yahoo.com/free_trans_service/babelfish2.js\"></script> ";
 
 		$lang = strtolower($lang);
 

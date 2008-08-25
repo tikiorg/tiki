@@ -43,6 +43,7 @@ function smarty_block_tikimodule($params, $content, &$smarty) {
 	if (!isset($name))      $name  = ereg_replace("[^-_a-zA-Z0-9]","",$title);
 	if (!isset($flip) || ($flip != 'y' && $flip != 'yc')) $flip = 'n';
 	if (!isset($nobox))      $nobox = 'n';
+	if (!isset($notitle))      $notitle = 'n';
 	if ($flip == 'yc') {
 		// can be switched but initialy closed
 		$flip = 'y';
@@ -59,6 +60,7 @@ function smarty_block_tikimodule($params, $content, &$smarty) {
 	$smarty->assign('module_flip', $flip);
 	$smarty->assign('module_dstate', $dstate);
 	$smarty->assign('module_nobox', $nobox);
+	$smarty->assign('module_notitle', $notitle);
 	$smarty->assign('module_decorations', $decorations);
 	$smarty->assign_by_ref('module_content', $content);
 	return $smarty->fetch('module.tpl');

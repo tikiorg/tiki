@@ -8,7 +8,6 @@
 require_once ('tiki-setup.php');
 if ( ! headers_sent() ) {
 	header ('location: '.$prefs['tikiIndex']);
+} else {
+	die("header already sent");
 }
-die("header already sent");
-
-?>
