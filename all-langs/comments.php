@@ -138,7 +138,7 @@ foreach ($comments_vars as $c_name) {
 	}
 }
 
-$smarty->assign_by_ref('comments_request_data', $comments_aux);
+$smarty->assign('comments_request_data', $comments_aux);
 
 if (!isset($_REQUEST['comments_threshold'])) {
 	$_REQUEST['comments_threshold'] = 0;
@@ -188,11 +188,13 @@ if (!isset($comments_prefix_var)) {
 	$comments_prefix_var = '';
 }
 
-if (!isset($_REQUEST[$comments_object_var])) {
-	die ("The comments_object_var variable cannot be found as a REQUEST variable");
-}
+if( ! isset( $comments_objectId ) ) {
+	if (!isset($_REQUEST[$comments_object_var])) {
+		die ("The comments_object_var variable cannot be found as a REQUEST variable");
+	}
 
-$comments_objectId = $comments_prefix_var . $_REQUEST["$comments_object_var"];
+	$comments_objectId = $comments_prefix_var . $_REQUEST["$comments_object_var"];
+}
 
 $message_id = '';
 $in_reply_to = '';

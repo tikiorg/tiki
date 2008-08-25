@@ -44,14 +44,14 @@ foreach( array_reverse( $pages ) as $id => $info )
 	$renderer = new WikiRenderer( $info, $user );
 	$renderer->applyPermissions();
 	$renderer->runSetups();
-	$contents[] = $smarty->fetch('tiki-show_page.tpl');
 
     $comments_per_page = $prefs['wiki_comments_per_page'];
     $thread_sort_mode = $prefs['wiki_comments_default_ordering'];
     $comments_vars=Array('page');
-    $comments_prefix_var='wiki page:';
-    $comments_object_var='page';
+	$comments_objectId = 'wiki page:' . $info['pageName'];
     include('comments.php');
+
+	$contents[] = $smarty->fetch('tiki-show_page.tpl');
 
 	if( $id != $page_id )
 		$renderer->restoreAll();
