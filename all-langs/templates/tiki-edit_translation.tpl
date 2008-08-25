@@ -29,7 +29,7 @@
 	<p>{tr}Language of newly translated page{/tr}: 
 		<select name="lang" size="1">
 			{section name=ix loop=$languages}
-			{if in_array($languages[ix].value, $prefs.available_languages) or $prefs.available_languages|@count eq 0}
+			{if in_array($languages[ix].value, $prefs.available_languages) or $prefs.available_languages|@count eq 0 or !is_array($prefs.available_languages)}
 			<option value="{$languages[ix].value|escape}">{$languages[ix].name}</option>
 			{/if}
 			{/section}

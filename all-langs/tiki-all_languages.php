@@ -28,11 +28,22 @@ $pages = array();
 
 $requested = $tikilib->get_page_info( $_REQUEST['page'] );
 $page_id = $requested['page_id'];
-$pages[$page_id] = $requested;
+$pages[] = $requested;
+$unordered = array();
+$excluded = array();
 
+$prefered = $multilinguallib->preferedLangs();
+
+// Sort languages according to user's prefences
 foreach( $multilinguallib->getTrads( 'wiki page', $page_id ) as $row )
-	if( $row['objId'] != $page_id )
-		$pages[ $row['objId'] ] = $tikilib->get_page_info_from_id( $row['objId'] );
+	if( $row['objId'] != $page_id && in_array($row['lang'], $prefered) )
+		$unordered[ $row['lang'] ] = $tikilib->get_page_info_from_id( $row['objId'] );
+	else
+		$excluded[] = $row['lang'];
+	
+foreach( $prefered as $lang )
+	if( array_key_exists( $lang, $unordered ) )
+		$pages[] = $unordered[$lang];
 
 $contents = array();
 
@@ -59,6 +70,7 @@ foreach( array_reverse( $pages ) as $id => $info )
 		$renderer->restoreAll();
 }
 
+$smarty->assign( 'excluded', $excluded );
 $smarty->assign( 'content', array_reverse( $contents ) );
 $smarty->assign( 'mid', 'tiki-all_languages.tpl' );
 $smarty->display( 'tiki.tpl' );
