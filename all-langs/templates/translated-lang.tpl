@@ -47,7 +47,7 @@
 					{/section}
 					{if $prefs.feature_multilingual_one_page eq 'y'}
 					<option value="-">---</option>
-					<option value="_all_">{tr}All{/tr}</option>
+					<option value="_all_"{if basename($smarty.server.PHP_SELF) eq 'tiki-all_languages.php'} selected="selected"{/if}>{tr}All{/tr}</option>
 					{/if}
 					{if $tiki_p_edit eq 'y'}
 					<option value="-">---</option>

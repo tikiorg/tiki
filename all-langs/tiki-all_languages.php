@@ -45,6 +45,8 @@ foreach( array_reverse( $pages ) as $id => $info )
 	$renderer->applyPermissions();
 	$renderer->runSetups();
 
+	$smarty->assign( 'hide_page_header', $id === 0 );
+
     $comments_per_page = $prefs['wiki_comments_per_page'];
     $thread_sort_mode = $prefs['wiki_comments_default_ordering'];
     $comments_vars=Array('page');
@@ -53,7 +55,7 @@ foreach( array_reverse( $pages ) as $id => $info )
 
 	$contents[] = $smarty->fetch('tiki-show_page.tpl');
 
-	if( $id != $page_id )
+	if( $id === count($pages) - 1 )
 		$renderer->restoreAll();
 }
 
