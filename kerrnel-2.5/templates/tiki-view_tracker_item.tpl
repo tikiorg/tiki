@@ -286,12 +286,9 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 <a href="tiki-user_information.php?user={$cur_field.value|escape:"url"}" class="link">{$cur_field.value}</a>
 {/if}
 
+{**** IP SELECTOR ****}
 {elseif $cur_field.type eq 'I'}
-{if !$cur_field.options or $tiki_p_admin_trackers eq 'y'}
-<input type="text" name="ins_{$cur_field.id}" value="{$cur_field.value|escape}" />
-{elseif $cur_field.options}
-{$cur_field.value}
-{/if}
+	{include file='tracker_item_field_input.tpl' field_value=$cur_field}
 
 {elseif $cur_field.type eq 'g'}
 {if !$cur_field.options or $tiki_p_admin_trackers eq 'y'}
@@ -447,13 +444,13 @@ document.write('<div class="categSelectAll"><input type="checkbox" id="clickall"
 
 
 	{assign var='Height' value=$prefs.MultimediaDefaultHeight}
-	{assign var='Lenght' value=$prefs.MultimediaDefaultLength}
+	{assign var='Length' value=$prefs.MultimediaDefaultLength}
 
 	{if $cur_field.value ne ''}
-	{if  $cur_field.options_array[1] ne '' } { $Lenght=$cur_field.options_array[1] }{/if}
+	{if  $cur_field.options_array[1] ne '' } { $Length=$cur_field.options_array[1] }{/if}
 	{if  $cur_field.options_array[2] ne '' } { $Height=$cur_field.options_array[2] }{/if}
 	{if $ModeVideo eq 'y' } { assign var="Height" value=$Height+$prefs.VideoHeight}{/if}
-	{include file=multiplayer.tpl url=$cur_field.value w=$Lenght h=$Height video=$ModeVideo}
+	{include file=multiplayer.tpl url=$cur_field.value w=$Length h=$Height video=$ModeVideo}
 {/if}
 {/if}
 {elseif $cur_field.type eq 'U'}

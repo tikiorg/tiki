@@ -313,11 +313,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 
 {* -------------------- IP selector -------------------- *}
 {elseif $field_value.type eq 'I'}
-{if !$field_value.options_array[0] or $tiki_p_admin_trackers eq 'y'}
-<input type="text" name="{$field_value.ins_id}" value="{if $input_err}{$field_value.value}{elseif $defaultvalues.fid}{$defaultvalues.$fid|escape}{else}{$IP}{/if}" />
-{else}
-{$IP}
-{/if}
+	{include file='tracker_item_field_input.tpl'}
 
 {* -------------------- group selector -------------------- *}
 {elseif $field_value.type eq 'g'}

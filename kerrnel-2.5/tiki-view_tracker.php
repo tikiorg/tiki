@@ -304,22 +304,68 @@ for ($i = 0; $i < $temp_max; $i++) {
 			}
 
 		} elseif ($fields["data"][$i]["type"] == 'I') { // IP selection
-			if (isset($_REQUEST["$ins_id"]) and $_REQUEST["$ins_id"] and (!$fields["data"][$i]['options_array'][0] or $tiki_p_admin_trackers == 'y')) {
-				$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];
-			} else {
-				if ($fields["data"][$i]['options_array'][0] == 1 and $_SERVER['REMOTE_ADDR']) {
-					$ins_fields["data"][$i]["value"] = $_SERVER['REMOTE_ADDR'];
+			$fields["data"][$i]['autoip'] = $_SERVER['REMOTE_ADDR'];
+			if (!$trklib->isValidIP($fields["data"][$i]['autoip']))
+				$fields["data"][$i]['autoip'] = '';
+
+			// This is not a submit, so set some values.
+			if (!isset($_REQUEST["save"])) {
+				if (isset($fields["data"][$i]['options_array'][0])) {
+					if ($fields["data"][$i]['options_array'][0] == 1 ||
+						$fields["data"][$i]['options_array'][0] == 2) 
+					{
+						$ins_fields["data"][$i]['value'] = $fields["data"][$i]['autoip'];
+						$fields["data"][$i]['octet'] = split("\.", $ins_fields["data"][$i]['value']);
+					} else {
+						$ins_fields["data"][$i]['value'] = '';
+						$fields["data"][$i]['octet'] = array('', '', '', '');
+					}
 				} else {
-					$ins_fields["data"][$i]["value"] = '';
+					if ($fields["data"][$i]['value'] != '') {
+						$ins_fields["data"][$i]['value'] = $fields["data"][$i]['value'];
+						$fields["data"][$i]['octet'] = split("\.", $ins_fields["data"][$i]['value']);
+					} else {
+						$ins_fields["data"][$i]['value'] = '';
+						$fields["data"][$i]['octet'] = array('', '', '', '');
+					}
+				}
+
+			// This IS a submit, so deal with what was provided.
+			} else {
+				if (isset($_REQUEST[$ins_id . "_octet1"]) && isset($_REQUEST[$ins_id . "_octet2"])
+					&& isset($_REQUEST[$ins_id . "_octet3"]) && isset($_REQUEST[$ins_id . "_octet4"])) 
+				{
+					if (empty($_REQUEST[$ins_id . "_octet1"]) && empty($_REQUEST[$ins_id . "_octet2"])
+						&& empty($_REQUEST[$ins_id . "_octet3"]) && empty($_REQUEST[$ins_id . "_octet4"]))
+					{
+						$newIp = $fields["data"][$i]['autoip'];
+					} else {
+						$newIp = $_REQUEST[$ins_id . "_octet1"] 
+							. '.' . $_REQUEST[$ins_id . "_octet2"]
+							. '.' . $_REQUEST[$ins_id . "_octet3"] 
+							. '.' . $_REQUEST[$ins_id . "_octet4"];
+					}
+				} else {
+					$newIp = $fields["data"][$i]['autoip'];
+				}
+	
+				if (!empty($newIp) && !$trklib->isValidIP($newIp)) {
+					$smarty->assign('msg', tra('Invalid IP address') . ": $newIp");
+					$smarty->display("error.tpl");
+					die;
+				} else {
+					$ins_fields["data"][$i]["value"] = $newIp;
+					$fields["data"][$i]['octet'] = split("\.", $ins_fields["data"][$i]['value']);
 				}
 			}
+			/* /// WHAT IS THIS??
 			if ($fields["data"][$i]['options_array'][0] == 1 and !$writerfield) {
 				$writerfield = $fid;
 			} elseif (isset($_REQUEST["$filter_id"])) {
 				$fields["data"][$i]["value"] = $_REQUEST["$filter_id"];
 			} else {
 				$fields["data"][$i]["value"] = '';
-			}
+			} */
 
 		} elseif ($fields["data"][$i]["type"] == 'g') { // group selection
 			if (isset($_REQUEST["$ins_id"]) and $_REQUEST["$ins_id"] and (!$fields["data"][$i]['options_array'][0] or $tiki_p_admin_trackers == 'y')) {
@@ -815,6 +861,7 @@ $smarty->assign('cookietab',$cookietab);
 ask_ticket('view-trackers');
 
 // Display the template
+$smarty->assign('createmode', true);
 $smarty->assign('mid', 'tiki-view_tracker.tpl');
 $smarty->display("tiki.tpl");
 //echo "<!-- ";var_dump($filtervalue); echo " -->";

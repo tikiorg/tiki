@@ -52,12 +52,43 @@
 
 {* -------------------- IP selector -------------------- *}
 {elseif $field_value.type eq 'I'}
-	{if $field_value.options_array[0] eq 0 or $tiki_p_admin_trackers eq 'y'}
-		<input type="text" name="{$field_value.ins_id}" value="{if $field_value.value}{$field_value.value|escape}{elseif $field_value.defaultvalue}{$field_value.defaultvalue|escape}{else}{$IP|escape}{/if}" />
+	{if isset($field_value.options_array[0])}
+		{if $field_value.options_array[0] == 1 || $field_value.options_array[0] == 2}
+			{if isset($field_value.options_array[1]) && $field_value.options_array[1] > 0 && $tiki_p_admin_trackers eq 'y'}
+				{assign var=display value='input'}
+			{else}
+				{if $field_value.value eq '' && !isset($createmode)}
+					{assign var=display value='input'}
+				{else}
+					{assign var=display value='value'}
+				{/if}
+			{/if}
+		{else}
+			{assign var=display value='input'}
+		{/if}
 	{else}
-		{if $field_value.options_array[0] eq 1 && empty($field_value.value)}<input type="hidden" name="authoripid" value="{$field_value.fieldId}" />{/if}
-		{$IP|escape}
+		{assign var=display value='input'}
 	{/if}
+
+	{if isset($display) and $display eq 'value'}
+		{$field_value.value}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		{if isset($field_value.options_array[2]) and $field_value.value ne ''}
+			{if $field_value.options_array[2] == 1}
+				(<a href="http://{$field_value.value|escape}">http link</a>)
+			{elseif $field_value.options_array[2] == 2}
+				(<a href="https://{$field_value.value|escape}">https link</a>)
+			{elseif $field_value.options_array[2] == 3}
+				(<a href="telnet://{$field_value.value|escape}">telnet link</a>)
+			{elseif $field_value.options_array[2] == 4}
+				(<a href="ssh://{$field_value.value|escape}">secure shell link</a>)
+			{/if}
+		{/if}
+	{elseif isset($display) and $display eq 'input'}
+		<input type="text" name="{$field_value.ins_id}_octet1" value="{$field_value.octet[0]}" size="3" maxlength="3" />.
+		<input type="text" name="{$field_value.ins_id}_octet2" value="{$field_value.octet[1]}" size="3" maxlength="3" />.
+		<input type="text" name="{$field_value.ins_id}_octet3" value="{$field_value.octet[2]}" size="3" maxlength="3" />.
+		<input type="text" name="{$field_value.ins_id}_octet4" value="{$field_value.octet[3]}" size="3" maxlength="3" />
+	{/if}	
 
 {* -------------------- group selector -------------------- *}
 {elseif $field_value.type eq 'g'}

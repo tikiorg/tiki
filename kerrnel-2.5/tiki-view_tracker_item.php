@@ -395,21 +395,6 @@ foreach($xfields["data"] as $i=>$array) {
 					$ins_fields["data"][$i]["value"] = $tikilib->make_time($tikilib->hour, $tikilib->minute, 0, $xxxm, $xxxd, $xxxy);
 				}
 			}
-/******
-			if (isset($_REQUEST["$ins_id" . "Day"])) {
-				if (empty($_REQUEST['$ins_id'.'Hour'])) {
-					$_REQUEST['$ins_id'.'Hour'] = 0;
-				}
-				if (empty($_REQUEST['$ins_id'.'Minute'])) {
-					$_REQUEST['$ins_id'.'Minute'] = 0;
-				}
-				$ins_fields["data"][$i]["value"] = $tikilib->make_time($_REQUEST["$ins_id" . "Hour"], $_REQUEST["$ins_id" . "Minute"],
-				0, $_REQUEST["$ins_id" . "Month"], $_REQUEST["$ins_id" . "Day"], $_REQUEST["$ins_id" . "Year"]); 
-			} else {
-				$ins_fields["data"][$i]["value"] = $tikilib->now;
-			}
-******/		
-
 		} elseif ($fields["data"][$i]["type"] == 'e') {
 			include_once('lib/categories/categlib.php');
 			$k = $ins_fields["data"][$i]['options_array'][0];
@@ -453,21 +438,63 @@ foreach($xfields["data"] as $i=>$array) {
 				$fields["data"][$i]["value"] = '';
 			}
 		
-		} elseif ($fields["data"][$i]["type"] == 'I' and isset($fields["data"][$i]['options_array'][0]) and isset($IP))	{
-			if (isset($_REQUEST["$ins_id"]) and ($fields["data"][$i]['options_array'][0] < 1 or $tiki_p_admin_trackers == 'y')) {
-				$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];
-			} else {
-				if ($fields["data"][$i]['options_array'][0] == 2) {
-					$ins_fields["data"][$i]["value"] = $IP;
-				} elseif ($fields["data"][$i]['options_array'][0] == 1) {
+		} elseif ($fields["data"][$i]["type"] == 'I')	{
+			$ipT = $trklib->get_tracker_item($_REQUEST["itemId"]);
+			$oldIp = $ipT[$fields['data'][$i]['fieldId']];
+			$autoIp = $_SERVER['REMOTE_ADDR'];
+			if (!$trklib->isValidIP($autoIp))
+				$autoIp = '';
+
+			// This is not a submit, so set some values.
+			if (!isset($_REQUEST["save"])) {
+				if (isset($fields["data"][$i]['options_array'][0])) {
+					if ($fields["data"][$i]['options_array'][0] == 2) {
+						$ins_fields["data"][$i]['value'] = $autoIp;
+						$ins_fields["data"][$i]['octet'] = split("\.", $ins_fields["data"][$i]['value']);
+					} elseif (!empty($oldIp)) {
+						$ins_fields["data"][$i]['value'] = $oldIp;
+						$ins_fields["data"][$i]['octet'] = split("\.", $ins_fields["data"][$i]['value']);
+					} else {
+						$ins_fields["data"][$i]['value'] = '';
+						$ins_fields["data"][$i]['octet'] = array('', '', '', '');
+					}
 				} else {
-					$ins_fields["data"][$i]["value"] = '';
+					if (!empty($info[$fields['data'][$i]['fieldId']])) {
+						$ins_fields["data"][$i]['value'] = $info[$fields['data'][$i]['fieldId']];
+						$ins_fields["data"][$i]['octet'] = split("\.", $ins_fields["data"][$i]['value']);
+					} else {
+						$ins_fields["data"][$i]['value'] = '';
+						$ins_fields["data"][$i]['octet'] = array('', '', '', '');
+					}
 				}
-			}
-			if (isset($_REQUEST["$filter_id"])) {
-				$fields["data"][$i]["value"] = $_REQUEST["$filter_id"];
+
+			// This IS a submit, so deal with what was provided.
 			} else {
-				$fields["data"][$i]["value"] = '';
+				if (isset($_REQUEST[$ins_id . "_octet1"]) && isset($_REQUEST[$ins_id . "_octet2"])
+					&& isset($_REQUEST[$ins_id . "_octet3"]) && isset($_REQUEST[$ins_id . "_octet4"]))
+				{
+					if (empty($_REQUEST[$ins_id . "_octet1"]) && empty($_REQUEST[$ins_id . "_octet2"])
+						&& empty($_REQUEST[$ins_id . "_octet3"]) && empty($_REQUEST[$ins_id . "_octet4"]))
+					{
+						$newIp = $autoIp;
+					} else {
+						$newIp = $_REQUEST[$ins_id . "_octet1"]
+							. '.' . $_REQUEST[$ins_id . "_octet2"]
+							. '.' . $_REQUEST[$ins_id . "_octet3"]
+							. '.' . $_REQUEST[$ins_id . "_octet4"];
+					}
+				} else {
+					$newIp = $autoIp;
+				}
+
+				if (!empty($newIp) && !$trklib->isValidIP($newIp)) {
+					$smarty->assign('msg', tra('Invalid IP address') . ": $newIp");
+					$smarty->display("error.tpl");
+					die;
+				} else {
+					$ins_fields["data"][$i]["value"] = $newIp;
+					$ins_fields["data"][$i]['octet'] = split("\.", $ins_fields["data"][$i]['value']);
+				}
 			}
 
 		} elseif ($fields["data"][$i]["type"] == 'g' and isset($fields["data"][$i]['options_array'][0]) and $group)	{
