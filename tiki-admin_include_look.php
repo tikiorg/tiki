@@ -120,7 +120,11 @@ $smarty->assign_by_ref("slide_styles", $slide_styles);
 
 if ( isset($_REQUEST["site_style"]) ) {
 	// If the theme has changed, reload the page to use the new theme
-	header("location: tiki-admin.php?page=look");
+	$location= 'location: tiki-admin.php?page=look';
+	if ($prefs['feature_tabs'] == 'y') {
+		$location .= "&cookietab=".$_COOKIE['tab'];
+	}
+	header($location);
 	exit;
 }
 ?>

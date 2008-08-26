@@ -188,9 +188,8 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 {/literal}
 {/if}
 </head>
-
 <body {if isset($section) and $section eq 'wiki page' and $prefs.user_dbl eq 'y' and $dblclickedit eq 'y' and $tiki_p_edit eq 'y'}ondblclick="location.href='tiki-editpage.php?page={$page|escape:"url"}';"{/if}
- onload="{if $prefs.feature_tabs eq 'y'}tikitabs({if $cookietab neq ''}{$cookietab}{elseif $smarty.server.HTTP_REFERER|regex_replace:"/\?.*$/":""|regex_replace:"/^http.?:\/\//":"" eq $smarty.server.HTTP_HOST|cat:$smarty.server.REQUEST_URI|regex_replace:"/\?.*$/":""}getCookie('tab',null,1){else}1{/if},5);{/if}{if $msgError} javascript:location.hash='msgError'{/if}"
+ onload="{if $prefs.feature_tabs eq 'y'}tikitabs({if $cookietab neq ''}{$cookietab}{else}1{/if},5);{/if}{if $msgError} javascript:location.hash='msgError'{/if}"
 {if $section or $smarty.session.fullscreen eq 'y'}class="
 {if $section}tiki_{$section}{/if} {if $smarty.session.fullscreen eq 'y'}fullscreen{/if}"{/if}>
 <ul class="jumplinks" style="position:absolute;top:-9000px;left:-9000px;z-index:9;">
