@@ -252,9 +252,7 @@ if ( ! empty($multiprint_pages) ) {
 	// disallow robots to index page:
 	$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 	
-	$headers = getallheaders();
-
-	if( strpos( $headers['Accept'], 'application/json' ) !== false && $prefs['feature_mootools'] == 'y' ) {
+	if( strpos( $_SERVER['HTTP_ACCEPT'], 'application/json' ) !== false && $prefs['feature_mootools'] == 'y' ) {
 		$pages = array();
 		foreach( $listpages['data'] as $page )
 			$pages[] = $page['pageName'];
