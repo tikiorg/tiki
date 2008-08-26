@@ -72,8 +72,17 @@
 		<select name="lang">
 		<option value='' {if $find_lang eq ''}selected="selected"{/if}>{tr}any language{/tr}</option>
 		{section name=ix loop=$languages}
-			{if count($prefs.available_languages) == 0 || in_array($languages[ix].value, $prefs.available_languages)}
+			{if !is_array($prefs.available_languages) || count($prefs.available_languages) == 0 || in_array($languages[ix].value, $prefs.available_languages)}
 			<option value="{$languages[ix].value|escape}" {if $find_lang eq $languages[ix].value}selected="selected"{/if}>{tr}{$languages[ix].name}{/tr}</option>
+			{/if}
+		{/section}
+		</select>
+		{tr}not in{/tr}
+		<select name="langOrphan">
+		<option value='' {if $find_langOrphan eq ''}selected="selected"{/if}></option>
+		{section name=ix loop=$languages}
+			{if !is_array($prefs.available_languages) || count($prefs.available_languages) == 0 || in_array($languages[ix].value, $prefs.available_languages)}
+			<option value="{$languages[ix].value|escape}" {if $find_langOrphan eq $languages[ix].value}selected="selected"{/if}>{tr}{$languages[ix].name}{/tr}</option>
 			{/if}
 		{/section}
 		</select>

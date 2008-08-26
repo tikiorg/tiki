@@ -72,6 +72,9 @@ class SemanticLib
 	function getInvert( $name, $field = null ) // {{{
 	{
 		if( false !== $invert = $this->getToken( $name, 'invert_token' ) ) {
+			if( empty($invert) )
+				$invert = $name;
+
 			return $this->getToken( $invert, $field );
 		}
 
@@ -230,6 +233,50 @@ class SemanticLib
 	function isValid( $token ) // {{{
 	{
 		return preg_match( "/^[a-z0-9-]{1,15}\\z/", $token );
+	} // }}}
+
+	function getRelationList( $page ) // {{{
+	{
+		global $tikilib, $wikilib;
+		$relations = array();
+
+		$result = $tikilib->query( "SELECT toPage, reltype FROM tiki_links WHERE fromPage = ? AND reltype IS NOT NULL", array($page) );
+		while( $row = $result->fetchRow() ) {
+			foreach( explode( ',', $row['reltype'] ) as $reltype ) {
+				if( false === $label = $this->getToken( $reltype, 'label' ) )
+					continue;
+
+				$label = tra($label);
+
+				if( ! array_key_exists( $label, $relations ) )
+					$relations[$label] = array();
+
+				if( ! array_key_exists( $row['toPage'], $relations[$label] ) )
+					$relations[$label][ $row['toPage'] ] = $wikilib->sefurl( $row['toPage'] );
+			}
+		}
+
+		$result = $tikilib->query( "SELECT fromPage, reltype FROM tiki_links WHERE toPage = ? AND reltype IS NOT NULL", array($page) );
+		while( $row = $result->fetchRow() ) {
+			foreach( explode( ',', $row['reltype'] ) as $reltype ) {
+				if( false === $label = $this->getInvert( $reltype, 'label' ) )
+					continue;
+
+				$label = tra($label);
+
+				if( ! array_key_exists( $label, $relations ) )
+					$relations[$label] = array();
+
+				if( ! array_key_exists( $row['fromPage'], $relations[$label] ) )
+					$relations[$label][ $row['fromPage'] ] = $wikilib->sefurl( $row['fromPage'] );
+			}
+		}
+
+		ksort( $relations );
+		foreach( $relations as &$set )
+			ksort( $set );
+
+		return $relations;
 	} // }}}
 }
 
