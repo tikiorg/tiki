@@ -92,87 +92,91 @@
 		{/remarksbox}
 	{/if}
 
-	<div align="center">
+	<div>
 		{capture name=upload_file assign=upload_str}
 		<hr class="clear"/>
 		<div class="clear">
-		<div class="floatleft clearfix" style="padding-right: 10px;">
-			<table>
-			<tr>
-				<td>{tr}File Title:{/tr}</td>
-				<td><input type="text" name="name[]" {if $fileInfo.name}value="{$fileInfo.name}"{/if} size="40" /> {if $gal_info.type eq "podcast" or $gal_info.type eq "vidcast"} ({tr}required field for podcasts{/tr}){/if}</td>
-			</tr>
-			<tr>
+		<div class="floatleft">
+			 <label>
+				{tr}File Title:{/tr}
+				<input type="text" name="name[]" {if $fileInfo.name}value="{$fileInfo.name}"{/if} size="40" /> {if $gal_info.type eq "podcast" or $gal_info.type eq "vidcast"} ({tr}required field for podcasts{/tr}){/if}</td>
+			</label>
+			<label>
 				<td>{tr}File Description:{/tr}</td>
 				<td><textarea rows="2" cols="40" name="description[]">{if $fileInfo.description}{$fileInfo.description}{/if}</textarea>
 				{if $gal_info.type eq "podcast" or $gal_info.type eq "vidcast"} ({tr}required field for podcasts{/tr}){/if}
 				</td>
-			</tr>
+			</label>
 		{* File replacement is only here when the javascript upload action is not
 		available in the file listing.
 		This may be moved later in another specific place (e.g. simple popup) for
 		non-javascript browsers since it is not really a "Property" of the file *}
 
 		{if $prefs.javascript_enabled neq 'y' || ! $editFileId}
-			<tr>
-				<td>{tr}Upload from disk:{/tr}
+			<label>
+				{tr}Upload from disk:{/tr}
 				{if $editFileId}{$fileInfo.filename|escape}<br />{/if}</td>
-				<td><input name="userfile[]" type="file" size="30"/></td>
-			</tr>
+				<input name="userfile[]" type="file" size="30"/>
+			</label>
 		{/if}
-			</table>
 		</div>
-		<div class="clearfix" style="text-align: left;">
+		<div class="floatleft">
 		{if $editFileId}
 			<input type="hidden" name="galleryId" value="{$galleryId}"/>
 			<input type="hidden" name="fileId" value="{$editFileId}"/>
 			<input type="hidden" name="lockedby" value="{$fileInfo.lockedby|escape}" \>
 		{else}
-			{tr}File Gallery:{/tr}
-			<select name="galleryId[]" style="width:150px">
-			{section name=idx loop=$galleries}
-				{if ($galleries[idx].individual eq 'n') or ($galleries[idx].individual_tiki_p_upload_files eq 'y')}
-				<option value="{$galleries[idx].id|escape}" {if $galleries[idx].id eq $galleryId}selected="selected"{/if}>{$galleries[idx].name}</option>
-				{/if}
-			{/section}
-			</select>
-			<br/>
+			<label>
+				{tr}File Gallery:{/tr}
+				<select name="galleryId[]" style="width:150px">
+				{section name=idx loop=$galleries}
+					{if ($galleries[idx].individual eq 'n') or ($galleries[idx].individual_tiki_p_upload_files eq 'y')}
+					<option value="{$galleries[idx].id|escape}" {if $galleries[idx].id eq $galleryId}selected="selected"{/if}>{$galleries[idx].name}</option>
+					{/if}
+				{/section}
+				</select>
+			</label>
 		{/if}
 
 		{if !$editFileId and $tiki_p_batch_upload_files eq 'y'}
-			{tr}Unzip all zip files:{/tr}
-			<input type="checkbox" name="isbatch[]" />
-			<br/>
+			<label>
+				{tr}Unzip all zip files:{/tr}
+				<input type="checkbox" name="isbatch[]" />
+			</label>
 		{/if}
 
 		{if $tiki_p_admin_file_galleries eq 'y'}
-			{tr}Creator:{/tr}
-			<select name="user[]">
-			{section name=ix loop=$users}
-				<option value="{$users[ix].login|escape}"{if (isset($fileInfo) and $fileInfo.user eq $users[ix].login) or (!isset($fileInfo) and $user == $users[ix].login)}  selected="selected"{/if}>{$users[ix].login|username}</option>
-			{/section}
-			</select>
-			<br/>
+			<label>
+				{tr}Creator:{/tr}
+				<select name="user[]">
+				{section name=ix loop=$users}
+					<option value="{$users[ix].login|escape}"{if (isset($fileInfo) and $fileInfo.user eq $users[ix].login) or (!isset($fileInfo) and $user == $users[ix].login)}  selected="selected"{/if}>{$users[ix].login|username}</option>
+				{/section}
+				</select>
+			</label>
 		{/if}
 
 		{if $prefs.fgal_limit_hits_per_file eq 'y'}
-			{tr}Maximum amount of downloads:{/tr}
-			<input type="text" name="hit_limit[]" value="{$hit_limit|default:0}"/>
-			{tr}0 for no limit{/tr}
-			<br/>
+			<label>
+				{tr}Maximum amount of downloads:{/tr}
+				<input type="text" name="hit_limit[]" value="{$hit_limit|default:0}"/>
+				{tr}0 for no limit{/tr}
+			</label>
 		{/if}
 
 		{if $prefs.feature_file_galleries_author eq 'y'}
-			{tr}Author if not the file creator:{/tr}
-			<input type="text" name="author[]" value="{$fileInfo.author|escape}" />
-			<br/>
+			<label>
+				{tr}Author if not the file creator:{/tr}
+				<input type="text" name="author[]" value="{$fileInfo.author|escape}" />
+			</label>
 		{/if}
 
 		{* We want comments only on updated files *}
 		{if $prefs.javascript_enabled neq 'y' && $editFileId}
-			{tr}Comment:{/tr}
-			<input type="text" name="comment[]" value="" size="40" />
-			<br/>
+			<label>
+				{tr}Comment:{/tr}
+				<input type="text" name="comment[]" value="" size="40" />
+			</label>
 		{/if}
 		</div>
 	</div>
@@ -194,12 +198,14 @@
 	<div id="multi_1">
 	</div>
 	<hr class="clear"/>
+	<div id="page_bar">
 	{if $prefs.javascript_enabled eq 'y'}
 	<input class="submitbutton" type="button" onclick="upload('0', 'loader_0')" value="{if $editFileId}{tr}Save{/tr}{else}{tr}Upload{/tr}{/if}"/>
 		{if !$editFileId}
 			<input class="submitbutton" type="button" onclick="javascript:add_upload_file('multiple_upload')" value="{tr lang=$lang}Add File{/tr}"/>
 		{/if}
 	{/if}
+	</div>
 	</div>
 	{if !empty($fileInfo.lockedby) and $user ne $fileInfo.lockedby}
 		{icon _id="lock" class="" alt=""}

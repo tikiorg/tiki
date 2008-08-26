@@ -161,6 +161,7 @@ textarea {
 
 label {
 	cursor: pointer;
+	display: block;
 }
 
 /***** Basic Page Layout 
@@ -2819,5 +2820,7 @@ padding-left: 18px;
 .sub {
 	padding-left: 5em !important;
 }
-
+#page_bar {
+	text-align: center;
+}
 /***** End of file ******/

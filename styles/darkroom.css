@@ -167,7 +167,7 @@ input[type=wikiaction] {margin-bottom: 2px}
 * html .findtable input {font-size: 1em}
 * html .wikitopline select {font-size: .9em}
 small {font-size: 0.8em}
-label {}
+label {display:block;}
 ul, ol {text-align: left}
 li {}
 
@@ -2413,5 +2413,5 @@ a.admbox.off {border: 1px solid #9f9f9f}
 a.admbox.off:hover,
 a.admbox.off:focus,
 a.admbox.off:active {border: 1px solid #9f9f9f}
-
+#page_bar {text-align:center;}
 /* end of css file */
