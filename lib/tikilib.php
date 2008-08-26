@@ -3696,24 +3696,28 @@ class TikiLib extends TikiDB {
 		}
 
 		if (!empty($filter)) {
-			$tmp_mid = '';
+			$tmp_mid = array();
 			foreach ($filter as $type=>$val) {
 				if ($type == 'categId') {
 					$join_tables .= " inner join `tiki_objects` as tob on (tob.`itemId`= tp.`pageName` and tob.`type`= ?) inner join `tiki_category_objects` as tc on (tc.`catObjectId`=tob.`objectId` and tc.`categId`=?) ";
 					$join_bindvars = array('wiki page', $val);
 				} elseif ($type == 'lang') {
-					if ( ! empty($tmp_mid) ) $tmp_mid .= ' and ';
-					$tmp_mid .= '`lang`=? ';
+					$tmp_mid[] = 'tp.`lang`=?';
 					$bindvars[] = $val;
 				} elseif ($type == 'structHead') {
 					$join_tables .= " inner join `tiki_structures` as ts on (ts.`page_id` = tp.`page_id` and ts.`parent_id` = 0) ";
 					$select .= ',ts.`page_alias`';
+				} elseif ($type == 'langOrphan') {
+					$join_tables .= " left join tiki_translated_objects tro on (tro.type = 'wiki page' AND tro.objId = tp.page_id) ";
+					$tmp_mid[] = "( (tro.traId IS NULL AND tp.lang != ?) OR tro.traId NOT IN(SELECT traId FROM tiki_translated_objects WHERE lang = ?))";
+					$bindvars[] = $val;
+					$bindvars[] = $val;
 				}
 			}
 			if (!empty($tmp_mid)) {
 				$mid .= empty($mid) ? ' where (' : ' and (';
-							$mid .= $tmp_mid.')';
-							}
+				$mid .= implode( ' and ', $tmp_mid ) . ')';
+			}
 		}
 		if (!empty($initial)) {
 			$mid .= empty($mid) ? ' where (' : ' and (';
@@ -3733,7 +3737,7 @@ class TikiLib extends TikiDB {
 		}
 
 		if ( $only_orphan_pages ) {
-		$join_tables = ' left join `tiki_links` as tl on tp.`pageName` = tl.`toPage` left join `tiki_structures` as ts on tp.`page_id` = ts.`page_id`';
+		$join_tables .= ' left join `tiki_links` as tl on tp.`pageName` = tl.`toPage` left join `tiki_structures` as ts on tp.`page_id` = ts.`page_id`';
 		$mid .= ( $mid == '' ) ? ' where ' : ' and ';
 		$mid .= 'tl.`toPage` IS NULL and `ts`.page_id IS NULL';
 		}

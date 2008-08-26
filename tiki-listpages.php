@@ -11,7 +11,7 @@ $section = 'wiki page';
 require_once('tiki-setup.php');
 require_once('lib/ajax/ajaxlib.php');
 
-$auto_query_args = array('initial','maxRecords','sort_mode','find','lang');
+$auto_query_args = array('initial','maxRecords','sort_mode','find','lang','langOrphan');
 
 $smarty->assign('headtitle',tra('Pages'));
 
@@ -173,6 +173,10 @@ if ( ! empty($multiprint_pages) ) {
 	if (!empty($_REQUEST['lang'])) {
 		$filter['lang'] = $_REQUEST['lang'];
 		$smarty->assign_by_ref('find_lang', $_REQUEST['lang']);
+	}
+	if (!empty($_REQUEST['langOrphan'])) {
+		$filter['langOrphan'] = $_REQUEST['langOrphan'];
+		$smarty->assign_by_ref('find_langOrphan', $_REQUEST['langOrphan']);
 	}
 	if ($prefs['feature_categories'] == 'y' && !empty($_REQUEST['categId'])) {
 		$filter['categId'] = $_REQUEST['categId'];
