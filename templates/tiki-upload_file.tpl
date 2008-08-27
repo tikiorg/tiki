@@ -95,47 +95,46 @@
 	<div>
 		{capture name=upload_file assign=upload_str}
 		<hr class="clear"/>
-		<div class="clear">
-		<div class="clearfix">
-			<div class="floatleft">
+		<table width="100%">
+		<tr>
+			<td width="50%">
 				 <label>
 					{tr}File Title:{/tr}
-					<input type="text" name="name[]" {if $fileInfo.name}value="{$fileInfo.name}"{/if} size="40" /> {if $gal_info.type eq "podcast" or $gal_info.type eq "vidcast"} ({tr}required field for podcasts{/tr}){/if}
+					<input style="width:100%" type="text" name="name[]" {if $fileInfo.name}value="{$fileInfo.name}"{/if} size="40" /> {if $gal_info.type eq "podcast" or $gal_info.type eq "vidcast"} ({tr}required field for podcasts{/tr}){/if}
 				</label>
-			</div>
-			<div class="floatright clearfix">
+			</td><td width="50%">
 				<label>
 					{tr}File Description:{/tr}
-					<textarea style="vertical-align: top" rows="2" cols="40" name="description[]">{if $fileInfo.description}{$fileInfo.description}{/if}</textarea>
+					<textarea style="width:100%" rows="2" cols="40" name="description[]">{if $fileInfo.description}{$fileInfo.description}{/if}</textarea>
 					{if $gal_info.type eq "podcast" or $gal_info.type eq "vidcast"} ({tr}required field for podcasts{/tr}){/if}
 				</label>
-			</div>
-		</div>
+			</td>
+		</tr>
 		{* File replacement is only here when the javascript upload action is not
 		available in the file listing.
 		This may be moved later in another specific place (e.g. simple popup) for
 		non-javascript browsers since it is not really a "Property" of the file *}
-		<div class="clearfix">
-		{if $prefs.javascript_enabled neq 'y' || ! $editFileId}
-		<div class="floatleft">
+		<tr>
+		{if $prefs.javascript_enabled neq 'y' || !$editFileId}
+		<td>
 			<label>
 				{tr}Upload from disk:{/tr}
 				{if $editFileId}{$fileInfo.filename|escape}<br />{/if}
 				<input name="userfile[]" type="file" size="30"/>
 			</label>
-		</div>
+		</td>
 		{/if}
 		{if !$editFileId and $tiki_p_batch_upload_files eq 'y'}
-		<div class="floatright">
+		<td>
 			<label>
 				<input type="checkbox" name="isbatch[]" />
 				{tr}Unzip zip files{/tr}
 			</label>
-		</div>
+		</td>
 		{/if}
-		</div>
-		<div class="clearfix">
-			<div class="floatleft">
+		</tr>
+		<tr>
+			<td>
 			{if $editFileId}
 				<input type="hidden" name="galleryId" value="{$galleryId}"/>
 				<input type="hidden" name="fileId" value="{$editFileId}"/>
@@ -152,9 +151,9 @@
 					</select>
 				</label>
 			{/if}
-			</div>
+			</td>
 
-			<div class="floatright">
+			<td>
 			{if $tiki_p_admin_file_galleries eq 'y'}
 				<label>
 					{tr}Creator:{/tr}
@@ -167,31 +166,36 @@
 			{/if}
 
 			{if $prefs.feature_file_galleries_author eq 'y'}
+				<br/>
 				<label>
 					{tr}Author if not the file creator:{/tr}
 					<input type="text" name="author[]" value="{$fileInfo.author|escape}" />
 				</label>
 			{/if}
-			</div>
-		</div>
-		<div>
+			</td>
+		</tr>
+		<tr>
 		{if $prefs.fgal_limit_hits_per_file eq 'y'}
+			<td>
 			<label>
 				{tr}Maximum amount of downloads:{/tr}
 				<input type="text" name="hit_limit[]" value="{$hit_limit|default:0}"/>
 				{tr}0 for no limit{/tr}
 			</label>
+			</td>
 		{/if}
 
 		{* We want comments only on updated files *}
 		{if $prefs.javascript_enabled neq 'y' && $editFileId}
+			<td>
 			<label>
 				{tr}Comment:{/tr}
 				<input type="text" name="comment[]" value="" size="40" />
 			</label>
+			</td>
 		{/if}
-		</div>
-	</div>
+		</tr>
+	</table>
 	{if $prefs.javascript_enabled eq 'y'}
 	<input type="hidden" name="upload" />
 	{/if}
