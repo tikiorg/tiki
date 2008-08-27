@@ -97,50 +97,47 @@
 		<hr class="clear"/>
 		<table width="100%">
 		<tr>
-			<td width="50%">
-				 <label>
-					{tr}File Title:{/tr}
-					<input style="width:100%" type="text" name="name[]" {if $fileInfo.name}value="{$fileInfo.name}"{/if} size="40" /> {if $gal_info.type eq "podcast" or $gal_info.type eq "vidcast"} ({tr}required field for podcasts{/tr}){/if}
-				</label>
-			</td><td width="50%">
-				<label>
-					{tr}File Description:{/tr}
-					<textarea style="width:100%" rows="2" cols="40" name="description[]">{if $fileInfo.description}{$fileInfo.description}{/if}</textarea>
+			<td width="60%">
+			<table width="100%">
+				<tr>
+					<td>{tr}File Title:{/tr}</td>
+					<td width="80%">
+						<input style="width:100%" type="text" name="name[]" {if $fileInfo.name}value="{$fileInfo.name}"{/if} size="40" /> {if $gal_info.type eq "podcast" or $gal_info.type eq "vidcast"} ({tr}required field for podcasts{/tr}){/if}
+					</td>
+				</tr>
+				<tr>
+					<td>{tr}File Description:{/tr}</td>
+					<td>
+						<textarea style="width:100%" rows="2" cols="40" name="description[]">{if $fileInfo.description}{$fileInfo.description}{/if}</textarea>
 					{if $gal_info.type eq "podcast" or $gal_info.type eq "vidcast"} ({tr}required field for podcasts{/tr}){/if}
-				</label>
-			</td>
-		</tr>
+					</td>
+				</tr>
+				<tr>
 		{* File replacement is only here when the javascript upload action is not
 		available in the file listing.
 		This may be moved later in another specific place (e.g. simple popup) for
 		non-javascript browsers since it is not really a "Property" of the file *}
-		<tr>
-		{if $prefs.javascript_enabled neq 'y' || !$editFileId}
-		<td>
-			<label>
-				{tr}Upload from disk:{/tr}
-				{if $editFileId}{$fileInfo.filename|escape}<br />{/if}
-				<input name="userfile[]" type="file" size="30"/>
-			</label>
-		</td>
-		{/if}
-		{if !$editFileId and $tiki_p_batch_upload_files eq 'y'}
-		<td>
-			<label>
-				<input type="checkbox" name="isbatch[]" />
-				{tr}Unzip zip files{/tr}
-			</label>
-		</td>
-		{/if}
-		</tr>
-		<tr>
+				{if $prefs.javascript_enabled neq 'y' || !$editFileId}
+					<td>{tr}Upload from disk:{/tr}</td>
+					<td>
+						{if $editFileId}{$fileInfo.filename|escape}{/if}
+						<input name="userfile[]" type="file" size="30"/>
+					</td>
+					{/if}
+				</tr>
+			</table>
+			</td>
 			<td>
+	
+		{if !$editFileId and $tiki_p_batch_upload_files eq 'y'}
+				<input type="checkbox" name="isbatch[]" />
+				{tr}Unzip zip files{/tr}<br/>
+		{/if}
 			{if $editFileId}
 				<input type="hidden" name="galleryId" value="{$galleryId}"/>
 				<input type="hidden" name="fileId" value="{$editFileId}"/>
 				<input type="hidden" name="lockedby" value="{$fileInfo.lockedby|escape}" \>
 			{else}
-				<label>
 					{tr}File Gallery:{/tr}
 					<select name="galleryId[]" style="width:150px">
 					{section name=idx loop=$galleries}
@@ -149,28 +146,22 @@
 						{/if}
 					{/section}
 					</select>
-				</label>
+				<br/>
 			{/if}
-			</td>
-
-			<td>
 			{if $tiki_p_admin_file_galleries eq 'y'}
-				<label>
 					{tr}Creator:{/tr}
 					<select name="user[]">
 					{section name=ix loop=$users}
 						<option value="{$users[ix].login|escape}"{if (isset($fileInfo) and $fileInfo.user eq $users[ix].login) or (!isset($fileInfo) and $user == $users[ix].login)}  selected="selected"{/if}>{$users[ix].login|username}</option>
 					{/section}
 					</select>
-				</label>
+				<br/>
 			{/if}
 
 			{if $prefs.feature_file_galleries_author eq 'y'}
-				<br/>
-				<label>
 					{tr}Author if not the file creator:{/tr}
 					<input type="text" name="author[]" value="{$fileInfo.author|escape}" />
-				</label>
+				<br/>
 			{/if}
 			</td>
 		</tr>
@@ -187,7 +178,6 @@
 
 		{* We want comments only on updated files *}
 		{if $prefs.javascript_enabled neq 'y' && $editFileId}
-			<td>
 			<label>
 				{tr}Comment:{/tr}
 				<input type="text" name="comment[]" value="" size="40" />
