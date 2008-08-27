@@ -367,6 +367,10 @@ if (isset($_REQUEST["upload"])) {
 		header ("location: tiki-list_file_gallery.php?galleryId=" . $batch_job_galleryId);
 		die;
 	}
+	if ($editFileId and count($errors) == 0) {
+		header ("location: tiki-list_file_gallery.php?galleryId=" . $_REQUEST["galleryId"][$key]);
+		die;
+	}
 }
 
 // Get the list of galleries to display the select box in the template

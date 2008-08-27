@@ -96,78 +96,90 @@
 		{capture name=upload_file assign=upload_str}
 		<hr class="clear"/>
 		<div class="clear">
-		<div class="floatleft">
-			 <label>
-				{tr}File Title:{/tr}
-				<input type="text" name="name[]" {if $fileInfo.name}value="{$fileInfo.name}"{/if} size="40" /> {if $gal_info.type eq "podcast" or $gal_info.type eq "vidcast"} ({tr}required field for podcasts{/tr}){/if}</td>
-			</label>
-			<label>
-				<td>{tr}File Description:{/tr}</td>
-				<td><textarea rows="2" cols="40" name="description[]">{if $fileInfo.description}{$fileInfo.description}{/if}</textarea>
-				{if $gal_info.type eq "podcast" or $gal_info.type eq "vidcast"} ({tr}required field for podcasts{/tr}){/if}
-				</td>
-			</label>
+		<div class="clearfix">
+			<div class="floatleft">
+				 <label>
+					{tr}File Title:{/tr}
+					<input type="text" name="name[]" {if $fileInfo.name}value="{$fileInfo.name}"{/if} size="40" /> {if $gal_info.type eq "podcast" or $gal_info.type eq "vidcast"} ({tr}required field for podcasts{/tr}){/if}
+				</label>
+			</div>
+			<div class="floatright clearfix">
+				<label>
+					{tr}File Description:{/tr}
+					<textarea style="vertical-align: top" rows="2" cols="40" name="description[]">{if $fileInfo.description}{$fileInfo.description}{/if}</textarea>
+					{if $gal_info.type eq "podcast" or $gal_info.type eq "vidcast"} ({tr}required field for podcasts{/tr}){/if}
+				</label>
+			</div>
+		</div>
 		{* File replacement is only here when the javascript upload action is not
 		available in the file listing.
 		This may be moved later in another specific place (e.g. simple popup) for
 		non-javascript browsers since it is not really a "Property" of the file *}
-
+		<div class="clearfix">
 		{if $prefs.javascript_enabled neq 'y' || ! $editFileId}
+		<div class="floatleft">
 			<label>
 				{tr}Upload from disk:{/tr}
-				{if $editFileId}{$fileInfo.filename|escape}<br />{/if}</td>
+				{if $editFileId}{$fileInfo.filename|escape}<br />{/if}
 				<input name="userfile[]" type="file" size="30"/>
 			</label>
+		</div>
+		{/if}
+		{if !$editFileId and $tiki_p_batch_upload_files eq 'y'}
+		<div class="floatright">
+			<label>
+				<input type="checkbox" name="isbatch[]" />
+				{tr}Unzip zip files{/tr}
+			</label>
+		</div>
 		{/if}
 		</div>
-		<div class="floatleft">
-		{if $editFileId}
-			<input type="hidden" name="galleryId" value="{$galleryId}"/>
-			<input type="hidden" name="fileId" value="{$editFileId}"/>
-			<input type="hidden" name="lockedby" value="{$fileInfo.lockedby|escape}" \>
-		{else}
-			<label>
-				{tr}File Gallery:{/tr}
-				<select name="galleryId[]" style="width:150px">
-				{section name=idx loop=$galleries}
-					{if ($galleries[idx].individual eq 'n') or ($galleries[idx].individual_tiki_p_upload_files eq 'y')}
-					<option value="{$galleries[idx].id|escape}" {if $galleries[idx].id eq $galleryId}selected="selected"{/if}>{$galleries[idx].name}</option>
-					{/if}
-				{/section}
-				</select>
-			</label>
-		{/if}
+		<div class="clearfix">
+			<div class="floatleft">
+			{if $editFileId}
+				<input type="hidden" name="galleryId" value="{$galleryId}"/>
+				<input type="hidden" name="fileId" value="{$editFileId}"/>
+				<input type="hidden" name="lockedby" value="{$fileInfo.lockedby|escape}" \>
+			{else}
+				<label>
+					{tr}File Gallery:{/tr}
+					<select name="galleryId[]" style="width:150px">
+					{section name=idx loop=$galleries}
+						{if ($galleries[idx].individual eq 'n') or ($galleries[idx].individual_tiki_p_upload_files eq 'y')}
+						<option value="{$galleries[idx].id|escape}" {if $galleries[idx].id eq $galleryId}selected="selected"{/if}>{$galleries[idx].name}</option>
+						{/if}
+					{/section}
+					</select>
+				</label>
+			{/if}
+			</div>
 
-		{if !$editFileId and $tiki_p_batch_upload_files eq 'y'}
-			<label>
-				{tr}Unzip all zip files:{/tr}
-				<input type="checkbox" name="isbatch[]" />
-			</label>
-		{/if}
+			<div class="floatright">
+			{if $tiki_p_admin_file_galleries eq 'y'}
+				<label>
+					{tr}Creator:{/tr}
+					<select name="user[]">
+					{section name=ix loop=$users}
+						<option value="{$users[ix].login|escape}"{if (isset($fileInfo) and $fileInfo.user eq $users[ix].login) or (!isset($fileInfo) and $user == $users[ix].login)}  selected="selected"{/if}>{$users[ix].login|username}</option>
+					{/section}
+					</select>
+				</label>
+			{/if}
 
-		{if $tiki_p_admin_file_galleries eq 'y'}
-			<label>
-				{tr}Creator:{/tr}
-				<select name="user[]">
-				{section name=ix loop=$users}
-					<option value="{$users[ix].login|escape}"{if (isset($fileInfo) and $fileInfo.user eq $users[ix].login) or (!isset($fileInfo) and $user == $users[ix].login)}  selected="selected"{/if}>{$users[ix].login|username}</option>
-				{/section}
-				</select>
-			</label>
-		{/if}
-
+			{if $prefs.feature_file_galleries_author eq 'y'}
+				<label>
+					{tr}Author if not the file creator:{/tr}
+					<input type="text" name="author[]" value="{$fileInfo.author|escape}" />
+				</label>
+			{/if}
+			</div>
+		</div>
+		<div>
 		{if $prefs.fgal_limit_hits_per_file eq 'y'}
 			<label>
 				{tr}Maximum amount of downloads:{/tr}
 				<input type="text" name="hit_limit[]" value="{$hit_limit|default:0}"/>
 				{tr}0 for no limit{/tr}
-			</label>
-		{/if}
-
-		{if $prefs.feature_file_galleries_author eq 'y'}
-			<label>
-				{tr}Author if not the file creator:{/tr}
-				<input type="text" name="author[]" value="{$fileInfo.author|escape}" />
 			</label>
 		{/if}
 
@@ -186,10 +198,13 @@
 	{/capture}
 	<div id="form">
 	{include file=categorize.tpl notable='y'}
-	<form {if $prefs.javascript_enabled eq 'y'}onsubmit='return false' target='upload_progress_0'{/if} id='file_0' name='file_0' action='tiki-upload_file.php' enctype='multipart/form-data' method='post' style='margin:0px; padding:0px'>
-	<input type="hidden" name="formId" value="0">
+	<form {if $prefs.javascript_enabled eq 'y' and !$editFileId}onsubmit='return false' target='upload_progress_0'{/if} id='file_0' name='file_0' action='tiki-upload_file.php' enctype='multipart/form-data' method='post' style='margin:0px; padding:0px'>
+	<input type="hidden" name="formId" value="0"/>
 	{$upload_str}
-	{if $prefs.javascript_enabled neq 'y'}
+	{if $editFileId}
+		<input class="submitbutton" type="submit" value="{tr}Save{/tr}"/>
+	{/if}
+	{if $prefs.javascript_enabled neq 'y' and !$editFileId}
 	{$upload_str}
 	{$upload_str}
 	<input type="submit" name="upload" value="{if $editFileId}{tr}Save{/tr}{else}{tr}Upload{/tr}{/if}"/>
@@ -199,11 +214,9 @@
 	</div>
 	<hr class="clear"/>
 	<div id="page_bar">
-	{if $prefs.javascript_enabled eq 'y'}
-	<input class="submitbutton" type="button" onclick="upload('0', 'loader_0')" value="{if $editFileId}{tr}Save{/tr}{else}{tr}Upload{/tr}{/if}"/>
-		{if !$editFileId}
+	{if $prefs.javascript_enabled eq 'y'  and  !$editFileId}
+	<input class="submitbutton" type="button" onclick="upload('0', 'loader_0')" value="{tr}Upload{/tr}"/>
 			<input class="submitbutton" type="button" onclick="javascript:add_upload_file('multiple_upload')" value="{tr lang=$lang}Add File{/tr}"/>
-		{/if}
 	{/if}
 	</div>
 	</div>
@@ -226,7 +239,7 @@
 		function add_upload_file() {
 			tmp = "<form onsubmit='return false' id='file_"+nb_upload+"' name='file_"+nb_upload+"' action='tiki-upload_file.php' target='upload_progress_"+nb_upload+"' enctype='multipart/form-data' method='post' style='margin:0px; padding:0px'>";
 			{/literal}
-			tmp += '<input type="hidden" name="formId" value="'+nb_upload+'">';
+			tmp += '<input type="hidden" name="formId" value="'+nb_upload+'"/>';
 			tmp += '{$upload_str|strip}';
 			{literal}
 			tmp += '</form><div id="multi_'+(nb_upload+1)+'"></div>';
