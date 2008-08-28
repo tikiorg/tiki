@@ -55,6 +55,11 @@ function wikiplugin_listpages_info() {
 				'name' => tra('Find'),
 				'description' => tra('txt'),
 			),
+			'lang' => array(
+				'required' => false,
+				'name' => tra('Language'),
+				'description' => tra('Two letter language code to filter pages listed.'),
+			),
 			'exact_match' => array(
 				'required' => false,
 				'name' => tra('Exact Match'),
@@ -104,6 +109,9 @@ function wikiplugin_listpages($data, $params) {
 	}
 	if (!empty($structHead) && $structHead == 'y') {
 		$filter['structHead'] = $structHead;
+	}
+	if( !empty($lang)) {
+		$filter['lang'] = $lang;
 	}
 	if (!isset($offset)) {
 		$offset = 0;
