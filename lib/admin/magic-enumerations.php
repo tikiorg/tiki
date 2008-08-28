@@ -34,7 +34,8 @@ $enumerations['defaultmailcharset'] = array ('utf-8'=>tra('utf-8'),'iso-8859-1'=
 $enumerations['mailcrlf'] = array ('0'=>tra('CRLF (standard)'),'1'=>tra('LF (some Unix MTA)'));
 //need this foreach because of dynamically driven languages of tikiwiki (copying $languages from $prefs array)
 $enumerations['availablelanguages'] = array();
-	foreach($languages as $key => $value){
+$languages = $tikilib->list_languages();
+foreach($languages as $key => $value){
 	$enumerations['availablelanguages'][$key] = $value;
 	}
 $enumerations['remembertime'] = array ('0'=>tra('5 minutes'),'1'=>tra('15 minutes'),'2'=>tra('30 minutes'),'3'=>tra('1 hour'),'4'=>tra('2 hours'),'5'=>tra('10 hours'),'6'=>tra('20 hours'),'7'=>tra('1 day'),'8'=>tra('1 week'),'9'=>tra('1 month'),'10'=>tra('1 year'));
