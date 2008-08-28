@@ -60,6 +60,16 @@ function wikiplugin_listpages_info() {
 				'name' => tra('Language'),
 				'description' => tra('Two letter language code to filter pages listed.'),
 			),
+			'langOrphan' => array(
+				'required' => false,
+				'name' => tra('Orphan Language'),
+				'description' => tra('Two letter language code to filter pages listed. Only pages not available in the provided language will be listed.'),
+			),
+			'translations' => array(
+				'required' => false,
+				'name' => tra('Load Translations'),
+				'description' => tra('user or pipe separated list of two letter language codes for additional languages to display. If the language parameter is not defined, the first element of this list will be used as the primary filter.'),
+			),
 			'exact_match' => array(
 				'required' => false,
 				'name' => tra('Exact Match'),
@@ -96,6 +106,7 @@ function wikiplugin_listpages($data, $params) {
 		return '';
 	} 
 	extract($params,EXTR_SKIP);
+	if( !isset($translations) ) $translations = null;
 	$filter == array();
 	if (!isset($initial)) {
 		if (isset($_REQUEST['initial'])) {
@@ -110,8 +121,22 @@ function wikiplugin_listpages($data, $params) {
 	if (!empty($structHead) && $structHead == 'y') {
 		$filter['structHead'] = $structHead;
 	}
-	if( !empty($lang)) {
+	if (!empty($translations) && $prefs['feature_multilingual'] == 'y') {
+		global $multilinguallib;
+		require_once 'lib/multilingual/multilinguallib.php';
+		if ($translations == 'user') {
+			$translations = $multilinguallib->preferedLangs();
+		} else {
+			$translations = explode( '|', $translations );
+		}
+	}
+	if (!empty($langOrphan)) {
+		$filter['langOrphan'] = $langOrphan;
+	}
+	if (!empty($lang)) {
 		$filter['lang'] = $lang;
+	} elseif (is_array($translations)) {
+		$lang = $filter['lang'] = reset($translations);
 	}
 	if (!isset($offset)) {
 		$offset = 0;
@@ -132,6 +157,22 @@ function wikiplugin_listpages($data, $params) {
 	$only_cant = false;
 
 	$listpages = $tikilib->list_pages($offset, $max, $sort, $find, $initial, $exact_match, $only_name, $for_list_pages, $only_orphan_pages, $filter, $only_cant);
+
+	if ( is_array( $translations ) ) {
+		$used = array();
+		foreach( $listpages['data'] as &$page ) {
+			$pages = $multilinguallib->getTranslations('wiki page', $page['page_id']);
+
+			$page['translations'] = array();
+			foreach( $pages as $trad )
+				if( $trad['lang'] != $lang && in_array($trad['lang'], $translations) ) {
+					$page['translations'][ $trad['lang'] ] = $trad['objName'];
+					$used[$trad['lang']] = $trad['langName'];
+				}
+		}
+
+		$smarty->assign( 'wplp_used', $used );
+	}
 
 	$smarty->assign_by_ref('listpages', $listpages['data']);
 	if (!empty($showPageAlias) && $showPageAlias == 'y')

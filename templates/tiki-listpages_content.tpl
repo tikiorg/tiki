@@ -36,6 +36,10 @@
       <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='pageName'}{tr}Page{/tr}{/self_link}</td>
     {/if}
 
+	{foreach from=$wplp_used key=lc item=ln}
+      <td class="heading">{$ln|escape}</td>
+	{/foreach}
+
     {if $prefs.wiki_list_hits eq 'y'}
       {assign var='cntcol' value=$cntcol+1}
       <td class="heading" style="text-align:right;">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='hits'}{tr}Hits{/tr}{/self_link}</td>
@@ -144,6 +148,14 @@
         {/if}
       </td>
     {/if}
+
+	{foreach from=$wplp_used key=lc item=ln}
+      <td class="{cycle advance=false}">
+		{if $listpages[changes].translations[$lc]}
+        <a href="{$listpages[changes].translations[$lc]|sefurl}" class="link" title="{tr}View page{/tr}&nbsp;{$listpages[changes].translations[$lc]}">{$listpages[changes].translations[$lc]}</a>
+		{/if}
+      </td>
+	{/foreach}
 
     {if $prefs.wiki_list_hits eq 'y'}	
       <td style="text-align:right;" class="{cycle advance=false}">{$listpages[changes].hits}</td>
