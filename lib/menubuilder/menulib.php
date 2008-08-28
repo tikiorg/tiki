@@ -186,7 +186,7 @@ class MenuLib extends TikiLib {
 			}
 		}
 	}
-   	// look if the current url matches the menu option - do be improved a lot
+   	// look if the current url matches the menu option - to be improved a lot
 	function menuOptionMatchesUrl($option) {
 		global $prefs;
 		if (empty($option['url'])) {
@@ -194,7 +194,7 @@ class MenuLib extends TikiLib {
 		}
 		$url = urldecode($_SERVER['REQUEST_URI']);
 		if ($prefs['feature_sefurl'] == 'y' && !empty($option['sefurl'])) {
-			$pos = strpos($url, '/'.$option['sefurl']);
+			$pos = strpos($url, '/'. urldecode($option['sefurl']));
 			$lg = 1 + strlen($option['sefurl']);
 		} else {
 			$pos = strpos(strtolower($url), strtolower($option['url']));
