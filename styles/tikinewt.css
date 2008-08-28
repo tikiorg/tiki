@@ -2823,4 +2823,26 @@ padding-left: 18px;
 #page_bar {
 	text-align: center;
 }
+/* File Gallery */
+div.fgal_file {
+}
+div.fgal_file div.fgal_file_c1 {
+  float: left;
+  display: block;
+  width: 49%;
+}
+div.fgal_file div.fgal_file_c2 {
+  float: right;
+  width: 49%;
+  padding-left: 10px !important;
+}
+div.fgal_file div.div.fgal_file_c2:after {
+    content: ".";
+    display: block;
+    clear: both;
+    visibility: hidden;
+}
+div.fgal_file div.fgal_file_c3 {
+  clear: both;
+}
 /***** End of file ******/

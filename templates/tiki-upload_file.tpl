@@ -95,9 +95,8 @@
 	<div>
 		{capture name=upload_file assign=upload_str}
 		<hr class="clear"/>
-		<table width="100%">
-		<tr>
-			<td width="60%">
+		<div class="fgal_file">
+			<div class="fgal_file_c1">
 			<table width="100%">
 				<tr>
 					<td>{tr}File Title:{/tr}</td>
@@ -121,14 +120,13 @@
 					<td>{tr}Upload from disk:{/tr}</td>
 					<td>
 						{if $editFileId}{$fileInfo.filename|escape}{/if}
-						<input name="userfile[]" type="file" size="30"/>
+						<input name="userfile[]" type="file" size="15"/>
 					</td>
 					{/if}
 				</tr>
 			</table>
-			</td>
-			<td>
-	
+		</div>
+		<div class="fgal_file_c2">
 		{if !$editFileId and $tiki_p_batch_upload_files eq 'y'}
 				<input type="checkbox" name="isbatch[]" />
 				{tr}Unzip zip files{/tr}<br/>
@@ -163,17 +161,15 @@
 					<input type="text" name="author[]" value="{$fileInfo.author|escape}" />
 				<br/>
 			{/if}
-			</td>
-		</tr>
-		<tr>
+		</div>
+		<div class="fgal_file_c3">
 		{if $prefs.fgal_limit_hits_per_file eq 'y'}
-			<td>
 			<label>
 				{tr}Maximum amount of downloads:{/tr}
 				<input type="text" name="hit_limit[]" value="{$hit_limit|default:0}"/>
 				{tr}0 for no limit{/tr}
 			</label>
-			</td>
+			<br/>
 		{/if}
 
 		{* We want comments only on updated files *}
@@ -182,10 +178,10 @@
 				{tr}Comment:{/tr}
 				<input type="text" name="comment[]" value="" size="40" />
 			</label>
-			</td>
+			<br/>
 		{/if}
-		</tr>
-	</table>
+	</div>
+	</div>
 	{if $prefs.javascript_enabled eq 'y'}
 	<input type="hidden" name="upload" />
 	{/if}
