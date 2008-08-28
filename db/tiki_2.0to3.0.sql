@@ -39,6 +39,7 @@ UPDATE `tiki_menu_options` set `url`='tiki-list_file_gallery.php' where `url`='t
 UPDATE `tiki_menu_options` SET `url`='tiki-admin_include_score.php' where `url`='tiki-admin_score.php';
 
 #2008-08-16 princessxine
+#2008-08-27 bitey [embiggens the feature_type column]
 DROP TABLE IF EXISTS `tiki_feature`;
 CREATE TABLE `tiki_feature` (
   `feature_id` mediumint(9) NOT NULL auto_increment,
@@ -46,7 +47,7 @@ CREATE TABLE `tiki_feature` (
   `parent_id` mediumint(9) NOT NULL,
   `status` varchar(12) NOT NULL default 'active',
   `setting_name` varchar(50) default NULL,
-  `feature_type` varchar(20) NOT NULL default 'feature',
+  `feature_type` varchar(30) NOT NULL default 'feature',
   `template` varchar(50) default NULL,
   `permission` varchar(50) default NULL,
   `ordinal` mediumint(9) NOT NULL default '1',

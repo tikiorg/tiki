@@ -5,6 +5,9 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
+include_once ('magic-enumerations.php');
+include_once('tikilib.php');
+include_once ('lib/categories/categlib.php');
 
 class MagicLib extends TikiLib {
 	function MagicLib($db) {
@@ -104,7 +107,7 @@ class MagicLib extends TikiLib {
 	}
 	
 	function _feature_post_processing($feature) {
-		global $prefs;
+		global $prefs, $enumerations, $tikilib, $categlib;
 		if ($feature['setting_name'] != '' && in_array($feature['setting_name'], $prefs)) {
 			$feature['value'] = $prefs[$feature['setting_name']];
 		}
@@ -113,10 +116,29 @@ class MagicLib extends TikiLib {
 		if ($feature['depends_on'] != 0) {
 			$feature['depends_on'] = $this->get_feature($feature['depends_on']);
 		}
-		
+
+		if ($feature['feature_type'] == 'limitcategory' || $feature['feature_type'] == 'selectcategory') {
+			$catree = $categlib->get_all_categories();
+			$feature['enumeration'] = $catree;
+		}
+		if ($feature['feature_type'] == 'languages') {
+			$languages = array();
+			$languages = $tikilib->list_languages(false,null,true);
+			$feature['enumeration'] = $languages;
+		}
+		if ($feature['feature_type'] == 'timezone') {
+			$feature['enumeration'] = TikiDate::getTimeZoneList();
+		}
+		if ($feature['feature_type'] == 'sitestyle') $enumerations['sitestyle'] = $tikilib->list_styles(); 
+		if ($feature['feature_type'] == 'slideshowstyle') $enumerations['slideshowstyle'] = $this->get_slideshowstyles();
+
+		if (array_key_exists($feature['feature_type'], $enumerations)) {
+			$feature['enumeration'] = $enumerations[$feature['feature_type']];
+		}
+					
 		return $feature;
 	}
-	
+
 	function get_feature_by_template($templateName) {
 		$bindvars = array();
 		$bindvars[] = $templateName;
@@ -153,6 +175,74 @@ class MagicLib extends TikiLib {
 	
 	function is_functionality($feature) {
 		return ($feature['feature_type'] == 'functionality' || $feature['feature_type'] == 'system' || $feature['feature_type'] == 'feature');
+	}
+	
+	// These are helper functions, pretty much as-ganked from tiki-admin.php
+
+	function simple_set_toggle($feature) {
+		global $_POST, $tikilib, $smarty, $tikifeedback, $prefs;
+		$setting = $feature;
+		if (isset($_POST[$setting]) && $_POST[$setting] == "on") {
+			if ((!isset($prefs[$setting]) || $prefs[$setting] != 'y')) {
+				// not yet set at all or not set to y
+				$tikilib->set_preference($setting, 'y');
+				$prefs[$setting] = 'y';
+				$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("%s enabled"),$feature));
+			}
+		} else {
+			if ((!isset($prefs[$setting]) || $prefs[$setting] != 'n')) {
+				// not yet set at all or not set to n
+				$tikilib->set_preference($feature, 'n');
+				$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("%s disabled"),$feature));
+			}
+		}
+	}
+	
+	function simple_set_value($feature, $pref = '', $isMultiple = false) {
+		global $_POST, $tikilib, $prefs;
+		
+		if (isset($_POST[$feature])) {
+			if ( $pref != '' ) {
+				$tikilib->set_preference($pref, $_POST[$feature]);
+				$prefs[$feature] = $_POST[$feature];
+			} else {
+				$tikilib->set_preference($feature, $_POST[$feature]);
+			}
+		} else if( $isMultiple ) {
+			// Multiple selection controls do not exist if no item is selected.
+			// We still want the value to be updated.
+			if ( $pref != '' ) {
+				$tikilib->set_preference($pref, array());
+				$prefs[$feature] = $_POST[$feature];
+			} else {
+				$tikilib->set_preference($feature, array());
+			}
+		}
+	}
+	
+	function simple_set_int($feature) {
+		global $_POST, $tikilib;
+		if (isset($_POST[$feature]) && is_numeric($_POST[$feature])) {
+			$tikilib->set_preference($feature, $_POST[$feature]);
+		}
+	}
+	
+	function byref_set_value($feature, $pref = "") {
+		global $_POST, $tikilib;
+		simple_set_value($feature, $pref);
+	}
+	
+	function get_slideshowstyles() {
+		$slide_styles = array();
+		$h = opendir("styles/slideshows");
+		while ($file = readdir($h)) {
+			if (strstr($file, "css")) {
+				$slide_styles[] = $file;
+			}
+		}
+		closedir ($h);
+				
+		return $slide_styles;
 	}
 }
 global $dbTiki;

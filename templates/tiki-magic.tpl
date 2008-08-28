@@ -60,13 +60,10 @@
 	{* Text Area  *}
 	{elseif $features[feature].feature_type eq 'textarea'}
 		<textarea cols="50" rows="5" name="{$features[feature].setting_name}" id="{$features[feature].setting_name}">{$features[feature].value}</textarea>
-	{* Special cases  *}
-	{elseif $features[feature].enumeration neq ''}
-		<select id="{$features[feature].setting_name}" name="{$features[feature].setting_name}">{foreach item=label key=value from=$features[feature].enumeration}<option value="{$value}" {if $value eq $features[feature].value}selected="selected"{/if}>{$label}</option>{/foreach}</select>
 	{* Timezone values *}
 	{elseif $features[feature].feature_type eq 'timezone'}
 	<select id="{$features[feature].setting_name}" name="{$features[feature].setting_name}">
-		{foreach key=tz item=tzinfo from=$timezones}
+		{foreach key=tz item=tzinfo from=$features[feature].enumeration}
 			{math equation="floor(x / (3600000))" x=$tzinfo.offset assign=offset}{math equation="(x - (y*3600000)) / 60000" y=$offset x=$tzinfo.offset assign=offset_min format="%02d"}
 			<option value="{$tz}" {if $features[feature].value eq $tz}selected="selected"{/if}>{$tz|escape:"html"} (UTC{if $offset >= 0}+{/if}{$offset}h{if $offset_min gt 0}{$offset_min}{/if})</option>
 		{/foreach}
@@ -75,22 +72,25 @@
 	{elseif $features[feature].feature_type eq 'limitcategory'}
 		<select id="{$features[feature].setting_name}" name="{$features[feature].setting_name}"><option value="-1" {if $value eq -1 or $value eq ''}selected="selected"{/if}>{tr}None{/tr}</option>
 			<option value="0" {if $value eq 0}selected="selected"{/if}>{tr}All{/tr}</option>
-			{section name=ix loop=$catree}
-			<option value="{$catree[ix].categId|escape}" {if $catree[ix].categId eq $value}selected="selected"{/if}>{$catree[ix].categpath}</option>
+			{section name=ix loop=$features[feature].enumeration}
+			<option value="{$features[feature].enumeration[ix].categId|escape}" {if $features[feature].enumeration[ix].categId eq $value}selected="selected"{/if}>{$features[feature].enumeration[ix].categpath}</option>
 			{/section}
 		</select>
 	{* Limit Category (limit a content item to certain categories) *}
 	{elseif $features[feature].feature_type eq 'selectcategory'}
 		<select id="{$features[feature].setting_name}" name="{$features[feature].setting_name}">
 			<option value="-1" {if $value eq -1 or $value eq ''}selected="selected"{/if}>{tr}None{/tr}</option>
-			{section name=ix loop=$catree}
-			<option value="{$catree[ix].categId|escape}" {if $catree[ix].categId eq $value}selected="selected"{/if}>{$catree[ix].categpath}</option>
+			{section name=ix loop=$features[feature].enumeration}
+			<option value="{$features[feature].enumeration[ix].categId|escape}" {if $features[feature].enumeration[ix].categId eq $value}selected="selected"{/if}>{$features[feature].enumeration[ix].categpath}</option>
 			{/section}
 			</select>
+		{* Special cases  *}
+	{elseif $features[feature].enumeration neq ''}
+		<select id="{$features[feature].setting_name}" name="{$features[feature].setting_name}">{foreach item=label key=value from=$features[feature].enumeration}<option value="{$value}" {if $value eq $features[feature].value}selected="selected"{/if}>{$label}</option>{/foreach}</select>
 	{* Placeholder for things that need a custom handler, that I haven't written yet*}
 	{elseif $features[feature].feature_type eq 'languages'}
 		<select id="{$features[feature].setting_name}" name="{$features[feature].setting_name}">
-			{section name=ix loop=$languages}
+			{section name=ix loop=$features[feature].enumeration}
 			<option value="{$languages[ix].value|escape}" {if $features[feature].value eq $languages[ix].value}selected="selected"{/if}>{$languages[ix].name}</option>
 			{/section}
 		</select>
@@ -102,8 +102,8 @@
 	{/if}
 	</div>
 {/if}
-<!-- SEXYTODO: Allow checking the box for this.  Right here.  Where it's needed.  p.s. remember to save the value too.  p.p.s. that will involve looking at the depends in addition to each of the features on the page. p.p.p.s sometimes the depended upon setting will be on the same page, so look out for contradictory
-values. -->
+{* SEXYTODO: Allow checking the box for this.  Right here.  Where it's needed.  p.s. remember to save the value too.  p.p.s. that will involve looking at the depends in addition to each of the features on the page. p.p.p.s sometimes the depended upon setting will be on the same page, so look out for contradictory
+values. *}
 {if $features[feature].depends_on neq 0}{tr}Requires  {/tr}{tr}{$features[feature].depends_on.feature_name}{/tr} ({if $features[feature].depends_on.value eq 'y'}{tr}Enabled{/tr}{else}{tr}Not Enabled{/tr}{/if}).{/if}
 {/section}
 </fieldset>

@@ -5042,7 +5042,7 @@ CREATE TABLE `tiki_feature` (
   `parent_id` mediumint(9) NOT NULL,
   `status` varchar(12) NOT NULL default 'active',
   `setting_name` varchar(50) default NULL,
-  `feature_type` varchar(20) NOT NULL default 'feature',
+  `feature_type` varchar(30) NOT NULL default 'feature',
   `template` varchar(50) default NULL,
   `permission` varchar(50) default NULL,
   `ordinal` mediumint(9) NOT NULL default '1',
@@ -5051,4 +5051,4 @@ CREATE TABLE `tiki_feature` (
   `feature_count` mediumint(9) NOT NULL default '0',
   `feature_path` varchar(20) NOT NULL default '0',
   PRIMARY KEY  (`feature_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=0 ;
+) ENGINE=MyISAM AUTO_INCREMENT=0 ;

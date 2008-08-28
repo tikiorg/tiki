@@ -221,7 +221,7 @@
 224,"Validate URLs",33,,"directory_validate_urls","flag",,"tiki_p_admin",,,"Directory"," "
 225,"Method to open directory links",33,,"directory_open_links","directoryopenlinks",,"tiki_p_admin",,,"Directory"," "
 226,"Comments",1001,,"feature_faq_comments","flag",,"tiki_p_admin",,,"FAQ"," "
-227,"Comments default ordering",1001,,"faq_comments_default_ordering","faqcommentsdefaultordering",,"tiki_p_admin",,,"FAQ"," "
+227,"Comments default ordering",1001,,"faq_comments_default_ordering","commentordering",,"tiki_p_admin",,,"FAQ"," "
 228,"Default number of comments per page",1001,,"faq_comments_per_page","int",,"tiki_p_admin",,,"FAQ"," "
 229,"Question and Answer prefix on Answers",9,,"faq_prefix","faqprefix",,"tiki_p_admin",-5,,"FAQ"," "
 236,"User Translation Watches",76,,"feature_user_watches_translations","flag",,"tiki_p_admin",,,," "
@@ -265,7 +265,7 @@
 343,"Last Modified",126,,"fgal_list_lastmodif","simple",,"tiki_p_admin",,,"File+Gallery"," "
 344,"fgal_sort_mode",126,,"fgal_sort_mode","simple",,"tiki_p_admin",,,"File+Gallery","cant find sort mode"
 345,"ID",126,,"fgal_list_id","simple",,"tiki_p_admin",,,"File+Gallery"," "
-346,"Ordering for forums in the forum listing",127,,"forums_ordering","simple",,"tiki_p_admin",,,"Forums"," "
+346,"Ordering for forums in the forum listing",127,,"forums_ordering","forumordering",,"tiki_p_admin",,,"Forums"," "
 347,"Home Forum (main forum)",127,,"home_forum","simple",,"tiki_p_admin",,,"Forums"," "
 348,"Posts per day",128,,"forum_list_ppd","flag",,"tiki_p_admin",,,"Forums"," "
 349,"Posts per day",128,,"forum_list_posts","flag",,"tiki_p_admin",,,"Forums"," "
@@ -886,7 +886,7 @@
 992,"Allow Anonymous Poll Voting",55,,"feature_poll_anonymous","flag",,"tiki_p_admin",,,"Poll"," "
 993,"Comments",55,,"feature_poll_comments","flag",,"tiki_p_admin",,,"Poll"," "
 994,"Default number of comments per page",55,,"poll_comments_per_page","simple",,"tiki_p_admin",,,"Poll"," "
-995,"Comments default ordering",55,,"poll_comments_default_ordering","wikicommentsdefaultordering",,"tiki_p_admin",,,"Poll"," "
+995,"Comments default ordering",55,,"poll_comments_default_ordering","commentordering",,"tiki_p_admin",,,"Poll"," "
 996,"Show user's info on mouseover",84,,"feature_score","configurationgroup",,"tiki_p_admin",,," ",
 997,"User List",84,,"feature_score","configurationgroup",,"tiki_p_admin",,," ",
 998,"Use PEAR::Date library",48,,"feature_pear_date","flag",,"tiki_p_admin",,," ",
