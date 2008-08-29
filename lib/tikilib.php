@@ -5092,15 +5092,7 @@ class TikiLib extends TikiDB {
 				// print "<pre>args2: :".htmlspecialchars( $plugins[2] ) .":</pre>";
 
 				// Normal plugins
-
-				// Construct plugin file pathname
 				$plugin_name = strtolower($plugins[1]);
-				$php_name = 'lib/wiki-plugins/wikiplugin_';
-				$php_name .= $plugin_name . '.php';
-
-				// Construct plugin function name
-				$func_name = 'wikiplugin_' . $plugin_name;
-				$func_name_info = $func_name . '_info';
 
 				$params_string = $plugins[2];
 
@@ -5134,27 +5126,8 @@ class TikiLib extends TikiDB {
 					}
 				}
 
-				if (file_exists($php_name)) {
-					include_once ($php_name);
-
-					if( function_exists( $func_name_info ) ) {
-						$plugin_enabled = true;
-						$plugin_editable = false;
-						$meta = $func_name_info();
-
-						if( isset( $meta['prefs'] ) ) {
-							foreach( $meta['prefs'] as $pref )
-								if( $prefs[$pref] != 'y' ) {
-									$plugin_enabled = false;
-									break;
-								}
-
-							$plugin_editable = $plugin_enabled && $tiki_p_edit == 'y' && $prefs['wiki_edit_plugin'] == 'y';
-						}
-					} else {
-						$plugin_enabled = true;
-						$plugin_editable = false;
-					}
+				if ($this->plugin_exists( $plugin_name )) {
+					$plugin_enabled = $this->plugin_can_execute( $plugin_name );
 
 					if( $plugin_enabled ) {
 						static $plugin_indexes = array();
@@ -5183,7 +5156,7 @@ class TikiLib extends TikiDB {
 							// Handle nested plugins.
 							$this->parse_first($plugin_data, $preparsed, $noparsed, $real_start_diff + $pos+strlen($plugin_start));
 
-							$ret = $func_name($plugin_data, $arguments, $real_start_diff + $pos+strlen($plugin_start));
+							$ret = $this->plugin_execute( $plugin_name, $plugin_data, $arguments, $real_start_diff + $pos+strlen($plugin_start));
 						}
 					} else {
 						// Handle nested plugins.
@@ -5192,7 +5165,7 @@ class TikiLib extends TikiDB {
 						$ret = tra( "__WARNING__: Plugin disabled $plugin! " ) . $plugin_data;
 					}
 
-					if( $plugin_editable ) {
+					if( $this->plugin_is_editable( $plugin_name ) ) {
 						include_once('lib/smarty_tiki/function.icon.php');
 						global $headerlib, $page;
 						$headerlib->add_jsfile( 'tiki-jsplugin.php?plugin=' . urlencode( $plugin_name ) );
@@ -5222,6 +5195,57 @@ class TikiLib extends TikiDB {
 
 		} // while
 		// print "<pre>real done data: :".htmlspecialchars( $data ) .":</pre>";
+	}
+
+	function plugin_exists( $name, $include = false ) {
+		$php_name = 'lib/wiki-plugins/wikiplugin_';
+		$php_name .= $name . '.php';
+
+		$exists = file_exists( $php_name );
+
+		if( $include && $exists )
+			include_once $php_name;
+
+		return $exists;
+	}
+
+	function plugin_info( $name ) {
+		if( ! $this->plugin_exists( $name, true ) )
+			return false;
+
+		$func_name_info = "wikiplugin_{$name}_info";
+
+		if( ! function_exists( $func_name_info ) )
+			return false;
+
+		return $func_name_info();
+	}
+
+	function plugin_can_execute( $name ) {
+		if( ! $meta = $this->plugin_info( $name ) )
+			return true; // Legacy plugins always execute
+
+		global $prefs;
+
+		if( isset( $meta['prefs'] ) )
+			foreach( $meta['prefs'] as $pref )
+				if( $prefs[$pref] != 'y' )
+					return false;
+
+		return true;
+	}
+
+	function plugin_execute( $name, $data = '', $args = array(), $offset = 0 ) {
+		if( ! $this->plugin_exists( $name, true ) )
+			return false;
+
+		$func_name = 'wikiplugin_' . $name;
+		return $func_name( $data, $args, $offset );
+	}
+
+	function plugin_is_editable( $name ) {
+		global $tiki_p_edit, $prefs;
+		return $this->plugin_info( $name ) && $tiki_p_edit == 'y' && $prefs['wiki_edit_plugin'] == 'y';
 	}
 
 	function quotesplit( $splitter=',', $repl_string ) {
