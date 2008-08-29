@@ -38,10 +38,10 @@ FCKConfig.ImageBrowserURL = FCKConfig.BasePath + 'filemanager/browser/default/br
 {/if}
 
 FCKConfig.Plugins.Add( 'tikilink', null, _TikiRoot + 'lib/fckeditor_tiki/plugins/' ) ;
-FCKConfig.tikilinkBtn     = '{tr}Insert/Edit an internal wiki link{/tr}' ;
-FCKConfig.tikilinkDlgTitle    = '{tr}Tiki Link - Insert internal link{/tr}' ;
-FCKConfig.tikilinkDlgName   = '{tr}Wiki Link insert{/tr}' ;
-FCKConfig.tikilinkDlgSelection    = '{tr}Please make a selection of text in order to create a link{/tr}' ;
+FCKConfig.tikilinkBtn     = "{tr}Insert/Edit an internal wiki link{/tr}" ;
+FCKConfig.tikilinkDlgTitle    = "{tr}Tiki Link - Insert internal link{/tr}" ;
+FCKConfig.tikilinkDlgName   = "{tr}Wiki Link insert{/tr}" ;
+FCKConfig.tikilinkDlgSelection    = "{tr}Please make a selection of text in order to create a link{/tr}" ;
 
 FCKConfig.LinkBrowser = false;
 FCKConfig.LinkUpload = false;
@@ -53,8 +53,8 @@ FCKConfig.ImageDlgHideLink = true ;
 {/if}
 FCKConfig.ImageUpload = false ;
 FCKConfig.Plugins.Add( 'tikiimage', null, _TikiRoot + 'lib/fckeditor_tiki/plugins/' ) ;
-FCKConfig.tikiimageBtn = '{tr}Insert an image{/tr}' ;
-FCKConfig.tikiimageDlgTitle = '{tr}Tiki Image - Insert an image{/tr}' ;
+FCKConfig.tikiimageBtn = "{tr}Insert an image{/tr}" ;
+FCKConfig.tikiimageDlgTitle = "{tr}Tiki Image - Insert an image{/tr}" ;
 
 FCKConfig.Plugins.Add( 'CleanHTML', null, _TikiRoot + 'lib/fckeditor_tiki/plugins/' );
 
