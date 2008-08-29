@@ -42,9 +42,8 @@ function capLock(e){
 
 {else}
 
-  <form action="tiki-register.php" method="post"> <br />
+  <form action="tiki-register.php" method="post" name="RegForm"> <br />
     <table class="normal">
-
 
       <tr><td class="formcolor">{if $prefs.login_is_email eq 'y'}{tr}Email{/tr}{else}{tr}Username{/tr}{/if}:</td>
       <td class="formcolor">
@@ -74,6 +73,13 @@ function capLock(e){
 	  {if $prefs.feature_ajax ne 'y' and $prefs.min_pass_length > 1}<em>{tr}Minimum {$prefs.min_pass_length} characters long{/tr}</em>. {/if}
 	  {if $prefs.feature_ajax ne 'y' and $prefs.pass_chr_num eq 'y'}<em>{tr}Password must contain both letters and numbers{/tr}</em>.{/if}
 {if $prefs.feature_ajax ne 'y'}</div></p>{/if}
+
+
+{if $prefs.generate_password eq 'y'}
+	<p><div><a class="linkbut" href="#" onClick="genPass('genepass','pass1','pass2');runPassword(document.RegForm.genpass.value, 'mypassword');{if $prefs.feature_ajax eq 'y'}check_pass();{/if}">{tr}Generate a password{/tr}:</a> <input id='genepass' name="genpass" type="text" /></div></p>
+{/if}
+
+
 	  </td>
       </tr>
 
@@ -124,12 +130,4 @@ function capLock(e){
 {icon _id=information style="vertical-align:middle" align="left"}{tr}NOTE: Make sure to whitelist this domain to prevent registration emails being canned by your spam filter!{/tr}
 </div>
   <br />
-
-  {if $prefs.generate_password eq 'y'}
-    <table class="normal">
-      <tr><td class="formcolor"><a class="link" href="javascript:genPass('genepass','pass1','pass2');">{tr}Generate a password{/tr}</a></td>
-        <td class="formcolor"><input id='genepass' type="text" /></td>
-      </tr>
-    </table>
-  {/if}
 {/if}
