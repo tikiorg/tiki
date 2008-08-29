@@ -5127,9 +5127,9 @@ class TikiLib extends TikiDB {
 				}
 
 				if ($this->plugin_exists( $plugin_name )) {
-					$plugin_enabled = $this->plugin_can_execute( $plugin_name );
 
-					if( $plugin_enabled ) {
+					if( $this->plugin_enabled( $plugin_name ) ) {
+
 						static $plugin_indexes = array();
 
 						if( ! array_key_exists( $plugin_name, $plugin_indexes ) )
@@ -5156,7 +5156,27 @@ class TikiLib extends TikiDB {
 							// Handle nested plugins.
 							$this->parse_first($plugin_data, $preparsed, $noparsed, $real_start_diff + $pos+strlen($plugin_start));
 
-							$ret = $this->plugin_execute( $plugin_name, $plugin_data, $arguments, $real_start_diff + $pos+strlen($plugin_start));
+							if( true === $status = $this->plugin_can_execute( $plugin_name, $plugin_data, $arguments ) ) {
+								$ret = $this->plugin_execute( $plugin_name, $plugin_data, $arguments, $real_start_diff + $pos+strlen($plugin_start));
+							} else {
+								global $tiki_p_plugin_viewdetail, $tiki_p_plugin_preview, $tiki_p_plugin_approve;
+								$details = $tiki_p_plugin_viewdetail == 'y' && $status != 'rejected';
+								$preview = $tiki_p_plugin_preview == 'y' && $details;
+								$approve = $tiki_p_plugin_approve == 'y' && $details;
+
+								$smarty->assign( 'plugin_name', $plugin_name );
+								$smarty->assign( 'plugin_index', $current_index );
+
+								$smarty->assign( 'plugin_status', $status );
+								$smarty->assign( 'plugin_details', $details );
+								$smarty->assign( 'plugin_preview', $preview );
+								$smarty->assign( 'plugin_approve', $approve );
+
+								$smarty->assign( 'plugin_body', $plugin_data );
+								$smarty->assign( 'plugin_args', $arguments );
+
+								$ret = '~np~' . $smarty->fetch('tiki-plugin_blocked.tpl') . '~/np~';
+							}
 						}
 					} else {
 						// Handle nested plugins.
@@ -5221,7 +5241,7 @@ class TikiLib extends TikiDB {
 		return $func_name_info();
 	}
 
-	function plugin_can_execute( $name ) {
+	function plugin_enabled( $name ) {
 		if( ! $meta = $this->plugin_info( $name ) )
 			return true; // Legacy plugins always execute
 
@@ -5232,6 +5252,13 @@ class TikiLib extends TikiDB {
 				if( $prefs[$pref] != 'y' )
 					return false;
 
+		return true;
+	}
+
+	function plugin_can_execute( $name, $data = '', $args = array() ) {
+		// TODO : Do real logic here
+		//return 'pending';
+		//return 'rejected';
 		return true;
 	}
 
