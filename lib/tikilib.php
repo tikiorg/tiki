@@ -6755,6 +6755,7 @@ class TikiLib extends TikiDB {
 		$description = null;
 		$reltype = null;
 		$processPlural = false;
+		$bestLang = ($prefs['feature_multilingual'] == 'y' && $prefs['feature_best_language'] == 'y')? "&amp;bl=y" : "";
 
 		if( array_key_exists( 'description', $extra ) )
 			$description = $extra['description'];
@@ -6790,7 +6791,6 @@ class TikiLib extends TikiDB {
 			// why the preg_replace? ex: ((page||Page-Desc)) the desc must stay Page-Desc, and not ))Page-Desc((
 			$desc1 = $desc;
 			$desc = preg_replace("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/s", "$1))$2(($3", $desc);
-			$bestLang = ($prefs['feature_multilingual'] == 'y' && $prefs['feature_best_language'] == 'y')? "&amp;bl=y" : "";
 			$uri_ref = $wikilib->sefurl($pageLink).$bestLang;
 
 			// check to see if desc is blank in ((page|desc))
@@ -6827,7 +6827,7 @@ class TikiLib extends TikiDB {
 			$plural_tmp = preg_replace("/([A-Za-rt-z])s$/", "$1", $plural_tmp);
 
 			if($desc = $this->page_exists_desc($plural_tmp)) {
-				$repl = "<a title='".$desc."' href='".$wikilib->sefurl($plural_tmp)."' class='wiki'>$pageLink</a>";
+				$repl = "<a title='".$desc."' href='".$wikilib->sefurl($plural_tmp).$bestLang."' class='wiki'>$pageLink</a>";
 				return $repl;
 			}
 		}
