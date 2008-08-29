@@ -5821,119 +5821,21 @@ class TikiLib extends TikiDB {
 		$temp_max = count($pages[1]);
 		for ($i = 0; $i < $temp_max; $i++) {
 			$exactMatch = $pages[0][$i];
+			$replacement = $this->get_wiki_link_replacement( $pages[2][$i], array( 
+				'description' => $pages[6][$i], 
+				'reltype' => $pages[1][$i] ) );
 
-			// Replace links to external wikis
-			$repl2 = true;
-
-			if( ! empty( $pages[1][$i] ) ) {
-				$reltype = $pages[1][$i];
-			} else {
-				$reltype = null;
-			}
-
-			if (strstr($pages[2][$i], ':')) {
-				$wexs = explode(':', $pages[2][$i]);
-
-				if (count($wexs) == 2) {
-					$wkname = $wexs[0];
-
-					if ($this->db->getOne("select count(*) from `tiki_extwiki` where `name`=?",array($wkname)) == 1) {
-						$wkurl = $this->db->getOne("select `extwiki`  from `tiki_extwiki` where `name`=?",array($wkname));
-
-						$wkurl = '<a href="' . str_replace('$page', urlencode($wexs[1]), $wkurl). '" class="wiki external ' . $reltype . '">' . $wexs[1] . '</a>';
-						$data = str_replace($exactMatch, $wkurl, $data);
-						$repl2 = false;
-					}
-				}
-			}
-
-			if ($repl2) {
-				// 24-Jun-2003, by zaufi
-				// TODO: future optimize: get page description and modification time at once.
-				// text[0] = link description (previous format)
-				// text[1] = timeout in seconds (new field)
-				// text[2..N] = drop
-				$text = explode("|", $pages[6][$i]);
-
-				if ($desc = $this->page_exists_desc($pages[2][$i])) {
-					// why the preg_replace? ex: ((page||Page-Desc)) the desc must stay Page-Desc, and not ))Page-Desc((
-					$desc1 = $desc;
-					$desc = preg_replace("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/s", "$1))$2(($3", $desc);
-					$bestLang = ($prefs['feature_multilingual'] == 'y' && $prefs['feature_best_language'] == 'y')? "&amp;bl=y" : "";
-					$uri_ref = $wikilib->sefurl($pages[2][$i]).$bestLang;
-
-					// check to see if desc is blank in ((page|desc))
-					if (strlen(trim($text[0])) > 0) {
-						$linktext = $text[0];
-					} elseif ($desc != $pages[1][$i]) {
-						// desc is blank; use the page description instead
-						$linktext = $pages[2][$i] . ': ' . $desc;
-					} else {
-						// there is no page description
-						$linktext = $pages[2][$i];
-					}
-
-					$repl = '<a title="'.$desc1.'" href="'.$uri_ref.'" class="wiki ' . $reltype . '">' . $linktext . '</a>';
-
-					// Check is timeout expired?
-					if (isset($text[1]) && (time() - intval($this->page_exists_modtime($pages[2][$i]))) < intval($text[1])) {
-						// Append small 'new' image. TODO: possible 'updated' image more suitable...
-						$repl .= '&nbsp;<img src="img/icons/new.gif" border="0" alt="'.tra("new","",true).'" />';
-					}
-				} else {
-					$uri_ref = "tiki-editpage.php?page=" . urlencode($pages[2][$i]);
-					if( $prefs['feature_multilingual'] == 'y' && isset( $GLOBALS['pageLang'] ) ) {
-						$uri_ref .= '&amp;lang=' . urlencode($GLOBALS['pageLang']);
-					}
-
-					$repl = (strlen(trim($text[0])) > 0 ? $text[0] : $pages[2][$i]) . '<a href="'.$uri_ref.'" title="'.tra("Create page:","",true)." ".urlencode($pages[2][$i]).'" class="wiki wikinew">?</a>';
-				}
-				$data = str_replace($exactMatch, $repl, $data);
-			}
+			$data = str_replace($exactMatch, $replacement, $data);
 		}
 
 		// New syntax for wiki pages ((name)) Where name can be anything
 		preg_match_all("/\(([a-z0-9-]+)?\( *($page_regex) *\)\)/", $data, $pages);
 
 		foreach ($pages[2] as $idx => $page_parse) {
-			$repl2 = true;
+			$exactMatch = $pages[0][$idx];
+			$replacement = $this->get_wiki_link_replacement( $page_parse, array( 'reltype' => $pages[1][$idx] ) );
 
-			if( ! empty( $pages[1][$idx] ) ) {
-				$reltype = $pages[1][$idx];
-			} else {
-				$reltype = null;
-			}
-
-			if (strstr($page_parse, ':')) {
-				$wexs = explode(':', $page_parse);
-
-				if (count($wexs) == 2) {
-					$wkname = $wexs[0];
-
-					if ($this->db->getOne("select count(*) from `tiki_extwiki` where `name`=?",array($wkname)) == 1) {
-						$wkurl = $this->db->getOne("select `extwiki`  from `tiki_extwiki` where `name`=?",array($wkname));
-
-						$wkurl = '<a href="' . str_replace('$page', urlencode($wexs[1]), $wkurl). '" class="wiki external ' . $reltype . '">' . $wexs[1] . '</a>';
-
-						$exactMatch = $pages[0][$idx];
-						$data = str_replace($exactMatch, $wkurl, $data);
-						$repl2 = false;
-					}
-				}
-			}
-
-			if ($repl2) {
-				if ($desc = $this->page_exists_desc($page_parse)) {
-					// why the preg_replace? ex: ((page||Page-Desc)) the desc must stay Page-Desc in the title, and not ))Page-Desc((
-					$bestLang = ($prefs['feature_multilingual'] == 'y' && $prefs['feature_best_language'] == 'y')? "&amp;bl=y" : ""; // to choose the best page language
-					$repl = "<a title=\"$desc\" href='" . $wikilib->sefurl($page_parse).$bestLang. "' class='wiki $reltype'>$page_parse</a>";
-				} else {
-					$repl = $page_parse.'<a href="tiki-editpage.php?page=' . urlencode($page_parse). ($prefs['feature_multilingual'] == 'y' && isset($GLOBALS['pageLang'])?('&amp;lang='.urlencode($GLOBALS['pageLang'])):'') . '" title="'.tra("Create page:","",true).' '.urlencode($page_parse).'"  class="wiki wikinew">?</a>';
-				}
-
-				$exactMatch = $pages[0][$idx];
-				$data = str_replace($exactMatch, $repl, $data);
-			}
+			$data = str_replace($exactMatch, $replacement, $data);
 		}
 
 		// Links to internal pages
@@ -5951,33 +5853,10 @@ class TikiLib extends TikiDB {
 			$words = $this->get_hotwords();
 			foreach (array_unique($pages[1])as $page_parse) {
 				if (!array_key_exists($page_parse, $words)) {
-					if ($desc = $this->page_exists_desc($page_parse)) {
-						//$desc = preg_replace("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/s", "$1))$2(($3", $desc);
-						$repl = '<a title="' . htmlspecialchars($desc) . '" href="'.$wikilib->sefurl($page_parse). '" class="wiki">' . $page_parse . '</a>';
-					} elseif ($prefs['feature_wiki_plurals'] == 'y') {
-# Link plural topic names to singular topic names if the plural
-# doesn't exist, and the language is english
-						$plural_tmp = $page_parse;
-# Plurals like policy / policies
-						$plural_tmp = preg_replace("/ies$/", "y", $plural_tmp);
-# Plurals like address / addresses
-						$plural_tmp = preg_replace("/sses$/", "ss", $plural_tmp);
-# Plurals like box / boxes
-						$plural_tmp = preg_replace("/([Xx])es$/", "$1", $plural_tmp);
-# Others, excluding ending ss like address(es)
-						$plural_tmp = preg_replace("/([A-Za-rt-z])s$/", "$1", $plural_tmp);
-						if($desc = $this->page_exists_desc($plural_tmp)) {
-							// $desc = preg_replace("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/s", "$1))$2(($3", $desc);
-							// $repl = "<a title=\"".$desc."\" href=\"tiki-index.php?page=$plural_tmp\" class=\"wiki\" title=\"spanner\">$page_parse</a>";
-							$repl = "<a title='".$desc."' href='".$wikilib->sefurl($plural_tmp)."' class='wiki'>$page_parse</a>";
-						} else {
-							$repl = $page_parse.'<a href="tiki-editpage.php?page='.urlencode($page_parse). ($prefs['feature_multilingual'] == 'y' && isset($GLOBALS['pageLang'])?('&amp;lang='.urlencode($GLOBALS['pageLang'])):'').'" title="'.tra("Create page:","",true).' '.urlencode($page_parse).'" class="wiki wikinew">?</a>';
-						}
-					} else {
-						$repl = $page_parse.'<a href="tiki-editpage.php?page=' . urlencode($page_parse). ($prefs['feature_multilingual'] == 'y' && isset($GLOBALS['pageLang'])?('&amp;lang='.urlencode($GLOBALS['pageLang'])):''). '"  title="'.tra("Create page:","",true).' '.urlencode($page_parse).'" class="wiki wikinew">?</a>';
-					}
-					$data = preg_replace("/(?<=[ \n\t\r\,\;]|^)$page_parse(?=$|[ \n\t\r\,\;\.])/", "$1" . "$repl" . "$2", $data);
-					//$data = str_replace($page_parse,$repl,$data);
+					$repl = $this->get_wiki_link_replacement( $page_parse, array(
+						'plural' => $prefs['feature_wiki_plurals'] == 'y' ) );
+
+					$data = preg_replace("/(?<=[ \n\t\r\,\;]|^)$page_parse(?=$|[ \n\t\r\,\;\.])/", "$1" . $repl . "$2", $data);
 				}
 			}
 		}
@@ -6868,6 +6747,99 @@ class TikiLib extends TikiDB {
 			$data = $handler($data);
 		}
 		return $data;
+	}
+
+	function get_wiki_link_replacement( $pageLink, $extra = array() ) {
+		global $prefs, $wikilib;
+		
+		$description = null;
+		$reltype = null;
+		$processPlural = false;
+
+		if( array_key_exists( 'description', $extra ) )
+			$description = $extra['description'];
+		if( array_key_exists( 'reltype', $extra ) )
+			$reltype = $extra['reltype'];
+		if( array_key_exists( 'plural', $extra ) )
+			$processPlural = (boolean) $extra['plural'];
+
+		// Replace links to external wikis
+		if (strpos($pageLink, ':')) {
+			$wexs = explode(':', $pageLink);
+
+			if (count($wexs) == 2) {
+				$wkname = $wexs[0];
+
+				if ($this->db->getOne("select count(*) from `tiki_extwiki` where `name`=?",array($wkname)) == 1) {
+					$wkurl = $this->db->getOne("select `extwiki`  from `tiki_extwiki` where `name`=?",array($wkname));
+
+					$wkurl = '<a href="' . str_replace('$page', urlencode($wexs[1]), $wkurl). '" class="wiki external ' . $reltype . '">' . $wexs[1] . '</a>';
+					return $wkurl;
+				}
+			}
+		}
+
+		// 24-Jun-2003, by zaufi
+		// TODO: future optimize: get page description and modification time at once.
+		// text[0] = link description (previous format)
+		// text[1] = timeout in seconds (new field)
+		// text[2..N] = drop
+		$text = explode("|", $description);
+
+		if ($desc = $this->page_exists_desc($pageLink)) {
+			// why the preg_replace? ex: ((page||Page-Desc)) the desc must stay Page-Desc, and not ))Page-Desc((
+			$desc1 = $desc;
+			$desc = preg_replace("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/s", "$1))$2(($3", $desc);
+			$bestLang = ($prefs['feature_multilingual'] == 'y' && $prefs['feature_best_language'] == 'y')? "&amp;bl=y" : "";
+			$uri_ref = $wikilib->sefurl($pageLink).$bestLang;
+
+			// check to see if desc is blank in ((page|desc))
+			if (strlen(trim($text[0])) > 0) {
+				$linktext = $text[0];
+			} elseif ($desc != $pageLink) {
+				// desc is blank; use the page description instead
+				$linktext = $pageLink . ': ' . $desc;
+			} else {
+				// there is no page description
+				$linktext = $pageLink;
+			}
+
+			$repl = '<a title="'.$desc1.'" href="'.$uri_ref.'" class="wiki ' . $reltype . '">' . $linktext . '</a>';
+
+			// Check is timeout expired?
+			if (isset($text[1]) && (time() - intval($this->page_exists_modtime($pageLink))) < intval($text[1])) {
+				// Append small 'new' image. TODO: possible 'updated' image more suitable...
+				$repl .= '&nbsp;<img src="img/icons/new.gif" border="0" alt="'.tra("new","",true).'" />';
+			}
+
+			return $repl;
+		}
+
+		if( $processPlural ) {
+			$plural_tmp = $pageLink;
+			// Plurals like policy / policies
+			$plural_tmp = preg_replace("/ies$/", "y", $plural_tmp);
+			// Plurals like address / addresses
+			$plural_tmp = preg_replace("/sses$/", "ss", $plural_tmp);
+			// Plurals like box / boxes
+			$plural_tmp = preg_replace("/([Xx])es$/", "$1", $plural_tmp);
+			// Others, excluding ending ss like address(es)
+			$plural_tmp = preg_replace("/([A-Za-rt-z])s$/", "$1", $plural_tmp);
+
+			if($desc = $this->page_exists_desc($plural_tmp)) {
+				$repl = "<a title='".$desc."' href='".$wikilib->sefurl($plural_tmp)."' class='wiki'>$pageLink</a>";
+				return $repl;
+			}
+		}
+
+		$uri_ref = "tiki-editpage.php?page=" . urlencode($pageLink);
+		if( $prefs['feature_multilingual'] == 'y' && isset( $GLOBALS['pageLang'] ) ) {
+			$uri_ref .= '&amp;lang=' . urlencode($GLOBALS['pageLang']);
+		}
+
+		$repl = (strlen(trim($text[0])) > 0 ? $text[0] : $pageLink) . '<a href="'.$uri_ref.'" title="'.tra("Create page:","",true)." ".urlencode($pageLink).'" class="wiki wikinew">?</a>';
+
+		return $repl;
 	}
 
 	function parse_smileys($data) {
