@@ -183,7 +183,7 @@ if ($prefs['feature_multilingual'] == 'y' && $use_best_language) { // chose the 
 	$bestLangPageId = $multilinguallib->selectLangObj('wiki page', $info['page_id']);
 	if ($info['page_id'] != $bestLangPageId) {
 		$page = $tikilib->get_page_name_from_id($bestLangPageId);
-//TODO: introduce a get_info_from_id to save a sql request
+		//TODO: introduce a get_info_from_id to save a sql request
 		$info = null;
 	} elseif ($info['lang'] != $prefs['language'] && $prefs['feature_homePage_if_bl_missing'] == 'y') {
 		if (!isset($userPageName))
@@ -207,32 +207,32 @@ if (!$info)
 
 // If the page doesn't exist then display an error
 if(empty($info) && !($user && $prefs['feature_wiki_userpage'] == 'y' && strcasecmp($prefs['feature_wiki_userpage_prefix'].$user, $page) == 0)) {
-  if ($user && $prefs['feature_wiki_userpage'] == 'y' && strcasecmp($prefs['feature_wiki_userpage_prefix'], $page) == 0) {
-    header('Location: tiki-index.php?page='.$prefs['feature_wiki_userpage_prefix'].$user);
-    die;
-  }
-  if ($prefs['feature_wiki_userpage'] == 'y' && strcasecmp($prefs['feature_wiki_userpage_prefix'], substr($page, 0, strlen($prefs['feature_wiki_userpage_prefix']))) == 0)
-	$isUserPage = true;
-  else
-	$isUserPage = false;
-  $likepages = $wikilib->get_like_pages($page);
-  /* if we have exactly one match, redirect to it */
-  if(count($likepages) == 1  && !$isUserPage) {
-    header ("Status: 302 Found"); /* PHP3 */
-    header ("HTTP/1.0 302 Found"); /* PHP4 */
-    header("Location: tiki-index.php?page=$likepages[0]");
-    die;
-  }
-  $smarty->assign_by_ref('likepages', $likepages);
-  $smarty->assign('msg',tra('Page cannot be found'));
-  header ('Status: 404 Not Found'); /* PHP3 */
-  header ('HTTP/1.0 404 Not Found'); /* PHP4 */
-  $smarty->assign('headtitle',tra('Page cannot be found'));
-  $smarty->assign('errortitle',tra('Page cannot be found').' (404)');
-  $smarty->assign('errortype', '404');
-  $smarty->assign('create', $isUserPage? 'n': 'y');
-  $smarty->display("error.tpl");
-  die;
+	if ($user && $prefs['feature_wiki_userpage'] == 'y' && strcasecmp($prefs['feature_wiki_userpage_prefix'], $page) == 0) {
+		header('Location: tiki-index.php?page='.$prefs['feature_wiki_userpage_prefix'].$user);
+		die;
+	}
+	if ($prefs['feature_wiki_userpage'] == 'y' && strcasecmp($prefs['feature_wiki_userpage_prefix'], substr($page, 0, strlen($prefs['feature_wiki_userpage_prefix']))) == 0)
+		$isUserPage = true;
+	else
+		$isUserPage = false;
+	$likepages = $wikilib->get_like_pages($page);
+	/* if we have exactly one match, redirect to it */
+	if(count($likepages) == 1  && !$isUserPage) {
+		header ("Status: 302 Found"); /* PHP3 */
+		header ("HTTP/1.0 302 Found"); /* PHP4 */
+		header("Location: tiki-index.php?page=$likepages[0]");
+		die;
+	}
+	$smarty->assign_by_ref('likepages', $likepages);
+	$smarty->assign('msg',tra('Page cannot be found'));
+	header ('Status: 404 Not Found'); /* PHP3 */
+	header ('HTTP/1.0 404 Not Found'); /* PHP4 */
+	$smarty->assign('headtitle',tra('Page cannot be found'));
+	$smarty->assign('errortitle',tra('Page cannot be found').' (404)');
+	$smarty->assign('errortype', '404');
+	$smarty->assign('create', $isUserPage? 'n': 'y');
+	$smarty->display("error.tpl");
+	die;
 }
 
 
