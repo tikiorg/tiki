@@ -4571,13 +4571,32 @@ class TikiLib extends TikiDB {
 		return $result->numRows();
 	}
 
-	function page_exists_desc($pageName) {
+	function page_exists_desc( &$pageName, $searchAlias = false ) {
 		$query = "select `description`  from `tiki_pages`
 			where `pageName` = ?";
 		$result = $this->query($query, array( $pageName ));
 
-		if (!$result->numRows())
+		if (!$result->numRows()) {
+			if( $searchAlias ) {
+				global $semanticlib, $prefs;
+
+				if( $prefs['feature_wiki_pagealias'] == 'y' ) {
+					require_once 'lib/wiki/semanticlib.php';
+
+					$links = $semanticlib->getLinksUsing(
+						explode( ',', $prefs['wiki_pagealias_tokens'] ),
+						array( 'toPage' => $pageName ) );
+
+					if( count($links) > 0 ) {
+						// May be multiple (inconsistencies), just use the first one
+						$pageName = $links[0]['fromPage'];
+						return $this->page_exists_desc( $pageName );
+					}
+				}
+			}
+
 			return false;
+		}
 
 		$res = $result->fetchRow();
 
@@ -6750,8 +6769,10 @@ class TikiLib extends TikiDB {
 	}
 
 	function get_wiki_link_replacement( $pageLink, $extra = array() ) {
-		global $prefs, $wikilib;
+		global $prefs, $wikilib, $semanticlib;
 		
+		$displayLink = $pageLink;
+
 		$description = null;
 		$reltype = null;
 		$processPlural = false;
@@ -6787,24 +6808,22 @@ class TikiLib extends TikiDB {
 		// text[2..N] = drop
 		$text = explode("|", $description);
 
-		if ($desc = $this->page_exists_desc($pageLink)) {
+		if ($desc = $this->page_exists_desc($pageLink, true)) {
 			// why the preg_replace? ex: ((page||Page-Desc)) the desc must stay Page-Desc, and not ))Page-Desc((
-			$desc1 = $desc;
-			$desc = preg_replace("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/s", "$1))$2(($3", $desc);
 			$uri_ref = $wikilib->sefurl($pageLink).$bestLang;
 
 			// check to see if desc is blank in ((page|desc))
 			if (strlen(trim($text[0])) > 0) {
 				$linktext = $text[0];
-			} elseif ($desc != $pageLink) {
+			} elseif ($desc != $pageLink && $description !== null) {
 				// desc is blank; use the page description instead
-				$linktext = $pageLink . ': ' . $desc;
+				$linktext = $displayLink . ': ' . $desc;
 			} else {
 				// there is no page description
-				$linktext = $pageLink;
+				$linktext = $displayLink;
 			}
 
-			$repl = '<a title="'.$desc1.'" href="'.$uri_ref.'" class="wiki ' . $reltype . '">' . $linktext . '</a>';
+			$repl = '<a title="'.$desc.'" href="'.$uri_ref.'" class="wiki ' . $reltype . '">' . $linktext . '</a>';
 
 			// Check is timeout expired?
 			if (isset($text[1]) && (time() - intval($this->page_exists_modtime($pageLink))) < intval($text[1])) {
@@ -6826,8 +6845,8 @@ class TikiLib extends TikiDB {
 			// Others, excluding ending ss like address(es)
 			$plural_tmp = preg_replace("/([A-Za-rt-z])s$/", "$1", $plural_tmp);
 
-			if($desc = $this->page_exists_desc($plural_tmp)) {
-				$repl = "<a title='".$desc."' href='".$wikilib->sefurl($plural_tmp).$bestLang."' class='wiki'>$pageLink</a>";
+			if($desc = $this->page_exists_desc($plural_tmp, true)) {
+				$repl = "<a title='".$desc."' href='".$wikilib->sefurl($plural_tmp).$bestLang."' class='wiki'>$displayLink</a>";
 				return $repl;
 			}
 		}
