@@ -48,32 +48,38 @@ function capLock(e){
 
       <tr><td class="formcolor">{if $prefs.login_is_email eq 'y'}{tr}Email{/tr}{else}{tr}Username{/tr}{/if}:</td>
       <td class="formcolor">
-        <input style="float:left" type="text" name="name" id="name"
-	  {if $prefs.feature_ajax eq 'y'}onKeyUp="return check_name()"{/if}/>&nbsp;
+        <input type="text" name="name" id="name"{if $prefs.feature_ajax eq 'y'} onKeyUp="return check_name()"{/if} /><br />
           {if $prefs.feature_ajax eq'y'}<div id="checkfield" style="float:left"></div>{/if}
 		{if $prefs.login_is_email eq 'y'} 
-		<em>{tr}Use your email as login{/tr}</em>.
+		<em>{tr}Use your email as login{/tr}</em>. 
 		{else}
 	  {if $prefs.lowercase_username eq 'y'} <em>{tr}Lowercase only{/tr}</em>.{/if}</td>
 		{/if}
       </tr>
 
-      {if $prefs.useRegisterPasscode eq 'y'}
-        <tr><td class="formcolor">{tr}Passcode to register (not your user password){/tr}:</td>
-	<td class="formcolor"><input type="password" name="passcode" onkeypress="capLock(event)" /></td></tr>
+{if $prefs.useRegisterPasscode eq 'y'}
+        <tr><td class="formcolor">{tr}Passcode to register{/tr}:</td>
+	<td class="formcolor"><input type="password" name="passcode" onkeypress="capLock(event)" /><br /><em>{tr}Not your password.{/tr} {tr}To request a passcode, {if $prefs.feature_contact eq 'y'}<a href="tiki-contact.php">{/if}
+	contact the sytem administrator{if $prefs.feature_contact eq 'y'}</a>{/if}{/tr}.</em> </td></tr>
       {/if}
  
       <tr><td class="formcolor">{tr}Password{/tr}:</td>
-      <td class="formcolor"><input style="float:left" id='pass1' type="password" name="pass" onkeypress="capLock(event)" 
-        {if $prefs.feature_ajax eq 'y'}onKeyUp="check_pass()"{/if}/>&nbsp;
-	  {if $prefs.feature_ajax ne 'y' and $prefs.min_pass_length > 1}<em>{tr}Minimum {$prefs.min_pass_length} characters long{/tr}</em>.<br />{/if}
+      <td class="formcolor">
+			<input style="float:left"  id='pass1' type="password" name="pass" onkeypress="capLock(event)" onKeyUp="runPassword(this.value, 'mypassword');{if $prefs.feature_ajax eq 'y'}check_pass();{/if}" />
+				<div style="float:left;width:150px;margin-left:5px;">
+				<div id="mypassword_text"></div>
+				<div id="mypassword_bar" style="font-size: 5px; height: 2px; width: 0px;"></div> 
+				</div>			
+{if $prefs.feature_ajax ne 'y'}<p><div>{/if}
+	  {if $prefs.feature_ajax ne 'y' and $prefs.min_pass_length > 1}<em>{tr}Minimum {$prefs.min_pass_length} characters long{/tr}</em>. {/if}
 	  {if $prefs.feature_ajax ne 'y' and $prefs.pass_chr_num eq 'y'}<em>{tr}Password must contain both letters and numbers{/tr}</em>.{/if}
+{if $prefs.feature_ajax ne 'y'}</div></p>{/if}
 	  </td>
       </tr>
 
       <tr><td class="formcolor">{tr}Repeat password{/tr}:</td>
       <td class="formcolor"><input style="float:left" id='pass2' type="password" name="passAgain" onkeypress="capLock(event)" 
-        {if $prefs.feature_ajax eq'y'}onKeyUp="check_pass()"{/if}/>{if $prefs.feature_ajax eq'y'}<div style="float:left" id="checkpass"></div>{/if}</td>
+        {if $prefs.feature_ajax eq'y'}onKeyUp="check_pass()"{/if}/>{if $prefs.feature_ajax eq'y'}<div style="float:left;margin-left:5px;" id="checkpass"></div>{/if}</td>
       </tr>
 
 {if $prefs.login_is_email ne 'y'}
@@ -94,15 +100,20 @@ function capLock(e){
       {/section}
       
       {* Groups *}
-      {if isset($theChoiceGroup)}
+{if isset($theChoiceGroup)}
         <input type="hidden" name="chosenGroup" value="{$theChoiceGroup|escape}" />
-      {elseif $listgroups}
-        <tr><td class="formcolor">{tr}Select your group{/tr}</td><td class="formcolor">
-        {foreach item=gr from=$listgroups}
-          {if $gr.registrationChoice eq 'y'}<input type="radio" name="chosenGroup" value="{$gr.groupName|escape}">{if $gr.groupDesc}{tr}{$gr.groupDesc}{/tr}{else}{$gr.groupName}{/if}</input><br />{/if}
-        {/foreach}</td></tr>
-      {/if}
-      {if $prefs.rnd_num_reg eq 'y'}{include file='antibot.tpl'}{/if}
+{elseif $listgroups}
+		<tr>
+			<td class="formcolor">{tr}Select your group{/tr}:</td>
+			<td class="formcolor">
+{foreach item=gr from=$listgroups}
+{if $gr.registrationChoice eq 'y'}			<input style="float:left;" type="radio" name="chosenGroup" id="gr_{$gr.groupName}" value="{$gr.groupName|escape}" /> <label for="gr_{$gr.groupName}">{if $gr.groupDesc}{tr}{$gr.groupDesc}{/tr}{else}{$gr.groupName}{/if}</label><br />{/if}
+{/foreach}
+			</td>
+		</tr>
+{/if}
+
+{if $prefs.rnd_num_reg eq 'y'}{include file='antibot.tpl'}{/if}
 
       <tr><td class="formcolor">&nbsp;</td>
       <td class="formcolor"><input type="submit" name="register" value="{tr}Register{/tr}" /></td>
