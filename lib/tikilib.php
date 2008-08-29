@@ -5820,9 +5820,7 @@ class TikiLib extends TikiDB {
 
 		$temp_max = count($pages[1]);
 		for ($i = 0; $i < $temp_max; $i++) {
-			$pattern = $pages[0][$i];
-			$pattern = preg_quote($pattern, "/");
-			$pattern = "/" . $pattern . "/";
+			$exactMatch = $pages[0][$i];
 
 			// Replace links to external wikis
 			$repl2 = true;
@@ -5843,7 +5841,7 @@ class TikiLib extends TikiDB {
 						$wkurl = $this->db->getOne("select `extwiki`  from `tiki_extwiki` where `name`=?",array($wkname));
 
 						$wkurl = '<a href="' . str_replace('$page', urlencode($wexs[1]), $wkurl). '" class="wiki external ' . $reltype . '">' . $wexs[1] . '</a>';
-						$data = preg_replace($pattern, $wkurl, $data);
+						$data = str_replace($exactMatch, $wkurl, $data);
 						$repl2 = false;
 					}
 				}
@@ -5890,7 +5888,7 @@ class TikiLib extends TikiDB {
 
 					$repl = (strlen(trim($text[0])) > 0 ? $text[0] : $pages[2][$i]) . '<a href="'.$uri_ref.'" title="'.tra("Create page:","",true)." ".urlencode($pages[2][$i]).'" class="wiki wikinew">?</a>';
 				}
-				$data = preg_replace($pattern, $repl, $data);
+				$data = str_replace($exactMatch, $repl, $data);
 			}
 		}
 
@@ -5917,10 +5915,8 @@ class TikiLib extends TikiDB {
 
 						$wkurl = '<a href="' . str_replace('$page', urlencode($wexs[1]), $wkurl). '" class="wiki external ' . $reltype . '">' . $wexs[1] . '</a>';
 
-						$pattern = $pages[0][$idx];
-						$pattern = preg_quote($pattern, "/");
-						$pattern = "/" . $pattern . "/";
-						$data = preg_replace($pattern, $wkurl, $data);
+						$exactMatch = $pages[0][$idx];
+						$data = str_replace($exactMatch, $wkurl, $data);
 						$repl2 = false;
 					}
 				}
@@ -5935,10 +5931,8 @@ class TikiLib extends TikiDB {
 					$repl = $page_parse.'<a href="tiki-editpage.php?page=' . urlencode($page_parse). ($prefs['feature_multilingual'] == 'y' && isset($GLOBALS['pageLang'])?('&amp;lang='.urlencode($GLOBALS['pageLang'])):'') . '" title="'.tra("Create page:","",true).' '.urlencode($page_parse).'"  class="wiki wikinew">?</a>';
 				}
 
-				$pattern = $pages[0][$idx];
-				$pattern = preg_quote($pattern, "/");
-				$pattern = "/" . $pattern . "/";
-				$data = preg_replace($pattern, $repl, $data);
+				$exactMatch = $pages[0][$idx];
+				$data = str_replace($exactMatch, $repl, $data);
 			}
 		}
 
