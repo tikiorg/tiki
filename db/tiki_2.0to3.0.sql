@@ -68,3 +68,6 @@ CREATE TABLE tiki_semantic_tokens (
 	label VARCHAR(25) NOT NULL,
 	invert_token VARCHAR(15)
 ) ENGINE=MyISAM ;
+
+#2008-08-29 lphuberdeau
+INSERT INTO tiki_semantic_tokens (token, label) VALUES('alias', 'Page Alias');

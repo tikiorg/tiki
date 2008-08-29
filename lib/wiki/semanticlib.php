@@ -93,18 +93,42 @@ class SemanticLib
 		return $this->newTokens;
 	} // }}}
 
-	function getLinksUsing( $token ) // {{{
+	function getLinksUsing( $token, $conditions = array() ) // {{{
 	{
 		global $tikilib;
 
-		$result = $tikilib->query( "SELECT fromPage, toPage, reltype FROM tiki_links WHERE reltype LIKE ? AND reltype IS NOT NULL ORDER BY fromPage, toPage",
-			array("%$token%") );
+		$token = (array) $token;
+		$tokenConds = array();
+		$bindvars = array();
+
+		// Multiple tokens can be fetched at the same time
+		foreach( $token as $name ) {
+			$tokenConds[] = 'reltype LIKE ?';
+			$bindvars[] = "%$name%";
+		}
+
+
+		$mid = array( 'reltype IS NOT NULL' );
+		$mid[] = '( ' . implode( ' OR ', $tokenConds ) . ' )';
+
+		// Filter on source and destination
+		foreach( $conditions as $field => $value ) {
+			if( ! in_array( $field, array( 'fromPage', 'toPage' ) ) )
+				continue;
+
+			$mid[] = "$field = ?";
+			$bindvars[] = $value;
+		}
+
+		$mid = implode( ' AND ', $mid );
+		$result = $tikilib->query( $q= "SELECT fromPage, toPage, reltype FROM tiki_links WHERE $mid ORDER BY fromPage, toPage",
+			$bindvars );
 		
 		$links = array();
 		while( $row = $result->fetchRow() ) {
 			$row['reltype'] = explode( ',', $row['reltype'] );
 
-			if( in_array( $token, $row['reltype'] ) )
+			if( count( array_intersect( $token, $row['reltype'] ) ) > 0 )
 				$links[] = $row;
 		}
 

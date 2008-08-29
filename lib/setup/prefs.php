@@ -82,6 +82,7 @@ function get_default_prefs() {
 		'feature_wiki_save_draft' => 'n', // Broken in 2.0 RC2 http://dev.tikiwiki.org/wish1888
 		'feature_wikiwords' => 'y',
 		'feature_wikiwords_usedash' => 'y',
+		'feature_wiki_pagealias' => 'y',
 		'mailin_autocheck' => 'n',
 		'mailin_autocheckFreq' => '0',
 		'mailin_autocheckLast' => 0,
@@ -123,6 +124,7 @@ function get_default_prefs() {
 		'wiki_list_id' => 'n',
 		'wiki_list_sortorder' => 'pageName',
 		'wiki_list_sortdirection' => 'asc',
+		'wiki_pagealias_tokens' => 'alias',
 		'wiki_page_regex' => 'strict',
 		'wiki_page_separator' => '...page...',
 		'wiki_page_navigation_bar' => 'bottom',
