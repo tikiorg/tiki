@@ -656,8 +656,12 @@ div#edithelpzone {	display: none;}
 .attention {	color: red;}
 .highlight, #highlight  {}
 
-/* Banners, text type */
+/* OpenID  */
+.openid_url {
+	background: #fff url(../../img/icons/login-OpenID-bg.gif) no-repeat;
+	padding-left: 18px}
 
+/* Banners, text type */
 .bannertext {	font-size: .95em;	text-decoration: none;}
 .bannertext:hover {}
 
