@@ -305,7 +305,7 @@ class SearchLib extends TikiLib {
 			'objectType' => 'wiki page',
 			'objectKey' => 'p.`pageName`',
 		);
-		$search_wikis['href'] = $prefs['feature_sefurl'] == 'y'? '%s#comments': 'tiki-index.php?page=%s#comments';
+		$search_wikis['href'] = $prefs['feature_sefurl'] == 'y'? '%s': 'tiki-index.php?page=%s';
 		if ($prefs['search_parsed_snippet'] == 'y') {
 			$search_wikis['is_html'] = 'is_html';
 			$search_wikis['parsed'] = true;
