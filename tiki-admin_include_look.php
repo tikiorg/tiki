@@ -46,8 +46,8 @@ if (isset($_REQUEST["looksetup"])) {
 	"feature_topbar_debug",
 	"sitemycode_publish",
 	"feature_bot_logo",
-        "feature_menusfolderstyle",
-        "direct_pagination",
+	'feature_menusfolderstyle',
+	'direct_pagination',
 	"nextprev_pagination",
 	"pagination_firstlast",
 	"pagination_icons",
@@ -80,12 +80,14 @@ if (isset($_REQUEST["looksetup"])) {
 	"transition_style_ver",
 	"direct_pagination_max_middle_links",
 	"direct_pagination_max_ending_links",
-	"feature_site_report_email"
+	'feature_site_report_email',
+	'feature_endbody_code',
     );
 
     foreach ($pref_simple_values as $svitem) {
         simple_set_value ($svitem);
     }
+	echo $prefs['feature_endbody_code'];
 
     $pref_byref_values = array(
 	"feature_left_column",

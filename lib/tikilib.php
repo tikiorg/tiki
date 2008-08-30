@@ -6240,6 +6240,7 @@ class TikiLib extends TikiDB {
 			$inPre = 0;
 			$inComment = 0;
 			$inTOC = 0;
+			$inScript = 0;
 			$title_text = '';
 
 			// loop: process all lines
@@ -6320,6 +6321,10 @@ class TikiLib extends TikiDB {
 				// not insert <br />
 				$inTOC += substr_count(strtolower($line), "<ul class=\"toc");
 				$inTOC -= substr_count(strtolower($line), "</ul");
+
+				// check if we are inside a script not insert <br />
+				$inScript += substr_count(strtolower($line), "<script ");
+				$inScript -= substr_count(strtolower($line), "</script>");
 
 				// If the first character is ' ' and we are not in pre then we are in pre
 				if (substr($line, 0, 1) == ' ' && $prefs['feature_wiki_monosp'] == 'y' && $inTable == 0 && $inPre == 0 && $inComment == 0 ) {
@@ -6589,7 +6594,7 @@ class TikiLib extends TikiDB {
 							 *
 							 * @since Version 1.9
 							 */
-							if ($inTable == 0 && $inPre == 0 && $inComment == 0 && $inTOC == 0
+							if ($inTable == 0 && $inPre == 0 && $inComment == 0 && $inTOC == 0 && $inScript == 0
 									// Don't put newlines at comments' end!
 									&& ! substr_count(strtolower($line), "-->")
 								 ) {

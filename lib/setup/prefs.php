@@ -846,6 +846,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_sitetitle' => 'y',
 		'feature_sitedesc' => 'n',
 		'feature_bot_logo' => 'n',
+		'feature_endbody_code' => '',
 
 		// layout
 		'feature_left_column' => 'y',

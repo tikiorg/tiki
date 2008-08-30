@@ -23,5 +23,8 @@
 <div class="cvsup" style="font-size:x-small;text-align:center;color:#999;">{tr}Last update from SVN{/tr}({$prefs.tiki_version}): {$lastup|tiki_long_datetime}</div>
 {/if}
 {/if}
+{if $prefs.feature_endbody_code}{*this code must be added just before </body>: needed by google analytics *}
+	{eval var=$prefs.feature_endbody_code}
+{/if}
 </body>
 </html>  
