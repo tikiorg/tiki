@@ -279,7 +279,6 @@ class SearchLib extends TikiLib {
 			'data' => 'c.`data`',
 			'hits' => 'p.`hits`', // c.hits is always null for a page comment!!
 			'lastModif' => 'c.`commentDate`',
-			'href' => 'tiki-index.php?page=%s#comments',
 			'id' => array('p.`pageName`', 'c.`threadId`'),
 			'pageName' => $this->db->concat('p.`pageName`', "': '", 'c.`title`'),
 			'search' => array('c.`title`', 'c.`data`'),
@@ -289,6 +288,7 @@ class SearchLib extends TikiLib {
 			'objectType' => 'wiki page',
 			'objectKey' => 'p.`pageName`',
 		);
+		$search_wikis_comments['href'] = $prefs['feature_sefurl'] == 'y'? '%s#comments': 'tiki-index.php?page=%s#comments';
 		$rv = $this->_find($search_wikis_comments, $words, $offset, $maxRecords, $fulltext);
 
 		static $search_wikis = array(
@@ -297,7 +297,6 @@ class SearchLib extends TikiLib {
 			'data' => '`data`',
 			'hits' => 'p.`hits`', //'pageRank', pageRank is updated not very often since the line below is in comment
 			'lastModif' => '`lastModif`',
-			'href' => 'tiki-index.php?page=%s',
 			'id' => array('`pageName`'),
 			'pageName' => '`pageName`',
 			'search' => array('p.`pageName`', 'p.`description`', '`data`'),
@@ -306,6 +305,7 @@ class SearchLib extends TikiLib {
 			'objectType' => 'wiki page',
 			'objectKey' => 'p.`pageName`',
 		);
+		$search_wikis['href'] = $prefs['feature_sefurl'] == 'y'? '%s#comments': 'tiki-index.php?page=%s#comments';
 		if ($prefs['search_parsed_snippet'] == 'y') {
 			$search_wikis['is_html'] = 'is_html';
 			$search_wikis['parsed'] = true;
@@ -314,7 +314,7 @@ class SearchLib extends TikiLib {
 		// that pagerank re-calculation was speed handicap (timex30)
 		//$this->pageRank();
 		if (!$rv['cant'])
-			return $this->_find($search_wikis, $words, $offset, $maxRecords, $fulltext);
+			$data = $this->_find($search_wikis, $words, $offset, $maxRecords, $fulltext);
 		else {
 			$data = array();
 			$data = $this->_find($search_wikis, $words, $offset, $maxRecords, $fulltext);
@@ -326,8 +326,9 @@ class SearchLib extends TikiLib {
 				array_push($data['data'], $a);
 			}
 			$data['cant'] += $rv['cant'];
-			return $data;
 		}
+		
+		return $data;
 
 	}
 	function find_relevance_cmp($a, $b) {
