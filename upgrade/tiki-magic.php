@@ -53,39 +53,6 @@ if ($feature['template'] != ''
 	exit;
 }
 
-$enumerations = array();
-// since these are static, populate them each time.  Maybe.  There might be lots, soon...
-$enumerations['commentordering'] = array('points_desc'=>tra('points'), 'commentDate_desc'=>tra('newest'), 'commentDate_asc'=>tra('oldest'));
-$enumerations['alignment'] = array('left'=>tra('on left side'), 'center'=>tra('on center'), 'right'=>tra('on right side'));
-
-$enumerations['bloguser'] = array('disabled'=>tra('Disabled'),'text'=>tra('Plain text'), 'link'=>tra('Link to user information'), 'avatar'=>tra('User avatar'));
-$enumerations['blogorder'] = array('created_desc'=>tra('Creation date (desc)'), 'lastModif_desc'=>tra('Last modification date (desc)'), 'title_asc'=>tra('Blog title (asc)'), 'posts_desc'=>tra('Number of posts (desc)'), 'hits_desc'=>tra('Visits (desc)'),'activity_desc'=>tra('Activity (desc)'));
-
-$enumerations['barlocation'] = array('top'=>tra('Top bar'), 'bottom'=>tra('Bottom bar'), 'both'=>('Both'));
-$enumerations['cachelength'] = array('0'=>tra('no cache'), '60'=>'1 ' . tra('minute'), '300'=>'5 ' . tra('minutes'), '600'=>'10 ' . tra('minutes'), '900'=>'15 '. tra('minutes'), '1800'=>'30 ' . tra('minutes'), '3600'=>'1 ' . tra('hour'), '7200'=>'2 ' . tra('hours'));
-$enumerations['wikiauthor'] = array('classic'=>tra('as Creator &amp; Last Editor'), 'business'=>tra('Business style'), 'collaborative'=>tra('Collaborative style'), 'lastmodif'=>tra('Page last modified on'), 'none'=>tra('no (disabled)'));
-$enumerations['idletimeout'] = array(1=>1,2=>2,5=>5,10=>10,15=>15,30=>30);
-$enumerations['wikitablesyntax'] = array('old'=>tra('|| for rows'),'new'=>tra('\n for rows'));
-$enumerations['wikidiffs'] = array('old'=>tra('Only with last version'), 'minsidediff'=>tra('Any 2 versions'));
-$enumerations['wikilinkformat'] = array('complete'=>tra('complete'), 'full'=>tra('latin'), 'strict'=>tra('english'));
-
-$enumerations['calendartimespan'] = array('1'=>'1 ' . tra('minute'), '5'=>'5 ' . tra('minutes'), '10'=>'10 ' . tra('minutes'), '15'=>'15 ' . tra('minutes'), '30'=>'30 ' . tra('minutes'));
-$enumerations['calendarviewmode'] = array('day'=>tra('Day'), 'week'=>tra('Week'), 'month'=>tra('Month'), 'quarter'=>tra('Quarter'), 'semester'=>tra('Semester'), 'year'=>tra('Year'));
-$enumerations['firstdayofweek'] = array('6'=>tra('Saturday'),'0'=>tra('Sunday'), '1'=>tra('Monday'),'user'=>tra('Depends user language'));
-$enumerations['errorreportinglevel'] = array ('0'=>tra('No error reporting'),'1'=>tra('Report all PHP errors'),'2'=>tra('Report all errors except notices'));
-
-$enumerations['forumordering'] = array ('created_asc'=>tra('Creation Date (asc)'),
-										'created_desc'=>tra('Creation Date (desc)'),
-										'threads_desc'=>tra('Topics (desc)'),
-										'comments_desc'=>tra('Threads (desc)'),
-										'lastPost_desc'=>tra('Last post (desc)'),										
-										'hits_desc'=>tra('Visits (desc)'),
-										'name_desc'=>tra('Name (desc)'),
-										'name_asc'=>tra('Name (asc)'),										
-										);
-
-
-
 $pagefeatures = array($feature);
 $containers = array();
 $hasCategories = false;
@@ -103,18 +70,18 @@ if ($_POST['submit'] != '') { /* Warning Level Fix:  Check if the 'submit' is a 
 	check_ticket('tiki_magic');
 	foreach($pagefeatures as $feature) {
 		if ($feature['feature_type'] == 'flag') {
-			simple_set_toggle($feature['setting_name']);
+			$magiclib->simple_set_toggle($feature['setting_name']);
 		} else if ($feature['feature_type'] == 'int') {
-			simple_set_int($feature['setting_name']);
+			$magiclib->simple_set_int($feature['setting_name']);
 		} else if ($feature['feature_type'] == 'simple') {
-			simple_set_value($feature['setting_name']);
+			$magiclib->simple_set_value($feature['setting_name']);
 		} else if ($feature['feature_type'] == 'byref') {
-			byref_set_value($feature['setting_name']);
+			$magiclib->byref_set_value($feature['setting_name']);
 		} else if ($feature['feature_type'] == 'feature') {
-			simple_set_toggle($feature['setting_name']); // save the toggling of features.
+			$magiclib->simple_set_toggle($feature['setting_name']); // save the toggling of features.
 		} else {
 			// All of the special settings are simple underneath.
-			simple_set_value($feature['setting_name']);
+			$magiclib->simple_set_value($feature['setting_name']);
 		}
 	}
 	
@@ -126,49 +93,18 @@ ask_ticket('tiki_magic');
 $smarty->assign_by_ref('containers', $containers);
 $smarty->assign('features', $pagefeatures);
 
-// lazy load the values which should be lazy loaded.
-foreach($lazyFields as $field=>$value) {
-	switch ($field) {
-		case 'category':
-			include_once ('lib/categories/categlib.php');
-			$catree = $categlib->get_all_categories();
-			$smarty->assign('catree', $catree);
-			break;
-		case 'language':
-			$languages = array();
-			$languages = $tikilib->list_languages(false,null,true);
-			$smarty->assign_by_ref("languages", $languages);
-			break;
-		case 'timezone':
-			$smarty->assign_by_ref("timezones", TikiDate::getTimeZoneList());
-			break;
-	}
-}
-
 // Display the template
 $smarty->assign('mid', 'tiki-magic.tpl');
 $smarty->display("tiki.tpl");
 
-$lazyFields = array();
 // Recursively get the features underneath the specified feature id.
 function get_features($featureid, $keepContainers = true) {
-	global $magiclib, $tikilib, $pagefeatures, $containers, $enumerations, $lazyFields, $prefs;
+	global $magiclib, $pagefeatures, $containers, $prefs;
 	$features = $magiclib->get_child_features($featureid);
 	$cont = array();
 
 	if ($features) {
 		foreach($features as $feature) {
-			if ($feature['feature_type'] == 'limitcategory' || $feature['feature_type'] == 'selectcategory') $lazyFields['category'] = true;
-			if ($feature['feature_type'] == 'languages')  $lazyFields['languages'] = true;
-			if ($feature['feature_type'] == 'timezone')  $lazyFields['timezone'] = true;
-			// add these to the enumeration, as they will only occur once; and this allows no template changes.
-			if ($feature['feature_type'] == 'sitestyle') $enumerations['sitestyle'] = $tikilib->list_styles(); 
-			if ($feature['feature_type'] == 'slideshowstyle') $enumerations['slideshowstyle'] = get_slideshowstyles();
-
-			if (array_key_exists($feature['feature_type'], $enumerations)) {
-				$feature['enumeration'] = $enumerations[$feature['feature_type']];
-			}
-
 			if ($keepContainers && $magiclib->is_container($feature) && $feature['feature_count'] > 0) {
 				$cont[] = $feature;
 			} else {
@@ -184,73 +120,5 @@ function get_features($featureid, $keepContainers = true) {
 			get_features($feature['feature_id'], false);
 		}
 	}
-}
-
-// These are helper functions, pretty much as-ganked from tiki-admin.php
-
-function simple_set_toggle($feature) {
-	global $_POST, $tikilib, $smarty, $tikifeedback, $prefs;
-	$setting = $feature;
-	if (isset($_POST[$setting]) && $_POST[$setting] == "on") {
-		if ((!isset($prefs[$setting]) || $prefs[$setting] != 'y')) {
-			// not yet set at all or not set to y
-			$tikilib->set_preference($setting, 'y');
-			$prefs[$setting] = 'y';
-			$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("%s enabled"),$feature));
-		}
-	} else {
-		if ((!isset($prefs[$setting]) || $prefs[$setting] != 'n')) {
-			// not yet set at all or not set to n
-			$tikilib->set_preference($feature, 'n');
-			$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("%s disabled"),$feature));
-		}
-	}
-}
-
-function simple_set_value($feature, $pref = '', $isMultiple = false) {
-	global $_POST, $tikilib, $prefs;
-	
-	if (isset($_POST[$feature])) {
-		if ( $pref != '' ) {
-			$tikilib->set_preference($pref, $_POST[$feature]);
-			$prefs[$feature] = $_POST[$feature];
-		} else {
-			$tikilib->set_preference($feature, $_POST[$feature]);
-		}
-	} else if( $isMultiple ) {
-		// Multiple selection controls do not exist if no item is selected.
-		// We still want the value to be updated.
-		if ( $pref != '' ) {
-			$tikilib->set_preference($pref, array());
-			$prefs[$feature] = $_POST[$feature];
-		} else {
-			$tikilib->set_preference($feature, array());
-		}
-	}
-}
-
-function simple_set_int($feature) {
-    global $_POST, $tikilib;
-	if (isset($_POST[$feature]) && is_numeric($_POST[$feature])) {
-		$tikilib->set_preference($feature, $_POST[$feature]);
-	}
-}
-
-function byref_set_value($feature, $pref = "") {
-	global $_POST, $tikilib;
-	simple_set_value($feature, $pref);
-}
-
-function get_slideshowstyles() {
-	$slide_styles = array();
-	$h = opendir("styles/slideshows");
-	while ($file = readdir($h)) {
-		if (strstr($file, "css")) {
-			$slide_styles[] = $file;
-		}
-	}
-	closedir ($h);
-			
-	return $slide_styles;
 }
 ?>

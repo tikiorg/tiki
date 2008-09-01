@@ -39,6 +39,7 @@ UPDATE `tiki_menu_options` set `url`='tiki-list_file_gallery.php' where `url`='t
 UPDATE `tiki_menu_options` SET `url`='tiki-admin_include_score.php' where `url`='tiki-admin_score.php';
 
 #2008-08-16 princessxine
+#2008-08-27 bitey [embiggens the feature_type column]
 DROP TABLE IF EXISTS `tiki_feature`;
 CREATE TABLE `tiki_feature` (
   `feature_id` mediumint(9) NOT NULL auto_increment,
@@ -46,7 +47,7 @@ CREATE TABLE `tiki_feature` (
   `parent_id` mediumint(9) NOT NULL,
   `status` varchar(12) NOT NULL default 'active',
   `setting_name` varchar(50) default NULL,
-  `feature_type` varchar(20) NOT NULL default 'feature',
+  `feature_type` varchar(30) NOT NULL default 'feature',
   `template` varchar(50) default NULL,
   `permission` varchar(50) default NULL,
   `ordinal` mediumint(9) NOT NULL default '1',
@@ -55,7 +56,7 @@ CREATE TABLE `tiki_feature` (
   `feature_count` mediumint(9) NOT NULL default '0',
   `feature_path` varchar(20) NOT NULL default '0',
   PRIMARY KEY  (`feature_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=0 ;
+) ENGINE=MyISAM AUTO_INCREMENT=1;
 
 #2008-08-17 lphuberdeau
 UPDATE tiki_menu_options SET section = 'feature_wiki_structure' WHERE optionId = 47;
@@ -66,3 +67,23 @@ CREATE TABLE tiki_schema (
 	install_date TIMESTAMP
 ) ENGINE=MyISAM;
 
+#2008-08-22 lphuberdeau
+ALTER TABLE tiki_links ADD COLUMN reltype VARCHAR(50);
+CREATE TABLE tiki_semantic_tokens (
+	token VARCHAR(15) PRIMARY KEY,
+	label VARCHAR(25) NOT NULL,
+	invert_token VARCHAR(15)
+) ENGINE=MyISAM ;
+
+#2008-08-29 lphuberdeau
+INSERT INTO tiki_semantic_tokens (token, label) VALUES('alias', 'Page Alias');
+
+#2008-08-29 lphuberdeau
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_plugin_viewdetail', 'Can view unapproved plugin details', 'editors', 'wiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_plugin_preview', 'Can execute unapproved plugin', 'editors', 'wiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_plugin_approve', 'Can approve plugin execution', 'editors', 'wiki');
+
+#2008-09-01 lphuberdeau
+DELETE FROM users_permissions WHERE permName IN('tiki_p_plugin_viewdetail', 'tiki_p_plugin_preview');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_plugin_viewdetail', 'Can view unapproved plugin details', 'registered', 'wiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_plugin_preview', 'Can execute unapproved plugin', 'registered', 'wiki');

@@ -257,6 +257,11 @@ if (isset($_REQUEST["page"])) {
 		$description = "Install predefined configuration profiles and add-ons.";
 		$helpUrl = "Profiles";
 		include_once ('tiki-admin_include_profiles.php');
+	} else if ($adminPage == "semantic") {
+		$admintitle = "Semantic Wiki Links";
+		$description = "Manage semantic tokens used throughout the wiki.";
+		$helpUrl = "SemanticLinks";
+		include_once ('tiki-admin_include_semantic.php');
 	}
 
 	$url = 'tiki-admin.php'.'?page='.$adminPage;

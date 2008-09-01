@@ -6,7 +6,7 @@
 {eval var="{tr}Last Modified Comments{/tr}" assign="tpl_module_title"}
 {/if}
 {/if}
-{tikimodule title=$tpl_module_title name="last_modif_tracker_comments" flip=$module_params.flip decorations=$mo\dule_params.decorations nobox=$module_params.nobox}
+{tikimodule title=$tpl_module_title name="last_modif_tracker_comments" flip=$module_params.flip decorations=$mo\dule_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 {if $nonums != 'y'}<ol>{else}<ul>{/if}
     {section name=ix loop=$modLastModifComments}
       <li>

@@ -2,7 +2,7 @@
 
 {if $prefs.feature_shoutbox eq 'y' and $tiki_p_view_shoutbox eq 'y'}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Shoutbox{/tr}"}{/if}
-{tikimodule title=$tpl_module_title name="shoutbox" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox}
+{tikimodule title=$tpl_module_title name="shoutbox" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
     {if $tiki_p_post_shoutbox eq 'y'}
       {js_maxlength textarea=shout_msg maxlength=255}
       <form action="{$shout_ownurl}" method="post" onsubmit="return verifyForm(this);">

@@ -6,7 +6,7 @@
 
 function wikiplugin_tracker_help() {
 	$help = tra("Displays an input form for tracker submit").":\n";
-	$help.= "~np~{TRACKER(trackerId=1, fields=id1:id2:id3, action=Name of submit button, showtitle=n, showdesc=n, showmandatory=n, embedded=n, url=\"http://site.com\", values=val1:val2:val3, sort=n, preview=preview, view=user, tpl=x.tpl,wiki=page,newstatus=o|p|c)}Notice{TRACKER}~/np~";
+	$help.= "~np~{TRACKER(trackerId=1, fields=id1:id2:id3, action=Name of submit button, showtitle=n, showdesc=n, showmandatory=n, embedded=n, url=\"http://site.com\", values=val1:val2:val3, sort=n, preview=preview, view=user|page, tpl=x.tpl,wiki=page,newstatus=o|p|c, itemId=)}Notice{TRACKER}~/np~";
 	return $help;
 }
 
@@ -56,7 +56,7 @@ function wikiplugin_tracker_info() {
 			'url' => array(
 				'required' => false,
 				'name' => tra('URL'),
-				'description' => tra('?'),
+				'description' => tra('Url used for the field links'),
 			),
 			'values' => array(
 				'required' => false,
@@ -76,17 +76,22 @@ function wikiplugin_tracker_info() {
 			'view' => array(
 				'required' => false,
 				'name' => tra('View'),
-				'description' => tra('user'),
+				'description' => tra('user|page'),
+			),
+			'itemId' =>array(
+				'required' => false,
+				'name' => tra('itemId'),
+				'description' => tra('itemId if you want to edit an item'),
 			),
 			'tpl' => array(
 				'required' => false,
 				'name' => tra('Template File'),
-				'description' => tra('Name of the template used to display the tracker.'),
+				'description' => tra('Name of the template used to display the tracker items.'),
 			),
 			'wiki' => array(
 				'required' => false,
 				'name' => tra('Wiki'),
-				'description' => tra('Page name'),
+				'description' => tra('Name of the wiki page containing the template to display the tracker items.'),
 			),
 			'newstatus' => array(
 				'required' => false,
@@ -109,7 +114,7 @@ function wikiplugin_tracker_name($fieldId, $name, $field_errors) {
 	return $name;
 }
 function wikiplugin_tracker($data, $params) {
-	global $tikilib, $userlib, $dbTiki, $user, $group, $page, $tiki_p_admin, $tiki_p_create_tracker_items, $smarty, $prefs, $trklib, $tiki_p_tracker_vote_ratings;
+	global $tikilib, $userlib, $dbTiki, $user, $group, $page, $tiki_p_admin, $tiki_p_create_tracker_items, $smarty, $prefs, $trklib, $tiki_p_tracker_vote_ratings, $tiki_p_wiki_admin_attachments;
 	include_once('lib/trackers/trackerlib.php');
 	
 	//var_dump($_REQUEST);
@@ -134,8 +139,14 @@ function wikiplugin_tracker($data, $params) {
 	} elseif (!empty($trackerId) && !empty($view) && $view == 'user') {// the user item of a tracker
 		$itemId = $trklib->get_user_item($trackerId, $tracker);
 		$usertracker = true;
+	} elseif (!empty($trackerId) && !empty($view) && $view == 'page' && !empty($_REQUEST['page']) && ($f = $trklib->get_field_id_from_type($trackerId, 'k', '1%'))) {// the page item
+		$itemId = $trklib->get_item_id($trackerId, $f, $_REQUEST['page']);
 	} elseif (!empty($trackerId) && !empty($_REQUEST['view_user'])) {
 		$itemId = $trklib->get_user_item($trackerId, $tracker, $_REQUEST['view_user']);
+	} elseif (!empty($_REQUEST['itemId'])) {
+		$itemId = $_REQUEST['itemId'];
+		$item = $trklib->get_tracker_item($itemId);
+		$trackerId = $item['trackerId'];
 	}
 	if (!isset($trackerId)) {
 		return $smarty->fetch("wiki-plugins/error_tracker.tpl");
@@ -242,7 +253,7 @@ function wikiplugin_tracker($data, $params) {
 						} else {
 							$newItemRate = NULL;
 						}
-					} elseif (($flds['data'][$cpt]['type'] == 'u' || $flds['data'][$cpt]['type'] == 'g' || $flds['data'][$cpt]['type'] == 'I') && ($flds['data'][$cpt]['options_array'][0] == '1' || $flds['data'][$cpt]['options_array'][0] == '2') && $tiki_p_admin_trackers != 'y' && empty($_REQUEST['track'][$fl['fieldId']])) {
+					} elseif (($flds['data'][$cpt]['type'] == 'u' || $flds['data'][$cpt]['type'] == 'g' || $flds['data'][$cpt]['type'] == 'I' || $flds['data'][$cpt]['type'] == 'k') && ($flds['data'][$cpt]['options_array'][0] == '1' || $flds['data'][$cpt]['options_array'][0] == '2') && $tiki_p_admin_trackers != 'y' && empty($_REQUEST['track'][$fl['fieldId']])) {
 						if (empty($itemId) && ($flds['data'][$cpt]['options_array'][0] == '1' || $flds['data'][$cpt]['options_array'][0] == '2')) {
 							if ($flds['data'][$cpt]['type'] == 'u')
 								$_REQUEST['track'][$fl['fieldId']] = empty($user)?(empty($_REQUEST['name'])? '':$_REQUEST['name']):$user;
@@ -250,6 +261,8 @@ function wikiplugin_tracker($data, $params) {
 								$_REQUEST['track'][$fl['fieldId']] = $group;
 							elseif ($flds['data'][$cpt]['type'] == 'I')
 								$_REQUEST['track'][$fl['fieldId']] = isset($_SERVER['REMOTE_ADDR'])?$_SERVER['REMOTE_ADDR']: '';
+							elseif ($flds['data'][$cpt]['type'] == 'k')
+								$_REQUEST['track'][$fl['fieldId']] = isset($_REQUEST['page'])?$_REQUEST['page']: '';
 						} elseif (!empty($itemId) && $flds['data'][$cpt]['options_array'][0] == '2') {
 							if ($flds['data'][$cpt]['type'] == 'u')
 								$_REQUEST['track'][$fl['fieldId']] = $user;

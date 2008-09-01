@@ -145,13 +145,14 @@ function batchImportUsers() {
 }
 $cookietab = "1";
 
+if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name'])) {
+	check_ticket('admin-users');
+	batchImportUsers();
+
 // Process the form to add a user here
-if (isset($_REQUEST["newuser"])) {
+} elseif (isset($_REQUEST["newuser"])) {
 	check_ticket('admin-users');
 	// if no user data entered, check if it's a batch upload  
-	if ((!$_REQUEST["name"]) and (is_uploaded_file($_FILES['csvlist']['tmp_name']))) {
-		batchImportUsers();
-	} else {
 		// Check if the user already exists
 		if ($_REQUEST["pass"] != $_REQUEST["pass2"]) {
 			$tikifeedback[] = array('num'=>1,'mes'=>tra("The passwords do not match"));
@@ -185,13 +186,13 @@ if (isset($_REQUEST["newuser"])) {
 		if (isset($tikifeedback[0]['msg'])) {
 			$logslib->add_log('adminusers','',$tikifeedback[0]['msg']);
 		}
-	}
 } elseif (isset($_REQUEST["action"])) {
 	if ($_REQUEST["action"] == 'delete' && $_REQUEST["user"] != 'admin') {
 		$area = 'deluser';
 		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 			key_check($area);
 			$userlib->remove_user($_REQUEST["user"]);
+			$tikifeedback = array();
 			$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s %s successfully deleted."),tra("user"),$_REQUEST["user"]));
 			$logslib->add_log('users',sprintf(tra("Deleted account %s"),$_REQUEST['user']));
 		} else {
@@ -475,6 +476,7 @@ if (isset($_REQUEST["user"]) and $_REQUEST["user"]) {
 if (isset($_REQUEST['add'])) {
 	$cookietab = "2";
 }
+
 $all_groups = $userlib->get_groups();
 $smarty->assign_by_ref('all_groups', $all_groups['data']);
 

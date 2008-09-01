@@ -606,6 +606,10 @@ div#edithelpzone {display: none}
 .highlight,
 #highlight  {}
 
+.openid_url {
+	background: #fff url(../../img/icons/login-OpenID-bg.gif) no-repeat;
+	padding-left: 18px}
+
 .bannertext {
 	font-size: .95em;
 	text-decoration: none}

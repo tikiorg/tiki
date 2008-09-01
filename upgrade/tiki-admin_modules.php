@@ -170,6 +170,8 @@ if (isset($_REQUEST["preview"])) {
 	$smarty->assign('preview', 'y');
 
 	$smarty->assign_by_ref('assign_name', $_REQUEST["assign_name"]);
+	parse_str($_REQUEST["assign_params"], $module_params);
+	$smarty->assign_by_ref('module_params', $module_params);
 
 	if ($tikilib->is_user_module($_REQUEST["assign_name"])) {
 		$info = $tikilib->get_user_module($_REQUEST["assign_name"]);
@@ -188,8 +190,6 @@ if (isset($_REQUEST["preview"])) {
 
 		if (file_exists($phpfile)) {
 			$module_rows = $_REQUEST["assign_rows"];
-
-			parse_str($_REQUEST["assign_params"], $module_params);
 			include ($phpfile);
 		}
 

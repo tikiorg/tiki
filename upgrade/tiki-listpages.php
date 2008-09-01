@@ -11,7 +11,7 @@ $section = 'wiki page';
 require_once('tiki-setup.php');
 require_once('lib/ajax/ajaxlib.php');
 
-$auto_query_args = array('initial','maxRecords','sort_mode','find','lang');
+$auto_query_args = array('initial','maxRecords','sort_mode','find','lang','langOrphan');
 
 $smarty->assign('headtitle',tra('Pages'));
 
@@ -57,11 +57,8 @@ if ( !empty($_REQUEST['submit_mult']) && isset($_REQUEST["checked"]) ) {
 				$smarty->display("error.tpl");
 				die;
 			}
-			$area = 'listpages_delete';
-			if ( $prefs['feature_ticketlib2'] != 'y' or ( isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]) ) ) {
-				key_check($area);
-				foreach ( $_REQUEST["checked"] as $check ) $tikilib->remove_all_versions($check);
-			} else key_get($area, '<b>'.tra("Delete those pages:").'</b><br />'.implode('<br />', $_REQUEST["checked"]));
+			foreach ( $_REQUEST["checked"] as $check )
+				$tikilib->remove_all_versions($check);
 			break;
 			
 		case 'print_pages':
@@ -177,6 +174,10 @@ if ( ! empty($multiprint_pages) ) {
 		$filter['lang'] = $_REQUEST['lang'];
 		$smarty->assign_by_ref('find_lang', $_REQUEST['lang']);
 	}
+	if (!empty($_REQUEST['langOrphan'])) {
+		$filter['langOrphan'] = $_REQUEST['langOrphan'];
+		$smarty->assign_by_ref('find_langOrphan', $_REQUEST['langOrphan']);
+	}
 	if ($prefs['feature_categories'] == 'y' && !empty($_REQUEST['categId'])) {
 		$filter['categId'] = $_REQUEST['categId'];
 		$smarty->assign_by_ref('find_categId', $_REQUEST['categId']);
@@ -255,8 +256,16 @@ if ( ! empty($multiprint_pages) ) {
 	// disallow robots to index page:
 	$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 	
-	// Display the template
-	$smarty->assign('mid', ($listpages_orphans ? 'tiki-orphan_pages.tpl' : 'tiki-listpages.tpl') );
-	$smarty->display("tiki.tpl");
+	if( strpos( $_SERVER['HTTP_ACCEPT'], 'application/json' ) !== false && $prefs['feature_mootools'] == 'y' ) {
+		$pages = array();
+		foreach( $listpages['data'] as $page )
+			$pages[] = $page['pageName'];
+
+		echo json_encode( $pages );
+	} else {
+		// Display the template
+		$smarty->assign('mid', ($listpages_orphans ? 'tiki-orphan_pages.tpl' : 'tiki-listpages.tpl') );
+		$smarty->display("tiki.tpl");
+	}
 }
 ?>

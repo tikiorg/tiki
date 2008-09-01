@@ -460,6 +460,7 @@ foreach($xfields["data"] as $i=>$array) {
 				if ($fields["data"][$i]['options_array'][0] == 2) {
 					$ins_fields["data"][$i]["value"] = $IP;
 				} elseif ($fields["data"][$i]['options_array'][0] == 1) {
+					unset($ins_fields['data'][$i]['fieldId']);
 				} else {
 					$ins_fields["data"][$i]["value"] = '';
 				}

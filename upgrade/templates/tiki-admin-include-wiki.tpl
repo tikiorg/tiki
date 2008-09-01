@@ -327,13 +327,13 @@ name="w_displayed_default"{if $prefs.w_displayed_default eq 'y'} checked="checke
     		</td>
     	</tr>
     	<tr>
-    		<td class="form">{tr}Comment{/tr}</td>
+    		<td class="form">{tr}Edit Comments{/tr}</td>
     		<td class="form">
     			<input type="checkbox" name="wiki_list_comment" {if $prefs.wiki_list_comment eq 'y'}checked="checked"{/if} />
     		</td>
     	</tr>
     	<tr>
-		<td class="form">{tr}Comment length:{/tr}</td>
+		<td class="form">{tr}Edit Comments length:{/tr}</td>
 		<td class="form">
 			<input type="text" name="wiki_list_comment_len" value="{$prefs.wiki_list_comment_len}" size="3" />
 		</td>
@@ -601,6 +601,7 @@ name="w_displayed_default"{if $prefs.w_displayed_default eq 'y'} checked="checke
     </select>
     </td></tr>
     <tr><td class="form">{tr}Uses Slideshow:{/tr}</td><td><input type="checkbox" name="wiki_uses_slides" {if $prefs.wiki_uses_slides eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}Structures:{/tr}</td><td><input type="checkbox" name="feature_wiki_structure" {if $prefs.feature_wiki_structure eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Open page as structure:{/tr}</td><td><input type="checkbox" name="feature_wiki_open_as_structure" {if $prefs.feature_wiki_open_as_structure eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Make structure from page:{/tr}</td><td><input type="checkbox" name="feature_wiki_make_structure" {if $prefs.feature_wiki_make_structure eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Categorize structure pages together:{/tr}</td><td><input type="checkbox" name="feature_wiki_categorize_structure" {if $prefs.feature_wiki_categorize_structure eq 'y'}checked="checked"{/if}/></td></tr>

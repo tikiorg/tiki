@@ -152,12 +152,19 @@ class WikiLib extends TikiLib {
 		$this->query($query, array( $newName, $tmpName ) );
 
 		// get pages linking to the old page
-		$query = "select `fromPage` from `tiki_links` where `toPage`=?";
+		$query = "select `fromPage`, `reltype` from `tiki_links` where `toPage`=?";
 		$result = $this->query($query, array( $oldName ) );
 
 		$linksToOld=array();
 		while ($res = $result->fetchRow()) {			
 		    $page = $res['fromPage'];
+			$types = $res['reltype'];
+
+			$semantics = array();
+			if( ! empty($types) ) {
+				$semantics = explode(',', $types );
+			}
+
 		    $is_wiki_page = true;
 		    if (substr($page,0,11) == 'objectlink:') {
 		    	$is_wiki_page = false;
@@ -177,12 +184,17 @@ class WikiLib extends TikiLib {
 				$comment_info = $commentslib->get_comment($objectId);
 				$data = $comment_info['data'];
 		    }
-		    $oldName = quotemeta( $oldName );
- 		    if (strstr($newName, " "))
-		    	$data = preg_replace("/(?<= |\n|\t|\r|\,|\;|^)$oldName(?= |\n|\t|\r|\,|\;|$)/", "((".$newName."))", $data);
-		    else
-		    	$data = preg_replace("/(?<= |\n|\t|\r|\,|\;|^)$oldName(?= |\n|\t|\r|\,|\;|$)/", $newName, $data);
-		    $data = preg_replace("/(?<=\(\()$oldName(?=\)\)|\|)/", $newName, $data);
+		    $quotedOldName = preg_quote( $oldName );
+			foreach( $semantics as $sem ) {
+				$data = str_replace( "($sem($oldName", "($sem($newName", $data );
+			}
+
+			if (strstr($newName, " "))
+				$data = preg_replace("/(?<= |\n|\t|\r|\,|\;|^)$quotedOldName(?= |\n|\t|\r|\,|\;|$)/", "((".$newName."))", $data);
+			else
+				$data = preg_replace("/(?<= |\n|\t|\r|\,|\;|^)$quotedOldName(?= |\n|\t|\r|\,|\;|$)/", $newName, $data);
+			$data = preg_replace("/(?<=\(\()$quotedOldName(?=\)\)|\|)/", $newName, $data);
+
 		    if ($is_wiki_page) {
 		    	$query = "update `tiki_pages` set `data`=?,`page_size`=? where `pageName`=?";
 		    	$this->query($query, array( $data,(int) strlen($data), $page));
@@ -558,36 +570,54 @@ class WikiLib extends TikiLib {
     }
 
     // Like pages are pages that share a word in common with the current page
-    function get_like_pages($page) {
-	global $user, $tikilib;
-	preg_match_all("/([A-Z])([a-z]+)/", $page, $words);
+	function get_like_pages($page) {
+		global $user, $tikilib, $prefs, $semanticlib;
 
-	// Add support to ((x)) in either strict or full modes
-	preg_match_all("/(([A-Za-z]|[\x80-\xFF])+)/", $page, $words2);
-	$words = array_unique(array_merge($words[0], $words2[0]));
-	$exps = array();
-	$bindvars=array();
-	foreach ($words as $word) {
-	    $exps[] = " `pageName` like ?";
-	    $bindvars[] = "%$word%";
-	}
+		// If pagealias are defined, they should be used instead of generic search
+		if( $prefs['feature_wiki_pagealias'] == 'y' ) {
+			require_once 'lib/wiki/semanticlib.php';
 
-	$exp = implode(" or ", $exps);
-	if ($exp) {
-		$query = "select `pageName` from `tiki_pages` where $exp";
-		$result = $this->query($query,$bindvars);
-		$ret = array();
+			$links = $semanticlib->getLinksUsing(
+				explode( ',', $prefs['wiki_pagealias_tokens'] ),
+				array( 'toPage' => $page ) );
 
-		while ($res = $result->fetchRow()) {
-			if ($tikilib->user_has_perm_on_object($user, $page, 'wiki page', 'tiki_p_view'))
-						$ret[] = $res["pageName"];
+			if( count($links) > 0 ) {
+				$likepages = array();
+				foreach( $links as $row )
+					$likepages[] = $row['fromPage'];
+
+				return $likepages;
+			}
 		}
 
-		return $ret;
-	} else {
-		return array();
+		preg_match_all("/([A-Z])([a-z]+)/", $page, $words);
+
+		// Add support to ((x)) in either strict or full modes
+		preg_match_all("/(([A-Za-z]|[\x80-\xFF])+)/", $page, $words2);
+		$words = array_unique(array_merge($words[0], $words2[0]));
+		$exps = array();
+		$bindvars=array();
+		foreach ($words as $word) {
+			$exps[] = " `pageName` like ?";
+			$bindvars[] = "%$word%";
+		}
+
+		$exp = implode(" or ", $exps);
+		if ($exp) {
+			$query = "select `pageName` from `tiki_pages` where $exp";
+			$result = $this->query($query,$bindvars);
+			$ret = array();
+
+			while ($res = $result->fetchRow()) {
+				if ($tikilib->user_has_perm_on_object($user, $page, 'wiki page', 'tiki_p_view'))
+					$ret[] = $res["pageName"];
+			}
+
+			return $ret;
+		} else {
+			return array();
+		}
 	}
-    }
 
     function is_locked($page, $info=null) {
 	if (!$info) {

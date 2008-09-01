@@ -2,7 +2,7 @@
 
 {if $prefs.feature_score eq 'y'}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Top users{/tr}"}{/if}
-{tikimodule title=$tpl_module_title name="users_rank" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox}
+{tikimodule title=$tpl_module_title name="users_rank" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 {if $nonums != 'y'}<ol>{else}<ul>{/if}
 {section loop=$users_rank name=u}
   <li>

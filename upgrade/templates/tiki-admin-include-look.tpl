@@ -5,7 +5,7 @@
 	{tr}{$crumbs[$crumb]->title}{/tr}
 	{help crumb=$crumbs[$crumb]}</div>
 
-	<form action="tiki-admin.php?page=look"  onreset="return(confirm('{tr}Cancel Edit{/tr}'))"  class="admin" method="post">
+	<form action="tiki-admin.php?page=look"  id="look" name="look" onreset="return(confirm('{tr}Cancel Edit{/tr}'))"  class="admin" method="post">
 		<div class="heading button" style="text-align: right">
 			<input type="submit" name="looksetup" value="{tr}Apply{/tr}" />
 			<input type="reset" name="looksetupreset" value="{tr}Reset{/tr}" />
@@ -163,6 +163,7 @@
 									<span>{tr}Custom Site Header{/tr}</span>
 								</a>
 							</legend>
+              {remarksbox type="note"}{tr}Activate will only show content for admin. Check Publish to use content for all users.{/tr}{/remarksbox}
 							<table class="admin">
 							<tr>
 								<td class="form">
@@ -540,6 +541,27 @@
 									<textarea id="bot_logo_code" name="bot_logo_code" rows="6" cols="40" style="width: 90%">{$prefs.bot_logo_code|escape}</textarea>
 									<br />
 									<small><em>{tr}Example{/tr}</em>:&lt;div style="text-align: center"&gt;&lt;small&gt;Powered by Tikiwiki&lt;/small&gt;&lt;/div&gt;</small>
+								</td>
+							</tr>
+							</table>
+						</fieldset>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="5">
+						<fieldset>
+							<legend>
+								<a href="#"><span>{tr}Custom End of <body> Code{/tr}</span></a>
+							</legend>
+							<table class="admin">
+							<tr>
+								<td class="form">
+									<label for="feature_endbody_code">{tr}Content{/tr}:</label>
+								</td>
+								<td>
+									<textarea id="feature_endbody_code" name="feature_endbody_code" rows="6" cols="40" style="width: 90%">{$prefs.feature_endbody_code|escape}</textarea>
+									<br />
+									<small><em>{tr}Example{/tr}</em>{literal}{wiki}&#123;literal&#125;{GOOGLEANALYTICS(account=xxxx) /}&#123;/literal&#125;{/wiki}{/literal}</small>
 								</td>
 							</tr>
 							</table>

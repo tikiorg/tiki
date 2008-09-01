@@ -7,7 +7,7 @@
 {eval var="{tr}Last Visitors{/tr}" assign="tpl_module_title"}
 {/if}
 {/if}
-{tikimodule title=$tpl_module_title name="last_visitors" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox}
+{tikimodule title=$tpl_module_title name="last_visitors" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
     <ol style="list-style-position:inside; margin:0; padding:0;{if ($nonums eq 'y') or ($showavatars eq 'y')} list-style-type:none;{else} list-style-type:decimal;{/if}">
 {if !$user}
 	<li>

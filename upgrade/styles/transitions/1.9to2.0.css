@@ -248,12 +248,8 @@ div#ajaxLoading {
 
 /* OpenID  */
 .openid_url {
-background-image: url(../../img/icons/login-OpenID-bg.gif);
-background-repeat: no-repeat;
-background-attachment: scroll;
-background-color: #ffffff;
-padding-left: 18px;
-}
+	background: #fff url(../../img/icons/login-OpenID-bg.gif) no-repeat;
+	padding-left: 18px}
 
 /* Style for navbar buttons 
  *  This class has to be added in the main style sheet */

@@ -61,7 +61,7 @@
 <th class="heading">{tr}Date{/tr}</th>
 {if $tiki_p_wiki_view_author ne 'n'}<th class="heading">{tr}User{/tr}</th>{/if}
 {if $prefs.feature_wiki_history_ip ne 'n'}<th class="heading">{tr}Ip{/tr}</th>{/if}
-<th class="heading">{tr}Comment{/tr}</th>
+<th class="heading">{tr}Edit Comment{/tr}</th>
 {if $prefs.feature_contribution eq 'y'}<th class="heading">{tr}Contribution{/tr}</th>{/if}
 {if $prefs.feature_contribution eq 'y' and $prefs.feature_contributor_wiki eq 'y'}<th class="heading">{tr}Contributors{/tr}</th>{/if}
 <th class="heading">{tr}Version{/tr}</th>

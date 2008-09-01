@@ -8,7 +8,7 @@
 {eval var="{tr}Top Sites{/tr}" assign="tpl_module_title"}
 {/if}
 {/if}
-{tikimodule title=$tpl_module_title name="directory_top_sites" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox}
+{tikimodule title=$tpl_module_title name="directory_top_sites" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
  {if $module_params.nonums != 'y'}<ol>{else}<ul>{/if}
     {section name=ix loop=$modTopdirSites}
         <li>

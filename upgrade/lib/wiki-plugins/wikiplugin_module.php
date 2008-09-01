@@ -28,7 +28,7 @@ so if you need to use params just add them in MODULE()
  */
 
 function wikiplugin_module_help() {
-	return tra("Displays a module inlined in page").":<br />~np~{MODULE(module=>,float=>left|right|none,decorations=>y|n,flip=>y|n,max=>,np=>0|1,args...)}{MODULE}~/np~";
+	return tra("Displays a module inlined in page").":<br />~np~{MODULE(module=>,float=>left|right|none,decorations=>y|n,flip=>y|n,max=>,np=>0|1,notitle=y|n,args...)}{MODULE}~/np~";
 }
 
 function wikiplugin_module_info() {
@@ -67,6 +67,11 @@ function wikiplugin_module_info() {
 				'required' => false,
 				'name' => tra('np'),
 				'description' => tra('0|1'),
+			),
+			'notitle' =>array(
+				'required' => false,
+				'name' => tra('notitle'),
+				'description' => tra('y|n'),
 			),
 		),
 	);

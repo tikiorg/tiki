@@ -9,11 +9,11 @@ function check_pass() {
 	if ((pass1 == '') || (pass2 == '')) {
 		document.getElementById('checkpass').innerHTML = '';
 	} else if ( pass1 == pass2 ) {
-		document.getElementById('checkpass').style.color = '#339933';
-		document.getElementById('checkpass').innerHTML = 'Passwords match';
+		document.getElementById('checkpass').style.color = '#000000';
+		document.getElementById('checkpass').innerHTML = "<img src='pics/icons/accept.png' style='vertical-align:middle' alt='Match' /> Passwords match";
 	} else if (document.getElementById('pass1').value != document.getElementById('pass2').value) {
-		document.getElementById('checkpass').style.color = '#FF0000';
-		document.getElementById('checkpass').innerHTML = 'Passwords don\'t match';	
+		document.getElementById('checkpass').style.color = '#000000';
+		document.getElementById('checkpass').innerHTML = "<img src='pics/icons/exclamation.png' style='vertical-align:middle' alt='Do not match' /> Passwords don\'t match";	
 	}
 }
 

@@ -208,7 +208,10 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
 	header('Location: tiki-calendar.php');
 	die;
 }  elseif (isset($_REQUEST['duplicate']) and $tiki_p_add_events == 'y') {
-	$calitem = $calendarlib->get_item($_REQUEST['duplicate']);
+	$calitem = $calendarlib->get_item($_REQUEST['calitemId']);
+	$calitem['calendarId'] = $_REQUEST['calendarId'];
+	$calitem['calitemId'] = 0;
+	$calendarlib->set_item($user,0,$calitem);
 	$id = 0;
 	if (isset($_REQUEST['calId'])) {
 		$calendar = $calendarlib->get_calendar($_REQUEST['calId']);

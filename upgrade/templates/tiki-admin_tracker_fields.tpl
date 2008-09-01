@@ -28,7 +28,7 @@
 <tr class="formcolor"><td>{tr}Type{/tr}:
 {assign var=fld value="z"}
 {foreach key=fk item=fi from=$field_types name=foreachname}
-{if $fi.opt}
+{if $fi.help}
 <div id='{$fk}' {if $type eq $fk or (($type eq 'o' or $type eq '') and $smarty.foreach.foreachname.first)}style="display:block;font-style:italic;"{else}style="display:none;font-style:italic;"{/if}>{$fi.help}</div>
 {assign var=fld value=$fld|cat:$fk}
 {/if}

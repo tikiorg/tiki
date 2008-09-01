@@ -3696,24 +3696,28 @@ class TikiLib extends TikiDB {
 		}
 
 		if (!empty($filter)) {
-			$tmp_mid = '';
+			$tmp_mid = array();
 			foreach ($filter as $type=>$val) {
 				if ($type == 'categId') {
 					$join_tables .= " inner join `tiki_objects` as tob on (tob.`itemId`= tp.`pageName` and tob.`type`= ?) inner join `tiki_category_objects` as tc on (tc.`catObjectId`=tob.`objectId` and tc.`categId`=?) ";
 					$join_bindvars = array('wiki page', $val);
 				} elseif ($type == 'lang') {
-					if ( ! empty($tmp_mid) ) $tmp_mid .= ' and ';
-					$tmp_mid .= '`lang`=? ';
+					$tmp_mid[] = 'tp.`lang`=?';
 					$bindvars[] = $val;
 				} elseif ($type == 'structHead') {
 					$join_tables .= " inner join `tiki_structures` as ts on (ts.`page_id` = tp.`page_id` and ts.`parent_id` = 0) ";
 					$select .= ',ts.`page_alias`';
+				} elseif ($type == 'langOrphan') {
+					$join_tables .= " left join tiki_translated_objects tro on (tro.type = 'wiki page' AND tro.objId = tp.page_id) ";
+					$tmp_mid[] = "( (tro.traId IS NULL AND tp.lang != ?) OR tro.traId NOT IN(SELECT traId FROM tiki_translated_objects WHERE lang = ?))";
+					$bindvars[] = $val;
+					$bindvars[] = $val;
 				}
 			}
 			if (!empty($tmp_mid)) {
 				$mid .= empty($mid) ? ' where (' : ' and (';
-							$mid .= $tmp_mid.')';
-							}
+				$mid .= implode( ' and ', $tmp_mid ) . ')';
+			}
 		}
 		if (!empty($initial)) {
 			$mid .= empty($mid) ? ' where (' : ' and (';
@@ -3733,7 +3737,7 @@ class TikiLib extends TikiDB {
 		}
 
 		if ( $only_orphan_pages ) {
-		$join_tables = ' left join `tiki_links` as tl on tp.`pageName` = tl.`toPage` left join `tiki_structures` as ts on tp.`page_id` = ts.`page_id`';
+		$join_tables .= ' left join `tiki_links` as tl on tp.`pageName` = tl.`toPage` left join `tiki_structures` as ts on tp.`page_id` = ts.`page_id`';
 		$mid .= ( $mid == '' ) ? ' where ' : ' and ';
 		$mid .= 'tl.`toPage` IS NULL and `ts`.page_id IS NULL';
 		}
@@ -4567,13 +4571,32 @@ class TikiLib extends TikiDB {
 		return $result->numRows();
 	}
 
-	function page_exists_desc($pageName) {
+	function page_exists_desc( &$pageName, $searchAlias = false ) {
 		$query = "select `description`  from `tiki_pages`
 			where `pageName` = ?";
 		$result = $this->query($query, array( $pageName ));
 
-		if (!$result->numRows())
+		if (!$result->numRows()) {
+			if( $searchAlias ) {
+				global $semanticlib, $prefs;
+
+				if( $prefs['feature_wiki_pagealias'] == 'y' ) {
+					require_once 'lib/wiki/semanticlib.php';
+
+					$links = $semanticlib->getLinksUsing(
+						explode( ',', $prefs['wiki_pagealias_tokens'] ),
+						array( 'toPage' => $pageName ) );
+
+					if( count($links) > 0 ) {
+						// May be multiple (inconsistencies), just use the first one
+						$pageName = $links[0]['fromPage'];
+						return $this->page_exists_desc( $pageName );
+					}
+				}
+			}
+
 			return false;
+		}
 
 		$res = $result->fetchRow();
 
@@ -4617,7 +4640,7 @@ class TikiLib extends TikiDB {
 		if (!$user) $user = 'anonymous';
 		if (empty($wysiwyg)) $wysiwyg = $prefs['wysiwyg_default'];
 		// Collect pages before modifying data
-		$pages = $this->get_pages($data);
+		$pages = $this->get_pages($data, true);
 
 		// This *really* shouldn't be necessary now that the
 		// query itself has been fixed up, and it causes much
@@ -4682,8 +4705,8 @@ class TikiLib extends TikiDB {
 		$this->clear_links($name);
 
 		// Pages are collected before adding slashes
-		foreach ($pages as $a_page) {
-			$this->replace_link($name, $a_page);
+		foreach ($pages as $a_page => $types) {
+			$this->replace_link($name, $a_page, $types);
 		}
 
 		// Update the log
@@ -5069,15 +5092,7 @@ class TikiLib extends TikiDB {
 				// print "<pre>args2: :".htmlspecialchars( $plugins[2] ) .":</pre>";
 
 				// Normal plugins
-
-				// Construct plugin file pathname
 				$plugin_name = strtolower($plugins[1]);
-				$php_name = 'lib/wiki-plugins/wikiplugin_';
-				$php_name .= $plugin_name . '.php';
-
-				// Construct plugin function name
-				$func_name = 'wikiplugin_' . $plugin_name;
-				$func_name_info = $func_name . '_info';
 
 				$params_string = $plugins[2];
 
@@ -5111,28 +5126,10 @@ class TikiLib extends TikiDB {
 					}
 				}
 
-				if (file_exists($php_name)) {
-					include_once ($php_name);
+				if ($this->plugin_exists( $plugin_name )) {
 
-					if( function_exists( $func_name_info ) ) {
-						$plugin_enabled = true;
-						$meta = $func_name_info();
+					if( $this->plugin_enabled( $plugin_name ) ) {
 
-						if( isset( $meta['prefs'] ) ) {
-							foreach( $meta['prefs'] as $pref )
-								if( $prefs[$pref] != 'y' ) {
-									$plugin_enabled = false;
-									break;
-								}
-
-							$plugin_editable = $plugin_enabled && $tiki_p_edit == 'y' && $prefs['wiki_edit_plugin'] == 'y';
-						}
-					} else {
-						$plugin_enabled = true;
-						$plugin_editable = false;
-					}
-
-					if( $plugin_enabled ) {
 						static $plugin_indexes = array();
 
 						if( ! array_key_exists( $plugin_name, $plugin_indexes ) )
@@ -5159,7 +5156,32 @@ class TikiLib extends TikiDB {
 							// Handle nested plugins.
 							$this->parse_first($plugin_data, $preparsed, $noparsed, $real_start_diff + $pos+strlen($plugin_start));
 
-							$ret = $func_name($plugin_data, $arguments, $real_start_diff + $pos+strlen($plugin_start));
+							if( true === $status = $this->plugin_can_execute( $plugin_name, $plugin_data, $arguments ) ) {
+								$ret = $this->plugin_execute( $plugin_name, $plugin_data, $arguments, $real_start_diff + $pos+strlen($plugin_start));
+							} else {
+								global $tiki_p_plugin_viewdetail, $tiki_p_plugin_preview, $tiki_p_plugin_approve;
+								$details = $tiki_p_plugin_viewdetail == 'y' && $status != 'rejected';
+								$preview = $tiki_p_plugin_preview == 'y' && $details;
+								$approve = $tiki_p_plugin_approve == 'y' && $details;
+
+								if( $status != 'rejected' ) {
+									$smarty->assign( 'plugin_fingerprint', $status );
+									$status = 'pending';
+								}
+
+								$smarty->assign( 'plugin_name', $plugin_name );
+								$smarty->assign( 'plugin_index', $current_index );
+
+								$smarty->assign( 'plugin_status', $status );
+								$smarty->assign( 'plugin_details', $details );
+								$smarty->assign( 'plugin_preview', $preview );
+								$smarty->assign( 'plugin_approve', $approve );
+
+								$smarty->assign( 'plugin_body', $plugin_data );
+								$smarty->assign( 'plugin_args', $arguments );
+
+								$ret = '~np~' . $smarty->fetch('tiki-plugin_blocked.tpl') . '~/np~';
+							}
 						}
 					} else {
 						// Handle nested plugins.
@@ -5168,7 +5190,7 @@ class TikiLib extends TikiDB {
 						$ret = tra( "__WARNING__: Plugin disabled $plugin! " ) . $plugin_data;
 					}
 
-					if( $plugin_editable ) {
+					if( $this->plugin_is_editable( $plugin_name ) ) {
 						include_once('lib/smarty_tiki/function.icon.php');
 						global $headerlib, $page;
 						$headerlib->add_jsfile( 'tiki-jsplugin.php?plugin=' . urlencode( $plugin_name ) );
@@ -5198,6 +5220,164 @@ class TikiLib extends TikiDB {
 
 		} // while
 		// print "<pre>real done data: :".htmlspecialchars( $data ) .":</pre>";
+	}
+
+	function plugin_exists( $name, $include = false ) {
+		$php_name = 'lib/wiki-plugins/wikiplugin_';
+		$php_name .= $name . '.php';
+
+		$exists = file_exists( $php_name );
+
+		if( $include && $exists )
+			include_once $php_name;
+
+		return $exists;
+	}
+
+	function plugin_info( $name ) {
+		if( ! $this->plugin_exists( $name, true ) )
+			return false;
+
+		$func_name_info = "wikiplugin_{$name}_info";
+
+		if( ! function_exists( $func_name_info ) )
+			return false;
+
+		return $func_name_info();
+	}
+
+	function plugin_enabled( $name ) {
+		if( ! $meta = $this->plugin_info( $name ) )
+			return true; // Legacy plugins always execute
+
+		global $prefs;
+
+		if( isset( $meta['prefs'] ) )
+			foreach( $meta['prefs'] as $pref )
+				if( $prefs[$pref] != 'y' )
+					return false;
+
+		return true;
+	}
+
+	function plugin_can_execute( $name, $data = '', $args = array() ) {
+		global $prefs;
+
+		// If validation is disabled, anything can execute
+		if( $prefs['wiki_validate_plugin'] != 'y' )
+			return true;
+
+		$meta = $this->plugin_info( $name );
+		if( ! isset( $meta['validate'] ) )
+			return true;
+
+		$fingerprint = $this->plugin_fingerprint( $meta, $data, $args );
+
+		$val = $this->plugin_fingerprint_check( $fingerprint );
+		if( strpos( $val, 'accept' ) === 0 )
+			return true;
+		elseif( strpos( $val, 'reject' ) === 0 )
+			return 'rejected';
+		else {
+			global $tiki_p_plugin_approve, $tiki_p_plugin_preview, $user;
+			if( $_SERVER['REQUEST_METHOD'] == 'POST'
+				&& isset( $_POST['plugin_fingerprint'] ) 
+				&& $_POST['plugin_fingerprint'] == $fingerprint
+			) {
+				if( $tiki_p_plugin_approve == 'y' ) {
+					if( isset( $_POST['plugin_accept'] ) ) {
+						$this->plugin_fingerprint_store( $fingerprint, 'accept' );
+						return true;
+					} elseif( isset( $_POST['plugin_reject'] ) ) {
+						$this->plugin_fingerprint_store( $fingerprint, 'reject' );
+						return 'rejected';
+					}
+				} 
+
+				if( $tiki_p_plugin_preview == 'y' 
+					&& isset( $_POST['plugin_preview'] ) ) {
+					return true;
+				}
+			}
+
+			return $fingerprint;
+		}
+	}
+
+	function plugin_fingerprint_check( $fp ) {
+		global $prefs;
+
+		if( ! isset( $prefs['plugin_fingerprints'] ) )
+			return '';
+
+		$data = unserialize( $prefs['plugin_fingerprints'] );
+
+		if( isset( $data[$fp] ) )
+			return $data[$fp];
+		else
+			return '';
+	}
+
+	function plugin_fingerprint_store( $fp, $type ) {
+		global $prefs, $user;
+		$date = date( 'Y-m-d H:i:s' );
+
+		if( ! isset( $prefs['plugin_fingerprints'] ) )
+			$data = array();
+		else
+			$data = unserialize( $prefs['plugin_fingerprints'] );
+
+		if( ! is_array( $data ) )
+			$data = array();
+
+		$data[$fp] = "$type/$date/$user";
+		$this->set_preference( 'plugin_fingerprints', serialize( $data ) );
+	}
+
+	function plugin_fingerprint( $meta, $data, $args ) {
+		$validate = $meta['validate'];
+		if( $validate == 'all' || $validate == 'body' )
+			$validateBody = $data;
+		else
+			$validateBody = '';
+
+		if( $validate == 'all' || $validate == 'arguments' ) {
+			$validateArgs = $args;
+
+			// Remove arguments marked as safe from the fingerprint
+			foreach( $meta['params'] as $key => $info )
+				if( isset( $validateArgs[$key] ) 
+					&& isset( $info['safe'] ) 
+					&& $info['safe']
+				)
+					unset( $validateArgs[$key] );
+
+			// Parameter order needs to be stable
+			ksort( $validateArgs );
+		} else
+			$validateArgs = array();
+
+		$bodyLen = str_pad( strlen( $validateBody ), 6, '0', STR_PAD_RIGHT );
+		$serialized = serialize( $validateArgs );
+		$argsLen = str_pad( strlen( $serialized ), 6, '0', STR_PAD_RIGHT );
+
+		$bodyHash = md5( $validateBody );
+		$argsHash = md5( $serialized );
+
+		return "$bodyHash-$argsHash-$bodyLen-$argsLen";
+	}
+
+	function plugin_execute( $name, $data = '', $args = array(), $offset = 0 ) {
+		if( ! $this->plugin_exists( $name, true ) )
+			return false;
+
+		$func_name = 'wikiplugin_' . $name;
+		return $func_name( $data, $args, $offset );
+	}
+
+	function plugin_is_editable( $name ) {
+		global $tiki_p_edit, $prefs;
+		return $this->plugin_info( $name ) && $tiki_p_edit == 'y' && $prefs['wiki_edit_plugin'] == 'y';
 	}
 
 	function quotesplit( $splitter=',', $repl_string ) {
@@ -5415,6 +5595,7 @@ class TikiLib extends TikiDB {
 		$is_html = isset($options['is_html']) ? $options['is_html'] : false;
 		$absolute_links = isset($options['absolute_links']) ? $options['absolute_links'] : false;
 		$language = isset($options['language']) ? $options['language'] : '';
+		$noparseplugins = isset($options['noparseplugins']) ? $options['noparseplugins'] : false;
 
 		// if simple_wiki is tru, disable some wiki syntax
 		// basically, allow wiki plugins, wiki links and almost
@@ -5468,7 +5649,9 @@ class TikiLib extends TikiDB {
 		// Handle pre- and no-parse sections and plugins
 		$preparsed = array('data'=>array(),'key'=>array());
 		$noparsed = array('data'=>array(),'key'=>array());
-		$this->parse_first($data, $preparsed, $noparsed);
+		if (!$noparseplugins) {
+			$this->parse_first($data, $preparsed, $noparsed);
+		}
 
 		// Handle |# anchor links by turning them into ALINK module calls.
 		preg_match_all("/\(\(([^)]*\|#[^)]*)\)\)/", $data, $anchors);
@@ -5550,7 +5733,9 @@ class TikiLib extends TikiDB {
 			}
 		}
 
-		$this->parse_first($data, $preparsed, $noparsed);
+		if (!$noparseplugins) {
+			$this->parse_first($data, $preparsed, $noparsed);
+		}
 
 		// Handle ~pre~...~/pre~ sections
 		$data = preg_replace(';~pre~(.*?)~/pre~;s', '<pre>$1</pre>', $data);
@@ -5806,113 +5991,26 @@ class TikiLib extends TikiDB {
 		// New syntax for wiki pages ((name|desc)) Where desc can be anything
 		// preg_match_all("/\(\(($page_regex)\|(.+?)\)\)/", $data, $pages);
 		// match ((name|desc)) as well as ((name|))
-		preg_match_all("/\(\(($page_regex)\|([^\)]*?)\)\)/", $data, $pages);
+		preg_match_all("/\(([a-z0-9-]+)?\(($page_regex)\|([^\)]*?)\)\)/", $data, $pages);
 
 		$temp_max = count($pages[1]);
 		for ($i = 0; $i < $temp_max; $i++) {
-			$pattern = $pages[0][$i];
-			$pattern = preg_quote($pattern, "/");
-			$pattern = "/" . $pattern . "/";
+			$exactMatch = $pages[0][$i];
+			$replacement = $this->get_wiki_link_replacement( $pages[2][$i], array( 
+				'description' => $pages[6][$i], 
+				'reltype' => $pages[1][$i] ) );
 
-			// Replace links to external wikis
-			$repl2 = true;
-
-			if (strstr($pages[1][$i], ':')) {
-				$wexs = explode(':', $pages[1][$i]);
-
-				if (count($wexs) == 2) {
-					$wkname = $wexs[0];
-
-					if ($this->db->getOne("select count(*) from `tiki_extwiki` where `name`=?",array($wkname)) == 1) {
-						$wkurl = $this->db->getOne("select `extwiki`  from `tiki_extwiki` where `name`=?",array($wkname));
-
-						$wkurl = '<a href="' . str_replace('$page', urlencode($wexs[1]), $wkurl). '" class="wiki external">' . $wexs[1] . '</a>';
-						$data = preg_replace($pattern, "$wkurl", $data);
-						$repl2 = false;
-					}
-				}
-			}
-
-			if ($repl2) {
-				// 24-Jun-2003, by zaufi
-				// TODO: future optimize: get page description and modification time at once.
-				// text[0] = link description (previous format)
-				// text[1] = timeout in seconds (new field)
-				// text[2..N] = drop
-				$text = explode("|", $pages[5][$i]);
-
-				if ($desc = $this->page_exists_desc($pages[1][$i])) {
-					// why the preg_replace? ex: ((page||Page-Desc)) the desc must stay Page-Desc, and not ))Page-Desc((
-					$desc1 = $desc;
-					$desc = preg_replace("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/s", "$1))$2(($3", $desc);
-					$bestLang = ($prefs['feature_multilingual'] == 'y' && $prefs['feature_best_language'] == 'y')? "&amp;bl=y" : "";
-					$uri_ref = $wikilib->sefurl($pages[1][$i]).$bestLang;
-
-					// check to see if desc is blank in ((page|desc))
-					if (strlen(trim($text[0])) > 0) {
-						$linktext = $text[0];
-					} elseif ($desc != $pages[1][$i]) {
-						// desc is blank; use the page description instead
-						$linktext = $pages[1][$i] . ': ' . $desc;
-					} else {
-						// there is no page description
-						$linktext = $pages[1][$i];
-					}
-
-					$repl = '<a title="'.$desc1.'" href="'.$uri_ref.'" class="wiki">' . $linktext . '</a>';
-
-					// Check is timeout expired?
-					if (isset($text[1]) && (time() - intval($this->page_exists_modtime($pages[1][$i]))) < intval($text[1])) {
-						// Append small 'new' image. TODO: possible 'updated' image more suitable...
-						$repl .= '&nbsp;<img src="img/icons/new.gif" border="0" alt="'.tra("new","",true).'" />';
-					}
-				} else {
-					$uri_ref = "tiki-editpage.php?page=" . urlencode($pages[1][$i]);
-					if( $prefs['feature_multilingual'] == 'y' && isset( $GLOBALS['pageLang'] ) ) {
-						$uri_ref .= '&amp;lang=' . urlencode($GLOBALS['pageLang']);
-					}
-
-					$repl = (strlen(trim($text[0])) > 0 ? $text[0] : $pages[1][$i]) . '<a href="'.$uri_ref.'" title="'.tra("Create page:","",true)." ".urlencode($pages[1][$i]).'" class="wiki wikinew">?</a>';
-				}
-				$data = preg_replace($pattern, "$repl", $data);
-			}
+			$data = str_replace($exactMatch, $replacement, $data);
 		}
 
 		// New syntax for wiki pages ((name)) Where name can be anything
-		preg_match_all("/\(\( *($page_regex) *\)\)/", $data, $pages);
+		preg_match_all("/\(([a-z0-9-]+)?\( *($page_regex) *\)\)/", $data, $pages);
 
-		foreach (array_unique($pages[1]) as $page_parse) {
-			$repl2 = true;
+		foreach ($pages[2] as $idx => $page_parse) {
+			$exactMatch = $pages[0][$idx];
+			$replacement = $this->get_wiki_link_replacement( $page_parse, array( 'reltype' => $pages[1][$idx] ) );
 
-			if (strstr($page_parse, ':')) {
-				$wexs = explode(':', $page_parse);
-
-				if (count($wexs) == 2) {
-					$wkname = $wexs[0];
-
-					if ($this->db->getOne("select count(*) from `tiki_extwiki` where `name`=?",array($wkname)) == 1) {
-						$wkurl = $this->db->getOne("select `extwiki`  from `tiki_extwiki` where `name`=?",array($wkname));
-
-						$wkurl = '<a href="' . str_replace('$page', urlencode($wexs[1]), $wkurl). '" class="wiki external">' . $wexs[1] . '</a>';
-						$data = preg_replace("/\(\($page_parse\)\)/", "$wkurl", $data);
-						$repl2 = false;
-					}
-				}
-			}
-
-			if ($repl2) {
-				if ($desc = $this->page_exists_desc($page_parse)) {
-					// why the preg_replace? ex: ((page||Page-Desc)) the desc must stay Page-Desc in the title, and not ))Page-Desc((
-					//$desc = preg_replace("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/s", "$1))$2(($3", $desc);
-					$bestLang = ($prefs['feature_multilingual'] == 'y' && $prefs['feature_best_language'] == 'y')? "&amp;bl=y" : ""; // to choose the best page language
-					$repl = "<a title=\"$desc\" href='" . $wikilib->sefurl($page_parse).$bestLang. "' class='wiki'>$page_parse</a>";
-				} else {
-					$repl = $page_parse.'<a href="tiki-editpage.php?page=' . urlencode($page_parse). ($prefs['feature_multilingual'] == 'y' && isset($GLOBALS['pageLang'])?('&amp;lang='.urlencode($GLOBALS['pageLang'])):'') . '" title="'.tra("Create page:","",true).' '.urlencode($page_parse).'"  class="wiki wikinew">?</a>';
-				}
-
-				$page_parse_pq = preg_quote($page_parse, "/");
-				$data = preg_replace("/\(\($page_parse_pq\)\)/", "$repl", $data);
-			}
+			$data = str_replace($exactMatch, $replacement, $data);
 		}
 
 		// Links to internal pages
@@ -5930,33 +6028,10 @@ class TikiLib extends TikiDB {
 			$words = $this->get_hotwords();
 			foreach (array_unique($pages[1])as $page_parse) {
 				if (!array_key_exists($page_parse, $words)) {
-					if ($desc = $this->page_exists_desc($page_parse)) {
-						//$desc = preg_replace("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/s", "$1))$2(($3", $desc);
-						$repl = '<a title="' . htmlspecialchars($desc) . '" href="'.$wikilib->sefurl($page_parse). '" class="wiki">' . $page_parse . '</a>';
-					} elseif ($prefs['feature_wiki_plurals'] == 'y') {
-# Link plural topic names to singular topic names if the plural
-# doesn't exist, and the language is english
-						$plural_tmp = $page_parse;
-# Plurals like policy / policies
-						$plural_tmp = preg_replace("/ies$/", "y", $plural_tmp);
-# Plurals like address / addresses
-						$plural_tmp = preg_replace("/sses$/", "ss", $plural_tmp);
-# Plurals like box / boxes
-						$plural_tmp = preg_replace("/([Xx])es$/", "$1", $plural_tmp);
-# Others, excluding ending ss like address(es)
-						$plural_tmp = preg_replace("/([A-Za-rt-z])s$/", "$1", $plural_tmp);
-						if($desc = $this->page_exists_desc($plural_tmp)) {
-							// $desc = preg_replace("/([ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/s", "$1))$2(($3", $desc);
-							// $repl = "<a title=\"".$desc."\" href=\"tiki-index.php?page=$plural_tmp\" class=\"wiki\" title=\"spanner\">$page_parse</a>";
-							$repl = "<a title='".$desc."' href='".$wikilib->sefurl($plural_tmp)."' class='wiki'>$page_parse</a>";
-						} else {
-							$repl = $page_parse.'<a href="tiki-editpage.php?page='.urlencode($page_parse). ($prefs['feature_multilingual'] == 'y' && isset($GLOBALS['pageLang'])?('&amp;lang='.urlencode($GLOBALS['pageLang'])):'').'" title="'.tra("Create page:","",true).' '.urlencode($page_parse).'" class="wiki wikinew">?</a>';
-						}
-					} else {
-						$repl = $page_parse.'<a href="tiki-editpage.php?page=' . urlencode($page_parse). ($prefs['feature_multilingual'] == 'y' && isset($GLOBALS['pageLang'])?('&amp;lang='.urlencode($GLOBALS['pageLang'])):''). '"  title="'.tra("Create page:","",true).' '.urlencode($page_parse).'" class="wiki wikinew">?</a>';
-					}
-					$data = preg_replace("/(?<=[ \n\t\r\,\;]|^)$page_parse(?=$|[ \n\t\r\,\;\.])/", "$1" . "$repl" . "$2", $data);
-					//$data = str_replace($page_parse,$repl,$data);
+					$repl = $this->get_wiki_link_replacement( $page_parse, array(
+						'plural' => $prefs['feature_wiki_plurals'] == 'y' ) );
+
+					$data = preg_replace("/(?<=[ \n\t\r\,\;]|^)$page_parse(?=$|[ \n\t\r\,\;\.])/", "$1" . $repl . "$2", $data);
 				}
 			}
 		}
@@ -6114,7 +6189,7 @@ class TikiLib extends TikiDB {
 			$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$2 $rel\">$1</a>$ext_icon", $data);
 			$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)\|([^\]]+)\]/";//< last param here ($2) is used for relation (rel) attribute (e.g. shadowbox) or nocache
 			preg_match($pattern, $data, $matches);
-			if ($matches[2]=='nocache') {
+			if (isset($matches[2]) && $matches[2]=='nocache') {
 				$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$rel\">$1</a>$ext_icon", $data);
 			} else {
 				$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$2 $rel\">$1</a>$ext_icon $cosa", $data);
@@ -6270,6 +6345,7 @@ class TikiLib extends TikiDB {
 			$inPre = 0;
 			$inComment = 0;
 			$inTOC = 0;
+			$inScript = 0;
 			$title_text = '';
 
 			// loop: process all lines
@@ -6350,6 +6426,10 @@ class TikiLib extends TikiDB {
 				// not insert <br />
 				$inTOC += substr_count(strtolower($line), "<ul class=\"toc");
 				$inTOC -= substr_count(strtolower($line), "</ul");
+
+				// check if we are inside a script not insert <br />
+				$inScript += substr_count(strtolower($line), "<script ");
+				$inScript -= substr_count(strtolower($line), "</script>");
 
 				// If the first character is ' ' and we are not in pre then we are in pre
 				if (substr($line, 0, 1) == ' ' && $prefs['feature_wiki_monosp'] == 'y' && $inTable == 0 && $inPre == 0 && $inComment == 0 ) {
@@ -6619,7 +6699,7 @@ class TikiLib extends TikiDB {
 							 *
 							 * @since Version 1.9
 							 */
-							if ($inTable == 0 && $inPre == 0 && $inComment == 0 && $inTOC == 0
+							if ($inTable == 0 && $inPre == 0 && $inComment == 0 && $inTOC == 0 && $inScript == 0
 									// Don't put newlines at comments' end!
 									&& ! substr_count(strtolower($line), "-->")
 								 ) {
@@ -6849,6 +6929,99 @@ class TikiLib extends TikiDB {
 		return $data;
 	}
 
+	function get_wiki_link_replacement( $pageLink, $extra = array() ) {
+		global $prefs, $wikilib, $semanticlib;
+		
+		$displayLink = $pageLink;
+
+		$description = null;
+		$reltype = null;
+		$processPlural = false;
+		$bestLang = ($prefs['feature_multilingual'] == 'y' && $prefs['feature_best_language'] == 'y')? "&amp;bl=y" : "";
+
+		if( array_key_exists( 'description', $extra ) )
+			$description = $extra['description'];
+		if( array_key_exists( 'reltype', $extra ) )
+			$reltype = $extra['reltype'];
+		if( array_key_exists( 'plural', $extra ) )
+			$processPlural = (boolean) $extra['plural'];
+
+		// Replace links to external wikis
+		if (strpos($pageLink, ':')) {
+			$wexs = explode(':', $pageLink);
+
+			if (count($wexs) == 2) {
+				$wkname = $wexs[0];
+
+				if ($this->db->getOne("select count(*) from `tiki_extwiki` where `name`=?",array($wkname)) == 1) {
+					$wkurl = $this->db->getOne("select `extwiki`  from `tiki_extwiki` where `name`=?",array($wkname));
+
+					$wkurl = '<a href="' . str_replace('$page', urlencode($wexs[1]), $wkurl). '" class="wiki external ' . $reltype . '">' . $wexs[1] . '</a>';
+					return $wkurl;
+				}
+			}
+		}
+
+		// 24-Jun-2003, by zaufi
+		// TODO: future optimize: get page description and modification time at once.
+		// text[0] = link description (previous format)
+		// text[1] = timeout in seconds (new field)
+		// text[2..N] = drop
+		$text = explode("|", $description);
+
+		if ($desc = $this->page_exists_desc($pageLink, true)) {
+			// why the preg_replace? ex: ((page||Page-Desc)) the desc must stay Page-Desc, and not ))Page-Desc((
+			$uri_ref = $wikilib->sefurl($pageLink).$bestLang;
+
+			// check to see if desc is blank in ((page|desc))
+			if (strlen(trim($text[0])) > 0) {
+				$linktext = $text[0];
+			} elseif ($desc != $pageLink && $description !== null) {
+				// desc is blank; use the page description instead
+				$linktext = $displayLink . ': ' . $desc;
+			} else {
+				// there is no page description
+				$linktext = $displayLink;
+			}
+
+			$repl = '<a title="'.$desc.'" href="'.$uri_ref.'" class="wiki ' . $reltype . '">' . $linktext . '</a>';
+
+			// Check is timeout expired?
+			if (isset($text[1]) && (time() - intval($this->page_exists_modtime($pageLink))) < intval($text[1])) {
+				// Append small 'new' image. TODO: possible 'updated' image more suitable...
+				$repl .= '&nbsp;<img src="img/icons/new.gif" border="0" alt="'.tra("new","",true).'" />';
+			}
+
+			return $repl;
+		}
+
+		if( $processPlural ) {
+			$plural_tmp = $pageLink;
+			// Plurals like policy / policies
+			$plural_tmp = preg_replace("/ies$/", "y", $plural_tmp);
+			// Plurals like address / addresses
+			$plural_tmp = preg_replace("/sses$/", "ss", $plural_tmp);
+			// Plurals like box / boxes
+			$plural_tmp = preg_replace("/([Xx])es$/", "$1", $plural_tmp);
+			// Others, excluding ending ss like address(es)
+			$plural_tmp = preg_replace("/([A-Za-rt-z])s$/", "$1", $plural_tmp);
+
+			if($desc = $this->page_exists_desc($plural_tmp, true)) {
+				$repl = "<a title='".$desc."' href='".$wikilib->sefurl($plural_tmp).$bestLang."' class='wiki'>$displayLink</a>";
+				return $repl;
+			}
+		}
+
+		$uri_ref = "tiki-editpage.php?page=" . urlencode($pageLink);
+		if( $prefs['feature_multilingual'] == 'y' && isset( $GLOBALS['pageLang'] ) ) {
+			$uri_ref .= '&amp;lang=' . urlencode($GLOBALS['pageLang']);
+		}
+
+		$repl = (strlen(trim($text[0])) > 0 ? $text[0] : $pageLink) . '<a href="'.$uri_ref.'" title="'.tra("Create page:","",true)." ".urlencode($pageLink).'" class="wiki wikinew">?</a>';
+
+		return $repl;
+	}
+
 	function parse_smileys($data) {
 		global $prefs;
 
@@ -6858,20 +7031,46 @@ class TikiLib extends TikiDB {
 		return $data;
 	}
 
-	function get_pages($data) {
+	function get_pages($data,$withReltype = false) {
 		global $page_regex, $prefs;
 
+		preg_match_all("/\(([a-z0-9-]+)?\( *($page_regex) *\)\)/", $data, $normal);
+		preg_match_all("/\(([a-z0-9-]+)?\( *($page_regex) *\|(.+?)\)\)/", $data, $withDesc);
+
 		if ($prefs['feature_wikiwords'] == 'y') {
-			preg_match_all("/\(\( *($page_regex) *\)\)/", $data, $pages2);
-			preg_match_all("/\(\( *($page_regex) *\|(.+?)\)\)/", $data, $pages3);
-			preg_match_all("/([ \n\t\r\,\;]|^)?([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/", $data, $pages);
-			$pages = array_unique(array_merge($pages[2], $pages2[1], $pages3[1]));
+			preg_match_all("/([ \n\t\r\,\;]|^)?([A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*)($|[ \n\t\r\,\;\.])/", $data, $wikiLinks);
+
+			$pageList = array_merge( $normal[2], $withDesc[2], $wikiLinks[2] );
+			if( $withReltype ) {
+				$relList = array_merge(
+					$normal[1], 
+					$withDesc[1], 
+					count($wikiLinks[2]) ? array_fill( 0, count($wikiLinks[2]), null ) : array()
+				);
+			}
 		} else {
-			preg_match_all("/\(\( *($page_regex) *\)\)/", $data, $pages);
-			preg_match_all("/\(\( *($page_regex) *\|(.+?)\)\)/", $data, $pages2);
-			$pages = array_unique(array_merge($pages[1], $pages2[1]));
+			$pageList = array_merge( $normal[2], $withDesc[2] );
+			if( $withReltype ) {
+				$relList = array_merge(
+					$normal[1], 
+					$withDesc[1]
+				);
+			}
 		}
-		return $pages;
+
+		if( $withReltype ) {
+			$complete = array();
+			foreach( $pageList as $idx => $name ) {
+				if( ! array_key_exists( $name, $complete ) )
+					$complete[$name] = array();
+				if( ! empty( $relList[$idx] ) && ! in_array( $relList[$idx], $complete[$name] ) )
+					$complete[$name][] = $relList[$idx];
+			}
+
+			return $complete;
+		} else {
+			return array_unique( $pageList );
+		}
 	}
 
 	function clear_links($page) {
@@ -6879,11 +7078,18 @@ class TikiLib extends TikiDB {
 		$result = $this->query($query, array($page));
 	}
 
-	function replace_link($pageFrom, $pageTo) {
+	function replace_link($pageFrom, $pageTo, $types = array()) {
 		$query = "delete from `tiki_links` where `fromPage`=? and `toPage`=?";
 		$result = $this->query($query, array($pageFrom,$pageTo));
-		$query = "insert into `tiki_links`(`fromPage`,`toPage`) values(?, ?)";
-		$result = $this->query($query, array($pageFrom,$pageTo));
+
+		if( count($types) == 0 ) {
+			$query = "insert into `tiki_links`(`fromPage`,`toPage`) values(?, ?)";
+			$result = $this->query($query, array($pageFrom,$pageTo));
+		} else {
+			sort($types);
+			$query = "insert into `tiki_links`(`fromPage`,`toPage`, `reltype`) values(?, ?, ?)";
+			$result = $this->query($query, array( $pageFrom, $pageTo, implode(',', $types) ));
+		}
 	}
 
 	function invalidate_cache($page) {
@@ -6905,7 +7111,7 @@ class TikiLib extends TikiDB {
 
 		$this->invalidate_cache($pageName);
 		// Collect pages before modifying edit_data (see update of links below)
-		$pages = $this->get_pages($edit_data);
+		$pages = $this->get_pages($edit_data, true);
 
 		if (!$this->page_exists($pageName))
 			return false;
@@ -6985,8 +7191,8 @@ class TikiLib extends TikiDB {
 		$this->clear_links($pageName);
 
 		// Pages collected above
-		foreach ($pages as $page) {
-			$this->replace_link($pageName, $page);
+		foreach ($pages as $page => $types) {
+			$this->replace_link($pageName, $page, $types);
 		}
 
 		if (strtolower($pageName) != 'sandbox' && !$minor) {
@@ -7054,7 +7260,7 @@ class TikiLib extends TikiDB {
 						array( $lang, $info['page_id'] ) );
 			}
 
-			if ($prefs['feature_user_watches'] == 'y' && $prefs['wiki_watch_minor'] != 'n') {
+			if ($prefs['feature_user_watches'] == 'y' && ($prefs['wiki_watch_minor'] != 'n' || !$minor)) {
 				//  Deal with mail notifications.
 				include_once('lib/notifications/notificationemaillib.php');
 				global $histlib; include_once ("lib/wiki/histlib.php");
@@ -7087,7 +7293,7 @@ class TikiLib extends TikiDB {
 			return;
 
 		// Collect pages before modifying edit_data
-		$pages = $this->get_pages($edit_data);
+		$pages = $this->get_pages($edit_data, true);
 
 		if (!$this->page_exists($pageName))
 			return false;
@@ -7114,8 +7320,8 @@ class TikiLib extends TikiDB {
 			$this->clear_links($pageName);
 
 			// Pages are collected at the top of the function before adding slashes
-			foreach ($pages as $page) {
-				$this->replace_link($pageName, $page);
+			foreach ($pages as $page => $types) {
+				$this->replace_link($pageName, $page, $types);
 			}
 		}
 	}

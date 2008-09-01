@@ -13,16 +13,21 @@ if ($feature == null && isset($_REQUEST['featurechain'])) {
 
 $featurePage = explode('/', $featureChain);
 $featureId = $featurePage[count($featurePage) - 1];
-$topLevelId = $featurePage[2];
+if (isset($featurePage[2])) {
+	$topLevelId = $featurePage[2];
+} else {
+	$topLevelId = '';
+}
 if (count($featurePage) > 3) {
 	$secondLevelId = $featurePage[3];
 }
 
 $topLevelFeatures = $magiclib->get_child_features(1, 'containers');
-$secondLevelFeatures = '';
 
 if ($topLevelId != '' && is_numeric($topLevelId)) {
 	$secondLevelFeatures = $magiclib->get_child_features($topLevelId, 'containers');
+} else {
+	$secondLevelFeatures = '';	
 }
 
 $smarty->assign_by_ref('toplevelfeatures', $topLevelFeatures);

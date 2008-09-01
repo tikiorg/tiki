@@ -8,7 +8,7 @@
 {eval var="<a href=\"tiki-view_articles.php?topic=$topicId&amp;type=$type\">{tr}Last articles{/tr}</a>" assign="tpl_module_title"}
 {/if}
 {/if}
-{tikimodule title=$tpl_module_title name="last_articles" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox}
+{tikimodule title=$tpl_module_title name="last_articles" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 {if $nonums != 'y'}<ol class="module">{else}<ul class="module">{/if}
     {section name=ix loop=$modLastArticles}
       <li>

@@ -46,8 +46,8 @@ if (isset($_REQUEST["looksetup"])) {
 	"feature_topbar_debug",
 	"sitemycode_publish",
 	"feature_bot_logo",
-        "feature_menusfolderstyle",
-        "direct_pagination",
+	'feature_menusfolderstyle',
+	'direct_pagination',
 	"nextprev_pagination",
 	"pagination_firstlast",
 	"pagination_icons",
@@ -80,12 +80,14 @@ if (isset($_REQUEST["looksetup"])) {
 	"transition_style_ver",
 	"direct_pagination_max_middle_links",
 	"direct_pagination_max_ending_links",
-	"feature_site_report_email"
+	'feature_site_report_email',
+	'feature_endbody_code',
     );
 
     foreach ($pref_simple_values as $svitem) {
         simple_set_value ($svitem);
     }
+	echo $prefs['feature_endbody_code'];
 
     $pref_byref_values = array(
 	"feature_left_column",
@@ -120,7 +122,11 @@ $smarty->assign_by_ref("slide_styles", $slide_styles);
 
 if ( isset($_REQUEST["site_style"]) ) {
 	// If the theme has changed, reload the page to use the new theme
-	header("location: tiki-admin.php?page=look");
+	$location= 'location: tiki-admin.php?page=look';
+	if ($prefs['feature_tabs'] == 'y') {
+		$location .= "&cookietab=".$_COOKIE['tab'];
+	}
+	header($location);
 	exit;
 }
 ?>

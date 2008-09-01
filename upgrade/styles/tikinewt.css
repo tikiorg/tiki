@@ -152,6 +152,7 @@ input[type=submit]:hover,
 fieldset {
 	border: solid 1px #C7D0D9;
 	padding: 10px;
+	margin: 0px;
 }
 
 textarea {
@@ -160,6 +161,7 @@ textarea {
 
 label {
 	cursor: pointer;
+	display: block;
 }
 
 /***** Basic Page Layout 
@@ -796,6 +798,7 @@ div.simplebox {
 /** rbox: remarks box (note/warning/tip/comment) */
 .rbox {
   margin-top: 10px;
+	text-align: left;
 }
 .rbox-data {
   padding: 2px;
@@ -807,6 +810,7 @@ div.simplebox {
   -khtml-border-radius-topright: 1ex;
   font-size: .95em;
   padding: 0 10px;   
+	padding-bottom: 0.35em;
   position: relative;
   display: inline;
   margin: 0;
@@ -2785,12 +2789,8 @@ table.default td {
 
 /* OpenID  */
 .openid_url {
-background-image: url(../../img/icons/login-OpenID-bg.gif);
-background-repeat: no-repeat;
-background-attachment: scroll;
-background-color: #ffffff;
-padding-left: 18px;
-}
+	background: #fff url(../../img/icons/login-OpenID-bg.gif) no-repeat;
+	padding-left: 18px}
 
 /* Style for navbar buttons 
  *  This class has to be added in the main style sheet */
@@ -2816,5 +2816,29 @@ padding-left: 18px;
 .sub {
 	padding-left: 5em !important;
 }
-
+#page_bar {
+	text-align: center;
+}
+/* File Gallery */
+div.fgal_file {
+}
+div.fgal_file div.fgal_file_c1 {
+  float: left;
+  display: block;
+  width: 49%;
+}
+div.fgal_file div.fgal_file_c2 {
+  float: right;
+  width: 49%;
+  padding-left: 10px !important;
+}
+div.fgal_file div.div.fgal_file_c2:after {
+    content: ".";
+    display: block;
+    clear: both;
+    visibility: hidden;
+}
+div.fgal_file div.fgal_file_c3 {
+  clear: both;
+}
 /***** End of file ******/

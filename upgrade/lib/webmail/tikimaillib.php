@@ -25,9 +25,9 @@ class TikiMail extends HtmlMimeMail {
 			$from = $prefs['sender_email'];
 		$this->setFrom($from);
 		if (!@ini_get('safe_mode'))
-			$this->setReturnPath($prefs['sender_email']); // in safe-mode, return-path must then be configured at the server level
-		$this->setHeader("Return-Path", "<".$prefs['sender_email'].">"); // just in case, mainly will not work as usually the server rewrites the envelop
-		$this->setHeader("Reply-To",  "<".$prefs['sender_email'].">");
+			$this->setReturnPath($from); // in safe-mode, return-path must then be configured at the server level
+		$this->setHeader("Return-Path", "<".$from.">"); // just in case, mainly will not work as usually the server rewrites the envelop
+		$this->setHeader("Reply-To",  "<".$from.">");
 	}
 
 	function setUser($user) {

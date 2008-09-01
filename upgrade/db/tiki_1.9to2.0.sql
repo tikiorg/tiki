@@ -1787,3 +1787,8 @@ UPDATE `users_permissions` SET `admin`='y' WHERE `permName` = 'tiki_p_admin_tiki
 
 #2008-07-11 nyloth
 UPDATE `tiki_preferences` SET `value`='n' WHERE `name`='feature_wysiwyg' AND `value`='default';
+
+#2008-08-18 sylvieg
+ALTER TABLE users_users ADD pass_confirm int(14) default NULL AFTER challenge;
+ALTER TABLE users_users ADD email_confirm int(14) default NULL AFTER pass_confirm;
+
