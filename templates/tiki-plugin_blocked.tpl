@@ -24,7 +24,7 @@
 		<a href="javascript:toggle('sec-{$plugin_name|escape}-{$plugin_index|escape}')" class="linkbut">{tr}View Details{/tr}</a>
 	</div>
 	<div id="sec-{$plugin_name|escape}-{$plugin_index|escape}" style="display:none">
-		<div><h3>Details</h3></div>
+		<div><h3>{tr}Details{/tr}: {$plugin_name|upper|escape}</h3></div>
 		{if $plugin_args|@count > 0}
 			<table>
 				{foreach from=$plugin_args key=arg item=val}
