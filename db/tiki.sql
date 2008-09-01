@@ -2986,8 +2986,8 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_map_view_mapfiles', 'Can view contents of mapfiles', 'registered', 'maps');
 
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_use_webmail', 'Can use webmail', 'registered', 'webmail');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_plugin_viewdetail', 'Can view unapproved plugin details', 'editors', 'wiki');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_plugin_preview', 'Can execute unapproved plugin', 'editors', 'wiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_plugin_viewdetail', 'Can view unapproved plugin details', 'registered', 'wiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_plugin_preview', 'Can execute unapproved plugin', 'registered', 'wiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_plugin_approve', 'Can approve plugin execution', 'editors', 'wiki');
 
 DROP TABLE IF EXISTS users_usergroups;
