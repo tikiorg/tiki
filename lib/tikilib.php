@@ -5271,7 +5271,7 @@ class TikiLib extends TikiDB {
 		if( ! isset( $meta['validate'] ) )
 			return true;
 
-		$fingerprint = $this->plugin_fingerprint( $meta, $data, $args );
+		$fingerprint = $this->plugin_fingerprint( $name, $meta, $data, $args );
 
 		$val = $this->plugin_fingerprint_check( $fingerprint );
 		if( strpos( $val, 'accept' ) === 0 )
@@ -5334,7 +5334,7 @@ class TikiLib extends TikiDB {
 		$this->set_preference( 'plugin_fingerprints', serialize( $data ) );
 	}
 
-	function plugin_fingerprint( $meta, $data, $args ) {
+	function plugin_fingerprint( $name, $meta, $data, $args ) {
 		$validate = $meta['validate'];
 		if( $validate == 'all' || $validate == 'body' )
 			$validateBody = $data;
@@ -5364,7 +5364,7 @@ class TikiLib extends TikiDB {
 		$bodyHash = md5( $validateBody );
 		$argsHash = md5( $serialized );
 
-		return "$bodyHash-$argsHash-$bodyLen-$argsLen";
+		return "$name-$bodyHash-$argsHash-$bodyLen-$argsLen";
 	}
 
 	function plugin_execute( $name, $data = '', $args = array(), $offset = 0 ) {
