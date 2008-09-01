@@ -192,6 +192,7 @@ function get_default_prefs() {
 		'wikiplugin_poll' => 'y',
 		'wikiplugin_proposal' => 'y',
 		'wikiplugin_quote' => 'y',
+		'wikiplugin_redirect' => 'n',
 		'wikiplugin_regex' => 'n',
 		'wikiplugin_remarksbox' => 'y',
 		'wikiplugin_rss' => 'y',
