@@ -5279,18 +5279,24 @@ class TikiLib extends TikiDB {
 		elseif( strpos( $val, 'reject' ) === 0 )
 			return 'rejected';
 		else {
-			global $tiki_p_plugin_approve, $user;
+			global $tiki_p_plugin_approve, $tiki_p_plugin_preview, $user;
 			if( $_SERVER['REQUEST_METHOD'] == 'POST'
-				&& $tiki_p_plugin_approve == 'y'
 				&& isset( $_POST['plugin_fingerprint'] ) 
-				&& $_POST['plugin_fingerprint'] == $fingerprint ) {
+				&& $_POST['plugin_fingerprint'] == $fingerprint
+			) {
+				if( $tiki_p_plugin_approve == 'y' ) {
+					if( isset( $_POST['plugin_accept'] ) ) {
+						$this->plugin_fingerprint_store( $fingerprint, 'accept' );
+						return true;
+					} elseif( isset( $_POST['plugin_reject'] ) ) {
+						$this->plugin_fingerprint_store( $fingerprint, 'reject' );
+						return 'rejected';
+					}
+				} 
 
-				if( isset( $_POST['plugin_accept'] ) ) {
-					$this->plugin_fingerprint_store( $fingerprint, 'accept' );
+				if( $tiki_p_plugin_preview == 'y' 
+					&& isset( $_POST['plugin_preview'] ) ) {
 					return true;
-				} elseif( isset( $_POST['plugin_reject'] ) ) {
-					$this->plugin_fingerprint_store( $fingerprint, 'reject' );
-					return 'rejected';
 				}
 			}
 
