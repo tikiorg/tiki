@@ -5164,6 +5164,11 @@ class TikiLib extends TikiDB {
 								$preview = $tiki_p_plugin_preview == 'y' && $details;
 								$approve = $tiki_p_plugin_approve == 'y' && $details;
 
+								if( $status != 'rejected' ) {
+									$smarty->assign( 'plugin_fingerprint', $status );
+									$status = 'pending';
+								}
+
 								$smarty->assign( 'plugin_name', $plugin_name );
 								$smarty->assign( 'plugin_index', $current_index );
 
@@ -5256,10 +5261,104 @@ class TikiLib extends TikiDB {
 	}
 
 	function plugin_can_execute( $name, $data = '', $args = array() ) {
-		// TODO : Do real logic here
-		//return 'pending';
-		//return 'rejected';
-		return true;
+		global $prefs;
+
+		// If validation is disabled, anything can execute
+		if( $prefs['wiki_validate_plugin'] != 'y' )
+			return true;
+
+		$meta = $this->plugin_info( $name );
+		if( ! isset( $meta['validate'] ) )
+			return true;
+
+		$fingerprint = $this->plugin_fingerprint( $meta, $data, $args );
+
+		$val = $this->plugin_fingerprint_check( $fingerprint );
+		if( strpos( $val, 'accept' ) === 0 )
+			return true;
+		elseif( strpos( $val, 'reject' ) === 0 )
+			return 'rejected';
+		else {
+			global $tiki_p_plugin_approve, $user;
+			if( $_SERVER['REQUEST_METHOD'] == 'POST'
+				&& $tiki_p_plugin_approve == 'y'
+				&& isset( $_POST['plugin_fingerprint'] ) 
+				&& $_POST['plugin_fingerprint'] == $fingerprint ) {
+
+				if( isset( $_POST['plugin_accept'] ) ) {
+					$this->plugin_fingerprint_store( $fingerprint, 'accept' );
+					return true;
+				} elseif( isset( $_POST['plugin_reject'] ) ) {
+					$this->plugin_fingerprint_store( $fingerprint, 'reject' );
+					return 'rejected';
+				}
+			}
+
+			return $fingerprint;
+		}
+	}
+
+	function plugin_fingerprint_check( $fp ) {
+		global $prefs;
+
+		if( ! isset( $prefs['plugin_fingerprints'] ) )
+			return '';
+
+		$data = unserialize( $prefs['plugin_fingerprints'] );
+
+		if( isset( $data[$fp] ) )
+			return $data[$fp];
+		else
+			return '';
+	}
+
+	function plugin_fingerprint_store( $fp, $type ) {
+		global $prefs, $user;
+		$date = date( 'Y-m-d H:i:s' );
+
+		if( ! isset( $prefs['plugin_fingerprints'] ) )
+			$data = array();
+		else
+			$data = unserialize( $prefs['plugin_fingerprints'] );
+
+		if( ! is_array( $data ) )
+			$data = array();
+
+		$data[$fp] = "$type/$date/$user";
+		$this->set_preference( 'plugin_fingerprints', serialize( $data ) );
+	}
+
+	function plugin_fingerprint( $meta, $data, $args ) {
+		$validate = $meta['validate'];
+		if( $validate == 'all' || $validate == 'body' )
+			$validateBody = $data;
+		else
+			$validateBody = '';
+
+		if( $validate == 'all' || $validate == 'arguments' ) {
+			$validateArgs = $args;
+
+			// Remove arguments marked as safe from the fingerprint
+			foreach( $meta['params'] as $key => $info )
+				if( isset( $validateArgs[$key] ) 
+					&& isset( $info['safe'] ) 
+					&& $info['safe']
+				)
+					unset( $validateArgs[$key] );
+
+			// Parameter order needs to be stable
+			ksort( $validateArgs );
+		} else
+			$validateArgs = array();
+
+		$bodyLen = str_pad( strlen( $validateBody ), 6, '0', STR_PAD_RIGHT );
+		$serialized = serialize( $validateArgs );
+		$argsLen = str_pad( strlen( $serialized ), 6, '0', STR_PAD_RIGHT );
+
+		$bodyHash = md5( $validateBody );
+		$argsHash = md5( $serialized );
+
+		return "$bodyHash-$argsHash-$bodyLen-$argsLen";
 	}
 
 	function plugin_execute( $name, $data = '', $args = array(), $offset = 0 ) {

@@ -49,6 +49,13 @@
 		{else}
 			<p>{tr}This plugin's body is empty.{/tr}</p>
 		{/if}
+		<form method="post" action="{$smarty.server.REQUEST_URI|escape}">
+			<p>
+				<input type="hidden" name="plugin_fingerprint" value="{$plugin_fingerprint|escape}"/>
+				<input type="submit" name="plugin_accept" value="{tr}Approve{/tr}"/>
+				<input type="submit" name="plugin_reject" value="{tr}Reject{/tr}"/>
+			</p>
+		</form>
 	</div>
 	{/if}
 {/if}

@@ -146,6 +146,7 @@ function get_default_prefs() {
 		'wikiapproval_master_group' => '',
 		'wiki_edit_section' => 'y',
 		'wiki_edit_plugin' => 'y',
+		'wiki_validate_plugin' => 'y',
 
 		'wikiplugin_agentinfo' => 'n',
 		'wikiplugin_alink' => 'y',
