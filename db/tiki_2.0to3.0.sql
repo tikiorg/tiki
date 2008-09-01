@@ -40,7 +40,6 @@ UPDATE `tiki_menu_options` SET `url`='tiki-admin_include_score.php' where `url`=
 
 #2008-08-16 princessxine
 #2008-08-27 bitey [embiggens the feature_type column]
-DROP TABLE IF EXISTS `tiki_feature`;
 CREATE TABLE `tiki_feature` (
   `feature_id` mediumint(9) NOT NULL auto_increment,
   `feature_name` varchar(150) NOT NULL,
