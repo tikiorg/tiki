@@ -64,6 +64,3 @@ CREATE TABLE tiki_schema (
 	patch_name VARCHAR(30) PRIMARY KEY,
 	install_date TIMESTAMP
 ) ENGINE=MyISAM;
-
-#2008-09-02 sylvieg
-ALTER TABLE tiki_tracker_fields ADD COLUMN descriptionIsParsed char(1) default 'n' AFTER editableBy;>>>>>>> .merge-right.r14589
