@@ -108,6 +108,9 @@ if( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 		$tikilib->plugin_alias_store( $_POST['plugin'], $info );
 		if( ! in_array( $_POST['plugin'], $pluginsAlias ) )
 			$pluginAlias[] = $_POST['plugins'];
+
+		foreach( glob( 'temp/cache/wikiplugin_*' ) as $file )
+			unlink( $file );
 	}
 }
 
