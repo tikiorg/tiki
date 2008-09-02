@@ -5222,20 +5222,32 @@ class TikiLib extends TikiDB {
 		// print "<pre>real done data: :".htmlspecialchars( $data ) .":</pre>";
 	}
 
-	function plugin_get_list() {
-		$plugins = array();
+	function plugin_get_list( $includeReal = true, $includeAlias = true ) {
+		$real = array();
+		$alias = array();
 
 		foreach( glob( 'lib/wiki-plugins/wikiplugin_*.php' ) as $file )
 		{
 			$base = basename( $file );
 			$plugin = substr( $base, 11, -4 );
 
-			$plugins[] = $plugin;
+			$real[] = $plugin;
 		}
 
 		global $prefs;
 		if( isset($prefs['pluginaliaslist']) )
-			$plugins = array_merge( $plugins, @unserialize($prefs['pluginaliaslist']) );
+			$alias = @unserialize($prefs['pluginaliaslist']);
+
+		if( $includeReal && $includeAlias )
+			$plugins = array_merge( $real, $alias );
+		elseif( $includeReal )
+			$plugins = $real;
+		elseif( $includeAlias )
+			$plugins = $alias;
+		else
+			$plugins = array();
+
+		sort($plugins);
 
 		return $plugins;
 	}
