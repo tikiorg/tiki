@@ -2315,7 +2315,6 @@ class TrackerLib extends TikiLib {
 				<dt>Description:
 				<dd><strong>[auto-assign]</strong> will auto-assign the creator of the item if set to 1
 				<dd><strong>[size]</strong> is the visible length of the field in characters; 
-				<dd><strong>[max]</strong> is the maximum number of characters that can be saved;
 				<dd>
 				</dl>'));
 		$type['y'] = array(
