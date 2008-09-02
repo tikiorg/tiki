@@ -102,6 +102,8 @@
 		{$field_value.value|escape}
 	{/if}
 
+
+
 {* -------------------- image -------------------- *}
 {elseif $field_value.type eq 'i'}
 	{if $list_mode eq 'csv'}
@@ -154,6 +156,16 @@
 		{$field_value.value}
 	{else}
 		{$field_value.value|escape}
+	{/if}
+
+{* -------------------- page selector ------------------------- *} 
+{elseif $field_value.type eq  'k'}
+	{if $list_mode eq 'y'}
+		{wiki}(({$field_value.value|escape})){/wiki}
+	{elseif $list_mode eq 'csv'}
+		{$field_value.value}
+	{else}
+		{wiki}(({$field_value.value|escape})){/wiki}
 	{/if}
 
 {* -------------------- textarea -------------------- *}
