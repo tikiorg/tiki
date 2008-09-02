@@ -80,3 +80,6 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 DELETE FROM users_permissions WHERE permName IN('tiki_p_plugin_viewdetail', 'tiki_p_plugin_preview');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_plugin_viewdetail', 'Can view unapproved plugin details', 'registered', 'wiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_plugin_preview', 'Can execute unapproved plugin', 'registered', 'wiki');
+
+#2008-09-02 sylvieg
+ALTER TABLE tiki_tracker_fields ADD COLUMN descriptionIsParsed char(1) default 'n' AFTER editableBy;

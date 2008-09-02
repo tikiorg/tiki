@@ -1510,7 +1510,10 @@ class TrackerLib extends TikiLib {
 			for ($i = 0; $i < $max; ++$i) {
 				foreach ($fields['data'] as $field) {
 					if ($field['name'] == $header[$i]) {
-						if ($field['type'] == 'e' or $field['type'] == 's') {
+						if ($field['type'] == 'p' && $field['options_array'][0] == 'password') {
+							//$userlib->change_user_password($user, $ins_fields['data'][$i]['value']);
+							continue;
+						} elseif ($field['type'] == 'e' or $field['type'] == 's') {
 							$data[$i] = '';
 						} elseif ($field['type'] == 'a') {
 							$data[$i] = preg_replace('/\%\%\%/',"\r\n",$data[$i]);
@@ -1925,7 +1928,7 @@ class TrackerLib extends TikiLib {
 	}
 
 
-	function replace_tracker_field($trackerId, $fieldId, $name, $type, $isMain, $isSearchable, $isTblVisible, $isPublic, $isHidden, $isMandatory, $position, $options, $description='',$isMultilingual='', $itemChoices=null, $errorMsg='', $visibleBy=null, $editableBy=null) {
+	function replace_tracker_field($trackerId, $fieldId, $name, $type, $isMain, $isSearchable, $isTblVisible, $isPublic, $isHidden, $isMandatory, $position, $options, $description='',$isMultilingual='', $itemChoices=null, $errorMsg='', $visibleBy=null, $editableBy=null, $descriptionIsParsed='n') {
 		// Serialize choosed items array (items of the tracker field to be displayed in the list proposed to the user)
 		if ( is_array($itemChoices) && count($itemChoices) > 0 && !empty($itemChoices[0]) ) {
 			$itemChoices = serialize($itemChoices);
@@ -1952,21 +1955,21 @@ class TrackerLib extends TikiLib {
 					$this->remove_field_images( $fieldId );
 				}
 				$query = "update `tiki_tracker_fields` set `name`=? ,`type`=?,`isMain`=?,`isSearchable`=?,
-					`isTblVisible`=?,`isPublic`=?,`isHidden`=?,`isMandatory`=?,`position`=?,`options`=?,`isMultilingual`=?, `description`=?, `itemChoices`=?, `errorMsg`=?, visibleBy=?, editableBy=? where `fieldId`=?";
-				$bindvars=array($name,$type,$isMain,$isSearchable,$isTblVisible,$isPublic,$isHidden,$isMandatory,(int)$position,$options,$isMultilingual,$description, $itemChoices, $errorMsg, $visibleBy, $editableBy, (int) $fieldId);
+					`isTblVisible`=?,`isPublic`=?,`isHidden`=?,`isMandatory`=?,`position`=?,`options`=?,`isMultilingual`=?, `description`=?, `itemChoices`=?, `errorMsg`=?, visibleBy=?, editableBy=?, `descriptionIsParsed`=? where `fieldId`=?";
+				$bindvars=array($name,$type,$isMain,$isSearchable,$isTblVisible,$isPublic,$isHidden,$isMandatory,(int)$position,$options,$isMultilingual,$description, $itemChoices, $errorMsg, $visibleBy, $editableBy, $descriptionIsParsed, (int) $fieldId);
 			} else {
 				$query = "insert into `tiki_tracker_fields` (`trackerId`,`name`,`type`,`isMain`,`isSearchable`,
-					`isTblVisible`, `isPublic`, `isHidden`, `isMandatory`, `position`, `options`, `fieldId`, `isMultilingual`, `description`, `itemChoices`, `errorMsg`, `visibleBy`, `editableBy`) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
-				$bindvars=array((int) $trackerId,$name,$type,$isMain,$isSearchable,$isTblVisible,$isPublic,$isHidden,$isMandatory,(int)$position,$options,(int) $fieldId,$isMultilingual, $description, $itemChoices, $errorMsg, $visibleBy, $editableBy);
+					`isTblVisible`, `isPublic`, `isHidden`, `isMandatory`, `position`, `options`, `fieldId`, `isMultilingual`, `description`, `itemChoices`, `errorMsg`, `visibleBy`, `editableBy`, `descriptionIsParsed`) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+				$bindvars=array((int) $trackerId,$name,$type,$isMain,$isSearchable,$isTblVisible,$isPublic,$isHidden,$isMandatory,(int)$position,$options,(int) $fieldId,$isMultilingual, $description, $itemChoices, $errorMsg, $visibleBy, $editableBy, $descriptionIsParsed);
 			}
 			$result = $this->query($query, $bindvars);
 		} else {
 			$this->getOne("delete from `tiki_tracker_fields` where `trackerId`=? and `name`=?",
 				array((int) $trackerId,$name),false);
-			$query = "insert into `tiki_tracker_fields`(`trackerId`,`name`,`type`,`isMain`,`isSearchable`,`isTblVisible`,`isPublic`,`isHidden`,`isMandatory`,`position`,`options`,`description`,`isMultilingual`, `itemChoices`, `errorMsg`, `visibleBy`, `editableBy`)
-                values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			$query = "insert into `tiki_tracker_fields`(`trackerId`,`name`,`type`,`isMain`,`isSearchable`,`isTblVisible`,`isPublic`,`isHidden`,`isMandatory`,`position`,`options`,`description`,`isMultilingual`, `itemChoices`, `errorMsg`, `visibleBy`, `editableBy`, `descriptionIsParsed`)
+                values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-			$result = $this->query($query,array((int) $trackerId,$name,$type,$isMain,$isSearchable,$isTblVisible,$isPublic,$isHidden,$isMandatory,$position,$options,$description,$isMultilingual, $itemChoices, $errorMsg, $visibleBy, $editableBy));
+			$result = $this->query($query,array((int) $trackerId,$name,$type,$isMain,$isSearchable,$isTblVisible,$isPublic,$isHidden,$isMandatory,$position,$options,$description,$isMultilingual, $itemChoices, $errorMsg, $visibleBy, $editableBy, $descriptionIsParsed));
 			$fieldId = $this->getOne("select max(`fieldId`) from `tiki_tracker_fields` where `trackerId`=? and `name`=?",array((int) $trackerId,$name));
 			// Now add the field to all the existing items
 			$query = "select `itemId` from `tiki_tracker_items` where `trackerId`=?";

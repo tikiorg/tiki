@@ -476,7 +476,7 @@ document.write('<div class="categSelectAll"><input type="checkbox" id="clickall"
 
 {if $cur_field.type ne 'a' and $cur_field.type ne 'S'}
 {if $cur_field.description}
-<br /><em>{$cur_field.description|escape}</em>
+<br />{if $cur_field.descriptionIsParsed eq 'y'}{wiki}{$cur_field.description}{/wiki}{else}<em>{$cur_field.description|escape}</em>{/if}
 {/if}
 {/if}
 </td>
