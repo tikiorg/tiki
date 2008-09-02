@@ -11,18 +11,9 @@ $page = $_POST['page'];
 
 $plugin = basename( $_POST['type'] );
 $type = strtoupper( $plugin );
-$file = 'lib/wiki-plugins/wikiplugin_' . $plugin . '.php';
-$info = "wikiplugin_{$plugin}_info";
 
-if( ! file_exists( $file ) )
+if( ! $meta = $tikilib->plugin_info( $plugin ) )
 	exit;
-
-include $file;
-
-if( ! function_exists( $info ) )
-	exit;
-
-$meta = $info();
 
 $info = $tikilib->get_page_info($page);
 $tikilib->get_perm_object($page, 'wiki page', $info, true);

@@ -2286,6 +2286,7 @@ CREATE TABLE tiki_tracker_fields (
   errorMsg text,
   visibleBy text,
   editableBy text,
+  descriptionIsParsed char(1) default 'n',
   PRIMARY KEY (fieldId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 

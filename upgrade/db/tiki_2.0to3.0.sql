@@ -39,7 +39,6 @@ UPDATE `tiki_menu_options` set `url`='tiki-list_file_gallery.php' where `url`='t
 UPDATE `tiki_menu_options` SET `url`='tiki-admin_include_score.php' where `url`='tiki-admin_score.php';
 
 #2008-08-16 princessxine
-DROP TABLE IF EXISTS `tiki_feature`;
 CREATE TABLE `tiki_feature` (
   `feature_id` mediumint(9) NOT NULL auto_increment,
   `feature_name` varchar(150) NOT NULL,
@@ -66,3 +65,5 @@ CREATE TABLE tiki_schema (
 	install_date TIMESTAMP
 ) ENGINE=MyISAM;
 
+#2008-09-02 sylvieg
+ALTER TABLE tiki_tracker_fields ADD COLUMN descriptionIsParsed char(1) default 'n' AFTER editableBy;>>>>>>> .merge-right.r14589
