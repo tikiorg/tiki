@@ -193,7 +193,7 @@ class MenuLib extends TikiLib {
 			return false;
 		}
 		$url = urldecode($_SERVER['REQUEST_URI']);
-		if ($prefs['feature_sefurl'] == 'y' && !empty($option['sefurl'])) {
+		if ($prefs['feature_sefurl'] == 'y' && !empty($option['sefurl']) && !strstr($url, 'tiki-index.php')) {
 			$pos = strpos($url, '/'. urldecode($option['sefurl']));
 			$lg = 1 + strlen($option['sefurl']);
 		} else {
