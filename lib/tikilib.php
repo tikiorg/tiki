@@ -5222,6 +5222,24 @@ class TikiLib extends TikiDB {
 		// print "<pre>real done data: :".htmlspecialchars( $data ) .":</pre>";
 	}
 
+	function plugin_get_list() {
+		$plugins = array();
+
+		foreach( glob( 'lib/wiki-plugins/wikiplugin_*.php' ) as $file )
+		{
+			$base = basename( $file );
+			$plugin = substr( $base, 11, -4 );
+
+			$plugins[] = $plugin;
+		}
+
+		global $prefs;
+		if( isset($prefs['pluginaliaslist']) )
+			$plugins = array_merge( $plugins, @unserialize($prefs['pluginaliaslist']) );
+
+		return $plugins;
+	}
+
 	function plugin_exists( $name, $include = false ) {
 		$php_name = 'lib/wiki-plugins/wikiplugin_';
 		$php_name .= $name . '.php';
@@ -5231,7 +5249,13 @@ class TikiLib extends TikiDB {
 		if( $include && $exists )
 			include_once $php_name;
 
-		return $exists;
+		if( $exists )
+			return true;
+		elseif( $info = $this->plugin_alias_info( $name ) ) {
+			// Make sure the underlying implementation exists
+
+			return $this->plugin_exists( $info['implementation'], $include );
+		}
 	}
 
 	function plugin_info( $name ) {
@@ -5240,10 +5264,68 @@ class TikiLib extends TikiDB {
 
 		$func_name_info = "wikiplugin_{$name}_info";
 
-		if( ! function_exists( $func_name_info ) )
-			return false;
+		if( ! function_exists( $func_name_info ) ) {
+			if( $info = $this->plugin_alias_info( $name ) )
+				return $info['description'];
+			else
+				return false;
+		}
 
 		return $func_name_info();
+	}
+
+	function plugin_alias_info( $name ) {
+		global $prefs;
+		$prefName = "pluginalias_$name";
+
+		if( ! isset( $prefs[$prefName] ) )
+			return false;
+
+		return @unserialize( $prefs[$prefName] );
+	}
+
+	function plugin_alias_store( $name, $data ) {
+		/*
+			Input data structure:
+			
+			implementation: other plugin_name
+			description:
+				** Equivalent of plugin info function here **
+			body:
+				input: use|ignore
+				default: body content to use
+				params:
+					token_name:
+						input: token_name, default uses same name above
+						default: value to use if missing
+						encoding: none|html|url - default to none
+			params:
+				; Use input parameter directly
+				token_name: default value
+
+				; Custom input parameter replacement
+				token_name:
+					pattern: body content to use
+					params:
+						token_name:
+							input: token_name, default uses same name above
+							default: value to use if missing
+							encoding: none|html|url - default to none
+		*/
+
+		$data['plugin_name'] = $name;
+
+		$prefName = "pluginalias_$name";
+		$this->set_preference( $prefName, serialize( $data ) );
+		
+		$list = array();
+		if( isset($prefs['pluginaliaslist']) )
+			$list = unserialize($prefs['pluginaliaslist']);
+		
+		if( ! in_array( $name, $list ) ) {
+			$list[] = $name;
+			$this->set_preference( 'pluginaliaslist', serialize($list) );
+		}
 	}
 
 	function plugin_enabled( $name ) {
@@ -5372,7 +5454,68 @@ class TikiLib extends TikiDB {
 			return false;
 
 		$func_name = 'wikiplugin_' . $name;
-		return $func_name( $data, $args, $offset );
+
+		if( function_exists( $func_name ) ) {
+			return $func_name( $data, $args, $offset );
+		} elseif( $info = $this->plugin_alias_info( $name ) ) {
+			$name = $info['implementation'];
+
+			// Do the body conversion
+			if( isset($info['body']) ) {
+				if( ( isset($info['body']['input']) && $info['body']['input'] == 'ignore' )
+					|| empty( $data ) )
+					$data = isset($info['body']['default']) ? $info['body']['default'] : '';
+
+				if( isset($info['body']['params']) )
+					$data = $this->plugin_replace_args( $data, $info['body']['params'], $args );
+			} else {
+				$data = '';
+			}
+
+			// Do parameter conversion
+			$params = array();
+			if( isset($info['params']) ) {
+				foreach( $info['params'] as $key => $value ) {
+					if( is_array( $value ) && isset($value['pattern']) && isset($value['params']) ) {
+						$params[$key] = $this->plugin_replace_args( $value['pattern'], $value['params'], $args );
+					} else {
+						// Handle simple values
+						if( isset($args[$key]) )
+							$params[$key] = $args[$key];
+						else
+							$params[$key] = $value;
+					}
+				}
+			}
+
+			return $this->plugin_execute( $name, $data, $params, $offset );
+		}
+	}
+
+	function plugin_replace_args( $content, $rules, $args ) {
+		$patterns = array();
+		$replacements = array();
+
+		foreach( $rules as $token => $info ) {
+			$patterns[] = "%$token%";
+			if( isset( $info['input'] ) )
+				$token = $info['input'];
+
+			if( isset( $args[$token] ) ) {
+				$value = $args[$token];
+			} else {
+				$value = isset($info['default']) ? $info['default'] : '';
+			}
+
+			switch( isset($info['encoding']) ? $info['encoding'] : 'none' )
+			{
+			case 'html': $replacements[] = htmlentities( $value, ENT_QUOTES, 'UTF-8' ); break;
+			case 'url': $replacements[] = rawurlencode( $value ); break;
+			default: $replacements[] = $value;
+			}
+		}
+
+		return str_replace( $patterns, $replacements, $content );
 	}
 
 	function plugin_is_editable( $name ) {
