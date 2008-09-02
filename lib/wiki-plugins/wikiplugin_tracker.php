@@ -705,8 +705,14 @@ function wikiplugin_tracker($data, $params) {
 						$back .= $smarty->fetch('tracker_item_field_input.tpl');
 					}
 
-					if (!empty($f['description']) && $f['type'] != 'h')
-						$back .= '<br /><i>'.$f['description'].'</i>';
+					if (!empty($f['description']) && $f['type'] != 'h') {
+						$back .= '<br />';
+						if ($f['descriptionIsParsed'] == 'y') {
+							$back .= $tikilib->parse_data($f['description']);
+						} else {
+							$back .= '<i>'.$f['description'].'</i>';
+						}
+					}
 					if (empty($tpl) && empty($wiki)) {
 						$back.= "</td></tr>";
 					}
