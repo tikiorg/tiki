@@ -5330,6 +5330,7 @@ class TikiLib extends TikiDB {
 		$prefName = "pluginalias_$name";
 		$this->set_preference( $prefName, serialize( $data ) );
 		
+		global $prefs;
 		$list = array();
 		if( isset($prefs['pluginaliaslist']) )
 			$list = unserialize($prefs['pluginaliaslist']);
@@ -5510,7 +5511,7 @@ class TikiLib extends TikiDB {
 
 		foreach( $rules as $token => $info ) {
 			$patterns[] = "%$token%";
-			if( isset( $info['input'] ) )
+			if( isset( $info['input'] ) && ! empty( $info['input'] ) )
 				$token = $info['input'];
 
 			if( isset( $args[$token] ) ) {

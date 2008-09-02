@@ -12,11 +12,19 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 $cacheToInvalidate = array( 'plugindesc' );
 
-$headerlib->add_jsfile( 'tiki-jsplugin.php' );
 $pluginsAlias = $tikilib->plugin_get_list( false, true );
 $pluginsReal = $tikilib->plugin_get_list( true, false );
 
 if( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
+	if( isset( $_POST['enable'] ) ) {
+		if( ! is_array( $_POST['enabled'] ) )
+			$_POST['enabled'] = array();
+
+		foreach( $pluginsAlias as $name ) {
+			$tikilib->set_preference( "wikiplugin_$name", in_array( $name, $_POST['enabled'] ) ? 'y' : 'n' );
+		}
+	}
+
 	if( isset( $_POST['save'] ) && ! in_array($_POST['plugin'], $pluginsReal) ) {
 		$info = array(
 			'implementation' => $_POST['implementation'],
@@ -28,6 +36,9 @@ if( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 				'params' => array(),
 			),
 			'body' => array(
+				'input' => isset($_POST['ignorebody']) ? 'ignore' : 'use',
+				'default' => $_POST['defaultbody'],
+				'params' => array(),
 			),
 			'params' => array(
 			),
@@ -53,19 +64,79 @@ if( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 			}
 		}
 
-		echo "<pre>" . print_r( $info, true ) . "</pre>";
+		if( isset($_POST['bodyparam']) ) {
+			foreach( $_POST['bodyparam'] as $param ) {
+				if( !empty( $param['token'] ) ) {
+					$info['body']['params'][ $param['token'] ] = array(
+						'input' => $param['input'],
+						'encoding' => $param['encoding'],
+						'default' => $param['default'],
+					);
+				}
+			}
+		}
+
+		if( isset($_POST['sparams']) ) {
+			foreach( $_POST['sparams'] as $detail ) {
+				if( ! empty($detail['token']) ) {
+					$info['params'][$detail['token']] = $detail['default'];
+				}
+			}
+		}
+
+		if( isset($_POST['cparams']) ) {
+			foreach( $_POST['cparams'] as $detail ) {
+				if( ! empty($detail['token']) ) {
+					$info['params'][$detail['token']] = array(
+						'pattern' => $detail['pattern'],
+						'params' => array(),
+					);
+
+					foreach( $detail['params'] as $param ) {
+						if( !empty( $param['token'] ) ) {
+							$info['params'][$detail['token']]['params'][ $param['token'] ] = array(
+								'input' => $param['input'],
+								'encoding' => $param['encoding'],
+								'default' => $param['default'],
+							);
+						}
+					}
+				}
+			}
+		}
+
+		$tikilib->plugin_alias_store( $_POST['plugin'], $info );
+		if( ! in_array( $_POST['plugin'], $pluginsAlias ) )
+			$pluginAlias[] = $_POST['plugins'];
 	}
 }
 
 if( isset($_REQUEST['plugin']) && $pluginInfo = $tikilib->plugin_alias_info($_REQUEST['plugin']) ) {
 	// Add an extra empty parameter to create new ones
-	$pluginInfo['description']['params'][''] = array(
-		'token' => '',
+	$pluginInfo['description']['params']['__NEW__'] = array(
 		'name' => '',
 		'description' => '',
 		'required' => '',
 		'safe' => '',
 	);
+	$pluginInfo['body']['params']['__NEW__'] = array(
+		'encoding' => '',
+		'input' => '',
+		'default' => '',
+	);
+	$pluginInfo['params']['__NEW__'] = array(
+		'pattern' => '',
+		'params' => array(),
+	);
+
+	foreach( $pluginInfo['params'] as &$p )
+		if( is_array( $p ) )
+			$p['params']['__NEW__'] = array(
+				'encoding' => '',
+				'input' => '',
+				'default' => '',
+			);
+
 	$smarty->assign( 'plugin', $pluginInfo );
 }
 
