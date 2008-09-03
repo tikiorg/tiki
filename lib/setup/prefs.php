@@ -176,6 +176,7 @@ function get_default_prefs() {
 		'wikiplugin_flash' => 'y',
 		'wikiplugin_gauge' => 'y',
 		'wikiplugin_group' => 'y',
+		'wikiplugin_iframe' => 'n',
 		'wikiplugin_include' => 'y',
 		'wikiplugin_jabber' => 'n',
 		'wikiplugin_lang' => 'y',

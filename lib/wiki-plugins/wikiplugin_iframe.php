@@ -1,0 +1,108 @@
+<?php
+/*
+ *
+ * IFRAME plugin. Creates an iframe and loads the specified page within the frame.
+ *
+ * Syntax:
+ *
+ *  {IFRAME(some parameters)}$data{IFRAME}
+ *
+ * Syntax:
+ *
+ * {IFRAME(name=>name, longdescription=>, width=>, height=>, align=>, frameborder=>, marginheight=> marginwidth=> scrolling=>)}source_URL{IFRAME}
+ *
+ */
+function wikiplugin_iframe_info() {
+	return array(
+		'name' => tra('Iframe'),
+		'documentation' => 'PluginIframe',
+		'description' => tra("Displays an iframe"),
+		'prefs' => array( 'wikiplugin_iframe' ),
+		'body' => tra('URL'),
+		'params' => array(
+			'name' => array(
+				'required' => false,
+				'name' => tra('Name'),
+				'description' => tra('name'),
+			),
+			'width' => array(
+				'required' => false,
+				'name' => tra('Width'),
+				'description' => tra('Pixels or %'),
+			),
+			'height' => array(
+				'required' => false,
+				'name' => tra('Height'),
+				'description' => tra('Pixels or %'),
+			),
+			'align' => array(
+				'required' => false,
+				'name' => tra('Alignment'),
+				'description' => 'top|middle|bottom|left|right',
+			),
+			'frameborder' => array(
+				'required' => false,
+				'name' => 'frameborder',
+				'description' => '1|0',
+			),
+			'marginheight' => array(
+				'required' => false,
+				'name' => tra('Margin Height'),
+				'description' => tra('Pixels'),
+			),
+			'marginwidth' => array(
+				'required' => false,
+				'name' => tra('Margin Width'),
+				'description' => tra('Pixels'),
+			),
+			'scrolling' => array(
+				'required' => false,
+				'name' => tra('Scrolling'),
+				'description' => 'yes|no|auto',
+			),
+			'src' => array(
+				'required' => false,
+				'name' => tra('URL'),
+				'description' => tra('URL'),
+			),
+		),
+	);
+}
+
+function wikiplugin_iframe($data, $params) {
+
+	extract ($params);
+	$ret = '<iframe ';
+
+	if (isset($name)) {
+		$ret .= " name=\"$name\"";
+	}
+	if (isset($width)) {
+		$ret .= " width=\"$width\"";
+	}
+	if (isset($height)) {
+		$ret .= " height=\"$height\"";
+	}
+	if (isset($align)) {
+		$ret .= " align=\"$align\"";
+	}
+	if (isset($frameborder)) {
+		$ret .= " frameborder=\"$frameborder\"";
+	}
+	if (isset($marginheight)) {
+		$ret .= " marginheight=\"$marginheight\"";
+	}
+	if (isset($marginwidth)) {
+		$ret .= " marginwidth=\"$marginwidth\"";
+	}
+	if (isset($scrolling)) {
+		$ret .= " scrolling=\"$scrolling\"";
+	}
+	if (isset($src)) {
+		$ret .= " src=\"$src\"";
+	} elseif (!empty($data)) {
+		$ret .= " src=\"$data\"";
+	}
+	$ret .= ">$data</iframe>";
+	return $ret;
+}
