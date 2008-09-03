@@ -395,14 +395,22 @@ if (isset($_REQUEST["user"]) and $_REQUEST["user"]) {
 
 	if (isset($_POST["edituser"]) and isset($_POST['name']) and isset($_POST['email'])) {
 		//var_dump($_POST);die;
-		if ($_POST['name']) {
+		if (!empty($_POST['name'])) {
 			if ( $userinfo['login'] != $_POST['name'] && $userinfo['login'] != 'admin' ) {
 				if ($userlib->user_exists($_POST['name'])) {
-					$smarty->assign('msg', tra("User already exists"));
-			  	$smarty->display("error.tpl");
-					die;
+					$tikifeedback[] = array('num'=>1,'mes'=>tra('User already exists'));
+				} elseif (!preg_match($patterns['login'],$_POST['name'])) {
+					$tikifeedback[] = array('num'=>1,'mes'=>tra("Login contains invalid characters"));
+				} elseif ($userlib->change_login($userinfo['login'],$_POST['name'])) {
+					$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s changed from %s to %s"),tra("login"),$userinfo['login'],$_POST["name"]));
+					$logslib->add_log('adminusers','changed login for '.$_POST['name'].' from '.$userinfo['login'].' to '.$_POST["name"]);
+					$userinfo['login'] = $_POST['name'];
+					if ($prefs['login_is_email'] == 'y') {
+						$_POST['email'] = $_POST['name'];
+					}
+				} else {
+					$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("Impossible to change %s from %s to %s"),tra("login"),$userinfo['email'],$_POST["email"]));
 				}
-				$chlogin = true;
 			}
 		}
 		if (isset($_POST['pass']) &&  $_POST["pass"]) {
@@ -417,7 +425,7 @@ if (isset($_REQUEST["user"]) and $_REQUEST["user"]) {
 			    $smarty->display("error.tpl");
 			    die;
 			}
-			if ($userlib->change_user_password($_POST['name'],$_POST["pass"])) {
+			if ($userlib->change_user_password($userinfo['login'], $_POST['pass'])) {
 				$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s modified successfully."),tra("password")));
 				$logslib->add_log('adminusers','changed password for '.$_POST['name']);
 			} else {
@@ -425,23 +433,14 @@ if (isset($_REQUEST["user"]) and $_REQUEST["user"]) {
 			}
 		}
 		if ($userinfo['email'] != $_POST['email']) {
-			if ($userlib->change_user_email($_POST['name'],$_POST['email'],'')) {
-				$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s changed from %s to %s"),tra("email"),$userinfo['email'],$_POST["email"]));
-				$logslib->add_log('adminusers','changed email for '.$_POST['name'].' from '.$userinfo['email'].' to '.$_POST["email"]);
+			if ($userlib->change_user_email($userinfo['login'], $_POST['email'],'')) {
+				if ($prefs['login_is_email'] != 'y') {
+					$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s changed from %s to %s"),tra("email"),$userinfo['email'],$_POST["email"]));
+					$logslib->add_log('adminusers','changed email for '.$_POST['name'].' from '.$userinfo['email'].' to '.$_POST["email"]);
+				}
 				$userinfo['email'] = $_POST['email'];
 			} else {
 				$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("Impossible to change %s from %s to %s"),tra("email"),$userinfo['email'],$_POST["email"]));
-			}
-		}
-		if ($chlogin) {
-			if (!preg_match($patterns['login'],$_POST['name'])) {
-				$tikifeedback[] = array('num'=>1,'mes'=>tra("Login contains invalid characters"));
-			} elseif ($userlib->change_login($userinfo['login'],$_POST['name'])) {
-				$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s changed from %s to %s"),tra("login"),$userinfo['login'],$_POST["name"]));
-				$logslib->add_log('adminusers','changed login for '.$_POST['name'].' from '.$userinfo['login'].' to '.$_POST["name"]);
-				$userinfo['login'] = $_POST['name'];
-			} else {
-				$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("Impossible to change %s from %s to %s"),tra("login"),$userinfo['email'],$_POST["email"]));
 			}
 		}
 		setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab1");
