@@ -107,7 +107,12 @@ class HeaderLib {
 			foreach ($this->cssfiles as $x=>$cssf) {
 				$back.= "<!-- cssfile $x -->\n";
 				foreach ($cssf as $cf) {					
-					global $tikipath;
+					global $tikipath, $tikidomain, $style_base;
+					if (!empty($tikidomain) && is_file("styles/$tikidomain/$style_base/$cf")) {
+						$cf = "styles/$tikidomain/$style_base/$cf";
+					} elseif (is_file("styles/$style_base/$cf")) {
+						$cf = "styles/$style_base/$cf";
+					}
 					$cfprint = str_replace('.css','',$cf) . '-print.css';
 					if (!file_exists($tikipath . $cfprint)) {
 						$back.= "<link rel=\"stylesheet\" href=\"$cf\" type=\"text/css\" />\n";
