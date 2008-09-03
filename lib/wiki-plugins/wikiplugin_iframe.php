@@ -19,43 +19,52 @@ function wikiplugin_iframe_info() {
 		'description' => tra("Displays an iframe"),
 		'prefs' => array( 'wikiplugin_iframe' ),
 		'body' => tra('URL'),
+		'validate' => 'all',
 		'params' => array(
 			'name' => array(
+				'safe' => true,
 				'required' => false,
 				'name' => tra('Name'),
 				'description' => tra('name'),
 			),
 			'width' => array(
+				'safe' => true,
 				'required' => false,
 				'name' => tra('Width'),
 				'description' => tra('Pixels or %'),
 			),
 			'height' => array(
+				'safe' => true,
 				'required' => false,
 				'name' => tra('Height'),
 				'description' => tra('Pixels or %'),
 			),
 			'align' => array(
+				'safe' => true,
 				'required' => false,
 				'name' => tra('Alignment'),
 				'description' => 'top|middle|bottom|left|right',
 			),
 			'frameborder' => array(
+				'safe' => true,
 				'required' => false,
 				'name' => 'frameborder',
 				'description' => '1|0',
 			),
 			'marginheight' => array(
+				'safe' => true,
 				'required' => false,
 				'name' => tra('Margin Height'),
 				'description' => tra('Pixels'),
 			),
 			'marginwidth' => array(
+				'safe' => true,
 				'required' => false,
 				'name' => tra('Margin Width'),
 				'description' => tra('Pixels'),
 			),
 			'scrolling' => array(
+				'safe' => true,
 				'required' => false,
 				'name' => tra('Scrolling'),
 				'description' => 'yes|no|auto',
