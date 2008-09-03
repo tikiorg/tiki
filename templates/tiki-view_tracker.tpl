@@ -216,6 +216,11 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
 <select name="batchaction">
 <option value="">{tr}...{/tr}</option>
 <option value="delete">{tr}Delete{/tr}</option>
+{if $tracker_info.showStatus eq 'y'}
+<option value="c">{tr}Close{/tr}</option>
+<option value="o">{tr}Open{/tr}</option>
+<option value="p">{tr}Pending{/tr}</option>
+{/if}
 </select>
 <input type="hidden" name="trackerId" value="{$trackerId}" />
 <input type="submit" name="act" value="{tr}OK{/tr}" />

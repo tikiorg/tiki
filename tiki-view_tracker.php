@@ -529,8 +529,14 @@ if (($tiki_p_admin_trackers == 'y' or $tiki_p_modify_tracker_items == 'y') and i
     key_get($area);
   }
 } elseif (($tiki_p_admin_trackers == 'y' or $tiki_p_modify_tracker_items == 'y') and isset($_REQUEST["batchaction"]) and $_REQUEST["batchaction"] == 'delete') {
+	check_ticket('view-trackers');
 	foreach ($_REQUEST['action'] as $batchid) {
 		$trklib->remove_tracker_item($batchid);
+	}
+} elseif (($tiki_p_admin_trackers == 'y' or $tiki_p_modify_tracker_items == 'y') and isset($_REQUEST['batchaction']) and ($_REQUEST['batchaction'] == 'o' || $_REQUEST['batchaction'] == 'p' || $_REQUEST['batchaction'] == 'c')) {
+check_ticket('view-trackers');
+	foreach ($_REQUEST['action'] as $batchid) {
+		$trklib->replace_item($_REQUEST['trackerId'], $batchid, array('data'=>''), $_REQUEST['batchaction']);
 	}
 }
 
