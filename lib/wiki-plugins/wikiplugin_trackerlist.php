@@ -396,6 +396,7 @@ function wikiplugin_trackerlist($data, $params) {
 				$filterfield[] = $f;
 				$filtervalue[] = '';
 				$exactvalue[] = $_REQUEST['page'];
+				$smarty->assign('list_mode', tra("n"));
 			}
 		}
 			
