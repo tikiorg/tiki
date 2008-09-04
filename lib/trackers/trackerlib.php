@@ -1013,7 +1013,7 @@ class TrackerLib extends TikiLib {
 
 			// Handle truncated fields. Only for textareas which have option 3 set
 			if ( $ins_fields["data"][$i]["type"] == 'a' && isset($ins_fields["data"][$i]["options_array"][3]) && ($ins_fields["data"][$i]['options_array'][3]) ) {
-				if (function_exists('mb_substr')) { // then mb_strlen() also exists
+				if (function_exists('mb_substr') && function_exists('mb_strlen')) {
 					if ( mb_strlen($ins_fields["data"][$i]['value']) > $ins_fields["data"][$i]['options_array'][3] ) {
 						$ins_fields['data'][$i]['value'] = mb_substr($ins_fields["data"][$i]['value'],0,$ins_fields["data"][$i]['options_array'][3])." (...)";
 					}
@@ -2416,26 +2416,26 @@ class TrackerLib extends TikiLib {
 			'label'=>tra('item link'),
 			'opt'=>true,
 			'help'=>tra('<dl>
-				<dt>Function: Provides a relational link to another item in a specified tracker.
+				<dt>Function: Provides a way to choose a value from another tracker (eventually with a link).
 				<dt>Usage: <strong>trackerId,fieldId,linkToItem,displayedFieldsList</strong>
 				<dt>Description:
-				<dd><strong>[trackerId]</strong> is the tracker ID of the data you want to link to;
-				<dd><strong>[fieldId]</strong> is the field from which you can select a value to link to;
-				<dd><strong>[linkToItem]</strong> if set to 0 will simply display the value, but if set to 1 will provide a link directly to that values item in the other tracker;
-				<dd><strong>[displayedFieldsList]</strong> is a list of fields to display instead of the target item, multiple fields can be separated with a |;
+				<dd><strong>[trackerId]</strong> is the tracker ID of the fields you want to display;
+				<dd><strong>[fieldId]</strong> is the field in [trackerId] from which you can select a value among all the field values of the items of [trackerId];
+				<dd><strong>[linkToItem]</strong> if set to 0 will simply display the value, but if set to 1 will provide a link directly to the item in the other tracker;
+				<dd><strong>[displayedFieldsList]</strong> is a list of fields in [trackerId] to display instead of [fieldId], multiple fields can be separated with a |;
 				<dd>multiple options must appear in the order specified, separated by commas.
 				</dl>'));
 		$type['l'] = array(
 			'label'=>tra('items list'),
 			'opt'=>true,
 			'help'=>tra('<dl>
-				<dt>Function: Provide a list of items as a result of a relational link between tracker items.
+				<dt>Function: Displays a list of field values from another tracker that has a relation with this tracker(eventually with a link).
 				<dt>Usage: <strong>trackerId,fieldIdThere,fieldIdHere,displayFieldIdThere,linkToItems</strong>
 				<dt>Description:
-				<dd><strong>[trackerId]</strong> is the tracker ID you want to link with;
+				<dd><strong>[trackerId]</strong> is the tracker ID of the fields you want to display;
 				<dd><strong>[fieldIdThere]</strong> is the field (multiple fields can be separated with a ":") you want to link with;
-				<dd><strong>[fieldIdHere]</strong> is the field (multiple fields can be separated with a ":") in this tracker you want to link with;
-				<dd><strong>[displayFieldIdThere]</strong> the field containing the data that shares the common link with fieldIdThere and fieldIdHere, can be separated by "|";
+				<dd><strong>[fieldIdHere]</strong> is the field in this tracker you want to link with;
+				<dd><strong>[displayFieldIdThere]</strong> the field(s) in [trackerId] you want to display, multiple fields can be separated by "|";
 				<dd><strong>[linkToItems]</strong> if set to 0 will simply display the value, but if set to 1 will provide a link directly to that values item in the other tracker;
 				<dd>multiple options must appear in the order specified, separated by commas.
 				</dl>'));
