@@ -219,7 +219,7 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', $for
 				foreach ($field['options_array'] as $val) {
 					$opt['id'] = $val;
 					$opt['name'] = $val;
-					if (!empty($_REQUEST['f_'.$fieldId]) && $_REQUEST['f_'.$fieldId][0] == $val) {
+					 && ((!is_array($_REQUEST['f_'.$fieldId]) && $_REQUEST['f_'.$fieldId] == $val) || (is_array($_REQUEST['f_'.$fieldId]) && in_array($val, $_REQUEST['f_'.$fieldId])))) {
 						$opt['selected'] = 'y';
 						$selected = true;
 					} else {
