@@ -239,7 +239,7 @@ window.onload = timeIt;
 {/if}
 </td></tr>
 {/if}
-{if $prefs.feature_smileys eq 'y'&&!$wysiwyg}
+{if ($prefs.feature_smileys eq 'y') && ($wysiwyg ne 'y')}
 <tr class="formcolor"><td>{tr}Smileys{/tr}:</td><td>
 {include file="tiki-smileys.tpl" area_name='editwiki'}
 </td>
