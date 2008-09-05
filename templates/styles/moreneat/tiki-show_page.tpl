@@ -198,7 +198,7 @@
 {elseif $atts|@count == 1}
 <span class="highlight">{tr}1 File Attached{/tr}</span>
 {else}
-<span class="highlight">{tr}{|} Files Attached{/tr}$atts|@count{tr}{|} Files Attached{/tr}</span>
+<span class="highlight">{$atts|@count}{tr}{|} Files Attached{/tr}</span>
 {/if}
 <span id="attzone_close" style="display:{if isset($smarty.session.tiki_cookie_jar.show_attzone) and $smarty.session.tiki_cookie_jar.show_attzone eq 'y'}inline{else}none{/if};">({tr}close{/tr})</span>
 </a>
