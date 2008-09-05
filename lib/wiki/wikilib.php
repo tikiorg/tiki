@@ -836,6 +836,23 @@ class WikiLib extends TikiLib {
 		$query = 'insert into `tiki_pages` (`pageName`,`hits`,`data`,`lastModif`,`comment`,`version`,`user`,`ip`,`description`,`creator`,`page_size`,`is_html`,`created`, `flag`,`points`,`votes`,`pageRank`,`lang`,`lockedby`) select ?,`hits`,`data`,`lastModif`,`comment`,`version`,`user`,`ip`,`description`,`creator`,`page_size`,`is_html`,`created`, `flag`,`points`,`votes`,`pageRank`,`lang`,`lockedby` from `tiki_pages` where `pageName`=?';
 		$this->query($query, array($new, $old));
 	}
+	function refresh_backlinks() {
+		global $tikilib, $prefs;
+		$tikilib->query('delete from tiki_links', array());
+		if ($prefs['feature_backlinks'] == 'n')
+			return;
+		$listpages = $tikilib->list_pageNames();
+		if ($listpages['cant']) {
+			foreach ($listpages['data'] as $from) {
+				$info = $tikilib->get_page_info($from['pageName']);
+				$pages = $tikilib->get_pages($info['data'], true);
+				foreach($pages as $to=>$types) {
+					$tikilib->replace_link($from['pageName'], $to, $types);
+					//echo '<br />FROM:'.$from['pageName']." TO: $to "; print_r($types);
+				}
+			}
+		}
+	}
 
 }
 
