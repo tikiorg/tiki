@@ -83,3 +83,7 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 
 #2008-09-02 sylvieg
 ALTER TABLE tiki_tracker_fields ADD COLUMN descriptionIsParsed char(1) default 'n' AFTER editableBy;
+
+#2008-09-05 lphuberdeau
+ALTER TABLE tiki_feature MODIFY COLUMN keyword VARCHAR(30) NULL;
+

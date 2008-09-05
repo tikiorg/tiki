@@ -3549,7 +3549,7 @@ CREATE TABLE `tiki_feature` (
   `permission` varchar(50) default NULL,
   `ordinal` mediumint(9) NOT NULL default '1',
   `depends_on` mediumint(9) default NULL,
-  `keyword` varchar(20) default NULL,
+  `keyword` varchar(30) default NULL,
   `feature_count` mediumint(9) NOT NULL default '0',
   `feature_path` varchar(20) NOT NULL default '0',
   PRIMARY KEY (`feature_id`)
