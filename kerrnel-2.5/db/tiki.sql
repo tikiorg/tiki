@@ -3490,7 +3490,7 @@ CREATE TABLE tiki_tracker_item_fields (
 # Table structure for table tiki_tracker_items
 #
 # Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 12, 2003 at 08:26 AM
+# Last update: Sep 05, 2008 at 03:23 AM
 #
 
 DROP TABLE IF EXISTS tiki_tracker_items;
@@ -3498,8 +3498,10 @@ CREATE TABLE tiki_tracker_items (
   itemId int(12) NOT NULL auto_increment,
   trackerId int(12) NOT NULL default '0',
   created int(14) default NULL,
+  createdBy varchar(255) default NULL,
   status char(1) default NULL,
   lastModif int(14) default NULL,
+  lastModifBy varchar(255) default NULL,
   PRIMARY KEY (itemId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 # --------------------------------------------------------
@@ -3525,7 +3527,7 @@ CREATE TABLE tiki_tracker_options (
 # Table structure for table tiki_trackers
 #
 # Creation: Jul 03, 2003 at 07:42 PM
-# Last update: Jul 12, 2003 at 08:26 AM
+# Last update: Aug 29, 2008 at 13:30 PM
 #
 
 DROP TABLE IF EXISTS tiki_trackers;

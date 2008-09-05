@@ -1071,6 +1071,8 @@ foreach ($ins_fields['data'] as $sid => $onefield) {
 	}
 }
 
+$info['createdByDisplay'] = $tikilib->get_displayName($info['createdBy']);
+$info['lastModifByDisplay'] = $tikilib->get_displayName($info['lastModifBy']);
 $smarty->assign('id_fields', $id_fields);
 $smarty->assign('trackerId', $_REQUEST["trackerId"]);
 $smarty->assign('tracker_info', $tracker_info);

@@ -900,11 +900,11 @@ class TrackerLib extends TikiLib {
 		if (!empty($itemId)) {
 			$oldStatus = $this->getOne("select `status` from `tiki_tracker_items` where `itemId`=?", array($itemId));
 			if ($status) {
-				$query = "update `tiki_tracker_items` set `status`=?,`lastModif`=? where `itemId`=?";
-				$result = $this->query($query,array($status,(int) $this->now,(int) $itemId));
+				$query = "update `tiki_tracker_items` set `status`=?,`lastModif`=?, `lastModifBy`=? where `itemId`=?";
+				$result = $this->query($query,array($status,(int) $this->now,$user,(int) $itemId));
 			} else {
-				$query = "update `tiki_tracker_items` set `lastModif`=? where `itemId`=?";
-				$result = $this->query($query,array((int) $this->now,(int) $itemId));
+				$query = "update `tiki_tracker_items` set `lastModif`=?, `lastModifBy`=? where `itemId`=?";
+				$result = $this->query($query,array((int) $this->now,$user,(int) $itemId));
 				$status = $oldStatus;
 			}
 		} else {
@@ -912,8 +912,8 @@ class TrackerLib extends TikiLib {
 				$status = $this->getOne("select `value` from `tiki_tracker_options` where `trackerId`=? and `name`=?",array((int) $trackerId,'newItemStatus'));
 			}
 			if (empty($status)) { $status = 'o'; }
-			$query = "insert into `tiki_tracker_items`(`trackerId`,`created`,`lastModif`,`status`) values(?,?,?,?)";
-			$result = $this->query($query,array((int) $trackerId,(int) $this->now,(int) $this->now,$status));
+			$query = "insert into `tiki_tracker_items`(`trackerId`,`created`,`createdBy`,`lastModif`,`lastModifBy`,`status`) values(?,?,?,?,?,?)";
+			$result = $this->query($query,array((int) $trackerId,(int) $this->now,$user,(int) $this->now,$user,$status));
 			$new_itemId = $this->getOne("select max(`itemId`) from `tiki_tracker_items` where `created`=? and `trackerId`=?",array((int) $this->now,(int) $trackerId));
 		}
 
@@ -2882,6 +2882,27 @@ class TrackerLib extends TikiLib {
 		}
 
 		return $result;
+	}
+
+	// Accepts a username and looks for a real name.  If a real name
+	// is found, it will return that as the display name, otherwise
+	// it will return the username.
+	function get_displayName($un) {
+		if (!$un) {
+			return "<i>unknown</i>";
+		} elseif (empty($un)) {
+			return "Anonymous";
+		}
+
+		$query = "select `value` from `tiki_user_preferences` where `user`=? and `prefName`=?";
+		$result = $this->query($query, array($un, 'realName'));
+		$res = $result->fetchRow();
+
+		if (!$res['value'] || empty($res['value'])) {
+			return $un;
+		} else {
+			return $res['value'];
+		}
 	}
 }
 
