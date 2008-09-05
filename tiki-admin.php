@@ -40,6 +40,7 @@ function simple_set_toggle($feature) {
 
 function simple_set_value($feature, $pref = '', $isMultiple = false) {
 	global $_REQUEST, $tikilib ,$prefs;
+
 	if (isset($_REQUEST[$feature])) {
 		if ( $pref != '' ) {
 			$tikilib->set_preference($pref, $_REQUEST[$feature]);

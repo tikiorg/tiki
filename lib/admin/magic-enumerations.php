@@ -32,12 +32,6 @@ $enumerations['faqprefix'] = array ('None'=>tra('None'),'QA'=>tra('Q and A'),'qu
 $enumerations['tikiversioncheckfrequency'] = array (86400=>tra('Each day'),604800=>tra('Each week'),2592000=>tra('Each month'));
 $enumerations['defaultmailcharset'] = array ('utf-8'=>tra('utf-8'),'iso-8859-1'=>tra('iso-8859-1'));
 $enumerations['mailcrlf'] = array ('0'=>tra('CRLF (standard)'),'1'=>tra('LF (some Unix MTA)'));
-//need this foreach because of dynamically driven languages of tikiwiki (copying $languages from $prefs array)
-$enumerations['availablelanguages'] = array();
-$languages = $tikilib->list_languages();
-foreach($languages as $key => $value){
-	$enumerations['availablelanguages'][$key] = $value;
-	}
 $enumerations['remembertime'] = array ('0'=>tra('5 minutes'),'1'=>tra('15 minutes'),'2'=>tra('30 minutes'),'3'=>tra('1 hour'),'4'=>tra('2 hours'),'5'=>tra('10 hours'),'6'=>tra('20 hours'),'7'=>tra('1 day'),'8'=>tra('1 week'),'9'=>tra('1 month'),'10'=>tra('1 year'));
 $enumerations['httpslogin'] = array ('0'=>tra('Disabled'),'1'=>tra('Allow secure (https) login'),'2'=>tra('Encourage secure (https) login'),'3'=>tra('Consider we are in always in HTTPS, but do not check'),'4'=>tra('Require secure (https) login'));
 $enumerations['featurecryptpasswords'] = array ('crypt-md5'=>tra('crypt-md5'),'crypt-des'=>tra('crypt-des'),'tikihash'=>tra('tikihash (old)'));
@@ -46,4 +40,6 @@ $enumerations['highlightgroup'] = array ('0'=>tra('choose a group ...'),'1'=>tra
 $enumerations['availablestyles'] = array ('0'=>tra('darkroom.css'),'1'=>tra('feb12.css'),'2'=>tra('simple-amette.css'),'3'=>tra('simple.css'),'3'=>tra('spanky.css'),'3'=>tra('thenews.css'),'3'=>tra('tikineat.css'),'3'=>tra('tikinewt.css'));
 $enumerations['transitionstylever'] = array ('none'=>tra('Never use transition css'),'css_specified_only'=>tra('Use @version:x.x specified in theme css or none if not specified'),'1.9'=>tra('Use @version:x.x specified in theme css or 1.9 if not specified'),'2.0'=>tra('Use @version:x.x specified in theme css or 2.0 if not specified'));
 $enumerations['wikilistsortorder'] = array ('pageName'=>tra('Name'),'lastModif'=>tra('LastModif'),'created'=>tra('Created'),'creator'=>tra('Creator'),'hits'=>tra('Hits'),'user'=>tra('Last editor'),'page_size'=>tra('Size'));
+$enumerations['wikiattachmentstorage'] = array('y'=>tra('Use database to store files'), 'n'=>tra('Use a directory to store files'));
+$enumerations['sortorder'] = array('asc'=>tra('Ascending'), 'desc'=>tra('Descending'));
 ?>

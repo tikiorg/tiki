@@ -4,6 +4,9 @@
 {section name=top loop=$toplevelfeatures}
 	<li{if $toplevel eq $toplevelfeatures[top].feature_id} class="current"{/if}><a href="tiki-magic.php?featurechain={$toplevelfeatures[top].feature_path}">{tr}{$toplevelfeatures[top].feature_name}{/tr}</a></li>
 {/section}
+	{if $feature.feature_count > 0 && $templatename != 'tiki-magic'}
+	<li class="configureThis"><a href="tiki-magic.php?featurechain={$feature.feature_path}">{tr}Configure{/tr} {tr}{$feature.feature_name}{/tr}</a></li>
+	{/if}
 </ul>
 {if $secondlevel}
 <ul class="secondLevelAdmin">

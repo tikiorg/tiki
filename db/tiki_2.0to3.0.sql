@@ -87,3 +87,5 @@ ALTER TABLE tiki_tracker_fields ADD COLUMN descriptionIsParsed char(1) default '
 #2008-09-05 lphuberdeau
 ALTER TABLE tiki_feature MODIFY COLUMN keyword VARCHAR(30) NULL;
 
+#2008-09-05 bitey
+ALTER TABLE tiki_feature ADD COLUMN `tip` text NULL;
