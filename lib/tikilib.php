@@ -4637,6 +4637,10 @@ class TikiLib extends TikiDB {
 
 		$commentslib = new Comments($dbTiki);
 
+		if( ! $is_html ) {
+			$data = str_replace( '<x>', '', $data );
+		}
+
 		if (!$user) $user = 'anonymous';
 		if (empty($wysiwyg)) $wysiwyg = $prefs['wysiwyg_default'];
 		// Collect pages before modifying data
@@ -7260,6 +7264,10 @@ class TikiLib extends TikiDB {
 		global $smarty, $prefs, $dbTiki, $histlib, $quantifylib;
 		include_once ("lib/wiki/histlib.php");
 		include_once ("lib/commentslib.php");
+
+		if( ! $is_html ) {
+			$edit_data = str_replace( '&lt;x&gt;', '', $edit_data );
+		}
 
 		$commentslib = new Comments($dbTiki);
 
