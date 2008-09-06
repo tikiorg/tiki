@@ -261,6 +261,7 @@ if ( ! empty($multiprint_pages) ) {
 		foreach( $listpages['data'] as $page )
 			$pages[] = $page['pageName'];
 
+		header( 'Content-Type: application/json' );
 		echo json_encode( $pages );
 	} else {
 		// Display the template
