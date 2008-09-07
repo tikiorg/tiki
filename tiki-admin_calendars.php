@@ -119,6 +119,7 @@ if ($_REQUEST["calendarId"]) {
 	$info["personal"] = 'n';
 	$info["startday"] = '25200';
 	$info["endday"] = '72000';
+    $info["customeventstatus"] = 0;
 }
 
 $smarty->assign('name', $info["name"]);
@@ -145,6 +146,13 @@ $smarty->assign('personal', $info["personal"]);
 $smarty->assign('startday', $info["startday"] < 0 ?0: round($info['startday']/(60*60)));
 $smarty->assign('endday', $info["endday"] < 0 ?0: round($info['endday']/(60*60)));
 $smarty->assign('hours', array('0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24'));
+$smarty->assign('customeventstatus', $info["customeventstatus"]);
+
+$smarty->assign('eventstatus', array(
+                                0 => tra('Tentative'),
+                                1 => tra('Confirmed'),
+                                2 => tra('Cancelled'))
+                                );
 
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'name_desc';

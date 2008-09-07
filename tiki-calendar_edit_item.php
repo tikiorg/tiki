@@ -272,6 +272,9 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
   die;
 }
 
+if (!empty($calendar['customeventstatus'])) {
+    $calitem['status'] = $calendar['customeventstatus'];
+}
 
 if ($calendar['customlocations'] == 'y') {
 	$listlocs = $calendarlib->list_locations($_REQUEST['calendarId']);
