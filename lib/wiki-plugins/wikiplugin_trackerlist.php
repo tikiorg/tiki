@@ -484,7 +484,7 @@ function wikiplugin_trackerlist($data, $params) {
 				elseif (empty($exactvalue))
 					$exactvalue = $user;
 				else
-					$exatvalue = array($exactvalue, $user);
+					$exactvalue = array($exactvalue, $user);
 			}
 		}
 
