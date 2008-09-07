@@ -330,7 +330,7 @@ function histlib_helper_setup_diff( $page, $oldver, $newver )
 			$smarty->assign_by_ref('new', $new);
 		}
 	}
-
+	
 	if (!isset($_REQUEST["diff_style"]) || $_REQUEST["diff_style"] == "old") {
 		$_REQUEST["diff_style"] = 'unidiff';
 	}

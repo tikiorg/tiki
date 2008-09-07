@@ -1,7 +1,5 @@
 {title help="i18n"}{tr}Translate:{/tr}&nbsp;{$name}{if isset($languageName)}&nbsp;({$languageName}, {$langpage}){/if}{/title}
 
-Hello world
-
 {if $type eq 'wiki page'}
   <a class="linkbut" href="tiki-index.php?page={$name|escape:'url'}&bl=n">{tr}View Page{/tr}</a>
 {else}
