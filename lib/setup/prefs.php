@@ -227,7 +227,11 @@ function get_default_prefs() {
 		'wikiplugin_versions' => 'y',
 		'wikiplugin_vote' => 'y',
 		'wikiplugin_wantedpages' => 'y',
+		'wikiplugin_webservice' => 'n',
 		'wikiplugin_youtube' => 'y',
+
+		// webservices
+		'webservice_consume_defaultcache' => 300, // 5 min
 
 		// wysiwyg
 		'feature_wysiwyg' => 'n',
