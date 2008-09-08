@@ -26,26 +26,19 @@
 
 {* -------------------- user selector -------------------- *}
 {elseif $field_value.type eq 'u'}
-	{if $field_value.options_array[0] eq 0 or empty($field_value.options_array) or $tiki_p_admin_trackers eq 'y'}
+	{if empty($field_value.options_array) or ($field_value.options_array[0] !=1 and $field_value.options_array[0] !=2) or $tiki_p_admin_trackers eq 'y'}
 		<select name="{$field_value.ins_id}" {if $field_value.http_request}onchange="selectValues('trackerIdList={$field_value.http_request[0]}&amp;fieldlist={$field_value.http_request[3]}&amp;filterfield={$field_value.http_request[1]}&amp;status={$field_value.http_request[4]}&amp;mandatory={$field_value.http_request[6]}&amp;filtervalue='+escape(this.value),'{$listfields.$fid.http_request[5]}')"{/if}>
 		<option value="">{tr}None{/tr}</option>
 		{foreach key=id item=one from=$field_value.list}
 			{if ( ! isset($field_value.itemChoices) || $field_value.itemChoices|@count eq 0 || in_array($one, $field_value.itemChoices) )}
-				{if $field_value.value}
+				{if $field_value.options_array[0] ne '2'}
 					<option value="{$one|escape}"{if $one eq $field_value.value} selected="selected"{/if}>{$one}</option>
 				{else}
-					<option value="{$one|escape}"{if $one eq $user and $field_value.options_array[0] ne '2'} selected="selected"{/if}>{$one}</option>
+					<option value="{$one|escape}"{if $one eq $user} selected="selected"{/if}>{$one}</option>
 				{/if}
 			{/if}
 		{/foreach}
 		</select>
-	{elseif $field_value.options_array[0] eq 1}
-		{if empty($field_value.value)}
-			{$user|escape}
-			<input type="hidden" name="authorfieldid" value="{$field_value.fieldId}" />
-		{else}
-			{$field_value.value|escape}
-		{/if}
 	{else}
 		{$user|escape}
 	{/if}
@@ -333,6 +326,10 @@
 	</select>
 
 {* -------------------- item list -------------------- *}
+{elseif  $field_value.type eq 'l'}
+	{foreach key=id item=label from=$field_value.value}
+		{$label|escape}
+	{/foreach}
 
 {* -------------------- dynamic list -------------------- *}
 {elseif $field_value.type eq 'w'}

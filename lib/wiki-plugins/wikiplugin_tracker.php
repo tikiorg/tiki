@@ -659,6 +659,10 @@ function wikiplugin_tracker($data, $params) {
 							$quicktags = $quicktagslib->list_quicktags(0, -1, 'taglabel_desc', '', 'trackers');
 							$smarty->assign_by_ref('quicktags', $quicktags['data']);
 						}
+					} elseif ($f['type'] == 'l' && isset($itemId)) {
+						$opts[1] = split(':', $f['options_array'][1]);
+						$finalFields = explode('|', $f['options_array'][3]);
+						$flds['data'][$i]['value'] = $trklib->get_join_values($itemId, array_merge(array($f['options_array'][2]), array($f['options_array'][1]), array($finalFields[0])), $f['options_array'][0], $finalFields);
 					}
 				}
 			}
