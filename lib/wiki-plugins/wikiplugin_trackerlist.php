@@ -397,7 +397,7 @@ function wikiplugin_trackerlist($data, $params) {
 			if ($f = $trklib->get_field_id_from_type($trackerId, 'u', '1%')) {
 				$filterfield[] = $f;
 				$filtervalue[] = '';
-				$exactvalue[] = isset($view)? $user: $view_user;
+				$exactvalue[] = isset($view)? (empty($user)?'Anonymous':$user): $view_user;
 			}
 		}
 		if (isset($view) && $view == 'page' && $_REQUEST['page']) {
