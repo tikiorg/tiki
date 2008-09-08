@@ -82,6 +82,7 @@ function get_default_prefs() {
 		'feature_wiki_save_draft' => 'n', // Broken in 2.0 RC2 http://dev.tikiwiki.org/wish1888
 		'feature_wikiwords' => 'y',
 		'feature_wikiwords_usedash' => 'y',
+		'feature_wiki_pagealias' => 'y',
 		'mailin_autocheck' => 'n',
 		'mailin_autocheckFreq' => '0',
 		'mailin_autocheckLast' => 0,
@@ -123,6 +124,7 @@ function get_default_prefs() {
 		'wiki_list_id' => 'n',
 		'wiki_list_sortorder' => 'pageName',
 		'wiki_list_sortdirection' => 'asc',
+		'wiki_pagealias_tokens' => 'alias',
 		'wiki_page_regex' => 'strict',
 		'wiki_page_separator' => '...page...',
 		'wiki_page_navigation_bar' => 'bottom',
@@ -144,6 +146,7 @@ function get_default_prefs() {
 		'wikiapproval_master_group' => '',
 		'wiki_edit_section' => 'y',
 		'wiki_edit_plugin' => 'y',
+		'wiki_validate_plugin' => 'y',
 
 		'wikiplugin_agentinfo' => 'n',
 		'wikiplugin_alink' => 'y',
@@ -173,6 +176,7 @@ function get_default_prefs() {
 		'wikiplugin_flash' => 'y',
 		'wikiplugin_gauge' => 'y',
 		'wikiplugin_group' => 'y',
+		'wikiplugin_iframe' => 'n',
 		'wikiplugin_include' => 'y',
 		'wikiplugin_jabber' => 'n',
 		'wikiplugin_lang' => 'y',
@@ -190,6 +194,7 @@ function get_default_prefs() {
 		'wikiplugin_poll' => 'y',
 		'wikiplugin_proposal' => 'y',
 		'wikiplugin_quote' => 'y',
+		'wikiplugin_redirect' => 'n',
 		'wikiplugin_regex' => 'n',
 		'wikiplugin_remarksbox' => 'y',
 		'wikiplugin_rss' => 'y',
@@ -222,7 +227,11 @@ function get_default_prefs() {
 		'wikiplugin_versions' => 'y',
 		'wikiplugin_vote' => 'y',
 		'wikiplugin_wantedpages' => 'y',
+		'wikiplugin_webservice' => 'n',
 		'wikiplugin_youtube' => 'y',
+
+		// webservices
+		'webservice_consume_defaultcache' => 300, // 5 min
 
 		// wysiwyg
 		'feature_wysiwyg' => 'n',
@@ -844,6 +853,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_sitetitle' => 'y',
 		'feature_sitedesc' => 'n',
 		'feature_bot_logo' => 'n',
+		'feature_endbody_code' => '',
 
 		// layout
 		'feature_left_column' => 'y',

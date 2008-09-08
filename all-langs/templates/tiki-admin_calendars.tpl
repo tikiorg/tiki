@@ -167,6 +167,9 @@ href="tiki-objectpermissions.php?objectName={$cal.name|escape:"url"}&amp;objectT
 <tr class="formcolor"><td>{tr}Custom background color{/tr}:</td><td>
 <input type="text" name="options[custombgcolor]" value="{$custombgcolor}" size="6" />
 </td></tr>
+<tr class="formcolor"><td>{tr}Default event status{/tr}:</td><td>
+{html_options name='options[customeventstatus]' options=$eventstatus selected=$customeventstatus}
+</td></tr>
 <tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 <br />

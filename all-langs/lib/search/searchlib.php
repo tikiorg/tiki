@@ -728,7 +728,8 @@ class SearchLib extends TikiLib {
 	}
 
 	function find_exact_wiki($words,$offset, $maxRecords) {
-	  global $prefs, $user, $tikilib;
+		global $prefs, $user, $tikilib;
+		global $wikilib;include_once('lib/wiki/wikilib.php');
 	  if ($prefs['feature_wiki'] == 'y'  && count($words) >0) {
 	  $query = "select distinct s.`page`, s.`location`, s.`last_update`, sum(s.`count`) as `count`, p.`data`, p.`hits`, p.`lastModif`, p.`is_html` 
 		from `tiki_searchindex` s, `tiki_pages` p  
@@ -741,7 +742,7 @@ class SearchLib extends TikiLib {
 	  $ret=array();
           while ($res = $result->fetchRow()) {
 	   if($this->user_has_perm_on_object($user,$res["page"],'wiki page','tiki_p_view', 'tiki_p_search_categorized')) {
-            $href = "tiki-index.php?page=".urlencode($res["page"]);
+		   $href = $wikilib->sefurl($res['page']);
             ++$cant;
             $ret[] = array(
               'pageName' => $res["page"],

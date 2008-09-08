@@ -5,6 +5,12 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
+include_once ('magic-enumerations.php');
+include_once('tikilib.php');
+include_once ('lib/categories/categlib.php');
+include_once ('lib/userslib.php');
+include_once ("lib/commentslib.php");
+include_once ("lib/logs/logslib.php");
 
 class MagicLib extends TikiLib {
 	function MagicLib($db) {
@@ -28,7 +34,7 @@ class MagicLib extends TikiLib {
 		while( false !== $row = fgetcsv( $fp, 1024, ',', '"' ) ) {
 			// Check for empty line should not happend but...
 			if ($row[0] !== null) {
-				while( count($row) < 11 )
+				while( count($row) < 12)
 					$row[] = '';
 
 				$row = array(
@@ -43,9 +49,10 @@ class MagicLib extends TikiLib {
 					(int) $row[8],
 					(int) $row[9],
 					(string) $row[10],
+					(string) $row[11]
 				);
 
-				$query = "INSERT INTO tiki_feature (`feature_id`, `feature_name`, `parent_id`, `status`, `setting_name`, `feature_type`, `template`, `permission`, `ordinal`, `depends_on`, `keyword`) VALUES(" . rtrim(str_repeat(' ?,', count($row)), ',') . ")";
+				$query = "INSERT INTO tiki_feature (`feature_id`, `feature_name`, `parent_id`, `status`, `setting_name`, `feature_type`, `template`, `permission`, `ordinal`, `depends_on`, `keyword`, `tip`) VALUES(" . rtrim(str_repeat(' ?,', count($row)), ',') . ")";
 				$this->query( $query, $row);
 			}
 		}
@@ -104,19 +111,65 @@ class MagicLib extends TikiLib {
 	}
 	
 	function _feature_post_processing($feature) {
-		global $prefs;
+		global $prefs, $enumerations, $tikilib, $categlib, $userlib, $dbTiki;
 		if ($feature['setting_name'] != '' && in_array($feature['setting_name'], $prefs)) {
 			$feature['value'] = $prefs[$feature['setting_name']];
+			// Slightly odd special case.  The value needs to be stored in 'language'; however the language
+			// preference for 'language' contains the user language.
+			if ($feature['setting_name'] == 'language') {
+				$feature['value'] = $prefs['site_language'];
+			}
 		}
 		// Dear developers,
 		// Don't fuckup and make circular dependencies.
 		if ($feature['depends_on'] != 0) {
 			$feature['depends_on'] = $this->get_feature($feature['depends_on']);
 		}
+
+		if ($feature['feature_type'] == 'grouplist') {
+			$groups = array();
+			$groups[] = "";
+			$feature['enumeration'] = array_merge($groups, $userlib->list_all_groups());
+		}
+		if ($feature['feature_type'] == 'limitcategory' || $feature['feature_type'] == 'selectcategory') {
+			$feature['enumeration'] = $categlib->get_all_categories();
+		}
+		if ($feature['feature_type'] == 'languages' || $feature['feature_type'] == 'availablelanguages' ) {
+			$feature['enumeration'] = array();
+			foreach($tikilib->list_languages(false,null,true) as $language) {
+				$feature['enumeration'][$language['value']] = $language['name'];
+			}
+		}
+		if ($feature['feature_type'] == 'forumselection') {
+			$commentslib = new Comments($dbTiki);
+			$all_forums = $commentslib->list_forums(0, -1, 'name_asc', '');
+			if (count($all_forums['data']) == 0) {
+				$empty = array();
+				$empty[''] = tra('No forums');
+				$feature['enumeration'] = $empty;
+			} else {
+				$feature['enumeration'] = $all_forums["data"];
+			}
+		}
+		if ($feature['feature_type'] == 'timezone') {
+			$feature['enumeration'] = TikiDate::getTimeZoneList();
+		}
+		if ($feature['feature_type'] == 'sitestyle') $enumerations['sitestyle'] = $tikilib->list_styles(); 
+		if ($feature['feature_type'] == 'slideshowstyle') $enumerations['slideshowstyle'] = $this->get_slideshowstyles();
+
+		if (array_key_exists($feature['feature_type'], $enumerations)) {
+			$feature['enumeration'] = $enumerations[$feature['feature_type']];
+		}
 		
+		// If there are a couple of other things which should allow mutliple select, add 'em here.
+		// If there are lots, add it to the tiki_features data table.
+		if ($feature['feature_type'] == 'availablelanguages' ) {
+			$feature['multiple'] = 'on';
+		}
+
 		return $feature;
 	}
-	
+
 	function get_feature_by_template($templateName) {
 		$bindvars = array();
 		$bindvars[] = $templateName;
@@ -148,11 +201,94 @@ class MagicLib extends TikiLib {
 	}
 
 	function is_setting($feature) {
-		return ($feature['feature_type'] == 'simple' || $feature['feature_type'] == 'byref' || $feature['feature_type'] == 'int' || $feature['feature_type'] == 'flag');
+		return !is_container($feature) && !is_functionality($feature);
 	}
 	
 	function is_functionality($feature) {
-		return ($feature['feature_type'] == 'functionality' || $feature['feature_type'] == 'system' || $feature['feature_type'] == 'feature');
+		return ($feature['feature_type'] == 'functionality' || $feature['feature_type'] == 'system' || $feature['feature_type'] == 'feature' || $feature['feature_type'] == 'subfeature');
+	}
+	
+	// These are helper functions, pretty much as-ganked from tiki-admin.php
+
+	function simple_set_toggle($feature) {
+		global $_POST, $tikilib, $smarty, $tikifeedback, $prefs, $logslib;
+		if ($feature != '') {	
+			$setting = $feature;
+			if (isset($_POST[$setting]) && $_POST[$setting] == "on") {
+				if ((!isset($prefs[$setting]) || $prefs[$setting] != 'y')) {
+					// not yet set at all or not set to y
+					$tikilib->set_preference($setting, 'y');
+					$prefs[$setting] = 'y';
+					$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("%s enabled"),$feature));
+					$logslib->add_log('Configuration', tra("$feature is turned on"));
+				}
+			} else {
+				if ((!isset($prefs[$setting]) || $prefs[$setting] != 'n')) {
+					// not yet set at all or not set to n
+					$tikilib->set_preference($feature, 'n');
+					$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("%s disabled"),$feature));
+					$logslib->add_log('Configuration', tra("$feature is turned off"));
+				}
+			}
+		}
+	}
+	
+	function simple_set_value($feature, $pref = '', $isMultiple = false) {
+		global $_POST, $tikilib, $prefs, $logslib;
+		if (is_array($_POST[$feature])) {
+			$featureStr = implode($_POST[$feature], ',');	
+		} else {
+			$featureStr = $_POST[$feature];
+		}
+		if ($feature != '') {
+			if (isset($_POST[$feature])) {
+				if ( $pref != '' ) {
+					$tikilib->set_preference($pref, $_POST[$feature]);
+					$prefs[$feature] = $_POST[$feature];
+					$logslib->add_log('Configuration', tra("$feature set to " . $featureStr));
+				} else {
+					$tikilib->set_preference($feature, $_POST[$feature]);
+					$logslib->add_log('Configuration', tra("$feature set to " . $featureStr));
+				}
+			} else if( $isMultiple ) {
+				// Multiple selection controls do not exist if no item is selected.
+				// We still want the value to be updated.
+				if ( $pref != '' ) {
+					$tikilib->set_preference($pref, array());
+					$prefs[$feature] = $_POST[$feature];
+					$logslib->add_log('Configuration', tra("$feature set to nothing"));
+				} else {
+					$tikilib->set_preference($feature, array());
+					$logslib->add_log('Configuration', tra("$feature set to nothing"));
+				}
+			}
+		}
+	}
+	
+	function simple_set_int($feature) {
+		global $_POST, $tikilib;
+		if (isset($_POST[$feature]) && is_numeric($_POST[$feature])) {
+			// This will cause logging / popups / any additional post processing to occur.
+			$this->simple_set_value($feature, $_POST[$feature]);
+		}
+	}
+	
+	function byref_set_value($feature, $pref = "") {
+		global $_POST, $tikilib;
+		$this->simple_set_value($feature, $pref);
+	}
+	
+	function get_slideshowstyles() {
+		$slide_styles = array();
+		$h = opendir("styles/slideshows");
+		while ($file = readdir($h)) {
+			if (strstr($file, "css")) {
+				$slide_styles[] = $file;
+			}
+		}
+		closedir ($h);
+				
+		return $slide_styles;
 	}
 }
 global $dbTiki;

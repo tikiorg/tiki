@@ -2286,6 +2286,7 @@ CREATE TABLE tiki_tracker_fields (
   errorMsg text,
   visibleBy text,
   editableBy text,
+  descriptionIsParsed char(1) default 'n',
   PRIMARY KEY (fieldId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
@@ -2986,6 +2987,9 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_map_view_mapfiles', 'Can view contents of mapfiles', 'registered', 'maps');
 
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_use_webmail', 'Can use webmail', 'registered', 'webmail');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_plugin_viewdetail', 'Can view unapproved plugin details', 'registered', 'wiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_plugin_preview', 'Can execute unapproved plugin', 'registered', 'wiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_plugin_approve', 'Can approve plugin execution', 'editors', 'wiki');
 
 DROP TABLE IF EXISTS users_usergroups;
 CREATE TABLE users_usergroups (
@@ -3533,19 +3537,20 @@ CREATE TABLE tiki_profile_symbols (
 	INDEX(`named`)
 );
 
-DROP TABLE IF EXISTS `tiki_feature`;
+DROP TABLE IF EXISTS tiki_feature;
 CREATE TABLE `tiki_feature` (
   `feature_id` mediumint(9) NOT NULL auto_increment,
   `feature_name` varchar(150) NOT NULL,
   `parent_id` mediumint(9) NOT NULL,
   `status` varchar(12) NOT NULL default 'active',
   `setting_name` varchar(50) default NULL,
-  `feature_type` varchar(20) NOT NULL default 'feature',
+  `feature_type` varchar(30) NOT NULL default 'feature',
   `template` varchar(50) default NULL,
   `permission` varchar(50) default NULL,
   `ordinal` mediumint(9) NOT NULL default '1',
   `depends_on` mediumint(9) default NULL,
-  `keyword` varchar(20) default NULL,
+  `keyword` varchar(30) default NULL,
+  `tip` text NULL,
   `feature_count` mediumint(9) NOT NULL default '0',
   `feature_path` varchar(20) NOT NULL default '0',
   PRIMARY KEY (`feature_id`)

@@ -141,7 +141,9 @@ if ( $prefs['feature_phplayers'] == 'y' ) require_once('lib/setup/phplayers.php'
 
 if( $tiki_p_admin == 'y' ) {
 	include_once('lib/admin/magiclib.php');
-	$smarty->assign('feature', $magiclib->get_feature_by_template(substr($tiki_script_filename, strrpos($tiki_script_filename, '/') + 1, -4)));
+	$templatename = substr($tiki_script_filename, strrpos($tiki_script_filename, '/') + 1, -4);
+	$smarty->assign('feature', $magiclib->get_feature_by_template($templatename));
+	$smarty->assign('templatename', $templatename);
 	require_once('tiki-admin_bar.php');
 }
 

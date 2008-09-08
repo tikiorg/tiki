@@ -199,9 +199,9 @@
 <tr>
 <td class="{cycle advance=false}">{$user_modules[user].name|escape}</td>
 <td class="{cycle advance=false}">{$user_modules[user].title|escape}</td>
-<td class="{cycle}"><a class="link" href="tiki-admin_modules.php?um_edit={$user_modules[user].name|escape:'url'}#editcreate" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
+<td class="{cycle}"><a class="link" href="tiki-admin_modules.php?um_edit={$user_modules[user].name|escape:'url'}&amp;cookietab=2#editcreate" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
              <a class="link" href="tiki-admin_modules.php?edit_assign={$user_modules[user].name|escape:'url'}#assign" title="{tr}Assign{/tr}">{icon _id='add' alt='{tr}Assign{/tr}'}</a>
-             <a class="link" href="tiki-admin_modules.php?um_remove={$user_modules[user].name|escape:'url'}" title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a></td>
+             <a class="link" href="tiki-admin_modules.php?um_remove={$user_modules[user].name|escape:'url'}&amp;cookietab=2" title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a></td>
 </tr>
 {sectionelse}
 <tr><td colspan="3" class="odd">
@@ -398,7 +398,20 @@
 </tr>
 {/if}
 </table>
+{remarksbox type="tip" title="{tr}Tip{/tr}"}
+  {tr}To use <a target="tikihelp" href="http://phplayersmenu.sourceforge.net/">phplayersmenu</a>, you can use one of the three following syntaxes:{/tr}
+  <ul>
+    <li>{literal}{phplayers id=X}{/literal}</li>
+    <li>{literal}{phplayers id=X type=horiz}{/literal}</li>
+    <li>{literal}{phplayers id=X type=vert}{/literal}</li>
+  </ul>
+  {tr}This will work well (or not!) depending on your theme. To learn more about <a target="tikihelp" href="http://themes.tikiwiki.org">themes</a>{/tr}<br />
+  {tr}To use a menu in a tiki format: {/tr}{literal}{menu id=X}{/literal}<br />
+  {tr}To use menu in a css/suckerfish format: {/tr}{literal}{menu id=X css=y}{/literal}
+{/remarksbox}
+
 </td></tr></table>
+
 </fieldset>
 
 {/strip}

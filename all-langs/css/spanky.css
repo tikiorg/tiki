@@ -54,15 +54,48 @@ ul.secondLevelAdmin li {
 	padding:5px;
 }
 
+ul.topLevelAdmin li.configureThis {
+	background: url("../img/gradient3.png");
+}
+
 ul.secondLevelAdmin li.special {
 	background: url("../img/gradient3.png");
 }
 
+#magicPanel label {
+	display:inline
+}
 .formLabel {
 	padding:3px;
-	width:40%;
-	text-align: right;
+}
+.flag {
+
+}
+.featureLabel {
+	display:inline;
+	font-size: 0.8em;
+	font-weight: normal;
+	color: #bbb;
+}
+h4.feature {
 	float:left;
+	color:#fff;
+	padding:5px;
+}
+
+div.featureHeader {
+	background-color:#032936;
+	margin:0px 0px 10px 0px;
+	clear:both;
+}
+
+div.featureHeader a.goLink {
+	background-color: green;
+	color:#999;
+	font-weight: normal;
+	display: block;
+	float: right;
+	height: 100%;
 }
 
 h3.configSection {
@@ -72,6 +105,40 @@ h3.configSection {
 	float:left;
 	clear:both;
 }
+
+tr h4 {
+	display:inline; 
+	color:white;
+}
+
+.featureHeading.enabled td {background-color: #032936;}
+.featureHeading.disabled td {background-color: #555;}
+
+.subfeatureHeading.enabled td {background-color: #37555F;}
+.subfeatureHeading.disabled td {background-color: #777;}
+
+.configurationgroupHeading td {background-color: #37555F;}
+.systemHeading td {background-color: #37555F;}
+.containerHeading td {background-color: #37555F;}
+
+tr.featureHeading td {vertical-align: middle; padding:5px;}
+.enabled td.goLink {width:100px; background-color: #19422A; text-align: right; }
+a.goLink {color:white; text-decoration: none;}
+td.featureName {width:200px;}
+td.featureEnabled {width:100px;}
+td.useDefault {width:100px;}
+td.featureHelp {width:100px;}
+td.featureHelp a {text-decoration: none; color:white;}
+.tip {
+	border-top:1px solid #777; 
+	border-bottom:1px solid #777;
+	background-color: #ccc;
+	padding:2px;
+}
+
+table.configTable {clear: both;}
+table.configTable td {padding:3px;} 
+table.configTable tr.setting td {padding:3px 3px 10px 3px;}
 
 div.configSetting {
 	clear:both;

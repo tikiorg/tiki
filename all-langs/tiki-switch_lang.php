@@ -14,6 +14,10 @@ elseif (isset($_SERVER['HTTP_REFERER']))
 else
 	$orig_url = $prefs['tikiIndex'];
 
+if ($prefs['feature_sefurl'] == 'y' && !strstr($orig_url, '.php') && !preg_match('/article[0-9]+$/', $orig_url)) {
+        $orig_url = preg_replace('#\/([^\/]+)$#', '/tiki-index.php?page=$1', $orig_url);
+}
+
 if (strstr($orig_url, 'tiki-index.php') || strstr($orig_url, 'tiki-read_article.php')) {
 	global $multilinguallib; include_once("lib/multilingual/multilinguallib.php");
 	$orig_url = urldecode($orig_url);
@@ -55,6 +59,9 @@ if (strstr($orig_url, 'tiki-index.php') || strstr($orig_url, 'tiki-read_article.
 		}
 	}
 	$orig_url = preg_replace('/(.*)&bl=y(.*)/', '$1$2', $orig_url);
+	if ($prefs['feature_sefurl'] == 'y') {
+		$orig_url = str_replace('tiki-index.php?page=', '', $orig_url);
+	}
 } elseif (!preg_match('/[?&]lang=/', $orig_url) && !preg_match('/[?&]bl=/', $orig_url)) {
 	if (strstr($orig_url, '?'))
 		$orig_url .= '&bl=y';

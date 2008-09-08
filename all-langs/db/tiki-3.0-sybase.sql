@@ -1,27 +1,9 @@
 set quoted_identifier on
 go
 
--- $Rev$
--- $Date: 2008-03-16 00:06:59 $
--- $Author: nyloth $
--- $Name: not supported by cvs2svn $
--- phpMyAdmin MySQL-Dump
--- version 2.5.1
--- http://www.phpmyadmin.net/ (download page)
---
--- Host: localhost
--- Generation Time: Jul 13, 2003 at 02:09 AM
--- Server version: 4.0.13
--- PHP Version: 4.2.3
+-- --------------------------------------------------------
 -- Database : tikiwiki
 -- --------------------------------------------------------
-
---
--- Table structure for table galaxia_activities
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "galaxia_activities"
 go
@@ -44,14 +26,6 @@ CREATE TABLE "galaxia_activities" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table galaxia_activity_roles
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "galaxia_activity_roles"
 go
@@ -65,14 +39,6 @@ CREATE TABLE "galaxia_activity_roles" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table galaxia_instance_activities
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "galaxia_instance_activities"
 go
@@ -90,14 +56,6 @@ CREATE TABLE "galaxia_instance_activities" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table galaxia_instance_comments
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "galaxia_instance_comments"
 go
@@ -118,14 +76,6 @@ CREATE TABLE "galaxia_instance_comments" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table galaxia_instances
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "galaxia_instances"
 go
@@ -147,14 +97,6 @@ CREATE TABLE "galaxia_instances" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table galaxia_processes
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "galaxia_processes"
 go
@@ -174,14 +116,6 @@ CREATE TABLE "galaxia_processes" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table galaxia_roles
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "galaxia_roles"
 go
@@ -198,14 +132,6 @@ CREATE TABLE "galaxia_roles" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table galaxia_transitions
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "galaxia_transitions"
 go
@@ -220,14 +146,6 @@ CREATE TABLE "galaxia_transitions" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table galaxia_user_roles
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "galaxia_user_roles"
 go
@@ -242,14 +160,6 @@ CREATE TABLE "galaxia_user_roles" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table galaxia_workitems
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "galaxia_workitems"
 go
@@ -269,14 +179,6 @@ CREATE TABLE "galaxia_workitems" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table messu_messages
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 08:29 PM
---
 
 -- DROP TABLE "messu_messages"
 go
@@ -305,15 +207,6 @@ go
 
 CREATE  INDEX "messu_messages_userIsRead" ON "messu_messages"("user" "isRead")
 go
--- --------------------------------------------------------
-
---
--- Table structure for table messu_archive (same structure as messu_messages)
--- desc: user may archive his messages to this table to speed up default msg handling
---
--- Creation: Feb 26, 2005 at 03:00 PM
--- Last update: Feb 26, 2005 at 03:00 PM
---
 
 -- DROP TABLE "messu_archive"
 go
@@ -340,15 +233,6 @@ CREATE TABLE "messu_archive" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table messu_sent (same structure as messu_messages)
--- desc: user may archive his messages to this table to speed up default msg handling
---
--- Creation: Feb 26, 2005 at 11:00 PM
--- Last update: Feb 26, 2005 at 11:00 PM
---
 
 -- DROP TABLE "messu_sent"
 go
@@ -375,7 +259,6 @@ CREATE TABLE "messu_sent" (
 go
 
 
--- --------------------------------------------------------
 
 -- DROP TABLE "sessions"
 go
@@ -393,13 +276,6 @@ go
 
 CREATE  INDEX "sessions_expiry" ON "sessions"("expiry")
 go
-
---
--- Table structure for table tiki_actionlog
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 13, 2003 at 12:29 AM
---
 
 -- DROP TABLE "tiki_actionlog"
 go
@@ -436,15 +312,6 @@ go
 
 CREATE  INDEX "tiki_actionlog_params_nameValue" ON "tiki_actionlog_params"("name" "value")
 go
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_articles
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Nov 27, 2006 at 21:53 PM
--- Last check: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_articles"
 go
@@ -508,7 +375,6 @@ CREATE  INDEX "tiki_articles_type" ON "tiki_articles"("type")
 go
 CREATE  INDEX "tiki_articles_ft" ON "tiki_articles"("title","heading","body")
 go
--- --------------------------------------------------------
 
 -- DROP TABLE "tiki_article_types"
 go
@@ -562,13 +428,6 @@ go
 
 
 
---
--- Table structure for table tiki_banners
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
-
 -- DROP TABLE "tiki_banners"
 go
 
@@ -608,14 +467,6 @@ CREATE TABLE "tiki_banners" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_banning
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_banning"
 go
@@ -640,14 +491,6 @@ CREATE TABLE "tiki_banning" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_banning_sections
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_banning_sections"
 go
@@ -661,14 +504,6 @@ CREATE TABLE "tiki_banning_sections" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_blog_activity
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 04:52 PM
---
 
 -- DROP TABLE "tiki_blog_activity"
 go
@@ -683,15 +518,6 @@ CREATE TABLE "tiki_blog_activity" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_blog_posts
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 04:52 PM
--- Last check: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_blog_posts"
 go
@@ -721,14 +547,6 @@ CREATE  INDEX "tiki_blog_posts_created" ON "tiki_blog_posts"("created")
 go
 CREATE  INDEX "tiki_blog_posts_ft" ON "tiki_blog_posts"("data","title")
 go
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_blog_posts_images
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_blog_posts_images"
 go
@@ -746,15 +564,6 @@ CREATE TABLE "tiki_blog_posts_images" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_blogs
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 13, 2003 at 01:07 AM
--- Last check: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_blogs"
 go
@@ -792,14 +601,6 @@ CREATE  INDEX "tiki_blogs_hits" ON "tiki_blogs"("hits")
 go
 CREATE  INDEX "tiki_blogs_ft" ON "tiki_blogs"("title","description")
 go
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_calendar_categories
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 07:05 AM
---
 
 -- DROP TABLE "tiki_calendar_categories"
 go
@@ -816,14 +617,6 @@ go
 
 CREATE UNIQUE INDEX "tiki_calendar_categories_catname" ON "tiki_calendar_categories"("calendarId","name")
 go
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_calendar_items
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 07:43 AM
---
 
 -- DROP TABLE "tiki_calendar_items"
 go
@@ -853,14 +646,6 @@ go
 
 CREATE  INDEX "tiki_calendar_items_calendarId" ON "tiki_calendar_items"("calendarId")
 go
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_calendar_locations
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 07:05 AM
---
 
 -- DROP TABLE "tiki_calendar_locations"
 go
@@ -878,14 +663,6 @@ go
 
 CREATE UNIQUE INDEX "tiki_calendar_locations_locname" ON "tiki_calendar_locations"("calendarId","name")
 go
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_calendar_roles
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_calendar_roles"
 go
@@ -900,14 +677,6 @@ CREATE TABLE "tiki_calendar_roles" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_calendars
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 05, 2003 at 02:03 PM
---
 
 -- DROP TABLE "tiki_calendars"
 go
@@ -932,7 +701,6 @@ CREATE TABLE "tiki_calendars" (
 go
 
 
--- --------------------------------------------------------
 
 -- DROP TABLE "tiki_calendar_options"
 go
@@ -947,13 +715,6 @@ CREATE TABLE "tiki_calendar_options" (
 go
 
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_categories
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 04, 2003 at 09:47 PM
---
 
 -- DROP TABLE "tiki_categories"
 go
@@ -970,14 +731,6 @@ CREATE TABLE "tiki_categories" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_categorized_objects
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Dec 06, 2005 
---
 
 -- DROP TABLE "tiki_objects"
 go
@@ -999,10 +752,6 @@ CREATE TABLE "tiki_objects" (
 go
 
 
--- --------------------------------------------------------
-
--- Table structure for table `tiki_categorized_objects`
---
 
 -- DROP TABLE `tiki_categorized_objects`
 go
@@ -1016,14 +765,6 @@ go
 
 
 
-
---
--- Table structure for table tiki_category_objects
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 13, 2003 at 01:09 AM
---
-
 -- DROP TABLE "tiki_category_objects"
 go
 
@@ -1036,14 +777,6 @@ CREATE TABLE "tiki_category_objects" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_category_sites
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 07, 2003 at 01:53 AM
---
 
 -- DROP TABLE "tiki_object_ratings"
 go
@@ -1057,14 +790,6 @@ CREATE TABLE "tiki_object_ratings" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_category_sites
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 07, 2003 at 01:53 AM
---
 
 -- DROP TABLE "tiki_category_sites"
 go
@@ -1078,14 +803,6 @@ CREATE TABLE "tiki_category_sites" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_chart_items
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_chart_items"
 go
@@ -1106,14 +823,6 @@ CREATE TABLE "tiki_chart_items" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_charts
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 06, 2003 at 08:14 AM
---
 
 -- DROP TABLE "tiki_charts"
 go
@@ -1143,14 +852,6 @@ CREATE TABLE "tiki_charts" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_charts_rankings
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_charts_rankings"
 go
@@ -1170,14 +871,6 @@ CREATE TABLE "tiki_charts_rankings" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_charts_votes
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_charts_votes"
 go
@@ -1193,14 +886,6 @@ CREATE TABLE "tiki_charts_votes" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_chat_channels
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_chat_channels"
 go
@@ -1220,14 +905,6 @@ CREATE TABLE "tiki_chat_channels" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_chat_messages
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_chat_messages"
 go
@@ -1244,14 +921,6 @@ CREATE TABLE "tiki_chat_messages" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_chat_users
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_chat_users"
 go
@@ -1266,15 +935,6 @@ CREATE TABLE "tiki_chat_users" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_comments
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 10:56 PM
--- Last check: Jul 11, 2003 at 01:52 AM
---
 
 -- DROP TABLE "tiki_comments"
 go
@@ -1325,14 +985,6 @@ CREATE  INDEX "tiki_comments_ft" ON "tiki_comments"("title","data")
 go
 CREATE UNIQUE INDEX "tiki_comments_no_repeats" ON "tiki_comments"("parentId" "userName" "title" "commentDate" "message_id" "in_reply_to")
 go
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_content
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_content"
 go
@@ -1347,14 +999,6 @@ CREATE TABLE "tiki_content" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_content_templates
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 12:37 AM
---
 
 -- DROP TABLE "tiki_content_templates"
 go
@@ -1370,14 +1014,6 @@ CREATE TABLE "tiki_content_templates" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_content_templates_sections
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 12:37 AM
---
 
 -- DROP TABLE "tiki_content_templates_sections"
 go
@@ -1391,14 +1027,6 @@ CREATE TABLE "tiki_content_templates_sections" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_cookies
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 10, 2003 at 04:00 AM
---
 
 -- DROP TABLE "tiki_cookies"
 go
@@ -1412,14 +1040,6 @@ CREATE TABLE "tiki_cookies" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_copyrights
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_copyrights"
 go
@@ -1438,14 +1058,6 @@ CREATE TABLE "tiki_copyrights" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_directory_categories
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 08:59 PM
---
 
 -- DROP TABLE "tiki_directory_categories"
 go
@@ -1468,14 +1080,6 @@ CREATE TABLE "tiki_directory_categories" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_directory_search
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_directory_search"
 go
@@ -1489,14 +1093,6 @@ CREATE TABLE "tiki_directory_search" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_directory_sites
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 07:32 PM
---
 
 -- DROP TABLE "tiki_directory_sites"
 go
@@ -1523,14 +1119,6 @@ go
 
 CREATE  INDEX "tiki_directory_sites_ft" ON "tiki_directory_sites"("name","description")
 go
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_drawings
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 08, 2003 at 05:02 AM
---
 
 -- DROP TABLE "tiki_drawings"
 go
@@ -1549,14 +1137,6 @@ CREATE TABLE "tiki_drawings" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_dsn
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_dsn"
 go
@@ -1570,8 +1150,6 @@ CREATE TABLE "tiki_dsn" (
 ) ENGINE=MyISAM  
 go
 
-
--- --------------------------------------------------------
 
 
 -- DROP TABLE "tiki_dynamic_variables"
@@ -1587,14 +1165,6 @@ go
 
 
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_extwiki
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
-
 -- DROP TABLE "tiki_extwiki"
 go
 
@@ -1608,15 +1178,6 @@ CREATE TABLE "tiki_extwiki" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_faq_questions
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
--- Last check: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_faq_questions"
 go
@@ -1641,15 +1202,6 @@ CREATE  INDEX "tiki_faq_questions_answer" ON "tiki_faq_questions"("answer")
 go
 CREATE  INDEX "tiki_faq_questions_ft" ON "tiki_faq_questions"("question","answer")
 go
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_faqs
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 09:09 PM
--- Last check: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_faqs"
 go
@@ -1676,14 +1228,6 @@ CREATE  INDEX "tiki_faqs_hits" ON "tiki_faqs"("hits")
 go
 CREATE  INDEX "tiki_faqs_ft" ON "tiki_faqs"("title","description")
 go
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_featured_links
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 11:08 PM
---
 
 -- DROP TABLE "tiki_featured_links"
 go
@@ -1701,12 +1245,6 @@ CREATE TABLE "tiki_featured_links" (
 go
 
 
--- --------------------------------------------------------
--- Table structure for table tiki_file_galleries
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 13, 2003 at 01:13 AM
---
 
 -- DROP TABLE "tiki_file_galleries"
 go
@@ -1753,15 +1291,6 @@ CREATE TABLE "tiki_file_galleries" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_files
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Nov 02, 2004 at 05:59 PM
--- Last check: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_files"
 go
@@ -1811,14 +1340,6 @@ CREATE  INDEX "tiki_files_hits" ON "tiki_files"("hits")
 go
 CREATE  INDEX "tiki_files_ft" ON "tiki_files"("name","description","search_data")
 go
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_forum_attachments
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_forum_attachments"
 go
@@ -1843,14 +1364,6 @@ go
 
 CREATE  INDEX "tiki_forum_attachments_threadId" ON "tiki_forum_attachments"("threadId")
 go
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_forum_reads
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 07:17 PM
---
 
 -- DROP TABLE "tiki_forum_reads"
 go
@@ -1866,14 +1379,6 @@ CREATE TABLE "tiki_forum_reads" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_forums
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 11:14 PM
---
 
 -- DROP TABLE "tiki_forums"
 go
@@ -1942,14 +1447,6 @@ CREATE TABLE "tiki_forums" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_forums_queue
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_forums_queue"
 go
@@ -1975,14 +1472,6 @@ CREATE TABLE "tiki_forums_queue" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_forums_reported
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_forums_reported"
 go
@@ -2000,15 +1489,6 @@ CREATE TABLE "tiki_forums_reported" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_galleries
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Sep 18, 2004 at 11:56 PM
--- Last check: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_galleries"
 go
@@ -2061,14 +1541,6 @@ CREATE  INDEX "tiki_galleries_visibleUser" ON "tiki_galleries"("visible" "user")
 go
 CREATE  INDEX "tiki_galleries_ft" ON "tiki_galleries"("name","description")
 go
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_galleries_scales
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_galleries_scales"
 go
@@ -2082,14 +1554,6 @@ CREATE TABLE "tiki_galleries_scales" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_games
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 05, 2003 at 08:23 PM
---
 
 -- DROP TABLE "tiki_games"
 go
@@ -2105,14 +1569,6 @@ CREATE TABLE "tiki_games" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_group_inclusion
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 05, 2003 at 02:03 AM
---
 
 -- DROP TABLE "tiki_group_inclusion"
 go
@@ -2126,14 +1582,6 @@ CREATE TABLE "tiki_group_inclusion" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_history
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Mar 30, 2005 at 10:21 PM
---
 
 -- DROP TABLE "tiki_history"
 go
@@ -2158,14 +1606,6 @@ CREATE TABLE "tiki_history" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_hotwords
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 10, 2003 at 11:04 PM
---
 
 -- DROP TABLE "tiki_hotwords"
 go
@@ -2179,14 +1619,6 @@ CREATE TABLE "tiki_hotwords" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_html_pages
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_html_pages"
 go
@@ -2203,14 +1635,6 @@ CREATE TABLE "tiki_html_pages" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_html_pages_dynamic_zones
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_html_pages_dynamic_zones"
 go
@@ -2226,15 +1650,6 @@ CREATE TABLE "tiki_html_pages_dynamic_zones" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_images
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Sep 18, 2004 at 08:29 PM
--- Last check: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_images"
 go
@@ -2270,15 +1685,6 @@ CREATE  INDEX "tiki_images_ti_us" ON "tiki_images"("user")
 go
 CREATE  INDEX "tiki_images_ft" ON "tiki_images"("name","description")
 go
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_images_data
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 12:49 PM
--- Last check: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_images_data"
 go
@@ -2301,14 +1707,6 @@ go
 
 CREATE  INDEX "tiki_images_data_t_i_d_it" ON "tiki_images_data"("imageId","type")
 go
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_language
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_language"
 go
@@ -2323,14 +1721,6 @@ CREATE TABLE "tiki_language" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_languages
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_languages"
 go
@@ -2344,19 +1734,11 @@ CREATE TABLE "tiki_languages" (
 go
 
 
--- --------------------------------------------------------
+
 INSERT INTO tiki_languages(lang, language) VALUES('en','English')
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_link_cache
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 06:06 PM
---
 
 -- DROP TABLE "tiki_link_cache"
 go
@@ -2378,14 +1760,6 @@ CREATE INDEX urlindex ON tiki_link_cache (url(250))
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_links
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 11:39 PM
---
 
 -- DROP TABLE "tiki_links"
 go
@@ -2401,14 +1775,6 @@ go
 
 CREATE  INDEX "tiki_links_toPage" ON "tiki_links"("toPage")
 go
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_live_support_events
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_live_support_events"
 go
@@ -2427,14 +1793,6 @@ CREATE TABLE "tiki_live_support_events" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_live_support_message_comments
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_live_support_message_comments"
 go
@@ -2450,14 +1808,6 @@ CREATE TABLE "tiki_live_support_message_comments" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_live_support_messages
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_live_support_messages"
 go
@@ -2481,14 +1831,6 @@ CREATE TABLE "tiki_live_support_messages" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_live_support_modules
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_live_support_modules"
 go
@@ -2502,7 +1844,7 @@ CREATE TABLE "tiki_live_support_modules" (
 go
 
 
--- --------------------------------------------------------
+
 INSERT INTO tiki_live_support_modules(name) VALUES('wiki')
 go
 
@@ -2531,14 +1873,6 @@ INSERT INTO tiki_live_support_modules(name) VALUES('charts')
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_live_support_operators
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_live_support_operators"
 go
@@ -2561,14 +1895,6 @@ CREATE TABLE "tiki_live_support_operators" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_live_support_requests
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_live_support_requests"
 go
@@ -2594,14 +1920,6 @@ CREATE TABLE "tiki_live_support_requests" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_logs
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_logs"
 go
@@ -2623,15 +1941,6 @@ go
 CREATE  INDEX "tiki_logs_logtype" ON "tiki_logs"("logtype")
 go
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_mail_events
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 11, 2003 at 05:28 AM
---
-
 -- DROP TABLE "tiki_mail_events"
 go
 
@@ -2644,14 +1953,6 @@ CREATE TABLE "tiki_mail_events" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_mailin_accounts
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jun 17, 2004 at 03:06 PM EST
---
 
 -- DROP TABLE "tiki_mailin_accounts"
 go
@@ -2680,14 +1981,6 @@ CREATE TABLE "tiki_mailin_accounts" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_menu_languages
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_menu_languages"
 go
@@ -2701,14 +1994,6 @@ CREATE TABLE "tiki_menu_languages" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_menu_options
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Nov 21, 2003 at 07:05 AM
---
 
 -- DROP TABLE "tiki_menu_options"
 go
@@ -2732,7 +2017,7 @@ go
 
 CREATE UNIQUE INDEX "tiki_menu_options_uniq_menu" ON "tiki_menu_options"("menuId","name","url","position","section","perm","groupname")
 go
--- --------------------------------------------------------
+
 INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (1,42,'o','Home','./',10,'','','',0)
 go
 
@@ -2913,7 +2198,7 @@ INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`",
 go
 
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (47,42,'o','Structures','tiki-admin_structures.php',250,'feature_wiki','tiki_p_view','',0)
+INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (47,42,'o','Structures','tiki-admin_structures.php',250,'feature_wiki_structure','tiki_p_view','',0)
 go
 
 
@@ -3469,14 +2754,6 @@ INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`",
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_menus
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_menus"
 go
@@ -3493,19 +2770,11 @@ CREATE TABLE "tiki_menus" (
 go
 
 
--- --------------------------------------------------------
+
 INSERT INTO "tiki_menus" ("menuId","name","description","type") VALUES ('42','Application menu','Main extensive navigation menu','d')
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_minical_events
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 09, 2003 at 04:06 AM
---
 
 -- DROP TABLE "tiki_minical_events"
 go
@@ -3527,14 +2796,6 @@ CREATE TABLE "tiki_minical_events" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_minical_topics
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_minical_topics"
 go
@@ -3555,14 +2816,6 @@ CREATE TABLE "tiki_minical_topics" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_modules
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 11:44 PM
---
 
 -- DROP TABLE "tiki_modules"
 go
@@ -3588,7 +2841,7 @@ CREATE  INDEX "tiki_modules_positionType" ON "tiki_modules"("position" "type")
 go
 CREATE  INDEX "tiki_modules_moduleId" ON "tiki_modules"("moduleId")
 go
--- --------------------------------------------------------
+
 INSERT INTO "tiki_modules" ("name","position","ord","cache_time","groups") VALUES ('login_box','r',1,0,'a:2:{i:0;s:10:"Registered";i:1;s:9:"Anonymous";}')
 go
 
@@ -3609,14 +2862,6 @@ INSERT INTO "tiki_modules" ("name","position","ord","cache_time","groups") VALUE
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_newsletter_subscriptions
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_newsletter_subscriptions"
 go
@@ -3634,14 +2879,6 @@ CREATE TABLE "tiki_newsletter_subscriptions" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_newsletter_groups
---
--- Creation: Jan 18, 2005
--- Last update: Jan 18, 2005
---
 
 -- DROP TABLE "tiki_newsletter_groups"
 go
@@ -3656,14 +2893,6 @@ CREATE TABLE "tiki_newsletter_groups" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_newsletter_included
---
--- Creation: Sep 25, 2007
--- Last update: Sep 25, 2007
---
 
 -- DROP TABLE "tiki_newsletter_included"
 go
@@ -3677,14 +2906,6 @@ CREATE TABLE "tiki_newsletter_included" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_newsletters
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_newsletters"
 go
@@ -3710,14 +2931,6 @@ CREATE TABLE "tiki_newsletters" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_newsreader_marks
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_newsreader_marks"
 go
@@ -3733,14 +2946,6 @@ CREATE TABLE "tiki_newsreader_marks" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_newsreader_servers
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_newsreader_servers"
 go
@@ -3758,15 +2963,6 @@ CREATE TABLE "tiki_newsreader_servers" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_page_footnotes
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 10:00 AM
--- Last check: Jul 12, 2003 at 10:00 AM
---
 
 -- DROP TABLE "tiki_page_footnotes"
 go
@@ -3781,15 +2977,6 @@ CREATE TABLE "tiki_page_footnotes" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_pages
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 13, 2003 at 01:52 AM
--- Last check: Jul 12, 2003 at 10:01 AM
---
 
 -- DROP TABLE "tiki_pages"
 go
@@ -3835,13 +3022,6 @@ CREATE  INDEX "tiki_pages_ft" ON "tiki_pages"("pageName","description","data")
 go
 CREATE UNIQUE INDEX "tiki_pages_pageName" ON "tiki_pages"("pageName")
 go
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_page_drafts
---
--- Creation: March 12, 2006 at 
---
 
 -- DROP TABLE "tiki_page_drafts"
 go
@@ -3859,14 +3039,6 @@ CREATE TABLE "tiki_page_drafts" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_pageviews
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 13, 2003 at 01:52 AM
---
 
 -- DROP TABLE "tiki_pageviews"
 go
@@ -3880,11 +3052,6 @@ CREATE TABLE "tiki_pageviews" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_poll_objects
---
 
 -- DROP TABLE "tiki_poll_objects"
 go
@@ -3899,14 +3066,6 @@ CREATE TABLE `tiki_poll_objects` (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_poll_options
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 06, 2003 at 07:57 PM
---
 
 -- DROP TABLE "tiki_poll_options"
 go
@@ -3923,14 +3082,6 @@ CREATE TABLE "tiki_poll_options" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_polls
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 06, 2003 at 07:57 PM
---
 
 -- DROP TABLE "tiki_polls"
 go
@@ -3947,14 +3098,6 @@ CREATE TABLE "tiki_polls" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_preferences
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 12:04 PM
---
 
 -- DROP TABLE "tiki_preferences"
 go
@@ -3968,14 +3111,6 @@ CREATE TABLE "tiki_preferences" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_private_messages
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_private_messages"
 go
@@ -3995,14 +3130,6 @@ CREATE TABLE "tiki_private_messages" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_programmed_content
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_programmed_content"
 go
@@ -4018,14 +3145,6 @@ CREATE TABLE "tiki_programmed_content" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_quiz_question_options
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_quiz_question_options"
 go
@@ -4041,14 +3160,6 @@ CREATE TABLE "tiki_quiz_question_options" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_quiz_questions
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_quiz_questions"
 go
@@ -4066,14 +3177,6 @@ CREATE TABLE "tiki_quiz_questions" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_quiz_results
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_quiz_results"
 go
@@ -4090,14 +3193,6 @@ CREATE TABLE "tiki_quiz_results" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_quiz_stats
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_quiz_stats"
 go
@@ -4113,14 +3208,6 @@ CREATE TABLE "tiki_quiz_stats" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_quiz_stats_sum
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_quiz_stats_sum"
 go
@@ -4138,14 +3225,6 @@ CREATE TABLE "tiki_quiz_stats_sum" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_quizzes
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: April 29, 2004
---
 
 -- DROP TABLE "tiki_quizzes"
 go
@@ -4194,14 +3273,6 @@ CREATE TABLE "tiki_quizzes" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_received_articles
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_received_articles"
 go
@@ -4236,14 +3307,6 @@ CREATE TABLE "tiki_received_articles" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_received_pages
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 09, 2003 at 03:56 AM
---
 
 -- DROP TABLE "tiki_received_pages"
 go
@@ -4261,8 +3324,8 @@ CREATE TABLE "tiki_received_pages" (
   "parent" varchar(255) default NULL NULL,
   "position" numeric(3,0) unsigned default NULL NULL,
   "alias" varchar(255) default NULL NULL,
-  "structureName"  varchar(250) default NULL NULL,
-  "parentName"  varchar(250) default NULL NULL,
+  "structureName" varchar(250) default NULL NULL,
+  "parentName" varchar(250) default NULL NULL,
   "page_alias" varchar(250) default '',
   "pos" numeric(4,0) default NULL NULL,
   PRIMARY KEY (receivedPageId)
@@ -4272,14 +3335,6 @@ go
 
 CREATE  INDEX "tiki_received_pages_structureName" ON "tiki_received_pages"("structureName")
 go
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_referer_stats
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 13, 2003 at 01:30 AM
---
 
 -- DROP TABLE "tiki_referer_stats"
 go
@@ -4294,14 +3349,6 @@ CREATE TABLE "tiki_referer_stats" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_related_categories
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_related_categories"
 go
@@ -4315,14 +3362,6 @@ CREATE TABLE "tiki_related_categories" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_rss_modules
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 10:19 AM
---
 
 -- DROP TABLE "tiki_rss_modules"
 go
@@ -4345,14 +3384,6 @@ go
 
 CREATE  INDEX "tiki_rss_modules_name" ON "tiki_rss_modules"("name")
 go
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_rss_feeds
---
--- Creation: Oct 14, 2003 at 20:34 PM
--- Last update: Oct 14, 2003 at 20:34 PM
---
 
 -- DROP TABLE "tiki_rss_feeds"
 go
@@ -4369,7 +3400,6 @@ CREATE TABLE "tiki_rss_feeds" (
 go
 
 
--- --------------------------------------------------------
 
 -- DROP TABLE "tiki_searchindex"
 go
@@ -4422,13 +3452,6 @@ go
 
 
 
---
--- Table structure for table tiki_search_stats
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 10:55 PM
---
-
 -- DROP TABLE "tiki_search_stats"
 go
 
@@ -4441,12 +3464,6 @@ CREATE TABLE "tiki_search_stats" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_secdb
---
---
 
 -- DROP TABLE "tiki_secdb"
 go
@@ -4465,13 +3482,6 @@ go
 CREATE  INDEX "tiki_secdb_sdb_fn" ON "tiki_secdb"("filename")
 go
 
---
--- Table structure for table tiki_semaphores
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 13, 2003 at 01:52 AM
---
-
 -- DROP TABLE "tiki_semaphores"
 go
 
@@ -4486,14 +3496,6 @@ CREATE TABLE "tiki_semaphores" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_sent_newsletters
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_sent_newsletters"
 go
@@ -4512,11 +3514,6 @@ CREATE TABLE "tiki_sent_newsletters" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_sent_newsletters_errors
---
 
 -- DROP TABLE "tiki_sent_newsletters_errors"
 go
@@ -4532,15 +3529,6 @@ CREATE TABLE "tiki_sent_newsletters_errors" (
 go
 
 
--- --------------------------------------------------------
-
-
---
--- Table structure for table tiki_sessions
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 13, 2003 at 01:52 AM
---
 
 -- DROP TABLE "tiki_sessions"
 go
@@ -4560,9 +3548,7 @@ CREATE  INDEX "tiki_sessions_user" ON "tiki_sessions"("user")
 go
 CREATE  INDEX "tiki_sessions_timestamp" ON "tiki_sessions"("timestamp")
 go
--- --------------------------------------------------------
 
--- Tables for TikiSheet
 -- DROP TABLE "tiki_sheet_layout"
 go
 
@@ -4621,13 +3607,6 @@ go
 
 
 
---
--- Table structure for table tiki_shoutbox
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 08:21 PM
---
-
 -- DROP TABLE "tiki_shoutbox"
 go
 
@@ -4643,11 +3622,6 @@ CREATE TABLE "tiki_shoutbox" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_shoutbox_words
---
 
 -- DROP TABLE "tiki_shoutbox_words"
 go
@@ -4661,14 +3635,6 @@ CREATE TABLE "tiki_shoutbox_words" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_structure_versions
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_structure_versions"
 go
@@ -4682,14 +3648,6 @@ CREATE TABLE "tiki_structure_versions" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_structures
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_structures"
 go
@@ -4712,14 +3670,6 @@ CREATE  INDEX "tiki_structures_pidpaid" ON "tiki_structures"("page_id","parent_i
 go
 CREATE  INDEX "tiki_structures_page_id" ON "tiki_structures"("page_id")
 go
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_submissions
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Nov 29, 2006 at 08:46 PM
---
 
 -- DROP TABLE "tiki_submissions"
 go
@@ -4764,14 +3714,6 @@ CREATE TABLE "tiki_submissions" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_suggested_faq_questions
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 11, 2003 at 08:52 PM
---
 
 -- DROP TABLE "tiki_suggested_faq_questions"
 go
@@ -4789,14 +3731,6 @@ CREATE TABLE "tiki_suggested_faq_questions" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_survey_question_options
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 11, 2003 at 12:55 AM
---
 
 -- DROP TABLE "tiki_survey_question_options"
 go
@@ -4812,14 +3746,6 @@ CREATE TABLE "tiki_survey_question_options" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_survey_questions
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 11, 2003 at 11:55 PM
---
 
 -- DROP TABLE "tiki_survey_questions"
 go
@@ -4840,14 +3766,6 @@ CREATE TABLE "tiki_survey_questions" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_surveys
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 07:40 PM
---
 
 -- DROP TABLE "tiki_surveys"
 go
@@ -4866,14 +3784,6 @@ CREATE TABLE "tiki_surveys" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_tags
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 06, 2003 at 02:58 AM
---
 
 -- DROP TABLE "tiki_tags"
 go
@@ -4896,14 +3806,6 @@ CREATE TABLE "tiki_tags" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_theme_control_categs
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_theme_control_categs"
 go
@@ -4917,14 +3819,6 @@ CREATE TABLE "tiki_theme_control_categs" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_theme_control_objects
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_theme_control_objects"
 go
@@ -4940,14 +3834,6 @@ CREATE TABLE "tiki_theme_control_objects" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_theme_control_sections
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_theme_control_sections"
 go
@@ -4961,14 +3847,6 @@ CREATE TABLE "tiki_theme_control_sections" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_topics
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 04, 2003 at 10:10 PM
---
 
 -- DROP TABLE "tiki_topics"
 go
@@ -4988,14 +3866,6 @@ CREATE TABLE "tiki_topics" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_tracker_fields
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 08, 2003 at 01:48 PM
---
 
 -- DROP TABLE "tiki_tracker_fields"
 go
@@ -5020,19 +3890,12 @@ CREATE TABLE "tiki_tracker_fields" (
   "errorMsg" text default '',
   "visibleBy" text default '',
   "editableBy" text default '',
+  "descriptionIsParsed" char(1) default 'n',
   PRIMARY KEY (fieldId)
 ) ENGINE=MyISAM  
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_tracker_item_attachments
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_tracker_item_attachments"
 go
@@ -5057,14 +3920,6 @@ CREATE TABLE "tiki_tracker_item_attachments" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_tracker_item_comments
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 08:12 AM
---
 
 -- DROP TABLE "tiki_tracker_item_comments"
 go
@@ -5082,14 +3937,6 @@ CREATE TABLE "tiki_tracker_item_comments" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_tracker_item_fields
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 08:26 AM
---
 
 -- DROP TABLE "tiki_tracker_item_fields"
 go
@@ -5110,14 +3957,6 @@ go
 
 CREATE  INDEX "tiki_tracker_item_fields_ft" ON "tiki_tracker_item_fields"("value")
 go
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_tracker_items
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 08:26 AM
---
 
 -- DROP TABLE "tiki_tracker_items"
 go
@@ -5134,14 +3973,6 @@ CREATE TABLE "tiki_tracker_items" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_tracker_options
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 08, 2003 at 01:48 PM
---
 
 -- DROP TABLE "tiki_tracker_options"
 go
@@ -5156,15 +3987,6 @@ CREATE TABLE "tiki_tracker_options" (
 go
 
 
--- --------------------------------------------------------
-
-
---
--- Table structure for table tiki_trackers
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 08:26 AM
---
 
 -- DROP TABLE "tiki_trackers"
 go
@@ -5191,14 +4013,6 @@ CREATE TABLE "tiki_trackers" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_untranslated
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_untranslated"
 go
@@ -5217,14 +4031,6 @@ CREATE  INDEX "tiki_untranslated_id_2" ON "tiki_untranslated"("id")
 go
 CREATE UNIQUE INDEX "tiki_untranslated_id" ON "tiki_untranslated"("id")
 go
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_user_answers
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_user_answers"
 go
@@ -5239,16 +4045,6 @@ CREATE TABLE "tiki_user_answers" (
 ) ENGINE=MyISAM
 go
 
-
--- --------------------------------------------------------
-
-
---
--- Table structure for table tiki_user_answers_uploads
---
--- Creation: Jan 25, 2005 at 07:42 PM
--- Last update: Jan 25, 2005 at 07:42 PM
---
 
 
 -- DROP TABLE "tiki_user_answers_uploads"
@@ -5269,14 +4065,6 @@ go
 
 
 
-
---
--- Table structure for table tiki_user_assigned_modules
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 08:25 PM
---
-
 -- DROP TABLE "tiki_user_assigned_modules"
 go
 
@@ -5293,14 +4081,6 @@ CREATE TABLE "tiki_user_assigned_modules" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_user_bookmarks_folders
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 11, 2003 at 08:35 AM
---
 
 -- DROP TABLE "tiki_user_bookmarks_folders"
 go
@@ -5316,14 +4096,6 @@ CREATE TABLE "tiki_user_bookmarks_folders" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_user_bookmarks_urls
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 11, 2003 at 08:36 AM
---
 
 -- DROP TABLE "tiki_user_bookmarks_urls"
 go
@@ -5342,14 +4114,6 @@ CREATE TABLE "tiki_user_bookmarks_urls" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_user_mail_accounts
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_user_mail_accounts"
 go
@@ -5373,14 +4137,6 @@ CREATE TABLE "tiki_user_mail_accounts" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_user_menus
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 11, 2003 at 10:58 PM
---
 
 -- DROP TABLE "tiki_user_menus"
 go
@@ -5398,14 +4154,6 @@ CREATE TABLE "tiki_user_menus" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_user_modules
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 05, 2003 at 03:16 AM
---
 
 -- DROP TABLE "tiki_user_modules"
 go
@@ -5421,18 +4169,11 @@ CREATE TABLE "tiki_user_modules" (
 go
 
 
--- --------------------------------------------------------
+
 INSERT INTO "tiki_user_modules" ("name","title","data","parse") VALUES ('mnu_application_menu', 'Menu', '{menu id=42}', 'n')
 go
 
 
-
---
--- Table structure for table tiki_user_notes
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 07:52 AM
---
 
 -- DROP TABLE "tiki_user_notes"
 go
@@ -5452,14 +4193,6 @@ CREATE TABLE "tiki_user_notes" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_user_postings
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 13, 2003 at 01:12 AM
---
 
 -- DROP TABLE "tiki_user_postings"
 go
@@ -5476,14 +4209,6 @@ CREATE TABLE "tiki_user_postings" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_user_preferences
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 13, 2003 at 01:09 AM
---
 
 -- DROP TABLE "tiki_user_preferences"
 go
@@ -5498,14 +4223,6 @@ CREATE TABLE "tiki_user_preferences" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_user_quizzes
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_user_quizzes"
 go
@@ -5525,14 +4242,6 @@ CREATE TABLE "tiki_user_quizzes" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_user_taken_quizzes
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_user_taken_quizzes"
 go
@@ -5546,34 +4255,26 @@ CREATE TABLE "tiki_user_taken_quizzes" (
 go
 
 
--- --------------------------------------------------------
 
-
---
--- Table structure for table tiki_user_tasks_history
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jan 25, 2005 by sir-b & moresun
---
 -- DROP TABLE "tiki_user_tasks_history"
 go
 
 
 CREATE TABLE "tiki_user_tasks_history" (
-  "belongs_to" integer(14) NOT NULL,                   -- the fist task in a history it has the same id as the task id
+  "belongs_to" integer(14) NOT NULL,                   -- the first task in a history it has the same id as the task id
   "task_version" integer(4) DEFAULT 0 NOT NULL,        -- version number for the history it starts with 0
   "title" varchar(250) NOT NULL,                       -- title
   "description" text DEFAULT NULL NULL,                     -- description
-  "start" integer(14) DEFAULT NULL NULL,                    -- date of the starting, if it is not set than there is not starting date
+  "start" integer(14) DEFAULT NULL NULL,                    -- date of the starting, if it is not set than there is no starting date
   "end" integer(14) DEFAULT NULL NULL,                      -- date of the end, if it is not set than there is not dealine
   "lasteditor" varchar(200) NOT NULL,                  -- lasteditor: username of last editior
   "lastchanges" integer(14) NOT NULL,                  -- date of last changes
   "priority" integer(2) DEFAULT 3 NOT NULL,                     -- priority
   "completed" integer(14) DEFAULT NULL NULL,                -- date of the completation if it is null it is not yet completed
   "deleted" integer(14) DEFAULT NULL NULL,                  -- date of the deleteation it it is null it is not deleted
-  "status" char(1) DEFAULT NULL NULL,                       -- null := waiting, 
-                                                     -- o := open / in progress, 
-                                                     -- c := completed -> (percentage = 100) 
+  "status" char(1) DEFAULT NULL NULL,                       -- null := waiting,
+                                                     -- o := open / in progress,
+                                                     -- c := completed -> (percentage = 100)
   "percentage" numeric(4,0) DEFAULT NULL NULL,
   "accepted_creator" char(1) DEFAULT NULL NULL,             -- y - yes, n - no, null - waiting
   "accepted_user" char(1) DEFAULT NULL NULL,                -- y - yes, n - no, null - waiting
@@ -5583,13 +4284,6 @@ go
 
 
 
-
---
--- Table structure for table tiki_user_tasks
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jan 25, 2005 by sir-b & moresun
---
 -- DROP TABLE "tiki_user_tasks"
 go
 
@@ -5600,7 +4294,7 @@ CREATE TABLE "tiki_user_tasks" (
   "user" varchar(200) DEFAULT '' NOT NULL,              -- task user
   "creator" varchar(200) NOT NULL,                     -- username of creator
   "public_for_group" varchar(30) DEFAULT NULL NULL,         -- this group can also view the task, if it is null it is not public
-  "rights_by_creator" char(1) DEFAULT NULL NULL,            -- null the user can delete the task, 
+  "rights_by_creator" char(1) DEFAULT NULL NULL,            -- null the user can delete the task,
   "created" integer(14) NOT NULL,                      -- date of the creation
   "status" char(1) default NULL NULL,
   "priority" numeric(2,0) default NULL NULL,
@@ -5612,15 +4306,6 @@ CREATE TABLE "tiki_user_tasks" (
 go
 
 
-
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_user_votings
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 11, 2003 at 11:55 PM
---
 
 -- DROP TABLE "tiki_user_votings"
 go
@@ -5635,14 +4320,6 @@ CREATE TABLE "tiki_user_votings" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_user_watches
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 08:07 AM
---
 
 -- DROP TABLE "tiki_user_watches"
 go
@@ -5664,14 +4341,6 @@ go
 
 CREATE  INDEX "tiki_user_watches_watchId" ON "tiki_user_watches"("watchId")
 go
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_userfiles
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_userfiles"
 go
@@ -5694,14 +4363,6 @@ CREATE TABLE "tiki_userfiles" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_userpoints
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 11, 2003 at 05:47 AM
---
 
 -- DROP TABLE "tiki_userpoints"
 go
@@ -5715,14 +4376,6 @@ CREATE TABLE "tiki_userpoints" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_users
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_users"
 go
@@ -5738,14 +4391,6 @@ CREATE TABLE "tiki_users" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_webmail_contacts
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_webmail_contacts"
 go
@@ -5763,7 +4408,6 @@ CREATE TABLE "tiki_webmail_contacts" (
 go
 
 
--- --------------------------------------------------------
 
 -- DROP TABLE "tiki_webmail_contacts_groups"
 go
@@ -5777,14 +4421,6 @@ CREATE TABLE "tiki_webmail_contacts_groups" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_webmail_messages
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_webmail_messages"
 go
@@ -5802,14 +4438,6 @@ CREATE TABLE "tiki_webmail_messages" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_wiki_attachments
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_wiki_attachments"
 go
@@ -5832,14 +4460,6 @@ CREATE TABLE "tiki_wiki_attachments" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table tiki_zones
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 
 -- DROP TABLE "tiki_zones"
 go
@@ -5852,13 +4472,6 @@ CREATE TABLE "tiki_zones" (
 go
 
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_download
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Apr 15 2004 at 07:42 PM
---
 
 -- DROP TABLE "tiki_download"
 go
@@ -5884,14 +4497,6 @@ CREATE  INDEX "tiki_download_type" ON "tiki_download"("type")
 go
 CREATE  INDEX "tiki_download_date" ON "tiki_download"("date")
 go
--- --------------------------------------------------------
-
---
--- Table structure for table users_grouppermissions
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 11, 2003 at 07:22 AM
---
 
 -- DROP TABLE "users_grouppermissions"
 go
@@ -5906,19 +4511,12 @@ CREATE TABLE "users_grouppermissions" (
 go
 
 
--- --------------------------------------------------------
 
-INSERT INTO "users_grouppermissions" ("groupName","permName") VALUES ('Anonymous','tiki_p_view')
+
+INSERT INTO users_grouppermissions (groupName,permName) VALUES('Anonymous','tiki_p_view')
 go
 
 
-
---
--- Table structure for table users_groups
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 08:57 PM
---
 
 -- DROP TABLE "users_groups"
 go
@@ -5936,20 +4534,12 @@ CREATE TABLE "users_groups" (
   "registrationUsersFieldIds" text default '',
   "userChoice" char(1) default NULL NULL,
   "groupDefCat" numeric(12,0) default 0,
-  "groupTheme" varchar(255) default '',  
+  "groupTheme" varchar(255) default '',
   PRIMARY KEY (groupName(30))
 ) ENGINE=MyISAM
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table users_objectpermissions
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 07:20 AM
---
 
 -- DROP TABLE "users_objectpermissions"
 go
@@ -5965,14 +4555,6 @@ CREATE TABLE "users_objectpermissions" (
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table users_permissions
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 11, 2003 at 07:22 AM
---
 
 -- DROP TABLE "users_permissions"
 go
@@ -5991,9 +4573,6 @@ go
 
 CREATE  INDEX "users_permissions_type" ON "users_permissions"("type")
 go
--- --------------------------------------------------------
--- 
-
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_calendar', 'Can create/admin calendars', 'admin', 'calendar', 'y')
 go
@@ -6915,14 +5494,18 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 go
 
 
--- --------------------------------------------------------
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_plugin_viewdetail', 'Can view unapproved plugin details', 'registered', 'wiki')
+go
 
---
--- Table structure for table users_usergroups
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 09:31 PM
---
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_plugin_preview', 'Can execute unapproved plugin', 'registered', 'wiki')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_plugin_approve', 'Can approve plugin execution', 'editors', 'wiki')
+go
+
+
 
 -- DROP TABLE "users_usergroups"
 go
@@ -6936,7 +5519,7 @@ CREATE TABLE "users_usergroups" (
 go
 
 
--- --------------------------------------------------------
+
 INSERT INTO "users_groups" ("groupName","groupDesc") VALUES ('Anonymous','Public users not logged')
 go
 
@@ -6949,14 +5532,6 @@ INSERT INTO "users_groups" ("groupName","groupDesc") VALUES ('Admins','Administr
 go
 
 
--- --------------------------------------------------------
-
---
--- Table structure for table users_users
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 13, 2003 at 01:07 AM
---
 
 -- DROP TABLE "users_users"
 go
@@ -7001,7 +5576,7 @@ CREATE  INDEX "users_users_registrationDate" ON "users_users"("registrationDate"
 go
 CREATE  INDEX "users_users_openid_url" ON "users_users"("openid_url")
 go
--- --------------------------------------------------------
+
 ------ Administrator account
 INSERT INTO "users_users" ("email","login","password","hash") VALUES ('','admin','admin','f6fdffe48c908deb0f4c3bd36c032e72')
 go
@@ -7023,12 +5598,7 @@ INSERT INTO "users_grouppermissions" ("groupName","permName") VALUES ('Admins','
 go
 
 
--- --------------------------------------------------------
--- 
 
---
--- Table structure for table 'tiki_integrator_reps'
---
 -- DROP TABLE "tiki_integrator_reps"
 go
 
@@ -7049,17 +5619,11 @@ go
 
 
 
---
--- Dumping data for table 'tiki_integrator_reps'
---
 INSERT INTO tiki_integrator_reps VALUES ('1','Doxygened (1.3.4) Documentation','','index.html','doxygen.css','n','y','0','Use this repository as rule source for all your repositories based on doxygened docs. To setup yours just add new repository and copy rules from this repository :)')
 go
 
 
 
---
--- Table structure for table 'tiki_integrator_rules'
---
 -- DROP TABLE "tiki_integrator_rules"
 go
 
@@ -7083,9 +5647,6 @@ go
 CREATE  INDEX "tiki_integrator_rules_repID" ON "tiki_integrator_rules"("repID")
 go
 
---
--- Dumping data for table 'tiki_integrator_rules'
---
 INSERT INTO tiki_integrator_rules VALUES ('1','1','1','.*<body[^>]*?>(.*?)</body.*','\1','y','n','i','y','Extract code between <body> and </body> tags')
 go
 
@@ -7099,9 +5660,6 @@ go
 
 
 
---
--- Table structures for table 'tiki_quicktags'
--- 
 -- DROP TABLE "tiki_quicktags"
 go
 
@@ -7772,7 +6330,7 @@ go
 
 
 
---translated objects table
+-- Translated objects table
 -- DROP TABLE "tiki_translated_objects"
 go
 
@@ -7789,11 +6347,6 @@ go
 
 CREATE  INDEX "tiki_translated_objects_traId" ON "tiki_translated_objects"( "traId" )
 go
-
-
---
--- Community tables begin
---
 
 -- DROP TABLE "tiki_friends"
 go
@@ -7833,7 +6386,6 @@ CREATE TABLE "tiki_score" (
   PRIMARY KEY (event)
 ) ENGINE=MyISAM
 go
-
 
 
 
@@ -7975,18 +6527,6 @@ go
 CREATE  INDEX "tiki_users_score_user" ON "tiki_users_score"("user","event_id","expire")
 go
 
-
---
--- Community tables end
---
-
---
--- Table structure for table tiki_file_handlers
---
--- Creation: Nov 02, 2004 at 05:59 PM
--- Last update: Nov 02, 2004 at 05:59 PM
---
-
 -- DROP TABLE "tiki_file_handlers"
 go
 
@@ -7998,13 +6538,6 @@ CREATE TABLE "tiki_file_handlers" (
 go
 
 
-
---
--- Table structure for table tiki_stats
---
--- Creation: Aug 04, 2005 at 05:59 PM
--- Last update: Aug 04, 2005 at 05:59 PM
---
 
 -- DROP TABLE "tiki_stats"
 go
@@ -8020,13 +6553,6 @@ CREATE TABLE "tiki_stats" (
 go
 
 
-
---
--- Table structure for table tiki_events
---
--- Creation: Aug 26, 2005 at 06:59 AM - mdavey
--- Last update: Sep 31, 2005 at 12:29 PM - mdavey
---
 
 -- DROP TABLE "tiki_events"
 go
@@ -8066,13 +6592,6 @@ go
 
 
 
---
--- Table structure for table tiki_registration_fields
---
--- Creation: Aug 31, 2005 at 12:57 PM - mdavey
--- Last update: Aug 31, 2005 at 12:57 PM - mdavey
--- 
-
 -- DROP TABLE "tiki_registration_fields"
 go
 
@@ -8103,6 +6622,7 @@ PRIMARY KEY (action, objectType),
 KEY (id)
 ) ENGINE=MyISAM
 go
+
 
 
 INSERT INTO "tiki_actionlog_conf" ("action","objectType","status") VALUES ('Created', 'wiki page', 'y')
@@ -8249,14 +6769,6 @@ INSERT INTO "tiki_actionlog_conf" ("action","objectType","status") VALUES ('Remo
 go
 
 
--- --------------------------------------------------------
-
-
--- Table structure for folksonomy tables
---
--- Creation: Out 16, 2005 - batawata
--- Last update: Out 16, 2005 - batawata
--- 
 
 -- DROP TABLE "tiki_freetags"
 go
@@ -8288,7 +6800,6 @@ CREATE TABLE "tiki_freetagged_objects" (
   KEY (objectId)
 ) ENGINE=MyISAM
 go
-
 
 
 
@@ -8417,7 +6928,7 @@ CREATE TABLE "tiki_profile_symbols" (
 	`value` VARCHAR(50) NOT NULL,
 	`named` ENUM('y','n') NOT NULL,
 	`creation_date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-  PRIMARY KEY( `domain`, `profile`, `object` ),
+  PRIMARY KEY ( `domain`, `profile`, `object` ),
   "INDEX"(`named`)
 )
 go
@@ -8442,8 +6953,8 @@ CREATE TABLE `tiki_feature` (
   `keyword` varchar(20) default NULL NULL,
   `feature_count` mediumnumeric(9,0) default '0' NOT NULL,
   `feature_path` varchar(20) default '0' NOT NULL,
-  PRIMARY KEY ("`feature_id`")
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=0 
+  PRIMARY KEY (`feature_id`)
+) ENGINE=MyISAM 
 go
 
 

@@ -199,9 +199,9 @@ function showDetails( id, domain, profile ) { // {{{
 </div>
 
 <div class="cbox">
-  <div class="cbox-title">{tr}Profile list{/tr}</div>
+  <div class="cbox-title"><a name="profile-results"/>"{tr}Profile list{/tr}</div>
   <div class="cbox-data">
-  	<form method="get" action="tiki-admin.php">
+  	<form method="get" action="tiki-admin.php#profile-results">
         <table class="admin"><tr>
 			<col width="30%"/>
 			<col width="70%"/>

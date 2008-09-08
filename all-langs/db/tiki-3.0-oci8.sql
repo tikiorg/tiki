@@ -1,23 +1,6 @@
--- $Rev$
--- $Date: 2008-03-16 00:06:59 $
--- $Author: nyloth $
--- $Name: not supported by cvs2svn $
--- phpMyAdmin MySQL-Dump
--- version 2.5.1
--- http://www.phpmyadmin.net/ (download page)
---
--- Host: localhost
--- Generation Time: Jul 13, 2003 at 02:09 AM
--- Server version: 4.0.13
--- PHP Version: 4.2.3
+-- --------------------------------------------------------
 -- Database : tikiwiki
 -- --------------------------------------------------------
---
--- Table structure for table galaxia_activities
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 DROP TABLE "galaxia_activities";
 
 CREATE SEQUENCE "galaxia_activities_sequ" INCREMENT BY 1 START WITH 1;
@@ -41,13 +24,7 @@ BEGIN
 SELECT "galaxia_activities_sequ".nextval into :NEW."activityId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table galaxia_activity_roles
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "galaxia_activity_roles";
 
 CREATE TABLE "galaxia_activity_roles" (
@@ -56,13 +33,7 @@ CREATE TABLE "galaxia_activity_roles" (
   PRIMARY KEY (activityId,roleId)
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
---
--- Table structure for table galaxia_instance_activities
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "galaxia_instance_activities";
 
 CREATE TABLE "galaxia_instance_activities" (
@@ -75,13 +46,7 @@ CREATE TABLE "galaxia_instance_activities" (
   PRIMARY KEY (instanceId,activityId)
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
---
--- Table structure for table galaxia_instance_comments
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "galaxia_instance_comments";
 
 CREATE SEQUENCE "galaxia_instance_comments_sequ" INCREMENT BY 1 START WITH 1;
@@ -103,13 +68,7 @@ BEGIN
 SELECT "galaxia_instance_comments_sequ".nextval into :NEW."cId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table galaxia_instances
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "galaxia_instances";
 
 CREATE SEQUENCE "galaxia_instances_sequ" INCREMENT BY 1 START WITH 1;
@@ -132,13 +91,7 @@ BEGIN
 SELECT "galaxia_instances_sequ".nextval into :NEW."instanceId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table galaxia_processes
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "galaxia_processes";
 
 CREATE SEQUENCE "galaxia_processes_sequ" INCREMENT BY 1 START WITH 1;
@@ -159,13 +112,7 @@ BEGIN
 SELECT "galaxia_processes_sequ".nextval into :NEW."pId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table galaxia_roles
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "galaxia_roles";
 
 CREATE SEQUENCE "galaxia_roles_sequ" INCREMENT BY 1 START WITH 1;
@@ -183,13 +130,7 @@ BEGIN
 SELECT "galaxia_roles_sequ".nextval into :NEW."roleId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table galaxia_transitions
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "galaxia_transitions";
 
 CREATE TABLE "galaxia_transitions" (
@@ -199,13 +140,7 @@ CREATE TABLE "galaxia_transitions" (
   PRIMARY KEY (actFromId,actToId)
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
---
--- Table structure for table galaxia_user_roles
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "galaxia_user_roles";
 
 CREATE SEQUENCE "galaxia_user_roles_sequ" INCREMENT BY 1 START WITH 1;
@@ -221,13 +156,7 @@ BEGIN
 SELECT "galaxia_user_roles_sequ".nextval into :NEW."roleId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table galaxia_workitems
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "galaxia_workitems";
 
 CREATE SEQUENCE "galaxia_workitems_sequ" INCREMENT BY 1 START WITH 1;
@@ -248,13 +177,7 @@ BEGIN
 SELECT "galaxia_workitems_sequ".nextval into :NEW."itemId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table messu_messages
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 08:29 PM
---
+
 DROP TABLE "messu_messages";
 
 CREATE SEQUENCE "messu_messages_sequ" INCREMENT BY 1 START WITH 1;
@@ -283,14 +206,7 @@ SELECT "messu_messages_sequ".nextval into :NEW."msgId" FROM DUAL;
 END;
 /
 CREATE  INDEX "messu_messages_userIsRead" ON "messu_messages"("user" "isRead");
--- --------------------------------------------------------
---
--- Table structure for table messu_archive (same structure as messu_messages)
--- desc: user may archive his messages to this table to speed up default msg handling
---
--- Creation: Feb 26, 2005 at 03:00 PM
--- Last update: Feb 26, 2005 at 03:00 PM
---
+
 DROP TABLE "messu_archive";
 
 CREATE SEQUENCE "messu_archive_sequ" INCREMENT BY 1 START WITH 1;
@@ -318,14 +234,7 @@ BEGIN
 SELECT "messu_archive_sequ".nextval into :NEW."msgId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table messu_sent (same structure as messu_messages)
--- desc: user may archive his messages to this table to speed up default msg handling
---
--- Creation: Feb 26, 2005 at 11:00 PM
--- Last update: Feb 26, 2005 at 11:00 PM
---
+
 DROP TABLE "messu_sent";
 
 CREATE SEQUENCE "messu_sent_sequ" INCREMENT BY 1 START WITH 1;
@@ -353,7 +262,7 @@ BEGIN
 SELECT "messu_sent_sequ".nextval into :NEW."msgId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
+
 DROP TABLE "sessions";
 
 CREATE TABLE "sessions"(
@@ -366,12 +275,6 @@ CREATE TABLE "sessions"(
 
 CREATE  INDEX "sessions_expiry" ON "sessions"("expiry");
 
---
--- Table structure for table tiki_actionlog
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 13, 2003 at 12:29 AM
---
 DROP TABLE "tiki_actionlog";
 
 CREATE SEQUENCE "tiki_actionlog_sequ" INCREMENT BY 1 START WITH 1;
@@ -404,14 +307,7 @@ CREATE TABLE "tiki_actionlog_params" (
 ) ENGINE=MyISAM;
 
 CREATE  INDEX "tiki_actionlog_params_nameValue" ON "tiki_actionlog_params"("name" "value");
--- --------------------------------------------------------
---
--- Table structure for table tiki_articles
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Nov 27, 2006 at 21:53 PM
--- Last check: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_articles";
 
 CREATE SEQUENCE "tiki_articles_sequ" INCREMENT BY 1 START WITH 1;
@@ -466,7 +362,7 @@ CREATE  INDEX "tiki_articles_publishDate" ON "tiki_articles"("publishDate");
 CREATE  INDEX "tiki_articles_expireDate" ON "tiki_articles"("expireDate");
 CREATE  INDEX "tiki_articles_type" ON "tiki_articles"("type");
 CREATE  INDEX "tiki_articles_ft" ON "tiki_articles"("title","heading","body");
--- --------------------------------------------------------
+
 DROP TABLE "tiki_article_types";
 
 CREATE TABLE "tiki_article_types" (
@@ -505,12 +401,6 @@ INSERT INTO "tiki_article_types" ("type","show_post_expire") VALUES ('Event','n'
 INSERT INTO "tiki_article_types" ("type","show_post_expire","heading_only","allow_comments") VALUES ('Classified','n','y','n');
 
 
---
--- Table structure for table tiki_banners
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 DROP TABLE "tiki_banners";
 
 CREATE SEQUENCE "tiki_banners_sequ" INCREMENT BY 1 START WITH 1;
@@ -552,13 +442,7 @@ BEGIN
 SELECT "tiki_banners_sequ".nextval into :NEW."bannerId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table tiki_banning
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_banning";
 
 CREATE SEQUENCE "tiki_banning_sequ" INCREMENT BY 1 START WITH 1;
@@ -584,13 +468,7 @@ BEGIN
 SELECT "tiki_banning_sequ".nextval into :NEW."banId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table tiki_banning_sections
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_banning_sections";
 
 CREATE TABLE "tiki_banning_sections" (
@@ -599,13 +477,7 @@ CREATE TABLE "tiki_banning_sections" (
   PRIMARY KEY (banId,section)
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_blog_activity
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 04:52 PM
---
+
 DROP TABLE "tiki_blog_activity";
 
 CREATE TABLE "tiki_blog_activity" (
@@ -615,14 +487,7 @@ CREATE TABLE "tiki_blog_activity" (
   PRIMARY KEY (blogId,day)
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_blog_posts
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 04:52 PM
--- Last check: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_blog_posts";
 
 CREATE SEQUENCE "tiki_blog_posts_sequ" INCREMENT BY 1 START WITH 1;
@@ -649,13 +514,7 @@ CREATE  INDEX "tiki_blog_posts_data" ON "tiki_blog_posts"("data");
 CREATE  INDEX "tiki_blog_posts_blogId" ON "tiki_blog_posts"("blogId");
 CREATE  INDEX "tiki_blog_posts_created" ON "tiki_blog_posts"("created");
 CREATE  INDEX "tiki_blog_posts_ft" ON "tiki_blog_posts"("data","title");
--- --------------------------------------------------------
---
--- Table structure for table tiki_blog_posts_images
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_blog_posts_images";
 
 CREATE SEQUENCE "tiki_blog_posts_images_sequ" INCREMENT BY 1 START WITH 1;
@@ -674,14 +533,7 @@ BEGIN
 SELECT "tiki_blog_posts_images_sequ".nextval into :NEW."imgId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table tiki_blogs
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 13, 2003 at 01:07 AM
--- Last check: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_blogs";
 
 CREATE SEQUENCE "tiki_blogs_sequ" INCREMENT BY 1 START WITH 1;
@@ -716,13 +568,7 @@ CREATE  INDEX "tiki_blogs_title" ON "tiki_blogs"("title");
 CREATE  INDEX "tiki_blogs_description" ON "tiki_blogs"("description");
 CREATE  INDEX "tiki_blogs_hits" ON "tiki_blogs"("hits");
 CREATE  INDEX "tiki_blogs_ft" ON "tiki_blogs"("title","description");
--- --------------------------------------------------------
---
--- Table structure for table tiki_calendar_categories
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 07:05 AM
---
+
 DROP TABLE "tiki_calendar_categories";
 
 CREATE SEQUENCE "tiki_calendar_categories_sequ" INCREMENT BY 1 START WITH 1;
@@ -739,13 +585,7 @@ SELECT "tiki_calendar_categories_sequ".nextval into :NEW."calcatId" FROM DUAL;
 END;
 /
 CREATE UNIQUE INDEX "tiki_calendar_categories_catname" ON "tiki_calendar_categories"("calendarId","name");
--- --------------------------------------------------------
---
--- Table structure for table tiki_calendar_items
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 07:43 AM
---
+
 DROP TABLE "tiki_calendar_items";
 
 CREATE SEQUENCE "tiki_calendar_items_sequ" INCREMENT BY 1 START WITH 1;
@@ -775,13 +615,7 @@ SELECT "tiki_calendar_items_sequ".nextval into :NEW."calitemId" FROM DUAL;
 END;
 /
 CREATE  INDEX "tiki_calendar_items_calendarId" ON "tiki_calendar_items"("calendarId");
--- --------------------------------------------------------
---
--- Table structure for table tiki_calendar_locations
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 07:05 AM
---
+
 DROP TABLE "tiki_calendar_locations";
 
 CREATE SEQUENCE "tiki_calendar_locations_sequ" INCREMENT BY 1 START WITH 1;
@@ -799,13 +633,7 @@ SELECT "tiki_calendar_locations_sequ".nextval into :NEW."callocId" FROM DUAL;
 END;
 /
 CREATE UNIQUE INDEX "tiki_calendar_locations_locname" ON "tiki_calendar_locations"("calendarId","name");
--- --------------------------------------------------------
---
--- Table structure for table tiki_calendar_roles
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_calendar_roles";
 
 CREATE TABLE "tiki_calendar_roles" (
@@ -815,13 +643,7 @@ CREATE TABLE "tiki_calendar_roles" (
   PRIMARY KEY (calitemId,username(16),role)
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_calendars
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 05, 2003 at 02:03 PM
---
+
 DROP TABLE "tiki_calendars";
 
 CREATE SEQUENCE "tiki_calendars_sequ" INCREMENT BY 1 START WITH 1;
@@ -847,7 +669,7 @@ BEGIN
 SELECT "tiki_calendars_sequ".nextval into :NEW."calendarId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
+
 DROP TABLE "tiki_calendar_options";
 
 CREATE TABLE "tiki_calendar_options" (
@@ -857,13 +679,7 @@ CREATE TABLE "tiki_calendar_options" (
   PRIMARY KEY (calendarId,optionName)
 ) ENGINE=MyISAM ;
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_categories
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 04, 2003 at 09:47 PM
---
+
 DROP TABLE "tiki_categories";
 
 CREATE SEQUENCE "tiki_categories_sequ" INCREMENT BY 1 START WITH 1;
@@ -881,13 +697,7 @@ BEGIN
 SELECT "tiki_categories_sequ".nextval into :NEW."categId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table tiki_categorized_objects
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Dec 06, 2005 
---
+
 DROP TABLE "tiki_objects";
 
 CREATE SEQUENCE "tiki_objects_sequ" INCREMENT BY 1 START WITH 1;
@@ -910,9 +720,7 @@ BEGIN
 SELECT "tiki_objects_sequ".nextval into :NEW."objectId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
--- Table structure for table `tiki_categorized_objects`
---
+
 DROP TABLE `tiki_categorized_objects`;
 
 CREATE TABLE `tiki_categorized_objects` (
@@ -921,12 +729,6 @@ CREATE TABLE `tiki_categorized_objects` (
 ) ENGINE=MyISAM ;
 
 
---
--- Table structure for table tiki_category_objects
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 13, 2003 at 01:09 AM
---
 DROP TABLE "tiki_category_objects";
 
 CREATE TABLE "tiki_category_objects" (
@@ -935,13 +737,7 @@ CREATE TABLE "tiki_category_objects" (
   PRIMARY KEY (catObjectId,categId)
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_category_sites
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 07, 2003 at 01:53 AM
---
+
 DROP TABLE "tiki_object_ratings";
 
 CREATE TABLE "tiki_object_ratings" (
@@ -950,13 +746,7 @@ CREATE TABLE "tiki_object_ratings" (
   PRIMARY KEY (catObjectId,pollId)
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_category_sites
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 07, 2003 at 01:53 AM
---
+
 DROP TABLE "tiki_category_sites";
 
 CREATE TABLE "tiki_category_sites" (
@@ -965,13 +755,7 @@ CREATE TABLE "tiki_category_sites" (
   PRIMARY KEY (categId,siteId)
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_chart_items
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_chart_items";
 
 CREATE SEQUENCE "tiki_chart_items_sequ" INCREMENT BY 1 START WITH 1;
@@ -993,13 +777,7 @@ BEGIN
 SELECT "tiki_chart_items_sequ".nextval into :NEW."itemId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table tiki_charts
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 06, 2003 at 08:14 AM
---
+
 DROP TABLE "tiki_charts";
 
 CREATE SEQUENCE "tiki_charts_sequ" INCREMENT BY 1 START WITH 1;
@@ -1030,13 +808,7 @@ BEGIN
 SELECT "tiki_charts_sequ".nextval into :NEW."chartId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table tiki_charts_rankings
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_charts_rankings";
 
 CREATE TABLE "tiki_charts_rankings" (
@@ -1051,13 +823,7 @@ CREATE TABLE "tiki_charts_rankings" (
   PRIMARY KEY (chartId,itemId,period)
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_charts_votes
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_charts_votes";
 
 CREATE TABLE "tiki_charts_votes" (
@@ -1068,13 +834,7 @@ CREATE TABLE "tiki_charts_votes" (
   PRIMARY KEY (user,itemId)
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_chat_channels
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_chat_channels";
 
 CREATE SEQUENCE "tiki_chat_channels_sequ" INCREMENT BY 1 START WITH 1;
@@ -1095,13 +855,7 @@ BEGIN
 SELECT "tiki_chat_channels_sequ".nextval into :NEW."channelId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table tiki_chat_messages
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_chat_messages";
 
 CREATE SEQUENCE "tiki_chat_messages_sequ" INCREMENT BY 1 START WITH 1;
@@ -1119,13 +873,7 @@ BEGIN
 SELECT "tiki_chat_messages_sequ".nextval into :NEW."messageId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table tiki_chat_users
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_chat_users";
 
 CREATE TABLE "tiki_chat_users" (
@@ -1135,14 +883,7 @@ CREATE TABLE "tiki_chat_users" (
   PRIMARY KEY (nickname,channelId)
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_comments
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 10:56 PM
--- Last check: Jul 11, 2003 at 01:52 AM
---
+
 DROP TABLE "tiki_comments";
 
 CREATE SEQUENCE "tiki_comments_sequ" INCREMENT BY 1 START WITH 1;
@@ -1185,13 +926,7 @@ CREATE  INDEX "tiki_comments_commentDate" ON "tiki_comments"("commentDate");
 CREATE  INDEX "tiki_comments_threaded" ON "tiki_comments"("message_id" "in_reply_to" "parentId");
 CREATE  INDEX "tiki_comments_ft" ON "tiki_comments"("title","data");
 CREATE UNIQUE INDEX "tiki_comments_no_repeats" ON "tiki_comments"("parentId" "userName" "title" "commentDate" "message_id" "in_reply_to");
--- --------------------------------------------------------
---
--- Table structure for table tiki_content
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_content";
 
 CREATE SEQUENCE "tiki_content_sequ" INCREMENT BY 1 START WITH 1;
@@ -1207,13 +942,7 @@ BEGIN
 SELECT "tiki_content_sequ".nextval into :NEW."contentId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table tiki_content_templates
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 12:37 AM
---
+
 DROP TABLE "tiki_content_templates";
 
 CREATE SEQUENCE "tiki_content_templates_sequ" INCREMENT BY 1 START WITH 1;
@@ -1230,13 +959,7 @@ BEGIN
 SELECT "tiki_content_templates_sequ".nextval into :NEW."templateId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table tiki_content_templates_sections
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 12:37 AM
---
+
 DROP TABLE "tiki_content_templates_sections";
 
 CREATE TABLE "tiki_content_templates_sections" (
@@ -1245,13 +968,7 @@ CREATE TABLE "tiki_content_templates_sections" (
   PRIMARY KEY (templateId,section)
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_cookies
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 10, 2003 at 04:00 AM
---
+
 DROP TABLE "tiki_cookies";
 
 CREATE SEQUENCE "tiki_cookies_sequ" INCREMENT BY 1 START WITH 1;
@@ -1266,13 +983,7 @@ BEGIN
 SELECT "tiki_cookies_sequ".nextval into :NEW."cookieId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table tiki_copyrights
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_copyrights";
 
 CREATE SEQUENCE "tiki_copyrights_sequ" INCREMENT BY 1 START WITH 1;
@@ -1292,13 +1003,7 @@ BEGIN
 SELECT "tiki_copyrights_sequ".nextval into :NEW."copyrightId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table tiki_directory_categories
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 08:59 PM
---
+
 DROP TABLE "tiki_directory_categories";
 
 CREATE SEQUENCE "tiki_directory_categories_sequ" INCREMENT BY 1 START WITH 1;
@@ -1322,13 +1027,7 @@ BEGIN
 SELECT "tiki_directory_categories_sequ".nextval into :NEW."categId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table tiki_directory_search
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_directory_search";
 
 CREATE TABLE "tiki_directory_search" (
@@ -1337,13 +1036,7 @@ CREATE TABLE "tiki_directory_search" (
   PRIMARY KEY (term)
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_directory_sites
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 07:32 PM
---
+
 DROP TABLE "tiki_directory_sites";
 
 CREATE SEQUENCE "tiki_directory_sites_sequ" INCREMENT BY 1 START WITH 1;
@@ -1370,13 +1063,7 @@ SELECT "tiki_directory_sites_sequ".nextval into :NEW."siteId" FROM DUAL;
 END;
 /
 CREATE  INDEX "tiki_directory_sites_ft" ON "tiki_directory_sites"("name","description");
--- --------------------------------------------------------
---
--- Table structure for table tiki_drawings
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 08, 2003 at 05:02 AM
---
+
 DROP TABLE "tiki_drawings";
 
 CREATE SEQUENCE "tiki_drawings_sequ" INCREMENT BY 1 START WITH 1;
@@ -1396,13 +1083,7 @@ BEGIN
 SELECT "tiki_drawings_sequ".nextval into :NEW."drawId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table tiki_dsn
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_dsn";
 
 CREATE SEQUENCE "tiki_dsn_sequ" INCREMENT BY 1 START WITH 1;
@@ -1418,7 +1099,7 @@ BEGIN
 SELECT "tiki_dsn_sequ".nextval into :NEW."dsnId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
+
 DROP TABLE "tiki_dynamic_variables";
 
 CREATE TABLE "tiki_dynamic_variables" (
@@ -1428,13 +1109,6 @@ CREATE TABLE "tiki_dynamic_variables" (
 );
 
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_extwiki
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
 DROP TABLE "tiki_extwiki";
 
 CREATE SEQUENCE "tiki_extwiki_sequ" INCREMENT BY 1 START WITH 1;
@@ -1450,14 +1124,7 @@ BEGIN
 SELECT "tiki_extwiki_sequ".nextval into :NEW."extwikiId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table tiki_faq_questions
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
--- Last check: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_faq_questions";
 
 CREATE SEQUENCE "tiki_faq_questions_sequ" INCREMENT BY 1 START WITH 1;
@@ -1479,14 +1146,7 @@ CREATE  INDEX "tiki_faq_questions_faqId" ON "tiki_faq_questions"("faqId");
 CREATE  INDEX "tiki_faq_questions_question" ON "tiki_faq_questions"("question");
 CREATE  INDEX "tiki_faq_questions_answer" ON "tiki_faq_questions"("answer");
 CREATE  INDEX "tiki_faq_questions_ft" ON "tiki_faq_questions"("question","answer");
--- --------------------------------------------------------
---
--- Table structure for table tiki_faqs
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 09:09 PM
--- Last check: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_faqs";
 
 CREATE SEQUENCE "tiki_faqs_sequ" INCREMENT BY 1 START WITH 1;
@@ -1510,13 +1170,7 @@ CREATE  INDEX "tiki_faqs_title" ON "tiki_faqs"("title");
 CREATE  INDEX "tiki_faqs_description" ON "tiki_faqs"("description");
 CREATE  INDEX "tiki_faqs_hits" ON "tiki_faqs"("hits");
 CREATE  INDEX "tiki_faqs_ft" ON "tiki_faqs"("title","description");
--- --------------------------------------------------------
---
--- Table structure for table tiki_featured_links
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 11:08 PM
---
+
 DROP TABLE "tiki_featured_links";
 
 CREATE TABLE "tiki_featured_links" (
@@ -1529,12 +1183,7 @@ CREATE TABLE "tiki_featured_links" (
   PRIMARY KEY (url)
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
--- Table structure for table tiki_file_galleries
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 13, 2003 at 01:13 AM
---
+
 DROP TABLE "tiki_file_galleries";
 
 CREATE SEQUENCE "tiki_file_galleries_sequ" INCREMENT BY 1 START WITH 1;
@@ -1582,14 +1231,7 @@ BEGIN
 SELECT "tiki_file_galleries_sequ".nextval into :NEW."galleryId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table tiki_files
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Nov 02, 2004 at 05:59 PM
--- Last check: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_files";
 
 CREATE SEQUENCE "tiki_files_sequ" INCREMENT BY 1 START WITH 1;
@@ -1633,13 +1275,7 @@ CREATE  INDEX "tiki_files_archiveId" ON "tiki_files"("archiveId");
 CREATE  INDEX "tiki_files_galleryId" ON "tiki_files"("galleryId");
 CREATE  INDEX "tiki_files_hits" ON "tiki_files"("hits");
 CREATE  INDEX "tiki_files_ft" ON "tiki_files"("name","description","search_data");
--- --------------------------------------------------------
---
--- Table structure for table tiki_forum_attachments
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_forum_attachments";
 
 CREATE SEQUENCE "tiki_forum_attachments_sequ" INCREMENT BY 1 START WITH 1;
@@ -1664,13 +1300,7 @@ SELECT "tiki_forum_attachments_sequ".nextval into :NEW."attId" FROM DUAL;
 END;
 /
 CREATE  INDEX "tiki_forum_attachments_threadId" ON "tiki_forum_attachments"("threadId");
--- --------------------------------------------------------
---
--- Table structure for table tiki_forum_reads
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 07:17 PM
---
+
 DROP TABLE "tiki_forum_reads";
 
 CREATE TABLE "tiki_forum_reads" (
@@ -1681,13 +1311,7 @@ CREATE TABLE "tiki_forum_reads" (
   PRIMARY KEY (user,threadId)
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_forums
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 11:14 PM
---
+
 DROP TABLE "tiki_forums";
 
 CREATE SEQUENCE "tiki_forums_sequ" INCREMENT BY 1 START WITH 1;
@@ -1757,13 +1381,7 @@ BEGIN
 SELECT "tiki_forums_sequ".nextval into :NEW."forumId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table tiki_forums_queue
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_forums_queue";
 
 CREATE SEQUENCE "tiki_forums_queue_sequ" INCREMENT BY 1 START WITH 1;
@@ -1790,13 +1408,7 @@ BEGIN
 SELECT "tiki_forums_queue_sequ".nextval into :NEW."qId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table tiki_forums_reported
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_forums_reported";
 
 CREATE TABLE "tiki_forums_reported" (
@@ -1809,14 +1421,7 @@ CREATE TABLE "tiki_forums_reported" (
   PRIMARY KEY (threadId)
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_galleries
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Sep 18, 2004 at 11:56 PM
--- Last check: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_galleries";
 
 CREATE SEQUENCE "tiki_galleries_sequ" INCREMENT BY 1 START WITH 1;
@@ -1864,13 +1469,7 @@ CREATE  INDEX "tiki_galleries_hits" ON "tiki_galleries"("hits");
 CREATE  INDEX "tiki_galleries_parentgallery" ON "tiki_galleries"("parentgallery");
 CREATE  INDEX "tiki_galleries_visibleUser" ON "tiki_galleries"("visible" "user");
 CREATE  INDEX "tiki_galleries_ft" ON "tiki_galleries"("name","description");
--- --------------------------------------------------------
---
--- Table structure for table tiki_galleries_scales
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_galleries_scales";
 
 CREATE TABLE "tiki_galleries_scales" (
@@ -1879,13 +1478,7 @@ CREATE TABLE "tiki_galleries_scales" (
   PRIMARY KEY (galleryId,scale)
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_games
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 05, 2003 at 08:23 PM
---
+
 DROP TABLE "tiki_games";
 
 CREATE TABLE "tiki_games" (
@@ -1896,13 +1489,7 @@ CREATE TABLE "tiki_games" (
   PRIMARY KEY (gameName)
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_group_inclusion
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 05, 2003 at 02:03 AM
---
+
 DROP TABLE "tiki_group_inclusion";
 
 CREATE TABLE "tiki_group_inclusion" (
@@ -1911,13 +1498,7 @@ CREATE TABLE "tiki_group_inclusion" (
   PRIMARY KEY (groupName(30),includeGroup(30))
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_history
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Mar 30, 2005 at 10:21 PM
---
+
 DROP TABLE "tiki_history";
 
 CREATE SEQUENCE "tiki_history_sequ" INCREMENT BY 1 START WITH 1;
@@ -1943,13 +1524,7 @@ BEGIN
 SELECT "tiki_history_sequ".nextval into :NEW."historyId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table tiki_hotwords
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 10, 2003 at 11:04 PM
---
+
 DROP TABLE "tiki_hotwords";
 
 CREATE TABLE "tiki_hotwords" (
@@ -1958,13 +1533,7 @@ CREATE TABLE "tiki_hotwords" (
   PRIMARY KEY (word)
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_html_pages
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_html_pages";
 
 CREATE TABLE "tiki_html_pages" (
@@ -1976,13 +1545,7 @@ CREATE TABLE "tiki_html_pages" (
   PRIMARY KEY (pageName)
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_html_pages_dynamic_zones
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_html_pages_dynamic_zones";
 
 CREATE TABLE "tiki_html_pages_dynamic_zones" (
@@ -1993,14 +1556,7 @@ CREATE TABLE "tiki_html_pages_dynamic_zones" (
   PRIMARY KEY (pageName,zone)
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_images
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Sep 18, 2004 at 08:29 PM
--- Last check: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_images";
 
 CREATE SEQUENCE "tiki_images_sequ" INCREMENT BY 1 START WITH 1;
@@ -2030,14 +1586,7 @@ CREATE  INDEX "tiki_images_ti_gId" ON "tiki_images"("galleryId");
 CREATE  INDEX "tiki_images_ti_cr" ON "tiki_images"("created");
 CREATE  INDEX "tiki_images_ti_us" ON "tiki_images"("user");
 CREATE  INDEX "tiki_images_ft" ON "tiki_images"("name","description");
--- --------------------------------------------------------
---
--- Table structure for table tiki_images_data
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 12:49 PM
--- Last check: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_images_data";
 
 CREATE TABLE "tiki_images_data" (
@@ -2054,13 +1603,7 @@ CREATE TABLE "tiki_images_data" (
 ) ENGINE=MyISAM;
 
 CREATE  INDEX "tiki_images_data_t_i_d_it" ON "tiki_images_data"("imageId","type");
--- --------------------------------------------------------
---
--- Table structure for table tiki_language
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_language";
 
 CREATE TABLE "tiki_language" (
@@ -2070,13 +1613,7 @@ CREATE TABLE "tiki_language" (
   PRIMARY KEY (source(255),lang)
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_languages
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_languages";
 
 CREATE TABLE "tiki_languages" (
@@ -2085,16 +1622,10 @@ CREATE TABLE "tiki_languages" (
   PRIMARY KEY (lang)
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
+
 INSERT INTO tiki_languages(lang, language) VALUES('en','English');
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_link_cache
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 06:06 PM
---
+
 DROP TABLE "tiki_link_cache";
 
 CREATE SEQUENCE "tiki_link_cache_sequ" INCREMENT BY 1 START WITH 1;
@@ -2114,13 +1645,7 @@ END;
 CREATE  INDEX "tiki_link_cache_url" ON "tiki_link_cache"("url");
 CREATE INDEX urlindex ON tiki_link_cache (url(250));
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_links
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 11:39 PM
---
+
 DROP TABLE "tiki_links";
 
 CREATE TABLE "tiki_links" (
@@ -2130,13 +1655,7 @@ CREATE TABLE "tiki_links" (
 ) ENGINE=MyISAM;
 
 CREATE  INDEX "tiki_links_toPage" ON "tiki_links"("toPage");
--- --------------------------------------------------------
---
--- Table structure for table tiki_live_support_events
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_live_support_events";
 
 CREATE SEQUENCE "tiki_live_support_events_sequ" INCREMENT BY 1 START WITH 1;
@@ -2156,13 +1675,7 @@ BEGIN
 SELECT "tiki_live_support_events_sequ".nextval into :NEW."eventId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table tiki_live_support_message_comments
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_live_support_message_comments";
 
 CREATE SEQUENCE "tiki_live_support_message_comments_sequ" INCREMENT BY 1 START WITH 1;
@@ -2179,13 +1692,7 @@ BEGIN
 SELECT "tiki_live_support_message_comments_sequ".nextval into :NEW."cId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table tiki_live_support_messages
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_live_support_messages";
 
 CREATE SEQUENCE "tiki_live_support_messages_sequ" INCREMENT BY 1 START WITH 1;
@@ -2210,13 +1717,7 @@ BEGIN
 SELECT "tiki_live_support_messages_sequ".nextval into :NEW."msgId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table tiki_live_support_modules
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_live_support_modules";
 
 CREATE SEQUENCE "tiki_live_support_modules_sequ" INCREMENT BY 1 START WITH 1;
@@ -2231,7 +1732,7 @@ BEGIN
 SELECT "tiki_live_support_modules_sequ".nextval into :NEW."modId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
+
 INSERT INTO tiki_live_support_modules(name) VALUES('wiki');
 
 INSERT INTO tiki_live_support_modules(name) VALUES('forums');
@@ -2246,13 +1747,7 @@ INSERT INTO tiki_live_support_modules(name) VALUES('workflow');
 
 INSERT INTO tiki_live_support_modules(name) VALUES('charts');
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_live_support_operators
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_live_support_operators";
 
 CREATE TABLE "tiki_live_support_operators" (
@@ -2270,13 +1765,7 @@ CREATE TABLE "tiki_live_support_operators" (
   PRIMARY KEY (user)
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_live_support_requests
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_live_support_requests";
 
 CREATE TABLE "tiki_live_support_requests" (
@@ -2297,13 +1786,7 @@ CREATE TABLE "tiki_live_support_requests" (
   PRIMARY KEY (reqId)
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_logs
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_logs";
 
 CREATE SEQUENCE "tiki_logs_sequ" INCREMENT BY 1 START WITH 1;
@@ -2325,13 +1808,6 @@ END;
 /
 CREATE  INDEX "tiki_logs_logtype" ON "tiki_logs"("logtype");
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_mail_events
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 11, 2003 at 05:28 AM
---
 DROP TABLE "tiki_mail_events";
 
 CREATE TABLE "tiki_mail_events" (
@@ -2340,13 +1816,7 @@ CREATE TABLE "tiki_mail_events" (
   "email" varchar(200) default NULL
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_mailin_accounts
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jun 17, 2004 at 03:06 PM EST
---
+
 DROP TABLE "tiki_mailin_accounts";
 
 CREATE SEQUENCE "tiki_mailin_accounts_sequ" INCREMENT BY 1 START WITH 1;
@@ -2376,13 +1846,7 @@ BEGIN
 SELECT "tiki_mailin_accounts_sequ".nextval into :NEW."accountId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table tiki_menu_languages
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_menu_languages";
 
 CREATE SEQUENCE "tiki_menu_languages_sequ" INCREMENT BY 1 START WITH 1;
@@ -2397,13 +1861,7 @@ BEGIN
 SELECT "tiki_menu_languages_sequ".nextval into :NEW."menuId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table tiki_menu_options
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Nov 21, 2003 at 07:05 AM
---
+
 DROP TABLE "tiki_menu_options";
 
 CREATE SEQUENCE "tiki_menu_options_sequ" INCREMENT BY 1 START WITH 1;
@@ -2427,7 +1885,7 @@ SELECT "tiki_menu_options_sequ".nextval into :NEW."optionId" FROM DUAL;
 END;
 /
 CREATE UNIQUE INDEX "tiki_menu_options_uniq_menu" ON "tiki_menu_options"("menuId","name","url","position","section","perm","groupname");
--- --------------------------------------------------------
+
 INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (1,42,'o','Home','./',10,'','','',0);
 
 INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (3,42,'o','Contact us','tiki-contact.php',20,'feature_contact','','',0);
@@ -2518,7 +1976,7 @@ INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`",
 
 INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (46,42,'o','Received pages','tiki-received_pages.php',245,'feature_wiki,feature_comm','tiki_p_view,tiki_p_admin_received_pages','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (47,42,'o','Structures','tiki-admin_structures.php',250,'feature_wiki','tiki_p_view','',0);
+INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (47,42,'o','Structures','tiki-admin_structures.php',250,'feature_wiki_structure','tiki_p_view','',0);
 
 INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (48,42,'s','Image Galleries','tiki-galleries.php',300,'feature_galleries','tiki_p_view_image_gallery','',0);
 
@@ -2796,13 +2254,7 @@ INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`",
 
 INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (194,42,'o','Action Log','tiki-admin_actionlog.php',1255,'feature_actionlog','tiki_p_view_actionlog_owngroups','',0);
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_menus
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_menus";
 
 CREATE SEQUENCE "tiki_menus_sequ" INCREMENT BY 1 START WITH 1;
@@ -2820,16 +2272,10 @@ BEGIN
 SELECT "tiki_menus_sequ".nextval into :NEW."menuId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
+
 INSERT INTO "tiki_menus" ("menuId","name","description","type") VALUES ('42','Application menu','Main extensive navigation menu','d');
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_minical_events
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 09, 2003 at 04:06 AM
---
+
 DROP TABLE "tiki_minical_events";
 
 CREATE SEQUENCE "tiki_minical_events_sequ" INCREMENT BY 1 START WITH 1;
@@ -2852,13 +2298,7 @@ BEGIN
 SELECT "tiki_minical_events_sequ".nextval into :NEW."eventId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table tiki_minical_topics
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_minical_topics";
 
 CREATE SEQUENCE "tiki_minical_topics_sequ" INCREMENT BY 1 START WITH 1;
@@ -2880,13 +2320,7 @@ BEGIN
 SELECT "tiki_minical_topics_sequ".nextval into :NEW."topicId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table tiki_modules
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 11:44 PM
---
+
 DROP TABLE "tiki_modules";
 
 CREATE SEQUENCE "tiki_modules_sequ" INCREMENT BY 1 START WITH 1;
@@ -2911,7 +2345,7 @@ END;
 /
 CREATE  INDEX "tiki_modules_positionType" ON "tiki_modules"("position" "type");
 CREATE  INDEX "tiki_modules_moduleId" ON "tiki_modules"("moduleId");
--- --------------------------------------------------------
+
 INSERT INTO "tiki_modules" ("name","position","ord","cache_time","groups") VALUES ('login_box','r',1,0,'a:2:{i:0;s:10:"Registered";i:1;s:9:"Anonymous";}');
 
 INSERT INTO "tiki_modules" ("name","position","ord","cache_time","params","groups") VALUES ('mnu_application_menu','l',1,0,'flip=y','a:2:{i:0;s:10:"Registered";i:1;s:9:"Anonymous";}');
@@ -2922,13 +2356,7 @@ INSERT INTO "tiki_modules" ("name","position","ord","cache_time","groups") VALUE
 
 INSERT INTO "tiki_modules" ("name","position","ord","cache_time","groups") VALUES ('since_last_visit_new','r',40,0,'a:1:{i:0;s:6:\"Admins\";}');
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_newsletter_subscriptions
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_newsletter_subscriptions";
 
 CREATE TABLE "tiki_newsletter_subscriptions" (
@@ -2941,13 +2369,7 @@ CREATE TABLE "tiki_newsletter_subscriptions" (
   PRIMARY KEY (nlId,email,isUser)
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_newsletter_groups
---
--- Creation: Jan 18, 2005
--- Last update: Jan 18, 2005
---
+
 DROP TABLE "tiki_newsletter_groups";
 
 CREATE TABLE "tiki_newsletter_groups" (
@@ -2957,13 +2379,7 @@ CREATE TABLE "tiki_newsletter_groups" (
   PRIMARY KEY (nlId,groupName)
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_newsletter_included
---
--- Creation: Sep 25, 2007
--- Last update: Sep 25, 2007
---
+
 DROP TABLE "tiki_newsletter_included";
 
 CREATE TABLE "tiki_newsletter_included" (
@@ -2972,13 +2388,7 @@ CREATE TABLE "tiki_newsletter_included" (
   PRIMARY KEY (nlId,includedId)
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_newsletters
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_newsletters";
 
 CREATE SEQUENCE "tiki_newsletters_sequ" INCREMENT BY 1 START WITH 1;
@@ -3005,13 +2415,7 @@ BEGIN
 SELECT "tiki_newsletters_sequ".nextval into :NEW."nlId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table tiki_newsreader_marks
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_newsreader_marks";
 
 CREATE TABLE "tiki_newsreader_marks" (
@@ -3022,13 +2426,7 @@ CREATE TABLE "tiki_newsreader_marks" (
   PRIMARY KEY (`user`(100),serverId,groupName(100))
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_newsreader_servers
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_newsreader_servers";
 
 CREATE SEQUENCE "tiki_newsreader_servers_sequ" INCREMENT BY 1 START WITH 1;
@@ -3047,14 +2445,7 @@ BEGIN
 SELECT "tiki_newsreader_servers_sequ".nextval into :NEW."serverId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table tiki_page_footnotes
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 10:00 AM
--- Last check: Jul 12, 2003 at 10:00 AM
---
+
 DROP TABLE "tiki_page_footnotes";
 
 CREATE TABLE "tiki_page_footnotes" (
@@ -3064,14 +2455,7 @@ CREATE TABLE "tiki_page_footnotes" (
   PRIMARY KEY (`user`(150),pageName(100))
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_pages
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 13, 2003 at 01:52 AM
--- Last check: Jul 12, 2003 at 10:01 AM
---
+
 DROP TABLE "tiki_pages";
 
 CREATE SEQUENCE "tiki_pages_sequ" INCREMENT BY 1 START WITH 1;
@@ -3114,12 +2498,7 @@ CREATE  INDEX "tiki_pages_data" ON "tiki_pages"("data");
 CREATE  INDEX "tiki_pages_pageRank" ON "tiki_pages"("pageRank");
 CREATE  INDEX "tiki_pages_ft" ON "tiki_pages"("pageName","description","data");
 CREATE UNIQUE INDEX "tiki_pages_pageName" ON "tiki_pages"("pageName");
--- --------------------------------------------------------
---
--- Table structure for table tiki_page_drafts
---
--- Creation: March 12, 2006 at 
---
+
 DROP TABLE "tiki_page_drafts";
 
 CREATE TABLE "tiki_page_drafts" (
@@ -3132,13 +2511,7 @@ CREATE TABLE "tiki_page_drafts" (
   PRIMARY KEY (pageName(120), `user`(120))
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_pageviews
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 13, 2003 at 01:52 AM
---
+
 DROP TABLE "tiki_pageviews";
 
 CREATE TABLE "tiki_pageviews" (
@@ -3147,10 +2520,7 @@ CREATE TABLE "tiki_pageviews" (
   PRIMARY KEY (day)
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_poll_objects
---
+
 DROP TABLE "tiki_poll_objects";
 
 CREATE TABLE `tiki_poll_objects` (
@@ -3160,13 +2530,7 @@ CREATE TABLE `tiki_poll_objects` (
   PRIMARY KEY (`catObjectId`,`pollId`)
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_poll_options
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 06, 2003 at 07:57 PM
---
+
 DROP TABLE "tiki_poll_options";
 
 CREATE SEQUENCE "tiki_poll_options_sequ" INCREMENT BY 1 START WITH 1;
@@ -3184,13 +2548,7 @@ BEGIN
 SELECT "tiki_poll_options_sequ".nextval into :NEW."optionId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table tiki_polls
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 06, 2003 at 07:57 PM
---
+
 DROP TABLE "tiki_polls";
 
 CREATE SEQUENCE "tiki_polls_sequ" INCREMENT BY 1 START WITH 1;
@@ -3208,13 +2566,7 @@ BEGIN
 SELECT "tiki_polls_sequ".nextval into :NEW."pollId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table tiki_preferences
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 12:04 PM
---
+
 DROP TABLE "tiki_preferences";
 
 CREATE TABLE "tiki_preferences" (
@@ -3223,13 +2575,7 @@ CREATE TABLE "tiki_preferences" (
   PRIMARY KEY (name)
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_private_messages
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_private_messages";
 
 CREATE SEQUENCE "tiki_private_messages_sequ" INCREMENT BY 1 START WITH 1;
@@ -3250,13 +2596,7 @@ BEGIN
 SELECT "tiki_private_messages_sequ".nextval into :NEW."messageId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table tiki_programmed_content
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_programmed_content";
 
 CREATE SEQUENCE "tiki_programmed_content_sequ" INCREMENT BY 1 START WITH 1;
@@ -3273,13 +2613,7 @@ BEGIN
 SELECT "tiki_programmed_content_sequ".nextval into :NEW."pId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table tiki_quiz_question_options
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_quiz_question_options";
 
 CREATE SEQUENCE "tiki_quiz_question_options_sequ" INCREMENT BY 1 START WITH 1;
@@ -3296,13 +2630,7 @@ BEGIN
 SELECT "tiki_quiz_question_options_sequ".nextval into :NEW."optionId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table tiki_quiz_questions
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_quiz_questions";
 
 CREATE SEQUENCE "tiki_quiz_questions_sequ" INCREMENT BY 1 START WITH 1;
@@ -3321,13 +2649,7 @@ BEGIN
 SELECT "tiki_quiz_questions_sequ".nextval into :NEW."questionId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table tiki_quiz_results
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_quiz_results";
 
 CREATE SEQUENCE "tiki_quiz_results_sequ" INCREMENT BY 1 START WITH 1;
@@ -3345,13 +2667,7 @@ BEGIN
 SELECT "tiki_quiz_results_sequ".nextval into :NEW."resultId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table tiki_quiz_stats
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_quiz_stats";
 
 CREATE TABLE "tiki_quiz_stats" (
@@ -3362,13 +2678,7 @@ CREATE TABLE "tiki_quiz_stats" (
   PRIMARY KEY (quizId,questionId,optionId)
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_quiz_stats_sum
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_quiz_stats_sum";
 
 CREATE TABLE "tiki_quiz_stats_sum" (
@@ -3381,13 +2691,7 @@ CREATE TABLE "tiki_quiz_stats_sum" (
   PRIMARY KEY (quizId)
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_quizzes
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: April 29, 2004
---
+
 DROP TABLE "tiki_quizzes";
 
 CREATE SEQUENCE "tiki_quizzes_sequ" INCREMENT BY 1 START WITH 1;
@@ -3437,13 +2741,7 @@ BEGIN
 SELECT "tiki_quizzes_sequ".nextval into :NEW."quizId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table tiki_received_articles
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_received_articles";
 
 CREATE SEQUENCE "tiki_received_articles_sequ" INCREMENT BY 1 START WITH 1;
@@ -3479,13 +2777,7 @@ BEGIN
 SELECT "tiki_received_articles_sequ".nextval into :NEW."receivedArticleId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table tiki_received_pages
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 09, 2003 at 03:56 AM
---
+
 DROP TABLE "tiki_received_pages";
 
 CREATE SEQUENCE "tiki_received_pages_sequ" INCREMENT BY 1 START WITH 1;
@@ -3501,8 +2793,8 @@ CREATE TABLE "tiki_received_pages" (
   "parent" varchar(255) default NULL,
   "position" number(3) unsigned default NULL,
   "alias" varchar(255) default NULL,
-  "structureName"  varchar(250) default NULL,
-  "parentName"  varchar(250) default NULL,
+  "structureName" varchar(250) default NULL,
+  "parentName" varchar(250) default NULL,
   "page_alias" varchar(250) default '',
   "pos" number(4) default NULL,
   PRIMARY KEY (receivedPageId)
@@ -3514,13 +2806,7 @@ SELECT "tiki_received_pages_sequ".nextval into :NEW."receivedPageId" FROM DUAL;
 END;
 /
 CREATE  INDEX "tiki_received_pages_structureName" ON "tiki_received_pages"("structureName");
--- --------------------------------------------------------
---
--- Table structure for table tiki_referer_stats
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 13, 2003 at 01:30 AM
---
+
 DROP TABLE "tiki_referer_stats";
 
 CREATE TABLE "tiki_referer_stats" (
@@ -3530,13 +2816,7 @@ CREATE TABLE "tiki_referer_stats" (
   PRIMARY KEY (referer)
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_related_categories
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_related_categories";
 
 CREATE TABLE "tiki_related_categories" (
@@ -3545,13 +2825,7 @@ CREATE TABLE "tiki_related_categories" (
   PRIMARY KEY (categId,relatedTo)
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_rss_modules
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 10:19 AM
---
+
 DROP TABLE "tiki_rss_modules";
 
 CREATE SEQUENCE "tiki_rss_modules_sequ" INCREMENT BY 1 START WITH 1;
@@ -3574,13 +2848,7 @@ SELECT "tiki_rss_modules_sequ".nextval into :NEW."rssId" FROM DUAL;
 END;
 /
 CREATE  INDEX "tiki_rss_modules_name" ON "tiki_rss_modules"("name");
--- --------------------------------------------------------
---
--- Table structure for table tiki_rss_feeds
---
--- Creation: Oct 14, 2003 at 20:34 PM
--- Last update: Oct 14, 2003 at 20:34 PM
---
+
 DROP TABLE "tiki_rss_feeds";
 
 CREATE TABLE "tiki_rss_feeds" (
@@ -3592,7 +2860,7 @@ CREATE TABLE "tiki_rss_feeds" (
   PRIMARY KEY (name,rssVer)
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
+
 DROP TABLE "tiki_searchindex";
 
 CREATE TABLE "tiki_searchindex"(
@@ -3629,12 +2897,6 @@ CREATE TABLE "tiki_searchwords"(
 ) ENGINE=MyISAM;
 
 
---
--- Table structure for table tiki_search_stats
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 10:55 PM
---
 DROP TABLE "tiki_search_stats";
 
 CREATE TABLE "tiki_search_stats" (
@@ -3643,11 +2905,7 @@ CREATE TABLE "tiki_search_stats" (
   PRIMARY KEY (term)
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_secdb
---
---
+
 DROP TABLE "tiki_secdb";
 
 CREATE TABLE "tiki_secdb"(
@@ -3660,12 +2918,6 @@ CREATE TABLE "tiki_secdb"(
 
 CREATE  INDEX "tiki_secdb_sdb_fn" ON "tiki_secdb"("filename");
 
---
--- Table structure for table tiki_semaphores
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 13, 2003 at 01:52 AM
---
 DROP TABLE "tiki_semaphores";
 
 CREATE TABLE "tiki_semaphores" (
@@ -3676,13 +2928,7 @@ CREATE TABLE "tiki_semaphores" (
   PRIMARY KEY (semName)
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_sent_newsletters
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_sent_newsletters";
 
 CREATE SEQUENCE "tiki_sent_newsletters_sequ" INCREMENT BY 1 START WITH 1;
@@ -3702,10 +2948,7 @@ BEGIN
 SELECT "tiki_sent_newsletters_sequ".nextval into :NEW."editionId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table tiki_sent_newsletters_errors
---
+
 DROP TABLE "tiki_sent_newsletters_errors";
 
 CREATE TABLE "tiki_sent_newsletters_errors" (
@@ -3716,13 +2959,7 @@ CREATE TABLE "tiki_sent_newsletters_errors" (
   KEY (editionId)
 ) ENGINE=MyISAM ;
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_sessions
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 13, 2003 at 01:52 AM
---
+
 DROP TABLE "tiki_sessions";
 
 CREATE TABLE "tiki_sessions" (
@@ -3735,8 +2972,7 @@ CREATE TABLE "tiki_sessions" (
 
 CREATE  INDEX "tiki_sessions_user" ON "tiki_sessions"("user");
 CREATE  INDEX "tiki_sessions_timestamp" ON "tiki_sessions"("timestamp");
--- --------------------------------------------------------
--- Tables for TikiSheet
+
 DROP TABLE "tiki_sheet_layout";
 
 CREATE TABLE "tiki_sheet_layout" (
@@ -3786,12 +3022,6 @@ SELECT "tiki_sheets_sequ".nextval into :NEW."sheetId" FROM DUAL;
 END;
 /
 
---
--- Table structure for table tiki_shoutbox
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 08:21 PM
---
 DROP TABLE "tiki_shoutbox";
 
 CREATE SEQUENCE "tiki_shoutbox_sequ" INCREMENT BY 1 START WITH 1;
@@ -3809,10 +3039,7 @@ BEGIN
 SELECT "tiki_shoutbox_sequ".nextval into :NEW."msgId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table tiki_shoutbox_words
---
+
 DROP TABLE "tiki_shoutbox_words";
 
 CREATE TABLE "tiki_shoutbox_words" (
@@ -3821,13 +3048,7 @@ CREATE TABLE "tiki_shoutbox_words" (
   PRIMARY KEY (word)
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_structure_versions
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_structure_versions";
 
 CREATE SEQUENCE "tiki_structure_versions_sequ" INCREMENT BY 1 START WITH 1;
@@ -3842,13 +3063,7 @@ BEGIN
 SELECT "tiki_structure_versions_sequ".nextval into :NEW."structure_id" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table tiki_structures
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_structures";
 
 CREATE SEQUENCE "tiki_structures_sequ" INCREMENT BY 1 START WITH 1;
@@ -3870,13 +3085,7 @@ END;
 /
 CREATE  INDEX "tiki_structures_pidpaid" ON "tiki_structures"("page_id","parent_id");
 CREATE  INDEX "tiki_structures_page_id" ON "tiki_structures"("page_id");
--- --------------------------------------------------------
---
--- Table structure for table tiki_submissions
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Nov 29, 2006 at 08:46 PM
---
+
 DROP TABLE "tiki_submissions";
 
 CREATE SEQUENCE "tiki_submissions_sequ" INCREMENT BY 1 START WITH 1;
@@ -3922,13 +3131,7 @@ BEGIN
 SELECT "tiki_submissions_sequ".nextval into :NEW."subId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table tiki_suggested_faq_questions
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 11, 2003 at 08:52 PM
---
+
 DROP TABLE "tiki_suggested_faq_questions";
 
 CREATE SEQUENCE "tiki_suggested_faq_questions_sequ" INCREMENT BY 1 START WITH 1;
@@ -3947,13 +3150,7 @@ BEGIN
 SELECT "tiki_suggested_faq_questions_sequ".nextval into :NEW."sfqId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table tiki_survey_question_options
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 11, 2003 at 12:55 AM
---
+
 DROP TABLE "tiki_survey_question_options";
 
 CREATE SEQUENCE "tiki_survey_question_options_sequ" INCREMENT BY 1 START WITH 1;
@@ -3970,13 +3167,7 @@ BEGIN
 SELECT "tiki_survey_question_options_sequ".nextval into :NEW."optionId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table tiki_survey_questions
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 11, 2003 at 11:55 PM
---
+
 DROP TABLE "tiki_survey_questions";
 
 CREATE SEQUENCE "tiki_survey_questions_sequ" INCREMENT BY 1 START WITH 1;
@@ -3998,13 +3189,7 @@ BEGIN
 SELECT "tiki_survey_questions_sequ".nextval into :NEW."questionId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table tiki_surveys
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 07:40 PM
---
+
 DROP TABLE "tiki_surveys";
 
 CREATE SEQUENCE "tiki_surveys_sequ" INCREMENT BY 1 START WITH 1;
@@ -4024,13 +3209,7 @@ BEGIN
 SELECT "tiki_surveys_sequ".nextval into :NEW."surveyId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table tiki_tags
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 06, 2003 at 02:58 AM
---
+
 DROP TABLE "tiki_tags";
 
 CREATE TABLE "tiki_tags" (
@@ -4048,13 +3227,7 @@ CREATE TABLE "tiki_tags" (
   PRIMARY KEY (tagName,pageName)
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_theme_control_categs
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_theme_control_categs";
 
 CREATE TABLE "tiki_theme_control_categs" (
@@ -4063,13 +3236,7 @@ CREATE TABLE "tiki_theme_control_categs" (
   PRIMARY KEY (categId)
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_theme_control_objects
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_theme_control_objects";
 
 CREATE TABLE "tiki_theme_control_objects" (
@@ -4080,13 +3247,7 @@ CREATE TABLE "tiki_theme_control_objects" (
   PRIMARY KEY (objId(100), type(100))
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_theme_control_sections
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_theme_control_sections";
 
 CREATE TABLE "tiki_theme_control_sections" (
@@ -4095,13 +3256,7 @@ CREATE TABLE "tiki_theme_control_sections" (
   PRIMARY KEY (section)
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_topics
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 04, 2003 at 10:10 PM
---
+
 DROP TABLE "tiki_topics";
 
 CREATE SEQUENCE "tiki_topics_sequ" INCREMENT BY 1 START WITH 1;
@@ -4122,13 +3277,7 @@ BEGIN
 SELECT "tiki_topics_sequ".nextval into :NEW."topicId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table tiki_tracker_fields
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 08, 2003 at 01:48 PM
---
+
 DROP TABLE "tiki_tracker_fields";
 
 CREATE SEQUENCE "tiki_tracker_fields_sequ" INCREMENT BY 1 START WITH 1;
@@ -4151,6 +3300,7 @@ CREATE TABLE "tiki_tracker_fields" (
   "errorMsg" clob,
   "visibleBy" clob,
   "editableBy" clob,
+  "descriptionIsParsed" char(1) default 'n',
   PRIMARY KEY (fieldId)
 ) ENGINE=MyISAM  ;
 
@@ -4159,13 +3309,7 @@ BEGIN
 SELECT "tiki_tracker_fields_sequ".nextval into :NEW."fieldId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table tiki_tracker_item_attachments
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_tracker_item_attachments";
 
 CREATE SEQUENCE "tiki_tracker_item_attachments_sequ" INCREMENT BY 1 START WITH 1;
@@ -4191,13 +3335,7 @@ BEGIN
 SELECT "tiki_tracker_item_attachments_sequ".nextval into :NEW."attId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table tiki_tracker_item_comments
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 08:12 AM
---
+
 DROP TABLE "tiki_tracker_item_comments";
 
 CREATE SEQUENCE "tiki_tracker_item_comments_sequ" INCREMENT BY 1 START WITH 1;
@@ -4216,13 +3354,7 @@ BEGIN
 SELECT "tiki_tracker_item_comments_sequ".nextval into :NEW."commentId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table tiki_tracker_item_fields
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 08:26 AM
---
+
 DROP TABLE "tiki_tracker_item_fields";
 
 CREATE TABLE "tiki_tracker_item_fields" (
@@ -4237,13 +3369,7 @@ CREATE TABLE "tiki_tracker_item_fields" (
 ) ENGINE=MyISAM;
 
 CREATE  INDEX "tiki_tracker_item_fields_ft" ON "tiki_tracker_item_fields"("value");
--- --------------------------------------------------------
---
--- Table structure for table tiki_tracker_items
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 08:26 AM
---
+
 DROP TABLE "tiki_tracker_items";
 
 CREATE SEQUENCE "tiki_tracker_items_sequ" INCREMENT BY 1 START WITH 1;
@@ -4261,13 +3387,7 @@ BEGIN
 SELECT "tiki_tracker_items_sequ".nextval into :NEW."itemId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table tiki_tracker_options
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 08, 2003 at 01:48 PM
---
+
 DROP TABLE "tiki_tracker_options";
 
 CREATE TABLE "tiki_tracker_options" (
@@ -4277,13 +3397,7 @@ CREATE TABLE "tiki_tracker_options" (
   PRIMARY KEY (trackerId,name(30))
 ) ENGINE=MyISAM ;
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_trackers
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 08:26 AM
---
+
 DROP TABLE "tiki_trackers";
 
 CREATE SEQUENCE "tiki_trackers_sequ" INCREMENT BY 1 START WITH 1;
@@ -4311,13 +3425,7 @@ BEGIN
 SELECT "tiki_trackers_sequ".nextval into :NEW."trackerId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table tiki_untranslated
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_untranslated";
 
 CREATE SEQUENCE "tiki_untranslated_sequ" INCREMENT BY 1 START WITH 1;
@@ -4335,13 +3443,7 @@ END;
 /
 CREATE  INDEX "tiki_untranslated_id_2" ON "tiki_untranslated"("id");
 CREATE UNIQUE INDEX "tiki_untranslated_id" ON "tiki_untranslated"("id");
--- --------------------------------------------------------
---
--- Table structure for table tiki_user_answers
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_user_answers";
 
 CREATE TABLE "tiki_user_answers" (
@@ -4352,13 +3454,7 @@ CREATE TABLE "tiki_user_answers" (
   PRIMARY KEY (userResultId,quizId,questionId,optionId)
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_user_answers_uploads
---
--- Creation: Jan 25, 2005 at 07:42 PM
--- Last update: Jan 25, 2005 at 07:42 PM
---
+
 DROP TABLE "tiki_user_answers_uploads";
 
 CREATE SEQUENCE "tiki_user_answers_uploads_sequ" INCREMENT BY 1 START WITH 1;
@@ -4379,12 +3475,6 @@ SELECT "tiki_user_answers_uploads_sequ".nextval into :NEW."answerUploadId" FROM 
 END;
 /
 
---
--- Table structure for table tiki_user_assigned_modules
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 08:25 PM
---
 DROP TABLE "tiki_user_assigned_modules";
 
 CREATE TABLE "tiki_user_assigned_modules" (
@@ -4397,13 +3487,7 @@ CREATE TABLE "tiki_user_assigned_modules" (
   PRIMARY KEY (name(30),user,position, ord)
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_user_bookmarks_folders
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 11, 2003 at 08:35 AM
---
+
 DROP TABLE "tiki_user_bookmarks_folders";
 
 CREATE SEQUENCE "tiki_user_bookmarks_folders_sequ" INCREMENT BY 1 START WITH 1;
@@ -4420,13 +3504,7 @@ BEGIN
 SELECT "tiki_user_bookmarks_folders_sequ".nextval into :NEW."folderId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table tiki_user_bookmarks_urls
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 11, 2003 at 08:36 AM
---
+
 DROP TABLE "tiki_user_bookmarks_urls";
 
 CREATE SEQUENCE "tiki_user_bookmarks_urls_sequ" INCREMENT BY 1 START WITH 1;
@@ -4446,13 +3524,7 @@ BEGIN
 SELECT "tiki_user_bookmarks_urls_sequ".nextval into :NEW."urlId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table tiki_user_mail_accounts
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_user_mail_accounts";
 
 CREATE SEQUENCE "tiki_user_mail_accounts_sequ" INCREMENT BY 1 START WITH 1;
@@ -4477,13 +3549,7 @@ BEGIN
 SELECT "tiki_user_mail_accounts_sequ".nextval into :NEW."accountId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table tiki_user_menus
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 11, 2003 at 10:58 PM
---
+
 DROP TABLE "tiki_user_menus";
 
 CREATE SEQUENCE "tiki_user_menus_sequ" INCREMENT BY 1 START WITH 1;
@@ -4502,13 +3568,7 @@ BEGIN
 SELECT "tiki_user_menus_sequ".nextval into :NEW."menuId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table tiki_user_modules
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 05, 2003 at 03:16 AM
---
+
 DROP TABLE "tiki_user_modules";
 
 CREATE TABLE "tiki_user_modules" (
@@ -4519,16 +3579,10 @@ CREATE TABLE "tiki_user_modules" (
   PRIMARY KEY (name)
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
+
 INSERT INTO "tiki_user_modules" ("name","title","data","parse") VALUES ('mnu_application_menu', 'Menu', '{menu id=42}', 'n');
 
 
---
--- Table structure for table tiki_user_notes
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 07:52 AM
---
 DROP TABLE "tiki_user_notes";
 
 CREATE SEQUENCE "tiki_user_notes_sequ" INCREMENT BY 1 START WITH 1;
@@ -4549,13 +3603,7 @@ BEGIN
 SELECT "tiki_user_notes_sequ".nextval into :NEW."noteId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table tiki_user_postings
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 13, 2003 at 01:12 AM
---
+
 DROP TABLE "tiki_user_postings";
 
 CREATE TABLE "tiki_user_postings" (
@@ -4567,13 +3615,7 @@ CREATE TABLE "tiki_user_postings" (
   PRIMARY KEY (user)
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_user_preferences
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 13, 2003 at 01:09 AM
---
+
 DROP TABLE "tiki_user_preferences";
 
 CREATE TABLE "tiki_user_preferences" (
@@ -4583,13 +3625,7 @@ CREATE TABLE "tiki_user_preferences" (
   PRIMARY KEY (user,prefName)
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_user_quizzes
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_user_quizzes";
 
 CREATE SEQUENCE "tiki_user_quizzes_sequ" INCREMENT BY 1 START WITH 1;
@@ -4610,13 +3646,7 @@ BEGIN
 SELECT "tiki_user_quizzes_sequ".nextval into :NEW."userResultId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table tiki_user_taken_quizzes
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_user_taken_quizzes";
 
 CREATE TABLE "tiki_user_taken_quizzes" (
@@ -4625,30 +3655,24 @@ CREATE TABLE "tiki_user_taken_quizzes" (
   PRIMARY KEY (user,quizId(50))
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_user_tasks_history
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jan 25, 2005 by sir-b & moresun
---
+
 DROP TABLE "tiki_user_tasks_history";
 
 CREATE TABLE "tiki_user_tasks_history" (
-  "belongs_to" integer(14) NOT NULL,                   -- the fist task in a history it has the same id as the task id
+  "belongs_to" integer(14) NOT NULL,                   -- the first task in a history it has the same id as the task id
   "task_version" integer(4) DEFAULT 0 NOT NULL,        -- version number for the history it starts with 0
   "title" varchar(250) NOT NULL,                       -- title
   "description" clob DEFAULT NULL,                     -- description
-  "start" integer(14) DEFAULT NULL,                    -- date of the starting, if it is not set than there is not starting date
+  "start" integer(14) DEFAULT NULL,                    -- date of the starting, if it is not set than there is no starting date
   "end" integer(14) DEFAULT NULL,                      -- date of the end, if it is not set than there is not dealine
   "lasteditor" varchar(200) NOT NULL,                  -- lasteditor: username of last editior
   "lastchanges" integer(14) NOT NULL,                  -- date of last changes
   "priority" integer(2) DEFAULT 3 NOT NULL,                     -- priority
   "completed" integer(14) DEFAULT NULL,                -- date of the completation if it is null it is not yet completed
   "deleted" integer(14) DEFAULT NULL,                  -- date of the deleteation it it is null it is not deleted
-  "status" char(1) DEFAULT NULL,                       -- null := waiting, 
-                                                     -- o := open / in progress, 
-                                                     -- c := completed -> (percentage = 100) 
+  "status" char(1) DEFAULT NULL,                       -- null := waiting,
+                                                     -- o := open / in progress,
+                                                     -- c := completed -> (percentage = 100)
   "percentage" number(4) DEFAULT NULL,
   "accepted_creator" char(1) DEFAULT NULL,             -- y - yes, n - no, null - waiting
   "accepted_user" char(1) DEFAULT NULL,                -- y - yes, n - no, null - waiting
@@ -4656,12 +3680,6 @@ CREATE TABLE "tiki_user_tasks_history" (
 ) ENGINE=MyISAM  ;
 
 
---
--- Table structure for table tiki_user_tasks
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jan 25, 2005 by sir-b & moresun
---
 DROP TABLE "tiki_user_tasks";
 
 CREATE TABLE "tiki_user_tasks" (
@@ -4670,7 +3688,7 @@ CREATE TABLE "tiki_user_tasks" (
   "user" varchar(200) DEFAULT '' NOT NULL,              -- task user
   "creator" varchar(200) NOT NULL,                     -- username of creator
   "public_for_group" varchar(30) DEFAULT NULL,         -- this group can also view the task, if it is null it is not public
-  "rights_by_creator" char(1) DEFAULT NULL,            -- null the user can delete the task, 
+  "rights_by_creator" char(1) DEFAULT NULL,            -- null the user can delete the task,
   "created" integer(14) NOT NULL,                      -- date of the creation
   "status" char(1) default NULL,
   "priority" number(2) default NULL,
@@ -4681,13 +3699,6 @@ CREATE TABLE "tiki_user_tasks" (
 ) ENGINE=MyISAM ;
 
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_user_votings
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 11, 2003 at 11:55 PM
---
 DROP TABLE "tiki_user_votings";
 
 CREATE TABLE "tiki_user_votings" (
@@ -4697,13 +3708,7 @@ CREATE TABLE "tiki_user_votings" (
   PRIMARY KEY (`user`(100),id(100))
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_user_watches
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 08:07 AM
---
+
 DROP TABLE "tiki_user_watches";
 
 CREATE SEQUENCE "tiki_user_watches_sequ" INCREMENT BY 1 START WITH 1;
@@ -4725,13 +3730,7 @@ SELECT "tiki_user_watches_sequ".nextval into :NEW."watchId" FROM DUAL;
 END;
 /
 CREATE  INDEX "tiki_user_watches_watchId" ON "tiki_user_watches"("watchId");
--- --------------------------------------------------------
---
--- Table structure for table tiki_userfiles
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_userfiles";
 
 CREATE SEQUENCE "tiki_userfiles_sequ" INCREMENT BY 1 START WITH 1;
@@ -4755,13 +3754,7 @@ BEGIN
 SELECT "tiki_userfiles_sequ".nextval into :NEW."fileId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table tiki_userpoints
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 11, 2003 at 05:47 AM
---
+
 DROP TABLE "tiki_userpoints";
 
 CREATE TABLE "tiki_userpoints" (
@@ -4770,13 +3763,7 @@ CREATE TABLE "tiki_userpoints" (
   "voted" number(8) default NULL
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_users
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_users";
 
 CREATE TABLE "tiki_users" (
@@ -4787,13 +3774,7 @@ CREATE TABLE "tiki_users" (
   PRIMARY KEY (user)
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_webmail_contacts
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_webmail_contacts";
 
 CREATE SEQUENCE "tiki_webmail_contacts_sequ" INCREMENT BY 1 START WITH 1;
@@ -4812,7 +3793,7 @@ BEGIN
 SELECT "tiki_webmail_contacts_sequ".nextval into :NEW."contactId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
+
 DROP TABLE "tiki_webmail_contacts_groups";
 
 CREATE TABLE "tiki_webmail_contacts_groups" (
@@ -4821,13 +3802,7 @@ CREATE TABLE "tiki_webmail_contacts_groups" (
   PRIMARY KEY (contactId,groupName(200))
 ) ENGINE=MyISAM ;
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_webmail_messages
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_webmail_messages";
 
 CREATE TABLE "tiki_webmail_messages" (
@@ -4840,13 +3815,7 @@ CREATE TABLE "tiki_webmail_messages" (
   PRIMARY KEY (accountId,mailId)
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_wiki_attachments
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_wiki_attachments";
 
 CREATE SEQUENCE "tiki_wiki_attachments_sequ" INCREMENT BY 1 START WITH 1;
@@ -4870,13 +3839,7 @@ BEGIN
 SELECT "tiki_wiki_attachments_sequ".nextval into :NEW."attId" FROM DUAL;
 END;
 /
--- --------------------------------------------------------
---
--- Table structure for table tiki_zones
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 07:42 PM
---
+
 DROP TABLE "tiki_zones";
 
 CREATE TABLE "tiki_zones" (
@@ -4884,13 +3847,7 @@ CREATE TABLE "tiki_zones" (
   PRIMARY KEY (zone)
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
---
--- Table structure for table tiki_download
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Apr 15 2004 at 07:42 PM
---
+
 DROP TABLE "tiki_download";
 
 CREATE SEQUENCE "tiki_download_sequ" INCREMENT BY 1 START WITH 1;
@@ -4913,13 +3870,7 @@ CREATE  INDEX "tiki_download_object" ON "tiki_download"("object","userId","type"
 CREATE  INDEX "tiki_download_userId" ON "tiki_download"("userId");
 CREATE  INDEX "tiki_download_type" ON "tiki_download"("type");
 CREATE  INDEX "tiki_download_date" ON "tiki_download"("date");
--- --------------------------------------------------------
---
--- Table structure for table users_grouppermissions
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 11, 2003 at 07:22 AM
---
+
 DROP TABLE "users_grouppermissions";
 
 CREATE TABLE "users_grouppermissions" (
@@ -4929,16 +3880,10 @@ CREATE TABLE "users_grouppermissions" (
   PRIMARY KEY (groupName(30),permName)
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
-INSERT INTO "users_grouppermissions" ("groupName","permName") VALUES ('Anonymous','tiki_p_view');
+
+INSERT INTO users_grouppermissions (groupName,permName) VALUES('Anonymous','tiki_p_view');
 
 
---
--- Table structure for table users_groups
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 03, 2003 at 08:57 PM
---
 DROP TABLE "users_groups";
 
 CREATE TABLE "users_groups" (
@@ -4953,17 +3898,11 @@ CREATE TABLE "users_groups" (
   "registrationUsersFieldIds" clob,
   "userChoice" char(1) default NULL,
   "groupDefCat" number(12) default 0,
-  "groupTheme" varchar(255) default '',  
+  "groupTheme" varchar(255) default '',
   PRIMARY KEY (groupName(30))
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
---
--- Table structure for table users_objectpermissions
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 07:20 AM
---
+
 DROP TABLE "users_objectpermissions";
 
 CREATE TABLE "users_objectpermissions" (
@@ -4974,13 +3913,7 @@ CREATE TABLE "users_objectpermissions" (
   PRIMARY KEY (objectId, objectType, groupName(30),permName)
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
---
--- Table structure for table users_permissions
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 11, 2003 at 07:22 AM
---
+
 DROP TABLE "users_permissions";
 
 CREATE TABLE "users_permissions" (
@@ -4993,8 +3926,7 @@ CREATE TABLE "users_permissions" (
 ) ENGINE=MyISAM;
 
 CREATE  INDEX "users_permissions_type" ON "users_permissions"("type");
--- --------------------------------------------------------
--- 
+
 INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_calendar', 'Can create/admin calendars', 'admin', 'calendar', 'y');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_add_events', 'Can add events in the calendar', 'registered', 'calendar');
@@ -5473,13 +4405,13 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_use_webmail', 'Can use webmail', 'registered', 'webmail');
 
--- --------------------------------------------------------
---
--- Table structure for table users_usergroups
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 12, 2003 at 09:31 PM
---
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_plugin_viewdetail', 'Can view unapproved plugin details', 'registered', 'wiki');
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_plugin_preview', 'Can execute unapproved plugin', 'registered', 'wiki');
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_plugin_approve', 'Can approve plugin execution', 'editors', 'wiki');
+
+
 DROP TABLE "users_usergroups";
 
 CREATE TABLE "users_usergroups" (
@@ -5488,20 +4420,14 @@ CREATE TABLE "users_usergroups" (
   PRIMARY KEY (userId,groupName(30))
 ) ENGINE=MyISAM;
 
--- --------------------------------------------------------
+
 INSERT INTO "users_groups" ("groupName","groupDesc") VALUES ('Anonymous','Public users not logged');
 
 INSERT INTO "users_groups" ("groupName","groupDesc") VALUES ('Registered','Users logged into the system');
 
 INSERT INTO "users_groups" ("groupName","groupDesc") VALUES ('Admins','Administrator and accounts managers.');
 
--- --------------------------------------------------------
---
--- Table structure for table users_users
---
--- Creation: Jul 03, 2003 at 07:42 PM
--- Last update: Jul 13, 2003 at 01:07 AM
---
+
 DROP TABLE "users_users";
 
 CREATE SEQUENCE "users_users_sequ" INCREMENT BY 1 START WITH 1;
@@ -5543,7 +4469,7 @@ CREATE  INDEX "users_users_score" ON "users_users"("score");
 CREATE  INDEX "users_users_login" ON "users_users"("login");
 CREATE  INDEX "users_users_registrationDate" ON "users_users"("registrationDate");
 CREATE  INDEX "users_users_openid_url" ON "users_users"("openid_url");
--- --------------------------------------------------------
+
 ------ Administrator account
 INSERT INTO "users_users" ("email","login","password","hash") VALUES ('','admin','admin','f6fdffe48c908deb0f4c3bd36c032e72');
 
@@ -5555,11 +4481,7 @@ INSERT INTO users_usergroups (userId, groupName) VALUES(1,'Admins');
 
 INSERT INTO "users_grouppermissions" ("groupName","permName") VALUES ('Admins','tiki_p_admin');
 
--- --------------------------------------------------------
--- 
---
--- Table structure for table 'tiki_integrator_reps'
---
+
 DROP TABLE "tiki_integrator_reps";
 
 CREATE SEQUENCE "tiki_integrator_reps_sequ" INCREMENT BY 1 START WITH 1;
@@ -5582,15 +4504,9 @@ SELECT "tiki_integrator_reps_sequ".nextval into :NEW."repID" FROM DUAL;
 END;
 /
 
---
--- Dumping data for table 'tiki_integrator_reps'
---
 INSERT INTO tiki_integrator_reps VALUES ('1','Doxygened (1.3.4) Documentation','','index.html','doxygen.css','n','y','0','Use this repository as rule source for all your repositories based on doxygened docs. To setup yours just add new repository and copy rules from this repository :)');
 
 
---
--- Table structure for table 'tiki_integrator_rules'
---
 DROP TABLE "tiki_integrator_rules";
 
 CREATE SEQUENCE "tiki_integrator_rules_sequ" INCREMENT BY 1 START WITH 1;
@@ -5615,9 +4531,6 @@ END;
 /
 CREATE  INDEX "tiki_integrator_rules_repID" ON "tiki_integrator_rules"("repID");
 
---
--- Dumping data for table 'tiki_integrator_rules'
---
 INSERT INTO tiki_integrator_rules VALUES ('1','1','1','.*<body[^>]*?>(.*?)</body.*','\1','y','n','i','y','Extract code between <body> and </body> tags');
 
 INSERT INTO tiki_integrator_rules VALUES ('2','1','2','img src=(\"|\')(?!http://)','img src=\1{path}/','y','n','i','y','Fix image paths');
@@ -5625,9 +4538,6 @@ INSERT INTO tiki_integrator_rules VALUES ('2','1','2','img src=(\"|\')(?!http://
 INSERT INTO tiki_integrator_rules VALUES ('3','1','3','href=(\"|\')(?!(--|(http|ftp)://))','href=\1tiki-integrator.php?repID={repID}&file=','y','n','i','y','Replace internal links to integrator. Don\'t touch an external link.');
 
 
---
--- Table structures for table 'tiki_quicktags'
--- 
 DROP TABLE "tiki_quicktags";
 
 CREATE SEQUENCE "tiki_quicktags_sequ" INCREMENT BY 1 START WITH 1;
@@ -5982,7 +4892,7 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('Deleted','--text--','pics/icons/text_strikethrough.png','forums');
 
 
---translated objects table
+-- Translated objects table
 DROP TABLE "tiki_translated_objects";
 
 CREATE SEQUENCE "tiki_translated_objects_sequ" INCREMENT BY 1 START WITH 1;
@@ -6001,9 +4911,6 @@ END;
 /
 CREATE  INDEX "tiki_translated_objects_traId" ON "tiki_translated_objects"( "traId" );
 
---
--- Community tables begin
---
 DROP TABLE "tiki_friends";
 
 CREATE TABLE "tiki_friends" (
@@ -6106,15 +5013,6 @@ CREATE TABLE "tiki_users_score" (
 
 CREATE  INDEX "tiki_users_score_user" ON "tiki_users_score"("user","event_id","expire");
 
---
--- Community tables end
---
---
--- Table structure for table tiki_file_handlers
---
--- Creation: Nov 02, 2004 at 05:59 PM
--- Last update: Nov 02, 2004 at 05:59 PM
---
 DROP TABLE "tiki_file_handlers";
 
 CREATE TABLE "tiki_file_handlers" (
@@ -6123,12 +5021,6 @@ CREATE TABLE "tiki_file_handlers" (
 ) ENGINE=MyISAM;
 
 
---
--- Table structure for table tiki_stats
---
--- Creation: Aug 04, 2005 at 05:59 PM
--- Last update: Aug 04, 2005 at 05:59 PM
---
 DROP TABLE "tiki_stats";
 
 CREATE TABLE "tiki_stats" (
@@ -6140,12 +5032,6 @@ CREATE TABLE "tiki_stats" (
 ) ENGINE=MyISAM;
 
 
---
--- Table structure for table tiki_events
---
--- Creation: Aug 26, 2005 at 06:59 AM - mdavey
--- Last update: Sep 31, 2005 at 12:29 PM - mdavey
---
 DROP TABLE "tiki_events";
 
 CREATE TABLE "tiki_events" (
@@ -6170,12 +5056,6 @@ INSERT INTO "tiki_events" ("callback_type","`order`","event","file","object","me
 INSERT INTO "tiki_events" ("callback_type","`order`","event","file","object","method") VALUES ('5', '30', 'user_registers', 'lib/registration/registrationlib.php', 'registrationlib', 'callback_tikimail_user_registers');
 
 
---
--- Table structure for table tiki_registration_fields
---
--- Creation: Aug 31, 2005 at 12:57 PM - mdavey
--- Last update: Aug 31, 2005 at 12:57 PM - mdavey
--- 
 DROP TABLE "tiki_registration_fields";
 
 CREATE SEQUENCE "tiki_registration_fields_sequ" INCREMENT BY 1 START WITH 1;
@@ -6205,6 +5085,7 @@ CREATE TABLE "tiki_actionlog_conf" (
 PRIMARY KEY (action, objectType),
 KEY (id)
 ) ENGINE=MyISAM;
+
 
 INSERT INTO "tiki_actionlog_conf" ("action","objectType","status") VALUES ('Created', 'wiki page', 'y');
 
@@ -6278,12 +5159,7 @@ INSERT INTO "tiki_actionlog_conf" ("action","objectType","status") VALUES ('Remo
 
 INSERT INTO "tiki_actionlog_conf" ("action","objectType","status") VALUES ('Removed', 'file', 'n');
 
--- --------------------------------------------------------
--- Table structure for folksonomy tables
---
--- Creation: Out 16, 2005 - batawata
--- Last update: Out 16, 2005 - batawata
--- 
+
 DROP TABLE "tiki_freetags";
 
 CREATE SEQUENCE "tiki_freetags_sequ" INCREMENT BY 1 START WITH 1;
@@ -6422,7 +5298,7 @@ CREATE TABLE "tiki_profile_symbols" (
 	`value` VARCHAR(50) NOT NULL,
 	`named` ENUM('y','n') NOT NULL,
 	`creation_date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-  PRIMARY KEY( `domain`, `profile`, `object` ),
+  PRIMARY KEY ( `domain`, `profile`, `object` ),
   "INDEX"(`named`)
 );
 
@@ -6443,8 +5319,8 @@ CREATE TABLE `tiki_feature` (
   `keyword` varchar(20) default NULL,
   `feature_count` mediumnumber(9) default '0' NOT NULL,
   `feature_path` varchar(20) default '0' NOT NULL,
-  PRIMARY KEY ("`feature_id`")
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=0 ;
+  PRIMARY KEY (`feature_id`)
+) ENGINE=MyISAM ;
 
 ;
 

@@ -45,7 +45,8 @@ class LogsLib extends TikiLib {
 		$mid = '';
 		if ($find) {
 			$findesc = '%'.$find.'%';
-			$amid[] = "`logmessage` like ? or `loguser` like ?";
+			$amid[] = "`logmessage` like ? or `loguser` like ? or 'logip' like ?";
+			$bindvars[] = $findesc;
 			$bindvars[] = $findesc;
 			$bindvars[] = $findesc;
 		}

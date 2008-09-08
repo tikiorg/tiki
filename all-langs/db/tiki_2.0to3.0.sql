@@ -39,14 +39,14 @@ UPDATE `tiki_menu_options` set `url`='tiki-list_file_gallery.php' where `url`='t
 UPDATE `tiki_menu_options` SET `url`='tiki-admin_include_score.php' where `url`='tiki-admin_score.php';
 
 #2008-08-16 princessxine
-DROP TABLE IF EXISTS `tiki_feature`;
+#2008-08-27 bitey [embiggens the feature_type column]
 CREATE TABLE `tiki_feature` (
   `feature_id` mediumint(9) NOT NULL auto_increment,
   `feature_name` varchar(150) NOT NULL,
   `parent_id` mediumint(9) NOT NULL,
   `status` varchar(12) NOT NULL default 'active',
   `setting_name` varchar(50) default NULL,
-  `feature_type` varchar(20) NOT NULL default 'feature',
+  `feature_type` varchar(30) NOT NULL default 'feature',
   `template` varchar(50) default NULL,
   `permission` varchar(50) default NULL,
   `ordinal` mediumint(9) NOT NULL default '1',
@@ -67,3 +67,25 @@ CREATE TABLE tiki_semantic_tokens (
 	label VARCHAR(25) NOT NULL,
 	invert_token VARCHAR(15)
 ) ENGINE=MyISAM ;
+
+#2008-08-29 lphuberdeau
+INSERT INTO tiki_semantic_tokens (token, label) VALUES('alias', 'Page Alias');
+
+#2008-08-29 lphuberdeau
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_plugin_viewdetail', 'Can view unapproved plugin details', 'editors', 'wiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_plugin_preview', 'Can execute unapproved plugin', 'editors', 'wiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_plugin_approve', 'Can approve plugin execution', 'editors', 'wiki');
+
+#2008-09-01 lphuberdeau
+DELETE FROM users_permissions WHERE permName IN('tiki_p_plugin_viewdetail', 'tiki_p_plugin_preview');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_plugin_viewdetail', 'Can view unapproved plugin details', 'registered', 'wiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_plugin_preview', 'Can execute unapproved plugin', 'registered', 'wiki');
+
+#2008-09-02 sylvieg
+ALTER TABLE tiki_tracker_fields ADD COLUMN descriptionIsParsed char(1) default 'n' AFTER editableBy;
+
+#2008-09-05 lphuberdeau
+ALTER TABLE tiki_feature MODIFY COLUMN keyword VARCHAR(30) NULL;
+
+#2008-09-05 bitey
+ALTER TABLE tiki_feature ADD COLUMN `tip` text NULL;

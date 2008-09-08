@@ -1013,7 +1013,7 @@ class TrackerLib extends TikiLib {
 
 			// Handle truncated fields. Only for textareas which have option 3 set
 			if ( $ins_fields["data"][$i]["type"] == 'a' && isset($ins_fields["data"][$i]["options_array"][3]) && ($ins_fields["data"][$i]['options_array'][3]) ) {
-				if (function_exists('mb_substr')) { // then mb_strlen() also exists
+				if (function_exists('mb_substr') && function_exists('mb_strlen')) {
 					if ( mb_strlen($ins_fields["data"][$i]['value']) > $ins_fields["data"][$i]['options_array'][3] ) {
 						$ins_fields['data'][$i]['value'] = mb_substr($ins_fields["data"][$i]['value'],0,$ins_fields["data"][$i]['options_array'][3])." (...)";
 					}
@@ -1510,7 +1510,10 @@ class TrackerLib extends TikiLib {
 			for ($i = 0; $i < $max; ++$i) {
 				foreach ($fields['data'] as $field) {
 					if ($field['name'] == $header[$i]) {
-						if ($field['type'] == 'e' or $field['type'] == 's') {
+						if ($field['type'] == 'p' && $field['options_array'][0] == 'password') {
+							//$userlib->change_user_password($user, $ins_fields['data'][$i]['value']);
+							continue;
+						} elseif ($field['type'] == 'e' or $field['type'] == 's') {
 							$data[$i] = '';
 						} elseif ($field['type'] == 'a') {
 							$data[$i] = preg_replace('/\%\%\%/',"\r\n",$data[$i]);
@@ -1925,7 +1928,7 @@ class TrackerLib extends TikiLib {
 	}
 
 
-	function replace_tracker_field($trackerId, $fieldId, $name, $type, $isMain, $isSearchable, $isTblVisible, $isPublic, $isHidden, $isMandatory, $position, $options, $description='',$isMultilingual='', $itemChoices=null, $errorMsg='', $visibleBy=null, $editableBy=null) {
+	function replace_tracker_field($trackerId, $fieldId, $name, $type, $isMain, $isSearchable, $isTblVisible, $isPublic, $isHidden, $isMandatory, $position, $options, $description='',$isMultilingual='', $itemChoices=null, $errorMsg='', $visibleBy=null, $editableBy=null, $descriptionIsParsed='n') {
 		// Serialize choosed items array (items of the tracker field to be displayed in the list proposed to the user)
 		if ( is_array($itemChoices) && count($itemChoices) > 0 && !empty($itemChoices[0]) ) {
 			$itemChoices = serialize($itemChoices);
@@ -1952,21 +1955,21 @@ class TrackerLib extends TikiLib {
 					$this->remove_field_images( $fieldId );
 				}
 				$query = "update `tiki_tracker_fields` set `name`=? ,`type`=?,`isMain`=?,`isSearchable`=?,
-					`isTblVisible`=?,`isPublic`=?,`isHidden`=?,`isMandatory`=?,`position`=?,`options`=?,`isMultilingual`=?, `description`=?, `itemChoices`=?, `errorMsg`=?, visibleBy=?, editableBy=? where `fieldId`=?";
-				$bindvars=array($name,$type,$isMain,$isSearchable,$isTblVisible,$isPublic,$isHidden,$isMandatory,(int)$position,$options,$isMultilingual,$description, $itemChoices, $errorMsg, $visibleBy, $editableBy, (int) $fieldId);
+					`isTblVisible`=?,`isPublic`=?,`isHidden`=?,`isMandatory`=?,`position`=?,`options`=?,`isMultilingual`=?, `description`=?, `itemChoices`=?, `errorMsg`=?, visibleBy=?, editableBy=?, `descriptionIsParsed`=? where `fieldId`=?";
+				$bindvars=array($name,$type,$isMain,$isSearchable,$isTblVisible,$isPublic,$isHidden,$isMandatory,(int)$position,$options,$isMultilingual,$description, $itemChoices, $errorMsg, $visibleBy, $editableBy, $descriptionIsParsed, (int) $fieldId);
 			} else {
 				$query = "insert into `tiki_tracker_fields` (`trackerId`,`name`,`type`,`isMain`,`isSearchable`,
-					`isTblVisible`, `isPublic`, `isHidden`, `isMandatory`, `position`, `options`, `fieldId`, `isMultilingual`, `description`, `itemChoices`, `errorMsg`, `visibleBy`, `editableBy`) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
-				$bindvars=array((int) $trackerId,$name,$type,$isMain,$isSearchable,$isTblVisible,$isPublic,$isHidden,$isMandatory,(int)$position,$options,(int) $fieldId,$isMultilingual, $description, $itemChoices, $errorMsg, $visibleBy, $editableBy);
+					`isTblVisible`, `isPublic`, `isHidden`, `isMandatory`, `position`, `options`, `fieldId`, `isMultilingual`, `description`, `itemChoices`, `errorMsg`, `visibleBy`, `editableBy`, `descriptionIsParsed`) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+				$bindvars=array((int) $trackerId,$name,$type,$isMain,$isSearchable,$isTblVisible,$isPublic,$isHidden,$isMandatory,(int)$position,$options,(int) $fieldId,$isMultilingual, $description, $itemChoices, $errorMsg, $visibleBy, $editableBy, $descriptionIsParsed);
 			}
 			$result = $this->query($query, $bindvars);
 		} else {
 			$this->getOne("delete from `tiki_tracker_fields` where `trackerId`=? and `name`=?",
 				array((int) $trackerId,$name),false);
-			$query = "insert into `tiki_tracker_fields`(`trackerId`,`name`,`type`,`isMain`,`isSearchable`,`isTblVisible`,`isPublic`,`isHidden`,`isMandatory`,`position`,`options`,`description`,`isMultilingual`, `itemChoices`, `errorMsg`, `visibleBy`, `editableBy`)
-                values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			$query = "insert into `tiki_tracker_fields`(`trackerId`,`name`,`type`,`isMain`,`isSearchable`,`isTblVisible`,`isPublic`,`isHidden`,`isMandatory`,`position`,`options`,`description`,`isMultilingual`, `itemChoices`, `errorMsg`, `visibleBy`, `editableBy`, `descriptionIsParsed`)
+                values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-			$result = $this->query($query,array((int) $trackerId,$name,$type,$isMain,$isSearchable,$isTblVisible,$isPublic,$isHidden,$isMandatory,$position,$options,$description,$isMultilingual, $itemChoices, $errorMsg, $visibleBy, $editableBy));
+			$result = $this->query($query,array((int) $trackerId,$name,$type,$isMain,$isSearchable,$isTblVisible,$isPublic,$isHidden,$isMandatory,$position,$options,$description,$isMultilingual, $itemChoices, $errorMsg, $visibleBy, $editableBy, $descriptionIsParsed));
 			$fieldId = $this->getOne("select max(`fieldId`) from `tiki_tracker_fields` where `trackerId`=? and `name`=?",array((int) $trackerId,$name));
 			// Now add the field to all the existing items
 			$query = "select `itemId` from `tiki_tracker_items` where `trackerId`=?";
@@ -2308,9 +2311,10 @@ class TrackerLib extends TikiLib {
 			'opt'=>true,
 			'help'=>tra('<dl>
 				<dt>Function: Allows a section fron the list of pages.
-				<dt>Usage: <strong>auto-assign</strong>
+				<dt>Usage: <strong>auto-assign, size, maxlen</strong>
 				<dt>Description:
 				<dd><strong>[auto-assign]</strong> will auto-assign the creator of the item if set to 1
+				<dd><strong>[size]</strong> is the visible length of the field in characters; 
 				<dd>
 				</dl>'));
 		$type['y'] = array(
@@ -2412,26 +2416,26 @@ class TrackerLib extends TikiLib {
 			'label'=>tra('item link'),
 			'opt'=>true,
 			'help'=>tra('<dl>
-				<dt>Function: Provides a relational link to another item in a specified tracker.
+				<dt>Function: Provides a way to choose a value from another tracker (eventually with a link).
 				<dt>Usage: <strong>trackerId,fieldId,linkToItem,displayedFieldsList</strong>
 				<dt>Description:
-				<dd><strong>[trackerId]</strong> is the tracker ID of the data you want to link to;
-				<dd><strong>[fieldId]</strong> is the field from which you can select a value to link to;
-				<dd><strong>[linkToItem]</strong> if set to 0 will simply display the value, but if set to 1 will provide a link directly to that values item in the other tracker;
-				<dd><strong>[displayedFieldsList]</strong> is a list of fields to display instead of the target item, multiple fields can be separated with a |;
+				<dd><strong>[trackerId]</strong> is the tracker ID of the fields you want to display;
+				<dd><strong>[fieldId]</strong> is the field in [trackerId] from which you can select a value among all the field values of the items of [trackerId];
+				<dd><strong>[linkToItem]</strong> if set to 0 will simply display the value, but if set to 1 will provide a link directly to the item in the other tracker;
+				<dd><strong>[displayedFieldsList]</strong> is a list of fields in [trackerId] to display instead of [fieldId], multiple fields can be separated with a |;
 				<dd>multiple options must appear in the order specified, separated by commas.
 				</dl>'));
 		$type['l'] = array(
 			'label'=>tra('items list'),
 			'opt'=>true,
 			'help'=>tra('<dl>
-				<dt>Function: Provide a list of items as a result of a relational link between tracker items.
+				<dt>Function: Displays a list of field values from another tracker that has a relation with this tracker(eventually with a link).
 				<dt>Usage: <strong>trackerId,fieldIdThere,fieldIdHere,displayFieldIdThere,linkToItems</strong>
 				<dt>Description:
-				<dd><strong>[trackerId]</strong> is the tracker ID you want to link with;
+				<dd><strong>[trackerId]</strong> is the tracker ID of the fields you want to display;
 				<dd><strong>[fieldIdThere]</strong> is the field (multiple fields can be separated with a ":") you want to link with;
-				<dd><strong>[fieldIdHere]</strong> is the field (multiple fields can be separated with a ":") in this tracker you want to link with;
-				<dd><strong>[displayFieldIdThere]</strong> the field containing the data that shares the common link with fieldIdThere and fieldIdHere, can be separated by "|";
+				<dd><strong>[fieldIdHere]</strong> is the field in this tracker you want to link with;
+				<dd><strong>[displayFieldIdThere]</strong> the field(s) in [trackerId] you want to display, multiple fields can be separated by "|";
 				<dd><strong>[linkToItems]</strong> if set to 0 will simply display the value, but if set to 1 will provide a link directly to that values item in the other tracker;
 				<dd>multiple options must appear in the order specified, separated by commas.
 				</dl>'));
@@ -2481,12 +2485,12 @@ class TrackerLib extends TikiLib {
 			'opt'=>true,
 			'help'=>tra('<dl>
 				<dt>Function: Allows an incrementing value field, or itemId field. (non-editable)
-				<dt>Usage: <strong>start,prepend,append,itemid</strong>
+				<dt>Usage: <strong>start,prepend,append,itemId</strong>
 				<dt>Description:
 				<dd><strong>[start]</strong> is the starting value for the field, defaults to 1;
 				<dd><strong>[prepend]</strong> is text that will be displayed before the field;
 				<dd><strong>[append]</strong> is text that will be displayed after the field;
-				<dd><strong>[itemid]</strong> if set to "itemid" will set this field to match the value of the actual database itemId field value;
+				<dd><strong>[itemId]</strong> if set to "itemId" will set this field to match the value of the actual database itemId field value;
 				<dd>multiple options must appear in the order specified, separated by commas.
 				</dl>'));
 		$type['U'] = array(

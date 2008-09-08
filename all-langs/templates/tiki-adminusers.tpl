@@ -250,10 +250,9 @@ class="prevnext">{tr}All{/tr}</a>
 <table class="normal">
 <tr class="formcolor"><td>{tr}User{/tr}</td><td>{if $userinfo.login neq 'admin'}<input type="text" name="name"  value="{$userinfo.login|escape}" /> {if $prefs.login_is_email eq 'y'}<i>{tr}Use the email as username{/tr}</i>{/if}<br />
 {if $userinfo.userId}
+    <i>{tr}Warning: changing the username could require the user to change his password(for user registered with an old tikiwiki <=1.8){/tr}</i>
   {if $prefs.feature_intertiki_server eq 'y'}
-    <i>{tr}Warning: changing the username will require the user to change his password and will mess with slave intertiki sites that use this one as master{/tr}</i>
-  {else}
-    <i>{tr}Warning: changing the username will require the user to change his password{/tr}</i>
+    <i>{tr}Warning: it will mess with slave intertiki sites that use this one as master{/tr}</i>
   {/if}
 {/if}
 {else}

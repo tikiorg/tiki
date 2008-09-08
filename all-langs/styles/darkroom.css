@@ -121,6 +121,8 @@ input[type=password] {
 	width: 120px;
 	font-size: 0.9em;
 	cursor: text}
+	
+
 
 button,
 input[type=submit],
@@ -167,7 +169,7 @@ input[type=wikiaction] {margin-bottom: 2px}
 * html .findtable input {font-size: 1em}
 * html .wikitopline select {font-size: .9em}
 small {font-size: 0.8em}
-label {}
+label {display:block;}
 ul, ol {text-align: left}
 li {}
 
@@ -690,6 +692,11 @@ div#edithelpzone {display: none}
 .highlight, #highlight  {
 	background: #474747 !important;
 	color: #fff}
+	
+/* OpenID  */
+.openid_url {
+	background: #fff url(../../img/icons/login-OpenID-bg.gif) no-repeat;
+	padding-left: 18px}
 
 .bannertext {
 	font-size: .95em;
@@ -2413,5 +2420,5 @@ a.admbox.off {border: 1px solid #9f9f9f}
 a.admbox.off:hover,
 a.admbox.off:focus,
 a.admbox.off:active {border: 1px solid #9f9f9f}
-
+#page_bar {text-align:center;}
 /* end of css file */

@@ -41,3 +41,5 @@ h3.box-title span.moduletitle {
 h3.box-title span.moduleflip {
   float: right;
 }
+label {display:block;}
+
