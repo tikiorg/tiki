@@ -15,12 +15,12 @@
 {section name=if loop=$filters}
 	{if $line ne 'y'}<tr class="{cycle}">{/if}
 		<td>
-		{$filters[if].name|tr_if}
+		<label for="f_{$filters[if].fieldId}">{$filters[if].name|tr_if}</label>
 		{if $showFieldId eq 'y'} -- {$filters[if].fieldId}{/if}
 		{if $line ne 'y'}</td><td>{else}:{/if}
 {*------drop-down, multiple *}
 		{if $filters[if].format eq 'd' or  $filters[if].format eq 'm'}
-			<select name="f_{$filters[if].fieldId}{if $filters[if].format eq "m"}[]{/if}" {if $filters[if].format eq "m"} size="5" multiple="multiple"{/if}> 
+			<select id="f_{$filters[if].fieldId}" name="f_{$filters[if].fieldId}{if $filters[if].format eq "m"}[]{/if}" {if $filters[if].format eq "m"} size="5" multiple="multiple"{/if}> 
 			<option value=""{if !$filters[if].selected} selected="selected"{/if}>{tr}Any{/tr}</option>
 			{section name=io loop=$filters[if].opts}
 				<option value="{$filters[if].opts[io].id|escape}"{if $filters[if].opts[io].selected eq "y"} selected="selected"{/if}>
@@ -35,10 +35,10 @@
 				{capture name=i_f}f_{$filters[if].fieldId}{/capture}
 				{initials_filter_links _initial=$smarty.capture.i_f}
 			{/if}
-			<input type="text" name="f_{$filters[if].fieldId}" value="{$filters[if].selected}"/>
+			<input id="f_{$filters[if].fieldId}" type="text" name="f_{$filters[if].fieldId}" value="{$filters[if].selected}"/>
 {*------checkbox, radio *}
 		{else}
-			<input {if $filters[if].format eq "c"}type="checkbox"{else}type="radio"{/if} name="f_{$filters[if].fieldId}{if $filters[if].format eq "c"}[]{/if}" value=""{if !$filters[if].selected} checked="checked"{/if} />{tr}Any{/tr}</input>{if $line ne 'y'}<br />{/if}
+			<input {if $filters[if].format eq "c"}type="checkbox"{else}type="radio"{/if} name="f_{$filters[if].fieldId}{if $filters[if].format eq "c"}[]{/if}" value=""{if !$filters[if].selected} checked="checked"{/if} /> {tr}Any{/tr}</input>{if $line ne 'y'}<br />{/if}
 			{section name=io loop=$filters[if].opts}
 				<input {if $filters[if].format eq "c"}type="checkbox"{else}type="radio"{/if} name="f_{$filters[if].fieldId}{if $filters[if].format eq "c"}[]{/if}" value="{$filters[if].opts[io].id|escape}"{if $filters[if].opts[io].selected eq "y"} checked="checked"{/if} /> {$filters[if].opts[io].name|tr_if}</input>{if $line ne 'y'}<br />{/if}
 			{/section}
