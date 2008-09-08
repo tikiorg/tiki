@@ -91,8 +91,8 @@
 {if $tracker_info.showStatus eq 'y' and ($tracker_info.showStatusAdminOnly ne 'y' or $tiki_p_admin_trackers eq 'y')}
   {assign var=ustatus value=$info.status|default:"p"}
   <tr class="formcolor">
-    <td class="formlabel">{tr}Status{/tr}</td><td>{$status_types.$ustatus.label}</td>
-    <td colspan="2">{html_image file=$status_types.$ustatus.image title=$status_types.$ustatus.label alt=$status_types.$ustatus.label}</td>
+    <td class="formlabel">{tr}Status{/tr}:</td><td>{$status_types.$ustatus.label}</td>
+    <td colspan="2" style="text-align:center;">{html_image file=$status_types.$ustatus.image title=$status_types.$ustatus.label alt=$status_types.$ustatus.label}</td>
   </tr>
 {/if}
 {assign var=stick value="n"}
@@ -109,7 +109,7 @@
 		{else}
 			<td class="formlabel right" >
 		{/if}
-		{$cur_field.name}
+		{$cur_field.name}:
 		{if ($cur_field.type eq 'l' and $cur_field.options_array[4] eq '1') and $cur_field.tracker_options.oneUserItem ne 'y'}
 		  {assign var="fieldopts" value="|"|explode:$cur_field.options_array[2]}
 			<br />
@@ -131,8 +131,8 @@
 	{/if}
   {/if}
 {/foreach}
-{if $tracker_info.showCreatedView eq 'y'}<tr class="formcolor"><td class="formlabel">{tr}Created on{/tr}</td><td colspan="3" class="formcontent">{$info.created|tiki_long_datetime} {tr}by{/tr} {$info.createdByDisplay}</td></tr>{/if}
-{if $tracker_info.showLastModifView eq 'y'}<tr class="formcolor"><td class="formlabel">{tr}LastModif{/tr}</td><td colspan="3" class="formcontent">{$info.lastModif|tiki_long_datetime} {tr}by{/tr} {$info.lastModifByDisplay}</td></tr>{/if}
+{if $tracker_info.showCreatedView eq 'y'}<tr class="formcolor"><td class="formlabel">{tr}Created{/tr}:</td><td colspan="3" class="formcontent">{$info.created|tiki_long_datetime} {tr}by{/tr} {$info.createdByDisplay}</td></tr>{/if}
+{if $tracker_info.showLastModifView eq 'y'}<tr class="formcolor"><td class="formlabel">{tr}Last Modified{/tr}:</td><td colspan="3" class="formcontent">{$info.lastModif|tiki_long_datetime} {tr}by{/tr} {$info.lastModifByDisplay}</td></tr>{/if}
 </table>
 </div>
 
