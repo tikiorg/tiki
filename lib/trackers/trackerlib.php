@@ -2485,12 +2485,12 @@ class TrackerLib extends TikiLib {
 			'opt'=>true,
 			'help'=>tra('<dl>
 				<dt>Function: Allows an incrementing value field, or itemId field. (non-editable)
-				<dt>Usage: <strong>start,prepend,append,itemid</strong>
+				<dt>Usage: <strong>start,prepend,append,itemId</strong>
 				<dt>Description:
 				<dd><strong>[start]</strong> is the starting value for the field, defaults to 1;
 				<dd><strong>[prepend]</strong> is text that will be displayed before the field;
 				<dd><strong>[append]</strong> is text that will be displayed after the field;
-				<dd><strong>[itemid]</strong> if set to "itemid" will set this field to match the value of the actual database itemId field value;
+				<dd><strong>[itemId]</strong> if set to "itemId" will set this field to match the value of the actual database itemId field value;
 				<dd>multiple options must appear in the order specified, separated by commas.
 				</dl>'));
 		$type['U'] = array(
