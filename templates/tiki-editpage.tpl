@@ -103,14 +103,14 @@ window.onload = timeIt;
 {if $likepages|@count < 0}
 <ul>
 {section name=back loop=$likepages}
-<li><a href="tiki-index.php?page={$likepages[back]|escape:"url"}" class="wiki">{$likepages[back]}</a></li>
+<li><a href="{$likepages[back]|sefurl}" class="wiki">{$likepages[back]}</a></li>
 {/section}
 </ul>
 {else}
 <table class="normal"><tr>
 {cycle name=table values=',,,,</tr><tr>' print=false advance=false}
 {section name=back loop=$likepages}
-<td><a href="tiki-index.php?page={$likepages[back]|escape:"url"}" class="wiki">{$likepages[back]}</a></td>{cycle name=table}
+<td><a href="{$likepages[back]|sefurl}" class="wiki">{$likepages[back]}</a></td>{cycle name=table}
 {/section}
 </tr></table>
 {/if}
@@ -441,7 +441,7 @@ function searchrep() {
 {include file=antibot.tpl}
 {/if}
 {if $prefs.wiki_feature_copyrights  eq 'y'}
-<tr class="formcolor"><td>{tr}License{/tr}:</td><td><a href="tiki-index.php?page={$prefs.wikiLicensePage}">{tr}{$prefs.wikiLicensePage}{/tr}</a></td></tr>
+<tr class="formcolor"><td>{tr}License{/tr}:</td><td><a href="{$prefs.wikiLicensePage|sefurl}">{tr}{$prefs.wikiLicensePage}{/tr}</a></td></tr>
 {if $prefs.wikiSubmitNotice neq ""}
 <tr class="formcolor"><td>{tr}Important{/tr}:</td><td><b>{tr}{$prefs.wikiSubmitNotice}{/tr}</b></td>
 {/if}
