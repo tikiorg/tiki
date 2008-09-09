@@ -1,6 +1,21 @@
 {remarksbox type="tip" title="{tr}Tip{/tr}"}<a class="rbox-link" href="http://doc.tikiwiki.org/Internationalization">{tr}Internationalization{/tr}</a>{/remarksbox}
 
-<div class="cbox">
+{if $prefs.feature_tabs eq 'y' and $prefs.lang_use_db != 'y'}
+	{cycle name=tabs values="1,2,3" print=false advance=false reset=true}
+	<div class="tabs">
+		<span	id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" 
+				class="tabmark tabinactive"><a 
+				href="#general"
+				onclick="javascript:tikitabs({cycle name=tabs},3); return false;">{tr}General Settings{/tr}</a></span>
+		<span	id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" 
+				class="tabmark tabinactive"><a 
+				href="#custom"
+				onclick="javascript:tikitabs({cycle name=tabs},3); return false;">{tr}Overwrite Strings{/tr}</a></span>
+	</div>
+{/if}
+
+{cycle name=content values="1,2,3,4,5" print=false advance=false reset=true}
+<div  id="content{cycle name=content assign=focustab}{$focustab}"{if $prefs.feature_tabs eq 'y'} class="tabcontent" style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if} class="cbox">
   <div class="cbox-title">{tr}I18n setup{/tr}</div>
   <script type="text/javascript">
 	<!--//--><![CDATA[//><!--
@@ -44,7 +59,11 @@
 			<td><input type="checkbox" name="feature_multilingual" id="feature_multilingual"
 			{if $prefs.feature_multilingual eq 'y'}checked="checked"{/if}/></td>
         </tr><tr>
-		
+
+			<td class="form"><label for="feature_multilingual">{tr}Translation Assitant{/tr}:</label></td>
+			<td><input type="checkbox" name="feature_translation" id="feature_translation"
+			{if $prefs.feature_translation eq 'y'}checked="checked"{/if}/></td>
+        </tr><tr>		
 		
 			<td class="form"><label for="feature_multilingual_structures">{tr}Multilingual structures{/tr}:</label></td>
 			<td><input type="checkbox" name="feature_multilingual_structures" id="feature_multilingual_structures"
@@ -136,4 +155,36 @@
       </form>
   </div>
 </div>
+
+{if $prefs.lang_use_db ne 'y'}
+<form action="tiki-admin.php?page=i18n" method="post">
+<div id="content{cycle name=content assign=focustab}{$focustab}"{if $prefs.feature_tabs eq 'y'} class="tabcontent" style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
+
+	<select name="custom_lang">
+		{foreach from=$languages key=ix item=lg}
+			<option value="{$ix}"{if $custom_lang eq $ix} selected="selected"{/if}>{$lg.name|escape}</option>
+		{/foreach}
+	</select>
+	<input type="submit" name="select" value="{tr}Select{/tr}" />
+{if !empty($custom_lang)}
+	<input type="hidden" name="custom_lang" value="{$custom_lang}" />
+	<table class="normal">
+	<tr><th>{tr}English{/tr}(en)</th><th>{tr}{$languages[$custom_lang].name|escape}{/tr}</th><th></th></tr>
+	<tr>
+		<td><input type="text" name="en" /></td>
+		<td><input type="text" name="custom" /></td>
+		<td></td>
+	</tr>
+	{foreach from=$custom_strings key=en item=string}
+		<tr>
+			<td><input type="text" name="en" value={$en}/></td>
+			<td><input type="text" name="en" /></td>
+		</tr>
+	{/foreach}
+	<tr><td colspan="2" class="button"><input type="submit" name="save_custom" value="{tr}Save{/tr}" /></td></tr>
+	</table>
+{/if}
+</div>
+</form>
+{/if}
 

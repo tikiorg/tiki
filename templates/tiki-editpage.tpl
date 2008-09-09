@@ -129,6 +129,7 @@ window.onload = timeIt;
 {/if}
 <form  enctype="multipart/form-data" method="post" action="tiki-editpage.php" id='editpageform' name='editpageform'>
 
+{if $prefs['feature_translation'] == 'y'}
 <select name="diff_style">
 
    {if $diff_style eq "htmldiff"}
@@ -144,6 +145,7 @@ window.onload = timeIt;
 </select>
 
 <input type="submit" class="wikiaction" onmouseover="return overlib('{tr}Change the style used to display differences to be translated.{/tr}');" onmouseout="nd();" name="preview" value="{tr}Change diff styles{/tr}" onclick="needToConfirm=false;" />
+{/if}
 
 <input type="hidden" name="page" value="{$page|escape}" />
 <input type="hidden" name="clock" value="{$edittimeout}" />
@@ -331,7 +333,7 @@ function searchrep() {
 {/if}
 </td></tr>
 {else}
-	{if $trads|@count > 1}
+	{if $trads|@count > 1 && $prefs['feature_translation'] == 'y'}
 	<tr class="formcolor">
 		<td>{tr}Translation request{/tr}:</td>
 		<td>

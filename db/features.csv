@@ -920,3 +920,4 @@
 1029,"Wiki comments",7,,,"configurationgroup",,"tiki_p_admin",,,,,,
 1030,"Wiki page name",7,,,"configurationgroup",,"tiki_p_admin",,,,,,
 1031,"Redirect",913,,"wikiplugin_redirect","flag",,"tiki_p_admin",,,,,," "
+1032,"Translation Assistant",76,,"feature_translation","flag",,"tiki_p_admin",-15,478,"i18n",,," "

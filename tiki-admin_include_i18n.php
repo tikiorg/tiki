@@ -27,6 +27,7 @@ ask_ticket('admin-inc-i18n');
 
     $pref_toggles = array(
 		"feature_multilingual",
+		'feature_translation',
 		"feature_multilingual_structures",
 		"feature_best_language",
 		'feature_sync_language',
@@ -49,5 +50,24 @@ ask_ticket('admin-inc-i18n');
 	simple_set_value( 'language' );
 	simple_set_value( 'available_languages', '', true );
 }
+function read_custom_strings($lg) {
+	$lang = array();
+	include("lang/$lg/custom.php");
+	return $lang;
+}
+function write_custom_strings($lg, $custom_strings) {
+	$fp = fopen("lang/$lg/custom.php");
+}
+if (isset($_REQUEST['save_custom']) && !empty($_REQUEST['custom_lang'])) {
+	$smarty->assign('cookietab', 2);
+}
+if (!empty($_REQUEST['delete_custom']) && !empty($_REQUEST['custom_lang'])) {
+	
+}
 
+if ($prefs['lang_use_db'] != 'y' && !empty($_REQUEST['custom_lang']) && !empty($_REQUEST['select'])) {
+	$smarty->assign('custom_strings', read_custom_strings($languages[$_REQUEST['custom_lang']]['value']));
+	$smarty->assign('cookietab', 2);
+	$smarty->assign_by_ref('custom_lang', $_REQUEST['custom_lang']);
+}
 ?>
