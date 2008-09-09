@@ -17,7 +17,7 @@ if ($tiki_p_admin != 'y') {
 	die;
 }
 
-$auto_query_args = array('offset', 'sort_mode', 'find', 'numrows');
+$auto_query_args = array('offset', 'sort_mode', 'find', 'maxRecords');
 
 $watches['user_registers'] = array(
 	'label'=>tra('A user registers'),
