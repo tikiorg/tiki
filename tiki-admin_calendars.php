@@ -124,7 +124,7 @@ if ($_REQUEST["calendarId"]) {
 
 $smarty->assign('name', $info["name"]);
 $smarty->assign('description', $info["description"]);
-$smarty->assign('user', $info["user"]);
+$smarty->assign('owner', $info["user"]);
 $smarty->assign('customlanguages', $info["customlanguages"]);
 $smarty->assign('customlocations', $info["customlocations"]);
 $smarty->assign('customparticipants', $info["customparticipants"]);
