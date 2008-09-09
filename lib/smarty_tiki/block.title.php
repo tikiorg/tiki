@@ -32,8 +32,6 @@ function smarty_block_title($params, $content, &$smarty, $repeat)
   if ( ! isset($params['url']) ) {
 	  require_once $smarty->_get_plugin_filepath('function', 'query');
 	  $params['url'] = smarty_function_query(array('_type' => 'absolute_path'), $smarty);
-	  echo $params['url'];
-	  //$params['url'] = (empty($param['url']))? $_REQUEST['SCRIPT_NAME']:$_REQUEST['SCRIPT_NAME'].'?'.$params['url'];
   }
   
   $html = '<h1>';
