@@ -4630,16 +4630,15 @@ CREATE TABLE "tiki_feature" (
   "parent_id" mediuminteger NOT NULL,
   "status" varchar(12) NOT NULL default 'active',
   "setting_name" varchar(50) default NULL,
-  "feature_type" varchar(20) NOT NULL default 'feature',
+  "feature_type" varchar(30) NOT NULL default 'feature',
   "template" varchar(50) default NULL,
   "permission" varchar(50) default NULL,
   "ordinal" mediuminteger NOT NULL default '1',
   "depends_on" mediuminteger default NULL,
-  "keyword" varchar(20) default NULL,
+  "keyword" varchar(30) default NULL,
+  "tip" text NULL,
   "feature_count" mediuminteger NOT NULL default '0',
   "feature_path" varchar(20) NOT NULL default '0',
   PRIMARY KEY ("feature_id")
-) ENGINE=MyISAM ;
-
-;
+) ENGINE=MyISAM ;;
 

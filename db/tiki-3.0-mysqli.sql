@@ -3537,19 +3537,20 @@ CREATE TABLE tiki_profile_symbols (
 	INDEX(`named`)
 );
 
-DROP TABLE IF EXISTS `tiki_feature`;
+DROP TABLE IF EXISTS tiki_feature;
 CREATE TABLE `tiki_feature` (
   `feature_id` mediumint(9) NOT NULL auto_increment,
   `feature_name` varchar(150) NOT NULL,
   `parent_id` mediumint(9) NOT NULL,
   `status` varchar(12) NOT NULL default 'active',
   `setting_name` varchar(50) default NULL,
-  `feature_type` varchar(20) NOT NULL default 'feature',
+  `feature_type` varchar(30) NOT NULL default 'feature',
   `template` varchar(50) default NULL,
   `permission` varchar(50) default NULL,
   `ordinal` mediumint(9) NOT NULL default '1',
   `depends_on` mediumint(9) default NULL,
-  `keyword` varchar(20) default NULL,
+  `keyword` varchar(30) default NULL,
+  `tip` text NULL,
   `feature_count` mediumint(9) NOT NULL default '0',
   `feature_path` varchar(20) NOT NULL default '0',
   PRIMARY KEY (`feature_id`)
