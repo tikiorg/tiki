@@ -9,8 +9,14 @@
 //this script may only be included - so its better to die if called directly.
 $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
-if ( $prefs['error_reporting_level'] == 1 ) $prefs['error_reporting_level'] = ( $tiki_p_admin == 'y' ) ? E_ALL : 0;
-elseif ( $prefs['error_reporting_adminonly'] == 'y' and $tiki_p_admin != 'y' ) $prefs['error_reporting_level'] = 0;
+if ( $prefs['error_reporting_level'] == 1 ) {
+	$prefs['error_reporting_level'] = ( $tiki_p_admin == 'y' ) ? E_ALL : 0;
+} elseif ( $prefs['error_reporting_adminonly'] == 'y' and $tiki_p_admin != 'y' ) {
+	$prefs['error_reporting_level'] = 0;
+}
+if ($prefs['error_reporting_level']) {
+	@ini_set('display_error', 1);//just in case the server allows it
+}
 error_reporting($prefs['error_reporting_level']);
 
 if ( $prefs['log_sql'] == 'y' ) {
