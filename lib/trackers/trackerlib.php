@@ -2207,7 +2207,7 @@ class TrackerLib extends TikiLib {
 		$type['R'] = array(
 			'label'=>tra('radio buttons'),
 			'opt'=>true,
-			'help'=>tra('Radio buttons options: list of items separated with commas.').tra('Default value is specified by having the value indicated twice consecutively') );
+			'help'=>tra('Radio buttons options: list of items separated with commas.').tra('Default value is specified by having the value indicated twice consecutively.').tra('If first option is &lt;br&gt;, options will be separated with a carraiage return') );
 		$type['u'] = array(
 			'label'=>tra('user selector'),
 			'opt'=>true,
