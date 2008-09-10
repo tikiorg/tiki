@@ -6082,6 +6082,9 @@ class TikiLib extends TikiDB {
 			}
 		}
 
+		// linebreaks using %%%
+		$data = str_replace("%%%", "<br />", $data);
+
 		// Replace dynamic variables
 		// Dynamic variables are similar to dynamic content but they are editable
 		// from the page directly, intended for short data, not long text but text
@@ -7070,9 +7073,6 @@ class TikiLib extends TikiDB {
 				$data = str_replace($rsss[0][$i], $repl, $data);
 			}
 		}
-
-		// linebreaks using %%%
-		$data = str_replace("%%%", "<br />", $data);
 
 		// Close BiDi DIVs if any
 		for ($i = 0; $i < $bidiCount; $i++) {
