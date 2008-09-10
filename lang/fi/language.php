@@ -6302,6 +6302,7 @@ $lang=Array(
 "Subscriptions" => "Tilaukset",
 "Valid" => "Hyväksytty",
 "subscribed" => "tilattu",
+"Subscribed" => "tilattu",
 "Admin Newsletters Template" => "Ylläpidä uutiskirjeen malli",
 "Create/Edit Newsletters" => "<Luo/muokkaa uutislehteä",
 "There are individual permissions set for this newsletter" => "Tälle uutislehdelle on asetettu erityioikeudet",

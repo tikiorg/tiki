@@ -5593,6 +5593,7 @@ $lang=Array(
 "Unassign" => "Unassign",
 "Random image from" => "Random image from",
 "subscribed" => "subscribed",
+"Subscribed" => "subscribed",
 "Event" => "Event",
 "Email:" => "Email:",
 "Preview poll" => "Preview poll",

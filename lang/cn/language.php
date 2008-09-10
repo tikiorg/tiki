@@ -7208,6 +7208,7 @@ $lang=Array(
 "Subscriptions" => "订阅",
 "Valid" => "有效",
 "subscribed" => "订阅",
+"Subscribed" => "订阅",
 "Create/Edit Newsletters" => "创建/编辑电子期刊",
 "There are individual permissions set for this newsletter" => "此电子期刊有独立的权限设置",
 "Users can subscribe/unsubscribe to this list" => "用户可取消/订阅到这个列表",

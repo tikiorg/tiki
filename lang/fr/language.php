@@ -4501,6 +4501,7 @@ $lang=Array(
 "Subscriptions" => "Inscriptions",
 "Valid" => "Valide",
 "subscribed" => "inscrit",
+"Subscribed" => "inscrit",
 "Admin Newsletters Template" => "Administrer un gabarit de lettre d'informations",
 "Create/Edit Newsletters" => "Ajouter/Modifier une lettre d'informations",
 "There are individual permissions set for this newsletter" => "Des droits individuels ont été mis sur cette lettre d'informations",

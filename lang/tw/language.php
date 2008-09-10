@@ -6875,6 +6875,7 @@ $lang=Array(
 "Add a subscription newsletters" => "增加訂閱電子報",
 "Subscriptions" => "訂閱",
 "subscribed" => "訂閱",
+"Subscribed" => "訂閱",
 "Create/Edit Newsletters" => "建立/編輯電子報",
 "There are individual permissions set for this newsletter" => "此電子報有獨立的權限設定",
 "Editions" => "版本",

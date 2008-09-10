@@ -6165,6 +6165,7 @@ $lang=Array(
 "Subscriptions" => "Assinaturas",
 "Valid" => "Válido",
 "subscribed" => "inscrita",
+"Subscribed" => "inscrita",
 "Admin Newsletters Template" => "Admin template de newsletters",
 "Create/Edit Newsletters" => "Criar/editar comunicados",
 "There are individual permissions set for this newsletter" => "Existem permissões individuais definidos para este comunicado",

@@ -6788,6 +6788,7 @@ $lang=Array(
 "Subscriptions" => "Abonnenter",
 "Valid" => "Gyldig",
 "subscribed" => "abonneret",
+"Subscribed" => "abonneret",
 "Create/Edit Newsletters" => "Opret/rediger nyhedsbreve",
 "There are individual permissions set for this newsletter" => "Der er individuelle adgsngskriterier for dette nyhedsbrev",
 "Editions" => "Udgaver",

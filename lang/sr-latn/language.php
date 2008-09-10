@@ -6544,6 +6544,7 @@ $lang=Array(
 "Subscriptions" => "Pretplate",
 "Valid" => "Ispravan",
 "subscribed" => "pretplaćen",
+"Subscribed" => "pretplaćen",
 "Create/Edit Newsletters" => "Napravi/izmeni novine",
 "There are individual permissions set for this newsletter" => "Postoje individualne dozvole podešene za ove novine",
 "Users can subscribe/unsubscribe to this list" => "Korisnici mogu da se pretplate/isključe sa ove liste",

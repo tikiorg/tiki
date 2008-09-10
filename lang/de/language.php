@@ -6170,6 +6170,7 @@ $lang=Array(
 "Subscriptions" => "Registrierungen",
 "Valid" => "G&uuml;ltig",
 "subscribed" => "abonniert",
+"Subscribed" => "abonniert",
 "Create/Edit Newsletters" => "Newsletters hinzuf&uuml;gen/bearbeiten",
 "There are individual permissions set for this newsletter" => "Es existieren individuelle Berechtigungen f&uuml;r diesen Newsletter",
 "Users can subscribe/unsubscribe to this list" => "Benutzer k&ouml;nnen sich f&uuml;r diese Liste an/abmelden",

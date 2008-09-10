@@ -6977,6 +6977,7 @@ $lang=Array(
 "Admin Newsletters" => "ניהול חדשונים",
 "Add a subscription newsletters" => "הוספת מנויים לחדשון",
 "subscribed" => "תאריך רישום",
+"Subscribed" => "תאריך רישום",
 "Create/Edit Newsletters" => "יצירת/עריכת חדשונים",
 "There are individual permissions set for this newsletter" => "יש הרשאות ספציפיות לחדשון זה",
 "Editions" => "מהדורות",
