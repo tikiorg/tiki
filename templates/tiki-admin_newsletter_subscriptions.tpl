@@ -169,7 +169,7 @@
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}
 <tr>
-<td class="{cycle advance=false}">{if $channels[user].isUser == "y"}{$channels[user].email|userlink|escape}{else}{$channels[user].email|escape}{/if}</td>
+<td class="{cycle advance=false}">{if $channels[user].isUser == "y"}{$channels[user].email|escape|userlink}{else}{$channels[user].email|escape}{/if}</td>
 <td class="{cycle advance=false}">{if $channels[user].valid == "n"}
 <a class="link" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;offset={$offset|urlencode}&amp;sort_mode={$sort_mode|urlencode}&amp;valid={$channels[user].nlId|urlencode}&amp;{if $channels[user].isUser eq "y"}user{else}email{/if}={$channels[user].email|escape:"url"}" title="{tr}Valid{/tr}">{tr}No{/tr}</a>
 {else}{tr}Yes{/tr}{/if}</td>
