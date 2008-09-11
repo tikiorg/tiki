@@ -45,6 +45,10 @@
 		<td><input type="checkbox" name="feature_category_use_phplayers" {if $prefs.feature_category_use_phplayers eq 'y'}checked="checked"{/if}/></td>
 	</tr>
 	<tr>
+		<td class="form">{tr}Categories used in tpl{/tr}</td>
+		<td><input type="checkbox" name="categories_used_in_tpl" {if $prefs.categories_used_in_tpl eq 'y'}checked="checked"{/if}/></td>
+	</tr>
+	<tr>
           <td colspan="2" class="button"><input type="submit" name="categorysetup" value="{tr}Save{/tr}" /></td>
 		  
         </tr>

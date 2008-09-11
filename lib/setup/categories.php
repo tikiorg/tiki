@@ -9,7 +9,7 @@
 //this script may only be included - so its better to die if called directly.
 $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
-if ($prefs['feature_categories'] == 'y') {
+if ($prefs['feature_categories'] == 'y' && $prefs['categories_used_in_tpl'] == 'y') {
 	global $categlib; include_once('lib/categories/categlib.php');
 	// pick up the objectType from cat_type is set or from section
     if (!empty($section) && !empty($sections) && !empty($sections[$section])) {
@@ -34,5 +34,4 @@ if ($prefs['feature_categories'] == 'y') {
 	}
     $smarty->assign_by_ref('objectCategoryIds', $objectCategoryIds);
 	// use in smarty {if isset($objectCategoryIds) and in_array(54, $objectCategoryIds)} My stuff ..{/if}
-	echo $section.'-'.$objectType.'-'.$_REQUEST[$here['key']].'-'.$_REQUEST[$here['itemkey']];print_r($objectCategoryIds);
 }
