@@ -1,7 +1,12 @@
 {if $prefs.feature_bot_logo eq 'y'}{eval var=$prefs.bot_logo_code}{/if}
-{if ($prefs.feature_site_report eq 'y' && $tiki_p_site_report eq 'y')}
+{if ($prefs.feature_site_report eq 'y' && $tiki_p_site_report eq 'y') || ($prefs.feature_site_send_link eq 'y' and $prefs.feature_tell_a_friend eq 'y' and $tiki_p_tell_a_friend eq 'y')}
 	<div id="site_report">
-		<a href="tiki-tell_a_friend.php?report=y&amp;url={$smarty.server.REQUEST_URI|escape:'url'}">{tr}Report to Webmaster{/tr}</a>
+		{if $prefs.feature_site_report eq 'y'}
+			<a href="tiki-tell_a_friend.php?report=y&amp;url={$smarty.server.REQUEST_URI|escape:'url'}">{tr}Report to Webmaster{/tr}</a>
+		{/if}
+		{if $prefs.feature_site_send_link eq 'y'}
+			<a href="tiki-tell_a_friend.php?url={$smarty.server.REQUEST_URI|escape:'url'}">{tr}Email this page{/tr}</a>
+		{/if}
 	</div>
 {/if}
 {if $prefs.feature_bot_bar_icons eq 'y'}
