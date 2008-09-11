@@ -129,7 +129,7 @@ window.onload = timeIt;
 {/if}
 <form  enctype="multipart/form-data" method="post" action="tiki-editpage.php" id='editpageform' name='editpageform'>
 
-{if $prefs['feature_translation'] == 'y'}
+{if $diff_style}
 <select name="diff_style">
 
    {if $diff_style eq "htmldiff"}
@@ -333,7 +333,7 @@ function searchrep() {
 {/if}
 </td></tr>
 {else}
-	{if $trads|@count > 1 && $prefs['feature_translation'] == 'y'}
+	{if $trads|@count > 1}
 	<tr class="formcolor">
 		<td>{tr}Translation request{/tr}:</td>
 		<td>
