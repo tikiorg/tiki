@@ -1385,16 +1385,18 @@ ul.toc * {}
 
 .diffheader {
 	background: #A9B8C2;
+	color: #000;
 	font-weight: bold}
 
-.diffadded { background: #CCFFCC}
-.diffdeleted { background: #FFCCCC}
+.diffadded { background: #CCFFCC; color: #000}
+.diffdeleted { background: #FFCCCC; color: #000}
 
 .diffinldel {
 	background: #FFCCCC;
+	 color: #000;
 	text-decoration: line-through}
 
-.diffbody { background: #F2F4F5}
+.diffbody { background: #F2F4F5;  color: #000}
 .diffchar { color: red}
 
 /***** Articles ****/
