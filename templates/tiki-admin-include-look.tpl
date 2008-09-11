@@ -511,7 +511,7 @@
 									<label for="feature_site_send_link">{tr}Send a link{/tr}:</label>
 								</td>
 								<td>
-									<input type="checkbox" name="feature_site_send_link" id="feature_site_send_link"{if $prefs.feature_send_link eq 'y'} checked="checked"{/if} />
+									<input type="checkbox" name="feature_site_send_link" id="feature_site_send_link"{if $prefs.feature_site_send_link eq 'y'} checked="checked"{/if} />
 								</td>
 							</tr>
 							</table>
