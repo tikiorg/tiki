@@ -16,6 +16,7 @@
 	float: left;
 	border-bottom: 1px solid gray;
 	width: 10em; /* width needed or else Opera goes nuts */
+	min-width: 10em;
 }
 .cssmenu_horiz li.menuSection1, .cssmenu_horiz li.menuSection2, .cssmenu_horiz li.menuSection3 {
 	background: url('../pics/icons/arrow_small.png') right no-repeat;
