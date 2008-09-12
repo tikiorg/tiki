@@ -35,6 +35,8 @@ function smarty_modifier_escape($string, $esc_type = 'html', $char_set = 'ISO-88
 
         case 'htmlall':
             $return = htmlentities($string, ENT_QUOTES, $char_set);
+            if (!strlen($return) && strlen($string)) // Bug php when there is non utf8 characters in the string(http://bugs.php.net/bug.php?id=43549, http://bugs.php.net/bug.php?id=43294)
+                $return =  htmlentities($string, ENT_QUOTES);
 	    // Convert back sanitization tags into real tags to avoid them to be displayed
             $return = str_replace('&lt;x&gt;', '<x>', $return);
 	    return $return;
