@@ -7,6 +7,8 @@
 </div>
 {/if} *}
 
+<span class="button2"><a href="tiki-admin_calendars.php" class="linkbut">{tr}Create Calendar{/tr}</a></span>
+
 {* --- tab with list --- *}
 <div id="content1" class="content">
 <h2>{tr}List of Calendars{/tr}</h2>
@@ -32,7 +34,7 @@
 {foreach key=id item=cal from=$calendars}
 <tr class="{cycle}">
 <td>{$id}</td>
-<td><a class="tablename" href="tiki-calendar.php?calIds[]={$id}">{$cal.name}</a>{if $cal.show_calname eq 'y'} {icon _id=layers alt="{tr}Show in popup box{/tr}"}{/if}</td>
+<td><a class="tablename" href="tiki-calendar.php?calIds[]={$id}" title="View Calendar">{$cal.name}</a>{if $cal.show_calname eq 'y'} {icon _id=layers alt="{tr}Show in popup box{/tr}"}{/if}</td>
 <td>{$cal.customlocations}{if $cal.show_location eq 'y'}{icon _id=layers alt="{tr}Show in popup box{/tr}"}{/if}</td>
 <td>{$cal.customparticipants}{if $cal.show_participants eq 'y'}{icon _id=layers alt="{tr}Show in popup box{/tr}"}{/if}</td>
 <td>{$cal.customcategories}{if $cal.show_category eq 'y'}{icon _id=layers alt="{tr}Show in popup box{/tr}"}{/if}</td>
