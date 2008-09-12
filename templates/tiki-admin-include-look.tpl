@@ -30,7 +30,7 @@
 		<fieldset{if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}"{/if}>
 			{if $prefs.feature_tabs neq 'y'}
 				<legend class="heading">
-					<a href="#theme" name="theme" onclick="flip('theme'); return false;">
+					<a href="#theme" onclick="flip('theme'); return false;">
 						<span>{tr}Theme{/tr}</span>
 					</a>
 				</legend>
@@ -148,7 +148,7 @@
 		<fieldset{if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}"{/if}>
 			{if $prefs.feature_tabs neq 'y'}
 				<legend class="heading" id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}">
-					<a href="#layout" name="layout" onclick="flip('layout'); return false;">
+					<a href="#layout" onclick="flip('layout'); return false;">
 						<span>{tr}General Layout options{/tr}</span>
 					</a>
 				</legend>
@@ -652,7 +652,7 @@
 		<fieldset{if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}"{/if}>
 			{if $prefs.feature_tabs neq 'y'}
 				<legend class="heading" id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}">
-					<a href="#other" name="other" onclick="flip('other'); return false;">
+					<a href="#other" onclick="flip('other'); return false;">
 					<span>{tr}Other options{/tr}</span>
 					</a>
 				</legend>
