@@ -416,7 +416,10 @@ function wikiplugin_trackerlist($data, $params) {
 		
 		if (!isset($exactvalue)) {
 			$exactvalue = '';
+		} elseif ($exactvalue == '#user') {
+			$exactvalue = $user;
 		}
+
 		if (isset($itemId)) {
 			$filter = array('itemId', $itemId);
 		} else {
