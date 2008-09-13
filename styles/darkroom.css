@@ -169,7 +169,6 @@ input[type=wikiaction] {margin-bottom: 2px}
 * html .findtable input {font-size: 1em}
 * html .wikitopline select {font-size: .9em}
 small {font-size: 0.8em}
-label {display:block;}
 ul, ol {text-align: left}
 li {}
 
