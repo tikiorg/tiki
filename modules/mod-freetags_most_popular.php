@@ -16,5 +16,4 @@ if ($prefs['feature_freetags'] != 'y') {
 	$most_popular_tags = $freetaglib->get_most_popular_tags('', 0, empty($module_params['max'])?$module_rows: $module_params['max']);
 	$smarty->assign_by_ref('most_popular_tags', $most_popular_tags);
 	$smarty->assign('type', (isset($module_params['type']) && $module_params['type'] =='cloud') ? 'cloud' : 'list');
-	print_r($module_params);
 }
