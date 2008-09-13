@@ -1030,7 +1030,7 @@ a.forumnameread {} */
 	padding: 0 !important}
 
 .tabactive {
-	border: solid;1px #225566 !important;
+	border: solid 1px #225566 !important;
 	border-bottom: none !important;
 	border-top-width: 2px !important;
 	position: relative;
