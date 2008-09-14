@@ -22,11 +22,18 @@
 <br />
 
 <h2>{tr}Cookies{/tr}</h2>
-{if $channels}<a href="tiki-admin_cookies.php?removeall=1" class="linkbut">{tr}Remove all cookies{/tr}</a><br /><br />
+{if $channels}
+	<div class="navbar">
+		<span class="button2">
+			<a href="tiki-admin_cookies.php?removeall=1" class="linkbut">{tr}Remove all cookies{/tr}</a>
+		</span>
+	</div>
 {/if}
+
 {if $channels or ($find ne '')}
   {include file='find.tpl' _sort_mode='y'}
 {/if}
+
 <table class="normal">
 <tr>
 <td class="heading"><a class="tableheading" href="tiki-admin_cookies.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'cookieId_desc'}cookieId_asc{else}cookieId_desc{/if}">{tr}ID{/tr}</a></td>

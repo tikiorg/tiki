@@ -7,7 +7,11 @@
 </div>
 {/if} *}
 
-<span class="button2"><a href="tiki-admin_calendars.php" class="linkbut">{tr}Create Calendar{/tr}</a></span>
+<div class="navbar">
+	<span class="button2">
+		<a href="tiki-admin_calendars.php" class="linkbut">{tr}Create Calendar{/tr}</a>
+	</span>
+</div>
 
 {* --- tab with list --- *}
 <div id="content1" class="content">
