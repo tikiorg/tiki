@@ -94,7 +94,7 @@ if ($prefs['feature_categories'] == 'y') {
 
 if ($_REQUEST["calendarId"]) {
 	$info = $calendarlib->get_calendar($_REQUEST["calendarId"]);
-	setcookie("activeTabs".urlencode(substr($_SERVER["REQUEST_URI"],1)),"tab2");
+	$cookietab = 2;
 } else {
 	$info = array();
 	$info["name"] = '';
@@ -120,7 +120,14 @@ if ($_REQUEST["calendarId"]) {
 	$info["startday"] = '25200';
 	$info["endday"] = '72000';
     $info["customeventstatus"] = 0;
+	if (!empty($_REQUEST['show']) && $_REQUEST['show'] == 'mod') {
+		$cookietab = '2';
+	} else {
+		$cookietab = 1;
+	}
 }
+setcookie('tab', $cookietab);
+$smarty->assign_by_ref('cookietab', $cookietab);
 
 $smarty->assign('name', $info["name"]);
 $smarty->assign('description', $info["description"]);
@@ -170,12 +177,6 @@ if (isset($_REQUEST["find"])) {
 
 $smarty->assign('find', $find);
 
-$calendars = $calendarlib->list_calendars(0, -1, $sort_mode, $find);
-
-foreach (array_keys($calendars["data"]) as $i) {
-	$calendars["data"][$i]["individual"] = $userlib->object_has_one_permission($i, 'calendar');
-}
-
 if (!isset($_REQUEST["offset"])) {
 	$offset = 0;
 } else {
@@ -183,22 +184,13 @@ if (!isset($_REQUEST["offset"])) {
 }
 $smarty->assign_by_ref('offset', $offset);
 
-$cant_pages = ceil($calendars["cant"] / $maxRecords);
-$smarty->assign_by_ref('cant_pages', $cant_pages);
-$smarty->assign('actual_page', 1 + ($offset / $maxRecords));
+$calendars = $calendarlib->list_calendars($offset, $maxRecords, $sort_mode, $find);
 
-if ($calendars["cant"] > ($offset + $maxRecords)) {
-	$smarty->assign('next_offset', $offset + $maxRecords);
-} else {
-	$smarty->assign('next_offset', -1);
+foreach (array_keys($calendars["data"]) as $i) {
+	$calendars["data"][$i]["individual"] = $userlib->object_has_one_permission($i, 'calendar');
 }
 
-// If offset is > 0 then prev_offset
-if ($offset > 0) {
-	$smarty->assign('prev_offset', $offset - $maxRecords);
-} else {
-	$smarty->assign('prev_offset', -1);
-}
+$smarty->assign_by_ref('cant', $calendars['cant']);
 
 $smarty->assign_by_ref('calendars', $calendars["data"]);
 

@@ -1,20 +1,22 @@
 {title admpage="calendar"}{tr}Admin Calendars{/tr}{/title}
 
-{* {if $prefs.feature_tabs eq 'y'}
-<div class="tabs">
-<span id="tab1" class="tab tabActive">{tr}List Calendars{/tr}</span>
-<span id="tab2" class="tab">{tr}Create/edit Calendars{/tr}</span>
-</div>
-{/if} *}
+{if $calendarId}
+	<div class="navbar">
+		 <a href="tiki-admin_calendars.php?show=mod" class="linkbut">{tr}Create Calendar{/tr}</a>
+	</div>	
+{/if}
 
-<div class="navbar">
-	<span class="button2">
-		<a href="tiki-admin_calendars.php" class="linkbut">{tr}Create Calendar{/tr}</a>
-	</span>
-</div>
+{if $prefs.feature_tabs eq 'y'}
+	{cycle name=tabs values="1,2,3" print=false advance=false reset=true}
+	<div class="tabs">
+		 <span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},3);">{tr}List of Calendars{/tr}</a></span>
+		 <span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},3);">{if $calendarId}{tr}Edit Calendar{/tr}{else}{tr}Create Calendar{/tr}{/if}</a></span>
+	</div>
+{/if}
 
+{cycle name=content values="1,2,3" print=false advance=false reset=true}
 {* --- tab with list --- *}
-<div id="content1" class="content">
+<div id="content{cycle name=content assign=focustab}{$focustab}"{if $prefs.feature_tabs eq 'y'} class="tabcontent" style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 <h2>{tr}List of Calendars{/tr}</h2>
 {if count($calendars) gt 0}
 {include file='find.tpl' _sort_mode='y'}
@@ -38,7 +40,9 @@
 {foreach key=id item=cal from=$calendars}
 <tr class="{cycle}">
 <td>{$id}</td>
-<td><a class="tablename" href="tiki-calendar.php?calIds[]={$id}" title="View Calendar">{$cal.name}</a>{if $cal.show_calname eq 'y'} {icon _id=layers alt="{tr}Show in popup box{/tr}"}{/if}</td>
+<td>
+	<a class="tablename" href="tiki-admin_calendars.php?calendarId={$id}" title="{tr}Edit{/tr}">{$cal.name|escape}</a>{if $cal.show_calname eq 'y'} {icon _id=layers alt="{tr}Show in popup box{/tr}"}{/if}
+</td>
 <td>{$cal.customlocations}{if $cal.show_location eq 'y'}{icon _id=layers alt="{tr}Show in popup box{/tr}"}{/if}</td>
 <td>{$cal.customparticipants}{if $cal.show_participants eq 'y'}{icon _id=layers alt="{tr}Show in popup box{/tr}"}{/if}</td>
 <td>{$cal.customcategories}{if $cal.show_category eq 'y'}{icon _id=layers alt="{tr}Show in popup box{/tr}"}{/if}</td>
@@ -48,43 +52,28 @@
 <td>{$cal.customsubscription}</td>
 <td>{$cal.personal}</td>
 <td>
-<a title="{tr}Permissions{/tr}" class="link" 
-href="tiki-objectpermissions.php?objectName={$cal.name|escape:"url"}&amp;objectType=calendar&amp;permType=calendar&amp;objectId={$id}">{if $cal.individual gt 0}{icon _id='key_active' alt='{tr}Permissions{/tr}'}</a>{$cal.individual}{else}{icon _id='key' alt='{tr}Permissions{/tr}'}</a>{/if}</td>
+	<a title="{tr}Permissions{/tr}" class="link" href="tiki-objectpermissions.php?objectName={$cal.name|escape:"url"}&amp;objectType=calendar&amp;permType=calendar&amp;objectId={$id}">{if $cal.individual gt 0}{icon _id='key_active' alt='{tr}Permissions{/tr}'}</a>{$cal.individual}{else}{icon _id='key' alt='{tr}Permissions{/tr}'}</a>{/if}
+</td>
 <td>
-   &nbsp;&nbsp;<a title="{tr}Edit{/tr}" class="link" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;calendarId={$id}">{icon _id='page_edit'}</a> &nbsp;
-   <a title="{tr}Delete{/tr}" class="link" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;drop={$id}" 
-   title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
+	<a title="{tr}Edit{/tr}" class="link" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;calendarId={$id}">{icon _id='page_edit'}</a>
+	<a title="{tr}View Calendar{/tr}" class="link" href="tiki-calendar.php?calIds[]={$id}">{icon _id=magnifier.png alt="{tr}View{/tr}"}</a>
+	<a title="{tr}Delete{/tr}" class="link" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;drop={$id}" title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
 </td>
 </tr>
 {/foreach}
 </table>
 <br />
 
-<div class="mini">
-{if $prev_offset >= 0}
-[<a class="prevnext" href="tiki-admin_calendars.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}Prev{/tr}</a>]&nbsp;
-{/if}
-{tr}Page{/tr}: {$actual_page}/{$cant_pages}
-{if $next_offset >= 0}
-&nbsp;[<a class="prevnext" href="tiki-admin_calendars.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}Next{/tr}</a>]
-{/if}
-{if $prefs.direct_pagination eq 'y'}
-<br />
-{section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
-<a class="prevnext" href="tiki-admin_calendars.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
-{$smarty.section.foo.index_next}</a>&nbsp;
-{/section}
-</div>
-{/if}
+{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
+
 {else}
 <b>{tr}No records found{/tr}</b>
 {/if}
 </div>
 
 {* --- tab with form --- *}
-<div id="content2" class="content">
-<h2>{tr}Create/edit Calendars{/tr}</h2>
+<div id="content{cycle name=content assign=focustab}{$focustab}"{if $prefs.feature_tabs eq 'y'} class="tabcontent" style="display:{if $focustab eq $cookietab}block{else}none{/if};{/if}">
+<h2>{tr}Create/Edit Calendars{/tr}</h2>
 
 <form action="tiki-admin_calendars.php" method="post">
 <input type="hidden" name="calendarId" value="{$calendarId|escape}" />
