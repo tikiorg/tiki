@@ -9,7 +9,7 @@
 //this script may only be included - so its better to die if called directly.
 $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
-if ($prefs['feature_categories'] == 'y' && isset($prefs['categories_used_in_tpl']) && $prefs['categories_used_in_tpl'] == 'y') {
+if ($prefs['feature_categories'] == 'y' && $prefs['categories_used_in_tpl'] == 'y') {
 	global $categlib; include_once('lib/categories/categlib.php');
 	// pick up the objectType from cat_type is set or from section
     if (!empty($section) && !empty($sections) && !empty($sections[$section])) {
