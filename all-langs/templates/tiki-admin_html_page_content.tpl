@@ -1,11 +1,18 @@
 {title}{tr}Admin HTML Page Dynamic Zones{/tr}{/title}
 
 <h2>{tr}Page{/tr}: {$pageName}</h2>
-<br />
-<br />
-<a class="linkbut" href="tiki-admin_html_pages.php">{tr}Admin HTML pages{/tr}</a>
-<a class="linkbut" href="tiki-admin_html_pages.php?pageName={$pageName|escape:"url"}">{tr}Edit this page{/tr}</a>
-<a class="linkbut" href="tiki-page.php?pageName={$pageName|escape:"url"}">{tr}View page{/tr}</a></h1>
+
+<div class="navbar">
+	<span class="button2">
+		<a class="linkbut" href="tiki-admin_html_pages.php">{tr}Admin HTML pages{/tr}</a>
+	</span>
+	<span class="button2">
+		<a class="linkbut" href="tiki-admin_html_pages.php?pageName={$pageName|escape:"url"}">{tr}Edit this page{/tr}</a>
+	</span>
+	<span class="button2">
+		<a class="linkbut" href="tiki-page.php?pageName={$pageName|escape:"url"}">{tr}View page{/tr}</a></h1>
+	</span>
+</div>
 
 {if $zone}
 <h2>{tr}Edit zone{/tr}</h2>

@@ -3552,6 +3552,7 @@ $lang=Array(
 // "Subscriptions" => "Subscriptions",
 // "Valid" => "Valid",
 // "subscribed" => "subscribed",
+// "Subscribed" => "subscribed",
 // "Admin Newsletters Template" => "Admin Newsletters Template",
 // "Create/Edit Newsletters" => "Create/Edit Newsletters",
 // "There are individual permissions set for this newsletter" => "There are individual permissions set for this newsletter",

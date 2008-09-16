@@ -13,7 +13,6 @@ function wikiplugin_webservice_info() {
 				'name' => tra('URL'),
 				'description' => tra('Complete service URL'),
 			),
-			/*
 			'service' => array(
 				'required' => false,
 				'safe' => true,
@@ -26,7 +25,6 @@ function wikiplugin_webservice_info() {
 				'name' => tra('Template Name'),
 				'description' => tra('For use with registered services, name of the template to be used to display the service output. This parameter will be ignored if a body is provided.'),
 			),
-			*/
 		),
 	);
 }
@@ -49,8 +47,22 @@ function wikiplugin_webservice( $data, $params ) {
 			file_put_contents( $templateFile, $data );
 
 		return $response->render( 'smarty', 'tikiwiki', 'tikiwiki', $templateFile );
+	} elseif( isset($params['service']) && isset($params['template']) ) {
+		require_once 'lib/webservicelib.php';
+
+		if( $service = Tiki_Webservice::getService( $params['service'] ) ) {
+			if( $template = $service->getTemplate( $params['template'] ) ) {
+				$response = $service->performRequest( $params );
+
+				return $template->render( $response, 'tikiwiki' );
+			} else {
+				return '^' . tra('Unknown Template') . '^';
+			}
+		} else {
+			return '^' . tra('Unknown Service') . '^';
+		}
 	} else {
-		// TODO : Use registered services
+		return '^' . tra('Missing parameters') . '^';
 	}
 }
 

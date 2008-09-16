@@ -11,7 +11,7 @@
 &#123;{$plugin_name}(
 {foreach key=name item=param from=$plugin.params}
 	<div class="plugin-param">
-	{if param.required}
+	{if $param.required}
 		{$name}=<em>"{$param.description|escape}"</em>
 	{else}
 		[ {$name}=<em>"{$param.description|escape}"</em> ]

@@ -27,18 +27,22 @@ class WebMailLib extends TikiLib {
 
 	function set_mail_flag($current, $user, $msgid, $flag, $value) {
 		// flag can be: isRead,isFlagged,isReplied, value: y/n
+
+		//MatWho 16/09/08 - Fixed mailId removed (int) as mail ids are strings
 		$query = "delete from `tiki_webmail_messages` where `accountId`=? and `mailId`=? and `user`=?";
-		$result = $this->query($query,array((int)$current,(int)$msgid,$user));
+		$result = $this->query($query,array((int)$current,$msgid,$user));
 
 		$query = "insert into `tiki_webmail_messages`(`$flag`,`accountId`,`mailId`,`user`) values (?,?,?,?)";
-		$result = $this->query($query,array($value,(int)$current,(int)$msgid,$user));
+		$result = $this->query($query,array($value,(int)$current,$msgid,$user));
+
 		return true;
 	}
 
 	function get_mail_flags($current, $user, $msgid) {
 		$query = "select `isRead`,`isFlagged`,`isReplied` from `tiki_webmail_messages` where `accountId`=? and `mailId`=? and user=?";
-		$result = $this->query($query, array((int)$current,(int)$msgid,$user));
 
+		$result = $this->query($query, array((int)$current,$msgid,$user));
+		
 		if (!$result->numRows()) {
 			return array(
 				'n',

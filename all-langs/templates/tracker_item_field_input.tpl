@@ -288,9 +288,19 @@
 {* -------------------- radio buttons -------------------- *}
 {elseif $field_value.type eq 'R'}
 	{section name=jx loop=$field_value.options_array}
-		<input type="radio" name="{$field_value.ins_id}" value="{$field_value.options_array[jx]|escape}" {if $field_value.value eq $field_value.options_array[jx] or $field_value.defaultvalue eq $field_value.options_array[jx]}checked="checked"{/if} id="{$field_value.ins_id}" />
-		<label for="{$field_value.ins_id}">{$field_value.options_array[jx]|escape}</label>
-{/section}
+		{if $smarty.section.jx.first}
+			{if $field_value.options_array[jx] eq '<br>' or $field_value.options_array[jx] eq '<br />'}
+				{assign var=sepR value='<br />'}
+			{else}
+				{assign var=sepR value=' '}
+			{/if}
+		{/if}
+		{if !$smarty.section.jx.first or $sepR ne '<br />'}
+			<input type="radio" name="{$field_value.ins_id}" value="{$field_value.options_array[jx]|escape}" {if $field_value.value eq $field_value.options_array[jx] or $field_value.defaultvalue eq $field_value.options_array[jx]}checked="checked"{/if} id="{$field_value.ins_id[jx]}" />
+			<label for="{$field_value.ins_id[jx]}">{$field_value.options_array[jx]|escape}</label>
+			{if !$smarty.section.jx.last}{$sepR}{/if}
+		{/if}
+	{/section}
 
 {* -------------------- checkbox -------------------- *}
 {elseif $field_value.type eq 'c'}

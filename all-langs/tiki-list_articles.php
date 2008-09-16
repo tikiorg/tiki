@@ -73,7 +73,7 @@ if (!empty($_REQUEST['maxRecords'])) {
 } else {
 	$maxRecords = $maxRecords;
 }
-#samrty->assign_by_ref('maxRecords', $maxRecords);
+$smarty->assign_by_ref('maxRecords', $maxRecords);
 
 if( ($tiki_p_admin == 'y') || ($tiki_p_admin_cms == 'y') ) {
   $pdate = '';

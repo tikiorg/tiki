@@ -169,7 +169,6 @@ input[type=wikiaction] {margin-bottom: 2px}
 * html .findtable input {font-size: 1em}
 * html .wikitopline select {font-size: .9em}
 small {font-size: 0.8em}
-label {display:block;}
 ul, ol {text-align: left}
 li {}
 
@@ -1031,7 +1030,7 @@ a.forumnameread {} */
 	padding: 0 !important}
 
 .tabactive {
-	border: solid;1px #225566 !important;
+	border: solid 1px #225566 !important;
 	border-bottom: none !important;
 	border-top-width: 2px !important;
 	position: relative;
@@ -1385,16 +1384,18 @@ ul.toc * {}
 
 .diffheader {
 	background: #A9B8C2;
+	color: #000;
 	font-weight: bold}
 
-.diffadded { background: #CCFFCC}
-.diffdeleted { background: #FFCCCC}
+.diffadded { background: #CCFFCC; color: #000}
+.diffdeleted { background: #FFCCCC; color: #000}
 
 .diffinldel {
 	background: #FFCCCC;
+	 color: #000;
 	text-decoration: line-through}
 
-.diffbody { background: #F2F4F5}
+.diffbody { background: #F2F4F5;  color: #000}
 .diffchar { color: red}
 
 /***** Articles ****/
@@ -1721,7 +1722,7 @@ table.commentinfo {background: #F0F0F0}
 
 .forum_actions .headers .title {
 	float: left;
-	background-color: dimgray;
+	background-color: #696969;
 	border: 1px solid #999999;
 	border-bottom: 0;
 	padding: 1px}
@@ -2325,17 +2326,15 @@ div#ajaxLoading {
 	position: absolute;
 	top: 50px;
 	right: 50%;
-	color: transparent;
 	padding: 3px;
 	font-family: Verdana;
 	font-size: 90%;
-	background-color: transparent;
 	background: url(../lib/shadowbox/images/loading.gif) no-repeat;
 	height: 45px;
 	width: 32px;
 	padding-top: 32px}
 
-#shadowbox_title{
+#shadowbox_title {
 	height: auto !important;
 	padding: 0;
 	overflow: visible}

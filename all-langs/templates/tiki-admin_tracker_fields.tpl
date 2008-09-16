@@ -162,7 +162,7 @@
 <td>{$channels[user].position}</td>
 <td>{$channels[user].name}</td>
 <td>{assign var=x value=$channels[user].type}{$field_types[$x].label}</td>
-<td>{$channels[user].options|truncate:42:"..."}</td>
+<td>{$channels[user].options|truncate:42:"..."|escape}</td>
 <td>{$channels[user].isMain}</td>
 <td>{$channels[user].isMultilingual}</td>
 <td>{$channels[user].isTblVisible}</td>

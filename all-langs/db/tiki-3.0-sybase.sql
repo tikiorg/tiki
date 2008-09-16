@@ -6935,7 +6935,7 @@ go
 
 
 
--- DROP TABLE `tiki_feature`
+-- DROP TABLE "tiki_feature"
 go
 
 
@@ -6945,20 +6945,17 @@ CREATE TABLE `tiki_feature` (
   `parent_id` mediumnumeric(9,0) NOT NULL,
   `status` varchar(12) default 'active' NOT NULL,
   `setting_name` varchar(50) default NULL NULL,
-  `feature_type` varchar(20) default 'feature' NOT NULL,
+  `feature_type` varchar(30) default 'feature' NOT NULL,
   `template` varchar(50) default NULL NULL,
   `permission` varchar(50) default NULL NULL,
   `ordinal` mediumnumeric(9,0) default '1' NOT NULL,
   `depends_on` mediumnumeric(9,0) default NULL NULL,
-  `keyword` varchar(20) default NULL NULL,
+  `keyword` varchar(30) default NULL NULL,
+  `tip` text NULL,
   `feature_count` mediumnumeric(9,0) default '0' NOT NULL,
   `feature_path` varchar(20) default '0' NOT NULL,
   PRIMARY KEY (`feature_id`)
-) ENGINE=MyISAM 
-go
-
-
-
+) ENGINE=MyISAM ;
 go
 
 

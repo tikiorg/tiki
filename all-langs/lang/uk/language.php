@@ -6694,6 +6694,7 @@ $lang=Array(
 "Add a subscription newsletters" => "Додати листки за підпискою",
 "Subscriptions" => "Підписки",
 "subscribed" => "підписані",
+"Subscribed" => "підписані",
 "Create/Edit Newsletters" => "Створити/ред, листки",
 "There are individual permissions set for this newsletter" => "Для цього листка новин встановлені індивідуальні дозволи",
 "Users can subscribe/unsubscribe to this list" => "Користувачі можуть підписатися чи відписатися з цієї розсилки",

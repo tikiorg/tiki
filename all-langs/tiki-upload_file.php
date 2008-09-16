@@ -61,7 +61,7 @@ if (!empty($_REQUEST['fileId'])) {
 
 if (isset($_REQUEST['galleryId'][0])) {
 	$gal_info = $tikilib->get_file_gallery((int)$_REQUEST['galleryId'][0]);
-	$tikilib->get_perm_object($_REQUEST["galleryId"], 'file gallery', $gal_info, true);
+	$tikilib->get_perm_object($_REQUEST['galleryId'][0], 'file gallery', $gal_info, true);
 }
 
 if (!empty($_REQUEST['galleryId'][0]) && empty($_REQUEST['fileId']) && $tiki_p_upload_files != 'y' && $tiki_p_admin_file_galleries != 'y') {
@@ -374,7 +374,7 @@ if (isset($_REQUEST["upload"])) {
 }
 
 // Get the list of galleries to display the select box in the template
-if (isset($_REQUEST["galleryId"]) and is_int($_REQUEST["galleryId"])) {
+if (isset($_REQUEST['galleryId']) && is_numeric($_REQUEST['galleryId'])) {
 	$smarty->assign('galleryId', $_REQUEST["galleryId"]);
 } elseif (isset($_REQUEST["galleryId"][0])) {
 	$smarty->assign('galleryId', $_REQUEST["galleryId"][0]);

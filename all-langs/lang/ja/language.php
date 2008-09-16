@@ -5445,6 +5445,7 @@ $lang=Array(
 "Banner zones" => "Banner zones",
 "Valid" => "Valid",
 "subscribed" => "subscribed",
+"Subscribed" => "subscribed",
 "Email:" => "Email:",
 "template" => "template",
 "Admin RSS modules" => "Admin RSS modules",

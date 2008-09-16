@@ -5303,7 +5303,7 @@ CREATE TABLE "tiki_profile_symbols" (
 );
 
 
-DROP TABLE `tiki_feature`;
+DROP TABLE "tiki_feature";
 
 CREATE TABLE `tiki_feature` (
   `feature_id` mediumnumber(9) NOT NULL auto_increment,
@@ -5311,16 +5311,15 @@ CREATE TABLE `tiki_feature` (
   `parent_id` mediumnumber(9) NOT NULL,
   `status` varchar(12) default 'active' NOT NULL,
   `setting_name` varchar(50) default NULL,
-  `feature_type` varchar(20) default 'feature' NOT NULL,
+  `feature_type` varchar(30) default 'feature' NOT NULL,
   `template` varchar(50) default NULL,
   `permission` varchar(50) default NULL,
   `ordinal` mediumnumber(9) default '1' NOT NULL,
   `depends_on` mediumnumber(9) default NULL,
-  `keyword` varchar(20) default NULL,
+  `keyword` varchar(30) default NULL,
+  `tip` clob NULL,
   `feature_count` mediumnumber(9) default '0' NOT NULL,
   `feature_path` varchar(20) default '0' NOT NULL,
   PRIMARY KEY (`feature_id`)
-) ENGINE=MyISAM ;
-
-;
+) ENGINE=MyISAM ;;
 

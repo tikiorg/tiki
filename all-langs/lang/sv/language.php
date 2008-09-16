@@ -6692,6 +6692,7 @@ $lang=Array(
 "Subscriptions" => "Prenumerationer",
 "Valid" => "Giltig",
 "subscribed" => "prenumererad",
+"Subscribed" => "prenumererad",
 "Create/Edit Newsletters" => "Skapa/redigera nyhetsbrev",
 "There are individual permissions set for this newsletter" => "Det finns individuella rättigheter för detta nyhetsbrev",
 "Users can subscribe/unsubscribe to this list" => "Användare kan anmäla/avanmäla prenumeration av detta nyhetsbrev",

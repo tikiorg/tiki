@@ -6008,6 +6008,7 @@ $lang=Array(
 "Subscriptions" => "Abonnementen",
 "Valid" => "Geldig",
 "subscribed" => "geabonneerd",
+"Subscribed" => "geabonneerd",
 "Admin Newsletters Template" => "Nieuwsbrieven sjabloon beheren",
 "Create/Edit Newsletters" => "Nieuwsbrieven maken/bewerken",
 "There are individual permissions set for this newsletter" => "Er bestaan individuele permissies voor deze nieuwsbrief",

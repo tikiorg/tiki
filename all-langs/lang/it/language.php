@@ -7089,6 +7089,7 @@ $lang=Array(
 "Admin Newsletters" => "Admin newsletter",
 "Add a subscription newsletters" => "Aggiungi un abbonato alla newsletter",
 "subscribed" => "abbonato",
+"Subscribed" => "abbonato",
 "Create/Edit Newsletters" => "Crea/modifica newsletter",
 "There are individual permissions set for this newsletter" => "Esistono permessi individuali per questa newsletter",
 "Editions" => "Edizioni",
