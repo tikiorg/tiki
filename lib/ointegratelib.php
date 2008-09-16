@@ -24,6 +24,9 @@ class OIntegrate
 			if( $to == 'tikiwiki' )
 				return new OIntegrate_Converter_HtmlToTiki;
 			break;	
+		case 'tikiwiki':
+			if( $to == 'html' )
+				return new OIntegrate_Converter_TikiToHtml;
 		}
 	} // }}}
 
@@ -64,12 +67,15 @@ class OIntegrate
 		$cacheControl = $this->extractHeader( $http_response_header, 'Cache-Control' );
 
 		$response = new OIntegrate_Response;
+		$response->contentType = $contentType;
+		$response->cacheControl = $cacheControl;
 		$response->data = $this->unserialize( $contentType, $content );
 		make_clean( $response->data );
 		$response->version = $this->extractHeader( $http_response_header, 'OIntegrate-Version' );
 		$response->schemaVersion = $this->extractHeader( $http_response_header, 'OIntegrate-SchemaVersion' );
 		if( ! $response->schemaVersion && isset( $response->data->_version ) )
 			$response->schemaVersion = $response->data->_version;
+		$response->schemaDocumentation = $this->extractHeader( $http_response_header, 'OIntegrate-SchemaDocumentation' );
 
 		global $prefs;
 		// Respect cache duration asked for
@@ -134,6 +140,9 @@ class OIntegrate_Response
 {
 	public $version = null;
 	public $schemaVersion = null;
+	public $schemaDocumentation = null;
+	public $contentType = null;
+	public $cacheControl = null;
 	public $data;
 
 	private $errors = array();
@@ -159,6 +168,35 @@ class OIntegrate_Response
 
 		$raw = $engine->process( $this->data, $templateFile );
 		return $output->convert( $raw );
+	} // }}}
+
+	function getTemplates( $supportedPairs = null ) // {{{
+	{
+		if( ! isset( $this->data['_template'] ) || ! is_array( $this->data['_template'] ) )
+			return array();
+
+		$templates = array();
+
+		foreach( $this->data['_template'] as $engine => $outputs ) {
+			foreach( $outputs as $output => $files ) {
+				if( is_array( $supportedPairs ) && ! in_array( "$engine/$output", $supportedPairs ) )
+					continue;
+
+				$files = (array) $files;
+
+				foreach( $files as $file ) {
+					$content = tiki_get_remote_file( $file );
+
+					$templates[] = array(
+						'engine' => $engine,
+						'output' => $output,
+						'content' => $content,
+					);
+				}
+			}
+		}
+
+		return $templates;
 	} // }}}
 }
 
@@ -225,6 +263,15 @@ class OIntegrate_Converter_HtmlToTiki implements OIntegrate_Converter // {{{
 	function convert( $content )
 	{
 		return '~np~' . $content . '~/np~';
+	}
+} // }}}
+
+class OIntegrate_Converter_TikiToHtml implements OIntegrate_Converter // {{{
+{
+	function convert( $content )
+	{
+		global $tikilib;
+		return $tikilib->parse_data( $content );
 	}
 } // }}}
 
