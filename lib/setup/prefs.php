@@ -776,6 +776,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_category_reinforce' => 'y',
 		'feature_category_use_phplayers' => 'y',
 		'categorypath_excluded' => '',
+		'categories_used_in_tpl' => 'n',
 
 		// games
 		'feature_games' => 'n',
