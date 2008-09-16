@@ -61,7 +61,7 @@ function wikiplugin_tracker_info() {
 			'values' => array(
 				'required' => false,
 				'name' => tra('Values'),
-				'description' => tra('Colon-separated list of values.'),
+				'description' => tra('Colon-separated list of values.').' '.tra('Note that plugin arguments can be enclosed with double quotes "; this allows them to contain , or :'),
 			),
 			'sort' => array(
 				'required' => false,
@@ -180,7 +180,10 @@ function wikiplugin_tracker($data, $params) {
 
 	if (isset($values)) {
 		if (!is_array($values)) {
-			$values = explode(':', $values);
+			$values = $tikilib->quotesplit(':', $values);
+			foreach ($values as $i=>$v) {
+				$values[$i] = preg_replace('/^"(.*)"$/', '$1', $v);
+			}
 		}
 	}
 	if (isset($_REQUEST['values'])) {
