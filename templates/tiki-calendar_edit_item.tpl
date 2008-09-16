@@ -1,12 +1,9 @@
 {strip}
-{title}{tr}Calendar Item{/tr}{/title}
+{title admpage="calendar"}{tr}Calendar Item{/tr}{/title}
 
 <div class="navbar">
 {if $tiki_p_view_calendar eq 'y'}
-<span class="button2"><a href="tiki-calendar.php" class="linkbut">{tr}Calendar{/tr}</a></span>
-{/if}
-{if $tiki_p_admin eq 'y'}
-<span class="button2"><a href="tiki-admin.php?page=calendar" class="linkbut">{tr}Config Calendars{/tr}</a></span>
+<span class="button2"><a href="tiki-calendar.php" class="linkbut">{tr}View Calendar{/tr}</a></span>
 {/if}
 {if $tiki_p_admin_calendar eq 'y'}
 <span class="button2"><a href="tiki-admin_calendars.php?calendarId={$calendarId}" class="linkbut">{tr}Edit Calendar{/tr}</a></span>
