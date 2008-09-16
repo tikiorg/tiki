@@ -46,7 +46,9 @@ if ($freetaglib->count_tags() == 0) {
 
 if (!isset($_REQUEST['tag']) && $prefs['freetags_preload_random_search'] == 'y') {
 	$tag = $freetaglib->get_tag_suggestion('', 1);
-  header("Location: tiki-browse_freetags.php?tag=$tag[0]");
+	if (!empty($tag[0])) {
+		$_REQUEST['tag'] = $tag[0];
+	}
 }
 
 

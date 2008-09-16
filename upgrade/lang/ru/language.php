@@ -3581,6 +3581,7 @@ $lang=Array(
 // "Add subscribers of another newsletter" => "Add subscribers of another newsletter",
 // "Subscriptions" => "Subscriptions",
 // "subscribed" => "subscribed",
+// "Subscribed" => "subscribed",
 // "Admin Newsletters Template" => "Admin Newsletters Template",
 // "Users can subscribe/unsubscribe to this list" => "Users can subscribe/unsubscribe to this list",
 // "Users can subscribe any email address" => "Users can subscribe any email address",

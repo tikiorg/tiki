@@ -6583,6 +6583,7 @@ $lang=Array(
 "Subscriptions" => "Subscrições",
 "Valid" => "Válido",
 "subscribed" => "subscrita",
+"Subscribed" => "subscrita",
 "Create/Edit Newsletters" => "Criar/editar comunicados",
 "There are individual permissions set for this newsletter" => "Existem permissões individuais definidos para este comunicado",
 "Users can subscribe/unsubscribe to this list" => "Utilizadores podem subscrever/anular subscrição nesta lista",

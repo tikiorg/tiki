@@ -61,7 +61,7 @@ function wikiplugin_tracker_info() {
 			'values' => array(
 				'required' => false,
 				'name' => tra('Values'),
-				'description' => tra('Colon-separated list of values.'),
+				'description' => tra('Colon-separated list of values.').' '.tra('Note that plugin arguments can be enclosed with double quotes "; this allows them to contain , or :'),
 			),
 			'sort' => array(
 				'required' => false,
@@ -180,7 +180,10 @@ function wikiplugin_tracker($data, $params) {
 
 	if (isset($values)) {
 		if (!is_array($values)) {
-			$values = explode(':', $values);
+			$values = $tikilib->quotesplit(':', $values);
+			foreach ($values as $i=>$v) {
+				$values[$i] = preg_replace('/^"(.*)"$/', '$1', $v);
+			}
 		}
 	}
 	if (isset($_REQUEST['values'])) {
@@ -659,6 +662,10 @@ function wikiplugin_tracker($data, $params) {
 							$quicktags = $quicktagslib->list_quicktags(0, -1, 'taglabel_desc', '', 'trackers');
 							$smarty->assign_by_ref('quicktags', $quicktags['data']);
 						}
+					} elseif ($f['type'] == 'l' && isset($itemId)) {
+						$opts[1] = split(':', $f['options_array'][1]);
+						$finalFields = explode('|', $f['options_array'][3]);
+						$flds['data'][$i]['value'] = $trklib->get_join_values($itemId, array_merge(array($f['options_array'][2]), array($f['options_array'][1]), array($finalFields[0])), $f['options_array'][0], $finalFields);
 					}
 				}
 			}

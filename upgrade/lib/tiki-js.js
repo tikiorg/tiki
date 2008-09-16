@@ -1295,7 +1295,7 @@ function popup_plugin_form( type )
 			var val = form['params[' + k + ']'].value;
 
 			if( val != '' )
-				params.push( k + '=>"' + val + '"' );
+				params.push( k + '="' + val + '"' );
 		}
 
 		var blob = '{' + type.toUpperCase() + '(' + params.join(',') + ')}' + form.content.value + '{' + type.toUpperCase() + '}';

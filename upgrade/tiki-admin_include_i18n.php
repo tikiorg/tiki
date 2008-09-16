@@ -27,6 +27,7 @@ ask_ticket('admin-inc-i18n');
 
     $pref_toggles = array(
 		"feature_multilingual",
+		'feature_translation',
 		"feature_multilingual_structures",
 		"feature_best_language",
 		'feature_sync_language',
@@ -49,5 +50,4 @@ ask_ticket('admin-inc-i18n');
 	simple_set_value( 'language' );
 	simple_set_value( 'available_languages', '', true );
 }
-
 ?>

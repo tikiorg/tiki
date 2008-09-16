@@ -30,7 +30,7 @@
 		<fieldset{if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}"{/if}>
 			{if $prefs.feature_tabs neq 'y'}
 				<legend class="heading">
-					<a href="#theme" name="theme" onclick="flip('theme'); return false;">
+					<a href="#theme" onclick="flip('theme'); return false;">
 						<span>{tr}Theme{/tr}</span>
 					</a>
 				</legend>
@@ -148,7 +148,7 @@
 		<fieldset{if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}"{/if}>
 			{if $prefs.feature_tabs neq 'y'}
 				<legend class="heading" id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}">
-					<a href="#layout" name="layout" onclick="flip('layout'); return false;">
+					<a href="#layout" onclick="flip('layout'); return false;">
 						<span>{tr}General Layout options{/tr}</span>
 					</a>
 				</legend>
@@ -508,10 +508,10 @@
 							</tr>
 							<tr>
 								<td class="form">
-									<label for="feature_site_send_link">{tr}Send a link{/tr}:</label>
+									<label for="feature_site_send_link">{tr}Email this page{/tr}:</label>
 								</td>
 								<td>
-									<input type="checkbox" name="feature_site_send_link" id="feature_site_send_link"{if $prefs.feature_send_link eq 'y'} checked="checked"{/if} />
+									<input type="checkbox" name="feature_site_send_link" id="feature_site_send_link"{if $prefs.feature_site_send_link eq 'y'} checked="checked"{/if} />
 								</td>
 							</tr>
 							</table>
@@ -652,7 +652,7 @@
 		<fieldset{if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}"{/if}>
 			{if $prefs.feature_tabs neq 'y'}
 				<legend class="heading" id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}">
-					<a href="#other" name="other" onclick="flip('other'); return false;">
+					<a href="#other" onclick="flip('other'); return false;">
 					<span>{tr}Other options{/tr}</span>
 					</a>
 				</legend>

@@ -3994,6 +3994,7 @@ $lang=Array(
 "Visibility" => "Visibility",
 "phpLayersMenus" => "phpLayersMenus",
 "subscribed" => "subscribed",
+"Subscribed" => "subscribed",
 "Editions" => "Editions",
 "EMail notifications" => "EMail notifications",
 "template" => "template",

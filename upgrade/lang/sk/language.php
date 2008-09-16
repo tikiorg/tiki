@@ -5471,6 +5471,7 @@ $lang=Array(
 "wiki-append" => "wiki-append",
 "Dynamic content blocks" => "Dynamic content blocks",
 "subscribed" => "subscribed",
+"Subscribed" => "subscribed",
 "Editions" => "Editions",
 "Is column visible when listing tracker items?" => "Is column visible when listing tracker items?",
 "Column links to edit/view item?" => "Column links to edit/view item?",

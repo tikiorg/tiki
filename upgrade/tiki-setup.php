@@ -129,7 +129,7 @@ if ( ! empty($_SESSION['interactive_translation_mode']) && ($_SESSION['interacti
 	$cachelib->empty_full_cache();
 }
 if ( $prefs['feature_freetags'] == 'y' ) require_once('lib/setup/freetags.php');
-//if ( $prefs['feature_categories'] == 'y') require_once('lib/setup/categories.php');
+if ( $prefs['feature_categories'] == 'y' ) require_once('lib/setup/categories.php');
 if ( $prefs['feature_userlevels'] == 'y' ) require_once('lib/setup/userlevels.php');
 if ( $prefs['feature_fullscreen'] == 'y' ) require_once('lib/setup/fullscreen.php');
 if ( $prefs['auth_method'] == 'openid' ) require_once('lib/setup/openid.php');
@@ -141,7 +141,9 @@ if ( $prefs['feature_phplayers'] == 'y' ) require_once('lib/setup/phplayers.php'
 
 if( $tiki_p_admin == 'y' ) {
 	include_once('lib/admin/magiclib.php');
-	$smarty->assign('feature', $magiclib->get_feature_by_template(substr($tiki_script_filename, strrpos($tiki_script_filename, '/') + 1, -4)));
+	$templatename = substr($tiki_script_filename, strrpos($tiki_script_filename, '/') + 1, -4);
+	$smarty->assign('feature', $magiclib->get_feature_by_template($templatename));
+	$smarty->assign('templatename', $templatename);
 	require_once('tiki-admin_bar.php');
 }
 

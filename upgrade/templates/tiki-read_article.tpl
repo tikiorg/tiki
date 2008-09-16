@@ -31,10 +31,14 @@
 </div>
 {/if}
 <div class="articletrailer">
+<table cellpadding="0" cellspacing="0" ><tr>
+<td>
 <span>{if $show_size eq 'y'}
 ({$size} bytes)
 {/if}</span>
+</td>
 {if $prefs.feature_multilingual eq 'y' and $show_lang eq 'y' and $lang}{include file="translated-lang.tpl" td='y' type='article'}{/if}
+<td>
 {if $tiki_p_edit_article eq 'y'}
 <a class="trailer" href="tiki-edit_article.php?articleId={$articleId}">{icon _id='page_edit'}</a>
 {/if}
@@ -50,6 +54,8 @@
 {if $tiki_p_remove_article eq 'y'}
 <a class="trailer" href="tiki-list_articles.php?remove={$articleId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
 {/if}
+</td>
+</tr></table>
 </div>
 
 <div class="articleheading">

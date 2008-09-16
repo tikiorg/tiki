@@ -6847,6 +6847,7 @@ $lang=Array(
 "Add a subscription newsletters" => "Hírlevél előfizetés hozzáadása",
 "Subscriptions" => "Előfizetések",
 "subscribed" => "előfizetve",
+"Subscribed" => "előfizetve",
 "Create/Edit Newsletters" => "Hírlevelek készítése/szerkesztése",
 "There are individual permissions set for this newsletter" => "Ennél a hírlevélnél egyéni engedélyek vannak beállítva",
 "Users can subscribe any email address" => "A felhasználók bármely e-mail címre előfizethetnek",

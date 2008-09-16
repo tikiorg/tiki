@@ -147,7 +147,7 @@
       <img src="pics/trans.png" alt="{tr}Wysiwyg{/tr}" title="{tr}Wysiwyg{/tr}{if $prefs.feature_wysiwyg ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Wysiwyg{/tr}</span>
     </a>	
 	
-	<a href="tiki-admin.php?page=ads" class="admbox{if $prefs.feature_banners ne 'y'} off{/if}"" style="background-image: url('pics/large/ads48x48.png')">
+	<a href="tiki-admin.php?page=ads" class="admbox{if $prefs.feature_banners ne 'y'} off{/if}" style="background-image: url('pics/large/ads48x48.png')">
 			<img src="pics/trans.png" alt="{tr}Site Ads and Banners{/tr}" title="{tr}Site Ads and Banners{/tr}" {if $prefs.feature_banners ne 'y'} ({tr}Disabled{/tr}){/if}/><span>{tr}Site Ads and Banners{/tr}</span>
 	</a>
 

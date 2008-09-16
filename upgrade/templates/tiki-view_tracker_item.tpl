@@ -375,7 +375,7 @@ document.write('<div class="categSelectAll"><input type="checkbox" id="clickall"
     </table>
     {/if}
 {elseif $cur_field.type eq 'k'}
-        <input type="text" name="ins_{$cur_field.id}" value="{$cur_field.value|escape}" {if $cur_field.options_array[1]}size="{$cur_field.options_array[1]}" maxlength="{$cur_field.options_array[2]}"{/if} />
+        <input type="text" name="ins_{$cur_field.id}" value="{$cur_field.value|escape}" {if $cur_field.options_array[1]}size="{$cur_field.options_array[1]}"{/if} />
 
 {elseif $cur_field.type eq 'n'}
 {if $cur_field.options_array[2]}<span class="formunit">{$cur_field.options_array[2]}&nbsp;</span>{/if}

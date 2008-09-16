@@ -119,19 +119,17 @@ if( $prefs['feature_multilingual'] == 'y' && ! empty( $page ) && is_string($page
 	{
 		global $quantifylib;
 		include_once 'lib/wiki/quantifylib.php';
-		$completeness = $quantifylib->getCompleteness( $transinfo['page_id'] );
 		include_once 'lib/wiki-plugins/wikiplugin_gauge.php';
-		$gauge = wikiplugin_gauge( '', array(
-			'value' => $completeness,
-			'max' => '100',
+		$numeric = $quantifylib->getCompleteness( $transinfo['page_id'] );
+		$smarty->assign( 'mod_translation_quantification', $numeric );
+		$smarty->assign( 'mod_translation_gauge', wikiplugin_gauge( '', array(
+			'value' => $numeric,
+			'max' => 100,
 			'size' => '100%',
-			'bgcolor' => '#ccc',
-			'color' => '#3f3',
+			'color' => 'green',
+			'bgcolor' => 'gray',
 			'showvalue' => false,
-		) );
-
-		$smarty->assign( 'mod_translation_quantification', $completeness );
-		$smarty->assign( 'mod_translation_gauge', $gauge );
+		) ) );
 	}
 }
 

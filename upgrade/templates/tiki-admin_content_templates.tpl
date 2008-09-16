@@ -14,13 +14,19 @@
 {/if}
 <form action="tiki-admin_content_templates.php" method="post">
 {if $prefs.feature_wysiwyg eq 'y' and $prefs.wysiwyg_optional eq 'y'}
-{if $wysiwyg ne 'y'}
-<span class="button2"><a class="linkbut" href="?templateId={$templateId}&amp;wysiwyg=y">{tr}Use wysiwyg editor{/tr}</a></span>
-{else}
-<span class="button2"><a class="linkbut" href="?templateId={$templateId}&amp;wysiwyg=n">{tr}Use normal editor{/tr}</a></span>
+	<div class="navbar">
+		{if $wysiwyg ne 'y'}
+			<span class="button2">
+				<a class="linkbut" href="?templateId={$templateId}&amp;wysiwyg=y">{tr}Use wysiwyg editor{/tr}</a>
+			</span>
+		{else}
+			<span class="button2">
+				<a class="linkbut" href="?templateId={$templateId}&amp;wysiwyg=n">{tr}Use normal editor{/tr}</a>
+			</span>
+		{/if}
+	</div>
 {/if}
-{/if}
-<br />
+
 <input type="hidden" name="templateId" value="{$templateId|escape}" />
 <table class="normal">
 <tr><td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" maxlength="255" size="40" name="name" value="{$info.name|escape}" /></td></tr>

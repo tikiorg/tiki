@@ -335,7 +335,7 @@ if ($_REQUEST["locSection"] == 'mailbox') {
 			// Now we can operate the messages
 			foreach (array_keys($_REQUEST["msg"])as $msg) {
 				$realmsg = $_REQUEST["realmsg"][$msg];
-
+				
 				switch ($_REQUEST["action"]) {
 				case "flag":
 					$webmaillib->set_mail_flag($current["accountId"], $user, $realmsg, 'isFlagged', 'y');

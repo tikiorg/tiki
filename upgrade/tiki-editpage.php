@@ -758,9 +758,10 @@ if ( $prefs['wiki_authors_style_by_page'] == 'y' ) {
 }
 
 if($is_html) {
-    $smarty->assign('allowhtml','y');
+	$smarty->assign('allowhtml','y');
 } else {
-  $smarty->assign('allowhtml','n');
+	$edit_data = str_replace( '<x>', '', $edit_data );
+	$smarty->assign('allowhtml','n');
 }
 if (empty($_REQUEST['lock_it']) && !empty($info['flag']) && $info['flag'] == 'L') {
 	$lock_it = 'y';

@@ -5750,6 +5750,7 @@ $lang=Array(
 "Add a subscription newsletters" => "Add a subscription newsletters",
 "Valid" => "Valid",
 "subscribed" => "subscribed",
+"Subscribed" => "subscribed",
 "Editions" => "Editions",
 "Add notification" => "Add notification",
 "A user registers" => "A user registers",

@@ -25,10 +25,6 @@ if( isset( $_REQUEST['refresh'] ) ) {
 	$magiclib->reload_features();
 }
 
-if( isset($_REQUEST['tabs']) && in_array( $_REQUEST['tabs'], array('y','n') ) ) {
-	$smarty->assign( 'tabs', $_REQUEST['tabs'] );
-}
-
 $headerlib->add_cssfile('css/spanky.css');
 $template ='tiki-magic';
 
@@ -77,11 +73,16 @@ if ($_POST['submit'] != '') { /* Warning Level Fix:  Check if the 'submit' is a 
 			$magiclib->simple_set_value($feature['setting_name']);
 		} else if ($feature['feature_type'] == 'byref') {
 			$magiclib->byref_set_value($feature['setting_name']);
-		} else if ($feature['feature_type'] == 'feature') {
+		} else if ($feature['feature_type'] == 'feature' || $feature['feature_type'] == 'subfeature') {
 			$magiclib->simple_set_toggle($feature['setting_name']); // save the toggling of features.
 		} else {
 			// All of the special settings are simple underneath.
-			$magiclib->simple_set_value($feature['setting_name']);
+			if($feature['multiple'] == 'on') {
+				$magiclib->simple_set_value($feature['setting_name'],'',true);			
+			}
+			else {
+				$magiclib->simple_set_value($feature['setting_name']);
+			}
 		}
 	}
 	

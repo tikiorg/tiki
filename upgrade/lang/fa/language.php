@@ -6184,6 +6184,7 @@ $lang=Array(
 "Subscriptions" => "اعضا",
 "Valid" => "معتبر",
 "subscribed" => "عضو شد",
+"Subscribed" => "عضو شد",
 "Admin Newsletters Template" => "مديريت الگوي خبرنامه‌ها",
 "Create/Edit Newsletters" => "ايجاد/تغيير خبرنامه‌ها",
 "There are individual permissions set for this newsletter" => "حقوق دسترسي فردي براي اين خبرنامه تنظيم شده است",

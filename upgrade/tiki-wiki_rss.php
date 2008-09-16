@@ -58,6 +58,7 @@ if ($output["data"]=="EMPTY") {
 			$prev_page = $histlib->get_page_from_history($data["pageName"], $pageversion, true);
 		}
 		$_REQUEST['redirectpage'] = 'y';//block the redirect interpretation 
+		$_REQUEST['page'] = $data["pageName"];
 		$curr_page_p = $tikilib->parse_data($curr_page["$descId"]);
 		$prev_page_p = $tikilib->parse_data($prev_page["$descId"]);
 	

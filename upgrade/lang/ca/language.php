@@ -6334,6 +6334,7 @@ $lang=Array(
 "Subscriptions" => "Subscripcions",
 "Valid" => "Vàlid",
 "subscribed" => "subscrit",
+"Subscribed" => "subscrit",
 "Create/Edit Newsletters" => "Crea/edita butlletins",
 "There are individual permissions set for this newsletter" => "Hi ha permisos individuals fixats per a aquest butlletí",
 "Users can subscribe/unsubscribe to this list" => "Els usuaris es poden subscriure/desubscriure a la llista d'aquest butlletí",

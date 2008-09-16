@@ -67,12 +67,12 @@ function wikiplugin_gauge_info() {
 			'perc' => array(
 				'required' => false,
 				'name' => tra('Display Percentage'),
-				'description' => tra('true|false, if true then a percentage is displayed.'),
+				'description' => tra('true|false, if true then a percentage of the maximum is displayed.'),
 			),
 			'showvalue' => array(
 				'required' => false,
-				'name' => tra('Display numeric value'),
-				'description' => tra('true|false, if the numeric value or percentage is displayed after the gauge.'),
+				'name' => tra('Display Value'),
+				'description' => tra('true|false, if the numeric value is displayed.'),
 			),
 			'height' => array(
 				'required' => false,
@@ -106,6 +106,10 @@ function wikiplugin_gauge($data, $params) {
 		$color = '#FF0000';
 	}
 
+	if (!isset($showvalue)) {
+		$showvalue = true;
+	}
+	
 	if (!isset($perc)) {
 		$perc = false;
 	}

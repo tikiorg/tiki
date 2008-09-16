@@ -176,6 +176,7 @@ function get_default_prefs() {
 		'wikiplugin_flash' => 'y',
 		'wikiplugin_gauge' => 'y',
 		'wikiplugin_group' => 'y',
+		'wikiplugin_iframe' => 'n',
 		'wikiplugin_include' => 'y',
 		'wikiplugin_jabber' => 'n',
 		'wikiplugin_lang' => 'y',
@@ -226,7 +227,11 @@ function get_default_prefs() {
 		'wikiplugin_versions' => 'y',
 		'wikiplugin_vote' => 'y',
 		'wikiplugin_wantedpages' => 'y',
+		'wikiplugin_webservice' => 'n',
 		'wikiplugin_youtube' => 'y',
+
+		// webservices
+		'webservice_consume_defaultcache' => 300, // 5 min
 
 		// wysiwyg
 		'feature_wysiwyg' => 'n',
@@ -771,6 +776,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_category_reinforce' => 'y',
 		'feature_category_use_phplayers' => 'y',
 		'categorypath_excluded' => '',
+		'categories_used_in_tpl' => 'n',
 
 		// games
 		'feature_games' => 'n',
@@ -792,6 +798,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_homePage_if_bl_missing' => 'n',
 		'record_untranslated' => 'n',
 		'feature_best_language' => 'n',
+		'feature_translation' => 'n',
 		'lang_use_db' => 'n',
 		'language' => 'en',
 		'feature_babelfish' => 'n',

@@ -64,3 +64,4 @@ CREATE TABLE tiki_schema (
 	patch_name VARCHAR(30) PRIMARY KEY,
 	install_date TIMESTAMP
 ) ENGINE=MyISAM;
+

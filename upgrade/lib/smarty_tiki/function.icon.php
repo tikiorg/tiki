@@ -116,7 +116,7 @@ function smarty_function_icon($params, &$smarty) {
   }
 
   if ( $notag ) {
-    $html = $params['path_prefix'].$params['file'];
+	  $html = (isset($params['path_prefix'])?$params['path_prefix']:'').$params['file'];
   } else {
 
     // use 'alt' as 'title' if not set

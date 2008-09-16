@@ -26,10 +26,9 @@ function capLock(e){
           <label for="login-switchuser">{tr}User{/tr}:</label>
           <input type="hidden" name="su" value="1" />
           <input type="text" name="username" id="login-switchuser" size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}" />
-         {if $prefs.feature_help eq 'y'}
-          <sup><a class="linkmodule tikihelp" href="tiki-admin_modules.php"
-          title="{tr}Parameters{/tr}: $input_size {tr}applicable for this item{/tr}"><small><strong>?</strong></small></a></sup>
-         {/if}
+{if $prefs.feature_help eq 'y'}
+		 {help url="Switch+User" desc="{tr}Help{/tr}"}
+{/if}
           <div style="text-align: center"><button type="submit" name="actsu">{tr}Switch{/tr}</button></div>
          </fieldset>
         </form>
@@ -111,7 +110,8 @@ function capLock(e){
             {if $prefs.rememberme eq 'always'}
               <input type="hidden" name="rme" id="login-remember" value="on" />
             {else}
-              <div style="text-align: center"><label for="login-remember">{tr}Remember me{/tr}</label> <input type="checkbox" name="rme" id="login-remember" value="on" /></div>
+              <div style="text-align: center"><input type="checkbox" name="rme" id="login-remember" value="on" /><label for="login-remember">{tr}Remember me{/tr}</label> ({tr}for{/tr} {if $prefs.remembertime eq 300}5 {tr}minutes{/tr}{elseif $prefs.remembertime eq 900}15 {tr}minutes{/tr}{elseif $prefs.remembertime eq 1800}30 {tr}minutes{/tr}{elseif $prefs.remembertime eq 3600}1 {tr}hour{/tr}{elseif $prefs.remembertime eq 7200}2 {tr}hours{/tr}{elseif $prefs.remembertime eq 36000}10 {tr}hours{/tr}{elseif $prefs.remembertime eq 72000}20 {tr}hours{/tr}{elseif $prefs.remembertime eq 86400} 1 {tr}day{/tr}{elseif $prefs.remembertime eq 604800}1 {tr}week{/tr}{elseif $prefs.remembertime eq 2629743}1 {tr}month{/tr}{elseif $prefs.remembertime eq 31556926}1 {tr}year{/tr}{/if})
+			  </div>
             {/if}
           {/if}
           <div style="text-align: center"><button type="submit" name="login">{tr}Login{/tr}</button></div>
