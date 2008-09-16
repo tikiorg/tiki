@@ -2231,7 +2231,7 @@ div.thumbnail {
 }
 div.thumbnamecontener, div.thumbimagecontener {
 	display: table;
-	#position: relative;
+	position: relative;
 	overflow: hidden;
 }
 div.thumbnamecontener {
@@ -2246,14 +2246,14 @@ div.thumbname, div.thumbimage {
 	display: table-cell;
 	vertical-align: middle;
 	/* for IE including IE7 */
-	#position: absolute;
-	#left: 0;
-	#top: 50%;
+	position: absolute;
+	left: 0;
+	top: 50%;
 }
 div.thumbnamesub, div.thumbimagesub {
 	/* for IE including IE7 */
-	#position: relative;
-	#top: -50%;
+	position: relative;
+	top: -50%;
 }
 div.thumbnail:hover {
 	background-color: #F3F6F9;
@@ -2762,11 +2762,11 @@ table.default td {
 	filter:progid:DXImageTransform.Microsoft.Alpha(opacity=80);
 	-moz-opacity: 0.8;
 	border: 1px solid transparent;
-	_border-color: white; /* for IE6 */
-	_filter: chroma(color=white); /* for IE6 */
 	padding: 1px;
 	margin: 0;
 }
+
+* html .icon { border:color: white; filter: chroma(color=white): }
 
 .upspan:hover .icon, a:hover .icon/*, span:hover .icon*/ {
 	filter:progid:DXImageTransform.Microsoft.Alpha(opacity=100);

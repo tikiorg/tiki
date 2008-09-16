@@ -1722,7 +1722,7 @@ table.commentinfo {background: #F0F0F0}
 
 .forum_actions .headers .title {
 	float: left;
-	background-color: dimgray;
+	background-color: #696969;
 	border: 1px solid #999999;
 	border-bottom: 0;
 	padding: 1px}
@@ -2326,17 +2326,15 @@ div#ajaxLoading {
 	position: absolute;
 	top: 50px;
 	right: 50%;
-	color: transparent;
 	padding: 3px;
 	font-family: Verdana;
 	font-size: 90%;
-	background-color: transparent;
 	background: url(../lib/shadowbox/images/loading.gif) no-repeat;
 	height: 45px;
 	width: 32px;
 	padding-top: 32px}
 
-#shadowbox_title{
+#shadowbox_title {
 	height: auto !important;
 	padding: 0;
 	overflow: visible}
