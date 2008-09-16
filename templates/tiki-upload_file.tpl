@@ -2,15 +2,21 @@
 
 {title help="File+Galleries" admpage="fgal"}{if $editFileId}{tr}Edit File:{/tr} {$fileInfo.filename}{else}{tr}Upload File{/tr}{/if}{/title}
 
-{if count($galleries) > 0 || $editFileId}
+{if !empty($galleryId) or (count($galleries) > 0 and $tiki_p_list_file_galleries eq 'y') or count($uploads) > 0}
+<div class="navbar">
 	{if !empty($galleryId)}
-		<div class="navbar">
-			<a href="tiki-list_file_gallery.php?galleryId={$galleryId}{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}" class="linkbut">{tr}Browse gallery{/tr}</a>
-			{if count($uploads) > 0}
-				<a href="#upload" class="linkbut" title="{tr}Upload File{/tr}">{tr}Upload File{/tr}</a>
-			{/if}
-		</div>
+		<a href="tiki-list_file_gallery.php?galleryId={$galleryId}{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}" class="linkbut">{tr}Browse Gallery{/tr}</a>
 	{/if}
+	{if count($galleries) > 0 and $tiki_p_list_file_galleries eq 'y'}
+		<a href="tiki-list_file_gallery.php{if $filegals_manager neq ''}?filegals_manager={$filegals_manager|escape}{/if}" class="linkbut">{tr}List Galleries{/tr}</a>
+	{/if}
+	{if count($uploads) > 0}
+		<a href="#upload" class="linkbut" title="{tr}Upload File{/tr}">{tr}Upload File{/tr}</a>
+	{/if}
+</div>
+{/if}
+
+{if count($galleries) > 0 || $editFileId}
 
 	{if count($errors) > 0}
 		<div class="simplebox highlight">
@@ -75,14 +81,7 @@
 		</div>
 	{/if}
 
-	{if !$editFileId}
-		{if $prefs.feature_file_galleries_batch eq 'y'}
-			{remarksbox type="tip" title="{tr}Tip{/tr}"}
-				{tr}Upload big files (e.g. PodCast files) here:{/tr}
-				<a class="rbox-link" href="tiki-batch_upload_files.php?galleryId={$galleryId}{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}">{tr}Directory batch{/tr}</a>
-			{/remarksbox}
-		{/if}
-	{elseif isset($fileInfo.lockedby) and $fileInfo.lockedby neq ''}
+	{if $editFileId and isset($fileInfo.lockedby) and $fileInfo.lockedby neq ''}
 		{remarksbox type="note" title="{tr}Info{/tr}" icon="lock"}
 		{if $user eq $fileInfo.lockedby}
 			{tr}You locked the file{/tr}
@@ -127,16 +126,22 @@
 			</table>
 		</div>
 		<div class="fgal_file_c2">
+		<table width="100%">
 		{if !$editFileId and $tiki_p_batch_upload_files eq 'y'}
+			<tr><td>
+				{tr}Unzip zip files{/tr}
+			</td><td width="80%">
 				<input type="checkbox" name="isbatch[]" />
-				{tr}Unzip zip files{/tr}<br/>
+			</td></tr>
 		{/if}
 			{if $editFileId}
 				<input type="hidden" name="galleryId" value="{$galleryId}"/>
 				<input type="hidden" name="fileId" value="{$editFileId}"/>
 				<input type="hidden" name="lockedby" value="{$fileInfo.lockedby|escape}" \>
 			{else}
+				<tr><td>
 					{tr}File Gallery:{/tr}
+				</td><td>
 					<select name="galleryId[]" style="width:150px">
 					{section name=idx loop=$galleries}
 						{if ($galleries[idx].individual eq 'n') or ($galleries[idx].individual_tiki_p_upload_files eq 'y')}
@@ -144,23 +149,28 @@
 						{/if}
 					{/section}
 					</select>
-				<br/>
+				</td></tr>
 			{/if}
 			{if $tiki_p_admin_file_galleries eq 'y'}
+				<tr><td>
 					{tr}Creator:{/tr}
+				</td><td>
 					<select name="user[]">
 					{section name=ix loop=$users}
 						<option value="{$users[ix].login|escape}"{if (isset($fileInfo) and $fileInfo.user eq $users[ix].login) or (!isset($fileInfo) and $user == $users[ix].login)}  selected="selected"{/if}>{$users[ix].login|username|escape}</option>
 					{/section}
 					</select>
-				<br/>
+				</td></tr>
 			{/if}
 
 			{if $prefs.feature_file_galleries_author eq 'y'}
+				<tr><td>
 					{tr}Author if not the file creator:{/tr}
+				</td><td>
 					<input type="text" name="author[]" value="{$fileInfo.author|escape}" />
-				<br/>
+				</td></tr>
 			{/if}
+			</table>
 		</div>
 		<div class="fgal_file_c3">
 		{if $prefs.fgal_limit_hits_per_file eq 'y'}
