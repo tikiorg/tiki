@@ -14,6 +14,7 @@ class Tiki_Profile_Installer
 		'menu' => 'Tiki_Profile_InstallHandler_Menu',
 		'blog' => 'Tiki_Profile_InstallHandler_Blog',
 		'blog_post' => 'Tiki_Profile_InstallHandler_BlogPost',
+		'plugin_alias' => 'Tiki_Profile_InstallHandler_PluginAlias',
 	);
 
 	private static $typeMap = array(
@@ -1081,6 +1082,60 @@ class Tiki_Profile_InstallHandler_BlogPost extends Tiki_Profile_InstallHandler /
 		$entryId = $bloglib->blog_post( $data['blog'], $data['content'], $data['user'], $data['title'], '', $data['private'] );
 
 		return $entryId;
+	}
+} // }}}
+
+class Tiki_Profile_InstallHandler_PluginAlias extends Tiki_Profile_InstallHandler // {{{
+{
+	function getData()
+	{
+		if( $this->data )
+			return $this->data;
+
+		$defaults = array(
+			'body' => array(
+				'input' => 'ignore',
+				'default' => '',
+				'params' => array()
+			),
+			'params' => array(
+			),
+		);
+
+		$data = array_merge(
+			$defaults,
+			$this->obj->getData()
+		);
+
+		return $this->data = $data;
+	}
+
+	function canInstall()
+	{
+		$data = $this->getData();
+
+		if( ! isset( $data['name'], $data['implementation'], $data['description'] ) )
+			return false;
+
+		if( ! is_array($data['description']) || ! is_array($data['body']) || ! is_array($data['params']) )
+			return false;
+
+		return true;
+	}
+
+	function _install()
+	{
+		global $tikilib;
+		$data = $this->getData();
+
+		$this->obj->replaceReferences( $data );
+
+		$name = $data['name'];
+		unset( $data['name'] );
+
+		$tikilib->plugin_alias_store( $name, $data );
+
+		return $name;
 	}
 } // }}}
 
