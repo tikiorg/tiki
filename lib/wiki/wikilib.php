@@ -696,57 +696,57 @@ class WikiLib extends TikiLib {
 	return $ret;
     }
 
-    function list_plugins($with_help = false) {
-	$files = array();
-	
-	if (is_dir(PLUGINS_DIR)) {
-	    if ($dh = opendir(PLUGINS_DIR)) {
-		while (($file = readdir($dh)) !== false) {
-		    if (preg_match("/^wikiplugin_.*\.php$/", $file))
-			array_push($files, $file);
-		}
-		closedir ($dh);
-	    }
-	}
-	sort($files);
-	if ($with_help) {
-		global $cachelib, $headerlib;
-		$headerlib->add_jsfile( 'tiki-jsplugin.php' );
-		if (!$cachelib->isCached('plugindesc')) {
-			$plugins = array();
-			foreach ($files as $pfile) {
-				$pinfo['file'] = $pfile;
-				$pinfo["help"] = $this->get_plugin_description($pfile, $enabled);
-				$pinfo["name"] = strtoupper(str_replace(".php", "", str_replace("wikiplugin_", "", $pfile)));
+	function list_plugins($with_help = false) {
+		if ($with_help) {
+			global $cachelib, $headerlib;
+			$headerlib->add_jsfile( 'tiki-jsplugin.php' );
+			if (!$cachelib->isCached('plugindesc')) {
+				$list = $this->plugin_get_list();
 
-				if( $enabled )
-					$plugins[] = $pinfo;
+				$plugins = array();
+				foreach ($list as $name) {
+					$pinfo["help"] = $this->get_plugin_description($name, $enabled);
+					$pinfo["name"] = strtoupper($name);
+
+					if( $enabled )
+						$plugins[] = $pinfo;
+				}
+				$cachelib->cacheItem("plugindesc",serialize($plugins));
+			} else {
+				$plugins = unserialize($cachelib->getCached("plugindesc"));
 			}
-			$cachelib->cacheItem("plugindesc",serialize($plugins));
+			return $plugins;
 		} else {
-			$plugins = unserialize($cachelib->getCached("plugindesc"));
+			// Only used by PluginManager ... what is that anyway?
+			$files = array();
+
+			if (is_dir(PLUGINS_DIR)) {
+				if ($dh = opendir(PLUGINS_DIR)) {
+					while (($file = readdir($dh)) !== false) {
+						if (preg_match("/^wikiplugin_.*\.php$/", $file))
+							array_push($files, $file);
+					}
+					closedir ($dh);
+				}
+			}
+			sort($files);
+
+			return $files;
 		}
-		return $plugins;
-	} else {
-		return $files;
-    }
 	}
 
     //
     // Call 'wikiplugin_.*_description()' from given file
     //
-    function get_plugin_description($file, &$enabled) {
+    function get_plugin_description($name, &$enabled) {
     	global $tikilib;
         $data = '';
-		require_once PLUGINS_DIR . '/' . $file;
 
-		// If info function exists, it means the improved method is available
-        $func_name = str_replace('.php', '', $file). '_info';
-		if( ! function_exists( $func_name ) )
+		if( ( ! $info = $this->plugin_info( $name ) ) && $this->plugin_exists( $name, true ) )
 		{
 			$enabled = true;
 
-			$func_name = str_replace('.php', '', $file). '_help';
+			$func_name = "wikiplugin_{$name}_help";
 			if( ! function_exists( $func_name ) )
 				return false;
 
@@ -758,7 +758,7 @@ class WikiLib extends TikiLib {
 			global $smarty;
 			$enabled = true;
 
-			$ret = $func_name();
+			$ret = $info;
 
 			if( isset( $ret['prefs'] ) )
 			{
@@ -778,7 +778,7 @@ class WikiLib extends TikiLib {
 			}
 
 			$smarty->assign( 'plugin', $ret );
-			$smarty->assign( 'plugin_name', strtoupper( substr( $file, 11, -4 ) ) );
+			$smarty->assign( 'plugin_name', strtoupper( $name ) );
 			return $smarty->fetch( 'tiki-plugin_help.tpl' );
 		}
     }

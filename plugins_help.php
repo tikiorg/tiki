@@ -11,17 +11,7 @@ require_once('tiki-setup.php');
 $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
 global $wikilib; include_once('lib/wiki/wikilib.php');
-$plugin_files = $wikilib->list_plugins();
-$plugins = array();
-
-// Request help string from each plugin module
-foreach ($plugin_files as $pfile) {
-  $pinfo["file"] = $pfile;
-
-  $pinfo["help"] = $wikilib->get_plugin_description($pfile);
-  $pinfo["name"] = strtoupper(str_replace(".php", "", str_replace("wikiplugin_", "", $pfile)));
-  $plugins[] = $pinfo;
-}
+$plugins = $wikilib->list_plugins( true );
 
 $smarty->assign_by_ref('plugins', $plugins);
 ?>
