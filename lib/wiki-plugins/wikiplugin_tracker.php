@@ -448,7 +448,7 @@ function wikiplugin_tracker($data, $params) {
 					$smarty->assign('wikiplugin_tracker', $trackerId);//used in vote plugin
 				}
 
-			} else if (!empty($values) || (!empty($_REQUEST['values']) and empty($_REQUEST['prefills']))) { // assign default values for each filedId specify
+			} else if (empty($itemId) && !empty($values) || (!empty($_REQUEST['values']) and empty($_REQUEST['prefills']))) { // assign default values for each filedId specify
 				if (empty($values)) { // url with values[]=x&values[] witouth the list of fields
 					$values = $_REQUEST['values'];
 				}
