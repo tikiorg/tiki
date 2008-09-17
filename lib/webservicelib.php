@@ -41,6 +41,19 @@ class Tiki_Webservice
 		}
 	} // }}}
 
+	public static function getList() // {{{
+	{
+		global $tikilib;
+
+		$result = $tikilib->query( "SELECT service FROM tiki_webservice ORDER BY service" );
+		$list = array();
+
+		while( $row = $result->fetchRow() )
+			$list[] = $row['service'];
+
+		return $list;
+	} // }}}
+
 	function save() // {{{
 	{
 		global $tikilib;
@@ -53,6 +66,13 @@ class Tiki_Webservice
 				$this->schemaVersion,
 				$this->schemaDocumentation,
 			) );
+	} // }}}
+
+	function delete() // {{{
+	{
+		global $tikilib;
+		$tikilib->query( "DELETE FROM tiki_webservice WHERE service = ?", array( $this->name ) );
+		$tikilib->query( "DELETE FROM tiki_webservice_template WHERE service = ?", array( $this->name ) );
 	} // }}}
 
 	function getParameters() // {{{
@@ -115,6 +135,13 @@ class Tiki_Webservice
 		$this->templates[$name] = $template;
 
 		return $template;
+	} // }}}
+
+	function removeTemplate( $name ) // {{{
+	{
+		global $tikilib;
+
+		$tikilib->query( "DELETE FROM tiki_webservice_template WHERE service = ? AND template = ?", array( $this->name, $name ) );
 	} // }}}
 
 	function getTemplates() // {{{

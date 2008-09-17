@@ -1,6 +1,14 @@
 <form method="post" action="tiki-admin.php?page=webservices">
+	<div class="button2">
+		{foreach from=$webservices item=name}
+			<a class="linkbut" href="tiki-admin.php?page=webservices&amp;name={$name|escape}">{$name|escape}</a>
+		{/foreach}
+		{if $storedName}
+		<a class="linkbut" href="tiki-admin.php?page=webservices">{tr}Create New{/tr}</a>
+		{/if}
+	</div>
 	{if $storedName}
-		<p><strong>{$storedName|escape}</strong>: {$url|escape}<input type="hidden" name="name" value="{$storedName|escape}"/></p>
+		<p><strong>{$storedName|escape}</strong>: {$url|escape}<input type="hidden" name="name" value="{$storedName|escape}"/> <a href="tiki-admin.php?page=webservices&amp;name={$storedName|escape}&amp;delete">{icon _id='cross'}</a></p>
 	{else}
 		<p>
 			{tr}Enter the URL of a web services returning either JSON or YAML. Parameters can be specified by enclosing a name between percentage signs. For example: %name%. %service% and %template% are reserved keywords and cannot be used.{/tr}
@@ -86,7 +94,10 @@
 				</tr>
 				{foreach from=$storedTemplates item=template}
 					<tr>
-						<td><input type="submit" name="loadtemplate" value="{$template->name|escape}"/></td>
+						<td>
+							<input type="submit" name="loadtemplate" value="{$template->name|escape}"/>
+							<a href="tiki-admin.php?page=webservices&amp;name={$storedName|escape}&amp;delete={$template->name|escape}">{icon _id='cross'}</a>
+						</td>
 						<td>{$template->engine|escape}</td>
 						<td>{$template->output|escape}</td>
 						<td><input type="submit" name="preview" value="{$template->name|escape}"/></td>

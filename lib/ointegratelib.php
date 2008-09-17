@@ -23,10 +23,14 @@ class OIntegrate
 		case 'html':
 			if( $to == 'tikiwiki' )
 				return new OIntegrate_Converter_HtmlToTiki;
+			elseif( $to == 'html' )
+				return new OIntegrate_Converter_Direct;
 			break;	
 		case 'tikiwiki':
 			if( $to == 'html' )
 				return new OIntegrate_Converter_TikiToHtml;
+			elseif( $to == 'tikiwiki' )
+				return new OIntegrate_Converter_EncodeHtml;
 		}
 	} // }}}
 
@@ -150,15 +154,9 @@ class OIntegrate_Response
 	function render( $engine, $engineOutput, $outputContext, $templateFile ) // {{{
 	{
 		$engine = OIntegrate::getEngine( $engine, $engineOutput );
-		if( $engineOutput == $outputContext ) {
-			$output = new OIntegrate_Converter_Direct;
-		} else {
-			$output = OIntegrate::getConverter( $engineOutput, $outputContext );
-
-			if( ! $output ) {
-				$this->errors = array( 1001, 'Output converter not found.' );
-				return;
-			}
+		if( ! $output = OIntegrate::getConverter( $engineOutput, $outputContext ) ) {
+			$this->errors = array( 1001, 'Output converter not found.' );
+			return;
 		}
 
 		if( ! $engine ) {
@@ -258,6 +256,14 @@ class OIntegrate_Converter_Direct implements OIntegrate_Converter // {{{
 	}
 } // }}}
 
+class OIntegrate_Converter_EncodeHtml implements OIntegrate_Converter // {{{
+{
+	function convert( $content )
+	{
+		return htmlentities( $content, ENT_QUOTES, 'UTF-8' );
+	}
+} // }}}
+
 class OIntegrate_Converter_HtmlToTiki implements OIntegrate_Converter // {{{
 {
 	function convert( $content )
@@ -271,7 +277,7 @@ class OIntegrate_Converter_TikiToHtml implements OIntegrate_Converter // {{{
 	function convert( $content )
 	{
 		global $tikilib;
-		return $tikilib->parse_data( $content );
+		return $tikilib->parse_data( htmlentities( $content, ENT_QUOTES, 'UTF-8' ) );
 	}
 } // }}}
 
