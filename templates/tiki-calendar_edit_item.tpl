@@ -42,9 +42,9 @@
 <table class="normal{if !$edit} vevent{/if}">
 <tr class="formcolor">
 	<td>{tr}Calendar{/tr}</td>
-	<td>{$listcals.$calendarId.name|escape}<br />
+	<td>{$listcals.$calendarId.name|escape}
 	<input type="hidden" name="save[calendarId]" value="{$calendarId}" />
-	{if !$id}{tr}or{/tr}&nbsp;
+	{if !$id}&nbsp;{tr}or{/tr}&nbsp;
 		<input type="submit" name="act" value="{tr}Go to{/tr}" onclick="document.location='{$myurl}?calendarId='+document.getElementById('calid').value;return false;" />
 		<select name="save[calendarId]" id="calid">
 			{foreach item=it key=itid from=$listcals}
@@ -52,7 +52,7 @@
 			{/foreach}
 		</select>
 	{elseif $edit and $tiki_p_add_events eq 'y'}
-		<input type="submit" name="act" value="{tr}Duplicate to{/tr}" onclick="document.location='{$myurl}?calendarId='+document.getElementById('calid').value+'&amp;calitemId={$id}&amp;duplicate=1';return false;" />
+		&nbsp;<input type="submit" name="act" value="{tr}Duplicate to{/tr}" onclick="document.location='{$myurl}?calendarId='+document.getElementById('calid').value+'&amp;calitemId={$id}&amp;duplicate=1';return false;" />
 		<select name="save[calendarId]" id="calid">
 			{foreach item=it key=itid from=$listcals}
 				<option value="{$it.calendarId}"{if $calendarId eq $itid} selected="selected"{/if}>{$it.name|escape}</option>
@@ -379,7 +379,7 @@ onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;">
 <tr><td><input type="submit" name="act" value="{tr}Save{/tr}" />
 &nbsp;{tr}in{/tr}&nbsp;
 <span class="linkbut" style="background-color:#{$listcals.$calendarId.custombgcolor};color:#{$listcals.$calendarId.customfgcolor}">{$listcals.$calendarId.name}</span>
-{if $id}<input type="submit" onclick='document.location="tiki-calendar_edit_item.php?calitemId={$id}&amp;delete=y";return false;' value="{tr}Delete Item{/tr}"/>{/if}
+{if $id}&nbsp;<input type="submit" onclick='document.location="tiki-calendar_edit_item.php?calitemId={$id}&amp;delete=y";return false;' value="{tr}Delete Item{/tr}"/>{/if}
 </td></tr>
 </table>
 {/if}
