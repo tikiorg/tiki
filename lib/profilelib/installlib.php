@@ -12,6 +12,8 @@ class Tiki_Profile_Installer
 		'file_gallery' => 'Tiki_Profile_InstallHandler_FileGallery',
 		'module' => 'Tiki_Profile_InstallHandler_Module',
 		'menu' => 'Tiki_Profile_InstallHandler_Menu',
+		'blog' => 'Tiki_Profile_InstallHandler_Blog',
+		'blog_post' => 'Tiki_Profile_InstallHandler_BlogPost',
 	);
 
 	private static $typeMap = array(
@@ -966,6 +968,119 @@ class Tiki_Profile_InstallHandler_Menu extends Tiki_Profile_InstallHandler // {{
 
 		return $menuId;
 
+	}
+} // }}}
+
+class Tiki_Profile_InstallHandler_Blog extends Tiki_Profile_InstallHandler // {{{
+{
+	function getData()
+	{
+		if( $this->data )
+			return $this->data;
+
+		$defaults = array(
+			'description' => '',
+			'user' => 'admin',
+			'public' => 'n',
+			'max_posts' => 10,
+			'heading' => '',
+			'use_title' => 'y',
+			'use_find' => 'y',
+			'comments' => 'n',
+			'show_avatar' => 'n',
+		);
+
+		$data = array_merge(
+			$defaults,
+			$this->obj->getData()
+		);
+
+		$data = Tiki_Profile::convertYesNo( $data );
+
+		return $this->data = $data;
+	}
+
+	function canInstall()
+	{
+		$data = $this->getData();
+		if( ! isset( $data['title'] ) )
+			return false;
+
+		return true;
+	}
+
+	function _install()
+	{
+		global $bloglib;
+		if( ! $bloglib ) require_once 'lib/blogs/bloglib.php';
+
+		$data = $this->getData();
+
+		$this->obj->replaceReferences( $data );
+
+		$blogId = $bloglib->replace_blog( $data['title'], $data['description'], $data['user'], $data['public'], $data['max_posts'], 0, $data['heading'], $data['use_title'], $data['use_find'], $data['allow_comments'], $data['show_avatar'] );
+
+		return $blogId;
+	}
+} // }}}
+
+class Tiki_Profile_InstallHandler_BlogPost extends Tiki_Profile_InstallHandler // {{{
+{
+	function getData()
+	{
+		if( $this->data )
+			return $this->data;
+
+		$defaults = array(
+			'title' => 'Title',
+			'private' => 'n',
+			'user' => '',
+		);
+
+		$data = array_merge(
+			$defaults,
+			$this->obj->getData()
+		);
+
+		$data = Tiki_Profile::convertYesNo( $data );
+
+		return $this->data = $data;
+	}
+
+	function canInstall()
+	{
+		$data = $this->getData();
+		if( ! isset( $data['blog'] ) )
+			return false;
+		if( ! isset( $data['content'] ) )
+			return false;
+
+		return true;
+	}
+
+	function _install()
+	{
+		global $bloglib;
+		if( ! $bloglib ) require_once 'lib/blogs/bloglib.php';
+
+		$data = $this->getData();
+
+		$this->obj->replaceReferences( $data );
+
+		if( isset( $data['blog'] ) && empty( $data['user'] ) ) {
+			global $bloglib, $tikilib;
+			if( ! $bloglib ) require_once 'lib/blogs/bloglib.php';
+
+			$result = $tikilib->query( "SELECT user FROM tiki_blogs WHERE blogId = ?", array( $data['blog'] ) );
+
+			if( $row = $result->fetchRow() ) {
+				$data['user'] = $row['user'];
+			}
+		}
+
+		$entryId = $bloglib->blog_post( $data['blog'], $data['content'], $data['user'], $data['title'], '', $data['private'] );
+
+		return $entryId;
 	}
 } // }}}
 
