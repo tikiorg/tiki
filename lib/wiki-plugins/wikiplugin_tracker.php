@@ -826,7 +826,7 @@ function wikiplugin_tracker($data, $params) {
 					}
 }//old
 
-					if (!empty($f['description']) && $f['type'] != 'h')
+					if (!empty($f['description']) && $f['type'] != 'h' && $f['type'] != 'S')
 						$back .= '<br /><i>'.$f['description'].'</i>';
 					if (empty($tpl) && empty($wiki)) {
 						$back.= "</td></tr>";
