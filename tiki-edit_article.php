@@ -359,10 +359,20 @@ if (isset($_REQUEST['save']) && empty($errors)) {
 	$imgsize = $_REQUEST["image_size"];
 
 	if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
-		$fp = fopen($_FILES['userfile1']['tmp_name'], "rb");
-
-		$imgdata = fread($fp, filesize($_FILES['userfile1']['tmp_name']));
+		$file_name = $_FILES['userfile1']['name'];
+		$file_tmp_name = $_FILES['userfile1']['tmp_name'];
+		$tmp_dest = $prefs['tmpDir'] . "/" . $file_name.".tmp";
+		if (!move_uploaded_file($file_tmp_name, $tmp_dest)) {
+			$smarty->assign('msg', tra('Errors detected'));
+			$smarty->display("error.tpl");
+			die();
+	  }
+    $fp = fopen($tmp_dest, "rb");
+		$imgdata = fread($fp, filesize($tmp_dest));
 		fclose ($fp);
+		if(is_file($tmp_dest)) {
+			@unlink($tmp_dest);
+		}
 		$imgtype = $_FILES['userfile1']['type'];
 		$imgsize = $_FILES['userfile1']['size'];
 		$imgname = $_FILES['userfile1']['name'];
