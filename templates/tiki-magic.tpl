@@ -15,7 +15,7 @@
 			<td class="useDefault">{* Invisible Feature *}</td>
 			{if $features[feature].status eq 'experimental'}<td><nobr>{tr}This is an experimental feature{/tr}</nobr></td>{else}<td class="spacer">&nbsp;</td>{/if}
 			{if ($features[feature].template neq '') and ($features[feature].value eq 'y')}
-			<td class="goLink"><a href="{$features[feature].template}.php" class="goLink">{tr}Go{/tr}&raquo;</a></td>
+			<td class="goLink"><a href="{$features[feature].template}" class="goLink">{tr}Go{/tr}&raquo;</a></td>
 			{else}<td class="spacer">&nbsp;</td>
 			{/if}
 		</tr>
@@ -23,7 +23,11 @@
 	<tr class="{$features[feature].feature_type}Heading"><td colspan="4">
 		<h4 class="configSection">{tr}{$features[feature].feature_name}{/tr}<sub>({$features[feature].feature_id})</sub>
 		{if $features[feature].feature_count eq 0}
-		<td class="goLink"><a name="container{$features[feature].feature_id}" href="tiki-magic.php?featurechain={$features[feature].feature_path|escape:'url'}" class="goLink" title="{tr}Go{/tr}">{tr}Go{/tr}&raquo;</a></td>
+			{if ($features[feature].template neq '') and ($features[feature].value eq 'y')}
+			<td class="goLink"><a href="{$features[feature].template}" class="goLink">{tr}Go{/tr}&raquo;</a></td>
+			{else}
+			<td class="goLink"><a name="container{$features[feature].feature_id}" href="tiki-magic.php?featurechain={$features[feature].feature_path|escape:'url'}" class="goLink" title="{tr}Go{/tr}">{tr}Go{/tr}&raquo;</a></td>
+			{/if}
 		{else}<td class="spacer">&nbsp;</td>
 	{/if}
 	</td></tr>	
