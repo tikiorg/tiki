@@ -3,6 +3,7 @@
   <script type="text/javascript" src="lib/wiki/wiki-ajax.js"></script>
 {/if}
 
+{if !$hide_page_header}
 {breadcrumbs type="trail" loc="page" crumbs=$crumbs}
 {if $prefs.feature_page_title eq 'y'}
 {breadcrumbs type="pagetitle" loc="page" crumbs=$crumbs}
@@ -31,9 +32,11 @@
 {tr}This is a new staging page that has not been approved before. Edit and manually move it to the category for approved pages to approve it for the first time.{/tr}
 </div>
 {/if}
+{/if} {*hide_page_header*}
 
 <div class="wikitopline" style="clear: both;">
 	<div class="content">
+		{if !$hide_page_header}
 		<div class="wikiinfo" style="float: left">
 {if $prefs.feature_wiki_pageid eq 'y' and $print_page ne 'y'}
 			<small><a class="link" href="tiki-index.php?page_id={$page_id}">{tr}page id{/tr}: {$page_id}</a></small>
@@ -121,6 +124,7 @@
 		</div>
 		<br class="clear" style="clear: both" />
 {/if}{* <-- end of if $print_page ne 'y' *}
+{/if} {*hide_page_header*}
 	</div>
 </div>
 
@@ -163,6 +167,7 @@
 	{/section}
 {/if}
 
+{if !$hide_page_header}
 {if $prefs.feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y' and isset($freetags.data[0])}
 {include file="freetag_list.tpl"}
 {/if}
@@ -234,6 +239,7 @@
 </div>
 {/if}
 {if $prefs.feature_wiki_ratings eq 'y'}{include file="poll.tpl"}{/if}
+{/if} {*hide_page_header*}
 
 {if $pageLang eq 'ar' or $pageLang eq 'he'}
 <div style="direction:RTL; unicode-bidi:embed; text-align: right; {if $pageLang eq 'ar'}font-size: large;{/if}">

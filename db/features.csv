@@ -926,3 +926,4 @@
 1035,"Plugin Alias Manager",913,,"feature_wiki","container","tiki-admin.php?page=plugins","tiki_p_admin",-5,,"Plugin Alias",,," "
 1036,"Webservice Plugins Registry",913,,"feature_wiki","container","tiki-admin.php?page=webservices","tiki_p_admin",-5,,"Webservices",,," "
 1037,"Semantic Relationships",898,,"feature_wiki","container","tiki-admin.php?page=semantic","tiki_p_admin",-5,,"Semantic Wiki",,," "
+1038,"Allow all languages to be displayed on a single page",76,,feature_multilingual_one_page,flag,,tiki_p_admin,,,,,,

@@ -7714,7 +7714,7 @@ class TikiLib extends TikiDB {
 		// run through all the language codes:
 		if (isset($short) && $short == "y") {
 			foreach ($languages as $lc) {
-				if (!count($prefs['available_languages']) or (!$all and in_array($lc,$prefs['available_languages']))) {
+				if ( !is_array($prefs['available_languages'] ) || (!$all and in_array($lc,$prefs['available_languages']))) {
 					if (isset($langmapping[$lc]))
 						$formatted[] = array('value' => $lc, 'name' => $langmapping[$lc][0]);
 					else
@@ -7725,7 +7725,7 @@ class TikiLib extends TikiDB {
 			return $formatted;
 		}
 		foreach ($languages as $lc) {
-			if (!count($prefs['available_languages']) or (!$all and in_array($lc,$prefs['available_languages'])) or $all) {
+			if (!is_array($prefs['available_languages']) || (!$all and in_array($lc,$prefs['available_languages'])) or $all) {
 				if (isset($langmapping[$lc])) {
 					// known language
 					if ($langmapping[$lc][0] == $langmapping[$lc][1]) {

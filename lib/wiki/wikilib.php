@@ -822,6 +822,10 @@ class WikiLib extends TikiLib {
 	}
 	function sefurl($page) {
 		global $prefs;
+		if( basename( $_SERVER['PHP_SELF'] ) == 'tiki-all_languages.php' ) {
+			return 'tiki-all_languages.php?page='.urlencode($page);
+		}
+
 		if ($prefs['feature_sefurl'] == 'y') {
 			return urlencode($page);
 		} else {
