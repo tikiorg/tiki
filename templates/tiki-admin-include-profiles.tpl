@@ -119,6 +119,9 @@ function showDetails( id, domain, profile ) { // {{{
 				{
 					for( k in data.dependencies )
 					{
+						if( typeof(data.dependencies[k]) != 'string')
+							continue;
+
 						var li = document.createElement( 'li' );
 						var a = document.createElement( 'a' );
 						a.href = data.dependencies[k];
