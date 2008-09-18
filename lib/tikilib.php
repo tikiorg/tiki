@@ -7097,6 +7097,9 @@ class TikiLib extends TikiDB {
 		
 		$displayLink = $pageLink;
 
+		// HTML entities encoding breaks page lookup
+		$pageLink = html_entity_decode( $pageLink, ENT_COMPAT, 'UTF-8' );
+
 		$description = null;
 		$reltype = null;
 		$processPlural = false;
