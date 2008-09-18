@@ -922,3 +922,4 @@
 1031,"Redirect",913,,"wikiplugin_redirect","flag",,"tiki_p_admin",,,,,," "
 1032,"Translation Assistant",76,,"feature_translation","flag",,"tiki_p_admin",-15,478,"i18n",,," "
 1033,"Categories used in tpl",25,,"categories_used_in_tpl","flag",,"tiki_p_admin",,"","Category","in_array(categoryId, $objectCategoryIds)",," "
+1034,"Urgent Translation",76,,"feature_urgent_translation","flag",,"tiki_p_admin",-15,478,"i18n",,," "

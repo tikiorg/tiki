@@ -334,7 +334,7 @@ function searchrep() {
 </td></tr>
 {else}
 	{if $trads|@count > 1}
-	<tr class="formcolor">
+	<tr class="formcolor"{if $prefs.feature_urgent_translation neq 'y' or $diff_style} style="display:none;"{/if}>
 		<td>{tr}Translation request{/tr}:</td>
 		<td>
 			<input type="hidden" name="lang" value="{$lang|escape}"/>
