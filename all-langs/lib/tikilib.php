@@ -5331,6 +5331,7 @@ class TikiLib extends TikiDB {
 							encoding: none|html|url - default to none
 		*/
 
+		$name = strtolower( $name );
 		$data['plugin_name'] = $name;
 
 		$prefName = "pluginalias_$name";
@@ -7095,6 +7096,9 @@ class TikiLib extends TikiDB {
 		global $prefs, $wikilib, $semanticlib;
 		
 		$displayLink = $pageLink;
+
+		// HTML entities encoding breaks page lookup
+		$pageLink = html_entity_decode( $pageLink, ENT_COMPAT, 'UTF-8' );
 
 		$description = null;
 		$reltype = null;

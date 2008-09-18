@@ -1786,14 +1786,13 @@ div.commentsedithelp {
 	font-weight: bold;
 }
 
-ul.catfeatures {}
+ul.catfeatures {list-style: none}
 ul.catfeatures li {}
 ul.catitems {}
 
 ul.catitems li {
-	float: left !important;
-	padding-right: 18px;
-}
+	display: inline;
+	margin-right: 10px}
 
 ul.catitems li a.link {}
 

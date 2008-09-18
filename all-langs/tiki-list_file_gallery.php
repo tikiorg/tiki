@@ -311,8 +311,8 @@ if ( isset($_REQUEST['edit']) ) {
 
 			// Check THIS gallery modification rights
 			if ( $galleryId > 0 ) {
-				if ( ! $user || $gal_info['user'] != $user ) 
-					$smarty->assign('errortype', 401);{
+				if ( ! $user || $gal_info['user'] != $user ) {
+					$smarty->assign('errortype', 401);
 					$smarty->assign('msg', tra('Permission denied you cannot edit this gallery'));
 					$smarty->display('error.tpl');
 					die;

@@ -36,22 +36,32 @@ function wikiplugin_webservice( $data, $params ) {
 	require_once( 'Horde/Yaml/Node.php' );
 	require_once( 'Horde/Yaml/Exception.php' );
 
+	if( ! empty( $data ) ) {
+		$templateFile = realpath( './temp/cache/' . md5($data) );
+
+		if( ! file_exists( $templateFile ) )
+			file_put_contents( $templateFile, $data );
+	} else {
+		$templateFile = '';
+	}
+
 	if( isset( $params['url'] ) ) {
 		// When URL is specified, always use the body as template
 		$request = new OIntegrate;
 		$response = $request->performRequest( $params['url'] );
 
-		$templateFile = realpath( './temp/cache/' . md5($data) );
-
-		if( ! file_exists( $templateFile ) )
-			file_put_contents( $templateFile, $data );
-
-		return $response->render( 'smarty', 'tikiwiki', 'tikiwiki', $templateFile );
+		if( ! empty( $templateFile ) )
+			return $response->render( 'smarty', 'tikiwiki', 'tikiwiki', $templateFile );
 	} elseif( isset($params['service']) && isset($params['template']) ) {
 		require_once 'lib/webservicelib.php';
 
 		if( $service = Tiki_Webservice::getService( $params['service'] ) ) {
-			if( $template = $service->getTemplate( $params['template'] ) ) {
+			if( ! empty( $templateFile ) ) {
+				// Render using function body
+				$response = $service->performRequest( $params );
+
+				return $response->render( 'smarty', 'tikiwiki', 'tikiwiki', $templateFile );
+			} elseif( $template = $service->getTemplate( $params['template'] ) ) {
 				$response = $service->performRequest( $params );
 
 				return $template->render( $response, 'tikiwiki' );

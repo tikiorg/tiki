@@ -289,7 +289,7 @@ class FileGalLib extends TikiLib {
 		$extract_dir = 'temp/'.basename($file).'/';
 		mkdir($extract_dir);
 		$archive = new PclZip($file);
-		$archive->extract($extract_dir);
+		$archive->extract(PCLZIP_OPT_PATH, $extract_dir, PCLZIP_OPT_REMOVE_ALL_PATH);
 		unlink($file);
 		$files = array();
 		$h = opendir($extract_dir);

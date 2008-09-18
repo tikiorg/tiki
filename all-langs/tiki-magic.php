@@ -49,6 +49,9 @@ if ($feature['template'] != ''
 	exit;
 }
 
+if( ! empty( $feature['template'] ) && strpos( $feature['template'], '.' ) === false )
+	$feature['template'] .= '.php';
+
 $pagefeatures = array($feature);
 $containers = array();
 $hasCategories = false;
@@ -106,6 +109,8 @@ function get_features($featureid, $keepContainers = true) {
 
 	if ($features) {
 		foreach($features as $feature) {
+			if( ! empty( $feature['template'] ) && strpos( $feature['template'], '.' ) === false )
+				$feature['template'] .= '.php';
 			if ($keepContainers && $magiclib->is_container($feature) && $feature['feature_count'] > 0) {
 				$cont[] = $feature;
 			} else {

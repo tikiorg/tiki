@@ -5,9 +5,18 @@ require_once 'lib/ointegratelib.php';
 require_once 'lib/webservicelib.php';
 
 if( isset( $_REQUEST['name'] ) && $webservice = Tiki_Webservice::getService( $_REQUEST['name'] ) ) {
-	$url = $webservice->url;
 
-	$storedTemplates = $webservice->getTemplates();
+	if( isset( $_REQUEST['delete'] ) && empty( $_REQUEST['delete'] ) ) {
+		$webservice->delete();
+		$webservice = new Tiki_Webservice;
+
+		$url = '';
+		$storedTemplates = array();
+	} else {
+		$url = $webservice->url;
+
+		$storedTemplates = $webservice->getTemplates();
+	}
 } else {
 	$url = '';
 
@@ -38,6 +47,11 @@ if( $response = $webservice->performRequest( $_REQUEST['params'] ) ) {
 		'javascript/html',
 	) ) );
 	$smarty->assign( 'response', $response );
+
+	if( isset($_REQUEST['delete']) && $webservice->getTemplate( $_REQUEST['delete'] ) ) {
+		$webservice->removeTemplate( $_REQUEST['delete'] );
+		unset( $storedTemplates[ $_REQUEST['delete'] ] );
+	}
 
 	// Load template data in the form for modification
 	if( isset($_REQUEST['loadtemplate']) ) {
@@ -86,6 +100,7 @@ if( $response = $webservice->performRequest( $_REQUEST['params'] ) ) {
 	}
 }
 
+$smarty->assign( 'webservices', Tiki_Webservice::getList() );
 $smarty->assign( 'storedName', $webservice->getName() );
 $smarty->assign( 'storedTemplates', $storedTemplates );
 $smarty->assign( 'url', $webservice->url );

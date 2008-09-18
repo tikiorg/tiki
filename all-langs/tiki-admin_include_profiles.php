@@ -53,7 +53,13 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 		require_once 'lib/profilelib/profilelib.php';
 		require_once 'lib/profilelib/installlib.php';
 
+		$data = array();
+		foreach( $_POST as $key => $value )
+			if( $key != 'url' && $key != 'install' )
+				$data[str_replace('_', ' ', $key )] = $value;
+
 		$installer = new Tiki_Profile_Installer;
+		$installer->setUserData( $data );
 
 		$profile = new Tiki_Profile( $_POST['url'] );
 		$installer->install( $profile );
@@ -104,15 +110,19 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 		}
 
 		$dependencies = array();
+		$userInput = array();
 		foreach( $deps as $d )
-			if( ! $installer->isInstalled( $d ) )
+			if( ! $installer->isInstalled( $d ) ) {
 				$dependencies[] = $d->pageUrl;
+				$userInput = array_merge( $userInput, $d->getRequiredInput() );
+			}
 
 		$parsed = $tikilib->parse_data( $profile->pageContent );
 		$installed = $installer->isInstalled( $profile );
 
 		echo json_encode( array(
 			'dependencies' => $dependencies,
+			'userInput' => $userInput,
 			'installable' => $sequencable,
 			'error' => $error,
 			'content' => $parsed,
