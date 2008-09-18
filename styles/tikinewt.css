@@ -1155,6 +1155,11 @@ form fieldset.tabcontent {
 	border: 1px solid #225566;
 	border-top: none !important;
 }
+
+.commentbloc {
+	text-align: left;
+}
+
 form.admin .tabs {
 	border-bottom: solid 1px #225566 !important;
 	margin: 10px 1px 0 0 !important;

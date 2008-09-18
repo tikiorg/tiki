@@ -7,6 +7,8 @@
   <br />
 {/if}
 
+<a class="link" href="tiki-forums.php">{tr}Forums{/tr}</a> {$prefs.site_crumb_seper} <a class="link" href="tiki-view_forum.php?forumId={$forumId}">{$forum_info.name}</a>
+
 <div class="navbar">
 <table width="97%">
 <tr>
