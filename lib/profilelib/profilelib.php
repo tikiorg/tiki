@@ -9,6 +9,7 @@ class Tiki_Profile
 {
 	const SHORT_PATTERN = '/^\$((([\w\.-]+):)?((\w+):))?(\w+)$/';
 	const LONG_PATTERN = '/\$profileobject:((([\w\.-]+):)?((\w+):))?(\w+)\$/';
+	const INFO_REQUEST = '/\$profilerequest:([^\$]+)\$([^\$]+)\$/';
 
 	private $url;
 	private $pageUrl;
@@ -227,6 +228,23 @@ class Tiki_Profile
 		return array( 'domain' => $domain, 'profile' => $profile, 'object' => $object );
 	} // }}}
 
+	function getRequiredInput() // {{{
+	{
+		return $this->traverseForRequiredInput( $this->data );
+	} // }}}
+
+	function traverseForRequiredInput( $value ) // {{{
+	{
+		$array = array();
+		if( is_array( $value ) )
+			foreach( $value as $v )
+				$array = array_merge( $array, $this->traverseForRequiredInput( $v ) );
+		elseif( preg_match( self::INFO_REQUEST, $value, $parts ) )
+			$array[$parts[1]] = $parts[2];
+
+		return $array;
+	} // }}}
+
 	function getRequiredProfiles( $recursive = false, $known = array() ) // {{{
 	{
 		$profiles = array();
@@ -247,32 +265,61 @@ class Tiki_Profile
 		return $profiles;
 	} // }}}
 
-	public function replaceReferences( &$data ) // {{{
+	public function replaceReferences( &$data, $suppliedUserData = false ) // {{{
 	{
+		if( $suppliedUserData === false )
+			$suppliedUserData = $this->getRequiredInput();
+
 		if( is_array( $data ) )
 			foreach( $data as &$sub )
-				$this->replaceReferences( $sub );
-		elseif( preg_match( self::SHORT_PATTERN, $data, $parts ) )
+				$this->replaceReferences( $sub, $suppliedUserData );
+		else
 		{
-			$object = $this->convertReference( $parts );
-			$serialized = Tiki_Profile_Object::serializeNamedObject( $object );
-			
-			if( ! isset( self::$known[$serialized] ) )
-				self::$known[$serialized] = self::findObjectReference( $object );
-
-			$data = self::$known[$serialized];
-		}
-		elseif( preg_match_all( self::LONG_PATTERN, $data, $parts, PREG_SET_ORDER ) )
-			foreach( $parts as $row )
+			if( preg_match( self::SHORT_PATTERN, $data, $parts ) )
 			{
-				$object = $this->convertReference( $row );
+				$object = $this->convertReference( $parts );
 				$serialized = Tiki_Profile_Object::serializeNamedObject( $object );
-				
+
 				if( ! isset( self::$known[$serialized] ) )
 					self::$known[$serialized] = self::findObjectReference( $object );
-				
-				$data = str_replace( $row[0], self::$known[$serialized], $data );
+
+				$data = self::$known[$serialized];
+				return;
 			}
+
+			$needles = array();
+			$replacements = array();
+
+			if( preg_match_all( self::LONG_PATTERN, $data, $parts, PREG_SET_ORDER ) )
+				foreach( $parts as $row )
+				{
+					$object = $this->convertReference( $row );
+					$serialized = Tiki_Profile_Object::serializeNamedObject( $object );
+
+					if( ! isset( self::$known[$serialized] ) )
+						self::$known[$serialized] = self::findObjectReference( $object );
+
+					$needles[] = $row[0];
+					$replacements[] = self::$known[$serialized];
+				}
+
+			if( preg_match_all( self::INFO_REQUEST, $data, $parts, PREG_SET_ORDER ) )
+				foreach( $parts as $row )
+				{
+					list( $full, $label, $default ) = $row;
+
+					if( ! array_key_exists( $label, $suppliedUserData ) )
+						$value = $default;
+					else
+						$value = $suppliedUserData[$label];
+
+					$needles[] = $full;
+					$replacements[] = $value;
+				}
+			
+			if( count( $needles ) )
+				$data = str_replace( $needles, $replacements, $data );
+		}
 	} // }}}
 
 	function getPreferences() // {{{
@@ -495,9 +542,9 @@ class Tiki_Profile_Object
 		return array();
 	} // }}}
 
-	public function replaceReferences( &$data ) // {{{
+	public function replaceReferences( &$data, $suppliedUserData = false ) // {{{
 	{
-		$this->profile->replaceReferences( $data );
+		$this->profile->replaceReferences( $data, $suppliedUserData );
 	} // }}}
 
 	private function traverseForReferences( $value ) // {{{

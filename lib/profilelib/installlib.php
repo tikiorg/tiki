@@ -22,6 +22,8 @@ class Tiki_Profile_Installer
 		'file_gallery' => 'fgal',
 	);
 
+	private $userData = false;
+
 	public static function convertType( $type ) // {{{
 	{
 		if( array_key_exists( $type, self::$typeMap ) )
@@ -47,6 +49,11 @@ class Tiki_Profile_Installer
 		$result = $tikilib->query( "SELECT DISTINCT domain, profile FROM tiki_profile_symbols" );
 		while( $row = $result->fetchRow() )
 			$this->installed[sprintf( "http://%s/tiki-export_wiki_pages.php?page=%s", $row['domain'], urlencode($row['profile']) )] = true;
+	} // }}}
+
+	function setUserData( $userData ) // {{{
+	{
+		$this->userData = $userData;
 	} // }}}
 
 	function getInstallOrder( Tiki_Profile $profile ) // {{{
@@ -162,7 +169,7 @@ class Tiki_Profile_Installer
 		{
 			$class = $this->handlers[$type];
 			if( class_exists( $class ) )
-				return new $class( $object );
+				return new $class( $object, $this->userData );
 		}
 	} // }}}
 
@@ -176,12 +183,12 @@ class Tiki_Profile_Installer
 			$this->getInstallHandler( $object )->install();
 
 		$preferences = $profile->getPreferences();
-		$profile->replaceReferences( $preferences );
+		$profile->replaceReferences( $preferences, $thus->userData );
 		foreach( $preferences as $pref => $value )
 			$tikilib->set_preference( $pref, $value );
 
 		$permissions = $profile->getPermissions();
-		$profile->replaceReferences( $permissions );
+		$profile->replaceReferences( $permissions, $thus->userData );
 		foreach( $permissions as $groupName => $info )
 			$this->setupGroup( $groupName, $info['general'], $info['permissions'], $info['objects'] );
 	} // }}}
@@ -224,10 +231,12 @@ class Tiki_Profile_Installer
 abstract class Tiki_Profile_InstallHandler // {{{
 {
 	protected $obj;
+	private $userData;
 
-	function __construct( Tiki_Profile_Object $obj )
+	function __construct( Tiki_Profile_Object $obj, $userData )
 	{
 		$this->obj = $obj;
+		$this->userData = $userData;
 	}
 
 	abstract function canInstall();
@@ -240,6 +249,11 @@ abstract class Tiki_Profile_InstallHandler // {{{
 
 		$this->obj->setValue( $id );
 	}
+
+	function replaceReferences( &$data ) // {{{
+	{
+		$this->obj->replaceReferences( $data, $this->userData );
+	} // }}}
 
 	abstract function _install();
 } // }}}
@@ -348,7 +362,7 @@ class Tiki_Profile_InstallHandler_Tracker extends Tiki_Profile_InstallHandler //
 		$values = $this->getDefaults();
 
 		$input = $this->getData();
-		$this->obj->replaceReferences( $input );
+		$this->replaceReferences( $input );
 
 		$conversions = $this->getOptionConverters();
 		foreach( $input as $key => $value )
@@ -476,7 +490,7 @@ class Tiki_Profile_InstallHandler_TrackerField extends Tiki_Profile_InstallHandl
 	{
 		$data = $this->getData();
 		$converters = $this->getConverters();
-		$this->obj->replaceReferences( $data );
+		$this->replaceReferences( $data );
 
 		foreach( $data as $key => &$value )
 			if( isset( $converters[$key] ) )
@@ -555,7 +569,7 @@ class Tiki_Profile_InstallHandler_TrackerItem extends Tiki_Profile_InstallHandle
 	{
 		$data = $this->getData();
 		$converters = $this->getConverters();
-		$this->obj->replaceReferences( $data );
+		$this->replaceReferences( $data );
 
 		foreach( $data as $key => &$value )
 			if( isset( $converters[$key] ) )
@@ -622,10 +636,10 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler /
 	{
 		global $tikilib;
 		$this->fetchData();
-		$this->obj->replaceReferences( $this->name );
-		$this->obj->replaceReferences( $this->description );
-		$this->obj->replaceReferences( $this->content );
-		$this->obj->replaceReferences( $this->lang );
+		$this->replaceReferences( $this->name );
+		$this->replaceReferences( $this->description );
+		$this->replaceReferences( $this->content );
+		$this->replaceReferences( $this->lang );
 
 		if( $tikilib->create_page( $this->name, 0, $this->content, time(), 'Created by profile installer.', 'admin', '0.0.0.0', $this->description, $this->lang ) )
 			return $this->name;
@@ -674,10 +688,10 @@ class Tiki_Profile_InstallHandler_Category extends Tiki_Profile_InstallHandler /
 	{
 		global $tikilib;
 		$this->fetchData();
-		$this->obj->replaceReferences( $this->name );
-		$this->obj->replaceReferences( $this->description );
-		$this->obj->replaceReferences( $this->parent );
-		$this->obj->replaceReferences( $this->items );
+		$this->replaceReferences( $this->name );
+		$this->replaceReferences( $this->description );
+		$this->replaceReferences( $this->parent );
+		$this->replaceReferences( $this->items );
 		
 		global $categlib;
 		require_once 'lib/categories/categlib.php';
@@ -766,7 +780,7 @@ class Tiki_Profile_InstallHandler_FileGallery extends Tiki_Profile_InstallHandle
 		if( ! $filegallib ) require_once 'lib/filegals/filegallib.php';
 
 		$input = $this->getData();
-		$this->obj->replaceReferences( $input );
+		$this->replaceReferences( $input );
 		
 		return $filegallib->replace_file_gallery( $input );
 	}
@@ -814,7 +828,7 @@ class Tiki_Profile_InstallHandler_Module extends Tiki_Profile_InstallHandler // 
 		$data = $this->getData();
 		$data['position'] = ($data['position'] == 'left') ? 'l' : 'r';
 
-		$this->obj->replaceReferences( $data );
+		$this->replaceReferences( $data );
 		
 		return $modlib->assign_module( 0, $data['name'], null, $data['position'], $data['order'], $data['cache'], $data['rows'], $data['groups'], $data['params'] );
 	}
@@ -932,7 +946,7 @@ class Tiki_Profile_InstallHandler_Menu extends Tiki_Profile_InstallHandler // {{
 
 		$data = $this->getData();
 
-		$this->obj->replaceReferences( $data );
+		$this->replaceReferences( $data );
 		
 		$type = 'f';
 		if( $data['collapse'] == 'collapsed' )
@@ -1017,7 +1031,7 @@ class Tiki_Profile_InstallHandler_Blog extends Tiki_Profile_InstallHandler // {{
 
 		$data = $this->getData();
 
-		$this->obj->replaceReferences( $data );
+		$this->replaceReferences( $data );
 
 		$blogId = $bloglib->replace_blog( $data['title'], $data['description'], $data['user'], $data['public'], $data['max_posts'], 0, $data['heading'], $data['use_title'], $data['use_find'], $data['allow_comments'], $data['show_avatar'] );
 
@@ -1066,7 +1080,7 @@ class Tiki_Profile_InstallHandler_BlogPost extends Tiki_Profile_InstallHandler /
 
 		$data = $this->getData();
 
-		$this->obj->replaceReferences( $data );
+		$this->replaceReferences( $data );
 
 		if( isset( $data['blog'] ) && empty( $data['user'] ) ) {
 			global $bloglib, $tikilib;
@@ -1128,7 +1142,7 @@ class Tiki_Profile_InstallHandler_PluginAlias extends Tiki_Profile_InstallHandle
 		global $tikilib;
 		$data = $this->getData();
 
-		$this->obj->replaceReferences( $data );
+		$this->replaceReferences( $data );
 
 		$name = $data['name'];
 		unset( $data['name'] );

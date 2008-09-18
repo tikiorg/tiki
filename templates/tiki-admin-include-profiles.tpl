@@ -88,7 +88,34 @@ function showDetails( id, domain, profile ) { // {{{
 					form.method = 'post';
 					form.action = document.location.href;
 
+					var iTable = document.createElement('table');
+					iTable.className = 'normal';
+
+					var rowNum = 0;
+					for( i in data.userInput ) {
+						if( typeof(data.userInput[i]) != 'string' )
+							continue;
+
+						var iRow = iTable.insertRow( rowNum++ );
+						var iLabel = iRow.insertCell( 0 );
+						var iField = iRow.insertCell( 1 );
+
+						iRow.className = 'formcolor';
+
+						iLabel.appendChild( document.createTextNode( i ) );
+						var iInput = document.createElement( 'input' );
+						iInput.type = 'text';
+						iInput.name = i;
+						iInput.value = data.userInput[i];
+
+						iField.appendChild( iInput );
+					}
+
+					if( rowNum > 0 )
+						form.appendChild( iTable );
+
 					form.appendChild(p);
+
 					submit.type = 'submit';
 					submit.name = 'install';
 					submit.value = 'Install Now';
