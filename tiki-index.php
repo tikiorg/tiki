@@ -457,10 +457,10 @@ include_once('tiki-section_options.php');
 $smarty->assign('cached_page','n');
 if(isset($info['wiki_cache'])) {$prefs['wiki_cache']=$info['wiki_cache'];}
 /*
-* Only cache unknown users. The is_null() should be sufficient,
-* but the other tests are included as protective programming.
+* Only cache unknown users. The $user == '' is standard test for anonymous,
+* but the is_null is included as protective code.
 */
-if($prefs['wiki_cache']>0 and (is_null($group) or $group=='' or $group=='Anonymous')) { 
+if($prefs['wiki_cache']>0 and (is_null($user) or $user == '')) { 
     $cache_info = $wikilib->get_cache_info($page);
     if($cache_info['cache_timestamp']+$prefs['wiki_cache'] > $tikilib->now) {
 	$pdata = $cache_info['cache'];
