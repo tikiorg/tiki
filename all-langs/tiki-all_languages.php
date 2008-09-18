@@ -38,9 +38,9 @@ $prefered = $multilinguallib->preferedLangs();
 foreach( $multilinguallib->getTrads( 'wiki page', $page_id ) as $row )
 	if( $row['objId'] != $page_id && in_array($row['lang'], $prefered) )
 		$unordered[ $row['lang'] ] = $tikilib->get_page_info_from_id( $row['objId'] );
-	else
+	elseif( $row['lang'] != $requested['lang'] )
 		$excluded[] = $row['lang'];
-	
+
 foreach( $prefered as $lang )
 	if( array_key_exists( $lang, $unordered ) )
 		$pages[] = $unordered[$lang];
@@ -56,7 +56,7 @@ foreach( array_reverse( $pages ) as $id => $info )
 	$renderer->applyPermissions();
 	$renderer->runSetups();
 
-	$smarty->assign( 'hide_page_header', $id === 0 );
+	$smarty->assign( 'hide_page_header', $id !== count($pages) - 1 );
 
     $comments_per_page = $prefs['wiki_comments_per_page'];
     $thread_sort_mode = $prefs['wiki_comments_default_ordering'];
