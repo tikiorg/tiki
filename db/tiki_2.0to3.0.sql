@@ -90,6 +90,10 @@ ALTER TABLE tiki_feature MODIFY COLUMN keyword VARCHAR(30) NULL;
 #2008-09-05 bitey
 ALTER TABLE tiki_feature ADD COLUMN `tip` text NULL;
 
+#2008-09-16  MatWho
+ALTER TABLE tiki_user_mail_accounts ADD COLUMN `flagsPublic` char(1) default 'n' AFTER smtpPort;
+ALTER TABLE tiki_user_mail_accounts ADD COLUMN `autoRefresh` int(4) NOT NULL default 0 AFTER flagsPublic;
+
 #2008-09-16 lphuberdeau
 CREATE TABLE tiki_webservice (
 	service VARCHAR(25) NOT NULL PRIMARY KEY,
@@ -107,4 +111,3 @@ CREATE TABLE tiki_webservice_template (
 	last_modif INT,
 	PRIMARY KEY( service, template )
 ) ENGINE=MyISAM ;
-
