@@ -8,7 +8,7 @@
 
 
 function wikiplugin_googledoc_help() {
-	return tra("googledoc").":~np~{GOOGLEDOC(key=XXXXX name=xxx, width=100, height=100, align=top|middle|bottom|left|right, frameborder=1|0, marginheight=0, marginwidth=0, scrolling=yes|no|auto, editLink=top|bottom|both)}{GOOGLEDOC}~/np~";
+	return tra("googledoc").":~np~{GOOGLEDOC(type=sheet|doc|pres|spreadsheet|document|presentation, key=XXXXX name=xxx, size=small|medium|large, width=100, height=100, align=top|middle|bottom|left|right, frameborder=1|0, marginheight=0, marginwidth=0, scrolling=yes|no|auto, editLink=top|bottom|both)}{GOOGLEDOC}~/np~";
 }
 
 function wikiplugin_googledoc_info() {
@@ -17,9 +17,15 @@ function wikiplugin_googledoc_info() {
 		'documentation' => 'PluginGoogleDoc',
 		'description' => tra("Displays a Google document"),
 //		'prefs' => array( 'wikiplugin_googleDoc' ),
-		'body' => tra('none'),
-		'validate' => 'all',
+		'body' => tra('Leave this empty.'),
+//		'validate' => 'all',
 		'params' => array(
+			'type' => array(
+				'safe' => true,
+				'required' => true,
+				'name' => tra('type'),
+				'description' => tra('Type of Google document'),
+			),
 			'key' => array(
 					'safe' => true,
 					'required' => true,
@@ -31,6 +37,12 @@ function wikiplugin_googledoc_info() {
 				'required' => false,
 				'name' => tra('Name'),
 				'description' => tra('Name of iframe'),
+			),
+			'size' => array(
+				'safe' => true,
+				'required' => false,
+				'name' => tra('Size'),
+				'description' => tra('Size of frame, use instead of width and height, they will fit the Google presentations sizes exactly. It can be small|medium|large.'),
 			),
 			'width' => array(
 				'safe' => true,
@@ -88,6 +100,16 @@ function wikiplugin_googledoc($data, $params) {
 
 	extract ($params);
 
+    if ($type =="sheet" or $type=="spreadsheet") {
+		$srcUrl="\"http://spreadsheets.google.com/pub?key=$key &output=html&widget=true\"";
+	}
+	if ($type =="doc" or $type=="document") {
+		$srcUrl="\"http://docs.google.com/Doc?docid=$key\"";
+	}
+	if ($type =="pres" or $type=="presentation") {
+		$srcUrl="\"http://docs.google.com/EmbedSlideshow?docid=$key\"";
+	}
+	
 	$ret = "";
 	
 	if (isset($name)) {
@@ -96,11 +118,15 @@ function wikiplugin_googledoc($data, $params) {
 		$frameName="Frame".$key;
 	}
 	if ($editLink== 'both' or $editLink== 'top') {
-		$ret .= " <P><A HREF=\"http://spreadsheets.google.com/ccc?key=$key\" Target=\"$frameName\">Edit this Google Document</A></P>";
+		$ret .= " <P><A HREF=\$srcUrl Target=\"$frameName\">Edit this Google Document</A></P>";
 	}
 
 	$ret .= '<iframe ';
 	$ret .= " name=\"$frameName\"";
+	
+	if($size == 'small') { $width= 410; $height= 342;}
+	if($size == 'medium'){ $width= 555; $height= 451;}
+	if($size == 'large') { $width= 700; $height= 559;}
 	
 	if (isset($width)) {
 		$ret .= " width=\"$width\"";
@@ -112,11 +138,14 @@ function wikiplugin_googledoc($data, $params) {
 	} else {
 		$ret .= " height=\"400\"";
 	}
+
 	if (isset($align)) {
 		$ret .= " align=\"$align\"";
 	}
 	if (isset($frameborder)) {
 		$ret .= " frameborder=\"$frameborder\"";
+	} else {
+		$ret .= " frameborder=0";
 	}
 	if (isset($marginheight)) {
 		$ret .= " marginheight=\"$marginheight\"";
@@ -128,10 +157,10 @@ function wikiplugin_googledoc($data, $params) {
 		$ret .= " scrolling=\"$scrolling\"";
 	}
 	if (isset($key)) {
-		$ret .= " src=\"http://spreadsheets.google.com/pub?key=$key &output=html&widget=true\"></iframe>";
+		$ret .= " src=$srcUrl></iframe>";
 	}
 	if ($editLink== 'both' or $editLink== 'bottom') {
-		$ret .= " <P><A HREF=\"http://spreadsheets.google.com/ccc?key=$key\" Target=\"$frameName\">Edit this Google Document</A></P>";
+		$ret .= " <P><A HREF=$srcUrl Target=\"$frameName\">Edit this Google Document</A></P>";
 	}
 
 	$ret .= "";
