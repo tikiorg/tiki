@@ -388,6 +388,7 @@ if ($prefs['feature_wiki_attachments'] == 'y' && isset($_REQUEST["attach"]) && (
  * \param &$p array -- ['stack'] = closing strings stack,
                        ['listack'] = stack of list types currently opened
                        ['first_td'] = flag: 'is <tr> was just before this <td>'
+                       ['first_tr'] = flag: 'is <table> was just before this <tr>'
  */
 function walk_and_parse(&$c, &$src, &$p, $head_url ) {
     // If no string
@@ -431,8 +432,8 @@ function walk_and_parse(&$c, &$src, &$p, $head_url ) {
 	                case "pre": $src .= "~pre~\n"; $p['stack'][] = array('tag' => 'pre', 'string' => "~/pre~\n"); break;
 	                case "sub": $src .= "{SUB()}"; $p['stack'][] = array('tag' => 'sub', 'string' => "{SUB}"); break;
 	                // Table parser
-	                case "table": $src .= '||'; $p['stack'][] = array('tag' => 'table', 'string' => '||'); break;
-	                case "tr": $p['first_td'] = true; break;
+	                case "table": $src .= '||'; $p['stack'][] = array('tag' => 'table', 'string' => '||'); $p['first_tr'] = true; break;
+	                case "tr": $src .= $p['first_tr'] ? '' : "\n"; $p['first_tr'] = false; $p['first_td'] = true; break;
 	                case "td": $src .= $p['first_td'] ? '' : '|'; $p['first_td'] = false; break;
 	                // Lists parser
 	                case "ul": $p['listack'][] = '*'; break;
@@ -526,7 +527,7 @@ function parse_html(&$inHtml) {
 	$htmlparser->Parse();
 	// Should I try to convert HTML to wiki?
 	$out_data = '';
-	$p =  array('stack' => array(), 'listack' => array(), 'first_td' => false);
+	$p =  array('stack' => array(), 'listack' => array(), 'first_td' => false, 'first_tr' => false);
 	walk_and_parse( $htmlparser->content, $out_data, $p, '' );
 	// Is some tags still opened? (It can be if HTML not valid, but this is not reason
 	// to produce invalid wiki :)
