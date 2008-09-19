@@ -3,7 +3,6 @@
 {popup_init src="lib/overlib.js"}
 {include file="tiki-articles-js.tpl"}
 {if $preview}
-{if $preview}
 {include file="tiki-preview_article.tpl"}
 {/if}
 
