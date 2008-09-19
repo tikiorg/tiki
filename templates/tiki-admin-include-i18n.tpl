@@ -48,8 +48,13 @@
 			<td class="form"><label for="feature_translation">{tr}Translation Assitant{/tr}:</label></td>
 			<td><input type="checkbox" name="feature_translation" id="feature_translation"
 			{if $prefs.feature_translation eq 'y'}checked="checked"{/if}/></td>
-        </tr><tr>			
-		
+
+	</tr><tr>
+			<td class="form"><label for="feature_urgent_translation">{tr}Urgent Translation{/tr}:</label></td>
+			<td><input type="checkbox" name="feature_urgent_translation" id="feature_translation"
+			{if $prefs.feature_urgent_translation eq 'y'}checked="checked"{/if}/></td>
+	</tr><tr>
+
 			<td class="form"><label for="feature_multilingual_structures">{tr}Multilingual structures{/tr}:</label></td>
 			<td><input type="checkbox" name="feature_multilingual_structures" id="feature_multilingual_structures"
 			{if $prefs.feature_multilingual_structures eq 'y'}checked="checked"{/if}/></td>
