@@ -33,11 +33,11 @@
 <label for="mess-mailprio">{tr}Priority{/tr}:</label>
 <select name="priority" id="mess-mailprio">
 <option value="" {if $priority eq ''}selected="selected"{/if}>{tr}All{/tr}</option>
-<option value="1" {if $priority eq 1}selected="selected"{/if}>{tr}1{/tr}</option>
-<option value="2" {if $priority eq 2}selected="selected"{/if}>{tr}2{/tr}</option>
-<option value="3" {if $priority eq 3}selected="selected"{/if}>{tr}3{/tr}</option>
-<option value="4" {if $priority eq 4}selected="selected"{/if}>{tr}4{/tr}</option>
-<option value="5" {if $priority eq 5}selected="selected"{/if}>{tr}5{/tr}</option>
+<option value="1" {if $priority eq 1}selected="selected"{/if}>1</option>
+<option value="2" {if $priority eq 2}selected="selected"{/if}>2</option>
+<option value="3" {if $priority eq 3}selected="selected"{/if}>3</option>
+<option value="4" {if $priority eq 4}selected="selected"{/if}>4</option>
+<option value="5" {if $priority eq 5}selected="selected"{/if}>5</option>
 </select>
 <label for="mess-mailcont">{tr}Containing{/tr}:</label>
 <input type="text" name="find" id="mess-mailcont" value="{$find|escape}" />
