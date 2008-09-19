@@ -214,14 +214,39 @@ if ( ! empty($multiprint_pages) ) {
 	
 	// disallow robots to index page:
 	$smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
-	
-	if( strpos( $_SERVER['HTTP_ACCEPT'], 'application/json' ) !== false && $prefs['feature_mootools'] == 'y' ) {
-		$pages = array();
-		foreach( $listpages['data'] as $page )
-			$pages[] = $page['pageName'];
 
-		header( 'Content-Type: application/json' );
-		echo json_encode( $pages );
+	if( $access->is_serializable_request() ) {
+		
+		if( isset( $_REQUEST['listonly'] ) && $prefs['feature_mootools'] == 'y' ) {
+			$pages = array();
+			foreach( $listpages['data'] as $page )
+				$pages[] = $page['pageName'];
+
+			$access->output_serialized( $pages );
+		} else {
+			$pages = array();
+			require_once 'lib/wiki/wikilib.php';
+			foreach( $listpages['data'] as $page ) {
+				$pages[] = array(
+					'page_id' => $page['page_id'],
+					'page_name' => $page['pageName'],
+					'url' => $wikilib->sefurl( $page['pageName'] ),
+					'version' => $page['version'],
+					'description' => $page['description'],
+					'last_modif' => date( 'Y-m-d H:i:s', $page['lastModif'] ),
+					'last_author' => $page['user'],
+					'creator' => $page['creator'],
+					'creation_date' => date( 'Y-m-d H:i:s', $page['created'] ),
+					'lang' => $page['lang'],
+				);
+			}
+
+			require_once 'lib/ointegratelib.php';
+			$response = OIntegrate_Response::create( array( 'list' => $pages ), '1.0' );
+			$response->addTemplate( 'smarty', 'tikiwiki', 'http://localhost/trunk/files/templates/listpages/smarty-tikiwiki-1.0-shortlist.txt' );
+			$response->schemaDocumentation = 'http://dev.tikiwiki.org/WebserviceListpages';
+			$response->send();
+		}
 	} else {
 		// Display the template
 		$smarty->assign('mid', ($listpages_orphans ? 'tiki-orphan_pages.tpl' : 'tiki-listpages.tpl') );

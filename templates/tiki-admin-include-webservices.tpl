@@ -68,7 +68,7 @@
 			</tr>
 			{foreach from=$templates item=template}
 				<tr>
-					<th>{$engine|escape}|{$output|escape}</th>
+					<th>{$template.engine|escape}/{$template.output|escape}</th>
 					<td><pre>{$template.content|escape}</pre></td>
 				</tr>
 			{foreachelse}

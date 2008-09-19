@@ -151,6 +151,49 @@ class OIntegrate_Response
 
 	private $errors = array();
 
+	public static function create( $data, $schemaVersion, $cacheLength = 300 ) // {{{
+	{
+		$response = new self;
+		$response->version = '1.0';
+		$response->data = $data;
+		$response->schemaVersion = $schemaVersion;
+
+		if( $cacheLength > 0 )
+			$response->cacheControl = "max-age=$cacheLength";
+		else
+			$response->cacheControl = "no-cache";
+
+		return $response;
+	} // }}}
+
+	function addTemplate( $engine, $output, $templateLocation ) // {{{
+	{
+		if( ! array_key_exists( '_template', $this->data ) )
+			$this->data['_template'] = array();
+		if( ! array_key_exists( $engine, $this->data['_template'] ) )
+			$this->data['_template'][$engine] = array();
+		if( ! array_key_exists( $output, $this->data['_template'][$engine] ) )
+			$this->data['_template'][$engine][$output] = array();
+
+		$this->data['_template'][$engine][$output][] = $templateLocation;
+	} // }}}
+
+	function send() // {{{
+	{
+		header( 'OIntegrate-Version: 1.0' );
+		header( 'OIntegrate-SchemaVersion: ' . $this->schemaVersion );
+		if( $this->schemaDocumentation )
+			header( 'OIntegrate-SchemaDocumentation: ' . $this->schemaDocumentation );
+		header( 'Cache-Control: ' . $this->cacheControl );
+
+		$data = $this->data;
+		$data['_version'] = $this->schemaVersion;
+
+		global $access;
+		$access->output_serialized( $data );
+		exit;
+	} // }}}
+
 	function render( $engine, $engineOutput, $outputContext, $templateFile ) // {{{
 	{
 		$engine = OIntegrate::getEngine( $engine, $engineOutput );
