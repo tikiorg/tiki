@@ -24,11 +24,7 @@ if ($prefs['feature_categories'] == 'y') {
 	}
 }
 
-if($prefs['feature_wiki'] != 'y') {
-    $smarty->assign('msg', tra('This feature is disabled').': feature_wiki');
-    $smarty->display('error.tpl');
-    die;  
-}
+$access->check_feature( 'feature_wiki' );
 
 if(!isset($_SESSION['thedate'])) {
     $thedate = $tikilib->now;
@@ -72,9 +68,7 @@ For more information:
 			header('Location: tiki-index.php?page='.$userHomePage);
 		}
 	} else {
-		$smarty->assign('msg', tra('No name indicated for wiki page'));
-		$smarty->display('error.tpl');
-		die;
+		$access->display_error( '', tra('No name indicated for wiki page'));
 	}
 	if ($prefs['feature_best_language'] == 'y') {
 		$use_best_language = true;
@@ -186,21 +180,11 @@ if(empty($info) && !($user && $prefs['feature_wiki_userpage'] == 'y' && strcasec
 	$likepages = $wikilib->get_like_pages($page);
 	/* if we have exactly one match, redirect to it */
 	if(count($likepages) == 1  && !$isUserPage) {
-		header ("Status: 302 Found"); /* PHP3 */
-		header ("HTTP/1.0 302 Found"); /* PHP4 */
-		header("Location: tiki-index.php?page=$likepages[0]");
-		die;
+		$access->redirect( "tiki-index.php?page={$likepages[0]}" );
 	}
 	$smarty->assign_by_ref('likepages', $likepages);
-	$smarty->assign('msg',tra('Page cannot be found'));
-	header ('Status: 404 Not Found'); /* PHP3 */
-	header ('HTTP/1.0 404 Not Found'); /* PHP4 */
-	$smarty->assign('headtitle',tra('Page cannot be found'));
-	$smarty->assign('errortitle',tra('Page cannot be found').' (404)');
-	$smarty->assign('errortype', '404');
 	$smarty->assign('create', $isUserPage? 'n': 'y');
-	$smarty->display("error.tpl");
-	die;
+	$access->display_error( $page, tra('Page cannot be found'), '404' );
 }
 
 
@@ -223,10 +207,7 @@ if( $page_ref_id )
 
 // Now check permissions to access this page
 if( ! $pageRenderer->canView ) {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg',tra('Permission denied you cannot view this page'));
-	$smarty->display('error.tpl');
-	die;  
+	$access->display_error( $page, tra('Permission denied you cannot view this page'), '403');
 }
 
 // Convert page to structure
@@ -381,9 +362,7 @@ if($prefs['feature_wiki_attachments'] == 'y') {
 		    $wikilib->wiki_attach_file($page, $_FILES['userfile1']['name'], $_FILES['userfile1']['type'], $_FILES['userfile1']['size'], '', $_REQUEST['attach_comment'], $user, $ret['fhash']);
 		}
 	    } else {
-				$smarty->assign('msg', $ret['error']);
-				$smarty->display('error.tpl');
-				die();
+			$access->display_error( '', $ret['error'] );
 		}		
 	}
     }
@@ -399,10 +378,7 @@ if ($prefs['feature_user_watches'] == 'y') {
 	if($user && isset($_REQUEST['watch_event'])) {
 		check_ticket('index');
 		if (($_REQUEST['watch_action'] == 'add_desc' || $_REQUEST['watch_action'] == 'del_desc') && $tiki_p_watch_structure != 'y') {
-			$smarty->assign('errortype', 401);
-			$smarty->assign('msg',tra('Permission denied'));
-			$smarty->display('error.tpl');
-			die;
+			$access->display_error( $page, tra('Permission denied'), '403');
 		}
 		if($_REQUEST['watch_action']=='add') {
 			$tikilib->add_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object'],'wiki page',$page,"tiki-index.php?page=$page");

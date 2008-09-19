@@ -18,48 +18,29 @@ class TikiAccessLib extends TikiLib {
 
 	// check that the user is admin or has admin permissions
 	function check_admin($user,$feature_name="") {
-		global $smarty, $tiki_p_admin, $prefs;
+		global $tiki_p_admin, $prefs;
 		require_once ('tiki-setup.php');
 		// first check that user is logged in
 		$this->check_user($user);
 		if (($user != 'admin') && ($tiki_p_admin != 'y')) {
-			if ($prefs['feature_redirect_on_error'] != 'y') {
-				$msg = tra("You do not have permission to use this feature");
-				if ($feature_name) {
-					$msg = $msg . ": " . $feature_name;
-				}
-				$smarty->assign('msg', $msg);
-				$smarty->display("error.tpl");
-				die;
-			} else {
-				$this->redirect(''.$prefs['tikiIndex']);
-				die;
+			$msg = tra("You do not have permission to use this feature");
+			if ($feature_name) {
+				$msg = $msg . ": " . $feature_name;
 			}
+			$this->display_error( '', $msg, '403' );
 		}
 	}
 
 	function check_user($user) {
-		global $smarty, $prefs;
+		global $prefs;
 		require_once ('tiki-setup.php');
 		if (!$user) {
-			if ($prefs['feature_redirect_on_error'] != 'y') {
-				$title = tra("You are not logged in");
-				if (isset( $prefs['feature_usability'] ) && $prefs['feature_usability'] == 'y' ) {
-					$this->display_error('',$title,'402');
-				} else {
-					$smarty->assign('msg', $title);
-					$smarty->display("error.tpl");
-				}
-				die;
-			} else {
-				$this->redirect(''.$prefs['tikiIndex']);
-				die;
-			}
+			$title = tra("You are not logged in");
+			$this->display_error( '', $title, '403' );
 		}
 	}
 
 	function check_page($user='y', $features=array(), $permissions=array(), $permission_name='') {
-		global $smarty;
 		require_once ('tiki-setup.php');
 		if( $features ) {
 			$this->check_feature($features);
@@ -71,62 +52,46 @@ class TikiAccessLib extends TikiLib {
 	}
 
 	function check_feature($features, $feature_name="") {
-		global $smarty, $prefs;
+		global $prefs;
 		require_once ('tiki-setup.php');
 		if ( ! is_array($features) ) { $features = array($features); }
 		foreach ($features as $feature) {
 			if ($prefs[$feature] != 'y') {
-				if ($prefs['feature_redirect_on_error'] != 'y') {
-					if ($feature_name == '') { $feature_name = $feature; }
-					$smarty->assign('msg', tra("This feature is disabled").": ". $feature_name);
-					$smarty->display("error.tpl");
-					die;
-				} else {
-					$this->redirect(''.$prefs['tikiIndex']);
-					die;
-				}
+				if ($feature_name != '') { $feature = $feature_name; }
+				$this->display_error('', tra("This feature is disabled").": ". $feature_name, '503' );
 			}
 		}
 	}
 
 	function check_permission($permissions, $permission_name='') {
-		global $smarty;
 		require_once ('tiki-setup.php');
 		if ( ! is_array($permissions) ) { $permissions = array($permissions); }
 		foreach ($permissions as $permission) {
 			global $$permission;
 			if ($$permission != 'y') {
-				if (!$permission_name) { $permission_name = $permission; }
-				$smarty->assign('msg', tra("You do not have permission to use this feature").": ". $permission_name);
-				$smarty->display("error.tpl");
-				die;
+				if ($permission_name) { $permission= $permission_name; }
+				$this->display_error('', tra("You do not have permission to use this feature").": ". $permission_name, '403', false);
 			}
 		}
 	}
 
 	// check permission, where the permission is normally unset
 	function check_permission_unset($permissions, $permission_name) {
-		global $smarty;
 		require_once ('tiki-setup.php');
 		foreach ($permissions as $permission) {
 			global $$permission;
 			if ((isset($$permission) && $$permission == 'n')) {
-				$smarty->assign('msg', tra("Permission denied").": ". $permission_name);
-				$smarty->display("error.tpl");
-				die;
+				if ($permission_name) { $permission= $permission_name; }
+				$this->display_error('', tra("You do not have permission to use this feature").": ". $permission_name, '403', false);
 			}
 		}
 	}
 
 	// check page exists
 	function check_page_exists($page) {
-		global $smarty;                 
 		require_once ('tiki-setup.php');
 		if (!$tikilib->page_exists($page)) {
-			$smarty->assign('msg', tra("Page cannot be found"));
-
-			$smarty->display("error.tpl");
-			die;
+			$this->display_error($page, tra("Page cannot be found"), '404');
 		}
 	}
 
@@ -140,50 +105,66 @@ class TikiAccessLib extends TikiLib {
 	 * 
 	 */
 	function check_script($scriptname, $page) {
-		global $smarty, $prefs;
+		global $prefs;
 		if (basename($scriptname) == $page) {
-			if ($prefs['feature_redirect_on_error'] == 'y') {
-				$this->redirect(''.$prefs['tikiIndex']);
-				die;
-			} else {
-				if( !isset($prefs['feature_usability']) || $prefs['feature_usability'] == 'n' ) {
-					$msg = tra("This script cannot be called directly");                
-					$this->display_error($page, $msg);
-				} else { 
-					$msg = tr("Page '%0' cannot be found", $page);
-					$this->display_error($page, $msg, "404");
-				}
+			if( !isset($prefs['feature_usability']) || $prefs['feature_usability'] == 'n' ) {
+				$msg = tra("This script cannot be called directly");                
+				$this->display_error($page, $msg);
+			} else { 
+				$msg = tr("Page '%0' cannot be found", $page);
+				$this->display_error($page, $msg, "404");
 			}
 		}
 	}
 
 	// you must call ask_ticket('error') before calling this
-	function display_error($page, $errortitle="", $errortype="") {
+	function display_error($page, $errortitle="", $errortype="", $enableRedirect = true) {
 		global $smarty, $wikilib;
 		require_once ('tiki-setup.php');
 		include_once('lib/wiki/wikilib.php');
-		if ( !isset($errortitle) ) {
-			$errortitle = tra('unknown error');
+
+		// Don't redirect when calls are made for web services
+		if ( $enableRedirect && $prefs['feature_redirect_on_error'] == 'y' && ! $this->is_machine_request() ) {
+			$this->redirect($prefs['tikiIndex']);
 		}
+
+		$detail = array(
+			'code' => $errortype,
+			'message' => $errortitle,
+		);
+
+		if ( !isset($errortitle) ) {
+			$detail['message'] = tra('unknown error');
+		}
+
 		// Display the template
 		$smarty->assign('msg', $errortitle);
-		if ( isset($errortype) && $errortype == "404" ) {
-			$likepages = $wikilib->get_like_pages($page);
-			/* if we have exactly one match, redirect to it */
-			if(count($likepages) == 1 ) {
-				$this->redirect("tiki-index.php?page=$likepages[0]");
-				die;
-			}
-			$smarty->assign_by_ref('likepages', $likepages);
+		switch( $errortype ) {
+		case '404':
 			header ("Status: 404 Not Found"); /* PHP3 */
 			header ("HTTP/1.0 404 Not Found"); /* PHP4 */
-			$smarty->assign('errortitle', $errortitle. " (404)");
-			$smarty->assign('page', $page);
-			$smarty->assign('errortype', $errortype);
-		} else {
-			$smarty->assign('errortype', $errortype);
+			$detail['page'] = $page;
+			$detail['message'] .= ' (404)';
+			break;
+		case '403':
+			if( $this->is_machine_request() )
+				header ("HTTP/1.0 403 Forbidden");
+			break;
+		case '503':
+			if( $this->is_machine_request() )
+				header ("HTTP/1.0 503 Service Unavailable");
+			break;
 		}
-		$smarty->display("error.tpl");
+
+		if( $this->is_serializable_request() ) {
+			$this->output_serialized( $detail );
+		} else {
+			$smarty->assign('errortitle', $detail['message']);
+			$smarty->assign('errortype', $detail['code']);
+			if( isset( $detail['page'] ) )
+				$smarty->assign('page', $page);
+			$smarty->display("error.tpl");
+		}
 		die;
 	}
 
@@ -232,6 +213,8 @@ class TikiAccessLib extends TikiLib {
 			echo "<script>document.location.href='$url';</script>\n";
 		} else {
 			@ob_end_clean(); // clear output buffer
+			header ("Status: 302 Found"); /* PHP3 */
+			header ("HTTP/1.0 302 Found"); /* PHP4 */
 			header( "Location: $url" );
 		}
 		exit();
@@ -307,6 +290,81 @@ class TikiAccessLib extends TikiLib {
 		//try to (re)authenticate the user
 		$result['header']='y';
 		return $result;
+	}
+
+	function get_accept_types() {
+		$accept = explode( ',', $_SERVER['HTTP_ACCEPT'] );
+
+		if( isset( $_REQUEST['httpaccept'] ) ) {
+			$accept = array_merge( explode( ',', $_REQUEST['httpaccept'] ), $accept );
+		}
+
+		$types = array();
+
+		foreach( $accept as $type ) {
+			$known = null;
+
+			if( strpos( $t = 'application/json', $type ) !== false )
+				$known = 'json';
+			elseif( strpos( $t = 'text/javascript', $type ) !== false )
+				$known = 'json';
+			elseif( strpos( $t = 'text/x-yaml', $type ) !== false )
+				$known = 'yaml';
+
+			if( $known && ! isset( $types[$known] ) )
+				$types[$known] = $t;
+		}
+
+		if( empty( $types ) )
+			$types['html'] = 'text/html';
+
+		return $types;
+	}
+
+	function is_machine_request() {
+		foreach( $this->get_accept_types() as $name => $full ) {
+			switch( $name ) {
+			case 'html':
+				return false;
+			case 'json':
+			case 'yaml':
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	function is_serializable_request() {
+		foreach( $this->get_accept_types() as $name => $full ) {
+			switch( $name ) {
+			case 'json':
+			case 'yaml':
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	function output_serialized( $data ) {
+		foreach( $this->get_accept_types() as $name => $full ) {
+			switch( $name ) {
+			case 'json':
+				header( "Content-Type: $full" );
+				echo json_encode( $data );
+				return;
+			case 'yaml':
+				require_once( 'Horde/Yaml.php' );
+				require_once( 'Horde/Yaml/Loader.php' );
+				require_once( 'Horde/Yaml/Node.php' );
+				require_once( 'Horde/Yaml/Exception.php' );
+
+				header( "Content-Type: $full" );
+				echo Horde_Yaml::dump($value);
+				return;
+			}
+		}
 	}
 }
 

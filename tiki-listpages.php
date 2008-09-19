@@ -15,25 +15,8 @@ $auto_query_args = array('initial','maxRecords','sort_mode','find','lang','langO
 
 $smarty->assign('headtitle',tra('Pages'));
 
-if ($prefs['feature_wiki'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_wiki");
-	$smarty->display("error.tpl");
-	die;
-}
-
-if ($prefs['feature_listPages'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_listPages");
-	$smarty->display("error.tpl");
-	die;
-}
-
-// Now check permissions to access this page
-if ($tiki_p_view != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied you cannot view pages"));
-	$smarty->display("error.tpl");
-	die;
-}
+$access->check_feature( array( 'feature_wiki', 'feature_listPages' ) );
+$access->check_permission( 'tiki_p_view' );
 
 /* mass-remove: 
    the checkboxes are sent as the array $_REQUEST["checked[]"], values are the wiki-PageNames, 
@@ -51,49 +34,29 @@ if ( !empty($_REQUEST['submit_mult']) && isset($_REQUEST["checked"]) ) {
 
 		case 'remove_pages':
 			// Now check permissions to remove the selected pages
-			if ( $tiki_p_remove != 'y' ) {
-				$smarty->assign('errortype', 401);
-				$smarty->assign('msg', tra("Permission denied you cannot remove pages"));
-				$smarty->display("error.tpl");
-				die;
-			}
+			$access->check_permission( 'tiki_p_remove' );
+
 			foreach ( $_REQUEST["checked"] as $check )
 				$tikilib->remove_all_versions($check);
 			break;
 			
 		case 'print_pages':
-			if ( $prefs['feature_wiki_multiprint'] != 'y' ) {
-				$smarty->assign('msg', tra("This feature is disabled").": feature_wiki_multiprint");
-				$smarty->display("error.tpl");
-				die;
-			}
+			$access->check_feature( 'feature_wiki_multiprint' );
+
 			foreach ( $_REQUEST["checked"] as $check ) {
-				if ( $tikilib->page_exists($check) ) {
-					// Now check permissions to access this page
-					if (!$tikilib->user_has_perm_on_object($user, $check, 'wiki page', 'tiki_p_view')) {
-						$smarty->assign('errortype', 401);
-						$smarty->assign('msg', tra("Permission denied you cannot view this page"));
-						$smarty->display("error.tpl");
-						die;
-					}
-					$page_info = $tikilib->get_page_info($check);
-					$page_info['parsed'] = $tikilib->parse_data($page_info['data']);
-					$multiprint_pages[] = $page_info;
-				} else {
-					// If the page doesn't exist then display an error
-					$smarty->assign('msg', tra("Page cannot be found"));
-					$smarty->display("error.tpl");
-					die;
+				$access->check_page_exists($check);
+				// Now check permissions to access this page
+				if (!$tikilib->user_has_perm_on_object($user, $check, 'wiki page', 'tiki_p_view')) {
+					$access->display_error( $check, tra("Permission denied you cannot view this page"), '403' );
 				}
+				$page_info = $tikilib->get_page_info($check);
+				$page_info['parsed'] = $tikilib->parse_data($page_info['data']);
+				$multiprint_pages[] = $page_info;
 			}
 			break;
 
 		case 'unlock_pages':
-			if ($prefs['feature_wiki_usrlock'] != 'y') {
-				$smarty->assign('msg', tra("This feature is disabled").": feature_wiki_usrlock");
-				$smarty->display("error.tpl");
-				die;
-			}
+			$access->check_feature( 'feature_wiki_usrlock' );
 			global $wikilib; include_once('lib/wiki/wikilib.php');
 			foreach ($_REQUEST["checked"] as $check) {
 				$info = $tikilib->get_page_info($check);
@@ -103,11 +66,7 @@ if ( !empty($_REQUEST['submit_mult']) && isset($_REQUEST["checked"]) ) {
 			}
 			break;
 		case 'lock_pages':
-			if ($prefs['feature_wiki_usrlock'] != 'y') {
-				$smarty->assign('msg', tra("This feature is disabled").": feature_wiki_usrlock");
-				$smarty->display("error.tpl");
-				die;
-			}
+			$access->check_feature( 'feature_wiki_usrlock' );
 			global $wikilib; include_once('lib/wiki/wikilib.php');
 			foreach ($_REQUEST["checked"] as $check) {
 				$info = $tikilib->get_page_info($check);
