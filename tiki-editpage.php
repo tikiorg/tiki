@@ -389,139 +389,115 @@ if ($prefs['feature_wiki_attachments'] == 'y' && isset($_REQUEST["attach"]) && (
                        ['listack'] = stack of list types currently opened
                        ['first_td'] = flag: 'is <tr> was just before this <td>'
  */
-function walk_and_parse(&$c, &$src, &$p, $head_url )
-{
+function walk_and_parse(&$c, &$src, &$p, $head_url ) {
     // If no string
-    if( ! $c )
-    {
-	return;
-    }
-    for ($i=0; $i <= $c["contentpos"]; $i++)
-    {
+    if(!$c) { return; }
+    
+    for ($i=0; $i <= $c["contentpos"]; $i++) {
         // If content type 'text' output it to destination...
-        if ($c[$i]["type"] == "text")
-	{
-	    if( ! preg_match( '/^\s*$/s', $c[$i]["data"] ) )
-	    {
-		$src .= preg_replace( '/^\s+/s', ' ', $c[$i]["data"] );
-	    }
-	}
-        elseif ($c[$i]["type"] == "comment")
-        {
-		$src .= preg_replace( '/<!--/', "\n~hc~", 
-			preg_replace( '/-->/', "~/hc~\n", $c[$i]["data"] )
-			);
-	}
-        elseif ($c[$i]["type"] == "tag")
-        {
-            if ($c[$i]["data"]["type"] == "open")
-	    {
-                // Open tag type
-                switch ($c[$i]["data"]["name"])
-                {
-		// Tags we don't want at all.
-		case "meta": 
-		    $c[$i]["content"] = '';
-		break;
-		case "br": $src .= '%%%'; break;
-                case "title": $src .= "\n!"; $p['stack'][] = array('tag' => 'title', 'string' => "\n"); break;
-                case "p": $src .= "\n"; $p['stack'][] = array('tag' => 'p', 'string' => "\n"); break;
-                case "b": $src .= '__'; $p['stack'][] = array('tag' => 'b', 'string' => '__'); break;
-                case "i": $src .= "''"; $p['stack'][] = array('tag' => 'i', 'string' => "''"); break;
-                case "em": $src .= "''"; $p['stack'][] = array('tag' => 'em', 'string' => "''"); break;
-                case "strong": $src .= '__'; $p['stack'][] = array('tag' => 'strong', 'string' => '__'); break;
-                case "u": $src .= "=="; $p['stack'][] = array('tag' => 'u', 'string' => "=="); break;
-                case "center": $src .= '::'; $p['stack'][] = array('tag' => 'center', 'string' => '::'); break;
-                case "code": $src .= '-+';  $p['stack'][] = array('tag' => 'code', 'string' => '+-'); break;
-                case "dd": $src .= ':';  $p['stack'][] = array('tag' => 'dd', 'string' => "\n"); break;
-                case "dt": $src .= ';';  $p['stack'][] = array('tag' => 'dt', 'string' => ''); break;
-                // headers detection looks like real suxx code...
-                // but possible it run faster :) I don't know where is profiler in PHP...
-                case "h1": $src .= "\n!"; $p['stack'][] = array('tag' => 'h1', 'string' => "\n"); break;
-                case "h2": $src .= "\n!!"; $p['stack'][] = array('tag' => 'h2', 'string' => "\n"); break;
-                case "h3": $src .= "\n!!!"; $p['stack'][] = array('tag' => 'h3', 'string' => "\n"); break;
-                case "h4": $src .= "\n!!!!"; $p['stack'][] = array('tag' => 'h4', 'string' => "\n"); break;
-                case "h5": $src .= "\n!!!!!"; $p['stack'][] = array('tag' => 'h5', 'string' => "\n"); break;
-                case "h6": $src .= "\n!!!!!!"; $p['stack'][] = array('tag' => 'h6', 'string' => "\n"); break;
-                case "pre": $src .= "~pre~\n"; $p['stack'][] = array('tag' => 'pre', 'string' => "~/pre~\n"); break;
-                case "sub": $src .= "{SUB()}"; $p['stack'][] = array('tag' => 'sub', 'string' => "{SUB}"); break;
-                // Table parser
-                case "table": $src .= '||'; $p['stack'][] = array('tag' => 'table', 'string' => '||'); break;
-                case "tr": $p['first_td'] = true; break;
-                case "td": $src .= $p['first_td'] ? '' : '|'; $p['first_td'] = false; break;
-                // Lists parser
-                case "ul": $p['listack'][] = '*'; break;
-                case "ol": $p['listack'][] = '#'; break;
-                case "li":
-                    // Generate wiki list item according to current list depth.
-                    // (ensure '*/#' starts from begining of line)
-                    $temp_max = count($p['listack']);
-                    for ($l = ''; strlen($l) < $temp_max; $l .= end($p['listack']));
-                    $src .= "\n$l ";
-                    break;
-                case "font":
-                    // If color attribute present in <font> tag
-                    if (isset($c[$i]["pars"]["color"]["value"]))
-                    {
-                        $src .= '~~'.$c[$i]["pars"]["color"]["value"].':';
-                        $p['stack'][] = array('tag' => 'font', 'string' => '~~');
-                    }
-                    break;
-                case "img":
-                    // If src attribute present in <img> tag
-                    if (isset($c[$i]["pars"]["src"]["value"]))
-                        // Note what it produce (img) not {img}! Will fix this below...
-		        if( strstr( $c[$i]["pars"]["src"]["value"], "http:" ) )
-			{
-			    $src .= '(img src='.$c[$i]["pars"]["src"]["value"].')';
-			} else {
-			    $src .= '(img src='.$head_url.$c[$i]["pars"]["src"]["value"].')';
-			}
-                    break;
-                case "a":
-                    // If href attribute present in <a> tag
-                    if (isset($c[$i]["pars"]["href"]["value"]))
-		    {
-		        if( strstr( $c[$i]["pars"]["href"]["value"], "http:" ) )
-			{
-			    $src .= '['.$c[$i]["pars"]["href"]["value"].'|';
-			} else {
-			    $src .= '['.$head_url.$c[$i]["pars"]["href"]["value"].'|';
-			}
-                        $p['stack'][] = array('tag' => 'a', 'string' => ']');
-                    }
-                    if( isset($c[$i]["pars"]["name"]["value"]) )
-		    {
-		    	$src .= '{ANAME()}'.$c[$i]["pars"]["name"]["value"].'{ANAME}';
+        if ($c[$i]["type"] == "text") {
+		    if( ! preg_match( '/^\s*$/s', $c[$i]["data"] ) )  {
+				$src .= preg_replace( '/^\s+/s', ' ', $c[$i]["data"] );
 		    }
-                    break;
-                }
-            }
-            else
-            {
+		} elseif ($c[$i]["type"] == "comment") {
+			$src .= preg_replace( '/<!--/', "\n~hc~", preg_replace( '/-->/', "~/hc~\n", $c[$i]["data"] ));
+		} elseif ($c[$i]["type"] == "tag") {
+            if ($c[$i]["data"]["type"] == "open") {
+                // Open tag type
+                switch ($c[$i]["data"]["name"])  {
+					// Tags we don't want at all.
+					case "meta": $c[$i]["content"] = ''; break;
+					
+					case "br": $src .= '%%%'; break;
+	                case "title": $src .= "\n!"; $p['stack'][] = array('tag' => 'title', 'string' => "\n"); break;
+	                case "p": $src .= "\n"; $p['stack'][] = array('tag' => 'p', 'string' => "\n"); break;
+	                case "b": $src .= '__'; $p['stack'][] = array('tag' => 'b', 'string' => '__'); break;
+	                case "i": $src .= "''"; $p['stack'][] = array('tag' => 'i', 'string' => "''"); break;
+	                case "em": $src .= "''"; $p['stack'][] = array('tag' => 'em', 'string' => "''"); break;
+	                case "strong": $src .= '__'; $p['stack'][] = array('tag' => 'strong', 'string' => '__'); break;
+	                case "u": $src .= "=="; $p['stack'][] = array('tag' => 'u', 'string' => "=="); break;
+	                case "center": $src .= '::'; $p['stack'][] = array('tag' => 'center', 'string' => '::'); break;
+	                case "code": $src .= '-+';  $p['stack'][] = array('tag' => 'code', 'string' => '+-'); break;
+	                case "dd": $src .= ':';  $p['stack'][] = array('tag' => 'dd', 'string' => "\n"); break;
+	                case "dt": $src .= ';';  $p['stack'][] = array('tag' => 'dt', 'string' => ''); break;
+	                // headers detection looks like real suxx code...
+	                // but possible it run faster :) I don't know where is profiler in PHP...
+	                case "h1": $src .= "\n!"; $p['stack'][] = array('tag' => 'h1', 'string' => "\n"); break;
+	                case "h2": $src .= "\n!!"; $p['stack'][] = array('tag' => 'h2', 'string' => "\n"); break;
+	                case "h3": $src .= "\n!!!"; $p['stack'][] = array('tag' => 'h3', 'string' => "\n"); break;
+	                case "h4": $src .= "\n!!!!"; $p['stack'][] = array('tag' => 'h4', 'string' => "\n"); break;
+	                case "h5": $src .= "\n!!!!!"; $p['stack'][] = array('tag' => 'h5', 'string' => "\n"); break;
+	                case "h6": $src .= "\n!!!!!!"; $p['stack'][] = array('tag' => 'h6', 'string' => "\n"); break;
+	                case "pre": $src .= "~pre~\n"; $p['stack'][] = array('tag' => 'pre', 'string' => "~/pre~\n"); break;
+	                case "sub": $src .= "{SUB()}"; $p['stack'][] = array('tag' => 'sub', 'string' => "{SUB}"); break;
+	                // Table parser
+	                case "table": $src .= '||'; $p['stack'][] = array('tag' => 'table', 'string' => '||'); break;
+	                case "tr": $p['first_td'] = true; break;
+	                case "td": $src .= $p['first_td'] ? '' : '|'; $p['first_td'] = false; break;
+	                // Lists parser
+	                case "ul": $p['listack'][] = '*'; break;
+	                case "ol": $p['listack'][] = '#'; break;
+	                case "li":
+	                    // Generate wiki list item according to current list depth.
+	                    // (ensure '*/#' starts from begining of line)
+	                    $temp_max = count($p['listack']);
+	                    for ($l = ''; strlen($l) < $temp_max; $l .= end($p['listack']));
+	                    $src .= "\n$l ";
+	                    break;
+	                case "font":
+	                    // If color attribute present in <font> tag
+	                    if (isset($c[$i]["pars"]["color"]["value"]))  {
+	                        $src .= '~~'.$c[$i]["pars"]["color"]["value"].':';
+	                        $p['stack'][] = array('tag' => 'font', 'string' => '~~');
+	                    }
+	                    break;
+	                case "img":
+	                    // If src attribute present in <img> tag
+	                    if (isset($c[$i]["pars"]["src"]["value"]))
+	                        // Note what it produce (img) not {img}! Will fix this below...
+					        if( strstr( $c[$i]["pars"]["src"]["value"], "http:" ) ) {
+							    $src .= '(img src='.$c[$i]["pars"]["src"]["value"].')';
+							} else {
+							    $src .= '(img src='.$head_url.$c[$i]["pars"]["src"]["value"].')';
+							}
+	                    break;
+	                case "a":
+	                    // If href attribute present in <a> tag
+	                    if (isset($c[$i]["pars"]["href"]["value"])) {
+					        if( strstr( $c[$i]["pars"]["href"]["value"], "http:" )) {
+							    $src .= '['.$c[$i]["pars"]["href"]["value"].'|';
+							} else {
+							    $src .= '['.$head_url.$c[$i]["pars"]["href"]["value"].'|';
+							}
+	                        $p['stack'][] = array('tag' => 'a', 'string' => ']');
+	                    }
+	                    if( isset($c[$i]["pars"]["name"]["value"])) {
+					    	$src .= '{ANAME()}'.$c[$i]["pars"]["name"]["value"].'{ANAME}';
+					    }
+						break;
+				}	// end switch on tag name
+            } else {
                 // This is close tag type. Is that smth we r waiting for?
-                switch ($c[$i]["data"]["name"])
-                {
-                case "ul":
-                    if (end($p['listack']) == '*') array_pop($p['listack']);
-                    break;
-                case "ol":
-                    if (end($p['listack']) == '#') array_pop($p['listack']);
-                    break;
-                default:
-                    $e = end($p['stack']);
-                    if ($c[$i]["data"]["name"] == $e['tag'])
-                    {
-                        $src .= $e['string'];
-                        array_pop($p['stack']);
-                    }
-                    break;
-                }
-            }
+                switch ($c[$i]["data"]["name"]) {
+	                case "ul":
+	                    if (end($p['listack']) == '*') array_pop($p['listack']);
+	                    break;
+	                case "ol":
+	                    if (end($p['listack']) == '#') array_pop($p['listack']);
+	                    break;
+	                default:
+	                    $e = end($p['stack']);
+	                    if ($c[$i]["data"]["name"] == $e['tag'])
+	                    {
+	                        $src .= $e['string'];
+	                        array_pop($p['stack']);
+	                    }
+	                    break;
+				}
+			}
         }
         // Recursive call on tags with content...
-        if (isset($c[$i]["content"]))
-        {
+        if (isset($c[$i]["content"])) {
 //            if (substr($src, -1) != " ") $src .= " ";
             walk_and_parse($c[$i]["content"], $src, $p, $head_url );
         }
