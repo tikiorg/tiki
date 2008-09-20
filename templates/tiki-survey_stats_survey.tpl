@@ -1,11 +1,11 @@
 {title}{tr}Stats for survey:{/tr}{$survey_info.name}{/title}
 
-<span class="button2"><a class="linkbut" href="tiki-list_surveys.php">{tr}List Surveys{/tr}</a></span>
-<span class="button2"><a class="linkbut" href="tiki-survey_stats.php">{tr}Survey Stats{/tr}</a></span>
+<span class="button2"><a href="tiki-list_surveys.php">{tr}List Surveys{/tr}</a></span>
+<span class="button2"><a href="tiki-survey_stats.php">{tr}Survey Stats{/tr}</a></span>
 {if $tiki_p_admin_surveys eq 'y'}
-  <span class="button2"><a class="linkbut" href="tiki-admin_surveys.php?surveyId={$surveyId}">{tr}Edit this Survey{/tr}</a></span>
-  <span class="button2"><a class="linkbut" href="tiki-survey_stats_survey.php?surveyId={$surveyId}&amp;clear={$surveyId}">{tr}Clear Stats{/tr}</a></span>
-  <span class="button2"><a class="linkbut" href="tiki-admin_surveys.php">{tr}Admin Surveys{/tr}</a></span>
+  <span class="button2"><a href="tiki-admin_surveys.php?surveyId={$surveyId}">{tr}Edit this Survey{/tr}</a></span>
+  <span class="button2"><a href="tiki-survey_stats_survey.php?surveyId={$surveyId}&amp;clear={$surveyId}">{tr}Clear Stats{/tr}</a></span>
+  <span class="button2"><a href="tiki-admin_surveys.php">{tr}Admin Surveys{/tr}</a></span>
 {/if}
 <br /><br />
 

@@ -6,25 +6,25 @@
 {/if}
 
 <span class="button2">
-  <a class="linkbut" href="tiki-user_tasks.php?show_form=y">{tr}New task{/tr}</a>
+  <a href="tiki-user_tasks.php?show_form=y">{tr}New task{/tr}</a>
 </span>
 <span class="button2">
-  <a class="linkbut" href="tiki-user_tasks.php">{tr}Task list{/tr}</a>
+  <a href="tiki-user_tasks.php">{tr}Task list{/tr}</a>
 </span>
 
 {if $task_admin}
 {if $admin_mode}
-<span class="button2"><a class="linkbut" href="tiki-user_tasks.php?taskId={$taskId}&amp;admin_mode_off=on">{tr}Admin mode off{/tr}</a>
+<span class="button2"><a href="tiki-user_tasks.php?taskId={$taskId}&amp;admin_mode_off=on">{tr}Admin mode off{/tr}</a>
 </span>
 {else}
-<span class="button2"><a class="linkbut" href="tiki-user_tasks.php?taskId={$taskId}&amp;admin_mode=on">{tr}Admin mode on{/tr}</a>
+<span class="button2"><a href="tiki-user_tasks.php?taskId={$taskId}&amp;admin_mode=on">{tr}Admin mode on{/tr}</a>
 </span>
 {/if}
 {/if}
-<span class="button2"><a href="#" onclick="javascript:flip('edithelpzone'); return false;" class="linkbut">{tr}Task help{/tr}</a></span>
+<span class="button2"><a href="#" onclick="javascript:flip('edithelpzone'); return false;">{tr}Task help{/tr}</a></span>
 
 {if (not $show_form)} 
-  <span class="button2"><a href="tiki-user_tasks.php?emty_trash=Empty trash" class="linkbut">{tr}Empty Trash{/tr}</a></span>
+  <span class="button2"><a href="tiki-user_tasks.php?emty_trash=Empty trash">{tr}Empty Trash{/tr}</a></span>
 {/if}
 
 <br /><br />

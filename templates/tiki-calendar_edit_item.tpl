@@ -3,23 +3,23 @@
 
 <div class="navbar">
 {if $tiki_p_view_calendar eq 'y'}
-<span class="button2"><a href="tiki-calendar.php" class="linkbut">{tr}View Calendars{/tr}</a></span>
+<span class="button2"><a href="tiki-calendar.php">{tr}View Calendars{/tr}</a></span>
 {/if}
 {if $tiki_p_admin_calendar eq 'y'}
-<span class="button2"><a href="tiki-admin_calendars.php?calendarId={$calendarId}" class="linkbut">{tr}Edit Calendar{/tr}</a></span>
+<span class="button2"><a href="tiki-admin_calendars.php?calendarId={$calendarId}">{tr}Edit Calendar{/tr}</a></span>
 {/if}
 {if $tiki_p_add_events eq 'y' and $id }
-<span class="button2"><a href="tiki-calendar_edit_item.php" class="linkbut">{tr}New event{/tr}</a></span>
+<span class="button2"><a href="tiki-calendar_edit_item.php">{tr}New event{/tr}</a></span>
 {/if}
 {if $id}
 {if $edit}
-<span class="button2"><a href="tiki-calendar_edit_item.php?viewcalitemId={$id}" class="linkbut">{tr}View event{/tr}</a></span>
+<span class="button2"><a href="tiki-calendar_edit_item.php?viewcalitemId={$id}">{tr}View event{/tr}</a></span>
 {elseif $tiki_p_change_events eq 'y'}
-<span class="button2"><a href="tiki-calendar_edit_item.php?calitemId={$id}" class="linkbut">{tr}Edit event{/tr}</a></span>
+<span class="button2"><a href="tiki-calendar_edit_item.php?calitemId={$id}">{tr}Edit event{/tr}</a></span>
 {/if}
 {/if}
 {if $tiki_p_admin_calendar eq 'y'}
-<span class="button2"><a href="tiki-admin_calendars.php" class="linkbut">{tr}Admin Calendars{/tr}</a></span>
+<span class="button2"><a href="tiki-admin_calendars.php">{tr}Admin Calendars{/tr}</a></span>
 {/if}
 </div>
 

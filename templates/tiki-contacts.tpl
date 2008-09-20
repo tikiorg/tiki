@@ -4,15 +4,15 @@
 <div style="float:right;margin:5px;">
 <span class="button2">
 {if $view eq 'list'}
-<a href="{$myurl}?view=group" class="linkbut" title="{tr}Group View{/tr}">{tr}Group View{/tr}</a>
+<a href="{$myurl}?view=group" title="{tr}Group View{/tr}">{tr}Group View{/tr}</a>
 {else}
-<a href="{$myurl}?view=list" class="linkbut" title="{tr}List View{/tr}">{tr}List View{/tr}</a>
+<a href="{$myurl}?view=list" title="{tr}List View{/tr}">{tr}List View{/tr}</a>
 {/if}
 </span>
 </div>
 <div style="float:left;margin:5px;">
-<span class="button2"><a href="#" onclick="flip('editform');return false;" class="linkbut">{tr}Create/edit contacts{/tr}</a></span>
-<span class="button2"><a href="tiki-user_contacts_prefs.php" class="linkbut" title="{tr}Preferences{/tr}">{tr}Preferences{/tr}</a></span>
+<span class="button2"><a href="#" onclick="flip('editform');return false;">{tr}Create/edit contacts{/tr}</a></span>
+<span class="button2"><a href="tiki-user_contacts_prefs.php" title="{tr}Preferences{/tr}">{tr}Preferences{/tr}</a></span>
 </div>
 </div>
 

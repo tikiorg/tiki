@@ -1,5 +1,5 @@
 <div class="navbar">
-  <a class="linkbut" href="tiki-list_blogs.php">{tr}List Blogs{/tr}</a>
+  <a href="tiki-list_blogs.php">{tr}List Blogs{/tr}</a>
 </div>
 
 {if strlen($heading) > 0}

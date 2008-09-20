@@ -1,6 +1,6 @@
 {title}{tr}Approve page changes in staging:{/tr} {$page|escape:"url"}{/title}
 
-<div class="navbar"><a href="tiki-index.php?page={$page|escape:url}" class="linkbut" title="{tr}View{/tr}">{tr}View page{/tr}</a></div>
+<div class="navbar"><a href="tiki-index.php?page={$page|escape:url}" title="{tr}View{/tr}">{tr}View page{/tr}</a></div>
 <br />
 <div class="simplebox highlight">{icon _id=accept alt="{tr}Page has been approved{/tr}" style="vertical-align:middle"} {tr}Page has been approved{/tr}</div>
 <br />

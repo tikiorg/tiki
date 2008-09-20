@@ -15,7 +15,7 @@
 {/if}
 
 <div class="navbar">
-  <a class="linkbut" href="tiki-list_submissions.php">{tr}List Submissions{/tr}</a>
+  <a href="tiki-list_submissions.php">{tr}List Submissions{/tr}</a>
 </div>
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}

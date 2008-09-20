@@ -11,10 +11,10 @@
       {if $prefs.feature_ajax eq 'y' and isset($last_mid_template)}
         {self_link _class='linkbut' _template=$last_mid_template}{tr}Go back{/tr}{/self_link}
       {else}
-        <a href="javascript:history.back()" class="linkbut">{tr}Go back{/tr}</a>
+        <a href="javascript:history.back()">{tr}Go back{/tr}</a>
       {/if}
       </span>
-      <span class="button2"><a href="{$prefs.tikiIndex}" class="linkbut">{tr}Return to home page{/tr}</a></span>
+      <span class="button2"><a href="{$prefs.tikiIndex}">{tr}Return to home page{/tr}</a></span>
     </form>
   </div>
 </div>

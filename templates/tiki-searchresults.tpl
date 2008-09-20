@@ -7,36 +7,36 @@
 {if !( $searchStyle eq "menu" )}
 <div class="navbar">
 {tr}Search in{/tr}:<br />
-<a class="linkbut" href="tiki-searchresults.php?highlight={$words}&amp;where=pages">{tr}All{/tr}</a>
+<a href="tiki-searchresults.php?highlight={$words}&amp;where=pages">{tr}All{/tr}</a>
 {if $prefs.feature_wiki eq 'y'}
- <a class="linkbut" href="tiki-searchresults.php?highlight={$words}&amp;where=wikis">{tr}Wiki{/tr}</a>
+ <a href="tiki-searchresults.php?highlight={$words}&amp;where=wikis">{tr}Wiki{/tr}</a>
 {/if}
 {if $prefs.feature_galleries eq 'y'}
- <a class="linkbut" href="tiki-searchresults.php?highlight={$words}&amp;where=galleries">{tr}Galleries{/tr}</a>
- <a class="linkbut" href="tiki-searchresults.php?highlight={$words}&amp;where=images">{tr}Images{/tr}</a>
+ <a href="tiki-searchresults.php?highlight={$words}&amp;where=galleries">{tr}Galleries{/tr}</a>
+ <a href="tiki-searchresults.php?highlight={$words}&amp;where=images">{tr}Images{/tr}</a>
 {/if}
 {if $prefs.feature_file_galleries eq 'y'}
- <a class="linkbut" href="tiki-searchresults.php?highlight={$words}&amp;where=files">{tr}Files{/tr}</a>
+ <a href="tiki-searchresults.php?highlight={$words}&amp;where=files">{tr}Files{/tr}</a>
 {/if}
 {if $prefs.feature_forums eq 'y'}
- <a class="linkbut" href="tiki-searchresults.php?highlight={$words}&amp;where=forums">{tr}Forums{/tr}</a>
+ <a href="tiki-searchresults.php?highlight={$words}&amp;where=forums">{tr}Forums{/tr}</a>
 {/if}
 {if $prefs.feature_faqs eq 'y'}
- <a class="linkbut" href="tiki-searchresults.php?highlight={$words}&amp;where=faqs">{tr}FAQs{/tr}</a>
+ <a href="tiki-searchresults.php?highlight={$words}&amp;where=faqs">{tr}FAQs{/tr}</a>
 {/if}
 {if $prefs.feature_blogs eq 'y'}
- <a class="linkbut" href="tiki-searchresults.php?highlight={$words}&amp;where=blogs">{tr}Blogs{/tr}</a>
- <a class="linkbut" href="tiki-searchresults.php?highlight={$words}&amp;where=posts">{tr}Blog Posts{/tr}</a>
+ <a href="tiki-searchresults.php?highlight={$words}&amp;where=blogs">{tr}Blogs{/tr}</a>
+ <a href="tiki-searchresults.php?highlight={$words}&amp;where=posts">{tr}Blog Posts{/tr}</a>
 {/if}
 {if $prefs.feature_directory eq 'y'}
- <a class="linkbut" href="tiki-searchresults.php?highlight={$words}&amp;where=directory">{tr}Directory{/tr}</a>
+ <a href="tiki-searchresults.php?highlight={$words}&amp;where=directory">{tr}Directory{/tr}</a>
 {/if}
 
 {if $prefs.feature_articles eq 'y'}
- <a class="linkbut" href="tiki-searchresults.php?highlight={$words}&amp;where=articles">{tr}Articles{/tr}</a>
+ <a href="tiki-searchresults.php?highlight={$words}&amp;where=articles">{tr}Articles{/tr}</a>
 {/if}
 {if $prefs.feature_trackers eq 'y'}
- <a class="linkbut" href="tiki-searchresults.php?highlight={$words}&amp;where=trackers">{tr}Trackers{/tr}</a>
+ <a href="tiki-searchresults.php?highlight={$words}&amp;where=trackers">{tr}Trackers{/tr}</a>
 {/if}
 </div><!-- navbar -->
 <br /><br />

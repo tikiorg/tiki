@@ -2,14 +2,14 @@
 
 {title help="mods"}{tr}Tikiwiki Mods{/tr}{/title}
 
-<span class="button2"><a href="tiki-mods_admin.php" class="linkbut">{tr}Mods Configuration{/tr}</a></span>
-<span class="button2"><a href="tiki-mods.php?reload=1{$findarg}{$typearg}" class="linkbut">{tr}Update remote index{/tr}</a></span>
-<span class="button2"><a href="tiki-mods.php?rebuild=1{$findarg}{$typearg}" class="linkbut">{tr}Rebuild local list{/tr}</a></span>
+<span class="button2"><a href="tiki-mods_admin.php">{tr}Mods Configuration{/tr}</a></span>
+<span class="button2"><a href="tiki-mods.php?reload=1{$findarg}{$typearg}">{tr}Update remote index{/tr}</a></span>
+<span class="button2"><a href="tiki-mods.php?rebuild=1{$findarg}{$typearg}">{tr}Rebuild local list{/tr}</a></span>
 {if $prefs.feature_mods_provider eq 'y'}
 <span class="button3">
-<span class="button2"><a href="tiki-mods.php?republishall=1{$findarg}{$typearg}" class="linkbut">{tr}Republish all{/tr}</a></span>
-<span class="button2"><a href="tiki-mods.php?publishall=1{$findarg}{$typearg}" class="linkbut">{tr}Publish all{/tr}</a></span>
-<span class="button2"><a href="tiki-mods.php?unpublishall=1{$findarg}{$typearg}" class="linkbut">{tr}Unpublish all{/tr}</a></span>
+<span class="button2"><a href="tiki-mods.php?republishall=1{$findarg}{$typearg}">{tr}Republish all{/tr}</a></span>
+<span class="button2"><a href="tiki-mods.php?publishall=1{$findarg}{$typearg}">{tr}Publish all{/tr}</a></span>
+<span class="button2"><a href="tiki-mods.php?unpublishall=1{$findarg}{$typearg}">{tr}Unpublish all{/tr}</a></span>
 </span>
 {/if}
 
@@ -168,7 +168,7 @@ No mods.
 
 {foreach key=type item=i from=$display}
 <tr><td colspan="{if $prefs.feature_mods_provider eq 'y'}3{else}2{/if}">
-<span class="button2"><a href="tiki-mods.php?type={$type|escape:"url"}{$findarg}" class="linkbut" title="{tr}Display only this type{/tr}">{$type}</a></span>
+<span class="button2"><a href="tiki-mods.php?type={$type|escape:"url"}{$findarg}" title="{tr}Display only this type{/tr}">{$type}</a></span>
 </td><td colspan="7">&nbsp;</td>
 </tr>
 {cycle values="odd,even" print=false}

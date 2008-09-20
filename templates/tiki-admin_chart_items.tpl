@@ -5,13 +5,13 @@
 
 <div class="navbar">
 	<span class="button2">
-		<a class="linkbut" href="tiki-admin_charts.php">{tr}Charts{/tr}</a>
+		<a href="tiki-admin_charts.php">{tr}Charts{/tr}</a>
 	</span>
 	<span class="button2">
-		<a class="linkbut" href="tiki-admin_charts.php?chartId={$chartId}">{tr}Edit Chart{/tr}</a>
+		<a href="tiki-admin_charts.php?chartId={$chartId}">{tr}Edit Chart{/tr}</a>
 	</span>
 	<span class="button2">
-		<a class="linkbut" href="tiki-view_chart.php?chartId={$chartId}">{tr}View{/tr}</a>
+		<a href="tiki-view_chart.php?chartId={$chartId}">{tr}View{/tr}</a>
 	</span>
 </div>
 

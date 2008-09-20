@@ -5,7 +5,7 @@
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}To use a banner in a <a class="rbox-link" href="tiki-admin_modules.php">module</a> or a template, use {literal}{banner zone=ABC}{/literal}, where ABC is the name of the zone.{/tr}{/remarksbox}
 
 <div class="navbar">
-  <a class="linkbut" href="tiki-edit_banner.php">{tr}Create banner{/tr}</a>
+  <a href="tiki-edit_banner.php">{tr}Create banner{/tr}</a>
 </div>
 {if $listpages or ($find ne '')}
   {include file='find.tpl' _sort_mode='y'}

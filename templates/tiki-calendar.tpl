@@ -21,20 +21,20 @@
 {/if}
 
 {if $tiki_p_admin_calendar eq 'y' or $tiki_p_admin eq 'y'}
-  <span class="button2"><a href="tiki-admin_calendars.php{if $displayedcals|@count eq 1}?calendarId={$displayedcals[0]}{/if}" class="linkbut">{tr}Admin Calendar{/tr}</a></span>
+  <span class="button2"><a href="tiki-admin_calendars.php{if $displayedcals|@count eq 1}?calendarId={$displayedcals[0]}{/if}">{tr}Admin Calendar{/tr}</a></span>
 {/if}
 
 {if $tiki_p_add_events eq 'y'}
-<span class="button2"><a href="tiki-calendar_edit_item.php" class="linkbut">{tr}Add Event{/tr}</a></span>
+<span class="button2"><a href="tiki-calendar_edit_item.php">{tr}Add Event{/tr}</a></span>
 {/if}
 
 {if count($listcals) >= 1}
-<span class="button2"><a href="#" title="{tr}Click to select visible calendars{/tr}" class="linkbut" onclick="toggle('filtercal');">{tr}Visible Calendars{/tr}</a></span>
+<span class="button2"><a href="#" title="{tr}Click to select visible calendars{/tr}" onclick="toggle('filtercal');">{tr}Visible Calendars{/tr}</a></span>
 
 {if count($thiscal)}
 {foreach item=k from=$listcals name=listc}
 {if $thiscal.$k}
-<span class="button2"><a href="#" class="linkbut" style="background-color:#{$infocals.$k.custombgcolor};color:#{$infocals.$k.customfgcolor}" onclick="toggle('filtercal');">{$infocals.$k.name}</a></span>
+<span class="button2"><a href="#" style="background-color:#{$infocals.$k.custombgcolor};color:#{$infocals.$k.customfgcolor}" onclick="toggle('filtercal');">{$infocals.$k.name}</a></span>
 {/if}
 {/foreach}
 {else}
@@ -47,8 +47,8 @@ none
 
 <span class="button2">
 {if $viewlist eq 'list'}
-<a href="{$myurl}?viewlist=table" class="linkbut" title="{tr}Calendar View{/tr}">{tr}Calendar View{/tr}</a>{else}
-<a href="{$myurl}?viewlist=list" class="linkbut" title="{tr}List View{/tr}">{tr}List View{/tr}</a>{/if}
+<a href="{$myurl}?viewlist=table" title="{tr}Calendar View{/tr}">{tr}Calendar View{/tr}</a>{else}
+<a href="{$myurl}?viewlist=list" title="{tr}List View{/tr}">{tr}List View{/tr}</a>{/if}
 </span>
 
 </div>

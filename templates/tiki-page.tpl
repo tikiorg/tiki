@@ -3,8 +3,8 @@
 {/if}
 {$parsed}
 {if $tiki_p_edit_html_pages eq 'y'}
-<span class="button2"><a class="linkbut" href="tiki-admin_html_pages.php?pageName={$pageName|escape:"url"}">{tr}Edit{/tr}</a></span>
+<span class="button2"><a href="tiki-admin_html_pages.php?pageName={$pageName|escape:"url"}">{tr}Edit{/tr}</a></span>
 {if $type eq 'd'}
-<span class="button2"><a class="linkbut" href="tiki-admin_html_page_content.php?pageName={$pageName|escape:"url"}">{tr}content{/tr}</a></span>
+<span class="button2"><a href="tiki-admin_html_page_content.php?pageName={$pageName|escape:"url"}">{tr}content{/tr}</a></span>
 {/if}
 {/if}

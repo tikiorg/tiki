@@ -3,7 +3,7 @@
 {title help="forums" admpage="forums"}{tr}Message queue for forum{/tr} {$forum_info.name}{/title}
 
 <div class="navbar">
-  <a class="linkbut" href="tiki-view_forum.php?forumId={$forumId}">{tr}Back to forum{/tr}</a>
+  <a href="tiki-view_forum.php?forumId={$forumId}">{tr}Back to forum{/tr}</a>
 </div>
 
 {if $smarty.request.qId and $form eq 'y'}

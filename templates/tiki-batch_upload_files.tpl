@@ -2,12 +2,12 @@
 
 <span class="button2">
 {if $galleryId ne ''}
-<a href="tiki-list_file_gallery.php?galleryId={$galleryId}" class="linkbut">
+<a href="tiki-list_file_gallery.php?galleryId={$galleryId}">
 {else}
-<a href="tiki-list_file_gallery.php" class="linkbut">
+<a href="tiki-list_file_gallery.php">
 {/if}
 {tr}Browse file gallery{/tr}</a></span>
-<span class="button2"><a href="tiki-upload_file.php?galleryId={$galleryId}" class="linkbut">{tr}Upload from disk{/tr}</a></span>
+<span class="button2"><a href="tiki-upload_file.php?galleryId={$galleryId}">{tr}Upload from disk{/tr}</a></span>
 <br />
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Please do not use this feature to upload data into the database.{/tr}{/remarksbox}
 

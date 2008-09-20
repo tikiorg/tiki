@@ -7,7 +7,7 @@
 		<td>
 			<b>{$name} ({$size|kbsize})</b>
 			<div class="button2">
-				<a href="#" onclick="javascript:flip('uploadinfos{$fileId}');flip('uploadinfos{$fileId}_close','inline');return false;" class="linkbut">
+				<a href="#" onclick="javascript:flip('uploadinfos{$fileId}');flip('uploadinfos{$fileId}_close','inline');return false;">
 				{tr}Additional Info{/tr}
 				<span id="uploadinfos{$fileId}_close" style="display:none">({tr}Hide{/tr})</span>
 				</a>

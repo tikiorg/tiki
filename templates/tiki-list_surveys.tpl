@@ -3,7 +3,7 @@
 
 {if $tiki_p_view_survey_stats eq 'y'}
   <div class="navbar">
-    <span class="button2"><a class="linkbut" href="tiki-survey_stats.php">{tr}Survey stats{/tr}</a></span>
+    <span class="button2"><a href="tiki-survey_stats.php">{tr}Survey stats{/tr}</a></span>
   </div>
 {/if}
 

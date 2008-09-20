@@ -3,7 +3,7 @@
 {title help="Image+Galleries" admpage="gal"}{tr}Galleries{/tr}{/title}
 
 {if $tiki_p_create_galleries eq 'y'}
-{if $edit_mode ne 'y' or $galleryId ne 0}<div class="navbar"><a class="linkbut" href="tiki-galleries.php?edit_mode=1&amp;galleryId=0">{tr}Create New Gallery{/tr}</a></div>{/if}
+{if $edit_mode ne 'y' or $galleryId ne 0}<div class="navbar"><a href="tiki-galleries.php?edit_mode=1&amp;galleryId=0">{tr}Create New Gallery{/tr}</a></div>{/if}
 {if $edit_mode eq 'y'}
 {if $galleryId eq 0}
 <h2>{tr}Create a gallery{/tr}</h2>
@@ -108,7 +108,7 @@
 {/if}
 {/if}
 {if $tiki_p_create_galleries eq 'y' && $galleryId ne 0}
-<div class="navbar"><a class="linkbut" href="tiki-galleries.php?edit_mode=1&amp;galleryId=0">{tr}Create New Gallery{/tr}</a></div>
+<div class="navbar"><a href="tiki-galleries.php?edit_mode=1&amp;galleryId=0">{tr}Create New Gallery{/tr}</a></div>
 {/if}
 <h2>{tr}Available Galleries{/tr}</h2>
 <div align="center">

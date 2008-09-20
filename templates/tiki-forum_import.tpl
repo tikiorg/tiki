@@ -3,8 +3,8 @@
 {title help="Forums" admpage="forums"}{tr}Forum Importer{/tr}{/title}
 
 <div class="navbar">
-  <a class="linkbut" title="{tr}Admin Forums{/tr}" href="tiki-admin_forums.php">{tr}Admin forums{/tr}</a>
-  <a class="linkbut" title="{tr}List Forums{/tr}" href="tiki-forums.php">{tr}List forums{/tr}</a>
+  <a title="{tr}Admin Forums{/tr}" href="tiki-admin_forums.php">{tr}Admin forums{/tr}</a>
+  <a title="{tr}List Forums{/tr}" href="tiki-forums.php">{tr}List forums{/tr}</a>
 </div>
 {*
  * If this is a new import, start by selecting the import method and we'll

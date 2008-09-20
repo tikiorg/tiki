@@ -3,7 +3,7 @@
 {title}{tr}History{/tr}: {$page}{/title}
 
 <div class="navbar">
-  <a href="tiki-index.php?page={$page|escape:url}" class="linkbut" title="{tr}View{/tr}">{tr}View page{/tr}</a>
+  <a href="tiki-index.php?page={$page|escape:url}" title="{tr}View{/tr}">{tr}View page{/tr}</a>
 </div>
 
 {if $preview}
@@ -12,7 +12,7 @@
   </h2>
   {if $info.version ne $preview and $tiki_p_rollback eq 'y'}
     <div class="navbar">
-      <a class="linkbut" href="tiki-rollback.php?page={$page|escape:"url"}&amp;version={$preview}" title="{tr}Rollback{/tr}">{tr}Rollback to this version{/tr}</a>
+      <a href="tiki-rollback.php?page={$page|escape:"url"}&amp;version={$preview}" title="{tr}Rollback{/tr}">{tr}Rollback to this version{/tr}</a>
     </div>
   {/if}
   <div class="wikitext">{$previewd}</div>
@@ -23,7 +23,7 @@
 {if $info.version eq $source}<small><small>{tr}(current){/tr}</small></small>{/if}
 </h2>
 {if $info.version ne $source and $tiki_p_rollback eq 'y'}
-<div class="navbar"><a class="linkbut" href="tiki-rollback.php?page={$page|escape:"url"}&amp;version={$source}" title="{tr}Rollback{/tr}">{tr}Rollback to this version{/tr}</a></div>
+<div class="navbar"><a href="tiki-rollback.php?page={$page|escape:"url"}&amp;version={$source}" title="{tr}Rollback{/tr}">{tr}Rollback to this version{/tr}</a></div>
 {/if}
 <div class="wikitext">{$sourced}</div>
 {/if}

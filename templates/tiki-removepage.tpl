@@ -1,7 +1,7 @@
 {title}{tr}Remove page{/tr}: {$page} ({if $version == 'last'}{tr}Last Version{/tr}{else}{tr}Version{/tr}: {$version}{/if}){/title}
 
 <span class="button2">
-  <a class="linkbut" href="tiki-index.php?page={$page|escape:'url'}">{tr}Return to wikipage{/tr} <b>{$page}</b></a>
+  <a href="tiki-index.php?page={$page|escape:'url'}">{tr}Return to wikipage{/tr} <b>{$page}</b></a>
 </span>
 <br />
 <form action="tiki-removepage.php" method="post">

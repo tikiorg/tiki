@@ -25,7 +25,7 @@
 {if $channels}
 	<div class="navbar">
 		<span class="button2">
-			<a href="tiki-admin_cookies.php?removeall=1" class="linkbut">{tr}Remove all cookies{/tr}</a>
+			<a href="tiki-admin_cookies.php?removeall=1">{tr}Remove all cookies{/tr}</a>
 		</span>
 	</div>
 {/if}

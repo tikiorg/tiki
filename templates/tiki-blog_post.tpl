@@ -5,15 +5,15 @@
 <div class="navbar">
 {if $prefs.feature_wysiwyg eq 'y' and $prefs.wysiwyg_optional eq 'y'}
 {if $wysiwyg ne 'y'}
-<span class="button2"><a class="linkbut" href="tiki-blog_post.php?{if $blogId ne ''}blogId={$blogId}&amp;{/if}{if $postId ne ''}&amp;postId={$postId}{/if}&amp;wysiwyg=y">{tr}Use wysiwyg editor{/tr}</a></span>
+<span class="button2"><a href="tiki-blog_post.php?{if $blogId ne ''}blogId={$blogId}&amp;{/if}{if $postId ne ''}&amp;postId={$postId}{/if}&amp;wysiwyg=y">{tr}Use wysiwyg editor{/tr}</a></span>
 {else}
-<span class="button2"><a class="linkbut" href="tiki-blog_post.php?{if $blogId ne ''}blogId={$blogId}&amp;{/if}{if $postId ne ''}&amp;postId={$postId}{/if}&amp;wysiwyg=n">{tr}Use normal editor{/tr}</a></span>
+<span class="button2"><a href="tiki-blog_post.php?{if $blogId ne ''}blogId={$blogId}&amp;{/if}{if $postId ne ''}&amp;postId={$postId}{/if}&amp;wysiwyg=n">{tr}Use normal editor{/tr}</a></span>
 {/if}
 {/if}
 {if $blogId > 0 }
-<span class="button2"><a class="linkbut" href="tiki-view_blog.php?blogId={$blogId}">{tr}View Blog{/tr}</a></span>
+<span class="button2"><a href="tiki-view_blog.php?blogId={$blogId}">{tr}View Blog{/tr}</a></span>
 {/if}
-<span class="button2"><a class="linkbut" href="tiki-list_blogs.php">{tr}List Blogs{/tr}</a></span>
+<span class="button2"><a href="tiki-list_blogs.php">{tr}List Blogs{/tr}</a></span>
 </div>
 
 {if $contribution_needed eq 'y'}
@@ -142,8 +142,8 @@
 <br />
 
 <div class="button2">
-      <a href="#edithelp" onclick="javascript:show('edithelpzone');hide('wikiplhelp-tab');show('wikihelp-tab'); return true;" name="edithelp" class="linkbut">{tr}Wiki Help{/tr}</a>
+      <a href="#edithelp" onclick="javascript:show('edithelpzone');hide('wikiplhelp-tab');show('wikihelp-tab'); return true;" name="edithelp">{tr}Wiki Help{/tr}</a>
 	</span><span class="button2">
-      <a href="#edithelp" onclick="javascript:show('edithelpzone');hide('wikihelp-tab');show('wikiplhelp-tab'); return true;" name="edithelp" class="linkbut">{tr}Plugin Help{/tr}</a>
+      <a href="#edithelp" onclick="javascript:show('edithelpzone');hide('wikihelp-tab');show('wikiplhelp-tab'); return true;" name="edithelp">{tr}Plugin Help{/tr}</a>
 </div>
 {include file=tiki-edit_help.tpl}

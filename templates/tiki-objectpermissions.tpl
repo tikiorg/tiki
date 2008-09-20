@@ -3,7 +3,7 @@
 {title help="Permission"}{tr}Assign permissions to {/tr}{tr}{$objectType|escape}{/tr}: {$objectName|escape}{/title}
 
 <div class="navbar">
-  <a href="{$referer}" class="linkbut">{tr}Back{/tr}</a>
+  <a href="{$referer}">{tr}Back{/tr}</a>
 </div>
 
 {if $prefs.feature_tabs eq 'y'}
@@ -169,7 +169,7 @@
 {/if}
 <br /><br />
 <div class="button2">
-<a href="#" onclick="javascript:flip('edithelpzone'); return false;" class="linkbut">{tr}Perms Help{/tr}</a>
+<a href="#" onclick="javascript:flip('edithelpzone'); return false;">{tr}Perms Help{/tr}</a>
 </div>
 
 <div class="wiki-edithelp"  id='edithelpzone' >

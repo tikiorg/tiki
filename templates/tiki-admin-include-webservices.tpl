@@ -1,10 +1,10 @@
 <form method="post" action="tiki-admin.php?page=webservices">
 	<div class="button2">
 		{foreach from=$webservices item=name}
-			<a class="linkbut" href="tiki-admin.php?page=webservices&amp;name={$name|escape}">{$name|escape}</a>
+			<a href="tiki-admin.php?page=webservices&amp;name={$name|escape}">{$name|escape}</a>
 		{/foreach}
 		{if $storedName}
-		<a class="linkbut" href="tiki-admin.php?page=webservices">{tr}Create New{/tr}</a>
+		<a href="tiki-admin.php?page=webservices">{tr}Create New{/tr}</a>
 		{/if}
 	</div>
 	{if $storedName}

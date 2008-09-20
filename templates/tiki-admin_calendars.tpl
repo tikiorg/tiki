@@ -2,7 +2,7 @@
 
 {if $calendarId}
 	<div class="navbar">
-		 <a href="tiki-admin_calendars.php?show=mod" class="linkbut">{tr}Create Calendar{/tr}</a>
+		 <a href="tiki-admin_calendars.php?show=mod">{tr}Create Calendar{/tr}</a>
 	</div>	
 {/if}
 

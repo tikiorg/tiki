@@ -1,7 +1,7 @@
 {title url="tiki-user_information.php?view_user=$userwatch"}{tr}User Information{/tr}{/title}
 
 {if $prefs.feature_display_my_to_others eq 'y' and $user and $prefs.feature_messages eq 'y' and $tiki_p_messages eq 'y' and $allowMsgs eq 'y'}
-  <div class="navbar"><a class="linkbut" href="#message">{tr}Send me a message{/tr}</a></div>
+  <div class="navbar"><a href="#message">{tr}Send me a message{/tr}</a></div>
 {/if}
 
 <table>

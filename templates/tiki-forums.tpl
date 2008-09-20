@@ -4,7 +4,7 @@
 
 {if $tiki_p_admin_forum eq 'y'}
   <div class="navbar">
-    <a class="linkbut" href="tiki-admin_forums.php">{tr}Admin forums{/tr}</a>
+    <a href="tiki-admin_forums.php">{tr}Admin forums{/tr}</a>
   </div>
 {/if}
 

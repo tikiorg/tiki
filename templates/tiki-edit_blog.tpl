@@ -5,9 +5,9 @@
 {/if}
 
 <div class="navbar">
-  <a class="linkbut" href="tiki-list_blogs.php">{tr}List Blogs{/tr}</a>
+  <a href="tiki-list_blogs.php">{tr}List Blogs{/tr}</a>
   
-  {if $blogId > 0}<a class="linkbut" href="tiki-view_blog.php?blogId={$blogId}">{tr}View Blog{/tr}</a>{/if}
+  {if $blogId > 0}<a href="tiki-view_blog.php?blogId={$blogId}">{tr}View Blog{/tr}</a>{/if}
 </div>
 
 {if $category_needed eq 'y'}

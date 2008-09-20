@@ -5,9 +5,9 @@
 
 <div class="navbar">
 {if $tiki_p_admin eq 'y'} {* only full admins can manage groups, not tiki_p_admin_users *}
-<span class="button2"><a href="tiki-admingroups.php" class="linkbut">{tr}Admin groups{/tr}</a></span>
+<span class="button2"><a href="tiki-admingroups.php">{tr}Admin groups{/tr}</a></span>
 {/if}
-<span class="button2"><a href="tiki-adminusers.php" class="linkbut">{tr}Admin users{/tr}</a></span>
+<span class="button2"><a href="tiki-adminusers.php">{tr}Admin users{/tr}</a></span>
 </div>
 
 <h2>{tr}Group Information{/tr}</h2>

@@ -2,7 +2,7 @@
 
 <div class="navbar">
   <span class="button2">
-    <a class="linkbut" href="tiki-index.php?page={$page|escape:"url"}">{tr}View{/tr}</a>
+    <a href="tiki-index.php?page={$page|escape:"url"}">{tr}View{/tr}</a>
   </span>
 </div>
 

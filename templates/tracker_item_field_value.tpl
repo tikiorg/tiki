@@ -261,8 +261,7 @@
 					trackerId={$item.trackerId}
 					&amp;itemId={$item.itemId}
 					&amp;ins_{$field_value.fieldId}=NULL
-					{if $page}&amp;page={$page|escape:url}{/if}"
-					class="linkbut">-</a>
+					{if $page}&amp;page={$page|escape:url}{/if}">-</a>
 			{/if}
 				{section name=i loop=$field_value.options_array}
 					{if $field_value.options_array[i] eq $item.my_rate}
@@ -272,8 +271,7 @@
 						trackerId={$item.trackerId}
 						&amp;itemId={$item.itemId}
 						&amp;ins_{$field_value.fieldId}={$field_value.options_array[i]}
-						{if $page}&amp;page={$page|escape:url}{/if}"
-						class="linkbut">{$field_value.options_array[i]}</a>
+						{if $page}&amp;page={$page|escape:url}{/if}">{$field_value.options_array[i]}</a>
 					{/if}
 				{/section}
 			</span></span>

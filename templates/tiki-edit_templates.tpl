@@ -6,10 +6,10 @@
 
 <div class="navbar">
   {if $prefs.feature_editcss eq 'y'}
-    <span class="button2"><a href="tiki-edit_css.php" class="linkbut">{tr}Edit CSS{/tr}</a></span>
+    <span class="button2"><a href="tiki-edit_css.php">{tr}Edit CSS{/tr}</a></span>
   {/if}
   {if $mode eq 'editing'}
-    <span class="button2"><a class="linkbut" href="tiki-edit_templates.php">{tr}Template listing{/tr}</a></span>
+    <span class="button2"><a href="tiki-edit_templates.php">{tr}Template listing{/tr}</a></span>
   {/if}
 </div>
 

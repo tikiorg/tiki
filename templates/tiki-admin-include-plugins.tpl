@@ -5,7 +5,7 @@
 			{foreach from=$plugins_alias item=name}
 				{assign var=full value='wikiplugin_'|cat:$name}
 				<input type="checkbox" name="enabled[]" value="{$name|escape}" {if $prefs[$full] eq 'y'}checked="checked"{/if}/>
-				<a href="tiki-admin.php?page=plugins&amp;plugin={$name|escape}" class="linkbut">{$name|escape}</a>
+				<a href="tiki-admin.php?page=plugins&amp;plugin={$name|escape}">{$name|escape}</a>
 			{/foreach}
 			<div>
 				<input type="submit" name="enable" value="{tr}Enable Plugins{/tr}"/>
@@ -15,7 +15,7 @@
 
 	{if $plugin}
 		<div class="button2">
-			<a href="tiki-admin.php?page=plugins" class="linkbut">{tr}New{/tr}</a>
+			<a href="tiki-admin.php?page=plugins">{tr}New{/tr}</a>
 		</div>
 	{/if}
 	

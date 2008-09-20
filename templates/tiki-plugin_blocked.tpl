@@ -21,7 +21,7 @@
 	{/if}
 	{if $plugin_details}
 	<div class="right button2">
-		<a href="javascript:toggle('sec-{$plugin_name|escape}-{$plugin_index|escape}')" class="linkbut">{tr}View Details{/tr}</a>
+		<a href="javascript:toggle('sec-{$plugin_name|escape}-{$plugin_index|escape}')">{tr}View Details{/tr}</a>
 	</div>
 	<div id="sec-{$plugin_name|escape}-{$plugin_index|escape}" style="display:none">
 		<div><h3>{tr}Details{/tr}: {$plugin_name|upper|escape}</h3></div>

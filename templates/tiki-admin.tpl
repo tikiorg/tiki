@@ -29,7 +29,7 @@ Add a value in first check when you create a new admin page. *}
 
 <a name="morelinks"></a>
 <br style="clear:both" />
-<span class="button2"><a href="#morelinks" class="linkbut">{tr}More Links{/tr}</a></span><br />
+<span class="button2"><a href="#morelinks">{tr}More Links{/tr}</a></span><br />
 
 <div class="cbox" id="morelinks" style="display:block;">
 <div class="cbox-title">{tr}Crosslinks to other features and settings{/tr}</div>

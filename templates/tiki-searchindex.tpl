@@ -7,7 +7,7 @@
   <div class="nohighlight navbar">
     <p>{tr}Search in{/tr}:</p>
 	{foreach item=name key=k from=$where_list}
-      	<a class="linkbut" {if $where eq $k}id="highlight"{/if} href="tiki-searchindex.php?highlight={$words}&amp;where={$k}">{tr}{$name}{/tr}</a>
+      	<a {if $where eq $k}id="highlight"{/if} href="tiki-searchindex.php?highlight={$words}&amp;where={$k}">{tr}{$name}{/tr}</a>
    	{/foreach}
   </div><!--nohighlight-->
   {* do not change the comment below, since smarty 'highlight' outputfilter is hardcoded to find exactly this... instead you may experience white pages as results *}

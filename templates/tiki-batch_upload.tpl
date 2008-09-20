@@ -3,12 +3,12 @@
 
 <span class="button2">
 {if $galleryId ne ''}
-<a href="tiki-browse_gallery.php?galleryId={$galleryId}" class="linkbut">
+<a href="tiki-browse_gallery.php?galleryId={$galleryId}">
 {else}
-<a href="tiki-galleries.php" class="linkbut">
+<a href="tiki-galleries.php">
 {/if}
 {tr}Browse gallery{/tr}</a></span>
-<span class="button2"><a href="tiki-upload_image.php" class="linkbut">{tr}Upload from disk{/tr}</a></span>
+<span class="button2"><a href="tiki-upload_image.php">{tr}Upload from disk{/tr}</a></span>
 <br /><br />
 
 {if count($feedback)}<div class="simplebox highlight">{section name=i loop=$feedback}{$feedback[i]}<br />{/section}</div>{/if}

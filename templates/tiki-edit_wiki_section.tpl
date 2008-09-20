@@ -3,7 +3,7 @@
 {title}{tr}Edit Section:{/tr}&nbsp;{$title}{/title}
 
 <div class="navbar">
-  <a class="linkbut" href="{$referer}">{tr}View object{/tr}</a>
+  <a href="{$referer}">{tr}View object{/tr}</a>
 </div>
 
 {if $preview}
