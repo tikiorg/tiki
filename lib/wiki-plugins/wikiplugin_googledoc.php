@@ -104,7 +104,7 @@ function wikiplugin_googledoc($data, $params) {
 		$srcUrl="\"http://spreadsheets.google.com/pub?key=$key &output=html&widget=true\"";
 	}
 	if ($type =="doc" or $type=="document") {
-		$srcUrl="\"http://docs.google.com/Doc?docid=$key\"";
+		$srcUrl="\"http://docs.google.com/View?docid=$key\"";
 	}
 	if ($type =="pres" or $type=="presentation") {
 		$srcUrl="\"http://docs.google.com/EmbedSlideshow?docid=$key\"";
