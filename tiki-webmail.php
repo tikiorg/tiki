@@ -124,7 +124,6 @@ if (!isset($_REQUEST["locSection"])) {
 }
 
 $smarty->assign('locSection', $_REQUEST["locSection"]);
-
 // Search if we have to add some contacts
 if (isset($_REQUEST["add_contacts"])) {
 	if (isset($_REQUEST["add"])) {
@@ -281,15 +280,16 @@ if ($_REQUEST["locSection"] == 'mailbox') {
 		die;
 	}
 
-//die(date(time()));
 	$smarty->assign('current', $current);
+	$smarty->assign('autoRefresh',$current['autoRefresh']);
+	$smarty->assign('flagsPublic',$current['flagsPublic']);
 	// Now get messages from mailbox
 	//$pop3 = new POP3($current["pop"], $current["username"], $current["pass"]);
 	//$pop3->exit = false;    //new
 	//$pop3->Open();
 	$pop3 = new Net_POP3();
 	if (!$pop3->connect($current["pop"]) || !$pop3->login($current["username"], $current["pass"])) {
-		echo '<b><br /><center><a href="tiki-webmail.php?locSection=settings">Click here for settings.</a></center></b>';
+		echo '<b><br /><center>The connection to the mail-server has failed. <a href="tiki-webmail.php?locSection=settings">Click here for settings.</a></center></b>';
 		die;
 	}
 /*
@@ -333,9 +333,9 @@ if ($_REQUEST["locSection"] == 'mailbox') {
 		if (isset($_REQUEST["msg"])) {
 			check_ticket('webmail');
 			// Now we can operate the messages
+			// $_REQUEST["realmsg"][$msg] gets you the mailID for the check box $_REQUEST["msg"]
 			foreach (array_keys($_REQUEST["msg"])as $msg) {
 				$realmsg = $_REQUEST["realmsg"][$msg];
-				
 				switch ($_REQUEST["action"]) {
 				case "flag":
 					$webmaillib->set_mail_flag($current["accountId"], $user, $realmsg, 'isFlagged', 'y');
@@ -428,9 +428,9 @@ if ($_REQUEST["locSection"] == 'mailbox') {
 			$aux["timestamp"] = strtotime($aux['Date']);
 			$l = $pop3->_cmdList($i);
 			$aux["size"] = $l["size"];
-			
-			//print_r($aux);print("<br />");
 			$aux["realmsgid"] = ereg_replace("[<>]","",$aux["Message-ID"]);
+//			var_dump($aux);
+
 			$webmaillib->replace_webmail_message($current["accountId"], $user, $aux["realmsgid"]);
 			list($aux["isRead"], $aux["isFlagged"], $aux["isReplied"]) = $webmaillib->get_mail_flags($current["accountId"], $user, $aux["realmsgid"]);
 
@@ -448,11 +448,11 @@ if ($_REQUEST["locSection"] == 'mailbox') {
 
 			$aux["subject"] = htmlspecialchars($aux["subject"]);
 		}
+//print("adding $i [".$aux["realmsgid"]."] <- [".$aux["Message-ID"]."]<BR>");
 
 		$aux["msgid"] = $i;
 		$list[] = $aux;
 	}
-
 	$lowerlimit = $i;
 
 	if ($lowerlimit < 0)
@@ -497,6 +497,8 @@ if ($_REQUEST["locSection"] == 'mailbox') {
 	}
 
 	$pop3->disconnect();
+//var_dump($list);
+
 	$smarty->assign('list', $list);
 }
 
@@ -510,7 +512,7 @@ if ($_REQUEST["locSection"] == 'settings') {
 
 	if (isset($_REQUEST["new_acc"])) {
 		check_ticket('webmail');
-		$webmaillib->replace_webmail_account($_REQUEST["accountId"], $user, $_REQUEST["account"], $_REQUEST["pop"], $_REQUEST["port"], $_REQUEST["username"], $_REQUEST["pass"], $_REQUEST["msgs"], $_REQUEST["smtp"], $_REQUEST["useAuth"], $_REQUEST["smtpPort"]);
+		$webmaillib->replace_webmail_account($_REQUEST["accountId"], $user, $_REQUEST["account"], $_REQUEST["pop"], $_REQUEST["port"], $_REQUEST["username"], $_REQUEST["pass"], $_REQUEST["msgs"], $_REQUEST["smtp"], $_REQUEST["useAuth"], $_REQUEST["smtpPort"], $_REQUEST["flagsPublic"], $_REQUEST["autoRefresh"]); // 16/09/08 MatWho aded flagsPublic and  autoRefresh
 
 		$_REQUEST["accountId"] = 0;
 	}
@@ -537,12 +539,17 @@ if ($_REQUEST["locSection"] == 'settings') {
 		$info["port"] = 110;
 		$info["smtpPort"] = 25;
 		$info["msgs"] = 20;
+		$info["flagsPublic"] = "n";
+		$info["autoRefresh"] = 0;
 	}
 
 	$smarty->assign('info', $info);
 	// List
 	$accounts = $webmaillib->list_webmail_accounts($user, 0, -1, 'account_asc', '');
 	$smarty->assign('accounts', $accounts["data"]);
+	
+	$pubAccounts = $webmaillib->list_webmail_group_accounts($user, 0, -1, 'account_asc', '');
+	$smarty->assign('pubAccounts', $pubAccounts["data"]);
 }
 
 /*************** Compose *********************************************************************************************/
