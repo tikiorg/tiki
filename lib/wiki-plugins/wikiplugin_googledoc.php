@@ -102,12 +102,15 @@ function wikiplugin_googledoc($data, $params) {
 
     if ($type =="sheet" or $type=="spreadsheet") {
 		$srcUrl="\"http://spreadsheets.google.com/pub?key=$key &output=html&widget=true\"";
+		$editHtml=" <P><A HREF=$srcUrl Target=\"$frameName\">Edit this Google Document</A></P>";
 	}
 	if ($type =="doc" or $type=="document") {
 		$srcUrl="\"http://docs.google.com/View?docid=$key\"";
+		$editHtml="";
 	}
 	if ($type =="pres" or $type=="presentation") {
 		$srcUrl="\"http://docs.google.com/EmbedSlideshow?docid=$key\"";
+		$editHtml="";
 	}
 	
 	$ret = "";
@@ -118,7 +121,7 @@ function wikiplugin_googledoc($data, $params) {
 		$frameName="Frame".$key;
 	}
 	if ($editLink== 'both' or $editLink== 'top') {
-		$ret .= " <P><A HREF=\$srcUrl Target=\"$frameName\">Edit this Google Document</A></P>";
+		$ret .= $editHtml;
 	}
 
 	$ret .= '<iframe ';
@@ -160,7 +163,7 @@ function wikiplugin_googledoc($data, $params) {
 		$ret .= " src=$srcUrl></iframe>";
 	}
 	if ($editLink== 'both' or $editLink== 'bottom') {
-		$ret .= " <P><A HREF=$srcUrl Target=\"$frameName\">Edit this Google Document</A></P>";
+		$ret .= $editHtml;
 	}
 
 	$ret .= "";
