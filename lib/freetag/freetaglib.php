@@ -187,7 +187,9 @@ class FreetagLib extends ObjectLib {
      * 
      */
     
-function get_objects_with_tag_combo($tagArray, $type='', $user = '', $offset = 0, $maxRecords = -1, $sort_mode = 'name_asc', $find = '', $broaden = 'n') {
+function get_objects_with_tag_combo($tagArray, $type='', $thisUser = '', $offset = 0, $maxRecords = -1, $sort_mode = 'name_asc', $find = '', $broaden = 'n') {
+	global $categlib; include_once('lib/categories/categlib.php');
+	global $tiki_p_admin, $user;
 	if (!isset($tagArray) || !is_array($tagArray)) {
 	    return false;
 	}
@@ -201,9 +203,9 @@ function get_objects_with_tag_combo($tagArray, $type='', $user = '', $offset = 0
 	
 	$numTags = count($tagArray);
 		
-	if (isset($user) && !empty($user)) {
+	if (isset($thisUser) && !empty($thisUser)) {
 	    $mid = "AND `user` = ?";
-	    $bindvals[] = $user;
+	    $bindvals[] = $thisUser;
 	} else {
 	    $mid = '';
 	}
@@ -218,9 +220,9 @@ function get_objects_with_tag_combo($tagArray, $type='', $user = '', $offset = 0
 		$bindvals_t = $bindvals;		
 		$mid_t = '';
 
-		if (isset($user) && !empty($user)) {
+		if (isset($thisUser) && !empty($thisUser)) {
 	    	$mid_t = "AND `user` = ?";
-	    	$bindvals_t[] = $user;	
+	    	$bindvals_t[] = $thisUser;	
 		}	
 	
 		if (isset($type) && !empty($type)) {
@@ -268,9 +270,9 @@ function get_objects_with_tag_combo($tagArray, $type='', $user = '', $offset = 0
 	
 	$mid = '';
 
-	if (isset($user) && !empty($user)) {
+	if (isset($thisUser) && !empty($thisUser)) {
 	    $mid = "AND `user` = ?";
-	    $bindvals[] = $user;	
+	    $bindvals[] = $thisUser;	
 	}	
 	
 	if (isset($type) && !empty($type)) {
@@ -303,13 +305,18 @@ function get_objects_with_tag_combo($tagArray, $type='', $user = '', $offset = 0
 	$query_cant .= $query_end;	
 	
 	$result = $this->query($query, $bindvals, $maxRecords, $offset);
+	$cant = $this->getOne($query_cant, $bindvals);
 	
 	$ret = array();
+	$permMap = $categlib->map_object_type_to_permission();
 	while ($row = $result->fetchRow()) {
-	    $ret[] = $row;
+		if ($tiki_p_admin == 'y' || $this->user_has_perm_on_object($user, $row['itemId'], $row['type'], $permMap[$row['type']])) {
+			$ret[] = $row;
+		} else {
+			--$cant;
+		}
 	}
 	
-	$cant = $this->getOne($query_cant, $bindvals);
 	
 	return array('data' => $ret,
 		     'cant' => $cant);
