@@ -2,7 +2,7 @@
 
 {title help=Webmail admpage=webmail}{tr}Webmail{/tr}{/title}
 
-{include file=tiki-mytiki_bar.tpl}
+{* include file=tiki-mytiki_bar.tpl *}
 <br /><br />
 <table>
 <tr>
@@ -47,11 +47,13 @@
 <tr><td class="formcolor">{tr}SMTP requires authentication{/tr}</td><td colspan="3" class="formcolor">{tr}Yes{/tr}<input type="radio" name="useAuth" value="y" {if $info.useAuth eq 'y'}checked="checked"{/if} /> {tr}No{/tr}<input type="radio" name="useAuth" value="n" {if $info.useAuth eq 'n'}checked="checked"{/if} /></td></tr>
 <tr><td class="formcolor">{tr}Username{/tr}</td><td colspan="3" class="formcolor"><input type="text" name="username" value="{$info.username|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Password{/tr}</td><td colspan="3" class="formcolor"><input type="password" name="pass" value="{$info.pass|escape}" /></td></tr>
-<tr><td class="formcolor">{tr}Messages per page{/tr}</td><td colspan="3" class="formcolor"><input type="text" name="msgs" size="7" value="{$info.msgs|escape}" /></td></tr>
-<tr><td class="formcolor">&nbsp;</td><td colspan="3" class="formcolor"><input type="submit" name="new_acc" value="{tr}Add{/tr}" /></td></tr>
+<tr><td class="formcolor">{tr}Messages per page{/tr}</td><td colspan="3" class="formcolor"><input type="text" name="msgs" size="4" value="{$info.msgs|escape}" /></td></tr>
+<tr><td class="formcolor">{tr}Public (shared mail inbox) or private{/tr}</td><td colspan="3" class="formcolor">{tr}Public{/tr}<input type="radio" name="flagsPublic" value="y" {if $info.flagsPublic eq 'y'}checked="checked"{/if} /> {tr}Private (Recommended){/tr}<input type="radio" name="flagsPublic" value="n" {if $info.flagsPublic eq 'n'}checked="checked"{/if} /></td></tr>
+<tr><td class="formcolor">{tr}Auto-refresh page time{/tr}</td><td colspan="3" class="formcolor"><input type="text" name="autoRefresh" size="4" value="{$info.autoRefresh|escape}" /> seconds (0 = no auto refresh)</td></tr>
+<tr><td class="formcolor">&nbsp;</td><td colspan="3" class="formcolor"><input type="submit" name="new_acc" value="{tr}Add/Update{/tr}" /></td></tr>
 </table>
 </form>
-<h2>{tr}User accounts{/tr}</h2>
+<h2>{tr}Personal e-mail accounts{/tr}</h2>
 <table class="normal">
 <tr>
 <td class="heading">{tr}Account{/tr}</td>
@@ -78,16 +80,56 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
 <tr><td colspan="5" class="odd">{tr}No records found.{/tr}</td></tr>
 {/section}
 </table>
+
+
+<h2>{tr}Group e-mail accounts{/tr}</h2>
+<table class="normal">
+<tr>
+<td class="heading">{tr}Account{/tr}</td>
+<td class="heading">{tr}Active{/tr}</td>
+<td class="heading">{tr}POP server{/tr}</td>
+<td class="heading">{tr}Username{/tr}</td>
+<td class="heading">{tr}Action{/tr}</td>
+</tr>
+{cycle values="odd,even" print=false}
+{section name=ixp loop=$pubAccounts}
+<tr>
+<td class="{cycle advance=false}"><a href="tiki-webmail.php?locSection=settings&amp;current={$pubAccounts[ixp].accountId}" class="{if $pubAccounts[ixp].current eq 'y'}tablename{else}link{/if}" title="{if $pubAccounts[ixp].current ne 'y'}{tr}Activate{/tr}{/if}">{$pubAccounts[ixp].account}</a>
+</td>
+<td class="{cycle advance=false}">{if $pubAccounts[ixp].current eq 'y'}{tr}Yes{/tr}{else}{tr}No{/tr}{/if}</td>
+<td class="{cycle advance=false}">{$pubAccounts[ixp].pop} ({$pubAccounts[ixp].port})</td>
+<td class="{cycle advance=false}">{$pubAccounts[ixp].username}</td>
+<td class="{cycle}"><a href="tiki-webmail.php?locSection=settings&amp;remove={$pubAccounts[ixp].accountId}" class="link" 
+title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
+<a href="tiki-webmail.php?locSection=settings&amp;accountId={$pubAccounts[ixp].accountId}" class="tablename" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
+{if $pubAccounts[ixp].current ne 'y'}
+<a href="tiki-webmail.php?locSection=settings&amp;current={$pubAccounts[ixp].accountId}" title="{tr}Activate{/tr}">{icon _id='accept' alt="{tr}Activate{/tr}"}</a>{/if}
+</td></tr>
+{sectionelse}
+<tr><td colspan="5" class="odd">{tr}No records found.{/tr}</td></tr>
+{/section}
+</table>
 {/if}
 
+
+
 {if $locSection eq 'mailbox'}
-<table >
+
+{if $autoRefresh neq 0}
+<script type="text/JavaScript">
+<!--
+setTimeout("location.reload(true);",{$autoRefresh}*1000);
+//   -->
+</script>
+{/if}
+
+<table width="100%">
 <tr>
 <td>
-<a class="link" href="tiki-webmail.php?locSection=mailbox">{tr}View All{/tr}</a> | <a class="link" href="tiki-webmail.php?locSection=mailbox&amp;filter=unread">{tr}Unread{/tr}</a> | <a class="link" href="tiki-webmail.php?locSection=mailbox&amp;filter=flagged">{tr}Flagged{/tr}</a>
+<a class="link" href="tiki-webmail.php?locSection=mailbox">{tr}Show All{/tr}</a> | <a class="link" href="tiki-webmail.php?locSection=mailbox&amp;filter=unread">{tr}Show Unread{/tr}</a> | <a class="link" href="tiki-webmail.php?locSection=mailbox&amp;filter=flagged">{tr}Show Flagged{/tr}</a> | {if $autoRefresh != 0}<a class="link" href="tiki-webmail.php?locSection=mailbox">{tr}Refresh now{/tr}</a> Auto refresh set for every {$autoRefresh} seconds.{else}<a class="link" href="tiki-webmail.php?locSection=mailbox">{tr}Refresh{/tr}</a>{/if}
 </td>
-<td align="right">
-{tr}Msg{/tr} {$showstart}-{$showend} {tr}of{/tr} {$total} 
+<td align="right" style="text-align:right">
+{if $flagsPublic eq 'y'}{tr}Group messages{/tr}{else}{tr}Messages{/tr}{/if} {$showstart} to {$showend} {tr}of{/tr} {$total} 
 {if $first}| <a class="link" href="tiki-webmail.php?locSection=mailbox&amp;start={$first}{if $filter}&amp;filter={$filter}{/if}">{tr}First{/tr}</a>{/if} 
 {if $prevstart}| <a class="link" href="tiki-webmail.php?locSection=mailbox&amp;start={$prevstart}{if $filter}&amp;filter={$filter}{/if}">{tr}Prev{/tr}</a>{/if} 
 {if $nextstart}| <a class="link" href="tiki-webmail.php?locSection=mailbox&start={$nextstart}{if $filter}&amp;filter={$filter}{/if}">{tr}Next{/tr}</a>{/if} 
