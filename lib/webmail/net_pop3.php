@@ -728,6 +728,11 @@ class Net_POP3 {
             foreach ($raw_headers as $value) {
                 $name  = substr($value, 0, $pos = strpos($value, ':'));
                 $value = ltrim(substr($value, $pos + 1));
+
+				// 21/09/08 MatWho Prevent capitalisation problems with Message-ID mail header
+				if (preg_match('/message-id/i',$name)) { 
+					$name  = "Message-ID";
+				} 
                 if (isset($headers[$name]) AND is_array($headers[$name])) {
                     $headers[$name][] = $value;
                 } elseif (isset($headers[$name])) {
@@ -736,7 +741,10 @@ class Net_POP3 {
                     $headers[$name] = $value;
                 }
             }
-
+            // Fix up Message-ID header
+			if (!array_key_exists('Message-ID',$headers)) {
+				
+			}
             return $headers;
         }
 
