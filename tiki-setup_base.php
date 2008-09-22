@@ -245,52 +245,64 @@ $vartype['userole'] = 'int';
 $vartype['focus'] = 'string';
 $vartype['ver'] = 'dotvars'; // filename hash for drawlib + rss type for rsslib
 
-function varcheck($array) {
-  global $patterns, $vartype, $prefs;
-  if (isset($array) and is_array($array)) {
-    foreach ($array as $rq=>$rv) {
-	  // check if the variable name is allowed
-      if (!preg_match($patterns['vars'],$rq)) {
-        //die(tra("Invalid variable name : "). htmlspecialchars($rq));
-      } elseif (isset($vartype["$rq"])) {
-      	// variable allowed to be empty?
-      	if ('+'==substr($vartype[$rq],0,1)) {
-      		if ($rv == "") {
-			return(tra("Notice: this variable may not be empty:")." <font color='red'>$rq</font>");
-      		}
-      		// remove + from type
-      		$vartype[$rq]=substr($vartype[$rq],1);
-      	}
-      	// expand arrays:
-				// TODO: handle return value
-        if (is_array($rv)) {
-          varcheck($rv);
-        // check single parameters:
-        } else {
-	        if (
-	          (((substr($rq,-2,2) == 'Id' and $rq != 'reqId') or $vartype["$rq"] == 'int') and !preg_match($patterns['int'],$rv))
-	          or ($vartype["$rq"] == 'intSign') and !preg_match($patterns['intSign'],$rv)
-	          or ($vartype["$rq"] == 'url') and !preg_match($patterns['url'],$rv)
-	          or ($vartype["$rq"] == 'char') and !preg_match($patterns['char'],$rv)
-	          or ($vartype["$rq"] == 'hash') and !preg_match($patterns['hash'],$rv)
-	          or ($vartype["$rq"] == 'string') and !preg_match($patterns['string'],$rv)
-	          or ($vartype["$rq"] == 'stringlist') and !preg_match($patterns['stringlist'],$rv)
-	          or ($vartype["$rq"] == 'dotvars') and !preg_match($patterns['dotvars'],$rv))
-	        {
-						return(tra("Notice: invalid variable value:")." $rq = <font color='red'>".htmlspecialchars($rv)."</font>");
-	        }
-        }
-      }
-    } // foreach
-  }
-} // varcheck($array)
+function varcheck(&$array, $category) {
+	global $patterns, $vartype, $prefs;
 
-$varcheck_errors=varcheck($_REQUEST);
+	$return = array();
+	if ( is_array($array) ) {
+		foreach ( $array as $rq => $rv ) {
+
+			// check if the variable name is allowed
+			if ( ! preg_match($patterns['vars'], $rq) ) {
+				//die(tra("Invalid variable name : "). htmlspecialchars($rq));
+			} elseif ( isset($vartype["$rq"]) ) {
+				$has_sign = false;
+
+				// Variable allowed to be empty?
+				if ( '+' == substr($vartype[$rq], 0, 1) ) {
+					if ( $rv == "" ) {
+						$return[] = tra("Notice: this variable may not be empty:")
+							.' <font color="red">$'.$category.'["'.$rq.'"]</font>';
+						continue;
+					}
+					$has_sign = true;
+				}
+
+				if ( is_array($rv) ) {
+					$return[] = varcheck($array[$rq], $category);
+				} else {
+					// Check single parameters
+					$pattern_key = $has_sign ? substr($vartype[$rq], 1) : $vartype[$rq];
+					if ( ! preg_match($patterns[$pattern_key], $rv) ) {
+						$return[] = tra("Notice: invalid variable value:")
+							.' $'.$category.'["'.$rq.'"] = <font color="red">'.htmlspecialchars($rv).'</font>';
+						$array[$rq] = ''; // Clear content
+					}
+				}
+			}
+		}
+	}
+
+	return implode('<br />', $return);
+}
+
+$varcheck_vars = array('_COOKIE', '_GET', '_POST', '_ENV', '_SERVER');
+$varcheck_errors = '';
+foreach ( $varcheck_vars as $var ) {
+	if ( ! isset($$var) ) continue;
+	if ( ( $tmp = varcheck($$var, $var) ) != '' ) {
+		if ( $varcheck_errors != '' ) $varcheck_errors .= '<br />';
+		$varcheck_errors .= $tmp;
+	}
+}
+unset($tmp);
 
 // rebuild $_REQUEST after sanity check
 unset($_REQUEST);
+$_REQUEST = array_merge($_GET, $_POST);
+///$_REQUEST = array_merge($_COOKIE, $_GET, $_POST, $_ENV, $_SERVER);
+
 unset($_COOKIE['offset']);
-$_REQUEST = array_merge($_COOKIE, $_GET, $_POST, $_ENV, $_SERVER);
 if (!empty($_REQUEST['highlight'])) {
 	if (is_array($_REQUEST['highlight'])) $_REQUEST['highlight'] = '';
 	$_REQUEST['highlight'] = htmlspecialchars($_REQUEST['highlight']);
