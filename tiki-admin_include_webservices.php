@@ -40,12 +40,14 @@ if( $response = $webservice->performRequest( $_REQUEST['params'] ) ) {
 		unset( $data['_version'] );
 	}
 
-	$smarty->assign( 'data', print_r( $data, true ) );
-	$smarty->assign( 'templates', $response->getTemplates( array(
+	$templates = $response->getTemplates( array(
 		'smarty/tikiwiki',
 		'smarty/html',
 		'javascript/html',
-	) ) );
+	) );
+
+	$smarty->assign( 'data', print_r( $data, true ) );
+	$smarty->assign( 'templates', $templates );
 	$smarty->assign( 'response', $response );
 
 	if( isset($_REQUEST['delete']) && $webservice->getTemplate( $_REQUEST['delete'] ) ) {
@@ -61,6 +63,18 @@ if( $response = $webservice->performRequest( $_REQUEST['params'] ) ) {
 		$smarty->assign( 'nt_engine', $template->engine );
 		$smarty->assign( 'nt_output', $template->output );
 		$smarty->assign( 'nt_content', $template->content );
+	}
+
+	if( isset( $_REQUEST['add'] ) ) {
+		$pos = key($_REQUEST['add']);
+
+		if( isset($templates[$pos]) ) {
+			$template = $templates[$pos];
+
+			$smarty->assign( 'nt_engine', $template['engine'] );
+			$smarty->assign( 'nt_output', $template['output'] );
+			$smarty->assign( 'nt_content', $template['content'] );
+		}
 	}
 
 	// Create new registered service

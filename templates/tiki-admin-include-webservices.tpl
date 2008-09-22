@@ -42,11 +42,11 @@
 				<td>{if $response->version}{$response->version|escape}{else}<em>{tr}Not supported{/tr}</em>{/if}
 			</tr>
 			<tr>
-				<th>{tr}OIntegrate Schema Version{/tr}</th>
+				<th>{tr}Schema Version{/tr}</th>
 				<td>{if $response->schemaVersion}{$response->schemaVersion|escape}{else}<em>{tr}Not supported{/tr}</em>{/if}
 			</tr>
 			<tr>
-				<th>{tr}OIntegrate Schema Documentation{/tr}</th>
+				<th>{tr}Schema Documentation{/tr}</th>
 				<td>{if $response->schemaDocumentation}<a href="{$response->schemaDocumentation|escape}">{tr}Available{/tr}</a>{else}<em>{tr}Not supported{/tr}</em>{/if}
 			</tr>
 			<tr>
@@ -66,9 +66,12 @@
 			<tr>
 				<th colspan="2">{tr}Proposed Templates{/tr}</th>
 			</tr>
-			{foreach from=$templates item=template}
+			{foreach from=$templates item=template key=number}
 				<tr>
-					<th>{$template.engine|escape}/{$template.output|escape}</th>
+					<th>
+						{$template.engine|escape}/{$template.output|escape}
+						<input type="submit" name="add[{$number}]" value="{tr}Add{/tr}"/>
+					</th>
 					<td><pre>{$template.content|escape}</pre></td>
 				</tr>
 			{foreachelse}
