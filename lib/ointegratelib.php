@@ -175,6 +175,15 @@ class OIntegrate_Response
 		if( ! array_key_exists( $output, $this->data['_template'][$engine] ) )
 			$this->data['_template'][$engine][$output] = array();
 
+		if( 0 !== strpos( $templateLocation, 'http' ) ) {
+			$host = $_SERVER['HTTP_HOST'];
+			$proto = 'http';
+			$path = dirname( $_SERVER['SCRIPT_NAME'] );
+			$templateLocation = ltrim( $templateLocation, '/' );
+
+			$templateLocation = "$proto://$host$path/$templateLocation";
+		}
+
 		$this->data['_template'][$engine][$output][] = $templateLocation;
 	} // }}}
 

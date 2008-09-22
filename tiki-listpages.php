@@ -243,7 +243,7 @@ if ( ! empty($multiprint_pages) ) {
 
 			require_once 'lib/ointegratelib.php';
 			$response = OIntegrate_Response::create( array( 'list' => $pages ), '1.0' );
-			$response->addTemplate( 'smarty', 'tikiwiki', 'http://localhost/trunk/files/templates/listpages/smarty-tikiwiki-1.0-shortlist.txt' );
+			$response->addTemplate( 'smarty', 'tikiwiki', 'files/templates/listpages/smarty-tikiwiki-1.0-shortlist.txt' );
 			$response->schemaDocumentation = 'http://dev.tikiwiki.org/WebserviceListpages';
 			$response->send();
 		}
