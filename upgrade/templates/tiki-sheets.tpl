@@ -10,7 +10,7 @@
 {else}
   <h2>{tr}Edit this sheet:{/tr} {$title}</h2>
   {if $tiki_p_edit_sheet eq 'y'}
-    <div class="navbar"><a class="linkbut" href="tiki-sheets.php?edit_mode=1&amp;sheetId=0">{tr}Create New Sheet{/tr}</a></div>
+    <div class="navbar"><a href="tiki-sheets.php?edit_mode=1&amp;sheetId=0">{tr}Create New Sheet{/tr}</a></div>
   {/if}
 {/if}
 
@@ -42,7 +42,7 @@ cted"{/if}>{$users[ix].login|username}</option>{/section}
 </div>
 <br />
 {else}
-<div class="navbar"><a href="tiki-sheets.php?edit_mode=edit&sheetId=0" class="linkbut">{tr}Create new Sheet{/tr}</a></div>
+<div class="navbar"><a href="tiki-sheets.php?edit_mode=edit&sheetId=0">{tr}Create new Sheet{/tr}</a></div>
 {/if}
 {/if}
 

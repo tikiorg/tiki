@@ -1,7 +1,7 @@
 {title help="Html+Pages"}{tr}Admin HTML pages{/tr}{/title}
 
 {if $pageName ne ''}
-  <div class="navbar"><a href="tiki-admin_html_pages.php" class="linkbut">{tr}Create new HTML page{/tr}</a></div>
+  <div class="navbar"><a href="tiki-admin_html_pages.php">{tr}Create new HTML page{/tr}</a></div>
 {/if}
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use {literal}{ed id=name}{/literal} or {literal}{ted id=name}{/literal} to insert dynamic zones{/tr}{/remarksbox}

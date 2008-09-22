@@ -12,7 +12,7 @@
 {else}
   <div class="navbar">
     <span class="button2">
-      <a href="tiki-user_preferences.php?view_user={$userwatch|escape}" class="linkbut">{tr}User Preferences{/tr}</a>
+      <a href="tiki-user_preferences.php?view_user={$userwatch|escape}">{tr}User Preferences{/tr}</a>
     </span>
   </div>
 {/if}

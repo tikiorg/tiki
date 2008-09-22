@@ -4,7 +4,7 @@
 <div>
 {else}
 <div id="comments">
-<div id="comzone"
+<div id="comzone{if $page}{$page|@md5}{/if}"
 {if (isset($smarty.session.tiki_cookie_jar.show_comzone) and $smarty.session.tiki_cookie_jar.show_comzone eq 'y') or (!isset($smarty.session.tiki_cookie_jar.show_comzone) and $prefs.wiki_comments_displayed_default eq 'y') or (isset($prefs.show_comzone) and $prefs.show_comzone eq 'y') or $show_comzone eq 'y' or $show_comments or $edit_reply eq '1'}
 	style="display:block;"
 {else}

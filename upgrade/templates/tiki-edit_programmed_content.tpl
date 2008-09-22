@@ -2,10 +2,10 @@
 
 <div class="navbar">
 	<span class="button2">
-		<a class="linkbut" href="tiki-edit_programmed_content.php?contentId={$contentId}">{tr}Create New Block{/tr}</a>
+		<a href="tiki-edit_programmed_content.php?contentId={$contentId}">{tr}Create New Block{/tr}</a>
 	</span>
 	<span class="button2">
-		<a class="linkbut" href="tiki-list_contents.php">{tr}Return to block listing{/tr}</a>
+		<a href="tiki-list_contents.php">{tr}Return to block listing{/tr}</a>
 	</span>
 </div>
 

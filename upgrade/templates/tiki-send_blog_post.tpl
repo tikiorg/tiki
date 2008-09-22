@@ -1,7 +1,7 @@
 {title help="Blogs"}{tr}Send blog post{/tr}{/title}
 
 <span class="button2">
-  <a class="linkbut" href="tiki-view_blog.php?find={$find}&amp;blogId={$blogId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}">{tr}Return to blog{/tr}</a>
+  <a href="tiki-view_blog.php?find={$find}&amp;blogId={$blogId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}">{tr}Return to blog{/tr}</a>
 </span>
 <br /><br />
 

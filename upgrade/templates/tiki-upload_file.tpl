@@ -5,13 +5,13 @@
 {if !empty($galleryId) or (count($galleries) > 0 and $tiki_p_list_file_galleries eq 'y') or count($uploads) > 0}
 <div class="navbar">
 	{if !empty($galleryId)}
-		<a href="tiki-list_file_gallery.php?galleryId={$galleryId}{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}" class="linkbut">{tr}Browse Gallery{/tr}</a>
+		<a href="tiki-list_file_gallery.php?galleryId={$galleryId}{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}">{tr}Browse Gallery{/tr}</a>
 	{/if}
 	{if count($galleries) > 0 and $tiki_p_list_file_galleries eq 'y'}
-		<a href="tiki-list_file_gallery.php{if $filegals_manager neq ''}?filegals_manager={$filegals_manager|escape}{/if}" class="linkbut">{tr}List Galleries{/tr}</a>
+		<a href="tiki-list_file_gallery.php{if $filegals_manager neq ''}?filegals_manager={$filegals_manager|escape}{/if}">{tr}List Galleries{/tr}</a>
 	{/if}
 	{if count($uploads) > 0}
-		<a href="#upload" class="linkbut" title="{tr}Upload File{/tr}">{tr}Upload File{/tr}</a>
+		<a href="#upload" title="{tr}Upload File{/tr}">{tr}Upload File{/tr}</a>
 	{/if}
 </div>
 {/if}
@@ -55,7 +55,7 @@
 				<td>
 					<b>{$uploads[ix].name} ({$uploads[ix].size|kbsize})</b>
 					<div class="button2">
-						<a href="#" onclick="javascript:flip('uploadinfos{$uploads[ix].fileId}');flip('uploadinfos{$uploads[ix].fileId}_close','inline');return false;" class="linkbut">
+						<a href="#" onclick="javascript:flip('uploadinfos{$uploads[ix].fileId}');flip('uploadinfos{$uploads[ix].fileId}_close','inline');return false;">
 						{tr}Additional Info{/tr}
 						<span id="uploadinfos{$uploads[ix].fileId}_close" style="display:none">({tr}Hide{/tr})</span>
 						</a>
@@ -229,7 +229,7 @@
 	{icon _id=exclamation alt="{tr}Error{/tr}" style="vertical-align:middle;"}
 	{tr}No gallery available.{/tr}
 	{tr}You have to create a gallery first!{/tr}
-	<p><a class="linkbut" href="tiki-list_file_gallery.php{if $filegals_manager neq ''}?filegals_manager={$filegals_manager|escape}{/if}">{tr}Create New Gallery{/tr}</a></p>
+	<p><a href="tiki-list_file_gallery.php{if $filegals_manager neq ''}?filegals_manager={$filegals_manager|escape}{/if}">{tr}Create New Gallery{/tr}</a></p>
 {/if}
 	{if $prefs.javascript_enabled neq 'y' || ! $editFileId}
 		<script type="text/javascript">

@@ -4,20 +4,20 @@
 
 <div id="page-bar">
 
-<span class="button2"> <a class="linkbut" href="#site_stats">{tr}Site{/tr}</a></span>
-{if $wiki_stats}<span class="button2"> <a class="linkbut" href="#wiki_stats">{tr}Wiki{/tr}</a></span>{/if}
-{if $igal_stats}<span class="button2"> <a class="linkbut" href="#igal_stats">{tr}Image galleries{/tr}</a></span>{/if}
-{if $fgal_stats}<span class="button2"> <a class="linkbut" href="#fgal_stats">{tr}File galleries{/tr}</a></span>{/if}
-{if $cms_stats}<span class="button2"> <a class="linkbut" href="#cms_stats">{tr}CMS{/tr}</a></span>{/if}
-{if $forum_stats}<span class="button2"> <a class="linkbut" href="#forum_stats">{tr}Forums{/tr}</a></span>{/if}
-{if $blog_stats}<span class="button2"> <a class="linkbut" href="#blog_stats">{tr}Blogs{/tr}</a></span>{/if}
-{if $poll_stats}<span class="button2"> <a class="linkbut" href="#poll_stats">{tr}Polls{/tr}</a></span>{/if}
-{if $faq_stats}<span class="button2"> <a class="linkbut" href="#faq_stats">{tr}FAQs{/tr}</a></span>{/if}
-{if $user_stats}<span class="button2"> <a class="linkbut" href="#user_stats">{tr}User{/tr}</a></span>{/if}
-{if $quiz_stats}<span class="button2"> <a class="linkbut" href="#quiz_stats">{tr}Quizzes{/tr}</a></span>{/if}
-{if $prefs.feature_referer_stats eq 'y' and $tiki_p_view_referer_stats eq 'y'}<span class="button2"> <a class="linkbut" href="tiki-referer_stats.php">{tr}Referer stats{/tr}</a></span>{/if}
-{if $best_objects_stats}<span class="button2"> <a class="linkbut" href="#best_objects_stats">{tr}Most viewed objects{/tr}</a></span>{/if}
-{if $best_objects_stats_lastweek}<span class="button2"> <a class="linkbut" href="#best_objects_stats_lastweek">{tr}Most viewed objects in the last 7 days{/tr}</a></span>{/if}
+<span class="button2"> <a href="#site_stats">{tr}Site{/tr}</a></span>
+{if $wiki_stats}<span class="button2"> <a href="#wiki_stats">{tr}Wiki{/tr}</a></span>{/if}
+{if $igal_stats}<span class="button2"> <a href="#igal_stats">{tr}Image galleries{/tr}</a></span>{/if}
+{if $fgal_stats}<span class="button2"> <a href="#fgal_stats">{tr}File galleries{/tr}</a></span>{/if}
+{if $cms_stats}<span class="button2"> <a href="#cms_stats">{tr}CMS{/tr}</a></span>{/if}
+{if $forum_stats}<span class="button2"> <a href="#forum_stats">{tr}Forums{/tr}</a></span>{/if}
+{if $blog_stats}<span class="button2"> <a href="#blog_stats">{tr}Blogs{/tr}</a></span>{/if}
+{if $poll_stats}<span class="button2"> <a href="#poll_stats">{tr}Polls{/tr}</a></span>{/if}
+{if $faq_stats}<span class="button2"> <a href="#faq_stats">{tr}FAQs{/tr}</a></span>{/if}
+{if $user_stats}<span class="button2"> <a href="#user_stats">{tr}User{/tr}</a></span>{/if}
+{if $quiz_stats}<span class="button2"> <a href="#quiz_stats">{tr}Quizzes{/tr}</a></span>{/if}
+{if $prefs.feature_referer_stats eq 'y' and $tiki_p_view_referer_stats eq 'y'}<span class="button2"> <a href="tiki-referer_stats.php">{tr}Referer stats{/tr}</a></span>{/if}
+{if $best_objects_stats}<span class="button2"> <a href="#best_objects_stats">{tr}Most viewed objects{/tr}</a></span>{/if}
+{if $best_objects_stats_lastweek}<span class="button2"> <a href="#best_objects_stats_lastweek">{tr}Most viewed objects in the last 7 days{/tr}</a></span>{/if}
 
 
 </div>

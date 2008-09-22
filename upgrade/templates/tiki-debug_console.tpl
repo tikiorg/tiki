@@ -38,7 +38,7 @@
   {section name=i loop=$tabs}
     <td>
       <div class="button2">
-        <a href="{$tabs[i].button_href}" class="linkbut">{$tabs[i].button_caption}</a>
+        <a href="{$tabs[i].button_href}">{$tabs[i].button_caption}</a>
       </div>
     </td>
   {/section}

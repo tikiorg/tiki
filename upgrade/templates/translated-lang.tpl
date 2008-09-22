@@ -30,6 +30,10 @@
 						element.form.action = "tiki-edit_translation.php";
 						element.value = page_to_translate;
 						element.form.submit();
+					} else if( option.value == "_all_" ) {
+						element.form.action = "tiki-all_languages.php";
+						element.value = page_to_translate;
+						element.form.submit();
 					} else
 						element.form.submit();
 				}
@@ -41,6 +45,10 @@
 					{section name=i loop=$trads}
 					<option value="{$trads[i].objName}">{$trads[i].langName}</option>
 					{/section}
+					{if $prefs.feature_multilingual_one_page eq 'y'}
+					<option value="-">---</option>
+					<option value="_all_"{if basename($smarty.server.PHP_SELF) eq 'tiki-all_languages.php'} selected="selected"{/if}>{tr}All{/tr}</option>
+					{/if}
 					{if $tiki_p_edit eq 'y'}
 					<option value="-">---</option>
 					<option value="_translate_">{tr}Translate{/tr}</option>

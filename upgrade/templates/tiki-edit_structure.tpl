@@ -1,7 +1,7 @@
 {title url="tiki-edit_structure.php?page_ref_id=$page_ref_id"}{if $editable == 'y'}{tr}Modify Structure{/tr}{else}{tr}Structure{/tr}{/if}: {$structure_name}{/title}
 
 <div class="navbar">
-  <a class="linkbut" href="tiki-admin_structures.php" title="{tr}Structures{/tr}">{tr}Structures{/tr}</a>
+  <a href="tiki-admin_structures.php" title="{tr}Structures{/tr}">{tr}Structures{/tr}</a>
 </div>
 
 {if $remove eq 'y'}

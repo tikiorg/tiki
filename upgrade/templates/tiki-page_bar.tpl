@@ -3,11 +3,11 @@
 
 <div class="clearfix" id="page-bar">
 {if $edit_page eq 'y'}
-  {if $wysiwyg eq 'n' or $prefs.wysiwyg_wiki_parsed eq 'y' or $prefs.wysiwyg_wiki_semi_parsed eq 'y'} {* Show this button only in normal editing mode *}
+  {if $wysiwyg ne 'y' or ($wysiwyg eq 'y' and ($prefs.wysiwyg_wiki_parsed eq 'y' or $prefs.wysiwyg_wiki_semi_parsed eq 'y'))} {* Show this button only in wiki parsing mode *}
     <span class="button2">
-      <a href="#edithelp" onclick="javascript:show('edithelpzone');hide('wikiplhelp-tab');show('wikihelp-tab'); return true;" name="edithelp" class="linkbut">{tr}Wiki Help{/tr}</a>
+      <a href="#edithelp" onclick="javascript:show('edithelpzone');hide('wikiplhelp-tab');show('wikihelp-tab'); return true;" name="edithelp">{tr}Wiki Help{/tr}</a>
 	</span><span class="button2">
-      <a href="#edithelp" onclick="javascript:show('edithelpzone');hide('wikihelp-tab');show('wikiplhelp-tab'); return true;" name="edithelp" class="linkbut">{tr}Plugin Help{/tr}</a>
+      <a href="#edithelp" onclick="javascript:show('edithelpzone');hide('wikihelp-tab');show('wikiplhelp-tab'); return true;" name="edithelp">{tr}Plugin Help{/tr}</a>
     </span>
   {/if}
 {else}
@@ -22,7 +22,7 @@
 {/if}
 {if $prefs.feature_source eq 'y' and $tiki_p_wiki_view_source eq 'y'}
 	<span class="button2" >
-      <a href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;source=0" class="linkbut">
+      <a href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;source=0">
         {tr}Source{/tr}
       </a>
 	</span>
@@ -31,47 +31,47 @@
 {if $page|lower ne 'sandbox'}
 
 {if $tiki_p_remove eq 'y' && $editable}
-<span class="button2"><a href="tiki-removepage.php?page={$page|escape:"url"}&amp;version=last" class="linkbut">{tr}Remove{/tr}</a></span>
+<span class="button2"><a href="tiki-removepage.php?page={$page|escape:"url"}&amp;version=last">{tr}Remove{/tr}</a></span>
 {/if}
 {if $tiki_p_rename eq 'y' && $editable}
-<span class="button2"><a href="tiki-rename_page.php?page={if $beingStaged eq 'y'}{$approvedPageName|escape:"url"}{else}{$page|escape:"url"}{/if}" class="linkbut">{tr}Rename{/tr}</a></span>
+<span class="button2"><a href="tiki-rename_page.php?page={if $beingStaged eq 'y'}{$approvedPageName|escape:"url"}{else}{$page|escape:"url"}{/if}">{tr}Rename{/tr}</a></span>
 {/if}
 {if $lock and ($tiki_p_admin_wiki eq 'y' or ($user and ($user eq $page_user or $user eq "admin") and ($tiki_p_lock eq 'y') and ($prefs.feature_wiki_usrlock eq 'y')))}
-<span class="button2"><a href="tiki-index.php?page={$page|escape:"url"}&amp;action=unlock" class="linkbut">{tr}Unlock{/tr}</a></span>
+<span class="button2"><a href="tiki-index.php?page={$page|escape:"url"}&amp;action=unlock">{tr}Unlock{/tr}</a></span>
 {/if}
 {if !$lock and ($tiki_p_admin_wiki eq 'y' or (($tiki_p_lock eq 'y') and ($prefs.feature_wiki_usrlock eq 'y')))}
-<span class="button2"><a href="tiki-index.php?page={$page|escape:"url"}&amp;action=lock" class="linkbut">{tr}Lock{/tr}</a></span>
+<span class="button2"><a href="tiki-index.php?page={$page|escape:"url"}&amp;action=lock">{tr}Lock{/tr}</a></span>
 {/if}
 {if $tiki_p_admin_wiki eq 'y' or $tiki_p_assign_perm_wiki_page eq 'y'}
-<span class="button2"><a href="tiki-objectpermissions.php?objectId={$page|escape:"url"}&amp;objectName={$page|escape:"url"}&amp;objectType=wiki+page&amp;permType=wiki" class="linkbut">{tr}Perms{/tr}</a></span>
+<span class="button2"><a href="tiki-objectpermissions.php?objectId={$page|escape:"url"}&amp;objectName={$page|escape:"url"}&amp;objectType=wiki+page&amp;permType=wiki">{tr}Perms{/tr}</a></span>
 {/if}
 
 {if $prefs.feature_history eq 'y' and $tiki_p_wiki_view_history eq 'y'}
-<span class="button2"><a href="tiki-pagehistory.php?page={$page|escape:"url"}" class="linkbut">{tr}History{/tr}</a></span>
+<span class="button2"><a href="tiki-pagehistory.php?page={$page|escape:"url"}">{tr}History{/tr}</a></span>
 {/if}
 {/if}
 
 {if $prefs.feature_likePages eq 'y'}
-<span class="button2"><a href="tiki-likepages.php?page={$page|escape:"url"}" class="linkbut">{tr}Similar{/tr}</a></span>
+<span class="button2"><a href="tiki-likepages.php?page={$page|escape:"url"}">{tr}Similar{/tr}</a></span>
 {/if}
 {if $prefs.feature_wiki_undo eq 'y' and $canundo eq 'y'}
-<span class="button2"><a href="tiki-index.php?page={$page|escape:"url"}&amp;undo=1" class="linkbut">{tr}Undo{/tr}</a></span>
+<span class="button2"><a href="tiki-index.php?page={$page|escape:"url"}&amp;undo=1">{tr}Undo{/tr}</a></span>
 {/if}
 {if $prefs.feature_wiki_make_structure eq 'y' and $tiki_p_edit_structures eq 'y' and $editable and $structure eq 'n' and count($showstructs) eq 0}
-<span class="button2"><a href="tiki-index.php?page={$page|escape:"url"}&amp;convertstructure=1" class="linkbut">{tr}Make Structure{/tr}</a></span>
+<span class="button2"><a href="tiki-index.php?page={$page|escape:"url"}&amp;convertstructure=1">{tr}Make Structure{/tr}</a></span>
 {/if}
 {if $prefs.wiki_uses_slides eq 'y'}
 {if $show_slideshow eq 'y'}
-<span class="button2"><a href="tiki-slideshow.php?page={$page|escape:"url"}" class="linkbut">{tr}Slides{/tr}</a></span>
+<span class="button2"><a href="tiki-slideshow.php?page={$page|escape:"url"}">{tr}Slides{/tr}</a></span>
 {elseif $structure eq 'y'}
-<span class="button2"><a href="tiki-slideshow2.php?page_ref_id={$page_info.page_ref_id}" class="linkbut">{tr}Slides{/tr}</a></span>
+<span class="button2"><a href="tiki-slideshow2.php?page_ref_id={$page_info.page_ref_id}">{tr}Slides{/tr}</a></span>
 {/if}
 {/if}
 {if $prefs.feature_wiki_export eq 'y' and ( $tiki_p_admin_wiki eq 'y' or $tiki_p_export_wiki eq 'y' )}
-<span class="button2"><a href="tiki-export_wiki_pages.php?page={$page|escape:"url"}" class="linkbut">{tr}Export{/tr}</a></span>
+<span class="button2"><a href="tiki-export_wiki_pages.php?page={$page|escape:"url"}">{tr}Export{/tr}</a></span>
 {/if}
 {if $prefs.feature_wiki_discuss eq 'y' && $show_page eq 'y' && $beingStaged ne 'y' && $tiki_p_forum_post eq 'y'}
-<span class="button2"><a href="tiki-view_forum.php?forumId={$prefs.wiki_forum_id}&amp;comments_postComment=post&amp;comments_title={$page|escape:"url"}&amp;comments_data={$wiki_discussion_string|escape:"url"}: {"[tiki-index.php?page="}{$page|escape:"url"}{"|"}{$page|escape:"url"}{"]"}&amp;comment_topictype=n" class="linkbut">{tr}Discuss{/tr}</a></span>
+<span class="button2"><a href="tiki-view_forum.php?forumId={$prefs.wiki_forum_id}&amp;comments_postComment=post&amp;comments_title={$page|escape:"url"}&amp;comments_data={$wiki_discussion_string|escape:"url"}: {"[tiki-index.php?page="}{$page|escape:"url"}{"|"}{$page|escape:"url"}{"]"}&amp;comment_topictype=n">{tr}Discuss{/tr}</a></span>
 {/if}
 
 {if $show_page == 'y'} {* Show this buttons only if page view mode *}
@@ -85,7 +85,7 @@
   ||  $tiki_p_edit_comments  == 'y')}
   {strip}
   <span class="button2">
-    <a href="#comments" onclick="javascript:flip('comzone');flip('comzone_close','inline');return false;" class="linkbut {if $comments_cant > 0}highlight{/if}">
+    <a href="#comments" onclick="javascript:flip('comzone{$page|@md5}');flip('comzone{$page|@md5}_close','inline');return false;" class="linkbut {if $comments_cant > 0}highlight{/if}">
       {if $comments_cant == 0 or ($tiki_p_read_comments  == 'n' and $tiki_p_post_comments  == 'y')}
         {tr}Add Comment{/tr}
       {elseif $comments_cant == 1}
@@ -93,7 +93,7 @@
       {else}
         {$comments_cant}&nbsp;{tr}comments{/tr}
       {/if}
-    <span id="comzone_close" style="display:{if isset($smarty.session.tiki_cookie_jar.show_comzone) and $smarty.session.tiki_cookie_jar.show_comzone eq 'y'}inline{else}none{/if};">({tr}Hide{/tr})</span>
+    <span id="comzone{$page|@md5}_close" style="display:{if isset($smarty.session.tiki_cookie_jar.show_comzone) and $smarty.session.tiki_cookie_jar.show_comzone eq 'y'}inline{else}none{/if};">({tr}Hide{/tr})</span>
     </a>
   </span>
   {/strip}   
@@ -112,7 +112,7 @@
 
 {strip}
   <span class="button2">
-    <a href="#attachments" onclick="javascript:flip('attzone');flip('attzone_close','inline');return false;" class="linkbut {if $atts|@count > 0}highlight{/if}">
+    <a href="#attachments" onclick="javascript:flip('attzone{$page|@md5}');flip('attzone{$page|@md5}_close','inline');return false;" class="linkbut {if $atts|@count > 0}highlight{/if}">
     {if $atts|@count == 0 || $tiki_p_wiki_attach_files == 'y' && $tiki_p_wiki_view_attachments == 'n' && $tiki_p_wiki_admin_attachments == 'n'}
       {tr}Attach File{/tr}
     {elseif $atts|@count == 1}
@@ -120,7 +120,7 @@
     {else}
       {tr}{$atts|@count} files attached{/tr}
     {/if}
-    <span id="attzone_close" style="display:{if (isset($smarty.session.tiki_cookie_jar.show_attzone) and $smarty.session.tiki_cookie_jar.show_attzone eq
+    <span id="attzone{$page|@md5}_close" style="display:{if (isset($smarty.session.tiki_cookie_jar.show_attzone) and $smarty.session.tiki_cookie_jar.show_attzone eq
 'y') or (!isset($smarty.session.tiki_cookie_jar.show_attzone) and $prefs.w_displayed_default eq 'y')}inline{else}none{/if};">({tr}Hide{/tr})
     </span>
     </a>
@@ -129,7 +129,7 @@
 {/if}{* attachments *}
 
   {if $prefs.feature_multilingual eq 'y' and $tiki_p_edit eq 'y' and !$lock}
-     <span class="button2"><a href="tiki-edit_translation.php?page={if $beingStaged == 'y'}{$approvedPageName|escape:'url'}{else}{$page|escape:'url'}{/if}" class="linkbut">{tr}Translate{/tr}</a></span>
+     <span class="button2"><a href="tiki-edit_translation.php?page={if $beingStaged == 'y'}{$approvedPageName|escape:'url'}{else}{$page|escape:'url'}{/if}">{tr}Translate{/tr}</a></span>
   {/if}
 {/if}
 

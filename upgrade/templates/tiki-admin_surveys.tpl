@@ -3,8 +3,8 @@
 {title help="Surveys"}{tr}Admin surveys{/tr}{/title}
 
 <div class="navbar">
-<span class="button2"><a class="linkbut" href="tiki-list_surveys.php">{tr}List Surveys{/tr}</a></span>
-<span class="button2"><a class="linkbut" href="tiki-survey_stats.php">{tr}Survey Stats{/tr}</a></span>
+<span class="button2"><a href="tiki-list_surveys.php">{tr}List Surveys{/tr}</a></span>
+<span class="button2"><a href="tiki-survey_stats.php">{tr}Survey Stats{/tr}</a></span>
 </div>
 
 {if $info.surveyId > 0}

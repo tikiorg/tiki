@@ -1,8 +1,8 @@
 {* $Id$ *}
 {title help="Quiz"}{tr}Stats for quizzes{/tr}{/title}
 
-<div class="navbar"><a class="linkbut" href="tiki-list_quizzes.php">{tr}List Quizzes{/tr}</a>
-  <a class="linkbut" href="tiki-edit_quiz.php">{tr}Admin Quizzes{/tr}</a>
+<div class="navbar"><a href="tiki-list_quizzes.php">{tr}List Quizzes{/tr}</a>
+  <a href="tiki-edit_quiz.php">{tr}Admin Quizzes{/tr}</a>
 </div>
 
 <h2>{tr}Quizzes{/tr}</h2>

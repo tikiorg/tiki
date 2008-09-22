@@ -93,15 +93,15 @@
 	    <td>{tr}Basic algorithm - Minimum amount of tags in common{/tr}</td>
 	    <td>
 	      <select name="morelikethis_basic_mincommon">
-	        <option value="1"{if $prefs.morelikethis_basic_mincommon eq '1'} selected="selected"{/if}>{tr}1{/tr}</option>
-	        <option value="2"{if $prefs.morelikethis_basic_mincommon eq '2' or ! $prefs.morelikethis_basic_mincommon} selected="selected"{/if}>{tr}2{/tr}</option>
-	        <option value="3"{if $prefs.morelikethis_basic_mincommon eq '3'} selected="selected"{/if}>{tr}3{/tr}</option>
-	        <option value="4"{if $prefs.morelikethis_basic_mincommon eq '4'} selected="selected"{/if}>{tr}4{/tr}</option>
-	        <option value="5"{if $prefs.morelikethis_basic_mincommon eq '5'} selected="selected"{/if}>{tr}5{/tr}</option>
-	        <option value="6"{if $prefs.morelikethis_basic_mincommon eq '6'} selected="selected"{/if}>{tr}6{/tr}</option>
-	        <option value="7"{if $prefs.morelikethis_basic_mincommon eq '7'} selected="selected"{/if}>{tr}7{/tr}</option>
-	        <option value="8"{if $prefs.morelikethis_basic_mincommon eq '8'} selected="selected"{/if}>{tr}8{/tr}</option>
-	        <option value="9"{if $prefs.morelikethis_basic_mincommon eq '9'} selected="selected"{/if}>{tr}9{/tr}</option>
+	        <option value="1"{if $prefs.morelikethis_basic_mincommon eq '1'} selected="selected"{/if}>1</option>
+	        <option value="2"{if $prefs.morelikethis_basic_mincommon eq '2' or ! $prefs.morelikethis_basic_mincommon} selected="selected"{/if}>2</option>
+	        <option value="3"{if $prefs.morelikethis_basic_mincommon eq '3'} selected="selected"{/if}>3</option>
+	        <option value="4"{if $prefs.morelikethis_basic_mincommon eq '4'} selected="selected"{/if}>4</option>
+	        <option value="5"{if $prefs.morelikethis_basic_mincommon eq '5'} selected="selected"{/if}>5</option>
+	        <option value="6"{if $prefs.morelikethis_basic_mincommon eq '6'} selected="selected"{/if}>6</option>
+	        <option value="7"{if $prefs.morelikethis_basic_mincommon eq '7'} selected="selected"{/if}>7</option>
+	        <option value="8"{if $prefs.morelikethis_basic_mincommon eq '8'} selected="selected"{/if}>8</option>
+	        <option value="9"{if $prefs.morelikethis_basic_mincommon eq '9'} selected="selected"{/if}>9</option>
 	      </select>			
 	    </td>		
 	  </tr>

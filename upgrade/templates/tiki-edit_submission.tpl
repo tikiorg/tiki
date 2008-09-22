@@ -3,7 +3,6 @@
 {popup_init src="lib/overlib.js"}
 {include file="tiki-articles-js.tpl"}
 {if $preview}
-{if $preview}
 {include file="tiki-preview_article.tpl"}
 {/if}
 
@@ -16,7 +15,7 @@
 {/if}
 
 <div class="navbar">
-  <a class="linkbut" href="tiki-list_submissions.php">{tr}List Submissions{/tr}</a>
+  <a href="tiki-list_submissions.php">{tr}List Submissions{/tr}</a>
 </div>
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}

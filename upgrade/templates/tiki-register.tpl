@@ -36,7 +36,8 @@ function capLock(e){
     <input type="hidden" name="pass" value="{$smarty.post.pass}"/>
     <input type="hidden" name="regcode" value="{$smarty.post.regcode}"/>
     <input type="hidden" name="novalidation" value="yes"/>
-    {if $chosenGroup}<input type="hidden" name="chosenGroup" value="{$smarty.post.chosenGroup}" />{/if}
+    {if isset($smarty.post.antibotcode)}<input type="hidden" name="antibotcode" value="{$smarty.post.antibotcode}"/>{/if}
+    {if $smarty.post.chosenGroup}<input type="hidden" name="chosenGroup" value="{$smarty.post.chosenGroup}" />{/if}
     <input type="submit" name="register" value="{tr}Register{/tr}" />
   </form>
 
@@ -113,7 +114,7 @@ function capLock(e){
 			<td class="formcolor">{tr}Select your group{/tr}:</td>
 			<td class="formcolor">
 {foreach item=gr from=$listgroups}
-{if $gr.registrationChoice eq 'y'}			<input style="float:left;" type="radio" name="chosenGroup" id="gr_{$gr.groupName}" value="{$gr.groupName|escape}" /> <label for="gr_{$gr.groupName}">{if $gr.groupDesc}{tr}{$gr.groupDesc}{/tr}{else}{$gr.groupName}{/if}</label><br />{/if}
+{if $gr.registrationChoice eq 'y'}			<input type="radio" name="chosenGroup" id="gr_{$gr.groupName}" value="{$gr.groupName|escape}" /> <label for="gr_{$gr.groupName}">{if $gr.groupDesc}{tr}{$gr.groupDesc}{/tr}{else}{$gr.groupName}{/if}</label><br />{/if}
 {/foreach}
 			</td>
 		</tr>

@@ -4,11 +4,11 @@
 {title help="Modules+Admin" admpage="module"}{tr}Admin Modules{/tr}{/title}
 
 <div class="navbar">
-{*<a class="linkbut" href="#assign">{tr}Assign Module{/tr}</a>
-<a class="linkbut" href="#leftmod">{tr}Left Modules{/tr}</a>
-<a class="linkbut" href="#rightmod">{tr}Right Modules{/tr}</a>
-<a class="linkbut" href="#editcreate">{tr}Edit/Create{/tr}</a>*}
-<a class="linkbut" href="tiki-admin_modules.php?clear_cache=1">{tr}Clear Cache{/tr}</a>
+{*<a href="#assign">{tr}Assign Module{/tr}</a>
+<a href="#leftmod">{tr}Left Modules{/tr}</a>
+<a href="#rightmod">{tr}Right Modules{/tr}</a>
+<a href="#editcreate">{tr}Edit/Create{/tr}</a>*}
+<a href="tiki-admin_modules.php?clear_cache=1">{tr}Clear Cache{/tr}</a>
 </div>
 
 {if $prefs.feature_tabs eq 'y'}

@@ -2,7 +2,7 @@
 {title help="Blogs" admpage="blogs"}{tr}Blogs{/tr}{/title}
 
 {if $tiki_p_create_blogs eq 'y'}
-  <div class="navbar"><a class="linkbut" href="tiki-edit_blog.php">{tr}Create New Blog{/tr}</a></div>
+  <div class="navbar"><a href="tiki-edit_blog.php">{tr}Create New Blog{/tr}</a></div>
 {/if}
 <div align="center">
 

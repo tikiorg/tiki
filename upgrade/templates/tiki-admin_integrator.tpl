@@ -14,14 +14,14 @@
 <div id="page-bar">
   <table><tr>
     <td><div class="button2">
-      <a href="tiki-list_integrator_repositories.php" class="linkbut">{tr}List Repositories{/tr}</a>
+      <a href="tiki-list_integrator_repositories.php">{tr}List Repositories{/tr}</a>
     </div></td>
     <td><div class="button2">
-      <a href="tiki-admin_integrator.php" class="linkbut">{tr}New Repository{/tr}</a>
+      <a href="tiki-admin_integrator.php">{tr}New Repository{/tr}</a>
     </div></td>
     {if isset($repID) and $repID ne '0'}
     <td><div class="button2">
-      <a href="tiki-integrator.php?repID={$repID|escape}" class="linkbut">{tr}View Repository{/tr}</a>
+      <a href="tiki-integrator.php?repID={$repID|escape}">{tr}View Repository{/tr}</a>
     </div></td>
     {/if}
   </tr></table>

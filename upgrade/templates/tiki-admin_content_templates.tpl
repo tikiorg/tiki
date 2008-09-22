@@ -17,11 +17,11 @@
 	<div class="navbar">
 		{if $wysiwyg ne 'y'}
 			<span class="button2">
-				<a class="linkbut" href="?templateId={$templateId}&amp;wysiwyg=y">{tr}Use wysiwyg editor{/tr}</a>
+				<a href="?templateId={$templateId}&amp;wysiwyg=y">{tr}Use wysiwyg editor{/tr}</a>
 			</span>
 		{else}
 			<span class="button2">
-				<a class="linkbut" href="?templateId={$templateId}&amp;wysiwyg=n">{tr}Use normal editor{/tr}</a>
+				<a href="?templateId={$templateId}&amp;wysiwyg=n">{tr}Use normal editor{/tr}</a>
 			</span>
 		{/if}
 	</div>

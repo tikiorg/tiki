@@ -1,7 +1,7 @@
 {title}{tr}I forgot my password{/tr}{/title}
 
 <div class="navbar">
-  <a class="linkbut" href="{$prefs.tikiIndex}">{tr}Return to HomePage{/tr}</a>
+  <a href="{$prefs.tikiIndex}">{tr}Return to HomePage{/tr}</a>
 </div>
 
 {if $showmsg ne 'n'}

@@ -3,7 +3,7 @@
 
 {if $tiki_p_view_quiz_stats eq 'y'}
 <div class="navbar">
-<a class="linkbut" href="tiki-quiz_stats.php">{tr}Quiz Stats{/tr}</a>
+<a href="tiki-quiz_stats.php">{tr}Quiz Stats{/tr}</a>
 </div>
 {if $channels or ($find ne '')}
 <table class="findtable">

@@ -82,22 +82,31 @@ class Tiki_Profile_List
 
 				list( $c, $t, $i ) = $row;
 
+				$key = "{$s['url']}#{$i}";
+
 				if( $category && stripos( $c, $category ) === false )
 					continue;
 				if( $profile && stripos( $i, $profile ) === false )
 					continue;
 
-				$list[] = array(
-					'domain' => $s['short'],
-					'category' => $c,
-					'name' => $i,
-				);
+				if( array_key_exists( $key, $list ) )
+				{
+					$list[$key]['category'] .= ", $c";
+				}
+				else
+				{
+					$list[$key] = array(
+						'domain' => $s['short'],
+						'category' => $c,
+						'name' => $i,
+					);
+				}
 			}
 
 			fclose($fp);
 		}
 
-		return $list;
+		return array_values( $list );
 	} // }}}
 
 	private function getCacheLocation( $path ) // {{{

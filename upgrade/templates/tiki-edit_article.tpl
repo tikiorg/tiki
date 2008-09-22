@@ -15,8 +15,8 @@
 {/title}
 
 <div class="navbar">
-  <a class="linkbut" href="tiki-list_articles.php">{tr}List Articles{/tr}</a>
-  <a class="linkbut" href="tiki-view_articles.php">{tr}View Articles{/tr}</a>
+  <a href="tiki-list_articles.php">{tr}List Articles{/tr}</a>
+  <a href="tiki-view_articles.php">{tr}View Articles{/tr}</a>
 </div>
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}
@@ -219,7 +219,7 @@
 <br />
 
 <span class="button2">
-<a href="#edithelp" onclick="javascript:show('edithelpzone');hide('wikiplhelp-tab');show('wikihelp-tab'); return true;" name="edithelp" class="linkbut">{tr}Wiki Help{/tr}</a>
-<a href="#edithelp" onclick="javascript:show('edithelpzone');hide('wikihelp-tab');show('wikiplhelp-tab'); return true;" name="edithelp" class="linkbut">{tr}Plugin Help{/tr}</a>
+<a href="#edithelp" onclick="javascript:show('edithelpzone');hide('wikiplhelp-tab');show('wikihelp-tab'); return true;" name="edithelp">{tr}Wiki Help{/tr}</a>
+<a href="#edithelp" onclick="javascript:show('edithelpzone');hide('wikihelp-tab');show('wikiplhelp-tab'); return true;" name="edithelp">{tr}Plugin Help{/tr}</a>
 </span>
 {include file=tiki-edit_help.tpl}

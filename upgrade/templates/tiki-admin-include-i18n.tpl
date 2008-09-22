@@ -48,20 +48,28 @@
 			<td class="form"><label for="feature_translation">{tr}Translation Assitant{/tr}:</label></td>
 			<td><input type="checkbox" name="feature_translation" id="feature_translation"
 			{if $prefs.feature_translation eq 'y'}checked="checked"{/if}/></td>
-        </tr><tr>			
-		
+
+	</tr><tr>
+			<td class="form"><label for="feature_urgent_translation">{tr}Urgent Translation{/tr}:</label></td>
+			<td><input type="checkbox" name="feature_urgent_translation" id="feature_translation"
+			{if $prefs.feature_urgent_translation eq 'y'}checked="checked"{/if}/></td>
+	</tr><tr>
+
 			<td class="form"><label for="feature_multilingual_structures">{tr}Multilingual structures{/tr}:</label></td>
 			<td><input type="checkbox" name="feature_multilingual_structures" id="feature_multilingual_structures"
 			{if $prefs.feature_multilingual_structures eq 'y'}checked="checked"{/if}/></td>
         </tr><tr>
 		
-		
 			<td class="form"><label for="feature_best_language">{tr}Show pages in user's preferred language{/tr}:</label></td>
 			<td><input type="checkbox" name="feature_best_language" id="feature_best_language"
 			{if $prefs.feature_best_language eq 'y'}checked="checked"{/if}/></td>
-        </tr><tr>
-		
-		
+	</tr><tr>
+
+			<td class="form"><label for="feature_sync_language">{tr}Page language forces to display strings in the same language{/tr}:</label></td>
+			<td><input type="checkbox" name="feature_sync_language" id="feature_sync_language"
+			{if $prefs.feature_sync_language eq 'y'}checked="checked"{/if}/></td>
+	</tr><tr>
+	
 			<td class="form"><label for="feature_detect_language">{tr}Detect browser language{/tr}:</label></td>
 			<td><input type="checkbox" name="feature_detect_language" id="feature_detect_language"
 			{if $prefs.feature_detect_language eq 'y'}checked="checked"{/if}/></td>

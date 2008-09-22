@@ -421,7 +421,7 @@ function wikiplugin_trackerlist($data, $params) {
 		}
 
 		if (isset($itemId)) {
-			$filter = array('itemId', $itemId);
+			$filter = array('tti.`itemId`'=> $itemId);
 		} else {
 			$filter = '';
 		}

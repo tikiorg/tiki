@@ -4,7 +4,12 @@
  * @param $lg - language - if not specify = global current language
  */
 
-function tra($content, $lg='', $no_interactive = false) {
+function tr($content) {
+	$args = func_get_args();
+	return tra( $content, '', false, array_slice( $args, 1 ) );
+}
+
+function tra($content, $lg='', $no_interactive = false, $args = array()) {
 	global $prefs;
 
 	if ($content != '') {
@@ -36,7 +41,7 @@ function tra($content, $lg='', $no_interactive = false) {
 				$lang = &${"lang_".$prefs['language']};
 			}
 			if ($l and isset(${"lang_$l"}[$content])) {
-				return ${"lang_$l"}[$content];
+				return tr_replace( ${"lang_$l"}[$content], $args );
 			} else {
 				// If no translation has been found and if the string ends with a punctuation,
 				//   try to translate punctuation separately (e.g. if the content is 'Login:' or 'Login :',
@@ -49,14 +54,14 @@ function tra($content, $lg='', $no_interactive = false) {
 					if ( $content[$content_lenght - 1] == $p ) {
 						$new_content = substr($content, 0, $content_lenght - 1);
 						if ( isset(${"lang_$l"}[$new_content]) ) {
-							return ${"lang_$l"}[$new_content].( isset(${"lang_$l"}[$p]) ? ${"lang_$l"}[$p] : $p );
+							return tr_replace( ${"lang_$l"}[$new_content].( isset(${"lang_$l"}[$p]) ? ${"lang_$l"}[$p] : $p ), $args );
 						} else {
-							return $content;
+							return tr_replace( $content, $args );
 						}
 					}
 				}
 
-				return $content;
+				return tr_replace( $content, $args );
 			}
 		} else {
 			global $tikilib,$multilinguallib;
@@ -79,18 +84,31 @@ function tra($content, $lg='', $no_interactive = false) {
 			$result = $tikilib->query($query, array($content,$lg == ""? $prefs['language'] : $lg));
 			$res = $result->fetchRow();
 			if (!$res) {
-				return $content.$tag;
+				return tr_replace( $content.$tag, $args );
 			}
 			if (!isset($res["tran"])) {
 				if ($prefs['record_untranslated'] == 'y') {
 					$query = "insert into `tiki_untranslated` (`source`,`lang`) values (?,?)";
 					$tikilib->query($query, array($content,$prefs['language']),-1,-1,false);
 				}
-				return $content.$tag;
+				return tr_replace( $content.$tag, $args );
 			}
 			$res["tran"] = preg_replace("~&lt;br(\s*/)&gt;~","<br$1>",$res["tran"]);
-			return $res["tran"].$tag;
+			return tr_replace( $res["tran"].$tag, $args );
 		}
 	}
+}
+
+function tr_replace( $content, $args ) {
+	if( ! count( $args ) )
+		return $content;
+
+	$needles = array();
+	$replacements = $args;
+
+	foreach( array_keys( $args ) as $num )
+		$needles[] = "%$num";
+	
+	return str_replace( $needles, $replacements, $content );
 }
 ?>

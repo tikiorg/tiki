@@ -4,11 +4,11 @@
 
 <div class="navbar">
 {if $tiki_p_edit_article eq 'y'}
-  <a class="linkbut" href="tiki-edit_article.php">{tr}Edit New Article{/tr}</a>
+  <a href="tiki-edit_article.php">{tr}Edit New Article{/tr}</a>
 {/if}
-<a class="linkbut" href="tiki-view_articles.php">{tr}View Articles{/tr}</a>
+<a href="tiki-view_articles.php">{tr}View Articles{/tr}</a>
 {if $prefs.feature_submissions == 'y' && ($tiki_p_approve_submission == "y" || $tiki_p_remove_submission == "y" || $tiki_p_edit_submission == "y")}
-<a class="linkbut" href="tiki-list_submissions.php">{tr}View submissions{/tr}</a>
+<a href="tiki-list_submissions.php">{tr}View submissions{/tr}</a>
 {/if}
 </div>
 {if $listpages or ($find ne '') or ($types ne '') or ($topics ne '') or ($lang ne '') or ($categId ne '')}

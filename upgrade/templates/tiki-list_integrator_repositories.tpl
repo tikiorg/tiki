@@ -6,7 +6,7 @@
 <div id="page-bar">
   <table><tr>
     <td><div class="button2">
-      <a href="tiki-admin_integrator.php" class="linkbut">{tr}Configure Repositories{/tr}</a>
+      <a href="tiki-admin_integrator.php">{tr}Configure Repositories{/tr}</a>
     </div></td>
   </tr></table>
 </div>

@@ -4,11 +4,11 @@
 {title help="Groups+Management" admpage="login"}{tr}Admin groups{/tr}{/title}
 
 <div class="navbar">
-<span class="button2"><a href="tiki-admingroups.php" class="linkbut">{tr}Admin groups{/tr}</a></span>
-<span class="button2"><a href="tiki-adminusers.php" class="linkbut">{tr}Admin users{/tr}</a></span>
-<span class="button2"><a href="tiki-admingroups.php?clean=y" class="linkbut">{tr}Clear cache{/tr}</a></span>
+<span class="button2"><a href="tiki-admingroups.php">{tr}Admin groups{/tr}</a></span>
+<span class="button2"><a href="tiki-adminusers.php">{tr}Admin users{/tr}</a></span>
+<span class="button2"><a href="tiki-admingroups.php?clean=y">{tr}Clear cache{/tr}</a></span>
 {if $groupname}
-<span class="button2"><a href="tiki-admingroups.php?add=1{if $prefs.feature_tabs ne 'y'}#2{/if}" class="linkbut">{tr}Add new group{/tr}</a></span>
+<span class="button2"><a href="tiki-admingroups.php?add=1{if $prefs.feature_tabs ne 'y'}#2{/if}">{tr}Add new group{/tr}</a></span>
 {/if}
 </div>
 
@@ -37,7 +37,7 @@
 <div align="center">
 {section name=ini loop=$initials}
 {if $initial and $initials[ini] eq $initial}
-<span class="button2"><span class="linkbut">{$initials[ini]|capitalize}</span></span> . 
+<span class="button2"><span>{$initials[ini]|capitalize}</span></span> . 
 {else}
 <a href="tiki-admingroups.php?initial={$initials[ini]}{if $find}&amp;find={$find|escape:"url"}{/if}{if $numrows}&amp;numrows={$numrows}{/if}{if $sort_mode}&amp;sort_mode={$sort_mode}{/if}" 
 class="prevnext">{$initials[ini]}</a> . 
@@ -215,7 +215,7 @@ class="prevnext">{tr}All{/tr}</a>
 {tr}Group tracker item : {$groupitemid}{/tr} <span class="button2"><a href="tiki-view_tracker_item.php?trackerId={$grouptrackerid}&amp;itemId={$groupitemid}&amp;show=mod" class="linkbut">{tr}Edit Item{/tr}</a></span>
 {elseif $grouptrackerid}
 {if $groupfieldid}
-{tr}Group tracker item not found{/tr} <span class="button2"><a href="tiki-view_tracker.php?trackerId={$grouptrackerid}" class="linkbut">{tr}Create item{/tr}</a></span>
+{tr}Group tracker item not found{/tr} <span class="button2"><a href="tiki-view_tracker.php?trackerId={$grouptrackerid}">{tr}Create item{/tr}</a></span>
 {else}
 {tr}choose a field ...{/tr}
 {/if}

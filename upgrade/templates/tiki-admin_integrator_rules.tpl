@@ -4,31 +4,31 @@
 <div id="page-bar">
   <table><tr>
     <td><div class="button2">
-      <a href="tiki-admin_integrator.php" class="linkbut">{tr}Configure Repositories{/tr}</a>
+      <a href="tiki-admin_integrator.php">{tr}Configure Repositories{/tr}</a>
     </div></td>
     <td><div class="button2">
-      <a href="tiki-list_integrator_repositories.php" class="linkbut">{tr}List Repositories{/tr}</a>
+      <a href="tiki-list_integrator_repositories.php">{tr}List Repositories{/tr}</a>
     </div></td>
 
     <td>&nbsp;</td>
 
     <td><div class="button2">
-      <a href="tiki-admin_integrator.php?action=edit&amp;repID={$repID|escape}" class="linkbut">{tr}Configure this Repository{/tr}</a>
+      <a href="tiki-admin_integrator.php?action=edit&amp;repID={$repID|escape}">{tr}Configure this Repository{/tr}</a>
     </div></td>
     <td><div class="button2">
-      <a href="tiki-integrator.php?repID={$repID|escape}" class="linkbut">{tr}View this Repository{/tr}</a>
+      <a href="tiki-integrator.php?repID={$repID|escape}">{tr}View this Repository{/tr}</a>
     </div></td>
     
     <td>&nbsp;</td>
     
     <td><div class="button2">
-      <a title="{tr}Add new rule{/tr}" href="tiki-admin_integrator_rules.php?repID={$repID|escape}" class="linkbut">
+      <a title="{tr}Add new rule{/tr}" href="tiki-admin_integrator_rules.php?repID={$repID|escape}">
         {tr}New Rule{/tr}
       </a>
     </div></td>
     {if count($reps) gt 0}
     <td><div class="button2">
-      <a title="{tr}view/hide copy rules dialog{/tr}" href="javascript:flip('rules-copy-panel');" class="linkbut">
+      <a title="{tr}view/hide copy rules dialog{/tr}" href="javascript:flip('rules-copy-panel');">
         {tr}Copy Rules{/tr}
       </a>
     </div></td>

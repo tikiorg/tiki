@@ -2,10 +2,10 @@
 {title help="Menus" url="tiki-admin_menu_options.php?menuId=$menuId"}{tr}Admin Menu:{/tr} {$editable_menu_info.name}{/title}
 
 <div class="navbar">
-<span class="button2"><a href="tiki-admin_menus.php" class="linkbut">{tr}List menus{/tr}</a></span>
-<span class="button2"><a href="tiki-admin_menus.php?menuId={$menuId}" class="linkbut">{tr}Edit this menu{/tr}</a></span>
-<span class="button2"><a href="#export" class="linkbut">{tr}Export{/tr}</a></span>
-<span class="button2"><a href="#import" class="linkbut">{tr}Import{/tr}</a></span>
+<span class="button2"><a href="tiki-admin_menus.php">{tr}List menus{/tr}</a></span>
+<span class="button2"><a href="tiki-admin_menus.php?menuId={$menuId}">{tr}Edit this menu{/tr}</a></span>
+<span class="button2"><a href="#export">{tr}Export{/tr}</a></span>
+<span class="button2"><a href="#import">{tr}Import{/tr}</a></span>
 </div>
 <br />
 <table><tr>
