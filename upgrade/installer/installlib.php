@@ -3,16 +3,16 @@ require_once 'lib/setup/twversion.class.php';
 
 class Installer
 {
-	private $patches = array();
-	private $scripts = array();
+	var $patches = array();
+	var $scripts = array();
 
-	public $installed = array();
-	public $executed = array();
+	var $installed = array();
+	var $executed = array();
 
-	public $success = array();
-	public $failures = array();
+	var $success = array();
+	var $failures = array();
 
-	function __construct() // {{{
+	function Installer() // {{{
 	{
 		$this->buildPatchList();
 		$this->buildScriptList();
@@ -65,7 +65,7 @@ class Installer
 			$this->runScript( $script );
 	} // }}}
 
-	private function installPatch( $patch ) // {{{
+	function installPatch( $patch ) // {{{
 	{
 		if( ! in_array( $patch, $this->patches ) )
 			return;
@@ -92,7 +92,7 @@ class Installer
 		$this->recordPatch( $patch );
 	} // }}}
 
-	private function runScript( $script ) // {{{
+	function runScript( $script ) // {{{
 	{
 		$file = dirname(__FILE__) . "/script/$script.php";
 
@@ -106,13 +106,13 @@ class Installer
 		$this->executed[] = $script;
 	} // }}}
 
-	private function recordPatch( $patch ) // {{{
+	function recordPatch( $patch ) // {{{
 	{
 		$this->query( "INSERT INTO tiki_schema (patch_name, install_date) VALUES(?, NOW())", array($patch) );
 		$this->patches = array_diff( $this->patches, array( $patch ) );
 	} // }}}
 
-	private function runFile( $file ) // {{{
+	function runFile( $file ) // {{{
 	{
 		global $db_tiki;
 
@@ -191,7 +191,7 @@ class Installer
 		}
 	} // }}}
 
-	private function buildPatchList() // {{{
+	function buildPatchList() // {{{
 	{
 		$files = glob( dirname(__FILE__) . '/schema/*_*.sql' );
 		foreach( $files as $file ) {
@@ -212,7 +212,7 @@ class Installer
 		sort( $this->patches );
 	} // }}}
 
-	private function buildScriptList() // {{{
+	function buildScriptList() // {{{
 	{
 		$files = glob( dirname(__FILE__) . '/script/*.php' );
 		foreach( $files as $file ) {
@@ -221,7 +221,7 @@ class Installer
 		}
 	} // }}}
 
-	private function tableExists( $tableName ) // {{{
+	function tableExists( $tableName ) // {{{
 	{
 		static $list = null;
 		if( is_null( $list ) )
