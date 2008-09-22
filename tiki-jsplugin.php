@@ -7,7 +7,7 @@
  * This is then used to allow a nice way for the editor of the page to use a form to edit the plug-in when they
  * click the little edit icon next to the plug-ins generated html.
  *
- * /
+ */
 
 $all = !isset( $_GET['plugin'] );
 
