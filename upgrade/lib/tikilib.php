@@ -5346,11 +5346,6 @@ class TikiLib extends TikiDB {
 			$list[] = $name;
 			$this->set_preference( 'pluginaliaslist', serialize($list) );
 		}
-
-		foreach( glob( 'temp/cache/wikiplugin_*' ) as $file )
-			unlink( $file );
-		global $cachelib;
-		$cachelib->invalidate('plugindesc');
 	}
 
 	function plugin_enabled( $name ) {

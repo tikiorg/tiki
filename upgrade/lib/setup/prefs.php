@@ -217,7 +217,6 @@ function get_default_prefs() {
 		'wikiplugin_trackerfilter' => 'y',
 		'wikiplugin_trackeritemfield' => 'y',
 		'wikiplugin_trackerlist' => 'y',
-		'wikiplugin_trackertimeline' => 'y',
 		'wikiplugin_tracker' => 'y',
 		'wikiplugin_trackerprefill' => 'y',
 		'wikiplugin_trackerstat' => 'y',
