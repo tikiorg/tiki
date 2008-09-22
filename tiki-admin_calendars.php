@@ -45,12 +45,13 @@ if (isset($_REQUEST["save"])) {
 	$customflags["custompriorities"] = $_REQUEST["custompriorities"];
 	$customflags["customsubscription"] = isset($_REQUEST["customsubscription"]) ? $_REQUEST["customsubscription"] : 'n';
 	$customflags["personal"] = $_REQUEST["personal"];
+	$customflags['customstatus'] = isset($_REQUEST['customstatus']) ? $_REQUEST['customstatus'] : 'y';
 	$options = $_REQUEST['options'];
 	if (!preg_match('/^[0-9a-fA-F]{3,6}$/',$options['customfgcolor'])) $options['customfgcolor'] = '000000';
 	if (!preg_match('/^[0-9a-fA-F]{3,6}$/',$options['custombgcolor'])) $options['custombgcolor'] = 'ffffff';
 	$options['startday'] = $_REQUEST['startday_Hour']*60*60;
 	$options['endday'] = $_REQUEST['endday_Hour']*60*60 - 1;
-	$extra = array('calname','description','location','description','language','category','participants','url');
+	$extra = array('calname','description','location','description','language','category','participants','url', 'status', 'status_calview');
 	foreach ($extra as $ex) {
 		if (isset($_REQUEST['show'][$ex]) and $_REQUEST['show'][$ex] == 'on') {
 			$options["show_$ex"] = 'y';
@@ -105,6 +106,7 @@ if ($_REQUEST["calendarId"]) {
 	$info["customcategories"] = 'n';
 	$info["custompriorities"] = 'n';
 	$info["customsubscription"] = 'n';
+	$info['customstatus'] = 'y';
 	$info["customurl"] = 'n';
 	$info["customfgcolor"] = '000000';
 	$info["custombgcolor"] = 'ffffff';
@@ -119,7 +121,7 @@ if ($_REQUEST["calendarId"]) {
 	$info["personal"] = 'n';
 	$info["startday"] = '25200';
 	$info["endday"] = '72000';
-    $info["customeventstatus"] = 0;
+    $info["defaulteventstatus"] = 0;
 	if (!empty($_REQUEST['show']) && $_REQUEST['show'] == 'mod') {
 		$cookietab = '2';
 	} else {
@@ -153,13 +155,14 @@ $smarty->assign('personal', $info["personal"]);
 $smarty->assign('startday', $info["startday"] < 0 ?0: round($info['startday']/(60*60)));
 $smarty->assign('endday', $info["endday"] < 0 ?0: round($info['endday']/(60*60)));
 $smarty->assign('hours', array('0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24'));
-$smarty->assign('customeventstatus', $info["customeventstatus"]);
+$smarty->assign('defaulteventstatus', $info['defaulteventstatus']);
 
 $smarty->assign('eventstatus', array(
                                 0 => tra('Tentative'),
                                 1 => tra('Confirmed'),
                                 2 => tra('Cancelled'))
                                 );
+$smarty->assign_by_ref('info', $info);
 
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'name_desc';

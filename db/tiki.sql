@@ -475,6 +475,7 @@ CREATE TABLE tiki_calendars (
   custompriorities enum('n','y') NOT NULL default 'n',
   customparticipants enum('n','y') NOT NULL default 'n',
   customsubscription enum('n','y') NOT NULL default 'n',
+  customstatus enum('n','y') NOT NULL default 'y',
   created int(14) NOT NULL default '0',
   lastmodif int(14) NOT NULL default '0',
   personal enum ('n', 'y') NOT NULL default 'n',
