@@ -35,7 +35,6 @@ class WebMailLib extends TikiLib {
 //		print($current,$user,$msgid);
 
 		if ($this->is_current_webmail_account_public ($user)){
-			print("group-replace");
 			$user=GROUP_USER_NAME;
 			$current=GROUP_USER_ID;
 		}
@@ -61,7 +60,6 @@ class WebMailLib extends TikiLib {
 		}
 
 		if ($this->is_current_webmail_account_public ($user)){
-			print("group-set");
 			$user=GROUP_USER_NAME;
 			$current=GROUP_USER_ID;
 		}
@@ -89,7 +87,6 @@ class WebMailLib extends TikiLib {
 
 	function get_mail_flags($current, $user, $msgid) {
 		if ($this->is_current_webmail_account_public ($user)){
-						print("group-get");
 			$user=GROUP_USER_NAME;
 			$current=GROUP_USER_ID;
 		}
@@ -215,8 +212,6 @@ class WebMailLib extends TikiLib {
 	
 	function is_current_webmail_account_public ($user) {
 		if($this->current_account_group == ''){
-			
-			print("slow");
 			$query = "select * from `tiki_user_mail_accounts` where `current`='y' and `user`=?";
 			$result = $this->query($query, array($user));
 			if (!$result->numRows())

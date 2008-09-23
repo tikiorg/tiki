@@ -310,8 +310,6 @@ if ($_REQUEST["locSection"] == 'mailbox') {
 	}
 */
 
-print($_REQUEST["quickFlag"]);
-print($_REQUEST["quickFlagMsg"]);
 	// The user just clicked on one of the flags, so set up for flag change
 	if (isset($_REQUEST["quickFlagMsg"])){
 		$realmsg = $_REQUEST["quickFlagMsg"];
@@ -660,7 +658,6 @@ if ($_REQUEST["locSection"] == 'compose') {
 			$smarty->assign('notcon', 'n');
 		}
 
-		//print_r($not_contacts);
 		$smarty->assign('not_contacts', $not_contacts);
 
 		if ($mail->send($to_array,'smtp')) {
