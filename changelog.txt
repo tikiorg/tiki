@@ -19,6 +19,191 @@ When possible, it's also nice to indicate what feature is concerned by the chang
 Before 2.0, there was only [MOD] for both [ENH] and [MOD]:
 
 ----------------------------------------------------------------------
+Version 2.1
+<http://tikiwiki.org/ReleaseProcess20>
+------------------
+
+------------------------------------------------------------------------
+r14819 | ricks99 | 2008-09-23 08:09:27 -0400 (Tue, 23 Sep 2008) | 1 line
+
+[fix] added global $page to allow inclusion of this module within a wiki page.
+------------------------------------------------------------------------
+r14817 | sept_7 | 2008-09-23 05:43:35 -0400 (Tue, 23 Sep 2008) | 2 lines
+
+[FIX] use PHP_SELF instead of REQUEST_URI to avoid mismatches and abuses
+
+------------------------------------------------------------------------
+r14816 | sept_7 | 2008-09-23 03:18:20 -0400 (Tue, 23 Sep 2008) | 5 lines
+
+[FIX] fix strange identity change... harmless only smarty user variable is
+			modified but users get scared.
+      change unused info['user'] to smarty variable onwer for now...
+			backport of 14651 in trunk
+
+------------------------------------------------------------------------
+r14813 | etuate | 2008-09-22 20:33:44 -0400 (Mon, 22 Sep 2008) | 1 line
+
+[FIX] bugs with anti scripting inserting ´<x>´ into map files
+------------------------------------------------------------------------
+r14812 | lphuberdeau | 2008-09-22 18:06:57 -0400 (Mon, 22 Sep 2008) | 1 line
+
+[BACKPORT] Second part of the sanitization fix
+------------------------------------------------------------------------
+r14806 | nyloth | 2008-09-22 16:36:58 -0400 (Mon, 22 Sep 2008) | 3 lines
+
+[SEC] tiki setup: fix vulnerability due to how _REQUEST was checked and rebuild, and due to how the error was handled in case of input type problem + optimize code in terms of performance + handle multiple error messages + reduce _REQUEST to only _GET and _POST (this is a backport of revision 14805).
+
+
+------------------------------------------------------------------------
+r14774 | sylvieg | 2008-09-19 15:20:25 -0400 (Fri, 19 Sep 2008) | 1 line
+
+backport from trunk not to have the 0 translated into an empty string
+------------------------------------------------------------------------
+r14760 | pkdille | 2008-09-19 03:54:28 -0400 (Fri, 19 Sep 2008) | 4 lines
+
+[FIX] imagals sorting by image count (ticket 1962): fix request
+[FIX] browse image gallery: fix the sorting by filesize which is, for the subgals, the number of images.
+
+
+------------------------------------------------------------------------
+r14759 | sewilco | 2008-09-18 17:18:42 -0400 (Thu, 18 Sep 2008) | 1 line
+
+[SEC] Make cache only work for anonymous users, stopping leakage across permissions, closing ticket 1291, using usual anon test
+------------------------------------------------------------------------
+r14758 | sewilco | 2008-09-18 15:55:25 -0400 (Thu, 18 Sep 2008) | 1 line
+
+[SEC] Make cache only work for anonymous users, stopping leakage across permissions, closing ticket 1291
+------------------------------------------------------------------------
+r14752 | ricks99 | 2008-09-18 12:54:08 -0400 (Thu, 18 Sep 2008) | 1 line
+
+[FIX]use the defined breadcrumb instead of hardcoding something else
+------------------------------------------------------------------------
+r14733 | luciash | 2008-09-17 13:55:56 -0400 (Wed, 17 Sep 2008) | 1 line
+
+[FIX] mootools js link was changed only in default tpl after mootools upgrade before 2.0 (Shadowbox wasn't working then in Simple style)
+------------------------------------------------------------------------
+r14732 | ricks99 | 2008-09-17 11:27:27 -0400 (Wed, 17 Sep 2008) | 1 line
+
+[FIX]Do not duplicate description for static text fields.
+------------------------------------------------------------------------
+r14726 | pkdille | 2008-09-17 08:41:05 -0400 (Wed, 17 Sep 2008) | 1 line
+
+[FIX] tracker comments: should be left aligned (check on dev.tw.o)
+------------------------------------------------------------------------
+r14724 | pkdille | 2008-09-17 05:17:50 -0400 (Wed, 17 Sep 2008) | 1 line
+
+[FIX] edit file galleries. Perms check was broken (bug 2009 - thks lpborges
+------------------------------------------------------------------------
+r14690 | sylvieg | 2008-09-12 10:45:44 -0400 (Fri, 12 Sep 2008) | 1 line
+
+[FIX]php bug: editing page with non utf8 characters returns an empty page
+------------------------------------------------------------------------
+r14685 | luciash | 2008-09-12 05:40:23 -0400 (Fri, 12 Sep 2008) | 1 line
+
+[FIX] when WYSIWYG is off don't check wysiwyg content is wiki parsed to show the web help link
+------------------------------------------------------------------------
+r14665 | ricks99 | 2008-09-10 10:59:35 -0400 (Wed, 10 Sep 2008) | 1 line
+
+[FIX]check permission before showing discuss link
+------------------------------------------------------------------------
+r14663 | sylvieg | 2008-09-10 09:59:28 -0400 (Wed, 10 Sep 2008) | 1 line
+
+[FIX]tracker: radio buttons can be separated by br or a space with an option <br>- the change should have never been done in 2.0
+------------------------------------------------------------------------
+r14642 | sylvieg | 2008-09-08 16:25:49 -0400 (Mon, 08 Sep 2008) | 1 line
+
+backport the undefined dbversion
+------------------------------------------------------------------------
+r14637 | sampaioprimo | 2008-09-08 12:56:33 -0400 (Mon, 08 Sep 2008) | 2 lines
+
+pt-br translation
+
+------------------------------------------------------------------------
+r14617 | sylvieg | 2008-09-05 11:58:56 -0400 (Fri, 05 Sep 2008) | 1 line
+
+[FIX]syntax error
+------------------------------------------------------------------------
+r14616 | ricks99 | 2008-09-05 06:45:35 -0400 (Fri, 05 Sep 2008) | 1 line
+
+[FIX]better formatting of radio button elements, correct use of LABEL element for each option
+------------------------------------------------------------------------
+r14609 | ricks99 | 2008-09-04 12:07:10 -0400 (Thu, 04 Sep 2008) | 1 line
+
+[FIX]smileys should appear in wiki editor, even if wysiwyg feature is enabled.
+------------------------------------------------------------------------
+r14551 | xavidp | 2008-08-29 14:26:10 -0400 (Fri, 29 Aug 2008) | 1 line
+
+[FIX] single quote changed to double quote to hopefully fix http://dev.tikiwiki.org/bug1732 for all languages, after the tip by Jonny B. and partial fix on language.php for Catalan. At least if fixes the bug in Catalan language and any others with single quotes in language.php.
+------------------------------------------------------------------------
+r14546 | jonnybradley | 2008-08-29 12:59:10 -0400 (Fri, 29 Aug 2008) | 2 lines
+
+[FIX] Added backslash in front of single quote mark which was breaking FCKEditor javascript preventing toolbars appearing in Catalan (on "Wiki Link insert")
+(http://dev.tikiwiki.org/bug1732 still open as it should be fixed for all languages in the template setup_fckeditor.tpl)
+------------------------------------------------------------------------
+r14535 | xavidp | 2008-08-28 13:10:16 -0400 (Thu, 28 Aug 2008) | 1 line
+
+[FIX] Image and link were missing on additional info box for image display on wiki page related to the uploaded document
+------------------------------------------------------------------------
+r14529 | sampaioprimo | 2008-08-27 09:08:45 -0400 (Wed, 27 Aug 2008) | 2 lines
+
+pt-br translation
+
+------------------------------------------------------------------------
+r14520 | sampaioprimo | 2008-08-26 13:52:14 -0400 (Tue, 26 Aug 2008) | 2 lines
+
+fix pt-br translation
+
+------------------------------------------------------------------------
+r14518 | nyloth | 2008-08-26 08:03:47 -0400 (Tue, 26 Aug 2008) | 1 line
+
+[FIX] contacts: needs both 'feature_contact' and 'feature_messages' to work
+------------------------------------------------------------------------
+r14491 | sampaioprimo | 2008-08-22 16:24:49 -0400 (Fri, 22 Aug 2008) | 2 lines
+
+pt-br translation
+
+------------------------------------------------------------------------
+r14486 | sampaioprimo | 2008-08-22 14:07:27 -0400 (Fri, 22 Aug 2008) | 2 lines
+
+more pt-br translation
+
+------------------------------------------------------------------------
+r14469 | Beuc | 2008-08-22 06:40:38 -0400 (Fri, 22 Aug 2008) | 1 line
+
+Fix quoting when using Multi-tiki ($VIRTUALS)
+------------------------------------------------------------------------
+r14465 | sampaioprimo | 2008-08-21 21:01:19 -0400 (Thu, 21 Aug 2008) | 2 lines
+
+more pt-br translation
+
+------------------------------------------------------------------------
+r14464 | sampaioprimo | 2008-08-21 20:55:00 -0400 (Thu, 21 Aug 2008) | 2 lines
+
+fix translation
+
+------------------------------------------------------------------------
+r14404 | ricks99 | 2008-08-18 17:08:40 -0400 (Mon, 18 Aug 2008) | 1 line
+
+[MOD]tables need headers, give iconic status
+------------------------------------------------------------------------
+r14403 | ricks99 | 2008-08-18 17:01:53 -0400 (Mon, 18 Aug 2008) | 1 line
+
+[UI]no files for all user prefs
+------------------------------------------------------------------------
+r14396 | sylvieg | 2008-08-18 14:15:01 -0400 (Mon, 18 Aug 2008) | 1 line
+
+[FIX]tracker: the IP selector/creator was reset when item was modified: todo: rewrite .. not a good idea to avoid resetting creator field by magically unsetting fieldId
+------------------------------------------------------------------------
+r14389 | sylvieg | 2008-08-18 11:34:13 -0400 (Mon, 18 Aug 2008) | 1 line
+
+[FIX]depending from where you come 1.9 or 1.10, email_due is there or not
+------------------------------------------------------------------------
+r14213 | xavidp | 2008-08-13 11:21:18 -0400 (Wed, 13 Aug 2008) | 1 line
+
+[FIX] db password was not hidden at typing time on upgrade through tiki-install.php
+------------------------------------------------------------------------
+
+----------------------------------------------------------------------
 Version 2.0
 <http://tikiwiki.org/ReleaseProcess20>
 ------------------

@@ -290,7 +290,7 @@ class WikiRenderer
 
 	private function setupPage() // {{{
 	{
-		global $prefs, $tikilib, $wikilib;
+		global $prefs, $tikilib, $wikilib, $user;
 
 		$this->smartyassign( 'page', $this->page );
 		$this->smartyassign('show_page','y');
@@ -313,7 +313,7 @@ class WikiRenderer
 			'language' => $this->info['lang']
 		);
 
-		if(isset($this->info['wiki_cache'])) {
+		if($prefs['wiki_cache']>0 and (is_null($user) or $user == '')) {
 			$this->setPref( 'wiki_cache', $this->info['wiki_cache'] );
 		}
 
