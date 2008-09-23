@@ -39,7 +39,7 @@ function test_callback($buffer) {
 		return $buffer;
 	}
 
-  if (strpos($_SERVER['REQUEST_URI'],"tiki-download_file") !== FALSE) {
+  if (strpos(basename($_SERVER['PHP_SELF']),"tiki-download_file") !== FALSE) {
 	  return $buffer;
 	}
 
