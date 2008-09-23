@@ -24,6 +24,14 @@ if (isset($_REQUEST["webmail"])) {
 	}
 
 	$tikilib->set_preference('webmail_max_attachment', $_REQUEST["webmail_max_attachment"]);
+
+	if (isset($_REQUEST["webmail_quick_flags"])){
+		$tikilib->set_preference('webmail_quick_flags', 'y');
+	} else {
+		$tikilib->set_preference('webmail_quick_flags', 'n');
+	}
+	
+	
 }
 ask_ticket('admin-inc-webmail');
 ?>

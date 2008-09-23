@@ -6,21 +6,40 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
+define('GROUP_USER_NAME',"groupemailuser");
+define('GROUP_USER_ID', 999999);
+
+
 class WebMailLib extends TikiLib {
 	
-	var $current_account_group='n';
+	var $current_account_group='';
 	
 	function WebMailLib($db) {
 		parent::TikiLib($db);
 	}
 
 	function remove_webmail_message($current, $user, $msgid) {
-		$query = "delete from `tiki_webmail_messages` where `accountId`=? and `mailId`=? and `user`=?";
-		$result = $this->query($query, array((int)$current,$msgid,$user));
+		
+//		if ($this->is_current_webmail_account_public ($user)){
+//			print("group-rem");
+//			$user=GROUP_USER_NAME;
+//			$current=GROUP_USER_ID;
+//		}
+		
+//		$query = "delete from `tiki_webmail_messages` where `accountId`=? and `mailId`=? and `user`=?";
+		$query = "delete from `tiki_webmail_messages` where `mailId`=?";
+		$result = $this->query($query, array($msgid));
 	}
 
 	function replace_webmail_message($current,$user,$msgid) {
 //		print($current,$user,$msgid);
+
+		if ($this->is_current_webmail_account_public ($user)){
+			print("group-replace");
+			$user=GROUP_USER_NAME;
+			$current=GROUP_USER_ID;
+		}
+
 		$query = "select count(*) from `tiki_webmail_messages` where `accountId`=? and `mailId`=? and `user`=?";
 
 		if ($this->getOne($query,array((int)$current,$msgid,$user)) == 0) {
@@ -32,6 +51,21 @@ class WebMailLib extends TikiLib {
 	function set_mail_flag($current, $user, $msgid, $flag, $value) {
 		// flag can be: isRead,isFlagged,isReplied, value: y/n
 
+//print($this->current_account_group);
+		if ($flag == 'isFlagged') {
+			if($value == 'y'){
+				$fMsg = "$user,". mktime().", ";
+			} else {
+				$fMsg = '';
+			}
+		}
+
+		if ($this->is_current_webmail_account_public ($user)){
+			print("group-set");
+			$user=GROUP_USER_NAME;
+			$current=GROUP_USER_ID;
+		}
+
 		//MatWho 16/09/08 - Fixed mailId removed (int) as mail ids are strings
 		$query ="SELECT * FROM tiki_webmail_messages WHERE accountId = ? AND mailId = ? AND user = ?";
 		$result = $this->query($query,array((int)$current,$msgid,$user));
@@ -39,19 +73,28 @@ class WebMailLib extends TikiLib {
 		
 		if ($row != NULL) {
 		    // Update is select found a match
-			$query ="UPDATE tiki_webmail_messages SET `$flag` = '$value' WHERE accountId = ? AND mailId = ? AND user = ?";
+			if ($flag == 'isFlagged'){
+				$query ="UPDATE tiki_webmail_messages SET `$flag` = '$value', `flaggedMsg` = '$fMsg' WHERE accountId = ? AND mailId = ? AND user = ?";
+			} else {
+				$query ="UPDATE tiki_webmail_messages SET `$flag` = '$value' WHERE accountId = ? AND mailId = ? AND user = ?";
+			}
 			$result = $this->query($query,array((int)$current,$msgid,$user));
 		} else {
 			// Otherwise insert, we have no flags for this massesge yet
-			$query = "insert into `tiki_webmail_messages`(`$flag`,`accountId`,`mailId`,`user`) values (?,?,?,?)";
-			$result = $this->query($query,array($value,(int)$current,$msgid,$user));
+			$query = "insert into `tiki_webmail_messages`(`$flag`,`accountId`,`mailId`,`user`,`flaggedMsg`) values (?,?,?,?,?)";
+			$result = $this->query($query,array($value,(int)$current,$msgid,$user,$fMsg));
 		}
 		return true;
 	}
 
 	function get_mail_flags($current, $user, $msgid) {
+		if ($this->is_current_webmail_account_public ($user)){
+						print("group-get");
+			$user=GROUP_USER_NAME;
+			$current=GROUP_USER_ID;
+		}
 		
-		if ($this->current_account_group=='y'){
+ 		if ($this->is_current_webmail_account_public ($user)){
 			$query = "select `isRead`,`isFlagged`,`isReplied` from `tiki_webmail_messages` where `mailId`=?";
 			$result = $this->query($query, array($msgid));
 		} else {
@@ -155,7 +198,6 @@ class WebMailLib extends TikiLib {
 			$bindvars = array($user,$account,$pop,$port,$smtpPort,$username,$pass,$smtp,$useAuth,$msgs,$flagsPublic,$autoRefresh);
 			$result = $this->query($query, $bindvars);
 		}
-
 		return true;
 	}
 
@@ -167,13 +209,35 @@ class WebMailLib extends TikiLib {
 			return false;
 
 		$res = $result->fetchRow();
+		$this->current_account_group = $res["flagsPublic"];
 		return $res;
+	}
+	
+	function is_current_webmail_account_public ($user) {
+		if($this->current_account_group == ''){
+			
+			print("slow");
+			$query = "select * from `tiki_user_mail_accounts` where `current`='y' and `user`=?";
+			$result = $this->query($query, array($user));
+			if (!$result->numRows())
+				return false;
+			$res = $result->fetchRow();
+			$this->current_account_group = $res["flagsPublic"];
+			return $res["flagsPublic"];
+		} else {
+			if ($this->current_account_group=='y'){
+				return true;
+			} else {
+				return false;
+			}
+		}
 	}
 
 	function remove_webmail_account($user, $accountId) {
 		$query = "delete from `tiki_user_mail_accounts` where `accountId`=? and `user`=?";
 		$result = $this->query($query, array((int)$accountId,$user));
 		return true;
+
 	}
 
 	function get_webmail_account($user, $accountId) {

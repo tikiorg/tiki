@@ -2645,6 +2645,7 @@ CREATE TABLE tiki_webmail_messages (
   isRead char(1) default NULL,
   isReplied char(1) default NULL,
   isFlagged char(1) default NULL,
+  flaggedMsg varchar(50) default '',
   PRIMARY KEY (accountId,mailId)
 ) ENGINE=MyISAM;
 
