@@ -1,29 +1,66 @@
-<table cellpadding="0" cellspacing="0" border="0" id="caltable">
-<tr><td width="42" class="heading">{tr}Hours{/tr}</td><td class="heading">{tr}Events{/tr}</td></tr>
-{cycle values="odd,even" print=false}
+<div style="position:relative">
+  <div style="position:relative;height:36px">
+    <div id="topLeft" class="calHeadingLeft" style="position:absolute;top:0%;height:100%">&nbsp;</div>
+    <div id="top" class="calHeading" style="position:absolute;top:0%;height:100%">
+		{tr}Events{/tr}<br /><strong>{$focusdate|tiki_long_date}</strong>
+	</div>
+  </div>
 {foreach key=k item=h from=$hours}
-<tr><td width="42" class="{cycle advance=false}">{$h}{tr}h{/tr}</td>
-<td class="{cycle}">
-{section name=hr loop=$hrows[$h]}
-{assign var=calendarId value=$hrows[$h][hr].result.calendarId}
-{if ($prefs.calendar_view_tab eq "y" or $tiki_p_change_events eq "y") and $hrows[$h][hr].calname ne ""}<span  style="float:right;">
-<a href="tiki-calendar_edit_item.php?viewcalitemId={$hrows[$h][hr].calitemId}"{if $prefs.feature_tabs ne "y"}#details{/if} title="{tr}Details{/tr}">{icon _id='magnifier' alt="{tr}Zoom{/tr}"}</a>
-{if $hrows[$h][hr].modifiable eq "y"}
-<a href="tiki-calendar_edit_item.php?calitemId={$hrows[$h][hr].calitemId}" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
-<a href="tiki-calendar_edit_item.php?calitemId={$hrows[$h][hr].calitemId}&amp;delete=1"  title="{tr}Remove{/tr}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>{/if}</span>
-{/if}
-<div {if $hrows[$h][hr].calname ne ""}class="Cal{$hrows[$h][hr].type} vevent" style="background-color:#{$infocals.$calendarId.custombgcolor};color:#{$infocals.$calendarId.customfgcolor};"{/if}>
-<abbr class="dtstart" title="{$hrows[$h][hr].startTimeStamp|isodate}">{$hours[$h]}:{$hrows[$h][hr].mins}</abbr> : {if $hrows[$h][hr].calname eq ""}{$hrows[$h][hr].type} : {/if}
-{if $myurl eq "tiki-action_calendar.php"}
-<a href="{$hrows[$h][hr].url}" class="url" title="{$hrows[$h][hr].web|escape}" class="linkmenu summary">{$hrows[$h][hr].name}</a>
-{else}
-<a href="tiki-calendar_edit_item.php?viewcalitemId={$hrows[$h][hr].calitemId}" class="linkmenu summary">{$hrows[$h][hr].name}</a>
-{/if}
-<span class="description">
-{if $hrows[$h][hr].calname ne ""}{$hrows[$h][hr].parsedDescription}{else}{$hrows[$h][hr].description}{/if}
-</span>
-</div>
-{/section}
-</td></tr>
+  <div style="position:relative;height:24px">
+    <div id="rowLeft_{$h}" class="calHours" style="position:absolute;top:0%;height:100%">{if ($h < 10)}0{/if}{$h}:00</div>
+    <div id="row_{$h}" class="calWeek" style="position:absolute;top:0%;height:100%;background:none">
+    </div>
+  </div>
 {/foreach}
-</table>
+
+
+{foreach key=k item=h from=$hours}
+	{section name=hr loop=$hrows[$h]}
+		{assign var=event value=$hrows[$h][hr]}
+		{assign var=calendarId value=$event.calendarId}
+		{assign var=over value=$event.over}
+		<div id="event_{$event.calitemId}" {if $hrows[$h][hr].calname ne ""}class="Cal{$event.type} vevent"{/if} style="position:absolute;z-index:100;top:{$event.top}px;height:{$event.duree}px;background-color:#{$infocals.$calendarId.custombgcolor};border-color:#{$infocals.$calendarId.customfgcolor};color:#{$infocals.$calendarId.customfgcolor};opacity:0.7;filter:Alpha(opacity=70);text-align:center;overflow:hidden">
+			<span style="padding-top:4px;padding-right:4px;float:right"><a style="padding:0 3px;"
+			{if $event.modifiable eq "y" || $event.visible eq 'y'}
+			    href="tiki-calendar_edit_item.php?viewcalitemId={$event.calitemId}"
+			{/if}
+
+			{if $prefs.calendar_sticky_popup eq "y" and $event.calitemId}
+				{popup sticky=true fullhtml="1" text=$over|escape:"javascript"|escape:"html"}
+			{else}
+				{popup fullhtml="1" text=$over|escape:"javascript"|escape:"html"}
+			{/if}
+		><img src="pics/icons/more_info.gif" alt="{tr}Details{/tr}" border="0"/></a></span>
+
+		{if $myurl eq "tiki-action_calendar.php"}
+		<a href="{$event.url}" class="url" title="{$event.web|escape}" class="linkmenu summary" style="color:#{$infocals.$calendarId.customfgcolor}">{$event.name}</a>
+		{else}
+		<a href="tiki-calendar_edit_item.php?viewcalitemId={$event.calitemId}" class="linkmenu summary" style="color:#{$infocals.$calendarId.customfgcolor}">{$event.name}</a>
+		{/if}
+		</div>
+	    <script type="text/javascript">
+		  var calWidth = document.getElementById('calscreen').offsetWidth;
+		  var leftWidth = 5 * calWidth/100;
+		  var cellWidth = 19 * leftWidth;
+	   	  document.getElementById('event_{$event.calitemId}').style.left=(leftWidth + ({$event.left} * cellWidth / 100)) + "px";
+	   	  document.getElementById('event_{$event.calitemId}').style.width=(cellWidth/{$event.concurrences} - 3) + "px"; + "px";
+	    </script>
+	{/section}
+{/foreach}
+
+</div>
+<script type="text/javascript">
+			var calWidth = document.getElementById('calscreen').offsetWidth;
+			var leftWidth = 5 * calWidth/100;
+			var rightWidth = 19 * leftWidth;
+			document.getElementById('topLeft').style.left="0px";
+			document.getElementById('topLeft').style.width=leftWidth + "px";
+			document.getElementById('top').style.left=leftWidth + "px";
+			document.getElementById('top').style.width=rightWidth + "px";
+{foreach key=k item=h from=$hours}
+			document.getElementById('rowLeft_{$h}').style.left="0px";
+			document.getElementById('rowLeft_{$h}').style.width=leftWidth + "px";
+			document.getElementById('row_{$h}').style.left=leftWidth + "px";
+			document.getElementById('row_{$h}').style.width=rightWidth + "px";
+{/foreach}
+</script>

@@ -32,7 +32,7 @@
 /**
  *  Event extends BaseComponent
  */
-require_once 'File/iCal/BaseComponent.php';
+require_once 'BaseComponent.php';
 
 /**
  * File_iCal_Event is the user implementation of VEVENT

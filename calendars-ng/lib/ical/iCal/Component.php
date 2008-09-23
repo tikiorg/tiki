@@ -223,7 +223,7 @@ abstract class File_iCal_Component {
      */
     public function getPropertyArray() {
         $r = array();
-        require_once 'File/iCal/Property.php';
+        require_once 'Property.php';
         $r[] = File_iCal_Property::getProperty("BEGIN", array(), $this->_name);
 
         foreach ($this->_properties as $prop) {
@@ -252,7 +252,7 @@ abstract class File_iCal_Component {
     public function getCalendar()
     {
             $r = array();
-            require_once 'File/iCal/ContentLine.php';
+            require_once 'ContentLine.php';
             $r[] = new File_iCal_ContentLine("BEGIN:".$this->_name);
 
             foreach ($this->_properties as $prop) {
@@ -287,7 +287,7 @@ abstract class File_iCal_Component {
      *                          The values represent the internal array keys for properties of this type.
      */
     protected function propertyExists($name, &$key = null) {
-        require_once 'File/iCal/Property.php';
+        require_once 'Property.php';
         $pn = File_iCal_Property::getClassName($name);
 
         $count = 0;
@@ -321,7 +321,7 @@ abstract class File_iCal_Component {
      *                                  If set to true, the function will check for matching parameters when selecting the property to which to add
      */
     protected function addPropertyValue($name, $value, $match_param = null) {
-        require_once 'File/iCal/Property.php';
+        require_once 'Property.php';
         if (in_array($name, $this->_properties_possible)) {
             $pn = File_iCal_Property::getClassName($name);
 
@@ -394,7 +394,7 @@ abstract class File_iCal_Component {
 
 
         }
-        require_once 'File/iCal/Property.php';
+        require_once 'Property.php';
         $props[] = File_iCal_Property::getProperty("BEGIN", array(), $component_name);
 
         //attachment is defined in the basecomponent class, so method_exists is always true
@@ -549,7 +549,7 @@ abstract class File_iCal_Component {
 
 
         //convert these properties to contentlines
-        require_once 'File/iCal/ContentLine.php';
+        require_once 'ContentLine.php';
         foreach ($props as $k=>$p) {
             $props[$k] = new File_iCal_ContentLine($p);
         }
@@ -602,7 +602,7 @@ abstract class File_iCal_Component {
         switch (get_class($this)) {
             case "File_iCal_Component_Event":
                 $component_name = "VEVENT";
-                require_once 'File/iCal/Event.php';
+                require_once 'Event.php';
                 $c = new File_iCal_Event();
                 break;
 

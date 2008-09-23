@@ -28,13 +28,15 @@
 <span class="button2"><a href="tiki-calendar_edit_item.php">{tr}Add Event{/tr}</a></span>
 {/if}
 
+<span class="button2"><a href="#" title="{tr}Click to export calendars{/tr}" onclick="toggle('exportcal');">{tr}Export Calendars{/tr}</a></span>
+
 {if count($listcals) >= 1}
 <span class="button2"><a href="#" title="{tr}Click to select visible calendars{/tr}" onclick="toggle('filtercal');">{tr}Visible Calendars{/tr}</a></span>
 
 {if count($thiscal)}
 {foreach item=k from=$listcals name=listc}
 {if $thiscal.$k}
-<span class="button2"><a href="#" style="background-color:#{$infocals.$k.custombgcolor};color:#{$infocals.$k.customfgcolor}" onclick="toggle('filtercal');">{$infocals.$k.name}</a></span>
+<div class="button2" style="display:inline;opacity:0.5;filter:Alpha(opacity=50);"><a href="#" class="linkbut" style="background-color:#{$infocals.$k.custombgcolor};color:#{$infocals.$k.customfgcolor};border:1px solid #{$infocals.$k.customfgcolor}" onclick="toggle('filtercal');">{$infocals.$k.name}</a></div>
 {/if}
 {/foreach}
 {else}
@@ -79,6 +81,20 @@ none
 </form>
 {/if}
 
+<form id="exportcal" method="post" action="{$exportUrl}" name="f" style="display:none;">
+<input type="hidden" name="export" value="y"/>
+<div class="caltitle">{tr}Export calendars{/tr}</div>
+<div class="caltoggle"><input name="calswitch" id="calswitch" type="checkbox" onclick="switchCheckboxes(this.form,'calendarIds[]',this.checked);"/> <label for="calswitch">{tr}Check / Uncheck All{/tr}</label></div>
+{foreach item=k from=$listcals}
+<div class="calcheckbox"><input type="checkbox" name="calendarIds[]" value="{$k|escape}" id="groupcal_{$k}" {if $thiscal.$k}checked="checked"{/if} />
+<label for="groupcal_{$k}" class="calId{$k}">{$infocals.$k.name}</label>
+</div>
+{/foreach}
+<div class="calcheckbox"><a href="{$iCalAdvParamsUrl}">{tr}advanced parameters{/tr}</a>
+</div>
+<div class="calinput"><input type="submit" name="valid" value="{tr}Export{/tr}"/></div>
+</form>
+
 
 {include file="tiki-calendar_nav.tpl"}
 
@@ -87,6 +103,9 @@ none
 
 {elseif $viewmode eq 'day'}
 {include file="tiki-calendar_daymode.tpl"}
+
+{elseif $viewmode eq 'week'}
+{include file="tiki-calendar_weekmode.tpl"}
 
 {else}
 {include file="tiki-calendar_calmode.tpl"}
