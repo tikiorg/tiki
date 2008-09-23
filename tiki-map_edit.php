@@ -174,6 +174,7 @@ if ($tiki_p_map_edit != 'y') {
 	if ($mapfiledata=="") {
 		$mapfiledata="##TIKIMAPS HEADER: END##\n\n".$_REQUEST["pagedata"];
 	}
+	$mapfiledata=str_replace('<x>','',$mapfiledata); //remove anti scripting codes on map files
 	fwrite($fp, $mapfiledata);
 	fclose ($fp);
 	
