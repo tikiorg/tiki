@@ -21,7 +21,7 @@ function tra($content, $lg='', $no_interactive = false, $args = array()) {
 				} else {
 					$l = $prefs['language'];
 				}
-			} elseif (is_file('lang/'.$prefs['language'].'/language.php')) {
+			} elseif (!empty($prefs['language']) && is_file('lang/'.$prefs['language'].'/language.php')) {
 				$l = $prefs['language'];
 			} elseif (is_file('lang/'.$prefs['site_language'].'/language.php')) {
 				$l = $prefs['site_language'];
