@@ -1,0 +1,1 @@
+{tr}Wiki page %s changed{/tr} {tr}by{/tr} {$mail_user} 
