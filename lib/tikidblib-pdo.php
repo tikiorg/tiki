@@ -149,7 +149,7 @@ class TikiDB {
 		error_reporting(E_ALL);
 		$result = $this->query($query, $values, 1, $offset);
 		$res = $result->fetchRow();
-		if ($res) {
+		if ($result) {
 			list($key, $value) = each($res);
 			return $value;
 		} else {
