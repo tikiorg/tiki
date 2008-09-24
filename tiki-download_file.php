@@ -40,23 +40,28 @@ function readfile_chunked($filename,$retbytes=true) {
 	}
 	return $status;
 }
+$zip = false;
+$error = '';
 
-if ( isset($_REQUEST['fileId']) ) {
+if ( isset($_REQUEST['fileId']) && !is_array($_REQUEST['fileId'])) {
 	$info = $tikilib->get_file($_REQUEST['fileId']);
 } elseif ( isset($_REQUEST['galleryId']) && isset($_REQUEST['name']) ) {
 	$info = $tikilib->get_file_by_name($_REQUEST['galleryId'], $_REQUEST['name']);
+} elseif ( isset($_REQUEST['fileId']) && is_array($_REQUEST['fileId'])) {
+	$info = $filegallib->zip($_REQUEST['fileId'], $error);
+	$zip = true;
 } else {
 	$smarty->assign('msg', tra('Incorrect param'));
 	$smarty->display('error.tpl');
 	die;
 }
 if ( ! is_array($info) ) {
-	$smarty->assign('msg', tra('Incorrect param'));
+	$smarty->assign('msg', tra('Incorrect param').' '.tra($error));
 	$smarty->display('error.tpl');
 	die;
 }
 
-if ( $tiki_p_admin_file_galleries != 'y' && !$user->user_has_perm_on_object($user, $info['galleryId'], 'file gallery', 'tiki_p_download_files')) {
+if ( !$zip && $tiki_p_admin_file_galleries != 'y' && !$userlib->user_has_perm_on_object($user, $info['galleryId'], 'file gallery', 'tiki_p_download_files')) {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra('You can not download files'));
 	$smarty->display('error.tpl');
