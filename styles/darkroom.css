@@ -1288,7 +1288,7 @@ div.button2 a, .button3 a {
 	border-top: 1px solid #818181;
 	display: block}
 
-.navbar .linkbut:hover,
+.navbar .linkbut:hover, .navbar a:hover,
 div.button2 a:hover, .button3 a:hover {
 	border: 1px solid #B2B2B2;
 	text-decoration: none}
