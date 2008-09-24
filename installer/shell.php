@@ -5,7 +5,7 @@ if( ! isset( $_SERVER['argc'] ) )
 if( ! file_exists( 'db/local.php' ) )
 	die( "Tiki is not installed yet.\n" );
 
-if( isset( $_SERVER['argv'][1] ) ) {
+if( isset( $_SERVER['argv'][1] ) && $_SERVER['argv'][1] != 'install' ) {
 	$multi = basename( $_SERVER['argv'][1] );
 }
 
