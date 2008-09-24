@@ -434,7 +434,7 @@ class CategLib extends ObjectLib {
 			}
 		}
 
-		$query_cant = "SELECT DISTINCT c.*, o.* FROM `tiki_category_objects` c, `tiki_categorized_objects` co, `tiki_objects` o LEFT JOIN `users_objectpermissions` u ON u.`objectId`=MD5(".$this->db->concat("o.`type`","LOWER(o.`itemId`)").") AND u.`objectType`=o.`type` WHERE c.`catObjectId`=o.`objectId` AND o.`objectId`=co.`catObjectId` $where";
+		$query_cant = "SELECT DISTINCT c.*, o.* FROM `tiki_category_objects` c, `tiki_categorized_objects` co, `tiki_objects` o LEFT JOIN `users_objectpermissions` u ON u.`objectId`=MD5(".$this->concat("o.`type`","LOWER(o.`itemId`)").") AND u.`objectType`=o.`type` WHERE c.`catObjectId`=o.`objectId` AND o.`objectId`=co.`catObjectId` $where";
 		$query = $query_cant . $orderBy;
 		$result = $this->query($query,$bindVars,$maxRecords,$offset);
 		$resultCant = $this->query($query_cant,$bindVars);

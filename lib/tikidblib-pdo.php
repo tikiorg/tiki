@@ -438,7 +438,7 @@ class TikiDB {
 		return " IFNULL($field, $ifNull) "; // if MySQL
 	}
 
-	function Concat() {
+	function concat() {
 		$s = "";
 		$arr = func_get_args();
 

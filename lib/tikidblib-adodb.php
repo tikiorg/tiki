@@ -431,6 +431,12 @@ function sql_cast($var,$type) {
     }
 
 }
+
+function concat() {
+	$args = func_get_args();
+	return call_user_func_array( array( $this->db, 'concat' ), $args );
+}
+
 function debugger_log($query, $values)
 {
     // Will spam only if debug parameter present in URL
