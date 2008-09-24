@@ -3561,7 +3561,7 @@ CREATE TABLE `tiki_feature` (
 ) ENGINE=MyISAM AUTO_INCREMENT=1;
 
 CREATE TABLE tiki_schema (
-	patch_name VARCHAR(30) PRIMARY KEY,
+	patch_name VARCHAR(100) PRIMARY KEY,
 	install_date TIMESTAMP
 ) ENGINE=MyISAM;
 
