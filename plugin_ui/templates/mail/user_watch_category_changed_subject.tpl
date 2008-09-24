@@ -1,1 +1,0 @@
-{tr}Category{/tr} {$categoryName} {tr}changed{/tr}
