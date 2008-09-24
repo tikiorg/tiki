@@ -270,9 +270,23 @@ class Tiki_Profile
 		if( $suppliedUserData === false )
 			$suppliedUserData = $this->getRequiredInput();
 
-		if( is_array( $data ) )
+		if( is_array( $data ) ) {
 			foreach( $data as &$sub )
 				$this->replaceReferences( $sub, $suppliedUserData );
+
+			$toReplace = array();
+			foreach( array_keys( $data ) as $key ) {
+				$newKey = $key;
+				$this->replaceReferences( $newKey, $suppliedUserData );
+				if( $newKey != $key )
+					$toReplace[$key] = $newKey;
+			}
+
+			foreach( $toReplace as $old => $new ) {
+				$data[$new] = $data[$old];
+				unset( $data[$old] );
+			}
+		}
 		else
 		{
 			if( preg_match( self::SHORT_PATTERN, $data, $parts ) )

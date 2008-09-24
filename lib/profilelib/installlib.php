@@ -15,6 +15,8 @@ class Tiki_Profile_Installer
 		'blog' => 'Tiki_Profile_InstallHandler_Blog',
 		'blog_post' => 'Tiki_Profile_InstallHandler_BlogPost',
 		'plugin_alias' => 'Tiki_Profile_InstallHandler_PluginAlias',
+		'webservice' => 'Tiki_Profile_InstallHandler_Webservice',
+		'webservice_template' => 'Tiki_Profile_InstallHandler_WebserviceTemplate',
 	);
 
 	private static $typeMap = array(
@@ -1150,6 +1152,103 @@ class Tiki_Profile_InstallHandler_PluginAlias extends Tiki_Profile_InstallHandle
 		$tikilib->plugin_alias_store( $name, $data );
 
 		return $name;
+	}
+} // }}}
+
+class Tiki_Profile_InstallHandler_Webservice extends Tiki_Profile_InstallHandler // {{{
+{
+	function getData()
+	{
+		if( $this->data )
+			return $this->data;
+
+		$defaults = array(
+			'schema_version' => null,
+			'schema_documentation' => null,
+		);
+
+		$data = array_merge(
+			$defaults,
+			$this->obj->getData()
+		);
+
+		return $this->data = $data;
+	}
+
+	function canInstall()
+	{
+		$data = $this->getData();
+
+		if( ! isset( $data['name'], $data['url'] ) )
+			return false;
+
+		return true;
+	}
+
+	function _install()
+	{
+		global $tikilib;
+		$data = $this->getData();
+
+		$this->replaceReferences( $data );
+
+		require_once 'lib/webservicelib.php';
+
+		$ws = Tiki_Webservice::create( $data['name'] );
+		$ws->url = $data['url'];
+		$ws->schemaVersion = $data['schema_version'];
+		$ws->schemaDocumentation = $data['schema_documentation'];
+		$ws->save();
+
+		return $ws->getName();
+	}
+} // }}}
+
+class Tiki_Profile_InstallHandler_WebserviceTemplate extends Tiki_Profile_InstallHandler // {{{
+{
+	function getData()
+	{
+		if( $this->data )
+			return $this->data;
+
+		$defaults = array(
+		);
+
+		$data = array_merge(
+			$defaults,
+			$this->obj->getData()
+		);
+
+		return $this->data = $data;
+	}
+
+	function canInstall()
+	{
+		$data = $this->getData();
+
+		if( ! isset( $data['name'], $data['engine'], $data['output'], $data['content'] ) )
+			return false;
+
+		return true;
+	}
+
+	function _install()
+	{
+		global $tikilib;
+		$data = $this->getData();
+
+		$this->replaceReferences( $data );
+
+		require_once 'lib/webservicelib.php';
+
+		$ws = Tiki_Webservice::getService( $data['webservice'] );
+		$template = $ws->addTemplate( $data['name'] );
+		$template->engine = $data['engine'];
+		$template->output = $data['output'];
+		$template->content = $data['content'];
+		$template->save();
+
+		return $template->name;
 	}
 } // }}}
 
