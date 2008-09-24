@@ -175,42 +175,7 @@ hosting provider.  Normally Tiki tables won't conflict with other product names{
 		</td><td>
 			{if $tikidb_created}
 			<fieldset>
-		    <table>
-			<tr><td><h2>{tr}Upgrade{/tr}</h2></td></tr>
-			<tr><td><p align="center"><img src="img/silk/sticky.png" alt="warning" style="vertical-align:middle"/> <strong>{tr}Important{/tr}</strong>: {tr}Backup your database with mysqldump, phpmyadmin, or other before upgrading.{/tr}</p>
-			<p>{tr}Update database using script{/tr}: <br />
-			<select name="file" size="{if $files}{$files|@count}{else}3{/if}">
-			{section name=ix loop=$files}
-			<option value="{$files[ix]|escape}">{$files[ix]}&nbsp;</option>
-{sectionelse}
-			<option value="" disabled="disabled">{tr}No scripts available.{/tr}</option>
-			{/section}
-			</select></p>
-			<p align="center"><input type="submit" name="update" value="{tr}Upgrade{/tr}" /></p>
-		    </td></tr>
-		    <tr><td>
-<table class="normal" cellpadding="5">
-	<tr><th>{tr}To upgrade from{/tr}:</th><th>{tr}Use this script{/tr}:</th></tr>
-	<tr class="even">
-		<td>3.0.x</td>
-		<td>tiki_2.0to3.0</td>
-	</tr>
-	<tr class="odd">
-		<td>2.0.x</td>
-		<td>tiki_1.9to2.0</td>
-	</tr>
-	<tr class="even">
-		<td>1.9.x or<br/>1.8.x</td>
-		<td>tiki_1.8to1.9<br />{tr}Then rerun the installer using tiki_1.9to2.0.{/tr}</td>
-	</tr>
-	<tr class="odd">
-		<td>1.7.x</td>
-		<td>{tr}See <a target="help" class="link" href="http://doc.tikiwiki.org/Upgrade+1.7+to+1.8">Tiki database 1.7.x to 1.8x instructions{/tr}</a>.</td>
-	</tr>
-</table>
-			<p>{tr}For information about <strong>tiki-secdb_*.sql</strong> files, please see <a target="help" class="link" href="http://doc.tikiwiki.org/Security+Admin">http://doc.tikiwiki.org/Security+Admin{/tr}</a>.
-
-			
+			<p align="center"><input type="submit" name="update" value="{tr}Automatic update{/tr}" /></p>
 		</td></tr>		
     </table>
 			</fieldset>
@@ -256,8 +221,8 @@ hosting provider.  Normally Tiki tables won't conflict with other product names{
 		</p>
 		</div>
     	
-<p><img src="pics/icons/accept.png" alt="{tr}Success{/tr}" style="vertical-align:middle"/> <strong>{if isset($smarty.post.update)}{tr}Upgrade{/tr}{else}{tr}Installation{/tr}{/if} {tr}operations executed successfully{/tr}</strong>: {$succcommands|@count} {tr}SQL queries{/tr}.</p>
-{if $failedcommands|@count > 0}
+<p><img src="pics/icons/accept.png" alt="{tr}Success{/tr}" style="vertical-align:middle"/> <strong>{if isset($smarty.post.update)}{tr}Upgrade{/tr}{else}{tr}Installation{/tr}{/if} {tr}operations executed successfully{/tr}</strong>: {$installer->success|@count} {tr}SQL queries{/tr}.</p>
+{if $installer->failures|@count > 0}
 			<script type="text/javascript">
 			<!--//--><![CDATA[//><!--
 				{literal}
@@ -268,15 +233,16 @@ hosting provider.  Normally Tiki tables won't conflict with other product names{
 			//--><!]]>
 			</script>
 
-<p><img src="pics/icons/delete.png" alt="{tr}Failed{/tr}" style="vertical-align:middle"/> <strong>{tr}Operations failed{/tr}:</strong> {$failedcommands|@count} {tr}SQL queries{/tr}. 
+<p><img src="pics/icons/delete.png" alt="{tr}Failed{/tr}" style="vertical-align:middle"/> <strong>{tr}Operations failed{/tr}:</strong> {$installer->failures|@count} {tr}SQL queries{/tr}. 
 <a href="javascript:sql_failed()">{tr}Display details{/tr}</a>.
 
 <div id="sql_failed_log" style="display:none">
  <p>{tr}During an upgrade, it is normal to have SQL failures resulting with <strong>Table already exists</strong> messages.{/tr}</p>
     		<textarea rows="15" cols="80">
-{section loop=$failedcommands name=ix}
-{$failedcommands[ix]}
-{/section}
+{foreach from=$installer->failures item=item}
+{$item[0]}
+{$item[1]}
+{/foreach}
     		</textarea>
 
 </div>

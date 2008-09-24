@@ -22,6 +22,7 @@ include_once("lib/init/initlib.php");
 // Define and load Smarty components
 define('SMARTY_DIR', "lib/smarty/libs/");
 require_once ( 'lib/smarty/libs/Smarty.class.php');
+require_once ('installer/installlib.php');
 
 $commands = array();
 ini_set('magic_quotes_runtime',0);
@@ -699,20 +700,18 @@ if ( isset($dbTiki) && is_object($dbTiki) && isset($_SESSION["install-logged-$mu
 	$smarty->assign('logged', 'y');
 
 	if ( isset($_REQUEST['scratch']) ) {
-		process_sql_file('tiki-'.$dbversion_tiki.'-'.$db_tiki.'.sql', $db_tiki);
+		$installer = new Installer;
+		$installer->cleanInstall();
+		$smarty->assign('installer', $installer);
 		$smarty->assign('dbdone', 'y');
 		if ( isset($_REQUEST['profile']) ) process_sql_file('profiles/'.$_REQUEST['profile'], $db_tiki);
 		$_SESSION[$cookie_name] = 'admin';
 	}
 
 	if ( isset($_REQUEST['update']) ) {
-		$is19 = ! has_tiki_db_20($dbTiki);
-		process_sql_file($_REQUEST['file'], $db_tiki);
-
-		if( $_REQUEST['file'] == 'tiki_1.9to2.0.sql' && $is19 ) {
-			$dbTiki->Execute( "INSERT INTO users_grouppermissions (groupName, permName, value) SELECT groupName, 'tiki_p_view_categorized', '' FROM users_grouppermissions WHERE permName = 'tiki_p_view_categories'" );
-			$dbTiki->Execute( "INSERT INTO users_objectpermissions (groupName, permName, objectType, objectId) SELECT groupName, 'tiki_p_view_categorized', objectType, objectId FROM users_objectpermissions WHERE permName = 'tiki_p_view_categories'" );
-		}
+		$installer = new Installer;
+		$installer->update();
+		$smarty->assign('installer', $installer);
 		$smarty->assign('dbdone', 'y');
 	}
 

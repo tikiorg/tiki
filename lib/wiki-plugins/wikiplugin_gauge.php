@@ -113,6 +113,12 @@ function wikiplugin_gauge($data, $params) {
 	if (!isset($perc)) {
 		$perc = false;
 	}
+
+	if (!isset($showvalue)) {
+		$showvalue = true;
+	} else {
+		$showvalue = (bool) $showvalue;
+	}
 	
 	if (!isset($max) or !$max) {
 	   $max = 100;

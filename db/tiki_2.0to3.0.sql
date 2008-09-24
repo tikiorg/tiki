@@ -39,7 +39,6 @@ UPDATE `tiki_menu_options` set `url`='tiki-list_file_gallery.php' where `url`='t
 UPDATE `tiki_menu_options` SET `url`='tiki-admin_include_score.php' where `url`='tiki-admin_score.php';
 
 #2008-08-16 princessxine
-#2008-08-27 bitey [embiggens the feature_type column]
 CREATE TABLE `tiki_feature` (
   `feature_id` mediumint(9) NOT NULL auto_increment,
   `feature_name` varchar(150) NOT NULL,
@@ -60,59 +59,12 @@ CREATE TABLE `tiki_feature` (
 #2008-08-17 lphuberdeau
 UPDATE tiki_menu_options SET section = 'feature_wiki_structure' WHERE optionId = 47;
 
-#2008-08-22 lphuberdeau
-ALTER TABLE tiki_links ADD COLUMN reltype VARCHAR(50);
-CREATE TABLE tiki_semantic_tokens (
-	token VARCHAR(15) PRIMARY KEY,
-	label VARCHAR(25) NOT NULL,
-	invert_token VARCHAR(15)
-) ENGINE=MyISAM ;
+#2008-08-18 lphuberdeau
+CREATE TABLE tiki_schema (
+	patch_name VARCHAR(30) PRIMARY KEY,
+	install_date TIMESTAMP
+) ENGINE=MyISAM;
 
-#2008-08-29 lphuberdeau
-INSERT INTO tiki_semantic_tokens (token, label) VALUES('alias', 'Page Alias');
+# This file is now obsolete. To modify the database, simple add a file to the installer/schema/
+# directory. For more information, see http://dev.tikiwiki.org/DatabaseSchemaUpgrade
 
-#2008-08-29 lphuberdeau
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_plugin_viewdetail', 'Can view unapproved plugin details', 'editors', 'wiki');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_plugin_preview', 'Can execute unapproved plugin', 'editors', 'wiki');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_plugin_approve', 'Can approve plugin execution', 'editors', 'wiki');
-
-#2008-09-01 lphuberdeau
-DELETE FROM users_permissions WHERE permName IN('tiki_p_plugin_viewdetail', 'tiki_p_plugin_preview');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_plugin_viewdetail', 'Can view unapproved plugin details', 'registered', 'wiki');
-INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_plugin_preview', 'Can execute unapproved plugin', 'registered', 'wiki');
-
-#2008-09-02 sylvieg
-ALTER TABLE tiki_tracker_fields ADD COLUMN descriptionIsParsed char(1) default 'n' AFTER editableBy;
-
-#2008-09-05 lphuberdeau
-ALTER TABLE tiki_feature MODIFY COLUMN keyword VARCHAR(30) NULL;
-
-#2008-09-05 bitey
-ALTER TABLE tiki_feature ADD COLUMN `tip` text NULL;
-
-#2008-09-16  MatWho
-ALTER TABLE tiki_user_mail_accounts ADD COLUMN `flagsPublic` char(1) default 'n' AFTER smtpPort;
-ALTER TABLE tiki_user_mail_accounts ADD COLUMN `autoRefresh` int(4) NOT NULL default 0 AFTER flagsPublic;
-ALTER TABLE tiki_webmail_messages ADD COLUMN `flaggedMsg` varchar(50) default '' AFTER isFlagged;
-
-#2008-09-16 lphuberdeau
-CREATE TABLE tiki_webservice (
-	service VARCHAR(25) NOT NULL PRIMARY KEY,
-	url VARCHAR(250),
-	schema_version VARCHAR(5),
-	schema_documentation VARCHAR(250)
-) ENGINE=MyISAM ;
-
-CREATE TABLE tiki_webservice_template (
-	service VARCHAR(25) NOT NULL,
-	template VARCHAR(25) NOT NULL,
-	engine VARCHAR(15) NOT NULL,
-	output VARCHAR(15) NOT NULL,
-	content TEXT NOT NULL,
-	last_modif INT,
-	PRIMARY KEY( service, template )
-) ENGINE=MyISAM ;
-
-#2008-09-22 sylvieg
-UPDATE tiki_calendar_options set optionName='defaulteventstatus' where optionName='customeventstatus';
-ALTER table tiki_calendars ADD COLUMN customstatus enum('n','y') NOT NULL default 'y';

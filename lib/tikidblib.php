@@ -6,7 +6,9 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-$local_php = 'db/local.php';
+if( !isset( $local_php ) ) {
+	$local_php = 'db/local.php';
+}
 if (is_file($local_php)) {
 	require_once($local_php);
 	if( $dbversion_tiki == '1.10' ) {
