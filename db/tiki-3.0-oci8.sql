@@ -658,6 +658,7 @@ CREATE TABLE "tiki_calendars" (
   "custompriorities" varchar(3) default 'n' NOT NULL CHECK ("custompriorities" IN ('n','y')),
   "customparticipants" varchar(3) default 'n' NOT NULL CHECK ("customparticipants" IN ('n','y')),
   "customsubscription" varchar(3) default 'n' NOT NULL CHECK ("customsubscription" IN ('n','y')),
+  "customstatus" varchar(3) default 'y' NOT NULL CHECK ("customstatus" IN ('n','y')),
   "created" number(14) default '0' NOT NULL,
   "lastmodif" number(14) default '0' NOT NULL,
   "personal" enum ('n', 'y') default 'n' NOT NULL,
@@ -3541,6 +3542,8 @@ CREATE TABLE "tiki_user_mail_accounts" (
   "smtp" varchar(255) default NULL,
   "useAuth" char(1) default NULL,
   "smtpPort" number(4) default NULL,
+  "flagsPublic" char(1) default 'n',				-- COMMENT 'MatWho - Shared Group Mail box if y',
+  "autoRefresh" number(4) default 0,		-- COMMENT 'seconds for mail list to refresh, 0 = none' NOT NULL, 
   PRIMARY KEY (accountId)
 ) ENGINE=MyISAM  ;
 
@@ -3812,6 +3815,7 @@ CREATE TABLE "tiki_webmail_messages" (
   "isRead" char(1) default NULL,
   "isReplied" char(1) default NULL,
   "isFlagged" char(1) default NULL,
+  "flaggedMsg" varchar(50) default '',
   PRIMARY KEY (accountId,mailId)
 ) ENGINE=MyISAM;
 
@@ -4559,17 +4563,17 @@ CREATE  INDEX "tiki_quicktags_tagcategory" ON "tiki_quicktags"("tagcategory");
 CREATE  INDEX "tiki_quicktags_taglabel" ON "tiki_quicktags"("taglabel");
 
 -- wiki
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('bold','__text__','pics/icons/text_bold.png','wiki');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('text, bold','__text__','pics/icons/text_bold.png','wiki');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('italic','\'\'text\'\'','pics/icons/text_italic.png','wiki');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('text, italic','\'\'text\'\'','pics/icons/text_italic.png','wiki');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('underline','===text===','pics/icons/text_underline.png','wiki');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('text, underline','===text===','pics/icons/text_underline.png','wiki');
 
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('table new','||r1c1|r1c2\nr2c1|r2c2||','pics/icons/table.png','wiki');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('external link','[http://example.com|text]','pics/icons/world_link.png','wiki');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('link, external','[http://example.com|text]','pics/icons/world_link.png','wiki');
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('wiki link','((text))','pics/icons/page_link.png','wiki');
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('link, wiki','((text))','pics/icons/page_link.png','wiki');
 
 INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('heading1','!text','pics/icons/text_heading_1.png','wiki');
 
@@ -5321,5 +5325,14 @@ CREATE TABLE `tiki_feature` (
   `feature_count` mediumnumber(9) default '0' NOT NULL,
   `feature_path` varchar(20) default '0' NOT NULL,
   PRIMARY KEY (`feature_id`)
-) ENGINE=MyISAM ;;
+) ENGINE=MyISAM ;
+
+
+CREATE TABLE "tiki_schema" (
+  "patch_name" VARCHAR(100) PRIMARY KEY,
+  "install_date" TIMESTAMP
+) ENGINE=MyISAM;
+
+
+;
 

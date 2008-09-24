@@ -475,6 +475,7 @@ CREATE TABLE tiki_calendars (
   custompriorities enum('n','y') NOT NULL default 'n',
   customparticipants enum('n','y') NOT NULL default 'n',
   customsubscription enum('n','y') NOT NULL default 'n',
+  customstatus enum('n','y') NOT NULL default 'y',
   created int(14) NOT NULL default '0',
   lastmodif int(14) NOT NULL default '0',
   personal enum ('n', 'y') NOT NULL default 'n',
@@ -2447,6 +2448,8 @@ CREATE TABLE tiki_user_mail_accounts (
   smtp varchar(255) default NULL,
   useAuth char(1) default NULL,
   smtpPort int(4) default NULL,
+  flagsPublic char(1) default 'n',				-- COMMENT 'MatWho - Shared Group Mail box if y',
+  autoRefresh int(4) NOT NULL default 0,		-- COMMENT 'seconds for mail list to refresh, 0 = none', 
   PRIMARY KEY (accountId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
@@ -2642,6 +2645,7 @@ CREATE TABLE tiki_webmail_messages (
   isRead char(1) default NULL,
   isReplied char(1) default NULL,
   isFlagged char(1) default NULL,
+  flaggedMsg varchar(50) default '',
   PRIMARY KEY (accountId,mailId)
 ) ENGINE=MyISAM;
 
@@ -3101,7 +3105,7 @@ INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('heading1','!text','pics/icons/text_heading_1.png','wiki');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('heading2','!!text','pics/icons/text_heading_2.png','wiki');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('heading3','!!!text','pics/icons/text_heading_3.png','wiki');
-INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('heading, title bar','-=text=-','pics/icons/text_padding_top.png','wiki');
+INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('title bar','-=text=-','pics/icons/text_padding_top.png','wiki');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('box','^text^','pics/icons/box.png','wiki');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('dynamic content','{content id= }','pics/icons/database_refresh.png','wiki');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('hr','---','pics/icons/page.png','wiki');
@@ -3555,3 +3559,9 @@ CREATE TABLE `tiki_feature` (
   `feature_path` varchar(20) NOT NULL default '0',
   PRIMARY KEY (`feature_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1;
+
+CREATE TABLE tiki_schema (
+	patch_name VARCHAR(100) PRIMARY KEY,
+	install_date TIMESTAMP
+) ENGINE=MyISAM;
+
