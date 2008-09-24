@@ -1268,7 +1268,8 @@ ul.floatleft li {
 .editdate ul.floatleft {margin-top: 8px}
  
 span.button2,
-.navbar .linkbut {
+.navbar .linkbut,
+.navbar a {
 	margin: 2px;
 	padding: 0 4px;
 	background:#4E4E4E url(darkroom/button.png) top left repeat-x;
