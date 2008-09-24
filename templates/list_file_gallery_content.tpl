@@ -1,6 +1,6 @@
 <table class="normal">
   <tr>
-  {if $gal_info.show_checked ne 'n' and $tiki_p_admin_file_galleries eq 'y'}
+  {if $gal_info.show_checked ne 'n' and ($tiki_p_admin_file_galleries eq 'y' or $tiki_p_upload_files eq 'y')}
     {assign var=nbCols value=`$nbCols+1`}
     <td class="heading" style="width:1%">&nbsp;</td>
   {/if}
@@ -157,7 +157,7 @@
 
   <tr>
       
-  {if $gal_info.show_checked neq 'n' and $tiki_p_admin_file_galleries eq 'y'}
+  {if $gal_info.show_checked neq 'n' and ($tiki_p_admin_file_galleries eq 'y' or $tiki_p_upload_files eq 'y')}
     <td style="text-align:center;" class="{cycle advance=false}">
       {if $files[changes].isgal eq 1}
         {assign var='checkname' value='subgal'}

@@ -105,14 +105,13 @@ if ( $tiki_p_admin_file_galleries == 'y' ) {
 	if ( isset($_REQUEST['delsel_x']) ) {
 		check_ticket('fgal');
 		foreach ( array_values($_REQUEST['file']) as $file ) {
-			if ( $_REQUEST['file'] > 0 ) {
-				$info = $filegallib->get_file_info($file);
+			if ($info = $filegallib->get_file_info($file)) {
 				$smarty->assign('fileId', $file);
 				$smarty->assign_by_ref('filename', $info['filename']);
 				$smarty->assign_by_ref('fname', $info['name']);
 				$smarty->assign_by_ref('fdescription', $info['description']);
+				$filegallib->remove_file($info, $user, $gal_info);
 			}
-			$filegallib->remove_file($info, $user, $gal_info);
 		}
 		foreach ( array_values($_REQUEST['subgal']) as $subgal ) {
 			$filegallib->remove_file_gallery($subgal, $galleryId);
@@ -129,6 +128,18 @@ if ( $tiki_p_admin_file_galleries == 'y' ) {
 			$filegallib->move_file_gallery($subgal, $_REQUEST['moveto']);
 		}
 	}
+}
+if (isset($_REQUEST['zipsel_x']) && $tiki_p_upload_files == 'y') {
+	check_ticket('fgal');
+	$href = array();
+	foreach (array_values($_REQUEST['file']) as $file) {
+		$href[] = "fileId[]=$file";
+	}
+	foreach ( array_values($_REQUEST['subgal']) as $subgal ) {
+		$href[] = "galId[]=$subgal";
+	}
+	header("Location: tiki-download_file.php?".implode('&', $href));
+	die;
 }
 
 // Lock a file

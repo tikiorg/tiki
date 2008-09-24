@@ -64,23 +64,28 @@
           {include file='list_file_gallery_content.tpl'}
         {/if}
       
-        {if $files and $gal_info.show_checked ne 'n' and $tiki_p_admin_file_galleries eq 'y'}
+        {if $files and $gal_info.show_checked ne 'n' and ($tiki_p_admin_file_galleries eq 'y' or $tiki_p_upload_files eq 'y')}
         <div>
           <div style="float:left">
           {tr}Perform action with checked:{/tr} 
           {if !isset($file_info)}
             {if $offset}<input type="hidden" name="offset" value="{$offset}" />{/if}
-            {icon _id='arrow_right' _tag='input_image' name='movesel' alt='{tr}Move{/tr}' title='{tr}Move Selected Files{/tr}' style='vertical-align: middle;'}
+            {if $tiki_p_admin_file_galleries eq 'y'}
+              {icon _id='arrow_right' _tag='input_image' name='movesel' alt='{tr}Move{/tr}' title='{tr}Move Selected Files{/tr}' style='vertical-align: middle;'}
+            {/if}
           {/if}
-          {icon _id='cross' _tag='input_image' _confirm='{tr}Are you sure you want to delete the selected files?{/tr}' name='delsel' alt='{tr}Delete{/tr}' style='vertical-align: middle;'}
+          {if $tiki_p_admin_file_galleries eq 'y'}
+            {icon _id='cross' _tag='input_image' _confirm='{tr}Are you sure you want to delete the selected files?{/tr}' name='delsel' alt='{tr}Delete{/tr}' style='vertical-align: middle;'}
+          {/if}
+          {icon _id='pics/icons/mime/zip.png' _tag='input_image' name='zipsel' alt='{tr}Download the zip{/tr}' style='vertical-align: middle;'}
           </div>
           {if $smarty.request.movesel_x and !isset($file_info)} 
           <div>
             {tr}Move to{/tr}:
             <select name="moveto">
               {section name=ix loop=$all_galleries}
-                {if $all_galleries[ix].galleryId ne $gal_info.galleryId}
-                  <option value="{$all_galleries[ix].id|escape}">{$all_galleries[ix].name}</option>
+                {if $all_galleries[ix].id ne $gal_info.galleryId}
+                  <option value="{$all_galleries[ix].id|escape}">{if $all_galleries[ix].parentName}{$all_galleries[ix].parentName|escape} > {/if}{$all_galleries[ix].name|escape}</option>
                 {/if}
               {/section}
             </select>

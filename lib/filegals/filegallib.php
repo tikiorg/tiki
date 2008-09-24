@@ -666,6 +666,61 @@ class FileGalLib extends TikiLib {
 		else
 			$tikilib->set_preference( $pref, $limit );
 	}
+	// not the best optimisation as using a library using files and not content
+	function zip($fileIds, &$error, $zipName='') {
+		global $tiki_p_admin_file_galleries, $userlib, $tikilib, $prefs, $user;
+		$list = array();
+		$temp = 'temp/'.md5($tikilib->now).'/';
+		if (!mkdir($temp)) {
+			$error = "Can not create directory $temp";
+			return false;
+		}
+		foreach ($fileIds as $fileId) {
+			$info = $tikilib->get_file($fileId);
+			if ($tiki_p_admin_file_galleries == 'y' || $userlib->user_has_perm_on_object($user, $info['galleryId'], 'file gallery', 'tiki_p_download_files')) {
+				if (empty($zipName)) {
+					$zipName = $info['galleryId'];
+				}
+				$tmp = $temp.$info['filename'];
+				if ($info['path']) { // duplicate file in temp
+					if (!copy($prefs['fgal_use_dir'].$info['path'], $tmp)) {
+						$error = "Can not copy to $tmp";
+						return false;
+					}
+				} else {//write file in temp
+					if (file_put_contents($tmp, $info['data']) === false) {
+						$error = "Can not write to $tmp";
+						return false;
+					}
+				}
+				$list[] = $tmp;
+			}
+		}
+		if (empty($list)) {
+			$error = "No permission";
+			return null;
+		}
+		$info['filename'] = "$zipName.zip";
+		$zip = $temp.$info['filename'];
+		include_once ('lib/pclzip.lib.php');
+		if (!$archive = new PclZip($zip)) {
+			$error = "Can not open $zip";
+			return false;
+		}
+		if (!($v_list = $archive->create(implode(',', $list), PCLZIP_OPT_REMOVE_PATH, $temp))) {
+			$error = "Can not write $zip";
+			return false;
+		}
+		$info['data'] = file_get_contents($zip);
+		$info['path'] = '';
+		$info['filetype'] = 'application/x-zip-compressed';
+		foreach ($list as $tmp) {
+			unlink($tmp);
+		}
+		unlink($zip);
+		rmdir($temp);
+		return $info;
+	}
 }
 global $dbTiki;
 $filegallib = new FileGalLib($dbTiki);
