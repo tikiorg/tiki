@@ -30,6 +30,17 @@ if ($tiki_p_use_webmail != 'y') {
 	die;
 }
 
+$js = <<< END
+function submit_form(msgname,flg)
+{
+  document.mailb.elements.quickFlag.value= flg;
+  document.mailb.elements.quickFlagMsg.value= msgname;
+  document.mailb.submit();
+}
+END;
+
+$headerlib->add_js($js,0);
+
 //require_once ("lib/webmail/pop3.php");
 require_once ("lib/webmail/net_pop3.php");
 //require_once ("lib/webmail/mimeDecode.php");
@@ -298,6 +309,23 @@ if ($_REQUEST["locSection"] == 'mailbox') {
 		die;
 	}
 */
+
+	// The user just clicked on one of the flags, so set up for flag change
+	if (isset($_REQUEST["quickFlagMsg"])){
+		$realmsg = $_REQUEST["quickFlagMsg"];
+		switch ($_REQUEST["quickFlag"]) {
+		case "y":
+			$webmaillib->set_mail_flag($current["accountId"], $user, $realmsg, 'isFlagged', 'y');
+
+			break;
+
+		case "n":
+			$webmaillib->set_mail_flag($current["accountId"], $user, $realmsg, 'isFlagged', 'n');
+
+			break;
+		}
+	}
+
 	if (isset($_REQUEST["delete"])) {
 		if (isset($_REQUEST["msg"])) {
 			check_ticket('webmail');
@@ -429,8 +457,6 @@ if ($_REQUEST["locSection"] == 'mailbox') {
 			$l = $pop3->_cmdList($i);
 			$aux["size"] = $l["size"];
 			$aux["realmsgid"] = ereg_replace("[<>]","",$aux["Message-ID"]);
-//			var_dump($aux);
-
 			$webmaillib->replace_webmail_message($current["accountId"], $user, $aux["realmsgid"]);
 			list($aux["isRead"], $aux["isFlagged"], $aux["isReplied"]) = $webmaillib->get_mail_flags($current["accountId"], $user, $aux["realmsgid"]);
 
@@ -448,8 +474,6 @@ if ($_REQUEST["locSection"] == 'mailbox') {
 
 			$aux["subject"] = htmlspecialchars($aux["subject"]);
 		}
-//print("adding $i [".$aux["realmsgid"]."] <- [".$aux["Message-ID"]."]<BR>");
-
 		$aux["msgid"] = $i;
 		$list[] = $aux;
 	}
@@ -497,8 +521,6 @@ if ($_REQUEST["locSection"] == 'mailbox') {
 	}
 
 	$pop3->disconnect();
-//var_dump($list);
-
 	$smarty->assign('list', $list);
 }
 
@@ -636,7 +658,6 @@ if ($_REQUEST["locSection"] == 'compose') {
 			$smarty->assign('notcon', 'n');
 		}
 
-		//print_r($not_contacts);
 		$smarty->assign('not_contacts', $not_contacts);
 
 		if ($mail->send($to_array,'smtp')) {

@@ -68,3 +68,7 @@ if ( $prefs['language'] == 'ar' || $prefs['language'] == 'he' || $prefs['languag
 	$prefs['feature_bidi'] = 'n';
 }
 
+if (empty($prefs['language'])) {
+	$prefs['language'] = $prefs['site_language'];
+}
+

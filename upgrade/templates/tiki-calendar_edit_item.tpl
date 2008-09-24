@@ -44,7 +44,7 @@
 	<td>{tr}Calendar{/tr}</td>
 	<td>{$listcals.$calendarId.name|escape}
 	<input type="hidden" name="save[calendarId]" value="{$calendarId}" />
-	{if !$id}&nbsp;{tr}or{/tr}&nbsp;
+	{if !$id}<br />{tr}or{/tr}&nbsp;
 		<input type="submit" name="act" value="{tr}Go to{/tr}" onclick="document.location='{$myurl}?calendarId='+document.getElementById('calid').value;return false;" />
 		<select name="save[calendarId]" id="calid">
 			{foreach item=it key=itid from=$listcals}
@@ -217,11 +217,12 @@
 {/if}
 </td></tr>
 
+{if $calendar.customstatus ne 'n'}
 <tr class="formcolor"><td>{tr}Status{/tr}</td><td>
 
 <div class="statusbox{if $calitem.status eq 0} status0{/if}">
 {if $edit}
-<input id="status0" type="radio" name="save[status]" value="0"{if $calitem.status eq 0} checked="checked"{/if} />
+<input id="status0" type="radio" name="save[status]" value="0"{if (!empty($calitem) and $calitem.status eq 0) or (empty($calitem) and $calendar.defaulteventstatus eq 0)} checked="checked"{/if} />
 <label for="status0">{tr}Tentative{/tr}</label>
 {else}
 {tr}Tentative{/tr}
@@ -244,6 +245,7 @@
 {/if}
 </div>
 </td></tr>
+{/if}
 
 {if $calendar.custompriorities eq 'y'}
 <tr class="formcolor"><td>

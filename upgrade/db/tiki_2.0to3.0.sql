@@ -67,3 +67,4 @@ CREATE TABLE tiki_schema (
 
 # This file is now obsolete. To modify the database, simple add a file to the installer/schema/
 # directory. For more information, see http://dev.tikiwiki.org/DatabaseSchemaUpgrade
+

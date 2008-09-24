@@ -12,22 +12,25 @@ div#adminBar a {
 }
 
 div#adminBar ul.topLevelAdmin li {
-	-moz-border-radius-topright: 15px;
-	-webkit-border-top-right-radius: 15px;
-	-moz-border-radius-topleft: 15px;
-	-webkit-border-top-left-radius: 15px;
+/*	22/09/08 MatWho Quick hack, changed this to make it neat in Safari */
+	-moz-border-radius-topright: 5px;
+	-webkit-border-top-right-radius: 5px;
+	-moz-border-radius-topleft: 5px;
+	-webkit-border-top-left-radius: 5px;
 }
 
 ul.topLevelAdmin {
 	margin:0px;
-	padding:3px 5px 3px 5px;
+/*	22/09/08 MatWho Quick hack, changed this to make it neat in Safari, the 1px padding makes it work ok in IE */
+	padding:1px 5px 0px 5px;
 	border-bottom:1px solid rgb(60,118,214);
 }
 
 ul.topLevelAdmin li {
 	display: inline;
 	list-style-type: none;
-	padding:3px 8px 3px 8px;
+/*	22/09/08 MatWho Quick hack, changed this to make it neat in Safari */
+	padding:0px 8px 0px 8px;
 }
 
 ul.topLevelAdmin li.current {
@@ -44,7 +47,9 @@ ul.secondLevelAdmin {
 	margin:0px;
 	padding:5px;
 	background: url("../img/gradient4.png");
-	background-position-y: 20px;
+/* 22/09/08 MatWho Quick hack, commented this out to make 2nd bar legible in Safari
+	background-position-y: 20px; */
+
 /*	background-color: #B5DAE6; */
 }
 

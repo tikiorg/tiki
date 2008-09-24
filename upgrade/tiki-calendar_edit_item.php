@@ -246,13 +246,14 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
 	} else {
 		$now = $tikilib->now;
 	}
+	$calendar = $calendarlib->get_calendar($_REQUEST['calendarId']);
 	$calitem = array(
 		'calitemId'=>0,
 		'user'=>$user,
 		'name'=>'',
 		'url'=>'',
 		'description'=>'',
-		'status'=>0,
+		'status'=>$calendar['defaulteventstatus'],
 		'priority'=>0,
 		'locationId'=>0,
 		'categoryId'=>0,
@@ -262,7 +263,6 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
 		'duration'=>(60*60) 
 		);
 	$id = 0;
-	$calendar = $calendarlib->get_calendar($_REQUEST['calendarId']);
 	$smarty->assign('edit',true);
 	$hour_minmax = floor(($calendar['startday']-1)/(60*60)).'-'. ceil(($calendar['endday'])/(60*60));
 } else {
@@ -272,8 +272,8 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
   die;
 }
 
-if (!empty($calendar['customeventstatus'])) {
-    $calitem['status'] = $calendar['customeventstatus'];
+if (!empty($calendar['eventstatus'])) {
+    $calitem['status'] = $calendar['eventstatus'];
 }
 
 if ($calendar['customlocations'] == 'y') {

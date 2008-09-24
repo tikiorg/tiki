@@ -192,11 +192,11 @@ if (isset($_REQUEST["upload"])) {
 					$filegallib->process_batch_file_upload($_REQUEST["galleryId"][$key], $_FILES["userfile"]['tmp_name'][$key], $user, $_REQUEST["description"][$key]);
 					$batch_job = true;
 					$batch_job_galleryId = $_REQUEST["galleryId"][$key];
-					print_msg(tra('Batch file processed')." $name <br/>",$formId);
+					print_msg(tra('Batch file processed')." $name",$formId);
 					continue;
 				} else {
 					$errors[] = tra('No permission to upload zipped file packages');
-					print_msg(tra('No permission to upload zipped file packages')."<br/>",$formId);
+					print_msg(tra('No permission to upload zipped file packages'),$formId);
 					continue;
 				}
 			}

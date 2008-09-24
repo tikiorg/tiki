@@ -58,6 +58,7 @@
 	<a title="{tr}Edit{/tr}" class="link" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;calendarId={$id}">{icon _id='page_edit'}</a>
 	<a title="{tr}View Calendar{/tr}" class="link" href="tiki-calendar.php?calIds[]={$id}">{icon _id=magnifier.png alt="{tr}View{/tr}"}</a>
 	<a title="{tr}Delete{/tr}" class="link" href="tiki-admin_calendars.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;drop={$id}" title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
+	<a title="{tr}Add Event{/tr}" class="link" href="tiki-calendar_edit_item.php?calendarId={$id}">{icon _id='add' alt="{tr}Add Event{/tr}"}</a>
 </td>
 </tr>
 {/foreach}
@@ -162,8 +163,15 @@
 <tr class="formcolor"><td>{tr}Custom background color{/tr}:</td><td>
 <input type="text" name="options[custombgcolor]" value="{$custombgcolor}" size="6" />
 </td></tr>
-<tr class="formcolor"><td>{tr}Default event status{/tr}:</td><td>
-{html_options name='options[customeventstatus]' options=$eventstatus selected=$customeventstatus}
+<tr class="formcolor"><td>{tr}Status{/tr}</td><td>
+<select name="customstatus">
+<option value='y' {if $info.customstatus ne 'n'}selected="selected"{/if}>{tr}Yes{/tr}</option>
+<option value='n' {if $info.customstatus eq 'n'}selected="selected"{/if}>{tr}No{/tr}</option>
+</select><br />
+{tr}Default event status{/tr}:
+{html_options name='options[defaulteventstatus]' options=$eventstatus selected=$defaulteventstatus}<br />
+{tr}Show in popup box{/tr}<input type="checkbox" name="show[status]" value="on"{if $info.show_status eq 'y'} checked="checked"{/if} />
+{tr}Show in calendar view{/tr}<input type="checkbox" name="show[status_calview]" value="on"{if $info.show_status_calview ne 'n'} checked="checked"{/if} />
 </td></tr>
 <tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>

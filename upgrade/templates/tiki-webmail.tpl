@@ -137,7 +137,9 @@ setTimeout("location.reload(true);",{$autoRefresh}*1000);
 </td>
 </tr>
 </table><br />
-<form action="tiki-webmail.php" method="post">
+<form action="tiki-webmail.php" method="post" name="mailb">
+<input type="hidden" name="quickFlag" value="" />
+<input type="hidden" name="quickFlagMsg" value="" />
 <input type="hidden" name="locSection" value="mailbox" />
 <input type="submit" name="delete" value="{tr}Delete{/tr}" />
 <input type="hidden" name="start" value="{$start|escape}" />
@@ -171,10 +173,14 @@ setTimeout("location.reload(true);",{$autoRefresh}*1000);
 </td>
 <td style="background:{$class};">
 {if $list[ix].isFlagged eq 'y'}
-<img src="img/webmail/flagged.gif" alt='{tr}Flagged{/tr}'/>
+<A href="javascript: submit_form('{$list[ix].realmsgid|escape}','n')"><img src="img/webmail/flagged.gif" border="0" alt='{tr}Flagged{/tr}'></A>
+{else}
+{if $prefs.webmail_quick_flags eq 'y'}
+<A href="javascript: submit_form('{$list[ix].realmsgid|escape}','y')"><img src="img/webmail/unflagged.gif" border="0" alt='{tr}unFlagged{/tr}'></A>
+{/if}
 {/if}
 {if $list[ix].isReplied eq 'y'}
-<img src="img/webmail/replied.gif" alt='{tr}Replied{/tr}'/>
+<img src="img/webmail/replied.gif" border="0" alt='{tr}Replied{/tr}'/>
 {/if}
 </td>
 <td style="background:{$class};">{$list[ix].sender.name}</td>

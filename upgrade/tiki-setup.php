@@ -70,7 +70,6 @@ $tiki_timer = new timer();
 $tiki_timer->start();
 
 require_once('tiki-setup_base.php');
-require_once('lib/setup/compatibility.php');
 require_once('lib/setup/prefs.php');
 // TikiTests are PHP5 only
 if ($prefs['feature_tikitests'] == 'y' and version_compare(PHP_VERSION, '5.0.0', '>='))  {

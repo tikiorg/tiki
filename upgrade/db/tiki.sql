@@ -475,6 +475,7 @@ CREATE TABLE tiki_calendars (
   custompriorities enum('n','y') NOT NULL default 'n',
   customparticipants enum('n','y') NOT NULL default 'n',
   customsubscription enum('n','y') NOT NULL default 'n',
+  customstatus enum('n','y') NOT NULL default 'y',
   created int(14) NOT NULL default '0',
   lastmodif int(14) NOT NULL default '0',
   personal enum ('n', 'y') NOT NULL default 'n',
@@ -2644,6 +2645,7 @@ CREATE TABLE tiki_webmail_messages (
   isRead char(1) default NULL,
   isReplied char(1) default NULL,
   isFlagged char(1) default NULL,
+  flaggedMsg varchar(50) default '',
   PRIMARY KEY (accountId,mailId)
 ) ENGINE=MyISAM;
 

@@ -45,7 +45,6 @@ if ( isset($_REQUEST['fileId']) ) {
 	$info = $tikilib->get_file($_REQUEST['fileId']);
 } elseif ( isset($_REQUEST['galleryId']) && isset($_REQUEST['name']) ) {
 	$info = $tikilib->get_file_by_name($_REQUEST['galleryId'], $_REQUEST['name']);
-	$_REQUEST['fileId'] = $info['fileId'];
 } else {
 	$smarty->assign('msg', tra('Incorrect param'));
 	$smarty->display('error.tpl');
@@ -57,53 +56,37 @@ if ( ! is_array($info) ) {
 	die;
 }
 
-$_REQUEST['galleryId'] = $info['galleryId'];
-
-$smarty->assign('individual', 'n');
-if ( $userlib->object_has_one_permission($_REQUEST['galleryId'], 'file gallery') ) {
-	$smarty->assign('individual', 'y');
-	if ( $tiki_p_admin != 'y' ) {
-		// Now get all the permissions that are set for this type of permissions 'file gallery'
-		$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'file galleries');
-		foreach ( $perms['data'] as $perm ) {
-			$permName = $perm['permName'];
-			if ( $userlib->object_has_permission($user, $_REQUEST['galleryId'], 'file gallery', $permName) ) {
-				$$permName = 'y';
-				$smarty->assign("$permName", 'y');
-			} else {
-				$$permName = 'n';
-				$smarty->assign("$permName", 'n');
-			}
-		}
-	}
-}
-
-if ( $tiki_p_admin_file_galleries == 'y' ) {
-	$tiki_p_download_files = 'y';
-}
-
-if ( $tiki_p_download_files != 'y' ) {
+if ( $tiki_p_admin_file_galleries != 'y' && !$user->user_has_perm_on_object($user, $info['galleryId'], 'file gallery', 'tiki_p_download_files')) {
+	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra('You can not download files'));
 	$smarty->display('error.tpl');
 	die;
 }
 
-// Add hits ( if download or display only )
+// Add hits ( if download or display only ) + lock if set
 if ( ! isset($_GET['thumbnail']) && ! isset($_GET['icon']) ) {
 
 	require_once('lib/stats/statslib.php');
-	if( ! $tikilib->add_file_hit($_REQUEST['fileId']) )
-	{
+	if( ! $tikilib->add_file_hit($info['fileId']) )	{
 		$smarty->assign('msg', tra('You cannot download this file right now. Your score is low or file limit was reached.'));
 		$smarty->display('error.tpl');
 		die;
 	}
-
-	$statslib->stats_hit($info['filename'], 'file', $_REQUEST['fileId']);
+	$statslib->stats_hit($info['filename'], 'file', $info['fileId']);
 
 	if ( $prefs['feature_actionlog'] == 'y' ) {
 		require_once('lib/logs/logslib.php');
-		$logslib->add_action('Downloaded', $_REQUEST['galleryId'], 'file gallery', 'fileId='.$_REQUEST["fileId"]);
+		$logslib->add_action('Downloaded', $info['galleryId'], 'file gallery', 'fileId='.$info['fileId']);
+	}
+
+	if ( ! empty($_REQUEST['lock']) ) {
+		if (!empty($info['lockedby']) && $info['lockedby'] != $user) {
+			$smarty->assign('msg', tra(sprintf('The file is locked by %s', $info['lockedby'])));
+			$smarty->assign('close_window', 'y');
+			$smarty->display('error.tpl');
+			die;
+		}
+		$filegallib->lock_file($info['fileId'], $user);
 	}
 }
 
@@ -190,16 +173,6 @@ if ( isset($_GET['thumbnail']) || isset($_GET['display']) || isset($_GET['icon']
 	}
 }
 
-// Lock while downloading
-if ( ! empty($_REQUEST['lock']) ) {
-	if (!empty($info['lockedby']) && $info['lockedby'] != $user) {
-		$smarty->assign('msg', tra(sprintf('The file is locked by %s', $info['lockedby'])));
-		$smarty->assign('close_window', 'y');
-		$smarty->display('error.tpl');
-		die;
-	}
-	$filegallib->lock_file($_REQUEST['fileId'], $user);
-}
 
 // IE6 can not download file with / in the name (the / can be there from a previous bug)
 $file = preg_replace('/.*([^\/]*)$/U', '$1', $info['filename']);

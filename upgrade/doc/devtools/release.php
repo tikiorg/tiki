@@ -5,7 +5,7 @@ define( 'ROOT', realpath( TOOLS . '/../..' ) );
 
 require_once TOOLS . '/svntools.php';
 
-if( $_SERVER['argc'] <= 2 )
+if( $_SERVER['argc'] <= 1 )
 	die( "Usage: php doc/devtools/release.php <version-number> [ <subrelease> ]
 Examples:
 	php doc/devtoos/release.php 2.0 preRC3
@@ -39,9 +39,11 @@ if( $isPre )
 else
 	$pre = '';
 
+$mainversion = $version{0} . '.0';
+
 if( empty( $subrelease ) )
 {
-	$branch = "branches/$version";
+	$branch = "branches/$mainversion";
 	$tag = "tags/$version";
 	$packageVersion = $version;
 	if( ! empty( $pre ) )
@@ -51,7 +53,7 @@ if( empty( $subrelease ) )
 }
 else
 {
-	$branch = "branches/$version";
+	$branch = "branches/$mainversion";
 	$tag = "tags/$version$subrelease";
 	$packageVersion = "$version.$pre$subrelease";
 	$secdbVersion = "$version$subrelease";
