@@ -143,6 +143,7 @@ function batchImportUsers() {
 		$smarty->assign_by_ref('errors', $errors);
 	}
 }
+$auto_query_args = array('offset', 'numrows', 'find', 'filterEmail', 'sort_mode', 'initial', 'filterGroup');
 $cookietab = "1";
 
 if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name'])) {
