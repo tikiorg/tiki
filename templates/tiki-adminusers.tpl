@@ -91,7 +91,7 @@
 </div>
 </form>
 
-{if $cant_pages > 1 or !empty($initial)}
+{if $cant > $numrows or !empty($initial)}
 <div align="center">
 {section name=ini loop=$initials}
 {if $initial and $initials[ini] eq $initial}
@@ -119,9 +119,11 @@ class="prevnext">{tr}All{/tr}</a>
   //-->                     
   </script>{/if}
 </td>
-<td class="heading"><a class="tableheading" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={if $sort_mode eq 'login_desc'}login_asc{else}login_desc{/if}">{tr}User{/tr}</a></td>
-{if $prefs.login_is_email neq 'y'}<td class="heading"><a class="tableheading" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={if $sort_mode eq 'email_desc'}email_asc{else}email_desc{/if}">{tr}Email{/tr}</a></td>{/if}
-<td class="heading"><a class="tableheading" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={if $sort_mode eq 'currentLogin_desc'}currentLogin_asc{else}currentLogin_desc{/if}">{tr}Last login{/tr}</a></td>
+<td class="heading">{self_link _class="tableheading" _sort_arg='sort_mode' _sort_field='login'}{tr}User{/tr}{/self_link}</td>
+{if $prefs.login_is_email neq 'y'}
+	<td class="heading">{self_link _class="tableheading" _sort_arg='sort_mode' _sort_field='email}{tr}Email{/tr}{/self_link}</td>
+{/if}
+<td class="heading">{self_link _class="tableheading" _sort_arg='sort_mode' _sort_field='currentLogin'}{tr}Last login{/tr}{/self_link}</td>
 <td class="heading" colspan="2">{tr}Groups{/tr}</td>
 <td class="heading">{tr}Action{/tr}</td>
 </tr>
@@ -142,8 +144,13 @@ class="prevnext">{tr}All{/tr}</a>
 <td>
 {foreach from=$users[user].groups key=grs item=what}
 {if $grs != "Anonymous"}
-{if $what eq 'included'}<i>{/if}<a class="link" href="tiki-admingroups.php?group={$grs|escape:"url"}" title={if $what eq 'included'}"{tr}Edit Included Group{/tr}"{else}"{tr}Edit Group{/tr}: {$grs}"{/if}>{$grs}</a>{if $what eq 'included'}</i>{/if}
-{if $what ne 'included' and $grs != "Registered"}<a class="link" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;user={$users[user].user}&amp;action=removegroup&amp;group={$grs|escape:"url"}" title="{tr}Remove{/tr} {tr}from{/tr} {$grs}">{icon _id=delete alt="{tr}Remove{/tr}" style="vertical-align:middle"}</a>{/if}
+{if $what eq 'included'}<i>{/if}
+<a class="link" href="tiki-admingroups.php?group={$grs|escape:"url"}" title={if $what eq 'included'}"{tr}Edit Included Group{/tr}"{else}"{tr}Edit Group{/tr}: {$grs}"{/if}>{$grs}</a>
+{if $what eq 'included'}</i>{/if}
+
+{if $what ne 'included' and $grs != "Registered"}
+	{self_link _class='link' action='removegroup' group=$grs _icon='delete' _title="{tr}Remove{/tr} {tr}from{/tr} $grs"}{/self_link}
+{/if}
 {if $grs eq $users[user].default_group} {tr}default{/tr}{/if}<br />
 {/if}
 {/foreach}
@@ -151,15 +158,15 @@ class="prevnext">{tr}All{/tr}</a>
 
 <td>
   {if $prefs.feature_userPreferences eq 'y' || $user eq 'admin'}
+    {self_link _class="link" user=`$users[user].userId` _icon="page_edit" _title="{tr}Edit Account Settings{/tr}: `$users[user].user`"}dfdfgfd{/self_link}
+
     <a class="link" href="tiki-user_preferences.php?userId={$users[user].userId}" title="{tr}Change user preferences{/tr}: {$users[user].user}">{icon _id='wrench' alt="{tr}Change user preferences{/tr}: `$users[user].user`"}</a>
   {/if}
-
-  <a class="link" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;user={$users[user].userId}{if feature_tabs ne 'y'}#2{/if}" title="{tr}Edit Account Settings{/tr}: {$users[user].user}">{icon _id='page_edit' alt="{tr}Edit Account Settings{/tr}: `$users[user].user`"}</a>
 
   <a class="link" href="tiki-user_information.php?userId={$users[user].userId}" title="{tr}User Information{/tr}: {$users[user].user}">{icon _id='help' alt="{tr}User Information{/tr}: `$users[user].user`"}</a>
 
   {if $users[user].user ne 'admin'}
-    <a class="link" href="tiki-adminusers.php?offset={$offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}&amp;action=delete&amp;user={$users[user].user|escape:url}" title="{tr}Delete{/tr}: {$users[user].user}">{icon _id='cross' alt="{tr}Delete{/tr}: `$users[user].user`"}</a>
+    {self_link _class="link" action="delete" user=`$users[user].user` _icon="cross" _alt="Delete" _title="{tr}Delete{/tr}: {$users[user].user}"}ddd{/self_link}
   	{if $users[user].valid && $users[user].waiting eq 'a'}
 		<a class="link" href="tiki-login_validate.php?user={$users[user].user|escape:url}&amp;pass={$users[user].valid|escape:url}" title="{tr}Validate user{/tr}: {$users[user].user}">{icon _id='accept' alt="{tr}Validate user{/tr}: `$users[user].user`"}</a>
 	{/if}
@@ -213,28 +220,8 @@ class="prevnext">{tr}All{/tr}</a>
 <input type="hidden" name="offset" value="{$offset|escape}" />
 </form>
 
-{if $cant_pages > 1}
-<br />
-<div class="mini">
-{if $prev_offset >= 0}
-[<a class="prevnext" href="tiki-adminusers.php?{if $find}find={$find|escape:"url"}&amp;{/if}{if $initial}initial={$initial}&amp;{/if}offset={$prev_offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}">{tr}Prev{/tr}</a>]&nbsp;
-{/if}
-{tr}Page{/tr}: {$actual_page}/{$cant_pages}
-{if $next_offset >= 0}
-&nbsp;[<a class="prevnext" href="tiki-adminusers.php?{if $find}find={$find|escape:"url"}&amp;{/if}{if $initial}initial={$initial}&amp;{/if}offset={$next_offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}">{tr}Next{/tr}</a>]
-{/if}
-{if $prefs.direct_pagination eq 'y'}
-<br />
-{section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$maxRecords}
+{pagination_links cant=$cant step=$numrows offset=$offset}{/pagination_links}
 
-<a class="prevnext" href="tiki-adminusers.php?find={$find|escape:"url"}&amp;{if $initial}initial={$initial}&amp;{/if}offset={$selector_offset}&amp;numrows={$numrows}&amp;sort_mode={$sort_mode}">
-{$smarty.section.foo.index_next}</a>&nbsp;
-{/section}
-{/if}
-
-</div>
-{/if}
 </div>
 
 {* ---------------------- tab with form -------------------- *}

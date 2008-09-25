@@ -368,20 +368,7 @@ if (!empty($group_management_mode) || !empty($set_default_groups_mode)) {
 }
 
 $smarty->assign_by_ref('users', $users["data"]);
-$cant_pages = ceil($users["cant"] / $numrows);
-$smarty->assign_by_ref('cant_pages', $cant_pages);
-$smarty->assign('actual_page', 1 + ($offset / $numrows));
-
-if ($users["cant"] > ($offset + $numrows)) {
-	$smarty->assign('next_offset', $offset + $numrows);
-} else {
-	$smarty->assign('next_offset', -1);
-}
-if ($offset > 0) {
-	$smarty->assign('prev_offset', $offset - $numrows);
-} else {
-	$smarty->assign('prev_offset', -1);
-}
+$smarty->assign_by_ref('cant', $users['cant']);
 
 list($username,$usermail,$usersTrackerId,$chlogin) = array('','','',false);
 if (isset($_REQUEST["user"]) and $_REQUEST["user"]) {
