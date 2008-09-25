@@ -4908,6 +4908,11 @@ class TikiLib extends TikiDB {
 	}
 
 	function plugin_match(&$data, &$plugins) {
+		global $pluginskiplist;
+		set_time_limit(5);
+		if( !is_array( $pluginskiplist ) )
+			$pluginskiplist = array();
+
 		$matcher = "/\{([A-Z]+)\(|\{([a-z]+)(\s|\})|~pp~|~np~|&lt;[pP][rR][eE]&gt;/";
 		preg_match( $matcher, $data, $plugins );
 
@@ -4918,8 +4923,14 @@ class TikiLib extends TikiDB {
 		 */
 
 		// Check to make sure there was a match.
-		if( count( $plugins ) > 0 && count( $plugins[0] )  > 0
-			) {
+		if( count( $plugins ) > 0 && count( $plugins[0] )  > 0 ) {
+			$pos = 0;
+			while( in_array( $plugins[0], $pluginskiplist ) ) {
+				$pos = strpos( $data, $plugins[0], $pos ) + 1;
+				if( ! preg_match( $matcher, substr($data, $pos), $plugins ) )
+					return;
+			}
+
 			// If it is a true plugin
 			if( $plugins[0]{0} == "{" ) {
 				$pos = strpos( $data, $plugins[0] ); // where plugin starts
@@ -5039,7 +5050,7 @@ class TikiLib extends TikiDB {
 			}
 
 			// If last parameter, consider next as end of string
-			if( preg_match( "/\w+=/", $params_string, $parts ) ) {
+			if( preg_match( "/[\s,]\w+=/", $params_string, $parts ) ) {
 				$end = strpos( $params_string, $parts[0] );
 				$value = substr( $params_string, 0, $end );
 				$params_string = substr( $params_string, $end );
@@ -5057,7 +5068,9 @@ class TikiLib extends TikiDB {
 
 	// This recursive function handles pre- and no-parse sections and plugins
 	function parse_first(&$data, &$preparsed, &$noparsed, $real_start_diff='0') {
-		global $dbTiki, $smarty, $tiki_p_edit, $prefs;
+		global $dbTiki, $smarty, $tiki_p_edit, $prefs, $pluginskiplist;
+		if( ! is_array( $pluginskiplist ) )
+			$pluginskiplist = array();
 
 		if( strlen( $data ) <= 1 ) {
 			return;
@@ -5244,20 +5257,31 @@ class TikiLib extends TikiDB {
 						$ret = tra( "__WARNING__: Plugin disabled $plugin! " ) . $plugin_data;
 					}
 
+					$skip = false;
 				} else {
-					// Handle nested plugins.
-					$this->parse_first($plugin_data, $preparsed, $noparsed);
+					if( $plugins['type'] == 'long' ) {
+						// Handle nested plugins.
+						$this->parse_first($plugin_data, $preparsed, $noparsed);
+						$ret = tra( "__WARNING__: No such module $plugin! " ) . $plugin_data;
 
-					$ret = tra( "__WARNING__: No such module $plugin! " ) . $plugin_data;
+						$skip = false;
+					} else {
+						// Short plugins need to be returned like normal plugins for backwards compat.
+						$pluginskiplist[] = $plugins[0];
+
+						$skip = true;
+					}
 				}
 
-				// Handle pre- & no-parse sections and plugins inserted by this plugin
-				$this->parse_first($ret, $preparsed, $noparsed);
-				//$ret = $this->parse_data($ret);
+				if( ! $skip ) {
+					// Handle pre- & no-parse sections and plugins inserted by this plugin
+					$this->parse_first($ret, $preparsed, $noparsed);
+					//$ret = $this->parse_data($ret);
 
-				// Replace plugin section with its output in data
-				$data = substr_replace($data, $ret, $pos, $pos_end - $pos + strlen($plugin_end));
-				$real_start_diff -= strlen($ret) - $pos_end - $pos + strlen($plugin_end);
+					// Replace plugin section with its output in data
+					$data = substr_replace($data, $ret, $pos, $pos_end - $pos + strlen($plugin_end));
+					$real_start_diff -= strlen($ret) - $pos_end - $pos + strlen($plugin_end);
+				}
 			}
 
 			// Find the plugins
@@ -5830,25 +5854,6 @@ class TikiLib extends TikiDB {
 		//   It can't be done in the sanitizer, that can't know if the input will be wiki parsed or not
 		$data = preg_replace('/(\{img [^\}]+li)<x>(nk[^\}]+\})/i', '\\1\\2', $data);
 
-		// Replace dynamic content occurrences
-		if (preg_match_all("/\{content +id=([0-9]+)\}/", $data, $dcs)) {
-			$temp_max = count($dcs[0]);
-			for ($i = 0; $i < $temp_max; $i++) {
-				$repl = $this->get_actual_content($dcs[1][$i]);
-				$data = str_replace($dcs[0][$i], $repl, $data);
-			}
-		}
-
-		// Replace Dynamic content with random selection
-		if (preg_match_all("/\{rcontent +id=([0-9]+)\}/", $data, $dcs)) {
-			global $dcslib; include_once("dcs/dcslib.php");
-			$temp_max = count($dcs[0]);
-			for ($i = 0; $i < $temp_max; $i++) {
-				$repl = $dcslib->get_random_content($dcs[1][$i]);
-				$data = str_replace($dcs[0][$i], $repl, $data);
-			}
-		}
-
 		// Process pre_handlers here
 		if (is_array($this->pre_handlers)) {
 			foreach ($this->pre_handlers as $handler) {
@@ -6255,102 +6260,6 @@ class TikiLib extends TikiDB {
 		// reinsert hash-replaced links into page
 		foreach ($noparsedlinks as $np) {
 			$data = str_replace($np["key"], $np["data"], $data);
-		}
-
-		// Images
-		preg_match_all("/(\{img [^\}]+\})/", $data, $pages);
-
-		foreach (array_unique($pages[1])as $page_parse) {
-			$parts = $this->split_tag( $page_parse);
-			$imgdata = array();      // pre-set preferences
-			$imgdata["src"] = '';
-			$imgdata["height"] = '';
-			$imgdata["width"] = '';
-			$imgdata["lnk"] = '';
-			$imgdata["rel"] = '';
-			$imgdata["title"] = '';
-			$imgdata["align"] = '';
-			$imgdata["desc"] = '';
-			$imgdata["imalign"] = '';
-			$imgdata["alt"] = '';
-			$imgdata["usemap"] = '';
-			$imgdata["class"] = '';
-			$imgdata = $this->split_assoc_array( $parts, $imgdata );
-
-			// Support both 'link' and 'lnk' syntax
-			if ( isset($imgdata['link']) && $imgdata['lnk'] == '' ) $imgdata['lnk'] = $imgdata['link'];
-
-			if (stristr(str_replace(' ', '', $imgdata["src"]),'javascript:')) {
-				$imgdata["src"]  = '';
-			}
-			if ($tikidomain && !preg_match('|^https?:|', $imgdata['src'])) {
-				$imgdata["src"] = preg_replace("~img/wiki_up/~","img/wiki_up/$tikidomain/",$imgdata["src"]);
-			}
-			if (strstr($imgdata["src"],'javascript:')) {
-				$imgdata["src"]  = '';
-			}
-
-			// Handle absolute links (e.g. to send a newsletter with images that remains on the tiki site)
-
-			if ( $imgdata['src'] != '' && $absolute_links && ! preg_match('|^[a-zA-Z]+:\/\/|', $imgdata['src']) ) {
-				global $base_host, $url_path;
-				$imgdata['src'] = $base_host.( $imgdata['src'][0] == '/' ? '' : $url_path ).$imgdata['src'];
-			}
-
-			$imgdata_dim = '';
-			if ( $prefs['feature_filegals_manager'] == 'y' ) {
-				global $detected_lib;
-				include_once('lib/images/images.php');
-			} else {
-				$detected_lib = '';
-			}
-			if ( $detected_lib != '' && ereg('^'.$tikiroot.'tiki-download_file.php\?', $imgdata['src']) ) {
-				// If an image lib has been detected and if we are using an image from a file gallery,
-				//   then also resize the image server-side, because it will generally imply less data to download from the user
-				//   (i.e. speed up the page download) and a better image quality (browser resize algorithms are quick but bad)
-				//
-				//   Note: ctype_digit is used to ensure there is only digits in width and height strings (e.g. to avoid '50%', ...)
-				//
-				if ( (int)$imgdata['width'] > 0 && ctype_digit($imgdata['width']) ) $imgdata['src'] .= '&amp;x='.$imgdata['width'];
-				if ( (int)$imgdata['height'] > 0 && ctype_digit($imgdata['height']) ) $imgdata['src'] .= '&amp;y='.$imgdata['height'];
-			}
-			if ( $imgdata['width'] ) $imgdata_dim .= ' width="' . $imgdata['width'] . '"';
-			if ( $imgdata['height'] ) $imgdata_dim .= ' height="' . $imgdata['height'] . '"';
-
-			$repl = '<img alt="' . $imgdata["alt"] . '" src="'.$imgdata["src"].'" border="0" '.$imgdata_dim;
-
-			if ($imgdata["imalign"]) {
-				$repl .= ' align="' . $imgdata["imalign"] . '"';
-			}
-			if ($imgdata["usemap"]) {
-				$repl .= ' usemap="#'.$imgdata["usemap"].'"';
-			}
-			if ($imgdata["class"]) {
-				$repl .= ' class="'.$imgdata["class"].'"';
-			}
-
-			$repl .= ' />';
-
-			if ($imgdata["lnk"]) {
-				$imgtarget= '';
-				if ($prefs['popupLinks'] == 'y' && (preg_match('#^([a-z0-9]+?)://#i', $imgdata['lnk']) || preg_match('#^www\.([a-z0-9\-]+)\.#i',$imgdata['lnk']))) {
-					$imgtarget = ' target="_blank"';
-			}
-			if ($imgdata['rel']) $linkrel = ' rel="'.$imgdata['rel'].'"';
-			if ($imgdata['title']) $linktitle = ' title="'.$imgdata['title'].'"';
-			$repl = '<a href="'.$imgdata["lnk"].'"'.$linkrel.$imgtarget.$linktitle.'>' . $repl . '</a>';
-			}
-
-			if ($imgdata["desc"]) {
-				$repl = '<table cellpadding="0" cellspacing="0"><tr><td>' . $repl . '</td></tr><tr><td class="mini">' . $imgdata["desc"] . '</td></tr></table>';
-			}
-
-			if ($imgdata["align"]) {
-				$repl = '<div class="img" align="' . $imgdata["align"] . '">' . $repl . "</div>";
-			} elseif (!$imgdata["desc"]) {
-				$repl = '<span class="img">' . $repl . "</span>";
-			}
-			$data = str_replace($page_parse, $repl, $data);
 		}
 
 		// *****
