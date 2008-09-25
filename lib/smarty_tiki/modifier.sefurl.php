@@ -16,6 +16,12 @@ function smarty_modifier_sefurl($source, $type='wiki') {
 	case 'wiki page':
 	case 'wiki':
 		return $wikilib->sefurl($source);
+	case 'blog':
+	        if ($prefs['feature_sefurl'] == 'y') {
+	            return "blog" . $source;
+	        } else {
+	            return 'tiki-view_blog.php?blogId='.$source;
+		}
 	}
 	return $source;
 }
