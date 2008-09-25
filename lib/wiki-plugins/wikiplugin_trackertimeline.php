@@ -51,7 +51,7 @@ function wikiplugin_trackertimeline_info() {
 }
 
 function wikiplugin_trackertimeline( $data, $params ) {
-	global $trklib, $smarty;
+	global $trklib, $smarty, $tikilib;
 	require_once 'lib/trackers/trackerlib.php';
 
 	if( ! isset( $params['tracker'] ) )
@@ -96,6 +96,12 @@ function wikiplugin_trackertimeline( $data, $params ) {
 		$detail['lend'] = min( $end, $detail['end'] );
 		$detail['lsize'] = round( ( $detail['lend'] - $detail['lstart'] ) / $size * 80 );
 
+		$detail['fstart'] = date( 'H:i', $detail['start'] );
+		$detail['fend'] = date( 'H:i', $detail['end'] );
+		$detail['psummary'] = $tikilib->parse_data( $detail['summary'] );
+
+		$detail['encoded'] = json_encode( $detail );
+
 		// Add to data list
 		if( ! array_key_exists( $detail['group'], $data ) )
 			$data[$detail['group']] = array();
@@ -110,6 +116,26 @@ function wikiplugin_trackertimeline( $data, $params ) {
 	ksort($data);
 
 	$smarty->assign( 'wp_ttl_data', $data );
+
+	$layout = array(
+		'size' => round( 3600 / $size * 80 ),
+		'blocks' => array(
+		),
+	);
+
+	if( $start % 3600 ) {
+		$pos = $start + 3600 - $start % 3600;
+		$layout['pad'] = round( (3600-$start%3600) / $size * 80 );
+	 } else {
+		$pos = $start;
+		$layout['pad'] = 0;
+	}
+
+	for( $i = $pos; $end > $i; $i += 3600 ) {
+		$layout['blocks'][] = date( 'H:i', $i );
+	}
+
+	$smarty->assign( 'layout', $layout );
 
 	return $smarty->fetch('wiki-plugins/wikiplugin_trackertimeline.tpl');
 }

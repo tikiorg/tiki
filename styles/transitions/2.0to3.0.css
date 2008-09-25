@@ -42,3 +42,6 @@ h3.box-title span.moduleflip {
   float: right;
 }
 
+#shadowbox_content {
+	background: white;
+}
