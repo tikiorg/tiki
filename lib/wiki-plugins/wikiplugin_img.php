@@ -7,6 +7,61 @@ function wikiplugin_img_info()
 		'description' => tra( 'Displays an image.' ),
 		'prefs' => array(),
 		'params' => array(
+			'src' => array(
+				'required' => false,
+				'name' => tra('Image Source'),
+				'description' => tra('Full URL to the image to display.'),
+			),
+			'height' => array(
+				'required' => false,
+				'name' => tra('Height'),
+				'description' => tra('Height of the image to display.'),
+			),
+			'width' => array(
+				'required' => false,
+				'name' => tra('Width'),
+				'description' => tra('Width of the image to display.'),
+			),
+			'link' => array(
+				'required' => false,
+				'name' => tra('Link'),
+				'description' => tra('Alias: lnk. Location the image should point to.'),
+			),
+			'rel' => array(
+				'required' => false,
+				'name' => tra('Link Relation'),
+				'description' => tra('"rel" attribute to add to the link.'),
+			),
+			'title' => array(
+				'required' => false,
+				'name' => tra('Link Title'),
+				'description' => tra('Description.'),
+			),
+			'align' => array(
+				'required' => false,
+				'name' => tra('Alignment'),
+				'description' => tra('Image alignment in the page. (left, right, center)'),
+			),
+			'desc' => array(
+				'required' => false,
+				'name' => tra('Description'),
+				'description' => tra('Image description to display on the page.'),
+			),
+			'alt' => array(
+				'required' => false,
+				'name' => tra('Alternate Text'),
+				'description' => tra('Alternate text to display if impossible to load the image.'),
+			),
+			'usemap' => array(
+				'required' => false,
+				'name' => tra('Image Map'),
+				'description' => tra('Name of the image map to use for the image.'),
+			),
+			'class' => array(
+				'required' => false,
+				'name' => tra('CSS Class'),
+				'description' => tra('Style to apply to the image.'),
+			),
 		),
 	);
 }
