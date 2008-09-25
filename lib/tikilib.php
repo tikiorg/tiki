@@ -5903,51 +5903,6 @@ class TikiLib extends TikiDB {
 			$data = str_replace( "((".$anchor_line."))", $repl, $data);
 		}
 
-		if( $prefs['feature_wiki_attachments'] == 'y' ) {
-			// Handle wiki file links by turning them into ATTACH module calls.
-			preg_match_all("/(\{file [^\}]+})/", $data, $pages);
-
-			foreach (array_unique($pages[1])as $page_parse) {
-				$parts = $this->split_tag( $page_parse, FALSE );
-
-				$filedata = array();      // pre-set preferences
-				$filedata["name"] = '';
-				$filedata["desc"] = '';
-				$filedata["showdesc"] = '';
-				$filedata["page"] = '';
-				$filedata["image"] = '';
-				$filedata = $this->split_assoc_array( $parts, $filedata);
-				$middle = "";
-
-				if( ! $filedata["name"] ) {
-					continue;
-				}
-
-				$repl = "{ATTACH(file=>".$filedata["name"];
-
-				if ($filedata["desc"]) {
-					$repl .= ",inline=>1";
-					$middle = $filedata["desc"];
-				}
-
-				if ($filedata["page"]) {
-					$repl .= ",page=>" . $filedata["page"];
-				}
-
-				if ($filedata["showdesc"]) {
-					$repl .= ",showdesc=>1";
-				}
-
-				if( $filedata["image"]) {
-					$repl .= ",image=>1";
-				}
-
-				$repl .= ")}$middle{ATTACH}";
-
-				$data = str_replace($page_parse, $repl, $data);
-			}
-		}
-
 		if (!$noparseplugins) {
 			$this->parse_first($data, $preparsed, $noparsed);
 		}
