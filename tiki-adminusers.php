@@ -259,6 +259,9 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 			$userGroups = '';
 		$groups = $userlib->get_groups(0, -1, $sort_mode, $find, $initial, 'n', $userGroups);
 		$smarty->assign('groups', $groups['data']);
+	} elseif ($_REQUEST['submit_mult'] == 'emailChecked') {
+		$email_mode = 'y';
+		$smarty->assign('email_mode', 'y');
 	}
 	if (isset($tikifeedback[0]['msg'])) {
 		$logslib->add_log('adminusers','',$tikifeedback[0]['msg']);
@@ -302,6 +305,45 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 	if (isset($tikifeedback[0]['msg'])) {
 		$logslib->add_log('adminusers','',$tikifeedback[0]['msg']);
 	}					
+} elseif (!empty($_REQUEST['emailChecked']) && $_REQUEST['emailChecked'] == 'y' && !empty($_REQUEST['checked'])) {
+	if (empty($_REQUEST['wikiTpl']) || !($info = $tikilib->get_page_info($_REQUEST['wikiTpl']))) {
+		$smarty->assign('msg', tra('Page cannot be found'));
+		$smarty->display('error.tpl');
+		die;
+	}
+	if (empty($info['description'])) {
+		$smarty->assign('msg', tra('The description is mandatory as it is used as mail subject'));
+		$smarty->display('error.tpl');
+		die;
+	}
+	include_once ('lib/webmail/tikimaillib.php');
+	$mail = new TikiMail();
+	if (!empty($_REQUEST['bcc'])) {
+		if (!validate_email($_REQUEST['bcc'])) {
+			$smarty->assign('msg', tra('Invalid or unknown email'));
+			$smarty->display('error.tpl');
+			die;
+		}
+		$mail->setBcc($_REQUEST['bcc']);
+	}
+	$foo = parse_url($_SERVER["REQUEST_URI"]);
+	$machine = $tikilib->httpPrefix() . dirname( $foo["path"] );
+	$machine = preg_replace("!/$!", "", $machine); // just incase
+ 	$smarty->assign_by_ref('mail_machine', $machine);
+	foreach ($_REQUEST['checked'] as $mail_user) {
+		$smarty->assign_by_ref('user', $mail_user);
+		$mail->setUser($mail_user);
+		$mail->setSubject($info['description']);
+		$text = $smarty->fetch("wiki:".$_REQUEST['wikiTpl']);
+		if (empty($text)) {
+			$smarty->assign('msg', tra('Error'));
+			$smarty->display('error.tpl');
+			die;
+		}
+		$mail->setText($text);
+		$mail->send($userlib->get_user_email($mail_user));
+	}
+	$smarty->assign_by_ref('user', $user);
 }
 
 if (!isset($_REQUEST["sort_mode"])) {
@@ -359,7 +401,7 @@ $smarty->assign('filterEmail', $filterEmail);
 //$users = $userlib->get_users($offset, $numrows, $sort_mode, $find, $initial, true);
 $users = $userlib->get_users($offset, $numrows, $sort_mode, $find, $initial, true, $filterGroup, $filterEmail);
 
-if (!empty($group_management_mode) || !empty($set_default_groups_mode)) {
+if (!empty($group_management_mode) || !empty($set_default_groups_mode) || !empty($email_mode)) {
 	$arraylen = count($users['data']);
 	for ($i=0; $i<$arraylen; $i++) {
 		if (in_array($users['data'][$i]['user'], $_REQUEST["checked"])) {

@@ -1,7 +1,7 @@
 {* $Id$ *}
 {popup_init src="lib/overlib.js"}
 
-{title help="Users+Management" admpage="login"}{tr}Admin Users{/tr}{/title}
+{title help="Users+Management" admpage="login" url="tiki-adminusers.php"}{tr}Admin Users{/tr}{/title}
 
 <div class="navbar">
 {if $tiki_p_admin eq 'y'} {* only full admins can manage groups, not tiki_p_admin_users *}
@@ -106,7 +106,7 @@ class="prevnext">{tr}All{/tr}</a>
 </div>
 {/if}
 
-<form name="checkform" method="post" action="{$smarty.server.PHP_SELF}{if $group_management_mode ne  'y' and $set_default_groups_mode ne 'y'}#multiple{/if}">
+<form name="checkform" method="post" action="{$smarty.server.PHP_SELF}{if $group_management_mode ne  'y' and $set_default_groups_mode ne 'y' and $email_mode ne 'y'}#multiple{/if}">
 <table class="normal">
 <tr>
 <td class="heading auto">{if $users}
@@ -142,23 +142,23 @@ class="prevnext">{tr}All{/tr}</a>
 <td class="thin"><a class="link" href="tiki-assignuser.php?assign_user={$users[user].user|escape:url}" title="{tr}Assign to group{/tr}">{icon _id='group_key' alt="{tr}Assign{/tr} `$users[user].user` {tr}to groups{/tr} "}</a></td>
 
 <td>
-{foreach from=$users[user].groups key=grs item=what}
+{foreach from=$users[user].groups key=grs item=what name=gr}
 {if $grs != "Anonymous"}
 {if $what eq 'included'}<i>{/if}
 <a class="link" href="tiki-admingroups.php?group={$grs|escape:"url"}" title={if $what eq 'included'}"{tr}Edit Included Group{/tr}"{else}"{tr}Edit Group{/tr}: {$grs}"{/if}>{$grs}</a>
 {if $what eq 'included'}</i>{/if}
-
+{if $grs eq $users[user].default_group}({tr}default{/tr}){/if}
 {if $what ne 'included' and $grs != "Registered"}
-	{self_link _class='link' action='removegroup' group=$grs _icon='delete' _title="{tr}Remove{/tr} {tr}from{/tr} $grs"}{/self_link}
+	{self_link _class='link' action='removegroup' group=$grs _icon='cross' _title="{tr}Remove{/tr} {tr}from{/tr} $grs"}{/self_link}
 {/if}
-{if $grs eq $users[user].default_group} {tr}default{/tr}{/if}<br />
+{if !$smarty.foreach.gr.last}<br />{/if}
 {/if}
 {/foreach}
 </td>
 
 <td>
   {if $prefs.feature_userPreferences eq 'y' || $user eq 'admin'}
-    {self_link _class="link" user=`$users[user].userId` _icon="page_edit" _title="{tr}Edit Account Settings{/tr}: `$users[user].user`"}dfdfgfd{/self_link}
+    {self_link _class="link" user=`$users[user].userId` _icon="page_edit" _title="{tr}Edit Account Settings{/tr}: `$users[user].user`"}{/self_link}
 
     <a class="link" href="tiki-user_preferences.php?userId={$users[user].userId}" title="{tr}Change user preferences{/tr}: {$users[user].user}">{icon _id='wrench' alt="{tr}Change user preferences{/tr}: `$users[user].user`"}</a>
   {/if}
@@ -166,7 +166,7 @@ class="prevnext">{tr}All{/tr}</a>
   <a class="link" href="tiki-user_information.php?userId={$users[user].userId}" title="{tr}User Information{/tr}: {$users[user].user}">{icon _id='help' alt="{tr}User Information{/tr}: `$users[user].user`"}</a>
 
   {if $users[user].user ne 'admin'}
-    {self_link _class="link" action="delete" user=`$users[user].user` _icon="cross" _alt="Delete" _title="{tr}Delete{/tr}: {$users[user].user}"}ddd{/self_link}
+    {self_link _class="link" action="delete" user=`$users[user].user` _icon="cross" _alt="Delete" _title="{tr}Delete{/tr}: `$users[user].user`"}{/self_link}
   	{if $users[user].valid && $users[user].waiting eq 'a'}
 		<a class="link" href="tiki-login_validate.php?user={$users[user].user|escape:url}&amp;pass={$users[user].valid|escape:url}" title="{tr}Validate user{/tr}: {$users[user].user}">{icon _id='accept' alt="{tr}Validate user{/tr}: `$users[user].user`"}</a>
 	{/if}
@@ -179,7 +179,7 @@ class="prevnext">{tr}All{/tr}</a>
   <tr>
   <td class="form" colspan="18">
   <a name="multiple"></a>{if $users}<p align="left"> {*on the left to have it close to the checkboxes*}
-  {if $group_management_mode neq 'y' && $set_default_groups_mode neq 'y'}
+  {if $group_management_mode neq 'y' && $set_default_groups_mode neq 'y' && $email_mode neq 'y'}
   {tr}Perform action with checked:{/tr}
   <select name="submit_mult">
     <option value="" selected="selected">-</option>
@@ -187,6 +187,7 @@ class="prevnext">{tr}All{/tr}</a>
     {if $prefs.feature_wiki_userpage == 'y'}<option value="remove_users_with_page">{tr}Remove Users and their Userpages{/tr}</option>{/if}
     <option value="assign_groups" >{tr}Manage Group Assignments{/tr}</option>
     <option value="set_default_groups">{tr}Set Default Groups{/tr}</option>
+	<option value="emailChecked">{tr}Email{/tr}</option>
   </select>
   <input type="submit" value="{tr}OK{/tr}" />
   {elseif $group_management_mode eq 'y'}
@@ -208,6 +209,10 @@ class="prevnext">{tr}All{/tr}</a>
   {/section}
   </select><br /><input type="submit" value="{tr}OK{/tr}" />
   <input type="hidden" name="set_default_groups" value="{$set_default_groups_mode}" />
+  {elseif $email_mode eq 'y'}
+  {tr}Template wiki page{/tr} <input type="text" name="wikiTpl" /><br />
+  {tr}bcc{/tr} <input type="text" name="bcc" /><input type="submit" value="{tr}OK{/tr}" />
+  <input type="hidden" name="emailChecked" value="{$email_mode}" />
   {/if}
   </p>
 {/if}
