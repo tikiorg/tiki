@@ -5074,13 +5074,6 @@ class TikiLib extends TikiDB {
 			$data1 = $data;
 			$plugin_start = $plugins[0];
 
-			///*
-
-				 print "<pre>plugins:";
-				 print_r( $plugins );
-				 print "</pre>";
-			 //*/
-
 			if( count($plugins) > 1 ) {
 				$plugin = $plugins[1];
 			}
