@@ -4908,7 +4908,7 @@ class TikiLib extends TikiDB {
 	}
 
 	function plugin_match(&$data, &$plugins) {
-		$matcher = "/\{([A-Z]+)\(|~pp~|~np~|&lt;[pP][rR][eE]&gt;/";
+		$matcher = "/\{([A-Z]+)\(|\{([a-z]+)(\s|\})|~pp~|~np~|&lt;[pP][rR][eE]&gt;/";
 		preg_match( $matcher, $data, $plugins );
 
 		/*
@@ -4921,7 +4921,7 @@ class TikiLib extends TikiDB {
 		if( count( $plugins ) > 0 && count( $plugins[0] )  > 0
 			) {
 			// If it is a true plugin
-			if( $plugins[0][0] == "{" ) {
+			if( $plugins[0]{0} == "{" ) {
 				$pos = strpos( $data, $plugins[0] ); // where plugin starts
 				$pos_end = $pos+strlen($plugins[0]); // where character after ( is
 
@@ -4932,7 +4932,17 @@ class TikiLib extends TikiDB {
 
 				// We start with one open curly brace, and one open paren.
 				$curlies = 1;
-				$parens = 1;
+
+				// If model with (
+				if( strlen( $plugins[1] ) ) {
+					$parens = 1;
+					$plugins['type'] = 'long';
+				} else {
+					$parens = 0;
+					$plugins[1] = $plugins[2];
+					unset($plugins[3]);
+					$plugins['type'] = 'short';
+				}
 
 				// While we're not at the end of the string, and we still haven't found both closers
 				while( $i < $last_data ) {
@@ -4943,9 +4953,12 @@ class TikiLib extends TikiDB {
 						$parens++;
 					} elseif( $data[$i] == "}" ) {
 						$curlies--;
+						if( $plugins['type'] == 'short' )
+							$lastParens = $i;
 					} elseif( $data[$i] == ")" ) {
 						$parens--;
-						$lastParens = $i;
+						if( $plugins['type'] == 'long' )
+							$lastParens = $i;
 					}
 
 					// If we found the end of the match...
@@ -4965,6 +4978,8 @@ class TikiLib extends TikiDB {
 						 print "</pre>";
 					 */
 				}
+
+				$plugins['arguments'] = $this->plugin_split_args( $plugins[2] );
 			} else {
 				$plugins[1] = $plugins[0];
 				$plugins[2] = "";
@@ -4977,6 +4992,67 @@ class TikiLib extends TikiDB {
 			 print "</pre>";
 		 */
 
+	}
+
+	function plugin_split_args( $params_string ) {
+		// the following str_replace line is to decode the &gt; char when html is turned off
+		// perhaps the plugin syntax should be changed in 1.8 not to use any html special chars
+		$params_string = str_replace('&gt;', '>', $params_string);
+		$params_string = str_replace('&lt;', '<', $params_string);
+		$params_string = str_replace('&quot;', '"', $params_string);
+		$params_string = str_replace('&amp;', '&', $params_string);
+
+		$arguments = array();
+
+		// Handle parameters one by one
+		while( false !== $pos = strpos( $params_string, '=' ) ) {
+			$name = substr( $params_string, 0, $pos );
+			$name = ltrim( $name, ', ' );
+			$value = '';
+
+			// Consider =>
+			if( $params_string{$pos + 1} == '>' )
+				$pos++;
+
+			// Cut off the name part
+			$params_string = substr( $params_string, $pos + 1 );
+			$params_string = ltrim( $params_string );
+
+			if( $params_string{0} == '"' ) {
+				$quote = 0;
+				// Parameter between quotes, find closing quote not escaped by a \
+				while( false !== $quote = strpos( $params_string, '"', $quote + 1 ) ) {
+					if( $params_string{$quote - 1} != "\\" )
+						break;
+				}
+
+				// Closing quote found
+				if( $quote !== false ) {
+					$value = substr( $params_string, 1, $quote - 1 );
+					$arguments[$name] = $value;
+
+					$params_string = substr( $params_string, $quote + 1 );
+					continue;
+				}
+
+				// Not found, fallback as if opening quote was part of the string
+			}
+
+			// If last parameter, consider next as end of string
+			if( preg_match( "/\w+=/", $params_string, $parts ) ) {
+				$end = strpos( $params_string, $parts[0] );
+				$value = substr( $params_string, 0, $end );
+				$params_string = substr( $params_string, $end );
+			} else {
+				$value = $params_string;
+				$params_string = '';
+			}
+
+			$value = rtrim( $value, ', ' );
+			$arguments[$name] = $value;
+		}
+
+		return $arguments;
 	}
 
 	// This recursive function handles pre- and no-parse sections and plugins
@@ -4998,14 +5074,12 @@ class TikiLib extends TikiDB {
 			$data1 = $data;
 			$plugin_start = $plugins[0];
 
-			/*
-				 print "<pre>real data: :".htmlspecialchars( $data ) .":</pre>";
+			///*
 
 				 print "<pre>plugins:";
 				 print_r( $plugins );
 				 print "</pre>";
-				 print "<pre>start: :".htmlspecialchars( $plugin_start ) .":</pre>";
-			 */
+			 //*/
 
 			if( count($plugins) > 1 ) {
 				$plugin = $plugins[1];
@@ -5020,8 +5094,12 @@ class TikiLib extends TikiDB {
 
 			// print "<pre>pos's: :$pos, $pos_middle:</pre>";
 
+			// process "short" plugins here: {plugin par1=>val1} - melmut
+			if( $plugins['type'] == 'short' && preg_match("/ *\}$/",$plugin_start) ) {
+				$plugin_end='';
+				$pos_end = $pos + strlen($plugin_start);
 			// process "short" plugins here: {PLUGIN(par1=>val1)/} - melmut
-			if( preg_match("/\/ *\}$/",$plugin_start) ) {
+			} elseif( preg_match("/\/ *\}$/",$plugin_start) ) {
 				$plugin_end='';
 				$pos_end = $pos + strlen($plugin_start);
 			} elseif( ! ( strpos( $plugin_start, '~pp~' ) === false ) ) {
@@ -5098,37 +5176,8 @@ class TikiLib extends TikiDB {
 				// Normal plugins
 				$plugin_name = strtolower($plugins[1]);
 
-				$params_string = $plugins[2];
-
-				// the following str_replace line is to decode the &gt; char when html is turned off
-				// perhaps the plugin syntax should be changed in 1.8 not to use any html special chars
-				$params_string = str_replace('&gt;', '>', $params_string);
-				$params_string = str_replace('&lt;', '<', $params_string);
-				$params_string = str_replace('&quot;', '"', $params_string);
-				$params_string = str_replace('&amp;', '&', $params_string);
-
 				// Construct argument list array
-				$params = $this->quotesplit(',', trim($params_string) );
-				$arguments = array();
-
-				foreach ($params as $param) {
-					$parts = $this->quotesplit( '=>?', $param );
-
-					if (isset($parts[0]) && isset($parts[1])) {
-						$name = trim($parts[0]);
-						$argument = trim($parts[1]);
-						// the following preg_replace removes more unwanted css attributes passed after ";" (including)
-						$argument = preg_replace('/([^\;]+)\;.*/','$1;',$argument);
-
-						// The following strips quotes at the beginning and end, if both are found
-						if( preg_match( '/^".*"$/', $argument ) ) {
-							$argument = preg_replace( '/^"/', '', $argument );
-							$argument = preg_replace( '/"$/', '', $argument );
-						}
-
-						$arguments[$name] = $argument;
-					}
-				}
+				$arguments = $plugins['arguments'];
 
 				if ($this->plugin_exists( $plugin_name )) {
 
