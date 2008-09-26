@@ -858,21 +858,23 @@ a.flipmodtitle:hover img {border: 1px solid #818181 !important}
 
 .rbox {
 	overflow: hidden;
-	border: 1px solid #606060;
-	padding: 4px;
+	border: 0;
 	color: #fffff0}
 
 .rbox-title {
+	display: inline-block;
 	text-align: left;
 	padding: 3px;
 	font-weight: bold;
 	background: transparent;
-	border: 0}
+	border: 1px solid #606060;
+	border-bottom: 0;
+	margin-bottom: -1px}
 
 .rbox-data {
 	padding: 3px;
 	background: transparent;
-	border: 0}
+	border: 1px solid #606060}
 
 .rbox a {text-decoration: underline}
 
@@ -883,7 +885,7 @@ a.flipmodtitle:hover img {border: 1px solid #818181 !important}
 .tip .rbox-data,
 .note .rbox-data {
 	background: #000;
-	border: none;
+	/*border: none;*/
 	color: #fffff0}
 
 .comment .rbox-title,
@@ -1286,7 +1288,7 @@ div.button2 a, .button3 a {
 	font-weight: bold;
 	border: 1px solid #3F3F3F;
 	border-top: 1px solid #818181;
-	display: block}
+	display: inline-block}
 
 .navbar .linkbut:hover, .navbar a:hover,
 div.button2 a:hover, .button3 a:hover {
