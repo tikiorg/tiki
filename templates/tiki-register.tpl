@@ -38,6 +38,7 @@
 		{if $prefs.login_is_email eq 'y'} 
 		<em>{tr}Use your email as login{/tr}</em>.
 		{else}
+	{if $prefs.min_username_length > 1}<em>{tr}Minimum {$prefs.min_pass_length} characters long{/tr}</em>. {/if}
 	  {if $prefs.lowercase_username eq 'y'} <em>{tr}Lowercase only{/tr}</em>.{/if}</td>
 		{/if}
       </tr>
@@ -50,7 +51,7 @@
       <tr><td class="formcolor">{tr}Password{/tr}:</td>
       <td class="formcolor"><input style="float:left" id='pass1' type="password" name="pass"
         {if $prefs.feature_ajax eq 'y'}onKeyUp="check_pass()"{/if}/>&nbsp;
-	  {if $prefs.feature_ajax ne 'y' and $prefs.min_pass_length > 1}<em>{tr}Minimum {$prefs.min_pass_length} characters long{/tr}</em>.<br />{/if}
+	  {if $prefs.feature_ajax ne 'y' and $prefs.min_pass_length > 1}<em>{tr}Minimum {$prefs.min_pass_length} characters long{/tr}</em>. {/if}
 	  {if $prefs.feature_ajax ne 'y' and $prefs.pass_chr_num eq 'y'}<em>{tr}Password must contain both letters and numbers{/tr}</em>.{/if}
 	  </td>
       </tr>
