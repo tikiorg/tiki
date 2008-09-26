@@ -13,7 +13,7 @@ function wikiplugin_trackerfilter_info() {
 		'filters' => array(
 			'required' => true,
 			'name' => tra('Filters'),
-			'description' => tra('2/d:4/r:5'),
+			'description' => tra('Example:'.'2/d:4/r:5',
 		),
 		'action' => array(
 			'required' => false,
@@ -23,12 +23,12 @@ function wikiplugin_trackerfilter_info() {
 		'displayList' => array(
 			'required' => false,
 			'name' => tra('Display List'),
-			'description' => tra('y|n'),
+			'description' => 'y|n',
 		),
 		'line' => array(
 			'required' => false,
 			'name' => tra('Line'),
-			'description' => tra('y|n'),
+			'description' => 'y|n',
 		),
 	) );
 

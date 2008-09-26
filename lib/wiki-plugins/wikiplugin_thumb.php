@@ -30,7 +30,7 @@ function wikiplugin_thumb_info() {
 			'float' => array(
 				'required' => false,
 				'name' => tra('Floating'),
-				'description' => tra('left|right|none'),
+				'description' => 'left|right|none',
 			),
 			'url' => array(
 				'required' => false,
@@ -40,12 +40,12 @@ function wikiplugin_thumb_info() {
 			'original' => array(
 				'required' => false,
 				'name' => tra('Original'),
-				'description' => tra('y|n'),
+				'description' => 'y|n',
 			),
 			'sticky' => array(
 				'required' => false,
 				'name' => tra('Sticky'),
-				'description' => tra('y|n'),
+				'description' => 'y|n',
 			),
 		),
 	);

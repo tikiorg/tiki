@@ -27,7 +27,7 @@ function wikiplugin_mouseover_info() {
 			'parse' => array(
 				'required' => false,
 				'name' => tra('Parse'),
-				'description' => tra('y|n'),
+				'description' => 'y|n',
 			),
 			'width' => array(
 				'required' => false,
@@ -42,32 +42,32 @@ function wikiplugin_mouseover_info() {
 			'sticky' => array(
 				'required' => false,
 				'name' => tra('Sticky'),
-				'description' => tra('y|n'),
+				'description' => 'y|n',
 			),
 			'left' => array(
 				'required' => false,
 				'name' => tra('Left'),
-				'description' => tra('y|n'),
+				'description' => 'y|n',
 			),
 			'right' => array(
 				'required' => false,
-				'name' => tra('Center'),
-				'description' => tra('y|n'),
+				'name' => tra('Right'),
+				'description' => 'y|n',
 			),
 			'center' => array(
 				'required' => false,
 				'name' => tra('Center'),
-				'description' => tra('y|n'),
+				'description' => 'y|n',
 			),
 			'above' => array(
 				'required' => false,
 				'name' => tra('Above'),
-				'description' => tra('y|n'),
+				'description' => 'y|n',
 			),
 			'below' => array(
 				'required' => false,
 				'name' => tra('Below'),
-				'description' => tra('y|n'),
+				'description' => 'y|n',
 			),
 			'offsetx' => array(
 				'required' => false,

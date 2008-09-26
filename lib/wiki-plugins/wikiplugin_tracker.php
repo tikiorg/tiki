@@ -36,22 +36,22 @@ function wikiplugin_tracker_info() {
 			'showtitle' => array(
 				'required' => false,
 				'name' => tra('Show Title'),
-				'description' => tra('y|n'),
+				'description' => 'y|n',
 			),
 			'showdesc' => array(
 				'required' => false,
 				'name' => tra('Show Description'),
-				'description' => tra('y|n'),
+				'description' => 'y|n',
 			),
 			'showmandatory' => array(
 				'required' => false,
 				'name' => tra('Show Mandatory'),
-				'description' => tra('y|n'),
+				'description' => 'y|n',
 			),
 			'embedded' => array(
 				'required' => false,
 				'name' => tra('Embedded'),
-				'description' => tra('y|n'),
+				'description' => 'y|n',
 			),
 			'url' => array(
 				'required' => false,
@@ -66,7 +66,7 @@ function wikiplugin_tracker_info() {
 			'sort' => array(
 				'required' => false,
 				'name' => tra('Sort'),
-				'description' => tra('y|n'),
+				'description' => 'y|n',
 			),
 			'preview' => array(
 				'required' => false,
@@ -96,7 +96,7 @@ function wikiplugin_tracker_info() {
 			'newstatus' => array(
 				'required' => false,
 				'name' => tra('New Status'),
-				'description' => tra('o|p|c, default status applied to newly created items.'),
+				'description' => 'o|p|c'. ' '.tra('Default status applied to newly created items.'),
 			),
 		),
 	);

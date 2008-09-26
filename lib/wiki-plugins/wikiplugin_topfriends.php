@@ -17,7 +17,7 @@ function wikiplugin_topfriends_info() {
 			'public' => array(
 				'required' => false,
 				'name' => tra('Public'),
-				'description' => tra('y|n'),
+				'description' => 'y|n',
 			),
 		),
 	);

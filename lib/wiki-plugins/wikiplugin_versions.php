@@ -38,7 +38,7 @@ function wikiplugin_versions_info() {
 			'title' => array(
 				'required' => false,
 				'name' => tra('Title'),
-				'description' => tra('y|n'),
+				'description' => 'y|n',
 			),
 			'defaults' => array(
 				'required' => false,

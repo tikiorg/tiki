@@ -46,32 +46,32 @@ function wikiplugin_module_info() {
 			'float' => array(
 				'required' => false,
 				'name' => tra('Float'),
-				'description' => tra('left|right|none'),
+				'description' => 'left|right|none',
 			),
 			'decoration' => array(
 				'required' => false,
 				'name' => tra('Decoration'),
-				'description' => tra('y|n'),
+				'description' => 'y|n',
 			),
 			'flip' => array(
 				'required' => false,
 				'name' => tra('Flip'),
-				'description' => tra('y|n'),
+				'description' => 'y|n',
 			),
 			'max' => array(
 				'required' => false,
 				'name' => tra('Max'),
-				'description' => tra('y|n'),
+				'description' => 'y|n',
 			),
 			'np' => array(
 				'required' => false,
 				'name' => tra('np'),
-				'description' => tra('0|1'),
+				'description' => '0|1',
 			),
 			'notitle' =>array(
 				'required' => false,
 				'name' => tra('notitle'),
-				'description' => tra('y|n'),
+				'description' => 'y|n',
 			),
 		),
 	);

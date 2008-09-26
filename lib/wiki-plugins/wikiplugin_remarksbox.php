@@ -33,7 +33,7 @@ function wikiplugin_remarksbox_info() {
 			'type' => array(
 				'required' => true,
 				'name' => tra('Type'),
-				'description' => tra('tip|comment|note|warning'),
+				'description' => 'tip|comment|note|warning',
 			),
 			'title' => array(
 				'required' => true,
@@ -43,7 +43,7 @@ function wikiplugin_remarksbox_info() {
 			'highlight' => array(
 				'required' => false,
 				'name' => tra('Highlight'),
-				'description' => tra('y|n'),
+				'description' => 'y|n',
 			),
 			'icon' => array(
 				'required' => false,

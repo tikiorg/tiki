@@ -33,7 +33,7 @@ function wikiplugin_listpages_info() {
 			'showNameOnly' => array(
 				'required' => false,
 				'name' => tra('Show Name Only'),
-				'description' => tra('y|n'),
+				'description' => 'y|n',
 			),
 			'categId' => array(
 				'required' => false,
@@ -43,12 +43,12 @@ function wikiplugin_listpages_info() {
 			'structHead' => array(
 				'required' => false,
 				'name' => tra('Structure Head'),
-				'description' => tra('y|n'),
+				'description' => 'y|n',
 			),
 			'showPageAlias' => array(
 				'required' => false,
 				'name' => tra('Show Page Alias'),
-				'description' => tra('y|n'),
+				'description' => 'y|n',
 			),
 			'find' => array(
 				'required' => false,
@@ -73,17 +73,17 @@ function wikiplugin_listpages_info() {
 			'exact_match' => array(
 				'required' => false,
 				'name' => tra('Exact Match'),
-				'description' => tra('y|n, related to Find.'),
+				'description' => 'y|n'.' '.tra('Related to Find.'),
 			),
 			'only_orphan_pages' => array(
 				'required' => false,
 				'name' => tra('Only Orphan Pages'),
-				'description' => tra('y|n'),
+				'description' => 'y|n',
 			),
 			'for_list_pages' => array(
 				'required' => false,
 				'name' => tra('For List Pages'),
-				'description' => tra('y|n'),
+				'description' => 'y|n',
 			),
 		),
 	);

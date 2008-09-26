@@ -34,12 +34,12 @@ function wikiplugin_split_info() {
 			'joincols' => array(
 				'required' => false,
 				'name' => tra('Join Columns'),
-				'description' => tra('y|n, generate the colspan attribute if columns are missing' ),
+				'description' => 'y|n'.' '.tra('Generate the colspan attribute if columns are missing' ),
 			),
 			'fixedsize' => array(
 				'required' => false,
 				'name' => tra('Fixed Size'),
-				'description' => tra('y|n, generate the width attribute on the columns'),
+				'description' => 'y|n'.' '.tra('Generate the width attribute on the columns'),
 			),
 			'colsize' => array(
 				'required' => false,
@@ -49,12 +49,12 @@ function wikiplugin_split_info() {
 			'first' => array(
 				'required' => false,
 				'name' => tra('First'),
-				'description' => tra('col|line'),
+				'description' => 'col|line',
 			),
 			'edit' => array(
 				'required' => false,
 				'name' => tra('Editable'),
-				'description' => tra('y|n, display edit icon for each section'),
+				'description' => 'y|n'.' '.tra('Display edit icon for each section'),
 			),
 		),
 	);

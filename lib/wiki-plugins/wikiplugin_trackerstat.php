@@ -36,17 +36,17 @@ function wikiplugin_trackerstat_info() {
 			'show_percent' => array(
 				'required' => false,
 				'name' => tra('Show Percentage'),
-				'description' => tra('y|n'),
+				'description' => 'y|n',
 			),
 			'show_bar' => array(
 				'required' => false,
 				'name' => tra('Show Bar'),
-				'description' => tra('y|n'),
+				'description' => 'y|n',
 			),
 			'status' => array(
 				'required' => false,
 				'name' => tra('Status Filter'),
-				'description' => tra('Which item status to list. o = open, p = pending, c = closed. Valid values: o|p|c|op|oc|pc|opc.'),
+				'description' => 'o|p|c|op|oc|pc|opc'.' '.tra('Which item status to list. o = open, p = pending, c = closed.'),
 			),
 		),
 	);

@@ -31,37 +31,37 @@ function wikiplugin_vote_info() {
 			'show_percent' => array(
 				'required' => false,
 				'name' => tra('Show Percentage'),
-				'description' => tra('y|n'),
+				'description' => 'y|n',
 			),
 			'show_bar' => array(
 				'required' => false,
 				'name' => tra('Show Bar'),
-				'description' => tra('y|n'),
+				'description' => 'y|n',
 			),
 			'show_stat' => array(
 				'required' => false,
 				'name' => tra('Show Stats'),
-				'description' => tra('y|n'),
+				'description' => 'y|n',
 			),
 			'show_stat_only_after' => array(
 				'required' => false,
 				'name' => tra('Show Stats After'),
-				'description' => tra('y|n'),
+				'description' => 'y|n',
 			),
 			'show_creator' => array(
 				'required' => false,
 				'name' => tra('Show Creator'),
-				'description' => tra('y|n'),
+				'description' => 'y|n',
 			),
 			'status' => array(
 				'required' => false,
 				'name' => tra('Status Filter'),
-				'description' => tra('Which item status to list. o = open, p = pending, c = closed. Valid values: o|p|c|op|oc|pc|opc.'),
+				'description' => 'o|p|c|op|oc|pc|opc'.' '.tra('Which item status to list. o = open, p = pending, c = closed.'),
 			),
 			'float' => array(
 				'required' => false,
 				'name' => tra('Float'),
-				'description' => tra('left|right'),
+				'description' => 'left|right',
 			),
 		),
 	);

@@ -28,7 +28,7 @@ function wikiplugin_trackerlist_info() {
 			'sort' => array(
 				'required' => false,
 				'name' => tra('Sort'),
-				'description' => tra('y|n'),
+				'description' => 'y|n',
 			),
 			'popup' => array(
 				'required' => false,
@@ -38,57 +38,57 @@ function wikiplugin_trackerlist_info() {
 			'stickypopup' => array(
 				'required' => false,
 				'name' => tra('Sticky Popup'),
-				'description' => tra('y|n'),
+				'description' => 'y|n',
 			),
 			'showtitle' => array(
 				'required' => false,
 				'name' => tra('Show Title'),
-				'description' => tra('y|n'),
+				'description' => 'y|n',
 			),
 			'showlinks' => array(
 				'required' => false,
 				'name' => tra('Show Links'),
-				'description' => tra('y|n'),
+				'description' => 'y|n',
 			),
 			'showdesc' => array(
 				'required' => false,
 				'name' => tra('Show Description'),
-				'description' => tra('y|n'),
+				'description' => 'y|n',
 			),
 			'shownbitems' => array(
 				'required' => false,
 				'name' => tra('shownbitems'),
-				'description' => tra('y|n'),
+				'description' => 'y|n',
 			),
 			'showinitials' => array(
 				'required' => false,
 				'name' => tra('Show Initials'),
-				'description' => tra('y|n'),
+				'description' => 'y|n',
 			),
 			'showstatus' => array(
 				'required' => false,
 				'name' => tra('Show Status'),
-				'description' => tra('y|n'),
+				'description' => 'y|n',
 			),
 			'showcreated' => array(
 				'required' => false,
 				'name' => tra('Show Creation Date'),
-				'description' => tra('y|n'),
+				'description' => 'y|n',
 			),
 			'showlastmodif' => array(
 				'required' => false,
 				'name' => tra('Show Last Modification'),
-				'description' => tra('y|n'),
+				'description' => 'y|n',
 			),
 			'showfieldname' => array(
 				'required' => false,
 				'name' => tra('Show Field Name'),
-				'description' => tra('y|n'),
+				'description' => 'y|n',
 			),
 			'status' => array(
 				'required' => false,
 				'name' => tra('Status Filter'),
-				'description' => tra('Which item status to list. o = open, p = pending, c = closed. Valid values: o|p|c|op|oc|pc|opc.'),
+				'description' => 'o|p|c|op|oc|pc|opc'.' '.tra('Which item status to list. o = open, p = pending, c = closed.'),
 			),
 			'sort_mode' => array(
 				'required' => false,
@@ -128,7 +128,7 @@ function wikiplugin_trackerlist_info() {
 			'more' => array(
 				'required' => false,
 				'name' => tra('More'),
-				'description' => tra('y|n'),
+				'description' => 'y|n',
 			),
 			'moreurl' => array(
 				'required' => false,
@@ -178,7 +178,7 @@ function wikiplugin_trackerlist_info() {
 			'list_mode' => array(
 				'required' => false,
 				'name' => tra('Mode'),
-				'description' => tra('y|n: if y, value will be truncated'),
+				'description' => 'y|n'.' '.tra('If y, value will be truncated'),
 			),
 		),
 	);

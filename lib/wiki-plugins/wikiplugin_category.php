@@ -47,12 +47,12 @@ function wikiplugin_category_info() {
 			'split' => array(
 				'required' => false,
 				'name' => tra('Split'),
-				'description' => tra('y|n'),
+				'description' => 'y|n',
 			),
 			'and' => array(
 				'required' => false,
 				'name' => tra('And'),
-				'description' => tra('y|n'),
+				'description' => 'y|n',
 			),
 		),
 	);
