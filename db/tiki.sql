@@ -321,7 +321,8 @@ CREATE TABLE tiki_banners (
   impressions int(8) default NULL,
   clicks int(8) default NULL,
   zone varchar(40) default NULL,
-  PRIMARY KEY (bannerId)
+  PRIMARY KEY (bannerId),
+  INDEX ban1(zone,useDates,impressions,maxImpressions,hourFrom,hourTo,fromDate,toDate,mon,tue,wed,thu,fri,sat,sun)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS tiki_banning;
