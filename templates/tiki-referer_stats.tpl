@@ -1,6 +1,6 @@
 {title help="Referer+Stats"}{tr}Referer stats{/tr}{/title}
 
-<a class="linkbut" href="tiki-referer_stats.php?clear=1">{tr}Clear Stats{/tr}</a>
+<span class="button2"><a href="tiki-referer_stats.php?clear=1">{tr}Clear Stats{/tr}</a></span>
 <br /><br />
 
 {include file='find.tpl' _sort_mode='y'}

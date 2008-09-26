@@ -10,7 +10,7 @@
 {/if}
 </h2>
 
-{if $contentId ne ''}<a class="linkbut" href="tiki-list_contents.php">{tr}Create New Block{/tr}</a>{/if}
+{if $contentId ne ''}<span class="button2"><a href="tiki-list_contents.php">{tr}Create New Block{/tr}</a></span>{/if}
 
 <form action="tiki-list_contents.php" method="post">
   {query _type='form_input'}

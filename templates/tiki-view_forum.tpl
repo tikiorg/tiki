@@ -14,23 +14,23 @@
 <tr>
 <td>
 {if ($tiki_p_forum_post_topic eq 'y' and ($prefs.feature_wiki_discuss ne 'y' or $prefs.$forumId ne $prefs.wiki_forum_id)) or $tiki_p_admin_forum eq 'y'}
-<a class="linkbut" href="tiki-view_forum.php?openpost=1&amp;forumId={$forum_info.forumId}&amp;comments_threadId=0&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}" {if !isset($comments_threadId) or $comments_threadId eq 0}onclick="javascript:show('forumpost');return false;"{/if}>
-{tr}New Topic{/tr}</a>
+<span class="button2"><a href="tiki-view_forum.php?openpost=1&amp;forumId={$forum_info.forumId}&amp;comments_threadId=0&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}" {if !isset($comments_threadId) or $comments_threadId eq 0}onclick="javascript:show('forumpost');return false;"{/if}>
+{tr}New Topic{/tr}</a></span>
 {/if}
 {if $tiki_p_admin_forum eq 'y' or !isset($all_forums) or $all_forums|@count > 1 }{* No need for users to go to forum list if they are already looking at the only forum BUT note that all_forums only defined with quickjump feature *}
-  <a class="linkbut" href="tiki-forums.php">{tr}Forum List{/tr}</a> 
+  <span class="button2"><a href="tiki-forums.php">{tr}Forum List{/tr}</a></span>
 {/if}
 
 {if $tiki_p_admin_forum eq 'y'}
-  <a class="linkbut" href="tiki-admin_forums.php?forumId={$forum_info.forumId}">{tr}Edit Forum{/tr}</a>
+  <span class="button2"><a href="tiki-admin_forums.php?forumId={$forum_info.forumId}">{tr}Edit Forum{/tr}</a></span>
 {/if}
 
 {if $queued > 0}
-  <a class="linkbut highlight" href="tiki-forum_queue.php?forumId={$forumId}">{tr}Manage Message Queue{/tr}&nbsp;({$queued})</a>
+   <span class="button2"><a class="highlight" href="tiki-forum_queue.php?forumId={$forumId}">{tr}Manage Message Queue{/tr}&nbsp;({$queued})</a></span>
 {/if}
 
 {if $reported > 0}
-  <a class="linkbut highlight" href="tiki-forums_reported.php?forumId={$forumId}">{tr}Manage Reported Messages{/tr}&nbsp;({$reported})</a>
+  <span class="button2"><a class="highlight" href="tiki-forums_reported.php?forumId={$forumId}">{tr}Manage Reported Messages{/tr}&nbsp;({$reported})</a></span>
 {/if}
 
 </td>

@@ -9,8 +9,8 @@
 5. {tr}Finally if the user didn't select a theme the default theme is used{/tr}<br />
 </div>
 <br /><br />
-<a class="linkbut" href="tiki-theme_control.php">{tr}Control by Categories{/tr}</a>
-<a class="linkbut" href="tiki-theme_control_objects.php">{tr}Control by Objects{/tr}</a>
+<span class="button2"><a href="tiki-theme_control.php">{tr}Control by Categories{/tr}</a></span>
+<span class="button2"><a href="tiki-theme_control_objects.php">{tr}Control by Objects{/tr}</a></span>
 <h2>{tr}Assign themes to sections{/tr}</h2>
 <form action="tiki-theme_control_sections.php" method="post">
 <table class="normal">

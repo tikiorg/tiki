@@ -18,21 +18,21 @@
 	{/if}
 	<div id="panel">
 		<menu>
-			<li><a href="#" onclick="insertRowClick()" class="linkbut">{tr}Insert Row{/tr}</a></li>
-			<li><a href="#" onclick="insertColumnClick()" class="linkbut">{tr}Insert Column{/tr}</a></li>
-			<li><a href="#" onclick="removeRowClick()" class="linkbut">{tr}Remove Row{/tr}</a></li>
-			<li><a href="#" onclick="removeColumnClick()" class="linkbut">{tr}Remove Column{/tr}</a></li>
-			<li><a href="#" onclick="mergeCellClick()" class="linkbut">{tr}Merge Cells{/tr}</a></li>
-			<li><a href="#" onclick="restoreCellClick()" class="linkbut">{tr}Restore Cells{/tr}</a></li>
-			<li><a href="#" onclick="copyCalculationClick()" class="linkbut">{tr}Copy Calculation{/tr}</a></li>
-			<li><a href="#" onclick="formatCellClick()" class="linkbut">{tr}Format Cell{/tr}</a></li>
+			<li><span class="button2"><a href="#" onclick="insertRowClick()">{tr}Insert Row{/tr}</a></span></li>
+			<li><span class="button2"><a href="#" onclick="insertColumnClick()">{tr}Insert Column{/tr}</a></span></li>
+			<li><span class="button2"><a href="#" onclick="removeRowClick()">{tr}Remove Row{/tr}</a></span></li>
+			<li><span class="button2"><a href="#" onclick="removeColumnClick()">{tr}Remove Column{/tr}</a></span></li>
+			<li><span class="button2"><a href="#" onclick="mergeCellClick()">{tr}Merge Cells{/tr}</a></span></li>
+			<li><span class="button2"><a href="#" onclick="restoreCellClick()">{tr}Restore Cells{/tr}</a></span></li>
+			<li><span class="button2"><a href="#" onclick="copyCalculationClick()">{tr}Copy Calculation{/tr}</a></span></li>
+			<li><span class="button2"><a href="#" onclick="formatCellClick()">{tr}Format Cell{/tr}</a></span></li>
 		</menu>
 		<div id="detail"></div>
 	</div>
 	<form method="post" action="tiki-view_sheets.php?mode=edit&sheetId={$sheetId}" id="Grid"></form>
 	<div class='submit'>
 		<input type="submit" onclick='g.target.style.visibility = "hidden"; g.prepareSubmit(); g.target.submit();' value="{tr}Save{/tr}" />
-		<a class="linkbut" href="tiki-view_sheets.php?sheetId={$sheetId}">{tr}Cancel{/tr}</a>
+		<span class="button2"><a href="tiki-view_sheets.php?sheetId={$sheetId}">{tr}Cancel{/tr}</a></span>
 	</div>
 	<script type="text/javascript" src="lib/sheet/grid.js"></script>
 	<script type="text/javascript" src="lib/sheet/control.js"></script>
@@ -63,25 +63,25 @@
 {else}
 {$grid_content}
 {if $tiki_p_view_sheet eq 'y' || $tiki_p_sheet_admin eq 'y' || $tiki_p_admin eq 'y'}
-<a href="tiki-sheets.php" class="linkbut">{tr}List Sheets{/tr}</a>
+<span class="button2"><a href="tiki-sheets.php">{tr}List Sheets{/tr}</a></span>
 {/if}
 {if $tiki_p_edit_sheet eq 'y' || $tiki_p_sheet_admin eq 'y' || $tiki_p_admin eq 'y'}
 {if $editconflict eq 'y'}
-	<a href="tiki-view_sheets.php?sheetId={$sheetId}&readdate={$read_date}&mode=edit" class="linkbut" title="{$semUser}" ><span class="highlight">{tr}Edit{/tr}</span></a>
+	<span class="button2 highlight"><a href="tiki-view_sheets.php?sheetId={$sheetId}&readdate={$read_date}&mode=edit" title="{$semUser}">{tr}Edit{/tr}</a></span>
 {else}
-	<a href="tiki-view_sheets.php?sheetId={$sheetId}&readdate={$read_date}&mode=edit" class="linkbut">{tr}Edit{/tr}</a>
+	<span class="button2"><a href="tiki-view_sheets.php?sheetId={$sheetId}&readdate={$read_date}&mode=edit">{tr}Edit{/tr}</a></span>
 {/if}
 {/if}
 {if $tiki_p_view_sheet_history eq 'y' || $tiki_p_sheet_admin eq 'y' || $tiki_p_admin eq 'y'}
-<a href="tiki-history_sheets.php?sheetId={$sheetId}" class="linkbut">{tr}History{/tr}</a>
+<span class="button2"><a href="tiki-history_sheets.php?sheetId={$sheetId}">{tr}History{/tr}</a></span>
 {/if}
 {if $tiki_p_view_sheet eq 'y' || $tiki_p_sheet_admin eq 'y' || $tiki_p_admin eq 'y'}
-<a href="tiki-export_sheet.php?sheetId={$sheetId}" class="linkbut">{tr}Export{/tr}</a>
+<span class="button2"><a href="tiki-export_sheet.php?sheetId={$sheetId}">{tr}Export{/tr}</a></span>
 {/if}
 {if $tiki_p_edit_sheet eq 'y' || $tiki_p_sheet_admin eq 'y' || $tiki_p_admin eq 'y'}
-<a href="tiki-import_sheet.php?sheetId={$sheetId}" class="linkbut">{tr}import{/tr}</a>
+<span class="button2"><a href="tiki-import_sheet.php?sheetId={$sheetId}">{tr}import{/tr}</a></span>
 {/if}
 {if $chart_enabled eq 'y'}
-<a href="tiki-graph_sheet.php?sheetId={$sheetId}" class="linkbut">{tr}Graph{/tr}</a>
+<span class="button2"><a href="tiki-graph_sheet.php?sheetId={$sheetId}">{tr}Graph{/tr}</a></span>
 {/if}
 {/if}

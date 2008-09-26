@@ -106,7 +106,7 @@ class="prevnext">{tr}All{/tr}</a>
 <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $prefs.feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 {if $groupname}
 <h2>{tr}Edit group{/tr} {$groupname}</h2>
-<a class="linkbut" href="tiki-assignpermission.php?group={$groupname}">{tr}Assign Permissions{/tr}</a>
+<span class="button2"><a href="tiki-assignpermission.php?group={$groupname}">{tr}Assign Permissions{/tr}</a></span>
 {else}
 <h2>{tr}Add new group{/tr}</h2>
 {/if}
@@ -173,7 +173,7 @@ class="prevnext">{tr}All{/tr}</a>
 {/section}
 </select>
 {/if}
-<span class="button2"><a href="{if $grouptrackerid}tiki-admin_tracker_fields.php?trackerId={$grouptrackerid}{else}tiki-admin_trackers.php{/if}" class="linkbut">{tr}Admin{/tr} {$ggr}</a>
+<span class="button2"><a href="{if $grouptrackerid}tiki-admin_tracker_fields.php?trackerId={$grouptrackerid}{else}tiki-admin_trackers.php{/if}">{tr}Admin{/tr} {$ggr}</a></span>
 </td></tr>
 {/if}
 {if $prefs.userTracker eq 'y'}
@@ -193,7 +193,7 @@ class="prevnext">{tr}All{/tr}</a>
 {/section}
 </select>
 {/if}
-<span class="button2"><a href="{if $userstrackerid}tiki-admin_tracker_fields.php?trackerId={$userstrackerid}{else}tiki-admin_trackers.php{/if}" class="linkbut">{tr}Admin{/tr} {$ugr}</a>
+<span class="button2"><a href="{if $userstrackerid}tiki-admin_tracker_fields.php?trackerId={$userstrackerid}{else}tiki-admin_trackers.php{/if}" >{tr}Admin{/tr} {$ugr}</a></span>
 </td></tr>
 <tr class="formcolor"><td>{tr}Users Information Tracker Fields Asked at Registration Time<br />(fieldIds separated with :){/tr}</td>
 <td><input type="text" size="40" name="registrationUsersFieldIds" value="{$registrationUsersFieldIds|escape}" /></td></tr>
@@ -212,7 +212,7 @@ class="prevnext">{tr}All{/tr}</a>
 
 {if $prefs.groupTracker eq 'y'}
 {if $grouptrackerid and $groupitemid}
-{tr}Group tracker item : {$groupitemid}{/tr} <span class="button2"><a href="tiki-view_tracker_item.php?trackerId={$grouptrackerid}&amp;itemId={$groupitemid}&amp;show=mod" class="linkbut">{tr}Edit Item{/tr}</a></span>
+{tr}Group tracker item : {$groupitemid}{/tr} <span class="button2"><a href="tiki-view_tracker_item.php?trackerId={$grouptrackerid}&amp;itemId={$groupitemid}&amp;show=mod">{tr}Edit Item{/tr}</a></span>
 {elseif $grouptrackerid}
 {if $groupfieldid}
 {tr}Group tracker item not found{/tr} <span class="button2"><a href="tiki-view_tracker.php?trackerId={$grouptrackerid}">{tr}Create item{/tr}</a></span>

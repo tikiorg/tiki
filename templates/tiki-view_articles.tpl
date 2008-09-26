@@ -107,7 +107,7 @@ border="0" src="article_image.php?image_type=topic&amp;id={$listpages[ix].topicI
    and ($tiki_p_read_comments eq 'y')
    and ($listpages[ix].allow_comments eq 'y')}
     <td class="articletrailer">
-      <a href="tiki-read_article.php?articleId={$listpages[ix].articleId}&amp;show_comzone=y#comments" class="linkbut {if $listpages[ix].comments_cant > 0}highlight{/if}">
+      <a href="tiki-read_article.php?articleId={$listpages[ix].articleId}&amp;show_comzone=y#comments"{if $listpages[ix].comments_cant > 0} class="highlight"{/if}>
         {if $listpages[ix].comments_cant == 0 or ($tiki_p_read_comments  == 'n' and $tiki_p_post_comments  == 'y')}
           {tr}Add Comment{/tr}
         {elseif $listpages[ix].comments_cant == 1}

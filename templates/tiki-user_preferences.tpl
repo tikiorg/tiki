@@ -7,9 +7,9 @@
 {/if}
 
 {if $tiki_p_admin_users eq 'y'}
-  <a class="linkbut" href="tiki-assignuser.php?assign_user={$userinfo.login}" title="{tr}Assign Group{/tr}">
+  <span class="button2"><a href="tiki-assignuser.php?assign_user={$userinfo.login}" title="{tr}Assign Group{/tr}">
     {tr}Assign Group{/tr}
-  </a>
+  </a></span>
 {/if}
 
 {if $userwatch eq $user or $userwatch eq ""}

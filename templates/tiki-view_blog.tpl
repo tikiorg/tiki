@@ -153,7 +153,7 @@
       <tr>
         <td>
           <div class="button2">
-            <a href="#comment" onclick="javascript:flip('comzone');flip('comzone_close','inline');return false;" class="linkbut {if $comments_cant > 0}highlight{/if}">
+            <a href="#comment" onclick="javascript:flip('comzone');flip('comzone_close','inline');return false;"{if $comments_cant > 0} class="highlight"{/if}>
               {if $comments_cant == 0 or ($tiki_p_read_comments  == 'n' and $tiki_p_post_comments  == 'y')}
                 {tr}Add Comment{/tr}
               {elseif $comments_cant == 1}

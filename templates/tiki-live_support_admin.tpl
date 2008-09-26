@@ -1,10 +1,10 @@
 {title help="Live+Support"}{tr}Live support system{/tr}{/title}
 
-<a class="linkbut" {jspopup href="tiki-live_support_console.php"}>{tr}Open operator console{/tr}</a>
-<a class="linkbut" {jspopup width="300" height="450" href="tiki-live_support_client.php"}> {tr}Open client window{/tr}</a>
-<a class="linkbut" href="tiki-live_support_admin.php?show_html">{tr}Generate HTML{/tr}</a>
-<a class="linkbut" href="tiki-live_support_transcripts.php">{tr}Transcripts{/tr}</a>
-<!--<a class="linkbut" href="tiki-live_support_messages.php">{tr}Support tickets{/tr}</a>-->
+<span class="button2"><a {jspopup href="tiki-live_support_console.php"}>{tr}Open operator console{/tr}</a></span>
+<span class="button2"><a {jspopup width="300" height="450" href="tiki-live_support_client.php"}> {tr}Open client window{/tr}</a></span>
+<span class="button2"><a href="tiki-live_support_admin.php?show_html">{tr}Generate HTML{/tr}</a></span>
+<span class="button2"><a href="tiki-live_support_transcripts.php">{tr}Transcripts{/tr}</a></span>
+<!--<span class="button2"><a href="tiki-live_support_messages.php">{tr}Support tickets{/tr}</a></span>-->
 <br /><br />
 {if $html}
 	<b>Generated HTML code:</b><br />

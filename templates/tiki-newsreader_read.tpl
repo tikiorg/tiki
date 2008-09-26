@@ -2,9 +2,9 @@
 <h1><a class="pagetitle" href="tiki-newsreader_read.php?offset={$offset}&amp;id={$id}&amp;serverId={$serverId}&amp;server={$server}&amp;port={$port}&amp;news_username={$news_username}&amp;password={$password}&amp;group={$group}">{tr}Reading article from{/tr}:{$group}</a></h1>
 {include file=tiki-mytiki_bar.tpl}
 <br /><br />
-<a class="linkbut" href="tiki-newsreader_servers.php">{tr}Back to servers{/tr}</a>
-{if $serverId}<a class="linkbut" href="tiki-newsreader_groups.php?serverId={$serverId}">{tr}Back to groups{/tr}</a>{/if}
-<a class="linkbut" href="tiki-newsreader_news.php?serverId={$serverId}&amp;server={$server}&amp;port={$port}&amp;news_username={$news_username}&amp;password={$password}&amp;group={$group}&amp;offset={$offset}">{tr}Back to list of articles{/tr}</a>
+<span class="button2"><a href="tiki-newsreader_servers.php">{tr}Back to servers{/tr}</a></span>
+{if $serverId}<span class="button2"><a href="tiki-newsreader_groups.php?serverId={$serverId}">{tr}Back to groups{/tr}</a></span>{/if}
+<span class="button2"><a href="tiki-newsreader_news.php?serverId={$serverId}&amp;server={$server}&amp;port={$port}&amp;news_username={$news_username}&amp;password={$password}&amp;group={$group}&amp;offset={$offset}">{tr}Back to list of articles{/tr}</a></span>
 <br /><br />
 <table class="normal">
 <tr><td class="formcolor" colspan="2">

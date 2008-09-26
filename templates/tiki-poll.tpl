@@ -19,7 +19,7 @@
 </div>
 {if $prefs.feature_poll_comments and $comments_cant and !isset($module_params)}
   <br />
-  <a href="#" onclick="javascript:flip('comzone');flip('comzone_close','inline');return false;" class="linkbut {if $comments_cant > 0}highlight{/if}">
+  <a href="#" onclick="javascript:flip('comzone');flip('comzone_close','inline');return false;"{if $comments_cant > 0} class="highlight"{/if}>
   {if $comments_cant == 0 or ($tiki_p_read_comments  == 'n' and $tiki_p_post_comments  == 'y')}
     {tr}Add Comment{/tr}
   {elseif $comments_cant == 1}

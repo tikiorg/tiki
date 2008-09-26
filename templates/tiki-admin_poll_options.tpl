@@ -1,7 +1,7 @@
 {title url="tiki-admin_poll_options.php?pollId=$pollId"}{tr}Admin Polls:{/tr} {$menu_info.title}{/title}
 
-<a href="tiki-admin_polls.php" class="linkbut">{tr}List polls{/tr}</a>
-<a href="tiki-admin_polls.php?pollId={$pollId}" class="linkbut">{tr}Edit this poll{/tr}</a>
+<span class="button2"><a href="tiki-admin_polls.php">{tr}List polls{/tr}</a></span>
+<span class="button2"><a href="tiki-admin_polls.php?pollId={$pollId}">{tr}Edit this poll{/tr}</a></span>
 <br />
 <h2>{tr}Preview poll{/tr}</h2>
 <div align="center">

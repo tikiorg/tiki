@@ -1,9 +1,9 @@
 {title}{tr}Admin FAQ{/tr}: {$faq_info.title}{/title}
 
-<a class="linkbut" href="tiki-list_faqs.php">{tr}List FAQs{/tr}</a>
-<a class="linkbut" href="tiki-view_faq.php?faqId={$faqId}">{tr}View FAQ{/tr}</a>
-<a class="linkbut" href="tiki-list_faqs.php?faqId={$faqId}">{tr}Edit this FAQ{/tr}</a>
-<a class="linkbut" href="tiki-faq_questions.php?faqId={$faqId}">{tr}New Question{/tr}</a>
+<span class="button2"><a href="tiki-list_faqs.php">{tr}List FAQs{/tr}</a></span>
+<span class="button2"><a href="tiki-view_faq.php?faqId={$faqId}">{tr}View FAQ{/tr}</a></span>
+<span class="button2"><a href="tiki-list_faqs.php?faqId={$faqId}">{tr}Edit this FAQ{/tr}</a></span>
+<span class="button2"><a href="tiki-faq_questions.php?faqId={$faqId}">{tr}New Question{/tr}</a></span>
 <br />
 <br />
 

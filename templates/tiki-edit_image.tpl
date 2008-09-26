@@ -1,7 +1,7 @@
 {title}{tr}Edit Image{/tr}{/title}
 
-<a class="linkbut" href="tiki-browse_gallery.php?galleryId={$galleryId}">{tr}Return to Gallery{/tr}</a>
-<a class="linkbut" href="tiki-browse_image.php?imageId={$imageId}">{tr}Browse Images{/tr}</a>
+<span class="button2"><a href="tiki-browse_gallery.php?galleryId={$galleryId}">{tr}Return to Gallery{/tr}</a></span>
+<span class="button2"><a href="tiki-browse_image.php?imageId={$imageId}">{tr}Browse Images{/tr}</a></span>
 <br /><br />
 <div align="center">
 {if $show eq 'y'}

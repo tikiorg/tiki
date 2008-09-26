@@ -10,7 +10,7 @@
 <div align="center">
 {section name=ini loop=$initials}
 {if $tr_initial and $initials[ini] eq $tr_initial}
-<span class="button2"><span class="linkbuton">{$initials[ini]|capitalize}</span></span> . 
+<span class="button2">{$initials[ini]|capitalize}</span> . 
 {else}
 {self_link _class="prevnext" tr_initial=$intials[ini]}{$initials[ini]}{/self_link}
 {/if}
@@ -167,7 +167,7 @@ link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" border="0" al
 
 {if $more eq 'y'}
 	<div class="more">
-		 <a class="linkbut" href="{if $moreurl}{$moreurl}{else}tiki-view_tracker.php{/if}?trackerId={$trackerId}{if isset($tr_sort_mode)}&amp;sort_mode={$tr_sort_mode}{/if}">{tr}More...{/tr}</a>
+		 <span class="button2"><a href="{if $moreurl}{$moreurl}{else}tiki-view_tracker.php{/if}?trackerId={$trackerId}{if isset($tr_sort_mode)}&amp;sort_mode={$tr_sort_mode}{/if}">{tr}More...{/tr}</a></span>
 	</div>
 {else}
 {pagination_links cant=$count_item step=$max offset=$tr_offset offset_arg=tr_offset}{/pagination_links}

@@ -1,12 +1,12 @@
 {title help="Quiz"}{tr}Quiz result stats{/tr}{/title}
 
-<! -- linkbuttons, they'd be better if they had rollover info -->
+<! -- linkbuttons, they would be better if they had rollover info -->
 
-<a class="linkbut" href="tiki-list_quizzes.php">{tr}List Quizzes{/tr}</a>
-<a class="linkbut" href="tiki-quiz_stats.php">{tr}Quiz Stats{/tr}</a>
-<a class="linkbut" href="tiki-quiz_stats_quiz.php?quizId={$quizId}">{tr}This Quiz Stats{/tr}</a>
-<a class="linkbut" href="tiki-edit_quiz.php?quizId={$quizId}">{tr}Edit this Quiz{/tr}</a>
-<a class="linkbut" href="tiki-edit_quiz.php">{tr}Admin Quizzes{/tr}</a><br /><br />
+<span class="button2"><a href="tiki-list_quizzes.php">{tr}List Quizzes{/tr}</a></span>
+<span class="button2"><a href="tiki-quiz_stats.php">{tr}Quiz Stats{/tr}</a></span>
+<span class="button2"><a href="tiki-quiz_stats_quiz.php?quizId={$quizId}">{tr}This Quiz Stats{/tr}</a></span>
+<span class="button2"><a href="tiki-edit_quiz.php?quizId={$quizId}">{tr}Edit this Quiz{/tr}</a></span>
+<span class="button2"><a href="tiki-edit_quiz.php">{tr}Admin Quizzes{/tr}</a><br /><br /></span>
 
 <! -- begin table/ it has no internal linking... that needs fixing -->
 

@@ -1,10 +1,10 @@
 {title url="tiki-edit_question_options.php?questionId=$questionId"}{tr}Edit question options{/tr}{/title}
 
-<a class="linkbut" href="tiki-list_quizzes.php">{tr}List Quizzes{/tr}</a>
-<a class="linkbut" href="tiki-quiz_stats.php">{tr}Quiz Stats{/tr}</a>
-<a class="linkbut" href="tiki-quiz_stats_quiz.php?quizId={$quizId}">{tr}This Quiz Stats{/tr}</a>
-<a class="linkbut" href="tiki-edit_quiz.php?quizId={$quizId}">{tr}Edit this Quiz{/tr}</a>
-<a class="linkbut" href="tiki-edit_quiz.php">{tr}Admin Quizzes{/tr}</a><br /><br />
+<span class="button2"><a href="tiki-list_quizzes.php">{tr}List Quizzes{/tr}</a></span>
+<span class="button2"><a href="tiki-quiz_stats.php">{tr}Quiz Stats{/tr}</a></span>
+<span class="button2"><a href="tiki-quiz_stats_quiz.php?quizId={$quizId}">{tr}This Quiz Stats{/tr}</a></span>
+<span class="button2"><a href="tiki-edit_quiz.php?quizId={$quizId}">{tr}Edit this Quiz{/tr}</a></span>
+<span class="button2"><a href="tiki-edit_quiz.php">{tr}Admin Quizzes{/tr}</a></span><br /><br />
 <h2>{tr}Create/edit options for question{/tr}: <a  href="tiki-edit_quiz_questions.php?quizId={$question_info.quizId}&amp;questionId={$question_info.questionId}">{$question_info.question}</a></h2>
 <form action="tiki-edit_question_options.php" method="post">
 <input type="hidden" name="optionId" value="{$optionId|escape}" />

@@ -11,12 +11,12 @@
 	{if $update eq 'y'}
 			{tr}has been updated{/tr}
 			<p>
-				<a class="linkbut" href="#" onclick='window.opener.location.reload(); self.close(); return false'>{tr}Close this window{/tr}</a>
-				<a class="linkbut" href="#" onclick='history.go(-1);'>{tr}Go Back{/tr}</a>
+				<span class="button2"><a href="#" onclick='window.opener.location.reload(); self.close(); return false'>{tr}Close this window{/tr}</a></span>
+				<span class="button2"><a href="#" onclick='history.go(-1);'>{tr}Go Back{/tr}</a></span>
 			</p>
 			<p><small>*{tr}Clicking 'Close this window' will reload the main window from where it was opened{/tr}</small></p>
 	{else}
-			<p><a class="linkbut" href="#" onclick='self.close();'>{tr}Close this window{/tr}</a></p>
+			<p><span class="button2"><a href="#" onclick='self.close();'>{tr}Close this window{/tr}</a></span></p>
 			
 			<form><table class='normal'>
 		{assign var=first value=""}

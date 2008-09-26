@@ -15,7 +15,7 @@
 {* Check that page is not locked and edit permission granted. SandBox can be edited w/o perm *}
 {if ($editable and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox')) or $tiki_p_admin_wiki eq 'y' or $canEditStaging eq 'y'}
       <span class="button2" >
-      <a title="{$semUser}" {ajax_href template="tiki-editpage.tpl" htmlelement="tiki-center"}tiki-editpage.php?page={if $needsStaging eq 'y'}{$stagingPageName|escape:"url"}{else}{$page|escape:"url"}{/if}{if $page_ref_id and $needsStaging neq 'y'}&amp;page_ref_id={$page_ref_id}{/if}{/ajax_href} class="linkbut {if $beingEdited eq 'y'}highlight{/if}">      		
+      <a title="{$semUser}" {ajax_href template="tiki-editpage.tpl" htmlelement="tiki-center"}tiki-editpage.php?page={if $needsStaging eq 'y'}{$stagingPageName|escape:"url"}{else}{$page|escape:"url"}{/if}{if $page_ref_id and $needsStaging neq 'y'}&amp;page_ref_id={$page_ref_id}{/if}{/ajax_href}{if $beingEdited eq 'y'}  class="highlight"{/if}>      		
           {tr}Edit{/tr}
         </a>
       </span>
@@ -85,7 +85,7 @@
   ||  $tiki_p_edit_comments  == 'y')}
   {strip}
   <span class="button2">
-    <a href="#comments" onclick="javascript:flip('comzone{$page|@md5}');flip('comzone{$page|@md5}_close','inline');return false;" class="linkbut {if $comments_cant > 0}highlight{/if}">
+    <a href="#comments" onclick="javascript:flip('comzone{$page|@md5}');flip('comzone{$page|@md5}_close','inline');return false;"{if $comments_cant > 0} class="highlight"{/if}>
       {if $comments_cant == 0 or ($tiki_p_read_comments  == 'n' and $tiki_p_post_comments  == 'y')}
         {tr}Add Comment{/tr}
       {elseif $comments_cant == 1}
@@ -112,7 +112,7 @@
 
 {strip}
   <span class="button2">
-    <a href="#attachments" onclick="javascript:flip('attzone{$page|@md5}');flip('attzone{$page|@md5}_close','inline');return false;" class="linkbut {if $atts|@count > 0}highlight{/if}">
+    <a href="#attachments" onclick="javascript:flip('attzone{$page|@md5}');flip('attzone{$page|@md5}_close','inline');return false;"{if $atts|@count > 0} class="highlight"{/if}>
     {if $atts|@count == 0 || $tiki_p_wiki_attach_files == 'y' && $tiki_p_wiki_view_attachments == 'n' && $tiki_p_wiki_admin_attachments == 'n'}
       {tr}Attach File{/tr}
     {elseif $atts|@count == 1}

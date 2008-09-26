@@ -6,10 +6,10 @@
 
 {title help="Quiz"}{tr}Edit quiz{/tr}: {$quiz->name}{/title}
 
-<a class="linkbut" href="tiki-list_quizzes.php">{tr}List Quizzes{/tr}</a>
-<a class="linkbut" href="tiki-quiz_stats.php">{tr}Quiz Stats{/tr}</a>
-<a class="linkbut" href="tiki-quiz_stats_quiz.php?quizId={$quiz->id}">{tr}This Quiz Stats{/tr}</a>
-<a class="linkbut" href="tiki-quiz_edit.php">{tr}Admin Quizzes{/tr}</a>
+<span class="button2"><a href="tiki-list_quizzes.php">{tr}List Quizzes{/tr}</a></span>
+<span class="button2"><a href="tiki-quiz_stats.php">{tr}Quiz Stats{/tr}</a></span>
+<span class="button2"><a href="tiki-quiz_stats_quiz.php?quizId={$quiz->id}">{tr}This Quiz Stats{/tr}</a></span>
+<span class="button2"><a href="tiki-quiz_edit.php">{tr}Admin Quizzes{/tr}</a></span>
 <br />
 <br />
 

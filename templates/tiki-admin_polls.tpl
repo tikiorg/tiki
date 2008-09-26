@@ -1,9 +1,9 @@
 {* $Id$ *}
 {title help="Polls" admpage="polls"}{tr}Admin Polls{/tr}{/title}
 
-<a href="tiki-admin_polls.php?setlast=1" class="linkbut">{tr}Set last poll as current{/tr}</a>
-<a href="tiki-admin_polls.php?closeall=1" class="linkbut">{tr}Close all polls but last{/tr}</a>
-<a href="tiki-admin_polls.php?activeall=1" class="linkbut">{tr}Activate all polls{/tr}</a>
+<span class="button2"><a href="tiki-admin_polls.php?setlast=1">{tr}Set last poll as current{/tr}</a></span>
+<span class="button2"><a href="tiki-admin_polls.php?closeall=1">{tr}Close all polls but last{/tr}</a></span>
+<span class="button2"><a href="tiki-admin_polls.php?activeall=1">{tr}Activate all polls{/tr}</a></span>
 <br /><br /><h2>{if $pollId eq '0'}{tr}Create poll{/tr}{else}{tr}Edit poll{/tr}{/if}</h2>
 <form action="tiki-admin_polls.php" method="post">
 <input type="hidden" name="pollId" value="{$pollId|escape}" />
