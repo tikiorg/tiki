@@ -6,7 +6,7 @@ require_once('tiki-setup.php');
 include_once ('lib/userprefs/userprefslib.php');
 
 if($prefs['feature_friends'] != 'y') {
-  $smarty->assign('msg',tra("This feature is disabled"));
+  $smarty->assign('msg',tra('This feature is disabled').': feature_friends');
   $smarty->display("error.tpl");
   die;  
 }
