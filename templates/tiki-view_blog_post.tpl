@@ -65,7 +65,7 @@
 <table >
 <tr><td>
 <small>
-<a class="link" href="tiki-view_blog_post.php?blogId={$blogId}&amp;postId={$postId}">{tr}Permalink{/tr}</a>
+<a class="link" href="{$postId|sefurl:blogpost}">{tr}Permalink{/tr}</a>
 {if $post_info.trackbacks_from_count}
   ({tr}referenced by{/tr}: {$post_info.trackbacks_from_count}
 {/if}

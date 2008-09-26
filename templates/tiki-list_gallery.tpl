@@ -16,7 +16,7 @@
     {/if}
   {/if}
 {/if}
-<a href="tiki-browse_gallery.php?galleryId={$galleryId}">{tr}Browse Gallery{/tr}</a>
+<a href="{$galleryId|sefurl:gallery}">{tr}Browse Gallery{/tr}</a>
 </div>
 
 <h2>{tr}Gallery Images{/tr}</h2>

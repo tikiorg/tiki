@@ -95,7 +95,7 @@
     <div class="postbody">
       {$listpages[ix].parsed_data}
       {if $listpages[ix].pages > 1}
-        <a class="link" href="tiki-view_blog_post.php?blogId={$blogId}&amp;postId={$listpages[ix].postId}">
+        <a class="link" href="{$listpages[ix].postId|sefurl:blogpost}">
           {tr}read more{/tr} ({$listpages[ix].pages} {tr}pages{/tr})
         </a>
       {/if}
@@ -122,7 +122,7 @@
         <tr>
           <td>
             <small>
-              <a class="link" href="tiki-view_blog_post.php?blogId={$blogId}&amp;postId={$listpages[ix].postId}">{tr}Permalink{/tr}</a>
+              <a class="link" href="{$listpages[ix].postId|sefurl:blogpost}">{tr}Permalink{/tr}</a>
               {if $allow_comments eq 'y' and $prefs.feature_blogposts_comments eq 'y'}
                 <a class="link" href="tiki-view_blog_post.php?find={$find}&amp;blogId={$blogId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;postId={$listpages[ix].postId}&amp;show_comments=1">{$listpages[ix].comments} {tr}comments{/tr}</a>
               {/if}

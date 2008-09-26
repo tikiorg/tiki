@@ -5,7 +5,7 @@
 <div class="navbar">
   <span class="button2">
     {if $galleryId ne ''}
-      <a href="tiki-browse_gallery.php?galleryId={$galleryId}">
+      <a href="{$galleryId:sefurl:gallery}">
     {else}
       <a href="tiki-galleries.php">
     {/if}

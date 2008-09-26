@@ -16,13 +16,28 @@ function smarty_modifier_sefurl($source, $type='wiki') {
 	case 'wiki page':
 	case 'wiki':
 		return $wikilib->sefurl($source);
+	// rewrite other things so htaccess can unrewrite
 	case 'blog':
 	        if ($prefs['feature_sefurl'] == 'y') {
 	            return "blog" . $source;
 	        } else {
 	            return 'tiki-view_blog.php?blogId='.$source;
 		}
+	case 'blogpost':
+	        if ($prefs['feature_sefurl'] == 'y') {
+	            return "blogpost" . $source;
+	        } else {
+	            return 'tiki-view_blog_post.php?postId='.$source;
+		}
+	case 'gallery':
+	        if ($prefs['feature_sefurl'] == 'y') {
+	            return "gallery" . $source;
+	        } else {
+	            return 'tiki-browse_gallery.php?galleryId='.$source;
+		}
 	}
+
+
 	return $source;
 }
 ?>

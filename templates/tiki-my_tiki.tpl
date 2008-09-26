@@ -75,7 +75,7 @@
             {section name=ix loop=$user_galleries}
               <tr>
                 <td class="{cycle advance=false}">
-                  <a class="link" href="tiki-browse_gallery.php?galleryId={$user_galleries[ix].galleryId}">{$user_galleries[ix].name}</a>
+                  <a class="link" href="{$user_galleries[ix].galleryId|sefurl:gallery}">{$user_galleries[ix].name}</a>
                 </td>
                 <td class="{cycle}" style="text-align:center;" width="50px">
                   <a class="link" href="tiki-galleries.php?editgal={$user_galleries[ix].galleryId}">
@@ -249,7 +249,7 @@
             {section name=ix loop=$user_blogs}
               <tr>
                 <td class="{cycle advance=false}">
-                  <a class="link" title="{tr}View{/tr}" href="tiki-view_blog.php?blogId={$user_blogs[ix].blogId}">{$user_blogs[ix].title}</a>
+                  <a class="link" title="{tr}View{/tr}" href="{$user_blogs[ix].blogId|sefurl:blog}">{$user_blogs[ix].title}</a>
                 </td>
                 <td class="{cycle}" style="text-align:center;" width="50px">
                   <a class="link" href="tiki-edit_blog.php?blogId={$user_blogs[ix].blogId}">

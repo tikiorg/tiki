@@ -79,7 +79,7 @@
         {foreach from=$subgals key=key item=item}
           <td align="center" {if (($key / $rowImages) % 2)}class="oddthumb"{else}class="eventhumb"{/if}>
           &nbsp;&nbsp;<br />
-          <a href="tiki-browse_gallery.php?galleryId={$item.galleryId}"><img alt="{tr}subgallery{/tr} {$item.name}" class="athumb" src="show_image.php?id={$item.imageId}&amp;thumb=1" /></a>
+          <a href="{$item.galleryId|sefurl:gallery}"><img alt="{tr}subgallery{/tr} {$item.name}" class="athumb" src="show_image.php?id={$item.imageId}&amp;thumb=1" /></a>
 	  <br />
 	  <small class="caption">
 		{tr}Subgallery{/tr}: 
