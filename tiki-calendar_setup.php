@@ -27,9 +27,11 @@ if ( ! ($prefs['feature_calendar'] == 'y' || $prefs['feature_action_calendar'] =
 
 $trunc = "20"; // put in a pref, number of chars displayed in cal cells
 
-if (isset($_REQUEST["todate"]) && $_REQUEST['todate']) {
+if (!empty($_REQUEST['day']) && !empty($_REQUEST['mon']) && !empty($_REQUEST['year'])) {//can come from the event module
+        $_REQUEST['todate'] = $_SESSION['CalendarFocusDate'] = TikiLib::make_time(23,59,59,intval($_REQUEST['mon']),intval($_REQUEST['day']),intval($_REQUEST['year']));
+} elseif (isset($_REQUEST['todate']) && $_REQUEST['todate']) {
 	$_SESSION['CalendarFocusDate'] = $_REQUEST['todate'];
- } elseif (!isset($_REQUEST['todate']) && isset($_SESSION['CalendarFocusDate']) && $_SESSION['CalendarFocusDate']) {
+} elseif (!isset($_REQUEST['todate']) && isset($_SESSION['CalendarFocusDate']) && $_SESSION['CalendarFocusDate']) {
 	$_REQUEST["todate"] = $_SESSION['CalendarFocusDate'];
 } else {
 	$focusdate = $tikilib->now;
