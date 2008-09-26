@@ -33,7 +33,7 @@
 {if $locSection eq 'settings'}
 {if $accountId}
 <h2>{tr}Edit mail account{/tr}</h2>
-<a href="tiki-webmail.php?locSection=settings" class="linkbut">{tr}Add new mail account{/tr}</a><br /><br />
+<span class="button2"><a href="tiki-webmail.php?locSection=settings">{tr}Add new mail account{/tr}</a></span><br /><br />
 {else}
 <h2>{tr}Add new mail account{/tr}</h2>
 {/if}

@@ -380,7 +380,7 @@ onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;">
 <tr><td><input type="submit" name="preview" value="{tr}Preview{/tr}" /></td></tr>
 <tr><td><input type="submit" name="act" value="{tr}Save{/tr}" />
 &nbsp;{tr}in{/tr}&nbsp;
-<span class="linkbut" style="background-color:#{$listcals.$calendarId.custombgcolor};color:#{$listcals.$calendarId.customfgcolor}">{$listcals.$calendarId.name}</span>
+<span class="button2" style="background-color:#{$listcals.$calendarId.custombgcolor};color:#{$listcals.$calendarId.customfgcolor}">{$listcals.$calendarId.name}</span>
 {if $id}&nbsp;<input type="submit" onclick='document.location="tiki-calendar_edit_item.php?calitemId={$id}&amp;delete=y";return false;' value="{tr}Delete Item{/tr}"/>{/if}
 </td></tr>
 </table>

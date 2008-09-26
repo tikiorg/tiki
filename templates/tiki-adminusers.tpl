@@ -95,7 +95,7 @@
 <div align="center">
 {section name=ini loop=$initials}
 {if $initial and $initials[ini] eq $initial}
-<span class="button2"><span class="linkbuton">{$initials[ini]|capitalize}</span></span> . 
+<span class="button2">{$initials[ini]|capitalize}</span> . 
 {else}
 <a href="tiki-adminusers.php?initial={$initials[ini]}{if $find}&amp;find={$find|escape:"url"}{/if}{if $numrows}&amp;numrows={$numrows}{/if}{if $sort_mode}&amp;sort_mode={$sort_mode}{/if}" 
 class="prevnext">{$initials[ini]}</a> . 
@@ -234,7 +234,7 @@ class="prevnext">{tr}All{/tr}</a>
 <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $prefs.feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 {if $userinfo.userId}
 <h2>{tr}Edit user{/tr}: {$userinfo.login}</h2>
-{if $userinfo.login ne 'admin'}<a class="linkbut" href="tiki-assignuser.php?assign_user={$userinfo.login|escape:url}">{tr}Assign to Groups{/tr}: {$userinfo.login}</a>{/if}
+{if $userinfo.login ne 'admin'}<span class="button2"><a href="tiki-assignuser.php?assign_user={$userinfo.login|escape:url}">{tr}Assign to Groups{/tr}: {$userinfo.login}</a></span>{/if}
 {else}
 <h2>{tr}Add a New User{/tr}</h2>
 {/if}
@@ -271,7 +271,7 @@ class="prevnext">{tr}All{/tr}</a>
 {if $prefs.min_pass_length > 1}<em>{tr}Minimum {$prefs.min_pass_length} characters long{/tr}</em>. {/if}
 {if $prefs.pass_chr_num eq 'y'}<em>{tr}Password must contain both letters and numbers{/tr}</em>.{/if}
 {if ! ( $prefs.auth_method eq 'auth' and ( $prefs.auth_create_user_tiki eq 'n' or $prefs.auth_skip_admin eq 'y' ) and $prefs.auth_create_user_auth eq 'n' ) }
-<p><div><a class="linkbut" href="#" onClick="genPass('genepass','pass1','pass2');runPassword(document.RegForm.genpass.value, 'mypassword');">Generate a password:</a> <input id='genepass' name="genpass" type="text" /></div></p>{/if}
+<p><div><span class="button2"><a href="#" onClick="genPass('genepass','pass1','pass2');runPassword(document.RegForm.genpass.value, 'mypassword');">Generate a password:</a> <input id='genepass' name="genpass" type="text" /></div></p>{/if}
 </td></tr>
 <tr class="formcolor"><td>{tr}Repeat Password{/tr}:</td><td><input type="password" name="pass2" id="pass2" /></td></tr>
 {if $userinfo.login neq 'admin'}

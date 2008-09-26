@@ -77,7 +77,7 @@ function capLock(e){
 
 
 {if $prefs.generate_password eq 'y'}
-	<p><div><a class="linkbut" href="#" onClick="genPass('genepass','pass1','pass2');runPassword(document.RegForm.genpass.value, 'mypassword');{if $prefs.feature_ajax eq 'y'}check_pass();{/if}">{tr}Generate a password{/tr}:</a> <input id='genepass' name="genpass" type="text" /></div></p>
+	<p><div><span class="button2"><a href="#" onClick="genPass('genepass','pass1','pass2');runPassword(document.RegForm.genpass.value, 'mypassword');{if $prefs.feature_ajax eq 'y'}check_pass();{/if}">{tr}Generate a password{/tr}:</a></span><input id='genepass' name="genpass" type="text" /></div></p>
 {/if}
 
 
