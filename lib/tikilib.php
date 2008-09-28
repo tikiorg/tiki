@@ -5101,7 +5101,7 @@ class TikiLib extends TikiDB {
 			// print "<pre>pos's: :$pos, $pos_middle:</pre>";
 
 			// process "short" plugins here: {plugin par1=>val1} - melmut
-			if( $plugins['type'] == 'short' && preg_match("/ *\}$/",$plugin_start) ) {
+			if( isset($plugins['type']) && $plugins['type'] == 'short' && preg_match("/ *\}$/",$plugin_start) ) {
 				$plugin_end='';
 				$pos_end = $pos + strlen($plugin_start);
 			// process "short" plugins here: {PLUGIN(par1=>val1)/} - melmut

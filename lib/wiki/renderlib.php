@@ -549,7 +549,7 @@ class WikiRenderer
 
 	private function setGlobal( $name, $value ) // {{{
 	{
-		if( $GLOBALS[$name] != $value && ! array_key_exists( $name, $this->toRestore ) )
+		if( (empty($GLOBALS[$name]) || $GLOBALS[$name] != $value) && ! array_key_exists( $name, $this->toRestore ) )
 			$this->toRestore[$name] = $value;
 
 		$GLOBALS[$name] = $value;
