@@ -6865,42 +6865,6 @@ class TikiLib extends TikiDB {
 
 		} // closing if ($simple_wiki)
 
-		// Replace rss modules
-		if (preg_match_all("/\{rss +id=([0-9]+) *(max=([0-9]+))? *\}/", $data, $rsss)) {
-			global $rsslib; include_once ('lib/rss/rsslib.php');
-
-			$temp_max = count($rsss[0]);
-			for ($i = 0; $i < $temp_max; $i++) {
-				$id = $rsss[1][$i];
-				$max = $rsss[3][$i];
-				if (empty($max))
-					$max = 99;
-
-				$rssdata = $rsslib->get_rss_module_content($id);
-				if (!$rssdata) {
-					$data = str_replace($rsss[0][$i], 'Undefined rss id ' . $id, $data);
-					continue;
-				}
-				$items = $rsslib->parse_rss_data($rssdata, $id);
-				$repl="";
-				if (isset($items[0]) && $items[0]["isTitle"]=="y") {
-					$repl .= '<div class="wiki"><a target="_blank" href="'.$items[0]["link"].'">'.$items[0]["title"].'</a></div>';
-					$items = array_slice ($items, 1);
-				}
-
-				$repl .= '<ul class="rsslist">';
-				$temp_max2 = count($items);
-				for ($j = 0; $j < $temp_max2 && $j < $max; $j++) {
-					$repl .= '<li class="rssitem"><a target="_blank" href="' . $items[$j]["link"] . '" class="rsslink">' . $items[$j]["title"] . '</a>';
-					if (isset($items[$j]["pubDate"]) && $items[$j]["pubDate"] <> '') { $repl .= ' <span class="rssdate">('.$items[$j]["pubDate"].')</span>'; }
-					$repl .= '</li>';
-				}
-
-				$repl .= '</ul>';
-				$data = str_replace($rsss[0][$i], $repl, $data);
-			}
-		}
-
 		// Close BiDi DIVs if any
 		for ($i = 0; $i < $bidiCount; $i++) {
 			$data .= "</div>";
