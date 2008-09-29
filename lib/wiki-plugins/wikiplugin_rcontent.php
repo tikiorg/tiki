@@ -15,7 +15,7 @@ function wikiplugin_rcontent_info() {
 	);
 }
 
-function wikiplugin_content( $data, $params) {
+function wikiplugin_rcontent( $data, $params) {
 
 	global $tikilib;
 
