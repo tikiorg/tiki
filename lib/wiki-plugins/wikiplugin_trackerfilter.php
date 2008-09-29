@@ -13,7 +13,7 @@ function wikiplugin_trackerfilter_info() {
 		'filters' => array(
 			'required' => true,
 			'name' => tra('Filters'),
-			'description' => tra('Example:'.'2/d:4/r:5',
+			'description' => tra('Example:') . '2/d:4/r:5',
 		),
 		'action' => array(
 			'required' => false,
