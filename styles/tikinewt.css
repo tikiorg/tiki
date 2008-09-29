@@ -1257,7 +1257,7 @@ div#page-bar table, div#page-bar td, div#page-bar tr {
 	-moz-border-radius: 5px 5px 0 0;
 	-khtml-border-radius: 5px 5px 0 0;
 }
-.button3 .linkbut {
+.button3 a {
 	border-radius: 5px 5px 0 0;
 	-moz-border-radius: 5px 5px 0 0;
 	-khtml-border-radius: 5px 5px 0 0;
@@ -1269,7 +1269,7 @@ body .button2 {
 }
 
 /* Links in buttons */
-.linkbut, .linkbut:visited {
+.button2 a, .button2 a:visited {
 	font-size: .95em;
 	color: #223344;
 	background: #C7D0D9;
@@ -1282,7 +1282,7 @@ body .button2 {
 	line-height: 170%;
 }
 
-.linkbut:hover {
+.button2 a:hover {
 	background: #dca;
 }
 
@@ -1508,7 +1508,7 @@ div.code {
 	background-color: transparent;
 }
 
-.versionav .button2 .linkbut {
+.versionav .button2 a {
 	border: 0;
 	background-color: inherit;
 	padding: 0 10px;

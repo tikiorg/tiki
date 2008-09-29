@@ -565,7 +565,7 @@ div.messureadbody {
 /*
  * common page classes
  */
-.linkbut {
+.button2 a {
  font-size: 0.8em;
 }
 .pagetitle {
@@ -877,7 +877,7 @@ div.articlebody {
   border-bottom: 1px dashed #999999;
   background-color: transparent;
 }
-.versionav .button2 .linkbut {
+.versionav .button2 a {
   border: 0;
   background-color: inherit;
   padding: 0 10px;

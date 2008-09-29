@@ -765,7 +765,7 @@ div#page-bar table
 	-moz-border-radius : 5px 5px 0 0;
 	-khtml-border-radius : 5px 5px 0 0;
 }
-.button3 .linkbut {
+.button3 a {
 	border-radius : 5px 5px 0 0;
 	-moz-border-radius : 5px 5px 0 0;
 	-khtml-border-radius : 5px 5px 0 0;
@@ -776,7 +776,7 @@ body .button2 {
 	margin-right : 5px;
 }
 /* Links in buttons */
-.linkbut, .linkbut:visited {
+.button2 a, .button2 a:visited {
 	font-size : 10px;
 	color : #223344;
 	background-color : #C7D0D9;
@@ -787,7 +787,7 @@ body .button2 {
 	white-space : nowrap;
         cursor  : pointer;
 }
-.linkbut:hover {
+.button2 a:hover {
 	background-color : #dca;
 }
 .tab1 form {
@@ -1971,7 +1971,7 @@ div.content .tabs {
 	border-bottom : 1px dashed #999999;
 	background-color : transparent;
 }
-.versionav .button2 .linkbut {
+.versionav .button2 a {
 	border : 0;
 	background-color : inherit;
 	padding : 0 10px;

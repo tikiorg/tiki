@@ -1269,38 +1269,26 @@ ul.floatleft li {
 
 .editdate ul.floatleft {margin-top: 8px}
  
-span.button2,
-.navbar .linkbut,
-.navbar a {
+.button2 {
+	display: inline-block;
 	margin: 2px;
 	padding: 0 4px;
 	background:#4E4E4E url(darkroom/button.png) top left repeat-x;
-	color:#B2B2B2;
-	font-weight: bold;
 	border: 1px solid #3F3F3F;
 	border-top: 1px solid #818181}
 
-div.button2 a, .button3 a {
-	margin: 2px;
-	padding: 0 4px;
-	background:#4E4E4E url(darkroom/button.png) top left repeat-x;
-	color:#B2B2B2;
+.button2:hover {border: 1px solid #B2B2B2}
+
+.button2 a,
+.button2 a:visited {
+	display: block;
 	font-weight: bold;
-	border: 1px solid #3F3F3F;
-	border-top: 1px solid #818181;
-	display: inline-block}
+	font-size: 0.8em;
+	text-decoration: none
+	color: #3F3F3F;}
 
-.navbar .linkbut:hover, .navbar a:hover,
-div.button2 a:hover, .button3 a:hover {
-	border: 1px solid #B2B2B2;
-	text-decoration: none}
+.button2 a:hover {text-decoration: none}
 
-span.button2 {line-height: 150%}
-span.button2:hover {border: 1px solid #B2B2B2}
-span.button2 a {border: 1px solid transparent}
-span.button2 a:hover {text-decoration: none}
-.linkbut, .linkbut:visited {font-size: 0.8em}
- /*.linkbut:hover {}
 div.cache {}
 div.cachedpage {}
 .wikicache, .wikicache:visited {}
@@ -1875,12 +1863,12 @@ html>body .galtable {width: 100%}
 
 td.oddthumb {
 	background: #696969;
-	border: 3px solid white;
+	border: 1px solid #474747;
 	border-collapse: collapse}
  
 td.eventhumb {
 	background: #3f3f3f;
-	border: 3px solid white;
+	border: 1px solid #6a6a6a;
 	border-collapse: collapse}
 
 td.eventhumb img {
