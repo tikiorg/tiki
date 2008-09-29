@@ -13,8 +13,10 @@ function wikiplugin_cookie_info()
 
 function wikiplugin_cookie( $data, $params )
 {
+	global $tikilib;
+
 	// Replace cookie
-	$cookie = $this->pick_cookie();
+	$cookie = $tikilib->pick_cookie();
 
 	return $cookie;
 }
