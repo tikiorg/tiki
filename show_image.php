@@ -16,6 +16,7 @@ include_once ("lib/imagegals/imagegallib.php");
 // show_image.php
 // application to display an image from the database with 
 // option to resize the image dynamically creating a thumbnail on the fly.
+// If a gallery ID is specified gallery's representative image is displayed.
 // you have to check if the user has permission to see this gallery
 if ($prefs['feature_galleries'] != 'y') {
    header("HTTP/1.0 404 Not Found");
@@ -27,6 +28,8 @@ if (isset($_REQUEST["name"])) {
 	$id=$imagegallib->get_imageid_byname($_REQUEST["name"]);
 } elseif (isset($_REQUEST["id"])) {
 	$id=$_REQUEST["id"];
+} elseif (isset($_REQUEST["galleryId"])) {
+	$id=$imagegallib->get_gallery_image($_REQUEST["galleryId"],'default');
 }
 
 if (!$id) {

@@ -408,6 +408,9 @@ if ($prefs['feature_actionlog'] == 'y') {
 }
 
 // Display the template
+$foo = parse_url($_SERVER["REQUEST_URI"]);
+$foo2 = str_replace("tiki-browse_gallery", "show_image", $foo["path"]);
+$smarty->assign('url_show', $tikilib->httpPrefix(). $foo2);
 
 $smarty->assign('mid', 'tiki-browse_gallery.tpl');
 $smarty->display("tiki.tpl");
