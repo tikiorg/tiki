@@ -6258,564 +6258,7 @@ class TikiLib extends TikiDB {
 		}
 
 		if (!$simple_wiki) {
-
-			$need_maketoc = strpos($data, "{maketoc");
-			$need_autonumbering = ( preg_match('/^\!+[\-\+]?#/m', $data) > 0 );
-
-			$anch = array();
-			$pageNum = 1;
-
-			// 08-Jul-2003, by zaufi
-			// HotWords will be replace only in ordinal text
-			// It looks __really__ goofy in Headers or Titles
-
-			if ( $prefs['feature_hotwords'] == 'y' ) {
-				// Get list of HotWords
-				$words = $this->get_hotwords();
-			}
-
-			// Now tokenize the expression and process the tokens
-			// Use tab and newline as tokenizing characters as well  ////
-			$lines = explode("\n", $data);
-			$data = '';
-			$listbeg = array();
-			$divdepth = array();
-			$hdr_structure = array();
-			$show_title_level = array();
-			$last_hdr = array();
-			$nb_last_hdr = 0;
-			$nb_hdrs = 0;
-			$inTable = 0;
-			$inPre = 0;
-			$inComment = 0;
-			$inTOC = 0;
-			$inScript = 0;
-			$title_text = '';
-
-			// loop: process all lines
-			$in_paragraph = 0;
-			foreach ($lines as $line) {
-				$current_title_num = '';
-				$numbering_remove = 0;
-
-				$line = rtrim($line); // Trim off trailing white space
-				// Check for titlebars...
-				// NOTE: that title bar should start at the beginning of the line and
-				//	   be alone on that line to be autoaligned... otherwise, it is an old
-				//	   styled title bar...
-				if (substr(ltrim($line), 0, 2) == '-=' && substr($line, -2, 2) == '=-') {
-					// Close open paragraph and lists, but not div's
-					$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 1, 0);
-					//
-					$align_len = strlen($line) - strlen(ltrim($line));
-
-					// My textarea size is about 120 space chars.
-					//define('TEXTAREA_SZ', 120);
-
-					// NOTE: That strict math formula (split into 3 areas) gives
-					//	   bad visual effects...
-					// $align = ($align_len < (TEXTAREA_SZ / 3)) ? "left"
-					//		: (($align_len > (2 * TEXTAREA_SZ / 3)) ? "right" : "center");
-					//
-					// Going to introduce some heuristic here :)
-					// Visualy (remember that space char is thin) center starts at 25 pos
-					// and 'right' from 60 (HALF of full width!) -- thats all :)
-					//
-					// NOTE: Guess align only if more than 10 spaces before -=title=-
-					if ($align_len > 10) {
-						$align = ($align_len < 25) ? "left" : (($align_len > 60) ? "right" : "center");
-
-						$align = ' style="text-align: ' . $align . ';"';
-					} else {
-						$align = '';
-					}
-
-					//
-					$line = trim($line);
-					$line = '<div class="titlebar"' . $align . '>' . substr($line, 2, strlen($line) - 4). '</div>';
-					$data .= $line . "\n";
-					// TODO: Case is handled ...  no need to check other conditions
-					//	   (it is apriori known that they are all false, moreover sometimes
-					//	   check procedure need > O(0) of compexity)
-					//	   -- continue to next line...
-					//	   MUST replace all remaining parse blocks to the same logic...
-					continue;
-				}
-
-				// Replace old styled titlebars
-				if (strlen($line) != strlen($line = preg_replace("/-=(.+?)=-/", "<div class='titlebar'>$1</div>", $line))) {
-					// Close open paragraph, but not lists (why not?) or div's
-					$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 0, 0);
-					$data .= $line . "\n";
-
-					continue;
-				}
-
-				// check if we are inside a ~hc~ block and, if so, ignore
-				// monospaced and do not insert <br />
-				$inComment += substr_count(strtolower($line), "<!--");
-				$inComment -= substr_count(strtolower($line), "-->");
-
-				// check if we are inside a ~pre~ block and, if so, ignore
-				// monospaced and do not insert <br />
-				$inPre += substr_count(strtolower($line), "<pre");
-				$inPre -= substr_count(strtolower($line), "</pre");
-
-				// check if we are inside a table, if so, ignore monospaced and do
-				// not insert <br />
-				$inTable += substr_count(strtolower($line), "<table");
-				$inTable -= substr_count(strtolower($line), "</table");
-
-				// check if we are inside an ul TOC list, if so, ignore monospaced and do
-				// not insert <br />
-				$inTOC += substr_count(strtolower($line), "<ul class=\"toc");
-				$inTOC -= substr_count(strtolower($line), "</ul");
-
-				// check if we are inside a script not insert <br />
-				$inScript += substr_count(strtolower($line), "<script ");
-				$inScript -= substr_count(strtolower($line), "</script>");
-
-				// If the first character is ' ' and we are not in pre then we are in pre
-				if (substr($line, 0, 1) == ' ' && $prefs['feature_wiki_monosp'] == 'y' && $inTable == 0 && $inPre == 0 && $inComment == 0 ) {
-					// Close open paragraph and lists, but not div's
-					$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 1, 0);
-
-					// If the first character is space then make font monospaced.
-					// For fixed formatting, use ~pp~...~/pp~
-					$line = '<tt>' . $line . '</tt>';
-				}
-
-				if ($prefs['feature_hotwords'] == 'y') {
-					// Replace Hotwords before begin
-					$line = $this->replace_hotwords($line, $words);
-				}
-
-				// Make plain URLs clickable hyperlinks
-				if ($prefs['feature_autolinks'] == 'y') {
-					$line = $this->autolinks($line);
-				}
-
-				// Replace monospaced text
-				$line = preg_replace("/(^|\s)-\+(.*?)\+-/", "<code>$2</code>", $line);
-				// Replace bold text
-				$line = preg_replace("/__(.*?)__/", "<b>$1</b>", $line);
-				// Replace italic text
-				$line = preg_replace("/\'\'(.*?)\'\'/", "<i>$1</i>", $line);
-				// Replace definition lists
-				$line = preg_replace("/^;([^:]*):([^\/\/].*)/", "<dl><dt>$1</dt><dd>$2</dd></dl>", $line);
-				$line = preg_replace("/^;(<a [^<]*<\/a>):([^\/\/].*)/", "<dl><dt>$1</dt><dd>$2</dd></dl>", $line);
-
-				// This line is parseable then we have to see what we have
-				if (substr($line, 0, 3) == '---') {
-					// This is not a list item --- close open paragraph and lists, but not div's
-					$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 1, 0);
-					$line = '<hr />';
-				} else {
-					$litype = substr($line, 0, 1);
-					if ($litype == '*' || $litype == '#') {
-						// Close open paragraph, but not lists or div's
-						$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 0, 0);
-						$listlevel = $this->how_many_at_start($line, $litype);
-						$liclose = '</li>';
-						$addremove = 0;
-						if ($listlevel < count($listbeg)) {
-							while ($listlevel != count($listbeg)) $data .= array_shift($listbeg);
-							if (substr(current($listbeg), 0, 5) != '</li>') $liclose = '';
-						} elseif ($listlevel > count($listbeg)) {
-							$listyle = '';
-							while ($listlevel != count($listbeg)) {
-								array_unshift($listbeg, ($litype == '*' ? '</ul>' : '</ol>'));
-								if ($listlevel == count($listbeg)) {
-									$listate = substr($line, $listlevel, 1);
-									if (($listate == '+' || $listate == '-') && !($litype == '*' && !strstr(current($listbeg), '</ul>') || $litype == '#' && !strstr(current($listbeg), '</ol>'))) {
-										$thisid = 'id' . microtime() * 1000000;
-										$data .= '<br /><a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($listate == '-' ? '+' : '-') . ']</a>';
-										$listyle = ' id="' . $thisid . '" style="display:' . ($listate == '+' ? 'block' : 'none') . ';"';
-										$addremove = 1;
-									}
-								}
-								$data.=($litype=='*'?"<ul$listyle>":"<ol$listyle>");
-							}
-							$liclose='';
-						}
-						if ($litype == '*' && !strstr(current($listbeg), '</ul>') || $litype == '#' && !strstr(current($listbeg), '</ol>')) {
-							$data .= array_shift($listbeg);
-							$listyle = '';
-							$listate = substr($line, $listlevel, 1);
-							if (($listate == '+' || $listate == '-')) {
-								$thisid = 'id' . microtime() * 1000000;
-								$data .= '<br /><a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($listate == '-' ? '+' : '-') . ']</a>';
-								$listyle = ' id="' . $thisid . '" style="display:' . ($listate == '+' ? 'block' : 'none') . ';"';
-								$addremove = 1;
-							}
-							$data .= ($litype == '*' ? "<ul$listyle>" : "<ol$listyle>");
-							$liclose = '';
-							array_unshift($listbeg, ($litype == '*' ? '</li></ul>' : '</li></ol>'));
-						}
-						$line = $liclose . '<li>' . substr($line, $listlevel + $addremove);
-						if (substr(current($listbeg), 0, 5) != '</li>') array_unshift($listbeg, '</li>' . array_shift($listbeg));
-					} elseif ($litype == '+') {
-						// Close open paragraph, but not list or div's
-						$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 0, 0);
-						$listlevel = $this->how_many_at_start($line, $litype);
-						// Close lists down to requested level
-						while ($listlevel < count($listbeg)) $data .= array_shift($listbeg);
-
-						// Must append paragraph for list item of given depth...
-						$listlevel = $this->how_many_at_start($line, $litype);
-						if (count($listbeg)) {
-							if (substr(current($listbeg), 0, 5) != '</li>') {
-								array_unshift($listbeg, '</li>' . array_shift($listbeg));
-								$liclose = '<li>';
-							} else $liclose = '<br />';
-						} else $liclose = '';
-						$line = $liclose . substr($line, count($listbeg));
-					} else {
-						// This is not a list item - close open lists,
-						// but not paragraph or div's. If we are
-						// closing a list, there really shouldn't be a
-						// paragraph open anyway.
-						$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 0, 1, 0);
-						// Get count of (possible) header signs at start
-						$hdrlevel = $this->how_many_at_start($line, '!');
-						// If 1st char on line is '!' and its count less than 6 (max in HTML)
-						if ($litype == '!' && $hdrlevel > 0 && $hdrlevel <= 6) {
-
-							/*
-							 * Handle headings autonumbering syntax (i.e. !#Text, !!#Text, ...)
-							 * Note :
-							 *    this needs to be done even if the current header has no '#'
-							 *    in order to generate the right numbers when they are not specified for every headers.
-							 *    This is the case, for example, when you want to add numbers to headers of level 2 but not to level 1
-							 */
-
-							$line_lenght = strlen($line);
-
-							// Generate an array containing the squeleton of maketoc (based on headers levels)
-							//   i.e. hdr_structure will contain something lile this :
-							//     array( 1, 2, 2.1, 2.1.1, 2.1.2, 2.2, ... , X.Y.Z... )
-							//
-
-							$hdr_structure[$nb_hdrs] = '';
-
-							// Generate the number (e.g. 1.2.1.1) of the current title, based on the previous title number :
-							//   - if the current title deepest level is lesser than (or equal to)
-							//     the deepest level of the previous title : then we increment the last level number,
-							//   - else : we simply add new levels with value '1' (only if the previous level number was shown),
-							//
-							if ( $nb_last_hdr > 0 && $hdrlevel <= $nb_last_hdr ) {
-								$hdr_structure[$nb_hdrs] = array_slice($last_hdr, 0, $hdrlevel);
-								if ( !empty($show_title_level[$hdrlevel]) || ! $need_autonumbering ) {
-									//
-									// Increment the level number only if :
-									//     - the last title of the same level number has a displayed number
-									//  or - no title has a displayed number (no autonumbering)
-									//
-									$hdr_structure[$nb_hdrs][$hdrlevel - 1]++;
-								}
-							} else {
-								if ( $nb_last_hdr > 0 ) {
-									$hdr_structure[$nb_hdrs] = $last_hdr;
-								}
-								for ( $h = 0 ; $h < $hdrlevel - $nb_last_hdr ; $h++ ) {
-									$hdr_structure[$nb_hdrs][$h + $nb_last_hdr] = '1';
-								}
-							}
-							$show_title_level[$hdrlevel] = ereg('^!+[\+\-]?#', $line);
-
-							// Update last_hdr info for the next header
-							$last_hdr = $hdr_structure[$nb_hdrs];
-							$nb_last_hdr = count($last_hdr);
-
-							$current_title_real_num = implode('.', $hdr_structure[$nb_hdrs]).'. ';
-
-							// Update the current title number to hide all parents levels numbers if the parent has no autonumbering
-							$hideall = false;
-							for ( $j = $hdrlevel ; $j > 0 ; $j-- ) {
-								if ( $hideall || ! $show_title_level[$j] ) {
-									unset($hdr_structure[$nb_hdrs][$j - 1]);
-									$hideall = true;
-								}
-							}
-
-							// Store the title number to use only if it has to be shown (if the '#' char is used)
-							$current_title_num = $show_title_level[$hdrlevel] ? implode('.', $hdr_structure[$nb_hdrs]).'. ' : '';
-
-							$nb_hdrs++;
-
-
-							// Close open paragraph (lists already closed above)
-							$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 0, 0);
-							// Close lower level divs if opened
-							for (;current($divdepth) >= $hdrlevel; array_shift($divdepth)) $data .= '</div>';
-
-							// Remove possible hotwords replaced :)
-							//   Umm, *why*?  Taking this out lets page
-							//   links in headers work, which can be nice.
-							//   -rlpowell
-							// $line = strip_tags($line);
-
-							// OK. Parse headers here...
-							$anchor = '';
-							$aclose = '';
-							$aclose2 = '';
-							$addremove = $show_title_level[$hdrlevel] ? 1 : 0; // If needed, also remove '#' sign from title beginning
-
-							// May be special signs present after '!'s?
-							$divstate = substr($line, $hdrlevel, 1);
-							if ($divstate == '+' || $divstate == '-') {
-								// OK. Must insert flipper after HEADER, and then open new div...
-								$thisid = 'id' . ereg_replace('[^a-zA-z0-9]', '',urlencode($page)) .$nb_hdrs;
-								$aclose = '<a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($divstate == '-' ? '+' : '-') . ']</a>';
-								$aclose2 = '<div id="' . $thisid . '" class="showhide_heading" style="display:' . ($divstate == '+' ? 'block' : 'none') . ';">';
-								$aclose2 = $aclose2 . '<script type="text/javascript">'."\n".'<!--//--><![CDATA[//><!--'."\n".'setheadingstate(\''. $thisid .'\')'."\n".' //--><!]]>'."\n".'</script>';
-								array_unshift($divdepth, $hdrlevel);
-								$addremove += 1;
-							}
-
-							// Generate the final title text
-							$title_text_base = substr($line, $hdrlevel + $addremove);
-							$title_text = $current_title_num.$title_text_base;
-
-							// create stable anchors for all headers
-							// use header but replace non-word character sequences
-							// with one underscore (for XHTML 1.0 compliance)
-							$thisid = ereg_replace('[^a-zA-Z0-9]+', '_', $title_text);
-							$thisid = ereg_replace('^_', '', $thisid);
-
-							// Add a number to the anchor if it already exists, to avoid duplicated anchors
-							if ( isset($all_anchors[$thisid]) ) {
-								$all_anchors[$thisid]++;
-								$thisid .= '_'.$all_anchors[$thisid];
-							} else {
-								$all_anchors[$thisid] = 1;
-							}
-
-							// Collect TOC entry if any {maketoc} is present on the page
-							if ( $need_maketoc !== false ) {
-								array_push($anch, array(
-											'id' => $thisid,
-											'hdrlevel' => $hdrlevel,
-											'pagenum' => $pageNum,
-											'title' => $title_text_base,
-											'title_displayed_num' => $current_title_num,
-											'title_real_num' => $current_title_real_num
-											));
-							}
-							global $tiki_p_edit, $section;
-							if ($prefs['wiki_edit_section'] == 'y' && $section == 'wiki page' && $tiki_p_edit == 'y') {
-								global $smarty;
-								include_once('lib/smarty_tiki/function.icon.php');
-								$button = '<div class="icon_edit_section"><a href="tiki-editpage.php?page='.urlencode($page).'&amp;hdr='.$nb_hdrs.'">'.smarty_function_icon(array('_id'=>'page_edit', 'alt'=>tra('Edit Section')), $smarty).'</a></div>';
-							} else {
-								$button = '';
-							}
-							// Use $hdrlevel + 1 because the page title is H1, so none of the other headers should be.
-							if ( $prefs['feature_wiki_show_hide_before'] == 'y' ) {
-								$line = $button.'<h'.($hdrlevel+1).' class="showhide_heading" id="'.$thisid.'">'.$aclose.' '.$title_text.'</h'.($hdrlevel+1).'>'.$aclose2;
-							} else {
-								$line = $button.'<h'.($hdrlevel+1).' class="showhide_heading" id="'.$thisid.'">'.$title_text.'</h'.($hdrlevel+1).'>'.$aclose.$aclose2;
-							}
-						} elseif (!strcmp($line, $prefs['wiki_page_separator'])) {
-							// Close open paragraph, lists, and div's
-							$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 1, 1);
-							// Leave line unchanged... tiki-index.php will split wiki here
-							$line = $prefs['wiki_page_separator'];
-							$pageNum += 1;
-						} else {
-							/** Usual paragraph.
-							 *
-							 * If the
-							 * $prefs['feature_wiki_paragraph_formatting']
-							 * is on, then consecutive lines of
-							 * text will be gathered into a block
-							 * that is surrounded by HTML
-							 * paragraph tags. One or more blank
-							 * lines, or another special Wiki line
-							 * (e.g., heading, titlebar, etc.)
-							 * signifies the end of the
-							 * paragraph. If the paragraph
-							 * formatting feature is off, the
-							 * original Tikiwiki behavior is used,
-							 * in which each line in the source is
-							 * terminated by an explicit line
-							 * break (br tag).
-							 *
-							 * @since Version 1.9
-							 */
-							if ($inTable == 0 && $inPre == 0 && $inComment == 0 && $inTOC == 0 && $inScript == 0
-									// Don't put newlines at comments' end!
-									&& ! substr_count(strtolower($line), "-->")
-								 ) {
-								if ($prefs['feature_wiki_paragraph_formatting'] == 'y') {
-									if ($in_paragraph && ( 0 == strcmp("", trim($line)) || substr(trim($line),0,5) == '</div' || substr(trim($line),0,4) == '<div')) {
-										// If still in paragraph, on meeting first blank line or end of div or start of div created by plugins; close a paragraph
-										$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 0, 0);
-									} elseif (!$in_paragraph && (0 != strcmp("", trim($line))) && substr(trim($line),0,4) != '<div') {
-										// If not in paragraph, first non-blank line; start a paragraph; if not start of div created by plugins
-										$data .= "<p>";
-										$in_paragraph = 1;
-									} elseif ($in_paragraph && $prefs['feature_wiki_paragraph_formatting_add_br'] == 'y' && substr(trim($line),0,5) != '</div' && substr(trim($line),0,4) != '<div') {
-										// A normal in-paragraph line if not close of div created by plugins
-										$line = '<br />' . $line;
-									} else {
-										// A normal in-paragraph line or a consecutive blank line.
-										// Leave it as is.
-									}
-								} else {
-									$line .= '<br />';
-								}
-							}
-						}
-					}
-				}
-				$data .= $line . "\n";
-			}
-
-			// Close open paragraph, lists, and div's
-			$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 1, 1);
-
-			/*
-			 * Replace special "maketoc" plugins
-			 *  Valid arguments :
-			 *    - type (look of the maketoc),
-			 *    - maxdepth (max level displayed),
-			 *    - title (replace the default title),
-			 *    - showhide (if set to y, add the Show/Hide link)
-			 *    - nolinks (if set to y, don't add links on toc entries)
-			 *    - nums : 
-			 *       * 'n' means 'no title autonumbering' in TOC,
-			 *       * 'force' means :
-			 *	    ~ same as 'y' if autonumbering is used in the page,
-			 *	    ~ 'number each toc entry as if they were all autonumbered'
-			 *       * any other value means 'same as page's headings autonumbering',
-			 *
-			 *  (Note that title will be translated if a translation is available)
-			 *
-			 *  Examples: {maketoc}, {maketoc type=box maxdepth=1 showhide=y}, {maketoc title="Page Content" maxdepth=3}, ...
-			 *  Obsolete syntax: {maketoc:box}
-			 */
-			$new_data = '';
-			$search_start = 0;
-			while ( ($maketoc_start = strpos($data, "{maketoc", $search_start)) !== false ) {
-				$maketoc_length = strpos($data, "}", $maketoc_start) + 1 - $maketoc_start;
-				$maketoc_string = substr($data, $maketoc_start, $maketoc_length);
-
-				// Handle old type definition for type "box" (and preserve environment for the title also)
-				if ( $maketoc_length > 12 && strtolower(substr($maketoc_string, 8, 4)) == ':box' ) {
-					$maketoc_string = "{maketoc type=box showhide=y title='".tra('index', $language, true).'"'.substr($maketoc_string, 12);
-				}
-
-				$maketoc_string = str_replace('&quot;', '"', $maketoc_string);
-				$maketoc_regs = array();
-
-				if ( $maketoc_length == 9 || preg_match_all("/([^\s=\(]+)=([^\"\s=\)\}]+|\"[^\"]*\")/", $maketoc_string, $maketoc_regs) ) {
-
-					if ( $maketoc_start > 0 ) {
-						$new_data .= substr($data, 0, $maketoc_start);
-					}
-
-					// Set maketoc default values
-					$maketoc_args = array(
-							'type' => '',
-							'maxdepth' => 0, // No limit
-							'title' => tra('Table of contents', $language, true),
-							'showhide' => '',
-							'nolinks' => '',
-							'nums' => ''
-							);
-
-					// Build maketoc arguments list (and remove " chars if they are around the value)
-					if ( isset($maketoc_regs[1]) ) {
-						$nb_args = count($maketoc_regs[1]);
-						for ( $a = 0; $a < $nb_args ; $a++ ) {
-							$maketoc_args[strtolower($maketoc_regs[1][$a])] = trim($maketoc_regs[2][$a], '"');
-						}
-					}
-
-					if ( $maketoc_args['title'] != '' ) {
-						// Translate maketoc title
-						$maketoc_summary = ' summary="'.tra($maketoc_args['title'], $language, true).'"';
-						$maketoc_title = "<div id='toctitle'><h3>".tra($maketoc_args['title'], $language).'</h3></div>';
-					} else {
-						$maketoc_summary = '';
-						$maketoc_title = '';
-					}
-
-					// Build maketoc
-					switch ( $maketoc_args['type'] ) {
-						case 'box': 
-							$maketoc_header = '';
-							$maketoc = "<table id='toc' class='toc'$maketoc_summary>\n<tr><td>$maketoc_title<ul>";
-							$maketoc_footer = "</ul></td></tr></table>\n";
-							$link_class = 'toclink';
-							break;
-						default: 
-							$maketoc = '';
-							$maketoc_header = "<span id='toc'>".$maketoc_title;
-							$maketoc_footer = '</span>';
-							$link_class = 'link';
-					}
-					if ( count($anch) ) {
-						foreach ( $anch as $tocentry ) {
-							if ( $maketoc_args['maxdepth'] > 0 && $tocentry['hdrlevel'] > $maketoc_args['maxdepth'] ) {
-								continue;
-							}
-
-							// Generate the toc entry title (with nums)
-							if ( $maketoc_args['nums'] == 'n' ) {
-								$tocentry_title = '';
-							} elseif ( $maketoc_args['nums'] == 'force' && ! $need_autonumbering ) {
-								$tocentry_title = $tocentry['title_real_num'];
-							} else {
-								$tocentry_title = $tocentry['title_displayed_num'];
-							}
-							$tocentry_title .= $tocentry['title'];
-
-							// Generate the toc entry link
-							$tocentry_link = '#'.$tocentry['id'];
-							if ( $tocentry['pagenum'] > 1 ) {
-								$tocentry_link = $PHP_SELF.'?page='.$page.'&pagenum='.$tocentry['pagenum'].$tocentry_link;
-							}
-							if ( $maketoc_args['nolinks'] != 'y' ) {
-								$tocentry_title = "<a href='$tocentry_link' class='link'>".$tocentry_title.'</a>';
-							}
-
-							if ( $maketoc != '' ) $maketoc.= "\n";
-							switch ( $maketoc_args['type'] ) {
-								case 'box':
-									$maketoc .= "<li class='toclevel-".$tocentry['hdrlevel']."'>".$tocentry_title."</li>";
-									break;
-								default:
-									$maketoc .= str_repeat('*', $tocentry['hdrlevel']).$tocentry_title;
-							}
-						}
-						$maketoc = $this->parse_data($maketoc);
-						$maketoc = ereg_replace("^<ul>", '<ul class="toc">', $maketoc);
-
-						if ( $link_class != 'link' ) {
-							$maketoc = ereg_replace("'link'", "'$link_class'", $maketoc);
-						}
-					}
-					$maketoc = $maketoc_header.$maketoc.$maketoc_footer;
-
-					// Add a Show/Hide link
-					if ( isset($maketoc_args['showhide']) && $maketoc_args['showhide'] == 'y' ) {
-						$maketoc .= "<script type='text/javascript'>\n"
-							. "//<![CDATA[\n"
-							. " if (window.showTocToggle) { var tocShowText = '".tra('Show','',true)."'; var tocHideText = '".tra('Hide','',true)."'; showTocToggle(); }\n"
-							. "//]]>;\n"
-							. "</script>\n";
-					}
-
-					$new_data .= $maketoc;
-					$data = substr($data, $maketoc_start + $maketoc_length);
-					$search_start = 0; // Reinitialize search start cursor, since data now begins after the last replaced maketoc
-				} else {
-					$search_start = $maketoc_start + $maketoc_length;
-				}
-			}
-			$data = $new_data.$data;
+			$this->parse_data_process_maketoc( $data );
 
 		} // closing if ($simple_wiki)
 
@@ -6832,6 +6275,569 @@ class TikiLib extends TikiDB {
 			$data = $handler($data);
 		}
 		return $data;
+	}
+
+	function parse_data_process_maketoc( &$data ) {
+
+		global $prefs;
+
+		$need_maketoc = strpos($data, "{maketoc");
+		$need_autonumbering = ( preg_match('/^\!+[\-\+]?#/m', $data) > 0 );
+
+		$anch = array();
+		$pageNum = 1;
+
+		// 08-Jul-2003, by zaufi
+		// HotWords will be replace only in ordinal text
+		// It looks __really__ goofy in Headers or Titles
+
+		if ( $prefs['feature_hotwords'] == 'y' ) {
+			// Get list of HotWords
+			$words = $this->get_hotwords();
+		}
+
+		// Now tokenize the expression and process the tokens
+		// Use tab and newline as tokenizing characters as well  ////
+		$lines = explode("\n", $data);
+		$data = '';
+		$listbeg = array();
+		$divdepth = array();
+		$hdr_structure = array();
+		$show_title_level = array();
+		$last_hdr = array();
+		$nb_last_hdr = 0;
+		$nb_hdrs = 0;
+		$inTable = 0;
+		$inPre = 0;
+		$inComment = 0;
+		$inTOC = 0;
+		$inScript = 0;
+		$title_text = '';
+
+		// loop: process all lines
+		$in_paragraph = 0;
+		foreach ($lines as $line) {
+			$current_title_num = '';
+			$numbering_remove = 0;
+
+			$line = rtrim($line); // Trim off trailing white space
+			// Check for titlebars...
+			// NOTE: that title bar should start at the beginning of the line and
+			//	   be alone on that line to be autoaligned... otherwise, it is an old
+			//	   styled title bar...
+			if (substr(ltrim($line), 0, 2) == '-=' && substr($line, -2, 2) == '=-') {
+				// Close open paragraph and lists, but not div's
+				$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 1, 0);
+				//
+				$align_len = strlen($line) - strlen(ltrim($line));
+
+				// My textarea size is about 120 space chars.
+				//define('TEXTAREA_SZ', 120);
+
+				// NOTE: That strict math formula (split into 3 areas) gives
+				//	   bad visual effects...
+				// $align = ($align_len < (TEXTAREA_SZ / 3)) ? "left"
+				//		: (($align_len > (2 * TEXTAREA_SZ / 3)) ? "right" : "center");
+				//
+				// Going to introduce some heuristic here :)
+				// Visualy (remember that space char is thin) center starts at 25 pos
+				// and 'right' from 60 (HALF of full width!) -- thats all :)
+				//
+				// NOTE: Guess align only if more than 10 spaces before -=title=-
+				if ($align_len > 10) {
+					$align = ($align_len < 25) ? "left" : (($align_len > 60) ? "right" : "center");
+
+					$align = ' style="text-align: ' . $align . ';"';
+				} else {
+					$align = '';
+				}
+
+				//
+				$line = trim($line);
+				$line = '<div class="titlebar"' . $align . '>' . substr($line, 2, strlen($line) - 4). '</div>';
+				$data .= $line . "\n";
+				// TODO: Case is handled ...  no need to check other conditions
+				//	   (it is apriori known that they are all false, moreover sometimes
+				//	   check procedure need > O(0) of compexity)
+				//	   -- continue to next line...
+				//	   MUST replace all remaining parse blocks to the same logic...
+				continue;
+			}
+
+			// Replace old styled titlebars
+			if (strlen($line) != strlen($line = preg_replace("/-=(.+?)=-/", "<div class='titlebar'>$1</div>", $line))) {
+				// Close open paragraph, but not lists (why not?) or div's
+				$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 0, 0);
+				$data .= $line . "\n";
+
+				continue;
+			}
+
+			// check if we are inside a ~hc~ block and, if so, ignore
+			// monospaced and do not insert <br />
+			$inComment += substr_count(strtolower($line), "<!--");
+			$inComment -= substr_count(strtolower($line), "-->");
+
+			// check if we are inside a ~pre~ block and, if so, ignore
+			// monospaced and do not insert <br />
+			$inPre += substr_count(strtolower($line), "<pre");
+			$inPre -= substr_count(strtolower($line), "</pre");
+
+			// check if we are inside a table, if so, ignore monospaced and do
+			// not insert <br />
+			$inTable += substr_count(strtolower($line), "<table");
+			$inTable -= substr_count(strtolower($line), "</table");
+
+			// check if we are inside an ul TOC list, if so, ignore monospaced and do
+			// not insert <br />
+			$inTOC += substr_count(strtolower($line), "<ul class=\"toc");
+			$inTOC -= substr_count(strtolower($line), "</ul");
+
+			// check if we are inside a script not insert <br />
+			$inScript += substr_count(strtolower($line), "<script ");
+			$inScript -= substr_count(strtolower($line), "</script>");
+
+			// If the first character is ' ' and we are not in pre then we are in pre
+			if (substr($line, 0, 1) == ' ' && $prefs['feature_wiki_monosp'] == 'y' && $inTable == 0 && $inPre == 0 && $inComment == 0 ) {
+				// Close open paragraph and lists, but not div's
+				$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 1, 0);
+
+				// If the first character is space then make font monospaced.
+				// For fixed formatting, use ~pp~...~/pp~
+				$line = '<tt>' . $line . '</tt>';
+			}
+
+			if ($prefs['feature_hotwords'] == 'y') {
+				// Replace Hotwords before begin
+				$line = $this->replace_hotwords($line, $words);
+			}
+
+			// Make plain URLs clickable hyperlinks
+			if ($prefs['feature_autolinks'] == 'y') {
+				$line = $this->autolinks($line);
+			}
+
+			// Replace monospaced text
+			$line = preg_replace("/(^|\s)-\+(.*?)\+-/", "<code>$2</code>", $line);
+			// Replace bold text
+			$line = preg_replace("/__(.*?)__/", "<b>$1</b>", $line);
+			// Replace italic text
+			$line = preg_replace("/\'\'(.*?)\'\'/", "<i>$1</i>", $line);
+			// Replace definition lists
+			$line = preg_replace("/^;([^:]*):([^\/\/].*)/", "<dl><dt>$1</dt><dd>$2</dd></dl>", $line);
+			$line = preg_replace("/^;(<a [^<]*<\/a>):([^\/\/].*)/", "<dl><dt>$1</dt><dd>$2</dd></dl>", $line);
+
+			// This line is parseable then we have to see what we have
+			if (substr($line, 0, 3) == '---') {
+				// This is not a list item --- close open paragraph and lists, but not div's
+				$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 1, 0);
+				$line = '<hr />';
+			} else {
+				$litype = substr($line, 0, 1);
+				if ($litype == '*' || $litype == '#') {
+					// Close open paragraph, but not lists or div's
+					$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 0, 0);
+					$listlevel = $this->how_many_at_start($line, $litype);
+					$liclose = '</li>';
+					$addremove = 0;
+					if ($listlevel < count($listbeg)) {
+						while ($listlevel != count($listbeg)) $data .= array_shift($listbeg);
+						if (substr(current($listbeg), 0, 5) != '</li>') $liclose = '';
+					} elseif ($listlevel > count($listbeg)) {
+						$listyle = '';
+						while ($listlevel != count($listbeg)) {
+							array_unshift($listbeg, ($litype == '*' ? '</ul>' : '</ol>'));
+							if ($listlevel == count($listbeg)) {
+								$listate = substr($line, $listlevel, 1);
+								if (($listate == '+' || $listate == '-') && !($litype == '*' && !strstr(current($listbeg), '</ul>') || $litype == '#' && !strstr(current($listbeg), '</ol>'))) {
+									$thisid = 'id' . microtime() * 1000000;
+									$data .= '<br /><a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($listate == '-' ? '+' : '-') . ']</a>';
+									$listyle = ' id="' . $thisid . '" style="display:' . ($listate == '+' ? 'block' : 'none') . ';"';
+									$addremove = 1;
+								}
+							}
+							$data.=($litype=='*'?"<ul$listyle>":"<ol$listyle>");
+						}
+						$liclose='';
+					}
+					if ($litype == '*' && !strstr(current($listbeg), '</ul>') || $litype == '#' && !strstr(current($listbeg), '</ol>')) {
+						$data .= array_shift($listbeg);
+						$listyle = '';
+						$listate = substr($line, $listlevel, 1);
+						if (($listate == '+' || $listate == '-')) {
+							$thisid = 'id' . microtime() * 1000000;
+							$data .= '<br /><a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($listate == '-' ? '+' : '-') . ']</a>';
+							$listyle = ' id="' . $thisid . '" style="display:' . ($listate == '+' ? 'block' : 'none') . ';"';
+							$addremove = 1;
+						}
+						$data .= ($litype == '*' ? "<ul$listyle>" : "<ol$listyle>");
+						$liclose = '';
+						array_unshift($listbeg, ($litype == '*' ? '</li></ul>' : '</li></ol>'));
+					}
+					$line = $liclose . '<li>' . substr($line, $listlevel + $addremove);
+					if (substr(current($listbeg), 0, 5) != '</li>') array_unshift($listbeg, '</li>' . array_shift($listbeg));
+				} elseif ($litype == '+') {
+					// Close open paragraph, but not list or div's
+					$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 0, 0);
+					$listlevel = $this->how_many_at_start($line, $litype);
+					// Close lists down to requested level
+					while ($listlevel < count($listbeg)) $data .= array_shift($listbeg);
+
+					// Must append paragraph for list item of given depth...
+					$listlevel = $this->how_many_at_start($line, $litype);
+					if (count($listbeg)) {
+						if (substr(current($listbeg), 0, 5) != '</li>') {
+							array_unshift($listbeg, '</li>' . array_shift($listbeg));
+							$liclose = '<li>';
+						} else $liclose = '<br />';
+					} else $liclose = '';
+					$line = $liclose . substr($line, count($listbeg));
+				} else {
+					// This is not a list item - close open lists,
+					// but not paragraph or div's. If we are
+					// closing a list, there really shouldn't be a
+					// paragraph open anyway.
+					$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 0, 1, 0);
+					// Get count of (possible) header signs at start
+					$hdrlevel = $this->how_many_at_start($line, '!');
+					// If 1st char on line is '!' and its count less than 6 (max in HTML)
+					if ($litype == '!' && $hdrlevel > 0 && $hdrlevel <= 6) {
+
+						/*
+						 * Handle headings autonumbering syntax (i.e. !#Text, !!#Text, ...)
+						 * Note :
+						 *    this needs to be done even if the current header has no '#'
+						 *    in order to generate the right numbers when they are not specified for every headers.
+						 *    This is the case, for example, when you want to add numbers to headers of level 2 but not to level 1
+						 */
+
+						$line_lenght = strlen($line);
+
+						// Generate an array containing the squeleton of maketoc (based on headers levels)
+						//   i.e. hdr_structure will contain something lile this :
+						//     array( 1, 2, 2.1, 2.1.1, 2.1.2, 2.2, ... , X.Y.Z... )
+						//
+
+						$hdr_structure[$nb_hdrs] = '';
+
+						// Generate the number (e.g. 1.2.1.1) of the current title, based on the previous title number :
+						//   - if the current title deepest level is lesser than (or equal to)
+						//     the deepest level of the previous title : then we increment the last level number,
+						//   - else : we simply add new levels with value '1' (only if the previous level number was shown),
+						//
+						if ( $nb_last_hdr > 0 && $hdrlevel <= $nb_last_hdr ) {
+							$hdr_structure[$nb_hdrs] = array_slice($last_hdr, 0, $hdrlevel);
+							if ( !empty($show_title_level[$hdrlevel]) || ! $need_autonumbering ) {
+								//
+								// Increment the level number only if :
+								//     - the last title of the same level number has a displayed number
+								//  or - no title has a displayed number (no autonumbering)
+								//
+								$hdr_structure[$nb_hdrs][$hdrlevel - 1]++;
+							}
+						} else {
+							if ( $nb_last_hdr > 0 ) {
+								$hdr_structure[$nb_hdrs] = $last_hdr;
+							}
+							for ( $h = 0 ; $h < $hdrlevel - $nb_last_hdr ; $h++ ) {
+								$hdr_structure[$nb_hdrs][$h + $nb_last_hdr] = '1';
+							}
+						}
+						$show_title_level[$hdrlevel] = ereg('^!+[\+\-]?#', $line);
+
+						// Update last_hdr info for the next header
+						$last_hdr = $hdr_structure[$nb_hdrs];
+						$nb_last_hdr = count($last_hdr);
+
+						$current_title_real_num = implode('.', $hdr_structure[$nb_hdrs]).'. ';
+
+						// Update the current title number to hide all parents levels numbers if the parent has no autonumbering
+						$hideall = false;
+						for ( $j = $hdrlevel ; $j > 0 ; $j-- ) {
+							if ( $hideall || ! $show_title_level[$j] ) {
+								unset($hdr_structure[$nb_hdrs][$j - 1]);
+								$hideall = true;
+							}
+						}
+
+						// Store the title number to use only if it has to be shown (if the '#' char is used)
+						$current_title_num = $show_title_level[$hdrlevel] ? implode('.', $hdr_structure[$nb_hdrs]).'. ' : '';
+
+						$nb_hdrs++;
+
+
+						// Close open paragraph (lists already closed above)
+						$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 0, 0);
+						// Close lower level divs if opened
+						for (;current($divdepth) >= $hdrlevel; array_shift($divdepth)) $data .= '</div>';
+
+						// Remove possible hotwords replaced :)
+						//   Umm, *why*?  Taking this out lets page
+						//   links in headers work, which can be nice.
+						//   -rlpowell
+						// $line = strip_tags($line);
+
+						// OK. Parse headers here...
+						$anchor = '';
+						$aclose = '';
+						$aclose2 = '';
+						$addremove = $show_title_level[$hdrlevel] ? 1 : 0; // If needed, also remove '#' sign from title beginning
+
+						// May be special signs present after '!'s?
+						$divstate = substr($line, $hdrlevel, 1);
+						if ($divstate == '+' || $divstate == '-') {
+							// OK. Must insert flipper after HEADER, and then open new div...
+							$thisid = 'id' . ereg_replace('[^a-zA-z0-9]', '',urlencode($page)) .$nb_hdrs;
+							$aclose = '<a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($divstate == '-' ? '+' : '-') . ']</a>';
+							$aclose2 = '<div id="' . $thisid . '" class="showhide_heading" style="display:' . ($divstate == '+' ? 'block' : 'none') . ';">';
+							$aclose2 = $aclose2 . '<script type="text/javascript">'."\n".'<!--//--><![CDATA[//><!--'."\n".'setheadingstate(\''. $thisid .'\')'."\n".' //--><!]]>'."\n".'</script>';
+							array_unshift($divdepth, $hdrlevel);
+							$addremove += 1;
+						}
+
+						// Generate the final title text
+						$title_text_base = substr($line, $hdrlevel + $addremove);
+						$title_text = $current_title_num.$title_text_base;
+
+						// create stable anchors for all headers
+						// use header but replace non-word character sequences
+						// with one underscore (for XHTML 1.0 compliance)
+						$thisid = ereg_replace('[^a-zA-Z0-9]+', '_', $title_text);
+						$thisid = ereg_replace('^_', '', $thisid);
+
+						// Add a number to the anchor if it already exists, to avoid duplicated anchors
+						if ( isset($all_anchors[$thisid]) ) {
+							$all_anchors[$thisid]++;
+							$thisid .= '_'.$all_anchors[$thisid];
+						} else {
+							$all_anchors[$thisid] = 1;
+						}
+
+						// Collect TOC entry if any {maketoc} is present on the page
+						if ( $need_maketoc !== false ) {
+							array_push($anch, array(
+										'id' => $thisid,
+										'hdrlevel' => $hdrlevel,
+										'pagenum' => $pageNum,
+										'title' => $title_text_base,
+										'title_displayed_num' => $current_title_num,
+										'title_real_num' => $current_title_real_num
+										));
+						}
+						global $tiki_p_edit, $section;
+						if ($prefs['wiki_edit_section'] == 'y' && $section == 'wiki page' && $tiki_p_edit == 'y') {
+							global $smarty;
+							include_once('lib/smarty_tiki/function.icon.php');
+							$button = '<div class="icon_edit_section"><a href="tiki-editpage.php?page='.urlencode($page).'&amp;hdr='.$nb_hdrs.'">'.smarty_function_icon(array('_id'=>'page_edit', 'alt'=>tra('Edit Section')), $smarty).'</a></div>';
+						} else {
+							$button = '';
+						}
+						// Use $hdrlevel + 1 because the page title is H1, so none of the other headers should be.
+						if ( $prefs['feature_wiki_show_hide_before'] == 'y' ) {
+							$line = $button.'<h'.($hdrlevel+1).' class="showhide_heading" id="'.$thisid.'">'.$aclose.' '.$title_text.'</h'.($hdrlevel+1).'>'.$aclose2;
+						} else {
+							$line = $button.'<h'.($hdrlevel+1).' class="showhide_heading" id="'.$thisid.'">'.$title_text.'</h'.($hdrlevel+1).'>'.$aclose.$aclose2;
+						}
+					} elseif (!strcmp($line, $prefs['wiki_page_separator'])) {
+						// Close open paragraph, lists, and div's
+						$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 1, 1);
+						// Leave line unchanged... tiki-index.php will split wiki here
+						$line = $prefs['wiki_page_separator'];
+						$pageNum += 1;
+					} else {
+						/** Usual paragraph.
+						 *
+						 * If the
+						 * $prefs['feature_wiki_paragraph_formatting']
+						 * is on, then consecutive lines of
+						 * text will be gathered into a block
+						 * that is surrounded by HTML
+						 * paragraph tags. One or more blank
+						 * lines, or another special Wiki line
+						 * (e.g., heading, titlebar, etc.)
+						 * signifies the end of the
+						 * paragraph. If the paragraph
+						 * formatting feature is off, the
+						 * original Tikiwiki behavior is used,
+						 * in which each line in the source is
+						 * terminated by an explicit line
+						 * break (br tag).
+						 *
+						 * @since Version 1.9
+						 */
+						if ($inTable == 0 && $inPre == 0 && $inComment == 0 && $inTOC == 0 && $inScript == 0
+								// Don't put newlines at comments' end!
+								&& ! substr_count(strtolower($line), "-->")
+							 ) {
+							if ($prefs['feature_wiki_paragraph_formatting'] == 'y') {
+								if ($in_paragraph && ( 0 == strcmp("", trim($line)) || substr(trim($line),0,5) == '</div' || substr(trim($line),0,4) == '<div')) {
+									// If still in paragraph, on meeting first blank line or end of div or start of div created by plugins; close a paragraph
+									$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 0, 0);
+								} elseif (!$in_paragraph && (0 != strcmp("", trim($line))) && substr(trim($line),0,4) != '<div') {
+									// If not in paragraph, first non-blank line; start a paragraph; if not start of div created by plugins
+									$data .= "<p>";
+									$in_paragraph = 1;
+								} elseif ($in_paragraph && $prefs['feature_wiki_paragraph_formatting_add_br'] == 'y' && substr(trim($line),0,5) != '</div' && substr(trim($line),0,4) != '<div') {
+									// A normal in-paragraph line if not close of div created by plugins
+									$line = '<br />' . $line;
+								} else {
+									// A normal in-paragraph line or a consecutive blank line.
+									// Leave it as is.
+								}
+							} else {
+								$line .= '<br />';
+							}
+						}
+					}
+				}
+			}
+			$data .= $line . "\n";
+		}
+
+		// Close open paragraph, lists, and div's
+		$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 1, 1);
+
+		/*
+		 * Replace special "maketoc" plugins
+		 *  Valid arguments :
+		 *    - type (look of the maketoc),
+		 *    - maxdepth (max level displayed),
+		 *    - title (replace the default title),
+		 *    - showhide (if set to y, add the Show/Hide link)
+		 *    - nolinks (if set to y, don't add links on toc entries)
+		 *    - nums : 
+		 *       * 'n' means 'no title autonumbering' in TOC,
+		 *       * 'force' means :
+		 *	    ~ same as 'y' if autonumbering is used in the page,
+		 *	    ~ 'number each toc entry as if they were all autonumbered'
+		 *       * any other value means 'same as page's headings autonumbering',
+		 *
+		 *  (Note that title will be translated if a translation is available)
+		 *
+		 *  Examples: {maketoc}, {maketoc type=box maxdepth=1 showhide=y}, {maketoc title="Page Content" maxdepth=3}, ...
+		 *  Obsolete syntax: {maketoc:box}
+		 */
+		$new_data = '';
+		$search_start = 0;
+		while ( ($maketoc_start = strpos($data, "{maketoc", $search_start)) !== false ) {
+			$maketoc_length = strpos($data, "}", $maketoc_start) + 1 - $maketoc_start;
+			$maketoc_string = substr($data, $maketoc_start, $maketoc_length);
+
+			// Handle old type definition for type "box" (and preserve environment for the title also)
+			if ( $maketoc_length > 12 && strtolower(substr($maketoc_string, 8, 4)) == ':box' ) {
+				$maketoc_string = "{maketoc type=box showhide=y title='".tra('index', $language, true).'"'.substr($maketoc_string, 12);
+			}
+
+			$maketoc_string = str_replace('&quot;', '"', $maketoc_string);
+			$maketoc_regs = array();
+
+			if ( $maketoc_length == 9 || preg_match_all("/([^\s=\(]+)=([^\"\s=\)\}]+|\"[^\"]*\")/", $maketoc_string, $maketoc_regs) ) {
+
+				if ( $maketoc_start > 0 ) {
+					$new_data .= substr($data, 0, $maketoc_start);
+				}
+
+				// Set maketoc default values
+				$maketoc_args = array(
+						'type' => '',
+						'maxdepth' => 0, // No limit
+						'title' => tra('Table of contents', $language, true),
+						'showhide' => '',
+						'nolinks' => '',
+						'nums' => ''
+						);
+
+				// Build maketoc arguments list (and remove " chars if they are around the value)
+				if ( isset($maketoc_regs[1]) ) {
+					$nb_args = count($maketoc_regs[1]);
+					for ( $a = 0; $a < $nb_args ; $a++ ) {
+						$maketoc_args[strtolower($maketoc_regs[1][$a])] = trim($maketoc_regs[2][$a], '"');
+					}
+				}
+
+				if ( $maketoc_args['title'] != '' ) {
+					// Translate maketoc title
+					$maketoc_summary = ' summary="'.tra($maketoc_args['title'], $language, true).'"';
+					$maketoc_title = "<div id='toctitle'><h3>".tra($maketoc_args['title'], $language).'</h3></div>';
+				} else {
+					$maketoc_summary = '';
+					$maketoc_title = '';
+				}
+
+				// Build maketoc
+				switch ( $maketoc_args['type'] ) {
+					case 'box': 
+						$maketoc_header = '';
+						$maketoc = "<table id='toc' class='toc'$maketoc_summary>\n<tr><td>$maketoc_title<ul>";
+						$maketoc_footer = "</ul></td></tr></table>\n";
+						$link_class = 'toclink';
+						break;
+					default: 
+						$maketoc = '';
+						$maketoc_header = "<span id='toc'>".$maketoc_title;
+						$maketoc_footer = '</span>';
+						$link_class = 'link';
+				}
+				if ( count($anch) ) {
+					foreach ( $anch as $tocentry ) {
+						if ( $maketoc_args['maxdepth'] > 0 && $tocentry['hdrlevel'] > $maketoc_args['maxdepth'] ) {
+							continue;
+						}
+
+						// Generate the toc entry title (with nums)
+						if ( $maketoc_args['nums'] == 'n' ) {
+							$tocentry_title = '';
+						} elseif ( $maketoc_args['nums'] == 'force' && ! $need_autonumbering ) {
+							$tocentry_title = $tocentry['title_real_num'];
+						} else {
+							$tocentry_title = $tocentry['title_displayed_num'];
+						}
+						$tocentry_title .= $tocentry['title'];
+
+						// Generate the toc entry link
+						$tocentry_link = '#'.$tocentry['id'];
+						if ( $tocentry['pagenum'] > 1 ) {
+							$tocentry_link = $PHP_SELF.'?page='.$page.'&pagenum='.$tocentry['pagenum'].$tocentry_link;
+						}
+						if ( $maketoc_args['nolinks'] != 'y' ) {
+							$tocentry_title = "<a href='$tocentry_link' class='link'>".$tocentry_title.'</a>';
+						}
+
+						if ( $maketoc != '' ) $maketoc.= "\n";
+						switch ( $maketoc_args['type'] ) {
+							case 'box':
+								$maketoc .= "<li class='toclevel-".$tocentry['hdrlevel']."'>".$tocentry_title."</li>";
+								break;
+							default:
+								$maketoc .= str_repeat('*', $tocentry['hdrlevel']).$tocentry_title;
+						}
+					}
+					$maketoc = $this->parse_data($maketoc);
+					$maketoc = ereg_replace("^<ul>", '<ul class="toc">', $maketoc);
+
+					if ( $link_class != 'link' ) {
+						$maketoc = ereg_replace("'link'", "'$link_class'", $maketoc);
+					}
+				}
+				$maketoc = $maketoc_header.$maketoc.$maketoc_footer;
+
+				// Add a Show/Hide link
+				if ( isset($maketoc_args['showhide']) && $maketoc_args['showhide'] == 'y' ) {
+					$maketoc .= "<script type='text/javascript'>\n"
+						. "//<![CDATA[\n"
+						. " if (window.showTocToggle) { var tocShowText = '".tra('Show','',true)."'; var tocHideText = '".tra('Hide','',true)."'; showTocToggle(); }\n"
+						. "//]]>;\n"
+						. "</script>\n";
+				}
+
+				$new_data .= $maketoc;
+				$data = substr($data, $maketoc_start + $maketoc_length);
+				$search_start = 0; // Reinitialize search start cursor, since data now begins after the last replaced maketoc
+			} else {
+				$search_start = $maketoc_start + $maketoc_length;
+			}
+		}
+		$data = $new_data.$data;
 	}
 
 	function get_wiki_link_replacement( $pageLink, $extra = array() ) {
