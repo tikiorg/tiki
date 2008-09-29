@@ -155,6 +155,8 @@ if ($_REQUEST["locSection"] == 'read') {
 	}
 
 	$current = $webmaillib->get_current_webmail_account($user);
+	
+	
 	$smarty->assign('current', $current);
 	//$pop3 = new POP3($current["pop"], $current["username"], $current["pass"]);
 	//$pop3->Open();
@@ -284,7 +286,6 @@ if ($_REQUEST["locSection"] == 'mailbox') {
 	closedir ($h);
 
 	$current = $webmaillib->get_current_webmail_account($user);
-
 	if (!$current) {
 		header ("location: tiki-webmail.php?locSection=settings");
 
@@ -299,10 +300,27 @@ if ($_REQUEST["locSection"] == 'mailbox') {
 	//$pop3->exit = false;    //new
 	//$pop3->Open();
 	$pop3 = new Net_POP3();
-	if (!$pop3->connect($current["pop"]) || !$pop3->login($current["username"], $current["pass"])) {
-		echo '<b><br /><center>The connection to the mail-server has failed. <a href="tiki-webmail.php?locSection=settings">Click here for settings.</a></center></b>';
+	
+	$r1 = $pop3->connect($current["pop"]);
+	$r2 = $pop3->login($current["username"], $current["pass"]);
+
+	if ($r1 !== true || $r2 !== true) {
+		$msg = "";
+		if ($r1 !== true){
+			$msg .= tr(' The connection failed, so check the server names.');
+		} else {
+			$msg .=  tr('The connection was OK.');
+			if (get_class($r2) == 'PEAR_Error'){
+				$msg .= tr(' But the login failed, so check the Username and Password.');
+			};
+		};
+			
+		$urlq = http_build_query(array('conmsg'=>$msg));
+		header ("location: tiki-webmail.php?locSection=settings&".$urlq);
+
 		die;
 	}
+
 /*
 	if ($pop3->has_error) { //new
 		echo '<b><br /><center><a href="tiki-webmail.php?locSection=settings">Click here for settings.</a></center></b>';
@@ -353,7 +371,7 @@ if ($_REQUEST["locSection"] == 'mailbox') {
 		$pop3->disconnect();
 
 		$pop3->connect($current["pop"]);
-		$pop3->login($current["username"], $current["pass"]);
+		$pop3->ixp($current["username"], $current["pass"]);
 	}
 	$mailsum = $pop3->numMsg();
 
@@ -527,18 +545,41 @@ if ($_REQUEST["locSection"] == 'mailbox') {
 /******************** Settings **************************************************************************************/
 if ($_REQUEST["locSection"] == 'settings') {
 	// Add a new mail account for the user here
-	if (!isset($_REQUEST["accountId"]))
-		$_REQUEST["accountId"] = 0;
+//	if (!isset($_REQUEST["accountId"]))
+//		$_REQUEST["accountId"] = 0;
 
-	$smarty->assign('accountId', $_REQUEST["accountId"]);
 
-	if (isset($_REQUEST["new_acc"])) {
+if (isset($_REQUEST["conmsg"])) {
+	check_ticket('webmail');
+ 		$smarty->assign('conmsg', $_REQUEST["conmsg"]);
+}
+
+
+
+
+	if (isset($_REQUEST["cancel_acc"])) {
 		check_ticket('webmail');
-		$webmaillib->replace_webmail_account($_REQUEST["accountId"], $user, $_REQUEST["account"], $_REQUEST["pop"], $_REQUEST["port"], $_REQUEST["username"], $_REQUEST["pass"], $_REQUEST["msgs"], $_REQUEST["smtp"], $_REQUEST["useAuth"], $_REQUEST["smtpPort"], $_REQUEST["flagsPublic"], $_REQUEST["autoRefresh"]); // 16/09/08 MatWho aded flagsPublic and  autoRefresh
-
-		$_REQUEST["accountId"] = 0;
+	 	unset($_REQUEST["cancel_acc"]);
+		unset($_REQUEST["accountId"]);
 	}
 
+	// The New/Update button was pressed
+	if (isset($_REQUEST["new_acc"])) {
+		check_ticket('webmail');
+		
+		if (!isset($_REQUEST["accountId"])) {
+			// Add new account
+			$_REQUEST["accountId"] = $webmaillib->new_webmail_account($user, $_REQUEST["account"], $_REQUEST["pop"], $_REQUEST["port"], $_REQUEST["username"], $_REQUEST["pass"], $_REQUEST["msgs"], $_REQUEST["smtp"], $_REQUEST["useAuth"], $_REQUEST["smtpPort"], $_REQUEST["flagsPublic"], $_REQUEST["autoRefresh"]);
+			
+			
+		} else {
+			// Update existing account
+			$webmaillib->replace_webmail_account($_REQUEST["accountId"], $user, $_REQUEST["account"], $_REQUEST["pop"], $_REQUEST["port"], $_REQUEST["username"], $_REQUEST["pass"], $_REQUEST["msgs"], $_REQUEST["smtp"], $_REQUEST["useAuth"], $_REQUEST["smtpPort"], $_REQUEST["flagsPublic"], $_REQUEST["autoRefresh"]);
+		}
+		unset($_REQUEST["accountId"]);
+	}
+	
+	// The red cross was pressed
 	if (isset($_REQUEST["remove"])) {
 		check_ticket('webmail');
 		$webmaillib->remove_webmail_account($user, $_REQUEST["remove"]);
@@ -548,11 +589,15 @@ if ($_REQUEST["locSection"] == 'settings') {
 		$webmaillib->current_webmail_account($user, $_REQUEST["current"]);
 	}
 
+
+
+	$smarty->assign('accountId', $_REQUEST["accountId"]);
+
+
 	if ($_REQUEST["accountId"]) {
 		$info = $webmaillib->get_webmail_account($user, $_REQUEST["accountId"]);
 	} else {
 		$info["account"] = '';
-
 		$info["username"] = '';
 		$info["pass"] = '';
 		$info["pop"] = '';

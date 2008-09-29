@@ -4,39 +4,44 @@
 
 {* include file=tiki-mytiki_bar.tpl *}
 <br /><br />
-<table>
+<table width="100%" border=0>
 <tr>
+  
   <td>
-    <a class="link" href="tiki-webmail.php?locSection=settings" title="{tr}Settings{/tr}">
-    <img border="0" src="img/webmail/settings.gif" alt="{tr}Settings{/tr}" /><br />
-    {tr}Settings{/tr}</a>
+    <a href="tiki-webmail.php?locSection=mailbox" title="{tr}Mailbox{/tr}">
+    <img border="0" src="img/webmail/mailbox.gif" alt="{tr}Mailbox{/tr}" /></A><br />
+    <a class="link" href="tiki-webmail.php?locSection=mailbox" title="{tr}Mailbox{/tr}">{tr}Mailbox{/tr}</a>
   </td>
   <td>
-    <a class="link" href="tiki-webmail.php?locSection=mailbox" title="{tr}Mailbox{/tr}">
-    <img border="0" src="img/webmail/mailbox.gif" alt="{tr}Mailbox{/tr}" /><br />
-    {tr}Mailbox{/tr}</a>
+    <a href="tiki-webmail.php?locSection=compose" title="{tr}Compose{/tr}">
+    <img border="0" src="img/webmail/compose.gif" alt="{tr}Compose{/tr}" /></a><br />
+    <a class="link" href="tiki-webmail.php?locSection=compose" title="{tr}Compose{/tr}">{tr}Compose{/tr}</a>
   </td>
   <td>
-    <a class="link" href="tiki-webmail.php?locSection=compose" title="{tr}Compose{/tr}">
-    <img border="0" src="img/webmail/compose.gif" alt="{tr}Compose{/tr}" /><br />
-    {tr}Compose{/tr}</a>
+    <a href="tiki-webmail.php?locSection=contacts" title="{tr}Contacts{/tr}">
+    <img border="0" src="img/webmail/contact.gif" alt="{tr}Contacts{/tr}" /></A><br />
+    <a class="link" href="tiki-webmail.php?locSection=contacts" title="{tr}Contacts{/tr}">{tr}Contacts{/tr}</a>
   </td>
-  <td>
-    <a class="link" href="tiki-webmail.php?locSection=contacts" title="{tr}Contacts{/tr}">
-    <img border="0" src="img/webmail/contact.gif" alt="{tr}Contacts{/tr}" /><br />
-    {tr}Contacts{/tr}</a>
+<TD width="50%">
+	</TD>
+<td>
+    <a href="tiki-webmail.php?locSection=settings" title="{tr}Settings{/tr}">
+    <img border="0" src="img/webmail/settings.gif" alt="{tr}Settings{/tr}" /></A><br />
+    <a class="link" href="tiki-webmail.php?locSection=settings" title="{tr}Settings{/tr}">{tr}Settings{/tr}</a>
   </td>
 </tr>
 </table>
 <hr/>
 
 {if $locSection eq 'settings'}
-{if $accountId}
-<h2>{tr}Edit mail account{/tr}</h2>
-<span class="button2"><a href="tiki-webmail.php?locSection=settings">{tr}Add new mail account{/tr}</a></span><br /><br />
-{else}
-<h2>{tr}Add new mail account{/tr}</h2>
-{/if}
+
+{if  $tiki_p_admin_personal_webmail eq 'y' or $tiki_p_admin_group_webmail eq 'y'}
+
+{if $conmsg ne ""}<div class="simplebox error">{tr}There was an error connecting to your e-maill account.{/tr} {$conmsg}</DIV>{/if}
+
+<h2>{if $accountId eq ''}{tr}Add a new{/tr}{else}{tr}Edit this{/tr}{/if} {tr} mail account{/tr}</h2>
+
+{if $tiki_p_admin_personal_webmail eq 'y' or $tiki_p_admin_group_webmail eq 'y'}
 <form action="tiki-webmail.php" method="post">
 <input type="hidden" name="accountId" value="{$accountId|escape}" />
 <input type="hidden" name="locSection" value="settings" />
@@ -48,14 +53,30 @@
 <tr><td class="formcolor">{tr}Username{/tr}</td><td colspan="3" class="formcolor"><input type="text" name="username" value="{$info.username|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Password{/tr}</td><td colspan="3" class="formcolor"><input type="password" name="pass" value="{$info.pass|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Messages per page{/tr}</td><td colspan="3" class="formcolor"><input type="text" name="msgs" size="4" value="{$info.msgs|escape}" /></td></tr>
-<tr><td class="formcolor">{tr}Public (shared mail inbox) or private{/tr}</td><td colspan="3" class="formcolor">{tr}Public{/tr}<input type="radio" name="flagsPublic" value="y" {if $info.flagsPublic eq 'y'}checked="checked"{/if} /> {tr}Private (Recommended){/tr}<input type="radio" name="flagsPublic" value="n" {if $info.flagsPublic eq 'n'}checked="checked"{/if} /></td></tr>
+
+{if ($tiki_p_admin_group_webmail eq 'y' and tiki_p_admin_personal_webmail) or $tiki_p_admin eq 'y'}
+<tr><td class="formcolor">{tr}Group (shared mail inbox) or private{/tr}</td><td colspan="3" class="formcolor">{tr}Group{/tr}<input type="radio" name="flagsPublic" value="y" {if $info.flagsPublic eq 'y'}checked="checked"{/if} /> {tr}Private{/tr}<input type="radio" name="flagsPublic" value="n" {if $info.flagsPublic eq 'n'}checked="checked"{/if} /></td></tr>
+{else}
+<tr><td></td><td><input type="hidden" name="flagsPublic" {if $tiki_p_admin_group_webmail eq 'y'}value="y"{else} value="n"{/if}>
+{if $tiki_p_admin_group_webmail eq 'y'}{tr}This will be a group mail account.{/tr}{else}{tr}This will be a personal mail account.{/tr}{/if}
+</td></tr>
+{/if}
+
 <tr><td class="formcolor">{tr}Auto-refresh page time{/tr}</td><td colspan="3" class="formcolor"><input type="text" name="autoRefresh" size="4" value="{$info.autoRefresh|escape}" /> seconds (0 = no auto refresh)</td></tr>
-<tr><td class="formcolor">&nbsp;</td><td colspan="3" class="formcolor"><input type="submit" name="new_acc" value="{tr}Add/Update{/tr}" /></td></tr>
+<tr><td class="formcolor">&nbsp;</td><td colspan="3" class="formcolor"><input type="submit" name="new_acc" value="{if $accountId eq ''}{tr}Add{/tr}{else}{tr}Update{/tr}{/if}" /> <input type="submit" name="cancel_acc" value="{tr}Clear{/tr}" /> </td></tr>
 </table>
 </form>
+
+{/if}
+{else}
+{tr}You do not have the correct permissions to Add or Edit a webmail account. <BR />Please contact your administrator and ask for "admin_personal_webmail" or "admin_group_webmail" permission.{/tr}
+{/if}
+
+{if count($accounts) != 0}
 <h2>{tr}Personal e-mail accounts{/tr}</h2>
 <table class="normal">
 <tr>
+<td class="heading">{tr}Active{/tr}</td>
 <td class="heading">{tr}Account{/tr}</td>
 <td class="heading">{tr}Active{/tr}</td>
 <td class="heading">{tr}POP server{/tr}</td>
@@ -65,6 +86,10 @@
 {cycle values="odd,even" print=false}
 {section name=ix loop=$accounts}
 <tr>
+	<td class="{cycle advance=false}">	{if $accounts[ix].current ne 'y'}
+		<a href="tiki-webmail.php?locSection=settings&amp;current={$accounts[ix].accountId}" title="{tr}Activate{/tr}">{icon _id='star_grey' alt="{tr}Click to activate{/tr}"}</a>{else}{icon _id='star' alt="{tr}This is the active account.{/tr}"}
+		{/if}
+	</td>
 <td class="{cycle advance=false}"><a href="tiki-webmail.php?locSection=settings&amp;current={$accounts[ix].accountId}" class="{if $accounts[ix].current eq 'y'}tablename{else}link{/if}" title="{if $accounts[ix].current ne 'y'}{tr}Activate{/tr}{/if}">{$accounts[ix].account}</a>
 </td>
 <td class="{cycle advance=false}">{if $accounts[ix].current eq 'y'}{tr}Yes{/tr}{else}{tr}No{/tr}{/if}</td>
@@ -74,17 +99,19 @@
 title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
 <a href="tiki-webmail.php?locSection=settings&amp;accountId={$accounts[ix].accountId}" class="tablename" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
 {if $accounts[ix].current ne 'y'}
-<a href="tiki-webmail.php?locSection=settings&amp;current={$accounts[ix].accountId}" title="{tr}Activate{/tr}">{icon _id='accept' alt="{tr}Activate{/tr}"}</a>{/if}
+<a href="tiki-webmail.php?locSection=settings&amp;current={$accounts[ix].accountId}" title="{tr}Activate{/tr}">{icon _id='accept' alt="{tr}Click to activate{/tr}"}</a>{/if}
 </td></tr>
 {sectionelse}
 <tr><td colspan="5" class="odd">{tr}No records found.{/tr}</td></tr>
 {/section}
 </table>
-
-
+{/if}
+{if $tiki_p_use_group_webmail eq 'y'}
+{if count($pubAccounts) != 0}
 <h2>{tr}Group e-mail accounts{/tr}</h2>
 <table class="normal">
 <tr>
+<td class="heading">{tr}Active{/tr}</td>
 <td class="heading">{tr}Account{/tr}</td>
 <td class="heading">{tr}Active{/tr}</td>
 <td class="heading">{tr}POP server{/tr}</td>
@@ -94,6 +121,10 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
 {cycle values="odd,even" print=false}
 {section name=ixp loop=$pubAccounts}
 <tr>
+<td class="{cycle advance=false}">	{if $pubAccounts[ixp].current ne 'y'}
+	<a href="tiki-webmail.php?locSection=settings&amp;current={$pubAccounts[ixp].accountId}" title="{tr}Click to activate{/tr}">{icon _id='star_grey' alt="{tr}Click to activate{/tr}"}</a>{else}{icon _id='star' alt="{tr}This is the active account.{/tr}"}
+	{/if}
+</td>
 <td class="{cycle advance=false}"><a href="tiki-webmail.php?locSection=settings&amp;current={$pubAccounts[ixp].accountId}" class="{if $pubAccounts[ixp].current eq 'y'}tablename{else}link{/if}" title="{if $pubAccounts[ixp].current ne 'y'}{tr}Activate{/tr}{/if}">{$pubAccounts[ixp].account}</a>
 </td>
 <td class="{cycle advance=false}">{if $pubAccounts[ixp].current eq 'y'}{tr}Yes{/tr}{else}{tr}No{/tr}{/if}</td>
@@ -101,16 +132,20 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
 <td class="{cycle advance=false}">{$pubAccounts[ixp].username}</td>
 <td class="{cycle}"><a href="tiki-webmail.php?locSection=settings&amp;remove={$pubAccounts[ixp].accountId}" class="link" 
 title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
+{if $tiki_p_admin_group_webmail eq 'y'or $tiki_p_admin eq 'y'}
 <a href="tiki-webmail.php?locSection=settings&amp;accountId={$pubAccounts[ixp].accountId}" class="tablename" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
+{/if}
 {if $pubAccounts[ixp].current ne 'y'}
-<a href="tiki-webmail.php?locSection=settings&amp;current={$pubAccounts[ixp].accountId}" title="{tr}Activate{/tr}">{icon _id='accept' alt="{tr}Activate{/tr}"}</a>{/if}
+<a href="tiki-webmail.php?locSection=settings&amp;current={$pubAccounts[ixp].accountId}" title="{tr}Activate{/tr}">{icon _id='accept' alt="{tr}Click to activate{/tr}"}</a>{/if}
 </td></tr>
 {sectionelse}
 <tr><td colspan="5" class="odd">{tr}No records found.{/tr}</td></tr>
 {/section}
 </table>
 {/if}
+{/if}
 
+{/if}
 
 
 {if $locSection eq 'mailbox'}
@@ -390,7 +425,7 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>&nbsp;&nbsp;
     <tr>
     <tr class="formcolor"><td>&nbsp;</td>
     <td colspan="3">
-    <textarea name="body" cols="60" rows="30">{$body|escape}</textarea>
+    <textarea name="body" cols="60" rows="30">{$body}</textarea>
     <tr class="formcolor"><td>{tr}Use HTML mail{/tr}</td><td colspan="3"><input type="checkbox" name="useHTML" />
     </td></tr>
     </table>

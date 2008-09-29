@@ -2992,6 +2992,12 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_map_view_mapfiles', 'Can view contents of mapfiles', 'registered', 'maps');
 
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_use_webmail', 'Can use webmail', 'registered', 'webmail');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_use_group_webmail', 'Can use group webmail', 'registered', 'webmail');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_group_webmail', 'Can administrate group webmail accounts', 'registered', 'webmail');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_use_personal_webmail', 'Can use personal webmail accounts', 'registered', 'webmail');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_admin_personal_webmail', 'Can administrate personal webmail accounts', 'registered', 'webmail');
+
+
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_plugin_viewdetail', 'Can view unapproved plugin details', 'registered', 'wiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_plugin_preview', 'Can execute unapproved plugin', 'registered', 'wiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_plugin_approve', 'Can approve plugin execution', 'editors', 'wiki');

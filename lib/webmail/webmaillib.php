@@ -198,6 +198,21 @@ class WebMailLib extends TikiLib {
 		return true;
 	}
 
+	function new_webmail_account($user, $account, $pop, $port, $username, $pass, $msgs, $smtp, $useAuth, $smtpPort, $flagsPublic, $autoRefresh)
+		{
+
+			$query = "insert into `tiki_user_mail_accounts`(`user`,`account`,`pop`,`port`,`smtpPort`,`username`,`pass`,`smtp`,`useAuth`,`msgs`,`flagsPublic`,`autoRefresh`) values(?,?,?,?,?,?,?,?,?,?,?,?)";
+			$bindvars = array($user,$account,$pop,$port,$smtpPort,$username,$pass,$smtp,$useAuth,$msgs,$flagsPublic,$autoRefresh);
+			$result = $this->query($query, $bindvars);
+
+
+			$accountID = $this->getOne("SELECT `accountID` FROM `tiki_user_mail_accounts` WHERE `user`=$user AND `account`=$account AND `pop`=$pop AND `port`=$port AND `smtpPort`=smtpPort AND `username`=username AND `pass`=$pass AND `smtp`=$smpt AND `useAuth`=$useAuth AND `msgs`=$msg AND `flagsPublic`=$flagesPublic AND `autoRefresh`=$autoRefresh");
+
+		return $accountID;
+	}
+	
+	
+
 	function get_current_webmail_account($user) {
 		$query = "select * from `tiki_user_mail_accounts` where `current`='y' and `user`=?";
 		$result = $this->query($query, array($user));
