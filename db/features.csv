@@ -929,3 +929,5 @@
 1038,"Allow all languages to be displayed on a single page",76,,feature_multilingual_one_page,flag,,tiki_p_admin,,,,,,
 1039,"Tracker Timeline",913,,"wikiplugin_trackertimeline","flag",,"tiki_p_admin",,,,,," "
 1040,"Ftp",913,,"wikiplugin_ftp","flag",,"tiki_p_admin",,,,,," "
+1041,"Cookie",913,,"wikiplugin_cookie","flag",,"tiki_p_admin",,,,,," "
+1042,"Picture",913,,"wikiplugin_picture","flag",,"tiki_p_admin",,,,,," "

@@ -165,6 +165,7 @@ function get_default_prefs() {
 		'wikiplugin_center' => 'y',
 		'wikiplugin_chart' => 'y',
 		'wikiplugin_code' => 'y',
+		'wikiplugin_cookie' => 'y',
 		'wikiplugin_copyright' => 'y',
 		'wikiplugin_countdown' => 'y',
 		'wikiplugin_div' => 'y',

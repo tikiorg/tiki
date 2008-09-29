@@ -6005,16 +6005,6 @@ class TikiLib extends TikiDB {
 			}
 		}
 
-		// Replace cookies
-		if (preg_match_all("/\{cookie\}/", $data, $rsss)) {
-			$temp_max = count($rsss[0]);
-			for ($i = 0; $i < $temp_max; $i++) {
-				$cookie = $this->pick_cookie();
-
-				$data = str_replace($rsss[0][$i], $cookie, $data);
-			}
-		}
-
 		// linebreaks using %%%
 		$data = str_replace("%%%", "<br />", $data);
 
