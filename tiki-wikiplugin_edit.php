@@ -9,7 +9,7 @@ if( ! isset( $_POST['message'] ) )
 
 $page = $_POST['page'];
 
-$plugin = basename( $_POST['type'] );
+$plugin = strtolower( basename( $_POST['type'] ) );
 $type = strtoupper( $plugin );
 
 if( ! $meta = $tikilib->plugin_info( $plugin ) )
@@ -26,32 +26,78 @@ $current = $info['data'];
 
 $pos = 0;
 $count = 0;
-while( false !== $pos = strpos( $current, "{{$type}(", $pos + 1 ) )
+while( true )
 {
+	$posA = strpos( $current, $sa = "{{$type}(", $pos + 1 );
+	$posB = $posB = strpos( $current, $sb = "{{$plugin}", $pos + 1 );
+
+	if( $posA === false && $posB === false )
+		break;
+
+	// Make sure we didn't get a partial word with {plugin (ex: {pluginfoo)
+	if( $posB !== false && ctype_alnum( $current{$posB + 1 + strlen($plugin)} ) ) {
+		$pos = $posB;
+		$posB = false;
+	}
+	
+	$syntax = 'normal';
+	if( $posA !== false && $posB !== false ) {
+		// out of {PLUGIN( or {plugin, take the lowest one
+		$pos = min( $posA, $posB );
+	} elseif( $posA !== false ) {
+		$pos = $posA;
+	} elseif( $posB !== false ) {
+		$pos = $posB;
+		$syntax = 'short';
+	} else {
+		$pos++;
+		continue;
+	}
+
 	++$count;
 
 	if( $_POST['index'] == $count )
 	{
-		$endparamA = strpos( $current, '/}', $pos );
-		$endparamB = strpos( $current, ')}', $pos );
-		if( false === $endparamA && false === $endparamB )
-			die( 'oops.' );
-		if( ( false !== $endparamA && false !== $endparamB && $endparamA < $endparamB )
-			|| $endparamB === false )
+		$hasBody = false;
+
+		if( $syntax == 'normal' ) {
+			$endparamA = strpos( $current, '/}', $pos );
+			$endparamB = strpos( $current, ')}', $pos );
+			if( false === $endparamA && false === $endparamB )
+				die( 'oops.' );
+			if( ( false !== $endparamA 
+				&& ( false !== $endparamB && $endparamA < $endparamB ) )
+				|| $endparamB === false )
+			{
+				$endparam = $endparamA + 2;
+			}
+			else
+			{
+				$endparam = $endparamB + 2;
+				$hasBody = true;
+			}
+		} else {
+			if( false !== $endparam = strpos( $current, '}', $pos ) )
+				$endparam = $endparam + 1;
+		}
+
+		if( $hasBody )
 		{
-			$current = substr_replace( $current, "}{{$type}}", $endparamA, 2 );
-			$endparam = $endparamA + 1;
+			$body = $endparam;
+			$endbody = strpos( $current, "{{$type}}", $endparam );
+			if( false === $endbody )
+				die( 'oops.' );
+
+			$before = substr( $current, 0, $body );
+			$after = substr( $current, $endbody + strlen("{{$type}}") );
 		}
 		else
-			$endparam = $endparamB + 2;
+		{
+			$before = substr( $current, 0, $endparam );
+			$after = substr( $current, $endparam );
+		}
 
-		$body = $endparam;
-		$endbody = strpos( $current, "{{$type}}", $endparam );
-		if( false === $endbody )
-			die( 'oops.' );
-
-		$before = substr( $current, 0, $body );
-		$after = substr( $current, $endbody );
+		$hasBody = !empty($content) && !ctype_space( $content );
 
 		// If parameters are provided, rebuild the parameter line
 		if( isset( $_POST['params'] ) && is_array( $_POST['params'] ) )
@@ -61,16 +107,23 @@ while( false !== $pos = strpos( $current, "{{$type}(", $pos + 1 ) )
 			$parts = array();
 			foreach( $values as $key => $value )
 				if( ! empty( $value ) )
-					$parts[] = "$key=>\"$value\"";
+					$parts[] = "$key=\"" . str_replace( '"', "\\\"", $value ) . '"';
 
-			$params = implode( ',', $parts );
+			$params = implode( ' ', $parts );
 
-			$before = substr( $before, 0, $pos )
-				. "{{$type}($params)}";
+			if( $hasBody )
+				$before = substr( $before, 0, $pos )
+					. "{{$type}($params)}";
+			else
+				$before = substr( $before, 0, $pos )
+					. "{{$plugin} $params}";
 		}
 
 		// Replace the content
-		$content = $before . $content . $after;
+		if( $hasBody )
+			$content = $before . $content . "{{$type}}" . $after;
+		else
+			$content = $before . $content . $after;
 
 		$tikilib->update_page( $page, $content, $_POST['message'], $user, $_SERVER['REMOTE_ADDR'] );
 	}
