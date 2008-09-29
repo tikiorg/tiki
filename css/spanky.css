@@ -134,7 +134,7 @@ td.featureEnabled {width:100px;}
 td.useDefault {width:100px;}
 td.featureHelp {width:100px;}
 td.featureHelp a {text-decoration: none; color:white;}
-.tip {
+tr > .tip {
 	border-top:1px solid #777; 
 	border-bottom:1px solid #777;
 	background-color: #ccc;
