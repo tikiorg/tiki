@@ -5959,52 +5959,6 @@ class TikiLib extends TikiDB {
 		// smileys
 		$data = $this->parse_smileys($data);
 
-		// Replace links to slideshows
-		if ($prefs['feature_drawings'] == 'y') {
-			// Replace drawings
-			// Replace rss modules
-			$pars = parse_url($_SERVER["REQUEST_URI"]);
-
-			$pars_parts = split('/', $pars["path"]);
-			$pars = array();
-
-			$temp_max = count($pars_parts) - 1;
-			for ($i = 0; $i < $temp_max; $i++) {
-				$pars[] = $pars_parts[$i];
-			}
-
-			$pars = join('/', $pars);
-
-			if (preg_match_all("/\{draw +name=([A-Za-z_\-0-9]+) *\}/", $data, $draws)) {
-				//$this->invalidate_cache($page);
-				$temp_max = count($draws[0]);
-				for ($i = 0; $i < $temp_max; $i++) {
-					$id = $draws[1][$i];
-					$repl = '';
-					if ($tikidomain) {
-						$name = $tikidomain.'/'.$id . '.gif';
-					} else {
-						$name = $id . '.gif';
-					}
-					if (file_exists("img/wiki/$name")) {
-						if ($tiki_p_edit_drawings == 'y' || $tiki_p_admin_drawings == 'y') {
-							$repl = "<a href='#' onclick=\"javascript:window.open('tiki-editdrawing.php?page=" . urlencode($page). "&amp;path=$pars&amp;drawing={$id}','','menubar=no,width=252,height=25');\"><img border='0' src='img/wiki/$name' alt='click to edit' /></a>";
-						} else {
-							$repl = "<img border='0' src='img/wiki/$name' alt='a drawing' />";
-						}
-					} else {
-						if ($tiki_p_edit_drawings == 'y' || $tiki_p_admin_drawings == 'y') {
-							$repl = "<a class='wiki' href='#' onclick=\"javascript:window.open('tiki-editdrawing.php?page=" . urlencode($page). "&amp;path=$pars&amp;drawing={$id}','','menubar=no,width=252,height=25');\">click here to create draw $id</a>";
-						} else {
-							$repl = tra('drawing not found');
-						}
-					}
-
-					$data = str_replace($draws[0][$i], $repl, $data);
-				}
-			}
-		}
-
 		// linebreaks using %%%
 		$data = str_replace("%%%", "<br />", $data);
 
