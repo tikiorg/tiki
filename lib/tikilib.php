@@ -5946,59 +5946,6 @@ class TikiLib extends TikiDB {
 		if (!$simple_wiki) {
 			$this->parse_htmlchar($data);
 		}
-		// Now replace a TOC
-		preg_match_all("/\{toc\s?(order=(desc|asc))?\s?(showdesc=(0|1))?\s?(shownum=(0|1))?\s?(type=(plain|fancy))?\s?(structId=([0-9a-z]+))?\s?(maxdepth=(\d+))?\s?\}/i", $data, $tocs);
-
-		// Loop over all the case-specific versions of {toc} used
-		// (if the user is consistent, this is a loop of count 1)
-		$temp_max = count($tocs[0]);
-		for ($i = 0; $i < $temp_max; $i++) {
-
-			//If there are instances of {toc} on this page
-			if (count($tocs[0]) > 0) {
-				$order = 'asc';
-				$showdesc = false;
-				$shownum = false;
-				$type = 'plain';
-				$structId = '';
-				$maxdepth = 0;
-				if ($tocs[2][$i] == 'desc') {
-					$order = 'desc';
-				}
-				if ($tocs[4][$i] == 1) {
-					$showdesc = true;
-				}
-				if ($tocs[6][$i] == 1) {
-					$shownum = true;
-				}
-				if ($tocs[8][$i] == 'fancy') {
-					$type = 'fancy';
-				}
-				if (isset($tocs[10][$i]) and !empty($tocs[10][$i])) {
-					$structId = $tocs[10][$i];
-				}
-				if ($tocs[12][$i] != '') {
-					$maxdepth = $tocs[12][$i];
-				}
-
-				include_once ("lib/structures/structlib.php");
-				if ($structId == '') {
-					//And we are currently viewing a structure
-					$page_info = $structlib->s_get_page_info($page_ref_id);
-					$structure_info = $structlib->s_get_structure_info($page_ref_id);
-					if (isset($page_info)) {
-						$html = $structlib->get_toc($page_ref_id,$order,$showdesc,$shownum,'',$type,'',$maxdepth, $structure_info['pageName']);
-						$data = str_replace($tocs[0][$i], $html, $data);
-					} else {
-						//Dont display the {toc} string for non structure pages
-						$data = str_replace($tocs[0][$i], '', $data);
-					}
-				} else {
-					$html = $structlib->fetch_toc($structlib->build_subtree_toc($structId),$showdesc,$shownum,$type,'',$maxdepth, 0, $structure_info['pageName']);
-					$data = str_replace($tocs[0][$i], $html, $data);
-				}
-			}
-		}
 
 		// Now search for images uploaded by users
 		if ($prefs['feature_wiki_pictures'] == 'y') {

@@ -213,6 +213,7 @@ function get_default_prefs() {
 		'wikiplugin_tag' => 'y',
 		'wikiplugin_thumb' => 'y',
 		'wikiplugin_titlesearch' => 'n',
+		'wikiplugin_toc' => 'y',
 		'wikiplugin_topfriends' => 'y',
 		'wikiplugin_trackerfilter' => 'y',
 		'wikiplugin_trackeritemfield' => 'y',
