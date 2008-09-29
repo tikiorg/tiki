@@ -5947,30 +5947,6 @@ class TikiLib extends TikiDB {
 			$this->parse_htmlchar($data);
 		}
 
-		// Now search for images uploaded by users
-		if ($prefs['feature_wiki_pictures'] == 'y') {
-			preg_match_all("/\{picture file=([^\}]+)\}/", $data, $pics);
-
-			$temp_max = count($pics[0]);
-			for ($i = 0; $i < $temp_max; $i++) {
-				// Check if the image exists
-				$name = $pics[1][$i];
-				if ($tikidomain && !preg_match('|^https?:|', $name)) {
-					$name = preg_replace("~img/wiki_up/~","img/wiki_up/$tikidomain/",$name);
-				}
-				if (file_exists($name) and (preg_match('/(gif|jpe?g|png)$/i',$name))) {
-					// Replace by the img tag to show the image
-					$repl = "<span class='img'><img src='$name' alt='$name' /></span>";
-				} else {
-					$repl = tra('picture not found')." $name";
-				}
-
-				// Replace by $repl
-				$data = str_replace($pics[0][$i], $repl, $data);
-			}
-		}
-
-		//$data = strip_tags($data);
 		// BiDi markers
 		$bidiCount = 0;
 		$bidiCount = preg_match_all("/(\{l2r\})/", $data, $pages);
