@@ -8,6 +8,7 @@
 {$plugin.description}
 </div>
 <div class="plugin-sample">
+{if $plugin.body}
 &#123;{$plugin_name}(
 {foreach key=name item=param from=$plugin.params}
 	<div class="plugin-param">
@@ -22,5 +23,19 @@
 <div class="plugin-param">
 {$plugin.body}
 </div>
-&#123;{$plugin_name}&#125;
 </div>
+&#123;{$plugin_name}&#125;
+{else}
+&#123;{$plugin_name|@lower}
+{foreach key=name item=param from=$plugin.params}
+	<div class="plugin-param">
+	{if $param.required}
+		{$name}=<em>"{$param.description|escape}"</em>
+	{else}
+		[ {$name}=<em>"{$param.description|escape}"</em> ]
+	{/if}
+	</div>
+{/foreach}
+&#125;
+</div>
+{/if}
