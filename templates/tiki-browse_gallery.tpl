@@ -188,3 +188,43 @@
   </div>
   {include file=comments.tpl}
 {/if}
+
+<br /><br />    
+<table class="normal noslideshow">
+<tr>
+      <td class="even">
+      <small>
+  {tr}You can view this gallery's configured image (first, random, etc.) in your browser using{/tr}:<br /><br />
+  <a class="gallink" href="{$url_show}?galleryId={$galleryId}">{$url_show}?galleryId={$galleryId}</a><br />
+  </small>
+  </td>
+</tr>
+<tr>
+  <td class="even">
+  <small>
+  {tr}You can include the gallery's image in an HTML page using one of these lines{/tr}:<br /><br />
+  {if $resultscale == $defaultscale}
+  &lt;img src="{$url_show}?galleryId={$galleryId}" /&gt;<br />
+  {elseif !$resultscale}
+  &lt;img src="{$url_show}?galleryId={$galleryId}" /&gt;<br />
+  {else}
+  &lt;img src="{$url_show}?galleryId={$galleryId}" /&gt;<br />
+  {/if}
+  </small>
+  </td>
+</tr>
+<tr>
+  <td class="even">
+  <small>
+  {tr}You can include the image in a tiki page using one of these lines{/tr}:<br /><br />
+  {if $resultscale == $defaultscale}
+  {literal}{{/literal}img src=show_image.php?galleryId={$galleryId} {literal}}{/literal}<br />
+  {elseif !$resultscale}
+  {literal}{{/literal}img src=show_image.php?galleryId={$galleryId} {literal}}{/literal}<br />
+  {else}
+  {literal}{{/literal}img src={$url_show}?galleryId={$galleryId} {literal}}{/literal}<br />
+  {/if}
+  </small>
+  </td>
+</tr>
+</table>

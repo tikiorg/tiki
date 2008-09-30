@@ -26,6 +26,7 @@ INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) V
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('2c450afc683c36483abc8e9e4ea2e999', './doc/devtools/securitycheck.php', '2.1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('da8a55568ec35d0130d764a5976a0f94', './doc/devtools/usergeo.php', '2.1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('3bd515c5bd89e945caf9e08b59fe7619', './doc/devtools/ggg-trace.php', '2.1', 0);
+INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('f0db7e17c544f518ffcda1895ddd672c', './doc/devtools/buildincrement.php', '2.1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('b9c6185e71811671e4549264502b82bb', './doc/devtools/cleanCatTrackers.php', '2.1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('112a6d18e92b63c6463a3db8ed5d8c2e', './doc/devtools/parse_tiki.php', '2.1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('d8116ae0dab5f421243d10220d1f8dff', './doc/devtools/search_smarty_prefs-2.0.php', '2.1', 0);

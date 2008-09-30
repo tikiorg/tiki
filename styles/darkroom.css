@@ -1291,7 +1291,7 @@ ul.floatleft li {
 	font-size: 0.8em;
 	text-decoration: none
 	color: #3F3F3F;}
-
+	
 .button2 a:hover {text-decoration: none}
 
 div.cache {}
@@ -1354,7 +1354,7 @@ table.wikiplugin-split {border: none}
 
 /** Wiki tocs **/
 div.tocnav {
-	background: #EBEBEB;
+	background: #474747;
 	padding: 3px;
 	margin-bottom: 4px;
 	clear: both}
