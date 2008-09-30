@@ -1269,7 +1269,7 @@ ul.floatleft li {
 
 .editdate ul.floatleft {margin-top: 8px}
 
- .navbar a,
+ .navbar > a,
 .button2 {
 	margin: 2px;
 	padding: 0 4px;
@@ -1278,7 +1278,7 @@ ul.floatleft li {
 	border-top: 1px solid #818181}
 .button2 {display: inline-block;}
 
-.navbar a:hover{
+.navbar > a:hover{
 	border: 1px solid #B2B2B2;
 	text-decoration: none;
 }
