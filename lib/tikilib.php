@@ -5247,7 +5247,7 @@ class TikiLib extends TikiDB {
 							include_once('lib/smarty_tiki/function.icon.php');
 							global $headerlib, $page;
 							$headerlib->add_jsfile( 'tiki-jsplugin.php?plugin=' . urlencode( $plugin_name ) );
-							$ret = '~np~<div><div style="float:right;"><a href="javascript:void(0)" onclick="show_plugin_form(\'' . addslashes($plugin_name) . '\', ' . addslashes($current_index) . ', \'' . addslashes($page) . '\', ' . htmlentities(json_encode($arguments)) . ', ' . htmlentities(json_encode(trim($plugin_data))) . ');this.style.display=\'none\'">'.smarty_function_icon(array('_id'=>'page_edit', 'alt'=>tra('Edit Plugin')), $smarty).'</a></div><div id="' . $plugin_name . $current_index . '">~/np~' . $ret . '~np~</div></div>~/np~';
+							$ret = '~np~<div><div style="float:right;"><a href="javascript:void(0)" onclick="show_plugin_form(\'' . addslashes($plugin_name) . '\', ' . addslashes($current_index) . ', \'' . addslashes($page) . '\', ' . htmlentities(json_encode($arguments)) . ', ' . htmlentities(json_encode(trim($plugin_data))) . ');this.style.display=\'none\'">'.smarty_function_icon(array('_id'=>'page_edit', 'alt'=>tra('Edit Plugin')), $smarty).'</a></div><div id="' . $plugin_name . $current_index . '"></div></div>~/np~'.$ret;
 						}
 
 					} else {
@@ -6602,7 +6602,11 @@ class TikiLib extends TikiDB {
 						// create stable anchors for all headers
 						// use header but replace non-word character sequences
 						// with one underscore (for XHTML 1.0 compliance)
-						$thisid = ereg_replace('[^a-zA-Z0-9]+', '_', $title_text);
+						// Workaround pb with plugin replacement and header id
+						//  first we remove hash from title_text for headings beginning
+						//  with images
+						$thisid = ereg_replace('[a-z0-9]{32}', '_', $title_text);
+						$thisid = ereg_replace('[^a-zA-Z0-9]+', '_', $thisid);
 						$thisid = ereg_replace('^_', '', $thisid);
 
 						// Add a number to the anchor if it already exists, to avoid duplicated anchors
