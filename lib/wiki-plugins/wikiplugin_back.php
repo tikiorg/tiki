@@ -13,6 +13,15 @@ function wikiplugin_back_help() {
     return tra("Insert back link on wiki page").":<br />~np~{BACK()/}~/np~";
 }
 
+function wikiplugin_back_info() {
+    return array(
+        'name' => tra('Back'),
+        'description' => tra('Displays a link that allows to go back in the browser history'),
+        'prefs' => array( 'wikiplugin_back' ),
+        'params' => array(),
+        );
+}
+
 function wikiplugin_back($data, $params) {
     global $tikilib;
     
@@ -21,11 +30,11 @@ function wikiplugin_back($data, $params) {
     
     extract ($params,EXTR_SKIP);
     
-    $begin = "<script type=\"text/javascript\">document.write('<a href=\"javascript:history.go(-1)\">";
+    $begin = '<a href=\"javascript:history.go(-1)\">";
     
-    $content = "Back";
+    $content = "tra(\'Back\')";
     
-    $end = "</a>');</script>";
+    $end = "</a>";
     
     return $begin . $content  . $end;
 }
