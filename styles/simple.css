@@ -998,6 +998,9 @@ a.flipmodtitle:hover img {
 .floatleft {float: left}
 .floatright {float: right}
 
-.icon {border: 0}
+a.icon,
+img.icon {
+	border: 0 !important;
+	background: transparent}
 
 /* end of css file */

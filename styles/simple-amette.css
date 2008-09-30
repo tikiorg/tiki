@@ -1449,5 +1449,8 @@ a.flipmodtitle:hover img {
 	border: 1px solid #eef5ee !important;
 }
 
-.icon {border: 0}
+a.icon,
+img.icon {
+	border: 0 !important;
+	background: transparent}
 /* end of css file */

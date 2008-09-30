@@ -44,6 +44,7 @@ h3.box-title span.moduleflip {
 }
 
 /* To enable removing deprecated tag from img.icon and prevent border on a.icon. */
-.icon {
-	border: 0;
-}
+a.icon,
+img.icon {
+	border: 0 !important;
+	background: transparent}
