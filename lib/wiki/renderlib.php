@@ -453,7 +453,7 @@ class WikiRenderer
 
 	private function setupPoll() // {{{
 	{
-		global $prefs, $polllib, $tikilib, $tiki_p_view_ratings;
+		global $prefs, $polllib, $tikilib, $tiki_p_wiki_view_ratings;
 
 		if ($prefs['feature_polls'] !='y' || $prefs['feature_wiki_ratings'] != 'y' || $tiki_p_wiki_view_ratings != 'y')
 			return;
