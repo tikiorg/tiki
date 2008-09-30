@@ -259,7 +259,10 @@ function varcheck(&$array, $category) {
 				}
 
 				if ( is_array($rv) ) {
-					$return[] = varcheck($array[$rq], $category);
+					$tmp = varcheck($array[$rq], $category);
+					if ($tmp != "") {	
+						$return[] = $tmp;
+					}
 				} else {
 					// Check single parameters
 					$pattern_key = $has_sign ? substr($vartype[$rq], 1) : $vartype[$rq];
@@ -277,6 +280,7 @@ function varcheck(&$array, $category) {
 }
 
 $varcheck_vars = array('_COOKIE', '_GET', '_POST', '_ENV', '_SERVER');
+global $varcheck_errors;
 $varcheck_errors = '';
 foreach ( $varcheck_vars as $var ) {
 	if ( ! isset($$var) ) continue;
