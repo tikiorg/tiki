@@ -149,7 +149,7 @@ class="prevnext">{tr}All{/tr}</a>
 {if $what eq 'included'}</i>{/if}
 {if $grs eq $users[user].default_group}({tr}default{/tr}){/if}
 {if $what ne 'included' and $grs != "Registered"}
-	{self_link _class='link' action='removegroup' group=$grs _icon='cross' _title="{tr}Remove{/tr} {tr}from{/tr} $grs"}{/self_link}
+	{self_link _class='link' action='removegroup' group=$grs _icon='delete' _title="{tr}Remove{/tr} `$users[user].user` {tr}from{/tr} $grs"}{/self_link}
 {/if}
 {if !$smarty.foreach.gr.last}<br />{/if}
 {/if}
