@@ -32,7 +32,7 @@ function wikiplugin_back($data, $params) {
     
     $begin = "<a href=\"javascript:history.go(-1)\">";
             
-    $content = "tra('Back')";
+    $content = tra('Back');
 
     $end = "</a>";
     
