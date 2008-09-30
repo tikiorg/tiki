@@ -45,7 +45,7 @@ function wikiplugin_bloglist($data, $params) {
 	$query = "select `postId`, `title`, `user`, `created`  from `tiki_blog_posts` where `blogId`=? order by `created` desc";
 	$result = $tikilib->query($query, array($Id));
 	$i=0;
-    	while (($res = $result->fetchRow()) && ($i < $Items)) {
+	while (($res = $result->fetchRow()) && (!isset($Items) || $i < $Items)) {
         	$text.="<tr><td>" . TikiLib::date_format("%d/%M/%Y %H:%M", $res["created"]) . "</td>";
 		$text.="<td><a href=\"tiki-view_blog_post.php?blogId=" . $Id . "&postId=" . $res["postId"] . "\">" . $res["title"] . "</a></td>";
         	$text.= "<td>" . $res["user"] . "</td></tr>\n";
