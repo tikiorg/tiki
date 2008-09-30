@@ -5452,7 +5452,7 @@ function add_pageview() {
     }
 
     //PARSEDATA
-    function parse_data($data,$is_html=false,$absolute_links=false) {
+    function parse_data($data,$is_html=false,$absolute_links=false,$noparseplugins=false) {
    	// Don't bother if there's nothing...
 	  if (function_exists('mb_strlen')) {
 		if( mb_strlen( $data ) < 1 )
@@ -5519,7 +5519,9 @@ function add_pageview() {
 	// Handle pre- and no-parse sections and plugins
 	$preparsed = array('data'=>array(),'key'=>array());
 	$noparsed = array('data'=>array(),'key'=>array());
-	$this->parse_first($data, $preparsed, $noparsed);
+	if (!$noparseplugins) {
+		$this->parse_first($data, $preparsed, $noparsed);
+    }	
 
 	// Handle |# anchor links by turning them into ALINK module calls.
 	preg_match_all("/\(\(([^)]*\|#[^)]*)\)\)/", $data, $anchors);
@@ -5611,8 +5613,9 @@ function add_pageview() {
 	    }
 	}
 
-	$this->parse_first($data, $preparsed, $noparsed);
-
+	if (!$noparseplugins) {
+		$this->parse_first($data, $preparsed, $noparsed);
+	}
 	// Handle ~pre~...~/pre~ sections
 	$data = preg_replace(';~pre~(.*?)~/pre~;s', '<pre>$1</pre>', $data);
 
