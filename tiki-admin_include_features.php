@@ -97,6 +97,7 @@ if (isset($_REQUEST["features"])) {
 		"user_assigned_modules",
 		"feature_sefurl",
 		"feature_tikitests",
+		"feature_magic",
 	);
 
 	$pref_byref_values = array(

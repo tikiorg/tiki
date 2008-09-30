@@ -1094,6 +1094,9 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		// TikiTests
 		'feature_tikitests' => 'n',
 
+		// Magic Admin Panel
+		'feature_magic' => 'y',
+
 		// Tiki Profiles
 		'profile_sources' => 'http://profiles.tikiwiki.org/profiles',
 
