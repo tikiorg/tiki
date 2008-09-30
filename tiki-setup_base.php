@@ -280,7 +280,6 @@ function varcheck(&$array, $category) {
 }
 
 $varcheck_vars = array('_COOKIE', '_GET', '_POST', '_ENV', '_SERVER');
-global $varcheck_errors;
 $varcheck_errors = '';
 foreach ( $varcheck_vars as $var ) {
 	if ( ! isset($$var) ) continue;
