@@ -31,9 +31,9 @@
 
   {if $user and $prefs.feature_user_watches eq 'y'}
     {if $user_watching_file_gallery eq 'n'}
-      <a href="tiki-list_file_gallery.php?galleryId={$galleryId|escape:"url"}&amp;galleryName={$name|escape:"url"}&amp;watch_event=file_gallery_changed&amp;watch_object={$galleryId|escape:"url"}&amp;watch_action=add"{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}>{icon _id='eye' align='right' alt="{tr}Monitor this Gallery{/tr}"}</a>
+      <a href="tiki-list_file_gallery.php?galleryId={$galleryId|escape:"url"}&amp;galleryName={$name|escape:"url"}&amp;watch_event=file_gallery_changed&amp;watch_object={$galleryId|escape:"url"}&amp;watch_action=add"{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if} class="icon">{icon _id='eye' align='right' alt="{tr}Monitor this Gallery{/tr}"}</a>
     {else}
-      <a href="tiki-list_file_gallery.php?galleryId={$galleryId|escape:"url"}&amp;galleryName={$name|escape:"url"}&amp;watch_event=file_gallery_changed&amp;watch_object={$galleryId|escape:"url"}&amp;watch_action=remove{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}">{icon _id='no_eye' align='right' alt="{tr}Stop Monitoring this Gallery{/tr}"}</a>
+      <a href="tiki-list_file_gallery.php?galleryId={$galleryId|escape:"url"}&amp;galleryName={$name|escape:"url"}&amp;watch_event=file_gallery_changed&amp;watch_object={$galleryId|escape:"url"}&amp;watch_action=remove{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}" class="icon">{icon _id='no_eye' align='right' alt="{tr}Stop Monitoring this Gallery{/tr}"}</a>
     {/if}
   {/if}  
   {if $prefs.rss_file_gallery eq 'y'}

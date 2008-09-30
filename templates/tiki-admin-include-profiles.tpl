@@ -221,7 +221,7 @@ function showDetails( id, domain, profile ) { // {{{
 		<tr>
 			<td>{$entry.short}</td>
 			<td><img id="profile-status-{$k}" src="img/icons2/status_{$entry.status}.gif"/></td>
-			<td><span id="profile-date-{$k}">{$entry.formatted}</span> <a href="javascript:refreshCache({$k})"><img src="pics/icons/arrow_refresh.png" class="icon" alt="{tr}Refresh{/tr}"/></a></td>
+			<td><span id="profile-date-{$k}">{$entry.formatted}</span> <a href="javascript:refreshCache({$k})" class="icon"><img src="pics/icons/arrow_refresh.png" class="icon" alt="{tr}Refresh{/tr}"/></a></td>
 		</tr>
 		{/foreach}
 	</table>
