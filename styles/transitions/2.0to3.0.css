@@ -23,11 +23,8 @@ They should be added to themes (possibly with tweaks) to make the theme v3.0 rea
 	top: 10%;
 	max-height: 80%;
 	overflow: auto;
-
 	background: white;
-
 	padding: 10px;
-
 	border: solid 2px black;
 }
 
@@ -44,4 +41,9 @@ h3.box-title span.moduleflip {
 
 #shadowbox_content {
 	background: white;
+}
+
+/* To enable removing deprecated tag from img.icon and prevent border on a.icon. */
+.icon {
+	border: 0;
 }

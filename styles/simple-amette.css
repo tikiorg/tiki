@@ -1448,4 +1448,6 @@ h3.box-title {
 a.flipmodtitle:hover img {
 	border: 1px solid #eef5ee !important;
 }
+
+.icon {border: 0}
 /* end of css file */

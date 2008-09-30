@@ -2415,4 +2415,6 @@ a.admbox.off:hover,
 a.admbox.off:focus,
 a.admbox.off:active {border: 1px solid #9f9f9f}
 #page_bar {text-align:center;}
+.icon {border: 0}
+
 /* end of css file */
