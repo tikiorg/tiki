@@ -37,7 +37,7 @@ function wikiplugin_skype_info() {
 			'action' => array(
 				'required' => false,
 				'name' => tra('Action'),
-				'description' => tra('call|chat'),
+				'description' => 'call|chat',
 			),
 		),
 	);
