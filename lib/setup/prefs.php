@@ -156,6 +156,7 @@ function get_default_prefs() {
 		'wikiplugin_articles' => 'y',
 		'wikiplugin_attach' => 'y',
 		'wikiplugin_avatar' => 'y',
+        'wikiplugin_back' => 'y',
 		'wikiplugin_backlinks' => 'y',
 		'wikiplugin_bloglist' => 'n',
 		'wikiplugin_box' => 'y',
