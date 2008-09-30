@@ -162,7 +162,7 @@ class LogsLib extends TikiLib {
 				}
 			}
 		}
-		return  $actions[0];
+		return  isset($actions[0])? $actions[0]: 0;
 	}
 	function action_must_be_logged($action, $objectType) {
 		global $prefs;
