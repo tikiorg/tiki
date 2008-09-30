@@ -30,10 +30,10 @@ function wikiplugin_back($data, $params) {
     
     extract ($params,EXTR_SKIP);
     
-    $begin = '<a href=\"javascript:history.go(-1)\">";
-    
-    $content = "tra(\'Back\')";
-    
+    $begin = "<a href=\"javascript:history.go(-1)\">";
+            
+    $content = "tra('Back')";
+
     $end = "</a>";
     
     return $begin . $content  . $end;
