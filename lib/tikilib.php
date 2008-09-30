@@ -2119,6 +2119,7 @@ class TikiLib extends TikiDB {
 					$result = $this->query($query, $bindvars);
 
 					if ( $with_subgals_size ) {
+						if (!function_exists('galsize')) {
 						function galsize($id, &$db) {
 							$return = 0;
 
@@ -2135,6 +2136,7 @@ class TikiLib extends TikiDB {
 							unset($result);
 
 							return $return;
+						}
 						}
 					}
 
