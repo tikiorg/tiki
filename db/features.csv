@@ -931,3 +931,4 @@
 1040,"Ftp",913,,"wikiplugin_ftp","flag",,"tiki_p_admin",,,,,," "
 1041,"Cookie",913,,"wikiplugin_cookie","flag",,"tiki_p_admin",,,,,," "
 1042,"Picture",913,,"wikiplugin_picture","flag",,"tiki_p_admin",,,,,," "
+1043,"Files",913,,"wikiplugin_files","flag",,"tiki_p_admin",,,,,," "
