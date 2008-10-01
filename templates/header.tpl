@@ -55,7 +55,7 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 <!--[if lt IE 7]> <link rel="StyleSheet" href="css/ie6.css" type="text/css" /> <![endif]-->
 
 {* --- phplayers block --- *}
-{if isset($phplayers_headers)}{$phplayers_headers}{/if}
+{if $prefs.feature_phplayers eq 'y' and isset($phplayers_headers)}{$phplayers_headers}{/if}
 
 {*-- css menus block --*}
 {if $prefs.feature_cssmenus eq 'y'}
