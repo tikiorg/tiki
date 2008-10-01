@@ -28,37 +28,22 @@
 		<td class="heading">{tr}Action{/tr}</td>
 	</tr>
 
+	{cycle values="odd,even" print=false}
 	{section name=changes loop=$listpages}
 		<tr>
-			{if $smarty.section.changes.index % 2}
-				<td class="odd">&nbsp;{$listpages[changes].postId}&nbsp;</td>
-				<td class="odd">
-					&nbsp;
-					<a class="blogname" href="tiki-edit_blog.php?blogId={$listpages[changes].blogId}" title="{$listpages[changes].blogTitle}">{$listpages[changes].blogTitle|truncate:$prefs.blog_list_title_len:"...":true}</a>
-					&nbsp;
-				</td>
-				<td class="odd">&nbsp;{$listpages[changes].created|tiki_short_datetime}&nbsp;</td>
-				<td class="odd">&nbsp;{$listpages[changes].size}&nbsp;</td>
-				<td class="odd">&nbsp;{$listpages[changes].user}&nbsp;</td>
-				<td class="odd">
-					<a class="link" href="tiki-list_posts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].postId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
-					<a class="link" href="tiki-blog_post.php?postId={$listpages[changes].postId}">{icon _id='page_edit'}</a>
-				</td>
-			{else}
-				<td class="even">&nbsp;{$listpages[changes].postId}&nbsp;</td>
-				<td class="even">
-					&nbsp;
-					<a class="blogname" href="tiki-edit_blog.php?blogId={$listpages[changes].blogId}" title="{$listpages[changes].blogTitle}">{$listpages[changes].blogTitle|truncate:$prefs.blog_list_title_len:"...":true}</a>
-					&nbsp;
-				</td>
-				<td class="even">&nbsp;{$listpages[changes].created|tiki_short_datetime}&nbsp;</td>
-				<td class="even">&nbsp;{$listpages[changes].size}&nbsp;</td>
-				<td class="even">&nbsp;{$listpages[changes].user}&nbsp;</td>
-				<td class="even">
-					<a class="link" href="tiki-blog_post.php?postId={$listpages[changes].postId}">{icon _id='page_edit'}</a>
-					<a class="link" href="tiki-list_posts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].postId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
-				</td>
-			{/if}
+			<td class="{cycle advance=false}">&nbsp;{$listpages[changes].postId}&nbsp;</td>
+			<td class="{cycle advance=false}">
+				&nbsp;
+				<a class="blogname" href="tiki-edit_blog.php?blogId={$listpages[changes].blogId}" title="{$listpages[changes].blogTitle}">{$listpages[changes].blogTitle|truncate:$prefs.blog_list_title_len:"...":true}</a>
+				&nbsp;
+			</td>
+			<td class="{cycle advance=false}">&nbsp;{$listpages[changes].created|tiki_short_datetime}&nbsp;</td>
+			<td class="{cycle advance=false}">&nbsp;{$listpages[changes].size}&nbsp;</td>
+			<td class="{cycle advance=false}">&nbsp;{$listpages[changes].user}&nbsp;</td>
+			<td class="{cycle}">
+				<a class="link" href="tiki-blog_post.php?postId={$listpages[changes].postId}">{icon _id='page_edit'}</a>
+				<a class="link" href="tiki-list_posts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$listpages[changes].postId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
+			</td>
 		</tr>
 	{sectionelse}
 		<tr>
