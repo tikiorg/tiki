@@ -5622,7 +5622,7 @@ class TikiLib extends TikiDB {
 		$quote_keys = array();
 		if( $matches ) {
 			foreach( array_unique( $quotes ) as $quote ) {
-				$key = md5( $this->genPass() );
+				$key = '§'.md5( $this->genPass() ).'§';
 				$aux["key"] = $key;
 				$aux["data"] = $quote;
 				$quote_keys[] = $aux;
@@ -5930,12 +5930,12 @@ class TikiLib extends TikiDB {
 			preg_match_all("/(?<!\[)\[([^\[][^\]]+)\]/", $data, $noparseurl);
 
 			foreach (array_unique($noparseurl[1])as $np) {
-				$key = md5($this->genPass());
+				$key = '§'.md5($this->genPass()).'§';
 
 				$aux["key"] = $key;
 				$aux["data"] = $np;
 				$noparsedlinks[] = $aux;
-				$data = str_replace("$np", $key, $data);
+				$data = preg_replace('/(^|[^a-zA-Z0-9])'.preg_quote($np,'/').'([^a-zA-Z0-9]|$)/', '\1'.$key.'\2', $data);
 			}
 		}
 
@@ -7604,7 +7604,7 @@ class TikiLib extends TikiDB {
 		$fhash = '';
 		$chunk = '';
 		if ($store_type == 'dir') {
-			$fhash = md5($name = $file_name.date('U'));
+			$fhash = '§'.md5($name = $file_name.date('U')).'§';
 			$fw = fopen($prefs['w_use_dir'].$fhash, "wb");
 			if (!$fw)
 				return array("ok"=>false, "error"=>tra('Cannot write to this file:').$fhash);
