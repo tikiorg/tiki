@@ -270,7 +270,7 @@
       {if $over_infos eq ''}
         {icon _id='information_gray' class='' alt='{tr}No information{/tr}'}
       {else}
-        <a class="fgalname" href="#" {popup fullhtml="1" text=$over_infos|escape:"javascript"|escape:"html"} style="cursor:help">{icon _id='information' class='' title=''}</a>
+        <a class="fgalname" href="#" {popup fullhtml="1" text=$over_infos|escape:"javascript"|escape:"html" left=true} style="cursor:help">{icon _id='information' class='' title=''}</a>
       {/if}
     {/if}
     </td>
