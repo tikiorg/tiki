@@ -399,6 +399,7 @@ class WikiRenderer
 	private function setupWatch() // {{{
 	{
 		global $prefs, $tikilib, $categlib;
+		require_once 'lib/categories/categlib.php';
 		if ($prefs['feature_user_watches'] != 'y')
 			return;
 
