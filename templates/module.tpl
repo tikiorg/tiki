@@ -20,20 +20,20 @@
 		{if $module_notitle ne 'y' }
 		<span class="moduletitle">{$module_title}</span>
 		{/if}
-		{if $module_flip eq 'y'}
+		{if $module_flip eq 'y' and $prefs.javascript_enabled ne 'n'}
 			<span class="moduleflip" id="moduleflip-{$module_name|cat:$module_position|cat:$module_ord|escape}">
 				<a title="{tr}Toggle module contents{/tr}" class="flipmodtitle" href="javascript:icntoggle('mod-{$module_name|cat:$module_position|cat:$module_ord|escape}','module.png');"><img name="icnmod-{$module_name|cat:$module_position|cat:$module_ord|escape}" class="flipmodimage" src="pics/icons/module.png" border="0" width="16" height="16" alt="[{tr}toggle{/tr}]" /></a>
 			</span>
 		{/if}
 		</h3>
 	{elseif $module_notitle ne 'y' }
-		{if $module_flip eq 'y'}
+		{if $module_flip eq 'y' and $prefs.javascript_enabled ne 'n'}
 			<h3 class="box-title" ondblclick="javascript:icntoggle('mod-{$module_name|cat:$module_position|cat:$module_ord|escape}','module.png');"{if !empty($module_params.color)} style="color:{$module_params.color};"{/if}>
 		{else}
 			<h3 class="box-title"{if !empty($module_params.color)} style="color:{$module_params.color};"{/if}>
 		{/if}
 		{$module_title}
-		{if $module_flip eq 'y'}
+		{if $module_flip eq 'y' and $prefs.javascript_enabled ne 'n'}
 			<span id="moduleflip-{$module_name|cat:$module_position|cat:$module_ord|escape}">
 				<a title="{tr}Toggle module contents{/tr}" class="flipmodtitle" href="javascript:icntoggle('mod-{$module_name|cat:$module_position|cat:$module_ord|escape}','module.png');"><img name="icnmod-{$module_name|cat:$module_position|cat:$module_ord|escape}" class="flipmodimage" src="pics/icons/module.png" border="0" alt="[{tr}Hide{/tr}]" /></a>
 			</span>
