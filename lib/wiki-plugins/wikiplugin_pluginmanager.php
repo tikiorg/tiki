@@ -107,7 +107,7 @@ function wikiplugin_pluginmanager_help() {
 				'info' => array(
 					'required' => false,
 					'name' => tra('Information'),
-					'description' => tra('version|description|arguments, multiple values can be used.'),
+					'description' => 'version|description|arguments '.tra('Multiple values separated with | can be used.'),
 				),
 			),
 		);
