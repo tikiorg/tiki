@@ -145,7 +145,7 @@
 					<select name="galleryId[]" style="width:150px">
 					{section name=idx loop=$galleries}
 						{if ($galleries[idx].individual eq 'n') or ($galleries[idx].individual_tiki_p_upload_files eq 'y')}
-						<option value="{$galleries[idx].id|escape}" {if $galleries[idx].id eq $galleryId}selected="selected"{/if}>{$galleries[idx].name}</option>
+						<option value="{$galleries[idx].id|escape}" {if $galleries[idx].id eq $galleryId}selected="selected"{/if}>{$galleries[idx].name|escape}</option>
 						{/if}
 					{/section}
 					</select>
@@ -207,6 +207,7 @@
 	{if $prefs.javascript_enabled neq 'y' and !$editFileId}
 	{$upload_str}
 	{$upload_str}
+	<hr />
 	<input type="submit" name="upload" value="{if $editFileId}{tr}Save{/tr}{else}{tr}Upload{/tr}{/if}"/>
 	{/if}
 	</form>

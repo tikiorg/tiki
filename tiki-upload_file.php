@@ -18,6 +18,8 @@ include_once ('lib/filegals/filegallib.php');
 include('lib/filegals/max_upload_size.php');
 @ini_set('max_execution_time', 0); //will not work in safe_mode is on
 
+$auto_query_args = array('galleryId', 'fileId');
+
 function print_progress($msg) {
 	global $prefs;
 
