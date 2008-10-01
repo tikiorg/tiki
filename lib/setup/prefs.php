@@ -910,7 +910,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_swffix' => 'n',
 
 		// textarea
-		'feature_smileys' => 'y',
+		'feature_smileys' => 'n',
 		'popupLinks' => 'y',
 		'feature_autolinks' => 'y',
 		'quicktags_over_textarea' => 'y',
