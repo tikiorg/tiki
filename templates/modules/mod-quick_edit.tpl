@@ -14,7 +14,7 @@
 {literal}
 window.addEvent('domready', function() {
 	var o = new Autocompleter.Request.JSON('{/literal}{$qefield}{literal}', 'tiki-listpages.php?listonly', {
-		'postVar': 'find',
+		'postVar': 'find'
 	});
 });
 {/literal}
