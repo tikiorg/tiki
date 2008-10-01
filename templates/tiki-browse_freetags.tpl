@@ -141,7 +141,7 @@
   
   {if $prefs.feature_faqs eq 'y'}
     {assign var=cpt value=$cpt+1}
-    <span class="button2"><a if $type eq 'faq'} id="highlight"{/if} href="tiki-browse_freetags.php?tag={$tagString}{if $broaden}&amp;broaden={$broaden}{/if}&amp;type=faq">{tr}FAQs{/tr}</a></span>
+    <span class="button2"><a {if $type eq 'faq'} id="highlight"{/if} href="tiki-browse_freetags.php?tag={$tagString}{if $broaden}&amp;broaden={$broaden}{/if}&amp;type=faq">{tr}FAQs{/tr}</a></span>
   {/if}
   
   {if $prefs.feature_sheet eq 'y'}
