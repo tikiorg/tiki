@@ -2,7 +2,7 @@
 {if (! isset($display) or $display eq '')}
 {if count($phpErrors)}
 <span class="button2"><a href="#" onclick="flip('errors');return false;">{tr}Show php error messages{/tr}</a></span><br />
-<div id="errors" style="display:{if isset($smarty.session.tiki_cookie_jar.show_errors) and $smarty.session.tiki_cookie_jar.show_errors eq 'y'}block{else}none{/if};">
+<div id="errors" style="display:{if (isset($smarty.session.tiki_cookie_jar.show_errors) and $smarty.session.tiki_cookie_jar.show_errors eq 'y') or $prefs.javascript_enabled ne 'y'}block{else}none{/if};">
 {foreach item=err from=$phpErrors}{$err}{/foreach}
 </div>
 {/if}
