@@ -75,7 +75,8 @@
             {/if}
 
             {if $user and $prefs.feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
-              <a title="{tr}Save to notepad{/tr}" href="tiki-view_blog.php?blogId={$blogId}&amp;savenotepad={$listpages[ix].postId}">{icon _id='disk' alt='{tr}Save{/tr}'}</a>
+              <a title="{tr}Save to notepad{/tr}" href="tiki-view_blog.php?blogId={$blogId}&amp;savenotepad={$listpages[ix].postId}">{icon _id='disk'
+							alt='{tr}Save to notepad{/tr}'}</a>
             {/if}
           </td>
         </tr>
@@ -124,7 +125,14 @@
             <small>
               <a class="link" href="{$listpages[ix].postId|sefurl:blogpost}">{tr}Permalink{/tr}</a>
               {if $allow_comments eq 'y' and $prefs.feature_blogposts_comments eq 'y'}
-                <a class="link" href="tiki-view_blog_post.php?find={$find}&amp;blogId={$blogId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;postId={$listpages[ix].postId}&amp;show_comments=1">{$listpages[ix].comments} {tr}comments{/tr}</a>
+                <a class="link" href="tiki-view_blog_post.php?find={$find}&amp;blogId={$blogId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;postId={$listpages[ix].postId}&amp;show_comments=1">
+								{$listpages[ix].comments}
+								{if $listpages[ix].comments == 1}
+									{tr}comment{/tr}
+								{else}
+									{tr}comments{/tr}
+									</a>
+								{/if}
               {/if}
             </small>
           </td>
