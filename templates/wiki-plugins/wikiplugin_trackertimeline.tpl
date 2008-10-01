@@ -17,6 +17,7 @@ ttl_showdetails = function( data ) {
 <table style="width: 100%;">
 	<col width="10%"/>
 	<col width="90%"/>
+	{foreach from=$layouts item=layout}
 	<tr>
 		<td></td>
 		<td>
@@ -24,6 +25,7 @@ ttl_showdetails = function( data ) {
 			{foreach from=$layout.blocks item=label}<div style="display: inline-block; display: -moz-inline-stack; width: {$layout.size}%; height: 15px; border: 0; overflow:hidden; background: lightblue; padding: 0; margin: 0;">{$label}</div>{/foreach}
 		</td>
 	</tr>
+	{/foreach}
 	{foreach from=$wp_ttl_data item=list key=datagroup}
 		<tr>
 			<th>{$datagroup|escape}</th>

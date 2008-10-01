@@ -46,6 +46,16 @@ function wikiplugin_trackertimeline_info() {
 				'name' => tra('Upper Bound'),
 				'description' => tra('Date until which element should be displayed. Date must be provided in YYYY-MM-DD HH:mm:ss format.'),
 			),
+			'scale1' => array(
+				'required' => false,
+				'name' => tra('Primary Scale Unit'),
+				'description' => tra('hour, day, week, month or year (default to hour)'),
+			),
+			'scale2' => array(
+				'required' => false,
+				'name' => tra('Secondary Scale Unit'),
+				'description' => tra('hour, day, week, month, year or empty (default to empty)'),
+			),
 		),
 	);
 }
@@ -117,25 +127,14 @@ function wikiplugin_trackertimeline( $data, $params ) {
 
 	$smarty->assign( 'wp_ttl_data', $data );
 
-	$layout = array(
-		'size' => round( 3600 / $size * 80 ),
-		'blocks' => array(
-		),
-	);
+	$layouts = array();
 
-	if( $start % 3600 ) {
-		$pos = $start + 3600 - $start % 3600;
-		$layout['pad'] = round( (3600-$start%3600) / $size * 80 );
-	 } else {
-		$pos = $start;
-		$layout['pad'] = 0;
-	}
+	if( isset( $params['scale2'] ) )
+		$layouts[] = wp_ttl_genlayout( $start, $end, $size, $params['scale2'] );
+	
+	$layouts[] = wp_ttl_genlayout( $start, $end, $size, isset($params['scale1']) ? $params['scale1'] : 'hour' );
 
-	for( $i = $pos; $end > $i; $i += 3600 ) {
-		$layout['blocks'][] = date( 'H:i', $i );
-	}
-
-	$smarty->assign( 'layout', $layout );
+	$smarty->assign( 'layouts', $layouts );
 
 	return $smarty->fetch('wiki-plugins/wikiplugin_trackertimeline.tpl');
 }
@@ -173,6 +172,43 @@ function wp_ttl_sort_cb( $a, $b ) {
 		return -1;
 	if( $a['start'] > $b['start'] )
 		return 1;
+}
+
+function wp_ttl_genlayout( $start, $end, $full, $type ) {
+	switch( $type ) {
+	case 'empty': case '': return;
+	case 'hour': $size = 3600; break;
+	case 'day': $size = 86400; break;
+	case 'week': $size = 604800; break;
+	case 'month': $size = 18144000; break;
+	case 'year': $size = 220752000; break;
+	}
+
+	$layout = array(
+		'size' => round( $size / $full * 80 ),
+		'blocks' => array(
+		),
+	);
+
+	if( $start % $size ) {
+		$pos = $start + $size - $start % $size;
+		$layout['pad'] = round( ($size-$start%$size) / $full * 80 );
+	 } else {
+		$pos = $start;
+		$layout['pad'] = 0;
+	}
+
+	for( $i = $pos; $end > $i; $i += $size ) {
+		switch( $type ) {
+		case 'hour': $layout['blocks'][] = date( 'H:i', $i ); break;
+		case 'day': $layout['blocks'][] = date( 'j', $i ); break;
+		case 'week': $layout['blocks'][] = date( 'j', $i ); break;
+		case 'month': $layout['blocks'][] = date( 'M', $i ); break;
+		case 'year': $layout['blocks'][] = date( 'Y', $i ); break;
+		}
+	}
+
+	return $layout;
 }
 
 ?>
