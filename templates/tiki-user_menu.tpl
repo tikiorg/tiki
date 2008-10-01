@@ -55,7 +55,7 @@
 
 {assign var=opensec value=$opensec+1}
 {if $menu_info.type eq 'e' or $menu_info.type eq 'd'}
-<div class="menuSection" {if $menu_info.type eq 'd' and $smarty.cookies.menu ne ''}style="display:none;"{else}style="display:block;"{/if} id='menu{$cname}'>
+<div class="menuSection" {if $menu_info.type eq 'd' and $smarty.cookies.menu ne ''  and $prefs.javascript_enabled ne 'n'}style="display:none;"{else}style="display:block;"{/if} id='menu{$cname}'>
 {else}
 <div class="menuSection">
 {/if}
