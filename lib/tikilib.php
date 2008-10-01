@@ -5155,7 +5155,7 @@ class TikiLib extends TikiDB {
 
 			if( preg_match( "/^ *&lt;[pP][rR][eE]&gt;|^ *~pp~|^ *~np~/", $plugin_start ) ) {
 				// ~pp~ type "plugins"
-				$key = md5($this->genPass());
+				$key = "§".md5($this->genPass())."§";
 				$noparsed["key"][] = "/". preg_quote($key)."/";
 				$plugin_data = str_replace('\\','\\\\',$plugin_data);
 				if( strstr( $plugin_data, '$' ) ) {
@@ -5206,7 +5206,7 @@ class TikiLib extends TikiDB {
 							preg_match( "/~np~(.*)~\/np~/s", $ret, $stuff );
 
 							if( count( $stuff ) > 0 ) {
-								$key = md5($this->genPass());
+								$key = "§".md5($this->genPass())."§";
 								$noparsed["key"][] =  "/". preg_quote($key)."/";
 								$noparsed["data"][] = $stuff[1];
 
@@ -6606,8 +6606,9 @@ class TikiLib extends TikiDB {
 						// with one underscore (for XHTML 1.0 compliance)
 						// Workaround pb with plugin replacement and header id
 						//  first we remove hash from title_text for headings beginning
-						//  with images
-						$thisid = ereg_replace('[a-z0-9]{32}', '_', $title_text);
+						//  with images and HTML tags
+						$thisid = ereg_replace('§[a-z0-9]{32}§', '', $title_text);
+						$thisid = ereg_replace('</?[^>]+>', '', $thisid);
 						$thisid = ereg_replace('[^a-zA-Z0-9]+', '_', $thisid);
 						$thisid = ereg_replace('^_', '', $thisid);
 
