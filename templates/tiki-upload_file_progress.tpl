@@ -12,7 +12,7 @@
 				<span id="uploadinfos{$fileId}_close" style="display:none">({tr}Hide{/tr})</span>
 				</a>
 			</div>
-			<div style="display:none;" id="uploadinfos{$fileId}">
+			<div style="{if $prefs.javascript_enabled eq 'y'}display:none;{/if}" id="uploadinfos{$fileId}">
 				{tr}You can download this file using{/tr}: <a class="link" href="{$dllink}">{$dllink}</a><br />
 				{tr}You can link to the file from a Wiki page using{/tr}: <div class="code">[tiki-download_file.php?fileId={$fileId}|{$name} ({$size|kbsize})]</div>
 				{tr}You can display an image in a Wiki page using{/tr}: <div class="code">&#x7b;img src="{$dllink}" alt="{$name} ({$size|kbsize})"}</div>
