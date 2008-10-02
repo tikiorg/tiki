@@ -958,7 +958,6 @@ td.heading {
 	color: #F5F5F5;
 	border-bottom: 1px solid #696969}
 
-td.bloglistheading {text-align: center}
 /* form.admin {}
 form.admin fieldset {}
 form.admin legend.heading {}
@@ -1013,16 +1012,6 @@ a.artname,
 a.forumname {}
 
 a.forumnameread {} */
-
-/* links in table headings */
-/* .tableheading,
-.gallistheading,
-.listgalheading,
-.bloglistheading,
-.llisfgalheading,
-.llistfileslink,
-.llistart,
-.lforumheading {} */
 
 /** Tabs **/
 

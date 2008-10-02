@@ -848,8 +848,7 @@ table.admin tr td div#page-bar {
 	background-color: transparent;
 }
 
-table.normal td.heading,
-td.bloglistheading {
+table.normal td.heading {
 	font-size: 1em;
 }
 td {}
@@ -873,8 +872,7 @@ td.even {background: #f9f9f9}
 
 td.third {background: #e7e7e7}
 
-td.heading,
-td.bloglistheading {
+td.heading {
 	text-align: center;
 	background: #F0F4F5;
 	border: 1px solid #999999;

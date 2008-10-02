@@ -801,15 +801,13 @@ td.even {
 
 td.third { }
 
-td.heading,
-td.bloglistheading {
+td.heading {
 	text-align: center;
 	color: #93554a;
 	background: #a8cce2}
 
 th,
-table.normal td.heading,
-td.bloglistheading {
+table.normal td.heading {
 	font-size: 1em;
 	font-weight: bold;
 	color: #93554a;

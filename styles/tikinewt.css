@@ -1010,14 +1010,7 @@ a.forumnameread {
 }
 
 /* links in table headings */
-.tableheading,
-.gallistheading,
-.listgalheading,
-.bloglistheading,
-.llisfgalheading,
-.llistfileslink,
-.llistart,
-.lforumheading {
+.tableheading {
 }
 
 table.findtable {

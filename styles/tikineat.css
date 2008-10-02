@@ -525,8 +525,7 @@ table.email td.closeButton {
 }
 
 /* headings */
-DIV.heading, TD.heading, td.gallistheading, td.listgalheading, td.bloglistheading,
-td.listfgalheading, td.jukeboxlistheading, td.listfilesheading,
+DIV.heading, TD.heading,
 td.listartheading, td.forumheading, td.viewthread {
 	color : black;
 	background-color : #DEE7EC;
@@ -573,9 +572,7 @@ DIV.heading {
 	margin: 3px 2px;
 }
 
-th.gallistheading, th.listgalheading, th.bloglistheading,
-th.listfgalheading, th.jukeboxlistheading, th.listfilesheading,
-th.listartheading, th.forumheading, th.viewthread {
+th.listartheading, th.viewthread {
 }
 
 .button {
@@ -602,8 +599,7 @@ a.forumnameread {
 }
 
 /* Links in table headings */
-.tableheading, .gallistheading, .listgalheading, .bloglistheading,
-.llisfgalheading, .llistfileslink, .llistart, .lforumheading {
+.tableheading {
 }
 .findtitle {float: left;}
 
