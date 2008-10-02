@@ -41,32 +41,41 @@ function wikiplugin_flash_info() {
 }
 
 function wikiplugin_flash($data, $params) {
+	static $id = 0;
 	
-	extract ($params,EXTR_SKIP);
+	global $headerlib;
 
-	if (empty($movie)) {
+	if (! isset($params['movie']) ) {
 		return tra('Missing parameter movie to the plugin flash');
 	}
 	
-	if (!isset($width)) {
-	$width = "425";
-	}	
+	$defaults = array(
+		'width' => 425,
+		'height' => 350,
+		'quality' => 'high',
+		'version' => '9.0.0',
+	);
 
-	if (!isset($height)) {
-	$height = "350";
-	}	
+	$myId = 'wp-flash-' . ++$id;
+	$params = array_merge( $defaults, $params );
 
-	if (!isset($quality)) {
-	$quality = "high";
-	}	
+	$movie = json_encode( $params['movie'] );
+	$div = json_encode( $myId );
+	$width = (int) $params['width'];
+	$height = (int) $params['height'];
+	$version = json_encode( $params['version'] );
 
-	$asetup = "<OBJECT CLASSID=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0\" WIDTH=\"$width\" HEIGHT=\"$height\">";
-	$asetup .= "<PARAM NAME=\"movie\" VALUE=\"$movie\">";
-	$asetup .= "<PARAM NAME=\"quality\" VALUE=\"$quality\">";
-	$asetup .= "<PARAM NAME=\"wmode\" VALUE=\"transparent\">";
-	$asetup .= "<embed src=\"$movie\" quality=\"$quality\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\" type=\"application/x-shockwave-flash\" width=\"$width\" height=\"$height\" wmode=\"transparent\"></embed></object>";
+	unset( $params['movie'], $params['width'], $params['height'], $params['version'] );
+	$params = json_encode($params);
 
-	return $asetup;
+	$js = <<<JS
+swfobject.embedSWF( $movie, $div, $width, $height, $version, {}, $params, {} );
+JS;
+
+	$headerlib->add_jsfile( 'lib/swfobject.js' );
+	$headerlib->add_js( $js );
+
+	return "~np~<div id=\"$myId\">" . tra('Flash player not available.') . "</div>~/np~";
 }
 
 ?>
