@@ -52,6 +52,9 @@ if (!empty($_REQUEST['fileId'])) {
 		$smarty->display('error.tpl');
 		die;
 	}
+	if (!empty($_REQUEST['galleryId']) && (is_numeric($_REQUEST['galleryId']) || is_string($_REQUEST['galleryId']))) {
+		$_REQUEST['galleryId'] = array($_REQUEST['galleryId']);
+	}
 	if (empty($_REQUEST['galleryId'][0])) {
 		$_REQUEST['galleryId'][0] = $fileInfo['galleryId'];
 	} elseif ($_REQUEST['galleryId'][0] != $fileInfo['galleryId']) {
