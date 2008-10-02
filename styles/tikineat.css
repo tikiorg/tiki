@@ -776,7 +776,11 @@ body .button2 {
 	margin-right : 5px;
 }
 /* Links in buttons */
-.button2 a, .button2 a:visited {
+.button2 a
+	, .button2 a:visited 
+	,	.navbar a
+	,	.navbar a:visited
+	{
 	font-size : 10px;
 	color : #223344;
 	background-color : #C7D0D9;
@@ -785,9 +789,11 @@ body .button2 {
 	border : 1px solid #999;
 	height : 16px;
 	white-space : nowrap;
-        cursor  : pointer;
+  cursor  : pointer;
 }
-.button2 a:hover {
+.button2 a:hover 
+	.	.navbar a:hover
+	{
 	background-color : #dca;
 }
 .tab1 form {

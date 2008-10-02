@@ -1269,7 +1269,11 @@ body .button2 {
 }
 
 /* Links in buttons */
-.button2 a, .button2 a:visited {
+.button2 a
+	, .button2 a:visited 
+	,	.navbar a
+	,	.navbar a:visited
+	{
 	font-size: .95em;
 	color: #223344;
 	background: #C7D0D9;
@@ -1282,7 +1286,9 @@ body .button2 {
 	line-height: 170%;
 }
 
-.button2 a:hover {
+.button2 a:hover 
+	,	.navbar a:hover 
+	{
 	background: #dca;
 }
 
