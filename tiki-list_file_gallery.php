@@ -56,6 +56,9 @@ if ( ! isset($_REQUEST['galleryId']) || $_REQUEST['galleryId'] == 0 ) {
 
 } elseif ( $gal_info = $tikilib->get_file_gallery($_REQUEST['galleryId']) ) {
 	$tikilib->get_perm_object($_REQUEST['galleryId'], 'file gallery', $gal_info);
+	if ($userlib->object_has_one_permission($_REQUEST['galleryId'], 'file gallery')) {
+		$smarty->assign('individual', 'y');
+	}
 	$podCastGallery = $filegallib->isPodCastGallery($_REQUEST['galleryId'], $gal_info);
 
 } else {
