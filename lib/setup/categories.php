@@ -15,7 +15,7 @@ if ($prefs['feature_categories'] == 'y' && $prefs['categories_used_in_tpl'] == '
     if (!empty($section) && !empty($sections) && !empty($sections[$section])) {
 		$here = $sections[$section];
 		if (isset($_REQUEST[$here['key']])) {
-			if (isset($_REQUEST[$here['key']][0])) { // tiki-upload_file uses galleryId[]
+			if (is_array($_REQUEST[$here['key']])) { // tiki-upload_file uses galleryId[]
 				$key = $_REQUEST[$here['key']][0];
 			} else {
 				$key = $_REQUEST[$here['key']];
