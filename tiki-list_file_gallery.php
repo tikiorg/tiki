@@ -242,7 +242,7 @@ if ( isset($_REQUEST['edit_mode']) and $_REQUEST['edit_mode'] ) {
 	}
 
 	// Edit a file
-	if ( $_REQUEST['fileId'] > 0 ) {
+	if ( isset($_REQUEST['fileId']) && $_REQUEST['fileId'] > 0 ) {
 		$info = $filegallib->get_file_info($_REQUEST['fileId']);
 
 		$smarty->assign('fileId', $_REQUEST['fileId']);
