@@ -801,7 +801,7 @@ if (isset($_REQUEST['mode_normal'])) {
 	$info['wysiwyg'] = true;
 	$smarty->assign('allowhtml','y');
 }
-if (!$parsed) {
+if (empty($parsed)) {
 	if ( ! isset($_REQUEST['edit']) && ! $is_html ) {
 		// When we get data from database (i.e. we are not in preview mode) and if we don't allow HTML,
 		//   then we need to convert database's HTML entities into their "normal chars" equivalents
