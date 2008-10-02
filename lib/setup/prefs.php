@@ -32,6 +32,7 @@ function get_default_prefs() {
 		'tiki_needs_upgrade' => 'n',
 		'tiki_version_last_check' => 0,
 		'tiki_version_check_frequency' => 604800,
+		'lastUpdatePrefs' => 0,
 
 		// wiki
 		'feature_wiki' => 'y',
