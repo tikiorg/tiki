@@ -94,7 +94,6 @@ if (isset($_REQUEST["features"])) {
 		"feature_shadowbox",
 		"feature_swffix",
 		"layout_section",
-		"user_assigned_modules",
 		"feature_sefurl",
 		"feature_tikitests",
 		"feature_magic",
