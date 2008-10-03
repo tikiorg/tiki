@@ -56,8 +56,8 @@ function getCookie($name, $section=null, $default=null) {
 if ($prefs['feature_tabs'] == 'y') {
 	if( isset($_GET['cookietab'])) {
 		$smarty->assign('cookietab',$_GET['cookietab']);
-	} elseif (count($_POST) > 0 and preg_replace(array('/\?.*$/','/^http.?:\/\//'),'',$_SERVER['HTTP_REFERER']) == preg_replace('/\?.*$/','',$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'])) {
-	$smarty->assign('cookietab',$_COOKIE['tab']);
+	} elseif (count($_POST) > 0 and preg_replace(array('/\?.*$/','/^http.?:\/\//'),'',$_SERVER['HTTP_REFERER']) == preg_replace('/\?.*$/','',$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']) && isset($_COOKIE['tab'])) {
+		$smarty->assign('cookietab',$_COOKIE['tab']);
 	} else {
 		$smarty->assign('cookietab',1);
 	}
