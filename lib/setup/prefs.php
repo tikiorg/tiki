@@ -32,7 +32,7 @@ function get_default_prefs() {
 		'tiki_needs_upgrade' => 'n',
 		'tiki_version_last_check' => 0,
 		'tiki_version_check_frequency' => 604800,
-		'lastUpdatePrefs' => 0,
+		'lastUpdatePrefs' => 1,
 
 		// wiki
 		'feature_wiki' => 'y',
@@ -875,6 +875,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_bot_bar_icons' => 'n',
 		'feature_bot_bar_debug' => 'n',
 		'feature_bot_bar_rss' => 'y',
+		'feature_bot_bar_power_by_tw' => 'y',
 		'maxRecords' => 25,
 		'maxArticles' => 10,
 		'maxVersions' => 0,

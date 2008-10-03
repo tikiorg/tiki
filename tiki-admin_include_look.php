@@ -23,6 +23,7 @@ if (isset($_REQUEST["looksetup"])) {
 	"feature_bot_bar_debug",
 	"feature_bot_bar_icons",
 	"feature_bot_bar_rss",
+	'feature_bot_bar_power_by_tw',
 	"feature_edit_templates",
 	"feature_editcss",
 	"feature_tabs",

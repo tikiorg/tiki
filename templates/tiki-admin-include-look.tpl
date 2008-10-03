@@ -585,6 +585,9 @@
 							<br />
 							<input type="checkbox" id="feature_bot_bar_rss" name="feature_bot_bar_rss" {if $prefs.feature_bot_bar_rss eq 'y'}checked="checked"{/if}/>
 							<label for="feature_bot_bar_rss">{tr}Bottom bar (RSS){/tr}</label>
+<br />
+							<input type="checkbox" id="feature_bot_bar_power_by_tw" name="feature_bot_bar_power_by_tw" {if $prefs.feature_bot_bar_power_by_tw eq 'y'}checked="checked"{/if}/>
+							<label for="feature_bot_bar_power_by_tw">{tr}Power by{/tr} TikiWiki</label>
 						</fieldset>
 					</td>
 				</tr>
