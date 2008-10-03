@@ -572,17 +572,19 @@
 					<td colspan="5" class="form">
 						<fieldset>
 							<legend>
-								<a href="#"><span><input type="checkbox" name="feature_bot_bar" {if $prefs.feature_bot_bar eq 'y'}checked="checked"{/if}/> {tr}Bottom bar{/tr}</span></a>
+								<a href="#"><span>{tr}Bottom bar{/tr}</span></a>
 							</legend>
-          	 	{tr}Bottom bar icons{/tr}
-							<input type="checkbox" name="feature_bot_bar_icons"
-         	  	{if $prefs.feature_bot_bar_icons eq 'y'}checked="checked"{/if}/>
-							| 
-							{tr}Bottom bar debug{/tr}
-							<input type="checkbox" name="feature_bot_bar_debug" {if $prefs.feature_bot_bar_debug eq 'y'}checked="checked"{/if}/>
-							| 
-							{tr}Bottom bar{/tr} (RSS) 
-							<input type="checkbox" name="feature_bot_bar_rss" {if $prefs.feature_bot_bar_rss eq 'y'}checked="checked"{/if}/>
+							<label for="feature_bot_bar">{tr}Activate{/tr}:</label>
+							<input type="checkbox" name="feature_bot_bar" {if $prefs.feature_bot_bar eq 'y'}checked="checked"{/if}/>
+							<hr />
+							<input type="checkbox" id="feature_bot_bar_icons" name="feature_bot_bar_icons"	{if $prefs.feature_bot_bar_icons eq 'y'}checked="checked"{/if}/>
+							<label for="feature_bot_bar_icons">{tr}Bottom bar icons{/tr}</label>
+							<br />
+							<input type="checkbox" id="feature_bot_bar_debug" name="feature_bot_bar_debug" {if $prefs.feature_bot_bar_debug eq 'y'}checked="checked"{/if}/>
+							<label for="feature_bot_bar_debug">{tr}Bottom bar debug{/tr}</label>
+							<br />
+							<input type="checkbox" id="feature_bot_bar_rss" name="feature_bot_bar_rss" {if $prefs.feature_bot_bar_rss eq 'y'}checked="checked"{/if}/>
+							<label for="feature_bot_bar_rss">{tr}Bottom bar (RSS){/tr}</label>
 						</fieldset>
 					</td>
 				</tr>
