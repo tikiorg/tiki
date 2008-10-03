@@ -4,6 +4,7 @@
 {if $prefs.log_sql ne 'y'}
 	{remarksbox type="warning" title="{tr}Notice{/tr}"}}{tr}This feature is disabled{/tr}<br />{tr}You will not see the latest queries.{/tr}{/remarksbox}
 {/if}
+{self_link clean="y" _class="button2"}{tr}Clean{/tr}{/self_link}
 
 {include file='find.tpl' find_show_num_rows='y'}
 
@@ -12,13 +13,15 @@
 		<th>{self_link _sort_arg='sort_mode' _sort_field='created'}{tr}Created{/tr}{/self_link}</th>
 		<th>{self_link _sort_arg='sort_mode' _sort_field='sql1'}{tr}Query{/tr}{/self_link}</th>
 		<th>{self_link _sort_arg='sort_mode' _sort_field='params'}{tr}Params{/tr}{/self_link}</th>
+		<th>{self_link _sort_arg='sort_mode' _sort_field='tracer'}{tr}From{/tr}{/self_link}</th>
 		<th>{self_link _sort_arg='sort_mode' _sort_field='timer'}{tr}Time{/tr}{/self_link}</th>
 	<tr>
 	{foreach from=$logs item=log}
 		<tr>
 			<td>{$log.created|escape}</td>
-			<td>{$log.sql1|truncate:200|escape}</td>
-			<td>{$log.params|truncate:200|escape}</td>
+			<td>{$log.sql1|escape}</td>
+			<td>{$log.params|escape}</td>
+			<td>{$log.tracer|escape}</td>
 			<td>{$log.timer|escape}</td>
 		</tr>
 	{/foreach}

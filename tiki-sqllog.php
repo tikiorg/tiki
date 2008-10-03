@@ -18,7 +18,17 @@ if ($tiki_p_admin != 'y') {
 
 include_once('lib/logs/logslib.php');
 
-$auto_query_args = array('offset', 'numrows', 'find', 'sort_mode'); 
+if (isset($_REQUEST['clean']) ) {
+	$area = 'cleanlogs';
+	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+		key_check($area);
+		$logslib->clean_logsql();
+	} else {
+		key_get($area, tra('Clean the sql logs'));
+	}
+}
+$auto_query_args = array('offset', 'numrows', 'find', 'sort_mode');
+
 $numrows = (isset($_REQUEST['numrows'])) ? $_REQUEST['numrows']: (isset($_REQUEST['maxRecords'])? $_REQUEST['maxRecords']: $prefs['maxRecords']);
 $smarty->assign_by_ref('numrows', $numrows);
 $smarty->assign_by_ref('maxRecords', $numrows);
@@ -28,6 +38,7 @@ $sort_mode = (isset($_REQUEST['sort_mode'])) ? $_REQUEST['sort_mode']: 'created_
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 $find = (isset($_REQUEST['find'])) ? $_REQUEST['find']: '';
 $smarty->assign_by_ref('find', $find);
+
 $logs = $logslib->list_logsql($sort_mode, $offset, $numrows, $find);
 $smarty->assign_by_ref('logs', $logs['data']);
 $smarty->assign_by_ref('cant', $logs['cant']);
