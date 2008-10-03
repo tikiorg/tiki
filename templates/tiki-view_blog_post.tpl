@@ -1,9 +1,8 @@
 {title help="Blogs"}{tr}Viewing blog post{/tr} - {$blog_data.title}{/title}
 
-<span class="button2">
+<div class="navbar">
   <a href="tiki-view_blog.php?find={$find}&amp;blogId={$blogId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}">{tr}Return to blog{/tr}</a>
-</span>
-<br /><br />
+</div>
 
 <div class="posthead">
 {if $blog_data.use_title eq 'y'}
@@ -54,7 +53,7 @@
 	</div>
 {/if}
 
-{if $prefs.blogues_feature_copyrights  eq 'y' and $prefs.wikiLicensePage}
+{if $prefs.blogues_feature_copyrights eq 'y' and $prefs.wikiLicensePage}
   {if $prefs.wikiLicensePage == $page}
     {if $tiki_p_edit_copyrights eq 'y'}
       <p class="editdate">{tr}To edit the copyright notices{/tr} <a href="copyrights.php?page={$copyrightpage}">{tr}Click Here{/tr}</a>.</p>
@@ -98,9 +97,9 @@
 </tr>
 {foreach from=$post_info.trackbacks_from key=key item=item}
 <tr>
-  <td  class="{cycle advance=false}">{$item.title|htmlentities}</td>
-  <td  class="{cycle advance=false}"><a href="{$key}" class="link" title="{$key}" target="_blank">{$key|truncate:"40"|htmlentities}</a></td>
-  <td  class="{cycle}">{$item.blog_name|htmlentities}</td>
+  <td class="{cycle advance=false}">{$item.title|htmlentities}</td>
+  <td class="{cycle advance=false}"><a href="{$key}" class="link" title="{$key}" target="_blank">{$key|truncate:"40"|htmlentities}</a></td>
+  <td class="{cycle}">{$item.blog_name|htmlentities}</td>
   {if ($ownsblog eq 'y') or ($user and $post_info.user eq $user) or $tiki_p_blog_admin eq 'y'}
     <td  class="{cycle advance=false}"><a href="tiki-view_blog_post.php?postId={$postId}&amp;deltrack={$key|urlencode}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a></td>
   {/if}
@@ -111,24 +110,22 @@
 
 {if $prefs.feature_blogposts_comments == 'y'
   && ($blog_data.allow_comments == 'y' or $blog_data.allow_comments == 'c')
-  && (($tiki_p_read_comments  == 'y'
+  && (($tiki_p_read_comments == 'y'
   && $comments_cant != 0)
-  ||  $tiki_p_post_comments  == 'y'
-  ||  $tiki_p_edit_comments  == 'y')
+  || $tiki_p_post_comments == 'y'
+  || $tiki_p_edit_comments == 'y')
 }
   <div id="page-bar">
-    <div class="button2">
-      <a href="#comment" onclick="javascript:flip('comzone');flip('comzone_close','inline');return false;"{if $comments_cant > 0} class="highlight"{/if}>
-        {if $comments_cant == 0 or ($tiki_p_read_comments  == 'n' and $tiki_p_post_comments  == 'y')}
-          {tr}Add Comment{/tr}
-        {elseif $comments_cant == 1}
-          {tr}1 comment{/tr}
-        {else}
-          {$comments_cant}&nbsp;{tr}comments{/tr}
-        {/if}
-          <span id="comzone_close" style="display:{if (isset($smarty.session.tiki_cookie_jar.show_comzone) and $smarty.session.tiki_cookie_jar.show_comzone eq 'y') or $show_comments}inline{else}none{/if};">({tr}close{/tr})</span>
-      </a>
-    </div>
+    <a href="#comment" onclick="javascript:flip('comzone');flip('comzone_close','inline');return false;"{if $comments_cant > 0} class="highlight"{/if}>
+			{if $comments_cant == 0 or ($tiki_p_read_comments == 'n' and $tiki_p_post_comments == 'y')}
+				{tr}Add Comment{/tr}
+      {elseif $comments_cant == 1}
+        {tr}1 comment{/tr}
+      {else}
+        {$comments_cant}&nbsp;{tr}comments{/tr}
+      {/if}
+      <span id="comzone_close" style="display:{if (isset($smarty.session.tiki_cookie_jar.show_comzone) and $smarty.session.tiki_cookie_jar.show_comzone eq 'y') or $show_comments}inline{else}none{/if};">({tr}close{/tr})</span>
+    </a>
   </div>
   {include file=comments.tpl}
 {/if}
