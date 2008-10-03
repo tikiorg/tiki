@@ -12,6 +12,7 @@
 {/if}
 
 {* multitiki ----------------------------- *}
+{* multitiki ----------------------------- *}
 {if $virt}
 <table><tr><td width="180">
 <div class="box">
@@ -276,7 +277,8 @@ hosting provider.  Normally Tiki tables won't conflict with other product names{
 
 {if isset($htaccess_error)}
 <h3><img src="pics/icons/information.png" alt="{tr}Note{/tr}" style="vertical-align:middle"/> {tr}Security{/tr}</h3>
-{tr}To increase your TikiWiki installation - and if you are using Apache web server - you should rename the <strong>_htaccess</strong> file into <strong>.htaccess</strong> (this file is in the main directory){/tr}.
+{tr}To secure your TikiWiki installation - and if you are using Apache web server - you should rename the <strong>_htaccess</strong> file to <strong>.htaccess</strong> (this file is in the main directory){/tr}.
+<p>&nbsp;</p>
 {/if}
 
 {if isset($smarty.post.scratch)}
@@ -293,10 +295,10 @@ hosting provider.  Normally Tiki tables won't conflict with other product names{
 <h2>{tr}Entering TikiWiki{/tr}</h2>
 <ul>
 {if isset($smarty.post.update)}
-<li><a href="tiki-install.php?lockenter" class="link">{tr}Enter TikiWiki and lock installer (Best){/tr}</a>
+<li><a href="tiki-install.php?lockenter" class="link">{tr}Enter TikiWiki and lock installer (Recommended){/tr}</a>
 <li><a href="tiki-index.php" class="link">{tr}Enter TikiWiki{/tr}</a>
 {else}
- <li><a href="tiki-install.php?lockchange" class="link">{tr}Login as the administrator and lock installer (Best){/tr}</a><br />{tr}You will be prompted to select a new administrator password.{/tr} {tr}Old password{/tr}: <em>admin</em></li>
+ <li><a href="tiki-install.php?lockchange" class="link">{tr}Login as the administrator and lock installer (Recommended){/tr}</a><br />{tr}You will be prompted to select a new administrator password.{/tr} {tr}Old password{/tr}: <em>admin</em></li>
  <li><a href="tiki-change_password.php?user=admin" class="link">{tr}Login as the administrator{/tr}</a><br />{tr}You will be prompted to select a new administrator password.{/tr} {tr}Old password{/tr}: <em>admin</em></li>
 {/if}
 </ul>
