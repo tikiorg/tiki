@@ -559,7 +559,7 @@ class Comments extends TikiLib {
 	    $findesc = '%' . $find . '%';
 
 	    $mid = " and `title` like $findesc or `data` like $findesc";
-	    $bindvars=array($findesc,$findesc,$object);
+	    $bindvars=array($object,$findesc,$findesc);
 	} else {
 	    $mid = "";
 	    $bindvars=array($object);
