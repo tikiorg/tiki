@@ -15,7 +15,7 @@ function wikiplugin_userlist_info() {
 		'name' => tra('User List'),
 		'description' => tra('Displays a list of registered users'),
 		'prefs' => array( 'wikiplugin_userlist' ),
-		'body' => tra('substring'),
+		'body' => tra('Login Filter'),
 		'params' => array(
 			'sep' => array(
 				'required' => false,
@@ -30,20 +30,24 @@ function wikiplugin_userlist_info() {
 			'sort' => array(
 				'required' => false,
 				'name' => tra('Sort Order'),
-				'desctiption' => tra('asc|desc'),
+				'desctiption' => 'asc|desc',
 			),
 			'layout' => array(
 				'required' => false,
 				'name' => tra('Layout'),
-				'description' => tra('table'),
+				'description' => 'table',
 			),
+			'link' => array(
+				'required' => false,
+				'name' => tra('Link'),
+				'description' => 'userpage|userinfo|userpref',
+			),			
 		),
 	);
 }
 
 function wikiplugin_userlist($data, $params) {
-    global $tikilib;
-    global $userlib;
+    global $tikilib, $userlib, $prefs, $tiki_p_admin, $tiki_p_admin_users;
 
     extract ($params,EXTR_SKIP);
 
@@ -73,12 +77,37 @@ function wikiplugin_userlist($data, $params) {
         }
     }
     
-    $query = 'select `login` from `users_users` where '.$mid;
+    $query = 'select `login`, `userId` from `users_users` where '.$mid;
     $result = $tikilib->query($query, $bindvars, $numRows);
     $ret = array();
 
     while ($row = $result->fetchRow()) {
-        $ret[] = $row['login'];
+		$res = '';
+		if (isset($link)) {
+			if ($link == 'userpage') {
+				if ($prefs['feature_wiki_userpage'] == 'y') {
+					global $wikilib; include_once('lib/wiki/wikilib.php');
+					$page = $prefs['feature_wiki_userpage_prefix'].$row['login'];
+					if ($tikilib->page_exists($page)) {
+						$res = '<a href="'.$wikilib->sefurl($page).'" title="'.tra('Page').'">';
+					}
+				}
+			} elseif (isset($link) && $link == 'userpref') {
+				if ($prefs['feature_userPreferences'] == 'y' && ($tiki_p_admin_users == 'y' || $tiki_p_admin == 'y')) {
+					$res = '<a href="tiki-user_preferences.php?userId='.$row['userId'].'" title="'.tra('Preferences').'">';
+				}
+			} elseif (isset($link) && $link == 'userinfo') {
+				if ($tiki_p_admin_users == 'y' || $tiki_p_admin == 'y') {
+					$res = '<a href="tiki-user_information.php?userId='.$row['userId'].'" title="'.tra('User Information').'">';
+				} else {
+					$user_information = $tikilib->get_user_preference($row['login'], 'user_information', 'public');
+					if ($user_information == 'private' && $row['login'] != $user) {
+						$res = '<a href="tiki-user_information.php?userId='.$row['userId'].'" title="'.tra('User Information').'">';
+					}
+				}
+			}
+		}
+        $ret[] = $res.$row['login'].($res?'</a>':'');
     }
     return $pre.implode ( $sep, $ret ).$post;
 }
