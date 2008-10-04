@@ -5845,6 +5845,38 @@ class TikiLib extends TikiDB {
 			}
 		}
 
+		if( $prefs['feature_wiki_argvariable'] == 'y' ) {
+			if (preg_match_all("/\\{\\{((\w+)(\\|([^\\}]+))?)\\}\\}/",$data,$args, PREG_SET_ORDER)) {
+				$needles = array();
+				$replacements = array();
+
+				foreach( $args as $arg ) {
+					$value = $arg[4];
+					$name = $arg[2];
+
+					switch( $name ) {
+					case 'user':
+						$value = $user;
+						break;
+					case 'page':
+						$value = $page;
+						break;
+					default:
+						if( isset($_GET[$name]) )
+							$value = $_GET[$name];
+						break;
+					}
+
+					if( ! empty( $value ) ) {
+						$needles[] = $arg[0];
+						$replacements[] = $value;
+					}
+				}
+
+				$data = str_replace( $needles, $replacements, $data );
+			}
+		}
+
 		/* <x> XSS Sanitization handling */
 
 		// Converts &lt;x&gt; (<x> tag using HTML entities) into the tag <x>. This tag comes from the input sanitizer (XSS filter).
