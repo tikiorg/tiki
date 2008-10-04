@@ -934,3 +934,5 @@
 1043,"Files",913,,"wikiplugin_files","flag",,"tiki_p_admin",,,,,," "
 1044,"Back",913,,"wikiplugin_back","flag",,"tiki_p_admin",,,,,," "
 1045,"Javascript",913,,"wikiplugin_js","flag",,"tiki_p_admin",,,,,," "
+1046,"Allow argument variables",141,,"feature_wiki_argvariable","flag",,"tiki_p_admin",,,,,," "
+1047,"Wiki Mind Map",141,,"feature_wiki_mindmap","flag",,"tiki_p_admin",,,,,," "
