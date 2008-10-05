@@ -7,12 +7,14 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 // returns mimetypes of files
-function tiki_get_mime($filename) {
+function tiki_get_mime($filename, $fallback = '') {
 	if (function_exists("mime_content_type")) {
 		//notice: this is the better way. 
 		//Compile php with --enable-mime-magic
 		//to be able to use this.
 		return mime_content_type($filename);
+	} elseif ( $fallback != '' ) {
+		return $fallback;
 	} else {
 		//The "Microsoft Way" - just kidding
 		$defaultmime = "application/octet-stream";
