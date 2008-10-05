@@ -32,15 +32,19 @@ class Smarty_Tikiwiki extends Smarty {
 			dirname(dirname(SMARTY_DIR)).'/smarty_tiki',
 			SMARTY_DIR.'plugins'
 		);
+
 		// In general, it's better that use_sub_dirs = false
 		// If ever you are on a very large/complex/multilingual site and your
 		// templates_c directory is > 10 000 files, (you can check at tiki-admin_system.php)
 		// you can change to true and maybe you will get better performance.
 		// http://smarty.php.net/manual/en/variable.use.sub.dirs.php
+		//
+		$this->use_sub_dirs = false;
 
-			$this->use_sub_dirs = false;
-			$this->security_settings['MODIFIER_FUNCS'][] = 'addslashes';
-			$this->security_settings['MODIFIER_FUNCS'][] = 'urlencode';
+		$this->security_settings['MODIFIER_FUNCS'] = array_merge(
+			$this->security_settings['MODIFIER_FUNCS'],
+			array('addslashes', 'ucfirst', 'ucwords', 'urlencode')
+		);
 	}
 
 	function _smarty_include($params) {

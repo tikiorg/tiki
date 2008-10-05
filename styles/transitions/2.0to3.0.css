@@ -47,4 +47,17 @@ h3.box-title span.moduleflip {
 a.icon,
 img.icon {
 	border: 0 !important;
-	background: transparent}
+	background: transparent
+}
+
+.post-approved-n { border-left: 3px dotted blue; }
+.post-approved-r { border-left: 3px double red; }
+.post-approved-r .content * { background-image: url(../../img/icons2/dots.gif); }
+
+.post-approved-n .content, .post-approved-r .content,
+.post-approved-n .title, .post-approved-r .title,
+.post-approved-n .postfooter, .post-approved-r .postfooter,
+tr.post-approved-n td span, tr.post-approved-r td span {
+	opacity: 0.5;
+}
+tr.post-approved-n td span, tr.post-approved-r td span { opacity: 0.6; }

@@ -186,6 +186,10 @@
 						<span class="checkbox"><input type="checkbox" name="feature_minichat" {if $prefs.feature_minichat eq 'y'}checked="checked"{/if}/></span>
 						<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Minichat" target="tikihelp" class="tikihelp" title="{tr}HTML Pages{/tr}">{/if} {tr}Minichat{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
 					</div>
+					<div class="float_r" style="width: 49%; text-align: left; float: right">
+						<span class="checkbox"><input type="checkbox" name="feature_comments_moderation" {if $prefs.feature_comments_moderation eq 'y'}checked="checked"{/if}/></span>
+						<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Comments+Moderation" target="tikihelp" class="tikihelp" title="{tr}Comments Moderation{/tr}">{/if} {tr}Comments Moderation{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
+					</div>
 				</div>
 			</fieldset>
 

@@ -493,6 +493,14 @@ if (($tiki_p_vote_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n')
 	}
 }
 
+if ( (!isset($forum_mode) || $forum_mode == 'n') && $tiki_p_admin_comments == 'y' && isset($_REQUEST['comments_approve']) && isset($_REQUEST["comments_threadId"]) ) {
+	if ( $_REQUEST['comments_approve'] == 'y' ) {
+		$commentslib->approve_comment($_REQUEST["comments_threadId"]);
+	} elseif ( $_REQUEST['comments_approve'] == 'n' ) {
+		$commentslib->reject_comment($_REQUEST["comments_threadId"]);
+	}
+}
+
 if (($tiki_p_remove_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n'))
 		|| (isset($forum_mode) && $forum_mode =='y' && $tiki_p_admin_forum == 'y' ) ) {
 	if (isset($_REQUEST["comments_remove"]) && isset($_REQUEST["comments_threadId"])) {
@@ -660,6 +668,13 @@ if (!isset($forum_mode) || $forum_mode == 'n') {
 	include_once("textareasize.php");
 }
 
+if ( ! isset($forum_mode) || $forum_mode == 'n' ) {
+	$queued = 0;
+	foreach ( $comments_coms['data'] as $k => $v ) {
+		if ( $v['approved'] == 'n' ) $queued++;
+	}
+	$smarty->assign('queued', $queued);
+}
 $smarty->assign('comments_coms', $comments_coms["data"] );
 
 // Grab the parent comment to show.  -rlpowell

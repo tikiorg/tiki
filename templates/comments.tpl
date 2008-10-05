@@ -69,6 +69,12 @@
 	{if $forum_mode neq 'y' or $prefs.forum_thread_user_settings eq 'y'}
 	<div class="forum_actions">
 		<div class="headers">
+		{if $tiki_p_admin_comments eq 'y' && $prefs.feature_comments_moderation eq 'y'}
+			<span class="title">{tr}Moderator actions{/tr}</span>
+			<span class="infos">
+				<a class="link" href="tiki-list_comments.php?types_section={$section}">{tr}queued:{/tr}{$queued}</a>
+			</span>
+		{/if}
 		</div>
 		<div class="actions">
 			<span class="action">
@@ -341,6 +347,10 @@
 				{/if}
 				{if $forum_mode eq 'y'}
 				<input type="button" name="comments_cancelComment" value="{tr}Cancel{/tr}" onclick="hide('{$postclass}');"/>
+				{elseif $prefs.feature_comments_moderation eq 'y' and $tiki_p_admin_comments neq 'y'}
+					{remarksbox type="note" title="{tr}Note{/tr}"}
+						Your comment will have to be approved by the moderator before it's publication.
+					{/remarksbox}	
 				{/if}
 			</td>
 		</tr>
@@ -348,15 +358,15 @@
 	</form>
 
 	<br />
-	<table class="normal" id="commentshelp">
-		<tr><td class="even">
-			<b>{if $forum_mode eq 'y'}{tr}Posting replies{/tr}:{else}{tr}Posting comments{/tr}:{/if}</b><br />
-			<br />
-			{tr}Use{/tr} [http://www.foo.com] {tr}or{/tr} [http://www.foo.com|{tr}Description{/tr}] {tr}for links{/tr}.<br />
-			{tr}HTML tags are not allowed inside posts{/tr}.<br />
-		</td></tr>
-	</table>
-	<br />
+	{if $forum_mode eq 'y'}
+		{assign var=tips_title value="{tr}Posting replies{/tr}"}
+	{else}
+		{assign var=tips_title value="{tr}Posting comments{/tr}"}
+	{/if}
+	{remarksbox type="tip" title=$tips_title}
+		{tr}Use{/tr} [http://www.foo.com] {tr}or{/tr} [http://www.foo.com|{tr}Description{/tr}] {tr}for links{/tr}.<br />
+		{tr}HTML tags are not allowed inside posts{/tr}.<br />
+	{/remarksbox}
 
 	{if $forum_mode eq 'y'}
     </div>

@@ -1638,7 +1638,7 @@ table.commentinfo {}
 	border-bottom: 1px solid #ACCCDD;
 	margin-bottom: 4px;
 	height: 100%;
-	overflow: auto;
+/*	overflow: auto;*/
 	padding-top: 2px;
 }
 .post .postbody-title .checkbox { float: left; }

@@ -5,6 +5,10 @@
 		and $forum_mode neq 'y' || ( $forum_mode eq 'y' and $forumId > 0 and $comments_parentId > 0 )
 	}
 	<div class="actions">
+		{if $forum_mode neq 'y' && $prefs.feature_comments_moderation eq 'y' && $tiki_p_admin_comments eq 'y' && $comment.approved eq 'n'}
+			{self_link comments_approve='y' comments_threadId=$comment.threadId _icon='comment_approve'}{tr}Approve{/tr}{/self_link}
+			{self_link comments_approve='n' comments_threadId=$comment.threadId _icon='comment_reject'}{tr}Reject{/tr}{/self_link}
+		{/if}
 		{if	$forum_mode neq 'y' && (
 				$tiki_p_edit_comments eq 'y'
 				|| $comment.userName == $user

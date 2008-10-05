@@ -656,6 +656,7 @@ CREATE TABLE tiki_comments (
   in_reply_to varchar(128) default NULL,
   comment_rating tinyint(2) default NULL,
   archived char(1) default NULL,
+  approved char(1) NOT NULL default 'y',
   PRIMARY KEY (threadId),
   UNIQUE KEY no_repeats (parentId, userName(40), title(100), commentDate, message_id(40), in_reply_to(40)),
   KEY title (title),

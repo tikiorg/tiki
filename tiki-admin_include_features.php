@@ -98,6 +98,7 @@ if (isset($_REQUEST["features"])) {
 		"feature_tikitests",
 		"feature_magic",
 		"feature_minichat",
+		"feature_comments_moderation",
 	);
 
 	$pref_byref_values = array(

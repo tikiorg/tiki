@@ -9,7 +9,8 @@
   * what                  : Change form title. Default value (if $what empty) is "Find". If $what is not empty, the text presented is $what content
   * exact_match           : If set adds exact_match field
   * types                 : If not empty adds type dropdown whith types array values
-    * find_type             : types dropdown selected value
+    * types_tag             : HTML element used to display types ('select' or 'checkbox'). Defaults to 'select'.
+    * find_type             : types selected value(s) - has to be a string for types_tag 'select' and an array for 'checkbox'
   * topics                : If not empty adds topic dropdown with topics array values
   * find_show_languages   : If value = 'y' adds lang dropdown with languages value dropdown
     * find_lang             : lang dropdown selected value
@@ -27,7 +28,7 @@
 {if $filegals_manager neq ''}<input type="hidden" name="filegals_manager" value="{$filegals_manager|escape}" />{/if}
 {if $_sort_mode eq 'y'}<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />{/if}
 
-{query _type='form_input' maxRecords='NULL' type='NULL' find='NULL' topic='NULL' lang='NULL' exact_match='NULL' categId='NULL' filegals_manager='NULL' save='NULL'}
+{query _type='form_input' maxRecords='NULL' type='NULL' types='NULL' find='NULL' topic='NULL' lang='NULL' exact_match='NULL' categId='NULL' filegals_manager='NULL' save='NULL'}
 
 <div class="findtitle">
 <label for="findwhat">
@@ -47,7 +48,7 @@
   <input type="checkbox" name="exact_match" id="findexactmatch" {if $exact_match ne 'n'}checked="checked"{/if}/>
   </div>
 {/if}
-{if !empty($types)}
+{if !empty($types) and ( !isset($types_tag) or $types_tag eq 'select' ) }
 	<div class="findtitle findtypes">
 		<select name="type">
 		<option value='' {if $find_type eq ''}selected="selected"{/if}>{tr}any type{/tr}</option>
@@ -109,6 +110,19 @@
 <div class="findtitle findsubmit">
   <input type="submit" name="search" value="{tr}Find{/tr}" />
 </div>
+
+{if !empty($types) and isset($types_tag) and $types_tag eq 'checkbox' }
+	<br style="clear:both" />
+	<div class="findtitle findtypes">{tr}in{/tr}:
+		{foreach key=key item=value from=$types}
+		<label>
+			<input type="checkbox" name="types[]" value="{$key|escape}" {if is_array($find_type) && in_array($key, $find_type)}checked="checked"{/if} /> {tr}{$value}{/tr}
+		</label>
+		&nbsp;
+		{/foreach}
+	</div>
+{/if}
+
 </form>
 </div>
 <div class="clear"></div>

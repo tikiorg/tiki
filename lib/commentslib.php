@@ -1314,16 +1314,26 @@ class Comments extends TikiLib {
 	return $ret;
     }
 
-    function count_comments($objectId) {
+    function count_comments($objectId, $approved = 'y') {
+	global $tiki_p_admin_comments;
+
 	$object = explode( ":", $objectId, 2);
-	if ($object[0] == 'topic') {
-		$query = 'select count(*) from `tiki_comments` where `objectType`=? and `parentId`=?';
-		$cant = $this->getOne($query, array('forum', $object[1]));
+	$query = 'select count(*) from `tiki_comments` where `objectType`=?';
+	if ( $object[0] == 'topic' ) {
+		$bindvars = array('forum');
+		$query .= ' and `parentId`=?';
 	} else {
-		$query = 'select count(*) from `tiki_comments` where `objectType`=? and `object`=?';
-		$cant = $this->getOne($query, $object );
+		$bindvars = array($object[0]);
+		$query .= ' and `object`=?';
 	}
-	return $cant;
+	$bindvars[] = $object[1];
+
+	if ( $tiki_p_admin_comments != 'y' ) {
+		$query .= ' and `approved`=?';
+		$bindvars[] = $approved;
+	}
+
+	return $this->getOne($query, $bindvars);
     }
 
     function count_comments_threads($objectId) {
@@ -1332,8 +1342,10 @@ class Comments extends TikiLib {
 	$cant = $this->getOne($query, $object );
 	return $cant;
     }
-    function get_comment_replies($id, $sort_mode, $offset, $orig_offset, $maxRecords, $orig_maxRecords, $threshold = 0, $find = '', $message_id = "", $forum = 0 )
+    function get_comment_replies($id, $sort_mode, $offset, $orig_offset, $maxRecords, $orig_maxRecords, $threshold = 0, $find = '', $message_id = "", $forum = 0, $approved = 'y' )
     {
+	global $tiki_p_admin_comments;
+
 	$retval = array();
 
 	if( $maxRecords <= 0 && $orig_maxRecords != 0)
@@ -1358,15 +1370,19 @@ class Comments extends TikiLib {
 	} else {
 	    $query = $query . " where `parentId`=? and `average`>=? ";
 	}
+	$bind = array($real_id, (int)$threshold);
+
+	if ( $tiki_p_admin_comments != 'y' ) {
+		$query .= 'and `approved`=? ';
+		$bind[] = $approved;
+	}
 
 	if ($find)
 	{
 	    $findesc = '%' . $find . '%';
-
 	    $query = $query . " and (`title` like ? or `data` like ?) ";
-	    $bind=array($real_id, (int) $threshold, $findesc, $findesc);
-	} else {
-	    $bind=array($real_id, (int) $threshold );
+	    $bind[] = $findesc;
+	    $bind[] = $findesc;
 	}
 
 	$query = $query . " order by " . $this->convert_sortmode($sort_mode);
@@ -1534,9 +1550,10 @@ class Comments extends TikiLib {
     }
 
     function get_comments($objectId, $parentId, $offset = 0, $maxRecords = 0,
-	    $sort_mode = 'commentDate_asc', $find = '', $threshold = 0, $style = 'commentStyle_threaded', $reply_threadId=0)
+	    $sort_mode = 'commentDate_asc', $find = '', $threshold = 0, $style = 'commentStyle_threaded', $reply_threadId=0, $approved='y')
     {
-	global $userlib;
+	global $userlib, $tiki_p_admin_comments;
+
 	// $start_time = microtime(true);
 	// Turn maxRecords into maxRecords + offset, so we can increment it without worrying too much.
 	$maxRecords = $offset + $maxRecords;
@@ -1575,11 +1592,18 @@ class Comments extends TikiLib {
 
 	// Break out the type and object parameters.
 	$object = explode( ":", $objectId, 2);
+	$bindvars = array_merge(array($object[0], $object[1], (float) $threshold), $bind_time);
+
+	if ( $tiki_p_admin_comments != 'y' ) {
+		$queue_cond = 'and `approved`=?';
+		$bindvars[] = $approved;
+	} else {
+		$queue_cond = '';
+	}
 
 	$query = "select count(*) from `tiki_comments` where
-	    `objectType`=? and `object`=? and `average` < ? $time_cond";
-	$below = $this->getOne($query, array_merge(
-		    array($object[0], $object[1], (float) $threshold), $bind_time) );
+	    `objectType`=? and `object`=? and `average` < ? $time_cond $queue_cond";
+	$below = $this->getOne($query, $bindvars);
 
 	if ($find) {
 	    $findesc = '%' . $find . '%';
@@ -1592,6 +1616,11 @@ class Comments extends TikiLib {
 	} else {
 	    $mid = " where tc1.`objectType` = ? and tc1.`object`=? and tc1.`parentId`=? and tc1.`average`>=? ";
 	    $bind_mid=array($object[0], $object[1], (int) $parentId, (int) $threshold);
+	}
+
+	if ( $tiki_p_admin_comments != 'y' ) {
+		$mid .= ' '.$queue_cond;
+		$bind_mid[] = $approved;
 	}
 
 	// $end_time = microtime(true);
@@ -1757,14 +1786,27 @@ class Comments extends TikiLib {
 	/* administrative functions to get all the comments of some types + enlarge find
 	 *  no perms checked as it is only for admin */
 	function get_all_comments($type, $offset = 0, $maxRecords = -1, $sort_mode = 'commentDate_asc', $find = '', $parent='') {
+
 		$join = '';
-		if (is_array($type)) {
-			$mid = 'tc.`objectType`in ('.implode(',', array_fill(0, count($type),'?')).')';
-			$bindvars = $type;
+		if ( empty($type) ) {
+			// If no type has been specified, get all comments except those used for forums which must not be handled here
+			$mid = 'tc.`objectType`!=?';
+			$bindvars[] = 'forum';
 		} else {
-			$mid = 'tc.`objectType`=?';
-			$bindvars[] = $type;
+			if (is_array($type)) {
+				$mid = 'tc.`objectType` in ('.implode(',', array_fill(0, count($type),'?')).')';
+				$bindvars = $type;
+			} else {
+				$mid = 'tc.`objectType`=?';
+				$bindvars[] = $type;
+			}
 		}
+
+		// Blog hack -- to fix
+		foreach ( $bindvars as $k => $v ) {
+			if ( $v == 'blog post' ) $bindvars[$k] = 'post';
+		}
+
 		if ($find) {
 			$find = "%$find%";
 			$mid .= ' and (tc.`title` like ? or tc.`data` like ? or tc.`userName` like ? or  tc.`user_ip` like ? or tc.`object` like ?)';
@@ -1777,6 +1819,7 @@ class Comments extends TikiLib {
 		if ($parent) {
 			$join = ' left join `tiki_comments` tc2 on(tc2.`threadId`=tc.`parentId`)';
 		}
+
 		$query = "select tc.*, tc2.`title` as parentTitle from `tiki_comments` tc $join where $mid order by ".$this->convert_sortmode($sort_mode);
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);
 		$query = "select count(*) from `tiki_comments` tc where $mid";
@@ -1784,15 +1827,16 @@ class Comments extends TikiLib {
 		$ret = array();
 		while ($res = $result->fetchRow()) {
 			switch ($res['objectType']) {
-				case 'wiki page': $res['href'] = 'tiki-index.php?page='.$res['object'].'&amp;comzone=show#threadId'.$res['threadId']; break;
-				case 'article': $res['href'] = 'tiki-read_article.php?articleId='.$res['object'].'&amp;comzone=show#threadId'.$res['threadId']; break;
-				case 'faq': $res['href'] = 'tiki-view_faq.php?faqId='.$res['object'].'&amp;comzone=show#threadId'.$res['threadId']; break;
-				case 'blog': $res['href'] = 'tiki-view_blog.php?blogId='.$res['object'].'&amp;comzone=show#threadId'.$res['threadId']; break;
-				case 'post': $res['href'] = 'tiki-view_blog_post.php?postId='.$res['object'].'&amp;comzone=show#threadId'.$res['threadId']; break;
-				case 'forum': $res['href'] = 'tiki-view_forum_thread.php?forumId='.$res['object'].'&amp;comzone=show#threadId'.$res['threadId']; break;
-				case 'file gallery': $res['href'] = 'tiki-list_file_gallery.php?galleryId='.$res['object'].'&amp;comzone=show#threadId'.$res['threadId']; break;
-				case 'image gallery': $res['href'] = 'tiki-browse_gallery.php?galleryId='.$res['object'].'&amp;comzone=show#threadId'.$res['threadId']; break;
+				case 'wiki page': $res['href'] = 'tiki-index.php?page='; break;
+				case 'article': $res['href'] = 'tiki-read_article.php?articleId='; break;
+				case 'faq': $res['href'] = 'tiki-view_faq.php?faqId='; break;
+				case 'blog': $res['href'] = 'tiki-view_blog.php?blogId='; break;
+				case 'post': $res['href'] = 'tiki-view_blog_post.php?postId='; break;
+				case 'forum': $res['href'] = 'tiki-view_forum_thread.php?forumId='; break;
+				case 'file gallery': $res['href'] = 'tiki-list_file_gallery.php?galleryId='; break;
+				case 'image gallery': $res['href'] = 'tiki-browse_gallery.php?galleryId='; break;
 			}
+			if ( isset($res['href']) ) $res['href'] .= $res['object'].'&amp;comzone=show';
 			$res['parsed'] = $this->parse_comment_data($res['data']);
 			$ret[] = $res;
 		}
@@ -1922,6 +1966,8 @@ class Comments extends TikiLib {
 	    $summary = '', $smiley = '', $contributions = '', $anonymous_name = ''
 	    )
     {
+	global $prefs, $tiki_p_admin_comments;
+
 	if (!$userName) {
 	    $_SESSION["lastPost"] = $this->now;
 	}
@@ -2019,6 +2065,10 @@ class Comments extends TikiLib {
 
 	// Break out the type and object parameters.
 	$object = explode( ":", $objectId, 2);
+
+	// Handle comments moderation (this should not affect forums and user with admin rights on comments)
+	$approved = ( $tiki_p_admin_comments == 'y' || $object[0] == 'forum' || $prefs['feature_comments_moderation'] != 'y' ) ? 'y' : 'n';
+
 	// If this post was not already found.
 	if (!$result->numRows())
 	{
@@ -2027,15 +2077,15 @@ class Comments extends TikiLib {
 			`commentDate`, `userName`, `title`, `data`, `votes`,
 			`points`, `hash`, `parentId`, `average`, `hits`,
 			`type`, `summary`, `smiley`, `user_ip`,
-			`message_id`, `in_reply_to`)
+			`message_id`, `in_reply_to`, `approved`)
 		values ( ?, ?, ?, ?, ?, ?,
 			0, 0, ?, ?, 0, 0, ?, ?, 
-			?, ?, ?, ?)";
+			?, ?, ?, ?, ?)";
 	    $result = $this->query($query, 
 		    array( $object[0], (string) $object[1],(int) $this->now, $userName,
 			$title, $data, $hash, (int) $parentId, $type,
 			$summary, $smiley, $_SERVER["REMOTE_ADDR"],
-			$message_id, (string) $in_reply_to)
+			$message_id, (string) $in_reply_to, $approved)
 		    );
 	}
 
@@ -2085,6 +2135,16 @@ class Comments extends TikiLib {
 		order by threadid asc", array( $hash ) );
 	return $threadId;
     }
+
+	function approve_comment($threadId, $status = 'y') {
+		if ( $threadId == 0 ) return false;
+
+		$query = "UPDATE `tiki_comments` SET `approved`=? WHERE `threadId`=?";
+		return $this->query($query, array($status, (int)$threadId)) !== false;
+	}
+	function reject_comment($threadId) {
+		return $this->approve_comment($threadId, 'r');
+	}
 
     function remove_comment($threadId) {
 	if ($threadId == 0)

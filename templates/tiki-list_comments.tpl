@@ -1,76 +1,94 @@
 {* $Id$ *}
 {popup_init src="lib/overlib.js"}
+{title help="comments"}{$title}{/title}
 
-{title help="comments"}{tr}Comments{/tr}{/title}
-
-{if $comments or ($find ne '')}
-<form method="get" action="tiki-list_comments.php">
-<table class="findtable">
-<tr><td class="findtitle">{tr}Find{/tr}</td>
-   <td class="findtitle">
-     <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" name="search" value="{tr}Find{/tr}" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-   </td>
-</tr>
-<tr><td class="findtable" colspan="2">{tr}in{/tr}: 
-{*<select name="types[]" multiple="multiple" size="5">*}
-{foreach key=key item=selected from=$list_types}
-<input type="checkbox" name="types[]" value="{$key|escape}" {if $selected eq 'y'}checked="checked"{/if} />{tr}{$key|escape}{/tr}&nbsp;&nbsp;
-{*<option value="{$key|escape}" {if $selected eq 'y'}selected="selected"{/if}>{$key|escape}</option>*}
-{/foreach}
-{*</select>*}
-</td></tr></table>
-   </form>
+{if $comments or ($find ne '') or count($show_types) gt 0}
+	{include file='find.tpl' types=$show_types find_type=$selected_types types_tag='checkbox'}
 {/if}
-<br />
+
 {if $comments}
 <form name="checkboxes_on" method="post" action="tiki-list_comments.php">
-<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-<input type="hidden" name="find" value="{$find|escape}" />
-{section name=ix loop=$types}
-<input type="hidden" name="types[]" value="{$types[ix]|escape}" />
-{/section}
-
+{query _type='form_input'}
 {/if}
 
 <table class="normal">
-<tr>
-<th class="heading">{if $comments}
-<script type="text/javascript">
-<!--//--><![CDATA[//><!--
- // check / uncheck all.
- // in the future, we could extend this to happen serverside as well for the convenience of people w/o javascript.
- // for now those people just have to check every single box
-  document.write("<input name=\"switcher\" id=\"clickall\" type=\"checkbox\" title=\"{tr}Select All{/tr}\" onclick=\"switchCheckboxes(this.form,'checked[]',this.checked)\"/>");
-//--><!]]>
-</script>{/if}
-</th>
-{if is_array($types) and count($types) > 1}<th class="heading">{self_link _class="tableheading" _sort_arg="sort_mode" _sort_field="objectType"}{tr}Type{/tr}{/self_link}</th>{/if}
-<th class="heading">{self_link _class="tableheading" _sort_arg="sort_mode" _sort_field="object"}{tr}Object{/tr}{/self_link}</th>
-<th class="heading">{self_link _class="tableheading" _sort_arg="sort_mode" _sort_field="title"}{tr}Title{/tr}{/self_link}</th>
-<th class="heading">{self_link _class="tableheading" _sort_arg="sort_mode" _sort_field="userName"}{tr}Author{/tr}{/self_link}</th>
-<th class="heading">{self_link _class="tableheading" _sort_arg="sort_mode" _sort_field="user_ip"}{tr}IP{/tr}{/self_link}</th>
-<th class="heading">{self_link _class="tableheading" _sort_arg="sort_mode" _sort_field="commentDate"}{tr}Date{/tr}{/self_link}</th>
-<th class="heading">{self_link _class="tableheading" _sort_arg="sort_mode" _sort_field="data"}{tr}Data{/tr}{/self_link}</th>
-</tr>
-{cycle values="even,odd" print=false}
-{section name=ix loop=$comments}
-<tr>
-<td class="{cycle advance=false}"><input type="checkbox" name="checked[]" value="{$comments[ix].threadId|escape}"/></td>
-{if is_array($types) and count($types) > 1}<td class="{cycle advance=false}">{if $comments[ix].objectType eq 'post'}{tr}Blog{/tr}{else}{tr}{$comments[ix].objectType}{/tr}{/if}</td>{/if}
-<td class="{cycle advance=false}">{$comments[ix].object|truncate:50:"...":true}</td>
-<td class="{cycle advance=false}"><a href="{$comments[ix].href}" title="{$comments[ix].title}">{$comments[ix].title|truncate:50:"...":true}</a>
-{if $comments[ix].parentId and empty($comments[ix].parentTitle)}<br />{tr}Orphan{/tr}{/if}</td>
-<td class="{cycle advance=false}">{$comments[ix].userName}</td>
-<td class="{cycle advance=false}">{$comments[ix].user_ip}</td>
-<td class="{cycle advance=false}">{$comments[ix].commentDate|tiki_short_datetime}</td>
-<td class="{cycle}" {popup caption=$comments[ix].title|escape|replace:'"':'&quot;' text=$comments[ix].parsed|escape|replace:'"':'&quot;'}>{$comments[ix].data|truncate:50:"...":true}</td>
-</tr>
-{sectionelse}
-<tr><td class="odd" colspan="7">{tr}No records found.{/tr}</td></tr>
-{/section}
+	<tr>
+		<th class="heading">
+		{if $comments}
+			<script type="text/javascript">
+			<!--//--><![CDATA[//><!--
+				// check / uncheck all.
+				document.write("<input name=\"switcher\" id=\"clickall\" type=\"checkbox\" title=\"{tr}Select All{/tr}\" onclick=\"switchCheckboxes(this.form,'checked[]',this.checked)\"/>");
+			//--><!]]>
+			</script>
+		{/if}
+		</th>
+	
+		{foreach key=headerKey item=headerName from=$headers}
+		<th class="heading">
+			{self_link _class="tableheading" _sort_arg="sort_mode" _sort_field=$headerKey}{tr}{$headerName}{/tr}{/self_link}
+		</th>
+		{/foreach}
+
+		{if $tiki_p_admin_comments eq 'y' and $prefs.feature_comments_moderation eq 'y'}
+		<th class="heading">
+			{self_link _class="tableheading" _sort_arg="sort_mode" _sort_field='approved'}{tr}Approval{/tr}{/self_link}
+		</th>
+		{/if}
+		<th class="heading">{tr}Actions{/tr}</th>
+	</tr>
+	
+	{cycle values="even,odd" print=false}
+	{section name=ix loop=$comments}{assign var=id value=$comments[ix].threadId}
+	<tr{if $prefs.feature_comments_moderation eq 'y'} class="post-approved-{$comments[ix].approved}"{/if}>
+		<td class="{cycle advance=false}"><input type="checkbox" name="checked[]" value="{$id}"/></td>
+		{foreach key=headerKey item=headerName from=$headers}{assign var=val value=$comments[ix].$headerKey}
+		<td class="{cycle advance=false}" {if $headerKey eq 'data'}
+			{popup caption=$comments[ix].title|escape:"javascript"|escape:"html"
+				text=$comments[ix].parsed|escape:"javascript"|escape:"html"}
+		{/if}><span> {* span is used for some themes CSS opacity on some cells content *}
+			{if $headerKey eq 'title'}
+				<a href="{$comments[ix].href}#threadId{$id}" title="{$val}">{$val|truncate:50:"...":true}</a>
+			{elseif $headerKey eq 'objectType'}
+				{tr}{$val|ucwords}{/tr}
+			{elseif $headerKey eq 'object' or $headerKey eq 'data'}
+				{$val|truncate:50:"...":true}
+			{elseif $headerKey eq 'commentDate'}
+				{$val|tiki_short_datetime}
+			{elseif $headerKey eq 'userName'}
+				{$val|userlink}
+			{else}
+				{$val}
+			{/if}
+		</span></td>
+		{/foreach}
+
+		{if $tiki_p_admin_comments eq 'y' and $prefs.feature_comments_moderation eq 'y'}
+		<td class="{cycle advance=false} approval">
+			{if $comments[ix].approved eq 'n'}
+				{self_link approve='y' checked=$id _icon='comment_approve'}{tr}Approve{/tr}{/self_link}
+				{self_link approve='r' checked=$id _icon='comment_reject'}{tr}Reject{/tr}{/self_link}
+			{elseif $comments[ix].approved eq 'y'}
+				&nbsp;{tr}Approved{/tr}&nbsp;
+			{elseif $comments[ix].approved eq 'r'}
+				<span>&nbsp;{tr}Rejected{/tr}&nbsp;</span>
+			{/if}
+		</td>
+		{/if}
+
+		<td class="{cycle advance=false}">
+			<a href="{$comments[ix].href}#threadId{$id}">{icon _id='magnifier' alt="{tr}Display{/tr}"}</a>
+			<a href="{$comments[ix].href|cat:"&amp;comments_threadId=`$id`&amp;edit_reply=1#form"}">{icon _id='page_edit' alt="{tr}Edit{/tr}"}</a>
+			{self_link remove=1 checked=$id _icon='cross'}{tr}Delete{/tr}{/self_link}
+		</td>
+
+		{cycle print=false}
+	</tr>
+	{sectionelse}
+	<tr><td class="odd" colspan="7">{tr}No records found.{/tr}</td></tr>
+	{/section}
 </table>
+
 {if $comments}
 <div class="formcolor">
 {tr}Perform action with checked:{/tr} <input type="submit" name="remove" value="{tr}Delete{/tr}" />

@@ -1838,6 +1838,17 @@ td.forumtoolbar {
 	border-bottom: 1px solid #8CACBB;
 	padding-bottom: 4px;
 }
+.post-approved-n { border-left: 3px dotted blue; }
+.post-approved-r { border-left: 3px double red; }
+.post-approved-r .content * { background-image: url(../img/icons2/dots.gif); }
+
+.post-approved-n .content, .post-approved-r .content,
+.post-approved-n .title, .post-approved-r .title,
+.post-approved-n .postfooter, .post-approved-r .postfooter,
+tr.post-approved-n td span, tr.post-approved-r td span {
+	opacity: 0.5;
+}
+tr.post-approved-n td span, tr.post-approved-r td span { opacity: 0.6; }
 
 .post .postbody-title .checkbox { float: left; }
 .post .postbody-title .title {
