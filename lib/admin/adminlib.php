@@ -406,7 +406,7 @@ class AdminLib extends TikiLib {
 	      if(preg_match('/^CREATE TABLE ([a-zA-Z0-9_]+)/',$item,$tmatch)) {
 		 $table=$tmatch[1];
 	      }
-	      if(preg_match('/^  ([a-zA-Z0-9_]+) (varchar|text)/',$item,$fmatch)) {
+	      if(preg_match('/^  ([a-zA-Z0-9_]+) (varchar|text|mediumtext|longtext)/',$item,$fmatch)) {
 		 $field=$fmatch[1];
 		 $tabfields[]=array('table'=>$table,'field' => $field);
 	      }
