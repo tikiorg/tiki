@@ -71,7 +71,7 @@ fields[{$c}] = '{$fid}';
 {foreach key=ku item=iu from=$field.categories name=eforeach}
   <td width="50%" nowrap="nowrap">
     <input type="checkbox" name="filtervalue[{$fid}][]" value="{$iu.categId}" id="cat{$iu.categId}" 
-      {if $fid == $filterfield && is_array($filtervalue) && in_array($iu.categId,$filtervalue)} checked{/if}
+      {if $fid == $filterfield && is_array($filtervalue) && in_array($iu.categId,$filtervalue)} checked="checked"{/if}
     />
     <label for="cat{$i.categId}">{$iu.name|escape}</label>
   </td>
