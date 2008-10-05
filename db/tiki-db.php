@@ -113,9 +113,9 @@ href="http://doc.tikiwiki.org/">the documentation</a> for more information.</p>
 if ( $dbversion_tiki == '1.10' ) $dbversion_tiki = '2.0';
 
 if (extension_loaded("pdo") and $api_tiki == 'pdo' ) {
-	require_once('tiki-db-pdo.php');
+	require_once('db/tiki-db-pdo.php');
 } else {
-	require_once('tiki-db-adodb.php');
+	require_once('db/tiki-db-adodb.php');
 }
 
 // Forget db info so that malicious PHP may not get password etc.
