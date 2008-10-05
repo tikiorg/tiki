@@ -936,3 +936,5 @@
 1045,"Javascript",913,,"wikiplugin_js","flag",,"tiki_p_admin",,,,,," "
 1046,"Allow argument variables",141,,"feature_wiki_argvariable","flag",,"tiki_p_admin",,,,,," "
 1047,"Wiki Mind Map",141,,"feature_wiki_mindmap","flag",,"tiki_p_admin",,,,,," "
+1046,"Minichat",15,,"feature_minichat","feature","","tiki_p_admin",,,,,," "
+
