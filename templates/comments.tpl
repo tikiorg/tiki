@@ -72,7 +72,7 @@
 		{if $tiki_p_admin_comments eq 'y' && $prefs.feature_comments_moderation eq 'y'}
 			<span class="title">{tr}Moderator actions{/tr}</span>
 			<span class="infos">
-				<a class="link" href="tiki-list_comments.php?types_section={$section}">{tr}queued:{/tr}{$queued}</a>
+				<a class="link" href="tiki-list_comments.php?types_section={$section}&amp;findfilter_approved=n">{tr}queued:{/tr}{$queued}</a>
 			</span>
 		{/if}
 		</div>

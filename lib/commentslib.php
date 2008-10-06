@@ -1785,7 +1785,7 @@ class Comments extends TikiLib {
 
 	/* administrative functions to get all the comments of some types + enlarge find
 	 *  no perms checked as it is only for admin */
-	function get_all_comments($type, $offset = 0, $maxRecords = -1, $sort_mode = 'commentDate_asc', $find = '', $parent='') {
+	function get_all_comments($type, $offset = 0, $maxRecords = -1, $sort_mode = 'commentDate_asc', $find = '', $parent='', $approved='') {
 
 		$join = '';
 		if ( empty($type) ) {
@@ -1816,6 +1816,12 @@ class Comments extends TikiLib {
 			$bindvars[] = $find;
 			$bindvars[] = $find;
 		}
+
+		if ( ! empty($approved) ) {
+			$mid .= ' and tc.`approved`=?';
+			$bindvars[] = $approved;
+		}
+
 		if ($parent) {
 			$join = ' left join `tiki_comments` tc2 on(tc2.`threadId`=tc.`parentId`)';
 		}

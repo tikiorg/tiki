@@ -132,11 +132,21 @@ if (isset($_REQUEST["find"])) {
 }
 $smarty->assign_by_ref('find', $find);
 
-$comments = $commentslib->get_all_comments($selected_types, $offset, $maxRecords, $sort_mode, $find, 'y');
+if ( ! isset($_REQUEST['findfilter_approved']) ) $_REQUEST['findfilter_approved'] = '';
+$filter_values = array('approved' => $_REQUEST['findfilter_approved']);
+$filter_names = array('approved' => tra('Approved Status'));
+$filters = array('approved' => array('n' => tra('Queued'), 'y' => tra('Approved'), 'r' => tra('Rejected')));
+asort($filters['approved']);
+
+$comments = $commentslib->get_all_comments($selected_types, $offset, $maxRecords, $sort_mode, $find, 'y', $_REQUEST['findfilter_approved']);
 foreach ( $comments['data'] as $k => $v ) {
 	if ( $v['objectType'] == 'post' ) $comments['data'][$k]['objectType'] = 'blog post';
 }
+
 $smarty->assign_by_ref('comments', $comments['data']);
+$smarty->assign_by_ref('filters', $filters);
+$smarty->assign_by_ref('filter_names', $filter_names);
+$smarty->assign_by_ref('filter_values', $filter_values);
 $smarty->assign_by_ref('cant', $comments['cant']);
 
 ask_ticket('list_comments');
