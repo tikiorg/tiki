@@ -13,7 +13,10 @@ if ($prefs['feature_ajax'] == "y") {
 require_once ('lib/ajax/ajaxlib.php');
 }
 include_once ('lib/webmail/webmaillib.php');
+
+$no_contact_instance = true;  //This prevents the lib from setting $contactlib
 include_once ('lib/webmail/contactlib.php');
+$contactlib = new ContactLib($dbTiki);
 
 if ($prefs['feature_webmail'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_wiki");
@@ -47,7 +50,8 @@ require_once ("lib/webmail/net_pop3.php");
 require_once ("lib/mail/mimelib.php");
 include_once ("lib/webmail/class.rc4crypt.php");
 include_once ("lib/webmail/tikimaillib.php");
-/*
+
+/* Needs to be deleted
 function parse_output(&$obj, &$parts, $i) {
 	if (!empty($obj->parts)) {
 		$temp_max = count($obj->parts);
