@@ -35,7 +35,7 @@ function smarty_function_icon($params, &$smarty) {
 
   // Handle _ids that contains the real filename and path
   if ( strpos($params['_id'], '/') !== false || strpos($params['_id'], '.') !== false ) {
-    if ( ($icons_basedir = dirname($params['_id'])) == '' || ! in_array($icons_basedir, $basedirs) ) $icons_basedir = $basedirs[0];
+    if ( ($icons_basedir = dirname($params['_id'])) == '')  $icons_basedir = $basedirs[0];
     $icons_basedir .= '/';
     if ( ($pos = strrpos($params['_id'], '.')) !== false ) $icons_extension = substr($params['_id'], $pos);
     $params['_id'] = ereg_replace('(^'.$icons_basedir.'|'.$icons_extension.'$)', '', $params['_id']);
