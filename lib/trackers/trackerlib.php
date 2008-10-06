@@ -2315,7 +2315,7 @@ class TrackerLib extends TikiLib {
 			'label'=>tra('page selector'),
 			'opt'=>true,
 			'help'=>tra('<dl>
-				<dt>Function: Allows a section fron the list of pages.
+				<dt>Function: Allows a selection from the list of pages.
 				<dt>Usage: <strong>auto-assign, size, maxlen</strong>
 				<dt>Description:
 				<dd><strong>[auto-assign]</strong> will auto-assign the creator of the item if set to 1
