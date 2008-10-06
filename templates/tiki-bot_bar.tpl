@@ -68,14 +68,15 @@
 {if $prefs.feature_babelfish eq 'y' or $prefs.feature_babelfish_logo eq 'y'}
 	{include file="babelfish.tpl"}
 {/if}
-{if $prefs.feature_bot_bar_power_by_tw ne 'n'}
-	<div id="power">
+<div id="power">
+	{if $prefs.feature_bot_bar_power_by_tw ne 'n'}
 		{tr}Powered by{/tr} <a href="http://info.tikiwiki.org" title="&#169; 2002&#8211;{$smarty.now|date_format:"%Y"} {tr}The TikiWiki Community{/tr}">{tr}TikiWiki CMS/Groupware{/tr}</a> {if $prefs.feature_topbar_version eq 'y'} v{$tiki_version} {if $tiki_uses_cvs eq 'y'} (CVS){/if} -{$tiki_star}- {/if}
-		<div id="credits">
-			{include file="credits.tpl"}
-		</div>
+	{/if}
+	<div id="credits">
+		{include file="credits.tpl"}
 	</div>
-{/if}
+</div>
+
 {if $prefs.feature_bot_bar_debug eq 'y'}
 <div id="loadstats" style="text-align: center">
 	<small>[ {tr}Execution time{/tr}: {elapsed} {tr}secs{/tr} ] &nbsp; [ {tr}Memory usage{/tr}: {memusage} ] &nbsp; [ {$num_queries} {tr}database queries used in {/tr} {$elapsed_in_db|truncate:3:''} secs ] &nbsp; [ GZIP {$gzip} ] &nbsp; [ {tr}Server load{/tr}: {$server_load} ]</small>
