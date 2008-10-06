@@ -465,12 +465,13 @@ foreach ($languages as $sel) {
       $data = preg_replace ("!^\s*\#.*\$!m", "", $data); // shell comments
 
       // Only extract tra () and hawtra () in .php-files
+	  // tr() function also exists for strings with arguments
 
       // Extract from SINGLE qouted strings
-      preg_match_all ('!\W(?:haw)?tra\s*\(\s*\'(.+?)\'\s*[\),]!s', $data, $sqwords);
+      preg_match_all ('!\W(?:haw)?tra?\s*\(\s*\'(.+?)\'\s*[\),]!s', $data, $sqwords);
 
       // Extract from DOUBLE quoted strings
-      preg_match_all ('!\W(?:haw)?tra\s*\(\s*"(.+?)"\s*[\),]!s', $data, $dqwords);
+      preg_match_all ('!\W(?:haw)?tra?\s*\(\s*"(.+?)"\s*[\),]!s', $data, $dqwords);
     }
 
     if (preg_match ("/\.tpl$/", $file)) {
@@ -484,7 +485,8 @@ foreach ($languages as $sel) {
       $data = preg_replace ('/(?s)\{tr\}\s*\{[$][^\}]*?\}\s*\{\/tr\}/','',$data);
 
       // Only extract {tr} ... {/tr} in .tpl-files
-      preg_match_all ('/(?s)\{tr\}(.+?)\{\/tr\}/', $data, $uqwords);
+	  // Also match {tr [args]} ...{/tr}
+      preg_match_all ('/(?s)\{tr[^\}]*\}(.+?)\{\/tr\}/', $data, $uqwords);
     }
 
     // Transfer unquoted words (if any) to the words array
