@@ -28,5 +28,5 @@ document.write(unescape("%3Cscript src=\'" + gaJsHost + "google-analytics.com/ga
 var pageTracker = _gat._getTracker("UA-'.$account.'");
 pageTracker._trackPageview();
 </script>';
-	return $ret;
+	return '~np~'.$ret.'~/np~';
 }
