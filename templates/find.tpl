@@ -17,6 +17,9 @@
   * find_show_categories  : If value = 'y' adds categories dropdown with categories array values
     * find_categId          : categories selected value
   * find_show_num_rows    : If value = 'y' adds maxRecords field. Value: maxRecords
+  * filters               : array( filter_field1 => array( option1_value => option1_text, ... ), filter_field2 => ... )
+    * filter_names          : array( filter_field1 => filter_field1_name, ... )
+    * filter_values         : array( filter_fieldX => filter_fieldX_selected_value, ... )
   *
   * Usage examples : {include file='find.tpl' _sort_mode='y'}
   *                  {include file="find.tpl" find_show_languages='y' find_show_categories='y' find_show_num_rows='y'} 
@@ -113,7 +116,7 @@
 
 {if !empty($types) and isset($types_tag) and $types_tag eq 'checkbox' }
 	<br style="clear:both" />
-	<div class="findtitle findtypes">{tr}in{/tr}:
+	<div class="findtitle findtypes">{tr}in:{/tr}
 		{foreach key=key item=value from=$types}
 		<label>
 			<input type="checkbox" name="types[]" value="{$key|escape}" {if is_array($find_type) && in_array($key, $find_type)}checked="checked"{/if} /> {tr}{$value}{/tr}
@@ -122,6 +125,22 @@
 		{/foreach}
 	</div>
 {/if}
+
+{if !empty($filters)}
+	{foreach key=key item=item from=$filters}
+	<br style="clear:both" />
+	<div class="findtitle findfilter">
+		{$filter_names.$key}{tr}:{/tr}
+		<select name="findfilter_{$key}">
+			<option value='' {if $filter_values.$key eq ''}selected="selected"{/if}>--</option>
+		{foreach key=key2 item=value from=$item}
+			<option value="{$key2}"{if $filter_values.$key eq $key2} selected="selected"{/if}>{$value}</option>
+		{/foreach}
+		</select>
+	</div>
+	{/foreach}
+{/if}
+
 
 </form>
 </div>
