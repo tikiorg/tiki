@@ -1200,6 +1200,7 @@ DROP TABLE IF EXISTS tiki_links;
 CREATE TABLE tiki_links (
   fromPage varchar(160) NOT NULL default '',
   toPage varchar(160) NOT NULL default '',
+  reltype varchar(50),
   PRIMARY KEY (fromPage,toPage),
   KEY toPage (toPage)
 ) ENGINE=MyISAM;
@@ -3573,4 +3574,29 @@ CREATE TABLE tiki_schema (
 	patch_name VARCHAR(100) PRIMARY KEY,
 	install_date TIMESTAMP
 ) ENGINE=MyISAM;
+
+CREATE TABLE tiki_semantic_tokens (
+	token VARCHAR(15) PRIMARY KEY,
+	label VARCHAR(25) NOT NULL,
+	invert_token VARCHAR(15)
+) ENGINE=MyISAM ;
+
+INSERT INTO tiki_semantic_tokens (token, label) VALUES('alias', 'Page Alias');
+
+CREATE TABLE tiki_webservice (
+	service VARCHAR(25) NOT NULL PRIMARY KEY,
+	url VARCHAR(250),
+	schema_version VARCHAR(5),
+	schema_documentation VARCHAR(250)
+) ENGINE=MyISAM ;
+
+CREATE TABLE tiki_webservice_template (
+	service VARCHAR(25) NOT NULL,
+	template VARCHAR(25) NOT NULL,
+	engine VARCHAR(15) NOT NULL,
+	output VARCHAR(15) NOT NULL,
+	content TEXT NOT NULL,
+	last_modif INT,
+	PRIMARY KEY( service, template )
+) ENGINE=MyISAM ;
 
