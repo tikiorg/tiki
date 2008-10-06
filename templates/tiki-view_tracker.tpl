@@ -259,7 +259,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 
 {foreach from=$fields key=ix item=field_value}
 {assign var=fid value=$field_value.fieldId}
-
+Name {$field_value.name}  Type {$field_value.type}<BR \>
 {* -------------------- header and others -------------------- *}
 {if $field_value.isHidden eq 'n' or $field_value.isHidden eq 'c'  or $tiki_p_admin_trackers eq 'y'}
 {if $field_value.type ne 'x' and $field_value.type ne 'l' and $field_value.type ne 'q' and (($field_value.type ne 'u' and $field_value.type ne 'g' and $field_value.type ne 'I') or !$field_value.options_array[0] or $tiki_p_admin_trackers eq 'y') and (empty($field_value.visibleBy) or in_array($default_group, $field_value.visibleBy) or $tiki_p_admin_trackers eq 'y')and (empty($field_value.editableBy) or in_array($default_group, $field_value.editableBy) or $tiki_p_admin_trackers eq 'y')}
@@ -311,6 +311,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {/if}
 {/if}
 {/foreach}
+
 </select>
 {else}
 {$user}
@@ -372,6 +373,11 @@ document.write('<div  class="categSelectAll"><input type="checkbox" id="clickall
 {* -------------------- image -------------------- *}
 {elseif $field_value.type eq 'i'}
 <input type="file" name="{$field_value.ins_id}" {if $input_err}value="{$field_value.value}"{/if}/>
+
+{* -------------------- page -------------------- *}
+{elseif $field_value.type eq 'k'}
+<input type="text" name="{$field_value.ins_id}" {if $input_err}value="{$field_value.value}"{/if}/>
+
 
 {* -------------------- multimedia -------------------- *}
 {elseif $field_value.type eq 'M'}
