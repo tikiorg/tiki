@@ -119,11 +119,11 @@ class="prevnext">{tr}All{/tr}</a>
   //-->                     
   </script>{/if}
 </td>
-<td class="heading">{self_link _class="tableheading" _sort_arg='sort_mode' _sort_field='login'}{tr}User{/tr}{/self_link}</td>
+<td class="heading">{self_link _sort_arg='sort_mode' _sort_field='login'}{tr}User{/tr}{/self_link}</td>
 {if $prefs.login_is_email neq 'y'}
-	<td class="heading">{self_link _class="tableheading" _sort_arg='sort_mode' _sort_field='email}{tr}Email{/tr}{/self_link}</td>
+	<td class="heading">{self_link _sort_arg='sort_mode' _sort_field='email}{tr}Email{/tr}{/self_link}</td>
 {/if}
-<td class="heading">{self_link _class="tableheading" _sort_arg='sort_mode' _sort_field='currentLogin'}{tr}Last login{/tr}{/self_link}</td>
+<td class="heading">{self_link _sort_arg='sort_mode' _sort_field='currentLogin'}{tr}Last login{/tr}{/self_link}</td>
 <td class="heading" colspan="2">{tr}Groups{/tr}</td>
 <td class="heading">{tr}Action{/tr}</td>
 </tr>

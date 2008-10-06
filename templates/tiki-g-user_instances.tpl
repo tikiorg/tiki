@@ -38,8 +38,8 @@
 <td >
 	<small>{tr}User{/tr}</small>
 </td>
-<td >
-	&nbsp;
+<td >&nbsp;
+	
 </td>	
 </tr>
 
@@ -94,14 +94,14 @@
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 <table class="normal">
 <tr>
-<td class="heading" ><a class="tableheading" href="{if $sort_mode eq 'iname_desc'}{sameurl sort_mode='iname_asc'}{else}{sameurl sort_mode='iname_desc'}{/if}">{tr}Name{/tr}</a></td>
-<td class="heading" ><a class="tableheading" href="{if $sort_mode eq 'owner_desc'}{sameurl sort_mode='owner_asc'}{else}{sameurl sort_mode='owner_desc'}{/if}">{tr}Owner{/tr}</a></td>
-<td class="heading" ><a class="tableheading" href="{if $sort_mode eq 'status_desc'}{sameurl sort_mode='status_asc'}{else}{sameurl sort_mode='status_desc'}{/if}">{tr}Inst Status{/tr}</a></td>
-<td class="heading" ><a class="tableheading" href="{if $sort_mode eq 'procname_desc'}{sameurl sort_mode='procname_asc'}{else}{sameurl sort_mode='procname_desc'}{/if}">{tr}Process{/tr}</a></td>
-<td class="heading" ><a class="tableheading" href="{if $sort_mode eq 'name_desc'}{sameurl sort_mode='name_asc'}{else}{sameurl sort_mode='name_desc'}{/if}">{tr}Activity{/tr}</a></td>
-<td class="heading" ><a class="tableheading" href="{if $sort_mode eq 'user_desc'}{sameurl sort_mode='user_asc'}{else}{sameurl sort_mode='user_desc'}{/if}">{tr}User{/tr}</a></td>
-{*<td class="heading" ><a class="tableheading" href="{if $sort_mode eq 'actstatus_desc'}{sameurl sort_mode='actstatus_asc'}{else}{sameurl sort_mode='actstatus_desc'}{/if}">{tr}Act status{/tr}</a></td>*}
-<td class="heading" ><a class="tableheading" href="{if $sort_mode eq 'exptime_desc'}{sameurl sort_mode='exptime_asc'}{else}{sameurl sort_mode='exptime_desc'}{/if}">{tr}Expiration Date{/tr}</a></td>
+<td class="heading" ><a href="{if $sort_mode eq 'iname_desc'}{sameurl sort_mode='iname_asc'}{else}{sameurl sort_mode='iname_desc'}{/if}">{tr}Name{/tr}</a></td>
+<td class="heading" ><a href="{if $sort_mode eq 'owner_desc'}{sameurl sort_mode='owner_asc'}{else}{sameurl sort_mode='owner_desc'}{/if}">{tr}Owner{/tr}</a></td>
+<td class="heading" ><a href="{if $sort_mode eq 'status_desc'}{sameurl sort_mode='status_asc'}{else}{sameurl sort_mode='status_desc'}{/if}">{tr}Inst Status{/tr}</a></td>
+<td class="heading" ><a href="{if $sort_mode eq 'procname_desc'}{sameurl sort_mode='procname_asc'}{else}{sameurl sort_mode='procname_desc'}{/if}">{tr}Process{/tr}</a></td>
+<td class="heading" ><a href="{if $sort_mode eq 'name_desc'}{sameurl sort_mode='name_asc'}{else}{sameurl sort_mode='name_desc'}{/if}">{tr}Activity{/tr}</a></td>
+<td class="heading" ><a href="{if $sort_mode eq 'user_desc'}{sameurl sort_mode='user_asc'}{else}{sameurl sort_mode='user_desc'}{/if}">{tr}User{/tr}</a></td>
+{*<td class="heading" ><a href="{if $sort_mode eq 'actstatus_desc'}{sameurl sort_mode='actstatus_asc'}{else}{sameurl sort_mode='actstatus_desc'}{/if}">{tr}Act status{/tr}</a></td>*}
+<td class="heading" ><a href="{if $sort_mode eq 'exptime_desc'}{sameurl sort_mode='exptime_asc'}{else}{sameurl sort_mode='exptime_desc'}{/if}">{tr}Expiration Date{/tr}</a></td>
 <td class="heading" >{tr}Action{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}

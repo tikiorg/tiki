@@ -25,13 +25,13 @@
 <table class="normal">
 <tr>
 <td class="heading">
-<a class="tableheading" href="tiki-list_quizzes.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a>
+<a href="tiki-list_quizzes.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a>
 </td>
 <td class="heading">
-<a class="tableheading" href="tiki-list_quizzes.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}Description{/tr}</a>
+<a href="tiki-list_quizzes.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}Description{/tr}</a>
 </td>
 <td class="heading">
-<a class="tableheading" href="tiki-list_quizzes.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'timeLimit_desc'}timeLimit_asc{else}timeLimit_desc{/if}">{tr}timeLimit{/tr}</a>
+<a href="tiki-list_quizzes.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'timeLimit_desc'}timeLimit_asc{else}timeLimit_desc{/if}">{tr}timeLimit{/tr}</a>
 </td>
 
 {* 
@@ -44,7 +44,7 @@ in /var/www/html/tikiwiki/lib/tikidblib.php on line 133
 Fatal error: Call to a member function on a non-object in /var/www/html/tikiwiki/lib/tikidblib.php on line 151
 // code
 <td class="heading">
-<a class="tableheading" href="tiki-list_quizzes.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'questions_desc'}questions_asc{else}questionsLimit_desc{/if}">{tr}Questions{/tr}</a>
+<a href="tiki-list_quizzes.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'questions_desc'}questions_asc{else}questionsLimit_desc{/if}">{tr}Questions{/tr}</a>
 *}
 <!-- the question heading won't sort -->
 <td class="heading">{tr}Questions{/tr}</td>

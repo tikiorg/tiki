@@ -48,8 +48,8 @@ Errors:<br />
 <table class="normal">
 <tr>
 <td  class="heading"><input type="submit" name="delete" value="{tr}x{/tr} " /></td>
-<td  class="heading" ><a class="tableheading" href="tiki-g-admin_roles.php?sort_mode={$sort_mode}&amp;pid={$pid}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode2={if $sort_mode2 eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></td>
-<td  class="heading" ><a class="tableheading" href="tiki-g-admin_roles.php?sort_mode={$sort_mode}&amp;pid={$pid}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode2={if $sort_mode2 eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}Description{/tr}</a></td>
+<td  class="heading" ><a href="tiki-g-admin_roles.php?sort_mode={$sort_mode}&amp;pid={$pid}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode2={if $sort_mode2 eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></td>
+<td  class="heading" ><a href="tiki-g-admin_roles.php?sort_mode={$sort_mode}&amp;pid={$pid}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode2={if $sort_mode2 eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}Description{/tr}</a></td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$items}
@@ -148,8 +148,8 @@ Errors:<br />
 		<td class="formcolor">
 		{tr}Role{/tr}
 		</td>
-		<td class="formcolor">
-		&nbsp;
+		<td class="formcolor">&nbsp;
+		
 		</td>
 	</tr>
 	<tr>
@@ -210,8 +210,8 @@ Errors:<br />
 <table class="normal">
 <tr>
 <td  class="heading"><input type="submit" name="delete_map" value="{tr}x{/tr} " /></td>
-<td  class="heading" ><a class="tableheading" href="tiki-g-admin_roles.php?pid={$pid}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Role{/tr}</a></td>
-<td  class="heading" ><a class="tableheading" href="tiki-g-admin_roles.php?pid={$pid}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}">{tr}User{/tr}</a></td>
+<td  class="heading" ><a href="tiki-g-admin_roles.php?pid={$pid}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Role{/tr}</a></td>
+<td  class="heading" ><a href="tiki-g-admin_roles.php?pid={$pid}&amp;find={$find}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}">{tr}User{/tr}</a></td>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$mapitems}

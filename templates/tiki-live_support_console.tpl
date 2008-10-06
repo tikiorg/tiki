@@ -26,9 +26,9 @@
 			<td class="heading">{tr}Status{/tr}: <b>{tr}{$status}{/tr}</b></td>
 			<td class="heading" style="text-align:right;">    
 				{if $status eq 'offline'}
-    				<a href="tiki-live_support_console.php?status=online" class="tableheading">{tr}be online{/tr}</a>
+    				<a href="tiki-live_support_console.php?status=online">{tr}be online{/tr}</a>
     			{else}
-    				<a href="tiki-live_support_console.php?status=offline" class="tableheading">{tr}be offline{/tr}</a>
+    				<a href="tiki-live_support_console.php?status=offline">{tr}be offline{/tr}</a>
     		{/if}
 		</td>
 		</tr>

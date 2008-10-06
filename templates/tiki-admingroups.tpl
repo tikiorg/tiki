@@ -51,8 +51,8 @@ class="prevnext">{tr}All{/tr}</a>
 <table class="normal">
 <tr>
 <td class="heading" style="width: 20px;">&nbsp;</td>
-<td class="heading"><a class="tableheading" href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'groupName_desc'}groupName_asc{else}groupName_desc{/if}">{tr}Name{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'groupDesc_desc'}groupDesc_asc{else}groupDesc_desc{/if}">{tr}Description{/tr}</a></td>
+<td class="heading"><a href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'groupName_desc'}groupName_asc{else}groupName_desc{/if}">{tr}Name{/tr}</a></td>
+<td class="heading"><a href="tiki-admingroups.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'groupDesc_desc'}groupDesc_asc{else}groupDesc_desc{/if}">{tr}Description{/tr}</a></td>
 <td class="heading">{tr}Includes{/tr}</td>
 <td class="heading">{tr}User Choice{/tr}</td>
 <td class="heading">{tr}Permissions{/tr}</td>

@@ -34,8 +34,8 @@
 <td >
 	<small>{tr}Valid{/tr}</small>
 </td>
-<td >
-	&nbsp;
+<td >&nbsp;
+	
 </td>	
 </tr>
 
@@ -81,10 +81,10 @@
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 <table class="normal">
 <tr>
-<td  class="heading" ><a class="tableheading" href="{if $sort_mode eq 'name_desc'}{sameurl sort_mode='name_asc'}{else}{sameurl sort_mode='name_desc'}{/if}">{tr}Name{/tr}</a></td>
+<td  class="heading" ><a href="{if $sort_mode eq 'name_desc'}{sameurl sort_mode='name_asc'}{else}{sameurl sort_mode='name_desc'}{/if}">{tr}Name{/tr}</a></td>
 <td  class="heading" >{tr}Activities{/tr}</td>
-<td  class="heading" ><a class="tableheading" href="{if $sort_mode eq 'isActive_desc'}{sameurl sort_mode='isActive_asc'}{else}{sameurl sort_mode='isActive_desc'}{/if}">{tr}act{/tr}</a></td>
-<td  class="heading" ><a class="tableheading" href="{if $sort_mode eq 'isValid_desc'}{sameurl sort_mode='isValid_asc'}{else}{sameurl sort_mode='isValid_desc'}{/if}">{tr}val{/tr}</a></td>
+<td  class="heading" ><a href="{if $sort_mode eq 'isActive_desc'}{sameurl sort_mode='isActive_asc'}{else}{sameurl sort_mode='isActive_desc'}{/if}">{tr}act{/tr}</a></td>
+<td  class="heading" ><a href="{if $sort_mode eq 'isValid_desc'}{sameurl sort_mode='isValid_asc'}{else}{sameurl sort_mode='isValid_desc'}{/if}">{tr}val{/tr}</a></td>
 <td  class="heading" >{tr}Instances{/tr}<br />
 </td>
 </tr>

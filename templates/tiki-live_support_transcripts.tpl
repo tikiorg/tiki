@@ -38,10 +38,10 @@
 </form>
 <table class="normal">
 <tr>
-<td  class="heading"><a class="tableheading" href="tiki-live_support_transcripts.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'chat_started_desc'}chat_started_asc{else}chat_started_desc{/if}">{tr}started{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-live_support_transcripts.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'tiki_user_desc'}tiki_user_asc{else}tiki_user_desc{/if}">{tr}Username{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-live_support_transcripts.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'reason_desc'}reason_asc{else}reason_desc{/if}">{tr}reason{/tr}</a></td>
-<td class="heading"><a class="tableheading" href="tiki-live_support_transcripts.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'operator_desc'}operator_asc{else}operator_desc{/if}">{tr}operator{/tr}</a></td>
+<td  class="heading"><a href="tiki-live_support_transcripts.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'chat_started_desc'}chat_started_asc{else}chat_started_desc{/if}">{tr}started{/tr}</a></td>
+<td class="heading"><a href="tiki-live_support_transcripts.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'tiki_user_desc'}tiki_user_asc{else}tiki_user_desc{/if}">{tr}Username{/tr}</a></td>
+<td class="heading"><a href="tiki-live_support_transcripts.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'reason_desc'}reason_asc{else}reason_desc{/if}">{tr}reason{/tr}</a></td>
+<td class="heading"><a href="tiki-live_support_transcripts.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'operator_desc'}operator_asc{else}operator_desc{/if}">{tr}operator{/tr}</a></td>
 <td  class="heading">{tr}msgs{/tr}</td>
 </tr>
 {cycle values="odd,even" print=false}

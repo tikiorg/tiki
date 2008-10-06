@@ -22,12 +22,12 @@
           <table class="normal">
             <tr>
               <th class="heading">
-                <a class="tableheading" href="tiki-my_tiki.php?sort_mode={if $sort_mode eq 'pageName_desc'}pageName_asc{else}pageName_desc{/if}">{tr}Page{/tr}</a>
+                <a href="tiki-my_tiki.php?sort_mode={if $sort_mode eq 'pageName_desc'}pageName_asc{else}pageName_desc{/if}">{tr}Page{/tr}</a>
               </th>
               <th class="heading">{tr}Creator{/tr}</th>
               <th class="heading">{tr}Last editor{/tr}</th>
               <th class="heading">
-                <a class="tableheading" href="tiki-my_tiki.php?sort_mode={if $sort_mode eq 'date_desc'}date_asc{else}date_desc{/if}">{tr}Last modification{/tr}</a>
+                <a href="tiki-my_tiki.php?sort_mode={if $sort_mode eq 'date_desc'}date_asc{else}date_desc{/if}">{tr}Last modification{/tr}</a>
               </th>
               <th class="heading" width="50px">{tr}Actions{/tr}</th>
             </tr>

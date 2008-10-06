@@ -135,20 +135,20 @@
 </table>
 <table class="normal">
 <tr class="heading">
-<td class="heading">{self_link _class="tableheading" _sort_arg='sort_mode' _sort_field='fieldId'}{tr}Id{/tr}{/self_link}</td>
+<td class="heading">{self_link _sort_arg='sort_mode' _sort_field='fieldId'}{tr}Id{/tr}{/self_link}</td>
 <td class="heading">&nbsp;</td>
-<td class="heading">{self_link _class="tableheading" _sort_arg='sort_mode' _sort_field='position'}{tr}Position{/tr}{/self_link}</td>
-<td class="heading">{self_link _class="tableheading" _sort_arg='sort_mode' _sort_field='name'}{tr}Name{/tr}{/self_link}</td>
-<td class="heading">{self_link _class="tableheading" _sort_arg='sort_mode' _sort_field='type'}{tr}Type{/tr}{/self_link}</td>
-<td class="heading">{self_link _class="tableheading" _sort_arg='sort_mode' _sort_field='options'}{tr}Options{/tr}{/self_link}</td>
-<td class="heading">{self_link _class="tableheading" _sort_arg='sort_mode' _sort_field='isMain'}{tr}isMain{/tr}{/self_link}</td>
-<td class="heading">{self_link _class="tableheading" _sort_arg='sort_mode' _sort_field='isMultilingual'}{tr}Multilingual{/tr}{/self_link}</td>
-<td class="heading">{self_link _class="tableheading" _sort_arg='sort_mode' _sort_field='isTblVisible'}{tr}Tbl vis{/tr}{/self_link}</td>
-<td class="heading">{self_link _class="tableheading" _sort_arg='sort_mode' _sort_field='isSearchable'}{tr}Searchable{/tr}{/self_link}</td>
-<td class="heading">{self_link _class="tableheading" _sort_arg='sort_mode' _sort_field='isPublic'}{tr}Public{/tr}{/self_link}</td>
-<td class="heading">{self_link _class="tableheading" _sort_arg='sort_mode' _sort_field='isHidden'}{tr}Hidden{/tr}{/self_link}</td>
-<td class="heading">{self_link _class="tableheading" _sort_arg='sort_mode' _sort_field='isMandatory'}{tr}Mandatory{/tr}{/self_link}</td>
-<td class="heading">{self_link _class="tableheading" _sort_arg='sort_mode' _sort_field='description'}{tr}Description{/tr}{/self_link}</td>
+<td class="heading">{self_link _sort_arg='sort_mode' _sort_field='position'}{tr}Position{/tr}{/self_link}</td>
+<td class="heading">{self_link _sort_arg='sort_mode' _sort_field='name'}{tr}Name{/tr}{/self_link}</td>
+<td class="heading">{self_link _sort_arg='sort_mode' _sort_field='type'}{tr}Type{/tr}{/self_link}</td>
+<td class="heading">{self_link _sort_arg='sort_mode' _sort_field='options'}{tr}Options{/tr}{/self_link}</td>
+<td class="heading">{self_link _sort_arg='sort_mode' _sort_field='isMain'}{tr}isMain{/tr}{/self_link}</td>
+<td class="heading">{self_link _sort_arg='sort_mode' _sort_field='isMultilingual'}{tr}Multilingual{/tr}{/self_link}</td>
+<td class="heading">{self_link _sort_arg='sort_mode' _sort_field='isTblVisible'}{tr}Tbl vis{/tr}{/self_link}</td>
+<td class="heading">{self_link _sort_arg='sort_mode' _sort_field='isSearchable'}{tr}Searchable{/tr}{/self_link}</td>
+<td class="heading">{self_link _sort_arg='sort_mode' _sort_field='isPublic'}{tr}Public{/tr}{/self_link}</td>
+<td class="heading">{self_link _sort_arg='sort_mode' _sort_field='isHidden'}{tr}Hidden{/tr}{/self_link}</td>
+<td class="heading">{self_link _sort_arg='sort_mode' _sort_field='isMandatory'}{tr}Mandatory{/tr}{/self_link}</td>
+<td class="heading">{self_link _sort_arg='sort_mode' _sort_field='description'}{tr}Description{/tr}{/self_link}</td>
 <td class="heading">&nbsp;</td>
 </tr>
 {cycle values="odd,even" print=false}

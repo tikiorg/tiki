@@ -38,20 +38,20 @@
 {elseif $ix.type eq 's' and $ix.name eq "Rating"}
 {if $tiki_p_admin_trackers eq 'y' or $perms.tiki_p_tracker_view_ratings eq 'y'}
 <td class="heading auto field{$ix.fieldId}">
-{self_link _class="tableheading" _sort_arg='tr_sort_mode' _sort_field='f_'|cat:$ix.fieldId}{$ix.name|default:"&nbsp;"}{/self_link}</td>
+{self_link _sort_arg='tr_sort_mode' _sort_field='f_'|cat:$ix.fieldId}{$ix.name|default:"&nbsp;"}{/self_link}</td>
 {/if}
 {else}
 <td class="heading auto field{$ix.fieldId}">
-{self_link _class="tableheading" _sort_arg='tr_sort_mode' _sort_field='f_'|cat:$ix.fieldId}{$ix.name|default:"&nbsp;"}{/self_link}
+{self_link _sort_arg='tr_sort_mode' _sort_field='f_'|cat:$ix.fieldId}{$ix.name|default:"&nbsp;"}{/self_link}
 </td>
 {/if}
 {/if}
 {/foreach}
 {if $showcreated eq 'y'}
-<td class="heading">{self_link _class="tableheading" _sort_arg='tr_sort_mode' _sort_field='created'}{tr}Created{/tr}{/self_link}</td>
+<td class="heading">{self_link _sort_arg='tr_sort_mode' _sort_field='created'}{tr}Created{/tr}{/self_link}</td>
 {/if}
 {if $showlastmodif eq 'y'}
-<td class="heading">{self_link _class="tableheading" _sort_arg='tr_sort_mode' _sort_field='lastModif'}{tr}LastModif{/tr}{/self_link}</td>
+<td class="heading">{self_link _sort_arg='tr_sort_mode' _sort_field='lastModif'}{tr}LastModif{/tr}{/self_link}</td>
 {/if}
 {if $tracker_info.useComments eq 'y' and $tracker_info.showComments eq 'y'}
 <td class="heading" width="5%">{tr}Coms{/tr}</td>

@@ -18,11 +18,11 @@
 <table border="0" class="normal" id="imagelist" width="100%">
 <tr>
 <th width="42" class="heading"></th>
-<th class="heading"><a class="tableheading" href="javascript:void(0);">{tr}Filename{/tr}</a></th>
-<th class="heading" width="80"><a class="tableheading" href="javascript:void(0);">{tr}width{/tr}</a></th>
-<th class="heading" width="80"><a class="tableheading" href="javascript:void(0);">{tr}height{/tr}</a></th>
-<th class="heading" width="80"><a class="tableheading" href="javascript:void(0);">{tr}Filesize{/tr}</th>
-<th class="heading" width="80"><a class="tableheading" href="javascript:void(0);">{tr}Filetype{/tr}</a></th></tr>
+<th class="heading"><a href="javascript:void(0);">{tr}Filename{/tr}</a></th>
+<th class="heading" width="80"><a href="javascript:void(0);">{tr}width{/tr}</a></th>
+<th class="heading" width="80"><a href="javascript:void(0);">{tr}height{/tr}</a></th>
+<th class="heading" width="80"><a href="javascript:void(0);">{tr}Filesize{/tr}</th>
+<th class="heading" width="80"><a href="javascript:void(0);">{tr}Filetype{/tr}</a></th></tr>
 {cycle print=false values="even,odd"}
 {foreach key=k item=it from=$imgstring}
 <tr class="{cycle}">

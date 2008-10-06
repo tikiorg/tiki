@@ -348,25 +348,25 @@
   {if $tiki_p_admin_forum eq 'y'}
   <th class="heading">&nbsp;</th>
   {/if}
-  <th class="heading">{self_link _class="tableheading" _sort_arg='thread_sort_mode' _sort_field='type'}{tr}Type{/tr}{/self_link}</th>
+  <th class="heading">{self_link _sort_arg='thread_sort_mode' _sort_field='type'}{tr}Type{/tr}{/self_link}</th>
   {if $forum_info.topic_smileys eq 'y'}
-  <th class="heading">{self_link _class="tableheading" _sort_arg='thread_sort_mode' _sort_field='smiley'}{tr}Emot{/tr}{/self_link}</th>
+  <th class="heading">{self_link _sort_arg='thread_sort_mode' _sort_field='smiley'}{tr}Emot{/tr}{/self_link}</th>
   {/if}
-  <th class="heading">{self_link _class="tableheading" _sort_arg='thread_sort_mode' _sort_field='title'}{tr}Title{/tr}{/self_link}</th>
+  <th class="heading">{self_link _sort_arg='thread_sort_mode' _sort_field='title'}{tr}Title{/tr}{/self_link}</th>
   {if $forum_info.topics_list_replies eq 'y'}
-  	<th class="heading">{self_link _class="tableheading" _sort_arg='thread_sort_mode' _sort_field='replies'}{tr}Replies{/tr}{/self_link}</th>
+  	<th class="heading">{self_link _sort_arg='thread_sort_mode' _sort_field='replies'}{tr}Replies{/tr}{/self_link}</th>
   {/if}
   {if $forum_info.topics_list_reads eq 'y'}
-  	<th class="heading">{self_link _class="tableheading" _sort_arg='thread_sort_mode' _sort_field='hits'}{tr}Reads{/tr}{/self_link}</th>
+  	<th class="heading">{self_link _sort_arg='thread_sort_mode' _sort_field='hits'}{tr}Reads{/tr}{/self_link}</th>
   {/if}
   {if $forum_info.topics_list_pts eq 'y'}
-  	<th class="heading">{self_link _class="tableheading" _sort_arg='thread_sort_mode' _sort_field='average'}{tr}pts{/tr}{/self_link}</th>
+  	<th class="heading">{self_link _sort_arg='thread_sort_mode' _sort_field='average'}{tr}pts{/tr}{/self_link}</th>
   {/if}
   {if $forum_info.topics_list_lastpost eq 'y'}
-  	<th class="heading">{self_link _class="tableheading" _sort_arg='thread_sort_mode' _sort_field='lastPost'}{tr}Last Post{/tr}{/self_link}</th>
+  	<th class="heading">{self_link _sort_arg='thread_sort_mode' _sort_field='lastPost'}{tr}Last Post{/tr}{/self_link}</th>
   {/if}
   {if $forum_info.topics_list_author eq 'y'}
-  	<th class="heading">{self_link _class="tableheading" _sort_arg='thread_sort_mode' _sort_field='userName'}{tr}Author{/tr}{/self_link}</th>
+  	<th class="heading">{self_link _sort_arg='thread_sort_mode' _sort_field='userName'}{tr}Author{/tr}{/self_link}</th>
   {/if}
 </tr>
 {cycle values="odd,even" print=false}

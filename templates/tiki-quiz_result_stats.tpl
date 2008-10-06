@@ -59,7 +59,7 @@ what is this supposed to be doing? isn't it already in the table below?
    <td  class="heading">{tr}Question{/tr}</td>
 *}
 <td class="heading">
-<a class="tableheading" href="tiki-quiz_result_stats.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'question_desc'}question_asc{else}question_desc{/if}">{tr}Questions{/tr}</a>
+<a href="tiki-quiz_result_stats.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'question_desc'}question_asc{else}question_desc{/if}">{tr}Questions{/tr}</a>
 </td>
 
 {*
@@ -67,7 +67,7 @@ what is this supposed to be doing? isn't it already in the table below?
 *}
 
 <td class="heading">
-<a class="tableheading" href="tiki-quiz_result_stats.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'optionText_desc'}optionText_asc{else}optionText_desc{/if}">{tr}Answer{/tr}</a>
+<a href="tiki-quiz_result_stats.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'optionText_desc'}optionText_asc{else}optionText_desc{/if}">{tr}Answer{/tr}</a>
 </td>
 
 
@@ -75,7 +75,7 @@ what is this supposed to be doing? isn't it already in the table below?
    <td  class="heading">{tr}Points{/tr}</td>
 *}
 <td class="heading">
-<a class="tableheading" href="tiki-quiz_result_stats.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'points_desc'}points_asc{else}points_desc{/if}">{tr}Points{/tr}</a>
+<a href="tiki-quiz_result_stats.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'points_desc'}points_asc{else}points_desc{/if}">{tr}Points{/tr}</a>
 </td>
 <td class="heading">
 {tr}Upload{/tr}

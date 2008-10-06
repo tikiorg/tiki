@@ -9,7 +9,7 @@
     <td class="heading" style="width:1%">&nbsp;</td>
   {/if}
       
-  {if $show_parentName eq 'y'}<td class="heading">{self_link _class="tableheading" _sort_arg="sort_mode" _sort_field='parentName'}{tr}Gallery{/tr}{/self_link}</td>{/if}
+  {if $show_parentName eq 'y'}<td class="heading">{self_link _sort_arg="sort_mode" _sort_field='parentName'}{tr}Gallery{/tr}{/self_link}</td>{/if}
   {foreach from=$fgal_listing_conf item=item key=propname}
     {if isset($item.key)}
       {assign var=key_name value=$item.key}

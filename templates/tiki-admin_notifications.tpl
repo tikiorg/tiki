@@ -62,10 +62,10 @@ document.write("<input name=\"switcher\" title=\"{tr}Select All{/tr}\" id=\"clic
 </script>
 {/if}
 </th>
-<th class="heading">{self_link _class="tableheading" _sort_arg="sort_mode" _sort_field="event"}{tr}Event{/tr}{/self_link}</th>
-<th class="heading">{self_link _class="tableheading" _sort_arg="sort_mode" _sort_field="object"}{tr}Object{/tr}{/self_link}</th>
-<th class="heading">{self_link _class="tableheading" _sort_arg="sort_mode" _sort_field="email"}{tr}eMail{/tr}{/self_link}</th>
-<th class="heading">{self_link _class="tableheading" _sort_arg="sort_mode" _sort_field="user"}{tr}User{/tr}{/self_link}</th>
+<th class="heading">{self_link _sort_arg="sort_mode" _sort_field="event"}{tr}Event{/tr}{/self_link}</th>
+<th class="heading">{self_link _sort_arg="sort_mode" _sort_field="object"}{tr}Object{/tr}{/self_link}</th>
+<th class="heading">{self_link _sort_arg="sort_mode" _sort_field="email"}{tr}eMail{/tr}{/self_link}</th>
+<th class="heading">{self_link _sort_arg="sort_mode" _sort_field="user"}{tr}User{/tr}{/self_link}</th>
 <th class="heading">{tr}Action{/tr}</th>
 </tr>
 {cycle print=false values="even,odd"}

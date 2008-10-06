@@ -26,13 +26,13 @@
 	
 		{foreach key=headerKey item=headerName from=$headers}
 		<th class="heading">
-			{self_link _class="tableheading" _sort_arg="sort_mode" _sort_field=$headerKey}{tr}{$headerName}{/tr}{/self_link}
+			{self_link _sort_arg="sort_mode" _sort_field=$headerKey}{tr}{$headerName}{/tr}{/self_link}
 		</th>
 		{/foreach}
 
 		{if $tiki_p_admin_comments eq 'y' and $prefs.feature_comments_moderation eq 'y'}
 		<th class="heading">
-			{self_link _class="tableheading" _sort_arg="sort_mode" _sort_field='approved'}{tr}Approval{/tr}{/self_link}
+			{self_link _sort_arg="sort_mode" _sort_field='approved'}{tr}Approval{/tr}{/self_link}
 		</th>
 		{/if}
 		<th class="heading">{tr}Actions{/tr}</th>

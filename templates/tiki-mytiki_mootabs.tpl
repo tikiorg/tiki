@@ -116,10 +116,10 @@
   			<div class="cbox-data">
   				<table class="normal">
   				<tr>
-  					<th class="heading"><a class="tableheading" href="tiki-my_tiki.php?sort_mode={if $sort_mode eq 'pageName_desc'}pageName_asc{else}pageName_desc{/if}">{tr}Page{/tr}</a></th>
+  					<th class="heading"><a href="tiki-my_tiki.php?sort_mode={if $sort_mode eq 'pageName_desc'}pageName_asc{else}pageName_desc{/if}">{tr}Page{/tr}</a></th>
   					<th class="heading">{tr}Creator{/tr}</th>
   					<th class="heading">{tr}Last editor{/tr}</th>
-  					<th class="heading"><a class="tableheading" href="tiki-my_tiki.php?sort_mode={if $sort_mode eq 'date_desc'}date_asc{else}date_desc{/if}">{tr}Last modification{/tr}</a></th><th class="heading">{tr}Actions{/tr}</th></tr>
+  					<th class="heading"><a href="tiki-my_tiki.php?sort_mode={if $sort_mode eq 'date_desc'}date_asc{else}date_desc{/if}">{tr}Last modification{/tr}</a></th><th class="heading">{tr}Actions{/tr}</th></tr>
   					{cycle values="even,odd" print=false}
   					{section name=ix loop=$user_pages}
   						<tr>
