@@ -127,7 +127,16 @@ function wikiplugin_trackerstat($data, $params) {
 			$itemId = $trklib->get_user_item($trackerId, $tracker_info);
 			for ($j = 0; $j < count($listCategs); ++$j) {
 				$objects = $categlib->get_category_objects($listCategs[$j]['categId'], "tracker $trackerId");
-				$v[$j]['count'] = count($objects);
+				if ($status == 'opc' || $tracker_info['showStatus'] == 'n') {
+					$v[$j]['count'] = count($objects);
+				} else {
+					$v[$j]['count'] = 0;
+					foreach ($objects as $o) {
+						$s = $trklib->get_item_info($o['itemId']);
+						if (strstr($status, $s['status']) !== false)
+							++$v[$j]['count'];
+					}
+				}
 				$v[$j]['value'] = $listCategs[$j]['name'];
 				foreach($objects as $o) {
 					if ($o['itemId'] == $itemId) {
