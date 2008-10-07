@@ -2212,8 +2212,10 @@ class TikiLib extends TikiDB {
 					return array('data' => $ret, 'cant' => $cant);
 	}
 
-	function list_file_galleries($offset = 0, $maxRecords = -1, $sort_mode = 'name_desc', $user='', $find='', $parentId=-1) {
-		return $this->get_files($offset, $maxRecords, $sort_mode, $find, $parentId, false, true, false, false, false, true, true, true, $user);
+	function list_file_galleries($offset = 0, $maxRecords = -1, $sort_mode = 'name_desc', $user='', $find='', $parentId=-1,
+								 $with_archive=false, $with_subgals=true, $with_subgals_size=false, $with_files=false, $with_files_data=false, $with_parent_name=true, $with_files_count=true,$recursive=true) {
+		return $this->get_files($offset, $maxRecords, $sort_mode, $find, $parentId,
+								$with_archive, $with_subgals, $with_subgals_size, $with_files, $with_files_data, $with_parent_name, $with_files_count, $recursive, $user);
 	}
 
 	/*shared*/
