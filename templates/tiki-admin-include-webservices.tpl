@@ -90,10 +90,10 @@
 			<h3>{tr}Registered Templates{/tr}</h3>
 			<table class="normal">
 				<tr>
-					<th>{th}Name{/th}</th>
-					<th>{th}Engine{/th}</th>
-					<th>{th}Output{/th}</th>
-					<th>{th}Preview{/th}</th>
+					<th>{tr}Name{/tr}</th>
+					<th>{tr}Engine{/tr}</th>
+					<th>{tr}Output{/tr}</th>
+					<th>{tr}Preview{/tr}</th>
 				</tr>
 				{foreach from=$storedTemplates item=template}
 					<tr>
