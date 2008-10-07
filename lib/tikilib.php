@@ -4915,14 +4915,20 @@ class TikiLib extends TikiDB {
 		if( !is_array( $pluginskiplist ) )
 			$pluginskiplist = array();
 
+		$matcher_fake = array("~pp~","~np~","&lt;pre&gt;","CODE");
 		$matcher = "/\{([A-Z]+)\(|\{([a-z]+)(\s|\})|~pp~|~np~|&lt;[pP][rR][eE]&gt;/";
-		preg_match( $matcher, $data, $plugins );
 
-		/*
-			 print "<pre>Plugin match begin:";
-			 print_r( $plugins );
-			 print "</pre>";
-		 */
+		$plugins = array();
+		preg_match_all( $matcher, $data, $tmp, PREG_SET_ORDER );
+		foreach ( $tmp as $p ) {
+			if ( in_array(strtolower($p[0]), $matcher_fake)
+				|| ( isset($p[1]) && ( in_array($p[1], $matcher_fake) || $this->plugin_exists($p[1]) ) )
+				|| ( isset($p[2]) && ( in_array($p[2], $matcher_fake) || $this->plugin_exists($p[2]) ) )
+			) {
+				$plugins = $p;
+				break;
+			}
+		}
 
 		// Check to make sure there was a match.
 		if( count( $plugins ) > 0 && count( $plugins[0] )  > 0 ) {
@@ -5328,7 +5334,7 @@ class TikiLib extends TikiDB {
 
 	function plugin_exists( $name, $include = false ) {
 		$php_name = 'lib/wiki-plugins/wikiplugin_';
-		$php_name .= $name . '.php';
+		$php_name .= strtolower($name) . '.php';
 
 		$exists = file_exists( $php_name );
 
