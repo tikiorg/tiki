@@ -45,8 +45,8 @@
 {* Links to edit, remove, browse the categories *}
 <table class="normal">
   <tr>
-    <th class="heading">{tr}Category{/tr}</th>
-    <th class="heading">{tr}Action{/tr}</th>
+    <th>{tr}Category{/tr}</th>
+    <th>{tr}Action{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$items}

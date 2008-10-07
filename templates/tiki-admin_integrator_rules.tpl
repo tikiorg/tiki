@@ -136,14 +136,14 @@
 {* Table with list of repositories *}
 <table class="normal" id="integrator_rules">
   <tr>
-    <td class="heading" rowspan="2"><span title="{tr}Rule order{/tr}">#</span></td>
-    <td class="heading">{tr}Search{/tr}</td>
-    <td class="heading">{tr}Replace{/tr}</td>
-    <td class="heading">{tr}Regex{/tr}</td>
-    <td class="heading">{tr}Case{/tr}</td>
-    <td class="heading">{tr}Actions{/tr}</td>
+    <th rowspan="2"><span title="{tr}Rule order{/tr}">#</span></th>
+    <th>{tr}Search{/tr}</th>
+    <th>{tr}Replace{/tr}</th>
+    <th>{tr}Regex{/tr}</th>
+    <th>{tr}Case{/tr}</th>
+    <th>{tr}Actions{/tr}</th>
   </tr><tr>
-    <td class="heading" colspan="5">{tr}Description{/tr}</td>
+    <th colspan="5">{tr}Description{/tr}</th>
   </tr>
   {cycle values="odd,even" print=false}
   {section name=rule loop=$rules}

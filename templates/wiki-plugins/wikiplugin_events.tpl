@@ -1,6 +1,6 @@
 {* $Id: wikiplugin_trackerstat.tpl 12245 2008-03-30 13:38:13Z luciash $ *}
 <table class="normal">
-<tr class="heading"><td colspan="2">{tr}Upcoming events{/tr}</td></tr>
+<tr><th colspan="2">{tr}Upcoming events{/tr}</th></tr>
 {cycle values="odd,even" print=false}
 {foreach from=$events item=event}
 	<tr class="{cycle advance=false}">

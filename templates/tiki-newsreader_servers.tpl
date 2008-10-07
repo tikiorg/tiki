@@ -24,8 +24,8 @@
 
 <table class="normal">
 <tr>
-<th class="heading"><a href="tiki-newsreader_servers.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'server_desc'}server_asc{else}server_desc{/if}">{tr}server{/tr}</a></th>
-<th class="heading" width="80px">{tr}Action{/tr}</th>
+<th><a href="tiki-newsreader_servers.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'server_desc'}server_asc{else}server_desc{/if}">{tr}server{/tr}</a></th>
+<th style="width:80px">{tr}Action{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}

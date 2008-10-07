@@ -130,15 +130,15 @@
     <td>
       {if $cantobjects > 0}
         <table class="normal">
-          <tr class="heading">
-            <th class="heading">
+          <tr>
+            <th>
               {tr}Name{/tr}
             </th>
-            <th class="heading">
+            <th>
               {tr}Type{/tr}
             </th>
             {if $deep eq 'on'}
-              <th class="heading">
+              <th>
                 {tr}Category{/tr}
               </th>
             {/if}

@@ -19,25 +19,25 @@
 
 <table class="normal">
 <tr>
-<td class="heading">
+<th>
 <!-- sort user -->
 <a href="tiki-quiz_stats_quiz.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}">{tr}User{/tr}</a>
-</td>
+</th>
 {*
 Set the names of the table headings to reflect the names of the db
 *}
 <!-- sort date -->
-<td class="heading"><a href="tiki-quiz_stats_quiz.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'timestamp_desc'}timestamp_asc{else}timestamp_desc{/if}">{tr}Date{/tr}</a></td>
+<th><a href="tiki-quiz_stats_quiz.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'timestamp_desc'}timestamp_asc{else}timestamp_desc{/if}">{tr}Date{/tr}</a></th>
 <!-- sort time taken -->
-<td class="heading">
-<a href="tiki-quiz_stats_quiz.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'timeTaken_desc'}timeTaken_asc{else}timeTaken_desc{/if}">{tr}time taken{/tr}</a></td>
+<th>
+<a href="tiki-quiz_stats_quiz.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'timeTaken_desc'}timeTaken_asc{else}timeTaken_desc{/if}">{tr}time taken{/tr}</a></th>
 <!-- sort points-->
-<td class="heading">
-<a href="tiki-quiz_stats_quiz.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'points_desc'}points_asc{else}points_desc{/if}">{tr}points{/tr}</a></td>
-<td class="heading">
+<th>
+<a href="tiki-quiz_stats_quiz.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'points_desc'}points_asc{else}points_desc{/if}">{tr}points{/tr}</a></th>
+<th>
 <!-- sort results -->
-<a href="tiki-quiz_stats_quiz.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'resultId_desc'}resultId_asc{else}resultId_desc{/if}">{tr}Result{/tr}</a></td>
-<td class="heading">{tr}P/F{/tr}</td>
+<a href="tiki-quiz_stats_quiz.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'resultId_desc'}resultId_asc{else}resultId_desc{/if}">{tr}Result{/tr}</a></th>
+<th>{tr}P/F{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}
@@ -95,16 +95,16 @@ Set the names of the table headings to reflect the names of the db
 
 {* I'd like to have every table heading sorted for immediate analysis
 <!-- sort options -->
-<td class="heading">
+<th>
 <a href="tiki-quiz_stats_quiz.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'options_desc'}options_asc{else}options_desc{/if}">{tr}Options{/tr}</a>
-</td>
+</th>
 *}
 
 <tr>
 	
-	<td class="heading">{tr}Option{/tr}</td>
-        <td class="heading">{tr}Votes{/tr}</td>
-   	<td class="heading">{tr}Average{/tr}</td>
+	<th>{tr}Option{/tr}</th>
+        <th>{tr}Votes{/tr}</th>
+   	<th>{tr}Average{/tr}</th>
 </tr>
 <!-- begin looping of data from data base -->
 {*second section beginning *}

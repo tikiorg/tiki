@@ -38,13 +38,13 @@
 
 <table class="normal">
 <tr>
-<td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='trackerId'}{tr}Id{/tr}{/self_link}</td>
-<td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='name'}{tr}Name{/tr}{/self_link}</td>
-<td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='description'}{tr}Description{/tr}{/self_link}</td>
-<td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='created'}{tr}Created{/tr}{/self_link}</td>
-<td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='lastModif'}{tr}Last Modif{/tr}{/self_link}</td>
-<td style="text-align:right;" class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='items'}{tr}Items{/tr}{/self_link}</td>
-<td class="heading">{tr}Action{/tr}</td>
+<th>{self_link _sort_arg='sort_mode' _sort_field='trackerId'}{tr}Id{/tr}{/self_link}</th>
+<th>{self_link _sort_arg='sort_mode' _sort_field='name'}{tr}Name{/tr}{/self_link}</th>
+<th>{self_link _sort_arg='sort_mode' _sort_field='description'}{tr}Description{/tr}{/self_link}</th>
+<th>{self_link _sort_arg='sort_mode' _sort_field='created'}{tr}Created{/tr}{/self_link}</th>
+<th>{self_link _sort_arg='sort_mode' _sort_field='lastModif'}{tr}Last Modif{/tr}{/self_link}</th>
+<th style="text-align:right;">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='items'}{tr}Items{/tr}{/self_link}</th>
+<th>{tr}Action{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}

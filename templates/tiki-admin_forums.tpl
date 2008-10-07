@@ -353,7 +353,7 @@
 <form action="#">
 <table class="normal">
 <tr>
-<th class="heading">
+<th>
 {if $channels}
 <script type="text/javascript">
 <!--//--><![CDATA[//><!--
@@ -362,15 +362,15 @@
 </script>
 {/if}
 </th>
-<th class="heading"><a href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}#editforums">{tr}Name{/tr}</a></th>
-<th class="heading"><a href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'threads_desc'}threads_asc{else}threads_desc{/if}#editforums">{tr}Topics{/tr}</a></th>
-<th class="heading"><a href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'comments_desc'}comments_asc{else}comments_desc{/if}#editforums">{tr}Coms{/tr}</a></th>
-<th class="heading">{tr}Users{/tr}</th>
-<th class="heading">{tr}Age{/tr}</th>
-<th class="heading">{tr}PPD{/tr}</th>
-<!--<td class="heading"><a href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastPost_desc'}lastPost_asc{else}lastPost_desc{/if}">{tr}Last Post{/tr}</a></td>-->
-<th class="heading"><a href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}Hits{/tr}</a></th>
-<th class="heading">{tr}Action{/tr}</th>
+<th><a href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}#editforums">{tr}Name{/tr}</a></th>
+<th><a href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'threads_desc'}threads_asc{else}threads_desc{/if}#editforums">{tr}Topics{/tr}</a></th>
+<th><a href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'comments_desc'}comments_asc{else}comments_desc{/if}#editforums">{tr}Coms{/tr}</a></th>
+<th>{tr}Users{/tr}</th>
+<th>{tr}Age{/tr}</th>
+<th>{tr}PPD{/tr}</th>
+<!--<th><a href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastPost_desc'}lastPost_asc{else}lastPost_desc{/if}">{tr}Last Post{/tr}</a></th>-->
+<th><a href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}Hits{/tr}</a></th>
+<th>{tr}Action{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}

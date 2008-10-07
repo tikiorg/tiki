@@ -57,7 +57,7 @@
 {if $subtree[ix].first or not $subtree[ix].last}
 <tr {if $page_ref_id eq $subtree[ix].page_ref_id}class="even"{else}class="odd"{/if}>
 {if $subtree[ix].pos eq ''}
-	<td class="heading"><a class='link' href='tiki-index.php?page={$subtree[ix].pageName|escape:"url"}' title="{tr}View{/tr}">{icon _id='magnifier' alt="{tr}View{/tr}"}</a>
+	<th><a class='link' href='tiki-index.php?page={$subtree[ix].pageName|escape:"url"}' title="{tr}View{/tr}">{icon _id='magnifier' alt="{tr}View{/tr}"}</a>
 		{if $editable == 'y'}
 		{if $subtree[ix].flag == 'L'}{icon _id='lock' alt="locked" title="locked by `$subtree[ix].user`"}
 		{else}<a class="link" href='tiki-editpage.php?page={$subtree[ix].pageName|escape:"url"}'>{icon _id='page_edit'}</a>{/if}
@@ -69,10 +69,10 @@
 				<a href="tiki-edit_structure.php?page_ref_id={$subtree[ix].page_ref_id}&amp;watch_object={$subtree[ix].page_ref_id}&amp;watch_action=remove">{icon _id='no_eye_arrow_down' alt='{tr}Stop Monitoring the Sub-Structure{/tr}'}</a>
 			{/if}
 		{/if}
-	</td>
-	<td class="heading">
+	</th>
+	<th>
 		<a class='link' href='tiki-edit_structure.php?page_ref_id={$subtree[ix].page_ref_id}'><b>{$subtree[ix].pageName}{if $subtree[ix].page_alias} ({$subtree[ix].page_alias}){/if}</b></a>
-	</td>
+	</th>
 {else}
 	<td {if $page_ref_id eq $subtree[ix].page_ref_id}style="border-style:dotted; border-width:1px; border-color:gray;"{/if}>
 	<!--

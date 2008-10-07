@@ -6,7 +6,7 @@
 
 <h2>{tr}Exterminator of cached content{/tr}</h2>
 <table class="normal">
-<tr><th class="heading">{tr}Directory{/tr}</th><th>{tr}Files{/tr}/{tr}Size{/tr}</th><th>{tr}Action{/tr}</th></tr>
+<tr><th>{tr}Directory{/tr}</th><th>{tr}Files{/tr}/{tr}Size{/tr}</th><th>{tr}Action{/tr}</th></tr>
 <tr class="form">
 <td class="odd"><b>./templates_c/</b></td>
 <td class="odd">({$templates_c.cant} {tr}Files{/tr} / {$templates_c.total|kbsize|default:'0 Kb'})</td>
@@ -46,9 +46,9 @@
 <h2>{tr}Templates compiler{/tr}</h2>
 <table class="sortable" id="templatecompiler" width="100%">
 <tr>
-<th class="heading">{tr}Language{/tr}</th>
-<th class="heading">{tr}Pages{/tr}/{tr}Size{/tr}</th>
-<th class="heading">{tr}Action{/tr}</th>
+<th>{tr}Language{/tr}</th>
+<th>{tr}Pages{/tr}/{tr}Size{/tr}</th>
+<th>{tr}Action{/tr}</th>
 </tr>
 {cycle values="even,odd" print=false}
 {foreach key=key item=item from=$templates}
@@ -82,7 +82,7 @@
 {/if}
 </table>
 <table class="sortable" id="tablefix" width="100%">
-<tr><th class="heading">{tr}Table{/tr}</th><th class="heading">{tr}Field{/tr}</th><th class="heading">{tr}Investigate{/tr}</th><th class="heading">{tr}Fix it{/tr}</th></tr>
+<tr><th>{tr}Table{/tr}</th><th>{tr}Field{/tr}</th><th>{tr}Investigate{/tr}</th><th>{tr}Fix it{/tr}</th></tr>
 {cycle values="even,odd" print=false}
 {foreach key=key item=item from=$tabfields}
 <tr><td class="{cycle advance=false}">{$item.table}</td><td class="{cycle advance=false}">{$item.field}</td>

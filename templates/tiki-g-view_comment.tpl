@@ -2,15 +2,15 @@
 <link rel="StyleSheet"  href="styles/{$prefs.style}" type="text/css" />
 <table class="email">
         <tr>
-	    	<td class="heading">{tr}From{/tr}:</td>
+	    	<th>{tr}From{/tr}:</th>
 		<td class="formcolor">{$user|capitalize:true}</td>
 	</tr>
 	<tr>
-	    	<td class="heading">{tr}Date{/tr}:</td>
+	    	<th>{tr}Date{/tr}:</th>
 		<td class="formcolor" colspan="3">{$timestamp|date_format:"%A %e de %B, %Y %H:%M:%S"|capitalize:true}</td>
 	</tr>
 	<tr>
-		<td class="heading">{tr}Subject{/tr}:</td>
+		<th>{tr}Subject{/tr}:</th>
 		<td class="formcolor" colspan="3">{$title}</td>
 	</tr>
 	<tr>

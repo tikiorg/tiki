@@ -15,11 +15,11 @@
 {if $confirm eq 'y'}
 <table class="normal">
 <tr>
-  <td colspan="2" class="heading highlight">{tr}Subscription confirmed!{/tr}</td>
+  <th colspan="2" class="highlight">{tr}Subscription confirmed!{/tr}</th>
 </tr>
 <tr>
   <td class="even">{tr}Name{/tr}:</td>
-  <th class="even">{$nl_info.name|escape}</th>
+  <td class="even">{$nl_info.name|escape}</td>
 </tr>
 <tr>
   <td class="even">{tr}Description{/tr}:</td>
@@ -37,7 +37,7 @@
 <input type="hidden" name="nlId" value="{$nlId|escape}" />
 <table class="normal">
 <tr>
-  <td colspan="2" class="heading">{tr}Subscribe to Newsletter{/tr}</td>
+  <th colspan="2">{tr}Subscribe to Newsletter{/tr}</th>
 </tr>
 <tr>
   <td class="even">{tr}Name{/tr}:</td>
@@ -73,9 +73,9 @@
 {/if}
 <table class="normal">
 <tr>
-<td class="heading"><a href="tiki-admin_newsletters.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></td>
-<td class="heading"><a href="tiki-admin_newsletters.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}Description{/tr}</a></td>
-<td class="heading" width="80px">&nbsp;</td>
+<th><a href="tiki-admin_newsletters.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></th>
+<th><a href="tiki-admin_newsletters.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}Description{/tr}</a></th>
+<th style="width:80px">&nbsp;</th>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}

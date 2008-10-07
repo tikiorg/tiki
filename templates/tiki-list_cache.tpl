@@ -10,9 +10,9 @@
 {cycle values="odd,even" print=false}
 <table class="normal">
 <tr>
-<td class="heading"><a href="tiki-list_cache.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'url_desc'}url_asc{else}url_desc{/if}">{tr}URL{/tr}</a></td>
-<td class="heading"><a href="tiki-list_cache.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'refresh_desc'}refresh_asc{else}refresh_desc{/if}">{tr}Last updated{/tr}</a></td>
-<td class="heading">{tr}Action{/tr}</td>
+<th><a href="tiki-list_cache.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'url_desc'}url_asc{else}url_desc{/if}">{tr}URL{/tr}</a></th>
+<th><a href="tiki-list_cache.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'refresh_desc'}refresh_asc{else}refresh_desc{/if}">{tr}Last updated{/tr}</a></th>
+<th>{tr}Action{/tr}</th>
 </tr>
 {section name=changes loop=$listpages}
 <tr>

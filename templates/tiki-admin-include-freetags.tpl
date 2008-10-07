@@ -6,7 +6,7 @@
     <form action="tiki-admin.php?page=freetags" method="post">
       <table class="admin">
         <tr>
-          <td colspan="2" class="heading">{tr}General{/tr}</td>
+          <th colspan="2">{tr}General{/tr}</th>
         </tr>
         <tr>
           <td class="form">{tr}Show Tag Cloud{/tr}: </td>
@@ -76,7 +76,7 @@
           </tr>
           
           <tr>
-            <td colspan="2" class="heading">{tr}More Like This/Get Similar Module{/tr}</td>
+            <th colspan="2">{tr}More Like This/Get Similar Module{/tr}</th>
           </tr>
         
           <tr>    
@@ -123,7 +123,7 @@
     <form action="tiki-admin.php?page=freetags" method="post">
     <table class="admin">
       <tr>
-        <td colspan="2" class="heading">{tr}General{/tr}</td>
+        <th colspan="2">{tr}General{/tr}</th>
       </tr>
       <tr>
         <td class="form">{tr}Enable freetags 3D browser{/tr}:</td>
@@ -142,7 +142,7 @@
 	<td><input type="text" name="freetags_3d_height" value="{$prefs.freetags_3d_height|escape}" size="3" /></td>
       </tr>
       <tr>
-        <td colspan="2" class="heading">{tr}Graph appearance{/tr}</td>
+        <th colspan="2">{tr}Graph appearance{/tr}</th>
       </tr>
       <tr>
         <td class="form">{tr}Navigation depth{/tr}: </td>
@@ -169,7 +169,7 @@
 	<td><input type="text" name="freetags_3d_missing_page_color" value="{$prefs.freetags_3d_missing_page_color|escape}" size="7" /></td>
       </tr> *}
       <tr>
-        <td colspan="2" class="heading">{tr}Camera settings{/tr}</td>
+        <th colspan="2">{tr}Camera settings{/tr}</th>
      </tr>
       <tr>
         <td class="form">{tr}Camera distance adjusted relative to nearest node{/tr}: </td>
@@ -189,7 +189,7 @@
       </tr>
       {* new fields *}
       <tr>
-        <td colspan="2" class="heading">{tr}Physics engine{/tr}</td>
+        <th colspan="2">{tr}Physics engine{/tr}</th>
      </tr>
       <tr>
         <td class="form">{tr}Friction constant{/tr}: </td>

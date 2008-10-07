@@ -126,11 +126,11 @@
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 <table class="normal">
 <tr>
-<td  class="heading"><input type="submit" name="delete" value="{tr}x{/tr} " /></td>
-<td class="heading" ><a href="{if $sort_mode eq 'title_desc'}{sameurl sort_mode="title_asc"}{else}{sameurl sort_mode="title_desc"}{/if}">{tr}Title{/tr}</a></td>
-<td  style="text-align:right;" class="heading" >{tr}Items{/tr}</td>
-<td  style="text-align:right;" class="heading" >{tr}Ranks{/tr}</td>
-<td  class="heading">&nbsp;</td>
+<th><input type="submit" name="delete" value="{tr}x{/tr} " /></th>
+<th><a href="{if $sort_mode eq 'title_desc'}{sameurl sort_mode="title_asc"}{else}{sameurl sort_mode="title_desc"}{/if}">{tr}Title{/tr}</a></th>
+<th style="text-align:right;">{tr}Items{/tr}</th>
+<th style="text-align:right;">{tr}Ranks{/tr}</th>
+<th>&nbsp;</th>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$items}

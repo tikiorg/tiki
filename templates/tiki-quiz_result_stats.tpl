@@ -12,7 +12,7 @@
 
 <table class="normal">
 <tr> 
-  <td colspan="2" class="heading">{tr}Quiz stats{/tr}</td>
+  <th colspan="2">{tr}Quiz stats{/tr}</th>
 </tr>
 <tr> 
   <td class="even">{tr}Quiz{/tr}</td>
@@ -56,30 +56,30 @@ what is this supposed to be doing? isn't it already in the table below?
 <table class="normal">
   <tr>
 {*
-   <td  class="heading">{tr}Question{/tr}</td>
+   <th>{tr}Question{/tr}</th>
 *}
-<td class="heading">
+<th>
 <a href="tiki-quiz_result_stats.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'question_desc'}question_asc{else}question_desc{/if}">{tr}Questions{/tr}</a>
-</td>
+</th>
 
 {*
-   <td  class="heading">{tr}Answer{/tr}</td>
+   <th>{tr}Answer{/tr}</th>
 *}
 
-<td class="heading">
+<th>
 <a href="tiki-quiz_result_stats.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'optionText_desc'}optionText_asc{else}optionText_desc{/if}">{tr}Answer{/tr}</a>
-</td>
+</th>
 
 
 {*
-   <td  class="heading">{tr}Points{/tr}</td>
+   <th>{tr}Points{/tr}</th>
 *}
-<td class="heading">
+<th>
 <a href="tiki-quiz_result_stats.php?quizId={$quizId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'points_desc'}points_asc{else}points_desc{/if}">{tr}Points{/tr}</a>
-</td>
-<td class="heading">
+</th>
+<th>
 {tr}Upload{/tr}
-</td>
+</th>
 
 
 

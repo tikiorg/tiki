@@ -19,39 +19,39 @@
 <table class="normal">
 <tr>
 {if $prefs.art_list_title eq 'y'}
-	<td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='title'}{tr}Title{/tr}{/self_link}</td>
+	<th>{self_link _sort_arg='sort_mode' _sort_field='title'}{tr}Title{/tr}{/self_link}</th>
 {/if}
 {if $prefs.art_list_type eq 'y'}	
-	<td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='type'}{tr}Type{/tr}{/self_link}</td>
+	<th>{self_link _sort_arg='sort_mode' _sort_field='type'}{tr}Type{/tr}{/self_link}</th>
 {/if}
 {if $prefs.art_list_topic eq 'y'}	
-	<td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='topicName'}{tr}Topic{/tr}{/self_link}</td>
+	<th>{self_link _sort_arg='sort_mode' _sort_field='topicName'}{tr}Topic{/tr}{/self_link}</th>
 {/if}
 {if $prefs.art_list_date eq 'y'}
-	<td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='publishDate'}{tr}PublishDate{/tr}{/self_link}</td>
+	<th>{self_link _sort_arg='sort_mode' _sort_field='publishDate'}{tr}PublishDate{/tr}{/self_link}</th>
 {/if}
 {if $prefs.art_list_expire eq 'y'}
-	<td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='expireDate'}{tr}ExpireDate{/tr}{/self_link}</td>
+	<th>{self_link _sort_arg='sort_mode' _sort_field='expireDate'}{tr}ExpireDate{/tr}{/self_link}</th>
 {/if}
 {if $prefs.art_list_visible eq 'y'}
-	<td class="heading"><span>{tr}Visible{/tr}</span></td>
+	<th><span>{tr}Visible{/tr}</span></th>
 {/if}
 {if $prefs.art_list_lang eq 'y'}
-	<td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='lang'}{tr}Lang{/tr}{/self_link}</td>
+	<th>{self_link _sort_arg='sort_mode' _sort_field='lang'}{tr}Lang{/tr}{/self_link}</th>
 {/if}
 {if $prefs.art_list_author eq 'y'}
-	<td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='authorName'}{tr}AuthorName{/tr}{/self_link}</td>
+	<th>{self_link _sort_arg='sort_mode' _sort_field='authorName'}{tr}AuthorName{/tr}{/self_link}</th>
 {/if}
 {if $prefs.art_list_reads eq 'y'}
-	<td style="text-align:right;" class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='nbreads'}{tr}Reads{/tr}{/self_link}</td>
+	<th style="text-align:right;">{self_link _sort_arg='sort_mode' _sort_field='nbreads'}{tr}Reads{/tr}{/self_link}</th>
 {/if}
 {if $prefs.art_list_size eq 'y'}
-	<td style="text-align:right;" class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='size'}{tr}Size{/tr}{/self_link}</td>
+	<th style="text-align:right;">{self_link _sort_arg='sort_mode' _sort_field='size'}{tr}Size{/tr}{/self_link}</th>
 {/if}
 {if $prefs.art_list_img eq 'y'}
-	<td class="heading">{tr}Img{/tr}</td>
+	<th>{tr}Img{/tr}</th>
 {/if}
-{if $tiki_p_edit_article eq 'y' or $tiki_p_remove_article eq 'y' or isset($oneEditPage) or $tiki_p_read_article}<td  class="heading">{tr}Action{/tr}</td>{/if}
+{if $tiki_p_edit_article eq 'y' or $tiki_p_remove_article eq 'y' or isset($oneEditPage) or $tiki_p_read_article}<th>{tr}Action{/tr}</th>{/if}
 </tr>
 {cycle values="odd,even" print=false}
 {section name=changes loop=$listpages}

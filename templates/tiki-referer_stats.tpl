@@ -7,15 +7,15 @@
 
 <table class="normal">
   <tr>
-  <td class="heading">
+  <th>
     <a href="tiki-referer_stats.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'referer_desc'}referer_asc{else}referer_desc{/if}">{tr}Word{/tr}</a>
-  </td>
-  <td class="heading">
+  </th>
+  <th>
     <a href="tiki-referer_stats.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}Hits{/tr}</a>
-  </td>
-  <td class="heading">
+  </th>
+  <th>
     <a href="tiki-referer_stats.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'last_desc'}last_asc{else}last_desc{/if}">{tr}Last{/tr}</a>
-  </td>
+  </th>
   </tr>
   {cycle values="odd,even" print=false}
   {section name=user loop=$channels}

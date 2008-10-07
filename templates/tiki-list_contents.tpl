@@ -46,13 +46,13 @@
 
 <table class="normal">
   <tr>
-    <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='contentId'}{tr}Id{/tr}{/self_link}</td>
-    <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='contentLabel'}{tr}Label{/tr}{/self_link}</td>
-    <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='data'}{tr}Current Value{/tr}{/self_link}</td>
-    <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='actual'}{tr}Current ver{/tr}{/self_link}</td>
-    <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='next'}{tr}Next ver{/tr}{/self_link}</td>
-    <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='future'}{tr}Future vers{/tr}{/self_link}</td>
-    <td class="heading">{tr}Action{/tr}</td>
+    <th>{self_link _sort_arg='sort_mode' _sort_field='contentId'}{tr}Id{/tr}{/self_link}</th>
+    <th>{self_link _sort_arg='sort_mode' _sort_field='contentLabel'}{tr}Label{/tr}{/self_link}</th>
+    <th>{self_link _sort_arg='sort_mode' _sort_field='data'}{tr}Current Value{/tr}{/self_link}</th>
+    <th>{self_link _sort_arg='sort_mode' _sort_field='actual'}{tr}Current ver{/tr}{/self_link}</th>
+    <th>{self_link _sort_arg='sort_mode' _sort_field='next'}{tr}Next ver{/tr}{/self_link}</th>
+    <th>{self_link _sort_arg='sort_mode' _sort_field='future'}{tr}Future vers{/tr}{/self_link}</th>
+    <th>{tr}Action{/tr}</th>
   </tr>
 {cycle values="odd,even" print=false}
 {section name=changes loop=$listpages}

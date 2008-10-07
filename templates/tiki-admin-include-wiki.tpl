@@ -427,7 +427,7 @@ name="w_displayed_default"{if $prefs.w_displayed_default eq 'y'} checked="checke
     <form action="tiki-admin.php?page=wiki" method="post">
     <table class="admin">
       <tr>
-        <td colspan="2" class="heading">General</td>
+        <th colspan="2">General</th>
       </tr>
       <tr>
         <td class="form">{tr}Enable wiki 3D browser:{/tr}</td>
@@ -446,7 +446,7 @@ name="w_displayed_default"{if $prefs.w_displayed_default eq 'y'} checked="checke
 	<td><input type="text" name="wiki_3d_height" value="{$prefs.wiki_3d_height|escape}" size="3" /></td>
       </tr>
       <tr>
-        <td colspan="2" class="heading">Graph appearance</td>
+        <th colspan="2">Graph appearance</th>
       </tr>
       <tr>
         <td class="form">{tr}Navigation depth:{/tr} </td>
@@ -473,7 +473,7 @@ name="w_displayed_default"{if $prefs.w_displayed_default eq 'y'} checked="checke
 	<td><input type="text" name="wiki_3d_missing_page_color" value="{$prefs.wiki_3d_missing_page_color|escape}" size="7" /></td>
       </tr>
       <tr>
-        <td colspan="2" class="heading">Camera settings</td>
+        <th colspan="2">Camera settings</th>
      </tr>
       <tr>
         <td class="form">{tr}Camera distance adjusted relative to nearest node:{/tr} </td>
@@ -496,7 +496,7 @@ name="w_displayed_default"{if $prefs.w_displayed_default eq 'y'} checked="checke
       </tr>
       {* new fields *}
       <tr>
-        <td colspan="2" class="heading">Physics engine</td>
+        <th colspan="2">Physics engine</th>
      </tr>
       <tr>
         <td class="form">{tr}Friction constant:{/tr} </td>

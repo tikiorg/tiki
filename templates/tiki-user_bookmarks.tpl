@@ -11,8 +11,8 @@
 <h2>{tr}Folders{/tr}</h2>
 <table class="normal">
 <tr>
-  <th class="heading">{tr}Name{/tr}</th>
-  <th class="heading">{tr}Action{/tr}</th>
+  <th>{tr}Name{/tr}</th>
+  <th>{tr}Action{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$folders}
@@ -32,9 +32,9 @@
 <h2>{tr}Bookmarks{/tr}</h2>
 <table class="normal">
 <tr>
-  <th class="heading">{tr}Name{/tr}</th>
-  <th class="heading">{tr}Url{/tr}</th>
-  <th class="heading">{tr}Action{/tr}</th>
+  <th>{tr}Name{/tr}</th>
+  <th>{tr}Url{/tr}</th>
+  <th>{tr}Action{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$urls}

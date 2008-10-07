@@ -75,13 +75,13 @@
 {* Table with list of repositories *}
 <table class="normal" id="integrator-repositories">
   <tr>
-    <td class="heading" rowspan="2">{tr}Name{/tr}</td>
-    <td class="heading">{tr}Path{/tr}</td>
-    <td class="heading">{tr}Start{/tr}</td>
-    <td class="heading">{tr}CSS File{/tr}</td>
-    <td class="heading">{tr}Actions{/tr}</td>
+    <th rowspan="2">{tr}Name{/tr}</th>
+    <th>{tr}Path{/tr}</th>
+    <th>{tr}Start{/tr}</th>
+    <th>{tr}CSS File{/tr}</th>
+    <th>{tr}Actions{/tr}</th>
   </tr><tr>
-    <td class="heading" colspan="4">{tr}Description{/tr}</td>
+    <th colspan="4">{tr}Description{/tr}</th>
   </tr>
   {cycle values="odd,even" print=false}
   {section name=rep loop=$repositories}

@@ -221,8 +221,8 @@
           <td colspan="2">
             <table class="normal">
               <tr class="formcolor">
-                <td class="heading">{tr}MIME Type{/tr}</td>
-                <td class="heading">{tr}System command{/tr}</td>
+                <th>{tr}MIME Type{/tr}</th>
+                <th>{tr}System command{/tr}</th>
               </tr>
               {foreach  key=mime item=cmd from=$fgal_handlers}
               <tr>

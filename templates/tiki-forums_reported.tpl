@@ -35,10 +35,10 @@
 <table class="normal">
 <tr>
 {if $items}
-<th class="heading" ></th>
+<th></th>
 {/if}
-<th class="heading">{tr}Message{/tr}</th>
-<th class="heading">{tr}Reported by{/tr}</th>
+<th>{tr}Message{/tr}</th>
+<th>{tr}Reported by{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$items}

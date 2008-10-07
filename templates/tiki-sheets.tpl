@@ -61,10 +61,10 @@ cted"{/if}>{$users[ix].login|username}</option>{/section}
 
 <table class="normal">
 <tr>
-<td class="heading"><a href="tiki-sheets.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}Title{/tr}</a></td>
-<td class="heading"><a href="tiki-sheets.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}Description{/tr}</a></td>
-<td class="heading"><a href="tiki-sheets.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}">{tr}User{/tr}</a></td>
-<td  class="heading">{tr}Actions{/tr}</td>
+<th><a href="tiki-sheets.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}Title{/tr}</a></th>
+<th><a href="tiki-sheets.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}Description{/tr}</a></th>
+<th><a href="tiki-sheets.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}">{tr}User{/tr}</a></th>
+<th>{tr}Actions{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=changes loop=$sheets}

@@ -7,10 +7,10 @@
 <h3>{tr}Available mapfiles{/tr}:</h3>
 <table class="normal">
 <tr>
-<td class="heading">{tr}Mapfile{/tr}</td>
-<td class="heading" width="20%">{tr}Actions{/tr}</td>
-<td class="heading" width="10%">{tr}Hits{/tr}</td>
-<td class="heading" width="10%">{tr}hits last 7 days{/tr}</td>
+<th>{tr}Mapfile{/tr}</th>
+<th style="width:20%">{tr}Actions{/tr}</th>
+<th style="width:10%">{tr}Hits{/tr}</th>
+<th style="width:10%">{tr}hits last 7 days{/tr}</th>
 </tr>
 {section name=user loop=$files}
 {if $smarty.section.user.index % 2}

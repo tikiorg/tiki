@@ -21,7 +21,7 @@
 <tr><td width="50%" valign="top">
 
 <table class="normal">
-<tr><td class="heading" colspan="2">{tr}Operations{/tr}</td></tr>
+<tr><th colspan="2">{tr}Operations{/tr}</th></tr>
 {if $master}
 <tr class="form"><td><b>check</b></td><td>
 <form action="tiki-replicate.php" method="post">
@@ -34,7 +34,7 @@
 
 {cycle values="odd,even" print=false}
 <table class="normal">
-<tr><td class="heading" colspan="3">{tr}Operations Log{/tr}</td></tr>
+<tr><th colspan="3">{tr}Operations Log{/tr}</th></tr>
 {section name=i loop=$log}
 <tr class="{cycle}"><td>{$log[i].logtime|tiki_short_datetime}</td>
 <td>{$log[i].loguser}</td>

@@ -39,8 +39,8 @@
 <h2>{tr}Properties{/tr}</h2>
 <table class="normal">
 <tr>
-	<td  class="heading">{tr}Property{/tr}</td>
-	<td  class="heading">{tr}Value{/tr}</td>
+	<th>{tr}Property{/tr}</th>
+	<th>{tr}Value{/tr}</th>
 </tr>
 {foreach from=$wi.properties item=item key=key}
 <tr>

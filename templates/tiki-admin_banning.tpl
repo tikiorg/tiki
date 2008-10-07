@@ -111,11 +111,11 @@
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 <table class="normal">
 <tr>
-<td  class="heading"><input type="submit" name="del" value="{tr}x{/tr} " /></td>
-<td class="heading">{tr}Title{/tr}</td>
-<td class="heading">{tr}User/IP{/tr}</td>
-<td class="heading">{tr}Sections{/tr}</td>
-<td class="heading">{tr}Action{/tr}</td>
+<th><input type="submit" name="del" value="{tr}x{/tr} " /></th>
+<th>{tr}Title{/tr}</th>
+<th>{tr}User/IP{/tr}</th>
+<th>{tr}Sections{/tr}</th>
+<th>{tr}Action{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$items}

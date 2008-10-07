@@ -9,9 +9,9 @@
 <table class="normal">
 {cycle values="odd,even" print=false}
 <tr>
-<td class="heading">{tr}From{/tr}</td>
-<td class="heading">{tr}Subject{/tr}</td>
-<td class="heading">{tr}Date{/tr}</td>
+<th>{tr}From{/tr}</th>
+<th>{tr}Subject{/tr}</th>
+<th>{tr}Date{/tr}</th>
 </tr>
 {section loop=$articles name=ix}
 <tr>

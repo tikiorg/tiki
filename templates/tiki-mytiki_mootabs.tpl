@@ -116,10 +116,10 @@
   			<div class="cbox-data">
   				<table class="normal">
   				<tr>
-  					<th class="heading"><a href="tiki-my_tiki.php?sort_mode={if $sort_mode eq 'pageName_desc'}pageName_asc{else}pageName_desc{/if}">{tr}Page{/tr}</a></th>
-  					<th class="heading">{tr}Creator{/tr}</th>
-  					<th class="heading">{tr}Last editor{/tr}</th>
-  					<th class="heading"><a href="tiki-my_tiki.php?sort_mode={if $sort_mode eq 'date_desc'}date_asc{else}date_desc{/if}">{tr}Last modification{/tr}</a></th><th class="heading">{tr}Actions{/tr}</th></tr>
+  					<th><a href="tiki-my_tiki.php?sort_mode={if $sort_mode eq 'pageName_desc'}pageName_asc{else}pageName_desc{/if}">{tr}Page{/tr}</a></th>
+  					<th>{tr}Creator{/tr}</th>
+  					<th>{tr}Last editor{/tr}</th>
+  					<th><a href="tiki-my_tiki.php?sort_mode={if $sort_mode eq 'date_desc'}date_asc{else}date_desc{/if}">{tr}Last modification{/tr}</a></th><th>{tr}Actions{/tr}</th></tr>
   					{cycle values="even,odd" print=false}
   					{section name=ix loop=$user_pages}
   						<tr>
@@ -163,7 +163,7 @@
   				<div class="cbox-title">{if $userwatch eq $user}{tr}My items{/tr}{else}{tr}Assigned items{/tr}{/if}</div>
   				<div class="cbox-data">
   					<table class="normal">
-  					<tr><th class="heading">{tr}Item{/tr}</th><th class="heading">{tr}Tracker{/tr}</th></tr>
+  					<tr><th>{tr}Item{/tr}</th><th>{tr}Tracker{/tr}</th></tr>
   					{cycle values="even,odd" print=false}
    					{section name=ix loop=$user_items}
   					<tr><td class="{cycle advance=false}">
@@ -182,7 +182,7 @@
   			<div class="cbox">
   				<div class="cbox-title">{tr}Unread Messages{/tr}</div>
   				<table  class="normal">
-  					<tr><th class="heading">{tr}Subject{/tr}</th><th class="heading">{tr}From{/tr}</th><th class="heading">{tr}Date{/tr}</th></tr>
+  					<tr><th>{tr}Subject{/tr}</th><th>{tr}From{/tr}</th><th>{tr}Date{/tr}</th></tr>
   					{cycle values="even,odd" print=false}
   					{section name=ix loop=$msgs}
   					<tr><td class="{cycle advance=false}">

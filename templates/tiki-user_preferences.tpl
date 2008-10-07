@@ -150,7 +150,7 @@
     {/section}
 
     <tr>
-      <td class="heading" colspan="2">{tr}Preferences{/tr}</td>
+      <th colspan="2">{tr}Preferences{/tr}</th>
     </tr>
   
     <tr>
@@ -318,7 +318,7 @@
 
     {if $prefs.feature_messages eq 'y' and $tiki_p_messages eq 'y'}
       <tr>
-        <td class="heading" colspan="2">{tr}User Messages{/tr}</td>
+        <th colspan="2">{tr}User Messages{/tr}</th>
       </tr>
     
       <tr>
@@ -385,7 +385,7 @@
 
     {if $prefs.feature_tasks eq 'y' and $tiki_p_tasks eq 'y'}
       <tr>
-        <td class="heading" colspan="2">{tr}User Tasks{/tr}</td>
+        <th colspan="2">{tr}User Tasks{/tr}</th>
       </tr>
     
       <tr>
@@ -405,7 +405,7 @@
     {/if}
 
     <tr>
-      <td class="heading" colspan="2">{tr}My Tiki{/tr}</td>
+      <th colspan="2">{tr}My Tiki{/tr}</th>
     </tr>
 
     {if $prefs.feature_wiki eq 'y'}

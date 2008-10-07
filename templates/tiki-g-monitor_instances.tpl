@@ -4,7 +4,7 @@
 
       {if $prefs.feature_help eq 'y'}
 <a href="{$prefs.helpurl}GalaxiaMonitorInstances" target="tikihelp" class="tikihelp" title="{tr}Galaxia Monitor Instances{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
+<img src="img/icons/help.gif" class="icon" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
 
       {if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-g-monitor_instances.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Galaxia Monitor Instances tpl{/tr}"><img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}Edit Tpl{/tr}' /></a>{/if}
@@ -89,14 +89,14 @@
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 <table class="normal">
 <tr>
-<td class="heading" ><a href="{if $sort_mode eq 'instanceId_desc'}{sameurl sort_mode='instanceId_asc'}{else}{sameurl sort_mode='instanceId_desc'}{/if}">{tr}Id{/tr}</a></td>
-{*<td class="heading" ><a href="{if $sort_mode eq 'name_desc'}{sameurl sort_mode='name_asc'}{else}{sameurl sort_mode='name_desc'}{/if}">{tr}Activity{/tr}</a></td>*}
-<td class="heading" ><a href="{if $sort_mode eq 'insName_desc'}{sameurl sort_mode='insName_asc'}{else}{sameurl sort_mode='insName_desc'}{/if}">{tr}Name{/tr}</a></td>
-<td class="heading" ><a href="{if $sort_mode eq 'name_desc'}{sameurl sort_mode='name_asc'}{else}{sameurl sort_mode='name_desc'}{/if}">{tr}Process{/tr}</a></td>
-<td class="heading" ><a href="{if $sort_mode eq 'started_desc'}{sameurl sort_mode='started_asc'}{else}{sameurl sort_mode='started_desc'}{/if}">{tr}Started{/tr}</a></td>
-<td class="heading" ><a href="{if $sort_mode eq 'status_desc'}{sameurl sort_mode='status_asc'}{else}{sameurl sort_mode='status_desc'}{/if}">{tr}Status{/tr}</a></td>
-<td class="heading" ><a href="{if $sort_mode eq 'ended_desc'}{sameurl sort_mode='ended_asc'}{else}{sameurl sort_mode='ended_desc'}{/if}">{tr}Ended{/tr}</a></td>
-<td class="heading" ><a href="{if $sort_mode eq 'user_desc'}{sameurl sort_mode='user_asc'}{else}{sameurl sort_mode='owner_desc'}{/if}">{tr}Creator{/tr}</a></td>
+<th><a href="{if $sort_mode eq 'instanceId_desc'}{sameurl sort_mode='instanceId_asc'}{else}{sameurl sort_mode='instanceId_desc'}{/if}">{tr}Id{/tr}</a></th>
+{*<th><a href="{if $sort_mode eq 'name_desc'}{sameurl sort_mode='name_asc'}{else}{sameurl sort_mode='name_desc'}{/if}">{tr}Activity{/tr}</a></th>*}
+<th><a href="{if $sort_mode eq 'insName_desc'}{sameurl sort_mode='insName_asc'}{else}{sameurl sort_mode='insName_desc'}{/if}">{tr}Name{/tr}</a></th>
+<th><a href="{if $sort_mode eq 'name_desc'}{sameurl sort_mode='name_asc'}{else}{sameurl sort_mode='name_desc'}{/if}">{tr}Process{/tr}</a></th>
+<th><a href="{if $sort_mode eq 'started_desc'}{sameurl sort_mode='started_asc'}{else}{sameurl sort_mode='started_desc'}{/if}">{tr}Started{/tr}</a></th>
+<th><a href="{if $sort_mode eq 'status_desc'}{sameurl sort_mode='status_asc'}{else}{sameurl sort_mode='status_desc'}{/if}">{tr}Status{/tr}</a></th>
+<th><a href="{if $sort_mode eq 'ended_desc'}{sameurl sort_mode='ended_asc'}{else}{sameurl sort_mode='ended_desc'}{/if}">{tr}Ended{/tr}</a></th>
+<th><a href="{if $sort_mode eq 'user_desc'}{sameurl sort_mode='user_asc'}{else}{sameurl sort_mode='owner_desc'}{/if}">{tr}Creator{/tr}</a></th>
 </tr>
 {cycle values="odd,even" print=false}
 {foreach from=$items item=proc}

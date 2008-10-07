@@ -28,11 +28,11 @@
 <table class="normal" width="100%">
 {foreach from=$result item=r}
 	<tr>
-		<td class="heading" width="10%">{tr}Request:{/tr}&nbsp;{$r.method}</td><td>{$r.url}</td>
+		<th style="width:10%">{tr}Request:{/tr}&nbsp;{$r.method}</th><td>{$r.url}</td>
 	</tr>
 	{if isset($r.post) and $show_post}
 		<tr>
-			<td class="heading" colspan="4">{tr}Post Variables{/tr}</td>
+			<th colspan="4">{tr}Post Variables{/tr}</th>
 		</tr>
 		{foreach from=$r.post item=p key=k}
 			<tr>
@@ -43,25 +43,25 @@
 	<tr><td colspan="4">
 	<table class="normal" width="100%">
 	{if $show_tidy}
-		<tr><td class="heading" colspan="2">{tr}Tidy Results{/tr}&nbsp;{tr}Reference{/tr}</td><td class="heading" colspan="2">{tr}Tidy Results{/tr}&nbsp;{tr}Replay{/tr}</td></tr>
- 		<tr><td colspan="2" width="50%"><pre>{$r.ref_error_msg|escape:"html"}</pre></td>
-		<td colspan="2" width="50%"><pre>{$r.replay_error_msg|escape:"html"}</pre></td>
+		<tr><th colspan="2">{tr}Tidy Results{/tr}&nbsp;{tr}Reference{/tr}</th><th colspan="2">{tr}Tidy Results{/tr}&nbsp;{tr}Replay{/tr}</th></tr>
+ 		<tr><td colspan="2" style="width:50%"><pre>{$r.ref_error_msg|escape:"html"}</pre></td>
+		<td colspan="2" style="width:50%"><pre>{$r.replay_error_msg|escape:"html"}</pre></td>
 		</tr>
 		{/if}
 	{if $r.html}
 		{if $show_page}
-	<tr><td class="heading" colspan="4" border="1">{tr}Results{/tr}</td></tr>
+	<tr><th colspan="4" border="1">{tr}Results{/tr}</th></tr>
 			{$r.html}
 		{else}
 	<tr>
-		<td class="heading" colspan="1">{tr}Results{/tr}</td>
-		<td colspan="3"><b><font color="red">{tr}The pages are different{/tr}</font></b></td>
+		<th colspan="1">{tr}Results{/tr}</th>
+		<td colspan="3" style="color: red; font-weight: bold">{tr}The pages are different{/tr}</td>
 	</tr>
 		{/if}
 	{else}
 	<tr>
-		<td class="heading" colspan="1">{tr}Results{/tr}</td>
-		<td colspan="3"><b><font color="green">{tr}The pages are identical{/tr}</font></b></td>
+		<th colspan="1">{tr}Results{/tr}</th>
+		<td colspan="3" style="color: green; font-weight: bold">{tr}The pages are identical{/tr}</td>
 	</tr>
 {/if}
 	</table>

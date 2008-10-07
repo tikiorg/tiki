@@ -37,15 +37,15 @@ function test_xpath(index) {
 <table class="normal" width="100%">
 {foreach from=$result item=r name=url}
 	<tr>
-		<td class="heading" width="10%">{tr}Request:{/tr}&nbsp;{$r.method}</td><td>{$r.url}</td>
+		<th style="width:10%">{tr}Request:{/tr}&nbsp;{$r.method}</td><td>{$r.url}</th>
 	</tr>
 	<tr><td colspan="2">
-  <table width="100%" >
-		<tr><td class="heading" colspan="2">{tr}Element to compare (Xpath expression):{/tr}&nbsp;<input type="text" style="width:50%;" id="xpath_{$smarty.foreach.url.index}" name="xpath[{$smarty.foreach.url.index}]" value="{$r.xpath}" />&nbsp;<input type="button" value="{tr}Test Xpath Expression{/tr}" onclick="javascript:test_xpath({$smarty.foreach.url.index}); return false" /></td>
+  <table style="width:100%" >
+		<tr><th colspan="2">{tr}Element to compare (Xpath expression):{/tr}&nbsp;<input type="text" style="width:50%;" id="xpath_{$smarty.foreach.url.index}" name="xpath[{$smarty.foreach.url.index}]" value="{$r.xpath}" />&nbsp;<input type="button" value="{tr}Test Xpath Expression{/tr}" onclick="javascript:test_xpath({$smarty.foreach.url.index}); return false" /></th>
 	</tr>
 	{if isset($r.post) and $show_post and sizeof($r.post) gt 0 }
 		<tr>
-			<td class="heading" colspan="2">{tr}Post Variables{/tr}</td>
+			<th colspan="2">{tr}Post Variables{/tr}</th>
 		</tr>
 		{foreach from=$r.post item=p key=k}
 			<tr>
@@ -54,7 +54,7 @@ function test_xpath(index) {
 		{/foreach}
 	{/if}
 	{if $show_tidy}
-	<tr><td class="heading" colspan="4">{tr}Tidy Results{/tr}</td></tr>
+	<tr><th colspan="4">{tr}Tidy Results{/tr}</th></tr>
 	<tr><td colspan="2">
 	<table class="normal" width="100%">
  		<tr><td colspan="2" width="50%"><pre>{$r.ref_error_msg|escape:"html"}</pre></td>

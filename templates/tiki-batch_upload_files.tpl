@@ -17,10 +17,10 @@
 <form method="post" action="tiki-batch_upload_files.php" name="f">
 <table border="0" class="normal" id="filelist" width="100%">
 <tr>
-<th class="heading"></th>
-<th class="heading"><a href="javascript:void(0);">{tr}Filename{/tr}</a></th>
-<th class="heading" width="80"><a href="javascript:void(0);">{tr}Filesize{/tr}</th>
-<th class="heading" width="80"><a href="javascript:void(0);">{tr}Filetype{/tr}</a></th></tr>
+<th></th>
+<th><a href="javascript:void(0);">{tr}Filename{/tr}</a></th>
+<th width="80"><a href="javascript:void(0);">{tr}Filesize{/tr}</th>
+<th width="80"><a href="javascript:void(0);">{tr}Filetype{/tr}</a></th></tr>
 {cycle print=false values="even,odd"}
 {foreach key=k item=it from=$filestring}
 <tr class="{cycle}">

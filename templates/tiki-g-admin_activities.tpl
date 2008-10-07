@@ -214,13 +214,13 @@ Errors:<br />
 <input type="hidden" name="activityId" value="{$info.activityId|escape}" />
 <table class="normal">
 <tr>
-<td style="text-align:center;"  class="heading"><input type="submit" name="delete_act" value="x " /></td>
-<td  class="heading" ><a href="tiki-g-admin_activities.php?where2={$where2}&amp;sort_mode2={$sort_mode2}&amp;pid={$pid}&amp;find={$find}&amp;where={$where}&amp;sort_mode={if $sort_mode eq 'flowNum_desc'}flowNum_asc{else}flowNum_desc{/if}">{tr}#{/tr}</a></td>
-<td  class="heading" ><a href="tiki-g-admin_activities.php?where2={$where2}&amp;sort_mode2={$sort_mode2}&amp;pid={$pid}&amp;find={$find}&amp;where={$where}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></td>
-<td  class="heading" ><a href="tiki-g-admin_activities.php?where2={$where2}&amp;sort_mode2={$sort_mode2}&amp;pid={$pid}&amp;find={$find}&amp;where={$where}&amp;sort_mode={if $sort_mode eq 'type_desc'}type_asc{else}type_desc{/if}">{tr}Type{/tr}</a></td>
-<td  class="heading" ><a href="tiki-g-admin_activities.php?where2={$where2}&amp;sort_mode2={$sort_mode2}&amp;pid={$pid}&amp;find={$find}&amp;where={$where}&amp;sort_mode={if $sort_mode eq 'isInteractive_desc'}isInteractive_asc{else}isInteractive_desc{/if}">{tr}inter{/tr}</a></td>
-<td  class="heading" ><a href="tiki-g-admin_activities.php?where2={$where2}&amp;sort_mode2={$sort_mode2}&amp;pid={$pid}&amp;find={$find}&amp;where={$where}&amp;sort_mode={if $sort_mode eq 'isInteractive_desc'}isAutoRouted_asc{else}isAutoRouted_desc{/if}">{tr}route{/tr}</a></td>
-<td  class="heading" >{tr}Action{/tr}</td>
+<th style="text-align:center;"><input type="submit" name="delete_act" value="x " /></th>
+<th><a href="tiki-g-admin_activities.php?where2={$where2}&amp;sort_mode2={$sort_mode2}&amp;pid={$pid}&amp;find={$find}&amp;where={$where}&amp;sort_mode={if $sort_mode eq 'flowNum_desc'}flowNum_asc{else}flowNum_desc{/if}">{tr}#{/tr}</a></th>
+<th><a href="tiki-g-admin_activities.php?where2={$where2}&amp;sort_mode2={$sort_mode2}&amp;pid={$pid}&amp;find={$find}&amp;where={$where}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></th>
+<th><a href="tiki-g-admin_activities.php?where2={$where2}&amp;sort_mode2={$sort_mode2}&amp;pid={$pid}&amp;find={$find}&amp;where={$where}&amp;sort_mode={if $sort_mode eq 'type_desc'}type_asc{else}type_desc{/if}">{tr}Type{/tr}</a></th>
+<th><a href="tiki-g-admin_activities.php?where2={$where2}&amp;sort_mode2={$sort_mode2}&amp;pid={$pid}&amp;find={$find}&amp;where={$where}&amp;sort_mode={if $sort_mode eq 'isInteractive_desc'}isInteractive_asc{else}isInteractive_desc{/if}">{tr}inter{/tr}</a></th>
+<th><a href="tiki-g-admin_activities.php?where2={$where2}&amp;sort_mode2={$sort_mode2}&amp;pid={$pid}&amp;find={$find}&amp;where={$where}&amp;sort_mode={if $sort_mode eq 'isInteractive_desc'}isAutoRouted_asc{else}isAutoRouted_desc{/if}">{tr}route{/tr}</a></th>
+<th>{tr}Action{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$items}
@@ -263,9 +263,9 @@ Errors:<br />
 </tr>	
 {/section}
 <tr>
-<td class="heading" colspan="7" style="text-align:center;">
+<th colspan="7" style="text-align:center;">
 <input type="submit" name="update_act" value="{tr}Update{/tr}" />
-</td>
+</th>
 </tr>
 </table>
 </form>	
@@ -273,7 +273,7 @@ Errors:<br />
 <h2>{tr}Process Transitions{/tr}</h2>
 <table class="normal">
 <tr>
-	<td >
+	<td>
 		<h3>{tr}List of transitions{/tr}</h3>
 			<form action="tiki-g-admin_activities.php" method="post" id='filtran'>
 			<input type="hidden" name="pid" value="{$pid|escape}" />
@@ -300,9 +300,9 @@ Errors:<br />
 			<input type="hidden" name="sort_mode2" value="{$sort_mode2|escape}" />
 			<table class="normal">
 			<tr>
-			<td class="heading" ><input type="submit" name="delete_tran" value="{tr}x{/tr} " /></td>
-			<td class="heading" ><a href="tiki-g-admin_activities.php?where2={$where2}&amp;sort_mode2={$sort_mode2}&amp;pid={$pid}&amp;find={$find}&amp;where={$where}&amp;sort_mode={if $sort_mode eq 'actFromName_desc'}actFromName_asc{else}actFromName_desc{/if}">{tr}Origin{/tr}</a></td>
-			<!--<td class="heading" ><a href="tiki-g-admin_activities.php?where2={$where2}&amp;sort_mode2={$sort_mode2}&amp;pid={$pid}&amp;find={$find}&amp;where={$where}&amp;sort_mode={if $sort_mode eq 'actToName_desc'}actToName_asc{else}actToName_desc{/if}">{tr}To{/tr}</a></td>-->
+			<th><input type="submit" name="delete_tran" value="{tr}x{/tr} " /></th>
+			<th><a href="tiki-g-admin_activities.php?where2={$where2}&amp;sort_mode2={$sort_mode2}&amp;pid={$pid}&amp;find={$find}&amp;where={$where}&amp;sort_mode={if $sort_mode eq 'actFromName_desc'}actFromName_asc{else}actFromName_desc{/if}">{tr}Origin{/tr}</a></th>
+			<!--<th><a href="tiki-g-admin_activities.php?where2={$where2}&amp;sort_mode2={$sort_mode2}&amp;pid={$pid}&amp;find={$find}&amp;where={$where}&amp;sort_mode={if $sort_mode eq 'actToName_desc'}actToName_asc{else}actToName_desc{/if}">{tr}To{/tr}</a></th>-->
 			</tr>
 			{cycle values="odd,even" print=false}
 			{section name=ix loop=$transitions}

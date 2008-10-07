@@ -6,12 +6,12 @@
 <h2>{tr}List of featured links{/tr}</h2>
 <table class="normal">
 <tr>
-<th class="heading">{tr}URL{/tr}</th>
-<th class="heading">{tr}Title{/tr}</th>
-<th class="heading">{tr}Hits{/tr}</th>
-<th class="heading">{tr}Position{/tr}</th>
-<th class="heading">{tr}Type{/tr}</th>
-<th class="heading">{tr}Action{/tr}</th>
+<th>{tr}URL{/tr}</th>
+<th>{tr}Title{/tr}</th>
+<th>{tr}Hits{/tr}</th>
+<th>{tr}Position{/tr}</th>
+<th>{tr}Type{/tr}</th>
+<th>{tr}Action{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$links}

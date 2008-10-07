@@ -1,4 +1,4 @@
-{*$Id: $*}
+{*$Id$*}
 {popup_init src="lib/overlib.js"}
 {*Smarty template*}
 <h1><a class="pagetitle" href="tiki-g-user_activities.php">{tr}User Activities{/tr}</a>
@@ -32,8 +32,8 @@
 	<small>{tr}Find{/tr}</small>
 </td>
 
-<td >
-	&nbsp;
+<td >&nbsp;
+	
 </td>	
 </tr>
 
@@ -65,9 +65,9 @@
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 <table class="normal">
 <tr>
-<td  class="heading" >{tr}Process{/tr}</td>
-<td  class="heading" >{tr}Activity{/tr}</td>
-<td  class="heading" >{tr}Instances{/tr}</td>
+<th>{tr}Process{/tr}</th>
+<th>{tr}Activity{/tr}</th>
+<th>{tr}Instances{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$items}

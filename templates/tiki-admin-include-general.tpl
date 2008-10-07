@@ -8,10 +8,10 @@
   <div class="cbox-data">
     <form action="tiki-admin.php?page=general" method="post">
       <table class="admin"><tr>
-        <td class="heading" colspan="2"
-            align="center">{tr}General Preferences{/tr}</td>
+        <th colspan="2"
+            align="center">{tr}General Preferences{/tr}</th>
       </tr>
-	<tr><td width="40%" class="form">{tr}Tikiwiki version{/tr} : </td><td class="form">{$tiki_version}<br /><span class="button2"><a href="tiki-install.php">{tr}Reset or upgrade your database{/tr}</a></span></td></tr>
+	<tr><td style="width:40%" class="form">{tr}Tikiwiki version{/tr} : </td><td class="form">{$tiki_version}<br /><span class="button2"><a href="tiki-install.php">{tr}Reset or upgrade your database{/tr}</a></span></td></tr>
 	<tr><td colspan="2"><hr /></td></tr>
 
       <tr>
@@ -123,7 +123,7 @@
 	</tr>
 		
 			<tr>
-        <td class="heading" colspan="2" align="center">{tr}General Settings{/tr}</td>
+        <th colspan="2" align="center">{tr}General Settings{/tr}</th>
       </tr>
 		
 		<tr>
@@ -254,7 +254,7 @@
       </tr>
 
 			<tr>
-        <td class="heading" colspan="2" align="center"><a name="help">{tr}Release check{/tr}</a></td>
+        <th colspan="2" align="center"><a name="help">{tr}Release check{/tr}</a></th>
 			</tr>
 			<tr>
 				<td class="form"><label for="general-versioncheck">{tr}Release check{/tr}</label></td>
@@ -277,7 +277,7 @@
       </tr>
 
 			<tr>
-        <td class="heading" colspan="2" align="center">{tr}Date and Time Formats{/tr}</td>
+        <th colspan="2" align="center">{tr}Date and Time Formats{/tr}</th>
       </tr><tr>
         <td class="form" ><label for="general-timezone">{tr}Default timezone{/tr}:</label></td>
         <td ><select name="server_timezone" id="general-timezone">
@@ -316,7 +316,7 @@
       </tr>
 
 				<tr>
-					<td class="heading" colspan="2" align="center">{tr}Other{/tr}</td>
+					<th colspan="2" align="center">{tr}Other{/tr}</th>
 				</tr>
 				<tr>
 				<td class="form"><label for="user_show_realnames">{tr}When possible, show the real user name instead of login:{/tr}</label></td>

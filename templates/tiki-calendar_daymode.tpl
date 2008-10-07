@@ -1,5 +1,5 @@
 <table cellpadding="0" cellspacing="0" border="0" id="caltable">
-<tr><td width="42" class="heading">{tr}Hours{/tr}</td><td class="heading">{tr}Events{/tr}</td></tr>
+<tr><th style="width:42px">{tr}Hours{/tr}</th><th>{tr}Events{/tr}</th></tr>
 {cycle values="odd,even" print=false}
 {foreach key=k item=h from=$hours}
 <tr><td width="42" class="{cycle advance=false}">{$h}{tr}h{/tr}</td>

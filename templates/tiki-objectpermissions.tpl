@@ -25,8 +25,8 @@
 <h2>{tr}Current permissions for this object{/tr}</h2>
 <table class="normal">
 <tr>
-	<th class="heading">{tr}Permission{/tr}</th>
-	<th class="heading">{tr}Group{/tr}</th>
+	<th>{tr}Permission{/tr}</th>
+	<th>{tr}Group{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
 {section  name=pg loop=$page_perms}
@@ -48,9 +48,9 @@
 {/if}
 <table class="normal">
 <tr>
-	<th class="heading">{tr}Permission{/tr}</th>
-	<th class="heading">{tr}Group{/tr}</th>
-	<th class="heading">{tr}Category{/tr}</th>
+	<th>{tr}Permission{/tr}</th>
+	<th>{tr}Group{/tr}</th>
+	<th>{tr}Category{/tr}</th>
 </tr>
 {cycle print=false values="even,odd"}
 {section  name=x loop=$categ_perms}
@@ -81,9 +81,9 @@
 <h2>{tr}Current permissions for this object{/tr}</h2>
 <table class="normal">
 <tr>
-	<th class="heading" colspan="2">{tr}Permissions{/tr}</th>
-	<th class="heading">{tr}Groups{/tr}</th>
-	<th class="heading" width="20px">{tr}Action{/tr}</th>
+	<th colspan="2">{tr}Permissions{/tr}</th>
+	<th>{tr}Groups{/tr}</th>
+	<th style="width:20px">{tr}Action{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
 {section  name=pg loop=$page_perms}
@@ -133,8 +133,8 @@
 
 <table class="normal">
 	<tr>
-		<th class="heading">{tr}Permissions{/tr}</th>
-		<th class="heading">{tr}Groups{/tr}</th>
+		<th>{tr}Permissions{/tr}</th>
+		<th>{tr}Groups{/tr}</th>
 	</tr>
 <tr>
 <td><table width="100%">

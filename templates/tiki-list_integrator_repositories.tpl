@@ -18,8 +18,8 @@
 {if count($repositories) gt 0}
 <table class="normal" id="integrator-repositories">
   <tr>
-    <td class="heading">{tr}Name{/tr}</td>
-    <td class="heading">{tr}Description{/tr}</td>
+    <th>{tr}Name{/tr}</th>
+    <th>{tr}Description{/tr}</th>
   </tr>
   {cycle values="odd,even" print=false}
   {section name=rep loop=$repositories}

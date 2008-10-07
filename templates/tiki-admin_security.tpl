@@ -4,10 +4,10 @@
 
 <h2>{tr}PHP settings{/tr}</h2>
 <table class="normal">
-<tr><th class="heading">{tr}PHP variable{/tr}</th>
-<th class="heading">{tr}Setting{/tr}</th>
-<th class="heading">{tr}Risk Factor{/tr}</th>
-<th class="heading">{tr}Explanation{/tr}</th></tr>
+<tr><th>{tr}PHP variable{/tr}</th>
+<th>{tr}Setting{/tr}</th>
+<th>{tr}Risk Factor{/tr}</th>
+<th>{tr}Explanation{/tr}</th></tr>
 {cycle values="even,odd" print=false}
 {foreach from=$phpsettings key=key item=item}
 <tr><td class="{cycle advance=false}">{$key}</td>
@@ -27,10 +27,10 @@
 <br />
 <h2>{tr}Tikiwiki settings{/tr}</h2>
 <table class="normal">
-<tr><th class="heading">{tr}Tiki variable{/tr}</th>
-<th class="heading">{tr}Setting{/tr}</th>
-<th class="heading">{tr}Risk Factor{/tr}</th>
-<th class="heading">{tr}Explanation{/tr}</th></tr>
+<tr><th>{tr}Tiki variable{/tr}</th>
+<th>{tr}Setting{/tr}</th>
+<th>{tr}Risk Factor{/tr}</th>
+<th>{tr}Explanation{/tr}</th></tr>
 {cycle values="even,odd" print=false}
 {foreach from=$tikisettings key=key item=item}
 <tr><td class="{cycle advance=false}">{$key}</td>
@@ -57,9 +57,9 @@
 </div>
 {if $filecheck}
 <table>
-<tr><td colspan="4" class="heading">{tr}File checks{/tr}</td></tr>
-<tr><td class="heading">{tr}Filename{/tr}</td>
-<td class="heading">{tr}State{/tr}</td>
+<tr><th colspan="4">{tr}File checks{/tr}</th></tr>
+<tr><th>{tr}Filename{/tr}</th>
+<th>{tr}State{/tr}</th>
 </tr>
 {foreach from=$tikifiles key=key item=item}
 <tr><td class="form">{$key}</td>
@@ -78,31 +78,31 @@
 </div>
 {if $permcheck}
 <table>
-<tr><td class="heading" rowspan="2">{tr}Filename{/tr}</td>
-<td class="heading" rowspan="2">{tr}type{/tr}</td>
-<td class="heading" colspan="2">{tr}owner{/tr}</td>
-<td class="heading" colspan="3">{tr}special{/tr}</td>
-<td class="heading" colspan="3">{tr}user{/tr}</td>
-<td class="heading" colspan="3">{tr}group{/tr}</td>
-<td class="heading" colspan="3">{tr}other{/tr}</td>
+<tr><th rowspan="2">{tr}Filename{/tr}</th>
+<th rowspan="2">{tr}type{/tr}</th>
+<th colspan="2">{tr}owner{/tr}</th>
+<th colspan="3">{tr}special{/tr}</th>
+<th colspan="3">{tr}user{/tr}</th>
+<th colspan="3">{tr}group{/tr}</th>
+<th colspan="3">{tr}other{/tr}</th>
 </tr>
 <tr>
-<td class="heading">{tr}uid{/tr}</td>
-<td class="heading">{tr}gid{/tr}</td>
-<td class="heading">{tr}suid{/tr}</td>
-<td class="heading">{tr}sgid{/tr}</td>
-<td class="heading">{tr}sticky{/tr}</td>
-<td class="heading">{tr}r{/tr}</td>
-<td class="heading">{tr}w{/tr}</td>
-<td class="heading">{tr}x{/tr}</td>
-<td class="heading">{tr}r{/tr}</td>
-<td class="heading">{tr}w{/tr}</td>
-<td class="heading">{tr}x{/tr}</td>
-<td class="heading">{tr}r{/tr}</td>
-<td class="heading">{tr}w{/tr}</td>
-<td class="heading">{tr}x{/tr}</td>
+<th>{tr}uid{/tr}</th>
+<th>{tr}gid{/tr}</th>
+<th>{tr}suid{/tr}</th>
+<th>{tr}sgid{/tr}</th>
+<th>{tr}sticky{/tr}</th>
+<th>{tr}r{/tr}</th>
+<th>{tr}w{/tr}</th>
+<th>{tr}x{/tr}</th>
+<th>{tr}r{/tr}</th>
+<th>{tr}w{/tr}</th>
+<th>{tr}x{/tr}</th>
+<th>{tr}r{/tr}</th>
+<th>{tr}w{/tr}</th>
+<th>{tr}x{/tr}</th>
 </tr>
-<tr><td colspan="16" class="heading">{tr}Set User ID (suid) files{/tr}</td></tr>
+<tr><th colspan="16">{tr}Set User ID (suid) files{/tr}</th></tr>
 {foreach from=$suid key=key item=item}
 <tr><td class="form">{$key}</td>
 <td class="form">{$item.t}</td>
@@ -123,7 +123,7 @@
 </tr>
 {/foreach}
 
-<tr><td colspan="16" class="heading">{tr}World writable files or directories{/tr}</td></tr>
+<tr><th colspan="16">{tr}World writable files or directories{/tr}</th></tr>
 {foreach from=$worldwritable key=key item=item}
 <tr><td class="form">{$key}</td>
 <td class="form">{$item.t}</td>
@@ -144,7 +144,7 @@
 </tr>
 {/foreach}
 
-<tr><td colspan="16" class="heading">{tr}Files or directories the Webserver can write to{/tr}</td></tr>
+<tr><th colspan="16">{tr}Files or directories the Webserver can write to{/tr}</th></tr>
 {foreach from=$apachewritable key=key item=item}
 <tr><td class="form">{$key}</td>
 <td class="form">{$item.t}</td>
@@ -165,7 +165,7 @@
 </tr>
 {/foreach}
 
-<tr><td colspan="16" class="heading">{tr}Strange Inodes (not file, not link, not directory){/tr}</td></tr>
+<tr><th colspan="16">{tr}Strange Inodes (not file, not link, not directory){/tr}</th></tr>
 {foreach from=$strangeinode key=key item=item}
 <tr><td class="form">{$key}</td>
 <td class="form">{$item.t}</td>
@@ -186,7 +186,7 @@
 </tr>
 {/foreach}
 
-<tr><td colspan="16" class="heading">{tr}Executable files{/tr}</td></tr>
+<tr><th colspan="16">{tr}Executable files{/tr}</th></tr>
 {foreach from=$executable key=key item=item}
 <tr><td class="form">{$key}</td>
 <td class="form">{$item.t}</td>

@@ -89,7 +89,7 @@ function validate_translation_request() {
 <br />
 <h3>{tr}Manage existing translations of this page{/tr}</h3>
 	<table class="normal">
-	<tr><th class="heading">{tr}Language{/tr}</th><th class="heading">{tr}Page{/tr}</th><th class="heading">{tr}Actions{/tr}</th></tr>
+	<tr><th>{tr}Language{/tr}</th><th>{tr}Page{/tr}</th><th>{tr}Actions{/tr}</th></tr>
 	{cycle values="odd,even" print=false}
 	{section name=i loop=$trads}
 	<tr class="{cycle}">

@@ -2,14 +2,14 @@
   <tr>
   {if $gal_info.show_checked ne 'n' and ($tiki_p_admin_file_galleries eq 'y' or $tiki_p_upload_files eq 'y')}
     {assign var=nbCols value=`$nbCols+1`}
-    <td class="heading" style="width:1%">&nbsp;</td>
+    <th style="width:1%">&nbsp;</th>
   {/if}
   {if ( $prefs.use_context_menu_icon eq 'y' or $prefs.use_context_menu_text eq 'y' ) and $gal_info.show_action neq 'n' and $prefs.javascript_enabled eq 'y'}
     {assign var=nbCols value=`$nbCols+1`}
-    <td class="heading" style="width:1%">&nbsp;</td>
+    <th style="width:1%">&nbsp;</th>
   {/if}
       
-  {if $show_parentName eq 'y'}<td class="heading">{self_link _sort_arg="sort_mode" _sort_field='parentName'}{tr}Gallery{/tr}{/self_link}</td>{/if}
+  {if $show_parentName eq 'y'}<th>{self_link _sort_arg="sort_mode" _sort_field='parentName'}{tr}Gallery{/tr}{/self_link}</th>{/if}
   {foreach from=$fgal_listing_conf item=item key=propname}
     {if isset($item.key)}
       {assign var=key_name value=$item.key}
@@ -74,23 +74,23 @@
       
   {if $other_columns_selected neq ''}
     {assign var=nbCols value=`$nbCols+1`}
-    <td class="heading">
+    <th>
     {self_link _class='tableheading' _sort_arg='sort_mode' _sort_field=$other_columns_selected _title=$fgal_listing_conf.$other_columns_selected.name}{$fgal_listing_conf.$other_columns_selected.name}{/self_link}
-    </td>
+    </th>
   {/if}
       
   {if ( $prefs.use_context_menu_icon neq 'y' and $prefs.use_context_menu_text neq 'y' ) or $gal_info.show_action eq 'y' or $prefs.javascript_enabled neq 'y'}
     {assign var=nbCols value=`$nbCols+1`}
-    <td class="heading">{tr}Actions{/tr}</td>
+    <th>{tr}Actions{/tr}</th>
   {/if}
       
   {if ( $other_columns neq '' or $other_columns_selected neq '' ) and $prefs.javascript_enabled eq 'y'}
     {assign var=nbCols value=`$nbCols+1`}
-    <td class="heading" style="width:1%">
+    <th style="width:1%">
     {if $other_columns neq ''}
       <a href='#' {popup trigger="onClick" sticky=1 mouseoff=1 fullhtml="1" text=$smarty.capture.over_other_columns|escape:"javascript"|escape:"html"} title='{tr}Other Sorts{/tr}'>{/if}{icon _id='timeline_marker' alt='{tr}Other Sorts{/tr}' title=''}{if $other_columns neq ''}</a>
     {/if}
-    </td>
+    </th>
   {/if}
 
   </tr>

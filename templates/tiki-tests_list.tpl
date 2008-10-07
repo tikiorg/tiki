@@ -6,8 +6,8 @@
 
 <table class="normal" width="100%" style="clear: both;">
 <tr>
-	<th class="heading">{tr}File Name{/tr}</th>
-	<th class="heading">{tr}Actions{/tr}</th>
+	<th>{tr}File Name{/tr}</th>
+	<th>{tr}Actions{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
 {foreach from=$files item=file}

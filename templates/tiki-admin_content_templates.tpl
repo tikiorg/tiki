@@ -101,10 +101,10 @@
 <br />
 <table class="normal">
 <tr>
-<td class="heading"><a href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></td>
-<td class="heading"><a href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Last Modif{/tr}</a></td>
-<td class="heading">{tr}Sections{/tr}</td>
-<td class="heading">{tr}Action{/tr}</td>
+<th><a href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></th>
+<th><a href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Last Modif{/tr}</a></th>
+<th>{tr}Sections{/tr}</th>
+<th>{tr}Action{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false advance=false}
 {section name=user loop=$channels}

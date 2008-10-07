@@ -22,15 +22,15 @@
   	<input type="hidden" id="status" value="online" />
 	<table class="normal" >
 		<tr>
-			<td class="heading">{tr}Operator{/tr}: {$user}</td>
-			<td class="heading">{tr}Status{/tr}: <b>{tr}{$status}{/tr}</b></td>
-			<td class="heading" style="text-align:right;">    
+			<th>{tr}Operator{/tr}: {$user}</th>
+			<th>{tr}Status{/tr}: <b>{tr}{$status}{/tr}</b></th>
+			<th style="text-align:right;">    
 				{if $status eq 'offline'}
     				<a href="tiki-live_support_console.php?status=online">{tr}be online{/tr}</a>
     			{else}
     				<a href="tiki-live_support_console.php?status=offline">{tr}be offline{/tr}</a>
     		{/if}
-		</td>
+		</th>
 		</tr>
 	</table>
 
@@ -43,10 +43,10 @@
     {/if}
 	<table id='reqs' class="normal">
 		<tr>
-			<td class="heading">{tr}User{/tr}</td>
-			<td class="heading">{tr}Reason{/tr}</td>
-			<td class="heading">{tr}Requested{/tr}</td>
-			<td class="heading">&nbsp;</td>
+			<th>{tr}User{/tr}</th>
+			<th>{tr}Reason{/tr}</th>
+			<th>{tr}Requested{/tr}</th>
+			<th>&nbsp;</th>
 		</tr>
 		{cycle values="odd,even" print=false}
 		{section loop=$requests name=ix}

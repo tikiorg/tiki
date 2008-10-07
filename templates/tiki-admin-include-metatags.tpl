@@ -16,11 +16,11 @@
         </td></tr>
         <tr><td class="form">{tr}Meta Description{/tr}:</td><td><input type="text" name="metatag_description" value="{$prefs.metatag_description}" size="50" /></td></tr>
         <tr><td class="form">{tr}Meta Author{/tr}:</td><td><input type="text" name="metatag_author" value="{$prefs.metatag_author}" size="50" /></td></tr>
-        <tr><td class="heading" colspan="3" align="center">{tr}Geourl{/tr}<a target="_blank" href="http://www.geourl.org/">{icon _id='help'}</a></td></tr>
+        <tr><th colspan="3" align="center">{tr}Geourl{/tr}<a target="_blank" href="http://www.geourl.org/">{icon _id='help'}</a></th></tr>
         <tr><td class="form">{tr}geo.position{/tr}:</td><td><input type="text" name="metatag_geoposition" value="{$prefs.metatag_geoposition}" size="50" /></td></tr>
         <tr><td class="form">{tr}geo.region{/tr}:</td><td><input type="text" name="metatag_georegion" value="{$prefs.metatag_georegion}" size="50" /></td></tr>
         <tr><td class="form">{tr}geo.placename{/tr}:</td><td><input type="text" name="metatag_geoplacename" value="{$prefs.metatag_geoplacename}" size="50" /></td></tr>
-        <tr><td class="heading" colspan="3" align="center">{tr}Robots{/tr}</td></tr>
+        <tr><th colspan="3" align="center">{tr}Robots{/tr}</th></tr>
         <tr><td class="form">{tr}meta robots{/tr}:</td><td><input type="text" name="adm_metatag_robots" value="{$adm_metatag_robots}" size="50" /></td></tr>
         <tr><td class="form">{tr}revisit after{/tr}:</td><td><input type="text" name="metatag_revisitafter" value="{$prefs.metatag_revisitafter}" size="50" /></td></tr>
         <tr><td class="form" colspan="3">&nbsp;</td></tr>

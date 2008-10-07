@@ -96,12 +96,12 @@
 
 <table class="normal">
 <tr>
-<td class="heading">
+<th>
 <a href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'questionId_desc'}questionId_asc{else}questionId_desc{/if}">{tr}ID{/tr}</a>
-</td>
-<td class="heading"><a href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'question_desc'}question_asc{else}question_desc{/if}">{tr}Question{/tr}</a>
-</td>
-<td class="heading">{tr}Action{/tr}</td>
+</th>
+<th><a href="tiki-faq_questions.php?faqId={$faqId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'question_desc'}question_asc{else}question_desc{/if}">{tr}Question{/tr}</a>
+</th>
+<th>{tr}Action{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}
@@ -144,9 +144,9 @@
 <h2>{tr}Suggested questions{/tr}</h2>
 <table class="normal">
 <tr>
-  <th class="heading">{tr}Question{/tr}</th>
-  <th class="heading">{tr}Answer{/tr}</th>
-  <th class="heading">{tr}Action{/tr}</th>
+  <th>{tr}Question{/tr}</th>
+  <th>{tr}Answer{/tr}</th>
+  <th>{tr}Action{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$suggested}

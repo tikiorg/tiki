@@ -83,19 +83,19 @@
 {/if}
 <table class="normal">
   <tr>
-    <td class="heading">
+    <th>
       <a href="tiki-admin_html_pages.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a>
-    </td>
+    </th>
     
-    <td class="heading">
+    <th>
       <a href="tiki-admin_html_pages.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'type_desc'}type_asc{else}type_desc{/if}">{tr}Type{/tr}</a>
-    </td>
+    </th>
 
-    <td class="heading">
+    <th>
       <a href="tiki-admin_html_pages.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Last Modif{/tr}</a>
-    </td>
+    </th>
 
-    <td class="heading" style="width:100px;">{tr}Action{/tr}</td>
+    <th style="width:100px;">{tr}Action{/tr}</th>
   </tr>
   
   {cycle values="odd,even" print=false}

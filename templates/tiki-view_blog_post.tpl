@@ -88,11 +88,11 @@
 {cycle values="odd,even" print=false}
 <table class="normal">
 <tr>
-	<td class="heading">{tr}Title{/tr}</td>
-	<td class="heading">{tr}URI{/tr}</td>
-	<td class="heading">{tr}Blog name{/tr}</td>
+	<th>{tr}Title{/tr}</th>
+	<th>{tr}URI{/tr}</th>
+	<th>{tr}Blog name{/tr}</th>
 {if ($ownsblog eq 'y') or ($user and $post_info.user eq $user) or $tiki_p_blog_admin eq 'y'}
-	<td class="heading">{tr}Action{/tr}</td>
+	<th>{tr}Action{/tr}</th>
 {/if}
 </tr>
 {foreach from=$post_info.trackbacks_from key=key item=item}

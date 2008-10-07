@@ -13,11 +13,11 @@
 {section name=ix loop=$channels}
   <table class="normal">
   <tr>
-    <td colspan="4" class="heading">{$channels[ix].question}</td>
+    <th colspan="4">{$channels[ix].question}</th>
   </tr>
   {if $channels[ix].type eq 'r'}
     <tr>
-      <td  class="odd">Votes:</td>
+      <td class="odd">Votes:</td>
       <td  class="odd">{$channels[ix].votes}</td>
     </tr>
     <tr>

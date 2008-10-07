@@ -35,13 +35,13 @@
 <div align="left">
 <table class="normal">
 <tr>
-<th class="heading">{self_link _sort_arg='sort_mode' _sort_field='lastModif'}{tr}Date{/tr}{/self_link}</th>
-<th class="heading">{self_link _sort_arg='sort_mode' _sort_field='object'}{tr}Page{/tr}{/self_link}</th>
-<th class="heading">{self_link _sort_arg='sort_mode' _sort_field='action'}{tr}Action{/tr}{/self_link}</th>
-<th class="heading">{self_link _sort_arg='sort_mode' _sort_field='user'}{tr}User{/tr}{/self_link}</th>
-<th class="heading">{self_link _sort_arg='sort_mode' _sort_field='ip'}{tr}Ip{/tr}{/self_link}</th>
-<th class="heading">{self_link _sort_arg='sort_mode' _sort_field='comment'}{tr}Comment{/tr}{/self_link}</th>
-<th class="heading">{tr}Action{/tr}</th>
+<th>{self_link _sort_arg='sort_mode' _sort_field='lastModif'}{tr}Date{/tr}{/self_link}</th>
+<th>{self_link _sort_arg='sort_mode' _sort_field='object'}{tr}Page{/tr}{/self_link}</th>
+<th>{self_link _sort_arg='sort_mode' _sort_field='action'}{tr}Action{/tr}{/self_link}</th>
+<th>{self_link _sort_arg='sort_mode' _sort_field='user'}{tr}User{/tr}{/self_link}</th>
+<th>{self_link _sort_arg='sort_mode' _sort_field='ip'}{tr}Ip{/tr}{/self_link}</th>
+<th>{self_link _sort_arg='sort_mode' _sort_field='comment'}{tr}Comment{/tr}{/self_link}</th>
+<th>{tr}Action{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=changes loop=$lastchanges}

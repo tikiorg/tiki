@@ -28,7 +28,7 @@
 <br /><br />
 {if $discardlist != ''}
 <table class="normal">
-<tr><td class="heading">{tr}Username{/tr}</td><td class="heading">{tr}Reason{/tr}</td></tr>
+<tr><th>{tr}Username{/tr}</th><th>{tr}Reason{/tr}</th></tr>
 {section name=reject loop=$discardlist}
 <tr><td class="odd">{$discardlist[reject].login}</td><td class="odd">{$discardlist[reject].reason}</td></tr>
 {/section}
@@ -109,7 +109,7 @@ class="prevnext">{tr}All{/tr}</a>
 <form name="checkform" method="post" action="{$smarty.server.PHP_SELF}{if $group_management_mode ne  'y' and $set_default_groups_mode ne 'y' and $email_mode ne 'y'}#multiple{/if}">
 <table class="normal">
 <tr>
-<td class="heading auto">{if $users}
+<th class="auto">{if $users}
   <script type='text/javascript'>
   <!--
   // check / uncheck all.
@@ -118,14 +118,14 @@ class="prevnext">{tr}All{/tr}</a>
   document.write("<input name=\"switcher\" title=\"{tr}Select All{/tr}\" id=\"clickall\" type=\"checkbox\" onclick=\"switchCheckboxes(this.form,'checked[]',this.checked)\"/>");
   //-->                     
   </script>{/if}
-</td>
-<td class="heading">{self_link _sort_arg='sort_mode' _sort_field='login'}{tr}User{/tr}{/self_link}</td>
+</th>
+<th>{self_link _sort_arg='sort_mode' _sort_field='login'}{tr}User{/tr}{/self_link}</th>
 {if $prefs.login_is_email neq 'y'}
-	<td class="heading">{self_link _sort_arg='sort_mode' _sort_field='email}{tr}Email{/tr}{/self_link}</td>
+	<th>{self_link _sort_arg='sort_mode' _sort_field='email}{tr}Email{/tr}{/self_link}</th>
 {/if}
-<td class="heading">{self_link _sort_arg='sort_mode' _sort_field='currentLogin'}{tr}Last login{/tr}{/self_link}</td>
-<td class="heading" colspan="2">{tr}Groups{/tr}</td>
-<td class="heading">{tr}Action{/tr}</td>
+<th>{self_link _sort_arg='sort_mode' _sort_field='currentLogin'}{tr}Last login{/tr}{/self_link}</th>
+<th colspan="2">{tr}Groups{/tr}</th>
+<th>{tr}Action{/tr}</th>
 </tr>
 {cycle print=false values="even,odd"}
 {section name=user loop=$users}

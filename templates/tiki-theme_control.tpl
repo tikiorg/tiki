@@ -50,9 +50,9 @@
 <form action="tiki-theme_control.php" method="post">
 <table class="normal">
 <tr>
-<td class="heading"><input type="submit" name="delete" value="{tr}Del{/tr}" /></td>
-<td class="heading" ><a href="tiki-theme_control.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Category{/tr}</a></td>
-<td class="heading" ><a href="tiki-theme_control.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'theme_desc'}theme_asc{else}theme_desc{/if}">{tr}theme{/tr}</a></td>
+<th><input type="submit" name="delete" value="{tr}Del{/tr}" /></th>
+<th><a href="tiki-theme_control.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Category{/tr}</a></th>
+<th><a href="tiki-theme_control.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'theme_desc'}theme_asc{else}theme_desc{/if}">{tr}theme{/tr}</a></th>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}

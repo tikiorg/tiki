@@ -133,9 +133,9 @@
 
 {*** Seems buggy (at least when called for a wiki page)
 {if $forum_mode ne 'y'}
-    <td class="heading" style="text-align: center; vertical-align: middle">
+    <th style="text-align: center; vertical-align: middle">
 		<a class="link" href="{$comments_complete_father}comzone=hide">{tr}Hide all{/tr}</a>
-    </td>
+    </th>
 {/if}
 ***}
 

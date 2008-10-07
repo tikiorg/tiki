@@ -24,9 +24,9 @@
 {/if}</h3>
 <br /><table width="95%" class="normal">
  <tr>
-  <th class="heading">{tr}Quicktag{/tr}</th>
-  <th class="heading">{tr}Description{/tr}</th>
-  <th class="heading">{tr}Wiki Syntax{/tr}</th>
+  <th>{tr}Quicktag{/tr}</th>
+  <th>{tr}Description{/tr}</th>
+  <th>{tr}Wiki Syntax{/tr}</th>
  </tr>
 {cycle values="odd,even" print=false}
 {section name=qtg loop=$quicktags}
@@ -42,8 +42,8 @@
 {/if}</h3>
 <br /><table width="95%" class="normal">
  <tr>
-	<th class="heading">{tr}Format{/tr}</th>
-	<th class="heading">{tr}Wiki Syntax{/tr}</th>
+	<th>{tr}Format{/tr}</th>
+	<th>{tr}Wiki Syntax{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
 {if $wysiwyg ne 'y' or ($wysiwyg eq 'y' and $prefs.wysiwyg_wiki_parsed eq 'y')}
@@ -106,7 +106,7 @@
 
 <br />
 <table width="95%" class="normal">
-	<tr><th class="heading">{tr}Plugin{/tr}</th><th class="heading">{tr}Description{/tr}</th></tr>
+	<tr><th>{tr}Plugin{/tr}</th><th>{tr}Description{/tr}</th></tr>
   {cycle values="even,odd" print=false}
   {section name=i loop=$plugins}
     <tr>

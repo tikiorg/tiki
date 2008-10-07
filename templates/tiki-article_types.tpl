@@ -30,28 +30,28 @@
 <form enctype="multipart/form-data" action="tiki-article_types.php" method="post">
 <table class="normal">
 <tr>
-<td class="heading">{tr}Name{/tr}</td>
-<td class="heading">{tr}Rate{/tr}</td>
-<td class="heading">{tr}Show before publish date{/tr}</td>
-<td class="heading">{tr}Show after expire date{/tr}</td>
-<td class="heading">{tr}Heading only{/tr}</td>
-<td class="heading">{tr}Comments{/tr}</td>
-<td class="heading">{tr}Comment Can Rate Article{/tr}</td>
-<td class="heading">{tr}Show image{/tr}</td>
-<td class="heading">{tr}Show avatar{/tr}</td>
-<td class="heading">{tr}Show author{/tr}</td>
-<td class="heading">{tr}Show publish date{/tr}</td>
-<td class="heading">{tr}Show expire date{/tr}</td>
-<td class="heading">{tr}Show reads{/tr}</td>
-<td class="heading">{tr}Show size{/tr}</td>
-<td class="heading">{tr}Show topline{/tr}</td>
-<td class="heading">{tr}Show subtitle{/tr}</td>
-<td class="heading">{tr}Show source{/tr}</td>
-<td class="heading">{tr}Show Image Caption{/tr}</td>
-<td class="heading">{tr}Show lang{/tr}</td>
-<td class="heading">{tr}Creator can edit{/tr}</td>
-<td class="heading">{tr}Articles{/tr}</td>
-<td class="heading">{tr}Delete{/tr}</td>
+<th>{tr}Name{/tr}</th>
+<th>{tr}Rate{/tr}</th>
+<th>{tr}Show before publish date{/tr}</th>
+<th>{tr}Show after expire date{/tr}</th>
+<th>{tr}Heading only{/tr}</th>
+<th>{tr}Comments{/tr}</th>
+<th>{tr}Comment Can Rate Article{/tr}</th>
+<th>{tr}Show image{/tr}</th>
+<th>{tr}Show avatar{/tr}</th>
+<th>{tr}Show author{/tr}</th>
+<th>{tr}Show publish date{/tr}</th>
+<th>{tr}Show expire date{/tr}</th>
+<th>{tr}Show reads{/tr}</th>
+<th>{tr}Show size{/tr}</th>
+<th>{tr}Show topline{/tr}</th>
+<th>{tr}Show subtitle{/tr}</th>
+<th>{tr}Show source{/tr}</th>
+<th>{tr}Show Image Caption{/tr}</th>
+<th>{tr}Show lang{/tr}</th>
+<th>{tr}Creator can edit{/tr}</th>
+<th>{tr}Articles{/tr}</th>
+<th>{tr}Delete{/tr}</th>
 </tr>
 {cycle print=false values="even,odd"}
 {section name=user loop=$types}

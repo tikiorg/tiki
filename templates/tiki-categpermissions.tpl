@@ -16,13 +16,13 @@
 <input type="hidden" name="categId" value="{$catId|escape}" />
 <table class="normal">
 <tr>
-	<th class="heading">
+	<th>
 		{if $prefs.javascript_enabled eq 'y'}
         	<input name="switcher" id="clickall" type="checkbox" title="Select All" onclick="switchCheckboxes(this.form,'checked[]',this.checked)"/>
       	{/if}
-	<th class="heading">{tr}Group{/tr}</th>
-	<th class="heading">{tr}Permission{/tr}</th>
-	<th class="heading">{tr}Action{/tr}</th>
+	<th>{tr}Group{/tr}</th>
+	<th>{tr}Permission{/tr}</th>
+	<th>{tr}Action{/tr}</th>
 </tr>
 {cycle print=false values="even,odd"}
 {section  name=pg loop=$category_perms}

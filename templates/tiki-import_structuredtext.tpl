@@ -24,10 +24,10 @@
 {if $result eq 'y'}
 <table class="normal">
 <tr>
-  <td class="heading">{tr}page{/tr}</td>
-  <td class="heading">{tr}excerpt{/tr}</td>
-  <td class="heading">{tr}Result{/tr}</td>
-  <td class="heading">{tr}body{/tr}</td>
+  <th>{tr}page{/tr}</th>
+  <th>{tr}excerpt{/tr}</th>
+  <th>{tr}Result{/tr}</th>
+  <th>{tr}body{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$lines}

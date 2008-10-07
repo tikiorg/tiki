@@ -21,12 +21,12 @@
 {cycle values="odd,even" print=false}
 <table>
 <tr>
-<th class="heading">{tr}Date{/tr}</th>
-<th class="heading">{tr}User{/tr}</th>
-{if $prefs.feature_wiki_history_ip ne 'n'}<th class="heading">{tr}IP{/tr}</th>{/if}
-<th class="heading">{tr}Comment{/tr}</th>
-<th class="heading">{tr}Version{/tr}</th>
-<th class="heading">{tr}Action{/tr}</th>
+<th>{tr}Date{/tr}</th>
+<th>{tr}User{/tr}</th>
+{if $prefs.feature_wiki_history_ip ne 'n'}<th>{tr}IP{/tr}</th>{/if}
+<th>{tr}Comment{/tr}</th>
+<th>{tr}Version{/tr}</th>
+<th>{tr}Action{/tr}</th>
 </tr><tr>
 <td class="{cycle advance=false}">{$staging_info.lastModif|tiki_short_datetime}</td>
 {if $tiki_p_wiki_view_author ne 'n'}<td class="{cycle advance=false}">{$staging_info.user}</td>{/if}

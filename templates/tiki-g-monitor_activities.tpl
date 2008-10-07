@@ -104,13 +104,12 @@
 <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
 <table class="normal">
 <tr>
-<td  class="heading" ><a href="{if $sort_mode eq 'type_desc'}{sameurl sort_mode='type_asc'}{else}{sameurl sort_mode='type_desc'}{/if}">&nbsp;</a></td>
-<td  class="heading" ><a href="{if $sort_mode eq 'name_desc'}{sameurl sort_mode='name_asc'}{else}{sameurl sort_mode='name_desc'}{/if}">{tr}Name{/tr}</a></td>
-<td  class="heading" ><a href="{if $sort_mode eq 'type_desc'}{sameurl sort_mode='type_asc'}{else}{sameurl sort_mode='type_desc'}{/if}">{tr}Type{/tr}</a></td>
-<td  class="heading" ><a href="{if $sort_mode eq 'isInteractive_desc'}{sameurl sort_mode='isInteractive_asc'}{else}{sameurl sort_mode='isInteractive_desc'}{/if}">{tr}int{/tr}</a></td>
-<td  class="heading" ><a href="{if $sort_mode eq 'isAutoRouted_desc'}{sameurl sort_mode='isAutoRouted_asc'}{else}{sameurl sort_mode='isAutoRouted_desc'}{/if}">{tr}routing{/tr}</a></td>
-<td  class="heading" >{tr}Instances{/tr}<br />
-</td>
+<th><a href="{if $sort_mode eq 'type_desc'}{sameurl sort_mode='type_asc'}{else}{sameurl sort_mode='type_desc'}{/if}">&nbsp;</a></th>
+<th><a href="{if $sort_mode eq 'name_desc'}{sameurl sort_mode='name_asc'}{else}{sameurl sort_mode='name_desc'}{/if}">{tr}Name{/tr}</a></th>
+<th><a href="{if $sort_mode eq 'type_desc'}{sameurl sort_mode='type_asc'}{else}{sameurl sort_mode='type_desc'}{/if}">{tr}Type{/tr}</a></th>
+<th><a href="{if $sort_mode eq 'isInteractive_desc'}{sameurl sort_mode='isInteractive_asc'}{else}{sameurl sort_mode='isInteractive_desc'}{/if}">{tr}int{/tr}</a></th>
+<th><a href="{if $sort_mode eq 'isAutoRouted_desc'}{sameurl sort_mode='isAutoRouted_asc'}{else}{sameurl sort_mode='isAutoRouted_desc'}{/if}">{tr}routing{/tr}</a></th>
+<th>{tr}Instances{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
 {foreach from=$items item=act}

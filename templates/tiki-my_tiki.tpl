@@ -21,15 +21,15 @@
           
           <table class="normal">
             <tr>
-              <th class="heading">
+              <th>
                 <a href="tiki-my_tiki.php?sort_mode={if $sort_mode eq 'pageName_desc'}pageName_asc{else}pageName_desc{/if}">{tr}Page{/tr}</a>
               </th>
-              <th class="heading">{tr}Creator{/tr}</th>
-              <th class="heading">{tr}Last editor{/tr}</th>
-              <th class="heading">
+              <th>{tr}Creator{/tr}</th>
+              <th>{tr}Last editor{/tr}</th>
+              <th>
                 <a href="tiki-my_tiki.php?sort_mode={if $sort_mode eq 'date_desc'}date_asc{else}date_desc{/if}">{tr}Last modification{/tr}</a>
               </th>
-              <th class="heading" width="50px">{tr}Actions{/tr}</th>
+              <th style="width:50px">{tr}Actions{/tr}</th>
             </tr>
             {cycle values="even,odd" print=false}
             {section name=ix loop=$user_pages}
@@ -68,8 +68,8 @@
         <div class="cbox-data">
           <table class="normal">
             <tr>
-              <th class="heading">{tr}Gallery{/tr}</th>
-              <th class="heading" width="50px">{tr}Actions{/tr}</th>
+              <th>{tr}Gallery{/tr}</th>
+              <th style="width:50px">{tr}Actions{/tr}</th>
             </tr>
             {cycle values="even,odd" print=false}
             {section name=ix loop=$user_galleries}
@@ -99,8 +99,8 @@
         <div class="cbox-data">
           <table class="normal">
             <tr>
-              <th class="heading">{tr}Item{/tr}</th>
-              <th class="heading">{tr}Tracker{/tr}</th>
+              <th>{tr}Item{/tr}</th>
+              <th>{tr}Tracker{/tr}</th>
             </tr>
             {cycle values="even,odd" print=false}
             {section name=ix loop=$user_items}
@@ -126,9 +126,9 @@
         <div class="cbox-data">
           <table class="normal">
             <tr>
-              <th class="heading">{tr}Subject{/tr}</th>
-              <th class="heading">{tr}From{/tr}</th>
-              <th class="heading">{tr}Date{/tr}</th>
+              <th>{tr}Subject{/tr}</th>
+              <th>{tr}From{/tr}</th>
+              <th>{tr}Date{/tr}</th>
             </tr>
             {cycle values="even,odd" print=false}
             {section name=ix loop=$msgs}
@@ -159,7 +159,7 @@
         <div class="cbox-data">
           <table class="normal">
             <tr>
-              <th class="heading">{tr}Tasks{/tr}</th>
+              <th>{tr}Tasks{/tr}</th>
             </tr>
             {cycle values="even,odd" print=false}
             {section name=ix loop=$tasks}
@@ -184,8 +184,8 @@
         <div class="cbox-data">
           <table class="normal">
             <tr>
-              <th class="heading">{tr}Forum topics{/tr}</th>              
-              <th class="heading">{tr}Date of post{/tr}</th>              
+              <th>{tr}Forum topics{/tr}</th>              
+              <th>{tr}Date of post{/tr}</th>              
             </tr>
             {cycle values="even,odd" print=false}
             {section name=ix loop=$user_forum_topics}
@@ -213,8 +213,8 @@
         <div class="cbox-data">
           <table class="normal">
             <tr>
-              <th class="heading">{tr}Forum replies{/tr}</th>              
-              <th class="heading">{tr}Date of post{/tr}</th>              
+              <th>{tr}Forum replies{/tr}</th>              
+              <th>{tr}Date of post{/tr}</th>              
             </tr>
             {cycle values="even,odd" print=false}
             {section name=ix loop=$user_forum_replies}
@@ -242,8 +242,8 @@
         <div class="cbox-data">
           <table class="normal">
             <tr>
-              <th class="heading">{tr}Blogs{/tr}</th>
-              <th class="heading" width="50px">{tr}Actions{/tr}</th>
+              <th>{tr}Blogs{/tr}</th>
+              <th style="width:50px">{tr}Actions{/tr}</th>
             </tr>
             {cycle values="even,odd" print=false}
             {section name=ix loop=$user_blogs}

@@ -11,8 +11,8 @@
 <br />
 <div align="center">
 <table bgcolor="#EAEAEA"  border="0" cellpadding="0" cellspacing="0">
-<tr><td class="heading">{tr}URL{/tr}</td><td class="text">{$info.url}</td></tr>
-<tr><td class="heading">{tr}Cached{/tr}</td><td class="text">{$info.refresh|tiki_long_datetime}</td></tr>
+<tr><th>{tr}URL{/tr}</th><td class="text">{$info.url}</td></tr>
+<tr><th>{tr}Cached{/tr}</th><td class="text">{$info.refresh|tiki_long_datetime}</td></tr>
 <tr><td class="text" colspan="2"><br />{tr}This is a cached version of the page.{/tr} 
 <a class="wikicache" href="{$ggcacheurl}">({tr}Click here to view the Google cache of the page instead.{/tr})</a>
 </td></tr>

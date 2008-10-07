@@ -18,11 +18,11 @@
 
 <table class="normal">
   <tr>
-    <td class="heading">&nbsp;</td>
+    <th>&nbsp;</th>
     {foreach from=$table_headers item=header key=sort_field}
-    <td class="heading">{self_link _template='tiki-admin_quicktags_content.tpl' _htmlelement='quicktags-content' _sort_field=$sort_field _sort_arg='sort_mode' _class='tableheading'}{$header}{/self_link}</td>
+    <th>{self_link _template='tiki-admin_quicktags_content.tpl' _htmlelement='quicktags-content' _sort_field=$sort_field _sort_arg='sort_mode' _class='tableheading'}{$header}{/self_link}</th>
     {/foreach}
-    <td class="heading">{tr}Action{/tr}</td>
+    <th>{tr}Action{/tr}</th>
   </tr>
 
 {cycle values="odd,even" print=false}

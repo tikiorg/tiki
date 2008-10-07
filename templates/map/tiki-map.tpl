@@ -183,10 +183,10 @@
 	     </td>
 		<td valign="top">
 		<table class="normal">
-		   <tr><td class="heading" align="center"><b>{tr}Overview{/tr}</b></td></tr>
+		   <tr><th align="center"><b>{tr}Overview{/tr}</b></th></tr>
 		   <tr><td align="center" valign="middle" bgcolor="FFFFFF">
 		   <img id="ref" src="{$image_ref_url}" border="1" alt="{tr}Overview{/tr}" title="{tr}Overview{/tr}" /></td ></tr>
-		   <tr><td class="heading" align="center"><b>{tr}Legend{/tr}</b></td></tr>
+		   <tr><th align="center"><b>{tr}Legend{/tr}</b></th></tr>
 		   <tr><td align="center" bgcolor="FFFFFF"><img id="leg" src="{$image_leg_url}" border="0" alt="{tr}Legend{/tr}" title="{tr}Legend{/tr}" /></td></tr>
 		   <tr><td>
     			<div class="separator">
@@ -200,13 +200,13 @@
 			<div id='layermenu' style="{$mnu_layermenu}">
     			<table class="normal">
 			<tr>
-				<td class="heading"><b>{tr}Layer{/tr}</b></td>
-		  		<td class="heading"><b>{tr}On{/tr}</b></td>
-		  		<td class="heading">
-				<img src="img/icons/edit.gif" border="0" alt="{tr}Label{/tr}" title="{tr}Label{/tr}" /></td>
-		  		<td class="heading">
-				<img src="img/icons/question.gif" border="0" alt="{tr}Query{/tr}" title="{tr}Query{/tr}" /></td>
-		  		<td class="heading"><img src="pics/icons/disk.png" width="16" height="16" border="0" alt="{tr}Download{/tr}" title="{tr}Download{/tr}" /></td>
+				<th><b>{tr}Layer{/tr}</b></th>
+		  		<th><b>{tr}On{/tr}</b></th>
+		  		<th>
+				<img src="img/icons/edit.gif" border="0" alt="{tr}Label{/tr}" title="{tr}Label{/tr}" /></th>
+		  		<th>
+				<img src="img/icons/question.gif" border="0" alt="{tr}Query{/tr}" title="{tr}Query{/tr}" /></th>
+		  		<th><img src="pics/icons/disk.png" width="16" height="16" border="0" alt="{tr}Download{/tr}" title="{tr}Download{/tr}" /></th>
 			</tr>
 			{section name=j loop=$my_layers}
 			{if $my_layers[j]->group neq "" }

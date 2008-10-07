@@ -48,9 +48,9 @@
 <h2>{tr}List of contributions{/tr}</h2>
 <table class="normal">
 <tr>
-<td class="heading">{tr}Name{/tr}</td>
-<td class="heading">{tr}Description{/tr}</td>
-<td class="heading">{tr}Actions{/tr}</td>
+<th>{tr}Name{/tr}</th>
+<th>{tr}Description{/tr}</th>
+<th>{tr}Actions{/tr}</th>
 </tr>
 {cycle print=false values="even,odd"}
 {section name=ix loop=$contributions}

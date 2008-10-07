@@ -17,7 +17,7 @@
 <h2>{tr}Available templates{/tr}:</h2>
 <table border="1" cellpadding="0" cellspacing="0" >
 <tr>
-<td class="heading">{tr}Template{/tr}</td>
+<th>{tr}Template{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$files}

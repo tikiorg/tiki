@@ -161,8 +161,8 @@
 <h2>{tr}Remove Zones (you lose entered info for the banner){/tr}</h2>
 <table class="normal">
 <tr>
-<td class="heading">{tr}Name{/tr}</td>
-<td class="heading">{tr}Action{/tr}</td>
+<th>{tr}Name{/tr}</th>
+<th>{tr}Action{/tr}</th>
 </tr>
 {cycle print=false values="even,odd"}
 {section name=ix loop=$zones}

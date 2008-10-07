@@ -47,9 +47,9 @@
 <table class="admin"><tr><td>
 <table class="normal">
   <tr>
-	<td class="heading" colspan="2">{tr}Order{/tr}</td>
-  	<td class="heading">{tr}Field{/tr}</td>
-	<td class="heading">{tr}Action{/tr}</td>
+	<th colspan="2">{tr}Order{/tr}</th>
+  	<th>{tr}Field{/tr}</th>
+	<th>{tr}Action{/tr}</th>
   </tr>
 {cycle values="odd,even" print=false}
   {foreach from=$exts item=ext key=k name=e}

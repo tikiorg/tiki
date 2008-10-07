@@ -36,7 +36,7 @@
         </tr>
           
         <tr>
-          <th class="heading" colspan="2" align="center">{tr}Database Search using MySQL 'Full-Text' Feature{/tr}</th>
+          <th colspan="2" align="center">{tr}Database Search using MySQL 'Full-Text' Feature{/tr}</th>
         </tr>
         
         <tr>
@@ -53,7 +53,7 @@
         </tr>
 	
         <tr>
-          <td class="heading" colspan="2">{tr}Performance issues{/tr}</td>
+          <th colspan="2">{tr}Performance issues{/tr}</th>
         </tr>
         
         <tr>
@@ -84,7 +84,7 @@
         </tr>
         
         <tr>
-          <th class="heading" colspan="2" align="center">{tr}Database Independent Full Text Search or Tiki Search{/tr}</th>
+          <th colspan="2" align="center">{tr}Database Independent Full Text Search or Tiki Search{/tr}</th>
         </tr>
 	
         <tr>
@@ -122,7 +122,7 @@
 	{/if}
       
         <tr>
-          <td class="heading" colspan="2">{tr}Search features{/tr}</td>
+          <th colspan="2">{tr}Search features{/tr}</th>
         </tr>
         
         <tr>
@@ -139,7 +139,7 @@
 	</tr>
       
         <tr>
-          <td class="heading" colspan="2">{tr}Settings for searching content{/tr}</td>
+          <th colspan="2">{tr}Settings for searching content{/tr}</th>
         </tr>
         
         <tr>

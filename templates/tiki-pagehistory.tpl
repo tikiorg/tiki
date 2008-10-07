@@ -57,17 +57,17 @@
 
 <table class="normal">
 <tr>
-{if $tiki_p_remove eq 'y'}<th class="heading"><input type="submit" name="delete" value="{tr}Del{/tr}" /></th>{/if}
-<th class="heading">{tr}Date{/tr}</th>
-{if $tiki_p_wiki_view_author ne 'n'}<th class="heading">{tr}User{/tr}</th>{/if}
-{if $prefs.feature_wiki_history_ip ne 'n'}<th class="heading">{tr}Ip{/tr}</th>{/if}
-<th class="heading">{tr}Edit Comment{/tr}</th>
-{if $prefs.feature_contribution eq 'y'}<th class="heading">{tr}Contribution{/tr}</th>{/if}
-{if $prefs.feature_contribution eq 'y' and $prefs.feature_contributor_wiki eq 'y'}<th class="heading">{tr}Contributors{/tr}</th>{/if}
-<th class="heading">{tr}Version{/tr}</th>
-<th class="heading">{tr}Action{/tr}</th>
+{if $tiki_p_remove eq 'y'}<th><input type="submit" name="delete" value="{tr}Del{/tr}" /></th>{/if}
+<th>{tr}Date{/tr}</th>
+{if $tiki_p_wiki_view_author ne 'n'}<th>{tr}User{/tr}</th>{/if}
+{if $prefs.feature_wiki_history_ip ne 'n'}<th>{tr}Ip{/tr}</th>{/if}
+<th>{tr}Edit Comment{/tr}</th>
+{if $prefs.feature_contribution eq 'y'}<th>{tr}Contribution{/tr}</th>{/if}
+{if $prefs.feature_contribution eq 'y' and $prefs.feature_contributor_wiki eq 'y'}<th>{tr}Contributors{/tr}</th>{/if}
+<th>{tr}Version{/tr}</th>
+<th>{tr}Action{/tr}</th>
 {if $prefs.default_wiki_diff_style != "old" and $history}
-<th class="heading" colspan="2">
+<th colspan="2">
 <input type="submit" name="compare" value="{tr}Compare{/tr}" /><br />
 </th>
 {/if}

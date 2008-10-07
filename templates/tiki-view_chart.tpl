@@ -32,18 +32,18 @@
 {/if}
 <table class="normal">
 <tr>
-	<td style="text-align:right;"  class="heading">{tr}Pos{/tr}</td>
-	<td style="text-align:right;"  class="heading">{tr}Pre{/tr}</td>
-	<td style="text-align:right;"  class="heading">{tr}Permanency{/tr}</td>
-	<td class="heading">{tr}Item{/tr}</td>
-	<td style="text-align:right;"  class="heading">{tr}chg{/tr}</td>
+	<th style="text-align:right;">{tr}Pos{/tr}</th>
+	<th style="text-align:right;">{tr}Pre{/tr}</th>
+	<th style="text-align:right;">{tr}Permanency{/tr}</th>
+	<th>{tr}Item{/tr}</th>
+	<th style="text-align:right;">{tr}chg{/tr}</th>
 	{if $chart_info.showVotes eq 'y'}
-	<td style="text-align:right;"  class="heading">{tr}Votes{/tr}</td>
+	<th style="text-align:right;">{tr}Votes{/tr}</th>
 	{/if}
 	{if $chart_info.showAverage eq 'y'}
-	<td style="text-align:right;"  class="heading">{tr}Avg{/tr}</td>
+	<th style="text-align:right;">{tr}Avg{/tr}</th>
 	{/if}
-	<td style="text-align:right;"  class="heading">&nbsp;</td>
+	<th style="text-align:right;">&nbsp;</th>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$items}

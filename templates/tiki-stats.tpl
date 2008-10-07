@@ -183,7 +183,7 @@
 <br /><h2 id="best_objects_stats">{tr}Most viewed objects{/tr}</h2>
 
 <table class="normal">
-	<tr><th class="heading">{tr}Object{/tr}</td><th class="heading">{tr}Section{/tr}</td><th class="heading">{tr}Hits{/tr}</td></tr>
+	<tr><th>{tr}Object{/tr}</th><th>{tr}Section{/tr}</th><th>{tr}Hits{/tr}</th></tr>
 {cycle values="odd,even" print=false advance=false}
 {section name=i loop=$best_objects_stats}
 	<tr>
@@ -199,9 +199,9 @@
 <br /><h2 id="best_objects_stats_lastweek">{tr}Most viewed objects in the last 7 days{/tr}</h2>
 <table class="normal">
 	<tr>
-		<th class="heading">{tr}Object{/tr}</th>
-		<th class="heading">{tr}Section{/tr}</th>
-		<th class="heading">{tr}Hits{/tr}</th></tr>
+		<th>{tr}Object{/tr}</th>
+		<th>{tr}Section{/tr}</th>
+		<th>{tr}Hits{/tr}</th></tr>
 {cycle values="odd,even" print=false advance=false}
 {section name=i loop=$best_objects_stats_lastweek}
 	<tr>

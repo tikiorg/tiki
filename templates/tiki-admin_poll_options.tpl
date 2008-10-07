@@ -31,10 +31,10 @@
 <div  align="center">
 <table class="normal">
 <tr>
-<th class="heading">{tr}Position{/tr}</th>
-<th class="heading">{tr}Title{/tr}</th>
-<th class="heading">{tr}Votes{/tr}</th>
-<th class="heading">{tr}Action{/tr}</th>
+<th>{tr}Position{/tr}</th>
+<th>{tr}Title{/tr}</th>
+<th>{tr}Votes{/tr}</th>
+<th>{tr}Action{/tr}</th>
 </tr>
 {cycle values="even,odd" print=false}
 {section name=user loop=$channels}

@@ -16,12 +16,12 @@
 <h2>{tr}List of topics{/tr}</h2>
 <table class="normal">
 <tr>
-<td class="heading">{tr}ID{/tr}</td>
-<td class="heading">{tr}Name{/tr}</td>
-<td class="heading">{tr}Image{/tr}</td>
-<td class="heading">{tr}Active?{/tr}</td>
-<td class="heading">{tr}Articles (subs){/tr}</td>
-<td class="heading">{tr}Action{/tr}</td>
+<th>{tr}ID{/tr}</th>
+<th>{tr}Name{/tr}</th>
+<th>{tr}Image{/tr}</th>
+<th>{tr}Active?{/tr}</th>
+<th>{tr}Articles (subs){/tr}</th>
+<th>{tr}Action{/tr}</th>
 </tr>
 {cycle print=false values="even,odd"}
 {section name=user loop=$topics}

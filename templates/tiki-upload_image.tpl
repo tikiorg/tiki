@@ -23,7 +23,7 @@
 {if $batchRes}
 	<h2>{tr}Batch Upload Results{/tr}</h2>
 	<table class="normal">
-		<tr><th class="heading">{tr}Filename{/tr}</th><th class="heading">{tr}Status{/tr}</th><th class="heading">{tr}ID{/tr}</th><th class="heading">{tr}Image{/tr}</th></tr>
+		<tr><th>{tr}Filename{/tr}</th><th>{tr}Status{/tr}</th><th>{tr}ID{/tr}</th><th>{tr}Image{/tr}</th></tr>
 	{cycle values="odd,even" print=false}
 	{section name=ix loop=$batchRes}
 		<tr><td class="{cycle advance=false}">{$batchRes[ix].filename}</td>

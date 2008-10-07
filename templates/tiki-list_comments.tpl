@@ -13,7 +13,7 @@
 
 <table class="normal">
 	<tr>
-		<th class="heading">
+		<th>
 		{if $comments}
 			<script type="text/javascript">
 			<!--//--><![CDATA[//><!--
@@ -25,17 +25,17 @@
 		</th>
 	
 		{foreach key=headerKey item=headerName from=$headers}
-		<th class="heading">
+		<th>
 			{self_link _sort_arg="sort_mode" _sort_field=$headerKey}{tr}{$headerName}{/tr}{/self_link}
 		</th>
 		{/foreach}
 
 		{if $tiki_p_admin_comments eq 'y' and $prefs.feature_comments_moderation eq 'y'}
-		<th class="heading">
+		<th>
 			{self_link _sort_arg="sort_mode" _sort_field='approved'}{tr}Approval{/tr}{/self_link}
 		</th>
 		{/if}
-		<th class="heading">{tr}Actions{/tr}</th>
+		<th>{tr}Actions{/tr}</th>
 	</tr>
 	
 	{cycle values="even,odd" print=false}

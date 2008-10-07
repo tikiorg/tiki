@@ -76,12 +76,12 @@
 <h2>{tr}Personal e-mail accounts{/tr}</h2>
 <table class="normal">
 <tr>
-<td class="heading">{tr}Active{/tr}</td>
-<td class="heading">{tr}Account{/tr}</td>
-<td class="heading">{tr}Active{/tr}</td>
-<td class="heading">{tr}POP server{/tr}</td>
-<td class="heading">{tr}Username{/tr}</td>
-<td class="heading">{tr}Action{/tr}</td>
+<th>{tr}Active{/tr}</th>
+<th>{tr}Account{/tr}</th>
+<th>{tr}Active{/tr}</th>
+<th>{tr}POP server{/tr}</th>
+<th>{tr}Username{/tr}</th>
+<th>{tr}Action{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$accounts}
@@ -111,12 +111,12 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
 <h2>{tr}Group e-mail accounts{/tr}</h2>
 <table class="normal">
 <tr>
-<td class="heading">{tr}Active{/tr}</td>
-<td class="heading">{tr}Account{/tr}</td>
-<td class="heading">{tr}Active{/tr}</td>
-<td class="heading">{tr}POP server{/tr}</td>
-<td class="heading">{tr}Username{/tr}</td>
-<td class="heading">{tr}Action{/tr}</td>
+<th>{tr}Active{/tr}</th>
+<th>{tr}Account{/tr}</th>
+<th>{tr}Active{/tr}</th>
+<th>{tr}POP server{/tr}</th>
+<th>{tr}Username{/tr}</th>
+<th>{tr}Action{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ixp loop=$pubAccounts}
@@ -188,12 +188,12 @@ setTimeout("location.reload(true);",{$autoRefresh}*1000);
 <br /><br />
 <table class="normal">
 <tr>
-  <td class="heading">&nbsp;</td>
-  <td class="heading">&nbsp;</td>
-  <td class="heading">{tr}Sender{/tr}</td>
-  <td class="heading">{tr}Subject{/tr}</td>
-  <td class="heading">{tr}Date{/tr}</td>
-  <td class="heading">{tr}Size{/tr}</td>
+  <th>&nbsp;</th>
+  <th>&nbsp;</th>
+  <th>{tr}Sender{/tr}</th>
+  <th>{tr}Subject{/tr}</th>
+  <th>{tr}Date{/tr}</th>
+  <th>{tr}Size{/tr}</th>
 </tr>
 {section name=ix loop=$list}
 {if $list[ix].isRead eq 'y'}
@@ -353,10 +353,10 @@ setTimeout("location.reload(true);",{$autoRefresh}*1000);
 {/section}
 <table class="normal">
 <tr>
-<td class="heading"><a href="tiki-webmail.php?locSection=contacts&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'firstName_desc'}firstName_asc{else}firstName_desc{/if}">{tr}First Name{/tr}</a></td>
-<td class="heading"><a href="tiki-webmail.php?locSection=contacts&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastName_desc'}lastName_asc{else}lastName_desc{/if}">{tr}Last Name{/tr}</a></td>
-<td class="heading"><a href="tiki-webmail.php?locSection=contacts&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'email_desc'}email_asc{else}email_desc{/if}">{tr}Email{/tr}</a></td>
-<td class="heading"><a href="tiki-webmail.php?locSection=contacts&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'nickname_desc'}nickname_asc{else}nickname_desc{/if}">{tr}Nickname{/tr}</a></td>
+<th><a href="tiki-webmail.php?locSection=contacts&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'firstName_desc'}firstName_asc{else}firstName_desc{/if}">{tr}First Name{/tr}</a></th>
+<th><a href="tiki-webmail.php?locSection=contacts&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastName_desc'}lastName_asc{else}lastName_desc{/if}">{tr}Last Name{/tr}</a></th>
+<th><a href="tiki-webmail.php?locSection=contacts&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'email_desc'}email_asc{else}email_desc{/if}">{tr}Email{/tr}</a></th>
+<th><a href="tiki-webmail.php?locSection=contacts&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'nickname_desc'}nickname_asc{else}nickname_desc{/if}">{tr}Nickname{/tr}</a></th>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$channels}
@@ -437,11 +437,11 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>&nbsp;&nbsp;
       <form action="tiki-webmail.php" method="post">
       <table class="normal">
       <tr>
-        <td class="heading">&nbsp;</td>
-        <td class="heading">{tr}Email{/tr}</td>
-        <td class="heading">{tr}First Name{/tr}</td>
-        <td class="heading">{tr}Last Name{/tr}</td>
-        <td class="heading">{tr}Nickname{/tr}</td>
+        <th>&nbsp;</th>
+        <th>{tr}Email{/tr}</th>
+        <th>{tr}First Name{/tr}</th>
+        <th>{tr}Last Name{/tr}</th>
+        <th>{tr}Nickname{/tr}</th>
       </tr>
       {section name=ix loop=$not_contacts}
       <tr><td><input type="checkbox" name="add[{$smarty.section.ix.index}]" /><input type="hidden" name="addemail[{$smarty.section.ix.index}]" value="{$not_contacts[ix]|escape}" /></td>

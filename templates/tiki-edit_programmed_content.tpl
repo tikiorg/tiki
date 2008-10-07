@@ -48,10 +48,10 @@
 
 <table class="normal">
   <tr>
-    <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='pId'}{tr}Id{/tr}{/self_link}</td>
-    <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='publishDate'}{tr}Publishing Date{/tr}{/self_link}</td>
-    <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='data'}{tr}Data{/tr}{/self_link}</td>
-    <td class="heading">{tr}Action{/tr}</td>
+    <th>{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='pId'}{tr}Id{/tr}{/self_link}</th>
+    <th>{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='publishDate'}{tr}Publishing Date{/tr}{/self_link}</th>
+    <th>{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='data'}{tr}Data{/tr}{/self_link}</th>
+    <th>{tr}Action{/tr}</th>
   </tr>
 	{section name=changes loop=$listpages}
 		<tr>

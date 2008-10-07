@@ -39,13 +39,13 @@
 <table class="normal">
 <caption>{tr}Left Modules{/tr}</caption>
 <tr>
-<td class="heading">{tr}Name{/tr}</td>
-<td class="heading">{tr}Order{/tr}</td>
-<td class="heading">{tr}Cache{/tr}</td>
-<td class="heading">{tr}Rows{/tr}</td>
-<td class="heading">{tr}Parameters{/tr}</td>
-<td class="heading">{tr}Groups{/tr}</td>
-<td class="heading">{tr}Action{/tr}</td>
+<th>{tr}Name{/tr}</th>
+<th>{tr}Order{/tr}</th>
+<th>{tr}Cache{/tr}</th>
+<th>{tr}Rows{/tr}</th>
+<th>{tr}Parameters{/tr}</th>
+<th>{tr}Groups{/tr}</th>
+<th>{tr}Action{/tr}</th>
 </tr>
 {cycle print=false values="even,odd"}
 {section name=user loop=$left}
@@ -79,13 +79,13 @@
 <table class="normal">
 <caption>{tr}Right Modules{/tr}</caption>
 <tr>
-<td class="heading">{tr}Name{/tr}</td>
-<td class="heading">{tr}Order{/tr}</td>
-<td class="heading">{tr}Cache{/tr}</td>
-<td class="heading">{tr}Rows{/tr}</td>
-<td class="heading">{tr}Parameters{/tr}</td>
-<td class="heading">{tr}Groups{/tr}</td>
-<td class="heading">{tr}Action{/tr}</td>
+<th>{tr}Name{/tr}</th>
+<th>{tr}Order{/tr}</th>
+<th>{tr}Cache{/tr}</th>
+<th>{tr}Rows{/tr}</th>
+<th>{tr}Parameters{/tr}</th>
+<th>{tr}Groups{/tr}</th>
+<th>{tr}Action{/tr}</th>
 </tr>
 {cycle print=false values="even,odd"}
 {section name=user loop=$right}
@@ -190,9 +190,9 @@
 <h2>{tr}User Modules{/tr}</h2>
 <table class="normal">
 <tr>
-<td class="heading">{tr}Name{/tr}</td>
-<td class="heading">{tr}Title{/tr}</td>
-<td class="heading">{tr}Action{/tr}</td>
+<th>{tr}Name{/tr}</th>
+<th>{tr}Title{/tr}</th>
+<th>{tr}Action{/tr}</th>
 </tr>
 {cycle print=false values="even,odd"}
 {section name=user loop=$user_modules}

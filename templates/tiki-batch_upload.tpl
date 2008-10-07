@@ -17,12 +17,12 @@
 <form method="post" action="tiki-batch_upload.php" name="f">
 <table border="0" class="normal" id="imagelist" width="100%">
 <tr>
-<th width="42" class="heading"></th>
-<th class="heading"><a href="javascript:void(0);">{tr}Filename{/tr}</a></th>
-<th class="heading" width="80"><a href="javascript:void(0);">{tr}width{/tr}</a></th>
-<th class="heading" width="80"><a href="javascript:void(0);">{tr}height{/tr}</a></th>
-<th class="heading" width="80"><a href="javascript:void(0);">{tr}Filesize{/tr}</th>
-<th class="heading" width="80"><a href="javascript:void(0);">{tr}Filetype{/tr}</a></th></tr>
+<th style="width:42px"></th>
+<th><a href="javascript:void(0);">{tr}Filename{/tr}</a></th>
+<th style="width:80px"><a href="javascript:void(0);">{tr}width{/tr}</a></th>
+<th style="width:80px"><a href="javascript:void(0);">{tr}height{/tr}</a></th>
+<th style="width:80px"><a href="javascript:void(0);">{tr}Filesize{/tr}</th>
+<th style="width:80px"><a href="javascript:void(0);">{tr}Filetype{/tr}</a></th></tr>
 {cycle print=false values="even,odd"}
 {foreach key=k item=it from=$imgstring}
 <tr class="{cycle}">

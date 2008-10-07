@@ -9,15 +9,15 @@
 {cycle values="odd,even" print=false}
 <table class="normal">
 <tr>
-<td class="heading"><a href="tiki-admin.php?page=wikiatt&amp;sort_mode=user_{if $sort_mode eq 'user'}asc{else}desc{/if}" class="heading">{tr}User{/tr}</td>
-<td class="heading"><a href="tiki-admin.php?page=wikiatt&amp;sort_mode=page_{if $sort_mode eq 'page'}asc{else}desc{/if}" class="heading">{tr}Page{/tr}</td>
-<td class="heading"><a href="tiki-admin.php?page=wikiatt&amp;sort_mode=filename_{if $sort_mode eq 'filename'}asc{else}desc{/if}" class="heading">{tr}Name{/tr}</td>
-<td class="heading"><a href="tiki-admin.php?page=wikiatt&amp;sort_mode=filesize_{if $sort_mode eq 'filesize'}asc{else}desc{/if}" class="heading">{tr}Size{/tr}</td>
-<td class="heading"><a href="tiki-admin.php?page=wikiatt&amp;sort_mode=filetype_{if $sort_mode eq 'filetype'}asc{else}desc{/if}" class="heading">{tr}Type{/tr}</td>
-<td class="heading"><a href="tiki-admin.php?page=wikiatt&amp;sort_mode=path_{if $sort_mode eq 'path'}asc{else}desc{/if}" class="heading">{tr}Storage{/tr}</td>
-<td class="heading"><a href="tiki-admin.php?page=wikiatt&amp;sort_mode=created_{if $sort_mode eq 'created'}asc{else}desc{/if}" class="heading">{tr}Created{/tr}</td>
-<td class="heading"><a href="tiki-admin.php?page=wikiatt&amp;sort_mode=hits_{if $sort_mode eq 'hits'}asc{else}desc{/if}" class="heading">&gt;</td>
-<td class="heading">&nbsp;</td>
+<th><a href="tiki-admin.php?page=wikiatt&amp;sort_mode=user_{if $sort_mode eq 'user'}asc{else}desc{/if}">{tr}User{/tr}</th>
+<th><a href="tiki-admin.php?page=wikiatt&amp;sort_mode=page_{if $sort_mode eq 'page'}asc{else}desc{/if}">{tr}Page{/tr}</th>
+<th><a href="tiki-admin.php?page=wikiatt&amp;sort_mode=filename_{if $sort_mode eq 'filename'}asc{else}desc{/if}">{tr}Name{/tr}</th>
+<th><a href="tiki-admin.php?page=wikiatt&amp;sort_mode=filesize_{if $sort_mode eq 'filesize'}asc{else}desc{/if}">{tr}Size{/tr}</th>
+<th><a href="tiki-admin.php?page=wikiatt&amp;sort_mode=filetype_{if $sort_mode eq 'filetype'}asc{else}desc{/if}">{tr}Type{/tr}</th>
+<th><a href="tiki-admin.php?page=wikiatt&amp;sort_mode=path_{if $sort_mode eq 'path'}asc{else}desc{/if}">{tr}Storage{/tr}</th>
+<th><a href="tiki-admin.php?page=wikiatt&amp;sort_mode=created_{if $sort_mode eq 'created'}asc{else}desc{/if}">{tr}Created{/tr}</th>
+<th><a href="tiki-admin.php?page=wikiatt&amp;sort_mode=hits_{if $sort_mode eq 'hits'}asc{else}desc{/if}">&gt;</th>
+<th>&nbsp;</th>
 </tr>
 {section name=x loop=$attachements}
 <tr class={cycle}>

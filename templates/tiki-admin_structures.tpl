@@ -55,8 +55,8 @@
 <h2>{tr}Structures{/tr}</h2>
 <table class="normal">
 <tr>
-  <th class="heading">{tr}Structure ID{/tr}</th>
-  <th class="heading">{tr}Action{/tr}</th>
+  <th>{tr}Structure ID{/tr}</th>
+  <th>{tr}Action{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
 {section loop=$channels name=ix}

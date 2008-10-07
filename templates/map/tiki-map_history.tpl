@@ -98,13 +98,13 @@
 <div>
 <table border="1" cellpadding="2" cellspacing="0">
 <tr>
-<th class="heading">{tr}Date{/tr}</th>
-<th class="heading">{tr}User{/tr}</th>
-<th class="heading">{tr}Ip{/tr}</th>
-<th class="heading">{tr}Version{/tr}</th>
-<th class="heading">{tr}Action{/tr}</th>
+<th>{tr}Date{/tr}</th>
+<th>{tr}User{/tr}</th>
+<th>{tr}Ip{/tr}</th>
+<th>{tr}Version{/tr}</th>
+<th>{tr}Action{/tr}</th>
 {if $prefs.default_wiki_diff_style != "old" and $history}
-<th class="heading" colspan="2">
+<th colspan="2">
 <input type="submit" name="compare" value="{tr}Compare{/tr}" /><br />
 </th>
 {/if}

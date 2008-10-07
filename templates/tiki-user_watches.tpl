@@ -70,10 +70,10 @@
 <table class="normal">
 <tr>
 {if $watches}
-<th style="text-align:center;" class="heading"></th>
+<th style="text-align:center;"></th>
 {/if}
-<th class="heading">{tr}Event{/tr}</th>
-<th class="heading">{tr}Object{/tr}</th>
+<th>{tr}Event{/tr}</th>
+<th>{tr}Object{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$watches}

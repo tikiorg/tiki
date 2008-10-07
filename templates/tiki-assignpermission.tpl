@@ -52,11 +52,11 @@
 <input type="submit" name="update" value="{tr}Update{/tr}" /><br />
 <table class="sortable" id="assignperms" width="100%">
 <tr>
-<th class="heading">&nbsp;</th>
-<th class="heading">{tr}Name{/tr}</th>
-<th class="heading" {if $advanced_features ne 'y'}style="display:none;"{else}style="display:block;"{/if}>{tr}level{/tr}</th>
-<th class="heading">{tr}Type{/tr}</th>
-<th class="heading">{tr}desc{/tr}</th>
+<th>&nbsp;</th>
+<th>{tr}Name{/tr}</th>
+<th {if $advanced_features ne 'y'}style="display:none;"{else}style="display:block;"{/if}>{tr}level{/tr}</th>
+<th>{tr}Type{/tr}</th>
+<th>{tr}desc{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$perms}

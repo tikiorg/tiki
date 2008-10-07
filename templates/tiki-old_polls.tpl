@@ -6,10 +6,10 @@
 
 <table class="normal">
 <tr>
-<td class="heading"><a href="tiki-old_polls.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}Title{/tr}</a></td>
-<td class="heading"><a href="tiki-old_polls.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'publishDate_desc'}publishDate_asc{else}publishDate_desc{/if}">{tr}Published{/tr}</a></td>
-<td class="heading"><a href="tiki-old_polls.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'votes_desc'}votes_asc{else}votes_desc{/if}">{tr}Votes{/tr}</a></td>
-<td class="heading">{tr}Action{/tr}</td>
+<th><a href="tiki-old_polls.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}Title{/tr}</a></th>
+<th><a href="tiki-old_polls.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'publishDate_desc'}publishDate_asc{else}publishDate_desc{/if}">{tr}Published{/tr}</a></th>
+<th><a href="tiki-old_polls.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'votes_desc'}votes_asc{else}votes_desc{/if}">{tr}Votes{/tr}</a></th>
+<th>{tr}Action{/tr}</th>
 </tr>
 {section name=changes loop=$listpages}
 <tr>

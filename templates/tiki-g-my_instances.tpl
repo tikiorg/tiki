@@ -2,12 +2,12 @@
 <br />
 <table class="normal">
   <tr>
-    <td class="heading">{tr}Process{/tr}</td>
-    <td class="heading">{tr}Start{/tr}</td>
-    <td class="heading">{tr}Owner{/tr}</td>
-    <td class="heading">{tr}Current Activity{/tr}</td>
-    <td class="heading">{tr}Assigned To{/tr}</td>
-    <td class="heading">{tr}Action{/tr}</td>
+    <th>{tr}Process{/tr}</th>
+    <th>{tr}Start{/tr}</th>
+    <th>{tr}Owner{/tr}</th>
+    <th>{tr}Current Activity{/tr}</th>
+    <th>{tr}Assigned To{/tr}</th>
+    <th>{tr}Action{/tr}</th>
   </tr>
 {cycle values="odd,even" print=false}
   {foreach from=$instances item=instance}

@@ -96,7 +96,7 @@
 {if count($suggested) != 0}
 <br />
 <table class="normal">
-<tr><th class="heading">{tr}Suggested questions{/tr}</th></tr>
+<tr><th>{tr}Suggested questions{/tr}</th></tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$suggested}
 <tr><td class="{cycle}">{$suggested[ix].question}</td></tr>

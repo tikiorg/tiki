@@ -26,38 +26,38 @@
 
 {if $showfieldname ne 'n' and empty($tpl)}
 <tr>
-{if $checkbox}<td class="heading">{$checkbox.title}</td>{/if}
+{if $checkbox}<th>{$checkbox.title}</td>{/if}
 {if ($showstatus ne 'n') and ($tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y'))}
-	<td class="heading auto" style="width:20px;">&nbsp;</td>
+	<th class="auto" style="width:20px;">&nbsp;</th>
 {/if}
 
 {foreach key=jx item=ix from=$fields}
 {if $ix.isPublic eq 'y' and ($ix.isHidden eq 'n' or $ix.isHidden eq 'c' or $ix.isHidden eq 'p' or $tiki_p_admin_trackers eq 'y') and $ix.type ne 'x' and $ix.type ne 'h' and in_array($ix.fieldId, $listfields) and ($ix.type ne 'p' or $ix.options_array[0] ne 'password') and (empty($ix.visibleBy) or in_array($default_group, $ix.visibleBy) or $tiki_p_admin_trackers eq 'y')}
 {if $ix.type eq 'l'}
-<td class="heading auto field{$ix.fieldId}">{$ix.name|default:"&nbsp;"}</td>
+<th class="auto field{$ix.fieldId}">{$ix.name|default:"&nbsp;"}</th>
 {elseif $ix.type eq 's' and $ix.name eq "Rating"}
 {if $tiki_p_admin_trackers eq 'y' or $perms.tiki_p_tracker_view_ratings eq 'y'}
-<td class="heading auto field{$ix.fieldId}">
-{self_link _sort_arg='tr_sort_mode' _sort_field='f_'|cat:$ix.fieldId}{$ix.name|default:"&nbsp;"}{/self_link}</td>
+<th class="auto field{$ix.fieldId}">
+{self_link _sort_arg='tr_sort_mode' _sort_field='f_'|cat:$ix.fieldId}{$ix.name|default:"&nbsp;"}{/self_link}</th>
 {/if}
 {else}
-<td class="heading auto field{$ix.fieldId}">
+<th class="auto field{$ix.fieldId}">
 {self_link _sort_arg='tr_sort_mode' _sort_field='f_'|cat:$ix.fieldId}{$ix.name|default:"&nbsp;"}{/self_link}
-</td>
+</th>
 {/if}
 {/if}
 {/foreach}
 {if $showcreated eq 'y'}
-<td class="heading">{self_link _sort_arg='tr_sort_mode' _sort_field='created'}{tr}Created{/tr}{/self_link}</td>
+<th>{self_link _sort_arg='tr_sort_mode' _sort_field='created'}{tr}Created{/tr}{/self_link}</th>
 {/if}
 {if $showlastmodif eq 'y'}
-<td class="heading">{self_link _sort_arg='tr_sort_mode' _sort_field='lastModif'}{tr}LastModif{/tr}{/self_link}</td>
+<th>{self_link _sort_arg='tr_sort_mode' _sort_field='lastModif'}{tr}LastModif{/tr}{/self_link}</th>
 {/if}
 {if $tracker_info.useComments eq 'y' and $tracker_info.showComments eq 'y'}
-<td class="heading" width="5%">{tr}Coms{/tr}</td>
+<th wstyle="width:5%">{tr}Coms{/tr}</th>
 {/if}
 {if $tracker_info.useAttachments eq 'y' and  $tracker_info.showAttachments eq 'y'}
-<td class="heading" width="5%">{tr}atts{/tr}</td>
+<th style="width:5%">{tr}atts{/tr}</th>
 {/if}
 </tr>
 {/if}

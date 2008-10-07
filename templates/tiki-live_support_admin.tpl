@@ -26,12 +26,12 @@
 <h2>{tr}Online operators{/tr}</h2>
 <table class="normal">
 	<tr>
-		<td  class="heading" style="text-align:center;">	
+		<th style="text-align:center;">	
 		{tr}Operator{/tr}
-		</td>
-		<td class="heading" colspan='2'>
+		</th>
+		<th colspan='2'>
 		{tr}Stats{/tr}
-		</td>		
+		</th>		
 	</tr>
 {cycle values='odd,even' print=false}	
 {section name=ix loop=$online_operators}
@@ -41,7 +41,7 @@
 			<b>{$online_operators[ix].user}</b>
 		</td>
 		<td class="{cycle advance=false}">
-			<table >
+			<table>
 				<tr>
 					<td>{tr}Accepted requests{/tr}:</td>
 					<td>{$online_operators[ix].accepted_requests}</td>
@@ -73,12 +73,12 @@
 {cycle values='odd,even' print=false}
 <table class="normal">
 	<tr>
-		<td  class="heading" style="text-align:center;">	
+		<th style="text-align:center;">	
 		{tr}Operator{/tr}
-		</td>
-		<td class="heading" colspan='2'>
+		</th>
+		<th colspan='2'>
 		{tr}Stats{/tr}
-		</td>		
+		</th>		
 	</tr>
 {section name=ix loop=$offline_operators}
 	<tr>

@@ -49,7 +49,7 @@
 {section name=ix loop=$comments}
 <table class="email">
         <tr>
-	    	<td class="heading">{tr}From{/tr}:</td>
+	    	<th>{tr}From{/tr}:</th>
 		<td class="formcolor">{$comments[ix].user|capitalize:true}</td>
       	        <td class="closeButton">
 		    <form method="POST" target="email" action="tiki-g-view_comment.php">
@@ -68,11 +68,11 @@
 		</td>
 	</tr>
 	<tr>
-	    	<td class="heading">{tr}Date{/tr}:</td>
+	    	<th>{tr}Date{/tr}:</th>
 		<td class="formcolor" colspan="3">{$comments[ix].timestamp|date_format:"%A %e de %B, %Y %H:%M:%S"|capitalize:true}</td>
 	</tr>
 	<tr>
-		<td class="heading">{tr}Subject{/tr}:</td>
+		<th>{tr}Subject{/tr}:</th>
 		<td class="formcolor" colspan="3">{$comments[ix].title}</td>
 	</tr>
 	<tr>
@@ -87,11 +87,11 @@
 <table class="normal">
 
 	<tr>
-	    	<td class="heading">{tr}Subject{/tr}:</td>
+	    	<th>{tr}Subject{/tr}:</th>
 	    	<td class="formcolor"><input type="text" name="__title" /></td>
 	</tr>
 	<tr>
-		<td class="heading">{tr}Body{/tr}:</td>
+		<th>{tr}Body{/tr}:</th>
 		<td class="formcolor"><textarea rows="5" cols="60" name="__comment"></textarea></td>
 	</tr>
 	<tr>

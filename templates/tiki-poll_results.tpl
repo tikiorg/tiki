@@ -66,7 +66,7 @@
 </table>
 </div>
 <table class="normal">
-<tr><td class="heading">{tr}User{/tr}</td><td class="heading">{tr}option{/tr}</td></tr>
+<tr><th>{tr}User{/tr}</th><th>{tr}option{/tr}</th></tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$list_votes}
 <tr><td class="{cycle advance=false}">{$list_votes[ix].user}</td><td class="{cycle}">{$list_votes[ix].title}</td></tr>

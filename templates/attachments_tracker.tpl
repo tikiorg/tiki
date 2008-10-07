@@ -33,12 +33,12 @@
 <table class="normal">
 	<tr>
 		{assign var='nbcols' value=2}
-		<td class="heading auto">&nbsp;</td>
+		<th class="auto">&nbsp;</th>
 		{section name=ix loop=$attfields}
 			{assign var='nbcols' value=$nbcols+1}
-			<td class="heading auto">{tr}{$attfields[ix]}{/tr}</td>
+			<th class="auto">{tr}{$attfields[ix]}{/tr}</th>
 		{/section}
-		<td class="heading">&nbsp;</td>
+		<th>&nbsp;</th>
 	</tr>
 	{cycle values="odd,even" print=false}
 	{section name=ix loop=$atts}

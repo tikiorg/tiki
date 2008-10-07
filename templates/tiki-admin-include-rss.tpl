@@ -9,7 +9,7 @@
   <div class="cbox-data">
     <form action="tiki-admin.php?page=rss" method="post">
       <table class="admin">
-        <tr><th class="heading" colspan="3">{tr}RSS Feeds{/tr}</th></tr>
+        <tr><th colspan="3">{tr}RSS Feeds{/tr}</th></tr>
         <tr>
           <td width="20"><input type="checkbox" name="rss_articles" onclick="flip('articlesrss');"{if $prefs.rss_articles eq 'y'} checked="checked"{/if}{if $prefs.feature_articles ne 'y'} disabled="disabled"{/if} /></td>
           <td class="form" colspan="2">{if $prefs.rss_articles eq 'y'}<a href="tiki-articles_rss.php" title="{tr}Feed for articles{/tr}.">{/if}{tr}Articles{/tr}{if $prefs.rss_articles eq 'y'}</a>{/if} {if $prefs.feature_articles ne 'y'}&nbsp;({tr}Feature is disabled.{/tr} <a href="tiki-admin.php?page=features" title="{tr}Features{/tr}">{tr}Enable now{/tr}</a>.){/if}
@@ -120,7 +120,7 @@
           </td>
         </tr>
         <tr>
-          <td width="20"><input type="checkbox" name="rss_directories" onclick="flip('directoriesrss');"{if $prefs.rss_directories eq 'y'} checked="checked"{/if}{if $prefs.feature_directory ne 'y'} disabled="disabled"{/if} /></td>
+          <td style="width:20px"><input type="checkbox" name="rss_directories" onclick="flip('directoriesrss');"{if $prefs.rss_directories eq 'y'} checked="checked"{/if}{if $prefs.feature_directory ne 'y'} disabled="disabled"{/if} /></td>
           <td class="form" colspan="2">{if $prefs.rss_directories eq 'y'}<a href="tiki-directory_rss.php" title="{tr}Feed for directory{/tr}.">{/if}{tr}Directories{/tr}{if $prefs.rss_directories eq 'y'}</a>{/if}  {if $prefs.feature_directory ne 'y'}&nbsp;({tr}Feature is disabled.{/tr} <a href="tiki-admin.php?page=features" title="{tr}Features{/tr}">{tr}Enable now{/tr}</a>.){/if}
             <div id="directoriesrss" style="display:{if ($prefs.rss_directories eq 'y') and ($prefs.feature_directory eq 'y')}block{else}none{/if};">
             <p>{tr}Title{/tr}: <input type="text" name="title_rss_directories" size="20" maxlength="255" style="width:95%" value='{$prefs.title_rss_calendar|escape}' /><br />{tr}Description{/tr}: <textarea name="desc_rss_directories" style="width:95%" cols="20" rows="2">{$prefs.desc_rss_directories|escape}</textarea><br />{tr}Maximum number of items to display{/tr}:<input type="text" name="max_rss_directories" size="5" value="{$prefs.max_rss_directories|escape}" /></p>
@@ -138,7 +138,7 @@
       </table>
 <br />
       <table class="admin">
-        <tr><th class="heading" colspan="2">{tr}Defaults{/tr}</th></tr>
+        <tr><th colspan="2">{tr}Defaults{/tr}</th></tr>
         <tr>
           <td class="form">{tr}Default RDF version{/tr}:</td>
           <td class="form">

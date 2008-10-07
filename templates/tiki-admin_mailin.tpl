@@ -2,13 +2,13 @@
 
 <table class="normal">
   <tr>
-    <td class="heading">
+    <th>
       {tr}Action{/tr}
-    </td>
-    <td class="heading">
+    </th>
+    <th>
       {tr}Account{/tr}
-    </td>
-    <td class="heading">{tr}Type{/tr}</td>
+    </th>
+    <th>{tr}Type{/tr}</th>
   </tr>
   {cycle values="even,odd" print=false}
   {section name=ix loop=$accounts}

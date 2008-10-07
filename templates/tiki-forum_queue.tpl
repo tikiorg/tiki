@@ -127,9 +127,9 @@
 <input type="hidden" name="find" value="{$find|escape}" />
 <table class="normal">
 <tr>
-{if $items}<th class="heading" >&nbsp;</th>
+{if $items}<th>&nbsp;</th>
 {/if}
-<th class="heading" >{tr}Message{/tr}</th>
+<th>{tr}Message{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$items}

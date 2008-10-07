@@ -34,12 +34,12 @@
 <table class="normal">
 <tr>
 {if $smarty.request.ver}
-<td class="heading"><input type="submit" name="del" value="{tr}x{/tr} " /></td>
+<th><input type="submit" name="del" value="{tr}x{/tr} " /></th>
 {/if}
-<td class="heading">{tr}Name{/tr}</td>
-<td class="heading">{tr}Ver{/tr}</td>
-<td class="heading">{tr}Versions{/tr}</td>
-<td class="heading">{tr}Action{/tr}</td>
+<th>{tr}Name{/tr}</th>
+<th>{tr}Ver{/tr}</th>
+<th>{tr}Versions{/tr}</th>
+<th>{tr}Action{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$items}

@@ -19,12 +19,12 @@
 </tr>
 <tr>
 	<!-- left column -->
-	<td >
+	<td>
 		<table  class="normal">
 			<tr>
-				<td class="heading">{tr}#{/tr}</td>
-				<td class="heading">{tr}Name{/tr}</td>
-				<td  class="heading">{tr}act{/tr}</td>
+				<th>{tr}#{/tr}</th>
+				<th>{tr}Name{/tr}</th>
+				<th>{tr}act{/tr}</th>
 			</tr>
 			{cycle values="odd,even" print=false}
 			{section name=ix loop=$modules_l}
@@ -48,9 +48,9 @@
 	<td >
 		<table  class="normal">
 			<tr>
-				<td class="heading">{tr}#{/tr}</td>
-				<td class="heading">{tr}Name{/tr}</td>
-				<td  class="heading">{tr}act{/tr}</td>
+				<th>{tr}#{/tr}</th>
+				<th>{tr}Name{/tr}</th>
+				<th>{tr}act{/tr}</th>
 			</tr>
 			{cycle values="odd,even" print=false}
 			{section name=ix loop=$modules_r}

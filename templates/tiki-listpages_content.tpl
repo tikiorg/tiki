@@ -15,11 +15,11 @@
 <table class="normal">
   <tr>
     {if $checkboxes_on eq 'y' && count($listpages) > 0}
-      <td class="heading">
+      <th>
       {if $prefs.javascript_enabled eq 'y'}
         <input name="switcher" id="clickall" type="checkbox" title="Select All" onclick="switchCheckboxes(this.form,'checked[]',this.checked)"/>
       {/if}
-      </td>
+      </th>
       {assign var='cntcol' value='1'}
     {else}
       {assign var='cntcol' value='0'}
@@ -28,26 +28,26 @@
 
     {if $prefs.wiki_list_id eq 'y'}
       {assign var='cntcol' value=$cntcol+1}
-      <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='page_id'}{tr}Id{/tr}{/self_link}</td>
+      <th>{self_link _sort_arg='sort_mode' _sort_field='page_id'}{tr}Id{/tr}{/self_link}</th>
     {/if}
 
     {if $prefs.wiki_list_name eq 'y'}
       {assign var='cntcol' value=$cntcol+1}
-      <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='pageName'}{tr}Page{/tr}{/self_link}</td>
+      <th>{self_link _sort_arg='sort_mode' _sort_field='pageName'}{tr}Page{/tr}{/self_link}</th>
     {/if}
 
 	{foreach from=$wplp_used key=lc item=ln}
-      <td class="heading">{$ln|escape}</td>
+      <th>{$ln|escape}</th>
 	{/foreach}
 
     {if $prefs.wiki_list_hits eq 'y'}
       {assign var='cntcol' value=$cntcol+1}
-      <td class="heading" style="text-align:right;">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='hits'}{tr}Hits{/tr}{/self_link}</td>
+      <th style="text-align:right;">{self_link _sort_arg='sort_mode' _sort_field='hits'}{tr}Hits{/tr}{/self_link}</th>
     {/if}
 
     {if $prefs.wiki_list_lastmodif eq 'y' or $prefs.wiki_list_comment eq 'y'}
       {assign var='cntcol' value=$cntcol+1}
-      <td class="heading">
+      <th>
       {assign var='lastmod_sortfield' value='lastModif'}
       {assign var='lastmod_shorttitle' value='{tr}Last mod{/tr}'}
       {if $prefs.wiki_list_lastmodif eq 'y' and $prefs.wiki_list_comment eq 'y'}
@@ -59,67 +59,67 @@
         {assign var='lastmod_sortfield' value='comment'}
         {assign var='lastmod_shorttitle' value='{tr}Comment{/tr}'}
       {/if}
-      {self_link _class='tableheading' _sort_arg='sort_mode' _sort_field=$lastmod_sortfield _title=$lastmod_title}{$lastmod_shorttitle}{/self_link}
-      </td>
+      {self_link _sort_arg='sort_mode' _sort_field=$lastmod_sortfield _title=$lastmod_title}{$lastmod_shorttitle}{/self_link}
+      </th>
     {/if}
 
     {if $prefs.wiki_list_creator eq 'y'}
       {assign var='cntcol' value=$cntcol+1}
-      <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='creator' _title='{tr}Page creator{/tr}'}{tr}Creator{/tr}{/self_link}</td>
+      <th>{self_link _sort_arg='sort_mode' _sort_field='creator' _title='{tr}Page creator{/tr}'}{tr}Creator{/tr}{/self_link}</th>
     {/if}
 
     {if $prefs.wiki_list_user eq 'y'}
       {assign var='cntcol' value=$cntcol+1}
-      <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='user' _title='{tr}Last author{/tr}'}{tr}Last author{/tr}{/self_link}</td>
+      <th>{self_link _sort_arg='sort_mode' _sort_field='user' _title='{tr}Last author{/tr}'}{tr}Last author{/tr}{/self_link}</th>
     {/if}
 
     {if $prefs.wiki_list_lastver eq 'y'}
       {assign var='cntcol' value=$cntcol+1}
-      <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='version' _title='{tr}Last version{/tr}'}{tr}Last ver.{/tr}{/self_link}</td>
+      <th>{self_link _sort_arg='sort_mode' _sort_field='version' _title='{tr}Last version{/tr}'}{tr}Last ver.{/tr}{/self_link}</th>
     {/if}
 
     {if $prefs.wiki_list_status eq 'y'}
       {assign var='cntcol' value=$cntcol+1}
-      <td style="text-align:center;" class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='flag' _icon='lock_gray'}{tr}Status of the page{/tr}{/self_link}</td>
+      <th style="text-align:center;">{self_link _sort_arg='sort_mode' _sort_field='flag' _icon='lock_gray'}{tr}Status of the page{/tr}{/self_link}</th>
     {/if}
 
     {if $prefs.wiki_list_versions eq 'y'}
       {assign var='cntcol' value=$cntcol+1}
-      <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='versions' _title='{tr}Versions{/tr}'}{tr}Vers.{/tr}{/self_link}</td>
+      <th>{self_link _sort_arg='sort_mode' _sort_field='versions' _title='{tr}Versions{/tr}'}{tr}Vers.{/tr}{/self_link}</th>
     {/if}
 
     {if $prefs.wiki_list_links eq 'y'}
       {assign var='cntcol' value=$cntcol+1}
-      <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='links' _title='{tr}Links to other items in page{/tr}'}{tr}Links{/tr}{/self_link}</td>
+      <th>{self_link _sort_arg='sort_mode' _sort_field='links' _title='{tr}Links to other items in page{/tr}'}{tr}Links{/tr}{/self_link}</th>
     {/if}
 
     {if $prefs.wiki_list_backlinks eq 'y'}
       {assign var='cntcol' value=$cntcol+1}
-      <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='backlinks' _title='{tr}Links to this page in other pages{/tr}'}{tr}Backl.{/tr}{/self_link}</td>
+      <th>{self_link _sort_arg='sort_mode' _sort_field='backlinks' _title='{tr}Links to this page in other pages{/tr}'}{tr}Backl.{/tr}{/self_link}</th>
     {/if}
 
     {if $prefs.wiki_list_size eq 'y'}
       {assign var='cntcol' value=$cntcol+1}
-      <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='size' _title='{tr}Page size{/tr}'}{tr}Size{/tr}{/self_link}</td>
+      <th>{self_link _sort_arg='sort_mode' _sort_field='size' _title='{tr}Page size{/tr}'}{tr}Size{/tr}{/self_link}</th>
     {/if}
 
     {if $prefs.wiki_list_language eq 'y'}
       {assign var='cntcol' value=$cntcol+1}
-      <td class="heading">{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='lang' _title='{tr}Language{/tr}'}{tr}Lang.{/tr}{/self_link}</td>
+      <th>{self_link _sort_arg='sort_mode' _sort_field='lang' _title='{tr}Language{/tr}'}{tr}Lang.{/tr}{/self_link}</th>
     {/if}
 
     {if $prefs.wiki_list_categories eq 'y'}
       {assign var='cntcol' value=$cntcol+1}
-      <td class="heading">{tr}Categories{/tr}</td>
+      <th>{tr}Categories{/tr}</th>
     {/if}
 
     {if $prefs.wiki_list_categories_path eq 'y'}
       {assign var='cntcol' value=$cntcol+1}
-      <td class="heading">{tr}Categories{/tr}</td>
+      <th>{tr}Categories{/tr}</th>
     {/if}
 
     {if $tiki_p_edit eq 'y' or $tiki_p_assign_perm_wiki_page eq 'y'}
-      <td class="heading">Action</td>
+      <th>Action</th>
     {/if}
   </tr>
 

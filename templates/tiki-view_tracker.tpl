@@ -95,43 +95,43 @@
 <table class="normal">
 <tr>
 {if $tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y')}
-<td class="heading auto" style="width:20px;"></td>
+<th class="auto" style="width:20px;"></th>
 {/if}
 {if $tiki_p_admin_trackers eq 'y'}
-<td class="heading" width="15">
+<th width="15">
 <script type='text/javascript'>
 <!--//--><![CDATA[//><!--
 document.write("<input name=\"switcher\" id=\"clickall2\" title=\"{tr}Select All{/tr}\" type=\"checkbox\" onclick=\"switchCheckboxes(this.form,'action[]',this.checked)\"/>");
 //--><!]]>
 </script>
-</td>
+</th>
 {/if}
 
 {foreach from=$fields key=ix item=field_value}
 {if ( $field_value.type eq 's' and ($field_value.name eq "Rating" or $field_value.name eq tra("Rating")) and $field_value.isTblVisible eq 'y' ) || ( $field_value.isTblVisible eq 'y' and $field_value.type ne 'x' and $field_value.type ne 'h' and ($field_value.isHidden eq 'n' or $field_value.isHidden eq 'p' or $tiki_p_admin_trackers eq 'y') ) and ($field_value.type ne 'p' or $field_value.options_array[0] ne 'password') and (empty($field_value.visibleBy) or in_array($default_group, $field_value.visibleBy) or $tiki_p_admin_trackers eq 'y') }
-	<td class="heading auto">
+	<th class="auto">
 		{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='f_'|cat:$field_value.fieldId}{$field_value.name|truncate:255:"..."|default:"&nbsp;"}{/self_link}
-	</td>
+	</th>
 	{assign var=rateFieldId value=$field_value.fieldId}
 {/if}
 {/foreach}
 
 {if $tracker_info.showCreated eq 'y'}
-<td class="heading"><a href="tiki-view_tracker.php?{if $status}status={$status}&amp;{/if}{if $initial}initial={$initial}&amp;{/if}{if $find}find={$find}&amp;{/if}trackerId={$trackerId}{if $offset}&amp;offset={$offset}{/if}&amp;sort_mode={if
-$sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Created{/tr}</a></td>
+<th><a href="tiki-view_tracker.php?{if $status}status={$status}&amp;{/if}{if $initial}initial={$initial}&amp;{/if}{if $find}find={$find}&amp;{/if}trackerId={$trackerId}{if $offset}&amp;offset={$offset}{/if}&amp;sort_mode={if
+$sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Created{/tr}</a></th>
 {/if}
 {if $tracker_info.showLastModif eq 'y'}
-<td class="heading"><a href="tiki-view_tracker.php?status={$status}&amp;{if $initial}initial={$initial}&amp;{/if}find={$find}&amp;trackerId={$trackerId}{if $offset}&amp;offset={$offset}{/if}&amp;sort_mode={if $sort_mode eq 'lastModif_desc'}lastModif_asc{else}lastModif_desc{/if}">{tr}lastModif{/tr}</a></td>
+<th><a href="tiki-view_tracker.php?status={$status}&amp;{if $initial}initial={$initial}&amp;{/if}find={$find}&amp;trackerId={$trackerId}{if $offset}&amp;offset={$offset}{/if}&amp;sort_mode={if $sort_mode eq 'lastModif_desc'}lastModif_asc{else}lastModif_desc{/if}">{tr}lastModif{/tr}</a></th>
 {/if}
 {if $tracker_info.useComments eq 'y' and $tracker_info.showComments eq 'y'}
-<td class="heading" width="5%">{tr}Coms{/tr}</td>
+<th style="width:5%">{tr}Coms{/tr}</th>
 {/if}
 {if $tracker_info.useAttachments eq 'y' and  $tracker_info.showAttachments eq 'y'}
-<td class="heading" width="5%">{tr}atts{/tr}</td>
-{if $tiki_p_admin_trackers eq 'y'}<td class="heading" width="5%">{tr}dls{/tr}</td>{/if}
+<th style="width:5%">{tr}atts{/tr}</th>
+{if $tiki_p_admin_trackers eq 'y'}<th style="width:5%">{tr}dls{/tr}</th>{/if}
 {/if}
 {if $tiki_p_admin_trackers eq 'y'}
-<td class="heading" width="20">{tr}Action{/tr}</td>
+<th style="width:20px">{tr}Action{/tr}</th>
 {/if}
 </tr>
 
@@ -166,7 +166,7 @@ $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Created{/tr
 	{cycle values="odd,even" print=false}
 	{foreach from=$items[user].field_values item=f}
 		{if in_array($f.fieldId, $popupFields)}
-			 <tr><th class="{cycle advance=false}">{$f.name}</th><td class="{cycle}">{include file="tracker_item_field_value.tpl" field_value=$f}</td></tr>
+			 <tr><th class="{cycle advance=false}">{$f.name}</th><td class="{cycle}">{include file="tracker_item_field_value.tpl" field_value=$f}</th></tr>
 		{/if}
 	{/foreach}
 	</table>

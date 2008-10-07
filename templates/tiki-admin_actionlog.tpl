@@ -94,17 +94,17 @@
 {if $actionlogs}
 <table class="smallnormal">
 <tr>
-<th class="heading"><a href="tiki-admin_actionlog.php?startDate={$startDate}&amp;endDate={$endDate}&amp;sort_mode=user_{if $sort_mode eq 'user_desc'}asc{else}desc{/if}{$url}">{tr}User{/tr}</a></th>
-<th class="heading"><a href="tiki-admin_actionlog.php?startDate={$startDate}&amp;endDate={$endDate}&amp;sort_mode=lastModif_{if $sort_mode eq 'lastModif_desc'}asc{else}desc{/if}{$url}">{tr}Date{/tr}</a></th>
-<th class="heading"><a href="tiki-admin_actionlog.php?startDate={$startDate}&amp;endDate={$endDate}&amp;sort_mode=action_{if $sort_mode eq 'action_desc'}asc{else}desc{/if}{$url}">{tr}Action{/tr}</a></th>
-<th class="heading"><a href="tiki-admin_actionlog.php?startDate={$startDate}&amp;endDate={$endDate}&amp;sort_mode=objectType_{if $sort_mode eq 'objectType_desc'}asc{else}desc{/if}{$url}">{tr}Type{/tr}</a></th>
-<th class="heading"><a href="tiki-admin_actionlog.php?startDate={$startDate}&amp;endDate={$endDate}&amp;sort_mode=object_{if $sort_mode eq 'object_desc'}asc{else}desc{/if}{$url}">{tr}Object{/tr}</a></th>
-{if !$reportCateg and $showCateg eq 'y'}<th class="heading"><a href="tiki-admin_actionlog.php?startDate={$startDate}&amp;endDate={$endDate}&amp;sort_mode=categName_{if $sort_mode eq 'categName_desc'}asc{else}desc{/if}{$url}">{tr}Category{/tr}</a></th>{/if}
-<th class="heading"><a href="tiki-admin_actionlog.php?startDate={$startDate}&amp;endDate={$endDate}&amp;sort_mode=add_{if $sort_mode eq 'add_desc'}asc{else}desc{/if}{$url}">+{if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if}</a></th>
-<th class="heading"><a href="tiki-admin_actionlog.php?startDate={$startDate}&amp;endDate={$endDate}&amp;sort_mode=del_{if $sort_mode eq 'del_desc'}asc{else}desc{/if}{$url}">-{if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if}</a></th>
-{if $prefs.feature_contribution eq 'y'}<th class="heading">{tr}contribution{/tr}</th>{/if}
-{if $prefs.feature_contributor_wiki eq 'y'}<th class="heading">{tr}contributor{/tr}</th>{/if}
-{if $prefs.feature_contribution eq 'y' and $tiki_p_admin eq 'y'}<th class="heading">&nbsp;</th>{/if}
+<th><a href="tiki-admin_actionlog.php?startDate={$startDate}&amp;endDate={$endDate}&amp;sort_mode=user_{if $sort_mode eq 'user_desc'}asc{else}desc{/if}{$url}">{tr}User{/tr}</a></th>
+<th><a href="tiki-admin_actionlog.php?startDate={$startDate}&amp;endDate={$endDate}&amp;sort_mode=lastModif_{if $sort_mode eq 'lastModif_desc'}asc{else}desc{/if}{$url}">{tr}Date{/tr}</a></th>
+<th><a href="tiki-admin_actionlog.php?startDate={$startDate}&amp;endDate={$endDate}&amp;sort_mode=action_{if $sort_mode eq 'action_desc'}asc{else}desc{/if}{$url}">{tr}Action{/tr}</a></th>
+<th><a href="tiki-admin_actionlog.php?startDate={$startDate}&amp;endDate={$endDate}&amp;sort_mode=objectType_{if $sort_mode eq 'objectType_desc'}asc{else}desc{/if}{$url}">{tr}Type{/tr}</a></th>
+<th><a href="tiki-admin_actionlog.php?startDate={$startDate}&amp;endDate={$endDate}&amp;sort_mode=object_{if $sort_mode eq 'object_desc'}asc{else}desc{/if}{$url}">{tr}Object{/tr}</a></th>
+{if !$reportCateg and $showCateg eq 'y'}<th><a href="tiki-admin_actionlog.php?startDate={$startDate}&amp;endDate={$endDate}&amp;sort_mode=categName_{if $sort_mode eq 'categName_desc'}asc{else}desc{/if}{$url}">{tr}Category{/tr}</a></th>{/if}
+<th><a href="tiki-admin_actionlog.php?startDate={$startDate}&amp;endDate={$endDate}&amp;sort_mode=add_{if $sort_mode eq 'add_desc'}asc{else}desc{/if}{$url}">+{if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if}</a></th>
+<th><a href="tiki-admin_actionlog.php?startDate={$startDate}&amp;endDate={$endDate}&amp;sort_mode=del_{if $sort_mode eq 'del_desc'}asc{else}desc{/if}{$url}">-{if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if}</a></th>
+{if $prefs.feature_contribution eq 'y'}<th>{tr}contribution{/tr}</th>{/if}
+{if $prefs.feature_contributor_wiki eq 'y'}<th>{tr}contributor{/tr}</th>{/if}
+{if $prefs.feature_contribution eq 'y' and $tiki_p_admin eq 'y'}<th>&nbsp;</th>{/if}
 </tr>
 {cycle values="even,odd" print=false}
 {section name=ix loop=$actionlogs}
@@ -171,10 +171,10 @@
 <table class="smallnormal">
 <caption>{tr}Login{/tr}</caption>
 <tr>
-{if $selectedUsers|@count gt 1}<th class="heading">{tr}User{/tr}</th>{/if}
-<th class="heading">{tr}connection time{/tr}</th>
-<th class="heading">{tr}connection seconds{/tr}</th>
-<th class="heading">{tr}Login{/tr}</th>
+{if $selectedUsers|@count gt 1}<th>{tr}User{/tr}</th>{/if}
+<th>{tr}connection time{/tr}</th>
+<th>{tr}connection seconds{/tr}</th>
+<th>{tr}Login{/tr}</th>
 </tr>
 {foreach key=auser item=time from=$logTimes}
 <tr>
@@ -191,9 +191,9 @@
 <table class="smallnormal">
 <caption>{tr}Volumn per category{/tr}</caption>
 <tr>
-<th class="heading">{tr}Category{/tr}</th>
+<th>{tr}Category{/tr}</th>
 {foreach  item=type from=$typeVol}
-<th class="heading">{$type} (+{if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if})</th><th class="heading">{$type} (-{if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if})</th><th class="heading">{$type} ({if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if})</th>
+<th>{$type} (+{if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if})</th><th>{$type} (-{if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if})</th><th>{$type} ({if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if})</th>
 {/foreach}
 </tr>
 {foreach key=categId item=vol from=$volCateg}
@@ -214,10 +214,10 @@
 <table class="smallnormal">
 <caption>{tr}Volumn per category and per user{/tr}</caption>
 <tr>
-<th class="heading">{tr}Category{/tr}</th>
-<th class="heading">{tr}User{/tr}</th>
+<th>{tr}Category{/tr}</th>
+<th>{tr}User{/tr}</th>
 {foreach  item=type from=$typeVol}
-<th class="heading">{$type} (+{if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if})</th><th class="heading">{$type} (-{if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if})</th><th class="heading">{$type} ({if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if})</th>
+<th>{$type} (+{if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if})</th><th>{$type} (-{if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if})</th><th>{$type} ({if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if})</th>
 {/foreach}
 </tr>
 {foreach key=categId item=vol from=$volUserCateg}
@@ -239,9 +239,9 @@
 <table class="normal">
 <caption>{tr}Number of actions per user{/tr}</caption>
 <tr>
-<th class="heading">{tr}User{/tr}</th>
+<th>{tr}User{/tr}</th>
 {foreach key=title item=nb from=$userActions[0]}
-{if $title ne 'user'}<th class="heading">{$title|replace:"/":" "}</th>{/if}
+{if $title ne 'user'}<th>{$title|replace:"/":" "}</th>{/if}
 {/foreach}
 </tr>
 {cycle values="even,odd" print=false}
@@ -262,9 +262,9 @@
 <table class="normal">
 <caption>{tr}Number of actions per object{/tr}</caption>
 <tr>
-<th class="heading">{tr}Object{/tr}</th>
+<th>{tr}Object{/tr}</th>
 {foreach key=title item=nb from=$objectActions[0]}
-{if $title ne 'object' and $title ne 'link'}<th class="heading">{$title|replace:"/":" "}</th>{/if}
+{if $title ne 'object' and $title ne 'link'}<th>{$title|replace:"/":" "}</th>{/if}
 {/foreach}
 </tr>
 {cycle values="even,odd" print=false}
@@ -285,9 +285,9 @@
 <table class="normal">
 <caption>{tr}Number of actions per category{/tr}</caption>
 <tr>
-<th class="heading">{tr}Category{/tr}</th>
+<th>{tr}Category{/tr}</th>
 {foreach  key=title item=nb from=$userActions[0]}
-{if $title ne 'user'}<th class="heading">{$title|replace:"/":" "}</th>{/if}
+{if $title ne 'user'}<th>{$title|replace:"/":" "}</th>{/if}
 {/foreach}
 </tr>
 {foreach key=categId item=stat from=$statCateg}
@@ -306,10 +306,10 @@
 <table class="normal">
 <caption>{tr}Number of actions per category and per user{/tr}</caption>
 <tr>
-<th class="heading">{tr}Category{/tr}</th>
-<th class="heading">{tr}User{/tr}</th>
+<th>{tr}Category{/tr}</th>
+<th>{tr}User{/tr}</th>
 {foreach  key=title item=nb from=$userActions[0]}
-{if $title ne 'user'}<th class="heading">{$title|replace:"/":" "}</th>{/if}
+{if $title ne 'user'}<th>{$title|replace:"/":" "}</th>{/if}
 {/foreach}
 </tr>
 {foreach key=categUser item=stat from=$statUserCateg}
@@ -328,7 +328,7 @@
 {if $prefs.feature_contribution eq 'y' && isset($groupContributions) && $groupContributions|@count >= 1}
 <table>
 <caption>{if $selectedUsers}{tr}Volumn per the users'group and per contribution{/tr}{else}{tr}Volumn per group and per contribution{/tr}{/if}</caption>
-<tr><th class="heading">{tr}Group{/tr}</th><th class="heading">{tr}Contribution{/tr}</th><th class="heading">+{if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if}</th><th class="heading">-{if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if}</th></tr>
+<tr><th>{tr}Group{/tr}</th><th>{tr}Contribution{/tr}</th><th>+{if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if}</th><th>-{if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if}</th></tr>
 {foreach from=$groupContributions key=group item=contributions}
 {foreach from=$contributions key=contribution item=stat}
 <tr><td class="{cycle advance=false}">{$group}</td><td class="{cycle advance=false}">{$contribution}</td><td class="{cycle advance=false}">{$stat.add}</td><td class="{cycle advance=false}">{$stat.del}</td></tr><!-- {cycle} -->
@@ -340,7 +340,7 @@
 {if $prefs.feature_contribution eq 'y' && isset($userContributions) && $userContributions|@count >= 1}
 <table>
 <caption>{tr}Volumn per user and per contribution{/tr}</caption>
-<tr><th class="heading">{tr}User{/tr}</th><th class="heading">{tr}Contribution{/tr}</th><th class="heading">+{if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if}</th><th class="heading">-{if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if}</th></tr>
+<tr><th>{tr}User{/tr}</th><th>{tr}Contribution{/tr}</th><th>+{if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if}</th><th>-{if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if}</th></tr>
 {foreach from=$userContributions key=user item=contributions}
 {foreach from=$contributions key=contribution item=stat}
 <tr><td class="{cycle advance=false}">{$user}</td><td class="{cycle advance=false}">{$stat.name}</td><td class="{cycle advance=false}">{$stat.stat.add}</td><td class="{cycle advance=false}">{$stat.stat.del}</td></tr><!-- {cycle} -->
@@ -352,11 +352,11 @@
 {if $prefs.feature_contribution eq 'y' && isset($contributionStat)}
 <table>
 <caption>{if $selectedUsers}{tr}Volumn per users'contribution and time{/tr}{else}{tr}Volumn per contribution and time{/tr}{/if}</caption>
-<tr><th class="heading">{tr}Contribution{/tr}</th>
-<th class="heading" colspan="{$contributionNbCols}">{if $contribTime eq 'd'}{tr}Days{/tr}{else}{tr}Weeks{/tr}{/if}</th></tr>
-<tr><td class="heading"></td>
+<tr><th>{tr}Contribution{/tr}</th>
+<th colspan="{$contributionNbCols}">{if $contribTime eq 'd'}{tr}Days{/tr}{else}{tr}Weeks{/tr}{/if}</th></tr>
+<tr><th></th>
 {section name=foo start=0 loop=`$contributionNbCols`}
-<td class="heading">{$smarty.section.foo.index+1}</td>
+<th>{$smarty.section.foo.index+1}</th>
 {/section}
 </tr>
 {foreach from=$contributionStat key=contributionId item=contribution}
@@ -390,10 +390,10 @@
 <table class="smallnormal">
 <tr>
 {if $tiki_p_admin eq 'y'}
-<th class="heading">{tr}recorded{/tr}</th>
+<th>{tr}recorded{/tr}</th>
 {/if}
-<th class="heading">{tr}viewed{/tr}</th>
-<th class="heading">{tr}Action{/tr}</th><th class="heading">{tr}Type{/tr}</th>
+<th>{tr}viewed{/tr}</th>
+<th>{tr}Action{/tr}</th><th>{tr}Type{/tr}</th>
 </tr>
 {cycle values="even,odd" print=false}
 {section name=ix loop=$actionlogConf}
