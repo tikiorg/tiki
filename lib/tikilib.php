@@ -6292,7 +6292,7 @@ class TikiLib extends TikiDB {
 		}
 
 		if (!$simple_wiki) {
-			$this->parse_data_process_maketoc( $data, $language );
+			$this->parse_data_process_maketoc( $data, $language, $page );
 
 		} // closing if ($simple_wiki)
 
@@ -6311,7 +6311,7 @@ class TikiLib extends TikiDB {
 		return $data;
 	}
 
-	function parse_data_process_maketoc( &$data, $language='' ) {
+	function parse_data_process_maketoc( &$data, $language='', $page ='' ) {
 
 		global $prefs;
 
