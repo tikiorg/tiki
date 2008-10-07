@@ -2,7 +2,7 @@
 {popup_init src="lib/overlib.js"}
 {title help="comments"}{$title}{/title}
 
-{if $comments or ($find ne '') or count($show_types) gt 0}
+{if $comments or ($find ne '') or count($show_types) gt 0 or isset($smarty.request.findfilter_approved)}
 	{include file='find.tpl' types=$show_types find_type=$selected_types types_tag='checkbox' filters=$filters filter_names=$filter_names filter_values=$filter_values}
 {/if}
 
@@ -92,7 +92,7 @@
 {if $comments}
 <div class="formcolor">
 	{tr}Perform action with checked:{/tr}
-	{icon _id='cross' _tag='input_image' name='remove' alt="{tr}Delete{/tr}"}
+	{icon _id='cross' _tag='input_image' name='remove' value='y' alt="{tr}Delete{/tr}"}
 	{if $tiki_p_admin_comments eq 'y' and $prefs.feature_comments_moderation eq 'y'}
 		{icon _id='comment_approve' _tag='input_image' name='approve' value='y' alt="{tr}Approve{/tr}"}
 		{icon _id='comment_reject' _tag='input_image' name='approve' value='r' alt="{tr}Reject{/tr}"}
