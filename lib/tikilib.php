@@ -5962,6 +5962,11 @@ class TikiLib extends TikiDB {
 		// Extract [link] sections (to be re-inserted later)
 		$noparsedlinks = array();
 
+		if (!$simple_wiki) {
+			// Replace colors ~~foreground[,background]:text~~
+			// must be done before []as the description may contain color change
+			$data = preg_replace("/\~\~([^\:\,]+)(,([^\:]+))?:([^\~]+)\~\~/", "<span style=\"color:$1; background:$3\">$4</span>", $data);
+		}
 		// This section matches [...].
 		// Added handling for [[foo] sections.  -rlpowell
 		if (!$simple_wiki) {
@@ -6047,8 +6052,6 @@ class TikiLib extends TikiDB {
 		if (!$simple_wiki) {
 			// Replace boxes
 			$data = preg_replace("/\^([^\^]+)\^/", "<div class=\"simplebox\">$1</div>", $data);
-			// Replace colors ~~foreground[,background]:text~~
-			$data = preg_replace("/\~\~([^\:\,]+)(,([^\:]+))?:([^\~]+)\~\~/", "<span style=\"color:$1; background:$3\">$4</span>", $data);
 			// Underlined text
 			$data = preg_replace("/===(.+?)===/", "<span style=\"text-decoration:underline;\">$1</span>", $data);
 			// Center text
