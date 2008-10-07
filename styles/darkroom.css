@@ -1917,7 +1917,7 @@ div.thumbdescription span.thumbinfoname {}
 a.namealias {}
 div.gallerypath, div.gallerypath a { color: #6996C3; font-style: italic; font-weight: normal; margin-left: 3px; text-decoration: none}
 div.gallerypath a:hover { text-decoration: underline}
-.fgalexplorer { border: 1px solid #D8D8D8}
+.fgalexplorer { border: 1px solid #D8D8D8; background: #999999;}
 .fgallisting table td { padding-left: 2px; padding-right: 2px}
 
 /***** Trackers *****/
