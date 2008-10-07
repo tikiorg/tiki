@@ -8,7 +8,7 @@
 
 require_once('tiki-setup.php');
 include_once('lib/commentslib.php');
-$auto_query_args = array('types_section','types','show_types','sort_mode','offset','find');
+$auto_query_args = array('types_section','types','show_types','sort_mode','offset','find','findfilter_approved');
 
 $commentslib = new Comments($dbTiki);
 
@@ -132,11 +132,15 @@ if (isset($_REQUEST["find"])) {
 }
 $smarty->assign_by_ref('find', $find);
 
-if ( ! isset($_REQUEST['findfilter_approved']) ) $_REQUEST['findfilter_approved'] = '';
-$filter_values = array('approved' => $_REQUEST['findfilter_approved']);
-$filter_names = array('approved' => tra('Approved Status'));
-$filters = array('approved' => array('n' => tra('Queued'), 'y' => tra('Approved'), 'r' => tra('Rejected')));
-asort($filters['approved']);
+if ( $prefs['feature_comments_moderation'] == 'y' ) {
+	if ( ! isset($_REQUEST['findfilter_approved']) ) $_REQUEST['findfilter_approved'] = '';
+	$filter_values = array('approved' => $_REQUEST['findfilter_approved']);
+	$filter_names = array('approved' => tra('Approved Status'));
+	$filters = array('approved' => array('n' => tra('Queued'), 'y' => tra('Approved'), 'r' => tra('Rejected')));
+	asort($filters['approved']);
+} else {
+	$filters = $filter_names = $filter_values = array();
+}
 
 $comments = $commentslib->get_all_comments($selected_types, $offset, $maxRecords, $sort_mode, $find, 'y', $_REQUEST['findfilter_approved']);
 foreach ( $comments['data'] as $k => $v ) {
