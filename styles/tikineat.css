@@ -514,7 +514,7 @@ table.email td.body {
  border: 1px solid #8CACBB;
 }
 
-table.email td.heading {
+table.email th {
  text-align: left;
  width: 15px;
 }
@@ -525,7 +525,7 @@ table.email td.closeButton {
 }
 
 /* headings */
-DIV.heading, TD.heading,
+DIV.heading, th,
 td.listartheading, td.forumheading, td.viewthread {
 	color : black;
 	background-color : #DEE7EC;

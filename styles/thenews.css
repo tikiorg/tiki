@@ -848,12 +848,11 @@ table.admin tr td div#page-bar {
 	background-color: transparent;
 }
 
-table.normal td.heading {
+table.normal th {
 	font-size: 1em;
 }
 td {}
 * html td {	font-size: 11px}
-th {}
 
 td.normal,
 td.bloglist,
@@ -872,7 +871,7 @@ td.even {background: #f9f9f9}
 
 td.third {background: #e7e7e7}
 
-td.heading {
+th {
 	text-align: center;
 	background: #F0F4F5;
 	border: 1px solid #999999;
@@ -899,9 +898,6 @@ td.form {
 	background: #E0DFE3;
 }
 
-th {
-	
-}
 /** Specific Tables **/
 
 /* Tables (list reduced due to classes not found in files) */

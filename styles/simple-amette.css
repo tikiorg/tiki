@@ -149,14 +149,14 @@ table.galtable {
 	border-collapse: collapse;
 }
 
-table.normal td.heading {
+table.normal th {
  background-color: #abcdef;
  border: solid 1px #24880C;
  font-size: 1em;
  width: 15px;
 }
 
-table.admin td.heading {
+table.admin th {
  background-color: #EEF5EE;
  border: solid 1px #24880C;
  font-size: 1em;

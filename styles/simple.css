@@ -147,7 +147,7 @@ table.galtable {
   border-collapse: collapse;
 }
 
-table.normal td.heading {
+table.normal th {
   background-color: #abcdef;
   font-size: 1em;
   width: 15px;

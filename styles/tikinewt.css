@@ -859,16 +859,6 @@ td {
 	text-align: left;
 }
 
-* html td,
-* html th { font-size: 11px }
-
-th {
-	color: black;
-	background: #DEE7EC;
-	border: 1px solid #8CACBB;
-	padding: 0 2px;
-}
-
 /* Cells in forms using a background color */
 .formcolor td,
 .galform td,
@@ -907,7 +897,7 @@ table.email td.body {
  border: 1px solid #8CACBB;
 }
 
-table.email td.heading {
+table.email th {
  text-align: left;
  width: 15px;
 }
@@ -918,12 +908,15 @@ table.email td.closeButton {
 }
 
 /* headings */
-div.heading, td.heading {
+div.heading, th {
 	color: black;
 	background: #DEE7EC;
 	border: 1px solid #8CACBB;
 	padding: 0 2px;
 }
+
+* html td,
+* html th {font-size: 11px}
 
 form.admin {
 	padding: 3px

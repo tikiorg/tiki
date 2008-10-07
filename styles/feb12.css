@@ -775,7 +775,6 @@ table.admin tr td div#page-bar {}
 
 td {vertical-align: top; font-size: inherit}
 * html td {	font-size: 100%}
-th {}
 
 .normal td,
 td.normal,
@@ -801,13 +800,9 @@ td.even {
 
 td.third { }
 
-td.heading {
-	text-align: center;
-	color: #93554a;
-	background: #a8cce2}
-
 th,
-table.normal td.heading {
+table.normal th {
+	text-align: center;
 	font-size: 1em;
 	font-weight: bold;
 	color: #93554a;
@@ -830,8 +825,6 @@ td.form {
 .forumform td {
 	border: 1px solid #a5acb2;
 	background: #a8cce2}
-
-th { }
 
 /** Tabs **/
 .tabs {

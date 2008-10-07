@@ -925,11 +925,6 @@ table.admin tr td div#page-bar {}
 td {vertical-align: top}
 * html td { font-size: 11px}
 
-th {
-	padding: 0 2px;
-	background: #303030;
-	color: #F5F5F5}
-
 td.normal,
 td.bloglist,
 .wikitable td,
@@ -948,11 +943,12 @@ td.even {
 
 /* table.email {}
 table.email td.body {}
-table.email td.heading {}
+table.email th {}
 table.email td.closeButton {} */
 
 div.heading,
-td.heading {
+th {
+	padding: 0 2px;
 	background: #292929 !important;
 	text-align: center;
 	color: #F5F5F5;
