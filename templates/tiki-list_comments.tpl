@@ -91,7 +91,12 @@
 
 {if $comments}
 <div class="formcolor">
-{tr}Perform action with checked:{/tr} <input type="submit" name="remove" value="{tr}Delete{/tr}" />
+	{tr}Perform action with checked:{/tr}
+	{icon _id='cross' _tag='input_image' name='remove' alt="{tr}Delete{/tr}"}
+	{if $tiki_p_admin_comments eq 'y' and $prefs.feature_comments_moderation eq 'y'}
+		{icon _id='comment_approve' _tag='input_image' name='approve' value='y' alt="{tr}Approve{/tr}"}
+		{icon _id='comment_reject' _tag='input_image' name='approve' value='n' alt="{tr}Reject{/tr}"}
+	{/if}
 </div>
 </form>
 {/if}
