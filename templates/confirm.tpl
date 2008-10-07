@@ -5,7 +5,7 @@
   <div class="cbox-data">
     <form action="{$confirmaction|escape}" method="post">
       {if $ticket}<input value="{$ticket}" name="ticket" type="hidden" />{/if}
-      {query _type='form_input'}
+      {query _type='form_input' _keepall='y'}
       <input type="submit" name="daconfirm" value="{tr}Click here to confirm your action{/tr}" />
       <span class="button2">
       {if $prefs.feature_ajax eq 'y' and isset($last_mid_template)}

@@ -45,7 +45,7 @@ function key_get($area, $confirmation_text = '', $confirmaction='') {
 		if ($user) {
 			$whose = $user;
 		} else { 
-  		$whose = ' '. md5($_SERVER['REMOTE_ADDR'].$_SERVER['USER_AGENT']);
+	  		$whose = ' '. md5($_SERVER['REMOTE_ADDR'].$_SERVER['USER_AGENT']);
 		}
 		$ticket = md5(uniqid(rand()));
 		$tikilib->set_user_preference($whose,'ticket',$ticket);
@@ -54,10 +54,12 @@ function key_get($area, $confirmation_text = '', $confirmaction='') {
 		if (empty($confirmation_text)) {
 			$confirmation_text = tra('Click here to confirm your action');
 		}
+
 		if (empty($confirmaction)) {
-			$confirmaction = $_SERVER['REQUEST_URI'];
+			$confirmaction = $_SERVER['PHP_SELF'];
 		}
-// Display the confirmation in the main tiki.tpl template
+
+		// Display the confirmation in the main tiki.tpl template
 		$smarty->assign('post',$_POST);
 		$smarty->assign('dblclickedit','n');
 		$smarty->assign('print_page','n');
