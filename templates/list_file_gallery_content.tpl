@@ -30,7 +30,7 @@
     {if isset($gal_info.$key_name) and ( $gal_info.$key_name eq 'y' or $gal_info.$key_name eq 'i' or $gal_info.$key_name eq 'a' or $propname eq 'name' ) }
       {assign var=propval value=$item.name}
       {assign var=link_title value=''}
-      {assign var=td_args value=' class="heading"'}
+      {assign var=td_args value=''}
       
       {if $gal_info.$key_name eq 'i' or $propname eq 'type' or ( $propname eq 'lockedby' and $gal_info.$key_name eq 'a') }
          {if isset($item.icon)}
@@ -44,15 +44,15 @@
 
       {if $propname eq 'name' and ( $gal_info.show_name eq 'a' or $gal_info.show_name eq 'f' ) }
         {assign var=nbCols value=`$nbCols+1`}
-        <td{$td_args}>{self_link _class="tableheading" _sort_arg="sort_mode" _sort_field='filename'}{tr}Filename{/tr}{/self_link}</td>
+        <th{$td_args}>{self_link _sort_arg="sort_mode" _sort_field='filename'}{tr}Name{/tr}{/self_link}</th>
       {/if}
       {if !($galleryId eq 0 and $propname eq 'lockedby') and ($propname neq 'name' or ( $gal_info.show_name eq 'a' or $gal_info.show_name eq 'n' )) }
         {assign var=nbCols value=`$nbCols+1`}
-        <td{$td_args}>
-           {self_link _class="tableheading" _sort_arg="sort_mode" _sort_field=$propname _title=$link_title}
+        <th{$td_args}>
+           {self_link _sort_arg="sort_mode" _sort_field=$propname _title=$link_title}
              {if $propicon}{icon _id=$propicon alt=$link_title}{else}{$propval}{/if}
 		   {/self_link}
-        </td>
+        </th>
       {/if}
     {/if}
   {/foreach}
@@ -75,7 +75,7 @@
   {if $other_columns_selected neq ''}
     {assign var=nbCols value=`$nbCols+1`}
     <th>
-    {self_link _class='tableheading' _sort_arg='sort_mode' _sort_field=$other_columns_selected _title=$fgal_listing_conf.$other_columns_selected.name}{$fgal_listing_conf.$other_columns_selected.name}{/self_link}
+    {self_link _sort_arg='sort_mode' _sort_field=$other_columns_selected _title=$fgal_listing_conf.$other_columns_selected.name}{$fgal_listing_conf.$other_columns_selected.name}{/self_link}
     </th>
   {/if}
       
@@ -171,7 +171,7 @@
       
   {if ( $prefs.use_context_menu_icon eq 'y' or $prefs.use_context_menu_text eq 'y' ) and $gal_info.show_action neq 'n' and $prefs.javascript_enabled eq 'y'}
     <td style="white-space: nowrap" class="{cycle advance=false}">
-      <a class="fgalname" title="{tr}Actions{/tr}" href="#" {popup trigger="onClick" sticky=1 mouseoff=1 fullhtml="1" text=$smarty.capture.over_actions|escape:"javascript"|escape:"html"} style="padding:0; margin:0; border:0">{icon _id='wrench' alt='{tr}Actions{/tr}'}</a>
+      <a class="fgalname" title="{tr}Actions{/tr}" href="#" {popup trigger="onClick" sticky=1 mouseoff=1 fullhtml="1" center=true text=$smarty.capture.over_actions|escape:"javascript"|escape:"html"} style="padding:0; margin:0; border:0">{icon _id='wrench' alt='{tr}Actions{/tr}'}</a>
     </td>
   {/if}
       
