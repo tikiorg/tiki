@@ -64,6 +64,7 @@ RewriteRule ^newsletter([0-9]+)    tiki-newsletters.php?nlId=$1             [QSA
 RewriteRule ^quiz([0-9]+)          tiki-take_quiz.php?quizId=$1             [QSA,L]
 RewriteRule ^survey([0-9]+)        tiki-take_survey.php?surveyId=$1         [QSA,L]
 RewriteRule ^tracker([0-9]+)       tiki-view_tracker.php?trackerId=$1       [QSA,L]
+RewriteRule ^item([0-9]+)          tiki-view_tracker_item.php?itemId=$1     [QSA,L]
 RewriteRule ^wiki-([A-Za-z0-9]+)   tiki-index.php?page=$1                   [QSA,L]
 RewriteRule ^page-([A-Za-z0-9]+)   tiki-index.php?page=$1                   [QSA,L]
 RewriteRule ^irc([0-9]+)           tiki-irc_logs.php?focus=$1               [QSA,L]
