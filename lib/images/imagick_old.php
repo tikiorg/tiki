@@ -12,6 +12,9 @@ class Image extends ImageAbstract {
       parent::__construct($image, false);
       $this->data = imagick_blob2image($image);
     }
+    if (($t = imagick_failedreason($this->data))) {
+      $this->data = NULL;
+    }
   }
 
   function Image($image, $isfile = false) {
