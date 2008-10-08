@@ -88,7 +88,6 @@ if (isset($_REQUEST["looksetup"])) {
     foreach ($pref_simple_values as $svitem) {
         simple_set_value ($svitem);
     }
-	echo $prefs['feature_endbody_code'];
 
     $pref_byref_values = array(
 	"feature_left_column",
