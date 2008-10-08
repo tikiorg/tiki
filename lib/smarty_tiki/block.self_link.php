@@ -37,6 +37,13 @@ function smarty_block_self_link($params, $content, &$smarty, $repeat = false) {
     require_once $smarty->_get_plugin_filepath('function', 'query');
 
     if ( is_array($params) ) {
+
+			if ( isset($params['xajax']) ) {
+				unset($params['xajaxargs']);
+				unset($params['xajaxr']);
+				unset($params['xajax']);
+			}
+
       if ( ! isset($content) ) $content = '';
       if ( ! isset($params['_ajax']) ) $params['_ajax'] = 'y';
       if ( ! isset($params['_tag']) ) $params['_tag'] = 'y';
