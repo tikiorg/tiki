@@ -967,14 +967,14 @@ div.heading {
 	margin: 3px 2px;
 }
 
-.button {
+/*.button {
 	background: #DEE7EC;
 	border: 1px solid #8CACBB;
 	margin: 2px;
 	padding: 0 2px;
 	text-align: center;
 	vertical-align: middle;
-}
+}*/
 
 /* links to view an object from a table listing objects can be generalized to this link */
 a.fgalname {
@@ -1255,11 +1255,11 @@ body .button2 {
 }
 
 /* Links in buttons */
-.button2 a
-	, .button2 a:visited 
-	,	.navbar a
-	,	.navbar a:visited
-	{
+.button2 a,
+.button2 a:visited,
+.button a,
+.button a:visited,
+button {
 	font-size: .95em;
 	color: #223344;
 	background: #C7D0D9;
@@ -1272,9 +1272,9 @@ body .button2 {
 	line-height: 170%;
 }
 
-.button2 a:hover 
-	,	.navbar a:hover 
-	{
+.button2 a:hover,
+.button a:hover,
+button:hover {
 	background: #dca;
 }
 
