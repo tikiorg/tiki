@@ -5960,6 +5960,16 @@ class TikiLib extends TikiDB {
 		// Handle comment sections
 		$data = preg_replace(';~tc~(.*?)~/tc~;s', '', $data);
 		$data = preg_replace(';~hc~(.*?)~/hc~;s', '<!-- $1 -->', $data);
+		// Replace special characters
+		// done after url catching because otherwise urls of dyn. sites will be modified
+		// not done in wysiwyg mode, i.e. $prefs['feature_wysiwyg'] set to something other than 'no' or not set at all
+		//			if (!$simple_wiki and $prefs['feature_wysiwyg'] == 'n') 
+		//above line changed by mrisch - special functions were not parsing when wysiwyg is set but wysiswyg is not enabled
+		// further changed by nkoth - why not parse in wysiwyg mode as well, otherwise it won't parse for display/preview?
+		// must be done before color as we can have ~hs~~hs
+		if (!$simple_wiki) {
+			$this->parse_htmlchar($data);
+		}
 
 		// Extract [link] sections (to be re-inserted later)
 		$noparsedlinks = array();
@@ -5982,16 +5992,6 @@ class TikiLib extends TikiDB {
 				$noparsedlinks[] = $aux;
 				$data = preg_replace('/(^|[^a-zA-Z0-9])'.preg_quote($np,'/').'([^a-zA-Z0-9]|$)/', '\1'.$key.'\2', $data);
 			}
-		}
-
-		// Replace special characters
-		// done after url catching because otherwise urls of dyn. sites will be modified
-		// not done in wysiwyg mode, i.e. $prefs['feature_wysiwyg'] set to something other than 'no' or not set at all
-		//			if (!$simple_wiki and $prefs['feature_wysiwyg'] == 'n') 
-		//above line changed by mrisch - special functions were not parsing when wysiwyg is set but wysiswyg is not enabled
-		// further changed by nkoth - why not parse in wysiwyg mode as well, otherwise it won't parse for display/preview?
-		if (!$simple_wiki) {
-			$this->parse_htmlchar($data);
 		}
 
 		// BiDi markers
