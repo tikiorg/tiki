@@ -89,6 +89,19 @@
 <tr><td class="{cycle advance=false}"><strong>{tr}Block Preformatting{/tr}</strong></td><td class="{cycle}"> {tr}Indent text with any number of spaces to turn it into a monospaced block that still follows other Wiki formatting instructions. It will be indended with the same number of spaces that you used.  Note that this mode does not preserve exact spacing and line breaks; use ~pp~...~/pp~ for that.{/tr}</td></tr>
 <tr><td class="{cycle advance=false}"><strong>{tr}Direction{/tr}</strong></td><td class="{cycle}">"{literal}{r2l}{/literal}", "{literal}{l2r}{/literal}", "{literal}{rm}{/literal}", "{literal}{lm}{/literal}"{tr}Insert resp. right-to-left and left-to-right text direction DIV (up to end of text) and markers for langages as arabic or hebrew.{/tr}</td></tr>
 <tr><td class="{cycle advance=false}"><strong>{tr}Table of contents{/tr}</strong></td><td class="{cycle}">{tr}"{literal}{toc}{/literal}", "{literal}{maketoc}{/literal}" prints out a table of contents for the current page based on structures (toc) or ! headings (maketoc){/tr}</td></tr>
+<tr><td class="{cycle advance=false}"><strong>{tr}Special characters{/tr}</strong></td><td class="{cycle}">
+"{literal}~hs~{/literal}" {tr}hard space{/tr},
+"{literal}~c~{/literal}" &copy;,
+"{literal}~amp~{/literal}" &amp;,
+"{literal}~lt~{/literal}" &lt;,
+"{literal}~gt~{/literal}" &gt;,
+"{literal}~ldq~{/literal}" &ldquo;,
+"{literal}~rdq~{/literal}" &rdquo;,
+"{literal}~lsq~{/literal}" &lsquo;,
+"{literal}~rsq~{/literal}" &rsquo;,
+"{literal}~--~{/literal}" &mdash;,
+"{literal}~bs~{/literal}" &#92;,
+{tr}numeric between ~ for html numeric characters entity{/tr}</td></tr>
 <tr><td class="{cycle advance=false}"><strong>{tr}Misc{/tr}</strong></td><td class="{cycle}">"{literal}{cookie}, {poll}{/literal}"</td></tr>
 </table>
 </div>
