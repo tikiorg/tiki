@@ -207,31 +207,33 @@ class RankLib extends TikiLib {
 
 	function forums_ranking_last_posts($limit) {
 		global $user;
-		$query = "select * from
-		`tiki_comments`,`tiki_forums` where
-		`object`=".$this->sql_cast("`forumId`","string")." and `objectType` = 'forum'
-		order by `commentDate` desc"; 
-//todo(tibi) this will save a lot of time but after this step the not permitted forums will be filtered out. so you might end up with less than limit.
-	//		$result = $this->query($query,array(),$limit);
-
-		$result = $this->query($query,array());
-		$ret = array();
+		$offset=0;
 		$count = 0;
-		while (($res = $result->fetchRow()) && $count < $limit) {
-                 if ($this->user_has_perm_on_object($user, $res['forumId'], 'forum', 'tiki_p_forum_read')) {
-				$aux['name'] = $res['name'] . ': ' . $res['title'];
-				$aux['title'] = $res['title'];
-				$aux['hits'] = $this->get_long_datetime($res['commentDate']);
-				$tmp = $res['parentId'];
-				if ($tmp == 0) $tmp = $res['threadId'];
-				$aux['href'] = 'tiki-view_forum_thread.php?forumId=' . $res['forumId'] . '&amp;comments_parentId=' . $tmp;
-				$aux['date'] = $res['commentDate'];
-				$aux['user'] = $res['userName'];
-				$ret[] = $aux;
-				++$count;
+		$ret = array();
+		while( $count < $limit) {
+			$query = "select `name`, `title`, `commentDate`, `parentId`, `threadId`, `forumId`, `userName` from
+				`tiki_comments`,`tiki_forums` where
+				`object`=".$this->sql_cast("`forumId`","string")." and `objectType` = 'forum'
+				order by `commentDate` desc"; 
+			$result = $this->query($query,array(),1,$offset);
+			$offset++;
+			if( ($res = $result->fetchRow()) ) {
+				if ($this->user_has_perm_on_object($user, $res['forumId'], 'forum', 'tiki_p_forum_read')) {
+					$aux['name'] = $res['name'] . ': ' . $res['title'];
+					$aux['title'] = $res['title'];
+					$aux['hits'] = $this->get_long_datetime($res['commentDate']);
+					$tmp = $res['parentId'];
+					if ($tmp == 0) $tmp = $res['threadId'];
+					$aux['href'] = 'tiki-view_forum_thread.php?forumId=' . $res['forumId'] . '&amp;comments_parentId=' . $tmp;
+					$aux['date'] = $res['commentDate'];
+					$aux['user'] = $res['userName'];
+					$ret[] = $aux;
+					++$count;
+				}
+			} else {
+				break;
 			}
 		}
-
 		$retval["data"] = $ret;
 		$retval["title"] = tra("Forums last posts");
 		$retval["y"] = tra("Topic date");
