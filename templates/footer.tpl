@@ -1,4 +1,5 @@
 {* $Id$ *}
+{* ==> put in this file what is not displayed in the layout (javascript, debug..)*}
 {if (! isset($display) or $display eq '')}
 {if count($phpErrors)}
 <span class="button2"><a href="#" onclick="flip('errors');return false;">{tr}Show php error messages{/tr}</a></span><br />
@@ -19,9 +20,6 @@
 	{$phplayers_LayersMenu->printFooter()}
 {/if}
 
-{if $lastup}
-<div class="cvsup" style="font-size:x-small;text-align:center;color:#999;">{tr}Last update from SVN{/tr}({$prefs.tiki_version}): {$lastup|tiki_long_datetime}</div>
-{/if}
 {/if}
 {if $prefs.feature_endbody_code}{*this code must be added just before </body>: needed by google analytics *}
 	{eval var=$prefs.feature_endbody_code}
