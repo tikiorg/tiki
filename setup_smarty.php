@@ -13,10 +13,12 @@ if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== FALSE) {
 	die();
 }
 
-// uncomment and adapt the following line if you use smarty external to tiki
-// define('SMARTY_DIR', 'lib/smarty/');
+// add a line like the following in db/local.php to use an external smarty installation: $smarty_path='/usr/share/php/smarty/'
+define('TIKI_SMARTY_DIR', 'lib/smarty_tiki/');
+if ( isset($smarty_path) && $smarty_path != '' && file_exists($smarty_path.'Smarty.class.php') ) define('SMARTY_DIR', $smarty_path);
+else define('SMARTY_DIR', 'lib/smarty/libs/');
 
-require_once ( 'lib/smarty/libs/Smarty.class.php');
+require_once(SMARTY_DIR.'Smarty.class.php');
 
 class Smarty_Tikiwiki extends Smarty {
 	
@@ -29,7 +31,7 @@ class Smarty_Tikiwiki extends Smarty {
 		$this->caching = 0;
 		$this->assign('app_name', 'Tikiwiki');
 		$this->plugins_dir = array(	// the directory order must be like this to overload a plugin
-			dirname(dirname(SMARTY_DIR)).'/smarty_tiki',
+			TIKI_SMARTY_DIR,
 			SMARTY_DIR.'plugins'
 		);
 
