@@ -3509,7 +3509,7 @@ CREATE TABLE `tiki_pages_translation_bits` (
   `version` int(8) NOT NULL,
   `source_translation_bit` int(10) NULL,
   `original_translation_bit` int(10) NULL,
-  `flags` SET('critical') NOT NULL DEFAULT '',
+  `flags` SET('critical') NULL DEFAULT '',
   PRIMARY KEY (`translation_bit_id`),
   KEY(`page_id`),
   KEY(`original_translation_bit`),
