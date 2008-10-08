@@ -131,7 +131,7 @@ function wikiplugin_attach($data, $params) {
 		// We're being called from a preview or something; try to build the atts ourselves.
 
 		// See if we're being called from a tracker page.
-		if( strstr( $_REQUEST["SCRIPT_NAME"], "tiki-view_tracker_item.php" ) ) {
+		if( strstr( $_SERVER['SCRIPT_NAME'], "tiki-view_tracker_item.php" ) ) {
 			$atts_item_name = $_REQUEST["itemId"];
 			$tracker_info = $trklib->get_tracker($atts_item_name);
 			$tracker_info = array_merge($tracker_info,$trklib->get_tracker_options($atts_item_name));
@@ -148,17 +148,17 @@ function wikiplugin_attach($data, $params) {
 		}
 
 		// See if we're being called from a wiki page.
-		if( strstr( $_REQUEST["SCRIPT_NAME"], "tiki-index.php" ) || strstr( $_REQUEST["SCRIPT_NAME"], "tiki-editpage.php" ) || strstr( $_REQUEST["SCRIPT_NAME"], 'tiki-pagehistory.php') ) {
+		if( strstr( $_SERVER['SCRIPT_NAME'], 'tiki-index.php' ) || strstr( $_SERVER['SCRIPT_NAME'], "tiki-editpage.php" ) || strstr( $_SERVER['SCRIPT_NAME'], 'tiki-pagehistory.php') ) {
 			$atts_item_name = $_REQUEST["page"];
 			$atts = $wikilib->list_wiki_attachments($atts_item_name,0,-1,'created_desc','');
 		}
 	}
 
-	# Save for restoration before this script ends
+	// Save for restoration before this script ends
 	$old_atts = $atts;
 	$url = '';
 
-	if( isset( $page ) ) {
+	if( !empty( $page ) ) {
 		if($tikilib->user_has_perm_on_object($user,$page,'wiki page','tiki_p_wiki_view_attachments') || $tikilib->user_has_perm_on_object($user, $_REQUEST['page'], 'wiki page', 'tiki_p_wiki_admin_attachments')) {
 			$atts = $wikilib->list_wiki_attachments($page,0,-1,'created_desc','');
 			$url = "&amp;page=$page";
@@ -167,7 +167,7 @@ function wikiplugin_attach($data, $params) {
 
 	if (isset($all)) {
 		$atts = $wikilib->list_all_attachements(0,-1,'page_asc','');
-	} elseif (isset($page)) {
+	} elseif (!empty($page)) {
 		if($tikilib->user_has_perm_on_object($user,$page,'wiki page','tiki_p_wiki_view_attachments') || $tikilib->user_has_perm_on_object($user, $_REQUEST['page'], 'wiki page', 'tiki_p_wiki_admin_attachments')) {
 			$atts = $wikilib->list_wiki_attachments($page,0,-1,'created_desc','');
 			$url = "&amp;page=$page";
@@ -225,7 +225,7 @@ function wikiplugin_attach($data, $params) {
 		if(isset($image) and $image ) {
 			$link = '<img src="tiki-download_wiki_attachment.php?attId='.$atts['data'][$n]['attId'].$url.'" class="wiki"';
 			$link.= ' alt="';
-			if (isset($showdesc)) {
+			if (empty($showdesc) || empty($atts['data'][$n]['comment'])) {
 				$link.= $atts['data'][$n]['filename'];
 			} else {
 				$link.= $atts['data'][$n]['comment'];
@@ -238,7 +238,7 @@ function wikiplugin_attach($data, $params) {
 			$link = '<a href="tiki-download_wiki_attachment.php?attId='.$atts['data'][$n]['attId'].$url.'" class="wiki"';
 			$link.= ' title="';
 
-			if (isset($showdesc)) {
+			if (empty($showdesc) || empty($atts['data'][$n]['comment'])) {
 				$link.= $atts['data'][$n]['filename'];
 			} else {
 				$link.= $atts['data'][$n]['comment'];
@@ -265,9 +265,9 @@ function wikiplugin_attach($data, $params) {
 				}
 			}
 
-			if (isset($showdesc) && !empty($atts['data'][$n]['comment'])) {
+			if (!empty($showdesc) && !empty($atts['data'][$n]['comment'])) {
 				$link.= strip_tags($atts['data'][$n]['comment']);
-			} else if( isset( $inline ) ) {
+			} else if( !empty( $inline ) && !empty($data)) {
 				$link.= $data;
 			} else {
 				$link.= strip_tags($atts['data'][$n]['filename']);
@@ -291,7 +291,7 @@ function wikiplugin_attach($data, $params) {
 
 	$separator = " ";
 
-	if( isset( $inline ) ) {
+	if( !empty( $inline ) && !empty($data) ) {
 		if( array_key_exists( 1, $out ) ) {
 			$data = $out[1];
 		} else {
