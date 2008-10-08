@@ -9,33 +9,41 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 function smarty_function_query($params, &$smarty) {
   global $auto_query_args;
 
-  $query = array_merge($_GET, $_POST);
-  if ( is_array($params) ) {
-    foreach( $params as $param_name => $param_value ) {
-  
-      // Arguments starting with an underscore are special and must not be included in URL
-      if ( $param_name[0] == '_' ) continue;
-  
-      $list = explode(",",$param_value);
-      if ( isset($_REQUEST[$param_name]) and in_array($_REQUEST[$param_name],$list) ) {
-        $query[$param_name] = $list[(array_search($_REQUEST[$param_name],$list)+1)%sizeof($list)];
-        if ( $query[$param_name] === NULL or $query[$param_name] == 'NULL' ) {
-          unset($query[$param_name]);
-        }
-      } elseif ( isset($query[$param_name]) and in_array($query[$param_name],$list) ) {
-        $query[$param_name] = $list[(array_search($query[$param_name],$list)+1)%sizeof($list)];
-        if ( $query[$param_name] === NULL or $query[$param_name] == 'NULL' ) {
-          unset($query[$param_name]);
-        }
-      } else {
-        if ( $list[0] !== NULL and $list[0] != 'NULL' ) {
-          $query[$param_name] = $list[0];
-        } else {
-          unset($query[$param_name]);
-        }
-      }
-    }
-  }
+	if ( isset($params['_noauto']) && $params['_noauto'] == 'y' ) {
+		$query = array();
+		foreach( $params as $param_name => $param_value ) {
+			if ( $param_name[0] == '_' ) continue;
+			$query[$param_name] = $param_value;
+		}
+	} else {
+		$query = array_merge($_GET, $_POST);
+		if ( is_array($params) ) {
+			foreach( $params as $param_name => $param_value ) {
+	
+				// Arguments starting with an underscore are special and must not be included in URL
+				if ( $param_name[0] == '_' ) continue;
+	
+				$list = explode(",",$param_value);
+				if ( isset($_REQUEST[$param_name]) and in_array($_REQUEST[$param_name],$list) ) {
+					$query[$param_name] = $list[(array_search($_REQUEST[$param_name],$list)+1)%sizeof($list)];
+					if ( $query[$param_name] === NULL or $query[$param_name] == 'NULL' ) {
+						unset($query[$param_name]);
+					}
+				} elseif ( isset($query[$param_name]) and in_array($query[$param_name],$list) ) {
+					$query[$param_name] = $list[(array_search($query[$param_name],$list)+1)%sizeof($list)];
+					if ( $query[$param_name] === NULL or $query[$param_name] == 'NULL' ) {
+						unset($query[$param_name]);
+					}
+				} else {
+					if ( $list[0] !== NULL and $list[0] != 'NULL' ) {
+						$query[$param_name] = $list[0];
+					} else {
+						unset($query[$param_name]);
+					}
+				}
+			}
+		}
+	}
 
   if ( is_array($query) ) {
 
