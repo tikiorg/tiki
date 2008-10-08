@@ -28,7 +28,7 @@ function smarty_function_menu($params, &$smarty)
 	}
 	$smarty->assign_by_ref('translate', $translate);
 	if (isset($css) and $prefs['feature_cssmenus'] == 'y') {
-		static $idCssmenu;
+		static $idCssmenu = 0;
 		if (isset($type) && ($type == 'vert' || $type == 'horiz')) {
 			$css = "cssmenu_$type.css";
 		} else {
