@@ -7699,8 +7699,8 @@ $lang=Array(
 // "The TikiTest Replay File is Empty" => "The TikiTest Replay File is Empty",
 // "TikiTest Replay" => "TikiTest Replay",
 // "The page is empty" => "The page is empty",
-"The page {\$mail_page} was changed by {\$mail_user} at {\$mail_date|tiki_short_datetime}" => "The page {\$mail_page} was changed by {\$mail_user} at {\$mail_date|tiki_short_datetime}",
-"\\n for rows" => "<return> for rows",
-"Your account request have been stored and will be activated by the admin as soon as possible." => "Your account request has been stored and will be activated by the admin as soon as possible.",
+// "The page {\$mail_page} was changed by {\$mail_user} at {\$mail_date|tiki_short_datetime}" => "The page {\$mail_page} was changed by {\$mail_user} at {\$mail_date|tiki_short_datetime}",
+// "<return> for rows" => "<return> for rows",
+// "Your account request has been stored and will be activated by the admin as soon as possible." => "Your account request has been stored and will be activated by the admin as soon as possible.",
 "###end###"=>"###end###");
 ?>

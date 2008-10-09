@@ -17,7 +17,7 @@ $enumerations['barlocation'] = array('top'=>tra('Top bar'), 'bottom'=>tra('Botto
 $enumerations['cachelength'] = array('0'=>tra('no cache'), '60'=>'1 ' . tra('minute'), '300'=>'5 ' . tra('minutes'), '600'=>'10 ' . tra('minutes'), '900'=>'15 '. tra('minutes'), '1800'=>'30 ' . tra('minutes'), '3600'=>'1 ' . tra('hour'), '7200'=>'2 ' . tra('hours'));
 $enumerations['wikiauthor'] = array('classic'=>tra('as Creator &amp; Last Editor'), 'business'=>tra('Business style'), 'collaborative'=>tra('Collaborative style'), 'lastmodif'=>tra('Page last modified on'), 'none'=>tra('no (disabled)'));
 $enumerations['idletimeout'] = array(1=>1,2=>2,5=>5,10=>10,15=>15,30=>30);
-$enumerations['wikitablesyntax'] = array('old'=>tra('|| for rows'),'new'=>tra('\n for rows'));
+$enumerations['wikitablesyntax'] = array('old'=>tra('|| for rows'),'new'=>tra('<return> for rows'));
 $enumerations['wikidiffs'] = array('old'=>tra('Only with last version'), 'minsidediff'=>tra('Any 2 versions'));
 $enumerations['wikilinkformat'] = array('complete'=>tra('complete'), 'full'=>tra('latin'), 'strict'=>tra('english'));
 $enumerations['calendartimespan'] = array('1'=>'1 ' . tra('minute'), '5'=>'5 ' . tra('minutes'), '10'=>'10 ' . tra('minutes'), '15'=>'15 ' . tra('minutes'), '30'=>'30 ' . tra('minutes'));

@@ -597,7 +597,7 @@ name="w_displayed_default"{if $prefs.w_displayed_default eq 'y'} checked="checke
     <tr><td class="form">{tr}Tables syntax:{/tr}</td><td>
     <select name="feature_wiki_tables">
     <option value="old" {if $prefs.feature_wiki_tables eq 'old'}selected="selected"{/if}>{tr}|| for rows{/tr}</option>
-    <option value="new" {if $prefs.feature_wiki_tables eq 'new'}selected="selected"{/if}>{tr}\n for rows{/tr}</option>
+    <option value="new" {if $prefs.feature_wiki_tables eq 'new'}selected="selected"{/if}>{tr}<return> for rows{/tr}</option>
     </select>
     </td></tr>
     <tr><td class="form">{tr}Uses Slideshow:{/tr}</td><td><input type="checkbox" name="wiki_uses_slides" {if $prefs.wiki_uses_slides eq 'y'}checked="checked"{/if}/></td></tr>
