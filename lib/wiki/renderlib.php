@@ -480,10 +480,7 @@ class WikiRenderer
 
 	private function setupBreadcrumbs() // {{{
 	{
-		global $prefs;
-		if( $prefs['feature_breadcrumbs'] != 'y' ) {
-			return;
-		}
+		global $prefs, $crumbs;
 
 		if ($this->structureInfo && $this->structureInfo['page_alias'] != '') {
 			$crumbpage = $this->structureInfo['page_alias'];
