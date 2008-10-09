@@ -349,7 +349,7 @@
 				<input type="button" name="comments_cancelComment" value="{tr}Cancel{/tr}" onclick="hide('{$postclass}');"/>
 				{elseif $prefs.feature_comments_moderation eq 'y' and $tiki_p_admin_comments neq 'y'}
 					{remarksbox type="note" title="{tr}Note{/tr}"}
-						Your comment will have to be approved by the moderator before it's publication.
+						Your comment will have to be approved by the moderator before it is displayed.
 					{/remarksbox}	
 				{/if}
 			</td>
