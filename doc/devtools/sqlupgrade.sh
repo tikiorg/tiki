@@ -11,6 +11,11 @@ SED='/bin/sed'
 MYSQL='/usr/bin/mysql'
 PHP='/usr/bin/php'
 
+if [ ! -x $PHP ]; then
+	echo "You need PHP command line interpreter."
+	exit 1
+fi
+
 if [ ! -d 'db' ]; then
 	echo "You must launch this script from your (multi)tiki root dir."
 	exit 0
