@@ -426,6 +426,7 @@ function sendCategoryEmailNotification($values) {
                 
                 $foo = parse_url($_SERVER["REQUEST_URI"]);
                 $machine = $tikilib->httpPrefix(). dirname( $foo["path"] );
+				$machine = preg_replace("!/$!", "", $machine); // just incase
                 $smarty->assign('mail_machine', $machine);
 
 				$nots_send = array(); 
