@@ -22,7 +22,11 @@ class Breadcrumb {
 	var $helpDescription;
 
 	function Breadcrumb($title, $desc='', $url='', $helpurl='', $helpdesc='') {
-                $this->title = $title;
+                if ($title == '') {
+		    $this->title = 'Home';
+		} else {
+		    $this->title = $title;
+		}
 		$this->description = $desc;
 		$this->url = $url;
 		$this->helpUrl = $helpurl;
@@ -101,7 +105,7 @@ class Breadcrumb {
             return false;
         }
         if( is_array($crumbs) ) {                             
-            $ret = array();  
+            $ret = array();
             if ( ($structure == 'y') && $info ) {
                 $cnt +=1;
                 $ret = breadcrumb_buildStructureTrail($structure_path, $cnt, $loclass);
@@ -214,8 +218,7 @@ class Breadcrumb {
         global $prefs, $print_page, $info, $structure, $structure_path;
     
         if ( ($prefs['feature_siteidentity'] == 'n'|| $prefs['feature_breadcrumbs'] == 'n') || $prefs['feature_sitetitle'] == 'title' ) {
-            $class = "pagetitle";
-            $ret = '<h1><a class="'.$class.'" title="';
+            $ret = '<strong><a title="';
         } else if ( $prefs['feature_sitetitle'] == 'y' ) {
             $class = "pagetitle";
 	    $ret = '<a class="'.$class.'" title="';
@@ -248,7 +251,7 @@ class Breadcrumb {
             $ret .= ' <img src="pics/icons/lock.png" border="0" height="16" width="16" alt="'.tra('locked').'" title="'.tra('locked by').' '.$info['user'].'" />';
         }
         if( ($prefs['feature_siteidentity'] == 'n' || $prefs['feature_breadcrumbs'] == 'n') || $prefs['feature_sitetitle'] == 'title' ) {
-            $ret .= '</h1>';          
+            $ret .= '</strong>';          
         }
         return $ret;
     }

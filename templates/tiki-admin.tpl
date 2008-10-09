@@ -1,9 +1,18 @@
 {* $Id$ *}
 {popup_init src="lib/overlib.js"}
 <div id="pageheader">
-{breadcrumbs type="trail" loc="admin" crumbs=$crumbs}
-{breadcrumbs type="pagetitle" loc="admin" crumbs=$crumbs}
+{* bother to display this only when breadcrumbs are on *}
+{if $prefs.feature_breadcrumbs eq 'y'}
+    {breadcrumbs type="trail" loc="page" crumbs=$crumbs}
+    {breadcrumbs type="pagetitle" loc="page" crumbs=$crumbs}
+{/if}
+{**
+ * Page Title as h1 goes here
+ *}
+    <h1 class="center pagetitle">{breadcrumbs type="pagetitle" loc="page" crumbs=$crumbs}</h1>
+{* description is built always *}
 {breadcrumbs type="desc" loc="page" crumbs=$trail}
+
 </div>
 {* The rest determines which page to include using "page" GET parameter. Default : list-sections
 Add a value in first check when you create a new admin page. *}

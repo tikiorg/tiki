@@ -3,10 +3,14 @@
   <script type="text/javascript" src="lib/wiki/wiki-ajax.js"></script>
 {/if}
 
+<<<<<<< .working
 {if !$hide_page_header}
-{breadcrumbs type="trail" loc="page" crumbs=$crumbs}
-{if $prefs.feature_page_title eq 'y'}
-{breadcrumbs type="pagetitle" loc="page" crumbs=$crumbs}
+	{* display breadcrumbs here only if the feature is on and when site location feature is selected to appear above page in top of center column  *}
+	{if $prefs.feature_siteloc eq 'page' and $prefs.feature_breadcrumbs eq 'y'}
+		{if $prefs.feature_siteloclabel eq 'y'}{tr}Location : {/tr}{/if}
+		{breadcrumbs type="trail" loc="page" crumbs=$crumbs}
+		{breadcrumbs type="pagetitle" loc="page" crumbs=$crumbs}
+	{/if}
 {/if}
 
 {if $beingStaged eq 'y'}
@@ -41,7 +45,9 @@
 {if $prefs.feature_wiki_pageid eq 'y' and $print_page ne 'y'}
 			<small><a class="link" href="tiki-index.php?page_id={$page_id}">{tr}page id{/tr}: {$page_id}</a></small>
 {/if}
+
 {breadcrumbs type="desc" loc="page" crumbs=$crumbs}
+
 {if $cached_page eq 'y'}<small>({tr}Cached{/tr})</small>{/if}
 {if $is_categorized eq 'y' and $prefs.feature_categories eq 'y' and $prefs.feature_categorypath eq 'y'}
 	{$display_catpath}
@@ -188,6 +194,15 @@
 {/if}
 
 <div class="wikitext">
+
+{**
+ * Page Title as h1 here when the feature is on
+ *}
+{if $prefs.feature_page_title eq 'y'}
+	<h1 class="center pagetitle">{breadcrumbs type="pagetitle" loc="page" crumbs=$crumbs}</h1>
+    
+{/if}
+
 {if $structure eq 'y'}
 <div class="tocnav">
 <table>
