@@ -14,7 +14,7 @@ class TikiResult{
 		$this->numrows = count ($this->result);
 	}
 
-	function fetchRow($mode) {
+	function fetchRow() {
 		return array_shift($this->result);
 	}
 
@@ -69,9 +69,10 @@ class TikiDB {
 		}
 		$this->convert_query_table_prefixes($query);
 
-		$offsetStr = ($offset >= 0) ? "$offset," : '';
-		if ($numrows < 0) $numrows = '18446744073709551615';
-		$sql .= " LIMIT $offsetStr$numrows";
+		if( $offset != -1 && $numrows != -1 )
+			$query .= " LIMIT $offset,$numrows";
+		elseif( $numrows != -1 )
+			$query .= " LIMIT $numrows";
 
 		$starttime=$this->startTimer();
 
@@ -92,7 +93,7 @@ class TikiDB {
 		$this->stopTimer($starttime);
 
 		if (!$result) {
-			$tmp = &$pq->errorInfo();
+			$tmp = $pq->errorInfo();
 			$this->sql_error_msg = $tmp[2];
 			$pq->closeCursor();
 			return false;
