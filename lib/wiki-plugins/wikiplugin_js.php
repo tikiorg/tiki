@@ -15,7 +15,7 @@ function wikiplugin_js_info() {
 			'description' => tra('Insert a javascript file or/and some javascript code.'),
 			'prefs' => array( 'wikiplugin_js' ),
 			'body' => tra('javascript code'),
-			'validate' =>true,
+			'validate' => 'all',
 			'params' => array(
 				'file' => array(
 					'required' => false,
