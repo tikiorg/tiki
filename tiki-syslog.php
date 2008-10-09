@@ -10,6 +10,8 @@ if ($tiki_p_admin != 'y') {
 	die;
 }
 
+$auto_query_args = array('offset', 'numrows', 'maxRecords', 'find', 'sort_mode');
+
 if (isset($_REQUEST["clean"])) {
 	$area = 'cleanlogs';
 	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
