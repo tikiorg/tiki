@@ -13,24 +13,16 @@
 </a>
   <div id="categorizator" style="display:{if isset($smarty.session.tiki_cookie_jar.show_categorizator) and $smarty.session.tiki_cookie_jar.show_categorizator eq 'y'}block{else}none{/if};">
 {/if}
-{if $prefs.feature_help eq 'y'}
-  {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Hold down CTRL to select multiple categories{/tr}.{/remarksbox}
-{/if}
   {if count($categories) gt 0}
-   <select name="cat_categories[]" multiple="multiple" size="5">
-   {section name=ix loop=$categories}
-    <option value="{$categories[ix].categId|escape}" {if $categories[ix].incat eq 'y'}selected="selected"{/if}>{if $categories[ix].categpath}{$categories[ix].categpath}{else}{$categories[ix].name}{/if}</option>
-   {/section}
-   </select><br />
-  {if $mandatory_category >=0}
+    <div style="vertical-align: middle; overflow-y: auto; overflow-x: hidden; height: 5em; width: 100%; border: 1px solid black;">
+    <table width="100%">
+      {cycle values="odd,even" print=false}
+      {section name=ix loop=$categories}
+      <tr class="{cycle}"><td><input type="checkbox" name="cat_categories[]" value="{$categories[ix].categId|escape}" {if $categories[ix].incat eq 'y'}checked="checked"{/if}/>{if $categories[ix].categpath}{$categories[ix].categpath}{else}{$categories[ix].name}{/if}</td></tr>
+      {/section}
+    </table>
+    </div>
     <input type="hidden" name="cat_categorize" value="on" />
-  {else}
-   <label for="cat-check">{tr}categorize this object{/tr}:</label>
-    <input type="checkbox" name="cat_categorize" id="cat-check" {if $cat_categorize eq 'y' or $categ_checked eq 'y'}checked="checked"{/if}/><br />
-{if $prefs.feature_help eq 'y'}
-  {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Uncheck the above checkbox to uncategorize this page/object{/tr}.{/remarksbox}
-{/if}
-   {/if}
   {else}
     {tr}No categories defined{/tr} <br />
   {/if}

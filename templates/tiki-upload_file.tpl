@@ -197,10 +197,10 @@
 	{/if}
 	{/capture}
 	<div id="form">
-	{include file=categorize.tpl notable='y'}
 	<form {if $prefs.javascript_enabled eq 'y' and !$editFileId}onsubmit='return false' target='upload_progress_0'{/if} id='file_0' name='file_0' action='tiki-upload_file.php' enctype='multipart/form-data' method='post' style='margin:0px; padding:0px'>
 	<input type="hidden" name="formId" value="0"/>
 	{$upload_str}
+	{include file=categorize.tpl notable='y'}
 	{if $editFileId}
 		<input class="submitbutton" type="submit" value="{tr}Save{/tr}"/>
 	{/if}

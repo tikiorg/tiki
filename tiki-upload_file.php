@@ -373,7 +373,7 @@ if (isset($_REQUEST["upload"])) {
 		die;
 	}
 	if ($editFileId and count($errors) == 0) {
-		header ("location: tiki-list_file_gallery.php?galleryId=" . $_REQUEST["galleryId"][$key]);
+		header ("location: tiki-list_file_gallery.php?galleryId=" . $_REQUEST["galleryId"][0]);
 		die;
 	}
 }
