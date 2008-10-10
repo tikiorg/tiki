@@ -1673,7 +1673,9 @@ function get_included_groups($group, $recur=true) {
 		return $utr;
 	}
 
-  function get_permissions($offset = 0, $maxRecords = -1, $sort_mode = 'permName_asc', $find = '', $type = '', $group = '') {
+  function get_permissions($offset = 0, $maxRecords = -1, $sort_mode = 'permName_asc', $find = '', $type = '', $group = '', $enabledOnly = false) {
+	global $prefs;
+
 	$values = array();
 	$sort_mode = $this->convert_sortmode($sort_mode);
 	$mid = '';
@@ -1706,6 +1708,9 @@ function get_included_groups($group, $recur=true) {
 	$ret = array();
 
 	while ($res = $result->fetchRow()) {
+		if( $res['feature_check'] && $prefs[ $res['feature_check'] ] != 'y' )
+			continue;
+
 	    $cant++;
 	    if ($group && $this->group_has_permission($group, $res['permName'])) {
 		$res['hasPerm'] = 'y';

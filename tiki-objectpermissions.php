@@ -127,7 +127,7 @@ $groups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');
 $smarty->assign_by_ref('groups', $groups["data"]);
 
 // Get a list of permissions
-$perms = $userlib->get_permissions(0, -1, 'permName_asc', '', $_REQUEST["permType"]);
+$perms = $userlib->get_permissions(0, -1, 'permName_asc', '', $_REQUEST["permType"], '', true);
 if ($tiki_p_admin_objects != 'y') {
 	$userPerms = array();
 	foreach ($perms['data'] as $perm) {
