@@ -763,7 +763,7 @@ $smarty->assign_by_ref('options_sortorder', $options_sortorder);
 
 */
 
-$options_sortorder = array(tra('Creation Date')=>'created', tra('Name')=>'name', tra('Last modification date')=>'lastModif', tra('Hits')=>'hits', tra('Owner') => 'user', tra('Description') => 'description', tra('ID') => 'galleryId');
+$options_sortorder = array(tra('Creation Date')=>'created', tra('Name')=>'name', tra('Last modification date')=>'lastModif', tra('Hits')=>'hits', tra('Owner') => 'user', tra('Description') => 'description', tra('ID') => 'id');
 $smarty->assign_by_ref('options_sortorder', $options_sortorder);
 
 
