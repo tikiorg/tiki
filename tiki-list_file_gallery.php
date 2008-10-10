@@ -92,7 +92,7 @@ $smarty->assign('edit_mode', 'n');
 $smarty->assign('dup_mode', 'n');
 $smarty->assign('visible', 'y');
 $smarty->assign('fgal_type', 'default');
-$smarty->assign('parentId', -1);
+$smarty->assign('parentId', isset($_REQUEST['parentId']) ? (int)$_REQUEST['parentId'] : -1);
 $smarty->assign('creator', $user);
 $smarty->assign('sortorder', 'created');
 $smarty->assign('sortdirection', 'desc');

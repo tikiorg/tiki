@@ -54,6 +54,10 @@
   {/if}
 
   {if $tiki_p_list_file_galleries eq 'y' or (!isset($tiki_p_list_file_galleries) and $tiki_p_view_file_gallery eq 'y')}<a href="tiki-list_file_gallery.php{if $filegals_manager neq ''}?filegals_manager={$filegals_manager|escape}{/if}" title="{tr}List Galleries{/tr}">{tr}List Galleries{/tr}</a>{/if}
+
+  {if $tiki_p_create_file_galleries eq 'y' and $edit_mode ne 'y'}
+	{button _text="{tr}Create a file gallery{/tr}" href="?edit_mode=1&amp;parentId=`$galleryId`"}
+  {/if}
   
   {if $tiki_p_admin_file_galleries eq 'y' or $user eq $gal_info.user}
     {if $edit_mode eq 'y' or $dup_mode eq 'y'}
@@ -88,7 +92,7 @@
     <a href="tiki-list_file_gallery.php{if $filegals_manager neq ''}?filegals_manager={$filegals_manager|escape}{/if}">{tr}List Galleries{/tr}</a>
   {/if}
   {if $tiki_p_create_file_galleries eq 'y' and $edit_mode ne 'y'}
-    <a href="tiki-list_file_gallery.php?edit_mode=1&amp;galleryId=0{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}">{tr}Create New File Gallery{/tr}</a>
+	{button _text="{tr}Create a file gallery{/tr}" href="?edit_mode=1&amp;parentId=-1&amp;galleryId=0"}
   {/if}
   {if $tiki_p_create_file_galleries eq 'y' and $dup_mode ne 'y'}
     <a href="tiki-list_file_gallery.php?dup_mode=1{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}">{tr}Duplicate File Gallery{/tr}</a>
