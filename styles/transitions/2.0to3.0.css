@@ -61,3 +61,12 @@ tr.post-approved-n td span, tr.post-approved-r td span {
 	opacity: 0.5;
 }
 tr.post-approved-n td span, tr.post-approved-r td span { opacity: 0.6; }
+
+div.multiselect {
+  vertical-align: middle;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 5em;
+  width: 100%;
+  border: 1px solid black;
+}

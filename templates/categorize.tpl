@@ -14,8 +14,8 @@
   <div id="categorizator" name="categorizator" style="display:{if isset($smarty.session.tiki_cookie_jar.show_categorizator) and $smarty.session.tiki_cookie_jar.show_categorizator eq 'y'}block{else}none{/if};">
 {/if}
   {if count($categories) gt 0}
-    <div style="vertical-align: middle; overflow-y: auto; overflow-x: hidden; height: 5em; width: 100%; border: 1px solid black;">
-    <table width="100%">
+    <div class="multiselect">
+    <table>
       {cycle values="odd,even" print=false}
       {section name=ix loop=$categories}
       {if $categories[ix].incat eq 'y'}

@@ -2860,4 +2860,17 @@ form.wikiplugin_edit textarea {
 div.icon_edit_section {
 	float: right;
 }
+
+div.multiselect {
+	vertical-align: middle;
+	overflow-y: auto;
+	overflow-x: hidden;
+	height: 5em;
+	width: 100%;
+	border: 1px solid black;
+}
+
+div.multiselect table {
+	width: 100%;
+}
 /***** End of file ******/

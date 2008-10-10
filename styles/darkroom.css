@@ -2405,4 +2405,10 @@ a.icon,
 img.icon {border: 0 !important;
 	background: transparent;}
 
+div.multiselect {
+  vertical-align: middle;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 5em;
+}
 /* end of css file */
