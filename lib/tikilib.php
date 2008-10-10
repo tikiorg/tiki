@@ -5257,7 +5257,7 @@ class TikiLib extends TikiDB {
 							include_once('lib/smarty_tiki/function.icon.php');
 							global $headerlib, $page;
 							$headerlib->add_jsfile( 'tiki-jsplugin.php?plugin=' . urlencode( $plugin_name ) );
-							$ret = '~np~<a href="javascript:void(0)" onclick="show_plugin_form(\'' . addslashes($plugin_name) . '\', ' . addslashes($current_index) . ', \'' . addslashes($page) . '\', ' . htmlentities(json_encode($arguments)) . ', ' . htmlentities(json_encode(trim($plugin_data))) . ');this.style.display=\'none\'">'.smarty_function_icon(array('_id'=>'shape_square_edit', 'alt'=>tra('Edit Plugin')), $smarty).'</a><span id="' . $plugin_name . $current_index . '"></span>~/np~'.$ret;
+							$ret = '~np~<a style="float:right" href="javascript:void(0)" onclick="show_plugin_form(\'' . addslashes($plugin_name) . '\', ' . addslashes($current_index) . ', \'' . addslashes($page) . '\', ' . htmlentities(json_encode($arguments)) . ', ' . htmlentities(json_encode(trim($plugin_data))) . ');this.style.display=\'none\'">'.smarty_function_icon(array('_id'=>'shape_square_edit', 'alt'=>tra('Edit Plugin')), $smarty).'</a><span id="' . $plugin_name . $current_index . '"></span>~/np~'.$ret;
 						}
 
 					} else {
