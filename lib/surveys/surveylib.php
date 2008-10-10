@@ -58,6 +58,9 @@ class SurveyLib extends TikiLib
 
 		$query = "update `tiki_survey_questions` set `average`=0, `value`=0, `votes`=0 where `surveyId`=?";
 		$result = $this->query($query, array((int)$surveyId));
+
+		$query = 'delete from `tiki_user_votings` where `id`=?';
+		$result = $this->query($query, array('survey'.(int)$surveyId));
 	}
 
 	function replace_survey($surveyId, $name, $description, $status) {
@@ -275,6 +278,10 @@ class SurveyLib extends TikiLib
 		$query = "delete from `tiki_survey_questions` where `surveyId`=?";
 		$result = $this->query($query,array((int)$surveyId));
 		$this->remove_object('survey', $surveyId);
+
+		$query = 'delete from `tiki_user_votings` where `id`=?';
+		$result = $this->query($query, array('survey'.(int)$surveyId));
+
 		return true;
 	}
 }

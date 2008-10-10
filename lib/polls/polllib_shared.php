@@ -111,15 +111,19 @@ class PollLibShared extends TikiLib {
   }
 	
 	function remove_poll($pollId) {
-    $query = "delete from `tiki_poll_objects` where `pollId`=?";
-    $result = $this->query($query,array((int) $pollId));
-    $query = "delete from `tiki_polls` where `pollId`=?";
-    $result = $this->query($query,array((int) $pollId));
-    $query = "delete from `tiki_poll_options` where `pollId`=?";
-    $result = $this->query($query,array((int) $pollId));
-    $this->remove_object('poll', $pollId);
-    return true;
-  }
+		$query = "delete from `tiki_poll_objects` where `pollId`=?";
+		$result = $this->query($query,array((int) $pollId));
+		$query = "delete from `tiki_polls` where `pollId`=?";
+		$result = $this->query($query,array((int) $pollId));
+		$query = "delete from `tiki_poll_options` where `pollId`=?";
+		$result = $this->query($query,array((int) $pollId));
+		$this->remove_object('poll', $pollId);
+
+		$query = 'delete from `tiki_user_votings` where `id`=?';
+		$this->query($query, array('poll'.(int)$pollId));
+
+		return true;
+	}
 
 	function get_catObjectId($cat_type,$cat_objid) {
 		return $this->getOne("select `objectId` from `tiki_objects` where `type`=? and `itemId`=?",array($cat_type,$cat_objid));
