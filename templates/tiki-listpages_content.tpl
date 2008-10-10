@@ -11,6 +11,8 @@
 {if $checkboxes_on eq 'y'}
   <form name="checkboxes_on" method="post" action="{$smarty.server.PHP_SELF}">
 {/if}
+
+{assign var='pagefound' value='n'}
   
 <table class="normal">
   <tr>
@@ -125,6 +127,7 @@
 
   {cycle values="even,odd" print=false}
   {section name=changes loop=$listpages}
+  {if $find eq $listpages[changes].pageName}{assign var='pagefound' value='y'}{/if}
   <tr>
     {if $checkboxes_on eq 'y'}
       <td class="{cycle advance=false}">
@@ -311,7 +314,7 @@
       </noscript>
     </p>
   {/if}
-  {if $find && $tiki_p_edit eq 'y'}{tr}Create Page{/tr}: <a href="tiki-editpage.php?page={$find}" title="{tr}Create{/tr}"> {$find}</a>{/if}
+  {if $find && $tiki_p_edit eq 'y' and $pagefound eq 'n'}{button _text="{tr}Create Page{/tr}: $find" href="tiki-editpage.php?page=$find" _title="{tr}Create{/tr}"}{/if}
 
 </form>
 
