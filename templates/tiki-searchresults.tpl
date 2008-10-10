@@ -39,10 +39,11 @@
  <a href="tiki-searchresults.php?highlight={$words}&amp;where=trackers">{tr}Trackers{/tr}</a>
 {/if}
 </div><!-- navbar -->
-<br /><br />
-{tr}Found{/tr} "{$words}" {tr}in{/tr} {if $where3}{$where2}: {$where3}{else}{$cant_results} {$where2}{/if}
 {/if}
 <form class="forms" method="get" action="tiki-searchresults.php">
+	{if !( $searchStyle eq "menu" )}
+		<label for="boolean">{tr}Boolean search:{/tr}<input type="checkbox" name="boolean"{if $boolean eq 'y'} checked="checked"{/if} /></label><br />
+	{/if}
     {tr}Find{/tr} <input id="fuser" name="highlight" size="14" type="text" accesskey="s" value="{$words}"/>
 {if ( $searchStyle eq "menu" )}
     {tr}in{/tr}
@@ -82,6 +83,12 @@
     <input type="submit" class="wikiaction" name="search" value="{tr}Go{/tr}"/>
 </form>
 </div><!--nohighlight-->
+
+{if $searchStyle ne "menu" }
+	<div class="highlight simplebox">
+		 {tr}Found{/tr} "{$words}" {tr}in{/tr} {if $where3}{$where2}: {$where3}{else}{$cant_results} {$where2}{/if}
+	</div>
+{/if}
 
 {if !($searchNoResults) }
 <div class="searchresults">
