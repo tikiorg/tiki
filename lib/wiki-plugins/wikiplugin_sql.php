@@ -20,6 +20,7 @@ function wikiplugin_sql($data, $params) {
 	}
 
 	$bindvars = array();
+	$data = html_entity_decode($data);
 	if ($nb = preg_match_all("/\?/", $data, $out)) {
 		foreach($params as $key => $value) {
 			if (ereg("^[0-9]*$", $key)) {
