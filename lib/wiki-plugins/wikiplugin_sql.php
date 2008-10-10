@@ -10,6 +10,7 @@ function wikiplugin_sql_info() {
 		'description' => tra('Run a sql query'),
 		'prefs' => array( 'wikiplugin_sql' ),
 		'body' => tra('sql query'),
+		'validate' => 'all',
 		'params' => array(
 			'db' => array(
 				'required' => true,
@@ -37,6 +38,7 @@ function wikiplugin_sql($data, $params) {
 	}
 
 	$bindvars = array();
+	$data = html_entity_decode($data);
 	if ($nb = preg_match_all("/\?/", $data, $out)) {
 		foreach($params as $key => $value) {
 			if (ereg("^[0-9]*$", $key)) {
