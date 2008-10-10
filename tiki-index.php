@@ -317,6 +317,10 @@ $cat_type = 'wiki page';
 $cat_objid = $page;
 include_once('tiki-section_options.php');
 
+if( isset( $_REQUEST['pagenum'] ) && $_REQUEST['pagenum'] > 0 ) {
+	$pageRenderer->setPageNumber( (int) $_REQUEST['pagenum'] );
+}
+
 if ( isset($_REQUEST['saved_msg']) && $info['user'] == $user ) {
 	// Generate the 'Page has been saved...' message
 	require_once('lib/smarty_tiki/modifier.userlink.php');
