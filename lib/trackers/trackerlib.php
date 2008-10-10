@@ -2745,9 +2745,10 @@ class TrackerLib extends TikiLib {
 		foreach (array('watchers_global', 'watchers_local', 'watchers_item', 'watchers_outbound') as $ws) {
 			if (!empty($$ws)) {
 				foreach($$ws as $w) {
-					if (!in_array($w['email'], $emails)) {
-						$emails[] = $w['email'];
-						$watchers[] = $w;
+					$wl = strtolower($w['email']);
+					if (!in_array($wl, $emails)) {
+						$emails[] = $wl;
+						$watchers[] = $wl;
 					}
 				}
 			}
