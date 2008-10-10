@@ -311,7 +311,7 @@ function wikiplugin_attach($data, $params) {
 
 	$atts = $old_atts;
 
-	return $data;
+	return '~np~'.$data.'~/np~';
 }
 
 ?>
