@@ -12,17 +12,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-if( ! function_exists( 'json_encode' ) )
-{
-	require_once 'lib/pear/Services/JSON.php';
-
-	function json_encode( $nodes )
-	{
-		$json = new Services_JSON();
-		return $json->encode($nodes);
-	}
-}
-
 require_once 'lib/profilelib/listlib.php';
 
 $list = new Tiki_Profile_List;
