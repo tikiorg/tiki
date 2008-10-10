@@ -50,7 +50,8 @@ if ( ! isset($_REQUEST['galleryId']) || $_REQUEST['galleryId'] == 0 ) {
 			'show_hits' => $prefs['fgal_list_hits'],
 			'show_lockedby' => $prefs['fgal_list_lockedby'],
 			'show_checked' => 'y',
-			'show_userlink' => 'y'
+			'show_userlink' => 'y',
+			'sort_mode' => $prefs['fgal_sort_mode']
 		);
 	}
 
@@ -668,8 +669,12 @@ if (isset($_GET['slideshow'])) {
 $smarty->assign_by_ref('name', $gal_info["name"]);
 $smarty->assign_by_ref('description', $gal_info["description"]);
 
-if ( ! isset($_REQUEST['sort_mode']) ) {
-	$_REQUEST['sort_mode'] = ( $gal_info['show_name'] == 'f' ? 'filename_asc' : 'name_asc' );
+if ( empty($_REQUEST['sort_mode']) ) {
+	if ($gal_info['sort_mode'] == 'name_asc' && $gal_info['show_name'] == 'f') {
+		$_REQUEST['sort_mode'] = 'filename_asc';
+	} else {
+		$_REQUEST['sort_mode'] = $gal_info['sort_mode'];
+	}
 }
 $smarty->assign_by_ref('sort_mode', $_REQUEST['sort_mode']);
 
@@ -744,7 +749,7 @@ $smarty->assign_by_ref('options_sortorder', $options_sortorder);
 
 */
 
-$options_sortorder = array(tra('Creation Date')=>'created', tra('Name')=>'name', tra('Last modification date')=>'lastModif', tra('Hits')=>'hits', tra('Owner') => 'user', tra('Description') => 'description', tra('ID') => 'galleryId');
+$options_sortorder = array(tra('Creation Date')=>'created', tra('Name')=>'name', tra('Last modification date')=>'lastModif', tra('Hits')=>'hits', tra('Owner') => 'user', tra('Description') => 'description', tra('ID') => 'id');
 $smarty->assign_by_ref('options_sortorder', $options_sortorder);
 
 

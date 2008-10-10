@@ -113,7 +113,7 @@ if (!empty($prefs['fgal_sort_mode']) &&	preg_match('/(.*)_(asc|desc)/', $prefs['
 	$smarty->assign('fgal_sortorder', 'created');
 	$smarty->assign('fgal_sortdirection', 'desc');
 }
-$options_sortorder = array(tra('Creation Date')=>'created', tra('Name')=>'name', tra('Last modification date')=>'lastModif', tra('Hits')=>'hits', tra('Owner') => 'user', tra('Description') => 'description', tra('ID') => 'galleryId');
+$options_sortorder = array(tra('Creation Date')=>'created', tra('Name')=>'name', tra('Last modification date')=>'lastModif', tra('Hits')=>'hits', tra('Owner') => 'user', tra('Description') => 'description', tra('ID') => 'id');
 $smarty->assign_by_ref('options_sortorder', $options_sortorder);
 
 $handlers = $filegallib->get_file_handlers();
