@@ -3,7 +3,6 @@
   <script type="text/javascript" src="lib/wiki/wiki-ajax.js"></script>
 {/if}
 
-<<<<<<< .working
 {if !$hide_page_header}
 	{* display breadcrumbs here only if the feature is on and when site location feature is selected to appear above page in top of center column  *}
 	{if $prefs.feature_siteloc eq 'page' and $prefs.feature_breadcrumbs eq 'y'}
@@ -11,7 +10,6 @@
 		{breadcrumbs type="trail" loc="page" crumbs=$crumbs}
 		{breadcrumbs type="pagetitle" loc="page" crumbs=$crumbs}
 	{/if}
-{/if}
 
 {if $beingStaged eq 'y'}
 <div class="tocnav">
