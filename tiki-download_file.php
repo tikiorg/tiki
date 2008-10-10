@@ -41,6 +41,21 @@ function readfile_chunked($filename,$retbytes=true) {
    return $status;
 }
 
+function get_readfile_chunked($filename) {
+   $chunksize = 1*(1024*1024); // how many bytes per chunk
+   $buffer = '';
+   $cnt =0;
+   $handle = fopen($filename, 'rb');
+   if ($handle === false) {
+       return false;
+   }
+   while (!feof($handle)) {
+       $buffer = fread($handle, $chunksize);
+   }
+   fclose($handle);
+   return $buffer;
+}
+
 if ( isset($_REQUEST['fileId']) ) {
 	$info = $tikilib->get_file($_REQUEST['fileId']);
 } elseif ( isset($_REQUEST['galleryId']) && isset($_REQUEST['name']) ) {
@@ -115,6 +130,10 @@ $content = &$info['data'];
 
 // Handle images display, files thumbnails and icons
 if ( isset($_GET['thumbnail']) || isset($_GET['display']) || isset($_GET['icon']) ) {
+	
+	if ( $info['path'] && (!$content || sizeof($content) == 0)) {
+		$content = &get_readfile_chunked($prefs['fgal_use_dir'].$info['path']);
+	}
 
 	// Modify the original image if needed
 	if ( ! isset($_GET['display']) || isset($_GET['x']) || isset($_GET['y']) || isset($_GET['scale']) || isset($_GET['max']) || isset($_GET['format']) ) {
