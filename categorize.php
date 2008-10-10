@@ -25,7 +25,7 @@ if ($prefs['feature_categories'] == 'y') {
 		$_REQUEST["cat_categorize"] = 'on';
 	}
 
-	if (isset($_REQUEST["cat_categorize"]) && $_REQUEST["cat_categorize"] == 'on') {
+	if ( isset($_REQUEST["cat_categorize"]) && $_REQUEST["cat_categorize"] == 'on' && ! (isset($_REQUEST["cat_clearall"]) && $_REQUEST["cat_clearall"] == 'on') ) {
 		$smarty->assign('cat_categorize', 'y');
 	} else {
 		$_REQUEST['cat_categories'] = NULL;

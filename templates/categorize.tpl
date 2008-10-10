@@ -7,22 +7,30 @@
 {if $mandatory_category >= 0}
   <div id="categorizator">
 {else}
-<a class="link" href="javascript:flip('categorizator');flip('categshow','inline');flip('categhide','inline');"{if ($mid eq 'tiki-editpage.tpl')}onclick="needToConfirm=false;"{/if}>
-<span id="categshow" style="display:{if isset($smarty.session.tiki_cookie_jar.show_categorizator) and $smarty.session.tiki_cookie_jar.show_categorizator eq 'y'}none{else}inline{/if};">{tr}Show Categories{/tr}</span>
-<span id="categhide" style="display:{if isset($smarty.session.tiki_cookie_jar.show_categorizator) and $smarty.session.tiki_cookie_jar.show_categorizator eq 'y'}inline{else}none{/if};">{tr}Hide Categories{/tr}</span>
+<a class="link" href="javascript:flip_multi('categorizator');flip_multi('categshow','inline');flip_multi('categhide','inline');"{if ($mid eq 'tiki-editpage.tpl')}onclick="needToConfirm=false;"{/if}>
+<span id="categshow" name="categshow" style="display:{if isset($smarty.session.tiki_cookie_jar.show_categorizator) and $smarty.session.tiki_cookie_jar.show_categorizator eq 'y'}none{else}inline{/if};">{tr}Show Categories{/tr}</span>
+<span id="categhide" name="categhide" style="display:{if isset($smarty.session.tiki_cookie_jar.show_categorizator) and $smarty.session.tiki_cookie_jar.show_categorizator eq 'y'}inline{else}none{/if};">{tr}Hide Categories{/tr}</span>
 </a>
-  <div id="categorizator" style="display:{if isset($smarty.session.tiki_cookie_jar.show_categorizator) and $smarty.session.tiki_cookie_jar.show_categorizator eq 'y'}block{else}none{/if};">
+  <div id="categorizator" name="categorizator" style="display:{if isset($smarty.session.tiki_cookie_jar.show_categorizator) and $smarty.session.tiki_cookie_jar.show_categorizator eq 'y'}block{else}none{/if};">
 {/if}
   {if count($categories) gt 0}
     <div style="vertical-align: middle; overflow-y: auto; overflow-x: hidden; height: 5em; width: 100%; border: 1px solid black;">
     <table width="100%">
       {cycle values="odd,even" print=false}
       {section name=ix loop=$categories}
-      <tr class="{cycle}"><td><input type="checkbox" name="cat_categories[]" value="{$categories[ix].categId|escape}" {if $categories[ix].incat eq 'y'}checked="checked"{/if}/>{if $categories[ix].categpath}{$categories[ix].categpath}{else}{$categories[ix].name}{/if}</td></tr>
+      {if $categories[ix].incat eq 'y'}
+				<tr class="{cycle}"><td><input type="checkbox" name="cat_categories[]" value="{$categories[ix].categId|escape}" checked="checked"/>{if $categories[ix].categpath}{$categories[ix].categpath}{else}{$categories[ix].name}{/if}</td></tr>
+			{/if}
+      {/section}
+      {section name=ix loop=$categories}
+      {if $categories[ix].incat neq 'y'}
+				<tr class="{cycle}"><td><input type="checkbox" name="cat_categories[]" value="{$categories[ix].categId|escape}"/>{if $categories[ix].categpath}{$categories[ix].categpath}{else}{$categories[ix].name}{/if}</td></tr>
+			{/if}
       {/section}
     </table>
     </div>
     <input type="hidden" name="cat_categorize" value="on" />
+		<input type="checkbox" name="cat_clearall" value="on" />{tr}Clear all Categories{/tr}<br/>
   {else}
     {tr}No categories defined{/tr} <br />
   {/if}

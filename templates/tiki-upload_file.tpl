@@ -192,6 +192,9 @@
 		{/if}
 	</div>
 	</div>
+	{if $prefs.javascript_enabled eq 'y' and !$editFileId}
+		{include file=categorize.tpl notable='y'}<br/>
+	{/if}
 	{if $prefs.javascript_enabled eq 'y'}
 	<input type="hidden" name="upload" />
 	{/if}
@@ -200,13 +203,14 @@
 	<form {if $prefs.javascript_enabled eq 'y' and !$editFileId}onsubmit='return false' target='upload_progress_0'{/if} id='file_0' name='file_0' action='tiki-upload_file.php' enctype='multipart/form-data' method='post' style='margin:0px; padding:0px'>
 	<input type="hidden" name="formId" value="0"/>
 	{$upload_str}
-	{include file=categorize.tpl notable='y'}<br/>
 	{if $editFileId}
+		{include file=categorize.tpl notable='y'}<br/>
 		<input class="submitbutton" type="submit" value="{tr}Save{/tr}"/>
 	{/if}
 	{if $prefs.javascript_enabled neq 'y' and !$editFileId}
 	{$upload_str}
 	{$upload_str}
+	{include file=categorize.tpl notable='y'}<br/>
 	<hr />
 	<input type="submit" name="upload" value="{if $editFileId}{tr}Save{/tr}{else}{tr}Upload{/tr}{/if}"/>
 	{/if}
@@ -241,7 +245,7 @@
 			tmp = "<form onsubmit='return false' id='file_"+nb_upload+"' name='file_"+nb_upload+"' action='tiki-upload_file.php' target='upload_progress_"+nb_upload+"' enctype='multipart/form-data' method='post' style='margin:0px; padding:0px'>";
 			{/literal}
 			tmp += '<input type="hidden" name="formId" value="'+nb_upload+'"/>';
-			tmp += '{$upload_str|strip}';
+			tmp += '{$upload_str|strip|escape:'javascript'}';
 			{literal}
 			tmp += '</form><div id="multi_'+(nb_upload+1)+'"></div>';
 			//tmp += '<div id="multi_'+(nb_upload+1)+'"></div>';
