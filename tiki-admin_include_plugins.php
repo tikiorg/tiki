@@ -33,6 +33,7 @@ if( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 				'description' => $_POST['description'],
 				'prefs' => array(),
 				'validate' => $_POST['validate'],
+				'inline' => isset( $_POST['inline'] ),
 				'params' => array(),
 			),
 			'body' => array(

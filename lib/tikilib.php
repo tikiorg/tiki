@@ -5621,7 +5621,10 @@ class TikiLib extends TikiDB {
 
 	function plugin_is_editable( $name ) {
 		global $tiki_p_edit, $prefs;
-		return $this->plugin_info( $name ) && $tiki_p_edit == 'y' && $prefs['wiki_edit_plugin'] == 'y';
+		$info = $this->plugin_info( $name );
+
+		return $info && $tiki_p_edit == 'y' && $prefs['wiki_edit_plugin'] == 'y'
+			&& ( ! isset($info['inline']) || ! $info['inline'] );
 	}
 
 	function quotesplit( $splitter=',', $repl_string ) {

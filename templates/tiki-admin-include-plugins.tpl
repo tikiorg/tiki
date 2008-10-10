@@ -66,6 +66,12 @@
 				</select>
 			</td>
 		</tr>
+		<tr>
+			<td>{tr}Inline (No Plugin Edit UI){/tr}</td>
+			<td colspan="2">
+				<input type="checkbox" name="inline" value="1" {if $plugin.description.inline}checked="checked"{/if}/>
+			</td>
+		</tr>
 
 		<tr><th colspan="3">{tr}Plugin Parameter Documentation{/tr}</th></tr>
 
