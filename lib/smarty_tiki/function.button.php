@@ -14,7 +14,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  */
 function smarty_function_button($params, &$smarty) {
   if ( ! is_array($params) || ! isset($params['_text']) ) return;
-  global $smarty, $prefs, $auto_query_args;
+  global $tikilib, $prefs, $auto_query_args;
 
   require_once $smarty->_get_plugin_filepath('block', 'self_link');
 	
@@ -22,7 +22,7 @@ function smarty_function_button($params, &$smarty) {
 	if ( ! empty($params['href']) ) {
 		if ( ( $pos = strpos($params['href'], '?') ) !== false ) {
 			$params['_script'] = substr($params['href'], 0, $pos);
-			parse_str(substr($params['href'], $pos+1), $url_args);
+			parse_str($tikilib->htmldecode(substr($params['href'], $pos+1)), $url_args);
 			$params = array_merge($params, $url_args);
 		} else {
 			$params['_script'] = $params['href'];
@@ -40,5 +40,3 @@ function smarty_function_button($params, &$smarty) {
 
 	return '<span class="button">'.$html.'</span>';
 }
-
-?>
