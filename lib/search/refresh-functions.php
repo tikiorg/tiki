@@ -206,9 +206,7 @@ function &search_index($data) {
 @	require_once('lib/htmlpurifier/HTMLPurifier.auto.php');
 @	require_once('lib/htmlpurifier/HTMLPurifier/Encoder.php');
 	if ( class_exists('HTMLPurifier_Encoder') ) {
-		$utf8encoder = new HTMLPurifier_Encoder();
-		$data = $utf8encoder->cleanUTF8($data);
-		unset($utf8encoder);
+		$data = HTMLPurifier_Encoder::cleanUTF8($data);
 	}
 
 	// Remove remaining HTML numeric entities
