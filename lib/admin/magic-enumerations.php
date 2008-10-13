@@ -91,7 +91,7 @@ $enumerations['authmethod'] = array ('0'=>'Just Tiki','1'=>'Web Server','2'=>'Ti
 $enumerations['highlightgroup'] = array ('0'=>'choose a group ...','1'=>'Registered','2'=>'Anonymous','3'=>'Admins');
 //get_strings ('0'=>tra('choose a group ...'),'1'=>tra('Registered'),'2'=>tra('Anonymous'),'3'=>tra('Admins'));
 
-$enumerations['availablestyles'] = array ('0'=>'darkroom.css','1'=>'feb12.css','2'=>'simple-amette.css','3'=>'simple.css','3'=>'spanky.css','3'=>'thenews.css','3'=>'tikineat.css','3'=>'tikinewt.css');
+$enumerations['availablestyles'] = $tikilib->list_styles();
 
 $enumerations['transitionstylever'] = array ('none'=>'Never use transition css','css_specified_only'=>'Use @version:x.x specified in theme css or none if not specified','1.9'=>'Use @version:x.x specified in theme css or 1.9 if not specified','2.0'=>'Use @version:x.x specified in theme css or 2.0 if not specified');
 //get_strings ('none'=>tra('Never use transition css'),'css_specified_only'=>tra('Use @version:x.x specified in theme css or none if not specified'),'1.9'=>tra('Use @version:x.x specified in theme css or 1.9 if not specified'),'2.0'=>tra('Use @version:x.x specified in theme css or 2.0 if not specified'));
