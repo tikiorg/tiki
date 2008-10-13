@@ -236,13 +236,16 @@ for a tracker and they must be valid in SQL{/tr}</em>
 
 <tr class="formcolor">
 	<td>{tr}Tracker items allow comments?{/tr}</td>
-	<td><input type="checkbox" name="useComments" {if $useComments eq 'y'}checked="checked"{/if} onclick="toggleTrTd('commentsoptions');" /></td>
+	<td><input type="checkbox" name="useComments" {if $useComments eq 'y'}checked="checked"{/if} onclick="toggleTrTd('commentsoptions');toggleTrTd('commentsoptions2');" /></td>
 </tr>
 <tr class="formcolor" id="commentsoptions" {if $useComments ne 'y'}style="display:none;"{/if}>
 		<td class="sub">{tr}and display comments in listing?{/tr}</td>
 		<td><input type="checkbox" name="showComments" {if $showComments eq 'y'}checked="checked"{/if} /></td>
 </tr>
-
+<tr class="formcolor" id="commentsoptions2" {if $useComments ne 'y'}style="display:none;"{/if}>
+		<td class="sub">{tr}and display last comment user/date?{/tr}</td>
+		<td><input type="checkbox" name="showLastComment" {if $showLastComment eq 'y'}checked="checked"{/if} /></td>
+</tr>
 <tr class="formcolor">
 <td>{tr}Tracker items allow attachments?{/tr}</td>
 <td><input type="checkbox" name="useAttachments" {if $useAttachments eq 'y'}checked="checked"{/if} onclick="toggleTrTd('attachmentsoptions');toggleTrTd('attachmentsconf');" /></td>

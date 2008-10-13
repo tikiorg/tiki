@@ -751,9 +751,15 @@ $smarty->assign_by_ref('urlquery', $urlquery);
 $cant = $items["cant"];
 include "tiki-pagination.php";
 
-if ($tracker_info['useComments'] == 'y' && $tracker_info['showComments'] == 'y') {
+if ($tracker_info['useComments'] == 'y' && ($tracker_info['showComments'] == 'y' || $tracker_info['showLastComment'] == 'y')) {
 	foreach ($items['data'] as $itkey=>$oneitem) {
-		$items['data'][$itkey]['comments'] = $trklib->get_item_nb_comments($items['data'][$itkey]['itemId']);
+		if ($tracker_info['showComments'] == 'y') {
+			$items['data'][$itkey]['comments'] = $trklib->get_item_nb_comments($items['data'][$itkey]['itemId']);
+		}
+		if ($tracker_info['showLastComment'] == 'y') {
+			$l = $trklib->list_item_comments($items['data'][$itkey]['itemId'], 0, 1, 'posted_desc');
+			$items['data'][$itkey]['lastComment'] = !empty($l['cant'])? $l['data'][0]: '';
+		}
 	}
 }
 if ($tracker_info['useAttachments'] == 'y' && $tracker_info['showAttachments'] == 'y') {

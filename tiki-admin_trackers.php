@@ -174,6 +174,13 @@ if (isset($_REQUEST["save"])) {
 		} else {
 			$tracker_options["showComments"] = 'n';
 		}
+		if (isset($_REQUEST['showLastComment']) 
+			&& ($_REQUEST['showLastComment'] == 'on'
+				or $_REQUEST['showLastComment'] == 'y')) {
+			$tracker_options['showLastComment'] = 'y';
+		} else {
+			$tracker_options['showLastComment'] = 'n';
+		}
 	} else {
 		$tracker_options["useComments"] = 'n';
 		$tracker_options["showComments"] = 'n';
@@ -386,6 +393,7 @@ $info["ratingOptions"] = '';
 $info["showRatings"] = '';
 $info["useComments"] = '';
 $info["showComments"] = '';
+$info['showLastComment'] = '';
 $info["useAttachments"] = '';
 $info["showAttachments"] = '';
 $info["defaultOrderKey"] = '';
@@ -440,6 +448,7 @@ $smarty->assign('ratingOptions', $info["ratingOptions"]);
 $smarty->assign('showRatings', $info["showRatings"]);
 $smarty->assign('useComments', $info["useComments"]);
 $smarty->assign('showComments', $info["showComments"]);
+$smarty->assign('showLastComment', $info['showLastComment']);
 $smarty->assign('useAttachments', $info["useAttachments"]);
 $smarty->assign('showAttachments', $info["showAttachments"]);
 $smarty->assign('defaultOrderKey', $info["defaultOrderKey"]);
