@@ -592,7 +592,7 @@ if ( ! empty($_FILES) ) {
 
 			$fileId = $filegallib->replace_file(
 				$fileInfo['fileId'],
-				$fileInto['name'],
+				$fileInfo['name'],
 				$fileInfo['description'],
 				$v['name'],
 				$data,
