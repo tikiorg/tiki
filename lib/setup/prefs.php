@@ -10,7 +10,10 @@
 // RULE2: put array() in default prefs for serialized values
 
 //this script may only be included - so its better to die if called directly.
-$access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  header("location: index.php");
+  exit;
+}
 
 function get_default_prefs() {
 	static $prefs;
@@ -159,7 +162,7 @@ function get_default_prefs() {
 		'wikiplugin_articles' => 'y',
 		'wikiplugin_attach' => 'y',
 		'wikiplugin_avatar' => 'y',
-        'wikiplugin_back' => 'y',
+		'wikiplugin_back' => 'y',
 		'wikiplugin_backlinks' => 'y',
 		'wikiplugin_bloglist' => 'n',
 		'wikiplugin_box' => 'y',

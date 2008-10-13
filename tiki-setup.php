@@ -53,7 +53,7 @@ if ( substr($tikiroot,-1,1) != '/' ) $tikiroot .= '/';
 if ( substr($tikipath,-1,1) != '/' ) $tikipath .= '/';
 
 require_once('lib/init/initlib.php');
-///if ( ! isset($_SESSION['votes']) ) $_SESSION['votes'] = array();
+
 $num_queries = 0;
 $elapsed_in_db = 0.0;
 $server_load = '';
@@ -70,7 +70,7 @@ $tiki_timer = new timer();
 $tiki_timer->start();
 
 require_once('tiki-setup_base.php');
-require_once('lib/setup/prefs.php');
+
 // TikiTests are PHP5 only
 if ($prefs['feature_tikitests'] == 'y' and version_compare(PHP_VERSION, '5.0.0', '>='))  {
 	require_once('tiki_tests/tikitestslib.php');

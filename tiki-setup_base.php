@@ -56,27 +56,12 @@ $needed_prefs = array(
 	'session_db' => 'n',
 	'sessions_silent' => 'disabled',
 	'language' => 'en',
-	'cookie_name' => 'tikiwiki',
-	'rememberme' => 'disabled',
-	'feature_intertiki' => 'n',
-	'tiki_key' => '',
-	'feature_intertiki_mymaster' => '',
-	'feature_intertiki_sharedcookie' => 'n',
-	'interlist' => array(),
-	'auth_method' => 'tiki',
-	'smarty_security' => 'n',
 	'feature_pear_date' => 'y'
 );
 
 $tikilib->get_preferences($needed_prefs, true, true);
-extract($prefs);
 require_once('lib/tikidate.php');
 $tikidate = new TikiDate();
-
-// Handle Smarty Security
-if ( $prefs['smarty_security'] == 'y' ) {
-	$smarty->security = true;
-}
 
 // set session lifetime
 if ($prefs['session_lifetime'] > 0) {
@@ -98,9 +83,20 @@ if ( isset($_GET['PHPSESSID']) && $_SERVER['REMOTE_ADDR'] == '127.0.0.1' ) {
 	$_COOKIE['PHPSESSID'] = $_GET['PHPSESSID'];
 	session_id($_GET['PHPSESSID']);
 }
-if ($sessions_silent == 'disabled' or !empty($_COOKIE)) {
+if ( $prefs['sessions_silent'] == 'disabled' or !empty($_COOKIE) ) {
 	// enabing silent sessions mean a session is only started when a cookie is presented
 	session_start();
+}
+
+// Check if phpCAS mods is installed 
+$phpcas_enabled = is_file('lib/phpcas/source/CAS/CAS.php') ? 'y' : 'n';
+
+// Retrieve all preferences
+require_once('lib/setup/prefs.php');
+
+// Handle Smarty Security
+if ( $prefs['smarty_security'] == 'y' ) {
+	$smarty->security = true;
 }
 
 require_once("lib/userslib.php");
@@ -108,7 +104,6 @@ $userlib = new UsersLib($dbTiki);
 require_once("lib/tikiaccesslib.php");
 $access = new TikiAccessLib();
 require_once("lib/breadcrumblib.php");
-//require_once("lib/tikihelplib.php");
 
 // ------------------------------------------------------
 // DEAL WITH XSS-TYPE ATTACKS AND OTHER REQUEST ISSUES
@@ -333,8 +328,8 @@ if (($prefs['rememberme'] != 'disabled')
 		$rpcauth = $userlib->get_remote_user_by_cookie($_COOKIE["$user_cookie_site"]);
 		if (is_object($rpcauth)) {
 			$response_value = $rpcauth->value();
-			if (is_object($response_value))  {
-			$user = $response_value->scalarval();
+			if (is_object($response_value)) {
+				$user = $response_value->scalarval();
 			}
 		}
 	} else {
@@ -355,14 +350,7 @@ if (($prefs['auth_method'] == 'ws') and (isset($_SERVER['REMOTE_USER']))) {
 	} elseif ($userlib->user_exists(substr($_SERVER['REMOTE_USER'], strpos($_SERVER['REMOTE_USER'], "\\") + 2))){
 		// Check for the username without the domain name
 		$_SESSION["$user_cookie_site"] = substr($_SERVER['REMOTE_USER'], strpos($_SERVER['REMOTE_USER'], "\\") + 2);
-	}																						 
-}
-
-// check if phpCAS mods is installed 
-if (is_file('lib/phpcas/source/CAS/CAS.php')) {
-	$phpcas_enabled = 'y';
-} else {
-	$phpcas_enabled = 'n';
+	}
 }
 
 // Check for Shibboleth Login
@@ -487,7 +475,6 @@ $allperms = $allperms["data"];
 foreach ($allperms as $vperm) {
 	$perm = $vperm["permName"];
 	$$perm = 'n';
-
 	$smarty->assign("$perm", 'n');
 }
 
