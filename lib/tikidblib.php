@@ -18,8 +18,6 @@ if (is_file($local_php)) {
 
 if (extension_loaded("pdo") and $api_tiki == 'pdo' ) {
 	require_once('tikidblib-pdo.php');
-} elseif ($api_tiki == 'native') {
-  require_once('tikidblib-native-mysqli.php');
 } else {
 	require_once('tikidblib-adodb.php');
 }
