@@ -10,7 +10,6 @@
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
-	die();
 }
 
 // ---------------------------------------------------------------------
@@ -121,32 +120,6 @@ function make_clean(&$var,$gpc=false) {
 		}
 	}
 }
-
-// deal with register_globals
-if ( ini_get('register_globals') ) {
-	foreach ( array($_ENV, $_GET, $_POST, $_COOKIE, $_SERVER) as $superglob ) {
-		foreach ( $superglob as $key=>$val ) {
-			if ( isset($GLOBALS[$key]) && $GLOBALS[$key]==$val ) { // if global has been set some other way
-				// that is OK (prevents munging of $_SERVER with ?_SERVER=rubbish etc.)
-				unset($GLOBALS[$key]);
-			}
-		}
-	}
-}
-make_clean($_GET,get_magic_quotes_gpc());
-make_clean($_POST,get_magic_quotes_gpc());
-make_clean($_COOKIE,get_magic_quotes_gpc());
-make_clean($_SERVER['QUERY_STRING']);
-make_clean($_SERVER['REQUEST_URI']);
-
-// deal with old request globals (e.g. used by Smarty)
-$GLOBALS['HTTP_GET_VARS'] =& $_GET;
-$GLOBALS['HTTP_POST_VARS'] =& $_POST;
-$GLOBALS['HTTP_COOKIE_VARS'] =& $_COOKIE;
-unset($GLOBALS['HTTP_ENV_VARS']);
-unset($GLOBALS['HTTP_SERVER_VARS']);
-unset($GLOBALS['HTTP_SESSION_VARS']);
-unset($GLOBALS['HTTP_POST_FILES']);
 
 // mose : simulate strong var type checking for http vars
 $patterns['login']   = "/^[-_a-zA-Z0-9@\.]*$/"; // special check for logins, not to be used in varcheck because compat with already created accounts
@@ -275,22 +248,6 @@ function varcheck(&$array, $category) {
 	return implode('<br />', $return);
 }
 
-$varcheck_vars = array('_COOKIE', '_GET', '_POST', '_ENV', '_SERVER');
-$varcheck_errors = '';
-foreach ( $varcheck_vars as $var ) {
-	if ( ! isset($$var) ) continue;
-	if ( ( $tmp = varcheck($$var, $var) ) != '' ) {
-		if ( $varcheck_errors != '' ) $varcheck_errors .= '<br />';
-		$varcheck_errors .= $tmp;
-	}
-}
-unset($tmp);
-
-// rebuild $_REQUEST after sanity check
-unset($_REQUEST);
-$_REQUEST = array_merge($_GET, $_POST);
-///$_REQUEST = array_merge($_COOKIE, $_GET, $_POST, $_ENV, $_SERVER);
-
 unset($_COOKIE['offset']);
 if (!empty($_REQUEST['highlight'])) {
 	if (is_array($_REQUEST['highlight'])) $_REQUEST['highlight'] = '';
@@ -322,7 +279,7 @@ $user_cookie_site = 'tiki-user-'.$cookie_site;
 // if remember me is enabled, check for cookie where auth hash is stored
 // user gets logged in as the first user in the db with a matching hash
 if (($prefs['rememberme'] != 'disabled') 
-	and (isset($_COOKIE["$user_cookie_site"])) 
+	and (isset($_COOKIE["$user_cookie_site"]))
 	and (!isset($user) and !isset($_SESSION["$user_cookie_site"]))) {
 	if ($prefs['feature_intertiki'] == 'y' and !empty($prefs['feature_intertiki_mymaster']) and $prefs['feature_intertiki_sharedcookie'] == 'y') {
 		$rpcauth = $userlib->get_remote_user_by_cookie($_COOKIE["$user_cookie_site"]);
@@ -411,58 +368,7 @@ if (isset($_SESSION["$user_cookie_site"])) {
 
 // --------------------------------------------------------------
 
-if (isset($_REQUEST['highlight']) || (isset($prefs['feature_referer_highlight']) && $prefs['feature_referer_highlight'] == 'y') ) {
-  $smarty->load_filter('output','highlight');
-}
-
-
-/* \brief  substr with a utf8 string - works only with $start and $length positive or nuls
- * This function is the same as substr but works with multibyte
- * In a multybyte sequence, the first byte of a multibyte sequence that represents a non-ASCII character is always in the range 0xC0 to 0xFD
- * and it indicates how many bytes follow for this character.
- * All further bytes in a multibyte sequence are in the range 0x80 to 0xBF.
- */
-if (function_exists('mb_substr')) {
-    mb_internal_encoding("UTF-8");
-}
-else {
-    function mb_substr($str, $start, $len = '', $encoding="UTF-8"){
-        $limit = strlen($str);
-        for ($s = 0; $start > 0;--$start) {// found the real start
-            if ($s >= $limit)
-                break;
-            if ($str[$s] <= "\x7F")
-                ++$s;
-            else {
-                ++$s; // skip length
-                while ($str[$s] >= "\x80" && $str[$s] <= "\xBF")
-                    ++$s;
-            }
-        }
-        if ($len == '')
-            return substr($str, $s);
-        else {
-            for ($e = $s; $len > 0; --$len) {//found the real end
-                if ($e >= $limit)
-                    break;
-                if ($str[$e] <= "\x7F")
-                    ++$e;
-                else {
-                    ++$e;//skip length
-                    while ($str[$e] >= "\x80" && $str[$e] <= "\xBF" && $e < $limit)
-                        ++$e;
-                       }
-            }
-        return substr($str, $s, $e - $s);
-		}
-    }
-}
-
-
-// We might need to cache this on a per-user basis
-// Cache cache
-// function user_has_permission($user,$perm) 
-if(!$cachelib->isCached("allperms")) {
+if ( ! $cachelib->isCached("allperms") ) {
 	$allperms = $userlib->get_permissions(0, -1, 'permName_desc', '', '');
 	$cachelib->cacheItem("allperms",serialize($allperms));
 } else {
@@ -470,8 +376,7 @@ if(!$cachelib->isCached("allperms")) {
 }
 $allperms = $allperms["data"];
 
-//Initializes permissions
-
+// Initializes permissions
 foreach ($allperms as $vperm) {
 	$perm = $vperm["permName"];
 	$$perm = 'n';
@@ -501,6 +406,63 @@ if ($user == 'admin' || ($user && $userlib->user_has_permission($user, 'tiki_p_a
 }
 
 unset($allperms);
+
+// --------------------------------------------------------------
+
+if ( $tiki_p_trust_input != 'y' ) {
+	$magic_quotes_gpc = get_magic_quotes_gpc();
+
+	// deal with register_globals
+	if ( ini_get('register_globals') ) {
+		foreach ( array($_ENV, $_GET, $_POST, $_COOKIE, $_SERVER) as $superglob ) {
+			foreach ( $superglob as $key=>$val ) {
+				if ( isset($GLOBALS[$key]) && $GLOBALS[$key]==$val ) { // if global has been set some other way
+					// that is OK (prevents munging of $_SERVER with ?_SERVER=rubbish etc.)
+					unset($GLOBALS[$key]);
+				}
+			}
+		}
+	}
+	make_clean($_GET, $magic_quotes_gpc);
+	make_clean($_POST, $magic_quotes_gpc);
+	make_clean($_COOKIE, $magic_quotes_gpc);
+	make_clean($_SERVER['QUERY_STRING']);
+	make_clean($_SERVER['REQUEST_URI']);
+
+	$varcheck_vars = array('_COOKIE', '_GET', '_POST', '_ENV', '_SERVER');
+	$varcheck_errors = '';
+	foreach ( $varcheck_vars as $var ) {
+		if ( ! isset($$var) ) continue;
+		if ( ( $tmp = varcheck($$var, $var) ) != '' ) {
+			if ( $varcheck_errors != '' ) $varcheck_errors .= '<br />';
+			$varcheck_errors .= $tmp;
+		}
+	}
+	unset($tmp);
+}
+
+// deal with old request globals (e.g. used by Smarty)
+$GLOBALS['HTTP_GET_VARS'] =& $_GET;
+$GLOBALS['HTTP_POST_VARS'] =& $_POST;
+$GLOBALS['HTTP_COOKIE_VARS'] =& $_COOKIE;
+unset($GLOBALS['HTTP_ENV_VARS']);
+unset($GLOBALS['HTTP_SERVER_VARS']);
+unset($GLOBALS['HTTP_SESSION_VARS']);
+unset($GLOBALS['HTTP_POST_FILES']);
+
+// rebuild $_REQUEST after sanity check
+unset($_REQUEST);
+$_REQUEST = array_merge($_GET, $_POST);
+
+// --------------------------------------------------------------
+
+if (isset($_REQUEST['highlight']) || (isset($prefs['feature_referer_highlight']) && $prefs['feature_referer_highlight'] == 'y') ) {
+  $smarty->load_filter('output','highlight');
+}
+
+mb_internal_encoding("UTF-8");
+
+// --------------------------------------------------------------
 
 // Fix IIS servers not setting what they should set (ay ay IIS, ay ay)
 if (!isset($_SERVER['QUERY_STRING']))
