@@ -493,6 +493,7 @@ class UsersLib extends TikiLib {
 			return array($this->update_lastlogin($user), $user, USER_VALID);
 	    }
 	    else {
+			global $smarty;
 			// see if we can create a new account
 			if ($shib_create_tiki) {
 			    
@@ -514,9 +515,9 @@ class UsersLib extends TikiLib {
 
 					$errmsg = $errmsg . "). For further information on this error goto the ((ShibReg)) Page";
 
-					$url = 'tiki-error.php?error=' . $errmsg;
-					header("location: $url");
-					die;
+					$smarty->assign('msg',$errmsg );
+					$smarty->display('error.tpl');
+					exit;
 				}
 				else
 				{
@@ -558,15 +559,17 @@ class UsersLib extends TikiLib {
 							$vaffils = $vaffils  . $vaffil . ", ";
 						}
 						$vaffils = rtrim($vaffils,", ");
-						$url = "tiki-error.php?error=<H1 align=center>User login error</H1><BR/><BR/>You must have one of the following affiliations to get into this wiki.<BR/><BR/><B>" . $vaffils . "</B><BR><BR/><BR/>For further information on this error goto the <a href=./tiki-index.php?page=ShibReg>Shibreg</a> Page";
-						header("location: $url");
-						die;
+						$errmsg = "<H1 align=center>User login error</H1><BR/><BR/>You must have one of the following affiliations to get into this wiki.<BR/><BR/><B>" . $vaffils . "</B><BR><BR/><BR/>For further information on this error goto the <a href=./tiki-index.php?page=ShibReg>Shibreg</a> Page";
+						$smarty->assign('msg',$errmsg );
+						$smarty->display('error.tpl');
+						exit;
 					}
 				}			
 			}
 			else{
-				header("location: tiki-error.php?error=The user [ " . $user . " ] is not registered with this wiki.");
-				die;
+				$smarty->assign('msg',"The user [ " . $user . " ] is not registered with this wiki.");
+				$smarty->display('error.tpl');
+				exit;
 			}
 			
 	    }

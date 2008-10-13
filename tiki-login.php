@@ -16,8 +16,9 @@ if ( ! (isset($_REQUEST['user']) or isset($_REQUEST['username'])) ) {
 }
 // Alert user if cookies are switched off
 if ( ini_get('session.use_cookies') == 1 && ! isset($_COOKIE['PHPSESSID']) ) {
-	header('Location: '.$base_url.'tiki-error.php?error='.urlencode(tra('You have to enable cookies to be able to login to this site')));
-	die;
+	$smarty->assign('msg',tra('You have to enable cookies to be able to login to this site'));
+	$smarty->display('error.tpl');
+	exit;
 }
 
 // Redirect to HTTPS if we are not in HTTPS but we require HTTPS login
@@ -338,7 +339,10 @@ if ( $isvalid ) {
 	case USER_NOT_VALIDATED: $error = tra('You are not yet validated'); break;
 	default: $error = tra('Invalid username or password');
 	}
-	$url = 'tiki-error.php?error='.urlencode($error);
+	if ( isset($user) and $prefs['feature_score'] == 'y' ) $tikilib->score_event($user, 'login');
+	$smarty->assign('msg',tra($error));
+	$smarty->display('error.tpl');
+	exit;
 
 	// on a login error wait this long in seconds. slows down automated login attacks.
 	// regular users mistyping on login will experience the delay, too, but wrong logins
