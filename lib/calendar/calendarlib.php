@@ -154,7 +154,6 @@ class CalendarLib extends TikiLib {
 
 	/* tsart ans tstop are in user time - the data base is in server time */
 	function list_raw_items($calIds, $user, $tstart, $tstop, $offset, $maxRecords, $sort_mode='start_asc', $find='', $customs=array()) {
-		global $user;
 
 		if (sizeOf($calIds) == 0) {
 		    return array();
@@ -189,7 +188,7 @@ class CalendarLib extends TikiLib {
 	}
 
 	function list_items($calIds, $user, $tstart, $tstop, $offset, $maxRecords, $sort_mode='start_asc', $find='', $customs=array()) {
-		global $user, $tiki_p_change_events, $prefs;
+		global $tiki_p_change_events, $prefs;
 		$ret = array();
 		$list = $this->list_raw_items($calIds, $user, $tstart, $tstop, $offset, $maxRecords, $sort_mode, $find, $customs);
 		foreach ($list as $res) {
@@ -239,7 +238,7 @@ class CalendarLib extends TikiLib {
 	}
 
 	function list_items_by_day($calIds, $user, $tstart, $tstop, $offset, $maxRecords, $sort_mode='start_asc', $find='', $customs=array()) {
-		global $user, $prefs;
+		global $prefs;
 		$ret = array();
 		$list = $this->list_raw_items($calIds, $user, $tstart, $tstop, $offset, $maxRecords, $sort_mode, $find, $customs);
 		foreach ($list as $res) {
@@ -325,7 +324,7 @@ class CalendarLib extends TikiLib {
 	}
 
 	function set_item($user, $calitemId, $data, $customs=array()) {
-		global $user, $prefs;
+		global $prefs;
 		if (!isset($data['calendarId'])) {
 			return false;
 		}

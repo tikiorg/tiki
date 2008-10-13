@@ -4667,7 +4667,7 @@ class TikiLib extends TikiDB {
 
 		$html=$is_html?1:0;
 		if ($html && $prefs['feature_purifier'] != 'n') {
-			require "HTMLPurifier.auto.php";
+			require "lib/htmlpurifier/HTMLPurifier.auto.php";
 			$purifier = new HTMLPurifier();
 			$edit_data = $purifier->purify($edit_data);
 		}
@@ -7123,7 +7123,7 @@ class TikiLib extends TikiDB {
 
 		$html=$is_html?1:0;
 		if ($html && $prefs['feature_purifier'] != 'n') {
-			require "HTMLPurifier.auto.php";
+			require "lib/htmlpurifier/HTMLPurifier.auto.php";
 			$purifier = new HTMLPurifier();
 			$edit_data = $purifier->purify($edit_data);
 		}

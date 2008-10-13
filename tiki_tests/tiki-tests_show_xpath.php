@@ -41,7 +41,7 @@ function enlight_xpath($url, $xpath) {
 		tidy_diagnose($data);
 	} else {
 		if (!$loaded) {
-			require_once("HTMLPurifier.auto.php");
+			require_once("lib/htmlpurifier/HTMLPurifier.auto.php");
 			$config =& HTMLPurifier_Config::createDefault();
 			$config->set('HTML', 'Doctype', 'XHTML 1.0 Transitional');
 			$config->set('Attr','EnableID', true);

@@ -203,8 +203,8 @@ function &search_index($data) {
 	}
 
 	// Clean the UTF-8 string using HTML Purifier
-@	require_once('lib/HTMLPurifier.auto.php');
-@	require_once('HTMLPurifier/Encoder.php');
+@	require_once('lib/htmlpurifier/HTMLPurifier.auto.php');
+@	require_once('lib/htmlpurifier/HTMLPurifier/Encoder.php');
 	if ( class_exists('HTMLPurifier_Encoder') ) {
 		$utf8encoder = new HTMLPurifier_Encoder();
 		$data = $utf8encoder->cleanUTF8($data);

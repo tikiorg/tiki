@@ -130,7 +130,7 @@ function verif_url($url, $use_tidy = TRUE) {
 		}
 	} else {
 		if (!$loaded) {
-			require_once("HTMLPurifier.auto.php");
+			require_once("lib/htmlpurifier/HTMLPurifier.auto.php");
 			$config =& HTMLPurifier_Config::createDefault();
 			$config->set('HTML', 'Doctype', 'XHTML 1.0 Transitional');
 			$config->set('HTML', 'TidyLevel', 'light');
