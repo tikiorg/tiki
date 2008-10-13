@@ -8,10 +8,12 @@
   <div id="categorizator">
 {else}
 <a class="link" href="javascript:flip_multi('categorizator');flip_multi('categshow','inline');flip_multi('categhide','inline');"{if ($mid eq 'tiki-editpage.tpl')}onclick="needToConfirm=false;"{/if}>
+{if $prefs.javascript_enabled eq 'y'}
 <span id="categshow" name="categshow" style="display:{if isset($smarty.session.tiki_cookie_jar.show_categorizator) and $smarty.session.tiki_cookie_jar.show_categorizator eq 'y'}none{else}inline{/if};">{tr}Show Categories{/tr}</span>
 <span id="categhide" name="categhide" style="display:{if isset($smarty.session.tiki_cookie_jar.show_categorizator) and $smarty.session.tiki_cookie_jar.show_categorizator eq 'y'}inline{else}none{/if};">{tr}Hide Categories{/tr}</span>
+{/if}
 </a>
-  <div id="categorizator" name="categorizator" style="display:{if isset($smarty.session.tiki_cookie_jar.show_categorizator) and $smarty.session.tiki_cookie_jar.show_categorizator eq 'y'}block{else}none{/if};">
+  <div id="categorizator" name="categorizator" style="display:{if (isset($smarty.session.tiki_cookie_jar.show_categorizator) and $smarty.session.tiki_cookie_jar.show_categorizator eq 'y') or $prefs.javascript_enabled ne 'y'}block{else}none{/if};">
 {/if}
   {if count($categories) gt 0}
     <div class="multiselect">
