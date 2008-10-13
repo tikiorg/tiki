@@ -2748,7 +2748,7 @@ class TrackerLib extends TikiLib {
 					$wl = strtolower($w['email']);
 					if (!in_array($wl, $emails)) {
 						$emails[] = $wl;
-						$watchers[] = $wl;
+						$watchers[] = $w;
 					}
 				}
 			}
