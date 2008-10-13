@@ -78,7 +78,9 @@ class SearchLib extends TikiLib {
 		if (isset($h['is_html'])) {
 			$sqlFields .= ', `is_html`';
 		}
-		
+		if (!empty($h['parent']))
+			$sqlFields .= ', '.$h['parent'];
+
 		$id = $h['id'];
 		$temp_max = count($id);
 		for ($i = 0; $i < $temp_max; ++$i)
@@ -126,7 +128,6 @@ class SearchLib extends TikiLib {
 		if (empty($objKeyCat)) {
 		    $objKeyCat = $objKey;
 		}
-		    
 		    
 		$chkObjPerm = $prefs['feature_search_show_forbidden_obj'] != 'y' && $tiki_p_admin != 'y' && (!empty($permName) || (!empty($permNameGlobal) && !empty($permNameObj))) && !empty($objType) && !empty($objKeyPerm) && !empty($objKeyGroup);
 
@@ -189,6 +190,9 @@ class SearchLib extends TikiLib {
 			$bindHaving = array();
 		    }
 		}
+		if ($h['parentJoin'])
+			$sqlJoin .= ' '.$h['parentJoin'];
+		    
 
 		$sqlWhere = ' WHERE ';
 		$sqlWhere .= (isset($h['filter']))? $h['filter'] : '1';
@@ -236,6 +240,7 @@ class SearchLib extends TikiLib {
 		$sql = $sqlFields . $sqlFrom . $sqlJoin . $sqlWhere . $sqlGroup . $sqlHaving . ' ORDER BY ' . $orderby;
 
 		$result = $this->query($sql, $bindVars);
+
 		$cant = $result->numRows();
 
 		if (!$cant && $boolean != 'y') { // no result
@@ -257,7 +262,7 @@ class SearchLib extends TikiLib {
 
 			// taking first 240 chars of text can bring broken html tags, better remove all tags.
 			global $tikilib;
-			$ret[] = array(
+			$r = array(
 				'name' => $res['name'],
 				'pageName' => $res["pageName"],
 				'data' => $tikilib->get_snippet($res['data'], isset($res['is_html'])? $res['is_html']:'n'),
@@ -266,6 +271,11 @@ class SearchLib extends TikiLib {
 				'href' => $href,
 				'relevance' => round($res["relevance"], 3),
 			);
+			if ($h['parent']) {
+				$r['parentName'] = $res['parentName'];
+				$r['parentHref'] = str_replace('$', '?', $res['parentHref']);
+			}
+			$ret[] = $r;
 		}
 
 		return array(
@@ -441,6 +451,7 @@ class SearchLib extends TikiLib {
 	function find_files($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n') {
 		static $search_files = array(
 			'from' => '`tiki_files` f',
+			'parent' => 'tfg.`name` as parentName, concat(\'tiki-list_file_gallery.php$galleryId=\', f.`galleryId`) as parentHref',
 			'name' => 'f.`name`',
 			'data' => 'f.`description`',
 			'hits' => 'f.hits',
@@ -452,7 +463,8 @@ class SearchLib extends TikiLib {
    			'filter' => '`archiveId` = 0',
 			'permName' => 'tiki_p_download_files',
 			'objectType' => 'file gallery',
-			'objectKey' => '`galleryId`',
+			'objectKey' => 'f.`galleryId`',
+			'parentJoin' => 'LEFT JOIN `tiki_file_galleries` tfg ON tfg.`galleryId` = f.`galleryId`',
 		);
 
 		return $this->_find($search_files, $words, $offset, $maxRecords, $fulltext, $filter, $boolean);

@@ -117,6 +117,7 @@
 {if $results[search].type > ''}
 &nbsp;({$results[search].type})
 {/if}
+{if !empty($results[search].parentName)}{tr}in{/tr} <a href="{$results[search].parentHref}">{$results[search].parentName|escape}</a> {/if}
 
 <br />
 <div class="searchdesc">{$results[search].data|strip_tags}</div>
