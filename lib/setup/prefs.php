@@ -670,7 +670,6 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['login_url'] = 'tiki-login.php';
 	$prefs['login_scr'] = 'tiki-login_scr.php';
 	$prefs['register_url'] = 'tiki-register.php';
-	$prefs['error_url'] = 'tiki-error.php';
 	$prefs['highlight_group'] = '';
 	$prefs['cookie_path'] = '/';
 	$prefs['cookie_domain'] = '';
