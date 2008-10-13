@@ -2406,9 +2406,12 @@ img.icon {border: 0 !important;
 	background: transparent;}
 
 div.multiselect {
-  vertical-align: middle;
-  overflow-y: auto;
-  overflow-x: hidden;
-  height: 5em;
+	vertical-align: middle;
+	overflow-y: auto;
+	overflow-x: hidden;
+	height: 5em;
 }
+
+div.multiselect div.odd {background: #292929}
+div.multiselect div.even {background: #3F3F3F}
 /* end of css file */

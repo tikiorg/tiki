@@ -2264,4 +2264,19 @@ div.multiselect {
 div.multiselect table {
 	width: 100%;
 }
+div.multiselect div.odd {
+	color: black;
+	background-color : #F4F6F7;
+}
+div.multiselect div.odd:hover {
+	background: #FFF7E6;
+}
+div.multiselect div.even {
+	border: 1px solid #8CACBB;
+	background: #E7E9EA;
+	color: black;
+}
+div.multiselect div.even:hover {
+	background-color: #F0F2F3;
+}
 /* end of css file */

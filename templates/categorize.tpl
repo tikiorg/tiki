@@ -15,19 +15,17 @@
 {/if}
   {if count($categories) gt 0}
     <div class="multiselect">
-    <table>
       {cycle values="odd,even" print=false}
       {section name=ix loop=$categories}
       {if $categories[ix].incat eq 'y'}
-				<tr class="{cycle}"><td><input type="checkbox" name="cat_categories[]" value="{$categories[ix].categId|escape}" checked="checked"/>{if $categories[ix].categpath}{$categories[ix].categpath}{else}{$categories[ix].name}{/if}</td></tr>
+				<div class="{cycle}" style="display: inline"><input type="checkbox" name="cat_categories[]" value="{$categories[ix].categId|escape}" checked="checked"/>{if $categories[ix].categpath}{$categories[ix].categpath}{else}{$categories[ix].name}{/if}</div>
 			{/if}
       {/section}
       {section name=ix loop=$categories}
       {if $categories[ix].incat neq 'y'}
-				<tr class="{cycle}"><td><input type="checkbox" name="cat_categories[]" value="{$categories[ix].categId|escape}"/>{if $categories[ix].categpath}{$categories[ix].categpath}{else}{$categories[ix].name}{/if}</td></tr>
+				<div class="{cycle}" style="display: inline"><input type="checkbox" name="cat_categories[]" value="{$categories[ix].categId|escape}"/>{if $categories[ix].categpath}{$categories[ix].categpath}{else}{$categories[ix].name}{/if}</div>
 			{/if}
       {/section}
-    </table>
     </div>
     <input type="hidden" name="cat_categorize" value="on" />
 		<input type="checkbox" name="cat_clearall" value="on" />{tr}Clear all Categories{/tr}<br/>

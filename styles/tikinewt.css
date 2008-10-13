@@ -2873,4 +2873,24 @@ div.multiselect {
 div.multiselect table {
 	width: 100%;
 }
+
+div.multiselect div.odd {
+	border: 1px solid #8CACBB;
+	color: black;
+	background: #F7F9FA;
+}
+
+div.multiselect div.odd:hover {
+	background: #FFF7E6;
+}
+
+div.multiselect div.even {
+	border: 1px solid #8CACBB;
+	background: #E7E9EA;
+	color: black;
+}
+
+div.multiselect div.even:hover {
+	background: #FFF7E6;
+}
 /***** End of file ******/
