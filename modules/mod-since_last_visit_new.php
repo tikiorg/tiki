@@ -15,7 +15,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 require_once('lib/smarty_tiki/modifier.userlink.php');
 
-if (!function_exists('mod_since_last_new_help')) {
+if (!function_exists('mod_since_last_visit_new_help')) {
 	function mod_since_last_visit_new_help() {
 		return "showuser=n&showtracker=n&calendar_focus=ignore";
 	}
