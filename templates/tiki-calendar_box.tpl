@@ -27,7 +27,7 @@
 {if $cellname}<br />{/if}{$celldescription}
 {/if}
 {if $show_status eq 'y'}
-<div class="statusbox status{$calitem.status}">{if $calitem.status eq 0}{tr}Tentative{/tr}{elseif $calitem.status eq 1}{tr}Confirmed{/tr}{elseif $calitem.status eq 2}{tr}Cancelled{/tr}{/if}</div>
+<div class="statusbox status{$cellstatus}">{if $cellstatus eq 0}{tr}Tentative{/tr}{elseif $cellstatus eq 1}{tr}Confirmed{/tr}{elseif $cellstatus eq 2}{tr}Cancelled{/tr}{/if}</div>
 {/if}
 </div>
 </div>

@@ -246,6 +246,7 @@ for ($i = 0; $i <= $numberofweeks; $i++) {
         $smarty->assign('celldescription', $tikilib->parse_data($le["description"]));
         $smarty->assign('cellmodif', $le['modifiable']);
         $smarty->assign('cellvisible', $le['visible']);
+		$smarty->assign('cellstatus', $le['status']);
         $smarty->assign('show_calname', $lec['show_calname']);
         $smarty->assign('show_description', $lec['show_description']);
         $smarty->assign('show_location', $lec['show_location']);
@@ -253,6 +254,7 @@ for ($i = 0; $i <= $numberofweeks; $i++) {
         $smarty->assign('show_language', $lec['show_language']);
         $smarty->assign('show_participants', $lec['show_participants']);
         $smarty->assign('show_url', $lec['show_url']);
+        $smarty->assign('show_status', $lec['show_status']);
         $leday["{$le['time']}$e"]["over"] = $smarty->fetch("tiki-calendar_box.tpl");
         $e++;
       }
