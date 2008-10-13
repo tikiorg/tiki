@@ -120,8 +120,9 @@
       <th>{tr}Categories{/tr}</th>
     {/if}
 
-    {if $tiki_p_edit eq 'y' or $tiki_p_assign_perm_wiki_page eq 'y'}
-      <th>Action</th>
+    {if $show_actions eq 'y'}
+      {assign var='cntcol' value=$cntcol+1}
+      <th>{tr}Actions{/tr}</th>
     {/if}
   </tr>
 
@@ -247,22 +248,22 @@
       </td>
     {/if}
 
-    {if $tiki_p_edit eq 'y' or $tiki_p_assign_perm_wiki_page eq 'y'}
+    {if $show_actions eq 'y'}
       <td class="{cycle advance=false}">
   
-      {if $tiki_p_edit eq 'y'}
+      {if $listpages[changes].perms.tiki_p_edit eq 'y'}
         <a class="link" href="tiki-editpage.php?page={$listpages[changes].pageName|escape:"url"}">{icon _id='page_edit'}</a>
       {/if}
 
-      {if $prefs.feature_history eq 'y' and $tiki_p_wiki_view_history eq 'y'}
+      {if $prefs.feature_history eq 'y' and $listpages[changes].perms.tiki_p_wiki_view_history eq 'y'}
         <a class="link" href="tiki-pagehistory.php?page={$listpages[changes].pageName|escape:"url"}">{icon _id='page_white_stack' alt='{tr}History{/tr}'}</a>
       {/if}
   
-      {if $tiki_p_assign_perm_wiki_page eq 'y'}
+      {if $listpages[changes].perms.tiki_p_assign_perm_wiki_page eq 'y'}
         <a class="link" href="tiki-objectpermissions.php?objectName={$listpages[changes].pageName|escape:"url"}&amp;objectType=wiki+page&amp;permType=wiki&amp;objectId={$listpages[changes].pageName|escape:"url"}">{icon _id='key' alt='{tr}Perms{/tr}'}</a>
       {/if}
 
-      {if $tiki_p_remove eq 'y'}
+      {if $listpages[changes].perms.tiki_p_remove eq 'y'}
         <a class="link" href="tiki-removepage.php?page={$listpages[changes].pageName|escape:"url"}&amp;version=last">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
       {/if}
   

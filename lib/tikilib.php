@@ -3665,20 +3665,18 @@ class TikiLib extends TikiDB {
 		$select = '';
 
 		// If sort mode is versions, links or backlinks then offset is 0, maxRecords is -1 (again) and sort_mode is nil
-		if (in_array($sort_mode, array(
-						'versions_desc',
-						'versions_asc',
-						'links_asc',
-						'links_desc',
-						'backlinks_asc',
-						'backlinks_desc'
-						))) {
-			$old_offset = $offset;
-			$old_maxRecords = $maxRecords;
+		$need_everything = false;
+		if ( in_array($sort_mode, array(
+			'versions_desc',
+			'versions_asc',
+			'links_asc',
+			'links_desc',
+			'backlinks_asc',
+			'backlinks_desc'
+		))) {
 			$old_sort_mode = $sort_mode;
 			$sort_mode = 'user_desc';
-			$offset = 0;
-			$maxRecords = -1;
+			$need_everything = true;
 		}
 
 		if (is_array($find)) { // you can use an array of pages
@@ -3741,30 +3739,33 @@ class TikiLib extends TikiDB {
 		}
 
 		if ( $only_orphan_pages ) {
-		$join_tables .= ' left join `tiki_links` as tl on tp.`pageName` = tl.`toPage` left join `tiki_structures` as ts on tp.`page_id` = ts.`page_id`';
-		$mid .= ( $mid == '' ) ? ' where ' : ' and ';
-		$mid .= 'tl.`toPage` IS NULL and `ts`.page_id IS NULL';
+			$join_tables .= ' left join `tiki_links` as tl on tp.`pageName` = tl.`toPage` left join `tiki_structures` as ts on tp.`page_id` = ts.`page_id`';
+			$mid .= ( $mid == '' ) ? ' where ' : ' and ';
+			$mid .= 'tl.`toPage` IS NULL and `ts`.page_id IS NULL';
 		}
 
 		if (!empty($join_bindvars)) {
 			$bindvars = empty($bindvars)? $join_bindvars : array_merge($join_bindvars, $bindvars);
 		}
-		if ($onlyCant) {
-			$query_cant = "select count(*) from `tiki_pages` tp left join `tiki_links` tl on tp.`pageName` = tl.`toPage` left join `tiki_structures` ts on  tp.`page_id`= ts.`page_id`where tl.`toPage` IS NULL and  `ts`.page_id IS NULL";
-			$cant = $this->getOne($query_cant,$bindvars);
-			return (array('cant'=>$cant));
-		}
 
-		$query = "select tp.* $select from `tiki_pages` as tp $join_tables $mid order by ".$this->convert_sortmode($sort_mode);
-		$query_cant = "select count(*) from `tiki_pages` as tp $join_tables $mid";
-		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$query = "select "
+			.( $onlyCant ? "tp.`page_id`" : "tp.* ".$select )
+			." from `tiki_pages` as tp $join_tables $mid order by ".$this->convert_sortmode($sort_mode);
 
-		$cant = $this->getOne($query_cant,$bindvars);
+		$result = $this->query($query, $bindvars);
 
+		$cant = 0;
+		$n = -1;
 		$ret = array();
 		while ($res = $result->fetchRow()) {
 			//WYSIWYCA
-			if ( $this->user_has_perm_on_object($user,$res['pageName'],'wiki page','tiki_p_view') ) {
+			$res['perms'] = $this->get_perm_object($res['pageName'], 'wiki page', $res, false);
+			if ( $res['perms']['tiki_p_view'] != 'y' ) continue;
+
+			$n++;
+			if ( ! $need_everything && $offset != -1 && $n < $offset ) continue;
+
+			if ( ! $onlyCant && ( $need_everything || $maxRecords == -1 || $cant < $maxRecords ) ) {
 				if ( $onlyName ) $res = array('pageName' => $res['pageName']);
 				else {
 					$page = $res['pageName'];
@@ -3781,24 +3782,20 @@ class TikiLib extends TikiDB {
 				}
 				$ret[] = $res;
 			}
+			$cant++;
 		}
+		if ( ! $need_everything ) $cant += $offset;
 
 		// If sortmode is versions, links or backlinks sort using the ad-hoc function and reduce using old_offset and old_maxRecords
-		if ($old_sort_mode == 'versions_asc') usort($ret, 'compare_versions');
-		if ($old_sort_mode == 'versions_desc') usort($ret, 'r_compare_versions');
-		if ($old_sort_mode == 'links_desc') usort($ret, 'compare_links');
-		if ($old_sort_mode == 'links_asc') usort($ret, 'r_compare_links');
-		if ($old_sort_mode == 'backlinks_desc') usort($ret, 'compare_backlinks');
-		if ($old_sort_mode == 'backlinks_asc') usort($ret, 'r_compare_backlinks');
-
-		if (in_array($old_sort_mode, array(
-						'versions_desc',
-						'versions_asc',
-						'links_asc',
-						'links_desc',
-						'backlinks_asc',
-						'backlinks_desc'
-						))) {
+		if ( $need_everything ) {
+			switch ( $old_sort_mode ) {
+				case 'versions_asc': usort($ret, 'compare_versions'); break;
+				case 'versions_desc': usort($ret, 'r_compare_versions'); break;
+				case 'links_desc': usort($ret, 'compare_links'); break;
+				case 'links_asc': usort($ret, 'r_compare_links'); break;
+				case 'backlinks_desc': usort($ret, 'compare_backlinks'); break;
+				case 'backlinks_asc': usort($ret, 'r_compare_backlinks'); break;
+			}
 			$ret = array_slice($ret, $old_offset, $old_maxRecords);
 		}
 

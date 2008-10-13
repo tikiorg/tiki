@@ -168,6 +168,21 @@ if ( ! empty($multiprint_pages) ) {
 		$listpages_orphans = false;
 	}
 	$listpages = $tikilib->list_pages($offset, $maxRecords, $sort_mode, $find, $initial, $exact_match, false, true, $listpages_orphans, $filter);
+
+	// Only show the 'Actions' column if the user can do at least one action on one of the listed pages
+	$show_actions = 'n';
+	$actions_perms = array('tiki_p_edit', 'tiki_p_wiki_view_history', 'tiki_p_assign_perm_wiki_page', 'tiki_p_remove');
+	foreach ( $actions_perms as $p ) {
+		foreach ( $listpages['data'] as $i ) {
+			if ( $i['perms'][$p] == 'y' ) {
+				$show_actions = 'y';
+				break 2;
+			}
+		}
+	}
+	$smarty->assign('show_actions', $show_actions);
+
+
 	// If there're more records then assign next_offset
 	$cant_pages = ceil($listpages["cant"] / $maxRecords);
 	$smarty->assign_by_ref('cant_pages', $cant_pages);
