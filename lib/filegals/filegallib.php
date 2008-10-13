@@ -515,9 +515,6 @@ class FileGalLib extends TikiLib {
 	}
 	
 	function delete_file_handler($mime_type) {
-		if ($mime_type == 'default')
-			return false;
-			
 		$query = "delete from `tiki_file_handlers` where `mime_type`=?";
 		$result = $this->query($query,array($mime_type));
 		return (($result) ? true : false);
