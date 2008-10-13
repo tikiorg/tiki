@@ -38,9 +38,6 @@ if (!isset($_REQUEST["id"])) {
 	die;
 }
 
-include_once ('lib/init/initlib.php');
-include_once ('tiki-setup_base.php');
-
 // If image_type has no value, we default to "article" to preserve previous behaviour
 if(!isset($_REQUEST["image_type"])) {
 	$_REQUEST["image_type"]="article";
