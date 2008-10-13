@@ -921,7 +921,7 @@
 1030,"Wiki page name",7,,,"configurationgroup",,"tiki_p_admin",,,,,,
 1031,"Redirect",913,,"wikiplugin_redirect","flag",,"tiki_p_admin",,,,,," "
 1032,"Translation Assistant",76,,"feature_translation","flag",,"tiki_p_admin",-15,478,"i18n",,," "
-1033,"Categories used in tpl",25,,"categories_used_in_tpl","flag",,"tiki_p_admin",,"","Category","in_array(categoryId, $objectCategoryIds)",," 
+1033,"Categories used in tpl",25,,"categories_used_in_tpl","flag",,"tiki_p_admin",,"","Category","in_array(categoryId, $objectCategoryIds)",," "
 1034,"Urgent Translation",76,,"feature_urgent_translation","flag",,"tiki_p_admin",-15,478,"i18n",,," "
 1035,"Plugin Alias Manager",913,,"","container","tiki-admin.php?page=plugins","tiki_p_admin",-5,,"Plugin Alias",,," "
 1036,"Webservice Plugins Registry",913,,"","container","tiki-admin.php?page=webservices","tiki_p_admin",-5,,"Webservices",,," "
