@@ -3749,7 +3749,7 @@ class TikiLib extends TikiDB {
 		}
 
 		$query = "select "
-			.( $onlyCant ? "tp.`page_id`" : "tp.* ".$select )
+			.( $onlyCant ? "tp.`pageName`" : "tp.* ".$select )
 			." from `tiki_pages` as tp $join_tables $mid order by ".$this->convert_sortmode($sort_mode);
 
 		$result = $this->query($query, $bindvars);
@@ -3796,7 +3796,7 @@ class TikiLib extends TikiDB {
 				case 'backlinks_desc': usort($ret, 'compare_backlinks'); break;
 				case 'backlinks_asc': usort($ret, 'r_compare_backlinks'); break;
 			}
-			$ret = array_slice($ret, $old_offset, $old_maxRecords);
+			$ret = array_slice($ret, $offset, $maxRecords);
 		}
 
 		$retval = array();
