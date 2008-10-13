@@ -167,6 +167,16 @@ class MagicLib extends TikiLib {
 			$feature['multiple'] = 'on';
 		}
 
+		if ($feature['template'] !== '' && strpos($feature['template'], '.php') === false) {
+			$feature['smartytemplate'] = $feature['template'] . '.tpl';
+			$feature['featureinclude'] = $feature['template'] . '.php';
+			$feature['pageurl'] = $feature['template'] . '.php';
+		} else if ($feature['template'] !== '' && strpos($feature['template'], '.php') > 1) {
+			$feature['pageurl'] = $feature['template'];
+		} else {
+			$feature['pageurl'] = 'tiki-magic.php?featurechain=' . $feature['featurechain'];
+		}
+
 		return $feature;
 	}
 
@@ -215,7 +225,9 @@ class MagicLib extends TikiLib {
 		if ($feature != '') {	
 			$setting = $feature;
 			if (isset($_POST[$setting]) && $_POST[$setting] == "on") {
+				echo "it's on, bitches ($feature)<br />";
 				if ((!isset($prefs[$setting]) || $prefs[$setting] != 'y')) {
+					echo "Set $feature to yes.<br />";
 					// not yet set at all or not set to y
 					$tikilib->set_preference($setting, 'y');
 					$prefs[$setting] = 'y';

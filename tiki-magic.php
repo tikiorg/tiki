@@ -35,23 +35,22 @@ if ($feature['template'] != ''
 	&& $feature['feature_count'] == 0 
 	&& $magiclib->is_container($feature) ) {
 
-	// The value of $feature is sometimes clobbered,  so store these values before the include.
-	$template = $feature['template'];
-	
-	include_once($template . '.php');
-	$mid = $smarty->get_template_vars('mid');
-	if( is_null( $mid ) ) {
-		$smarty->assign('mid', $template . '.tpl');
-		
-		// Containers need to display the tiki, and that's just the way it is.
-		$smarty->display("tiki.tpl");
+	if ($feature['templateinclude'] != '') {
+		include_once($feature['templateinclude']);
+		$mid = $smarty->get_template_vars('mid');
+		if( is_null( $mid ) ) {
+			$smarty->assign('mid', $feature['smartytemplate']);
+			
+			// Containers need to display the tiki, and that's just the way it is.
+			$smarty->display("tiki.tpl");
+		}
+	} else {
+		// if there's a template, but it's not an include; redirect.
+		header("HTTP/1.1 301 Moved Permanently");
+		header ("Location:" . $feature['pageurl']);
 	}
 	exit;
 }
-
-if( ! empty( $feature['template'] ) && strpos( $feature['template'], '.' ) === false )
-	$feature['template'] .= '.php';
-
 $pagefeatures = array($feature);
 $containers = array();
 $hasCategories = false;
@@ -109,8 +108,6 @@ function get_features($featureid, $keepContainers = true) {
 
 	if ($features) {
 		foreach($features as $feature) {
-			if( ! empty( $feature['template'] ) && strpos( $feature['template'], '.' ) === false )
-				$feature['template'] .= '.php';
 			if ($keepContainers && $magiclib->is_container($feature) && $feature['feature_count'] > 0) {
 				$cont[] = $feature;
 			} else {
