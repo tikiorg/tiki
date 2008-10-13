@@ -69,8 +69,8 @@ class TikiAccessLib extends TikiLib {
 		foreach ($permissions as $permission) {
 			global $$permission;
 			if ($$permission != 'y') {
-				if ($permission_name) { $permission= $permission_name; }
-				$this->display_error('', tra("You do not have permission to use this feature").": ". $permission_name, '403', false);
+				if ($permission_name) { $permission = $permission_name; }
+				$this->display_error('', tra("You do not have permission to use this feature").": ". $permission, '403', false);
 			}
 		}
 	}
@@ -81,8 +81,8 @@ class TikiAccessLib extends TikiLib {
 		foreach ($permissions as $permission) {
 			global $$permission;
 			if ((isset($$permission) && $$permission == 'n')) {
-				if ($permission_name) { $permission= $permission_name; }
-				$this->display_error('', tra("You do not have permission to use this feature").": ". $permission_name, '403', false);
+				if ($permission_name) { $permission = $permission_name; }
+				$this->display_error('', tra("You do not have permission to use this feature").": ". $permission, '403', false);
 			}
 		}
 	}
