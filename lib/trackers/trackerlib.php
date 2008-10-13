@@ -279,7 +279,7 @@ class TrackerLib extends TikiLib {
 		$result = $this->query($query,array((int) $commentId));
 	}
 
-	function list_item_comments($itemId, $offset, $maxRecords, $sort_mode, $find) {
+	function list_item_comments($itemId, $offset=0, $maxRecords=-1, $sort_mode='posted_des', $find='') {
 		if ($find) {
 			$findesc = '%' . $find . '%';
 			$mid = " and (`title` like ? or `data` like ?)";
