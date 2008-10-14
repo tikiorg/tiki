@@ -44,6 +44,11 @@ function wikiplugin_code_info() {
 				'name' => tra('Right to left'),
 				'description' => tra('0|1, switch the text display from left to right to right to left'),
 			),
+			'ishtml' => array(
+				'required' => false,
+				'name' => tra('Content is HTML'),
+				'description' => tra('0|1, display the content as is instead of escaping HTML special chars'),
+			),
 		),
 	);
 }
@@ -53,7 +58,9 @@ function wikiplugin_code($data, $params) {
 		extract($params, EXTR_SKIP);
 	}
 	$code = trim($data);
+
 	$parse_wiki = ( isset($wiki) && $wiki == 1 );
+	$escape_html = ( ! isset($ishtml) || $ishtml != 1 );
 
 	// Detect if GeSHI (Generic Syntax Highlighter) is available
 	$geshi_paths = array(
@@ -90,6 +97,8 @@ function wikiplugin_code($data, $params) {
 			$out = trim($out);
 		}
 
+		if ( ! $escape_html ) $out = TikiLib::htmldecode($out);
+
 	} elseif ( isset($colors) && ( $colors == 'highlights' || $colors == 'php' ) ) {
 
 		$out = highlight_string(TikiLib::htmldecode($code), true);
@@ -104,6 +113,8 @@ function wikiplugin_code($data, $params) {
 		// Remove spaces after the first tag and before the start of the code
 		$out = ereg_replace("^\s*(<[^>]+>)\n", '\\1', $out);
 		$out = trim($out);
+
+		if ( ! $escape_html ) $out = TikiLib::htmldecode($out);
 
 	} else {
 
@@ -120,6 +131,7 @@ function wikiplugin_code($data, $params) {
 			$out = $code;
 		}
 
+		if ( $escape_html ) $out = htmlentities($out);
 	}
 
 	if ( isset($wrap) && $wrap == 1 ) {

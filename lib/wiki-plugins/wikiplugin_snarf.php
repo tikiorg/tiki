@@ -23,7 +23,7 @@ function wikiplugin_snarf_info() {
 				'description' => tra('Full URL to the page to include.'),
 			),
 			'regex' => array(
-				'required' => true,
+				'required' => false,
 				'name' => tra('Regular Expression'),
 				'description' => tra('PCRE compliant regular expression'),
 			),
@@ -32,27 +32,53 @@ function wikiplugin_snarf_info() {
 				'name' => tra('Regular Expression Part'),
 				'description' => tra('ex: $1'),
 			),
+			'wrap' => array(
+				'required' => false,
+				'name' => tra('Word Wrap'),
+				'description' => tra('0|1, Enable word wrapping on the code to avoid breaking the layout.'),
+			),
+			'colors' => array(
+				'required' => false,
+				'name' => tra('Colors'),
+				'description' => tra('Syntax highlighting to use. May not be used with line numbers. Available: php, html, sql, javascript, css, java, c, doxygen, delphi, ...'),
+			),
+			'ln' => array(
+				'required' => false,
+				'name' => tra('Line numbers'),
+				'description' => tra('0|1, may not be used with colors.'),
+			),
+			'wiki' => array(
+				'required' => false,
+				'name' => tra('Wiki syntax'),
+				'description' => tra('0|1, parse wiki syntax within the code snippet.'),
+			),
+			'rtl' => array(
+				'required' => false,
+				'name' => tra('Right to left'),
+				'description' => tra('0|1, switch the text display from left to right to right to left'),
+			),
+			'ishtml' => array(
+				'required' => false,
+				'name' => tra('Content is HTML'),
+				'description' => tra('0|1, display the content as is instead of escaping HTML special chars'),
+			),
 		),
 	);
 }
 
 function wikiplugin_snarf($data, $params)
 {
-
     global $tikilib;
 
-    extract ($params,EXTR_SKIP);
-
-    if( ! isset( $url ) )
+    if( ! isset( $params['url'] ) )
     {
 	return ("<b>". tra( "Missing url parameter for SNARF plugin." ) . "</b><br />");
     }
 
     if( function_exists("curl_init") )
     {
-	//print("<pre>url: $url</pre>"); 
+	$ch = curl_init( $params['url'] ); 
 
-	$ch = curl_init( $url ); 
 	// use output buffering instead of returntransfer -itmaybebuggy 
 	ob_start(); 
 	curl_exec($ch); 
@@ -60,24 +86,30 @@ function wikiplugin_snarf($data, $params)
 	$html = ob_get_contents(); 
 	ob_end_clean(); 
 
-	$snarf = preg_replace( "/.*<\s*body[^>]*>(.*)<[^>]*\/\s*body[^>]*>.*/si", "$1", $html );
+	// Not using preg_replace due to its limitations to 100.000 characters
+	$snarf = eregi_replace('^.*<\s*body[^>]*>', '', $html);
+	$snarf = eregi_replace('<\s*\/body[^>]*>.*$', '', $snarf);
 
 	// If the user specified a more specialized regex
-	if( isset( $regex ) && isset( $regexres ) 
-		and preg_match('/^(.)(.)+\1[^e]*$/', $regex))
-	{
-	    //print("<pre>regex: ".htmlspecialchars($regex)."</pre>"); 
-	    //print("<pre>regexres: ".htmlspecialchars($regexres)."</pre>"); 
-	    $snarf = preg_replace( $regex, $regexres, $snarf );
+	if ( isset($params['regex']) && isset($params['regexres']) && preg_match('/^(.)(.)+\1[^e]*$/', $params['regex']) ) {
+		$snarf = preg_replace( $params['regex'], $params['regexres'], $snarf );
 	}
 
-	//print("<pre>BODY: " . htmlspecialchars( $snarf ) . "</pre>"); 
+	if ( $data == '' ) $data = NULL;
+	$code_defaults = array('caption' => $data, 'wrap' => '1', 'colors' => NULL, 'wiki' => '0', 'ln' => NULL, 'rtl' => NULL, 'ishtml' => NULL);
+	$ret = '{CODE(';
+	foreach ( $code_defaults as $k => $v ) {
+		$tmp = isset($params[$k]) ? $params[$k] : ( $v !== NULL ? $v : '' );
+		if ( $tmp != '' ) {
+			if ( $ret != '' ) $ret .= ',';
+			$ret .= $k . '=' . $tmp;
+		}
+	}
+	$ret .= ')}' . $snarf .'{CODE}';
 
-	$ret = "{CODE(wrap=>1,wiki=>1,caption=>" . $data . ")}" . $snarf . "{CODE}";
     } else {
 	$ret = "<p>You need php-curl for the SNARF plugin!</p>\n";
     }
-
 
     return $ret;
 }
