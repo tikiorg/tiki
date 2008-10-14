@@ -146,12 +146,18 @@ function wikiplugin_img( $data, $params )
 
 	if ($imgdata["lnk"]) {
 		$imgtarget= '';
+
 		if ($prefs['popupLinks'] == 'y' && (preg_match('#^([a-z0-9]+?)://#i', $imgdata['lnk']) || preg_match('#^www\.([a-z0-9\-]+)\.#i',$imgdata['lnk']))) {
 			$imgtarget = ' target="_blank"';
-	}
-	if ($imgdata['rel']) $linkrel = ' rel="'.$imgdata['rel'].'"';
-	if ($imgdata['title']) $linktitle = ' title="'.$imgdata['title'].'"';
-	$repl = '<a href="'.$imgdata["lnk"].'"'.$linkrel.$imgtarget.$linktitle.'>' . $repl . '</a>';
+		}
+
+		if ($imgdata['rel'])
+			$linkrel = ' rel="'.$imgdata['rel'].'"';
+		else
+			$linkrel = '';
+
+		if ($imgdata['title']) $linktitle = ' title="'.$imgdata['title'].'"';
+		$repl = '<a href="'.$imgdata["lnk"].'"'.$linkrel.$imgtarget.$linktitle.'>' . $repl . '</a>';
 	}
 
 	if ($imgdata["desc"]) {
