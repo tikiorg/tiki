@@ -99,7 +99,7 @@ if ( $prefs['useGroupHome'] == 'y' ) require_once('lib/setup/default_homepage.ph
 require_once('lib/setup/theme.php');
 if ( $prefs['feature_babelfish'] == 'y' || $prefs['feature_babelfish_logo'] == 'y' ) require_once('lib/setup/babelfish.php');
 
-if ( $varcheck_errors != '' ) {
+if ( !empty($varcheck_errors) ) {
 	$smarty->assign('msg', $varcheck_errors);
 	$smarty->display('error.tpl');
 	die;
