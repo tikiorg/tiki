@@ -50,7 +50,7 @@ if(isset($_REQUEST["find"])) {
 }
 $smarty->assign('find',$find);
 
-$listusers = $tikilib->list_users($offset,$maxRecords,$sort_mode,$find);
+$listusers = $tikilib->list_users($offset,$maxRecords,$sort_mode,$find, true);
 
 // If there're more records then assign next_offset
 $cant_pages = ceil($listusers["cant"] / $maxRecords);

@@ -413,7 +413,7 @@ if (empty($_REQUEST['fileId'])) {
 }
 
 if ($tiki_p_admin_file_galleries == 'y' || $tiki_p_admin == 'y') {
-	$users = $tikilib->list_users(0, -1, 'login_asc');
+	$users = $tikilib->list_users(0, -1, 'login_asc', '', false);
 	$smarty->assign_by_ref('users', $users['data']);
 }
 

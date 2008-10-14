@@ -2493,7 +2493,7 @@ class TikiLib extends TikiDB {
 		}
 	}
 
-	function list_users($offset = 0, $maxRecords = -1, $sort_mode = 'pref:realName', $find = '', $include_prefs = true) {
+	function list_users($offset = 0, $maxRecords = -1, $sort_mode = 'pref:realName', $find = '', $include_prefs = false) {
 		global $user, $prefs, $userprefslib;
 		include_once('lib/userprefs/userprefslib.php');
 
