@@ -3,8 +3,8 @@
 <tr class="formcolor">
  <td>{tr}Categorize{/tr}</td>
  <td{if $colsCategorize} colspan="{$colsCategorize}"{/if}>
- {/if}
-{if $mandatory_category >= 0}
+{/if}
+{if $mandatory_category >= 0 or $prefs.javascript_enabled neq 'y'}
   <div id="categorizator">
 {else}
 <a class="link" href="javascript:flip_multi('categorizator');flip_multi('categshow','inline');flip_multi('categhide','inline');"{if ($mid eq 'tiki-editpage.tpl')}onclick="needToConfirm=false;"{/if}>
