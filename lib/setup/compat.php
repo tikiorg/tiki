@@ -24,6 +24,13 @@ if( ! function_exists( 'json_encode' ) )
 	}
 }
 
+if( ! function_exists( 'array_fill_keys' ) ) {
+	function array_fill_keys( $keys, $value = null )
+	{
+		return array_combine( $keys, array_fill( 0, count($keys), $value) );
+	}
+}
+
 /* \brief  substr with a utf8 string - works only with $start and $length positive or nuls
  * This function is the same as substr but works with multibyte
  * In a multybyte sequence, the first byte of a multibyte sequence that represents a non-ASCII character is always in the range 0xC0 to 0xFD
