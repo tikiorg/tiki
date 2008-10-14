@@ -6,7 +6,7 @@
 {if $nonums != 'y'}<ol>{else}<ul>{/if}
 {section loop=$users_rank name=u}
   <li>
-    <div class="licomponent" style="display:inline">{$users_rank[u].position})&nbsp;</div>
+    {*<div class="licomponent" style="display:inline">{$users_rank[u].position})&nbsp;</div>*}
     <div class="licomponent" style="display:inline">{$users_rank[u].score}</div>
     <div class="licomponent" style="display:inline">&nbsp;{$users_rank[u].login|userlink}</div>
   </li>
