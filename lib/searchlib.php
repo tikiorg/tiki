@@ -190,7 +190,7 @@ class SearchLib extends TikiLib {
 			$bindHaving = array();
 		    }
 		}
-		if ($h['parentJoin'])
+		if (!empty($h['parentJoin']))
 			$sqlJoin .= ' '.$h['parentJoin'];
 		    
 
@@ -271,7 +271,7 @@ class SearchLib extends TikiLib {
 				'href' => $href,
 				'relevance' => round($res["relevance"], 3),
 			);
-			if ($h['parent']) {
+			if (!empty($h['parent'])) {
 				$r['parentName'] = $res['parentName'];
 				$r['parentHref'] = str_replace('$', '?', $res['parentHref']);
 			}
