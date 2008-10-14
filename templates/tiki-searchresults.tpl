@@ -8,36 +8,36 @@
 {if !( $searchStyle eq "menu" )}
 <div class="navbar">
 {tr}Search in{/tr}:<br />
-<a href="tiki-searchresults.php?highlight={$words}&amp;where=pages">{tr}All{/tr}</a>
+<a href="{$smarty.server.PHP_SELF}?{query where=pages}"{if $where eq 'pages'} class='highlight'{/if}>{tr}All{/tr}</a>
 {if $prefs.feature_wiki eq 'y'}
- <a href="tiki-searchresults.php?highlight={$words}&amp;where=wikis">{tr}Wiki{/tr}</a>
+ <a href="{$smarty.server.PHP_SELF}?{query where=wikis}"{if $where eq 'wikis'} class='highlight'{/if}>{tr}Wiki{/tr}</a>
 {/if}
 {if $prefs.feature_galleries eq 'y'}
- <a href="tiki-searchresults.php?highlight={$words}&amp;where=galleries">{tr}Galleries{/tr}</a>
- <a href="tiki-searchresults.php?highlight={$words}&amp;where=images">{tr}Images{/tr}</a>
+ <a href="{$smarty.server.PHP_SELF}?{query where=galleries}"{if $where eq 'galleries'} class='highlight'{/if}>{tr}Galleries{/tr}</a>
+ <a href="{$smarty.server.PHP_SELF}?{query where=images}"{if $where eq 'images'} class='highlight'{/if}>{tr}Images{/tr}</a>
 {/if}
 {if $prefs.feature_file_galleries eq 'y'}
- <a href="tiki-searchresults.php?highlight={$words}&amp;where=files">{tr}Files{/tr}</a>
+ <a href="{$smarty.server.PHP_SELF}?{query where=files}{if $where eq 'files'} class='highlight'{/if}">{tr}Files{/tr}</a>
 {/if}
 {if $prefs.feature_forums eq 'y'}
- <a href="tiki-searchresults.php?highlight={$words}&amp;where=forums">{tr}Forums{/tr}</a>
+ <a href="{$smarty.server.PHP_SELF}?{query where=forums}"{if $where eq 'forums'} class='highlight'{/if}>{tr}Forums{/tr}</a>
 {/if}
 {if $prefs.feature_faqs eq 'y'}
- <a href="tiki-searchresults.php?highlight={$words}&amp;where=faqs">{tr}FAQs{/tr}</a>
+ <a href="{$smarty.server.PHP_SELF}?{query where=faqs}"{if $where eq 'faqs'} class='highlight'{/if}>{tr}FAQs{/tr}</a>
 {/if}
 {if $prefs.feature_blogs eq 'y'}
- <a href="tiki-searchresults.php?highlight={$words}&amp;where=blogs">{tr}Blogs{/tr}</a>
- <a href="tiki-searchresults.php?highlight={$words}&amp;where=posts">{tr}Blog Posts{/tr}</a>
+ <a href="{$smarty.server.PHP_SELF}?{query where=blogs}"{if $where eq 'blogs'} class='highlight'{/if}>{tr}Blogs{/tr}</a>
+ <a href="{$smarty.server.PHP_SELF}?{query where=posts}"{if $where eq 'posts'} class='highlight'{/if}>{tr}Blog Posts{/tr}</a>
 {/if}
 {if $prefs.feature_directory eq 'y'}
- <a href="tiki-searchresults.php?highlight={$words}&amp;where=directory">{tr}Directory{/tr}</a>
+ <a href="{$smarty.server.PHP_SELF}?{query where=directory}"{if $where eq 'directory'} class='highlight'{/if}>{tr}Directory{/tr}</a>
 {/if}
 
 {if $prefs.feature_articles eq 'y'}
- <a href="tiki-searchresults.php?highlight={$words}&amp;where=articles">{tr}Articles{/tr}</a>
+ <a href="{$smarty.server.PHP_SELF}?{query where=articles}"{if $where eq 'articles'} class='highlight'{/if}>{tr}Articles{/tr}</a>
 {/if}
 {if $prefs.feature_trackers eq 'y'}
- <a href="tiki-searchresults.php?highlight={$words}&amp;where=trackers">{tr}Trackers{/tr}</a>
+ <a href="{$smarty.server.PHP_SELF}?{query where=trackers}"{if $where eq 'trackers'} class='highlight'{/if}>{tr}Trackers{/tr}</a>
 {/if}
 </div><!-- navbar -->
 {/if}
