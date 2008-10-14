@@ -8,24 +8,22 @@
   <div id="categorizator">
 {else}
 <a class="link" href="javascript:flip_multi('categorizator');flip_multi('categshow','inline');flip_multi('categhide','inline');"{if ($mid eq 'tiki-editpage.tpl')}onclick="needToConfirm=false;"{/if}>
-{if $prefs.javascript_enabled eq 'y'}
 <span id="categshow" name="categshow" style="display:{if isset($smarty.session.tiki_cookie_jar.show_categorizator) and $smarty.session.tiki_cookie_jar.show_categorizator eq 'y'}none{else}inline{/if};">{tr}Show Categories{/tr}</span>
 <span id="categhide" name="categhide" style="display:{if isset($smarty.session.tiki_cookie_jar.show_categorizator) and $smarty.session.tiki_cookie_jar.show_categorizator eq 'y'}inline{else}none{/if};">{tr}Hide Categories{/tr}</span>
-{/if}
 </a>
-  <div id="categorizator" name="categorizator" style="display:{if (isset($smarty.session.tiki_cookie_jar.show_categorizator) and $smarty.session.tiki_cookie_jar.show_categorizator eq 'y') or $prefs.javascript_enabled ne 'y'}block{else}none{/if};">
+  <div id="categorizator" name="categorizator" style="display:{if isset($smarty.session.tiki_cookie_jar.show_categorizator) and $smarty.session.tiki_cookie_jar.show_categorizator eq 'y'}block{else}none{/if};">
 {/if}
   {if count($categories) gt 0}
     <div class="multiselect">
       {cycle values="odd,even" print=false}
       {section name=ix loop=$categories}
       {if $categories[ix].incat eq 'y'}
-				<div class="{cycle}" style="display: inline"><input type="checkbox" name="cat_categories[]" value="{$categories[ix].categId|escape}" checked="checked"/>{if $categories[ix].categpath}{$categories[ix].categpath}{else}{$categories[ix].name}{/if}</div>
+				<div class="{cycle}" style="display: inline; white-space:nowrap;"><input type="checkbox" name="cat_categories[]" value="{$categories[ix].categId|escape}" checked="checked"/>{if $categories[ix].categpath}{$categories[ix].categpath}{else}{$categories[ix].name}{/if}</div>
 			{/if}
       {/section}
       {section name=ix loop=$categories}
       {if $categories[ix].incat neq 'y'}
-				<div class="{cycle}" style="display: inline"><input type="checkbox" name="cat_categories[]" value="{$categories[ix].categId|escape}"/>{if $categories[ix].categpath}{$categories[ix].categpath}{else}{$categories[ix].name}{/if}</div>
+				<div class="{cycle}" style="display: inline; white-space:nowrap;"><input type="checkbox" name="cat_categories[]" value="{$categories[ix].categId|escape}"/>{if $categories[ix].categpath}{$categories[ix].categpath}{else}{$categories[ix].name}{/if}</div>
 			{/if}
       {/section}
     </div>
