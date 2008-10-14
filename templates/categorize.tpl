@@ -28,7 +28,7 @@
       {/section}
     </div>
     <input type="hidden" name="cat_categorize" value="on" />
-		<input type="checkbox" name="cat_clearall" value="on" />{tr}Clear all Categories{/tr}<br/>
+		<input type="checkbox" name="cat_clearall" value="on" {if $prefs.javascript_enabled eq 'y'}onclick="switchCheckboxes(this.form,'cat_categories[]',false);"{/if} />{tr}Clear all Categories{/tr}<br/>
   {else}
     {tr}No categories defined{/tr} <br />
   {/if}
