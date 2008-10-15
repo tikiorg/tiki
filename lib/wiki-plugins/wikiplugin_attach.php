@@ -235,7 +235,7 @@ function wikiplugin_attach($data, $params) {
 			}
 			$link.= '"/>';
 		} else {
-			$link = '<a href="tiki-download_wiki_attachment.php?attId='.$atts['data'][$n]['attId'].$url.'" class="wiki"';
+			$link = '<a href="tiki-download_wiki_attachment.php?attId='.$atts['data'][$n]['attId'].$url.'&amp;download=y" class="wiki"';
 			$link.= ' title="';
 
 			if (empty($showdesc) || empty($atts['data'][$n]['comment'])) {

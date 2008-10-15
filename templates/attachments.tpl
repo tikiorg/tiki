@@ -44,7 +44,7 @@ or (!isset($smarty.session.tiki_cookie_jar.show_attzone) and $prefs.w_displayed_
 <td class="{cycle advance=false}">{$atts[ix].attId}</td>
 <td class="{cycle advance=false}">
  {$atts[ix].filename|iconify}
- <a class="tablename" href="tiki-download_wiki_attachment.php?attId={$atts[ix].attId}&amp;page={$page|escape:"url"}">{$atts[ix].filename}</a>
+ <a class="tablename" href="tiki-download_wiki_attachment.php?attId={$atts[ix].attId}&amp;page={$page|escape:"url"}&amp;download=y">{$atts[ix].filename}</a>
  </td><td class="{cycle advance=false}">
   <a title="{tr}View{/tr}" href="tiki-download_wiki_attachment.php?attId={$atts[ix].attId}" target="_blank">{icon _id='monitor' alt="{tr}View{/tr}"}</a>
   <a title="{tr}Download{/tr}" href="tiki-download_wiki_attachment.php?attId={$atts[ix].attId}&amp;download=y">{icon _id='disk' alt="{tr}Download{/tr}"}</a> &nbsp;
