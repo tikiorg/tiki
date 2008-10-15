@@ -1,4 +1,4 @@
-{title help="i18n"}{tr}Translate:{/tr}&nbsp;{$name}{if isset($languageName)}&nbsp;({$languageName}, {$langpage}){/if}{/title}
+{title help="i18n" admpage="i18n"}{tr}Translate:{/tr}&nbsp;{$name}{if isset($languageName)}&nbsp;({$languageName}, {$langpage}){/if}{/title}
 
 {if $type eq 'wiki page'}
   <span class="button2"><a href="tiki-index.php?page={$name|escape:'url'}&bl=n">{tr}View Page{/tr}</a></span>
@@ -133,6 +133,8 @@ function validate_translation_request() {
 				<option value="{$lang.value|escape}">{$lang.name}</option>
 				{/foreach}
 			</select>
+			<input type="hidden" name="id" value="{$id}" />
+			<input type="hidden" name="type" value="{$type|escape}" />
 			<input type="hidden" name="page" value="{$name|escape}"/>
 			<input type="submit" value="{tr}Set Current Page's Language{/tr}"/>
 		</p>
