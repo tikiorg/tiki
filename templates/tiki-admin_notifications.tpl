@@ -94,13 +94,21 @@ document.write("<input name=\"switcher\" title=\"{tr}Select All{/tr}\" id=\"clic
 
 {if !empty($trackers)}
 	<h2>{tr}Trackers Outbound Emails{/tr}</h2>
-	{section name=ix loop=$trackers}
-			 <a href="tiki-admin_trackers.php?trackerId={$trackers[ix].trackerId}">{$trackers[ix].value|escape}</a><br />
+	<table class="normal">
+		{section name=ix loop=$trackers}
+			<tr class="{cycle}"><td> 
+			<a href="tiki-admin_trackers.php?trackerId={$trackers[ix].trackerId}">{$trackers[ix].value|escape}</a>
+			</td></tr>
 	{/section}
+	</table>
 {/if}
 {if !empty($forums)}
 	<h2>{tr}Forums Outbound Emails{/tr}</h2>
-	{section name=ix loop=$forums}
-			 <a href="tiki-admin_forums.php?forumId={$forums[ix].forumId}">{$forums[ix].outbound_address|escape}</a><br />
+	<table class="normal">
+		{section name=ix loop=$forums}
+			<tr class="{cycle}"><td> 
+			<a href="tiki-admin_forums.php?forumId={$forums[ix].forumId}">{$forums[ix].outbound_address|escape}</a><br />
+			</td></tr>
 	{/section}
+	</table>
 {/if}
