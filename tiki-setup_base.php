@@ -108,14 +108,14 @@ require_once("lib/breadcrumblib.php");
 // DEAL WITH XSS-TYPE ATTACKS AND OTHER REQUEST ISSUES
 
 require_once('lib/setup/sanitization.php');
-function make_clean(&$var,$gpc=false) {
+function make_clean(&$var,$gpc=false,$clean_xss=false) {
 	if ( is_array($var) ) {
 		foreach ( $var as $key=>$val ) {
-			make_clean($var[$key],$gpc);
+			make_clean($var[$key],$gpc,$clean_xss);
 		}
 	} else {
 		if ($gpc) $var = stripslashes($var);
-		if ( ! isset($_SERVER['SCRIPT_FILENAME']) || basename($_SERVER['SCRIPT_FILENAME']) != 'tiki-admin.php' ) {
+		if ( $clean_xss && ( ! isset($_SERVER['SCRIPT_FILENAME']) || basename($_SERVER['SCRIPT_FILENAME']) != 'tiki-admin.php' ) ) {
 			$var = RemoveXSS($var);
 		}
 	}
@@ -408,27 +408,27 @@ if ($user == 'admin' || ($user && $userlib->user_has_permission($user, 'tiki_p_a
 unset($allperms);
 
 // --------------------------------------------------------------
+$magic_quotes_gpc = get_magic_quotes_gpc();
+$clean_xss = ( $tiki_p_trust_input != 'y' );
 
-if ( $tiki_p_trust_input != 'y' ) {
-	$magic_quotes_gpc = get_magic_quotes_gpc();
-
-	// deal with register_globals
-	if ( ini_get('register_globals') ) {
-		foreach ( array($_ENV, $_GET, $_POST, $_COOKIE, $_SERVER) as $superglob ) {
-			foreach ( $superglob as $key=>$val ) {
-				if ( isset($GLOBALS[$key]) && $GLOBALS[$key]==$val ) { // if global has been set some other way
-					// that is OK (prevents munging of $_SERVER with ?_SERVER=rubbish etc.)
-					unset($GLOBALS[$key]);
-				}
+// deal with register_globals
+if ( ini_get('register_globals') ) {
+	foreach ( array($_ENV, $_GET, $_POST, $_COOKIE, $_SERVER) as $superglob ) {
+		foreach ( $superglob as $key=>$val ) {
+			if ( isset($GLOBALS[$key]) && $GLOBALS[$key]==$val ) { // if global has been set some other way
+				// that is OK (prevents munging of $_SERVER with ?_SERVER=rubbish etc.)
+				unset($GLOBALS[$key]);
 			}
 		}
 	}
-	make_clean($_GET, $magic_quotes_gpc);
-	make_clean($_POST, $magic_quotes_gpc);
-	make_clean($_COOKIE, $magic_quotes_gpc);
-	make_clean($_SERVER['QUERY_STRING']);
-	make_clean($_SERVER['REQUEST_URI']);
+}
+make_clean($_GET, $magic_quotes_gpc, $clean_xss);
+make_clean($_POST, $magic_quotes_gpc, $clean_xss);
+make_clean($_COOKIE, $magic_quotes_gpc, $clean_xss);
+make_clean($_SERVER['QUERY_STRING'], false, $clean_xss);
+make_clean($_SERVER['REQUEST_URI'], false, $clean_xss);
 
+if ( $tiki_p_trust_input != 'y' ) {
 	$varcheck_vars = array('_COOKIE', '_GET', '_POST', '_ENV', '_SERVER');
 	$varcheck_errors = '';
 	foreach ( $varcheck_vars as $var ) {
