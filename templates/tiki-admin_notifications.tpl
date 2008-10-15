@@ -77,7 +77,7 @@ document.write("<input name=\"switcher\" title=\"{tr}Select All{/tr}\" id=\"clic
 <td>{$channels[user].email}</td>
 <td>{$channels[user].user}</td>
 <td>
-   <a class="link" href="tiki-admin_notifications.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;removeevent={$channels[user].watchId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
+   <a class="link" href="{$smarty.server.PHP_SELF}?{query removeevent=$channels[user].watchId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
 </td>
 </tr>
 {sectionelse}
@@ -91,3 +91,16 @@ document.write("<input name=\"switcher\" title=\"{tr}Select All{/tr}\" id=\"clic
 </form>
 
 {pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
+
+{if !empty($trackers)}
+	<h2>{tr}Trackers Outbound Emails{/tr}</h2>
+	{section name=ix loop=$trackers}
+			 <a href="tiki-admin_trackers.php?trackerId={$trackers[ix].trackerId}">{$trackers[ix].value|escape}</a><br />
+	{/section}
+{/if}
+{if !empty($forums)}
+	<h2>{tr}Forums Outbound Emails{/tr}</h2>
+	{section name=ix loop=$forums}
+			 <a href="tiki-admin_forums.php?forumId={$forums[ix].forumId}">{$forums[ix].outbound_address|escape}</a><br />
+	{/section}
+{/if}

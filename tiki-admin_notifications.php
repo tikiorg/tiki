@@ -141,6 +141,19 @@ $channels = $tikilib->list_watches($offset, $maxRecords, $sort_mode, $find);
 $smarty->assign_by_ref('cant', $channels['cant']);
 $smarty->assign_by_ref('channels', $channels["data"]);
 
+if ($prefs['feature_trackers'] == 'y') {
+	global $trklib; include_once('lib/trackers/trackerlib.php');
+	$trackers = $trklib->get_trackers_options(0, 'outboundemail', $find, 'empty');
+	$smarty->assign_by_ref('trackers', $trackers);
+}
+if ($prefs['feature_forums'] == 'y') {
+	include_once('lib/commentslib.php');
+	$commentslib = new Comments($dbTiki);
+	$forums = $commentslib->get_outbound_emails();
+	$smarty->assign_by_ref('forums', $forums);
+}
+
+
 ask_ticket('admin-notif');
 
 // disallow robots to index page:

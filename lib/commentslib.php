@@ -2305,6 +2305,20 @@ class Comments extends TikiLib {
 		}
 		return $dirs;
 	}
+	function get_outbound_emails() {
+		$ret = array();
+		$query = "select `forumId`, `mail` as outbound_address from `tiki_forums` where `useMail`=? and `mail` != ''";
+		$result = $this->query($query, array('y'));
+		while ($res = $result->fetchRow()) {
+			$ret[] = $res;
+		}
+		$query = "select `forumId`, `outbound_address` from `tiki_forums` where `outbound_address` != '' and `outbound_address` is not null";
+		$result = $this->query($query);
+		while ($res = $result->fetchRow()) {
+			$ret[] = $res;
+		}
+		return $ret;
+	}
 }
 
 function compare_replies($ar1, $ar2) {

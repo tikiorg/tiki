@@ -2111,6 +2111,36 @@ class TrackerLib extends TikiLib {
 		return $res;
 	}
 
+	function get_trackers_options($trackerId, $option='', $find='', $not='') {
+		$where = array();
+		$bindvars = array();
+		if (!empty($trackerId)) {
+			$where[] = '`trackerId`=?';
+			$bindvars[] = (int)$trackerId;
+		}
+		if (!empty($option)) {
+			$where[] = '`name`=?';
+			$bindvars[] = $option;
+		}
+		if (!empty($find)) {
+			$where[] = "`value` like %$find%";
+			$bindvars[] = $find;
+		}
+		if ($not == 'null') {
+			$where[] = '`value` is not null';
+		} else if ($not == 'empty') {
+			$where[] = "`value` != ''";
+		}
+		$query = 'select * from `tiki_tracker_options` where '. implode(' and ', $where);
+		$result = $this->query($query, $bindvars);
+		if (!$result->numRows()) return array();
+		$res = array();
+		while ($opt = $result->fetchRow()) {
+			$res[] = $opt;
+		}
+		return $res;
+	}
+
 	function get_tracker_field($fieldId) {
 		$query = "select * from `tiki_tracker_fields` where `fieldId`=?";
 		$result = $this->query($query,array((int) $fieldId));
