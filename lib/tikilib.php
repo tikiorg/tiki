@@ -180,6 +180,8 @@ class TikiLib extends TikiDB {
 	}
 
 	function list_watches($offset, $maxRecords, $sort_mode, $find) {
+		$mid = '';
+		$bindvars = array();
 		if ($find) {	
 			$mid = ' where `event` like ? or `email` like ?';
 			$bindvars = array('%'.$find.'%', '%'.$find.'%');
