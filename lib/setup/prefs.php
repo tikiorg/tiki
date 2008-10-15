@@ -821,6 +821,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_babelfish_logo' => 'n',
 		'quantify_changes' => 'n',
 		'feature_sync_language' => 'n',
+		'show_available_translations' =>'y',
 
 		// html header
 		'metatag_keywords' => '',
@@ -1205,6 +1206,7 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 
 	// Override default prefs with values specified in database
 	$modified = $tikilib->get_db_preferences();
+echo "RELOAD";
 
 	// Unserialize serialized preferences
 	if ( isset($_SESSION['serialized_prefs']) && is_array($_SESSION['serialized_prefs']) ) {

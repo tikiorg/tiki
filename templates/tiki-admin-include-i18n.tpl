@@ -136,6 +136,12 @@
 			{if $prefs.feature_babelfish_logo eq 'y'}checked="checked"{/if}/></td>
 		</tr><tr>
 
+		</tr><tr>		
+		
+			<td class="form"><label for="show_available_translations">{tr}Display Available Translations{/tr}:</label></td>		
+			<td><input type="checkbox" name="show_available_translations" id="show_available_translations"
+			{if $prefs.show_available_translations eq 'y'}checked="checked"{/if}/></td>
+		</tr><tr>
 
 		
           <td colspan="2" class="button"><input type="submit" name="i18nsetup" value="{tr}Save{/tr}" /></td>

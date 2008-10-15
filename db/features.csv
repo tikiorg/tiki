@@ -937,3 +937,4 @@
 1046,"Allow argument variables",141,,"feature_wiki_argvariable","flag",,"tiki_p_admin",,,,,," "
 1047,"Wiki Mind Map",141,,"feature_wiki_mindmap","flag",,"tiki_p_admin",,,,,," "
 1048,"Minichat",15,,"feature_minichat","feature","","tiki_p_admin",,,,,," "
+1049,"Display Available Translations",76,,"show_available_translations","flag",,"tiki_p_admin",41,,"i18n",,," "

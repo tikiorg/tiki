@@ -41,6 +41,7 @@ ask_ticket('admin-inc-i18n');
 		"record_untranslated",
 		"feature_babelfish",
 		"feature_babelfish_logo",
+		'show_available_translations',
     );
 
 
