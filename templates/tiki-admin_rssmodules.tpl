@@ -91,10 +91,10 @@ Refresh rate:
 </td>
 <td class="{cycle advance=false}" style="text-align:center">{$channels[user].showTitle}</td>
 <td class="{cycle advance=false}" style="text-align:center">{$channels[user].showPubDate}</td>
-<td class="{cycle}">   <a class="link" href="tiki-admin_rssmodules.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].rssId}" title="{tr}Delete{/tr}">{icon _id=cross.png alt="{tr}Delete{/tr}"}</a>
-   <a class="link" href="tiki-admin_rssmodules.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;rssId={$channels[user].rssId}" title="{tr}Edit{/tr}">{icon _id=page_edit.png}</a>
-   <a class="link" href="tiki-admin_rssmodules.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;view={$channels[user].rssId}" title="{tr}View{/tr}">{icon _id=feed.png alt="{tr}View feed{/tr}"}</a>
-   <a class="link" href="tiki-admin_rssmodules.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;refresh={$channels[user].rssId}" title="{tr}Refresh{/tr}">{icon _id=arrow_refresh.png alt="{tr}Refresh{/tr}"}</a>
+<td class="{cycle}">   <a class="link" href="tiki-admin_rssmodules.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].rssId}" title="{tr}Delete{/tr}">{icon _id=cross alt="{tr}Delete{/tr}"}</a>
+   <a class="link" href="tiki-admin_rssmodules.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;rssId={$channels[user].rssId}" title="{tr}Edit{/tr}">{icon _id=page_edit}</a>
+   <a class="link" href="tiki-admin_rssmodules.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;view={$channels[user].rssId}" title="{tr}View{/tr}">{icon _id=feed alt="{tr}View feed{/tr}"}</a>
+   <a class="link" href="tiki-admin_rssmodules.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;refresh={$channels[user].rssId}" title="{tr}Refresh{/tr}">{icon _id=arrow_refresh alt="{tr}Refresh{/tr}"}</a>
 </td>
 </tr>
 {sectionelse}

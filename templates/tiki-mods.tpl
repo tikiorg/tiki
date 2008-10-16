@@ -18,7 +18,7 @@
 {/remarksbox}
 
 {if $iswritable}
-<div class="simplebox" style="color:#009900;">{icon _id=information.png style="vertical-align:middle;"} <b>{tr}Attention{/tr}</b><br />{tr}Apache has the right to write in your file tree, which enables the installation, removal or upgrade of packages. When you are done with those operations, think to fix those permissions back to a safe state (by using "./setup.sh" for example).{/tr}</div>
+<div class="simplebox" style="color:#009900;">{icon _id=information style="vertical-align:middle;"} <b>{tr}Attention{/tr}</b><br />{tr}Apache has the right to write in your file tree, which enables the installation, removal or upgrade of packages. When you are done with those operations, think to fix those permissions back to a safe state (by using "./setup.sh" for example).{/tr}</div>
 {else}
 <div class="simplebox" style="color:#990000;"><b>{tr}Attention{/tr}</b><br />{tr}To install, remove or upgrade packages you need to give the apache user the right to write files in your web tree (you can use "./setup.sh open" to set it up). After installation you need to remove that permission (using "./setup.sh").{/tr}</div>
 {/if}
@@ -142,7 +142,7 @@ function update_button_install() {
 {if $tikifeedback}
 <br />
 {section name=n loop=$tikifeedback}
-<div class="simplebox {if $tikifeedback[n].num > 0} highlight{/if}">{if $tikifeedback[n].num > 0}{icon _id=delete.png alt="Alert" style="vertical-align:middle;"}{/if}{$tikifeedback[n].mes}</div><br />
+<div class="simplebox {if $tikifeedback[n].num > 0} highlight{/if}">{if $tikifeedback[n].num > 0}{icon _id=delete alt="Alert" style="vertical-align:middle;"}{/if}{$tikifeedback[n].mes}</div><br />
 {/section}{/if}
 
 {if not $installask}

@@ -21,9 +21,9 @@
 				{foreach item=better from=$mod_translation_better_known}
 				<li>
 					{if $tiki_p_edit eq 'y'}
-						<a href="tiki-editpage.php?page={if isset($stagingPageName) && $hasStaging == 'y'}{$stagingPageName|escape:'url'}{else}{$page|escape:'url'}{/if}&amp;source_page={$better.page|escape:'url'}&amp;oldver={$better.last_update|escape:'url'}&amp;newver={$better.current_version|escape:'url'}&amp;diff_style={$default_diff_style}" alt="{tr}update from it{/tr}">{icon _id=page_translate_from.png alt="{tr}update from it{/tr}" style="vertical-align:middle"}</a>
+						<a href="tiki-editpage.php?page={if isset($stagingPageName) && $hasStaging == 'y'}{$stagingPageName|escape:'url'}{else}{$page|escape:'url'}{/if}&amp;source_page={$better.page|escape:'url'}&amp;oldver={$better.last_update|escape:'url'}&amp;newver={$better.current_version|escape:'url'}&amp;diff_style={$default_diff_style}" alt="{tr}update from it{/tr}">{icon _id=page_translate_from alt="{tr}update from it{/tr}" style="vertical-align:middle"}</a>
 					{/if}
-					<a href="tiki-index.php?page={$better.page|escape:'url'}" title="{$better.page}">{icon _id=page.png alt="{tr}view{/tr}" style="vertical-align:middle"}</a>
+					<a href="tiki-index.php?page={$better.page|escape:'url'}" title="{$better.page}">{icon _id=page alt="{tr}view{/tr}" style="vertical-align:middle"}</a>
 					<a href="tiki-index.php?page={$better.page|escape:'url'}" title="{$better.page}">{$better.page}</a> ({$better.lang})
 				</li>
 				{/foreach}
@@ -36,15 +36,15 @@
 			{/if}
 			{if $mod_translation_better_other}
 {if $prefs.change_language eq 'y'}
-			<a href="javascript:void(0)" onclick="intro=document.getElementById('mod-translation-better-intro');if(intro)intro.style.display='none';document.getElementById('mod-translation-better-ul').style.display='block';this.style.display='none'" class="linkmenu">{icon _id=plus_small.png alt="{tr}More...{/tr}" width="11" height="8" style="vertical-align:middle;border:0"} {tr}More...{/tr}</a>
+			<a href="javascript:void(0)" onclick="intro=document.getElementById('mod-translation-better-intro');if(intro)intro.style.display='none';document.getElementById('mod-translation-better-ul').style.display='block';this.style.display='none'" class="linkmenu">{icon _id=plus_small alt="{tr}More...{/tr}" width="11" height="8" style="vertical-align:middle;border:0"} {tr}More...{/tr}</a>
 {/if}
 			<ul id="mod-translation-better-ul"{if $prefs.change_language eq 'y'} style="display:none"{/if}>
 				{foreach item=better from=$mod_translation_better_other}
 				<li>
 					{if $tiki_p_edit eq 'y'}
-						<a href="tiki-editpage.php?page={if isset($stagingPageName) && $hasStaging == 'y'}{$stagingPageName|escape:'url'}{else}{$page|escape:'url'}{/if}&amp;source_page={$better.page|escape:'url'}&amp;oldver={$better.last_update|escape:'url'}&amp;newver={$better.current_version|escape:'url'}&amp;{$default_diff_style}=htmldiff" alt="{tr}update from it{/tr}">{icon _id=page_translate_from.png alt="{tr}update from it{/tr}" style="vertical-align:middle"}</a>
+						<a href="tiki-editpage.php?page={if isset($stagingPageName) && $hasStaging == 'y'}{$stagingPageName|escape:'url'}{else}{$page|escape:'url'}{/if}&amp;source_page={$better.page|escape:'url'}&amp;oldver={$better.last_update|escape:'url'}&amp;newver={$better.current_version|escape:'url'}&amp;{$default_diff_style}=htmldiff" alt="{tr}update from it{/tr}">{icon _id=page_translate_from alt="{tr}update from it{/tr}" style="vertical-align:middle"}</a>
 					{/if}
-					<a href="tiki-index.php?page={$better.page|escape:'url'}" title="{$better.page}">{icon _id=page.png alt="{tr}view{/tr}" style="vertical-align:middle"}</a>
+					<a href="tiki-index.php?page={$better.page|escape:'url'}" title="{$better.page}">{icon _id=page alt="{tr}view{/tr}" style="vertical-align:middle"}</a>
 					<a href="tiki-index.php?page={$better.page|escape:'url'}" title="{$better.page}">{$better.page}</a> ({$better.lang})
 				</li>
 				{/foreach}
@@ -70,7 +70,7 @@
 			{/if}
 			{if $mod_translation_equivalent_other}
 {if $prefs.change_language eq 'y'}
-			<a href="javascript:void(0)" onclick="intro=document.getElementById('mod-translation-equiv-intro');if(intro)intro.style.display='none';document.getElementById('mod-translation-equiv-ul').style.display='block';this.style.display='none'" class="linkmenu">{icon _id=plus_small.png alt="{tr}More...{/tr}" width="11" height="8" style="vertical-align:middle;border:0"} {tr}More...{/tr}</a>
+			<a href="javascript:void(0)" onclick="intro=document.getElementById('mod-translation-equiv-intro');if(intro)intro.style.display='none';document.getElementById('mod-translation-equiv-ul').style.display='block';this.style.display='none'" class="linkmenu">{icon _id=plus_small alt="{tr}More...{/tr}" width="11" height="8" style="vertical-align:middle;border:0"} {tr}More...{/tr}</a>
 {/if}
 			<ul id="mod-translation-equiv-ul"{if $prefs.change_language eq 'y'} style="display:none"{/if}>
 				{foreach item=equiv from=$mod_translation_equivalent_other}
@@ -90,9 +90,9 @@
 				{foreach item=worst from=$mod_translation_worst_known}
 				<li>
 					{if $tiki_p_edit eq 'y'}
-						<a href="tiki-editpage.php?page={$worst.page|escape:'url'}&amp;source_page={$page|escape:'url'}&amp;oldver={$worst.last_update|escape:'url'}&amp;newver={$pageVersion|escape:'url'}&amp;diff_style={$default_diff_style}">{icon _id=page_translate_to.png alt="{tr}update it{/tr}" style="vertical-align:middle"}</a>
+						<a href="tiki-editpage.php?page={$worst.page|escape:'url'}&amp;source_page={$page|escape:'url'}&amp;oldver={$worst.last_update|escape:'url'}&amp;newver={$pageVersion|escape:'url'}&amp;diff_style={$default_diff_style}">{icon _id=page_translate_to alt="{tr}update it{/tr}" style="vertical-align:middle"}</a>
 					{/if}
-					<a href="tiki-index.php?page={$worst.page|escape:'url'}" title="{$worst.page}" title="{$worst.page}">{icon _id=page.png alt="{tr}view{/tr}" style="vertical-align:middle"}</a>
+					<a href="tiki-index.php?page={$worst.page|escape:'url'}" title="{$worst.page}" title="{$worst.page}">{icon _id=page alt="{tr}view{/tr}" style="vertical-align:middle"}</a>
 					<a href="tiki-index.php?page={$worst.page|escape:'url'}" title="{$worst.page}" title="{$worst.page}">{$worst.page}</a> ({$worst.lang})
 				</li>
 				{/foreach}
@@ -104,15 +104,15 @@
 			{/if}
 			{if $mod_translation_worst_other}
 {if $prefs.change_language eq 'y'}
-			<a href="javascript:void(0)" onclick="intro=document.getElementById('mod-translation-worst-intro');if(intro)intro.style.display='none';document.getElementById('mod-translation-worst-ul').style.display='block';this.style.display='none'" class="linkmenu">{icon _id=plus_small.png alt="{tr}More...{/tr}" width="11" height="8" style="vertical-align:middle;border:0"}{tr}More...{/tr}</a>
+			<a href="javascript:void(0)" onclick="intro=document.getElementById('mod-translation-worst-intro');if(intro)intro.style.display='none';document.getElementById('mod-translation-worst-ul').style.display='block';this.style.display='none'" class="linkmenu">{icon _id=plus_small alt="{tr}More...{/tr}" width="11" height="8" style="vertical-align:middle;border:0"}{tr}More...{/tr}</a>
 {/if}
 			<ul id="mod-translation-worst-ul"{if $prefs.change_language eq 'y'} style="display:none"{/if}>
 				{foreach item=worst from=$mod_translation_worst_other}
 				<li>
 					{if $tiki_p_edit eq 'y'}
-						<a href="tiki-editpage.php?page={$worst.page|escape:'url'}&amp;source_page={$page|escape:'url'}&amp;oldver={$worst.last_update|escape:'url'}&amp;newver={$pageVersion|escape:'url'}&amp;diff_style={$default_diff_style}">{icon _id=page_translate_to.png alt="{tr}update it{/tr}" style="vertical-align:middle"}</a>
+						<a href="tiki-editpage.php?page={$worst.page|escape:'url'}&amp;source_page={$page|escape:'url'}&amp;oldver={$worst.last_update|escape:'url'}&amp;newver={$pageVersion|escape:'url'}&amp;diff_style={$default_diff_style}">{icon _id=page_translate_to alt="{tr}update it{/tr}" style="vertical-align:middle"}</a>
 					{/if}
-					<a href="tiki-index.php?page={$worst.page|escape:'url'}" title="{$worst.page}">{icon _id=page.png alt="{tr}view{/tr}" style="vertical-align:middle"}</a>
+					<a href="tiki-index.php?page={$worst.page|escape:'url'}" title="{$worst.page}">{icon _id=page alt="{tr}view{/tr}" style="vertical-align:middle"}</a>
 					<a href="tiki-index.php?page={$worst.page|escape:'url'}" title="{$worst.page}">{$worst.page}</a> ({$worst.lang})
 				</li>
 				{/foreach}

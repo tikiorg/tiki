@@ -4,12 +4,12 @@
 {include file="messu-nav.tpl"}
 
 {if $allowMsgs ne 'y'}<br />
-<div class="simplebox">{icon _id=information.png style="vertical-align:middle" align="left"} {tr}If you want people to be able to reply to you, enable <a href='tiki-user_preferences.php'>Allow messages from other users</a> in your preferences.{/tr}</div><br /</br />
+<div class="simplebox">{icon _id=information style="vertical-align:middle" align="left"} {tr}If you want people to be able to reply to you, enable <a href='tiki-user_preferences.php'>Allow messages from other users</a> in your preferences.{/tr}</div><br /</br />
 {/if}
 
 
 {if $sent}
-<div class="simplebox highlight">{if (strstr($message, '{tr}ERROR{/tr}')) or (strstr($message, '{tr}Invalid{/tr}'))}{icon _id=delete.png alt="{tr}Error{/tr}" style="vertical-align:middle" align="left"}{else}{icon _id=accept.png alt="{tr}Send{/tr}" style="vertical-align:middle"} {/if}{$message}</div>
+<div class="simplebox highlight">{if (strstr($message, '{tr}ERROR{/tr}')) or (strstr($message, '{tr}Invalid{/tr}'))}{icon _id=delete alt="{tr}Error{/tr}" style="vertical-align:middle" align="left"}{else}{icon _id=accept alt="{tr}Send{/tr}" style="vertical-align:middle"} {/if}{$message}</div>
 {/if}
 
 {if (!$sent) or ((strstr($message, '{tr}ERROR{/tr}')) or (strstr($message, '{tr}Invalid{/tr}')))}

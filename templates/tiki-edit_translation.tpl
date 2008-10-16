@@ -122,7 +122,7 @@ function validate_translation_request() {
 {* end of if !isset($allowed_for_staging_only)*}
 {else}
 	<div class="simplebox">
-		{icon _id=delete.png alt="{tr}Alert{/tr}" style="vertical-align:middle"} 
+		{icon _id=delete alt="{tr}Alert{/tr}" style="vertical-align:middle"} 
 		{tr}No language is assigned to this page.{/tr}
 	</div>
 	<p>{tr}Please select a language before performing translation.{/tr}</p>

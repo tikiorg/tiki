@@ -1,6 +1,6 @@
 <div class="cbox">
 <div class="cbox-title">
-{icon _id=error.png style="vertical-align:middle"}
+{icon _id=error style="vertical-align:middle"}
 {if $plugin_status eq 'rejected'}
 	{tr}Plugin execution was denied{/tr}
 {else}

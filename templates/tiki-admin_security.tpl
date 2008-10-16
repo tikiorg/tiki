@@ -13,10 +13,10 @@
 <tr><td class="{cycle advance=false}">{$key}</td>
 <td class="{cycle advance=false}">{$item.setting}</td>
 <td class="{cycle advance=false}">
-{if $item.risk eq 'safe'}{icon _id=accept.png alt="$item.risk" style="vertical-align:middle"}
-{elseif $item.risk eq 'risky'}{icon _id=exclamation.png alt="$item.risk" style="vertical-align:middle"}
-{elseif $item.risk eq 'unsafe'}{icon _id=exclamation.png alt="$item.risk" style="vertical-align:middle"}
-{elseif $item.risk eq 'unknown'}{icon _id=error.png alt="$item.risk" style="vertical-align:middle"}
+{if $item.risk eq 'safe'}{icon _id=accept alt="$item.risk" style="vertical-align:middle"}
+{elseif $item.risk eq 'risky'}{icon _id=exclamation alt="$item.risk" style="vertical-align:middle"}
+{elseif $item.risk eq 'unsafe'}{icon _id=exclamation alt="$item.risk" style="vertical-align:middle"}
+{elseif $item.risk eq 'unknown'}{icon _id=error alt="$item.risk" style="vertical-align:middle"}
 {/if}
 {$item.risk}</td>
 <td class="{cycle advance=true}">{$item.message}</td></tr>
@@ -36,10 +36,10 @@
 <tr><td class="{cycle advance=false}">{$key}</td>
 <td class="{cycle advance=false}">{$item.setting}</td>
 <td class="{cycle advance=false}">
-{if $item.risk eq 'safe'}{icon _id=accept.png alt="$item.risk" style="vertical-align:middle"}
-{elseif $item.risk eq 'risky'}{icon _id=exclamation.png alt="$item.risk" style="vertical-align:middle"}
-{elseif $item.risk eq 'unsafe'}{icon _id=exclamation.png alt="$item.risk" style="vertical-align:middle"}
-{elseif $item.risk eq 'unknown'}{icon _id=error.png alt="$item.risk" style="vertical-align:middle"}
+{if $item.risk eq 'safe'}{icon _id=accept alt="$item.risk" style="vertical-align:middle"}
+{elseif $item.risk eq 'risky'}{icon _id=exclamation alt="$item.risk" style="vertical-align:middle"}
+{elseif $item.risk eq 'unsafe'}{icon _id=exclamation alt="$item.risk" style="vertical-align:middle"}
+{elseif $item.risk eq 'unknown'}{icon _id=error alt="$item.risk" style="vertical-align:middle"}
 {/if}
 {$item.risk}</td>
 <td class="{cycle}">{$item.message}</td></tr>
