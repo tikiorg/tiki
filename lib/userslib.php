@@ -17,6 +17,7 @@ define("SERVER_ERROR", -1);
 define("PASSWORD_INCORRECT", -3);
 define("USER_NOT_FOUND", -5);
 define("ACCOUNT_DISABLED", -6);
+define("ACCOUNT_WAITING_USER", -9);
 define ("USER_AMBIGOUS", -7);
 define('USER_NOT_VALIDATED', -8);
 
@@ -828,6 +829,8 @@ class UsersLib extends TikiLib {
 		if ($res['valid'] > '' && $pass == $res['valid']) // used for validation of user account before activation
 		return array(USER_VALID, $user);
 
+		if (!empty($res['valid']) && $res['waiting'] == 'u')
+			return array(ACCOUNT_WAITING_USER, $user);
 		if (!empty($res['valid']))
 			return array(ACCOUNT_DISABLED, $user);
 	    return array(PASSWORD_INCORRECT, $user);

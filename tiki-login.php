@@ -208,11 +208,12 @@ if ( $isvalid ) {
 		$url = 'tiki-change_password.php?user=' . urlencode($user);
 	} elseif ($isEmailDue) {
 		$userlib->send_confirm_email($user);
+		$userslib->change_user_waiting($user, 'u');
 		$msg = $smarty->fetch('tiki-login_confirm_email.tpl');
 		$smarty->assign_by_ref('msg', $msg);
 		$smarty->assign('user', '');
 		unset($user);
-		$smarty->assign('do_not_show_login_box', 'y');
+		$smarty->assign('errortype', 'login');
 		$smarty->assign('mid', 'tiki-information.tpl');
 		$smarty->display("tiki.tpl");
 		die;
@@ -332,14 +333,16 @@ if ( $isvalid ) {
 	unset($isvalid);
 
 	switch ( $error ) {
-	case PASSWORD_INCORRECT: $error = tra('Invalid password'); break;
-	case USER_NOT_FOUND: $error = tra('Invalid username'); break;
-	case ACCOUNT_DISABLED: $error = tra('Account disabled'); break;
-	case USER_AMBIGOUS: $error = tra('You must use the right case for your user name'); break;
-	case USER_NOT_VALIDATED: $error = tra('You are not yet validated'); break;
-	default: $error = tra('Invalid username or password');
+	case PASSWORD_INCORRECT: $error = 'Invalid password'; break;
+	case USER_NOT_FOUND: $error = 'Invalid username'; break;
+	case ACCOUNT_DISABLED: $error = 'Account disabled'; $errortype = 'login'; break;
+	case ACCOUNT_WAITING_USER: $error = 'You did not validate your account'; $errortype = 'login'; break;
+	case USER_AMBIGOUS: $error = 'You must use the right case for your user name'; break;
+	case USER_NOT_VALIDATED: $error = 'You are not yet validated'; break;
+	default: $error = 'Invalid username or password';
 	}
 	if ( isset($user) and $prefs['feature_score'] == 'y' ) $tikilib->score_event($user, 'login');
+	if (isset($errortype)) $smarty->assign_by_ref('errortype', $errortype);
 	$smarty->assign('msg',tra($error));
 	$smarty->display('error.tpl');
 	exit;

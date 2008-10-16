@@ -5,6 +5,11 @@ close();
 //--><!]]>
 </script>
 {/if}
+{* 402: need login
+ * 401: perm
+ * 404: page does not exist
+ * login: error login
+ *}
 {capture assign=mid_data}
 	{if ($errortype eq "402")}
 		{include file=tiki-login.tpl}
@@ -50,7 +55,7 @@ close();
 					{/if}
 					{if $errortype eq 401 && empty($user) and  $prefs.permission_denied_login_box eq 'y'} {* permission denied *}
 						{include file=tiki-login.tpl}
-					{elseif !isset($user) }
+					{elseif !isset($user) and $errortype != 'login'}
 						<div class="simplebox highlight">
 							{tr}You are not logged in.{/tr} <a href="tiki-login_scr.php">{tr}Go to Login Page{/tr}</a>
 						</div>
