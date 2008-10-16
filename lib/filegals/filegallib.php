@@ -699,13 +699,14 @@ class FileGalLib extends TikiLib {
 		}
 		$info['filename'] = "$zipName.zip";
 		$zip = $temp.$info['filename'];
+		define( PCZLIB_SEPARATOR, '\001');
 		include_once ('lib/pclzip.lib.php');
 		if (!$archive = new PclZip($zip)) {
-			$error = "Can not open $zip";
+			$error = $archive->errorInfo(true);
 			return false;
 		}
-		if (!($v_list = $archive->create(implode(',', $list), PCLZIP_OPT_REMOVE_PATH, $temp))) {
-			$error = "Can not write $zip";
+		if (!($v_list = $archive->create($list, PCLZIP_OPT_REMOVE_PATH, $temp))) {
+			$error = $archive->errorInfo(true);
 			return false;
 		}
 		$info['data'] = file_get_contents($zip);
