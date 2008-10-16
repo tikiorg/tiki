@@ -3744,9 +3744,13 @@ function add_pageview() {
 	} elseif (is_string($find) && !empty($find)) { // or a string
 	    if (!$exact_match && $find) {
 		$find = preg_replace("/(\w+)/","%\\1%",$find);
-		$find = preg_split("/[\s]+/",$find,-1,PREG_SPLIT_NO_EMPTY);
-                $mid = " where `pageName` like ".implode(' or `pageName` like ',array_fill(0,count($find),'?'));
-                $bindvars = $find;
+		$f = preg_split("/[\s]+/",$find,-1,PREG_SPLIT_NO_EMPTY);
+				if (empty($f)) {//look for space...
+					$mid = " where `pageName` like '%$find%'";
+				} else {
+					$mid = " where `pageName` like ".implode(' or `pageName` like ',array_fill(0,count($f),'?'));
+					$bindvars = $f;
+				}
 	    } else {
 		$mid = " where `pageName` like ? ";
 		$bindvars = array('%' . $find . '%');
