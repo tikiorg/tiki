@@ -151,7 +151,7 @@
 	{section name=i loop=$translation_alert}
 	<div class="cbox">
 	<div class="cbox-title">
-	{tr}{icon _id=information.png style="vertical-align:middle"} Content may be out of date{/tr}
+	{icon _id=information.png style="vertical-align:middle"} {tr}Content may be out of date{/tr}
 	</div>
 	<div class="cbox-data">
 		<p>{tr}An urgent request for translation has been sent. Until this page is updated, you can see a corrected version in the following pages:{/tr}</p>
