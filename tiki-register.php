@@ -253,9 +253,9 @@ ask_ticket('register');
 
 $_VALID = tra("Please enter a valid %s.  No spaces, more than %d characters and contain %s");
 
-$smarty->assign('_PROMPT_UNAME', sprintf($_VALID, tra("username"), $prefs['min_user_length'], "0-9,a-z,A-Z") );
+$smarty->assign('_PROMPT_UNAME', sprintf($_VALID, tra("username"), $prefs['min_username_length'], "0-9,a-z,A-Z") );
 $smarty->assign('_PROMPT_PASS', sprintf($_VALID, tra("password"), $prefs['min_pass_length'], "0-9,a-z,A-Z") );
-$smarty->assign('min_user_length', $prefs['min_user_length']);
+$smarty->assign('min_username_length', $prefs['min_username_length']);
 $smarty->assign('min_pass_length', $prefs['min_pass_length']);
 
 // disallow robots to index page:

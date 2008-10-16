@@ -126,10 +126,11 @@ input[type=submit],
 .submitbutton,
 .button input,
 input[type=reset] {
-	border: 1px solid #4C4C4C;
-	background: #E6EFF8;
-	font-weight: bold;
-	color: #999;
+	border: 1px solid #aaa; 
+	background: #fbfbfb;
+	font-weight: normal;
+	color: #4C4C4C;
+	font-size: 90% !important;
 }
 
 button:hover,

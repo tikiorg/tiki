@@ -8,7 +8,7 @@
 
 	 <div class="cbox-data">
 	 <br />
-	 {$msg}
+	 {$msg|escape}
 	 <br /><br />
 	 <a href="javascript:history.back()" class="linkmenu">{tr}Go back{/tr}</a><br /><br />
 	 <a href="{$prefs.tikiIndex}" class="linkmenu">{tr}Return to home page{/tr}</a>

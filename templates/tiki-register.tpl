@@ -53,7 +53,7 @@ function capLock(e){
 		{if $prefs.login_is_email eq 'y'} 
 		<em>{tr}Use your email as login{/tr}</em>. 
 		{else}
-	{if $prefs.min_username_length > 1}<em>{tr}Minimum {$prefs.min_pass_length} characters long{/tr}</em>. {/if}
+	{if $prefs.min_username_length > 1}<em>{tr}Minimum {$prefs.min_username_length} characters long{/tr}</em>. {/if}
 	  {if $prefs.lowercase_username eq 'y'} <em>{tr}Lowercase only{/tr}</em>.{/if}</td>
 		{/if}
       </tr>

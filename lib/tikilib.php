@@ -3687,9 +3687,13 @@ class TikiLib extends TikiDB {
 		} elseif (is_string($find) && !empty($find)) { // or a string
 			if (!$exact_match && $find) {
 				$find = preg_replace("/(\w+)/","%\\1%",$find);
-				$find = preg_split("/[\s]+/",$find,-1,PREG_SPLIT_NO_EMPTY);
-				$mid = " where `pageName` like ".implode(' or `pageName` like ',array_fill(0,count($find),'?'));
-				$bindvars = $find;
+				$f = preg_split("/[\s]+/",$find,-1,PREG_SPLIT_NO_EMPTY);
+				if (empty($f)) {//look for space...
+					$mid = " where `pageName` like '%$find%'";
+				} else {
+					$mid = " where `pageName` like ".implode(' or `pageName` like ',array_fill(0,count($f),'?'));
+					$bindvars = $f;
+				}
 			} else {
 				$mid = " where `pageName` like ? ";
 				$bindvars = array('%' . $find . '%');
@@ -5492,7 +5496,10 @@ class TikiLib extends TikiDB {
 		if( ! isset( $prefs['plugin_fingerprints'] ) )
 			return '';
 
-		$data = unserialize( $prefs['plugin_fingerprints'] );
+		// Converts &lt;x&gt; (<x> tag using HTML entities) into the tag <x>. This tag comes from the input sanitizer (XSS filter).
+		// This is not HTML valid and avoids using <x> in a wiki text,
+		//   but hide '<x>' text inside some words like 'style' that are considered as dangerous by the sanitizer.
+		$data = str_replace( array( '&lt;x&gt;', '~np~', '~/np~' ), array( '<x>', ' ~np~', '~/np~ ' ), $data );
 
 		if( isset( $data[$fp] ) )
 			return $data[$fp];

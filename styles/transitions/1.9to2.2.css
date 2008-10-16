@@ -126,7 +126,7 @@ div#ajaxLoading {
 	border-bottom: 1px solid #ACCCDD;
 	margin-bottom: 4px;
 	height: 100%;
-/*	overflow: auto; */
+	overflow: auto;
 	padding-top: 2px;
 }
 .post .postbody-title .checkbox { float: left; }
@@ -248,8 +248,12 @@ div#ajaxLoading {
 
 /* OpenID  */
 .openid_url {
-	background: #fff url(../../img/icons/login-OpenID-bg.gif) no-repeat;
-	padding-left: 18px}
+background-image: url(../../img/icons/login-OpenID-bg.gif);
+background-repeat: no-repeat;
+background-attachment: scroll;
+background-color: #ffffff;
+padding-left: 18px;
+}
 
 /* Style for navbar buttons 
  *  This class has to be added in the main style sheet */
@@ -408,25 +412,27 @@ h3.box-title {
 }
 
 /* categobjects.tpl */
-.catfeatures {
-  margin-left: 0;
-  padding: 0;
-  font-weight: bold;
+.catfeatures
+{
+  margin-left:0;
+  padding:  0;
+  font-weight:  bold;
   list-style: none;
 }
 
-.catitems {
-  margin-left: 0;
-  padding: 0;
-  font-weight: bold;
+.catitems
+{
+  margin-left:0;
+  padding:  0;
+  font-weight:  bold;
   list-style: none;
 }
 
-.catitems li {
-  padding: 0;
-  margin-left: 15px;
-  margin-bottom: 2px;
-  display: inline;
+.catitems li
+{
+  padding:      0;
+  margin-left:  15px;
+  margin-bottom:2px;
 }
 
 /* rbox: remarks box (note/warning/tip/comment)
@@ -505,38 +511,6 @@ div #page-bar
   font-family:arial,sans-serif;
   text-align: center;
   font-size: 7pt;
-}
-
-#power_icons {
-	 text-align: center
-}
-
-#power_icons img {
-	border: 0;
-	vertical-align: middle
-}
-
-#fullscreenbutton {
-  float: right;
-	position: absolute;
-	top: 2px;
-	right: 10px;
-	font-size: 80%;
-	white-space: nowrap;
-	padding: 0 4px;
-	cursor: pointer;
-}
-
-#sitetitle {
-	font-size: 2.4em;
-}
-
-#sitesubtitle {
-	font-size:1.6em;
-}
-
-.sub {
-	padding-left: 5em !important;
 }
 
 .blogactions {
