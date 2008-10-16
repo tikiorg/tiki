@@ -77,14 +77,17 @@ function wikiplugin_snarf($data, $params)
 
     if( function_exists("curl_init") )
     {
-	$ch = curl_init( $params['url'] ); 
-
-	// use output buffering instead of returntransfer -itmaybebuggy 
-	ob_start(); 
-	curl_exec($ch); 
-	curl_close($ch); 
-	$html = ob_get_contents(); 
-	ob_end_clean(); 
+	$curl = curl_init(); 
+	curl_setopt($curl, CURLOPT_URL, $params['url']);
+	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 2);
+	curl_setopt($curl, CURLOPT_TIMEOUT, 2);
+	curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+	curl_setopt($curl, CURLOPT_HEADER, false);
+	curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true );
+	curl_setopt($curl, CURLOPT_USERAGENT, "TikiWiki Snarf" );
+	$html = curl_exec($curl);
+	curl_close($curl); 
 
 	// Not using preg_replace due to its limitations to 100.000 characters
 	$snarf = eregi_replace('^.*<\s*body[^>]*>', '', $html);
@@ -97,20 +100,18 @@ function wikiplugin_snarf($data, $params)
 
 	if ( $data == '' ) $data = NULL;
 	$code_defaults = array('caption' => $data, 'wrap' => '1', 'colors' => NULL, 'wiki' => '0', 'ln' => NULL, 'rtl' => NULL, 'ishtml' => NULL);
-	$ret = '{CODE(';
+
 	foreach ( $code_defaults as $k => $v ) {
-		$tmp = isset($params[$k]) ? $params[$k] : ( $v !== NULL ? $v : '' );
-		if ( $tmp != '' ) {
-			if ( $ret != '' ) $ret .= ',';
-			$ret .= $k . '=' . $tmp;
-		}
+		if ( isset($params[$k]) ) $code_defaults[$k] = $params[$k];
+		if ( $code_defaults[$k] === NULL ) unset($code_defaults[$k]);
 	}
-	$ret .= ')}' . $snarf .'{CODE}';
+
+	include_once('lib/wiki-plugins/wikiplugin_code.php');
+	$ret = wikiplugin_code($snarf, $code_defaults);
 
     } else {
 	$ret = "<p>You need php-curl for the SNARF plugin!</p>\n";
     }
-
     return $ret;
 }
 
