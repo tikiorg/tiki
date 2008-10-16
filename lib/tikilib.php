@@ -605,7 +605,7 @@ class TikiLib extends TikiDB {
 		$query = 'SELECT tpc.`data`'
 			.' FROM `tiki_programmed_content` AS tpc, `tiki_content` AS tc'
 			.' WHERE tpc.`contentId` = tc.`contentId` AND tc.`contentLabel`=? AND `publishDate`<=? ORDER BY `publishDate` DESC';
-		$data = $this->getOne($query, array((int)$fieldvalue, $this->now));
+		$data = $this->getOne($query, array($fieldvalue, $this->now));
 		return $data;
 	}
 
