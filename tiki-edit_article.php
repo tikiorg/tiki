@@ -46,7 +46,7 @@ if (isset($_REQUEST["previewId"])) {
 
 $smarty->assign('articleId', $articleId);
 $smarty->assign('previewId', $previewId);
-$smarty->assign('imageIsChanged', ($_REQUEST["imageIsChanged"]=='y')?'y':'n');
+$smarty->assign('imageIsChanged', (isset($_REQUEST['imageIsChanged']) && $_REQUEST['imageIsChanged']=='y')?'y':'n');
 
 if (isset($_REQUEST["templateId"]) && $_REQUEST["templateId"] > 0) {
 	$template_data = $tikilib->get_template($_REQUEST["templateId"]);
@@ -476,7 +476,7 @@ include_once ("categorize_list.php");
 
 if ($prefs['feature_freetags'] == 'y') {
     include_once ("freetag_list.php");
-    if ($_REQUEST["preview"]) {
+    if (isset($_REQUEST['preview'])) {
 	$smarty->assign('taglist',$_REQUEST["freetag_string"]);
     }
 }
