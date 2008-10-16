@@ -166,7 +166,7 @@ class="prevnext">{tr}All{/tr}</a>
   <a class="link" href="tiki-user_information.php?userId={$users[user].userId}" title="{tr}User Information{/tr}: {$users[user].user}">{icon _id='help' alt="{tr}User Information{/tr}: `$users[user].user`"}</a>
 
   {if $users[user].user ne 'admin'}
-    {self_link _class="link" action="delete" user=`$users[user].user` _icon="cross" _alt="Delete" _title="{tr}Delete{/tr}: `$users[user].user`"}{/self_link}
+    <a class="link" href="{$smarty.server.PHP_SELF}?{query action=delete user=$users[user].user}" title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
   	{if $users[user].valid && $users[user].waiting eq 'a'}
 		<a class="link" href="tiki-login_validate.php?user={$users[user].user|escape:url}&amp;pass={$users[user].valid|escape:url}" title="{tr}Validate user{/tr}: {$users[user].user}">{icon _id='accept' alt="{tr}Validate user{/tr}: `$users[user].user`"}</a>
 	{/if}
