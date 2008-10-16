@@ -43,7 +43,7 @@
 </form>
 
 <br />
-{if $words neq ''}
+{if $words neq '' and !$searchNoResults}
   {tr}Found{/tr} "{$words}" {tr}in{/tr} {$cant_results} {$where2}
 {/if}
 
