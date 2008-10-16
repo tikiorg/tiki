@@ -147,7 +147,6 @@ class TikiDB {
 	// Gets one column for the database.
 	function getOne($query, $values = null, $reporterrors = true, $offset = 0) {
 
-		error_reporting(E_ALL);
 		$result = $this->query($query, $values, 1, $offset);
 		$res = $result->fetchRow();
 		if ($result) {

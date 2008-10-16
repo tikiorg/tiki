@@ -460,11 +460,11 @@ class TikiLib extends TikiDB {
 	/*shared*/
 	function dir_stats() {
 		$aux = array();
-		$aux["valid"] = $this->db->getOne("select count(*) from `tiki_directory_sites` where `isValid`=?",array('y'));
-		$aux["invalid"] = $this->db->getOne("select count(*) from `tiki_directory_sites` where `isValid`=?",array('n'));
-		$aux["categs"] = $this->db->getOne("select count(*) from `tiki_directory_categories`",array());
-		$aux["searches"] = $this->db->getOne("select sum(`hits`) from `tiki_directory_search`",array());
-		$aux["visits"] = $this->db->getOne("select sum(`hits`) from `tiki_directory_sites`",array());
+		$aux["valid"] = $this->getOne("select count(*) from `tiki_directory_sites` where `isValid`=?",array('y'));
+		$aux["invalid"] = $this->getOne("select count(*) from `tiki_directory_sites` where `isValid`=?",array('n'));
+		$aux["categs"] = $this->getOne("select count(*) from `tiki_directory_categories`",array());
+		$aux["searches"] = $this->getOne("select sum(`hits`) from `tiki_directory_search`",array());
+		$aux["visits"] = $this->getOne("select sum(`hits`) from `tiki_directory_sites`",array());
 		return $aux;
 	}
 
@@ -6923,8 +6923,8 @@ class TikiLib extends TikiDB {
 			if (count($wexs) == 2) {
 				$wkname = $wexs[0];
 
-				if ($this->db->getOne("select count(*) from `tiki_extwiki` where `name`=?",array($wkname)) == 1) {
-					$wkurl = $this->db->getOne("select `extwiki`  from `tiki_extwiki` where `name`=?",array($wkname));
+				if ($this->getOne("select count(*) from `tiki_extwiki` where `name`=?",array($wkname)) == 1) {
+					$wkurl = $this->getOne("select `extwiki`  from `tiki_extwiki` where `name`=?",array($wkname));
 
 					$wkurl = '<a href="' . str_replace('$page', urlencode($wexs[1]), $wkurl). '" class="wiki external ' . $reltype . '">' . $wexs[1] . '</a>';
 					return $wkurl;
