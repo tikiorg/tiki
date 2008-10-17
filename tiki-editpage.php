@@ -1273,8 +1273,6 @@ if( $prefs['feature_multilingual'] == 'y' ) {
 $smarty->assign('edittimeout', (ini_get('session.gc_maxlifetime') / 60 ));
 
 ask_ticket('edit-page');
-$ajaxlib->registerTemplate('tiki-editpage.tpl');
-$ajaxlib->processRequests();
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 // Display the Index Template
