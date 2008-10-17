@@ -9,9 +9,10 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 	exit;
 }
 
-function smarty_modifier_sefurl($source, $type='wiki') {
+function smarty_modifier_sefurl($source, $type='wiki', $with_next = '' ) {
 	global $prefs, $wikilib;
 	include_once('lib/wiki/wikilib.php');
+
 	switch($type){
 	case 'wiki page':
 	case 'wiki':
@@ -19,9 +20,9 @@ function smarty_modifier_sefurl($source, $type='wiki') {
 	// rewrite other things so htaccess can unrewrite
 	case 'blog':
 	        if ($prefs['feature_sefurl'] == 'y') {
-	            return "blog" . $source;
+			return "blog" . $source;
 	        } else {
-	            return 'tiki-view_blog.php?blogId='.$source;
+			return 'tiki-view_blog.php?blogId='.$source;
 		}
 	case 'blogpost':
 	        if ($prefs['feature_sefurl'] == 'y') {
@@ -31,9 +32,9 @@ function smarty_modifier_sefurl($source, $type='wiki') {
 		}
 	case 'gallery':
 	        if ($prefs['feature_sefurl'] == 'y') {
-	            return "gallery" . $source;
+	            return "gallery" . $source . ($with_next ? '?' : '') ;
 	        } else {
-	            return 'tiki-browse_gallery.php?galleryId='.$source;
+	            return 'tiki-browse_gallery.php?galleryId='. $source . ($with_next ? '&' : '');
 		}
 	}
 

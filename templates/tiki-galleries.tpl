@@ -169,11 +169,11 @@
 {if $galleries[changes].visible eq 'y' or $tiki_p_admin_galleries eq 'y'}
 <tr>
 {if $prefs.gal_list_name eq 'y'}
-  <td class="{cycle advance=false}"><a class="galname" href="tiki-browse_gallery.php?galleryId={$galleries[changes].galleryId}">{$galleries[changes].name}</a></td>
+  <td class="{cycle advance=false}"><a class="galname" href="{$galleries[changes].galleryId|sefurl:gallery}">{$galleries[changes].name}</a></td>
 {/if}
 {if $prefs.gal_list_parent eq 'y'}
   <td class="{cycle advance=false}">
-  {if $galleries[changes].parentgallery ne -1 }<a class="galname" href="tiki-browse_gallery.php?galleryId={$galleries[changes].parentgallery}">{$galleries[changes].parentgalleryName}</a>{/if}
+  {if $galleries[changes].parentgallery ne -1 }<a class="galname" href="{$galleries[changes].parentgallery|sefurl:gallery}">{$galleries[changes].parentgalleryName}</a>{/if}
   {if $galleries[changes].parentgal eq 'y'}<i>{tr}Parent{/tr}</i>{/if}
   </td>
 {/if}

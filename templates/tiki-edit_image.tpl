@@ -1,6 +1,6 @@
 {title}{tr}Edit Image{/tr}{/title}
 
-<span class="button2"><a href="tiki-browse_gallery.php?galleryId={$galleryId}">{tr}Return to Gallery{/tr}</a></span>
+<span class="button2"><a href="{$galleryId|sefurl:gallery}">{tr}Return to Gallery{/tr}</a></span>
 <span class="button2"><a href="tiki-browse_image.php?imageId={$imageId}">{tr}Browse Images{/tr}</a></span>
 <br /><br />
 <div align="center">

@@ -11,7 +11,7 @@
 {/if}
 {/if}
 {if $blogId > 0 }
-<span class="button2"><a href="tiki-view_blog.php?blogId={$blogId}">{tr}View Blog{/tr}</a></span>
+<span class="button2"><a href="{$blogId|sefurl:blog}">{tr}View Blog{/tr}</a></span>
 {/if}
 <span class="button2"><a href="tiki-list_blogs.php">{tr}List Blogs{/tr}</a></span>
 </div>

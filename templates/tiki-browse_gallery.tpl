@@ -65,11 +65,11 @@
 {/if}
 
 	<span class="sorttitle">{tr}Sort Images by{/tr}</span>
-    [ <span class="sortoption"><a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></span>
-    | <span class="sortoption"><a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Date{/tr}</a></span>
-    | <span class="sortoption"><a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}Hits{/tr}</a></span>
-    | <span class="sortoption"><a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}">{tr}User{/tr}</a></span>
-    | <span class="sortoption"><a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'filesize_desc'}filesize_asc{else}filesize_desc{/if}">{tr}Size{/tr}</a></span> ]
+    [ <span class="sortoption"><a class="gallink" href="{$galleryId|sefurl:gallery:with_next}offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></span>
+    | <span class="sortoption"><a class="gallink" href="{$galleryId|sefurl:gallery:with_next}offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Date{/tr}</a></span>
+    | <span class="sortoption"><a class="gallink" href="{$galleryId|sefurl:gallery:with_next}offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}Hits{/tr}</a></span>
+    | <span class="sortoption"><a class="gallink" href="{$galleryId|sefurl:gallery:with_next}offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}">{tr}User{/tr}</a></span>
+    | <span class="sortoption"><a class="gallink" href="{$galleryId|sefurl:gallery:with_next}offset={$offset}&amp;sort_mode={if $sort_mode eq 'filesize_desc'}filesize_asc{else}filesize_desc{/if}">{tr}Size{/tr}</a></span> ]
 
 
   <div class="thumbnails">
@@ -130,9 +130,9 @@
             		<a class="gallink" href="tiki-browse_image.php?galleryId={$galleryId}&amp;sort_mode={$sort_mode}&amp;imageId={$item.imageId}&amp;scalesize=0" title="{tr}Original Size{/tr}"><img src='img/icons2/nav_dot.gif' border='0' width='8' height='11' alt='{tr}Original Size{/tr}' title='{tr}Original Size{/tr}' /></a>
 	    		{/if}
             	{if $imagerotate}
-            		<a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;rotateright={$item.imageId}" title="{tr}rotate right{/tr}"><img src='img/icons2/admin_rotate.gif' border='0' width='11' height='11' alt='{tr}rotate{/tr}' title='{tr}rotate{/tr}' /></a>
+            		<a class="gallink" href={$galleryId}|sefurl:gallery:with_next}rotateright={$item.imageId}" title="{tr}rotate right{/tr}"><img src='img/icons2/admin_rotate.gif' border='0' width='11' height='11' alt='{tr}rotate{/tr}' title='{tr}rotate{/tr}' /></a>
             	{/if}
-            	<a class="gallink" href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;remove={$item.imageId}" title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
+            	<a class="gallink" href="{$galleryId|sefurl:gallery:with_next}remove={$item.imageId}" title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
             	<a class="gallink" href="tiki-edit_image.php?galleryId={$galleryId}&amp;edit={$item.imageId}" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
           {/if}
           <a class="gallink" href="tiki-browse_image.php?galleryId={$galleryId}&amp;sort_mode={$sort_mode}&amp;imageId={$item.imageId}&amp;scalesize={$defaultscale}" {if $prefs.gal_image_mouseover neq 'n'}{popup fullhtml="1" text=$over_info.$key|escape:"javascript"|escape:"html"}{/if}>{icon _id='magnifier' alt='{tr}Details{/tr}'}</a>
@@ -195,7 +195,7 @@
       <td class="even">
       <small>
   {tr}You can view this gallery's configured image (first, random, etc.) in your browser using{/tr}:<br /><br />
-  <a class="gallink" href="{$url_show}?galleryId={$galleryId}">{$url_show}?galleryId={$galleryId}</a><br />
+  <a class="gallink" href="{$base_url}show_image.php?galleryId={$galleryId}">{$base_url}show_image.php?galleryId={$galleryId}</a><br />
   </small>
   </td>
 </tr>
@@ -204,11 +204,11 @@
   <small>
   {tr}You can include the gallery's image in an HTML page using one of these lines{/tr}:<br /><br />
   {if $resultscale == $defaultscale}
-  &lt;img src="{$url_show}?galleryId={$galleryId}" /&gt;<br />
+  &lt;img src="{$base_url}show_image.php?galleryId={$galleryId}" /&gt;<br />
   {elseif !$resultscale}
-  &lt;img src="{$url_show}?galleryId={$galleryId}" /&gt;<br />
+  &lt;img src="{$base_url}show_image.php?galleryId={$galleryId}" /&gt;<br />
   {else}
-  &lt;img src="{$url_show}?galleryId={$galleryId}" /&gt;<br />
+  &lt;img src="{$base_url}show_image.php?galleryId={$galleryId}" /&gt;<br />
   {/if}
   </small>
   </td>
@@ -222,7 +222,7 @@
   {elseif !$resultscale}
   {literal}{{/literal}img src=show_image.php?galleryId={$galleryId} {literal}}{/literal}<br />
   {else}
-  {literal}{{/literal}img src={$url_show}?galleryId={$galleryId} {literal}}{/literal}<br />
+  {literal}{{/literal}img src={$base_url}show_image.php?galleryId={$galleryId} {literal}}{/literal}<br />
   {/if}
   </small>
   </td>
