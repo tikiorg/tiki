@@ -27,7 +27,6 @@
 <fieldset {if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}"{/if}>
 {if $prefs.feature_tabs neq 'y'}
   <legend class="heading">
-    <a href="#assign" name="assign">
 <span>
 {tr}Assign/Edit modules{/tr}
 </span>
