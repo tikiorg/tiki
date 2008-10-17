@@ -157,11 +157,16 @@ global $ajaxlib;
 $ajaxlib = new TikiAjax();
 $ajaxlib->registerFunction("loadComponent");
 
-function loadComponent($template, $htmlElementId, $max_tikitabs = 0) {
-    global $smarty, $ajaxlib, $prefs;
+function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user = '') {
+    global $smarty, $ajaxlib, $prefs, $user;
     $objResponse = new xajaxResponse();
-    
-    if ($ajaxlib->templateIsRegistered($template)) {
+
+    if ( $last_user != $user ) {
+
+	// If the user session timed out, completely reload the page to refresh right/left modules
+	$objResponse->addRedirect($_SERVER['REQUEST_URI'], 0);
+
+    } elseif ( $ajaxlib->templateIsRegistered($template) ) {
 
 	$content = $smarty->fetch($template);
 	$objResponse->addAssign($htmlElementId, "innerHTML", $content);

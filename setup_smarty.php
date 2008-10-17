@@ -95,7 +95,7 @@ class Smarty_Tikiwiki extends Smarty {
 			}
 
 			// Enable AJAX
-			if ( $prefs['feature_ajax'] == 'y' ) {
+			if ( $prefs['feature_ajax'] == 'y' && $_smarty_display ) {
 				global $ajaxlib; require_once('lib/ajax/ajaxlib.php');
 				$ajaxlib->registerTemplate($tpl);
 				$ajaxlib->processRequests();
@@ -109,6 +109,14 @@ class Smarty_Tikiwiki extends Smarty {
 			include_once('tiki-modules.php');
 		} elseif ($_smarty_tpl_file == 'confirm.tpl' || $_smarty_tpl_file == 'error.tpl' || $_smarty_tpl_file == 'information.tpl' || $_smarty_tpl_file == 'error_ticket.tpl' || $_smarty_tpl_file == 'error_simple.tpl') {
 			include_once('tiki-modules.php');
+
+			// Enable AJAX
+			if ( $prefs['feature_ajax'] == 'y' && $_smarty_display ) {
+				$_POST['xajaxargs'][0] = $_smarty_tpl_file;
+				global $ajaxlib; require_once('lib/ajax/ajaxlib.php');
+				$ajaxlib->registerTemplate($_smarty_tpl_file);
+				$ajaxlib->processRequests();
+			}
 		}
 
 		if (isset($style_base)) {

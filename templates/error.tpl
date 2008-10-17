@@ -53,7 +53,7 @@ close();
 						</div>
 						<br /><br />
 					{/if}
-					{if $errortype eq 401 && empty($user) and  $prefs.permission_denied_login_box eq 'y'} {* permission denied *}
+					{if $errortype eq 401 && empty($user) and $prefs.permission_denied_login_box eq 'y'} {* permission denied *}
 						{include file=tiki-login.tpl}
 					{elseif !isset($user) and $errortype != 'login'}
 						<div class="simplebox highlight">
@@ -71,7 +71,7 @@ close();
 {/capture}
 
 {if isset($smarty.request.xajax) && $smarty.request.xajax eq 'loadComponent'}
-{xajax_response content=$mid_data}
+{$mid_data}
 {else}
 {include file=tiki.tpl}
 {/if}
