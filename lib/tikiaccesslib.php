@@ -124,7 +124,7 @@ class TikiAccessLib extends TikiLib {
 		include_once('lib/wiki/wikilib.php');
 
 		// Don't redirect when calls are made for web services
-		if ( $enableRedirect && $prefs['feature_redirect_on_error'] == 'y' && ! $this->is_machine_request() ) {
+		if ( $enableRedirect && $prefs['feature_redirect_on_error'] == 'y' && ! $this->is_machine_request() && ! $this->is_xajax_request() ) {
 			$this->redirect($prefs['tikiIndex']);
 		}
 
@@ -141,8 +141,7 @@ class TikiAccessLib extends TikiLib {
 		$smarty->assign('msg', $errortitle);
 		switch( $errortype ) {
 		case '404':
-			header ("Status: 404 Not Found"); /* PHP3 */
-			header ("HTTP/1.0 404 Not Found"); /* PHP4 */
+			header ("HTTP/1.0 404 Not Found");
 			$detail['page'] = $page;
 			$detail['message'] .= ' (404)';
 			break;
@@ -213,8 +212,7 @@ class TikiAccessLib extends TikiLib {
 			echo "<script>document.location.href='$url';</script>\n";
 		} else {
 			@ob_end_clean(); // clear output buffer
-			header ("Status: 302 Found"); /* PHP3 */
-			header ("HTTP/1.0 302 Found"); /* PHP4 */
+			header("HTTP/1.0 302 Found");
 			header( "Location: $url" );
 		}
 		exit();
@@ -319,6 +317,11 @@ class TikiAccessLib extends TikiLib {
 			$types['html'] = 'text/html';
 
 		return $types;
+	}
+
+	function is_xajax_request() {
+		global $prefs;
+		return ( $prefs['feature_ajax'] == 'y' && isset($_POST['xajaxargs']) );
 	}
 
 	function is_machine_request() {
