@@ -227,20 +227,24 @@ if (isset($_REQUEST["upload"])) {
 
 			if (($prefs['fgal_use_db'] == 'n') || ($podCastGallery)) {
 				$fhash = md5($name = $_FILES["userfile"]['name'][$key]);
-				$fhash = md5(uniqid($fhash));
+				$extension = '';
 
 				// for podcast galleries add the extension so the
 				// file can be called directly if name is known,
 				if ($podCastGallery) {
 					$path_parts = pathinfo($_FILES["userfile"]['name'][$key]);
 					if (in_array(strtolower($path_parts["extension"]),array("m4a", "mp3", "mov", "mp4", "m4v", "pdf"))) {
-						$fhash .= ".".strtolower($path_parts["extension"]);
+						$extension = ".".strtolower($path_parts["extension"]);
 					}
 					$savedir=$prefs['fgal_podcast_dir'];
 				} else {
 					$savedir=$prefs['fgal_use_dir'];
 				}
-				@$fw = fopen($savedir . $fhash, "wb");
+				do {
+					$fhash = md5(uniqid($fhash));
+				} while (file_exists($savedir . $fhash. $extension));
+				
+				@$fw = fopen($savedir . $fhash. $extension, "wb");
 				if (!$fw) {
 					$errors[] = tra('Cannot write to this file:').$savedir.$fhash;
 					print_msg(tra('Cannot write to this file:').$savedir.$fhash,$formId);
@@ -372,7 +376,7 @@ if (isset($_REQUEST["upload"])) {
 		header ("location: tiki-list_file_gallery.php?galleryId=" . $batch_job_galleryId);
 		die;
 	}
-	if ($editFileId and count($errors) == 0) {
+	if (!empty($editFileId) and count($errors) == 0) {
 		header ("location: tiki-list_file_gallery.php?galleryId=" . $_REQUEST["galleryId"][0]);
 		die;
 	}
