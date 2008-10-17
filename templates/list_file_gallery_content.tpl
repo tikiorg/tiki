@@ -285,7 +285,7 @@
   </td></tr>
   {/section}
 
-  {if $gal_info.show_checked ne 'n' and $tiki_p_admin_file_galleries eq 'y'}
+  {if $gal_info.show_checked ne 'n' and $tiki_p_admin_file_galleries eq 'y' and $prefs.javascript_enabled eq 'y'}
   <tr><td colspan="{$nbCols}"><input name="switcher" id="clickall" type="checkbox" onclick="switchCheckboxes(this.form,'file[]',this.checked); switchCheckboxes(this.form,'subgal[]',this.checked);"/>
     <label for="clickall">{tr}Select All{/tr}</label>
   </td></tr>
