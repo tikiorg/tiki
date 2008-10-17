@@ -19,6 +19,152 @@ When possible, it's also nice to indicate what feature is concerned by the chang
 Before 2.0, there was only [MOD] for both [ENH] and [MOD]:
 
 ----------------------------------------------------------------------
+Version 2.2
+<http://tikiwiki.org/ReleaseNotes22>
+------------------
+
+------------------------------------------------------------------------
+r15184 | sylvieg | 2008-10-16 14:45:23 -0400 (Thu, 16 Oct 2008) | 1 line
+
+[FIX]{file: do not put the page name in {file} when attaching a file - because rename page do not scan the page content
+------------------------------------------------------------------------
+r15183 | sylvieg | 2008-10-16 14:31:56 -0400 (Thu, 16 Oct 2008) | 1 line
+
+backport plugin attach to be able to use {file name=} without page specification
+------------------------------------------------------------------------
+r15181 | sylvieg | 2008-10-16 14:00:56 -0400 (Thu, 16 Oct 2008) | 1 line
+
+[FIX]search: do not display 'found in' if in noresults mode
+------------------------------------------------------------------------
+r15180 | luciash | 2008-10-16 13:52:49 -0400 (Thu, 16 Oct 2008) | 1 line
+
+[FIX] removed unnecessary center class
+------------------------------------------------------------------------
+r15177 | sylvieg | 2008-10-16 13:26:09 -0400 (Thu, 16 Oct 2008) | 1 line
+
+[FIX]sql error: when searching for space in list_pages
+------------------------------------------------------------------------
+r15168 | chibaguy | 2008-10-15 23:06:19 -0400 (Wed, 15 Oct 2008) | 1 line
+
+[FIX] Button bg color lightened and contrast improved so not to be mistaken for greyed out.
+------------------------------------------------------------------------
+r15167 | marclaporte | 2008-10-15 18:39:37 -0400 (Wed, 15 Oct 2008) | 1 line
+
+[FIX] correct link about release
+------------------------------------------------------------------------
+r15165 | Jyhem | 2008-10-15 16:15:45 -0400 (Wed, 15 Oct 2008) | 1 line
+
+[SEC] Can't hurt. Just in case the string passes through input sanitization
+------------------------------------------------------------------------
+r15160 | marclaporte | 2008-10-15 13:08:55 -0400 (Wed, 15 Oct 2008) | 1 line
+
+[FIX] Missing feature check for inclusion of extra css files.
+------------------------------------------------------------------------
+r15155 | lphuberdeau | 2008-10-15 09:51:54 -0400 (Wed, 15 Oct 2008) | 1 line
+
+[FIX] No parse syntax could be used to bypass sanitization
+------------------------------------------------------------------------
+r15154 | nyloth | 2008-10-15 08:36:55 -0400 (Wed, 15 Oct 2008) | 1 line
+
+[FIX] backport fix 15153 for wiki page title feature.
+------------------------------------------------------------------------
+r15152 | sylvieg | 2008-10-15 08:18:10 -0400 (Wed, 15 Oct 2008) | 1 line
+
+backport bug categ/status on trackerstat
+------------------------------------------------------------------------
+r15150 | marclaporte | 2008-10-14 21:32:48 -0400 (Tue, 14 Oct 2008) | 1 line
+
+[FIX] Correct variable names for min_pass_length and min_username_length
+------------------------------------------------------------------------
+r15149 | marclaporte | 2008-10-14 20:54:54 -0400 (Tue, 14 Oct 2008) | 1 line
+
+[FIX] SEWilco fixed bug 1291, so removing warning note
+------------------------------------------------------------------------
+r15134 | Jyhem | 2008-10-14 05:18:13 -0400 (Tue, 14 Oct 2008) | 1 line
+
+[SEC] Limit size of user-provided input.
+------------------------------------------------------------------------
+r15110 | Jyhem | 2008-10-13 10:33:03 -0400 (Mon, 13 Oct 2008) | 1 line
+
+[SEC] Fix security concerns by removing the need for tiki-error.php (clear tiki-error.php and unused initialisation)
+------------------------------------------------------------------------
+r15108 | Jyhem | 2008-10-13 10:10:12 -0400 (Mon, 13 Oct 2008) | 1 line
+
+[SEC] Fix security concerns by removing the need for tiki-error.php
+------------------------------------------------------------------------
+r15095 | sylvieg | 2008-10-10 18:40:50 -0400 (Fri, 10 Oct 2008) | 1 line
+
+backport sort in fgal
+------------------------------------------------------------------------
+r15087 | jonnybradley | 2008-10-10 12:09:46 -0400 (Fri, 10 Oct 2008) | 1 line
+
+[FIX] Renamed transition style files to reflect new "base" twversion
+------------------------------------------------------------------------
+r15086 | sylvieg | 2008-10-10 11:43:06 -0400 (Fri, 10 Oct 2008) | 1 line
+
+[FIX]SQL: to have queries with > running
+------------------------------------------------------------------------
+r15083 | jonnybradley | 2008-10-10 11:00:48 -0400 (Fri, 10 Oct 2008) | 1 line
+
+[FIX] Files not in database "display", "thumbnail" etc fixed (slightly different to fix in trunk - hope it doesn't make a merge mess)
+------------------------------------------------------------------------
+r15013 | pkdille | 2008-10-06 15:08:55 -0400 (Mon, 06 Oct 2008) | 1 line
+
+[FIX] blog post: backport commit 13736. Users do not have perms to post in another user's private blog. [bug 1348]
+------------------------------------------------------------------------
+r15002 | sylvieg | 2008-10-06 08:27:24 -0400 (Mon, 06 Oct 2008) | 1 line
+
+backport the error message when feature is not set: the feature should be changed manually in the database
+------------------------------------------------------------------------
+r14923 | luciash | 2008-09-30 14:54:19 -0400 (Tue, 30 Sep 2008) | 1 line
+
+[FIX] added missing site location bar + little padding fix
+------------------------------------------------------------------------
+r14922 | luciash | 2008-09-30 14:42:18 -0400 (Tue, 30 Sep 2008) | 1 line
+
+[FIX] allow display page title when breadcrumbs are on, display location prefix in center column too when switched on, display the location bar with breadcrumbs only once, better to highlight the current page in breadcrumbs by strong than h1, ...
+------------------------------------------------------------------------
+r14920 | jonnybradley | 2008-09-30 13:25:27 -0400 (Tue, 30 Sep 2008) | 2 lines
+
+[FIX] Renamed overLIB's windowWidth function to olWindowWidth to avoid conflict with PHP Layers Menu windowWidth variable.
+(overLIB was last updated in 2005 but have contacted the author - no response)
+------------------------------------------------------------------------
+r14919 | jonnybradley | 2008-09-30 13:17:06 -0400 (Tue, 30 Sep 2008) | 4 lines
+
+[FIX] Switch editor mode: fixes markup parsing when switching to and from WYSIWYG
+Keeps edits, works on smilies, plugins, tables, images, headings etc
+Tested well on trunk now so committing (slightly modified) here in case 2.2 is released
+
+------------------------------------------------------------------------
+r14901 | lphuberdeau | 2008-09-29 20:55:16 -0400 (Mon, 29 Sep 2008) | 1 line
+
+[MOD] Updating version numbers
+------------------------------------------------------------------------
+r14897 | sewilco | 2008-09-29 14:07:43 -0400 (Mon, 29 Sep 2008) | 1 line
+
+[NEW] Add galleryId to show_image.php to show one image from a gallery.
+------------------------------------------------------------------------
+r14894 | sylvieg | 2008-09-29 10:43:19 -0400 (Mon, 29 Sep 2008) | 1 line
+
+[FIX]switch theme: better error message + you can switch theme even if userprefs is disabled - it will use cookie in this case
+------------------------------------------------------------------------
+r14889 | sylvieg | 2008-09-29 09:53:25 -0400 (Mon, 29 Sep 2008) | 1 line
+
+style for login and search top boxes
+------------------------------------------------------------------------
+r14878 | ricks99 | 2008-09-26 15:48:10 -0400 (Fri, 26 Sep 2008) | 1 line
+
+[FIX]show min length for username
+------------------------------------------------------------------------
+r14869 | chibaguy | 2008-09-25 22:22:54 -0400 (Thu, 25 Sep 2008) | 1 line
+
+[FIX]  Bad nested span removed from tiki-browse_gallery.tpl (was causing problem with watch icon), spans added to give list gallery same button look as browse gallery, button style, tocnav contrast, gallery thumb td borders fixed in darkroom.css.
+------------------------------------------------------------------------
+r14858 | luciash | 2008-09-25 06:16:51 -0400 (Thu, 25 Sep 2008) | 1 line
+
+[FIX] typo in module_params caused nobox param unuseful (thanks to Jose F. Garcia)
+
+----------------------------------------------------------------------
 Version 2.1
 <http://tikiwiki.org/ReleaseNotes21>
 ------------------

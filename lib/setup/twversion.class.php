@@ -27,10 +27,10 @@ class TWVersion {
 		//   stable   : Represents officially supported releases.
 		//   unstable : Represents candidate and test/development releases.
 		//   head     : Represents next generation development version.
-		$this->branch 	= 'unstable';
+		$this->branch 	= 'stable';
 
 		// Set everything else, including defaults.
-		$this->version 	= '2.2alpha';
+		$this->version 	= '2.2';
 		$this->star		= 'Arcturus';
 		$this->release 	= $this->version;
 		$this->releases	= array();
@@ -90,7 +90,7 @@ class TWVersion {
 				16=>'1.9.10.1',
 				17=>'2.0',
 				18=>'2.1',
-				19=>'2.2alpha',
+				19=>'2.2',
 				);
 	}
 
