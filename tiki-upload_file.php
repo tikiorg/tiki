@@ -69,9 +69,9 @@ if (isset($_REQUEST['galleryId'][0])) {
 	$tikilib->get_perm_object($_REQUEST['galleryId'][0], 'file gallery', $gal_info, true);
 }
 
-if (!empty($_REQUEST['galleryId'][0]) && empty($_REQUEST['fileId']) && $tiki_p_upload_files != 'y' && $tiki_p_admin_file_galleries != 'y') {
+if (empty($_REQUEST['fileId']) && $tiki_p_upload_files != 'y' && $tiki_p_admin_file_galleries != 'y') {
 	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("Permission denied you can upload files but not to this file gallery"));
+	$smarty->assign('msg', tra("Permission denied"));
 	$smarty->display('error.tpl');
 	die;
 }
