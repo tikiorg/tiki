@@ -314,14 +314,8 @@ div#sitead {
 }
 
 #showhide_columns {
-	border: 1px solid #8CACBB;
-	margin: 3px 3px -1px 3px
+	margin: 3px 3px -1px 3px;
 }
-
-.tellafriend {
-	border-left: 1px solid #8CACBB;
-	border-right: 1px solid #8CACBB;
-	margin: 3px 3px -1px 3px}
 
 #c1c2 {
 	font-size: 1em;
@@ -388,8 +382,6 @@ a.flip img {
 	background-color: transparent;
 	width: 180px;
 	text-align: left;
-	border-right: 1px solid #8CACBB;
-	border-bottom: 1px solid #8CACBB;
 	overflow: visible;
 }
 
@@ -404,8 +396,6 @@ a.flip img {
 	width: 179px;
 	margin-left: -180px;
 	text-align: left;
-	border-left: 1px solid #8CACBB;
-	border-bottom: 1px solid #8CACBB;
 	
 }
 
@@ -2720,12 +2710,15 @@ table.default td {
   background: #dee7ec;
 }
 
-.advanced:before { content:url(../img/icons/mini_blue_diamond.gif)" "; }
+.advanced:before { 
+	content:url(../img/icons/mini_blue_diamond.gif)" "; 
+}
 
 .tellafriend {
 	font-size: 80%;
 	text-align:right;
 	margin-right: 1em;
+	margin: 3px 1em -1px 3px;
 }
 .tellafriend a {
 	text-decoration: none;
