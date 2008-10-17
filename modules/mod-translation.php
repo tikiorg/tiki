@@ -8,14 +8,16 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 global $pivotLanguage;
 
-function filter_languages_from_pivot( $langInfo )
-{
-	global $pivotLanguage;
-	global $pageLang;
+if( ! function_exists( 'filter_languages_from_pivot' ) ) {
+	function filter_languages_from_pivot( $langInfo )
+	{
+		global $pivotLanguage;
+		global $pageLang;
 
-	return empty( $pivotLanguage )
-		|| $pageLang == $pivotLanguage
-		|| $langInfo['lang'] == $pivotLanguage;
+		return empty( $pivotLanguage )
+			|| $pageLang == $pivotLanguage
+			|| $langInfo['lang'] == $pivotLanguage;
+	}
 }
 
 if( isset( $module_params['pivot_language'] ) ) {
