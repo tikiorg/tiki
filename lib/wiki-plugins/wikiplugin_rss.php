@@ -130,7 +130,7 @@ function wikiplugin_rss($data,$params) {
 		}
 
 		if ( $desc > 1 ) {
-			$repl .= '<div class="rssdescription">'.substr(strip_tags(TikiLib::htmldecode($items[$j]['description'])),0,$desc).' <a href="'.$items[$j]['link'].'">[[...]</a></div>';
+			$repl .= '<div class="rssdescription">'.substr(strip_tags(TikiLib::htmldecode($items[$j]['description'])),0,$desc).' <a href="'.$items[$j]['link'].'">[...]</a></div>';
 		}
 		$repl .= '</li>';
 	}
