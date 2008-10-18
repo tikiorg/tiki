@@ -462,7 +462,8 @@ CREATE TABLE "tiki_banners" (
   "impressions" numeric(8,0) default NULL NULL,
   "clicks" numeric(8,0) default NULL NULL,
   "zone" varchar(40) default NULL NULL,
-  PRIMARY KEY (bannerId)
+  PRIMARY KEY (bannerId),
+  "INDEX" ban1(zone,useDates,impressions,maxImpressions,hourFrom,hourTo,fromDate,toDate,mon,tue,wed,thu,fri,sat,sun)
 ) ENGINE=MyISAM  
 go
 
@@ -963,6 +964,7 @@ CREATE TABLE "tiki_comments" (
   "in_reply_to" varchar(128) default NULL NULL,
   "comment_rating" numeric(2,0) default NULL NULL,
   "archived" char(1) default NULL NULL,
+  "approved" char(1) default 'y' NOT NULL,
   PRIMARY KEY (threadId)
 ) ENGINE=MyISAM  
 go
@@ -1769,6 +1771,7 @@ go
 CREATE TABLE "tiki_links" (
   "fromPage" varchar(160) default '' NOT NULL,
   "toPage" varchar(160) default '' NOT NULL,
+  "reltype" varchar(50) default '',
   PRIMARY KEY (fromPage,toPage)
 ) ENGINE=MyISAM
 go
@@ -2200,6 +2203,10 @@ go
 
 
 INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (47,42,'o','Structures','tiki-admin_structures.php',250,'feature_wiki_structure','tiki_p_view','',0)
+go
+
+
+INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (197,42,'o','Mind Map','tiki-mindmap.php',255,'feature_wiki_mindmap','tiki_p_view','',0)
 go
 
 
@@ -4570,6 +4577,7 @@ CREATE TABLE "users_permissions" (
   "level" varchar(80) default NULL NULL,
   "type" varchar(20) default NULL NULL,
   "admin" varchar(1) default NULL NULL,
+  "feature_check" VARCHAR(50) NULL,
   PRIMARY KEY (permName)
 ) ENGINE=MyISAM
 go
@@ -5498,6 +5506,24 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 go
 
 
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_use_group_webmail', 'Can use group webmail', 'registered', 'webmail')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_group_webmail', 'Can administrate group webmail accounts', 'registered', 'webmail')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_use_personal_webmail', 'Can use personal webmail accounts', 'registered', 'webmail')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_personal_webmail', 'Can administrate personal webmail accounts', 'registered', 'webmail')
+go
+
+
+
+
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_plugin_viewdetail', 'Can view unapproved plugin details', 'registered', 'wiki')
 go
 
@@ -5507,6 +5533,76 @@ go
 
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_plugin_approve', 'Can approve plugin execution', 'editors', 'wiki')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_trust_input', 'Trust all user inputs (no security checks)', 'admin', 'tiki')
+go
+
+
+
+UPDATE users_permissions SET feature_check = 'feature_wiki' WHERE permName IN(
+	'tiki_p_admin_wiki',
+	'tiki_p_assign_perm_wiki_page',
+	'tiki_p_edit',
+	'tiki_p_export_wiki',
+	'tiki_p_lock',
+	'tiki_p_minor',
+	'tiki_p_remove',
+	'tiki_p_rename',
+	'tiki_p_rollback',
+	'tiki_p_view',
+	'tiki_p_view_history',
+	'tiki_p_view_source'
+)
+go
+
+
+UPDATE users_permissions SET feature_check = 'wiki_feature_copyrights' WHERE permName = 'tiki_p_edit_copyrights'
+go
+
+
+UPDATE users_permissions SET feature_check = 'feature_wiki_structure' WHERE permName = 'tiki_p_edit_structures'
+go
+
+
+UPDATE users_permissions SET feature_check = 'feature_wiki_structure' WHERE permName = 'tiki_p_watch_structure'
+go
+
+
+UPDATE users_permissions SET feature_check = 'feature_wiki_pictures' WHERE permName = 'tiki_p_upload_picture'
+go
+
+
+UPDATE users_permissions SET feature_check = 'feature_wiki_templates' WHERE permName = 'tiki_p_use_as_template'
+go
+
+
+UPDATE users_permissions SET feature_check = 'feature_wiki_attachments' WHERE permName = 'tiki_p_admin_attachments'
+go
+
+
+UPDATE users_permissions SET feature_check = 'feature_wiki_attachments' WHERE permName = 'tiki_p_attach_files'
+go
+
+
+UPDATE users_permissions SET feature_check = 'feature_wiki_attachments' WHERE permName = 'tiki_p_wiki_view_attachments'
+go
+
+
+UPDATE users_permissions SET feature_check = 'feature_wiki_ratings' WHERE permName = 'tiki_p_admin_ratings'
+go
+
+
+UPDATE users_permissions SET feature_check = 'feature_wiki_ratings' WHERE permName = 'tiki_p_wiki_view_ratings'
+go
+
+
+UPDATE users_permissions SET feature_check = 'feature_wiki_ratings' WHERE permName = 'tiki_p_wiki_vote_ratings'
+go
+
+
+UPDATE users_permissions SET feature_check = 'feature_wiki_comments' WHERE permName = 'tiki_p_wiki_view_comments'
 go
 
 
@@ -6876,7 +6972,7 @@ CREATE TABLE `tiki_pages_translation_bits` (
   `version` numeric(8,0) NOT NULL,
   `source_translation_bit` numeric(10,0) NULL,
   `original_translation_bit` numeric(10,0) NULL,
-  `flags` SET('critical') DEFAULT '' NOT NULL,
+  `flags` SET('critical') NULL DEFAULT '',
   PRIMARY KEY (`translation_bit_id`),
   KEY(`page_id`),
   KEY(`original_translation_bit`),
@@ -6964,10 +7060,64 @@ go
 
 
 
+-- DROP TABLE "tiki_schema"
+go
+
+
 CREATE TABLE "tiki_schema" (
   "patch_name" VARCHAR(100) PRIMARY KEY,
   "install_date" TIMESTAMP
 ) ENGINE=MyISAM
+go
+
+
+
+-- DROP TABLE "tiki_semantic_tokens"
+go
+
+
+CREATE TABLE "tiki_semantic_tokens" (
+  "token" VARCHAR(15) PRIMARY KEY,
+  "label" VARCHAR(25) NOT NULL,
+  "invert_token" VARCHAR(15)
+) ENGINE=MyISAM 
+go
+
+
+
+INSERT INTO tiki_semantic_tokens (token, label) VALUES('alias', 'Page Alias')
+go
+
+
+
+
+-- DROP TABLE "tiki_webservice"
+go
+
+
+CREATE TABLE "tiki_webservice" (
+  "service" VARCHAR(25) NOT NULL PRIMARY KEY,
+  "url" VARCHAR(250),
+  "schema_version" VARCHAR(5),
+  "schema_documentation" VARCHAR(250)
+) ENGINE=MyISAM 
+go
+
+
+
+-- DROP TABLE "tiki_webservice_template"
+go
+
+
+CREATE TABLE "tiki_webservice_template" (
+  "service" VARCHAR(25) NOT NULL,
+  "template" VARCHAR(25) NOT NULL,
+  "engine" VARCHAR(15) NOT NULL,
+  "output" VARCHAR(15) NOT NULL,
+  "content" TEXT NOT NULL,
+  "last_modif" INT,
+  PRIMARY KEY( service, template )
+) ENGINE=MyISAM 
 go
 
 

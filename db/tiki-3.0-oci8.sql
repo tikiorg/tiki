@@ -434,7 +434,8 @@ CREATE TABLE "tiki_banners" (
   "impressions" number(8) default NULL,
   "clicks" number(8) default NULL,
   "zone" varchar(40) default NULL,
-  PRIMARY KEY (bannerId)
+  PRIMARY KEY (bannerId),
+  "INDEX" ban1(zone,useDates,impressions,maxImpressions,hourFrom,hourTo,fromDate,toDate,mon,tue,wed,thu,fri,sat,sun)
 ) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_banners_trig" BEFORE INSERT ON "tiki_banners" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
@@ -910,6 +911,7 @@ CREATE TABLE "tiki_comments" (
   "in_reply_to" varchar(128) default NULL,
   "comment_rating" number(2) default NULL,
   "archived" char(1) default NULL,
+  "approved" char(1) default 'y' NOT NULL,
   PRIMARY KEY (threadId)
 ) ENGINE=MyISAM  ;
 
@@ -1652,6 +1654,7 @@ DROP TABLE "tiki_links";
 CREATE TABLE "tiki_links" (
   "fromPage" varchar(160) default '' NOT NULL,
   "toPage" varchar(160) default '' NOT NULL,
+  "reltype" varchar(50),
   PRIMARY KEY (fromPage,toPage)
 ) ENGINE=MyISAM;
 
@@ -1978,6 +1981,8 @@ INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`",
 INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (46,42,'o','Received pages','tiki-received_pages.php',245,'feature_wiki,feature_comm','tiki_p_view,tiki_p_admin_received_pages','',0);
 
 INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (47,42,'o','Structures','tiki-admin_structures.php',250,'feature_wiki_structure','tiki_p_view','',0);
+
+INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (197,42,'o','Mind Map','tiki-mindmap.php',255,'feature_wiki_mindmap','tiki_p_view','',0);
 
 INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (48,42,'s','Image Galleries','tiki-galleries.php',300,'feature_galleries','tiki_p_view_image_gallery','',0);
 
@@ -3926,6 +3931,7 @@ CREATE TABLE "users_permissions" (
   "level" varchar(80) default NULL,
   "type" varchar(20) default NULL,
   "admin" varchar(1) default NULL,
+  "feature_check" VARCHAR(50) NULL,
   PRIMARY KEY (permName)
 ) ENGINE=MyISAM;
 
@@ -4409,11 +4415,62 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_use_webmail', 'Can use webmail', 'registered', 'webmail');
 
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_use_group_webmail', 'Can use group webmail', 'registered', 'webmail');
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_group_webmail', 'Can administrate group webmail accounts', 'registered', 'webmail');
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_use_personal_webmail', 'Can use personal webmail accounts', 'registered', 'webmail');
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_personal_webmail', 'Can administrate personal webmail accounts', 'registered', 'webmail');
+
+
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_plugin_viewdetail', 'Can view unapproved plugin details', 'registered', 'wiki');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_plugin_preview', 'Can execute unapproved plugin', 'registered', 'wiki');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_plugin_approve', 'Can approve plugin execution', 'editors', 'wiki');
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_trust_input', 'Trust all user inputs (no security checks)', 'admin', 'tiki');
+
+
+UPDATE users_permissions SET feature_check = 'feature_wiki' WHERE permName IN(
+	'tiki_p_admin_wiki',
+	'tiki_p_assign_perm_wiki_page',
+	'tiki_p_edit',
+	'tiki_p_export_wiki',
+	'tiki_p_lock',
+	'tiki_p_minor',
+	'tiki_p_remove',
+	'tiki_p_rename',
+	'tiki_p_rollback',
+	'tiki_p_view',
+	'tiki_p_view_history',
+	'tiki_p_view_source'
+);
+
+UPDATE users_permissions SET feature_check = 'wiki_feature_copyrights' WHERE permName = 'tiki_p_edit_copyrights';
+
+UPDATE users_permissions SET feature_check = 'feature_wiki_structure' WHERE permName = 'tiki_p_edit_structures';
+
+UPDATE users_permissions SET feature_check = 'feature_wiki_structure' WHERE permName = 'tiki_p_watch_structure';
+
+UPDATE users_permissions SET feature_check = 'feature_wiki_pictures' WHERE permName = 'tiki_p_upload_picture';
+
+UPDATE users_permissions SET feature_check = 'feature_wiki_templates' WHERE permName = 'tiki_p_use_as_template';
+
+UPDATE users_permissions SET feature_check = 'feature_wiki_attachments' WHERE permName = 'tiki_p_admin_attachments';
+
+UPDATE users_permissions SET feature_check = 'feature_wiki_attachments' WHERE permName = 'tiki_p_attach_files';
+
+UPDATE users_permissions SET feature_check = 'feature_wiki_attachments' WHERE permName = 'tiki_p_wiki_view_attachments';
+
+UPDATE users_permissions SET feature_check = 'feature_wiki_ratings' WHERE permName = 'tiki_p_admin_ratings';
+
+UPDATE users_permissions SET feature_check = 'feature_wiki_ratings' WHERE permName = 'tiki_p_wiki_view_ratings';
+
+UPDATE users_permissions SET feature_check = 'feature_wiki_ratings' WHERE permName = 'tiki_p_wiki_vote_ratings';
+
+UPDATE users_permissions SET feature_check = 'feature_wiki_comments' WHERE permName = 'tiki_p_wiki_view_comments';
 
 
 DROP TABLE "users_usergroups";
@@ -5258,7 +5315,7 @@ CREATE TABLE `tiki_pages_translation_bits` (
   `version` number(8) NOT NULL,
   `source_translation_bit` number(10) NULL,
   `original_translation_bit` number(10) NULL,
-  `flags` SET('critical') DEFAULT '' NOT NULL,
+  `flags` SET('critical') NULL DEFAULT '',
   PRIMARY KEY (`translation_bit_id`),
   KEY(`page_id`),
   KEY(`original_translation_bit`),
@@ -5328,10 +5385,47 @@ CREATE TABLE `tiki_feature` (
 ) ENGINE=MyISAM ;
 
 
+DROP TABLE "tiki_schema";
+
 CREATE TABLE "tiki_schema" (
   "patch_name" VARCHAR(100) PRIMARY KEY,
   "install_date" TIMESTAMP
 ) ENGINE=MyISAM;
+
+
+DROP TABLE "tiki_semantic_tokens";
+
+CREATE TABLE "tiki_semantic_tokens" (
+  "token" VARCHAR(15) PRIMARY KEY,
+  "label" VARCHAR(25) NOT NULL,
+  "invert_token" VARCHAR(15)
+) ENGINE=MyISAM ;
+
+
+INSERT INTO tiki_semantic_tokens (token, label) VALUES('alias', 'Page Alias');
+
+
+DROP TABLE "tiki_webservice";
+
+CREATE TABLE "tiki_webservice" (
+  "service" VARCHAR(25) NOT NULL PRIMARY KEY,
+  "url" VARCHAR(250),
+  "schema_version" VARCHAR(5),
+  "schema_documentation" VARCHAR(250)
+) ENGINE=MyISAM ;
+
+
+DROP TABLE "tiki_webservice_template";
+
+CREATE TABLE "tiki_webservice_template" (
+  "service" VARCHAR(25) NOT NULL,
+  "template" VARCHAR(25) NOT NULL,
+  "engine" VARCHAR(15) NOT NULL,
+  "output" VARCHAR(15) NOT NULL,
+  "content" TEXT NOT NULL,
+  "last_modif" INT,
+  PRIMARY KEY( service, template )
+) ENGINE=MyISAM ;
 
 
 ;
