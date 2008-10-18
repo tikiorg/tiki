@@ -210,7 +210,7 @@ function get_default_prefs() {
 		'wikiplugin_regex' => 'n',
 		'wikiplugin_remarksbox' => 'y',
 		'wikiplugin_rss' => 'y',
-		'wikiplugin_sf' => 'y',
+		'wikiplugin_sf' => 'n',
 		'wikiplugin_sheet' => 'y',
 		'wikiplugin_showpages' => 'y',
 		'wikiplugin_skype' => 'y',
