@@ -3822,16 +3822,14 @@ UPDATE users_permissions SET feature_check = 'feature_wiki' WHERE permName IN(
 	'tiki_p_admin_wiki',
 	'tiki_p_assign_perm_wiki_page',
 	'tiki_p_edit',
-	'tiki_p_export_wiki',
 	'tiki_p_lock',
 	'tiki_p_minor',
 	'tiki_p_remove',
 	'tiki_p_rename',
 	'tiki_p_rollback',
-	'tiki_p_view',
-	'tiki_p_view_history',
-	'tiki_p_view_source'
+	'tiki_p_view'
 );
+
 
 UPDATE users_permissions SET feature_check = 'wiki_feature_copyrights' WHERE permName = 'tiki_p_edit_copyrights';
 
@@ -3856,6 +3854,23 @@ UPDATE users_permissions SET feature_check = 'feature_wiki_ratings' WHERE permNa
 UPDATE users_permissions SET feature_check = 'feature_wiki_ratings' WHERE permName = 'tiki_p_wiki_vote_ratings';
 
 UPDATE users_permissions SET feature_check = 'feature_wiki_comments' WHERE permName = 'tiki_p_wiki_view_comments';
+
+
+--Added 20081018
+UPDATE users_permissions SET feature_check = 'feature_wiki_export' WHERE permName = 'tiki_p_export_wiki';
+
+UPDATE users_permissions SET feature_check = 'feature_history' WHERE permName = 'tiki_p_wiki_view_history';
+
+UPDATE users_permissions SET feature_check = 'feature_wiki_attachments' WHERE permName = 'tiki_p_wiki_attach_files';
+
+UPDATE users_permissions SET feature_check = 'feature_wiki_attachments' WHERE permName = 'tiki_p_wiki_admin_attachments';
+
+UPDATE users_permissions SET feature_check = 'feature_wiki_ratings' WHERE permName = 'tiki_p_wiki_admin_ratings';
+
+UPDATE users_permissions SET feature_check = 'feature_source' WHERE permName = 'tiki_p_wiki_view_source';
+
+
+
 
 
 DROP TABLE IF EXISTS 'users_usergroups';
