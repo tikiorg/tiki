@@ -29,7 +29,11 @@ class TrackerLib extends TikiLib {
 	}
 
 	function get_image_filename($imageFileName, $itemId, $fieldId) {
-		return $file_name = 'img/trackers/'.md5( "$imageFileName.$itemId.$fieldId" );
+		do {
+			$name = md5( uniqid("$imageFileName.$itemId.$fieldId"));
+		} while (file_exists("img/trackers/$name"));
+		
+		return "img/trackers/$name";
 	}
 
 	function remove_field_images($fieldId) {
