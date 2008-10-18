@@ -3,8 +3,11 @@
 
 # Usage:
 # from db/convertscripts, run:
-# ./convertsqls.sh domain.com/subdomain/
-
+# sh convertsqls.sh
+#
+# If you don't have php-cli the, you can use:
+# sh convertsqls.sh domain.com/subdomain/
+#
 
 VERSION="3.0"
 
