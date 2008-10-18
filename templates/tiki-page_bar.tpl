@@ -39,7 +39,7 @@
 {if $lock and ($tiki_p_admin_wiki eq 'y' or ($user and ($user eq $page_user or $user eq "admin") and ($tiki_p_lock eq 'y') and ($prefs.feature_wiki_usrlock eq 'y')))}
 <span class="button2"><a href="tiki-index.php?page={$page|escape:"url"}&amp;action=unlock">{tr}Unlock{/tr}</a></span>
 {/if}
-{if !$lock and ($tiki_p_admin_wiki eq 'y' or (($tiki_p_lock eq 'y') and ($prefs.feature_wiki_usrlock eq 'y')))}
+{if !$lock and $prefs.feature_wiki_usrlock eq 'y' and ($tiki_p_admin_wiki eq 'y' or $tiki_p_lock eq 'y')}
 <span class="button2"><a href="tiki-index.php?page={$page|escape:"url"}&amp;action=lock">{tr}Lock{/tr}</a></span>
 {/if}
 {if $tiki_p_admin_wiki eq 'y' or $tiki_p_assign_perm_wiki_page eq 'y'}
