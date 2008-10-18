@@ -33,8 +33,8 @@
 {/foreach}
 <input type="submit" name="ticket_action_button" value="{tr}Click here to confirm your action{/tr}" />
 </form><br /><br />
-        <a href="javascript:history.back()" class="linkmenu">{tr}Go back{/tr}</a><br />
-        <a href="{$prefs.tikiIndex}" class="linkmenu">{tr}Return to home page{/tr}</a>
+        {if $prefs.javascript_enabled eq 'y'}{button href="javascript:history.back()" _text="{tr}Go back{/tr}"}<br /><br />{/if}
+        {button href="$prefs.tikiIndex" _text="{tr}Return to home page{/tr}"}
         </div>
         </div>
       </div></td>
