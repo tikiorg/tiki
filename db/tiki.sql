@@ -3599,11 +3599,13 @@ CREATE TABLE `tiki_feature` (
   PRIMARY KEY (`feature_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1;
 
+DROP TABLE IF EXISTS tiki_schema;
 CREATE TABLE tiki_schema (
 	patch_name VARCHAR(100) PRIMARY KEY,
 	install_date TIMESTAMP
 ) ENGINE=MyISAM;
 
+DROP TABLE IF EXISTS tiki_semantic_tokens;
 CREATE TABLE tiki_semantic_tokens (
 	token VARCHAR(15) PRIMARY KEY,
 	label VARCHAR(25) NOT NULL,
@@ -3612,6 +3614,8 @@ CREATE TABLE tiki_semantic_tokens (
 
 INSERT INTO tiki_semantic_tokens (token, label) VALUES('alias', 'Page Alias');
 
+
+DROP TABLE IF EXISTS tiki_webservice;
 CREATE TABLE tiki_webservice (
 	service VARCHAR(25) NOT NULL PRIMARY KEY,
 	url VARCHAR(250),
@@ -3619,6 +3623,7 @@ CREATE TABLE tiki_webservice (
 	schema_documentation VARCHAR(250)
 ) ENGINE=MyISAM ;
 
+DROP TABLE IF EXISTS tiki_webservice_template;
 CREATE TABLE tiki_webservice_template (
 	service VARCHAR(25) NOT NULL,
 	template VARCHAR(25) NOT NULL,
