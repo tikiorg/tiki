@@ -57,7 +57,7 @@ function get_default_prefs() {
 		'feature_wiki_description' => 'n',
 		'feature_wiki_discuss' => 'n',
 		'feature_wiki_export' => 'n',
-		'feature_wiki_structure' => 'y',
+		'feature_wiki_structure' => 'n',
 		'feature_wiki_import_page' => 'n',
 		'feature_wiki_footnotes' => 'n',
 		'feature_wiki_icache' => 'n',
