@@ -2760,6 +2760,7 @@ class TrackerLib extends TikiLib {
 		return $field;
 	}
 	function get_notification_emails($trackerId, $itemId, $options, $newItemId=0, $status='', $oldStatus='') {
+		global $prefs;
 		$watchers_global = $this->get_event_watches('tracker_modified',$trackerId);
 		$watchers_local = $this->get_local_notifications($itemId, $newItemId, $status, $oldStatus);
 		$watchers_item = $itemId? $this->get_event_watches('tracker_item_modified',$itemId, array('trackerId'=>$trackerId)): array();
@@ -2770,6 +2771,8 @@ class TrackerLib extends TikiLib {
 				global $userlib, $user_preferences;
 				$u = $userlib->get_user_by_email($w);
 				$this->get_user_preferences($u, array('user', 'language', 'mailCharset'));
+				if (empty($user_preferences[$u]['language'])) $user_preferences[$u]['language'] = $prefs['site_language'];
+				if (empty($user_preferences[$u]['mailCharset'])) $user_preferences[$u]['mailCharset'] = $prefs['users_prefs_mailCharset'];
 				$watchers_outbound[] = array('email'=>$w, 'user'=>$u, 'language'=>$user_preferences[$u]['language'], 'mailCharset'=>$user_preferences[$u]['mailCharset']);
 			}
 		}
