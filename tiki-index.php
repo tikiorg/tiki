@@ -411,9 +411,6 @@ if ($prefs['feature_actionlog'] == 'y') {
 	$logslib->add_action('Viewed', $page);
 }
 
-$ajaxlib->registerTemplate("tiki-show_page.tpl");
-$ajaxlib->processRequests();
-
 // Detect if we have a PDF export mod installed
 $smarty->assign('pdf_export', file_exists('lib/mozilla2ps/mod_urltopdf.php') ? 'y' : 'n');
 
