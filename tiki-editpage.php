@@ -410,7 +410,8 @@ function walk_and_parse(&$c, &$src, &$p, $head_url ) {
 					case "meta": $c[$i]["content"] = ''; break;
 					
 					case "br": $src .= '%%%'; break;
-	                case "title": $src .= "\n!"; $p['stack'][] = array('tag' => 'title', 'string' => "\n"); break;
+					case "hr": $src .= '---'; break;
+					case "title": $src .= "\n!"; $p['stack'][] = array('tag' => 'title', 'string' => "\n"); break;
 	                case "p": $src .= "\n"; $p['stack'][] = array('tag' => 'p', 'string' => "\n"); break;
 	                case "b": $src .= '__'; $p['stack'][] = array('tag' => 'b', 'string' => '__'); break;
 	                case "i": $src .= "''"; $p['stack'][] = array('tag' => 'i', 'string' => "''"); break;
