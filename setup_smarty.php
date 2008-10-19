@@ -67,9 +67,6 @@ class Smarty_Tikiwiki extends Smarty {
 	function fetch($_smarty_tpl_file, $_smarty_cache_id = null, $_smarty_compile_id = null, $_smarty_display = false) {
 		global $prefs, $style_base, $tikidomain, $zoom_templates;
 
-		$_smarty_cache_id = $prefs['language'] . $_smarty_cache_id;
-		$_smarty_compile_id = $prefs['language'] . $_smarty_compile_id;
-
 		if ( ($tpl = $this->get_template_vars('mid')) && ( $_smarty_tpl_file == 'tiki.tpl' || $_smarty_tpl_file == 'tiki-print.tpl' || $_smarty_tpl_file == 'tiki_full.tpl' ) ) {
 
 			// Set the last mid template to be used by AJAX to simulate a 'BACK' action
@@ -128,6 +125,8 @@ class Smarty_Tikiwiki extends Smarty {
 				$_smarty_tpl_file = "styles/$style_base/$_smarty_tpl_file";
 			}
 		}
+		$_smarty_cache_id = $prefs['language'] . $_smarty_cache_id;
+		$_smarty_compile_id = $prefs['language'] . $_smarty_compile_id;
 
 		return parent::fetch($_smarty_tpl_file, $_smarty_cache_id, $_smarty_compile_id, $_smarty_display);
 	}
