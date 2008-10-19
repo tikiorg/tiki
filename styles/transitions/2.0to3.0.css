@@ -70,3 +70,18 @@ div.multiselect {
   width: 100%;
   border: 1px solid black;
 }
+
+/* better PHP/Smarty errors display */
+
+#show-errors-button {
+	position: absolute;
+	bottom: 10px;
+	z-index: 1024;
+}
+
+#errors {
+	z-index: 1023;
+	position: absolute;
+	top: 0px;
+}
+
