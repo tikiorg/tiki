@@ -95,7 +95,6 @@ class Smarty_Tikiwiki extends Smarty {
 			if ( $prefs['feature_ajax'] == 'y' && $_smarty_display ) {
 				global $ajaxlib; require_once('lib/ajax/ajaxlib.php');
 				$ajaxlib->registerTemplate($tpl);
-				$ajaxlib->processRequests();
 			}
 
 			if ( $_smarty_tpl_file == 'tiki-print.tpl' ) {
@@ -104,6 +103,9 @@ class Smarty_Tikiwiki extends Smarty {
 			$data = $this->fetch($tpl, $_smarty_cache_id, $_smarty_compile_id);//must get the mid because the modules can overwrite smarty variables
 			$this->assign('mid_data', $data);
 			include_once('tiki-modules.php');
+			if ($prefs['feature_ajax'] == 'y' && $_smarty_display ) {
+				$ajaxlib->processRequests();
+			}
 		} elseif ($_smarty_tpl_file == 'confirm.tpl' || $_smarty_tpl_file == 'error.tpl' || $_smarty_tpl_file == 'information.tpl' || $_smarty_tpl_file == 'error_ticket.tpl' || $_smarty_tpl_file == 'error_simple.tpl') {
 			include_once('tiki-modules.php');
 
