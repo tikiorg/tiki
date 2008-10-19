@@ -3387,11 +3387,11 @@ INSERT INTO tiki_score (event, score, expiration) VALUES ('wiki_attach_file',3,0
 DROP TABLE IF EXISTS tiki_users_score;
 CREATE TABLE tiki_users_score (
   user char(200) NOT NULL default '',
-  event_id char(40) NOT NULL default '',
+  event_id char(200) NOT NULL default '',
   expire int(14) NOT NULL default '0',
   tstamp timestamp(14) NOT NULL,
-  PRIMARY KEY (user,event_id),
-  KEY user (user,event_id,expire)
+  PRIMARY KEY (user(110),event_id(110)),
+  KEY user (user(110),event_id(110),expire)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS tiki_file_handlers;
