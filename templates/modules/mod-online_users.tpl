@@ -1,7 +1,7 @@
 {* $Id$ *}
 
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Online users{/tr}"}{/if}
-{tikimodule title=$tpl_module_title name="online_users" flip=$module_params.flip decorations=$module_params.decorations nobox=$modules_params.nobox notitle=$module_params.notitle}
+{tikimodule error=$module_params.error title=$tpl_module_title name="online_users" flip=$module_params.flip decorations=$module_params.decorations nobox=$modules_params.nobox notitle=$module_params.notitle}
 {foreach key=ix from=$online_users item=online_user}
 {if $user and $prefs.feature_messages eq 'y' and $tiki_p_messages eq 'y'}
     {if $online_user.allowMsgs eq 'n'}

@@ -8,7 +8,7 @@
 {eval var="{tr}Last Sites{/tr}" assign="tpl_module_title"}
 {/if}
 {/if}
-{tikimodule title=$tpl_module_title name="directory_last_sites" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
+{tikimodule error=$module_params.error title=$tpl_module_title name="directory_last_sites" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 {if $module_params.nonums != 'y'}<ol>{else}<ul>{/if}
   {section name=ix loop=$modLastdirSites}
      <li>{if $absurl == 'y'}

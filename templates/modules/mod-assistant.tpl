@@ -1,6 +1,6 @@
 {* $Id$ *}
 {if !isset($tpl_module_title)}{eval assign=tpl_module_title var="{tr}Tikiwiki Assistant{/tr}"}{/if}
-{tikimodule title=$tpl_module_title name="assistant" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
+{tikimodule error=$module_params.error title=$tpl_module_title name="assistant" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 <div align="center"><strong>{tr}Thank you for installing Tikiwiki{/tr}!</strong></div>
 {if $tiki_p_admin eq 'y'}
  <p><img src="pics/icons/arrow_small.png" alt="" style="border:0;margin-right:2px;vertical-align:middle" align="left" /><strong>{tr}To configure your Tiki{/tr}</strong>:<br />

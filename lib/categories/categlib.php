@@ -930,7 +930,7 @@ class CategLib extends ObjectLib {
 		$result = $this->get_all_categories_ext();
 		$ret = array();
 		foreach ($result as $res) {
-			if ($userlib->user_has_permission($user, 'tiki_p_admin') || !$userlib->object_has_one_permission($res['categId'], 'category')) {
+			if ($userlib->user_has_permission($user, 'tiki_p_admin')) {
 				$ret[] = $res;				
 			} else {
 				if ($userlib->object_has_permission($user, $res['categId'], 'category', $perm)) {

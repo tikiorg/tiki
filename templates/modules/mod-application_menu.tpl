@@ -1,6 +1,6 @@
 {* $Id$ *}
 {if !isset($tpl_module_title)}{eval assign=tpl_module_title var="{tr}Menu{/tr}"}{/if}
-{tikimodule title=$tpl_module_title name="application_menu" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
+{tikimodule error=$module_params.error title=$tpl_module_title name="application_menu" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 &nbsp;<a href="{$prefs.tikiIndex}" class="linkmenu">{tr}Home{/tr}</a><br />
 
 {if $prefs.feature_contact eq 'y'}

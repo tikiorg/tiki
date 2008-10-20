@@ -8,7 +8,7 @@
 {eval var="{tr}Last modifed events{/tr}" assign="tpl_module_title"}
 {/if}
 {/if}
-{tikimodule title=$tpl_module_title name="last_modif_events" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
+{tikimodule error=$module_params.error title=$tpl_module_title name="last_modif_events" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 {if $nonums != 'y'}<ol>{else}<ul>{/if}
     {section name=ix loop=$modLastEvents}
      <li>{$modLastEvents[ix].start|tiki_short_datetime}<br />

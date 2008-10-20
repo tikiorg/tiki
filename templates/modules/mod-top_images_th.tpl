@@ -2,7 +2,7 @@
 
 {if $prefs.feature_galleries eq 'y'}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Top Images{/tr}"}{/if}
-{tikimodule title=$tpl_module_title name="top_images_th" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
+{tikimodule error=$module_params.error title=$tpl_module_title name="top_images_th" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 	{if $nonums != 'y'}<ol>{else}<ul>{/if}
 	{section name=ix loop=$modTopImages}
 	{if $smarty.section.ix.index < $modrows}

@@ -3,7 +3,7 @@
 {if $prefs.feature_freetags eq 'y' && count($modFreetagsCurrent) gt 0}
   {if !isset($tpl_module_title)}{eval var="{tr}Tags This Page Has{/tr}" assign="tpl_module_title"}{/if}
 
-  {tikimodule title=$tpl_module_title name="freetags_current" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
+  {tikimodule error=$module_params.error title=$tpl_module_title name="freetags_current" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
   {section name=ix loop=$modFreetagsCurrent.data}
      <div class="module">
      <a class="linkmodule" href="tiki-browse_freetags.php?tag={$modFreetagsCurrent.data[ix].tag|escape:'url'}">{$modFreetagsCurrent.data[ix].tag}</a>

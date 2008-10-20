@@ -1,6 +1,6 @@
 {* $Id$ *}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Style{/tr}: `$prefs.style`"}{/if}
-{tikimodule title=$tpl_module_title name="switch_theme" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
+{tikimodule error=$module_params.error title=$tpl_module_title name="switch_theme" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 	{if $prefs.change_theme ne 'n'}
 	<form method="get" action="tiki-switch_theme.php">
 		<select name="theme" size="1" onchange="this.form.submit();">

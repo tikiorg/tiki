@@ -5,7 +5,7 @@
 
 {if $show_translation_module}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Page translation{/tr}"}{/if}
-{tikimodule title=$tpl_module_title name="translation" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
+{tikimodule error=$module_params.error title=$tpl_module_title name="translation" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 {if $trads|@count eq '1'}<p>{tr}There are no translations of this page.{/tr}<p>{/if}
 	{if $prefs.quantify_changes eq 'y' and $mod_translation_quantification}
 		<div>

@@ -38,6 +38,7 @@ function smarty_block_tikimodule($params, $content, &$smarty) {
 	global $prefs;
 	extract($params);
 	if (!isset($content))   return "";
+	if (!isset($error))  $error = '';
 	if (!isset($overflow))  $overflow = false;
 	if (!isset($title))     $title = substr(strip_tags($content),0,12)."...";
 	if (!isset($name))      $name  = ereg_replace("[^-_a-zA-Z0-9]","",$title);
@@ -54,6 +55,7 @@ function smarty_block_tikimodule($params, $content, &$smarty) {
 	}
 	if (!isset($decorations) || $decorations != 'n') $decorations = 'y';
 
+	$smarty->assign('module_error', $error);
 	$smarty->assign('module_overflow', $overflow);
 	$smarty->assign('module_title', $title);
 	$smarty->assign('module_name', $name);

@@ -1,5 +1,5 @@
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}RSS Feeds{/tr}"}{/if}
-{tikimodule title=$tpl_module_title name="rsslist" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
+{tikimodule error=$module_params.error title=$tpl_module_title name="rsslist" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
   <div id="rss">
     {if $prefs.feature_wiki eq 'y' and $prefs.rss_wiki eq 'y' and $tiki_p_view eq 'y'}
         <a class="linkmodule" title="{tr}Wiki RSS{/tr}" href="tiki-wiki_rss.php?ver={$prefs.rssfeed_default_version}"><img src='pics/icons/feed.png' style='border: 0; vertical-align: text-bottom;' alt='{tr}RSS feed{/tr}' title='{tr}RSS feed{/tr}' width='16' height='16' />

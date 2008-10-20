@@ -3,7 +3,7 @@
 {if $user}
     {if $prefs.feature_blogs eq 'y'}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}My blogs{/tr}"}{/if}
-{tikimodule title=$tpl_module_title name="user_blogs" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
+{tikimodule error=$module_params.error title=$tpl_module_title name="user_blogs" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 	{if $nonums != 'y'}<ol>{else}<ul>{/if}
 	{section name=ix loop=$modUserBlogs}
 	    <li>

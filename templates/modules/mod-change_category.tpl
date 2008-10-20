@@ -6,7 +6,7 @@ note : lists the objects from a given category not a recursive tree
 *}
 {if $prefs.feature_categories eq 'y' and $page and $showmodule}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}$modcattitle{/tr}"}{/if}
-{tikimodule title=$tpl_module_title name="$modname" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
+{tikimodule error=$module_params.error title=$tpl_module_title name="$modname" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 
 {if $module_params.detail eq 'y'}
 {cycle values="odd,even" print=false}

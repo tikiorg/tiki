@@ -19,14 +19,6 @@ if ($prefs['feature_categories'] != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
-
-if ($tiki_p_view_categories != 'y') {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
-
 // Check for parent category or set to 0 if not present
 if (!isset($_REQUEST["parentId"])) {
 	$_REQUEST["parentId"] = 0;
