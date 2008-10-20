@@ -46,6 +46,3 @@ function wikiplugin_topfriends($data, $params) {
 
 	return $smarty->fetch('plugins/plugin-topfriends.tpl');
 }
-
-?>
-
