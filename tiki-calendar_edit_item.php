@@ -53,6 +53,11 @@ if ($tiki_p_admin_calendar == 'y') {
 
 $caladd = array();
 $rawcals = $calendarlib->list_calendars();
+if ($rawcals['cant'] == 0 && $tiki_p_admin_calendar == 'y') {
+	$smarty->assign('msg', tra('You need to create one calendar'));
+	$smarty->display("error.tpl");
+	die;
+}
 foreach ($rawcals["data"] as $cal_id=>$cal_data) {
   if ($tiki_p_admin == 'y') {
     $cal_data["tiki_p_view_calendar"] = 'y';
