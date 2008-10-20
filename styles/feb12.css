@@ -1598,10 +1598,6 @@ div.showimage {
 div.imgaldescr {margin: 10px}
 .sorttitle { margin-left: 10px}
 
-/* Check next 4 ?? */
-div.gallerypath, div.gallerypath a { color: #6996C3; font-style: italic; font-weight: normal; margin-left: 3px; text-decoration: none}
-div.gallerypath a:hover { color: black; text-decoration: underline}
-
 /***** File Galleries *****/
 
 div.thumbnailcontener {}

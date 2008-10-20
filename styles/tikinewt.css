@@ -2304,23 +2304,6 @@ a.namealias {
 	font-style: italic;
 }
 
-div.gallerypath, div.gallerypath a {
-	color: #6996C3;
-	font-style: italic;
-	font-weight: normal;
-	margin-left: 3px;
-	text-decoration: none;
-}
-
-div.gallerypath a:hover {
-	color: black;
-	text-decoration: underline;
-}
-
-.fgalexplorer { border: 1px solid #8CACBB; }
-.fgallisting table td { padding-left: 2px; padding-right: 2px; }
-
-
 /***** Calendar *****/
 
 .day, .day:visited {
