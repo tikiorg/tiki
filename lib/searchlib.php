@@ -200,7 +200,7 @@ class SearchLib extends TikiLib {
 		$orderby = (isset($h['orderby']) ? $h['orderby'] : $h['hits']);
 
 		if ($fulltext) {
-			//$words = html_entity_decode($words);
+			$words = html_entity_decode($words); // to have the "
 			$qwords = $this->db->quote($words);
 
 			$sqlft = 'MATCH(' . join(',', $h['search']). ') AGAINST (' . $qwords ;
