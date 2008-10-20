@@ -71,17 +71,13 @@ div.multiselect {
   border: 1px solid black;
 }
 
-/* better PHP/Smarty errors display */
+/* display PHP/Smarty errors on top */
 
 #show-errors-button {
-	position: absolute;
-	bottom: 10px;
 	z-index: 1024;
 }
 
 #errors {
 	z-index: 1023;
-	position: absolute;
-	top: 0px;
 }
 
