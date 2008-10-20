@@ -333,6 +333,25 @@ class Tiki_Profile
 			
 			if( count( $needles ) )
 				$data = str_replace( $needles, $replacements, $data );
+
+			$needles = array();
+			$replacements = array();
+
+			// Replace date formats D(...) to unix timestamps
+			if( preg_match_all( "/D\\(([^\\)]+)\\)/", $data, $parts, PREG_SET_ORDER ) )
+				foreach( $parts as $row )
+				{
+					list( $full, $date ) = $row;
+
+					if( false !== $conv = strtotime( $date ) )
+					{
+						$needles[] = $full;
+						$replacements = $conv;
+					}
+				}
+
+			if( count( $needles ) )
+				$data = str_replace( $needles, $replacements, $data );
 		}
 	} // }}}
 
