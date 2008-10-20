@@ -86,12 +86,15 @@ function wikiplugin_snarf($data, $params)
 	curl_setopt($curl, CURLOPT_HEADER, false);
 	curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true );
 	curl_setopt($curl, CURLOPT_USERAGENT, "TikiWiki Snarf" );
-	$html = curl_exec($curl);
+	$snarf = curl_exec($curl);
 	curl_close($curl); 
 
-	// Not using preg_replace due to its limitations to 100.000 characters
-	$snarf = eregi_replace('^.*<\s*body[^>]*>', '', $html);
-	$snarf = eregi_replace('<\s*\/body[^>]*>.*$', '', $snarf);
+	// If content is HTML, keep only the content of the body
+	if ( isset($params['ishtml']) && $params['ishtml'] == 1 ) {
+		// Not using preg_replace due to its limitations to 100.000 characters
+		$snarf = eregi_replace('^.*<\s*body[^>]*>', '', $snarf);
+		$snarf = eregi_replace('<\s*\/body[^>]*>.*$', '', $snarf);
+	}
 
 	// If the user specified a more specialized regex
 	if ( isset($params['regex']) && isset($params['regexres']) && preg_match('/^(.)(.)+\1[^e]*$/', $params['regex']) ) {
