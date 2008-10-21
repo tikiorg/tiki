@@ -2747,6 +2747,7 @@ table.default td {
 	border: 1px solid transparent;
 	padding: 1px;
 	margin: 0;
+	vertical-align: middle;
 }
 
 * html .icon { border:color: white; filter: chroma(color=white): }
