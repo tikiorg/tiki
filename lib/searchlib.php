@@ -398,6 +398,10 @@ class SearchLib extends TikiLib {
 			'pageName' => 'd.`name`',
 			'search' => array('d.`name`', 'd.`description`'),
 		);
+		global $tiki_p_admin;
+		if ($tiki_p_admin != 'y') {
+			$search_directory['filter'] =  "d.`isValid` = 'y'";
+		}
 
 		return $this->_find($search_directory, $words, $offset, $maxRecords, $fulltext, $filter, $boolean);
 	}

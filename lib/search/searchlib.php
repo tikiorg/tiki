@@ -805,8 +805,12 @@ class SearchLib extends TikiLib {
                 (".implode(',',array_fill(0,count($words),'?')).") and
                 s.`location`='dir_site' and
                 ".$this->sql_cast("s.`page`","int")."=d.`siteId` and
-		cs.`siteId`=d.`siteId`
-		order by `hits` desc";
+                cs.`siteId`=d.`siteId`";
+			global $tiki_p_admin;
+			if ($tiki_p_admin != 'y') {
+                $query .= " and d.`isValid` = 'y'";
+            }
+		    $query .= "	order by `hits` desc";
             $result=$this->query($query,$words,$maxRecords,$offset);
             $cant=0;
             $ret=array();
