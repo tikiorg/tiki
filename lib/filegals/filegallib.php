@@ -25,7 +25,7 @@ class FileGalLib extends TikiLib {
 	function remove_file($fileInfo, $user, $galInfo='') {
 		global $prefs, $smarty;
 
-		if ($podCastGallery = $this->isPodCastGallery($galleryId, $galInfo)) {
+		if ($podCastGallery = $this->isPodCastGallery($fileInfo['galleryId'], $galInfo)) {
 			$savedir=$prefs['fgal_podcast_dir'];
 		} else {
 			$savedir=$prefs['fgal_use_dir'];
