@@ -108,17 +108,21 @@ $smarty->assign('reindex_file_id', -1);
 if ( $tiki_p_admin_file_galleries == 'y' ) {
 	if ( isset($_REQUEST['delsel_x']) ) {
 		check_ticket('fgal');
-		foreach ( array_values($_REQUEST['file']) as $file ) {
-			if ($info = $filegallib->get_file_info($file)) {
-				$smarty->assign('fileId', $file);
-				$smarty->assign_by_ref('filename', $info['filename']);
-				$smarty->assign_by_ref('fname', $info['name']);
-				$smarty->assign_by_ref('fdescription', $info['description']);
-				$filegallib->remove_file($info, $user, $gal_info);
+		if (isset($_REQUEST['file'])) {
+			foreach ( array_values($_REQUEST['file']) as $file ) {
+				if ($info = $filegallib->get_file_info($file)) {
+					$smarty->assign('fileId', $file);
+					$smarty->assign_by_ref('filename', $info['filename']);
+					$smarty->assign_by_ref('fname', $info['name']);
+					$smarty->assign_by_ref('fdescription', $info['description']);
+					$filegallib->remove_file($info, $user, $gal_info);
+				}
 			}
 		}
-		foreach ( array_values($_REQUEST['subgal']) as $subgal ) {
-			$filegallib->remove_file_gallery($subgal, $galleryId);
+		if (isset($_REQUEST['subgal'])) {
+			foreach ( array_values($_REQUEST['subgal']) as $subgal ) {
+				$filegallib->remove_file_gallery($subgal, $galleryId);
+			}
 		}
 	}
 
