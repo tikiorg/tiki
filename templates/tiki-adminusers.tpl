@@ -143,16 +143,20 @@ class="prevnext">{tr}All{/tr}</a>
 
 <td>
 {foreach from=$users[user].groups key=grs item=what name=gr}
+<div>
 {if $grs != "Anonymous"}
+{if $what ne 'included' and $grs != "Registered"}
+	{self_link _class='link' user=$users[user].user action='removegroup' group=$grs _icon='delete' _title="{tr}Remove{/tr} `$users[user].user` {tr}from{/tr} $grs"}{/self_link}
+{else}
+	{icon _id='bullet_white'}
+{/if}
 {if $what eq 'included'}<i>{/if}
-<a class="link" href="tiki-admingroups.php?group={$grs|escape:"url"}" title={if $what eq 'included'}"{tr}Edit Included Group{/tr}"{else}"{tr}Edit Group{/tr}: {$grs}"{/if}>{$grs}</a>
+ <a class="link" {$link_style} href="tiki-admingroups.php?group={$grs|escape:"url"}" title={if $what eq 'included'}"{tr}Edit Included Group{/tr}"{else}"{tr}Edit Group{/tr}: {$grs}"{/if}>{$grs}</a>
 {if $what eq 'included'}</i>{/if}
 {if $grs eq $users[user].default_group}({tr}default{/tr}){/if}
-{if $what ne 'included' and $grs != "Registered"}
-	{self_link _class='link' action='removegroup' group=$grs _icon='delete' _title="{tr}Remove{/tr} `$users[user].user` {tr}from{/tr} $grs"}{/self_link}
-{/if}
 {if !$smarty.foreach.gr.last}<br />{/if}
 {/if}
+</div>
 {/foreach}
 </td>
 
