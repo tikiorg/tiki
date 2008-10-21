@@ -188,7 +188,7 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 			$logslib->add_log('adminusers','',$tikifeedback[0]['msg']);
 		}
 } elseif (isset($_REQUEST["action"])) {
-	if ($_REQUEST["action"] == 'delete' && $_REQUEST["user"] != 'admin') {
+	if ( $_REQUEST["action"] == 'delete' && isset($_REQUEST["user"]) && $_REQUEST["user"] != 'admin' ) {
 		$area = 'deluser';
 		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 			key_check($area);
@@ -200,7 +200,7 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 			key_get($area);
 		}
 	}
-	if ($_REQUEST["action"] == 'removegroup') {
+	if ( $_REQUEST["action"] == 'removegroup' && isset($_REQUEST["user"]) ) {
 		$area = 'deluserfromgroup';
 		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 			key_check($area);
