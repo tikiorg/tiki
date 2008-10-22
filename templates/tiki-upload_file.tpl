@@ -141,7 +141,7 @@
 			{else}
 				<tr><td>
 					{tr}File Gallery:{/tr}
-				</td><td>
+				</td><td width="80%">
 					<select name="galleryId[]" style="width:150px">
 					{section name=idx loop=$galleries}
 						{if ($galleries[idx].individual eq 'n') or ($galleries[idx].individual_tiki_p_upload_files eq 'y')}
@@ -154,7 +154,7 @@
 			{if $tiki_p_admin_file_galleries eq 'y'}
 				<tr><td>
 					{tr}Creator:{/tr}
-				</td><td>
+				</td><td width="80%">
 					<select name="user[]">
 					{section name=ix loop=$users}
 						<option value="{$users[ix].login|escape}"{if (isset($fileInfo) and $fileInfo.user eq $users[ix].login) or (!isset($fileInfo) and $user == $users[ix].login)}  selected="selected"{/if}>{$users[ix].login|username|escape}</option>
@@ -166,7 +166,7 @@
 			{if $prefs.feature_file_galleries_author eq 'y'}
 				<tr><td>
 					{tr}Author if not the file creator:{/tr}
-				</td><td>
+				</td><td width="80%">
 					<input type="text" name="author[]" value="{$fileInfo.author|escape}" />
 				</td></tr>
 			{/if}
@@ -205,7 +205,7 @@
 	{$upload_str}
 	{if $editFileId}
 		{include file=categorize.tpl notable='y'}<br/>
-		<input class="submitbutton" type="submit" value="{tr}Save{/tr}"/>
+		<input class="submitbutton" name="upload" type="submit" value="{tr}Save{/tr}"/>
 	{/if}
 	{if $prefs.javascript_enabled neq 'y' and !$editFileId}
 	{$upload_str}
