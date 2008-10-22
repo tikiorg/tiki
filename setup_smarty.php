@@ -45,7 +45,11 @@ class Smarty_Tikiwiki extends Smarty {
 
 		$this->security_settings['MODIFIER_FUNCS'] = array_merge(
 			$this->security_settings['MODIFIER_FUNCS'],
-			array('addslashes', 'ucfirst', 'ucwords', 'urlencode', 'md5', 'implode', 'explode', 'tra', 'strlen', 'strstr')
+			array('addslashes', 'ucfirst', 'ucwords', 'urlencode', 'md5', 'implode', 'explode')
+		);
+		$this->security_settings['IF_FUNCS'] = array_merge(
+			$this->security_settings['IF_FUNCS'],
+			array('tra', 'strlen', 'strstr')
 		);
 	}
 
