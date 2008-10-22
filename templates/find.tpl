@@ -92,7 +92,10 @@
   <input type="text" name="maxRecords" id="findnumrows" value="{$maxRecords|escape}" size="3" />
 {/if}
 <div class="findtitle findsubmit">
-  <input type="submit" name="search" value="{tr}Find{/tr}" />
+	  <input type="submit" name="search" value="{tr}Find{/tr}" />
+{if $find ne ''}
+	<a href="{$smarty.server.PHP_SELF}" title="{tr}Clear Filter{/tr}">{tr}Clear Filter{/tr}</a>
+{/if}		
 </div>
 </form>
 </div>
