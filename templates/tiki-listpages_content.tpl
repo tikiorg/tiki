@@ -1,4 +1,5 @@
 {* $Id$ *}
+{if $find ne ''}<p>{tr}Found{/tr} &quot;{$find}&quot; {tr}in{/tr} {$cant} {tr}pages{/tr}{/if}{if $initial ne ''} {tr}starting with{/tr} &quot;{$initial}&quot;{/if}.</p>
 
 {if $cant_pages > 1 or $initial or $find}{initials_filter_links}{/if}
 
