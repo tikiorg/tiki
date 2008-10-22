@@ -201,9 +201,7 @@ window.onload = timeIt;
 <tr class="formcolor"><td colspan="2">{tr}Categories will be inherited from the structure top page{/tr}</td></tr>
 {/if}
 {else}
-{if $tiki_p_view_categories eq 'y'}
 {include file=categorize.tpl}
-{/if}
 {/if}
 {include file=structures.tpl}
 {if $prefs.feature_wiki_templates eq 'y' and $tiki_p_use_content_templates eq 'y' and !$templateId}
