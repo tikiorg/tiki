@@ -172,7 +172,7 @@ if (isset($_REQUEST["upload"])) {
 		if (!empty($_FILES["userfile"]["name"][$key])) {
 			// Were there any problems with the upload?  If so, report here.
 			if (!is_uploaded_file($_FILES["userfile"]["tmp_name"][$key])) {
-				$errors[] = tra('Upload was not successful').': '.$tikilib->uploaded_file_error($error);
+				$errors[] = $_FILES['userfile']['name'][$key].': '.tra('Upload was not successful').': '.$tikilib->uploaded_file_error($error);
 				continue;
 			}
 			// Check the name
@@ -201,7 +201,6 @@ if (isset($_REQUEST["upload"])) {
 					continue;
 				} else {
 					$errors[] = tra('No permission to upload zipped file packages');
-					print_msg(tra('No permission to upload zipped file packages'),$formId);
 					continue;
 				}
 			}
@@ -211,7 +210,6 @@ if (isset($_REQUEST["upload"])) {
 			$tmp_dest = $prefs['tmpDir'] . "/" . $file_name.".tmp";
 			if (!move_uploaded_file($file_tmp_name, $tmp_dest)) {
 				$errors[] = tra('Errors detected');
-				print_msg(tra('Errors detected'),$formId);
 				continue;
 			}
 
@@ -219,7 +217,6 @@ if (isset($_REQUEST["upload"])) {
 
 			if (!$fp) {
 				$errors[] = tra('Cannot read file:').' '.$tmp_dest;
-				print_msg(tra('Cannot read file:').' '.$tmp_dest,$formId);
 			}
 
 			$data = '';
@@ -247,7 +244,6 @@ if (isset($_REQUEST["upload"])) {
 				@$fw = fopen($savedir . $fhash. $extension, "wb");
 				if (!$fw) {
 					$errors[] = tra('Cannot write to this file:').$savedir.$fhash;
-					print_msg(tra('Cannot write to this file:').$savedir.$fhash,$formId);
 				}
 			}
 
@@ -257,7 +253,6 @@ if (isset($_REQUEST["upload"])) {
 				} else {
 					if (($data = fread($fp, 8192 * 16)) === false) {
 						$errors[] = tra('Cannot read the file:').' '.$tmp_dest;
-						print_msg(tra('Cannot read the file:').' '.$tmp_dest,$formId);
 					}
 					fwrite($fw, $data);
 				}
@@ -285,12 +280,10 @@ if (isset($_REQUEST["upload"])) {
 
 			if (!$size) {
 				$errors[] = tra('Warning: Empty file:').'  '.$name.'. '.tra('Please re-upload your file');
-				print_msg(tra('Warning: Empty file:').'  '.$name.'. '.tra('Please re-upload your file'),$formId);
 			}
 			if (($prefs['fgal_use_db'] == 'y') && (!$podCastGallery)) {
 				if (!isset($data) || strlen($data) < 1) {
 					$errors[] = tra('Warning: Empty file:'). ' ' . $name.'. '.tra('Please re-upload your file');
-					print_msg(tra('Warning: Empty file:'). ' ' . $name.'. '.tra('Please re-upload your file'),$formId);
 				}
 			}
 
@@ -314,7 +307,6 @@ if (isset($_REQUEST["upload"])) {
 
 				if (!$fileId) {
 					$errors[] = tra('Upload was not successful. Duplicate file content'). ': ' . $name;
-					print_msg(tra('Upload was not successful. Duplicate file content'). ': ' . $name,$formId);
 					if (($prefs['fgal_use_db'] == 'n') || ($podCastGallery)) {
 						@unlink($savedir . $fhash);
 					}
@@ -351,6 +343,11 @@ if (isset($_REQUEST["upload"])) {
 					}
 				}
 			}
+		}
+	}
+	if (count($errors)) {
+		foreach ($errors as $error) {
+			print_msg($error, $formId);
 		}
 	}
 
