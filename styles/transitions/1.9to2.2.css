@@ -283,6 +283,7 @@ td.third {
 /* Style for OverBox */
 .opaque {
   background-color: #FFFFFF;
+  color: #000;
   width : auto;
   border : 1px solid #666666;
   border-radius : 10px;
@@ -444,6 +445,7 @@ h3.box-title {
 	text-align: center;
 	white-space: nowrap;
 	background-color: #ddd;
+	color: #000;
 	border-width: 0 1px 1px 0;
 	border-color: #CCC;
 	border-style: solid;
@@ -462,6 +464,7 @@ h3.box-title {
 	font-style: italic;
 	border: 1px #DDD solid;
 	background-color: #eee;
+	color: #000;
 	position: relative;
 	z-index: 1;
 }
@@ -505,7 +508,7 @@ div #page-bar
 {
   font-family:arial,sans-serif;
   text-align: center;
-  font-size: 7pt;
+  font-size: 80%;
 }
 
 .blogactions {
