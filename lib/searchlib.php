@@ -463,7 +463,7 @@ class SearchLib extends TikiLib {
 			'href' => 'tiki-download_file.php?fileId=%d',
 			'id' => array('`fileId`'),
 			'pageName' => '`filename`',
-			'search' => array('f.`name`', 'f.`description`', 'f.`search_data`'),
+			'search' => array('f.`name`', 'f.`description`', 'f.`search_data`', 'f.`filename`'),
    			'filter' => '`archiveId` = 0',
 			'permName' => 'tiki_p_download_files',
 			'objectType' => 'file gallery',
