@@ -73,8 +73,11 @@ class OIntegrate
 		$response = new OIntegrate_Response;
 		$response->contentType = $contentType;
 		$response->cacheControl = $cacheControl;
+
 		$response->data = $this->unserialize( $contentType, $content );
-		make_clean( $response->data );
+		$response->data = new JitFilter( $response->data );
+		$response->data->setDefaultFilter( new JitFilter_PreventXss );
+
 		$response->version = $this->extractHeader( $http_response_header, 'OIntegrate-Version' );
 		$response->schemaVersion = $this->extractHeader( $http_response_header, 'OIntegrate-SchemaVersion' );
 		if( ! $response->schemaVersion && isset( $response->data->_version ) )

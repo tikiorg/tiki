@@ -91,17 +91,12 @@ class JitFilter implements ArrayAccess, Iterator, Countable
 
 	function next()
 	{
-		// TODO : This may not be right
-		if( next( $this->stored ) )
-			return $this->current();
-		else
-			return false;
+		next( $this->stored );
 	}
 
 	function rewind()
 	{
 		reset( $this->stored );
-		return $this->current();
 	}
 
 	function key()
@@ -111,8 +106,7 @@ class JitFilter implements ArrayAccess, Iterator, Countable
 
 	function valid()
 	{
-		// TODO : Find out what to do with this
-		return current( $this->stored );
+		return false !== current( $this->stored );
 	}
 
 	function count()

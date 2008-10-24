@@ -14,6 +14,8 @@ class JitFilter_AllTests
         $suite->addTestSuite('JitFilter_AccessTest');
         $suite->addTestSuite('JitFilter_FilterTest');
         $suite->addTestSuite('JitFilter_IteratorTest');
+        $suite->addTestSuite('JitFilter_CallbackTest');
+        $suite->addTestSuite('JitFilter_XssTest');
 
         return $suite;
     }

@@ -4916,7 +4916,6 @@ class TikiLib extends TikiDB {
 
 	function plugin_match(&$data, &$plugins) {
 		global $pluginskiplist;
-		set_time_limit(5);
 		if( !is_array( $pluginskiplist ) )
 			$pluginskiplist = array();
 

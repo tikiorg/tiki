@@ -107,20 +107,6 @@ require_once("lib/breadcrumblib.php");
 // ------------------------------------------------------
 // DEAL WITH XSS-TYPE ATTACKS AND OTHER REQUEST ISSUES
 
-require_once('lib/setup/sanitization.php');
-function make_clean(&$var,$gpc=false,$clean_xss=false) {
-	if ( is_array($var) ) {
-		foreach ( $var as $key=>$val ) {
-			make_clean($var[$key],$gpc,$clean_xss);
-		}
-	} else {
-		if ($gpc) $var = stripslashes($var);
-		if ( $clean_xss && ( ! isset($_SERVER['SCRIPT_FILENAME']) || basename($_SERVER['SCRIPT_FILENAME']) != 'tiki-admin.php' ) ) {
-			$var = RemoveXSS($var);
-		}
-	}
-}
-
 // mose : simulate strong var type checking for http vars
 $patterns['login']   = "/^[-_a-zA-Z0-9@\.]*$/"; // special check for logins, not to be used in varcheck because compat with already created accounts
 $patterns['int']   = "/^[0-9]*$/"; // *Id
@@ -422,11 +408,6 @@ if ( ini_get('register_globals') ) {
 		}
 	}
 }
-make_clean($_GET, $magic_quotes_gpc, $clean_xss);
-make_clean($_POST, $magic_quotes_gpc, $clean_xss);
-make_clean($_COOKIE, $magic_quotes_gpc, $clean_xss);
-make_clean($_SERVER['QUERY_STRING'], false, $clean_xss);
-make_clean($_SERVER['REQUEST_URI'], false, $clean_xss);
 
 if ( $tiki_p_trust_input != 'y' ) {
 	$varcheck_vars = array('_COOKIE', '_GET', '_POST', '_ENV', '_SERVER');
@@ -445,14 +426,38 @@ if ( $tiki_p_trust_input != 'y' ) {
 $GLOBALS['HTTP_GET_VARS'] =& $_GET;
 $GLOBALS['HTTP_POST_VARS'] =& $_POST;
 $GLOBALS['HTTP_COOKIE_VARS'] =& $_COOKIE;
+
+require_once 'JitFilter.php';
+require_once 'Zend/Filter.php';
+require_once 'JitFilter/PreventXss.php';
+require_once 'JitFilter/Callback.php';
+
+$_REQUEST = new JitFilter( array_merge($_GET, $_POST) );
+$_GET = new JitFilter( $_GET );
+$_POST = new JitFilter( $_POST );
+$_COOKIE = new JitFilter( $_COOKIE );
+
+$xssFilter = new Zend_Filter;
+if( $magic_quotes_gpc )
+	$xssFilter->addFilter( new JitFilter_Callback( 'stripslashes' ) );
+if( $clean_xss )
+	$xssFilter->addFilter( new JitFilter_PreventXss );
+
+$_REQUEST->setDefaultFilter( $xssFilter );
+$_GET->setDefaultFilter( $xssFilter );
+$_POST->setDefaultFilter( $xssFilter );
+$_COOKIE->setDefaultFilter( $xssFilter );
+
+if( $clean_xss ) {
+	$filter = new JitFilter_PreventXss;
+	$_SERVER['QUERY_STRING'] = $filter->filter( $_SERVER['QUERY_STRING'] );
+	$_SERVER['REQUEST_URI'] = $filter->filter( $_SERVER['REQUEST_URI'] );
+}
+
 unset($GLOBALS['HTTP_ENV_VARS']);
 unset($GLOBALS['HTTP_SERVER_VARS']);
 unset($GLOBALS['HTTP_SESSION_VARS']);
 unset($GLOBALS['HTTP_POST_FILES']);
-
-// rebuild $_REQUEST after sanity check
-unset($_REQUEST);
-$_REQUEST = array_merge($_GET, $_POST);
 
 // --------------------------------------------------------------
 

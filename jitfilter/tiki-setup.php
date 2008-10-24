@@ -63,6 +63,7 @@ $crumbs = array();
 require_once('lib/setup/tikisetup.class.php');
 TikiSetup::prependIncludePath($tikipath);
 TikiSetup::prependIncludePath('lib');
+TikiSetup::prependIncludePath('lib/core/lib');
 TikiSetup::prependIncludePath('lib/pear');
 
 require_once('lib/setup/timer.class.php');
