@@ -8,7 +8,7 @@
   {assign var='checkboxes_on' value='n'}
 {/if}
 
-{if $find ne '' and $listpages|@count ne '0'}<p>{tr}Found{/tr} &quot;{$find}&quot {tr}in{/tr} {$listpages|@count} {tr}pages{/tr}.
+{if $find ne '' and $listpages|@count ne '0'}<p>{tr}Found{/tr} &quot;{$find}&quot {tr}in{/tr} {$listpages|@count} {tr}pages{/tr}.</p>
 {/if}
 
 
@@ -281,7 +281,7 @@
 
   <tr>
     <td colspan="{$cntcol}" class="odd">
-      <b>{tr}No records found{/tr}{if $find ne ''} {tr}with{/tr} &quot;{$find}&quot;{/if}{if $initial ne ''}{tr} and starting with{/tr} &quot;{$initial}&quot;{/if}</b>
+      <b>{tr}No records found{/tr}{if $find ne ''} {tr}with{/tr} &quot;{$find}&quot;{/if}{if $initial ne ''}{tr} {if $find ne ''}and {/if}starting with{/tr} &quot;{$initial}&quot;{/if}</b>
     </td>
   </tr>
   {/section}
