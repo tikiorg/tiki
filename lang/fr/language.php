@@ -7577,6 +7577,7 @@ $lang=Array(
 "Complete Translation" => "Traduction complète",
 "Save the page, but do not send notifications and do not count it as new content to be translated." => "Enregistrer la page sans envoi de notification par courrier. Ne pas enregistrer le contenu comme à être traduit",
 "Minor Edit" => "Modif. mineure",
+"Save Minor Edit" => "Enreg. modif. mineure",
 "Save the page as a draft." => "Enregistrer la page comme brouillon.",
 "Save Draft" => "Enregistrer brouillon",
 "Compose Message" => "Composer un message",
