@@ -17,7 +17,7 @@
  <a href="{$smarty.server.PHP_SELF}?{query where=images}"{if $where eq 'images'} class='highlight'{/if}>{tr}Images{/tr}</a>
 {/if}
 {if $prefs.feature_file_galleries eq 'y'}
- <a href="{$smarty.server.PHP_SELF}?{query where=files}{if $where eq 'files'} class='highlight'{/if}">{tr}Files{/tr}</a>
+ <a href="{$smarty.server.PHP_SELF}?{query where=files}"{if $where eq 'files'} class='highlight'{/if}>{tr}Files{/tr}</a>
 {/if}
 {if $prefs.feature_forums eq 'y'}
  <a href="{$smarty.server.PHP_SELF}?{query where=forums}"{if $where eq 'forums'} class='highlight'{/if}>{tr}Forums{/tr}</a>
