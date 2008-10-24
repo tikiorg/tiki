@@ -111,7 +111,7 @@
   </div>
 {/if}
 <div class="findtitle findsubmit">
-  <input type="submit" name="search" value="{tr}Find{/tr}" />
+  <input type="submit" name="search" value="{tr}Go{/tr}" />
 </div>
 
 {if !empty($types) and isset($types_tag) and $types_tag eq 'checkbox' }
