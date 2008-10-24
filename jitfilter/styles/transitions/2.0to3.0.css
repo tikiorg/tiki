@@ -1,0 +1,83 @@
+/*
+The following CSS classes were added to Tiki between v2.0 and v3.0
+They should be added to themes (possibly with tweaks) to make the theme v3.0 ready
+*/
+
+.plugin-desc {
+	padding: 5px;
+}
+
+.plugin-sample {
+	padding: 5px;
+	font-family: monospace;
+}
+
+.plugin-sample .plugin-param {
+	padding-left: 15px;
+}
+
+.plugin-form-float {
+	position: fixed;
+	left: 15%;
+	right: 15%;
+	top: 10%;
+	max-height: 80%;
+	overflow: auto;
+	background: white;
+	padding: 10px;
+	border: solid 2px black;
+}
+
+.icon_edit_section {
+	float: right;
+}
+
+h3.box-title span.moduletitle {
+  float: left;
+}
+h3.box-title span.moduleflip {
+  float: right;
+}
+
+#shadowbox_content {
+	background: white;
+}
+
+/* To enable removing deprecated tag from img.icon and prevent border on a.icon. */
+a.icon,
+img.icon {
+	border: 0 !important;
+	background: transparent
+}
+
+.post-approved-n { border-left: 3px dotted blue; }
+.post-approved-r { border-left: 3px double red; }
+.post-approved-r .content * { background-image: url(../../img/icons2/dots.gif); }
+
+.post-approved-n .content, .post-approved-r .content,
+.post-approved-n .title, .post-approved-r .title,
+.post-approved-n .postfooter, .post-approved-r .postfooter,
+tr.post-approved-n td span, tr.post-approved-r td span {
+	opacity: 0.5;
+}
+tr.post-approved-n td span, tr.post-approved-r td span { opacity: 0.6; }
+
+div.multiselect {
+  vertical-align: middle;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 5em;
+  width: 100%;
+  border: 1px solid black;
+}
+
+/* display PHP/Smarty errors on top */
+
+#show-errors-button {
+	z-index: 1024;
+}
+
+#errors {
+	z-index: 1023;
+}
+
