@@ -112,6 +112,9 @@
 {/if}
 <div class="findtitle findsubmit">
   <input type="submit" name="search" value="{tr}Go{/tr}" />
+{if $find ne ''}
+	<span class="button"><a href="{$smarty.server.PHP_SELF}" itle="{tr}Clear Filter{/tr}">{tr}Clear Filter{/tr}</a></span>
+{/if}
 </div>
 
 {if !empty($types) and isset($types_tag) and $types_tag eq 'checkbox' }

@@ -8,6 +8,10 @@
   {assign var='checkboxes_on' value='n'}
 {/if}
 
+{if $find ne '' and $listpages|@count ne '0'}<p>{tr}Found{/tr} &quot;{$find}&quot {tr}in{/tr} {$listpages|@count} {tr}pages{/tr}.
+{/if}
+
+
 {if $checkboxes_on eq 'y'}
   <form name="checkboxes_on" method="post" action="{$smarty.server.PHP_SELF}">
 {/if}
@@ -30,7 +34,8 @@
 
     {if $prefs.wiki_list_id eq 'y'}
       {assign var='cntcol' value=$cntcol+1}
-      <th>{self_link _sort_arg='sort_mode' _sort_field='page_id'}{tr}Id{/tr}{/self_link}</th>
+      <th>{self_link _sort_arg='sort_mode' _sort_field='page_id'}{tr}Id{/tr}{/self_link}
+</th>
     {/if}
 
     {if $prefs.wiki_list_name eq 'y'}
@@ -275,8 +280,8 @@
   {sectionelse}
 
   <tr>
-    <td colspan="{$cntcol}">
-      <b>{tr}No records found{/tr}</b>
+    <td colspan="{$cntcol}" class="odd">
+      <b>{tr}No records found{/tr}{if $find ne ''} {tr}with{/tr} &quot;{$find}&quot;{/if}{if $initial ne ''}{tr} and starting with{/tr} &quot;{$initial}&quot;{/if}</b>
     </td>
   </tr>
   {/section}
