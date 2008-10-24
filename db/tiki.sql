@@ -903,7 +903,7 @@ CREATE TABLE tiki_files (
   KEY archiveId (archiveId),
   KEY galleryId (galleryId),
   KEY hits (hits),
-  FULLTEXT KEY ft (name,description,search_data)
+  FULLTEXT KEY ft (name,description,search_data,filename)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS tiki_forum_attachments;
