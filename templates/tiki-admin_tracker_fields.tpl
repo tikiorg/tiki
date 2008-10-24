@@ -35,9 +35,11 @@
 {/foreach}
 </td><td>
 <select name="type" id='trkfldtype' onchange='javascript:chgTrkFld("{$fld}",this.options[selectedIndex].value);javascript:chgTrkFld("{$fld}",this.options[selectedIndex].value);javascript:chgTrkLingual(this.options[selectedIndex].value);'>
+{sortlinks}
 {foreach key=fk item=fi from=$field_types}
 <option value="{$fk}" {if $type eq $fk}selected="selected"{/if}{if $fi.opt and ($type eq $fk or $type  eq 'o' or $type eq '')}{assign var=showit value=true}{/if}>{$fi.label}</option>
 {/foreach}
+{/sortlinks}
 </select>
 
 {if $prefs.feature_help eq 'y'}
