@@ -397,10 +397,11 @@ class DirLib extends TikiLib {
 	function dir_replace_site($siteId, $name, $description, $url, $country, $isValid) {
 		global $prefs;
 
-		make_clean($name);
-		make_clean($description);
-		make_clean($url);
-		make_clean($country);
+		$filter = new JitFilter_PreventXss;
+		$name = $filter->filter($name);
+		$description = $filter->filter($description);
+		$url = $filter->filter($url);
+		$country = $filter->filter($country);
 
 		if ($siteId) {
 			$query = "update `tiki_directory_sites` set `name`=?, `description`=?, `url`=?, `country`=?, `isValid`=?, `lastModif`=?  where `siteId`=?";
