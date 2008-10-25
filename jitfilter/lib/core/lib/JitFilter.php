@@ -4,6 +4,7 @@ class JitFilter implements ArrayAccess, Iterator, Countable
 {
 	private $stored;
 	private $defaultFilter;
+	private $lastUsed = array();
 	private $filters = array();
 
 	function __construct( $data )
@@ -29,21 +30,31 @@ class JitFilter implements ArrayAccess, Iterator, Countable
 				$this->stored[$key]->setDefaultFilter( $this->defaultFilter );
 		}
 
+		$filter = null;
+
 		// Composed objects go through
 		if( $this->stored[$key] instanceof self )
 			return $this->stored[$key];
 
 		// Specified filters take precedence
 		elseif( array_key_exists( $key, $this->filters ) )
-			return $this->filters[$key]->filter( $this->stored[$key] );
+			$filter = $this->filters[$key];
 
 		// Default filters apply
 		elseif( $this->defaultFilter )
-			return $this->defaultFilter->filter( $this->stored[$key] );
+			$filter = $this->defaultFilter;
 
-		// No filtering has no special behavior
-		else
+		if( $filter ) {
+			if( isset( $this->lastUsed[$key] ) && $this->lastUsed[$key][0] == $filter )
+				return $this->lastUsed[$key][1];
+
+
+			$this->lastUsed[$key] = array( $filter, $filter->filter( $this->stored[$key] ) );
+			return $this->lastUsed[$key][1];
+		} else {
+			// No filtering has no special behavior
 			return $this->stored[$key];
+		}
 	}
 
 	function offsetSet( $key, $value )
