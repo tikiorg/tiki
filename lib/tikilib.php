@@ -5846,7 +5846,7 @@ class TikiLib extends TikiDB {
 		$language = isset($options['language']) ? $options['language'] : '';
 		$noparseplugins = isset($options['noparseplugins']) ? $options['noparseplugins'] : false;
 
-		// if simple_wiki is tru, disable some wiki syntax
+		// if simple_wiki is true, disable some wiki syntax
 		// basically, allow wiki plugins, wiki links and almost
 		// everything between {}
 		$simple_wiki = false;
@@ -6107,7 +6107,7 @@ class TikiLib extends TikiDB {
 		// If they are parenthesized then don't treat as links
 		// Prevent ))PageName(( from being expanded \"\'
 		//[A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*
-		if ( ! $simple_wiki && $prefs['feature_wikiwords'] == 'y' ) {
+		if ( ! $simple_wiki && $prefs['feature_wiki'] == 'y' && $prefs['feature_wikiwords'] == 'y' ) {
 			// The first part is now mandatory to prevent [Foo|MyPage] from being converted!
 			if ($prefs['feature_wikiwords_usedash'] == 'y') {
 				preg_match_all("/(?<=[ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-\x80-\xFF]+[A-Z][a-z0-9_\-\x80-\xFF]+[A-Za-z0-9\-_\x80-\xFF]*)(?=$|[ \n\t\r\,\;\.])/", $data, $pages);
