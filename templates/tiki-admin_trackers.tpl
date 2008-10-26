@@ -107,7 +107,7 @@
 <tr class="formcolor">
   <td>{tr}Description{/tr}:</td>
 	<td>
-	{tr}Description text is tiki-parsed:{/tr} <input type="checkbox" name="descriptionIsParsed" {if $descriptionIsParsed eq 'y'}checked="checked"{/if} onclick="toggleBlock('trackerDesc');" />
+	{tr}Description text is tiki-parsed:{/tr}<input type="checkbox" name="descriptionIsParsed" {if $descriptionIsParsed eq 'y'}checked="checked"{/if} onclick="toggleBlock('trackerDesc');" /><br />
 	<div id="trackerDesc" style="display:none;" >
 		{include file=tiki-edit_help_tool.tpl qtnum="trackerDesc" area_name="trackerDescription"}
 		{if $descriptionIsParsed eq 'y'}<script language="javascript">
