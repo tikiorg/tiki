@@ -129,7 +129,7 @@
 {if $prefs.trk_with_mirror_tables eq 'y'}
 <tr class="formcolor"><td>
 {tr}Use "explicit" names in the mirror table{/tr}<br />
-<em>{tr}tracker name must be unique, field names must be unique 
+<em>{tr}tracker name must be unique, field names must be unique
 for a tracker and they must be valid in SQL{/tr}</em>
 </td><td>
 <input type="checkbox" name="useExplicitNames" {if $useExplicitNames eq 'y'}checked="checked"{/if} />
@@ -294,6 +294,19 @@ for a tracker and they must be valid in SQL{/tr}</em>
 <td><input type="text" name="showPopup" value="{$showPopup|escape}" /></td>
 </tr>
 
+<tr class="formcolor">
+<td>{tr}Group of users alerted when tracker is modified{/tr}</td>
+<td>
+<select id="groupforAlert" name="groupforAlert">
+<option value="">&nbsp;</option>
+{foreach key=k item=i from=$groupforAlertList}
+<option value="{$k}" {$i}>{$k}</option>
+{/foreach}
+</select>
+</td>
+</tr>
+
+
 <tr class="formcolor"><td></td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
@@ -315,7 +328,7 @@ description = {$description}
 descriptionIsParsed = {$descriptionIsParsed}
 useExplicitNames = {$useExplicitNames}
 showStatus = {$showStatus}
-defaultStatus = {foreach key=st item=stdata from=$status_types}{if $defaultStatusList.$st}{$st}{/if}{/foreach} 
+defaultStatus = {foreach key=st item=stdata from=$status_types}{if $defaultStatusList.$st}{$st}{/if}{/foreach}
 showStatusAdminOnly = {$showStatusAdminOnly}
 outboundEmail = {$outboundEmail|escape}
 simpleEmail = {$simpleEmail}
@@ -331,7 +344,7 @@ useComments = {$useComments}
 showComments = {$showComments}
 useAttachments = {$useAttachments}
 showAttachments = {$showAttachments}
-attachmentsconf = {$ui.filename|default:0},{$ui.created|default:0},{$ui.hits|default:0},{$ui.comment|default:0},{$ui.filesize|default:0},{$ui.version|default:0},{$ui.filetype|default:0},{$ui.longdesc|default:0} 
+attachmentsconf = {$ui.filename|default:0},{$ui.created|default:0},{$ui.hits|default:0},{$ui.comment|default:0},{$ui.filesize|default:0},{$ui.version|default:0},{$ui.filetype|default:0},{$ui.longdesc|default:0}
 useRatings = {$useRatings}
 ratingOptions = {$ratingOptions}
 categories = {$catsdump}
@@ -357,7 +370,7 @@ categories = {$catsdump}
 </td></tr>
 <tr class="formcolor"><td>{tr}Fields{/tr}</td><td><input type="radio" name="which" value="list"/> {tr}Fields visible in items list{/tr}
 <br /><input type="radio" name="which" value="ls"/> {tr}Fields searchable or visible in items list{/tr}
-<br /><input type="radio" name="which" value="item"/> {tr}Fields visible in an item view{/tr} 
+<br /><input type="radio" name="which" value="item"/> {tr}Fields visible in an item view{/tr}
 <br /><input type="radio" name="which" value="all" checked="checked"/> {tr}All fields{/tr}
 <br /><input type="text" name="listfields" /> {tr}or list of fields separated by comma{/tr}
 </td></tr>

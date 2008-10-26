@@ -46,7 +46,7 @@ if (!empty($_REQUEST['duplicate']) && !empty($_REQUEST['name']) && !empty($_REQU
 	if (isset($_REQUEST['dupPerms']) && $_REQUEST['dupPerms'] == 'on') {
 		global $userlib; include_once('lib/userslib.php');
 		$userlib->copy_object_permissions($_REQUEST['trackerId'], $newTrackerId, 'tracker');
-	}  
+	}
 	unset($_REQUEST); // Used to show the list of trackers instead of the new tracker after duplication
 }
 
@@ -80,8 +80,8 @@ if (isset($_REQUEST["save"])) {
 	}
 
 	check_ticket('admin-trackers');
-	if (isset($_REQUEST["showCreated"]) 
-		&& ($_REQUEST["showCreated"] == 'on' 
+	if (isset($_REQUEST["showCreated"])
+		&& ($_REQUEST["showCreated"] == 'on'
 			or $_REQUEST["showCreated"] == 'y')) {
 		$tracker_options["showCreated"] = 'y';
 	} else {
@@ -94,54 +94,54 @@ if (isset($_REQUEST["save"])) {
 		$tracker_options['showCreatedFormat'] = '';
 	}
 
-	if (isset($_REQUEST["showCreatedView"]) 
-		&& ($_REQUEST["showCreatedView"] == 'on' 
+	if (isset($_REQUEST["showCreatedView"])
+		&& ($_REQUEST["showCreatedView"] == 'on'
 			or $_REQUEST["showCreatedView"] == 'y')) {
 		$tracker_options["showCreatedView"] = 'y';
 	} else {
 		$tracker_options["showCreatedView"] = 'n';
 	}
 
-	if (isset($_REQUEST["showStatus"]) 
-		&& ($_REQUEST["showStatus"] == 'on' 
+	if (isset($_REQUEST["showStatus"])
+		&& ($_REQUEST["showStatus"] == 'on'
 			or $_REQUEST["showStatus"] == 'y')) {
 		$tracker_options["showStatus"] = 'y';
 	} else {
 		$tracker_options["showStatus"] = 'n';
 	}
 
-	if (isset($_REQUEST["showStatusAdminOnly"]) 
-		&& ($_REQUEST["showStatusAdminOnly"] == 'on' 
+	if (isset($_REQUEST["showStatusAdminOnly"])
+		&& ($_REQUEST["showStatusAdminOnly"] == 'on'
 			or $_REQUEST["showStatusAdminOnly"] == 'y')) {
 		$tracker_options["showStatusAdminOnly"] = 'y';
 	} else {
 		$tracker_options["showStatusAdminOnly"] = 'n';
 	}
-	
-	if (isset($_REQUEST["simpleEmail"]) 
-		&& ($_REQUEST["simpleEmail"] == 'on' 
+
+	if (isset($_REQUEST["simpleEmail"])
+		&& ($_REQUEST["simpleEmail"] == 'on'
 			or $_REQUEST["simpleEmail"] == 'y')) {
 		$tracker_options["simpleEmail"] = 'y';
 	} else {
 		$tracker_options["simpleEmail"] = 'n';
 	}
-	
+
 	if( isset($_REQUEST["outboundEmail"]) )
 	{
 		$tracker_options["outboundEmail"] = $_REQUEST["outboundEmail"];
 	} else {
 		$tracker_options["outboundEmail"] = '';
 	}
-	
-	if (isset($_REQUEST["newItemStatus"]) 
+
+	if (isset($_REQUEST["newItemStatus"])
 		&& ($_REQUEST["newItemStatus"] == 'on'
 			or $_REQUEST["newItemStatus"] == 'y')) {
 		$tracker_options["newItemStatus"] = 'y';
 	} else {
 		$tracker_options["newItemStatus"] = 'n';
 	}
-	
-	if (isset($_REQUEST["useRatings"]) 
+
+	if (isset($_REQUEST["useRatings"])
 		&& ($_REQUEST["useRatings"] == 'on'
 			or $_REQUEST["useRatings"] == 'y')) {
 		$tracker_options["useRatings"] = 'y';
@@ -150,7 +150,7 @@ if (isset($_REQUEST["save"])) {
 		} else {
 			$tracker_options["ratingOptions"] = '-2,-1,0,1,2';
 		}
-		if (isset($_REQUEST["showRatings"]) 
+		if (isset($_REQUEST["showRatings"])
 			&& ($_REQUEST["showRatings"] == 'on'
 				or $_REQUEST["showRatings"] == 'y')) {
 			$tracker_options["showRatings"] = 'y';
@@ -163,18 +163,18 @@ if (isset($_REQUEST["save"])) {
 		$tracker_options["showRatings"] = 'n';
 	}
 
-	if (isset($_REQUEST["useComments"]) 
+	if (isset($_REQUEST["useComments"])
 		&& ($_REQUEST["useComments"] == 'on'
 			or $_REQUEST["useComments"] == 'y')) {
 		$tracker_options["useComments"] = 'y';
-		if (isset($_REQUEST["showComments"]) 
+		if (isset($_REQUEST["showComments"])
 			&& ($_REQUEST["showComments"] == 'on'
 				or $_REQUEST["showComments"] == 'y')) {
 			$tracker_options["showComments"] = 'y';
 		} else {
 			$tracker_options["showComments"] = 'n';
 		}
-		if (isset($_REQUEST['showLastComment']) 
+		if (isset($_REQUEST['showLastComment'])
 			&& ($_REQUEST['showLastComment'] == 'on'
 				or $_REQUEST['showLastComment'] == 'y')) {
 			$tracker_options['showLastComment'] = 'y';
@@ -186,11 +186,11 @@ if (isset($_REQUEST["save"])) {
 		$tracker_options["showComments"] = 'n';
 	}
 
-	if (isset($_REQUEST["useAttachments"]) 
+	if (isset($_REQUEST["useAttachments"])
 		&& ($_REQUEST["useAttachments"] == 'on'
 			or $_REQUEST["useAttachments"] == 'y')) {
 		$tracker_options["useAttachments"] = 'y';
-		if (isset($_REQUEST["showAttachments"]) 
+		if (isset($_REQUEST["showAttachments"])
 			&& ($_REQUEST["showAttachments"] == 'on'
 				or $_REQUEST["showAttachments"] == 'y')) {
 			$tracker_options["showAttachments"] = 'y';
@@ -203,7 +203,7 @@ if (isset($_REQUEST["save"])) {
 	}
 
 
-	if (isset($_REQUEST["showLastModif"]) 
+	if (isset($_REQUEST["showLastModif"])
 		&& ($_REQUEST["showLastModif"] == 'on'
 			or $_REQUEST["showLastModif"] == 'y')) {
 		$tracker_options["showLastModif"] = 'y';
@@ -215,7 +215,7 @@ if (isset($_REQUEST["save"])) {
 	} else {
 		$tracker_options['showLastModifFormat'] = '';
 	}
-	if (isset($_REQUEST["showLastModifView"]) 
+	if (isset($_REQUEST["showLastModifView"])
 		&& ($_REQUEST["showLastModifView"] == 'on'
 			or $_REQUEST["showLastModifView"] == 'y')) {
 		$tracker_options["showLastModifView"] = 'y';
@@ -225,7 +225,7 @@ if (isset($_REQUEST["save"])) {
 
 
 	if (isset($_REQUEST["defaultOrderDir"])
-		&& ($_REQUEST["defaultOrderDir"] == 'asc' 
+		&& ($_REQUEST["defaultOrderDir"] == 'asc'
 			or $_REQUEST["defaultOrderDir"] == 'desc')) {
 		$tracker_options["defaultOrderDir"] = $_REQUEST["defaultOrderDir"];
 	} else {
@@ -251,15 +251,15 @@ if (isset($_REQUEST["save"])) {
 	}
 
 
-	if (isset($_REQUEST["writerCanModify"]) 
+	if (isset($_REQUEST["writerCanModify"])
 		&& ($_REQUEST["writerCanModify"] == 'on'
 			or $_REQUEST["writerCanModify"] == 'y')) {
 		$tracker_options["writerCanModify"] = 'y';
 	} else {
 		$tracker_options["writerCanModify"] = 'n';
 	}
-	
-	if (isset($_REQUEST["autoCreateCategories"]) 
+
+	if (isset($_REQUEST["autoCreateCategories"])
 		&& ($_REQUEST["autoCreateCategories"] == 'on'
 			or $_REQUEST["autoCreateCategories"] == 'y')) {
 		$tracker_options["autoCreateCategories"] = 'y';
@@ -267,7 +267,7 @@ if (isset($_REQUEST["save"])) {
 		$tracker_options["autoCreateCategories"] = 'n';
 	}
 
-	if (isset($_REQUEST["oneUserItem"]) 
+	if (isset($_REQUEST["oneUserItem"])
 		&& ($_REQUEST["oneUserItem"] == 'on'
 			or $_REQUEST["oneUserItem"] == 'y')) {
 		$tracker_options["oneUserItem"] = 'y';
@@ -275,7 +275,7 @@ if (isset($_REQUEST["save"])) {
 		$tracker_options["oneUserItem"] = 'n';
 	}
 
-	if (isset($_REQUEST["writerGroupCanModify"]) 
+	if (isset($_REQUEST["writerGroupCanModify"])
 		&& ($_REQUEST["writerGroupCanModify"] == 'on'
 			or $_REQUEST["writerGroupCanModify"] == 'y')) {
 		$tracker_options["writerGroupCanModify"] = 'y';
@@ -283,8 +283,8 @@ if (isset($_REQUEST["save"])) {
 		$tracker_options["writerGroupCanModify"] = 'n';
 	}
 
-	if (isset($_REQUEST["defaultStatus"]) 
-		&& $_REQUEST["defaultStatus"]) { 
+	if (isset($_REQUEST["defaultStatus"])
+		&& $_REQUEST["defaultStatus"]) {
 		if (is_array($_REQUEST["defaultStatus"])) {
 			$tracker_options["defaultStatus"] = implode('',$_REQUEST["defaultStatus"]);
 		} else {
@@ -292,6 +292,13 @@ if (isset($_REQUEST["save"])) {
 		}
 	} else {
 		$tracker_options["defaultStatus"] = 'o';
+	}
+
+
+	if (isset($_REQUEST['groupforAlert']) && $_REQUEST["groupforAlert"]) {
+		$tracker_options['groupforAlert'] = $_REQUEST['groupforAlert'];
+	} else {
+		$tracker_options['groupforAlert'] = '';
 	}
 
 	if (isset($_REQUEST['ui'])) {
@@ -312,10 +319,10 @@ if (isset($_REQUEST["save"])) {
 		}
 		$tracker_options["orderAttachments"] = $orderat;
 	}
-	
-	
-	if(isset($_REQUEST["useExplicitNames"]) 
-		&& ($_REQUEST["useExplicitNames"] == 'on' 
+
+
+	if(isset($_REQUEST["useExplicitNames"])
+		&& ($_REQUEST["useExplicitNames"] == 'on'
 			or $_REQUEST["useExplicitNames"] == 'y')) {
 		$tracker_options["useExplicitNames"] = 'y';
 	}
@@ -354,7 +361,8 @@ if (isset($_REQUEST["save"])) {
 	} else {
 		$tracker_options['showPopup'] = '';
 	}
-	
+
+
 	$_REQUEST["trackerId"] = $trklib->replace_tracker($_REQUEST["trackerId"], $_REQUEST["name"], $_REQUEST["description"], $tracker_options, $_REQUEST["descriptionIsParsed"]?'y':'');
 	$logslib->add_log('admintrackers','changed or created tracker '.$_REQUEST["name"]);
 
@@ -406,6 +414,8 @@ $info["writerGroupCanModify"] = '';
 $info["defaultStatus"] = 'o';
 $info["defaultStatusList"] = array();
 $info["orderAttachments"] = 'name,created,filesize,hits,desc';
+$info["groupforAlertList"] = array();
+$info["groupforAlert"] = '';
 $info['start']= 0;
 $info['end'] = 0;
 $info['autoCreateCategories']='';
@@ -423,6 +433,14 @@ if ($_REQUEST["trackerId"]) {
 $dstatus = preg_split('//', $info['defaultStatus'], -1, PREG_SPLIT_NO_EMPTY);
 foreach ($dstatus as $ds) {
 	$info["defaultStatusList"][$ds] = true;
+}
+
+
+$all_groups = $userlib->list_all_groups();
+if ( is_array($all_groups) ) {
+	foreach ( $all_groups as $g ){
+		$groupforAlertList[$g] =  ( $g == $info["groupforAlert"] )  ? 'selected' : '';
+	}
 }
 
 $smarty->assign('fields', $fields['data']);
@@ -461,7 +479,10 @@ $smarty->assign('writerGroupCanModify', $info["writerGroupCanModify"]);
 $smarty->assign('defaultStatus', $info["defaultStatus"]);
 $smarty->assign('defaultStatusList', $info["defaultStatusList"]);
 $smarty->assign('autoCreateCategories', $info["autoCreateCategories"]);
+$smarty->assign_by_ref('groupforAlertList', $groupforAlertList);
+$smarty->assign('groupforAlert', $info["groupforAlert"]);
 $smarty->assign_by_ref('info', $info);
+
 
 $outatt = array();
 $info["orderPopup"] = '';

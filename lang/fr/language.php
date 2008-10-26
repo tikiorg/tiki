@@ -44,7 +44,7 @@
 // Usefull mode when preparing a translation for distribution.
 
 // http://www.neonchart.com/get_strings.php?nohelp&nosections
-// Prepare all languages for release 
+// Prepare all languages for release
 
 
 // ### Note for translators about translation of text ending with colons (':')
@@ -55,7 +55,7 @@
 // ### If a string ending with colon needs translating (like "{tr}Login:{/tr}")
 // ### then TikiWiki tries to translate 'Login' and ':' separately.
 // ### This allows to have only one translation for "{tr}Login{/tr}" and "{tr}Login:{/tr}"
-// ### and it still allows to translate ":" as "&nbsp;:" for languages that 
+// ### and it still allows to translate ":" as "&nbsp;:" for languages that
 // ### need it (like french)
 
 $lang=Array(
@@ -5775,6 +5775,7 @@ $lang=Array(
 "Before:" => "Avant :",
 "Do not show empty fields in item view?" => "Ne pas montrer les champs vides à l'affichage d'une fiche?",
 "Show these fields (ID comma separated) in a popup on item link when listing tracker items?" => "Montrer ces champs (Ids séparés par des virgules) dans une popup au passage sur le lien vers la fiche lors de l'affichage des fiches d'un formulaire?",
+"Group of users alerted when tracker is modified"=>"Groupe d'utilisateur alerté quand le formulaire est modifié",
 "Import/export trackers" => "Importer/exporter des formulaires",
 "Charset encoding" => "Encodage des caractères",
 "Delimitors" => "Délimiteurs",

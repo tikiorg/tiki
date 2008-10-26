@@ -1277,7 +1277,7 @@ CREATE  INDEX "tiki_files_created" ON "tiki_files"("created");
 CREATE  INDEX "tiki_files_archiveId" ON "tiki_files"("archiveId");
 CREATE  INDEX "tiki_files_galleryId" ON "tiki_files"("galleryId");
 CREATE  INDEX "tiki_files_hits" ON "tiki_files"("hits");
-CREATE  INDEX "tiki_files_ft" ON "tiki_files"("name","description","search_data");
+CREATE  INDEX "tiki_files_ft" ON "tiki_files"("name","description","search_data","filename");
 
 DROP TABLE "tiki_forum_attachments";
 
@@ -1980,7 +1980,7 @@ INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`",
 
 INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (46,42,'o','Received pages','tiki-received_pages.php',245,'feature_wiki,feature_comm','tiki_p_view,tiki_p_admin_received_pages','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (47,42,'o','Structures','tiki-admin_structures.php',250,'feature_wiki_structure','tiki_p_view','',0);
+INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (47,42,'o','Structures','tiki-admin_structures.php',250,'feature_wiki,feature_wiki_structure','tiki_p_view','',0);
 
 INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (197,42,'o','Mind Map','tiki-mindmap.php',255,'feature_wiki_mindmap','tiki_p_view','',0);
 
@@ -3422,6 +3422,7 @@ CREATE TABLE "tiki_trackers" (
   "showAttachments" char(1) default NULL,
   "items" number(10) default NULL,
   "showComments" char(1) default NULL,
+  "groupforAlert" varchar(255) default NULL,
   "orderAttachments" varchar(255) default 'filename,created,filesize,hits,desc' NOT NULL,
   PRIMARY KEY (trackerId)
 ) ENGINE=MyISAM  ;
@@ -3548,7 +3549,7 @@ CREATE TABLE "tiki_user_mail_accounts" (
   "useAuth" char(1) default NULL,
   "smtpPort" number(4) default NULL,
   "flagsPublic" char(1) default 'n',				-- COMMENT 'MatWho - Shared Group Mail box if y',
-  "autoRefresh" number(4) default 0,		-- COMMENT 'seconds for mail list to refresh, 0 = none' NOT NULL, 
+  "autoRefresh" number(4) default 0,		-- COMMENT 'seconds for mail list to refresh, 0 = none' NOT NULL,
   PRIMARY KEY (accountId)
 ) ENGINE=MyISAM  ;
 
@@ -5078,10 +5079,10 @@ DROP TABLE "tiki_users_score";
 
 CREATE TABLE "tiki_users_score" (
   "user" char(200) default '' NOT NULL,
-  "event_id" char(40) default '' NOT NULL,
+  "event_id" char(200) default '' NOT NULL,
   "expire" number(14) default '0' NOT NULL,
   "tstamp" timestamp(3) NOT NULL,
-  PRIMARY KEY (user,event_id)
+  PRIMARY KEY (user(110),event_id(110))
 ) ENGINE=MyISAM;
 
 CREATE  INDEX "tiki_users_score_user" ON "tiki_users_score"("user","event_id","expire");

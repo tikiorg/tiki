@@ -2371,6 +2371,7 @@ CREATE TABLE tiki_trackers (
   showAttachments char(1) default NULL,
   items int(10) default NULL,
   showComments char(1) default NULL,
+  groupforAlert varchar(255) default NULL,
   orderAttachments varchar(255) NOT NULL default 'filename,created,filesize,hits,desc',
   PRIMARY KEY (trackerId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
@@ -2453,7 +2454,7 @@ CREATE TABLE tiki_user_mail_accounts (
   useAuth char(1) default NULL,
   smtpPort int(4) default NULL,
   flagsPublic char(1) default 'n',				-- COMMENT 'MatWho - Shared Group Mail box if y',
-  autoRefresh int(4) NOT NULL default 0,		-- COMMENT 'seconds for mail list to refresh, 0 = none', 
+  autoRefresh int(4) NOT NULL default 0,		-- COMMENT 'seconds for mail list to refresh, 0 = none',
   PRIMARY KEY (accountId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
