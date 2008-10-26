@@ -65,8 +65,6 @@ CREATE TABLE tiki_schema (
 	install_date TIMESTAMP
 ) ENGINE=MyISAM;
 
-#2008_10_26 GillesM
-ALTER TABLE tiki_trackers ADD groupforAlert varchar(255) default NULL ;
 # This file is now obsolete. To modify the database, simple add a file to the installer/schema/
 # directory. For more information, see http://dev.tikiwiki.org/DatabaseSchemaUpgrade
 
