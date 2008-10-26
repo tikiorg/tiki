@@ -16,6 +16,13 @@
 		{/if}
 	{/section}
 </ul>
+<ul class="topLevelAdmin">
+	{section name=sec loop=$thirdlevel}
+		{if ($thirdlevel[sec].feature_type eq 'feature' && $thirdlevel[sec].value eq 'y' && $thirdlevel[sec].feature_count > 0) || $thirdlevel[sec].feature_type neq 'feature'}
+		<li{if $thirdlevelId eq $thirdlevel[sec].feature_id} class="current"{/if}><a href="tiki-magic.php?featurechain={$thirdlevel[sec].feature_path}">{tr}{$thirdlevel[sec].feature_name}{/tr}</a></li>	
+		{/if}
+	{/section}
+</ul>
 {/if}
 </div>
 {/if}

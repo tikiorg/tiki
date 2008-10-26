@@ -1,7 +1,6 @@
 <?php
 require_once ('tiki-setup.php');
 include_once ('lib/admin/magiclib.php');
-
 $featureChain = $_REQUEST['featurechain'];
 $featurePage = explode('/', $featureChain);
 $featureId = $featurePage[count($featurePage) - 1];
@@ -26,14 +25,23 @@ if ($topLevelId != '' && is_numeric($topLevelId)) {
 	$secondLevelFeatures = '';	
 }
 
+if ($secondLevelId != '' && is_numeric($secondLevelId)) {
+	$thirdLevelFeatures = $magiclib->get_child_features($secondLevelId, 'containers');
+} else {
+	$thirdLevelFeatures = '';	
+}
+
 $smarty->assign_by_ref('toplevelfeatures', $topLevelFeatures);
 $smarty->assign_by_ref('secondlevel', $secondLevelFeatures);
+$smarty->assign_by_ref('thirdlevel', $thirdLevelFeatures);
+
 $smarty->assign('toplevel', $topLevelId);
 if (count($featurePage) > 1) {
 	$smarty->assign('secondlevelId', $secondLevelId);
 }
-
-
+if (count($featurePage) > 2) {
+	$smarty->assign('thirdlevelId', $thirdLevelId);
+}
 /*
  * $$feature['permission'] is slightly magic.  It's checking the value of the name of the variable that is in feature['permission'].
  * If feature['permission'] is 'tiki_p_wiki_admin', it is checking if $tiki_p_wiki_admin has the value 'y'.

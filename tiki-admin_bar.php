@@ -30,10 +30,22 @@ if ($topLevelId != '' && is_numeric($topLevelId)) {
 	$secondLevelFeatures = '';	
 }
 
+if ($secondLevelId != '' && is_numeric($secondLevelId)) {
+	$thirdLevelFeatures = $magiclib->get_child_features($secondLevelId, 'containers');
+} else {
+	$thirdLevelFeatures = '';	
+}
+
 $smarty->assign_by_ref('toplevelfeatures', $topLevelFeatures);
 $smarty->assign_by_ref('secondlevel', $secondLevelFeatures);
+$smarty->assign_by_ref('thirdlevel', $thirdLevelFeatures);
+
 $smarty->assign('toplevel', $topLevelId);
 if (count($featurePage) > 1) {
 	$smarty->assign('secondlevelId', $secondLevelId);
+}
+if (count($featurePage) > 2) {
+	$smarty->assign('thirdlevelId', $thirdLevelId);
+
 }
 ?>
