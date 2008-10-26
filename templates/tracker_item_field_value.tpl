@@ -9,19 +9,24 @@
 {elseif $field_value.isMain eq 'y'
  and ($tiki_p_view_trackers eq 'y' or $tiki_p_modify_tracker_items eq 'y' or $tiki_p_comment_tracker_items eq 'y'
  or ($tracker_info.writerCanModify eq 'y' and $user and $my eq $user) or ($tracker_info.writerCanModify eq 'y' and $group and $ours eq $group))}
-	{if empty($url)}
+	{if empty($url) and !empty($item.itemId)}
 		{assign var=urll value="tiki-view_tracker_item.php?itemId=`$item.itemId`&amp;trackerId=`$item.trackerId`&amp;show=view"}
-	{elseif strstr($url, 'itemId')}
+	{elseif strstr($url, 'itemId') and !empty($item.itemId)}
 		{assign var=urll value=$url|regex_replace:"/itemId=?/":"itemId=`$item.itemId`"}
 	{else}
 		{assign var=urll value=$url}
 	{/if}
-	<a class="tablename" href="{$urll}{if $offset}&amp;offset={$offset}{/if}{if isset($reloff)}&amp;reloff={$reloff}{/if}{if $item_count}&amp;cant={$item_count}{/if}{foreach key=urlkey item=urlval from=$urlquery}{if $urlval}&amp;{$urlkey}={$urlval|escape:"url"}{/if}{/foreach}"{if $showpopup eq 'y'} {popup text=$smarty.capture.popup|escape:"javascript"|escape:"html" fullhtml="1" hauto=true vauto=true sticky=$stickypopup}{/if}>
-	{assign var='is_link' value='y'}
+	{if !empty($urll)}
+		{assign var='is_link' value='y'}
+	{else}
+		{assign var='is_link' value='n'}
+	{/if}
 {else}
 	{assign var='is_link' value='n'}
 {/if}
-
+{if $is_link eq 'y'}
+	<a class="tablename" href="{$urll}{if $offset}&amp;offset={$offset}{/if}{if isset($reloff)}&amp;reloff={$reloff}{/if}{if $item_count}&amp;cant={$item_count}{/if}{foreach key=urlkey item=urlval from=$urlquery}{if $urlval}&amp;{$urlkey}={$urlval|escape:"url"}{/if}{/foreach}"{if $showpopup eq 'y'} {popup text=$smarty.capture.popup|escape:"javascript"|escape:"html" fullhtml="1" hauto=true vauto=true sticky=$stickypopup}{/if}>
+{/if}
 {* ******************** field with preprend ******************** *}
 {if ($field_value.type eq 't' or $field_value.type eq 'n' or $field_value.type eq 'c') and !empty($field_value.options_array[2])}
 	<span class="formunit">{$field_value.options_array[2]}</span>
@@ -45,7 +50,7 @@
 			{if $list_mode ne 'csv' and count($field_value.links) > 1}
 				<div>
 			{/if}
-			{if $field_value.options_array[4] eq '1' and $showlinks ne 'n' and $list_mode ne 'csv'}
+			{if $field_value.options_array[4] eq '1' and $showlinks ne 'n' and $list_mode ne 'csv' and !empty($field_value.options_array[0]) and !empty($tid)}
 				<a href="tiki-view_tracker_item.php?itemId={$tid}&amp;trackerId={$field_value.options_array[0]}">
 			{/if}
 			{if $list_mode eq 'y'}
@@ -53,7 +58,7 @@
 			{else}
 				{$tlabel}
 			{/if}
-			{if $field_value.options_array[4] eq '1' and $showlinks ne 'n' and $list_mode ne 'csv'}
+			{if $field_value.options_array[4] eq '1' and $showlinks ne 'n' and $list_mode ne 'csv' and !empty($field_value.options_array[0]) and !empty($tid)}
 				</a>
 			{/if}
 			{if $list_mode ne 'csv' and count($field_value.links) > 1}
