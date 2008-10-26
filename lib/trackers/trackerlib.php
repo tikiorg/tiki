@@ -1876,7 +1876,6 @@ class TrackerLib extends TikiLib {
 
 	// Inserts or updates a tracker
 	function replace_tracker($trackerId, $name, $description, $options, $descriptionIsParsed,$groupforAlert) {
-echo "GROUP FOR ALERT:$groupforAlert";
 		if ($trackerId) {
 			$old = $this->getOne('select count(*) from `tiki_trackers` where `trackerId`=?',array((int)$trackerId));
 			if ($old) {
