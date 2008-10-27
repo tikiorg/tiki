@@ -523,12 +523,13 @@ class TrackerLib extends TikiLib {
 	}
 
 	function get_all_tracker_items($trackerId){
-	     $query="select distinct(`itemId`) from `tiki_tracker_items` where`trackerId`=?";
-	     $result=$result = $this->query($query,array((int)$trackerId));
-	     while ($res = $result->fetchRow()) {
-				$ret[] = $res['itemId'];
-	     }
-	     return $ret;
+		$ret = array();
+		$query = "select distinct(`itemId`) from `tiki_tracker_items` where`trackerId`=?";
+		$result = $this->query($query,array((int)$trackerId));
+		while ($res = $result->fetchRow()) {
+			$ret[] = $res['itemId'];
+		}
+		return $ret;
 	}
 
 	function getSqlStatus($status, &$mid, &$bindvars, $trackerId) {
