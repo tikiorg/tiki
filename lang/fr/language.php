@@ -5166,6 +5166,7 @@ $lang=Array(
 "Permissions" => "Droits d'accès",
 "Add Event" => "Ajouter un évènement",
 "Custom Locations" => "Lieux configurables",
+"Group of users alerted when calendar event is modified"=>"Groupe d'utilisateurs alerté quand le calendrier est modifié",
 "Custom Participants" => "Participants configurables",
 "Custom Categories" => "Catégories configurables",
 "Custom Languages" => "Langues configurables",

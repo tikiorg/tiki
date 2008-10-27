@@ -32,7 +32,7 @@ if (isset($_REQUEST["drop"])) {
 		$calendarlib->drop_calendar($_REQUEST["drop"]);
 		$_REQUEST["calendarId"] = 0;
 	} else {
-		key_get($area); 
+		key_get($area);
 	}
 }
 
@@ -46,11 +46,13 @@ if (isset($_REQUEST["save"])) {
 	$customflags["customsubscription"] = isset($_REQUEST["customsubscription"]) ? $_REQUEST["customsubscription"] : 'n';
 	$customflags["personal"] = $_REQUEST["personal"];
 	$customflags['customstatus'] = isset($_REQUEST['customstatus']) ? $_REQUEST['customstatus'] : 'y';
+	$customflags['groupforAlert']=$_REQUEST['groupforAlert'];
 	$options = $_REQUEST['options'];
 	if (!preg_match('/^[0-9a-fA-F]{3,6}$/',$options['customfgcolor'])) $options['customfgcolor'] = '000000';
 	if (!preg_match('/^[0-9a-fA-F]{3,6}$/',$options['custombgcolor'])) $options['custombgcolor'] = 'ffffff';
 	$options['startday'] = $_REQUEST['startday_Hour']*60*60;
 	$options['endday'] = $_REQUEST['endday_Hour']*60*60 - 1;
+
 	$extra = array('calname','description','location','description','language','category','participants','url', 'status', 'status_calview');
 	foreach ($extra as $ex) {
 		if (isset($_REQUEST['show'][$ex]) and $_REQUEST['show'][$ex] == 'on') {
@@ -121,6 +123,8 @@ if ($_REQUEST["calendarId"]) {
 	$info["personal"] = 'n';
 	$info["startday"] = '25200';
 	$info["endday"] = '72000';
+	$info["groupforAlertList"] = array();
+	$info["groupforAlert"] = '';
     $info["defaulteventstatus"] = 0;
 	if (!empty($_REQUEST['show']) && $_REQUEST['show'] == 'mod') {
 		$cookietab = '2';
@@ -128,6 +132,14 @@ if ($_REQUEST["calendarId"]) {
 		$cookietab = 1;
 	}
 }
+
+$all_groups = $userlib->list_all_groups();
+if ( is_array($all_groups) ) {
+	foreach ( $all_groups as $g ){
+		$groupforAlertList[$g] =  ( $g == $info["groupforAlert"] )  ? 'selected' : '';
+	}
+}
+
 setcookie('tab', $cookietab);
 $smarty->assign_by_ref('cookietab', $cookietab);
 
@@ -152,6 +164,9 @@ $smarty->assign('show_participants', $info["show_participants"]);
 $smarty->assign('show_url', $info["show_url"]);
 $smarty->assign('calendarId', $_REQUEST["calendarId"]);
 $smarty->assign('personal', $info["personal"]);
+$smarty->assign('groupforAlert', $info["groupforAlert"]);
+$smarty->assign_by_ref('groupforAlertList', $groupforAlertList);
+
 $smarty->assign('startday', $info["startday"] < 0 ?0: round($info['startday']/(60*60)));
 $smarty->assign('endday', $info["endday"] < 0 ?0: round($info['endday']/(60*60)));
 $smarty->assign('hours', array('0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24'));

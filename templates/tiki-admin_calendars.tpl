@@ -3,7 +3,7 @@
 {if $calendarId}
 	<div class="navbar">
 		{button _text="{tr}Create Calendar{/tr}" href="tiki-admin_calendars.php?show=mod"}
-	</div>	
+	</div>
 {/if}
 
 {if $prefs.feature_tabs eq 'y'}
@@ -173,6 +173,16 @@
 {tr}Show in popup box{/tr}<input type="checkbox" name="show[status]" value="on"{if $info.show_status eq 'y'} checked="checked"{/if} />
 {tr}Show in calendar view{/tr}<input type="checkbox" name="show[status_calview]" value="on"{if $info.show_status_calview ne 'n'} checked="checked"{/if} />
 </td></tr>
+<tr class="formcolor">
+<td>{tr}Group of users alerted when calendar event is modified{/tr}</td>
+<td>
+<select id="groupforAlert" name="groupforAlert">
+<option value="">&nbsp;</option>
+{foreach key=k item=i from=$groupforAlertList}
+<option value="{$k}" {$i}>{$k}</option>
+{/foreach}
+</select></td>
+</tr>
 <tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 <br />
