@@ -830,8 +830,10 @@ if ( $prefs['feature_user_watches'] == 'y' ) {
 	}
 }
 
-$all_galleries = $filegallib->list_file_galleries(0, -1, 'name_asc', $user, '', -1, false, true, false, false,false,true, false );
-$smarty->assign_by_ref('all_galleries', $all_galleries['data']);
+if ($prefs['fgal_show_explorer'] == 'y') {
+	$all_galleries = $filegallib->list_file_galleries(0, -1, 'name_asc', $user, '', -1, false, true, false, false,false,true, false );
+	$smarty->assign_by_ref('all_galleries', $all_galleries['data']);
+}
 
 // Build galleries browsing tree and current gallery path array
 //
@@ -863,7 +865,8 @@ function add2tree(&$tree, &$galleries, &$gallery_id, &$gallery_path, &$expanded,
 	}
 }
 
-if ( is_array($all_galleries) && count($all_galleries) > 0 ) {
+$gallery_path_str = '';
+if ( $prefs['fgal_show_explorer'] == 'y' && is_array($all_galleries) && count($all_galleries) > 0 ) {
 	$tree = array('name' => tra('File Galleries'), 'data' => array(), 'link_var' => 'galleryId', 'link_id' => 0 );
 	$gallery_path = array();
 	$expanded = array('1');
@@ -871,7 +874,6 @@ if ( is_array($all_galleries) && count($all_galleries) > 0 ) {
 	add2tree($tree['data'], $all_galleries['data'], $galleryId, $gallery_path, $expanded);
 
 	array_unshift($gallery_path, array(0, $tree['name']));
-	$gallery_path_str = '';
 	foreach ( $gallery_path as $dir_id ) {
 		if ( $gallery_path_str != '' ) $gallery_path_str .= ' &nbsp;&gt;&nbsp;';
 		$gallery_path_str .= '<a href="tiki-list_file_gallery.php?galleryId='.$dir_id[0].( ( isset($_REQUEST['filegals_manager']) && $_REQUEST['filegals_manager'] != '' ) ? '&amp;filegals_manager='.urlencode($_REQUEST['filegals_manager']) : '').'">'.$dir_id[1].'</a>';
