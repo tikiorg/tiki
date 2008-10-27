@@ -526,7 +526,7 @@ class TrackerLib extends TikiLib {
 	     $query="select distinct(`itemId`) from `tiki_tracker_items` where`trackerId`=?";
 	     $result=$result = $this->query($query,array((int)$trackerId));
 	     while ($res = $result->fetchRow()) {
-				$ret=$res['itemId'];
+				$ret[] = $res['itemId'];
 	     }
 	     return $ret;
 	}
