@@ -413,7 +413,18 @@ function walk_and_parse(&$c, &$src, &$p, $head_url ) {
 					case "br": $src .= '%%%'; break;
 					case "hr": $src .= '---'; break;
 					case "title": $src .= "\n!"; $p['stack'][] = array('tag' => 'title', 'string' => "\n"); break;
-					case "p": $src .= "\n"; $p['stack'][] = array('tag' => 'p', 'string' => "\n"); break;
+					case "p":
+					case "div": // Wiki parsing creates divs for center
+						if( isset($c[$i]['pars']) 
+							&& isset($c[$i]['pars']['style']) 
+							&& $c[$i]['pars']['style']['value'] == 'text-align: center;' ) {
+							$src .= "\n::";
+							$p['stack'][] = array('tag' => $c[$i]['data']['name'], 'string' => "::\n"); 
+						} else {
+							$src .= "\n";
+							$p['stack'][] = array('tag' => $c[$i]['data']['name'], 'string' => "\n"); 
+						}
+						break;
 					case "b": $src .= '__'; $p['stack'][] = array('tag' => 'b', 'string' => '__'); break;
 					case "i": $src .= "''"; $p['stack'][] = array('tag' => 'i', 'string' => "''"); break;
 					case "em": $src .= "''"; $p['stack'][] = array('tag' => 'em', 'string' => "''"); break;
@@ -433,6 +444,7 @@ function walk_and_parse(&$c, &$src, &$p, $head_url ) {
 					case "h6": $src .= "\n!!!!!!"; $p['stack'][] = array('tag' => 'h6', 'string' => "\n"); break;
 					case "pre": $src .= "~pre~\n"; $p['stack'][] = array('tag' => 'pre', 'string' => "~/pre~\n"); break;
 					case "sub": $src .= "{SUB()}"; $p['stack'][] = array('tag' => 'sub', 'string' => "{SUB}"); break;
+					case "sup": $src .= "{SUP()}"; $p['stack'][] = array('tag' => 'sup', 'string' => "{SUP}"); break;
 					// Table parser
 					case "table": $src .= '||'; $p['stack'][] = array('tag' => 'table', 'string' => '||'); $p['first_tr'] = true; break;
 					case "tr": $src .= $p['first_tr'] ? '' : "\n"; $p['first_tr'] = false; $p['first_td'] = true; break;
