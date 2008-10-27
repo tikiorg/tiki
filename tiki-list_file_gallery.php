@@ -93,6 +93,7 @@ $smarty->assign('dup_mode', 'n');
 $smarty->assign('visible', 'y');
 $smarty->assign('fgal_type', 'default');
 $smarty->assign('parentId', isset($_REQUEST['parentId']) ? (int)$_REQUEST['parentId'] : -1);
+$smarty->assign('groupforAlert', isset($_REQUEST['groupforAlert']) ? $_REQUEST['groupforAlert'] : '');
 $smarty->assign('creator', $user);
 $smarty->assign('sortorder', 'created');
 $smarty->assign('sortdirection', 'desc');
@@ -101,7 +102,7 @@ $smarty->assign_by_ref('gal_info', $gal_info);
 $smarty->assign_by_ref('galleryId', $_REQUEST['galleryId']);
 $smarty->assign_by_ref('name', $gal_info['name']);
 $smarty->assign_by_ref('description', $gal_info['description']);
-
+$smarty->assign_by_ref('groupforAlertList', $groupforAlertList);
 $smarty->assign('reindex_file_id', -1);
 
 // Execute batch actions
@@ -246,6 +247,13 @@ if ( isset($_REQUEST['edit_mode']) and $_REQUEST['edit_mode'] ) {
 		$smarty->assign_by_ref('users', $users['data']);
 	}
 
+	$all_groups = $userlib->list_all_groups();
+	if ( is_array($all_groups) ) {
+		foreach ( $all_groups as $g ){
+		$groupforAlertList[$g] =  ( $g == $gal_info["groupforAlert"] )  ? 'selected' : '';
+		}
+	}
+
 	// Edit a file
 	if ( isset($_REQUEST['fileId']) && $_REQUEST['fileId'] > 0 ) {
 		$info = $filegallib->get_file_info($_REQUEST['fileId']);
@@ -264,6 +272,7 @@ if ( isset($_REQUEST['edit_mode']) and $_REQUEST['edit_mode'] ) {
 		$smarty->assign_by_ref('archives', $gal_info['archives']);
 		$smarty->assign_by_ref('visible', $gal_info['visible']);
 		$smarty->assign_by_ref('parentId', $gal_info['parentId']);
+		$smarty->assign_by_ref('groupforAlert', $gal_info['groupforAlert']);
 		$smarty->assign_by_ref('creator', $gal_info['user']);
 		$smarty->assign('max_desc', $gal_info['max_desc']);
 		$smarty->assign('fgal_type', $gal_info['type']);
@@ -342,7 +351,7 @@ if ( isset($_REQUEST['edit']) ) {
 
 	// Everything is ok so we proceed to edit the file or gallery
 
-	$request_vars = array('name', 'fname', 'description', 'fdescription', 'max_desc', 'fgal_type', 'maxRows', 'rowImages', 'thumbSizeX', 'thumbSizeY', 'parentId', 'creator');
+	$request_vars = array('name', 'fname', 'description', 'fdescription', 'max_desc', 'fgal_type', 'maxRows', 'rowImages', 'thumbSizeX', 'thumbSizeY', 'parentId','groupforAlert', 'creator');
 	foreach ( $request_vars as $v ) {
 		if ( isset($_REQUEST[$v]) ) {
 			$smarty->assign_by_ref($v, $_REQUEST[$v]);
@@ -393,6 +402,7 @@ if ( isset($_REQUEST['edit']) ) {
 			'max_desc' => $_REQUEST['max_desc'],
 			'type' => $_REQUEST['fgal_type'],
 			'parentId' => $_REQUEST['parentId'],
+			'groupforAlert' => $_REQUEST['groupforAlert'],
 			'lockable' => $lockable,
 			'show_lockedby' => $_REQUEST['fgal_list_lockedby'],
 			'archives' => $_REQUEST['archives'],
@@ -578,7 +588,7 @@ if ( ! empty($_FILES) ) {
 			fclose($fp);
 			// remove file after copying it to the right location or database
 			@unlink($tmp_dest);
-			
+
 			if ( $prefs['fgal_use_db'] == 'n' ) {
 				fclose($fw);
 				$data = '';
@@ -682,7 +692,7 @@ $smarty->assign_by_ref('offset', $_REQUEST['offset']);
 if (isset($_GET['slideshow'])) {
   $_REQUEST['maxRecords'] = $maxRecords = -1;
   $offset = 0;
-} 
+}
 
 $smarty->assign_by_ref('name', $gal_info["name"]);
 $smarty->assign_by_ref('description', $gal_info["description"]);
@@ -713,7 +723,7 @@ if (isset($_GET['slideshow'])) {
   reset($filesid);
   $smarty->assign('firstId',current($filesid));
   $smarty->assign('show_find', 'n');
-  $smarty->assign('direct_pagination', 'y'); 
+  $smarty->assign('direct_pagination', 'y');
   $smarty->display('file_gallery_slideshow.tpl');
   die();
 } else {
@@ -797,7 +807,7 @@ if ( $prefs['feature_user_watches'] == 'y' ) {
 			);
 		} else {
 			$tikilib->remove_user_watch($user, $_REQUEST['watch_event'], $_REQUEST['watch_object']);
-		}   
+		}
 	}
 
 	$smarty->assign('user_watching_file_gallery', 'n');
@@ -805,9 +815,9 @@ if ( $prefs['feature_user_watches'] == 'y' ) {
 		$smarty->assign('user_watching_file_gallery', 'y');
 	}
 
-	// Check, if the user is watching this file gallery by a category.    
+	// Check, if the user is watching this file gallery by a category.
 	if ( $prefs['feature_categories'] == 'y' ) {
-		$watching_categories_temp = $categlib->get_watching_categories($galleryId, 'file gallery', $user);	    
+		$watching_categories_temp = $categlib->get_watching_categories($galleryId, 'file gallery', $user);
 		$smarty->assign('category_watched', 'n');
 		if ( count($watching_categories_temp) > 0 ) {
 			$smarty->assign('category_watched', 'y');

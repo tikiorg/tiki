@@ -867,6 +867,7 @@ CREATE TABLE tiki_file_galleries (
   show_files char(1) default NULL,
   show_explorer char(1) default NULL,
   show_path char(1) default NULL,
+  groupforAlert varchar(255) default NULL,
   PRIMARY KEY (galleryId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 

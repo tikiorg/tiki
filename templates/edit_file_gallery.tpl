@@ -33,7 +33,7 @@
           </select>
         </td></tr>
         <tr><td class="formcolor">{tr}Description{/tr}:<br/>({tr}required field for podcasts{/tr})</td><td class="formcolor"><textarea rows="5" cols="40" name="description" style="width:100%">{$description|escape}</textarea></td></tr>
-        <tr><td class="formcolor">{tr}Gallery is visible to non-admin users?{/tr}</td><td class="formcolor"><input type="checkbox" name="visible" {if $visible eq 'y'}checked="checked"{/if} /></td></tr>       
+        <tr><td class="formcolor">{tr}Gallery is visible to non-admin users?{/tr}</td><td class="formcolor"><input type="checkbox" name="visible" {if $visible eq 'y'}checked="checked"{/if} /></td></tr>
 
         <tr><td class="formcolor">{tr}This Gallery is Public{/tr}:</td><td class="formcolor"><input type="checkbox" name="public" {if $public eq 'y'}checked="checked"{/if}/></td></tr>
         <tr><td class="formcolor">{tr}The files can be locked at download:{/tr} </td><td class="formcolor"><input type="checkbox" name="lockable" {if $lockable eq 'y'}checked="checked"{/if}/></td></tr>
@@ -59,6 +59,20 @@
           {section name=ix loop=$users}<option value="{$users[ix].login|escape}"{if $creator eq $users[ix].login} selected="selected"{/if}>{$users[ix].login|username}</option>{/section}
           </select>
         </td></tr>
+
+	<tr>
+	<td class="formcolor">{tr}Group of users alerted when file gallery is modified{/tr}</td>
+	<td class="formcolor">
+	<select id="groupforAlert" name="groupforAlert">
+	<option value="">&nbsp;</option>
+	{foreach key=k item=i from=$groupforAlertList}
+	<option value="{$k}" {$i}>{$k}</option>
+	{/foreach}
+	</select>
+	</td>
+	</tr>
+
+
         {/if}
         {include file='categorize.tpl'}
 

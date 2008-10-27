@@ -30,7 +30,7 @@ class FileGalLib extends TikiLib {
 		} else {
 			$savedir=$prefs['fgal_use_dir'];
 		}
-		
+
 		if ($fileInfo['path']) {
 			unlink ($savedir . $fileInfo['path']);
 		}
@@ -188,6 +188,7 @@ class FileGalLib extends TikiLib {
 		if (!isset($fgal_info['visible']))  $fgal_info['visible'] = 'y';
 		if (!isset($fgal_info['type']))  $fgal_info['type'] = 'default';
 		if (!isset($fgal_info['parentId']))  $fgal_info['parentId'] = -1;
+		if (!isset($fgal_info['groupforAlert']))  $fgal_info['groupforAlert'] = '';
 		if (!isset($fgal_info['lockable']))  $fgal_info['lockable'] = 'n';
 		if (!isset($fgal_info['show_lockedby']))  $fgal_info['show_lockedby'] = 'y';
 		if (!isset($fgal_info['archives']))  $fgal_info['archives'] = -1;
@@ -208,7 +209,7 @@ class FileGalLib extends TikiLib {
 			$query = "update `tiki_file_galleries` set `name`=?, `maxRows`=?,
 			`description`=?, `lastModif`=?, `public`=?, `visible`=?, `show_icon`=?,
 			`show_id`=?, `show_name`=?, `show_description`=?, `show_size`=?,
-			`show_created`=?, `show_hits`=?, `max_desc`=?, `type`=?, `parentId`=?,
+			`show_created`=?, `show_hits`=?, `max_desc`=?, `type`=?, `parentId`=?,`groupforAlert`=?,
 			`user`=?, `lockable`=?, `show_lockedby`=?, `archives`=?, `sort_mode`=?,
 			`show_modified`=?, `show_creator`=?, `show_author`=?, `subgal_conf`=?,
 			`show_last_user`=?, `show_comment`=?, `show_files`=?, `show_explorer`=?,
@@ -220,7 +221,7 @@ class FileGalLib extends TikiLib {
 			$fgal_info['show_name'], $fgal_info['show_description'],
 			$fgal_info['show_size'], $fgal_info['show_created'],
 			$fgal_info['show_hits'], (int) $fgal_info['max_desc'],
-			$fgal_info['type'], $fgal_info['parentId'], $fgal_info['user'],
+			$fgal_info['type'], $fgal_info['parentId'],$fgal_info['groupforAlert'], $fgal_info['user'],
 			$fgal_info['lockable'], $fgal_info['show_lockedby'],
 			$fgal_info['archives'], $fgal_info['sort_mode'],
 			$fgal_info['show_modified'], $fgal_info['show_creator'],
@@ -242,10 +243,10 @@ class FileGalLib extends TikiLib {
 			$query = "insert into `tiki_file_galleries`(`name`, `description`,
 			`created`, `user`, `lastModif`, `maxRows`, `public`, `hits`, `visible`,
 			`show_id`, `show_icon`, `show_name`, `show_description`, `show_created`,
-			`show_hits`, `max_desc`, `type`, `parentId`, `lockable`, `show_lockedby`,
+			`show_hits`, `max_desc`, `type`, `parentId`,`groupforAlert`, `lockable`, `show_lockedby`,
 			`archives`, `sort_mode`, `show_modified`, `show_creator`, `show_author`,
 			`subgal_conf`, `show_last_user`, `show_comment`, `show_files`,
-			`show_explorer`, `show_path`) values (?,?,?,?,?,?,?,?,?,
+			`show_explorer`, `show_path`) values (?,?,?,?,?,?,?,?,?,?,
 			?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 			$bindvars=array($fgal_info['name'], $fgal_info['description'], (int)
@@ -254,7 +255,7 @@ class FileGalLib extends TikiLib {
 			$fgal_info['show_id'], $fgal_info['show_icon'], $fgal_info['show_name'],
 			$fgal_info['show_description'], $fgal_info['show_created'],
 			$fgal_info['show_hits'], (int) $fgal_info['max_desc'],
-			$fgal_info['type'], $fgal_info['parentId'], $fgal_info['lockable'],
+			$fgal_info['type'], $fgal_info['parentId'],$fgal_info['groupforAlert'], $fgal_info['lockable'],
 			$fgal_info['show_lockedby'], $fgal_info['archives'],
 			$fgal_info['sort_mode'], $fgal_info['show_modified'],
 			$fgal_info['show_creator'], $fgal_info['show_author'],
@@ -509,11 +510,11 @@ class FileGalLib extends TikiLib {
 		else {
 			$query = "insert into `tiki_file_handlers` (`mime_type`,`cmd`) values (?,?)";
 			$result = $this->query($query,array($mime_type,$cmd));
-		}	
-		
+		}
+
 		return $result;
 	}
-	
+
 	function delete_file_handler($mime_type) {
 		$query = "delete from `tiki_file_handlers` where `mime_type`=?";
 		$result = $this->query($query,array($mime_type));
@@ -527,7 +528,7 @@ class FileGalLib extends TikiLib {
 		while ($row = $result->fetchRow()) {
 			$fileParseApps[$row['mime_type']] = $row['cmd'];
 		}
-		
+
 		return $fileParseApps;
 	}
 
@@ -538,7 +539,7 @@ class FileGalLib extends TikiLib {
 		while($row = $result->fetchRow()) {
 			$rows[] = $row;
 		}
-		
+
 		foreach($rows as $row) {
 			$search_text = $this->get_search_text_for_data($row['data'],$row['path'],$row['filetype'], $row['galleryId']);
 			if ($search_text!==false) {
@@ -552,7 +553,7 @@ class FileGalLib extends TikiLib {
 
 	function get_search_text_for_data($data,$path,$type, $galleryId) {
 		global $prefs;
-		
+
 		if (!isset($data) && !isset($path)) {
 			return false;
 		}
@@ -562,7 +563,7 @@ class FileGalLib extends TikiLib {
 		} else {
 			$savedir=$prefs['fgal_use_dir'];
 		}
-		
+
 		$fileParseApps = $this->get_file_handlers();
 
 		$parseApp = '';
@@ -573,13 +574,13 @@ class FileGalLib extends TikiLib {
 
 		if (empty($parseApp))
 			return '';
-			
-		if (empty($path)) {	
+
+		if (empty($path)) {
 			$tmpfname = tempnam("/tmp", "wiki_");
 			$tmpFile = fopen($tmpfname,'w');
 			if ($tmpFile === false)
 				return false;
-				
+
 			if (fwrite($tmpFile,$data) === false)
 				return false;
 			fflush($tmpFile);
@@ -588,7 +589,7 @@ class FileGalLib extends TikiLib {
 		else {
 			$tmpfname = $savedir . $path;
 		}
-		
+
 		$cmd = str_replace('%1',$tmpfname,$parseApp);
 		$handle = popen("$cmd","r");
 		if ($handle === false) {
@@ -596,16 +597,16 @@ class FileGalLib extends TikiLib {
 				@unlink($tmpfname);
 			return false;
 		}
-			
+
 		$contents = '';
 		while (!feof($handle)) {
 			$contents .= fread($handle, 8192);
 		}
 		fclose($handle);
-		
+
 		if (empty($path))
 			@unlink($tmpfname);
-				
+
 		return $contents;
 	}
 
@@ -629,7 +630,7 @@ class FileGalLib extends TikiLib {
 	/* unlock a file */
 	function unlock_file($fileId) {
 		$query = 'update `tiki_files` set `lockedby`=? where `fileId`=?';
-		$this->query($query, array(NULL, $fileId));		
+		$this->query($query, array(NULL, $fileId));
 	}
 	/* get archives of a file */
 	function get_archives($fileId, $offset=0, $maxRecords=-1, $sort_mode='created_desc', $find='') {

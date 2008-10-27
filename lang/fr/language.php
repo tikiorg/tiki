@@ -3533,6 +3533,7 @@ $lang=Array(
 "none" => "aucun",
 "Parent gallery" => "Galerie parente",
 "Owner of the gallery" => "Propriétaire de la galerie",
+"Group of users alerted when file gallery is modified","groupe des utilisateurs alerté quand un élément de la galerie est modifié",
 "Default sort order" => "Ordre du tri par défaut",
 "descending" => "décroissant",
 "ascending" => "croissant",
