@@ -1933,11 +1933,9 @@ class TikiLib extends TikiDB {
 
 	/*shared*/
 	function get_file($id) {
-		$query = "select `path`,`galleryId`,`filename`,`filetype`,`data`,`filesize`,`name`,`description` from `tiki_files` where `fileId`=?";
-		$query = "select `path` ,`galleryId`,`filename`,`filetype`,`data`,`filesize`, `lockedby` from `tiki_files` where `fileId`=?";
-		$result = $this->query($query,array((int) $id));
-		$res = $result->fetchRow();
-		return $res;
+		$query = "select * from `tiki_files` where `fileId`=?";
+		$result = $this->query($query, array((int)$id));
+		return $result ? $result->fetchRow() : array();
 	}
 
 	/*shared: added by AW*/
