@@ -30,7 +30,7 @@ if ($topLevelId != '' && is_numeric($topLevelId)) {
 	$secondLevelFeatures = '';	
 }
 
-if ($secondLevelId != '' && is_numeric($secondLevelId)) {
+if (isset($secondLevelId) && $secondLevelId != '' && is_numeric($secondLevelId)) {
 	$thirdLevelFeatures = $magiclib->get_child_features($secondLevelId, 'containers');
 } else {
 	$thirdLevelFeatures = '';	
