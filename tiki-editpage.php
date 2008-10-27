@@ -396,8 +396,10 @@ function walk_and_parse(&$c, &$src, &$p, $head_url ) {
 	for ($i=0; $i <= $c["contentpos"]; $i++) {
 		// If content type 'text' output it to destination...
 		if ($c[$i]["type"] == "text") {
-			if( ! preg_match( '/^\s*$/s', $c[$i]["data"] ) )  {
-				$src .= preg_replace( '/^\s+/s', ' ', $c[$i]["data"] );
+			if( ! ctype_space( $c[$i]["data"] ) )  {
+				$add = preg_replace( '/^\s+/s', ' ', $c[$i]["data"] );
+				$add = rtrim( $add );
+				$src .= $add;
 			}
 		} elseif ($c[$i]["type"] == "comment") {
 			$src .= preg_replace( '/<!--/', "\n~hc~", preg_replace( '/-->/', "~/hc~\n", $c[$i]["data"] ));
@@ -482,9 +484,13 @@ function walk_and_parse(&$c, &$src, &$p, $head_url ) {
 				switch ($c[$i]["data"]["name"]) {
 					case "ul":
 						if (end($p['listack']) == '*') array_pop($p['listack']);
+						if( empty($p['listack']) )
+							$src .= "\n";
 						break;
 					case "ol":
 						if (end($p['listack']) == '#') array_pop($p['listack']);
+						if( empty($p['listack']) )
+							$src .= "\n";
 						break;
 					default:
 						$e = end($p['stack']);
