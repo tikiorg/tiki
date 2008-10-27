@@ -911,8 +911,8 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
 		&& isset($_REQUEST['copyrightYear'])
 		&& isset($_REQUEST['copyrightAuthors'])
 		&& !empty($_REQUEST['copyrightYear'])
-		&& !empty($_REQUEST['copyrightTitle']
-	) {
+		&& !empty($_REQUEST['copyrightTitle']) 
+	){
 
 		include_once("lib/copyrights/copyrightslib.php");
 		$copyrightslib = new CopyrightsLib($dbTiki);
