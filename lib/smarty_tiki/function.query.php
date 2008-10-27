@@ -122,13 +122,13 @@ function smarty_function_query($params, &$smarty) {
 
     switch ( $params['_type'] ) {
       case 'absolute_uri':
-        $ret = $base_host.$php_self.'?'.$ret;
+        $ret = $base_host.$php_self.( $ret == '' ? '' : '?'.$ret );
         break;
       case 'absolute_path':
-        $ret = $php_self.'?'.$ret;
+        $ret = $php_self.( $ret == '' ? '' : '?'.$ret );
         break;
       case 'relative':
-	$ret = basename($php_self).'?'.$ret;
+	$ret = basename($php_self).( $ret == '' ? '' : '?'.$ret );
         break;
       case 'form_input': case 'arguments': /* default */
     }
@@ -136,4 +136,3 @@ function smarty_function_query($params, &$smarty) {
 
   return $ret;
 }
-?>
