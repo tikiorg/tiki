@@ -356,10 +356,19 @@ function histlib_helper_setup_diff( $page, $oldver, $newver )
 
 			$parse_options = array('is_html' => ($new['is_html'] == 1), 'noheadinc' => true);
 			$new["data"] = $tikilib->parse_data($new["data"], $parse_options);
+
+			$old['data'] = histlib_strip_irrelevant( $old['data'] );
+			$new['data'] = histlib_strip_irrelevant( $new['data'] );
 		}
 		$html = diff2($old["data"], $new["data"], $_REQUEST["diff_style"]);
 		$smarty->assign_by_ref('diffdata', $html);
 	}
+}
+
+function histlib_strip_irrelevant( $data )
+{
+	$data = preg_replace( "/<(h1|h2|h3|h4|h5|h6|h7)\s+([^\\\\>]+)>/i", '<$1>', $data );
+	return $data;
 }
 
 ?>
