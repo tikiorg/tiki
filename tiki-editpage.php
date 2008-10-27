@@ -791,7 +791,7 @@ if (isset($_REQUEST['mode_normal'])) {
 	$exticons = $prefs['feature_wiki_ext_icon'];
 	$prefs['feature_wiki_ext_icon'] = 'n';		// and the external link icons
 	$edit_data = preg_replace('/(!!*)[\+\-]/m','$1', $edit_data);		// remove show/hide headings
-	$parsed = $tikilib->parse_data($edit_data,Array('absolute_links'=>true, 'noparseplugins'=>true));
+	$parsed = $tikilib->parse_data($edit_data,array('absolute_links'=>true, 'noparseplugins'=>true,'noheaderinc'=>true));
 	$parsed = preg_replace('/<span class=\"img\">(.*?)<\/span>/im','$1', $parsed);					// remove spans round img's
 	$parsed = preg_replace("/src=\"img\/smiles\//im","src=\"".$tikiroot."img/smiles/", $parsed);	// fix smiley src's
 	$smarty->assign('pagedata', $parsed);

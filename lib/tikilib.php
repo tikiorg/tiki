@@ -5841,10 +5841,11 @@ class TikiLib extends TikiDB {
 
 		// Handle parsing options
 		if ( $options == null ) $options = array();
-		$is_html = isset($options['is_html']) ? $options['is_html'] : false;
-		$absolute_links = isset($options['absolute_links']) ? $options['absolute_links'] : false;
-		$language = isset($options['language']) ? $options['language'] : '';
-		$noparseplugins = isset($options['noparseplugins']) ? $options['noparseplugins'] : false;
+		$options['is_html'] = $is_html = isset($options['is_html']) ? $options['is_html'] : false;
+		$options['absolute_links'] = $absolute_links = isset($options['absolute_links']) ? $options['absolute_links'] : false;
+		$options['language'] = $language = isset($options['language']) ? $options['language'] : '';
+		$options['noparseplugins'] = $noparseplugins = isset($options['noparseplugins']) ? $options['noparseplugins'] : false;
+		$options['noheaderinc'] = $noheaderinc = isset($options['noheaderinc']) ? $options['noheaderinc'] : false;
 
 		// if simple_wiki is true, disable some wiki syntax
 		// basically, allow wiki plugins, wiki links and almost
@@ -6308,7 +6309,7 @@ class TikiLib extends TikiDB {
 		}
 
 		if (!$simple_wiki) {
-			$this->parse_data_process_maketoc( $data, $language, $page );
+			$this->parse_data_process_maketoc( $data, $options, $language, $page );
 
 		} // closing if ($simple_wiki)
 
@@ -6327,7 +6328,7 @@ class TikiLib extends TikiDB {
 		return $data;
 	}
 
-	function parse_data_process_maketoc( &$data, $language='', $page ='' ) {
+	function parse_data_process_maketoc( &$data, $options, $language='', $page ='' ) {
 
 		global $prefs;
 
@@ -6691,11 +6692,18 @@ class TikiLib extends TikiDB {
 						} else {
 							$button = '';
 						}
+
 						// Use $hdrlevel + 1 because the page title is H1, so none of the other headers should be.
+						// Except when page title is off
+						// Or when in wysiwyg mode
+						$headerInc = 0;
+						if( $prefs['feature_page_title'] == 'y' && ! $options['noheaderinc'] )
+							++$headerInc;
+
 						if ( $prefs['feature_wiki_show_hide_before'] == 'y' ) {
-							$line = $button.'<h'.($hdrlevel+1).' class="showhide_heading" id="'.$thisid.'">'.$aclose.' '.$title_text.'</h'.($hdrlevel+1).'>'.$aclose2;
+							$line = $button.'<h'.($hdrlevel+$headerInc).' class="showhide_heading" id="'.$thisid.'">'.$aclose.' '.$title_text.'</h'.($hdrlevel+1).'>'.$aclose2;
 						} else {
-							$line = $button.'<h'.($hdrlevel+1).' class="showhide_heading" id="'.$thisid.'">'.$title_text.'</h'.($hdrlevel+1).'>'.$aclose.$aclose2;
+							$line = $button.'<h'.($hdrlevel+$headerInc).' class="showhide_heading" id="'.$thisid.'">'.$title_text.'</h'.($hdrlevel+1).'>'.$aclose.$aclose2;
 						}
 					} elseif (!strcmp($line, $prefs['wiki_page_separator'])) {
 						// Close open paragraph, lists, and div's
