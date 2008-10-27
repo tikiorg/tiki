@@ -3,8 +3,8 @@
 {title help="Surveys"}{tr}Admin surveys{/tr}{/title}
 
 <div class="navbar">
-<span class="button2"><a href="tiki-list_surveys.php">{tr}List Surveys{/tr}</a></span>
-<span class="button2"><a href="tiki-survey_stats.php">{tr}Survey Stats{/tr}</a></span>
+	{button href="tiki-list_surveys.php" _text="{tr}List Surveys{/tr}"}
+	{button href="tiki-survey_stats.php" _text="{tr}Survey Stats{/tr}"}
 </div>
 
 {if $info.surveyId > 0}
@@ -19,27 +19,21 @@
 <input type="hidden" name="surveyId" value="{$info.surveyId|escape}" />
 <table class="normal">
 <tr class="formcolor">
-<!-- the tiny field for giving it a name-->
 <td>{tr}Name{/tr}:</td>
 <td>
 
-<!-- % works here -->
 <input type="text" name="name" size="80" value="{$info.name|escape}" /></td>
-
-
 
 </tr>
 <tr class="formcolor">
 <td>{tr}Description{/tr}:</td>
 <td>
-<!-- % !work here hence the wonkiness in formatting... ugly as dirt -->
 <textarea name="description" rows="4" cols="80">{$info.description|escape}</textarea></td></tr>
 {include file=categorize.tpl}
 <tr class="formcolor">
 <td>{tr}Status{/tr}</td>
 <td>
 <select name="status">
-<!-- the survey has an on and off button... could be applied to quizzes -->
 <option value="o" {if $info.status eq 'o'}selected='selected'{/if}>{tr}Open{/tr}</option>
 <option value="c" {if $info.status eq 'c'}selected='selected'{/if}>{tr}closed{/tr}</option>
 </select>
@@ -47,29 +41,19 @@
 <tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
-<!--  find in existing surveys -->
 <br />
 <h2>{tr}Surveys{/tr}</h2>
 {if $channels or ($find ne '')}
   {include file='find.tpl' _sort_mode='y'}
 {/if}
-<!--  existing surveys -->
 
 <table class="normal">
 <tr>
 <th>
-<!--  table: sort by ID -->
 <a href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'surveyId_desc'}surveyId_asc{else}surveyId_desc{/if}">{tr}ID{/tr}</a></th>
-<!--  table: sort by name -->
 <th><a href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></th>
-<!--  table: sort by description-->
 <th><a href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}Description{/tr}</a></th>
-<!--  table: sort by stat: which appears rediculous becuase there is nothing to sort-->
 <th><a href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'status_desc'}status_asc{else}status_desc{/if}">{tr}Status{/tr}</a></th>
-<!--  table: sort by question but it doesn't work and I don't know why-->
-{*
-<th><a href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'question_desc'}question_asc{else}question_desc{/if}">{tr}Questions{/tr}</th>
-*}
 <th>{tr}Questions{/tr}</th>
 
 <th>{tr}Action{/tr}</th>
@@ -103,7 +87,6 @@
 <tr><td class="odd" colspan="6">{tr}No records found.{/tr}</td></tr>
 {/section}
 </table>
-<!--  the little page adjust... need to find the $prefs.maxRecords value so that we can set that to a user controlled value-->
 
 <div class="mini">
 {if $prev_offset >= 0}
@@ -122,5 +105,3 @@
 {/section}
 {/if}
 </div>
-
-<!--end tiki-admin_surveys.tpl... last edited by dgd-->

@@ -22,13 +22,14 @@ class SurveyLib extends TikiLib
 	}
 
 	function register_survey_text_option_vote($questionId, $value) {
-		$cant = $this->getOne("select count(*) from `tiki_survey_question_options` where `qoption`=?",array($value));
+		$bindvars = array((int)$questionId, $value);
+		$cant = $this->getOne("select count(*) from `tiki_survey_question_options` where `questionId`=? and `qoption`=?", $bindvars);
 		if ($cant) {
 			$query = "update `tiki_survey_question_options` set `votes`=`votes`+1 where `questionId`=? and `qoption`=?";
 		} else {
 			$query = "insert into `tiki_survey_question_options`(`questionId`,`qoption`,`votes`) values(?,?,1)";
 		}
-		$result = $this->query($query, array((int)$questionId,$value));
+		$result = $this->query($query, $bindvars);
 	}
 
 	function register_survey_rate_vote($questionId, $rate) {
@@ -40,7 +41,7 @@ class SurveyLib extends TikiLib
 
 	function register_survey_option_vote($questionId, $optionId) {
 		$query = "update `tiki_survey_question_options` set `votes`=`votes`+1 where `questionId`=? and `optionId`=?";
-		$result = $this->query($query, array((int)$questionId,(int)$optionId));
+		$result = $this->query($query, array((int)$questionId, (int)$optionId));
 	}
 
 	function clear_survey_stats($surveyId) {
@@ -77,22 +78,24 @@ class SurveyLib extends TikiLib
 		return $surveyId;
 	}
 
-	function replace_survey_question($questionId, $question, $type, $surveyId, $position, $options) {
-		//$question = addslashes($question);
-
-		//$options = addslashes($options);
+	function replace_survey_question($questionId, $question, $type, $surveyId, $position, $options, $mandatory = 'n', $min_answers = 0, $max_answers = 0) {
+		if ( $mandatory != 'y' ) $mandatory = 'n';
+		$min_answers = (int)$min_answers;
+		$max_answers = (int)$max_answers;
 
 		if ($questionId) {
-			$query = "update `tiki_survey_questions` set `type`=?, `position`=?, `question`=?, `options`=? where `questionId`=? and `surveyId`=?";
 
-			$result = $this->query($query, array($type,(int) $position,$question,$options,(int)$questionId,(int)$surveyId));
+			$query = "update `tiki_survey_questions` set `type`=?, `position`=?, `question`=?, `options`=?, `mandatory`=?, `min_answers`=?, `max_answers`=? where `questionId`=? and `surveyId`=?";
+			$result = $this->query($query, array($type, (int)$position, $question, $options, $mandatory, (int)$min_answers, (int)$max_answers, (int)$questionId, (int)$surveyId));
+
 		} else {
 
-			$query = "insert into `tiki_survey_questions`(`question`,`type`,`surveyId`,`position`,`votes`,`value`,`options`) values(?,?,?,?,0,0,?)";
-			$result = $this->query($query,array($question,$type,(int)$surveyId,(int) $position,$options));
+			$query = "insert into `tiki_survey_questions` (`question`,`type`,`surveyId`,`position`,`votes`,`value`,`options`,`mandatory`,`min_answers`,`max_answers`) values(?,?,?,?,0,0,?,?,?,?)";
+			$result = $this->query($query, array($question, $type, (int)$surveyId, (int)$position, $options, $mandatory, (int)$min_answers, (int)$max_answers));
 
 			$queryid = "select max(`questionId`) from `tiki_survey_questions` where `question`=? and `type`=?";
 			$questionId = $this->getOne($queryid,array($question,$type));
+
 		}
 
 		if (!empty($options)) {
@@ -105,27 +108,30 @@ class SurveyLib extends TikiLib
 		$result = $this->query($query,array((int)$questionId));
 		$ret = array();
 
-		while ($res = $result->fetchRow()) {
-			if (!in_array($res["qoption"], $options)) {
-				$query2 = "delete from `tiki_survey_question_options` where `questionId`=? and `optionId`=?";
-				$result2 = $this->query($query2, array((int)$questionId,(int)$res["optionId"]));
-			} else {
-				$idx = array_search($res["qoption"], $options);
-				unset ($options[$idx]);
+		// Reset question options only if not a 'text' or 'filegal choice', because their options are dynamically generated
+		if ( ! in_array($type, array('t','g')) ) {
+			while ( $res = $result->fetchRow() ) {
+				if ( ! in_array($res["qoption"], $options) ) {
+					$query2 = "delete from `tiki_survey_question_options` where `questionId`=? and `optionId`=?";
+					$result2 = $this->query($query2, array((int)$questionId,(int)$res["optionId"]));
+				} else {
+					$idx = array_search($res["qoption"], $options);
+					unset ($options[$idx]);
+				}
+			}
+			foreach ( $options as $option ) {
+				$query = "insert into `tiki_survey_question_options` (`questionId`,`qoption`,`votes`) values(?,?,0)";
+				$result = $this->query($query, array((int)$questionId, $option));
 			}
 		}
 
-		foreach ($options as $option) {
-			$query = "insert into `tiki_survey_question_options` (`questionId`,`qoption`,`votes`) values(?,?,0)";
-			$result = $this->query($query,array((int)$questionId,$option));
-		}
 		return $questionId;
 	}
 
 	function get_survey($surveyId) {
 		$query = "select * from `tiki_surveys` where `surveyId`=?";
-		$result = $this->query($query,array((int)$surveyId));
-		if (!$result->numRows()) return false;
+		$result = $this->query($query, array((int)$surveyId));
+		if ( ! $result->numRows() ) return false;
 		$res = $result->fetchRow();
 		return $res;
 	}
@@ -169,15 +175,22 @@ class SurveyLib extends TikiLib
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
-			$questionId = $res["questionId"];
-			if (!empty($res['options']) &&  ($res["type"] == 'r' || $res["type"] == 's') )
-				$res['explode'] = array_fill(1,$res['options'], " "); 
 
 			// save user options
 			$options = explode( ",", $res["options"] );
+
+			$questionId = $res["questionId"];
+			if ( ! empty($res['options']) ) {
+				if ( $res['type'] == 'g' ) {
+					$res['explode'] = $options;
+				} elseif ( in_array($res['type'], array('r','s')) ) {
+					$res['explode'] = array_fill(1, $res['options'], ' ');
+				}
+			}
 			
 			$res["options"] = $this->getOne("select count(*) from `tiki_survey_question_options` where `questionId`=?",array((int)$res["questionId"]));
-			$query2 = "select * from `tiki_survey_question_options` where `questionId`=? order by `optionId`";
+			$query2 = "select * from `tiki_survey_question_options` where `questionId`=? order by "
+				. ( $res['type'] == 'g' ? '`votes` desc' : '`optionId`' );
 
 			if ($res["type"] == 'r') {
 				$maxwidth = 5;
@@ -188,7 +201,7 @@ class SurveyLib extends TikiLib
 			$result2 = $this->query($query2,array((int)$questionId));
 			$ret2 = array();
 			$votes = 0;
-			$total_votes = $this->getOne("select sum(`votes`) from `tiki_survey_question_options` where `questionId`=?",array((int)$questionId));
+			$total_votes = $this->getOne("select sum(`votes`) as sum from `tiki_survey_question_options` where `questionId`=?",array((int)$questionId));
 			
 			// store user defined options indices
 			$opts = array();
@@ -196,7 +209,10 @@ class SurveyLib extends TikiLib
 				$opts[$options[$cpt]] = $cpt; 
 			}
 
+			$ids = array();
 			while ($res2 = $result2->fetchRow()) {
+///FIXME				if ( $res['type'] == 'g' ) unset($files['data']
+
 				if ($total_votes) {
 					$average = ($res2["votes"] / $total_votes)*100;
 				} else {
@@ -206,17 +222,35 @@ class SurveyLib extends TikiLib
 				$votes += $res2["votes"];
 				$res2["average"] = $average;
 				$res2["width"] = $average * 2;
-				if ($res['type'] == 'x') 
+				if ($res['type'] == 'x') {
 					$res2['qoption'] = $tikilib->parse_data($res2['qoption']);
+				}
 				
 				// when question with multiple options
 				// we MUST respect the user defined order
-				if( in_array($res['type'], array('m', 'c'))  ) {
+				if ( in_array($res['type'], array('m', 'c')) ) {
 					$ret2[$opts[$res2['qoption']]] = $res2;
-				}
-				else {
+				} else {
 					$ret2[] = $res2;
 				}
+
+				$ids[$res2['qoption']]++;
+			}
+		
+			// For a multiple choice from a file gallery, show all files in the stats results, even if there was no vote for those files
+			if ( $res['type'] == 'g' && $res['options'] > 0 ) {
+				$files = $this->get_files(0, -1, '', '', $options[0], false, false, false, true, false, false, false, false, '', false, false);
+				foreach ( $files['data'] as $f ) {
+					if ( ! isset($ids[$f['id']]) ) {
+						$ret2[] = array(
+							'qoption' => $f['id'],
+							'votes' => 0,
+							'average' => 0,
+							'width' => 0
+						);
+					}
+				}
+				unset($files);
 			}
 
 			$res["qoptions"] = $ret2;

@@ -3,14 +3,13 @@
 {title}{tr}Stats for surveys{/tr}{/title}
 
 <div class="navbar">
-  <span class="button2"><a href="tiki-list_surveys.php">{tr}List Surveys{/tr}</a></span>
-  <span class="button2"><a href="tiki-survey_stats.php">{tr}Survey Stats{/tr}</a></span>
-  {if $tiki_p_admin_surveys eq 'y'}
-    <span class="button2"><a href="tiki-admin_surveys.php">{tr}Admin Surveys{/tr}</a></span>
-  {/if}
+	{button href="tiki-list_surveys.php" _text="{tr}List Surveys{/tr}"}
+	{button href="tiki-survey_stats.php" _text="{tr}Survey Stats{/tr}"}
+	{if $tiki_p_admin_surveys eq 'y'}
+		{button href="tiki-admin_surveys.php" _text="{tr}Admin Surveys{/tr}"}
+	{/if}
 </div>
 
-<h2>{tr}Surveys{/tr}</h2>
 <div  align="center">
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>

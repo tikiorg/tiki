@@ -8,25 +8,23 @@
 
 // Initialization
 require_once ('tiki-setup.php');
-
 include_once ('lib/surveys/surveylib.php');
+
+$auto_query_args = array('surveyId','questionId','offset','find','sort_mode','maxRecords');
 
 if ($prefs['feature_surveys'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_surveys");
-
 	$smarty->display("error.tpl");
 	die;
 }
 
 if (!isset($_REQUEST["surveyId"])) {
 	$smarty->assign('msg', tra("No survey indicated"));
-
 	$smarty->display("error.tpl");
 	die;
 }
 
 $smarty->assign('surveyId', $_REQUEST["surveyId"]);
-
 $smarty->assign('individual', 'n');
 
 if ($userlib->object_has_one_permission($_REQUEST["surveyId"], 'survey')) {
@@ -77,6 +75,9 @@ if ($_REQUEST["questionId"]) {
 	$info["type"] = '';
 	$info["position"] = '';
 	$info["options"] = '';
+	$info["mandatory"] = '';
+	$info["min_answers"] = '';
+	$info["max_answers"] = '';
 }
 
 $smarty->assign_by_ref('info', $info);
@@ -93,13 +94,25 @@ if (isset($_REQUEST["remove"])) {
 
 if (isset($_REQUEST["save"])) {
 	check_ticket('admin-survey-questions');
-	$srvlib->replace_survey_question($_REQUEST["questionId"], $_REQUEST["question"], $_REQUEST["type"], $_REQUEST["surveyId"],
-		$_REQUEST["position"], $_REQUEST["options"]);
+	$srvlib->replace_survey_question(
+		$_REQUEST["questionId"],
+		$_REQUEST["question"],
+		$_REQUEST["type"],
+		$_REQUEST["surveyId"],
+		$_REQUEST["position"],
+		$_REQUEST["options"],
+		isset($_REQUEST["mandatory"]) ? 'y' : 'n',
+		$_REQUEST["min_answers"],
+		$_REQUEST["max_answers"]
+	);
 
 	$info["question"] = '';
 	$info["type"] = '';
 	$info["position"] = '';
 	$info["options"] = '';
+	$info["mandatory"] = '';
+	$info["min_answers"] = '';
+	$info["max_answers"] = '';
 	$smarty->assign('questionId', 0);
 	$smarty->assign('info', $info);
 }

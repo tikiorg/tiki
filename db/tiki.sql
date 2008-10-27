@@ -2191,6 +2191,9 @@ CREATE TABLE tiki_survey_question_options (
   questionId int(12) NOT NULL default '0',
   qoption text,
   votes int(10) default NULL,
+  mandatory char(1) NOT NULL default 'n',
+  max_answers int(5) NOT NULL default 0,
+  min_answers int(5) NOT NULL default 0,
   PRIMARY KEY (optionId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 

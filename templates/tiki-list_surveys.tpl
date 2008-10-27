@@ -1,11 +1,14 @@
 {* $Id$ *}
 {title help="Surveys"}{tr}Surveys{/tr}{/title}
 
+<div class="navbar">
 {if $tiki_p_view_survey_stats eq 'y'}
-  <div class="navbar">
-    <span class="button2"><a href="tiki-survey_stats.php">{tr}Survey stats{/tr}</a></span>
-  </div>
+  {button href="tiki-survey_stats.php" _text="{tr}Survey stats{/tr}"}
 {/if}
+{if $tiki_p_admin_surveys eq 'y'}
+  {button href="tiki-admin_surveys.php" _text="{tr}Create New Survey{/tr}"}
+{/if}
+</div>
 
 <table class="normal">
 <tr>
@@ -32,17 +35,16 @@
 
 <td style="text-align:right;"  class="{cycle}">
 {if ($tiki_p_admin_surveys eq 'y') or ($channels[user].status eq 'o' and $channels[user].taken_survey eq 'n')}
-<a href="tiki-take_survey.php?surveyId={$channels[user].surveyId}">
-<img border='0' title='{tr}Take Survey{/tr}' alt='{tr}Take Survey{/tr}' width="16" height="16" hspace="6" vspace="0" src='img/icons/toright.gif' /></a>
+<a href="tiki-take_survey.php?surveyId={$channels[user].surveyId}">{icon _id='control_play' alt='{tr}Take Survey{/tr}}</a>
 {/if}
 
 {if ($tiki_p_admin eq 'y') or ($channels[user].individual eq 'n' and $tiki_p_view_survey_stats eq 'y') or ($channels[user].individual_tiki_p_view_survey_stats eq 'y')}
-<a href="tiki-survey_stats_survey.php?surveyId={$channels[user].surveyId}">
-<img border='0' title='{tr}Stats{/tr}' alt='{tr}Stats{/tr}' width="16" height="16" hspace="3" vspace="0" src='img/icons/zoom.gif' /></a>{/if}
+<a href="tiki-survey_stats_survey.php?surveyId={$channels[user].surveyId}">{icon _id='chart_curve' alt='{tr}Stats{/tr}'}</a>
+{/if}
 
 {if ($tiki_p_admin eq 'y') or ($channels[user].individual eq 'n' and $tiki_p_admin_surveys eq 'y') or ($channels[user].individual_tiki_p_admin_surveys eq 'y')}
-<a href="tiki-admin_surveys.php?surveyId={$channels[user].surveyId}">
-<img border='0' title='{tr}Admin{/tr}' alt='{tr}Admin{/tr}' width="16" height="16" hspace="3" vspace="0" src='img/icons/config.gif' /></a>{/if}
+<a href="tiki-admin_surveys.php?surveyId={$channels[user].surveyId}">{icon _id='page_edit' alt='{tr}Edit this Survey{/tr}'}</a>
+{/if}
 </td>
 </tr>
 {/if}

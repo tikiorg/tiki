@@ -1,13 +1,17 @@
 {title url="tiki-admin_survey_questions.php?surveyId=$surveyId"}{tr}Edit survey questions:{/tr} {$survey_info.name}{/title}
 
-<span class="button2"><a href="tiki-list_surveys.php">{tr}List surveys{/tr}</a></span>
-<span class="button2"><a href="tiki-survey_stats.php">{tr}Survey Stats{/tr}</a></span>
-<span class="button2"><a href="tiki-survey_stats_survey.php?surveyId={$surveyId}">{tr}this survey stats{/tr}</a></span>
-<span class="button2"><a href="tiki-admin_surveys.php?surveyId={$surveyId}">{tr}Edit this Survey{/tr}</a></span>
-<span class="button2"><a href="tiki-admin_surveys.php">{tr}Admin Surveys{/tr}</a></span>
+<div class="navbar">
+	{button href="tiki-admin_survey_questions.php?surveyId=$surveyId" _text="{tr}Add a New Question{/tr}"}
+	{button href="tiki-list_surveys.php" _text="{tr}List surveys{/tr}"}
+	{button href="tiki-survey_stats.php" _text="{tr}Survey Stats{/tr}"}
+	{button href="tiki-survey_stats_survey.php?surveyId=$surveyId" _text="{tr}this survey stats{/tr}"}
+	{button href="tiki-admin_surveys.php?surveyId=$surveyId" _text="{tr}Edit this Survey{/tr}"}
+	{button href="tiki-admin_surveys.php" _text="{tr}Admin Surveys{/tr}"}
+</div>
 <br />
-<br />
-<h2>{tr}Create/edit questions for survey{/tr}: <a href="tiki-admin_surveys.php?surveyId={$survey_info.surveyId}">{$survey_info.name}</a></h2>
+<h2>
+{if $questionId gt 0}{tr}Edit Survey Question{/tr}{else}{tr}Add a New Question to this survey{/tr}{/if}
+</h2>
 <form action="tiki-admin_survey_questions.php" method="post">
 <input type="hidden" name="surveyId" value="{$surveyId|escape}" />
 <input type="hidden" name="questionId" value="{$questionId|escape}" />
@@ -18,14 +22,24 @@
 <select name="type">
 <option value='c' {if $info.type eq 'c'}selected=selected{/if}>{tr}One choice{/tr}</option>
 <option value='m' {if $info.type eq 'm'}selected=selected{/if}>{tr}Multiple choices{/tr}</option>
+<option value='g' {if $info.type eq 'g'}selected=selected{/if}>{tr}Multiple choices of thumbnails from a file gallery{/tr}</option>
 <option value='t' {if $info.type eq 't'}selected=selected{/if}>{tr}Short text{/tr}</option>
-<option value='x' {if $info.type eq 'x'}selected=selected{/if}>{tr}Wiki textaera{/tr}</option>
+<option value='x' {if $info.type eq 'x'}selected=selected{/if}>{tr}Wiki textarea{/tr}</option>
 <option value='r' {if $info.type eq 'r'}selected=selected{/if}>{tr}Rate (1..5){/tr}</option>
 <option value='s' {if $info.type eq 's'}selected=selected{/if}>{tr}Rate (1..10){/tr}</option>
 <option value='r' {if $info.type eq 'r'}selected=selected{/if}>{tr}Rate{/tr}</option>
 </select></td></tr>
+<tr><td class="formcolor">{tr}Answer is mandatory:{/tr}</td><td class="formcolor"><input type="checkbox" name="mandatory" {if $info.mandatory eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="formcolor">{tr}Number of required answers (for multiple choices):{/tr}</td><td class="formcolor">
+	{tr}Min:{/tr}<input type="text" name="min_answers" size="4" value="{$info.min_answers}" />
+	{tr}Max:{/tr}<input type="text" name="max_answers" size="4" value="{$info.max_answers}" />
+</td></tr>
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor">
-{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}For a multiple answer question put the answers into the following field, separated by a comma. Example: one,two,many,lots{/tr}.<br />{tr}For a rate, you can give the maximum value.{/tr}{/remarksbox}
+{remarksbox type="tip" title="{tr}Tip{/tr}"}
+	{tr}For a multiple answer question put the answers into the following field, separated by a comma. Example: one,two,many,lots{/tr}.
+	<br />{tr}For a rate, you can give the maximum value.{/tr}
+	<br />{tr}For the 'multiple choices of thumbnail from a file gallery' type, options are: Gallery ID. Example: 4{/tr}
+{/remarksbox}
 </td></tr>
 <tr><td class="formcolor">{tr}Options (if apply){/tr}:</td><td class="formcolor"><input type="text" name="options" value="{$info.options|escape}" size="80" /></td></tr>
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
@@ -62,9 +76,9 @@
 <td class="{cycle advance=false}">{$channels[user].question}</td>
 <td class="{cycle advance=false}">{$channels[user].type}</td>
 <td class="{cycle advance=false}">{$channels[user].options}</td>
-<td class="odd">
-   <a class="link" href="tiki-admin_survey_questions.php?surveyId={$surveyId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].questionId}">{tr}Delete{/tr}</a>
-   <a class="link" href="tiki-admin_survey_questions.php?surveyId={$surveyId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;questionId={$channels[user].questionId}">{tr}Edit{/tr}</a>
+<td class="{cycle advance=false}">
+	{self_link _icon='page_edit' questionId=$channels[user].questionId}{tr}Edit{/tr}{/self_link}
+	{self_link _icon='cross' remove=$channels[user].questionId}{tr}Delete{/tr}{/self_link}
 </td>
 </tr>
 {/section}
@@ -87,4 +101,3 @@
 {/if}
 </div>
 </div>
-
