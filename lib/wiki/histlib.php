@@ -156,14 +156,14 @@ class HistLib extends TikiLib {
 
 		if ($fetchdata==true) {
 			if ($version > 0)
-				$query = "select `pageName`, `description`, `version`, `lastModif`, `user`, `ip`, `data`, `comment` from `tiki_history` where `pageName`=? and `version`=?";				
+				$query = "select `pageName`, `description`, `version`, `lastModif`, `user`, `ip`, `data`, `comment`, `is_html` from `tiki_history` where `pageName`=? and `version`=?";				
 			else
-				$query = "select `pageName`, `description`, `version`, `lastModif`, `user`, `ip`, `data`, `comment` from `tiki_pages` where `pageName`=?";
+				$query = "select `pageName`, `description`, `version`, `lastModif`, `user`, `ip`, `data`, `comment`, `is_html` from `tiki_pages` where `pageName`=?";
 		} else {
 			if ($version > 0)
-				$query = "select `pageName`, `description`, `version`, `lastModif`, `user`, `ip`, `comment` from `tiki_history` where `pageName`=? and `version`=?";
+				$query = "select `pageName`, `description`, `version`, `lastModif`, `user`, `ip`, `comment`, `is_html` from `tiki_history` where `pageName`=? and `version`=?";
 			else
-				$query = "select `pageName`, `description`, `version`, `lastModif`, `user`, `ip`, `comment` from `tiki_pages` where `pageName`=?";
+				$query = "select `pageName`, `description`, `version`, `lastModif`, `user`, `ip`, `comment`, `is_html` from `tiki_pages` where `pageName`=?";
 		}
 		if ($version > 0)
 			$result = $this->query($query,array($page,$version));
@@ -183,6 +183,7 @@ class HistLib extends TikiLib {
 			$aux["pageName"] = $res["pageName"];
 			$aux["description"] = $res["description"];
 			$aux["comment"] = $res["comment"];
+			$aux["is_html"] = $res["is_html"];
 			//$aux["percent"] = levenshtein($res["data"],$actual);
 			$ret[] = $aux;
 		}
@@ -300,7 +301,8 @@ $histlib = new HistLib($dbTiki);
 
 function histlib_helper_setup_diff( $page, $oldver, $newver )
 {
-	global $smarty, $histlib, $tikilib;
+	global $smarty, $histlib, $tikilib, $prefs;
+	$prefs['wiki_edit_section'] = 'n';
 	
 	$info = $tikilib->get_page_info( $page );
 
@@ -349,8 +351,10 @@ function histlib_helper_setup_diff( $page, $oldver, $newver )
 			$new['data'] = strip_tags(preg_replace($search,$replace,$new['data']),'<h1><h2><h3><h4><b><i><u><span>');
 		}
 		if ($_REQUEST["diff_style"] == "htmldiff") {
-			$parse_options = array('is_html' => ($info['is_html'] == 1));
+			$parse_options = array('is_html' => ($old['is_html'] == 1), 'noheadinc' => true);
 			$old["data"] = $tikilib->parse_data($old["data"], $parse_options);
+
+			$parse_options = array('is_html' => ($new['is_html'] == 1), 'noheadinc' => true);
 			$new["data"] = $tikilib->parse_data($new["data"], $parse_options);
 		}
 		$html = diff2($old["data"], $new["data"], $_REQUEST["diff_style"]);

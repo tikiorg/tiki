@@ -6701,9 +6701,9 @@ class TikiLib extends TikiDB {
 							++$headerInc;
 
 						if ( $prefs['feature_wiki_show_hide_before'] == 'y' ) {
-							$line = $button.'<h'.($hdrlevel+$headerInc).' class="showhide_heading" id="'.$thisid.'">'.$aclose.' '.$title_text.'</h'.($hdrlevel+1).'>'.$aclose2;
+							$line = $button.'<h'.($hdrlevel+$headerInc).' class="showhide_heading" id="'.$thisid.'">'.$aclose.' '.$title_text.'</h'.($hdrlevel+$headerInc).'>'.$aclose2;
 						} else {
-							$line = $button.'<h'.($hdrlevel+$headerInc).' class="showhide_heading" id="'.$thisid.'">'.$title_text.'</h'.($hdrlevel+1).'>'.$aclose.$aclose2;
+							$line = $button.'<h'.($hdrlevel+$headerInc).' class="showhide_heading" id="'.$thisid.'">'.$title_text.'</h'.($hdrlevel+$headerInc).'>'.$aclose.$aclose2;
 						}
 					} elseif (!strcmp($line, $prefs['wiki_page_separator'])) {
 						// Close open paragraph, lists, and div's
@@ -7086,6 +7086,10 @@ class TikiLib extends TikiDB {
 		include_once ("lib/wiki/histlib.php");
 		include_once ("lib/commentslib.php");
 
+		if( $wysiwyg == 'y' ) {
+			$is_html = 1;
+		}
+
 		if( ! $is_html ) {
 			$edit_data = str_replace( '&lt;x&gt;', '', $edit_data );
 		}
@@ -7208,10 +7212,10 @@ class TikiLib extends TikiDB {
 		// This if no longer checks for minor-ness of the change; sendWikiEmailNotification does that.
 		if( $prefs['feature_wiki_history_full'] == 'y' || $data != $edit_data || $description != $info["description"] || $comment != $edit_comment ) {
 			if (strtolower($pageName) != 'sandbox') {
-				$query = "insert into `tiki_history`(`pageName`, `version`, `lastModif`, `user`, `ip`, `comment`, `data`, `description`)
-					values(?,?,?,?,?,?,?,?)";
+				$query = "insert into `tiki_history`(`pageName`, `version`, `lastModif`, `user`, `ip`, `comment`, `data`, `description`,`is_html`)
+					values(?,?,?,?,?,?,?,?,?)";
 # echo "<pre>";print_r(get_defined_vars());echo "</pre>";die();
-				$result = $this->query($query,array($pageName,(int) $old_version,(int) $lastModif,$user,$ip,$comment,$data,$description));
+				$result = $this->query($query,array($pageName,(int) $old_version,(int) $lastModif,$user,$ip,$comment,$data,$description,(int)$info['is_html']));
 
 				if ($prefs['feature_contribution'] == 'y') {// transfer page contributions to the history
 					global $contributionlib; include_once('lib/contribution/contributionlib.php');
