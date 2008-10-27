@@ -1027,10 +1027,16 @@ div.thumbnail {
 	border-left: 1px solid #C7D0D9;
 	text-align: center;
 }
+div.thumbnailcontenerchecked div.thumbnail {
+	background-color: #adcddd;
+	border-color: #8cacbb;
+}
 div.thumbnamecontener, div.thumbimagecontener {
 	display: table;
 	#position: relative;
 	overflow: hidden;
+	margin-left: auto;
+	margin-right: auto;
 }
 div.thumbnamecontener {
 	background-color: #F3F6F9;

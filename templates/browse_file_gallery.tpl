@@ -1,13 +1,23 @@
-{* $Header: /cvsroot/tikiwiki/tiki/templates/list_file_gallery.tpl,v 1.31.2.25 2008-03-18 08:48:44 nyloth Exp $ *}
-
 <div id="thumbnails" style="float:left">
 
   {section name=changes loop=$files}
 
-    {* do not show subgals in browsing view *}
-    {if $files[changes].isgal neq 1}
+  {* Checkboxes *}
+  {if $files[changes].isgal eq 1}
+    {assign var=checkname value=$subgal_checkbox_name|default:'subgal'}
+  {else}
+    {assign var=checkname value=$file_checkbox_name|default:'file'}
+  {/if}
+  {if $gal_info.show_checked neq 'n' and $smarty.request.$checkname and in_array($files[changes].id,$smarty.request.$checkname)}
+    {assign var=is_checked value='y'}
+  {else}
+    {assign var=is_checked value='n'}
+  {/if}
 
-    {if ( $prefs.use_context_menu_icon eq 'y' or $prefs.use_context_menu_text eq 'y' ) and $gal_info.show_action neq 'y'}
+  {* do not show subgals in browsing view *}
+  {if $files[changes].isgal neq 1}
+
+    {if ( $prefs.use_context_menu_icon eq 'y' or $prefs.use_context_menu_text eq 'y' ) and $gal_info.show_action neq 'n'}
       {capture name=over_actions}{strip}
       <div class='opaque'>
         <div class='box-title'>{tr}Actions{/tr}</div>
@@ -80,21 +90,23 @@
 
     {math equation="x + 6" x=$thumbnail_size assign=thumbnailcontener_size}
 
-    <div class="thumbnailcontener" style="float:left; width:{$thumbnailcontener_size}px">
+    <div id="{$checkname}_{$files[changes].id}" class="thumbnailcontener{if $is_checked eq 'y'} thumbnailcontenerchecked{/if}" style="float:left; width:{$thumbnailcontener_size}px">
 
       <div class="thumbnail" style="float:left; width:{$thumbnailcontener_size}px">
-        <div class="thumbimagecontener" style="width:{$thumbnail_size}px; height:{$thumbnailcontener_size}px">
+        <div class="thumbimagecontener" style="width:{$thumbnail_size}px;height:{$thumbnailcontener_size}px{if $show_infos neq 'y'};margin-bottom:4px{/if}">
           <div class="thumbimage">
             <div class="thumbimagesub" style="width:{$thumbnail_size}px;">{assign var=key_type value=$files[changes].type|truncate:9:'':true}
-              <a {$link}{if $prefs.feature_shadowbox eq 'y' && $filegals_manager neq 'y'} rel="shadowbox[gallery];type={if $key_type eq 'image/png' or $key_type eq 'image/jpe' or $key_type eq 'image/gif'}img{else}iframe{/if}" title="{if $files[changes].name neq ''}{$files[changes].name|escape}{/if}{if $files[changes].description neq ''} ({$files[changes].description|escape}){/if}"{/if}{if $over_infos neq ''} {popup fullhtml="1" text=$over_infos|escape:"javascript"|escape:"html"}{/if}>
+              <a {$link}{if $prefs.feature_shadowbox eq 'y' && $filegals_manager neq 'y'} rel="shadowbox[gallery];type={if $key_type eq 'image/png' or $key_type eq 'image/jpe' or $key_type eq 'image/gif'}img{else}iframe{/if}"{/if}{if $over_infos neq ''} {popup fullhtml="1" text=$over_infos|escape:"javascript"|escape:"html"}{else} title="{if $files[changes].name neq ''}{$files[changes].name|escape}{/if}{if $files[changes].description neq ''} ({$files[changes].description|escape}){/if}"{/if}>
                 <img src="tiki-download_file.php?fileId={$files[changes].id}&amp;thumbnail&amp;max={$thumbnail_size}" />
               </a>
             </div>
           </div>
         </div>
 
+	{if $show_infos eq 'y'}
         <div class="thumbinfos">
         {foreach from=$fgal_listing_conf item=item key=propname}
+
           {if isset($item.key)}
             {assign var=key_name value=$item.key}
           {else}
@@ -125,55 +137,52 @@
             {/if}
         
             {if $propname eq 'name'}
-
-              <div class="thumbnamecontener">
-                <div class="thumbname">
-                  <div class="thumbnamesub" style="width:{$thumbnail_size}px">
-                    {if $gal_info.show_name eq 'f' or ($gal_info.show_name eq 'a' and $files[changes].name eq '')}
-                      <a class="fgalname" {$link} title="{$files[changes].filename}">{$files[changes].filename}</a>
-                    {else}
-                      {$propval}
-                    {/if}
-                  </div>
-                </div>
+          <div class="thumbnamecontener">
+            <div class="thumbname">
+              <div class="thumbnamesub" style="width:{$thumbnail_size}px">
+                {if $gal_info.show_name eq 'f' or ($gal_info.show_name eq 'a' and $files[changes].name eq '')}
+                  <a class="fgalname" {$link} title="{$files[changes].filename}">{$files[changes].filename}</a>
+                {else}
+                  {$propval}
+                {/if}
               </div>
+            </div>
+          </div>
 
-              <div class="thumbinfosothers"{if $show_details eq 'n'} style="display:none"{/if}>
+          <div class="thumbinfosothers"{if $show_details eq 'n'} style="display:none"{/if}>
 
             {elseif $propval neq '' and $propname neq 'name' and $propname neq 'type'}
 
-              <div class="thumbinfo{if $propname eq 'description'} thumbdescription{/if}">
-                <span class="thumbinfoname">{$item.name}:</span>
-                <span class="thumbinfoval"{if $propname neq 'description'} style="white-space: nowrap"{/if}>{$propval}</span>
-              </div>
+            <div class="thumbinfo{if $propname eq 'description'} thumbdescription{/if}">
+              <span class="thumbinfoname">{$item.name}:</span>
+              <span class="thumbinfoval"{if $propname neq 'description'} style="white-space: nowrap"{/if}>{$propval}</span>
+            </div>
 
             {/if}
           {/if}
         {/foreach}
-        </div>
+          </div> {* thumbinfosothers *}
+        </div> {* thumbinfos *}
+        {/if}
   
-      </div>
-    </div>
+      </div> {* thumbnail *}
 
-    <div class="thumbactions" style="float:right; width:{$thumbnail_size}px">
+      <div class="thumbactions" style="float:right; width:{$thumbnail_size}px">
 
       {if $gal_info.show_checked neq 'n' and $tiki_p_admin_file_galleries eq 'y'}
-        {if $files[changes].isgal eq 1}
-          {assign var='checkname' value='subgal'}
+        <label><input type="checkbox" onclick="flip_thumbnail_status('{$checkname}_{$files[changes].id}')" name="{$checkname}[]" value="{$files[changes].id|escape}" {if $is_checked eq 'y'}checked="checked"{/if} />{if isset($checkbox_label)}{$checkbox_label}{/if}</label>
+      {/if}
+
+      {if $gal_info.show_action neq 'n'}
+        {if ( $prefs.use_context_menu_icon eq 'y' or $prefs.use_context_menu_text eq 'y' ) and $prefs.javascript_enabled eq 'y'}
+          <a class="fgalname" title="{tr}Actions{/tr}" href="#" {popup trigger="onClick" sticky=1 mouseoff=1 fullhtml="1" text=$smarty.capture.over_actions|escape:"javascript"|escape:"html"}>{icon _id='wrench' alt='{tr}Actions{/tr}'}</a>
         {else}
-          {assign var='checkname' value='file'}
+          {include file=fgal_context_menu.tpl}
         {/if}
-        <input type="checkbox" name="{$checkname}[]" value="{$files[changes].id|escape}" {if $smarty.request.$checkname and in_array($files[changes].id,$smarty.request.$checkname)}checked="checked"{/if} />
       {/if}
 
-      {if ( $prefs.use_context_menu_icon eq 'y' or $prefs.use_context_menu_text eq 'y' ) and $gal_info.show_action neq 'n' and $prefs.javascript_enabled eq 'y'}
-        <a class="fgalname" title="{tr}Actions{/tr}" href="#" {popup trigger="onClick" sticky=1 mouseoff=1 fullhtml="1" text=$smarty.capture.over_actions|escape:"javascript"|escape:"html"}>{icon _id='wrench' alt='{tr}Actions{/tr}'}</a>
-      {else}
-        {include file=fgal_context_menu.tpl}
-      {/if}
-
-    </div>
-  </div>  
+      </div> {* thumbactions *}
+    </div> {* thumbnailcontener *}
   {/if}
 
   {sectionelse}
@@ -185,9 +194,6 @@
 </div>
 <br clear="all" />
 
-{if $gal_info.show_checked ne 'n' and $tiki_p_admin_file_galleries eq 'y'}
-<div>
-  <input name="switcher" id="clickall" type="checkbox" onclick="switchCheckboxes(this.form,'file[]',this.checked); switchCheckboxes(this.form,'subgal[]',this.checked);"/>
-  <label for="clickall">{tr}Select All{/tr}</label>
-</div>
+{if $gal_info.show_checked neq 'n' and $tiki_p_admin_file_galleries eq 'y' and ( !isset($show_selectall) or $show_selectall eq 'y' )}
+	{select_all checkbox_names='file[],subgal[]'}
 {/if}

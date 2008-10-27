@@ -56,15 +56,16 @@
         {assign var=nbCols value=0}
         {assign var=other_columns value=''}
         {assign var=other_columns_selected value=''}
-        {assign var=show_infos value='n'}
      
         {if $view eq 'browse'}
+          {assign var=show_infos value='y'}
           {include file='browse_file_gallery.tpl'}
         {else}
+          {assign var=show_infos value='n'}
           {include file='list_file_gallery_content.tpl'}
         {/if}
       
-        {if $files and $gal_info.show_checked ne 'n' and ($tiki_p_admin_file_galleries eq 'y' or $tiki_p_upload_files eq 'y')}
+        {if $files and $gal_info.show_checked neq 'n' and ($tiki_p_admin_file_galleries eq 'y' or $tiki_p_upload_files eq 'y')}
         <div>
           <div style="float:left">
           {tr}Perform action with checked:{/tr} 
