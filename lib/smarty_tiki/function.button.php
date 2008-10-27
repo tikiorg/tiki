@@ -13,10 +13,10 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *	- _text: Text that will be shown in the button
  */
 function smarty_function_button($params, &$smarty) {
-  if ( ! is_array($params) || ! isset($params['_text']) ) return;
-  global $tikilib, $prefs, $auto_query_args;
+	if ( ! is_array($params) || ! isset($params['_text']) ) return;
+	global $tikilib, $prefs, $auto_query_args;
 
-  require_once $smarty->_get_plugin_filepath('block', 'self_link');
+	require_once $smarty->_get_plugin_filepath('block', 'self_link');
 	
 	$url_args = array();
 	if ( ! empty($params['href']) ) {
