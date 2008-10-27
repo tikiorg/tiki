@@ -177,7 +177,7 @@ class MagicLib extends TikiLib {
 		} else if ($feature['template'] !== '' && strpos($feature['template'], '.php') > 1) {
 			$feature['pageurl'] = $feature['template'];
 		} else {
-			$feature['pageurl'] = 'tiki-magic.php?featurechain=' . $feature['featurechain'];
+			//			$feature['pageurl'] = 'tiki-magic.php?featurechain=' . $feature['featurechain'];
 		}
 
 		return $feature;
