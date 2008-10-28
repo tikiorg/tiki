@@ -26,25 +26,19 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 		} 
 	}
 	if( isset($_POST['remove']) ) {
-		$list = array();
-		if( isset( $_POST['select'] ) )
-			$list = (array) $_POST['select'];
+		$list = $_POST->asArray('select');
 
 		foreach( $list as $token )
 			$semanticlib->removeToken( $token );
 	}
 	if( isset($_POST['removeclean']) ) {
-		$list = array();
-		if( isset( $_POST['select'] ) )
-			$list = (array) $_POST['select'];
+		$list = $_POST->asArray('select');
 
 		foreach( $list as $token )
 			$semanticlib->removeToken( $token, true );
 	}
 	if( isset($_POST['clean']) ) {
-		$list = array();
-		if( isset( $_POST['select'] ) )
-			$list = (array) $_POST['select'];
+		$list = $_POST->asArray('select');
 
 		foreach( $list as $token )
 			$semanticlib->cleanToken( $token );
@@ -73,9 +67,7 @@ if( isset( $_REQUEST['rename'] ) ) {
 if( isset($_POST['list']) ) {
 	$lists = array();
 
-	$list = array();
-	if( isset( $_POST['select'] ) )
-		$list = (array) $_POST['select'];
+	$list = $_POST->asArray('select');
 
 	foreach( $list as $token ) {
 		$lists[$token] = $semanticlib->getLinksUsing( $token );
