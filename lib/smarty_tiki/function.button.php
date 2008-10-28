@@ -9,12 +9,13 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 /*
  * smarty_function_button: Display a Tikiwiki button
  *
- * params will be used as params for the HTML tag (e.g. href, class, ...), except special params starting with '_' :
+ * params will be used as params for as smarty self_link params, except those special params specific to smarty button :
  *	- _text: Text that will be shown in the button
  */
 function smarty_function_button($params, &$smarty) {
 	if ( ! is_array($params) || ! isset($params['_text']) ) return;
 	global $tikilib, $prefs, $auto_query_args;
+	$auto_query_args_orig = null;
 
 	require_once $smarty->_get_plugin_filepath('block', 'self_link');
 	
@@ -28,7 +29,17 @@ function smarty_function_button($params, &$smarty) {
 			$params['_script'] = $params['href'];
 		}
 		unset($params['href']);
-		$params['_noauto'] = 'y';
+		if ( !empty($params['_auto_args']) ) {
+			$auto_query_args_orig = $auto_query_args;
+			$auto_query_args = explode(',', $params['_auto_args']);
+		} else {
+			$params['_noauto'] = 'y';
+		}
+	}
+
+  // Remove params that does not start with a '_', since we don't want them to modify the URL
+	foreach ( $params as $k => $v ) {
+		if ( $k[0] != '_' ) unset($params[$k]);
 	}
 
 	$html = smarty_block_self_link(
@@ -38,5 +49,6 @@ function smarty_function_button($params, &$smarty) {
 		false
 	);
 
+	if ( $auto_query_args_orig !== null ) $auto_query_args = $auto_query_args_orig;
 	return '<span class="button">'.$html.'</span>';
 }
