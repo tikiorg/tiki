@@ -187,7 +187,7 @@ function wikiplugin_tracker($data, $params) {
 		}
 	}
 	if (isset($_REQUEST['values'])) {
-		if (is_array($_REQUEST['values'])) {
+		if ($_REQUEST->isArray('values')) {
 			foreach ($_REQUEST['values'] as $i=>$k) {
 				$_REQUEST['values'][$i] = urldecode($k);
 			}
@@ -489,7 +489,7 @@ function wikiplugin_tracker($data, $params) {
 
 			} else {
 				if (isset($_REQUEST['values']) && isset($_REQUEST['prefills'])) { //url:prefields=1:2&values[]=x&values[]=y
-					if (!is_array($_REQUEST['values']))
+					if (!$_REQUEST->isArray('values'))
 						$_REQUEST['values'] = array($_REQUEST['values']);
 					$fl = split(':', $_REQUEST['prefills']);
 				} else {

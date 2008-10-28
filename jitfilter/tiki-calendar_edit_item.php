@@ -203,7 +203,7 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
   }
 } elseif (isset($_REQUEST['drop']) and $tiki_p_change_events == 'y') {
   check_ticket('calendar');
-  if (is_array($_REQUEST['drop'])) {
+  if ($_REQUEST->isArray('drop')) {
     foreach ($_REQUEST['drop'] as $dropme) {
       $calendarlib->drop_item($user, $dropme);
     } 

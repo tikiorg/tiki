@@ -67,8 +67,8 @@ if (!empty($_REQUEST['show']) && $_REQUEST['show'] == 'view') {
 }
 $defaultvalues = array();
 
-if (isset($_REQUEST['vals']) and is_array($_REQUEST['vals'])) {
-	$defaultvalues = $_REQUEST['vals'];
+if ($_REQUEST->isArray('vals')) {
+	$defaultvalues = $_REQUEST['vals']->asArray();
 	$cookietab = "2";
 } elseif (isset($_REQUEST['new'])) {
 	$cookietab = "2";
@@ -274,10 +274,10 @@ for ($i = 0; $i < $temp_max; $i++) {
 			$fields["data"][$i]['categories'] = $categlib->get_child_categories($parentId);
 			$categId = "ins_cat_$fid";
 			if (isset($_REQUEST[$categId])) {
-				if (is_array($_REQUEST[$categId])) {
+				if ($_REQUEST->isArray($categId)) {
 					foreach ($_REQUEST[$categId] as $c)
 						$fields["data"][$i]['cat'][$c] = 'y';
-					$ins_categs = array_merge($ins_categs, $_REQUEST[$categId]);
+					$ins_categs = array_merge($ins_categs, $_REQUEST[$categId]->asArray());
 				} else {
 					$fields["data"][$i]['cat'][$_REQUEST[$categId]] = 'y';
 					$ins_categs[] = $_REQUEST[$categId];
@@ -705,7 +705,7 @@ if ($my and $writerfield) {
 	$filtervalue = '';
 	$_REQUEST['status'] = 'opc';
 } else {
-	if (isset($_REQUEST["filtervalue"]) and is_array($_REQUEST["filtervalue"]) and isset($_REQUEST["filtervalue"]["$filterfield"])) {
+	if ($_REQUEST->isArray("filtervalue") and isset($_REQUEST["filtervalue"]["$filterfield"])) {
 		$filtervalue = $_REQUEST["filtervalue"]["$filterfield"];
 	} else if (isset($_REQUEST["filtervalue"])) {
 		$filtervalue = $_REQUEST["filtervalue"];

@@ -59,7 +59,7 @@ $smarty->assign('info', $info);
 // Delete roles
 if (isset($_REQUEST["delete"])) {
 	check_ticket('g-admin-roles');
-	foreach (array_keys($_REQUEST["role"])as $item) {
+	foreach ($_REQUEST["role"]->keys() as $item) {
 		$roleManager->remove_role($_REQUEST['pid'], $item);
 	}
 }
@@ -99,7 +99,7 @@ $smarty->assign_by_ref('roles', $roles['data']);
 
 if (isset($_REQUEST["delete_map"])) {
 	check_ticket('g-admin-roles');
-	foreach (array_keys($_REQUEST["map"])as $item) {
+	foreach ($_REQUEST["map"]->keys() as $item) {
 		$parts = explode(':::', $item);
 
 		$roleManager->remove_mapping($parts[0], $parts[1]);

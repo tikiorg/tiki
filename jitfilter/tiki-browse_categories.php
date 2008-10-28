@@ -70,7 +70,7 @@ if (isset($_REQUEST["deep"]) && $_REQUEST["deep"] == 'on') {
 }
 
 $canView = false;
-if (is_array($_REQUEST['parentId'])) {
+if ($_REQUEST->isArray('parentId')) {
 	foreach ($_REQUEST['parentId'] as $p) {
 		$paths[] = $categlib->get_category_path($p);
 		$p_info = $categlib->get_category($p);

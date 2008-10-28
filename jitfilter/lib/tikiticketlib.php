@@ -85,7 +85,7 @@ function key_check($area) {
 			} else { 
 				$whose = ' '. md5($_SERVER['REMOTE_ADDR'].$_SERVER['USER_AGENT']);
 			}
-			if (isset($_REQUEST) and is_array($_REQUEST)
+			if (isset($_REQUEST) and $_REQUEST instanceof JitFilter
 				and (!isset($_REQUEST['ticket']) 
 				or $_REQUEST['ticket'] != $tikilib->get_user_preference($whose,'ticket'))) {
 				unset($_REQUEST);

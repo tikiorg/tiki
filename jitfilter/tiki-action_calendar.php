@@ -31,7 +31,7 @@ if ( empty($_REQUEST['refresh']) ) {
 	if ( ! array_key_exists('CalendarViewTikiCals', $_SESSION) ) {
 		$_SESSION['CalendarViewTikiCals'] = array_keys($tikiItems);
 	}
-} elseif ( !empty($_REQUEST['tikicals']) and is_array($_REQUEST['tikicals']) ) {
+} elseif ( !empty($_REQUEST['tikicals']) and $_REQUEST->isArray('tikicals') ) {
 	$_SESSION['CalendarViewTikiCals'] = $_REQUEST['tikicals'];
 } else {
 	unset($_SESSION['CalendarViewTikiCals']);

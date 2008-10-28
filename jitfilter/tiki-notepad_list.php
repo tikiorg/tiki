@@ -74,7 +74,7 @@ if (isset($_REQUEST["merge"])) {
 		die;
 	}
 
-	foreach (array_keys($_REQUEST["note"])as $note) {
+	foreach ($_REQUEST["note"]->keys() as $note) {
 		$data_c = $notepadlib->get_note($user, $note);
 
 		$data = $data_c['data'];
@@ -96,7 +96,7 @@ if (isset($_REQUEST["merge"])) {
 }
 
 if (isset($_REQUEST["delete"]) && isset($_REQUEST["note"])) {
-	foreach (array_keys($_REQUEST["note"])as $note) {
+	foreach ($_REQUEST["note"]->keys() as $note) {
 		$notepadlib->remove_note($user, $note);
 	}
 }

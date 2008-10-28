@@ -17,13 +17,13 @@ if ($user && isset($prefs['feature_tasks']) && $prefs['feature_tasks'] == 'y' &&
 	}
 
 	if (isset($_REQUEST["modTasksDel"])) {
-		foreach (array_keys($_REQUEST["modTasks"])as $task) {
+		foreach ($_REQUEST["modTasks"]->keys() as $task) {
 			$tasklib->mark_task_as_trash($task, $user);
 		}
 	}
 
 	if (isset($_REQUEST["modTasksCom"])) {
-		foreach (array_keys($_REQUEST["modTasks"])as $task) {
+		foreach ($_REQUEST["modTasks"]->keys() as $task) {
 			$tasklib->mark_complete_task($task, $user);
 		}
 	}

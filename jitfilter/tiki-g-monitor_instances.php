@@ -46,7 +46,7 @@ if (isset($_REQUEST['update'])) {
 
 if (isset($_REQUEST['delete'])) {
 	check_ticket('g-monitor-instances');
-	foreach (array_keys($_REQUEST['inst'])as $ins) {
+	foreach ($_REQUEST['inst']->keys() as $ins) {
 		$processMonitor->remove_instance($ins);
 	}
 }

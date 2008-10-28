@@ -94,7 +94,7 @@ function wikiplugin_miniquiz($data, $params) {
 		$failed_comment[] = "You should concentrate a little more.";
 
 		if (isset($_REQUEST['quizit']) and $_REQUEST['quizit']) {
-			if (isset($_REQUEST['answer']) and is_array($_REQUEST['answer'])) {
+			if (isset($_REQUEST['answer']) and $_REQUEST->isArray('answer')) {
 				$out.= "[MiniQuiz]\n";
 				$out.= "trackerId : $trackerId\n";
 				$out.= "user : $user\n";

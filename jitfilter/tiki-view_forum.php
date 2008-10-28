@@ -165,7 +165,7 @@ if ($tiki_p_admin_forum == 'y') {
 		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 			key_check($area);
 		if (isset($_REQUEST['forumtopic'])) {
-	    foreach (array_values($_REQUEST['forumtopic'])as $topic) {
+	    foreach ($_REQUEST['forumtopic'] as $topic) {
 				$commentslib->remove_comment($topic);
 				$commentslib->register_remove_post($_REQUEST['forumId'], 0);
 	    }
@@ -180,7 +180,7 @@ if ($tiki_p_admin_forum == 'y') {
     if (isset($_REQUEST['locksel_x'])) {
 	if (isset($_REQUEST['forumtopic'])) {
 		check_ticket('view-forum');
-	    foreach (array_values($_REQUEST['forumtopic'])as $topic) {
+	    foreach ($_REQUEST['forumtopic'] as $topic) {
 		$commentslib->lock_comment($topic);
 	    }
 	}
@@ -189,7 +189,7 @@ if ($tiki_p_admin_forum == 'y') {
     if (isset($_REQUEST['unlocksel_x'])) {
 	if (isset($_REQUEST['forumtopic'])) {
 		check_ticket('view-forum');
-	    foreach (array_values($_REQUEST['forumtopic'])as $topic) {
+	    foreach ($_REQUEST['forumtopic'] as $topic) {
 		$commentslib->unlock_comment($topic);
 	    }
 	}
@@ -197,7 +197,7 @@ if ($tiki_p_admin_forum == 'y') {
 
     if (isset($_REQUEST['movesel'])) {
 	if (isset($_REQUEST['forumtopic'])) {
-	    foreach (array_values($_REQUEST['forumtopic'])as $topic) {
+	    foreach ($_REQUEST['forumtopic'] as $topic) {
 		check_ticket('view-forum');
 		// To move a topic you just have to change the object
 		$obj = 'forum:' . $_REQUEST['moveto'];
@@ -212,7 +212,7 @@ if ($tiki_p_admin_forum == 'y') {
 
     if (isset($_REQUEST['mergesel'])) {
 	if (isset($_REQUEST['forumtopic'])) {
-	    foreach (array_values($_REQUEST['forumtopic'])as $topic) {
+	    foreach ($_REQUEST['forumtopic'] as $topic) {
 		check_ticket('view-forum');
 		// To move a topic you just have to change the object
 		if ($topic != $_REQUEST['mergetopic']) {

@@ -61,7 +61,7 @@ $smarty->assign('info', $info);
 
 if (isset($_REQUEST["delete"])) {
 	check_ticket('g-admin-graph');
-	foreach (array_keys($_REQUEST["process"])as $item) {
+	foreach ($_REQUEST["process"]->keys() as $item) {
 		$processManager->remove_process($item);
 	}
 }

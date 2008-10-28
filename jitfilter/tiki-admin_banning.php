@@ -56,7 +56,7 @@ if (isset($_REQUEST['remove'])) {
 
 if (isset($_REQUEST['del']) && isset($_REQUEST['delsec'])) {
 	check_ticket('admin-banning');
-	foreach (array_keys($_REQUEST['delsec'])as $sec) {
+	foreach ($_REQUEST['delsec']->keys() as $sec) {
 		$banlib->remove_rule($sec);
 	}
 }
@@ -67,7 +67,7 @@ if (isset($_REQUEST['save'])) {
 
 	$_REQUEST['date_from'] = $tikilib->make_time(0, 0, 0, $_REQUEST['date_fromMonth'], $_REQUEST['date_fromDay'], $_REQUEST['date_fromYear']);
 	$_REQUEST['date_to'] = $tikilib->make_time(0, 0, 0, $_REQUEST['date_toMonth'], $_REQUEST['date_toDay'], $_REQUEST['date_toYear']);
-	$sections = array_keys($_REQUEST['section']);
+	$sections = $_REQUEST['section']->keys();
 	$banlib->replace_rule($_REQUEST['banId'], $_REQUEST['mode'], $_REQUEST['title'], $_REQUEST['ip1'], $_REQUEST['ip2'],
 		$_REQUEST['ip3'], $_REQUEST['ip4'], $_REQUEST['userreg'], $_REQUEST['date_from'], $_REQUEST['date_to'], $_REQUEST['use_dates'],
 		$_REQUEST['message'], $sections);

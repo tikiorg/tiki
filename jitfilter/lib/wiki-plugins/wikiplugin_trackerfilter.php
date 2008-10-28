@@ -205,7 +205,7 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', $for
 				}
 				foreach ($res as $opt) {
 					$opt['id'] = $opt['categId'];
-					if (!empty($_REQUEST['f_'.$fieldId]) && ((is_array($_REQUEST['f_'.$fieldId]) && in_array($opt['id'], $_REQUEST['f_'.$fieldId])) || (!is_array($_REQUEST['f_'.$fieldId]) && $opt['id'] == $_REQUEST['f_'.$fieldId]))) {
+					if (!empty($_REQUEST['f_'.$fieldId]) && (($_REQUEST->isArray('f_'.$fieldId) && in_array($opt['id'], $_REQUEST['f_'.$fieldId]->asArray())) || (!$_REQUEST->isArray('f_'.$fieldId) && $opt['id'] == $_REQUEST['f_'.$fieldId]))) {
 						$opt['selected'] = 'y';
 						$selected = true;
 					} else {
@@ -219,7 +219,7 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', $for
 				foreach ($field['options_array'] as $val) {
 					$opt['id'] = $val;
 					$opt['name'] = $val;
-					if (!empty($_REQUEST['f_'.$fieldId]) && ((!is_array($_REQUEST['f_'.$fieldId]) && $_REQUEST['f_'.$fieldId] == $val) || (is_array($_REQUEST['f_'.$fieldId]) && in_array($val, $_REQUEST['f_'.$fieldId])))) {
+					if (!empty($_REQUEST['f_'.$fieldId]) && ((!$_REQUEST->isArray('f_'.$fieldId) && $_REQUEST['f_'.$fieldId] == $val) || ($_REQUEST->isArray('f_'.$fieldId) && in_array($val, $_REQUEST['f_'.$fieldId]->asArray())))) {
 						$opt['selected'] = 'y';
 						$selected = true;
 					} else {
@@ -245,7 +245,7 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', $for
 				foreach ($res as $val) {
 					$opt['id'] = $val;
 					$opt['name'] = $val;
-					if (!empty($_REQUEST['f_'.$fieldId]) && ((!is_array($_REQUEST['f_'.$fieldId]) && $_REQUEST['f_'.$fieldId] == $val) || (is_array($_REQUEST['f_'.$fieldId]) && in_array($val, $_REQUEST['f_'.$fieldId])))) {
+					if (!empty($_REQUEST['f_'.$fieldId]) && ((!$_REQUEST->isArray('f_'.$fieldId) && $_REQUEST['f_'.$fieldId] == $val) || ($_REQUEST->isArray('f_'.$fieldId) && in_array($val, $_REQUEST['f_'.$fieldId]->asArray())))) {
 						$opt['selected'] = 'y';
 						$selected = true;
 					} else {

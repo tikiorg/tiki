@@ -47,7 +47,7 @@ if (isset($_REQUEST['del'])) {
 	$area = 'deldraw';
 	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 		key_check($area);
-		foreach (array_keys($_REQUEST['draw'])as $id) {
+		foreach ($_REQUEST['draw']->keys() as $id) {
 			$drawlib->remove_drawing($id);
 		}
 	} else {

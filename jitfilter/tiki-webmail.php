@@ -143,7 +143,7 @@ $smarty->assign('locSection', $_REQUEST["locSection"]);
 if (isset($_REQUEST["add_contacts"])) {
 	if (isset($_REQUEST["add"])) {
 		check_ticket('webmail');
-		foreach (array_keys($_REQUEST["add"])as $i) {
+		foreach ($_REQUEST["add"]->keys() as $i) {
 			$contactlib->replace_contact(0, $_REQUEST["addFirstName"][$i], $_REQUEST["addLastName"][$i], $_REQUEST["addemail"][$i],
 				$_REQUEST["addNickname"][$i], $user);
 		}
@@ -352,7 +352,7 @@ if ($_REQUEST["locSection"] == 'mailbox') {
 		if (isset($_REQUEST["msg"])) {
 			check_ticket('webmail');
 			// Now we can delete the messages
-			foreach (array_keys($_REQUEST["msg"])as $msg) {
+			foreach ($_REQUEST["msg"]->keys() as $msg) {
 				$listing = $pop3->GetListing($msg);
 				$realmsgid = $listing["msg_id"];
 				$webmaillib->remove_webmail_message($current["accountId"], $user, $realmsgid);
@@ -384,7 +384,7 @@ if ($_REQUEST["locSection"] == 'mailbox') {
 			check_ticket('webmail');
 			// Now we can operate the messages
 			// $_REQUEST["realmsg"][$msg] gets you the mailID for the check box $_REQUEST["msg"]
-			foreach (array_keys($_REQUEST["msg"])as $msg) {
+			foreach ($_REQUEST["msg"]->keys() as $msg) {
 				$realmsg = $_REQUEST["realmsg"][$msg];
 				switch ($_REQUEST["action"]) {
 				case "flag":

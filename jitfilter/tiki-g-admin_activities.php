@@ -140,7 +140,7 @@ if (isset($_REQUEST['addrole'])) {
 // Delete activities
 if (isset($_REQUEST["delete_act"])) {
 	check_ticket('g-admin-activities');
-	foreach (array_keys($_REQUEST["activity"])as $item) {
+	foreach ($_REQUEST["activity"]->keys() as $item) {
 		$activityManager->remove_activity($_REQUEST['pid'], $item);
 	}
 }
@@ -274,7 +274,7 @@ $smarty->assign('where', $_REQUEST['where']);
 // Transitions
 if (isset($_REQUEST["delete_tran"])) {
 	check_ticket('g-admin-activities');
-	foreach (array_keys($_REQUEST["transition"])as $item) {
+	foreach ($_REQUEST["transition"]->keys() as $item) {
 		$parts = explode("_", $item);
 
 		$activityManager->remove_transition($parts[0], $parts[1]);

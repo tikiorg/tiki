@@ -130,7 +130,7 @@ function buildFileList() {
 }
 
 
-if (isset($_REQUEST["batch_upload"]) and isset($_REQUEST['files']) and is_array($_REQUEST['files'])) {
+if (isset($_REQUEST["batch_upload"]) and isset($_REQUEST['files']) and $_REQUEST->isArray('files')) {
 	// default is: file names from request
 	$fileArray = $_REQUEST['files'];
 	$totfiles = count($fileArray);

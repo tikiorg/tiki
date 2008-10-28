@@ -54,9 +54,9 @@ $smarty->assign('info', $info);
 
 if (isset($_REQUEST["delete"])) {
 	if (isset($_REQUEST["chart"]))
-	if (is_array($_REQUEST["chart"])) {
+	if ($_REQUEST->isArray("chart")) {
 		check_ticket('admin-charts'); 
-		foreach (array_keys($_REQUEST["chart"])as $item) {
+		foreach ($_REQUEST["chart"]->keys() as $item) {
 			$chartlib->remove_chart($item);
 		}
 	}

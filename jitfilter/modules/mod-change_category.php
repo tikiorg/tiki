@@ -99,7 +99,7 @@ if ($prefs['feature_categories'] == 'y' && (isset($_REQUEST['page']) || isset($_
 		}
 	}
     if (isset($_REQUEST['modcatchange'])) {
-		if (!is_array($_REQUEST['modcatchange'])) {
+		if (!$_REQUEST->isArray('modcatchange')) {
 			$_REQUEST['modcatchange'] = array($_REQUEST['modcatchange']);
 		}
 		foreach ($_REQUEST['modcatchange'] as $cat) {

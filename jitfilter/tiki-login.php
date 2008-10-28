@@ -77,7 +77,7 @@ if ( $prefs['feature_intertiki'] == 'y' ) {
 } else unset($_REQUEST['intertiki']);
 
 // Go through the intertiki process
-if ( isset($_REQUEST['intertiki']) and in_array($_REQUEST['intertiki'], array_keys($prefs['interlist'])) ) {
+if ( isset($_REQUEST['intertiki']) && isset($prefs['interlist'][ $_REQUEST['intertiki'] ]) ) {
 
     $rpcauth = $userlib->intervalidate($prefs['interlist'][$_REQUEST['intertiki']],$user,$pass,!empty($prefs['feature_intertiki_mymaster'])? true : false);
 

@@ -81,7 +81,7 @@ $smarty->assign_by_ref('info', $info);
 
 // Remove a category
 if (isset($_REQUEST["remove"])) {
-	if (is_array($_REQUEST["remove"])) {
+	if ($_REQUEST->isArray("remove")) {
 		check_ticket('dir-admin-sites');
 		foreach ($_REQUEST["remove"] as $remid) {
 			$dirlib->dir_remove_site($remid);

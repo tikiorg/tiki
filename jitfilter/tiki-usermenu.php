@@ -37,7 +37,7 @@ if (!isset($_REQUEST["menuId"]))
 
 if (isset($_REQUEST["delete"]) && isset($_REQUEST["menu"])) {
 	check_ticket('user-menu');
-	foreach (array_keys($_REQUEST["menu"])as $men) {
+	foreach ($_REQUEST["menu"]->keys() as $men) {
 		$usermenulib->remove_usermenu($user, $men);
 	}
 

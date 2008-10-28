@@ -45,6 +45,16 @@ class JitFilter_AccessTest extends PHPUnit_Framework_TestCase
 	{
 		$this->assertEquals( array(), array_diff( array( 'hello', 'world' ), $this->array['baz']->asArray() ) );
 	}
+
+	function testKeys()
+	{
+		$this->assertEquals( array( 'foo', 'bar', 'baz' ), $this->array->keys() );
+	}
+
+	function testIsArray()
+	{
+		$this->assertTrue( $this->array->isArray('baz') );
+	}
 }
 
 ?>

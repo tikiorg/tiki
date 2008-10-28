@@ -85,7 +85,7 @@ if (isset($_REQUEST["save"]) and isset($_REQUEST["olgroup"]) and !empty($_REQUES
 	}
 	$userlib->change_group($_REQUEST['olgroup'],$_REQUEST['name'],$_REQUEST['desc'],$ag_home,$ag_utracker,$ag_gtracker,$ag_ufield,$ag_gfield, $ag_rufields, $_REQUEST['userChoice'],$ag_defcat,$ag_theme);
 	$userlib->remove_all_inclusions($_REQUEST["name"]);
-	if (isset($_REQUEST["include_groups"]) and is_array($_REQUEST["include_groups"])) {		
+	if (isset($_REQUEST["include_groups"]) and $_REQUEST->isArray("include_groups")) {		
 		foreach ($_REQUEST["include_groups"] as $include) {
 			if ($include && $_REQUEST["name"] != $include) {
 				$userlib->group_inclusion($_REQUEST["name"], $include);

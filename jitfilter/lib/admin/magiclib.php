@@ -245,8 +245,8 @@ class MagicLib extends TikiLib {
 	
 	function simple_set_value($feature, $pref = '', $isMultiple = false) {
 		global $_POST, $tikilib, $prefs, $logslib;
-		if (is_array($_POST[$feature])) {
-			$featureStr = implode($_POST[$feature], ',');	
+		if ($_POST->isArray($feature)) {
+			$featureStr = implode(',', $_POST[$feature]->asArray());	
 		} else {
 			$featureStr = $_POST[$feature];
 		}

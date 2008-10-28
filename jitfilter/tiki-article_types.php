@@ -41,7 +41,7 @@ elseif(isset($_REQUEST["remove_type"])) {
 	}
 }
 elseif(isset($_REQUEST["update_type"])) {
-	foreach(array_keys($_REQUEST["type_array"]) as $this_type) {
+	foreach($_REQUEST["type_array"]->keys() as $this_type) {
 		if (!isset($_REQUEST["use_ratings"][$this_type])) {$_REQUEST["use_ratings"][$this_type] = 'n';}
 		if (!isset($_REQUEST["show_pre_publ"][$this_type])) {$_REQUEST["show_pre_publ"][$this_type] = 'n';}
 		if (!isset($_REQUEST["show_post_expire"][$this_type])) {$_REQUEST["show_post_expire"][$this_type] = 'n';}

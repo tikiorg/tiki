@@ -72,7 +72,7 @@ $smarty->assign_by_ref('info', $info);
 
 if (isset($_REQUEST["delete"]) && isset($_REQUEST["hist"]) && $info["flag"] != 'L') {
 	check_ticket('page-history');
-	foreach (array_keys($_REQUEST["hist"])as $version) {
+	foreach ($_REQUEST["hist"]->keys() as $version) {
 		$histlib->remove_version($_REQUEST["page"], $version);
 	}
 }

@@ -159,8 +159,8 @@ foreach (array('status', 'filterfield', 'filtervalue', 'initial', 'exactvalue', 
         $$trynam = '';
     }
 }
-if (isset($_REQUEST["filtervalue"]) and is_array($_REQUEST["filtervalue"]) and isset($_REQUEST["filtervalue"]["$tryfilterfield"])) {
-	$tryfiltervalue = $_REQUEST["filtervalue"]["$tryfilterfield"];
+if ($_REQUEST->isArray("filtervalue") and isset($_REQUEST["filtervalue"][$tryfilterfield])) {
+	$tryfiltervalue = $_REQUEST["filtervalue"][$tryfilterfield];
 }
 
 
@@ -415,8 +415,8 @@ foreach($xfields["data"] as $i=>$array) {
 			$k = $ins_fields["data"][$i]['options_array'][0];
 			$fields["data"][$i]["$k"] = $categlib->get_child_categories($k);
 			$categId = "ins_cat_$fid";
-			if (isset($_REQUEST[$categId]) and is_array($_REQUEST[$categId])) {
-				$ins_categs = array_merge($ins_categs,$_REQUEST[$categId]);
+			if ($_REQUEST->isArray($categId)) {
+				$ins_categs = array_merge($ins_categs,$_REQUEST[$categId]->asArray());
 			}
 			$ins_fields["data"][$i]["value"] = '';
 		

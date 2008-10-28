@@ -75,7 +75,7 @@ if( !( is_numeric( $_GET['w'] )
 	&& $_GET['s'] <= 500 && $_GET['s'] > 0
 	&& is_numeric( $_GET['min'] )
 	&& is_numeric( $_GET['max'] )
-	&& is_array( $_GET['f'] )
+	&& $_GET->isArray('f')
 	&& $_GET['min'] < $_GET['max'] 
 	&& $_GET['w'] >= 100
 	&& $_GET['h'] >= 100 ) )
@@ -99,7 +99,7 @@ $graph->setTitle( $_GET['title'] );
 $size = ($_GET['max'] - $_GET['min']) / $_GET['s'];
 
 $data = array();
-foreach( array_values( $_GET['f'] ) as $key=>$formula )
+foreach( array_values( $_GET['f']->asArray() ) as $key=>$formula )
 {
 	$formula = convert_formula( $formula );
 	

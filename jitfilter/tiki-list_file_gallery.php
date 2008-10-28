@@ -109,7 +109,7 @@ if ( $tiki_p_admin_file_galleries == 'y' ) {
 	if ( isset($_REQUEST['delsel_x']) ) {
 		check_ticket('fgal');
 		if (isset($_REQUEST['file'])) {
-			foreach ( array_values($_REQUEST['file']) as $file ) {
+			foreach ( $_REQUEST['file'] as $file ) {
 				if ($info = $filegallib->get_file_info($file)) {
 					$smarty->assign('fileId', $file);
 					$smarty->assign_by_ref('filename', $info['filename']);
@@ -120,7 +120,7 @@ if ( $tiki_p_admin_file_galleries == 'y' ) {
 			}
 		}
 		if (isset($_REQUEST['subgal'])) {
-			foreach ( array_values($_REQUEST['subgal']) as $subgal ) {
+			foreach ( $_REQUEST['subgal'] as $subgal ) {
 				$filegallib->remove_file_gallery($subgal, $galleryId);
 			}
 		}
@@ -128,11 +128,11 @@ if ( $tiki_p_admin_file_galleries == 'y' ) {
 
 	if ( isset($_REQUEST['movesel']) ) {
 		check_ticket('fgal');
-		foreach ( array_values($_REQUEST['file']) as $file ) {
+		foreach ( $_REQUEST['file'] as $file ) {
 			// To move a topic you just have to change the object
 			$filegallib->set_file_gallery($file, $_REQUEST['moveto']);
 		}
-		foreach ( array_values($_REQUEST['subgal']) as $subgal ) {
+		foreach ( $_REQUEST['subgal'] as $subgal ) {
 			$filegallib->move_file_gallery($subgal, $_REQUEST['moveto']);
 		}
 	}
@@ -140,10 +140,10 @@ if ( $tiki_p_admin_file_galleries == 'y' ) {
 if (isset($_REQUEST['zipsel_x']) && $tiki_p_upload_files == 'y') {
 	check_ticket('fgal');
 	$href = array();
-	foreach (array_values($_REQUEST['file']) as $file) {
+	foreach ($_REQUEST['file'] as $file) {
 		$href[] = "fileId[]=$file";
 	}
-	foreach ( array_values($_REQUEST['subgal']) as $subgal ) {
+	foreach ( $_REQUEST['subgal'] as $subgal ) {
 		$href[] = "galId[]=$subgal";
 	}
 	header("Location: tiki-download_file.php?".implode('&', $href));

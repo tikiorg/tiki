@@ -15,7 +15,7 @@ include_once('lib/score/scorelib.php');
 if (isset($_REQUEST["scoreevents"])) {
 	check_ticket('admin-inc-score');
 
-	if (isset($_REQUEST['events']) && is_array($_REQUEST['events'])) {
+	if (isset($_REQUEST['events']) && $_REQUEST->isArray('events')) {
 	    $scorelib->update_events($_REQUEST['events']);
 	}
 }

@@ -76,32 +76,29 @@ $smarty->assign( 'data', $info );
 if( isset( $_REQUEST['save'] ) )
 {
 	// Process save
-	if( isset( $_REQUEST['setlang'] )
-		&& is_array( $_REQUEST['setlang'] ) )
+	if( $_REQUEST->isArray('setlang') )
 	{
 		foreach( $_REQUEST['setlang'] as $tagId => $lang )
 			if( !empty( $lang ) )
 				$freetaglib->set_tag_language( $tagId, $lang );
 	}
 
-	if( isset( $_REQUEST['newtag'] )
-		&& isset( $_REQUEST['rootlang'] )
-		&& is_array( $_REQUEST['newtag'] )
-		&& is_array( $_REQUEST['rootlang'] ) )
+	if( $_REQUEST->isArray('newtag')
+		&& $_REQUEST->isArray('rootlang') )
 	{
-		foreach( $_REQUEST['newtag'] as $tagGroup => $list )
-			if( is_array( $list ) && array_key_exists( $tagGroup, $_REQUEST['rootlang'] ) )
+		foreach( $_REQUEST['newtag']->asArray() as $tagGroup => $list )
+			if( is_array( $list ) && isset( $_REQUEST['rootlang'][$tagGroup] ) )
 				foreach( $list as $lang => $tag )
 				{
 					$root = $_REQUEST['rootlang'][$tagGroup];
-					if( !array_key_exists( $lang, $root ) )
+					if( !isset( $root[$lang] ) )
 						continue;
 
 					$freetaglib->translate_tag( $root[$lang], $tagGroup, $lang, $tag );
 				}
 	}
 
-	if( isset( $_REQUEST['clear'] ) && is_array( $_REQUEST['clear'] ) )
+	if( $_REQUEST->isArray('clear') )
 	{
 		foreach( $_REQUEST['clear'] as $tag )
 			$freetaglib->clear_tag_language_from_id( $tag );
@@ -120,8 +117,7 @@ $languages = $multilinguallib->preferedLangs();
 $used_languages = array();
 foreach ($languages as $l)
 	$used_languages[$l] = true;
-if( array_key_exists( 'additional_languages', $_REQUEST )
-	&& is_array( $_REQUEST['additional_languages'] ) )
+if( isset( $_REQUEST['additional_languages'] ) )
 	foreach( $_REQUEST['additional_languages'] as $lang )
 		$used_languages[$lang] = true;
 $used_languages = array_keys( $used_languages );

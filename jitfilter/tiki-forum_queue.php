@@ -213,14 +213,14 @@ if (isset($_REQUEST['qId'])) {
 
 if (isset($_REQUEST['rej']) && isset($_REQUEST['msg'])) {
 	check_ticket('forum-queue');
-	foreach (array_keys($_REQUEST['msg'])as $msg) {
+	foreach ($_REQUEST['msg']->keys() as $msg) {
 		$commentslib->remove_queued($msg);
 	}
 }
 
 if (isset($_REQUEST['app']) && isset($_REQUEST['msg'])) {
 	check_ticket('forum-queue');
-	foreach (array_keys($_REQUEST['msg'])as $msg) {
+	foreach ($_REQUEST['msg']->keys() as $msg) {
 		$commentslib->approve_queued($msg);
 	}
 }

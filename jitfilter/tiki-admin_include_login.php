@@ -74,9 +74,9 @@ if (isset($_REQUEST["loginprefs"])) {
 		foreach ($listgroups['data'] as $gr) {
 			if ($gr['groupName'] == 'Anonymous')
 				continue;
-			if ($gr['registrationChoice'] == 'y' && !in_array($gr['groupName'], $_REQUEST['registration_choices'])) // deselect
+			if ($gr['registrationChoice'] == 'y' && !in_array($gr['groupName'], $_REQUEST['registration_choices']->asArray())) // deselect
 				$out[] = $gr['groupName'];
-			elseif ($gr['registrationChoice'] != 'y' && in_array($gr['groupName'], $_REQUEST['registration_choices'])) //select
+			elseif ($gr['registrationChoice'] != 'y' && in_array($gr['groupName'], $_REQUEST['registration_choices']->asArray())) //select
 				$in[] = $gr['groupName'];
 		}
 		if (count($in))

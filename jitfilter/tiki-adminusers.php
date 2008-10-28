@@ -404,7 +404,7 @@ $users = $userlib->get_users($offset, $numrows, $sort_mode, $find, $initial, tru
 if (!empty($group_management_mode) || !empty($set_default_groups_mode) || !empty($email_mode)) {
 	$arraylen = count($users['data']);
 	for ($i=0; $i<$arraylen; $i++) {
-		if (in_array($users['data'][$i]['user'], $_REQUEST["checked"])) {
+		if (in_array($users['data'][$i]['user'], $_REQUEST["checked"]->asArray())) {
 			$users['data'][$i]['checked'] = 'y';
 		}
 	}

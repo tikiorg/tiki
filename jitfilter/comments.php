@@ -553,7 +553,7 @@ if ($_REQUEST["comments_threadId"] > 0) {
 
 	if( ! array_key_exists( "title", $comment_info ) )
 	{
-		if( array_key_exists( "comments_title", $_REQUEST ) )
+		if( isset( $_REQUEST["comments_title"] ) )
 		{
 			$comment_info["title"] = $_REQUEST["comments_title"];
 		} else {

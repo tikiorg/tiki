@@ -128,7 +128,7 @@ function buildImageList() {
 }
 
 
-if (isset($_REQUEST["batch_upload"]) and isset($_REQUEST['imgs']) and is_array($_REQUEST['imgs'])) {
+if (isset($_REQUEST["batch_upload"]) and isset($_REQUEST['imgs']) and $_REQUEST->isArray('imgs')) {
 
 	// default is: image names from request
 	$imgArray = $_REQUEST['imgs'];

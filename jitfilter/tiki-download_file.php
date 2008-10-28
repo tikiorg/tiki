@@ -58,11 +58,11 @@ function get_readfile_chunked($filename) {
    return $buffer;
 }
 
-if ( isset($_REQUEST['fileId']) && !is_array($_REQUEST['fileId'])) {
+if ( isset($_REQUEST['fileId']) && !$_REQUEST->isArray('fileId')) {
 	$info = $tikilib->get_file($_REQUEST['fileId']);
 } elseif ( isset($_REQUEST['galleryId']) && isset($_REQUEST['name']) ) {
 	$info = $tikilib->get_file_by_name($_REQUEST['galleryId'], $_REQUEST['name']);
-} elseif ( isset($_REQUEST['fileId']) && is_array($_REQUEST['fileId'])) {
+} elseif ( isset($_REQUEST['fileId']) && $_REQUEST->isArray('fileId')) {
 	$info = $filegallib->zip($_REQUEST['fileId'], $error);
 	$zip = true;
 } else {

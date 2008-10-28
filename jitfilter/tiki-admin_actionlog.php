@@ -156,7 +156,7 @@ if (isset($_REQUEST['list']) || isset($_REQUEST['export']) || isset($_REQUEST['g
 	$selectedUsers = array();
 	if (isset($_REQUEST['selectedUsers'])) {
 		foreach ($users as $key=>$u) {
-			if (in_array($u, $_REQUEST['selectedUsers'])) {
+			if (in_array($u, $_REQUEST['selectedUsers']->asArray())) {
 				$url .= "&amp;selectedUsers[]=$u";
 				$selectedUsers[$key] = 'y';
 			} else
@@ -167,7 +167,7 @@ if (isset($_REQUEST['list']) || isset($_REQUEST['export']) || isset($_REQUEST['g
 	if (isset($_REQUEST['selectedGroups']) && !(sizeof($_REQUEST['selectedGroups']) == 1 && $_REQUEST['selectedGroups'][0] == '')) {
 		$selectedGroups = array();
 		foreach ($groups as $key=>$g) {
-			if (in_array($g, $_REQUEST['selectedGroups'])) {
+			if (in_array($g, $_REQUEST['selectedGroups']->asArray())) {
 				$url .= "&amp;selectedGroups[]=$g";
 				$selectedGroups[$g] = 'y';
 				if ($tiki_p_admin == 'y' || $tiki_p_view_actionlog_owngroups == 'y') {

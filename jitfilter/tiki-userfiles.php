@@ -108,7 +108,7 @@ for ($i = 0; $i < 5; $i++) {
 // Process removal here
 if (isset($_REQUEST["delete"]) && isset($_REQUEST["userfile"])) {
 	check_ticket('user-files');
-	foreach (array_keys($_REQUEST["userfile"])as $file) {
+	foreach ($_REQUEST["userfile"]->keys() as $file) {
 		$userfileslib->remove_userfile($user, $file);
 	}
 }

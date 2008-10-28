@@ -84,6 +84,16 @@ class JitFilter implements ArrayAccess, Iterator, Countable
 		return $ret;
 	}
 
+	function isArray( $key )
+	{
+		return isset($this->stored[$key]) && $this->offsetGet($key) instanceof self;
+	}
+
+	function keys()
+	{
+		return array_keys( $this->stored );
+	}
+
 	function setDefaultFilter( $filter )
 	{
 		if( ! $filter instanceof Zend_Filter_Interface )

@@ -285,8 +285,8 @@ if (isset($_REQUEST["save"])) {
 
 	if (isset($_REQUEST["defaultStatus"]) 
 		&& $_REQUEST["defaultStatus"]) { 
-		if (is_array($_REQUEST["defaultStatus"])) {
-			$tracker_options["defaultStatus"] = implode('',$_REQUEST["defaultStatus"]);
+		if ($_REQUEST->isArray("defaultStatus")) {
+			$tracker_options["defaultStatus"] = implode('',$_REQUEST["defaultStatus"]->asArray());
 		} else {
 			$tracker_options["defaultStatus"] = $_REQUEST["defaultStatus"];
 		}
@@ -295,7 +295,7 @@ if (isset($_REQUEST["save"])) {
 	}
 
 	if (isset($_REQUEST['ui'])) {
-		if (!is_array($_REQUEST['ui'])) {
+		if (!$_REQUEST->isArray('ui')) {
 			$_REQUEST['ui'] = split(',',$_REQUEST['ui']);
 		}
 		$showlist = array();

@@ -57,7 +57,7 @@ if (!empty($_REQUEST['remove'])) {
 }
 if (isset($_REQUEST['delsel_x']) && !empty($_REQUEST['file'])) {
 	check_ticket('list-archives');
-	foreach (array_values($_REQUEST['file']) as $fileId) {
+	foreach ($_REQUEST['file'] as $fileId) {
 		if (!($removeInfo = $filegallib->get_file_info($fileId))) {
 			$smarty->assign('msg', tra("Incorrect param"));
 			$smarty->display('error.tpl');

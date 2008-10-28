@@ -100,9 +100,9 @@ while( true )
 		$hasBody = !empty($content) && !ctype_space( $content );
 
 		// If parameters are provided, rebuild the parameter line
-		if( isset( $_POST['params'] ) && is_array( $_POST['params'] ) )
+		if( isset( $_POST['params'] ) && $_POST->isArray('params') )
 		{
-			$values = array_intersect_key( $_POST['params'], $meta['params'] );
+			$values = array_intersect_key( $_POST['params']->asArray(), $meta['params'] );
 
 			$parts = array();
 			foreach( $values as $key => $value )

@@ -81,8 +81,8 @@ if(!empty($_REQUEST['reply'])||!empty($_REQUEST['replyall'])) {
 }
 
 foreach( array( 'to', 'cc', 'bcc' ) as $dest )
-	if( is_array( $_REQUEST[$dest] ) )
-		$_REQUEST[$dest] = implode( ', ', array_filter( $_REQUEST[$dest], 'ctype_alnum' ) );
+	if( $_REQUEST->isArray($dest) )
+		$_REQUEST[$dest] = implode( ', ', array_filter( $_REQUEST[$dest]->asArray(), 'ctype_alnum' ) );
 
 $smarty->assign('to', $_REQUEST['to']);
 $smarty->assign('cc', $_REQUEST['cc']);

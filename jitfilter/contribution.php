@@ -26,7 +26,7 @@ if ($prefs['feature_contribution'] == 'y') {
 	$contributions = $contributionlib->list_contributions();
 	if (!empty($_REQUEST['contributions'])) {
 		for ($i = $contributions['cant'] - 1; $i >= 0; -- $i) {
-			if (in_array($contributions['data'][$i]['contributionId'], $_REQUEST['contributions'])) {
+			if (in_array($contributions['data'][$i]['contributionId'], $_REQUEST['contributions']->asArray())) {
 				$contributions['data'][$i]['selected'] = 'y';
 				$oneSelected = 'y';
 			}

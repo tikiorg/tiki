@@ -62,7 +62,7 @@ if (isset($_REQUEST['delete'])) {
   $area = 'delminical';
   if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
-	foreach (array_keys($_REQUEST["event"])as $ev) {
+	foreach ($_REQUEST["event"]->keys() as $ev) {
 		$minicallib->minical_remove_event($user, $ev);
 	}
   } else {

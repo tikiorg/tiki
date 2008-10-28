@@ -108,7 +108,7 @@ if (isset($_REQUEST["createlevel"])) {
 
 if (isset($_REQUEST['update'])) {
 	check_ticket('admin-perms');
-	foreach (array_keys($_REQUEST['permName'])as $per) {
+	foreach ($_REQUEST['permName']->keys() as $per) {
 		$userlib->change_permission_level($per, $_REQUEST['level'][$per]);
 
 		if (isset($_REQUEST['perm'][$per])) {

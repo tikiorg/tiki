@@ -108,8 +108,8 @@ if (isset($_REQUEST['delsel_x']) && isset($_REQUEST['checked'])) {
 if (isset($_REQUEST["save"])) {
 	if (!isset($_REQUEST['groupname']))
 		$_REQUEST['groupname'] = '';
-	elseif (is_array($_REQUEST['groupname'] ) )
-		$_REQUEST['groupname'] = implode(',', $_REQUEST['groupname']);
+	elseif ($_REQUEST->isArray('groupname') )
+		$_REQUEST['groupname'] = implode(',', $_REQUEST['groupname']->asArray());
 	if (!isset($_REQUEST['level'])) $_REQUEST['level'] = 0;
 
 include_once('lib/modules/modlib.php');

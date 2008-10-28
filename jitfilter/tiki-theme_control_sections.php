@@ -37,7 +37,7 @@ if (isset($_REQUEST['assign'])) {
 
 if (isset($_REQUEST["delete"])) {
 	check_ticket('tc-sections');
-	foreach (array_keys($_REQUEST["sec"])as $sec) {
+	foreach ($_REQUEST["sec"]->keys() as $sec) {
 		$tcontrollib->tc_remove_section($sec);
 	}
 }

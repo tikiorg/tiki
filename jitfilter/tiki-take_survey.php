@@ -110,7 +110,7 @@ if (isset($_REQUEST["ans"])) {
 		if (isset($_REQUEST["question_" . $questionId])) {
 			if ($question["type"] == 'm') {
 				// If we have a multiple question
-				$ids = array_keys($_REQUEST["question_" . $questionId]);
+				$ids = $_REQUEST["question_" . $questionId]->keys();
 
 				//print_r($ids);
 				// Now for each of the options we increase the number of votes

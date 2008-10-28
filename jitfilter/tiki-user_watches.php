@@ -100,7 +100,7 @@ if (isset($_REQUEST["delete"]) && isset($_REQUEST['watch'])) {
 /*  $area = 'delwatches';
   if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area); */
-	foreach (array_keys($_REQUEST["watch"])as $item) {
+	foreach ($_REQUEST["watch"]->keys() as $item) {
 		$tikilib->remove_user_watch_by_id($item);
 	}
 /*  } else {

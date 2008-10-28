@@ -98,7 +98,7 @@ $smarty->assign('form', 'y');
 
 if (isset($_REQUEST['del']) && isset($_REQUEST['msg'])) {
 	check_ticket('forum-reported');
-	foreach (array_keys($_REQUEST['msg'])as $msg) {
+	foreach ($_REQUEST['msg']->keys() as $msg) {
 		$commentslib->remove_reported($msg);
 	}
 }

@@ -80,10 +80,9 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
 }
 
 if (isset($_REQUEST["delete"])) {
-	if (isset($_REQUEST["process"]))
-	if (is_array($_REQUEST["process"])) {
+	if ($_REQUEST->isArray("process")) {
 		check_ticket('g-admin-processes');
-		foreach (array_keys($_REQUEST["process"])as $item) {
+		foreach ($_REQUEST["process"]->keys() as $item) {
 			$processManager->remove_process((int)$item);
 		}
 	}

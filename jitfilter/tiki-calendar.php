@@ -127,9 +127,9 @@ $smarty->assign('listcals', $listcals);
 $smarty->assign('modifTab', $modifTab);
 
 // set up list of groups
-if (isset($_REQUEST["calIds"])and is_array($_REQUEST["calIds"])and count($_REQUEST["calIds"])) {
-	$_SESSION['CalendarViewGroups'] = array_intersect($_REQUEST["calIds"], $listcals);
-} elseif (isset($_REQUEST["calIds"])and !is_array($_REQUEST["calIds"])) {
+if (isset($_REQUEST["calIds"])and $_REQUEST->isArray("calIds")and count($_REQUEST["calIds"])) {
+	$_SESSION['CalendarViewGroups'] = array_intersect($_REQUEST["calIds"]->asArray(), $listcals);
+} elseif (isset($_REQUEST["calIds"])and !$_REQUEST->isArray("calIds")) {
 	$_SESSION['CalendarViewGroups'] = array_intersect(array($_REQUEST["calIds"]), $listcals);
 } elseif (!isset($_SESSION['CalendarViewGroups']) || !empty($_REQUEST['allCals'])) {
 	$_SESSION['CalendarViewGroups'] = $listcals;

@@ -75,7 +75,7 @@ else {
 			$categories[$i]["incat"] = 'n';
 		}
 		if (isset($_REQUEST["cat_categories"]) && isset($_REQUEST["cat_categorize"]) && $_REQUEST["cat_categorize"] == 'on') {
-			if (in_array($categories[$i]["categId"], $_REQUEST["cat_categories"])) {
+			if (in_array($categories[$i]["categId"], $_REQUEST["cat_categories"]->asArray())) {
 				$categories[$i]["incat"] = 'y';
 				// allow to preselect categories when creating a new article
 				// like this: /tiki-edit_article.php?cat_categories[]=1&cat_categorize=on

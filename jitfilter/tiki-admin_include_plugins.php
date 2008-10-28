@@ -17,11 +17,11 @@ $pluginsReal = $tikilib->plugin_get_list( true, false );
 
 if( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 	if( isset( $_POST['enable'] ) ) {
-		if( ! is_array( $_POST['enabled'] ) )
+		if( ! $_POST->isArray('enabled') )
 			$_POST['enabled'] = array();
 
 		foreach( $pluginsAlias as $name ) {
-			$tikilib->set_preference( "wikiplugin_$name", in_array( $name, $_POST['enabled'] ) ? 'y' : 'n' );
+			$tikilib->set_preference( "wikiplugin_$name", in_array( $name, $_POST['enabled']->asArray() ) ? 'y' : 'n' );
 		}
 	}
 

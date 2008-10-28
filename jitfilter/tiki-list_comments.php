@@ -88,7 +88,7 @@ $smarty->assign_by_ref('headers', $headers);
 // Handle actions
 if ( isset($_REQUEST['checked']) ) {
 	check_ticket('list_comments');
-	$checked = is_array($_REQUEST['checked']) ? $_REQUEST['checked'] : array($_REQUEST['checked']);
+	$checked = $_REQUEST->isArray('checked') ? $_REQUEST['checked'] : array($_REQUEST['checked']);
 
 	// Delete comment(s)
 	if ( isset($_REQUEST['remove']) ) {

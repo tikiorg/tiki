@@ -37,7 +37,7 @@ if (isset($_REQUEST['delk'])) {
 
 if (isset($_REQUEST["intertikiclient"])) {
 	check_ticket('admin-inc-intertiki');
-	if (isset($_REQUEST['new']) and is_array($_REQUEST['new']) and $_REQUEST['new']['name']) {
+	if (isset($_REQUEST['new']) and $_REQUEST->isArray('new') and $_REQUEST['new']['name']) {
 		$new["{$_REQUEST['new']['name']}"] = $_REQUEST['new'];
 		$_REQUEST['interlist'] += $new;
 	}
@@ -57,7 +57,7 @@ if (isset($_REQUEST["intertikiserver"])) {
 	simple_set_toggle('feature_intertiki_server');
 	simple_set_value('intertiki_logfile');
 	simple_set_value('intertiki_errfile');
-	if (isset($_REQUEST['newhost']) and is_array($_REQUEST['newhost']) and $_REQUEST['newhost']['key']) {
+	if (isset($_REQUEST['newhost']) and $_REQUEST->isArray('newhost') and $_REQUEST['newhost']['key']) {
 		$newhost["{$_REQUEST['newhost']['key']}"] = $_REQUEST['newhost'];
 		$_REQUEST['known_hosts'] += $newhost;
 	}

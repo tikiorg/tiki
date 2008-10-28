@@ -16,7 +16,7 @@ function smarty_function_query($params, &$smarty) {
 			$query[$param_name] = $param_value;
 		}
 	} else {
-		$query = array_merge($_GET, $_POST);
+		$query = $_REQUEST;
 		if ( is_array($params) ) {
 			foreach( $params as $param_name => $param_value ) {
 	

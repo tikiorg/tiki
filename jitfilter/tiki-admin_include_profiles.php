@@ -123,7 +123,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 }
 
 if( isset( $_GET['list'] ) ) { // {{{
-	$params = array_merge( array( 'repository' => '', 'category' => '', 'profile' => '' ), $_GET );
+	$params = array_merge( array( 'repository' => '', 'category' => '', 'profile' => '' ), $_GET->asArray() );
 	$smarty->assign( 'category', $params['category'] );
 	$smarty->assign( 'profile', $params['profile'] );
 	$smarty->assign( 'repository', $params['repository'] );

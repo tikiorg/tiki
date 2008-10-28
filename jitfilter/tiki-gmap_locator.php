@@ -37,7 +37,7 @@ $smarty->assign('gmap_defaultz',$prefs['gmap_defaultz']);
 $smarty->assign('input','n');
 if ($user and isset($_REQUEST['for'])) {
 	if ($_REQUEST['for'] == 'user') {
-		if (isset($_REQUEST['point']) and is_array($_REQUEST['point'])) {
+		if ($_REQUEST->isArray('point')) {
 			$p = $_REQUEST['point'];
 			if ($p['x'] > -90 and $p['x'] < 90) { $tikilib->set_user_preference($userwatch, 'lon', $p['x']); }
 			if ($p['y'] > -90 and $p['y'] < 90) { $tikilib->set_user_preference($userwatch, 'lat', $p['y']); }
@@ -55,7 +55,7 @@ if ($user and isset($_REQUEST['for'])) {
 		$smarty->assign('backlink',tra('Back to preferences'));
 	}
 	if ($_REQUEST['for'] == 'item') {
-	  if (isset($_REQUEST['point']) and is_array($_REQUEST['point'])) {
+	  if ($_REQUEST->isArray('point')) {
 	    echo "OK";
 	    if(isset($_REQUEST['itemId']) && isset($_REQUEST['fieldId'])){
 	      echo "OK";

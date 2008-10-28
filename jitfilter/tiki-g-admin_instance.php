@@ -95,7 +95,7 @@ if (isset($_REQUEST['addprop'])) {
 
 if (isset($_REQUEST['saveprops'])) {
 	check_ticket('g-admin-instance');
-	foreach (array_keys($_REQUEST['props'])as $key) {
+	foreach ($_REQUEST['props']->keys() as $key) {
 		$props[$key] = $_REQUEST['props'][$key];
 	}
 

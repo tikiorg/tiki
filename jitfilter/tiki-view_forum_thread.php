@@ -209,7 +209,7 @@ if($tiki_p_admin_forum == 'y') {
     if(isset($_REQUEST['delsel'])) {
 	if (isset($_REQUEST['forumthread'])) {
 	    check_ticket('view-forum');
-	    foreach(array_values($_REQUEST['forumthread']) as $thread) {
+	    foreach($_REQUEST['forumthread'] as $thread) {
 		$commentslib->remove_comment($thread);
 		$commentslib->register_remove_post($_REQUEST['forumId'], $_REQUEST['comments_parentId']);
 	    }
@@ -229,7 +229,7 @@ if($tiki_p_admin_forum == 'y') {
     if(isset($_REQUEST['movesel'])) {
 	if (isset($_REQUEST['forumthread'])) {
 	    check_ticket('view-forum');
-	    foreach(array_values($_REQUEST['forumthread']) as $thread) {
+	    foreach($_REQUEST['forumthread'] as $thread) {
 		$commentslib->set_parent($thread,$_REQUEST['moveto']);
 	    }
 	}
