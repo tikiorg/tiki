@@ -8,6 +8,25 @@
 // Initialization
 $section = 'wiki page';
 require_once('tiki-setup.php');
+
+$_REQUEST->replaceFilters( array(
+	'action' => 'word',
+	'attach_comment' => 'striptags',
+	'best_lang' => 'alnum',
+	'bl' => 'alnum',
+	'copyrightpage' => 'striptags',
+	'mode' => 'word',
+	'page' => 'striptags',
+	'pagenum' => 'digits',
+	'page_id' => 'digits',
+	'page_ref_id' => 'digits',
+	'removeattach' => 'digits',
+	'structure' => 'digits',
+	'watch_action' => 'word',
+	'watch_event' => 'word',
+	'watch_object' => 'striptags',
+) );
+
 if( $prefs['feature_wiki_structure'] == 'y' ) {
 	include_once('lib/structures/structlib.php');
 }

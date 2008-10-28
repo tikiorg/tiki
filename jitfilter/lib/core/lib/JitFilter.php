@@ -70,13 +70,19 @@ class JitFilter implements ArrayAccess, Iterator, Countable
 		return (string) $this->stored;
 	}
 
-	function setDefaultFilter( Zend_Filter_Interface $filter )
+	function setDefaultFilter( $filter )
 	{
+		if( ! $filter instanceof Zend_Filter_Interface )
+			$filter = $this->mapFilter( $filter );
+
 		$this->defaultFilter = $filter;
 	}
 
-	function replaceFilter( $key, Zend_Filter_Interface $filter )
+	function replaceFilter( $key, $filter )
 	{
+		if( ! $filter instanceof Zend_Filter_Interface )
+			$filter = $this->mapFilter( $filter );
+
 		$this->filters[$key] = $filter;
 	}
 
@@ -88,9 +94,37 @@ class JitFilter implements ArrayAccess, Iterator, Countable
 				&& $this->offsetGet( $key ) instanceof self ) {
 
 				$this->offsetGet($key)->replaceFilters( $values );
-			} elseif( $values instanceof Zend_Filter_Interface ) {
+			} else {
 				$this->replaceFilter( $key, $values );
 			}
+		}
+	}
+
+	static function mapFilter( $name )
+	{
+		switch( $name )
+		{
+		case 'alpha':
+			require_once 'Zend/Filter/Alpha.php';
+			return new Zend_Filter_Alpha;
+		case 'alnum':
+			require_once 'Zend/Filter/Alnum.php';
+			return new Zend_Filter_Alnum;
+		case 'digits':
+			require_once 'Zend/Filter/Digits.php';
+			return new Zend_Filter_Digits;
+		case 'striptags':
+			require_once 'Zend/Filter/StripTags.php';
+			return new Zend_Filter_StripTags;
+		case 'word':
+			require_once 'JitFilter/Word.php';
+			return new JitFilter_Word;
+		case 'xss':
+			require_once 'JitFilter/PreventXss.php';
+			return new JitFilter_PreventXss;
+		default:
+			trigger_error( 'Filter not found: ' . $name, E_USER_WARNING );
+			return new JitFilter_PreventXss;
 		}
 	}
 
