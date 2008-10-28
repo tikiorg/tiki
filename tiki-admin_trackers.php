@@ -10,6 +10,7 @@
 require_once ('tiki-setup.php');
 
 include_once ('lib/trackers/trackerlib.php');
+include_once ('lib/groupalert/groupalertlib.php');
 
 if ($prefs['feature_trackers'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_trackers");
@@ -363,7 +364,8 @@ if (isset($_REQUEST["save"])) {
 	}
 
 
-	$_REQUEST["trackerId"] = $trklib->replace_tracker($_REQUEST["trackerId"], $_REQUEST["name"], $_REQUEST["description"], $tracker_options, $_REQUEST["descriptionIsParsed"]?'y':'',$_REQUEST["groupforAlert"]);
+	$_REQUEST["trackerId"] = $trklib->replace_tracker($_REQUEST["trackerId"], $_REQUEST["name"], $_REQUEST["description"], $tracker_options, $_REQUEST["descriptionIsParsed"]?'y':'');
+	$groupalertlib->AddGroup ('tracker',$_REQUEST["trackerId"] ,$_REQUEST["groupforAlert"] );
 	$logslib->add_log('admintrackers','changed or created tracker '.$_REQUEST["name"]);
 
 	$cat_desc = $_REQUEST["description"];
@@ -415,7 +417,7 @@ $info["defaultStatus"] = 'o';
 $info["defaultStatusList"] = array();
 $info["orderAttachments"] = 'name,created,filesize,hits,desc';
 $info["groupforAlertList"] = array();
-$info["groupforAlert"] = '';
+$info["groupforAlert"] = $groupalertlib-> GetGroup ('tracker',$_REQUEST["trackerId"]) ;
 $info['start']= 0;
 $info['end'] = 0;
 $info['autoCreateCategories']='';

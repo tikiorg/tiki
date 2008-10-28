@@ -1876,15 +1876,15 @@ class TrackerLib extends TikiLib {
 	}
 
 	// Inserts or updates a tracker
-	function replace_tracker($trackerId, $name, $description, $options, $descriptionIsParsed,$groupforAlert) {
+	function replace_tracker($trackerId, $name, $description, $options, $descriptionIsParsed) {
 		if ($trackerId) {
 			$old = $this->getOne('select count(*) from `tiki_trackers` where `trackerId`=?',array((int)$trackerId));
 			if ($old) {
-				$query = "update `tiki_trackers` set `name`=?,`description`=?,`descriptionIsParsed`=?,`lastModif`=?,`groupforAlert`=? where `trackerId`=?";
-				$this->query($query,array($name,$description,$descriptionIsParsed,(int)$this->now,$groupforAlert,(int) $trackerId));
+				$query = "update `tiki_trackers` set `name`=?,`description`=?,`descriptionIsParsed`=?,`lastModif`=? where `trackerId`=?";
+				$this->query($query,array($name,$description,$descriptionIsParsed,(int)$this->now,(int) $trackerId));
 			} else {
-				$query = "insert into `tiki_trackers` (`name`,`description`,`descriptionIsParsed`,`lastModif`,`groupforAlert`,`trackerId`) values (?,?,?,?,?,?)";
-				$this->query($query,array($name,$description,$descriptionIsParsed,(int)$this->now,$groupforAlert,(int) $trackerId));
+				$query = "insert into `tiki_trackers` (`name`,`description`,`descriptionIsParsed`,`lastModif`,`trackerId`) values (?,?,?,?,?)";
+				$this->query($query,array($name,$description,$descriptionIsParsed,(int)$this->now,(int) $trackerId));
 			}
 		} else {
 			$this->query("delete from `tiki_trackers` where `name`=?",array($name),-1,-1,false);

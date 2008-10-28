@@ -3648,3 +3648,12 @@ CREATE TABLE tiki_webservice_template (
 	PRIMARY KEY( service, template )
 ) ENGINE=MyISAM ;
 
+DROP TABLE IF EXISTS tiki_groupalert;
+
+CREATE TABLE tiki_groupalert (
+	groupName varchar(255) NOT NULL default '',
+	objectType varchar( 20 ) NOT NULL default '',
+	objectId  varchar(10) NOT NULL default '',
+	displayEachuser  char( 1 ) default NULL ,
+	PRIMARY KEY ( objectType,objectId )
+) ENGINE=MyISAM ;
