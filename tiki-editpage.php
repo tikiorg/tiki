@@ -397,8 +397,8 @@ function walk_and_parse(&$c, &$src, &$p, $head_url ) {
 		// If content type 'text' output it to destination...
 		if ($c[$i]["type"] == "text") {
 			if( ! ctype_space( $c[$i]["data"] ) )  {
-				$add = preg_replace( '/^\s+/s', ' ', $c[$i]["data"] );
-				$add = rtrim( $add );
+				$add = ltrim( $c[$i]["data"] );
+				$add = str_replace( array("\r","\n"), ' ', $add );
 				$src .= $add;
 			}
 		} elseif ($c[$i]["type"] == "comment") {
@@ -430,6 +430,8 @@ function walk_and_parse(&$c, &$src, &$p, $head_url ) {
 					case "em": $src .= "''"; $p['stack'][] = array('tag' => 'em', 'string' => "''"); break;
 					case "strong": $src .= '__'; $p['stack'][] = array('tag' => 'strong', 'string' => '__'); break;
 					case "u": $src .= "=="; $p['stack'][] = array('tag' => 'u', 'string' => "=="); break;
+					case "strike": $src .= "--"; $p['stack'][] = array('tag' => 'strike', 'string' => "--"); break;
+					case "del": $src .= "--"; $p['stack'][] = array('tag' => 'del', 'string' => "--"); break;
 					case "center": $src .= '::'; $p['stack'][] = array('tag' => 'center', 'string' => '::'); break;
 					case "code": $src .= '-+';  $p['stack'][] = array('tag' => 'code', 'string' => '+-'); break;
 					case "dd": $src .= ':';  $p['stack'][] = array('tag' => 'dd', 'string' => "\n"); break;
