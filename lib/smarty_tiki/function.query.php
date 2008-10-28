@@ -111,8 +111,8 @@ function smarty_function_query($params, &$smarty) {
     if ( isset($params['_script']) && $params['_script'] != '' ) {
       $php_self = $params['_script'];
 
-      // If _script does not already specifies the directory and if there is one in PHP_SELF server var, use it
-      if ( strpos($php_self, '/') === false && $_SERVER['PHP_SELF'][0] == '/' ) {
+      // If _script is not an anchor, does not already specifies the directory and if there is one in PHP_SELF server var, use it
+      if ( $php_self[0] != '#' && strpos($php_self, '/') === false && $_SERVER['PHP_SELF'][0] == '/' ) {
         $php_self = dirname($_SERVER['PHP_SELF']).'/'.$php_self;
       }
 
