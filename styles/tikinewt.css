@@ -1224,10 +1224,6 @@ div#page-bar table, div#page-bar td, div#page-bar tr {
 	float: left;
 }
 
-.button2, .button3 {
-	/*margin: 0;
-	padding: 0;*/
-}
 .button3 {
 	border-radius: 5px 5px 0 0;
 	-moz-border-radius: 5px 5px 0 0;
@@ -1240,13 +1236,8 @@ div#page-bar table, div#page-bar td, div#page-bar tr {
 	padding-bottom: 2px;
 	border-bottom: 0;
 }
-body .button2 {
-	margin-left: 5px;
-}
 
 /* Links in buttons */
-.button2 a,
-.button2 a:visited,
 .button a,
 .button a:visited,
 button {
@@ -1262,7 +1253,6 @@ button {
 	line-height: 170%;
 }
 
-.button2 a:hover,
 .button a:hover,
 button:hover {
 	background: #dca;
@@ -1481,19 +1471,6 @@ div.code {
 	display: inline;
 	float: right;
 	border-left: 1px dashed #999999;
-}
-
-.versionav .button2 {
-	display: block;
-	border: 0;
-	border-bottom: 1px dashed #999999;
-	background-color: transparent;
-}
-
-.versionav .button2 a {
-	border: 0;
-	background-color: inherit;
-	padding: 0 10px;
 }
 
 .versionav .highlight {
@@ -2215,7 +2192,8 @@ div.imgaldescr {
 /***** File Galleries *****/
 
 div.thumbnailcontener {
-	margin: 4px;
+	margin: 4px 4px -12px;
+	height: 100% !important;
 }
 div.thumbnail {
 	padding: 0;
@@ -2227,6 +2205,7 @@ div.thumbnail {
 	text-align: center;
 }
 div.thumbnamecontener, div.thumbimagecontener {
+	margin: auto;
 	display: table;
 	position: relative;
 	overflow: hidden;
@@ -2243,7 +2222,7 @@ div.thumbname, div.thumbimage {
 	display: table-cell;
 	vertical-align: middle;
 	/* for IE including IE7 */
-	position: absolute;
+	_position: absolute;
 	left: 0;
 	top: 50%;
 }
@@ -2280,7 +2259,8 @@ div.thumbname {
 }
 div.thumbactions {
 	width: 100%;
-	margin-top: -20px; /* -25px */
+	position: relative;
+	top: -20px; /* -25px */
 }
 div.thumbactions * {
 	vertical-align: middle;
