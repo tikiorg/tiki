@@ -85,7 +85,7 @@ if (isset($_REQUEST["save"]) and isset($_REQUEST["olgroup"]) and !empty($_REQUES
 	}
 	$userlib->change_group($_REQUEST['olgroup'],$_REQUEST['name'],$_REQUEST['desc'],$ag_home,$ag_utracker,$ag_gtracker,$ag_ufield,$ag_gfield, $ag_rufields, $_REQUEST['userChoice'],$ag_defcat,$ag_theme);
 	$userlib->remove_all_inclusions($_REQUEST["name"]);
-	if (isset($_REQUEST["include_groups"]) and is_array($_REQUEST["include_groups"])) {		
+	if (isset($_REQUEST["include_groups"]) and is_array($_REQUEST["include_groups"])) {
 		foreach ($_REQUEST["include_groups"] as $include) {
 			if ($include && $_REQUEST["name"] != $include) {
 				$userlib->group_inclusion($_REQUEST["name"], $include);
@@ -98,7 +98,7 @@ if (isset($_REQUEST["save"]) and isset($_REQUEST["olgroup"]) and !empty($_REQUES
 
 // Process a form to remove a group
 if (isset($_REQUEST["action"])) {
-	if ($_REQUEST["action"] == 'delete') {		
+	if ($_REQUEST["action"] == 'delete') {
 		$area = 'delgroup';
 		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 			key_check($area);
@@ -182,7 +182,7 @@ if (!empty($_REQUEST["group"])) {
 
 	if(isset($re["groupDefCat"]))
 		$groupdefcat = $re["groupDefCat"];
-  	 
+
 	if(isset($re["groupHome"]))
 		$grouptheme = $re["groupTheme"];
 
@@ -205,7 +205,7 @@ if (!empty($_REQUEST["group"])) {
 			$smarty->assign('registrationUsersFieldIds', $re['registrationUsersFieldIds']);
 	}
 
-	if ($prefs['groupTracker'] == 'y') {	
+	if ($prefs['groupTracker'] == 'y') {
 		$groupFields = array();
 		if (isset($re["groupTrackerId"]) and $re["groupTrackerId"]) {
 			include_once('lib/trackers/trackerlib.php');
@@ -223,7 +223,7 @@ if (!empty($_REQUEST["group"])) {
 	}
 
 	$groupperms = $re["perms"];
-	
+
 	//$allgroups = $userlib->list_all_groups();
 	$allgroups = $userlib->list_can_include_groups($re["groupName"]);
 	$rs = $userlib->get_included_groups($_REQUEST['group'], false);
@@ -290,9 +290,9 @@ if (!empty($_REQUEST['group']) && isset($_REQUEST['import'])) {
 	if ($fields[0]!='user') {
 		$smarty->assign('msg', tra('The file does not have the required header:').' user');
 		$smarty->display('error.tpl');
-		die;	
+		die;
 	}
-	$data = @fgetcsv($fhandle, 1000);	
+	$data = @fgetcsv($fhandle, 1000);
 	while (!feof($fhandle)) {
 		if (function_exists("mb_detect_encoding") && mb_detect_encoding($data[0], "ASCII, UTF-8, ISO-8859-1") ==  "ISO-8859-1") {
 				$data[0] = utf8_encode($data[0]);
@@ -315,7 +315,7 @@ if ($prefs['feature_categories'] == 'y') {
 	$categories = $categlib->get_all_categories_respect_perms($user, 'tiki_p_view_categories');
 	$smarty->assign_by_ref('categories', $categories);
 }
-  	 
+
 $av_themes = $tikilib->list_styles();
 $smarty->assign_by_ref('av_themes', $av_themes);
 

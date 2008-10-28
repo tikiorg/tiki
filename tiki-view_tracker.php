@@ -11,6 +11,9 @@ $section = 'trackers';
 require_once('tiki-setup.php');
 
 include_once('lib/trackers/trackerlib.php');
+include_once ('lib/groupalert/groupalertlib.php');
+
+
 global $notificationlib; include_once('lib/notifications/notificationlib.php');
 
 $auto_query_args = array('offset','trackerId','reloff','itemId','maxRecords','status','sort_mode','initial','filterfield','filtervalue');
@@ -119,6 +122,19 @@ if ($tiki_p_view_trackers != 'y') {
 $smarty->assign('my', $my);
 $smarty->assign('ours', $ours);
 
+$smarty->assign_by_ref('groupforalert',$groupforalert);
+
+$smarty->assign_by_ref('showeachuser',$showeachuser);
+
+$groupforalert=$groupalertlib->GetGroup ('tracker',$_REQUEST["trackerId"]);
+
+
+ if ( $groupforalert != "" ) {
+ 	$showeachuser=$groupalertlib->GetShowEachUser('tracker',$_REQUEST["trackerId"], $groupforalert) ;
+  	$listusertoalert=$userlib->get_users(0,-1,'login_asc','','',false,$groupforalert,'') ;
+	$smarty->assign_by_ref('listusertoalert',$listusertoalert['data']);
+ }
+
 $field_types = $trklib->field_types();
 $smarty->assign('field_types', $field_types);
 
@@ -175,14 +191,14 @@ $counter=0;
 $temp_max = count($xfields["data"]);
 for ($i = 0; $i < $temp_max; $i++) {
 	$fid = $xfields["data"][$i]["fieldId"];
-	
+
 	$ins_id = 'ins_' . $fid;
 	$xfields["data"][$i]["ins_id"] = $ins_id;
 	$xfields["data"][$i]["id"] = $fid;
-	
+
 	$filter_id = 'filter_' . $fid;
 	$xfields["data"][$i]["filter_id"] = $filter_id;
-	
+
 	if (!empty($tracker_info['defaultOrderKey']) and $tracker_info['defaultOrderKey'] == $xfields["data"][$i]['fieldId']) {
 		$orderkey = true;
 	}
@@ -191,10 +207,10 @@ for ($i = 0; $i < $temp_max; $i++) {
 	} else {
 		$creatorSelector = false;
 	}
-	if (($xfields["data"][$i]['isTblVisible'] == 'y' or $xfields["data"][$i]['isSearchable'] == 'y' or in_array($fid, $popupFields)) 
+	if (($xfields["data"][$i]['isTblVisible'] == 'y' or $xfields["data"][$i]['isSearchable'] == 'y' or in_array($fid, $popupFields))
 		and ($xfields["data"][$i]['isHidden'] == 'n' or $xfields["data"][$i]['isHidden'] == 'p' or $tiki_p_admin_trackers == 'y' or ($xfields["data"][$i]['type'] == 's' and $xfields['data'][$i]['name'] == 'Rating' and $tiki_p_tracker_view_ratings == 'y'))
 		) {
-		
+
 		$listfields[$fid]['type'] = $xfields["data"][$i]["type"];
 		$listfields[$fid]['name'] = $xfields["data"][$i]["name"];
 		$listfields[$fid]['options'] = $xfields["data"][$i]["options"];
@@ -214,7 +230,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 		}
 		if (isset($xfields['data'][$i]['otherField']))
 			$listfields[$fid]['otherField'] = $xfields['data'][$i]['otherField'];
-	} 
+	}
 
 	if ($creatorSelector or $xfields["data"][$i]['isHidden'] == 'n' or $xfields["data"][$i]['isHidden'] == 'c' or $xfields["data"][$i]['isHidden'] == 'p' or $tiki_p_admin_trackers == 'y' or ($xfields["data"][$i]['type'] == 's' and $xfields['data'][$i]['name'] == 'Rating' and $tiki_p_tracker_view_ratings == 'y')) {
 		$ins_fields["data"][$i] = $xfields["data"][$i];
@@ -223,13 +239,13 @@ for ($i = 0; $i < $temp_max; $i++) {
 			$fields["data"][$i]["value"] = '';
 			$ins_fields["data"][$i]["value"] = '';
 			$xxxm = $xxxd = $xxxy = null;
-			if (!isset($_REQUEST["$ins_id" . "Month"]) 
+			if (!isset($_REQUEST["$ins_id" . "Month"])
 				|| empty($_REQUEST["$ins_id" . "Month"])
 				|| $_REQUEST["$ins_id" . "Month"] == 'null')   $xxxm = '00';
-			if (!isset($_REQUEST["$ins_id" . "Day"]) 
+			if (!isset($_REQUEST["$ins_id" . "Day"])
 				|| empty($_REQUEST["$ins_id" . "Day"])
 				|| $_REQUEST["$ins_id" . "Day"] == 'null')     $xxxd = '00';
-			if (!isset($_REQUEST["$ins_id" . "Year"]) 
+			if (!isset($_REQUEST["$ins_id" . "Year"])
 				|| empty($_REQUEST["$ins_id" . "Year"])
 				|| $_REQUEST["$ins_id" . "Year"] == 'null')    $xxxy = '00';
 
@@ -238,8 +254,8 @@ for ($i = 0; $i < $temp_max; $i++) {
 			// If the individual field is blank, then set it to today.
 			// If the field is mandatory, then a blank full date is not
 			// allowed, in which case we set it to today's date.
-			if ($xxxm == $xxxd && $xxxd == $xxxy && $xxxy == '00' 
-				&& ($fields["data"][$i]['isMandatory'] == 'y' 
+			if ($xxxm == $xxxd && $xxxd == $xxxy && $xxxy == '00'
+				&& ($fields["data"][$i]['isMandatory'] == 'y'
 				|| (isset($fields["data"][$i]['options_array'][0]) && $fields["data"][$i]['options_array'][0] != 'd')
 				|| ((isset($fields["data"][$i]['options_array'][0]) && $fields["data"][$i]['options_array'][0] == 'd') && (!isset($fields["data"][$i]['options_array'][3]) || $fields["data"][$i]['options_array'][3] != 'blank'))
 				)
@@ -364,14 +380,14 @@ for ($i = 0; $i < $temp_max; $i++) {
 			}
 			if ($fields["data"][$i]["options_array"][0])	{
 				$textarea_options = true;
-			} 
+			}
 			 if ($fields["data"][$i]["isMultilingual"]=='y') {
-		        
+
                                   global $multilinguallib;
                                   include_once('lib/multilingual/multilinguallib.php');
                                   $multi_languages=$prefs['available_languages'];
                                   $smarty->assign('multi_languages',$multi_languages);
-                                  
+
                                   $ins_fields["data"][$i]['isMultilingual']='y';
 				            $compteur=0;
 				            foreach ($multi_languages as $num=>$tmplang){
@@ -387,7 +403,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 					    }
 					 $ins_fields["data"][$i]["lingualpvalue"]=$fields["data"][$i]["lingualpvalue"];
 					     $ins_fields["data"][$i]["lingualvalue"]=$fields["data"][$i]["lingualvalue"];
-				        } 
+				        }
 
 		} elseif($fields["data"][$i]["type"] == 's' and $xfields['data'][$i]['name'] == 'Rating') { // rating
 			if (isset($_REQUEST["$ins_id"])) {
@@ -398,8 +414,8 @@ for ($i = 0; $i < $temp_max; $i++) {
 			}
 
 		} elseif(  $fields["data"][$i]["type"] == 'y' ) { // country list
-			if (isset($_REQUEST["$ins_id"])) {		
-				$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];	
+			if (isset($_REQUEST["$ins_id"])) {
+				$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];
 			}
 			// Get flags here
 			if (isset($fields["data"][$i]["options_array"][1]) && $fields["data"][$i]["options_array"][1] == 1)	{
@@ -430,19 +446,19 @@ for ($i = 0; $i < $temp_max; $i++) {
 					$stt = 'o';
 				}
 				$fields["data"][$i]["list"] = array_unique($trklib->get_all_items($fields["data"][$i]["options_array"][0],$fields["data"][$i]["options_array"][1],$stt));
-				
+
 				if (isset($fields["data"][$i]["options_array"][3]))
 					$fields["data"][$i]["listdisplay"] = array_unique($trklib->concat_all_items_from_fieldslist($fields["data"][$i]["options_array"][0],$fields["data"][$i]["options_array"][3]));
-			}	
+			}
 			elseif (($fields["data"][$i]["type"] == 'M') && ($fields["data"][$i]["options_array"][0] >= '3' ) )	{
-				if (isset($_FILES["$ins_id"]) &&  is_uploaded_file($_FILES["$ins_id"]['tmp_name'])) {	
+				if (isset($_FILES["$ins_id"]) &&  is_uploaded_file($_FILES["$ins_id"]['tmp_name'])) {
 					$fp = fopen( $_FILES["$ins_id"]['tmp_name'], 'rb' );
 					$data = '';
 					while (!feof($fp)) {
 						$data .= fread($fp, 8192 * 16);
 					}
 					fclose ($fp);
-					$ins_fields["data"][$i]["value"] = $data;					
+					$ins_fields["data"][$i]["value"] = $data;
 					$ins_fields["data"][$i]["file_type"] = $_FILES["$ins_id"]['type'];
 					$ins_fields["data"][$i]["file_size"] = $_FILES["$ins_id"]['size'];
 					$ins_fields["data"][$i]["file_name"] = $_FILES["$ins_id"]['name'];
@@ -483,7 +499,7 @@ for ($i = 0; $i < $temp_max; $i++) {
                                   include_once('lib/multilingual/multilinguallib.php');
                                   $multi_languages=$multilinguallib->getSystemLanguage();
                                   $smarty->assign('multi_languages',$multi_languages);
-                                  
+
                                   $ins_fields["data"][$i]['isMultilingual']='y';
 				            $compteur=0;
 				            foreach ($multi_languages as $num=>$lang){
@@ -496,15 +512,15 @@ for ($i = 0; $i < $temp_max; $i++) {
 				            $fields["data"][$i]["lingualpvalue"][$num]["lang"] = $lang;
 				            if (isset($_REQUEST[$ins_id."_".$lang]))
 				                $fields["data"][$i]["lingualpvalue"][$num]["value"] =     $tikilib->parse_data(htmlspecialchars($_REQUEST[$ins_id."_".$lang]));
-				                
+
 					    }
 					    $ins_fields["data"][$i]["lingualpvalue"]=$fields["data"][$i]["lingualpvalue"];
 					     $ins_fields["data"][$i]["lingualvalue"]=$fields["data"][$i]["lingualvalue"];
 			}
-			
+
 		}
 	}
-	// store values to have them available when there is 
+	// store values to have them available when there is
 	// an error in the values typed by an user for a field type.
 	if (isset( $fields['data'][$i]['fieldId']))
 		$fields['data'][$i]['value'] = isset($ins_fields['data'][$i]['value'])?$ins_fields['data'][$i]['value']: '';
@@ -512,7 +528,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 	if (empty($mainfield) and isset($fields['data'][$i]['isMain']) && $fields["data"][$i]["isMain"] == 'y' and !empty($fields["data"][$i]["value"])) {
 		$mainfield = $fields["data"][$i]["value"];
 }
-	
+
 }
 if ($textarea_options) {
 	global $quicktagslib; include_once ('lib/quicktags/quicktagslib.php');
@@ -548,7 +564,7 @@ if ($prefs['feature_user_watches'] == 'y' and $tiki_p_watch_trackers == 'y') {
 	if ($user and isset($_REQUEST['watch'])) {
 		check_ticket('view-trackers');
 		if ($_REQUEST['watch'] == 'add') {
-			$tikilib->add_user_watch($user, 'tracker_modified', $_REQUEST["trackerId"], 'tracker', $tracker_info['name'],"tiki-view_tracker.php?trackerId=".$_REQUEST["trackerId"]); 
+			$tikilib->add_user_watch($user, 'tracker_modified', $_REQUEST["trackerId"], 'tracker', $tracker_info['name'],"tiki-view_tracker.php?trackerId=".$_REQUEST["trackerId"]);
 		} else {
 			$tikilib->remove_user_watch($user, 'tracker_modified', $_REQUEST["trackerId"]);
 		}
@@ -559,19 +575,19 @@ if ($prefs['feature_user_watches'] == 'y' and $tiki_p_watch_trackers == 'y') {
 		$smarty->assign('user_watching_tracker', 'y');
 	}
 
-    // Check, if the user is watching this tracker by a category.    
+    // Check, if the user is watching this tracker by a category.
 	if ($prefs['feature_categories'] == 'y') {
-	    $watching_categories_temp=$categlib->get_watching_categories($_REQUEST["trackerId"],'tracker',$user);	    
+	    $watching_categories_temp=$categlib->get_watching_categories($_REQUEST["trackerId"],'tracker',$user);
 	    $smarty->assign('category_watched','n');
 	 	if (count($watching_categories_temp) > 0) {
 	 		$smarty->assign('category_watched','y');
-	 		$watching_categories=array();	 			 	
+	 		$watching_categories=array();
 	 		foreach ($watching_categories_temp as $wct ) {
 	 			$watching_categories[]=array("categId"=>$wct,"name"=>$categlib->get_category_name($wct));
-	 		}		 		 	
+	 		}
 	 		$smarty->assign('watching_categories', $watching_categories);
-	 	}    
-	} 		
+	 	}
+	}
 }
 
 if (isset($_REQUEST['import'])) {
@@ -581,9 +597,19 @@ if (isset($_REQUEST['import'])) {
 		fclose($fp);
 	}
 } elseif (isset($_REQUEST["save"])) {
-	
+
 	if ($tiki_p_create_tracker_items == 'y') {
 
+		foreach ( $_REQUEST['checked'] as $user ){
+		$email=$userlib->get_user_email($user);
+		if ( ! empty($email) ){
+  		        include_once ('lib/webmail/tikimaillib.php');
+			$mail = new TikiMail();
+			$mail->setText("There is a changement in tracker (message will be redefined)");
+			$mail->setSubject("You are alerted of a changement" );
+			$mail->send(array($email));
+			}
+		}
 		// Check field values for each type and presence of mandatory ones
 		$mandatory_missing = array();
 		$err_fields = array();

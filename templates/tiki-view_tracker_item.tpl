@@ -197,6 +197,7 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>&nbsp;&nbsp;
 {/if}
 {/section}
 
+
 <table class="normal">
 <tr class="formcolor">
 <td class="formcontent">&nbsp;</td>
@@ -513,11 +514,28 @@ document.write('<div class="categSelectAll"><input type="checkbox" id="clickall"
 
 {/if}
 {/foreach}
+
+{if $groupforalert ne ''}
+
+<tr class="formcolor">
+<td>{tr}Choose users to alert{/tr}</td>
+<td>
+{section name=idx loop=$listusertoalert}
+{if $showeachuser eq '' }
+<input type="hidden"  name="checked[]" value="{$listusertoalert[idx].user}">
+{else}
+<input type="checkbox" name="checked[]" value="{$listusertoalert[idx].user}"> {$listusertoalert[idx].user}
+{/if}
+{/section}
+</td>
+</tr>
+{/if}
+
 <tr class="formcolor"><td class="formlabel">&nbsp;</td><td colspan="3" class="formcontent">
 <input type="submit" name="save" value="{tr}Save{/tr}" />
 {* --------------------------- to return to tracker list after saving --------- *}
 {if $tiki_p_view_trackers eq 'y'}
-<input type="submit" name="save_return" value="{tr}Save{/tr} &amp; {tr}Back{/tr} {tr}Items list{/tr}" /> 
+<input type="submit" name="save_return" value="{tr}Save{/tr} &amp; {tr}Back{/tr} {tr}Items list{/tr}" />
 {/if}
 </td></tr>
 </table>
