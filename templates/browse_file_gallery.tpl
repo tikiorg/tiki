@@ -170,7 +170,7 @@
       <div class="thumbactions" style="float:right; width:{$thumbnail_size}px">
 
       {if $gal_info.show_checked neq 'n' and $tiki_p_admin_file_galleries eq 'y'}
-        <label><input type="checkbox" onclick="flip_thumbnail_status('{$checkname}_{$files[changes].id}')" name="{$checkname}[]" value="{$files[changes].id|escape}" {if $is_checked eq 'y'}checked="checked"{/if} />{if isset($checkbox_label)}{$checkbox_label}{/if}</label>
+        <label style="float:left"><input type="checkbox" onclick="flip_thumbnail_status('{$checkname}_{$files[changes].id}')" name="{$checkname}[]" value="{$files[changes].id|escape}" {if $is_checked eq 'y'}checked="checked"{/if} />{if isset($checkbox_label)}{$checkbox_label}{/if}</label>
       {/if}
 
       {if $gal_info.show_action neq 'n'}

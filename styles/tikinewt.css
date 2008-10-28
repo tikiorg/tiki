@@ -2770,6 +2770,7 @@ table.default td {
   -moz-border-radius : 10px;
   -khtml-border-radius : 10px;
   padding : 5px;
+  text-align: left;
 }
 .opaque .box-title,
 .opaque .box-data {

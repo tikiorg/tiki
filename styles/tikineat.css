@@ -279,6 +279,7 @@ div.box-title table td {
 }
 div.opaque {
 	background-color: white;
+	text-align: left;
 }
 div.box-data {
 	color : black;
