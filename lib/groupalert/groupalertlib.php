@@ -14,7 +14,10 @@ class groupAlertLib extends TikiLib {
 		parent::TikiLib($db);
 	}
 
-	function AddGroup ($ObjectType, $ObjectNumber,$GroupName,$displayEachUser="y" ) {
+	function AddGroup ($ObjectType, $ObjectNumber,$GroupName,$displayEachUser) {
+		if ( $displayEachUser == "on" ) $displayEachUser='y';
+		if ( $displayEachUser == "" ) $displayEachUser='n';
+
 		$query ="delete from `tiki_groupalert` where ( `objectType`= ? and `objectId` = ?) ";
 		$this->query($query,array($ObjectType,$ObjectNumber));
 		if ( $GroupName != '' ) {
@@ -27,6 +30,10 @@ class groupAlertLib extends TikiLib {
 	function GetGroup ($ObjectType,$ObjectNumber) {
 		$res= $this->getOne( "select `groupName` from `tiki_groupalert` where ( `objectType` = ? and `objectId` = ? )", array($ObjectType,$ObjectNumber));
 		return $res ;
+	}
+
+	function GetShowEachUser($ObjectType,$ObjectNumber,$GroupName ) {
+		return $this->getOne( "select `displayEachuser` from `tiki_groupalert` where ( `objectType` = ? and `objectId` = ? and `groupName` =? )", array($ObjectType,$ObjectNumber,$GroupName));
 	}
 
 }

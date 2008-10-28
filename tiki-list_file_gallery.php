@@ -96,6 +96,7 @@ $smarty->assign('visible', 'y');
 $smarty->assign('fgal_type', 'default');
 $smarty->assign('parentId', isset($_REQUEST['parentId']) ? (int)$_REQUEST['parentId'] : -1);
 $smarty->assign('groupforAlert', isset($_REQUEST['groupforAlert']) ? $_REQUEST['groupforAlert'] : '');
+$smarty->assign_by_ref('showeachuser', $showeachuser);
 $smarty->assign('creator', $user);
 $smarty->assign('sortorder', 'created');
 $smarty->assign('sortdirection', 'desc');
@@ -105,6 +106,8 @@ $smarty->assign_by_ref('galleryId', $_REQUEST['galleryId']);
 $smarty->assign_by_ref('name', $gal_info['name']);
 $smarty->assign_by_ref('description', $gal_info['description']);
 $smarty->assign_by_ref('groupforAlertList', $groupforAlertList);
+
+
 $smarty->assign('reindex_file_id', -1);
 
 
@@ -258,6 +261,9 @@ if ( isset($_REQUEST['edit_mode']) and $_REQUEST['edit_mode'] ) {
 		$groupforAlertList[$g] =  ( $g == $groupselected )  ? 'selected' : '';
 		}
 	}
+
+	$showeachuser=$groupalertlib-> GetShowEachUser('file gallery',$_REQUEST['galleryId'],$groupselected) ;
+
 
 	// Edit a file
 	if ( isset($_REQUEST['fileId']) && $_REQUEST['fileId'] > 0 ) {
@@ -429,7 +435,7 @@ if ( isset($_REQUEST['edit']) ) {
 		unset($fgal_diff['hits']);
 		$smarty->assign('fgal_diff',$fgal_diff);
 		$fgid = $filegallib->replace_file_gallery($gal_info);
-		$groupalertlib->AddGroup ('file gallery', $galleryId ,$_REQUEST['groupforAlert']);
+		$groupalertlib->AddGroup ('file gallery', $galleryId ,$_REQUEST['groupforAlert'],$_REQUEST['showeachuser']);
 		if ( $prefs['feature_categories'] == 'y' ) {
 			$cat_type = 'file gallery';
 			$cat_objid = $fgid;

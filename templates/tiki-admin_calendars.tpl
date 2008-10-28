@@ -183,6 +183,13 @@
 {/foreach}
 </select></td>
 </tr>
+<tr class="formcolor">
+<td>{tr}Allows to select each user for small groups{/tr}</td>
+<td>
+<input type="checkbox" name="showeachuser" {if $showeachuser eq 'y'}checked="checked"{/if}<td>
+<td>
+</tr>
+
 <tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 <br />

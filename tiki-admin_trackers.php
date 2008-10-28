@@ -301,6 +301,11 @@ if (isset($_REQUEST["save"])) {
 	} else {
 		$tracker_options['groupforAlert'] = '';
 	}
+	if (isset($_REQUEST['showeachuser']) && $_REQUEST['showeachuser'] == "on") {
+		$tracker_options['showeachuser'] = 'y';
+	} else {
+		$tracker_options['showeachuser'] = 'n';
+	}
 
 	if (isset($_REQUEST['ui'])) {
 		if (!is_array($_REQUEST['ui'])) {
@@ -365,7 +370,7 @@ if (isset($_REQUEST["save"])) {
 
 
 	$_REQUEST["trackerId"] = $trklib->replace_tracker($_REQUEST["trackerId"], $_REQUEST["name"], $_REQUEST["description"], $tracker_options, $_REQUEST["descriptionIsParsed"]?'y':'');
-	$groupalertlib->AddGroup ('tracker',$_REQUEST["trackerId"] ,$_REQUEST["groupforAlert"] );
+	$groupalertlib->AddGroup ('tracker',$_REQUEST["trackerId"] ,$_REQUEST["groupforAlert"],$_REQUEST["showeachuser"] );
 	$logslib->add_log('admintrackers','changed or created tracker '.$_REQUEST["name"]);
 
 	$cat_desc = $_REQUEST["description"];
@@ -418,6 +423,7 @@ $info["defaultStatusList"] = array();
 $info["orderAttachments"] = 'name,created,filesize,hits,desc';
 $info["groupforAlertList"] = array();
 $info["groupforAlert"] = $groupalertlib-> GetGroup ('tracker',$_REQUEST["trackerId"]) ;
+$info["showeachuser"] = $groupalertlib->GetShowEachUser('tracker',$_REQUEST["trackerId"],$info["groupforAlert"] );
 $info['start']= 0;
 $info['end'] = 0;
 $info['autoCreateCategories']='';
@@ -483,6 +489,8 @@ $smarty->assign('defaultStatusList', $info["defaultStatusList"]);
 $smarty->assign('autoCreateCategories', $info["autoCreateCategories"]);
 $smarty->assign_by_ref('groupforAlertList', $groupforAlertList);
 $smarty->assign('groupforAlert', $info["groupforAlert"]);
+$smarty->assign('showeachuser', $info["showeachuser"]);
+
 $smarty->assign_by_ref('info', $info);
 
 

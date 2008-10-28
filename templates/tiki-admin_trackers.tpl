@@ -107,7 +107,7 @@
 <tr class="formcolor">
   <td>{tr}Description{/tr}:</td>
 	<td>
-	{tr}Description text is tiki-parsed:{/tr}<input type="checkbox" name="descriptionIsParsed" {if $descriptionIsParsed eq 'y'}checked="checked"{/if} onclick="toggleBlock('trackerDesc');" /><br />
+	{tr}Description text is tiki-parsed:{/tr} <input type="checkbox" name="descriptionIsParsed" {if $descriptionIsParsed eq 'y'}checked="checked"{/if} onclick="toggleBlock('trackerDesc');" />
 	<div id="trackerDesc" style="display:none;" >
 		{include file=tiki-edit_help_tool.tpl qtnum="trackerDesc" area_name="trackerDescription"}
 		{if $descriptionIsParsed eq 'y'}<script language="javascript">
@@ -306,6 +306,12 @@ for a tracker and they must be valid in SQL{/tr}</em>
 </td>
 </tr>
 
+<tr class="formcolor">
+<td>{tr}Allows to select each user for small groups{/tr}</td>
+<td>
+<input type="checkbox" name="showeachuser" {if $showeachuser eq 'y'}checked="checked"{/if}<td>
+<td>
+</tr>
 
 <tr class="formcolor"><td></td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
