@@ -9,6 +9,7 @@
 // Initialization
 $section = 'file_galleries';
 require_once('tiki-setup.php');
+include_once ('lib/groupalert/groupalertlib.php');
 
 if ( $prefs['feature_file_galleries'] != 'y' ) {
 	$smarty->assign('msg', tra('This feature is disabled').': feature_file_galleries');
@@ -77,6 +78,7 @@ if ( ( $galleryId != 0 || $tiki_p_list_file_galleries != 'y' ) && $tiki_p_view_f
 	die;
 }
 
+
 // Init smarty variables to blank values
 $smarty->assign('name', '');
 $smarty->assign('fname', '');
@@ -104,6 +106,7 @@ $smarty->assign_by_ref('name', $gal_info['name']);
 $smarty->assign_by_ref('description', $gal_info['description']);
 $smarty->assign_by_ref('groupforAlertList', $groupforAlertList);
 $smarty->assign('reindex_file_id', -1);
+
 
 // Execute batch actions
 if ( $tiki_p_admin_file_galleries == 'y' ) {
@@ -248,9 +251,11 @@ if ( isset($_REQUEST['edit_mode']) and $_REQUEST['edit_mode'] ) {
 	}
 
 	$all_groups = $userlib->list_all_groups();
+	$groupselected=$groupalertlib->GetGroup('file gallery',$_REQUEST['galleryId']);
+
 	if ( is_array($all_groups) ) {
 		foreach ( $all_groups as $g ){
-		$groupforAlertList[$g] =  ( $g == $gal_info["groupforAlert"] )  ? 'selected' : '';
+		$groupforAlertList[$g] =  ( $g == $groupselected )  ? 'selected' : '';
 		}
 	}
 
@@ -272,7 +277,7 @@ if ( isset($_REQUEST['edit_mode']) and $_REQUEST['edit_mode'] ) {
 		$smarty->assign_by_ref('archives', $gal_info['archives']);
 		$smarty->assign_by_ref('visible', $gal_info['visible']);
 		$smarty->assign_by_ref('parentId', $gal_info['parentId']);
-		$smarty->assign_by_ref('groupforAlert', $gal_info['groupforAlert']);
+		$smarty->assign_by_ref('groupforAlert',$groupselected );
 		$smarty->assign_by_ref('creator', $gal_info['user']);
 		$smarty->assign('max_desc', $gal_info['max_desc']);
 		$smarty->assign('fgal_type', $gal_info['type']);
@@ -351,7 +356,7 @@ if ( isset($_REQUEST['edit']) ) {
 
 	// Everything is ok so we proceed to edit the file or gallery
 
-	$request_vars = array('name', 'fname', 'description', 'fdescription', 'max_desc', 'fgal_type', 'maxRows', 'rowImages', 'thumbSizeX', 'thumbSizeY', 'parentId','groupforAlert', 'creator');
+	$request_vars = array('name', 'fname', 'description', 'fdescription', 'max_desc', 'fgal_type', 'maxRows', 'rowImages', 'thumbSizeX', 'thumbSizeY', 'parentId', 'creator');
 	foreach ( $request_vars as $v ) {
 		if ( isset($_REQUEST[$v]) ) {
 			$smarty->assign_by_ref($v, $_REQUEST[$v]);
@@ -402,7 +407,6 @@ if ( isset($_REQUEST['edit']) ) {
 			'max_desc' => $_REQUEST['max_desc'],
 			'type' => $_REQUEST['fgal_type'],
 			'parentId' => $_REQUEST['parentId'],
-			'groupforAlert' => $_REQUEST['groupforAlert'],
 			'lockable' => $lockable,
 			'show_lockedby' => $_REQUEST['fgal_list_lockedby'],
 			'archives' => $_REQUEST['archives'],
@@ -425,7 +429,7 @@ if ( isset($_REQUEST['edit']) ) {
 		unset($fgal_diff['hits']);
 		$smarty->assign('fgal_diff',$fgal_diff);
 		$fgid = $filegallib->replace_file_gallery($gal_info);
-
+		$groupalertlib->AddGroup ('file gallery', $galleryId ,$_REQUEST['groupforAlert']);
 		if ( $prefs['feature_categories'] == 'y' ) {
 			$cat_type = 'file gallery';
 			$cat_objid = $fgid;
@@ -830,10 +834,8 @@ if ( $prefs['feature_user_watches'] == 'y' ) {
 	}
 }
 
-if ($prefs['fgal_show_explorer'] == 'y') {
-	$all_galleries = $filegallib->list_file_galleries(0, -1, 'name_asc', $user, '', -1, false, true, false, false,false,true, false );
-	$smarty->assign_by_ref('all_galleries', $all_galleries['data']);
-}
+$all_galleries = $filegallib->list_file_galleries(0, -1, 'name_asc', $user, '', -1, false, true, false, false,false,true, false );
+$smarty->assign_by_ref('all_galleries', $all_galleries['data']);
 
 // Build galleries browsing tree and current gallery path array
 //
@@ -865,8 +867,7 @@ function add2tree(&$tree, &$galleries, &$gallery_id, &$gallery_path, &$expanded,
 	}
 }
 
-$gallery_path_str = '';
-if ( $prefs['fgal_show_explorer'] == 'y' && is_array($all_galleries) && count($all_galleries) > 0 ) {
+if ( is_array($all_galleries) && count($all_galleries) > 0 ) {
 	$tree = array('name' => tra('File Galleries'), 'data' => array(), 'link_var' => 'galleryId', 'link_id' => 0 );
 	$gallery_path = array();
 	$expanded = array('1');
@@ -874,6 +875,7 @@ if ( $prefs['fgal_show_explorer'] == 'y' && is_array($all_galleries) && count($a
 	add2tree($tree['data'], $all_galleries['data'], $galleryId, $gallery_path, $expanded);
 
 	array_unshift($gallery_path, array(0, $tree['name']));
+	$gallery_path_str = '';
 	foreach ( $gallery_path as $dir_id ) {
 		if ( $gallery_path_str != '' ) $gallery_path_str .= ' &nbsp;&gt;&nbsp;';
 		$gallery_path_str .= '<a href="tiki-list_file_gallery.php?galleryId='.$dir_id[0].( ( isset($_REQUEST['filegals_manager']) && $_REQUEST['filegals_manager'] != '' ) ? '&amp;filegals_manager='.urlencode($_REQUEST['filegals_manager']) : '').'">'.$dir_id[1].'</a>';

@@ -188,7 +188,6 @@ class FileGalLib extends TikiLib {
 		if (!isset($fgal_info['visible']))  $fgal_info['visible'] = 'y';
 		if (!isset($fgal_info['type']))  $fgal_info['type'] = 'default';
 		if (!isset($fgal_info['parentId']))  $fgal_info['parentId'] = -1;
-		if (!isset($fgal_info['groupforAlert']))  $fgal_info['groupforAlert'] = '';
 		if (!isset($fgal_info['lockable']))  $fgal_info['lockable'] = 'n';
 		if (!isset($fgal_info['show_lockedby']))  $fgal_info['show_lockedby'] = 'y';
 		if (!isset($fgal_info['archives']))  $fgal_info['archives'] = -1;
@@ -209,7 +208,7 @@ class FileGalLib extends TikiLib {
 			$query = "update `tiki_file_galleries` set `name`=?, `maxRows`=?,
 			`description`=?, `lastModif`=?, `public`=?, `visible`=?, `show_icon`=?,
 			`show_id`=?, `show_name`=?, `show_description`=?, `show_size`=?,
-			`show_created`=?, `show_hits`=?, `max_desc`=?, `type`=?, `parentId`=?,`groupforAlert`=?,
+			`show_created`=?, `show_hits`=?, `max_desc`=?, `type`=?, `parentId`=?,
 			`user`=?, `lockable`=?, `show_lockedby`=?, `archives`=?, `sort_mode`=?,
 			`show_modified`=?, `show_creator`=?, `show_author`=?, `subgal_conf`=?,
 			`show_last_user`=?, `show_comment`=?, `show_files`=?, `show_explorer`=?,
@@ -221,7 +220,7 @@ class FileGalLib extends TikiLib {
 			$fgal_info['show_name'], $fgal_info['show_description'],
 			$fgal_info['show_size'], $fgal_info['show_created'],
 			$fgal_info['show_hits'], (int) $fgal_info['max_desc'],
-			$fgal_info['type'], $fgal_info['parentId'],$fgal_info['groupforAlert'], $fgal_info['user'],
+			$fgal_info['type'], $fgal_info['parentId'], $fgal_info['user'],
 			$fgal_info['lockable'], $fgal_info['show_lockedby'],
 			$fgal_info['archives'], $fgal_info['sort_mode'],
 			$fgal_info['show_modified'], $fgal_info['show_creator'],
@@ -243,7 +242,7 @@ class FileGalLib extends TikiLib {
 			$query = "insert into `tiki_file_galleries`(`name`, `description`,
 			`created`, `user`, `lastModif`, `maxRows`, `public`, `hits`, `visible`,
 			`show_id`, `show_icon`, `show_name`, `show_description`, `show_created`,
-			`show_hits`, `max_desc`, `type`, `parentId`,`groupforAlert`, `lockable`, `show_lockedby`,
+			`show_hits`, `max_desc`, `type`, `parentId`, `lockable`, `show_lockedby`,
 			`archives`, `sort_mode`, `show_modified`, `show_creator`, `show_author`,
 			`subgal_conf`, `show_last_user`, `show_comment`, `show_files`,
 			`show_explorer`, `show_path`) values (?,?,?,?,?,?,?,?,?,?,
@@ -255,7 +254,7 @@ class FileGalLib extends TikiLib {
 			$fgal_info['show_id'], $fgal_info['show_icon'], $fgal_info['show_name'],
 			$fgal_info['show_description'], $fgal_info['show_created'],
 			$fgal_info['show_hits'], (int) $fgal_info['max_desc'],
-			$fgal_info['type'], $fgal_info['parentId'],$fgal_info['groupforAlert'], $fgal_info['lockable'],
+			$fgal_info['type'], $fgal_info['parentId'], $fgal_info['lockable'],
 			$fgal_info['show_lockedby'], $fgal_info['archives'],
 			$fgal_info['sort_mode'], $fgal_info['show_modified'],
 			$fgal_info['show_creator'], $fgal_info['show_author'],
