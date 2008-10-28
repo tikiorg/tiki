@@ -21,14 +21,12 @@ if ($prefs['feature_categories'] == 'y') {
 	$smarty->assign('cat_categorize', 'n');
 
 	if (isset($_REQUEST['import']) and isset($_REQUEST['categories'])) {
-		$_REQUEST["cat_categories"] = split(',',$_REQUEST['categories']);
+		$_REQUEST->replaceFilter( 'categories', 'digits' );
+		$_REQUEST["cat_categories"] = $_REQUEST->asArray( 'categories', ',' );
 		$_REQUEST["cat_categorize"] = 'on';
 	}
 
-	if( isset($_REQUEST['cat_categories']) )
-		$categorize_cats = $_REQUEST['cat_categories']->asArray();
-	else
-		$categorize_cats = array();
+	$categorize_cats = $_REQUEST->asArray('cat_categories');
 
 	if ( isset($_REQUEST["cat_categorize"]) && $_REQUEST["cat_categorize"] == 'on' && ! (isset($_REQUEST["cat_clearall"]) && $_REQUEST["cat_clearall"] == 'on') ) {
 		$smarty->assign('cat_categorize', 'y');
