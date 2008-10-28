@@ -8,6 +8,48 @@
 
 $section = "wiki page";
 require_once ('tiki-setup.php');
+require_once 'Zend/Filter/PregReplace.php';
+/*
+$_REQUEST->replaceFilters( array(
+	// TODO : ??? 'attach_comment' => 'striptags',
+	'cell' => 'digits',
+	// TODO : ??? 'contributions' => 'digits',
+	'cat_categories' => 'digits',
+	'cat_categorize' => 'alpha',
+	'categId' => new Zend_Filter_PregReplace( '/[^\d\+]+/', '' ),
+	// TODO : ??? 'comment' => 'striptags',
+	'copyrightAuthors' => 'striptags',
+	'copyrightTitle' => 'striptags',
+	'copyrightYear' => new Zend_Filter_PregReplace( '/[^\d\-]+/', '' ),
+	'current_page_id' => 'digits',
+	'description' => 'striptags',
+	// TODO : ??? 'edit' => 'wiki',
+	// TODO : ??? 'footnote' => 'striptags',
+	'freetag_string' => 'striptags',
+	'hdr' => 'digits',
+	'isminor' => 'alpha',
+	'lang' => new Zend_Filter_PregReplace( '/[^a-z\-]+/', '' ),
+	'lock_it' => 'alpha',
+	'newver' => 'digits',
+	'oldver' => 'digits',
+	'page' => 'striptags',
+	'page_ref_id' => 'digits',
+	'parse_html' => 'alpha',
+	'poll_template' => 'striptags',
+	// TODO : ??? 'poll_template' => 'striptags',
+	'poll_title' => 'striptags',
+	'pos' => 'digits',
+	'source_page' => 'striptags',
+	'spellcheck' => 'alpha',
+	// TODO : ??? 'such_url' => 'striptags',
+	'templateId' => 'digits',
+	'translationOf' => 'striptags',
+	'ratingId' => 'digits',
+	// TODO : ??? 'wiki_authors_style' => 'word',
+	'wiki_cache' => 'digits',
+	'wysiwyg' => 'alpha',
+) );
+*/
 include_once ('lib/wiki/wikilib.php');
 include_once ('lib/structures/structlib.php');
 include_once ('lib/notifications/notificationlib.php');

@@ -25,23 +25,28 @@ if ($prefs['feature_categories'] == 'y') {
 		$_REQUEST["cat_categorize"] = 'on';
 	}
 
+	if( isset($_REQUEST['cat_categories']) )
+		$categorize_cats = $_REQUEST['cat_categories']->asArray();
+	else
+		$categorize_cats = array();
+
 	if ( isset($_REQUEST["cat_categorize"]) && $_REQUEST["cat_categorize"] == 'on' && ! (isset($_REQUEST["cat_clearall"]) && $_REQUEST["cat_clearall"] == 'on') ) {
 		$smarty->assign('cat_categorize', 'y');
 	} else {
-		$_REQUEST['cat_categories'] = NULL;
+		$categorize_cats = NULL;
 	}
 	if ($prefs["feature_wikiapproval"] == 'y' && $cat_type == 'wiki page' && substr($cat_objid, 0, strlen($prefs['wikiapproval_prefix'])) == $prefs['wikiapproval_prefix']) {		
-		if ($prefs['wikiapproval_approved_category'] > 0 && in_array($prefs['wikiapproval_approved_category'], $_REQUEST['cat_categories'])) {
-			$_REQUEST['cat_categories'] = array_diff($_REQUEST['cat_categories'],Array($prefs['wikiapproval_approved_category']));
+		if ($prefs['wikiapproval_approved_category'] > 0 && in_array($prefs['wikiapproval_approved_category'], $categorize_cats)) {
+			$categorize_cats = array_diff($categorize_cats,Array($prefs['wikiapproval_approved_category']));
 		}
-		if ($prefs['wikiapproval_staging_category'] > 0 && !in_array($prefs['wikiapproval_staging_category'], $_REQUEST['cat_categories'])) {	
-			$_REQUEST['cat_categories'][] = $prefs['wikiapproval_staging_category'];	
+		if ($prefs['wikiapproval_staging_category'] > 0 && !in_array($prefs['wikiapproval_staging_category'], $categorize_cats)) {	
+			$categorize_cats[] = $prefs['wikiapproval_staging_category'];	
 		}
-		if ($prefs['wikiapproval_outofsync_category'] > 0 && !in_array($prefs['wikiapproval_outofsync_category'], $_REQUEST['cat_categories'])) {	
-			$_REQUEST['cat_categories'][] = $prefs['wikiapproval_outofsync_category'];	
+		if ($prefs['wikiapproval_outofsync_category'] > 0 && !in_array($prefs['wikiapproval_outofsync_category'], $categorize_cats)) {	
+			$categorize_cats[] = $prefs['wikiapproval_outofsync_category'];	
 		}
 	}
-	$categlib->update_object_categories($_REQUEST['cat_categories'], $cat_objid, $cat_type, $cat_desc, $cat_name, $cat_href);
+	$categlib->update_object_categories($categorize_cats, $cat_objid, $cat_type, $cat_desc, $cat_name, $cat_href);
 
 	$cats = $categlib->get_object_categories($cat_type, $cat_objid);
 	if (isset($section) && $section == 'wiki' && $prefs['feature_wiki_mandatory_category'] > 0)

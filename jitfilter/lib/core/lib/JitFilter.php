@@ -26,7 +26,9 @@ class JitFilter implements ArrayAccess, Iterator, Countable
 	{
 		if( is_array( $this->stored[$key] ) ) {
 			$this->stored[$key] = new self( $this->stored[$key] );
-			if( $this->defaultFilter )
+			if( isset( $this->filters[$key] ) )
+				$this->stored[$key]->setDefaultFilter( $this->filters[$key] );
+			elseif( $this->defaultFilter )
 				$this->stored[$key]->setDefaultFilter( $this->defaultFilter );
 		}
 
@@ -70,6 +72,18 @@ class JitFilter implements ArrayAccess, Iterator, Countable
 		return (string) $this->stored;
 	}
 
+	function asArray()
+	{
+		$ret = array();
+		foreach( array_keys( $this->stored ) as $k ) {
+			$ret[$k] = $this->offsetGet($k);
+			if( $ret[$k] instanceof self )
+				$ret[$k] = $ret[$k]->asArray();
+		}
+
+		return $ret;
+	}
+
 	function setDefaultFilter( $filter )
 	{
 		if( ! $filter instanceof Zend_Filter_Interface )
@@ -84,6 +98,10 @@ class JitFilter implements ArrayAccess, Iterator, Countable
 			$filter = $this->mapFilter( $filter );
 
 		$this->filters[$key] = $filter;
+
+		if( isset($this->stored[$key]) && $this->stored[$key] instanceof self ) {
+			$this->stored[$key]->setDefaultFilter( $filter );
+		}
 	}
 
 	function replaceFilters( $filters )
