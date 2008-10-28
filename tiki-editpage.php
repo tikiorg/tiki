@@ -425,6 +425,31 @@ function walk_and_parse(&$c, &$src, &$p, $head_url ) {
 							$p['stack'][] = array('tag' => $c[$i]['data']['name'], 'string' => "\n"); 
 						}
 						break;
+					case "span":
+						if( isset($c[$i]['pars']) 
+							&& isset($c[$i]['pars']['style']) 
+							&& preg_match( "/background(\-color)?: rgb\((\d+), (\d+), (\d+)\)/", $c[$i]['pars']['style']['value'], $parts ) ) {
+							$src .= "~~#"
+								. str_pad( dechex( 255-$parts[1] ), 2, '0', STR_PAD_LEFT )
+								. str_pad( dechex( 255-$parts[2] ), 2, '0', STR_PAD_LEFT )
+								. str_pad( dechex( 255-$parts[3] ), 2, '0', STR_PAD_LEFT )
+								. ',#'
+								. str_pad( dechex( $parts[1] ), 2, '0', STR_PAD_LEFT )
+								. str_pad( dechex( $parts[2] ), 2, '0', STR_PAD_LEFT )
+								. str_pad( dechex( $parts[3] ), 2, '0', STR_PAD_LEFT )
+								. ':';
+							$p['stack'][] = array('tag' => 'span', 'string' => "~~"); 
+						} elseif( isset($c[$i]['pars']) 
+							&& isset($c[$i]['pars']['style']) 
+							&& preg_match( "/color: rgb\((\d+), (\d+), (\d+)\)/", $c[$i]['pars']['style']['value'], $parts ) ) {
+							$src .= "~~#"
+								. str_pad( dechex( $parts[1] ), 2, '0', STR_PAD_LEFT )
+								. str_pad( dechex( $parts[2] ), 2, '0', STR_PAD_LEFT )
+								. str_pad( dechex( $parts[3] ), 2, '0', STR_PAD_LEFT )
+								. ':';
+							$p['stack'][] = array('tag' => 'span', 'string' => "~~"); 
+						}
+						break;
 					case "b": $src .= '__'; $p['stack'][] = array('tag' => 'b', 'string' => '__'); break;
 					case "i": $src .= "''"; $p['stack'][] = array('tag' => 'i', 'string' => "''"); break;
 					case "em": $src .= "''"; $p['stack'][] = array('tag' => 'em', 'string' => "''"); break;
@@ -813,6 +838,10 @@ if (isset($_REQUEST['mode_normal'])) {
 	$parsed = $tikilib->parse_data($edit_data,array('absolute_links'=>true, 'noparseplugins'=>true,'noheaderinc'=>true));
 	$parsed = preg_replace('/<span class=\"img\">(.*?)<\/span>/im','$1', $parsed);					// remove spans round img's
 	$parsed = preg_replace("/src=\"img\/smiles\//im","src=\"".$tikiroot."img/smiles/", $parsed);	// fix smiley src's
+	$parsed = str_replace( 
+		array( '{SUP()}', '{SUP}', '{SUB()}', '{SUB}' ),
+		array( '<sup>', '</sup>', '<sub>', '</sub>' ),
+		$parsed );
 	$smarty->assign('pagedata', $parsed);
 	$prefs['wiki_edit_section'] = $secedit;
 	$prefs['feature_wiki_ext_icon'] = $exticons;
