@@ -192,6 +192,15 @@ function replace_tracker_from_request( $tracker_info )
 	if (!isset($_REQUEST['errorMsg'])) {
 		$_REQUEST['errorMsg'] = '';
 	}
+	if (!isset($_REQUEST['visibleBy'])) {
+		$_REQUEST['visibleBy'] = '';
+	}
+	if (!isset($_REQUEST['editableBy'])) {
+		$_REQUEST['editableBy'] = '';
+	}
+	if (!isset($_REQUEST['itemChoices'])) {
+		$_REQUEST['itemChoices'] = '';
+	}
 
     //$_REQUEST["name"] = str_replace(' ', '_', $_REQUEST["name"]);
     $trklib->replace_tracker_field($_REQUEST["trackerId"], $_REQUEST["fieldId"], $_REQUEST["name"], $_REQUEST["type"], $isMain, $isSearchable,

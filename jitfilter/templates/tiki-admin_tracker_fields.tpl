@@ -35,7 +35,7 @@
 {/foreach}
 </td><td>
 <select name="type" id='trkfldtype' onchange='javascript:chgTrkFld("{$fld}",this.options[selectedIndex].value);javascript:chgTrkFld("{$fld}",this.options[selectedIndex].value);javascript:chgTrkLingual(this.options[selectedIndex].value);'>
-{sortlinks}
+{sortlinks case=false}
 {foreach key=fk item=fi from=$field_types}
 <option value="{$fk}" {if $type eq $fk}selected="selected"{/if}{if $fi.opt and ($type eq $fk or $type  eq 'o' or $type eq '')}{assign var=showit value=true}{/if}>{$fi.label}</option>
 {/foreach}
@@ -56,7 +56,7 @@
 {if isset($fi.itemChoicesList)}
 <select name="itemChoices[]" id='{$fk}itemChoices' {if $type eq $fk or (($type eq 'o' or $type eq '') and $smarty.foreach.foreachname.first)}style="display:block;"{else}style="display:none;"{/if} size="{math equation="min(10,x)" x=$fi.itemChoicesList|@count}" multiple="multiple">
 <option value="">&nbsp;</option>
-{sortlinks}
+{sortlinks case=false}
 {foreach key=choice_k item=choice_i from=$fi.itemChoicesList}
 {$choice_k}
 <option value="{$choice_k|escape}"{if !empty($itemChoices) and in_array($choice_k, $itemChoices)} selected="selected"{/if}>{tr}{$choice_i}{/tr}</option>

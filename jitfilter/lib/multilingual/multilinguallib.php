@@ -143,7 +143,7 @@ class MultilingualLib extends TikiLib {
 		}
 		else {
 			$l = $this->format_language_list(array($objLang), 'y');
-			$ret0 = array('objId'=>$objId, 'objName'=>$objName, 'lang'=> $objLang, 'langName'=>$l[0]['name']);
+			$ret0 = array('objId'=>$objId, 'objName'=>$objName, 'lang'=> $objLang, 'langName'=>empty($l)?'':$l[0]['name']);
 			while ($res = $result->fetchRow()) {
 				$l = $this->format_language_list(array($res['lang']), 'y');
 				$res['langName'] = $l[0]['name'];

@@ -1,7 +1,6 @@
 <?php
 require_once ('tiki-setup.php');
 include_once ('lib/admin/magiclib.php');
-
 $featureChain = $_REQUEST['featurechain'];
 $featurePage = explode('/', $featureChain);
 $featureId = $featurePage[count($featurePage) - 1];
@@ -9,7 +8,6 @@ $featureId = $featurePage[count($featurePage) - 1];
 $feature = $magiclib->get_feature($featureId);
 $smarty->assign('feature', $feature);
 $smarty->assign('title', $feature['feature_name']);
-
 /*
  * $$feature['permission'] is slightly magic.  It's checking the value of the name of the variable that is in feature['permission'].
  * If feature['permission'] is 'tiki_p_wiki_admin', it is checking if $tiki_p_wiki_admin has the value 'y'.

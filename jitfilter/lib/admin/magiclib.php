@@ -112,6 +112,9 @@ class MagicLib extends TikiLib {
 	
 	function _feature_post_processing($feature) {
 		global $prefs, $enumerations, $tikilib, $categlib, $userlib, $dbTiki;
+		
+		if ($feature == null) return null;
+
 		if ($feature['setting_name'] != '' && in_array($feature['setting_name'], $prefs)) {
 			$feature['value'] = $prefs[$feature['setting_name']];
 			// Slightly odd special case.  The value needs to be stored in 'language'; however the language
@@ -174,7 +177,7 @@ class MagicLib extends TikiLib {
 		} else if ($feature['template'] !== '' && strpos($feature['template'], '.php') > 1) {
 			$feature['pageurl'] = $feature['template'];
 		} else {
-			$feature['pageurl'] = 'tiki-magic.php?featurechain=' . $feature['featurechain'];
+			$feature['pageurl'] = 'tiki-magic.php?featurechain=' . $feature['feature_path'];
 		}
 
 		return $feature;

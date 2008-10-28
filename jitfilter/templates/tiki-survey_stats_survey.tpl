@@ -1,15 +1,16 @@
 {title}{tr}Stats for survey:{/tr}{$survey_info.name}{/title}
 
-<span class="button2"><a href="tiki-list_surveys.php">{tr}List Surveys{/tr}</a></span>
-<span class="button2"><a href="tiki-survey_stats.php">{tr}Survey Stats{/tr}</a></span>
-{if $tiki_p_admin_surveys eq 'y'}
-  <span class="button2"><a href="tiki-admin_surveys.php?surveyId={$surveyId}">{tr}Edit this Survey{/tr}</a></span>
-  <span class="button2"><a href="tiki-survey_stats_survey.php?surveyId={$surveyId}&amp;clear={$surveyId}">{tr}Clear Stats{/tr}</a></span>
-  <span class="button2"><a href="tiki-admin_surveys.php">{tr}Admin Surveys{/tr}</a></span>
-{/if}
-<br /><br />
+<div class="navbar">
+	{button href="tiki-list_surveys.php" _text="{tr}List Surveys{/tr}"}
+	{button href="tiki-survey_stats.php" _text="{tr}Survey Stats{/tr}"}
+	{if $tiki_p_admin_surveys eq 'y'}
+		{button href="tiki-admin_surveys.php?surveyId=`$surveyId`" _text="{tr}Edit this Survey{/tr}"}
+		{button href="tiki-survey_stats_survey.php?surveyId=`$surveyId`&amp;clear=`$surveyId`" _text="{tr}Clear Stats{/tr}"}
+		{button href="tiki-admin_surveys.php" _text="{tr}Admin Surveys{/tr}"}
+	{/if}
+</div>
+<br />
 
-<h2>{tr}Stats for this survey Questions {/tr}</h2>
 {section name=ix loop=$channels}
   <table class="normal">
   <tr>
@@ -17,29 +18,41 @@
   </tr>
   {if $channels[ix].type eq 'r'}
     <tr>
-      <td class="odd">Votes:</td>
-      <td  class="odd">{$channels[ix].votes}</td>
+      <td class="odd">{tr}Votes:{/tr}</td>
+      <td class="odd">{$channels[ix].votes}</td>
     </tr>
     <tr>
-      <td class="odd">{tr}Average{/tr}:</td>
+      <td class="odd">{tr}Average:{/tr}</td>
       <td class="odd">{$channels[ix].average|string_format:"%.2f"}</td>
     </tr>
   {elseif $channels[ix].type eq 's'}
     <tr>
-      <td  class="odd">Votes:</td>
-      <td  class="odd">{$channels[ix].votes}</td>
+      <td class="odd">{tr}Votes:{/tr}</td>
+      <td class="odd">{$channels[ix].votes}</td>
     </tr>
     <tr>
-      <td class="odd">{tr}Average{/tr}:</td>
+      <td class="odd">{tr}Average:{/tr}</td>
       <td class="odd">{$channels[ix].average|string_format:"%.2f"}/10</td>
     </tr>
   {else}
     {section name=jx loop=$channels[ix].qoptions}
     <tr>
-      <td  class="odd">{$channels[ix].qoptions[jx].qoption}</td>
-      <td  class="odd">{$channels[ix].qoptions[jx].votes}</td>
-      <td  class="odd">{$channels[ix].qoptions[jx].average|string_format:"%.2f"}%</td>
-      <td  class="odd"><img src="img/leftbar.gif" alt="&lt;" /><img alt="-" src="img/mainbar.gif" height="14" width="{$channels[ix].qoptions[jx].width}" /><img src="img/rightbar.gif" alt="&gt;" /></td>
+      <td class="odd">
+        {if $channels[ix].type eq 'g'}
+          <div style="float:left">
+          {thumb _id=$channels[ix].qoptions[jx].qoption _max=40 name='thumb' style='margin:3px;'}
+          </div>
+          <div>
+            {fileinfo _id=$channels[ix].qoptions[jx].qoption _field='name' _link='thumb'}
+            <br />{fileinfo _id=$channels[ix].qoptions[jx].qoption _field='description'}
+          </div>
+        {else}
+          {$channels[ix].qoptions[jx].qoption}
+        {/if}
+      </td>
+      <td class="odd">{$channels[ix].qoptions[jx].votes}</td>
+      <td class="odd">{$channels[ix].qoptions[jx].average|string_format:"%.2f"}%</td>
+      <td class="odd"><img src="img/leftbar.gif" alt="&lt;" /><img alt="-" src="img/mainbar.gif" height="14" width="{$channels[ix].qoptions[jx].width}" /><img src="img/rightbar.gif" alt="&gt;" /></td>
     </tr>
     {/section}
   {/if}

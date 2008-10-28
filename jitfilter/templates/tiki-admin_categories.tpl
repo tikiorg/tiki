@@ -4,7 +4,7 @@
 {title help="Categories+Admin"}{tr}Admin Categories{/tr}{/title}
 
 <div class="navbar">
-  <a href="tiki-browse_categories.php?parentId={$parentId}" title="{tr}browse the category system{/tr}">{tr}Browse Category{/tr}</a>
+	{button href="tiki-browse_categories.php?parentId=$parentId" _text="{tr}Browse Category{/tr}" _title="{tr}Browse the category system{/tr}"}
 </div>
 
 {if !empty($errors)}

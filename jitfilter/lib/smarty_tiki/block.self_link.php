@@ -27,6 +27,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *   _title : tooltip to display when the mouse is over the link. Use $content when _icon is used.
  *   _alt : alt attribute for the icon's IMG tag (use _title if _alt is not specified).
  *   _script : specify another script than the current one (this disable AJAX for this link when the current script is different).
+ *   _on* : specify values of on* (e.g. onclick) HTML attributes used for javascript events
  */
 function smarty_block_self_link($params, $content, &$smarty, $repeat = false) {
     global $prefs;
@@ -46,6 +47,7 @@ function smarty_block_self_link($params, $content, &$smarty, $repeat = false) {
 
       if ( ! isset($content) ) $content = '';
       if ( ! isset($params['_ajax']) ) $params['_ajax'] = 'y';
+      if ( ! isset($params['_script']) ) $params['_script'] = '';
       if ( ! isset($params['_tag']) ) $params['_tag'] = 'y';
       if ( ! isset($params['_sort_arg']) ) $params['_sort_arg'] = 'sort';
       if ( ! isset($params['_sort_field']) ) {
@@ -53,8 +55,8 @@ function smarty_block_self_link($params, $content, &$smarty, $repeat = false) {
       } elseif ( $params['_sort_arg'] != '' and ! isset($params[$params['_sort_arg']]) ) {
 	        $params[$params['_sort_arg']] = $params['_sort_field'].'_asc,'.$params['_sort_field'].'_desc';
       }
-      // Complete _script path if needed
-      if ( isset($params['_script']) ) {
+      // Complete _script path if needed (not empty, not an anchor, ...)
+      if ( $params['_script'] != '' && $params['_script'][0] != '#' ) {
         if ( $params['_script'] != '' && $_SERVER['PHP_SELF'][0] == '/' && strpos($params['_script'], '/') === false ) {
           $self_dir = dirname($_SERVER['PHP_SELF']);
           $params['_script'] = ( $self_dir == '/' ? '' : $self_dir ).'/'.$params['_script'];
@@ -62,8 +64,6 @@ function smarty_block_self_link($params, $content, &$smarty, $repeat = false) {
         if ( $params['_script'] == $_SERVER['PHP_SELF'] ) {
           $params['_script'] = '';
         }
-      } else {
-        $params['_script'] = '';
       }
 
       $params['_type'] = $default_type;
@@ -113,8 +113,14 @@ function smarty_block_self_link($params, $content, &$smarty, $repeat = false) {
         }
 
         $link = ( ( isset($params['_class']) && $params['_class'] != '' ) ? 'class="'.$params['_class'].'" ' : '' )
-              . ( ( isset($params['_title']) && $params['_title'] != '' ) ? 'title="'.str_replace('"','\"',$params['_title']).'" ' : '' )
-              . $ret;
+              . ( ( isset($params['_title']) && $params['_title'] != '' ) ? 'title="'.str_replace('"','\"',$params['_title']).'" ' : '' );
+				foreach ( $params as $k => $v ) {
+					if ( strlen($k) > 3 && substr($k, 0, 3) == '_on' ) {
+						$link .= htmlentities(substr($k, 1)).'="'.$v.'" '; // $v should be already htmlentitized in the template
+						unset($params[$k]);
+					}
+				}
+        $link .= $ret;
 
         $ret = "<a $link>".$content.'</a>';
 
@@ -133,5 +139,3 @@ function smarty_block_self_link($params, $content, &$smarty, $repeat = false) {
 
     return $ret;
 }
-
-?>

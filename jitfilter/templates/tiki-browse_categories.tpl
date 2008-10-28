@@ -4,8 +4,11 @@
 
 {if $parentId and $p_info.description}<div class="description">{$p_info.description}</div>{/if}
 {if $tiki_p_admin_categories eq 'y'}
-<div class="navbar"><a href="tiki-admin_categories.php?parentId={$parentId}" title="{tr}Admin the Category System{/tr}">{tr}Admin Category{/tr}</a></div>
+	<div class="navbar">
+		{button href="tiki-admin_categories.php?parentId=$parentId" _text="{tr}Admin Category{/tr}" _title="{tr}Admin the Category System{/tr}"}
+	</div>
 {/if}
+
 {if $user and $prefs.feature_user_watches eq 'y'}
 	{if $user_watching_category eq 'n'}
 		<a href="tiki-browse_categories.php?parentId={$parentId|escape:"url"}&amp;watch_event=category_changed&amp;watch_object={$parentId|escape:"url"}&amp;deep={$deep}&amp;watch_action=add" class="icon">{icon _id='eye' alt='{tr}Watch Only This Category{/tr}'}</a>

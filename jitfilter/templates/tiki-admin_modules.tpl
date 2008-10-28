@@ -4,11 +4,7 @@
 {title help="Modules+Admin" admpage="module"}{tr}Admin Modules{/tr}{/title}
 
 <div class="navbar">
-{*<a href="#assign">{tr}Assign Module{/tr}</a>
-<a href="#leftmod">{tr}Left Modules{/tr}</a>
-<a href="#rightmod">{tr}Right Modules{/tr}</a>
-<a href="#editcreate">{tr}Edit/Create{/tr}</a>*}
-<a href="tiki-admin_modules.php?clear_cache=1">{tr}Clear Cache{/tr}</a>
+{button href="tiki-admin_modules.php?clear_cache=1" _text="{tr}Clear Cache{/tr}"}
 </div>
 
 {if $prefs.feature_tabs eq 'y'}
@@ -123,11 +119,12 @@
 <h3>{tr}Preview{/tr}</h3>
 {$preview_data}
 {/if}
-<form method="post" action="tiki-admin_modules.php#assign">
+<form method="post" action="tiki-admin_modules.php">
 {if !empty($info.moduleId)}<input type="hidden" name="moduleId" value="{$info.moduleId}" />{elseif !empty($moduleId)}<input type="hidden" name="moduleId" value="{$moduleId}" />{/if}
 <table class="normal">
 <tr><td class="formcolor">{tr}Module Name{/tr}</td><td class="formcolor">
 <select name="assign_name">
+<option value=""></option>
 {section name=ix loop=$all_modules}
 <option value="{$all_modules[ix]|escape}" {if $assign_name eq $all_modules[ix] || $assign_selected eq $all_modules[ix]}selected="selected"{/if}>{$all_modules[ix]}</option>
 {/section}

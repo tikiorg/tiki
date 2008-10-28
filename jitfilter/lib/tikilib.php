@@ -1933,11 +1933,9 @@ class TikiLib extends TikiDB {
 
 	/*shared*/
 	function get_file($id) {
-		$query = "select `path`,`galleryId`,`filename`,`filetype`,`data`,`filesize`,`name`,`description` from `tiki_files` where `fileId`=?";
-		$query = "select `path` ,`galleryId`,`filename`,`filetype`,`data`,`filesize`, `lockedby` from `tiki_files` where `fileId`=?";
-		$result = $this->query($query,array((int) $id));
-		$res = $result->fetchRow();
-		return $res;
+		$query = "select * from `tiki_files` where `fileId`=?";
+		$result = $this->query($query, array((int)$id));
+		return $result ? $result->fetchRow() : array();
 	}
 
 	/*shared: added by AW*/
@@ -5841,12 +5839,13 @@ class TikiLib extends TikiDB {
 
 		// Handle parsing options
 		if ( $options == null ) $options = array();
-		$is_html = isset($options['is_html']) ? $options['is_html'] : false;
-		$absolute_links = isset($options['absolute_links']) ? $options['absolute_links'] : false;
-		$language = isset($options['language']) ? $options['language'] : '';
-		$noparseplugins = isset($options['noparseplugins']) ? $options['noparseplugins'] : false;
+		$options['is_html'] = $is_html = isset($options['is_html']) ? $options['is_html'] : false;
+		$options['absolute_links'] = $absolute_links = isset($options['absolute_links']) ? $options['absolute_links'] : false;
+		$options['language'] = $language = isset($options['language']) ? $options['language'] : '';
+		$options['noparseplugins'] = $noparseplugins = isset($options['noparseplugins']) ? $options['noparseplugins'] : false;
+		$options['noheaderinc'] = $noheaderinc = isset($options['noheaderinc']) ? $options['noheaderinc'] : false;
 
-		// if simple_wiki is tru, disable some wiki syntax
+		// if simple_wiki is true, disable some wiki syntax
 		// basically, allow wiki plugins, wiki links and almost
 		// everything between {}
 		$simple_wiki = false;
@@ -6062,7 +6061,7 @@ class TikiLib extends TikiDB {
 			// Underlined text
 			$data = preg_replace("/===(.+?)===/", "<span style=\"text-decoration:underline;\">$1</span>", $data);
 			// Center text
-			$data = preg_replace("/::(.+?)::/", "<div align=\"center\">$1</div>", $data);
+			$data = preg_replace("/::(.+?)::/", "<div style=\"text-align: center;\">$1</div>", $data);
 		}
 
 		// definitively put out the protected words ))protectedWord((
@@ -6107,7 +6106,7 @@ class TikiLib extends TikiDB {
 		// If they are parenthesized then don't treat as links
 		// Prevent ))PageName(( from being expanded \"\'
 		//[A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*
-		if ( ! $simple_wiki && $prefs['feature_wikiwords'] == 'y' ) {
+		if ( ! $simple_wiki && $prefs['feature_wiki'] == 'y' && $prefs['feature_wikiwords'] == 'y' ) {
 			// The first part is now mandatory to prevent [Foo|MyPage] from being converted!
 			if ($prefs['feature_wikiwords_usedash'] == 'y') {
 				preg_match_all("/(?<=[ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-\x80-\xFF]+[A-Z][a-z0-9_\-\x80-\xFF]+[A-Za-z0-9\-_\x80-\xFF]*)(?=$|[ \n\t\r\,\;\.])/", $data, $pages);
@@ -6308,7 +6307,7 @@ class TikiLib extends TikiDB {
 		}
 
 		if (!$simple_wiki) {
-			$this->parse_data_process_maketoc( $data, $language, $page );
+			$this->parse_data_process_maketoc( $data, $options, $language, $page );
 
 		} // closing if ($simple_wiki)
 
@@ -6327,7 +6326,7 @@ class TikiLib extends TikiDB {
 		return $data;
 	}
 
-	function parse_data_process_maketoc( &$data, $language='', $page ='' ) {
+	function parse_data_process_maketoc( &$data, $options, $language='', $page ='' ) {
 
 		global $prefs;
 
@@ -6691,11 +6690,18 @@ class TikiLib extends TikiDB {
 						} else {
 							$button = '';
 						}
+
 						// Use $hdrlevel + 1 because the page title is H1, so none of the other headers should be.
+						// Except when page title is off
+						// Or when in wysiwyg mode
+						$headerInc = 0;
+						if( $prefs['feature_page_title'] == 'y' && ! $options['noheaderinc'] )
+							++$headerInc;
+
 						if ( $prefs['feature_wiki_show_hide_before'] == 'y' ) {
-							$line = $button.'<h'.($hdrlevel+1).' class="showhide_heading" id="'.$thisid.'">'.$aclose.' '.$title_text.'</h'.($hdrlevel+1).'>'.$aclose2;
+							$line = $button.'<h'.($hdrlevel+$headerInc).' class="showhide_heading" id="'.$thisid.'">'.$aclose.' '.$title_text.'</h'.($hdrlevel+$headerInc).'>'.$aclose2;
 						} else {
-							$line = $button.'<h'.($hdrlevel+1).' class="showhide_heading" id="'.$thisid.'">'.$title_text.'</h'.($hdrlevel+1).'>'.$aclose.$aclose2;
+							$line = $button.'<h'.($hdrlevel+$headerInc).' class="showhide_heading" id="'.$thisid.'">'.$title_text.'</h'.($hdrlevel+$headerInc).'>'.$aclose.$aclose2;
 						}
 					} elseif (!strcmp($line, $prefs['wiki_page_separator'])) {
 						// Close open paragraph, lists, and div's
@@ -7078,6 +7084,10 @@ class TikiLib extends TikiDB {
 		include_once ("lib/wiki/histlib.php");
 		include_once ("lib/commentslib.php");
 
+		if( $wysiwyg == 'y' ) {
+			$is_html = 1;
+		}
+
 		if( ! $is_html ) {
 			$edit_data = str_replace( '&lt;x&gt;', '', $edit_data );
 		}
@@ -7200,10 +7210,10 @@ class TikiLib extends TikiDB {
 		// This if no longer checks for minor-ness of the change; sendWikiEmailNotification does that.
 		if( $prefs['feature_wiki_history_full'] == 'y' || $data != $edit_data || $description != $info["description"] || $comment != $edit_comment ) {
 			if (strtolower($pageName) != 'sandbox') {
-				$query = "insert into `tiki_history`(`pageName`, `version`, `lastModif`, `user`, `ip`, `comment`, `data`, `description`)
-					values(?,?,?,?,?,?,?,?)";
+				$query = "insert into `tiki_history`(`pageName`, `version`, `lastModif`, `user`, `ip`, `comment`, `data`, `description`,`is_html`)
+					values(?,?,?,?,?,?,?,?,?)";
 # echo "<pre>";print_r(get_defined_vars());echo "</pre>";die();
-				$result = $this->query($query,array($pageName,(int) $old_version,(int) $lastModif,$user,$ip,$comment,$data,$description));
+				$result = $this->query($query,array($pageName,(int) $old_version,(int) $lastModif,$user,$ip,$comment,$data,$description,(int)$info['is_html']));
 
 				if ($prefs['feature_contribution'] == 'y') {// transfer page contributions to the history
 					global $contributionlib; include_once('lib/contribution/contributionlib.php');

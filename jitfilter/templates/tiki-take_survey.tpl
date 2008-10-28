@@ -1,3 +1,7 @@
+{if $error_msg neq ''}
+	{remarksbox type="warning" title="{tr}Warning{/tr}"}{$error_msg}{/remarksbox}
+	<br />
+{/if}
 <form name="aform" formId='editpageform' action="tiki-take_survey.php" method="post">
 <input type="hidden" name="surveyId" value="{$surveyId|escape}" />
 <input type="hidden" name="vote" value="yes" />
@@ -12,16 +16,12 @@
             <input type="radio" value="{$questions[ix].qoptions[jx].optionId|escape}" name="question_{$questions[ix].questionId}" />{$questions[ix].qoptions[jx].qoption}<br />
           {/section}
         </div>  
-      {/if}
-      
-      {if $questions[ix].type eq 't'}
+      {elseif $questions[ix].type eq 't'}
         <div class="quizoptions">
           <input type="text" name="question_{$questions[ix].questionId}" />
         </div>  
-      {/if}
-
-      {if $questions[ix].type eq 'x'}
-      {assign var='area' value=$questions[ix].questionId}
+      {elseif $questions[ix].type eq 'x'}
+        {assign var='area' value=$questions[ix].questionId}
 
         <div class="quizoptions">
           <table class="normal">
@@ -42,17 +42,13 @@
             </tr>
           </table>
         </div>  
-      {/if}
-
-      {if $questions[ix].type eq 'm'}
+      {elseif $questions[ix].type eq 'm'}
         <div class="quizoptions">
           {section name=jx loop=$questions[ix].qoptions}
             <input type="checkbox" value="{$questions[ix].qoptions[jx].optionId|escape}" name="question_{$questions[ix].questionId}[{$questions[ix].qoptions[jx].optionId}]" />{$questions[ix].qoptions[jx].qoption}<br />
           {/section}
         </div>  
-      {/if}
-
-      {if $questions[ix].type eq 'r' or $questions[ix].type eq 's'}
+      {elseif $questions[ix].type eq 'r' or $questions[ix].type eq 's'}
         <div class="quizoptions">
           {if $questions[ix].options}
             {foreach from=$questions[ix].explode key=k item=j}
@@ -77,6 +73,8 @@
             <input type="radio" value="10" name="question_{$questions[ix].questionId}" />10
           {/if}
         </div>
+      {elseif $questions[ix].type eq 'g'}
+        {fgal_browse _id=$questions[ix].explode.0 show_selectall='n' show_infos='n' checkbox_label="{tr}Choose{/tr}" file_checkbox_name="question_`$questions[ix].questionId`"}
       {/if}
     </div>
   {/section}

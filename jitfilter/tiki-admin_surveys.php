@@ -56,6 +56,18 @@ if ($tiki_p_admin_surveys != 'y') {
 	die;
 }
 
+if (isset($_REQUEST["save"])) {
+	check_ticket('admin-surveys');
+	$sid = $srvlib->replace_survey($_REQUEST["surveyId"], $_REQUEST["name"], $_REQUEST["description"], $_REQUEST["status"]);
+
+	$cat_type = 'survey';
+	$cat_objid = $sid;
+	$cat_desc = substr($_REQUEST["description"], 0, 200);
+	$cat_name = $_REQUEST["name"];
+	$cat_href = "tiki-take_survey.php?surveyId=" . $cat_objid;
+	include_once ("categorize.php");
+}
+
 if ($_REQUEST["surveyId"]) {
 	$info = $srvlib->get_survey($_REQUEST["surveyId"]);
 } else {
@@ -76,18 +88,6 @@ if (isset($_REQUEST["remove"])) {
 	} else {
 		key_get($area);
 	}
-}
-
-if (isset($_REQUEST["save"])) {
-	check_ticket('admin-surveys');
-	$sid = $srvlib->replace_survey($_REQUEST["surveyId"], $_REQUEST["name"], $_REQUEST["description"], $_REQUEST["status"]);
-
-	$cat_type = 'survey';
-	$cat_objid = $sid;
-	$cat_desc = substr($_REQUEST["description"], 0, 200);
-	$cat_name = $_REQUEST["name"];
-	$cat_href = "tiki-take_survey.php?surveyId=" . $cat_objid;
-	include_once ("categorize.php");
 }
 
 if (!isset($_REQUEST["sort_mode"])) {

@@ -193,7 +193,12 @@ class MenuLib extends TikiLib {
 			return false;
 		}
 		$url = urldecode($_SERVER['REQUEST_URI']);
-		if ($prefs['feature_sefurl'] == 'y' && !empty($option['sefurl']) && !strstr($url, 'tiki-index.php')) {
+		if (preg_match('/.*tiki.index.php$/', $url)) {
+			global $wikilib; include_once('lib/wiki/wikilib.php');
+			$homePage = $wikilib->get_default_wiki_page();
+			$url .= "?page=$homePage";
+		}
+		if ($prefs['feature_sefurl'] == 'y' && !empty($option['sefurl'])) {
 			$pos = strpos($url, '/'. urldecode($option['sefurl']));
 			$lg = 1 + strlen($option['sefurl']);
 		} else {

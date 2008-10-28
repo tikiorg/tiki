@@ -44,8 +44,8 @@
 <br />
 <h2>{tr}Watches{/tr}</h2>
 <form action="tiki-user_watches.php" method="post" id='formi'>
-{tr}Show{/tr}:<select name="event" onchange="javascript:document.getElementById('formi').submit();">
-<option value=""{if $smarty.request.event eq ''} selected="selected"{/if}>{tr}All{/tr} {tr}watched events{/tr}</option>
+{tr}Show:{/tr}<select name="event" onchange="javascript:document.getElementById('formi').submit();">
+<option value=""{if $smarty.request.event eq ''} selected="selected"{/if}>{tr}All watched events{/tr}</option>
 {section name=ix loop=$events}
 <option value="{$events[ix]|escape}" {if $events[ix] eq $smarty.request.event}selected="selected"{/if}>
 	{if $events[ix] eq 'article_submitted'}

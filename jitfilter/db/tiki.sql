@@ -867,6 +867,7 @@ CREATE TABLE tiki_file_galleries (
   show_files char(1) default NULL,
   show_explorer char(1) default NULL,
   show_path char(1) default NULL,
+  groupforAlert varchar(255) default NULL,
   PRIMARY KEY (galleryId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
@@ -2204,6 +2205,9 @@ CREATE TABLE tiki_survey_questions (
   votes int(10) default NULL,
   value int(10) default NULL,
   average decimal(4,2) default NULL,
+  mandatory char(1) NOT NULL default 'n',
+  max_answers int(5) NOT NULL default 0,
+  min_answers int(5) NOT NULL default 0,
   PRIMARY KEY (questionId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
@@ -2371,6 +2375,7 @@ CREATE TABLE tiki_trackers (
   showAttachments char(1) default NULL,
   items int(10) default NULL,
   showComments char(1) default NULL,
+  groupforAlert varchar(255) default NULL,
   orderAttachments varchar(255) NOT NULL default 'filename,created,filesize,hits,desc',
   PRIMARY KEY (trackerId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
@@ -2453,7 +2458,7 @@ CREATE TABLE tiki_user_mail_accounts (
   useAuth char(1) default NULL,
   smtpPort int(4) default NULL,
   flagsPublic char(1) default 'n',				-- COMMENT 'MatWho - Shared Group Mail box if y',
-  autoRefresh int(4) NOT NULL default 0,		-- COMMENT 'seconds for mail list to refresh, 0 = none', 
+  autoRefresh int(4) NOT NULL default 0,		-- COMMENT 'seconds for mail list to refresh, 0 = none',
   PRIMARY KEY (accountId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
@@ -3643,3 +3648,12 @@ CREATE TABLE tiki_webservice_template (
 	PRIMARY KEY( service, template )
 ) ENGINE=MyISAM ;
 
+DROP TABLE IF EXISTS tiki_groupalert;
+
+CREATE TABLE tiki_groupalert (
+	groupName varchar(255) NOT NULL default '',
+	objectType varchar( 20 ) NOT NULL default '',
+	objectId  varchar(10) NOT NULL default '',
+	displayEachuser  char( 1 ) default NULL ,
+	PRIMARY KEY ( objectType,objectId )
+) ENGINE=MyISAM ;

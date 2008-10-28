@@ -19,7 +19,12 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *  - _confirm: text to use in a popup requesting the user to confirm it's action (yet only available with javascript)
  */
 function smarty_function_icon($params, &$smarty) {
-  if ( ! is_array($params) || ! isset($params['_id']) ) return;
+	if ( ! is_array($params) || ! isset($params['_id']) ) return;
+
+	$serialized_params = serialize($params);
+	if ( isset($_SESSION['icons'][$serialized_params]) ) {
+		return $_SESSION['icons'][$serialized_params];
+	}
 
   $basedirs = array('pics/icons', 'images', 'img/icons', 'pics/icons/mime');
   $icons_extension = '.png';
@@ -45,7 +50,7 @@ function smarty_function_icon($params, &$smarty) {
 
   if ( ! eregi('^[a-z0-9_]+$', $params['_id']) ) return;
 
-  global $smarty, $prefs, $style_base, $tikidomain, $tikipath, $url_path, $base_url;
+  global $prefs, $style_base, $tikidomain, $tikipath, $url_path, $base_url;
 
   // Include smarty functions used below
   require_once $smarty->_get_plugin_filepath('function', 'html_image');
@@ -156,7 +161,6 @@ function smarty_function_icon($params, &$smarty) {
 
   }
 
-  return $html;
+	$_SESSION['icons'][$serialized_params] = $html;
+	return $_SESSION['icons'][$serialized_params];
 }
-
-?>

@@ -18,13 +18,9 @@
 {if $prefs.feature_wysiwyg eq 'y' and $prefs.wysiwyg_optional eq 'y'}
 	<div class="navbar">
 		{if $wysiwyg ne 'y'}
-			<span class="button2">
-				<a href="?templateId={$templateId}&amp;wysiwyg=y">{tr}Use wysiwyg editor{/tr}</a>
-			</span>
+			{button href="?templateId=$templateId&amp;wysiwyg=y" _text="{tr}Use wysiwyg editor{/tr}"}
 		{else}
-			<span class="button2">
-				<a href="?templateId={$templateId}&amp;wysiwyg=n">{tr}Use normal editor{/tr}</a>
-			</span>
+			{button href="?templateId=$templateId&amp;wysiwyg=n" _text="{tr}Use normal editor{/tr}"}
 		{/if}
 	</div>
 {/if}

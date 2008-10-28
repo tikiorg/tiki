@@ -24,9 +24,7 @@
 <h2>{tr}Cookies{/tr}</h2>
 {if $channels}
 	<div class="navbar">
-		<span class="button2">
-			<a href="tiki-admin_cookies.php?removeall=1">{tr}Remove all cookies{/tr}</a>
-		</span>
+		{button href="?removeall=1" _text="{tr}Remove all cookies{/tr}"}
 	</div>
 {/if}
 
@@ -38,7 +36,7 @@
 <tr>
 <th><a href="tiki-admin_cookies.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'cookieId_desc'}cookieId_asc{else}cookieId_desc{/if}">{tr}ID{/tr}</a></th>
 <th><a href="tiki-admin_cookies.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'cookie_desc'}cookie_asc{else}cookie_desc{/if}">{tr}cookie{/tr}</a></th>
-<th>{tr}Action{/tr}</th>
+<th width="15%">{tr}Action{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false advance=false}
 {section name=user loop=$channels}

@@ -1341,7 +1341,7 @@ CREATE  INDEX "tiki_files_galleryId" ON "tiki_files"("galleryId")
 go
 CREATE  INDEX "tiki_files_hits" ON "tiki_files"("hits")
 go
-CREATE  INDEX "tiki_files_ft" ON "tiki_files"("name","description","search_data")
+CREATE  INDEX "tiki_files_ft" ON "tiki_files"("name","description","search_data","filename")
 go
 
 -- DROP TABLE "tiki_forum_attachments"
@@ -2202,7 +2202,7 @@ INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`",
 go
 
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (47,42,'o','Structures','tiki-admin_structures.php',250,'feature_wiki_structure','tiki_p_view','',0)
+INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (47,42,'o','Structures','tiki-admin_structures.php',250,'feature_wiki,feature_wiki_structure','tiki_p_view','',0)
 go
 
 
@@ -4015,6 +4015,7 @@ CREATE TABLE "tiki_trackers" (
   "showAttachments" char(1) default NULL NULL,
   "items" numeric(10,0) default NULL NULL,
   "showComments" char(1) default NULL NULL,
+  "groupforAlert" varchar(255) default NULL NULL,
   "orderAttachments" varchar(255) default 'filename,created,filesize,hits,desc' NOT NULL,
   PRIMARY KEY (trackerId)
 ) ENGINE=MyISAM  
@@ -4141,7 +4142,7 @@ CREATE TABLE "tiki_user_mail_accounts" (
   "useAuth" char(1) default NULL NULL,
   "smtpPort" numeric(4,0) default NULL NULL,
   "flagsPublic" char(1) default 'n',				-- COMMENT 'MatWho - Shared Group Mail box if y',
-  "autoRefresh" numeric(4,0) default 0,		-- COMMENT 'seconds for mail list to refresh, 0 = none' NOT NULL, 
+  "autoRefresh" numeric(4,0) default 0,		-- COMMENT 'seconds for mail list to refresh, 0 = none' NOT NULL,
   PRIMARY KEY (accountId)
 ) ENGINE=MyISAM  
 go
@@ -6643,10 +6644,10 @@ go
 
 CREATE TABLE "tiki_users_score" (
   "user" char(200) default '' NOT NULL,
-  "event_id" char(40) default '' NOT NULL,
+  "event_id" char(200) default '' NOT NULL,
   "expire" numeric(14,0) default '0' NOT NULL,
   "tstamp" timestamp NOT NULL,
-  PRIMARY KEY (user,event_id)
+  PRIMARY KEY (user(110),event_id(110))
 ) ENGINE=MyISAM
 go
 

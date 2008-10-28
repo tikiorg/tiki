@@ -468,6 +468,7 @@ class SearchLib extends TikiLib {
 			'permName' => 'tiki_p_download_files',
 			'objectType' => 'file gallery',
 			'objectKey' => 'f.`galleryId`',
+			'objectKeyGroup' => 'f.`fileId`',
 			'parentJoin' => 'LEFT JOIN `tiki_file_galleries` tfg ON tfg.`galleryId` = f.`galleryId`',
 		);
 

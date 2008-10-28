@@ -1894,9 +1894,14 @@ div#browse_image {
 
 /***** File Galleries *****/
 
-div.thumbnailcontener {}
+div.thumbnailcontener {
+	height: 100% !important;
+	margin: 4px;
+}
 div.thumbnail {}
-div.thumbnamecontener, div.thumbimagecontener {}
+div.thumbnamecontener, div.thumbimagecontener {
+	height: 100% !important;
+}
 div.thumbnamecontener {}
 div.thumbname, div.thumbimage {}
 div.thumbnamesub, div.thumbimagesub {}

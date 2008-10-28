@@ -31,7 +31,7 @@
 		<Attribute name="class" value="titlebar" />
 	</Style>
 	
-	<Style name="Normal" element="div" />
+	<Style name="Normal" element="p" />
 	
 	<Style name="Framed" element="div">
 		<Attribute name="class" value="simplebox" />
