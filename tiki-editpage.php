@@ -839,8 +839,8 @@ if (isset($_REQUEST['mode_normal'])) {
 	$parsed = preg_replace('/<span class=\"img\">(.*?)<\/span>/im','$1', $parsed);					// remove spans round img's
 	$parsed = preg_replace("/src=\"img\/smiles\//im","src=\"".$tikiroot."img/smiles/", $parsed);	// fix smiley src's
 	$parsed = str_replace( 
-		array( '{SUP()}', '{SUP}', '{SUB()}', '{SUB}' ),
-		array( '<sup>', '</sup>', '<sub>', '</sub>' ),
+		array( '{SUP()}', '{SUP}', '{SUB()}', '{SUB}', '<table' ),
+		array( '<sup>', '</sup>', '<sub>', '</sub>', '<table border="1"' ),
 		$parsed );
 	$smarty->assign('pagedata', $parsed);
 	$prefs['wiki_edit_section'] = $secedit;
