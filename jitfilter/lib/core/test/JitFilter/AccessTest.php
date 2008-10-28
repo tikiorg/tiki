@@ -55,6 +55,20 @@ class JitFilter_AccessTest extends PHPUnit_Framework_TestCase
 	{
 		$this->assertTrue( $this->array->isArray('baz') );
 	}
+
+	function testAsArray()
+	{
+		$this->assertEquals( array( 'bar' ), $this->array->asArray('foo') );
+		$this->assertEquals( array(), $this->array->asArray('not_exists') );
+	}
+
+	function testAsArraySplit()
+	{
+		$test = new JitFilter( array( 'foo' => '1|2a|3' ) );
+		$test->setDefaultFilter( new Zend_Filter_Digits );
+
+		$this->assertEquals( array( '1', '2', '3' ), $test->asArray( 'foo', '|' ) );
+	}
 }
 
 ?>
