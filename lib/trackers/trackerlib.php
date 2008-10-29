@@ -1462,7 +1462,7 @@ class TrackerLib extends TikiLib {
 			if ($encoding == 'ISO-8859-1') {
 				$header[$i] = utf8_encode($header[$i]);
 			}
-			$header[$i] = preg_replace('/ -- [0-9]*$/', '', $header[$i]);
+			$header[$i] = preg_replace('/ -- [0-9]*$/', ' -- ', $header[$i]);
 		}
 		if (count($header) != count(array_unique($header))) {
 			return 'Duplicate header names';
@@ -1517,8 +1517,13 @@ class TrackerLib extends TikiLib {
 			$query = "insert into `tiki_tracker_item_fields`(`itemId`,`fieldId`,`value`) values(?,?,?)";
 			$query2 = "update `tiki_tracker_item_fields` set `value`=? where `itemId`=? and `fieldId`=?";
 			for ($i = 0; $i < $max; ++$i) {
+				if (!preg_match('/ -- $/', $header[$i])) {
+					continue;
+				}
+				$h = preg_replace('/ -- $/', '', $header[$i]);
 				foreach ($fields['data'] as $field) {
-					if ($field['name'] == $header[$i]) {
+					if ($field['name'] == $h) {
+						echo 'gggg'.$h;
 						if ($field['type'] == 'p' && $field['options_array'][0] == 'password') {
 							//$userlib->change_user_password($user, $ins_fields['data'][$i]['value']);
 							continue;
@@ -1557,7 +1562,6 @@ class TrackerLib extends TikiLib {
 			foreach ( $need_reindex as $id ) refresh_index('tracker_items', $id);
 			unset($need_reindex);
 		}
-
 		return $total;
 	}
 
