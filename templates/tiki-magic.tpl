@@ -81,9 +81,9 @@
 			</select>
 	{elseif $features[feature].enumeration neq ''}
 		{if $features[feature].multiple eq 'on'}
-		<select id="{$features[feature].setting_name}" name="{$features[feature].setting_name}[]" multiple="true" size="5">{foreach item=label key=value from=$features[feature].enumeration}<option value="{$value}"{foreach item=i key=v from=$features[feature].value}{if $value eq $i} selected="selected"{/if}{/foreach}>{$label}</option>{/foreach}</select>
+		<select id="{$features[feature].setting_name}" name="{$features[feature].setting_name}[]" multiple="true" size="5">{foreach item=label key=value from=$features[feature].enumeration}<option value="{$value}"{foreach item=i key=v from=$features[feature].value}{if $value eq $i} selected="selected"{/if}{/foreach}>{tr}{$label}{/tr}</option>{/foreach}</select>
 		{else}
-		<select id="{$features[feature].setting_name}" name="{$features[feature].setting_name}">{foreach item=label key=value from=$features[feature].enumeration}<option value="{$value}" {if $value eq $features[feature].value}selected="selected"{/if}>{$label}</option>{/foreach}</select>
+		<select id="{$features[feature].setting_name}" name="{$features[feature].setting_name}">{foreach item=label key=value from=$features[feature].enumeration}<option value="{$value}" {if $value eq $features[feature].value}selected="selected"{/if}>{tr}{$label}{/tr}</option>{/foreach}</select>
 		{/if}
 	
 	{* Placeholder for things that need a custom handler, that I haven't written yet*}
