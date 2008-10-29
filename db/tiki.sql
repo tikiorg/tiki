@@ -1101,6 +1101,7 @@ CREATE TABLE tiki_history (
   comment varchar(200) default NULL,
   data longblob,
   type varchar(50) default NULL,
+  is_html TINYINT(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (pageName,version),
   KEY `user` (`user`),
   KEY(historyId)
