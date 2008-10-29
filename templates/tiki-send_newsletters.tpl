@@ -4,7 +4,13 @@
 {title help="Newsletters"}{tr}Send Newsletters{/tr} {if $nlId ne '0'}{$nlName}{/if}{/title}
 
 {if $tiki_p_admin_newsletters eq "y"}
-  <div class="navbar"><span class="button2"><a href="tiki-admin_newsletters.php{if $nlId}?nlId={$nlId}{/if}">{tr}Admin Newsletters{/tr}</a></span></div>
+  <div class="navbar">
+		{if $nlId}
+			{button href="tiki-admin_newsletters.php?nlId=$nlId" _text="{tr}Admin Newsletters{/tr}"}
+		{else}
+			{button href="tiki-admin_newsletters.php" _text="{tr}Admin Newsletters{/tr}"}
+		{/if}
+	</div>
 {/if}
 
 {assign var=area_name value="editwiki"}
