@@ -69,6 +69,13 @@ class JitFilter_AccessTest extends PHPUnit_Framework_TestCase
 
 		$this->assertEquals( array( '1', '2', '3' ), $test->asArray( 'foo', '|' ) );
 	}
+
+	function testSubset()
+	{
+		$this->assertEquals( 
+			array( 'foo' => $this->array['foo'], 'baz' => $this->array->asArray('baz') ), 
+			$this->array->subset( array('foo', 'baz') )->asArray() );
+	}
 }
 
 ?>

@@ -10,6 +10,26 @@
 $section = 'trackers';
 require_once('tiki-setup.php');
 
+$_REQUEST->replaceFilters( array(
+	'action' => 'digits',
+	'batchaction' => 'word',
+	'checked' => 'username',
+	'cookietab' => 'digits',
+	// TODO : ??? 'indexfield' => 'striptags',
+	'initial' => 'digits',
+	'itemId' => 'digits',
+	'maxRecords' => 'digits',
+	'my' => 'username',
+	'offset' => 'digits',
+	'ours' => 'groupname',
+	'remove' => 'digits',
+	'show' => 'word',
+	'sort_mode' => 'word',
+	'status' => 'alpha',
+	'trackerId' => 'digits',
+	'watch' => 'word',
+) );
+
 include_once('lib/trackers/trackerlib.php');
 include_once ('lib/groupalert/groupalertlib.php');
 
@@ -239,15 +259,20 @@ for ($i = 0; $i < $temp_max; $i++) {
 			$fields["data"][$i]["value"] = '';
 			$ins_fields["data"][$i]["value"] = '';
 			$xxxm = $xxxd = $xxxy = null;
-			if (!isset($_REQUEST["$ins_id" . "Month"])
-				|| empty($_REQUEST["$ins_id" . "Month"])
-				|| $_REQUEST["$ins_id" . "Month"] == 'null')   $xxxm = '00';
-			if (!isset($_REQUEST["$ins_id" . "Day"])
-				|| empty($_REQUEST["$ins_id" . "Day"])
-				|| $_REQUEST["$ins_id" . "Day"] == 'null')     $xxxd = '00';
-			if (!isset($_REQUEST["$ins_id" . "Year"])
-				|| empty($_REQUEST["$ins_id" . "Year"])
-				|| $_REQUEST["$ins_id" . "Year"] == 'null')    $xxxy = '00';
+			$_REQUEST->replaceFilters( array(
+				"{$ins_id}Month" => 'alnum',
+				"{$ins_id}Day" => 'alnum',
+				"{$ins_id}Year" => 'alnum',
+			) );
+			if (!isset($_REQUEST[$ins_id . "Month"])
+				|| empty($_REQUEST[$ins_id . "Month"])
+				|| $_REQUEST[$ins_id . "Month"] == 'null')   $xxxm = '00';
+			if (!isset($_REQUEST[$ins_id . "Day"])
+				|| empty($_REQUEST[$ins_id . "Day"])
+				|| $_REQUEST[$ins_id . "Day"] == 'null')     $xxxd = '00';
+			if (!isset($_REQUEST[$ins_id . "Year"])
+				|| empty($_REQUEST[$ins_id . "Year"])
+				|| $_REQUEST[$ins_id . "Year"] == 'null')    $xxxy = '00';
 
 			// If all date fields (month, day, year) are blank, then
 			// that's fine, otherwise, take the date the field is set to.
@@ -290,6 +315,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 			$fields["data"][$i]['categories'] = $categlib->get_child_categories($parentId);
 			$categId = "ins_cat_$fid";
 			if (isset($_REQUEST[$categId])) {
+				$_REQUEST->replaceFilter($categId, 'digits');
 				if ($_REQUEST->isArray($categId)) {
 					foreach ($_REQUEST[$categId] as $c)
 						$fields["data"][$i]['cat'][$c] = 'y';
@@ -615,7 +641,7 @@ if (isset($_REQUEST['import'])) {
 		$err_fields = array();
 		$ins_categs = array();
 		$categorized_fields = array();
-		while (list($postVar, $postVal) = each($_REQUEST)) {
+		foreach( $_REQUEST as $postVar => $postVal ) {
 			if(preg_match("/^ins_cat_([0-9]+)/", $postVar, $m)) {
     				foreach ($postVal as $v)
 					$ins_categs[] = $v;

@@ -11,61 +11,52 @@ function smarty_function_query($params, &$smarty) {
 	static $request = NULL;
 
 	if ( isset($params['_noauto']) && $params['_noauto'] == 'y' ) {
-		$query = array();
-		foreach( $params as $param_name => $param_value ) {
-			if ( $param_name[0] == '_' ) continue;
-			$query[$param_name] = $param_value;
-		}
+		$query = new JitFilter(array());
 		// Even if _noauto is set, 'filegals_manager' is a special param that has to be kept all the time
 		if ( ! isset($params['filegals_manager']) && isset($_REQUEST['filegals_manager']) ) {
 			$query['filegals_manager'] = $_REQUEST['filegals_manager'];
 		}
 	} else {
 		$query = $_REQUEST;
-		if ( is_array($params) ) {
-			foreach( $params as $param_name => $param_value ) {
-	
-				// Arguments starting with an underscore are special and must not be included in URL
-				if ( $param_name[0] == '_' ) continue;
-	
-				$list = explode(",",$param_value);
-				if ( isset($_REQUEST[$param_name]) and in_array($_REQUEST[$param_name],$list) ) {
-					$query[$param_name] = $list[(array_search($_REQUEST[$param_name],$list)+1)%sizeof($list)];
-					if ( $query[$param_name] === NULL or $query[$param_name] == 'NULL' ) {
-						unset($query[$param_name]);
-					}
-				} elseif ( isset($query[$param_name]) and in_array($query[$param_name],$list) ) {
-					$query[$param_name] = $list[(array_search($query[$param_name],$list)+1)%sizeof($list)];
-					if ( $query[$param_name] === NULL or $query[$param_name] == 'NULL' ) {
-						unset($query[$param_name]);
-					}
-				} else {
-					if ( $list[0] !== NULL and $list[0] != 'NULL' ) {
-						$query[$param_name] = $list[0];
-					} else {
-						unset($query[$param_name]);
-					}
-				}
-			}
-		}
 	}
 
     // Only keep params explicitely specified when calling this function or specified in the $auto_query_args global var
     // This is to avoid including unwanted params (like actions : remove, save...)
     if ( ( ! isset($params['_keepall']) || $params['_keepall'] != 'y' ) && is_array($auto_query_args) ) {
-      foreach ( $query as $k => $v ) {
-        if ( ! in_array($k, $auto_query_args) && ! ( is_array($params) && array_key_exists($k, $params) ) ) {
-          unset($query[$k]);
-        }
-      }
+	  $keys = array_merge( array_keys( $params ), $auto_query_args );
+	  $query = $query->subset( $keys );
     }
+
+	foreach( $params as $param_name => $param_value ) {
+		// Arguments starting with an underscore are special and must not be included in URL
+		if ( $param_name[0] == '_' ) continue;
+
+		$list = explode(",",$param_value);
+		if ( isset($_REQUEST[$param_name]) and in_array($_REQUEST[$param_name],$list) ) {
+			$query[$param_name] = $list[(array_search($_REQUEST[$param_name],$list)+1)%sizeof($list)];
+			if ( $query[$param_name] === NULL or $query[$param_name] == 'NULL' ) {
+				unset($query[$param_name]);
+			}
+		} elseif ( isset($query[$param_name]) and in_array($query[$param_name],$list) ) {
+			$query[$param_name] = $list[(array_search($query[$param_name],$list)+1)%sizeof($list)];
+			if ( $query[$param_name] === NULL or $query[$param_name] == 'NULL' ) {
+				unset($query[$param_name]);
+			}
+		} else {
+			if ( $list[0] !== NULL and $list[0] != 'NULL' ) {
+				$query[$param_name] = $list[0];
+			} else {
+				unset($query[$param_name]);
+			}
+		}
+	}
 
     $ret = '';
     if ( isset($params['_type']) && $params['_type'] == 'form_input' ) {
       foreach ( $query as $k => $v ) {
         $rtag = '<input type="hidden"';
         $rname = htmlspecialchars($k, ENT_QUOTES, 'UTF-8');
-        if ( is_array($v) ) {
+        if ( $query->isArray($k) ) {
           foreach ( $v as $vk => $vv ) {
             $vrname = $rname.'['.htmlspecialchars($vk, ENT_QUOTES, 'UTF-8').']';
             $ret .= $rtag.' name="'.$vrname.'" value="'.htmlspecialchars($vv, ENT_QUOTES, 'UTF-8').'" />'."\n";
@@ -80,10 +71,10 @@ function smarty_function_query($params, &$smarty) {
       }
       $sep = $params['_urlencode'] == 'n' ? '&' : '&amp;';
       if ( function_exists('http_build_query') && $params['_urlencode'] == 'y' ) {
-        $ret = http_build_query($query, '', $sep);
+        $ret = http_build_query($query->asArray(), '', $sep);
       } else {
         foreach ( $query as $k => $v ) {
-          if ( is_array($v) ) {
+          if ( $query->isArray($k) ) {
             foreach ( $v as $vk => $vv ) {
               if ( $ret != '' ) $ret .= $sep;
               if ( $params['_urlencode'] == 'y' ) {

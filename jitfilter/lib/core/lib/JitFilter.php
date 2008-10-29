@@ -20,6 +20,8 @@ class JitFilter implements ArrayAccess, Iterator, Countable
 	function offsetUnset( $offset )
 	{
 		unset( $this->stored[$offset] );
+		unset( $this->lastUsed[$offset] );
+		unset( $this->filters[$offset] );
 	}
 
 	function offsetGet( $key )
@@ -55,6 +57,8 @@ class JitFilter implements ArrayAccess, Iterator, Countable
 
 	function offsetSet( $key, $value )
 	{
+		unset($this->lastUsed[$key]);
+
 		if( $value instanceof self )
 			return $this->stored[$key] = $value->stored;
 		else
@@ -94,6 +98,22 @@ class JitFilter implements ArrayAccess, Iterator, Countable
 		} else {
 			return array();
 		}
+	}
+
+	function subset( $keys )
+	{
+		$jit = new self( array() );
+		$jit->defaultFilter = $this->defaultFilter;
+		$jit->filters = $this->filters;
+		
+		foreach( $keys as $key ) {
+			if( isset($this->stored[$key]) )
+				$jit->stored[$key] = $this->stored[$key];
+			if( isset($this->lastUsed[$key]) )
+				$jit->lastUsed[$key] = $this->lastUsed[$key];
+		}
+
+		return $jit;
 	}
 
 	function isArray( $key )
@@ -163,6 +183,9 @@ class JitFilter implements ArrayAccess, Iterator, Countable
 		case 'digits':
 			require_once 'Zend/Filter/Digits.php';
 			return new Zend_Filter_Digits;
+		case 'username':
+		case 'groupname':
+			// Use striptags
 		case 'striptags':
 			require_once 'Zend/Filter/StripTags.php';
 			return new Zend_Filter_StripTags;
