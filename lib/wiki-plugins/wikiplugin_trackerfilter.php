@@ -54,8 +54,7 @@ function wikiplugin_trackerfilter($data, $params) {
 		$smarty->assign('msgTrackerFilter', $_REQUEST['msgTrackerFilter']);
 	}
 	if (!isset($filters)) {
-		$smarty->assign('msg', tra("missing parameters"));
-		return $dataRes.$smarty->fetch("error_simple.tpl");
+		return tra('missing parameters').' filters';
 	}
 	$listfields = split(':',$filters);
 	foreach ($listfields as $i=>$f) {
@@ -124,6 +123,9 @@ function wikiplugin_trackerfilter($data, $params) {
 	}
 
 	$filters = wikiplugin_trackerFilter_get_filters($trackerId, $listfields, $formats);
+	if (!is_array($filters)) {
+		return $filters;
+	}
 	$smarty->assign_by_ref('filters', $filters);
 	$smarty->assign_by_ref('trackerId', $trackerId);
 	$smarty->assign_by_ref('line', $line);
@@ -256,8 +258,7 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', $for
 				break;		
 		
 			default:
-				$smarty->assign('msg', tra("tracker field type not processed yet"));
-				return $dataRes.$smarty->fetch("error_simple.tpl");
+				return tra('tracker field type not processed yet').' '.$field['type'];
 			}
 		}
 		$filters[] = array('name' => $field['name'], 'fieldId' => $fieldId, 'format'=>$formats[$fieldId], 'opts' => $opts, 'selected'=>$selected);
