@@ -4,12 +4,16 @@
 {title help="Groups+Management" admpage="login"}{tr}Admin groups{/tr}{/title}
 
 <div class="navbar">
-<span class="button2"><a href="tiki-admingroups.php">{tr}Admin groups{/tr}</a></span>
-<span class="button2"><a href="tiki-adminusers.php">{tr}Admin users{/tr}</a></span>
-<span class="button2"><a href="tiki-admingroups.php?clean=y">{tr}Clear cache{/tr}</a></span>
-{if $groupname}
-<span class="button2"><a href="tiki-admingroups.php?add=1{if $prefs.feature_tabs ne 'y'}#2{/if}">{tr}Add new group{/tr}</a></span>
-{/if}
+	{button _text="{tr}Admin groups{/tr}"}
+	{button href="tiki-adminusers.php" _text="{tr}Admin users{/tr}"}
+	{button href="tiki-admingroups.php?clean=y" _text="{tr}Clear cache{/tr}"}
+	{if $groupname}
+		{if $prefs.feature_tabs ne 'y'}
+			{button  href="tiki-admingroups.php?add=1#2" _text="{tr}Add new group{/tr}"}
+		{else}
+			{button  href="tiki-admingroups.php?add=1" _text="{tr}Add new group{/tr}"}
+		{/if}
+	{/if}
 </div>
 
 {if $prefs.feature_tabs eq 'y'}
