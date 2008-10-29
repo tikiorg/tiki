@@ -2,8 +2,8 @@
 {title help="Newsletters"}{tr}Admin newsletters{/tr}{/title}
 
 <div class="navbar">
-<span class="button2"><a href="tiki-newsletters.php">{tr}List Newsletters{/tr}</a></span>
-<span class="button2"><a href="tiki-send_newsletters.php">{tr}Send Newsletters{/tr}</a></span>
+	{button href="tiki-newsletters.php" _text="{tr}List Newsletters{/tr}"}
+	{button href="tiki-send_newsletters.php" _text="{tr}Send Newsletters{/tr}"}
 </div>
 
 <h2>{tr}Create/Edit Newsletters{/tr}</h2>
