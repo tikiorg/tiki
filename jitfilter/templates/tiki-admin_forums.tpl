@@ -3,17 +3,17 @@
 {title help="Forums" admpage="forums"}{tr}Admin Forums{/tr}{/title}
 
 <div class="navbar">
-{if $forumId > 0 or $dup_mode eq 'y'}
-<a href="tiki-admin_forums.php">{tr}Create new forum{/tr}</a>
-{/if}
-{if $dup_mode ne 'y'}
-<a href="tiki-admin_forums.php?dup_mode=y">{tr}Duplicate forum{/tr}</a>
-{/if}
-{if $forumId > 0}
-<a href="tiki-view_forum.php?forumId={$forumId}">{tr}View this forum{/tr}</a>
-{/if}
-<a href="tiki-forum_import.php">{tr}Import forums{/tr}</a>
-<a href="#editforums">{tr}List forums{/tr}</a>
+	{if $forumId > 0 or $dup_mode eq 'y'}
+		{button href="?" _text="{tr}Create new forum{/tr}"} 
+	{/if}
+	{if $dup_mode ne 'y'}
+		{button href="tiki-admin_forums.php?dup_mode=y" _text="{tr}Duplicate forum{/tr}"} 
+	{/if}
+	{if $forumId > 0}
+		{button href="tiki-view_forum.php?forumId=$forumId" _text="{tr}View this forum{/tr}"}
+	{/if}
+	{button href="tiki-forum_import.php" _text="{tr}Import forums{/tr}"}
+	{button href="#editforums" _text="{tr}List forums{/tr}"}
 </div>
 
 {if $dup_mode != 'y'}

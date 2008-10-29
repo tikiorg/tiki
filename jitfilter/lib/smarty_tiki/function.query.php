@@ -7,13 +7,18 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 function smarty_function_query($params, &$smarty) {
-  global $auto_query_args;
+	global $auto_query_args;
+	static $request = NULL;
 
 	if ( isset($params['_noauto']) && $params['_noauto'] == 'y' ) {
 		$query = array();
 		foreach( $params as $param_name => $param_value ) {
 			if ( $param_name[0] == '_' ) continue;
 			$query[$param_name] = $param_value;
+		}
+		// Even if _noauto is set, 'filegals_manager' is a special param that has to be kept all the time
+		if ( ! isset($params['filegals_manager']) && isset($_REQUEST['filegals_manager']) ) {
+			$query['filegals_manager'] = $_REQUEST['filegals_manager'];
 		}
 	} else {
 		$query = $_REQUEST;
@@ -44,8 +49,6 @@ function smarty_function_query($params, &$smarty) {
 			}
 		}
 	}
-
-  if ( is_array($query) ) {
 
     // Only keep params explicitely specified when calling this function or specified in the $auto_query_args global var
     // This is to avoid including unwanted params (like actions : remove, save...)
@@ -100,8 +103,6 @@ function smarty_function_query($params, &$smarty) {
         }
       }
     }
-
-  }
 
   if ( is_array($params) && isset($params['_type']) ) {
     global $base_host;

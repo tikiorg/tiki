@@ -504,6 +504,22 @@ document.write('<div  class="categSelectAll"><input type="checkbox" id="clickall
 {include file="antibot.tpl"}
 {/if}
 
+{if $groupforalert ne ''}
+<tr class="formcolor">
+<td>{tr}Choose users to alert{/tr}</td>
+<td>
+{section name=idx loop=$listusertoalert}
+{if $showeachuser eq '' }
+<input type="hidden"  name="checked[]" value="{$listusertoalert[idx].user}">
+{else}
+<input type="checkbox" name="checked[]" value="{$listusertoalert[idx].user}"> {$listusertoalert[idx].user}
+{/if}
+{/section}
+</td>
+</tr>
+{/if}
+
+
 <tr class="formcolor"><td class="formlabel">&nbsp;</td><td colspan="3" class="formcontent">
 <input type="submit" name="save" value="{tr}Save{/tr}" /> <input type="checkbox" name="viewitem"/> {tr}View inserted item{/tr}</td></tr>
 </table>

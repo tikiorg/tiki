@@ -2236,7 +2236,7 @@ class TrackerLib extends TikiLib {
 				'max'=>array('type'=>'int','label'=>tra('max')),
 			),
 			'help'=>tra('<dl>
-				<dt>Function: Allows alhpanumeric text input in a one-line field of arbitrary size.
+				<dt>Function: Allows alphanumeric text input in a one-line field of arbitrary size.
 				<dt>Usage: <strong>samerow,size,prepend,append,max</strong>
 				<dt>Description:
 				<dd><strong>[samerow]</strong> will display the next field or checkbox in the same row if a 1 is specified;
@@ -2250,7 +2250,7 @@ class TrackerLib extends TikiLib {
 			'label'=>tra('textarea'),
 			'opt'=>true,
 			'help'=>tra('<dl>
-				<dt>Function: Allows alhpanumeric text input in a multi-line field of arbitrary size.
+				<dt>Function: Allows alphanumeric text input in a multi-line field of arbitrary size.
 				<dt>Usage: <strong>quicktags,width,height,max,listmax,wordmax</strong>
 				<dt>Description:
 				<dd><strong>[quicktags]</strong> enables quicktags if a 1 is specified;
@@ -2537,7 +2537,7 @@ class TrackerLib extends TikiLib {
 			'label'=>tra('user subscription'),
 			'opt'=>false,
 			'help'=>tra('<dl>
-				<dt>Function: Allow registered users to subscribe themselves to a tracker item (think evite).
+				<dt>Function: Allow registered users to subscribe themselves to a tracker item (think Evite.com).
 				<dt>Description:
 				<dd>Use this field as you would to have people sign up for an event. It is best if the tracker is only editable by its creator or the admin.  To set the max number of subscribers, edit the tracker item and put the number at the beginning of the field.
 				<dt>Example:

@@ -211,7 +211,6 @@ class SurveyLib extends TikiLib
 
 			$ids = array();
 			while ($res2 = $result2->fetchRow()) {
-///FIXME				if ( $res['type'] == 'g' ) unset($files['data']
 
 				if ($total_votes) {
 					$average = ($res2["votes"] / $total_votes)*100;

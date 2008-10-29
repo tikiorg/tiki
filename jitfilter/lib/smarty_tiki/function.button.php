@@ -11,6 +11,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *
  * params will be used as params for as smarty self_link params, except those special params specific to smarty button :
  *	- _text: Text that will be shown in the button
+ *	- _auto_args: comma separated list of URL arguments that will be kept from _REQUEST (like $auto_query_args)
  */
 function smarty_function_button($params, &$smarty) {
 	if ( ! is_array($params) || ! isset($params['_text']) ) return;
@@ -19,6 +20,11 @@ function smarty_function_button($params, &$smarty) {
 
 	require_once $smarty->_get_plugin_filepath('block', 'self_link');
 	
+	// Remove params that does not start with a '_', since we don't want them to modify the URL
+	foreach ( $params as $k => $v ) {
+		if ( $k[0] != '_' && $k != 'href' ) unset($params[$k]);
+	}
+
 	$url_args = array();
 	if ( ! empty($params['href']) ) {
 		if ( ( $pos = strpos($params['href'], '?') ) !== false ) {
@@ -35,11 +41,6 @@ function smarty_function_button($params, &$smarty) {
 		} else {
 			$params['_noauto'] = 'y';
 		}
-	}
-
-  // Remove params that does not start with a '_', since we don't want them to modify the URL
-	foreach ( $params as $k => $v ) {
-		if ( $k[0] != '_' ) unset($params[$k]);
 	}
 
 	$html = smarty_block_self_link(
