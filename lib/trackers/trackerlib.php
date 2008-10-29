@@ -1523,7 +1523,6 @@ class TrackerLib extends TikiLib {
 				$h = preg_replace('/ -- $/', '', $header[$i]);
 				foreach ($fields['data'] as $field) {
 					if ($field['name'] == $h) {
-						echo 'gggg'.$h;
 						if ($field['type'] == 'p' && $field['options_array'][0] == 'password') {
 							//$userlib->change_user_password($user, $ins_fields['data'][$i]['value']);
 							continue;
