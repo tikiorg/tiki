@@ -430,13 +430,13 @@ function walk_and_parse(&$c, &$src, &$p, $head_url ) {
 							&& isset($c[$i]['pars']['style']) 
 							&& preg_match( "/background(\-color)?: rgb\((\d+), (\d+), (\d+)\)/", $c[$i]['pars']['style']['value'], $parts ) ) {
 							$src .= "~~#"
-								. str_pad( dechex( 255-$parts[1] ), 2, '0', STR_PAD_LEFT )
 								. str_pad( dechex( 255-$parts[2] ), 2, '0', STR_PAD_LEFT )
 								. str_pad( dechex( 255-$parts[3] ), 2, '0', STR_PAD_LEFT )
+								. str_pad( dechex( 255-$parts[4] ), 2, '0', STR_PAD_LEFT )
 								. ',#'
-								. str_pad( dechex( $parts[1] ), 2, '0', STR_PAD_LEFT )
 								. str_pad( dechex( $parts[2] ), 2, '0', STR_PAD_LEFT )
 								. str_pad( dechex( $parts[3] ), 2, '0', STR_PAD_LEFT )
+								. str_pad( dechex( $parts[4] ), 2, '0', STR_PAD_LEFT )
 								. ':';
 							$p['stack'][] = array('tag' => 'span', 'string' => "~~"); 
 						} elseif( isset($c[$i]['pars']) 
