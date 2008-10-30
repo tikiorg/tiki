@@ -328,6 +328,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 			$ins_fields["data"][$i]["value"] = '';
 
 		} elseif ($fields["data"][$i]["type"] == 'u') { // user selection
+			$_REQUEST->replaceFilter( $ins_id, 'username' );
 			if (isset($_REQUEST["$ins_id"]) and $_REQUEST["$ins_id"] and (!$fields["data"][$i]['options_array'][0] or $tiki_p_admin_trackers == 'y')) {
 				$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];
 			} else {
@@ -364,6 +365,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 			}
 
 		} elseif ($fields["data"][$i]["type"] == 'g') { // group selection
+			$_REQUEST->replaceFilter( $ins_id, 'groupname' );
 			if (isset($_REQUEST["$ins_id"]) and $_REQUEST["$ins_id"] and (!$fields["data"][$i]['options_array'][0] or $tiki_p_admin_trackers == 'y')) {
 				$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];
 			} else {
@@ -382,6 +384,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 			}
 
 		} elseif ($fields["data"][$i]["type"] == 'c') { // checkbox
+			$_REQUEST->replaceFilter( $ins_id, 'alpha' );
 			if (isset($_REQUEST["$ins_id"]) && $_REQUEST["$ins_id"] == 'on') {
 				$ins_fields["data"][$i]["value"] = 'y';
 			} else {
@@ -440,6 +443,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 			}
 
 		} elseif(  $fields["data"][$i]["type"] == 'y' ) { // country list
+			$_REQUEST->replaceFilter( $ins_id, 'striptags' );
 			if (isset($_REQUEST["$ins_id"])) {
 				$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];
 			}
