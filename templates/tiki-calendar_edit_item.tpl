@@ -2,25 +2,29 @@
 {title admpage="calendar"}{tr}Calendar Item{/tr}{/title}
 
 <div class="navbar">
-{if $tiki_p_view_calendar eq 'y'}
-<span class="button2"><a href="tiki-calendar.php">{tr}View Calendars{/tr}</a></span>
-{/if}
-{if $tiki_p_admin_calendar eq 'y'}
-<span class="button2"><a href="tiki-admin_calendars.php?calendarId={$calendarId}">{tr}Edit Calendar{/tr}</a></span>
-{/if}
-{if $tiki_p_add_events eq 'y' and $id }
-<span class="button2"><a href="tiki-calendar_edit_item.php">{tr}New event{/tr}</a></span>
-{/if}
-{if $id}
-{if $edit}
-<span class="button2"><a href="tiki-calendar_edit_item.php?viewcalitemId={$id}">{tr}View event{/tr}</a></span>
-{elseif $tiki_p_change_events eq 'y'}
-<span class="button2"><a href="tiki-calendar_edit_item.php?calitemId={$id}">{tr}Edit event{/tr}</a></span>
-{/if}
-{/if}
-{if $tiki_p_admin_calendar eq 'y'}
-<span class="button2"><a href="tiki-admin_calendars.php">{tr}Admin Calendars{/tr}</a></span>
-{/if}
+	{if $tiki_p_view_calendar eq 'y'}
+		{button href="tiki-calendar.php" _text="{tr}View Calendars{/tr}"}
+	{/if}
+
+	{if $tiki_p_admin_calendar eq 'y'}
+		{button href="tiki-admin_calendars.php?calendarId=$calendarId" _text="{tr}Edit Calendar{/tr}"}
+	{/if}
+
+	{if $tiki_p_add_events eq 'y' and $id }
+		{button href="tiki-calendar_edit_item.php" _text="{tr}New event{/tr}"}
+	{/if}
+
+	{if $id}
+		{if $edit}
+			{button href="tiki-calendar_edit_item.php?viewcalitemId=$id" _text="{tr}View event{/tr}"} 
+		{elseif $tiki_p_change_events eq 'y'}
+			{button href="tiki-calendar_edit_item.php?calitemId=$id" _text="{tr}Edit event{/tr}"}
+		{/if}
+	{/if}
+
+	{if $tiki_p_admin_calendar eq 'y'}
+		{button href="tiki-admin_calendars.php" _text="{tr}Admin Calendars{/tr}"} 
+	{/if}
 </div>
 
 <div class="wikitext">

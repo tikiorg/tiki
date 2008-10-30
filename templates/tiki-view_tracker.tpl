@@ -7,28 +7,36 @@
 {title url="tiki-view_tracker.php?trackerId=$trackerId" adm="trackers"}{tr}Tracker:{/tr} {$tracker_info.name}{/title}
 
 <div class="navbar">
-{if $prefs.feature_user_watches eq 'y' and $tiki_p_watch_trackers eq 'y' and $user}
-{if $user_watching_tracker ne 'y'}
-<a href="tiki-view_tracker.php?trackerId={$trackerId}&amp;watch=add" title="{tr}Monitor{/tr}">{icon _id='eye' align="right" hspace="5" alt="{tr}Monitor{/tr}"}</a>
-{else}
-<a href="tiki-view_tracker.php?trackerId={$trackerId}&amp;watch=stop" title="{tr}Stop Monitor{/tr}">{icon _id='no_eye' align="right" hspace="5" alt="{tr}Stop Monitor{/tr}"}</a>
-{/if}
-{/if}
-{if $prefs.rss_tracker eq "y"}
-<a href="tiki-tracker_rss.php?trackerId={$trackerId}"><img src='img/rss.png' border='0' alt='{tr}RSS feed{/tr}' title='{tr}RSS feed{/tr}'  align="right" /></a>
-{/if}
-{if (isset($tiki_p_list_trackers) and $tiki_p_list_trackers eq 'y') or (!isset($tiki_p_list_trackers) and $tiki_p_view_trackers eq 'y')}<span class="button2"><a href="tiki-list_trackers.php">{tr}List Trackers{/tr}</a></span>{/if}
-{if $tiki_p_create_tracker_items eq 'y' && $prefs.feature_tabs ne 'y'}<span class="button2"><a href="tiki-view_tracker.php?trackerId={$trackerId}#content2">{tr}Insert New Item{/tr}</a></span>
-{/if}
-{if $filtervalue}
-<span class="button2"><a href="tiki-view_tracker.php?trackerId={$trackerId}">{tr}View This Tracker's Items{/tr}</a></span>
-{/if}
-{if $tiki_p_admin_trackers eq 'y'}
-&nbsp;&nbsp;
-<span class="button2"><a href="tiki-admin_trackers.php">{tr}Admin Trackers{/tr}</a></span>
-<span class="button2"><a href="tiki-admin_trackers.php?trackerId={$trackerId}">{tr}Edit This Tracker{/tr}</a></span>
-<span class="button2"><a href="tiki-admin_tracker_fields.php?trackerId={$trackerId}">{tr}Edit Fields{/tr}</a></span>
-{/if}
+	{if $prefs.feature_user_watches eq 'y' and $tiki_p_watch_trackers eq 'y' and $user}
+		{if $user_watching_tracker ne 'y'}
+			<a href="tiki-view_tracker.php?trackerId={$trackerId}&amp;watch=add" title="{tr}Monitor{/tr}">{icon _id='eye' align="right" hspace="5" alt="{tr}Monitor{/tr}"}</a>
+		{else}
+			<a href="tiki-view_tracker.php?trackerId={$trackerId}&amp;watch=stop" title="{tr}Stop Monitor{/tr}">{icon _id='no_eye' align="right" hspace="5" alt="{tr}Stop Monitor{/tr}"}</a>
+		{/if}
+	{/if}
+
+	{if $prefs.rss_tracker eq "y"}
+		<a href="tiki-tracker_rss.php?trackerId={$trackerId}"><img src='img/rss.png' border='0' alt='{tr}RSS feed{/tr}' title='{tr}RSS feed{/tr}' align="right" /></a>
+	{/if}
+
+	{if (isset($tiki_p_list_trackers) and $tiki_p_list_trackers eq 'y') or (!isset($tiki_p_list_trackers) and $tiki_p_view_trackers eq 'y')}
+		{button href="tiki-list_trackers.php" _text="{tr}List Trackers{/tr}"}
+	{/if}
+
+	{if $tiki_p_create_tracker_items eq 'y' && $prefs.feature_tabs ne 'y'}
+		{button href="tiki-view_tracker.php?trackerId=$trackerId#content2" _text="{tr}Insert New Item{/tr}"}
+	{/if}
+	
+	{if $filtervalue}
+		{button href="tiki-view_tracker.php?trackerId=$trackerId" _text="{tr}View This Tracker's Items{/tr}"}
+	{/if}
+
+	{if $tiki_p_admin_trackers eq 'y'}
+		&nbsp;&nbsp;
+		{button href="tiki-admin_trackers.php" _text="{tr}Admin Trackers{/tr}"}
+		{button href="tiki-admin_trackers.php?trackerId=$trackerId" _text={tr}Edit This Tracker{/tr}"}
+		{button href="tiki-admin_tracker_fields.php?trackerId=$trackerId" _text="{tr}Edit Fields{/tr}"} 
+	{/if}
 </div>
 
 <div class="navbar" align="right">

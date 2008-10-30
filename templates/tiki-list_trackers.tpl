@@ -4,7 +4,7 @@
 
 <div class="navbar">
   {if $tiki_p_admin_trackers eq 'y'}
-    <span class="button2"><a href="tiki-admin_trackers.php?show=mod#mod">{tr}Create Trackers{/tr}</a></span>
+		{button href="tiki-admin_trackers.php?show=mod#mod" _text="{tr}Create Trackers{/tr}"}
   {/if}
 </div>
 

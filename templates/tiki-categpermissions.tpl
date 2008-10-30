@@ -5,10 +5,15 @@
 ::
 <a href="tiki-admin_categories.php?parentId={$path[x].categId}">{$path[x].name}</a>
 {/section}</h1>
-<div class="navbar"><a href="tiki-admin_categories.php">{tr}Admin Categories{/tr}</a></div>
+
+<div class="navbar">
+	{button href="tiki-admin_categories.php" _text="{tr}Admin Categories{/tr}"}
+</div>
+
 {if $prefs.feature_search_show_forbidden_cat eq 'y'}
-<div class="simplebox highlight">{tr}Categories checking is not done in the database search.{/tr}</div>
+	<div class="simplebox highlight">{tr}Categories checking is not done in the database search.{/tr}</div>
 {/if}
+
 <br />
 
 <h2>{tr}Current permissions for this category{/tr}:</h2>

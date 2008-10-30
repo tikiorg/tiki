@@ -46,9 +46,11 @@ none
 
 
 <span class="button2">
-{if $viewlist eq 'list'}
-<a href="{$myurl}?viewlist=table" title="{tr}Calendar View{/tr}">{tr}Calendar View{/tr}</a>{else}
-<a href="{$myurl}?viewlist=list" title="{tr}List View{/tr}">{tr}List View{/tr}</a>{/if}
+	{if $viewlist eq 'list'}
+		<a href="{$myurl}?viewlist=table" title="{tr}Calendar View{/tr}">{tr}Calendar View{/tr}</a>
+	{else}
+		<a href="{$myurl}?viewlist=list" title="{tr}List View{/tr}">{tr}List View{/tr}</a>
+	{/if}
 </span>
 
 </div>
@@ -60,7 +62,8 @@ none
 		{if $category_watched eq 'y'}
 			{tr}Watched by categories{/tr}:
 			{section name=i loop=$watching_categories}
-				<a href="tiki-browse_categories?parentId={$watching_categories[i].categId}">{$watching_categories[i].name}</a>&nbsp;
+				{button href="tiki-browse_categories?parentId=$watching_categories[i].categId" _text=$watching_categories[i].name}
+				&nbsp;
 			{/section}
 		{/if}	
 	{/if}
