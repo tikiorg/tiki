@@ -351,11 +351,19 @@ function histlib_helper_setup_diff( $page, $oldver, $newver )
 			$new['data'] = strip_tags(preg_replace($search,$replace,$new['data']),'<h1><h2><h3><h4><b><i><u><span>');
 		}
 		if ($_REQUEST["diff_style"] == "htmldiff") {
+			$oldp = $prefs['wiki_edit_plugin'];
+			$olds = $prefs['wiki_edit_section'];
+
+			$prefs['wiki_edit_plugin'] = 'n';
+			$prefs['wiki_edit_section'] = 'n';
 			$parse_options = array('is_html' => ($old['is_html'] == 1), 'noheadinc' => true);
 			$old["data"] = $tikilib->parse_data($old["data"], $parse_options);
 
 			$parse_options = array('is_html' => ($new['is_html'] == 1), 'noheadinc' => true);
 			$new["data"] = $tikilib->parse_data($new["data"], $parse_options);
+
+			$prefs['wiki_edit_plugin'] = $oldp;
+			$prefs['wiki_edit_section'] = $olds;
 
 			$old['data'] = histlib_strip_irrelevant( $old['data'] );
 			$new['data'] = histlib_strip_irrelevant( $new['data'] );

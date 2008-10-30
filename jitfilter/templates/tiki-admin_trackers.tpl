@@ -3,11 +3,11 @@
 {title help="Trackers" admpage="trackers"}{tr}Admin Trackers{/tr}{/title}
 
 <div class="navbar">
-<span class="button2"><a href="tiki-list_trackers.php">{tr}List Trackers{/tr}</a></span>
-{if $trackerId}
-<span class="button2"><a href="tiki-admin_tracker_fields.php?trackerId={$trackerId}">{tr}Edit This Tracker's Fields{/tr}</a></span>
-<span class="button2"><a href="tiki-view_tracker.php?trackerId={$trackerId}">{tr}View This Tracker's Items{/tr}</a></span>
-{/if}
+	{button href="tiki-list_trackers.php" _text="{tr}List Trackers{/tr}"} 
+	{if $trackerId}
+		{button href="tiki-admin_tracker_fields.php?trackerId=$trackerId" _text="{tr}Edit This Tracker's Fields{/tr}"}
+		{button href="tiki-view_tracker.php?trackerId=$trackerId" _text="{tr}View This Tracker's Items{/tr}"}
+	{/if}
 </div>
 
 {if $prefs.feature_tabs eq 'y'}

@@ -1,7 +1,7 @@
 {* $Id$ *}
 <div class="navbar">
-<span class="button2"><a href="tiki-admingroups.php">{tr}Admin Groups{/tr}</a></span>
-<span class="button2"><a href="tiki-adminusers.php">{tr}Admin Users{/tr}</a></span>
+	{button href="tiki-admingroups.php" _text="{tr}Admin Groups{/tr}"}
+	{button href="tiki-adminusers.php" _text="{tr}Admin Users{/tr}"}
 </div>
 
 <div class="cbox">

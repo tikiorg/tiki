@@ -4,13 +4,13 @@
 {title help="Users+Management" admpage="login" url="tiki-adminusers.php"}{tr}Admin Users{/tr}{/title}
 
 <div class="navbar">
-{if $tiki_p_admin eq 'y'} {* only full admins can manage groups, not tiki_p_admin_users *}
-<span class="button2"><a href="tiki-admingroups.php">{tr}Admin Groups{/tr}</a></span>
-{/if}
-<span class="button2"><a href="tiki-adminusers.php">{tr}Admin Users{/tr}</a></span>
-{if $userinfo.userId}
-<span class="button2"><a href="tiki-adminusers.php?add=1">{tr}Add a New User{/tr}</a></span>
-{/if}
+	{if $tiki_p_admin eq 'y'} {* only full admins can manage groups, not tiki_p_admin_users *}
+		{button href="tiki-admingroups.php" _text="{tr}Admin Groups{/tr}"}
+	{/if}
+	{button _text="{tr}Admin Users{/tr}"}
+	{if $userinfo.userId}
+		{button href="?add=1" _text="{tr}Add a New User{/tr}"}
+	{/if}
 </div>
 
 {if $prefs.feature_intertiki eq 'y' and !empty($prefs.feature_intertiki_mymaster)}

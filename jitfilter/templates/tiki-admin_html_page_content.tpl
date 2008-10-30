@@ -3,15 +3,10 @@
 <h2>{tr}Page{/tr}: {$pageName}</h2>
 
 <div class="navbar">
-	<span class="button2">
-		<a href="tiki-admin_html_pages.php">{tr}Admin HTML pages{/tr}</a>
-	</span>
-	<span class="button2">
-		<a href="tiki-admin_html_pages.php?pageName={$pageName|escape:"url"}">{tr}Edit this page{/tr}</a>
-	</span>
-	<span class="button2">
-		<a href="tiki-page.php?pageName={$pageName|escape:"url"}">{tr}View page{/tr}</a></h1>
-	</span>
+	{button href="tiki-admin_html_pages.php" _text="{tr}Admin HTML pages{/tr}"}
+	{assign var='pname' value=$pageName|escape:"url"}
+	{button href="tiki-admin_html_pages.php?pageName=$pname" _text="{tr}Edit this page{/tr}"}
+	{button href="tiki-page.php?pageName=$pname" _text="{tr}View page{/tr}"}
 </div>
 
 {if $zone}

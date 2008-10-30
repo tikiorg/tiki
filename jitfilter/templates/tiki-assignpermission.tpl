@@ -4,10 +4,10 @@
 {title help="Permissions+Settings" url="tiki-assignpermission.php?group=$escgroup"}{tr}Assign permissions to group:{/tr} {$group}{/title}
 
 <div class="navbar">
-{if $tiki_p_admin eq 'y'} {* only full admins can manage groups, not tiki_p_admin_users *}
-<span class="button2"><a href="tiki-admingroups.php">{tr}Admin groups{/tr}</a></span>
-{/if}
-<span class="button2"><a href="tiki-adminusers.php">{tr}Admin users{/tr}</a></span>
+	{if $tiki_p_admin eq 'y'} {* only full admins can manage groups, not tiki_p_admin_users *}
+		{button href="tiki-admingroups.php" _text="{tr}Admin groups{/tr}"}
+	{/if}
+	{button href="tiki-adminusers.php" _text="{tr}Admin users{/tr}"}
 </div>
 
 <h2>{tr}Group Information{/tr}</h2>

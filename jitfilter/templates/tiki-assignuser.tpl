@@ -4,12 +4,12 @@
 {title}{tr}Assign User {$assign_user} to Groups{/tr}{/title}
 
 <div class="navbar">
-{if $tiki_p_admin eq 'y'} {* only full admins can manage groups, not tiki_p_admin_users *}
-<span class="button2"><a href="tiki-admingroups.php">{tr}Admin groups{/tr}</a></span>
-{/if}
-{if $tiki_p_admin eq 'y' or $tiki_p_admin_users eq 'y'}
-<span class="button2"><a href="tiki-adminusers.php">{tr}Admin users{/tr}</a></span>
-{/if}
+	{if $tiki_p_admin eq 'y'} {* only full admins can manage groups, not tiki_p_admin_users *}
+		{button href="tiki-admingroups.php" _text="{tr}Admin groups{/tr}"}
+	{/if}
+	{if $tiki_p_admin eq 'y' or $tiki_p_admin_users eq 'y'}
+		{button href="tiki-adminusers.php" _text="{tr}Admin users{/tr}"}
+	{/if}
 </div>
 
 {if $tiki_p_admin eq 'y' or $tiki_p_admin_users eq 'y'}

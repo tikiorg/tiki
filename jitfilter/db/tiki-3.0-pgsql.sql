@@ -985,6 +985,7 @@ CREATE TABLE "tiki_file_galleries" (
   "show_files" char(1) default NULL,
   "show_explorer" char(1) default NULL,
   "show_path" char(1) default NULL,
+  "groupforAlert" varchar(255) default NULL,
   PRIMARY KEY ("galleryId")
 ) ENGINE=MyISAM  ;
 
@@ -1238,6 +1239,7 @@ CREATE TABLE "tiki_history" (
   "comment" varchar(200) default NULL,
   "data" bytea,
   "type" varchar(50) default NULL,
+  "is_html" TINYINT(1) NOT NULL DEFAULT 0,
   PRIMARY KEY ("pageName","version"),
   KEY(historyId)
 ) ENGINE=MyISAM;
@@ -2685,6 +2687,9 @@ CREATE TABLE "tiki_survey_questions" (
   "votes" bigint default NULL,
   "value" bigint default NULL,
   "average" decimal(4,2) default NULL,
+  "mandatory" char(1) NOT NULL default 'n',
+  "max_answers" integer NOT NULL default 0,
+  "min_answers" integer NOT NULL default 0,
   PRIMARY KEY ("questionId")
 ) ENGINE=MyISAM  ;
 
@@ -4764,6 +4769,17 @@ CREATE TABLE "tiki_webservice_template" (
   PRIMARY KEY ("service","template")
 ) ENGINE=MyISAM ;
 
+
+DROP TABLE "tiki_groupalert";
+
+
+CREATE TABLE "tiki_groupalert" (
+  "groupName" varchar(255) NOT NULL default '',
+  "objectType" varchar( 20 ) NOT NULL default '',
+  "objectId"  varchar(10) NOT NULL default '',
+  "displayEachuser"  char( 1 ) default NULL ,
+  PRIMARY KEY ("objectType","objectId")
+) ENGINE=MyISAM ;
 
 ;
 

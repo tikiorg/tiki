@@ -1,7 +1,7 @@
 {title}{tr}Admin layout{/tr}{/title}
 
 <div class="navbar">
-<a href="tiki-theme_control.php">Theme control</a>
+	{button href="tiki-theme_control.php" _text="{tr}Theme control{/tr}"}
 </div>
 
 {section name=ix loop=$sections}

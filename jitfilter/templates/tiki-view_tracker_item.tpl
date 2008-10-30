@@ -417,11 +417,10 @@ document.write('<div class="categSelectAll"><input type="checkbox" id="clickall"
 <select name="ins_{$cur_field.id}" {if $cur_field.http_request}onchange="selectValues('trackerIdList={$cur_field.http_request[0]}&amp;fieldlist={$cur_field.http_request[3]}&amp;filterfield={$cur_field.http_request[1]}&amp;status={$cur_field.http_request[4]}&amp;mandatory={$cur_field.http_request[6]}&amp;filtervalue='+escape(this.value),'{$cur_field.http_request[5]}')"{/if}>
 </select>
 
-{elseif $cur_field.type eq 'd' or $cur_field.type eq 'D'}
-{include file='tracker_item_field_input.tpl' field_value=$cur_field}
-
-{elseif $cur_field.type eq 'R'}
-{include file='tracker_item_field_input.tpl' field_value=$cur_field}
+{elseif $cur_field.type eq 'd' or $cur_field.type eq 'D'
+or $cur_field.type eq 'R'
+or $cur_field.type eq 'i'}
+{include file='tracker_item_field_input.tpl' field_value=$cur_field item=$item_info}
 
 {elseif $cur_field.type eq 'c'}
 <input type="checkbox" name="ins_{$cur_field.id}" {if $cur_field.value eq 'y'}checked="checked"{/if}/>
@@ -437,15 +436,7 @@ document.write('<div class="categSelectAll"><input type="checkbox" id="clickall"
 {/foreach}
 </select>
 
-{elseif $cur_field.type eq 'i'}
-<input type="file" name="ins_{$cur_field.id}" /><br />
-{if $cur_field.value ne ''}
-<img src="{$cur_field.value}" alt="n/a" width="{$cur_field.options_array[2]}" height="{$cur_field.options_array[3]}" /><br />
-<a href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$itemId}&amp;fieldId={$cur_field.id}&amp;fieldName={$cur_field.name}&amp;removeImage">{tr}Remove Image{/tr}</a>
-{else}
-<img border="0" src="img/icons/na_pict.gif" alt="n/a" />
-{/if}
-
+{* -------------------- Multimedia -------------------- *}
 {elseif $cur_field.type eq 'M'}
 {if ($cur_field.options_array[0] > '2')}
 <input type="file" name="ins_{$cur_field.id}" value="{$cur_field.value}" /><br />

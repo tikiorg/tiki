@@ -3,9 +3,10 @@
 {title url="tiki-admin_newsletter_subscriptions.php?nlId=$nlId_urlencoded"}{tr}Admin newsletter subscriptions{/tr}{/title}
 
 <div class="navbar">
-<a href="tiki-newsletters.php">{tr}List Newsletters{/tr}</a>
- <a href="tiki-admin_newsletters.php?nlId={$nlId|urlencode}">{tr}Admin Newsletters{/tr}</a> 
- <a href="tiki-send_newsletters.php?nlId={$nlId|urlencode}">{tr}Send Newsletters{/tr}</a>
+	{button href="tiki-newsletters.php" _text="{tr}List Newsletters{/tr}"}
+	{assign var="nlid_encod" value=$nlId|urlencode}
+	{button href="tiki-admin_newsletters.php?nlId=$nlid_encod" _text="{tr}Admin Newsletters{/tr}"}
+	{button href="tiki-send_newsletters.php?nlId=$nlid_encod" _text="{tr}Send Newsletters{/tr}"}
 </div>
 
 <table class="normal">
