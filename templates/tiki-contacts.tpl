@@ -1,19 +1,18 @@
 {title}{tr}Contacts{/tr}{/title}
 
-<div class="page-bar">
-<div style="float:right;margin:5px;">
-<span class="button2">
-{if $view eq 'list'}
-<a href="{$myurl}?view=group" title="{tr}Group View{/tr}">{tr}Group View{/tr}</a>
-{else}
-<a href="{$myurl}?view=list" title="{tr}List View{/tr}">{tr}List View{/tr}</a>
-{/if}
-</span>
-</div>
-<div style="float:left;margin:5px;">
-<span class="button2"><a href="#" onclick="flip('editform');return false;">{tr}Create/edit contacts{/tr}</a></span>
-<span class="button2"><a href="tiki-user_contacts_prefs.php" title="{tr}Preferences{/tr}">{tr}Preferences{/tr}</a></span>
-</div>
+<div class="navbar">
+	<div style="float:right;margin:5px;">
+			{if $view eq 'list'}
+				{button href="?view=group" _text="{tr}Group View{/tr}"}
+			{else}
+				{button href="?view=list" _text="{tr}List View{/tr}"}
+			{/if}
+	</div>
+
+	<div style="float:left;margin:5px;">
+		<span class="button"><a href="#" onclick="flip('editform');return false;">{tr}Create/edit contacts{/tr}</a></span>
+		{button href="tiki-user_contacts_prefs.php" _text="{tr}Preferences{/tr}"}
+	</div>
 </div>
 
 <form action="tiki-contacts.php" method="post" id="editform" name='editform_contact' style="clear:both;margin:5px;display:{ if $contactId}block{else}none{/if};">

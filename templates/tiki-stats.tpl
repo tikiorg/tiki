@@ -2,25 +2,23 @@
 
 {title help="Stats"}{tr}Stats{/tr}{/title}
 
-<div id="page-bar">
-
-<span class="button2"> <a href="#site_stats">{tr}Site{/tr}</a></span>
-{if $wiki_stats}<span class="button2"> <a href="#wiki_stats">{tr}Wiki{/tr}</a></span>{/if}
-{if $igal_stats}<span class="button2"> <a href="#igal_stats">{tr}Image galleries{/tr}</a></span>{/if}
-{if $fgal_stats}<span class="button2"> <a href="#fgal_stats">{tr}File galleries{/tr}</a></span>{/if}
-{if $cms_stats}<span class="button2"> <a href="#cms_stats">{tr}CMS{/tr}</a></span>{/if}
-{if $forum_stats}<span class="button2"> <a href="#forum_stats">{tr}Forums{/tr}</a></span>{/if}
-{if $blog_stats}<span class="button2"> <a href="#blog_stats">{tr}Blogs{/tr}</a></span>{/if}
-{if $poll_stats}<span class="button2"> <a href="#poll_stats">{tr}Polls{/tr}</a></span>{/if}
-{if $faq_stats}<span class="button2"> <a href="#faq_stats">{tr}FAQs{/tr}</a></span>{/if}
-{if $user_stats}<span class="button2"> <a href="#user_stats">{tr}User{/tr}</a></span>{/if}
-{if $quiz_stats}<span class="button2"> <a href="#quiz_stats">{tr}Quizzes{/tr}</a></span>{/if}
-{if $prefs.feature_referer_stats eq 'y' and $tiki_p_view_referer_stats eq 'y'}<span class="button2"> <a href="tiki-referer_stats.php">{tr}Referer stats{/tr}</a></span>{/if}
-{if $best_objects_stats}<span class="button2"> <a href="#best_objects_stats">{tr}Most viewed objects{/tr}</a></span>{/if}
-{if $best_objects_stats_lastweek}<span class="button2"> <a href="#best_objects_stats_lastweek">{tr}Most viewed objects in the last 7 days{/tr}</a></span>{/if}
-
-
+<div class="navbar">
+	{button href="#site_stats" _text="{tr}Site{/tr}"}
+	{if $wiki_stats}{button href="#wiki_stats" _text="{tr}Wiki{/tr}"}{/if}
+	{if $igal_stats}{button href="#igal_stats" _text="{tr}Image galleries{/tr}"}{/if}
+	{if $fgal_stats}{button href="#fgal_stats" _text="{tr}File galleries{/tr}"}{/if}
+	{if $cms_stats}{button href="#cms_stats" _text="{tr}CMS{/tr}"}{/if}
+	{if $forum_stats}{button href="#forum_stats" _text="{tr}Forums{/tr}"}{/if}
+	{if $blog_stats}{button href="#blog_stats" _text="{tr}Blogs{/tr}"}{/if}
+	{if $poll_stats}{button href="#poll_stats" _text="{tr}Polls{/tr}"}{/if}
+	{if $faq_stats}{button href="#faq_stats" _text="{tr}FAQs{/tr}"}{/if}
+	{if $user_stats}{button href="#user_stats" _text="{tr}User{/tr}"}{/if}
+	{if $quiz_stats}{button href="#quiz_stats" _text="{tr}Quizzes{/tr}"}{/if}
+	{if $prefs.feature_referer_stats eq 'y' and $tiki_p_view_referer_stats eq 'y'}{button href="tiki-referer_stats.php" _text="{tr}Referer stats{/tr}"}{/if}
+	{if $best_objects_stats}{button href="#best_objects_stats" _text="{tr}Most viewed objects{/tr}"}{/if}
+	{if $best_objects_stats_lastweek}{button href="#best_objects_stats_lastweek" _text="{tr}Most viewed objects in the last 7 days{/tr}"}{/if}
 </div>
+
 <br class="clear" />
 {* Site stats *}
 <h2 id="site_stats">{tr}Site Stats{/tr}</h2>
