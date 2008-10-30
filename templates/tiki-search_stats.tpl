@@ -3,7 +3,7 @@
 {title help="SearchStats"}{tr}Search stats{/tr}{/title}
 
 <div class="navbar">
-  <a href="tiki-search_stats.php?clear=1">{tr}Clear Stats{/tr}</a>
+	{button href="?clear=1" _text="{tr}Clear Stats{/tr}"}
 </div>
 
 {include file='find.tpl' _sort_mode='y'}

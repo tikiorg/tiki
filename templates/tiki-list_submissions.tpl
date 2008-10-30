@@ -1,9 +1,9 @@
 {title}{tr}Submissions{/tr}{/title}
 
 <div class="navbar">
-  <a href="tiki-edit_submission.php">{tr}Edit New Submission{/tr}</a>
+	{button href="tiki-edit_submission.php" _text="{tr}Edit New Submission{/tr}"}
   {if $tiki_p_read_article eq 'y'}
-    <a href="tiki-list_articles.php">{tr}List articles{/tr}</a>
+		{button href="tiki-list_articles.php" _text="{tr}List articles{/tr}"}
   {/if}
 </div>
 

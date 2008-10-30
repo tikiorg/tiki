@@ -2,7 +2,7 @@
 {title help="mods"}{tr}Tikiwiki Mods Configuration{/tr}{/title}
 
 <div class="navbar">
-  <span class="button2"><a href="tiki-mods.php">{tr}Mods Install/uninstall{/tr}</a></span>
+	{button href="tiki-mods.php" _text="{tr}Mods Install/uninstall{/tr}"}
 </div>
 
 {section name=n loop=$tikifeedback}<div class="simplebox{if $tikifeedback[n].num > 0} highlight{/if}">{$tikifeedback[n].mes}</div>{/section}

@@ -3,7 +3,8 @@
 {title}{tr}History{/tr}: {$page}{/title}
 
 <div class="navbar">
-  <a href="tiki-index.php?page={$page|escape:url}" title="{tr}View{/tr}">{tr}View page{/tr}</a>
+	{assign var=thispage value=$page|escape:url}
+	{button href="tiki-index.php?page=$thispage" _text="{tr}View page{/tr}"}
 </div>
 
 {if $preview}

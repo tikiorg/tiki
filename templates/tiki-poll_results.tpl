@@ -3,8 +3,8 @@
 {title help="polls" admpage="polls"}{tr}Poll Results{/tr}{/title}
 
 <div class="navbar">
-  <span class="button2"><a href="tiki-old_polls.php">{tr}Polls{/tr}</a></span>
-  <span class="button2"><a href="tiki-poll_results.php">{tr}Top Voted Polls{/tr}</a></span>
+	{button href="tiki-old_polls.php" _text="{tr}Polls{/tr}"}
+	{button href="tiki-poll_results.php" _text="{tr}Top Voted Polls{/tr}"}
 </div>
 
 {if empty($smarty.request.pollId) and !isset($list_votes)}
