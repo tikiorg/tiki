@@ -138,7 +138,7 @@ if ( $prefs['feature_wysiwyg'] == 'y' ) {
 }
 if ( $prefs['feature_phplayers'] == 'y' ) require_once('lib/setup/phplayers.php');
 
-if( $tiki_p_admin == 'y' ) {
+if( $prefs['feature_magic'] == 'y' && $tiki_p_admin == 'y' ) {
 	include_once('lib/admin/magiclib.php');
 	$templatename = substr($tiki_script_filename, strrpos($tiki_script_filename, '/') + 1, -4);
 	$smarty->assign('feature', $magiclib->get_feature_by_template($templatename));
