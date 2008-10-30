@@ -548,6 +548,8 @@ class TrackerLib extends TikiLib {
 
 		if (!$status) {
 			return false;
+		} elseif ($status == 'opc') {
+				return true;
 		} elseif (strlen($status) > 1) {
 			$sts = preg_split('//', $status, -1, PREG_SPLIT_NO_EMPTY);
 			if (count($sts)) {
@@ -662,13 +664,18 @@ class TrackerLib extends TikiLib {
 
 					$cat_table .= " INNER JOIN `tiki_objects` tob$ff ON (tob$ff.`itemId` = tti.`itemId`)"
 						." INNER JOIN `tiki_category_objects` tco$ff ON (tob$ff.`objectId` = tco$ff.`catObjectId`)";
-					$mid .= " AND tob$ff.`type` = 'tracker $trackerId' AND tco$ff.`categId` IN ( 0 ";
+					$mid .= " AND tob$ff.`type` = 'tracker $trackerId' AND tco$ff.`categId` IN ( ";
 					$value = empty($fv) ? $ev : $fv;
 					if ( ! is_array($value) && $value != '' )
 						$value = array($value);
+					$first = true;
 					foreach ( $value as $catId ) {
 						$bindvars[] = $catId;
-						$mid .= ',?';
+						if ($first)
+							$first = false;
+						else 
+							$mid .= ',';
+						$mid .= '?';
 					}
 					$mid .= " ) ";
 
