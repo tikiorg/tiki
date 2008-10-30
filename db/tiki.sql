@@ -2297,7 +2297,8 @@ CREATE TABLE tiki_tracker_fields (
   visibleBy text,
   editableBy text,
   descriptionIsParsed char(1) default 'n',
-  PRIMARY KEY (fieldId)
+  PRIMARY KEY (fieldId),
+  INDEX trackerId (trackerId),
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS tiki_tracker_item_attachments;
@@ -2315,7 +2316,8 @@ CREATE TABLE tiki_tracker_item_attachments (
   comment varchar(250) default NULL,
   longdesc blob,
   version varchar(40) default NULL,
-  PRIMARY KEY (attId)
+  PRIMARY KEY (attId),
+  INDEX itemId (itemId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS tiki_tracker_item_comments;
@@ -2349,7 +2351,8 @@ CREATE TABLE tiki_tracker_items (
   created int(14) default NULL,
   status char(1) default NULL,
   lastModif int(14) default NULL,
-  PRIMARY KEY (itemId)
+  PRIMARY KEY (itemId),
+  INDEX trackerId (trackerId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS tiki_tracker_options;
