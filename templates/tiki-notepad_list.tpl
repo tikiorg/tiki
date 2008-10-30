@@ -5,7 +5,7 @@
 {/if}
 
 <div class="navbar">
-  <span class="button2"><a href="tiki-notepad_write.php">{tr}Write a note{/tr}</a></span>
+	{button href="tiki-notepad_write.php" _text="{tr}Write a note{/tr}"}
 </div>
 
 <div style="text-align:center;">

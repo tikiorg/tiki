@@ -7,8 +7,8 @@
 {title help="Quiz"}{tr}Admin Quizzes{/tr}{/title}
 
 <div class="navbar">
-<a href="tiki-list_quizzes.php">{tr}List Quizzes{/tr}</a>
-<a href="tiki-quiz_stats.php">{tr}Quiz Stats{/tr}</a>
+	{button href="tiki-list_quizzes.php" _text="{tr}List Quizzes{/tr}"}
+	{button href="tiki-quiz_stats.php" _text="{tr}Quiz Stats{/tr}"}
 </div>
 
 <h2>{tr}Create/edit quizzes{/tr}</h2>
