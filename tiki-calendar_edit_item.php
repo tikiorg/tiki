@@ -10,6 +10,7 @@ require_once ('tiki-setup.php');
 
 include_once ('lib/calendar/calendarlib.php');
 include_once ('lib/newsletters/nllib.php');
+include_once ('lib/groupalert/groupalertlib.php');
 
 if ($prefs['feature_calendar'] != 'y') {
   $smarty->assign('msg', tra("This feature is disabled").": feature_calendar");
@@ -33,8 +34,8 @@ if (isset($_REQUEST['calendarId']) and $userlib->object_has_one_permission($_REQ
         $smarty->assign("$permName", 'n');
       }
     }
-  } 
-} 
+  }
+}
 */
 
 $smarty->assign('edit',false);
@@ -49,7 +50,7 @@ if ($tiki_p_admin_calendar == 'y') {
   $smarty->assign('tiki_p_view_events','y');
   $tiki_p_view_calendar = 'y';
   $smarty->assign('tiki_p_view_calendar','y');
-} 
+}
 
 $caladd = array();
 $rawcals = $calendarlib->list_calendars();
@@ -118,10 +119,24 @@ foreach ($rawcals["data"] as $cal_id=>$cal_data) {
 }
 $smarty->assign('listcals',$caladd);
 
-if (!isset($_REQUEST['calendarId']) and count($caladd)) { 
+if (!isset($_REQUEST['calendarId']) and count($caladd)) {
 	$keys = array_keys($caladd);
-	$_REQUEST['calendarId'] = array_shift($keys); 
-} 
+	$_REQUEST['calendarId'] = array_shift($keys);
+}
+
+
+$smarty->assign_by_ref('groupforalert',$groupforalert);
+
+$smarty->assign_by_ref('showeachuser',$showeachuser);
+
+$groupforalert=$groupalertlib->GetGroup ('calendar',$_REQUEST["calendarId"]);
+
+
+ if ( $groupforalert != "" ) {
+ 	$showeachuser=$groupalertlib->GetShowEachUser('calendar',$_REQUEST["calendarId"], $groupforalert) ;
+  	$listusertoalert=$userlib->get_users(0,-1,'login_asc','','',false,$groupforalert,'') ;
+	$smarty->assign_by_ref('listusertoalert',$listusertoalert['data']);
+ }
 
 if ($prefs['feature_categories'] == 'y') {
   global $categlib; include_once ('lib/categories/categlib.php');
@@ -136,7 +151,7 @@ if ($prefs['feature_categories'] == 'y') {
       $smarty->display("error.tpl");
       die;
     }
-  } 
+  }
 }
 
 if (isset($_POST['act']) || isset($_POST['preview'])) {
@@ -180,11 +195,21 @@ if (isset($_POST['act'])) {
 	if (empty($save['user'])) $save['user'] = $user;
 	$newcalid = $save['calendarId'];
 
-	if ((empty($save['calitemId']) and $caladd["$newcalid"]['tiki_p_add_events']) 
+	if ((empty($save['calitemId']) and $caladd["$newcalid"]['tiki_p_add_events'])
 	or (!empty($save['calitemId']) and $caladd["$newcalid"]['tiki_p_change_events'])) {
 		if (empty($save['name'])) $save['name'] = tra("event without name");
 
 		$calendarlib->set_item($user,$save['calitemId'],$save);
+		foreach ( $_REQUEST['checked'] as $user ){
+		$email=$userlib->get_user_email($user);
+		if ( ! empty($email) ){
+  		        include_once ('lib/webmail/tikimaillib.php');
+			$mail = new TikiMail();
+			$mail->setText("There is a changement in calendar (message will be redefined)");
+			$mail->setSubject("You are alerted of a changement" );
+			$mail->send(array($email));
+			}
+		}
 		header('Location: tiki-calendar.php');
 		die;
 	}
@@ -206,10 +231,10 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
   if (is_array($_REQUEST['drop'])) {
     foreach ($_REQUEST['drop'] as $dropme) {
       $calendarlib->drop_item($user, $dropme);
-    } 
+    }
   } else {
     $calendarlib->drop_item($user, $_REQUEST['drop']);
-  } 
+  }
 	header('Location: tiki-calendar.php');
 	die;
 }  elseif (isset($_REQUEST['duplicate']) and $tiki_p_add_events == 'y') {
@@ -265,7 +290,7 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
 		'nlId'=>0,
 		'start'=>$now,
 		'end'=>$now+(60*60),
-		'duration'=>(60*60) 
+		'duration'=>(60*60)
 		);
 	$id = 0;
 	$smarty->assign('edit',true);

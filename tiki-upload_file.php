@@ -7,13 +7,14 @@
 // al.
 // All Rights Reserved. See copyright.txt for details and a complete list of
 // authors.
-// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. 
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE.
 // See license.txt for details.
 
 $section = 'file_galleries';
 require_once ('tiki-setup.php');
 include_once ('lib/categories/categlib.php');
 include_once ('lib/filegals/filegallib.php');
+include_once ('lib/groupalert/groupalertlib.php');
 
 include('lib/filegals/max_upload_size.php');
 @ini_set('max_execution_time', 0); //will not work in safe_mode is on
@@ -46,6 +47,8 @@ if ($prefs['feature_file_galleries'] != 'y') {
 	die;
 }
 
+
+
 if (!empty($_REQUEST['fileId'])) {
 	if (!($fileInfo = $filegallib->get_file_info($_REQUEST['fileId']))) {
 		$smarty->assign('msg', tra("Incorrect param"));
@@ -62,7 +65,7 @@ if (!empty($_REQUEST['fileId'])) {
 		$smarty->display('error.tpl');
 		die;
 	}
-}	
+}
 
 if (isset($_REQUEST['galleryId'][0])) {
 	$gal_info = $tikilib->get_file_gallery((int)$_REQUEST['galleryId'][0]);
@@ -90,7 +93,7 @@ if (!empty($_REQUEST['fileId'])) {
 	if (isset($_REQUEST['lockedby']) && $fileInfo['lockedby'] != $_REQUEST['lockedby']) {
 		if (empty($fileInfo['lockedby'])) {
 			$smarty->assign('msg', tra(sprintf('The file has been unlocked meanwhile')));
-		} else {			
+		} else {
 			$smarty->assign('msg', tra(sprintf('The file is locked by %s', $fileInfo['lockedby'])));
 		}
 		$smarty->display('error.tpl');
@@ -122,6 +125,20 @@ else
 $_REQUEST['hit_limit'] = 0;
 
 $smarty->assign('show', 'n');
+
+
+$smarty->assign_by_ref('groupforalert',$groupforalert);
+
+$smarty->assign_by_ref('showeachuser',$showeachuser);
+
+$groupforalert=$groupalertlib->GetGroup ('file gallery',$_REQUEST["galleryId"]);
+
+
+ if ( $groupforalert != "" ) {
+ 	$showeachuser=$groupalertlib->GetShowEachUser('file gallery',$_REQUEST["galleryId"], $groupforalert) ;
+  	$listusertoalert=$userlib->get_users(0,-1,'login_asc','','',false,$groupforalert,'') ;
+	$smarty->assign_by_ref('listusertoalert',$listusertoalert['data']);
+ }
 
 if (isset($_REQUEST['fileId']))
 $editFileId = $_REQUEST['fileId'];
@@ -240,7 +257,7 @@ if (isset($_REQUEST["upload"])) {
 				do {
 					$fhash = md5(uniqid($fhash));
 				} while (file_exists($savedir . $fhash. $extension));
-				
+
 				@$fw = fopen($savedir . $fhash. $extension, "wb");
 				if (!$fw) {
 					$errors[] = tra('Cannot write to this file:').$savedir.$fhash;
@@ -359,7 +376,7 @@ if (isset($_REQUEST["upload"])) {
 		$cat_objid = $editFileId;
 		$cat_desc = substr($_REQUEST["description"][0], 0, 200);
 		$cat_name = empty($fileInfo['name'])?$fileInfo['filename']: $fileInfo['name'];
-		$cat_href = $podCastGallery?$podcast_url.$fhash: "$url_browse?fileId=".$editFileId; 
+		$cat_href = $podCastGallery?$podcast_url.$fhash: "$url_browse?fileId=".$editFileId;
 		if( $prefs['fgal_limit_hits_per_file'] == 'y' ) {
 			$filegallib->set_download_limit( $editFileId, $_REQUEST['hit_limit'][0] );
 		}
@@ -368,7 +385,7 @@ if (isset($_REQUEST["upload"])) {
 
 	$smarty->assign('errors', $errors);
 	$smarty->assign('uploads', $uploads);
-	
+
 	if ($batch_job and count($errors) == 0) {
 		header ("location: tiki-list_file_gallery.php?galleryId=" . $batch_job_galleryId);
 		die;

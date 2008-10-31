@@ -94,6 +94,20 @@
 	<div>
 		{capture name=upload_file assign=upload_str}
 		<hr class="clear"/>
+
+{if $groupforalert ne ''}
+{if $showeachuser eq 'y' }
+{tr}Choose users to alert{/tr}
+{/if}
+{section name=idx loop=$listusertoalert}
+{if $showeachuser eq 'n' }
+<input type="hidden"  name="checked[]" value="{$listusertoalert[idx].user}">
+{else}
+<input type="checkbox" name="checked[]" value="{$listusertoalert[idx].user}"> {$listusertoalert[idx].user}
+{/if}
+{/section}
+{/if}
+
 		<div class="fgal_file">
 			<div class="fgal_file_c1">
 			<table width="100%">

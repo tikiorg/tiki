@@ -513,11 +513,13 @@ document.write('<div  class="categSelectAll"><input type="checkbox" id="clickall
 {/if}
 
 {if $groupforalert ne ''}
+{if $showeachuser eq 'y' }
 <tr class="formcolor">
 <td>{tr}Choose users to alert{/tr}</td>
 <td>
+{/if}
 {section name=idx loop=$listusertoalert}
-{if $showeachuser eq '' }
+{if $showeachuser eq 'n' }
 <input type="hidden"  name="checked[]" value="{$listusertoalert[idx].user}">
 {else}
 <input type="checkbox" name="checked[]" value="{$listusertoalert[idx].user}"> {$listusertoalert[idx].user}
