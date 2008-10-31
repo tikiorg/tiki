@@ -10,7 +10,7 @@
 	</div>
 
 	<div style="float:left;margin:5px;">
-		<span class="button"><a href="#" onclick="flip('editform');return false;">{tr}Create/edit contacts{/tr}</a></span>
+		{button href="#" _onclick="flip('editform');return false;" _text="{tr}Create/edit contacts{/tr}"}
 		{button href="tiki-user_contacts_prefs.php" _text="{tr}Preferences{/tr}"}
 	</div>
 </div>
