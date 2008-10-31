@@ -347,6 +347,30 @@ class WikiLib extends TikiLib {
 		$res = $result->fetchRow();
 		return $res;
 	}
+	function get_parse($page, &$canBeRefreshed) {
+		global $prefs;
+		$content = '';
+		$canBeRefreshed = false;
+		if ($prefs['wiki_cache'] > 0) {
+			$cache_info = $this->get_cache_info($page);
+			if (isset($cache_info['cache_timestamp']) && $cache_info['cache_timestamp'] + $prefs['wiki_cache'] > $this->now) {
+				$content = $cache_info['cache'];
+				$canBeRefreshed = true;
+			} else {
+				$info = $this->get_page_info($page);
+				if (!empty($info)) {
+					$content = $this->parse_data($info['data'],  array('is_html' => $info['is_html']));
+					$this->update_cache($page, $content);
+				}
+			}
+		} else {
+			$info = $tikilib->get_page_info($page);
+			if (!empty($info)) {
+				$content = $this->parse_data($info['data'], array('is_html' => $info['is_html']));
+			}
+		}
+		return $content;
+	}
 
 	function update_cache($page, $data) {
 
@@ -863,5 +887,3 @@ class WikiLib extends TikiLib {
 global $wikilib;
 global $dbTiki;
 $wikilib = new WikiLib($dbTiki);
-
-?>

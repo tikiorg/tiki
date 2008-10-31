@@ -317,17 +317,9 @@ class WikiRenderer
 			$this->setPref( 'wiki_cache', $this->info['wiki_cache'] );
 		}
 
-		if($prefs['wiki_cache']>0) {
-			$cache_info = $wikilib->get_cache_info($this->page);
-			if($cache_info['cache_timestamp']+$prefs['wiki_cache'] > $tikilib->now) {
-				$pdata = $cache_info['cache'];
-				$this->smartyassign('cached_page','y');
-			} else {
-				$pdata = $tikilib->parse_data($this->info['data'], $parse_options);
-				$wikilib->update_cache($this->page,$pdata);
-			}
-		} else {
-			$pdata = $tikilib->parse_data($this->info['data'], $parse_options);
+		$pdata = $wikilib->get_parse($this->page, $canBeRefreshed);
+		if ($canBeRefreshed) {
+			$this->smartyassign('cached_page','y');
 		}
 
 		$pages = $wikilib->get_number_of_pages($pdata);
