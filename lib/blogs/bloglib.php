@@ -102,22 +102,26 @@ class BlogLib extends TikiLib {
 		return $blogId;
 	}
 
-	function list_blog_posts($blogId, $offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '', $date = '', $approved = 'y') {
+	function list_blog_posts($blogId, $offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '', $date_min = '', $date_max = '', $approved = 'y') {
 		global $tiki_p_admin_comments;
 
 		if ($find) {
 			$findesc = '%' . $find . '%';
 
 			$mid = " where `blogId`=? and (`data` like ? or `title` like ?) ";
-			$bindvars = array((int)$blogId,$findesc, $findesc);
+			$bindvars = array((int)$blogId, $findesc, $findesc);
 		} else {
 			$mid = " where `blogId`=? ";
 			$bindvars = array((int) $blogId);
 		}
 
-		if ($date) {
+		if ( $date_min ) {
+			$mid .= " and  `created`>=? ";
+			$bindvars[] = (int)$date_min;
+		}
+		if ( $date_max ) {
 			$mid .= " and  `created`<=? ";
-			$bindvars[]=(int) $date;
+			$bindvars[] = (int)$date_max;
 		}
 
 		$query = "select * from `tiki_blog_posts` $mid order by ".$this->convert_sortmode($sort_mode);
