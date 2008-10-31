@@ -78,8 +78,10 @@ class Smarty_Tikiwiki extends Smarty {
 			// Set the last mid template to be used by AJAX to simulate a 'BACK' action
 			if ( isset($_SESSION['last_mid_template']) ) {
 				$this->assign('last_mid_template', $_SESSION['last_mid_template']);
+				$this->assign('last_mid_php', $_SESSION['last_mid_php']);
 			}
 			$_SESSION['last_mid_template'] = $tpl;
+			$_SESSION['last_mid_php'] = $_SERVER['REQUEST_URI'];
 
 			// Enable Template Zoom
 			if ( $prefs['feature_template_zoom'] == 'y' && isset($zoom_templates) ) {
