@@ -26,18 +26,19 @@
 
 </tr>
 <tr class="formcolor">
-<td>{tr}Description{/tr}:</td>
-<td>
-<textarea name="description" rows="4" cols="80">{$info.description|escape}</textarea></td></tr>
+	<td>{tr}Description{/tr}:</td>
+	<td>{textarea name="description" rows="6" cols="80"}{$info.description|escape}{/textarea}</td>
+</tr>
 {include file=categorize.tpl}
 <tr class="formcolor">
-<td>{tr}Status{/tr}</td>
-<td>
-<select name="status">
-<option value="o" {if $info.status eq 'o'}selected='selected'{/if}>{tr}Open{/tr}</option>
-<option value="c" {if $info.status eq 'c'}selected='selected'{/if}>{tr}closed{/tr}</option>
-</select>
-</td></tr>
+	<td>{tr}Status{/tr}</td>
+	<td>
+		<select name="status">
+			<option value="o" {if $info.status eq 'o'}selected='selected'{/if}>{tr}Open{/tr}</option>
+			<option value="c" {if $info.status eq 'c'}selected='selected'{/if}>{tr}closed{/tr}</option>
+		</select>
+	</td>
+</tr>
 <tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
