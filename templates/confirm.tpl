@@ -11,7 +11,7 @@
       {if $prefs.feature_ajax eq 'y' and isset($last_mid_template)}
         {button href="#" _template=$last_mid_template _text="{tr}Go back{/tr}"}
       {else}
-				{button href="#" onclick="javascript:history.back(); return false;" _text="{tr}Go back{/tr}"}
+				{button href="#" _onclick="javascript:history.back(); return false;" _text="{tr}Go back{/tr}"}
       {/if}
 			{button href=$prefs.tikiIndex _text="{tr}Return to home page{/tr}"}
     </form>
