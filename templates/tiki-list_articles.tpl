@@ -3,18 +3,19 @@
 {title help="Articles" admpage="cms"}{tr}Articles{/tr}{/title}
 
 <div class="navbar">
-{if $tiki_p_edit_article eq 'y'}
-  <a href="tiki-edit_article.php">{tr}Edit New Article{/tr}</a>
-{/if}
-<a href="tiki-view_articles.php">{tr}View Articles{/tr}</a>
-{if $prefs.feature_submissions == 'y' && ($tiki_p_approve_submission == "y" || $tiki_p_remove_submission == "y" || $tiki_p_edit_submission == "y")}
-<a href="tiki-list_submissions.php">{tr}View submissions{/tr}</a>
-{/if}
+	{if $tiki_p_edit_article eq 'y'}
+		{button href="tiki-edit_article.php" _text="{tr}Edit New Article{/tr}"}
+	{/if}
+	{button href="tiki-view_articles.php" _text="{tr}View Articles{/tr}"}
+
+	{if $prefs.feature_submissions == 'y' && ($tiki_p_approve_submission == "y" || $tiki_p_remove_submission == "y" || $tiki_p_edit_submission == "y")}
+		{button href="tiki-list_submissions.php" _text="{tr}View submissions{/tr}"}
+	{/if}
 </div>
+
 {if $listpages or ($find ne '') or ($types ne '') or ($topics ne '') or ($lang ne '') or ($categId ne '')}
   {include file="find.tpl" find_show_languages='y' find_show_categories='y' find_show_num_rows='y'}
 {/if}
-<br />
 
 <table class="normal">
 <tr>

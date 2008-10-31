@@ -1,17 +1,21 @@
 {title url="tiki-edit_programmed_content.php?contentId=$contentId"}{tr}Program dynamic content for block:{/tr} {$contentId}{/title}
 
 <div class="navbar">
-	<span class="button2">
-		<a href="tiki-edit_programmed_content.php?contentId={$contentId}">{tr}Create New Block{/tr}</a>
-	</span>
-	<span class="button2">
-		<a href="tiki-list_contents.php">{tr}Return to block listing{/tr}</a>
-	</span>
+	{button href="?contentId=$contentId" _text="{tr}Create New Block{/tr}"}
+	{button href="tiki-list_contents.php" _text="{tr}Return to block listing{/tr}"}
 </div>
 
 <h2>{tr}Block description: {/tr}{$description}</h2>
 
-<h2>{if $data}{tr}Edit{/tr}{else}{tr}Create{/tr}{/if} {tr}content{/tr}</h2>
+<h2>
+	{if $data}
+		{tr}Edit{/tr}
+	{else}
+		{tr}Create{/tr}
+	{/if} 
+	{tr}content{/tr}
+</h2>
+
 {if $pId}
 	{tr}You are editing block:{/tr} {$pId}<br />
 {/if}

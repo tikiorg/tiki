@@ -15,8 +15,8 @@
 {/title}
 
 <div class="navbar">
-  <a href="tiki-list_articles.php">{tr}List Articles{/tr}</a>
-  <a href="tiki-view_articles.php">{tr}View Articles{/tr}</a>
+	{button href="tiki-list_articles.php" _text="{tr}List Articles{/tr}"}
+  {button href="tiki-view_articles.php" _text="{tr}View Articles{/tr}"}
 </div>
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}

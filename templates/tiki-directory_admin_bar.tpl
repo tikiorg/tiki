@@ -1,32 +1,20 @@
 <div class="navbar">
-	<span class="button2">
-		<a href="tiki-directory_browse.php">{tr}Browse{/tr}</a>
-	</span>
-	<span class="button2">
-		<a href="tiki-directory_admin.php">{tr}Admin{/tr}</a>
-	</span>
+	{button href="tiki-directory_browse.php" _text="{tr}Browse{/tr}"}
+	{button href="tiki-directory_admin.php" _text="{tr}Admin{/tr}"}
 
 	{if $tiki_p_admin_directory_cats eq 'y'}
-		<span class="button2">
-			<a href="tiki-directory_admin_categories.php">{tr}Categories{/tr}</a>
-		</span>
+		{button href="tiki-directory_admin_categories.php" _text="{tr}Categories{/tr}"}
 	{/if}
 
 	{if $tiki_p_admin_directory_cats eq 'y'}
-		<span class="button2">
-			<a href="tiki-directory_admin_related.php">{tr}Related{/tr}</a>
-		</span>
+			{button href="tiki-directory_admin_related.php" _text="{tr}Related{/tr}"}
 	{/if}
 
 	{if $tiki_p_admin_directory_sites eq 'y'}
-		<span class="button2">
-			<a href="tiki-directory_admin_sites.php">{tr}Sites{/tr}</a>
-		</span>
+		{button href="tiki-directory_admin_sites.php" _text="{tr}Sites{/tr}"}
 	{/if}
 
 	{if $tiki_p_validate_links eq 'y'}
-		<span class="button2">
-			<a href="tiki-directory_validate_sites.php">{tr}Validate{/tr}</a>
-		</span>
+		{button href="tiki-directory_validate_sites.php" _text="{tr}Validate{/tr}"}
 	{/if}
 </div>
