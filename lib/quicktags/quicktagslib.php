@@ -17,18 +17,24 @@ class QuickTagsLib extends TikiLib {
 		if ($find) {
 			$findesc = '%' . $find . '%';
 			$mid = " where (`taglabel` like ?)";
-			$bindvars[]=$findesc;
+			$bindvars[] = $findesc;
 		} else {
 			$mid = "";
 		}
-		if ($category) {
-			if ($mid) {
-				$mid .= " and (`tagcategory` like ?)";
+		if ( !empty($category) ) {
+			if ( is_array($category) ) {
+				$mid .= ( $mid ? ' and ' : ' where ' ) . '(';
+				foreach ( $category as $k => $v ) {
+					if ( $k > 0 ) $mid .= ' OR';
+					$mid .= ' `tagcategory` like ?';
+					$bindvars[] = $v;
+				}
+				$mid .= ')';
 			} else {
-			   $mid = " where (`tagcategory` like ?)";
+				$mid .= ( $mid ? ' and ' : ' where ' ) . '(`tagcategory` like ?)';
+				$bindvars[] = $category;
 			}
-			$bindvars[]=$category;
-	        }
+		}
 
 		$query = "select * from `tiki_quicktags` $mid order by ".$this->convert_sortmode($sort_mode);
 		$query_cant = "select count(*) from `tiki_quicktags` $mid";
