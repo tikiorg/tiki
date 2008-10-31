@@ -1,20 +1,19 @@
 {* $Id$ *}
 <div class="cbox">
-  {if !empty($confirmation_text)}<div class="cbox-title">{icon _id=information style="vertical-align:middle"} {$confirmation_text}</div>{/if}
+  {if !empty($confirmation_text)}
+		<div class="cbox-title">{icon _id=information style="vertical-align:middle"} {$confirmation_text}</div>
+	{/if}
   <br />
-  <div class="cbox-data">
-    <form action="{$confirmaction|escape}" method="post">
-      {if $ticket}<input value="{$ticket}" name="ticket" type="hidden" />{/if}
-      {query _type='form_input' _keepall='y'}
-      <input type="submit" name="daconfirm" value="{tr}Click here to confirm your action{/tr}" />
-      <span class="button2">
+  <div class="cbox-title">
+    <form name='confirm' action="{$confirmaction|escape}" method="post">
+      {query _type='form_input' _keepall='y' ticket=$ticket daconfirm='y'}
+			{button href="#" _onclick="javascript:document.forms['confirm'].submit();return false;" _text="{tr}Click here to confirm your action{/tr}"}
       {if $prefs.feature_ajax eq 'y' and isset($last_mid_template)}
-        {self_link _class='linkbut' _template=$last_mid_template}{tr}Go back{/tr}{/self_link}
+        {button href="#" _template=$last_mid_template _text="{tr}Go back{/tr}"}
       {else}
-        <a href="javascript:history.back()">{tr}Go back{/tr}</a>
+				{button href="#" onclick="javascript:history.back(); return false;" _text="{tr}Go back{/tr}"}
       {/if}
-      </span>
-      <span class="button2"><a href="{$prefs.tikiIndex}">{tr}Return to home page{/tr}</a></span>
+			{button href=$prefs.tikiIndex _text="{tr}Return to home page{/tr}"}
     </form>
   </div>
 </div>
