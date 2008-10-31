@@ -25,7 +25,7 @@
 
 {if $tiki_p_admin_forum eq "y"}
   <div class="navbar">
-    <a title="{tr}Edit Forum{/tr}" href="tiki-admin_forums.php?forumId={$forumId}">{tr}Edit Forum{/tr}</a><br />
+		{button href="tiki-admin_forums.php?forumId=$forumId" _text="{tr}Edit Forum{/tr}"} 
   </div>
 {/if}
 

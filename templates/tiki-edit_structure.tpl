@@ -1,53 +1,63 @@
 {title url="tiki-edit_structure.php?page_ref_id=$page_ref_id"}{if $editable == 'y'}{tr}Modify Structure{/tr}{else}{tr}Structure{/tr}{/if}: {$structure_name}{/title}
 
 <div class="navbar">
-  <a href="tiki-admin_structures.php" title="{tr}Structures{/tr}">{tr}Structures{/tr}</a>
+	{button href="tiki-admin_structures.php" _text="{tr}Structures{/tr}"}
 </div>
 
 {if $remove eq 'y'}
-{tr}You will remove{/tr} '{$removePageName}' {if $page_removable == 'y'}{tr}and its subpages from the structure, now you have two options:{/tr}{else}{tr}and its subpages from the structure{/tr}{/if}
-<ul>
-<li><a class="link" href="tiki-edit_structure.php?page_ref_id={$structure_id}&amp;rremove={$removepage}&amp;page={$removePageName|escape:"url"}">{tr}Remove only from structure{/tr}</a></li>
-{if $page_removable == 'y'}<li><a class="link" href="tiki-edit_structure.php?page_ref_id={$structure_id}&amp;sremove={$removepage}&amp;page={$removePageName|escape:"url"}">{tr}Remove from structure and remove page too{/tr}</a></li>{/if}
-</ul>
-<br />
+	{tr}You will remove{/tr} '{$removePageName}' {if $page_removable == 'y'}{tr}and its subpages from the structure, now you have two options:{/tr}{else}{tr}and its subpages from the structure{/tr}{/if}
+	<ul>
+		<li>
+			<a class="link" href="tiki-edit_structure.php?page_ref_id={$structure_id}&amp;rremove={$removepage}&amp;page={$removePageName|escape:"url"}">{tr}Remove only from structure{/tr}</a>
+		</li>
+		{if $page_removable == 'y'}
+			<li>
+				<a class="link" href="tiki-edit_structure.php?page_ref_id={$structure_id}&amp;sremove={$removepage}&amp;page={$removePageName|escape:"url"}">{tr}Remove from structure and remove page too{/tr}</a>
+			</li>
+		{/if}
+	</ul>
+	<br />
 {/if}
 
 {if $alert_exists eq 'y'}
-<strong>{tr}The page already exists. The page that has been added to the structure is the existing one.{/tr}</strong>
-<br />
+	<strong>{tr}The page already exists. The page that has been added to the structure is the existing one.{/tr}</strong>
+	<br />
 {/if}
 
 {if count($alert_in_st) > 0}
-{tr}Note that the following pages are also part of another structure. Make sure that access permissions (if any) do not conflict:{/tr}
-{foreach from=$alert_in_st item=thest}
-&nbsp;&nbsp;<a class='tablename' href='tiki-index.php?page={$thest|escape:"url"}' target="_blank">{$thest}</a>
-{/foreach}
-<br /><br />
+	{tr}Note that the following pages are also part of another structure. Make sure that access permissions (if any) do not conflict:{/tr}
+	{foreach from=$alert_in_st item=thest}
+		&nbsp;&nbsp;<a class='tablename' href='tiki-index.php?page={$thest|escape:"url"}' target="_blank">{$thest}</a>
+	{/foreach}
+	<br />
+	<br />
 {/if}
 
 {if count($alert_categorized) > 0}
-{tr}The following pages added have automatically been categorized with the same categories as the structure:{/tr}
-{foreach from=$alert_categorized item=thecat}
-&nbsp;&nbsp;<a class='tablename' href='tiki-index.php?page={$thecat|escape:"url"}' target="_blank">{$thecat}</a>
-{/foreach}
-<br /><br />
+	{tr}The following pages added have automatically been categorized with the same categories as the structure:{/tr}
+	{foreach from=$alert_categorized item=thecat}
+		&nbsp;&nbsp;<a class='tablename' href='tiki-index.php?page={$thecat|escape:"url"}' target="_blank">{$thecat}</a>
+	{/foreach}
+	<br />
+	<br />
 {/if}
 
 {if count($alert_to_remove_cats) > 0}
-{tr}The following pages have categories but the structure has none. You may wish to uncategorize them to be consistent:{/tr}
-{foreach from=$alert_to_remove_cats item=thecat}
-&nbsp;&nbsp;<a class='tablename' href='tiki-index.php?page={$thecat|escape:"url"}' target="_blank">{$thecat}</a>
-{/foreach}
-<br /><br />
+	{tr}The following pages have categories but the structure has none. You may wish to uncategorize them to be consistent:{/tr}
+	{foreach from=$alert_to_remove_cats item=thecat}
+		&nbsp;&nbsp;<a class='tablename' href='tiki-index.php?page={$thecat|escape:"url"}' target="_blank">{$thecat}</a>
+	{/foreach}
+	<br />
+	<br />
 {/if}
 
 {if count($alert_to_remove_extra_cats) > 0}
-{tr}The following pages are in categories that the structure is not in. You may wish to recategorize them in order to be consistent:{/tr}
-{foreach from=$alert_to_remove_extra_cats item=theextracat}
-&nbsp;&nbsp;<a class='tablename' href='tiki-index.php?page={$theextracat|escape:"url"}' target="_blank">{$theextracat}</a>
-{/foreach}
-<br /><br />
+	{tr}The following pages are in categories that the structure is not in. You may wish to recategorize them in order to be consistent:{/tr}
+	{foreach from=$alert_to_remove_extra_cats item=theextracat}
+		&nbsp;&nbsp;<a class='tablename' href='tiki-index.php?page={$theextracat|escape:"url"}' target="_blank">{$theextracat}</a>
+	{/foreach}
+	<br />
+	<br />
 {/if}
 
 <h2>{tr}Structure Layout{/tr}</h2>

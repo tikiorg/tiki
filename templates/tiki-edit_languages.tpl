@@ -1,8 +1,14 @@
 {title}{tr}Edit or ex/import Languages{/tr}{/title}
 
-<span class="button2"><a href="tiki-edit_languages.php">{tr}Edit and create Languages{/tr}</a></span>
-<span class="button2"><a href="tiki-imexport_languages.php">{tr}Im- Export Languages{/tr}</a></span>
-<span class="button2"><a href="tiki-edit_languages.php?interactive_translation_mode={if $interactive_translation_mode eq 'on'}off{else}on{/if}" class="link">{if $interactive_translation_mode eq 'on' }{tr}Toggle interactive translation off{/tr}{else}{tr}Toggle interactive translation on{/tr}{/if} </a></span>
+<div class="navbar">
+	{button href="tiki-edit_languages.php" _text="{tr}Edit and create Languages{/tr}"}
+	{button href="tiki-imexport_languages.php" _text="{tr}Im-Export Languages{/tr}"}
+	{if $interactive_translation_mode eq 'on'}
+		{button href="tiki-edit_languages.php?interactive_translation_mode=off" _text="{tr}Toggle interactive translation off{/tr}"}
+	{else}
+		{button href="tiki-edit_languages.php?interactive_translation_mode=on" _text="{tr}Toggle interactive translation on{/tr}"}
+	{/if}
+</div>
 
 <table >
 <tr>

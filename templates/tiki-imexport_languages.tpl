@@ -1,7 +1,7 @@
 {title}{tr}Edit or ex/import Languages{/tr}{/title}
 
 <div class="navbar">
-  <a href="tiki-edit_languages.php">{tr}Edit and create Languages{/tr}</a>
+	{button href="tiki-edit_languages.php" _text="{tr}Edit and create Languages{/tr}"}
 </div>
 
 <table>

@@ -3,7 +3,7 @@
 {title help="Forums" admpage="forums"}{tr}Reported messages for forum{/tr}&nbsp;{$forum_info.name}{/title}
 
 <div class="navbar">
-  <a href="tiki-view_forum.php?forumId={$forumId}">{tr}Back to forum{/tr}</a>
+	{button href="tiki-view_forum.php?forumId=$forumId" _text="{tr}Back to forum{/tr}"}
 </div>
 
 <h2>{tr}List of messages{/tr} ({$cant})</h2>
