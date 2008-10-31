@@ -7,13 +7,12 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
+$section = 'surveys';
 require_once ('tiki-setup.php');
-
 include_once ('lib/surveys/surveylib.php');
 
 if ($prefs['feature_surveys'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_surveys");
-
 	$smarty->display("error.tpl");
 	die;
 }
