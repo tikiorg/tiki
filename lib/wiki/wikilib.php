@@ -364,7 +364,7 @@ class WikiLib extends TikiLib {
 				}
 			}
 		} else {
-			$info = $tikilib->get_page_info($page);
+			$info = $this->get_page_info($page);
 			if (!empty($info)) {
 				$content = $this->parse_data($info['data'], array('is_html' => $info['is_html']));
 			}
