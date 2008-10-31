@@ -35,12 +35,10 @@ if ($_REQUEST["tagId"]) {
 	$info = $quicktagslib->get_quicktag($_REQUEST["tagId"]);
 } else {
 	$info = array();
-
-	$info["taglabel"] = '';
+	$info['taglabel'] = '';
 	$info['taginsert'] = '';
 	$info['tagicon'] = '';
 }
-
 
 if (isset($_REQUEST["remove"])) {
 	$area = "delquicktag";
@@ -62,7 +60,6 @@ if (isset($_REQUEST["save"])) {
 	$info['tagcategory'] = '';
 	$smarty->assign('name', '');
 }
-
 $smarty->assign('info', $info);
 
 if (!isset($_REQUEST["sort_mode"])) {
@@ -70,13 +67,13 @@ if (!isset($_REQUEST["sort_mode"])) {
 } else {
 	$sort_mode = $_REQUEST["sort_mode"];
 }
+$smarty->assign_by_ref('sort_mode', $sort_mode);
 
 if (!isset($_REQUEST["offset"])) {
 	$offset = 0;
 } else {
 	$offset = $_REQUEST["offset"];
 }
-
 $smarty->assign_by_ref('offset', $offset);
 
 if (isset($_REQUEST["find"])) {
@@ -84,30 +81,36 @@ if (isset($_REQUEST["find"])) {
 } else {
 	$find = '';
 }
-
 $smarty->assign('find', $find);
 
 if (isset($_REQUEST["category"])) {
 	$category = $_REQUEST["category"];
-        if ($category == "All") $category = '';
+	if ($category == 'All') $category = '';
+	elseif ($category == 'wiki page') $category = 'wiki';
+	elseif ($category == 'cms') $category = 'articles';
 } else {
 	$category = '';
 }
-
 $smarty->assign('category', $category);
-$smarty->assign_by_ref('sort_mode', $sort_mode);
 
-$quicktags = $quicktagslib->list_quicktags($offset, $maxRecords, $sort_mode, $find, $category);
-$smarty->assign('cant', $quicktags['cant']);
+$list_categories = array();
+foreach ( $sections as $k => $v ) {
+	if ( $prefs[$v['feature']] != 'y' || ! isset($v['objectType']) ) continue;
+	if ( $k == 'wiki page' ) $k = 'wiki';
+	elseif ( $k == 'cms' ) $k = 'articles';
+	$list_categories[$k] = tra(ucwords($v['objectType']));
+}
+asort($list_categories);
+$smarty->assign_by_ref('list_categories', $list_categories);
+
+$quicktags = $quicktagslib->list_quicktags($offset, $maxRecords, $sort_mode, $find, ( $category == '' ? array_keys($list_categories) : $category ) );
 $smarty->assign_by_ref('quicktags', $quicktags["data"]);
+$smarty->assign('cant', $quicktags['cant']);
 
 $icon_path = array("images","img/icons","img/icn", "pics/icons");
 $list_icons = $quicktagslib->list_icons($icon_path);
 $smarty->assign_by_ref('list_icons', $list_icons);
 
-//Need a method to find out, which quicktags are used in Tiki
-$list_categories = array('wiki', 'newsletters', 'maps', 'trackers', 'calendar', 'blogs', 'articles', 'faqs', 'forums');
-$smarty->assign_by_ref('list_categories', $list_categories);
 
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
@@ -122,5 +125,3 @@ if ( $prefs['feature_ajax'] == 'y' ) {
 // Display the template
 $smarty->assign('mid', 'tiki-admin_quicktags.tpl');
 $smarty->display("tiki.tpl");
-
-?>

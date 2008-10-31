@@ -8,13 +8,24 @@
 <td><input type="text" maxlength="255" size="25" name="taglabel" value="{$info.taglabel|escape}" /></td></tr>
 <tr class="formcolor"><td>{tr}Insert (use 'text' for figuring the selection){/tr}:</td>
 
-<td><textarea cols ="50" rows="5" name="taginsert">{$info.taginsert|escape}</textarea></td></tr>
-<tr class="formcolor"><td>{tr}Category{/tr}:</td><td>
-<select name="tagcategory">
-{section name=ct loop=$list_categories}
-<option value="{$list_categories[ct]}" {if $info.tagcategory eq $list_categories[ct]} selected="selected"{/if} >{tr}{$list_categories[ct]}{/tr}</option>
-{/section}
-</select>
+<td><textarea cols ="50" rows="5" name="taginsert">{$info.taginsert|escape}</textarea>
+
+{if $list_categories|@count gt 1}
+</td></tr>
+<tr class="formcolor">
+	<td>{tr}Category{/tr}:</td>
+	<td>
+		<select name="tagcategory">
+		{foreach item=text key=value from=$list_categories}
+			<option value="{$value}"{if $category eq $value} selected="selected"{/if}>{$text}</option>
+		{/foreach}
+		</select>
+{else}
+	{foreach item=text key=value from=$list_categories}
+		<input type="hidden" name="tagcategory" value="{$value}" />
+	{/foreach}
+{/if}
+
 </td></tr>
 <tr class="formcolor"><td>{tr}Path to the tag icon{/tr}:</td><td>
 <select name="tagicon">
