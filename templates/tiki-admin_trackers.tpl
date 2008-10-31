@@ -310,7 +310,6 @@ for a tracker and they must be valid in SQL{/tr}</em>
 <td>{tr}Allows to select each user for small groups{/tr}</td>
 <td>
 <input type="checkbox" name="showeachuser" {if $showeachuser eq 'y'}checked="checked"{/if}></td>
-<td>
 </tr>
 
 <tr class="formcolor"><td></td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
