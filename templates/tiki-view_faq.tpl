@@ -1,8 +1,16 @@
 {title help="FAQs"}{tr}{$faq_info.title}{/tr}{/title}
 
-<span class="button2"><a href="tiki-list_faqs.php">{tr}List FAQs{/tr}</a></span>
-{if $tiki_p_admin_faqs eq 'y'}<span class="button2"><a href="tiki-list_faqs.php?faqId={$faqId}">{tr}Edit this FAQ{/tr}</a></span> {/if}
-{if $tiki_p_admin_faqs eq 'y'}<span class="button2"><a href="tiki-faq_questions.php?faqId={$faqId}">{tr}New Question{/tr}{/if}</a></span><br /><br />
+<div class="navbar">
+	{button href="tiki-list_faqs.php" _text="{tr}List FAQs{/tr}"}
+	
+	{if $tiki_p_admin_faqs eq 'y'}
+		{button href="tiki-list_faqs.php?faqId=$faqId" _text="{tr}Edit this FAQ{/tr}"}
+	{/if}
+	{if $tiki_p_admin_faqs eq 'y'}
+		{button href="tiki-faq_questions.php?faqId=$faqId" _text="{tr}New Question{/tr}"}
+	{/if}
+</div>
+
 <h2>{tr}Questions{/tr}</h2>
 {if !$channels}
 {tr}There are no questions in this FAQ.{/tr}

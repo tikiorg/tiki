@@ -2,10 +2,12 @@
 
 {if $tiki_p_admin_faqs eq 'y'}
   {if $faqId > 0}
-    <h2>{tr}Edit this FAQ:{/tr} {$title}</h2>
-    <span class="button2"><a href="tiki-list_faqs.php">{tr}Create new FAQ{/tr}</a></span>
+		<h2>{tr}Edit this FAQ:{/tr} {$title}</h2>
+		<div class="navbar">
+			{button href="tiki-list_faqs.php" _text="{tr}Create new FAQ{/tr}"} 
+		</div>
   {else}
-  <h2>{tr}Create New FAQ:{/tr}</h2>
+		<h2>{tr}Create New FAQ:{/tr}</h2>
 {/if}
 
 <form action="tiki-list_faqs.php" method="post">

@@ -5,29 +5,25 @@
   <br /><br />
 {/if}
 
-<span class="button2">
-  <a href="tiki-user_tasks.php?show_form=y">{tr}New task{/tr}</a>
-</span>
-<span class="button2">
-  <a href="tiki-user_tasks.php">{tr}Task list{/tr}</a>
-</span>
+<div class="navbar">
+	{button href="tiki-user_tasks.php?show_form=y" _text="{tr}New task{/tr}"}
+	{button href="tiki-user_tasks.php" _text="{tr}Task list{/tr}"}
 
-{if $task_admin}
-{if $admin_mode}
-<span class="button2"><a href="tiki-user_tasks.php?taskId={$taskId}&amp;admin_mode_off=on">{tr}Admin mode off{/tr}</a>
-</span>
-{else}
-<span class="button2"><a href="tiki-user_tasks.php?taskId={$taskId}&amp;admin_mode=on">{tr}Admin mode on{/tr}</a>
-</span>
-{/if}
-{/if}
-<span class="button2"><a href="#" onclick="javascript:flip('edithelpzone'); return false;">{tr}Task help{/tr}</a></span>
+	{if $task_admin}
+		{if $admin_mode}
+			{button href="tiki-user_tasks.php?taskId=$taskId&amp;admin_mode_off=on" _text="{tr}Admin mode off{/tr}"}
+		{else}
+			{button href="tiki-user_tasks.php?taskId=$taskId&amp;admin_mode=on" _text="{tr}Admin mode on{/tr}"}
+		{/if}
+	{/if}
+	
+	{button href="#" _onclick="javascript:flip('edithelpzone'); return false;" _text="{tr}Task help{/tr}"}
 
-{if (not $show_form)} 
-  <span class="button2"><a href="tiki-user_tasks.php?emty_trash=Empty trash">{tr}Empty Trash{/tr}</a></span>
-{/if}
+	{if (not $show_form)} 
+		{button href="tiki-user_tasks.php?emty_trash=Empty trash" _text="{tr}Empty Trash{/tr}"}
+	{/if}
+</div>
 
-<br /><br />
 {* start ************ Search  ***************}
 {if (not $show_form)} 
   {include file='find.tpl' _sort_mode='y'}
