@@ -252,7 +252,7 @@ $smarty->assign('form_sendstructures', $form_sendstructures);
 $smarty->assign('form_sendarticles', $form_sendarticles);
 
 $pages = $tikilib->list_pageNames(0, -1, 'pageName_asc', $find);
-$articles = $tikilib->list_articles(0, -1, 'publishDate_desc', $find, $tikilib->now, $user);
+$articles = $tikilib->list_articles(0, -1, 'publishDate_desc', $find, 0, $tikilib->now, $user);
 $smarty->assign_by_ref('pages', $pages["data"]);
 $smarty->assign_by_ref('articles', $articles["data"]);
 

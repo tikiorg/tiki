@@ -79,18 +79,23 @@ if (!isset($_REQUEST["offset"])) {
 
 $smarty->assign_by_ref('offset', $offset);
 
-if (isset($_SESSION["thedate"])) {
+if ( isset($_REQUEST['date_min']) || isset($_REQUEST['date_max']) ) {
+	$date_min = isset($_REQUEST['date_min']) ? $_REQUEST['date_min'] : 0;
+	$date_max = isset($_REQUEST['date_max']) ? $_REQUEST['date_max'] : $tikilib->now;
+} elseif (isset($_SESSION["thedate"])) {
+	$date_min = 0;
 	if ($_SESSION["thedate"] < $tikilib->now) {
-		$pdate = $_SESSION["thedate"];
+		$date_max = $_SESSION["thedate"];
 	} else {
 		if ($tiki_p_admin == 'y' || $tiki_p_admin_cms == 'y') {
-			$pdate = $_SESSION["thedate"];
+			$date_max = $_SESSION["thedate"];
 		} else {
-			$pdate = $tikilib->now;
+			$date_max = $tikilib->now;
 		}
 	}
 } else {
-	$pdate = $tikilib->now;
+	$date_min = 0;
+	$date_max = $tikilib->now;
 }
 
 if (isset($_REQUEST["find"])) {
@@ -131,7 +136,7 @@ if (!isset($_REQUEST['lang'])) {
 }
 
 // Get a list of last changes to the Wiki database
-$listpages = $tikilib->list_articles($offset, $prefs['maxArticles'], $sort_mode, $find, $pdate, $user, $type, $topic, 'y', $topicName, $categId, '', '', $_REQUEST['lang']);
+$listpages = $tikilib->list_articles($offset, $prefs['maxArticles'], $sort_mode, $find, $date_min, $date_max, $user, $type, $topic, 'y', $topicName, $categId, '', '', $_REQUEST['lang']);
 if ($prefs['feature_multilingual'] == 'y') {
 	include_once("lib/multilingual/multilinguallib.php");
 	$listpages['data'] = $multilinguallib->selectLangList('article', $listpages['data']);

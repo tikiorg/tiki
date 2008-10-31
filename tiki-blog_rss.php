@@ -73,7 +73,7 @@ if ($output["data"]=="EMPTY") {
 	$titleId = "title";
 	$readrepl = "tiki-view_blog_post.php?$id=%s&postId=%s";
 
-	$changes = $bloglib -> list_blog_posts($_REQUEST["$id"], 0, $prefs['max_rss_blog'], $dateId.'_desc', '', $tikilib->now);
+	$changes = $bloglib -> list_blog_posts($_REQUEST["$id"], 0, $prefs['max_rss_blog'], $dateId.'_desc', '', '', $tikilib->now);
 	$tmp = array();
 	foreach ($changes["data"] as $data)  {
 		$data["$descId"] = $tikilib->parse_data($data["$descId"]);

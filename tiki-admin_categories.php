@@ -439,7 +439,7 @@ $trackers = $trklib->list_trackers(0, -1, 'name_asc', $find_objects);
 $smarty->assign_by_ref('trackers', $trackers["data"]);
 
 
-$articles = $tikilib->list_articles(0, -1, 'title_asc', $find_objects, '', $user, '', '', 'n');
+$articles = $tikilib->list_articles(0, -1, 'title_asc', $find_objects, '', '', $user, '', '', 'n');
 $smarty->assign_by_ref('articles', $articles["data"]);
 
 $directories = $dirlib->dir_list_all_categories(0, -1, 'name_asc', $find_objects);

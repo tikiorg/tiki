@@ -131,7 +131,7 @@ case 'quiz':
 	break;
 
 case 'article':
-	$objects = $tikilib->list_articles(0, -1, 'title_asc', $find_objects, '', $user);
+	$objects = $tikilib->list_articles(0, -1, 'title_asc', $find_objects, '', '', '', $user);
 
 	$smarty->assign_by_ref('objects', $objects["data"]);
 	$objects = $objects['data'];

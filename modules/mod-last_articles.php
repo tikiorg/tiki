@@ -31,7 +31,7 @@ if (isset($module_params['showDate']) && $module_params['showDate'] == 'y') {
 	$smarty->assign('showDate','y');
 }
 
-$ranking = $tikilib->list_articles(0,$module_rows,'publishDate_desc', '', date("U"), '', $mod_type, $mod_topicId, 'y', $mod_topic, $categId, '', '', $l);
+$ranking = $tikilib->list_articles(0,$module_rows,'publishDate_desc', '', '', date("U"), '', $mod_type, $mod_topicId, 'y', $mod_topic, $categId, '', '', $l);
 if (isset($module_params['showHeading']) && $module_params['showHeading'] != 'n') {
 	if ($module_params['showHeading'] == 'y')
 		$module_params['showHeading'] = -1;

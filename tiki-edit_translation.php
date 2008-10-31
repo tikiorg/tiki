@@ -82,7 +82,7 @@ else if ($_REQUEST['id']) {
 		$type = "article";
 		$objId = $_REQUEST['id'];
 		$langpage = $info['lang'];
-		$articles = $tikilib->list_articles(0, -1, 'title_asc', '', '', $user);
+		$articles = $tikilib->list_articles(0, -1, 'title_asc', '', '', '', $user);
 		$smarty->assign_by_ref('articles', $articles["data"]);
 	}
 }

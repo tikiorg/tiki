@@ -30,7 +30,7 @@ function smarty_function_article($params, &$smarty)
     } else {
 		$skip = array();
     }
-    $list_articles = $tikilib->list_articles(0, $max, 'publishDate_desc', '', '', '', '', '', 1);
+    $list_articles = $tikilib->list_articles(0, $max, 'publishDate_desc', '', '', '', '', '', '', 1);
 
     $x = "";
 

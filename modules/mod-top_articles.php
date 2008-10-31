@@ -6,7 +6,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-$ranking = $tikilib->list_articles(0, $module_rows, 'nbreads_desc', '', '', $user);
+$ranking = $tikilib->list_articles(0, $module_rows, 'nbreads_desc', '', '', '', $user);
 
 $smarty->assign('modTopArticles', $ranking["data"]);
 $smarty->assign('nonums', isset($module_params["nonums"]) ? $module_params["nonums"] : 'n');
