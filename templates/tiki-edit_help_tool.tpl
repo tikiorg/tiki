@@ -101,7 +101,7 @@ function taginsert(area_name,tagid)
   {else}
 	style="float: right; border-left: medium double lightgrey; padding-left:8px; margin-left:8px"
   {/if}>
-	<a href="tiki-admin_quicktags.php" onclick="needToConfirm = true;">{icon _id='wrench' alt="{tr}Admin Quicktags{/tr}"}</a>
+	<a href="tiki-admin_quicktags.php{if isset($section)}?category={$section|escape:'url'}{/if}" onclick="needToConfirm = true;">{icon _id='wrench' alt="{tr}Admin Quicktags{/tr}"}</a>
   </div>
   {/if}
 
