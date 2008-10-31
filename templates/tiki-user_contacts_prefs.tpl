@@ -3,7 +3,7 @@
 <!-- this bar is created by a ref to {include file=tiki-mytiki_bar.tpl} :) -->
 {include file=tiki-mytiki_bar.tpl}
 <div class="navbar">
-	<span class="button2"><a href="tiki-contacts.php" title="{tr}Contacts{/tr}">{tr}Contacts{/tr}</a></span>
+	{button href="tiki-contacts.php" _text="{tr}Contacts{/tr}"}
 </div>
 
 <table class="admin" style="clear:both;"><tr><td>

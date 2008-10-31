@@ -1,15 +1,14 @@
 {* $Id$ *}
 {title}{tr}Directory batch upload{/tr}{/title}
 
-<span class="button2">
-{if $galleryId ne ''}
-<a href="{$galleryId|sefurl:gallery}">
-{else}
-<a href="tiki-galleries.php">
-{/if}
-{tr}Browse gallery{/tr}</a></span>
-<span class="button2"><a href="tiki-upload_image.php">{tr}Upload from disk{/tr}</a></span>
-<br /><br />
+<div class="navbar">
+	{if $galleryId ne ''}
+		{button href="tiki-browse_gallery.php?galleryId=$galleryId" _text="{tr}Browse gallery{/tr}"}
+	{else}
+		{button href="tiki-galleries.php" _text="{tr}Browse gallery{/tr}"}
+	{/if}
+	{button href="tiki-upload_image.php" _text="{tr}Upload from disk{/tr}"}
+</div>
 
 {if count($feedback)}<div class="simplebox highlight">{section name=i loop=$feedback}{$feedback[i]}<br />{/section}</div>{/if}
 

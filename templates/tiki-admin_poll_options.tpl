@@ -1,19 +1,21 @@
 {title url="tiki-admin_poll_options.php?pollId=$pollId"}{tr}Admin Polls:{/tr} {$menu_info.title}{/title}
 
-<span class="button2"><a href="tiki-admin_polls.php">{tr}List polls{/tr}</a></span>
-<span class="button2"><a href="tiki-admin_polls.php?pollId={$pollId}">{tr}Edit this poll{/tr}</a></span>
-<br />
+<div class="navbar">
+	{button href="tiki-admin_polls.php" _text="{tr}List polls{/tr}"}
+	{button href="tiki-admin_polls.php?pollId=$pollId" _text="{tr}Edit this poll{/tr}"}
+</div>
+
 <h2>{tr}Preview poll{/tr}</h2>
 <div align="center">
-<div style="text-align:left;width:130px;" class="cbox">
-<div class="cbox-title">{$menu_info.name}</div>
-<div class="cbox-data">
-{include file=tiki-poll.tpl}
+	<div style="text-align:left;width:130px;" class="cbox">
+		<div class="cbox-title">{$menu_info.name}</div>
+		<div class="cbox-data">
+			{include file=tiki-poll.tpl}
+		</div>
+	</div>
 </div>
-</div>
-</div>
-<br />
 
+<br />
 
 <h2>{if $optionId eq ''}{tr}Add poll option{/tr}{else}{tr}Edit poll option{/tr}{/if}</h2>
 <form action="tiki-admin_poll_options.php" method="post">

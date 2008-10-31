@@ -5,8 +5,9 @@
 {/if}
 
 <div class="navbar">
-<a href="tiki-user_assigned_modules.php?recreate=1">{tr}Restore defaults{/tr}</a>
+	{button href="tiki-user_assigned_modules.php?recreate=1" _text="{tr}Restore defaults{/tr}"}
 </div>
+
 <h2>{tr}User assigned modules{/tr}</h2>
 <table >
 <tr>

@@ -1,14 +1,14 @@
 {title}{tr}Directory batch upload{/tr}{/title}
 
-<span class="button2">
-{if $galleryId ne ''}
-<a href="tiki-list_file_gallery.php?galleryId={$galleryId}">
-{else}
-<a href="tiki-list_file_gallery.php">
-{/if}
-{tr}Browse file gallery{/tr}</a></span>
-<span class="button2"><a href="tiki-upload_file.php?galleryId={$galleryId}">{tr}Upload from disk{/tr}</a></span>
-<br />
+<div class="navbar">
+	{if $galleryId ne ''}
+		{button href="tiki-list_file_gallery.php?galleryId=$galleryId" _text="{tr}Browse file gallery{/tr}"}
+	{else}
+		{button href="tiki-list_file_gallery.php" _text="{tr}Browse file gallery{/tr}"}
+	{/if}
+	{button href="tiki-upload_file.php?galleryId=$galleryId" _text="{tr}Upload from disk{/tr}"}
+</div>
+
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Please do not use this feature to upload data into the database.{/tr}{/remarksbox}
 
 {if count($feedback)}<div class="simplebox highlight">{section name=i loop=$feedback}{$feedback[i]}<br />{/section}</div>{/if}
