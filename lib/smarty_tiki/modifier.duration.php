@@ -17,7 +17,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 function smarty_modifier_duration($string, $long=true)
 {
   $result=Array();
-  if($string > 60*60*24) {
+  if($string >= 60*60*24) {
     $days = floor($string/(60*60*24));
     if ($days > 1) {
 	$s = tra('days');
@@ -32,7 +32,7 @@ function smarty_modifier_duration($string, $long=true)
     $result[]="$days$s";
     $string = $string % (60*60*24);
   }
-  if($string > 60*60) {
+  if($string >= 60*60) {
     $hours = floor($string/(60*60));
     if ($hours > 1) {
 	$s = tra('hours');
@@ -47,7 +47,7 @@ function smarty_modifier_duration($string, $long=true)
     $result[]="$hours$s";
     $string = $string % (60*60);
   }
-  if($string > 60 && ($long || (!$long && empty($days)))) {
+  if($string >= 60 && ($long || (!$long && empty($days)))) {
     $mins = floor($string/(60));
     if ($mins > 1) {
 	$s = tra('mins');
