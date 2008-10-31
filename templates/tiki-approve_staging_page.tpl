@@ -1,18 +1,24 @@
 {title}{tr}Approve page changes in staging:{/tr} {$page|escape:"url"}{/title}
 
-<div class="navbar"><a href="tiki-index.php?page={$page|escape:url}" title="{tr}View{/tr}">{tr}View page{/tr}</a></div>
-<br />
-<div class="simplebox highlight">{icon _id=accept alt="{tr}Page has been approved{/tr}" style="vertical-align:middle"} {tr}Page has been approved{/tr}</div>
-<br />
+<div class="navbar">
+	{assign var=thispage value=$page|escape:url}
+	{button href="tiki-index.php?page=$thispage" _text="{tr}View page{/tr}"}
+</div>
+
+<div class="simplebox highlight">
+	{icon _id=accept alt="{tr}Page has been approved{/tr}" style="vertical-align:middle"} {tr}Page has been approved{/tr}
+</div>
+
+
 {if $staging_atts|count >= 1 || $atts|count >=1}
-{if  count($staging_atts) >= 1}
-	<h2>{tr}New attachments{/tr}</h2>
-	{include file="attachments.tpl" atts=$staging_atts target='_blank' attach_box="n"}
-{/if}
-{if count($atts) >= 1}
-	<h2>{tr}Old attachments{/tr}</h2>
-	{include file="attachments.tpl" atts=$atts target='_blank'  attach_box="n"}
-{/if}
+	{if  count($staging_atts) >= 1}
+		<h2>{tr}New attachments{/tr}</h2>
+		{include file="attachments.tpl" atts=$staging_atts target='_blank' attach_box="n"}
+	{/if}
+	{if count($atts) >= 1}
+		<h2>{tr}Old attachments{/tr}</h2>
+		{include file="attachments.tpl" atts=$atts target='_blank'  attach_box="n"}
+	{/if}
 {/if}
 
 <h2>{tr}History{/tr}</h2>

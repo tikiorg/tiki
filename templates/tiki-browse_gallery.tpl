@@ -4,36 +4,42 @@
 {title}{tr}Browsing Gallery:{/tr} {$name}{/title}
 
 <div class="navbar">
-{if $tiki_p_list_image_galleries eq 'y'}
-<span class="button2"><a href="tiki-galleries.php" title="{tr}List Galleries{/tr}">{tr}List Galleries{/tr}</a></span>
-{/if}
-{if $system eq 'n'}
-  {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
-    <span class="button2"><a href="tiki-galleries.php?edit_mode=1&amp;galleryId={$galleryId}">{tr}Edit Gallery{/tr}</a></span>
-    <span class="button2"><a href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;rebuild={$galleryId}">{tr}Rebuild Thumbnails{/tr}</a></span>
-  {/if}
-  {if $tiki_p_upload_images eq 'y'}
-    {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner) or $public eq 'y'}
-      <span class="button2"><a href="tiki-upload_image.php?galleryId={$galleryId}">{tr}Upload Image{/tr}</a></span>
-    {/if}
-  {/if}
-  {if $prefs.feature_gal_batch eq "y" and $tiki_p_batch_upload_image_dir eq 'y'}
-    {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner) or $public eq 'y'}
-      <span class="button2"><a href="tiki-batch_upload.php?galleryId={$galleryId}">{tr}Directory batch{/tr}</a></span>
-    {/if}
-  {/if}
-  {if $tiki_p_assign_perm_image_gallery eq 'y'}
-  	  <span class="button2"><a href="tiki-objectpermissions.php?objectName={$name|escape:"url"}&amp;objectType=image+gallery&amp;permType=image+galleries&amp;objectId={$galleryId}">{tr}Perms{/tr}</a></span>
-  {/if}
-{/if}
+	{if $tiki_p_list_image_galleries eq 'y'}
+		{button href="tiki-galleries.php" _text="{tr}List Galleries{/tr}"}
+	{/if}
+	{if $system eq 'n'}
+		{if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
+			{button href="tiki-galleries.php?edit_mode=1&amp;galleryId=$galleryId" _text="{tr}Edit Gallery{/tr}"}
+			{button href="tiki-browse_gallery.php?galleryId=$galleryId&amp;rebuild=$galleryId" _text="{tr}Rebuild Thumbnails{/tr}"}
+		{/if}
+		
+		{if $tiki_p_upload_images eq 'y'}
+			{if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner) or $public eq 'y'}
+				{button href="tiki-upload_image.php?galleryId=$galleryId" _text="{tr}Upload Image{/tr}"}
+			{/if}
+		{/if}
+		
+		{if $prefs.feature_gal_batch eq "y" and $tiki_p_batch_upload_image_dir eq 'y'}
+			{if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner) or $public eq 'y'}
+				{button href="tiki-batch_upload.php?galleryId=$galleryId" _text="{tr}Directory batch{/tr}"}
+			{/if}
+		{/if}
+		
+		{if $tiki_p_assign_perm_image_gallery eq 'y'}
+			{assign var=thisname value=$name|escape:"url"}
+			{button href="tiki-objectpermissions.php?objectName=$thisname&amp;objectType=image+gallery&amp;permType=image+galleries&amp;objectId=$galleryId"	_text="{tr}Perms{/tr}"}
+		{/if}
+	{/if}
 
-{if $tiki_p_admin_galleries eq 'y'}
-<span class="button2"><a href="tiki-list_gallery.php?galleryId={$galleryId}">{tr}List Gallery{/tr}</a></span>
-<span class="button2"><a href="tiki-show_all_images.php?id={$galleryId}">{tr}All Images{/tr}</a></span>
-{/if}
-{if $prefs.rss_image_gallery eq 'y'}
-  <span class="button2"><a href="tiki-image_gallery_rss.php?galleryId={$galleryId}">{tr}RSS{/tr}</a></span>
-{/if}
+	{if $tiki_p_admin_galleries eq 'y'}
+		{button href="tiki-list_gallery.php?galleryId=$galleryId" _text="{tr}List Gallery{/tr}"}
+		{button href="tiki-show_all_images.php?id=$galleryId" _text="{tr}All Images{/tr}"}
+	{/if}
+
+	{if $prefs.rss_image_gallery eq 'y'}
+		{button href="tiki-image_gallery_rss.php?galleryId=$galleryId" _text="{tr}RSS{/tr}"}
+	{/if}
+	
 	{if $user and $prefs.feature_user_watches eq 'y'}
 		{if $user_watching_gal eq 'n'}
 			<a href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;watch_event=image_gallery_changed&amp;watch_object={$galleryId}&amp;watch_action=add" title="{tr}Monitor this Gallery{/tr}" class="icon">{icon _id='eye' alt="{tr}Monitor this Gallery{/tr}"}</a>

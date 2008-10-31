@@ -3,21 +3,24 @@
 {title url="tiki-blog_post.php?blogId=$blogId&postId=$postId"}{tr}Edit Post{/tr}{/title}
 
 <div class="navbar">
-{if $prefs.feature_wysiwyg eq 'y' and $prefs.wysiwyg_optional eq 'y'}
-{if $wysiwyg ne 'y'}
-<span class="button2"><a href="tiki-blog_post.php?{if $blogId ne ''}blogId={$blogId}&amp;{/if}{if $postId ne ''}&amp;postId={$postId}{/if}&amp;wysiwyg=y">{tr}Use wysiwyg editor{/tr}</a></span>
-{else}
-<span class="button2"><a href="tiki-blog_post.php?{if $blogId ne ''}blogId={$blogId}&amp;{/if}{if $postId ne ''}&amp;postId={$postId}{/if}&amp;wysiwyg=n">{tr}Use normal editor{/tr}</a></span>
-{/if}
-{/if}
-{if $blogId > 0 }
-<span class="button2"><a href="{$blogId|sefurl:blog}">{tr}View Blog{/tr}</a></span>
-{/if}
-<span class="button2"><a href="tiki-list_blogs.php">{tr}List Blogs{/tr}</a></span>
+	{if $prefs.feature_wysiwyg eq 'y' and $prefs.wysiwyg_optional eq 'y'}
+		{if $wysiwyg ne 'y'}
+			{button href="tiki-blog_post.php?wysiwyg=y" _auto_args='blogId,postId' _text="{tr}Use Wysiwyg Editor{/tr}"}
+		{else}
+			{button href="tiki-blog_post.php?wysiwyg=n" _auto_args='blogId,postId' _text="{tr}Use Normal Editor{/tr}"}
+		{/if}
+	{/if}
+	
+	{if $blogId > 0 }
+		{assign var=thisblog value=$blogId|sefurl:blog}
+		{button href=$thisblog _text="{tr}View Blog{/tr}"}
+	{/if}
+	
+	{button href="tiki-list_blogs.php" _text="{tr}List Blogs{/tr}"}
 </div>
 
 {if $contribution_needed eq 'y'}
-<div class="simplebox highlight">{tr}A contribution is mandatory{/tr}</div>
+	<div class="simplebox highlight">{tr}A contribution is mandatory{/tr}</div>
 {/if}
 {if $preview eq 'y'}
 	{include file=tiki-preview_post.tpl}
