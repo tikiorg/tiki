@@ -27,7 +27,7 @@ $sections = array(
 		'objectType' =>'blog post',
 		'itemObjectType' => 'blog post',
 		'commentsFeature' => 'feature_blog_comments',
-		'itemCommentsFeature' => 'feature_blogposts_comments',
+		'itemCommentsFeature' => 'feature_blogposts_comments'
 	),
 	// tra('File Gallery')
 	// tra('File')
@@ -64,7 +64,7 @@ $sections = array(
 		'key' => 'articleId',
 		'itemkey' => '',
 		'objectType' => 'article',
-		'commentsFeature' => 'feature_article_comments',
+		'commentsFeature' => 'feature_article_comments'
 	),
 	// tra('Tracker')
 	'trackers' => array(
@@ -158,10 +158,12 @@ $sections = array(
 		'key' => '',
 		'itemkey' => '',
 	),
+	// tra('Map')
 	'maps' => array(
 		'feature' => 'feature_maps',
 		'key' => 'mapId',
 		'itemkey' => '',
+		'objectType' => 'map',
 	),
 	'gmaps' => array(
 		'feature' => 'feature_gmap',
@@ -187,6 +189,12 @@ $sections = array(
 	),
 	'swffix' => array(
 		'feature' => 'feature_swffix',
+	),
+	// tra('Newsletter')
+	'newsletters' => array(
+		'feature' => 'feature_newsletters',
+		'key' => 'nlId',
+		'objectType' => 'newsletter',
 	),
 );
 
