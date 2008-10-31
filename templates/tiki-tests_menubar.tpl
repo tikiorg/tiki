@@ -17,17 +17,18 @@
 {/if}
 <div class="navbar">
 	{if $tiki_p_admin_tikitests eq 'y' or $tiki_p_play_tikitests eq 'y'}
-	<a href="tiki_tests/tiki-tests_list.php">{tr}List TikiTests{/tr}</a>
+		{button href="tiki_tests/tiki-tests_list.php" _text="{tr}List TikiTests{/tr}"}
 	{/if}
+
 	{if $tiki_p_admin_tikitests eq 'y' or $tiki_p_edit_tikitests eq 'y'}
-	<a href="tiki_tests/tiki-tests_record.php">{tr}Create a TikiTest{/tr}</a>
+		{button href="tiki_tests/tiki-tests_record.php" _text="{tr}Create a TikiTest{/tr}"}
 	{/if}
 	{if $filename neq '' and ($tiki_p_admin_tikitests eq 'y' or $tiki_p_play_tikitests eq 'y')}
-	{assign var=path value="$tikiroot tiki_tests/tiki-tests_edit.php"|replace:' ':''}
-	{if $smarty.server.SCRIPT_NAME eq "$tikiroot tiki_tests/tiki-tests_edit.php"|replace:' ':''}
-	<a href="tiki_tests/tiki-tests_replay.php?filename={$filename}&amp;action={tr}Config{/tr}">{tr}Replay the TikiTest{/tr}</a>
-	{elseif $smarty.server.SCRIPT_NAME eq "$tikiroot tiki_tests/tiki-tests_replay.php"|replace:' ':''}
-	<a href="tiki_tests/tiki-tests_edit.php?filename={$filename}">{tr}Edit the TikiTest{/tr}</a>
-	{/if}
+		{assign var=path value="$tikiroot tiki_tests/tiki-tests_edit.php"|replace:' ':''}
+		{if $smarty.server.SCRIPT_NAME eq "$tikiroot tiki_tests/tiki-tests_edit.php"|replace:' ':''}
+			{button href="tiki_tests/tiki-tests_replay.php?filename=$filename&amp;action=Config" _text="{tr}Replay the TikiTest{/tr}"}
+		{elseif $smarty.server.SCRIPT_NAME eq "$tikiroot tiki_tests/tiki-tests_replay.php"|replace:' ':''}
+			{button href="tiki_tests/tiki-tests_edit.php?filename=$filename" _text="{tr}Edit the TikiTest{/tr}"}
+		{/if}
 	{/if}
 </div>

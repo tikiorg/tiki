@@ -3,9 +3,9 @@
 {title help="Blogs"}{tr}Blogs{/tr}{/title}
 
 <div class="navbar">
-  <a href="tiki-edit_blog.php">{tr}Edit Blog{/tr}</a>
-  <a href="tiki-blog_post.php">{tr}Post{/tr}</a>
-  <a href="tiki-list_blogs.php">{tr}List Blogs{/tr}</a>
+	{button href="tiki-edit_blog.php" _text="{tr}Edit Blog{/tr}"}
+	{button href="tiki-blog_post.php" _text="{tr}Post{/tr}"}
+	{button href="tiki-list_blogs.php" _text="{tr}List Blogs{/tr}"}
 </div>
 
 {if $listpages or ($find ne '')}

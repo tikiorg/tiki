@@ -5,18 +5,18 @@
 </div>
 
 <div class="navbar">
-{if $system eq 'n'}
-  {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
-    <a  href="tiki-galleries.php?edit_mode=1&amp;galleryId={$galleryId}">{tr}Edit Gallery{/tr}</a>
-    <a href="tiki-list_gallery.php?galleryId={$galleryId}&amp;rebuild={$galleryId}">{tr}Rebuild Thumbnails{/tr}</a>
-  {/if}
-  {if $tiki_p_upload_images eq 'y'}
-    {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner) or $public eq 'y'}
-        <a href="tiki-upload_image.php?galleryId={$galleryId}">{tr}Upload Image{/tr}</a>
-    {/if}
-  {/if}
-{/if}
-<a href="{$galleryId|sefurl:gallery}">{tr}Browse Gallery{/tr}</a>
+	{if $system eq 'n'}
+		{if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
+			{button href="tiki-galleries.php?edit_mode=1&galleryId=$galleryId" _text="{tr}Edit Gallery{/tr}"}
+			{button href="tiki-list_gallery.php?galleryId=$galleryId&rebuild=$galleryId" _text="{tr}Rebuild Thumbnails{/tr}"}
+		{/if}
+		{if $tiki_p_upload_images eq 'y'}
+			{if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner) or $public eq 'y'}
+					{button href="tiki-upload_image.php?galleryId=$galleryId" _text="{tr}Upload Image{/tr}"}
+			{/if}
+		{/if}
+	{/if}
+	{button href="tiki-browse_gallery.php?galleryId=$galleryId" _text="{tr}Browse Gallery{/tr}"}
 </div>
 
 <h2>{tr}Gallery Images{/tr}</h2>

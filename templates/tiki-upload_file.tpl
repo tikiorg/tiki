@@ -5,13 +5,24 @@
 {if !empty($galleryId) or (count($galleries) > 0 and $tiki_p_list_file_galleries eq 'y') or count($uploads) > 0}
 <div class="navbar">
 	{if !empty($galleryId)}
-		<a href="tiki-list_file_gallery.php?galleryId={$galleryId}{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}">{tr}Browse Gallery{/tr}</a>
+		{if $filegals_manager neq ''}
+			{assign var=fgmanager value=$filegals_manager|escape}
+			{button href="tiki-list_file_gallery.php?galleryId=$galleryId&amp;filegals_manager=$fmanager" _text="{tr}Browse Gallery{/tr}"}
+		{else}
+			{button href="tiki-list_file_gallery.php?galleryId=$galleryId" _text="{tr}Browse Gallery{/tr}"}
+		{/if}
 	{/if}
+
 	{if count($galleries) > 0 and $tiki_p_list_file_galleries eq 'y'}
-		<a href="tiki-list_file_gallery.php{if $filegals_manager neq ''}?filegals_manager={$filegals_manager|escape}{/if}">{tr}List Galleries{/tr}</a>
+		{if $filegals_manager neq ''}
+			{assign var=fgmanager value=$filegals_manager|escape}
+			{button href="tiki-list_file_gallery.php?filegals_manager=$fgmanager" _text="{tr}List Galleries{/tr}"}
+		{else}
+			{button href="tiki-list_file_gallery.php" _text="{tr}List Galleries{/tr}"}
+		{/if}
 	{/if}
 	{if count($uploads) > 0}
-		<a href="#upload" title="{tr}Upload File{/tr}">{tr}Upload File{/tr}</a>
+		{button href="#upload" _text="{tr}Upload File{/tr}"}
 	{/if}
 </div>
 {/if}
