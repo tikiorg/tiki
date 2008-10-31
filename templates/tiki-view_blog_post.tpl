@@ -1,7 +1,7 @@
 {title help="Blogs"}{tr}Viewing blog post{/tr} - {$blog_data.title}{/title}
 
 <div class="navbar">
-  <a href="tiki-view_blog.php?find={$find}&amp;blogId={$blogId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}">{tr}Return to blog{/tr}</a>
+	{button href="tiki-view_blog.php" _auto_args="find,blogId,offset,sort_mode" _text="{tr}Return to blog{/tr}"}
 </div>
 
 <div class="posthead">

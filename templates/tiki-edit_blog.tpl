@@ -5,9 +5,12 @@
 {/if}
 
 <div class="navbar">
-  <a href="tiki-list_blogs.php">{tr}List Blogs{/tr}</a>
-  
-  {if $blogId > 0}<a href="{$blogId|sefurl:blog}">{tr}View Blog{/tr}</a>{/if}
+	{button href="tiki-list_blogs.php" _text="{tr}List Blogs{/tr}"}
+	 
+  {if $blogId > 0}
+		{assign var=thisblogId value=$blogId|sefurl:blog}
+		{button href=$thisblogId _text="{tr}View Blog{/tr}"}
+	{/if}
 </div>
 
 {if $category_needed eq 'y'}

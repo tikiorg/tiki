@@ -3,16 +3,22 @@
 {title help="Image+Galleries" admpage="gal"}{tr}Galleries{/tr}{/title}
 
 {if $tiki_p_create_galleries eq 'y'}
-{if $edit_mode ne 'y' or $galleryId ne 0}<div class="navbar"><a href="tiki-galleries.php?edit_mode=1&amp;galleryId=0">{tr}Create New Gallery{/tr}</a></div>{/if}
+
+{if $edit_mode ne 'y' or $galleryId ne 0}
+	<div class="navbar">
+		{button href="?edit_mode=1&amp;galleryId=0" _text="{tr}Create New Gallery{/tr}"}
+	</div>
+{/if}
+
 {if $edit_mode eq 'y'}
-{if $galleryId eq 0}
-<h2>{tr}Create a gallery{/tr}</h2>
-{else}
-<h2>{tr}Edit this gallery:{/tr} {$name}</h2>
-{/if}
-{if $category_needed eq 'y'}
-<div class="simplebox highlight">{tr}A category is mandatory{/tr}</div>
-{/if}
+	{if $galleryId eq 0}
+		<h2>{tr}Create a gallery{/tr}</h2>
+	{else}
+		<h2>{tr}Edit this gallery:{/tr} {$name}</h2>
+	{/if}
+	{if $category_needed eq 'y'}
+		<div class="simplebox highlight">{tr}A category is mandatory{/tr}</div>
+	{/if}
 
 <div{* style="text-align: center"*}>
 {if $individual eq 'y'}
