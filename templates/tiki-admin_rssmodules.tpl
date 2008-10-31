@@ -32,19 +32,19 @@
 <tr><td class="formcolor">{tr}Refresh rate{/tr}:</td>
 <td class="formcolor">
 <select name="refresh">
-<option value="1" {if $refresh eq 60}selected="selected"{/if}>1 {tr}minute{/tr}</option>
-<option value="5" {if $refresh eq 300}selected="selected"{/if}>5 {tr}minutes{/tr}</option>
-<option value="10" {if $refresh eq 600}selected="selected"{/if}>10 {tr}minutes{/tr}</option>
-<option value="15" {if $refresh eq 900}selected="selected"{/if}>15 {tr}minutes{/tr}</option>
-<option value="20" {if $refresh eq 1200}selected="selected"{/if}>20 {tr}minutes{/tr}</option>
-<option value="30" {if $refresh eq 1800}selected="selected"{/if}>30 {tr}minutes{/tr}</option>
-<option value="45" {if $refresh eq 2700}selected="selected"{/if}>45 {tr}minutes{/tr}</option>
-<option value="60" {if $refresh eq 3600}selected="selected"{/if}>1 {tr}hour{/tr}</option>
-<option value="90" {if $refresh eq 5400}selected="selected"{/if}>1.5 {tr}hours{/tr}</option>
-<option value="120" {if $refresh eq 7200}selected="selected"{/if}>2 {tr}hours{/tr}</option>
-<option value="360" {if $refresh eq 21600}selected="selected"{/if}>6 {tr}hours{/tr}</option>
-<option value="720" {if $refresh eq 43200}selected="selected"{/if}>12 {tr}hours{/tr}</option>
-<option value="1440" {if $refresh eq 86400}selected="selected"{/if}>1 {tr}day{/tr}</option>
+<option value="1" {if $refresh eq 60}selected="selected"{/if}>{60|duration}</option>
+<option value="5" {if $refresh eq 300}selected="selected"{/if}>{300|duration}</option>
+<option value="10" {if $refresh eq 600}selected="selected"{/if}>{600|duration}</option>
+<option value="15" {if $refresh eq 900}selected="selected"{/if}>{900|duration}</option>
+<option value="20" {if $refresh eq 1200}selected="selected"{/if}>{1200|duration}</option>
+<option value="30" {if $refresh eq 1800}selected="selected"{/if}>{1800|duration}</option>
+<option value="45" {if $refresh eq 2700}selected="selected"{/if}>{2700|duration}</option>
+<option value="60" {if $refresh eq 3600}selected="selected"{/if}>{3600|duration}</option>
+<option value="90" {if $refresh eq 5400}selected="selected"{/if}>{5400|duration}</option>
+<option value="120" {if $refresh eq 7200}selected="selected"{/if}>{7200|duration}</option>
+<option value="360" {if $refresh eq 21600}selected="selected"{/if}>{21600|duration}</option>
+<option value="720" {if $refresh eq 43200}selected="selected"{/if}>{43200|duration}</option>
+<option value="1440" {if $refresh eq 86400}selected="selected"{/if}>{86400|duration}</option>
 </select>
 </td></tr>
 <tr><td class="formcolor">{tr}show feed title{/tr}:</td><td class="formcolor"><input type="checkbox" name="showTitle" {if $showTitle eq 'y'}checked="checked"{/if} /></td></tr>
@@ -59,11 +59,11 @@
 {/if}
 <table class="normal">
 <tr>
-<th><a href="tiki-admin_rssmodules.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'rssId_desc'}rssId_asc{else}rssId_desc{/if}">{tr}ID{/tr}</a></th>
-<th><a href="tiki-admin_rssmodules.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></th>
-<th><a href="tiki-admin_rssmodules.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastUpdated_desc'}lastUpdated_asc{else}lastUpdated_desc{/if}">{tr}Last update{/tr}</a></th>
-<th><a href="tiki-admin_rssmodules.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastUpdated_desc'}showTitle_asc{else}showTitle_desc{/if}">{tr}Show Title?{/tr}</a></th>
-<th><a href="tiki-admin_rssmodules.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'refresh_desc'}showPubDate_asc{else}showPubDate_desc{/if}">{tr}Show Date?{/tr}</a></th>
+<th>{self_link _sort_arg='sort_mode' _sort_field='rssId'}{tr}ID{/tr}{/self_link}</th>
+<th>{self_link _sort_arg='sort_mode' _sort_field='name'}{tr}Name{/tr}{/self_link}</th>
+<th>{self_link _sort_arg='sort_mode' _sort_field='lastUpdated'}{tr}Last update{/tr}{/self_link}</th>
+<th>{self_link _sort_arg='sort_mode' _sort_field='showTitle'}{tr}Show Title?{/tr}{/self_link}</th>
+<th>{self_link _sort_arg='sort_mode' _sort_field='showPubDate'}{tr}Show Date?{/tr}{/self_link}</th>
 <th>{tr}Action{/tr}</th>
 </tr>
 {cycle values="even,odd" print=false}
@@ -75,19 +75,7 @@ Size: {$channels[user].size} kb<br />
 </td>
 <td class="{cycle advance=false}">{if $channels[user].lastUpdated eq '1000000'}{tr}Never{/tr}{else}{$channels[user].lastUpdated|tiki_short_datetime}{/if}<br />
 Refresh rate: 
-{if $channels[user].minutes eq 1}1 {tr}minute{/tr}
-{elseif $channels[user].minutes eq  5}5 {tr}minutes{/tr}
-{elseif $channels[user].minutes eq  10}10 {tr}minutes{/tr}
-{elseif $channels[user].minutes eq  15}15 {tr}minutes{/tr}
-{elseif $channels[user].minutes eq  20}20 {tr}minutes{/tr}
-{elseif $channels[user].minutes eq  30}30 {tr}minutes{/tr}
-{elseif $channels[user].minutes eq  45}45 {tr}minutes{/tr}
-{elseif $channels[user].minutes eq  60}1 {tr}hour{/tr}
-{elseif $channels[user].minutes eq  90}1.5 {tr}hours{/tr}
-{elseif $channels[user].minutes eq  120}2 {tr}hours{/tr}
-{elseif $channels[user].minutes eq  360}6 {tr}hours{/tr}
-{elseif $channels[user].minutes eq  720}12 {tr}hours{/tr}
-{elseif $channels[user].minutes eq  3600}1 {tr}day{/tr}{/if}
+{$channels[user].refresh|duration}
 </td>
 <td class="{cycle advance=false}" style="text-align:center">{$channels[user].showTitle}</td>
 <td class="{cycle advance=false}" style="text-align:center">{$channels[user].showPubDate}</td>
@@ -102,23 +90,7 @@ Refresh rate:
 {/section}
 </table>
 
-<br />
-<div class="mini">
-{if $prev_offset >= 0}
-[<a class="prevnext" href="tiki-admin_rssmodules.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}Prev{/tr}</a>]&nbsp;
-{/if}
-{tr}Page{/tr}: {$actual_page}/{$cant_pages}
-{if $next_offset >= 0}
-&nbsp;[<a class="prevnext" href="tiki-admin_rssmodules.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}Next{/tr}</a>]
-{/if}
-{if $prefs.direct_pagination eq 'y'}
-<br />
-{section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
-<a class="prevnext" href="tiki-admin_rssmodules.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
-{$smarty.section.foo.index_next}</a>&nbsp;
-{/section}
-{/if}
-</div>
+{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
+
 </div>
 

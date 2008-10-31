@@ -11,6 +11,8 @@ require_once ('tiki-setup.php');
 
 include_once ('lib/rss/rsslib.php');
 
+$auto_query_args = array('rssId', 'offset','maxRecords','sort_mode','find');
+
 if (!isset($rsslib)) {
 	$rsslib = new RssLib($dbTiki);
 }
@@ -135,22 +137,8 @@ $smarty->assign('find', $find);
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 $channels = $rsslib->list_rss_modules($offset, $maxRecords, $sort_mode, $find);
 
-$cant_pages = ceil($channels["cant"] / $maxRecords);
-$smarty->assign_by_ref('cant_pages', $cant_pages);
-$smarty->assign('actual_page', 1 + ($offset / $maxRecords));
-
-if ($channels["cant"] > ($offset + $maxRecords)) {
-	$smarty->assign('next_offset', $offset + $maxRecords);
-} else {
-	$smarty->assign('next_offset', -1);
-}
-
-// If offset is > 0 then prev_offset
-if ($offset > 0) {
-	$smarty->assign('prev_offset', $offset - $maxRecords);
-} else {
-	$smarty->assign('prev_offset', -1);
-}
+$cant = $channels['cant'];
+$smarty->assign_by_ref('cant', $cant);
 
 $temp_max = count($channels["data"]);
 for ($i = 0; $i < $temp_max; $i++) {
