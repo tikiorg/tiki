@@ -1,8 +1,11 @@
 {title}{tr}Tag translation{/tr}{if isset($data)}: {$data.pageName}{/if}{/title}
 
 {if isset($data)}
-<span class="button2"><a href="tiki-index.php?page={$objId}">View page</a></span>
+	<div class="navbar">
+		{button  href="tiki-index.php?page=$objId" _text="{tr}View page{/tr}"}
+	</div>
 {/if}
+
 	<p>{tr}Note that tags that were created on pages with no language set will remain
 	universal (i.e. is the same tag in all languages) until a language has been set for the tag.{/tr}
 	{tr}Until then, they cannot be translated.{/tr}</p>
@@ -27,7 +30,9 @@
 	{/literal}
 	//--><!]]>
 	</script>
-	<span class="button2"><a href="javascript:show_cleartra_checkboxes()" id="scblink">{tr}Show checkboxes to clear language information on tags{/tr}</a></span>
+		
+{button _onclick="javascript:show_cleartra_checkboxes()" id="scblink" _text="{tr}Show checkboxes to clear language information on tags{/tr}"}
+
 <table id="tagtranslationtable">
 	<thead>
 		<tr>

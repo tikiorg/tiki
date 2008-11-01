@@ -1,11 +1,13 @@
 {title help="i18n" admpage="i18n"}{tr}Translate:{/tr}&nbsp;{$name}{if isset($languageName)}&nbsp;({$languageName}, {$langpage}){/if}{/title}
 
-{if $type eq 'wiki page'}
-  <span class="button2"><a href="tiki-index.php?page={$name|escape:'url'}&bl=n">{tr}View Page{/tr}</a></span>
-{else}
-  <span class="button2"><a href="tiki-read_article.php?articleId={$id}">{tr}View Article{/tr}</a></span>
-{/if}
-
+<div class="navbar">
+	{if $type eq 'wiki page'}
+		{assign var=thisname value=$name|escape:'url'}
+		{button href="tiki-index.php?page=$thisname&bl=n" _text="{tr}View Page{/tr}"}
+	{else}
+		{button href="tiki-read_article.php?articleId=$id" _text="{tr}View Article{/tr}"}
+	{/if}
+</div>
 
 {if $error}
 	<div class="simplebox highlight">

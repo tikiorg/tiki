@@ -3,7 +3,10 @@
 
 <h2>{tr}List of types{/tr}</h2>
 
-<span class="button2"><a href="javascript:toggle('wiki-edithelp')">{tr}show help{/tr}</a></span>
+<div class="navbar">
+	{button _onclick="javascript:toggle('wiki-edithelp')" _text="{tr}show help{/tr}"}
+</div>
+
 <div class="wiki-edithelp" id="wiki-edithelp" style="display:none;">
 <b>{tr}Name{/tr}</b> - {tr}Shows up in the drop down list of article types{/tr}<br />
 <b>{tr}Rate{/tr}</b> - {tr}Allow ratings by the author{/tr}<br />

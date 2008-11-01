@@ -1,17 +1,16 @@
 {* $Id$ *}
 
 {title help="mods"}{tr}Tikiwiki Mods{/tr}{/title}
-
-<span class="button2"><a href="tiki-mods_admin.php">{tr}Mods Configuration{/tr}</a></span>
-<span class="button2"><a href="tiki-mods.php?reload=1{$findarg}{$typearg}">{tr}Update remote index{/tr}</a></span>
-<span class="button2"><a href="tiki-mods.php?rebuild=1{$findarg}{$typearg}">{tr}Rebuild local list{/tr}</a></span>
-{if $prefs.feature_mods_provider eq 'y'}
-<span class="button3">
-<span class="button2"><a href="tiki-mods.php?republishall=1{$findarg}{$typearg}">{tr}Republish all{/tr}</a></span>
-<span class="button2"><a href="tiki-mods.php?publishall=1{$findarg}{$typearg}">{tr}Publish all{/tr}</a></span>
-<span class="button2"><a href="tiki-mods.php?unpublishall=1{$findarg}{$typearg}">{tr}Unpublish all{/tr}</a></span>
-</span>
-{/if}
+<div class="navbar">
+	{button href="tiki-mods_admin.php" _text="{tr}Mods Configuration{/tr}"}
+	{button href="tiki-mods.php?reload=1$findarg$typearg" _text="{tr}Update remote index{/tr}"}
+	{button href="tiki-mods.php?rebuild=1$findarg$typearg" _text="{tr}Rebuild local list{/tr}"}
+	{if $prefs.feature_mods_provider eq 'y'}
+		{button href="tiki-mods.php?republishall=1$findarg$typearg" _text="{tr}Republish all{/tr}"}
+		{button href="tiki-mods.php?publishall=1$findarg$typearg" _text="{tr}Publish all{/tr}"}
+		{button href="tiki-mods.php?unpublishall=1$findarg$typearg" _text="{tr}Unpublish all{/tr}"}
+	{/if}
+</div>
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}
     {tr}Tiki "mods" are additional features not included in the public release. Learn more at <a target="tikihelp" href="http://mods.tikiwiki.org">mods.tikiwiki.org</a>.{/tr}

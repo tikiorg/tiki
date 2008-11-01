@@ -2,7 +2,10 @@
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}To use these links, you must assign the featured_links <a class="rbox-link" href="tiki-admin_modules.php">module</a>.{/tr}{/remarksbox}
 
-<span class="button2"><a href="tiki-admin_links.php?generate=1">{tr}Generate positions by hits{/tr}</a></span>
+<div class="navbar">
+	{button href="tiki-admin_links.php?generate=1" _text="{tr}Generate positions by hits{/tr}"}
+</div>
+
 <h2>{tr}List of featured links{/tr}</h2>
 <table class="normal">
 <tr>
