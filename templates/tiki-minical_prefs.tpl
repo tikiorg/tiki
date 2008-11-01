@@ -1,16 +1,14 @@
 {title help="User+Calendar"}{tr}Mini Calendar: Preferences{/tr}{/title}
 
 {include file=tiki-mytiki_bar.tpl}
-<br />
-<table border="0">
-<tr>
-<td><div class="button2"><a href="tiki-minical.php#add">{tr}Add{/tr}</a></div></td>
-<td><div class="button2"><a href="tiki-minical_prefs.php">{tr}Prefs{/tr}</a></div></td>
-<td><div class="button2"><a href="tiki-minical.php?view=daily">{tr}Daily{/tr}</a></div></td>
-<td><div class="button2"><a href="tiki-minical.php?view=weekly">{tr}Weekly{/tr}</a></div></td>
-<td><div class="button2"><a href="tiki-minical.php?view=list">{tr}List{/tr}</a></div></td>
-</tr>
-</table>
+
+<div class="navbar">
+	{button href="tiki-minical.php#add" _text="{tr}Add{/tr} "}
+	{button href="tiki-minical_prefs.php" _text="{tr}Prefs{/tr}"}
+	{button href="tiki-minical.php?view=daily" _text="{tr}Daily{/tr}"}
+	{button href="tiki-minical.php?view=weekly" _text="{tr}Weekly{/tr}"}
+	{button href="tiki-minical.php?view=list" _text="{tr}List{/tr}"}
+</div>
 
 <h2>{tr}Preferences{/tr}</h2>
 <form action="tiki-minical_prefs.php" method="post">

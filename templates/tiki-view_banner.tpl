@@ -1,12 +1,15 @@
 {title help="Banners"}{tr}Banner stats{/tr}{/title}
 
-<span class="button2"><a href="tiki-list_banners.php">{tr}List banners{/tr}</a></span>
-{if $tiki_p_admin_banners eq 'y'}
-  <span class="button2"><a href="tiki-edit_banner.php?bannerId={$bannerId}">{tr}Edit{/tr}</a></span>
-  <span class="button2"><a href="tiki-edit_banner.php">{tr}Create new banner{/tr}</a></span>
-{/if}
+<div class="navbar">
+	{button href="tiki-list_banners.php" _text="{tr}List banners{/tr}"}
+	{if $tiki_p_admin_banners eq 'y'}
+		{button href="tiki-edit_banner.php?bannerId=$bannerId" _text="{tr}Edit{/tr}"}
+		{button href="tiki-edit_banner.php" _text="{tr}Create new banner{/tr}"}
+	{/if}
+</div>
 
 <h2>{tr}Banner Information{/tr}</h2>
+
 <div class="simplebox">
 <table>
 <tr>

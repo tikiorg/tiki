@@ -5,21 +5,19 @@
 {/if}
 
 {if $prefs.feature_ajax ne 'y' && $prefs.feature_mootools ne 'y'}
-{include file=tiki-mytiki_bar.tpl}
+	{include file=tiki-mytiki_bar.tpl}
 {/if}
-<br />
-<table border="0">
-<tr>
-<td><div class="button2"><a href="tiki-minical.php#add">{tr}Add{/tr}</a></div></td>
-<td><div class="button2"><a href="tiki-minical_prefs.php">{tr}Prefs{/tr}</a></div></td>
-<td><div class="button2"><a href="tiki-minical.php?view=daily">{tr}Daily{/tr}</a></div></td>
-<td><div class="button2"><a href="tiki-minical.php?view=weekly">{tr}Weekly{/tr}</a></div></td>
-<td><div class="button2"><a href="tiki-minical.php?view=list">{tr}List{/tr}</a></div></td>
-<td><div class="button2"><a href="tiki-minical_export.php">{tr}Export{/tr}</a></div></td>
-<td><div class="button2"><a href="tiki-minical_prefs.php#import">{tr}Import{/tr}</a></div></td>
-</tr>
-</table>
-<br />
+
+<div class="navbar">
+	{button href="tiki-minical.php#add" _text="{tr}Add{/tr} "}
+	{button href="tiki-minical_prefs.php" _text="{tr}Prefs{/tr}"}
+	{button href="tiki-minical.php?view=daily" _text="{tr}Daily{/tr}"}
+	{button href="tiki-minical.php?view=weekly" _text="{tr}Weekly{/tr}"}
+	{button href="tiki-minical.php?view=list" _text="{tr}List{/tr}"}
+	{button href="tiki-minical_export.php" _text="{tr}Export{/tr}"}
+	{button href="tiki-minical_prefs.php#import" _text="{tr}Import{/tr}"}
+</div>
+
 <table class="normal" >
 <tr>
 	<td class="formcolor">

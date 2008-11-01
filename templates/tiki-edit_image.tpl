@@ -1,8 +1,10 @@
 {title}{tr}Edit Image{/tr}{/title}
 
-<span class="button2"><a href="{$galleryId|sefurl:gallery}">{tr}Return to Gallery{/tr}</a></span>
-<span class="button2"><a href="tiki-browse_image.php?imageId={$imageId}">{tr}Browse Images{/tr}</a></span>
-<br /><br />
+<div class="navbar">
+	{button href="tiki-browse_gallery.php" _auto_args='galleryId' _text="{tr}Return to Gallery{/tr}"}
+	{button href="tiki-browse_image.php?imageId=$imageId" _text="{tr}Browse Images{/tr}"}
+</div>
+
 <div align="center">
 {if $show eq 'y'}
 <br />

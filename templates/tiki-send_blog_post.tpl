@@ -1,9 +1,8 @@
 {title help="Blogs"}{tr}Send blog post{/tr}{/title}
 
-<span class="button2">
-  <a href="tiki-view_blog.php?find={$find}&amp;blogId={$blogId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}">{tr}Return to blog{/tr}</a>
-</span>
-<br /><br />
+<div class="navbar">
+	{button href="tiki-view_blog.php?find=$find&amp;blogId=$blogId&amp;offset=$offset&amp;sort_mode=$sort_mode" _text="{tr}Return to blog{/tr}"}
+</div>
 
 {if $sent eq 'y'}
   <h3>{tr}A link to this post was sent to the following addresses:{/tr}</h3>
