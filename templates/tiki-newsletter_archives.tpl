@@ -1,15 +1,17 @@
 {title help="Newsletters"}{tr}Sent editions{/tr}{if $nl_info}: {$nl_info.name}{/if}{/title}
 
-<span class="button2"><a href="tiki-newsletters.php">{tr}List Newsletters{/tr}</a></span>
-{if $tiki_p_subscribe_newsletters eq "y"}
-  <span class="button2"><a href="tiki-newsletters.php?nlId={$nlId}&amp;info=1">{tr}Subscribe{/tr}</a></span>
-{/if}
-{if $tiki_p_send_newsletters eq "y"}
-  <span class="button2"><a href="tiki-send_newsletters.php?nlId={$nlId}">{tr}Send Newsletters{/tr}</a></span>
-{/if}
-{if $tiki_p_admin_newsletters eq "y"}
-  <span class="button2"><a href="tiki-admin_newsletters.php">{tr}Admin Newsletters{/tr}</a></span>
-{/if}
+<div class="navbar">
+	{button href="tiki-newsletters.php" _text="{tr}List Newsletters{/tr}"}
+	{if $tiki_p_subscribe_newsletters eq "y"}
+		{button href="tiki-newsletters.php?nlId=$nlId&amp;info=1" _text="{tr}Subscribe{/tr}"}
+	{/if}
+	{if $tiki_p_send_newsletters eq "y"}
+		{button href="tiki-send_newsletters.php?nlId=$nlId" _text="{tr}Send Newsletters{/tr}"} 
+	{/if}
+	{if $tiki_p_admin_newsletters eq "y"}
+		{button href="tiki-admin_newsletters.php" _text="{tr}Admin Newsletters{/tr}"}
+	{/if}
+</div>
 
 {if $edition}
 <div class="title">

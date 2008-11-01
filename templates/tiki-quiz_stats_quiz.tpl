@@ -1,14 +1,15 @@
 {title help="Quiz"}{tr}Stats for quiz:{/tr} {$quiz_info.name}{/title}
 
-<span class="button2"><a href="tiki-list_quizzes.php">{tr}List Quizzes{/tr}</a></span>
-<span class="button2"><a href="tiki-quiz_stats.php">{tr}Quiz Stats{/tr}</a></span>
-<span class="button2"><a href="tiki-quiz_stats_quiz.php?quizId={$quizId}">{tr}This Quiz Stats{/tr}</a></span>
-<span class="button2"><a href="tiki-edit_quiz.php?quizId={$quizId}">{tr}Edit this Quiz{/tr}</a></span>
-{if $tiki_p_admin_quizzes eq 'y'}
-  <span class="button2"><a href="tiki-quiz_stats_quiz.php?quizId={$quizId}&amp;clear={$quizId}">{tr}Clear Stats{/tr}</a></span>
-{/if}
-<span class="button2"><a href="tiki-edit_quiz.php">{tr}Admin Quizzes{/tr}</a></span>
-<br /><br />
+<div class="navbar">
+	{button href="tiki-list_quizzes.php" _text="{tr}List Quizzes{/tr}"} 
+	{button href="tiki-quiz_stats.php" _text="{tr}Quiz Stats{/tr}"}
+	{button href="tiki-quiz_stats_quiz.php?quizId=$quizId" _text="{tr}This Quiz Stats{/tr}"}
+	{button href="tiki-edit_quiz.php?quizId=$quizId" _text="{tr}Edit this Quiz{/tr}"} 
+	{if $tiki_p_admin_quizzes eq 'y'}
+		{button href="tiki-quiz_stats_quiz.php?quizId=$quizId&clear=$quizId" _text="{tr}Clear Stats{/tr}"}
+	{/if}
+	{button href="tiki-edit_quiz.php" _text="{tr}Admin Quizzes{/tr}"}
+</div>
 
 <!-- end link buttons -->
 

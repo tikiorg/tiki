@@ -11,22 +11,16 @@
 {else}
     <h2>{tr}Create New Repository{/tr}</h2>
 {/if}
-<div id="page-bar">
-  <table><tr>
-    <td><div class="button2">
-      <a href="tiki-list_integrator_repositories.php">{tr}List Repositories{/tr}</a>
-    </div></td>
-    <td><div class="button2">
-      <a href="tiki-admin_integrator.php">{tr}New Repository{/tr}</a>
-    </div></td>
-    {if isset($repID) and $repID ne '0'}
-    <td><div class="button2">
-      <a href="tiki-integrator.php?repID={$repID|escape}">{tr}View Repository{/tr}</a>
-    </div></td>
-    {/if}
-  </tr></table>
+
+<div class="navbar">
+	{button href="tiki-list_integrator_repositories.php" _text="{tr}List Repositories{/tr}"}
+	{button href="tiki-admin_integrator.php" _text="{tr}New Repository{/tr}"}
+	{if isset($repID) and $repID ne '0'}
+		{assign var=thisrepID value=$repID|escape }
+		{button href="tiki-integrator.php?repID=$thisrepID" _text="{tr}View Repository{/tr}"}
+  {/if}
 </div>
-<br />
+
 
 {* Add form *}
 <form action="tiki-admin_integrator.php" method="post">
