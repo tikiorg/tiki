@@ -1236,6 +1236,7 @@ input[type=submit],
         cursor: pointer;
         display: inline;
         outline: none;
+	line-height: 2em;
 }
 .button a,
 .button a:visited {
