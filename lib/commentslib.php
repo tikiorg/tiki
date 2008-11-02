@@ -305,68 +305,74 @@ class Comments extends TikiLib {
 	if (!$pop3)
 	    return;
 
-	$mailsum = $pop3->numMsg();
-
-	$pop3->disconnect();
-
-	for ($i = 1; $i <= $mailsum; $i++) {
-
-	    // Just changed the code to close and re-open the POP3 session for
-	    // each message; it used to try to retrieve everything in one
-	    // session.
-	    //
-	    // We close and re-open for each message because POP3 won't
-	    // delete mail until the client quits (so you can back out of
-	    // accidental deletions in a real user client).  This doesn't apply
-	    // here, and as it stands if the mailbox gets very full, we end up
-	    // hitting the mailbox over and over without changing anything,
-	    // because eventually the session times out.
-	    //
-	    // As a side effect, $i doesn't really get used (we're always
-	    // retrieving the first message).
-	    //
-	    // -Robin Powell, 8 Nov 2004
-
-	    $pop3->connect($info["inbound_pop_server"]);
-	    $pop3->login($info["inbound_pop_user"], $info["inbound_pop_password"]);
-
-	    $aux = $pop3->getParsedHeaders( 1 );
-
+	$mailSum = $pop3->numMsg();
+	
+	//we don't want the operation to time out... this would result in the same messages being imported over and over...
+	//(messages are only removed from the pop server on a gracefull connection termination... ie .not php or webserver a timeout)
+	//$maximport should be in a admin config screen, but I don't know how to do that yet.
+	$maxImport = 10;
+	if ($mailSum > $maxImport ) $mailSum = $maxImport;
+	
+	for ($i = 1; $i <= $mailSum; $i++) {
+	//echo 'loop ' . $i;
+		
+		$aux = $pop3->getParsedHeaders( $i );
+		
 	    // If the connection is done, or the mail has an error, or whatever,
 	    // we try to delete the current mail (because something is wrong with it)
 	    // and continue on. --rlpowell
 	    if( $aux == FALSE ) {
-		$pop3->deleteMsg( 1 );
-		continue;
+			$pop3->deleteMsg( $i );
+			continue;
 	    }
 
+		//echo '<pre>';
+		//print_r ($aux);
+		//echo '</pre>';
+		
 	    if (!isset($aux['From']))
 	    {
-	    	if( isset($aux['Return-path']) )
-		{
-		    $aux['From'] = $aux['Return-path'];
-		} else {
-		    $aux['From'] = "";
-		    $aux['Return-path'] = "";
-		}
+			if( isset($aux['Return-path']) )
+			{
+				$aux['From'] = $aux['Return-path'];
+			}
+			else
+			{
+				$aux['From'] = "";
+				$aux['Return-path'] = "";
+			}
 	    }
+		
+		//try to get the date from the email:
+		$postDate = strtotime($aux['Date']);
+		if ($postDate == false) $postDate = $this->now;
+		
+		//save the original email address, if we don't get a user match, then we
+		//can at least give some info about the poster.
+		$original_email = $aux["From"];
+		
+		//fix mailman addresses, or there is no chance to get a match
+		$aux["From"] = str_replace(' at ', '@', $original_email);
+		
 
 	    preg_match('/<?([-!#$%&\'*+\.\/0-9=?A-Z^_`a-z{|}~]+@[-!#$%&\'*+\/0-9=?A-Z^_`a-z{|}~]+\.[-!#$%&\'*+\.\/0-9=?A-Z^_`a-z{|}~]+)>?/',$aux["From"],$mail);
 
-	    // If we don't actually have a mail, try again
+	    // should we throw out emails w/ invalid (possibly obfusicated) email addressses?
+		//this should be an admin option, but I don't know how to put it there yet.
+		$throwOutInvalidEmails = false;
 	    if( ! array_key_exists( 1, $mail ) )
 	    {
-	    	continue;
+			if ( $throwOutInvalidEmails ) continue;
 	    }
-
-	    $email = $mail[1];
+		
+	$email = $mail[1];
 			
-	    $full = $pop3->getMsg( 1 );
-	    $message = $pop3->getBody( 1 );
+	    $full = $pop3->getMsg( $i );
+	    $message = $pop3->getBody( $i );
 
-	    // print( "<pre>" );
-	    // print_r( $full );
-	    // print( "</pre>" );
+	    //print( "<pre>" );
+	    //print_r( $full );
+	    //print( "</pre>" );
 
 	    $output = mime::decode($full);
 	    //unset ($parts);
@@ -415,8 +421,8 @@ class Comments extends TikiLib {
 	    // Determine user from email
 	    $userName = $this->getOne("select `login` from `users_users` where `email`=?",array($email));
 
-	    if (!$userName)
-		$user = '';
+		//use anonomus name feature if we don't have a real name
+	    if (!$userName) $anonName = $original_email;
 
 	    // Determine if the thread already exists.
 	    $parentId = $this->getOne(
@@ -432,6 +438,10 @@ class Comments extends TikiLib {
 
 	    if (!$parentId)
 	    {
+/*		
+		This doesn't make any sense to me... why would we say an inbound email is a'thread to discuss a page'?
+		I've updated this to just make a new thread w/ the original email info by seting $parentId = 0
+		
 		// No thread already; create it.
 
 		$temp_msid = '';
@@ -447,12 +457,15 @@ class Comments extends TikiLib {
 
 		// First post is in reply to this one
 		$in_reply_to = $temp_msid;
+*/
+		$parentId = 0;
+
 	    }
 
 	    // post
 	    $threadid = $this->post_new_comment( 'forum:' . $forumId,
 		    $parentId, $userName, $title, $body,
-		    $message_id, $in_reply_to);
+		    $message_id, $in_reply_to, 'n', '', '', '', $anonName, $postDate);
 
 	    $this->register_forum_post($forumId,$parentId);
 
@@ -489,14 +502,9 @@ class Comments extends TikiLib {
 			$title, $message_id, $in_reply_to,
 			$threadid, $parentId);
 	    }
-
-
-		$pop3->deleteMsg( 1 );
-
-	    $pop3->disconnect();
-
+		$pop3->deleteMsg( $i );
 	}
-
+	$pop3->disconnect();
     }
 
     /* queue management */
@@ -655,6 +663,8 @@ class Comments extends TikiLib {
 		.(( $include_archived ) ? '' : ' and (a.`archived` is null or a.`archived`=?)')
 		." and a.`type` $stickytest ?  and a.`objectType` = 'forum'
 		and a.`parentId` = ? $time_cond group by a.`threadId`";
+		
+
 	    if($this->driver != 'sybase') {
 		$query .=",a.`object`,a.`objectType`,a.`parentId`,a.`userName`,a.`commentDate`,a.`hits`,a.`type`,a.`points`,a.`votes`,a.`average`,a.`title`,a.`data`,a.`hash`,a.`user_ip`,a.`summary`,a.`smiley`,a.`message_id`,a.`in_reply_to`,a.`comment_rating` ";
 	    }
@@ -949,6 +959,8 @@ class Comments extends TikiLib {
 			    $result2 = $this->query(
 				'select * from `tiki_comments` where `object`= ? and `objectType` = ? order by commentDate desc',
 				array($res['forumId'], 'forum'));
+
+
 			    $res['lastPostData'] = $result2->fetchRow();
 			    $res['lastPost'] = $res['lastPostData']['commentDate'];
 		    } else {
@@ -1317,11 +1329,13 @@ class Comments extends TikiLib {
     function count_comments($objectId, $approved = 'y') {
 	global $tiki_p_admin_comments;
 
+
 	$object = explode( ":", $objectId, 2);
 	$query = 'select count(*) from `tiki_comments` where `objectType`=?';
 	if ( $object[0] == 'topic' ) {
 		$bindvars = array('forum');
 		$query .= ' and `parentId`=?';
+
 	} else {
 		$bindvars = array($object[0]);
 		$query .= ' and `object`=?';
@@ -1331,9 +1345,12 @@ class Comments extends TikiLib {
 	if ( $tiki_p_admin_comments != 'y' ) {
 		$query .= ' and `approved`=?';
 		$bindvars[] = $approved;
+
+
 	}
 
 	return $this->getOne($query, $bindvars);
+
     }
 
     function count_comments_threads($objectId) {
@@ -1342,10 +1359,10 @@ class Comments extends TikiLib {
 	$cant = $this->getOne($query, $object );
 	return $cant;
     }
+	
     function get_comment_replies($id, $sort_mode, $offset, $orig_offset, $maxRecords, $orig_maxRecords, $threshold = 0, $find = '', $message_id = "", $forum = 0, $approved = 'y' )
     {
 	global $tiki_p_admin_comments;
-
 	$retval = array();
 
 	if( $maxRecords <= 0 && $orig_maxRecords != 0)
@@ -1376,13 +1393,14 @@ class Comments extends TikiLib {
 		$query .= 'and `approved`=? ';
 		$bind[] = $approved;
 	}
-
 	if ($find)
 	{
 	    $findesc = '%' . $find . '%';
+
 	    $query = $query . " and (`title` like ? or `data` like ?) ";
 	    $bind[] = $findesc;
 	    $bind[] = $findesc;
+
 	}
 
 	$query = $query . " order by " . $this->convert_sortmode($sort_mode);
@@ -1549,7 +1567,7 @@ class Comments extends TikiLib {
 	$this->time_control = $time;
     }
 
-    function get_comments($objectId, $parentId, $offset = 0, $maxRecords = 0,
+     function get_comments($objectId, $parentId, $offset = 0, $maxRecords = 0,
 	    $sort_mode = 'commentDate_asc', $find = '', $threshold = 0, $style = 'commentStyle_threaded', $reply_threadId=0, $approved='y')
     {
 	global $userlib, $tiki_p_admin_comments;
@@ -1605,6 +1623,7 @@ class Comments extends TikiLib {
 	    `objectType`=? and `object`=? and `average` < ? $time_cond $queue_cond";
 	$below = $this->getOne($query, $bindvars);
 
+
 	if ($find) {
 	    $findesc = '%' . $find . '%';
 
@@ -1617,12 +1636,10 @@ class Comments extends TikiLib {
 	    $mid = " where tc1.`objectType` = ? and tc1.`object`=? and tc1.`parentId`=? and tc1.`average`>=? ";
 	    $bind_mid=array($object[0], $object[1], (int) $parentId, (int) $threshold);
 	}
-
 	if ( $tiki_p_admin_comments != 'y' ) {
 		$mid .= ' '.$queue_cond;
 		$bind_mid[] = $approved;
 	}
-
 	// $end_time = microtime(true);
 
 	// print "TIME1 in get_comments: ".($end_time - $start_time)."\n";
@@ -1969,13 +1986,16 @@ class Comments extends TikiLib {
 
     function post_new_comment($objectId, $parentId, $userName,
 	    $title, $data, &$message_id, $in_reply_to = '', $type = 'n',
-	    $summary = '', $smiley = '', $contributions = '', $anonymous_name = ''
+	    $summary = '', $smiley = '', $contributions = '', $anonymous_name = '',
+		$postDate = ''
 	    )
     {
 	global $prefs, $tiki_p_admin_comments;
-
+	
+	if ($postDate == '') $postDate = $this->now;
+	
 	if (!$userName) {
-	    $_SESSION["lastPost"] = $this->now;
+	    $_SESSION["lastPost"] = $postDate;
 	}
 
 	if (!isset($_SERVER['REMOTE_ADDR']))
@@ -1988,7 +2008,8 @@ class Comments extends TikiLib {
 
 	if (!$userName) {
 		if ($anonymous_name) {
-			$userName = $anonymous_name . ' ' . tra('(not registered)');
+			//$userName = $anonymous_name . ' ' . tra('(not registered)');
+			$userName = $anonymous_name;
 		} else {
 	    	$userName = tra('Anonymous');
 		}
@@ -2001,7 +2022,7 @@ class Comments extends TikiLib {
 		$query = "update `tiki_user_postings` ".
 		    "set `last`=?, `posts` = `posts` + 1 where `user`=?";
 
-		$this->query($query, array( (int)$this->now, $userName ) );
+		$this->query($query, array( (int)$postDate, $userName ) );
 	    } else {
 		$posts = $this->getOne("select count(*) ".
 			"from `tiki_comments` where `userName`=?",
@@ -2013,7 +2034,7 @@ class Comments extends TikiLib {
 		$query = "insert into 
 		    `tiki_user_postings`(`user`,`first`,`last`,`posts`) 
 		    values( ?, ?, ?, ? )";
-		$this->query($query,  array($userName, (int) $this->now, (int) $this->now,(int) $posts) );
+		$this->query($query,  array($userName, (int) $postDate, (int) $postDate,(int) $posts) );
 	    }
 
 	    // Calculate max
@@ -2071,10 +2092,8 @@ class Comments extends TikiLib {
 
 	// Break out the type and object parameters.
 	$object = explode( ":", $objectId, 2);
-
 	// Handle comments moderation (this should not affect forums and user with admin rights on comments)
 	$approved = ( $tiki_p_admin_comments == 'y' || $object[0] == 'forum' || $prefs['feature_comments_moderation'] != 'y' ) ? 'y' : 'n';
-
 	// If this post was not already found.
 	if (!$result->numRows())
 	{
@@ -2150,8 +2169,9 @@ class Comments extends TikiLib {
 	}
 	function reject_comment($threadId) {
 		return $this->approve_comment($threadId, 'r');
-	}
 
+	}
+	
     function remove_comment($threadId) {
 	if ($threadId == 0)
 		return false;
@@ -2320,7 +2340,6 @@ class Comments extends TikiLib {
 		return $ret;
 	}
 }
-
 function compare_replies($ar1, $ar2) {
     if (($ar1['type'] == 's' && $ar2['type'] == 's') ||
 	    ($ar1['type'] != 's' && $ar2['type'] != 's')) {
