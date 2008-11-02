@@ -11,7 +11,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *
  * special params:
  *    _quicktags: if set to 'y', display quicktags above the textarea
- *    _wikiparsed: y|n|optional_on|optional_off. If set to 'optional_on' or 'optional_off', a checkbox will be added to enable/disable wiki parsing and to show/hide quicktags 
  *
  * usage: {textarea id='my_area' name='my_area'}{tr}My Text{/tr}{/textarea}
  *
@@ -22,11 +21,17 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 	if ( $repeat || $content == '' ) return;
 
 	if ( ! isset($params['_quicktags']) ) $params['quicktags'] = 'n';
+/*
 	if ( ! isset($params['_wikiparsed']) ) {
 		// Quicktags implies wiki parsing
 		$params['_wikiparsed'] = $params['quicktags'];
 	}
+*/
 	if ( ! isset($params['_wysiwyg']) ) $params['_wysiwyg'] = 'n';
+	if ( isset($params['_zoom']) && $params['_zoom'] == 'n' ) {
+		$feature_template_zoom_orig = $prefs['feature_template_zoom'];
+		$prefs['feature_template_zoom'] = 'n';
+	}
 	if ( ! isset($params['_section']) ) {
 		global $section;
 		$params['_section'] = $section;
@@ -39,12 +44,6 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 //		{editform Meat=$pagedata InstanceName='edit' ToolbarSet="Tiki"}
 //		<input type="hidden" name="wysiwyg" value="y" />
 	} else {
-		if ( $params['_wikiparsed'] == 'optional_on' || $params['_wikiparsed'] == 'optional_off' ) {
-			$html .= tra('Allow wiki syntax:')
-				.'<input type="checkbox" name="'.$params['name'].'IsParsed"'
-				.( $params['_wikiparsed'] == 'optional_on' ? ' checked="checked"' : '' )
-				.' onclick="toggleBlock(\'qt'.$params['name'].'\');" /><br />';
-		}
 		if ( $params['_quicktags'] == 'y' ) {
 			include_once ('lib/quicktags/quicktagslib.php');
 			$quicktags = $quicktagslib->list_quicktags(0, -1, 'taglabel_desc', '', $params['_section']);
@@ -72,6 +71,20 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 		$html .= "\n".'<input type="hidden" name="rows" value="'.$params['rows'].'"/>'
 			."\n".'<input type="hidden" name="cols" value="'.$params['cols'].'"/>'
 			."\n".'<input type="hidden" name="wysiwyg" value="'.$params['_wysiwyg'].'" />';
+
+/* Commented because wiki may have to be supported everywhere and is not a user choice. IMO, It complexify the user interface for no good reason.
+		if ( $params['_wikiparsed'] == 'optional_on' || $params['_wikiparsed'] == 'optional_off' ) {
+			$html .= '<input type="checkbox" name="'.$params['name'].'IsParsed"'
+				. ( $params['_wikiparsed'] == 'optional_on' ? ' checked="checked"' : '' )
+				. ' onclick="toggleBlock(\'qt'.$params['name'].'\');" /> '
+				. tra('Allow wiki syntax')
+				. '<br />';
+		}
+*/
+
+		if ( isset($params['_zoom']) && $params['_zoom'] == 'n' ) {
+			$prefs['feature_template_zoom'] = $feature_template_zoom_orig;
+		}
 	}
 
 	return $html;
