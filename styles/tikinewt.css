@@ -299,7 +299,7 @@ div#sitead {
 #sitesearchbar {
 	font-size: .95em;
 	text-align: right;
-	max-width: 300px;
+/*	max-width: 300px;*/
 	float: right; 
 }
 
