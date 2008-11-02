@@ -1,4 +1,4 @@
-{if isset($smarty.request.zoom) && $smarty.request.zoom|cat:'.tpl' eq $smarty.template}
+{if $prefs.feature_template_zoom eq 'y' && isset($smarty.request.zoom) && $smarty.request.zoom|cat:'.tpl' eq $smarty.template}
 	{assign var=zoom_mode value='y'}
 	{popup_init src="lib/overlib.js"}
 {else}
