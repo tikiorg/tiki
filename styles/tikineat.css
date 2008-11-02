@@ -272,6 +272,9 @@ div.opaque {
 	background-color: white;
 	text-align: left;
 }
+.opaque a {
+	text-decoration: none;
+}
 div.box-data {
 	color : black;
 	padding : 5px;
@@ -690,6 +693,8 @@ TD.third {
 	margin : 0 10px;
 	margin-bottom : 3px;
 }
+.pagetitle { text-decoration: none; }
+.pagetitle:hover { text-decoration: underline; }
 
 .link, .gallink, .bloglink, .fgallink, .trailer,
 .opencomlink, .commentslink, .admlink,.forumbutlink {

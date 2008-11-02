@@ -1678,9 +1678,8 @@ span.posthead small {
 
 /***** Forums *****/
 
-div.forumspagetitle {
-
-}
+.pagetitle { text-decoration: none; }
+.pagetitle:hover { text-decoration: underline; }
 
 table.threads {
 	width: 100%;
@@ -2765,9 +2764,11 @@ table.default td {
 }
 .opaque .box-title,
 .opaque .box-data {
-  width: auto;
+	width: auto;
 }
-
+.opaque a {
+	text-decoration: none;
+}
 .sub {
 	padding-left: 5em !important;
 }
