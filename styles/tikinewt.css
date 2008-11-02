@@ -10,7 +10,7 @@ body {
 	font-family: Verdana, Helvetica, Geneva, Arial, sans-serif;
 	margin: 0;
 	padding: 0;
-	font-size: 60% !important;
+	font-size: 70% !important;
 	color: #000;
 }
 
@@ -102,6 +102,7 @@ button,
 input,
 textarea,
 select {
+	font-size: 100% !important;
 	color: #112233;
 	margin: 1px;
 }
@@ -143,10 +144,6 @@ input[type=submit]:hover,
 .button input:hover {
 	background: #FFFFFF;
 	cursor: pointer;
-}
-
-* html .findtable input {
-	font-size: 1em;
 }
 
 fieldset {
@@ -957,15 +954,6 @@ div.heading {
 	margin: 3px 2px;
 }
 
-/*.button {
-	background: #DEE7EC;
-	border: 1px solid #8CACBB;
-	margin: 2px;
-	padding: 0 2px;
-	text-align: center;
-	vertical-align: middle;
-}*/
-
 /* links to view an object from a table listing objects can be generalized to this link */
 a.fgalname {
 	text-decoration: none;
@@ -994,12 +982,7 @@ a.forumnameread {
 
 /* links in table headings */
 
-
-table.findtable {
-	margin-bottom: 1px;
-	padding-bottom: 10px;
-}
-.findtable td { }
+.findtitle {float: left;}
 
 /* Odd rows in several listings */
 tr.odd {
@@ -1224,38 +1207,42 @@ div#page-bar table, div#page-bar td, div#page-bar tr {
 	float: left;
 }
 
-.button3 {
-	border-radius: 5px 5px 0 0;
-	-moz-border-radius: 5px 5px 0 0;
-	-khtml-border-radius: 5px 5px 0 0;
-}
-.button3 a {
-	border-radius: 5px 5px 0 0;
-	-moz-border-radius: 5px 5px 0 0;
-	-khtml-border-radius: 5px 5px 0 0;
-	padding-bottom: 2px;
-	border-bottom: 0;
+.navbar, .findtable {
+	margin: 5px 0px 10px 0px;
 }
 
 /* Links in buttons */
 .button a,
 .button a:visited,
-button {
+button,
+input[type=submit],
+.button input,
+.submitbutton {
+        font-family : Verdana, Helvetica, Geneva, Arial, sans-serif;
 	font-size: .95em;
-	color: #223344;
-	background: #C7D0D9;
-	padding: 0 4px;
-	text-decoration: none;
-	border: 1px solid #999;
-	height: 16px;
-	white-space: nowrap;
-	cursor : pointer;
-	line-height: 170%;
+        font-weight: bold;
+        color: #223344;
+        background-color: #C7D0D9;
+        border: 1px solid #999;
+        padding: 0px 4px;
+        margin-right: 1px;
+        text-decoration: none;
+        white-space: nowrap;
+        cursor: pointer;
+        display: inline;
+        outline: none;
+}
+.button a,
+.button a:visited {
+        padding: 1px 4px;
 }
 
 .button a:hover,
-button:hover {
-	background: #dca;
+button:hover,
+input[type=submit]:hover,
+.button input:hover,
+.submitbutton:hover {
+        background-color: #dca;
 }
 
 .tab1 form {
@@ -1292,14 +1279,12 @@ td.wikicell {
 	background: #F7F9FA;
 }
 div.wikitext {
-	font-size: 1.2em;
 	padding: 10px;
 	clear: both;
 	width: auto;
 }
 
 body.wikitext {
-	font-size: 1.2em;
 	margin: 10px !important;
 	background: #F3F6F9;
 }

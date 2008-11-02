@@ -145,15 +145,6 @@ button, input {
 input[type=checkbox], input[type=radio] {
 	border : 0;
 }
-button, input[type=submit], .button input, .submitbutton {
-	border : 1px solid #46596f;
-	background-color: #C7D0D9;
-	font-weight : bold;
-}
-button:hover, input[type=submit]:hover, .button input:hover, .submitbutton:hover {
-	background-color : #FFFFFF;
-	cursor : pointer;
-}
 fieldset {
 	border: solid 1px #C7D0D9;
 	padding: 10px;
@@ -573,17 +564,42 @@ DIV.heading {
 	margin: 3px 2px;
 }
 
-th.listartheading, th.viewthread {
+.button a,
+.button a:visited,
+button,
+input[type=submit],
+.button input,
+.submitbutton {
+	font-family : Verdana, Helvetica, Geneva, Arial, sans-serif;
+	font-size: 11px;
+	font-weight: bold;
+	color: #223344;
+	background-color: #C7D0D9;
+	border: 1px solid #999;
+	padding: 0px 4px;
+	margin: 1px;
+	text-decoration: none;
+	white-space: nowrap;
+	cursor: pointer;
+	outline: none;
+}
+.button a,
+.button a:visited {
+	padding: 1px 4px;
 }
 
-.button {
-	background-color : #DEE7EC;
-	border : 1px solid #8CACBB;
-	margin: 0px;
-	padding : 0 2px;
-	text-align : center;
-	vertical-align : middle;
+.button a:hover,
+button:hover,
+input[type=submit]:hover,
+.button input:hover,
+.submitbutton:hover {
+	background-color: #dca;
 }
+
+.navbar, .findtable {
+	margin: 5px 0px 10px 0px;
+}
+
 
 /* Links to view an object from a table listing objects can be generalized to this link */
 a.fgalname { text-decoration: none; font-weight: normal; color: #225566 !important; }
@@ -751,47 +767,6 @@ div#page-bar table
 	padding: 0;
 }
 
-/* Wiki action buttons (the buttons displayed at the end of each page to edit/print/remove/etc a page */
-.button2, .button3 {
-	margin : 0;
-	padding : 0;
-}
-.button3 {
-	border-radius : 5px 5px 0 0;
-	-moz-border-radius : 5px 5px 0 0;
-	-khtml-border-radius : 5px 5px 0 0;
-}
-.button3 a {
-	border-radius : 5px 5px 0 0;
-	-moz-border-radius : 5px 5px 0 0;
-	-khtml-border-radius : 5px 5px 0 0;
-	padding-bottom : 2px;
-	border-bottom : 0;
-}
-body .button2 {
-	margin-right : 5px;
-}
-/* Links in buttons */
-.button2 a
-	, .button2 a:visited 
-	,	.navbar a
-	,	.navbar a:visited
-	{
-	font-size : 10px;
-	color : #223344;
-	background-color : #C7D0D9;
-	padding : 0px 4px;
-	text-decoration : none;
-	border : 1px solid #999;
-	height : 16px;
-	white-space : nowrap;
-  cursor  : pointer;
-}
-.button2 a:hover 
-	.	.navbar a:hover
-	{
-	background-color : #dca;
-}
 .tab1 form {
 	display : inline;
 }
@@ -1972,17 +1947,6 @@ div.content .tabs {
 	display : inline;
 	float : right;
 	border-left : 1px dashed #999999;
-}
-.versionav .button2 {
-	display : block;
-	border : 0;
-	border-bottom : 1px dashed #999999;
-	background-color : transparent;
-}
-.versionav .button2 a {
-	border : 0;
-	background-color : inherit;
-	padding : 0 10px;
 }
 .versionav .highlight {
 	background-color : #CCCCCC;
