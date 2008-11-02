@@ -27,7 +27,7 @@
 </tr>
 <tr class="formcolor">
 	<td>{tr}Description{/tr}:</td>
-	<td>{textarea name="description" rows="6" cols="80"}{$info.description|escape}{/textarea}</td>
+	<td>{textarea name="description" rows="6" cols="80" _quicktags='y' _zoom='n'}{$info.description}{/textarea}</td>
 </tr>
 {include file=categorize.tpl}
 <tr class="formcolor">
@@ -64,7 +64,7 @@
 <tr>
 <td class="{cycle advance=false}">{$channels[user].surveyId}</td>
 <td class="{cycle advance=false}">{$channels[user].name}</td>
-<td class="{cycle advance=false}">{$channels[user].description}</td>
+<td class="{cycle advance=false}">{wiki}{$channels[user].description|escape}{/wiki}</td>
 <td style="text-align:center;" class="{cycle advance=false}">
 {if $channels[user].status eq 'o'}
 	{icon _id=ofolder alt="Open"}

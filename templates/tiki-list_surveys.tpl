@@ -30,7 +30,7 @@
 {/if}
 {$channels[user].name}</a>
 </td>
-<td class="{cycle advance=false}">{$channels[user].description}</td>
+<td class="{cycle advance=false}">{wiki}{$channels[user].description|escape}{/wiki}</td>
 <td style="text-align:right;"  class="{cycle advance=false}">{$channels[user].questions}</td>
 
 <td style="text-align:right;"  class="{cycle}">
