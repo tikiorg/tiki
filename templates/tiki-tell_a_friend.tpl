@@ -8,7 +8,9 @@
   {/if}
 {/title}
 
-<span class="button2"><a href="{$url}">{tr}Back{/tr}</a></span>
+<div class="navbar">
+	{button href="$url" _text="{tr}Back{/tr}"}
+</div>
 
 {if isset($sent)}
 <div class="simplebox highlight">{icon _id=accept alt="{tr}OK{/tr}" style="vertical-align:middle" align="left"} 
