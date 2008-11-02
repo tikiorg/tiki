@@ -102,6 +102,7 @@ button,
 input,
 textarea,
 select {
+	font-family: Verdana, Helvetica, Geneva, Arial, sans-serif;
 	font-size: 100% !important;
 	color: #112233;
 	margin: 1px;
