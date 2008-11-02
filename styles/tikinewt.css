@@ -530,9 +530,13 @@ div.menuSection div.separator {
 	font-weight: normal;
 }
 .linkmenu:hover {
-  color: #224466;
+	color: #224466;
 	background: #ddd;
 	letter-spacing: 0;
+}
+.linkmenu,
+.linkmenu:visited {
+	display: block;
 }
 
 .rsslist {
