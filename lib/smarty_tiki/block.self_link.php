@@ -74,7 +74,10 @@ function smarty_block_self_link($params, $content, &$smarty, $repeat = false) {
         if ( $params['_ajax'] == 'y' && $params['_script'] == '' ) {
           require_once $smarty->_get_plugin_filepath('block', 'ajax_href');
           if ( ! isset($params['_htmlelement']) ) $params['_htmlelement'] = 'tiki-center';
-          if ( ! isset($params['_template']) ) $params['_template'] = basename($_SERVER['PHP_SELF'], '.php').'.tpl';
+          if ( ! isset($params['_template']) ) {
+						$params['_template'] = basename($_SERVER['PHP_SELF'], '.php').'.tpl';
+						if ( $params['_template'] == 'tiki-index.tpl' ) $params['_template'] = 'tiki-show_page.tpl';
+					}
           if ( ! file_exists('templates/'.$params['_template']) || $params['_template'] == 'noauto' ) {
             $params['_htmlelement'] = '';
             $params['_template'] = '';
