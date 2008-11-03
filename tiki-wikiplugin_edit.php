@@ -24,7 +24,7 @@ if ($tiki_p_edit != 'y') {
 $content = $_POST['content'];
 $current = $info['data'];
 
-$pos = 0;
+$pos = -1;
 $count = 0;
 while( true )
 {
@@ -131,5 +131,3 @@ while( true )
 
 header( "Location: {$_SERVER['HTTP_REFERER']}" );
 exit;
-
-?>
