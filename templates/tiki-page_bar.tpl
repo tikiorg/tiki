@@ -4,11 +4,8 @@
 <div class="clearfix" id="page-bar">
 {if $edit_page eq 'y'}
   {if $wysiwyg ne 'y' or ($wysiwyg eq 'y' and ($prefs.wysiwyg_wiki_parsed eq 'y' or $prefs.wysiwyg_wiki_semi_parsed eq 'y'))} {* Show this button only in wiki parsing mode *}
-    <span class="button2">
-      <a href="#edithelp" onclick="javascript:show('edithelpzone');hide('wikiplhelp-tab');show('wikihelp-tab'); return true;" name="edithelp">{tr}Wiki Help{/tr}</a>
-	</span><span class="button2">
-      <a href="#edithelp" onclick="javascript:show('edithelpzone');hide('wikihelp-tab');show('wikiplhelp-tab'); return true;" name="edithelp">{tr}Plugin Help{/tr}</a>
-    </span>
+		{button href="#edithelp" _onclick="javascript:show('edithelpzone');hide('wikiplhelp-tab');show('wikihelp-tab'); return true;" name="edithelp"	_text="{tr}Wiki Help{/tr}"}
+		{button href="#edithelp" _onclick="javascript:show('edithelpzone');hide('wikihelp-tab');show('wikiplhelp-tab'); return true;" name="edithelp" _text="{tr}Plugin Help{/tr}"}
   {/if}
 {else}
 
