@@ -85,10 +85,11 @@ function wikiplugin_rss($data,$params) {
 	$repl = '';		
 	$items = array();
 	foreach ( $ids as $val ) {
-		if ( ! ($rssdata = $rsslib->get_rss_module_content($val)) ) {
+		if ( ! ($rss = $rsslib->get_rss_module($val)) ) {
 			$repl = tra('RSS Id incorrect:').' '.$val;
 		}
-		$itemsrss = $rsslib->parse_rss_data($rssdata, $val);
+		$itemsrss = $rsslib->parse_rss_data($rss['content'], $val, $rss);
+
 		$items = array_merge($items, $itemsrss);		
 	}
  

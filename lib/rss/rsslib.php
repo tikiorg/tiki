@@ -455,20 +455,22 @@ class RSSLib extends TikiLib {
 	}
 
 	/* parse xml data and return it in an array */
-	function parse_rss_data($data, $rssId) {
-		$showPubDate = $this->get_rss_showPubDate($rssId);
-		$showTitle = $this->get_rss_showTitle($rssId);
-
+	function parse_rss_data($data, $rssId, $info='') {
 		$news = array();
-
+		if (empty($info)) {
+			$info = $this->get_rss_module($rssId);
+		}
+		if (empty($info)) {
+			return $news;
+		}
 		//Only include the title if the option for doing that (showTitle) has been set.
-		if ($showTitle=="y") {
+		if ($info['showTitle'] == 'y') {
 			// get title and link of the feed:
 			preg_match("/<title>(.*?)<\/title>/i", $data, $title);
 			preg_match("/<link>(.*?)<\/link>/i", $data, $link);
                         
 			// set "y" if title should be shown:
-			$anew["isTitle"]=$showTitle;
+			$anew["isTitle"]=$info['showTitle'];
 			$anew["title"] = "";
 			if (isset($title[1])) { $anew["title"] = $title[1]; }
 			$anew["link"] = "";
@@ -528,7 +530,7 @@ class RSSLib extends TikiLib {
 					$anew["description"] = $description[2][0]; //Because of the CDATA-matching, the index is off by 1.
 				}
 				$anew["pubDate"] = '';
-				if ( isset($pubdate[1][0]) && ($showPubDate == 'y') )
+				if ( isset($pubdate[1][0]) && ($info['showPubDate'] == 'y') )
 				{
 					$anew["pubDate"] = $pubdate[1][0];
 				}
