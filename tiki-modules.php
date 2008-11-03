@@ -160,8 +160,8 @@ for ($mod_counter = 0; $mod_counter < $temp_max; $mod_counter++) {
 			if (file_exists("templates/".$template)) {
 				$data = $smarty->fetch($template);
 			} else {
-				if ($tikilib->is_user_module($mod_reference["name"])) {
-					$info = $tikilib->get_user_module($mod_reference["name"]);
+				$info = $tikilib->get_user_module($mod_reference['name']);
+				if (!empty($info)) {
 					$smarty->assign('user_title', tra($info["title"]));
 					if (isset($info['parse']) && $info["parse"] == 'y')
 						$info["data"] = $tikilib->parse_data($info["data"]);
