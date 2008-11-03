@@ -167,7 +167,8 @@ No mods.
 
 {foreach key=type item=i from=$display}
 <tr><td colspan="{if $prefs.feature_mods_provider eq 'y'}3{else}2{/if}">
-<span class="button2"><a href="tiki-mods.php?type={$type|escape:"url"}{$findarg}" title="{tr}Display only this type{/tr}">{$type}</a></span>
+	{assign var=thistype value=$type|escape:"url"}
+	{button href="tiki-mods.php?type=$thistype$findarg" _title="{tr}Display only this type{/tr}" _text=$type}
 </td><td colspan="7">&nbsp;</td>
 </tr>
 {cycle values="odd,even" print=false}

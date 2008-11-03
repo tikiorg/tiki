@@ -15,20 +15,18 @@
   {/if}
 
   {if $tiki_p_list_trackers eq 'y' or $tiki_p_admin_trackers eq 'y'}
-    <span class="button2"><a href="tiki-list_trackers.php">{tr}List Trackers{/tr}</a></span>
+		{button href="tiki-list_trackers.php" _text="{tr}List Trackers{/tr}"}
   {/if}
 
   {if $tiki_p_view_trackers eq 'y'}
-    <span class="button2">
-      <a href="tiki-view_tracker.php?trackerId={$trackerId}{if $status}&amp;status={$status}{/if}{if $sort_mode}&amp;sort_mode={$sort_mode}{/if}">{tr}View This Tracker's Items{/tr}</a>
-    </span>
+		{button href="tiki-view_tracker.php" _auto_args="trackerId,status,sort_mode" _text="{tr}View This Tracker's Items{/tr}"}
   {/if}
 
   {if $tiki_p_admin_trackers eq 'y'}
     &nbsp;&nbsp;
-    <span class="button2"><a href="tiki-admin_trackers.php">{tr}Admin Trackers{/tr}</a></span>
-    <span class="button2"><a href="tiki-admin_trackers.php?trackerId={$trackerId}">{tr}Edit This Tracker{/tr}</a></span>
-    <span class="button2"><a href="tiki-admin_tracker_fields.php?trackerId={$trackerId}">{tr}Edit Fields{/tr}</a></span>
+		{button href="tiki-admin_trackers.php" _text="{tr}Admin Trackers{/tr}"}
+		{button href="tiki-admin_trackers.php?trackerId=$trackerId" _text="{tr}Edit This Tracker{/tr}"}
+		{button href="tiki-admin_tracker_fields.php?trackerId=$trackerId" _text="{tr}Edit Fields{/tr}"}
   {/if}
 </div>
 

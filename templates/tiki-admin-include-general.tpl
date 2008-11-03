@@ -52,7 +52,13 @@
         <th colspan="2"
             align="center">{tr}General Preferences{/tr}</th>
       </tr>
-	<tr><td style="width:40%" class="form">{tr}Tikiwiki version{/tr} : </td><td class="form">{$tiki_version}<br /><span class="button2"><a href="tiki-install.php">{tr}Reset or upgrade your database{/tr}</a></span></td></tr>
+	<tr>
+		<td style="width:40%" class="form">{tr}Tikiwiki version{/tr} : </td>
+		<td class="form">
+			{$tiki_version}<br />
+			{button href="tiki-install.php" _text="{tr}Reset or upgrade your database{/tr}"}
+		</td>
+	</tr>
 	<tr><td colspan="2"><hr /></td></tr>
 
       <tr>

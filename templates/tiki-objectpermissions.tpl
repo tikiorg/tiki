@@ -168,9 +168,8 @@
 {tr}and also to all pages of the sub-structure:{/tr} <input name="assignstructure" type="checkbox" />
 {/if}
 <br /><br />
-<div class="button2">
-<a href="#" onclick="javascript:flip('edithelpzone'); return false;">{tr}Perms Help{/tr}</a>
-</div>
+
+{button href="#" _onclick="javascript:flip('edithelpzone'); return false;" _text="{tr}Perms Help{/tr}"}
 
 <div class="wiki-edithelp"  id='edithelpzone' >
 {cycle print=false values="even,odd"}
