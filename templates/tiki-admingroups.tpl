@@ -41,7 +41,9 @@
 <div align="center">
 {section name=ini loop=$initials}
 {if $initial and $initials[ini] eq $initial}
-<span class="button2"><span>{$initials[ini]|capitalize}</span></span> . 
+	<span class="button">
+		<span>{$initials[ini]|capitalize}</span>
+	</span> . 
 {else}
 <a href="tiki-admingroups.php?initial={$initials[ini]}{if $find}&amp;find={$find|escape:"url"}{/if}{if $numrows}&amp;numrows={$numrows}{/if}{if $sort_mode}&amp;sort_mode={$sort_mode}{/if}" 
 class="prevnext">{$initials[ini]}</a> . 
@@ -179,7 +181,13 @@ class="prevnext">{tr}All{/tr}</a>
 {/section}
 </select>
 {/if}
-<span class="button2"><a href="{if $grouptrackerid}tiki-admin_tracker_fields.php?trackerId={$grouptrackerid}{else}tiki-admin_trackers.php{/if}">{tr}Admin{/tr} {$ggr}</a></span>
+
+{if $grouptrackerid}
+	{button href="tiki-admin_tracker_fields.php?trackerId=$grouptrackerid" _text="{tr}Admin{/tr} $ggr"}
+{else}
+	{button href="tiki-admin_trackers.php" _text="{tr}Admin{/tr} $ggr"}
+{/if}
+
 </td></tr>
 {/if}
 {if $prefs.userTracker eq 'y'}
@@ -199,7 +207,13 @@ class="prevnext">{tr}All{/tr}</a>
 {/section}
 </select>
 {/if}
-<span class="button2"><a href="{if $userstrackerid}tiki-admin_tracker_fields.php?trackerId={$userstrackerid}{else}tiki-admin_trackers.php{/if}" >{tr}Admin{/tr} {$ugr}</a></span>
+
+{if $userstrackerid}
+	{button href="tiki-admin_tracker_fields.php?trackerId=$userstrackerid" _text="{tr}Admin{/tr} $ugr"}
+{else}
+	{button href="tiki-admin_trackers.php" _text="{tr}Admin{/tr} $ugr"}
+{/if}
+
 </td></tr>
 <tr class="formcolor"><td>{tr}Users Information Tracker Fields Asked at Registration Time<br />(fieldIds separated with :){/tr}</td>
 <td><input type="text" size="40" name="registrationUsersFieldIds" value="{$registrationUsersFieldIds|escape}" /></td></tr>
@@ -217,16 +231,18 @@ class="prevnext">{tr}All{/tr}</a>
 <br /><br />
 
 {if $prefs.groupTracker eq 'y'}
-{if $grouptrackerid and $groupitemid}
-{tr}Group tracker item : {$groupitemid}{/tr} <span class="button2"><a href="tiki-view_tracker_item.php?trackerId={$grouptrackerid}&amp;itemId={$groupitemid}&amp;show=mod">{tr}Edit Item{/tr}</a></span>
-{elseif $grouptrackerid}
-{if $groupfieldid}
-{tr}Group tracker item not found{/tr} <span class="button2"><a href="tiki-view_tracker.php?trackerId={$grouptrackerid}">{tr}Create item{/tr}</a></span>
-{else}
-{tr}choose a field ...{/tr}
-{/if}
-{/if}
-<br /><br />
+	{if $grouptrackerid and $groupitemid}
+		{tr}Group tracker item : {$groupitemid}{/tr} 
+			{button href="tiki-view_tracker_item.php?trackerId=$grouptrackerid&amp;itemId=$groupitemid&amp;show=mod" _text="{tr}Edit Item{/tr}"}
+	{elseif $grouptrackerid}
+		{if $groupfieldid}
+			{tr}Group tracker item not found{/tr}
+			{button href="tiki-view_tracker.php?trackerId=$grouptrackerid" _text="{tr}Create Item{/tr}"}
+		{else}
+			{tr}Choose a field ...{/tr}
+		{/if}
+	{/if}
+	<br /><br />
 {/if}
 </div>
 

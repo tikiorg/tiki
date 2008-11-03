@@ -1,12 +1,14 @@
 <form method="post" action="tiki-admin.php?page=webservices">
-	<div class="button2">
+	<div class="navbar">
 		{foreach from=$webservices item=name}
-			<a href="tiki-admin.php?page=webservices&amp;name={$name|escape}">{$name|escape}</a>
+			{assign var=thisname value=$name|escape}
+			{button href="tiki-admin.php?page=webservices&amp;name=$thisname}" _text=$thisname}
 		{/foreach}
 		{if $storedName}
-		<a href="tiki-admin.php?page=webservices">{tr}Create New{/tr}</a>
+			{button href="tiki-admin.php?page=webservices" _text="{tr}Create New{/tr}"}
 		{/if}
 	</div>
+
 	{if $storedName}
 		<p><strong>{$storedName|escape}</strong>: {$url|escape}<input type="hidden" name="name" value="{$storedName|escape}"/> <a href="tiki-admin.php?page=webservices&amp;name={$storedName|escape}&amp;delete">{icon _id='cross'}</a></p>
 	{else}

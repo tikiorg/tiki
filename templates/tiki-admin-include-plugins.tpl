@@ -1,5 +1,5 @@
 {if $plugins_alias|@count}
-	<div class="button2">
+	<div class="button">
 		<h2>{tr}Available Alias{/tr}</h2>
 		<form method="post" action="tiki-admin.php?page=plugins">
 			{foreach from=$plugins_alias item=name}
@@ -14,11 +14,9 @@
 	</div>
 {/if}
 
-	{if $plugin}
-		<div class="button2">
-			<a href="tiki-admin.php?page=plugins">{tr}New{/tr}</a>
-		</div>
-	{/if}
+{if $plugin}
+	{button href="tiki-admin.php?page=plugins" _text="{tr}New{/tr}"}
+{/if}
 
 <form method="post" action="tiki-admin.php?page=plugins">
 	<table class="normal">
