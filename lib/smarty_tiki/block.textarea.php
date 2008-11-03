@@ -18,7 +18,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 	global $prefs;
-	if ( $repeat || $content == '' ) return;
+	if ( $repeat ) return;
 
 	if ( ! isset($params['_quicktags']) ) $params['quicktags'] = 'n';
 /*
