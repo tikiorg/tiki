@@ -15,11 +15,12 @@
 {/remarksbox}
 
 {if $menuId > 0}
-<h2>{tr}Edit this Menu:{/tr} {$info.name}</h2>
-<span class="button2"><a href="tiki-admin_menus.php">{tr}Create new Menu{/tr}</a></span>
+	<h2>{tr}Edit this Menu:{/tr} {$info.name}</h2>
+	{button href="tiki-admin_menus.php" _text="{tr}Create new Menu{/tr}"}
 {else}
-<h2>{tr}Create new Menu{/tr}</h2>
+	<h2>{tr}Create new Menu{/tr}</h2>
 {/if}
+
 <form action="tiki-admin_menus.php" method="post">
 <input type="hidden" name="menuId" value="{$menuId|escape}" />
 <table class="normal">

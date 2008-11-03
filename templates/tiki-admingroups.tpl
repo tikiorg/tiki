@@ -108,12 +108,14 @@ class="prevnext">{tr}All{/tr}</a>
 {* ----------------------- tab with form --------------------------------------- *}
 <a name="2" ></a>
 <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $prefs.feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
+
 {if $groupname}
-<h2>{tr}Edit group{/tr} {$groupname}</h2>
-<span class="button2"><a href="tiki-assignpermission.php?group={$groupname}">{tr}Assign Permissions{/tr}</a></span>
+	<h2>{tr}Edit group{/tr} {$groupname}</h2>
+	{button href="tiki-assignpermission.php?group=$groupname" _text="{tr}Assign Permissions{/tr}"}
 {else}
-<h2>{tr}Add new group{/tr}</h2>
+	<h2>{tr}Add new group{/tr}</h2>
 {/if}
+
 <form action="tiki-admingroups.php" method="post">
 <table class="normal">
 <tr class="formcolor"><td><label for="groups_group">{tr}Group{/tr}:</label></td><td>{if $groupname neq 'Anonymous' and $groupname neq 'Registered' and $groupname neq 'Admins'}<input type="text" name="name" id="groups_group" value="{$groupname|escape}" />{else}<input type="hidden" name="name" id="groups_group" value="{$groupname|escape}" />{$groupname}{/if}</td></tr>
