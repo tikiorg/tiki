@@ -2140,6 +2140,10 @@ td.eventhumb {
 	border-collapse: collapse;
 	text-align: center;
 }
+div.thumbnailcontenerchecked div.thumbnail {
+	background-color: #adcddd;
+	border-color: #8cacbb;
+}
 
 div.thumbnails {
 	border: 1px solid white;
