@@ -240,7 +240,7 @@ class WikiRenderer
 		global $wikilib, $tiki_p_edit, $tiki_p_remove, $tiki_p_admin_wiki;
 
 		// Verify lock status
-		if($wikilib->is_locked($this->page, $this->info)) {
+		if($wikilib->is_locked($this->page)) {
 			$this->smartyassign('lock',true);  
 		} else {
 			$this->smartyassign('lock',false);
