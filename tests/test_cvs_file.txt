@@ -1,7 +1,7 @@
 $Id$
 this file is used to test commits
 
-"are we really on BRANCH-1-10, mama ?"
+"are we really on branches/2.0, mama ?"
 $Date: $
 $Date$
 $Author$
