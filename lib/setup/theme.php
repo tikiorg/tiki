@@ -49,3 +49,12 @@ if ( $tikidomain and is_file('styles/'.$tikidomain.'/'.$style_base.'/ie6.css') )
 } elseif ( is_file('styles/'.$style_base.'/ie6.css') ) {
 	$style_ie6_css = 'styles/'.$style_base.'/ie6.css';
 }
+// include optional "options" cascading stylesheet if set
+if ( isset($prefs['style_option']) && $prefs['style_option'] != '' ) {
+	if ($tikidomain && is_file('styles/'.$tikidomain.'/'.$style_base.'/options/'.$prefs['style_option']) ) {
+		$headerlib->add_cssfile('styles/'.$tikidomain.'/'.$style_base.'/options/'.$prefs['style_option'], 52);
+	} else if (is_file('styles/'.$style_base.'/options/'.$prefs['style_option'])) {
+		$headerlib->add_cssfile('styles/'.$style_base.'/options/'.$prefs['style_option'], 52);
+	}
+}
+

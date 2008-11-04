@@ -15,6 +15,11 @@ if (isset($_REQUEST["site_style"])) {
     simple_set_value("site_style", "style");
 }
 
+if (isset($_REQUEST["site_style_option"])) {
+    check_ticket('admin-inc-general');
+    simple_set_value("site_style_option", "style_option");
+}
+
 if (isset($_REQUEST["looksetup"])) {
     ask_ticket('admin-inc-look');
 
@@ -107,6 +112,8 @@ if (isset($_REQUEST["looksetup"])) {
 
 $llist = $tikilib->list_styles();
 $smarty->assign_by_ref( "styles", $llist);
+$loplist = $tikilib->list_style_options();
+$smarty->assign_by_ref( "style_options", $loplist);
 
 // Get list of available slideshow styles
 $slide_styles = array();
@@ -120,7 +127,7 @@ closedir ($h);
 
 $smarty->assign_by_ref("slide_styles", $slide_styles);
 
-if ( isset($_REQUEST["site_style"]) ) {
+if ( isset($_REQUEST["site_style"]) || isset($_REQUEST["site_style_option"]) ) {
 	// If the theme has changed, reload the page to use the new theme
 	$location= 'location: tiki-admin.php?page=look';
 	if ($prefs['feature_tabs'] == 'y') {

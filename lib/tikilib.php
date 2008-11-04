@@ -7505,6 +7505,40 @@ class TikiLib extends TikiDB {
 		return $styles;
 	}
 
+	function list_style_options() {
+		global $tikidomain, $prefs;
+
+		$stlstl = split("-|\.", $prefs['style']);
+		$style_base = $stlstl[0];
+		if (!$style_base) {
+			return false;
+		}
+
+		$sty = array();
+
+		/* See $tikidomains note in list_styles() above */
+		$tikidomain_str = "$tikidomain/";
+
+		if (is_dir("styles/$tikidomain_str$style_base/options/")) {
+			$h = opendir("styles/$tikidomain_str$style_base/options/");
+			while ($file = readdir($h)) {
+				if (strstr($file, ".css") and substr($file,0,1) != '.') {
+					$sty["$file"] = 1;
+				}
+			}
+			closedir($h);
+		}
+
+		$styles = array_keys($sty);
+		if (count($styles)) {
+			sort($styles);
+			array_unshift ( $styles, tra('None'));
+			return $styles;
+		} else {
+			return false;
+		}
+	}
+
 	// Comparison function used to sort languages by their name in the
 	// current locale.
 	function formatted_language_compare($a, $b) {

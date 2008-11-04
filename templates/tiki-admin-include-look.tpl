@@ -48,7 +48,19 @@
 							{/section}
 							</select>
 						</td>
-					</tr>
+					</tr>{if $style_options}
+					<tr>
+						<td class="form" >
+							<label for="general-theme">{tr}Theme options{/tr}:</label>
+						</td>
+						<td width="67%">
+							<select name="site_style_option" id="general-theme-options">
+							{section name=ix loop=$style_options}
+								<option value="{$style_options[ix]|escape}"{if $prefs.style_option eq $style_options[ix]} selected="selected"{/if}>{$style_options[ix]}</option>
+							{/section}
+							</select>
+						</td>
+					</tr>{/if}
 					<tr>
 						<td class="form">
 							<label for="general-slideshows">{tr}Slideshows theme{/tr}:</label>
