@@ -97,77 +97,9 @@ $smarty->assign_by_ref('questions', $questions["data"]);
 
 if (isset($_REQUEST["ans"])) {
 	check_ticket('take-survey');
-
-	// Check mandatory fields and min/max number of answers
-	$errors = array();
-	foreach ( $questions["data"] as $question ) {
-		$key = 'question_'.$question['questionId'];
-		$nb_answers = empty($_REQUEST[$key]) ? 0 : 1;
-		$multiple_choice = in_array($question['type'], array('m','g'));
-		if ( $multiple_choice ) {
-			$nb_answers = is_array($_REQUEST[$key]) ? count($_REQUEST[$key]) : 0;
-			if ( $question['max_answers'] < 1 ) $question['max_answers'] = $nb_answers;
-		}
-		$q = '<b>'.htmlentities($question['question']).'</b>';
-		if ( $multiple_choice ) {
-			if ( $question['mandatory'] == 'y' ) $question['min_answers'] = max(1, $question['min_answers']);
-			if ( $question['min_answers'] == $question['max_answers'] && $nb_answers != $question['min_answers'] ) {
-				$errors[] = sprintf(tra('You have to make %d choice(s) for the question "%s".'), $question['min_answers'], $q);
-			} elseif ( $nb_answers < $question['min_answers'] ) {
-				$errors[] = sprintf(tra('You have to make at least %d choice(s) for the question "%s".'), $question['min_answers'], $q);
-			} elseif ( $question['max_answers'] > 0 && $nb_answers > $question['max_answers'] ) {
-				$errors[] = sprintf(tra('You have to make less than %d choice(s) for the question "%s".'), $question['max_answers'], $q);
-			}
-		} elseif ( $question['mandatory'] == 'y' && $nb_answers == 0 ) {
-			$errors[] = sprintf(tra('You have to choose at least %d choice(s) for the question "%s".'), 1, $q)
-				.' "<b>'.htmlentities($question['question']).'</b>';
-		}
-	}
-
-	if ( count($errors) > 0 ) {
-		$error_msg = implode('<br />', $errors);
-	} else {
-		$error_msg = '';
-		foreach ( $questions["data"] as $question ) {
-			$questionId = $question["questionId"];
-
-			if (isset($_REQUEST["question_" . $questionId])) {
-				if ( $question["type"] == 'm' ) {
-
-					// If we have a multiple question
-					$ids = array_keys($_REQUEST["question_" . $questionId]);
-
-					// Now for each of the options we increase the number of votes
-					foreach ( $ids as $optionId ) {
-						$srvlib->register_survey_option_vote($questionId, $optionId);
-					}
-
-				} elseif ( $question["type"] == 'g' ) {
-
-					// If we have a multiple choice of file from a gallery
-					$ids = $_REQUEST["question_" . $questionId];
-
-					// Now for each of the options we increase the number of votes
-					foreach ( $ids as $optionId ) {
-						$srvlib->register_survey_text_option_vote($questionId, $optionId);
-					}
-
-				} else {
-					$value = $_REQUEST["question_" . $questionId];
-
-					if ($question["type"] == 'r' || $question["type"] == 's') {
-						$srvlib->register_survey_rate_vote($questionId, $value);
-					} elseif ($question["type"] == 't' || $question["type"] == 'x') {
-						$srvlib->register_survey_text_option_vote($questionId, $value);
-					} else {
-						$srvlib->register_survey_option_vote($questionId, $value);
-					}
-				}
-			}
-		}
-		$tikilib->register_user_vote($user, 'survey' . $_REQUEST["surveyId"]);
-		header('Location: tiki-list_surveys.php');
-	}
+	$error_msg = '';
+	$srvlib->register_answers($_REQUEST['surveyId'], $questions['data'], $_REQUEST, $error_msg);
+	if ( $error_msg == '' ) header('Location: tiki-list_surveys.php');
 }
 
 include_once ('tiki-section_options.php');

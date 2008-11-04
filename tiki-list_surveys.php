@@ -111,5 +111,3 @@ ask_ticket('list-surveys');
 // Display the template
 $smarty->assign('mid', 'tiki-list_surveys.tpl');
 $smarty->display("tiki.tpl");
-
-?>

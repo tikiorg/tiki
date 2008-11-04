@@ -2,10 +2,10 @@
 	{remarksbox type="warning" title="{tr}Warning{/tr}"}{$error_msg}{/remarksbox}
 	<br />
 {/if}
-<form name="aform" formId='editpageform' action="tiki-take_survey.php" method="post">
+<form name="aform" formId='editpageform' action="{$form_action|default:'tiki-take_survey.php'}" method="post">
 <input type="hidden" name="surveyId" value="{$surveyId|escape}" />
 <input type="hidden" name="vote" value="yes" />
-  <h2>{$survey_info.name}</h2>
+  {if !isset($show_name) or $show_name eq 'y'}<h2>{$survey_info.name}</h2>{/if}
     <div class="quizdescription">{wiki}{$survey_info.description|escape}{/wiki}</div>
     {section name=ix loop=$questions}
     <div class="questionblock">

@@ -317,8 +317,86 @@ class SurveyLib extends TikiLib
 
 		return true;
 	}
+
+	// Check mandatory fields and min/max number of answers and register vote/answers if ok
+	function register_answers($surveyId, $questions, $answers, &$error_msg = null) {
+		if ( $surveyId <= 0 || empty($questions) ) return false;
+
+		$errors = array();
+		foreach ( $questions as $question ) {
+			$key = 'question_'.$question['questionId'];
+			$nb_answers = empty($answers[$key]) ? 0 : 1;
+			$multiple_choice = in_array($question['type'], array('m','g'));
+			if ( $multiple_choice ) {
+				$nb_answers = is_array($answers[$key]) ? count($answers[$key]) : 0;
+				if ( $question['max_answers'] < 1 ) $question['max_answers'] = $nb_answers;
+			}
+			$q = empty($question['question']) ? '.' : ' "<b>'.htmlentities($question['question']).'</b>".';
+			if ( $multiple_choice ) {
+				if ( $question['mandatory'] == 'y' ) $question['min_answers'] = max(1, $question['min_answers']);
+				if ( $question['min_answers'] == $question['max_answers'] && $nb_answers != $question['min_answers'] ) {
+					$errors[] = sprintf(tra('You have to make %d choice(s) for the question'), $question['min_answers']).$q;
+				} elseif ( $nb_answers < $question['min_answers'] ) {
+					$errors[] = sprintf(tra('You have to make at least %d choice(s) for the question'), $question['min_answers']).$q;
+				} elseif ( $question['max_answers'] > 0 && $nb_answers > $question['max_answers'] ) {
+					$errors[] = sprintf(tra('You have to make less than %d choice(s) for the question'), $question['max_answers']).$q;
+				}
+			} elseif ( $question['mandatory'] == 'y' && $nb_answers == 0 ) {
+				$errors[] = sprintf(tra('You have to choose at least %d choice(s) for the question'), 1).$q
+					.' "<b>'.htmlentities($question['question']).'</b>';
+			}
+		}
+	
+		if ( count($errors) > 0 ) {
+			if ( $error_msg !== null ) {
+				$error_msg = implode('<br />', $errors);
+			}
+			return false;
+		} else {
+			foreach ( $questions as $question ) {
+				$questionId = $question["questionId"];
+	
+				if (isset($answers["question_" . $questionId])) {
+					if ( $question["type"] == 'm' ) {
+	
+						// If we have a multiple question
+						$ids = array_keys($answers["question_" . $questionId]);
+	
+						// Now for each of the options we increase the number of votes
+						foreach ( $ids as $optionId ) {
+							$this->register_survey_option_vote($questionId, $optionId);
+						}
+	
+					} elseif ( $question["type"] == 'g' ) {
+
+						// If we have a multiple choice of file from a gallery
+						$ids = $answers["question_" . $questionId];
+	
+						// Now for each of the options we increase the number of votes
+						foreach ( $ids as $optionId ) {
+							$this->register_survey_text_option_vote($questionId, $optionId);
+						}
+	
+					} else {
+						$value = $answers["question_" . $questionId];
+	
+						if ($question["type"] == 'r' || $question["type"] == 's') {
+							$this->register_survey_rate_vote($questionId, $value);
+						} elseif ($question["type"] == 't' || $question["type"] == 'x') {
+							$this->register_survey_text_option_vote($questionId, $value);
+						} else {
+							$this->register_survey_option_vote($questionId, $value);
+						}
+					}
+				}
+			}
+		}
+
+		global $user;
+		$this->register_user_vote($user, 'survey' . $surveyId);
+
+		return true;
+	}
 }
 global $dbTiki;
 $srvlib = new SurveyLib($dbTiki);
-
-?>
