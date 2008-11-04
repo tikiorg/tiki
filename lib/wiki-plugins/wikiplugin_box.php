@@ -64,14 +64,14 @@ function wikiplugin_box($data, $params) {
 	// if (substr($data, 0, 2) == "\r\n") $data = substr($data, 2);
     
 	extract ($params,EXTR_SKIP);
-	$bg   = (isset($bg))    ? " background:$bg;" : "";
+	$bg   = (isset($bg))    ? " background:$bg" : "";
 	$id = (isset($id)) ? " id=\"$id\" ":'';
 	$class = (isset($class))? ' '.$class: ' ';
 	if (isset($float)) {// box without table 
 		$w = (isset($width)) ? " width:$width"  : "";
-		$f = ($float == "left" || $float == "right")? " float:$float;" : "";
-		$c = (isset($clear))    ? " clear:both;" : "";
-		$begin = "<div class='cbox$class' $id style='$bg;$f;$w;$c'>";
+		$f = ($float == "left" || $float == "right")? " float:$float" : "";
+		$c = (isset($clear))    ? " clear:both" : "";
+		$begin = "<div class='cbox$class' $id style='$bg;$f;margin:1em;margin-$float:0;$w;$c'>";
 	} else { // box in a table
 		$w = (isset($width)) ? " width=\"$width\""  : "";
 		$al = (isset($align) && ($align == 'right' || $align == "center")) ? " align=\"$align\"" : "";
