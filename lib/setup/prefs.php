@@ -222,6 +222,7 @@ function get_default_prefs() {
 		'wikiplugin_subscribegroup' => 'y',
 		'wikiplugin_subscribegroups' => 'y',
 		'wikiplugin_sup' => 'y',
+		'wikiplugin_survey' => 'y',
 		'wikiplugin_tag' => 'y',
 		'wikiplugin_thumb' => 'y',
 		'wikiplugin_titlesearch' => 'n',
