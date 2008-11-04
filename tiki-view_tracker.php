@@ -600,7 +600,7 @@ if (isset($_REQUEST['import'])) {
 
 	if ($tiki_p_create_tracker_items == 'y') {
 
-		foreach ( $_REQUEST['checked'] as $user ){
+		foreach ( $_REQUEST['listtoalert'] as $user ){
 		$email=$userlib->get_user_email($user);
 		if ( ! empty($email) ){
   		        include_once ('lib/webmail/tikimaillib.php');

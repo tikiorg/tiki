@@ -106,18 +106,7 @@
 		{capture name=upload_file assign=upload_str}
 		<hr class="clear"/>
 
-{if $groupforalert ne ''}
-{if $showeachuser eq 'y' }
-{tr}Choose users to alert{/tr}
-{/if}
-{section name=idx loop=$listusertoalert}
-{if $showeachuser eq 'n' }
-<input type="hidden"  name="checked[]" value="{$listusertoalert[idx].user}">
-{else}
-<input type="checkbox" name="checked[]" value="{$listusertoalert[idx].user}"> {$listusertoalert[idx].user}
-{/if}
-{/section}
-{/if}
+
 
 		<div class="fgal_file">
 			<div class="fgal_file_c1">
@@ -159,11 +148,13 @@
 				<input type="checkbox" name="isbatch[]" />
 			</td></tr>
 		{/if}
+
 			{if $editFileId}
 				<input type="hidden" name="galleryId" value="{$galleryId}"/>
 				<input type="hidden" name="fileId" value="{$editFileId}"/>
 				<input type="hidden" name="lockedby" value="{$fileInfo.lockedby|escape}" \>
 			{else}
+				{if $groupforalert eq ''}
 				<tr><td>
 					{tr}File Gallery:{/tr}
 				</td><td width="80%">
@@ -175,6 +166,9 @@
 					{/section}
 					</select>
 				</td></tr>
+				{else}
+					<input type="hidden" name="galleryId" value="{$galleryId}"/>
+				{/if}
 			{/if}
 			{if $tiki_p_admin_file_galleries eq 'y'}
 				<tr><td>
@@ -194,6 +188,23 @@
 				</td><td width="80%">
 					<input type="text" name="author[]" value="{$fileInfo.author|escape}" />
 				</td></tr>
+			{/if}
+			{if $groupforalert ne ''}
+				{if $showeachuser eq 'y' }
+					<tr><td>
+						{tr}Choose users to alert{/tr}
+					</td><td width="80%">
+				{/if}
+				{section name=idx loop=$listusertoalert}
+					{if $showeachuser eq 'n' }
+						<input type="hidden"  name="checked[]" value="{$listusertoalert[idx].user}">
+					{else}
+						<input type="checkbox" name="checked[]" value="{$listusertoalert[idx].user}"> {$listusertoalert[idx].user}
+					{/if}
+				{/section}
+				{if $showeachuser eq 'y' }
+					</td></tr>
+				{/if}
 			{/if}
 			</table>
 		</div>

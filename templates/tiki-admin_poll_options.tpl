@@ -23,7 +23,7 @@
 <input type="hidden" name="pollId" value="{$pollId|escape}" />
 <table>
 <tr>
-<td class="form">{tr}Option{/tr}:</td><td><input type="text" name="title" value="{$title|escape}" /></td>
+<td class="form">{tr}Option{/tr}:</td><td><input type="text" name="title" value="{$title|escape}" size=40/></td>
 <td class="form">{tr}Position{/tr}:</td><td><input type="text" name="position" value="{$position|escape}" size="4" /></td>
 <td colspan="2"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>

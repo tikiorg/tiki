@@ -200,7 +200,7 @@ if (isset($_POST['act'])) {
 		if (empty($save['name'])) $save['name'] = tra("event without name");
 
 		$calendarlib->set_item($user,$save['calitemId'],$save);
-		foreach ( $_REQUEST['checked'] as $user ){
+		foreach ( $_REQUEST['listtoalert'] as $user ){
 		$email=$userlib->get_user_email($user);
 		if ( ! empty($email) ){
   		        include_once ('lib/webmail/tikimaillib.php');

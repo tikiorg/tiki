@@ -74,8 +74,7 @@
 
 	<tr>
 	<td class="formcolor">{tr}Allows to select each user for small groups{/tr}</td>
-	<td class="formcolor">
-	<input type="checkbox" name="showeachuser" {if $showeachuser eq 'y'}checked="checked"{/if}/ ></td>
+	<td class="formcolor"><input type="checkbox" name="showeachuser" {if $showeachuser eq 'y'}checked="checked"{/if}/ ></td>
 	</tr>
 
 

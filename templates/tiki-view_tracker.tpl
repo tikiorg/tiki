@@ -26,7 +26,7 @@
 	{if $tiki_p_create_tracker_items eq 'y' && $prefs.feature_tabs ne 'y'}
 		{button href="tiki-view_tracker.php?trackerId=$trackerId#content2" _text="{tr}Insert New Item{/tr}"}
 	{/if}
-	
+
 	{if $filtervalue}
 		{button href="tiki-view_tracker.php?trackerId=$trackerId" _text="{tr}View This Tracker's Items{/tr}"}
 	{/if}
@@ -35,7 +35,7 @@
 		&nbsp;&nbsp;
 		{button href="tiki-admin_trackers.php" _text="{tr}Admin Trackers{/tr}"}
 		{button href="tiki-admin_trackers.php?trackerId=$trackerId" _text={tr}Edit This Tracker{/tr}"}
-		{button href="tiki-admin_tracker_fields.php?trackerId=$trackerId" _text="{tr}Edit Fields{/tr}"} 
+		{button href="tiki-admin_tracker_fields.php?trackerId=$trackerId" _text="{tr}Edit Fields{/tr}"}
 	{/if}
 </div>
 
@@ -522,9 +522,9 @@ document.write('<div  class="categSelectAll"><input type="checkbox" id="clickall
 {/if}
 {section name=idx loop=$listusertoalert}
 {if $showeachuser eq 'n' }
-<input type="hidden"  name="checked[]" value="{$listusertoalert[idx].user}">
+<input type="hidden"  name="listtoalert[]" value="{$listusertoalert[idx].user}">
 {else}
-<input type="checkbox" name="checked[]" value="{$listusertoalert[idx].user}"> {$listusertoalert[idx].user}
+<input type="checkbox" name="listtoalert[]" value="{$listusertoalert[idx].user}"> {$listusertoalert[idx].user}
 {/if}
 {/section}
 </td>

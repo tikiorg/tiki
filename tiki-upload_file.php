@@ -131,12 +131,13 @@ $smarty->assign_by_ref('groupforalert',$groupforalert);
 
 $smarty->assign_by_ref('showeachuser',$showeachuser);
 
-$groupforalert=$groupalertlib->GetGroup ('file gallery',$_REQUEST["galleryId"]);
-
+if (!empty($_REQUEST['galleryId'])) {
+$groupforalert=$groupalertlib->GetGroup ('file gallery',(int)$_REQUEST["galleryId"]);
+}
 
  if ( $groupforalert != "" ) {
- 	$showeachuser=$groupalertlib->GetShowEachUser('file gallery',$_REQUEST["galleryId"], $groupforalert) ;
-  	$listusertoalert=$userlib->get_users(0,-1,'login_asc','','',false,$groupforalert,'') ;
+ 	$showeachuser=$groupalertlib->GetShowEachUser('file gallery',(int)$_REQUEST["galleryId"], $groupforalert) ;
+  	$listusertoalert=$userlib->get_users(0,-1,'login_asc','',''	,false,$groupforalert,'') ;
 	$smarty->assign_by_ref('listusertoalert',$listusertoalert['data']);
  }
 

@@ -333,9 +333,9 @@ onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;">
 {/if}
 {section name=idx loop=$listusertoalert}
 {if $showeachuser eq 'n' }
-<input type="hidden"  name="checked[]" value="{$listusertoalert[idx].user}">
+<input type="hidden"  name="listtoalert[]" value="{$listusertoalert[idx].user}">
 {else}
-<input type="checkbox" name="checked[]" value="{$listusertoalert[idx].user}"> {$listusertoalert[idx].user}
+<input type="checkbox" name="listtoalert[]" value="{$listusertoalert[idx].user}"> {$listusertoalert[idx].user}
 {/if}
 {/section}
 </td>
