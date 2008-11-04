@@ -120,7 +120,9 @@ document.write("<input name=\"switcher\" id=\"clickall2\" title=\"{tr}Select All
 	<th class="auto">
 		{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='f_'|cat:$field_value.fieldId}{$field_value.name|truncate:255:"..."|default:"&nbsp;"}{/self_link}
 	</th>
-	{assign var=rateFieldId value=$field_value.fieldId}
+	{if $field_value.type eq 's' and ($field_value.name eq "Rating" or $field_value.name eq tra("Rating"))}
+		{assign var=rateFieldId value=$field_value.fieldId}
+	{/if}
 {/if}
 {/foreach}
 
