@@ -1,5 +1,10 @@
 <div class='opaque'>
-<div class='box-title'>{$cellhead}
+<div class='box-title'>
+{if $allday}
+	All-Day
+{else}
+	{$cellhead}
+{/if}
 {if $infocals.$cellcalendarId.custompriorities eq 'y' and $cellprio}<span class='calprio{$cellprio}' id='calprio'>{$cellprio}</span>{/if}
 {if $prefs.calendar_sticky_popup eq "y" and $cellid}&nbsp;<a onmouseover="javascript:cClick()" title="{tr}close{/tr}">{html_image file='img/icons/close.gif' alt="{tr}close{/tr}"}</a>{/if}
 </div>

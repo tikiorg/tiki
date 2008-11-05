@@ -233,6 +233,7 @@ for ($i = 0; $i <= $numberofweeks; $i++) {
         $le['visible'] = in_array($le['calendarId'], $visible)? "y": "n";
 				$lec = $infocals['data']["{$le['calendarId']}"];
         $leday["{$le['time']}$e"] = $le;
+        $smarty->assign('allday', $le["result"]["allday"]);
         $smarty->assign('cellcalendarId', $le["calendarId"]);
         $smarty->assign('cellhead', $le["head"]);
         $smarty->assign('cellprio', $le["prio"]);
