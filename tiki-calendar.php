@@ -233,7 +233,6 @@ for ($i = 0; $i <= $numberofweeks; $i++) {
         $le['visible'] = in_array($le['calendarId'], $visible)? "y": "n";
 				$lec = $infocals['data']["{$le['calendarId']}"];
         $leday["{$le['time']}$e"] = $le;
-
         $smarty->assign('cellcalendarId', $le["calendarId"]);
         $smarty->assign('cellhead', $le["head"]);
         $smarty->assign('cellprio', $le["prio"]);
@@ -268,16 +267,24 @@ for ($i = 0; $i <= $numberofweeks; $i++) {
 
 $hrows = array();
 $hours = array();
+$arows = array();
 if ($calendarViewMode == 'day') {
   $hours = range(0,23);
   foreach ($cell[0]["{$weekdays[0]}"]['items'] as $dayitems) {
     $rawhour = intval(substr($dayitems['time'],0,2));
     $dayitems['mins'] = substr($dayitems['time'],2);
-    $hrows["$rawhour"][] = $dayitems;
+    
+    if ($dayitems["result"]["allday"]) {
+    	$arows[] = $dayitems;
+    } else {
+   		$hrows["$rawhour"][] = $dayitems;
+    }
   }
 }
+
 $smarty->assign('hrows', $hrows);
 $smarty->assign('hours', $hours);
+$smarty->assign('arows', $arows);
 $smarty->assign('mrows', array(0=>"00", 5=>"05", 10=>"10", 15=>"15", 20=>"20", 25=>"25", 30=>"30", 35=>"35", 40=>"40", 45=>"45", 50=>"50", 55=>"55"));
 
 $smarty->assign('trunc', $trunc);

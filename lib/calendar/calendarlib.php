@@ -287,7 +287,7 @@ class CalendarLib extends TikiLib {
 
 		$query = "select i.`calitemId` as `calitemId`, i.`calendarId` as `calendarId`, i.`user` as `user`, i.`start` as `start`, i.`end` as `end`, t.`name` as `calname`, ";
 		$query.= "i.`locationId` as `locationId`, l.`name` as `locationName`, i.`categoryId` as `categoryId`, c.`name` as `categoryName`, i.`priority` as `priority`, i.`nlId` as `nlId`, ";
-		$query.= "i.`status` as `status`, i.`url` as `url`, i.`lang` as `lang`, i.`name` as `name`, i.`description` as `description`, i.`created` as `created`, i.`lastmodif` as `lastModif`, ";
+		$query.= "i.`status` as `status`, i.`url` as `url`, i.`lang` as `lang`, i.`name` as `name`, i.`description` as `description`, i.`created` as `created`, i.`lastmodif` as `lastModif`, i.`allday` as `allday`, ";
 		$query.= "t.`customlocations` as `customlocations`, t.`customcategories` as `customcategories`, t.`customlanguages` as `customlanguages`, t.`custompriorities` as `custompriorities`, ";
 		$query.= "t.`customsubscription` as `customsubscription`, ";
 		$query.= "t.`customparticipants` as `customparticipants` ";
@@ -415,7 +415,7 @@ class CalendarLib extends TikiLib {
 		$data['user']=$user;
 
 		$realcolumns=array('calitemId', 'calendarId', 'start', 'end', 'locationId', 'categoryId', 'nlId','priority',
-				   'status', 'url', 'lang', 'name', 'description', 'user', 'created', 'lastmodif');
+				   'status', 'url', 'lang', 'name', 'description', 'user', 'created', 'lastmodif', 'allday');
 		foreach($customs as $custom) $realcolumns[]=$custom;
 
 		if ($calitemId) {
@@ -718,9 +718,8 @@ class CalendarLib extends TikiLib {
 							$lte['desc_name'] .= tra($lte['action']);
 						}
 					}
-	
 					foreach ( $leday as $key => $lte ) {
-
+			
 						if ( $group_by == 'day' ) {
 							$desc = '';
 							foreach ( $lte['description'] as $desc_where => $desc_items ) {
@@ -733,7 +732,6 @@ class CalendarLib extends TikiLib {
 							}
 							$lte['description'] = $desc;
 						}
-	
 						$smarty->assign_by_ref('cellhead', $lte["head"]);
 						$smarty->assign_by_ref('cellprio', $lte["prio"]);
 						$smarty->assign_by_ref('cellcalname', $lte["calname"]);

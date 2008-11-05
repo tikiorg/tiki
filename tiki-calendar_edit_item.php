@@ -164,8 +164,9 @@ if (isset($_POST['act']) || isset($_POST['preview'])) {
 		$_REQUEST['end_date_Month'] = TikiLib::date_format("%m", $save['date_end']);
 		$_REQUEST['end_date_Day'] = TikiLib::date_format("%d", $save['date_end']);
 		$_REQUEST['end_date_Year'] = TikiLib::date_format("%Y", $save['date_end']);
+        
 	}
-
+    $save['allday'] = $_REQUEST['allday'] == 'true' ? 1 : 0;
 	$save['start'] = TikiLib::make_time(
 		$_REQUEST['start_Hour'],
 		$_REQUEST['start_Minute'],
