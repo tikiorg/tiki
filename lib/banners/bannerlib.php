@@ -54,7 +54,7 @@ class BannerLib extends TikiLib {
 
 			break;
 		case 'useFlash':
-			if ($prefs['javascript_enable'] == 'y')
+			if ($prefs['javascript_enabled'] == 'y')
 				$raw = $res['HTMLData'];
 			else
 				$raw = $res['textData'];
