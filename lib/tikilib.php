@@ -4511,6 +4511,13 @@ class TikiLib extends TikiDB {
 					$prefs['style'] = $prefs['site_style'];
 					$_SESSION['s_prefs']['style'] = $prefs['site_style'];
 				}
+			} elseif ( $name == 'theme-option' ) { // FIXME: Remove this exception as well?
+				$prefs['style_option'] = $value;
+				$_SESSION['s_prefs']['style_option'] = $value;
+				if ( $value == '' ) {
+					$prefs['style_option'] = $prefs['site_style_option'];
+					$_SESSION['s_prefs']['style_option'] = $prefs['site_style_option'];
+				}
 			} elseif ( $value == '' ) {
 				if ( in_array($name, $user_overrider_prefs) ) {
 					$prefs[$name] = $prefs['site_'.$name];

@@ -10,10 +10,17 @@ global $prefs, $user;
 if ( isset($_COOKIE['tiki-theme']) && !($prefs['feature_userPreferences'] == 'y' && $user && $prefs['change_theme'] == 'y') ){
 	$style = $_COOKIE['tiki-theme'];
 }
+if ( isset($_COOKIE['tiki-theme-option']) && !($prefs['feature_userPreferences'] == 'y' && $user && $prefs['change_theme'] == 'y') ){
+	$style_option = $_COOKIE['tiki-theme-option'];
+}
 
 $smarty->assign('styleslist',$tikilib->list_styles());
+$smarty->assign_by_ref( "style_options", $tikilib->list_style_options());
 
 if ( isset($style) ) {
 	$smarty->assign('styleName', ereg_replace($tikidomain."/", "", $style));
+}
+if ( isset($style_option) ) {
+	$smarty->assign('styleNameOption', ereg_replace($tikidomain."/", "", $style_option));
 }
 ?>
