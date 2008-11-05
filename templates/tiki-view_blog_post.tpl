@@ -62,7 +62,7 @@
     <p class="editdate">{tr}The content on this page is licensed under the terms of the{/tr} <a href="tiki-index.php?page={$prefs.wikiLicensePage}&amp;copyrightpage={$page|escape:"url"}">{$prefs.wikiLicensePage}</a>.</p>
   {/if}
 {/if}
-<hr/>
+<hr style="clear:both"/>
 <table >
 <tr><td>
 <small>
