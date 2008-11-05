@@ -14,9 +14,4 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 *   from  all blogs
 */
 $ranking = $tikilib->list_posts(0, $module_rows, 'created_desc', '', (isset($module_params["blogid"]) ? $module_params["blogid"] : -1 ) );
-
 $smarty->assign('modLastBlogPosts', $ranking["data"]);
-$smarty->assign('modLastBlogPostsTitle',(isset($module_params["title"])?$module_params["title"]:""));
-$smarty->assign('nonums', isset($module_params["nonums"]) ? $module_params["nonums"] : 'n');
-
-?>
