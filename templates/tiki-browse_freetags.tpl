@@ -37,7 +37,7 @@
         <div class="freetagskeywords">
           <b>{tr}Tags{/tr}</b> 
           <input type="text" id="tagBox" name="tag" size="25" value="{$tagString|escape}" />
-          <span class="button2"><a onclick="clearTags();">{tr}Clear{/tr}</a></span>
+					{button _onclick="clearTags();" _text="{tr}Clear{/tr}"}
           <input type="submit" value="{tr}Go{/tr}" />
           <br />
           <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />

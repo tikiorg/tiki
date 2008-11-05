@@ -13,30 +13,29 @@
 	<table width="97%">
 		<tr>
 			<td>
+				{assign var=thisforum_info value=$forum_info.forumId}
 				{if ($tiki_p_forum_post_topic eq 'y' and ($prefs.feature_wiki_discuss ne 'y' or $prefs.$forumId ne $prefs.wiki_forum_id)) or $tiki_p_admin_forum eq 'y'}
-					<span class="button2">
-						<a href="tiki-view_forum.php?openpost=1&amp;forumId={$forum_info.forumId}&amp;comments_threadId=0&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}" {if !isset($comments_threadId) or $comments_threadId eq 0}onclick="javascript:show('forumpost');return false;"{/if}>{tr}New Topic{/tr}</a>
-					</span>
+					{if !isset($comments_threadId) or $comments_threadId eq 0}
+						{button	href="tiki-view_forum.php?openpost=1&amp;forumId=$thisforum_info&amp;comments_threadId=0&amp;comments_threshold=$comments_threshold&amp;comments_offset=$comments_offset&amp;thread_sort_mode=$thread_sort_mode&amp;comments_per_page=$comments_per_page" _onclick="javascript:show('forumpost');return false;" _text="{tr}New Topic{/tr}"}
+					{else}
+						{button	href="tiki-view_forum.php?openpost=1&amp;forumId=$thisforum_info&amp;comments_threadId=0&amp;comments_threshold=$comments_threshold&amp;comments_offset=$comments_offset&amp;thread_sort_mode=$thread_sort_mode&amp;comments_per_page=$comments_per_page" _onclick="javascript:show('forumpost');return false;" _text="{tr}New Topic{/tr}"}
+					{/if}
 				{/if}
 				{if $tiki_p_admin_forum eq 'y' or !isset($all_forums) or $all_forums|@count > 1 }
 				{* No need for users to go to forum list if they are already looking at the only forum BUT note that all_forums only defined with quickjump feature *}
-					<span class="button2"><a href="tiki-forums.php">{tr}Forum List{/tr}</a></span>
+					{button href="tiki-forums.php" _text="{tr}Forum List{/tr}"}
 				{/if}
 
 				{if $tiki_p_admin_forum eq 'y'}
-					<span class="button2"><a href="tiki-admin_forums.php?forumId={$forum_info.forumId}">{tr}Edit Forum{/tr}</a></span>
+					{button href="tiki-admin_forums.php?forumId=$thisforum_info" _text="{tr}Edit Forum{/tr}"}
 				{/if}
 
 				{if $queued > 0}
-					<span class="button2">
-						<a class="highlight" href="tiki-forum_queue.php?forumId={$forumId}">{tr}Manage Message Queue{/tr}&nbsp;({$queued})</a>
-					</span>
+					{button href="tiki-forum_queue.php?forumId=$forumId" _text="{tr}Manage Message Queue{/tr}&nbsp;($queued)"}
 				{/if}
 
 				{if $reported > 0}
-					<span class="button2">
-						<a class="highlight" href="tiki-forums_reported.php?forumId={$forumId}">{tr}Manage Reported Messages{/tr}&nbsp;({$reported})</a>
-					</span>
+					{button href="tiki-forums_reported.php?forumId=$forumId" _text="{tr}Manage Reported Messages{/tr}&nbsp;($reported)"}
 				{/if}
 			</td>
 			

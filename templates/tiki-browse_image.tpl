@@ -15,11 +15,10 @@
 {else}
   {title}{tr}Browsing Image:{/tr}&nbsp;{$name}{/title}
 <div id="{$rootid}browse_image">
-  <h1><a class="pagetitle pixurl" href="{$url_base}{$imageId}">{tr}Browsing Image{/tr}: <span class="noslideshow">{$name}</span><span class="slideshow_i pixurl" style="display: none">#{$imageId}</span></a></h1>
-  <div>
-    <span class="button2"><a href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;offset={$offset}" style="">{tr}Return to Gallery{/tr}</a><span class="button2">
+  <div class="navbar">
+		{button href="tiki-browse_gallery.php?galleryId=$galleryId&amp;offset=$offset" _text="{tr}Return to Gallery{/tr}"}
     {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner)}
-    <span class="button2 pixurl"><a href="tiki-edit_image.php?galleryId={$galleryId}&amp;edit={$imageId}&amp;sort_mode={$sort_mode}" style="">{tr}Edit Image{/tr}</a></span>
+			{button href="tiki-edit_image.php?galleryId=$galleryId&amp;edit=$imageId&amp;sort_mode=$sort_mode" _text="{tr}Edit Image{/tr}"}
     {/if}
   </div>
 {/if}

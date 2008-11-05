@@ -220,14 +220,17 @@ window.onload = timeIt;
     </td>
   </tr>
 {/if}
+
 {if $prefs.feature_wiki_ratings eq 'y' and $tiki_p_wiki_admin_ratings eq 'y'}
 <tr class="formcolor"><td>{tr}Use rating{/tr}:</td><td>
 {if $poll_rated.info}
 <input type="hidden" name="poll_title" value="{$poll_rated.info.title|escape}" />
 <a href="tiki-admin_poll_options.php?pollId={$poll_rated.info.pollId}">{$poll_rated.info.title}</a>
-<span class="button2"><a href="tiki-editpage.php?page={$page|escape:"url"}&amp;removepoll={$poll_rated.info.pollId}">{tr}disable{/tr}</a>
+{assign var=thispage value=$page|escape:"url"}
+{assign var=thispoll_rated value=$poll_rated.info.pollId}
+{button href="?page=$thispage&amp;removepoll=$thispoll_rated" _text="{tr}Disable{/tr}"}
 {if $tiki_p_admin_poll eq 'y'}
-<span class="button2"><a href="tiki-admin_polls.php">{tr}Admin Polls{/tr}</a></span>
+	{button href="tiki-admin_polls.php" _text="{tr}Admin Polls{/tr}"}
 {/if}
 {else}
 {if count($polls_templates)}
