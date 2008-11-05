@@ -9,7 +9,11 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 global $prefs, $sections;
 
 $link = '';
-if ( isset($module_params['feature']) && isset($sections[$module_params['feature']]) && $prefs[$sections[$module_params['feature']]['feature']] == 'y' ) {
+if ( isset($module_params['feature'])
+	&& isset($sections[$module_params['feature']])
+	&& isset($sections[$module_params['feature']]['feature'])
+	&& $prefs[$sections[$module_params['feature']]['feature']] == 'y'
+) {
 	$default_date_args = 'date_min=%d&amp;date_max=%d';
 	switch ( $module_params['feature'] ) {
 		case 'blogs':
