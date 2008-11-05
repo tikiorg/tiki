@@ -1,6 +1,6 @@
 {popup_init src="lib/overlib.js"}
 
-{title url="tiki-blog_post.php?blogId=$blogId&postId=$postId"}{tr}Edit Post{/tr}{/title}
+{title url="tiki-blog_post.php?blogId=$blogId&postId=$postId"}{if $postId gt 0}{tr}Edit Post{/tr}{else}{tr}Post{/tr}{/if}{/title}
 
 <div class="navbar">
 	{if $prefs.feature_wysiwyg eq 'y' and $prefs.wysiwyg_optional eq 'y'}
@@ -11,7 +11,7 @@
 		{/if}
 	{/if}
 	
-	{if $blogId > 0 }
+	{if $blogId gt 0 }
 		{assign var=thisblog value=$blogId|sefurl:blog}
 		{button href=$thisblog _text="{tr}View Blog{/tr}"}
 	{/if}
@@ -36,7 +36,8 @@
 <form enctype="multipart/form-data" name='blogpost' method="post" action="tiki-blog_post.php" id ='editpageform'>
 <input type="hidden" name="wysiwyg" value="{$wysiwyg|escape}" />
 <input type="hidden" name="postId" value="{$postId|escape}" />
-<input type="hidden" name="blogId" value="{$blogId|escape}" />
+
+{if $blogs|@count gt 1 and ( !isset($blogId) or $blogId eq 0 )}
 <table class="normal">
 <tr><td class="editblogform">{tr}Blog{/tr}</td><td class="editblogform">
 <select name="blogId">
@@ -45,6 +46,11 @@
 {/section}
 </select>
 </td></tr>
+{else}
+<input type="hidden" name="blogId" value="{$blogId|escape}" />
+<table class="normal">
+{/if}
+
 {assign var=area_name value="blogedit"}
 {if $prefs.feature_smileys eq 'y' && not $wysiwyg}
 <tr><td class="editblogform">{tr}Smileys{/tr}</td><td class="editblogform">

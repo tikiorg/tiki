@@ -9,7 +9,6 @@
 // Initialization
 $section = 'blogs';
 require_once ('tiki-setup.php');
-
 include_once ('lib/blogs/bloglib.php');
 
 $smarty->assign('headtitle',tra('Create Blog'));
@@ -176,7 +175,6 @@ if (isset($_REQUEST['preview']) || $category_needed) {
 }
 
 
-$sections = 'blogs';
 $cat_type = 'blog';
 $cat_objid = $blogId;
 include_once ("categorize_list.php");
