@@ -93,7 +93,7 @@ group is probably the same as your user name. The following should work for you:
   sh $0 $USER $USER 02777
 
 
-NOTE: If you do execute on of the three last commands, you will not be able 
+NOTE: If you do execute one of the three last commands, you will not be able 
 to delete certain files created by apache, and will need to ask your system
 administrator to delete them for you if needed. However, you may still be able to 
 rename (move) them.
