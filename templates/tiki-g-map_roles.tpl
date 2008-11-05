@@ -1,9 +1,10 @@
-{*Smarty template*}
-<h1><a class="pagetitle" href="tiki-g-map_roles.php?pid={$pid}">{tr}Map process roles{/tr}</a></h1>
-<span class="button2"><a href="tiki-g-admin_processes.php">{tr}Admin Processes{/tr}</a></span>
-<span class="button2"><a href="tiki-g-admin_activities.php?pid={$pid}">{tr}Admin Activities{/tr}</a></span>
-<span class="button2"><a href="tiki-g-admin_roles.php?pid={$pid}">{tr}Admin Roles{/tr}</a></span>
-<span class="button2"><a href="tiki-g-admin_processes.php?pid={$pid}">{tr}Edit this Process{/tr}</a></span><br /><br />
+{title url="tiki-g-map_roles.php?pid=$pid"}{tr}Map process roles{/tr}{/title}
+
+{button href="tiki-g-admin_processes.php" _text="{tr}Admin Processes{/tr}"}
+{button href="tiki-g-admin_activities.php?pid=$pid" _text="{tr}Admin Activities{/tr}"}
+{button href="tiki-g-admin_roles.php?pid=$pid" _text="{tr}Admin Roles{/tr}"}
+{button href="tiki-g-admin_processes.php?pid=$pid" _text="{tr}Edit this Process{/tr}"}
+
 {tr}Process:{/tr} {$proc_info.name} {$proc_info.version}<br />
 
 process graph<br />

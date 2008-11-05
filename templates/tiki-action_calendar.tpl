@@ -2,23 +2,21 @@
 <div id="calscreen">
 
 <div style="float:right;margin:5px;">
+	{if $viewlist neq 'list'}
+		{if $group_by_item neq 'n'}
+			{button href="?gbi=n" _text=" {tr}Do not group by item{/tr}"}
+		{else}
+			{button href="?gbi=y" _text=" {tr}Group by item{/tr}"}
+		{/if}
+	{/if}
 
-{if $viewlist neq 'list'}
-<span class="button2">
-{if $group_by_item neq 'n'}
-<a href="{$myurl}?gbi=n" title="{tr}Do not group by item{/tr}">{tr}Do not group by item{/tr}</a>{else}
-<a href="{$myurl}?gbi=y" title="{tr}Group by item{/tr}">{tr}Group by item{/tr}</a>{/if}
-</span>
-{/if}
+	{button href="#" _onclick="toggle('filtercal');" _text="{tr}Filter{/tr}"}
 
-<span class="button2"><a href="#" onclick="toggle('filtercal');">{tr}Filter{/tr}</a></span>
-
-<span class="button2">
-{if $viewlist eq 'list'}
-<a href="{$myurl}?viewlist=table" title="{tr}Calendar View{/tr}">{tr}Calendar View{/tr}</a>{else}
-<a href="{$myurl}?viewlist=list" title="{tr}List View{/tr}">{tr}List View{/tr}</a>{/if}
-</span>
-
+	{if $viewlist eq 'list'}
+		{button href="?viewlist=table" _text="{tr}Calendar View{/tr}"}
+	{else}
+		{button href="?viewlist=list" _text="{tr}List View{/tr}"}
+	{/if}
 </div>
 
 {title}{tr}Tiki Action Calendar{/tr}{/title}
