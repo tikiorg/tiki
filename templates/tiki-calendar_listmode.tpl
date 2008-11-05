@@ -12,11 +12,11 @@
 <tr class="{cycle}{if $listevents[w].start <= $smarty.now and $listevents[w].end >= $smarty.now} selected{/if} vevent">
 <td>
 <abbr class="dtstart" title="{$listevents[w].start|compactisodate}"><a href="{$myurl}?todate={$listevents[w].start}" title="{tr}Change Focus{/tr}">{$listevents[w].start|tiki_short_date}</a></abbr><br />
-{$listevents[w].start|tiki_short_time}
+{if $listevents[w].allday} All-Day {else} {$listevents[w].start|tiki_short_time} {/if}
 </td>
 <td>
 {if $listevents[w].start|tiki_short_date ne $listevents[w].end|tiki_short_date}<abbr class="dtend" title="{$listevents[w].end|compactisodate}"><a href="{$myurl}?todate={$listevents[w].end}" title="{tr}Change Focus{/tr}">{$listevents[w].end|tiki_short_date}</a></abbr> {/if}<br />
-{if $listevents[w].start ne $listevents[w].end}{$listevents[w].end|tiki_short_time}{/if}
+{if $listevents[w].start ne $listevents[w].end and $listevents[w].allday ne 1}{$listevents[w].end|tiki_short_time}{/if}
 </td>
 <td>
 <a class="link" href="tiki-calendar_edit_item.php?viewcalitemId={$listevents[w].calitemId}" title="{tr}View{/tr}"><span class="summary">{$listevents[w].name|escape}</span></a><br />
