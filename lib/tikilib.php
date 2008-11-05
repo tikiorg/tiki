@@ -2652,7 +2652,7 @@ class TikiLib extends TikiDB {
 		return $ret;
 	}
 
-	function list_blogs_user_can_post($user) {
+	function list_blogs_user_can_post() {
 		global $tiki_p_blog_admin, $user;
 		$query = "select * from `tiki_blogs` order by `title` asc";
 		$result = $this->query($query);
