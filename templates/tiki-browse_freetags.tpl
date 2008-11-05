@@ -89,73 +89,63 @@
 {capture name="browse"}
 {tr}Browse in{/tr}:
 
-  <span class="button2"><a {if $type eq ''} id="highlight"{/if} href="tiki-browse_freetags.php?tag={$tagString}{if $broaden}&amp;broaden={$broaden}{/if}">{tr}All{/tr}</a></span>
-  
-  {if $prefs.feature_wiki eq 'y'}
-    {assign var=cpt value=$cpt+1}
-    <span class="button2"><a {if $type eq 'wiki page'} id="highlight"{/if} href="tiki-browse_freetags.php?tag={$tagString}{if $broaden}&amp;broaden={$broaden}{/if}&amp;type=wiki+page">{tr}Wiki pages{/tr}</a></span>
-  {/if}
-  
-  {if $prefs.feature_galleries eq 'y'}
-    {assign var=cpt value=$cpt+1}
-    <span class="button2"><a {if $type eq 'image gallery'} id="highlight"{/if} href="tiki-browse_freetags.php?tag={$tagString}{if $broaden}&amp;broaden={$broaden}{/if}&amp;type=image+gallery">{tr}Image galleries{/tr}</a></span>
-    <span class="button2"><a {if $type eq 'image'} id="highlight"{/if} href="tiki-browse_freetags.php?tag={$tagString}{if $broaden}&amp;broaden={$broaden}{/if}&amp;type=image">{tr}Images{/tr}</a></span>
-  {/if}
-  
-  {if $prefs.feature_file_galleries eq 'y'}
-    {assign var=cpt value=$cpt+1}
-    <span class="button2"><a {if $type eq 'file gallery'} id="highlight"{/if} href="tiki-browse_freetags.php?tag={$tagString}{if $broaden}&amp;broaden={$broaden}{/if}&amp;type=file+gallery">{tr}File galleries{/tr}</a></span>
-  {/if}
-  
-  {if $prefs.feature_blogs eq 'y'}
-    {assign var=cpt value=$cpt+1}
-    <span class="button2"><a {if $type eq 'blog post'} id="highlight"{/if} href="tiki-browse_freetags.php?tag={$tagString}{if $broaden}&amp;broaden={$broaden}{/if}&amp;type=blog+post">{tr}Blogs{/tr}</a></span>
-  {/if}
-  
-  {if $prefs.feature_trackers eq 'y'}
-    {assign var=cpt value=$cpt+1}
-    <span class="button2"><a {if $type eq 'tracker'} id="highlight"{/if} href="tiki-browse_freetags.php?tag={$tagString}{if $broaden}&amp;broaden={$broaden}{/if}&amp;type=tracker">{tr}Trackers{/tr}</a></span>
-  
-    <span class="button2"><a {if $type eq 'trackerItem'} id="highlight"{/if} href="tiki-browse_freetags.php?tag={$tagString}{if $broaden}&amp;broaden={$broaden}{/if}&amp;type=trackerItem">{tr}Trackers Items{/tr}</a></span>
-  {/if}
-  
-  {if $prefs.feature_quizzes eq 'y'}
-    {assign var=cpt value=$cpt+1}
-    <span class="button2"><a {if $type eq 'quiz'} id="highlight"{/if} href="tiki-browse_freetags.php?tag={$tagString}{if $broaden}&amp;broaden={$broaden}{/if}&amp;type=quiz">{tr}Quizzes{/tr}</a></span>
-  {/if}
-  
-  {if $prefs.feature_polls eq 'y'}
-    {assign var=cpt value=$cpt+1}
-    <span class="button2"><a {if $type eq 'poll'} id="highlight"{/if} href="tiki-browse_freetags.php?tag={$tagString}{if $broaden}&amp;broaden={$broaden}{/if}&amp;type=poll">{tr}Polls{/tr}</a></span>
-  {/if}
-  
-  {if $prefs.feature_surveys eq 'y'}
-    {assign var=cpt value=$cpt+1}
-    <span class="button2"><a {if $type eq 'survey'} id="highlight"{/if} href="tiki-browse_freetags.php?tag={$tagString}{if $broaden}&amp;broaden={$broaden}{/if}&amp;type=survey">{tr}Surveys{/tr}</a></span>
-  {/if}
-  
-  {if $prefs.feature_directory eq 'y'}
-    {assign var=cpt value=$cpt+1}
-    <span class="button2"><a {if $type eq 'directory'} id="highlight"{/if} href="tiki-browse_freetags.php?tag={$tagString}{if $broaden}&amp;broaden={$broaden}{/if}&amp;type=directory">{tr}Directory{/tr}</a></span>
-  {/if}
-  
-  {if $prefs.feature_faqs eq 'y'}
-    {assign var=cpt value=$cpt+1}
-    <span class="button2"><a {if $type eq 'faq'} id="highlight"{/if} href="tiki-browse_freetags.php?tag={$tagString}{if $broaden}&amp;broaden={$broaden}{/if}&amp;type=faq">{tr}FAQs{/tr}</a></span>
-  {/if}
-  
-  {if $prefs.feature_sheet eq 'y'}
-    {assign var=cpt value=$cpt+1}
-    <span class="button2"><a {if $type eq 'sheet'} id="highlight"{/if} href="tiki-browse_freetags.php?tag={$tagString}{if $broaden}&amp;broaden={$broaden}{/if}&amp;type=sheet">{tr}Sheets{/tr}</a></span>
-  {/if}
-  
-  {if $prefs.feature_articles eq 'y'}
-    {assign var=cpt value=$cpt+1}
-    <span class="button2"><a {if $type eq 'article'} id="highlight"{/if} href="tiki-browse_freetags.php?tag={$tagString}{if $broaden}&amp;broaden={$broaden}{/if}&amp;type=article">{tr}Articles{/tr}</a></span>
-  {/if}   
-          <input type="text" name="find" value="{$find}" />
-          <input type="submit" value="{tr}Filter{/tr}" />
-      </form>
+	{if $type eq $objectType}
+		{assign var=thisclass value='highlight'}
+	{else}
+		{assign var=thisclass value=''}
+	{/if}
+	{if $broaden eq ''}
+		{assign var=thisbroaden value="&amp;broaden=$broaden"}
+	{else}
+		{assign var=thisbroaden value=''}
+	{/if}
+	{button _text="{tr}All{/tr}" _class=$thisclass href="tiki-browse_freetags.php?tag=$tagString$thisbroaden"}
+
+{foreach item=objectType from=$objects_with_freetags}
+	{foreach item=sect key=key from=$sections_enabled}
+		{if isset($sect.objectType) and $sect.objectType eq $objectType and $objectType neq 'blog post'}
+			{assign var=feature_label value=$objectType|ucwords}
+			{if $type eq $objectType}
+				{assign var=thisclass value='highlight'}
+			{else}
+				{assign var=thisclass value=''}
+			{/if}
+			{if $broaden eq ''}
+				{assign var=thisbroaden value="&amp;broaden=$broaden"}
+			{else}
+				{assign var=thisbroaden value=''}
+			{/if}
+			{assign var=thistype value=$objectType|escape:'url'}
+			{button _text="{tr}$feature_label{/tr}" _class=$thisclass href="tiki-browse_freetags.php?tag=$tagString$thisbroaden&amp;type=$thistype"}
+			{assign var=cpt value=$cpt+1}
+		{/if}
+		{if isset($sect.itemObjectType) and $sect.itemObjectType eq $objectType}
+			{if $objectType eq 'tracker %d'}
+				{assign var=feature_label value='Tracker Item'}
+				{assign var=objectType value='trackerItem'}
+			{else}
+				{assign var=feature_label value=$objectType|ucwords}
+			{/if}
+			{if $type eq $objectType}
+				{assign var=thisclass value='highlight'}
+			{else}
+				{assign var=thisclass value=''}
+			{/if}
+			{if $broaden eq ''}
+				{assign var=thisbroaden value="&amp;broaden=$broaden"}
+			{else}
+				{assign var=thisbroaden value=''}
+			{/if}
+			{assign var=thistype value=$objectType|escape:'url'}
+			{button _text="{tr}$feature_label{/tr}" _class=$thisclass href="tiki-browse_freetags.php?tag=$tagString$thisbroaden&amp;type=$thistype"}
+			{assign var=cpt value=$cpt+1}
+		{/if}
+	{/foreach}
+{/foreach}
+          
+	<input type="text" name="find" value="{$find}" />
+	<input type="submit" value="{tr}Filter{/tr}" />
+</form>
 {/capture}
 {if $cpt > 1}{$smarty.capture.browse}{/if}
 
