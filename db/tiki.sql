@@ -442,6 +442,7 @@ CREATE TABLE tiki_calendar_items (
   user varchar(200) default '',
   created int(14) NOT NULL default '0',
   lastmodif int(14) NOT NULL default '0',
+  allday tinyint(1) NOT NULL default '0',
   PRIMARY KEY (calitemId),
   KEY calendarId (calendarId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
