@@ -68,7 +68,7 @@
       {if $view eq 'browse'}
         {button _text="{tr}List Gallery{/tr}" href="?view=list&amp;galleryId=$galleryId"}
       {else}
-        {button _text="{tr}Browse Images{/tr}" href="?view=browse&amp;galleryId=$galleryId"}
+        {button _text="{tr}Browse Images{/tr}" href="?view=browse&amp;galleryId=$galleryId" _ajax='n'} {* no AJAX to make shadowbox work in browse view *}
       {/if}
     {/if}
   {/if}
