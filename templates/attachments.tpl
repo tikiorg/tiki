@@ -5,12 +5,22 @@
 {if $tiki_p_wiki_view_attachments == 'y'
  || $tiki_p_wiki_admin_attachments == 'y'
  || $tiki_p_wiki_attach_files == 'y'}
-{if (isset($smarty.session.tiki_cookie_jar.show_attzone) and $smarty.session.tiki_cookie_jar.show_attzone eq 'y')
-or (!isset($smarty.session.tiki_cookie_jar.show_attzone) and $prefs.w_displayed_default eq 'y')}
-<div id="attzone{if $page}{$page|@md5}{/if}" style="display:block;">
+
+<div
+{if $pagemd5}
+	{assign var=cookie_key value="show_attzone$pagemd5"}
+	id="attzone{$pagemd5}"
 {else}
-<div id="attzone{if $page}{$page|@md5}{/if}" style="display:none;">
+	{assign var=cookie_key value="show_attzone"}
+	id="attzone"
 {/if}
+{if (isset($smarty.session.tiki_cookie_jar.$cookie_key) and $smarty.session.tiki_cookie_jar.$cookie_key eq 'y')
+or (!isset($smarty.session.tiki_cookie_jar.$cookie_key) and $prefs.w_displayed_default eq 'y')}
+	style="display:block;"
+{else}
+	style="display:none;"
+{/if}
+>
 
 {* Generate table if view permissions granted
  * and if count of attached files > 0

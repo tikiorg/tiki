@@ -1,146 +1,173 @@
 {* $Id$ *}
 {strip}
 
+{assign var=thispage value=$page|escape:"url"}
+
+{if $beingStaged eq 'y'}
+	{assign var=thisapprovedPageName value=$approvedPageName|escape:"url"}
+{/if}
+
 <div class="clearfix" id="page-bar">
-{if $edit_page eq 'y'}
-  {if $wysiwyg ne 'y' or ($wysiwyg eq 'y' and ($prefs.wysiwyg_wiki_parsed eq 'y' or $prefs.wysiwyg_wiki_semi_parsed eq 'y'))} {* Show this button only in wiki parsing mode *}
-		{button href="#edithelp" _onclick="javascript:show('edithelpzone');hide('wikiplhelp-tab');show('wikihelp-tab'); return true;" name="edithelp"	_text="{tr}Wiki Help{/tr}"}
-		{button href="#edithelp" _onclick="javascript:show('edithelpzone');hide('wikihelp-tab');show('wikiplhelp-tab'); return true;" name="edithelp" _text="{tr}Plugin Help{/tr}"}
-  {/if}
-{else}
+	{if $edit_page eq 'y'}
+		{if $wysiwyg ne 'y' or ($wysiwyg eq 'y' and ($prefs.wysiwyg_wiki_parsed eq 'y' or $prefs.wysiwyg_wiki_semi_parsed eq 'y'))} {* Show this button only in wiki parsing mode *}
+			{button href="#edithelp" _onclick="javascript:show('edithelpzone');hide('wikiplhelp-tab');show('wikihelp-tab'); return true;" name="edithelp" _text="{tr}Wiki Help{/tr}"}
+			{button href="#edithelp" _onclick="javascript:show('edithelpzone');hide('wikihelp-tab');show('wikiplhelp-tab'); return true;" name="edithelp" _text="{tr}Plugin Help{/tr}"}
+		{/if}
+	{else}
+		{* Check that page is not locked and edit permission granted. SandBox can be edited w/o perm *}
+		{if ($editable and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox')) or $tiki_p_admin_wiki eq 'y' or $canEditStaging eq 'y'}
+			{if $needsStaging eq 'y'}
+				{assign var=thisPageName value=$stagingPageName|escape:"url"}
+			{else}
+				{assign var=thisPageName value=$thispage}
+			{/if}
+			{if $page_ref_id and $needsStaging neq 'y'}
+				{assign var=thisPageRefId value="&amp;page_ref_id=$page_ref_id"}
+			{else}
+				{assign var=thisPageRefId value=""}
+			{/if}
+			{if $beingEdited eq 'y'}
+				{assign var=thisPageClass value='+highlight'}
+			{else}
+				{assign var=thisPageClass value=''}
+			{/if}
+			{button href="tiki-editpage.php?page="|cat:$thisPageName|cat:$thisPageRefId _class=$thisPageClass _text="{tr}Edit{/tr}"}
+		{/if}
 
-{* Check that page is not locked and edit permission granted. SandBox can be edited w/o perm *}
-{if ($editable and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox')) or $tiki_p_admin_wiki eq 'y' or $canEditStaging eq 'y'}
-      <span class="button2" >
-      <a title="{$semUser}" {ajax_href template="tiki-editpage.tpl" htmlelement="tiki-center"}tiki-editpage.php?page={if $needsStaging eq 'y'}{$stagingPageName|escape:"url"}{else}{$page|escape:"url"}{/if}{if $page_ref_id and $needsStaging neq 'y'}&amp;page_ref_id={$page_ref_id}{/if}{/ajax_href}{if $beingEdited eq 'y'}  class="highlight"{/if}>      		
-          {tr}Edit{/tr}
-        </a>
-      </span>
-{/if}
-{if $prefs.feature_source eq 'y' and $tiki_p_wiki_view_source eq 'y'}
-	<span class="button2" >
-      <a href="tiki-pagehistory.php?page={$page|escape:"url"}&amp;source=0">
-        {tr}Source{/tr}
-      </a>
-	</span>
-{/if}
+		{if $prefs.feature_source eq 'y' and $tiki_p_wiki_view_source eq 'y'}
+			{button href="tiki-pagehistory.php?page=$thispage&amp;source=0" _text="{tr}Source{/tr}"}
+		{/if}
 
-{if $page|lower ne 'sandbox'}
+		{if $page|lower ne 'sandbox'}
+			{if $tiki_p_remove eq 'y' && $editable}
+				{button href="tiki-removepage.php?page=$thispage&amp;version=last" _text="{tr}Remove{/tr}"}
+			{/if}
 
-{if $tiki_p_remove eq 'y' && $editable}
-<span class="button2"><a href="tiki-removepage.php?page={$page|escape:"url"}&amp;version=last">{tr}Remove{/tr}</a></span>
-{/if}
-{if $tiki_p_rename eq 'y' && $editable}
-<span class="button2"><a href="tiki-rename_page.php?page={if $beingStaged eq 'y'}{$approvedPageName|escape:"url"}{else}{$page|escape:"url"}{/if}">{tr}Rename{/tr}</a></span>
-{/if}
-{if $lock and ($tiki_p_admin_wiki eq 'y' or ($user and ($user eq $page_user or $user eq "admin") and ($tiki_p_lock eq 'y') and ($prefs.feature_wiki_usrlock eq 'y')))}
-<span class="button2"><a href="tiki-index.php?page={$page|escape:"url"}&amp;action=unlock">{tr}Unlock{/tr}</a></span>
-{/if}
-{if !$lock and $prefs.feature_wiki_usrlock eq 'y' and ($tiki_p_admin_wiki eq 'y' or $tiki_p_lock eq 'y')}
-<span class="button2"><a href="tiki-index.php?page={$page|escape:"url"}&amp;action=lock">{tr}Lock{/tr}</a></span>
-{/if}
-{if $tiki_p_admin_wiki eq 'y' or $tiki_p_assign_perm_wiki_page eq 'y'}
-<span class="button2"><a href="tiki-objectpermissions.php?objectId={$page|escape:"url"}&amp;objectName={$page|escape:"url"}&amp;objectType=wiki+page&amp;permType=wiki">{tr}Perms{/tr}</a></span>
-{/if}
+			{if $tiki_p_rename eq 'y' && $editable}
+				{if $beingStaged eq 'y'}
+					{button <a href="tiki-rename_page.php?page=$thisapprovedPageName" _text="{tr}Rename{/tr}"}
+				{else}
+					{button href="tiki-rename_page.php?page=$thispage" _text="{tr}Rename{/tr}"}
+				{/if}
+			{/if}
 
-{if $prefs.feature_history eq 'y' and $tiki_p_wiki_view_history eq 'y'}
-<span class="button2"><a href="tiki-pagehistory.php?page={$page|escape:"url"}">{tr}History{/tr}</a></span>
-{/if}
-{/if}
+			{if $prefs.feature_wiki_usrlock eq 'y' and ( $tiki_p_admin_wiki eq 'y' or ($user and $user eq $page_user and $tiki_p_lock eq 'y') )}
+				{if $lock}
+					{button href="tiki-index.php?page=$thispage&amp;action=unlock" _text="{tr}Unlock{/tr}"}
+				{else}
+					{button href="tiki-index.php?page=$thispage&amp;action=lock" _text="{tr}Lock{/tr}"}
+				{/if}
+			{/if}
 
-{if $prefs.feature_likePages eq 'y'}
-<span class="button2"><a href="tiki-likepages.php?page={$page|escape:"url"}">{tr}Similar{/tr}</a></span>
-{/if}
-{if $prefs.feature_wiki_undo eq 'y' and $canundo eq 'y'}
-<span class="button2"><a href="tiki-index.php?page={$page|escape:"url"}&amp;undo=1">{tr}Undo{/tr}</a></span>
-{/if}
-{if $prefs.feature_wiki_make_structure eq 'y' and $tiki_p_edit_structures eq 'y' and $editable and $structure eq 'n' and count($showstructs) eq 0}
-<span class="button2"><a href="tiki-index.php?page={$page|escape:"url"}&amp;convertstructure=1">{tr}Make Structure{/tr}</a></span>
-{/if}
-{if $prefs.wiki_uses_slides eq 'y'}
-{if $show_slideshow eq 'y'}
-<span class="button2"><a href="tiki-slideshow.php?page={$page|escape:"url"}">{tr}Slides{/tr}</a></span>
-{elseif $structure eq 'y'}
-<span class="button2"><a href="tiki-slideshow2.php?page_ref_id={$page_info.page_ref_id}">{tr}Slides{/tr}</a></span>
-{/if}
-{/if}
-{if $prefs.feature_wiki_export eq 'y' and ( $tiki_p_admin_wiki eq 'y' or $tiki_p_export_wiki eq 'y' )}
-<span class="button2"><a href="tiki-export_wiki_pages.php?page={$page|escape:"url"}">{tr}Export{/tr}</a></span>
-{/if}
-{if $prefs.feature_wiki_discuss eq 'y' && $show_page eq 'y' && $beingStaged ne 'y' && $tiki_p_forum_post eq 'y'}
-<span class="button2"><a href="tiki-view_forum.php?forumId={$prefs.wiki_forum_id}&amp;comments_postComment=post&amp;comments_title={$page|escape:"url"}&amp;comments_data={$wiki_discussion_string|escape:"url"}: {"[tiki-index.php?page="}{$page|escape:"url"}{"|"}{$page|escape:"url"}{"]"}&amp;comment_topictype=n">{tr}Discuss{/tr}</a></span>
-{/if}
+			{if $tiki_p_admin_wiki eq 'y' or $tiki_p_assign_perm_wiki_page eq 'y'}
+				{button href="tiki-objectpermissions.php?objectId=$thispage&amp;objectName=$thispage&amp;objectType=wiki+page&amp;permType=wiki"	_text="{tr}Perms{/tr}"}
+			{/if}
 
-{if $show_page == 'y'} {* Show this buttons only if page view mode *}
+			{if $prefs.feature_history eq 'y' and $tiki_p_wiki_view_history eq 'y'}
+				{button href="tiki-pagehistory.php?page=$thispage" _text="{tr}History{/tr}"}
+			{/if}
+		{/if}
 
-  {* don't show comments if feature disabled or not enough rights *}
-  {if $prefs.feature_wiki_comments == 'y'
-	&& $tiki_p_wiki_view_comments == 'y'
-  && (($tiki_p_read_comments  == 'y'
-  && $comments_cant != 0)
-  ||  $tiki_p_post_comments  == 'y'
-  ||  $tiki_p_edit_comments  == 'y')}
-  {strip}
-  <span class="button2">
-    <a href="#comments" onclick="javascript:flip('comzone{$page|@md5}');flip('comzone{$page|@md5}_close','inline');return false;"{if $comments_cant > 0} class="highlight"{/if}>
-      {if $comments_cant == 0 or ($tiki_p_read_comments  == 'n' and $tiki_p_post_comments  == 'y')}
-        {tr}Add Comment{/tr}
-      {elseif $comments_cant == 1}
-        {tr}1 comment{/tr}
-      {else}
-        {$comments_cant}&nbsp;{tr}comments{/tr}
-      {/if}
-    <span id="comzone{$page|@md5}_close" style="display:{if isset($smarty.session.tiki_cookie_jar.show_comzone) and $smarty.session.tiki_cookie_jar.show_comzone eq 'y'}inline{else}none{/if};">({tr}Hide{/tr})</span>
-    </a>
-  </span>
-  {/strip}   
-{/if}
+		{if $prefs.feature_likePages eq 'y'}
+			{button href="tiki-likepages.php?page=$thispage" _text="{tr}Similar{/tr}"}
+		{/if}
 
-{* don't show attachments button if feature disabled or no corresponding rights or no attached files and r/o*}
+		{if $prefs.feature_wiki_undo eq 'y' and $canundo eq 'y'}
+			{button href="tiki-index.php?page=$thispage&amp;undo=1" _text="{tr}Undo{/tr}"}
+		{/if}
 
-{if $prefs.feature_wiki_attachments == 'y'
-  && (
-        $tiki_p_wiki_view_attachments  == 'y'
-      &&  count($atts) > 0
-      ||  $tiki_p_wiki_attach_files      == 'y'
-      ||  $tiki_p_wiki_admin_attachments == 'y'
-    )
-}
+		{if $prefs.feature_wiki_make_structure eq 'y' and $tiki_p_edit_structures eq 'y' and $editable and $structure eq 'n' and count($showstructs) eq 0}
+			{button href="tiki-index.php?page=$thispage&amp;convertstructure=1" _text="{tr}Make Structure{/tr}"}
+		{/if}
 
-{strip}
-  <span class="button2">
-    <a href="#attachments" onclick="javascript:flip('attzone{$page|@md5}');flip('attzone{$page|@md5}_close','inline');return false;"{if $atts|@count > 0} class="highlight"{/if}>
-    {if $atts|@count == 0 || $tiki_p_wiki_attach_files == 'y' && $tiki_p_wiki_view_attachments == 'n' && $tiki_p_wiki_admin_attachments == 'n'}
-      {tr}Attach File{/tr}
-    {elseif $atts|@count == 1}
-      {tr}1 File Attached{/tr}
-    {else}
-      {tr}{$atts|@count} files attached{/tr}
-    {/if}
-    <span id="attzone{$page|@md5}_close" style="display:{if (isset($smarty.session.tiki_cookie_jar.show_attzone) and $smarty.session.tiki_cookie_jar.show_attzone eq
-'y') or (!isset($smarty.session.tiki_cookie_jar.show_attzone) and $prefs.w_displayed_default eq 'y')}inline{else}none{/if};">({tr}Hide{/tr})
-    </span>
-    </a>
-  </span>
-{/strip}
-{/if}{* attachments *}
+		{if $prefs.wiki_uses_slides eq 'y'}
+			{if $show_slideshow eq 'y'}
+				{button href="tiki-slideshow.php?page=$thispage" _text="{tr}Slides{/tr}"}
+			{elseif $structure eq 'y'}
+				{assign var=thispage_info value=$page_info.page_ref_id}
+				{button href="tiki-slideshow2.php?page_ref_id=$thispage_info" _text="{tr}Slides{/tr}"}
+			{/if}
+		{/if}
 
-  {if $prefs.feature_multilingual eq 'y' and $tiki_p_edit eq 'y' and !$lock}
-     <span class="button2"><a href="tiki-edit_translation.php?page={if $beingStaged == 'y'}{$approvedPageName|escape:'url'}{else}{$page|escape:'url'}{/if}">{tr}Translate{/tr}</a></span>
-  {/if}
-{/if}
+		{if $prefs.feature_wiki_export eq 'y' and ( $tiki_p_admin_wiki eq 'y' or $tiki_p_export_wiki eq 'y' )}
+			{button href="tiki-export_wiki_pages.php?page=$thispage" _text="{tr}Export{/tr}"}
+		{/if}
 
-{/if}
+		{if $prefs.feature_wiki_discuss eq 'y' && $show_page eq 'y' && $beingStaged ne 'y' && $tiki_p_forum_post eq 'y'}
+			{assign var=thiswiki_discussion_string value=$wiki_discussion_string|escape:"url"}
+			{button href="tiki-view_forum.php?forumId=`$prefs.wiki_forum_id`&amp;comments_postComment=post&amp;comments_title=$thispage&amp;comments_data=$thiswiki_discussion_string%3A+%5Btiki-index.php%3Fpage=$thispage%7C$thispage%5D&amp;comment_topictype=n" _text="{tr}Discuss{/tr}"}
+		{/if}
+
+		{if $show_page == 'y'} {* Show this buttons only if page view mode *}
+
+			{* don't show comments if feature disabled or not enough rights *}
+			{if $prefs.feature_wiki_comments == 'y'
+				&& $tiki_p_wiki_view_comments == 'y'
+				&& (($tiki_p_read_comments == 'y'
+				&& $comments_cant != 0)
+				|| $tiki_p_post_comments == 'y'
+				||$tiki_p_edit_comments == 'y')}
+				{assign var=pagemd5 value=$page|@md5}
+				{if $comments_cant gt 0}
+					{assign var=thisbuttonclass value='highlight'}
+				{else}
+					{assign var=thisbuttonclass value=''}
+				{/if}
+				{if $comments_cant == 0 or ($tiki_p_read_comments == 'n' and $tiki_p_post_comments == 'y')}
+					{assign var=thistext value="{tr}Add Comment{/tr}"}
+				{elseif $comments_cant == 1}
+					{assign var=thistext value="{tr}1 comment{/tr}"}
+				{else}
+					{assign var=thistext value="$comments_cant&nbsp;{tr}comments{/tr}"}
+				{/if}
+				{button href="#comments" _flip_id="comzone$pagemd5" _class=$thisbuttonclass _text=$thistext}
+			{/if}
+
+			{* don't show attachments button if feature disabled or no corresponding rights or no attached files and r/o*}
+
+			{if $prefs.feature_wiki_attachments == 'y'
+				&& (
+					$tiki_p_wiki_view_attachments == 'y'
+					&& count($atts) > 0
+					|| $tiki_p_wiki_attach_files == 'y'
+					|| $tiki_p_wiki_admin_attachments == 'y')
+			}
+				{if $atts|@count gt 0}
+					{assign var=thisbuttonclass value='highlight'}
+				{else}
+					{assign var=thisbuttonclass value=''}
+				{/if}
+				{capture assign=thistext}{strip}
+					{if $atts|@count == 0 || $tiki_p_wiki_attach_files == 'y' && $tiki_p_wiki_view_attachments == 'n' && $tiki_p_wiki_admin_attachments == 'n'}
+						{tr}Attach File{/tr}
+					{elseif $atts|@count == 1}
+						{tr}1 File Attached{/tr}
+					{else}
+						{tr}{$atts|@count} files attached{/tr}
+					{/if}
+				{/strip}{/capture}
+				{button href="#attachments" _flip_id="attzone$pagemd5" _class=$thisbuttonclass _text=$thistext}
+			{/if}{* attachments *}
+
+			{if $prefs.feature_multilingual eq 'y' and $tiki_p_edit eq 'y' and !$lock}
+				{if $beingStaged == 'y'}
+					{button href="tiki-edit_translation.php?page=$thisapprovedPageName" _text="{tr}Translate{/tr}"}
+				{else}
+					{button href="tiki-edit_translation.php?page=$thispage" _text="{tr}Translate{/tr}"}
+				{/if}
+			{/if}
+		{/if}
+	{/if}
 </div>
 
 {if $wiki_extras eq 'y' && $prefs.feature_wiki_attachments eq 'y' and $tiki_p_wiki_view_attachments eq 'y'}
-<a name="attachments"></a>
-{include file=attachments.tpl}
+	<a name="attachments"></a>
+	{include file=attachments.tpl}
 {/if}
 
 {if $prefs.feature_wiki_comments eq 'y' and $tiki_p_wiki_view_comments == 'y' and $edit_page ne 'y'}
-<a name="comments"></a>
-{include file=comments.tpl}
+	<a name="comments"></a>
+	{include file=comments.tpl}
 {/if}
 
 {/strip}

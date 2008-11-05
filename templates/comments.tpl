@@ -4,8 +4,15 @@
 <div>
 {else}
 <div id="comments">
-<div id="comzone{if $page}{$page|@md5}{/if}"
-{if (isset($smarty.session.tiki_cookie_jar.show_comzone) and $smarty.session.tiki_cookie_jar.show_comzone eq 'y') or (!isset($smarty.session.tiki_cookie_jar.show_comzone) and $prefs.wiki_comments_displayed_default eq 'y') or (isset($prefs.show_comzone) and $prefs.show_comzone eq 'y') or $show_comzone eq 'y' or $show_comments or $edit_reply eq '1'}
+<div
+{if $pagemd5}
+	{assign var=cookie_key value="show_comzone$pagemd5"}
+	id="comzone{$pagemd5}"
+{else}
+	{assign var=cookie_key value="show_comzone"}
+	id="comzone"
+{/if}
+{if (isset($smarty.session.tiki_cookie_jar.$cookie_key) and $smarty.session.tiki_cookie_jar.$cookie_key eq 'y') or (!isset($smarty.session.tiki_cookie_jar.$cookie_key) and $prefs.wiki_comments_displayed_default eq 'y') or (isset($prefs.show_comzone) and $prefs.show_comzone eq 'y') or $show_comzone eq 'y' or $show_comments or $edit_reply eq '1'}
 	style="display:block;"
 {else}
 	style="display:none;"
