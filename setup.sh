@@ -55,10 +55,11 @@ if [ "$COMMAND" = 'fix' ]; then
 
 or
 
-2- If you press enter to continue, you will probably get some error messages but it (the script) will 
-still fix what it can according to the permissions of your user. This script will now ask you some 
-questions. If you don't know what to answer, just press enter to each question (to use default value)"
-	
+2- If you press enter to continue, you will probably get some error messages
+but it (the script) will still fix what it can according to the permissions
+of your user. This script will now ask you some questions. If you don't know
+what to answer, just press enter to each question (to use default value)"
+
 		read 
 		AUSER=$USER
 	fi
@@ -141,9 +142,10 @@ elif [ "$COMMAND" = 'open' ]; then
 
 or
 
-2- If you press enter to continue, you will probably get some error messages but it (the script) will 
-still fix what it can according to the permissions of your user. This script will now ask you some 
-questions. If you don't know what to answer, just press enter to each question (to use default value)"
+2- If you press enter to continue, you will probably get some error messages
+but it (the script) will still fix what it can according to the permissions
+of your user. This script will now ask you some questions. If you don't know
+what to answer, just press enter to each question (to use default value)"
 
 		read 
 		echo -n "Open global perms ..."
