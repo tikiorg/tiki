@@ -17,8 +17,7 @@ body {
 	font-family: "Trebuchet MS", "Bitstream Vera Sans", sans-serif}
 
 html>body {font-size: 74% !important}
-*:first-child+html body {font-size: 72% !important;
-}
+*:first-child+html body {font-size: 72% !important;}
 body.fullscreen { }
 
 a,
@@ -1274,7 +1273,7 @@ ul.floatleft li {
 	display: block;
 	font-weight: bold;
 	font-size: 0.8em;
-	text-decoration: none
+	text-decoration: none;
 	color: #3F3F3F;}
 	
 .button2 a:hover {text-decoration: none}
@@ -1282,7 +1281,7 @@ ul.floatleft li {
 div.cache {}
 div.cachedpage {}
 .wikicache, .wikicache:visited {}
-.wikicache:hover {}*/
+.wikicache:hover {}
 .wikinew {color: #fff}
 .wiki-edithelp {display: none}
 textarea.wikiedit {font-size: 1.1em}
