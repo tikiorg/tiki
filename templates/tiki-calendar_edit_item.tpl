@@ -99,6 +99,9 @@
 			<td style="border:0;padding-top:2px;vertical-align:middle">
 				<a href="#" onclick="document.f.start_Minute.selectedIndex=(document.f.start_Minute.selectedIndex+1);">{icon _id='plus_small' align='left' width='11' height='8'}</a>
 			</td>
+			<td style="border:0;vertical-align:middle;">
+				<input type="checkbox" name="allday" value="true" {if $calitem.allday eq 1} checked="checked" {/if}> All-Day</input>
+			</td>
 		</tr>
 		<tr>
 			<td style="border:0;vertical-align:middle">
@@ -115,7 +118,11 @@
 		</tr>
 	</table>
 {else}
-	<abbr class="dtstart" title="{$calitem.start|isodate}">{$calitem.start|tiki_long_datetime}</abbr>
+    {if $calitem.allday}
+	    <abbr class="dtstart" title="{$calitem.start|tiki_short_date}">{$calitem.start|tiki_long_date}</abbr>
+    {else}
+        <abbr class="dtstart" title="{$calitem.start|isodate}">{$calitem.start|tiki_long_datetime}</abbr>
+    {/if}
 {/if}
 </td>
 </tr>
@@ -190,7 +197,11 @@
 	</tr>
 </table>
 {else}
-	{if $calitem.end}<abbr class="dtend" title="{$calitem.end|isodate}">{/if}{$calitem.end|tiki_long_datetime}{if $calitem.end}</abbr>{/if}
+    {if $calitem.allday}
+        {if $calitem.end}<abbr class="dtend" title="{$calitem.end|tiki_short_date}">{/if}{$calitem.end|tiki_long_date}{if $calitem.end}</abbr>{/if}
+    {else}
+        {if $calitem.end}<abbr class="dtend" title="{$calitem.end|isodate}">{/if}{$calitem.end|tiki_long_datetime}{if $calitem.end}</abbr>{/if}
+    {/if}
 {/if}
 </td>
 </tr>
