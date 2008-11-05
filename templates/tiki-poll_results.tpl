@@ -29,7 +29,12 @@
 {/if}
 {section name=x loop=$poll_info_arr}
 <h2><a href="tiki-poll_results.php?pollId={$poll_info_arr[x].pollId}{if !empty($list_votes)}&amp;list=y{/if}">{$poll_info_arr[x].title}</a></h2>
-{if $tiki_p_admin_polls eq 'y'}<span class=button2"><a href="tiki-poll_results.php?list=y&amp;pollId={$poll_info_arr[x].pollId}">{tr}Votes{/tr}</a></span>{/if}
+
+{if $tiki_p_admin_polls eq 'y'}
+	{assign var=thispoll_info_arr value=$poll_info_arr[x].pollId}
+	{button href="tiki-poll_results.php?list=y&amp;pollId=$thispoll_info_arr" _text="{tr}Votes{/tr}"}
+{/if}
+
 <div class="pollresults">
 {cycle values="even,odd" print=false}
 <table class="pollresults">

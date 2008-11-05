@@ -1,17 +1,12 @@
 {* $Id$ *}
 
-<h2>{tr}Available Repositories{/tr}</h2>
+{title}{tr}Available Repositories{/tr}{/title}
 
 {if $tiki_p_admin eq 'y'}
-<div id="page-bar">
-  <table><tr>
-    <td><div class="button2">
-      <a href="tiki-admin_integrator.php">{tr}Configure Repositories{/tr}</a>
-    </div></td>
-  </tr></table>
-</div>
+	<div class="navbar">
+		{button href="tiki-admin_integrator.php" _text="{tr}Configure Repositories{/tr}"}
+	</div>
 {/if}
-<br />
 
 
 {* Table with list of repositories (if array is not empty) *}
