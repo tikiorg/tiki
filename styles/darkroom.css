@@ -1254,29 +1254,29 @@ ul.floatleft li {
 .editdate ul.floatleft {margin-top: 8px}
 
  .navbar > a,
-.button2 {
+.button {
 	margin: 2px;
 	padding: 0 4px;
 	background:#4E4E4E url(darkroom/button.png) top left repeat-x;
 	border: 1px solid #3F3F3F;
 	border-top: 1px solid #818181}
-.button2 {display: inline-block;}
+.button {display: inline-block;}
 
 .navbar > a:hover{
 	border: 1px solid #B2B2B2;
 	text-decoration: none;
 }
-.button2:hover {border: 1px solid #B2B2B2}
+.button:hover {border: 1px solid #B2B2B2}
 
-.button2 a,
-.button2 a:visited {
+.button a,
+.button a:visited {
 	display: block;
 	font-weight: bold;
 	font-size: 0.8em;
 	text-decoration: none;
-	color: #3F3F3F;}
+	color: #ccc;}
 	
-.button2 a:hover {text-decoration: none}
+.button a:hover {text-decoration: none}
 
 div.cache {}
 div.cachedpage {}
