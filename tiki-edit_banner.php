@@ -71,18 +71,17 @@ if (isset($_REQUEST["bannerId"]) && $_REQUEST["bannerId"] > 0) {
 	$smarty->assign("use", $info["which"]);
 	$smarty->assign("zone", $info["zone"]);
 	if ($info["which"] == 'useFlash') {
-		$matches=array();
-		preg_match('/SWFFix\.embedSWF\([\'" ]*([^,\'"]*)[\'" ]*,[\'" ]*([^,\'"]*)[\'" ]*,[\'" ]*([^,\'"]*)[\'" ]*,[\'" ]*([^,\'"]*)[\'" ]*,[\'" ]*([^,\'"]*)[\'" ]*,[\'" ]*([^,\'"]*)[\'" ]*,[\'" ]*([^,\'"]*)[\'" ]*,[\'" ]*([^,\'"]*)[\'" ]*,[\'" ]*([^,\'")]*)[\'" ]*/', $info["HTMLData"], $matches);
-		$smarty->assign("movieUrl", $matches[1]);
-		$smarty->assign("movieId", $matches[2]);
-		$smarty->assign("movieWidth", $matches[3]);
-		$smarty->assign("movieHeight", $matches[4]);
-		$smarty->assign("movieVersion", $matches[5]);
-		$smarty->assign("movieInstallUrl", $matches[6]);
-		$smarty->assign("movieFlashVars", $matches[7]);
-		$smarty->assign("movieParams", $matches[8]);
-		$smarty->assign("movieAttributes", $matches[9]);
-	
+		if (preg_match('/(swfobject|SWFFix)\.embedSWF\([\'" ]*([^,\'"]*)[\'" ]*,[\'" ]*([^,\'"]*)[\'" ]*,[\'" ]*([^,\'"]*)[\'" ]*,[\'" ]*([^,\'"]*)[\'" ]*,[\'" ]*([^,\'"]*)[\'" ]*,[\'" ]*([^,\'"]*)[\'" ]*/m', $info['HTMLData'], $matches)) {
+			$smarty->assign("movieUrl", $matches[2]);
+			$smarty->assign("movieId", $matches[3]);
+			$smarty->assign("movieWidth", $matches[4]);
+			$smarty->assign("movieHeight", $matches[5]);
+			$smarty->assign("movieVersion", $matches[6]);
+		} else if (preg_match('/width="*([0-9]*).*height="*([0-9]*).*"([^"]\.swf"/mi', $info['HTMLData'], $matches)) {
+			$smarty->assign("movieUrl", $matches[3]);
+			$smarty->assign("movieWidth", $matches[1]);
+			$smarty->assign("movieHeight", $matches[2]);
+		}
 	}
 	$smarty->assign("HTMLData", $info["HTMLData"]);
 	$smarty->assign("fixedURLdata", $info["fixedURLData"]);
@@ -304,7 +303,12 @@ if (isset($_REQUEST["save"]) || isset($_REQUEST["create_zone"])) {
 
 	if (!isset($_REQUEST["create_zone"])) {
 		if ($_REQUEST["use"] == "useFlash") {
-			$_REQUEST["HTMLData"]=$bannerlib->embed_flash($_REQUEST["movieUrl"],$_REQUEST["movieId"],$_REQUEST["movieInstallUrl"],$_REQUEST["movieWidth"],$_REQUEST["movieHeight"],$_REQUEST["movieVersion"],"","","");
+			$params['movie'] = $_REQUEST['movieUrl'];
+			if (!empty($_REQUEST['movieWidth'])) $params['width'] = $_REQUEST['movieWidth'];
+			if (!empty($_REQUEST['movieHeight'])) $params['height'] = $_REQUEST['movieHeight'];
+			if (!empty($_REQUEST['movieVersion'])) $params['version'] = $_REQUEST['movieVersion'];
+			$_REQUEST['HTMLData'] = $tikilib->embed_flash($params, 'y');
+			$_REQUEST['textData'] = $tikilib->embed_flash($params, 'n');
 		}
 		$bannerId = $bannerlib->replace_banner($_REQUEST["bannerId"], $_REQUEST["client"], $_REQUEST["url"], '',
 			'', $_REQUEST["use"], $_REQUEST["imageData"], $_REQUEST["imageType"], $_REQUEST["imageName"], $_REQUEST["HTMLData"],

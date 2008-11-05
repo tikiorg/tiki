@@ -127,7 +127,7 @@
   {banner zone="$zone"}
   </td></tr>
   {/if}
-  <tr> <td><input type="hidden" name="movieId" value="{$movieId}"/><input type="hidden" name="movieInstallUrl" value="{$movieInstallUrl}"/>
+  <tr> <td>
       {tr}Movie URL{/tr} <input type="text" size="50" name="movieUrl" value="{$movieUrl|escape}" /><br />
       {tr}Movie Size{/tr}: <input type="text" size="4" name="movieWidth" value="{$movieWidth|escape}" /> {tr}Pixels{/tr} x <input type="text" size="4" name="movieHeight" value="{$movieHeight|escape}" /> {tr}Pixels{/tr} <br />
       {tr}FlashPlugin min version{/tr}: <input type="text" name="movieVersion" value="{$movieVersion|escape}" />({tr}ex{/tr}:8.0.0)<br />

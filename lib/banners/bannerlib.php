@@ -12,6 +12,7 @@ class BannerLib extends TikiLib {
 	}
 
 	function select_banner($zone, $target='_blank') {
+		global $prefs;
 
 		// Things to check
 		// UseDates and dates
@@ -53,8 +54,10 @@ class BannerLib extends TikiLib {
 
 			break;
 		case 'useFlash':
-			$raw = $res["HTMLData"];
-
+			if ($prefs['javascript_enable'] == 'y')
+				$raw = $res['HTMLData'];
+			else
+				$raw = $res['textData'];
 			break;
 
 
@@ -175,27 +178,7 @@ class BannerLib extends TikiLib {
 		$res = $result->fetchRow();
 		return $res;
 	}
-	function embed_flash($movieUrl,$movieId,$movieInstallUrl,$movieWidth,$movieHeight,$movieVersion='8.0.0',$movieFlashVars='',$movieParams='',$movieAttributes='') {
-		global $prefs;
-		if ($prefs['feature_swffix'] == 'y') {
-			if (!$movieId) {
-				$movieId="banner_".rand(1000,100000);
-			}
-			$flash_embed ="<div id=\"$movieId\"></div>\n";
-			$flash_embed .="<script type=\"text/javascript\">";
-			$flash_embed .="SWFFix.embedSWF(\"$movieUrl\",\"$movieId\", \"$movieWidth\", \"$movieHeight\", \"$movieVersion\", \"$movieInstallUrl\",\"$movieFlashVars\",\"$movieParams\",\"$movieAttributes\");";
-			$flash_embed .="</script>";
-		} else {
-			$flash_embed = "<OBJECT CLASSID=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=$movieVersion\" WIDTH=\"$movieWidth\" HEIGHT=\"$movieHeight\">";
-			$flash_embed .= "<PARAM NAME=\"movie\" VALUE=\"$movieUrl\">";
-			$flash_embed .= "<PARAM NAME=\"quality\" VALUE=\"best\">";
-			$flash_embed .= "<PARAM NAME=\"wmode\" VALUE=\"transparent\">";
-			$flash_embed .= "<embed src=\"$movieUrl\" quality=\"best\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\" type=\"application/x-shockwave-flash\" width=\"$movieWidth\" height=\"$movieHeight\" wmode=\"transparent\"></embed></object>";
-		}
-		
-		Return $flash_embed;
 
-	}
 	function replace_banner($bannerId, $client, $url, $title = '', $alt = '', $use, $imageData, $imageType, $imageName, $HTMLData,
 		$fixedURLData, $textData, $fromDate, $toDate, $useDates, $mon, $tue, $wed, $thu, $fri, $sat, $sun, $hourFrom, $hourTo,
 		$maxImpressions, $zone) {

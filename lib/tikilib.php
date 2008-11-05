@@ -7874,6 +7874,44 @@ class TikiLib extends TikiDB {
 		}
 		return (array($start, $end));
 	}
+	/* javascript = y or n to force to generate a version with javascript or not, ='' user prefs */
+	function embed_flash($params, $javascript='') {
+		global $prefs;
+		global $headerlib; include_once('lib/headerlib.php');
+		if (! isset($params['movie']) ) {
+			return false;
+		}
+		$defaults = array(
+						  'width' => 425,
+						  'height' => 350,
+						  'quality' => 'high',
+						  'version' => '9.0.0',
+						  );
+		$params = array_merge( $defaults, $params );
+		if ( ((empty($javascript) && $prefs['javascript_enabled'] == 'y') || $javascript == 'y')) {
+			$myId = 'wp-flash-' . md5($params['movie']);
+			$movie = json_encode( $params['movie'] );
+			$div = json_encode( $myId );
+			$width = (int) $params['width'];
+			$height = (int) $params['height'];
+			$version = json_encode( $params['version'] );
+			unset( $params['movie'], $params['width'], $params['height'], $params['version'] );
+			$params = json_encode($params);
+			$js = <<<JS
+swfobject.embedSWF( $movie, $div, $width, $height, $version, {}, $params, {} );
+JS;
+			$headerlib->add_jsfile( 'lib/swfobject.js' );
+			return "<div id=\"$myId\">" . tra('Flash player not available.') . "</div><script type=\"text/javascript\">\n<!--//--><![CDATA[//><!--\n$js\n//--><!]]>\n</script>\n";
+		} else { // link on the movie will not work with IE6
+			extract ($params,EXTR_SKIP);
+			$asetup = "<OBJECT CLASSID=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0\" WIDTH=\"$width\" HEIGHT=\"$height\">";
+			$asetup .= "<PARAM NAME=\"movie\" VALUE=\"$movie\">";
+			$asetup .= "<PARAM NAME=\"quality\" VALUE=\"$quality\">";
+			$asetup .= "<PARAM NAME=\"wmode\" VALUE=\"transparent\">";
+			$asetup .= "<embed src=\"$movie\" quality=\"$quality\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\" type=\"application/x-shockwave-flash\" width=\"$width\" height=\"$height\" wmode=\"transparent\"></embed></object>";
+			return $asetup;
+		}
+	}
 }
 // end of class ------------------------------------------------------
 
