@@ -116,7 +116,7 @@
         {/if}
       {/if}
 
-      <hr/>
+      <hr style="clear:both"/>
 
       <table>
         <tr>
