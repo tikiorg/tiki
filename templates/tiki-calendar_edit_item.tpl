@@ -91,16 +91,33 @@
 			{/if}
 			</td>
 			<td style="border:0;padding-top:2px;vertical-align:middle">
-				<a href="#" onclick="document.f.start_Hour.selectedIndex=(document.f.start_Hour.selectedIndex+1);">{icon _id='plus_small' align='left' width='11' height='8'}</a>
+				<span id="starttimehourplus" style="display: {if $allday} inline {else} none {/if}"><a href="#" onclick="document.f.start_Hour.selectedIndex=(document.f.start_Hour.selectedIndex+1);">{icon _id='plus_small' align='left' width='11' height='8'}</a></span>
 			</td>
 			<td rowspan="2" style="border:0;vertical-align:middle" class="html_select_time">
-				{html_select_time prefix="start_" display_seconds=false time=$calitem.start minute_interval=$prefs.calendar_timespan hour_minmax=$hour_minmax}
+				<span id="starttime" style="display: {if $allday} inline {else} none {/if}">{html_select_time prefix="start_" display_seconds=false time=$calitem.start minute_interval=$prefs.calendar_timespan hour_minmax=$hour_minmax}</span>
 			</td>
 			<td style="border:0;padding-top:2px;vertical-align:middle">
-				<a href="#" onclick="document.f.start_Minute.selectedIndex=(document.f.start_Minute.selectedIndex+1);">{icon _id='plus_small' align='left' width='11' height='8'}</a>
+				<span id="starttimeminplus" style="display: {if $allday} inline {else} none {/if}"><a href="#" onclick="document.f.start_Minute.selectedIndex=(document.f.start_Minute.selectedIndex+1);">{icon _id='plus_small' align='left' width='11' height='8'}</a></span>
 			</td>
-			<td style="border:0;vertical-align:middle;">
-				<input type="checkbox" name="allday" value="true" {if $calitem.allday eq 1} checked="checked" {/if}> All-Day</input>
+			<td style="border:0;vertical-align:middle;" rowspan="2">
+				<input type="checkbox" name="allday" 
+					   onclick="toggleSpan('starttimehourplus');
+					   			toggleSpan('starttimehourminus');
+					   			toggleSpan('starttime');
+					   			toggleSpan('starttimeminplus');
+					   			toggleSpan('starttimeminminus');
+					   			toggleSpan('endtimehourplus');
+					   			toggleSpan('endtimehourminus');
+					   			toggleSpan('endtime');
+					   			toggleSpan('endtimeminplus');
+					   			toggleSpan('endtimeminminus');
+					   			toggleSpan('durhourplus');
+					   			toggleSpan('durhourminus');
+					   			toggleSpan('duration');
+					   			toggleSpan('duratione');
+					   			toggleSpan('durminplus');
+					   			toggleSpan('durminminus');"
+					   value="true" {if $calitem.allday} checked="checked" {/if}> All-Day</input>
 			</td>
 		</tr>
 		<tr>
@@ -110,10 +127,10 @@
 			{/if}
 			</td>
 			<td style="border:0;vertical-align:middle">
-				<a href="#" onclick="document.f.start_Hour.selectedIndex=(document.f.start_Hour.selectedIndex-1);">{icon _id='minus_small' align='left' width='11' height='8'}</a>
+				<span id="starttimehourminus" style="display: {if $allday} inline {else} none {/if}"><a href="#" onclick="document.f.start_Hour.selectedIndex=(document.f.start_Hour.selectedIndex-1);">{icon _id='minus_small' align='left' width='11' height='8'}</a>
 			</td>
 			<td style="border:0;vertical-align:middle">
-				<a href="#" onclick="document.f.start_Minute.selectedIndex=(document.f.start_Minute.selectedIndex-1);">{icon _id='minus_small' align='left' width='11' height='8'}</a>
+				<span id="starttimeminminus" style="display: {if $allday} inline {else} none {/if}"><a href="#" onclick="document.f.start_Minute.selectedIndex=(document.f.start_Minute.selectedIndex-1);">{icon _id='minus_small' align='left' width='11' height='8'}</a>
 			</td>
 		</tr>
 	</table>
@@ -134,7 +151,7 @@
 		<tr>
 			<td style="border:0;padding-top:2px;vertical-align:middle">
 			{if $prefs.feature_jscalendar neq 'y' or $prefs.javascript_enabled neq 'y'}
-				<a href="#" onclick="document.f.Time_Hour.selectedIndex=(document.f.Time_Hour.selectedIndex+1);">{icon _id='plus_small' align='left' width='11' height='8'}</a>
+				<span id="endtimehourplus" style="display: {if $allday} inline {else} none {/if}"><a href="#" onclick="document.f.Time_Hour.selectedIndex=(document.f.Time_Hour.selectedIndex+1);">{icon _id='plus_small' align='left' width='11' height='8'}</a></span>
 			{/if}
 			</td>
 			<td rowspan="2" style="border:0;vertical-align:middle">
@@ -145,16 +162,16 @@
 			{/if}
 			</td>
 			<td style="border:0;padding-top:2px;vertical-align:middle">
-				<a href="#" onclick="document.f.end_Hour.selectedIndex=(document.f.end_Hour.selectedIndex+1);">{icon _id='plus_small' align='left' width='11' height='8'}</a>
+				<span id="endtimehourplus" style="display: {if $allday} inline {else} none {/if}"><a href="#" onclick="document.f.end_Hour.selectedIndex=(document.f.end_Hour.selectedIndex+1);">{icon _id='plus_small' align='left' width='11' height='8'}</a></span>
 			</td>
 			<td rowspan="2" style="border:0;vertical-align:middle" class="html_select_time">
-				{html_select_time prefix="end_" display_seconds=false time=$calitem.end minute_interval=$prefs.calendar_timespan hour_minmax=$hour_minmax}
+				<span id="endtime" style="display: {if $allday} inline {else} none {/if}">{html_select_time prefix="end_" display_seconds=false time=$calitem.end minute_interval=$prefs.calendar_timespan hour_minmax=$hour_minmax}</span>
 			</td>
 			<td style="border:0;padding-top:2px;vertical-align:middle">
-					<a href="#" onclick="document.f.end_Minute.selectedIndex=(document.f.end_Minute.selectedIndex+1);">{icon _id='plus_small' align='left' width='11' height='8'}</a>
+				<span id="endtimeminplus" style="display: {if $allday} inline {else} none {/if}"><a href="#" onclick="document.f.end_Minute.selectedIndex=(document.f.end_Minute.selectedIndex+1);">{icon _id='plus_small' align='left' width='11' height='8'}</a></span>
 			</td>
 			<td rowspan="2" style="border:0;padding-top:2px;vertical-align:middle">
-				<a href="#" onclick="document.getElementById('end_or_duration').value='duration';flip('end_duration');flip('end_date');return false;">{tr}Duration{/tr}</a>
+				<span id="duration" style="display: {if $allday} inline {else} none {/if}"><a href="#" onclick="document.getElementById('end_or_duration').value='duration';flip('end_duration');flip('end_date');return false;">{tr}Duration{/tr}</a></span>
 			</td>
 		</tr>
 		<tr>
@@ -164,10 +181,10 @@
 		{/if}
 		</td>
 		<td style="border:0;vertical-align:middle">
-			<a href="#" onclick="document.f.end_Hour.selectedIndex=(document.f.end_Hour.selectedIndex-1);">{icon _id='minus_small' align='left' width='11' height='8'}</a>
+			<span id="endtimehourminus" style="display: {if $allday} inline {else} none {/if}"><a href="#" onclick="document.f.end_Hour.selectedIndex=(document.f.end_Hour.selectedIndex-1);">{icon _id='minus_small' align='left' width='11' height='8'}</a></span>
 		</td>
 		<td style="border:0;vertical-align:middle">
-			<a href="#" onclick="document.f.end_Minute.selectedIndex=(document.f.end_Minute.selectedIndex-1);">{icon _id='minus_small' align='left' width='11' height='8'}</a>
+			<span id="endtimeminminus" style="display: {if $allday} inline {else} none {/if}"><a href="#" onclick="document.f.end_Minute.selectedIndex=(document.f.end_Minute.selectedIndex-1);">{icon _id='minus_small' align='left' width='11' height='8'}</a></span>
 		</td>
 	</tr>
 </table>
@@ -175,13 +192,13 @@
 <table cellpadding="0" cellspacing="0" border="0" style="border:0;display:none;" id="end_duration">
 	<tr>
 		<td style="border:0;padding-top:2px;vertical-align:middle">
-			<a href="#" onclick="document.f.duration_Hour.selectedIndex=(document.f.duration_Hour.selectedIndex+1);">{icon _id='plus_small' align='left' width='11' height='8'}</a>
+			<span id="durhourplus" style="display: {if $allday} inline {else} none {/if}"><a href="#" onclick="document.f.duration_Hour.selectedIndex=(document.f.duration_Hour.selectedIndex+1);">{icon _id='plus_small' align='left' width='11' height='8'}</a></span>
 		</td>
 		<td style="border:0;vertical-align:middle" rowspan="2" class="html_select_time">
-			{html_select_time prefix="duration_" display_seconds=false time=$calitem.duration|default:'01:00' minute_interval=$prefs.calendar_timespan}
+			<span id="duratione" style="display: {if $allday} inline {else} none {/if}">{html_select_time prefix="duration_" display_seconds=false time=$calitem.duration|default:'01:00' minute_interval=$prefs.calendar_timespan}</span>
 		</td>
 		<td style="border:0;padding-top:2px;vertical-align:middle">
-			<a href="#" onclick="document.f.duration_Minute.selectedIndex=(document.f.duration_Minute.selectedIndex+1);">{icon _id='plus_small' align='left' width='11' height='8'}</a>
+			<span id="durminplus" style="display: {if $allday} inline {else} none {/if}"><a href="#" onclick="document.f.duration_Minute.selectedIndex=(document.f.duration_Minute.selectedIndex+1);">{icon _id='plus_small' align='left' width='11' height='8'}</a></span>
 		</td>
 		<td rowspan="2" style="border:0;padding-top:2px;vertical-align:middle">
 			<a href="#" onclick="document.getElementById('end_or_duration').value='end';flip('end_date');flip('end_duration');return false;">{tr}Date and time of end{/tr}</a>
@@ -189,10 +206,10 @@
 	</tr>
 	<tr>
 		<td style="border:0;vertical-align:middle">
-			<a href="#" onclick="document.f.duration_Hour.selectedIndex=(document.f.duration_Hour.selectedIndex-1);">{icon _id='minus_small' align='left' width='11' height='8'}</a>
+			<span id="durhourminus" style="display: {if $allday} inline {else} none {/if}"><a href="#" onclick="document.f.duration_Hour.selectedIndex=(document.f.duration_Hour.selectedIndex-1);">{icon _id='minus_small' align='left' width='11' height='8'}</a></span>
 		</td>
 		<td style="border:0;vertical-align:middle">
-			<a href="#" onclick="document.f.duration_Minute.selectedIndex=(document.f.duration_Minute.selectedIndex-1);">{icon _id='minus_small' align='left' width='11' height='8'}</a>
+			<span id="durminminus" style="display: {if $allday} inline {else} none {/if}"><a href="#" onclick="document.f.duration_Minute.selectedIndex=(document.f.duration_Minute.selectedIndex-1);">{icon _id='minus_small' align='left' width='11' height='8'}</a></span>
 		</td>
 	</tr>
 </table>
