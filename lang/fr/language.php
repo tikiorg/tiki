@@ -8084,7 +8084,7 @@ $lang=Array(
 "Page must be defined inside a structure to use this feature" => "La page doit être définie à l'intérieur d'une structure pour utiliser cette fonctionnalité",
 "You cannot take this quiz twice" => "Vous ne pouvez remplir ce QCM deux fois",
 "Quiz time limit exceeded quiz cannot be computed" => "Limite de temps dépassée : le QCM ne peut pas être traité",
-"You cannot take this survey twice" => "Vous ne pouvez pas répondre à cette enquête 2 fois",
+"You cannot take this survey twice" => "Vous ne pouvez pas répondre à cette enquête deux fois",
 "Please create a category first" => "SVP, créer une catégorie d'abord",
 "Tracker item:" => "Fiche du formulaire :",
 "No trackerId specified" => "Pas d'identifiant de formulaire spécifié",
@@ -8160,5 +8160,9 @@ $lang=Array(
 "TikiTest Record" => "Enregistrement TikiTest",
 "TikiTest Replay" => "Rejouer TikiTest",
 "The page is empty" => "La page est vide",
+"You have to make %d choice(s) for the question" => "Vous devez donner %s réponses à la question";
+"You have to make at least %d choice(s) for the question" => "Vous devez donner au moins %s réponses à la question";
+"You have to make less than %d choice(s) for the question" => "Vous devez donner moins de %s réponses à la question";
+
 "###end###"=>"###end###");
 ?>
