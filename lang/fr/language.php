@@ -8160,9 +8160,9 @@ $lang=Array(
 "TikiTest Record" => "Enregistrement TikiTest",
 "TikiTest Replay" => "Rejouer TikiTest",
 "The page is empty" => "La page est vide",
-"You have to make %d choice(s) for the question" => "Vous devez donner %s réponses à la question";
-"You have to make at least %d choice(s) for the question" => "Vous devez donner au moins %s réponses à la question";
-"You have to make less than %d choice(s) for the question" => "Vous devez donner moins de %s réponses à la question";
+"You have to make %d choice(s) for the question" => "Vous devez donner %s réponses à la question",
+"You have to make at least %d choice(s) for the question" => "Vous devez donner au moins %s réponses à la question",
+"You have to make less than %d choice(s) for the question" => "Vous devez donner moins de %s réponses à la question",
 
 "###end###"=>"###end###");
 ?>
