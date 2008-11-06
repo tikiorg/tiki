@@ -5,7 +5,7 @@
   <br /><br />
 {/if}
 
-{if $pending_requests|sizeof}
+{if $pending_requests|@count}
 <p style="font-weight: bold;">{tr}Pending requests{/tr}</p>
 <table class="userlist">
 <tr>
@@ -24,7 +24,7 @@
 </table>
 {/if}
 
-{if $waiting_requests|sizeof}
+{if $waiting_requests|@count}
 <p style="font-weight: bold;">{tr}Waiting requests{/tr}</p>
 <table class="userlist">
 <tr>
