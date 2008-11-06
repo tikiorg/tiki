@@ -62,11 +62,29 @@ for ($mod_counter = 0; $mod_counter < $temp_max; $mod_counter++) {
 	$pass = 'y';
 	if (isset($module_params["lang"]) && ((gettype($module_params["lang"]) == "array" && !in_array($prefs['language'], $module_params["lang"])) ||  (gettype($module_params["lang"]) == "string" && $module_params["lang"] != $prefs['language']))) {
 		$pass="n";
-	} elseif (isset($module_params['section']) && (!isset($section) || $section != $module_params['section'])) {
+	}
+	if ($pass == 'y' && isset($module_params['section']) && (!isset($section) || $section != $module_params['section'])) {
 		$pass = 'n';
-	} elseif (isset($module_params['page']) && (!isset($section) || $section != 'wiki page' || !isset($page) || $page != $module_params['page'])) {
-		$pass = 'n';
-	} elseif (isset($module_params['theme'])) {
+	}
+	if ($pass == 'y' && isset($module_params['nopage']) && isset($page) && isset($section) && $section == 'wiki page') {
+		if (is_array($module_params['nopage'])) {
+			if (in_array($page,$module_params['nopage'])) {
+				$pass = 'n';
+			}
+		} else if ($module_params['nopage'] == $page) {
+			$pass = 'n';
+		}
+	}
+	if ($pass == 'y' && isset($module_params['page'])) {
+		if (!isset($section) || $section != 'wiki page' || !isset($page)) { // must be in a page
+			$pass = 'n';
+		} elseif (isset($page)  && is_array($module_params['page']) && !in_array($page, $module_params['page'])) {
+			$pass = 'n';
+		} elseif (isset($page)  && !is_array($module_params['page']) && $page != $module_params['page']) {
+			$pass = 'n';
+		}
+	}
+	if ($pass == 'y' && isset($module_params['theme'])) {
 		global $tc_theme;
 		if (substr($module_params['theme'],0,1) != '!') { // usual behavior
 			if (isset($tc_theme) && $tc_theme > '' && $module_params['theme'] != $tc_theme) {
@@ -82,7 +100,8 @@ for ($mod_counter = 0; $mod_counter < $temp_max; $mod_counter++) {
 				$pass = 'n';
 			}
 		}
-	} elseif ($prefs['modallgroups'] != 'y') {
+	}
+	if ($pass == 'y' && $prefs['modallgroups'] != 'y') {
 		if ($mod_reference["groups"]) {
 			$module_groups = unserialize($mod_reference["groups"]);
 		} else {
