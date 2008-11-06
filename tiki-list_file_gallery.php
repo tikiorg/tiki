@@ -67,7 +67,7 @@ if ( ! isset($_REQUEST['galleryId']) || $_REQUEST['galleryId'] == 0 ) {
 
 $galleryId = $_REQUEST['galleryId'];
 
-if ( ( $galleryId != 0 || $tiki_p_list_file_galleries != 'y' ) && $tiki_p_view_file_gallery != 'y' ) {
+if ( ( $galleryId != 0 || $tiki_p_list_file_galleries != 'y' ) && ($galleryId == 0 || $tiki_p_view_file_gallery != 'y') ) {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra('Permission denied you cannot view this section'));
 	$smarty->display('error.tpl');
