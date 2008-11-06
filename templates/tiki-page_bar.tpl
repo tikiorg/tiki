@@ -47,7 +47,7 @@
 
 			{if $tiki_p_rename eq 'y' && $editable}
 				{if $beingStaged eq 'y'}
-					{button <a href="tiki-rename_page.php?page=$thisapprovedPageName" _text="{tr}Rename{/tr}"}
+					{button href="tiki-rename_page.php?page=$thisapprovedPageName" _text="{tr}Rename{/tr}"}
 				{else}
 					{button href="tiki-rename_page.php?page=$thispage" _text="{tr}Rename{/tr}"}
 				{/if}
