@@ -10,8 +10,8 @@
 $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
 $mylevel = $tikilib->get_user_preference($user,'mylevel',1);
-if ( isset($_REQUEST['level']) and isset($prefs['userlevels'][$_REQUEST['level']]) and $user ) {
-	$tikilib->set_user_preference($user,"mylevel",$_REQUEST['level']);
-	$mylevel = $_REQUEST['level'];
+if ( isset($_REQUEST['mylevel']) and isset($prefs['userlevels'][$_REQUEST['mylevel']]) and $user ) {
+	$tikilib->set_user_preference($user,"mylevel",$_REQUEST['mylevel']);
+	$mylevel = $_REQUEST['mylevel'];
 }
 $smarty->assign('mylevel',$mylevel);
