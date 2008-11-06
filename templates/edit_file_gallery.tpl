@@ -111,11 +111,11 @@
           </table>
         </td></tr>
       </table>
-			</div>
+     </fieldset>
 			<div class="button" style="margin-top: 5px; text-align: center">
 				<input type="submit" value="{tr}Save{/tr}" name="edit" />
 			</div>
     </form>
-  </fieldset>
+	</div>
 <br />
 {/if}
