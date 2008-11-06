@@ -28,46 +28,47 @@ class Cachelib {
     }
   }
 	
-  function cacheItem($key,$data) {
-		$key = md5($key);
+  function cacheItem($key, $data, $type='') {
+		$key = $type.md5($key);
 		$fw = fopen($this->folder."/$key","w");
 		fwrite($fw,$data);
 		fclose($fw);
 		return true;
   }
 	
-  function isCached($key) {
-		$key = md5($key);
+  function isCached($key, $type='') {
+		$key = $type.md5($key);
 		return is_file($this->folder."/$key");
   }
 	
-  function getCached($key) {
-		$key = md5($key);
-	if ( filesize($this->folder."/$key") == 0 ) { 	
+  function getCached($key, $type='') {
+		$key = $type.md5($key);
+		if ( filesize($this->folder."/$key") == 0 ) { 	
 			return serialize(false);
 		} 
 		$fw = fopen($this->folder."/$key","r");
 		$data = fread($fw,filesize($this->folder."/$key"));
 		fclose($fw);
 		return $data;
-}
+  }
 	
   /** gets the timestamp of item insertion in cache,
    *  returns false if key doesn't exist
    */
-  function getCachedDate($key) {
-      $key = md5($key);
+  function getCachedDate($key, $type='') {
+      $key = $type.md5($key);
       if( is_file($this->folder."/$key") ) {
           return filemtime($this->folder."/$key");
       } else return false;
   }
 		
-  function invalidate($key) {
-		$key = md5($key);
+  function invalidate($key, $type='') {
+		$key = $type.md5($key);
 		if (is_file($this->folder."/$key")) {
 			unlink($this->folder."/$key");
 		}
   }
+
 
 	function empty_full_cache(){
 		global $tikidomain,$logslib;
@@ -78,6 +79,16 @@ class Cachelib {
 			$logslib->add_log('system','erased full cache');
 		}
 	}
+	function empty_type_cache($type) {
+		$path = $this->folder;
+		$all = opendir($path);
+		while ($file = readdir($all)) {
+			if (strstr($file, $type) == 0) {
+				unlink("$path/$file");
+			}
+		}
+	}
+		
 
   function du($path, $begin=null) {
 	if (!$path or !is_dir($path)) return (array('total' => 0,'cant' =>0));

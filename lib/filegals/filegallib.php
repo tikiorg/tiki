@@ -276,9 +276,20 @@ class FileGalLib extends TikiLib {
 			require_once('lib/search/refresh-functions.php');
 			refresh_index('file_galleries', $galleryId);
 		}
+		global $cachelib; include_once('lib/cache/cachelib.php');
+		$cachelib->empty_type_cache($this->get_all_galleries_cache_type());
 
 		// event_handler($action,$object_type,$object_id,$options);
 		return $galleryId;
+	}
+	function get_all_galleries_cache_name($user) {
+		global $tikilib;
+		$gs = $tikilib->get_user_groups($user);
+		$cacheName = md5(implode("\n", $gs));
+		return $cacheName;
+	}
+	function get_all_galleries_cache_type() {
+		return 'fgals_';
 	}
 
 	function process_batch_file_upload($galleryId, $file, $user, $description) {

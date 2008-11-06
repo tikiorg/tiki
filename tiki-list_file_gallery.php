@@ -71,7 +71,7 @@ if ( ! isset($_REQUEST['galleryId']) || $_REQUEST['galleryId'] == 0 ) {
 
 $galleryId = $_REQUEST['galleryId'];
 
-if ( ( $galleryId != 0 || $tiki_p_list_file_galleries != 'y' ) && $tiki_p_view_file_gallery != 'y' ) {
+if ( ( $galleryId != 0 || $tiki_p_list_file_galleries != 'y' ) && ($galleryId == 0 || $tiki_p_view_file_gallery != 'y')) {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra('Permission denied you cannot view this section'));
 	$smarty->display('error.tpl');
@@ -840,11 +840,6 @@ if ( $prefs['feature_user_watches'] == 'y' ) {
 	}
 }
 
-if ($prefs['fgal_show_explorer'] == 'y') {
-	$all_galleries = $filegallib->list_file_galleries(0, -1, 'name_asc', $user, '', -1, false, true, false, false,false,true, false );
-	$smarty->assign_by_ref('all_galleries', $all_galleries['data']);
-}
-
 // Build galleries browsing tree and current gallery path array
 //
 function add2tree(&$tree, &$galleries, &$gallery_id, &$gallery_path, &$expanded, $cur_id = -1) {
@@ -875,24 +870,37 @@ function add2tree(&$tree, &$galleries, &$gallery_id, &$gallery_path, &$expanded,
 	}
 }
 
-if ( is_array($all_galleries) && count($all_galleries) > 0 ) {
-	$tree = array('name' => tra('File Galleries'), 'data' => array(), 'link_var' => 'galleryId', 'link_id' => 0 );
-	$gallery_path = array();
-	$expanded = array('1');
+if ($prefs['fgal_show_explorer'] == 'y' || $prefs['fgal_show_path'] == 'y') {
+	global $cachelib; include_once('lib/cache/cachelib.php');
+	$cacheName = $filegallib->get_all_galleries_cache_name($user);
+	$cacheType = $filegallib->get_all_galleries_cache_type();
+	if (!$cachelib->isCached($cacheName, $cacheType)) {
+		$all_galleries = $filegallib->list_file_galleries(0, -1, 'name_asc', $user, '', -1, false, true, false, false,false,true, false );
+		$cachelib->cacheItem($cacheName, serialize($all_galleries), $cacheType);
+	} else {
+		$all_galleries = unserialize($cachelib->getCached($cacheName, $cacheType));
+	}
+	$smarty->assign_by_ref('all_galleries', $all_galleries['data']);
 
-	add2tree($tree['data'], $all_galleries['data'], $galleryId, $gallery_path, $expanded);
+	if ( isset($all_galleries) && is_array($all_galleries) && count($all_galleries) > 0 ) {
+		$tree = array('name' => tra('File Galleries'), 'data' => array(), 'link_var' => 'galleryId', 'link_id' => 0 );
+		$gallery_path = array();
+		$expanded = array('1');
 
-	array_unshift($gallery_path, array(0, $tree['name']));
-	$gallery_path_str = '';
-	foreach ( $gallery_path as $dir_id ) {
-		if ( $gallery_path_str != '' ) $gallery_path_str .= ' &nbsp;&gt;&nbsp;';
-		$gallery_path_str .= '<a href="tiki-list_file_gallery.php?galleryId='.$dir_id[0].( ( isset($_REQUEST['filegals_manager']) && $_REQUEST['filegals_manager'] != '' ) ? '&amp;filegals_manager='.urlencode($_REQUEST['filegals_manager']) : '').'">'.$dir_id[1].'</a>';
+		add2tree($tree['data'], $all_galleries['data'], $galleryId, $gallery_path, $expanded);
+		if ($prefs['fgal_show_path'] == 'y') {
+			array_unshift($gallery_path, array(0, $tree['name']));
+			$gallery_path_str = '';
+			foreach ( $gallery_path as $dir_id ) {
+				if ( $gallery_path_str != '' ) $gallery_path_str .= ' &nbsp;&gt;&nbsp;';
+				$gallery_path_str .= '<a href="tiki-list_file_gallery.php?galleryId='.$dir_id[0].( ( isset($_REQUEST['filegals_manager']) && $_REQUEST['filegals_manager'] != '' ) ? '&amp;filegals_manager='.urlencode($_REQUEST['filegals_manager']) : '').'">'.$dir_id[1].'</a>';
+			}
+			$smarty->assign('gallery_path', $gallery_path_str);
+		}
+		$smarty->assign_by_ref('tree', $tree);
+		$smarty->assign_by_ref('expanded', $expanded);
 	}
 }
-
-$smarty->assign('gallery_path', $gallery_path_str);
-$smarty->assign_by_ref('tree', $tree);
-$smarty->assign_by_ref('expanded', $expanded);
 
 ask_ticket('fgal');
 

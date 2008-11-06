@@ -419,10 +419,14 @@ if (isset($_REQUEST['galleryId']) && is_numeric($_REQUEST['galleryId'])) {
 }
 
 if (empty($_REQUEST['fileId'])) {
-	if ($tiki_p_admin_file_galleries != 'y') {
-		$galleries = $tikilib->list_visible_file_galleries(0, -1, 'name_asc', $user, '');
+	global $cachelib; include_once('lib/cache/cachelib.php');
+	$cacheName = $filegallib->get_all_galleries_cache_name($user);
+	$cacheType = $filegallib->get_all_galleries_cache_type();
+	if (!$cachelib->isCached($cacheName, $cacheType)) {
+		$galleries = $filegallib->list_file_galleries(0, -1, 'name_asc', $user, '', -1, false, true, false, false,false,true, false );
+		$cachelib->cacheItem($cacheName, serialize($galleries), $cacheType);
 	} else {
-		$galleries = $filegallib->list_file_galleries(0, -1, 'name_asc', $user, '');
+		$galleries = unserialize($cachelib->getCached($cacheName, $cacheType));
 	}
 	$temp_max = count($galleries["data"]);
 	for ($i = 0; $i < $temp_max; $i++) {
