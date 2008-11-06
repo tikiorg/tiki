@@ -45,6 +45,7 @@
 				{/if}
 					<div id="tiki-center" {*id needed for ajax editpage link*} class="clearfix content">
 						{$mid_data}
+						{show_help}
 					</div>
 				</div>
 			</div>

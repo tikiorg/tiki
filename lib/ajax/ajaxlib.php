@@ -169,6 +169,9 @@ function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user 
     } elseif ( $ajaxlib->templateIsRegistered($template) ) {
 
 	$content = $smarty->fetch($template);
+	// Help
+	require_once $smarty->_get_plugin_filepath('function', 'show_help');
+	$content .= smarty_function_show_help(null,$smarty);
 	$objResponse->addAssign($htmlElementId, "innerHTML", $content);
 
 	// Handle TikiTabs in order to display only the current tab in the XAJAX response

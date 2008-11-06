@@ -54,6 +54,7 @@
 
 			<div id="tiki-center" style="clear: both">
 			{$mid_data}
+			{show_help}
 			</div>
 		</td>
 

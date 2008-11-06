@@ -1,16 +1,7 @@
 {* $Id$ *}
 {** \brief Show wiki syntax and plugins help *}
 {* TODO: Add links to add samples to edit form *}
-
-<div class="wiki-edithelp" id="edithelpzone">
-<div id="wikihelp-tab">
-{if count($plugins) ne 0 and !($wysiwyg ne 'y' and $prefs.wysiwyg_wiki_parsed ne 'y' and $prefs.wysiwyg_wiki_semi_parsed ne 'y')}
-  <div style="text-align: right;">
-    <a title="{tr}Close{/tr}" href="javascript:flip('edithelpzone');">{icon _id=minus_small alt="{tr}Close{/tr}" width="11" height="8"}</a>
-  </div>
-{/if}
-<br />
-
+{add_help show='n' title="{tr}Wiki Help{/tr}" id="wiki_help"}
 <p>{tr}For more information, please see <a href="{$prefs.helpurl}Wiki Page Editor">Wiki Page Editor</a>{/tr}</p>
 
 {if $prefs.feature_wiki_paragraph_formatting eq 'y' }
@@ -104,19 +95,13 @@
 {tr}numeric between ~ for html numeric characters entity{/tr}</td></tr>
 <tr><td class="{cycle advance=false}"><strong>{tr}Misc{/tr}</strong></td><td class="{cycle}">"{literal}{cookie}, {poll}{/literal}"</td></tr>
 </table>
-</div>
+{/add_help}
 
 {if count($plugins) ne 0}
-<div id="wikiplhelp-tab" style="display:none;">
-  <div style="text-align: right;">
-    <a title="{tr}Close{/tr}" href="javascript:flip('edithelpzone');">{icon _id=minus_small alt="{tr}Close{/tr}" width="11" height="8"}</a>
-  </div>
-<br />
-
+{add_help show='n' title="{tr}Plugin Help{/tr}" id="plugins_help"}
 <h3>{tr}Plugins{/tr}{if $prefs.feature_help eq 'y'} <a href="{$prefs.helpurl}Plugins" target="tikihelp" class="tikihelp" title="{tr}Quicktags{/tr}">{icon _id='help' style="vertical-align:middle"}</a>
 {/if}</h3>
 <p>{tr}Note that plugin arguments can be enclosed with double quotes (&quot;); this allows them to contain , or = or &gt;{/tr}.</p>
-
 <br />
 <table width="95%" class="normal">
 	<tr><th>{tr}Plugin{/tr}</th><th>{tr}Description{/tr}</th></tr>
@@ -137,6 +122,5 @@
   {cycle print=false}
   {/section}
 </table>
-</div>
+{/add_help}
 {/if}
-</div>

@@ -81,3 +81,46 @@ div.multiselect {
 	z-index: 1023;
 }
 
+/* New Help section */
+div#tikihelp {
+	position:fixed;
+	_position:absolute;
+	right: 0px;
+	top: 15%;
+	max-height: 85%;
+	max-width: 350px;
+	padding:0;
+	margin:0;
+	border: none;
+	background-color: transparent;
+}
+div.help_icon {
+	border: 0;
+	margin: 0;
+	padding: 0;
+}
+div.help_icon img{
+	vertical-align: middle;
+	border: 0;
+	margin: 0;
+	padding: 0;
+}
+div.help_section_select {
+	font-weight : bold;
+	font-size: 120%;
+	background-color : #E7E9EA;
+	width: 340px;
+	margin: 2px;
+}
+div.help_sections {
+	padding:  2px;
+	background-color: #AAC9E9;
+	max-height : 500px;
+	overflow: auto;
+}
+div.help_section {
+	width : 340px;
+	margin: 5px;
+	padding: 5px;
+	background-color: white;
+}
