@@ -119,25 +119,31 @@ foreach ($rawcals["data"] as $cal_id=>$cal_data) {
 }
 $smarty->assign('listcals',$caladd);
 
-if (!isset($_REQUEST['calendarId']) and count($caladd)) {
-	$keys = array_keys($caladd);
-	$_REQUEST['calendarId'] = array_shift($keys);
-}
+
 
 
 $smarty->assign_by_ref('groupforalert',$groupforalert);
 
 $smarty->assign_by_ref('showeachuser',$showeachuser);
 
-$groupforalert=$groupalertlib->GetGroup ('calendar',$_REQUEST["calendarId"]);
 
 
- if ( $groupforalert != "" ) {
- 	$showeachuser=$groupalertlib->GetShowEachUser('calendar',$_REQUEST["calendarId"], $groupforalert) ;
-  	$listusertoalert=$userlib->get_users(0,-1,'login_asc','','',false,$groupforalert,'') ;
+if ( ! isset($_REQUEST["calendarId"]) )
+		$calID=$calendarlib->get_calendarid($_REQUEST["calitemId"]);
+	else
+		$calID=$_REQUEST["calendarId"];
+
+$groupforalert=$groupalertlib->GetGroup ('calendar',$calID);
+if ( $groupforalert != "" ) {
+	$showeachuser=$groupalertlib->GetShowEachUser('calendar',$calID, $groupforalert) ;
+	$listusertoalert=$userlib->get_users(0,-1,'login_asc','','',false,$groupforalert,'') ;
 	$smarty->assign_by_ref('listusertoalert',$listusertoalert['data']);
- }
+}
 
+if (!isset($_REQUEST['calendarId']) and count($caladd)) {
+	$keys = array_keys($caladd);
+	$_REQUEST['calendarId'] = array_shift($keys);
+}
 if ($prefs['feature_categories'] == 'y') {
   global $categlib; include_once ('lib/categories/categlib.php');
   $perms_array = $categlib->get_object_categories_perms($user, 'calendar', $_REQUEST['calendarId']);
@@ -164,7 +170,7 @@ if (isset($_POST['act']) || isset($_POST['preview'])) {
 		$_REQUEST['end_date_Month'] = TikiLib::date_format("%m", $save['date_end']);
 		$_REQUEST['end_date_Day'] = TikiLib::date_format("%d", $save['date_end']);
 		$_REQUEST['end_date_Year'] = TikiLib::date_format("%Y", $save['date_end']);
-        
+
 	}
     $save['allday'] = $_REQUEST['allday'] == 'true' ? 1 : 0;
 	$save['start'] = TikiLib::make_time(

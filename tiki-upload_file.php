@@ -349,6 +349,20 @@ if (isset($_REQUEST["upload"])) {
 					$cat_desc = substr($_REQUEST["description"][$key], 0, 200);
 					$cat_name =  empty($_REQUEST['name'][$key])? $name: $_REQUEST['name'][$key];
 					$cat_href = $aux['dllink'];
+echo "ok";
+echo "reqqs".$_REQUEST['listtoalert'];
+				foreach ( $_REQUEST['listtoalert'] as $user ){
+echo "user $user";
+				$email=$userlib->get_user_email($user);
+				if ( ! empty($email) ){
+					include_once ('lib/webmail/tikimaillib.php');
+					$mail = new TikiMail();
+					$mail->setText("There is a changement in file gallery (message will be redefined)");
+					$mail->setSubject("You are alerted of a changement" );
+					$mail->send(array($email));
+			}
+		}
+
 					include_once ('categorize.php');
 					// Print progress
 					if ($prefs['javascript_enabled'] == 'y') {
