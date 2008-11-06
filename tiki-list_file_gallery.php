@@ -840,8 +840,10 @@ if ( $prefs['feature_user_watches'] == 'y' ) {
 	}
 }
 
-$all_galleries = $filegallib->list_file_galleries(0, -1, 'name_asc', $user, '', -1, false, true, false, false,false,true, false );
-$smarty->assign_by_ref('all_galleries', $all_galleries['data']);
+if ($prefs['fgal_show_explorer'] == 'y') {
+	$all_galleries = $filegallib->list_file_galleries(0, -1, 'name_asc', $user, '', -1, false, true, false, false,false,true, false );
+	$smarty->assign_by_ref('all_galleries', $all_galleries['data']);
+}
 
 // Build galleries browsing tree and current gallery path array
 //
