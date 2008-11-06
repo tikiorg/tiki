@@ -58,7 +58,7 @@
 <tr class="formcolor">
 <td>{tr}Category:{/tr}</td>
 <td><select name="categId">
-<option value="" {if $reportCateg eq  '' or reportCateg eq 0}selected="selected"{/if}>* {tr}All{/tr} *</option>
+<option value="" {if $reportCateg eq  '' or $reportCateg eq 0}selected="selected"{/if}>* {tr}All{/tr} *</option>
  {section name=ix loop=$categories}
 <option value="{$categories[ix].categId|escape}" {if $reportCateg eq  $categories[ix].name}selected="selected"{/if}>{$categories[ix].name|escape}</option>
 {/section}
