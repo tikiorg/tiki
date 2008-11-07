@@ -39,7 +39,11 @@ function smarty_function_menu($params, &$smarty)
 		$headerlib->add_jsfile('lib/menubuilder/menu.js');
 		$tpl = 'tiki-user_cssmenu.tpl';
 		$smarty->assign('menu_type', $type);
-		$smarty->assign('idCssmenu', $idCssmenu++);
+		if(! isset($css_id)){//adding $css_id parameter to customize menu id and prevent automatic id renaming when a menu is removed
+			$smarty->assign('idCssmenu', $idCssmenu++);	
+		} else {
+			$smarty->assign('idCssmenu', $css_id);
+		}
 	} else {
 		$tpl = 'tiki-user_menu.tpl';
 	}
