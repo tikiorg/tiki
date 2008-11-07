@@ -65,12 +65,7 @@
 				</td>
 				<td>
 					<b>{$uploads[ix].name} ({$uploads[ix].size|kbsize})</b>
-					<div class="button2">
-						<a href="#" onclick="javascript:flip('uploadinfos{$uploads[ix].fileId}');flip('uploadinfos{$uploads[ix].fileId}_close','inline');return false;">
-						{tr}Additional Info{/tr}
-						<span id="uploadinfos{$uploads[ix].fileId}_close" style="display:none">({tr}Hide{/tr})</span>
-						</a>
-					</div>
+					{button href="#" _flip_id="uploadinfos`$uploads[ix].fileId`" _text="{tr}Additional Info{/tr}"}
 					<div style="{if $prefs.javascript_enabled eq 'y'}display:none;{/if}" id="uploadinfos{$uploads[ix].fileId}">
 						{tr}You can download this file using{/tr}: <a class="link" href="{$uploads[ix].dllink}">{$uploads[ix].dllink}</a><br />
 						{tr}You can link to the file from a Wiki page using{/tr}: <div class="code">[tiki-download_file.php?fileId={$uploads[ix].fileId}|{$uploads[ix].name} ({$uploads[ix].size|kbsize})]</div>
