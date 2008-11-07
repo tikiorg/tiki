@@ -18,7 +18,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 function smarty_function_button($params, &$smarty) {
 	if ( ! is_array($params) || ! isset($params['_text']) ) return;
 	global $tikilib, $prefs, $auto_query_args;
-	$auto_query_args_orig = null;
 
 	require_once $smarty->_get_plugin_filepath('block', 'self_link');
 
@@ -52,12 +51,15 @@ function smarty_function_button($params, &$smarty) {
 			$params['_script'] = $params['href'];
 		}
 		unset($params['href']);
-		if ( !empty($params['_auto_args']) ) {
-			$auto_query_args_orig = $auto_query_args;
-			$auto_query_args = explode(',', $params['_auto_args']);
-		} else {
-			$params['_noauto'] = 'y';
-		}
+	}
+
+	if ( !empty($params['_auto_args']) ) {
+		if ( !isset($auto_query_args) ) $auto_query_args = null;
+		$auto_query_args_orig = $auto_query_args;
+		$auto_query_args = explode(',', $params['_auto_args']);
+	} else {
+		$auto_query_args_orig = null;
+		$params['_noauto'] = 'y';
 	}
 
 	$html = smarty_block_self_link(
@@ -67,6 +69,6 @@ function smarty_function_button($params, &$smarty) {
 		false
 	);
 
-	if ( $auto_query_args_orig !== null ) $auto_query_args = $auto_query_args_orig;
+	$auto_query_args = $auto_query_args_orig;
 	return '<span class="button">'.$html.'</span>';
 }
