@@ -131,7 +131,7 @@ function wikiplugin_code($data, $params) {
 			$out = $code;
 		}
 
-		if ( $escape_html ) $out = htmlentities($out);
+		if ( $escape_html ) $out = htmlentities($out,ENT_COMPAT,"utf-8");
 	}
 
 	if ( isset($wrap) && $wrap == 1 ) {
