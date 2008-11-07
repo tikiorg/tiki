@@ -97,7 +97,7 @@
 						<td>
 							<input type="checkbox" name="feature_editcss" {if $prefs.feature_editcss eq 'y'}checked="checked"{/if}/>
 							{if $prefs.feature_editcss eq 'y' and $tiki_p_create_css eq 'y'}
-								<a href="tiki-edit_css.php" class="link" title="{tr}Edit CSS{/tr}">{tr}Edit CSS{/tr}</a>
+								{button _text="{tr}Edit CSS{/tr}" href="tiki-edit_css.php"}
 							{/if}
 						</td>
 					</tr>
@@ -109,7 +109,7 @@
 					<td>
 						<input type="checkbox" name="feature_theme_control" {if $prefs.feature_theme_control eq 'y'}checked="checked"{/if}/>
 						{if $prefs.feature_theme_control eq 'y'}
-							<a href="tiki-theme_control.php" class="link" title="{tr}Theme Control{/tr}">{tr}Theme Control{/tr}</a>
+							{button href="tiki-theme_control.php" _text="{tr}Theme Control{/tr}"}
 						{/if}
 					</td>
 				</tr>
@@ -121,6 +121,9 @@
 					</td>
 					<td>
 						<input type="checkbox" name="feature_view_tpl" {if $prefs.feature_view_tpl eq 'y'}checked="checked"{/if}/>
+						{if $prefs.feature_view_tpl eq 'y'}
+							{button href="tiki-edit_templates.php" _text="{tr}View Templates{/tr}" }
+						{/if}
 					</td>
 				</tr>
 				<tr>
@@ -134,7 +137,7 @@
 					<td>
 						<input type="checkbox" name="feature_edit_templates" {if $prefs.feature_edit_templates eq 'y'}checked="checked"{/if}/>
 						{if $prefs.feature_edit_templates eq 'y'}
-							<a href="tiki-edit_templates.php" class="link" title="{tr}Edit Templates{/tr}">{tr}Edit Templates{/tr}</a>
+							{button href="tiki-edit_templates.php" _text="{tr}Edit Templates{/tr}" }
 						{/if}
 					</td>
 				</tr>
