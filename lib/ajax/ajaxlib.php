@@ -188,6 +188,7 @@ function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user 
     } else {
 	$objResponse->addAlert(sprintf(tra("Template %s not registered"),$template));
     }
+	$objResponse->addIncludeScript("tiki-jsplugin.php");
     return $objResponse;
 }
 
