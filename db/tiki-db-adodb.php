@@ -57,7 +57,7 @@ if (!@$dbTiki->Connect($host_tiki, $user_tiki, $pass_tiki, $dbs_tiki)) {
 					<a title="help" href="http://doc.tikiwiki.org/Installation" target="help"><img border="0" src="img/icons/help.gif" alt="Help" /></a>
 				</h1>
 				<p>The following error message was returned:
-					<div class="simplebox">'
+					<div class="simplebox">';
 	print $dbTiki->ErrorMsg();
 	print '</div>
 				</p>
