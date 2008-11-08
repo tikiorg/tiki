@@ -102,32 +102,38 @@ class BlogLib extends TikiLib {
 		return $blogId;
 	}
 
-	function list_blog_posts($blogId, $offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '', $date_min = '', $date_max = '', $approved = 'y') {
+	function list_blog_posts($blogId = 0, $offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '', $date_min = '', $date_max = '', $approved = 'y') {
 		global $tiki_p_admin_comments;
 
-		if ($find) {
-			$findesc = '%' . $find . '%';
+		$mid = array();
+		$bindvars = array();
 
-			$mid = " where `blogId`=? and (`data` like ? or `title` like ?) ";
-			$bindvars = array((int)$blogId, $findesc, $findesc);
-		} else {
-			$mid = " where `blogId`=? ";
-			$bindvars = array((int) $blogId);
+		if ( $blogId > 0 ) {
+			$mid[] = "`blogId`=?";
+			$bindvars[] = (int)$blogId;
+		}
+
+		if ( $find ) {
+			$findesc = '%' . $find . '%';
+			$mid[] = "(`data` like ? or `title` like ?)";
+			$bindvars[] = $findesc;
+			$bindvars[] = $findesc;
 		}
 
 		if ( $date_min ) {
-			$mid .= " and  `created`>=? ";
+			$mid[] = "`created`>=?";
 			$bindvars[] = (int)$date_min;
 		}
 		if ( $date_max ) {
-			$mid .= " and  `created`<=? ";
+			$mid[] = "`created`<=?";
 			$bindvars[] = (int)$date_max;
 		}
+		$mid = empty($mid) ? '' : 'where ' . implode(' and ', $mid);
 
 		$query = "select * from `tiki_blog_posts` $mid order by ".$this->convert_sortmode($sort_mode);
 		$query_cant = "select count(*) from `tiki_blog_posts` $mid";
-		$result = $this->query($query,$bindvars,$maxRecords,$offset);
-		$cant = $this->getOne($query_cant,$bindvars);
+		$result = $this->query($query, $bindvars, $maxRecords, $offset);
+		$cant = $this->getOne($query_cant, $bindvars);
 		$ret = array();
 
 		$cant_com_query = "select count(*) from `tiki_comments` where `object`=? and `objectType` = 'post'";
@@ -150,7 +156,40 @@ class BlogLib extends TikiLib {
 		$retval = array();
 		$retval["data"] = $ret;
 		$retval["cant"] = $cant;
+
 		return $retval;
+	}
+
+	function list_blog_post_comments($approved = 'y') {
+		global $user;
+
+		$query = "SELECT b.`title`, b.`postId`, c.`threadId`, c.`title` as commentTitle, `commentDate`, `userName` FROM `tiki_comments` c, `tiki_blog_posts` b WHERE `objectType`='post' AND b.`postId`=c.`object`";
+
+		$bindvars = array();
+		if ( $tiki_p_admin_comments != 'y' ) {
+			$query .= ' AND `approved`=?';
+			$bindvars[] = $approved;
+		} else {
+			$approved = NULL;
+		}
+
+		$query .= " ORDER BY `commentDate` desc";
+		$result = $this->query($query, $bindvars);
+
+		$ret = array();
+		while ( $res = $result->fetchRow() ) {
+			if ( $this->user_has_perm_on_object($user, $res['postId'], 'post', 'tiki_p_read_blog') ) {
+
+				/// check if the blog post is marked private
+				$priv = ( $res2 = $this->get_post($res['postId']) ) ? $res2['priv'] : '';
+
+				if ( $priv != 'y' || ( $user && $user == $res2["user"] ) || $tiki_p_blog_admin == 'y' ) {
+					$ret[] = $res;
+				}
+			}
+		}
+
+		return array('data' => $ret, 'cant' => count($ret));
 	}
 
 	function list_all_blog_posts($offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '', $date = '') {
