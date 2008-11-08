@@ -9,8 +9,8 @@
 // Initialization
 $section = 'blogs';
 require_once ('tiki-setup.php');
-
 include_once ('lib/blogs/bloglib.php');
+$auto_query_args = array('postId','blogId','offset','find','sort_mode','page','mode','show_comments');
 
 // first of all , we just die if blogs feature is not set
 if ($prefs['feature_blogs'] != 'y') {
