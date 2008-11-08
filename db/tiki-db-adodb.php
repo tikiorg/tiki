@@ -74,7 +74,7 @@ if (!@$dbTiki->Connect($host_tiki, $user_tiki, $pass_tiki, $dbs_tiki)) {
 		<hr>
 		<p align="center">
 			<a href="http://www.tikiwiki.org" title="Tikiwiki">
-  			<img src="img/tiki/tikibutton2.png" alt="Tikiwiki" border="0" height="31" width="80">
+			<img src="img/tiki/tikibutton2.png" alt="Tikiwiki" border="0" height="31" width="80">
 			</a>
 		</p>
 	</div>
@@ -119,7 +119,7 @@ if (!@$dbTiki->Execute('select `login` from `users_users` limit 1')) {
 		<hr>
 		<p align="center">
 			<a href="http://www.tikiwiki.org" title="Tikiwiki">
-  			<img src="img/tiki/tikibutton2.png" alt="Tikiwiki" border="0" height="31" width="80">
+			<img src="img/tiki/tikibutton2.png" alt="Tikiwiki" border="0" height="31" width="80">
 			</a>
 		</p>
 	</div>
