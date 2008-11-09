@@ -36,19 +36,23 @@ class groupAlertLib extends TikiLib {
 		return $this->getOne( "select `displayEachuser` from `tiki_groupalert` where ( `objectType` = ? and `objectId` = ? and `groupName` =? )", array($ObjectType,$ObjectNumber,$GroupName));
 	}
 
-	function Notify ( $Object ,$ObjectId ,$ListOfChecked ,$URL,$Message ) {
-		foreach ( $ListOfChecked as $user ){
+	function Notify ( $ListUserToAlert,$URI ) {
+		global $tikilib,$userlib ;
+		$project=$tikilib->get_preference ("siteTitle");
+		$foo = parse_url($_SERVER["REQUEST_URI"]);
+		$machine = $tikilib->httpPrefix() . dirname( $foo["path"] );
+		$URL=$machine."/".$URI;
+		foreach ( $ListUserToAlert as $user ){
 		$email=$userlib->get_user_email($user);
 		if ( ! empty($email) ){
-		include_once ('lib/webmail/tikimaillib.php');
+		include_once ('lib/webmail/tikimaillib.php'); 
 		$mail = new TikiMail();
-		$mail->setText($Message + "\n" + tra ("You can check the modifications at :")+$URL);
-		$mail->setSubject("You are alerted of a changement" );
+		$mail->setText(tra("You are alerted by the server "). $project . "\n" . tra ("You can check the modifications at : ") .$URL );
+		$mail->setSubject(tra("You are alerted of a changement on ").$project );
 		$mail->send(array($email));
 		}
 	}
 	}
-
 }
 
 
