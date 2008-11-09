@@ -350,16 +350,7 @@ if (isset($_REQUEST["upload"])) {
 					$cat_name =  empty($_REQUEST['name'][$key])? $name: $_REQUEST['name'][$key];
 					$cat_href = $aux['dllink'];
 
-					foreach ( $_REQUEST['listtoalert'] as $user ){
-						$email=$userlib->get_user_email($user);
-						if ( ! empty($email) ){
-							include_once ('lib/webmail/tikimaillib.php');
-							$mail = new TikiMail();
-							$mail->setText("There is a changement in file gallery (message will be redefined)");
-							$mail->setSubject("You are alerted of a changement" );
-							$mail->send(array($email));
-						}
-					}
+					$groupalertlib->Notify($_REQUEST['listtoalert'],"tiki-download_file.php?fileId=".$fileId);
 
 					include_once ('categorize.php');
 					// Print progress

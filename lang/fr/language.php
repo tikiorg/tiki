@@ -8163,6 +8163,8 @@ $lang=Array(
 "You have to make %d choice(s) for the question" => "Vous devez donner %s réponses à la question",
 "You have to make at least %d choice(s) for the question" => "Vous devez donner au moins %s réponses à la question",
 "You have to make less than %d choice(s) for the question" => "Vous devez donner moins de %s réponses à la question",
-
+"You are alerted by the server "=>"Alerte du serveur",
+"You can check the modifications at : "=>"Vous pouvez accéder à la modification à l'adresse ",
+"You are alerted of a changement on "=>"Vous êtes alerté d'un changement sur",
 "###end###"=>"###end###");
 ?>
