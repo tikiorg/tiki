@@ -41,6 +41,11 @@ function list_tables( $dbTiki )
 		return $list;
 
 	$result = $dbTiki->Execute( "show tables" );
+
+	if (!$result) {
+		return $list;
+	}
+
 	while( $row = $result->fetchRow() )
 		$list[] = reset( $row );
 
