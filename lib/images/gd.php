@@ -18,7 +18,12 @@ class Image extends ImageAbstract {
       if ( $isfile ) {
         $this->format = strtolower(substr($image, strrpos($image, '.') + 1));
         list($width, $height, $type) = getimagesize($image);
-        $this->format = image_type_to_extension($type,false);
+        if (function_exists("image_type_to_extension")) {
+          $this->format = image_type_to_extension($type,false);
+        } else {
+          $tmp = image_type_to_mime_type($type);
+          $this->format = strtolower(substr($tmp,strrpos($tmp,"/")+1));
+        }
         if ( $this->is_supported($this->format) ) {
           if ( $this->format == 'jpg' ) $this->format = 'jpeg';
           $this->data = call_user_func('imagecreatefrom'.$this->format, $image);
