@@ -31,6 +31,17 @@ if( ! function_exists( 'array_fill_keys' ) ) {
 	}
 }
 
+if ( ! function_exists('sys_getloadavg') ) {
+	function sys_getloadavg()
+	{
+		$loadavg_file = '/proc/loadavg';
+		if (file_exists($loadavg_file)) {
+			return explode(chr(32),file_get_contents($loadavg_file));
+		}
+		return array(0,0,0);
+	}
+}
+
 /* \brief  substr with a utf8 string - works only with $start and $length positive or nuls
  * This function is the same as substr but works with multibyte
  * In a multybyte sequence, the first byte of a multibyte sequence that represents a non-ASCII character is always in the range 0xC0 to 0xFD

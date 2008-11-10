@@ -10,16 +10,14 @@
 $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
 // get average server load in the last minute
-if ( is_readable('/proc/loadavg') && ($load = file('/proc/loadavg')) ) {
-    list($server_load) = explode(' ', $load[0]);
-    $smarty->assign('server_load', $server_load);
-    if ( $prefs['use_load_threshold'] == 'y' and $tiki_p_access_closed_site != 'y' and !isset($bypass_siteclose_check) ) {
-        if ( $server_load > $prefs['load_threshold'] ) {
-            $url = 'tiki-error_simple.php?error=' . urlencode($prefs['site_busy_msg']);
-            header('location: ' . $url);
-            exit;
-        }
-    }
-} else {
-	$smarty->assign('server_load', '?');
+$load = sys_getloadavg();
+$server_load = $load[0];
+
+if ( $prefs['use_load_threshold'] == 'y' and $tiki_p_access_closed_site != 'y' and !isset($bypass_siteclose_check) ) {
+	if ( $server_load > $prefs['load_threshold'] ) {
+		$url = 'tiki-error_simple.php?error=' . urlencode($prefs['site_busy_msg']);
+		header('location: ' . $url);
+		exit;
+	}
 }
+$smarty->assign('server_load', $server_load == 0 ? '?' : $server_load);
