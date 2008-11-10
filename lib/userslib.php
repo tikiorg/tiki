@@ -1409,13 +1409,11 @@ function get_included_groups($group, $recur=true) {
 		$k = 'group_theme_'.$group;
 
 		if ( $cachelib->isCached($k) ) {
-			echo 'CACHED';
 			$return = $cachelib->getCached($k);
 		} elseif ( ! empty($group) ) {
 			$query = 'select `groupTheme` from `users_groups` where `groupName` = ?';
 			$return = $this->getOne($query, array($group));
 			$cachelib->cacheItem($k, $return);
-			echo 'SETCACHE';
 		}
 		if (!empty($return)) {
 			return $return;
