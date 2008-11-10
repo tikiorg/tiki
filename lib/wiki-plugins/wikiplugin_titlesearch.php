@@ -127,7 +127,7 @@
                 } elseif ($count == 1) {
                     $sOutput  .= tra("One page found for title search")." '__".$search."__'";
                 } else {
-                    $sOutput = "$count".tra(" pages found for title search")." '__".$search."__'";
+                    $sOutput = "$count ".tra("pages found for title search")." '__".$search."__'";
                 }
                 $sOutput  .= "\n";
             }

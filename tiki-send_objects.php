@@ -145,10 +145,10 @@ if (isset($_REQUEST["send"])) {
 				$msg .= tra($errorMsg);
 			} else {
 				if (!$result->faultCode()) {
-					$msg .= tra('Page'). ': '.$spage['pageName']. tra(' successfully sent'). "<br />";
+					$msg .= tra('Page'). ': '.$spage['pageName']." ". tra('successfully sent'). "<br />";
 				} else {
 					$errorMsg = $result->faultString(); 
-					$msg .= tra('Page'). ': '.$spage['pageName']. tra(' not sent') . '!' . "<br />";
+					$msg .= tra('Page'). ': '.$spage['pageName']." ".tra('not sent') . '!' . "<br />";
 					$msg .= tra('Error: ') . $result->faultCode() . '-' . tra($errorMsg) . "<br />";
 				}
 			}
@@ -175,10 +175,10 @@ if (isset($_REQUEST["send"])) {
 				$msg .= tra($errorMsg);
 			} else {
 				if (!$result->faultCode()) {
-				    $msg .= tra('Page'). ': ' . $page . tra(' successfully sent'). "<br />";
+				    $msg .= tra('Page'). ': ' . $page . " ".tra('successfully sent'). "<br />";
 				} else {
 				    $errorMsg = $result->faultString();
-				    $msg .= tra('Page'). ': ' . $page . tra(' not sent') . '!' . "<br />";
+				    $msg .= tra('Page'). ': ' . $page . " ".tra('not sent') . '!' . "<br />";
 				    $msg .= tra('Error: ') . $result->faultCode() . '-' . tra($errorMsg) . "<br />";
 				}
 			}
@@ -220,10 +220,10 @@ if (isset($_REQUEST["send"])) {
 				$msg .= tra($errorMsg);
 			} else {
 				if (!$result->faultCode()) {
-				    $msg .= tra('Article'). ': ' . $page . tra(' successfully sent'). "<br />";
+				    $msg .= tra('Article'). ': ' . $page . " ".tra('successfully sent'). "<br />";
 				} else {
 				    $errorMsg = $result->faultString();
-				    $msg .= tra('Article'). ': ' . $page . tra(' not sent') . '!' . "<br />";
+				    $msg .= tra('Article'). ': ' . $page ." ".tra('not sent') . '!' . "<br />";
 				    $msg .= tra('Error: ') . $result->faultCode() . '-' . tra($errorMsg) . "<br />";
 				}
 			}

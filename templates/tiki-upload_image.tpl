@@ -78,7 +78,7 @@
 	{/if}
 {include file=categorize.tpl}
 	<tr class="formcolor">
-	<td  class="formcolor" colspan="2"><b>{tr}Now enter the image URL{/tr}{tr} or upload a local image from your disk{/tr}</b></td></tr>
+	<td  class="formcolor" colspan="2"><b>{tr}Now enter the image URL{/tr} {tr}or upload a local image from your disk{/tr}</b></td></tr>
 	<tr><td class="formcolor">URL:</td><td class="formcolor"><input size="50" type="text" name="url" /></td></tr>
 	<tr>
 	<td class="formcolor">{tr}Upload from disk{/tr} / {tr}Batch upload{/tr}:</td><td class="formcolor">

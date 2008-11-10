@@ -40,7 +40,7 @@
     <select name="feature_intertiki_mymaster" onchange="check_server_visibility(this);">
       <option value="">{tr}No{/tr}</option>
   {foreach from=$prefs.interlist key=k item=i}
-      <option value="{$k|escape}"{if $prefs.feature_intertiki_mymaster eq $k} selected="selected"{/if}>{$i.name} {tr} as master{/tr}</option>
+      <option value="{$k|escape}"{if $prefs.feature_intertiki_mymaster eq $k} selected="selected"{/if}>{$i.name} {tr}as master{/tr}</option>
   {/foreach}
     </select>
     <div id="admin-slavemode-options" style="display: {if $prefs.feature_intertiki_mymaster eq ''}none{else}block{/if}">

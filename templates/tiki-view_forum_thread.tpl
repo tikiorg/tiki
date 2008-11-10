@@ -6,7 +6,7 @@
 {/title}
 
 {if $unread > 0}
-  <a class='link' href='messu-mailbox.php'>{tr}You have{/tr} {$unread} {tr} unread private messages{/tr}<br /><br /></a>
+  <a class='link' href='messu-mailbox.php'>{tr}You have{/tr} {$unread} {tr}unread private messages{/tr}<br /><br /></a>
 {/if}
 
 {if $was_queued eq 'y'}
