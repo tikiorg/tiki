@@ -11,11 +11,22 @@ class MenuLib extends TikiLib {
 		$this->TikiLib($db);
 	}
 
-	function list_menus($offset, $maxRecords, $sort_mode, $find) {
+	function empty_menu_cache($menuId = 0) {
+		global $cachelib; include_once('lib/cache/cachelib.php');
+		if ( $menuId > 0 ) {
+			$cachelib->empty_type_cache('menu_'.$menuId.'_');
+		} else {
+			$menus = $this->list_menus();
+			foreach ( $menus['data'] as $menu_info ) {
+				$cachelib->empty_type_cache('menu_'.$menu_info['menuId'].'_');
+			}
+		}
+	}
+
+	function list_menus($offset = 0, $maxRecords = -1, $sort_mode = 'menuId_asc', $find = '') {
 
 		if ($find) {
 			$findesc = '%' . $find . '%';
-
 			$mid = " where (`name` like ? or `description` like ?)";
 			$bindvars=array($findesc,$findesc);
 		} else {
@@ -24,21 +35,18 @@ class MenuLib extends TikiLib {
 		}
 
 		$query = "select * from `tiki_menus` $mid order by ".$this->convert_sortmode($sort_mode);
-		$query_cant = "select count(*) from `tiki_menus` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
-		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
-		while ($res = $result->fetchRow()) {
+		while ( $res = $result->fetchRow() ) {
 			$query = "select count(*) from `tiki_menu_options` where `menuId`=?";
-
-			$res["options"] = $this->getOne($query,array((int)$res["menuId"]));
+			$res["options"] = $this->getOne($query, array((int)$res["menuId"]));
 			$ret[] = $res;
 		}
 
 		$retval = array();
 		$retval["data"] = $ret;
-		$retval["cant"] = $cant;
+		$retval["cant"] = count($ret);
 		return $retval;
 	}
 
@@ -46,11 +54,12 @@ class MenuLib extends TikiLib {
 		// Check the name
 		if (isset($menuId) and $menuId > 0) {
 			$query = "update `tiki_menus` set `name`=?,`description`=?,`type`=?, `icon`=? where `menuId`=?";
-			$bindvars=array($name,$description,$type,$icon,(int)$menuId);
+			$bindvars = array($name,$description,$type,$icon,(int)$menuId);
+			$this->empty_menu_cache($menuId);
 		} else {
 			// was: replace into. probably we need a delete here
-			$query = "insert into `tiki_menus`(`name`,`description`,`type`,`icon`) values(?,?,?,?)";
-			$bindvars=array($name,$description,$type,$icon);
+			$query = "insert into `tiki_menus` (`name`,`description`,`type`,`icon`) values(?,?,?,?)";
+			$bindvars = array($name,$description,$type,$icon);
 		}
 
 		$result = $this->query($query,$bindvars);
@@ -73,23 +82,30 @@ class MenuLib extends TikiLib {
 			$bindvars=array((int)$menuId,$name,$url,$type,(int)$position,$section,$perm,$groupname,$level);
 		}
 
+		$this->empty_menu_cache($menuId);
 		$result = $this->query($query, $bindvars);
 		return true;
 	}
 
 	function remove_menu($menuId) {
 		$query = "delete from `tiki_menus` where `menuId`=?";
-
 		$result = $this->query($query,array((int)$menuId));
+
 		$query = "delete from `tiki_menu_options` where `menuId`=?";
 		$result = $this->query($query,array((int)$menuId));
+
+		$this->empty_menu_cache($menuId);
 		return true;
 	}
 
 	function remove_menu_option($optionId) {
-		$query = "delete from `tiki_menu_options` where `optionId`=?";
+		$query = "select `menuId` from `tiki_menu_options` where `optionId`=?";
+		$menuId = $this->getOne($query,array((int)$optionId));
 
+		$query = "delete from `tiki_menu_options` where `optionId`=?";
 		$result = $this->query($query,array((int)$optionId));
+
+		$this->empty_menu_cache($menuId);
 		return true;
 	}
 
@@ -119,6 +135,8 @@ class MenuLib extends TikiLib {
 		$result=$this->query($query,array($position1, $position, $menuId));
 		$query = "update `tiki_menu_options` set `position`=? where `optionId`=?";
 		$result=$this->query($query,array($position, $optionId,));
+
+		$this->empty_menu_cache($menuId);
 	}
 
 	function next_pos ($optionId) {
@@ -135,6 +153,8 @@ class MenuLib extends TikiLib {
 		$result = $this->query($query, array($position1, $position, $menuId));
 		$query = "update `tiki_menu_options` set `position`=? where `optionId`=?";
 		$result = $this->query($query, array($position, $optionId));
+
+		$this->empty_menu_cache($menuId);
 	}
 	/*
          * gets the result of list_menu_options and create the field "type_description"
@@ -175,17 +195,24 @@ class MenuLib extends TikiLib {
 		$query = "select * from `tiki_menu_options` where `url` like ?";
 		$result = $this->query($query, array("%tiki-index.php?page=$oldName%"));
 		$query = "update `tiki_menu_options` set `url`=? where `optionId`=?";
-		while ($res = $result->fetchRow()) {
+
+		$menu_cache_removed = array();
+		while ( $res = $result->fetchRow() ) {
 			$p = parse_url($res['url']);
-	  		if ($p['path'] == 'tiki-index.php') {
+	  		if ( $p['path'] == 'tiki-index.php' ) {
 				parse_str($p['query'], $p);
-				if ($p['page'] == $oldName) {
+				if ( $p['page'] == $oldName ) {
 					$url = str_replace($oldName, $newName, $res['url']);
 					$this->query($query, array($url, $res['optionId']));
+					if ( ! isset($menu_cache_removed[$p['menuId']]) ) {
+						$menu_cache_removed[$p['menuId']] = 1;
+						$this->empty_menu_cache($p['menuId']);
+					}
 				}
 			}
 		}
 	}
+
    	// look if the current url matches the menu option - to be improved a lot
 	function menuOptionMatchesUrl($option) {
 		global $prefs;
