@@ -169,16 +169,28 @@ function sql_error($query, $values, $result) {
     $outp.= "<tr class='formcolor'><td colspan='2'><tt>".htmlspecialchars($query)."</tt></td></tr>";
     $outp.= "<tr class='heading'><td colspan='2'>Values:</td></tr>";
     foreach ($values as $k=>$v) {
-		if (is_null($v)) $v='<i>NULL</i>';
-		else $v=htmlspecialchars($v);
+		$value_size = strlen($v);
+		if (is_null($v)) {
+			$v='<i>NULL</i>';
+		} else if ($value_size > 1024) {
+			$v = "<i>string data of length $value_size</i>";
+		} else {
+			$v=htmlspecialchars($v);
+		}
 		$outp.= "<tr class='formcolor'><td>".htmlspecialchars($k)."</td><td>$v</td></tr>";
     }
     $outp.= "<tr class='heading'><td colspan='2'>Message:</td></tr><tr class='formcolor'><td colspan='2'>".htmlspecialchars($this->db->ErrorMsg())."</td></tr>\n";
 	
     $q=$query;
     foreach($values as $v) {
-		if (is_null($v)) $v='NULL';
-		else $v="'".addslashes($v)."'";
+		$value_size = strlen($v);
+		if (is_null($v)) {
+			$v='NULL';
+		} else if ($value_size > 1024) {
+			$v="[string data of length $value_size]";
+		} else {
+			$v="'".addslashes($v)."'";
+		}
 		$pos=strpos($q, '?');
 		if ($pos !== FALSE)
 			$q=substr($q, 0, $pos)."$v".substr($q, $pos+1);
