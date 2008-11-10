@@ -1415,12 +1415,7 @@ function get_included_groups($group, $recur=true) {
 			$return = $this->getOne($query, array($group));
 			$cachelib->cacheItem($k, $return);
 		}
-		if (!empty($return)) {
-			return $return;
-		}
-
-		global $prefs;
-		return $prefs['style'];
+		return $return;
 	}
 
 	/* Returns a default category for user's default_group
@@ -2363,7 +2358,6 @@ function get_included_groups($group, $recur=true) {
 			$cachelib->invalidate('grouplist');
 			$cachelib->invalidate('group_theme_'.$group);
 		}
-	
 		$cachelib->invalidate('group_theme_'.$olgroup);
 
 		return true;

@@ -47,7 +47,10 @@ class Cachelib {
 			return serialize(false);
 		} 
 		$fw = fopen($this->folder."/$key","r");
-		$data = fread($fw,filesize($this->folder."/$key"));
+		if ($l = filesize($this->folder."/$key"))
+			$data = fread($fw, $l);
+		else
+			$data = '';
 		fclose($fw);
 		return $data;
   }

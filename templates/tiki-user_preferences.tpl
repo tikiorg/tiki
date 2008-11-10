@@ -185,7 +185,7 @@
       </td>
     </tr>
     
-    {if $prefs.change_theme eq 'y'}
+    {if $prefs.change_theme eq 'y' && $group_style eq ''}
       <tr>
         <td class="{cycle advance=false}">{tr}Theme{/tr}:</td>
         <td class="{cycle}">

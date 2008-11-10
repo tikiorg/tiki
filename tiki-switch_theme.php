@@ -12,7 +12,7 @@ if (isset($_SERVER['HTTP_REFERER'])) {
 
 if (isset($_GET['theme'])){
 	$new_theme = $_GET['theme'];
-	if ($prefs['feature_userPreferences'] == 'y' && $user && $prefs['change_theme'] == 'y') {  
+	if ($prefs['feature_userPreferences'] == 'y' && $user && $prefs['change_theme'] == 'y' && $group_theme == '') {  
 		$tikilib->set_user_preference($user,'theme',$new_theme);
 		$prefs['style'] = $new_theme;
 	} elseif ($prefs['change_theme'] == 'y') {
@@ -23,7 +23,7 @@ if (isset($_GET['theme'])){
 
 if (isset($_GET['theme-option'])){
 	$new_theme_option = $_GET['theme-option'];
-	if ($prefs['feature_userPreferences'] == 'y' && $user && $prefs['change_theme'] == 'y') {  
+	if ($prefs['feature_userPreferences'] == 'y' && $user && $prefs['change_theme'] == 'y' && empty($group_style)) {  
 		$tikilib->set_user_preference($user,'theme-option',$new_theme_option);
 		$prefs['style_option'] = $new_theme_option;
 	} elseif ($prefs['change_theme'] == 'y') {

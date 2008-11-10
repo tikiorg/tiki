@@ -69,8 +69,11 @@ if (isset($_REQUEST['userId']) || isset($_REQUEST['view_user'])) {
 }
 
 // Custom fields
-$customfields = array();
-$customfields = $userprefslib->get_userprefs('CustomFields');
+include_once('lib/registration/registrationlib.php');
+$customfields = $registrationlib->get_customfields();
+foreach ($customfields as $i=>$c) {
+	$customfields[$i]['value'] = $tikilib->get_user_preference($userwatch, $c['prefName']);
+}
 $smarty->assign_by_ref('customfields', $customfields);
 
 $smarty->assign('userwatch', $userwatch);
@@ -88,7 +91,7 @@ $smarty->assign('show_mouseover_user_info',
 if ($prefs['feature_userPreferences'] == 'y' && isset($_REQUEST["new_prefs"])) {
 	check_ticket('user-prefs');
 	// setting preferences
-	if ($prefs['change_theme'] == 'y') {
+	if ($prefs['change_theme'] == 'y' && $group_theme == '') {
 		if (isset($_REQUEST["mystyle"])) {
 			if ($user == $userwatch) {
 				$t = $tikidomain? $tikidomain.'/':'';
