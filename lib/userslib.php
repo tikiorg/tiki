@@ -1408,22 +1408,21 @@ function get_included_groups($group, $recur=true) {
 		global $cachelib; require_once("lib/cache/cachelib.php");
 		$k = 'group_theme_'.$group;
 
-		if ( $cachelib->isCached($k) ) return $cachelib->getCached($k);
-
-		if ( ! empty($group) ) {
+		if ( $cachelib->isCached($k) ) {
+			echo 'CACHED';
+			$return = $cachelib->getCached($k);
+		} elseif ( ! empty($group) ) {
 			$query = 'select `groupTheme` from `users_groups` where `groupName` = ?';
 			$return = $this->getOne($query, array($group));
-			if ( ! empty($return) ) {
-    				$cachelib->cacheItem($k, $return);
-				return $return;
-			}
+			$cachelib->cacheItem($k, $return);
+			echo 'SETCACHE';
+		}
+		if (!empty($return)) {
+			return $return;
 		}
 
 		global $prefs;
-		$return = $prefs['style'];
-		$cachelib->cacheItem($k, $return);
-
-		return $return;
+		return $prefs['style'];
 	}
 
 	/* Returns a default category for user's default_group

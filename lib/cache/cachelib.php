@@ -43,7 +43,7 @@ class Cachelib {
 	
   function getCached($key, $type='') {
 		$key = $type.md5($key);
-		if ( filesize($this->folder."/$key") == 0 ) { 	
+		if ( !file_exists($this->folder."/$key")) { 	
 			return serialize(false);
 		} 
 		$fw = fopen($this->folder."/$key","r");
