@@ -2146,11 +2146,21 @@ class TikiLib extends TikiDB {
 					$cant = 0;
 					$n = -1;
 					$need_everything = ( $with_subgals_size && ( $sort_mode == 'size_asc' || $sort_mode == 'filesize_asc' ) );
-
+					global $cachelib; include_once('lib/cache/cachelib.php');
+				  $cacheName = md5("group:".implode("\n", $this->get_user_groups($user)));
+  				$cacheType = 'fgals_perms_'.$galleryId."_";
+					if ($cachelib->isCached($cacheName, $cacheType)) {
+						$fgal_perms = unserialize($cachelib->getCached($cacheName, $cacheType));
+					} else {
+						$fgal_perms = array();
+					}
 					while ( $res = $result->fetchRow() ) {
 						$object_type = ( $res['isgal'] == 1 ? 'file gallery' : 'file');
-						$res['perms'] = $this->get_perm_object($res['id'], $object_type, array(), false);
-
+						if (isset($fgal_perms[$res['id']])) {
+							$res['perms'] = $fgal_perms[$res['id']];
+						} else {
+							$fgal_perms[$res['id']] = $res['perms'] = $this->get_perm_object($res['id'], $object_type, array(), false);
+						}
 						// Don't return the current item, if :
 						//  the user has no rights to view the file gallery AND no rights to list all galleries (in case it's a gallery)
 						if ( $res['perms']['tiki_p_view_file_gallery'] != 'y'
@@ -2178,6 +2188,7 @@ class TikiLib extends TikiDB {
 
 						$cant++;
 					}
+					$cachelib->cacheItem($cacheName, serialize($fgal_perms), $cacheType);
 					if ( ! $need_everything ) $cant += $offset;
 
 

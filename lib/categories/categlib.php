@@ -200,6 +200,7 @@ class CategLib extends ObjectLib {
 			$this->remove_category($res["categId"]);
 		}
 		$cachelib->invalidate('allcategs');
+		$cachelib->empty_type_cache('fgals_perms');
 		$cachelib->invalidate("allcategs$categId");
 	
 		$values= array("categoryId"=>$categId, "categoryName"=>$categoryName, "categoryPath"=>$categoryPath,
@@ -225,6 +226,7 @@ class CategLib extends ObjectLib {
 		$query = "update `tiki_categories` set `name`=?, `parentId`=?, `description`=? where `categId`=?";
 		$result = $this->query($query,array($name,(int) $parentId,$description,(int) $categId));
 		$cachelib->invalidate('allcategs');
+		$cachelib->empty_type_cache('fgals_perms');
 		$cachelib->invalidate('childcategs'.$parentId);
 
 		$this->update_category_cache($categId);
@@ -242,6 +244,7 @@ class CategLib extends ObjectLib {
 		$query = "select `categId` from `tiki_categories` where `name`=? and `parentId`=?";
 		$id = $this->getOne($query,array($name,(int) $parentId));
 		$cachelib->invalidate('allcategs');
+		$cachelib->empty_type_cache('fgals_perms');
 		$cachelib->invalidate('childcategs'.$parentId);
 		$values= array("categoryId"=>$id, "categoryName"=>$name, "categoryPath"=> $this->get_category_path_string_with_root($id),
 			"description"=>$description, "parentId" => $parentId, "parentName" => $this->get_category_name($parentId),
@@ -280,6 +283,7 @@ class CategLib extends ObjectLib {
 
 		$this->query($query, array($id));
 		$cachelib->invalidate('allcategs');
+		$cachelib->empty_type_cache('fgals_perms');
 		return $id;
 	}
 
@@ -602,6 +606,7 @@ class CategLib extends ObjectLib {
 			$result = $this->query($query,array((int) $catObjectId));
 		}
 		$cachelib->invalidate('allcategs');
+		$cachelib->empty_type_cache('fgals_perms');
 	}
 
 	// FUNCTIONS TO CATEGORIZE SPECIFIC OBJECTS ////
@@ -1016,6 +1021,7 @@ class CategLib extends ObjectLib {
 		    // Refresh categories
 		    global $cachelib;
 		    $cachelib->invalidate('allcategs');
+        $cachelib->empty_type_cache('fgals_perms');
 		}
     }
 

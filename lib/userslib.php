@@ -1555,6 +1555,7 @@ function get_included_groups($group, $recur=true) {
 
 		global $cachelib;
 		$cachelib->invalidate("allperms");
+		$cachelib->empty_type_cache("fgals_perms");
 
 		global $menulib; include_once('lib/menubuilder/menulib.php');
 		$menulib->empty_menu_cache();
@@ -1571,6 +1572,7 @@ function get_included_groups($group, $recur=true) {
 
 		global $cachelib;
 		$cachelib->invalidate("allperms");
+		$cachelib->empty_type_cache("fgals_perms");
 		$cachelib->invalidate("groupperms_$group");
 
 		global $menulib; include_once('lib/menubuilder/menulib.php');
@@ -1588,6 +1590,7 @@ function get_included_groups($group, $recur=true) {
 
 		global $cachelib;
 		$cachelib->invalidate("allperms");
+		$cachelib->empty_type_cache("fgals_perms");
 		$cachelib->invalidate("groupperms_$group");
 	
 		global $menulib; include_once('lib/menubuilder/menulib.php');
@@ -1602,6 +1605,7 @@ function get_included_groups($group, $recur=true) {
 
 		global $cachelib;
 		$cachelib->invalidate("allperms");
+		$cachelib->empty_type_cache("fgals_perms");
 
 		global $menulib; include_once('lib/menubuilder/menulib.php');
 		$menulib->empty_menu_cache();
@@ -1790,6 +1794,7 @@ function get_included_groups($group, $recur=true) {
 
 		global $cachelib;
 		$cachelib->invalidate("allperms");
+		$cachelib->empty_type_cache("fgals_perms");
 		$cachelib->invalidate("groupperms_$group");
 	
 		global $menulib; include_once('lib/menubuilder/menulib.php');
@@ -1850,6 +1855,7 @@ function get_included_groups($group, $recur=true) {
 
 		global $cachelib;
 		$cachelib->invalidate("allperms");
+		$cachelib->empty_type_cache("fgals_perms");
 		$cachelib->invalidate("groupperms_$group");
 	
 		global $menulib; include_once('lib/menubuilder/menulib.php');
