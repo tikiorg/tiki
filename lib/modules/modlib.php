@@ -22,7 +22,7 @@ class ModLib extends TikiLib {
 			$result = $this->query($query,array($name,$title,$data,$parse));
 
 			global $cachelib; require_once("lib/cache/cachelib.php");
-			$cachelib->invalidate('user_modules');
+			$cachelib->invalidate("user_modules_$name");
 
 			return true;
 		}

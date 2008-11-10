@@ -3187,7 +3187,7 @@ class TikiLib extends TikiDB {
 	/*shared*/
 	function get_user_module($name) {
 		global $cachelib;
-		$cacheKey = 'user_modules';
+		$cacheKey = "user_modules_$name";
 
 		if ( $cachelib->isCached($cacheKey) ) {
 			$return = unserialize($cachelib->getCached($cacheKey));
