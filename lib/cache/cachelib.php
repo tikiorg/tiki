@@ -83,7 +83,7 @@ class Cachelib {
 		$path = $this->folder;
 		$all = opendir($path);
 		while ($file = readdir($all)) {
-			if (strstr($file, $type) == 0) {
+			if (strpos($file, $type) === 0) {
 				unlink("$path/$file");
 			}
 		}

@@ -118,81 +118,109 @@ $content_changed = false;
 $content = &$info['data'];
 
 // Handle images display, files thumbnails and icons
-if ( isset($_GET['thumbnail']) || isset($_GET['display']) || isset($_GET['icon']) ) {
-	
-	if ( $info['path'] && (!$content || sizeof($content) == 0)) {
-		$content = &get_readfile_chunked($prefs['fgal_use_dir'].$info['path']);
+if ( isset($_GET['preview']) || isset($_GET['thumbnail']) || isset($_GET['display']) || isset($_GET['icon']) ) {
+	$use_cache = false;
+
+	// Cache only thumbnails to avoid DOS attacks
+	if ( ( isset($_GET['thumbnail']) || isset($_GET['preview']) ) && ! isset($_GET['display']) && ! isset($_GET['icon']) && ! isset($_GET['scale']) && ! isset($_GET['x']) && ! isset($_GET['y']) && ! isset($_GET['format']) && ! isset($_GET['max']) ) {
+	        global $cachelib; include_once('lib/cache/cachelib.php');
+	        $cacheName = md5($info['filesize']."\n".$info['created']."\n".$info['filename']);
+	        $cacheType = ( isset($_GET['thumbnail']) ? 'thumbnail_' : 'preview_' ) . ((int)$_REQUEST['fileId']).'_';
+		$use_cache = true;
 	}
 
-	// Modify the original image if needed
-	if ( ! isset($_GET['display']) || isset($_GET['x']) || isset($_GET['y']) || isset($_GET['scale']) || isset($_GET['max']) || isset($_GET['format']) ) {
+        if ( $use_cache && $cachelib->isCached($cacheName, $cacheType) ) {
+		$content = $cachelib->getCached($cacheName, $cacheType);
+	} else {
 
-		$content_changed = true;
-		if ( $info['path'] ) {
-			$content=file_get_contents(($prefs['fgal_use_dir'].$info['path']));
+		if ( $info['path'] && (!$content || sizeof($content) == 0)) {
+			$content = &get_readfile_chunked($prefs['fgal_use_dir'].$info['path']);
 		}
-
-		require_once('lib/images/images.php');
-		if (!class_exists('Image')) die();
-
-		$format = substr($info['filename'], strrpos($info['filename'], '.') + 1);
-
-		// Fallback to an icon if the format is not supported
-		if ( ! Image::is_supported($format) ) {
-			$_GET['icon'] = 'y';
-			$_GET['max'] = 32;
+	
+		// Modify the original image if needed
+		if ( ! isset($_GET['display']) || isset($_GET['x']) || isset($_GET['y']) || isset($_GET['scale']) || isset($_GET['max']) || isset($_GET['format']) ) {
+	
+			$content_changed = true;
+			if ( $info['path'] ) {
+				$content=file_get_contents(($prefs['fgal_use_dir'].$info['path']));
+			}
+	
+			require_once('lib/images/images.php');
+			if (!class_exists('Image')) die();
+	
+			$format = substr($info['filename'], strrpos($info['filename'], '.') + 1);
+	
+			// Fallback to an icon if the format is not supported
+			if ( ! Image::is_supported($format) ) {
+				$_GET['icon'] = 'y';
+				$_GET['max'] = 32;
+			}
+	
+			if ( isset($_GET['icon']) ) {
+				unset($content);
+				if ( isset($_GET['max']) ) {
+					$icon_x = $_GET['max'];
+					$icon_y = $_GET['max'];
+				} else {
+					$icon_x = isset($_GET['x']) ? $_GET['x'] : 0;
+					$icon_y = isset($_GET['y']) ? $_GET['y'] : 0;	
+				}
+	
+				$content = Image::icon($format, $icon_x, $icon_y);
+				$format = Image::get_icon_default_format();
+				$info['filetype'] = 'image/'.$format;
+			}
+	
+			if ( ! isset($_GET['icon']) || ( isset($_GET['format']) && $_GET['format'] != $format ) ) {
+				$image = new Image($content);
+	
+				$resize = false;
+				// We resize if needed
+				if ( isset($_GET['x']) || isset($_GET['y']) ) {
+					$image->resize($_GET['x']+0, $_GET['y']+0);
+					$resize = true;
+				}
+				// We scale if needed
+				elseif ( isset($_GET['scale']) ) {
+					$image->scale($_GET['scale']+0);
+					$resize = true;
+				}
+				// We reduce size if length or width is greater that $_GET['max'] if needed
+				elseif ( isset($_GET['max']) ) {
+					$image->resizemax($_GET['max']+0);
+					$resize = true;
+				}
+				// We resize to a thumbnail size if needed
+				elseif ( isset($_GET['thumbnail']) ) {
+					$image->resizethumb();
+				}
+				// We resize to a preview size if needed
+				elseif ( isset($_GET['preview']) ) {
+					$image->resizemax('800');
+					$resize = true;
+				}
+	
+				// We change the image format if needed
+				if ( isset($_GET['format']) && Image::is_supported($_GET['format']) ) {
+					$image->convert($_GET['format']);
+				}
+				// By default, we change the image format to the usual most common format (jpeg) for thumbnails
+				elseif ( isset($_GET['thumbnail']) ) {
+					$image->convert('jpeg');
+				}
+	
+				$content =& $image->display();
+				$info['filetype'] = $image->get_mimetype();
+			}
 		}
+		
+		if ( $use_cache ) {
+			// Remove all existing thumbnails for this file, to avoid taking too much disk space
+			// (only one thumbnail size is handled at the same time)
+			$cachelib->empty_type_cache($cacheType);
 
-		if ( isset($_GET['icon']) ) {
-			unset($content);
-			if ( isset($_GET['max']) ) {
-				$icon_x = $_GET['max'];
-				$icon_y = $_GET['max'];
-			} else {
-				$icon_x = isset($_GET['x']) ? $_GET['x'] : 0;
-				$icon_y = isset($_GET['y']) ? $_GET['y'] : 0;	
-			}
-
-			$content = Image::icon($format, $icon_x, $icon_y);
-			$format = Image::get_icon_default_format();
-			$info['filetype'] = 'image/'.$format;
-		}
-
-		if ( ! isset($_GET['icon']) || ( isset($_GET['format']) && $_GET['format'] != $format ) ) {
-			$image = new Image($content);
-
-			$resize = false;
-			// We resize if needed
-			if ( isset($_GET['x']) || isset($_GET['y']) ) {
-				$image->resize($_GET['x']+0, $_GET['y']+0);
-				$resize = true;
-			}
-			// We scale if needed
-			elseif ( isset($_GET['scale']) ) {
-				$image->scale($_GET['scale']+0);
-				$resize = true;
-			}
-			// We reduce size if length or width is greater that $_GET['max'] if needed
-			elseif ( isset($_GET['max']) ) {
-				$image->resizemax($_GET['max']+0);
-				$resize = true;
-			}
-			// We resize to a thumbnail size if needed
-			elseif ( isset($_GET['thumbnail']) ) {
-				$image->resizethumb();
-			}
-
-			// We change the image format if needed
-			if ( isset($_GET['format']) && Image::is_supported($_GET['format']) ) {
-				$image->convert($_GET['format']);
-			}
-			// By default, we change the image format to the usual most common format (jpeg) for thumbnails
-			elseif ( isset($_GET['thumbnail']) ) {
-				$image->convert('jpeg');
-			}
-
-			$content =& $image->display();
-			$info['filetype'] = $image->get_mimetype();
+			// Cache Thumbnail
+			$cachelib->cacheItem($cacheName, $content, $cacheType);
 		}
 	}
 }
@@ -224,4 +252,3 @@ if ( $info['path'] and !$content_changed ) {
 	}
 	echo "$content";
 }
-?>

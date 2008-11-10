@@ -65,11 +65,14 @@
       {button _text="{tr}Browse Gallery{/tr}" href="?galleryId=$galleryId"}
     {else}
       {button _text="{tr}Edit Gallery{/tr}" href="?edit_mode=1&amp;galleryId=$galleryId"}
-      {if $view eq 'browse'}
-        {button _text="{tr}List Gallery{/tr}" href="?view=list&amp;galleryId=$galleryId"}
-      {else}
-        {button _text="{tr}Browse Images{/tr}" href="?view=browse&amp;galleryId=$galleryId" _ajax='n'} {* no AJAX to make shadowbox work in browse view *}
-      {/if}
+    {/if}
+  {/if}
+
+  {if $edit_mode neq 'y' and $dup_mode neq 'y'}
+    {if $view eq 'browse'}
+      {button _text="{tr}List Gallery{/tr}" href="?view=list&amp;galleryId=$galleryId"}
+    {else}
+      {button _text="{tr}Browse Images{/tr}" href="?view=browse&amp;galleryId=$galleryId" _ajax='n'} {* no AJAX to make shadowbox work in browse view *}
     {/if}
   {/if}
 

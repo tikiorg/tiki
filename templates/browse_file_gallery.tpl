@@ -82,7 +82,7 @@
           {if $gal_info.type eq 'podcast' or $gal_info.type eq 'vidcast'}
             href="{$download_path}{$files[changes].path}"
           {else}
-            href="tiki-download_file.php?fileId={$files[changes].id}&amp;display=y"
+            href="tiki-download_file.php?fileId={$files[changes].id}&amp;{if $prefs.javascript_enabled eq 'y'}preview{else}display=y{/if}"
           {/if}
         {/if}
       {/if}
@@ -97,7 +97,7 @@
           <div class="thumbimage">
             <div class="thumbimagesub" style="width:{$thumbnail_size}px;">{assign var=key_type value=$files[changes].type|truncate:9:'':true}
               <a {$link}{if $prefs.feature_shadowbox eq 'y' && $filegals_manager neq 'y'} rel="shadowbox[gallery];type={if $key_type eq 'image/png' or $key_type eq 'image/jpe' or $key_type eq 'image/gif'}img{else}iframe{/if}"{/if}{if $over_infos neq ''} {popup fullhtml="1" text=$over_infos|escape:"javascript"|escape:"html"}{else} title="{if $files[changes].name neq ''}{$files[changes].name|escape}{/if}{if $files[changes].description neq ''} ({$files[changes].description|escape}){/if}"{/if}>
-                <img src="tiki-download_file.php?fileId={$files[changes].id}&amp;thumbnail&amp;max={$thumbnail_size}" />
+                <img src="tiki-download_file.php?fileId={$files[changes].id}&amp;thumbnail" />
               </a>
             </div>
           </div>
