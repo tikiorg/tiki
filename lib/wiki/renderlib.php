@@ -560,7 +560,7 @@ class WikiRenderer
 	{
 		if ( $this->canUndo !== null ) return $this->canUndo;
 
-		global $tiki_p_admin_wiki, $tiki_p_remove;
+		global $tiki_p_admin_wiki, $tiki_p_remove, $tiki_p_edit;
 
 		if ( $this->info['flag'] != 'L'
 			&& (
