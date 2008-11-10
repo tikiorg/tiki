@@ -138,9 +138,9 @@ if ( isset($_GET['preview']) || isset($_GET['thumbnail']) || isset($_GET['displa
 		if ( ! isset($_GET['display']) || isset($_GET['x']) || isset($_GET['y']) || isset($_GET['scale']) || isset($_GET['max']) || isset($_GET['format']) ) {
 	
 			$content_changed = true;
-			if ( $info['path'] ) {
-				$content = file_get_contents(($prefs['fgal_use_dir'].$info['path']));
-			}
+//			if ( $info['path'] ) {
+//				$content = file_get_contents(($prefs['fgal_use_dir'].$info['path']));
+//			}
 	
 			require_once('lib/images/images.php');
 			if (!class_exists('Image')) die();
@@ -169,7 +169,11 @@ if ( isset($_GET['preview']) || isset($_GET['thumbnail']) || isset($_GET['displa
 			}
 	
 			if ( ! isset($_GET['icon']) || ( isset($_GET['format']) && $_GET['format'] != $format ) ) {
-				$image = new Image($content);
+				if ( isset($info['path']) ) {
+					$image = new Image($prefs['fgal_use_dir'].$info['path'], true);
+				} else {
+					$image = new Image($content);
+				}
 	
 				$resize = false;
 				// We resize if needed
