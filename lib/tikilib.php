@@ -32,7 +32,7 @@ class TikiLib extends TikiDB {
 	var $now;
 
 	var $cache_page_info;
-
+	var $sessionId = null;
 
 	// Constructor receiving a PEAR::Db database object.
 	function TikiLib($db) {
@@ -512,7 +512,8 @@ class TikiLib extends TikiDB {
 
 	/*shared*/
 	function get_online_users() {
-		if(!isset($this->online_users_cache)) {
+		if ( ! isset($this->online_users_cache) ) {
+			$this->update_session();
 			$this->online_users_cache=array();
 			$query = "select s.`user`, p.`value` as 'realName', `timestamp`, `tikihost` from `tiki_sessions` s left join `tiki_user_preferences` p on s.`user`<>? and s.`user` = p.`user` and p.`prefName` = 'realName' where s.`user` is not null;";
 			$result = $this->query($query,array(''));
@@ -1748,12 +1749,13 @@ class TikiLib extends TikiDB {
 	function get_menu($menuId) {
 		$query = "select * from `tiki_menus` where `menuId`=?";
 		$result = $this->query($query,array((int)$menuId));
-		if (!$result->numRows()) return false;
+		if ( ! $result->numRows() ) return false;
 		$res = $result->fetchRow();
-		if (empty($res['icon']))
+		if ( empty($res['icon']) ) {
 			$res['oicon'] = null;
-		else
+		} else {
 			$res['oicon'] = dirname($res['icon']).'/o'.basename($res['icon']);
+		}
 		return $res;
 	}
 
@@ -2443,8 +2445,9 @@ class TikiLib extends TikiDB {
 	function list_online_friends($user)
 	{
 		global $userlib;
+		$this->update_session();
 
-		$bindvars=array($user);
+		$bindvars = array($user);
 
 		// TODO: same as list_users
 		$query = "select u.*, p.`value` as realName from `tiki_friends` as f, `users_users` as u, `tiki_sessions` s left join `tiki_user_preferences` p on u.`login`=p.`user` and p.`prefName` = 'realName' where u.`login`=f.`friend` and s.`user`=u.`login` and f.`user`=? and f.`user` <> f.`friend`";
@@ -3051,7 +3054,18 @@ class TikiLib extends TikiDB {
 		return $ret;
 	}
 
-	function update_session($sessionId) {
+	function setSessionId($sessionId) {
+		$this->sessionId = $sessionId;
+	}
+
+	function getSessionId() {
+		return $this->sessionId;
+	}
+
+	function update_session() {
+		static $uptodate = false;
+		if ( $uptodate === true || $this->sessionId === null ) return true;
+
 		global $user, $prefs;
 		global $logslib; include_once("lib/logs/logslib.php");
 
@@ -3084,16 +3098,20 @@ class TikiLib extends TikiDB {
 			$query = "delete from `sessions` where `expiry`<?";
 			$this->query($query, array($oldy));
 		}
+
+		$uptodate = true;
 		return true;
 	}
 
 	function count_sessions() {
+		$this->update_session();
 		$query = "select count(*) from `tiki_sessions`";
 		$cant = $this->getOne($query,array());
 		return $cant;
 	}
 
 	function count_cluster_sessions() {
+		$this->update_session();
 		$query = "select `tikihost`, count(`tikihost`) as cant from `tiki_sessions` group by `tikihost`";
 		$result = $this->query($query, array());
 		$ret = array();
@@ -3104,18 +3122,28 @@ class TikiLib extends TikiDB {
 	}
 
 	/*shared*/
-	function get_assigned_modules($position, $displayed="n") {
+	function get_assigned_modules($position = null, $displayed="n") {
 		$filter = '';
-		if ($displayed != 'n') {
-			$filter = " and (`type` is null or `type` !='h')";
+
+		if ( $position !== null ) {
+			$filter .= 'where `position`=?';
+			$bindvars = array($position);
 		}
-		$query = "select * from `tiki_modules` ";
-		$query.= " where `position`= ? $filter order by ".$this->convert_sortmode("ord_asc");
 
-		$result = $this->query($query, array($position));
+		if ( $displayed != 'n' ) {
+			$filter .= ( $filter == '' ? 'where' : 'and' ) . " (`type` is null or `type` != 'h')";
+		}
+
+		$query = "select * from `tiki_modules` $filter order by ".$this->convert_sortmode("ord_asc");
+
+		if ( isset($bindvars) ) {
+			$result = $this->query($query, $bindvars);
+		} else {
+			$result = $this->query($query);
+		}
+
 		$ret = array();
-
-		while ($res = $result->fetchRow()) {
+		while ( $res = $result->fetchRow() ) {
 			if ($res["groups"] && strlen($res["groups"]) > 1) {
 				$grps = @unserialize($res["groups"]);
 
@@ -3128,7 +3156,14 @@ class TikiLib extends TikiDB {
 			} else {
 				$res["module_groups"] = '&nbsp;';
 			}
-			$ret[] = $res;
+			if ( $position === null ) {
+				if ( ! isset($ret[$res['position']]) ) {
+					$ret[$res['position']] = array();
+				}
+				$ret[$res['position']][] = $res;
+			} else {
+				$ret[] = $res;
+			}
 		}
 		return $ret;
 	}
@@ -3142,10 +3177,19 @@ class TikiLib extends TikiDB {
 
 	/*shared*/
 	function get_user_module($name) {
-		$query = "select * from `tiki_user_modules` where `name`=?";
-		$result = $this->query($query,array($name));
-		$res = $result->fetchRow();
-		return $res;
+		global $cachelib;
+		$cacheKey = 'user_modules';
+
+		if ( $cachelib->isCached($cacheKey) ) {
+			$return = unserialize($cachelib->getCached($cacheKey));
+		} else {
+			$query = "select * from `tiki_user_modules` where `name`=?";
+			$result = $this->query($query, array($name));
+			$return = $result->fetchRow();
+			$cachelib->cacheItem($cacheKey, serialize($return));
+		}
+
+		return $return;
 	}
 
 	function cache_links($links) {
@@ -4367,6 +4411,9 @@ class TikiLib extends TikiDB {
 		global $cachelib; require_once("lib/cache/cachelib.php");
 		$cachelib->invalidate('tiki_preferences_cache');
 
+		global $menulib; include_once('lib/menubuilder/menulib.php');
+		$menulib->empty_menu_cache();
+
 		$this->set_lastUpdatePrefs();
 
 		$query = "delete from `tiki_preferences` where `name`=?";
@@ -4564,35 +4611,26 @@ class TikiLib extends TikiDB {
 
 	// This implements all the functions needed to use Tiki
 	/*shared*/
-	function page_exists($pageName, $casesensitive=false) {
-		$query = "select `pageName` from `tiki_pages` where `pageName` = ?";
-		$result = $this->query($query, array($pageName));
-
-		// if casesensitive, check the name of the returned page:
-		if ( ($casesensitive) && ($result->numRows()) ) {
-			$res = $result->fetchRow();
-			if ($res["pageName"] <> $pageName) return 0;
-		}
-		return $result->numRows();
+	function page_exists($pageName, $casesensitive = false) {
+		$page_info = $this->get_page_info($pageName, false);
+		return ( $page_info !== false && ( ! $casesensitive || $page_info['pageName'] == $pageName ) ) ? 1 : 0;
 	}
 
 	function page_exists_desc( &$pageName, $searchAlias = false ) {
-		$query = "select `description`  from `tiki_pages`
-			where `pageName` = ?";
-		$result = $this->query($query, array( $pageName ));
-
-		if (!$result->numRows()) {
-			if( $searchAlias ) {
+		$page_info = $this->get_page_info($pageName, false);
+		
+		if ( $page_info === false ) {
+			if ( $searchAlias ) {
 				global $semanticlib, $prefs;
 
-				if( $prefs['feature_wiki_pagealias'] == 'y' ) {
+				if ( $prefs['feature_wiki_pagealias'] == 'y' ) {
 					require_once 'lib/wiki/semanticlib.php';
 
 					$links = $semanticlib->getLinksUsing(
 						explode( ',', $prefs['wiki_pagealias_tokens'] ),
 						array( 'toPage' => $pageName ) );
 
-					if( count($links) > 0 ) {
+					if ( count($links) > 0 ) {
 						// May be multiple (inconsistencies), just use the first one
 						$pageName = $links[0]['fromPage'];
 						return $this->page_exists_desc( $pageName );
@@ -4603,28 +4641,13 @@ class TikiLib extends TikiDB {
 			return false;
 		}
 
-		$res = $result->fetchRow();
-
-		if (!$res["description"])
-			$res["description"] = $pageName;
-
-		return $res["description"];
+		return empty($page_info['description']) ? $pageName : $page_info['description'];
 	}
 
 	function page_exists_modtime($pageName) {
-		$query = "select `lastModif`  from `tiki_pages`
-			where `pageName` = ?";
-		$result = $this->query($query, array( $pageName ));
-
-		if (!$result->numRows())
-			return false;
-
-		$res = $result->fetchRow();
-
-		if (!$res["lastModif"])
-			$res["lastModif"] = 0;
-
-		return $res["lastModif"];
+		$page_info = $this->get_page_info($pageName, false);
+		if ( $page_info === false ) return false;
+		return empty($page_info['lastModif']) ? 0 : $page_info['lastModif'];
 	}
 
 	function add_hit($pageName) {
@@ -4777,28 +4800,40 @@ class TikiLib extends TikiDB {
 		return $ret;
 	}
 
-	function get_page_info($pageName) {
-		if ( isset($this->cache_page_info['pageName']) && $this->cache_page_info['pageName'] == $pageName) {
-			return $this->cache_page_info;
+	function get_page_info($pageName, $retrieve_datas = true) {
+		$pageNameEncode = urlencode($pageName);
+		if ( isset($this->cache_page_info[$pageNameEncode])
+			&& ( ! $retrieve_datas || isset($this->cache_page_info[$pageNameEncode]['data']) )
+		) {
+			return $this->cache_page_info[$pageNameEncode];
 		}
-		$query = "select * from `tiki_pages` where `pageName`=?";
 
+		if ( $retrieve_datas ) {
+			$query = "SELECT * FROM `tiki_pages` WHERE `pageName`=?";
+		} else {
+			$query = "SELECT `page_id`, `pageName`, `hits`, `description`, `lastModif`, `comment`, `version`, `user`, `ip`, `flag`, `points`, `votes`, `wiki_cache`, `cache_timestamp`, `pageRank`, `creator`, `page_size`, `lang`, `lockedby`, `is_html`, `created`, `wysiwyg`, `wiki_authors_style` FROM `tiki_pages` WHERE `pageName`=?";
+		}
 		$result = $this->query($query, array($pageName));
 
-		if (!$result->numRows()) {
+		if ( ! $result->numRows() ) {
 			return false;
 		} else {
-			$this->cache_page_info = $result->fetchRow();
+			$row = $result->fetchRow();
 
-			global $user;
-			if ($user) {
+			// Be sure to have the correct character case (because DB is caseinsensitive)
+			$pageNameEncode = urlencode($row['pageName']);
+
+			$this->cache_page_info[$pageNameEncode] = $row;
+
+			global $user, $prefs;
+			if ( $user && $prefs['feature_wiki_save_draft'] == 'y' ) {
 				$query = "select * from `tiki_page_drafts` where `user`=? and `pageName`=?";
 				$result = $this->query($query, array($user, $pageName));
-				if ($result->numRows()) {
-					$this->cache_page_info['draft'] = $result->fetchRow();
+				if ( $result->numRows() ) {
+					$this->cache_page_info[$pageNameEncode]['draft'] = $result->fetchRow();
 				}
 			}
-			return $this->cache_page_info;
+			return $this->cache_page_info[$pageNameEncode];
 		}
 	}
 
@@ -5844,6 +5879,7 @@ class TikiLib extends TikiDB {
 		$options['language'] = $language = isset($options['language']) ? $options['language'] : '';
 		$options['noparseplugins'] = $noparseplugins = isset($options['noparseplugins']) ? $options['noparseplugins'] : false;
 		$options['noheaderinc'] = $noheaderinc = isset($options['noheaderinc']) ? $options['noheaderinc'] : false;
+		$options['page'] = isset($options['page']) ? $options['page'] : $page;
 
 		// if simple_wiki is true, disable some wiki syntax
 		// basically, allow wiki plugins, wiki links and almost
@@ -5871,7 +5907,7 @@ class TikiLib extends TikiDB {
 						$value = $user;
 						break;
 					case 'page':
-						$value = $page;
+						$value = $options['page'];
 						break;
 					default:
 						if( isset($_GET[$name]) )
@@ -5941,9 +5977,9 @@ class TikiLib extends TikiDB {
 				$anchor = $parts1[1];
 			}
 
-			if ( !$anchor_page && $page ) {
-				$anchor_page = $page;
-				if ( !$anchor_desc )  $anchor_desc = $page;
+			if ( !$anchor_page && $options['page'] ) {
+				$anchor_page = $options['page'];
+				if ( !$anchor_desc )  $anchor_desc = $options['page'];
 			}
 			$repl = "{ALINK(pagename=>".$anchor_page.",aname=>".$anchor.")}".$anchor_desc."{ALINK}";
 			$data = str_replace( "((".$anchor_line."))", $repl, $data);
@@ -6114,9 +6150,9 @@ class TikiLib extends TikiDB {
 				preg_match_all("/(?<=[ \n\t\r\,\;]|^)([A-Z][a-z0-9\x80-\xFF]+[A-Z][a-z0-9\x80-\xFF]+[A-Za-z0-9\x80-\xFF]*)(?=$|[ \n\t\r\,\;\.])/", $data, $pages);
 			}
 			//TODO to have a real utf8 Wikiword where the capitals can be a utf8 capital
-			$words = $this->get_hotwords();
-			foreach (array_unique($pages[1])as $page_parse) {
-				if (!array_key_exists($page_parse, $words)) {
+			$words = ( $prefs['feature_hotwords'] == 'y' ) ? $this->get_hotwords() : array();
+			foreach ( array_unique($pages[1]) as $page_parse ) {
+				if ( ! array_key_exists($page_parse, $words) ) {
 					$repl = $this->get_wiki_link_replacement( $page_parse, array(
 						'plural' => $prefs['feature_wiki_plurals'] == 'y' ) );
 
@@ -6307,7 +6343,7 @@ class TikiLib extends TikiDB {
 		}
 
 		if (!$simple_wiki) {
-			$this->parse_data_process_maketoc( $data, $options, $language, $page );
+			$this->parse_data_process_maketoc( $data, $options, $language, $options['page'] );
 
 		} // closing if ($simple_wiki)
 

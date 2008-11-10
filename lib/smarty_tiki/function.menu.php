@@ -14,8 +14,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  * - tr = y|n , n means no option translation (default y) */
 function smarty_function_menu($params, &$smarty)
 {
-    global $tikilib, $user, $headerlib, $prefs;
-    global $menulib; include_once('lib/menubuilder/menulib.php');
+	global $tikilib, $user, $headerlib, $prefs;
+	global $menulib; include_once('lib/menubuilder/menulib.php');
 	extract($params);
 
 	if (empty($link_on_section) || $link_on_section == 'y') {
@@ -47,15 +47,25 @@ function smarty_function_menu($params, &$smarty)
 	} else {
 		$tpl = 'tiki-user_menu.tpl';
 	}
-	$menu_info = $tikilib->get_menu($id);
-	$channels = $tikilib->list_menu_options($id,0,-1,'position_asc','','',isset($prefs['mylevel'])?$prefs['mylevel']:0);
+
+	global $cachelib; include_once('lib/cache/cachelib.php');
+	$cacheName = isset($prefs['mylevel']) ? $prefs['mylevel'] : 0;
+	$cacheName .= '_'.$prefs['language'].'_'.md5(implode("\n", $tikilib->get_user_groups($user)));
+	$cacheType = 'menu_'.$id.'_';
+
+	if ( $cachelib->isCached($cacheName, $cacheType) ) {
+		list($menu_info, $channels) = unserialize($cachelib->getCached($cacheName, $cacheType));
+	} else {
+		$menu_info = $tikilib->get_menu($id);
+		$channels = $tikilib->list_menu_options($id,0,-1,'position_asc','','',isset($prefs['mylevel'])?$prefs['mylevel']:0);
+		$channels = $tikilib->sort_menu_options($channels);
+		$cachelib->cacheItem($cacheName, serialize(array($menu_info, $channels)), $cacheType);
+	}
 	$channels = $menulib->setSelected($channels, isset($sectionLevel)?$sectionLevel:'', isset($toLevel)?$toLevel: '');
-	$channels = $tikilib->sort_menu_options($channels);
+
 	$smarty->assign('menu_channels',$channels['data']);
 	$smarty->assign('menu_info',$menu_info);
-    $smarty->display($tpl);
+	return $smarty->fetch($tpl);
 }
 
 function compare_menu_options($a, $b) { return strcmp(tra($a['name']), tra($b['name'])); }
-
-?>

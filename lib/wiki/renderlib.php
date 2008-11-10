@@ -34,7 +34,7 @@ class WikiRenderer
 	private $smartyRestore = array();
 
 	public $canView = false;
-	public $canUndo = false;
+	public $canUndo = null;
 
 	function __construct( $info, $user )
 	{
@@ -229,40 +229,31 @@ class WikiRenderer
 
 	private function setupBacklinks() // {{{
 	{
-		global $wikilib;
+		global $prefs, $wikilib;
 
-		$backlinks = $wikilib->get_backlinks($this->page);
-		$this->smartyassign('backlinks', $backlinks);
+		if ( $prefs['feature_backlinks'] == 'y' ) {
+			$backlinks = $wikilib->get_backlinks($this->page);
+			$this->smartyassign('backlinks', $backlinks);
+		}
 	} // }}}
 
 	private function setupActions() // {{{
 	{
-		global $wikilib, $tiki_p_edit, $tiki_p_remove, $tiki_p_admin_wiki;
+		global $prefs, $wikilib, $tiki_p_edit, $tiki_p_remove, $tiki_p_admin_wiki;
 
 		// Verify lock status
-		if($wikilib->is_locked($this->page)) {
-			$this->smartyassign('lock',true);  
-		} else {
-			$this->smartyassign('lock',false);
+		if ( $prefs['feature_wiki_usrlock'] == 'y' ) {
+			if ( $wikilib->is_locked($this->page, $this->info) ) {
+				$this->smartyassign('lock', true);  
+			} else {
+				$this->smartyassign('lock', false);
+			}
 		}
 
 		$this->smartyassign('editable', $wikilib->is_editable($this->page, $this->user, $this->info));
 
 		// If not locked and last version is user version then can undo
-		$this->smartyassign('canundo','n');	
-		if(
-			$this->info['flag']!='L' 
-			&& ( 
-				($tiki_p_edit == 'y' && $this->info['user'] == $this->user) 
-				|| ( $tiki_p_remove == 'y' ) 
-			) )  {
-			$this->smartyassign('canundo','y');	
-			$this->canUndo = true;
-		}
-		if($tiki_p_admin_wiki == 'y') {
-			$this->smartyassign('canundo','y');		
-			$this->canUndo = true;
-		}
+		$this->smartyassign('canundo', $this->canUndo() ? 'y' : 'n');
 
 		if(!isset($this->info['is_html'])) {
 			$this->info['is_html'] = false;
@@ -355,7 +346,7 @@ class WikiRenderer
 	private function setupAttachments() // {{{
 	{
 		global $prefs, $wikilib;
-		if($prefs['feature_wiki_attachments'] != 'y')
+		if ( $prefs['feature_wiki_attachments'] != 'y' )
 			return;
 
 		// If anything below here is changed, please change lib/wiki-plugins/wikiplugin_attach.php as well.
@@ -563,6 +554,36 @@ class WikiRenderer
 			$this->smartyRestore[$name] = $smarty->get_template_vars($name);
 
 		$smarty->assign( $name, $value );
+	} // }}}
+
+	function canUndo() // {{{
+	{
+		if ( $this->canUndo !== null ) return $this->canUndo;
+
+		global $tiki_p_admin_wiki, $tiki_p_remove;
+
+		if ( $this->info['flag'] != 'L'
+			&& (
+				( $tiki_p_edit == 'y' && $this->info['user'] == $this->user ) || $tiki_p_remove == 'y'
+			) )  {
+			$this->canUndo = true;
+		}
+		if ( $tiki_p_admin_wiki == 'y' ) {
+			$this->canUndo = true;
+		}
+
+		return $this->canUndo;
+		
+	} // }}}
+
+	function setInfos( $infos ) // {{{
+	{
+		$this->info = $infos;
+	} // }}}
+
+	function setInfo( $name, $value ) // {{{
+	{
+		$this->info[$name] = $value;
 	} // }}}
 }
 

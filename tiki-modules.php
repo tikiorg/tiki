@@ -33,13 +33,15 @@ $module_zones['l'] = 'left_modules';
 $module_zones['r'] = 'right_modules';
 
 if ($prefs['user_assigned_modules'] == 'y' && $tiki_p_configure_modules == 'y' && $user && $usermoduleslib->user_has_assigned_modules($user)) {
-    foreach ( $module_zones as $zone=>$zone_name ) {
-        $$zone_name = $usermoduleslib->get_assigned_modules_user($user, $zone);
-    }
+	foreach ( $module_zones as $zone=>$zone_name ) {
+		$$zone_name = $usermoduleslib->get_assigned_modules_user($user, $zone);
+	}
 } else {
-    foreach ( $module_zones as $zone=>$zone_name ) {
-    	$$zone_name = $tikilib->get_assigned_modules($zone, 'y');
-    }
+	$modules_by_position = $tikilib->get_assigned_modules(null, 'y');
+	foreach ( $module_zones as $zone => $zone_name ) {
+		$$zone_name = isset($modules_by_position[$zone]) ? $modules_by_position[$zone] : array();
+	}
+	unset($modules_by_position);
 }
 
 foreach ( array('left_modules', 'right_modules') as $these_modules_name ) {
@@ -169,7 +171,7 @@ for ($mod_counter = 0; $mod_counter < $temp_max; $mod_counter++) {
 		$module_rows = $mod_reference["rows"];
 		$smarty->assign_by_ref('module_rows',$mod_reference["rows"]);
 			$mod_reference["data"] = '';
-            $smarty->assign_by_ref('module_params', $module_params); // module code can unassign this if it wants to hide params
+			$smarty->assign_by_ref('module_params', $module_params); // module code can unassign this if it wants to hide params
 			$smarty->assign('module_ord', $mod_reference['ord']);
 			$smarty->assign('module_position', $mod_reference['position']);
 			$smarty->assign('moduleId', $mod_reference['moduleId']);

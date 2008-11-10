@@ -20,6 +20,10 @@ class ModLib extends TikiLib {
 			$query = "insert into `tiki_user_modules`(`name`,`title`,`data`, `parse`) values(?,?,?,?)";
 
 			$result = $this->query($query,array($name,$title,$data,$parse));
+
+			global $cachelib; require_once("lib/cache/cachelib.php");
+			$cachelib->invalidate('user_modules');
+
 			return true;
 		}
 	}
@@ -140,6 +144,10 @@ class ModLib extends TikiLib {
 		$this->unassign_module($name);
 		$query = " delete from `tiki_user_modules` where `name`=?";
 		$result = $this->query($query,array($name));
+
+		global $cachelib; require_once("lib/cache/cachelib.php");
+		$cachelib->invalidate('user_modules');
+
 		return true;
 	}
 

@@ -40,7 +40,7 @@ function get_default_prefs() {
 		// wiki
 		'feature_wiki' => 'y',
 		'default_wiki_diff_style' => 'minsidediff',
-		'feature_backlinks' => 'y',
+		'feature_backlinks' => 'n',
 		'feature_dump' => 'n',
 		'feature_history' => 'y',
 		'feature_lastChanges' => 'y',
@@ -1126,7 +1126,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 
 		'feature_bidi' => 'n',
 		'feature_lastup' => 'y',
-		'transition_style_ver' => '1.9',
+		'transition_style_ver' => '2.0',
 
 		'magic_last_load' => 0,
 	);
@@ -1159,7 +1159,6 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 
 	$prefs['feature_bidi'] = 'n';
 	$prefs['feature_lastup'] = 'y';
-	$prefs['transition_style_ver'] = '1.9';
 
 	// Be sure we have a default value for user prefs
 	foreach ( $prefs as $p => $v ) {
@@ -1179,8 +1178,10 @@ $user_overrider_prefs = array('language', 'style', 'userbreadCrumb', 'tikiIndex'
 // Check if prefs needs to be reloaded
 if (isset($_SESSION['s_prefs'])) {
 
+	// lastUpdatePrefs pref is retrived in tiki-setup_base
+	$lastUpdatePrefs = $prefs['lastUpdatePrefs'];
+
 	// Reload if there was an update of some prefs
-	$lastUpdatePrefs = $tikilib->getOne("select `value` from `tiki_preferences` where `name`=?", array('lastUpdatePrefs'));
 	if ( empty($_SESSION['s_prefs']['lastReadingPrefs']) || $lastUpdatePrefs > $_SESSION['s_prefs']['lastReadingPrefs'] ) {
 		$_SESSION['need_reload_prefs'] = true;
 	}

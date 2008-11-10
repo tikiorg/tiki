@@ -55,10 +55,15 @@ $needed_prefs = array(
 	'session_db' => 'n',
 	'sessions_silent' => 'disabled',
 	'language' => 'en',
-	'feature_pear_date' => 'y'
+	'feature_pear_date' => 'y',
+	'lastUpdatePrefs' => -1
 );
 
 $tikilib->get_preferences($needed_prefs, true, true);
+if ( $prefs['lastUpdatePrefs'] == -1 ) {
+	$tikilib->query('insert into `tiki_preferences`(`name`,`value`) values(?,?)', array('lastUpdatePrefs', 1));
+}
+
 require_once('lib/tikidate.php');
 $tikidate = new TikiDate();
 
@@ -379,14 +384,19 @@ if ( ! $cachelib->isCached("allperms") ) {
 $allperms = $allperms["data"];
 
 // Initializes permissions
-foreach ($allperms as $vperm) {
+$admin_perms = array();
+foreach ( $allperms as $vperm ) {
 	$perm = $vperm["permName"];
 	$$perm = 'n';
 	$smarty->assign("$perm", 'n');
+	if ( $vperm['admin'] == 'y' ) {
+		$admin_perms[] = $perm;
+	}
 }
 
 // Permissions
-if ($user == 'admin' || ($user && $userlib->user_has_permission($user, 'tiki_p_admin'))) {//Gives admins all permissions
+if ( $user && ( $user == 'admin' || $userlib->user_has_permission($user, 'tiki_p_admin') ) ) {
+	// Gives admins all permissions
 	foreach ($allperms as $vperm) {
 		$perm = $vperm['permName'];
 		$$perm = 'y';
@@ -395,9 +405,9 @@ if ($user == 'admin' || ($user && $userlib->user_has_permission($user, 'tiki_p_a
 } else {
 	$perms = $userlib->get_user_detailled_permissions($user);
 	foreach ($perms as $perm) {
-	    $smarty->assign($perm['permName'], 'y');
-	    $$perm['permName'] = 'y';
-		if ($perm['admin'] == 'y') { // assign all perms of the perm type
+		$smarty->assign($perm, 'y');
+		$$perm = 'y';
+		if ( in_array($perm, $admin_perms) ) { // assign all perms of the perm type
 			$ps = $userlib->get_permissions(0, -1, 'permName_desc', '', $perm['type']);
 			foreach ($ps['data'] as $perm) {
 				$$perm['permName'] = 'y';
@@ -407,6 +417,7 @@ if ($user == 'admin' || ($user && $userlib->user_has_permission($user, 'tiki_p_a
 	}
 }
 
+unset($admin_perms);
 unset($allperms);
 
 // --------------------------------------------------------------

@@ -20,7 +20,7 @@ if ( ! is_file('styles/'.$prefs['style']) and ! is_file('styles/'.$tikidomain.'/
 	$prefs['style'] = 'tikineat.css';
 }
 
-$prefs['style'] = $userlib->get_user_group_theme($user);
+$prefs['style'] = $userlib->get_user_group_theme();
 		
 include_once("lib/csslib.php");
 if ( $prefs['transition_style_ver'] == 'css_specified_only' ) {

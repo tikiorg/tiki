@@ -85,8 +85,8 @@ if ( ($prefs['feature_wysiwyg'] != 'n' && $prefs['feature_wysiwyg'] != 'y') || $
 require_once('lib/setup/sections.php');
 require_once('lib/headerlib.php');
 
-if ( isset($_REQUEST['PHPSESSID']) ) $tikilib->update_session($_REQUEST['PHPSESSID']);
-elseif ( function_exists('session_id') ) $tikilib->update_session(session_id());
+if ( isset($_REQUEST['PHPSESSID']) ) $tikilib->setSessionId($_REQUEST['PHPSESSID']);
+elseif ( function_exists('session_id') ) $tikilib->setSessionId(session_id());
 
 require_once('lib/setup/cookies.php');
 require_once('lib/setup/js_detect.php');

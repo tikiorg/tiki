@@ -131,8 +131,11 @@ if(isset($page_ref_id)) {
 $page = $_REQUEST['page'];
 $smarty->assign_by_ref('page',$page);
 
-if (!$tikilib->page_exists($page) && function_exists('utf8_encode') && $tikilib->page_exists(utf8_encode($page))) {
-    $page = $_REQUEST["page"] = utf8_encode($page);
+if ( function_exists('utf8_encode') ) {
+	$pagename_utf8 = utf8_encode($page);
+	if ( $page != $pagename_utf8 && ! $tikilib->page_exists($page) && $tikilib->page_exists($pagename_utf8) ) {
+		$page = $_REQUEST["page"] = $pagename_utf8;
+	}
 }
 
 $use_best_language = $use_best_language || isset($_REQUEST['bl']) || isset($_REQUEST['best_lang']);
@@ -247,34 +250,34 @@ if($prefs['count_admin_pvs'] == 'y' || $user!='admin') {
 
 // Check if we have to perform an action for this page
 // for example lock/unlock
-if( 
+if ( 
 	($tiki_p_admin_wiki == 'y') 
 	|| 
 	($user and ($tiki_p_lock == 'y') and ($prefs['feature_wiki_usrlock'] == 'y'))
-  ) {
-    if(isset($_REQUEST['action'])) {
-	check_ticket('index');
-	if($_REQUEST['action']=='lock') {
-	    $wikilib->lock_page($page);
-	    $info['flag'] = 'L';
-	    $smarty->assign('lock',true);  
-	}  
-    }
+) {
+	if ( isset($_REQUEST['action']) ) {
+		check_ticket('index');
+		if ( $_REQUEST['action'] == 'lock' ) {
+			$wikilib->lock_page($page);
+			$pageRenderer->setInfo('flag', 'L');
+			$info['flag'] = 'L';
+		}  
+	}
 }
 
-if( 
+if ( 
 	($tiki_p_admin_wiki == 'y') 
 	|| 
 	($user and ($user == $info['user']) and ($tiki_p_lock == 'y') and ($prefs['feature_wiki_usrlock'] == 'y'))
-  ) {
-    if(isset($_REQUEST['action'])) {
-	check_ticket('index');
-	if ($_REQUEST['action']=='unlock') {
-	    $wikilib->unlock_page($page);
-	    $smarty->assign('lock',false);  
-	    $info['flag'] = 'U';
-	}  
-    }
+) {
+	if ( isset($_REQUEST['action']) ) {
+		check_ticket('index');
+		if ( $_REQUEST['action'] == 'unlock' ) {
+			$wikilib->unlock_page($page);
+			$pageRenderer->setInfo('flag', 'U');
+			$info['flag'] = 'U';
+		}  
+	}
 }
 
 
@@ -288,24 +291,28 @@ if($user
 }
 
 // Process an undo here
-if(isset($_REQUEST['undo'])) {
-    if( $pageRenderer->canUndo ) {
-	$area = 'delundopage';
-	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-	    key_check($area);
+if ( isset($_REQUEST['undo']) ) {
+	if ( $pageRenderer->canUndo() ) {
+		$area = 'delundopage';
+		if ( $prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"])) ) {
+			key_check($area);
 
-	    // Remove the last version	
-	    $wikilib->remove_last_version($page);
-	    // If page was deleted then re-create
-	    if(!$tikilib->page_exists($page)) {
-		$tikilib->create_page($page,0,'',$tikilib->now,'Tiki initialization'); 
-	    }
-	    // Restore page information
-	    $info = $tikilib->get_page_info($page);  	
-	} else {
-	    key_get($area);
-	}
-    }	
+			// Remove the last version	
+			$wikilib->remove_last_version($page);
+
+			// If page was deleted then re-create
+			if ( ! $tikilib->page_exists($page) ) {
+				$tikilib->create_page($page, 0, '', $tikilib->now, 'Tiki initialization'); 
+			}
+
+			// Restore page information
+			$info = $tikilib->get_page_info($page);
+			$pageRenderer->setInfos($info);
+
+		} else {
+			key_get($area);
+		}
+	}	
 }
 
 if(isset($_REQUEST['refresh'])) {

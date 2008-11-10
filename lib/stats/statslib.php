@@ -161,27 +161,28 @@ class StatsLib extends TikiLib {
 		return $stats;
 	}
 	
-	function stats_hit($object,$type,$id=NULL) {
-		if (is_null($object) || is_null($type)) {
-			$result=false;
+	function stats_hit($object, $type, $id = NULL) {
+		if ( is_null($object) || is_null($type) ) {
+			$result = false;
 			return $result;
 		}
-	$year = $this->date_format("%Y");
-	$day = $this->date_format("%d");
-	$month = $this->date_format("%m");
-    $dayzero = $this->make_time(0, 0, 0, $month, $day, $year);
-    if (!is_null($id)) {
-    	$object=$id."?".$object;
-    }
-    $cant = $this->getOne("select count(*) from `tiki_stats` where `object`=? and `type`=? and `day`=?",array($object,$type,(int)$dayzero));
-    if ($cant) {
-        $query = "update `tiki_stats` set `hits`=`hits`+1 where `object`=? and `type`=? and `day`=?";
-    } else {
-        $query = "insert into `tiki_stats`(`object`,`type`, `day`,`hits`) values(?,?,?,1)";
-    }
 
-    $result = $this->query($query,array($object,$type,(int)$dayzero),-1,-1,false);
-    return $result;
+		list($month, $day, $year) = explode(',', $this->date_format("%m,%d,%Y"));
+		$dayzero = $this->make_time(0, 0, 0, $month, $day, $year);
+
+		if ( ! is_null($id) ) {
+			$object = $id."?".$object;
+		}
+
+		$cant = $this->getOne("select count(*) from `tiki_stats` where `object`=? and `type`=? and `day`=?", array($object, $type, (int)$dayzero));
+
+		if ( $cant ) {
+			$query = "update `tiki_stats` set `hits`=`hits`+1 where `object`=? and `type`=? and `day`=?";
+		} else {
+			$query = "insert into `tiki_stats` (`object`,`type`,`day`,`hits`) values(?,?,?,1)";
+		}
+
+		return $this->query($query, array($object, $type, (int)$dayzero), -1, -1, false);
 	}
 	
 	function best_overall_object_stats($max=20,$days=0) {

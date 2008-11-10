@@ -251,13 +251,19 @@ class CategLib extends ObjectLib {
 	}
 
 	function is_categorized($type, $itemId) {
-		if (empty($itemId))
+		if ( empty($itemId) ) return 0;
+
+		global $cachelib;
+		if ( $cachelib->isCached('allcategs') && count(unserialize($cachelib->getCached('allcategs'))) == 0 ) {
 			return 0;
+		}
+
 		$query = "select o.`objectId` from `tiki_categorized_objects` c, `tiki_objects` o where c.`catObjectId`=o.`objectId` and o.`type`=? and o.`itemId`=?";
-		$bindvars=array($type,$itemId);
+		$bindvars = array($type,$itemId);
 		settype($bindvars["1"],"string");
 		$result = $this->query($query,$bindvars);
-		if ($result->numRows()) {
+
+		if ( $result->numRows() ) {
 			$res = $result->fetchRow();
 			return $res["objectId"];
 		} else {

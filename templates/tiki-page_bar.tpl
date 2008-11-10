@@ -75,7 +75,7 @@
 		{/if}
 
 		{if $prefs.feature_wiki_undo eq 'y' and $canundo eq 'y'}
-			{button href="tiki-index.php?page=$thispage&amp;undo=1" _text="{tr}Undo{/tr}"}
+			{button href="tiki-index.php?page=$thispage&amp;undo=1" _text="{tr}Undo{/tr}" _ajax='n'}
 		{/if}
 
 		{if $prefs.feature_wiki_make_structure eq 'y' and $tiki_p_edit_structures eq 'y' and $editable and $structure eq 'n' and count($showstructs) eq 0}
