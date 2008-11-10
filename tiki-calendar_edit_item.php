@@ -206,17 +206,8 @@ if (isset($_POST['act'])) {
 	or (!empty($save['calitemId']) and $caladd["$newcalid"]['tiki_p_change_events'])) {
 		if (empty($save['name'])) $save['name'] = tra("event without name");
 
-		$calendarlib->set_item($user,$save['calitemId'],$save);
-		foreach ( $_REQUEST['listtoalert'] as $user ){
-		$email=$userlib->get_user_email($user);
-		if ( ! empty($email) ){
-  		        include_once ('lib/webmail/tikimaillib.php');
-			$mail = new TikiMail();
-			$mail->setText("There is a changement in calendar (message will be redefined)");
-			$mail->setSubject("You are alerted of a changement" );
-			$mail->send(array($email));
-			}
-		}
+		$calitemId=$calendarlib->set_item($user,$save['calitemId'],$save);
+		$groupalertlib->Notify($_REQUEST['listtoalert'],"tiki-calendar_edit_item.php?viewcalitemId=".$calitemId);
 		header('Location: tiki-calendar.php');
 		die;
 	}
