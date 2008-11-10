@@ -511,9 +511,9 @@ or $cur_field.type eq 'i'}
 <td>
 {section name=idx loop=$listusertoalert}
 {if $showeachuser eq '' }
-<input type="hidden"  name="checked[]" value="{$listusertoalert[idx].user}">
+<input type="hidden"  name="listtoalert[]" value="{$listusertoalert[idx].user}">
 {else}
-<input type="checkbox" name="checked[]" value="{$listusertoalert[idx].user}"> {$listusertoalert[idx].user}
+<input type="checkbox" name="listtoalert[]" value="{$listusertoalert[idx].user}"> {$listusertoalert[idx].user}
 {/if}
 {/section}
 </td>

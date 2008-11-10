@@ -600,16 +600,6 @@ if (isset($_REQUEST['import'])) {
 
 	if ($tiki_p_create_tracker_items == 'y') {
 
-		foreach ( $_REQUEST['listtoalert'] as $user ){
-		$email=$userlib->get_user_email($user);
-		if ( ! empty($email) ){
-  		        include_once ('lib/webmail/tikimaillib.php');
-			$mail = new TikiMail();
-			$mail->setText("There is a changement in tracker (message will be redefined)");
-			$mail->setSubject("You are alerted of a changement" );
-			$mail->send(array($email));
-			}
-		}
 		// Check field values for each type and presence of mandatory ones
 		$mandatory_missing = array();
 		$err_fields = array();
@@ -639,6 +629,7 @@ if (isset($_REQUEST['import'])) {
 				$_REQUEST['itemId'] = $trklib->get_user_item($_REQUEST['trackerId'], $tracker_info);
 			}
 			$itemid = $trklib->replace_item($_REQUEST["trackerId"], $_REQUEST["itemId"], $ins_fields, $_REQUEST['status'], $ins_categs);
+			$groupalertlib->Notify($_REQUEST['listtoalert'],"tiki-view_tracker_item.php?itemId=".$itemid);
 			$cookietab = "1";
 			$smarty->assign('itemId', '');
 			$trklib->categorized_item($_REQUEST["trackerId"], $itemid, $mainfield, $ins_categs);
