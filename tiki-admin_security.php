@@ -211,7 +211,7 @@ function md5_check_dir($dir,&$result) { // save all suspicious files in $result
           // use result of most_recent to decide
 
             if($most_recent==false) {
-           $result[$entry]=tra('This file is from another Tikiwiki version: ').implode(tra(' or '),$is_tikiver);
+           $result[$entry]=tra('This file is from another Tikiwiki version: ').implode(' '.tra('or').' ',$is_tikiver);
             }
         }
       }

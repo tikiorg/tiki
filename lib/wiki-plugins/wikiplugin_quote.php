@@ -42,7 +42,7 @@ function wikiplugin_quote($data, $params) {
     
 	extract ($params, EXTR_SKIP);
 	if (!empty($replyto)) {
-		$caption = $replyto . tra(' wrote:');
+		$caption = $replyto .' '.tra('wrote:');
 	} else {
 		$caption = tra('Quote:');
 	}

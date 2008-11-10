@@ -297,19 +297,19 @@ class ActivityManager extends BaseManager {
       if($res['isInteractive'] == 'y') {
           $cant = $this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."activity_roles where activityId=".$res['activityId']);
           if(!$cant) {
-            $errors[] = tra('Activity').': '.$res['name'].tra(' is interactive but has no role assigned');
+            $errors[] = tra('Activity').': '.$res['name'].' '.tra('is interactive but has no role assigned');
           }
       } else {
         if( $res['type'] != 'end' && $res['isAutoRouted'] == 'n') {
           $cant = $this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."activity_roles where activityId=".$res['activityId']);
             if(!$cant) {
-              $errors[] = tra('Activity').': '.$res['name'].tra(' is non-interactive and non-autorouted but has no role assigned');
+              $errors[] = tra('Activity').': '.$res['name'].' '.tra('is non-interactive and non-autorouted but has no role assigned');
             }
         }
       }
       if($res['type']=='standalone') {
         if($this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."transitions where actFromId=$aid or actToId=$aid")) {
-           $errors[] = tra('Activity').': '.$res['name'].tra(' is standalone but has transitions');
+           $errors[] = tra('Activity').': '.$res['name'].' '.tra('is standalone but has transitions');
         }
       }
 
@@ -322,7 +322,7 @@ class ActivityManager extends BaseManager {
     while($res = $result->fetchRow()) {      
         $cant = $this->getOne("select count(*) from ".GALAXIA_TABLE_PREFIX."user_roles where roleId=".$res['roleId']);
         if(!$cant) {
-          $errors[] = tra('Role').': '.$res['name'].tra(' is not mapped');
+          $errors[] = tra('Role').': '.$res['name'].' '.tra('is not mapped');
         }        
     }
     

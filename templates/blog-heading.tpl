@@ -3,7 +3,7 @@
   <div class="blogdesc">{tr}Description:{/tr} {$description}</div>
 {/if}
 <div class="bloginfo">
-{tr}Created by{/tr} {$creator|userlink}{tr} on {/tr}{$created|tiki_short_datetime}<br />
+{tr}Created by{/tr} {$creator|userlink} {tr}on{/tr} {$created|tiki_short_datetime}<br />
 {tr}Last post{/tr} {$lastModif|tiki_short_datetime}<br />
 <span class="blogactions">
 		{if $tiki_p_blog_post eq "y"}

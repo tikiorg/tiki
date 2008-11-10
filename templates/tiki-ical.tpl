@@ -23,7 +23,7 @@
 	});
     {/literal}
     </script>
-    <br />{tr} To {/tr}:
+    <br /> {tr}To{/tr} :
     <input type="hidden" name="tstop" id="tstop" value="{$tstop|escape}" />
     <span id="tstopl" class="daterow" style="padding:0; margin:0">Click</span>
     <script type="text/javascript" >
