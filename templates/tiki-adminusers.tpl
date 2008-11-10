@@ -303,9 +303,8 @@
 	{if $userinfo.userId}
 		<h2>{tr}Edit user{/tr}: {$userinfo.login}</h2>
 		{if $userinfo.login ne 'admin'}
-			<span class="button2">
-				<a href="tiki-assignuser.php?assign_user={$userinfo.login|escape:url}">{tr}Assign to Groups{/tr}: {$userinfo.login}</a>
-			</span>
+			{assign var=thisloginescaped value=$userinfo.login|escape:'url'}
+			{button href="tiki-assignuser.php?assign_user=$thisloginescaped" _text="{tr}Assign user to Groups{/tr}"}
 		{/if}
 	{else}
 		<h2>{tr}Add a New User{/tr}</h2>
@@ -378,10 +377,8 @@
 						{if ! ( $prefs.auth_method eq 'auth' and ( $prefs.auth_create_user_tiki eq 'n' or $prefs.auth_skip_admin eq 'y' ) and $prefs.auth_create_user_auth eq 'n' ) }
 							<p>
 								<div>
-									<span class="button2">
-										<a href="#" onClick="genPass('genepass','pass1','pass2');runPassword(document.RegForm.genpass.value, 'mypassword');">Generate a password:</a> 
-										<input id='genepass' name="genpass" type="text" />
-									</span>
+									{button href="#" _onclick="genPass('genepass','pass1','pass2');runPassword(document.RegForm.genpass.value, 'mypassword');" _text="{tr}Generate a password{/tr}"}
+									<input id='genepass' name="genpass" type="text" />
 								</div>
 							</p>
 						{/if}
@@ -449,9 +446,7 @@
 		{if $prefs.userTracker eq 'y'}
 			{if $userstrackerid and $usersitemid}
 				{tr}User tracker item : {$usersitemid}{/tr} 
-				<span class="button2">
-					<a href="tiki-view_tracker_item.php?trackerId={$userstrackerid}&amp;itemId={$usersitemid}&amp;show=mod" class="linkbut">{tr}Edit Item{/tr}</a>
-				</span>
+				{button href="tiki-view_tracker_item.php?trackerId=$userstrackerid&amp;itemId=$usersitemid&amp;show=mod" _text="{tr}Edit Item{/tr}"}
 			{/if}
 			<br />
 			<br />
