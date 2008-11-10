@@ -1790,7 +1790,7 @@ class TikiLib extends TikiDB {
 			if (!$full) {
 				$display = true;
 				if (isset($res['section']) and $res['section']) {
-					$sections = split(",",$res['section']);
+					$sections = preg_split('/\s*,\s*/',$res['section']);
 					foreach ($sections as $sec) {
 						if (!isset($prefs[$sec]) or $prefs[$sec] != 'y') {
 							$display = false;
@@ -1800,7 +1800,7 @@ class TikiLib extends TikiDB {
 				}
 				if ($display && $tiki_p_admin != 'y') {
 					if (isset($res['perm']) and $res['perm']) {
-						$sections = split(",",$res['perm']);
+						$sections = preg_split('/\s*,\s*/',$res['perm']);
 						foreach ($sections as $sec) {
 							if (!isset($GLOBALS[$sec]) or $GLOBALS[$sec] != 'y') {
 								$display = false;
@@ -1812,7 +1812,7 @@ class TikiLib extends TikiDB {
 				if ($display && $tiki_p_admin != 'y') {
 					$usergroups = $this->get_user_groups($user);
 					if (isset($res['groupname']) and $res['groupname']) {
-						$sections = split(",",$res['groupname']);
+						$sections = preg_split('/\s*,\s*/',$res['groupname']);
 						foreach ($sections as $sec) {
 							if ($sec and !in_array($sec,$usergroups)) {
 								$display = false;
@@ -1828,7 +1828,6 @@ class TikiLib extends TikiDB {
 				$ret[] = $res;
 			}
 		}
-
 		$retval["data"] = array_values($ret);
 		$retval["cant"] = $cant;
 		return $retval;
@@ -2149,7 +2148,6 @@ class TikiLib extends TikiDB {
 					$need_everything = ( $with_subgals_size && ( $sort_mode == 'size_asc' || $sort_mode == 'filesize_asc' ) );
 
 					while ( $res = $result->fetchRow() ) {
-
 						$object_type = ( $res['isgal'] == 1 ? 'file gallery' : 'file');
 						$res['perms'] = $this->get_perm_object($res['id'], $object_type, array(), false);
 
@@ -4937,7 +4935,7 @@ class TikiLib extends TikiDB {
 		while( $data1 != $data2 ) {
 			$data1 = $data;
 			if (isset($noparsed["key"]) and count($noparsed["key"]) and count($noparsed["key"]) == count($noparsed["data"])) {
-				$data = preg_replace($noparsed["key"], $noparsed["data"], $data);
+				$data = str_replace($noparsed["key"], $noparsed["data"], $data);
 			}
 
 			if (isset($preparsed["key"]) and count($preparsed["key"]) and count($preparsed["key"]) == count($preparsed["data"])) {
@@ -5199,7 +5197,7 @@ class TikiLib extends TikiDB {
 			if( preg_match( "/^ *&lt;[pP][rR][eE]&gt;|^ *~pp~|^ *~np~/", $plugin_start ) ) {
 				// ~pp~ type "plugins"
 				$key = "§".md5($this->genPass())."§";
-				$noparsed["key"][] = "/". preg_quote($key)."/";
+				$noparsed["key"][] = preg_quote($key);
 				$plugin_data = str_replace('\\','\\\\',$plugin_data);
 				if( strstr( $plugin_data, '$' ) ) {
 					$plugin_data = str_replace('$', '\$', $plugin_data);
@@ -5250,7 +5248,7 @@ class TikiLib extends TikiDB {
 
 							if( count( $stuff ) > 0 ) {
 								$key = "§".md5($this->genPass())."§";
-								$noparsed["key"][] =  "/". preg_quote($key)."/";
+								$noparsed["key"][] =  preg_quote($key);
 								$noparsed["data"][] = $stuff[1];
 
 								$ret = preg_replace( "/~np~.*~\/np~/s", $key, $ret );
