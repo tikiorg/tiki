@@ -131,18 +131,15 @@ if ( isset($_GET['preview']) || isset($_GET['thumbnail']) || isset($_GET['displa
 
         if ( $use_cache && $cachelib->isCached($cacheName, $cacheType) ) {
 		$content = $cachelib->getCached($cacheName, $cacheType);
+		$content_changed = true;
 	} else {
 
-		if ( $info['path'] && (!$content || sizeof($content) == 0)) {
-			$content = &get_readfile_chunked($prefs['fgal_use_dir'].$info['path']);
-		}
-	
 		// Modify the original image if needed
 		if ( ! isset($_GET['display']) || isset($_GET['x']) || isset($_GET['y']) || isset($_GET['scale']) || isset($_GET['max']) || isset($_GET['format']) ) {
 	
 			$content_changed = true;
 			if ( $info['path'] ) {
-				$content=file_get_contents(($prefs['fgal_use_dir'].$info['path']));
+				$content = file_get_contents(($prefs['fgal_use_dir'].$info['path']));
 			}
 	
 			require_once('lib/images/images.php');
