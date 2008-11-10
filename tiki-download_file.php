@@ -129,10 +129,13 @@ if ( isset($_GET['preview']) || isset($_GET['thumbnail']) || isset($_GET['displa
 		$use_cache = true;
 	}
 
+		$build_content = true;
         if ( $use_cache && $cachelib->isCached($cacheName, $cacheType) ) {
 		$content = $cachelib->getCached($cacheName, $cacheType);
+		if ($content !== serialize(false) and $content != "") $build_content = false;
 		$content_changed = true;
-	} else {
+	} 
+	if ($build_content) {
 
 		// Modify the original image if needed
 		if ( ! isset($_GET['display']) || isset($_GET['x']) || isset($_GET['y']) || isset($_GET['scale']) || isset($_GET['max']) || isset($_GET['format']) ) {
