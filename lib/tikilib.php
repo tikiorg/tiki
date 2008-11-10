@@ -3072,7 +3072,7 @@ class TikiLib extends TikiDB {
 		$oldy = $this->now - $delay;
 		if ($user != '') { // was the user timeout?
 			$query = "select count(*) from `tiki_sessions` where `sessionId`=?";
-			$cant = $this->getOne($query, array($sessionId));
+			$cant = $this->getOne($query, array($this->sessionId));
 			if ($cant == 0)
 				$logslib->add_log("login", "back", $user, '', '', $this->now);
 		}
@@ -3083,14 +3083,14 @@ class TikiLib extends TikiDB {
 				$logslib->add_log('login', 'timeout', $res['user'], ' ', ' ', $res['timestamp']+ $delay);
 		}
 		$query = "delete from `tiki_sessions` where `sessionId`=? or `timestamp`<?";
-		$bindvars = array($sessionId, $oldy);
+		$bindvars = array($this->sessionId, $oldy);
 		if ($user) {
 			$query .= " or `user`=?";
 			$bindvars[] = $user;
 		}
 		$this->query($query, $bindvars, -1, -1, false);
 		$query = "insert into `tiki_sessions`(`sessionId`,`timestamp`,`user`,`tikihost`) values(?,?,?,?)";
-		$result = $this->query($query, array($sessionId, (int)$this->now, $user,$_SERVER['HTTP_HOST']), -1, -1, false );
+		$result = $this->query($query, array($this->sessionId, (int)$this->now, $user,$_SERVER['HTTP_HOST']), -1, -1, false );
 		if ($prefs['session_db'] == 'y') {
 			// clean up adodb sessions as well in case adodb session garbage collection not working
 			$query = "delete from `sessions` where `expiry`<?";
