@@ -484,9 +484,6 @@ function return_bytes( $val ) {
 	return $val;
 }
 
-include 'lib/cache/cachelib.php';
-$cachelib->empty_full_cache();
-
 // -----------------------------------------------------------------------------
 // end of functions .. now starts the processing
 
@@ -512,13 +509,28 @@ if (is_file('db/virtuals.inc')) {
 	$virtuals = false;
 }
 
-if ($virtuals and isset($_REQUEST['multi']) and in_array($_REQUEST['multi'],$virtuals)) {
-	$local = 'db/'.$_REQUEST['multi'].'/local.php';
-	$multi = $_REQUEST['multi'];
+$multi = '';
+if ($virtuals) {
+	if (isset($_REQUEST['multi']) and in_array($_REQUEST['multi'],$virtuals)) {
+		$multi = $_REQUEST['multi'];
+	} else {
+		if (isset($_SERVER['TIKI_VIRTUAL']) and is_file('db/'.$_SERVER['TIKI_VIRTUAL'].'/local.php')) {
+			$multi = $_SERVER['TIKI_VIRTUAL'];
+		} elseif (isset($_SERVER['SERVER_NAME']) and is_file('db/'.$_SERVER['SERVER_NAME'].'/local.php')) {
+			$multi = $_SERVER['SERVER_NAME'];
+		} elseif (isset($_SERVER['HTTP_HOST']) and is_file('db/'.$_SERVER['HTTP_HOST'].'/local.php')) {
+			$multi = $_SERVER['HTTP_HOST'];
+		}
+	}
+}
+if (!empty($multi)) {
+	$local = "db/$multi/local.php";
 } else {
 	$local = 'db/local.php';
-	$multi = '';
 }
+$tikidomain = $multi;
+include 'lib/cache/cachelib.php';
+$cachelib->empty_full_cache();
 
 $_SESSION["install-logged-$multi"] = 'y';
 
