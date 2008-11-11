@@ -91,7 +91,7 @@ if (isset($_REQUEST["save"])) {
 	$msg = "";
 
 	if (empty($user) && $prefs['feature_antibot'] == 'y' && (!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $_REQUEST['antibotcode'])) {
- $msg .= tra("You have mistyped the anti-bot verification code; please try again. ");
+ $msg .= tra("You have mistyped the anti-bot verification code; please try again.");
 	}
 
 	if (empty($_REQUEST["name"])) {

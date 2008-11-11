@@ -5308,7 +5308,7 @@ class TikiLib extends TikiDB {
 						// Handle nested plugins.
 						$this->parse_first($plugin_data, $preparsed, $noparsed);
 
-						$ret = tra( "__WARNING__: Plugin disabled $plugin! " ) . $plugin_data;
+						$ret = tra( "__WARNING__: Plugin disabled $plugin!" ) . $plugin_data;
 					}
 
 					$skip = false;
@@ -5316,7 +5316,7 @@ class TikiLib extends TikiDB {
 					if( $plugins['type'] == 'long' ) {
 						// Handle nested plugins.
 						$this->parse_first($plugin_data, $preparsed, $noparsed);
-						$ret = tra( "__WARNING__: No such module $plugin! " ) . $plugin_data;
+						$ret = tra( "__WARNING__: No such module $plugin!" ) . $plugin_data;
 
 						$skip = false;
 					} else {

@@ -105,7 +105,7 @@ function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set',
 				}	    
 			    }
 			    if ($prefs['feature_community_mouseover_lastlogin'] == 'y') {
-				$content .= tra("Last seen on ") . $tikilib->get_short_datetime($info['lastLogin']);
+				$content .= tra("Last seen on").' '.$tikilib->get_short_datetime($info['lastLogin']);
 				$content .= "<br />";
 			    }
 

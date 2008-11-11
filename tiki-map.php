@@ -75,7 +75,7 @@ function userErrorHandler ($errno, $errmsg, $filename, $linenum, $vars)
   global $map_path;
   global $mapfile;
   global $tiki_p_map_edit;
-  $msg=tra("An error as occured with the mapfile: ").$mapfile."<br /><br />".$errmsg."<br />";
+  $msg=tra("An error as occured with the mapfile:")." ".$mapfile."<br /><br />".$errmsg."<br />";
   
   $pos=strpos($errmsg,":(");
   if ($errmsg[$pos+2]=='l')

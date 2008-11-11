@@ -74,7 +74,7 @@ class EvLib extends TikiLib {
 				$_SERVER["SERVER_NAME"] = $_SERVER["HTTP_HOST"];
 			}
 			$mail = new TikiMail($user);
-			$mail->setSubject(tra('Newsletter subscription information at '). $_SERVER["SERVER_NAME"]);
+			$mail->setSubject(tra('Newsletter subscription information at').' '. $_SERVER["SERVER_NAME"]);
 			$mail->setText($mail_data);
 			if (!$mail->send(array($email)))
 				return false;

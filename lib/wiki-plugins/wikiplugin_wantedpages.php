@@ -56,22 +56,22 @@ function wikiplugin_wantedpages_info() {
 			'skipext' => array(
 				'required' => false,
 				'name' => tra('Skip Extension'),
-				'description' => tra("Whether to include external wikis in the list. possible values: ")."0 / 1",
+				'description' => tra("Whether to include external wikis in the list. possible values")."0 / 1",
 			),
 			'collect' => array(
 				'required' => false,
 				'name' => tra('Collect'),
-				'description' => tra("Collect either originating or wanted pages in a cell and display them in the second column. possible values: ")."from / to",
+				'description' => tra("Collect either originating or wanted pages in a cell and display them in the second column. possible values:")." from / to",
 			),
 			'debug' => array(
 				'required' => false,
 				'name' => tra('Debug'),
-				'description' => tra("Switch-on debug output with details about the items. possible values: ")."0 / 1 / 2",
+				'description' => tra("Switch-on debug output with details about the items. possible values:")." 0 / 1 / 2",
 			),
 			'table' => array(
 				'required' => false,
 				'name' => tra('Table'),
-				'description' => tra("Multiple collected items are separated in distinct table rows, or by comma or line break in one cell. possible values: ")."sep / co / br",
+				'description' => tra("Multiple collected items are separated in distinct table rows, or by comma or line break in one cell. possible values:")." sep / co / br",
 			),
 			'level' => array(
 				'required' => false,

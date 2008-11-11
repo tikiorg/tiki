@@ -444,7 +444,7 @@
 							</tr>
 							<tr>
 								<td class="form">
-									<label for="feature_siteloclabel">{tr}Prefix breadcrumbs with 'Location : ' {/tr}</label>
+									<label for="feature_siteloclabel">{tr}Prefix breadcrumbs with 'Location :' {/tr} </label>
 								</td>
 								<td>
 									<input type="checkbox" name="feature_siteloclabel" id="feature_siteloclabel"{if $prefs.feature_siteloclabel eq 'y'} checked="checked"{/if} />

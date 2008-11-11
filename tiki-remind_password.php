@@ -106,7 +106,7 @@ if (isset($_REQUEST["remind"])) {
 		}
 
 		if ($prefs['login_is_email'] == 'y')
-			$tmp .= tra("to the email ");
+			$tmp .= tra("to the email");
 		else
 			$tmp .= tra("to the registered email address for");
 		$tmp .= " " . $name. ". ";

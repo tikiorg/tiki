@@ -10,8 +10,8 @@
     <li>{literal}{phplayers id=X type=vert}{/literal}</li>
   </ul>
   {tr}This will work well (or not!) depending on your theme. To learn more about <a target="tikihelp" href="http://themes.tikiwiki.org">themes</a>{/tr}<br />
-  {tr}To use a menu in a tiki format: {/tr}{literal}{menu id=X}{/literal}<br />
-  {tr}To use menu in a css/suckerfish format: {/tr}{literal}{menu id=X css=y}{/literal}
+  {tr}To use a menu in a tiki format:{/tr} {literal}{menu id=X}{/literal}<br />
+  {tr}To use menu in a css/suckerfish format:{/tr} {literal}{menu id=X css=y}{/literal}
 {/remarksbox}
 
 {if $menuId > 0}

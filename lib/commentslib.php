@@ -129,7 +129,7 @@ class Comments extends TikiLib {
 
 		@$fw = fopen($forum_info['att_store_dir'] . $fhash, "wb");
 		if (!$fw && ! $inbound_mail ) {
-		    $smarty->assign('msg', tra('Cannot write to this file: '). $forum_info['att_store_dir'] . $fhash);
+		    $smarty->assign('msg', tra('Cannot write to this file:').' '.$forum_info['att_store_dir'] . $fhash);
 		    $smarty->display("error.tpl");
 		    die;
 		}
