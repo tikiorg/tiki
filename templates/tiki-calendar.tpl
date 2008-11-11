@@ -21,45 +21,39 @@
 		{/if}
 
 		{if $tiki_p_admin_calendar eq 'y' or $tiki_p_admin eq 'y'}
-			<span class="button2">
-				<a href="tiki-admin_calendars.php{if $displayedcals|@count eq 1}?calendarId={$displayedcals[0]}{/if}">{tr}Admin Calendar{/tr}</a>
-			</span>
+			{if $displayedcals|@count eq 1}
+				{button href="tiki-admin_calendars.php?calendarId=$displayedcals[0]" _text="{tr}Admin Calendar{/tr}"}
+			{else}
+				{button href="tiki-admin_calendars.php" _text="{tr}Admin Calendar{/tr}"}
+			{/if}
 		{/if}
 
 		{if $tiki_p_add_events eq 'y'}
-			<span class="button2">
-				<a href="tiki-calendar_edit_item.php">{tr}Add Event{/tr}</a>
-			</span>
+			{button href="tiki-calendar_edit_item.php" _text="{tr}Add Event{/tr}"}
 		{/if}
 
 		{if count($listcals) >= 1}
-			<span class="button2">
-				<a href="#" title="{tr}Click to select visible calendars{/tr}" onclick="toggle('filtercal');">{tr}Visible Calendars{/tr}</a>
-			</span>
+			{button href="#" _onclick="toggle('filtercal');" _text="{tr}Visible Calendars{/tr}"}
 
 			{if count($thiscal)}
 				{foreach item=k from=$listcals name=listc}
 					{if $thiscal.$k}
-						<span class="button2">
-							<a href="#" style="background-color:#{$infocals.$k.custombgcolor};color:#{$infocals.$k.customfgcolor}" onclick="toggle('filtercal');">{$infocals.$k.name}</a>
-						</span>
+						{assign var=thiscustombgcolor value=$infocals.$k.custombgcolor}
+						{assign var=thiscustomfgcolor value=$infocals.$k.customfgcolor}
+						{assign var=thisinfocalsname value=$infocals.$k.name}
+						{button href="#" _style="background-color:#$thiscustombgcolor;color:#$thiscustomfgcolor" _onclick="toggle('filtercal');" _text="$thisinfocalsname"}
 					{/if}
 				{/foreach}
 			{else}
-				<span class="button2" style="background-color:#fff;padding:0 4px;">
-				none
-				</span>
+				{button href="" _style="background-color:#fff;padding:0 4px;" _text="{tr}None{/tr}"}
 			{/if}
 		{/if}
 
-		<span class="button2">
-			{if $viewlist eq 'list'}
-				<a href="{$myurl}?viewlist=table" title="{tr}Calendar View{/tr}">{tr}Calendar View{/tr}</a>
-			{else}
-				<a href="{$myurl}?viewlist=list" title="{tr}List View{/tr}">{tr}List View{/tr}</a>
-			{/if}
-		</span>
-
+		{if $viewlist eq 'list'}
+			{button href="?viewlist=table" _text="{tr}Calendar View{/tr}"}
+		{else}
+			{button href="?viewlist=list" _text="{tr}List View{/tr}"}
+		{/if}
 	</div>
 
 	<br />
@@ -89,7 +83,9 @@
 					<label for="groupcal_{$k}" class="calId{$k}">{$infocals.$k.name} (id #{$k})</label>
 				</div>
 			{/foreach}
-			<div class="calinput"><input type="submit" name="refresh" value="{tr}Refresh{/tr}"/></div>
+			<div class="calinput">
+				<input type="submit" name="refresh" value="{tr}Refresh{/tr}"/>
+			</div>
 		</form>
 	{/if}
 

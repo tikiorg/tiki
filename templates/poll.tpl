@@ -1,19 +1,13 @@
 {if $ratings.info.pollId and $tiki_p_wiki_view_ratings eq 'y'}
 	<div style="display:inline;float:right;background-color:white; padding: 1px 3px; border:1px solid #666666; -moz-border-radius : 10px;font-size:.8em;">
 		<div id="pollopen">
-			<span class="button2">
-				<a href="#" onclick="javascript:show('pollzone');hide('polledit');hide('pollopen');" class="link" title="{tr}Click to see the ratings{/tr}">{tr}Rating{/tr}</a>
-			</span>
+			{button href="#" _onclick="javascript:show('pollzone');hide('polledit');hide('pollopen');" class="link" _text="{tr}Rating{/tr}"}
 		</div>
 		{if $tiki_p_wiki_vote_ratings eq 'y'}
 			<div id="polledit">
 				<div class="pollnav">
-					<span class="button2">
-						<a href="#" onclick="javascript:hide('pollzone');hide('polledit');show('pollopen');" class="link">{tr}[-]{/tr}</a>
-					</span>
-					<span class="button2">
-						<a href="#" onclick="javascript:show('pollzone');hide('polledit');hide('pollopen');" class="link">{tr}View{/tr}</a>
-					</span>
+					{button href="#" _onclick="javascript:hide('pollzone');hide('polledit');show('pollopen');" _text="{tr}[-]{/tr}"}
+					{button href="#" _onclick="javascript:show('pollzone');hide('polledit');hide('pollopen');" class="link" _text="{tr}View{/tr}"}
 				</div>
 				
 				{if $ratings.title}<div>{$ratings.title}</div>{/if}
@@ -45,12 +39,8 @@
 			</div>
 			<div id="pollzone">
 				<div class="pollnav">
-					<span class="button2">
-						<a href="#" onclick="javascript:hide('pollzone');hide('polledit');show('pollopen');" class="link">{tr}[-]{/tr}</a>
-					</span>
-					<span class="button2">
-						<a href="#" onclick="javascript:hide('pollzone');show('polledit');hide('pollopen');" class="link">{tr}vote{/tr}</a>
-					</span>
+					{button href="#" _onclick="javascript:hide('pollzone');hide('polledit');show('pollopen');" _text="{tr}[-]{/tr}"}
+					{button href="#" _onclick="javascript:hide('pollzone');show('polledit');hide('pollopen');" _text="{tr}Vote{/tr}"}
 				</div>
 				{if $ratings.title}<div>{$ratings.title}</div>{/if}
 				{section name=ix loop=$ratings.options}
@@ -60,9 +50,7 @@
 		{else}
 			<div id="pollzone">
 				<div class="pollnav">
-					<span class="button2">
-						<a href="#" onclick="javascript:hide('pollzone');hide('polledit');show('pollopen');" class="link">{tr}[-]{/tr}</a>
-					</span>
+					{button href="#" _onclick="javascript:hide('pollzone');hide('polledit');show('pollopen');" _text="{tr}[-]{/tr}"}
 				</div>
 				{if $ratings.title}<div>{$ratings.title}</div>{/if}
 				{section name=ix loop=$ratings.options}
