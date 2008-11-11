@@ -6,15 +6,16 @@ close();
 </script>
 {/if}
 {* 402: need login
- * 401: perm
+ * 401, 403: perm
  * 404: page does not exist
  * login: error login
  *}
+
 {capture assign=mid_data}
 	{if ($errortype eq "402")}
 		{include file=tiki-login.tpl}
-	{elseif $errortype eq 401 and !empty($prefs.permission_denied_url)}
-		{php}global $prefs; header('Location:'.$prefs['permission_denied_url']); exit; {/php}
+	{elseif ($errortype eq 401 or $errortype eq 403) and !empty($prefs.permission_denied_url)}
+		{redirect url=$prefs.permission_denied_url}
 	{else}
 		<br />
 		<div class="cbox">
@@ -24,7 +25,7 @@ close();
 				{if ($errortype eq "404")}
 					{if $prefs.feature_likePages eq 'y'}
 						{if $likepages}
-							{tr}Perhaps you were looking for:{/tr}
+							<p>{tr}Perhaps you were looking for:{/tr}</p>
 							<ul>
 								{section name=back loop=$likepages}
 								<li><a href="tiki-index.php?page={$likepages[back]|escape:"url"}" class="wiki">{$likepages[back]}</a></li>
