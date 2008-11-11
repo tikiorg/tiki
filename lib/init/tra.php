@@ -48,7 +48,7 @@ function tra($content, $lg='', $no_interactive = false, $args = array()) {
 				//   then it will try to translate 'Login' and ':' separately).
 				// This should avoid duplicated strings like 'Login' and 'Login:' that were needed before
 				//   (because there is no space before ':' in english, but there is one in others like french)
-				$punctuations = array(':', '!', ';');
+				$punctuations = array(':', '!', ';', '.', ',', '?'); // Modify get_strings.php accordingly
 				$content_lenght = strlen($content);
 				foreach ( $punctuations as $p ) {
 					if ( $content[$content_lenght - 1] == $p ) {

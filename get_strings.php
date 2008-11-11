@@ -44,6 +44,7 @@
 ////////////////////////////////////////////////////////////////////////////
 /// functions
 
+$punctuations = array(':', '!', ';', '.', ',', '?'); // Modify lib/init/tra.php accordingly
 $addPHPslashes = Array ("\n" => '\n',
 			"\r" => '\r',
 			"\t" => '\t',
@@ -423,7 +424,7 @@ foreach ($languages as $sel) {
     writeFile_and_User ($fw, "// These options will only provide the minimal amout of comments.\n");
     writeFile_and_User ($fw, "// Usefull mode when preparing a translation for distribution.\n\n");
     writeFile_and_User ($fw, "// http://www.neonchart.com/get_strings.php?nohelp&nosections\n");
-    writeFile_and_User ($fw, "// Prepare all languages for release \n\n\n");
+    writeFile_and_User ($fw, "// Prepare all languages for release\n\n\n");
 
 		writeFile_and_User ($fw, "// ### Note for translators about translation of text ending with colons (':')\n");
 		writeFile_and_User ($fw, "// ###\n");
@@ -433,7 +434,7 @@ foreach ($languages as $sel) {
 		writeFile_and_User ($fw, "// ### If a string ending with colon needs translating (like \"{tr}Login:{/tr}\")\n");
 		writeFile_and_User ($fw, "// ### then TikiWiki tries to translate 'Login' and ':' separately.\n");
 		writeFile_and_User ($fw, "// ### This allows to have only one translation for \"{tr}Login{/tr}\" and \"{tr}Login:{/tr}\"\n");
-		writeFile_and_User ($fw, "// ### and it still allows to translate \":\" as \"&nbsp;:\" for languages that \n");
+		writeFile_and_User ($fw, "// ### and it still allows to translate \":\" as \"&nbsp;:\" for languages that\n");
 		writeFile_and_User ($fw, "// ### need it (like french)\n");
 
     // Start generating the lang array
@@ -518,6 +519,7 @@ foreach ($languages as $sel) {
     }
 
     foreach (array_unique ($words) as $word) {
+
       if (isset ($lang[$word])) {
 	if (!isset ($translated[$word])) {
 	  $translated[$word] = $lang[$word];
@@ -525,9 +527,22 @@ foreach ($languages as $sel) {
 	unset ($unused[$word]);
       }
       else {
+
+        // Handle punctuations at the end of the string (cf. comments in lib/init/tra.php)
+        // For example, if word == 'Login:', we don't keep it if we also have a string 'Login'
+        //   (except if we already have an explicit translation for 'Login:')
+        //
+        $word_lenght = strlen($word);
+        $word_last_char = $word[$word_lenght - 1];
+        if ( in_array($word_last_char, $punctuations) ) {
+          $word = substr($word, 0, $word_lenght - 1);
+	  if ( isset($lang[$word]) ) continue;
+        }
+
 	if (!isset ($to_translate[$word])) {
 	  $to_translate[$word]=$word;
 	}
+
       }
 
       if ($module) {
