@@ -119,7 +119,7 @@ class TikiAccessLib extends TikiLib {
 
 	// you must call ask_ticket('error') before calling this
 	function display_error($page, $errortitle="", $errortype="", $enableRedirect = true) {
-		global $smarty, $wikilib;
+		global $smarty, $wikilib, $prefs;
 		require_once ('tiki-setup.php');
 		include_once('lib/wiki/wikilib.php');
 
