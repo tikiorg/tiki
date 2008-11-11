@@ -6,29 +6,31 @@
   {$description}
 </div>
 
-{if $tiki_p_view_sheet eq 'y' || $tiki_p_sheet_admin eq 'y' || $tiki_p_admin eq 'y'}
-  <span class="button2"><a href="tiki-sheets.php">{tr}List Sheets{/tr}</a></span>
-{/if}
+<div class="navbar">
+	{if $tiki_p_view_sheet eq 'y' || $tiki_p_sheet_admin eq 'y' || $tiki_p_admin eq 'y'}
+		{button href="tiki-sheets.php" _text="{tr}List Sheets{/tr}"}
+	{/if}
 
-{if $tiki_p_view_sheet eq 'y' || $tiki_p_sheet_admin eq 'y' || $tiki_p_admin eq 'y'}
-  <span class="button2"><a href="tiki-view_sheets.php?sheetId={$sheetId}">{tr}View{/tr}</a></span>
-{/if}
+	{if $tiki_p_view_sheet eq 'y' || $tiki_p_sheet_admin eq 'y' || $tiki_p_admin eq 'y'}
+		{button href="tiki-view_sheets.php?sheetId=$sheetId" _text="{tr}View{/tr}"}
+	{/if}
 
-{if $tiki_p_edit_sheet eq 'y' || $tiki_p_sheet_admin eq 'y' || $tiki_p_admin eq 'y'}
-  <span class="button2"><a href="tiki-view_sheets.php?sheetId={$sheetId}&readdate={$read_date}&mode=edit">{tr}Edit{/tr}</a></span>
-{/if}
+	{if $tiki_p_edit_sheet eq 'y' || $tiki_p_sheet_admin eq 'y' || $tiki_p_admin eq 'y'}
+		{button href="tiki-view_sheets.php?sheetId=$sheetId&amp;readdate=$read_date&amp;mode=edit" _text="{tr}Edit{/tr}"}
+	{/if}
 
-{if $tiki_p_view_sheet_history eq 'y' || $tiki_p_sheet_admin eq 'y' || $tiki_p_admin eq 'y'}
-  <span class="button2"><a href="tiki-history_sheets.php?sheetId={$sheetId}">{tr}History{/tr}</a></span>
-{/if}
+	{if $tiki_p_view_sheet_history eq 'y' || $tiki_p_sheet_admin eq 'y' || $tiki_p_admin eq 'y'}
+		{button href="tiki-history_sheets.php?sheetId=$sheetId" _text="{tr}History{/tr}"}
+	{/if}
 
-{if $tiki_p_view_sheet eq 'y' || $tiki_p_sheet_admin eq 'y' || $tiki_p_admin eq 'y'}
-  <span class="button2"><a href="tiki-export_sheet.php?sheetId={$sheetId}">{tr}Export{/tr}</a></span>
-{/if}
+	{if $tiki_p_view_sheet eq 'y' || $tiki_p_sheet_admin eq 'y' || $tiki_p_admin eq 'y'}
+		{button href="tiki-export_sheet.php?sheetId=$sheetId" _text="{tr}Export{/tr}"}
+	{/if}
 
-{if $chart_enabled eq 'y'}
-  <span class="button2"><a href="tiki-graph_sheet.php?sheetId={$sheetId}">{tr}Graph{/tr}</a></span>
-{/if}
+	{if $chart_enabled eq 'y'}
+		{button href="tiki-graph_sheet.php?sheetId=$sheetId" _text="{tr}Graph{/tr}"}
+	{/if}
+</div>
 
 {if $page_mode eq 'submit'}
 {$grid_content}

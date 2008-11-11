@@ -5,7 +5,7 @@
 {title help="Spreadsheet"}{$title}{/title}
 
 <div>
-  {$description}
+	{$description}
 </div>
 
 {if $page_mode eq 'edit'}
@@ -16,23 +16,21 @@
 		//--><!]]>
 		</script>
 	{/if}
-	<div id="panel">
-		<menu>
-			<li><span class="button2"><a href="#" onclick="insertRowClick()">{tr}Insert Row{/tr}</a></span></li>
-			<li><span class="button2"><a href="#" onclick="insertColumnClick()">{tr}Insert Column{/tr}</a></span></li>
-			<li><span class="button2"><a href="#" onclick="removeRowClick()">{tr}Remove Row{/tr}</a></span></li>
-			<li><span class="button2"><a href="#" onclick="removeColumnClick()">{tr}Remove Column{/tr}</a></span></li>
-			<li><span class="button2"><a href="#" onclick="mergeCellClick()">{tr}Merge Cells{/tr}</a></span></li>
-			<li><span class="button2"><a href="#" onclick="restoreCellClick()">{tr}Restore Cells{/tr}</a></span></li>
-			<li><span class="button2"><a href="#" onclick="copyCalculationClick()">{tr}Copy Calculation{/tr}</a></span></li>
-			<li><span class="button2"><a href="#" onclick="formatCellClick()">{tr}Format Cell{/tr}</a></span></li>
-		</menu>
+	<div class="navbar">
+			{button href="#" _onclick="insertRowClick()" _text="{tr}Insert Row{/tr}"}
+			{button href="#" _onclick="insertColumnClick()" _text="{tr}Insert Column{/tr}"}
+			{button href="#" _onclick="removeRowClick()" _text="{tr}Remove Row{/tr}"}
+			{button href="#" _onclick="removeColumnClick()" _text="{tr}Remove Column{/tr}"}
+			{button href="#" _onclick="mergeCellClick()" _text="{tr}Merge Cells{/tr}"}
+			{button href="#" _onclick="restoreCellClick()" _text="{tr}Restore Cells{/tr}"}
+			{button href="#" _onclick="copyCalculationClick()" _text="{tr}Copy Calculation{/tr}"}
+			{button href="#" _onclick="formatCellClick()" _text="{tr}Format Cell{/tr}"}
 		<div id="detail"></div>
 	</div>
 	<form method="post" action="tiki-view_sheets.php?mode=edit&sheetId={$sheetId}" id="Grid"></form>
 	<div class='submit'>
 		<input type="submit" onclick='g.target.style.visibility = "hidden"; g.prepareSubmit(); g.target.submit();' value="{tr}Save{/tr}" />
-		<span class="button2"><a href="tiki-view_sheets.php?sheetId={$sheetId}">{tr}Cancel{/tr}</a></span>
+		{button href="tiki-view_sheets.php?sheetId=$sheetId" _text="{tr}Cancel{/tr}"}
 	</div>
 	<script type="text/javascript" src="lib/sheet/grid.js"></script>
 	<script type="text/javascript" src="lib/sheet/control.js"></script>
@@ -61,27 +59,34 @@
 	</script>
 
 {else}
-{$grid_content}
-{if $tiki_p_view_sheet eq 'y' || $tiki_p_sheet_admin eq 'y' || $tiki_p_admin eq 'y'}
-<span class="button2"><a href="tiki-sheets.php">{tr}List Sheets{/tr}</a></span>
-{/if}
-{if $tiki_p_edit_sheet eq 'y' || $tiki_p_sheet_admin eq 'y' || $tiki_p_admin eq 'y'}
-{if $editconflict eq 'y'}
-	<span class="button2 highlight"><a href="tiki-view_sheets.php?sheetId={$sheetId}&readdate={$read_date}&mode=edit" title="{$semUser}">{tr}Edit{/tr}</a></span>
-{else}
-	<span class="button2"><a href="tiki-view_sheets.php?sheetId={$sheetId}&readdate={$read_date}&mode=edit">{tr}Edit{/tr}</a></span>
-{/if}
-{/if}
-{if $tiki_p_view_sheet_history eq 'y' || $tiki_p_sheet_admin eq 'y' || $tiki_p_admin eq 'y'}
-<span class="button2"><a href="tiki-history_sheets.php?sheetId={$sheetId}">{tr}History{/tr}</a></span>
-{/if}
-{if $tiki_p_view_sheet eq 'y' || $tiki_p_sheet_admin eq 'y' || $tiki_p_admin eq 'y'}
-<span class="button2"><a href="tiki-export_sheet.php?sheetId={$sheetId}">{tr}Export{/tr}</a></span>
-{/if}
-{if $tiki_p_edit_sheet eq 'y' || $tiki_p_sheet_admin eq 'y' || $tiki_p_admin eq 'y'}
-<span class="button2"><a href="tiki-import_sheet.php?sheetId={$sheetId}">{tr}import{/tr}</a></span>
-{/if}
-{if $chart_enabled eq 'y'}
-<span class="button2"><a href="tiki-graph_sheet.php?sheetId={$sheetId}">{tr}Graph{/tr}</a></span>
-{/if}
+	{$grid_content}
+	<div class="navbar">
+		{if $tiki_p_view_sheet eq 'y' || $tiki_p_sheet_admin eq 'y' || $tiki_p_admin eq 'y'}
+			{button href="tiki-sheets.php" _text="{tr}List Sheets{/tr}"}
+		{/if}
+	
+		{if $tiki_p_edit_sheet eq 'y' || $tiki_p_sheet_admin eq 'y' || $tiki_p_admin eq 'y'}
+			{if $editconflict eq 'y'}
+				{button href="tiki-view_sheets.php?sheetId=$sheetId&amp;readdate=$read_date&amp;mode=edit" _title="$semUser" _text="{tr}Edit{/tr}"}
+			{else}
+				{button href="tiki-view_sheets.php?sheetId=$sheetId&amp;readdate=$read_date&amp;mode=edit" _text="{tr}Edit{/tr}"}
+			{/if}
+		{/if}
+
+		{if $tiki_p_view_sheet_history eq 'y' || $tiki_p_sheet_admin eq 'y' || $tiki_p_admin eq 'y'}
+			{button href="tiki-history_sheets.php?sheetId=$sheetId" _text="{tr}History{/tr}"}
+		{/if}
+
+		{if $tiki_p_view_sheet eq 'y' || $tiki_p_sheet_admin eq 'y' || $tiki_p_admin eq 'y'}
+			{button href="tiki-export_sheet.php?sheetId=$sheetId" _text="{tr}Export{/tr}"}
+		{/if}
+
+		{if $tiki_p_edit_sheet eq 'y' || $tiki_p_sheet_admin eq 'y' || $tiki_p_admin eq 'y'}
+			{button href="tiki-import_sheet.php?sheetId=$sheetId" _text="{tr}Import{/tr}"}
+		{/if}
+
+		{if $chart_enabled eq 'y'}
+			{button href="tiki-graph_sheet.php?sheetId=$sheetId" _text="{tr}Graph{/tr}"}
+		{/if}
+	</div>
 {/if}
