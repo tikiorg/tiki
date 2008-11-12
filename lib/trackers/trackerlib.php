@@ -1930,11 +1930,14 @@ class TrackerLib extends TikiLib {
 		}
 		if (is_array($visibleBy) && count($visibleBy) > 0 && !empty($visibleBy[0])) {
 			$visibleBy = serialize($visibleBy);
+		} else {
+			$visibleBy = '';
 		}
 		if (is_array($editableBy) && count($editableBy) > 0 && !empty($editableBy[0])) {
 			$editableBy = serialize($editableBy);
+		} else {
+			$editableBy = '';
 		}
-		  
 
 		if ($fieldId) {
 			// -------------------------------------
