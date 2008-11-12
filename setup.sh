@@ -70,11 +70,13 @@ what to answer, just press enter to each question (to use default value)"
 		AGROUP=$REPLY
 	fi
 
-	echo -n "Multi []: "
+	touch db/virtuals.inc
+	echo -n "Multi ["$(< db/virtuals.inc)"]: "
 	read VIRTUALS
 
+	[ ! -n "$VIRTUALS" ] && VIRTUALS=$(< db/virtuals.inc)
+
 	if [ -n "$VIRTUALS" ]; then
-		touch db/virtuals.inc
 		for vdir in $VIRTUALS; do
 			echo $vdir >> db/virtuals.inc
 			cat db/virtuals.inc | sort | uniq > db/virtuals.inc_new
@@ -90,7 +92,7 @@ what to answer, just press enter to each question (to use default value)"
 			mkdir -p $dir
 		fi
 		echo " ok."
-		if [ -n $VIRTUALS ]; then
+		if [ -n "$VIRTUALS" ]; then
 			for vdir in $VIRTUALS; do
 				echo -n "  $dir/$vdir ... "
 				if [ ! -d "$dir/$vdir" ]; then
