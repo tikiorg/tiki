@@ -6,6 +6,7 @@ if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== false) {
   exit;
 }
 
+require_once('lib/init/initlib.php');
 
 // Please use the local.php file instead containing these variables
 // If you set sessions to store in the database, you will need a local.php file

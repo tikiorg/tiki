@@ -904,6 +904,12 @@ if ($prefs['fgal_show_explorer'] == 'y' || $prefs['fgal_show_path'] == 'y') {
 
 ask_ticket('fgal');
 
+if ( isset($_REQUEST['view']) && $_REQUEST['view'] == 'browse') {
+	foreach( $files['data'] as $file) {
+		$_SESSION['allowed'][$file['fileId']] = true;
+	}
+}
+
 if ( $_REQUEST['galleryId'] != 0 ) {
 
 	$smarty->assign('download_path', ( $podCastGallery ? $prefs['fgal_podcast_dir'] : $prefs['fgal_use_dir'] ) );

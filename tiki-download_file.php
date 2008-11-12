@@ -3,13 +3,34 @@
 // Initialization
 
 $force_no_compression = true;
-require_once('tiki-setup.php');
-include_once('lib/filegals/filegallib.php');
+$skip = false;
 
-if ( $prefs['feature_file_galleries'] != 'y' ) {
-	$smarty->assign('msg', tra('This feature is disabled'));
-	$smarty->display('error.tpl');
-	die;
+if ( isset($_GET['fileId']) && isset($_GET['thumbnail']) && isset($_COOKIE['PHPSESSID']) && count($_GET) == 2 ) {
+	session_start();
+	if ( $_SESSION['allowed'][$_GET['fileId']] ) {
+		include('db/tiki-db.php');
+		$query = "select * from `tiki_files` where `fileId`=?";
+		$result = $dbTiki->query($query, array((int)$_GET['fileId']));
+		$info = $result ? $result->fetchRow() : array();
+		$query = "select `value` from `tiki_preferences` where name = 'fgal_use_dir';";
+		$result = $dbTiki->query($query);
+		$tmp = $result->fetchRow();
+		$prefs['fgal_use_dir'] = $tmp['value'];
+		$skip = true;
+	} else {
+		session_write_close();
+	}
+}
+
+if (!$skip) {
+	require_once('tiki-setup.php');
+	include_once('lib/filegals/filegallib.php');
+
+	if ( $prefs['feature_file_galleries'] != 'y' ) {
+		$smarty->assign('msg', tra('This feature is disabled'));
+		$smarty->display('error.tpl');
+		die;
+	}
 }
 
 if ( ! ini_get('safe_mode') ) {
@@ -46,29 +67,31 @@ function readfile_chunked($filename,$retbytes=true) {
 $zip = false;
 $error = '';
 
-if ( isset($_REQUEST['fileId']) && !is_array($_REQUEST['fileId'])) {
-	$info = $tikilib->get_file($_REQUEST['fileId']);
-} elseif ( isset($_REQUEST['galleryId']) && isset($_REQUEST['name']) ) {
-	$info = $tikilib->get_file_by_name($_REQUEST['galleryId'], $_REQUEST['name']);
-} elseif ( isset($_REQUEST['fileId']) && is_array($_REQUEST['fileId'])) {
-	$info = $filegallib->zip($_REQUEST['fileId'], $error);
-	$zip = true;
-} else {
-	$smarty->assign('msg', tra('Incorrect param'));
-	$smarty->display('error.tpl');
-	die;
-}
-if ( ! is_array($info) ) {
-	$smarty->assign('msg', tra('Incorrect param').' '.tra($error));
-	$smarty->display('error.tpl');
-	die;
-}
+if (!$skip) {
+	if ( isset($_REQUEST['fileId']) && !is_array($_REQUEST['fileId'])) {
+		$info = $tikilib->get_file($_REQUEST['fileId']);
+	} elseif ( isset($_REQUEST['galleryId']) && isset($_REQUEST['name']) ) {
+		$info = $tikilib->get_file_by_name($_REQUEST['galleryId'], $_REQUEST['name']);
+	} elseif ( isset($_REQUEST['fileId']) && is_array($_REQUEST['fileId'])) {
+		$info = $filegallib->zip($_REQUEST['fileId'], $error);
+		$zip = true;
+	} else {
+		$smarty->assign('msg', tra('Incorrect param'));
+		$smarty->display('error.tpl');
+		die;
+	}
+	if ( ! is_array($info) ) {
+		$smarty->assign('msg', tra('Incorrect param').' '.tra($error));
+		$smarty->display('error.tpl');
+		die;
+	}
 
-if ( !$zip && $tiki_p_admin_file_galleries != 'y' && !$userlib->user_has_perm_on_object($user, $info['galleryId'], 'file gallery', 'tiki_p_download_files')) {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra('You can not download files'));
-	$smarty->display('error.tpl');
-	die;
+	if ( !$zip && $tiki_p_admin_file_galleries != 'y' && !$userlib->user_has_perm_on_object($user, $info['galleryId'], 'file gallery', 'tiki_p_download_files')) {
+		$smarty->assign('errortype', 401);
+		$smarty->assign('msg', tra('You can not download files'));
+		$smarty->display('error.tpl');
+		die;
+	}
 }
 
 // Add hits ( if download or display only ) + lock if set
