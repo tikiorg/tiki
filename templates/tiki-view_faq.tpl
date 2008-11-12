@@ -49,39 +49,33 @@
 </div>
 {/section}
 {/if}
-{if $faq_info.canSuggest eq 'y' and $tiki_p_suggest_faq eq 'y'}
-  <span class="button2">
-  <a href="javascript:flip('faqsugg');"{if $suggested_cant > 0} class="highlight"{/if}>
-    {if $suggested_cant == 0}
-      {tr}Add Suggestion{/tr}
-    {elseif $suggested_cant == 1}
-      {tr}1 suggestion{/tr}
-    {else}
-      {$suggested_cant} {tr}suggestions{/tr}
-    {/if}
-  </a>
-  </span>
-{/if}
 
-{if $prefs.feature_faq_comments == 'y'
-    && (($tiki_p_read_comments  == 'y'
-    && $comments_cant != 0)
-  ||  $tiki_p_post_comments  == 'y'
-  ||  $tiki_p_edit_comments  == 'y')
-}
-  <span class="button2">
-  <a href="#comment" onclick="javascript:flip('comzone');flip('comzone_close','inline');return false;"{if $comments_cant >= 1} class="highlight"{/if}>
-    {if $comments_cant == 0 or ($tiki_p_read_comments  == 'n' and $tiki_p_post_comments  == 'y')}
-      {tr}Add Comment{/tr}
-    {elseif $comments_cant == 1}
-      {tr}1 comment{/tr}
-    {else}
-      {$comments_cant} {tr}comments{/tr}
-    {/if}
-    <span id="comzone_close" style="display:{if isset($smarty.session.tiki_cookie_jar.show_comzone) and $smarty.session.tiki_cookie_jar.show_comzone eq 'y'}inline{else}none{/if};">({tr}close{/tr})</span>
-  </a>
-  </span>
-{/if}
+<div id="page-bar">
+	{if $faq_info.canSuggest eq 'y' and $tiki_p_suggest_faq eq 'y'}
+		{button href="javascript:flip('faqsugg');" _flip_id="faqsugg" _text="{tr}Add Suggestion{/tr}"}
+	{/if}
+
+	{if $prefs.feature_faq_comments == 'y'
+			&& (($tiki_p_read_comments == 'y'
+			&& $comments_cant != 0)
+		|| $tiki_p_post_comments == 'y'
+		|| $tiki_p_edit_comments == 'y')
+	}
+		{if $comments_cant gt 0}
+			{assign var=thisbuttonclass value='highlight'}
+		{else}
+			{assign var=thisbuttonclass value=''}
+		{/if}
+		{if $comments_cant == 0 or ($tiki_p_read_comments == 'n' and $tiki_p_post_comments == 'y')}
+			{assign var=thistext value="{tr}Add Comment{/tr}"}
+		{elseif $comments_cant == 1}
+			{assign var=thistext value="{tr}1 comment{/tr}"}
+		{else}
+			{assign var=thistext value="$comments_cant&nbsp;{tr}Comments{/tr}"}
+		{/if}
+		{button href="#comments" _flip_id="comzone" _class=$thisbuttonclass _text=$thistext}
+	{/if}
+</div>
 
 {if $faq_info.canSuggest eq 'y' and $tiki_p_suggest_faq eq 'y'}
 <div class="faq_suggestions" id="faqsugg" style="display:{if !empty($error)}block{else}none{/if};">
@@ -114,7 +108,7 @@
 </div>
 {/if}
 
-{if $prefs.faqs_feature_copyrights  eq 'y' and $prefs.wikiLicensePage}
+{if $prefs.faqs_feature_copyrights eq 'y' and $prefs.wikiLicensePage}
   {if $prefs.wikiLicensePage == $page}
     {if $tiki_p_edit_copyrights eq 'y'}
       <p class="editdate">{tr}To edit the copyright notices{/tr} <a href="copyrights.php?page={$copyrightpage}">{tr}Click Here{/tr}</a>.</p>
@@ -127,9 +121,9 @@
 
 
 {if $prefs.feature_faq_comments == 'y'
-&& (($tiki_p_read_comments  == 'y'
+&& (($tiki_p_read_comments == 'y'
 && $comments_cant != 0)
-||  $tiki_p_post_comments  == 'y'
-||  $tiki_p_edit_comments  == 'y')}
+|| $tiki_p_post_comments == 'y'
+|| $tiki_p_edit_comments == 'y')}
 {include file=comments.tpl}
 {/if}

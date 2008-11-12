@@ -4,7 +4,10 @@
 {if $prefs.log_sql ne 'y'}
 	{remarksbox type="warning" title="{tr}Notice{/tr}"}}{tr}This feature is disabled{/tr}<br />{tr}You will not see the latest queries.{/tr}{/remarksbox}
 {/if}
-{self_link clean="y" _class="button2"}{tr}Clean{/tr}{/self_link}
+
+<div class="navbar">
+	{button href="?clean=y" _text="{tr}Clean{/tr}"}
+</div>
 
 {include file='find.tpl' find_show_num_rows='y'}
 
