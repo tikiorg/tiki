@@ -9,13 +9,19 @@ class ImageAbstract {
   var $thumb_max_size = 120;
 
   function __construct($image, $isfile = false) {
-    $this->classname = get_class($this);
-    $this->data = $isfile ? $this->get_from_file($image) : $image;
+    if ( ! empty($image) ) {
+      $this->classname = get_class($this);
+      $this->data = $isfile ? $this->get_from_file($image) : $image;
+    }
+  }
+
+  function is_empty() {
+    return empty($this->data);
   }
 
   function get_from_file($filename) {
-    $content = '';
-    if ( file_exists($filename) ) {
+    $content = NULL;
+    if ( is_readable($filename) ) {
       $f = fopen($filename, 'rb');
       $size = filesize($filename);
       $content = fread($f, $size);

@@ -12,7 +12,7 @@ class Image extends ImageAbstract {
 
     // Which GD Version do we have?
     $exts = get_loaded_extensions();
-    if ( in_array('gd', $exts) && $image != '' ) {
+    if ( in_array('gd', $exts) && ! empty($this->data) ) {
       $this->havegd = true;
       $this->get_gdinfo();
       if ( $isfile ) {
