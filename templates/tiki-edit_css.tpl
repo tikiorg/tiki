@@ -1,26 +1,34 @@
 {title help="Edit+CSS"}{tr}Edit Style Sheet{/tr}{/title}
 
-<div>
+<div class=:navbar">
+	 {if ($prefs.feature_view_tpl eq 'y' || $prefs.feature_edit_templates eq 'y') && $tiki_p_edit_templates == 'y'}
+		 {button href="tiki-edit_templates.php" _text="{tr}View Templates{/tr}"}
+	{/if}
+</div>
+
 <form method="post" action="tiki-edit_css.php">
 {tr}Style Sheet{/tr} : 
 {if $action eq "edit"}
 <input type="text" name="editstyle" value="{$editstyle}" />
-<input type="submit" name="save" value="{tr}Save{/tr}" /> 
-<a href="tiki-edit_css.php?editstyle={$editstyle}" class="link">{tr}Cancel{/tr}</a>
+<input type="submit" name="save" value="{tr}Save{/tr}" />
+{button  href="tiki-edit_css.php?editstyle=$editstyle" _text="{tr}Cancel{/tr}"}
+{if $tikidomain}
+{tr}The file will be saved in:{/tr} styles/{$tikidomain}
+{/if}
 <div style="padding:4px;border-bottom:1px solid #c3b3a3;">
 <textarea name="data" rows="42" cols="80" wrap="virtual" style="padding:7px;padding-right:0;">{$data|escape}</textarea>
 </div>
 {else}
+{assign var=shortStyle value=$prefs.style|replace:'.css':''}
 <select name="editstyle">
 <option value="" style="background-color:#efdece;color:#766656;border-bottom:1px dashed #787878;">{tr}choose a stylesheet{/tr}</option>
 {section name=t loop=$list}
-<option value="{$list[t]|escape}"{if $list[t] eq $editstyle} selected="selected"{/if}>{$list[t]}</option>
+<option value="{$list[t]|escape}"{if $list[t] eq $editstyle or (empty($editstyle) and $list[t] eq $shortStyle)} selected="selected"{/if}>{$list[t]|escape}</option>
 {/section}
 </select>
 <input type="submit" name="try" value="{tr}Try{/tr}" />
 <input type="submit" name="display" value="{tr}Display{/tr}" />
-<input type="submit" name="edit" value="{tr}Edit{/tr}" /><br />
-<div class="">{tr}File with names appended by -{$user} are modifiable, others are only duplicable and be used as model.{/tr}</div>
+<input type="submit" name="edit" value="{tr}Edit{/tr}" />
 
 {section name=l loop=$css}
 <div style="padding:4px;">
@@ -45,4 +53,3 @@
 {/if}
 
 </form>
-</div>
