@@ -11,15 +11,27 @@ if ( isset($_GET['fileId']) && isset($_GET['thumbnail']) && isset($_COOKIE['PHPS
 		include('db/tiki-db.php');
 		include('lib/tikidblib.php');
 		$db = new TikiDB($dbTiki);
+
 		$query = "select * from `tiki_files` where `fileId`=?";
 		$result = $db->query($query, array((int)$_GET['fileId']));
-		if (!$result) echo 'ARG1';
-		$info = $result ? $result->fetchRow() : array();
-		$query = "select `value` from `tiki_preferences` where `name` = 'fgal_use_dir';";
-		$result = $db->query($query);
-		$tmp = $result->fetchRow();
-		$prefs['fgal_use_dir'] = $tmp['value'];
-		$skip = true;
+		if ( $result ) {
+			$info = $result->fetchRow();
+
+			if ( isset($_SESSION['s_prefs']) ) {
+				$prefs = $_SESSION['s_prefs'];
+			} else {
+				$query = "select `value` from `tiki_preferences` where `name` = 'fgal_use_dir';";
+				$result = $db->query($query);
+				if ( $result ) {
+					$tmp = $result->fetchRow();
+					$prefs = array('fgal_use_dir' => $tmp['value']);
+				}
+			}
+
+			$skip = true;
+		} else {
+			$info = array();
+		}
 	} else {
 		session_write_close();
 	}
@@ -237,7 +249,7 @@ if ( isset($_GET['preview']) || isset($_GET['thumbnail']) || isset($_GET['displa
 			}
 	
 			if ( ! isset($_GET['icon']) || ( isset($_GET['format']) && $_GET['format'] != $format ) ) {
-  				if ( isset($info['path']) ) {
+  				if ( ! empty($info['path']) ) {
 					$image = new Image($prefs['fgal_use_dir'].$info['path'], true);
 				} else {
 					$image = new Image($content);
