@@ -5,38 +5,51 @@ require_once('lib/images/abstract.php');
 class Image extends ImageAbstract {
   var $gdinfo;
   var $gdversion;
-  var $havegd;
+  var $havegd = false;
 
   function __construct($image, $isfile = false) {
-    parent::__construct($image, false);
 
     // Which GD Version do we have?
     $exts = get_loaded_extensions();
-    if ( in_array('gd', $exts) && ! empty($this->data) ) {
+    if ( in_array('gd', $exts) && ! empty($image) ) {
       $this->havegd = true;
       $this->get_gdinfo();
-      if ( $isfile ) {
-        $this->filename = $image;
-        $this->format = strtolower(substr($image, strrpos($image, '.') + 1));
-        list($width, $height, $type) = getimagesize($image);
-        if (function_exists("image_type_to_extension")) {
-          $this->format = image_type_to_extension($type,false);
-        } else {
-          $tmp = image_type_to_mime_type($type);
-          $this->format = strtolower(substr($tmp,strrpos($tmp,"/")+1));
-        }
-        if ( $this->is_supported($this->format) ) {
-          if ( $this->format == 'jpg' ) $this->format = 'jpeg';
-          $this->data = call_user_func('imagecreatefrom'.$this->format, $image);
-        }
-      } else {
-        $this->data = imagecreatefromstring($this->data);
-      }
+			if ($isfile) {
+				$this->filename = $image;
+				parent::__construct(NULL, false);
+				$this->loaded = false;
+			} else {
+				parent::__construct($image, false);
+				$this->loaded = false;
+			}
     } else {
       $this->havegd = false;
       $this->gdinfo = array();
     }
   }
+
+	function _load_data() {
+		if (!$this->loaded && $this->havegd) {
+			if (!empty($this->filename)) {
+				$this->format = strtolower(substr($image, strrpos($image, '.') + 1));
+				list($width, $height, $type) = getimagesize($this->filename);
+				if (function_exists("image_type_to_extension")) {
+					$this->format = image_type_to_extension($type,false);
+				} else {
+					$tmp = image_type_to_mime_type($type);
+					$this->format = strtolower(substr($tmp,strrpos($tmp,"/")+1));
+				}
+				if ( $this->is_supported($this->format) ) {
+					if ( $this->format == 'jpg' ) $this->format = 'jpeg';
+					$this->data = call_user_func('imagecreatefrom'.$this->format, $this->filename);
+					$this->loaded = true;
+				}
+			} elseif (!empty($this->data)) {
+				$this->data = imagecreatefromstring($this->data);
+				$this->loaded = true;
+			}
+		}
+	}
 
   function Image($image, $isfile = false) {
     Image::__construct($image, $isfile);
@@ -50,12 +63,18 @@ class Image extends ImageAbstract {
   }
 
   function resizethumb() {
-    if ( $this->thumb !== null ) $this->data = imagecreatefromstring($this->thumb);
+    if ( $this->thumb !== null ) {
+			$this->data = imagecreatefromstring($this->thumb);
+			$this->loaded = true;
+		} else {
+			$this->_load_data();
+		}
     return parent::resizethumb();
   }
 
   function display() {
-  
+
+		$this->_load_data();
     ob_end_flush();
     ob_start();
     switch ( strtolower($this->format) ) {
@@ -83,6 +102,7 @@ class Image extends ImageAbstract {
   }
 
   function rotate($angle) {
+		$this->_load_data();
     $this->data = imagerotate($this->data, $angle, 0);
     return true;
   }
@@ -160,10 +180,12 @@ class Image extends ImageAbstract {
   }
 
   function _get_height() {
+		$this->_load_data();
     return imagesy($this->data);
   }
 
   function _get_width() {
+		$this->_load_data();
     return imagesx($this->data);
   }
 

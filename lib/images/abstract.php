@@ -9,15 +9,15 @@ class ImageAbstract {
   var $thumb_max_size = 120;
   var $filename = null;
   var $thumb = null;
+	var $loaded = false;
 
   function __construct($image, $isfile = false) {
-    if ( ! empty($image) ) {
+    if ( ! empty($image) || $this->filename !== null ) {
       if ( $this->filename !== null && function_exists('exif_thumbnail') ) {
         $this->thumb = exif_thumbnail($this->filename, $this->width, $this->height);
       }
       $this->classname = get_class($this);
       if ( $isfile ) {
-        $this->data = $this->get_from_file($image);
         $this->filename = $image;
       } else {
         $this->data = $image;
@@ -25,8 +25,19 @@ class ImageAbstract {
     }
   }
 
+	function _load_data() {
+		if (!$this->loaded) {
+			if (!empty($this->filename)) {
+				$this->data = $this->get_from_file($this->filename);
+				$this->loaded = true;
+			} elseif (!empty($this->data)) {
+				$this->loaded = true;
+			}
+		}
+	}
+
   function is_empty() {
-    return empty($this->data);
+    return empty($this->data) && empty($this->filename);
   }
 
   function get_from_file($filename) {
@@ -43,6 +54,7 @@ class ImageAbstract {
   function _resize($x, $y) { }
 
   function resize($x = 0, $y = 0) {
+		$this->_load_data();
     $x0 = $this->get_width();
     $y0 = $this->get_height();
 
@@ -58,6 +70,7 @@ class ImageAbstract {
   }
 
   function resizemax($max) {
+		$this->_load_data();
     $x0 = $this->get_width();
     $y0 = $this->get_height();
     if ( $x0 <= 0 || $y0 <= 0 || $max <= 0 ) return;
@@ -72,6 +85,7 @@ class ImageAbstract {
   }
 
   function scale($r) {
+		$this->_load_data();
     $x0 = $this->get_width();
     $y0 = $this->get_height();
     if ( $x0 <= 0 || $y0 <= 0 || $r <= 0 ) return;
@@ -96,6 +110,7 @@ class ImageAbstract {
   }
 
   function display() {
+		$this->_load_data();
     return $this->data;
   }
 
@@ -134,7 +149,6 @@ class ImageAbstract {
     $format = call_user_func(array($class, 'get_icon_default_format'));
 
     if ( ! $keep_original && class_exists($class) ) {
-  
       $icon_format = $format;
       $class = 'Image';
   
@@ -145,7 +159,6 @@ class ImageAbstract {
       } else {
         return false;
       }
-  
     }
 
     $name = "lib/images/icons/$extension.$format";
@@ -154,7 +167,6 @@ class ImageAbstract {
     }
 
     if ( ! $keep_original ) {
-
       $icon = new $class($name, true);
       if ( $format != $icon_format ) {
         $icon->convert($icon_format);
@@ -162,11 +174,8 @@ class ImageAbstract {
       $icon->resize($x, $y);
 
       return $icon->display();
-
     } else {
-
       return ImageAbstract::get_from_file($name);
-
     }
 
   } 
