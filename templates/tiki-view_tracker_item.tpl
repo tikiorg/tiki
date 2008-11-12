@@ -3,7 +3,6 @@
 
 {title help="trackers"}{tr}Tracker Item:{/tr} {$tracker_info.name}{/title}
 
-
 {* --------- navigation ------ *}
 <div class="navbar">
   {if $prefs.feature_user_watches eq 'y' and $tiki_p_watch_trackers eq 'y'}
@@ -71,7 +70,7 @@
 {cycle name=tabs values="1,2,3,4,5" print=false advance=false reset=true}
 <div class="tabs">
 <span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}View{/tr}</a></span>
-{if $tracker_info.useComments eq 'y'}
+{if $tracker_info.useComments eq 'y' and $tiki_p_tracker_view_comments ne 'n'}
 <span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}Comments{/tr} ({$commentCount})</a></span>
 {/if}
 {if $tracker_info.useAttachments eq 'y'}
@@ -137,7 +136,7 @@
 </div>
 
 {* -------------------------------------------------- tab with comments --- *}
-{if $tracker_info.useComments eq 'y'}
+{if $tracker_info.useComments eq 'y' and $tiki_p_tracker_view_comments ne 'n'}
 <div id="content{cycle name=content assign=focustab}{$focustab}"{if $prefs.feature_tabs eq 'y'} class="tabcontent" style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 {if $tiki_p_comment_tracker_items eq 'y'}
 <h2>{tr}Add a Comment{/tr}</h2>

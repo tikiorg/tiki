@@ -53,7 +53,7 @@
 {if $showlastmodif eq 'y'}
 <th>{self_link _sort_arg='tr_sort_mode' _sort_field='lastModif'}{tr}LastModif{/tr}{/self_link}</th>
 {/if}
-{if $tracker_info.useComments eq 'y' and $tracker_info.showComments eq 'y'}
+{if $tracker_info.useComments eq 'y' and $tracker_info.showComments eq 'y' and $tiki_p_tracker_view_comments ne 'n'}
 <th wstyle="width:5%">{tr}Coms{/tr}</th>
 {/if}
 {if $tracker_info.useAttachments eq 'y' and  $tracker_info.showAttachments eq 'y'}
@@ -119,7 +119,7 @@
 {if $showlastmodif eq 'y'}
 <td>{if $tracker_info.showLastModifFormat}{$items[user].lastModif|tiki_date_format:$tracker_info.showLastModifFormat}{else}{$items[user].lastModif|tiki_short_datetime}{/if}</td>
 {/if}
-{if $tracker_info.useComments eq 'y' and $tracker_info.showComments eq 'y'}
+{if $tracker_info.useComments eq 'y' and $tracker_info.showComments eq 'y' and $tiki_p_tracker_view_comments ne 'n'}
 <td  style="text-align:center;">{$items[user].comments}</td>
 {/if}
 {if $tracker_info.useAttachments eq 'y' and $tracker_info.showAttachments eq 'y'}
