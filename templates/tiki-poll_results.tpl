@@ -106,18 +106,19 @@
   ||  $tiki_p_edit_comments  == 'y')
 }
   <div id="page-bar">
-    <span class="button2">
-      <a href="#comments" onclick="javascript:flip('comzone');flip('comzone_close','inline');return false;"{if $comments_cant>0} class="highlight"{/if}>
-        {if $comments_cant == 0 or ($tiki_p_read_comments  == 'n' and $tiki_p_post_comments  == 'y')}
-          {tr}Add Comment{/tr}
-        {elseif $comments_cant == 1}
-          {tr}1 comment{/tr}
-        {else}
-          {$comments_cant}&nbsp;{tr}comments{/tr}
-        {/if}
-        <span id="comzone_close" style="display:{if isset($smarty.session.tiki_cookie_jar.show_comzone) and $smarty.session.tiki_cookie_jar.show_comzone eq 'y'}inline{else}none{/if};">({tr}close{/tr})</span>
-      </a>
-    </span>
+		{if $comments_cant gt 0}
+			{assign var=thisbuttonclass value='highlight'}
+		{else}
+			{assign var=thisbuttonclass value=''}
+		{/if}
+	  {if $comments_cant == 0 or ($tiki_p_read_comments == 'n' and $tiki_p_post_comments == 'y')}
+			{assign var=thistext value="{tr}Add Comment{/tr}"}
+		{elseif $comments_cant == 1}
+			{assign var=thistext value="{tr}1 comment{/tr}"}
+		{else}
+			{assign var=thistext value="$comments_cant&nbsp;{tr}Comments{/tr}"}
+		{/if}
+		{button href="#comments" _flip_id="comzone" _class=$thisbuttonclass _text=$thistext}
   </div>
   {include file=comments.tpl}
 {/if}
