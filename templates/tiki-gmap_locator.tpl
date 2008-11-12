@@ -8,7 +8,10 @@
 <table>
 {if $input eq 'y'}
 <tr><td colspan="2">
-<span class="button2"><a href="{$backurl}">{$backlink}</a></span>{if $watch}({$watch}){/if}<br /><br />
+{button href="$backurl" _text="$backlink"}
+{if $watch}({$watch}){/if}
+<br />
+<br />
 <form action="tiki-gmap_locator.php{$extraquery}" method="post">
 {if $watch}<input type="hidden" name="view_user" value="{$watch}" />{/if}
 <input type="text" name="point[x]" value="{$pointx}" id="pointx" size="16" />

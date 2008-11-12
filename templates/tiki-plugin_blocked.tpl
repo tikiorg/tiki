@@ -20,9 +20,9 @@
 	</ul>
 	{/if}
 	{if $plugin_details}
-	<div class="right button2">
-		<a href="javascript:toggle('sec-{$plugin_name|escape}-{$plugin_index|escape}')">{tr}View Details{/tr}</a>
-	</div>
+	{assign var=thisplugin_name value=$plugin_name|escape}
+	{assign var=thisplugin_index value=$plugin_index|escape}
+	{button href="javascript:toggle('sec-$thisplugin_name-$thisplugin_index')" _class="right" _text="{tr}View Details{/tr}"}
 	<div id="sec-{$plugin_name|escape}-{$plugin_index|escape}" style="display:none">
 		<div><h3>{tr}Details{/tr}: {$plugin_name|upper|escape}</h3></div>
 		{if $plugin_args|@count > 0}

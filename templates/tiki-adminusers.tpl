@@ -122,7 +122,7 @@
 		<div align="center">
 			{section name=ini loop=$initials}
 				{if $initial and $initials[ini] eq $initial}
-					<span class="button2">{$initials[ini]|capitalize}</span> . 
+					<span class="button">{$initials[ini]|capitalize}</span> . 
 				{else}
 					<a href="tiki-adminusers.php?initial={$initials[ini]}{if $find}&amp;find={$find|escape:"url"}{/if}{if $numrows}&amp;numrows={$numrows}{/if}{if $sort_mode}&amp;sort_mode={$sort_mode}{/if}" class="prevnext">{$initials[ini]}</a> . 
 				{/if}
