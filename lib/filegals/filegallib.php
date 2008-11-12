@@ -139,7 +139,9 @@ class FileGalLib extends TikiLib {
 			$galleryId = $info['galleryId'];
 		}
 		global $cachelib; require_once("lib/cache/cachelib.php");
+		$cachelib->empty_type_cache('fgals_perms_'.$id."_");
 		$cachelib->empty_type_cache('fgals_perms_'.$info['galleryId']."_");
+		$cachelib->empty_type_cache($this->get_all_galleries_cache_type());
 
 		if ($podCastGallery = $this->isPodCastGallery($galleryId)) {
 			$savedir=$prefs['fgal_podcast_dir'];
