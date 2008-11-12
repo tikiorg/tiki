@@ -11,7 +11,10 @@ if ( $prefs['feature_file_galleries'] != 'y' ) {
 	$smarty->display('error.tpl');
 	die;
 }
-@set_time_limit(0);
+
+if ( ! ini_get('safe_mode') ) {
+	@set_time_limit(0);
+}
 
 /*
 	 Borrowed from http://php.net/manual/en/function.readfile.php#54295 to come
@@ -42,21 +45,6 @@ function readfile_chunked($filename,$retbytes=true) {
 }
 $zip = false;
 $error = '';
-
-function get_readfile_chunked($filename) {
-   $chunksize = 1*(1024*1024); // how many bytes per chunk
-   $buffer = '';
-   $cnt =0;
-   $handle = fopen($filename, 'rb');
-   if ($handle === false) {
-       return false;
-   }
-   while (!feof($handle)) {
-       $buffer = fread($handle, $chunksize);
-   }
-   fclose($handle);
-   return $buffer;
-}
 
 if ( isset($_REQUEST['fileId']) && !is_array($_REQUEST['fileId'])) {
 	$info = $tikilib->get_file($_REQUEST['fileId']);
@@ -110,12 +98,62 @@ if ( ! isset($_GET['thumbnail']) && ! isset($_GET['icon']) ) {
 	}
 }
 
-// close the session in case of large downloads to enable further browsing
-session_write_close();
+session_write_close(); // close the session in case of large downloads to enable further browsing
 error_reporting(E_ALL);
+if ( ob_get_level() ) while (@ob_end_clean()); // Be sure output buffering is turned off
 
 $content_changed = false;
 $content = &$info['data'];
+
+$md5 = '';
+if ( ! empty($info['path']) )  {
+	$filepath = $prefs['fgal_use_dir'].$info['path'];
+	if ( is_readable($filepath) ) {
+		$file_stats = stat($filepath);
+		$last_modified = $file_stats['mtime'];
+		$md5 = empty($info['hash']) ?
+			md5($file_stats['mtime'].'='.$file_stats['ino'].'='.$file_stats['size'])
+			: $info['hash'];
+	} else {
+		// File missing or not readable
+		die;
+	}
+} elseif ( ! empty($content) ) {
+	$last_modified = $info['lastModif'];
+	$md5 = empty($info['hash']) ? md5($content) : $info['hash'];
+} else {
+	// Empty content
+	die;
+}
+
+// ETag: Entity Tag used for strong cache validation.
+$etag = '"' . $md5 . '-' . crc32($md5) . '"';
+header('ETag: '.$etag);
+
+$use_client_cache = false;
+if ( isset($_SERVER['HTTP_IF_MODIFIED_SINCE']) && $last_modified == strtotime(current($a = explode(';', $_SERVER['HTTP_IF_MODIFIED_SINCE']))) ) {
+	$use_client_cache = true;
+} elseif ( isset($_SERVER['HTTP_IF_NONE_MATCH']) ) {
+	$tmp = array_map('trim', explode(',', $_SERVER['HTTP_IF_NONE_MATCH']));
+	foreach ( $tmp as $v ) {
+		if ( $v == '*' || $v == $etag ) {
+			$use_client_cache = true;
+			break;
+		}
+	}
+	unset($tmp);
+}
+
+header("Pragma: ");
+header('Expires: ');
+header('Cache-Control: '.( $user ? 'private' : 'public' ).',must-revalidate,post-check=0,pre-check=0');
+
+if ( $use_client_cache ) {
+	header('Status: 304 Not Modified', true, 304);
+	exit;
+} else {
+	if ( !empty($last_modified) ) header('Last-Modified: '.gmdate('D, d M Y H:i:s', $last_modified). ' GMT');
+}
 
 // Handle images display, files thumbnails and icons
 if ( isset($_GET['preview']) || isset($_GET['thumbnail']) || isset($_GET['display']) || isset($_GET['icon']) ) {
@@ -124,30 +162,28 @@ if ( isset($_GET['preview']) || isset($_GET['thumbnail']) || isset($_GET['displa
 	// Cache only thumbnails to avoid DOS attacks
 	if ( ( isset($_GET['thumbnail']) || isset($_GET['preview']) ) && ! isset($_GET['display']) && ! isset($_GET['icon']) && ! isset($_GET['scale']) && ! isset($_GET['x']) && ! isset($_GET['y']) && ! isset($_GET['format']) && ! isset($_GET['max']) ) {
 	        global $cachelib; include_once('lib/cache/cachelib.php');
-	        $cacheName = md5($info['filesize']."\n".$info['created']."\n".$info['filename']);
+		$cacheName = $md5;
 	        $cacheType = ( isset($_GET['thumbnail']) ? 'thumbnail_' : 'preview_' ) . ((int)$_REQUEST['fileId']).'_';
 		$use_cache = true;
 	}
 
-		$build_content = true;
+	$build_content = true;
         if ( $use_cache && $cachelib->isCached($cacheName, $cacheType) ) {
+		$content = null; // Explicitely free memory before getting cache
 		$content = $cachelib->getCached($cacheName, $cacheType);
 		if ($content !== serialize(false) and $content != "") $build_content = false;
 		$content_changed = true;
-	} 
+	}
+
 	if ($build_content) {
 
 		// Modify the original image if needed
 		if ( ! isset($_GET['display']) || isset($_GET['x']) || isset($_GET['y']) || isset($_GET['scale']) || isset($_GET['max']) || isset($_GET['format']) ) {
 	
-			$content_changed = true;
-//			if ( $info['path'] ) {
-//				$content = file_get_contents(($prefs['fgal_use_dir'].$info['path']));
-//			}
-	
 			require_once('lib/images/images.php');
 			if (!class_exists('Image')) die();
 	
+			$content_changed = true;
 			$format = substr($info['filename'], strrpos($info['filename'], '.') + 1);
 	
 			// Fallback to an icon if the format is not supported
@@ -157,7 +193,9 @@ if ( isset($_GET['preview']) || isset($_GET['thumbnail']) || isset($_GET['displa
 			}
 	
 			if ( isset($_GET['icon']) ) {
-				unset($content);
+				unset($info['path']);
+				$content = null; // Explicitely free memory before generating icon
+
 				if ( isset($_GET['max']) ) {
 					$icon_x = $_GET['max'];
 					$icon_y = $_GET['max'];
@@ -169,14 +207,17 @@ if ( isset($_GET['preview']) || isset($_GET['thumbnail']) || isset($_GET['displa
 				$content = Image::icon($format, $icon_x, $icon_y);
 				$format = Image::get_icon_default_format();
 				$info['filetype'] = 'image/'.$format;
+				$info['lastModif'] = 0;
 			}
 	
 			if ( ! isset($_GET['icon']) || ( isset($_GET['format']) && $_GET['format'] != $format ) ) {
-				if ( isset($info['path']) ) {
+  				if ( isset($info['path']) ) {
 					$image = new Image($prefs['fgal_use_dir'].$info['path'], true);
 				} else {
 					$image = new Image($content);
+					$content = null; // Explicitely free memory before getting cache
 				}
+				if ( $image->is_empty() ) die;
 	
 				$resize = false;
 				// We resize if needed
@@ -229,25 +270,21 @@ if ( isset($_GET['preview']) || isset($_GET['thumbnail']) || isset($_GET['displa
 	}
 }
 
+if ( empty($info['filetype']) ) $info['filetype'] = 'application/x-octetstream';
+header('Content-type: '.$info['filetype']);
+
 
 // IE6 can not download file with / in the name (the / can be there from a previous bug)
-$file = preg_replace('/.*([^\/]*)$/U', '$1', $info['filename']);
+$file = basename($info['filename']);
 
-// Added by Jenolan  31/8/2003 /////////////////////////////////////////////
-// File galleries should always be attachments (files) not inline (textual)
-
-header('Content-type: '.$info['filetype']);
-if (!$content_change and !isset($_GET['display'])) {
+// If the content has not changed, ask the browser to download it (instead of displaying it)
+if ( ! $content_changed and !isset($_GET['display']) ) {
 	header("Content-Disposition: attachment; filename=\"$file\"");
 }
 
-header('Expires: 0');
-header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-header('Pragma: public');
-
 if ( $info['path'] and !$content_changed ) {
-	header('Content-Length: '.filesize($prefs['fgal_use_dir'].$info['path']) );
-	readfile_chunked($prefs['fgal_use_dir'].$info['path']);
+	header('Content-Length: '.filesize($filepath));
+	readfile_chunked($filepath);
 } else {
 	if ( function_exists('mb_strlen') ) {
 		header('Content-Length: '.mb_strlen($content, '8bit'));
