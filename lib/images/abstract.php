@@ -7,11 +7,21 @@ class ImageAbstract {
   var $width = NULL;
   var $classname = 'ImageAbstract';
   var $thumb_max_size = 120;
+  var $filename = null;
+  var $thumb = null;
 
   function __construct($image, $isfile = false) {
     if ( ! empty($image) ) {
+      if ( $this->filename !== null && function_exists('exif_thumbnail') ) {
+        $this->thumb = exif_thumbnail($this->filename, $this->width, $this->height);
+      }
       $this->classname = get_class($this);
-      $this->data = $isfile ? $this->get_from_file($image) : $image;
+      if ( $isfile ) {
+        $this->data = $this->get_from_file($image);
+        $this->filename = $image;
+      } else {
+        $this->data = $image;
+      }
     }
   }
 

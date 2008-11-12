@@ -16,6 +16,7 @@ class Image extends ImageAbstract {
       $this->havegd = true;
       $this->get_gdinfo();
       if ( $isfile ) {
+        $this->filename = $image;
         $this->format = strtolower(substr($image, strrpos($image, '.') + 1));
         list($width, $height, $type) = getimagesize($image);
         if (function_exists("image_type_to_extension")) {
@@ -46,6 +47,11 @@ class Image extends ImageAbstract {
     imagecopyresampled($t, $this->data, 0, 0, 0, 0, $x, $y, $this->get_width(), $this->get_height());
     $this->data = $t;
     unset($t);
+  }
+
+  function resizethumb() {
+    if ( $this->thumb !== null ) $this->data = imagecreatefromstring($this->thumb);
+    return parent::resizethumb();
   }
 
   function display() {

@@ -6,6 +6,7 @@ class Image extends ImageAbstract {
 
   function __construct($image, $isfile = false) {
     if ( $isfile ) {
+      $this->filename = $image;
       $blob = imagick_readimage($image);
       parent::__construct($blob, false);
     } else {
@@ -23,6 +24,11 @@ class Image extends ImageAbstract {
 
   function _resize($x, $y) {
     return imagick_scale(&$this->data, $x, $y);
+  }
+
+  function resizethumb() {
+    if ( $this->thumb !== null ) $this->data = imagick_blob2image($this->thumb);
+    return parent::resizethumb();
   }
 
   function get_mimetype() {
