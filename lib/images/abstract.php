@@ -15,6 +15,7 @@ class ImageAbstract {
     if ( ! empty($image) || $this->filename !== null ) {
       if ( $this->filename !== null && function_exists('exif_thumbnail') ) {
         $this->thumb = exif_thumbnail($this->filename, $this->width, $this->height);
+				if (trim($this->thumb) == "") $this->thumb = NULL;
       }
       $this->classname = get_class($this);
       if ( $isfile ) {
