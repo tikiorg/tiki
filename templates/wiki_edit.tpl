@@ -25,7 +25,24 @@
 	</div>
 	{/if}
 	{if $zoom_mode eq 'n' and $prefs.quicktags_over_textarea neq 'y'}</td><td style="border:0;">{/if}
-	<textarea id="{$textarea_id|default:editwiki}" class="{$textarea_class|default:wikiedit}" name="{$textarea_name|default:edit}"{$textarea_attributes}>{$pagedata|escape:'htmlall':'UTF-8'}</textarea>
+	<!--autosave -->
+	{capture name=autosave}{if $prefs.feature_ajax eq 'y'}{autosave id=$textarea_id|default:editwiki default=$pagedata}{else}{$pagedata}{/if}{/capture}
+	{if $prefs.feature_ajax eq 'y' and $noautosave neq 'y' and $has_autosave eq 'y'} 
+	{remarksbox type="warning" title="{tr}AutoSave{/tr}"}
+	{tr}If you want the saved version instead of the autosaved one{/tr}&nbsp;{self_link noautosave='y' _ajax='n'}{tr}Click Here{/tr}{/self_link}
+	{/remarksbox}
+	{/if} 
+	<textarea id="{$textarea_id|default:editwiki}" class="{$textarea_class|default:wikiedit}" name="{$textarea_name|default:edit}"{$textarea_attributes}>{$smarty.capture.autosave}</textarea>
+	{if $prefs.feature_ajax eq 'y'}
+		<!-- autosave -->
+		<script type='text/javascript'>
+		<!--//--><![CDATA[//><!--
+			register_id('{$textarea_id|default:editwiki}');
+			auto_save();
+		//--><!]]>
+		</script>
+		<!-- autosave -->
+	{/if}
 	{if $zoom_mode eq 'n' and $prefs.quicktags_over_textarea neq 'y'}</td></tr></table>{/if}
 </div>
 
@@ -36,7 +53,7 @@
 
 <script type='text/javascript'>
 <!--//--><![CDATA[//><!--
-document.getElementById('editwiki').style.height = ( getWindowHeight() - document.getElementById('textarea-toolbar').offsetHeight - 10 ) + 'px';
+document.getElementById('{$textarea_id|default:editwiki}').style.height = ( getWindowHeight() - document.getElementById('textarea-toolbar').offsetHeight - 10 ) + 'px';
 document.getElementById('tiki-center').style.padding = '0px';
 document.body.style.backgroundColor = '#c1c1c1';
 //--><!]]>

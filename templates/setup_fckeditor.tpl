@@ -9,7 +9,7 @@ var _FileBrowserExtension     = 'php' ;
 FCKConfig.BodyClass = 'wikitext';
 FCKConfig.FontNames = 'sans serif;serif;monospace;Arial;Comic Sans MS;Courier New;Tahoma;Times New Roman;Verdana' ;
 
-FCKConfig.ToolbarSets["Tiki"] = [
+FCKConfig.ToolbarSets["Tiki"] = [ 
 {foreach item=it from=$toolbar name=lines}
   {foreach item=i from=$it name=item}
   [{foreach item=m from=$i name=im}'{$m}'{if $smarty.foreach.im.index+1 ne $smarty.foreach.im.total},{/if}{/foreach}]{if $smarty.foreach.lines.index+1 ne $smarty.foreach.lines.total},{/if}
@@ -59,3 +59,22 @@ FCKConfig.tikiimageDlgTitle = "{tr}Tiki Image - Insert an image{/tr}" ;
 FCKConfig.Plugins.Add( 'CleanHTML', null, _TikiRoot + 'lib/fckeditor_tiki/plugins/' );
 
 FCKConfig.Plugins.Add( 'dragresizetable' );
+
+//----------------------------------------------------
+// ajaxAutoSave plugin
+FCKConfig.Plugins.Add('ajaxAutoSave','en', _TikiRoot + 'lib/fckeditor_tiki/plugins/') ;
+
+// --- config settings for the ajaxAutoSave plugin ---
+// URL to post to
+FCKConfig.ajaxAutoSaveTargetUrl = '{$tikiroot}tiki-auto_save.php' ;
+
+// Enable / Disable Plugin onBeforeUpdate Action
+FCKConfig.ajaxAutoSaveBeforeUpdateEnabled = true ;
+
+// RefreshTime
+FCKConfig.ajaxAutoSaveRefreshTime = 30 ;
+
+// Sensitivity to key strokes
+FCKConfig.ajaxAutoSaveSensitivity = 2 ;
+
+

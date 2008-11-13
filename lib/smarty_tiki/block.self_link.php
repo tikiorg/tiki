@@ -40,9 +40,7 @@ function smarty_block_self_link($params, $content, &$smarty, $repeat = false) {
     if ( is_array($params) ) {
 
 			if ( isset($params['xajax']) ) {
-				unset($params['xajaxargs']);
-				unset($params['xajaxr']);
-				unset($params['xajax']);
+				$params['xajaxargs'] = $params['xajaxr'] = $params['xajax'] = 'NULL';
 			}
 
       if ( ! isset($content) ) $content = '';

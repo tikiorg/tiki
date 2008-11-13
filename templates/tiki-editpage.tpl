@@ -281,7 +281,16 @@ window.onload = timeIt;
 <input type="hidden" name="cols" value="{$cols}"/>
 <input type="hidden" name="wysiwyg" value="n" />
 {else}
-{editform Meat=$pagedata InstanceName='edit' ToolbarSet="Tiki"}
+{capture name=autosave}{if $prefs.feature_ajax eq 'y'}{autosave test='n' id='edit' default=$pagedata}{else}{$pagedata}{/if}{/capture}
+  {if $prefs.feature_ajax eq 'y' and $noautosave neq 'y' and $has_autosave eq 'y'}
+  {remarksbox type="warning" title="{tr}AutoSave{/tr}"}
+  {tr}If you want the saved version instead of the autosaved one{/tr}&nbsp;{self_link noautosave='y' _ajax='n'}{tr}Click Here{/tr}{/self_link}
+  {/remarksbox}
+  {/if}
+</td>
+</tr>
+<tr><td colspan="2">
+{editform Meat=$smarty.capture.autosave InstanceName='edit' ToolbarSet="Tiki"}
 <input type="hidden" name="wysiwyg" value="y" />
 {/if}
 </td></tr>

@@ -15,6 +15,7 @@ function smarty_function_editform($params, &$smarty) {
 	if (isset($params['Meat']))       $fcked->Meat = $params['Meat'];
 	if (isset($params['Width']))      $fcked->Width = $params['Width'];
 	if (isset($params['Height']))     $fcked->Height = $params['Height'];
+	$fcked->Config['autoSaveSelf'] = htmlentities($_SERVER['REQUEST_URI']);
 	if (isset($params['ToolbarSet'])) {
 		$fcked->ToolbarSet = $params['ToolbarSet'];
 	} else {
