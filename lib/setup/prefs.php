@@ -645,6 +645,8 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$prefs['auth_create_user_tiki'] = 'n';
 	$prefs['auth_create_user_auth'] = 'n';
 	$prefs['auth_skip_admin'] = 'y';
+	$prefs['auth_type'] = 'LDAP';
+	$prefs['auth_imap_pop3_basedsn'] = ''; 
 	$prefs['auth_ldap_url'] = '';
 	$prefs['auth_pear_host'] = "localhost";
 	$prefs['auth_pear_port'] = "389";
