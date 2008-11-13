@@ -206,9 +206,17 @@ name="eponymousGroups" {if $prefs.eponymousGroups eq 'y'}checked="checked"{/if}/
 <tr><td class="form">{tr}Create user if not in Tiki?{/tr}</td><td><input type="checkbox" name="auth_create_user_tiki" {if $prefs.auth_create_user_tiki eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="form">{tr}Create user if not in Auth?{/tr}</td><td><input type="checkbox" name="auth_create_user_auth" {if $prefs.auth_create_user_auth eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="form">{tr}Just use Tiki auth for admin?{/tr}</td><td><input type="checkbox" name="auth_skip_admin" {if $prefs.auth_skip_admin eq 'y'}checked="checked"{/if} /></td></tr>
+<tr><td class="form">{tr}Auth Type{/tr}:</td><td>
+<select name="auth_type">
+<option value="LDAP" {if $prefs.auth_type eq "LDAP"} selected="selected"{/if}>LDAP</option>
+<option value="IMAP" {if $prefs.auth_type eq "IMAP"} selected="selected"{/if}>IMAP</option>
+<option value="POP3" {if $prefs.auth_type eq "POP3"} selected="selected"{/if}>POP3</option>
+<option value="vpopmail" {if $prefs.auth_type eq "vpopmail"} selected="selected"{/if}>vpopmail</option>
+</select></td></tr>
 <tr><td class="form">{tr}LDAP URL<br />(if set, this will override the Host and Port below){/tr}:</td><td><input type="text" name="auth_ldap_url" value="{$prefs.auth_ldap_url|escape}" size="50" /></td></tr>
 <tr><td class="form">{tr}LDAP Host{/tr}:</td><td><input type="text" name="auth_pear_host" value="{$prefs.auth_pear_host|escape}" size="50" /></td></tr>
 <tr><td class="form">{tr}LDAP Port{/tr}:</td><td><input type="text" name="auth_pear_port" value="{$prefs.auth_pear_port|escape}" /></td></tr>
+<tr><td class="form">{tr}IMAP/POP3 BaseDSN{/tr}:</td><td><input type="text" name="auth_imap_pop3_basedsn" value="{$prefs.auth_imap_pop3_basedsn|escape}" /></td></tr>
 <tr><td class="form">{tr}LDAP Scope{/tr}:</td><td>
 <select name="auth_ldap_scope">
 <option value="sub" {if $prefs.auth_ldap_scope eq "sub"} selected="selected"{/if}>sub</option>

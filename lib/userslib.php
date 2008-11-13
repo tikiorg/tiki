@@ -744,35 +744,60 @@ class UsersLib extends TikiLib {
 	if ($prefs['auth_method'] != 'auth')
 	    return false;
 
-	// get all of the LDAP options from the database
-	$options['url'] = $prefs['auth_ldap_url'];
-	$options['host'] = $prefs['auth_pear_host'];
-	$options['port'] = $prefs['auth_pear_port'];
-	$options['scope'] = $prefs['auth_ldap_scope'];
-	$options['basedn'] = $prefs['auth_ldap_basedn'];
-	$options['userdn'] = $prefs['auth_ldap_userdn'];
-	$options['userattr'] = $prefs['auth_ldap_userattr'];
-	$options['useroc'] = $prefs['auth_ldap_useroc'];
-	$options['groupdn'] = $prefs['auth_ldap_groupdn'];
-	$options['groupattr'] = $prefs['auth_ldap_groupattr'];
-	$options['groupoc'] = $prefs['auth_ldap_groupoc'];
-	$options['memberattr'] = $prefs['auth_ldap_memberattr'];
-	$options['memberisdn'] = ($prefs['auth_ldap_memberisdn'] == 'y');
-	$options['version'] = $prefs['auth_ldap_version'];
+        // set the Auth options based on auth_type
+        if ($prefs['auth_type'] == 'LDAP') {
+                // get all of the LDAP options from the database
+                $options['url'] = $prefs['auth_ldap_url'];
+                $options['host'] = $prefs['auth_pear_host'];
+                $options['port'] = $prefs['auth_pear_port'];
+                $options['scope'] = $prefs['auth_ldap_scope'];
+                $options['basedn'] = $prefs['auth_ldap_basedn'];
+                $options['userdn'] = $prefs['auth_ldap_userdn'];
+                $options['userattr'] = $prefs['auth_ldap_userattr'];
+                $options['useroc'] = $prefs['auth_ldap_useroc'];
+                $options['groupdn'] = $prefs['auth_ldap_groupdn'];
+                $options['groupattr'] = $prefs['auth_ldap_groupattr'];
+                $options['groupoc'] = $prefs['auth_ldap_groupoc'];
+                $options['memberattr'] = $prefs['auth_ldap_memberattr'];
+                $options['memberisdn'] = ($prefs['auth_ldap_memberisdn'] == 'y');
+                $options['version'] = $prefs['auth_ldap_version'];
 
-	//added to allow for ldap systems that do not allow anonymous bind
-	$options['binddn'] = $prefs['auth_ldap_adminuser'];
-	$options['bindpw'] = $prefs['auth_ldap_adminpass'];
+                //added to allow for ldap systems that do not allow anonymous bind
+                $options['binddn'] = $prefs['auth_ldap_adminuser'];
+                $options['bindpw'] = $prefs['auth_ldap_adminpass'];
 
-	// attributes to fetch
-	$options['attributes'] = array();
-	if ( $nameattr = $prefs['auth_ldap_nameattr'] ) $options['attributes'][] = $nameattr;
+                // attributes to fetch
+                $options['attributes'] = array();
+                if ( $nameattr = $prefs['auth_ldap_nameattr'] ) $options['attributes'][] = $nameattr;
 
-	// set the Auth options
-	//$a = new Auth('LDAP', $options, '', false, $user, $pass);
-	
-	//corrected for the Auth v.13 upgrade
-	$a = new Auth('LDAP', $options, '', false);
+                // set the Auth options
+                //$a = new Auth('LDAP', $options, '', false, $user, $pass);
+
+                //corrected for the Auth v.13 upgrade
+                $a = new Auth('LDAP', $options, '', false);
+
+        } else if ($prefs['auth_type'] == 'IMAP') {
+                $options['host'] = $prefs['auth_pear_host'];
+                $options['port'] = $prefs['auth_pear_port'];
+                $options['baseDSN'] = $prefs['auth_imap_pop3_basedsn'];
+                $options['checkServer'] = 'false';
+
+                $a = new Auth('IMAP', $options, '', false);
+        } else if ($prefs['auth_type'] == 'POP3') {
+                $options['host'] = $prefs['auth_pear_host'];
+                $options['port'] = $prefs['auth_pear_port'];
+                $options['baseDSN'] = $prefs['auth_imap_pop3_basedsn'];
+                $options['checkServer'] = 'false';
+
+                $a = new Auth('POP3', $options, '', false);
+        } else if ($prefs['auth_type'] == 'vpopmail') {
+                $options['host'] = $prefs['auth_pear_host'];
+                $options['port'] = $prefs['auth_pear_port'];
+                $options['baseDSN'] = $prefs['auth_imap_pop3_basedsn'];
+                $options['checkServer'] = 'false';
+
+                $a = new Auth('vpopmail', $options, '', false);
+        }
 
 	//added to support Auth v1.3
 	$a->username = $user;

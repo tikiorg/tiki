@@ -92,6 +92,8 @@ if (isset($_REQUEST["auth_pear"])) {
 	simple_set_toggle('auth_create_user_tiki');
 	simple_set_toggle('auth_create_user_auth');
 	simple_set_toggle('auth_skip_admin');
+	simple_set_value('auth_type');
+    simple_set_value('auth_imap_pop3_basedsn');
 	simple_set_value('auth_ldap_url');
 	simple_set_value('auth_pear_host');
 	simple_set_value('auth_pear_port');
