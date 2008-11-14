@@ -8,7 +8,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 global $prefs;
 if ($prefs['feature_ajax'] == 'y') {
-	require_once("lib/ajax/xajax.inc.php");
+	require_once("lib/ajax/xajax/xajax_core/xajaxAIO.inc.php");
 
 	class TikiAjax extends xajax {
 
@@ -44,7 +44,7 @@ if ($prefs['feature_ajax'] == 'y') {
 			$this->aTemplates = array();
 			$this->deniedFunctions = array();
 
-			$this->waitCursorOn();
+			$this->setFlags(waitCursor,true);
 		}
 
 		/**
@@ -89,8 +89,9 @@ if ($prefs['feature_ajax'] == 'y') {
 		 * 
 		 * 
 		 */
-		function registerFunction($mFunction, $sRequestType=XAJAX_POST) {
+		function registerFunction($mFunction, $sRequestType=XAJAX_GET) {
 			$functionName = is_array($mFunction) ? $mFunction[0] : $mFunction;
+			$this->setDefaultMethod($sRequestType);
 			if (isset($this->deniedFunctions[$functionName])) {
 				if (is_array($mFunction)) {
 					if (method_exists($mFunction[1], $mFunction[2] . 'Error')) {
@@ -107,7 +108,7 @@ if ($prefs['feature_ajax'] == 'y') {
 					} 
 				} 
 			}
-			xajax::registerFunction($mFunction, $sRequestType);
+			xajax::register(XAJAX_FUNCTION,$mFunction);
 		}
 
 		/*
@@ -118,7 +119,7 @@ if ($prefs['feature_ajax'] == 'y') {
 		 */
 		function accessDenied() {
 			$objResponse = new xajaxResponse();
-			$objResponse->addAlert(tra("Permission denied"));
+			$objResponse->Alert(tra("Permission denied"));
 			return $objResponse;
 		}
 
@@ -133,10 +134,10 @@ if ($prefs['feature_ajax'] == 'y') {
 		function processRequests() {
 			global $smarty;
 			if (isset($smarty)) {
-				$smarty->assign("xajax_js",$this->getJavascript('','lib/ajax/xajax_js/xajax.js'));
+				$smarty->assign("xajax_js",$this->getJavascript('lib/ajax/xajax/'));
 			}
 
-			xajax::processRequests();
+			xajax::processRequest();
 		}
 
 	}
@@ -160,12 +161,12 @@ $ajaxlib->registerFunction("loadComponent");
 function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user = '') {
 	global $smarty, $ajaxlib, $prefs, $user;
 	global $js_script;
-	$objResponse = new xajaxResponse();
+	$objResponse = new xajaxResponse('UTF-8');
 
 	if ( $last_user != $user ) {
 
 		// If the user session timed out, completely reload the page to refresh right/left modules
-		$objResponse->addRedirect($_SERVER['REQUEST_URI'], 0);
+		$objResponse->Redirect($_SERVER['REQUEST_URI'], 0);
 
 	} elseif ( $ajaxlib->templateIsRegistered($template) ) {
 
@@ -174,7 +175,7 @@ function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user 
 		require_once $smarty->_get_plugin_filepath('function', 'show_help');
 		$content .= smarty_function_show_help(null,$smarty); 
 
-		$objResponse->addAssign($htmlElementId, "innerHTML", $content);
+		$objResponse->Assign($htmlElementId, "innerHTML", $content);
 
 		// Handle TikiTabs in order to display only the current tab in the XAJAX response
 		// This has to be done here, since it is tikitabs() is usually called when loading the <body> tag
@@ -184,21 +185,22 @@ function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user 
 		if ( $max_tikitabs > 0 && $prefs['feature_tabs'] == 'y' ) {
 			global $cookietab;
 			$tab = ( $cookietab != '' ) ? (int)$cookietab : 1;
-			$objResponse->addScript("tikitabs($tab,$max_tikitabs);");
+			$objResponse->Script("tikitabs($tab,$max_tikitabs);");
 		}
 
 	} else {
-		$objResponse->addAlert(sprintf(tra("Template %s not registered"),$template));
+		$objResponse->Alert(sprintf(tra("Template %s not registered"),$template));
 	}
 
-	$objResponse->addScript("var xajaxRequestUri=\"".$ajaxlib->sRequestURI."\";\n");
+	$objResponse->Script("hide('ajaxLoading');");
+	$objResponse->Script("var xajax.config.requestURI =\"".$ajaxlib->sRequestURI."\";\n");
 	if (sizeof($js_script)) {
 	foreach($js_script as $s) {
-		$objResponse->addScript($s);
+		$objResponse->Script($s);
 	}
-		$objResponse->addScriptCall("auto_save");
+		$objResponse->Call("auto_save");
 	}
-	$objResponse->addIncludeScript("tiki-jsplugin.php");
+	$objResponse->IncludeScript("tiki-jsplugin.php");
 
 	return $objResponse;
 }
