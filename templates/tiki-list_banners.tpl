@@ -22,6 +22,7 @@
 <th><a href="tiki-list_banners.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'useDates_desc'}useDates_asc{else}useDates_desc{/if}">{tr}Use Dates?{/tr}</a></th>
 <th><a href="tiki-list_banners.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'maxImpressions_desc'}maxImpressions_asc{else}maxImpressions_desc{/if}">{tr}Max Impressions{/tr}</a></th>
 <th><a href="tiki-list_banners.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'impressions_desc'}impressions_asc{else}impressions_desc{/if}">{tr}Impressions{/tr}</a></th>
+<th><a href="tiki-list_banners.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'maxClicks_desc'}maxImpressions_asc{else}maxClicks_desc{/if}">{tr}Max Clicks{/tr}</a></th>
 <th><a href="tiki-list_banners.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'clicks_desc'}clicks_asc{else}clicks_desc{/if}">{tr}Clicks{/tr}</a></th>
 <th>{tr}Action{/tr}</th>
 </tr>
@@ -37,6 +38,7 @@
 <td class="{cycle advance=false}">{$listpages[changes].useDates}</td>
 <td class="{cycle advance=false}">{$listpages[changes].maxImpressions}</td>
 <td class="{cycle advance=false}">{$listpages[changes].impressions}</td>
+<td class="{cycle advance=false}">{$listpages[changes].maxClicks}</td>
 <td class="{cycle advance=false}">{$listpages[changes].clicks}</td>
 <td class="{cycle}">
 {if $tiki_p_admin_banners eq 'y'}

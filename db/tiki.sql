@@ -319,6 +319,7 @@ CREATE TABLE tiki_banners (
   created int(14) default NULL,
   maxImpressions int(8) default NULL,
   impressions int(8) default NULL,
+  maxClicks int(8) default NULL,
   clicks int(8) default NULL,
   zone varchar(40) default NULL,
   PRIMARY KEY (bannerId),
@@ -868,7 +869,6 @@ CREATE TABLE tiki_file_galleries (
   show_files char(1) default NULL,
   show_explorer char(1) default NULL,
   show_path char(1) default NULL,
-  groupforAlert varchar(255) default NULL,
   PRIMARY KEY (galleryId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
@@ -2385,7 +2385,6 @@ CREATE TABLE tiki_trackers (
   showAttachments char(1) default NULL,
   items int(10) default NULL,
   showComments char(1) default NULL,
-  groupforAlert varchar(255) default NULL,
   orderAttachments varchar(255) NOT NULL default 'filename,created,filesize,hits,desc',
   PRIMARY KEY (trackerId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;

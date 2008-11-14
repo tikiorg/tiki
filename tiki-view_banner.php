@@ -53,6 +53,7 @@ $smarty->assign('bannerId', $info["bannerId"]);
 $smarty->assign('created', $info["created"]);
 $smarty->assign('client', $info["client"]);
 $smarty->assign('maxImpressions', $info["maxImpressions"]);
+$smarty->assign('maxClicks', $info["maxClicks"]);
 $impressions = $info["impressions"];
 $clicks = $info["clicks"];
 $smarty->assign('impressions', $impressions);

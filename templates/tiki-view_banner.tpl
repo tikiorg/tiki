@@ -37,6 +37,11 @@
   <td>{$impressions}</td>
 </tr>
 <tr>
+  <td>{tr}Max Clicks{/tr}:</td>
+  <td>{$maxClicks}</td>
+</tr>    
+
+<tr>
   <td>{tr}Clicks{/tr}:</td>
   <td>{$clicks}</td>
 </tr>

@@ -56,6 +56,7 @@ if (isset($_REQUEST["bannerId"]) && $_REQUEST["bannerId"] > 0) {
 	$smarty->assign('bannerId', $info["bannerId"]);
 	$smarty->assign('client', $info["client"]);
 	$smarty->assign('maxImpressions', $info["maxImpressions"]);
+	$smarty->assign('maxClicks', $info["maxClicks"]);
 	$smarty->assign('fromDate', $info["fromDate"]);
 	$smarty->assign('toDate', $info["toDate"]);
 	$smarty->assign('useDates', $info["useDates"]);
@@ -109,6 +110,7 @@ if (isset($_REQUEST["bannerId"]) && $_REQUEST["bannerId"] > 0) {
 } else {
 	$smarty->assign('client', '');
 	$smarty->assign('maxImpressions', -1);
+	$smarty->assign('maxClicks', -1);
 	$smarty->assign('fromDate', $tikilib->now);
 	$cur_time = explode(',', $tikilib->date_format('%Y,%m,%d,%H,%M,%S', $publishDate));
 	$smarty->assign('toDate', $tikilib->make_time($cur_time[3], $cur_time[4], $cur_time[5], $cur_time[1], $cur_time[2], $cur_time[0]+1));
@@ -159,6 +161,7 @@ if (isset($_REQUEST["save"]) || isset($_REQUEST["create_zone"])) {
 	$smarty->assign('toTime', $_REQUEST["toTimeHour"].':'.$_REQUEST["toTimeMinute"]);
 	$smarty->assign('client', $_REQUEST["client"]);
 	$smarty->assign('maxImpressions', $_REQUEST["maxImpressions"]);
+	$smarty->assign('maxClicks', $_REQUEST["maxClicks"]);
 	$smarty->assign('HTMLData', $_REQUEST["HTMLData"]);
 	$smarty->assign('fixedURLData', $_REQUEST["fixedURLData"]);
 	$smarty->assign('textData', $_REQUEST["textData"]);
@@ -313,7 +316,7 @@ if (isset($_REQUEST["save"]) || isset($_REQUEST["create_zone"])) {
 		$bannerId = $bannerlib->replace_banner($_REQUEST["bannerId"], $_REQUEST["client"], $_REQUEST["url"], '',
 			'', $_REQUEST["use"], $_REQUEST["imageData"], $_REQUEST["imageType"], $_REQUEST["imageName"], $_REQUEST["HTMLData"],
 			$_REQUEST["fixedURLData"], $_REQUEST["textData"], $fromDate, $toDate, $useDates, $Dmon, $Dtue, $Dwed, $Dthu, $Dfri,
-			$Dsat, $Dsun, $fromTime, $toTime, $_REQUEST["maxImpressions"], $_REQUEST["zone"]);
+			$Dsat, $Dsun, $fromTime, $toTime, $_REQUEST["maxImpressions"],$_REQUEST["maxClicks"], $_REQUEST["zone"]);
 
 		header("location:tiki-list_banners.php");
 		

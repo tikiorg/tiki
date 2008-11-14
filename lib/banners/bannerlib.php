@@ -30,8 +30,8 @@ class BannerLib extends TikiLib {
 		//
 		$query = "select count(*) from `tiki_banners` where `$dw` = ? and  `hourFrom`<=? and `hourTo`>=? and
     		( ((`useDates` = ?) and (`fromDate`<=? and `toDate`>=?)) or (`useDates` = ?) ) and
-    		(`impressions`<`maxImpressions` or `maxImpressions`=?) and `zone`=?";
-		$bindvars=array('y',$hour,$hour,'y',(int) $this->now,(int) $this->now,'n',-1,$zone);
+    		(`impressions`<`maxImpressions` or `maxImpressions`=?) and (`clicks` < `maxClicks` or `maxClicks`=?) and `zone`=?";
+		$bindvars=array('y',$hour,$hour,'y',(int) $this->now,(int) $this->now,'n',-1,-1,$zone);
 		$rows=$this->getOne($query,$bindvars);
 
 		if (!$rows)
@@ -42,7 +42,7 @@ class BannerLib extends TikiLib {
 
 		$query = "select * from `tiki_banners` where $dw = ? and  `hourFrom`<=? and `hourTo`>=? and
 		( ((`useDates` = ?) and (`fromDate`<=? and `toDate`>=?)) or (`useDates` = ?) ) and
-		(`impressions`<`maxImpressions`  or `maxImpressions`=?)and `zone`=?";
+		(`impressions`<`maxImpressions`  or `maxImpressions`=?) and (`clicks`<`maxClicks` or `maxClicks`=?) and `zone`=?";
 		$result = $this->query($query,$bindvars,1,$bid);
 
 		$res = $result->fetchRow();
@@ -181,7 +181,7 @@ class BannerLib extends TikiLib {
 
 	function replace_banner($bannerId, $client, $url, $title = '', $alt = '', $use, $imageData, $imageType, $imageName, $HTMLData,
 		$fixedURLData, $textData, $fromDate, $toDate, $useDates, $mon, $tue, $wed, $thu, $fri, $sat, $sun, $hourFrom, $hourTo,
-		$maxImpressions, $zone) {
+		$maxImpressions, $maxClicks,$zone) {
 		$imageData = urldecode($imageData);
 		//$imageData = '';
 
@@ -206,11 +206,11 @@ class BannerLib extends TikiLib {
                 `hourFrom` = ?,
                 `hourTo` = ?,
                 `mon` = ? ,`tue` = ?, `wed` = ?, `thu` = ?, `fri` = ?, `sat` = ?, `sun` = ?,
-                `maxImpressions` = ? where `bannerId`=?";
+                `maxImpressions` = ?, `maxClicks` = ? where `bannerId`=?";
 
                 $bindvars=array($client,$url,$title,$alt,$use,$imageData,$imageType,$imageName,$HTMLData,
                                 $fixedURLData, $textData, $fromDate, $toDate, $useDates,$this->now,$zone,$hourFrom,$hourTo,
-				$mon,$tue,$wed,$thu,$fri,$sat,$sun,$maxImpressions,$bannerId);
+				$mon,$tue,$wed,$thu,$fri,$sat,$sun,$maxImpressions,$maxClicks,$bannerId);
 
 				$result = $this->query($query,$bindvars);
 
@@ -223,14 +223,14 @@ class BannerLib extends TikiLib {
 		} else {
 			$query = "insert into `tiki_banners`(`client`, `url`, `title`, `alt`, `which`, `imageData`, `imageType`, `HTMLData`,
                 `fixedURLData`, `textData`, `fromDate`, `toDate`, `useDates`, `mon`, `tue`, `wed`, `thu`, `fri`, `sat`, `sun`,
-                `hourFrom`, `hourTo`, `maxImpressions`,`created`,`zone`,`imageName`,`impressions`,`clicks`)
+                `hourFrom`, `hourTo`, `maxImpressions`,`maxClicks`,`created`,`zone`,`imageName`,`impressions`,`clicks`)
                 values(?,?,?,?,?,?,?,?,
                 ?,?,?,?,?,?,?,?,?,
-                ?,?,?,?,?,?,?,?,?,?,?)";
+                ?,?,?,?,?,?,?,?,?,?,???)";
 
                 $bindvars=array($client,$url,$title,$alt,$use,$imageData,$imageType,$HTMLData,
                                 $fixedURLData, $textData, $fromDate, $toDate, $useDates, $mon,$tue,$wed,$thu,
-                                $fri,$sat,$sun,$hourFrom,$hourTo,$maxImpressions,$this->now,$zone,$imageName,0,0);
+                                $fri,$sat,$sun,$hourFrom,$hourTo,$maxImpressions,$maxClicks,$this->now,$zone,$imageName,0,0);
 
 
 			$result = $this->query($query,$bindvars);
