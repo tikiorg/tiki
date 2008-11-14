@@ -7557,10 +7557,13 @@ class TikiLib extends TikiDB {
 		return $styles;
 	}
 
-	function list_style_options() {
+	function list_style_options($a_style) {
 		global $tikidomain, $prefs;
 
-		$stlstl = split("-|\.", $prefs['style']);
+		if (!$a_style) {
+			$a_style = $prefs['style'];
+		}
+		$stlstl = split("-|\.", $a_style);
 		$style_base = $stlstl[0];
 		if (!$style_base) {
 			return false;
