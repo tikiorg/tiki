@@ -16,6 +16,8 @@
 			{/if}
 		{/section}
 	</ul>
+	{/if}
+	{if $thirdlevel}
 	<ul class="secondLevelAdmin">
 		{section name=sec loop=$thirdlevel}
 			{if ($thirdlevel[sec].feature_type eq 'feature' && $thirdlevel[sec].value eq 'y' && $thirdlevel[sec].feature_count > 0) || $thirdlevel[sec].feature_type neq 'feature'}
