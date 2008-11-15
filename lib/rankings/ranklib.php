@@ -172,7 +172,7 @@ class RankLib extends TikiLib {
 		} else {		
 		$query = "select a.*, tf.*, max(b.`commentDate`) as `lastPost` from
 		`tiki_comments` a left join `tiki_comments` b on b.`parentId`=a.`threadId` right join `tiki_forums` tf on "
-		.$this->sql_cast("tf.`forumId`","string").
+		.$this->sql_cast("tf.`forumId`","string")." = a.`object`".
 		" where	a.`objectType` = 'forum' and a.`parentId`=0 $mid group by a.`threadId` order by `lastPost` desc";
 		}
 
