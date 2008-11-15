@@ -33,14 +33,16 @@ class mime {
 			$hdr_name = trim(substr($line, 0, strpos($line, ':')));
 			$hdr_value = trim(substr($line, strpos($line, ':')+1));
 			if (substr($hdr_value,0,1) == ' ') $hdr_value = substr($hdr_value, 1);
-			$hdr_value = preg_replace('/(=\?[^?]+\?(Q|B)\?[^?]*\?=)( |' . "\t|" . $crlf . ')+=\?/', '\1=?', $hdr_value);
-			while (preg_match('/(=\?([^?]+)\?(Q|B)\?([^?]*)\?=)/', $hdr_value, $matches)) {
+			$hdr_value = preg_replace('/(=\?[^?]+\?(Q|B|q|b)\?[^?]*\?=)( |' . "\t|" . $crlf . ')+=\?/', '\1=?', $hdr_value);
+			while (preg_match('/(=\?([^?]+)\?(Q|B|q|b)\?([^?]*)\?=)/', $hdr_value, $matches)) {
 				list(,$encoded,$charset,$encoding,$text) = $matches;
 				switch ($encoding) {
 				case 'B':
+				case 'b':
 					$text = base64_decode($text);
 					break;
 				case 'Q':
+				case 'q':
 					$text = str_replace('_', ' ', $text);
 					preg_match_all('/=([A-F0-9]{2})/', $text, $matches);
 					foreach ($matches[1] as $value) {
