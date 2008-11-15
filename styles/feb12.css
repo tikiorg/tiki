@@ -1948,12 +1948,12 @@ table.default thead td,
 table.default tfoot td {
 	font-weight: bold;
 	text-align:	center;
-	background: black;
+	background: #F5F5F5;
 	color: #D8D8D8}
 
 table.default td {
-	border: solid 1px #A9A9A9;
-	background: black}
+	border: solid 1px #909090;
+	background: #F5F5F5}
 
 /***** 'Advanced feature' *****/
 
