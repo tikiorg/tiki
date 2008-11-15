@@ -61,9 +61,13 @@ function sendForumEmailNotification($event, $object, $forum_info, $title, $data,
 		{
 		    foreach ( $attachments as $att )
 		    {
-			$att_data = $commentslib->get_thread_attachment( $att['attId'] );
-			$file = $mail->getFile( $att_data['dir'].$att_data['path'] );
-			$mail->addAttachment( $file, $att_data['filename'], $att_data['filetype'] );
+				$att_data = $commentslib->get_thread_attachment( $att['attId'] );
+				if($att_data['dir'].$att_data['path'] == ""){ // no path to file on disk
+					$file = $att_data['data']; // read file from database
+				} else {
+					$file = $mail->getFile( $att_data['dir'].$att_data['path'] ); // read file from disk
+				}
+				$mail->addAttachment( $file, $att_data['filename'], $att_data['filetype'] );
 		    }
 		}
 
