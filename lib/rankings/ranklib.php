@@ -180,8 +180,12 @@ class RankLib extends TikiLib {
 		$ret = array();
 		$count = 0;
 		while (($res = $result->fetchRow()) && $count < $limit) {
-                  if ($this->user_has_perm_on_object($user, $res['object'], 'forum', 'tiki_p_forum_read')) {
-				$aux['name'] = $res['name'] . ': ' . $res['title'];
+			if ($this->user_has_perm_on_object($user, $res['object'], 'forum', 'tiki_p_forum_read')) {
+				if($mid == '') { // no forumId selected 
+					$aux['name'] = $res['name'] . ': ' . $res['title']; //forum name plus topic
+				} else { // forumId selected
+					$aux['name'] = $res['title']; // omit forum name
+				}
 				$aux['title'] = $res['title'];
 				$aux['href'] = 'tiki-view_forum_thread.php?forumId=' . $res['object'] . '&amp;comments_parentId=' . $res['threadId'];
 				if ($last_replied == false) {
