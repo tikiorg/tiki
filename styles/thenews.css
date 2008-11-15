@@ -29,7 +29,7 @@ body.fullscreen {}
 
 a,
 a:visited {
-	color: #004276;
+	color: #005faa;
 	text-decoration: none;
 }
 
@@ -2153,13 +2153,13 @@ div#ajaxLoading {
 table.default thead td,	table.default tfoot td {
 	font-weight: bold;
 	text-align:	center;
-	background-color: black;
+	background: #eee;
 	color: #D8D8D8;
 }
 
 table.default	td {
-	border : solid 1px #A9A9A9;
-	background-color: black;
+	border: solid 1px #909090;
+	background: #eee;
 }
 
 /**********   'advanced feature' divs   **********/
