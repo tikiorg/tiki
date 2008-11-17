@@ -9,6 +9,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 global $prefs;
 if ($prefs['feature_ajax'] == 'y') {
 	require_once("lib/ajax/xajax/xajax_core/xajaxAIO.inc.php");
+	if (!defined ('XAJAX_GET')) define ('XAJAX_GET', 0);
 
 	class TikiAjax extends xajax {
 
@@ -44,7 +45,7 @@ if ($prefs['feature_ajax'] == 'y') {
 			$this->aTemplates = array();
 			$this->deniedFunctions = array();
 
-			$this->setFlags(waitCursor,true);
+			$this->configure('waitCursor',true);
 		}
 
 		/**
