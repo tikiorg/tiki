@@ -17,10 +17,11 @@ if ( isset($_COOKIE['tiki-theme-option']) && !($prefs['feature_userPreferences']
 $smarty->assign('styleslist',$tikilib->list_styles());
 $smarty->assign_by_ref( "style_options", $tikilib->list_style_options());
 
+/* $styleName not found anywhere - TODO delete this if safe
 if ( isset($style) ) {
 	$smarty->assign('styleName', ereg_replace($tikidomain."/", "", $style));
 }
 if ( isset($style_option) ) {
 	$smarty->assign('styleNameOption', ereg_replace($tikidomain."/", "", $style_option));
-}
+}*/
 ?>
