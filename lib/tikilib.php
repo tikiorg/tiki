@@ -2299,7 +2299,8 @@ class TikiLib extends TikiDB {
 		}
 
 		// If the user is not admin then select `it` 's own galleries or public galleries
-		if ($user != 'admin') {
+		global $tiki_p_admin_files_galleries;
+		if ($tiki_p_admin_files_galleries != 'y') {
 			$whuser.= " and (`user`=? or `public`=?)";
 			$bindvars[] = $user;
 			$bindvars[] = "y";
