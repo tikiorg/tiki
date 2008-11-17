@@ -1,11 +1,12 @@
 {title help="Live+Support"}{tr}Live support system{/tr}{/title}
 
-<span class="button2"><a {jspopup href="tiki-live_support_console.php"}>{tr}Open operator console{/tr}</a></span>
-<span class="button2"><a {jspopup width="300" height="450" href="tiki-live_support_client.php"}> {tr}Open client window{/tr}</a></span>
-<span class="button2"><a href="tiki-live_support_admin.php?show_html">{tr}Generate HTML{/tr}</a></span>
-<span class="button2"><a href="tiki-live_support_transcripts.php">{tr}Transcripts{/tr}</a></span>
-<!--<span class="button2"><a href="tiki-live_support_messages.php">{tr}Support tickets{/tr}</a></span>-->
-<br /><br />
+<div class="navbar">
+	{button	href='#' _onclick="javascript:window.open('tiki-live_support_console.php','','menubar=no,scrollbars=yes,resizable=yes,height=400,width=600');" _text="{tr}Open operator console{/tr}"}
+	{button	href='#' _onclick="javascript:window.open('tiki-live_support_client.php','','menubar=no,scrollbars=yes,resizable=yes,height=450,width=300');" _text="{tr}Open client window{/tr}"}
+	{button href="?show_html" _text="{tr}Generate HTML{/tr}"}
+	{button href="tiki-live_support_transcripts.php" _text="{tr}Transcripts{/tr}"}
+</div>
+
 {if $html}
 	<b>Generated HTML code:</b><br />
 	Copy-paste the following XHTML snippet in the pages where you want to provide live support.<br />
