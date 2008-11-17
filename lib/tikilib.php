@@ -2890,7 +2890,7 @@ class TikiLib extends TikiDB {
 		$ret = array();
 		while ($res = $result->fetchRow()) {
 			if ($res['topicId'] != 0 && $userlib->object_has_one_permission($res['topicId'], 'topic')) {// if no topic or if topic has no special perm don't have to check for topic perm
-				$add=$this->user_has_perm_on_object($user,$res['topicId'],'topic','tiki_p_topic_read');
+				$add1 = $this->user_has_perm_on_object($user,$res['topicId'],'topic','tiki_p_topic_read');
 			} else {
 				$add1 = $this->user_has_perm_on_object($user, $res['articleId'],'article', 'tiki_p_read_article') ;
 			}
