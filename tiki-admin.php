@@ -354,7 +354,7 @@ if ($prefs['feature_version_checks'] == 'y') {
 			$smarty->assign('tiki_release', $TWV->version);
 		}
 		$tikilib->set_preference('tiki_needs_upgrade', $prefs['tiki_needs_upgrade']);
-		$smarty->assign('tiki_needs_upgrade', $tiki_needs_upgrade);
+		$smarty->assign('tiki_needs_upgrade', $$prefs['tiki_needs_upgrade']);
 	} else {
 		$tiki_needs_upgrade = $tikilib->get_preference("tiki_needs_upgrade", "n");
 		$smarty->assign('tiki_needs_upgrade', $tiki_needs_upgrade);
