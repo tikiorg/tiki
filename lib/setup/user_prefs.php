@@ -44,6 +44,9 @@ if ( $user ) {
 	if ( isset($prefs['theme']) && $prefs['theme'] != '' ) {
 		$prefs['style'] = $prefs['theme'];
 	}
+	if ( isset($prefs['theme-option']) && $prefs['theme-option'] != '' ) {
+		$prefs['style_option'] = $prefs['theme-option'];
+	}
 
 	// Set the userPage name for this user since other scripts use this value.
 	$userPage = $prefs['feature_wiki_userpage_prefix'].$user;

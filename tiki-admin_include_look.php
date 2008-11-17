@@ -10,18 +10,34 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-if (isset($_REQUEST["site_style"])) {
-    check_ticket('admin-inc-general');
-    simple_set_value("site_style", "style");
+if (!isset($prefs['site_style'])) {	// what am i missing here? shouldn't these get set earlier?
+	$prefs = array_merge($prefs, $tikilib->get_preferences('site_style%'));
 }
-
-if (isset($_REQUEST["site_style_option"])) {
-    check_ticket('admin-inc-general');
-    simple_set_value("site_style_option", "style_option");
-}
+$a_style = $prefs['site_style'];
 
 if (isset($_REQUEST["looksetup"])) {
     ask_ticket('admin-inc-look');
+
+	if (isset($_REQUEST["site_style"])) {
+	    check_ticket('admin-inc-general');
+	    simple_set_value("site_style", "style");
+		simple_set_value("site_style", "site_style");
+	    
+		if (isset($_REQUEST["site_style_option"])) {
+		    check_ticket('admin-inc-general');
+		    if ($_REQUEST["site_style_option"] == tra('None')) {
+		    	$_REQUEST["site_style_option"] = '';
+		    }
+		    simple_set_value("site_style_option", "style_option");
+			simple_set_value("site_style_option", "site_style_option");
+		}
+		
+	    // admin changing site style should change (admin's) user pref style/theme
+	    //if ($prefs['feature_userPreferences'] == 'y' && $user && $prefs['change_theme'] == 'y') {
+		//	$tikilib->set_user_preference($user,'theme',$prefs['site_style']);
+		//	$tikilib->set_user_preference($user,'theme-option',$prefs['site_style_option']);
+	    //}
+	}
 
     $pref_toggles = array(
 	"feature_bot_bar",
@@ -108,12 +124,15 @@ if (isset($_REQUEST["looksetup"])) {
         byref_set_value ($britem);
     }
     
+} else {	// just changed theme menu, so refill options
+	if (isset($_REQUEST["site_style"]) && $_REQUEST["site_style"] != '') {
+		$a_style = $_REQUEST["site_style"];
+	}
 }
 
-$llist = $tikilib->list_styles();
-$smarty->assign_by_ref( "styles", $llist);
-$loplist = $tikilib->list_style_options();
-$smarty->assign_by_ref( "style_options", $loplist);
+$smarty->assign_by_ref( "styles", $tikilib->list_styles());
+$smarty->assign('a_style', $a_style);
+$smarty->assign_by_ref( "style_options", $tikilib->list_style_options($a_style));
 
 // Get list of available slideshow styles
 $slide_styles = array();
@@ -127,7 +146,7 @@ closedir ($h);
 
 $smarty->assign_by_ref("slide_styles", $slide_styles);
 
-if ( isset($_REQUEST["site_style"]) || isset($_REQUEST["site_style_option"]) ) {
+if (isset($_REQUEST["looksetup"]) && (isset($_REQUEST["site_style"]) || isset($_REQUEST["site_style_option"]))) {
 	// If the theme has changed, reload the page to use the new theme
 	$location= 'location: tiki-admin.php?page=look';
 	if ($prefs['feature_tabs'] == 'y') {

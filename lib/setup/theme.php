@@ -14,6 +14,7 @@ if ( isset($_SESSION['try_style']) ) {
 } elseif ( $prefs['change_theme'] != 'y' ) {
 	// Use the site value instead of the user value if the user is not allowed to change the theme
 	$prefs['style'] = $prefs['site_style'];
+	$prefs['style_option'] = $prefs['site_style_option'];
 }
 
 if ( ! is_file('styles/'.$prefs['style']) and ! is_file('styles/'.$tikidomain.'/'.$prefs['style']) ) {

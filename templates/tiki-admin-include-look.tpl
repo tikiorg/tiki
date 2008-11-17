@@ -42,25 +42,27 @@
 							<label for="general-theme">{tr}Theme{/tr}:</label>
 						</td>
 						<td width="67%">
-							<select name="site_style" id="general-theme">
+							<select name="site_style" id="general-theme" onchange="this.form.submit();">
 							{section name=ix loop=$styles}
-								<option value="{$styles[ix]|escape}"{if $prefs.style eq $styles[ix]} selected="selected"{/if}>{$styles[ix]}</option>
+								<option value="{$styles[ix]|escape}"{if $a_style eq $styles[ix]} selected="selected"{/if}>{$styles[ix]}</option>
 							{/section}
 							</select>
+							{if $prefs.site_style != $a_style}<span class="highlight">{tr}* Note: Theme displayed differs from "site" theme ({$prefs.site_style}).{/tr}</span>{/if}
 						</td>
-					</tr>{if $style_options}
+					</tr>
 					<tr>
 						<td class="form" >
 							<label for="general-theme">{tr}Theme options{/tr}:</label>
 						</td>
 						<td width="67%">
-							<select name="site_style_option" id="general-theme-options">
+							<select name="site_style_option" id="general-theme-options" {if !$style_options}disabled{/if}>
+							{if !$style_options}<option value="">{tr}None{/tr}</option>{/if}
 							{section name=ix loop=$style_options}
 								<option value="{$style_options[ix]|escape}"{if $prefs.style_option eq $style_options[ix]} selected="selected"{/if}>{$style_options[ix]}</option>
 							{/section}
 							</select>
 						</td>
-					</tr>{/if}
+					</tr>
 					<tr>
 						<td class="form">
 							<label for="general-slideshows">{tr}Slideshows theme{/tr}:</label>
