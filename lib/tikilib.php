@@ -1928,7 +1928,7 @@ class TikiLib extends TikiDB {
 
 	// FILE GALLERIES ////
 	/*shared*/
-	function list_files($offset, $maxRecords, $sort_mode, $find) {
+	function list_files($offset=0, $maxRecords=-1, $sort_mode='created_desc', $find='') {
 		return $this->get_files($offset, $maxRecords, $sort_mode, $find, -1, false, false, true, true, false, false, true, true);
 	}
 
@@ -7557,7 +7557,7 @@ class TikiLib extends TikiDB {
 		return $styles;
 	}
 
-	function list_style_options($a_style) {
+	function list_style_options($a_style='') {
 		global $tikidomain, $prefs;
 
 		if (!$a_style) {
