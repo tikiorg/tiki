@@ -577,7 +577,11 @@ class TrackerLib extends TikiLib {
 		$bindvars = array($trackerId);
 
 		if (!empty($filter)) {
-			$this->parse_filter($filter, $mid, $bindvars);
+			$mid2 = array();
+			$this->parse_filter($filter, $mid2, $bindvars);
+			if (!empty($mid2)) {
+				$mid .= ' AND '.implode(' AND ', $mid2);
+			}
 		}
 
 		if ( $status && ! $this->getSqlStatus($status, $mid, $bindvars, $trackerId) ) {
