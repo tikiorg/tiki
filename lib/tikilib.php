@@ -6032,7 +6032,7 @@ class TikiLib extends TikiDB {
 		// This section matches [...].
 		// Added handling for [[foo] sections.  -rlpowell
 		if (!$simple_wiki) {
-			preg_match_all("/(?<!\[)\[([^\[][^\]]+)\]/", $data, $noparseurl);
+			preg_match_all("/(?<!\[)(\[[^\[][^\]]+\])/", $data, $noparseurl);
 
 			foreach (array_unique($noparseurl[1])as $np) {
 				$key = '§'.md5($this->genPass()).'§';
