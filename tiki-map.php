@@ -29,12 +29,12 @@ if ($tiki_p_map_view != 'y') {
 }
 
 //setting up xajax
-require_once("lib/ajax/xajax.inc.php");
+require_once("lib/ajax/xajax/xajax_core/xajaxAIO.inc.php");
 $xajax = new xajax("x_maps.php");
-//$xajax->debugOn();
-//$xajax->statusMessagesOn();
-$xajax->registerFunction("map_redraw");
-$smarty->assign('xajax_javascript', $xajax->getJavascript("lib/ajax"));
+//$xajax->setFlag('debug',true);
+//$xajax->configure('statusMessages',true);
+$xajax->register(XAJAX_FUNCTION,"map_redraw");
+$smarty->assign('xajax_javascript', $xajax->getJavascript("lib/ajax/xajax"));
 
 //handling the layer manager menu: visible by default if never used before
 if (getCookie('layermenu', "menu") != 'o' && getCookie('layermenu', "menu") != 'c') {
