@@ -124,3 +124,11 @@ div.help_section {
 	padding: 5px;
 	background-color: white;
 }
+
+.findtable ul {
+	list-style: none;
+}
+
+.findtable ul li {
+	float: left;
+}
