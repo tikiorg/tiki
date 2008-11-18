@@ -186,22 +186,25 @@ function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user 
 		if ( $max_tikitabs > 0 && $prefs['feature_tabs'] == 'y' ) {
 			global $cookietab;
 			$tab = ( $cookietab != '' ) ? (int)$cookietab : 1;
-			$objResponse->Script("tikitabs($tab,$max_tikitabs);");
+			$objResponse->script("tikitabs($tab,$max_tikitabs);");
 		}
 
 	} else {
-		$objResponse->Alert(sprintf(tra("Template %s not registered"),$template));
+		$objResponse->alert(sprintf(tra("Template %s not registered"),$template));
 	}
 
-	$objResponse->Script("hide('ajaxLoading');");
-	$objResponse->Script("var xajax.config.requestURI =\"".$ajaxlib->sRequestURI."\";\n");
+	$objResponse->script("hide('ajaxLoading');");
+	if ($prefs['feature_shadowbox'] == 'y') {
+		$objResponse->script("Shadowbox.init({ skipSetup: true }); Shadowbox.setup();");
+	}
+	$objResponse->script("var xajax.config.requestURI =\"".$ajaxlib->sRequestURI."\";\n");
 	if (sizeof($js_script)) {
 	foreach($js_script as $s) {
-		$objResponse->Script($s);
+		$objResponse->script($s);
 	}
-		$objResponse->Call("auto_save");
+		$objResponse->call("auto_save");
 	}
-	$objResponse->IncludeScript("tiki-jsplugin.php");
+	$objResponse->includeScript("tiki-jsplugin.php");
 
 	return $objResponse;
 }
