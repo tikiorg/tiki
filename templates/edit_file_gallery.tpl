@@ -23,21 +23,21 @@
 			  <legend class="heading"><a href="#"><span>{tr}Properties{/tr}</span></a></legend>
 				{/if}
       <table class="normal">
-        <tr><td class="formcolor">{tr}Name{/tr}:<br/> ({tr}required field for podcasts{/tr})</td><td class="formcolor"><input type="text" size="50" name="name" value="{$name|escape}" style="width:100%"/></td></tr>
+        <tr><td class="formcolor">{tr}Name{/tr}:<br/> ({tr}required field for podcasts{/tr})</td><td class="formcolor"><input type="text" size="50" name="name" value="{$gal_info.name|escape}" style="width:100%"/></td></tr>
         <tr><td class="formcolor">{tr}Type{/tr}:</td><td class="formcolor">
           <select name="fgal_type">
             <!-- TODO: make this a configurable list read from database -->
-            <option value="default" {if $fgal_type eq 'default'}selected="selected"{/if}>{tr}any file{/tr}</option>
-            <option value="podcast" {if $fgal_type eq 'podcast'}selected="selected"{/if}>{tr}podcast (audio){/tr}</option>
-            <option value="vidcast" {if $fgal_type eq 'vidcast'}selected="selected"{/if}>{tr}podcast (video){/tr}</option>
+            <option value="default" {if $gal_info.type eq 'default'}selected="selected"{/if}>{tr}any file{/tr}</option>
+            <option value="podcast" {if $gal_info.type eq 'podcast'}selected="selected"{/if}>{tr}podcast (audio){/tr}</option>
+            <option value="vidcast" {if $gal_info.type eq 'vidcast'}selected="selected"{/if}>{tr}podcast (video){/tr}</option>
           </select>
         </td></tr>
-        <tr><td class="formcolor">{tr}Description{/tr}:<br/>({tr}required field for podcasts{/tr})</td><td class="formcolor"><textarea rows="5" cols="40" name="description" style="width:100%">{$description|escape}</textarea></td></tr>
-        <tr><td class="formcolor">{tr}Gallery is visible to non-admin users?{/tr}</td><td class="formcolor"><input type="checkbox" name="visible" {if $visible eq 'y'}checked="checked"{/if} /></td></tr>
+        <tr><td class="formcolor">{tr}Description{/tr}:<br/>({tr}required field for podcasts{/tr})</td><td class="formcolor"><textarea rows="5" cols="40" name="description" style="width:100%">{$gal_info.description|escape}</textarea></td></tr>
+        <tr><td class="formcolor">{tr}Gallery is visible to non-admin users?{/tr}</td><td class="formcolor"><input type="checkbox" name="visible" {if $gal_info.visible eq 'y'}checked="checked"{/if} /></td></tr>
 
-        <tr><td class="formcolor">{tr}This Gallery is Public{/tr}:</td><td class="formcolor"><input type="checkbox" name="public" {if $public eq 'y'}checked="checked"{/if}/></td></tr>
-        <tr><td class="formcolor">{tr}The files can be locked at download:{/tr} </td><td class="formcolor"><input type="checkbox" name="lockable" {if $lockable eq 'y'}checked="checked"{/if}/></td></tr>
-        <tr><td class="formcolor">{tr}Maximum number of archives for each file{/tr}: </td><td class="formcolor"><input size="5" type="text" name="archives" value="{$archives|escape}" /> <i>(0={tr}unlimited{/tr}) (-1={tr}none{/tr})</i>
+        <tr><td class="formcolor">{tr}This Gallery is Public{/tr}:</td><td class="formcolor"><input type="checkbox" name="public" {if $gal_info.public eq 'y'}checked="checked"{/if}/></td></tr>
+        <tr><td class="formcolor">{tr}The files can be locked at download:{/tr} </td><td class="formcolor"><input type="checkbox" name="lockable" {if $gal_info.lockable eq 'y'}checked="checked"{/if}/></td></tr>
+        <tr><td class="formcolor">{tr}Maximum number of archives for each file{/tr}: </td><td class="formcolor"><input size="5" type="text" name="archives" value="{$gal_info.archives|escape}" /> <i>(0={tr}unlimited{/tr}) (-1={tr}none{/tr})</i>
 	{if ! isset($smarty.request.parentId)}
         </td></tr>
         <tr><td class="formcolor">{tr}Parent gallery{/tr}:</td><td class="formcolor">
@@ -112,9 +112,7 @@
         </td></tr>
       </table>
      </fieldset>
-			<div class="button" style="margin-top: 5px; text-align: center">
-				<input type="submit" value="{tr}Save{/tr}" name="edit" />
-			</div>
+			<input type="submit" value="{tr}Save{/tr}" name="edit" />
     </form>
 	</div>
 <br />

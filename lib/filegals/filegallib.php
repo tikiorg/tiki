@@ -201,11 +201,11 @@ class FileGalLib extends TikiLib {
 
 		// if the user is admin or the user is the same user and the gallery exists
 		// then replace if not then create the gallary if the name is unused.
-		$name = strip_tags($name);
+		$fgal_info['name'] = strip_tags($fgal_info['name']);
 
-		$description = strip_tags($description);
-		if ($sort_mode == 'created_desc') {
-			$sort_mode = null;
+		$fgal_info['description'] = strip_tags($fgal_info['description']);
+		if ($fgal_info['sort_mode'] == 'created_desc') {
+			$fgal_info['sort_mode'] = null;
 		}
 
 		if ($fgal_info['galleryId'] > 0) {
@@ -272,6 +272,7 @@ class FileGalLib extends TikiLib {
 			`lastModif`=?",array($fgal_info['name'],(int) $this->now));
 
 			if ($prefs['feature_score'] == 'y') {
+				global $user;
 			    $this->score_event($user, 'fgallery_new');
 			}
 		}
