@@ -767,8 +767,6 @@ if (is_array($filtervalue)) {
 	$urlquery["filtervalue[".$filterfield."]"] = $filtervalue;
 }
 $smarty->assign_by_ref('urlquery', $urlquery);
-$cant = $items["cant"];
-include "tiki-pagination.php";
 
 if ($tracker_info['useComments'] == 'y' && ($tracker_info['showComments'] == 'y' || $tracker_info['showLastComment'] == 'y')) {
 	foreach ($items['data'] as $itkey=>$oneitem) {
