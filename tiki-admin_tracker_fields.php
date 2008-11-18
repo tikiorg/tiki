@@ -291,8 +291,7 @@ $smarty->assign('plug', implode(':',$plug));
 $urlquery['find'] = $find;
 $urlquery['sort_mode'] = $sort_mode;
 $smarty->assign_by_ref('urlquery', $urlquery);
-$cant = $channels["cant"];
-include "tiki-pagination.php";
+$smarty->assign_by_ref('cant', $channels['cant']);
 
 include_once('lib/quicktags/quicktagslib.php');
 $quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_desc','','trackers');
