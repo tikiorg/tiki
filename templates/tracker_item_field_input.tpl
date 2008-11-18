@@ -78,11 +78,7 @@
 {elseif $field_value.type eq 'e'}
 	{if !empty($field_value.options_array[2]) && ($field_value.options_array[2] eq '1' or $field_value.options_array[2] eq 'y')}
 		<script type="text/javascript">
-{/strip}
-		<!--//--><![CDATA[//><!--
-			document.write('<div  class="categSelectAll"><input type="checkbox" id="clickall" onclick="switchCheckboxes(this.form,\'{$field_value.ins_id}[]\',this.checked)"/>{tr}Select All{/tr}</div>');
-		//--><!]]>
-{strip}
+		{include file='categSelectAll.tpl'}
 		</script>
 	{/if}
 	{if $field_value.options_array[1] eq 'd' || $field_value.options_array[1] eq 'm'}
