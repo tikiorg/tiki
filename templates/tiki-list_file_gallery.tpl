@@ -101,6 +101,9 @@
   {if $tiki_p_create_file_galleries eq 'y' and $dup_mode ne 'y'}
     {button _text="{tr}Duplicate File Gallery{/tr}" href="?dup_mode=1" _auto_args='filegals_manager'}
   {/if}
+  {if $tiki_p_upload_files eq 'y'}
+  	  {button _text="{tr}Upload File{/tr}" href="tiki-upload_file.php"}
+  {/if}
 
 {/if}
 
