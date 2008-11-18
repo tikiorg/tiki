@@ -629,7 +629,9 @@ if (isset($_REQUEST['import'])) {
 				$_REQUEST['itemId'] = $trklib->get_user_item($_REQUEST['trackerId'], $tracker_info);
 			}
 			$itemid = $trklib->replace_item($_REQUEST["trackerId"], $_REQUEST["itemId"], $ins_fields, $_REQUEST['status'], $ins_categs);
-			$groupalertlib->Notify($_REQUEST['listtoalert'],"tiki-view_tracker_item.php?itemId=".$itemid);
+			if (isset($_REQUEST['listtoalert'])) {
+				$groupalertlib->Notify($_REQUEST['listtoalert'],"tiki-view_tracker_item.php?itemId=$itemid");
+			}
 			$cookietab = "1";
 			$smarty->assign('itemId', '');
 			$trklib->categorized_item($_REQUEST["trackerId"], $itemid, $mainfield, $ins_categs);
