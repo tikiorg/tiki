@@ -367,6 +367,11 @@ if (isset($_REQUEST["save"])) {
 	} else {
 		$tracker_options['showPopup'] = '';
 	}
+	if (isset($_REQUEST['descriptionIsParsed']) && ($_REQUEST['descriptionIsParsed'] == 'on' || $_REQUEST['descriptionIsParsed'] == 'y')) {
+		$tracker_options['descriptionIsParsed'] = 'y';
+	} else {
+		$tracker_options['descriptionIsParsed'] = 'n';
+	}	
 
 
 	$_REQUEST["trackerId"] = $trklib->replace_tracker($_REQUEST["trackerId"], $_REQUEST["name"], $_REQUEST["description"], $tracker_options, $_REQUEST["descriptionIsParsed"]?'y':'');
@@ -553,8 +558,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 $urlquery['find'] = $find;
 $urlquery['sort_mode'] = $sort_mode;
 $smarty->assign_by_ref('urlquery', $urlquery);
-$cant = $channels["cant"];
-include "tiki-pagination.php";
+$smarty->assign_by_ref('cant', $channels['cant']);
 
 include_once('lib/quicktags/quicktagslib.php');
 $quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_desc','','trackers');

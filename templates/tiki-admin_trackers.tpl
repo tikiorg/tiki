@@ -74,7 +74,7 @@
 <tr class="odd"><td colspan="6"><strong>{tr}No records found{/tr}{if $find} {tr}with{/tr}: {$find}{/if}.</strong></td></tr>
 {/section}
 </table>
-{include file="tiki-pagination.tpl"}
+{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
 </div>
 
 {* --- tab with form --- *}
