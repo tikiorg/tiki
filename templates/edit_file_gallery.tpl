@@ -23,7 +23,7 @@
 			  <legend class="heading"><a href="#"><span>{tr}Properties{/tr}</span></a></legend>
 				{/if}
       <table class="normal">
-        <tr><td class="formcolor">{tr}Name{/tr}:<br/> ({tr}required field for podcasts{/tr})</td><td class="formcolor"><input type="text" size="50" name="name" value="{$gal_info.name|escape}" style="width:100%"/></td></tr>
+        <tr><td class="formcolor">{tr}Name{/tr}:</td><td class="formcolor"><input type="text" size="50" name="name" value="{$gal_info.name|escape}" style="width:100%"/><br/><i>{tr}required field for podcasts{/tr}</i></td></tr>
         <tr><td class="formcolor">{tr}Type{/tr}:</td><td class="formcolor">
           <select name="fgal_type">
             <!-- TODO: make this a configurable list read from database -->
@@ -32,10 +32,10 @@
             <option value="vidcast" {if $gal_info.type eq 'vidcast'}selected="selected"{/if}>{tr}podcast (video){/tr}</option>
           </select>
         </td></tr>
-        <tr><td class="formcolor">{tr}Description{/tr}:<br/>({tr}required field for podcasts{/tr})</td><td class="formcolor"><textarea rows="5" cols="40" name="description" style="width:100%">{$gal_info.description|escape}</textarea></td></tr>
+        <tr><td class="formcolor">{tr}Description{/tr}:</td><td class="formcolor"><textarea rows="5" cols="40" name="description" style="width:100%">{$gal_info.description|escape}</textarea><br/><i>{tr}required field for podcasts{/tr}</i></td></tr>
         <tr><td class="formcolor">{tr}Gallery is visible to non-admin users?{/tr}</td><td class="formcolor"><input type="checkbox" name="visible" {if $gal_info.visible eq 'y'}checked="checked"{/if} /></td></tr>
 
-        <tr><td class="formcolor">{tr}This Gallery is Public{/tr}:</td><td class="formcolor"><input type="checkbox" name="public" {if $gal_info.public eq 'y'}checked="checked"{/if}/></td></tr>
+        <tr><td class="formcolor">{tr}This Gallery is Public{/tr}:</td><td class="formcolor"><input type="checkbox" name="public" {if $gal_info.public eq 'y'}checked="checked"{/if}/><br /><i>{tr}Users with perms and not only the owner of the gallery can upload in it{/tr}</i></td></tr>
         <tr><td class="formcolor">{tr}The files can be locked at download:{/tr} </td><td class="formcolor"><input type="checkbox" name="lockable" {if $gal_info.lockable eq 'y'}checked="checked"{/if}/></td></tr>
         <tr><td class="formcolor">{tr}Maximum number of archives for each file{/tr}: </td><td class="formcolor"><input size="5" type="text" name="archives" value="{$gal_info.archives|escape}" /> <i>(0={tr}unlimited{/tr}) (-1={tr}none{/tr})</i>
 	{if ! isset($smarty.request.parentId)}
