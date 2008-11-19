@@ -174,7 +174,34 @@ label {
 	font-size: 10px;
 	padding: 5px;
 	text-align: right;
+	float: right;
 }
+#sitesearchbar input[type=text],
+#sitesearchbar select,
+#siteloginbar input[type=password],
+#siteloginbar input[type=text] {
+	font-size: 9px;
+	height: 11px;
+	margin-right: 5px;
+}
+
+#siteloginbar {
+	position: relative;
+	bottom: 50px;
+}
+
+#siteloginbar.logged-in {
+	bottom: 24px;
+}
+
+#siteloginbar .register {
+	margin-right: 5px;
+}
+
+#siteloginbar .pass {
+	margin-right: 5px;
+}
+
 
 /*********************** GENERAL LAYOUT ************************************/
 DIV#tiki-main {
