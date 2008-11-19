@@ -514,7 +514,8 @@ class CategLib extends ObjectLib {
 			$return_perms = array(); // initialize array for storing perms to be returned
 
 			if (!$cachelib->isCached("categories_permission_names")) {
-				$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'category');
+				$group = $userlib->get_user_default_group($user);
+				$perms = $userlib->get_permissions(0, -1, 'permName_desc', $group, 'category');
 				$cachelib->cacheItem("categories_permission_names",serialize($perms));
 			} else {
 				$perms = unserialize($cachelib->getCached("categories_permission_names"));
