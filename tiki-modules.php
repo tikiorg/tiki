@@ -7,7 +7,8 @@
 
 //this script may only be included - so its better to die if called directly.
 //smarty is not there - we need setup
-global $access; require_once('tiki-setup.php');
+require_once('tiki-setup.php');
+global $access;
 $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
 global $usermoduleslib; include_once ('lib/usermodules/usermoduleslib.php');
