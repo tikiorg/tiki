@@ -42,8 +42,13 @@
     {else}
     <td width="100%" class="fgallisting">
     {/if}
-      <div style="padding:1px; overflow-x:auto; overflow-y:hidden;">
 
+      <div style="padding:1px; overflow-x:auto; overflow-y:hidden;">
+        {if $maxRecords > 20 and $cant > $maxRecords}
+          <div class="clearboth" style="margin-bottom: 3px;">
+            {pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
+          </div>
+        {/if}
       <form name="fgalformid" id="fgalform" method="post" action="{$smarty.server.PHP_SELF}{if $filegals_manager neq ''}?filegals_manager={$filegals_manager|escape}{/if}">
         <input type="hidden" name="galleryId" value="{$gal_info.galleryId|escape}" />
         <input type="hidden" name="find" value="{$find|escape}" />
