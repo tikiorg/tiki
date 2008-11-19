@@ -1020,6 +1020,15 @@ div.imgaldescr {
 .sorttitle {
 	margin-left : 10px;
 }
+ul.categories{
+margin:0;
+padding:0;
+}
+ul.categories li{
+list-style:none;
+margin:0;
+padding:0;
+}
 
 /******************************************************* FILE GALLERIES **********************************************/
 
