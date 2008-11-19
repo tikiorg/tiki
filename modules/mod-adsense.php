@@ -28,4 +28,3 @@ $smarty->assign('color_bg', isset($module_params["color_bg"]) ? $module_params["
 $smarty->assign('color_link', isset($module_params["color_link"]) ? $module_params["color_link"] : '');
 $smarty->assign('color_url', isset($module_params["color_url"]) ? $module_params["color_url"] : '');
 $smarty->assign('color_text', isset($module_params["color_text"]) ? $module_params["color_text"] : '');
-?>

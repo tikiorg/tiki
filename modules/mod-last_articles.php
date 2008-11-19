@@ -45,4 +45,4 @@ $smarty->assign('nonums', isset($module_params["nonums"]) ? $module_params["nonu
 $smarty->assign('absurl', isset($module_params["absurl"]) ? $module_params["absurl"] : 'n');
 $module_rows = count($ranking["data"]);
 $smarty->assign('module_rows', $module_rows);
-?>
+

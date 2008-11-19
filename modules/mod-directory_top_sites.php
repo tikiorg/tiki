@@ -13,4 +13,4 @@ if ($prefs['feature_directory'] == 'y') {
 	$smarty->assign('modTopdirSites', $ranking["data"]);
 }
 
-?>
+

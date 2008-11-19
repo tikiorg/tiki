@@ -24,4 +24,3 @@ if ( isset($style) ) {
 if ( isset($style_option) ) {
 	$smarty->assign('styleNameOption', ereg_replace($tikidomain."/", "", $style_option));
 }*/
-?>

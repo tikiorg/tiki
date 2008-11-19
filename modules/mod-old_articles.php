@@ -12,4 +12,4 @@ if (!isset($prefs['maxArticles']))
 $ranking = $tikilib->list_articles($prefs['maxArticles'], $module_rows, 'publishDate_desc', '', '', '', $user);
 $smarty->assign('modOldArticles', $ranking["data"]);
 
-?>
+

@@ -10,4 +10,4 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 // for 1.8 it will help people with the :: menu options
 // Damian aka damosoft aka TikiGod
 
-?>
+

@@ -39,4 +39,4 @@ if ($prefs['feature_trackers'] == 'y') {
 	$smarty->assign('count', (int) $tmp['cant']);
 }
 
-?>
+

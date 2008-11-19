@@ -38,4 +38,4 @@ foreach($languages as $lingua) {
     $languages2[] = $tmp;
 }
 $smarty->assign_by_ref('languages', $languages2);
-?>
+

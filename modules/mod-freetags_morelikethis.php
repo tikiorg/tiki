@@ -22,4 +22,4 @@ $smarty->assign('modMoreLikeThis', $morelikethis);
 $smarty->assign('module_rows', $module_rows);
 $smarty->assign('nonums', isset($module_params["nonums"]) ? $module_params["nonums"] : 'n');
 
-?>
+

@@ -35,4 +35,4 @@ if ( $prefs['feature_action_calendar'] == 'y' && $tiki_p_view_tiki_calendar == '
 	$smarty->assign('var', '');
 	$smarty->assign('myurl', 'tiki-action_calendar.php');
 }
-?>
+

@@ -60,4 +60,4 @@ if( !isset( $qe_usage_counter ) )
 	$qe_usage_counter = 0;
 $smarty->assign('qefield', 'qe-' . ++$qe_usage_counter);
 
-?>
+

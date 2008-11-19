@@ -14,4 +14,4 @@ $posters = $ranklib->forums_top_posters($module_rows);
 $smarty->assign('modTopForumPosters', $posters["data"]);
 $smarty->assign('nonums', isset($module_params["nonums"]) ? $module_params["nonums"] : 'n');
 
-?>
+

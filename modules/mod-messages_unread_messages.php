@@ -13,4 +13,4 @@ if ($user) {
 	$smarty->assign('modUnread', $modUnread);
 }
 
-?>
+

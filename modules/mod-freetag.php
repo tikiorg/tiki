@@ -25,5 +25,5 @@ if (isset($sections[$section])) {
 }
 $smarty->assign('tagid',$tagid);
 $smarty->assign('tagname',$tagname);
+ 
 
-?>

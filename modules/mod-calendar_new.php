@@ -31,4 +31,4 @@ if ( $prefs['feature_calendar'] == 'y' && $tiki_p_view_calendar == 'y' ) {
 	$smarty->assign('var', '');
 	$smarty->assign('myurl', 'tiki-calendar.php');
 }
-?>
+

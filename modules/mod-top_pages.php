@@ -12,4 +12,4 @@ $ranking = $ranklib->wiki_ranking_top_pages($module_rows);
 $smarty->assign('modTopPages', $ranking["data"]);
 $smarty->assign('nonums', isset($module_params["nonums"]) ? $module_params["nonums"] : 'n');
 $smarty->assign('module_rows', $module_rows);
-?>
+

@@ -14,4 +14,4 @@ if( isset($page) && !empty($page) ) {
 	$smarty->assign( 'msl_relations', $semanticlib->getRelationList( $msl_page ) );
 }
 
-?>
+

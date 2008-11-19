@@ -40,4 +40,4 @@ if ($prefs['feature_trackers'] == 'y') {
     $smarty->assign('nonums', isset($module_params["nonums"]) ? $module_params["nonums"] : 'n');
 }
 
-?>
+

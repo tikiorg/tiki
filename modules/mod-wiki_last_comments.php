@@ -41,4 +41,4 @@ $smarty->assign('nonums', isset($module_params["nonums"]) ? $module_params["nonu
 $smarty->assign('module_rows', $module_rows);
 $smarty->assign('moretooltips', isset($module_params["moretooltips"]) ? $module_params["moretooltips"] : 'n');
 
-?>
+

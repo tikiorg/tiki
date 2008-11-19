@@ -25,4 +25,4 @@ else
 	$currenttags = array();
 
 $smarty->assign('modFreetagsCurrent', $currenttags);
-?>
+

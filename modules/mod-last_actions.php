@@ -42,4 +42,4 @@ if ($user) {
 	$smarty->assign('nonums', isset($module_params["nonums"]) ? $module_params["nonums"] : 'n');
 	$smarty->assign('maxlen', isset($module_params["maxlen"]) ? $module_params["maxlen"] : '20');
 }
-?>
+

@@ -11,4 +11,4 @@ $ranking = $tikilib->list_articles(0, $module_rows, 'nbreads_desc', '', '', '', 
 $smarty->assign('modTopArticles', $ranking["data"]);
 $smarty->assign('nonums', isset($module_params["nonums"]) ? $module_params["nonums"] : 'n');
 
-?>
+

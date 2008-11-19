@@ -14,4 +14,4 @@ if ($user) {
     $smarty->assign('most_popular_tags', $most_popular_tags);
 }
 
-?>
+

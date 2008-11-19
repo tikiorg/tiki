@@ -20,4 +20,4 @@ if ($prefs['feature_directory'] == 'y') {
     $smarty->assign('nonums', isset($module_params["nonums"]) ? $module_params["nonums"] : 'n');
 	$smarty->assign('absurl', isset($module_params["absurl"]) ? $module_params["absurl"] : 'n');
 }
-?>
+
