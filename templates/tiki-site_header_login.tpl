@@ -9,7 +9,10 @@
 			<input type="text" name="user" id="sl-login-user" />
 			<label for="sl-login-pass">{tr}Password{/tr}:</label>
 			<input type="password" name="pass" id="sl-login-pass" size="10" />
-			{if $prefs.rememberme eq 'always'}<input type="hidden" name="rme" value="on" />{/if}
+			{if $prefs.rememberme eq 'always'}<input type="hidden" name="rme" value="on" />
+			{else if $prefs.rememberme eq 'all'}<div class="rme">
+				<label for="login-remember">{tr}Remember me{/tr}</label> <input type="checkbox" name="rme" id="login-remember" value="on" checked="checked" />
+			</div>{/if}
 			<input class="wikiaction" type="submit" name="login" value="{tr}Login{/tr}" />
 		</form>
 		{if $prefs.allowRegister eq 'y'}
