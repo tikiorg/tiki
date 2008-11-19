@@ -132,3 +132,12 @@ div.help_section {
 .findtable ul li {
 	float: left;
 }
+ul.categories{
+margin:0;
+padding:0;
+}
+ul.categories li{
+list-style:none;
+margin:0;
+padding:0;
+}
