@@ -22,21 +22,13 @@ if (isset($_REQUEST["looksetup"])) {
 	    check_ticket('admin-inc-general');
 	    simple_set_value("site_style", "style");
 		simple_set_value("site_style", "site_style");
-	    
-		if (isset($_REQUEST["site_style_option"])) {
-		    check_ticket('admin-inc-general');
-		    if ($_REQUEST["site_style_option"] == tra('None')) {
-		    	$_REQUEST["site_style_option"] = '';
-		    }
-		    simple_set_value("site_style_option", "style_option");
-			simple_set_value("site_style_option", "site_style_option");
+	    		
+		if (!isset($_REQUEST["site_style_option"]) || $_REQUEST["site_style_option"] == tra('None')) {	// style has no options
+			$_REQUEST["site_style_option"] = '';
 		}
-		
-	    // admin changing site style should change (admin's) user pref style/theme
-	    //if ($prefs['feature_userPreferences'] == 'y' && $user && $prefs['change_theme'] == 'y') {
-		//	$tikilib->set_user_preference($user,'theme',$prefs['site_style']);
-		//	$tikilib->set_user_preference($user,'theme-option',$prefs['site_style_option']);
-	    //}
+	    check_ticket('admin-inc-general');
+	    simple_set_value("site_style_option", "style_option");
+		simple_set_value("site_style_option", "site_style_option");
 	}
 
     $pref_toggles = array(
