@@ -32,11 +32,27 @@ $smarty->assign('categories', $categories);
 
 $list_styles = $tikilib->list_styles();
 $smarty->assign_by_ref('styles',$list_styles);
+if ($_REQUEST['theme']) {
+	$a_style = $_REQUEST['theme'];
+} else {
+	$a_style = $prefs['style'];
+}
+$smarty->assign('a_style', $a_style);
+$loplist = $tikilib->list_style_options($a_style);
+if (!$loplist) {
+	$loplist = Array(tra('None'));
+}
+$smarty->assign_by_ref( "style_options", $loplist);
 
 if (isset($_REQUEST['assigcat'])) {
 	if (isset($_REQUEST['categId'])) {
 		check_ticket('theme-control');
-		$tcontrollib->tc_assign_category($_REQUEST['categId'], $_REQUEST['theme']);
+		if (!isset($_REQUEST['theme-option']) || $_REQUEST['theme-option'] == tra('None')) {
+			$option = '';
+		} else {
+			$option = $_REQUEST['theme-option'];
+		}
+		$tcontrollib->tc_assign_category($_REQUEST['categId'], $_REQUEST['theme'], $option);
 	} else {
 		$smarty->assign('msg', tra("Please create a category first"));
 

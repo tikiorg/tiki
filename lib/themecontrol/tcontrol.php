@@ -11,13 +11,17 @@ class ThemeControlLib extends TikiLib {
 		$this->TikiLib($db);
 	}
 
-	function tc_assign_category($categId, $theme) {
+	function tc_assign_category($categId, $theme, $option) {
 		$this->tc_remove_cat($categId);
 
 		$query = "delete from `tiki_theme_control_categs` where `categId`=?";
 		$this->query($query,array($categId),-1,-1,false);
 		$query = "insert into `tiki_theme_control_categs`(`categId`,`theme`) values(?,?)";
-		$this->query($query,array($categId,$theme));
+		$themeoption = $theme;
+		if ($option) {
+			$themeoption .= '/'.$option;
+		}
+		$this->query($query,array($categId,$themeoption));
 	}
 
 	function tc_assign_section($section, $theme) {

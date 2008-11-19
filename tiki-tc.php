@@ -34,7 +34,14 @@ if ($prefs['feature_theme_control'] == 'y') {
 		if (count($tc_categs)) {
 			foreach ($tc_categs as $cat) {
 				if ($cat_theme = $tcontrollib->tc_get_theme_by_categ($cat)) {
-					$tc_theme = $cat_theme;	
+					$p = strpos($cat_theme, '/');	// theme option starts after a / char
+					if ($p === false) {
+						$tc_theme = $cat_theme;
+						$tc_theme_option = '';
+					} else {
+						$tc_theme = substr($cat_theme, 0, $p);
+						$tc_theme_option = substr($cat_theme, $p+1);
+					}	
 					$catt=$categlib->get_category($cat);
 					$smarty->assign_by_ref('category', $catt["name"]);
 					break;
@@ -54,13 +61,23 @@ if ($prefs['feature_theme_control'] == 'y') {
 	if ($tc_theme) {
 		if ($tikidomain and is_file("styles/$tikidomain/$tc_theme")) {
 			$headerlib->drop_cssfile('styles/'.$tikidomain.'/'.$prefs['style']);
-			$headerlib->add_cssfile('styles/'.$tikidomain.'/'.$tc_theme,50);
+			$headerlib->add_cssfile('styles/'.$tikidomain.'/'.$tc_theme,51);
 		} else {
 			$headerlib->drop_cssfile('styles/'.$prefs['style']);
-			$headerlib->add_cssfile('styles/'.$tc_theme,50);
+			$headerlib->add_cssfile('styles/'.$tc_theme,51);
 		}
 		$stlstl = split("-|\.",$tc_theme);
 		$style_base = $stlstl[0];
+	
+		if ($tc_theme_option) {
+			if ($tikidomain and is_file("styles/$tikidomain/$style_base/options/$tc_theme_option")) {
+				$headerlib->drop_cssfile('styles/'.$tikidomain.'/'.$prefs['style_option']);
+				$headerlib->add_cssfile("styles/$tikidomain/$style_base/options/$tc_theme_option",52);
+			} else {
+				$headerlib->drop_cssfile('styles/'.$prefs['style_option']);
+				$headerlib->add_cssfile("styles/$style_base/options/$tc_theme_option",52);
+			}
+		}
 	}
 }
 
