@@ -575,12 +575,6 @@ include_once ("categorize_list.php");
 
 ask_ticket('admin-trackers');
 
-if ( $prefs['feature_ajax'] == 'y' ) {
-	require_once ("lib/ajax/ajaxlib.php");
-	$ajaxlib->registerTemplate('tiki-admin_trackers.tpl');
-	$ajaxlib->processRequests();
-}
-
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
