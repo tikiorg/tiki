@@ -115,7 +115,10 @@
 	</a>
 {/if}
           <br />
-
+	{* categories for item *}
+    	 {if $item.categories !=''}
+            <span class='categories'>{tr}Categories{/tr}:&nbsp;{$item.categories}</span><br />
+         {/if}
           <small class="caption">
 	  {if $prefs.gal_image_mouseover neq 'only'}
 		{if $showname=='y'}{$item.name}<br />{/if}

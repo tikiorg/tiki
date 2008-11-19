@@ -343,6 +343,25 @@ $subgals = $imagegallib->get_subgalleries($offset, $maxImages, $sort_mode, '', $
 $remainingImages = $maxImages-count($subgals['data']);
 $newoffset = $offset -$subgals['cant'];
 $images = $imagegallib->get_images($newoffset, $remainingImages, $sort_mode, $find, $_REQUEST["galleryId"]);
+//get categories for each images
+global $objectlib;
+global $categlib;
+$type='image';
+$arr=array();
+for($i=0;$i<=count($images['data'])-1;$i++){
+$img_id=$images['data'][$i]['imageId'];
+$arr= $categlib->get_object_categories($type, $img_id);
+$category_list_for_each_image='';
+if(count($arr)>0){
+$category_list_for_each_image.="<ul class='categories'>";
+foreach ($arr as $c){
+$category_list_for_each_image.="<li>".$categlib->get_category_name($c)."</li>";
+}
+$category_list_for_each_image.="</ul>";
+//adding categories to the object
+$images['data'][$i]['categories']=$category_list_for_each_image;
+}
+}
 $smarty->assign('num_objects',count($subgals['data'])+count($images['data']));
 $smarty->assign('num_subgals',count($subgals['data']));
 $smarty->assign('num_images',count($images['data']));
