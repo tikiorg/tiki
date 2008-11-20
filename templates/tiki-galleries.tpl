@@ -1,5 +1,4 @@
 {* $Id$ *}
-{debug}
 {title help="Image+Galleries" admpage="gal"}{tr}Galleries{/tr}{/title}
 
 {if $tiki_p_create_galleries eq 'y'}
