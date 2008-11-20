@@ -1768,7 +1768,18 @@ CREATE TABLE tiki_polls (
   votes int(8) default NULL,
   active char(1) default NULL,
   publishDate int(14) default NULL,
+  anonym enum( 'a', 'u', 'i', 'c' ) NOT NULL DEFAULT 'u',
   PRIMARY KEY (pollId)
+) ENGINE=MyISAM AUTO_INCREMENT=1 ;
+
+DROP TABLE IF EXISTS `tiki_poll_votes`;
+CREATE TABLE IF NOT EXISTS `tiki_poll_votes` (
+  `pollId` int(11) NOT NULL,
+  `optionId` int(11) NOT NULL,
+  `voteId` int(11) NOT NULL auto_increment,
+  `identification` varchar(300) NOT NULL,
+  `time` int(11) NOT NULL,
+  PRIMARY KEY  (`voteId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS tiki_preferences;

@@ -3,7 +3,7 @@ $Header: /cvsroot/tikiwiki/tiki/styles/tikineat.css,v 1.37.2.26 2008-03-19 20:41
 Simple basic theme for generic tiki
 
 IE hacks applied !
-read http://glish.com/css/hacks.asp 
+read http://glish.com/css/hacks.asp
 
 changing colors ?
 you can list them with
@@ -47,41 +47,41 @@ H6 {
 	font-size : 10px;
 	color : #032936;
 }
-.tab-wrapper 
-{ 
-        padding: 0; 
-	border: 1px solid #eee; 
-} 
-.tab-menu { 
-	list-style: none; 
-	padding: 2px 0; 
-	clear:  both; 
-	line-height: 17px; 
-	font-size: 12px; 
-} 
-.tab-menu li { 
-	width: 200px; 
-	display: inline; 
-	margin: 0 2px; 
-} 
-.tab-menu li a 	{ 
-	padding: 1px 5px; 
-	background-color: #f5f5f5; 
-	color:  #222; 
-	font-weight: bold; 
-	text-decoration: none; 
-} 
-.tab-menu li a:hover, 
-.tab-menu li a:focus { 
-	background-color: #FAEC8F; 
-	border-bottom-color:    #999; 
-} 
-.tab-menu li a:hover { 
-	background-color: #FAEC8F; 
-	border-bottom-color: #999; 
-} 
-.tab-menu li.tab-selected a { 
-	background-color: #BCEC8F; 
+.tab-wrapper
+{
+        padding: 0;
+	border: 1px solid #eee;
+}
+.tab-menu {
+	list-style: none;
+	padding: 2px 0;
+	clear:  both;
+	line-height: 17px;
+	font-size: 12px;
+}
+.tab-menu li {
+	width: 200px;
+	display: inline;
+	margin: 0 2px;
+}
+.tab-menu li a 	{
+	padding: 1px 5px;
+	background-color: #f5f5f5;
+	color:  #222;
+	font-weight: bold;
+	text-decoration: none;
+}
+.tab-menu li a:hover,
+.tab-menu li a:focus {
+	background-color: #FAEC8F;
+	border-bottom-color:    #999;
+}
+.tab-menu li a:hover {
+	background-color: #FAEC8F;
+	border-bottom-color: #999;
+}
+.tab-menu li.tab-selected a {
+	background-color: #BCEC8F;
 }
 ul {
 	margin-top : 2px;
@@ -368,7 +368,7 @@ span.user-box-text {
 #power {
 	font-size: 10px;
 }
-	
+
 /* When modules display a list of items each item is enclosed in a cell with the following style */
 TD.module {
 	font-size : 10px;
@@ -414,13 +414,13 @@ div.cbox-data {
 .rbox-data {
   padding: 2px;
 }
-.rbox-title, .warning .rbox-title { 
+.rbox-title, .warning .rbox-title {
   border: 0;
   border-radius-topright : 1ex;
   -moz-border-radius-topright : 1ex;
   -khtml-border-radius-topright : 1ex;
   font-size : 10px;
-  padding : 0 10px;   
+  padding : 0 10px;
   position : relative;
   display : inline;
   margin : 0;
@@ -441,7 +441,7 @@ div.cbox-data {
 .comment, .tip .rbox-title, .rbox-title.tip {
   background-color: #CCCCDD;
 }
-.rbox-data[name="comment"], .tip .rbox-data, .rbox-data.tip {            
+.rbox-data[name="comment"], .tip .rbox-data, .rbox-data.tip {
   background-color: #ECEFEC;
   border: 1px solid #CCDDCC;
 }
@@ -634,7 +634,7 @@ input[type=submit]:hover,
 /* Links to view an object from a table listing objects can be generalized to this link */
 a.fgalname { text-decoration: none; font-weight: normal; color: #225566 !important; }
 a.fgalname:hover { text-decoration: underline; }
- 
+
 a.tablename, a.galname, a.imagename, a.jukeboxname,
 a.blogname, a.fgalname, a.artname, a.forumname {
 	font-weight : bold;
@@ -851,7 +851,7 @@ body.wikitext a:hover {
 	background-color: #FFFFF1;
 }
 div.wikitext div.img {
-        overflow: auto;       /* for Netscape, Firefox, Opera */  
+        overflow: auto;       /* for Netscape, Firefox, Opera */
         overflow-y: auto;     /* for IE */
         overflow-x: hidden;   /* for IE */
 }
@@ -1124,7 +1124,7 @@ div.thumbdescription + div.thumbinfo {
 div.thumbdescription span.thumbinfoname {
 	display: none;
 }
-a.namealias {	
+a.namealias {
 	font-style: italic;
 }
 
@@ -1865,15 +1865,15 @@ a.phplm:hover, .phplmnormal a:hover {
 /***************** tiki tabs ***************/
 .tabs {
 	border-bottom: solid 1px #225566 !important;
-	margin-top: 10px !important; 
+	margin-top: 10px !important;
   padding: 0 !important;
 }
 
 .tabactive {
-  border: solid 1px #225566 !important; 
-  border-bottom: none !important; 
+  border: solid 1px #225566 !important;
+  border-bottom: none !important;
   border-top-width: 2px !important;
-	position: relative; 
+	position: relative;
   top: -2px;
 }
 
@@ -1886,9 +1886,9 @@ a.phplm:hover, .phplmnormal a:hover {
 	}
 
 .tabinactive {
-	border: solid 1px #666666 !important; 
+	border: solid 1px #666666 !important;
   border-bottom: none !important;
-	position: relative !important; 
+	position: relative !important;
   top: -3px !important;
 }
 
@@ -1941,7 +1941,7 @@ a.phplm:hover, .phplmnormal a:hover {
 }
 
 .tabcontent table {
-	margin-left: auto; 
+	margin-left: auto;
   margin-right: auto;
 	margin-top: 1%;
 	margin-bottom: 2%;
@@ -1964,7 +1964,7 @@ form fieldset.tabcontent {
 
 form.admin .tabs {
 	border-bottom: solid 1px #225566 !important;
-	margin: 10px 1px 0 0px !important; 
+	margin: 10px 1px 0 0px !important;
   padding: 0 !important;
 }
 
@@ -1973,7 +1973,7 @@ div.content {
 }
 
 div.content .tabs {
-  margin: 0px; 
+  margin: 0px;
   margin-bottom: 3px;
 }
 
@@ -2207,10 +2207,10 @@ span.minichat_nick {
   background-color: white;
 }
 .clearfix:after {
-    content: "."; 
-    display: block; 
-    height: 0; 
-    clear: both; 
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
     visibility: hidden;
 }
 /* Hides from IE-mac \*/
@@ -2234,7 +2234,7 @@ div.fgal_file {
 div.fgal_file div.fgal_file_c1 {
   float: left;
   display: block;
-  width: 49%; 
+  width: 49%;
 }
 div.fgal_file div.fgal_file_c2 {
   float: right;
@@ -2290,5 +2290,31 @@ div.multiselect div.even {
 }
 div.multiselect div.even:hover {
 	background-color: #F0F2F3;
+}
+
+/**
+wiki poll plugin
+**/
+div.poll
+{
+	margin-bottom: 20px;
+	margin-top: 20px;
+	border: 1px solid #dddddd;
+	border-bottom: 3px solid #dddddd;
+}
+div.poll div
+{
+	text-align: left;
+}
+div.poll div.poll-title
+{
+	border-top: 2px solid #dddddd;
+	background-color: #eeeeee;
+	padding: 2px;
+	margin-bottom: 5px;
+}
+div.poll div.poll-data
+{
+	padding: 4px;
 }
 /* end of css file */

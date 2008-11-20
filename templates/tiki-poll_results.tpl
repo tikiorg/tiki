@@ -82,14 +82,14 @@
 </table>
 </div>
 <table class="normal">
-<tr><th>{tr}User{/tr}</th><th>{tr}option{/tr}</th></tr>
+<tr><th>{tr}Identification{/tr}</th><th>{tr}option{/tr}</th></tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$list_votes}
-<tr><td class="{cycle advance=false}">{$list_votes[ix].user}</td><td class="{cycle}">{$list_votes[ix].title}</td></tr>
+<tr><td class="{cycle advance=false}">{$list_votes[ix].identification}</td><td class="{cycle}">{$list_votes_options[ix]}</td></tr>
 {sectionelse}
 <tr><td colspan="2">{tr}No records found{/tr}</td></tr>
 {/section}
-</table>	
+</table>
 <div class="mini">
 {if $prev_offset >= 0}
 [<a class="prevnext" href="tiki-poll_results.php?list=y&amp;pollId={$poll_info.pollId}&amp;find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}Prev{/tr}</a>]&nbsp;

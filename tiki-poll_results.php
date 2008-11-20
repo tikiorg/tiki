@@ -28,12 +28,12 @@ if ($tiki_p_view_poll_results != 'y') {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg',tra("Permission denied you cannot view this page"));
 	$smarty->display("error.tpl");
-	die;  
+	die;
 }
 
 if (!isset($_REQUEST["maxRecords"])) {
 	$_REQUEST["maxRecords"] = 30;
-	$smarty->assign('maxRecords', $_REQUEST['maxRecords']);	
+	$smarty->assign('maxRecords', $_REQUEST['maxRecords']);
 } elseif ($_REQUEST["maxRecords"] == '') {
 	$_REQUEST["maxRecords"] = -1;
 	$smarty->assign('maxRecords', '');
@@ -42,14 +42,14 @@ if (!isset($_REQUEST['find'])) {
 	$_REQUEST['find'] = '';
 }
 $smarty->assign_by_ref('find', $_REQUEST['find']);
-	
+
 $polls = $polllib->list_active_polls(0, $_REQUEST["maxRecords"], "votes_desc", $_REQUEST['find']);
 $pollIds = array();
 if (isset($_REQUEST["pollId"])) {
-	$pollIds[] = $_REQUEST["pollId"];	
+	$pollIds[] = $_REQUEST["pollId"];
 } else {
 	foreach ($polls["data"] as $pId) {
-		$pollIds[] = $pId["pollId"];	
+		$pollIds[] = $pId["pollId"];
 	}
 }
 
@@ -79,7 +79,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 	}
 
 	$width = $percent * 200 / 100;
-	$options[$i]["width"] = $percent;	
+	$options[$i]["width"] = $percent;
 
 	$options[$i]["users"] = $polllib->get_poll_voters( $options[$i]["optionId"] );
 }
@@ -91,9 +91,9 @@ function scoresort($a, $b) {
 	if (isset($_REQUEST["scoresort_asc"])) {
 		$i = $_REQUEST["scoresort_asc"];
 	} else {
-		$i = $_REQUEST["scoresort_desc"]; 
+		$i = $_REQUEST["scoresort_desc"];
 	}
-	// must first sort based on missing, otherwise missing index will occur when trying to read more info. 
+	// must first sort based on missing, otherwise missing index will occur when trying to read more info.
 	if (count($a["options"]) <= $i && count($b["options"]) <= $i ) {
 		return 0;
 	} elseif (count($a["options"]) <= $i ) {
@@ -102,43 +102,44 @@ function scoresort($a, $b) {
 		return 1;
 	}
 	if ($a["options"][$i]["title"] == $poll_info_arr["options"][$i]["title"] && $b["options"][$i]["title"] != $poll_info_arr["options"][$i]["title"] ) {
-    	return 1;  
+    	return 1;
     }
 	if ($a["options"][$i]["title"] != $poll_info_arr["options"][$i]["title"] && $b["options"][$i]["title"] == $poll_info_arr["options"][$i]["title"] ) {
-    	return -1;  
+    	return -1;
     }
     if ($a["options"][$i]["width"] == $b["options"][$i]["width"]) {
-    	return 0;  
+    	return 0;
     }
 	if (isset($_REQUEST["scoresort_asc"])) {
 		return ($a["options"][$i]["width"] < $b["options"][$i]["width"]) ? -1 : 1;
 	} else {
-		return ($a["options"][$i]["width"] > $b["options"][$i]["width"]) ? -1 : 1; 
-	}    
+		return ($a["options"][$i]["width"] > $b["options"][$i]["width"]) ? -1 : 1;
+	}
 }
 if (isset($_REQUEST["scoresort_desc"])) {
 	$smarty->assign('scoresort_desc', $_REQUEST["scoresort_desc"]);
 } elseif (isset($_REQUEST["scoresort_asc"])) {
 	$smarty->assign('scoresort_asc', $_REQUEST["scoresort_asc"]);
 }
-if (isset($_REQUEST["scoresort_asc"]) || isset($_REQUEST["scoresort_desc"])) {	
+if (isset($_REQUEST["scoresort_asc"]) || isset($_REQUEST["scoresort_desc"])) {
 	$t_arr = $poll_info_arr;
 	$sort_ok = usort($t_arr, "scoresort");
 	if ($sort_ok)  $poll_info_arr = $t_arr;
 }
 
-if ($tiki_p_admin_polls == 'y' && !empty($_REQUEST['list']) && isset($_REQUEST['pollId'])) {	
+if ($tiki_p_admin_polls == 'y' && !empty($_REQUEST['list']) && isset($_REQUEST['pollId'])) {
 	if (empty($_REQUEST['sort_mode'])) {
-		$_REQUEST['sort_mode'] = 'user_asc';
+		$_REQUEST['sort_mode'] = 'identification_asc';
 	}
 	$smarty->assign_by_ref('sort_mode', $_REQUEST['sort_mode']);
 	if (!isset($_REQUEST['offset'])) {
 		$_REQUEST['offset'] = 0;
 	}
 	$smarty->assign_by_ref('offset', $_REQUEST['offset']);
-	
-	$list_votes = $tikilib->list_votes('poll'.$_REQUEST['pollId'], $_REQUEST['offset'], $maxRecords, $_REQUEST['sort_mode'], $_REQUEST['find'], 'tiki_poll_options', 'title');
+
+	$list_votes = $polllib->list_votes($_REQUEST['pollId'], $_REQUEST['offset'], $maxRecords, $_REQUEST['sort_mode']);
 	$smarty->assign_by_ref('list_votes', $list_votes['data']);
+	$smarty->assign_by_ref('list_votes_options', $list_votes['options'] );
 
 	$cant_pages = ceil($list_votes['cant'] / $maxRecords);
 	$smarty->assign_by_ref('cant_pages', $cant_pages);
