@@ -32,6 +32,6 @@
 			</div>
 		</form>
 	{/if}
-</div>
 {/if}
+</div>
 {/strip}
