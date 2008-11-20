@@ -12,7 +12,7 @@
 {if $nonums != 'y'}<ol class="module">{else}<ul class="module">{/if}
     {section name=ix loop=$modLastArticles}
       <li>
-		{if $showTopicImg eq 'y' or $showDate eq 'y'}
+		{if !empty($showImg) or $showDate eq 'y'}
 		<div class="module">
 			{if $showDate eq 'y'}
 				<div class="date">{$modLastArticles[ix].publishDate|tiki_short_date}</div>
