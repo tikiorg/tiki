@@ -762,7 +762,7 @@ class TrackerLib extends TikiLib {
 		return $retval;
 	}
 	function get_item_fields($trackerId, $itemId, $listfields, &$itemUser) {
-		global $prefs, $user;
+		global $prefs, $user, $tiki_p_admin_trackers;
 		$fields = array();
 		$fil = array();
 		$kx = '';
@@ -790,6 +790,9 @@ class TrackerLib extends TikiLib {
 				$fopt['fieldId'] = $fieldId;
 			$fieldId = $fopt['fieldId'];
 			$fopt['value'] = ( isset($fil[$fieldId]) ) ? $fil[$fieldId] : '';
+			if ($tiki_p_admin_trackers != 'y' && ($fopt['isHidden'] == 'y' || ($fopt['isHidden'] == 'c' && $itemUser != $user))) {
+				$fopt['value'] = '';
+			}
 			$fopt['linkId'] = '';
 			if (!empty($fopt['options'])) {
 				$fopt['options_array'] = split(',', $fopt['options']);

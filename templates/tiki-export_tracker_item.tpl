@@ -48,7 +48,7 @@
 {if !empty($listfields)}
 {if $comma eq 'y'}{$separator}{else}{assign var='comma' value='y'}{/if}
 {foreach item=field_value from=$item.field_values name=list}
-	{if $field_value.isHidden ne 'c' or $item.creator eq $user or $tiki_p_admin_trackers eq 'y'}
+	{if $field_value.isHidden ne 'c' or ($field_value.isHidden eq 'c' and ($item.itemUser eq $user or $tiki_p_admin_trackers eq 'y'))}
 		{capture name="line"}{include file="tracker_item_field_value.tpl" list_mode='csv' showlinks='n'}{/capture}{$delimitorL}{$smarty.capture.line|replace:"\r\n":"`$CR`"|replace:"\n":"`$CR`"|replace:"<br />":"`$CR`"|replace:"`$delimitorL`":"`$delimitorL``$delimitorL`"|replace:"`$delimitorR`":"`$delimitorR``$delimitorR`"}{$delimitorR}
 	{else}
 		{$delimitorL}{$delimitorR}

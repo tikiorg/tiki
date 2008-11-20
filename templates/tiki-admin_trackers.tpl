@@ -358,31 +358,6 @@ categories = {$catsdump}
 </form>
 
 {if $trackerId}
-<h2>{tr}Export CSV data{/tr}</h2>
-<form action="tiki-export_tracker.php?trackerId={$trackerId}" method="post">
-<table class="normal">
-<tr class="formcolor"><td>{tr}File{/tr}</td><td>{tr}Tracker{/tr}_{$trackerId}.csv</td></tr>
-<tr class="formcolor"><td>{tr}Charset encoding{/tr}</td><td><select name="encoding"><option value="UTF-8" selected="selected">{tr}UTF-8{/tr}</option><option value="ISO-8859-1">{tr}ISO-8859-1{/tr}</option></select></td></tr>
-<tr class="formcolor"><td>{tr}Separator{/tr}</td><td><input type="text" name="separator" value="," /></td></tr>
-<tr class="formcolor"><td>{tr}Delimitors{/tr}</td><td><input type="text" name="delimitorL" value='"' /><input type="text" name="delimitorR" value='"' /></td></tr>
-<tr class="formcolor"><td>{tr}Carriage Return inside Field Value{/tr}</td><td><input type="text" name="CR" value='%%%' /></td></tr>
-<tr class="formcolor"><td>{tr}Parse{/tr}</td><td><input type="checkbox" name="parse" /></td></tr>
-<tr class="formcolor"><td>{tr}Info{/tr}</td><td><input name="showItemId" type="checkbox" checked="checked" />itemId
-<br /><input type="checkbox" name="showStatus"{if $info.showStatus eq 'y'} checked="checked"{/if} />{tr}status{/tr}
-<br /><input type="checkbox" name="showCreated"{if $info.showCreated eq 'y'} checked="checked"{/if} />{tr}created{/tr}
-<br /><input type="checkbox" name="showLastModif"{if $info.showLastModif eq 'y'} checked="checked"{/if} />{tr}lastModif{/tr}
-</td></tr>
-<tr class="formcolor"><td>{tr}Fields{/tr}</td><td><input type="radio" name="which" value="list"/> {tr}Fields visible in items list{/tr}
-<br /><input type="radio" name="which" value="ls"/> {tr}Fields searchable or visible in items list{/tr}
-<br /><input type="radio" name="which" value="item"/> {tr}Fields visible in an item view{/tr}
-<br /><input type="radio" name="which" value="all" checked="checked"/> {tr}All fields{/tr}
-<br /><input type="text" name="listfields" /> {tr}or list of fields separated by comma{/tr}
-</td></tr>
-<tr class="formcolor"><td>{tr}Filter{/tr}</td><td>{include file="wiki-plugins/wikiplugin_trackerfilter.tpl" showFieldId="y" inForm="y"}</td></tr>
-<tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="export" value="{tr}Export{/tr}" /></td></tr>
-</table>
-</form>
-
 <h2>{tr}Import CSV data{/tr}</h2>
 <form action="tiki-import_tracker.php?trackerId={$trackerId}" method="post" enctype="multipart/form-data">
 <table class="normal">

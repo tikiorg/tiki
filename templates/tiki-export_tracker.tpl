@@ -1,60 +1,81 @@
-{strip}
-{if $heading ne 'n'}
-{if $showItemId ne 'n'}
-{assign var='comma' value='y'}
-{$delimitorL}itemId{$delimitorR}
-{/if}
-{if $showStatus ne 'n'}
-	{if $comma eq 'y'}{$separator}{else}{assign var='comma' value='y'}{/if}
-	{$delimitorL}status{$delimitorR}
-{/if}
-{if $showCreated ne 'n'}
-	{if $comma eq 'y'}{$separator}{else}{assign var='comma' value='y'}{/if}
-	{$delimitorL}created{$delimitorR}
-{/if}
-{if $showLastModif ne 'n'}
-	{if $comma eq 'y'}{$separator}{else}{assign var='comma' value='y'}{/if}
-	{$delimitorL}lastModif{$delimitorR}
-{/if}
-{if !empty($listfields)}
-	{if $comma eq 'y'}{$separator}{else}{assign var='comma' value='y'}{/if}
-{foreach item=field key=fieldId from=$listfields name=list}
-	{$delimitorL}{$field.name} -- {$fieldId}{$delimitorR}
-	{if !$smarty.foreach.list.last}{$separator}{/if}
-{/foreach}
-{/if}
-{assign var='comma' value='n'}
-{/strip}
-{strip}
-{/if}
-{foreach from=$items item=item}
-{assign var='comma' value='n'}
-{if $showItemId ne 'n'}
-{assign var='comma' value='y'}
-{$delimitorL}{$item.itemId}{$delimitorR}
-{/if}
-{if $showStatus eq 'y'}
-	{if $comma eq 'y'}{$separator}{else}{assign var='comma' value='y'}{/if}
-	{$delimitorL}{$item.status}{$delimitorR}
-{/if}
-{if $showCreated ne 'n'}
-	{if $comma eq 'y'}{$separator}{else}{assign var='comma' value='y'}{/if}
-	{$delimitorL}{$item.created|tiki_short_datetime}{$delimitorR}
-{/if}
-{if $showLastModif ne 'n'}
-	{if $comma eq 'y'}{$separator}{else}{assign var='comma' value='y'}{/if}
-	{$delimitorL}{$item.lastModif|tiki_short_datetime}{$delimitorR}
-{/if}
-{if !empty($listfields)}
-{if $comma eq 'y'}{$separator}{else}{assign var='comma' value='y'}{/if}
-{foreach item=field_value from=$item.field_values name=list}
-	{if $field_value.isHidden ne 'c' or $item.creator eq $user or $tiki_p_admin_trackers eq 'y'}
-		{capture name="line"}{include file="tracker_item_field_value.tpl" list_mode='csv' showlinks='n'}{/capture}{$delimitorL}{$smarty.capture.line|replace:"\r\n":"`$CR`"|replace:"\n":"`$CR`"|replace:"<br />":"`$CR`"|replace:"`$delimitorL`":"`$delimitorL``$delimitorL`"|replace:"`$delimitorR`":"`$delimitorR``$delimitorR`"}{$delimitorR}
-	{else}
-		{$delimitorL}{$delimitorR}
-	{/if}
-	{if !$smarty.foreach.list.last}{$separator}{/if}
-{/foreach}
-{/if}
-{/strip}
-{/foreach}
+{* $Id$ *}
+
+<h2>{tr}Export Tracker Items{/tr}</h2>
+
+<form action="tiki-view_tracker.php?trackerId={$trackerId}&cookietab=3" method="post">
+<table class="normal">
+<tr class="formcolor">
+	<td><label for="tracker">{tr}Tracker{/tr}</label></td>
+	<td>
+	<select name="trackerId" onchange="this.form.submit();" id="tracker">
+      {foreach from=$trackers item=tracker}
+       <option value="{$tracker.trackerId}" title="{$tracker.description|escape}"{if $tracker.trackerId eq $trackerId} selected="selected"{/if}>
+           {$tracker.name|escape}
+       </option>
+      {/foreach}
+    </select>
+	</td>
+</tr>
+</table>
+</form>
+<form action="tiki-export_tracker.php" method="post">
+<table class="normal">
+<tr class="formcolor">
+	<td>{tr}File{/tr}</td>
+	<td>{tr}Tracker{/tr}_{$trackerId}.csv</td>
+</tr>
+<tr class="formcolor">
+	<td><label for="encoding">{tr}Charset encoding{/tr}</label></td>
+	<td><select name="encoding" id="emcoding"><option value="UTF-8" selected="selected">{tr}UTF-8{/tr}</option><option value="ISO-8859-1">{tr}ISO-8859-1{/tr}</option></select></td>
+</tr>
+<tr class="formcolor">
+	<td><label for="separator">{tr}Separator{/tr}</label></td>
+	<td><input type="text" name="separator" id="separator" value="," /></td>
+</tr>
+<tr class="formcolor">
+	<td><label for="delimitorL">{tr}Delimitors{/tr}</label></td>
+	<td><input type="text" name="delimitorL" id="delimitorL" value='"' /><input type="text" name="delimitorR" value='"' /></td>
+</tr>
+<tr class="formcolor">
+	<td><label for="CR">{tr}Carriage Return inside Field Value{/tr}</label></td>
+	<td><input type="text" name="CR" id="CR" value='%%%' /></td>
+</tr>
+<tr class="formcolor">
+	<td><label for="parse">{tr}Parse as Wiki Text{/tr}</label></td>
+	<td><input type="checkbox" name="parse" id="parse" /></td>
+</tr>
+<tr class="formcolor">
+	<td>{tr}Info{/tr}</td>
+	<td>
+		<input name="showItemId" id="showItemId" type="checkbox" checked="checked" /><label for="showItemId">{tr}itemId{/tr}</label>
+		<br /><input type="checkbox" name="showStatus" id="showStatus"{if $info.showStatus eq 'y'} checked="checked"{/if} /><label for="showStatus">{tr}status{/tr}</label>
+		<br /><input type="checkbox" name="showCreated" id="showCreated"{if $info.showCreated eq 'y'} checked="checked"{/if} /><label for="showCreated">{tr}created{/tr}</label>
+		<br /><input type="checkbox" name="showLastModif" id="showLastModif"{if $info.showLastModif eq 'y'} checked="checked"{/if} /><label for="lastModif">{tr}lastModif{/tr}</label>
+	</td>
+</tr>
+<tr class="formcolor">
+	<td>{tr}Fields{/tr}</td>
+	<td>
+		<input type="radio" name="which" id="list" value="list"/> <label for="list">{tr}Fields visible in items list{/tr}</label>
+		<br /><input type="radio" name="which" id="ls" value="ls"/> <label for="ls">{tr}Fields searchable or visible in items list{/tr}</label>
+		<br /><input type="radio" name="which" id="item" value="item"/> <label for="item">{tr}Fields visible in an item view{/tr}</label>
+		<br /><input type="radio" name="which" id="all" value="all" checked="checked"/> <label for="all">{tr}All fields{/tr}</label>
+		<br /><input type="radio" name="which" id="these" value="these"> <label for="these">{tr}These fields{/tr}</label>
+		<select multiple="multiple" name="listfields[]" id="listfields">
+			{foreach from=$fields item=ix}
+				{if ($ix.isHidden eq 'n' or $ix.isHidden eq 'c' or $ix.isHidden eq 'p' or $tiki_p_admin_trackers eq 'y') and $ix.type ne 'x' and $ix.type ne 'h' and ($ix.type ne 'p' or $ix.options_array[0] ne 'password') and (empty($ix.visibleBy) or in_array($default_group, $ix.visibleBy) or $tiki_p_admin_trackers eq 'y')}
+					<option value="{$ix.fieldId}">{$ix.name|escape}</option>
+				{/if}
+			{/foreach}
+		</select>
+		{remarksbox type="tip" title="Tip"}{tr}Use Ctrl+Click to select multiple fields.{/tr}{/remarksbox}
+	</td>
+</tr>
+<tr class="formcolor">
+	<td>{tr}Filter{/tr}</td>
+	<td>{include file="wiki-plugins/wikiplugin_trackerfilter.tpl" showFieldId="y" inForm="y"}</td></tr>
+<tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="export" value="{tr}Export{/tr}" /></td>
+</tr>
+</table>
+</form>
+

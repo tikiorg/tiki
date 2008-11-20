@@ -818,6 +818,13 @@ $users = $userlib->list_all_users();
 $groups = $userlib->list_all_groups();
 $smarty->assign_by_ref('users', $users);
 $smarty->assign_by_ref('groups', $groups);
+if ($tiki_p_export_tracker) {
+	$trackers = $tikilib->list_trackers();
+	$smarty->assign_by_ref('trackers', $trackers['data']);
+	include_once('lib/wiki-plugins/wikiplugin_trackerfilter.php');
+	$filters = wikiplugin_trackerFilter_get_filters($_REQUEST['trackerId']);
+	$smarty->assign_by_ref('filters', $filters);
+}
 
 include_once('tiki-section_options.php');
 
