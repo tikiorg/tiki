@@ -91,6 +91,13 @@
 		{tr}Subgallery{/tr}: 
 			{if $showname=='y' || $showfilename=='y'}{$item.name}<br />{/if}
 			{if $showimageid=='y'}{tr}ID{/tr}: {$item.galleryId}<br />{/if}
+			{if $showcategories=='y'}
+				{tr}Categories{/tr}:
+                       		{section name=categ loop=item.categories}
+                        		<li>{$item.categories[categ]}</li>
+                		{/section}
+                		</ul><br />
+			{/if}
 			{if $showdescription=='y'}{$item.description}<br />{/if}
 			{if $showcreated=='y'}{tr}Created{/tr}: {$item.created|tiki_short_date}<br />{/if}
 			{if $showuser=='y'}{tr}User{/tr}: {$item.user|userlink}<br />{/if}
@@ -115,20 +122,19 @@
 	</a>
 {/if}
           <br />
-	{* categories for item *}
-    	 {if $item.categories}
-         	 <span class='categories'>{tr}Categories{/tr}:&nbsp;
-		<ul class='categories'>
-		{section name=categ loop=$item.categories}
-			<li>{$item.categories[categ]}</li>
-		{/section}
-		</ul></span><br />
-         {/if}
-          <small class="caption">
+	  <small class="caption">
 	  {if $prefs.gal_image_mouseover neq 'only'}
 		{if $showname=='y'}{$item.name}<br />{/if}
 		{if $showfilename=='y'}{tr}Filename{/tr}: {$item.filename}<br />{/if}
 		{if $showimageid=='y'}{tr}ID{/tr}: {$item.imageId}<br />{/if}
+		{if $showcategories=='y'}
+		    	{tr}Categories{/tr}:
+                        <ul class='categories'>
+                        {section name=categ loop=$item.categories}
+                        	<li>{$item.categories[categ]}</li>
+                        {/section}
+                        </ul><br />
+                {/if}
 		{if $showdescription=='y'}{$item.description}<br />{/if}
 		{if $showcreated=='y'}{tr}Created{/tr}: {$item.created|tiki_short_date}<br />{/if}
 		{if $showuser=='y'}{tr}User{/tr}: {$item.user|userlink}<br />{/if}

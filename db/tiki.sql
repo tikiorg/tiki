@@ -1049,6 +1049,7 @@ CREATE TABLE tiki_galleries (
   parentgallery int(14) NOT NULL default -1,
   showname char(1) NOT NULL default 'y',
   showimageid char(1) NOT NULL default 'n',
+  showcategories char(1) NOT NULL default 'n',
   showdescription char(1) NOT NULL default 'n',
   showcreated char(1) NOT NULL default 'n',
   showuser char(1) NOT NULL default 'n',

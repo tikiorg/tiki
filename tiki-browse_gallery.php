@@ -127,6 +127,7 @@ if($user!='admin' && $user!=$gal_info["user"] && $gal_info["public"]!='y') {
 	$gal_info["description"] = 'System Gallery';
 	$gal_info['showname'] ='y';
 	$gal_info['showimageid'] ='n';
+	$gal_info['showcategories'] ='n';
 	$gal_info['showdescription'] ='n';
 	$gal_info['showcreated'] ='n';
 	$gal_info['showuser'] ='n';
@@ -143,6 +144,7 @@ $smarty->assign_by_ref('public', $gal_info["public"]);
 $smarty->assign_by_ref('galleryId', $_REQUEST["galleryId"]);
 $smarty->assign_by_ref('showname', $gal_info['showname']);
 $smarty->assign_by_ref('showimageid', $gal_info['showimageid']);
+$smarty->assign_by_ref('showcategories', $gal_info['showcategories']);
 $smarty->assign_by_ref('showdescription', $gal_info['showdescription']);
 $smarty->assign_by_ref('showcreated', $gal_info['showcreated']);
 $smarty->assign_by_ref('showuser', $gal_info['showuser']);
