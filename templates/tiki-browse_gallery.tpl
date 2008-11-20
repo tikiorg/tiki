@@ -116,8 +116,13 @@
 {/if}
           <br />
 	{* categories for item *}
-    	 {if $item.categories !=''}
-            <span class='categories'>{tr}Categories{/tr}:&nbsp;{$item.categories}</span><br />
+    	 {if $item.categories}
+         	 <span class='categories'>{tr}Categories{/tr}:&nbsp;
+		<ul class='categories'>
+		{section name=categ loop=$item.categories}
+			<li>{$item.categories[categ]}</li>
+		{/section}
+		</ul></span><br />
          {/if}
           <small class="caption">
 	  {if $prefs.gal_image_mouseover neq 'only'}
