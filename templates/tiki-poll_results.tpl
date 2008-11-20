@@ -43,8 +43,19 @@
 {if $smarty.section.x.total > 1}<a href="tiki-poll_results.php?{if !empty($scoresort_desc)}scoresort_asc{else}scoresort_desc{/if}={$smarty.section.ix.index}">{/if}
 {$poll_info_arr[x].options[ix].title}
 {if $smarty.section.x.total > 1}</a>{/if}
+
+{if $prefs.feature_poll_public == 'y'}
+   {tr}Users Voting For This Option{/tr}: {section name=iix loop=$poll_info_arr[x].options[ix].users}
+   {if $smarty.section.iix.index >= 1}
+   , 
+   {/if}
+   {$poll_info_arr[x].options[ix].users[iix].user}
+   {/section}
+{/if}
 </td>
-    <td class="pollr {cycle}"><img src="img/leftbar.gif" alt="&lt;" /><img src="img/mainbar.gif" alt="-" height="14" width="{$poll_info_arr[x].options[ix].width}" /><img src="img/rightbar.gif" alt="&gt;" />  {$poll_info_arr[x].options[ix].percent}% ({$poll_info_arr[x].options[ix].votes})</td></tr>
+    <td class="pollr {cycle}"><img src="img/leftbar.gif" alt="&lt;" /><img src="img/mainbar.gif" alt="-" height="14" width="{$poll_info_arr[x].options[ix].width}" /><img src="img/rightbar.gif" alt="&gt;" />  {$poll_info_arr[x].options[ix].percent}% ({$poll_info_arr[x].options[ix].votes})
+    </td>
+    </tr>
 {/section}
 </table>
 <br />

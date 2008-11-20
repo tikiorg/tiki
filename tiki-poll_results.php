@@ -80,6 +80,8 @@ for ($i = 0; $i < $temp_max; $i++) {
 
 	$width = $percent * 200 / 100;
 	$options[$i]["width"] = $percent;	
+
+	$options[$i]["users"] = $polllib->get_poll_voters( $options[$i]["optionId"] );
 }
 $poll_info_arr[$pK]["options"] = $options;
 $poll_info_arr[$pK]["total"] = $total;

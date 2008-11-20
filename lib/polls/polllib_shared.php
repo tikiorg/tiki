@@ -19,6 +19,16 @@ class PollLibShared extends TikiLib {
 		return $res;
 	}
 
+	function get_poll_voters( $optionId ) {
+		$query = "select user from `tiki_user_votings` where `optionId`=?";
+		$result = $this->query($query,array((int)$optionId));
+		$ret = array();
+		while ($res = $result->fetchRow()) {
+			$ret[] = $res;
+		}
+		return $ret;
+	}
+
 	function list_poll_options($pollId) {
 		$query = "select * from `tiki_poll_options` where `pollId`=? order by `position`";
 		$result = $this->query($query,array((int) $pollId));
