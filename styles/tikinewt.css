@@ -281,8 +281,16 @@ div#sitead {
 	float: left;
 }
 
-#siteloginbar {position: absolute; bottom:3px; right: 10px;}
+#siteloginbar {
+	text-align: right;
+	position: absolute;
+	bottom: 60px;
+	right: 10px;
+	font-size: 80%}
 
+ #siteloginbar.logged-in {
+	bottom: 120px;
+}
 
 #tiki-top {
 	font-size: .95em;

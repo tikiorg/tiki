@@ -345,9 +345,14 @@ div#sitead {
 #siteloginbar {
 	text-align: right;
 	position: absolute;
-	bottom: 2px; right: 10px;
+	bottom: 110px;
+	right: 10px;
 	font-size: 80%}
-	
+
+#siteloginbar.logged-in {
+	bottom: 140px;
+}
+
 input[id="sl-login-user"],
 input[id="sl-login-pass"] {font-size: 1.1em}
 

@@ -295,7 +295,17 @@ div#sitead {
 	padding-left: 10px;
 }
 
-#siteloginbar {position: absolute; bottom:3px; right: 10px;}
+#siteloginbar {
+	text-align: right;
+	position: absolute;
+	bottom: 90px;
+	right: 10px;
+	font-size: 80%}
+
+ #siteloginbar.logged-in {
+	bottom: 120px;
+}
+
 
 /* tiki-top_bar.tpl - menu and search */
 
