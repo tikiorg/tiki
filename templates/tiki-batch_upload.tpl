@@ -3,11 +3,11 @@
 
 <div class="navbar">
 	{if $galleryId ne ''}
-		{button href="tiki-browse_gallery.php?galleryId=$galleryId" _text="{tr}Browse gallery{/tr}"}
+		{button href="tiki-browse_gallery.php?galleryId=$galleryId" _text="{tr}Browse Gallery{/tr}"}
 	{else}
-		{button href="tiki-galleries.php" _text="{tr}Browse gallery{/tr}"}
+		{button href="tiki-galleries.php" _text="{tr}Browse Gallery{/tr}"}
 	{/if}
-	{button href="tiki-upload_image.php" _text="{tr}Upload from disk{/tr}"}
+	{button href="tiki-upload_image.php" _text="{tr}Upload From Disk{/tr}"}
 </div>
 
 {if count($feedback)}<div class="simplebox highlight">{section name=i loop=$feedback}{$feedback[i]}<br />{/section}</div>{/if}
@@ -18,8 +18,8 @@
 <tr>
 <th style="width:42px"></th>
 <th><a href="javascript:void(0);">{tr}Filename{/tr}</a></th>
-<th style="width:80px"><a href="javascript:void(0);">{tr}width{/tr}</a></th>
-<th style="width:80px"><a href="javascript:void(0);">{tr}height{/tr}</a></th>
+<th style="width:80px"><a href="javascript:void(0);">{tr}Width{/tr}</a></th>
+<th style="width:80px"><a href="javascript:void(0);">{tr}Height{/tr}</a></th>
 <th style="width:80px"><a href="javascript:void(0);">{tr}Filesize{/tr}</th>
 <th style="width:80px"><a href="javascript:void(0);">{tr}Filetype{/tr}</a></th></tr>
 {cycle print=false values="even,odd"}
@@ -44,7 +44,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {tr}eg. from "digicam0001.jpg" then name digicam0001 will be used for the name field{/tr}<br />
 <br />
 {if $permAddGallery eq "y"}
-&nbsp;&nbsp;&nbsp;&nbsp; <input type="checkbox" name="subdirToSubgal" value="true" id="subdirToSubgal" /> {tr}convert the last sub directory to a sub gallery{/tr}<br />
+&nbsp;&nbsp;&nbsp;&nbsp; <input type="checkbox" name="subdirToSubgal" value="true" id="subdirToSubgal" /> {tr}Convert the last sub directory to a sub gallery{/tr}<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {tr}eg. from "misc/screenshots/digicam0001.jpg" a gallery named "screenshots" will be created{/tr}<br />
 <br />
 {/if}

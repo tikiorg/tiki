@@ -4,14 +4,14 @@
 
 <div class="navbar">
 	{if $galleryId ne ''}
-		{button href="tiki-browse_gallery.php" _auto_args="galleryId" _text="{tr}Browse gallery{/tr}"}
+		{button href="tiki-browse_gallery.php" _auto_args="galleryId" _text="{tr}Browse Gallery{/tr}"}
 	{else}
-		{button href="tiki-galleries.php" _text="{tr}Browse gallery{/tr}"}
+		{button href="tiki-galleries.php" _text="{tr}Browse Gallery{/tr}"}
 	{/if}
 
   {if $prefs.feature_gal_batch eq "y" and $tiki_p_batch_upload_image_dir eq 'y'}
     {if $tiki_p_admin_galleries eq 'y' or ($user and $user eq $owner) or $public eq 'y'}
-			{button href="tiki-batch_upload.php" _auto_args="galleryId" _text="{tr}Directory batch{/tr}"}
+			{button href="tiki-batch_upload.php" _auto_args="galleryId" _text="{tr}Directory Batch{/tr}"}
     {/if}
   {/if}
 </div>
@@ -81,14 +81,14 @@
 	<td  class="formcolor" colspan="2"><b>{tr}Now enter the image URL{/tr} {tr}or upload a local image from your disk{/tr}</b></td></tr>
 	<tr><td class="formcolor">URL:</td><td class="formcolor"><input size="50" type="text" name="url" /></td></tr>
 	<tr>
-	<td class="formcolor">{tr}Upload from disk{/tr} / {tr}Batch upload{/tr}:</td><td class="formcolor">
+	<td class="formcolor">{tr}Upload From Disk{/tr} / {tr}Batch Upload{/tr}:</td><td class="formcolor">
 	<input type="hidden" name="MAX_FILE_SIZE" value="10000000" />
 	<input size="50" name="userfile1" type="file" />
 	</td></tr>
 	<tr><td class="formcolor">{tr}Thumbnail (optional, overrides automatic thumbnail generation){/tr}:</td><td class="formcolor">
 	<input name="userfile2" size ="50" type="file" />
 	</td></tr>
-	<tr><td class="formcolor">{tr}Upload from disk{/tr}:</td><td class="formcolor">
+	<tr><td class="formcolor">{tr}Upload From Disk{/tr}:</td><td class="formcolor">
 	<input name="userfile3" type="file" />
 	<input name="userfile4" type="file" /><br />
 	<input name="userfile5" type="file" />

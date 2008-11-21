@@ -6,7 +6,7 @@
   {strip}
     {if $edit_mode eq 'y'}
       {if $galleryId eq 0}
-        {tr}Create a file gallery{/tr}
+        {tr}Create a File Gallery{/tr}
       {else}
         {tr}Edit Gallery{/tr}: {$name}
       {/if}
@@ -57,7 +57,7 @@
   {/if}
 
   {if $tiki_p_create_file_galleries eq 'y' and $edit_mode ne 'y'}
-    {button _text="{tr}Create a file gallery{/tr}" href="?edit_mode=1&amp;parentId=$galleryId"}
+    {button _text="{tr}Create a File Gallery{/tr}" href="?edit_mode=1&amp;parentId=$galleryId"}
   {/if}
   
   {if $tiki_p_admin_file_galleries eq 'y' or $user eq $gal_info.user}
@@ -86,7 +86,7 @@
       {button _text="{tr}Upload File{/tr}" href="tiki-upload_file.php?galleryId=$galleryId"}
     {/if}
     {if $prefs.feature_file_galleries_batch eq "y" and $tiki_p_batch_upload_file_dir eq 'y'}
-      {button _text="{tr}Directory batch{/tr}" href="tiki-batch_upload_files.php?galleryId=$galleryId"}
+      {button _text="{tr}Directory Batch{/tr}" href="tiki-batch_upload_files.php?galleryId=$galleryId"}
     {/if}
   {/if}
 
@@ -96,7 +96,7 @@
     {button _text="{tr}List Galleries{/tr}" href='?'}
   {/if}
   {if $tiki_p_create_file_galleries eq 'y' and $edit_mode ne 'y'}
-    {button _text="{tr}Create a file gallery{/tr}" href="?edit_mode=1&amp;parentId=-1&amp;galleryId=0"}
+    {button _text="{tr}Create a File Gallery{/tr}" href="?edit_mode=1&amp;parentId=-1&amp;galleryId=0"}
   {/if}
   {if $tiki_p_create_file_galleries eq 'y' and $dup_mode ne 'y'}
     {button _text="{tr}Duplicate File Gallery{/tr}" href="?dup_mode=1" _auto_args='filegals_manager'}
