@@ -814,6 +814,7 @@ class TrackerLib extends TikiLib {
 				$calc = preg_replace('/#([0-9]+)/', '$fil[\1]', $fopt['options']);
 				eval('$computed = '.$calc.';');
 				$fopt['value'] = $computed;
+				$fil[$fieldId] = $computed;
 				break;
 			case 's':
 				$key = 'tracker.'.$trackerId.'.'.$itemId;
