@@ -193,7 +193,7 @@ $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Created{/tr
 {/if}
 {/if}
 
-{include file="tracker_item_field_value.tpl" field_value=$field_value list_mode="y" item=$items[user] showlinks="y" reloff=$smarty.section.user.index}
+{include file="tracker_item_field_value.tpl" field_value=$field_value list_mode="y" item=$items[user] showlinks="y" reloff=$smarty.section.user.index url=""}
 
 </td>
 {/if}
