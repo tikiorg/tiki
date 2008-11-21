@@ -156,7 +156,6 @@ if (isset($_REQUEST["edit_mode"]) && $_REQUEST["edit_mode"]) {
 
 	if ($_REQUEST["galleryId"] > 0) {
 		if ($info = $imagegallib->get_gallery_info($_REQUEST["galleryId"])) {
-
 		$scaleinfo = $imagegallib->get_gallery_scale_info($_REQUEST["galleryId"]);
 		$gallery_images = $imagegallib->get_images(0,-1,'name_asc',false,$_REQUEST['galleryId']);
 		foreach($gallery_images['data'] as $key => $item) {
@@ -178,7 +177,7 @@ if (isset($_REQUEST["edit_mode"]) && $_REQUEST["edit_mode"]) {
 		$smarty->assign('parentgallery',$info['parentgallery']);
 		$smarty->assign('showname',$info['showname']);
 		$smarty->assign('showimageid',$info['showimageid']);
-		$smarty->assign('showcategories',$info['showcategories']);
+		$smarty->assign('showcategories',$info['showcategories']);;
 		$smarty->assign('showdescription',$info['showdescription']);
 		$smarty->assign('showcreated',$info['showcreated']);
 		$smarty->assign('showuser',$info['showuser']);
@@ -240,7 +239,7 @@ if (isset($_REQUEST["edit"]) && $prefs['feature_categories'] == 'y' && $prefs['f
 	$smarty->assign('galleryimage',$_REQUEST['galleryimage']);
 	$smarty->assign('parentgallery',$_REQUEST['parentgallery']);
 	$smarty->assign('defaultscale',$_REQUEST['defaultscale']);
-	$auxarray=array('showname','showimageid','showcategories','showdescription','showcreated','showuser','showhits','showxysize','showfilesize','showfilename');
+	$auxarray=array('showname','showimageid','showdescription','showcreated','showuser','showhits','showxysize','showfilesize','showfilename','showcategories');
 	foreach($auxarray as $key => $item) {
 		if(!isset($_REQUEST[$item])) {
 			$_REQUEST[$item]='n';
@@ -269,9 +268,8 @@ if (isset($_REQUEST["edit"]) && $prefs['feature_categories'] == 'y' && $prefs['f
 	$gid = $imagegallib->replace_gallery($_REQUEST["galleryId"], $_REQUEST["name"], $_REQUEST["description"],
 		'', $_REQUEST["owner"], $_REQUEST["maxRows"], $_REQUEST["rowImages"], $_REQUEST["thumbSizeX"], $_REQUEST["thumbSizeY"], $public,
 		$visible,$_REQUEST['sortorder'],$_REQUEST['sortdirection'],$_REQUEST['galleryimage'],$_REQUEST['parentgallery'],
-		$_REQUEST['showname'],$_REQUEST['showimageid'],$_REQUEST['showdescription'],$_REQUEST['showcategories'],$_REQUEST['showcreated'],
-		$_REQUEST['showuser'],$_REQUEST['showhits'],$_REQUEST['showxysize'],$_REQUEST['showfilesize'],$_REQUEST['showfilename'],$_REQUEST['defaultscale'],$geographic);
-
+		$_REQUEST['showname'],$_REQUEST['showimageid'],$_REQUEST['showdescription'],$_REQUEST['showcreated'],
+		$_REQUEST['showuser'],$_REQUEST['showhits'],$_REQUEST['showxysize'],$_REQUEST['showfilesize'],$_REQUEST['showfilename'],$_REQUEST['defaultscale'],$geographic,$_REQUEST['showcategories']);
 	#add scales
 	if (isset($_REQUEST["scaleSize"])) {
 		if (strstr($_REQUEST["scaleSize"],',')) {
@@ -324,7 +322,7 @@ if ($category_needed == 'y') {
 	$smarty->assign('galleryimage',$_REQUEST['galleryimage']);
 	$smarty->assign('parentgallery',$_REQUEST['parentgallery']);
 	$smarty->assign('defaultscale',$_REQUEST['defaultscale']);
-	$auxarray=array('showname','showimageid','showdescription','showcategories','showcreated','showuser','showhits','showxysize','showfilesize','showfilename');
+	$auxarray=array('showname','showimageid','showdescription','showcreated','showuser','showhits','showxysize','showfilesize','showfilename','showcategories');
 	foreach($auxarray as $key => $item) {
 		if(!isset($_REQUEST[$item])) {
 			$_REQUEST[$item]='n';
@@ -518,5 +516,4 @@ ask_ticket('galleries');
 // Display the template
 $smarty->assign('mid', 'tiki-galleries.tpl');
 $smarty->display("tiki.tpl");
-
 ?>

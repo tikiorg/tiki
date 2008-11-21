@@ -1,6 +1,5 @@
 {* $Id$ *}
 {title help="Image+Galleries" admpage="gal"}{tr}Galleries{/tr}{/title}
-
 {if $tiki_p_create_galleries eq 'y'}
 
 {if $edit_mode ne 'y' or $galleryId ne 0}
@@ -56,13 +55,13 @@
 	<input type="checkbox" name="showname" value="y" {if $showname=='y'}checked="checked"{/if} />{tr}Name{/tr}<br />
 	<input type="checkbox" name="showimageid" value="y" {if $showimageid=='y'}checked="checked"{/if} />{tr}Image ID{/tr}<br />
 	<input type="checkbox" name="showdescription" value="y" {if $showdescription=='y'}checked="checked"{/if} />{tr}Description{/tr}<br />
-	<input type="checkbox" name="showcategories" value="y" {if $showcategories=='y'}checked="checked"{/if} />{tr}Categories{/tr}<br />
 	<input type="checkbox" name="showcreated" value="y" {if $showcreated=='y'}checked="checked"{/if} />{tr}Creation Date{/tr}<br />
 	<input type="checkbox" name="showuser" value="y" {if $showuser=='y'}checked="checked"{/if} />{tr}User{/tr}<br />
 	<input type="checkbox" name="showhits" value="y" {if $showhits=='y'}checked="checked"{/if} />{tr}Hits{/tr}<br />
 	<input type="checkbox" name="showxysize" value="y" {if $showxysize=='y'}checked="checked"{/if} />{tr}XY-Size{/tr}<br />
 	<input type="checkbox" name="showfilesize" value="y" {if $showfilesize=='y'}checked="checked"{/if} />{tr}Filesize{/tr}<br />
 	<input type="checkbox" name="showfilename" value="y" {if $showfilename=='y'}checked="checked"{/if} />{tr}Filename{/tr}<br />
+	<input type="checkbox" name="showcategories" value="y" {if $showcategories=='y'}checked="checked"{/if} />{tr}Categories{/tr}<br />
 </td></tr>
 <tr><td class="formcolor">{tr}Gallery Image{/tr}:</td><td class="formcolor"><select name="galleryimage">
 {foreach from=$options_galleryimage key=key item=item}

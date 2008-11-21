@@ -1776,7 +1776,7 @@ class ImageGalsLib extends TikiLib {
 	}
 
 	function replace_gallery($galleryId, $name, $description, $theme, $user, $maxRows, $rowImages, $thumbSizeX, $thumbSizeY, $public, $visible = 'y', $sortorder='created', $sortdirection='desc', 
-$galleryimage='first',$parentgallery=-1,$showname='y',$showimageid='n',$showdescription='n',$showcategories='n',$showcreated='n',$showuser='n',$showhits='y',$showxysize='y',$showfilesize='n',$showfilename='n',$defaultscale='o',$geographic	= 'n') {
+$galleryimage='first',$parentgallery=-1,$showname='y',$showimageid='n',$showdescription='n',$showcreated='n',$showuser='n',$showhits='y',$showxysize='y',$showfilesize='n',$showfilename='n',$defaultscale='o',$geographic= 'n',$showcategories='n') {
 		global $prefs;
 
 		// if the user is admin or the user is the same user and the gallery exists then replace if not then
