@@ -405,7 +405,7 @@ if ( $user && ( $user == 'admin' || $userlib->user_has_permission($user, 'tiki_p
 } else {
 	$perms = $userlib->get_user_detailled_permissions($user);
 	foreach ($perms as $perm) {
-		$smarty->assign($perm, 'y');
+		$smarty->assign($perm['permName'], 'y');
 		$$perm['permName'] = 'y';
 		if ( in_array($perm['permName'], $admin_perms) ) { // assign all perms of the perm type
 			$ps = $userlib->get_permissions(0, -1, 'permName_desc', '', $perm['type']);
