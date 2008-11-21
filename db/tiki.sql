@@ -446,7 +446,7 @@ CREATE TABLE tiki_calendar_items (
   allday tinyint(1) NOT NULL default '0',
   PRIMARY KEY (calitemId),
   KEY calendarId (calendarId)
-) ENGINE=MyISAM AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM AUTO_INCREMENT=1;
 
 DROP TABLE IF EXISTS tiki_calendar_locations;
 CREATE TABLE tiki_calendar_locations (
