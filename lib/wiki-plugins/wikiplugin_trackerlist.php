@@ -321,6 +321,9 @@ function wikiplugin_trackerlist($data, $params) {
 		if (!isset($url))
 			$url = '';
 		$smarty->assign_by_ref('url', $url);
+		if (!isset($export))
+			$export = 'n';
+		$smarty->assign_by_ref('export', $export);
 
 		if (!empty($ldelim))
 			$smarty->left_delimiter = $ldelim;
@@ -517,6 +520,18 @@ function wikiplugin_trackerlist($data, $params) {
 		$smarty->assign_by_ref('filterfield',$exactvalue);
 		$smarty->assign_by_ref('listfields', $listfields);
 		$smarty->assign_by_ref('popupfields', $popupfields);
+		if (!empty($export)) {
+			$exportUrl = "tiki-view_tracker.php?trackerId=$trackerId&amp;displayedFields=$fields&amp;cookietab=3";
+			foreach ($filterfield as $i=>$fieldId) {
+				$exportUrl .= "&amp;f_$fieldId=";
+				if (empty($filtervalue[$i])) {
+					$exportUrl .= $exactvalue[$i];
+				} else {
+					$exportUrl .= $filtervalue[$i];
+				}
+			}
+			$smarty->assign('exportUrl', $exportUrl);
+		}
 
 
 		if (count($passfields)) {

@@ -59,12 +59,12 @@
 		<input type="radio" name="which" id="list" value="list"/> <label for="list">{tr}Fields visible in items list{/tr}</label>
 		<br /><input type="radio" name="which" id="ls" value="ls"/> <label for="ls">{tr}Fields searchable or visible in items list{/tr}</label>
 		<br /><input type="radio" name="which" id="item" value="item"/> <label for="item">{tr}Fields visible in an item view{/tr}</label>
-		<br /><input type="radio" name="which" id="all" value="all" checked="checked"/> <label for="all">{tr}All fields{/tr}</label>
-		<br /><input type="radio" name="which" id="these" value="these"> <label for="these">{tr}These fields{/tr}</label>
+		<br /><input type="radio" name="which" id="all" value="all"{if empty($displayedFields)} checked="checked"{/if} /> <label for="all">{tr}All fields{/tr}</label>
+		<br /><input type="radio" name="which" id="these" value="these"{if !empty($displayedFields)} checked="checked"{/if}> <label for="these">{tr}These fields{/tr}</label>
 		<select multiple="multiple" name="listfields[]" id="listfields">
 			{foreach from=$fields item=ix}
 				{if ($ix.isHidden eq 'n' or $ix.isHidden eq 'c' or $ix.isHidden eq 'p' or $tiki_p_admin_trackers eq 'y') and $ix.type ne 'x' and $ix.type ne 'h' and ($ix.type ne 'p' or $ix.options_array[0] ne 'password') and (empty($ix.visibleBy) or in_array($default_group, $ix.visibleBy) or $tiki_p_admin_trackers eq 'y')}
-					<option value="{$ix.fieldId}">{$ix.name|escape}</option>
+					<option value="{$ix.fieldId}"{if !empty($displayedFields) and in_array($ix.fieldId, $displayedFields)} selected="selected"{/if}>{$ix.name|escape}</option>
 				{/if}
 			{/foreach}
 		</select>

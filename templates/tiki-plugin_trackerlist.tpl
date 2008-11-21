@@ -173,9 +173,15 @@ link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" border="0" al
 
 {if $more eq 'y'}
 	<div class="more">
-		 <span class="button2"><a href="{if $moreurl}{$moreurl}{else}tiki-view_tracker.php{/if}?trackerId={$trackerId}{if isset($tr_sort_mode)}&amp;sort_mode={$tr_sort_mode}{/if}">{tr}More...{/tr}</a></span>
+		 {capture assign=moreUrl}
+		 {if $moreurl}{$moreurl}{else}tiki-view_tracker.php{/if}?trackerId={$trackerId}{if isset($tr_sort_mode)}&amp;sort_mode={$tr_sort_mode}{/if}
+		 {/capture}
+		 {button href="$moreUrl" _text="{tr}More...{/tr}"}
 	</div>
 {else}
 {pagination_links cant=$count_item step=$max offset=$tr_offset offset_arg=tr_offset}{/pagination_links}
+{/if}
+{if $export eq 'y' && $tiki_p_export_tracker eq 'y'}
+	{button href="$exportUrl" _text="{tr}Export{/tr}"}
 {/if}
 {/strip}

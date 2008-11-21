@@ -44,7 +44,7 @@ if ($tiki_p_view_trackers != 'y') {
 $filters = array();
 if (!empty($_REQUEST['listfields'])) {
 	if (is_string($_REQUEST['listfields'])) {
-		$filters['fieldId'] = split(',', $_REQUEST['listfields']);
+		$filters['fieldId'] = split('[,:]', $_REQUEST['listfields']);
 	} elseif (is_array($_REQUEST['listfields'])) {
 		$filters['fieldId'] = $_REQUEST['listfields'];
 	}
@@ -202,3 +202,4 @@ while (($items = $trklib->list_items($_REQUEST['trackerId'], $offset, $maxRecord
 if (!empty($fp)) {
 	fclose($fp);
 }
+die;
