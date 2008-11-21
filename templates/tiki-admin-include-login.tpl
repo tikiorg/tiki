@@ -112,6 +112,7 @@ name="eponymousGroups" {if $prefs.eponymousGroups eq 'y'}checked="checked"{/if}/
 <tr><td class="form">{tr}Minimum username length{/tr}:</td><td><input type="text" name="min_username_length" value="{$prefs.min_username_length|escape}" /></td></tr>
 <tr><td class="form">{tr}Maximum username length{/tr}:</td><td><input type="text" name="max_username_length" value="{$prefs.max_username_length|escape}" /></td></tr>
 <tr><td class="form">{tr}Force lowercase username{/tr}:</td><td><input type="checkbox" name="lowercase_username" {if $prefs.lowercase_username eq 'y'}checked="checked"{/if}/></td></tr>
+<tr><td class="form">{tr}Username Pattern{/tr}:</td><td><input type="text" name="username_pattern" value="{$prefs.username_pattern|escape}" /></td></tr>
 <tr><td class="form">{tr}Use challenge/response authentication{/tr}:</td><td><input type="checkbox" name="feature_challenge" {if $prefs.feature_challenge eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Force to use chars and nums in passwords{/tr}:</td><td><input type="checkbox" name="pass_chr_num" {if $prefs.pass_chr_num eq 'y'}checked="checked"{/if}/></td></tr>
 <tr><td class="form">{tr}Minimum password length{/tr}:</td><td><input type="text" name="min_pass_length" value="{$prefs.min_pass_length|escape}" /></td></tr>
