@@ -11,7 +11,8 @@
 <div class="article">
 {if $listpages[ix].show_topline eq 'y' and $listpages[ix].topline}<div class="articletopline">{$listpages[ix].topline}</div>{/if}
 <div class="articletitle">
-<span class="titlea">{$listpages[ix].title}</span><br />
+<span class="titlea">
+<a href="tiki-read_article.php?articleId={$listpages[ix].articleId}">{$listpages[ix].title}</a></span><br />
 {if $listpages[ix].show_subtitle eq 'y' and $listpages[ix].subtitle}<div class="articlesubtitle">{$listpages[ix].subtitle}</div>{/if}
 {if ($listpages[ix].show_author eq 'y')
  or ($listpages[ix].show_pubdate eq 'y')
