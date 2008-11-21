@@ -1768,11 +1768,11 @@ function get_included_groups($group, $recur=true) {
 	if ( count($groups) == 1 ) return $this->get_group_permissions($groups[0]);
 
 	$ret = array();
-	$query = 'select distinct up.`permName` from `users_permissions` as up, `users_grouppermissions` as ug where ug.`groupName` in ('.implode(',',array_fill(0,count($groups),'?')).') and up.`permName`=ug.`permName`';
+	$query = 'select distinct up.* from `users_permissions` as up, `users_grouppermissions` as ug where ug.`groupName` in ('.implode(',',array_fill(0,count($groups),'?')).') and up.`permName`=ug.`permName`';
 	$result = $this->query($query, $groups);
 
 	while ( $res = $result->fetchRow() ) {
-		$ret[] = $res['permName'];
+		$ret[] = $res;
 	}
 
 	return $ret;
