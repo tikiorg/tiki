@@ -920,6 +920,7 @@ class TrackerLib extends TikiLib {
 		global $user, $smarty, $notificationlib, $prefs, $cachelib, $categlib, $tiki_p_admin_trackers, $userlib, $tikilib;
 		include_once('lib/categories/categlib.php');
 		include_once('lib/notifications/notificationlib.php');
+		$fil = array();
 
 		if (!empty($itemId)) {
 			$oldStatus = $this->getOne("select `status` from `tiki_tracker_items` where `itemId`=?", array($itemId));
@@ -1096,7 +1097,11 @@ class TrackerLib extends TikiLib {
 				}
 				$value = @ $ins_fields["data"][$i]["value"];
 
-				if (isset($ins_fields["data"][$i]["type"]) and $ins_fields["data"][$i]["type"] == 'q') {
+				if (isset($ins_fields['data'][$i]['type']) and $ins_fields['data'][$i]['type'] == 'C') {
+					$calc = preg_replace('/#([0-9]+)/', '$fil[\1]', $ins_fields['data'][$i]['options']);
+					eval('$value = '.$calc.';');
+
+				} elseif (isset($ins_fields["data"][$i]["type"]) and $ins_fields["data"][$i]["type"] == 'q') {
 					if (isset($ins_fields["data"][$i]['options_array'][3]) && $ins_fields["data"][$i]['options_array'][3] == 'itemId') {
 						$value = $itemId?$itemId: $new_itemId;
 					} elseif ($itemId == false) {
@@ -1246,6 +1251,7 @@ class TrackerLib extends TikiLib {
 						$query = "insert into `tiki_tracker_item_fields`(`itemId`,`fieldId`,`value`) values(?,?,?)";
 						$this->query($query,array((int) $new_itemId,(int) $fieldId,(string)$value));
 					}
+					$fil[$fieldId] = $value;
 					$cachelib->invalidate(md5('trackerfield'.$fieldId.'o'));
 					$cachelib->invalidate(md5('trackerfield'.$fieldId.'c'));
 					$cachelib->invalidate(md5('trackerfield'.$fieldId.'p'));
