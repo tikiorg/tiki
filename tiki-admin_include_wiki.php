@@ -192,7 +192,9 @@ if (isset($_REQUEST["wikifeatures"])) {
 	'wiki_authors_style',
 	'feature_wiki_mandatory_category',
 	'wiki_page_navigation_bar',
-	'wiki_actions_bar'
+	'wiki_actions_bar',
+	'wiki_topline_position',
+	'page_bar_position'
 	);
 	foreach ($pref_values as $value) {
 		simple_set_value($value);

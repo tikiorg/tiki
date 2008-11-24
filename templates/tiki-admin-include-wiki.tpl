@@ -648,6 +648,21 @@ name="w_displayed_default"{if $prefs.w_displayed_default eq 'y'} checked="checke
     <tr><td class="form">{tr}Regex search and replace:{/tr}</td><td><input type="checkbox" name="feature_wiki_replace" {if $prefs.feature_wiki_replace eq 'y'}checked="checked"{/if}/></td></tr>
 	<tr><td class="form">{tr}Edit section:{/tr}</td><td><input type="checkbox" name="wiki_edit_section" {if $prefs.wiki_edit_section eq 'y'}checked="checked"{/if}/></td></tr>
 	<tr><td class="form">{tr}Log bytes changes (+/-) in Action Logs (slows each page modifications){/tr}</td><td><input type="checkbox" name="feature_actionlog_bytes" {if $prefs.feature_actionlog_bytes eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}Wiki top line (description, icons, backlinks etc):{/tr}</td><td>
+    <select name="wiki_topline_position">
+    <option value="top" {if $prefs.wiki_topline_position eq 'top'}selected="selected"{/if}>{tr}Top bar{/tr}</option>
+    <option value="bottom" {if $prefs.wiki_topline_position eq 'bottom'}selected="selected"{/if}>{tr}Bottom bar{/tr}</option>
+    <option value="both" {if $prefs.wiki_topline_position eq 'both'}selected="selected"{/if}>{tr}Both{/tr}</option>
+    <option value="none" {if $prefs.wiki_topline_position eq 'none'}selected="selected"{/if}>{tr}Neither{/tr}</option>
+    </select>
+    </td></tr>
+    <tr><td class="form">{tr}Wiki bottom buttons (Edit, Source, Remove etc):{/tr}</td><td>
+    <select name="page_bar_position">
+    <option value="top" {if $prefs.page_bar_position eq 'top'}selected="selected"{/if}>{tr}Top bar{/tr}</option>
+    <option value="bottom" {if $prefs.page_bar_position eq 'bottom'}selected="selected"{/if}>{tr}Bottom bar{/tr}</option>
+    <option value="none" {if $prefs.page_bar_position eq 'none'}selected="selected"{/if}>{tr}Neither{/tr}</option>
+    </select>
+    </td></tr>
     <tr><td colspan="2" class="button"><input type="submit" name="wikifeatures" value="{tr}Set features{/tr}" /></td></tr>
     </table>
     </form>
