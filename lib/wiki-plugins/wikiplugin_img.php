@@ -156,7 +156,10 @@ function wikiplugin_img( $data, $params )
 		else
 			$linkrel = '';
 
-		if ($imgdata['title']) $linktitle = ' title="'.$imgdata['title'].'"';
+		if ($imgdata['title'])
+			$linktitle = ' title="'.$imgdata['title'].'"';
+		else
+			$linktitle = '';
 		$repl = '<a href="'.$imgdata["lnk"].'"'.$linkrel.$imgtarget.$linktitle.'>' . $repl . '</a>';
 	}
 
