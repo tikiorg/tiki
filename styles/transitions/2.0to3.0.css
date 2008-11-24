@@ -133,11 +133,21 @@ div.help_section {
 	float: left;
 }
 ul.categories{
-margin:0;
-padding:0;
+	margin:0;
+	padding:0;
 }
 ul.categories li{
-list-style:none;
-margin:0;
-padding:0;
+	list-style:none;
+	margin:0;
+	padding:0;
+}
+
+.alphafilter {
+	display: block;
+	margin: 10px 0;
+	text-align:center;
+}
+
+.alphafilter a {
+	font-size: 120%;
 }

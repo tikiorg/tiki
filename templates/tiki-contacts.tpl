@@ -74,126 +74,122 @@
 	</table>
 </form>
 
-<div align="center" style="clear:both;margin:5px;">
+{include file='find.tpl' _sort_mode='y'}
 
-	{include file='find.tpl' _sort_mode='y'}
+<span class="alphafilter">
+	<a href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}">{tr}All{/tr}</a>
+	{section name=ix loop=$letters}
+		<a href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;letter={$letters[ix]}">{$letters[ix]}</a>
+	{/section}
+</span>
 
-	<span class=alphafilter>
-		<a class="link" href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}">{tr}All{/tr}</a>
-		{section name=ix loop=$letters}
-			<a class="link" href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;letter={$letters[ix]}">{$letters[ix]}</a>
-		{/section}
-	</span>
-
-	<table class="normal">
-		<tr>
-			<th>
-				<a href="tiki-contacts.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'firstName_desc'}firstName_asc{else}firstName_desc{/if}">{tr}First Name{/tr}</a>
-			</th>
-			<th>
-				<a href="tiki-contacts.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastName_desc'}lastName_asc{else}lastName_desc{/if}">{tr}Last Name{/tr}</a>
-			</th>
-			<th>
-				<a href="tiki-contacts.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'email_desc'}email_asc{else}email_desc{/if}">{tr}Email{/tr}</a>
-			</th>
-			<th>
-				<a href="tiki-contacts.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'nickname_desc'}nickname_asc{else}nickname_desc{/if}">{tr}Nickname{/tr}</a>
-			</th>
-			{foreach from=$exts item=ext key=k}
-				{if $ext.show eq 'y'}
-					<th>
-						<a>{$ext.tra}</a>
-					</th>
-				{/if}
-			{/foreach}
-			
-			{if $view eq 'list'}
-				<th>{tr}Groups{/tr}</th>
-			{/if}
-			
-			<th>{tr}Action{/tr}</th>
-		</tr>
-		
-		{cycle values="odd,even" print=false}
-		{foreach key=k item=channels from=$all}
-			{if count($channels)}
-				{if $view neq 'list'}
-					<tr>
-						<td colspan="6" style="font-size:80%;color:#999;">
-							{tr}from{/tr} <b>{$k}</b>
-						</td>
-					</tr>
-				{/if}
-				{section name=user loop=$channels}
-					<tr>
-						<td class="{cycle advance=false}">
-							<a class="link" href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;contactId={$channels[user].contactId}">{$channels[user].firstName}</a>
-						</td>
-						<td class="{cycle advance=false}">
-							<a class="link" href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;contactId={$channels[user].contactId}">{$channels[user].lastName}</a>
-						</td>
-						<td class="{cycle advance=false}">
-							<a class="link" href="mailto:{$channels[user].email}">{$channels[user].email}</a>
-						</td>
-						<td class="{cycle advance=false}">
-							{$channels[user].nickname}
-						</td>
-						{foreach from=$exts item=ext key=e}
-							{if $ext.show eq 'y'}
-								<td class="{cycle advance=false}">{$channels[user].ext[$e]}</td>
-							{/if}
-						{/foreach}
-						{if $view eq 'list'}
-							<td class="{cycle advance=false}">
-								{if isset($channels[user].groups)}
-									{foreach item=it name=gr from=$channels[user].groups}
-										{$it}
-										{if $smarty.foreach.gr.index+1 ne $smarty.foreach.gr.last}, {/if}
-									{/foreach}
-								{else}
-									&nbsp;
-								{/if}
-							</td>
-						{/if}
-						
-						<td class="{cycle advance=false}">&nbsp;
-							{if $channels[user].user eq $user}
-								<a href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;contactId={$channels[user].contactId}" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
-								<a href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;remove={$channels[user].contactId}" style="margin-left:20px;" title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
-							{elseif $tiki_p_admin eq 'y'}
-								<a href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;remove={$channels[user].contactId}" style="margin-left:36px;" title="{tr}Delete{/tr}">{icon _id='cross_admin' alt='{tr}Delete{/tr}'}</a>
-							{/if}
-						</td>
-					</tr>
-				{/section}
-			{else}
-				<tr class="odd">
-					<td>{tr}No records found.{/tr}</td>
-				</tr>
+<table class="normal">
+	<tr>
+		<th>
+			<a href="tiki-contacts.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'firstName_desc'}firstName_asc{else}firstName_desc{/if}">{tr}First Name{/tr}</a>
+		</th>
+		<th>
+			<a href="tiki-contacts.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'lastName_desc'}lastName_asc{else}lastName_desc{/if}">{tr}Last Name{/tr}</a>
+		</th>
+		<th>
+			<a href="tiki-contacts.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'email_desc'}email_asc{else}email_desc{/if}">{tr}Email{/tr}</a>
+		</th>
+		<th>
+			<a href="tiki-contacts.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'nickname_desc'}nickname_asc{else}nickname_desc{/if}">{tr}Nickname{/tr}</a>
+		</th>
+		{foreach from=$exts item=ext key=k}
+			{if $ext.show eq 'y'}
+				<th>
+					<a>{$ext.tra}</a>
+				</th>
 			{/if}
 		{/foreach}
-	</table>
+		
+		{if $view eq 'list'}
+			<th>{tr}Groups{/tr}</th>
+		{/if}
+		
+		<th>{tr}Action{/tr}</th>
+	</tr>
 	
-	<div class="mini">
-		{if $prev_offset >= 0}
-			[<a class="prevnext" href="tiki-contacts.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}Prev{/tr}</a>]
-			&nbsp;
-		{/if}
-		{tr}Page{/tr}: {$actual_page}/{$cant_pages}
-		{if $next_offset >= 0}
-			&nbsp;
-			[<a class="prevnext" href="tiki-contacts.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}Next{/tr}</a>]
-		{/if}
-
-		{if $prefs.direct_pagination eq 'y'}
-			<br />
-			{section loop=$cant_pages name=foo}
-				{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
-				<a class="prevnext" href="tiki-contacts.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">{$smarty.section.foo.index_next}</a>
-				&nbsp;
+	{cycle values="odd,even" print=false}
+	{foreach key=k item=channels from=$all}
+		{if count($channels)}
+			{if $view neq 'list'}
+				<tr>
+					<td colspan="6" style="font-size:80%;color:#999;">
+						{tr}from{/tr} <b>{$k}</b>
+					</td>
+				</tr>
+			{/if}
+			{section name=user loop=$channels}
+				<tr>
+					<td class="{cycle advance=false}">
+						<a class="link" href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;contactId={$channels[user].contactId}">{$channels[user].firstName}</a>
+					</td>
+					<td class="{cycle advance=false}">
+						<a class="link" href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;contactId={$channels[user].contactId}">{$channels[user].lastName}</a>
+					</td>
+					<td class="{cycle advance=false}">
+						<a class="link" href="mailto:{$channels[user].email}">{$channels[user].email}</a>
+					</td>
+					<td class="{cycle advance=false}">
+						{$channels[user].nickname}
+					</td>
+					{foreach from=$exts item=ext key=e}
+						{if $ext.show eq 'y'}
+							<td class="{cycle advance=false}">{$channels[user].ext[$e]}</td>
+						{/if}
+					{/foreach}
+					{if $view eq 'list'}
+						<td class="{cycle advance=false}">
+							{if isset($channels[user].groups)}
+								{foreach item=it name=gr from=$channels[user].groups}
+									{$it}
+									{if $smarty.foreach.gr.index+1 ne $smarty.foreach.gr.last}, {/if}
+								{/foreach}
+							{else}
+								&nbsp;
+							{/if}
+						</td>
+					{/if}
+					
+					<td class="{cycle advance=false}">&nbsp;
+						{if $channels[user].user eq $user}
+							<a href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;contactId={$channels[user].contactId}" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
+							<a href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;remove={$channels[user].contactId}" style="margin-left:20px;" title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
+						{elseif $tiki_p_admin eq 'y'}
+							<a href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;remove={$channels[user].contactId}" style="margin-left:36px;" title="{tr}Delete{/tr}">{icon _id='cross_admin' alt='{tr}Delete{/tr}'}</a>
+						{/if}
+					</td>
+				</tr>
 			{/section}
+		{else}
+			<tr class="odd">
+				<td>{tr}No records found.{/tr}</td>
+			</tr>
 		{/if}
-	</div>
+	{/foreach}
+</table>
+	
+<div class="mini">
+	{if $prev_offset >= 0}
+		[<a class="prevnext" href="tiki-contacts.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}Prev{/tr}</a>]
+		&nbsp;
+	{/if}
+	{tr}Page{/tr}: {$actual_page}/{$cant_pages}
+	{if $next_offset >= 0}
+		&nbsp;
+		[<a class="prevnext" href="tiki-contacts.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}Next{/tr}</a>]
+	{/if}
+	{if $prefs.direct_pagination eq 'y'}
+		<br />
+		{section loop=$cant_pages name=foo}
+			{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
+			<a class="prevnext" href="tiki-contacts.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">{$smarty.section.foo.index_next}</a>
+			&nbsp;
+		{/section}
+	{/if}
 </div>
 
 {literal}
