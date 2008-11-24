@@ -23,7 +23,7 @@ function wikiplugin_sheet_info() {
 		'name' => tra('Sheet'),
 		'documentation' => 'PluginSheet',
 		'description' => tra('Displays the content of a spreadsheet in the page.'),
-		'prefs' => array( 'wikiplugin_sheet', 'feature_sheets' ),
+		'prefs' => array( 'wikiplugin_sheet', 'feature_sheet' ),
 		'body' => tra('Sheet Heading'),
 		'params' => array(
 			'id' => array(

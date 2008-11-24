@@ -13,7 +13,7 @@ require_once ('tiki-setup.php');
 require_once ('lib/sheet/grid.php');
 
 if ($prefs['feature_sheet'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_sheets");
+	$smarty->assign('msg', tra("This feature is disabled").": feature_sheet");
 
 	$smarty->display("error.tpl");
 	die;
@@ -42,7 +42,7 @@ if (!isset($_REQUEST["sheetId"])) {
 }
 
 if ($tiki_p_view_sheet != 'y') {
-	$smarty->assign('msg', tra("Access Denied").": feature_sheets");
+	$smarty->assign('msg', tra("Access Denied").": feature_sheet");
 
 	$smarty->display("error.tpl");
 	die;
@@ -68,7 +68,7 @@ $smarty->assign('chart_enabled', (function_exists('imagepng') || function_exists
 // If we are editing an existing gallery prepare smarty variables
 if (isset($_REQUEST["edit_mode"]) && $_REQUEST["edit_mode"]) {
 	if ($tiki_p_edit_sheet != 'y') {
-		$smarty->assign('msg', tra("Access Denied").": feature_sheets");
+		$smarty->assign('msg', tra("Access Denied").": feature_sheet");
 
 		$smarty->display("error.tpl");
 		die;
@@ -105,7 +105,7 @@ if (isset($_REQUEST["edit_mode"]) && $_REQUEST["edit_mode"]) {
 // Process the insertion or modification of a gallery here
 if (isset($_REQUEST["edit"])) {
 	if ($tiki_p_edit_sheet != 'y') {
-		$smarty->assign('msg', tra("Access Denied").": feature_sheets");
+		$smarty->assign('msg', tra("Access Denied").": feature_sheet");
 
 		$smarty->display("error.tpl");
 		die;
