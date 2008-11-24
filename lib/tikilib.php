@@ -5084,7 +5084,7 @@ class TikiLib extends TikiDB {
 			$params_string = substr( $params_string, $pos + 1 );
 			$params_string = ltrim( $params_string );
 
-			if( $params_string{0} == '"' ) {
+			if( !empty($params_string) && $params_string{0} == '"' ) {
 				$quote = 0;
 				// Parameter between quotes, find closing quote not escaped by a \
 				while( false !== $quote = strpos( $params_string, '"', $quote + 1 ) ) {

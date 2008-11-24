@@ -185,7 +185,7 @@ function wikiplugin_trackerlist_info() {
 }
 
 function wikiplugin_trackerlist($data, $params) {
-	global $smarty, $tikilib, $dbTiki, $userlib, $tiki_p_admin_trackers, $prefs, $_REQUEST, $tiki_p_view_trackers, $user, $page, $tiki_p_tracker_vote_ratings, $tiki_p_tracker_view_ratings, $trklib, $tiki_p_traker_vote_rating;
+	global $smarty, $tikilib, $dbTiki, $userlib, $tiki_p_admin_trackers, $prefs, $_REQUEST, $tiki_p_view_trackers, $user, $page, $tiki_p_tracker_vote_ratings, $tiki_p_tracker_view_ratings, $trklib, $tiki_p_traker_vote_rating, $tiki_p_export_tracker;
 	require_once("lib/trackers/trackerlib.php");
 	global $notificationlib;  include_once('lib/notifications/notificationlib.php');//needed if plugin tracker after plugin trackerlist
 	extract ($params,EXTR_SKIP);
@@ -520,15 +520,25 @@ function wikiplugin_trackerlist($data, $params) {
 		$smarty->assign_by_ref('filterfield',$exactvalue);
 		$smarty->assign_by_ref('listfields', $listfields);
 		$smarty->assign_by_ref('popupfields', $popupfields);
-		if (!empty($export)) {
-			$exportUrl = "tiki-view_tracker.php?trackerId=$trackerId&amp;displayedFields=$fields&amp;cookietab=3";
-			foreach ($filterfield as $i=>$fieldId) {
-				$exportUrl .= "&amp;f_$fieldId=";
-				if (empty($filtervalue[$i])) {
-					$exportUrl .= $exactvalue[$i];
-				} else {
-					$exportUrl .= $filtervalue[$i];
+		if (!empty($export) && $tiki_p_export_tracker == 'y') {
+			$exportUrl = "tiki-view_tracker.php?trackerId=$trackerId&amp;cookietab=3";
+			if (!empty($fields)) 
+				$exportUrl .= "&amp;displayedFields=$fields";
+			if (is_array($filterfield)) {
+				foreach ($filterfield as $i=>$fieldId) {
+					$exportUrl .= "&amp;f_$fieldId=";
+					if (empty($filtervalue[$i])) {
+						$exportUrl .= $exactvalue[$i];
+					} else {
+						$exportUrl .= $filtervalue[$i];
+					}
 				}
+			} elseif(!empty($filterfield)) {
+				$exportUrl .= "&amp;f_$filterfield=";
+				if (empty($filtervalue))
+					$exportUrl .= $exactvalue;
+				else
+					$exportUrl .= $filtervalue;
 			}
 			$smarty->assign('exportUrl', $exportUrl);
 		}
