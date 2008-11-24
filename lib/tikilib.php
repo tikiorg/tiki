@@ -6908,7 +6908,7 @@ class TikiLib extends TikiDB {
 						// Generate the toc entry link
 						$tocentry_link = '#'.$tocentry['id'];
 						if ( $tocentry['pagenum'] > 1 ) {
-							$tocentry_link = $PHP_SELF.'?page='.$page.'&pagenum='.$tocentry['pagenum'].$tocentry_link;
+							$tocentry_link = $_SERVER['PHP_SELF'].'?page='.$page.'&pagenum='.$tocentry['pagenum'].$tocentry_link;
 						}
 						if ( $maketoc_args['nolinks'] != 'y' ) {
 							$tocentry_title = "<a href='$tocentry_link' class='link'>".$tocentry_title.'</a>';
