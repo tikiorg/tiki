@@ -358,6 +358,8 @@ categories = {$catsdump}
 </form>
 
 {if $trackerId}
+{include file=tiki-export_tracker.tpl}
+
 <h2>{tr}Import CSV data{/tr}</h2>
 <form action="tiki-import_tracker.php?trackerId={$trackerId}" method="post" enctype="multipart/form-data">
 <table class="normal">
