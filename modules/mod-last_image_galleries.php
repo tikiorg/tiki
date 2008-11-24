@@ -7,7 +7,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
-if (empty($imagegallib) or !is_object($imagegallib)) include_once 'lib/imagegals/imagegallib.php';
+global $imagegallib; include_once 'lib/imagegals/imagegallib.php';
 $ranking = $imagegallib->list_visible_galleries(0, $module_rows, 'lastModif_desc', $user, '');
 
 $smarty->assign('modLastGalleries', $ranking["data"]);
