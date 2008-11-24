@@ -11,6 +11,9 @@ close();
 	{elseif $errortype eq 401 and !empty($prefs.permission_denied_url)}
 		{php}global $prefs; header('Location:'.$prefs['permission_denied_url']); exit; {/php}
 	{else}
+		{if $errortype eq 401 && empty($user) and  $prefs.permission_denied_login_box eq 'y'} {* permission denied *}
+			{assign var='errortitle' value='{tr}Please login{/tr}' }
+		{/if}
 		<br />
 		<div class="cbox">
 			<div class="cbox-title">{icon _id=exclamation alt={tr}Error{/tr} style=vertical-align:middle} {$errortitle|default:"{tr}Error{/tr}"}</div>
@@ -44,12 +47,6 @@ close();
 
 					<br />
 				{else}
-					{if ( isset($msg) ) }
-						<div class="simplebox error">
-							{$msg}
-						</div>
-						<br /><br />
-					{/if}
 					{if $errortype eq 401 && empty($user) and  $prefs.permission_denied_login_box eq 'y'} {* permission denied *}
 						{include file=tiki-login.tpl}
 					{elseif !isset($user) }
@@ -57,6 +54,13 @@ close();
 							{tr}You are not logged in.{/tr} <a href="tiki-login_scr.php">{tr}Go to Login Page{/tr}</a>
 						</div>
 						<br /><br />
+					{else}
+					{if ( isset($msg) ) }
+						<div class="simplebox error">
+							{$msg}
+						</div>
+						<br /><br />
+					{/if}
 					{/if}
 				{/if}
 				{if $page and $create eq 'y' and ($tiki_p_admin eq 'y' or $tiki_p_admin_wiki eq 'y' or $tiki_p_edit eq 'y')}<a href="tiki-editpage.php?page={$page}" class="linkmenu">{tr}Create this page{/tr}</a> {tr}(page will be orphaned){/tr}<br /><br />{/if}
