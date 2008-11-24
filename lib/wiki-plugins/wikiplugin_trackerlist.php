@@ -180,6 +180,11 @@ function wikiplugin_trackerlist_info() {
 				'name' => tra('Mode'),
 				'description' => 'y|n'.' '.tra('If y, value will be truncated'),
 			),
+			'export' => array(
+				'required' => false,
+				'name' => tra('Export Button'),
+				'description' => 'y|n',
+			),
 		),
 	);
 }
