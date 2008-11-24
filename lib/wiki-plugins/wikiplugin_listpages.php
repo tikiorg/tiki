@@ -107,7 +107,7 @@ function wikiplugin_listpages($data, $params) {
 	} 
 	extract($params,EXTR_SKIP);
 	if( !isset($translations) ) $translations = null;
-	$filter == array();
+	$filter = array();
 	if (!isset($initial)) {
 		if (isset($_REQUEST['initial'])) {
 			$initial = $_REQUEST['initial'];
