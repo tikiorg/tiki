@@ -6353,7 +6353,7 @@ class TikiLib extends TikiDB {
 		}
 
 		if (!$simple_wiki) {
-			$this->parse_data_process_maketoc( $data, $options, $language, $options['page'] );
+			$this->parse_data_process_maketoc( $data, $options, $language, $options['page'], $is_html );
 
 		} // closing if ($simple_wiki)
 
@@ -6372,7 +6372,7 @@ class TikiLib extends TikiDB {
 		return $data;
 	}
 
-	function parse_data_process_maketoc( &$data, $options, $language='', $page ='' ) {
+	function parse_data_process_maketoc( &$data, $options, $language='', $page ='', $is_html=false ) {
 
 		global $prefs;
 
@@ -6493,7 +6493,7 @@ class TikiLib extends TikiDB {
 			$inScript -= substr_count(strtolower($line), "</script>");
 
 			// If the first character is ' ' and we are not in pre then we are in pre
-			if (substr($line, 0, 1) == ' ' && $prefs['feature_wiki_monosp'] == 'y' && $inTable == 0 && $inPre == 0 && $inComment == 0 ) {
+			if (substr($line, 0, 1) == ' ' && $prefs['feature_wiki_monosp'] == 'y' && $inTable == 0 && $inPre == 0 && $inComment == 0 && !$is_html) {
 				// Close open paragraph and lists, but not div's
 				$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 1, 0);
 
