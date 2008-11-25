@@ -41,7 +41,7 @@ if ($prefs['feature_categories'] == 'y') {
 			$_REQUEST['cat_categories'][] = $prefs['wikiapproval_outofsync_category'];	
 		}
 	}
-	$categlib->update_object_categories($_REQUEST['cat_categories'], $cat_objid, $cat_type, $cat_desc, $cat_name, $cat_href);
+	$categlib->update_object_categories(isset($_REQUEST['cat_categories'])?$_REQUEST['cat_categories']:'', $cat_objid, $cat_type, $cat_desc, $cat_name, $cat_href);
 
 	$cats = $categlib->get_object_categories($cat_type, $cat_objid);
 	if (isset($section) && $section == 'wiki' && $prefs['feature_wiki_mandatory_category'] > 0)

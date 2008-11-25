@@ -1,10 +1,14 @@
-{title admpage="calendar"}{tr}Admin Calendars{/tr}{/title}
-
-{if $calendarId}
-	<div class="navbar">
-		{button _text="{tr}Create Calendar{/tr}" href="tiki-admin_calendars.php?show=mod"}
-	</div>
+{if !empty($calendarId)}
+	{title url="tiki-admin_calendars.php?calendarId=$calendarId" admpage="calendar"}{tr}Admin Calendars{/tr}{/title}
+{else}
+	{title url="tiki-admin_calendars.php" admpage="calendar"}{tr}Admin Calendars{/tr}{/title}
 {/if}
+<div class="navbar">
+{if !empty($calendarId)}
+	{button _text="{tr}Create Calendar{/tr}" href="tiki-admin_calendars.php?show=mod"}
+{/if}
+{button _text="{tr}View Calendars{/tr}" href="tiki-calendar.php"}
+</div>
 
 {if $prefs.feature_tabs eq 'y'}
 	{cycle name=tabs values="1,2,3" print=false advance=false reset=true}

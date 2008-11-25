@@ -62,7 +62,7 @@ if (isset($_REQUEST["save"])) {
 		}
 	}
 	$_REQUEST["calendarId"] = $calendarlib->set_calendar($_REQUEST["calendarId"],$user,$_REQUEST["name"],$_REQUEST["description"],$customflags,$options);
-	$groupalertlib->AddGroup ('calendar',$_REQUEST["calendarId"],$_REQUEST['groupforAlert'],$_REQUEST['showeachuser']);
+	$groupalertlib->AddGroup ('calendar',$_REQUEST["calendarId"],$_REQUEST['groupforAlert'], !empty($_REQUEST['showeachuser'])?$_REQUEST['showeachuser']:'n');
 	if ($_REQUEST['personal'] == 'y') {
 		$userlib->assign_object_permission("Registered", $_REQUEST["calendarId"], "calendar", "tiki_p_view_calendar");
 		$userlib->assign_object_permission("Registered", $_REQUEST["calendarId"], "calendar", "tiki_p_view_events");
