@@ -1,13 +1,34 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.231.2.43 2008-03-21 21:50:38 sylvieg Exp $
-//this script may only be included - so its better to die if called directly.
+/**
+ * Tracker Library
+ *
+ * $Id$
+ * Functions to support accessing and process the Trackers.
+ *
+ * @package		TikiWiki
+ * @subpackage	Trackers
+ * @author		Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+ * @copyright	Copyright (c) 2002-2008  All Rights Reserved.
+ * 				See copyright.txt for details and a complete list of authors.
+ * @license		LGPL - See license.txt for details.
+ * @version		SVN: $Rev$
+ * @filesource
+ * @link		http://dev.tikiwiki.org/Trackers
+ * @since		Always
+ */
+/**
+ * This script may only be included, so it is better to die if called directly.
+ */
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
 
-
-
+/**
+ * TrackerLib Class
+ *
+ * This class extends the TikiLib class.
+ */
 class TrackerLib extends TikiLib {
 
 	var $trackerinfo_cache;
