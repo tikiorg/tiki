@@ -38,7 +38,7 @@
 	{if $first eq 'y'}
                 <span class="post_reads"><b>{tr}Reads{/tr}</b>: {$comment.hits}</span>
 	{else}
-		<span class="back_to_top"><a href="#tiki-top">{html_image file="img/icon_back_top.gif" border='0' alt="{tr}top of page{/tr}"}</a></span>
+		<span class="back_to_top"><a href="#tiki-top" title="{tr}top of page{/tr}">{icon  _id='resultset_up' alt="{tr}top of page{/tr}"}</a></span>
 	{/if}
 
 	</div>
