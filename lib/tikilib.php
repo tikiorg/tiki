@@ -6353,7 +6353,7 @@ class TikiLib extends TikiDB {
 		}
 
 		if (!$simple_wiki) {
-			$this->parse_data_process_maketoc( $data, $options, $language, $options['page'], $is_html );
+			$this->parse_data_process_maketoc( $data, $options, $language);
 
 		} // closing if ($simple_wiki)
 
@@ -6372,7 +6372,7 @@ class TikiLib extends TikiDB {
 		return $data;
 	}
 
-	function parse_data_process_maketoc( &$data, $options, $language='', $page ='', $is_html=false ) {
+	function parse_data_process_maketoc( &$data, $options) {
 
 		global $prefs;
 
@@ -6493,7 +6493,7 @@ class TikiLib extends TikiDB {
 			$inScript -= substr_count(strtolower($line), "</script>");
 
 			// If the first character is ' ' and we are not in pre then we are in pre
-			if (substr($line, 0, 1) == ' ' && $prefs['feature_wiki_monosp'] == 'y' && $inTable == 0 && $inPre == 0 && $inComment == 0 && !$is_html) {
+			if (substr($line, 0, 1) == ' ' && $prefs['feature_wiki_monosp'] == 'y' && $inTable == 0 && $inPre == 0 && $inComment == 0 && !$options['is_html']) {
 				// Close open paragraph and lists, but not div's
 				$this->close_blocks($data, $in_paragraph, $listbeg, $divdepth, 1, 1, 0);
 
@@ -6682,7 +6682,7 @@ class TikiLib extends TikiDB {
 						$divstate = substr($line, $hdrlevel, 1);
 						if ($divstate == '+' || $divstate == '-') {
 							// OK. Must insert flipper after HEADER, and then open new div...
-							$thisid = 'id' . ereg_replace('[^a-zA-z0-9]', '',urlencode($page)) .$nb_hdrs;
+							$thisid = 'id' . ereg_replace('[^a-zA-z0-9]', '',urlencode($options['page'])) .$nb_hdrs;
 							$aclose = '<a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($divstate == '-' ? '+' : '-') . ']</a>';
 							$aclose2 = '<div id="' . $thisid . '" class="showhide_heading" style="display:' . ($divstate == '+' ? 'block' : 'none') . ';">';
 							$aclose2 = $aclose2 . '<script type="text/javascript">'."\n".'<!--//--><![CDATA[//><!--'."\n".'setheadingstate(\''. $thisid .'\')'."\n".' //--><!]]>'."\n".'</script>';
@@ -6729,8 +6729,8 @@ class TikiLib extends TikiDB {
 							global $smarty;
 							include_once('lib/smarty_tiki/function.icon.php');
 							$button = '<div class="icon_edit_section"><a href="tiki-editpage.php?';
-							if (!empty($page)) {
-								$button .= 'page='.urlencode($page).'&amp;';
+							if (!empty($options['page'])) {
+								$button .= 'page='.urlencode($options['page']).'&amp;';
 							}
 							$button .= 'hdr='.$nb_hdrs.'">'.smarty_function_icon(array('_id'=>'page_edit', 'alt'=>tra('Edit Section')), $smarty).'</a></div>';
 						} else {
@@ -6836,7 +6836,7 @@ class TikiLib extends TikiDB {
 
 			// Handle old type definition for type "box" (and preserve environment for the title also)
 			if ( $maketoc_length > 12 && strtolower(substr($maketoc_string, 8, 4)) == ':box' ) {
-				$maketoc_string = "{maketoc type=box showhide=y title='".tra('index', $language, true).'"'.substr($maketoc_string, 12);
+				$maketoc_string = "{maketoc type=box showhide=y title='".tra('index', $options['language'], true).'"'.substr($maketoc_string, 12);
 			}
 
 			$maketoc_string = str_replace('&quot;', '"', $maketoc_string);
@@ -6852,7 +6852,7 @@ class TikiLib extends TikiDB {
 				$maketoc_args = array(
 						'type' => '',
 						'maxdepth' => 0, // No limit
-						'title' => tra('Table of contents', $language, true),
+						'title' => tra('Table of contents', $options['language'], true),
 						'showhide' => '',
 						'nolinks' => '',
 						'nums' => ''
@@ -6868,8 +6868,8 @@ class TikiLib extends TikiDB {
 
 				if ( $maketoc_args['title'] != '' ) {
 					// Translate maketoc title
-					$maketoc_summary = ' summary="'.tra($maketoc_args['title'], $language, true).'"';
-					$maketoc_title = "<div id='toctitle'><h3>".tra($maketoc_args['title'], $language).'</h3></div>';
+					$maketoc_summary = ' summary="'.tra($maketoc_args['title'], $options['language'], true).'"';
+					$maketoc_title = "<div id='toctitle'><h3>".tra($maketoc_args['title'], $options['language']).'</h3></div>';
 				} else {
 					$maketoc_summary = '';
 					$maketoc_title = '';
@@ -6908,7 +6908,7 @@ class TikiLib extends TikiDB {
 						// Generate the toc entry link
 						$tocentry_link = '#'.$tocentry['id'];
 						if ( $tocentry['pagenum'] > 1 ) {
-							$tocentry_link = $_SERVER['PHP_SELF'].'?page='.$page.'&pagenum='.$tocentry['pagenum'].$tocentry_link;
+							$tocentry_link = $_SERVER['PHP_SELF'].'?page='.$options['page'].'&pagenum='.$tocentry['pagenum'].$tocentry_link;
 						}
 						if ( $maketoc_args['nolinks'] != 'y' ) {
 							$tocentry_title = "<a href='$tocentry_link' class='link'>".$tocentry_title.'</a>';
