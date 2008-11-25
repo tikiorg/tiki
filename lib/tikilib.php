@@ -6353,7 +6353,7 @@ class TikiLib extends TikiDB {
 		}
 
 		if (!$simple_wiki) {
-			$this->parse_data_process_maketoc( $data, $options, $language);
+			$this->parse_data_process_maketoc( $data, $options);
 
 		} // closing if ($simple_wiki)
 
