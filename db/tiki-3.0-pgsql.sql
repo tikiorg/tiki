@@ -359,6 +359,7 @@ CREATE TABLE "tiki_banners" (
   "created" bigint default NULL,
   "maxImpressions" integer default NULL,
   "impressions" integer default NULL,
+  "maxClicks" integer default NULL,
   "clicks" integer default NULL,
   "zone" varchar(40) default NULL,
   PRIMARY KEY ("bannerId"),
@@ -496,8 +497,9 @@ CREATE TABLE "tiki_calendar_items" (
   "user" varchar(200) default '',
   "created" bigint NOT NULL default '0',
   "lastmodif" bigint NOT NULL default '0',
+  "allday" smallint NOT NULL default '0',
   PRIMARY KEY ("calitemId")
-) ENGINE=MyISAM  ;
+) ENGINE=MyISAM ;
 
 CREATE  INDEX "tiki_calendar_items_calendarId" ON "tiki_calendar_items"("calendarId");
 
@@ -985,7 +987,6 @@ CREATE TABLE "tiki_file_galleries" (
   "show_files" char(1) default NULL,
   "show_explorer" char(1) default NULL,
   "show_path" char(1) default NULL,
-  "groupforAlert" varchar(255) default NULL,
   PRIMARY KEY ("galleryId")
 ) ENGINE=MyISAM  ;
 
@@ -1187,6 +1188,7 @@ CREATE TABLE "tiki_galleries" (
   "showfilesize" char(1) NOT NULL default 'n',
   "showfilename" char(1) NOT NULL default 'n',
   "defaultscale" varchar(10) NOT NULL DEFAULT 'o',
+  "showcategories" char(1) NOT NULL default 'n', 
   PRIMARY KEY ("galleryId")
 ) ENGINE=MyISAM  ;
 
@@ -1800,6 +1802,12 @@ INSERT INTO "tiki_menu_options" ("optionId","menuId","type","name","url","positi
 
 INSERT INTO "tiki_menu_options" ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (129,42,'r','Admin','tiki-admin.php',1050,'feature_integrator','tiki_p_admin_integrator','',0);
 
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'r','Admin','tiki-admin.php',1050,'feature_edit_templates','tiki_p_edit_templates','',0);
+
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'r','Admin','tiki-admin.php',1050,'feature_view_tpl','tiki_p_edit_templates','',0);
+
+INSERT INTO "tiki_menu_options" ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'r','Admin','tiki-admin.php',1050,'feature_editcss','tiki_p_create_css','',0);
+
 INSERT INTO "tiki_menu_options" ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (130,42,'o','Admin home','tiki-admin.php',1051,'','tiki_p_admin','',0);
 
 INSERT INTO "tiki_menu_options" ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (131,42,'o','Live support','tiki-live_support_admin.php',1055,'feature_live_support','tiki_p_live_support_admin','',0);
@@ -1839,6 +1847,10 @@ INSERT INTO "tiki_menu_options" ("optionId","menuId","type","name","url","positi
 INSERT INTO "tiki_menu_options" ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (149,42,'o','Banners','tiki-list_banners.php',1150,'feature_banners','tiki_p_admin_banners','',0);
 
 INSERT INTO "tiki_menu_options" ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (150,42,'o','Edit templates','tiki-edit_templates.php',1155,'feature_edit_templates','tiki_p_edit_templates','',0);
+
+INSERT INTO "tiki_menu_options" ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (147,42,'o','View Templates','tiki-edit_templates.php',1155,'feature_view_tpl','tiki_p_edit_templates','',2);
+
+INSERT INTO "tiki_menu_options" ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (146,42,'o','Edit CSS','tiki-edit_css.php',1158,'feature_editcss','tiki_p_create_css','',2);
 
 INSERT INTO "tiki_menu_options" ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (151,42,'o','Drawings','tiki-admin_drawings.php',1160,'feature_drawings','tiki_p_admin_drawings','',0);
 
@@ -2172,7 +2184,20 @@ CREATE TABLE "tiki_polls" (
   "votes" integer default NULL,
   "active" char(1) default NULL,
   "publishDate" bigint default NULL,
+  "anonym" varchar(5) CHECK ("anonym" IN ( 'a', 'u', 'i', 'c' )) NOT NULL DEFAULT 'u',
   PRIMARY KEY ("pollId")
+) ENGINE=MyISAM  ;
+
+
+DROP TABLE "tiki_poll_votes";
+
+CREATE TABLE "IF" NOT EXISTS tiki_poll_votes (
+  "pollId" bigint NOT NULL,
+  "optionId" bigint NOT NULL,
+  "voteId" bigserial,
+  "identification" varchar(300) NOT NULL,
+  "time" bigint NOT NULL,
+  PRIMARY KEY ("voteId")
 ) ENGINE=MyISAM  ;
 
 
@@ -2777,7 +2802,7 @@ CREATE TABLE "tiki_tracker_fields" (
   "trackerId" bigint NOT NULL default '0',
   "name" varchar(255) default NULL,
   "options" text,
-  "type" char(1) default NULL,
+  "type" char(15) default NULL,
   "isMain" char(1) default NULL,
   "isTblVisible" char(1) default NULL,
   "position" smallint default NULL,
@@ -2792,7 +2817,8 @@ CREATE TABLE "tiki_tracker_fields" (
   "visibleBy" text,
   "editableBy" text,
   "descriptionIsParsed" char(1) default 'n',
-  PRIMARY KEY ("fieldId")
+  PRIMARY KEY ("fieldId"),
+  "INDEX" trackerId (trackerId),
 ) ENGINE=MyISAM  ;
 
 
@@ -2812,7 +2838,8 @@ CREATE TABLE "tiki_tracker_item_attachments" (
   "comment" varchar(250) default NULL,
   "longdesc" bytea,
   "version" varchar(40) default NULL,
-  PRIMARY KEY ("attId")
+  PRIMARY KEY ("attId"),
+  "INDEX" itemId (itemId)
 ) ENGINE=MyISAM  ;
 
 
@@ -2851,7 +2878,8 @@ CREATE TABLE "tiki_tracker_items" (
   "created" bigint default NULL,
   "status" char(1) default NULL,
   "lastModif" bigint default NULL,
-  PRIMARY KEY ("itemId")
+  PRIMARY KEY ("itemId"),
+  "INDEX" trackerId (trackerId)
 ) ENGINE=MyISAM  ;
 
 
@@ -2882,7 +2910,6 @@ CREATE TABLE "tiki_trackers" (
   "showAttachments" char(1) default NULL,
   "items" bigint default NULL,
   "showComments" char(1) default NULL,
-  "groupforAlert" varchar(255) default NULL,
   "orderAttachments" varchar(255) NOT NULL default 'filename,created,filesize,hits,desc',
   PRIMARY KEY ("trackerId")
 ) ENGINE=MyISAM  ;
@@ -3615,6 +3642,8 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_comment_tracker_items', 'Can insert comments for tracker items', 'basic', 'trackers');
 
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_tracker_view_comments', 'Can view tracker items comments', 'basic', 'trackers');
+
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_create_tracker_items', 'Can create new items for trackers', 'registered', 'trackers');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_list_trackers', 'Can list trackers', 'basic', 'trackers');
@@ -3632,6 +3661,8 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_trackers_pending', 'Can view trackers pending items', 'editors', 'trackers');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_watch_trackers', 'Can watch tracker', 'registered', 'trackers');
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_export_tracker', 'Can export tracker items', 'registered', 'trackers');
 
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_wiki', 'Can admin the wiki', 'editors', 'wiki', 'y');
