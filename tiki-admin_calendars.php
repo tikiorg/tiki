@@ -48,8 +48,8 @@ if (isset($_REQUEST["save"])) {
 	$customflags["personal"] = $_REQUEST["personal"];
 	$customflags['customstatus'] = isset($_REQUEST['customstatus']) ? $_REQUEST['customstatus'] : 'y';
 	$options = $_REQUEST['options'];
-	if (!preg_match('/^[0-9a-fA-F]{3,6}$/',$options['customfgcolor'])) $options['customfgcolor'] = '000000';
-	if (!preg_match('/^[0-9a-fA-F]{3,6}$/',$options['custombgcolor'])) $options['custombgcolor'] = 'ffffff';
+	if (!preg_match('/^[0-9a-fA-F]{3,6}$/',$options['customfgcolor'])) $options['customfgcolor'] = '';
+	if (!preg_match('/^[0-9a-fA-F]{3,6}$/',$options['custombgcolor'])) $options['custombgcolor'] = '';
 	$options['startday'] = $_REQUEST['startday_Hour']*60*60;
 	$options['endday'] = $_REQUEST['endday_Hour']*60*60 - 1;
 
@@ -111,8 +111,8 @@ if ($_REQUEST["calendarId"]) {
 	$info["customsubscription"] = 'n';
 	$info['customstatus'] = 'y';
 	$info["customurl"] = 'n';
-	$info["customfgcolor"] = '000000';
-	$info["custombgcolor"] = 'ffffff';
+	$info["customfgcolor"] = '';
+	$info["custombgcolor"] = '';
 	$info["show_calname"] = 'y';
 	$info["show_description"] = 'y';
 	$info["show_category"] = 'n';

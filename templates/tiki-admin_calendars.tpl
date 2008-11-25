@@ -158,10 +158,10 @@
 <select name="endday_Hour">{foreach item=h from=$hours}<option value="{$h}"{if $h eq $endday} selected="selected"{/if}>{$h}</option>{/foreach}</select>{tr}h{/tr}
 </td></tr>
 <tr class="formcolor"><td>{tr}Custom foreground color{/tr}:</td><td>
-<input type="text" name="options[customfgcolor]" value="{$customfgcolor}" size="6" />
+<input type="text" name="options[customfgcolor]" value="{$customfgcolor}" size="6" /><i>{tr}Ex:{/tr} FFFFFF</i>
 </td></tr>
 <tr class="formcolor"><td>{tr}Custom background color{/tr}:</td><td>
-<input type="text" name="options[custombgcolor]" value="{$custombgcolor}" size="6" />
+<input type="text" name="options[custombgcolor]" value="{$custombgcolor}" size="6" /><i>{tr}Ex:{/tr} 000000</i>
 </td></tr>
 <tr class="formcolor"><td>{tr}Status{/tr}</td><td>
 <select name="customstatus">

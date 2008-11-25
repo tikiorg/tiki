@@ -49,33 +49,25 @@ $focuscell = TikiLib::make_time(0,0,0,$focus_month,$focus_day,$focus_year);
 $smarty->assign('focusdate', $focusdate);
 $smarty->assign('focuscell', $focuscell);
 
-if ( isset($calendarViewMode) && $calendarViewMode != '' ) {
-	$smarty->assign('viewmode', $calendarViewMode);
-} else {
-	if (!isset($_SESSION['CalendarViewMode']) or !$_SESSION['CalendarViewMode']) {
-		$_SESSION['CalendarViewMode'] = $prefs['calendar_view_mode'];
-	}
-
-	if (isset($_REQUEST["viewmode"]) and $_REQUEST["viewmode"]) {
-		$_SESSION['CalendarViewMode'] = $_REQUEST["viewmode"];
-	}
-
-	if (!isset($_SESSION['CalendarViewMode']) or !$_SESSION['CalendarViewMode']) {
-		$_SESSION['CalendarViewMode'] = 'month';
-	}
-	$smarty->assign('viewmode', $_SESSION['CalendarViewMode']);
+if (!empty($_REQUEST['viewmode'])) {
+	$calendarViewMode = $_REQUEST['viewmode'];
+} elseif (!empty($_SESSION['CalendarViewMode'])) {
 	$calendarViewMode = $_SESSION['CalendarViewMode'];
+} else {
+	$calendarViewMode = $prefs['calendar_view_mode'];
 }
+$_SESSION['CalendarViewMode'] = $calendarViewMode;
+$smarty->assign_by_ref('viewmode', $calendarViewMode);
 
 if (isset($_REQUEST["viewlist"])) {
-	$viewlist = $_REQUEST["viewlist"];
+	$viewlist = $_REQUEST['viewlist'];
 	$_SESSION['CalendarViewList'] = $viewlist;
 } elseif (!empty($_SESSION['CalendarViewList'])) {
 	$viewlist = $_SESSION['CalendarViewList'];
 } else {
 	$viewlist = "";
 }
-$smarty->assign_by_ref('viewlist', $_SESSION['CalendarViewList']);
+$smarty->assign_by_ref('viewlist', $viewlist);
 
 if (isset($_REQUEST["gbi"])) {
 	$group_by_item = $_REQUEST["gbi"];

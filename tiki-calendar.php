@@ -94,6 +94,9 @@ foreach ($rawcals["data"] as $cal_id=>$cal_data) {
 }
 if ($prefs['feature_categories'] == 'y' and isset($_REQUEST['calIds'])) {
 	$is_categorized = FALSE;
+	if (!is_array($_REQUEST['calIds'])) {
+		$_REQUEST['calIds'] = array($_REQUEST['calIds']);
+	}
 	foreach ($_REQUEST['calIds'] as $calId) {
 		$perms_array = $categlib->get_object_categories_perms($user, 'calendar', $calId);
 		if ($perms_array) {
