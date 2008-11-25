@@ -1419,14 +1419,8 @@ class ImageGalsLib extends TikiLib {
 		$maxRecords = -1;
 	    }
 
-	    // If the user is not admin then select `it` 's own galleries or public galleries
-	    if (($user != 'admin') and ($tiki_p_admin_galleries != 'y')) {
-		$whuser = "and `user`=? or `public`=?";
-		$bindvars=array('y',$user,'y');
-	    } else {
 		$whuser = "";
 		$bindvars=array('y');
-	    }
 
 	    if ($find) {
 		$findesc = '%' . $find . '%';
