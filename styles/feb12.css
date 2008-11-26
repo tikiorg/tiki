@@ -274,7 +274,7 @@ div#tiki-bot {}
 	text-align: left;
 	background: transparent;
 	vertical-align: top;
-	padding-top: 1em;;
+	/*padding-top: 1em;*/
 	padding-bottom: 0;
 	margin: 0}
 
@@ -289,7 +289,10 @@ div.floatleft {
 	float: left;
 	clear: none}
 
-#sitelogo {margin: auto !important}
+#sitelogo {
+	margin: auto !important;
+	padding-top: 20px}
+
 div#sitead {margin: auto}
 #sitead.floatright {padding-right: 100px}
 #sitead.floatleft {padding-left: 100px}
@@ -322,7 +325,7 @@ input[id="sl-login-pass"] {}
 
 #sitetitle {
 	font-size: 2.2em;
-	padding-top: 30px;
+	/*padding-top: 30px;*/
 	padding-bottom: 14px}
 
 * html #sitetitle { padding-top: 20px }

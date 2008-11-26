@@ -284,12 +284,12 @@ div#sitead {
 #siteloginbar {
 	text-align: right;
 	position: absolute;
-	bottom: 60px;
+	bottom: 3px;
 	right: 10px;
-	font-size: 80%}
+	font-size: 90%}
 
  #siteloginbar.logged-in {
-	bottom: 120px;
+	bottom: 3px;
 }
 
 #tiki-top {

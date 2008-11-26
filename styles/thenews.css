@@ -9,7 +9,8 @@
 
 /***** XHTML Elements ******/
 body {
-	background-color: white;
+	background: white;
+	color: #000;
 	font: 72% Georgia, serif;
 	text-align: center;
 }
@@ -225,26 +226,17 @@ ul.jumplinks a:focus, ul.jumplinks a:active {
 	text-align: left;
 }
 
-#sitetitle,
-#sitesubtitle {}
+.floatleft #sitetitle,
+.floatleft #sitesubtitle {padding-left: 20px}
 
-#sitetitle {
-	font-size: 2.4em;
-	padding-left: 1em;
-}
+#sitetitle {font-size: 2.4em}
+#sitesubtitle {font-size: 1.6em}
 
-#sitesubtitle {
-	font-size:1.6em;
-}
+#sitetitle a,
+#sitetitle a:link,
+#sitetitle a:visited {color: #000}
 
-#header a,
-#header a:visited {}
-
-#header a:hover {}
-
-#header-top {
-	/* height: set to preserve positions against page bg img, if any. */
-}
+#header-top {position: relative}
 
 /* Look & Feel options */
 #siteheader {
@@ -298,12 +290,12 @@ div#sitead {
 #siteloginbar {
 	text-align: right;
 	position: absolute;
-	bottom: 90px;
+	bottom: 3px;
 	right: 10px;
-	font-size: 80%}
+	font-size: 90%}
 
  #siteloginbar.logged-in {
-	bottom: 120px;
+	bottom: 3px;
 }
 
 

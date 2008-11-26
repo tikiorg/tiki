@@ -275,7 +275,7 @@ div#tiki-main #tikimidtbl {
 
 /* Site Header & Identity */
 
-/* #header-top {} */ 
+#header-top {position: relative} 
 
 #siteheader {
 	text-align: left;
@@ -345,12 +345,12 @@ div#sitead {
 #siteloginbar {
 	text-align: right;
 	position: absolute;
-	bottom: 110px;
+	bottom: 2px;
 	right: 10px;
-	font-size: 80%}
+	font-size: 90%}
 
 #siteloginbar.logged-in {
-	bottom: 140px;
+	bottom: 2px;
 }
 
 input[id="sl-login-user"],
