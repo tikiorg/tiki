@@ -78,10 +78,10 @@ $smarty->assign('find', $find);
 $maxRecords = 20;
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 
-if (!isset($_REQUEST["letter"])) {
+if (!isset($_REQUEST["initial"])) {
 	$contacts = $contactlib->list_contacts($user, $offset, $maxRecords, $sort_mode, $find);
 } else {
-	$contacts = $contactlib->list_contacts_by_letter($user, $offset, $maxRecords, $sort_mode, $_REQUEST["letter"]);
+	$contacts = $contactlib->list_contacts_by_letter($user, $offset, $maxRecords, $sort_mode, $_REQUEST["initial"]);
 }
 
 $cant_pages = ceil(count($contacts) / $maxRecords);
@@ -94,10 +94,6 @@ if (count($contacts) > ($offset + $maxRecords)) {
 } else {
 	$smarty->assign('next_offset', -1);
 }
-
-$letters = 'a-b-c-d-e-f-g-h-i-j-k-l-m-n-o-p-q-r-s-t-u-v-w-x-y-z';
-$letters = split('-', $letters);
-$smarty->assign('letters', $letters);
 
 // If offset is > 0 then prev_offset
 if ($offset > 0) {
