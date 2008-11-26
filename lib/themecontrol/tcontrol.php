@@ -19,6 +19,9 @@ class ThemeControlLib extends TikiLib {
 		$query = "insert into `tiki_theme_control_categs`(`categId`,`theme`) values(?,?)";
 		$themeoption = $theme;
 		if ($option) {
+			if ($option == tra('None')) {
+				$option = '';
+			}
 			$themeoption .= '/'.$option;
 		}
 		$this->query($query,array($categId,$themeoption));

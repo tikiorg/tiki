@@ -47,10 +47,10 @@ $smarty->assign_by_ref( "style_options", $loplist);
 if (isset($_REQUEST['assigcat'])) {
 	if (isset($_REQUEST['categId'])) {
 		check_ticket('theme-control');
-		if (!isset($_REQUEST['theme-option']) || $_REQUEST['theme-option'] == tra('None')) {
+		if (!isset($_REQUEST['theme-option'])) {
 			$option = '';
 		} else {
-			$option = $_REQUEST['theme-option'];
+			$option = $_REQUEST['theme-option'];	// including 'None'
 		}
 		$tcontrollib->tc_assign_category($_REQUEST['categId'], $_REQUEST['theme'], $option);
 	} else {
