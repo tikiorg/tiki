@@ -131,7 +131,7 @@ $smarty->assign_by_ref('showeachuser',$showeachuser);
 if ( ! isset($_REQUEST["calendarId"]) ) {
 	if (isset($_REQUEST['calitemId'])) {
 		$calID = $calendarlib->get_calendarid($_REQUEST['calitemId']);
-	} elseif (isset(S_REQUEST['viewcalitemId'])) {
+	} elseif (isset($_REQUEST['viewcalitemId'])) {
 		$calID = $calendarlib->get_calendarid($_REQUEST['viewcalitemId']);
 	}
 } elseif (isset($_REQUEST['calendarId'])) {
