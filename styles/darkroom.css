@@ -150,7 +150,8 @@ select {
 	background: #292929;
 	color: #F5F5F5;
 	font-size: 1em;
-	vertical-align: middle}
+	vertical-align: middle;
+}
 
 option {border: 0}
 select[multiple] {height: 10em}
@@ -1260,13 +1261,14 @@ ul.floatleft li {
 
 .navbar {line-height: 150%;margin-bottom: 10px;margin-top: 5px;}
 
-.navbar > a,
+.navbar > a .button,
 .button {
 	margin: 2px;
 	padding: 0 4px;
 	background:#4E4E4E url(darkroom/button.png) top left repeat-x;
 	border: 1px solid #3F3F3F;
-	border-top: 1px solid #818181}
+	border-top: 1px solid #818181;
+}
 .button {display: inline-block;}
 
 .navbar > a:hover{
@@ -1746,8 +1748,9 @@ span.commentstitle {
 
 /* Find */
 .subcomment {margin-left: 10px}
-.findtitle {float: left;}
-.findtable {padding: 15px 0;}
+.findtable {padding: 15px 0; float: left;}
+.findtable ul {list-style: none;padding:0; margin: 0;float: left;}
+.findtable ul li {float: left;}
 
 /* Help box*/
 div.commentsedithelp {
@@ -1872,7 +1875,6 @@ td.eventhumb img {
 	margin-right: 6px}
 
 /* ?? */
-div.thumbnails {}
 
 img.athumb {
 	border: 0;
@@ -1901,24 +1903,27 @@ div#browse_image {
 /***** File Galleries *****/
 
 div.thumbnailcontener {
+	border: 1px solid #292929;
+	overflow: hidden;
+	margin: 2px;
+	text-align: center;
 	height: 100% !important;
-	margin: 4px;
 }
+div#thumbnails {padding: 1px;}
 div.thumbnail {}
-div.thumbnamecontener, div.thumbimagecontener {
-	height: 100% !important;
-}
+div.thumbnamecontener, div.thumbimagecontener {}
 div.thumbnamecontener {}
-div.thumbname, div.thumbimage {}
+div.thumbname, div.thumbimage {padding: 4px;}
 div.thumbnamesub, div.thumbimagesub {}
 div.thumbnail:hover {}
 div.thumbnail:hover div.thumbnamecontener {}
 div.thumbimage img {}
+div.thumbinfosothers {font-size: 80%;}
 div.thumbinfos {}
 div.thumbinfo {}
 span.thumbinfoval {}
-div.thumbname {}
-div.thumbactions {}
+div.thumbname {border-top: 1px dotted #292929;border-bottom: 1px dotted #292929;}
+div.thumbactions {text-align: right;}
 div.thumbactions * {}
 div.thumbactions input {}
 div.thumbactions a {}
@@ -2425,11 +2430,4 @@ div.multiselect {
 
 div.multiselect div.odd {background: #292929}
 div.multiselect div.even {background: #3F3F3F}
-.findtable ul {
-	list-style: none;
-}
-
-.findtable ul li {
-	float: left;
-}
 /* end of css file */
