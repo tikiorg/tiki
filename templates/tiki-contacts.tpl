@@ -76,12 +76,7 @@
 
 {include file='find.tpl' _sort_mode='y'}
 
-<span class="alphafilter">
-	<a href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}">{tr}All{/tr}</a>
-	{section name=ix loop=$letters}
-		<a href="tiki-contacts.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;find={$find}&amp;letter={$letters[ix]}">{$letters[ix]}</a>
-	{/section}
-</span>
+{initials_filter_links}
 
 <table class="normal">
 	<tr>

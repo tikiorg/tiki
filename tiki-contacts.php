@@ -115,7 +115,7 @@ if (isset($_REQUEST["find"])) {
 $smarty->assign('find', $find);
 $maxRecords = 20;
 
-$contacts = $contactlib->list_contacts($user, $offset, $maxRecords, $sort_mode, $find, true, $_REQUEST["letter"]);
+$contacts = $contactlib->list_contacts($user, $offset, $maxRecords, $sort_mode, $find, true, $_REQUEST["initial"]);
 
 if ( isset($_REQUEST['view']) ) $_SESSION['UserContactsView'] = $_REQUEST['view'];
 elseif ( ! isset($_SESSION['UserContactsView']) ) $_SESSION['UserContactsView'] = $userlib->get_user_preference($user, 'user_contacts_default_view');
@@ -169,7 +169,7 @@ if ($cant > ($offset + $maxRecords)) {
 	$smarty->assign('next_offset', -1);
 }
 
-$smarty->assign('letters', range('a','z'));
+$smarty->assign('initial', range('a','z'));
 if ($offset > 0) {
 	$smarty->assign('prev_offset', $offset - $maxRecords);
 } else {
