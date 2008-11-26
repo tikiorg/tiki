@@ -40,7 +40,7 @@ function smarty_function_initials_filter_links($params, &$smarty) {
 	}
 	$html .= "\n".str_replace( $params['_initial'].'=X', $params['_initial'].'=', $tag_start).tra('All').'</a>';
 	
-	return '<div align="center">'.$html.'</div>';
+	return '<div class="alphafilter">'.$html.'</div>';
 }
 
 
