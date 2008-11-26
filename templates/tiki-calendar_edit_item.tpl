@@ -45,8 +45,8 @@
 	<td>{$listcals.$calendarId.name|escape}
 	<input type="hidden" name="save[calendarId]" value="{$calendarId}" />
 	{if !$id}<br />{tr}or{/tr}&nbsp;
-		<input type="submit" name="act" value="{tr}Go to{/tr}" onclick="document.location='{$myurl}?calendarId='+document.getElementById('calid').value;return false;" />
-		<select name="save[calendarId]" id="calid">
+		<input type="submit" name="act" value="{tr}Go to{/tr}" />
+		<select name="save[calendarId]" id="calid" onchange="javascript:document.getElementById('editcalitem').submit();">
 			{foreach item=it key=itid from=$listcals}
 				<option value="{$it.calendarId}"{if $calendarId eq $itid} selected="selected"{/if}>{$it.name|escape}</option>
 			{/foreach}

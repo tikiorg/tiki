@@ -164,8 +164,11 @@ if ($prefs['feature_categories'] == 'y') {
     }
   }
 }
+if (isset($_REQUEST['save']) && !isset($_REQUEST['preview']) && !isset($_REQUEST['act'])) {
+	$_REQUEST['changeCal'] = 'y';
+}
 
-if (isset($_POST['act']) || isset($_POST['preview'])) {
+if (isset($_REQUEST['act']) || isset($_REQUEST['preview']) || isset($_REQUEST['changeCal'])) {
 	$save = $_POST['save'];
 	// Take care of timestamps dates coming from jscalendar
 	if ( isset($save['date_start']) || isset($save['date_end']) ) {
@@ -260,6 +263,10 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
 	$calitem = $save;
 	$smarty->assign('edit',true);
 	$smarty->assign('preview', 'y');
+} elseif (isset($_REQUEST['changeCal'])) {
+	$calitem = $save;
+	$smarty->assign('edit',true);
+	$_REQUEST['calendarId'] = $save['calendarId'];
 } elseif (isset($_REQUEST['viewcalitemId']) and $tiki_p_view_events == 'y') {
 	$calitem = $calendarlib->get_item($_REQUEST['viewcalitemId']);
 	$id = $_REQUEST['viewcalitemId'];
