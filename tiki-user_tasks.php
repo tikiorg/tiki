@@ -724,24 +724,7 @@ if (!$show_form){
 									/*$use_show_shared_for_group*/ false, /*$show_shared_for_group*/ null, 
 									$show_trash, $show_completed, $show_admin);
 						
-	$cant_pages = ceil($tasklist['cant'] / $maxRecords);
-
-	if($maxRecords == -1) $cant_pages = 1;
-	$smarty->assign_by_ref('cant_pages', $cant_pages);
-	$smarty->assign('actual_page', 1 + ($offset / $maxRecords));
 	$smarty->assign('cant', $tasklist['cant']);
-	if ($tasklist["cant"] > ($offset + $maxRecords)) {
-		$smarty->assign('next_offset', $offset + $maxRecords);
-	} else {
-		$smarty->assign('next_offset', -1);
-	}
-	
-	// If offset is > 0 then prev_offset
-	if ($offset > 0) {
-		$smarty->assign('prev_offset', $offset - $maxRecords);
-	} else {
-		$smarty->assign('prev_offset', -1);
-	}
 	
 	$smarty->assign_by_ref('tasklist', $tasklist["data"]);
 }
@@ -752,8 +735,6 @@ if (!$show_form){
 	
 	$receive_users = $tasklib->get_user_with_permissions('tiki_p_tasks_receive');
 	if(count($receive_users) < 100) $smarty->assign('receive_users', $receive_users);
-	
-
 
 
 include_once ('tiki-mytiki_shared.php');
