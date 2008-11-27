@@ -59,7 +59,7 @@ function wikiplugin_annotation_info() {
 
 function wikiplugin_annotation($data, $params) {
 	static $first = true;
-	global $page, $tiki_p_edit;
+	global $page, $tiki_p_edit, $headerlib;
 
 	$params = array_merge( array( 'align' => 'left', 'desc' => '' ), $params );
 
@@ -92,7 +92,6 @@ function wikiplugin_annotation($data, $params) {
 	{
 		$first = false;
 		$script = <<<SCRIPT
-<script type="text/javascript">
 var active = null;
 var selected = {};
 var containers = {};
@@ -393,11 +392,10 @@ function serializeAnnotations( data, cid ) // {{{
 	gete(cid).fieldContent.value = str;
 } // }}}
 
-</script>
 SCRIPT;
+		
+		$headerlib->add_js( $script );
 	} // }}}
-	else
-		$script = '';
 
 	static $uid = 0;
 	$uid++;
@@ -424,7 +422,6 @@ FORM;
 
 	return <<<ANNOTATION
 ~np~
-$script
 <div>
 <div id="$cid" style="background:url({$params['src']}); width:{$params['width']}px; height:{$params['height']}px;" onclick="handleClick(event,'$cid')" onmousemove="handleMove(event,'$cid')">
 	<div id="$cid-editor" style="display:none;width:250px;height:100px;position:absolute;background:white;border-color:black;border-style:solid;border-width:normal;padding:2px;">
