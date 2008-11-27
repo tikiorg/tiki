@@ -288,9 +288,6 @@ if (!isset($nextscaleinfo['scale'])) {
 if ($info["maxRows"] == 0)
 	$info["maxRows"] = 10;
 
-if ($info["rowImages"] == 0)
-	$info["rowImages"] = 6;
-
 //print $info["rowImages"] ;
 $maxImages = $info["maxRows"] * $info["rowImages"];
 $smarty->assign_by_ref('maxImages', $maxImages);
@@ -347,15 +344,16 @@ $newoffset = $offset -$subgals['cant'];
 $images = $imagegallib->get_images($newoffset, $remainingImages, $sort_mode, $find, $_REQUEST["galleryId"]);
 //get categories for each images
 global $objectlib;
-global $categlib;
-$type='image';
-$arr=array();
-for($i=0;$i<=count($images['data'])-1;$i++){
-	$img_id=$images['data'][$i]['imageId'];
-	$arr= $categlib->get_object_categories($type, $img_id);
-	//adding categories to the object
-	for ($k=0; $k<=count($arr)-1; $k++){
-		$images['data'][$i]['categories'][$k]=$categlib->get_category_name($arr[$k]);
+if ($prefs['feature_categories'] == 'y') {
+	$type='image';
+	$arr=array();
+	for($i=0;$i<=count($images['data'])-1;$i++){
+		$img_id=$images['data'][$i]['imageId'];
+		$arr= $categlib->get_object_categories($type, $img_id);
+		//adding categories to the object
+		for ($k=0; $k<=count($arr)-1; $k++){
+			$images['data'][$i]['categories'][$k]=$categlib->get_category_name($arr[$k]);
+		}
 	}
 }
 $smarty->assign('num_objects',count($subgals['data'])+count($images['data']));
