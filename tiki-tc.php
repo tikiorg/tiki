@@ -69,12 +69,18 @@ if ($prefs['feature_theme_control'] == 'y') {
 		$stlstl = split("-|\.",$tc_theme);
 		$style_base = $stlstl[0];
 	
-		if ($tc_theme_option) {
-			if ($tikidomain and is_file("styles/$tikidomain/$style_base/options/$tc_theme_option")) {
-				$headerlib->drop_cssfile('styles/'.$tikidomain.'/'.$prefs['style_option']);
+		if ($tc_theme_option == '') {	// special handling for 'None' case
+			if ($tikidomain) {
+				$headerlib->drop_cssfile('styles/'.$style_base.'/options/'.$tikidomain.'/'.$prefs['style_option']);
+			} else {
+				$headerlib->drop_cssfile('styles/'.$style_base.'/options/'.$prefs['style_option']);
+			}
+		} else if ($tc_theme_option) {
+			if ($tikidomain and (is_file("styles/$tikidomain/$style_base/options/$tc_theme_option" || $tc_theme_option == ''))) {
+				$headerlib->drop_cssfile("styles/$tikidomain/".$prefs['style_option']);
 				$headerlib->add_cssfile("styles/$tikidomain/$style_base/options/$tc_theme_option",52);
 			} else {
-				$headerlib->drop_cssfile('styles/'.$prefs['style_option']);
+				$headerlib->drop_cssfile("styles/$style_base/options/".$prefs['style_option']);
 				$headerlib->add_cssfile("styles/$style_base/options/$tc_theme_option",52);
 			}
 		}
