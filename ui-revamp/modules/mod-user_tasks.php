@@ -44,4 +44,4 @@ if ($user && isset($prefs['feature_tasks']) && $prefs['feature_tasks'] == 'y' &&
 	$smarty->assign('modTasks', $modTasks['data']);
 }
 
-?>
+

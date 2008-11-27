@@ -331,20 +331,7 @@ $smarty->assign('grouptheme', $grouptheme);
 $smarty->assign('groupperms', $groupperms);
 $smarty->assign_by_ref('userChoice', $userChoice);
 
-$cant_pages = ceil($users["cant"] / $numrows);
-$smarty->assign_by_ref('cant_pages', $cant_pages);
-$smarty->assign('actual_page', 1 + ($offset / $numrows));
-
-if ($users["cant"] > ($offset + $numrows)) {
-	$smarty->assign('next_offset', $offset + $numrows);
-} else {
-	$smarty->assign('next_offset', -1);
-}
-if ($offset > 0) {
-	$smarty->assign('prev_offset', $offset - $numrows);
-} else {
-	$smarty->assign('prev_offset', -1);
-}
+$smarty->assign_by_ref('cant_pages', $users["cant"]);
 
 setcookie('tab',$cookietab);
 $smarty->assign('cookietab',$cookietab);

@@ -12,4 +12,3 @@ $best_objects_stats = $statslib->best_overall_object_stats($module_rows);
 $smarty->assign('modTopObjects', $best_objects_stats);
 $smarty->assign('nonums', isset($module_params["nonums"]) ? $module_params["nonums"] : 'n');
 $smarty->assign('module_rows', $module_rows);
-?>

@@ -217,8 +217,8 @@ function sql_error($query, $values, $result) {
     $showviaajax=false;
     if ($prefs['feature_ajax'] == 'y') {
 		global $ajaxlib;
-		include_once('lib/ajax/xajax.inc.php');
-		if ($ajaxlib && $ajaxlib->canProcessRequests()) {
+		include_once('lib/ajax/xajax/xajax_core/ajaxAIO.inc.php');
+		if ($ajaxlib && $ajaxlib->canProcessRequest()) {
 			// this was a xajax request -> return a xajax answer
 			$objResponse = new xajaxResponse();
 			$page ="<html><head>";
@@ -226,7 +226,7 @@ function sql_error($query, $values, $result) {
 			$page.=" <link rel='stylesheet' href='styles/tikineat.css' type='text/css' />";
 			$page.="</head><body>$outp</body></html>";
 			$page=addslashes(str_replace(array("\n", "\r"), array(' ', ' '), $page));
-			$objResponse->addScript("bugwin=window.open('', 'tikierror', 'width=760,height=500,scrollbars=1,resizable=1');".
+			$objResponse->script("bugwin=window.open('', 'tikierror', 'width=760,height=500,scrollbars=1,resizable=1');".
 									"bugwin.document.write('$page');");
 			echo $objResponse->getOutput();
 			die();

@@ -13,7 +13,7 @@ require_once ('tiki-setup.php');
 require_once ('lib/sheet/grid.php');
 
 if ($prefs['feature_sheet'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_sheets");
+	$smarty->assign('msg', tra("This feature is disabled").": feature_sheet");
 
 	$smarty->display("error.tpl");
 	die;
@@ -27,7 +27,7 @@ if ( !isset($_REQUEST['sheetId']) ) {
 }
 
 if ($tiki_p_admin != 'y' && $tiki_p_admin_sheet != 'y' && !$tikilib->user_has_perm_on_object($user, $_REQUEST['sheetId'], 'sheet', 'tiki_p_view_sheet')) {
-	$smarty->assign('msg', tra("Access Denied").": feature_sheets");
+	$smarty->assign('msg', tra("Access Denied").": feature_sheet");
 
 	$smarty->display("error.tpl");
 	die;
@@ -60,7 +60,7 @@ $smarty->assign('page_mode', 'view' );
 $grid = &new TikiSheet;
 
 if (isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'edit' && $tiki_p_edit_sheet != 'y' && $tiki_p_admin != 'y' && $tiki_p_admin_sheet != 'y') {
-	$smarty->assign('msg', tra("Access Denied").": feature_sheets");
+	$smarty->assign('msg', tra("Access Denied").": feature_sheet");
 	$smarty->display("error.tpl");
 	die;
 }
@@ -68,7 +68,7 @@ if (isset($_REQUEST['mode']) && $_REQUEST['mode'] == 'edit' && $tiki_p_edit_shee
 if( $_SERVER['REQUEST_METHOD'] == 'POST' )
 {
 	if ($tiki_p_edit_sheet != 'y' && $tiki_p_admin != 'y' && $tiki_p_admin_sheet != 'y') {
-		$smarty->assign('msg', tra("Access Denied").": feature_sheets");
+		$smarty->assign('msg', tra("Access Denied").": feature_sheet");
 
 		$smarty->display("error.tpl");
 		die;

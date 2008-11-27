@@ -129,7 +129,7 @@ function make_clean(&$var,$gpc=false,$clean_xss=false) {
 }
 
 // mose : simulate strong var type checking for http vars
-$patterns['login']   = "/^[-_a-zA-Z0-9@\.]*$/"; // special check for logins, not to be used in varcheck because compat with already created accounts
+$patterns['login']   = $prefs['username_pattern']; // special check for logins, not to be used in varcheck because compat with already created accounts
 $patterns['int']   = "/^[0-9]*$/"; // *Id
 $patterns['intSign']   = "/^[-+]?[0-9]*$/"; // *offset,
 $patterns['char']  = "/^(pref:)?[-,_a-zA-Z0-9]*$/"; // sort_mode 
@@ -405,13 +405,13 @@ if ( $user && ( $user == 'admin' || $userlib->user_has_permission($user, 'tiki_p
 } else {
 	$perms = $userlib->get_user_detailled_permissions($user);
 	foreach ($perms as $perm) {
-		$smarty->assign($perm, 'y');
-		$$perm = 'y';
-		if ( in_array($perm, $admin_perms) ) { // assign all perms of the perm type
+		$smarty->assign($perm['permName'], 'y');
+		$$perm['permName'] = 'y';
+		if ( in_array($perm['permName'], $admin_perms) ) { // assign all perms of the perm type
 			$ps = $userlib->get_permissions(0, -1, 'permName_desc', '', $perm['type']);
-			foreach ($ps['data'] as $perm) {
-				$$perm['permName'] = 'y';
-				$smarty->assign($perm['permName'], 'y');
+			foreach ($ps['data'] as $p) {
+				$$p['permName'] = 'y';
+				$smarty->assign($p['permName'], 'y');
 			}
 		}
 	}

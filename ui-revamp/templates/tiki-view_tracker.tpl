@@ -75,14 +75,19 @@
 	{/section}
 </div><br />{/if}
 {if $prefs.feature_tabs eq 'y'}
-{cycle name=tabs values="1,2,3" print=false advance=false reset=true}
+{cycle name=tabs values="1,2,3,4" print=false advance=false reset=true}
 <div class="tabs">
 {if $tiki_p_view_trackers eq 'y' or ($tracker_info.writerCanModify eq 'y' and $user)}
-<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},3);">{tr}Tracker Items for{/tr} <i>{$tracker_info.name}</i></a></span>
+<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Tracker Items for{/tr} <i>{$tracker_info.name}</i></a></span>
 {/if}
 {if $tiki_p_create_tracker_items eq 'y'}
-<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},3);">{tr}Insert New Item{/tr}</a></span>
+<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Insert New Item{/tr}</a></span>
 {/if}
+{if $tiki_p_export_tracker eq 'y'}
+	<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Export Tracker Items{/tr}</a></span>
+{/if}
+
+
 </div>
 {/if}
 
@@ -188,7 +193,7 @@ $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Created{/tr
 {/if}
 {/if}
 
-{include file="tracker_item_field_value.tpl" field_value=$field_value list_mode="y" item=$items[user] showlinks="y" reloff=$smarty.section.user.index}
+{include file="tracker_item_field_value.tpl" field_value=$field_value list_mode="y" item=$items[user] showlinks="y" reloff=$smarty.section.user.index url=""}
 
 </td>
 {/if}
@@ -539,6 +544,15 @@ document.write('<div  class="categSelectAll"><input type="checkbox" id="clickall
 <br /><em>{tr}Fields marked with a * are mandatory.{/tr}</em>
 </div>
 {/if}
+
+{* -------------------------------------------------- tab with export --- *}
+{if $tiki_p_export_tracker eq 'y'}
+<div id="content{cycle name=content assign=focustab}{$focustab}"{if $prefs.feature_tabs eq 'y'} class="tabcontent"{/if}>
+{include file=tiki-export_tracker.tpl}
+</div>
+{/if}
+
+
 {foreach from=$fields key=ix item=field_value}
 {assign var=fid value=$field_value.fieldId}
 {if $listfields.$fid.http_request}

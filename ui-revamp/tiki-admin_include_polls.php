@@ -34,6 +34,18 @@ if (isset($_REQUEST["pollprefs"])) {
 	} else {
 		$tikilib->set_preference("feature_poll_anonymous", 'n');
 	}
+
+	if (isset($_REQUEST["feature_poll_public"]) && $_REQUEST["feature_poll_public"] == "on") {
+		$tikilib->set_preference("feature_poll_public", 'y');
+	} else {
+		$tikilib->set_preference("feature_poll_public", 'n');
+	}
+
+	if (isset($_REQUEST["feature_poll_revote"]) && $_REQUEST["feature_poll_revote"] == "on") {
+		$tikilib->set_preference("feature_poll_revote", 'y');
+	} else {
+		$tikilib->set_preference("feature_poll_revote", 'n');
+	}
 	simple_set_toggle('poll_list_categories');
 	simple_set_toggle('poll_list_objects');
 }

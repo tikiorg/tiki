@@ -14,4 +14,4 @@ $smarty->assign('modLastEvents', $events);
 $smarty->assign('maxlen', isset($module_params["maxlen"]) ? $module_params["maxlen"] : 0);
 $smarty->assign('nonums', isset($module_params["nonums"]) ? $module_params["nonums"] : 'n');
 
-?>
+

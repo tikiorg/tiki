@@ -17,4 +17,4 @@ $ranking = $imagegallib->list_images(0, $module_rows, 'created_desc', '', $galle
 $smarty->assign('modLastImages', $ranking["data"]);
 $smarty->assign('nonums', isset($module_params["nonums"]) ? $module_params["nonums"] : 'n');
 
-?>
+

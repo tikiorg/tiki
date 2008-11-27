@@ -25,4 +25,4 @@ if ($ranking) {
 $smarty->assign('modForumsLastPosts', $ranking["data"]);
 $smarty->assign('nonums', isset($module_params["nonums"]) ? $module_params["nonums"] : 'n');
 
-?>
+

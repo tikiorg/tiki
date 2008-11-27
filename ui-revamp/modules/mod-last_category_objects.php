@@ -27,4 +27,4 @@ if (!is_array($last) or !is_array($last['data'])) {
 }
 $smarty->assign('last',$last['data']);
 $smarty->assign('type',$module_params["type"]);
-?>
+

@@ -18,4 +18,4 @@ global $artlib; include_once('lib/articles/artlib.php');
 $listTopics = $artlib->list_topics();
 $smarty->assign('listTopics', $listTopics);
 $smarty->assign('nonums', isset($module_params["nonums"]) ? $module_params["nonums"] : 'n');
-?>
+

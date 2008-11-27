@@ -22,7 +22,7 @@
 			{button href="tiki-upload_file.php?galleryId=$thisgall" _text="{tr}Upload File{/tr}"}
 		{/if}
 		{if $prefs.feature_file_galleries_batch eq "y" and $tiki_p_batch_upload_file_dir eq 'y'}
-			{button href="tiki-batch_upload_files.php?galleryId=$thisgall" _text="{tr}Directory batch{/tr}"}
+			{button href="tiki-batch_upload_files.php?galleryId=$thisgall" _text="{tr}Directory Batch{/tr}"}
 		{/if}
 	{/if}
 </div>

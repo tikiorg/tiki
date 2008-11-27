@@ -1,13 +1,34 @@
 <?php
-// CVS: $Id: trackerlib.php,v 1.231.2.43 2008-03-21 21:50:38 sylvieg Exp $
-//this script may only be included - so its better to die if called directly.
+/**
+ * Tracker Library
+ *
+ * $Id$
+ * Functions to support accessing and process the Trackers.
+ *
+ * @package		TikiWiki
+ * @subpackage	Trackers
+ * @author		Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+ * @copyright	Copyright (c) 2002-2008  All Rights Reserved.
+ * 				See copyright.txt for details and a complete list of authors.
+ * @license		LGPL - See license.txt for details.
+ * @version		SVN: $Rev$
+ * @filesource
+ * @link		http://dev.tikiwiki.org/Trackers
+ * @since		Always
+ */
+/**
+ * This script may only be included, so it is better to die if called directly.
+ */
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
 
-
-
+/**
+ * TrackerLib Class
+ *
+ * This class extends the TikiLib class.
+ */
 class TrackerLib extends TikiLib {
 
 	var $trackerinfo_cache;
@@ -762,7 +783,7 @@ class TrackerLib extends TikiLib {
 		return $retval;
 	}
 	function get_item_fields($trackerId, $itemId, $listfields, &$itemUser) {
-		global $prefs, $user;
+		global $prefs, $user, $tiki_p_admin_trackers;
 		$fields = array();
 		$fil = array();
 		$kx = '';
@@ -790,6 +811,9 @@ class TrackerLib extends TikiLib {
 				$fopt['fieldId'] = $fieldId;
 			$fieldId = $fopt['fieldId'];
 			$fopt['value'] = ( isset($fil[$fieldId]) ) ? $fil[$fieldId] : '';
+			if ($tiki_p_admin_trackers != 'y' && ($fopt['isHidden'] == 'y' || ($fopt['isHidden'] == 'c' && $itemUser != $user))) {
+				$fopt['value'] = '';
+			}
 			$fopt['linkId'] = '';
 			if (!empty($fopt['options'])) {
 				$fopt['options_array'] = split(',', $fopt['options']);
@@ -811,6 +835,7 @@ class TrackerLib extends TikiLib {
 				$calc = preg_replace('/#([0-9]+)/', '$fil[\1]', $fopt['options']);
 				eval('$computed = '.$calc.';');
 				$fopt['value'] = $computed;
+				$fil[$fieldId] = $computed;
 				break;
 			case 's':
 				$key = 'tracker.'.$trackerId.'.'.$itemId;
@@ -917,6 +942,7 @@ class TrackerLib extends TikiLib {
 		global $user, $smarty, $notificationlib, $prefs, $cachelib, $categlib, $tiki_p_admin_trackers, $userlib, $tikilib;
 		include_once('lib/categories/categlib.php');
 		include_once('lib/notifications/notificationlib.php');
+		$fil = array();
 
 		if (!empty($itemId)) {
 			$oldStatus = $this->getOne("select `status` from `tiki_tracker_items` where `itemId`=?", array($itemId));
@@ -1093,7 +1119,11 @@ class TrackerLib extends TikiLib {
 				}
 				$value = @ $ins_fields["data"][$i]["value"];
 
-				if (isset($ins_fields["data"][$i]["type"]) and $ins_fields["data"][$i]["type"] == 'q') {
+				if (isset($ins_fields['data'][$i]['type']) and $ins_fields['data'][$i]['type'] == 'C') {
+					$calc = preg_replace('/#([0-9]+)/', '$fil[\1]', $ins_fields['data'][$i]['options']);
+					eval('$value = '.$calc.';');
+
+				} elseif (isset($ins_fields["data"][$i]["type"]) and $ins_fields["data"][$i]["type"] == 'q') {
 					if (isset($ins_fields["data"][$i]['options_array'][3]) && $ins_fields["data"][$i]['options_array'][3] == 'itemId') {
 						$value = $itemId?$itemId: $new_itemId;
 					} elseif ($itemId == false) {
@@ -1243,6 +1273,7 @@ class TrackerLib extends TikiLib {
 						$query = "insert into `tiki_tracker_item_fields`(`itemId`,`fieldId`,`value`) values(?,?,?)";
 						$this->query($query,array((int) $new_itemId,(int) $fieldId,(string)$value));
 					}
+					$fil[$fieldId] = $value;
 					$cachelib->invalidate(md5('trackerfield'.$fieldId.'o'));
 					$cachelib->invalidate(md5('trackerfield'.$fieldId.'c'));
 					$cachelib->invalidate(md5('trackerfield'.$fieldId.'p'));

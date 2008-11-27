@@ -1765,16 +1765,15 @@ function get_included_groups($group, $recur=true) {
 	$groups = $this->get_user_groups($user);
 
 	// Use group cache if only one group
-	if ( count($groups) == 1 ) return $this->get_group_permissions($groups[0]);
+	//if ( count($groups) == 1 ) return $this->get_group_permissions($groups[0]);
 
 	$ret = array();
-	$query = 'select distinct up.`permName` from `users_permissions` as up, `users_grouppermissions` as ug where ug.`groupName` in ('.implode(',',array_fill(0,count($groups),'?')).') and up.`permName`=ug.`permName`';
+	$query = 'select distinct up.* from `users_permissions` as up, `users_grouppermissions` as ug where ug.`groupName` in ('.implode(',',array_fill(0,count($groups),'?')).') and up.`permName`=ug.`permName`';
 	$result = $this->query($query, $groups);
 
 	while ( $res = $result->fetchRow() ) {
-		$ret[] = $res['permName'];
+		$ret[] = $res;
 	}
-
 	return $ret;
     }
 
@@ -1982,9 +1981,9 @@ function get_included_groups($group, $recur=true) {
 	}
 
     function add_user($user, $pass, $email, $provpass = '',$pass_first_login=false, $valid=NULL, $openid_url=NULL) {
-	global $tikilib, $cachelib, $patterns, $prefs;
+	global $tikilib, $cachelib, $prefs;
 
-	if ($this->user_exists($user) || empty($user) || !preg_match($patterns['login'],$user) || strtolower($user) == 'anonymous' || strtolower($user) == 'registered')
+	if ($this->user_exists($user) || empty($user) || !preg_match($prefs['username_pattern'], $user) || strtolower($user) == 'anonymous' || strtolower($user) == 'registered')
 	    return false;
 
 	// Generate a unique hash; this is also done below in set_user_fields()

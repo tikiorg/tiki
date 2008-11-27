@@ -28,7 +28,7 @@
 {assign var=over value=$cell[w][d].items[items].over}
 {assign var=calendarId value=$cell[w][d].items[items].calendarId}
 <div>
-<span class="calprio{$cell[w][d].items[items].prio}" style="padding:0 2px;color:#666;float:left;">{$cell[w][d].items[items].prio}</span><div class="{if $infocals.$calendarId.customstatus ne 'n' and $infocals.$calendarId.show_status_calview ne 'n'}Cal{$cell[w][d].items[items].type} {/if}calId{$cell[w][d].items[items].calendarId}"><a style="padding:0 3px;background-color:#{$infocals.$calendarId.custombgcolor};color:#{$infocals.$calendarId.customfgcolor};"
+<span class="calprio{$cell[w][d].items[items].prio}" style="padding:0 2px;color:#666;float:left;">{$cell[w][d].items[items].prio}</span><div class="{if $infocals.$calendarId.customstatus ne 'n' and $infocals.$calendarId.show_status_calview ne 'n'}Cal{$cell[w][d].items[items].type} {/if}calId{$cell[w][d].items[items].calendarId}"><a style="padding:0 3px;{if $infocals.$calendarId.custombgcolor ne ''}background-color:#{$infocals.$calendarId.custombgcolor};{/if}{if $infocals.$calendarId.customfgcolor ne ''}color:#{$infocals.$calendarId.customfgcolor};{/if}"
 {if $myurl eq "tiki-action_calendar.php"}
 {if $cell[w][d].items[items].modifiable eq "y" || $cell[w][d].items[items].visible eq 'y'}href="{$cell[w][d].items[items].url}"{/if}
 {else}

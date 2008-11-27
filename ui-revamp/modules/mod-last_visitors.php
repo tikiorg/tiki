@@ -12,4 +12,4 @@ $smarty->assign('maxlen', isset($module_params["maxlen"]) ? $module_params["maxl
 $smarty->assign('nonums', isset($module_params["nonums"]) ? $module_params["nonums"] : 'n');
 $smarty->assign('showavatars', isset($module_params["showavatars"]) ? $module_params["showavatars"] : 'n');
 
-?>
+

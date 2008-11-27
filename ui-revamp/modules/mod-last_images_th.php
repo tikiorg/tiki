@@ -18,4 +18,4 @@ if (isset($module_params["galleryId"])) {
 $ranking = $imagegallib->list_images(0, $module_rows, 'created_desc', '', $galleryId);
 $smarty->assign('modLastImages', $ranking["data"]);
 
-?>
+

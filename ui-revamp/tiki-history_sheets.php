@@ -13,14 +13,14 @@ require_once ('tiki-setup.php');
 require_once ('lib/sheet/grid.php');
 
 if ($prefs['feature_sheet'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_sheets");
+	$smarty->assign('msg', tra("This feature is disabled").": feature_sheet");
 
 	$smarty->display("error.tpl");
 	die;
 }
 
 if ($tiki_p_admin != 'y' && $tiki_p_admin_sheet != 'y' && !$tikilib->user_has_perm_on_object($user, $_REQUEST['sheetId'], 'sheet', 'tiki_p_view_sheet')) {
-	$smarty->assign('msg', tra("Access Denied").": feature_sheets");
+	$smarty->assign('msg', tra("Access Denied").": feature_sheet");
 
 	$smarty->display("error.tpl");
 	die;

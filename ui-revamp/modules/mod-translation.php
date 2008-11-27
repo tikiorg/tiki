@@ -135,4 +135,4 @@ if( $prefs['feature_translation'] == 'y' && ! empty( $page ) && is_string($page)
 	}
 }
 
-?>
+

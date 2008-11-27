@@ -11,7 +11,7 @@
 <a href="tiki-calendar_edit_item.php?calitemId={$arows[ar].calitemId}" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
 <a href="tiki-calendar_edit_item.php?calitemId={$arows[ar].calitemId}&amp;delete=1"  title="{tr}Remove{/tr}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>{/if}</span>
 {/if}
-<div {if $arows[ar].calname ne ""}class="Cal{$arows[ar].type} vevent" style="background-color:#{$infocals.$calendarId.custombgcolor};color:#{$infocals.$calendarId.customfgcolor};"{/if}>
+<div {if $arows[ar].calname ne ""}class="Cal{$arows[ar].type} vevent" style="{if $infocals.$calendarId.custombgcolor ne ''}background-color:#{$infocals.$calendarId.custombgcolor};{/if}{if $infocals.$calendarId.customfgcolor ne ''}color:#{$infocals.$calendarId.customfgcolor};{/if}"{/if}>
 {if $arows[ar].calname eq ""}{$arows[ar].type} : {/if}
 {if $myurl eq "tiki-action_calendar.php"}
 <a href="{$arows[ar].url}" class="url" title="{$arows[ar].web|escape}" class="linkmenu summary">{$arows[ar].name}</a>
@@ -38,7 +38,7 @@
 <a href="tiki-calendar_edit_item.php?calitemId={$hrows[$h][hr].calitemId}" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
 <a href="tiki-calendar_edit_item.php?calitemId={$hrows[$h][hr].calitemId}&amp;delete=1"  title="{tr}Remove{/tr}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>{/if}</span>
 {/if}
-<div {if $hrows[$h][hr].calname ne ""}class="Cal{$hrows[$h][hr].type} vevent" style="background-color:#{$infocals.$calendarId.custombgcolor};color:#{$infocals.$calendarId.customfgcolor};"{/if}>
+<div {if $hrows[$h][hr].calname ne ""}class="Cal{$hrows[$h][hr].type} vevent" style="{if $infocals.$calendarId.custombgcolor ne ''}background-color:#{$infocals.$calendarId.custombgcolor};{/if}{if $infocals.$calendarId.customfgcolor ne ''}color:#{$infocals.$calendarId.customfgcolor};{/if}"{/if}>
 <abbr class="dtstart" title="{$hrows[$h][hr].startTimeStamp|isodate}">{$hours[$h]}:{$hrows[$h][hr].mins}</abbr> : {if $hrows[$h][hr].calname eq ""}{$hrows[$h][hr].type} : {/if}
 {if $myurl eq "tiki-action_calendar.php"}
 <a href="{$hrows[$h][hr].url}" class="url" title="{$hrows[$h][hr].web|escape}" class="linkmenu summary">{$hrows[$h][hr].name}</a>

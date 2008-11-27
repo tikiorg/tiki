@@ -15,4 +15,4 @@ if ($prefs['feature_score'] == 'y') {
 
 $smarty->assign('nonums', isset($module_params["nonums"]) ? $module_params["nonums"] : 'n');
 
-?>
+

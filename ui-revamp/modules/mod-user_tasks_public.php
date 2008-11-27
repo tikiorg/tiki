@@ -38,4 +38,4 @@ if ($user && isset($prefs['feature_tasks']) && $prefs['feature_tasks'] == 'y' &&
 	$smarty->assign('user_groups', $user_groups );
 }
 
-?>
+

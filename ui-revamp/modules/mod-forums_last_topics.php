@@ -35,4 +35,4 @@ if (isset($module_params['forumId'])) {
 $smarty->assign('modForumsLastTopics', $ranking["data"]);
 $smarty->assign('nonums', isset($module_params["nonums"]) ? $module_params["nonums"] : 'n');
 $smarty->assign('absurl', isset($module_params["absurl"]) ? $module_params["absurl"] : 'n');
-?>
+

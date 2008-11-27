@@ -22,4 +22,4 @@ $ranking = $ranklib->forums_ranking_most_read_topics($module_rows, $forumId);
 $smarty->assign('modForumsMostReadTopics', $ranking["data"]);
 $smarty->assign('nonums', isset($module_params["nonums"]) ? $module_params["nonums"] : 'n');
 
-?>
+

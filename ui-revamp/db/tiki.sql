@@ -446,7 +446,7 @@ CREATE TABLE tiki_calendar_items (
   allday tinyint(1) NOT NULL default '0',
   PRIMARY KEY (calitemId),
   KEY calendarId (calendarId)
-) ENGINE=MyISAM AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM AUTO_INCREMENT=1;
 
 DROP TABLE IF EXISTS tiki_calendar_locations;
 CREATE TABLE tiki_calendar_locations (
@@ -1057,6 +1057,7 @@ CREATE TABLE tiki_galleries (
   showfilesize char(1) NOT NULL default 'n',
   showfilename char(1) NOT NULL default 'n',
   defaultscale varchar(10) NOT NULL DEFAULT 'o',
+  showcategories char(1) NOT NULL default 'n', 
   PRIMARY KEY (galleryId),
   KEY name (name),
   KEY description (description(255)),
@@ -1767,7 +1768,18 @@ CREATE TABLE tiki_polls (
   votes int(8) default NULL,
   active char(1) default NULL,
   publishDate int(14) default NULL,
+  anonym enum( 'a', 'u', 'i', 'c' ) NOT NULL DEFAULT 'u',
   PRIMARY KEY (pollId)
+) ENGINE=MyISAM AUTO_INCREMENT=1 ;
+
+DROP TABLE IF EXISTS `tiki_poll_votes`;
+CREATE TABLE IF NOT EXISTS `tiki_poll_votes` (
+  `pollId` int(11) NOT NULL,
+  `optionId` int(11) NOT NULL,
+  `voteId` int(11) NOT NULL auto_increment,
+  `identification` varchar(300) NOT NULL,
+  `time` int(11) NOT NULL,
+  PRIMARY KEY  (`voteId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS tiki_preferences;
@@ -2288,7 +2300,7 @@ CREATE TABLE tiki_tracker_fields (
   trackerId int(12) NOT NULL default '0',
   name varchar(255) default NULL,
   options text,
-  type char(1) default NULL,
+  type char(15) default NULL,
   isMain char(1) default NULL,
   isTblVisible char(1) default NULL,
   position int(4) default NULL,
@@ -2924,6 +2936,7 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_trackers_closed', 'Can view trackers closed items', 'registered', 'trackers');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_trackers_pending', 'Can view trackers pending items', 'editors', 'trackers');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_watch_trackers', 'Can watch tracker', 'registered', 'trackers');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_export_tracker', 'Can export tracker items', 'registered', 'trackers');
 
 INSERT INTO users_permissions (permName, permDesc, level, type, admin) VALUES ('tiki_p_admin_wiki', 'Can admin the wiki', 'editors', 'wiki', 'y');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_assign_perm_wiki_page', 'Can assign perms to wiki pages', 'admin', 'wiki');

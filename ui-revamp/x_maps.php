@@ -4,20 +4,20 @@ require_once('tiki-setup.php');
 
 //setting up xajax
 include_once('lib/map/map_query.php');
-require_once("lib/ajax/xajax.inc.php");
+require_once("lib/ajax/xajax/xajax_core/xajaxAIO.inc.php");
 $xajax = new xajax("x_maps.php");
-$xajax->debugOn();
-$xajax->statusMessagesOn();
+$xajax->setFlag('debug',true);
+$xajax->configure('statusMessages',true);
 
 if($prefs['feature_maps'] != 'y' || $prefs['feature_ajax'] != 'y') {
   $objResponse = new xajaxResponse();
-  $objResponse->addAlert(tra("Feature disabled"));
+  $objResponse->alert(tra("Feature disabled"));
   return $objResponse;
 }
 
 if($tiki_p_map_view != 'y') {
   $objResponse = new xajaxResponse();
-  $objResponse->addAlert(tra("You do not have permissions to view the maps"));
+  $objResponse->alert(tra("You do not have permissions to view the maps"));
   return $objResponse;
 }
   
@@ -27,7 +27,7 @@ if($tiki_p_map_view != 'y') {
   	
   	if (strstr($mapfile, '..')) {
 	    $msg = tra("You do not have permission to do that");
-	    $objResponse->addAlert($msg);
+	    $objResponse->alert($msg);
 	    return $objResponse;
 		}
 
@@ -36,7 +36,7 @@ if($tiki_p_map_view != 'y') {
 		//checking the mapfile
 		if (!is_file($prefs['map_path'].$mapfile) || preg_match("/(\/\.)/", $prefs['map_path'].$mapfile)) {
 	  	$msg = tra("invalid mapfile name");
-	  	$objResponse->addAlert($msg);
+	  	$objResponse->alert($msg);
 	  	return $objResponse;
 	  }
 
@@ -76,29 +76,29 @@ if($tiki_p_map_view != 'y') {
   	  $my_rect= ms_newrectObj();
   	  $my_rect->setextent($corx,$cory,$corx2,$cory2);
   		$map->zoomrectangle($my_rect,$map->width,$map->height,$my_extent);
-	  	$objResponse->addAssign("minx", "value",$map->extent->minx);
-	  	$objResponse->addAssign("miny", "value",$map->extent->miny);
-	  	$objResponse->addAssign("maxx", "value",$map->extent->maxx);
-	  	$objResponse->addAssign("maxy", "value",$map->extent->maxy);
-	  	$objResponse->addAssign("map", "style.cursor","default");
-	  	$objResponse->addAssign("zoomselect", "style.visibility","hidden");
-	  	$objResponse->addScript("xMoveTo(xGetElementById('map'),0,0);");
-	  	$objResponse->addScript("minx=".$map->extent->minx.";");
-	  	$objResponse->addScript("miny=".$map->extent->miny.";");
-	  	$objResponse->addScript("maxx=".$map->extent->maxx.";");
-	  	$objResponse->addScript("maxy=".$map->extent->maxy.";");
+	  	$objResponse->assign("minx", "value",$map->extent->minx);
+	  	$objResponse->assign("miny", "value",$map->extent->miny);
+	  	$objResponse->assign("maxx", "value",$map->extent->maxx);
+	  	$objResponse->assign("maxy", "value",$map->extent->maxy);
+	  	$objResponse->assign("map", "style.cursor","default");
+	  	$objResponse->assign("zoomselect", "style.visibility","hidden");
+	  	$objResponse->script("xMoveTo(xGetElementById('map'),0,0);");
+	  	$objResponse->script("minx=".$map->extent->minx.";");
+	  	$objResponse->script("miny=".$map->extent->miny.";");
+	  	$objResponse->script("maxx=".$map->extent->maxx.";");
+	  	$objResponse->script("maxy=".$map->extent->maxy.";");
   	} else {
 	  	$map->zoompoint(1,$my_point,$map->width,$map->height,$my_extent);
-	  	$objResponse->addAssign("minx", "value",$map->extent->minx);
-	  	$objResponse->addAssign("miny", "value",$map->extent->miny);
-	  	$objResponse->addAssign("maxx", "value",$map->extent->maxx);
-	  	$objResponse->addAssign("maxy", "value",$map->extent->maxy);
-	  	$objResponse->addAssign("map", "style.cursor","move");
-	  	$objResponse->addScript("xMoveTo(xGetElementById('map'),0,0);");
-	  	$objResponse->addScript("minx=".$map->extent->minx.";");
-	  	$objResponse->addScript("miny=".$map->extent->miny.";");
-	  	$objResponse->addScript("maxx=".$map->extent->maxx.";");
-	  	$objResponse->addScript("maxy=".$map->extent->maxy.";");
+	  	$objResponse->assign("minx", "value",$map->extent->minx);
+	  	$objResponse->assign("miny", "value",$map->extent->miny);
+	  	$objResponse->assign("maxx", "value",$map->extent->maxx);
+	  	$objResponse->assign("maxy", "value",$map->extent->maxy);
+	  	$objResponse->assign("map", "style.cursor","move");
+	  	$objResponse->script("xMoveTo(xGetElementById('map'),0,0);");
+	  	$objResponse->script("minx=".$map->extent->minx.";");
+	  	$objResponse->script("miny=".$map->extent->miny.";");
+	  	$objResponse->script("maxx=".$map->extent->maxx.";");
+	  	$objResponse->script("maxy=".$map->extent->maxy.";");
 	  }
   	$image = $map->drawquery();
 		$image_url = $image->saveWebImage();
@@ -123,21 +123,21 @@ if($tiki_p_map_view != 'y') {
 		$image->free();		
 		
 		
-  	$objResponse->addAssign("innerBoxContent","innerHTML", $result);
-  	$objResponse->addAssign("resultBox","innerHTML", $result);
-  	$objResponse->addAssign("map", "src", $image_url);
+  	$objResponse->assign("innerBoxContent","innerHTML", $result);
+  	$objResponse->assign("resultBox","innerHTML", $result);
+  	$objResponse->assign("map", "src", $image_url);
   	if ($zoom!=3) {
-  		$objResponse->addAssign("ref", "src", $image_ref_url);
+  		$objResponse->assign("ref", "src", $image_ref_url);
   	}
   	if ($zoom==2 || $zoom==5) {
-  		$objResponse->addAssign("scale", "src", $image_scale_url);
+  		$objResponse->assign("scale", "src", $image_scale_url);
   	}
   	if ($changeleg) {
-  		$objResponse->addAssign("leg", "src", $image_leg_url);
+  		$objResponse->assign("leg", "src", $image_leg_url);
   	}
   	return $objResponse;
   }
   
-  $xajax->registerFunction("map_redraw");
-  $xajax->processRequests();
+  $xajax->register(XAJAX_FUNCTION,"map_redraw");
+  $xajax->processRequest();
 ?>

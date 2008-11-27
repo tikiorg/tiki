@@ -1,10 +1,14 @@
-{title admpage="calendar"}{tr}Admin Calendars{/tr}{/title}
-
-{if $calendarId}
-	<div class="navbar">
-		{button _text="{tr}Create Calendar{/tr}" href="tiki-admin_calendars.php?show=mod"}
-	</div>
+{if !empty($calendarId)}
+	{title url="tiki-admin_calendars.php?calendarId=$calendarId" admpage="calendar"}{tr}Admin Calendars{/tr}{/title}
+{else}
+	{title url="tiki-admin_calendars.php" admpage="calendar"}{tr}Admin Calendars{/tr}{/title}
 {/if}
+<div class="navbar">
+{if !empty($calendarId)}
+	{button _text="{tr}Create Calendar{/tr}" href="tiki-admin_calendars.php?show=mod"}
+{/if}
+{button _text="{tr}View Calendars{/tr}" href="tiki-calendar.php"}
+</div>
 
 {if $prefs.feature_tabs eq 'y'}
 	{cycle name=tabs values="1,2,3" print=false advance=false reset=true}
@@ -158,10 +162,10 @@
 <select name="endday_Hour">{foreach item=h from=$hours}<option value="{$h}"{if $h eq $endday} selected="selected"{/if}>{$h}</option>{/foreach}</select>{tr}h{/tr}
 </td></tr>
 <tr class="formcolor"><td>{tr}Custom foreground color{/tr}:</td><td>
-<input type="text" name="options[customfgcolor]" value="{$customfgcolor}" size="6" />
+<input type="text" name="options[customfgcolor]" value="{$customfgcolor}" size="6" /><i>{tr}Ex:{/tr} FFFFFF</i>
 </td></tr>
 <tr class="formcolor"><td>{tr}Custom background color{/tr}:</td><td>
-<input type="text" name="options[custombgcolor]" value="{$custombgcolor}" size="6" />
+<input type="text" name="options[custombgcolor]" value="{$custombgcolor}" size="6" /><i>{tr}Ex:{/tr} 000000</i>
 </td></tr>
 <tr class="formcolor"><td>{tr}Status{/tr}</td><td>
 <select name="customstatus">

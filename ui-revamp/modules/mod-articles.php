@@ -48,4 +48,4 @@ $ranking = $tikilib->list_articles($start, $module_rows, 'publishDate_desc', '',
 
 $smarty->assign('modArticles', $ranking["data"]);
 
-?>
+

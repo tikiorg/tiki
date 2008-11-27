@@ -10,26 +10,21 @@
 $section = 'trackers';
 require_once('tiki-setup.php');
 
-include_once('lib/trackers/trackerlib.php');
-include_once ('lib/groupalert/groupalertlib.php');
-
-
-global $notificationlib; include_once('lib/notifications/notificationlib.php');
-
-$auto_query_args = array('offset','trackerId','reloff','itemId','maxRecords','status','sort_mode','initial','filterfield','filtervalue');
-
-if ($prefs['feature_categories'] == 'y') {
-	global $categlib;
-	if (!is_object($categlib)) {
-		include_once('lib/categories/categlib.php');
-	}
-}
-
 if ($prefs['feature_trackers'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_trackers");
 	$smarty->display("error.tpl");
 	die;
 }
+include_once('lib/trackers/trackerlib.php');
+if ($prefs['feature_groupalert'] == 'y') {
+	include_once ('lib/groupalert/groupalertlib.php');
+}
+include_once('lib/notifications/notificationlib.php');
+if ($prefs['feature_categories'] == 'y') {
+	include_once('lib/categories/categlib.php');
+}
+
+$auto_query_args = array('offset','trackerId','reloff','itemId','maxRecords','status','sort_mode','initial','filterfield','filtervalue');
 
 if (!empty($_REQUEST['itemId']))
 	$ratedItemId = $_REQUEST['itemId'];
@@ -122,18 +117,16 @@ if ($tiki_p_view_trackers != 'y') {
 $smarty->assign('my', $my);
 $smarty->assign('ours', $ours);
 
-$smarty->assign_by_ref('groupforalert',$groupforalert);
-
-$smarty->assign_by_ref('showeachuser',$showeachuser);
-
-$groupforalert=$groupalertlib->GetGroup ('tracker',$_REQUEST["trackerId"]);
-
-
- if ( $groupforalert != "" ) {
- 	$showeachuser=$groupalertlib->GetShowEachUser('tracker',$_REQUEST["trackerId"], $groupforalert) ;
-  	$listusertoalert=$userlib->get_users(0,-1,'login_asc','','',false,$groupforalert,'') ;
-	$smarty->assign_by_ref('listusertoalert',$listusertoalert['data']);
- }
+if ($prefs['feature_groupalert'] == 'y') {
+	$groupforalert=$groupalertlib->GetGroup ('tracker', $_REQUEST['trackerId']);
+	if ( $groupforalert != '' ) {
+		$showeachuser=$groupalertlib->GetShowEachUser('tracker',$_REQUEST["trackerId"], $groupforalert) ;
+		$listusertoalert=$userlib->get_users(0,-1,'login_asc','','',false,$groupforalert,'') ;
+		$smarty->assign_by_ref('listusertoalert',$listusertoalert['data']);
+	}
+	$smarty->assign_by_ref('groupforalert',$groupforalert);
+	$smarty->assign_by_ref('showeachuser',$showeachuser);
+}
 
 $field_types = $trklib->field_types();
 $smarty->assign('field_types', $field_types);
@@ -629,7 +622,9 @@ if (isset($_REQUEST['import'])) {
 				$_REQUEST['itemId'] = $trklib->get_user_item($_REQUEST['trackerId'], $tracker_info);
 			}
 			$itemid = $trklib->replace_item($_REQUEST["trackerId"], $_REQUEST["itemId"], $ins_fields, $_REQUEST['status'], $ins_categs);
-			$groupalertlib->Notify($_REQUEST['listtoalert'],"tiki-view_tracker_item.php?itemId=".$itemid);
+			if (isset($_REQUEST['listtoalert']) && $prefs['feature_groupalert'] == 'y') {
+				$groupalertlib->Notify($_REQUEST['listtoalert'],"tiki-view_tracker_item.php?itemId=$itemid");
+			}
 			$cookietab = "1";
 			$smarty->assign('itemId', '');
 			$trklib->categorized_item($_REQUEST["trackerId"], $itemid, $mainfield, $ins_categs);
@@ -765,8 +760,6 @@ if (is_array($filtervalue)) {
 	$urlquery["filtervalue[".$filterfield."]"] = $filtervalue;
 }
 $smarty->assign_by_ref('urlquery', $urlquery);
-$cant = $items["cant"];
-include "tiki-pagination.php";
 
 if ($tracker_info['useComments'] == 'y' && ($tracker_info['showComments'] == 'y' || $tracker_info['showLastComment'] == 'y')) {
 	foreach ($items['data'] as $itkey=>$oneitem) {
@@ -818,6 +811,20 @@ $users = $userlib->list_all_users();
 $groups = $userlib->list_all_groups();
 $smarty->assign_by_ref('users', $users);
 $smarty->assign_by_ref('groups', $groups);
+if ($tiki_p_export_tracker == 'y') {
+	$trackers = $tikilib->list_trackers();
+	$smarty->assign_by_ref('trackers', $trackers['data']);
+	include_once('lib/wiki-plugins/wikiplugin_trackerfilter.php');
+	$filters = wikiplugin_trackerFilter_get_filters($_REQUEST['trackerId']);
+	$smarty->assign_by_ref('filters', $filters);
+	if (!empty($_REQUEST['displayedFields'])) {
+		if (is_string($_REQUEST['displayedFields'])) {
+			$smarty->assign('displayedFields', split('[:,]', $_REQUEST['displayedFields']));
+		} else {
+			$smarty->assign_by_ref('displayedFields', $_REQUEST['displayedFields']);
+		}
+	}
+}
 
 include_once('tiki-section_options.php');
 

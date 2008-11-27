@@ -32,14 +32,14 @@ function handle_series( $serie, &$sheet )
 
 // Now check permissions to access this page
 if ($prefs['feature_sheet'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_sheets, feature_charts");
+	$smarty->assign('msg', tra("This feature is disabled").": feature_sheet, feature_charts");
 
 	$smarty->display("error.tpl");
 	die;
 }
 
 if ($tiki_p_admin != 'y' && $tiki_p_admin_sheet != 'y' && !$tikilib->user_has_perm_on_object($user, $_REQUEST['sheetId'], 'sheet', 'tiki_p_view_sheet')) {
-	$smarty->assign('msg', tra("Access Denied").": feature_sheets");
+	$smarty->assign('msg', tra("Access Denied").": feature_sheet");
 
 	$smarty->display("error.tpl");
 	die;

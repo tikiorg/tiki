@@ -1,4 +1,4 @@
-<?php 
+<?php
 // $Id: /cvsroot/tikiwiki/tiki/poll_categorize.php,v 1.7 2007-10-12 07:55:23 nyloth Exp $
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
@@ -11,9 +11,9 @@ require_once('tiki-setup.php');
 $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
 global $prefs;
-
 if ($prefs['feature_categories'] == 'y' and $prefs['feature_polls'] == 'y') {
 	global $categlib, $polllib;
+	#echo '<div>hier</div>';
 	if (!is_object($categlib))  include_once('lib/categories/categlib.php');
 	if (!is_object($polllib))  include_once('lib/polls/polllib.php');
 	if (!isset($_REQUEST['poll_title'])) { $_REQUEST['poll_title'] = 'rate it!'; }
@@ -24,7 +24,7 @@ if ($prefs['feature_categories'] == 'y' and $prefs['feature_polls'] == 'y') {
 			$catObjectId = $categlib->add_categorized_object($cat_type, $cat_objid, $cat_desc, $cat_name, $cat_href);
 		}
 		if ($polllib->has_object_polls($catObjectId)) {
-			$polllib->remove_object_poll($cat_type, $cat_objid);	
+			$polllib->remove_object_poll($cat_type, $cat_objid);
 		}
 		$pollid = $polllib->create_poll($_REQUEST["poll_template"], $cat_objid .': '. $_REQUEST['poll_title']);
 		$polllib->poll_categorize($catObjectId, $pollid, $_REQUEST['poll_title']);

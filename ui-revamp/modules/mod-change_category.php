@@ -140,4 +140,4 @@ if ($prefs['feature_categories'] == 'y' && (isset($_REQUEST['page']) || isset($_
   $smarty->assign('modcatlist',$modcatlist);
   $smarty->assign('modcatid',$id);
 }
-?>
+

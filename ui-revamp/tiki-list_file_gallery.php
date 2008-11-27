@@ -9,18 +9,19 @@
 // Initialization
 $section = 'file_galleries';
 require_once('tiki-setup.php');
-include_once ('lib/groupalert/groupalertlib.php');
 
 if ( $prefs['feature_file_galleries'] != 'y' ) {
 	$smarty->assign('msg', tra('This feature is disabled').': feature_file_galleries');
 	$smarty->display('error.tpl');
 	die;
 }
-
 include_once ('lib/filegals/filegallib.php');
 include_once ('lib/stats/statslib.php');
 if ( $prefs['feature_categories'] == 'y' ) {
 	global $categlib; include_once('lib/categories/categlib.php');
+}
+if ($prefs['feature_groupalert'] == 'y') {
+	include_once ('lib/groupalert/groupalertlib.php');
 }
 
 $auto_query_args = array('galleryId','fileId','offset','find','sort_mode','edit_mode','page','filegals_manager','maxRecords','show_fgalexplorer','dup_mode','show_details','view');
@@ -30,10 +31,9 @@ if ( ! isset($_REQUEST['galleryId']) || $_REQUEST['galleryId'] == 0 ) {
 	$tikilib->get_perm_object('', 'file gallery');
 	$_REQUEST['galleryId'] = 0;
 
-	if ( ! isset($_REQUEST['edit']) && ! isset($_REQUEST['edit_mode']) && ! isset($_REQUEST['duplicate']) ) {
 		// Initialize listing fields with default values (used for the main gallery listing)
-		$gal_info = array(
-			'name' => 'File Galleries',
+	$gal_info = array(
+			'name' => '',
 			'show_id' => $prefs['fgal_list_id'],
 			'show_icon' => $prefs['fgal_list_type'],
 			'show_name' => 'f', //$prefs['fgal_list_name'],
@@ -52,10 +52,14 @@ if ( ! isset($_REQUEST['galleryId']) || $_REQUEST['galleryId'] == 0 ) {
 			'show_lockedby' => $prefs['fgal_list_lockedby'],
 			'show_checked' => 'y',
 			'show_userlink' => 'y',
-			'sort_mode' => $prefs['fgal_sort_mode']
-		);
-	}
-
+			'sort_mode' => $prefs['fgal_sort_mode'],
+			'public' => 'y',
+			'lockable' => 'n',
+			'visible' =>'y',
+			'archives' => -1,
+			'type' => 'default',
+			'description' => '',
+	);
 } elseif ( $gal_info = $tikilib->get_file_gallery($_REQUEST['galleryId']) ) {
 	$tikilib->get_perm_object($_REQUEST['galleryId'], 'file gallery', $gal_info);
 	if ($userlib->object_has_one_permission($_REQUEST['galleryId'], 'file gallery')) {
@@ -71,7 +75,7 @@ if ( ! isset($_REQUEST['galleryId']) || $_REQUEST['galleryId'] == 0 ) {
 
 $galleryId = $_REQUEST['galleryId'];
 
-if ( ( $galleryId != 0 || $tiki_p_list_file_galleries != 'y' ) && ($galleryId == 0 || $tiki_p_view_file_gallery != 'y')) {
+if ( ( $galleryId != 0 || $tiki_p_list_file_galleries != 'y' ) && ($galleryId == 0 || $tiki_p_view_file_gallery != 'y') ) {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra('Permission denied you cannot view this section'));
 	$smarty->display('error.tpl');
@@ -80,32 +84,21 @@ if ( ( $galleryId != 0 || $tiki_p_list_file_galleries != 'y' ) && ($galleryId ==
 
 
 // Init smarty variables to blank values
-$smarty->assign('name', '');
 $smarty->assign('fname', '');
-$smarty->assign('description', '');
 $smarty->assign('fdescription', '');
 $smarty->assign('max_desc', 1024);
 $smarty->assign('maxRows', 10);
-$smarty->assign('public', 'n');
-$smarty->assign('lockable', 'n');
-$smarty->assign('archives', -1);
 $smarty->assign('edited', 'n');
 $smarty->assign('edit_mode', 'n');
 $smarty->assign('dup_mode', 'n');
-$smarty->assign('visible', 'y');
-$smarty->assign('fgal_type', 'default');
 $smarty->assign('parentId', isset($_REQUEST['parentId']) ? (int)$_REQUEST['parentId'] : -1);
-$smarty->assign('groupforAlert', isset($_REQUEST['groupforAlert']) ? $_REQUEST['groupforAlert'] : '');
-$smarty->assign_by_ref('showeachuser', $showeachuser);
 $smarty->assign('creator', $user);
 $smarty->assign('sortorder', 'created');
 $smarty->assign('sortdirection', 'desc');
 
 $smarty->assign_by_ref('gal_info', $gal_info);
-$smarty->assign_by_ref('galleryId', $_REQUEST['galleryId']);
 $smarty->assign_by_ref('name', $gal_info['name']);
-$smarty->assign_by_ref('description', $gal_info['description']);
-$smarty->assign_by_ref('groupforAlertList', $groupforAlertList);
+$smarty->assign_by_ref('galleryId', $_REQUEST['galleryId']);
 
 
 $smarty->assign('reindex_file_id', -1);
@@ -253,17 +246,21 @@ if ( isset($_REQUEST['edit_mode']) and $_REQUEST['edit_mode'] ) {
 		$smarty->assign_by_ref('users', $users['data']);
 	}
 
-	$all_groups = $userlib->list_all_groups();
-	$groupselected=$groupalertlib->GetGroup('file gallery',$_REQUEST['galleryId']);
-
-	if ( is_array($all_groups) ) {
-		foreach ( $all_groups as $g ){
-		$groupforAlertList[$g] =  ( $g == $groupselected )  ? 'selected' : '';
+	if ($prefs['feature_groupalert'] == 'y') {
+		$smarty->assign('groupforAlert', isset($_REQUEST['groupforAlert']) ? $_REQUEST['groupforAlert'] : '');
+		$all_groups = $userlib->list_all_groups();
+		$groupselected=$groupalertlib->GetGroup('file gallery',$_REQUEST['galleryId']);
+		if ( is_array($all_groups) ) {
+			foreach ( $all_groups as $g ){
+				$groupforAlertList[$g] =  ( $g == $groupselected )  ? 'selected' : '';
+			}
 		}
+		$smarty->assign_by_ref('groupforAlert',$groupselected );
+		$showeachuser=$groupalertlib->GetShowEachUser('file gallery',$_REQUEST['galleryId'],$groupselected) ;
+		$smarty->assign_by_ref('showeachuser', $showeachuser);
+		$smarty->assign_by_ref('groupforAlertList', $groupforAlertList);
+
 	}
-
-	$showeachuser=$groupalertlib-> GetShowEachUser('file gallery',$_REQUEST['galleryId'],$groupselected) ;
-
 
 	// Edit a file
 	if ( isset($_REQUEST['fileId']) && $_REQUEST['fileId'] > 0 ) {
@@ -278,15 +275,9 @@ if ( isset($_REQUEST['edit_mode']) and $_REQUEST['edit_mode'] ) {
 	// Edit a gallery
 	elseif ( $galleryId > 0 ) {
 		$smarty->assign_by_ref('maxRows', $gal_info['maxRows']);
-		$smarty->assign_by_ref('public', $gal_info['public']);
-		$smarty->assign_by_ref('lockable', $gal_info['lockable']);
-		$smarty->assign_by_ref('archives', $gal_info['archives']);
-		$smarty->assign_by_ref('visible', $gal_info['visible']);
 		$smarty->assign_by_ref('parentId', $gal_info['parentId']);
-		$smarty->assign_by_ref('groupforAlert',$groupselected );
 		$smarty->assign_by_ref('creator', $gal_info['user']);
 		$smarty->assign('max_desc', $gal_info['max_desc']);
-		$smarty->assign('fgal_type', $gal_info['type']);
 
 		if ( isset($gal_info['sort_mode']) && preg_match('/(.*)_(asc|desc)/', $gal_info['sort_mode'], $matches) ) {
 			$smarty->assign('sortorder', $matches[1]);
@@ -435,7 +426,9 @@ if ( isset($_REQUEST['edit']) ) {
 		unset($fgal_diff['hits']);
 		$smarty->assign('fgal_diff',$fgal_diff);
 		$fgid = $filegallib->replace_file_gallery($gal_info);
-		$groupalertlib->AddGroup ('file gallery', $galleryId ,$_REQUEST['groupforAlert'],$_REQUEST['showeachuser']);
+		if ($prefs['feature_groupalert'] == 'y') {
+			$groupalertlib->AddGroup ('file gallery', $galleryId ,$_REQUEST['groupforAlert'],$_REQUEST['showeachuser']);
+		}
 		if ( $prefs['feature_categories'] == 'y' ) {
 			$cat_type = 'file gallery';
 			$cat_objid = $fgid;
@@ -704,9 +697,6 @@ if (isset($_GET['slideshow'])) {
   $offset = 0;
 }
 
-$smarty->assign_by_ref('name', $gal_info["name"]);
-$smarty->assign_by_ref('description', $gal_info["description"]);
-
 if ( empty($_REQUEST['sort_mode']) ) {
 	if ($gal_info['sort_mode'] == 'name_asc' && $gal_info['show_name'] == 'f') {
 		$_REQUEST['sort_mode'] = 'filename_asc';
@@ -870,7 +860,7 @@ function add2tree(&$tree, &$galleries, &$gallery_id, &$gallery_path, &$expanded,
 	}
 }
 
-if ($prefs['fgal_show_explorer'] == 'y' || $prefs['fgal_show_path'] == 'y') {
+if ($prefs['fgal_show_explorer'] == 'y' || $prefs['fgal_show_path'] == 'y' || isset($_REQUEST['movesel'])) {
 	global $cachelib; include_once('lib/cache/cachelib.php');
 	$cacheName = $filegallib->get_all_galleries_cache_name($user);
 	$cacheType = $filegallib->get_all_galleries_cache_type();

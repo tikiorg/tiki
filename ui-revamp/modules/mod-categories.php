@@ -78,4 +78,4 @@ if ($prefs['feature_categories'] != 'y') {
 		$smarty->assign('tree', $res);
 	}
 }
-?>
+

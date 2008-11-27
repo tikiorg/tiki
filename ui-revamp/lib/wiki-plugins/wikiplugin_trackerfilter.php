@@ -28,7 +28,7 @@ function wikiplugin_trackerfilter_info() {
 		'line' => array(
 			'required' => false,
 			'name' => tra('Line'),
-			'description' => 'y|n',
+			'description' => 'y|n - displays all the filter on the same line',
 		),
 	) );
 

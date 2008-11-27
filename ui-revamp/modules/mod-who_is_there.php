@@ -21,4 +21,4 @@ if(isset($module_params["cluster"]) && $module_params["cluster"]==1) {
 $smarty->assign_by_ref('online_users', $online_users);
 $smarty->assign('logged_users', $logged_users);
 
-?>
+

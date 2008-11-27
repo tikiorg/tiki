@@ -92,6 +92,7 @@ function get_default_prefs() {
 		'mailin_autocheck' => 'n',
 		'mailin_autocheckFreq' => '0',
 		'mailin_autocheckLast' => 0,
+		'page_bar_position' => 'bottom',
 		'warn_on_edit_time' => 2,
 		'wikiHomePage' => 'HomePage',
 		'wikiLicensePage' => '',
@@ -138,6 +139,7 @@ function get_default_prefs() {
 		'wiki_pagename_strip' => '',
 		'wiki_right_column' => 'y',
 		'wiki_top_bar' => 'y',
+		'wiki_topline_position' => 'top',
 		'wiki_uses_slides' => 'n',
 		'wiki_watch_author' => 'n',
 		'wiki_watch_comments' => 'y',
@@ -509,6 +511,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'available_languages' => array(),
 		'available_styles' => array(),
 		'lowercase_username' => 'n',
+		'username_pattern' => '/^[ \'-_a-zA-Z0-9@\.]*$/',
 		'max_username_length' => '50',
 		'min_username_length' => '1',
 		'users_prefs_allowMsgs' => 'y',
@@ -1131,6 +1134,9 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'transition_style_ver' => '2.0',
 
 		'magic_last_load' => 0,
+
+		//groupalert
+		'feature_groupalert' => 'y',
 	);
 
 	// spellcheck

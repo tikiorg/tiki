@@ -69,4 +69,4 @@ if ($prefs['feature_shoutbox'] == 'y' && $tiki_p_view_shoutbox == 'y') {
 	$smarty->assign('tooltip', isset($module_params["tooltip"]) ? $module_params["tooltip"] : 0);
 }
 
-?>
+

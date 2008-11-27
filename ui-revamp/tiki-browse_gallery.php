@@ -127,6 +127,7 @@ if($user!='admin' && $user!=$gal_info["user"] && $gal_info["public"]!='y') {
 	$gal_info["description"] = 'System Gallery';
 	$gal_info['showname'] ='y';
 	$gal_info['showimageid'] ='n';
+	$gal_info['showcategories'] ='n';
 	$gal_info['showdescription'] ='n';
 	$gal_info['showcreated'] ='n';
 	$gal_info['showuser'] ='n';
@@ -143,6 +144,7 @@ $smarty->assign_by_ref('public', $gal_info["public"]);
 $smarty->assign_by_ref('galleryId', $_REQUEST["galleryId"]);
 $smarty->assign_by_ref('showname', $gal_info['showname']);
 $smarty->assign_by_ref('showimageid', $gal_info['showimageid']);
+$smarty->assign_by_ref('showcategories', $gal_info['showcategories']);
 $smarty->assign_by_ref('showdescription', $gal_info['showdescription']);
 $smarty->assign_by_ref('showcreated', $gal_info['showcreated']);
 $smarty->assign_by_ref('showuser', $gal_info['showuser']);
@@ -286,9 +288,6 @@ if (!isset($nextscaleinfo['scale'])) {
 if ($info["maxRows"] == 0)
 	$info["maxRows"] = 10;
 
-if ($info["rowImages"] == 0)
-	$info["rowImages"] = 6;
-
 //print $info["rowImages"] ;
 $maxImages = $info["maxRows"] * $info["rowImages"];
 $smarty->assign_by_ref('maxImages', $maxImages);
@@ -343,6 +342,20 @@ $subgals = $imagegallib->get_subgalleries($offset, $maxImages, $sort_mode, '', $
 $remainingImages = $maxImages-count($subgals['data']);
 $newoffset = $offset -$subgals['cant'];
 $images = $imagegallib->get_images($newoffset, $remainingImages, $sort_mode, $find, $_REQUEST["galleryId"]);
+//get categories for each images
+global $objectlib;
+if ($prefs['feature_categories'] == 'y') {
+	$type='image';
+	$arr=array();
+	for($i=0;$i<=count($images['data'])-1;$i++){
+		$img_id=$images['data'][$i]['imageId'];
+		$arr= $categlib->get_object_categories($type, $img_id);
+		//adding categories to the object
+		for ($k=0; $k<=count($arr)-1; $k++){
+			$images['data'][$i]['categories'][$k]=$categlib->get_category_name($arr[$k]);
+		}
+	}
+}
 $smarty->assign('num_objects',count($subgals['data'])+count($images['data']));
 $smarty->assign('num_subgals',count($subgals['data']));
 $smarty->assign('num_images',count($images['data']));

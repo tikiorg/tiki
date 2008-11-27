@@ -45,8 +45,8 @@
 	<td>{$listcals.$calendarId.name|escape}
 	<input type="hidden" name="save[calendarId]" value="{$calendarId}" />
 	{if !$id}<br />{tr}or{/tr}&nbsp;
-		<input type="submit" name="act" value="{tr}Go to{/tr}" onclick="document.location='{$myurl}?calendarId='+document.getElementById('calid').value;return false;" />
-		<select name="save[calendarId]" id="calid">
+		<input type="submit" name="act" value="{tr}Go to{/tr}" />
+		<select name="save[calendarId]" id="calid" onchange="javascript:document.getElementById('editcalitem').submit();">
 			{foreach item=it key=itid from=$listcals}
 				<option value="{$it.calendarId}"{if $calendarId eq $itid} selected="selected"{/if}>{$it.name|escape}</option>
 			{/foreach}
@@ -434,7 +434,7 @@ onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;">
 <tr><td><input type="submit" name="preview" value="{tr}Preview{/tr}" /></td></tr>
 <tr><td><input type="submit" name="act" value="{tr}Save{/tr}" />
 &nbsp;{tr}in{/tr}&nbsp;
-<span class="button2" style="background-color:#{$listcals.$calendarId.custombgcolor};color:#{$listcals.$calendarId.customfgcolor}">{$listcals.$calendarId.name}</span>
+<span class="button2" style="{if $listcals.$calendarId.custombgcolor ne ''}background-color:#{$listcals.$calendarId.custombgcolor};{/if}{if $listcals.$calendarId.customfgcolor ne ''}color:#{$listcals.$calendarId.customfgcolor};{/if}">{$listcals.$calendarId.name}</span>
 {if $id}&nbsp;<input type="submit" onclick='document.location="tiki-calendar_edit_item.php?calitemId={$id}&amp;delete=y";return false;' value="{tr}Delete Item{/tr}"/>{/if}
 </td></tr>
 </table>

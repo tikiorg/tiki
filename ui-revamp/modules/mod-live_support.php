@@ -16,4 +16,4 @@ if ($lsadminlib->is_operator($user)) {
 	        $smarty->assign('user_is_operator','n');
 }
 
-?>
+

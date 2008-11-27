@@ -2,11 +2,11 @@
 
 <div class="navbar">
 	{if $galleryId ne ''}
-		{button href="tiki-list_file_gallery.php?galleryId=$galleryId" _text="{tr}Browse file gallery{/tr}"}
+		{button href="tiki-list_file_gallery.php?galleryId=$galleryId" _text="{tr}Browse File Gallery{/tr}"}
 	{else}
-		{button href="tiki-list_file_gallery.php" _text="{tr}Browse file gallery{/tr}"}
+		{button href="tiki-list_file_gallery.php" _text="{tr}Browse File Gallery{/tr}"}
 	{/if}
-	{button href="tiki-upload_file.php?galleryId=$galleryId" _text="{tr}Upload from disk{/tr}"}
+	{button href="tiki-upload_file.php?galleryId=$galleryId" _text="{tr}Upload From Disk{/tr}"}
 </div>
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Please do not use this feature to upload data into the database.{/tr}{/remarksbox}
@@ -41,7 +41,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {tr}eg. from "digicam0001.jpg" then name digicam0001 will be used for the name field{/tr}<br />
 <!--
 {if $permAddGallery eq "y"}
-&nbsp;&nbsp;&nbsp;&nbsp; <input type="checkbox" name="subdirToSubgal" value="true" id="subdirToSubgal" /> {tr}convert the last sub directory to a sub gallery{/tr}<br />
+&nbsp;&nbsp;&nbsp;&nbsp; <input type="checkbox" name="subdirToSubgal" value="true" id="subdirToSubgal" /> {tr}Convert the last sub directory to a sub gallery{/tr}<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {tr}eg. from "misc/screenshots/digicam0001.jpg" a gallery named "screenshots" will be created{/tr}<br />
 {/if}
 -->

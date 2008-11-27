@@ -1,7 +1,5 @@
 {* $Id$ *}
-
 {title help="Image+Galleries" admpage="gal"}{tr}Galleries{/tr}{/title}
-
 {if $tiki_p_create_galleries eq 'y'}
 
 {if $edit_mode ne 'y' or $galleryId ne 0}
@@ -63,6 +61,7 @@
 	<input type="checkbox" name="showxysize" value="y" {if $showxysize=='y'}checked="checked"{/if} />{tr}XY-Size{/tr}<br />
 	<input type="checkbox" name="showfilesize" value="y" {if $showfilesize=='y'}checked="checked"{/if} />{tr}Filesize{/tr}<br />
 	<input type="checkbox" name="showfilename" value="y" {if $showfilename=='y'}checked="checked"{/if} />{tr}Filename{/tr}<br />
+	<input type="checkbox" name="showcategories" value="y" {if $showcategories=='y'}checked="checked"{/if} />{tr}Categories{/tr}<br />
 </td></tr>
 <tr><td class="formcolor">{tr}Gallery Image{/tr}:</td><td class="formcolor"><select name="galleryimage">
 {foreach from=$options_galleryimage key=key item=item}

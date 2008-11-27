@@ -53,12 +53,11 @@ function smarty_function_button($params, &$smarty) {
 		unset($params['href']);
 	}
 
+	$auto_query_args_orig = $auto_query_args;
 	if ( !empty($params['_auto_args']) ) {
 		if ( !isset($auto_query_args) ) $auto_query_args = null;
-		$auto_query_args_orig = $auto_query_args;
 		$auto_query_args = explode(',', $params['_auto_args']);
 	} else {
-		$auto_query_args_orig = null;
 		$params['_noauto'] = 'y';
 	}
 

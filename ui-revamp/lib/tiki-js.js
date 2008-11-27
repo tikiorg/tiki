@@ -23,287 +23,287 @@ function browser() {
 
 function getElementById(id) {
     if (document.all) {
-	return document.getElementById(id);
+  return document.getElementById(id);
     }
     for (i=0;i<document.forms.length;i++) {
-	if (document.forms[i].elements[id]) {return document.forms[i].elements[id]; }
+  if (document.forms[i].elements[id]) {return document.forms[i].elements[id]; }
     }
 }
 
 /* toggle CSS (tableless) layout columns */
 function toggleCols(id,zeromargin,maincol) {
-	var showit = 'show_' + escape(id);
-	if (!zeromargin) var zeromargin = '';
-	if (!id) var id = '';
-	if (!maincol) var maincol = 'col1';
-	if (document.getElementById(id).style.display == "none") {
-		document.getElementById(id).style.display = "block";
-		if (zeromargin == 'left') {
-			document.getElementById(maincol).style.marginLeft = '';
-			setSessionVar(showit,'y');
-		} else {
-			document.getElementById(maincol).style.marginRight = '';
-			setSessionVar(showit,'y');
-		}
-	} else {
-		document.getElementById(id).style.display = "none";
-		if (zeromargin == 'left') {
-			document.getElementById(maincol).style.marginLeft = '0';
-			setSessionVar(showit,'n');
-		} else {
-			document.getElementById(maincol).style.marginRight = '0';
-			setSessionVar(showit,'n');
-		}
-	}
+  var showit = 'show_' + escape(id);
+  if (!zeromargin) var zeromargin = '';
+  if (!id) var id = '';
+  if (!maincol) var maincol = 'col1';
+  if (document.getElementById(id).style.display == "none") {
+    document.getElementById(id).style.display = "block";
+    if (zeromargin == 'left') {
+      document.getElementById(maincol).style.marginLeft = '';
+      setSessionVar(showit,'y');
+    } else {
+      document.getElementById(maincol).style.marginRight = '';
+      setSessionVar(showit,'y');
+    }
+  } else {
+    document.getElementById(id).style.display = "none";
+    if (zeromargin == 'left') {
+      document.getElementById(maincol).style.marginLeft = '0';
+      setSessionVar(showit,'n');
+    } else {
+      document.getElementById(maincol).style.marginRight = '0';
+      setSessionVar(showit,'n');
+    }
+  }
 }
 
 function toggle_dynamic_var(name) {
-	name1 = 'dyn_'+name+'_display';
-	name2 = 'dyn_'+name+'_edit';
-	if(document.getElementById(name1).style.display == "none") {
-		document.getElementById(name2).style.display = "none";
-		document.getElementById(name1).style.display = "inline";
-	} else {
-		document.getElementById(name1).style.display = "none";
-		document.getElementById(name2).style.display = "inline";
-	
-	}
-	
+  name1 = 'dyn_'+name+'_display';
+  name2 = 'dyn_'+name+'_edit';
+  if(document.getElementById(name1).style.display == "none") {
+    document.getElementById(name2).style.display = "none";
+    document.getElementById(name1).style.display = "inline";
+  } else {
+    document.getElementById(name1).style.display = "none";
+    document.getElementById(name2).style.display = "inline";
+
+  }
+
 }
 
 function chgArtType() {
         articleType = document.getElementById('articletype').value;
         typeProperties = articleTypes[articleType];
 
-	propertyList = new Array('show_topline','y',
-				 'show_subtitle','y',
-				 'show_linkto','y',
-				 'show_lang','y',
-				 'show_author','y',
-				 'use_ratings','y',
-				 'heading_only','n',
-				 'show_image_caption','y',
-				 'show_pre_publ','y',
-				 'show_post_expire','y',
-				 'show_image','y'
-				 );
+  propertyList = new Array('show_topline','y',
+         'show_subtitle','y',
+         'show_linkto','y',
+         'show_lang','y',
+         'show_author','y',
+         'use_ratings','y',
+         'heading_only','n',
+         'show_image_caption','y',
+         'show_pre_publ','y',
+         'show_post_expire','y',
+         'show_image','y'
+         );
 
-	var l = propertyList.length;
-	for (var i=0; i<l; i++) {
-	    property = propertyList[i++];
-	    value = propertyList[i];
-	    
-	    if (typeProperties[property] == value) {
-		display = "";
-	    } else {
-		display = "none";
-	    }
-	    
-	    if (document.getElementById(property)) {
-		document.getElementById(property).style.display = display;
-	    } else {
-		j = 1;
-		while (document.getElementById(property+'_'+j)) {
-		    document.getElementById(property+'_'+j).style.display=display;
-		    j++;
-		}
-	    }
+  var l = propertyList.length;
+  for (var i=0; i<l; i++) {
+      property = propertyList[i++];
+      value = propertyList[i];
 
-	}
+      if (typeProperties[property] == value) {
+    display = "";
+      } else {
+    display = "none";
+      }
+
+      if (document.getElementById(property)) {
+    document.getElementById(property).style.display = display;
+      } else {
+    j = 1;
+    while (document.getElementById(property+'_'+j)) {
+        document.getElementById(property+'_'+j).style.display=display;
+        j++;
+    }
+      }
+
+  }
 }
 
 function chgMailinType() {
-	if (document.getElementById('mailin_type').value != 'article-put') {
-		document.getElementById('article_topic').style.display = "none";
-		document.getElementById('article_type').style.display = "none";
-	} else {
-		document.getElementById('article_topic').style.display = "";
-		document.getElementById('article_type').style.display = "";
-	}
+  if (document.getElementById('mailin_type').value != 'article-put') {
+    document.getElementById('article_topic').style.display = "none";
+    document.getElementById('article_type').style.display = "none";
+  } else {
+    document.getElementById('article_topic').style.display = "";
+    document.getElementById('article_type').style.display = "";
+  }
 }
 
 function toggleSpan(id) {
-	if (document.getElementById(id).style.display == "inline") {
-		document.getElementById(id).style.display = "none";
-	} else {
-		document.getElementById(id).style.display = "inline";
-	}
+  if (document.getElementById(id).style.display == "inline") {
+    document.getElementById(id).style.display = "none";
+  } else {
+    document.getElementById(id).style.display = "inline";
+  }
 }
 
 function toggleBlock(id) {
-	if (document.getElementById(id).style.display == "none") {
-		document.getElementById(id).style.display = "block";
-	} else {
-		document.getElementById(id).style.display = "none";
-	}
+  if (document.getElementById(id).style.display == "none") {
+    document.getElementById(id).style.display = "block";
+  } else {
+    document.getElementById(id).style.display = "none";
+  }
 }
 
 function toggleTrTd(id) {
-	if (document.getElementById(id).style.display == "none") {
-		document.getElementById(id).style.display = "";
-	} else {
-		document.getElementById(id).style.display = "none";
-	}
+  if (document.getElementById(id).style.display == "none") {
+    document.getElementById(id).style.display = "";
+  } else {
+    document.getElementById(id).style.display = "none";
+  }
 }
 
 function showTocToggle() {
-	if (document.createTextNode) {
-		// Uses DOM calls to avoid document.write + XHTML issues
+  if (document.createTextNode) {
+    // Uses DOM calls to avoid document.write + XHTML issues
 
-		var linkHolder = document.getElementById('toctitle')
-		if (!linkHolder) return;
+    var linkHolder = document.getElementById('toctitle')
+    if (!linkHolder) return;
 
-		var outerSpan = document.createElement('span');
-		outerSpan.className = 'toctoggle';
+    var outerSpan = document.createElement('span');
+    outerSpan.className = 'toctoggle';
 
-		var toggleLink = document.createElement('a');
-		toggleLink.id = 'togglelink';
-		toggleLink.className = 'internal';
-		toggleLink.href = 'javascript:toggleToc()';
-		toggleLink.appendChild(document.createTextNode(tocHideText));
+    var toggleLink = document.createElement('a');
+    toggleLink.id = 'togglelink';
+    toggleLink.className = 'internal';
+    toggleLink.href = 'javascript:toggleToc()';
+    toggleLink.appendChild(document.createTextNode(tocHideText));
 
-		outerSpan.appendChild(document.createTextNode('['));
-		outerSpan.appendChild(toggleLink);
-		outerSpan.appendChild(document.createTextNode(']'));
+    outerSpan.appendChild(document.createTextNode('['));
+    outerSpan.appendChild(toggleLink);
+    outerSpan.appendChild(document.createTextNode(']'));
 
-		linkHolder.appendChild(document.createTextNode(' '));
-		linkHolder.appendChild(outerSpan);
-		if (getCookie("hidetoc") == "1" ) toggleToc();
-	}
+    linkHolder.appendChild(document.createTextNode(' '));
+    linkHolder.appendChild(outerSpan);
+    if (getCookie("hidetoc") == "1" ) toggleToc();
+  }
 }
 
 function changeText(el, newText) {
-	// Safari work around
-	if (el.innerText)
-		el.innerText = newText;
-	else if (el.firstChild && el.firstChild.nodeValue)
-		el.firstChild.nodeValue = newText;
+  // Safari work around
+  if (el.innerText)
+    el.innerText = newText;
+  else if (el.firstChild && el.firstChild.nodeValue)
+    el.firstChild.nodeValue = newText;
 }
 
 function toggleToc() {
-	var toc = document.getElementById('toc').getElementsByTagName('ul')[0];
-	var toggleLink = document.getElementById('togglelink')
+  var toc = document.getElementById('toc').getElementsByTagName('ul')[0];
+  var toggleLink = document.getElementById('togglelink')
 
-	if (toc && toggleLink && toc.style.display == 'none') {
-		changeText(toggleLink, tocHideText);
-		toc.style.display = 'block';
-		setCookie("hidetoc","0");
-	} else {
-		changeText(toggleLink, tocShowText);
-		toc.style.display = 'none';
-		setCookie("hidetoc","1");
-	}
+  if (toc && toggleLink && toc.style.display == 'none') {
+    changeText(toggleLink, tocHideText);
+    toc.style.display = 'block';
+    setCookie("hidetoc","0");
+  } else {
+    changeText(toggleLink, tocShowText);
+    toc.style.display = 'none';
+    setCookie("hidetoc","1");
+  }
 }
 
 function chgTrkFld(f,o) {
-	var opt = 0;
-	document.getElementById('z').style.display = "none";
-	document.getElementById('zDescription').style.display = "";
-	document.getElementById('zStaticText').style.display = "none";
-	document.getElementById('zStaticTextQuicktags').style.display = "none";
+  var opt = 0;
+  document.getElementById('z').style.display = "none";
+  document.getElementById('zDescription').style.display = "";
+  document.getElementById('zStaticText').style.display = "none";
+  document.getElementById('zStaticTextQuicktags').style.display = "none";
 
-	for (var i = 0; i < f.length; i++) {
-		var c = f.charAt(i);
-		if (document.getElementById(c)) { 
-			var ichoiceParent = document.getElementById('itemChoicesRow');
-			var ichoice = document.getElementById(c + 'itemChoices');
-			if (c == o) {
-				document.getElementById(c).style.display = "";
-				document.getElementById('z').style.display = "block";
-				if (c == 'S') {
-					document.getElementById('zDescription').style.display = "none";
-					document.getElementById('zStaticText').style.display = "";
-					document.getElementById('zStaticTextQuicktags').style.display = "";
-				}
-				if (ichoice) {
-					ichoice.style.display = "";
-					ichoiceParent.style.display = "";
-				} else {
-					ichoiceParent.style.display = "none";
-				}
-			} else {
-				document.getElementById(c).style.display = "none";
-				if (ichoice) {
-					ichoice.style.display = "none";
-				}
-			}
-		}
-	}
+  for (var i = 0; i < f.length; i++) {
+    var c = f.charAt(i);
+    if (document.getElementById(c)) {
+      var ichoiceParent = document.getElementById('itemChoicesRow');
+      var ichoice = document.getElementById(c + 'itemChoices');
+      if (c == o) {
+        document.getElementById(c).style.display = "";
+        document.getElementById('z').style.display = "block";
+        if (c == 'S') {
+          document.getElementById('zDescription').style.display = "none";
+          document.getElementById('zStaticText').style.display = "";
+          document.getElementById('zStaticTextQuicktags').style.display = "";
+        }
+        if (ichoice) {
+          ichoice.style.display = "";
+          ichoiceParent.style.display = "";
+        } else {
+          ichoiceParent.style.display = "none";
+        }
+      } else {
+        document.getElementById(c).style.display = "none";
+        if (ichoice) {
+          ichoice.style.display = "none";
+        }
+      }
+    }
+  }
 }
 
 function chgTrkLingual(item) {
-	document.getElementById("multilabelRow").style.display = ( item == 't' || item == 'a' ) ? '' : 'none';
+  document.getElementById("multilabelRow").style.display = ( item == 't' || item == 'a' ) ? '' : 'none';
 }
 
 function multitoggle(f,o) {
-	for (var i = 0; i < f.length; i++) {
-		if (document.getElementById('fid'+f[i])) { 
-			if (f[i] == o) {
-				document.getElementById('fid'+f[i]).style.display = "block";
-			} else {
-				document.getElementById('fid'+f[i]).style.display = "none";
-			}
-		}
-	}
+  for (var i = 0; i < f.length; i++) {
+    if (document.getElementById('fid'+f[i])) {
+      if (f[i] == o) {
+        document.getElementById('fid'+f[i]).style.display = "block";
+      } else {
+        document.getElementById('fid'+f[i]).style.display = "none";
+      }
+    }
+  }
 }
 
 function setMenuCon(foo) {
-	var it = foo.split(",");
-	document.getElementById('menu_url').value = it[0];
-	document.getElementById('menu_name').value = it[1];
-	if (it[2]) {
-		document.getElementById('menu_section').value = it[2];
-	} else {
-		document.getElementById('menu_section').value = '';
-	}
-	if (it[3]) {
-		document.getElementById('menu_perm').value = it[3];
-	} else {
-		document.getElementById('menu_perm').value = '';
-	}
+  var it = foo.split(",");
+  document.getElementById('menu_url').value = it[0];
+  document.getElementById('menu_name').value = it[1];
+  if (it[2]) {
+    document.getElementById('menu_section').value = it[2];
+  } else {
+    document.getElementById('menu_section').value = '';
+  }
+  if (it[3]) {
+    document.getElementById('menu_perm').value = it[3];
+  } else {
+    document.getElementById('menu_perm').value = '';
+  }
 }
 
 function genPass(w1, w2, w3) {
-	vo = "aeiouAEU";
+  vo = "aeiouAEU";
 
-	co = "bcdfgjklmnprstvwxzBCDFGHJKMNPQRSTVWXYZ0123456789_$%#";
-	s = Math.round(Math.random());
-	l = 8;
-	p = '';
+  co = "bcdfgjklmnprstvwxzBCDFGHJKMNPQRSTVWXYZ0123456789_$%#";
+  s = Math.round(Math.random());
+  l = 8;
+  p = '';
 
-	for (i = 0; i < l; i++) {
-		if (s) {
-			letter = vo.charAt(Math.round(Math.random() * (vo.length - 1)));
+  for (i = 0; i < l; i++) {
+    if (s) {
+      letter = vo.charAt(Math.round(Math.random() * (vo.length - 1)));
 
-			s = 0;
-		} else {
-			letter = co.charAt(Math.round(Math.random() * (co.length - 1)));
+      s = 0;
+    } else {
+      letter = co.charAt(Math.round(Math.random() * (co.length - 1)));
 
-			s = 1;
-		}
+      s = 1;
+    }
 
-		p = p + letter;
-	}
+    p = p + letter;
+  }
 
-	document.getElementById(w1).value = p;
-	document.getElementById(w2).value = p;
-	document.getElementById(w3).value = p;
+  document.getElementById(w1).value = p;
+  document.getElementById(w2).value = p;
+  document.getElementById(w3).value = p;
 }
 
 function setUserModule(foo1) {
-	document.getElementById('usermoduledata').value = foo1;
+  document.getElementById('usermoduledata').value = foo1;
 }
 
 function setSomeElement(fooel, foo1) {
-	document.getElementById(fooel).value = document.getElementById(fooel).value + foo1;
+  document.getElementById(fooel).value = document.getElementById(fooel).value + foo1;
 }
 
 function replaceSome(fooel, what, repl) {
-	document.getElementById(fooel).value = document.getElementById(fooel).value.replace(what, repl);
+  document.getElementById(fooel).value = document.getElementById(fooel).value.replace(what, repl);
 }
 
 function replaceLimon(vec) {
-	document.getElementById(vec[0]).value = document.getElementById(vec[0]).value.replace(vec[1], vec[2]);
+  document.getElementById(vec[0]).value = document.getElementById(vec[0]).value.replace(vec[1], vec[2]);
 }
 
 function replaceImgSrc(imgName,replSrc) {
@@ -327,134 +327,134 @@ function setCaretToPos (textarea, pos) {
   setSelectionRange(textarea, pos, pos);
 }
 function insertAt(elementId, replaceString) {
-	//inserts given text at selection or cursor position
-	textarea = getElementById(elementId);
-	var toBeReplaced = /text|page|area_name/g; //substrings in replaceString to be replaced by the selection if a selection was done
-	if (textarea.setSelectionRange) {
-		//Mozilla UserAgent Gecko-1.4
-		var selectionStart = textarea.selectionStart;
-		var selectionEnd = textarea.selectionEnd;
-		var scrollTop=textarea.scrollTop;
-		if (selectionStart != selectionEnd) { // has there been a selection
-			var newString = replaceString.replace(toBeReplaced, textarea.value.substring(selectionStart, selectionEnd));
-			textarea.value = textarea.value.substring(0, selectionStart)
-				+ newString
-				+ textarea.value.substring(selectionEnd);
-			setSelectionRange(textarea, selectionStart, selectionStart + newString.length);
-		}
-		else  {// set caret
-			textarea.value = textarea.value.substring(0, selectionStart)
-				+ replaceString
-				+ textarea.value.substring(selectionEnd);
-			setCaretToPos(textarea, selectionStart + replaceString.length);
-		}
-		textarea.scrollTop=scrollTop;
-	}
-	else if (document.selection) {
-		//UserAgent IE-6.0
-		textarea.focus();
-		var range = document.selection.createRange();
-		if (range.parentElement() == textarea) {
-			var isCollapsed = range.text == '';
-			if (! isCollapsed)  {
-				range.text = replaceString.replace(toBeReplaced, range.text);
-				range.moveStart('character', -range.text.length);
-				range.select();
-			}
-			else {
-				range.text = replaceString;
-			}
-		}
-	}
-	else { //UserAgent Gecko-1.0.1 (NN7.0)
-		setSomeElement(elementId, replaceString)
-			//alert("don't know yet how to handle insert" + document);
-	}
+  //inserts given text at selection or cursor position
+  textarea = getElementById(elementId);
+  var toBeReplaced = /text|page|area_name/g; //substrings in replaceString to be replaced by the selection if a selection was done
+  if (textarea.setSelectionRange) {
+    //Mozilla UserAgent Gecko-1.4
+    var selectionStart = textarea.selectionStart;
+    var selectionEnd = textarea.selectionEnd;
+    var scrollTop=textarea.scrollTop;
+    if (selectionStart != selectionEnd) { // has there been a selection
+      var newString = replaceString.replace(toBeReplaced, textarea.value.substring(selectionStart, selectionEnd));
+      textarea.value = textarea.value.substring(0, selectionStart)
+        + newString
+        + textarea.value.substring(selectionEnd);
+      setSelectionRange(textarea, selectionStart, selectionStart + newString.length);
+    }
+    else  {// set caret
+      textarea.value = textarea.value.substring(0, selectionStart)
+        + replaceString
+        + textarea.value.substring(selectionEnd);
+      setCaretToPos(textarea, selectionStart + replaceString.length);
+    }
+    textarea.scrollTop=scrollTop;
+  }
+  else if (document.selection) {
+    //UserAgent IE-6.0
+    textarea.focus();
+    var range = document.selection.createRange();
+    if (range.parentElement() == textarea) {
+      var isCollapsed = range.text == '';
+      if (! isCollapsed)  {
+        range.text = replaceString.replace(toBeReplaced, range.text);
+        range.moveStart('character', -range.text.length);
+        range.select();
+      }
+      else {
+        range.text = replaceString;
+      }
+    }
+  }
+  else { //UserAgent Gecko-1.0.1 (NN7.0)
+    setSomeElement(elementId, replaceString)
+      //alert("don't know yet how to handle insert" + document);
+  }
 }
 
 function setUserModuleFromCombo(id) {
-	document.getElementById('usermoduledata').value = document.getElementById('usermoduledata').value
-		+ document.getElementById(id).options[document.getElementById(id).selectedIndex].value;
+  document.getElementById('usermoduledata').value = document.getElementById('usermoduledata').value
+    + document.getElementById(id).options[document.getElementById(id).selectedIndex].value;
 //document.getElementById('usermoduledata').value='das';
 }
 
 
 function show(foo,f,section) {
-	document.getElementById(foo).style.display = "block";
-	if (f) { setCookie(foo, "o", section); }
+  document.getElementById(foo).style.display = "block";
+  if (f) { setCookie(foo, "o", section); }
 }
 
 function hide(foo,f, section) {
-	if (document.getElementById(foo)) {
-		document.getElementById(foo).style.display = "none";
-		if (f) {
-			var wasnot = getCookie(foo, section, 'x') == 'x';
-			setCookie(foo, "c", section);
-			if (wasnot) {
-				history.go(0);
-			}
-		}
-	}
+  if (document.getElementById(foo)) {
+    document.getElementById(foo).style.display = "none";
+    if (f) {
+      var wasnot = getCookie(foo, section, 'x') == 'x';
+      setCookie(foo, "c", section);
+      if (wasnot) {
+        history.go(0);
+      }
+    }
+  }
 }
 
 function flip_multi(foo,style) {
-	showit = 'show_' + escape(foo);
+  showit = 'show_' + escape(foo);
 
-	if (style == null) style = 'block';
-	if (this.iewin && style == 'table-cell') {
-		style = 'block';
-	}
+  if (style == null) style = 'block';
+  if (this.iewin && style == 'table-cell') {
+    style = 'block';
+  }
 
-	//FIXME
-	elements = document.getElementsByName(foo);
-	for (i=0 ; i < elements.length; i++) {
-		if (elements[i].style.display == "none") {
-			elements[i].style.display = style;
-			setSessionVar(showit,'y');
-		} else {
-			if (elements[i].style.display == style) {
-				elements[i].style.display = "none";
-				setSessionVar(showit, 'n');
-			} else {
-				elements[i].style.display = style;
-				setSessionVar(showit, 'y');
-			}
-		}
-	}
+  //FIXME
+  elements = document.getElementsByName(foo);
+  for (i=0 ; i < elements.length; i++) {
+    if (elements[i].style.display == "none") {
+      elements[i].style.display = style;
+      setSessionVar(showit,'y');
+    } else {
+      if (elements[i].style.display == style) {
+        elements[i].style.display = "none";
+        setSessionVar(showit, 'n');
+      } else {
+        elements[i].style.display = style;
+        setSessionVar(showit, 'y');
+      }
+    }
+  }
 }
 
 function flip(foo,style) {
-	showit = 'show_' + escape(foo);
+  showit = 'show_' + escape(foo);
 
-	if (style == null) style = 'block';
-	if (this.iewin && style == 'table-cell') {
-		style = 'block';
-	}
+  if (style == null) style = 'block';
+  if (this.iewin && style == 'table-cell') {
+    style = 'block';
+  }
 
-	if (document.getElementById(foo).style.display == "none") {
-		document.getElementById(foo).style.display = style;
-		setSessionVar(showit,'y');
-	} else {
-		if (document.getElementById(foo).style.display == style) {
-			document.getElementById(foo).style.display = "none";
-			setSessionVar(showit, 'n');
-		} else {
-			document.getElementById(foo).style.display = style;
-			setSessionVar(showit, 'y');
-		}
-	}
+  if (document.getElementById(foo).style.display == "none") {
+    document.getElementById(foo).style.display = style;
+    setSessionVar(showit,'y');
+  } else {
+    if (document.getElementById(foo).style.display == style) {
+      document.getElementById(foo).style.display = "none";
+      setSessionVar(showit, 'n');
+    } else {
+      document.getElementById(foo).style.display = style;
+      setSessionVar(showit, 'y');
+    }
+  }
 }
 
 function toggle(foo) {
-	if (document.getElementById(foo).style.display == "none") {
-		show(foo, true, "menu");
-	} else {
-		if (document.getElementById(foo).style.display == "block") {
-			hide(foo, true, "menu");
-		} else {
-			show(foo, true, "menu");
-		}
-	}
+  if (document.getElementById(foo).style.display == "none") {
+    show(foo, true, "menu");
+  } else {
+    if (document.getElementById(foo).style.display == "block") {
+      hide(foo, true, "menu");
+    } else {
+      show(foo, true, "menu");
+    }
+  }
 }
 
 function setopacity(obj,opac){
@@ -467,173 +467,173 @@ function setopacity(obj,opac){
 }
 
 function flip_thumbnail_status(id) {
-	var elem = document.getElementById(id);
-	if ( elem.className == 'thumbnailcontener' ) {
-		elem.className += ' thumbnailcontenerchecked';
-	} else {
-		elem.className = 'thumbnailcontener';
-	}
+  var elem = document.getElementById(id);
+  if ( elem.className == 'thumbnailcontener' ) {
+    elem.className += ' thumbnailcontenerchecked';
+  } else {
+    elem.className = 'thumbnailcontener';
+  }
 }
 
 function tikitabs(focus,max) {
-	for (var i = 1; i < max; i++) {
-		var tabname = 'tab' + i;
-		var content = 'content' + i;
-		if (document.getElementById(tabname) && typeof document.getElementById(tabname) != 'undefined') {
-			if (i == focus) {
-				//show(tabname);
-				show(content);
-				setCookie('tab',focus);
-				document.getElementById(tabname).className = 'tabmark';
-				document.getElementById(tabname).className += ' tabactive';
-			} else {
-				//hide(tabname);
-				hide(content);
-				document.getElementById(tabname).className = 'tabmark';
-				document.getElementById(tabname).className += ' tabinactive';
-			}
-		}
-	}
+  for (var i = 1; i < max; i++) {
+    var tabname = 'tab' + i;
+    var content = 'content' + i;
+    if (document.getElementById(tabname) && typeof document.getElementById(tabname) != 'undefined') {
+      if (i == focus) {
+        //show(tabname);
+        show(content);
+        setCookie('tab',focus);
+        document.getElementById(tabname).className = 'tabmark';
+        document.getElementById(tabname).className += ' tabactive';
+      } else {
+        //hide(tabname);
+        hide(content);
+        document.getElementById(tabname).className = 'tabmark';
+        document.getElementById(tabname).className += ' tabinactive';
+      }
+    }
+  }
 }
 
 function setfoldericonstate(foo) {
-	if (getCookie(foo, "menu", "o") == "o") {
-		src = "ofolder.png";
-	} else {
-		src = "folder.png";
-	}
-	document.getElementsByName('icn' + foo)[0].src = document.getElementsByName('icn' + foo)[0].src.replace(/[^\\\/]*$/, src);
+  if (getCookie(foo, "menu", "o") == "o") {
+    src = "ofolder.png";
+  } else {
+    src = "folder.png";
+  }
+  document.getElementsByName('icn' + foo)[0].src = document.getElementsByName('icn' + foo)[0].src.replace(/[^\\\/]*$/, src);
 }
 /* foo: name of the menu
  * def: menu type (e:extended, c:collapsed, f:fixed)
  * the menu is collapsed function of its cookie: if no cookie is set, the def is used
  */
 function setfolderstate(foo, def, img) {
-	var status = getCookie(foo, "menu", "o");
+  var status = getCookie(foo, "menu", "o");
     if (!img) {
-		if (document.getElementsByName('icn' + foo)[0].src.search(/[\\\/]/))
-			img = document.getElementsByName('icn' + foo)[0].src.replace(/.*[\\\/]([^\\\/]*)$/, "$1");
-		else
-			img = 'folder.png';
-	}
+    if (document.getElementsByName('icn' + foo)[0].src.search(/[\\\/]/))
+      img = document.getElementsByName('icn' + foo)[0].src.replace(/.*[\\\/]([^\\\/]*)$/, "$1");
+    else
+      img = 'folder.png';
+  }
     var src = img; // default
-	if (status == "o") {
-		show(foo);
-		src = "o" + img;
-	} else if (status != "c"  && def != 'd') {
-		show(foo);
-		src = "o" + img;
-	}
-	else {
-		hide(foo);
-	}
-	document.getElementsByName('icn' + foo)[0].src = document.getElementsByName('icn' + foo)[0].src.replace(/[^\\\/]*$/, src);
+  if (status == "o") {
+    show(foo);
+    src = "o" + img;
+  } else if (status != "c"  && def != 'd') {
+    show(foo);
+    src = "o" + img;
+  }
+  else {
+    hide(foo);
+  }
+  document.getElementsByName('icn' + foo)[0].src = document.getElementsByName('icn' + foo)[0].src.replace(/[^\\\/]*$/, src);
 }
 
 function setheadingstate(foo) {
-	var status = getCookie(foo, "showhide_headings");
-	if (status == "o") {
-		show(foo);
-		collapseSign("flipper" + foo);
-	} else /*if (status == "c")*/ {
-		if (!document.getElementById(foo).style.display == "none") {
-			hide(foo);
-			expandSign("flipper" + foo);
-		}
-	}
+  var status = getCookie(foo, "showhide_headings");
+  if (status == "o") {
+    show(foo);
+    collapseSign("flipper" + foo);
+  } else /*if (status == "c")*/ {
+    if (!document.getElementById(foo).style.display == "none") {
+      hide(foo);
+      expandSign("flipper" + foo);
+    }
+  }
 }
 
 function setsectionstate(foo, def, img) {
-	var status = getCookie(foo, "menu", "o");
-	if (status == "o") {
-		show(foo);
-		if (img) src = "o" + img;
-	} else if (status != "c" && def != 'd') {
-		show(foo);
-		if (img) src = "o" + img;
-	} else /*if (status == "c")*/ {
-		hide(foo);
-		if (img) src = img;
-	}
-	if (img) document.getElementsByName('icn' + foo)[0].src = document.getElementsByName('icn' + foo)[0].src.replace(/[^\\\/]*$/, src);
+  var status = getCookie(foo, "menu", "o");
+  if (status == "o") {
+    show(foo);
+    if (img) src = "o" + img;
+  } else if (status != "c" && def != 'd') {
+    show(foo);
+    if (img) src = "o" + img;
+  } else /*if (status == "c")*/ {
+    hide(foo);
+    if (img) src = img;
+  }
+  if (img) document.getElementsByName('icn' + foo)[0].src = document.getElementsByName('icn' + foo)[0].src.replace(/[^\\\/]*$/, src);
 }
 
 function icntoggle(foo, img) {
     if (!img) {
-		if (document.getElementsByName('icn' + foo)[0].src.search(/[\\\/]/))
-			img = document.getElementsByName('icn' + foo)[0].src.replace(/.*[\\\/]([^\\\/]*)$/, "$1");
-		else
-			img = 'folder.png';
-	}
-	if (document.getElementById(foo).style.display == "none") {
-		show(foo, true, "menu");
-		document.getElementsByName('icn' + foo)[0].src = document.getElementsByName('icn' + foo)[0].src.replace(/[^\\\/]*$/, 'o' + img);
-		
-	} else {
-		hide(foo, true, "menu");
-		img = img.replace(/(^|\/|\\)o(.*)$/, '$1$2');
-		document.getElementsByName('icn' + foo)[0].src = document.getElementsByName('icn' + foo)[0].src.replace(/[^\\\/]*$/, img);
-	}
+    if (document.getElementsByName('icn' + foo)[0].src.search(/[\\\/]/))
+      img = document.getElementsByName('icn' + foo)[0].src.replace(/.*[\\\/]([^\\\/]*)$/, "$1");
+    else
+      img = 'folder.png';
+  }
+  if (document.getElementById(foo).style.display == "none") {
+    show(foo, true, "menu");
+    document.getElementsByName('icn' + foo)[0].src = document.getElementsByName('icn' + foo)[0].src.replace(/[^\\\/]*$/, 'o' + img);
+
+  } else {
+    hide(foo, true, "menu");
+    img = img.replace(/(^|\/|\\)o(.*)$/, '$1$2');
+    document.getElementsByName('icn' + foo)[0].src = document.getElementsByName('icn' + foo)[0].src.replace(/[^\\\/]*$/, img);
+  }
 }
 
 //
 // set folder icon state during page load
 //
 function setFolderIcons() {
-	var elements = document.forms[the_form].elements[elements_name];
+  var elements = document.forms[the_form].elements[elements_name];
 
-	var elements_cnt = ( typeof (elements.length) != 'undefined') ? elements.length : 0;
+  var elements_cnt = ( typeof (elements.length) != 'undefined') ? elements.length : 0;
 
-	if (elements_cnt) {
-		for (var i = 0; i < elements_cnt; i++) {
-			elements[i].checked = document.forms[the_form].elements[switcher_name].checked;
-		}
-	} else {
-		elements.checked = document.forms[the_form].elements[switcher_name].checked;
+  if (elements_cnt) {
+    for (var i = 0; i < elements_cnt; i++) {
+      elements[i].checked = document.forms[the_form].elements[switcher_name].checked;
+    }
+  } else {
+    elements.checked = document.forms[the_form].elements[switcher_name].checked;
 
-		;
-	} // end if... else
+    ;
+  } // end if... else
 
-	return true;
+  return true;
 }     // setFolderIcons()
 
 // Initialize a cross-browser XMLHttpRequest object.
 // The object return has to be sent using send(). More parameters can be
 // given.
 // callback - The function that will be called when the response arrives
-//		First parameter will be the status 
+//		First parameter will be the status
 //		(HTTP Response Code [200,403, 404, ...])
 // method - GET or POST
 // url - The URL to open
 function getHttpRequest( method, url, async )
 {
-	if( async == null )
-		async = false;
+  if( async == null )
+    async = false;
 
-	var request;
+  var request;
 
-	if( window.XMLHttpRequest )
-		request = new XMLHttpRequest();
-	else if( window.ActiveXObject )
-	{
-		try
-		{
-			request = new ActiveXObject( "Microsoft.XMLHTTP" );
-		}
-		catch( ex )
-		{
-			request = new ActiveXObject("MSXML2.XMLHTTP");
-		}
-	}
-	else
-		return false;
+  if( window.XMLHttpRequest )
+    request = new XMLHttpRequest();
+  else if( window.ActiveXObject )
+  {
+    try
+    {
+      request = new ActiveXObject( "Microsoft.XMLHTTP" );
+    }
+    catch( ex )
+    {
+      request = new ActiveXObject("MSXML2.XMLHTTP");
+    }
+  }
+  else
+    return false;
 
-	if( !request )
-		return false;
+  if( !request )
+    return false;
 
-	request.open( method, url, async );
+  request.open( method, url, async );
 
-	return request;
+  return request;
 }
 
 // name - name of the cookie
@@ -645,9 +645,9 @@ function getHttpRequest( method, url, async )
 // * an argument defaults when it is assigned null as a placeholder
 // * a null placeholder is not required for trailing omitted arguments
 function setSessionVar(name,value) {
-	var request = getHttpRequest( "GET", "tiki-cookie-jar.php?" + name + "=" + escape(value));
-	request.send('');
-	tiki_cookie_jar[name] = value;
+  var request = getHttpRequest( "GET", "tiki-cookie-jar.php?" + name + "=" + escape(value));
+  request.send('');
+  tiki_cookie_jar[name] = value;
 }
 
 function setCookie(name, value, section, expires, path, domain, secure) {
@@ -655,95 +655,95 @@ function setCookie(name, value, section, expires, path, domain, secure) {
         expires = new Date();
         expires.setFullYear(expires.getFullYear() + 1);
     }
-	if (feature_no_cookie == 'y') {
-		var request = getHttpRequest( "GET", "tiki-cookie-jar.php?" + name + "=" + escape( value ) )
-		try {
-			request.send('');
-			//alert("XMLHTTP/set"+request.readyState+request.responseText);
-			tiki_cookie_jar[name] = value;
-			return true;
-		}
-		catch( ex )	{
-			setCookieBrowser(name, value, section, expires, path, domain, secure);
-			return false;
-		}
-	}
-	else {
-		setCookieBrowser(name, value, section, expires, path, domain, secure);
-		return true;
-	}
+  if (feature_no_cookie == 'y') {
+    var request = getHttpRequest( "GET", "tiki-cookie-jar.php?" + name + "=" + escape( value ) )
+    try {
+      request.send('');
+      //alert("XMLHTTP/set"+request.readyState+request.responseText);
+      tiki_cookie_jar[name] = value;
+      return true;
+    }
+    catch( ex )	{
+      setCookieBrowser(name, value, section, expires, path, domain, secure);
+      return false;
+    }
+  }
+  else {
+    setCookieBrowser(name, value, section, expires, path, domain, secure);
+    return true;
+  }
 }
 function setCookieBrowser(name, value, section, expires, path, domain, secure) {
-	if (section) {
-		valSection = getCookie(section);
-		name2 = "@" + name + ":";
-		if (valSection) {
-			if (new RegExp(name2).test(valSection))
-				valSection  = valSection.replace(new RegExp(name2 + "[^@;]*"), name2 + value);
-			else
-				valSection = valSection + name2 + value;
-			setCookieBrowser(section, valSection, null, expires, path, domain, secure);
-		}
-		else {
-			valSection = name2+value;
-			setCookieBrowser(section, valSection, null, expires, path, domain, secure);
-		}
-		
-	}
-	else {
-		var curCookie = name + "=" + escape(value) + ((expires) ? "; expires=" + expires.toGMTString() : "")
-			+ ((path) ? "; path=" + path : "") + ((domain) ? "; domain=" + domain : "") + ((secure) ? "; secure" : "");
-		document.cookie = curCookie;
-	}
+  if (section) {
+    valSection = getCookie(section);
+    name2 = "@" + name + ":";
+    if (valSection) {
+      if (new RegExp(name2).test(valSection))
+        valSection  = valSection.replace(new RegExp(name2 + "[^@;]*"), name2 + value);
+      else
+        valSection = valSection + name2 + value;
+      setCookieBrowser(section, valSection, null, expires, path, domain, secure);
+    }
+    else {
+      valSection = name2+value;
+      setCookieBrowser(section, valSection, null, expires, path, domain, secure);
+    }
+
+  }
+  else {
+    var curCookie = name + "=" + escape(value) + ((expires) ? "; expires=" + expires.toGMTString() : "")
+      + ((path) ? "; path=" + path : "") + ((domain) ? "; domain=" + domain : "") + ((secure) ? "; secure" : "");
+    document.cookie = curCookie;
+  }
 }
 
 // name - name of the desired cookie
 // section - name of group of cookies or null
 // * return string containing value of specified cookie or null if cookie does not exist
 function getCookie(name, section, defval) {
-	if( feature_no_cookie == 'y' && (window.XMLHttpRequest || window.ActiveXObject) && typeof tiki_cookie_jar != "undefined" && tiki_cookie_jar.length > 0) {
-		if (typeof tiki_cookie_jar[name] == "undefined")
-			return defval;
-		return tiki_cookie_jar[name];
-	}
-	else {
-		return getCookieBrowser(name, section, defval);
-	}
+  if( feature_no_cookie == 'y' && (window.XMLHttpRequest || window.ActiveXObject) && typeof tiki_cookie_jar != "undefined" && tiki_cookie_jar.length > 0) {
+    if (typeof tiki_cookie_jar[name] == "undefined")
+      return defval;
+    return tiki_cookie_jar[name];
+  }
+  else {
+    return getCookieBrowser(name, section, defval);
+  }
 }
 function getCookieBrowser(name, section, defval) {
-	if (section) {
-		var valSection = getCookieBrowser(section);
-		if (valSection) {
-			var name2 = "@"+name+":";
-			var val = valSection.match(new RegExp(name2 + "([^@;]*)"));
-			if (val)
-				return unescape(val[1]);
-			else
-				return null;
-		} else {
-			return defval;
-		}
-	} else {
-		var dc = document.cookie;
+  if (section) {
+    var valSection = getCookieBrowser(section);
+    if (valSection) {
+      var name2 = "@"+name+":";
+      var val = valSection.match(new RegExp(name2 + "([^@;]*)"));
+      if (val)
+        return unescape(val[1]);
+      else
+        return null;
+    } else {
+      return defval;
+    }
+  } else {
+    var dc = document.cookie;
 
-		var prefix = name + "=";
-		var begin = dc.indexOf("; " + prefix);
+    var prefix = name + "=";
+    var begin = dc.indexOf("; " + prefix);
 
-		if (begin == -1) {
-			begin = dc.indexOf(prefix);
+    if (begin == -1) {
+      begin = dc.indexOf(prefix);
 
-			if (begin != 0)
-				return null;
+      if (begin != 0)
+        return null;
 
-		} else begin += 2;
+    } else begin += 2;
 
-		var end = document.cookie.indexOf(";", begin);
+    var end = document.cookie.indexOf(";", begin);
 
-		if (end == -1)
-			end = dc.length;
+    if (end == -1)
+      end = dc.length;
 
-		return unescape(dc.substring(begin + prefix.length, end));
-	}
+    return unescape(dc.substring(begin + prefix.length, end));
+  }
 }
 
 // name - name of the cookie
@@ -751,84 +751,84 @@ function getCookieBrowser(name, section, defval) {
 // [domain] - domain of the cookie (must be same as domain used to create cookie)
 // * path and domain default if assigned null or omitted if no explicit argument proceeds
 function deleteCookie(name, section, expires, path, domain, secure) {
-	if (section) {
-		valSection = getCookieBrowser(section);
-		name2 = "@" + name + ":";
-		if (valSection) {
-			if (new RegExp(name2).test(valSection)) {
-				valSection  = valSection.replace(new RegExp(name2 + "[^@;]*"), "");
-				setCookieBrowser(section, valSection, null, expires, path, domain, secure);
-			}
-		}
-	}
-	else {
+  if (section) {
+    valSection = getCookieBrowser(section);
+    name2 = "@" + name + ":";
+    if (valSection) {
+      if (new RegExp(name2).test(valSection)) {
+        valSection  = valSection.replace(new RegExp(name2 + "[^@;]*"), "");
+        setCookieBrowser(section, valSection, null, expires, path, domain, secure);
+      }
+    }
+  }
+  else {
 
 //	if( !setCookie( name, '', 0, path, domain ) ) {
 //		if (getCookie(name)) {
-			document.cookie = name + "="
-				+ ((path) ? "; path=" + path : "") + ((domain) ? "; domain=" + domain : "") + "; expires=Thu, 01-Jan-70 00:00:01 GMT";
+      document.cookie = name + "="
+        + ((path) ? "; path=" + path : "") + ((domain) ? "; domain=" + domain : "") + "; expires=Thu, 01-Jan-70 00:00:01 GMT";
 //		}
-	}
+  }
 }
 
 // date - any instance of the Date object
 // * hand all instances of the Date object to this function for "repairs"
 function fixDate(date) {
-	var base = new Date(0);
+  var base = new Date(0);
 
-	var skew = base.getTime();
+  var skew = base.getTime();
 
-	if (skew > 0)
-		date.setTime(date.getTime() - skew);
+  if (skew > 0)
+    date.setTime(date.getTime() - skew);
 }
 
 //
 // Expand/collapse lists
 //
 function flipWithSign(foo) {
-	if (document.getElementById(foo).style.display == "none") {
-		show(foo, true, "showhide_headings");
-		collapseSign("flipper" + foo);
-	} else {
-		hide(foo, true, "showhide_headings");
-		expandSign("flipper" + foo);
-	}
+  if (document.getElementById(foo).style.display == "none") {
+    show(foo, true, "showhide_headings");
+    collapseSign("flipper" + foo);
+  } else {
+    hide(foo, true, "showhide_headings");
+    expandSign("flipper" + foo);
+  }
 }
 
 // set the state of a flipped entry after page reload
 function setFlipWithSign(foo) {
-	if (getCookie(foo) == "o") {
-		collapseSign("flipper" + foo);
+  if (getCookie(foo) == "o") {
+    collapseSign("flipper" + foo);
 
-		show(foo);
-	} else {
-		expandSign("flipper" + foo);
+    show(foo);
+  } else {
+    expandSign("flipper" + foo);
 
-		hide(foo);
-	}
+    hide(foo);
+  }
 }
 
 function expandSign(foo) {
-	document.getElementById(foo).firstChild.nodeValue = "[+]";
+  document.getElementById(foo).firstChild.nodeValue = "[+]";
 }
 
 function collapseSign(foo) {
-	document.getElementById(foo).firstChild.nodeValue = "[-]";
+  document.getElementById(foo).firstChild.nodeValue = "[-]";
 } // flipWithSign()
 
 //
 // Check / Uncheck all Checkboxes
 //
 function switchCheckboxes(tform, elements_name, state) {
-	// checkboxes need to have the same name elements_name
-	// e.g. <input type="checkbox" name="my_ename[]">, will arrive as Array in php.
-	for (var i = 0; i < tform.length; i++) {
-		if (tform.elements[i].name == elements_name) {
-			tform.elements[i].checked = state
-		}
-	}
-	return true;
-}  
+  // checkboxes need to have the same name elements_name
+  // e.g. <input type="checkbox" name="my_ename[]">, will arrive as Array in php.
+  for (var i = 0; i < tform.length; i++) {
+    if (tform.elements[i].name == elements_name) {
+      tform.elements[i].checked = state
+    }
+  }
+  return true;
+}
 
 //
 // Set client timezone
@@ -848,13 +848,13 @@ setCookie("local_tz", local_tz, null, expires, "/");
 // <option value="http://tikiwiki.org">tikiwiki.org</option>
 // </select>
 function go(o) {
-	if (o.options[o.selectedIndex].value != "") {
-		location = o.options[o.selectedIndex].value;
+  if (o.options[o.selectedIndex].value != "") {
+    location = o.options[o.selectedIndex].value;
 
-		o.options[o.selectedIndex] = 1;
-	}
+    o.options[o.selectedIndex] = 1;
+  }
 
-	return false;
+  return false;
 }
 
 
@@ -894,14 +894,14 @@ function confirmTheLink(theLink, theMsg)
     if (typeof(window.opera) != 'undefined') {
         return true;
     }
-                                                                                                                  
+
     var is_confirmed = confirm(theMsg);
     //if (is_confirmed) {
     //    theLink.href += '&amp;is_js_confirmed=1';
     //}
-                                                                                                                  
+
     return is_confirmed;
-} 
+}
 
 /** \brief: modif a textarea dimension
  * \elementId = textarea idea
@@ -910,33 +910,33 @@ function confirmTheLink(theLink, theMsg)
  * \formid = form id (needs to have 2 input rows and cols
  **/
 function textareasize(elementId, height, width, formId) {
-	textarea = document.getElementById(elementId);
-	form1 = document.getElementById(formId);
-	if (textarea && height != 0 && textarea.rows + height > 5) {
-		textarea.rows += height;
-		if (form1.rows)
-			form1.rows.value = textarea.rows;
-	}
-	if (textarea && width != 0 && textarea.cols + width > 10) {
-		 textarea.cols += width;
-		if (form1.cols)
-			form1.cols.value = textarea.cols;
-	}
+  textarea = document.getElementById(elementId);
+  form1 = document.getElementById(formId);
+  if (textarea && height != 0 && textarea.rows + height > 5) {
+    textarea.rows += height;
+    if (form1.rows)
+      form1.rows.value = textarea.rows;
+  }
+  if (textarea && width != 0 && textarea.cols + width > 10) {
+     textarea.cols += width;
+    if (form1.cols)
+      form1.cols.value = textarea.cols;
+  }
 }
 
 
 /** \brief: insert img tag in textarea
- *	
- */	
+ *
+ */
 function insertImgFile(elementId, fileId, oldfileId,type,page,attach_comment) {
     textarea = getElementById(elementId);
-    fileup   = getElementById(fileId);    
-    oldfile  = getElementById(oldfileId);    
-    prefixEl = getElementById("prefix");    
+    fileup   = getElementById(fileId);
+    oldfile  = getElementById(oldfileId);
+    prefixEl = getElementById("prefix");
     prefix   = "img/wiki_up/";
 
-    if (!textarea || ! fileup) 
-	return;
+    if (!textarea || ! fileup)
+  return;
 
     if ( prefixEl) { prefix= prefixEl.value; }
 
@@ -944,25 +944,25 @@ function insertImgFile(elementId, fileId, oldfileId,type,page,attach_comment) {
     oldfilename = oldfile.value;
 
     if (filename == oldfilename ||
-	filename == "" ) { // insert only if name really changed
-	return;
+  filename == "" ) { // insert only if name really changed
+  return;
     }
     oldfile.value = filename;
 
     if (filename.indexOf("/")>=0) { // unix
-	dirs = filename.split("/"); 
-	filename = dirs[dirs.length-1];
+  dirs = filename.split("/");
+  filename = dirs[dirs.length-1];
     }
     if (filename.indexOf("\\")>=0) { // dos
-	dirs = filename.split("\\"); 
-	filename = dirs[dirs.length-1];
+  dirs = filename.split("\\");
+  filename = dirs[dirs.length-1];
     }
     if (filename.indexOf(":")>=0) { // mac
-	dirs = filename.split(":"); 
-	filename = dirs[dirs.length-1];
+  dirs = filename.split(":");
+  filename = dirs[dirs.length-1];
     }
-    // @todo - here's a hack: we know its ending up in img/wiki_up. 
-    //      replace with dyn. variable once in a while to respect the tikidomain 
+    // @todo - here's a hack: we know its ending up in img/wiki_up.
+    //      replace with dyn. variable once in a while to respect the tikidomain
     if (type == "file") {
         str = "{file name=\""+filename + "\"";
         if (desc = getElementById(attach_comment).value)
@@ -977,12 +977,12 @@ function insertImgFile(elementId, fileId, oldfileId,type,page,attach_comment) {
 /* add new upload image form in page edition */
 var img_form_count = 2;
 function addImgForm() {
-	var new_text = document.createElement('span');
-	new_text.setAttribute('id','picfile' + img_form_count);
-	new_text.innerHTML = '<input name=\'picfile' + img_form_count + '\' type=\'file\' onchange=\'javascript:insertImgFile("editwiki","picfile' + img_form_count + '","hasAlreadyInserted","img")\'/><br />';
-	document.getElementById('new_img_form').appendChild(new_text);
-	needToConfirm = true;
-	img_form_count ++;
+  var new_text = document.createElement('span');
+  new_text.setAttribute('id','picfile' + img_form_count);
+  new_text.innerHTML = '<input name=\'picfile' + img_form_count + '\' type=\'file\' onchange=\'javascript:insertImgFile("editwiki","picfile' + img_form_count + '","hasAlreadyInserted","img")\'/><br />';
+  document.getElementById('new_img_form').appendChild(new_text);
+  needToConfirm = true;
+  img_form_count ++;
 }
 
 /*
@@ -994,7 +994,7 @@ function wiki3d_open (page, width, height) {
 
 /* some little email protection */
 function protectEmail(nom, domain, sep) {
-		document.write('<a class="wiki" href="mailto:'+nom+'@'+domain+'">'+nom+sep+domain+'</a>');
+    document.write('<a class="wiki" href="mailto:'+nom+'@'+domain+'">'+nom+sep+domain+'</a>');
 }
 
 // --- begin of sorttable, written by Stuart Langridge, November 2003, MIT license ---
@@ -1020,7 +1020,7 @@ function ts_makeSortable(table) {
         var firstRow = table.rows[0];
     }
     if (!firstRow) return;
-    
+
     // We have a first row: assume it's the header, and make its contents clickable links
     for (var i=0;i<firstRow.cells.length;i++) {
         var cell = firstRow.cells[i];
@@ -1030,24 +1030,24 @@ function ts_makeSortable(table) {
 }
 
 function ts_getInnerText(el) {
-	if (typeof el == "string") return el;
-	if (typeof el == "undefined") { return el };
-	if (el.innerText) return el.innerText;	//Not needed but it is faster
-	var str = "";
-	
-	var cs = el.childNodes;
-	var l = cs.length;
-	for (var i = 0; i < l; i++) {
-		switch (cs[i].nodeType) {
-			case 1: //ELEMENT_NODE
-				str += ts_getInnerText(cs[i]);
-				break;
-			case 3:	//TEXT_NODE
-				str += cs[i].nodeValue;
-				break;
-		}
-	}
-	return str;
+  if (typeof el == "string") return el;
+  if (typeof el == "undefined") { return el };
+  if (el.innerText) return el.innerText;	//Not needed but it is faster
+  var str = "";
+
+  var cs = el.childNodes;
+  var l = cs.length;
+  for (var i = 0; i < l; i++) {
+    switch (cs[i].nodeType) {
+      case 1: //ELEMENT_NODE
+        str += ts_getInnerText(cs[i]);
+        break;
+      case 3:	//TEXT_NODE
+        str += cs[i].nodeValue;
+        break;
+    }
+  }
+  return str;
 }
 
 function ts_resortTable(lnk) {
@@ -1060,7 +1060,7 @@ function ts_resortTable(lnk) {
     var td = lnk.parentNode;
     var column = td.cellIndex;
     var table = getParent(td,'TABLE');
-    
+
     // Work out a type for the column
     if (table.rows.length <= 1) return;
     var itm = ts_getInnerText(table.rows[1].cells[column]);
@@ -1085,13 +1085,13 @@ function ts_resortTable(lnk) {
         ARROW = '&nbsp;&nbsp;<img src="pics/icons/resultset_down.png" border="0" width="16" height="16" />';
         span.setAttribute('sortdir','down');
     }
-    
+
     // We appendChild rows that already exist to the tbody, so it moves them rather than creating new ones
     // don't do sortbottom rows
     for (i=0;i<newRows.length;i++) { if (!newRows[i].className || (newRows[i].className && (newRows[i].className.indexOf('sortbottom') == -1))) table.tBodies[0].appendChild(newRows[i]);}
     // do sortbottom rows only
     for (i=0;i<newRows.length;i++) { if (newRows[i].className && (newRows[i].className.indexOf('sortbottom') != -1)) table.tBodies[0].appendChild(newRows[i]);}
-    
+
     // Delete any other arrows there may be showing
     var allspans = document.getElementsByTagName("span");
     for (var ci=0;ci<allspans.length;ci++) {
@@ -1101,16 +1101,16 @@ function ts_resortTable(lnk) {
             }
         }
     }
-        
+
     span.innerHTML = ARROW;
 }
 
 function getParent(el, pTagName) {
-	if (el == null) return null;
-	else if (el.nodeType == 1 && el.tagName.toLowerCase() == pTagName.toLowerCase())	// Gecko bug, supposed to be uppercase
-		return el;
-	else
-		return getParent(el.parentNode, pTagName);
+  if (el == null) return null;
+  else if (el.nodeType == 1 && el.tagName.toLowerCase() == pTagName.toLowerCase())	// Gecko bug, supposed to be uppercase
+    return el;
+  else
+    return getParent(el.parentNode, pTagName);
 }
 function ts_sort_date(a,b) {
     // y2k notes: two digit years less than 50 are treated as 20XX, greater than 50 are treated as 19XX
@@ -1135,16 +1135,16 @@ function ts_sort_date(a,b) {
     return 1;
 }
 
-function ts_sort_currency(a,b) { 
+function ts_sort_currency(a,b) {
     aa = ts_getInnerText(a.cells[SORT_COLUMN_INDEX]).replace(/[^0-9.]/g,'');
     bb = ts_getInnerText(b.cells[SORT_COLUMN_INDEX]).replace(/[^0-9.]/g,'');
     return parseFloat(aa) - parseFloat(bb);
 }
 
-function ts_sort_numeric(a,b) { 
+function ts_sort_numeric(a,b) {
     aa = parseFloat(ts_getInnerText(a.cells[SORT_COLUMN_INDEX]));
     if (isNaN(aa)) aa = 0;
-    bb = parseFloat(ts_getInnerText(b.cells[SORT_COLUMN_INDEX])); 
+    bb = parseFloat(ts_getInnerText(b.cells[SORT_COLUMN_INDEX]));
     if (isNaN(bb)) bb = 0;
     return aa-bb;
 }
@@ -1166,13 +1166,13 @@ function ts_sort_default(a,b) {
 }
 
 // function to allow multiselection in checkboxes
-// must be called like this : 
+// must be called like this :
 //
 // <input type="checkbox" onclick="checkbox_list_check_all(form_name,[checkbox_name_1,checkbox_name2 ...],true|false);">
 function checkbox_list_check_all(form,list,checking) {
-	for (var checkbox in list) {
-		document.forms[form].elements[list[checkbox]].checked=checking;	
-	}
+  for (var checkbox in list) {
+    document.forms[form].elements[list[checkbox]].checked=checking;
+  }
 }
 
 
@@ -1190,7 +1190,7 @@ function addEvent(elm, evType, fn, useCapture)
   } else {
     alert("Handler could not be removed");
   }
-} 
+}
 
 function adjustThumbnails() {
   var i,j,h = 0;
@@ -1229,7 +1229,7 @@ function correctPNG() // correctly handle PNG transparency in Win IE 5.5 & 6.
 {
    var arVersion = navigator.appVersion.split("MSIE")
    var version = parseFloat(arVersion[1])
-   if ((version >= 5.5) && (document.body.filters)) 
+   if ((version >= 5.5) && (document.body.filters))
    {
       for(var i=0; i<document.images.length; i++)
       {
@@ -1240,25 +1240,25 @@ function correctPNG() // correctly handle PNG transparency in Win IE 5.5 & 6.
             var imgID = (img.id) ? "id='" + img.id + "' " : ""
             var imgClass = (img.className) ? "class='" + img.className + "' " : ""
             var imgTitle = (img.title) ? "title='" + img.title + "' " : "title='" + img.alt + "' "
-            var imgStyle = "display:inline-block;" + img.style.cssText 
+            var imgStyle = "display:inline-block;" + img.style.cssText
             if (img.align == "left") imgStyle = "float:left;" + imgStyle
             if (img.align == "right") imgStyle = "float:right;" + imgStyle
             if (img.parentElement.href) imgStyle = "cursor:hand;" + imgStyle
             var strNewHTML = "<span " + imgID + imgClass + imgTitle
             + " style=\"" + "width:" + img.width + "px; height:" + img.height + "px;" + imgStyle + ";"
             + "filter:progid:DXImageTransform.Microsoft.AlphaImageLoader"
-            + "(src=\'" + img.src + "\', sizingMethod='scale');\"></span>" 
+            + "(src=\'" + img.src + "\', sizingMethod='scale');\"></span>"
             img.outerHTML = strNewHTML
             i = i-1
          }
       }
-   }    
+   }
 }
 */
 browser();
 /* do not need if all the pngs are png8
 if (this.iewin) {
-	window.attachEvent("onload", correctPNG);
+  window.attachEvent("onload", correctPNG);
 
 }
 */
@@ -1273,239 +1273,239 @@ function SetMyUrl(area,url) {
 }
 /* Count the number of words (spearated with space) */
 function wordCount(maxSize, source, cpt, message) {
-	var formcontent = source.value;
-	str = formcontent.replace(/^\s+|\s+$/g, '') ;
-	formcontent = str.split(/[^\S]+/);
-	document.getElementById(cpt).value = formcontent.length;
-	if (maxSize > 0 && formcontent.length > maxSize) {
+  var formcontent = source.value;
+  str = formcontent.replace(/^\s+|\s+$/g, '') ;
+  formcontent = str.split(/[^\S]+/);
+  document.getElementById(cpt).value = formcontent.length;
+  if (maxSize > 0 && formcontent.length > maxSize) {
         alert(message);
-	}
+  }
 }
 
 function show_plugin_form( type, index, pageName, args, bodyContent )
 {
-	var target = document.getElementById( type + index );
-	var content = target.innerHTML;
+  var target = document.getElementById( type + index );
+  var content = target.innerHTML;
 
-	var form = build_plugin_form( type, index, pageName, args, bodyContent );
+  var form = build_plugin_form( type, index, pageName, args, bodyContent );
 
-	target.innerHTML = '';
-	target.appendChild( form );
+  target.innerHTML = '';
+  target.appendChild( form );
 }
 
 function popup_plugin_form( type, index, pageName, args, bodyContent, edit_icon )
 {
-	var container = document.createElement( 'div' );
-	container.className = 'plugin-form-float';
-	
-	var minimize = document.createElement( 'a' );
-	var icon = document.createElement( 'img' );
-	minimize.appendChild( icon );
-	minimize.href = 'javascript:void(0)';
-	container.appendChild( minimize );
-	icon.src = 'images/fullscreen_minimize.gif';
-	icon.style.position = 'absolute';
-	icon.style.top = '0px';
-	icon.style.right = '0px';
-	icon.style.border = 'none';
+  var container = document.createElement( 'div' );
+  container.className = 'plugin-form-float';
 
-	if (!index) { index = 0; }
-	if (!pageName) { pageName = ''; }
-	if (!args) { args = {}; }
-	if (!bodyContent) { bodyContent = ''; }
+  var minimize = document.createElement( 'a' );
+  var icon = document.createElement( 'img' );
+  minimize.appendChild( icon );
+  minimize.href = 'javascript:void(0)';
+  container.appendChild( minimize );
+  icon.src = 'images/fullscreen_minimize.gif';
+  icon.style.position = 'absolute';
+  icon.style.top = '0px';
+  icon.style.right = '0px';
+  icon.style.border = 'none';
 
-	var form = build_plugin_form(
-		type,
-		index,
-		pageName,
-		args,
-		bodyContent
-	);
+  if (!index) { index = 0; }
+  if (!pageName) { pageName = ''; }
+  if (!args) { args = {}; }
+  if (!bodyContent) { bodyContent = ''; }
 
-	form.onsubmit = function()
-	{
-		var meta = tiki_plugins[type];
-		var params = [];
-		var edit = edit_icon;
+  var form = build_plugin_form(
+    type,
+    index,
+    pageName,
+    args,
+    bodyContent
+  );
 
-		for( var k in meta.params )
-		{
-			if( typeof(meta.params[k]) != 'object' )
-				continue;
+  form.onsubmit = function()
+  {
+    var meta = tiki_plugins[type];
+    var params = [];
+    var edit = edit_icon;
 
-			var val = form['params[' + k + ']'].value;
+    for( var k in meta.params )
+    {
+      if( typeof(meta.params[k]) != 'object' )
+        continue;
 
-			if( val != '' )
-				params.push( k + '="' + val + '"' );
-		}
+      var val = form['params[' + k + ']'].value;
 
-		var blob = '{' + type.toUpperCase() + '(' + params.join(',') + ')}' + form.content.value + '{' + type.toUpperCase() + '}';
+      if( val != '' )
+        params.push( k + '="' + val + '"' );
+    }
 
-		insertAt( 'editwiki', blob );
+    var blob = '{' + type.toUpperCase() + '(' + params.join(',') + ')}' + form.content.value + '{' + type.toUpperCase() + '}';
 
-		document.body.removeChild( container );
-		if (edit)
-			edit.style.display = 'inline';
-		return false;
-	}
+    insertAt( 'editwiki', blob );
 
-	minimize.onclick = function() {
-		var edit = edit_icon;
-		if (edit)
-			edit.style.display = 'inline';
-		document.body.removeChild( container );
-	};
+    document.body.removeChild( container );
+    if (edit)
+      edit.style.display = 'inline';
+    return false;
+  }
 
-	document.body.appendChild( container );
-	if (edit_icon)
-		edit_icon.style.display = 'none';
-	container.appendChild( form );
+  minimize.onclick = function() {
+    var edit = edit_icon;
+    if (edit)
+      edit.style.display = 'inline';
+    document.body.removeChild( container );
+  };
+
+  document.body.appendChild( container );
+  if (edit_icon)
+    edit_icon.style.display = 'none';
+  container.appendChild( form );
 }
 
 function build_plugin_form( type, index, pageName, args, bodyContent )
 {
-	var form = document.createElement( 'form' );
-	form.method = 'post';
-	form.action = 'tiki-wikiplugin_edit.php';
-	form.className  = 'wikiplugin_edit';
+  var form = document.createElement( 'form' );
+  form.method = 'post';
+  form.action = 'tiki-wikiplugin_edit.php';
+  form.className  = 'wikiplugin_edit';
 
-	var hiddenPage = document.createElement( 'input' );
-	hiddenPage.type = 'hidden';
-	hiddenPage.name = 'page';
-	hiddenPage.value = pageName;
-	form.appendChild( hiddenPage );
+  var hiddenPage = document.createElement( 'input' );
+  hiddenPage.type = 'hidden';
+  hiddenPage.name = 'page';
+  hiddenPage.value = pageName;
+  form.appendChild( hiddenPage );
 
-	var hiddenType = document.createElement( 'input' );
-	hiddenType.type = 'hidden';
-	hiddenType.name = 'type';
-	hiddenType.value = type;
-	form.appendChild( hiddenType );
+  var hiddenType = document.createElement( 'input' );
+  hiddenType.type = 'hidden';
+  hiddenType.name = 'type';
+  hiddenType.value = type;
+  form.appendChild( hiddenType );
 
-	var hiddenIndex = document.createElement( 'input' );
-	hiddenIndex.type = 'hidden';
-	hiddenIndex.name = 'index';
-	hiddenIndex.value = index;
-	form.appendChild( hiddenIndex );
+  var hiddenIndex = document.createElement( 'input' );
+  hiddenIndex.type = 'hidden';
+  hiddenIndex.name = 'index';
+  hiddenIndex.value = index;
+  form.appendChild( hiddenIndex );
 
-	var meta = tiki_plugins[type];
+  var meta = tiki_plugins[type];
 
-	var header = document.createElement( 'h3' );
-	header.innerHTML = meta.name;
-	form.appendChild( header );
+  var header = document.createElement( 'h3' );
+  header.innerHTML = meta.name;
+  form.appendChild( header );
 
-	var desc = document.createElement( 'div' );
-	desc.innerHTML = meta.description;
-	form.appendChild( desc );
+  var desc = document.createElement( 'div' );
+  desc.innerHTML = meta.description;
+  form.appendChild( desc );
 
-	var table = document.createElement( 'table' );
-	table.className = 'normal';
-	form.appendChild( table );
+  var table = document.createElement( 'table' );
+  table.className = 'normal';
+  form.appendChild( table );
 
-	var rowNumber = 0;
-	for( i in meta.params )
-	{
-		if( typeof(meta.params[i]) != 'object' || meta.params[i].name == 'array' )
-			continue;
+  var rowNumber = 0;
+  for( i in meta.params )
+  {
+    if( typeof(meta.params[i]) != 'object' || meta.params[i].name == 'array' )
+      continue;
 
-		var row = table.insertRow( rowNumber++ );
-		var label = row.insertCell( 0 );
-		var field = row.insertCell( 1 );
-		row.className = 'formcolor';
+    var row = table.insertRow( rowNumber++ );
+    var label = row.insertCell( 0 );
+    var field = row.insertCell( 1 );
+    row.className = 'formcolor';
 
-		label.innerHTML = meta.params[i].name;
-		if( meta.params[i].required )
-			label.style.fontWeight = 'bold';
+    label.innerHTML = meta.params[i].name;
+    if( meta.params[i].required )
+      label.style.fontWeight = 'bold';
 
-		var input = document.createElement( 'input' );
-		input.type = 'text';
-		input.name = 'params[' + i + ']';
-		if( args[i] )
-			input.value = args[i];
+    var input = document.createElement( 'input' );
+    input.type = 'text';
+    input.name = 'params[' + i + ']';
+    if( args[i] )
+      input.value = args[i];
 
-		var desc = document.createElement( 'div' );
-		desc.style.fontSize = 'x-small';
-		desc.innerHTML = meta.params[i].description;
+    var desc = document.createElement( 'div' );
+    desc.style.fontSize = 'x-small';
+    desc.innerHTML = meta.params[i].description;
 
-		field.appendChild( input );
-		field.appendChild( desc );
-	}
+    field.appendChild( input );
+    field.appendChild( desc );
+  }
 
-	var bodyRow = table.insertRow(rowNumber++);
-	var bodyCell = bodyRow.insertCell(0);
-	var bodyField = document.createElement( 'textarea' );
-	var bodyDesc = document.createElement( 'div' );
+  var bodyRow = table.insertRow(rowNumber++);
+  var bodyCell = bodyRow.insertCell(0);
+  var bodyField = document.createElement( 'textarea' );
+  var bodyDesc = document.createElement( 'div' );
 
-	if( meta.body )
-		bodyDesc.innerHTML = meta.body;
-	else
-		bodyRow.style.display = 'none';
+  if( meta.body )
+    bodyDesc.innerHTML = meta.body;
+  else
+    bodyRow.style.display = 'none';
 
-	bodyField.name = 'content';
-	bodyField.value = bodyContent;
+  bodyField.name = 'content';
+  bodyField.value = bodyContent;
 
-	bodyRow.className = 'formcolor';
-	
-	bodyCell.appendChild( bodyDesc );
-	bodyCell.appendChild( bodyField );
-	bodyCell.colSpan = '2';
+  bodyRow.className = 'formcolor';
 
-	var submitRow = table.insertRow(rowNumber++);
-	var submitCell = submitRow.insertCell(0);
-	var submit = document.createElement( 'input' );
+  bodyCell.appendChild( bodyDesc );
+  bodyCell.appendChild( bodyField );
+  bodyCell.colSpan = '2';
 
-	submit.type = 'submit';
-	submitCell.colSpan = 2;
-	submitCell.appendChild( submit );
-	submitCell.className = 'submit';
+  var submitRow = table.insertRow(rowNumber++);
+  var submitCell = submitRow.insertCell(0);
+  var submit = document.createElement( 'input' );
 
-	return form;
+  submit.type = 'submit';
+  submitCell.colSpan = 2;
+  submitCell.appendChild( submit );
+  submitCell.className = 'submit';
+
+  return form;
 }
 
 
-// Password strength 
-// Based from code by: 
+// Password strength
+// Based from code by:
 // Matthew R. Miller - 2007
 // www.codeandcoffee.com
 // originally released as "free software license"
 
 /*
-	Password Strength Algorithm:
-	
-	Password Length:
-		5 Points: Less than 4 characters
-		10 Points: 5 to 7 characters
-		25 Points: 8 or more
-		
-	Letters:
-		0 Points: No letters
-		10 Points: Letters are all lower case
-		20 Points: Letters are upper case and lower case
+  Password Strength Algorithm:
 
-	Numbers:
-		0 Points: No numbers
-		10 Points: 1 number
-		20 Points: 3 or more numbers
-		
-	Characters:
-		0 Points: No characters
-		10 Points: 1 character
-		25 Points: More than 1 character
+  Password Length:
+    5 Points: Less than 4 characters
+    10 Points: 5 to 7 characters
+    25 Points: 8 or more
 
-	Bonus:
-		2 Points: Letters and numbers
-		3 Points: Letters, numbers, and characters
-		5 Points: Mixed case letters, numbers, and characters
-		
-	Password Text Range:
-	
-		>= 90: Very Secure
-		>= 80: Secure
-		>= 70: Very Strong
-		>= 60: Strong
-		>= 50: Average
-		>= 25: Weak
-		>= 0: Very Weak
-		
+  Letters:
+    0 Points: No letters
+    10 Points: Letters are all lower case
+    20 Points: Letters are upper case and lower case
+
+  Numbers:
+    0 Points: No numbers
+    10 Points: 1 number
+    20 Points: 3 or more numbers
+
+  Characters:
+    0 Points: No characters
+    10 Points: 1 character
+    25 Points: More than 1 character
+
+  Bonus:
+    2 Points: Letters and numbers
+    3 Points: Letters, numbers, and characters
+    5 Points: Mixed case letters, numbers, and characters
+
+  Password Text Range:
+
+    >= 90: Very Secure
+    >= 80: Secure
+    >= 70: Very Strong
+    >= 60: Strong
+    >= 50: Average
+    >= 25: Weak
+    >= 0: Very Weak
+
 */
 
 
@@ -1519,174 +1519,192 @@ var m_strCharacters = "!@#$%^&*?_~"
 // Check password
 function checkPassword(strPassword)
 {
-	// Reset combination count
-	var nScore = 0;
-	
-	// Password length
-	// -- Less than 4 characters
-	if (strPassword.length < 5)
-	{
-		nScore += 5;
-	}
-	// -- 5 to 7 characters
-	else if (strPassword.length > 4 && strPassword.length < 8)
-	{
-		nScore += 10;
-	}
-	// -- 8 or more
-	else if (strPassword.length > 7)
-	{
-		nScore += 25;
-	}
+  // Reset combination count
+  var nScore = 0;
 
-	// Letters
-	var nUpperCount = countContain(strPassword, m_strUpperCase);
-	var nLowerCount = countContain(strPassword, m_strLowerCase);
-	var nLowerUpperCount = nUpperCount + nLowerCount;
-	// -- Letters are all lower case
-	if (nUpperCount == 0 && nLowerCount != 0) 
-	{ 
-		nScore += 10; 
-	}
-	// -- Letters are upper case and lower case
-	else if (nUpperCount != 0 && nLowerCount != 0) 
-	{ 
-		nScore += 20; 
-	}
-	
-	// Numbers
-	var nNumberCount = countContain(strPassword, m_strNumber);
-	// -- 1 number
-	if (nNumberCount == 1)
-	{
-		nScore += 10;
-	}
-	// -- 3 or more numbers
-	if (nNumberCount >= 3)
-	{
-		nScore += 20;
-	}
-	
-	// Characters
-	var nCharacterCount = countContain(strPassword, m_strCharacters);
-	// -- 1 character
-	if (nCharacterCount == 1)
-	{
-		nScore += 10;
-	}	
-	// -- More than 1 character
-	if (nCharacterCount > 1)
-	{
-		nScore += 25;
-	}
-	
-	// Bonus
-	// -- Letters and numbers
-	if (nNumberCount != 0 && nLowerUpperCount != 0)
-	{
-		nScore += 2;
-	}
-	// -- Letters, numbers, and characters
-	if (nNumberCount != 0 && nLowerUpperCount != 0 && nCharacterCount != 0)
-	{
-		nScore += 3;
-	}
-	// -- Mixed case letters, numbers, and characters
-	if (nNumberCount != 0 && nUpperCount != 0 && nLowerCount != 0 && nCharacterCount != 0)
-	{
-		nScore += 5;
-	}
-	
-	
-	return nScore;
+  // Password length
+  // -- Less than 4 characters
+  if (strPassword.length < 5)
+  {
+    nScore += 5;
+  }
+  // -- 5 to 7 characters
+  else if (strPassword.length > 4 && strPassword.length < 8)
+  {
+    nScore += 10;
+  }
+  // -- 8 or more
+  else if (strPassword.length > 7)
+  {
+    nScore += 25;
+  }
+
+  // Letters
+  var nUpperCount = countContain(strPassword, m_strUpperCase);
+  var nLowerCount = countContain(strPassword, m_strLowerCase);
+  var nLowerUpperCount = nUpperCount + nLowerCount;
+  // -- Letters are all lower case
+  if (nUpperCount == 0 && nLowerCount != 0)
+  {
+    nScore += 10;
+  }
+  // -- Letters are upper case and lower case
+  else if (nUpperCount != 0 && nLowerCount != 0)
+  {
+    nScore += 20;
+  }
+
+  // Numbers
+  var nNumberCount = countContain(strPassword, m_strNumber);
+  // -- 1 number
+  if (nNumberCount == 1)
+  {
+    nScore += 10;
+  }
+  // -- 3 or more numbers
+  if (nNumberCount >= 3)
+  {
+    nScore += 20;
+  }
+
+  // Characters
+  var nCharacterCount = countContain(strPassword, m_strCharacters);
+  // -- 1 character
+  if (nCharacterCount == 1)
+  {
+    nScore += 10;
+  }
+  // -- More than 1 character
+  if (nCharacterCount > 1)
+  {
+    nScore += 25;
+  }
+
+  // Bonus
+  // -- Letters and numbers
+  if (nNumberCount != 0 && nLowerUpperCount != 0)
+  {
+    nScore += 2;
+  }
+  // -- Letters, numbers, and characters
+  if (nNumberCount != 0 && nLowerUpperCount != 0 && nCharacterCount != 0)
+  {
+    nScore += 3;
+  }
+  // -- Mixed case letters, numbers, and characters
+  if (nNumberCount != 0 && nUpperCount != 0 && nLowerCount != 0 && nCharacterCount != 0)
+  {
+    nScore += 5;
+  }
+
+
+  return nScore;
 }
- 
-// Runs password through check and then updates GUI 
-function runPassword(strPassword, strFieldID) 
+
+// Runs password through check and then updates GUI
+function runPassword(strPassword, strFieldID)
 {
-	// Check password
-	var nScore = checkPassword(strPassword);
-	
-	 // Get controls
-    	var ctlBar = document.getElementById(strFieldID + "_bar"); 
-    	var ctlText = document.getElementById(strFieldID + "_text");
-    	if (!ctlBar || !ctlText)
-    		return;
-    	
-    	// Set new width
-    	ctlBar.style.width = nScore + "%";
+  // Check password
+  var nScore = checkPassword(strPassword);
 
- 	// Color and text
-	// -- Very Secure
- 	if (nScore >= 90)
- 	{
-		var strIcon = "<img src='pics/icons/accept.png' style='vertical-align:middle' alt='Very Secure' />";
-		var strText = "Very Secure";
- 		var strColor = "#0ca908";
- 	}
- 	// -- Secure
- 	else if (nScore >= 80)
- 	{
-		var strIcon = "<img src='pics/icons/accept.png' style='vertical-align:middle' alt='Secure' />";
-		var strText = "Secure";
- 		vstrColor = "#0ca908";
-	}
-	// -- Very Strong
- 	else if (nScore >= 70)
- 	{
-		var strIcon = "<img src='pics/icons/accept.png' style='vertical-align:middle' alt='Very Strong' />";
- 		var strText = "Very Strong";
- 		var strColor = "#0ca908";
-	}
-	// -- Strong
- 	else if (nScore >= 60)
- 	{
- 		var strIcon = "<img src='pics/icons/accept.png' style='vertical-align:middle' alt='Strong' />";
-		var strText = "Strong";
- 		var strColor = "#0ca908";
-	}
-	// -- Average
- 	else if (nScore >= 40)
- 	{
- 		var strIcon = " ";
-		var strText = "Average";
- 		var strColor = "#e3cb00";
-	}
-	// -- Weak
- 	else if (nScore >= 25)
- 	{
- 		var strIcon = "<img src='pics/icons/exclamation.png' style='vertical-align:middle' alt='Weak' />";
- 		var strText = "Weak";
- 		var strColor = "#ff0000";
-	}
-	// -- Very Weak
- 	else
- 	{
- 		var strIcon = "<img src='pics/icons/exclamation.png' style='vertical-align:middle' alt='Very weak' />";
-		var strText = "Very Weak";
- 		var strColor = "#ff0000";
-	}
-	ctlBar.style.backgroundColor = strColor;
-	ctlText.innerHTML = "<span>"  + strIcon + " Strength: " + strText + "</span>";
+   // Get controls
+      var ctlBar = document.getElementById(strFieldID + "_bar");
+      var ctlText = document.getElementById(strFieldID + "_text");
+      if (!ctlBar || !ctlText)
+        return;
+
+      // Set new width
+      ctlBar.style.width = nScore + "%";
+
+   // Color and text
+  // -- Very Secure
+   if (nScore >= 90)
+   {
+    var strIcon = "<img src='pics/icons/accept.png' style='vertical-align:middle' alt='Very Secure' />";
+    var strText = "Very Secure";
+     var strColor = "#0ca908";
+   }
+   // -- Secure
+   else if (nScore >= 80)
+   {
+    var strIcon = "<img src='pics/icons/accept.png' style='vertical-align:middle' alt='Secure' />";
+    var strText = "Secure";
+     vstrColor = "#0ca908";
+  }
+  // -- Very Strong
+   else if (nScore >= 70)
+   {
+    var strIcon = "<img src='pics/icons/accept.png' style='vertical-align:middle' alt='Very Strong' />";
+     var strText = "Very Strong";
+     var strColor = "#0ca908";
+  }
+  // -- Strong
+   else if (nScore >= 60)
+   {
+     var strIcon = "<img src='pics/icons/accept.png' style='vertical-align:middle' alt='Strong' />";
+    var strText = "Strong";
+     var strColor = "#0ca908";
+  }
+  // -- Average
+   else if (nScore >= 40)
+   {
+     var strIcon = " ";
+    var strText = "Average";
+     var strColor = "#e3cb00";
+  }
+  // -- Weak
+   else if (nScore >= 25)
+   {
+     var strIcon = "<img src='pics/icons/exclamation.png' style='vertical-align:middle' alt='Weak' />";
+     var strText = "Weak";
+     var strColor = "#ff0000";
+  }
+  // -- Very Weak
+   else
+   {
+     var strIcon = "<img src='pics/icons/exclamation.png' style='vertical-align:middle' alt='Very weak' />";
+    var strText = "Very Weak";
+     var strColor = "#ff0000";
+  }
+  ctlBar.style.backgroundColor = strColor;
+  ctlText.innerHTML = "<span>"  + strIcon + " Strength: " + strText + "</span>";
 }
- 
+
 // Checks a string for a list of characters
 function countContain(strPassword, strCheck)
-{ 
-	// Declare variables
-	var nCount = 0;
-	
-	for (i = 0; i < strPassword.length; i++) 
-	{
-		if (strCheck.indexOf(strPassword.charAt(i)) > -1) 
-		{ 
-	        	nCount++;
-		} 
-	} 
- 
-	return nCount; 
-} 
- 
- 
- 
- 
+{
+  // Declare variables
+  var nCount = 0;
+
+  for (i = 0; i < strPassword.length; i++)
+  {
+    if (strCheck.indexOf(strPassword.charAt(i)) > -1)
+    {
+            nCount++;
+    }
+  }
+
+  return nCount;
+}
+
+/**
+ * Adds an Option to the quickpoll section.
+ */
+function pollsAddOption()
+{
+  var newOptionDiv = new Element( 'div' );
+  var newOption = new Element( 'input', { type: "text", name: "options[]" } );
+  newOption.inject( newOptionDiv );
+  newOptionDiv.inject( $( 'tikiPollsOptions' ) );
+}
+
+/**
+ * toggles the quickpoll section
+ */
+function pollsToggleQuickOptions()
+{
+	var display = $( 'tikiPollsQuickOptions' ).getStyle( 'display' );
+	if( display == 'none' ) $( 'tikiPollsQuickOptions' ).setStyle( 'display', 'block' );
+	else $( 'tikiPollsQuickOptions' ).setStyle( 'display', 'none' );
+}
+

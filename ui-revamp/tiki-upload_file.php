@@ -12,9 +12,18 @@
 
 $section = 'file_galleries';
 require_once ('tiki-setup.php');
-include_once ('lib/categories/categlib.php');
+if ($prefs['feature_categories'] == 'y') {
+	include_once ('lib/categories/categlib.php');
+}
+if ($prefs['feature_file_galleries'] != 'y') {
+	$smarty->assign('msg', tra("This feature is disabled").": feature_file_galleries");
+	$smarty->display("error.tpl");
+	die;
+}
 include_once ('lib/filegals/filegallib.php');
-include_once ('lib/groupalert/groupalertlib.php');
+if ($prefs['feature_groupalert'] == 'y') {
+	include_once ('lib/groupalert/groupalertlib.php');
+}
 
 include('lib/filegals/max_upload_size.php');
 @ini_set('max_execution_time', 0); //will not work in safe_mode is on
@@ -40,13 +49,6 @@ function print_msg($msg,$id) {
 		ob_flush();
 	}
 }
-
-if ($prefs['feature_file_galleries'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_file_galleries");
-	$smarty->display("error.tpl");
-	die;
-}
-
 
 
 if (!empty($_REQUEST['fileId'])) {
@@ -126,20 +128,16 @@ $_REQUEST['hit_limit'] = 0;
 
 $smarty->assign('show', 'n');
 
-
-$smarty->assign_by_ref('groupforalert',$groupforalert);
-
-$smarty->assign_by_ref('showeachuser',$showeachuser);
-
-if (!empty($_REQUEST['galleryId'])) {
-$groupforalert=$groupalertlib->GetGroup ('file gallery',(int)$_REQUEST["galleryId"]);
+if (!empty($_REQUEST['galleryId']) && $prefs['feature_groupalert'] == 'y') {
+	$groupforalert=$groupalertlib->GetGroup ('file gallery',(int)$_REQUEST["galleryId"]);
+	if ( $groupforalert != '' ) {
+		$showeachuser=$groupalertlib->GetShowEachUser('file gallery',(int)$_REQUEST["galleryId"], $groupforalert) ;
+		$listusertoalert=$userlib->get_users(0,-1,'login_asc','',''	,false,$groupforalert,'') ;
+		$smarty->assign_by_ref('listusertoalert',$listusertoalert['data']);
+	}
+	$smarty->assign_by_ref('groupforalert',$groupforalert);
+	$smarty->assign_by_ref('showeachuser',$showeachuser);
 }
-
- if ( $groupforalert != "" ) {
- 	$showeachuser=$groupalertlib->GetShowEachUser('file gallery',(int)$_REQUEST["galleryId"], $groupforalert) ;
-  	$listusertoalert=$userlib->get_users(0,-1,'login_asc','',''	,false,$groupforalert,'') ;
-	$smarty->assign_by_ref('listusertoalert',$listusertoalert['data']);
- }
 
 if (isset($_REQUEST['fileId']))
 $editFileId = $_REQUEST['fileId'];
@@ -350,7 +348,9 @@ if (isset($_REQUEST["upload"])) {
 					$cat_name =  empty($_REQUEST['name'][$key])? $name: $_REQUEST['name'][$key];
 					$cat_href = $aux['dllink'];
 
-					$groupalertlib->Notify($_REQUEST['listtoalert'],"tiki-download_file.php?fileId=".$fileId);
+					if ($prefs['feature_groupalert'] == 'y') {
+						$groupalertlib->Notify($_REQUEST['listtoalert'],"tiki-download_file.php?fileId=".$fileId);
+					}
 
 					include_once ('categorize.php');
 					// Print progress

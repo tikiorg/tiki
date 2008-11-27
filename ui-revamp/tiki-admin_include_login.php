@@ -30,6 +30,7 @@ if (isset($_REQUEST["loginprefs"])) {
 	simple_set_value('registerPasscode');
 	simple_set_value('min_username_length');
 	simple_set_value('max_username_length');
+	simple_set_value('username_pattern');
 	simple_set_value('min_pass_length');
 	simple_set_value('pass_due');
 	simple_set_value('email_due');
