@@ -584,12 +584,16 @@ function wikiplugin_tracker($data, $params) {
 						if (in_array($f['fieldId'], $optional)) {
 							$f['name'] = "<i>".$f['name']."</i>";
 						}
+						if ($f['type'] != 'h') {
 						$back.= "<tr><td>".wikiplugin_tracker_name($f['fieldId'], $f['name'], $field_errors);
 						if ($showmandatory == 'y' and $f['isMandatory'] == 'y') {
 							$back.= "&nbsp;<b>*</b>&nbsp;";
 							$onemandatory = true;
 						}
 						$back.= "</td><td>";
+						} else {
+						$back .= "<tr><td class='heading' colspan='2'>".wikiplugin_tracker_name($f['fieldId'], $f['name'], $field_errors);
+						}
 						$smarty->assign_by_ref('field_value', $f);
 						if (isset($item)) {
 							$smarty->assign_by_ref('item', $item);
@@ -603,7 +607,8 @@ function wikiplugin_tracker($data, $params) {
 							$back.= "&nbsp;<b>*</b>&nbsp;";
 							$onemandatory = true;
 						}
-						$back.= "</td><td>";
+						if ($f['type'] != 'h') {
+						$back.= "</td><td>"; }
 						$back.= '<input type="text" name="track['.$f["fieldId"].']" value="'.$f['value'].'"';
 						if (isset($f['options_array'][1])) {
 							$back.= 'size="'.$f['options_array'][1].'" maxlength="'.$f['options_array'][1].'"';
