@@ -609,7 +609,7 @@ class CalendarLib extends TikiLib {
 			$cond .= " and `end` <= (unix_timestamp(now())) +".$maxSeconds;
 		}
 		$ljoin = "left join `tiki_calendar_locations` as l on i.`locationId`=l.`callocId` left join `tiki_calendar_categories` as c on i.`categoryId`=c.`calcatId`";
-		$query = "select i.`start`, i.`end`, i.`name`, i.`description`, i.`calitemId`, i.`calendarId`, i.`user`, i.`lastModif`, i.`url`, l.`name` as location, c.`name` as category from `tiki_calendar_items` i $ljoin where 1=1 ".$cond." order by ".$this->convert_sortmode($order);
+		$query = "select i.`start`, i.`end`, i.`name`, i.`description`, i.`calitemId`, i.`calendarId`, i.`user`, i.`lastModif`, i.`url`, l.`name` as location, i.`allday`, c.`name` as category from `tiki_calendar_items` i $ljoin where 1=1 ".$cond." order by ".$this->convert_sortmode($order);
 		$result = $this->query($query,$bindvars,$maxrows,0);
 			
 		$ret = array();

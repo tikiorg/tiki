@@ -7,6 +7,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 global $calendarlib, $userlib, $tiki_p_admin, $tiki_p_view_calendar;
+if ($prefs['feature_calendar'] != 'y')
+	return;
 include_once ('lib/calendar/calendarlib.php');
 
 $rawcals = $calendarlib->list_calendars();
@@ -37,6 +39,7 @@ foreach ($rawcals["data"] as $cal_id=>$cal_data) {
 		$viewable[] = $cal_id;
 	}
 }
+$smarty->assign_by_ref('infocals', $rawcals['data']);
 
 $events = array();
 if (!empty($viewable))
