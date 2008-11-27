@@ -9,18 +9,20 @@
 // Initialization
 $section = 'trackers';
 require_once ('tiki-setup.php');
-include_once('lib/categories/categlib.php');
-include_once ("lib/filegals/filegallib.php");
-include_once ('lib/trackers/trackerlib.php');
-include_once ('lib/notifications/notificationlib.php');
-include_once ('lib/groupalert/groupalertlib.php');
-
-
-
 if ($prefs['feature_trackers'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_trackers");
 	$smarty->display("error.tpl");
 	die;
+}
+include_once ('lib/trackers/trackerlib.php');
+
+if ($prefs['feature_categories'] == 'y') {
+	include_once('lib/categories/categlib.php');
+}
+include_once ("lib/filegals/filegallib.php");
+include_once ('lib/notifications/notificationlib.php');
+if ($prefs['feature_groupalert'] == 'y') {
+	include_once ('lib/groupalert/groupalertlib.php');
 }
 
 $auto_query_args = array('offset','trackerId','reloff','itemId','maxRecords','status','sort_mode','initial','filterfield','filtervalue','exactvalue');
@@ -134,19 +136,17 @@ if (!isset($utid) and !isset($gtid) and (!isset($_REQUEST["itemId"]) or !$_REQUE
 	die;
 }
 
-$smarty->assign_by_ref('groupforalert',$groupforalert);
 
-$smarty->assign_by_ref('showeachuser',$showeachuser);
-
-$groupforalert=$groupalertlib->GetGroup ('tracker',$_REQUEST["trackerId"]);
-
-
- if ( $groupforalert != "" ) {
- 	$showeachuser=$groupalertlib->GetShowEachUser('tracker',$_REQUEST["trackerId"], $groupforalert) ;
-  	$listusertoalert=$userlib->get_users(0,-1,'login_asc','','',false,$groupforalert,'') ;
-	$smarty->assign_by_ref('listusertoalert',$listusertoalert['data']);
- }
-
+if ($prefs['feature_groupalert'] == 'y') {
+	$groupforalert=$groupalertlib->GetGroup ('tracker',$_REQUEST['trackerId']);
+	if ( $groupforalert != "" ) {
+		$showeachuser=$groupalertlib->GetShowEachUser('tracker',$_REQUEST['trackerId'], $groupforalert) ;
+		$listusertoalert=$userlib->get_users(0,-1,'login_asc','','',false,$groupforalert,'') ;
+		$smarty->assign_by_ref('listusertoalert',$listusertoalert['data']);
+	}
+	$smarty->assign_by_ref('groupforalert',$groupforalert);
+	$smarty->assign_by_ref('showeachuser',$showeachuser);
+}
 
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'created_desc';
@@ -735,7 +735,9 @@ if ($tiki_p_modify_tracker_items == 'y' || $special) {
 		if (count($field_errors['err_mandatory']) == 0  && count($field_errors['err_value']) == 0 ) {
 
 			$smarty->assign('input_err', '0'); // no warning to display
-			$groupalertlib->Notify($_REQUEST['listtoalert'],"tiki-view_tracker_item.php?itemId=".$_REQUEST["itemId"]);
+			if ($prefs['feature_groupalert'] == 'y') {
+				$groupalertlib->Notify($_REQUEST['listtoalert'],"tiki-view_tracker_item.php?itemId=".$_REQUEST["itemId"]);
+			}
 			check_ticket('view-trackers-items');
 			if (!isset($_REQUEST["edstatus"]) or ($tracker_info["showStatus"] != 'y' and $tiki_p_admin_trackers != 'y')) {
 				$_REQUEST["edstatus"] = $tracker_info["modItemStatus"];

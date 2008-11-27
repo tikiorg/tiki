@@ -942,3 +942,4 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 1051,Username Pattern,1012,,username_pattern,byref,,tiki_p_admin,,,,,, 
 1052,ShareThis,913,,wikiplugin_sharethis,flag,,tiki_p_admin,,,,SHARETHIS plugin emits a social bookmarking popup window,,
 1053,Comments Moderation,15,,feature_comments_moderation,feature,,tiki_p_admin,,,,,,
+1054,Group Alert,15,,feature_groupalert,feature,,tiki_p_admin,,,,,, 

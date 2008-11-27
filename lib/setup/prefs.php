@@ -1134,6 +1134,9 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'transition_style_ver' => '2.0',
 
 		'magic_last_load' => 0,
+
+		//groupalert
+		'feature_groupalert' => 'y',
 	);
 
 	// spellcheck

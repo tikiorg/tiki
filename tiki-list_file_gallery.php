@@ -9,18 +9,19 @@
 // Initialization
 $section = 'file_galleries';
 require_once('tiki-setup.php');
-include_once ('lib/groupalert/groupalertlib.php');
 
 if ( $prefs['feature_file_galleries'] != 'y' ) {
 	$smarty->assign('msg', tra('This feature is disabled').': feature_file_galleries');
 	$smarty->display('error.tpl');
 	die;
 }
-
 include_once ('lib/filegals/filegallib.php');
 include_once ('lib/stats/statslib.php');
 if ( $prefs['feature_categories'] == 'y' ) {
 	global $categlib; include_once('lib/categories/categlib.php');
+}
+if ($prefs['feature_groupalert'] == 'y') {
+	include_once ('lib/groupalert/groupalertlib.php');
 }
 
 $auto_query_args = array('galleryId','fileId','offset','find','sort_mode','edit_mode','page','filegals_manager','maxRecords','show_fgalexplorer','dup_mode','show_details','view');
@@ -91,8 +92,6 @@ $smarty->assign('edited', 'n');
 $smarty->assign('edit_mode', 'n');
 $smarty->assign('dup_mode', 'n');
 $smarty->assign('parentId', isset($_REQUEST['parentId']) ? (int)$_REQUEST['parentId'] : -1);
-$smarty->assign('groupforAlert', isset($_REQUEST['groupforAlert']) ? $_REQUEST['groupforAlert'] : '');
-$smarty->assign_by_ref('showeachuser', $showeachuser);
 $smarty->assign('creator', $user);
 $smarty->assign('sortorder', 'created');
 $smarty->assign('sortdirection', 'desc');
@@ -100,7 +99,6 @@ $smarty->assign('sortdirection', 'desc');
 $smarty->assign_by_ref('gal_info', $gal_info);
 $smarty->assign_by_ref('name', $gal_info['name']);
 $smarty->assign_by_ref('galleryId', $_REQUEST['galleryId']);
-$smarty->assign_by_ref('groupforAlertList', $groupforAlertList);
 
 
 $smarty->assign('reindex_file_id', -1);
@@ -248,17 +246,21 @@ if ( isset($_REQUEST['edit_mode']) and $_REQUEST['edit_mode'] ) {
 		$smarty->assign_by_ref('users', $users['data']);
 	}
 
-	$all_groups = $userlib->list_all_groups();
-	$groupselected=$groupalertlib->GetGroup('file gallery',$_REQUEST['galleryId']);
-
-	if ( is_array($all_groups) ) {
-		foreach ( $all_groups as $g ){
-		$groupforAlertList[$g] =  ( $g == $groupselected )  ? 'selected' : '';
+	if ($prefs['feature_groupalert'] == 'y') {
+		$smarty->assign('groupforAlert', isset($_REQUEST['groupforAlert']) ? $_REQUEST['groupforAlert'] : '');
+		$all_groups = $userlib->list_all_groups();
+		$groupselected=$groupalertlib->GetGroup('file gallery',$_REQUEST['galleryId']);
+		if ( is_array($all_groups) ) {
+			foreach ( $all_groups as $g ){
+				$groupforAlertList[$g] =  ( $g == $groupselected )  ? 'selected' : '';
+			}
 		}
+		$smarty->assign_by_ref('groupforAlert',$groupselected );
+		$showeachuser=$groupalertlib->GetShowEachUser('file gallery',$_REQUEST['galleryId'],$groupselected) ;
+		$smarty->assign_by_ref('showeachuser', $showeachuser);
+		$smarty->assign_by_ref('groupforAlertList', $groupforAlertList);
+
 	}
-
-	$showeachuser=$groupalertlib-> GetShowEachUser('file gallery',$_REQUEST['galleryId'],$groupselected) ;
-
 
 	// Edit a file
 	if ( isset($_REQUEST['fileId']) && $_REQUEST['fileId'] > 0 ) {
@@ -274,7 +276,6 @@ if ( isset($_REQUEST['edit_mode']) and $_REQUEST['edit_mode'] ) {
 	elseif ( $galleryId > 0 ) {
 		$smarty->assign_by_ref('maxRows', $gal_info['maxRows']);
 		$smarty->assign_by_ref('parentId', $gal_info['parentId']);
-		$smarty->assign_by_ref('groupforAlert',$groupselected );
 		$smarty->assign_by_ref('creator', $gal_info['user']);
 		$smarty->assign('max_desc', $gal_info['max_desc']);
 
@@ -425,7 +426,9 @@ if ( isset($_REQUEST['edit']) ) {
 		unset($fgal_diff['hits']);
 		$smarty->assign('fgal_diff',$fgal_diff);
 		$fgid = $filegallib->replace_file_gallery($gal_info);
-		$groupalertlib->AddGroup ('file gallery', $galleryId ,$_REQUEST['groupforAlert'],$_REQUEST['showeachuser']);
+		if ($prefs['feature_groupalert'] == 'y') {
+			$groupalertlib->AddGroup ('file gallery', $galleryId ,$_REQUEST['groupforAlert'],$_REQUEST['showeachuser']);
+		}
 		if ( $prefs['feature_categories'] == 'y' ) {
 			$cat_type = 'file gallery';
 			$cat_objid = $fgid;

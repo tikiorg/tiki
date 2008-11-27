@@ -11,7 +11,9 @@ $section = 'calendar';
 require_once ('tiki-setup.php');
 
 include_once ('lib/calendar/calendarlib.php');
-include_once ('lib/groupalert/groupalertlib.php');
+if ($prefs['feature_groupalert'] == 'y') {
+	include_once ('lib/groupalert/groupalertlib.php');
+}
 
 if ($tiki_p_admin_calendar != 'y' and $tiki_p_admin != 'y') {
 	$smarty->assign('errortype', 401);
@@ -62,7 +64,9 @@ if (isset($_REQUEST["save"])) {
 		}
 	}
 	$_REQUEST["calendarId"] = $calendarlib->set_calendar($_REQUEST["calendarId"],$user,$_REQUEST["name"],$_REQUEST["description"],$customflags,$options);
-	$groupalertlib->AddGroup ('calendar',$_REQUEST["calendarId"],$_REQUEST['groupforAlert'], !empty($_REQUEST['showeachuser'])?$_REQUEST['showeachuser']:'n');
+	if ($prefs['feature_groupalert'] == 'y') {
+		$groupalertlib->AddGroup ('calendar',$_REQUEST["calendarId"],$_REQUEST['groupforAlert'], !empty($_REQUEST['showeachuser'])?$_REQUEST['showeachuser']:'n');
+	}
 	if ($_REQUEST['personal'] == 'y') {
 		$userlib->assign_object_permission("Registered", $_REQUEST["calendarId"], "calendar", "tiki_p_view_calendar");
 		$userlib->assign_object_permission("Registered", $_REQUEST["calendarId"], "calendar", "tiki_p_view_events");
@@ -132,17 +136,22 @@ if ($_REQUEST["calendarId"]) {
 		$cookietab = 1;
 	}
 }
-$info["groupforAlertList"] = array();
-$info["groupforAlert"] = $groupalertlib->GetGroup('calendar',$_REQUEST["calendarId"]);
+if ($prefs['feature_groupalert'] == 'y') {
+	$info["groupforAlertList"] = array();
+	$info["groupforAlert"] = $groupalertlib->GetGroup('calendar',$_REQUEST["calendarId"]);
 
-$all_groups = $userlib->list_all_groups();
-if ( is_array($all_groups) ) {
-	foreach ( $all_groups as $g ){
-		$groupforAlertList[$g] =  ( $g == $info["groupforAlert"] )  ? 'selected' : '';
+	$all_groups = $userlib->list_all_groups();
+	if ( is_array($all_groups) ) {
+		foreach ( $all_groups as $g ){
+			$groupforAlertList[$g] =  ( $g == $info['groupforAlert'] )  ? 'selected' : '';
+		}
 	}
+	$showeachuser = $groupalertlib-> GetShowEachUser('calendar',$_REQUEST['calendarId'],$info['groupforAlert']) ;
+	$smarty->assign('groupforAlert', $info['groupforAlert']);
+	$smarty->assign_by_ref('groupforAlertList', $groupforAlertList);
+	$smarty->assign_by_ref('showeachuser', $showeachuser);
 }
 
-$showeachuser=$groupalertlib-> GetShowEachUser('calendar',$_REQUEST['calendarId'],$info["groupforAlert"]) ;
 
 setcookie('tab', $cookietab);
 $smarty->assign_by_ref('cookietab', $cookietab);
@@ -168,9 +177,6 @@ $smarty->assign('show_participants', $info["show_participants"]);
 $smarty->assign('show_url', $info["show_url"]);
 $smarty->assign('calendarId', $_REQUEST["calendarId"]);
 $smarty->assign('personal', $info["personal"]);
-$smarty->assign('groupforAlert', $info["groupforAlert"]);
-$smarty->assign_by_ref('groupforAlertList', $groupforAlertList);
-$smarty->assign_by_ref('showeachuser', $showeachuser);
 
 
 $smarty->assign('startday', $info["startday"] < 0 ?0: round($info['startday']/(60*60)));

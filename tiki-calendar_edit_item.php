@@ -8,17 +8,18 @@
 $section = 'calendar';
 require_once ('tiki-setup.php');
 
-include_once ('lib/calendar/calendarlib.php');
-include_once ('lib/newsletters/nllib.php');
-include_once ('lib/groupalert/groupalertlib.php');
-
 if ($prefs['feature_calendar'] != 'y') {
   $smarty->assign('msg', tra("This feature is disabled").": feature_calendar");
   $smarty->display("error.tpl");
   die;
 }
+include_once ('lib/calendar/calendarlib.php');
+include_once ('lib/newsletters/nllib.php');
+if ($prefs['feature_groupalert'] == 'y') {
+	include_once ('lib/groupalert/groupalertlib.php');
+}
 if ($prefs['feature_ajax'] == "y") {
-require_once ('lib/ajax/ajaxlib.php');
+	require_once ('lib/ajax/ajaxlib.php');
 }
 /*
 if (isset($_REQUEST['calendarId']) and $userlib->object_has_one_permission($_REQUEST['calendarId'],'calendar')) {
@@ -119,15 +120,6 @@ foreach ($rawcals["data"] as $cal_id=>$cal_data) {
 }
 $smarty->assign('listcals',$caladd);
 
-
-
-
-$smarty->assign_by_ref('groupforalert',$groupforalert);
-
-$smarty->assign_by_ref('showeachuser',$showeachuser);
-
-
-
 if ( ! isset($_REQUEST["calendarId"]) ) {
 	if (isset($_REQUEST['calitemId'])) {
 		$calID = $calendarlib->get_calendarid($_REQUEST['calitemId']);
@@ -138,11 +130,15 @@ if ( ! isset($_REQUEST["calendarId"]) ) {
 		$calID=$_REQUEST["calendarId"];
 }
 
-$groupforalert=$groupalertlib->GetGroup ('calendar',$calID);
-if ( $groupforalert != "" ) {
-	$showeachuser=$groupalertlib->GetShowEachUser('calendar',$calID, $groupforalert) ;
-	$listusertoalert=$userlib->get_users(0,-1,'login_asc','','',false,$groupforalert,'') ;
-	$smarty->assign_by_ref('listusertoalert',$listusertoalert['data']);
+if ($prefs['feature_groupalert'] == 'y') {
+	$groupforalert=$groupalertlib->GetGroup ('calendar',$calID);
+	if ( $groupforalert != '' ) {
+		$showeachuser=$groupalertlib->GetShowEachUser('calendar',$calID, $groupforalert) ;
+		$listusertoalert=$userlib->get_users(0,-1,'login_asc','','',false,$groupforalert,'') ;
+		$smarty->assign_by_ref('listusertoalert',$listusertoalert['data']);
+	}
+	$smarty->assign_by_ref('groupforalert',$groupforalert);
+	$smarty->assign_by_ref('showeachuser',$showeachuser);
 }
 
 if (!isset($_REQUEST['calendarId']) and count($caladd)) {
@@ -215,7 +211,9 @@ if (isset($_POST['act'])) {
 		if (empty($save['name'])) $save['name'] = tra("event without name");
 
 		$calitemId=$calendarlib->set_item($user,$save['calitemId'],$save);
-		$groupalertlib->Notify($_REQUEST['listtoalert'],"tiki-calendar_edit_item.php?viewcalitemId=".$calitemId);
+		if ($prefs['feature_groupalert'] == 'y') {
+			$groupalertlib->Notify($_REQUEST['listtoalert'],"tiki-calendar_edit_item.php?viewcalitemId=".$calitemId);
+		}
 		header('Location: tiki-calendar.php');
 		die;
 	}
