@@ -47,5 +47,6 @@ TikiInit::prependIncludePath('lib/pear');
 TikiInit::prependIncludePath('lib/core/lib');
 
 require_once 'DeclFilter.php';
+require_once 'JitFilter.php';
 
 ?>

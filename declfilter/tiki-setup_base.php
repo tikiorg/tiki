@@ -12,6 +12,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
+require_once 'tiki-filter-base.php';
+
 // ---------------------------------------------------------------------
 // basic php conf adjustment
 
@@ -112,19 +114,13 @@ require_once("lib/breadcrumblib.php");
 // ------------------------------------------------------
 // DEAL WITH XSS-TYPE ATTACKS AND OTHER REQUEST ISSUES
 
-require_once('lib/setup/sanitization.php');
-function make_clean(&$var,$gpc=false,$clean_xss=false) {
+function remove_gpc(&$var) {
 	if ( is_array($var) ) {
 		foreach ( $var as $key=>$val ) {
-			make_clean($var[$key],$gpc,$clean_xss);
+			remove_gpc($var[$key],$gpc,$clean_xss);
 		}
 	} else {
-		if ($gpc) $var = stripslashes($var);
-		if ( $clean_xss && ( ! isset($_SERVER['SCRIPT_FILENAME']) || basename($_SERVER['SCRIPT_FILENAME']) != 'tiki-admin.php' ) ) {
-			if( ! empty($var) && ! ctype_alnum($var) ) {
-				$var = RemoveXSS($var);
-			}
-		}
+		$var = stripslashes($var);
 	}
 }
 
@@ -435,11 +431,38 @@ if ( ini_get('register_globals') ) {
 		}
 	}
 }
-make_clean($_GET, $magic_quotes_gpc, $clean_xss);
-make_clean($_POST, $magic_quotes_gpc, $clean_xss);
-make_clean($_COOKIE, $magic_quotes_gpc, $clean_xss);
-make_clean($_SERVER['QUERY_STRING'], false, $clean_xss);
-make_clean($_SERVER['REQUEST_URI'], false, $clean_xss);
+
+$serverFilter = new DeclFilter;
+if( $clean_xss ) {
+	$serverFilter->addStaticKeyFilters( array(
+		'QUERY_STRING' => 'xss',
+		'REQUEST_URI' => 'xss',
+	) );
+}
+$jitServer = new JitFilter( $_SERVER );
+$_SERVER = $serverFilter->filter( $_SERVER );
+
+if( $magic_quotes_gpc ) {
+	remove_gpc($_GET);
+	remove_gpc($_POST);
+	remove_gpc($_COOKIE);
+}
+
+// Preserve unfiltered values accessible through JIT filtering
+$jitPost = new JitFilter( $_POST );
+$jitGet = new JitFilter( $_GET );
+$jitRequest = new JitFilter( $_REQUEST );
+
+// Apply configured filters to all other input
+if( ! isset( $inputConfiguration ) ) $inputConfiguration = array();
+$inputFilter = DeclFilter::fromConfiguration( $inputConfiguration, array('catchAllFilter') );
+if( $clean_xss ) {
+	$inputFilter->addCatchAllFilter('xss');
+}
+
+$_GET = $inputFilter->filter( $_GET );
+$_POST = $inputFilter->filter( $_POST );
+$_COOKIE = $inputFilter->filter( $_COOKIE );
 
 if ( $tiki_p_trust_input != 'y' ) {
 	$varcheck_vars = array('_COOKIE', '_GET', '_POST', '_ENV', '_SERVER');
