@@ -14,6 +14,11 @@ class TikiFilter_MapTest extends PHPUnit_Framework_TestCase
 		$this->assertTrue( TikiFilter::get( 'word' ) instanceof TikiFilter_Word );
 	}
 
+	function testKnown()
+	{
+		$this->assertTrue( TikiFilter::get( new Zend_Filter_Alnum ) instanceof Zend_Filter_Alnum );
+	}
+
 	function testComposed()
 	{
 		$filter = new JitFilter( array( 'foo' => 'test123' ) );

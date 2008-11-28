@@ -133,16 +133,12 @@ class JitFilter implements ArrayAccess, Iterator, Countable
 
 	function setDefaultFilter( $filter )
 	{
-		if( ! $filter instanceof Zend_Filter_Interface )
-			$filter = TikiFilter::get( $filter );
-
-		$this->defaultFilter = $filter;
+		$this->defaultFilter = TikiFilter::get( $filter );
 	}
 
 	function replaceFilter( $key, $filter )
 	{
-		if( ! $filter instanceof Zend_Filter_Interface )
-			$filter = TikiFilter::get( $filter );
+		$filter = TikiFilter::get( $filter );
 
 		$this->filters[$key] = $filter;
 
