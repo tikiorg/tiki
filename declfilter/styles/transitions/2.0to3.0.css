@@ -1,0 +1,154 @@
+/*
+The following CSS classes were added to Tiki between v2.0 and v3.0
+They should be added to themes (possibly with tweaks) to make the theme v3.0 ready
+*/
+
+.plugin-desc {
+	padding: 5px;
+}
+
+.plugin-sample {
+	padding: 5px;
+	font-family: monospace;
+}
+
+.plugin-sample .plugin-param {
+	padding-left: 15px;
+}
+
+.plugin-form-float {
+	position: fixed;
+	left: 15%;
+	right: 15%;
+	top: 10%;
+	max-height: 80%;
+	overflow: auto;
+	background: white;
+	padding: 10px;
+	border: solid 2px black;
+}
+
+.icon_edit_section {
+	float: right;
+}
+
+h3.box-title span.moduletitle {
+  float: left;
+}
+h3.box-title span.moduleflip {
+  float: right;
+}
+
+#shadowbox_content {
+	background: white;
+}
+
+/* To enable removing deprecated tag from img.icon and prevent border on a.icon. */
+a.icon,
+img.icon {
+	border: 0 !important;
+	background: transparent
+}
+
+.post-approved-n { border-left: 3px dotted blue; }
+.post-approved-r { border-left: 3px double red; }
+.post-approved-r .content * { background-image: url(../../img/icons2/dots.gif); }
+
+.post-approved-n .content, .post-approved-r .content,
+.post-approved-n .title, .post-approved-r .title,
+.post-approved-n .postfooter, .post-approved-r .postfooter,
+tr.post-approved-n td span, tr.post-approved-r td span {
+	opacity: 0.5;
+}
+tr.post-approved-n td span, tr.post-approved-r td span { opacity: 0.6; }
+
+div.multiselect {
+  vertical-align: middle;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 5em;
+  width: 100%;
+  border: 1px solid black;
+}
+
+/* display PHP/Smarty errors on top */
+
+#show-errors-button {
+	z-index: 1024;
+}
+
+#errors {
+	z-index: 1023;
+}
+
+/* New Help section */
+div#tikihelp {
+	position:fixed;
+	_position:absolute;
+	right: 0px;
+	top: 15%;
+	max-height: 85%;
+	max-width: 350px;
+	padding:0;
+	margin:0;
+	border: none;
+	background-color: transparent;
+	z-index: 2;
+}
+div.help_icon {
+	border: 0;
+	margin: 0;
+	padding: 0;
+}
+div.help_icon img{
+	vertical-align: middle;
+	border: 0;
+	margin: 0;
+	padding: 0;
+}
+div.help_section_select {
+	font-weight : bold;
+	font-size: 120%;
+	background-color : #E7E9EA;
+	width: 340px;
+	margin: 2px;
+}
+div.help_sections {
+	padding:  2px;
+	background-color: #AAC9E9;
+	max-height : 500px;
+	overflow: auto;
+}
+div.help_section {
+	width : 340px;
+	margin: 5px;
+	padding: 5px;
+	background-color: white;
+}
+
+.findtable ul {
+	list-style: none;
+}
+
+.findtable ul li {
+	float: left;
+}
+ul.categories{
+	margin:0;
+	padding:0;
+}
+ul.categories li{
+	list-style:none;
+	margin:0;
+	padding:0;
+}
+
+.alphafilter {
+	display: block;
+	margin: 10px 0;
+	text-align:center;
+}
+
+.alphafilter a {
+	font-size: 120%;
+}
