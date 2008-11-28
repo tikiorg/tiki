@@ -1,6 +1,6 @@
 <?php
 
-class JitFilter_PreventXss implements Zend_Filter_Interface
+class TikiFilter_PreventXss implements Zend_Filter_Interface
 {
 	function filter( $value )
 	{

@@ -21,6 +21,7 @@ class AllTests
         $suite = new PHPUnit_Framework_TestSuite('CoreSuite');
 
         $suite->addTest(JitFilter_AllTests::suite());
+        $suite->addTest(TikiFilter_AllTests::suite());
 
         return $suite;
     }

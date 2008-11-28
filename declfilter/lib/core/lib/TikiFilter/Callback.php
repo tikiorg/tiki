@@ -1,6 +1,6 @@
 <?php
 
-class JitFilter_Callback implements Zend_Filter_Interface
+class TikiFilter_Callback implements Zend_Filter_Interface
 {
 	private $callback;
 
