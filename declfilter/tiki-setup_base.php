@@ -452,10 +452,12 @@ if( $magic_quotes_gpc ) {
 $jitPost = new JitFilter( $_POST );
 $jitGet = new JitFilter( $_GET );
 $jitRequest = new JitFilter( $_REQUEST );
+$jitCookie = new JitFilter( $_COOKIE );
 
 $jitPost->setDefaultFilter( 'xss' );
 $jitGet->setDefaultFilter( 'xss' );
 $jitRequest->setDefaultFilter( 'xss' );
+$jitCookie->setDefaultFilter( 'xss' );
 
 // Apply configured filters to all other input
 if( ! isset( $inputConfiguration ) ) $inputConfiguration = array();
