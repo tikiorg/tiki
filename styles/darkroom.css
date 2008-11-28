@@ -2192,6 +2192,8 @@ Caltrack a:visited {color: #00BD02}
 	
 .daterow:hover {border: 1px solid #aaa}
 
+a.viewmodeon img.icon {border: white solid 1px !important;padding:0 0 0 2px;}
+
 /*****  Polls  *****/
 
 div.pollresults {

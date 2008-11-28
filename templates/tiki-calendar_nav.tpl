@@ -2,12 +2,12 @@
 <div class="tabrow">
 
 <div class="viewmode">
-<a href="{$myurl}?viewmode=day" class="viewmode{if $viewmode eq 'day'}on{else}off{/if}" title="{tr}Day{/tr}"><img src="img/icons/cal_day.gif" width="30" height="24" border="0" alt="{tr}Day{/tr}" /></a>
-<a href="{$myurl}?viewmode=week" class="viewmode{if $viewmode eq 'week'}on{else}off{/if}" title="{tr}Week{/tr}"><img src="img/icons/cal_week.gif" width="30" height="24" border="0" alt="{tr}Week{/tr}" /></a>
-<a href="{$myurl}?viewmode=month" class="viewmode{if $viewmode eq 'month'}on{else}off{/if}" title="{tr}Month{/tr}"><img src="img/icons/cal_month.gif" width="30" height="24" border="0" alt="{tr}Month{/tr}" /></a>
-<a href="{$myurl}?viewmode=quarter" class="viewmode{if $viewmode eq 'quarter'}on{else}off{/if}" title="{tr}Quarter{/tr}"><img src="img/icons/cal_quarter.gif" width="30" height="24" border="0" alt="{tr}Quarter{/tr}" /></a>
-<a href="{$myurl}?viewmode=semester" class="viewmode{if $viewmode eq 'semester'}on{else}off{/if}" title="{tr}Semester{/tr}"><img src="img/icons/cal_semester.gif" width="30" height="24" border="0" alt="{tr}Semester{/tr}" /></a>
-<a href="{$myurl}?viewmode=year" class="viewmode{if $viewmode eq 'year'}on{else}off{/if}" title="{tr}Year{/tr}"><img src="img/icons/cal_year.gif" width="30" height="24" border="0" alt="{tr}Year{/tr}" /></a>
+<a href="{$myurl}?viewmode=day" class="viewmode{if $viewmode eq 'day'}on{else}off{/if}" title="{tr}Day{/tr}">{icon _id="img/icons/cal_day.gif" width="30" height="24" alt="{tr}Day{/tr}"}</a>
+<a href="{$myurl}?viewmode=week" class="viewmode{if $viewmode eq 'week'}on{else}off{/if}" title="{tr}Week{/tr}">{icon _id="img/icons/cal_week.gif" width="30" height="24" alt="{tr}Week{/tr}"}</a>
+<a href="{$myurl}?viewmode=month" class="viewmode{if $viewmode eq 'month'}on{else}off{/if}" title="{tr}Month{/tr}">{icon _id="img/icons/cal_month.gif" width="30" height="24" alt="{tr}Month{/tr}"}</a>
+<a href="{$myurl}?viewmode=quarter" class="viewmode{if $viewmode eq 'quarter'}on{else}off{/if}" title="{tr}Quarter{/tr}">{icon _id="img/icons/cal_quarter.gif" width="30" height="24" alt="{tr}Quarter{/tr}"}</a>
+<a href="{$myurl}?viewmode=semester" class="viewmode{if $viewmode eq 'semester'}on{else}off{/if}" title="{tr}Semester{/tr}">{icon _id="img/icons/cal_semester.gif" width="30" height="24" alt="{tr}Semester{/tr}"}</a>
+<a href="{$myurl}?viewmode=year" class="viewmode{if $viewmode eq 'year'}on{else}off{/if}" title="{tr}Year{/tr}">{icon _id="img/icons/cal_year.gif" width="30" height="24" alt="{tr}Year{/tr}"}</a>
 </div>
 
 {if $prefs.feature_jscalendar eq 'y' && $prefs.javascript_enabled eq 'y'}
