@@ -453,6 +453,10 @@ $jitPost = new JitFilter( $_POST );
 $jitGet = new JitFilter( $_GET );
 $jitRequest = new JitFilter( $_REQUEST );
 
+$jitPost->setDefaultFilter( 'xss' );
+$jitGet->setDefaultFilter( 'xss' );
+$jitRequest->setDefaultFilter( 'xss' );
+
 // Apply configured filters to all other input
 if( ! isset( $inputConfiguration ) ) $inputConfiguration = array();
 $inputFilter = DeclFilter::fromConfiguration( $inputConfiguration, array('catchAllFilter') );
