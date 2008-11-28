@@ -13,6 +13,8 @@ class DeclFilter_AllTests
 
         $suite->addTestSuite('DeclFilter_BaseTest');
         $suite->addTestSuite('DeclFilter_StaticKeyTest');
+        $suite->addTestSuite('DeclFilter_CatchAllFilterTest');
+        $suite->addTestSuite('DeclFilter_ConfigureTest');
 
         return $suite;
     }
