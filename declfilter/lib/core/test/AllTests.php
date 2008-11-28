@@ -22,6 +22,7 @@ class AllTests
 
         $suite->addTest(JitFilter_AllTests::suite());
         $suite->addTest(TikiFilter_AllTests::suite());
+        $suite->addTest(DeclFilter_AllTests::suite());
 
         return $suite;
     }
