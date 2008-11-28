@@ -1,6 +1,6 @@
 <?php
 
-require_once 'DeclFilter/Rule.php';
+require_once 'DeclFilter/FilterRule.php';
 require_once 'TikiFilter.php';
 
 class DeclFilter_StaticKeyFilterRule extends DeclFilter_FilterRule

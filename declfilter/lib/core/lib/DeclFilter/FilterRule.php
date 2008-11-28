@@ -1,5 +1,7 @@
 <?php
 
+require_once 'DeclFilter/Rule.php';
+
 abstract class DeclFilter_FilterRule implements DeclFilter_Rule
 {
 	private $composite = false;

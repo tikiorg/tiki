@@ -1,13 +1,10 @@
 <?php
 
-class DeclFilter_StaticKeyTest extends PHPUnit_Framework_TestCase
+class DeclFilter_StaticKeyUnsetTest extends PHPUnit_Framework_TestCase
 {
 	function testMatch()
 	{
-		$rule = new DeclFilter_StaticKeyFilterRule( array(
-			'hello' => 'digits',
-			'world' => 'alpha',
-		) );
+		$rule = new DeclFilter_StaticKeyUnsetRule( array( 'hello', 'world' ) );
 
 		$this->assertTrue( $rule->match( 'hello' ) );
 		$this->assertTrue( $rule->match( 'world' ) );
@@ -16,10 +13,7 @@ class DeclFilter_StaticKeyTest extends PHPUnit_Framework_TestCase
 
 	function testApply()
 	{
-		$rule = new DeclFilter_StaticKeyFilterRule( array(
-			'hello' => 'digits',
-			'world' => 'alpha',
-		) );
+		$rule = new DeclFilter_StaticKeyUnsetRule( array( 'hello', 'world' ) );
 
 		$data = array(
 			'hello' => '123abc',
@@ -30,8 +24,8 @@ class DeclFilter_StaticKeyTest extends PHPUnit_Framework_TestCase
 		$rule->apply( $data, 'hello' );
 		$rule->apply( $data, 'world' );
 
-		$this->assertEquals( $data['hello'], '123' );
-		$this->assertEquals( $data['world'], 'abc' );
+		$this->assertFalse( isset( $data['hello'] ) );
+		$this->assertFalse( isset( $data['world'] ) );
 		$this->assertEquals( $data['foo'], '123abc' );
 	}
 }

@@ -92,6 +92,17 @@ class DeclFilter implements Zend_Filter_Interface
 	}
 
 	/**
+	 * Unset the specifies keys.
+	 */
+	function addStaticKeyUnset( array $keys )
+	{
+		require_once 'DeclFilter/StaticKeyUnsetRule.php';
+		$rule = new DeclFilter_StaticKeyUnsetRule( $keys );
+
+		$this->rules[] = $rule;
+	}
+
+	/**
 	 * Adds a catch-all rule with a default filter. Will apply on all values
 	 * not covered by previous rules. This must be the last rule applied. The
 	 * filter will only be applied on array elements.
@@ -103,6 +114,17 @@ class DeclFilter implements Zend_Filter_Interface
 		require_once 'DeclFilter/CatchAllFilterRule.php';
 		$rule = new DeclFilter_CatchAllFilterRule( $filter );
 		$rule->applyOnElements();
+
+		$this->rules[] = $rule;
+	}
+
+	/**
+	 * Unset all remaining keys.
+	 */
+	function addCatchAllUnset( $param = null )
+	{
+		require_once 'DeclFilter/StaticKeyUnsetRule.php';
+		$rule = new DeclFilter_CatchAllUnsetRule();
 
 		$this->rules[] = $rule;
 	}

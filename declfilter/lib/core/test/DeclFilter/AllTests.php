@@ -12,8 +12,10 @@ class DeclFilter_AllTests
         $suite = new PHPUnit_Framework_TestSuite('DeclFilterSuite');
 
         $suite->addTestSuite('DeclFilter_BaseTest');
-        $suite->addTestSuite('DeclFilter_StaticKeyTest');
+        $suite->addTestSuite('DeclFilter_StaticKeyFilterTest');
+        $suite->addTestSuite('DeclFilter_StaticKeyUnsetTest');
         $suite->addTestSuite('DeclFilter_CatchAllFilterTest');
+        $suite->addTestSuite('DeclFilter_CatchAllUnsetTest');
         $suite->addTestSuite('DeclFilter_ConfigureTest');
 
         return $suite;
