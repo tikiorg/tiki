@@ -93,6 +93,7 @@ div#tikihelp {
 	margin:0;
 	border: none;
 	background-color: transparent;
+	z-index: 2;
 }
 div.help_icon {
 	border: 0;
