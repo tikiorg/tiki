@@ -65,11 +65,6 @@ class JitFilter implements ArrayAccess, Iterator, Countable
 			return $this->stored[$key] = $value;
 	}
 
-	function __toString()
-	{
-		return (string) $this->stored;
-	}
-
 	function asArray( $key = false, $separator = false )
 	{
 		if( $key === false ) {

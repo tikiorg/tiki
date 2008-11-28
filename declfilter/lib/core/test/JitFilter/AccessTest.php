@@ -76,6 +76,20 @@ class JitFilter_AccessTest extends PHPUnit_Framework_TestCase
 			array( 'foo' => $this->array['foo'], 'baz' => $this->array->asArray('baz') ), 
 			$this->array->subset( array('foo', 'baz') )->asArray() );
 	}
+
+	function testUnset()
+	{
+		unset($this->array['baz']);
+
+		$this->assertFalse( isset($this->array['baz']) );
+	}
+
+	function testSet()
+	{
+		$this->array['new'] = 'foo';
+
+		$this->assertEquals( $this->array['new'], 'foo' );
+	}
 }
 
 ?>
