@@ -35,6 +35,22 @@ class DeclFilter_KeyPatternFilterTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals( $data['bar_abc'], 'abc' );
 		$this->assertEquals( $data['foo'], '123abc' );
 	}
+
+	function testApplyOnElements()
+	{
+		$rule = new DeclFilter_KeyPatternFilterRule( array(
+			'/^foo_\d+$/' => 'digits',
+		) );
+		$rule->applyOnElements();
+
+		$data = array(
+			'foo_123' => array( '123abc', '456def' ),
+		);
+
+		$rule->apply( $data, 'foo_123' );
+
+		$this->assertEquals( $data['foo_123'], array( '123', '456' ) );
+	}
 }
 
 ?>

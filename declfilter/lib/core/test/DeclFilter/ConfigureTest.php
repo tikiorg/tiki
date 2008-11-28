@@ -89,6 +89,57 @@ class DeclFilter_ConfigureTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals( $data['world'], 'abc' );
 		$this->assertFalse( isset( $data['bar'] ) );
 	}
+
+	function testFilterPattern()
+	{
+		$configuration = array(
+			array( 'keyPatternFilters' => array(
+				'/^hello/' => 'digits',
+			) ),
+			array( 'keyPatternFiltersForArrays' => array(
+				'/^fo+$/' => 'alpha',
+			) ),
+		);
+
+		$filter = DeclFilter::fromConfiguration( $configuration );
+
+		$data = $filter->filter( array(
+			'hello123' => '123abc',
+			'hello456' => '123abc',
+			'world' => '123abc',
+			'foo' => array(
+				'abc123',
+				'def456',
+			),
+		) );
+
+		$this->assertEquals( $data['hello123'], '123' );
+		$this->assertEquals( $data['hello456'], '123' );
+		$this->assertEquals( $data['world'], '123abc' );
+		$this->assertContains( 'abc', $data['foo'] );
+		$this->assertContains( 'def', $data['foo'] );
+	}
+
+	function testUnsetPattern()
+	{
+		$configuration = array(
+			array( 'keyPatternUnset' => array(
+				'/^hello/',
+			) ),
+		);
+
+		$filter = DeclFilter::fromConfiguration( $configuration );
+
+		$data = $filter->filter( array(
+			'hello123' => '123abc',
+			'hello456' => '123abc',
+			'world' => '123abc',
+		) );
+
+		$this->assertFalse( isset( $data['hello123'] ) );
+		$this->assertFalse( isset( $data['hello456'] ) );
+		$this->assertEquals( $data['world'], '123abc' );
+	}
 }
 
 ?>

@@ -128,6 +128,31 @@ class DeclFilter implements Zend_Filter_Interface
 
 		$this->rules[] = $rule;
 	}
+
+	function addKeyPatternFilters( $filters )
+	{
+		require_once 'DeclFilter/KeyPatternFilterRule.php';
+		$rule = new DeclFilter_KeyPatternFilterRule( $filters );
+
+		$this->rules[] = $rule;
+	}
+
+	function addKeyPatternFiltersForArrays( $filters )
+	{
+		require_once 'DeclFilter/KeyPatternFilterRule.php';
+		$rule = new DeclFilter_KeyPatternFilterRule( $filters );
+		$rule->applyOnElements();
+
+		$this->rules[] = $rule;
+	}
+
+	function addKeyPatternUnset( $keys )
+	{
+		require_once 'DeclFilter/KeyPatternUnsetRule.php';
+		$rule = new DeclFilter_KeyPatternUnsetRule( $keys );
+
+		$this->rules[] = $rule;
+	}
 }
 
 ?>
