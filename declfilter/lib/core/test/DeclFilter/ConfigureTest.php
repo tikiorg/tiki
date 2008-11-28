@@ -33,6 +33,19 @@ class DeclFilter_ConfigureTest extends PHPUnit_Framework_TestCase
 		$this->assertContains( '456', $data['foo'] );
 		$this->assertEquals( $data['bar'], 'UNDECLARED' );
 	}
+
+	/**
+	 * Triggered errors become exceptions...
+	 * @expectedException Exception
+	 */
+	function testDisallowed()
+	{
+		$configuration = array(
+			array( 'catchAllFilter' => new Zend_Filter_StringToUpper ),
+		);
+
+		$filter = DeclFilter::fromConfiguration( $configuration, array( 'catchAllFilter' ) );
+	}
 }
 
 ?>

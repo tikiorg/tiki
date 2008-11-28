@@ -19,6 +19,15 @@ class TikiFilter_MapTest extends PHPUnit_Framework_TestCase
 		$this->assertTrue( TikiFilter::get( new Zend_Filter_Alnum ) instanceof Zend_Filter_Alnum );
 	}
 
+	/**
+	 * Triggered errors become exceptions...
+	 * @expectedException Exception
+	 */
+	function testUnknown()
+	{
+		$this->assertTrue( TikiFilter::get( 'does_not_exist' ) instanceof TikiFilter_PreventXss );
+	}
+
 	function testComposed()
 	{
 		$filter = new JitFilter( array( 'foo' => 'test123' ) );
