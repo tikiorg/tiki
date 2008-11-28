@@ -1,6 +1,6 @@
 <?php
 
-class DeclFilter_StaticKeyTest extends PHPUnit_Framework_TestCase
+class DeclFilter_CatchAllFilterTest extends PHPUnit_Framework_TestCase
 {
 	function testMatch()
 	{
@@ -38,7 +38,6 @@ class DeclFilter_StaticKeyTest extends PHPUnit_Framework_TestCase
 
 		$this->assertEquals( $data['hello'][0], '123' );
 		$this->assertEquals( $data['hello'][1], '456' );
-	}
 	}
 }
 
