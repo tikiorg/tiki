@@ -503,7 +503,22 @@ li.menuoption {
 
 .cssmenu a:hover,
 .cssmenu h2:hover,
-li.menuSection:hover a {color: #FF1493}
+li.menuSection:hover a {color: #F5F5F5;}
+
+.cssmenu_horiz li { border-bottom:0;background-color: #3B3B3B;}
+.cssmenu_horiz li a {
+	border-bottom: 1px solid transparent;
+	border-right: 1px solid #6A6A6A;
+	padding: 6px;
+}
+.cssmenu_horiz li.selectedAscendant > a,
+.cssmenu_horiz li.selected > a,
+.cssmenu_horiz li a:hover{text-decoration:none; background: #909090; }
+.cssmenu_horiz li.menuSection0{background: #3B3B3B url(darkroom/down.png) no-repeat 96% 50%;}
+.cssmenu_horiz li.menuSection1,
+.cssmenu_horiz li.menuSection2,
+.cssmenu_horiz li.menuSection3,
+{background: url(darkroom/right.png) no-repeat 96% 50%;}
 
 /* These override css/cssmenu_vert.css */
 .cssmenu_vert li a,
