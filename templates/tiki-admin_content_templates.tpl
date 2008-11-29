@@ -116,74 +116,54 @@
 <hr />
 
 <h2>{tr}Templates{/tr}</h2>
-<div  align="center">
-	{if $channels or ($find ne '')}
-		{include file='find.tpl' _sort_mode='y'}
-	{/if}
-	<br />
-	<table class="normal">
+{if $channels or ($find ne '')}
+	{include file='find.tpl' _sort_mode='y'}
+{/if}
+
+<table class="normal">
+	<tr>
+		<th>
+			<a href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a>
+		</th>
+		<th>
+			<a href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Last Modified{/tr}</a>
+		</th>
+		<th>{tr}Sections{/tr}</th>
+		<th>{tr}Action{/tr}</th>
+	</tr>
+	{cycle values="odd,even" print=false advance=false}
+	{section name=user loop=$channels}
 		<tr>
-			<th>
-				<a href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a>
-			</th>
-			<th>
-				<a href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Last Modified{/tr}</a>
-			</th>
-			<th>{tr}Sections{/tr}</th>
-			<th>{tr}Action{/tr}</th>
-		</tr>
-		{cycle values="odd,even" print=false advance=false}
-		{section name=user loop=$channels}
-			<tr>
-				<td class="{cycle advance=false}">{$channels[user].name}</td>
-				<td class="{cycle advance=false}">{$channels[user].created|tiki_short_datetime}</td>
-				<td class="{cycle advance=false}">
-					{if count($channels[user].sections) == 0}{tr}Visible in no sections{/tr}{/if}
-					{section name=ix loop=$channels[user].sections}
-						{$channels[user].sections[ix]} 
-						<a title="{tr}Delete{/tr}" class="link" href="tiki-admin_content_templates.php?removesection={$channels[user].sections[ix]}&amp;rtemplateId={$channels[user].templateId}" 
-							{icon _id='cross' alt='{tr}Delete{/tr}'}
-						</a>
-						&nbsp;&nbsp;
-					{/section}
-				</td>
-				<td class="{cycle advance=true}">
-					&nbsp;&nbsp;
-					<a title="{tr}Edit{/tr}" class="link" href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;templateId={$channels[user].templateId}">
-						{icon _id='page_edit'}
-					</a> 
-					&nbsp;
-					<a title="{tr}Delete{/tr}" class="link" href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].templateId}" >
+			<td class="{cycle advance=false}">{$channels[user].name}</td>
+			<td class="{cycle advance=false}">{$channels[user].created|tiki_short_datetime}</td>
+			<td class="{cycle advance=false}">
+				{if count($channels[user].sections) == 0}{tr}Visible in no sections{/tr}{/if}
+				{section name=ix loop=$channels[user].sections}
+					{$channels[user].sections[ix]} 
+					<a title="{tr}Delete{/tr}" class="link" href="tiki-admin_content_templates.php?removesection={$channels[user].sections[ix]}&amp;rtemplateId={$channels[user].templateId}" 
 						{icon _id='cross' alt='{tr}Delete{/tr}'}
 					</a>
-				</td>
-			</tr>
-		{sectionelse}
-			<tr>
-				<td colspan="4" class="odd">
-					{tr}No records found{/tr}
-				</td>
-			</tr>
-		{/section}
-	</table>
-
-	<div class="mini">
-		{if $prev_offset >= 0}
-			[<a class="prevnext" href="tiki-admin_content_templates.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}Prev{/tr}</a>]&nbsp;
-		{/if}
-		{tr}Page{/tr}: {$actual_page}/{$cant_pages}
-		{if $next_offset >= 0}
-			&nbsp;
-			[<a class="prevnext" href="tiki-admin_content_templates.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}Next{/tr}</a>]
-		{/if}
-		{if $prefs.direct_pagination eq 'y'}
-			<br />
-			{section loop=$cant_pages name=foo}
-				{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
-				<a class="prevnext" href="tiki-admin_content_templates.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
-				{$smarty.section.foo.index_next}</a>
+					&nbsp;&nbsp;
+				{/section}
+			</td>
+			<td class="{cycle advance=true}">
+				&nbsp;&nbsp;
+				<a title="{tr}Edit{/tr}" class="link" href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;templateId={$channels[user].templateId}">
+					{icon _id='page_edit'}
+				</a> 
 				&nbsp;
-			{/section}
-		{/if}
-	</div>
-</div>
+				<a title="{tr}Delete{/tr}" class="link" href="tiki-admin_content_templates.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].templateId}" >
+					{icon _id='cross' alt='{tr}Delete{/tr}'}
+				</a>
+			</td>
+		</tr>
+	{sectionelse}
+		<tr>
+			<td colspan="4" class="odd">
+				{tr}No records found{/tr}
+			</td>
+		</tr>
+	{/section}
+</table>
+
+{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
