@@ -2186,13 +2186,13 @@ div#ajaxLoading {
 table.default thead td,	table.default tfoot td {
 	font-weight: bold;
 	text-align:	center;
-	background-color: black;
-	color: #D8D8D8;
+	background: #fff;
+	color: #000;
 }
 
 table.default	td {
-	border : solid 1px #A9A9A9;
-	background-color: black;
+	border: solid 1px #A9A9A9;
+	background: #fff;
 }
 
 /**********   'advanced feature' divs   **********/
