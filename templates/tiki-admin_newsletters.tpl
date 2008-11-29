@@ -26,22 +26,15 @@
 <input type="checkbox" name="validateAddr" {if $info.validateAddr eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="formcolor">{tr}Allow customized text message to be sent with the html version{/tr}</td><td class="formcolor">
 <input type="checkbox" name="allowTxt" {if $info.allowTxt eq 'y'}checked="checked"{/if} /></td></tr>
-{* <tr><td class="formcolor">{tr}Frequency{/tr}</td><td class="formcolor">
-<select name="frequency">
-{section name=ix loop=$freqs}
-<option value="{$freqs[ix].t|escape}" {if $info.frequency eq $freqs[ix].t}selected="selected"{/if}>{$freqs[ix].i} {tr}days{/tr}</option>
-{/section}
-</select>
-</td></tr>
-*}
 <tr><td  class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
 <h2>{tr}Newsletters{/tr}</h2>
-<div align="center">
+
 {if $channels or ($find ne '')}
   {include file='find.tpl' _sort_mode='y'}
 {/if}
+
 <table class="normal">
 <tr>
 <th>&nbsp;</th>
@@ -82,22 +75,5 @@ border="0" width="16" height="16" alt="{tr}Assign Permissions{/tr}" src="pics/ic
 <tr><td class="odd" colspan="10">{tr}No records{/tr}</td></tr>
 {/section}
 </table>
-<div class="mini">
-{if $prev_offset >= 0}
-[<a class="prevnext" href="tiki-admin_newsletters.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}Prev{/tr}</a>]&nbsp;
-{/if}
-{tr}Page{/tr}: {$actual_page}/{$cant_pages}
-{if $next_offset >= 0}
-&nbsp;[<a class="prevnext" href="tiki-admin_newsletters.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}Next{/tr}</a>]
-{/if}
-{if $prefs.direct_pagination eq 'y'}
-<br />
-{section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
-<a class="prevnext" href="tiki-admin_newsletters.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
-{$smarty.section.foo.index_next}</a>&nbsp;
-{/section}
-{/if}
-</div>
-</div>
 
+{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}

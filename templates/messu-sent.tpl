@@ -93,13 +93,5 @@ var CHECKBOX_LIST = [{section name=user loop=$items}'msg[{$items[user].msgId}]'{
   {/section}
 </table>
 </form>
-<br />
-<div class="mini">
-{if $prev_offset >= 0}
-[<a class="prevnext" href="messu-sent.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}&amp;priority={$priority}&amp;flag={$flag}&amp;flagval={$flagval}">{tr}Prev{/tr}</a>]
-{/if}
-{tr}Page{/tr}: {$actual_page}/{$cant_pages}
-{if $next_offset >= 0}
-[<a class="prevnext" href="messu-sent.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}&amp;priority={$priority}&amp;flag={$flag}&amp;flagval={$flagval}">{tr}Next{/tr}</a>]
-{/if}
-</div>
+
+{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
