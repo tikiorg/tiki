@@ -705,7 +705,8 @@ class WikiLib extends TikiLib {
     function get_plugin_description($file) {
     	global $tikilib;
         $data = '';
-        $fp = fopen(PLUGINS_DIR . '/' . $file, 'r');
+		if (!($fp = fopen(PLUGINS_DIR . '/' . $file, 'r')))
+			return '';
         while(!feof($fp)) {
               $data .= fread($fp,4096);
         }
