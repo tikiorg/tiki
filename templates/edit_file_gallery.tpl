@@ -78,6 +78,8 @@
 	<td class="formcolor"><input type="checkbox" name="showeachuser" {if $showeachuser eq 'y'}checked="checked"{/if}/ ></td>
 	</tr>
 	{/if}
+
+	{/if}
      {include file='categorize.tpl'}
 
 				</table>
