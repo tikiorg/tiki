@@ -177,6 +177,7 @@
 {tr}Show in popup box{/tr}<input type="checkbox" name="show[status]" value="on"{if $info.show_status eq 'y'} checked="checked"{/if} />
 {tr}Show in calendar view{/tr}<input type="checkbox" name="show[status_calview]" value="on"{if $info.show_status_calview ne 'n'} checked="checked"{/if} />
 </td></tr>
+{if $prefs.feature_groupalert eq 'y'}
 <tr class="formcolor">
 <td>{tr}Group of users alerted when calendar event is modified{/tr}</td>
 <td>
@@ -191,7 +192,7 @@
 <td>{tr}Allows to select each user for small groups{/tr}</td>
 <td><input type="checkbox" name="showeachuser" {if $showeachuser eq 'y'}checked="checked"{/if} /></td>
 </tr>
-
+{/if}
 <tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 <br />

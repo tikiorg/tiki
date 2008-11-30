@@ -5437,6 +5437,7 @@ $lang=Array(
 "Show Quick Urls" => "Montre l'aide URLs",
 "Some useful URLs" => "Adresses Web utiles",
 "Hide Quick Urls" => "Cacher l'aide URLs",
+"Add this object at the end of menu"=>"Ajouter cet objet à la fin du menu",
 "For wiki page, use ((PageName))." => "Pour les pages wiki, utilisez ((NomdePage)).",
 "Separate multiple sections with a comma ( , )." => "Séparer chaque section avec une virgule ( , ).",
 "Separate multiple permissions with a comma ( , )." => "Séparer chaque permission par avec une virgule ( , ).",
