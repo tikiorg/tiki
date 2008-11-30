@@ -60,6 +60,7 @@
           </select>
         </td></tr>
 
+	{if $prefs.feature_groupalert eq 'y'}
 	<tr>
 	<td class="formcolor">{tr}Group of users alerted when file gallery is modified{/tr}</td>
 	<td class="formcolor">
@@ -76,7 +77,7 @@
 	<td class="formcolor">{tr}Allows to select each user for small groups{/tr}</td>
 	<td class="formcolor"><input type="checkbox" name="showeachuser" {if $showeachuser eq 'y'}checked="checked"{/if}/ ></td>
 	</tr>
-
+	{/if}
 
 
 
