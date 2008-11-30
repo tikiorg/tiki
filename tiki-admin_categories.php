@@ -391,26 +391,8 @@ $smarty->assign_by_ref('find', $find);
 $objects = $categlib->list_category_objects($_REQUEST["parentId"], $offset, $maxRecords, $sort_mode, '', $find, false);
 $smarty->assign_by_ref('objects', $objects["data"]);
 
-$cant_pages = ceil($objects["cant"] / $maxRecords);
-$smarty->assign_by_ref('cant_pages', $cant_pages);
-$smarty->assign('actual_page', 1 + ($offset / $maxRecords));
+$smarty->assign_by_ref('cant_pages', $objects["cant"]);
 
-if ($objects["cant"] > ($offset + $maxRecords)) {
-	$smarty->assign('next_offset', $offset + $maxRecords);
-} else {
-	$smarty->assign('next_offset', -1);
-}
-
-// If offset is > 0 then prev_offset
-if ($offset > 0) {
-	$smarty->assign('prev_offset', $offset - $maxRecords);
-} else {
-	$smarty->assign('prev_offset', -1);
-}
-/*
-$categories = $categlib->get_all_categories();
-$smarty->assign_by_ref('categories', $categories);
-*/
 $galleries = $tikilib->list_galleries(0, -1, 'name_desc', 'admin', $find_objects);
 $smarty->assign_by_ref('galleries', $galleries["data"]);
 

@@ -73,22 +73,8 @@ if (isset($_REQUEST["find"])) {
 $smarty->assign('find', $find);
 
 $words = $hotwordlib->list_hotwords($offset, $maxRecords, $sort_mode, $find);
-$cant_pages = ceil($words["cant"] / $maxRecords);
-$smarty->assign_by_ref('cant_pages', $cant_pages);
-$smarty->assign('actual_page', 1 + ($offset / $maxRecords));
 
-if ($words["cant"] > ($offset + $maxRecords)) {
-	$smarty->assign('next_offset', $offset + $maxRecords);
-} else {
-	$smarty->assign('next_offset', -1);
-}
-
-// If offset is > 0 then prev_offset
-if ($offset > 0) {
-	$smarty->assign('prev_offset', $offset - $maxRecords);
-} else {
-	$smarty->assign('prev_offset', -1);
-}
+$smarty->assign_by_ref('cant_pages', $words["cant"]);
 
 // Get users (list of users)
 $smarty->assign_by_ref('words', $words["data"]);
