@@ -44,74 +44,11 @@ END;
 
 $headerlib->add_js($js,0);
 
-//require_once ("lib/webmail/pop3.php");
 require_once ("lib/webmail/net_pop3.php");
-//require_once ("lib/webmail/mimeDecode.php");
 require_once ("lib/mail/mimelib.php");
 include_once ("lib/webmail/class.rc4crypt.php");
 include_once ("lib/webmail/tikimaillib.php");
 
-/* Needs to be deleted
-function parse_output(&$obj, &$parts, $i) {
-	if (!empty($obj->parts)) {
-		$temp_max = count($obj->parts);
-		for ($i = 0; $i < $temp_max; $i++)
-			parse_output($obj->parts[$i], $parts, $i);
-	} else {
-		$ctype = $obj->ctype_primary . '/' . $obj->ctype_secondary;
-
-		switch ($ctype) {
-		case 'text/plain':
-			if (isset($obj->disposition)AND $obj->disposition == 'attachment') {
-				$names = split(';', $obj->headers["content-disposition"]);
-
-				$names = split('=', $names[1]);
-				$aux['name'] = $names[1];
-				$aux['content-type'] = $obj->headers["content-type"];
-				$aux['part'] = $i;
-				$parts['attachments'][] = $aux;
-			} else {
-				if(isset($obj->ctype_parameters) && strtolower($obj->ctype_parameters['charset']) == "iso-8859-1")
-					$parts['text'][] = utf8_encode($obj->body);
-				else if (isset($obj->ctype_parameters) && (strtolower($obj->ctype_parameters['charset']) != "utf-8" && function_exists('mb_convert_encoding')))
-					$parts['text'][] = mb_convert_encoding($obj->body, "utf-8", $obj->ctype_parameters['charset']);
-				else
-					$parts['text'][] = $obj->body;
-			}
-
-			break;
-
-		case 'text/html':
-			if (isset($obj->disposition)AND $obj->disposition == 'attachment') {
-				$names = split(';', $obj->headers["content-disposition"]);
-
-				$names = split('=', $names[1]);
-				$aux['name'] = $names[1];
-				$aux['content-type'] = $obj->headers["content-type"];
-				$aux['part'] = $i;
-				$parts['attachments'][] = $aux;
-			} else {
-				if(isset($obj->ctype_parameters) && strtolower($obj->ctype_parameters['charset']) == "iso-8859-1")
-					$parts['html'][] = utf8_encode($obj->body);
-				else if (isset($obj->ctype_parameters) && (strtolower($obj->ctype_parameters['charset']) != "utf-8" && function_exists('mb_convert_encoding')))
-					$parts['html'][] = mb_convert_encoding($obj->body, "utf-8", $obj->ctype_parameters['charset']);
-				else
-					$parts['html'][] = $obj->body;
-			}
-
-			break;
-		default:
-			$names = split(';', $obj->headers["content-disposition"]);
-
-			$names = split('=', $names[1]);
-			$aux['name'] = $names[1];
-			$aux['content-type'] = $obj->headers["content-type"];
-			$aux['part'] = $i;
-			$parts['attachments'][] = $aux;
-		}
-	}
-}
-*/
 function decode_subject_utf8($string){
 	if (ereg('=\?.*\?.*\?=', $string) === false)
 		return $string;
@@ -150,7 +87,8 @@ if (isset($_REQUEST["add_contacts"])) {
 	}
 }
 
-/*************** Read an Email **************************************************************************************/
+//	Read an Email
+
 if ($_REQUEST["locSection"] == 'read') {
 	if (isset($_REQUEST["fullheaders"])) {
 		$smarty->assign('fullheaders', 'y');
@@ -162,8 +100,6 @@ if ($_REQUEST["locSection"] == 'read') {
 	
 	
 	$smarty->assign('current', $current);
-	//$pop3 = new POP3($current["pop"], $current["username"], $current["pass"]);
-	//$pop3->Open();
 	$pop3 = new Net_POP3();
 	$pop3->connect($current["pop"]);
 	$pop3->login($current["username"], $current["pass"]);
@@ -201,7 +137,6 @@ if ($_REQUEST["locSection"] == 'read') {
 	$pop3->disconnect();
 
 	$output = mime::decode($full);
-//echo "<pre>OUTPUT:";print_r($output); echo"</pre>";
 
 	$bodies = mime::get_bodies($output);
 
@@ -277,7 +212,7 @@ if ($_REQUEST["locSection"] == 'read') {
 	$smarty->assign('headers', $output['header']);
 }
 
-/*************** Mailbox *******************************************************************************************/
+//   Mailbox
 if ($_REQUEST["locSection"] == 'mailbox') {
 	$h = opendir("temp/mail_attachs/");
 
@@ -299,10 +234,6 @@ if ($_REQUEST["locSection"] == 'mailbox') {
 	$smarty->assign('current', $current);
 	$smarty->assign('autoRefresh',$current['autoRefresh']);
 	$smarty->assign('flagsPublic',$current['flagsPublic']);
-	// Now get messages from mailbox
-	//$pop3 = new POP3($current["pop"], $current["username"], $current["pass"]);
-	//$pop3->exit = false;    //new
-	//$pop3->Open();
 	$pop3 = new Net_POP3();
 	
 	$r1 = $pop3->connect($current["pop"]);
@@ -324,13 +255,6 @@ if ($_REQUEST["locSection"] == 'mailbox') {
 
 		die;
 	}
-
-/*
-	if ($pop3->has_error) { //new
-		echo '<b><br /><center><a href="tiki-webmail.php?locSection=settings">Click here for settings.</a></center></b>';
-		die;
-	}
-*/
 
 	// The user just clicked on one of the flags, so set up for flag change
 	if (isset($_REQUEST["quickFlagMsg"])){
@@ -371,7 +295,6 @@ if ($_REQUEST["locSection"] == 'mailbox') {
 
 	if (isset($_REQUEST["delete_one"]) || isset($_REQUEST["delete"])) {
 		// Now delete the messages and reopen the mailbox to renumber messages
-		//$pop3->close();
 		$pop3->disconnect();
 
 		$pop3->connect($current["pop"]);
@@ -383,7 +306,6 @@ if ($_REQUEST["locSection"] == 'mailbox') {
 		if (isset($_REQUEST["msg"])) {
 			check_ticket('webmail');
 			// Now we can operate the messages
-			// $_REQUEST["realmsg"][$msg] gets you the mailID for the check box $_REQUEST["msg"]
 			foreach (array_keys($_REQUEST["msg"])as $msg) {
 				$realmsg = $_REQUEST["realmsg"][$msg];
 				switch ($_REQUEST["action"]) {
@@ -546,21 +468,14 @@ if ($_REQUEST["locSection"] == 'mailbox') {
 	$smarty->assign('list', $list);
 }
 
-/******************** Settings **************************************************************************************/
+//   Settings
 if ($_REQUEST["locSection"] == 'settings') {
-	// Add a new mail account for the user here
-//	if (!isset($_REQUEST["accountId"]))
-//		$_REQUEST["accountId"] = 0;
-
 
 if (isset($_REQUEST["conmsg"])) {
 	check_ticket('webmail');
  		$smarty->assign('conmsg', $_REQUEST["conmsg"]);
 }
-
-
-
-
+	
 	if (isset($_REQUEST["cancel_acc"])) {
 		check_ticket('webmail');
 	 	unset($_REQUEST["cancel_acc"]);
@@ -623,7 +538,7 @@ if (isset($_REQUEST["conmsg"])) {
 	$smarty->assign('pubAccounts', $pubAccounts["data"]);
 }
 
-/*************** Compose *********************************************************************************************/
+//   Compose
 if ($_REQUEST["locSection"] == 'compose') {
 	$current = $webmaillib->get_current_webmail_account($user);
 
@@ -865,7 +780,7 @@ if ($_REQUEST["locSection"] == 'compose') {
 	$smarty->assign('attach3type', $_REQUEST["attach3type"]);
 }
 
-/******************** Contacts **************************************************************************************/
+//     Contacts
 if ($_REQUEST["locSection"] == 'contacts') {
 	if (!isset($_REQUEST["contactId"])) {
 		$_REQUEST["contactId"] = 0;

@@ -293,36 +293,6 @@ if ($_REQUEST["parentId"]) {
 $smarty->assign('path', $path);
 $smarty->assign('father', $father);
 $smarty->assign('categ_name', $categ_name);
-/*
-// ---------------------------------------------------
-// Convert $childrens
-//$debugger->var_dump('$children');
-$ctall = $categlib->get_all_categories_ext();
-$tree_nodes = array();
-
-foreach ($ctall as $c) {
-	$tree_nodes[] = array(
-		"id" => $c["categId"],
-		"parent" => $c["parentId"],
-		"data" => '<a class="catname" href="tiki-admin_categories.php?parentId=' . $c["categId"] . '" title="' . tra(
-			'Child categories'). ':' . $c["children"] . ' ' . tra(
-			'Objects in category'). ':' . $c["objects"] . '">' . $c["name"] . '</a>',
-		"edit" =>
-			'<a class="link" href="tiki-admin_categories.php?parentId=' . $c["parentId"] . '&amp;categId=' . $c["categId"] . '#editcreate" title="' . tra(
-			'edit'). '"><img border="0" src="img/icons/edit.gif" /></a>',
-		"remove" =>
-			'<a class="link" href="tiki-admin_categories.php?parentId=' . $c["parentId"] . '&amp;removeCat=' . $c["categId"] . '" title="' . tra(
-			'remove'). '"><img  border="0" src="img/icons2/delete.gif" /></a>',
-		"children" => $c["children"],
-		"objects" => $c["objects"]
-	);
-}
-
-//$debugger->var_dump('$tree_nodes');
-$tm = new CatAdminTreeMaker("admcat");
-$res = $tm->make_tree($_REQUEST["parentId"], $tree_nodes);
-$smarty->assign('tree', $res);
-*/
 // ---------------------------------------------------
 function array_csort($marray, $column) {
 	if (is_array($marray)) {
@@ -349,8 +319,6 @@ if (is_array($path)) {
 	}
 }
 $smarty->assign('catree', $catree['data']);
-
-// var_dump($catree); 
 
 // ---------------------------------------------------
 

@@ -12,13 +12,6 @@ require_once ('tiki-setup.php');
 
 include_once ('lib/articles/artlib.php');
 
-/*
-if($prefs['feature_listPages'] != 'y') {
-  $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display("error.tpl");
-  die;  
-}
-*/
 if ($prefs['feature_submissions'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_submissions");
 
@@ -26,15 +19,6 @@ if ($prefs['feature_submissions'] != 'y') {
 	die;
 }
 
-/*
-// Now check permissions to access this page
-if($tiki_p_view != 'y') {
-  $smarty->assign('errortype', 401);
-  $smarty->assign('msg',tra("Permission denied you cannot view pages"));
-  $smarty->display("error.tpl");
-  die;  
-}
-*/
 if (isset($_REQUEST["remove"])) {
 	if ($tiki_p_remove_submission != 'y') {
 		$smarty->assign('errortype', 401);

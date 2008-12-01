@@ -97,16 +97,9 @@ if (isset($_REQUEST["add"])) {
 if (isset($_REQUEST["delete"]) && isset($_REQUEST['watch'])) {
   check_ticket('user-watches');
 /* CSRL doesn't work if param as passed not in the uri */
-/*  $area = 'delwatches';
-  if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-    key_check($area); */
 	foreach (array_keys($_REQUEST["watch"])as $item) {
 		$tikilib->remove_user_watch_by_id($item);
 	}
-/*  } else {
-	key_get($area);
-  } */
-// 
 }
 
 // Get watch events and put them in watch_events

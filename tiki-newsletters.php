@@ -112,7 +112,7 @@ if ($tiki_p_subscribe_newsletters == 'y') {
 			if ($nllib->newsletter_subscribe($_REQUEST["nlId"], $user, "y"))
 				$smarty->assign('subscribed', 'y');
 		} elseif ($nllib->newsletter_subscribe($_REQUEST["nlId"], $_REQUEST["email"] ))
-			$smarty->assign('subscribed', 'y'); /* will receive en email */
+			$smarty->assign('subscribed', 'y'); // will receive en email
 
 	}
 }
@@ -123,7 +123,7 @@ if (isset($_REQUEST["info"])) {
 	$smarty->assign('nl_info', $nl_info);
 	$smarty->assign('subscribe', 'y');
 }
-/* List newsletters */
+// List newsletters
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'created_desc';
 } else {

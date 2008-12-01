@@ -55,11 +55,6 @@ if ($_REQUEST["zone"]) {
 $smarty->assign('content', $info["content"]);
 $smarty->assign('type', $info["type"]);
 
-/* NO REMOVAL
-if(isset($_REQUEST["remove"])) {
-  $htmlpageslib->remove_html_page_content($_REQUEST["pageName"],$_REQUEST["remove"]);
-}
-*/
 if (isset($_REQUEST["editmany"])) {
 	check_ticket('admin-html-page-content');
 	$zones = $htmlpageslib->list_html_page_content($_REQUEST["pageName"], 0, -1, 'zone_asc', '');

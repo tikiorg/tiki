@@ -109,17 +109,6 @@ if (isset($_REQUEST['save'])) {
 
 $where = '';
 $wheres = array();
-/*
-if(isset($_REQUEST['filter'])) {
-  if($_REQUEST['filter_name']) {
-   $wheres[]=" name='".$_REQUEST['filter_name']."'";
-  }
-  if($_REQUEST['filter_active']) {
-   $wheres[]=" isActive='".$_REQUEST['filter_active']."'";
-  }
-  $where = implode('and',$wheres);
-}
-*/
 if (isset($_REQUEST['where'])) {
 	$where = $_REQUEST['where'];
 }

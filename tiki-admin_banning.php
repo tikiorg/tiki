@@ -1,7 +1,5 @@
 <?php
 
-// $Header$
-
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -88,17 +86,7 @@ if (isset($_REQUEST['save'])) {
 
 $where = '';
 $wheres = array();
-/*
-if(isset($_REQUEST['filter'])) {
-  if($_REQUEST['filter_name']) {
-   $wheres[]=" name='".$_REQUEST['filter_name']."'";
-  }
-  if($_REQUEST['filter_active']) {
-   $wheres[]=" isActive='".$_REQUEST['filter_active']."'";
-  }
-  $where = implode('and',$wheres);
-}
-*/
+
 if (isset($_REQUEST['where'])) {
 	$where = $_REQUEST['where'];
 }
