@@ -4151,7 +4151,8 @@ CREATE TABLE "tiki_tracker_fields" (
   "errorMsg" clob,
   "visibleBy" clob,
   "editableBy" clob,
-  PRIMARY KEY (fieldId)
+  PRIMARY KEY (fieldId),
+  "INDEX" trackerId (trackerId)
 ) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_tracker_fields_trig" BEFORE INSERT ON "tiki_tracker_fields" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
@@ -4183,7 +4184,8 @@ CREATE TABLE "tiki_tracker_item_attachments" (
   "comment" varchar(250) default NULL,
   "longdesc" blob,
   "version" varchar(40) default NULL,
-  PRIMARY KEY (attId)
+  PRIMARY KEY (attId),
+  "INDEX" itemId (itemId)
 ) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_tracker_item_attachments_trig" BEFORE INSERT ON "tiki_tracker_item_attachments" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
@@ -4253,7 +4255,8 @@ CREATE TABLE "tiki_tracker_items" (
   "created" number(14) default NULL,
   "status" char(1) default NULL,
   "lastModif" number(14) default NULL,
-  PRIMARY KEY (itemId)
+  PRIMARY KEY (itemId),
+  "INDEX" trackerId (trackerId)
 ) ENGINE=MyISAM  ;
 
 CREATE TRIGGER "tiki_tracker_items_trig" BEFORE INSERT ON "tiki_tracker_items" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW

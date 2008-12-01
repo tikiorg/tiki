@@ -5020,7 +5020,8 @@ CREATE TABLE "tiki_tracker_fields" (
   "errorMsg" text default '',
   "visibleBy" text default '',
   "editableBy" text default '',
-  PRIMARY KEY (fieldId)
+  PRIMARY KEY (fieldId),
+  "INDEX" trackerId (trackerId)
 ) ENGINE=MyISAM  
 go
 
@@ -5052,7 +5053,8 @@ CREATE TABLE "tiki_tracker_item_attachments" (
   "comment" varchar(250) default NULL NULL,
   "longdesc" image default '',
   "version" varchar(40) default NULL NULL,
-  PRIMARY KEY (attId)
+  PRIMARY KEY (attId),
+  "INDEX" itemId (itemId)
 ) ENGINE=MyISAM  
 go
 
@@ -5129,7 +5131,8 @@ CREATE TABLE "tiki_tracker_items" (
   "created" numeric(14,0) default NULL NULL,
   "status" char(1) default NULL NULL,
   "lastModif" numeric(14,0) default NULL NULL,
-  PRIMARY KEY (itemId)
+  PRIMARY KEY (itemId),
+  "INDEX" trackerId (trackerId)
 ) ENGINE=MyISAM  
 go
 
