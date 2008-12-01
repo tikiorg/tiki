@@ -28,35 +28,35 @@ class  BilingualAlignerTest extends PHPUnit_Framework_TestCase
    //    These tests check the internal workings of the class.
    ////////////////////////////////////////////////////////////////
 
+
    public function test_segmentation_deals_withPeriod() {
-      $text = "hello brand new. world";
-      $expSentences = array("hello brand new", " world");
+      $text = "hello brand new. world.";
+      $expSentences = array("hello brand new.", " world.");
       $this->doTestBasicSegmentation($text, $expSentences, 
                                      "Segmentation did not deal properly with separation with period.");
    }
    
    public function testSegmentationDealsWithQuestionMark() {
-      $text = "hello? Anybody home";
-      $expSentences = array("hello", " Anybody home");
+      $text = "hello? Anybody home?";
+      $expSentences = array("hello?", " Anybody home?");
       $this->doTestBasicSegmentation($text, $expSentences, 
                                      "Segmentation did not deal properly with separation with question mark.");
    }   
 
    
    public function testSegmentationDealsWithExclamationMark() {
-      $text = "hello! Anybody home";
-      $expSentences = array("hello", " Anybody home");
+      $text = "hello! Anybody home!";
+      $expSentences = array("hello!", " Anybody home!");
       $this->doTestBasicSegmentation($text, $expSentences, 
                                      "Segmentation did not deal properly with separation with question mark.");
    }  
    
    public function testSegmentationDealsWithEmptyString() {
       $text = "";
-      $expSentences = array("");
+      $expSentences = array();
       $this->doTestBasicSegmentation($text, $expSentences, 
-                                     "Segmentation did not deal properly with separation with question mark.");
+                                     "Segmentation did not deal properly with empty string.");
    }     
-   
 
    
    ////////////////////////////////////////////////////////////////
