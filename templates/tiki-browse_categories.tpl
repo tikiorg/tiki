@@ -100,7 +100,7 @@
 <div class="treetitle">{tr}Current category{/tr}:
 <a href="tiki-browse_categories.php?parentId=0&amp;deep={$deep}&amp;type={$type|escape}" class="categpath">{tr}Top{/tr}</a>
 {section name=x loop=$path}
-&nbsp;::&nbsp;
+&nbsp;{$prefs.site_crumb_seper}&nbsp;
 <a class="categpath" href="tiki-browse_categories.php?parentId={$path[x].categId}&amp;deep={$deep}&amp;type={$type|escape}">{$path[x].name|tr_if}</a>
 {/section}
 </div>
@@ -113,7 +113,7 @@
 {elseif $paths}
 {section name=x loop=$paths}
 {section name=y loop=$paths[x]}
-&nbsp;::&nbsp;
+&nbsp;{$prefs.site_crumb_seper}&nbsp;
 <a class="categpath" href="tiki-browse_categories.php?parentId={$paths[x][y].categId}&amp;deep={$deep}&amp;type={$type|escape}">{$paths[x][y].name|tr_if}</a>
 {/section}
 <br />
