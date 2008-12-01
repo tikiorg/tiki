@@ -2818,7 +2818,7 @@ CREATE TABLE "tiki_tracker_fields" (
   "editableBy" text,
   "descriptionIsParsed" char(1) default 'n',
   PRIMARY KEY ("fieldId"),
-  "INDEX" trackerId (trackerId),
+  "INDEX" trackerId (trackerId)
 ) ENGINE=MyISAM  ;
 
 
