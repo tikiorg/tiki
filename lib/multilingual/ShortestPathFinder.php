@@ -21,15 +21,28 @@ class  ShortestPathFinder {
 	var $numberOfNodes = 0;
 	var $bestPath = 0;
 	var $matrixWidth = 0;
+	var $shortestPathes = array();
  
 	function ShortestPathFinder(&$ourMap, $infiniteDistance) {
 		$this -> infiniteDistance = $infiniteDistance;
 		$this -> map = &$ourMap;
-		$this -> numberOfNodes = count($ourMap);
+		$this -> numberOfNodes = $this->maxNodeIndex()+1;
 		$this -> bestPath = 0;
 	}
+	
+	function maxNodeIndex() {
+	   $max_node_index = max(array_keys($this->map));
+	   foreach ($this->map as $this_node_distances) {
+	      $largest_dest_index_from_this_node = max(array_keys($this_node_distances));
+	      if ($largest_dest_index_from_this_node > $max_node_index) {
+	         $max_node_index = $largest_dest_index_from_this_node;
+	      }
+	   } 
+	   return $max_node_index;
+	}
+	
  
-	function findShortestPath($start,$to = null) {
+	function computeShortestPathes($start,$to = null) {
 		$this -> startnode = $start;
 		for ($i=0;$i<$this -> numberOfNodes;$i++) {
 			if ($i == $this -> startnode) {
@@ -55,6 +68,9 @@ class  ShortestPathFinder {
 			$this -> visited[$this -> bestPath] = true;
 			$tries++;
 		}
+		$this -> shortestPathes = $this->getShortestPathesInfo();
+
+		return $this -> shortestPathes;
 	}
  
 	function findBestPath($ourDistance, $ourNodesLeft) {
@@ -81,6 +97,14 @@ class  ShortestPathFinder {
 			}
 		}
 	}
+	
+	function shortestPathBetween($origin_node_num, $destination_node_num) {
+	   return $this->shortestPathes[$destination_node_num];
+	}
+ 
+    function shortestDistanceBetween($origin_node_num, $destination_node_num) {
+       return $this->distance[$destination_node_num];
+    }
  
 	function printMap(&$map) {
 		$placeholder = ' %' . strlen($this -> infiniteDistance) .'d';
@@ -92,6 +116,31 @@ class  ShortestPathFinder {
 			$foo.= "\n";
 		}
 		return $foo;
+	}
+	
+	function getShortestPathesInfo($to = null) {
+		$ourShortestPath = array();
+		for ($i = 0; $i < $this -> numberOfNodes; $i++) {
+			if($to !== null && $to !== $i) {
+				continue;
+			}
+			$ourShortestPath[$i] = array();
+			$endNode = null;
+			$currNode = $i;
+			$ourShortestPath[$i][] = $i;
+			while ($endNode === null || $endNode != $this -> startnode) {
+				$ourShortestPath[$i][] = $this -> previousNode[$currNode];
+				$endNode = $this -> previousNode[$currNode];
+				$currNode = $this -> previousNode[$currNode];
+			}
+			$ourShortestPath[$i] = array_reverse($ourShortestPath[$i]);
+			if ($to === null || $to === $i) {
+				if ($to === $i) {
+					break;
+				}
+			}
+		}
+		return $ourShortestPath;
 	}
  
 	function getResults($to = null) {
@@ -183,8 +232,8 @@ function run_path_finder_example() {
    // initialize the algorithm class
    $path_finder = new ShortestPathFinder($ourMap, I,$matrixWidth);
  
-   // $path_finder->findShortestPath(0,13); to find only path from field 0 to field 13...
-   $path_finder->findShortestPath(0); 
+   // $path_finder->computeShortestPathes(0,13); to find only path from field 0 to field 13...
+   $path_finder->computeShortestPathes(0); 
  
    // Display the results
  
@@ -196,7 +245,7 @@ function run_path_finder_example() {
    echo '</pre>';
 }
 
-run_path_finder_example();
+//run_path_finder_example();
 
 
 ?>
