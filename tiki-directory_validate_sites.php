@@ -92,13 +92,6 @@ if ($offset > 0) {
 
 $smarty->assign_by_ref('items', $items["data"]);
 
-/*
-$categs = $dirlib->dir_get_all_categories_np(0,-1,'name asc',$find,$_REQUEST["parent"]);
-$smarty->assign('categs',$categs);
-$all_categs = $dirlib->dir_get_all_categories(0,-1,'name asc',$find);
-$smarty->assign('all_categs',$all_categs);
-*/
-
 // This page should be displayed with Directory section options
 $section='directory';
 include_once('tiki-section_options.php');

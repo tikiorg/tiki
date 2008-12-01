@@ -225,7 +225,6 @@ if ($offset > 0) {
 
 $smarty->assign_by_ref('channels', $channels["data"]);
 
-/* --------------------------------------- */
 $sort_mode_g = (isset($_REQUEST["sort_mode_g"]))?$_REQUEST["sort_mode_g"] : 'groupName_asc';
 $smarty->assign_by_ref('sort_mode_g', $sort_mode_g);
 $offset_g = (isset($_REQUEST["offset_g"]))? $_REQUEST["offset_g"] : 0;
@@ -255,8 +254,6 @@ $included_n = $nllib->list_newsletter_included($_REQUEST["nlId"], 0, -1);
 $smarty->assign('included_n',$included_n);
 $smarty->assign('nb_included',count($included_n));
 
-/* --------------------------------------- */
-
 // Fill array with possible number of questions per page
 $freqs = array();
 
@@ -278,11 +275,6 @@ $smarty->assign_by_ref('users', $users);
 $newsletters = $nllib->list_newsletters(0,-1,"created_desc",false, '', '', 'n');
 $smarty->assign_by_ref('newsletters', $newsletters['data']);
 
-/*
-$cat_type='newsletter';
-$cat_objid = $_REQUEST["nlId"];
-include_once("categorize_list.php");
-*/
 include_once ('tiki-section_options.php');
 
 ask_ticket('admin-nl-subsriptions');

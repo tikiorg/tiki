@@ -108,16 +108,6 @@ if (!isset($_REQUEST["galleryId"])) {
 if ($_REQUEST["galleryId"] != 0) {
 	// To browse the gallery the user has to be admin, the owner or the gallery has to be public
 	$gal_info = $imagegallib->get_gallery($_REQUEST["galleryId"]);
-//$smarty->assign_by_ref('theme',$gal_info["theme"]);
-//$smarty->assign('use_theme','y');
-/*
-if($user!='admin' && $user!=$gal_info["user"] && $gal_info["public"]!='y') {
-  $smarty->assign('errortype', 401);
-  $smarty->assign('msg',tra("Permission denied you cannot browse this gallery"));
-  $smarty->display("error.tpl");
-  die;  
-}
-*/
 } else {
 	$gal_info["galleryId"] = 0;
 

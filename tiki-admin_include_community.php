@@ -34,13 +34,4 @@ if (isset($_REQUEST["listfeatures"])) {
 	simple_set_value("user_list_order");
 }
 
-/* This is desired future feature
-if (isset($_REQUEST["friendshipfeatures"])) {
-	check_ticket('admin-inc-community');
-	simple_set_toggle("feature_community_friends_permission");
-	simple_set_int("feature_community_friends_permission_dep");
-
-}
-*/
-
 ask_ticket('admin-inc-community');

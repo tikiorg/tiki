@@ -116,14 +116,7 @@ if (isset($_REQUEST["save"])) {
 		$_REQUEST["allowTxt"] = 'n';
 	}
 	$sid = $nllib->replace_newsletter($_REQUEST["nlId"], $_REQUEST["name"], $_REQUEST["description"], $_REQUEST["allowUserSub"], $_REQUEST["allowAnySub"], $_REQUEST["unsubMsg"], $_REQUEST["validateAddr"],$_REQUEST["allowTxt"],$_REQUEST["frequency"],$_REQUEST["author"]);
-	/*
-	$cat_type='newsletter';
-	$cat_objid = $sid;
-	$cat_desc = substr($_REQUEST["description"],0,200);
-	$cat_name = $_REQUEST["name"];
-	$cat_href="tiki-newsletters.php?nlId=".$cat_objid;
-	include_once("categorize.php");
-	*/
+	
 	$info["name"] = '';
 	$info["description"] = '';
 	$info["allowUserSub"] = 'y';
@@ -131,7 +124,6 @@ if (isset($_REQUEST["save"])) {
 	$info["unsubMsg"] = 'y';
 	$info["validateAddr"] = 'y';
 	$info["allowTxt"] = 'y';
-	//$info["frequency"] = 7 * 24 * 60 * 60;
 	$smarty->assign('nlId', 0);
 	$smarty->assign('info', $info);
 }

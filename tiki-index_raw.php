@@ -153,11 +153,6 @@ if (empty($info["user"])) {
 
 $smarty->assign_by_ref('lastUser', $info["user"]);
 
-/*
-// force enable wiki comments (for development)
-$prefs['feature_wiki_comments'] = 'y';
-*/
-
 // Comments engine!
 if ($prefs['feature_wiki_comments'] == 'y') {
 	$comments_per_page = $prefs['wiki_comments_per_page'];
