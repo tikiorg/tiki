@@ -194,6 +194,7 @@ function wikiplugin_trackerlist($data, $params) {
 	require_once("lib/trackers/trackerlib.php");
 	global $notificationlib;  include_once('lib/notifications/notificationlib.php');//needed if plugin tracker after plugin trackerlist
 	extract ($params,EXTR_SKIP);
+
 	if ($prefs['feature_trackers'] != 'y' || !isset($trackerId) || !($tracker_info = $trklib->get_tracker($trackerId))) {
 		return $smarty->fetch("wiki-plugins/error_tracker.tpl");
 	} else {
@@ -409,7 +410,7 @@ function wikiplugin_trackerlist($data, $params) {
 			}
 		}
 		if (isset($view) && $view == 'page' && $_REQUEST['page']) {
-			if ($f = $trklib->get_field_id_from_type($trackerId, 'k', '1%')) {
+			if ($f = $trklib->get_field_id_from_type($trackerId, 'k')) {
 				$filterfield[] = $f;
 				$filtervalue[] = '';
 				$exactvalue[] = $_REQUEST['page'];
