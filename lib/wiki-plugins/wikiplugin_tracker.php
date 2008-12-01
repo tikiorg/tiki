@@ -6,7 +6,7 @@
 
 function wikiplugin_tracker_help() {
 	$help = tra("Displays an input form for tracker submit").":\n";
-	$help.= "~np~{TRACKER(trackerId=1, fields=id1:id2:id3, action=Name of submit button, showtitle=n, showdesc=n, showmandatory=n, embedded=n, url=\"http://site.com\", values=val1:val2:val3, sort=n, preview=preview, view=user|page, tpl=x.tpl,wiki=page,newstatus=o|p|c, itemId=)}Notice{TRACKER}~/np~";
+	$help.= "~np~{TRACKER(trackerId=1, fields=id1:id2:id3, action=Name of submit button, showtitle=n, showdesc=n, showmandatory=n, embedded=n, url=\"http://site.com\", values=val1:val2:val3, sort=n, preview=preview, view=user|page, tpl=x.tpl,wiki=page,newstatus=o|p|c, itemId=, colwidth=##|##%)}Notice{TRACKER}~/np~";
 	return $help;
 }
 
@@ -97,6 +97,11 @@ function wikiplugin_tracker_info() {
 				'required' => false,
 				'name' => tra('New Status'),
 				'description' => 'o|p|c'. ' '.tra('Default status applied to newly created items.'),
+			),
+			'colwidth' => array(
+				'required' => false,
+				'name' => tra('Width of first column '),
+				'description' => '## or ##% '. ' '.tra('Specify the width in pixels or percentage of the first column in the tracker form.'),
 			),
 		),
 	);
@@ -704,12 +709,20 @@ function wikiplugin_tracker($data, $params) {
 						if (in_array($f['fieldId'], $optional)) {
 							$f['name'] = "<i>".$f['name']."</i>";
 						}
-						$back.= "<tr><td>".wikiplugin_tracker_name($f['fieldId'], $f['name'], $field_errors);
+						if ($f['type'] != 'h') {
+						$back.= "<tr><td";
+						if (!empty($colwidth)){
+							$back .= " width='".$colwidth."'";
+						}
+						$back .= ">".wikiplugin_tracker_name($f['fieldId'], $f['name'], $field_errors);
 						if ($showmandatory == 'y' and $f['isMandatory'] == 'y') {
 							$back.= "&nbsp;<b>*</b>&nbsp;";
 							$onemandatory = true;
 						}
 						$back.= "</td><td>";
+						} else {
+						$back .= "<tr><th colspan='2'>".wikiplugin_tracker_name($f['fieldId'], $f['name'], $field_errors);
+						}
 						$smarty->assign_by_ref('field_value', $f);
 						if (isset($item)) {
 							$smarty->assign_by_ref('item', $item);
@@ -726,7 +739,11 @@ function wikiplugin_tracker($data, $params) {
 						}
 					}
 					if (empty($tpl) && empty($wiki)) {
+					if ($f['type'] != 'h'){
 						$back.= "</td></tr>";
+						} else {
+						$back.= "</th></tr>";						
+						}
 					}
 				}
 			}
