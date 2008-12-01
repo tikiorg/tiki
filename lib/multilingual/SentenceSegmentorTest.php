@@ -48,7 +48,7 @@ class  SentenceSegmentorTest extends PHPUnit_Framework_TestCase
       $text = "hello! Anybody home!";
       $expSentences = array("hello!", " Anybody home!");
       $this->do_test_basic_segmentation($text, $expSentences, 
-                                     "Segmentation did not deal properly with separation with question mark.");
+                                     "Segmentation did not deal properly with separation with exclamation mark.");
    }  
    
    public function test_segmentation_deals_with_exclamation_empty_string() {
