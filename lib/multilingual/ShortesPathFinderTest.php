@@ -41,20 +41,20 @@ class  ShortestPathFinderTest extends PHPUnit_Framework_TestCase
       $path_finder = new ShortestPathFinder($distances_matrix, $INFINITY);
    }
    
-   public function test_This_is_how_you_pre_compute_shortest_pathes_from_a_given_origin_to_all_other_nodes() {
+   public function test_This_is_how_you_compute_shortest_pathes_from_a_given_origin_to_all_other_nodes() {
 //      echo "-- test_This_is_how_you_find_the_shortest_path: invoked\n";
       $start_node_num = 0;
       $this->pfinder->computeShortestPathes($start_node_num);      
    }
    
-   public function test_This_is_how_you_find_shortest_path_from_an_origin_to_another_node() {   
+   public function test_This_is_how_you_find_shortest_path_from_the_origin_to_another_node() {   
 //      echo "-- test_This_is_how_you_find_shortest_path_from_an_origin_to_another_node: invoked\n";
-      $start_node_num = 0;
+      $origin_node_num = 0;
       $destination_node_num = 2;
-      $this->pfinder->computeShortestPathes($start_node_num);
+      $this->pfinder->computeShortestPathes($origin_node_num);
       
-      $nodes_in_path = $this->pfinder->shortestPathBetween($start_node_num, $destination_node_num);
-      $distance = $this->pfinder->shortestDistanceBetween($start_node_num, $destination_node_num);
+      $nodes_in_path = $this->pfinder->shortestPathTo($destination_node_num);
+      $distance = $this->pfinder->shortestDistanceTo($destination_node_num);
    }    
 
    ////////////////////////////////////////////////////////////////
@@ -75,9 +75,9 @@ class  ShortestPathFinderTest extends PHPUnit_Framework_TestCase
    ////////////////////////////////////////////////////////////////
    
    function assertShortestPathIs($destination, $exp_path, $exp_dist) {
-      $got_dist = $distance = $this->pfinder->shortestDistanceBetween(0, $destination);
+      $got_dist = $distance = $this->pfinder->shortestDistanceTo($destination);
       $this->assertEquals($exp_dist, $got_dist, "Shortest distance to node $destination was wrong.");
-      $got_path = $this->pfinder->shortestPathBetween(0, $destination);
+      $got_path = $this->pfinder->shortestPathTo($destination);
       $this->assertEquals($exp_path, $got_path, "Shortest path to node $destination was wrong.");
 
    }

@@ -98,11 +98,11 @@ class  ShortestPathFinder {
 		}
 	}
 	
-	function shortestPathBetween($origin_node_num, $destination_node_num) {
+	function shortestPathTo($destination_node_num) {
 	   return $this->shortestPathes[$destination_node_num];
 	}
  
-    function shortestDistanceBetween($origin_node_num, $destination_node_num) {
+    function shortestDistanceTo($destination_node_num) {
        return $this->distance[$destination_node_num];
     }
  
