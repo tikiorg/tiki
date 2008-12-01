@@ -1,4 +1,3 @@
-<?php error_reporting(E_ALL); ini_set('display_errors', 'on'); ?>
 <?php
 /* Invoke a social network sharing tool.
 // Developed by Scot E. Wilcoxon for Tiki CMS
