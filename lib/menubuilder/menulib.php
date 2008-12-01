@@ -36,6 +36,8 @@ class MenuLib extends TikiLib {
 
 		$query = "select * from `tiki_menus` $mid order by ".$this->convert_sortmode($sort_mode);
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
+		$query_cant = "select count(*) from `tiki_menus` $mid";
+		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
 
 		while ( $res = $result->fetchRow() ) {
@@ -46,7 +48,7 @@ class MenuLib extends TikiLib {
 
 		$retval = array();
 		$retval["data"] = $ret;
-		$retval["cant"] = count($ret);
+		$retval["cant"] = $cant;
 		return $retval;
 	}
 
