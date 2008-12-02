@@ -21,7 +21,7 @@ function wikiplugin_trackerlist_info() {
 				'description' => tra('Tracker ID'),
 			),
 			'fields' => array(
-				'required' => true,
+				'required' => false,
 				'name' => tra('Fields'),
 				'description' => tra('Colon-separated list of field IDs to be displayed. Example: 2:4:5'),
 			),
