@@ -1284,7 +1284,6 @@ ul.floatleft li {
 	border: 1px solid #3F3F3F;
 	border-top: 1px solid #818181;
 }
-.button {display: inline-block;}
 
 .navbar > a:hover{
 	border: 1px solid #B2B2B2;
@@ -1294,7 +1293,6 @@ ul.floatleft li {
 
 .button a,
 .button a:visited {
-	display: block;
 	font-weight: bold;
 	font-size: 0.8em;
 	text-decoration: none;
