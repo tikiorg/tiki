@@ -41,14 +41,7 @@ class  ShortestPathFinderTest extends PHPUnit_Framework_TestCase
       $path_finder = new ShortestPathFinder($distances_matrix, $INFINITY);
    }
    
-   public function test_This_is_how_you_compute_shortest_pathes_from_a_given_origin_to_all_other_nodes() {
-//      echo "-- test_This_is_how_you_find_the_shortest_path: invoked\n";
-      $start_node_num = 0;
-      $this->pfinder->computeShortestPathes($start_node_num);      
-   }
-   
    public function test_This_is_how_you_find_shortest_path_from_the_origin_to_another_node() {   
-//      echo "-- test_This_is_how_you_find_shortest_path_from_an_origin_to_another_node: invoked\n";
       $origin_node_num = 0;
       $destination_node_num = 2;
       $this->pfinder->computeShortestPathes($origin_node_num);
@@ -57,10 +50,37 @@ class  ShortestPathFinderTest extends PHPUnit_Framework_TestCase
       $distance = $this->pfinder->shortestDistanceTo($destination_node_num);
    }    
 
+   public function test_node_names_do_not_have_to_be_numbers() {
+      echo "\n\n############ test_node_names_do_not_have_to_be_numbers\n\n";
+      $distances_matrix['paris']['lyon'] = 11;
+      $distances_matrix['paris']['marseilles'] = 23;
+     $distances_matrix['lyon']['marseilles'] = 5;
+      $INFINITY = 9999999;
+
+      $this->pfinder = new ShortestPathFinder($distances_matrix, $INFINITY);   
+      $this->pfinder->computeShortestPathes('paris');      
+      $nodes_in_path = $this->pfinder->shortestPathTo('marseilles');
+      $distance = $this->pfinder->shortestDistanceTo('marseilles');
+      
+   }
+
    ////////////////////////////////////////////////////////////////
    // Internal tests
    //    These tests check the internal workings of the class.
    ////////////////////////////////////////////////////////////////
+
+   public function test__nodesInMatrix() {
+   
+      $distances_matrix = array();
+      $distances_matrix['paris']['london'] = 300;
+      $distances_matrix['paris']['rome'] = 600;
+      $distances_matrix['london']['ottawa'] = 2000;      
+      $exp_nodes = array('london', 'ottawa', 'paris', 'rome');
+      
+      $nodes_list = $this->pfinder->_nodesInMmatrix($distances_matrix);
+      
+      $this->assertEquals($exp_nodes, $nodes_list, "Bad list of nodes.");
+   }
 
    public function test_path_finder_SMALL_example() {
       $start_node_num = 0;
@@ -70,6 +90,10 @@ class  ShortestPathFinderTest extends PHPUnit_Framework_TestCase
       $this->assertShortestPathIs(2, array(0, 1, 2), 16);
    }
    
+   public function test_reminder_get_rid_of_maxNodeIndex_method() {
+      $this->fail("We want to get rid of node numbbers, and replace them with alphanumeric node ids. Oncce that's done, get rid of method maxNodeIndex()");
+   }
+      
    ////////////////////////////////////////////////////////////////
    // Helper methods
    ////////////////////////////////////////////////////////////////

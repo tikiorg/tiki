@@ -23,12 +23,35 @@ class  ShortestPathFinder {
 	var $bestPath = 0;
 	var $matrixWidth = 0;
 	var $shortestPathes = array();
- 
+    var $nodes = array();
+     
 	function ShortestPathFinder(&$ourMap, $infiniteDistance) {
 		$this -> infiniteDistance = $infiniteDistance;
 		$this -> map = &$ourMap;
 		$this -> numberOfNodes = $this->maxNodeIndex()+1;
 		$this -> bestPath = 0;
+
+	    $this->nodes = $this->_nodesInMmatrix($ourMap);
+	}
+	
+	function _nodesInMmatrix($distanceMatrix) {
+	   $nodes = array();
+       foreach (array_keys($distanceMatrix) as $originNode) {
+          if (!in_array($originNode, $nodes)) {
+             array_push($nodes, $originNode);
+          }
+          $distancesFromThisNode = $distanceMatrix[$originNode];
+          foreach (array_keys($distancesFromThisNode) as $destinationNode) {
+             if (!in_array($destinationNode, $nodes)) {
+                array_push($nodes, $destinationNode);
+             }
+          }
+       }
+       sort($nodes);
+
+       echo "-- _nodesInMmatrix: outputting nodes:\n"; var_dump($nodes);
+
+       return $nodes;
 	}
 	
 	function maxNodeIndex() {
@@ -45,20 +68,23 @@ class  ShortestPathFinder {
  
 	function computeShortestPathes($start,$to = null) {
 		$this -> startnode = $start;
-		for ($i=0;$i<$this -> numberOfNodes;$i++) {
-			if ($i == $this -> startnode) {
-				$this -> visited[$i] = true;
-				$this -> distance[$i] = 0;
+		foreach ($this->nodes as $currNode) {
+			if ($currNode == $this -> startnode) {
+				$this -> visited[$currNode] = true;
+				$this -> distance[$currNode] = 0;
 			} else {
-				$this -> visited[$i] = false;
-				$this -> distance[$i] = isset($this -> map[$this -> startnode][$i]) 
-					? $this -> map[$this -> startnode][$i] 
+				$this -> visited[$currNode] = false;
+				$this -> distance[$currNode] = isset($this -> map[$this -> startnode][$currNode]) 
+					? $this -> map[$this -> startnode][$currNode] 
 					: $this -> infiniteDistance;
 			}
-			$this -> previousNode[$i] = $this -> startnode;
+			$this -> previousNode[$currNode] = $this -> startnode;
 		}
  
 		$maxTries = $this -> numberOfNodes;
+		
+		echo "-- computeShortestPathes: \$maxTries=$maxTries\n";
+		
 		$tries = 0;
 		while (in_array(false,$this -> visited,true) && $tries <= $maxTries) {			
 			$this -> bestPath = $this->findBestPath($this->distance,array_keys($this -> visited,false,true));
