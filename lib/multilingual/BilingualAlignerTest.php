@@ -87,7 +87,7 @@ class  BilingualAlignerTest extends PHPUnit_Framework_TestCase
                  
       $l1_sentence = "";
       $l2_sentence = "";
-      $this->assert_sentence_length_delta_is($l1_sentence, $l2_sentence, -0,
+      $this->assert_sentence_length_delta_is($l1_sentence, $l2_sentence, 0,
                  "Bad delta for case with both sentences empty.");
 
       $l1_sentence = null;
@@ -105,15 +105,26 @@ class  BilingualAlignerTest extends PHPUnit_Framework_TestCase
       $this->assert_sentence_length_delta_is($l1_sentence, $l2_sentence, 0,
                  "Bad delta for case with both sentences null.");   
    }
+
+   function test__generate_shortest_path_matrix() {
+      $this->_setup_segmented_sentences();
+      $this->aligner->_generate_shortest_path_matrix();
+   }
    
    ////////////////////////////////////////////////////////////////
    // Helper methods
    ////////////////////////////////////////////////////////////////
 
-   public function assert_sentence_length_delta_is($l1_sentence, $l2_sentence, $exp_delta, $message) {
+   private function assert_sentence_length_delta_is($l1_sentence, $l2_sentence, $exp_delta, $message) {
       $got_delta = $this->aligner->_sentence_length_delta($l1_sentence, $l2_sentence);
       $message = $message."\nSentence length delta was wrong.";
       $this->assertEquals($exp_delta, $got_delta, $message, 0.001);
+   }
+   
+   private function _setup_segmented_sentences() {
+       $en_entences = "Hello earthlings. Take me to your leader.";
+       $fr_sentences = "Bonjour terriens. Inutile de résister. Amenez moi à votre chef.";
+       $this->aligner->_segment_parallel_texts_to_sentences($en_entences, $fr_sentences);
    }
 }
 ?>

@@ -51,7 +51,6 @@ class  ShortestPathFinderTest extends PHPUnit_Framework_TestCase
    }    
 
    public function test_node_names_do_not_have_to_be_numbers() {
-      echo "\n\n############ test_node_names_do_not_have_to_be_numbers\n\n";
       $distances_matrix['paris']['lyon'] = 11;
       $distances_matrix['paris']['marseilles'] = 23;
      $distances_matrix['lyon']['marseilles'] = 5;
@@ -86,24 +85,44 @@ class  ShortestPathFinderTest extends PHPUnit_Framework_TestCase
       $start_node_num = 0;
       $this->pfinder->computeShortestPathes($start_node_num); 
 
-      $this->assertShortestPathIs(1, array(0, 1), 11);     
-      $this->assertShortestPathIs(2, array(0, 1, 2), 16);
+      $this->assertShortestPathIs(1, array(0, 1), 11, "");     
+      $this->assertShortestPathIs(2, array(0, 1, 2), 16, "");
    }
    
-   public function test_reminder_get_rid_of_maxNodeIndex_method() {
-      $this->fail("We want to get rid of node numbbers, and replace them with alphanumeric node ids. Oncce that's done, get rid of method maxNodeIndex()");
+   public function test_path_finder_LARGER_example() {
+      $start_node_num = 'ottawa';
+      $cost_matrix['ottawa']['montreal'] = 50;
+      $cost_matrix['ottawa']['chicago'] = 100;
+      $cost_matrix['ottawa']['detroit'] = 150;
+      $cost_matrix['montreal']['detroit'] = 90;
+      $cost_matrix['montreal']['vancouver'] = 300;
+
+      $cost_matrix['detroit']['vancouver'] = 110;
+      $cost_matrix['chicago']['vancouver'] = 170;
+      $cost_matrix['ottawa']['toronto'] = 90;
+      $cost_matrix['toronto']['vancouver'] = 280;
+      $INFINITY = 9999999;
+
+      $this->pfinder = new ShortestPathFinder($cost_matrix, $INFINITY);      
+      $this->pfinder->computeShortestPathes('ottawa'); 
+
+      $this->assertShortestPathIs('montreal', array("ottawa", "montreal"), 50, "Bad path to montreal");     
+      $this->assertShortestPathIs('toronto', array("ottawa", "toronto"), 90, "Bad path to toronto");
+      $this->assertShortestPathIs('chicago', array("ottawa", "chicago"), 100, "Bad path to chicago");   
+      $this->assertShortestPathIs('detroit', array("ottawa", "montreal", "detroit"), 140, "Bad path to detroit");
+      $this->assertShortestPathIs('vancouver', array("ottawa", "montreal", "detroit", "vancouver"), 250, "Bad path to vancouver");
    }
+   
       
    ////////////////////////////////////////////////////////////////
    // Helper methods
    ////////////////////////////////////////////////////////////////
    
-   function assertShortestPathIs($destination, $exp_path, $exp_dist) {
+   function assertShortestPathIs($destination, $exp_path, $exp_dist, $message) {
       $got_dist = $distance = $this->pfinder->shortestDistanceTo($destination);
       $this->assertEquals($exp_dist, $got_dist, "Shortest distance to node $destination was wrong.");
       $got_path = $this->pfinder->shortestPathTo($destination);
-      $this->assertEquals($exp_path, $got_path, "Shortest path to node $destination was wrong.");
-
+      $this->assertEquals($exp_path, $got_path, "$message\nShortest path to node $destination was wrong.");
    }
 
 }

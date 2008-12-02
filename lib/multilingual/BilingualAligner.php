@@ -22,6 +22,11 @@ class BilingualAligner {
 	   $this->l2_sentences = $this->_segment_into_sentences($l2_text);
 	}
 	
+	function _generate_shortest_path_matrix() {
+	    $nodes_to_extend = array("0-0", "0-*", "*-0", "0,1-0", "0-0,1");
+	    
+	}
+	
 	public function _sentence_length_delta($l1_sentence, $l2_sentence) {
 	   $l1_length = strlen($l1_sentence);
 	   $l2_length = strlen($l2_sentence);
