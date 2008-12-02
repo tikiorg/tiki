@@ -36,15 +36,8 @@ $smarty->assign('nlId', $_REQUEST["nlId"]);
 
 $newsletters = $nllib->list_newsletters(0, -1, 'created_desc', '', '', array("tiki_p_admin_newsletters", "tiki_p_send_newsletters"));
 
-if (($user=="admin") && (count($newsletters["data"])==0)) {
+if (!$newsletters['cant']) {
 	$smarty->assign('msg', tra("No newsletters available."));
-	$smarty->display("error.tpl");
-	die;
-}
-
-if (!$newsletters["cant"]) {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 	$smarty->display("error.tpl");
 	die;
 }
