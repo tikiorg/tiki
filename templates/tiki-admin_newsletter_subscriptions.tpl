@@ -112,7 +112,6 @@
 <h2>{tr}Subscriptions{/tr}</h2>
 {* groups------------------------------------ *}
 {if $nb_groups > 0}
-<div  align="center">
 <table class="normal">
 <tr>
 <th><a href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;offset={$offset_g|urlencode}&amp;sort_mode_g={if $sort_mode_g eq 'groupName_asc'}groupName_desc{else}groupName_asc{/if}">{tr}Group{/tr}</a></th><th>{tr}Action{/tr}</th>
@@ -125,13 +124,11 @@
 </tr>
 {/section}
 </table>
-</div>
 {/if}
 {* /groups------------------------------------ *}
 
 {* included------------------------------------ *}
 {if $nb_included > 0}
-<div  align="center">
 <table class="normal">
 <tr>
 <th><a href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;offset={$offset_g|urlencode}&amp;sort_mode_i={if $sort_mode_i eq 'name_asc'}name_desc{else}name_asc{/if}">{tr}Newsletter{/tr}</a></th><th>{tr}Action{/tr}</th>
@@ -144,10 +141,8 @@
 </tr>
 {/foreach}
 </table>
-</div>
 {/if}
 {* /included------------------------------------ *}
-<div  align="center">
 <table class="findtable">
 <tr><td class="findtable">{tr}Find{/tr}</td>
    <td class="findtable">
@@ -160,6 +155,7 @@
    </td>
 </tr>
 </table>
+
 <table class="normal">
 <tr>
 <th><a href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;offset={$offset|urlencode}&amp;sort_mode={if $sort_mode eq 'email_desc'}email_asc{else}email_desc{/if}">{tr}eMail{/tr} - {tr}User{/tr}</a></th>
@@ -181,24 +177,5 @@
 </tr>
 {/section}
 </table>
-<div class="mini">
-{if $prev_offset >= 0}
-[<a class="prevnext" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;find={$find|urlencode}&amp;offset={$prev_offset|urlencode}&amp;sort_mode={$sort_mode|urlencode}">{tr}Prev{/tr}</a>]&nbsp;
-{/if}
-{if $cant_pages > 0}
-{tr}Page{/tr}: {$actual_page}/{$cant_pages}
-{/if}
-{if $next_offset >= 0}
-&nbsp;[<a class="prevnext" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;find={$find|urlencode}&amp;offset={$next_offset|urlencode}&amp;sort_mode={$sort_mode|urlencode}">{tr}Next{/tr}</a>]
-{/if}
-{if $prefs.direct_pagination eq 'y'}
-<br />
-{section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
-<a class="prevnext" href="tiki-admin_newsletter_subscriptions.php?nlId={$nlId|urlencode}&amp;find={$find|urlencode}&amp;offset={$selector_offset|urlencode}&amp;sort_mode={$sort_mode|urlencode}">
-{$smarty.section.foo.index_next}</a>&nbsp;
-{/section}
-{/if}
-</div>
-</div>
 
+{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}

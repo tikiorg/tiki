@@ -59,7 +59,6 @@ $smarty->assign('find', $find);
 $smarty->assign('sheetId', $_REQUEST["sheetId"]);
 
 // Init smarty variables to blank values
-//$smarty->assign('theme','');
 $smarty->assign('title', '');
 $smarty->assign('description', '');
 $smarty->assign('edit_mode', 'n');
@@ -114,7 +113,6 @@ if (isset($_REQUEST["edit"])) {
 
 	// Everything is ok so we proceed to edit the gallery
 	$smarty->assign('edit_mode', 'y');
-	//$smarty->assign_by_ref('theme',$_REQUEST["theme"]);
 	$smarty->assign_by_ref('title', $_REQUEST["title"]);
 	$smarty->assign_by_ref('description', $_REQUEST["description"]);
 
@@ -175,25 +173,9 @@ $smarty->assign_by_ref('offset', $offset);
 // GET ALL GALLERIES SINCE ALL GALLERIES ARE BROWSEABLE
 $sheets = $sheetlib->list_sheets($offset, $maxRecords, $sort_mode, $find);
 
-$cant_pages = ceil($sheets["cant"] / $maxRecords);
-$smarty->assign_by_ref('cant_pages', $cant_pages);
-$smarty->assign('actual_page', 1 + ($offset / $maxRecords));
-
-if ($sheets["cant"] > ($offset + $maxRecords)) {
-	$smarty->assign('next_offset', $offset + $maxRecords);
-} else {
-	$smarty->assign('next_offset', -1);
-}
-
-// If offset is > 0 then prev_offset
-if ($offset > 0) {
-	$smarty->assign('prev_offset', $offset - $maxRecords);
-} else {
-	$smarty->assign('prev_offset', -1);
-}
+$smarty->assign_by_ref('cant_pages', $sheets["cant"]);
 
 $smarty->assign_by_ref('sheets', $sheets["data"]);
-//print_r($galleries["data"]);
 $cat_type = 'sheet';
 $cat_objid = $_REQUEST["sheetId"];
 include_once ("categorize_list.php");
