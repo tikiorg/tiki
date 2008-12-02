@@ -846,7 +846,7 @@ class LogsLib extends TikiLib {
 
 	// get the contributors of the last update of a wiki page
 	function get_wiki_contributors($page_info) {
-		$query = 'select distinct(uu.`login`) from `tiki_actionlog_params` tap, `users_users` uu , `tiki_actionlog` ta where tap.`actionId`= ta.`actionId` and tap.`name`=? and uu.`userId`=tap.`value` and ta.`object`=? and ta.`objectType`=? and ta.`lastModif`=? order by `login` asc';
+		$query = 'select distinct(uu.`login`), uu.`userId` from `tiki_actionlog_params` tap, `users_users` uu , `tiki_actionlog` ta where tap.`actionId`= ta.`actionId` and tap.`name`=? and uu.`userId`=tap.`value` and ta.`object`=? and ta.`objectType`=? and ta.`lastModif`=? order by `login` asc';
 		$result = $this->query($query, array('contributor', $page_info['pageName'], 'wiki page', $page_info['lastModif'])); 
 		$ret = array();
 		while ($res = $result->fetchRow()) {
