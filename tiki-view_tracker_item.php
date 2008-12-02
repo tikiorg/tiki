@@ -1180,7 +1180,7 @@ if ($tracker_info["useAttachments"] == 'y') {
 			$data = '';
 			$fhash = '';
 			if ($prefs['t_use_db'] == 'n') {
-				$fhash = md5($name = $_FILES['userfile1']['name']);
+				$fhash = md5($_FILES['userfile1']['name'].$tikilib->now);
 				$fw = fopen($prefs['t_use_dir'] . $fhash, "wb");
 				if (!$fw) {
 					$smarty->assign('msg', tra('Cannot write to this file:'). $fhash);
