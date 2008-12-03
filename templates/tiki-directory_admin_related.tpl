@@ -35,7 +35,7 @@
   </tr>
   <tr>
     <td class="formcolor">&nbsp;</td>
-    <td class="formcolor"><input type="submit" name="add" value="{tr}Save{/tr}" />
+    <td class="formcolor"><input type="submit" name="add" value="{tr}Save{/tr}" /></td>
   </tr>
 </table>
 </form>
@@ -43,6 +43,9 @@
 <h2>{tr}Related categories{/tr}</h2>
 {* Display the list of categories (items) using pagination *}
 {* Links to edit, remove, browse the categories *}
+<form action="tiki-directory_admin_related.php">
+<input type="hidden" name="parent" value="{$parent|escape}" />
+<input type="hidden" name="oldcategId" value="{$items[user].relatedTo|escape}" />
 <table class="normal">
   <tr>
     <th>{tr}Category{/tr}</th>
@@ -50,9 +53,6 @@
 </tr>
 {cycle values="odd,even" print=false}
 {section name=user loop=$items}
-<form action="tiki-directory_admin_related.php">
-<input type="hidden" name="parent" value="{$parent|escape}" />
-<input type="hidden" name="oldcategId" value="{$items[user].relatedTo|escape}" />
 <tr>
 <td class="{cycle advance=false}">
 <select name="categId">
@@ -65,10 +65,10 @@
 <input type="submit" name="remove" value="{tr}Remove{/tr}" />
 <input type="submit" name="update" value="{tr}Update{/tr}" />
 </td>
-</form>
 </tr>
 {sectionelse}<tr><td colspan="2" class="odd">{tr}No records found.{/tr}</td></tr>
 {/section}
 </table>
+</form>
 
 {pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
