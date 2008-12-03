@@ -184,7 +184,7 @@
 </tr>
 {/section}
 </table>
-<br />
+
 {pagination_links cant=$cant step=$max offset=$offset}{/pagination_links}
 
 <h2>{tr}Import/Export Trackers Fields{/tr}</h2>

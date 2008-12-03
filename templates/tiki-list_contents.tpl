@@ -89,5 +89,4 @@
 {/section}
 </table>
 
-<br />
 {pagination_links cant=$cant step=$prefs.maxRecords offset=$offset}{/pagination_links}

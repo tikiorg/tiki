@@ -324,5 +324,4 @@
 
 </form>
 
-<br />
 {pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
