@@ -118,6 +118,12 @@ while( true )
 				$before = substr( $before, 0, $pos )
 					. "{{$plugin} $params}";
 		}
+		elseif( $syntax == 'short' && $hasBody )
+		{
+			// Need to convert the begining of the plugin to the long syntax
+			$before = substr( $before, 0, $pos )
+				. "{{$type}(" . substr( $before, $pos + strlen($plugin) + 2, -1 ) . ")}";
+		}
 
 		// Replace the content
 		if( $hasBody )
