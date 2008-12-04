@@ -57,7 +57,7 @@
 				{/section}
 			</table>
 
-			{include file=tiki-pagination.tpl}
+			{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
 		</div>
 		
 		<table>

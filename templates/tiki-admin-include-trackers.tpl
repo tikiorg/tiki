@@ -29,7 +29,7 @@
           <td colspan="2" class="button">
             <input type="submit" name="trkset" value="{tr}Change preferences{/tr}" />
           </td>
-        </tr>    
+        </tr>
       </table>
     </form>
   </div>
@@ -56,7 +56,7 @@
           <td colspan="2" class="button">
             <input type="submit" name="trkMirrorTables" value="{tr}Validate choice{/tr}" />
           </td>
-        </tr>    
+        </tr>
       </table>
     </form>
   </div>
@@ -121,9 +121,9 @@
         {/section}
       </table>
       
-    {include file=tiki-pagination.tpl}
+			{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
     </div>
-{if $attachments}    
+{if $attachments}
     <table>
       <tr>
         <td>
