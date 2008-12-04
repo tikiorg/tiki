@@ -109,17 +109,6 @@ if (isset($_REQUEST['save'])) {
 
 $where = '';
 $wheres = array();
-/*
-if(isset($_REQUEST['filter'])) {
-  if($_REQUEST['filter_name']) {
-   $wheres[]=" name='".$_REQUEST['filter_name']."'";
-  }
-  if($_REQUEST['filter_active']) {
-   $wheres[]=" isActive='".$_REQUEST['filter_active']."'";
-  }
-  $where = implode('and',$wheres);
-}
-*/
 if (isset($_REQUEST['where'])) {
 	$where = $_REQUEST['where'];
 }
@@ -148,23 +137,8 @@ $smarty->assign('find', $find);
 $smarty->assign('where', $where);
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 $items = $chartlib->list_charts($offset, $maxRecords, $sort_mode, $find, $where);
-$smarty->assign('cant', $items['cant']);
 
-$cant_pages = ceil($items["cant"] / $maxRecords);
-$smarty->assign_by_ref('cant_pages', $cant_pages);
-$smarty->assign('actual_page', 1 + ($offset / $maxRecords));
-
-if ($items["cant"] > ($offset + $maxRecords)) {
-	$smarty->assign('next_offset', $offset + $maxRecords);
-} else {
-	$smarty->assign('next_offset', -1);
-}
-
-if ($offset > 0) {
-	$smarty->assign('prev_offset', $offset - $maxRecords);
-} else {
-	$smarty->assign('prev_offset', -1);
-}
+$smarty->assign_by_ref('cant_pages', $items["cant"]);
 
 $smarty->assign_by_ref('items', $items["data"]);
 

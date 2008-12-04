@@ -29,6 +29,8 @@
   {include file='find.tpl' _sort_mode='y'}
 {/if}
 
+<span class="taskcount">{$cant}&nbsp;{tr}Tasks{/tr}</span>
+
 <div class="wiki-edithelp"  id='edithelpzone' >
 <table width="100%">
 {if $tiki_p_tasks_receive eq 'y'}

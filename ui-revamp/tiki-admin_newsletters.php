@@ -116,14 +116,7 @@ if (isset($_REQUEST["save"])) {
 		$_REQUEST["allowTxt"] = 'n';
 	}
 	$sid = $nllib->replace_newsletter($_REQUEST["nlId"], $_REQUEST["name"], $_REQUEST["description"], $_REQUEST["allowUserSub"], $_REQUEST["allowAnySub"], $_REQUEST["unsubMsg"], $_REQUEST["validateAddr"],$_REQUEST["allowTxt"],$_REQUEST["frequency"],$_REQUEST["author"]);
-	/*
-	$cat_type='newsletter';
-	$cat_objid = $sid;
-	$cat_desc = substr($_REQUEST["description"],0,200);
-	$cat_name = $_REQUEST["name"];
-	$cat_href="tiki-newsletters.php?nlId=".$cat_objid;
-	include_once("categorize.php");
-	*/
+	
 	$info["name"] = '';
 	$info["description"] = '';
 	$info["allowUserSub"] = 'y';
@@ -131,7 +124,6 @@ if (isset($_REQUEST["save"])) {
 	$info["unsubMsg"] = 'y';
 	$info["validateAddr"] = 'y';
 	$info["allowTxt"] = 'y';
-	//$info["frequency"] = 7 * 24 * 60 * 60;
 	$smarty->assign('nlId', 0);
 	$smarty->assign('info', $info);
 }
@@ -161,43 +153,10 @@ $smarty->assign('find', $find);
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 $channels = $nllib->list_newsletters($offset, $maxRecords, $sort_mode, $find, $update, array("tiki_p_admin_newsletters"));
 
-$cant_pages = ceil($channels["cant"] / $maxRecords);
-$smarty->assign_by_ref('cant_pages', $cant_pages);
-$smarty->assign('actual_page', 1 + ($offset / $maxRecords));
-
-if ($channels["cant"] > ($offset + $maxRecords)) {
-	$smarty->assign('next_offset', $offset + $maxRecords);
-} else {
-	$smarty->assign('next_offset', -1);
-}
-
-// If offset is > 0 then prev_offset
-if ($offset > 0) {
-	$smarty->assign('prev_offset', $offset - $maxRecords);
-} else {
-	$smarty->assign('prev_offset', -1);
-}
+$smarty->assign_by_ref('cant_pages', $channels["cant"]);
 
 $smarty->assign_by_ref('channels', $channels["data"]);
 
-// Fill array with possible number of questions per page
-/*
-$freqs = array();
-
-for ($i = 0; $i < 90; $i++) {
-	$aux["i"] = $i;
-
-	$aux["t"] = $i * 24 * 60 * 60;
-	$freqs[] = $aux;
-}
-
-$smarty->assign('freqs', $freqs);
-*/
-/*
-$cat_type='newsletter';
-$cat_objid = $_REQUEST["nlId"];
-include_once("categorize_list.php");
-*/
 include_once ('tiki-section_options.php');
 
 ask_ticket('admin-nl');

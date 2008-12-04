@@ -1,7 +1,4 @@
 <?php
-/*
- * Created on 24.5.2005
- */
  
 	$removed = false;
 	$fh = fopen('tiki-install.php', 'rb');
@@ -12,15 +9,15 @@ if (!file_exists("install/tiki-install.php")) {
 	echo "no such file";
 } else {
 	if (is_writable("install/tiki-install.php")) {
-		/* first try to delete the file */
+		// first try to delete the file
 		if (@unlink("install/tiki-install.php")) {
 			$removed = true;
 		}
-		/* if it fails, then try to rename it */
+		// if it fails, then try to rename it
 		else if (@rename("install/tiki-install.php","install/tiki-install_php.bak")) {
 			$removed = true;
 		}
-		/* otherwise here's an attempt to delete the content of the file */
+		// otherwise here's an attempt to delete the content of the file
 		else {
 			$data = preg_replace('/\/\/stopinstall: /', '', $data);
 			$fh = fopen('install/tiki-install.php', 'wb');

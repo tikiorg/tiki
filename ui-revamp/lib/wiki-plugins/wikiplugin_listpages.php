@@ -85,6 +85,11 @@ function wikiplugin_listpages_info() {
 				'name' => tra('For List Pages'),
 				'description' => 'y|n',
 			),
+			'sort' => array(
+				'required' => false,
+				'name' => tra('Sort'),
+				'description' => 'lastModif_desc'.tra('or').'pageName_asc',
+			),
 		),
 	);
 }

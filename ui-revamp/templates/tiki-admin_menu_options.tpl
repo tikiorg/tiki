@@ -175,7 +175,6 @@
 <br />
 <a name="options"></a>
 <br /><h2>{tr}Menu options{/tr}</h2>
-<div align="center">
 {if $channels or ($find ne '')}
   <form method="get" action="tiki-admin_menu_options.php">
     <table class="findtable">
@@ -268,28 +267,9 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
 </div>
 {/if}
 </form>
-<br />
 
-<div class="mini">
-{if $prev_offset >= 0}
-[<a class="prevnext" href="tiki-admin_menu_options.php?find={$find}&amp;menuId={$menuId}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}">{tr}Prev{/tr}</a>]&nbsp;
-{/if}
-{tr}Page{/tr}: {$actual_page}/{$cant_pages}
-{if $next_offset >= 0}
-&nbsp;[<a class="prevnext" href="tiki-admin_menu_options.php?find={$find}&amp;menuId={$menuId}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}">{tr}Next{/tr}</a>]
-{/if}
-{if $prefs.direct_pagination eq 'y'}
-<br />
-{section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
-<a class="prevnext" href="tiki-admin_menu_options.php?find={$find}&amp;menuId={$menuId}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}{if !empty($nbRecords)}&amp;nbRecords={$nbRecords}{/if}">
-{$smarty.section.foo.index_next}</a>&nbsp;
-{/section}
-{/if}
-</div>
-</div>
+{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
 
-<br />
 <a name="export"></a>
 <h2>{tr}Export CSV data{/tr}</h2>
 <form action="tiki-admin_menu_options.php" method="post">
@@ -306,9 +286,3 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
 {tr}File{/tr}: <input name="csvfile" type="file" />
 <input type="submit" name="import" value="{tr}Import{/tr}" />
 </form>
-{*
-<form action="tiki-admin_menu_options.php" method="post">
-<textarea name="menudump" cols="70" rows="42">{$menudump}</textarea><br />
-<input type="submit" name="action" value="{tr}Save{/tr}" />
-</form>
-*}

@@ -65,6 +65,11 @@
 <td class="{cycle advance=true}">
 	<a class="link" href="tiki-admin_menus.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;menuId={$channels[user].menuId}" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
 {if $tiki_p_edit_menu_option eq 'y'}	<a class="link" href="tiki-admin_menu_options.php?menuId={$channels[user].menuId}" title="{tr}Configure/Options{/tr}">{icon _id='table' alt='{tr}Configure/Options{/tr}'}</a>{/if}
+{if $channels[user].individual eq 'y'}<a title="{tr}Active Permissions{/tr}" class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=menus&amp;permType=menus&amp;objectId={$channels[user].menuId}">
+{icon _id='key_active' alt="{tr}Active Permissions{/tr}"}</a>{else}
+<a title="{tr}Permissions{/tr}" class="link" href="tiki-objectpermissions.php?objectName={$channels[user].name|escape:"url"}&amp;objectType=menus&amp;permType=menus&amp;objectId={$channels[user].menuId}">
+{icon _id='key' alt="{tr}Permissions{/tr}"}</a>{/if}
+&nbsp;
     <a class="link" href="tiki-admin_menus.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].menuId}" title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
 </td>
 </tr>
@@ -72,20 +77,4 @@
 <tr><td class="odd" colspan="5">No records found.</td></tr>
 {/section}
 </table>
-<div class="mini">
-{if $prev_offset >= 0}
-[<a class="prevnext" href="tiki-admin_menus.php?find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}Prev{/tr}</a>][
-{/if}
-{tr}Page{/tr}: {$actual_page}/{$cant_pages}
-{if $next_offset >= 0}
-&nbsp;[<a class="prevnext" href="tiki-admin_menus.php?find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}Next{/tr}</a>]
-{/if}
-{if $prefs.direct_pagination eq 'y'}
-<br />
-{section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
-<a class="prevnext" href="tiki-admin_menus.php?find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
-{$smarty.section.foo.index_next}</a>
-{/section}
-{/if}
-</div>
+{pagination_links cant=$cant step=$maxRecords offset=$offset }{/pagination_links} 

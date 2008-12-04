@@ -45,6 +45,7 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 //		<input type="hidden" name="wysiwyg" value="y" />
 	} else {
 		if ( $params['_quicktags'] == 'y' ) {
+			global $quicktagslib;
 			include_once ('lib/quicktags/quicktagslib.php');
 			$quicktags = $quicktagslib->list_quicktags(0, -1, 'taglabel_desc', '', $params['_section']);
 			$smarty->assign_by_ref('quicktags', $quicktags["data"]);

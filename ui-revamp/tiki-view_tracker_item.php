@@ -736,7 +736,7 @@ if ($tiki_p_modify_tracker_items == 'y' || $special) {
 
 			$smarty->assign('input_err', '0'); // no warning to display
 			if ($prefs['feature_groupalert'] == 'y') {
-				$groupalertlib->Notify($_REQUEST['listtoalert'],"tiki-view_tracker_item.php?itemId=".$_REQUEST["itemId"]);
+				$groupalertlib->Notify(isset($_REQUEST['listtoalert'])? $_REQUEST['listtoalert']:'',"tiki-view_tracker_item.php?itemId=".$_REQUEST["itemId"]);
 			}
 			check_ticket('view-trackers-items');
 			if (!isset($_REQUEST["edstatus"]) or ($tracker_info["showStatus"] != 'y' and $tiki_p_admin_trackers != 'y')) {
@@ -1180,7 +1180,7 @@ if ($tracker_info["useAttachments"] == 'y') {
 			$data = '';
 			$fhash = '';
 			if ($prefs['t_use_db'] == 'n') {
-				$fhash = md5($name = $_FILES['userfile1']['name']);
+				$fhash = md5($_FILES['userfile1']['name'].$tikilib->now);
 				$fw = fopen($prefs['t_use_dir'] . $fhash, "wb");
 				if (!$fw) {
 					$smarty->assign('msg', tra('Cannot write to this file:'). $fhash);

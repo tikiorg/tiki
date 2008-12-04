@@ -224,7 +224,7 @@ if ($_REQUEST["forumId"]) {
 $smarty->assign('forumId', $_REQUEST["forumId"]);
 
 foreach ($info as $key => $value) {
-	if ($key == "section") /* conflict with section management */
+	if ($key == "section") // conflict with section management
 		$smarty->assign("forumSection", $value);
 	else
 		$smarty->assign($key, $value);

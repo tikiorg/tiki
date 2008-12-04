@@ -32,7 +32,6 @@
 {if $findwhat!=""}
 {tr}Found{/tr} "<b>{$findwhat}</b>" {tr}in{/tr} {$cant_records} {tr}LastChanges{/tr} 
 {/if}
-<div align="left">
 <table class="normal">
 <tr>
 <th>{self_link _sort_arg='sort_mode' _sort_field='lastModif'}{tr}Date{/tr}{/self_link}</th>
@@ -79,6 +78,5 @@
 </td></tr>
 {/section}
 </table>
-<br />
+
 {pagination_links cant=$cant_records step=$prefs.maxRecords offset=$offset}{/pagination_links}
-</div>

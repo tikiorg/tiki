@@ -158,28 +158,13 @@ if (isset($_REQUEST['nbRecords'])) {
 	$nbRecords = $maxRecords;
 }
 
-
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 $allchannels = $menulib->list_menu_options($_REQUEST["menuId"], 0, -1, $sort_mode, $find);
 $allchannels = $menulib->sort_menu_options($allchannels);
 $channels = $menulib->list_menu_options($_REQUEST["menuId"], $offset, $nbRecords, $sort_mode, $find, true);
 $channels = $menulib->describe_menu_types($channels);
-$cant_pages = ceil($channels["cant"] / $nbRecords);
-$smarty->assign_by_ref('cant_pages', $cant_pages);
-$smarty->assign('actual_page', 1 + ($offset / $nbRecords));
 
-if ($channels["cant"] > ($offset + $nbRecords)) {
-	$smarty->assign('next_offset', $offset + $nbRecords);
-} else {
-	$smarty->assign('next_offset', -1);
-}
-
-// If offset is > 0 then prev_offset
-if ($offset > 0) {
-	$smarty->assign('prev_offset', $offset - $nbRecords);
-} else {
-	$smarty->assign('prev_offset', -1);
-}
+$smarty->assign_by_ref('cant_pages', $channels["cant"]);
 
 $smarty->assign_by_ref('channels', $channels["data"]);
 $smarty->assign_by_ref('allchannels', $allchannels["data"]);

@@ -139,16 +139,7 @@
       {/section}
       </table>
       
-        <div class="mini">
-        {if $prev_offset >= 0}
-          [<a class="prevnext" href="tiki-admin_categories.php?find={$find}&amp;parentId={$parentId}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}#objects">{tr}Prev{/tr}</a>]&nbsp;
-        {/if}
-        {tr}Page{/tr}: {$actual_page}/{if $cant_pages eq 0}1{else}{$cant_pages}{/if}
-        {if $next_offset >= 0}
-          &nbsp;[<a class="prevnext" href="tiki-admin_categories.php?find={$find}&amp;parentId={$parentId}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}#objects">{tr}Next{/tr}</a>]
-        {/if}
-        </div>
-
+			{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset }{/pagination_links}
       
       </div>
 

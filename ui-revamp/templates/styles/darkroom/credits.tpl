@@ -1,1 +1,1 @@
- | {tr}Theme{/tr}: <a href="http://zukakakina.com" title="Design by Gary Cunningham-Lee aka chibaguy">Darkroom</a>
+ | {tr}Theme{/tr}: <a href="http://themes.tikiwiki.org">Darkroom</a>

@@ -33,7 +33,7 @@
 	{/remarksbox}
 	{/if} 
 	<textarea id="{$textarea_id|default:editwiki}" class="{$textarea_class|default:wikiedit}" name="{$textarea_name|default:edit}"{$textarea_attributes}>{$smarty.capture.autosave}</textarea>
-	{if $prefs.feature_ajax eq 'y'}
+	{if $prefs.feature_ajax eq 'y' && $prefs.feature_ajax_autosave eq 'y'}
 		<!-- autosave -->
 		<script type='text/javascript'>
 		<!--//--><![CDATA[//><!--

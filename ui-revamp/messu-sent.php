@@ -129,21 +129,7 @@ $smarty->assign('find', $find);
 $items = $messulib->list_user_messages($user, $offset, $maxRecords, $sort_mode,
 	$find, $_REQUEST["flag"], $_REQUEST["flagval"], $_REQUEST['priority'], 'sent');
 
-$cant_pages = ceil($items["cant"] / $maxRecords);
-$smarty->assign_by_ref('cant_pages', $cant_pages);
-$smarty->assign('actual_page', 1 + ($offset / $maxRecords));
-
-if ($items["cant"] > ($offset + $maxRecords)) {
-	$smarty->assign('next_offset', $offset + $maxRecords);
-} else {
-	$smarty->assign('next_offset', -1);
-}
-
-if ($offset > 0) {
-	$smarty->assign('prev_offset', $offset - $maxRecords);
-} else {
-	$smarty->assign('prev_offset', -1);
-}
+$smarty->assign_by_ref('cant_pages', $items["cant"]);
 
 $smarty->assign_by_ref('items', $items["data"]);
 

@@ -150,22 +150,4 @@
 </table>
 </form>
 
-<div class="mini">
-<div align="center">
-{if $prev_offset >= 0}
-[<a class="prevnext" href="tiki-admin_banning.php?offset={$prev_offset}&amp;find={$find}">{tr}Prev{/tr}</a>]
-{/if}
-{tr}Page{/tr}: {$actual_page}/{$cant_pages}
-{if $next_offset >= 0}
-[<a class="prevnext" href="tiki-admin_banning.php?offset={$next_offset}&amp;find={$find}">{tr}Next{/tr}</a>]
-{/if}
-{if $prefs.direct_pagination eq 'y'}
-<br />
-{section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
-<a class="prevnext" href="tiki-admin_banning.php?offset={$selector_offset}&amp;find={$find}">
-{$smarty.section.foo.index_next}</a>
-{/section}
-{/if}
-</div>
-</div>
+{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}

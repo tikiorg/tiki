@@ -293,36 +293,6 @@ if ($_REQUEST["parentId"]) {
 $smarty->assign('path', $path);
 $smarty->assign('father', $father);
 $smarty->assign('categ_name', $categ_name);
-/*
-// ---------------------------------------------------
-// Convert $childrens
-//$debugger->var_dump('$children');
-$ctall = $categlib->get_all_categories_ext();
-$tree_nodes = array();
-
-foreach ($ctall as $c) {
-	$tree_nodes[] = array(
-		"id" => $c["categId"],
-		"parent" => $c["parentId"],
-		"data" => '<a class="catname" href="tiki-admin_categories.php?parentId=' . $c["categId"] . '" title="' . tra(
-			'Child categories'). ':' . $c["children"] . ' ' . tra(
-			'Objects in category'). ':' . $c["objects"] . '">' . $c["name"] . '</a>',
-		"edit" =>
-			'<a class="link" href="tiki-admin_categories.php?parentId=' . $c["parentId"] . '&amp;categId=' . $c["categId"] . '#editcreate" title="' . tra(
-			'edit'). '"><img border="0" src="img/icons/edit.gif" /></a>',
-		"remove" =>
-			'<a class="link" href="tiki-admin_categories.php?parentId=' . $c["parentId"] . '&amp;removeCat=' . $c["categId"] . '" title="' . tra(
-			'remove'). '"><img  border="0" src="img/icons2/delete.gif" /></a>',
-		"children" => $c["children"],
-		"objects" => $c["objects"]
-	);
-}
-
-//$debugger->var_dump('$tree_nodes');
-$tm = new CatAdminTreeMaker("admcat");
-$res = $tm->make_tree($_REQUEST["parentId"], $tree_nodes);
-$smarty->assign('tree', $res);
-*/
 // ---------------------------------------------------
 function array_csort($marray, $column) {
 	if (is_array($marray)) {
@@ -349,8 +319,6 @@ if (is_array($path)) {
 	}
 }
 $smarty->assign('catree', $catree['data']);
-
-// var_dump($catree); 
 
 // ---------------------------------------------------
 
@@ -391,26 +359,8 @@ $smarty->assign_by_ref('find', $find);
 $objects = $categlib->list_category_objects($_REQUEST["parentId"], $offset, $maxRecords, $sort_mode, '', $find, false);
 $smarty->assign_by_ref('objects', $objects["data"]);
 
-$cant_pages = ceil($objects["cant"] / $maxRecords);
-$smarty->assign_by_ref('cant_pages', $cant_pages);
-$smarty->assign('actual_page', 1 + ($offset / $maxRecords));
+$smarty->assign_by_ref('cant_pages', $objects["cant"]);
 
-if ($objects["cant"] > ($offset + $maxRecords)) {
-	$smarty->assign('next_offset', $offset + $maxRecords);
-} else {
-	$smarty->assign('next_offset', -1);
-}
-
-// If offset is > 0 then prev_offset
-if ($offset > 0) {
-	$smarty->assign('prev_offset', $offset - $maxRecords);
-} else {
-	$smarty->assign('prev_offset', -1);
-}
-/*
-$categories = $categlib->get_all_categories();
-$smarty->assign_by_ref('categories', $categories);
-*/
 $galleries = $tikilib->list_galleries(0, -1, 'name_desc', 'admin', $find_objects);
 $smarty->assign_by_ref('galleries', $galleries["data"]);
 

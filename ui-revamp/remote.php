@@ -7,12 +7,6 @@
 
 $version = "0.2";
 
-/*
-// if you wisely moved that script ..
-$_SERVER['TIKI_VIRTUAL'] = 'myvirtual';
-chdir('/path/to/tiki');
-*/
-
 include 'tiki-setup.php';
 require_once("XML/Server.php");
 

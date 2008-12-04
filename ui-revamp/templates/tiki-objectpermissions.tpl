@@ -3,7 +3,7 @@
 {title help="Permission"}{tr}Assign permissions to {/tr}{tr}{$objectType|escape}{/tr}: {$objectName|escape}{/title}
 
 <div class="navbar">
-  <a href="{$referer}">{tr}Back{/tr}</a>
+  {button href="$referer" _text="{tr}Back{/tr}"}
 </div>
 
 {if $prefs.feature_tabs eq 'y'}

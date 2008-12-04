@@ -294,6 +294,7 @@ for a tracker and they must be valid in SQL{/tr}</em>
 <td><input type="text" name="showPopup" value="{$showPopup|escape}" /></td>
 </tr>
 
+{if $prefs.feature_groupalert eq 'y'}
 <tr class="formcolor">
 <td>{tr}Group of users alerted when tracker is modified{/tr}</td>
 <td>
@@ -310,6 +311,7 @@ for a tracker and they must be valid in SQL{/tr}</em>
 <td>{tr}Allows to select each user for small groups{/tr}</td>
 <td><input type="checkbox" name="showeachuser" {if $showeachuser eq 'y'}checked="checked"{/if} /></td>
 </tr>
+{/if}
 
 <tr class="formcolor"><td></td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>

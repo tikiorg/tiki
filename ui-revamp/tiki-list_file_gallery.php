@@ -734,7 +734,7 @@ if (isset($_GET['slideshow'])) {
   $smarty->assign('mid','tiki-list_file_gallery.tpl');
 }
 
-/* Browse view */
+// Browse view
 
 // Find the lenght of the longest file name
 $smarty->assign('view', isset($_REQUEST['view']) ? $_REQUEST['view'] : 'list' );
@@ -752,30 +752,6 @@ if ( $prefs['feature_file_galleries_comments'] == 'y' ) {
 	$comments_object_var = 'galleryId';
 	include_once ('comments.php');
 }
-
-/*
-
-if ( $tiki_p_admin_file_galleries == 'y' || $tiki_p_assign_perm_file_gallery == 'y' ) {
-	if ( ! isset($perms) ) {
-		$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'file galleries');
-	}
-	$smarty->assign_by_ref('perms', $perms['data']);
-	$groups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');
-	$smarty->assign_by_ref('groups', $groups['data']);
-}
-
-$options_sortorder = array(
-	tra('Creation Date') => 'created',
-	tra('Name') => 'name',
-	tra('Filename') => 'filename',
-	tra('Size') => 'filesize',
-	tra('Owner') => 'user',
-	tra('Hits') => 'hits',
-	tra('ID') => 'fileId'
-);
-$smarty->assign_by_ref('options_sortorder', $options_sortorder);
-
-*/
 
 $options_sortorder = array(tra('Creation Date')=>'created', tra('Name')=>'name', tra('Last modification date')=>'lastModif', tra('Hits')=>'hits', tra('Owner') => 'user', tra('Description') => 'description', tra('ID') => 'id');
 $smarty->assign_by_ref('options_sortorder', $options_sortorder);

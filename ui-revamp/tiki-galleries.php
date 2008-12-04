@@ -434,7 +434,6 @@ for ($i = 0; $i < $temp_max; $i++) {
 
 	// check if top gallery (has no parents)
 	$info = $imagegallib->get_gallery_info($galleries["data"][$i]["galleryId"]);
-	/*$subgals = $imagegallib->get_subgalleries($top_offset = 1, $maxImages, $sort_mode, '', $galleries["data"][$i]["galleryId"]);*/
 	if ($info['parentgallery'] == -1) {
 		$galleries["data"][$i]["topgal"] = 'y';
 	} else {

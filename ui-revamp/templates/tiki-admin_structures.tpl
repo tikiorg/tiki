@@ -88,10 +88,8 @@
 </tr>
 {/section}
 </table>
-<br />
-<div style="text-align: center">
+
 {pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
-</div>
 
 {if $tiki_p_edit_structures == 'y'}
 <h2>{tr}Create new structure{/tr}</h2>

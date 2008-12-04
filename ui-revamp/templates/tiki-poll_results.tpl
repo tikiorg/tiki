@@ -8,7 +8,6 @@
 </div>
 
 {if empty($smarty.request.pollId) and !isset($list_votes)}
-<div align="center">
 <form method="post" action="{$smarty.server.PHP_SELF}">
 {if !empty($offset)}<input type="hidden" name="offset" value="{$offset}" />{/if}
 {if !empty($scoresort_desc)}<input type="hidden" name="scoresort_desc" value="{$scoresort_desc}" />{/if}
@@ -90,24 +89,9 @@
 <tr><td colspan="2">{tr}No records found{/tr}</td></tr>
 {/section}
 </table>
-<div class="mini">
-{if $prev_offset >= 0}
-[<a class="prevnext" href="tiki-poll_results.php?list=y&amp;pollId={$poll_info.pollId}&amp;find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}Prev{/tr}</a>]&nbsp;
-{/if}
-{tr}Page{/tr}: {$actual_page}/{$cant_pages}
-{if $next_offset >= 0}
-&nbsp;[<a class="prevnext" href="tiki-poll_results.php?list=y&amp;pollId={$poll_info.pollId}&amp;find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}Next{/tr}</a>]
-{/if}
-{if $prefs.direct_pagination eq 'y'}
-<br />
-{section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
-<a class="prevnext" href="tiki-poll_results.php?list=y&amp;pollId={$poll_info.pollId}&amp;find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
-{$smarty.section.foo.index_next}</a>&nbsp;
-{/section}
-{/if}
 
-</div>
+{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset }{/pagination_links}
+
 {/if}
 
 {if $prefs.feature_poll_comments == 'y'

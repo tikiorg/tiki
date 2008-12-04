@@ -38,6 +38,9 @@ class groupAlertLib extends TikiLib {
 
 	function Notify ( $ListUserToAlert,$URI ) {
 		global $tikilib,$userlib ;
+		if (!is_array($ListUserToAlert)) {
+			return;
+		}
 		$project=$tikilib->get_preference ("siteTitle");
 		$foo = parse_url($_SERVER["REQUEST_URI"]);
 		$machine = $tikilib->httpPrefix() . dirname( $foo["path"] );

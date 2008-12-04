@@ -64,25 +64,9 @@ $smarty->assign('find', $find);
 // Get a list of last changes to the Wiki database
 $listpages = $polllib->list_all_polls($offset, $maxRecords, $sort_mode, $find);
 // If there're more records then assign next_offset
-$cant_pages = ceil($listpages["cant"] / $maxRecords);
-$smarty->assign_by_ref('cant_pages', $cant_pages);
-$smarty->assign('actual_page', 1 + ($offset / $maxRecords));
-
-if ($listpages["cant"] > ($offset + $maxRecords)) {
-	$smarty->assign('next_offset', $offset + $maxRecords);
-} else {
-	$smarty->assign('next_offset', -1);
-}
-
-// If offset is > 0 then prev_offset
-if ($offset > 0) {
-	$smarty->assign('prev_offset', $offset - $maxRecords);
-} else {
-	$smarty->assign('prev_offset', -1);
-}
+$smarty->assign_by_ref('cant_pages', $listpages["cant"]);
 
 $smarty->assign_by_ref('listpages', $listpages["data"]);
-//print_r($listpages["data"]);
 
 // Display the template
 $smarty->assign('mid', 'tiki-old_polls.tpl');
