@@ -988,32 +988,31 @@ class ImageGalsLib extends TikiLib {
 			$findesc = '%' . $find . '%';
 
 			$mid = " and (`name` like ? or `description` like ?)";
-			$bindvars=array('o',$findesc,$findesc);
+			$bindvars=array($findesc,$findesc);
 		} else {
 			$mid = "";
-			$bindvars=array('o');
+			$bindvars=array();
 		}
 
-		$midcant = "";
-		$cantvars=array();
 		if ($galleryId != -1 && is_numeric($galleryId)) {
 			$mid .= " and i.`galleryId`=? ";
 			$bindvars[]=(int) $galleryId;
-			$midcant = "where `galleryId`=? ";
-			$cantvars[]=(int) $galleryId;
 		} else if ($galleryId == -1) {//don't show system gallery
 			$mid .= 'and i.`galleryId`!=? ';
 			$bindvars[] = 0;
 		}
 
+		$query_cant = "select count(*) from `tiki_images` i  where 1 $mid";
+		$cant = $this->getOne($query_cant, $bindvars);
 		$query = "select i.`path` ,i.`imageId`,i.`name`,i.`description`,i.`created`,
                 d.`filename`,d.`filesize`,d.`xsize`,d.`ysize`,
                 i.`user`,i.`hits`
                 from `tiki_images` i , `tiki_images_data` d
                  where i.`imageId`=d.`imageId`
-                 and d.`type`=?
                 $mid
+                 and d.`type`=?
                 order by ".$this->convert_sortmode($sort_mode);
+		$bindvars[] = 'o';
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$ret = array();
 
@@ -1023,8 +1022,6 @@ class ImageGalsLib extends TikiLib {
 
 		$retval = array();
 		$retval["data"] = $ret;
-		$query_cant = "select count(*) from `tiki_images` $midcant";
-		$cant = $this->getOne($query_cant,$cantvars);
 		$retval["cant"] = $cant;
 		return $retval;
 	}

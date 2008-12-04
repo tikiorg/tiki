@@ -175,17 +175,7 @@
 
 {pagination_links cant=$cant step=$maxImages offset=$offset}{/pagination_links}
 
-<table class="findtable">
-<tr><td class="findtable">{tr}Find{/tr}
-   <form method="get" action="tiki-browse_gallery.php">
-     <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}Find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-     <input type="hidden" name="galleryId" value="{$galleryId}" />
-   </form>
-   </td>
-</tr>
-</table>
+{include file="find.tpl"}
 
 {if $prefs.feature_image_galleries_comments == 'y'
   && (($tiki_p_read_comments == 'y'
