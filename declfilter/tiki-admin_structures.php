@@ -255,7 +255,7 @@ $smarty->assign('find', $find);
 
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 
-/* default $maxRecords defined in tiki-setup.php */
+// default $maxRecords defined in tiki-setup.php
 if (isset($_REQUEST['maxRecords'])) {
 	$maxRecords = $_REQUEST['maxRecords'];
 }

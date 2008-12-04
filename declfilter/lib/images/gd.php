@@ -3,17 +3,17 @@
 require_once('lib/images/abstract.php');
 
 class Image extends ImageAbstract {
-  var $gdinfo;
-  var $gdversion;
-  var $havegd = false;
+	var $gdinfo;
+	var $gdversion;
+	var $havegd = false;
 
-  function __construct($image, $isfile = false) {
+	function __construct($image, $isfile = false) {
 
-    // Which GD Version do we have?
-    $exts = get_loaded_extensions();
-    if ( in_array('gd', $exts) && ! empty($image) ) {
-      $this->havegd = true;
-      $this->get_gdinfo();
+		// Which GD Version do we have?
+		$exts = get_loaded_extensions();
+		if ( in_array('gd', $exts) && ! empty($image) ) {
+			$this->havegd = true;
+			$this->get_gdinfo();
 			if ($isfile) {
 				$this->filename = $image;
 				parent::__construct(NULL, false);
@@ -22,11 +22,11 @@ class Image extends ImageAbstract {
 				parent::__construct($image, false);
 				$this->loaded = false;
 			}
-    } else {
-      $this->havegd = false;
-      $this->gdinfo = array();
-    }
-  }
+		} else {
+			$this->havegd = false;
+			$this->gdinfo = array();
+		}
+	}
 
 	function _load_data() {
 		if (!$this->loaded && $this->havegd) {
@@ -51,143 +51,157 @@ class Image extends ImageAbstract {
 		}
 	}
 
-  function Image($image, $isfile = false) {
-    Image::__construct($image, $isfile);
-  }
+	function Image($image, $isfile = false) {
+		Image::__construct($image, $isfile);
+	}
 
-  function _resize($x, $y) {
-    $t = imagecreatetruecolor($x, $y);
-    imagecopyresampled($t, $this->data, 0, 0, 0, 0, $x, $y, $this->get_width(), $this->get_height());
-    $this->data = $t;
-    unset($t);
-  }
+	function _resize($x, $y) {
+		if ($this->data) {
+			$t = imagecreatetruecolor($x, $y);
+			imagecopyresampled($t, $this->data, 0, 0, 0, 0, $x, $y, $this->get_width(), $this->get_height());
+			$this->data = $t;
+			unset($t);
+		}
+	}
 
-  function resizethumb() {
-    if ( $this->thumb !== null ) {
+	function resizethumb() {
+		if ( $this->thumb !== null ) {
 			$this->data = imagecreatefromstring($this->thumb);
 			$this->loaded = true;
 		} else {
 			$this->_load_data();
 		}
-    return parent::resizethumb();
-  }
+		return parent::resizethumb();
+	}
 
-  function display() {
+	function display() {
 
 		$this->_load_data();
-    ob_end_flush();
-    ob_start();
-    switch ( strtolower($this->format) ) {
-      case 'jpeg':
-      case 'jpg':
-        imagejpeg($this->data);
-        break;
-      case 'gif':
-        imagegif($this->data);
-        break;
-      case 'png':
-        imagepng($this->data);
-        break;
-      case 'wbmp':
-        imagewbmp($this->data);
-        break;
-      default:
-        ob_end_clean();
-        return NULL;
-    }
-    $image = ob_get_contents();
-    ob_end_clean();
+		if ($this->data) {
+			ob_end_flush();
+			ob_start();
+			switch ( strtolower($this->format) ) {
+				case 'jpeg':
+				case 'jpg':
+					imagejpeg($this->data);
+					break;
+				case 'gif':
+					imagegif($this->data);
+					break;
+				case 'png':
+					imagepng($this->data);
+					break;
+				case 'wbmp':
+					imagewbmp($this->data);
+					break;
+				default:
+					ob_end_clean();
+					return NULL;
+			}
+			$image = ob_get_contents();
+			ob_end_clean();
 
-    return $image;
-  }
+			return $image;
+		} else {
+			return NULL;
+		}
+	}
 
-  function rotate($angle) {
+	function rotate($angle) {
 		$this->_load_data();
-    $this->data = imagerotate($this->data, $angle, 0);
-    return true;
-  }
+		if ($this->data) {
+			$this->data = imagerotate($this->data, $angle, 0);
+			return true;
+		} else {
+			return false;
+		}
+	}
 
-  function get_gdinfo() {
-    $gdinfo = array();
-    $gdversion = '';
+	function get_gdinfo() {
+		$gdinfo = array();
+		$gdversion = '';
 
-    if ( function_exists("gd_info") ) {
-      $gdinfo = gd_info();
-      preg_match("/[0-9]+\.[0-9]+/", $gdinfo["GD Version"], $gdversiontmp);
-      $gdversion = $gdversiontmp[0];
-    } else {
-      //next try
-      ob_start();
-      phpinfo (INFO_MODULES);
-      $gdversion = preg_match('/GD Version.*2.0/', ob_get_contents()) ? '2.0' : '1.0';
-      $gdinfo["JPG Support"] = preg_match('/JPG Support.*enabled/', ob_get_contents());
-      $gdinfo["PNG Support"] = preg_match('/PNG Support.*enabled/', ob_get_contents());
-      $gdinfo["GIF Create Support"] = preg_match('/GIF Create Support.*enabled/', ob_get_contents());
-      $gdinfo["WBMP Support"] = preg_match('/WBMP Support.*enabled/', ob_get_contents());
-      $gdinfo["XBM Support"] = preg_match('/XBM Support.*enabled/', ob_get_contents());
-      ob_end_clean();
-    }
-   
-    if ( isset($this) ) {
-      $this->gdinfo = $gdinfo;
-      $this->gdversion = $gdversion;
-    } 
-    return $gdinfo;
-  }
+		if ( function_exists("gd_info") ) {
+			$gdinfo = gd_info();
+			preg_match("/[0-9]+\.[0-9]+/", $gdinfo["GD Version"], $gdversiontmp);
+			$gdversion = $gdversiontmp[0];
+		} else {
+			//next try
+			ob_start();
+			phpinfo (INFO_MODULES);
+			$gdversion = preg_match('/GD Version.*2.0/', ob_get_contents()) ? '2.0' : '1.0';
+			$gdinfo["JPG Support"] = preg_match('/JPG Support.*enabled/', ob_get_contents());
+			$gdinfo["PNG Support"] = preg_match('/PNG Support.*enabled/', ob_get_contents());
+			$gdinfo["GIF Create Support"] = preg_match('/GIF Create Support.*enabled/', ob_get_contents());
+			$gdinfo["WBMP Support"] = preg_match('/WBMP Support.*enabled/', ob_get_contents());
+			$gdinfo["XBM Support"] = preg_match('/XBM Support.*enabled/', ob_get_contents());
+			ob_end_clean();
+		}
 
-  // This method do not need to be called on an instance
-  function is_supported($format) {
+		if ( isset($this) ) {
+			$this->gdinfo = $gdinfo;
+			$this->gdversion = $gdversion;
+		} 
+		return $gdinfo;
+	}
 
-    if ( ! function_exists('imagetypes') ) {
-      $gdinfo = isset($this) ? $this->gdinfo : Image::get_gdinfo();
-    }
+	// This method do not need to be called on an instance
+	function is_supported($format) {
 
-    switch ( strtolower($format) ) {
-      case 'jpeg':
-      case 'jpg':
-        if ( isset($gdinfo) && $gdinfo['JPG Support'] ) {
-          return true;
-        } else {
-          return ( imagetypes() & IMG_JPG );
-        }
-      case 'png':
-        if ( isset($gdinfo) && $gdinfo['PNG Support'] ) {
-          return true;
-        } else {
-          return ( imagetypes() & IMG_PNG );
-        }
-      case 'gif':
-        if ( isset($gdinfo) && $gdinfo['GIF Create Support'] ) {
-          return true;
-        } else {
-          return ( imagetypes() & IMG_GIF );
-        }
-      case 'wbmp':
-        if ( isset($gdinfo) && $gdinfo['WBMP Support']) {
-          return true;
-        } else {
-          return ( imagetypes() & IMG_WBMP );
-        }
-      case 'xpm':
-        if ( isset($gdinfo) && $gdinfo['XPM Support']) {
-          return true;
-        } else {
-          return ( imagetypes() & IMG_XPM );
-        }
-    }
+		if ( ! function_exists('imagetypes') ) {
+			$gdinfo = isset($this) ? $this->gdinfo : Image::get_gdinfo();
+		}
 
-    return false;
-  }
+		switch ( strtolower($format) ) {
+			case 'jpeg':
+			case 'jpg':
+				if ( isset($gdinfo) && $gdinfo['JPG Support'] ) {
+					return true;
+				} else {
+					return ( imagetypes() & IMG_JPG );
+				}
+			case 'png':
+				if ( isset($gdinfo) && $gdinfo['PNG Support'] ) {
+					return true;
+				} else {
+					return ( imagetypes() & IMG_PNG );
+				}
+			case 'gif':
+				if ( isset($gdinfo) && $gdinfo['GIF Create Support'] ) {
+					return true;
+				} else {
+					return ( imagetypes() & IMG_GIF );
+				}
+			case 'wbmp':
+				if ( isset($gdinfo) && $gdinfo['WBMP Support']) {
+					return true;
+				} else {
+					return ( imagetypes() & IMG_WBMP );
+				}
+			case 'xpm':
+				if ( isset($gdinfo) && $gdinfo['XPM Support']) {
+					return true;
+				} else {
+					return ( imagetypes() & IMG_XPM );
+				}
+		}
 
-  function _get_height() {
+		return false;
+	}
+
+	function _get_height() {
 		$this->_load_data();
-    return imagesy($this->data);
-  }
+		if ($this->data) {
+			return imagesy($this->data);
+		}
+	}
 
-  function _get_width() {
+	function _get_width() {
 		$this->_load_data();
-    return imagesx($this->data);
-  }
+		if ($this->data) {
+			return imagesx($this->data);
+		}
+	}
 
 }
 

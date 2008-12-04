@@ -162,22 +162,7 @@ $channels = $quizlib->list_quiz_questions($_REQUEST["quizId"], $offset, $maxReco
 // $questions = $quizlib->list_all_questions(0, -1, 'position_desc', '');
 // $smarty->assign('questions', $questions["data"]);
 
-$cant_pages = ceil($channels["cant"] / $maxRecords);
-$smarty->assign_by_ref('cant_pages', $cant_pages);
-$smarty->assign('actual_page', 1 + ($offset / $maxRecords));
-
-if ($channels["cant"] > ($offset + $maxRecords)) {
-	$smarty->assign('next_offset', $offset + $maxRecords);
-} else {
-	$smarty->assign('next_offset', -1);
-}
-
-// If offset is > 0 then prev_offset
-if ($offset > 0) {
-	$smarty->assign('prev_offset', $offset - $maxRecords);
-} else {
-	$smarty->assign('prev_offset', -1);
-}
+$smarty->assign_by_ref('cant_pages', $channels["cant"]);
 
 $smarty->assign_by_ref('channels', $channels["data"]);
 

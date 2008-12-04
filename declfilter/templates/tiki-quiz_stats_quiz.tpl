@@ -14,7 +14,6 @@
 <!-- end link buttons -->
 
 <h2>{tr}Quiz stats{/tr}</h2>
-<div align="center">
 
 <!-- begin table for stats data -->
 
@@ -62,26 +61,7 @@ Set the names of the table headings to reflect the names of the db
 {/section}
 </table>
 
-<!-- this is the part for viewing the next 10 results -->
-<div class="mini">
-{if $prev_offset >= 0}
-[<a class="prevnext" href="tiki-quiz_stats_quiz.php?quizId={$quizId}&amp;find={$find}&amp;offset={$prev_offset}&amp;sort_mode={$sort_mode}">{tr}Prev{/tr}</a>]&nbsp;
-{/if}
-{tr}Page{/tr}: {$actual_page}/{$cant_pages}
-{if $next_offset >= 0}
-&nbsp;[<a class="prevnext" href="tiki-quiz_stats_quiz.php?quizId={$quizId}&amp;find={$find}&amp;offset={$next_offset}&amp;sort_mode={$sort_mode}">{tr}Next{/tr}</a>]
-{/if}
-{if $prefs.direct_pagination eq 'y'}
-<br />
-{section loop=$cant_pages name=foo}
-{assign var=selector_offset value=$smarty.section.foo.index|times:$prefs.maxRecords}
-<!-- really need to find how/ where to set the maxRecords to user control -->
-<a class="prevnext" href="tiki-quiz_stats_quiz.php?quizId={$quizId}&amp;find={$find}&amp;offset={$selector_offset}&amp;sort_mode={$sort_mode}">
-{$smarty.section.foo.index_next}</a>&nbsp;
-{/section}
-{/if}
-</div>
-</div>
+{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
 
 <!-- begin second table -->
 <h2>{tr}Stats for this quiz Questions {/tr}</h2>

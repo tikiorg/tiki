@@ -30,7 +30,7 @@ function wikiplugin_userlist_info() {
 			'sort' => array(
 				'required' => false,
 				'name' => tra('Sort Order'),
-				'desctiption' => 'asc|desc',
+				'description' => 'asc|desc',
 			),
 			'layout' => array(
 				'required' => false,

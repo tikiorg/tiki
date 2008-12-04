@@ -129,22 +129,10 @@ if ($categ_info['allowSites'] == 'y') {
 	$smarty->assign_by_ref('offset', $offset);
 	$smarty->assign_by_ref('sort_mode', $sort_mode);
 	$smarty->assign('find', $find);
+
 	$items = $dirlib->dir_list_sites($_REQUEST['parent'], $offset, $prefs['directory_links_per_page'], $sort_mode, '', 'y');
-	$cant_pages = ceil($items["cant"] / $prefs['directory_links_per_page']);
-	$smarty->assign_by_ref('cant_pages', $cant_pages);
-	$smarty->assign('actual_page', 1 + ($offset / $prefs['directory_links_per_page']));
 
-	if ($items["cant"] > ($offset + $prefs['directory_links_per_page'])) {
-		$smarty->assign('next_offset', $offset + $prefs['directory_links_per_page']);
-	} else {
-		$smarty->assign('next_offset', -1);
-	}
-
-	if ($offset > 0) {
-		$smarty->assign('prev_offset', $offset - $prefs['directory_links_per_page']);
-	} else {
-		$smarty->assign('prev_offset', -1);
-	}
+	$smarty->assign_by_ref('cant_pages', $items["cant"]);
 
 	$smarty->assign_by_ref('items', $items["data"]);
 }

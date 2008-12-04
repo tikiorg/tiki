@@ -111,7 +111,6 @@
 <td class="odd" colspan="6"><strong>{tr}No records found.{/tr}</strong><td>
 {/section}
 </table>
-<br />
 
 {pagination_links cant=$cant step=$prefs.maxRecords offset=$offset}{/pagination_links}
 

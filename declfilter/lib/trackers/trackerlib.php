@@ -945,6 +945,7 @@ class TrackerLib extends TikiLib {
 		$fil = array();
 
 		if (!empty($itemId)) {
+			$new_itemId = 0;
 			$oldStatus = $this->getOne("select `status` from `tiki_tracker_items` where `itemId`=?", array($itemId));
 			if ($status) {
 				$query = "update `tiki_tracker_items` set `status`=?,`lastModif`=? where `itemId`=?";
@@ -1055,6 +1056,15 @@ class TrackerLib extends TikiLib {
 						$ins_fields['data'][$i]['value'] = $this->replace_item_attachment($ins_fields['data'][$i]['old_value'], $ins_fields['data'][$i]['file_name'], $ins_fields['data'][$i]['file_type'], $ins_fields['data'][$i]['file_size'], $ins_fields['data'][$i]['value'], '', $user, $fhash, '', '', $trackerId, $itemId ? $itemId : $new_itemId, '', false);
 					} else {
 						continue;
+					}
+				} elseif ($ins_fields['data'][$i]['type'] == 'k') { //page selector
+					if (!$this->page_exists($ins_fields['data'][$i]['value'])) {
+						$opts = split(',', $ins_fields['data'][$i]['options']);
+						if (!empty($opts[2])) {
+							global $IP;
+							$info = $this->get_page_info($opts[2]);
+							$this->create_page($ins_fields['data'][$i]['value'], 0, $info['data'], $this->now, '', $user, $IP, $info['description'], $info['lang'], $info['is_html'], array(), $info['wysiwyyg'], $info['wiki_authors_style']);
+						}
 					}
 				}
 
@@ -2400,7 +2410,8 @@ class TrackerLib extends TikiLib {
 				<dt>Usage: <strong>auto-assign, size, maxlen</strong>
 				<dt>Description:
 				<dd><strong>[auto-assign]</strong> will auto-assign the creator of the item if set to 1
-				<dd><strong>[size]</strong> is the visible length of the field in characters;
+				<dd><strong>[size]</strong> is the visible input length of the field in characters (<=0 not limited);
+				<dd><strong>[create]</strong>: will create the page if not exits copy of the page with name value of this param.which pagename is the value of this param
 				<dd>
 				</dl>'));
 		$type['y'] = array(

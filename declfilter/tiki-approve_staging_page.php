@@ -58,15 +58,6 @@ if ($prefs['wikiapproval_approved_category'] == 0 && $tiki_p_edit != 'y' || $pre
 $staging_page = $page;
 $page = substr($staging_page, strlen($prefs['wikiapproval_prefix']));
 
-// If either page doesn't exist then display an error
-/*
-if (!$tikilib->page_exists($page) || !$tikilib->page_exists($staging_page)) { 
-	$smarty->assign('msg', tra("Either staging or approved page cannot be found"));
-
-	$smarty->display("error.tpl");
-	die;
-}
-*/
 if (!($staging_info = $tikilib->get_page_info($staging_page))) {
 	$smarty->assign('msg', tra('Page cannot be found'));
 	$smarty->display('error.tpl');

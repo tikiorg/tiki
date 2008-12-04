@@ -18,13 +18,6 @@ if ($prefs['feature_categories'] == 'y') {
 
 $commentslib = new Comments($dbTiki);
 
-/*
-if($prefs['feature_listPages'] != 'y') {
-  $smarty->assign('msg',tra("This feature is disabled"));
-  $smarty->display("error.tpl");
-  die;  
-}
-*/
 if ($prefs['feature_articles'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_articles");
 

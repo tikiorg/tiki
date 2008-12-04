@@ -141,19 +141,7 @@ if ($tiki_p_admin_polls == 'y' && !empty($_REQUEST['list']) && isset($_REQUEST['
 	$smarty->assign_by_ref('list_votes', $list_votes['data']);
 	$smarty->assign_by_ref('list_votes_options', $list_votes['options'] );
 
-	$cant_pages = ceil($list_votes['cant'] / $maxRecords);
-	$smarty->assign_by_ref('cant_pages', $cant_pages);
-	$smarty->assign('actual_page', 1 + ($_REQUEST['offset'] / $maxRecords));
-	if ($list_votes['cant'] > ($_REQUEST['offset'] + $maxRecords)) {
-		$smarty->assign('next_offset', $_REQUEST['offset'] + $maxRecords);
-	} else {
-		$smarty->assign('next_offset', -1);
-	}
-	if ($_REQUEST['offset'] > 0) {
-		$smarty->assign('prev_offset', $_REQUEST['offset'] - $maxRecords);
-	} else {
-		$smarty->assign('prev_offset', -1);
-	}
+	$smarty->assign_by_ref('cant_pages', $list_votes['cant']);
 }
 
 // Poll comments

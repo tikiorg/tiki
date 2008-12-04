@@ -5,13 +5,11 @@
 			<img src="tiki-download_file.php?fileId={$fileId}&amp;thumbnail=y" />
 		</td>
 		<td>
-			<b>{$name} ({$size|kbsize})</b>
-			<div class="button2">
-				<a href="#" onclick="javascript:flip('uploadinfos{$fileId}');flip('uploadinfos{$fileId}_close','inline');return false;">
-				{tr}Additional Info{/tr}
-				<span id="uploadinfos{$fileId}_close" style="display:none">({tr}Hide{/tr})</span>
-				</a>
-			</div>
+			<b>{$name} ({$size|kbsize})</b><br />
+			{button href="#" _onclick="javascript:flip('uploadinfos$fileId');flip('close_uploadinfos$fileId','inline');return false;" _text="{tr}Additional Info{/tr}"}
+			<span id="close_uploadinfos{$fileId}" style="display:none">
+				  {button href="#" _onclick="javascript:flip('uploadinfos$fileId');flip('close_uploadinfos$fileId','inline');return false;" _text="({tr}Hide{/tr})"}
+			</span>
 			<div style="{if $prefs.javascript_enabled eq 'y'}display:none;{/if}" id="uploadinfos{$fileId}">
 				{tr}You can download this file using{/tr}: <a class="link" href="{$dllink}">{$dllink}</a><br />
 				{tr}You can link to the file from a Wiki page using{/tr}: <div class="code">[tiki-download_file.php?fileId={$fileId}|{$name} ({$size|kbsize})]</div>

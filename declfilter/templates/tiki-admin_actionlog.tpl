@@ -68,7 +68,7 @@
 <tr class="formcolor"><td></td><td>{tr}Week{/tr}<input type="radio" name="contribTime" value="w"{if $contribTime ne 'd'} checked="checked"{/if} /> {tr}Day{/tr}<input type="radio" name="contribTime" value="d"{if $contribTime eq 'd'} checked="checked"{/if} /></td></tr>
 <tr class="formcolor"><td colspan="2" class="button"><input type="submit" name="list" value="{tr}Report{/tr}" /></td></tr>
 {if $prefs.feature_contribution eq 'y'}
-<tr class="formcolor"><td colspan="2" class="button"><input type="submit" name="graph" value="{tr}Graph Contributions{/tr}" />
+<tr class="formcolor"><td colspan="2"><input type="submit" name="graph" value="{tr}Graph Contributions{/tr}" />
 {if $prefs.feature_jpgraph eq 'y'}
 <br />{tr}Group Bar Plot:{/tr}<input type="radio" name="barPlot" value="group" /> {tr}Accumulated Bar Plot:{/tr}<input type="radio" name="barPlot" value="acc" checked="checked" />
 <br />{tr}Background color:{/tr} <select name="bgcolor">{foreach item=color from=$bgcolors}<option value="{$color|escape}"{if $defaultBgcolor eq $color} selected="selected"{/if}>{tr}{$color}{/tr}</option>{/foreach}</select> 
@@ -153,7 +153,7 @@
 {if $endDate}<input type="hidden" name="endDate" value="{$endDate}" />{/if}
 {$action.action} / {$action.objectType} / {$action.object} 
 <table class="normal">
-{include file="contribution.tpl"}
+{include file="contribution.tpl" section=$action.objectType}
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="saveAction" value="{tr}Save Action{/tr}" /></td></tr>
 </table>
 </form>

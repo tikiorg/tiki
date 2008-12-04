@@ -100,6 +100,9 @@ if (!empty($_REQUEST['actionId']) && $tiki_p_admin == 'y') {
 			if (isset($_REQUEST['contributions'])) {
 				$logslib->insert_params($_REQUEST['actionId'], 'contribution', $_REQUEST['contributions']);
 			}
+			if (isset($_REQUEST['contributors'])) {
+				$logslib->insert_params($_REQUEST['actionId'], 'contributor', $_REQUEST['contributors']);
+			}
 		} else {
 			$smarty->assign('error', 'found more than one object that can correspond');
 		}
@@ -107,6 +110,14 @@ if (!empty($_REQUEST['actionId']) && $tiki_p_admin == 'y') {
 		$smarty->assign_by_ref('action', $action);
 		if  ($action['objectType'] == 'wiki page') {
 			$contributions = $logslib->get_action_contributions($action['actionId']);
+			$info = $tikilib->get_page_info($action['object']);
+			$contributors = $logslib->get_wiki_contributors($info);
+			$tcontributors = array();
+			foreach ($contributors as $c) {
+				$tcontributors[] = $c['userId'];
+			}
+			$smarty->assign_by_ref('contributors', $tcontributors);
+
 		} elseif ($id = $logslib->get_comment_action($action)) {
 			$contributions = $logslib->get_action_contributions($action['actionId']);
 		} else {
@@ -116,7 +127,6 @@ if (!empty($_REQUEST['actionId']) && $tiki_p_admin == 'y') {
 		foreach ($contributions as $contribution) {
 			$cont[] = $contribution['contributionId'];
 		}
-		$section = $action['objectType'];
 		$_REQUEST['contributions'] = $cont;
 		include('contribution.php');
 		$contributions['data'][] = array('contributionId'=>0, 'name'=>'');

@@ -1,5 +1,8 @@
 <?php
 
+if ($prefs['feature_ajax'] != 'y' || $prefs['feature_ajax_autosave'] != 'y') {
+	return;
+}
 require_once('tiki-setup.php');
 require_once('lib/ajax/ajaxlib.php');
 

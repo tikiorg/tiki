@@ -138,24 +138,8 @@ if ($deep == 'on') {
 		$objects['data'][$i]['categName'] = $tikilib->other_value_in_tab_line($ctall, $objects['data'][$i]['categId'], 'categId', 'name');
 }
 $smarty->assign_by_ref('objects', $objects["data"]);
-$smarty->assign_by_ref('cantobjects', $objects["cant"]);
 
-$cant_pages = ceil($objects["cant"] / $maxRecords);
-$smarty->assign_by_ref('cant_pages', $cant_pages);
-$smarty->assign('actual_page', 1 + ($offset / $maxRecords));
-
-if ($objects["cant"] > ($offset + $maxRecords)) {
-	$smarty->assign('next_offset', $offset + $maxRecords);
-} else {
-	$smarty->assign('next_offset', -1);
-}
-
-// If offset is > 0 then prev_offset
-if ($offset > 0) {
-	$smarty->assign('prev_offset', $offset - $maxRecords);
-} else {
-	$smarty->assign('prev_offset', -1);
-}
+$smarty->assign_by_ref('cant_pages', $objects["cant"]);
 
 include_once ('tiki-section_options.php');
 ask_ticket('browse-categories');

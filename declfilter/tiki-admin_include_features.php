@@ -19,6 +19,7 @@ if (isset($_REQUEST["features"])) {
 		"feature_action_calendar",
 		"feature_actionlog",
 		"feature_ajax",
+		"feature_ajax_autosave",
 		"feature_articles",
 		"feature_banners",
 		"feature_banning",

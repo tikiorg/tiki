@@ -4,7 +4,7 @@ global $access;
 $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
 global $prefs;
-if ($prefs['feature_ajax'] != 'y') {
+if ($prefs['feature_ajax'] != 'y' || $prefs['feature_ajax_autosave'] != 'y') {
 	return;
 }
 
@@ -36,6 +36,9 @@ function remove_save($id) {
 	$file_name = md5("$user:$user_ip:$request_uri:$id");
 	if (file_exists("temp/cache/wiki-$file_name")) {
 		unlink("temp/cache/wiki-$file_name");
+//		file_put_contents("temp/cache/log_del-$file_name","$user:$user_ip:$referer:$id");
+//	} else {
+//		file_put_contents("temp/cache/log_nodel-$file_name","$user:$user_ip:$referer:$id");
 	}
 	return new xajaxResponse();
 }

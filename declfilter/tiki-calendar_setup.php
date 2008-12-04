@@ -172,7 +172,9 @@ $smarty->assign('viewday', $focus_day);
 $smarty->assign('viewyear', $focus_year);
 
 // calculate timespan for sql query
-if ($calendarViewMode == 'month' || $calendarViewMode == 'quarter' || $calendarViewMode == 'semester') {
+if ($viewlist == 'list') {
+	$daystart = $focusdate;
+} elseif ($calendarViewMode == 'month' || $calendarViewMode == 'quarter' || $calendarViewMode == 'semester') {
 	$daystart = TikiLib::make_time(0,0,0, $focus_month, 1, $focus_year);
 } elseif ($calendarViewMode == 'year') {
 	$daystart = TikiLib::make_time(0,0,0, 1, 1, $focus_year);
@@ -267,7 +269,7 @@ if ( $calendarViewMode == 'month' ||
 
 	// then back up to the preceding Sunday;
 	// $viewstart -= $wd * $d;
-	if ( $wd > 0 ) {
+	if ( $wd > 0  and $viewlist != 'list') {
 
 		$viewstart_d = TikiLib::date_format("%d", $viewstart);
 		$viewstart_m = TikiLib::date_format("%m", $viewstart);
@@ -300,9 +302,9 @@ if ( $calendarViewMode == 'month' ||
 	// $viewend = $viewstart + (7 * $d) - 1;
 	$viewend = TikiLib::make_time(
 		0, 0, 0,
-	   	TikiLib::date_format("%m", $viewstart),
-		TikiLib::date_format("%d", $viewstart) + 7,
-		TikiLib::date_format("%Y", $viewstart)
+	   	TikiLib::date_format("%m", $daystart),
+		TikiLib::date_format("%d", $daystart) + 7,
+		TikiLib::date_format("%Y", $daystart)
 	) - 1;
 	$dayend = $viewend;
 	$numberofweeks = 0;

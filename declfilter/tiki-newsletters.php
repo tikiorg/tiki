@@ -112,7 +112,7 @@ if ($tiki_p_subscribe_newsletters == 'y') {
 			if ($nllib->newsletter_subscribe($_REQUEST["nlId"], $user, "y"))
 				$smarty->assign('subscribed', 'y');
 		} elseif ($nllib->newsletter_subscribe($_REQUEST["nlId"], $_REQUEST["email"] ))
-			$smarty->assign('subscribed', 'y'); /* will receive en email */
+			$smarty->assign('subscribed', 'y'); // will receive en email
 
 	}
 }
@@ -123,7 +123,7 @@ if (isset($_REQUEST["info"])) {
 	$smarty->assign('nl_info', $nl_info);
 	$smarty->assign('subscribe', 'y');
 }
-/* List newsletters */
+// List newsletters
 if (!isset($_REQUEST["sort_mode"])) {
 	$sort_mode = 'created_desc';
 } else {
@@ -162,24 +162,9 @@ $smarty->assign('find', $find);
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 $channels = $nllib->list_newsletters($offset, $maxRecords, $sort_mode, $find, '', array("tiki_p_subscribe_newsletters", "tiki_p_admin_newsletters", "tiki_p_send_newsletters"));
 
-$cant_pages = ceil($channels["cant"] / $maxRecords);
-$smarty->assign_by_ref('cant_pages', $cant_pages);
-$smarty->assign('actual_page', 1 + ($offset / $maxRecords));
-
-if ($channels["cant"] > ($offset + $maxRecords)) {
-	$smarty->assign('next_offset', $offset + $maxRecords);
-} else {
-	$smarty->assign('next_offset', -1);
-}
-
-// If offset is > 0 then prev_offset
-if ($offset > 0) {
-	$smarty->assign('prev_offset', $offset - $maxRecords);
-} else {
-	$smarty->assign('prev_offset', -1);
-}
-
+$smarty->assign_by_ref('cant', $channels['cant']);
 $smarty->assign_by_ref('channels', $channels["data"]);
+
 ask_ticket('newsletters');
 
 $section='newsletters';
