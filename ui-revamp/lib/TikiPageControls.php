@@ -166,6 +166,11 @@ class TikiPageControls_Menu extends TikiPageControls_Element
 		return $item;
 	} // }}}
 
+	function addSeparator() // {{{
+	{
+		// TODO : To implement
+	} // }}}
+
 	function isEmpty() // {{{
 	{
 		return count($this->itemList) == 0;
