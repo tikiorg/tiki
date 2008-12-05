@@ -30,7 +30,15 @@ class TikiPageControls_Wiki extends TikiPageControls
 
 	function build() // {{{
 	{
-		$this->setHeading( $this->page, $this->link( 'wiki page', $this->page ) );
+		switch($mode) {
+		case 'translate_new':
+		case 'translate_update':
+			$this->setHeading( tr('%0 (translation of %1)', $this->page, $this->translationSource), $this->link( 'wiki page', $this->page ) );
+			break;
+		default:
+			$this->setHeading( $this->page, $this->link( 'wiki page', $this->page ) );
+			break;
+		}
 
 		if( $this->hasPref('feature_multilingual') ) {
 			$this->addLanguageMenu();
@@ -93,6 +101,11 @@ class TikiPageControls_Wiki extends TikiPageControls
 	function isAllLanguage( $isAllLanguage ) // {{{
 	{
 		$this->isAllLanguage = (bool) $isAllLanguage;
+	} // }}}
+
+	function setTranslationSource( $sourcePage ) // {{{
+	{
+		$this->translationSource = $sourcePage;
 	} // }}}
 
 	private function getBacklinks() // {{{
@@ -223,8 +236,21 @@ class TikiPageControls_Wiki extends TikiPageControls
 			$link = $this->link( 'url', 'tiki-editpage.php', array(
 				'page' => $this->page
 			) );
-			$tab = $this->addTab( tra('Edit'), $link );
-			$tab->setSelected( $this->mode == 'edit' );
+			switch($this->mode) {
+			case 'translate_new':
+			case 'translate_update':
+				$tab = $this->addTab( tra('Translate'), $link );
+				$tab->setSelected( $this->mode == 'translate_new' || $this->mode == 'translate_update' );
+				break;
+			case 'edit_section':
+				$tab = $this->addTab( tra('Edit Section'), $link );
+				$tab->setSelected( $this->mode == 'edit_section' );
+				break;
+			default:
+				$tab = $this->addTab( tra('Edit'), $link );
+				$tab->setSelected( $this->mode == 'edit' );
+				break;
+			}
 		}
 
 		if( $this->hasPref('feature_categories')

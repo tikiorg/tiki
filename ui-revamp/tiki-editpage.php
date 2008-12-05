@@ -1322,6 +1322,22 @@ if( $prefs['feature_multilingual'] == 'y' ) {
 // Get edit session timeout in minutes
 $smarty->assign('edittimeout', (ini_get('session.gc_maxlifetime') / 60 ));
 
+require_once 'TikiPageControls_Wiki.php';
+$controls = new TikiPageControls_Wiki($info);
+if( isset($_GET['hdr']) ) {
+	$controls->setMode('edit_section');
+} elseif( isNewTranslationMode() ) {
+	$controls->setMode('translate_new');
+	$controls->setTranslationSource( $_REQUEST['translationOf'] );
+} elseif( isUpdateTranslationMode() ) {
+	$controls->setMode('translate_update');
+	$controls->setTranslationSource( $_REQUEST['source_page'] );
+} else {
+	$controls->setMode('edit');
+}
+$controls->build();
+$smarty->assign('wiki_page_controls', $controls);
+
 ask_ticket('edit-page');
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
