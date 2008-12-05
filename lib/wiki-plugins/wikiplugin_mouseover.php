@@ -99,6 +99,9 @@ function wikiplugin_mouseover($data, $params) {
 	if (!empty($parse) && ($parse == 'y' || $parse == '1')) {
 		$data = $tikilib->parse_data($data);
 		$data = substr($data, 0, -1);// do not ask me why - but the parsing adds a CR
+	} else {
+		// Really don't parse...
+		$data = "~np~ $data ~/np~";
 	}
 	$data = preg_replace('/\r\n/', '<br />', $data);
 	$html .= " onmouseover=\"return overlib('".str_replace("'", "\'", htmlspecialchars($data))."'";
