@@ -1966,6 +1966,7 @@ div.gallerypath a:hover {}
 
 /***** Calendar *****/
 
+.Cal,
 .Cal0, 
 .Cal1, 
 .Cal2 {
@@ -2093,6 +2094,7 @@ Caltrack a:visited {color: #00BD02}
 .Calwiki:before {background: #292929}
 
 .calcheckbox {background: #3F3F3F}
+#calscreen td a { color: #3f3f3f; }
 
 .calcontent {
   min-height: 60px;
@@ -2108,7 +2110,7 @@ Caltrack a:visited {color: #00BD02}
 	font-size: 1em;
 	background: inherit}
 
-.calfocus a {color: #F5F5F5}
+#calscreen .calfocus a {color: #F5F5F5}
 
 .calfocuson {
 	font-size: 90%;

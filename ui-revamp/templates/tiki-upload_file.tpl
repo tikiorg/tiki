@@ -260,6 +260,14 @@
 		{icon _id="lock" class="" alt=""}
 		<span class="attention">{tr}The file is locked by {$fileInfo.lockedby}{/tr}</span>
 	{/if}
+	<br />
+	{remarksbox type="note"}
+		{tr}Maximum file size is limited to:{/tr}
+		{if $tiki_p_admin eq 'y'}<a title="{$max_upload_size_comment}">{/if}
+			{$max_upload_size|kbsize:true:0}
+		{if $tiki_p_admin eq 'y'}</a>{/if}
+	{/remarksbox}
+
 	</div>
 {else}
 	{icon _id=exclamation alt="{tr}Error{/tr}" style="vertical-align:middle;"}

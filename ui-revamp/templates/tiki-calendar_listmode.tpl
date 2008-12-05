@@ -6,7 +6,7 @@
 <th><a href="{$myurl}?sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></th>
 <th>{tr}Action{/tr}</th>
 </tr>
-{if $listevents|@count eq 0}<tr><td colspan="5">{tr}No records found{/tr}</td></tr>{/if}
+{if $listevents|@count eq 0}<tr><td colspan="6">{tr}No records found{/tr}</td></tr>{/if}
 {cycle values="odd,even" print=false}
 {section name=w loop=$listevents}
 {assign var=calendarId value=$listevents[w].calendarId}
@@ -19,6 +19,8 @@
 {if $listevents[w].start|tiki_short_date ne $listevents[w].end|tiki_short_date}<abbr class="dtend" title="{$listevents[w].end|compactisodate}"><a href="{$myurl}?todate={$listevents[w].end}" title="{tr}Change Focus{/tr}">{$listevents[w].end|tiki_short_date}</a></abbr> {/if}<br />
 {if $listevents[w].start ne $listevents[w].end and $listevents[w].allday ne 1}{$listevents[w].end|tiki_short_time}{/if}
 </td>
+<td><br />{$listevents[w].categoryName}</td>
+<td><br />{$listevents[w].locationName}</td>
 <td style="{if $infocals.$calendarId.custombgcolor ne ''}background-color:#{$infocals.$calendarId.custombgcolor};{/if}">
 <a class="link" href="tiki-calendar_edit_item.php?viewcalitemId={$listevents[w].calitemId}" title="{tr}View{/tr}">
 {if $infocals.$calendarId.customfgcolor ne ''}<span style="color:#{$infocals.$calendarId.customfgcolor};">{/if}

@@ -629,6 +629,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		// calendar
 		'feature_calendar' => 'n',
 		'calendar_sticky_popup' => 'n',
+		'default_calendars' => array(),
 		'calendar_view_mode' => 'month',
 		'calendar_view_tab' => 'n',
 		'calendar_firstDayofWeek' => 'user',
@@ -1182,7 +1183,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 
 // Initialize prefs for which we want to use the site value (they will be prefixed with 'site_')
 // ( this is also used in tikilib, not only when reloading prefs )
-$user_overrider_prefs = array('language', 'style', 'userbreadCrumb', 'tikiIndex', 'wikiHomePage');
+$user_overrider_prefs = array('language', 'style', 'userbreadCrumb', 'tikiIndex', 'wikiHomePage','default_calendars');
 
 // Check if prefs needs to be reloaded
 if (isset($_SESSION['s_prefs'])) {

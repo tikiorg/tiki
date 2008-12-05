@@ -50,6 +50,17 @@ if (isset($_REQUEST["save"])) {
 	$customflags["personal"] = $_REQUEST["personal"];
 	$customflags['customstatus'] = isset($_REQUEST['customstatus']) ? $_REQUEST['customstatus'] : 'y';
 	$options = $_REQUEST['options'];
+	if (array_key_exists('customcolors',$options) && strPos($options['customcolors'],'-') > 0) {
+		$customColors = explode('-',$options['customcolors']);
+		if (!preg_match('/^[0-9a-fA-F]{3,6}$/',$customColors[0]))
+			$options['customfgcolor'] = '000000';
+		else
+			$options['customfgcolor'] = $customColors[0];
+		if (!preg_match('/^[0-9a-fA-F]{3,6}$/',$customColors[1]))
+			$options['custombgcolor'] = 'ffffff';
+		else
+			$options['custombgcolor'] = $customColors[1];
+	}
 	if (!preg_match('/^[0-9a-fA-F]{3,6}$/',$options['customfgcolor'])) $options['customfgcolor'] = '';
 	if (!preg_match('/^[0-9a-fA-F]{3,6}$/',$options['custombgcolor'])) $options['custombgcolor'] = '';
 	$options['startday'] = $_REQUEST['startday_Hour']*60*60;
@@ -168,6 +179,7 @@ $smarty->assign('customsubscription', $info["customsubscription"]);
 $smarty->assign('customurl', $info["customurl"]);
 $smarty->assign('customfgcolor', $info["customfgcolor"]);
 $smarty->assign('custombgcolor', $info["custombgcolor"]);
+$smarty->assign('customColors', $info["customfgcolor"]."-".$info["custombgcolor"]);
 $smarty->assign('show_calname', $info["show_calname"]);
 $smarty->assign('show_description', $info["show_description"]);
 $smarty->assign('show_category', $info["show_category"]);

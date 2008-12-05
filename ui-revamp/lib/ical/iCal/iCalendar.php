@@ -64,13 +64,12 @@ class File_iCal_iCalendar {
             $lines = explode("\x0D\x0A", $string);
 
             $contentlines = array();
-            require_once 'File/iCal/ContentLine.php';
+            require_once 'ContentLine.php';
             //assemble into contentlines
             foreach ($lines as $line)
             {
                     $contentlines[] = new File_iCal_ContentLine($line);
             }
-
             //verify the validity of the structure
             if (($contentlines[0]->name() == "BEGIN") && ($contentlines[0]->value() == "VCALENDAR")
                     && ($contentlines[count($contentlines)-1]->name() == "END") && ($contentlines[count($contentlines)-1]->value() == "VCALENDAR"))
@@ -135,7 +134,7 @@ class File_iCal_iCalendar {
         // $c is an array of contentlines
         private function ProcessComponent($c)
         {
-            require_once 'File/iCal/Component.php';
+            require_once 'Component.php';
             switch ($c[0]->value())
             {
                 case "VEVENT":
@@ -183,7 +182,7 @@ class File_iCal_iCalendar {
         public function getCalendar($fold =  true, $wrap_length = 72)
         {
             $r = array();
-            require_once 'File/iCal/ContentLine.php';
+            require_once 'ContentLine.php';
             $header = new File_iCal_ContentLine("BEGIN:VCALENDAR");
             $footer = new File_iCal_ContentLine("END:VCALENDAR");
 
@@ -294,7 +293,7 @@ class File_iCal_iCalendar {
          *
          */
         public function addEvent( $e) { //File_iCal_Event
-            require_once 'File/iCal/Component.php';
+            require_once 'Component.php';
             $this->_components[] = File_iCal_Component_Event::getComponent($e);
             
         }
