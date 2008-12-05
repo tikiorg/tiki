@@ -373,7 +373,7 @@ class WikiRenderer
 		$this->smartyassign('atts_count',count($atts['data']));
 
 		if( $this->pageControls )
-			$this->pageControls->setAttachementCount( count($atts['data']) );
+			$this->pageControls->setAttachmentCount( count($atts['data']) );
 	} // }}}
 
 	private function setupFootnotes() // {{{
