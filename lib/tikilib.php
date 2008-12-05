@@ -7423,7 +7423,12 @@ class TikiLib extends TikiDB {
 		return $short_datetime_format;
 	}
 
-	function date_format($format, $timestamp = false, $_user = false, $input_format = DATE_FORMAT_UNIXTIME) {
+	function date_format2($format, $timestamp = false, $_user = false, $input_format = DATE_FORMAT_UNIXTIME) {
+		global $tikilib;
+		return $tikilib->date_format($format, $timestamp, $_user, $input_format, false);
+	}
+
+	function date_format($format, $timestamp = false, $_user = false, $input_format = DATE_FORMAT_UNIXTIME, $is_strftime_format = true) {
 		global $tikidate, $tikilib;
 		if ( ! $timestamp ) {
 			$timestamp = time();
@@ -7438,7 +7443,8 @@ class TikiLib extends TikiDB {
 		if ( $tz != 'UTC' ) {
 			$tikidate->convertTZByID($tz);
 		}
-		return $tikidate->format($format);
+
+		return $tikidate->format($format, $is_strftime_format);
 	}
 
 	function make_time($hour,$minute,$second,$month,$day,$year) {
