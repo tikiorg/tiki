@@ -104,16 +104,7 @@
   ||  $tiki_p_post_comments  == 'y'
   ||  $tiki_p_edit_comments  == 'y')}
 <div id="page-bar">
-<div class="button2">
-      <a href="#comments" onclick="javascript:flip('comzone{if $comments_show eq 'y'}open{/if}');" class="linkbut">
-	{if $comments_cant == 0}
-          {tr}Add Comment{/tr}
-        {elseif $comments_cant == 1}
-          <span class="highlight">{tr}1 comment{/tr}</span>
-        {else}
-          <span class="highlight">{$comments_cant} {tr}comments{/tr}</span>
-        {/if}
-      </a>
+	 {include file=comments_button.tpl}
 </div>
 </div>
 {include file=comments.tpl}
