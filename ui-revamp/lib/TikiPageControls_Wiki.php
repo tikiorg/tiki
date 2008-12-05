@@ -20,6 +20,7 @@ class TikiPageControls_Wiki extends TikiPageControls
 	private $structureInfo;
 	private $attachmentCount;
 	private $commentCount;
+	private $isLocked;
 
 	function __construct( $info ) // {{{
 	{
@@ -102,6 +103,11 @@ class TikiPageControls_Wiki extends TikiPageControls
 		$this->translationSource = $sourcePage;
 	} // }}}
 
+	function setIsLocked( $locked ) // {{{
+	{
+		$this->isLocked = (bool) $locked;
+	} // }}}
+
 	private function getBacklinks() // {{{
 	{
 		if( $this->backlinks )
@@ -169,6 +175,26 @@ class TikiPageControls_Wiki extends TikiPageControls
 				->setSelected( $this->isMode('remove') );
 		}
 
+		if( $this->hasPref('feature_wiki_usrlock')
+		 && (
+		 	$this->hasPerm('tiki_p_admin_wiki')
+			|| ( $this->getUser() && $this->info['user'] == $this->getUser() && $this->hasPerm('tiki_p_lock') )
+		 ) ) {
+			if( $this->isLocked() ) {
+				$link = $this->link( 'wiki page', $this->page, array(
+					'action' => 'unlock',
+				) );
+				$actionMenu->addItem( tra('Unlock'), $link )
+					->setSelected( $this->isMode('lock') );
+			} else {
+				$link = $this->link( 'wiki page', $this->page, array(
+					'action' => 'lock',
+				) );
+				$actionMenu->addItem( tra('Lock'), $link )
+					->setSelected( $this->isMode('lock') );
+			}
+		}
+
 		if( $this->hasPerm('tiki_p_assign_perm_wiki_page') 
 		 || $this->hasPerm('tiki_p_admin_wiki') ) {
 			$link = $this->link( 'url', 'tiki-objectpermissions.php', array(
@@ -182,7 +208,7 @@ class TikiPageControls_Wiki extends TikiPageControls
 		}
 
 		if( $this->hasPref('feature_likePages') ) {
-			$link = $this->link( 'url', 'tiki-likePages.php', array(
+			$link = $this->link( 'url', 'tiki-likepages.php', array(
 				'page' => $this->page,
 			) );
 			$actionMenu->addItem( tra('Similar'), $link )
@@ -213,16 +239,36 @@ class TikiPageControls_Wiki extends TikiPageControls
 				$link = $this->link( 'url', 'tiki-slideshow.php', array(
 					'page' => $this->page,
 				) );
-				$actionMenu->addItem( 'Slides', $link )
+				$actionMenu->addItem( tra('Slides'), $link )
 					->setSelected( $this->isMode('slide') );
 			}
 			if( $this->hasStructure() ) {
 				$link = $this->link( 'url', 'tiki-slideshow2.php', array(
 					'page_ref_id' => $this->structureInfo['page_ref_id'],
 				) );
-				$actionMenu->addItem( 'Structure Slides', $link )
+				$actionMenu->addItem( tra('Structure Slides'), $link )
 					->setSelected( $this->isMode('slide_structure') );
 			}
+		}
+
+		if( $this->hasPref('feature_wiki_export')
+			&& $this->hasAnyOfPerm('tiki_p_admin_wiki', 'tiki_p_export_wiki')
+		) {
+				$link = $this->link( 'url', 'tiki-export_wiki_pages.php', array(
+					'page' => $this->page,
+				) );
+				$actionMenu->addItem( tra('Export'), $link )
+					->setSelected( $this->isMode('export') );
+		}
+
+		if( $this->hasPref('feature_multilingual')
+		 && $this->hasPerm('tiki_p_edit')
+		 && ! $this->isLocked() ) {
+			$link = $this->link( 'url', 'tiki-edit_translation.php', array(
+				'page' => $this->page,
+			) );
+			$actionMenu->addItem( tra('Translate'), $link )
+				->setSelected( $this->isMode('translate') );
 		}
 
 		if( $actionMenu->isEmpty() ) {
@@ -302,16 +348,14 @@ class TikiPageControls_Wiki extends TikiPageControls
 	{
 		if ( $this->canUndo !== null ) return $this->canUndo;
 
-		global $tiki_p_admin_wiki, $tiki_p_remove, $tiki_p_edit;
-
 		if ( $this->info['flag'] != 'L'
 			&& (
-				// TODO : Must find user
-				( $tiki_p_edit == 'y' && $this->info['user'] == $this->user ) || $tiki_p_remove == 'y'
+				( $this->hasPerm('tiki_p_edit') && $this->info['user'] == $this->getUser() ) 
+				|| $this->hasPerm('tiki_p_remove')
 			) )  {
 			$this->canUndo = true;
 		}
-		if ( $tiki_p_admin_wiki == 'y' ) {
+		if ( $this->hasPerm('tiki_p_admin_wiki') ) {
 			$this->canUndo = true;
 		}
 
@@ -376,6 +420,15 @@ class TikiPageControls_Wiki extends TikiPageControls
 
 			return $this->canSlideshow = count($slides) > 1;
 		}
+	} // }}}
+
+	private function isLocked() // {{{
+	{
+		if( ! is_null($this->isLocked) )
+			return $this->isLocked;
+
+		global $wikilib; require_once 'lib/wiki/wikilib.php';
+		return $this->isLocked = $wikilib->is_locked($this->page, $this->info);
 	} // }}}
 }
 

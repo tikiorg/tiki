@@ -1,13 +1,17 @@
-{title help="i18n" admpage="i18n"}{tr}Translate:{/tr}&nbsp;{$name}{if isset($languageName)}&nbsp;({$languageName}, {$langpage}){/if}{/title}
+{if $object_page_controls}
+	{$object_page_controls}
+{else}
+	{title help="i18n" admpage="i18n"}{tr}Translate:{/tr}&nbsp;{$name}{if isset($languageName)}&nbsp;({$languageName}, {$langpage}){/if}{/title}
 
-<div class="navbar">
-	{if $type eq 'wiki page'}
-		{assign var=thisname value=$name|escape:'url'}
-		{button href="tiki-index.php?page=$thisname&bl=n" _text="{tr}View Page{/tr}"}
-	{else}
-		{button href="tiki-read_article.php?articleId=$id" _text="{tr}View Article{/tr}"}
-	{/if}
-</div>
+	<div class="navbar">
+		{if $type eq 'wiki page'}
+			{assign var=thisname value=$name|escape:'url'}
+			{button href="tiki-index.php?page=$thisname&bl=n" _text="{tr}View Page{/tr}"}
+		{else}
+			{button href="tiki-read_article.php?articleId=$id" _text="{tr}View Article{/tr}"}
+		{/if}
+	</div>
+{/if}
 
 {if $error}
 	<div class="simplebox highlight">

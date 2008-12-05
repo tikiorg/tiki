@@ -261,11 +261,10 @@ class WikiRenderer
 
 		// Verify lock status
 		if ( $prefs['feature_wiki_usrlock'] == 'y' ) {
-			if ( $wikilib->is_locked($this->page, $this->info) ) {
-				$this->smartyassign('lock', true);  
-			} else {
-				$this->smartyassign('lock', false);
-			}
+			$lock = $wikilib->is_locked($this->page, $this->info);
+			$this->smartyassign('lock', $lock);  
+		} else {
+			$lock = false;
 		}
 
 		$this->smartyassign('editable', $this->canEdit());
@@ -280,6 +279,7 @@ class WikiRenderer
 		if( $this->pageControls ) {
 			$this->pageControls->setCanUndo( $this->canUndo() );
 			$this->pageControls->setCanEdit( $this->canEdit() );
+			$this->pageControls->setIsLocked( $lock );
 		}
 	} // }}}
 

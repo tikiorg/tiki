@@ -267,6 +267,13 @@ ask_ticket('edit-translation');
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
+require_once('TikiPageControls.php');
+if( $controls = TikiPageControls::factory( $type, $objId, $name ) ) {
+	$controls->setMode('translate');
+	$controls->build();
+	$smarty->assign('object_page_controls', $controls);
+}
+
 // Display the template
 $smarty->assign('mid', 'tiki-edit_translation.tpl');
 $smarty->display("tiki.tpl");

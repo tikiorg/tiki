@@ -36,63 +36,15 @@
 			{button href="tiki-editpage.php?page="|cat:$thisPageName|cat:$thisPageRefId _class=$thisPageClass _text="{tr}Edit{/tr}"}
 		{/if}
 
-		{if $prefs.feature_source eq 'y' and $tiki_p_wiki_view_source eq 'y'}
-			{button href="tiki-pagehistory.php?page=$thispage&amp;source=0" _text="{tr}Source{/tr}"}
-		{/if}
-
 		{if $page|lower ne 'sandbox'}
-			{if $tiki_p_remove eq 'y' && $editable}
-				{button href="tiki-removepage.php?page=$thispage&amp;version=last" _text="{tr}Remove{/tr}"}
-			{/if}
-
 			{if $tiki_p_rename eq 'y' && $editable}
 				{if $beingStaged eq 'y'}
+					{* TODO : What about staging? *}
 					{button href="tiki-rename_page.php?page=$thisapprovedPageName" _text="{tr}Rename{/tr}"}
 				{else}
 					{button href="tiki-rename_page.php?page=$thispage" _text="{tr}Rename{/tr}"}
 				{/if}
 			{/if}
-
-			{if $prefs.feature_wiki_usrlock eq 'y' and ( $tiki_p_admin_wiki eq 'y' or ($user and $user eq $page_user and $tiki_p_lock eq 'y') )}
-				{if $lock}
-					{button href="tiki-index.php?page=$thispage&amp;action=unlock" _text="{tr}Unlock{/tr}"}
-				{else}
-					{button href="tiki-index.php?page=$thispage&amp;action=lock" _text="{tr}Lock{/tr}"}
-				{/if}
-			{/if}
-
-			{if $tiki_p_admin_wiki eq 'y' or $tiki_p_assign_perm_wiki_page eq 'y'}
-				{button href="tiki-objectpermissions.php?objectId=$thispage&amp;objectName=$thispage&amp;objectType=wiki+page&amp;permType=wiki"	_text="{tr}Perms{/tr}"}
-			{/if}
-
-			{if $prefs.feature_history eq 'y' and $tiki_p_wiki_view_history eq 'y'}
-				{button href="tiki-pagehistory.php?page=$thispage" _text="{tr}History{/tr}"}
-			{/if}
-		{/if}
-
-		{if $prefs.feature_likePages eq 'y'}
-			{button href="tiki-likepages.php?page=$thispage" _text="{tr}Similar{/tr}"}
-		{/if}
-
-		{if $prefs.feature_wiki_undo eq 'y' and $canundo eq 'y'}
-			{button href="tiki-index.php?page=$thispage&amp;undo=1" _text="{tr}Undo{/tr}" _ajax='n'}
-		{/if}
-
-		{if $prefs.feature_wiki_make_structure eq 'y' and $tiki_p_edit_structures eq 'y' and $editable and $structure eq 'n' and count($showstructs) eq 0}
-			{button href="tiki-index.php?page=$thispage&amp;convertstructure=1" _text="{tr}Make Structure{/tr}"}
-		{/if}
-
-		{if $prefs.wiki_uses_slides eq 'y'}
-			{if $show_slideshow eq 'y'}
-				{button href="tiki-slideshow.php?page=$thispage" _text="{tr}Slides{/tr}"}
-			{elseif $structure eq 'y'}
-				{assign var=thispage_info value=$page_info.page_ref_id}
-				{button href="tiki-slideshow2.php?page_ref_id=$thispage_info" _text="{tr}Slides{/tr}"}
-			{/if}
-		{/if}
-
-		{if $prefs.feature_wiki_export eq 'y' and ( $tiki_p_admin_wiki eq 'y' or $tiki_p_export_wiki eq 'y' )}
-			{button href="tiki-export_wiki_pages.php?page=$thispage" _text="{tr}Export{/tr}"}
 		{/if}
 
 		{if $prefs.feature_wiki_discuss eq 'y' && $show_page eq 'y' && $beingStaged ne 'y' && $tiki_p_forum_post eq 'y'}
@@ -141,6 +93,7 @@
 
 			{if $prefs.feature_multilingual eq 'y' and $tiki_p_edit eq 'y' and !$lock}
 				{if $beingStaged == 'y'}
+					{* TODO : What about staging? *}
 					{button href="tiki-edit_translation.php?page=$thisapprovedPageName" _text="{tr}Translate{/tr}"}
 				{else}
 					{button href="tiki-edit_translation.php?page=$thispage" _text="{tr}Translate{/tr}"}

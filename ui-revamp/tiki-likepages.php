@@ -52,7 +52,7 @@ if ($tiki_p_view != 'y') {
 $likepages = $wikilib->get_like_pages($page);
 
 // If the page doesn't exist then display an error
-if (!$tikilib->page_exists($page)) {
+if (!$info = $tikilib->get_page_info($page)) {
   if(count($likepages) == 1 ) {
     header ("Status: 402 Found"); /* PHP3 */ 
     header ("HTTP/1.0 402 Found"); /* PHP4 */
@@ -78,6 +78,12 @@ ask_ticket('likepages');
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 include_once ('tiki-section_options.php');
+
+require_once 'TikiPageControls_Wiki.php';
+$controls = new TikiPageControls_Wiki($info);
+$controls->setMode('similar');
+$controls->build();
+$smarty->assign('wiki_page_controls', $controls);
 
 // Display the template
 $smarty->assign('mid', 'tiki-likepages.tpl');

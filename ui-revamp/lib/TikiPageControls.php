@@ -7,8 +7,6 @@ class TikiPageControls_Element implements ArrayAccess
 	private $link;
 	private $type;
 
-	private $mode = false;
-
 	private $selected = false;
 
 	function __construct( $type ) // {{{
@@ -67,6 +65,10 @@ class TikiPageControls_Element implements ArrayAccess
 
 	function __toString() // {{{
 	{
+		if( $this->type == 'separator' ) {
+			return '<hr/>';
+		}
+
 		$text = htmlentities( $this->text, ENT_QUOTES, 'UTF-8' );
 
 		if( !is_null($this->argument) ) {
@@ -170,7 +172,12 @@ class TikiPageControls_Menu extends TikiPageControls_Element
 
 	function addSeparator() // {{{
 	{
-		// TODO : To implement
+		if( count($this->itemList) > 0 ) {
+			$last = end($this->itemList);
+
+			if( $last['type'] != 'separator' )
+				$this->itemList[] = new TikiPageControls_Element('separator');
+		}
 	} // }}}
 
 	function isEmpty() // {{{
@@ -200,10 +207,19 @@ abstract class TikiPageControls implements ArrayAccess
 	private $heading;
 	private $menus = array();
 	private $tabs = array();
+	private $user;
+
+	private $mode = false;
 
 	private $template = 'tiki-pagecontrols.tpl';
 
 	public abstract function build();
+
+	function __construct() // {{{
+	{
+		global $user;
+		$this->user = $user;
+	} // }}}
 
 	public static function factory( $objectType, $objectId, $objectName = null ) // {{{
 	{
@@ -211,9 +227,22 @@ abstract class TikiPageControls implements ArrayAccess
 		case 'wiki page':
 			global $tikilib;
 			require_once('TikiPageControls_Wiki.php');
+			if( is_numeric($objectId) && !empty($objectName) )
+				$objectId = $objectName;
+
 			$info = $tikilib->get_page_info( $objectId );
 			return new TikiPageControls_Wiki($info);
 		}
+	} // }}}
+
+	public function getUser( $user ) // {{{
+	{
+		return $this->user;
+	} // }}}
+
+	public function setUser( $user ) // {{{
+	{
+		$this->user = $user;
 	} // }}}
 
 	public function setHeading( $label, $link = null ) // {{{
@@ -231,6 +260,18 @@ abstract class TikiPageControls implements ArrayAccess
 	protected function hasPerm( $permName ) // {{{
 	{
 		return isset( $GLOBALS[$permName] ) && $GLOBALS[$permName] == 'y';
+	} // }}}
+
+	protected function hasAnyOfPerm( $permName ) // {{{
+	{
+		if( ! is_array($permName) )
+			$permName = func_get_args();
+
+		foreach( $permName as $p )
+			if( $this->hasPerm($p) )
+				return true;
+
+		return false;
 	} // }}}
 
 	protected function hasPref( $prefName ) // {{{
