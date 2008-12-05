@@ -17,9 +17,9 @@ class WikiRenderer
 		'setupCreator',
 		'setupMultilingual',
 		'setupBacklinks',
-		'setupActions',
 		'setupSlideshow',
 		'setupPage',
+		'setupActions',
 		'setupAttachments',
 		'setupFootnotes',
 		'setupWatch',
@@ -27,21 +27,28 @@ class WikiRenderer
 		'setupPoll',
 		'setupBreadcrumbs',
 		'setupStaging',
+
+		// Better be last
+		'setupPageControls',
 	);
 
 	private $toRestore = array();
 	private $prefRestore = array();
 	private $smartyRestore = array();
 
-	public $canView = false;
-	public $canUndo = null;
+	private $pageControls = null;
 
-	function __construct( $info, $user )
+	public $canView = false;
+	public $canEdit = null;
+	public $canUndo = null;
+	private $canSlideshow = null;
+
+	function __construct( $info, $user ) // {{{
 	{
 		$this->info = $info;
 		$this->user = $user;
 		$this->page = $info['pageName'];
-	}
+	} // }}}
 
 	function applyPermissions() // {{{
 	{
@@ -161,6 +168,9 @@ class WikiRenderer
 
 		$this->smartyassign('showstructs', $structs_with_perm);
 		$this->smartyassign('page_ref_id', $this->structureInfo['page_ref_id']);
+
+		if( $this->pageControls )
+			$this->pageControls->setStructureInfo( $this->structureInfo );
 	} // }}}
 
 	private function setupContributors() // {{{
@@ -188,7 +198,7 @@ class WikiRenderer
 
 	private function setupMultilingual() // {{{
 	{
-		global $multilinguallib, $tikilib, $prefs;
+		global $multilinguallib, $tikilib, $prefs, $tiki_p_edit;
 
 		if ($prefs['feature_multilingual'] != 'y')
 			return;
@@ -200,8 +210,12 @@ class WikiRenderer
 			$this->smartyassign('trads', $trads);
 			$pageLang = $this->info['lang'];
 			$this->smartyassign('pageLang', $pageLang);
+
+			if( $this->pageControls ) {
+				$this->pageControls->setTranslations( $trads );
+			}
 		}
-		
+
 		$stagingEnabled = (
 			$prefs['feature_wikiapproval'] == 'y' 
 			&& $tikilib->page_exists($prefs['wikiapproval_prefix'] . $this->page) );
@@ -234,6 +248,10 @@ class WikiRenderer
 		if ( $prefs['feature_backlinks'] == 'y' ) {
 			$backlinks = $wikilib->get_backlinks($this->page);
 			$this->smartyassign('backlinks', $backlinks);
+
+			if( $this->pageControls ) {
+				$this->pageControls->setBacklinks( $backlinks );
+			}
 		}
 	} // }}}
 
@@ -250,7 +268,7 @@ class WikiRenderer
 			}
 		}
 
-		$this->smartyassign('editable', $wikilib->is_editable($this->page, $this->user, $this->info));
+		$this->smartyassign('editable', $this->canEdit());
 
 		// If not locked and last version is user version then can undo
 		$this->smartyassign('canundo', $this->canUndo() ? 'y' : 'n');
@@ -258,25 +276,21 @@ class WikiRenderer
 		if(!isset($this->info['is_html'])) {
 			$this->info['is_html'] = false;
 		}
+
+		if( $this->pageControls ) {
+			$this->pageControls->setCanUndo( $this->canUndo() );
+			$this->pageControls->setCanEdit( $this->canEdit() );
+		}
 	} // }}}
 
 	private function setupSlideshow() // {{{
 	{
 		global $prefs;
 
-		if ($prefs['wiki_uses_slides'] != 'y') {
-			$this->smartyassign('show_slideshow','n');
-			return;
-		}
-
-		$slides = split("-=[^=]+=-",$this->info['data']);
-		if(count($slides)>1) {
-			$this->smartyassign('show_slideshow','y');
-		} else {
-			$slides = explode('...page...',$this->info['data']);
-
-			$this->smartyassign('show_slideshow', ( count($slides) > 1 ) ? 'y' : 'n' );
-		}
+		$this->smartyassign('show_slideshow', $this->hasSlideshow() ? 'y' : 'n' );
+		
+		if( $this->pageControls )
+			$this->pageControls->setCanSlideshow( $this->hasSlideshow() );
 	} // }}}
 
 	private function setupPage() // {{{
@@ -357,6 +371,9 @@ class WikiRenderer
 		$atts = $wikilib->list_wiki_attachments($this->page,0,-1, $this->sortMode,'');
 		$this->smartyassign('atts',$atts["data"]);
 		$this->smartyassign('atts_count',count($atts['data']));
+
+		if( $this->pageControls )
+			$this->pageControls->setAttachementCount( count($atts['data']) );
 	} // }}}
 
 	private function setupFootnotes() // {{{
@@ -528,6 +545,12 @@ class WikiRenderer
 		}
 	} // }}}
 
+	private function setupPageControls() // {{{
+	{
+		if( $this->pageControls )
+			$this->pageControls->build();
+	} // }}}
+
 	private function setGlobal( $name, $value ) // {{{
 	{
 		if( (empty($GLOBALS[$name]) || $GLOBALS[$name] != $value) && ! array_key_exists( $name, $this->toRestore ) )
@@ -574,6 +597,46 @@ class WikiRenderer
 
 		return $this->canUndo;
 		
+	} // }}}
+
+	function canEdit() // {{{
+	{
+		if( !is_null($this->canEdit) )
+			return $this->canEdit;
+
+		global $wikilib;
+
+		$this->canEdit = $wikilib->is_editable($this->page, $this->user, $this->info);
+		return $this->canEdit;
+	} // }}}
+
+	function hasStructure() // {{{
+	{
+		return ! is_null($this->structureInfo);
+	} // }}}
+
+	function hasSlideshow() // {{{
+	{
+		if( ! is_null( $this->canSlideshow ) )
+			return $this->canSlideshow;
+
+		if ($prefs['wiki_uses_slides'] != 'y') {
+			return $this->canSlideshow = false;
+		}
+
+		$slides = split("-=[^=]+=-",$this->info['data']);
+		if(count($slides)>1) {
+			return $this->canSlideshow = true;
+		} else {
+			$slides = explode('...page...',$this->info['data']);
+
+			return $this->canSlideshow = count($slides) > 1;
+		}
+	} // }}}
+	
+	function setPageControls( TikiPageControls_Wiki $controls ) // {{{
+	{
+		$this->pageControls = $controls;
 	} // }}}
 
 	function setInfos( $infos ) // {{{
