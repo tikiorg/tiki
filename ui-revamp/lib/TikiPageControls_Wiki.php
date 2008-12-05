@@ -53,6 +53,9 @@ class TikiPageControls_Wiki extends TikiPageControls
 				$link = $this->link( 'wiki page', $back['fromPage'] );
 				$backlinksMenu->addItem( $back['fromPage'], $link );
 			}
+
+			if( $backlinksMenu->isEmpty() )
+				$this->removeMenu($backlinksMenu);
 		}
 
 		$this->addTabs();
@@ -130,28 +133,40 @@ class TikiPageControls_Wiki extends TikiPageControls
 	{
 		$langMenu = $this->addMenu( tra('Language') );
 
-		foreach( $this->getTranslations() as $trad ) {
-			$link = $this->link( 'wiki page', $trad['objName'] );
-			$item = $langMenu->addItem( $trad['langName'], $link );
-			$item->setSelected( ! $this->isAllLanguage && $this->info['lang'] == $trad['lang'] );
+		if( empty( $this->info['lang'] ) ) {
+			if( $this->hasPerm('tiki_p_edit') ) {
+				$link = $this->link( 'url', 'tiki-edit_translation.php', array(
+							'page' => $this->page,
+							) );
+				$langMenu->addItem( tra('Set Language'), $link );
+			}
+		} else {
+			foreach( $this->getTranslations() as $trad ) {
+				$link = $this->link( 'wiki page', $trad['objName'] );
+				$item = $langMenu->addItem( $trad['langName'], $link );
+				$item->setSelected( ! $this->isAllLanguage && $this->info['lang'] == $trad['lang'] );
+			}
+
+			if( $this->hasPref('feature_multilingual_one_page') ) {
+				$link = $this->link( 'url', 'tiki-all_languages', array(
+							'page' => $this->page,
+							) );
+				$langMenu->addSeparator();
+				$item = $langMenu->addItem( tra('All'), $link );
+				$item->setSelected( $this->isAllLanguage );
+			}
+
+			if( $this->hasPerm('tiki_p_edit') ) {
+				$link = $this->link( 'url', 'tiki-edit_translation.php', array(
+							'page' => $this->page,
+							) );
+				$langMenu->addSeparator();
+				$langMenu->addItem( tra('Translate'), $link );
+			}
 		}
 
-		if( $this->hasPref('feature_multilingual_one_page') ) {
-			$link = $this->link( 'url', 'tiki-all_languages', array(
-				'page' => $this->page,
-			) );
-			$langMenu->addSeparator();
-			$item = $langMenu->addItem( tra('All'), $link );
-			$item->setSelected( $this->isAllLanguage );
-		}
-
-		if( $this->hasPerm('tiki_p_edit') ) {
-			$link = $this->link( 'url', 'tiki-edit_translation.php', array(
-				'page' => $this->page,
-			) );
-			$langMenu->addSeparator();
-			$langMenu->addItem( tra('Translate'), $link );
-		}
+		if( $langMenu->isEmpty() )
+			$this->removeMenu( $langMenu );
 	} // }}}
 	
 	private function addActionMenu() // {{{
