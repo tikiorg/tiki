@@ -17,4 +17,4 @@
 	{assign var=thisflipid value="comzone"}
 {/if}
 
-{button href="#comments" _flip_id=$thisflipid _class=$thisbuttonclass _text=$thistext}
+{button href="#comments" _flip_id=$thisflipid _class=$thisbuttonclass _text=$thistext _flip_default_open=$prefs.wiki_comments_displayed_default}

@@ -14,6 +14,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *	- _auto_args: comma separated list of URL arguments that will be kept from _REQUEST (like $auto_query_args)
  *	- _flip_id: id HTML atribute of the element to show/hide (for type 'flip'). This will automatically generate an 'onclick' attribute that will use tiki javascript function flip() to show/hide some content.
  *	- _flip_hide_text: if set to 'n', do not display a '(Hide)' suffix after _text when status is not 'hidden'
+ *	- _flip_default_open: if set to 'y', the flip is open by default (if no cookie jar)
  */
 function smarty_function_button($params, &$smarty) {
 	if ( ! is_array($params) || ! isset($params['_text']) ) return;
@@ -31,7 +32,7 @@ function smarty_function_button($params, &$smarty) {
 		if ( ! isset($params['_flip_hide_text']) || $params['_flip_hide_text'] != 'n' ) {
 			$cookie_key = 'show_' . $params['_flip_id'];
 			$params['_text'] .= '<span id="'.$params['_flip_id'].'_close" style="display:'
-				. ( isset($_SESSION['tiki_cookie_jar'][$cookie_key]) && $_SESSION['tiki_cookie_jar'][$cookie_key] == 'y' ? 'inline' : 'none' )
+				. ( ((isset($_SESSION['tiki_cookie_jar'][$cookie_key]) && $_SESSION['tiki_cookie_jar'][$cookie_key] == 'y') || (!isset($_SESSION['tiki_cookie_jar'][$cookie_key]) && isset($params['_flip_default_open']) && $params['_default_flip_open'] == 'y')) ? 'inline' : 'none' )
 				. ';"> (' . tra('Hide') . ')</span>';
 		}
 	}
