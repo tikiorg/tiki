@@ -7,6 +7,8 @@ class TikiPageControls_Element implements ArrayAccess
 	private $link;
 	private $type;
 
+	private $mode = false;
+
 	private $selected = false;
 
 	function __construct( $type ) // {{{
@@ -193,13 +195,26 @@ class TikiPageControls_Menu extends TikiPageControls_Element
 	} // }}}
 }
 
-class TikiPageControls implements ArrayAccess
+abstract class TikiPageControls implements ArrayAccess
 {
 	private $heading;
 	private $menus = array();
 	private $tabs = array();
 
 	private $template = 'tiki-pagecontrols.tpl';
+
+	public abstract function build();
+
+	public static function factory( $objectType, $objectId, $objectName = null ) // {{{
+	{
+		switch( $objectType ) {
+		case 'wiki page':
+			global $tikilib;
+			require_once('TikiPageControls_Wiki.php');
+			$info = $tikilib->get_page_info( $objectId );
+			return new TikiPageControls_Wiki($info);
+		}
+	} // }}}
 
 	public function setHeading( $label, $link = null ) // {{{
 	{
@@ -276,6 +291,24 @@ class TikiPageControls implements ArrayAccess
 		case 'heading': return true;
 		default: return false;
 		}
+	} // }}}
+
+	function setMode( $mode ) // {{{
+	{
+		$this->mode = $mode;
+	} // }}}
+
+	protected function getMode() // {{{
+	{
+		return $this->mode;
+	} // }}}
+
+	protected function isMode( $mode ) // {{{
+	{
+		if( ! is_array($mode) )
+			$mode = func_get_args();
+
+		return in_array( $this->mode, $mode );
 	} // }}}
 
 	function offsetSet( $name, $value ) {}

@@ -1,11 +1,9 @@
 {* $Id$ *}
 
-{title}{tr}History{/tr}: {$page}{/title}
+{* See tiki-pagecontrols.tpl *}
+{$wiki_page_controls}
 
-<div class="navbar">
-	{assign var=thispage value=$page|escape:url}
-	{button href="tiki-index.php?page=$thispage" _text="{tr}View page{/tr}"}
-</div>
+{assign var=thispage value=$page|escape:url}
 
 {if $preview}
   <h2>{tr}Preview of version{/tr}: {$preview}

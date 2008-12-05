@@ -1,9 +1,6 @@
-{title}{tr}Remove page{/tr}: {$page} ({if $version == 'last'}{tr}Last Version{/tr}{else}{tr}Version{/tr}: {$version}{/if}){/title}
+{assign var=thispage value=$page|escape:'url'}
 
-<div class="navbar">
-	{assign var=thispage value=$page|escape:'url'}
-	{button href="tiki-index.php?page=$thispage" _text="{tr}Back to page{/tr}"}
-</div>
+{$wiki_page_controls}
 
 <form action="tiki-removepage.php" method="post">
   <p>{tr}You are about to remove the page{/tr} {$page} {tr}permanently{/tr}.</p>

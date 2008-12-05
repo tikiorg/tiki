@@ -1,10 +1,14 @@
 {* $Id$ *}
 
+{if $object_page_controls}
+	{$object_page_controls}
+{else}
 {title help="Permission"}{tr}Assign permissions to {/tr}{tr}{$objectType|escape}{/tr}: {$objectName|escape}{/title}
 
 <div class="navbar">
   {button href="$referer" _text="{tr}Back{/tr}"}
 </div>
+{/if}
 
 {if $prefs.feature_tabs eq 'y'}
   <div class="tabs" style="clear: both;">

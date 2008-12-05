@@ -41,10 +41,9 @@ if ($prefs['feature_wikiapproval'] == 'y' && substr($page, 0, strlen($prefs['wik
 include_once ("tiki-pagesetup.php");
 
 // Now check permissions to rename this page
-$info=null;
+$info = $tikilib->get_page_info($page);
 if ($tiki_p_rename == 'y') {
 	if ($tiki_p_admin_wiki != 'y' && $prefs['feature_wiki_usrlock'] == 'y') {
-		$info = $tikilib->get_page_info($page);
 		$allowed = ($wikilib->is_editable($page, $user, $info))? 'y': 'n';
 	} else {
 		$allowed = 'y';
@@ -105,6 +104,12 @@ include_once ('tiki-section_options.php');
 
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
+
+require_once 'TikiPageControls_Wiki.php';
+$controls = new TikiPageControls_Wiki($info);
+$controls->setMode('rename');
+$controls->build();
+$smarty->assign('wiki_page_controls', $controls);
 
 $smarty->assign('mid', 'tiki-rename_page.tpl');
 $smarty->display("tiki.tpl");

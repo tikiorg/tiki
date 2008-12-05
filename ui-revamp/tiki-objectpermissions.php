@@ -190,6 +190,13 @@ if ($prefs['feature_categories'] == 'y') {
 
 ask_ticket('object-perms');
 
+require_once('TikiPageControls.php');
+if( $controls = TikiPageControls::factory( $_REQUEST['objectType'], $_REQUEST['objectId'], $_REQUEST['objectName'] ) ) {
+	$controls->setMode('permissions');
+	$controls->build();
+	$smarty->assign('object_page_controls', $controls);
+}
+
 // Display the template
 $smarty->assign('mid','tiki-objectpermissions.tpl');
 if ( isset($_REQUEST['filegals_manager']) && $_REQUEST['filegals_manager'] != '' ) {

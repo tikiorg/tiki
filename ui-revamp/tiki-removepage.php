@@ -28,6 +28,7 @@ if (!isset($_REQUEST["page"])) {
 	die;
 } else {
 	$page = $_REQUEST["page"];
+	$info = $tikilib->get_page_info($page);
 
 	$smarty->assign_by_ref('page', $_REQUEST["page"]);
 }
@@ -86,6 +87,12 @@ include_once ('tiki-section_options.php');
 
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
+
+require_once 'TikiPageControls_Wiki.php';
+$controls = new TikiPageControls_Wiki($info);
+$controls->setMode('remove');
+$controls->build();
+$smarty->assign('wiki_page_controls', $controls);
 
 $smarty->assign('mid', 'tiki-removepage.tpl');
 $smarty->display("tiki.tpl");

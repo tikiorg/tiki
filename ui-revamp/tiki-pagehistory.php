@@ -235,6 +235,12 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 include_once ('tiki-section_options.php');
 
+require_once 'TikiPageControls_Wiki.php';
+$controls = new TikiPageControls_Wiki($info);
+$controls->setMode('history');
+$controls->build();
+$smarty->assign('wiki_page_controls', $controls);
+
 // Display the template
 $smarty->assign('mid', 'tiki-pagehistory.tpl');
 $smarty->display("tiki.tpl");
