@@ -15,6 +15,7 @@ if ($prefs['feature_calendar'] != 'y') {
 }
 include_once ('lib/calendar/calendarlib.php');
 include_once ('lib/newsletters/nllib.php');
+include_once ('lib/calendar/calrecurrence.php');
 if ($prefs['feature_groupalert'] == 'y') {
 	include_once ('lib/groupalert/groupalertlib.php');
 }
@@ -38,6 +39,11 @@ if (isset($_REQUEST['calendarId']) and $userlib->object_has_one_permission($_REQ
   }
 }
 */
+
+$daysnames = array("Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Satursday");
+$monthnames = array("","January","February","March","April","May","June","July","August","September","October","November","December");
+$smarty->assign('daysnames',$daysnames);
+$smarty->assign('monthnames',$monthnames);
 
 $smarty->assign('edit',false);
 $hours_minmax = '';
@@ -209,11 +215,67 @@ if (isset($_POST['act'])) {
 	if ((empty($save['calitemId']) and $caladd["$newcalid"]['tiki_p_add_events'])
 	or (!empty($save['calitemId']) and $caladd["$newcalid"]['tiki_p_change_events'])) {
 		if (empty($save['name'])) $save['name'] = tra("event without name");
+		if (empty($save['priority'])) $save['priority'] = 0;
 
-		$calitemId=$calendarlib->set_item($user,$save['calitemId'],$save);
+		if (array_key_exists('recurrent',$_POST) && ($_POST['recurrent'] == 1) && $_POST['affect']!='event') {
+			$calRecurrence = new CalRecurrence($_POST['recurrenceId'] ? $_POST['recurrenceId'] : -1);
+			$calRecurrence->setCalendarId($save['calendarId']);
+			$calRecurrence->setStart($_POST['start_Hour'] . str_pad($_POST['start_Minute'],2,'0',STR_PAD_LEFT));
+			$calRecurrence->setEnd($_POST['end_Hour'] . str_pad($_POST['end_Minute'],2,'0',STR_PAD_LEFT));
+			$calRecurrence->setAllday($save['allday'] == 1);
+			$calRecurrence->setLocationId($save['locationId']);
+			$calRecurrence->setCategoryId($save['categoryId']);
+			$calRecurrence->setNlId(0); //TODO : What id nlId ?
+			$calRecurrence->setPriority($save['priority']);
+			$calRecurrence->setStatus($save['status']);
+			$calRecurrence->setUrl($save['url']);
+			$calRecurrence->setLang(strLen($save['lang']) > 0 ? $save['lang'] : 'en');
+			$calRecurrence->setName($save['name']);
+			$calRecurrence->setDescription($save['description']);
+			switch($_POST['recurrenceType']) {
+				case "weekly":
+					$calRecurrence->setWeekly(true);
+					$calRecurrence->setWeekday($_POST['weekday']);
+					$calRecurrence->setMonthly(false);
+					$calRecurrence->setYearly(false);
+					break;
+				case "monthly":
+					$calRecurrence->setWeekly(false);
+					$calRecurrence->setMonthly(true);
+					$calRecurrence->setDayOfMonth($_POST['dayOfMonth']);
+					$calRecurrence->setYearly(false);
+					break;
+				case "yearly":
+					$calRecurrence->setWeekly(false);
+					$calRecurrence->setMonthly(false);
+					$calRecurrence->setYearly(true);
+					$calRecurrence->setDateOfYear(str_pad($_POST['dateOfYear_month'],2,'0',STR_PAD_LEFT) . str_pad($_POST['dateOfYear_day'],2,'0',STR_PAD_LEFT));
+					break;
+			}
+			$calRecurrence->setStartPeriod($_POST['startPeriod']);
+			if ($_POST['endType'] == "dt")
+				$calRecurrence->setEndPeriod($_POST['endPeriod']);
+			else {
+				$calRecurrence->setNbRecurrences($_POST['nbRecurrences']);
+			}
+			$calRecurrence->setUser($save['user']);
+			$calRecurrence->save($_POST['affect'] == 'all');
+			header('Location: tiki-calendar.php');
+			die;
+		} else {
+			if (array_key_exists('recurrenceId',$_POST)) {
+				$save['recurrenceId'] = $_POST['recurrenceId'];
+				$save['changed'] = true;
+			}
+			$calitemId = $calendarlib->set_item($user,$save['calitemId'],$save);
+			header('Location: tiki-calendar.php');
+			die;
+		}
+
 		if ($prefs['feature_groupalert'] == 'y') {
 			$groupalertlib->Notify($_REQUEST['listtoalert'],"tiki-calendar_edit_item.php?viewcalitemId=".$calitemId);
 		}
+
 		header('Location: tiki-calendar.php');
 		die;
 	}
@@ -230,6 +292,13 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
   } else {
     key_get($area);
   }
+} elseif (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["recurrenceId"]) and $tiki_p_change_events == 'y') {
+	$calRec = new CalRecurrence($_REQUEST['recurrenceId']);
+	$calRec->delete();
+    $_REQUEST["recurrenceTypeId"] = 0;
+    $_REQUEST["calitemId"] = 0;
+	header('Location: tiki-calendar.php');
+	die;
 } elseif (isset($_REQUEST['drop']) and $tiki_p_change_events == 'y') {
   check_ticket('calendar');
   if (is_array($_REQUEST['drop'])) {
@@ -363,9 +432,15 @@ include_once("textareasize.php");
 $smarty->assign('myurl', 'tiki-calendar_edit_item.php');
 $smarty->assign('id', $id);
 $smarty->assign('hour_minmax', $hour_minmax);
+if ($calitem['recurrenceId'] > 0) {
+	$cr = new CalRecurrence($calitem['recurrenceId']);
+	$smarty->assign('recurrence',$cr->toArray());
+}
 $smarty->assign('calitem', $calitem);
 $smarty->assign('calendar', $calendar);
 $smarty->assign('calendarId', $_REQUEST['calendarId']);
+if (array_key_exists('CalendarViewGroups',$_SESSION) && count($_SESSION['CalendarViewGroups']) == 1)
+	$smarty->assign('calendarView',$_SESSION['CalendarViewGroups'][0]);
 if ($prefs['feature_ajax'] == "y") {
 function edit_calendar_ajax() {
     global $ajaxlib, $xajax;

@@ -288,7 +288,7 @@ abstract class File_iCal_BaseComponent {
      *
      *  @param  File_iCal_Attendee  $a
      */
-    protected function addAttendee($a) { //File_iCal_Attendee 
+    protected function addAttendees($a) { //File_iCal_Attendee 
         $this->_attendees[] = $a;
     }
 
@@ -559,7 +559,7 @@ abstract class File_iCal_BaseComponent_EFJT extends File_iCal_BaseComponent {
 
 
     public function addAttendee($a) { //File_iCal_Attendee 
-        File_iCal_BaseComponent::addAttendee($a);
+        File_iCal_BaseComponent::addAttendees($a);
     }
 
     public function getAttendees() {

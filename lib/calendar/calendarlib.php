@@ -9,6 +9,14 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 define('weekInSeconds', 604800);
 
 class CalendarLib extends TikiLib {
+	function convert_sortmode($sort_mode) {
+		$tmp = explode("_",$sort_mode);
+		if (count($tmp) == 2) {
+			if ($tmp[0] == "categoryName" || $tmp[0] == "locationName")
+				return "name " . $tmp[1];
+		}
+		return parent::convert_sortmode($sort_mode);
+	}
 
 	function CalendarLib($db) {
 		$this->TikiLib($db);
@@ -178,7 +186,19 @@ class CalendarLib extends TikiLib {
 		$bindvars[] = $user;
 
 		$query = "select i.`calitemId` as `calitemId` ";
-		$query .= "from `tiki_calendar_items` as i left join `tiki_calendars` as c on i.`calendarId`=c.`calendarId` where ($cond)  order by i.".$this->convert_sortmode("$sort_mode");
+		$queryCompl = "";
+		$joinCompl = "";
+		$tblRef = "i.";
+		if (substr($sort_mode,0,12) == "categoryName") {
+			$queryCompl = "`tiki_calendar_categories` as compl right join ";
+			$joinCompl = " on i.categoryId = compl.calcatid ";
+			$tblRef = "compl.";
+		} elseif (substr($sort_mode,0,12) == "locationName") {
+			$queryCompl = "`tiki_calendar_locations` as compl right join ";
+			$joinCompl = " on i.locationId = compl.callocid ";
+			$tblRef = "compl.";
+		}
+		$query .= "from " . $queryCompl . "`tiki_calendar_items` as i ".$joinCompl." left join `tiki_calendars` as c on i.`calendarId`=c.`calendarId` where ($cond)  order by ". $tblRef . $this->convert_sortmode("$sort_mode");
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);
 		$ret = array();
 		while ($res = $result->fetchRow()) {
@@ -287,7 +307,7 @@ class CalendarLib extends TikiLib {
 
 		$query = "select i.`calitemId` as `calitemId`, i.`calendarId` as `calendarId`, i.`user` as `user`, i.`start` as `start`, i.`end` as `end`, t.`name` as `calname`, ";
 		$query.= "i.`locationId` as `locationId`, l.`name` as `locationName`, i.`categoryId` as `categoryId`, c.`name` as `categoryName`, i.`priority` as `priority`, i.`nlId` as `nlId`, ";
-		$query.= "i.`status` as `status`, i.`url` as `url`, i.`lang` as `lang`, i.`name` as `name`, i.`description` as `description`, i.`created` as `created`, i.`lastmodif` as `lastModif`, i.`allday` as `allday`, ";
+		$query.= "i.`status` as `status`, i.`url` as `url`, i.`lang` as `lang`, i.`name` as `name`, i.`description` as `description`, i.`created` as `created`, i.`lastmodif` as `lastModif`, i.`allday` as `allday`, i.`recurrenceId` as `recurrenceId`, ";
 		$query.= "t.`customlocations` as `customlocations`, t.`customcategories` as `customcategories`, t.`customlanguages` as `customlanguages`, t.`custompriorities` as `custompriorities`, ";
 		$query.= "t.`customsubscription` as `customsubscription`, ";
 		$query.= "t.`customparticipants` as `customparticipants` ";
@@ -412,10 +432,13 @@ class CalendarLib extends TikiLib {
 			$data['nlId'] = 0;
 		}
 
+		if (!isset($data['recurrenceId']) || !($data['recurrenceId'] > 0))
+			$data['recurrenceId'] = null;
+
 		$data['user']=$user;
 
 		$realcolumns=array('calitemId', 'calendarId', 'start', 'end', 'locationId', 'categoryId', 'nlId','priority',
-				   'status', 'url', 'lang', 'name', 'description', 'user', 'created', 'lastmodif', 'allday');
+				   'status', 'url', 'lang', 'name', 'description', 'user', 'created', 'lastmodif', 'allday','recurrenceId','changed');
 		foreach($customs as $custom) $realcolumns[]=$custom;
 
 		if ($calitemId) {
