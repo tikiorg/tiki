@@ -136,7 +136,7 @@
 						{tr}{$atts|@count} files attached{/tr}
 					{/if}
 				{/strip}{/capture}
-				{button href="#attachments" _flip_id="attzone$pagemd5" _class=$thisbuttonclass _text=$thistext}
+				{button href="#attachments" _flip_id="attzone$pagemd5" _class=$thisbuttonclass _text=$thistext _flip_default_open=$prefs.w_displayed_default}
 			{/if}{* attachments *}
 
 			{if $prefs.feature_multilingual eq 'y' and $tiki_p_edit eq 'y' and !$lock}
