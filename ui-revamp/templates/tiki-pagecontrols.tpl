@@ -14,9 +14,9 @@
 	</div>
 	<div class="tabs">
 		{foreach from=$controls.tabs item=tab}
-			<div class="tab {if $tab.selected} active{/if}">
+			<span class="tabmark {if $tab.selected}tabactive{else}tabinactive{/if}">
 				{$tab}
-			</div>
+			</span>
 		{/foreach}
 	</div>
 </div>

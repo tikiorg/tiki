@@ -13,6 +13,11 @@
 	{$display_catpath}
 {/if}
 		</div>
+
+{* Display the entire page controls here. See tiki-pagecontrols.tpl *}
+{$wiki_page_controls}
+
+{* Superseeded by page controls? TODO : Verify and clean-up
 {if $print_page ne 'y'}
 		<div class="wikiactions" style="float: right; padding-left:10px; white-space: nowrap">
 			<div class="icons" style="float: left;">
@@ -89,7 +94,8 @@
 	{/if}
 		</div>
 		<br class="clear" style="clear: both" />
-{/if} {* <-- end of if $print_page ne 'y' *}
+{/if}
+*}
 {/if} {*hide_page_header*}
 	</div> {* div.content *}
 </div> {* div.wikitopline *}

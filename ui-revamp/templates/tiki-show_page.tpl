@@ -109,10 +109,12 @@
 {**
  * Page Title as h1 here when the feature is on
  *}
+{* Superseeded by page controls TODO : Cleanup
 {if $prefs.feature_page_title eq 'y'}
 	<h1 class="pagetitle">{breadcrumbs type="pagetitle" loc="page" crumbs=$crumbs}</h1>
     
 {/if}
+*}
 
 {if $structure eq 'y'}
 <div class="tocnav">
