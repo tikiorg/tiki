@@ -421,6 +421,7 @@ if ($prefs['feature_actionlog'] == 'y') {
 // Detect if we have a PDF export mod installed
 $smarty->assign('pdf_export', file_exists('lib/mozilla2ps/mod_urltopdf.php') ? 'y' : 'n');
 
+error_reporting(E_ALL);
 require_once 'TikiPageControls_Wiki.php';
 $controls = new TikiPageControls_Wiki( $info );
 $controls->setMode('view');

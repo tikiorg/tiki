@@ -30,7 +30,7 @@ class TikiPageControls_Wiki extends TikiPageControls
 
 	function build() // {{{
 	{
-		$this->setHeading( $page, $this->link( 'wiki page', $page ) );
+		$this->setHeading( $this->page, $this->link( 'wiki page', $this->page ) );
 
 		if( $this->hasPref('feature_multilingual') ) {
 			$this->addLanguageMenu();

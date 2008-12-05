@@ -547,8 +547,9 @@ class WikiRenderer
 
 	private function setupPageControls() // {{{
 	{
-		if( $this->pageControls )
+		if( $this->pageControls ) {
 			$this->pageControls->build();
+		}
 	} // }}}
 
 	private function setGlobal( $name, $value ) // {{{

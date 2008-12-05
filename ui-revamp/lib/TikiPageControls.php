@@ -1,13 +1,13 @@
 <?php
 
-class TikiPageControls_Element
+class TikiPageControls_Element implements ArrayAccess
 {
 	private $text;
 	private $argument;
 	private $link;
 	private $type;
 
-	private $selected;
+	private $selected = false;
 
 	function __construct( $type ) // {{{
 	{
@@ -36,9 +36,50 @@ class TikiPageControls_Element
 	{
 		$this->selected = (bool) $selected;
 	} // }}}
+
+	function offsetGet( $name ) // {{{
+	{
+		switch( $name ) {
+		case 'text': return $this->text;
+		case 'argument': return $this->argument;
+		case 'link': return $this->link;
+		case 'type': return $this->type;
+		case 'selected': return $this->selected;
+		}
+	} // }}}
+
+	function offsetExists( $name ) // {{{
+	{
+		switch( $name ) {
+		case 'text': return true;
+		case 'argument': return true;
+		case 'link': return true;
+		case 'type': return true;
+		case 'selected': return true;
+		default: return false;
+		}
+	} // }}}
+
+	function offsetSet( $name, $value ) {}
+	function offsetUnset( $name ) {}
+
+	function __toString() // {{{
+	{
+		$text = htmlentities( $this->text, ENT_QUOTES, 'UTF-8' );
+
+		if( !is_null($this->argument) ) {
+			$text .= ' <span class="argument">' . htmlentities($this->argument, ENT_QUOTES, 'UTF-8') . '</span>';
+		}
+
+		if( $this->link ) {
+			$text = '<a href="' . htmlentities($this->link->getHref(), ENT_QUOTES, 'UTF-8') . '">' . $text . '</a>';
+		}
+
+		return $text;
+	} // }}}
 }
 
-abstract class TikiPageControls_Link
+abstract class TikiPageControls_Link implements ArrayAccess
 {
 	abstract function getHref();
 
@@ -63,6 +104,24 @@ abstract class TikiPageControls_Link
 			throw Exception('Unknown link type: ' . $type);
 		}
 	} // }}}
+
+	function offsetGet( $name ) // {{{
+	{
+		switch( $name ) {
+		case 'href': return $this->getHref();
+		}
+	} // }}}
+
+	function offsetExists( $name ) // {{{
+	{
+		switch( $name ) {
+		case 'href': return true;
+		default: return false;
+		}
+	} // }}}
+
+	function offsetSet( $name, $value ) {}
+	function offsetUnset( $name ) {}
 }
 
 class TikiPageControls_UrlLink extends TikiPageControls_Link
@@ -79,7 +138,7 @@ class TikiPageControls_UrlLink extends TikiPageControls_Link
 	function getHref() // {{{
 	{
 		if( count($this->arguments) ) {
-			$query = http_build_query($arguments, null, '&');
+			$query = http_build_query($this->arguments, null, '&');
 			return "{$this->base}?$query";
 		} else {
 			return $this->base;
@@ -87,22 +146,55 @@ class TikiPageControls_UrlLink extends TikiPageControls_Link
 	} // }}}
 }
 
-class TikiPageControls_Menu
+class TikiPageControls_Menu extends TikiPageControls_Element
 {
-	function addItem()
-	{
-		return new TikiPageControls_Element;
-	}
+	private $itemList = array();
 
-	function isEmpty()
+	function __construct() // {{{
 	{
-		return false;
-	}
+		parent::__construct('menu');
+	} // }}}
+
+	function addItem( $label, $link ) // {{{
+	{
+		$item = new TikiPageControls_Element('menu_item');
+		$item->setText( $label );
+		$item->setLink( $link );
+
+		$this->itemList[] = $item;
+
+		return $item;
+	} // }}}
+
+	function isEmpty() // {{{
+	{
+		return count($this->itemList) == 0;
+	} // }}}
+
+	function offsetGet( $name ) // {{{
+	{
+		switch( $name ) {
+		case 'items': return $this->itemList;
+		default: return parent::offsetGet( $name );
+		}
+	} // }}}
+
+	function offsetExists( $name ) // {{{
+	{
+		switch( $name ) {
+		case 'items': return true;
+		default: return parent::offsetExists( $name );
+		}
+	} // }}}
 }
 
-class TikiPageControls
+class TikiPageControls implements ArrayAccess
 {
 	private $heading;
+	private $menus = array();
+	private $tabs = array();
+
+	private $template = 'tiki-pagecontrols.tpl';
 
 	public function setHeading( $label, $link = null ) // {{{
 	{
@@ -127,23 +219,62 @@ class TikiPageControls
 		return isset( $prefs[$prefName] ) && $prefs[$prefName] == 'y';
 	} // }}}
 
-	protected function addMenu( $label )
+	protected function addMenu( $label ) // {{{
 	{
-		return new TikiPageControls_Menu;
-	}
+		$menu = new TikiPageControls_Menu;
+		$menu->setText( $label );
 
-	protected function removeMenu( TikiPageControls_Menu $menu )
-	{
-	}
+		$this->menus[] = $menu;
 
-	protected function addTab( $label, $link, $argument = null )
+		return $menu;
+	} // }}}
+
+	protected function removeMenu( TikiPageControls_Menu $menu ) // {{{
 	{
-		return new TikiPageControls_Element;
-	}
+		$this->menus = array_diff( $this->menus, array( $menu ) );
+	} // }}}
+
+	protected function addTab( $label, $link, $argument = null ) // {{{
+	{
+		$tab = new TikiPageControls_Element( 'tab' );
+		$tab->setText( $label );
+		$tab->setLink( $link );
+		$tab->setArgument( $argument );
+
+		$this->tabs[] = $tab;
+
+		return $tab;
+	} // }}}
+
+	function __toString() // {{{
+	{
+		global $smarty;
+		$smarty->assign( 'controls', $this );
+
+		return $smarty->fetch( $this->template );
+	} // }}}
+
+	function offsetGet( $name ) // {{{
+	{
+		switch( $name ) {
+		case 'menus': return $this->menus;
+		case 'tabs': return $this->tabs;
+		case 'heading': return $this->heading;
+		}
+	} // }}}
+
+	function offsetExists( $name ) // {{{
+	{
+		switch( $name ) {
+		case 'menus': return true;
+		case 'tabs': return true;
+		case 'heading': return true;
+		default: return false;
+		}
+	} // }}}
+
+	function offsetSet( $name, $value ) {}
+	function offsetUnset( $name ) {}
 }
-
-// TODO : Add menus
-// TODO : Add items
-// TODO : Add tab
 
 ?>
