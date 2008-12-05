@@ -107,6 +107,7 @@ class TikiPageControls_Wiki extends TikiPageControls
 		if( $this->backlinks )
 			return $this->backlinks;
 
+		global $wikilib; require_once 'lib/wiki/wikilib.php';
 		return $this->backlinks = $wikilib->get_backlinks($this->page);
 	} // }}}
 
@@ -115,6 +116,7 @@ class TikiPageControls_Wiki extends TikiPageControls
 		if( $this->trads )
 			return $this->trads;
 
+		global $multilinguallib; require_once 'lib/multilingual/multilinguallib.php';
 		return $this->trads = $multilinguallib->getTranslations('wiki page', $this->info['page_id'], $this->page, $this->info['lang']);
 	} // }}}
 
@@ -304,6 +306,7 @@ class TikiPageControls_Wiki extends TikiPageControls
 
 		if ( $this->info['flag'] != 'L'
 			&& (
+				// TODO : Must find user
 				( $tiki_p_edit == 'y' && $this->info['user'] == $this->user ) || $tiki_p_remove == 'y'
 			) )  {
 			$this->canUndo = true;
@@ -321,6 +324,7 @@ class TikiPageControls_Wiki extends TikiPageControls
 		if( !is_null($this->canEdit) )
 			return $this->canEdit;
 
+		global $wikilib; require_once 'lib/wiki/wikilib.php';
 		$this->canEdit = $wikilib->is_editable($this->page, $this->user, $this->info);
 		return $this->canEdit;
 	} // }}}
