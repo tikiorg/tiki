@@ -13,7 +13,7 @@ function smarty_function_query($params, &$smarty) {
 	if ( isset($params['_noauto']) && $params['_noauto'] == 'y' ) {
 		$query = array();
 		foreach( $params as $param_name => $param_value ) {
-			if ( $param_name[0] == '_' ) continue;
+			if ( $param_name[0] == '_' || $param_value == 'NULL' || $param_value == NULL ) continue;
 			$query[$param_name] = $param_value;
 		}
 		// Even if _noauto is set, 'filegals_manager' is a special param that has to be kept all the time
@@ -22,12 +22,18 @@ function smarty_function_query($params, &$smarty) {
 		}
 	} else {
 		// Not using _REQUEST here, because it is sometimes directly modified in scripts
-		if ( $request === NULL ) $request = array_merge($_GET, $_POST);
+		if ( $request === NULL ) {
+			$request = array_merge($_GET, $_POST);
+
+			// Remove Xajax special arguments
+			foreach ( array('xjxargs', 'xjxr', 'xjx', 'xjxfun', 'xjxr') as $k ) {
+				unset($request[$k]);
+			}
+		}
 		$query = $request;
 
 		if ( is_array($params) ) {
 			foreach( $params as $param_name => $param_value ) {
-	
 				// Arguments starting with an underscore are special and must not be included in URL
 				if ( $param_name[0] == '_' ) continue;
 	
