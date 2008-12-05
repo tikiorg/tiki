@@ -62,13 +62,79 @@ tr.post-approved-n td span, tr.post-approved-r td span {
 }
 tr.post-approved-n td span, tr.post-approved-r td span { opacity: 0.6; }
 
+/* multiselect section for categories for example */
+
 div.multiselect {
-  vertical-align: middle;
-  overflow-y: auto;
-  overflow-x: hidden;
-  height: 5em;
-  width: 100%;
-  border: 1px solid black;
+	vertical-align: middle;
+	padding: 0;
+	border:1px solid #80B1E2;
+	height: 1.5em;
+	overflow: visible;
+}
+div.multiselect table{
+	width: 100%;
+}
+div.multiselect div.option {
+	white-space:nowrap;
+	width: 33.33%;
+	display: inline-block;
+	overflow : hidden;
+	margin : -1px;
+}
+
+div.multiselect div.selection span {
+	display: inline;
+}
+div.multiselect li.odd, div.multiselect div.odd {
+	color: black;
+	background-color : #F4F6F7;
+}
+div.multiselect li.odd:hover, div.multiselect div.odd:hover {
+	background: #FFF7E6;
+}
+div.multiselect li.even, div.multiselect div.even {
+	color: black;
+	background-color: #E7E9EA;
+}
+div.multiselect div.even:hover, div.multiselect div.even:hover {
+	background-color: #F0F2F3;
+}
+
+div.multiselect div.odd, div.multiselect div.even {
+	border:1px solid #80B1E2;
+}
+div.multiselect ul {
+	list-style-image:none;
+	list-style-position:outside;
+	list-style-type:none;
+	text-align: left;
+	white-space: nowrap;
+	margin:0;
+	padding:0;
+}
+div.multiselect img {
+	vertical-align: middle;
+}
+
+div.multiselect div.selection {
+	display: none;
+	overflow-y: auto;
+	overflow-x: hidden;
+	position: relative;
+	height: auto;
+	max-height: 7em;
+	z-index: 1000;
+	width: 100%;
+	left: -1px;
+	border:1px solid #80B1E2;
+	background-color: #ffffff;
+	float: left;
+	margin:0;
+	padding:0;
+}
+
+div.multiselect:hover, div.multiselect div.selection:hover {
+	border:1px solid #80B1E2;
 }
 
 /* display PHP/Smarty errors on top */

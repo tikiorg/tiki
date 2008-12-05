@@ -175,17 +175,7 @@
 
 {pagination_links cant=$cant step=$maxImages offset=$offset}{/pagination_links}
 
-<table class="findtable">
-<tr><td class="findtable">{tr}Find{/tr}
-   <form method="get" action="tiki-browse_gallery.php">
-     <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}Find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-     <input type="hidden" name="galleryId" value="{$galleryId}" />
-   </form>
-   </td>
-</tr>
-</table>
+{include file="find.tpl"}
 
 {if $prefs.feature_image_galleries_comments == 'y'
   && (($tiki_p_read_comments == 'y'
@@ -194,20 +184,8 @@
   ||  $tiki_p_edit_comments  == 'y')
 }
   <div id="page-bar">
-		{if $comments_cant gt 0}
-			{assign var=thisbuttonclass value='highlight'}
-		{else}
-			{assign var=thisbuttonclass value=''}
-		{/if}
-	  {if $comments_cant == 0 or ($tiki_p_read_comments == 'n' and $tiki_p_post_comments == 'y')}
-			{assign var=thistext value="{tr}Add Comment{/tr}"}
-		{elseif $comments_cant == 1}
-			{assign var=thistext value="{tr}1 comment{/tr}"}
-		{else}
-			{assign var=thistext value="$comments_cant&nbsp;{tr}Comments{/tr}"}
-		{/if}
-		{button href="#comments" _flip_id="comzone" _class=$thisbuttonclass _text=$thistext}
-    </div>
+  	   {include file=comments_button.tpl}
+  </div>
   {include file=comments.tpl}
 {/if}
 

@@ -62,12 +62,13 @@ if (isset($_REQUEST["all2db"])) {
 }
 $attachements = $wikilib->list_all_attachements($offset,$maxRecords,$sort_mode,$find);
 
+$smarty->assign_by_ref('cant_pages', $attachements['cant']);
+
 $smarty->assign_by_ref('attachements', $attachements['data']);
 $urlquery['find'] = $find;
 $urlquery['page'] = 'wikiatt';
 $urlquery['sort_mode'] = $sort_mode;
 $smarty->assign_by_ref('urlquery', $urlquery);
-$cant = $attachements['cant'];
-include "tiki-pagination.php";
+
 ask_ticket('admin-inc-wikiatt');
 ?>
