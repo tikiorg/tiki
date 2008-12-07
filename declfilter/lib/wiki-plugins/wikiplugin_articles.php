@@ -24,16 +24,19 @@ function wikiplugin_articles_info() {
 				'required' => false,
 				'name' => tra('Articles displayed'),
 				'description' => tra('The amount of articles to display in the list.'),
+				'filter' => 'digits',
 			),
 			'topic' => array(
 				'required' => false,
 				'name' => tra('Topic name'),
 				'description' => tra('The name of the topic.'),
+				'filter' => 'topicname',
 			),
 			'topicId' => array(
 				'required' => false,
 				'name' => tra('Topic ID'),
 				'description' => tra('The ID of the topic.'),
+				'filter' => 'digits',
 			),
 			'type' => array(
 				'required' => false,
@@ -44,16 +47,19 @@ function wikiplugin_articles_info() {
 				'required' => false,
 				'name' => tra('Category ID'),
 				'description' => tra('The ID of the category to list from.'),
+				'filter' => 'digits',
 			),
 			'lang' => array(
 				'required' => false,
 				'name' => tra('Language'),
 				'description' => tra('The article language to list.'),
+				'filter' => 'lang',
 			),
 			'sort' => array(
 				'required' => false,
 				'name' => tra('Sort order'),
 				'description' => tra('The column and order of the sort in columnName_asc or columnName_desc format.'),
+				'filter' => 'word',
 			),
 			'quiet' => array(
 				'required' => false,

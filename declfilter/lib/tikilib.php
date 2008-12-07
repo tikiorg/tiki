@@ -5607,6 +5607,7 @@ class TikiLib extends TikiDB {
 
 			// Apply filters on the body
 			$filter = isset($info['filter']) ? TikiFilter::get($info['filter']) : $default;
+			$data = $this->htmldecode($data);
 			$data = $filter->filter($data);
 
 			// Make sure all arguments are declared
@@ -5616,6 +5617,7 @@ class TikiLib extends TikiDB {
 			// Apply filters on values individually
 			foreach( $args as $key => &$value ) {
 				$filter = isset($params[$key]['filter']) ? TikiFilter::get($params[$key]['filter']) : $default;
+				$value = $this->htmldecode($value);
 				$value = $filter->filter($value);
 			}
 

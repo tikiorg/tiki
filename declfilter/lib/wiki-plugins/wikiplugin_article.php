@@ -26,11 +26,13 @@ function wikiplugin_article_info() {
 				'required' => false,
 				'name' => tra('Field'),
 				'description' => tra('The article field to display. Default field is Heading.'),
+				'filter' => 'word',
 			),
 			'Id' => array(
 				'required' => false,
 				'name' => tra('Article ID'),
 				'description' => tra('The article to display. If no value is provided, most recent article will be used.'),
+				'filter' => 'digits',
 			),
 		),
 	);

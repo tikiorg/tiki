@@ -13,9 +13,14 @@ class TikiFilter_MapTest extends PHPUnit_Framework_TestCase
 		$this->assertTrue( TikiFilter::get( 'pagename' ) instanceof Zend_Filter_StripTags );
 		$this->assertTrue( TikiFilter::get( 'username' ) instanceof Zend_Filter_StripTags );
 		$this->assertTrue( TikiFilter::get( 'groupname' ) instanceof Zend_Filter_StripTags );
+		$this->assertTrue( TikiFilter::get( 'topicname' ) instanceof Zend_Filter_StripTags );
 		$this->assertTrue( TikiFilter::get( 'xss' ) instanceof TikiFilter_PreventXss );
 		$this->assertTrue( TikiFilter::get( 'word' ) instanceof TikiFilter_Word );
 		$this->assertTrue( TikiFilter::get( 'wikicontent' ) instanceof TikiFilter_RawUnsafe );
+
+		// Temporary
+		$this->assertTrue( TikiFilter::get( 'lang' ) instanceof TikiFilter_PreventXss );
+		$this->assertTrue( TikiFilter::get( 'url' ) instanceof TikiFilter_PreventXss );
 	}
 
 	function testKnown()
