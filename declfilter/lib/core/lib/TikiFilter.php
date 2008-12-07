@@ -30,6 +30,7 @@ class TikiFilter
 			return new Zend_Filter_Digits;
 		case 'username':
 		case 'groupname':
+		case 'pagename':
 			// Use striptags
 		case 'striptags':
 			require_once 'Zend/Filter/StripTags.php';
@@ -40,6 +41,9 @@ class TikiFilter
 		case 'xss':
 			require_once 'TikiFilter/PreventXss.php';
 			return new TikiFilter_PreventXss;
+		case 'wikicontent':
+			require_once 'TikiFilter/RawUnsafe.php';
+			return new TikiFilter_RawUnsafe;
 		default:
 			trigger_error( 'Filter not found: ' . $filter, E_USER_WARNING );
 			require_once 'TikiFilter/PreventXss.php';

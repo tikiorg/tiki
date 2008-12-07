@@ -10,8 +10,12 @@ class TikiFilter_MapTest extends PHPUnit_Framework_TestCase
 		$this->assertTrue( TikiFilter::get( 'alpha' ) instanceof Zend_Filter_Alpha );
 		$this->assertTrue( TikiFilter::get( 'alnum' ) instanceof Zend_Filter_Alnum );
 		$this->assertTrue( TikiFilter::get( 'striptags' ) instanceof Zend_Filter_StripTags );
+		$this->assertTrue( TikiFilter::get( 'pagename' ) instanceof Zend_Filter_StripTags );
+		$this->assertTrue( TikiFilter::get( 'username' ) instanceof Zend_Filter_StripTags );
+		$this->assertTrue( TikiFilter::get( 'groupname' ) instanceof Zend_Filter_StripTags );
 		$this->assertTrue( TikiFilter::get( 'xss' ) instanceof TikiFilter_PreventXss );
 		$this->assertTrue( TikiFilter::get( 'word' ) instanceof TikiFilter_Word );
+		$this->assertTrue( TikiFilter::get( 'wikicontent' ) instanceof TikiFilter_RawUnsafe );
 	}
 
 	function testKnown()
@@ -42,6 +46,12 @@ class TikiFilter_MapTest extends PHPUnit_Framework_TestCase
 		$filter->setDefaultFilter( 'digits' );
 
 		$this->assertEquals( '123', $filter['foo'] );
+	}
+
+	function testRaw()
+	{
+		$filter = new TikiFilter_RawUnsafe;
+		$this->assertEquals( 'alert', $filter->filter('alert') );
 	}
 }
 

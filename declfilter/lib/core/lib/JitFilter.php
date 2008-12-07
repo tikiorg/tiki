@@ -1,4 +1,5 @@
 <?php
+require_once 'TikiFilter.php';
 
 class JitFilter implements ArrayAccess, Iterator, Countable
 {
@@ -194,6 +195,7 @@ class JitFilter implements ArrayAccess, Iterator, Countable
 
 	function __get( $key )
 	{
+		require_once 'JitFilter/Element.php';
 		if( ! isset( $this->stored[$key] ) )
 			return new JitFilter_Element( null );
 
