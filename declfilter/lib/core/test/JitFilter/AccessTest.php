@@ -90,6 +90,28 @@ class JitFilter_AccessTest extends PHPUnit_Framework_TestCase
 
 		$this->assertEquals( $this->array['new'], 'foo' );
 	}
+
+	function testGetSingleWithoutPresetGeneric()
+	{
+		$this->assertEquals( $this->array->foo->filter( new Zend_Filter_StringToUpper ), 'BAR' );
+	}
+
+	function testGetSinfleWithoutPresetNamed()
+	{
+		$this->assertEquals( $this->array->bar->digits(), '10' );
+	}
+
+	function testGetStructuredWithoutPresetGeneric()
+	{
+		$filtered = $this->array->baz->filter( new Zend_Filter_StringToUpper );
+		$this->assertEquals( $filtered, array( 'HELLO', 'WORLD' ) );
+	}
+
+	function testGetStructuredWithoutPresetNamed()
+	{
+		$filtered = $this->array->baz->alpha();
+		$this->assertEquals( $filtered, array( 'hello', 'world' ) );
+	}
 }
 
 ?>

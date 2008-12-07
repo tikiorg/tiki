@@ -191,6 +191,29 @@ class JitFilter implements ArrayAccess, Iterator, Countable
 	{
 		return count( $this->stored );
 	}
+
+	function __get( $key )
+	{
+		if( ! isset( $this->stored[$key] ) )
+			return new JitFilter_Element( null );
+
+		if( $this->stored[$key] instanceof self || is_array( $this->stored[$key] ) )
+			return $this->offsetGet( $key );
+
+		return new JitFilter_Element( $this->stored[$key] );
+	}
+
+	function filter( $filter )
+	{
+		$jit = new self( $this->stored );
+		$jit->setDefaultFilter( $filter );
+		return $jit->asArray();
+	}
+
+	function __call( $name, $arguments )
+	{
+		return $this->filter( $name );
+	}
 }
 
 ?>
