@@ -61,19 +61,7 @@
 		|| $tiki_p_post_comments == 'y'
 		|| $tiki_p_edit_comments == 'y')
 	}
-		{if $comments_cant gt 0}
-			{assign var=thisbuttonclass value='highlight'}
-		{else}
-			{assign var=thisbuttonclass value=''}
-		{/if}
-		{if $comments_cant == 0 or ($tiki_p_read_comments == 'n' and $tiki_p_post_comments == 'y')}
-			{assign var=thistext value="{tr}Add Comment{/tr}"}
-		{elseif $comments_cant == 1}
-			{assign var=thistext value="{tr}1 comment{/tr}"}
-		{else}
-			{assign var=thistext value="$comments_cant&nbsp;{tr}Comments{/tr}"}
-		{/if}
-		{button href="#comments" _flip_id="comzone" _class=$thisbuttonclass _text=$thistext}
+		{include file=comments_button.tpl}
 	{/if}
 </div>
 

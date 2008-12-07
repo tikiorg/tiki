@@ -101,6 +101,8 @@ if ($tiki_p_view_image_gallery != 'y') {
 	die;
 }
 
+$auto_query_args = array('offset','galleryId', 'sort_mode', 'find');
+
 if (!isset($_REQUEST["galleryId"])) {
 	$_REQUEST["galleryId"] = 0;
 }
@@ -326,6 +328,7 @@ if (isset($_REQUEST["find"])) {
 } else {
 	$find = '';
 }
+$smarty->assign_by_ref('find', $find);
 
 // get subgalleries first
 $subgals = $imagegallib->get_subgalleries($offset, $maxImages, $sort_mode, '', $_REQUEST["galleryId"]);
@@ -349,25 +352,9 @@ if ($prefs['feature_categories'] == 'y') {
 $smarty->assign('num_objects',count($subgals['data'])+count($images['data']));
 $smarty->assign('num_subgals',count($subgals['data']));
 $smarty->assign('num_images',count($images['data']));
-$cant_pages = ceil(($subgals['cant']+$images['cant']) / $maxImages);
-$smarty->assign_by_ref('cant_pages', $cant_pages);
-$smarty->assign('actual_page', 1 + ($offset / $maxImages));
-
-if ($images["cant"] > ($offset + $maxImages)) {
-	$smarty->assign('next_offset', $offset + $maxImages);
-} else {
-	$smarty->assign('next_offset', -1);
-}
-
-// If offset is > 0 then prev_offset
-if ($offset > 0) {
-	$smarty->assign('prev_offset', $offset - $maxImages);
-} else {
-	$smarty->assign('prev_offset', -1);
-}
 
 $smarty->assign_by_ref('images', $images["data"]);
-$smarty->assign_by_ref('cant', $images["cant"]);
+$smarty->assign('cant', $subgals['cant']+ $images['cant']);
 $smarty->assign_by_ref('subgals', $subgals['data']);
 
 // Mouseover data

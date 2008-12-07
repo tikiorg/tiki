@@ -69,7 +69,7 @@
     </select>
     </td></tr>
 <tr><td class="form">{tr}List displayed by default{/tr}</td><td><input type="checkbox" 
-name="wiki_comments_displayed_default"{if $prefs.wiki_comments_comment_displayed_default eq 'y'} checked="checked"{/if} /></td></tr>
+name="wiki_comments_displayed_default"{if $prefs.wiki_comments_displayed_default eq 'y'} checked="checked"{/if} /></td></tr>
     <tr><td colspan="2" class="button"><input type="submit" name="wikiprefs" value="{tr}Change settings{/tr}" /></td></tr>
     </table>
     </form>

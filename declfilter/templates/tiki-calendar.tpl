@@ -11,7 +11,7 @@
 
 <div id="calscreen">
 
-	<div id="configlinks" style="float:right;margin:5px;">
+	<div id="configlinks">
 		{if $displayedcals|@count eq 1 and $user and $prefs.feature_user_watches eq 'y'}
 			{if $user_watching eq 'y'}
 				<a href="tiki-calendar.php?watch_event=calendar_changed&amp;watch_action=remove" class="icon">{icon _id='no_eye' alt="{tr}Stop Monitoring this Page{/tr}"}</a>
@@ -32,8 +32,10 @@
 			{button href="tiki-calendar_edit_item.php" _text="{tr}Add Event{/tr}"}
 		{/if}
 
+		{button href="#" _onclick="javascript:toggle('exportcal');" _text="{tr}Export Calendars{/tr}" _title="{tr}Click to export calendars{/tr}"}
+
 		{if count($listcals) >= 1}
-			{button href="#" _onclick="toggle('filtercal');" _text="{tr}Visible Calendars{/tr}"}
+			{button href="#" _onclick="javascript:toggle('filtercal');" _text="{tr}Visible Calendars{/tr}" _title="{tr}Click to select visible calendars{/tr}"}
 
 			{if count($thiscal)}
 				{foreach item=k from=$listcals name=listc}
@@ -41,7 +43,7 @@
 						{assign var=thiscustombgcolor value=$infocals.$k.custombgcolor}
 						{assign var=thiscustomfgcolor value=$infocals.$k.customfgcolor}
 						{assign var=thisinfocalsname value=$infocals.$k.name}
-						{button href="#" _style="background-color:#$thiscustombgcolor;color:#$thiscustomfgcolor" _onclick="toggle('filtercal');" _text="$thisinfocalsname"}
+						{button href="#" _style="background-color:#$thiscustombgcolor;color:#$thiscustomfgcolor;border:1px solid #$thiscustomfgcolor;" _onclick="toggle('filtercal');" _text="$thisinfocalsname"}
 					{/if}
 				{/foreach}
 			{else}
@@ -63,7 +65,8 @@
 			{if $category_watched eq 'y'}
 				{tr}Watched by categories{/tr}:
 				{section name=i loop=$watching_categories}
-					{button href="tiki-browse_categories?parentId=$watching_categories[i].categId" _text=$watching_categories[i].name}
+					{assign var=thiswatchingcateg value=$watching_categories[i].categId}
+					{button href="tiki-browse_categories?parentId=$thiswatchingcateg" _text=$watching_categories[i].name}
 					&nbsp;
 				{/section}
 			{/if}	
@@ -89,13 +92,30 @@
 		</form>
 	{/if}
 
+<form id="exportcal" method="post" action="{$exportUrl}" name="f" style="display:none;">
+<input type="hidden" name="export" value="y"/>
+<div class="caltitle">{tr}Export calendars{/tr}</div>
+<div class="caltoggle"><input name="calswitch" id="calswitch" type="checkbox" onclick="switchCheckboxes(this.form,'calendarIds[]',this.checked);"/> <label for="calswitch">{tr}Check / Uncheck All{/tr}</label></div>
+{foreach item=k from=$listcals}
+<div class="calcheckbox"><input type="checkbox" name="calendarIds[]" value="{$k|escape}" id="groupcal_{$k}" {if $thiscal.$k}checked="checked"{/if} />
+<label for="groupcal_{$k}" class="calId{$k}">{$infocals.$k.name}</label>
+</div>
+{/foreach}
+<div class="calcheckbox"><a href="{$iCalAdvParamsUrl}">{tr}advanced parameters{/tr}</a>
+</div>
+<div class="calinput"><input type="submit" name="valid" value="{tr}Export{/tr}"/></div>
+</form>
+
 	{include file="tiki-calendar_nav.tpl"}
 
 	{if $viewlist eq 'list'}
 		{include file="tiki-calendar_listmode.tpl"'}
 	{elseif $viewmode eq 'day'}
 		{include file="tiki-calendar_daymode.tpl"}
+	{elseif $viewmode eq 'week'}
+		{include file="tiki-calendar_weekmode.tpl"}
 	{else}
 		{include file="tiki-calendar_calmode.tpl"}
 	{/if}
+<p>&nbsp;</p>
 </div>

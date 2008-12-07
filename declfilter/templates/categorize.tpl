@@ -15,17 +15,22 @@
 {/if}
   {if count($categories) gt 0}
     <div class="multiselect">
+ <div onclick="flip('categories_select');" class="{cycle}" style="white-space: nowrap;"><img align="right" src="pics/icons/hide_unhide.png"/>{tr}Choose Categories{/tr}</div>
+{strip}
+    <div id="categories_select" {*onmouseover="show('categories_select');" onmouseout="hide('categories_select');"*} class="selection">
       {cycle values="odd,even" print=false}
       {section name=ix loop=$categories}
       {if $categories[ix].incat eq 'y'}
-				<div class="{cycle}" style="display: inline; white-space:nowrap;"><input type="checkbox" name="cat_categories[]" value="{$categories[ix].categId|escape}" checked="checked"/>{if $categories[ix].categpath}{$categories[ix].categpath}{else}{$categories[ix].name}{/if}</div>
+				<div class="{cycle} option"><input type="checkbox" name="cat_categories[]" value="{$categories[ix].categId|escape}" checked="checked"/>{if $categories[ix].categpath}{$categories[ix].categpath}{else}{$categories[ix].name}{/if}</div>
 			{/if}
       {/section}
       {section name=ix loop=$categories}
       {if $categories[ix].incat neq 'y'}
-				<div class="{cycle}" style="display: inline; white-space:nowrap;"><input type="checkbox" name="cat_categories[]" value="{$categories[ix].categId|escape}"/>{if $categories[ix].categpath}{$categories[ix].categpath}{else}{$categories[ix].name}{/if}</div>
+				<div class="{cycle} option"><input type="checkbox" name="cat_categories[]" value="{$categories[ix].categId|escape}"/>{if $categories[ix].categpath}{$categories[ix].categpath}{else}{$categories[ix].name}{/if}</div>
 			{/if}
       {/section}
+    </div>
+{/strip}
     </div>
     <input type="hidden" name="cat_categorize" value="on" />
 		<input type="checkbox" name="cat_clearall" value="on" {if $prefs.javascript_enabled eq 'y'}onclick="switchCheckboxes(this.form,'cat_categories[]',false);"{/if} />{tr}Clear all Categories{/tr}<br/>
@@ -41,3 +46,4 @@
 </tr>
   {/if}
 {/if}
+

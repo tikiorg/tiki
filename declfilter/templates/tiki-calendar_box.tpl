@@ -1,36 +1,32 @@
-<div class='opaque'>
-<div class='box-title'>
+<div class='opaque' style="position:absolute;left:50%;margin-left:-150px;width:400px">
+<div style="float:right"><a href="#" onClick="javascript:nd();"><img src="pics/icons/cross.png" alt="{tr}close{/tr}" border="0"/></a></div>
+<strong>
 {if $allday}
-	All-Day
+	{tr}All-Day{/tr}
 {else}
-	{$cellhead}
+  {if ($cellend - $cellstart < 86400)}
+	{$cellstart|tiki_date_format:"%H:%M"} &gt {$cellend|tiki_date_format:"%H:%M"}
+  {else}
+	{$cellstart|tiki_date_format:"%e %B (%H:%M)"} &gt {$cellend|tiki_date_format:"%e %B (%H:%M)"}
+  {/if}
 {/if}
-{if $infocals.$cellcalendarId.custompriorities eq 'y' and $cellprio}<span class='calprio{$cellprio}' id='calprio'>{$cellprio}</span>{/if}
-{if $prefs.calendar_sticky_popup eq "y" and $cellid}&nbsp;<a onmouseover="javascript:cClick()" title="{tr}close{/tr}">{html_image file='img/icons/close.gif' alt="{tr}close{/tr}"}</a>{/if}
-</div>
-
-{if $show_calname eq 'y' and $cellcalname}<div class='box-title' style="{if $infocals.$cellcalendarId.custombgcolor ne ''}background-color:#{$infocals.$cellcalendarId.custombgcolor};{/if}{if $infocals.$cellcalendarId.customfgcolor ne ''}color:#{$infocals.$cellcalendarId.customfgcolor};{/if}"><b>{$cellcalname}</b></div>{/if}
-
-{if $cellid and $tiki_p_view_events eq 'y'}
-<div style="text-align:right" class='box-title'>
-{if $prefs.calendar_sticky_popup eq "y"}
-<a href="tiki-calendar_edit_item.php?viewcalitemId={$cellid}" title="{tr}Details{/tr}">{icon _id='magnifier' alt="{tr}Zoom{/tr}"}</a>&nbsp;{if $cellmodif eq "y"}<a href="tiki-calendar_edit_item.php?calitemId={$cellid}" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a><a href="tiki-calendar_edit_item.php?calitemId={$cellid}&amp;delete=1" title="{tr}Remove{/tr}">{icon _id='cross' alt="{tr}Remove{/tr}"}</a>{/if}
-{elseif $cellmodif eq "y"}
-... {tr}click to edit{/tr}
-{elseif $prefs.calendar_view_tab eq "y"}
-... {tr}click to view{/tr}
+</strong>
+<br />
+<a href="tiki-calendar_edit_item.php?viewcalitemId={$cellid}" title="{tr}Details{/tr}">{$cellname}</a><br />
+{if $show_description eq 'y'}<span class="box-data">{$celldescription}</span><br />{/if}
+{if $show_participants eq 'y' and $cellparticipants}
+<span class="box-title">{tr}Organized by{/tr}:</span> {$cellorganizers}<br />
+<span class="box-title">{tr}Participants{/tr}:</span> {$cellparticipants}<br />
+<br />
 {/if}
-</div>
+{if $infocals.$cellcalendarId.custompriorities eq 'y' and $cellprio}<span class='box-title'>{tr}Priority{/tr}:</span> {$cellprio}<br />{/if}
+{if $show_category eq 'y' and $infocals.$cellcalendarId.customcategories eq 'y' and $cellcategory}<span class='box-title'>{tr}Category{/tr}:</span> {$cellcategory}<br />{/if}
+{if $show_location eq 'y' and $infocals.$cellcalendarId.customlocations eq 'y' and $celllocation}<span class='box-title'>{tr}Location{/tr}:</span> {$celllocation}<br />{/if}
+{if $show_url eq 'y' and $infocals.$cellcalendarId.customurl eq 'y' and $cellurl}<span class='box-title'>{tr}Website{/tr}:</span> <a href="{$cellurl|escape:'url'}" title="{$cellurl|escape:'url'}">{$cellurl|truncate:32:'...'}</a><br />{/if}
+{if $show_calname eq 'y' and $cellcalname}<span class='box-title'>{tr}Calendar{/tr}:</span>
+<span style=";height:12px;width:12px;background-color:#{$infocals.$cellcalendarId.custombgcolor};border-color:#{$infocals.$cellcalendarId.customfgcolor};border-width:1px;border-style:solid;opacity:0.7;">&nbsp;{$cellcalname}&nbsp;</span><br />
 {/if}
-
-{if $show_location eq 'y' and $infocals.$cellcalendarId.customlocations eq 'y' and $celllocation}<div class='box-title'><b>{$celllocation}</b></div>{/if}
-{if $show_category eq 'y' and $infocals.$cellcalendarId.customcategories eq 'y' and $cellcategory}<div class='box-title'><b>{$cellcategory}</b></div>{/if}
-{if $show_url eq 'y' and $infocals.$cellcalendarId.customurl eq 'y' and $cellurl}<div class='box-title'><a href="{$cellurl|escape:'url'}" title="{$cellurl|escape:'url'}">{$url|truncate:32:'...'}</a></div>{/if}
-<div class='box-data'>
-{if $cellname}<b>{$cellname}</b>{/if}
-{if $show_description eq 'y'}
-{if $cellname}<br />{/if}{$celldescription}
-{/if}
+<br />
 {if $show_status eq 'y'}
 <div class="statusbox status{$cellstatus}">{if $cellstatus eq 0}{tr}Tentative{/tr}{elseif $cellstatus eq 1}{tr}Confirmed{/tr}{elseif $cellstatus eq 2}{tr}Cancelled{/tr}{/if}</div>
 {/if}

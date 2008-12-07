@@ -13,6 +13,7 @@ ul.autocompleter-choices
 	font-family:			Verdana, Geneva, Arial, Helvetica, sans-serif;
 	z-index:				50;
 	background-color:		#fff;
+	color: #000;
 }
 
 ul.autocompleter-choices li

@@ -131,7 +131,7 @@
 	<input type="submit" name="search" value="{tr}Go{/tr}" />
 	{if $find ne ''}
 		<span class="button">
-			<a href="{$smarty.server.PHP_SELF}" title="{tr}Clear Filter{/tr}">{tr}Clear Filter{/tr}</a>
+			<a href="{$smarty.server.PHP_SELF}?{query find='' types='' topic='' lang='' langOrphan='' exact_match='' categId='' maxRecords=''}" title="{tr}Clear Filter{/tr}">{tr}Clear Filter{/tr}</a>
 		</span>
 	{/if}
 </li>

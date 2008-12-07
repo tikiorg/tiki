@@ -140,7 +140,6 @@ class File_iCal {
      */
     public function __toString() {
         $return = "";
-
         foreach ($this->_iCalendars as $c) {
             $return .= $c->__toString();
         }
@@ -174,10 +173,9 @@ class File_iCal {
     * @access  public
     * @static
     */
-    public static function sendHeader() {
-        header("Content-type: text/calendar");
-	header("Content-disposition: inline; filename=toto.ics");
-	
+    public static function sendHeader($name="toto") {
+		header("Content-type: text/calendar");
+		header("Content-disposition: inline; filename=".$name.".ics");
     }
 
     /**
@@ -189,7 +187,7 @@ class File_iCal {
                      "PRODID:PEAR-File_iCal\x0D\x0A" . 
                      "CALSCALE:GREGORIAN\x0D\x0A" . 
                      "END:VCALENDAR\x0D\x0A";
-        require_once 'File/iCal/iCalendar.php';
+        require_once 'iCal/iCalendar.php';
         return new File_iCal_iCalendar($skeleton);
     }
     /**
@@ -202,7 +200,7 @@ class File_iCal {
     */
     function factory($str,$args = array()) 
     {
-        require_once 'File/iCal/'. $str. '.php';
+        require_once 'iCal/'.$str.'.php';
         $class = 'File_iCal_'. $str;
         $ret = new $class;
         if ($args) {
