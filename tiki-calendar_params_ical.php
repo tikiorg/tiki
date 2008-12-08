@@ -8,20 +8,46 @@
 $section = 'calendar';
 require_once ('tiki-setup.php');
 
+if ($prefs['feature_calendar'] != 'y') {
+	$smarty->assign('msg', tra("This feature is disabled").": feature_calendar");
+	$smarty->display("error.tpl");
+	die;
+}
+
 include_once ('lib/calendar/calendarlib.php');
 include_once ('lib/categories/categlib.php');
 include_once ('lib/newsletters/nllib.php');
 
-if ($prefs['feature_calendar'] != 'y') {
-  $smarty->assign('msg', tra("This feature is disabled").": feature_calendar");
-  $smarty->display("error.tpl");
-  die;
-}
 if ($prefs['feature_ajax'] == "y") {
-require_once ('lib/ajax/ajaxlib.php');
+	require_once ('lib/ajax/ajaxlib.php');
 }
 
 $smarty->assign('edit',false);
+
+if (isset($_SESSION['CalendarFocusDate']) && $_SESSION['CalendarFocusDate']) {
+	$now = explode("/",date('m/d/Y',$_SESSION['CalendarFocusDate']));
+} else {
+	// by default, export will start from yesterday's events.
+	$now = explode("/",date('m/d/Y'));
+}
+
+if (isset($_SESSION['CalendarViewMode'])) {
+	switch ($_SESSION['CalendarViewMode']) {
+		case 'month':
+			$startTime = mktime(0,0,0,$now[0],1,$now[2]);
+			$stopTime = mktime(0,0,0,$now[0]+1,0,$now[2]);
+			break;
+		default:
+			$startTime = mktime(0,0,0,$now[0],$now[1]-1,$now[2]);
+			$stopTime = mktime(0,0,0,$now[0],$now[1]+1,$now[2]);
+	}
+} else {
+	$startTime = mktime(0,0,0,$now[0],$now[1]-1,$now[2]);
+	$stopTime = mktime(0,0,0,$now[0],$now[1]+1,$now[2]);
+}
+
+$smarty->assign('startTime',$startTime);
+$smarty->assign('stopTime',$stopTime);
 
 $caladd = array();
 $rawcals = $calendarlib->list_calendars();

@@ -1,12 +1,11 @@
 <?php
-
-// Initialization
 require_once('tiki-setup.php');
-include_once ('lib/ical/iCal.php');
-TikiInit::appendIncludePath("lib/ical/");
 
-// list calendars //
-include_once ('lib/calendar/calendarlib.php');
+if ($prefs['feature_calendar'] != 'y') {
+	$smarty->assign('msg', tra("This feature is disabled").": feature_calendar");
+	$smarty->display("error.tpl");
+	die;
+}
 
 if ($tiki_p_admin_calendar != 'y' and $tiki_p_admin != 'y') {
 	$smarty->assign('errortype', 401);
@@ -14,9 +13,24 @@ if ($tiki_p_admin_calendar != 'y' and $tiki_p_admin != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
-$now = explode("/",date('m/d/Y'));
-$startTime = mktime(0,0,0,$now[0],$now[1]-1,$now[2]); // by default, export will start from yesterday's events.
-$stopTime = 9999999999; // by default, this will be considered the end of time
+
+// Initialization
+TikiInit::appendIncludePath("lib/ical/");
+include_once ('lib/ical/iCal.php');
+
+// list calendars //
+include_once ('lib/calendar/calendarlib.php');
+
+if (isset($_SESSION['CalendarFocusDate']) && $_SESSION['CalendarFocusDate']) {
+	$now = explode("/",date('m/d/Y',$_SESSION['CalendarFocusDate']));
+} else {
+	$now = explode("/",date('m/d/Y'));
+}
+
+// by default, export will start from yesterday's events.
+$startTime = mktime(0,0,0,$now[0],$now[1]-1,$now[2]);
+// by default, this will be considered the end of time
+$stopTime = 9999999999;
 
 if (isset($_REQUEST["tstart"]))
 	$startTime = $_REQUEST["tstart"];
