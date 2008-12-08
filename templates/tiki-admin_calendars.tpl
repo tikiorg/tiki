@@ -160,8 +160,9 @@
 <tr class="formcolor"><td>{tr}End of day{/tr}:</td><td>
 <select name="endday_Hour">{foreach item=h from=$hours}<option value="{$h}"{if $h eq $endday} selected="selected"{/if}>{$h}</option>{/foreach}</select>{tr}h{/tr}
 </td></tr>
-<tr class="formcolor"><td>{tr}standard colors{/tr}:</td><td>
+<tr class="formcolor"><td>{tr}Standard Colors{/tr}:</td><td>
 	<select name="options[customcolors]" onChange="javascript:document.getElementById('fgColorField').disabled=(this.options[this.selectedIndex].value != 0);document.getElementById('bgColorField').disabled=(this.options[this.selectedIndex].value != 0);">
+	  <option value="" />
 	  <option value="008400-99fa99" style="background-color:#99fa99;color:#008400" {if ($customColors) eq '008400-99fa99'}selected{/if}>{tr}Green{/tr}</option>
 	  <option value="3333ff-aaccff" style="background-color:#aaccff;color:#3333ff" {if ($customColors) eq '3333ff-aaccff'}selected{/if}>{tr}Blue{/tr}</option>
 	  <option value="996699-c2a6d2" style="background-color:#e0cae5;color:#996699" {if ($customColors) eq '996699-c2a6d2'}selected{/if}>{tr}Purple{/tr}</option>
