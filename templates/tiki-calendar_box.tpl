@@ -24,7 +24,7 @@
 {if $show_location eq 'y' and $infocals.$cellcalendarId.customlocations eq 'y' and $celllocation}<span class='box-title'>{tr}Location{/tr}:</span> {$celllocation}<br />{/if}
 {if $show_url eq 'y' and $infocals.$cellcalendarId.customurl eq 'y' and $cellurl}<span class='box-title'>{tr}Website{/tr}:</span> <a href="{$cellurl|escape:'url'}" title="{$cellurl|escape:'url'}">{$cellurl|truncate:32:'...'}</a><br />{/if}
 {if $show_calname eq 'y' and $cellcalname}<span class='box-title'>{tr}Calendar{/tr}:</span>
-<span style=";height:12px;width:12px;background-color:#{$infocals.$cellcalendarId.custombgcolor};border-color:#{$infocals.$cellcalendarId.customfgcolor};border-width:1px;border-style:solid;opacity:0.7;">&nbsp;{$cellcalname}&nbsp;</span><br />
+<span style=";height:12px;width:12px;background-color:#{$infocals.$cellcalendarId.custombgcolor};border-color:#{$infocals.$cellcalendarId.customfgcolor};border-width:1px;border-style:solid;">&nbsp;{$cellcalname}&nbsp;</span><br />
 {/if}
 <br />
 {if $show_status eq 'y'}
