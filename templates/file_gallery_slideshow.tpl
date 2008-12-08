@@ -4,10 +4,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<title>{$title} - Slideshow</title>
-{literal}
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<link rel="stylesheet" href="lib/slideshow/css/slideshow.css" type="text/css" media="screen" />
 	<style type="text/css">
+{literal}
 	html, body { background-color: black; height: 100%; width: 100%; }
 	* { margin: 0; padding: 0; }
 	.slideshow { right: 70px; }
@@ -48,6 +48,7 @@
 		background: transparent url(lib/slideshow_tiki/thumbnails-b.png) repeat scroll 0 0;
 		bottom: 30px;
 	}
+{/literal}
 	</style>
 	<script type="text/javascript" src="lib/mootools/mootools-1.2-core.js"></script>
 	<script type="text/javascript" src="lib/mootools/mootools-1.2-more.js"></script>
@@ -56,20 +57,20 @@
 	<script type="text/javascript">
 	<!--//--><![CDATA[//><!--
 	var myShow;
-	window.addEvent('domready', function(){
-		var data = {
-{/literal}{foreach from=$file key=i item=f name=files}
+	window.addEvent('domready', function(){ldelim}
+		var data = {ldelim}
+{foreach from=$file key=i item=f name=files}
 {if $smarty.foreach.files.first}{assign var=first value=$f.id}{/if}
 			'tiki-download_file.php?preview&fileId={$f.id}': {ldelim}
 				caption: '{$f.name|escape:'javascript'}',
 				href: 'tiki-download_file.php?fileId={$f.id}'
 			{rdelim}{if !$smarty.foreach.files.last},
 {/if}
-{/foreach}{literal}
-		};
-		myShow = new Slideshow.Fullsize('show', data, {
+{/foreach}
+		{rdelim};
+		myShow = new Slideshow.Fullsize('show', data, {ldelim}
 			controller: true,
-			hu: '{/literal}{if $tikiroot neq ""}{$tikiroot}{else}/{/if}{literal}',
+			hu: '{if $tikiroot neq ""}{$tikiroot}{else}/{/if}',
 			thumbnails: true,
 			replace: [/\?preview/, '?thumbnail'],
 			overlap: false,
@@ -82,11 +83,10 @@
 			captions: true,
 			adjustheight: -60,
 			adjustwidth: -180
-		});
-	});
+		{rdelim});
+	{rdelim});
 	//--><!]]>
 	</script>
-{/literal}
 </head>
 <body>
 <div style="position:fixed; top:5px; right:10px;">{button href='#' _onclick='javascript:window.close();' _text="{tr}Close{/tr}"}</div>
