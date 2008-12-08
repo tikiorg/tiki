@@ -48,7 +48,7 @@
 	<input type="hidden" name="recurrent" value="1"/>
 		{tr}This event depends on a recurrence rule{/tr}
 	{else}
-	  <input type="checkbox" id="id_recurrent" name="recurrent" value="1" onChange="javascript: toggle('recurrenceRules');"{if $calitem.recurrenceId gt 0}checked="checked"{/if}/><label for="id_recurrent">{tr}This event depends on a recurrence rule{/tr}</label>
+	  <input type="checkbox" id="id_recurrent" name="recurrent" value="1" onClick="javascript: toggle('recurrenceRules');"{if $calitem.recurrenceId gt 0}checked="checked"{/if}/><label for="id_recurrent">{tr}This event depends on a recurrence rule{/tr}</label>
 	{/if}
 {else}
 	<span class="summary">{if $calitem.recurrenceId gt 0}{tr}This event depends on a recurrence rule{/tr}{else}{tr}This event is not recurrent{/tr}{/if}</span>
@@ -182,6 +182,7 @@
 		<br />&nbsp;
 	  </div>
 {else}
+	{if $recurrence.id > 0}
 	{if $recurrence.weekly}
 	  {tr}Event is repeated {if $recurrence.nbRecurrences gt 0}{$recurrence.nbRecurrences} {tr}times{/tr}, {/if}every{/tr}&nbsp;{tr}{$daysnames[$recurrence.weekday]}{/tr}
 	{elseif $recurrence.monthly}
@@ -192,6 +193,7 @@
 	<br />
 	{tr}Starting on{/tr} {$recurrence.startPeriod|tiki_long_date}
 	{if $recurrence.endPeriod gt 0}, {tr}ending by{/tr} {$recurrence.endPeriod|tiki_long_date}{/if}.
+{/if}
 {/if}
 	</td>
 </tr>
@@ -378,6 +380,10 @@
     {else}
         {if $calitem.end}<abbr class="dtend" title="{$calitem.end|isodate}">{/if}{$calitem.end|tiki_long_datetime}{if $calitem.end}</abbr>{/if}
     {/if}
+{/if}
+{if $impossibleDates}
+<br />
+<span style="color:#900;">{tr}Events cannot end before they start{/tr}</span>
 {/if}
 </td>
 </tr>

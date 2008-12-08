@@ -207,6 +207,11 @@ if (isset($_REQUEST['act']) || isset($_REQUEST['preview']) || isset($_REQUEST['c
 		$save['duration'] = max(0, $save['end'] - $save['start']);
 	}
 }
+$impossibleDates = false;
+if (isset($save['start']) && isset($save['end'])) {
+	if (($save['end'] - $save['start']) < 0)
+		$impossibleDates = true;
+}
 
 if (isset($_POST['act'])) {
 	if (empty($save['user'])) $save['user'] = $user;
@@ -218,6 +223,14 @@ if (isset($_POST['act'])) {
 		if (empty($save['priority'])) $save['priority'] = 0;
 
 		if (array_key_exists('recurrent',$_POST) && ($_POST['recurrent'] == 1) && $_POST['affect']!='event') {
+			$impossibleDates = false;
+			if ($_POST['end_Hour'] < $_POST['start_Hour']) {
+				$impossibleDates = true;
+			} elseif (($_POST['end_Hour'] == $_POST['start_Hour']) && ($_POST['end_Minute'] < $_POST['start_Minute'])) {
+				$impossibleDates = true;
+			} else
+				$impossibleDates = false;
+			if (!$impossibleDates) {
 			$calRecurrence = new CalRecurrence($_POST['recurrenceId'] ? $_POST['recurrenceId'] : -1);
 			$calRecurrence->setCalendarId($save['calendarId']);
 			$calRecurrence->setStart($_POST['start_Hour'] . str_pad($_POST['start_Minute'],2,'0',STR_PAD_LEFT));
@@ -262,7 +275,9 @@ if (isset($_POST['act'])) {
 			$calRecurrence->save($_POST['affect'] == 'all');
 			header('Location: tiki-calendar.php');
 			die;
+			}
 		} else {
+			if (!$impossibleDates) {
 			if (array_key_exists('recurrenceId',$_POST)) {
 				$save['recurrenceId'] = $_POST['recurrenceId'];
 				$save['changed'] = true;
@@ -279,6 +294,7 @@ if (isset($_POST['act'])) {
 		header('Location: tiki-calendar.php');
 		die;
 	}
+}
 }
 
 if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["calitemId"]) and $tiki_p_change_events == 'y') {
@@ -323,13 +339,13 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
   }
 	$smarty->assign('edit',true);
 	$hour_minmax = floor(($calendar['startday']-1)/(60*60)).'-'. ceil(($calendar['endday'])/(60*60));
-} elseif (isset($_REQUEST['preview'])) {
+} elseif (isset($_REQUEST['preview']) || $impossibleDates) {
 	$save['parsed'] = $tikilib->parse_data($save['description']);
 	$save['parsedName'] = $tikilib->parse_data($save['name']);
 	$id = $save['calitemId'];
 	$calitem = $save;
 	$smarty->assign('edit',true);
-	$smarty->assign('preview', 'y');
+	$smarty->assign('preview', isset($_REQUEST['preview']));
 } elseif (isset($_REQUEST['changeCal'])) {
 	$calitem = $save;
 	$smarty->assign('edit',true);
@@ -450,6 +466,7 @@ function edit_calendar_ajax() {
 }
 edit_calendar_ajax();
 }
+$smarty->assign('impossibleDates',$impossibleDates);
 $smarty->assign('mid', 'tiki-calendar_edit_item.tpl');
 $smarty->display("tiki.tpl");
 ?>
