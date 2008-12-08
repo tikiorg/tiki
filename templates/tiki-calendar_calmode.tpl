@@ -1,10 +1,11 @@
-{if $calendarViewMode eq 'month'}
-<table border="0" cellpading="0" cellspacing="0" style="width:100%">
-  <tr valign="middle" style="height:36px">
-	<td id="month_title" style="text-align:center"><strong>{$currMonth|tiki_date_format:"%B %Y"}</strong></td>
-  </tr>
-</table>
-{/if}
+<div class="calnavigation">
+	{if $calendarViewMode eq 'month'}
+		{$currMonth|tiki_date_format:"%B %Y"}
+	{else}
+		{$daystart|tiki_date_format:"%B %Y"} - {$dayend|tiki_date_format:"%B %Y"}
+	{/if}
+</div>
+
 <table border="0" cellpading="0" cellspacing="0" style="width:100%;border-collapse:collapse">
   <tr valign="middle" style="height:36px">
 {section name=dn loop=$daysnames}
