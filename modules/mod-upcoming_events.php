@@ -54,4 +54,6 @@ $smarty->assign('maxlen', isset($module_params["maxlen"]) ? $module_params["maxl
 $smarty->assign('nonums', isset($module_params["nonums"]) ? $module_params["nonums"] : 'n');
 $module_rows = count($events);
 $smarty->assign('module_rows', $module_rows);
-
+if (isset($module_params['title'])) {
+	$smarty->assign('tpl_module_title', $module_params['title']);
+}
