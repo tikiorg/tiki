@@ -17,7 +17,7 @@ if (isset($_REQUEST['noautosave'])) {
 function auto_save($id, $data, $referer = "") {
 	global $user;
 	$user_agent = $_SERVER['HTTP_USER_AGENT'];
-	$user_ip = $_SERVER['REMOTE_ADDR'];
+	$user_ip = $tikilib->get_ip_address();
 	if ($referer == "") {
 		$referer = preg_replace("/(\?|\&)noautosave=y/","",$_SERVER['REQUEST_URI']);
 	}
@@ -31,7 +31,7 @@ function auto_save($id, $data, $referer = "") {
 function remove_save($id) {
 	global $user;
 	$user_agent = $_SERVER['HTTP_USER_AGENT'];
-	$user_ip = $_SERVER['REMOTE_ADDR'];
+	$user_ip = $tikilib->get_ip_address();
 	$request_uri = preg_replace("/(\?|\&)noautosave=y/","",$_SERVER['REQUEST_URI']);
 	$file_name = md5("$user:$user_ip:$request_uri:$id");
 	if (file_exists("temp/cache/wiki-$file_name")) {
@@ -46,7 +46,7 @@ function remove_save($id) {
 function has_autosave($id) {
 	global $user;
 	$user_agent = $_SERVER['HTTP_USER_AGENT'];
-	$user_ip = $_SERVER['REMOTE_ADDR'];
+	$user_ip = $tikilib->get_ip_address();
 	$request_uri = preg_replace("/(?|&)noautosave='y'/","",$_SERVER['REQUEST_URI']);
 	$file_name = md5("$user:$user_ip:$request_uri:$id");
 	
@@ -56,7 +56,7 @@ function has_autosave($id) {
 function get_autosave($id) {
 	global $user;
 	$user_agent = $_SERVER['HTTP_USER_AGENT'];
-	$user_ip = $_SERVER['REMOTE_ADDR'];
+	$user_ip = $tikilib->get_ip_address();
 	$request_uri = preg_replace("/(?|&)noautosave='y'/","",$_SERVER['REQUEST_URI']);
 	$file_name = md5("$user:$user_ip:$request_uri:$id");
 	if (file_exists("temp/cache/wiki-$file_name")) {

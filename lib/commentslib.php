@@ -1998,9 +1998,6 @@ class Comments extends TikiLib {
 	    $_SESSION["lastPost"] = $postDate;
 	}
 
-	if (!isset($_SERVER['REMOTE_ADDR']))
-	    $_SERVER['REMOTE_ADDR'] = '127.0.0.1';
-
 	// Check for banned userName or banned IP or IP in banned range
 
 	// Check for duplicates.
@@ -2109,7 +2106,7 @@ class Comments extends TikiLib {
 	    $result = $this->query($query, 
 		    array( $object[0], (string) $object[1],(int) $this->now, $userName,
 			$title, $data, $hash, (int) $parentId, $type,
-			$summary, $smiley, $_SERVER["REMOTE_ADDR"],
+			$summary, $smiley, $tikilib->get_ip_address(),
 			$message_id, (string) $in_reply_to, $approved)
 		    );
 	}
