@@ -713,13 +713,8 @@ if (isset($_GET['slideshow'])) {
   $files = $tikilib->get_files(0, -1, $_REQUEST['sort_mode'], $_REQUEST['find'], $_REQUEST['galleryId'] == 0 ? -1 : $_REQUEST['galleryId'], false, false, false, true, false, false, false, true, '', false);
   $smarty->assign('cant', $files['cant']);
   $i = 0;
-  foreach( $files['data'] as $file) {
-    $filesid[] = $file['fileId'];
-    $file_info[$i]['filename'] = $file['filename'];
-    $file_info[$i++]['name'] = $file['name'];
-  }
   $smarty->assign_by_ref('filesid', $filesid);
-  $smarty->assign_by_ref('file', $file_info);
+  $smarty->assign_by_ref('file', $files['data']);
   reset($filesid);
   $smarty->assign('firstId',current($filesid));
   $smarty->assign('show_find', 'n');
