@@ -39,7 +39,12 @@ class BilingualAligner {
 	       $this->_extend_shortest_path_matrix_by_one_level();
 	    }
 
-//        print "-- _generate_shortest_path_matrix: upon exit, \$this->cost_matrix=\n";var_dump($this->cost_matrix);print "\n";
+/*
+        print "-- _generate_shortest_path_matrix: upon exit, \$this->cost_matrix=\n";var_dump($this->cost_matrix);print "\n";
+        foreach (array_keys($this->cost_matrix) as $origin) {
+           print "-- _generate_shortest_path_matrix: \$this->cost_matrix[$origin]=";var_dump($this->cost_matrix[$origin]);print"\n";
+        }
+*/
 	}
 	
 	public function _extend_shortest_path_matrix_by_one_level() {
@@ -67,17 +72,24 @@ class BilingualAligner {
 
      public function _match_current_l1_and_l2_sentences($node_to_extend, 
                           $l1_n_matches, $l2_n_matches) {
+
+//       print "-- _match_current_l1_and_l2_sentences: extending node: \$node_to_extend='$node_to_extend'\n";
+
        $sentences_this_node = $this->_sentences_at_this_node($node_to_extend);
        $l1_curr_sentence = $sentences_this_node[0];
        $l2_curr_sentence = $sentences_this_node[1];
     
        $new_node = $this->_generate_node_ID($l1_curr_sentence, 'm', $l1_n_matches,
                                             $l2_curr_sentence, 'm', $l2_n_matches);
-       if ($new_node != null) {
+//       print "-- _match_current_l1_and_l2_sentences: extending to \$new_node='$new_node'\n";
+
+      if ($new_node != null) {
           array_push($this->nodes_at_next_level, $new_node);
           
           // For now, assume same cost for links between nodes.
           $this->cost_matrix[$node_to_extend][$new_node] = 'match_cost';
+       } else {
+          $this->cost_matrix[$node_to_extend]['END'] = 'goto_end_cost';
        }
 
 //       print "-- _match_current_l1_and_l2_sentences: upon exit, \$this->cost_matrix=\n";var_dump($this->cost_matrix);print "\n";
@@ -99,6 +111,8 @@ class BilingualAligner {
        
           // For now, assume same cost for links between nodes.
           $this->cost_matrix[$node_to_extend][$new_node] = 'skip_cost';
+       } else {
+          $this->cost_matrix[$node_to_extend]['END'] = 'goto_end_cost';       
        }
 
 	   return;
@@ -137,8 +151,8 @@ class BilingualAligner {
     public function _generate_node_ID($l1_sentence, $l1_operation, $l1_n_times,
                                       $l2_sentence, $l2_operation, $l2_n_times) {
        $id = null;
-       if ($l1_sentence < count($this->l1_sentences) &&
-           $l2_sentence < count($this->l2_sentences)) {
+       if ($l1_sentence + $l1_n_times < count($this->l1_sentences) &&
+           $l2_sentence + $l2_n_times < count($this->l2_sentences)) {
            $id = "$l1_sentence$l1_operation$l1_n_times|$l2_sentence$l2_operation$l2_n_times";
        }
        return $id;
