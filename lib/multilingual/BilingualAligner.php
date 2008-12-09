@@ -39,10 +39,11 @@ class BilingualAligner {
 	       $this->_extend_shortest_path_matrix_by_one_level();
 	    }
 
-//        print "-- _segment_parallel_texts_to_sentences: upon exit, \$this->cost_matrix=\n";var_dump($this->cost_matrix);print "\n";
+//        print "-- _generate_shortest_path_matrix: upon exit, \$this->cost_matrix=\n";var_dump($this->cost_matrix);print "\n";
 	}
 	
 	public function _extend_shortest_path_matrix_by_one_level() {
+//	    print "-- _extend_shortest_path_matrix_by_one_level:  \$this->nodes_at_current_level=\n";var_dump($this->nodes_at_current_level);print "\n";
 	    $this->nodes_at_next_level = array();
 	    foreach ($this->nodes_at_current_level as $a_node_to_extend) {
 	       $this->_extend_shortest_path_matrix_from_this_node($a_node_to_extend);
@@ -51,7 +52,7 @@ class BilingualAligner {
 	    // NOTE: Once this method is finished, replace line below by 
 	    //       $this->nodes_at_current_level = $this->nodes_at_next_level;
 	    //
-	    $this->nodes_at_current_level = array();
+	    $this->nodes_at_current_level = $this->nodes_at_next_level;
 	}
 	
 	public function _extend_shortest_path_matrix_from_this_node($node_to_extend) {	
@@ -72,10 +73,12 @@ class BilingualAligner {
     
        $new_node = $this->_generate_node_ID($l1_curr_sentence, 'm', $l1_n_matches,
                                             $l2_curr_sentence, 'm', $l2_n_matches);
-       array_push($this->nodes_at_next_level, $new_node);
-       
-       // For now, assume same cost for links between nodes.
-       $this->cost_matrix[$node_to_extend][$new_node] = 'match_cost';
+       if ($new_node != null) {
+          array_push($this->nodes_at_next_level, $new_node);
+          
+          // For now, assume same cost for links between nodes.
+          $this->cost_matrix[$node_to_extend][$new_node] = 'match_cost';
+       }
 
 //       print "-- _match_current_l1_and_l2_sentences: upon exit, \$this->cost_matrix=\n";var_dump($this->cost_matrix);print "\n";
 
@@ -90,10 +93,13 @@ class BilingualAligner {
     
        $new_node = $this->_generate_node_ID($l1_curr_sentence, 's', $l1_n_skips,
                                             $l2_curr_sentence, 's', $l2_n_skips);
-       array_push($this->nodes_at_next_level, $new_node);
+
+       if ($new_node != null) {
+          array_push($this->nodes_at_next_level, $new_node);
        
-       // For now, assume same cost for links between nodes.
-       $this->cost_matrix[$node_to_extend][$new_node] = 'skip_cost';
+          // For now, assume same cost for links between nodes.
+          $this->cost_matrix[$node_to_extend][$new_node] = 'skip_cost';
+       }
 
 	   return;
 
@@ -130,7 +136,11 @@ class BilingualAligner {
     
     public function _generate_node_ID($l1_sentence, $l1_operation, $l1_n_times,
                                       $l2_sentence, $l2_operation, $l2_n_times) {
-       $id = "$l1_sentence$l1_operation$l1_n_times|$l2_sentence$l2_operation$l2_n_times";
+       $id = null;
+       if ($l1_sentence < count($this->l1_sentences) &&
+           $l2_sentence < count($this->l2_sentences)) {
+           $id = "$l1_sentence$l1_operation$l1_n_times|$l2_sentence$l2_operation$l2_n_times";
+       }
        return $id;
     }
    
