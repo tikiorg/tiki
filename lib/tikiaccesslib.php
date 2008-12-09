@@ -90,7 +90,7 @@ class TikiAccessLib extends TikiLib {
 	// check page exists
 	function check_page_exists($page) {
 		require_once ('tiki-setup.php');
-		if (!$tikilib->page_exists($page)) {
+		if (!$this->page_exists($page)) {
 			$this->display_error($page, tra("Page cannot be found"), '404');
 		}
 	}
