@@ -47,7 +47,7 @@
 		{if $id}<span class="summary">{$listcals[$calitem.calendarId].name|escape}</span><br />{tr}or{/tr}&nbsp;{/if}
 		<select name="save[calendarId]" id="calid" onchange="javascript:document.getElementById('editcalitem').submit();">
 			{foreach item=it key=itid from=$listcals}
-				<option value="{$it.calendarId}"
+				<option value="{$it.calendarId}" style="background-color:#{$it.custombgcolor};color:#{$it.customfgcolor};"
 				{if $calitem.calendarId}
 					{if $calitem.calendarId eq $itid} selected="selected"{/if}
 				{else}
