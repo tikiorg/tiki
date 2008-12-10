@@ -62,6 +62,7 @@ class TikiPageControls_Element implements ArrayAccess
 		case 'type': return $this->type;
 		case 'selected': return $this->selected;
 		case 'icon': return $this->getIconLink();
+		case 'iconsrc': return $this->iconPath;
 		}
 	} // }}}
 
@@ -73,6 +74,8 @@ class TikiPageControls_Element implements ArrayAccess
 		case 'link': return true;
 		case 'type': return true;
 		case 'selected': return true;
+		case 'icon': return true;
+		case 'iconsrc': return true;
 		default: return false;
 		}
 	} // }}}
