@@ -203,7 +203,7 @@
 {if $edit}
 		{if $id}<span class="summary">{$listcals[$calitem.calendarId].name|escape}</span><br />{tr}or{/tr}&nbsp;{/if}
 		<input type="submit" name="changeCal" value="{tr}Go to{/tr}" />
-		<select name="save[calendarId]" id="calid">
+		<select name="save[calendarId]" id="calid" onchange="javascript:document.getElementById('editcalitem').submit();">
 			{foreach item=it key=itid from=$listcals}
 				<option value="{$it.calendarId}"
 				{if $calitem.calendarId}

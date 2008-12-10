@@ -133,11 +133,18 @@ if ( ! isset($_REQUEST["calendarId"]) ) {
 		$calID = $calendarlib->get_calendarid($_REQUEST['viewcalitemId']);
 	}
 } elseif (isset($_REQUEST['calendarId'])) {
-		$calID=$_REQUEST["calendarId"];
+	$calID = $_REQUEST['calendarId'];
+} elseif (isset($_REQUEST['save']) && isset($_REQUEST['save']['calendarId'])) {
+	$calId = $_REQUEST['save']['calendarId'];
+}
+if (!isset($calID) and count($caladd)) {
+	$keys = array_keys($caladd);
+	$calID = array_shift($keys);
 }
 
-if ($prefs['feature_groupalert'] == 'y') {
+if ($prefs['feature_groupalert'] == 'y' && !empty($calID) ) {
 	$groupforalert=$groupalertlib->GetGroup ('calendar',$calID);
+	$showeachuser = '';
 	if ( $groupforalert != '' ) {
 		$showeachuser=$groupalertlib->GetShowEachUser('calendar',$calID, $groupforalert) ;
 		$listusertoalert=$userlib->get_users(0,-1,'login_asc','','',false,$groupforalert,'') ;
@@ -147,13 +154,9 @@ if ($prefs['feature_groupalert'] == 'y') {
 	$smarty->assign_by_ref('showeachuser',$showeachuser);
 }
 
-if (!isset($_REQUEST['calendarId']) and count($caladd)) {
-	$keys = array_keys($caladd);
-	$_REQUEST['calendarId'] = array_shift($keys);
-}
 if ($prefs['feature_categories'] == 'y') {
   global $categlib; include_once ('lib/categories/categlib.php');
-  $perms_array = $categlib->get_object_categories_perms($user, 'calendar', $_REQUEST['calendarId']);
+  $perms_array = $categlib->get_object_categories_perms($user, 'calendar', $calID);
   if ($perms_array) {
     foreach ($perms_array as $p=>$v) {
       $$p = $v;
@@ -329,7 +332,7 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
 	die;
 }  elseif (isset($_REQUEST['duplicate']) and $tiki_p_add_events == 'y') {
 	$calitem = $calendarlib->get_item($_REQUEST['calitemId']);
-	$calitem['calendarId'] = $_REQUEST['calendarId'];
+	$calitem['calendarId'] = $calID;
 	$calitem['calitemId'] = 0;
 	$calendarlib->set_item($user,0,$calitem);
 	$id = 0;
@@ -353,27 +356,24 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
 	$calendar = $calendarlib->get_calendar($calitem['calendarId']);
 	$smarty->assign('edit',true);
 	$smarty->assign('changeCal', isset($_REQUEST['changeCal']));
-	$_REQUEST['calendarId'] = $save['calendarId'];
 } elseif (isset($_REQUEST['viewcalitemId']) and $tiki_p_view_events == 'y') {
 	$calitem = $calendarlib->get_item($_REQUEST['viewcalitemId']);
 	$id = $_REQUEST['viewcalitemId'];
 	$calendar = $calendarlib->get_calendar($calitem['calendarId']);
 	$hour_minmax = ceil(($calendar['startday'])/(60*60)).'-'. ceil(($calendar['endday'])/(60*60));
-	$_REQUEST['calendarId'] = $calitem['calendarId'];
 } elseif (isset($_REQUEST['calitemId']) and ($tiki_p_change_events == 'y' or $tiki_p_view_events == 'y')) {
 	$calitem = $calendarlib->get_item($_REQUEST['calitemId']);
 	$id = $_REQUEST['calitemId'];
 	$calendar = $calendarlib->get_calendar($calitem['calendarId']);
 	$smarty->assign('edit',true);
 	$hour_minmax = ceil(($calendar['startday'])/(60*60)).'-'. ceil(($calendar['endday'])/(60*60));
-	$_REQUEST['calendarId'] = $calitem['calendarId'];
-} elseif (isset($_REQUEST['calendarId']) and $tiki_p_add_events == 'y') {
+} elseif (isset($calID) and $tiki_p_add_events == 'y') {
 	if (isset($_REQUEST['todate'])) {
 		$now = $_REQUEST['todate'];
 	} else {
 		$now = $tikilib->now;
 	}
-	$calendar = $calendarlib->get_calendar($_REQUEST['calendarId']);
+	$calendar = $calendarlib->get_calendar($calID);
 	$calitem = array(
 		'calitemId'=>0,
 		'user'=>$user,
@@ -404,14 +404,14 @@ if (!empty($calendar['eventstatus'])) {
 }
 
 if ($calendar['customlocations'] == 'y') {
-	$listlocs = $calendarlib->list_locations($_REQUEST['calendarId']);
+	$listlocs = $calendarlib->list_locations($calID);
 } else {
 	$listlocs = array();
 }
 $smarty->assign('listlocs', $listlocs);
 
 if ($calendar['customcategories'] == 'y') {
-	$listcats = $calendarlib->list_categories($_REQUEST['calendarId']);
+	$listcats = $calendarlib->list_categories($calID);
 } else {
 	$listcats = array();
 }
@@ -438,7 +438,7 @@ $smarty->assign('listroles',array('0'=>'','1'=>tra('required'),'2'=>tra('optiona
 
 if ($prefs['feature_theme_control'] == 'y') {
   $cat_type = "calendar";
-  $cat_objid = $_REQUEST['calendarId'];
+  $cat_objid = $calID;
   include('tiki-tc.php');
 }
 
@@ -458,7 +458,7 @@ if ($calitem['recurrenceId'] > 0) {
 }
 $smarty->assign('calitem', $calitem);
 $smarty->assign('calendar', $calendar);
-$smarty->assign('calendarId', $_REQUEST['calendarId']);
+$smarty->assign('calendarId', $calID);
 if (array_key_exists('CalendarViewGroups',$_SESSION) && count($_SESSION['CalendarViewGroups']) == 1)
 	$smarty->assign('calendarView',$_SESSION['CalendarViewGroups'][0]);
 if ($prefs['feature_ajax'] == "y") {
