@@ -78,7 +78,7 @@
 	</div><br style="clear:both" />
 	{/if}
 {/if}
-<br class="clear" />
+</div>
 </div>{* -- END of middle part wrapper -- *}
 {if $prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}
 {if $prefs.feature_bot_bar eq 'y'}
@@ -89,7 +89,7 @@
 		</div>
 	</div>
 </div>
-</div>
+
 {/if}
 {/if}
 {include file="footer.tpl"}
