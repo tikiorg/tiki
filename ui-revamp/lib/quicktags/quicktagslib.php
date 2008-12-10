@@ -121,6 +121,14 @@ class QuicktagFckOnly extends Quicktag
 			return new self( 'Underline' );
 		case 'unlink':
 			return new self( 'Unlink' );
+		case 'style':
+			return new self( 'Style' );
+		case 'fontname':
+			return new self( 'FontName' );
+		case 'fontsize':
+			return new self( 'FontSize' );
+		case 'source':
+			return new self( 'Source' );
 		}
 	} // }}}
 
@@ -190,6 +198,20 @@ class QuicktagInline extends Quicktag
 			$wysiwyg = 'Anchor';
 			$syntax = '{ANAME()}text{ANAME}';
 			break;
+		case 'color':
+			$label = tra('Text Color');
+			$icon = tra('pics/icons/palette.png');
+			$wysiwyg = 'TextColor';
+			$syntax = '~~red:text~~';
+			break;
+		case 'bgcolor':
+			$label = tra('Background Color');
+			$icon = tra('pics/icons/palette.png');
+			$wysiwyg = 'BGColor';
+			$syntax = '~~white,black:text~~';
+			break;
+		default:
+			return;
 		}
 
 		$tag = new self;
@@ -215,7 +237,7 @@ class QuicktagInline extends Quicktag
 
 	function getWikiHtml() // {{{
 	{
-		return '<a href="javascript:insertAt(\'editwiki\', \'' . htmlentities($this->syntax, ENT_QUOTES, 'UTF-8') . '\')" title="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '">' . $this->getIconHtml() . '</a>';
+		return '<a href="javascript:insertAt(\'editwiki\', \'' . htmlentities($this->syntax, ENT_QUOTES, 'UTF-8') . '\')" onclick="needToConfirm=false;" title="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '">' . $this->getIconHtml() . '</a>';
 	} // }}}
 }
 
@@ -268,6 +290,22 @@ class QuicktagBlock extends QuicktagInline // Will change in the future
 			$wysiwyg = 'Blockquote';
 			$syntax = '^text^';
 			break;
+		case 'h1':
+		case 'h2':
+		case 'h3':
+			$label = tra('Heading') . ' ' . $tagName{1};
+			$icon = 'pics/icons/text_heading_' . $tagName{1} . '.png';
+			$wysiwyg = null;
+			$syntax = str_repeat('!', $tagName{1}) . 'text';
+			break;
+		case 'image':
+			$label = tra('Image');
+			$icon = tra('pics/icons/picture.png');
+			$wysiwyg = 'tikiimage';
+			$syntax = '{img src= width= height= link= }';
+			break;
+		default:
+			return;
 		}
 
 		$tag = new self;
@@ -300,6 +338,63 @@ class QuicktagFullscreen extends Quicktag
 		if( isset($_REQUEST['zoom']) )
 			$name = 'preview';
 		return '<input type="image" name="'.$name.'" alt="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '" title="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '" value="wiki_edit" onclick="needToConfirm=false;" title="" class="icon" src="' . htmlentities($this->icon, ENT_QUOTES, 'UTF-8') . '"/>';
+	} // }}}
+}
+
+class QuicktagWikiplugin extends Quicktag
+{
+	private $pluginName;
+
+	public static function fromName( $name ) // {{{
+	{
+		global $tikilib;
+		if( substr( $name, 0, 11 ) == 'wikiplugin_'  ) {
+			$name = substr( $name, 11 );
+			if( $info = $tikilib->plugin_info( $name ) ) {
+
+				$tag = new self;
+				$tag->setLabel( $info['name'] )
+					->setIcon( self::getIcon( $name ) )
+					->setWysiwygToken( self::getToken( $name ) )
+					->setPluginName( $name );
+
+				return $tag;
+			}
+		}
+	} // }}}
+
+	function setPluginName( $name ) // {{{
+	{
+		$this->pluginName = $name;
+
+		return $this;
+	} // }}}
+
+	function isAccessible() // {{{
+	{
+		global $tikilib;
+		return $tikilib->plugin_enabled( $this->pluginName );
+	} // }}}
+
+	private static function getIcon( $name ) // {{{
+	{
+		// This property could be added to the plugin definition
+		switch($name) {
+		default:
+			return tra('pics/icons/plugin_default.png');
+		}
+	} // }}}
+
+	private static function getToken( $name ) // {{{
+	{
+		switch($name) {
+		case 'flash': return 'Flash';
+		}
+	} // }}}
+
+	function getWikiHtml() // {{{
+	{
+		return '<a href="javascript:popup_plugin_form(\'' . $this->pluginName . '\')" onclick="needToConfirm=false;" title="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '">' . $this->getIconHtml() . '</a>';
 	} // }}}
 }
 
@@ -354,6 +449,8 @@ class QuicktagsList
 		elseif( $tag = QuicktagBlock::fromName( $tagName ) )
 			return $tag;
 		elseif( $tag = QuicktagFckOnly::fromName( $tagName ) )
+			return $tag;
+		elseif( $tag = QuicktagWikiplugin::fromName( $tagName ) )
 			return $tag;
 		elseif( $tagName == 'fullscreen' )
 			return new QuicktagFullscreen;
