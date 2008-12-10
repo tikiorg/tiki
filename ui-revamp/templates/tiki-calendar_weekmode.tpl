@@ -5,7 +5,8 @@
 {section name=dn loop=$daysnames}
     <td id="top_{$smarty.section.dn.index}" class="calHeading{if $focuscell eq $viewWeekDays[dn]}On{/if}" width="13%">
 	  {$daysnames[dn]}<br />
-	  <strong><a href="{$myurl}?todate={$viewWeekDays[dn]}" title="{tr}Change Focus{/tr}">{$viewWeekDays[dn]|tiki_date_format:"%B %e"}</a></strong>
+	  <strong><a href="{$myurl}?todate={$viewWeekDays[dn]}" title="{tr}Change Focus{/tr}">{$viewWeekDays[dn]|tiki_date_format:$short_format_day}</a></strong>
+	  {if $tiki_p_add_events eq 'y' and count($listcals) > 0}<a href="tiki-calendar_edit_item.php?todate={$viewWeekDays[dn]}{if $displayedcals|@count eq 1}&amp;calendarId={$displayedcals[0]}{/if}" title="{tr}Add Event{/tr}">{icon _id='calendar_add' alt="{tr}+{/tr}"}</a>{/if}
 	</td>
 {/section}
   </tr>

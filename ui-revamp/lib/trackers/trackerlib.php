@@ -1058,12 +1058,14 @@ class TrackerLib extends TikiLib {
 						continue;
 					}
 				} elseif ($ins_fields['data'][$i]['type'] == 'k') { //page selector
-					if (!$this->page_exists($ins_fields['data'][$i]['value'])) {
-						$opts = split(',', $ins_fields['data'][$i]['options']);
-						if (!empty($opts[2])) {
-							global $IP;
-							$info = $this->get_page_info($opts[2]);
-							$this->create_page($ins_fields['data'][$i]['value'], 0, $info['data'], $this->now, '', $user, $IP, $info['description'], $info['lang'], $info['is_html'], array(), $info['wysiwyyg'], $info['wiki_authors_style']);
+					if ($ins_fields['data'][$i]['value'] != '') {
+						if (!$this->page_exists($ins_fields['data'][$i]['value'])) {
+							$opts = split(',', $ins_fields['data'][$i]['options']);
+							if (!empty($opts[2])) {
+								global $IP;
+								$info = $this->get_page_info($opts[2]);
+								$this->create_page($ins_fields['data'][$i]['value'], 0, $info['data'], $this->now, '', $user, $IP, $info['description'], $info['lang'], $info['is_html'], array(), $info['wysiwyyg'], $info['wiki_authors_style']);
+							}
 						}
 					}
 				}

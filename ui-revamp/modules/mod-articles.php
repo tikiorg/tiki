@@ -47,5 +47,7 @@ if (isset($module_params['categId'])) {
 $ranking = $tikilib->list_articles($start, $module_rows, 'publishDate_desc', '', '', '', $user, $type, $topicId, 'y', $topic, $categId, '', '', $lang);
 
 $smarty->assign('modArticles', $ranking["data"]);
-
+if (isset($module_params['title'])) {
+	$smarty->assign('tpl_module_title', $module_params['title']);
+}
 

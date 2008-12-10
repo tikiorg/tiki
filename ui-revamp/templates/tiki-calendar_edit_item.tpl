@@ -48,7 +48,7 @@
 	<input type="hidden" name="recurrent" value="1"/>
 		{tr}This event depends on a recurrence rule{/tr}
 	{else}
-	  <input type="checkbox" id="id_recurrent" name="recurrent" value="1" onChange="javascript: toggle('recurrenceRules');"{if $calitem.recurrenceId gt 0}checked="checked"{/if}/><label for="id_recurrent">{tr}This event depends on a recurrence rule{/tr}</label>
+	  <input type="checkbox" id="id_recurrent" name="recurrent" value="1" onClick="javascript: toggle('recurrenceRules');"{if $calitem.recurrenceId gt 0}checked="checked"{/if}/><label for="id_recurrent">{tr}This event depends on a recurrence rule{/tr}</label>
 	{/if}
 {else}
 	<span class="summary">{if $calitem.recurrenceId gt 0}{tr}This event depends on a recurrence rule{/tr}{else}{tr}This event is not recurrent{/tr}{/if}</span>
@@ -182,6 +182,7 @@
 		<br />&nbsp;
 	  </div>
 {else}
+	{if $recurrence.id > 0}
 	{if $recurrence.weekly}
 	  {tr}Event is repeated {if $recurrence.nbRecurrences gt 0}{$recurrence.nbRecurrences} {tr}times{/tr}, {/if}every{/tr}&nbsp;{tr}{$daysnames[$recurrence.weekday]}{/tr}
 	{elseif $recurrence.monthly}
@@ -193,12 +194,15 @@
 	{tr}Starting on{/tr} {$recurrence.startPeriod|tiki_long_date}
 	{if $recurrence.endPeriod gt 0}, {tr}ending by{/tr} {$recurrence.endPeriod|tiki_long_date}{/if}.
 {/if}
+{/if}
 	</td>
 </tr>
 <tr class="formcolor">
 	<td>{tr}Calendar{/tr}</td>
 	<td>
 {if $edit}
+		{if $id}<span class="summary">{$listcals[$calitem.calendarId].name|escape}</span><br />{tr}or{/tr}&nbsp;{/if}
+		<input type="submit" name="changeCal" value="{tr}Go to{/tr}" />
 		<select name="save[calendarId]" id="calid">
 			{foreach item=it key=itid from=$listcals}
 				<option value="{$it.calendarId}"
@@ -379,6 +383,10 @@
         {if $calitem.end}<abbr class="dtend" title="{$calitem.end|isodate}">{/if}{$calitem.end|tiki_long_datetime}{if $calitem.end}</abbr>{/if}
     {/if}
 {/if}
+{if $impossibleDates}
+<br />
+<span style="color:#900;">{tr}Events cannot end before they start{/tr}</span>
+{/if}
 </td>
 </tr>
 <tr class="formcolor">
@@ -538,7 +546,11 @@ onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;">
 <td>{tr}Organized by{/tr}</td>
 <td>
 {if $edit}
-<input type="text" name="save[organizers]" value="{foreach item=org from=$calitem.organizers}{$org}, {/foreach}" style="width:90%;" />
+	{if $preview or $changeCal}
+		<input type="text" name="save[organizers]" value="{$calitem.organizers}" style="width:90%;" />
+	{else}
+		<input type="text" name="save[organizers]" value="{foreach item=org from=$calitem.organizers name=organizers}{if $org neq ''}{$org}{if !$smarty.foreach.organizers.last},{/if}{/if}{/foreach}" style="width:90%;" />
+	{/if}
 {else}
 {foreach item=org from=$calitem.organizers}
 {$org|escape}<br />
@@ -555,7 +567,11 @@ onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;">
 </td>
 <td>
 {if $edit}
-<input type="text" name="save[participants]" value="{foreach item=ppl from=$calitem.participants}{if $ppl.role}{$ppl.role}:{/if}{$ppl.name}, {/foreach}" style="width:90%;" />
+	{if $preview or $changeCal}
+		<input type="text" name="save[participants]" value="{$calitem.participants}" style="width:90%;" />
+	{else}
+		<input type="text" name="save[participants]" value="{foreach item=ppl from=$calitem.participants name=participants}{if $ppl.name neq ''}{if $ppl.role}{$ppl.role}:{/if}{$ppl.name}{if !$smarty.foreach.participants.last},{/if}{/if}{/foreach}" style="width:90%;" />
+	{/if}
 {else}
 {foreach item=ppl from=$calitem.participants}
 {$ppl.name|escape} {if $listroles[$ppl.role]}({$listroles[$ppl.role]}){/if}<br />

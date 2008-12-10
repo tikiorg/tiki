@@ -80,11 +80,16 @@ class TikiDate {
 		return $tz;
 	}
 
-	function format($format) {
+	function format($format, $is_strftime_format = true) {
 		global $prefs;
-		$format = preg_replace("/(?<!%)([a-zA-Z])/",'\\\$1',$format);
+
 		// Format the date
-		$return = $this->date->format(str_replace($this->search,$this->replace,$format));
+		if ( $is_strftime_format ) {
+			$format = preg_replace("/(?<!%)([a-zA-Z])/",'\\\$1',$format);
+			$return = $this->date->format(str_replace($this->search,$this->replace,$format));
+		} else {
+			$return = $this->date->format($format);
+		}
 
 		// Translate the date if we are not already in english
 
@@ -148,7 +153,7 @@ class TikiDate {
 	}
 
 	function getTimezoneId() {
-		return $this->format("e");
+		return $this->date->format("e");
 	}
 
 	function TimezoneIsValidId($id) {

@@ -25,7 +25,7 @@ function wikiplugin_files_info() {
 			'categId' => array(
 				'required' => false,
 				'name' => tra('Category ID'),
-				'description' => tra('Category ID'),
+				'description' => tra('Category ID').':'.tra('Category ID'),
 			),
 			'sort' => array(
 				'required' => false,
@@ -132,6 +132,9 @@ function wikiplugin_files($data, $params) {
 	}
 
 	$files = array();
+	if (isset($categId) && strstr($categId, ':')) {
+		$categId = explode(':', $categId);
+	}
 	if (!isset($sort))
 		$sort = 'name_asc';
 	if (isset($galleryId)) {
@@ -154,8 +157,14 @@ function wikiplugin_files($data, $params) {
 		for ($i = 0; $i < $fs['cant']; ++$i) {
 			if (isset($categId)) { // filter the files
 				$cats = $categlib->get_object_categories('file', $fs['data'][$i]['fileId']);
-				if (!in_array($categId, $cats))
-					continue;	
+				if (is_array($categId)) {
+					if (!array_intersect($categId, $cats)) {
+						continue;
+					}
+				} else {
+					if (!in_array($categId, $cats))
+						continue;
+				}	
 			}
 			$fs['data'][$i]['p_download_files'] = $p_download_files;
 			$fs['data'][$i]['p_view_file_gallery'] = $p_view_file_gallery;
@@ -258,7 +267,13 @@ function wikiplugin_files($data, $params) {
 	$smarty->assign('show_parentName', $show_parentName);
 
 	if (isset($categId)) {
-		$category = $categlib->get_category_name($categId);
+		if (is_array($categId)) {
+			foreach ($categId as $cat) {
+				$category[] = $categlib->get_category_name($cat);
+			}
+		} else {
+			$category = $categlib->get_category_name($categId);
+		}
 		$smarty->assign_by_ref('category', $category);
 	} else
 		$smarty->assign('category', '');

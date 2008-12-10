@@ -316,8 +316,8 @@ for ($i = 0; $i < $temp_max; $i++) {
 			if (isset($_REQUEST["$ins_id"]) and $_REQUEST["$ins_id"] and (!$fields["data"][$i]['options_array'][0] or $tiki_p_admin_trackers == 'y')) {
 				$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];
 			} else {
-				if ($fields["data"][$i]['options_array'][0] == 1 and $_SERVER['REMOTE_ADDR']) {
-					$ins_fields["data"][$i]["value"] = $_SERVER['REMOTE_ADDR'];
+				if ($fields["data"][$i]['options_array'][0] == 1 and $tikilib->get_ip_address()) {
+					$ins_fields["data"][$i]["value"] = $tikilib->get_ip_address();
 				} else {
 					$ins_fields["data"][$i]["value"] = '';
 				}

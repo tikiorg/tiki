@@ -120,7 +120,7 @@ class ObjectLib extends TikiLib {
 			case 'wiki': case 'wiki page':
 				global $tikilib; include_once('lib/tikilib.php');
 				global $user;
-				$tikilib->update_page($object, $data, tra('section edit'), $user, $_SERVER["REMOTE_ADDR"]);
+				$tikilib->update_page($object, $data, tra('section edit'), $user, $tikilib->get_ip_address());
 				break;
 			case 'article':
 				global $artlib; include_once('lib/articles/artlib.php');

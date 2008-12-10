@@ -11,7 +11,7 @@ function smarty_function_autosave($params, &$smarty)
 	global $user;
 	global $js_script;
 	$user_agent = $_SERVER['HTTP_USER_AGENT'];
-	$user_ip = $_SERVER['REMOTE_ADDR'];
+	$user_ip = $tikilib->get_ip_address();
 	$request_uri = $_SERVER['REQUEST_URI'];
 	$file_name = md5("$user:$user_ip:$request_uri:".$params['id']);
 	$js_script[$params['id']] = "register_id('".$params['id']."');";

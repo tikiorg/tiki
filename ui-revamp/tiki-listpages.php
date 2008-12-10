@@ -51,6 +51,7 @@ if ( !empty($_REQUEST['submit_mult']) && isset($_REQUEST["checked"]) ) {
 				}
 				$page_info = $tikilib->get_page_info($check);
 				$page_info['parsed'] = $tikilib->parse_data($page_info['data']);
+				$page_info['h'] = 1;
 				$multiprint_pages[] = $page_info;
 			}
 			break;

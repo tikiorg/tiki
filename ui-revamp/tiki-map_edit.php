@@ -91,7 +91,7 @@ if (isset($_REQUEST["create"]) && ($tiki_p_map_create == 'y')) {
 	fwrite ($fp,"#\n");
 	fwrite ($fp,"#Modified by: ".$user."\n");
 	fwrite ($fp,"#GMT Date: ".gmdate("Ymd His")."\n");
-	fwrite ($fp,"#IP: ".$_REQUEST["REMOTE_ADDR"]."\n");
+	fwrite ($fp,"#IP: ".$tikilib->get_ip_address()."\n");
 	fwrite ($fp,"#\n");
 	fwrite ($fp,"##TIKIMAPS HEADER: END##\n");
 	fwrite ($fp,"\n");
@@ -167,7 +167,7 @@ if ($tiki_p_map_edit != 'y') {
 	fwrite ($fp,"#\n");
 	fwrite ($fp,"#Modified by: ".$user."\n");
 	fwrite ($fp,"#GMT Date: ".gmdate("Ymd His")."\n");
-	fwrite ($fp,"#IP: ".$_REQUEST["REMOTE_ADDR"]."\n");
+	fwrite ($fp,"#IP: ".$tikilib->get_ip_address()."\n");
 	fwrite ($fp,"#\n");
 	$mapfiledata=strstr($_REQUEST["pagedata"],"##TIKIMAPS HEADER: END##");
 	// if the header is not found
