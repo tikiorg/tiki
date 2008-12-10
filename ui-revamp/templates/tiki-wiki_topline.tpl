@@ -15,7 +15,7 @@
 		</div>
 
 {* Display the entire page controls here. See tiki-pagecontrols.tpl *}
-{$wiki_page_controls.header}
+{$object_page_controls.header}
 
 {* Superseeded by page controls? TODO : Verify and clean-up
 {if $print_page ne 'y'}

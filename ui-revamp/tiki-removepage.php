@@ -92,7 +92,7 @@ require_once 'TikiPageControls_Wiki.php';
 $controls = new TikiPageControls_Wiki($info);
 $controls->setMode('remove');
 $controls->build();
-$smarty->assign('wiki_page_controls', $controls);
+$smarty->assign('object_page_controls', $controls);
 
 $smarty->assign('mid', 'tiki-removepage.tpl');
 $smarty->display("tiki.tpl");

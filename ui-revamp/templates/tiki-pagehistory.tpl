@@ -1,7 +1,7 @@
 {* $Id$ *}
 
 {* See tiki-pagecontrols.tpl *}
-{$wiki_page_controls.header}
+{$object_page_controls.header}
 
 {assign var=thispage value=$page|escape:url}
 
@@ -189,4 +189,4 @@
 
 {include file=tiki-page_bar.tpl}
 
-{$wiki_page_controls.footer}
+{$object_page_controls.footer}

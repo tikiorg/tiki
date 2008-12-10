@@ -109,7 +109,7 @@ require_once 'TikiPageControls_Wiki.php';
 $controls = new TikiPageControls_Wiki($info);
 $controls->setMode('rename');
 $controls->build();
-$smarty->assign('wiki_page_controls', $controls);
+$smarty->assign('object_page_controls', $controls);
 
 $smarty->assign('mid', 'tiki-rename_page.tpl');
 $smarty->display("tiki.tpl");

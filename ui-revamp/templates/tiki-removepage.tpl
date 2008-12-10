@@ -1,6 +1,6 @@
 {assign var=thispage value=$page|escape:'url'}
 
-{$wiki_page_controls.header}
+{$object_page_controls.header}
 
 <form action="tiki-removepage.php" method="post">
   <p>{tr}You are about to remove the page{/tr} {$page} {tr}permanently{/tr}.</p>
@@ -11,4 +11,4 @@
   <input type="submit" name="remove" value="{tr}Remove{/tr}" />
 </form>
 
-{$wiki_page_controls.footer}
+{$object_page_controls.footer}

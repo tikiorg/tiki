@@ -549,7 +549,7 @@ class WikiRenderer
 	{
 		if( $this->pageControls ) {
 			$this->pageControls->build();
-			$this->smartyassign('wiki_page_controls', $this->pageControls);
+			$this->smartyassign('object_page_controls', $this->pageControls);
 		}
 	} // }}}
 

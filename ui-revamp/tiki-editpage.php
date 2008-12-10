@@ -1336,7 +1336,7 @@ if( isset($_GET['hdr']) ) {
 	$controls->setMode('edit');
 }
 $controls->build();
-$smarty->assign('wiki_page_controls', $controls);
+$smarty->assign('object_page_controls', $controls);
 
 ask_ticket('edit-page');
 // disallow robots to index page:
