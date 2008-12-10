@@ -65,6 +65,76 @@ class QuicktagSeparator extends Quicktag
 	} // }}}
 }
 
+class QuicktagFckOnly extends Quicktag
+{ 
+	private function __construct( $token ) // {{{
+	{
+		$this->setWysiwygToken( $token );
+	} // }}}
+	
+	public static function fromName( $name ) // {{{
+	{
+		switch( $name ) {
+		case 'templates':
+			return new self( 'Templates' );
+		case 'cut':
+			return new self( 'Cut' );
+		case 'copy':
+			return new self( 'Copy' );
+		case 'paste':
+			return new self( 'Paste' );
+		case 'pastetext':
+			return new self( 'PasteText' );
+		case 'print':
+			return new self( 'Print' );
+		case 'spellcheck':
+			return new self( 'SpellCheck' );
+		case 'undo':
+			return new self( 'Undo' );
+		case 'redo':
+			return new self( 'Redo' );
+		case 'find':
+			return new self( 'Find' );
+		case 'replace':
+			return new self( 'Replace' );
+		case 'selectall':
+			return new self( 'SelectAll' );
+		case 'removeformat':
+			return new self( 'RemoveFormat' );
+		case 'smiley':
+			return new self( 'Smiley' );
+		case 'specialchar':
+			return new self( 'SpecialChar' );
+		case 'showblocks':
+			return new self( 'ShowBlocks' );
+		case 'left':
+			return new self( 'JustifyLeft' );
+		case 'right':
+			return new self( 'JustifyRight' );
+		case 'full':
+			return new self( 'JustifyFull' );
+		case 'indent':
+			return new self( 'Indent' );
+		case 'outdent':
+			return new self( 'Outdent' );
+		case 'underline':
+			return new self( 'Underline' );
+		case 'unlink':
+			return new self( 'Unlink' );
+		}
+	} // }}}
+
+	function isAccessible() // {{{
+	{
+		return true;
+	} // }}}
+
+	function getWikiHtml() // {{{
+	{
+		return null;
+	} // }}}
+}
+
 class QuicktagInline extends Quicktag
 {
 	protected $syntax;
@@ -89,6 +159,36 @@ class QuicktagInline extends Quicktag
 			$icon = tra('pics/icons/text_strikethrough.png');
 			$wysiwyg = 'StrikeThrough';
 			$syntax = '--text--';
+			break;
+		case 'sub':
+			$label = tra('Subscript');
+			$icon = tra('pics/icons/text_subscript.png');
+			$wysiwyg = 'Subscript';
+			$syntax = '{SUB()}text{SUB}';
+			break;
+		case 'sup':
+			$label = tra('Superscript');
+			$icon = tra('pics/icons/text_superscript.png');
+			$wysiwyg = 'Superscript';
+			$syntax = '{SUP()}text{SUP}';
+			break;
+		case 'tikilink':
+			$label = tra('Wiki Link');
+			$icon = tra('pics/icons/page_link.png');
+			$wysiwyg = 'tikilink';
+			$syntax = '((text))';
+			break;
+		case 'link':
+			$label = tra('Link');
+			$icon = tra('pics/icons/world_link.png');
+			$wysiwyg = 'Link';
+			$syntax = '[http://example.com|text]';
+			break;
+		case 'anchor':
+			$label = tra('Anchor');
+			$icon = tra('pics/icons/anchor.png');
+			$wysiwyg = 'Anchor';
+			$syntax = '{ANAME()}text{ANAME}';
 			break;
 		}
 
@@ -131,6 +231,42 @@ class QuicktagBlock extends QuicktagInline // Will change in the future
 			$icon = tra('pics/icons/text_align_center.png');
 			$wysiwyg = 'JustifyCenter';
 			$syntax = "::text::";
+			break;
+		case 'table':
+			$label = tra('Table');
+			$icon = tra('pics/icons/table.png');
+			$wysiwyg = 'Table';
+			$syntax = '||r1c1|r1c2\nr2c1|r2c2||';
+			break;
+		case 'rule':
+			$label = tra('Horizontal Bar');
+			$icon = tra('pics/icons/page.png');
+			$wysiwyg = 'Rule';
+			$syntax = '---';
+			break;
+		case 'pagebreak':
+			$label = tra('Page Break');
+			$icon = tra('pics/icons/page.png');
+			$wysiwyg = 'PageBreak';
+			$syntax = '---';
+			break;
+		case 'list':
+			$label = tra('Unordered List');
+			$icon = tra('pics/icons/text_list_bullets.png');
+			$wysiwyg = 'UnorderedList';
+			$syntax = '*text';
+			break;
+		case 'numlist':
+			$label = tra('Ordered List');
+			$icon = tra('pics/icons/text_list_numbers.png');
+			$wysiwyg = 'OrderedList';
+			$syntax = '#text';
+			break;
+		case 'blockquote':
+			$label = tra('Block Quote');
+			$icon = tra('pics/icons/box.png');
+			$wysiwyg = 'Blockquote';
+			$syntax = '^text^';
 			break;
 		}
 
@@ -213,18 +349,16 @@ class QuicktagsList
 
 	private function getTag( $tagName ) // {{{
 	{
-		switch( $tagName ) {
-		case 'bold':
-		case 'italic':
-		case 'strike':
-			return QuicktagInline::fromName( $tagName );
-		case 'center':
-			return QuicktagBlock::fromName( $tagName );
-		case 'fullscreen':
+		if( $tag = QuicktagInline::fromName( $tagName ) )
+			return $tag;
+		elseif( $tag = QuicktagBlock::fromName( $tagName ) )
+			return $tag;
+		elseif( $tag = QuicktagFckOnly::fromName( $tagName ) )
+			return $tag;
+		elseif( $tagName == 'fullscreen' )
 			return new QuicktagFullscreen;
-		case '-':
+		elseif( $tagName == '-' )
 			return new QuicktagSeparator;
-		}
 	} // }}}
 
 	function getWysiwygArray() // {{{
