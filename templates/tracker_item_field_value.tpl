@@ -113,7 +113,11 @@
 		{$field_value.value}
 	{elseif $field_value.value ne ''}
 		{if $list_mode ne 'n'}
+			{if !empty($field_value.options_array[5]) and $prefs.feature_shadowbox eq 'y'}
+				<a href="{$field_value.value}" rel="{if $field_value.options_array[5] eq 'item'}shadowbox[{$item.itemId}]{elseif $field_value.options_array[5]} eq 'individual'}shadowbox{else}shadowbox[{$field_value.options_array[5]}{/if};type=img">
+			{/if}
 			<img border="0" src="{$field_value.value}"{if $field_value.options_array[0]} width="{$field_value.options_array[0]}"{/if}{if $field_value.options_array[1]} height="{$field_value.options_array[1]}"{/if} alt="" />
+			{if $field_value.options_array[5] and $prefs.feature_shadowbox eq 'y'}</a>{/if}
 		{else}
 			<img border="0" src="{$field_value.value}"{if $field_value.options_array[2]} width="{$field_value.options_array[2]}"{/if}{if $field_value.options_array[3]} height="{$field_value.options_array[3]}"{/if} alt="" />
 		{/if}
