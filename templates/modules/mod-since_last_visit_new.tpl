@@ -34,20 +34,15 @@
 							{assign var=showtcname value=show_$tcname}
 							<a class="separator" href="javascript:flip('{$tcname}');">{$tracker.count}&nbsp;{$tracker.label}</a>
 							<div id="{$tcname}" style="display:{if !isset($cookie.$showtcname) or $cookie.$showtcname eq 'y'}block{else}none{/if};"> 
-								<table cellpadding="0" cellspacing="0">
+								{if $nonums != 'y'}<ol>{else}<ul>{/if}
 								{section name=xx loop=$tracker.list}
-									<tr class="module">
-										<td width="10" />
-										<td width="20" align="right" class="module">&nbsp;{$smarty.section.xx.index_next})</td> 
-										<td>
-											<a  class="linkmodule"
+									<li><a  class="linkmodule"
 												href="{$tracker.list[xx].href|escape}"
 												title="{$tracker.list[xx].title|escape}">{if $tracker.list[xx].label == ''}-{else}{$tracker.list[xx].label|escape}{/if}
 											</a>
-										</td>
-									</tr>
+									</li>
 								{/section}
-								</table>
+								{if $nonums != 'y'}</ol>{else}</ul>{/if}
 							</div>
 						</div>
 					{/foreach}
@@ -56,21 +51,17 @@
 
 				{else}
 					<div id="{$cname}" style="display:{if !isset($cookie.$showcname) or $cookie.$showcname eq 'y'}block{else}none{/if};">
-						<table cellpadding="0" cellspacing="0">
+						{if $nonums != 'y'}<ol>{else}<ul>{/if}
 						{section name=ix loop=$slvn_item.list}
-							<tr class="module">
-								<td width="10" />
-								<td width="20" align="right" class="module">{$smarty.section.ix.index_next})</td>
-								<td>
+							<li>
 									<a  class="linkmodule" 
 										href="{$slvn_item.list[ix].href|escape}"
 										title="{$slvn_item.list[ix].title|escape}">
 										{if $slvn_item.list[ix].label == ''}-{else}{$slvn_item.list[ix].label|escape}{/if}
 									</a>
-								</td>
-							</tr>
+								</li>
 						{/section}
-						</table>
+						{if $nonums != 'y'}</ol>{else}</ul>{/if}
 					</div>
 				{/if}
 			{/if}
