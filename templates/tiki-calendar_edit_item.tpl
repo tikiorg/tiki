@@ -201,6 +201,8 @@
 	<td>{tr}Calendar{/tr}</td>
 	<td>
 {if $edit}
+		{if $id}<span class="summary">{$listcals[$calitem.calendarId].name|escape}</span><br />{tr}or{/tr}&nbsp;{/if}
+		<input type="submit" name="changeCal" value="{tr}Go to{/tr}" />
 		<select name="save[calendarId]" id="calid">
 			{foreach item=it key=itid from=$listcals}
 				<option value="{$it.calendarId}"
@@ -544,7 +546,11 @@ onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;">
 <td>{tr}Organized by{/tr}</td>
 <td>
 {if $edit}
-<input type="text" name="save[organizers]" value="{foreach item=org from=$calitem.organizers}{$org}, {/foreach}" style="width:90%;" />
+	{if $preview or $changeCal}
+		<input type="text" name="save[organizers]" value="{$calitem.organizers}" style="width:90%;" />
+	{else}
+		<input type="text" name="save[organizers]" value="{foreach item=org from=$calitem.organizers name=organizers}{if $org neq ''}{$org}{if !$smarty.foreach.organizers.last},{/if}{/if}{/foreach}" style="width:90%;" />
+	{/if}
 {else}
 {foreach item=org from=$calitem.organizers}
 {$org|escape}<br />
@@ -561,7 +567,11 @@ onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;">
 </td>
 <td>
 {if $edit}
-<input type="text" name="save[participants]" value="{foreach item=ppl from=$calitem.participants}{if $ppl.role}{$ppl.role}:{/if}{$ppl.name}, {/foreach}" style="width:90%;" />
+	{if $preview or $changeCal}
+		<input type="text" name="save[participants]" value="{$calitem.participants}" style="width:90%;" />
+	{else}
+		<input type="text" name="save[participants]" value="{foreach item=ppl from=$calitem.participants name=participants}{if $ppl.name neq ''}{if $ppl.role}{$ppl.role}:{/if}{$ppl.name}{if !$smarty.foreach.participants.last},{/if}{/if}{/foreach}" style="width:90%;" />
+	{/if}
 {else}
 {foreach item=ppl from=$calitem.participants}
 {$ppl.name|escape} {if $listroles[$ppl.role]}({$listroles[$ppl.role]}){/if}<br />

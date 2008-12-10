@@ -207,6 +207,7 @@ if (isset($_REQUEST['act']) || isset($_REQUEST['preview']) || isset($_REQUEST['c
 		$save['duration'] = max(0, $save['end'] - $save['start']);
 	}
 }
+
 $impossibleDates = false;
 if (isset($save['start']) && isset($save['end'])) {
 	if (($save['end'] - $save['start']) < 0)
@@ -344,11 +345,14 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
 	$save['parsedName'] = $tikilib->parse_data($save['name']);
 	$id = $save['calitemId'];
 	$calitem = $save;
+	$calendar = $calendarlib->get_calendar($calitem['calendarId']);
 	$smarty->assign('edit',true);
 	$smarty->assign('preview', isset($_REQUEST['preview']));
 } elseif (isset($_REQUEST['changeCal'])) {
 	$calitem = $save;
+	$calendar = $calendarlib->get_calendar($calitem['calendarId']);
 	$smarty->assign('edit',true);
+	$smarty->assign('changeCal', isset($_REQUEST['changeCal']));
 	$_REQUEST['calendarId'] = $save['calendarId'];
 } elseif (isset($_REQUEST['viewcalitemId']) and $tiki_p_view_events == 'y') {
 	$calitem = $calendarlib->get_item($_REQUEST['viewcalitemId']);
