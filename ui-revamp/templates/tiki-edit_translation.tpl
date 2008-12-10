@@ -1,5 +1,5 @@
 {if $object_page_controls}
-	{$object_page_controls}
+	{$object_page_controls.header}
 {else}
 	{title help="i18n" admpage="i18n"}{tr}Translate:{/tr}&nbsp;{$name}{if isset($languageName)}&nbsp;({$languageName}, {$langpage}){/if}{/title}
 
@@ -145,4 +145,7 @@ function validate_translation_request() {
 			<input type="submit" value="{tr}Set Current Page's Language{/tr}"/>
 		</p>
 	</form>
+{/if}
+{if $object_page_controls}
+	{$object_page_controls.footer}
 {/if}

@@ -248,7 +248,8 @@ abstract class TikiPageControls implements ArrayAccess
 
 	private $mode = false;
 
-	private $template = 'tiki-pagecontrols.tpl';
+	private $headerTemplate = 'tiki-pagecontrols.tpl';
+	private $footerTemplate = 'tiki-pagecontrols-footer.tpl';
 
 	public abstract function build();
 
@@ -348,12 +349,12 @@ abstract class TikiPageControls implements ArrayAccess
 		return $tab;
 	} // }}}
 
-	function __toString() // {{{
+	private function renderTemplate( $template ) // {{{
 	{
 		global $smarty;
 		$smarty->assign( 'controls', $this );
 
-		return $smarty->fetch( $this->template );
+		return $smarty->fetch( $template );
 	} // }}}
 
 	function offsetGet( $name ) // {{{
@@ -362,6 +363,8 @@ abstract class TikiPageControls implements ArrayAccess
 		case 'menus': return $this->menus;
 		case 'tabs': return $this->tabs;
 		case 'heading': return $this->heading;
+		case 'header': return $this->renderTemplate( $this->headerTemplate );
+		case 'footer': return $this->renderTemplate( $this->footerTemplate );
 		default: return $this->menus[$name];
 		}
 	} // }}}
@@ -369,9 +372,12 @@ abstract class TikiPageControls implements ArrayAccess
 	function offsetExists( $name ) // {{{
 	{
 		switch( $name ) {
-		case 'menus': return true;
-		case 'tabs': return true;
-		case 'heading': return true;
+		case 'menus':
+		case 'tabs':
+		case 'heading':
+		case 'header': 
+		case 'footer': 
+			return true;
 		default: return isset($this->menus[$name]);
 		}
 	} // }}}

@@ -1,4 +1,4 @@
-{$wiki_page_controls}
+{$wiki_page_controls.header}
 {if $likepages|@count ge '2'}
 <ul>
 {section name=back loop=$likepages}
@@ -16,3 +16,4 @@
 
 {include file=tiki-page_bar.tpl}
 
+{$wiki_page_controls.footer}

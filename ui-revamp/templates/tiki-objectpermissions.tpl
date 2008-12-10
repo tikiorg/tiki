@@ -1,7 +1,7 @@
 {* $Id$ *}
 
 {if $object_page_controls}
-	{$object_page_controls}
+	{$object_page_controls.header}
 {else}
 {title help="Permission"}{tr}Assign permissions to {/tr}{tr}{$objectType|escape}{/tr}: {$objectName|escape}{/title}
 
@@ -187,3 +187,7 @@
 </div>
 </form>
 </fieldset>
+
+{if $object_page_controls}
+	{$object_page_controls.footer}
+{/if}
