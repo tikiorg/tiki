@@ -9,6 +9,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 function smarty_function_autosave($params, &$smarty)
 {
 	global $user;
+	global $tikilib;
 	global $js_script;
 	$user_agent = $_SERVER['HTTP_USER_AGENT'];
 	$user_ip = $tikilib->get_ip_address();
