@@ -41,6 +41,43 @@
 
 <table class="normal{if !$edit} vevent{/if}">
 <tr class="formcolor">
+	<td>{tr}Calendar{/tr}</td>
+	<td>
+{if $edit}
+		{if $id}<span class="summary">{$listcals[$calitem.calendarId].name|escape}</span><br />{tr}or{/tr}&nbsp;{/if}
+		<select name="save[calendarId]" id="calid" onchange="javascript:document.getElementById('editcalitem').submit();">
+			{foreach item=it key=itid from=$listcals}
+				<option value="{$it.calendarId}"
+				{if $calitem.calendarId}
+					{if $calitem.calendarId eq $itid} selected="selected"{/if}
+				{else}
+					{if $calendarView}
+						{if $calendarView eq $itid} selected="selected"{/if}
+					{else}
+						{if $calendarId}
+							{if $calendarId eq $itid} selected="selected"{/if}
+						{/if}
+					{/if}
+				{/if}>{$it.name|escape}</option>
+			{/foreach}
+		</select>
+{else}
+	<span class="summary">{$listcals[$calitem.calendarId].name|escape}</span>
+{/if}
+	</td>
+</tr>
+
+<tr class="formcolor">
+<td>{tr}Title{/tr}</td>
+<td>
+{if $edit}
+	<input type="text" name="save[name]" value="{$calitem.name|escape}" size="32" style="width:90%;"/>
+{else}
+	<span class="summary">{$calitem.name|escape}</span>
+{/if}
+</td>
+</tr>
+<tr class="formcolor">
 	<td>{tr}Recurrence{/tr}</td>
 	<td>
 {if $edit}
@@ -196,44 +233,6 @@
 {/if}
 {/if}
 	</td>
-</tr>
-<tr class="formcolor">
-	<td>{tr}Calendar{/tr}</td>
-	<td>
-{if $edit}
-		{if $id}<span class="summary">{$listcals[$calitem.calendarId].name|escape}</span><br />{tr}or{/tr}&nbsp;{/if}
-		<input type="submit" name="changeCal" value="{tr}Go to{/tr}" />
-		<select name="save[calendarId]" id="calid" onchange="javascript:document.getElementById('editcalitem').submit();">
-			{foreach item=it key=itid from=$listcals}
-				<option value="{$it.calendarId}"
-				{if $calitem.calendarId}
-					{if $calitem.calendarId eq $itid} selected="selected"{/if}
-				{else}
-					{if $calendarView}
-						{if $calendarView eq $itid} selected="selected"{/if}
-					{else}
-						{if $calendarId}
-							{if $calendarId eq $itid} selected="selected"{/if}
-						{/if}
-					{/if}
-				{/if}>{$it.name|escape}</option>
-			{/foreach}
-		</select>
-{else}
-	<span class="summary">{$listcals[$calitem.calendarId].name|escape}</span>
-{/if}
-	</td>
-</tr>
-
-<tr class="formcolor">
-<td>{tr}Title{/tr}</td>
-<td>
-{if $edit}
-	<input type="text" name="save[name]" value="{$calitem.name|escape}" size="32" style="width:90%;"/>
-{else}
-	<span class="summary">{$calitem.name|escape}</span>
-{/if}
-</td>
 </tr>
 <tr class="formcolor">
 <td>{tr}Start{/tr}</td>
