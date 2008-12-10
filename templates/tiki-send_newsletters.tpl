@@ -177,7 +177,6 @@
 </div>
 {* --- tab with drafts --- *}
 <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $prefs.feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
-{** need to be finished }
 {assign var=channels value=$drafts}
 {assign var=view_editions value='n'}
 {assign var=offset value=$dr_offset}
@@ -196,7 +195,6 @@
 {assign var=tab value=2}
 <h2>{tr}Drafts{/tr}&nbsp;({$cant_drafts})</h2>
 {include file=sent_newsletters.tpl }
-{ **}
 </div>
 
 {* --- tab with editions --- *}

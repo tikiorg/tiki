@@ -311,8 +311,8 @@ if (isset($_REQUEST['ed_find']) && isset($_REQUEST['dr_find'])) {
 $smarty->assign_by_ref('ed_find', $ed_find);
 $smarty->assign_by_ref('dr_find', $dr_find);
 	
-$editions = $nllib->list_editions($_REQUEST["nlId"], $ed_offset, $maxRecords, $ed_sort_mode, $ed_find);
-$drafts = $nllib->list_editions($_REQUEST["nlId"], $dr_offset, $maxRecords, $dr_sort_mode, $dr_find);
+$editions = $nllib->list_editions($_REQUEST["nlId"], $ed_offset, $maxRecords, $ed_sort_mode, $ed_find, false);
+$drafts = $nllib->list_editions($_REQUEST["nlId"], $dr_offset, $maxRecords, $dr_sort_mode, $dr_find, true);
 
 $ed_cant_pages = ceil($editions["cant"] / $maxRecords);
 $dr_cant_pages = ceil($drafts["cant"] / $maxRecords);

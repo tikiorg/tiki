@@ -51,11 +51,37 @@ class NlLib extends TikiLib {
 		return $nlId;
 	}
 
-	function replace_edition($nlId, $subject, $data, $users) {
-		$query = "insert into `tiki_sent_newsletters`(`nlId`,`subject`,`data`,`sent`,`users`) values(?,?,?,?,?)";
-		$result = $this->query($query,array((int)$nlId,$subject,$data,(int)$this->now,$users));
-		$query = "update `tiki_newsletters` set `editions`= `editions`+ 1 where `nlId`=?";
-		$result = $this->query($query,array((int)$nlId));
+	function replace_edition($nlId, $subject, $data, $users, $editionId=0, $draft=false, $datatxt='') {
+		if ($draft == false) {
+			if( $editionId > 0 && $this->getOne('select `sent` from `tiki_sent_newsletters` where `editionId`=?', array( (int)$editionId )) == -1 ) {
+				// save and send a draft
+				$query = "update `tiki_sent_newsletters` set `subject`=?, `data`=?, `sent`=?, `users`=? , `datatxt`=? ";
+				$query.= "where editionId=? and nlId=?";
+				$result = $this->query($query,array($subject,$data, (int)$this->now, $users, $datatxt, (int)$editionId,(int)$nlId));
+				$query = "update `tiki_newsletters` set `editions`= `editions`+ 1 where `nlId`=? ";
+				$result = $this->query($query,array((int)$nlId));
+			} else {
+				 // save and send an edition
+				$query = "insert into `tiki_sent_newsletters`(`nlId`,`subject`,`data`,`sent`,`users` ,`datatxt`) values(?,?,?,?,?,?)";
+				$result = $this->query($query,array((int)$nlId,$subject,$data,(int)$this->now,$users,$datatxt));
+				$query = "update `tiki_newsletters` set `editions`= `editions`+ 1 where `nlId`=?";
+				$result = $this->query($query,array((int)$nlId));
+				$editionId = $this->getOne('select max(`editionId`) from `tiki_sent_newsletters`');
+			}
+		} else {
+			if( $editionId > 0 && $this->getOne('select `sent` from `tiki_sent_newsletters` where `editionId`=?', array( (int)$editionId )) == -1 ) {
+				// save an existing draft
+				$query = "update `tiki_sent_newsletters` set `subject`=?, `data`=?, `datatxt`=?";
+				$query.= "where editionId=? and nlId=?";
+				$result = $this->query($query,array($subject,$data,$datatxt,(int)$editionId,(int)$nlId));
+			} else {
+				// save a new draft
+				$query = "insert into `tiki_sent_newsletters`(`nlId`,`subject`,`data`,`sent`,`users`,`datatxt`) values(?,?,?,?,?,?)";
+				$result = $this->query($query,array((int)$nlId,$subject,$data,-1,0,$datatxt));
+				$editionId = $this->getOne('select max(`editionId`) from `tiki_sent_newsletters`');
+			}
+		}
+		return $editionId;
 	}
 
 	/* get only the email subscribers */
@@ -416,6 +442,7 @@ class NlLib extends TikiLib {
 				$notok = $this->getOne("select count(*) from `tiki_newsletter_subscriptions` where `valid`=? and `nlId`=?",array('n',(int)$res['nlId']));
 				$res["users"] = $ok + $notok;
 				$res["confirmed"] = $ok;
+				$res['drafts'] = $this->getOne("select count(*) from `tiki_sent_newsletters` where `nlId`=? and `sent`=-1", array((int)$res['nlId']));
 			}
 			$ret[] = $res;
 		}
@@ -436,7 +463,7 @@ class NlLib extends TikiLib {
 		return $res;
 	}
 
-	function list_editions($nlId, $offset, $maxRecords, $sort_mode, $find, $perm='') {
+	function list_editions($nlId, $offset, $maxRecords, $sort_mode, $find, $drafts=false, $perm='') {
 		global $tikilib, $user;
 		$bindvars = array();
 		$mid = "";
@@ -454,6 +481,8 @@ class NlLib extends TikiLib {
 			$bindvars[] = $findesc;
 			$bindvars[] = $findesc;
 		}
+
+		$mid.=($drafts ? ' and tsn.`sent`=-1' : ' and tsn.`sent`<>-1');
 
 		$query = "select tsn.`editionId`,tn.`nlId`,`subject`,`data`,tsn.`users`,`sent`,`name` from `tiki_newsletters` tn, `tiki_sent_newsletters` tsn ";
 		$query.= " where tn.`nlId`=tsn.`nlId` $mid order by ".$this->convert_sortmode("$sort_mode");
