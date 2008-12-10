@@ -47,7 +47,7 @@ class TikiPageControls_Wiki extends TikiPageControls
 		$this->addActionMenu();
 
 		if( $this->hasPref('feature_backlinks') ) {
-			$backlinksMenu = $this->addMenu( tra('Backlinks') );
+			$backlinksMenu = $this->addMenu( 'backlinks', tra('Backlinks') );
 
 			foreach( $this->getBacklinks() as $back ) {
 				$link = $this->link( 'wiki page', $back['fromPage'] );
@@ -131,19 +131,19 @@ class TikiPageControls_Wiki extends TikiPageControls
 
 	private function addLanguageMenu() // {{{
 	{
-		$langMenu = $this->addMenu( tra('Language') );
+		$langMenu = $this->addMenu( 'language', tra('Language') );
 
 		if( empty( $this->info['lang'] ) ) {
 			if( $this->hasPerm('tiki_p_edit') ) {
 				$link = $this->link( 'url', 'tiki-edit_translation.php', array(
 							'page' => $this->page,
 							) );
-				$langMenu->addItem( tra('Set Language'), $link );
+				$langMenu->addItem( tra('Set Language'), $link, 'set_language' );
 			}
 		} else {
 			foreach( $this->getTranslations() as $trad ) {
 				$link = $this->link( 'wiki page', $trad['objName'] );
-				$item = $langMenu->addItem( $trad['langName'], $link );
+				$item = $langMenu->addItem( $trad['langName'], $link, $this->info['lang'] );
 				$item->setSelected( ! $this->isAllLanguage && $this->info['lang'] == $trad['lang'] );
 			}
 
@@ -152,7 +152,7 @@ class TikiPageControls_Wiki extends TikiPageControls
 							'page' => $this->page,
 							) );
 				$langMenu->addSeparator();
-				$item = $langMenu->addItem( tra('All'), $link );
+				$item = $langMenu->addItem( tra('All'), $link, 'all' );
 				$item->setSelected( $this->isAllLanguage );
 			}
 
@@ -161,7 +161,7 @@ class TikiPageControls_Wiki extends TikiPageControls
 							'page' => $this->page,
 							) );
 				$langMenu->addSeparator();
-				$langMenu->addItem( tra('Translate'), $link );
+				$langMenu->addItem( tra('Translate'), $link, 'translate' );
 			}
 		}
 
@@ -171,13 +171,13 @@ class TikiPageControls_Wiki extends TikiPageControls
 	
 	private function addActionMenu() // {{{
 	{
-		$actionMenu = $this->addMenu( tra('Actions') );
+		$actionMenu = $this->addMenu( 'actions', tra('Actions') );
 
 		if( $this->hasPerm('tiki_p_rename') ) {
 			$link = $this->link( 'url', 'tiki-rename_page.php', array(
 				'page' => $this->page,
 			) );
-			$actionMenu->addItem( tra('Rename'), $link )
+			$actionMenu->addItem( tra('Rename'), $link, 'rename' )
 				->setSelected( $this->isMode('rename') );
 		}
 
@@ -186,7 +186,7 @@ class TikiPageControls_Wiki extends TikiPageControls
 				'page' => $this->page,
 				'version' => 'last',
 			) );
-			$actionMenu->addItem( tra('Remove'), $link )
+			$actionMenu->addItem( tra('Remove'), $link, 'remove' )
 				->setSelected( $this->isMode('remove') );
 		}
 
@@ -199,13 +199,13 @@ class TikiPageControls_Wiki extends TikiPageControls
 				$link = $this->link( 'wiki page', $this->page, array(
 					'action' => 'unlock',
 				) );
-				$actionMenu->addItem( tra('Unlock'), $link )
+				$actionMenu->addItem( tra('Unlock'), $link, 'unlock' )
 					->setSelected( $this->isMode('lock') );
 			} else {
 				$link = $this->link( 'wiki page', $this->page, array(
 					'action' => 'lock',
 				) );
-				$actionMenu->addItem( tra('Lock'), $link )
+				$actionMenu->addItem( tra('Lock'), $link, 'lock' )
 					->setSelected( $this->isMode('lock') );
 			}
 		}
@@ -218,7 +218,7 @@ class TikiPageControls_Wiki extends TikiPageControls
 				'objectType' => 'wiki page',
 				'permType' => 'wiki',
 			) );
-			$actionMenu->addItem( tra('Permissions'), $link )
+			$actionMenu->addItem( tra('Permissions'), $link, 'permissions' )
 				->setSelected( $this->isMode('permissions') );
 		}
 
@@ -226,7 +226,7 @@ class TikiPageControls_Wiki extends TikiPageControls
 			$link = $this->link( 'url', 'tiki-likepages.php', array(
 				'page' => $this->page,
 			) );
-			$actionMenu->addItem( tra('Similar'), $link )
+			$actionMenu->addItem( tra('Similar'), $link, 'similar' )
 				->setSelected( $this->isMode('similar') );
 		}
 
@@ -234,7 +234,7 @@ class TikiPageControls_Wiki extends TikiPageControls
 			$link = $this->link( 'wiki page', $this->page, array(
 				'undo' => 1,
 			) );
-			$actionMenu->addItem( tra('Undo'), $link )
+			$actionMenu->addItem( tra('Undo'), $link, 'undo' )
 				->setSelected( $this->isMode('undo') );
 		}
 
@@ -245,7 +245,7 @@ class TikiPageControls_Wiki extends TikiPageControls
 			$link = $this->link( 'wiki page', $this->page, array(
 				'convertstructure' => 1,
 			) );
-			$actionMenu->addItem( tra('Make Structure'), $link )
+			$actionMenu->addItem( tra('Make Structure'), $link, 'structure_make' )
 				->setSelected( $this->isMode('structure_make') );
 		}
 
@@ -254,14 +254,14 @@ class TikiPageControls_Wiki extends TikiPageControls
 				$link = $this->link( 'url', 'tiki-slideshow.php', array(
 					'page' => $this->page,
 				) );
-				$actionMenu->addItem( tra('Slides'), $link )
+				$actionMenu->addItem( tra('Slides'), $link, 'slide' )
 					->setSelected( $this->isMode('slide') );
 			}
 			if( $this->hasStructure() ) {
 				$link = $this->link( 'url', 'tiki-slideshow2.php', array(
 					'page_ref_id' => $this->structureInfo['page_ref_id'],
 				) );
-				$actionMenu->addItem( tra('Structure Slides'), $link )
+				$actionMenu->addItem( tra('Structure Slides'), $link, 'slide_structure' )
 					->setSelected( $this->isMode('slide_structure') );
 			}
 		}
@@ -272,7 +272,7 @@ class TikiPageControls_Wiki extends TikiPageControls
 				$link = $this->link( 'url', 'tiki-export_wiki_pages.php', array(
 					'page' => $this->page,
 				) );
-				$actionMenu->addItem( tra('Export'), $link )
+				$actionMenu->addItem( tra('Export'), $link, 'export' )
 					->setSelected( $this->isMode('export') );
 		}
 
@@ -282,7 +282,7 @@ class TikiPageControls_Wiki extends TikiPageControls
 			$link = $this->link( 'url', 'tiki-edit_translation.php', array(
 				'page' => $this->page,
 			) );
-			$actionMenu->addItem( tra('Translate'), $link )
+			$actionMenu->addItem( tra('Translate'), $link, 'translate' )
 				->setSelected( $this->isMode('translate') );
 		}
 
@@ -294,7 +294,7 @@ class TikiPageControls_Wiki extends TikiPageControls
 	private function addTabs() // {{{
 	{
 		$link = $this->link( 'wiki page', $this->page );
-		$tab = $this->addTab( tra('View'), $link );
+		$tab = $this->addTab( 'view', tra('View'), $link );
 		$tab->setSelected( $this->isMode('view') );
 
 		if( $this->hasPerm('tiki_p_edit') ) {
@@ -304,15 +304,15 @@ class TikiPageControls_Wiki extends TikiPageControls
 			switch($this->getMode()) {
 			case 'translate_new':
 			case 'translate_update':
-				$tab = $this->addTab( tra('Translate'), $link );
+				$tab = $this->addTab( 'edit', tra('Translate'), $link );
 				$tab->setSelected( $this->isMode('translate_new', 'translate_update') );
 				break;
 			case 'edit_section':
-				$tab = $this->addTab( tra('Edit Section'), $link );
+				$tab = $this->addTab( 'edit', tra('Edit Section'), $link );
 				$tab->setSelected( $this->isMode('edit_section') );
 				break;
 			default:
-				$tab = $this->addTab( tra('Edit'), $link );
+				$tab = $this->addTab( 'edit', tra('Edit'), $link );
 				$tab->setSelected( $this->isMode('edit') );
 				break;
 			}
@@ -324,7 +324,7 @@ class TikiPageControls_Wiki extends TikiPageControls
 			$link = $this->link( 'url', 'tiki-index.php', array(
 				'page' => $this->page
 			) );
-			$tab = $this->addTab( tra('Categorize'), $link );
+			$tab = $this->addTab( 'categories', tra('Categorize'), $link );
 			$tab->setSelected( $this->isMode('category') );
 		}
 
@@ -334,7 +334,7 @@ class TikiPageControls_Wiki extends TikiPageControls
 			$link = $this->link( 'url', 'tiki-index.php', array(
 				'page' => $this->page
 			) );
-			$tab = $this->addTab( tra('Comments'), $link, $this->getCommentCount() );
+			$tab = $this->addTab( 'comments', tra('Comments'), $link, $this->getCommentCount() );
 			$tab->setSelected( $this->isMode('comment') );
 		}
 
@@ -344,7 +344,7 @@ class TikiPageControls_Wiki extends TikiPageControls
 			$link = $this->link( 'url', 'tiki-index.php', array(
 				'page' => $this->page
 			) );
-			$tab = $this->addTab( tra('Attachments'), $link, $this->getAttachmentCount() );
+			$tab = $this->addTab( 'attachments', tra('Attachments'), $link, $this->getAttachmentCount() );
 			$tab->setSelected( $this->isMode('attach') );
 		}
 
@@ -354,7 +354,7 @@ class TikiPageControls_Wiki extends TikiPageControls
 			$link = $this->link( 'url', 'tiki-pagehistory.php', array(
 				'page' => $this->page
 			) );
-			$tab = $this->addTab( tra('History'), $link );
+			$tab = $this->addTab( 'history', tra('History'), $link );
 			$tab->setSelected( $this->isMode('history') );
 		}
 	} // }}}

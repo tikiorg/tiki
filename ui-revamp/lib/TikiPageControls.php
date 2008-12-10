@@ -159,13 +159,16 @@ class TikiPageControls_Menu extends TikiPageControls_Element
 		parent::__construct('menu');
 	} // }}}
 
-	function addItem( $label, $link ) // {{{
+	function addItem( $label, $link, $permanentName = null ) // {{{
 	{
 		$item = new TikiPageControls_Element('menu_item');
 		$item->setText( $label );
 		$item->setLink( $link );
 
-		$this->itemList[] = $item;
+		if( is_null( $permanentName ) )
+			$this->itemList[] = $item;
+		else
+			$this->itemList[$permanentName] = $item;
 
 		return $item;
 	} // }}}
@@ -189,7 +192,11 @@ class TikiPageControls_Menu extends TikiPageControls_Element
 	{
 		switch( $name ) {
 		case 'items': return $this->itemList;
-		default: return parent::offsetGet( $name );
+		default: 
+			if( parent::offsetExists( $name ) )
+				return parent::offsetGet( $name );
+			else
+				return $this->itemList[$name];
 		}
 	} // }}}
 
@@ -197,7 +204,7 @@ class TikiPageControls_Menu extends TikiPageControls_Element
 	{
 		switch( $name ) {
 		case 'items': return true;
-		default: return parent::offsetExists( $name );
+		default: return parent::offsetExists( $name ) || isset($this->itemList[$name]);
 		}
 	} // }}}
 }
@@ -280,12 +287,12 @@ abstract class TikiPageControls implements ArrayAccess
 		return isset( $prefs[$prefName] ) && $prefs[$prefName] == 'y';
 	} // }}}
 
-	protected function addMenu( $label ) // {{{
+	protected function addMenu( $permanentName, $label ) // {{{
 	{
 		$menu = new TikiPageControls_Menu;
 		$menu->setText( $label );
 
-		$this->menus[] = $menu;
+		$this->menus[$permanentName] = $menu;
 
 		return $menu;
 	} // }}}
@@ -295,14 +302,14 @@ abstract class TikiPageControls implements ArrayAccess
 		$this->menus = array_diff( $this->menus, array( $menu ) );
 	} // }}}
 
-	protected function addTab( $label, $link, $argument = null ) // {{{
+	protected function addTab( $permanentName, $label, $link, $argument = null ) // {{{
 	{
 		$tab = new TikiPageControls_Element( 'tab' );
 		$tab->setText( $label );
 		$tab->setLink( $link );
 		$tab->setArgument( $argument );
 
-		$this->tabs[] = $tab;
+		$this->tabs[$permanentName] = $tab;
 
 		return $tab;
 	} // }}}
@@ -321,6 +328,7 @@ abstract class TikiPageControls implements ArrayAccess
 		case 'menus': return $this->menus;
 		case 'tabs': return $this->tabs;
 		case 'heading': return $this->heading;
+		default: return $this->menus[$name];
 		}
 	} // }}}
 
@@ -330,7 +338,7 @@ abstract class TikiPageControls implements ArrayAccess
 		case 'menus': return true;
 		case 'tabs': return true;
 		case 'heading': return true;
-		default: return false;
+		default: return isset($this->menus[$name]);
 		}
 	} // }}}
 
