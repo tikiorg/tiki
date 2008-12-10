@@ -157,9 +157,19 @@ function get_default_prefs() {
 		'wiki_validate_plugin' => 'y',
 
 		'toolbar_global' => '
-			bold,italic,strike
+			fullscreen, templates, -, 
+			cut, copy, paste, pastetext, pasteword, print, spellcheck, -, 
+			undo, redo, -, find, replace, selectall, removeformat, -, 
+			table, rule, smiley, specialchar, pagebreak, showblocks
 			/
-			left,center,-,fullscreen
+			left, center, right, justify, -, 
+			list, numlist, outdent, indent, blockquote, -, 
+			bold, italic, underline, strike, -, sub, sup, -, 
+			tikilink, link, unlink, anchor, -, 
+			image, wikiplugin_flash
+			/
+			style, fontname, fontsize, h1, h2, h3, -,
+			color, bgcolor, source
 			',
 
 		'wikiplugin_agentinfo' => 'n',

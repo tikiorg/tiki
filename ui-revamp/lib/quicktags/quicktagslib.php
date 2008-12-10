@@ -85,6 +85,8 @@ class QuicktagFckOnly extends Quicktag
 			return new self( 'Paste' );
 		case 'pastetext':
 			return new self( 'PasteText' );
+		case 'pasteword':
+			return new self( 'PasteWord' );
 		case 'print':
 			return new self( 'Print' );
 		case 'spellcheck':
