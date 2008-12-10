@@ -156,6 +156,12 @@ function get_default_prefs() {
 		'wiki_edit_plugin' => 'y',
 		'wiki_validate_plugin' => 'y',
 
+		'toolbar_global' => '
+			bold,italic,strike
+			/
+			left,center,-,fullscreen
+			',
+
 		'wikiplugin_agentinfo' => 'n',
 		'wikiplugin_alink' => 'y',
 		'wikiplugin_aname' => 'y',
