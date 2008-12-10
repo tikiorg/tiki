@@ -149,8 +149,8 @@ class TikiPageControls_Wiki extends TikiPageControls
 
 			if( $this->hasPref('feature_multilingual_one_page') ) {
 				$link = $this->link( 'url', 'tiki-all_languages', array(
-							'page' => $this->page,
-							) );
+					'page' => $this->page,
+				) );
 				$langMenu->addSeparator();
 				$langMenu->addItem( tra('All'), $link, 'all' )
 					->setSelected( $this->isAllLanguage );
@@ -158,8 +158,8 @@ class TikiPageControls_Wiki extends TikiPageControls
 
 			if( $this->hasPerm('tiki_p_edit') ) {
 				$link = $this->link( 'url', 'tiki-edit_translation.php', array(
-							'page' => $this->page,
-							) );
+					'page' => $this->page,
+				) );
 				$langMenu->addSeparator();
 				$langMenu->addItem( tra('Translate'), $link, 'translate' );
 			}
@@ -187,6 +187,7 @@ class TikiPageControls_Wiki extends TikiPageControls
 				'version' => 'last',
 			) );
 			$actionMenu->addItem( tra('Remove'), $link, 'remove' )
+				->setIcon( 'pics/icons/cross.png' )
 				->setSelected( $this->isMode('remove') );
 		}
 
@@ -219,6 +220,7 @@ class TikiPageControls_Wiki extends TikiPageControls
 				'permType' => 'wiki',
 			) );
 			$actionMenu->addItem( tra('Permissions'), $link, 'permissions' )
+				->setIcon( 'pics/icons/key.png' )
 				->setSelected( $this->isMode('permissions') );
 		}
 
@@ -305,14 +307,17 @@ class TikiPageControls_Wiki extends TikiPageControls
 			case 'translate_new':
 			case 'translate_update':
 				$this->addTab( 'edit', tra('Translate'), $link )
+					->setIcon( 'pics/icons/page_edit.png' )
 					->setSelected( $this->isMode('translate_new', 'translate_update') );
 				break;
 			case 'edit_section':
 				$this->addTab( 'edit', tra('Edit Section'), $link )
+					->setIcon( 'pics/icons/page_edit.png' )
 					->setSelected( $this->isMode('edit_section') );
 				break;
 			default:
 				$this->addTab( 'edit', tra('Edit'), $link )
+					->setIcon( 'pics/icons/page_edit.png' )
 					->setSelected( $this->isMode('edit') );
 				break;
 			}
@@ -355,6 +360,7 @@ class TikiPageControls_Wiki extends TikiPageControls
 				'page' => $this->page
 			) );
 			$this->addTab( 'history', tra('History'), $link )
+				->setIcon( 'pics/icons/page_white_stack.png' )
 				->setSelected( $this->isMode('history') );
 		}
 	} // }}}

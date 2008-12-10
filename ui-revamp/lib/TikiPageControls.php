@@ -6,6 +6,7 @@ class TikiPageControls_Element implements ArrayAccess
 	private $argument;
 	private $link;
 	private $type;
+	private $iconPath;
 
 	private $selected = false;
 
@@ -45,6 +46,13 @@ class TikiPageControls_Element implements ArrayAccess
 		return $this;
 	} // }}}
 
+	function setIcon( $path ) // {{{
+	{
+		$this->iconPath = $path;
+		
+		return $this;
+	} // }}}
+
 	function offsetGet( $name ) // {{{
 	{
 		switch( $name ) {
@@ -53,6 +61,7 @@ class TikiPageControls_Element implements ArrayAccess
 		case 'link': return $this->link;
 		case 'type': return $this->type;
 		case 'selected': return $this->selected;
+		case 'icon': return $this->getIconLink();
 		}
 	} // }}}
 
@@ -70,6 +79,16 @@ class TikiPageControls_Element implements ArrayAccess
 
 	function offsetSet( $name, $value ) {}
 	function offsetUnset( $name ) {}
+
+	private function getIconLink() // {{{
+	{
+		return '<a href="' . htmlentities($this->link->getHref(), ENT_QUOTES, 'UTF-8') . '">' . $this->getIcon() . '</a>';
+	} // }}}
+
+	private function getIcon() // {{{
+	{
+		return '<img src="' . htmlentities($this->iconPath, ENT_QUOTES, 'UTF-8') . '" alt="' . htmlentities($this->text, ENT_QUOTES, 'UTF-8') . '" title="' . htmlentities($this->text, ENT_QUOTES, 'UTF-8') . '" class="icon"/>';
+	} // }}}
 
 	function __toString() // {{{
 	{
