@@ -143,8 +143,8 @@ class TikiPageControls_Wiki extends TikiPageControls
 		} else {
 			foreach( $this->getTranslations() as $trad ) {
 				$link = $this->link( 'wiki page', $trad['objName'] );
-				$item = $langMenu->addItem( $trad['langName'], $link, $this->info['lang'] );
-				$item->setSelected( ! $this->isAllLanguage && $this->info['lang'] == $trad['lang'] );
+				$langMenu->addItem( $trad['langName'], $link, $this->info['lang'] )
+					->setSelected( ! $this->isAllLanguage && $this->info['lang'] == $trad['lang'] );
 			}
 
 			if( $this->hasPref('feature_multilingual_one_page') ) {
@@ -152,8 +152,8 @@ class TikiPageControls_Wiki extends TikiPageControls
 							'page' => $this->page,
 							) );
 				$langMenu->addSeparator();
-				$item = $langMenu->addItem( tra('All'), $link, 'all' );
-				$item->setSelected( $this->isAllLanguage );
+				$langMenu->addItem( tra('All'), $link, 'all' )
+					->setSelected( $this->isAllLanguage );
 			}
 
 			if( $this->hasPerm('tiki_p_edit') ) {
@@ -294,8 +294,8 @@ class TikiPageControls_Wiki extends TikiPageControls
 	private function addTabs() // {{{
 	{
 		$link = $this->link( 'wiki page', $this->page );
-		$tab = $this->addTab( 'view', tra('View'), $link );
-		$tab->setSelected( $this->isMode('view') );
+		$this->addTab( 'view', tra('View'), $link )
+			->setSelected( $this->isMode('view') );
 
 		if( $this->hasPerm('tiki_p_edit') ) {
 			$link = $this->link( 'url', 'tiki-editpage.php', array(
@@ -304,16 +304,16 @@ class TikiPageControls_Wiki extends TikiPageControls
 			switch($this->getMode()) {
 			case 'translate_new':
 			case 'translate_update':
-				$tab = $this->addTab( 'edit', tra('Translate'), $link );
-				$tab->setSelected( $this->isMode('translate_new', 'translate_update') );
+				$this->addTab( 'edit', tra('Translate'), $link )
+					->setSelected( $this->isMode('translate_new', 'translate_update') );
 				break;
 			case 'edit_section':
-				$tab = $this->addTab( 'edit', tra('Edit Section'), $link );
-				$tab->setSelected( $this->isMode('edit_section') );
+				$this->addTab( 'edit', tra('Edit Section'), $link )
+					->setSelected( $this->isMode('edit_section') );
 				break;
 			default:
-				$tab = $this->addTab( 'edit', tra('Edit'), $link );
-				$tab->setSelected( $this->isMode('edit') );
+				$this->addTab( 'edit', tra('Edit'), $link )
+					->setSelected( $this->isMode('edit') );
 				break;
 			}
 		}
@@ -324,8 +324,8 @@ class TikiPageControls_Wiki extends TikiPageControls
 			$link = $this->link( 'url', 'tiki-index.php', array(
 				'page' => $this->page
 			) );
-			$tab = $this->addTab( 'categories', tra('Categorize'), $link );
-			$tab->setSelected( $this->isMode('category') );
+			$this->addTab( 'categories', tra('Categorize'), $link )
+				->setSelected( $this->isMode('category') );
 		}
 
 		if( $this->hasPref('feature_wiki_comments')
@@ -334,8 +334,8 @@ class TikiPageControls_Wiki extends TikiPageControls
 			$link = $this->link( 'url', 'tiki-index.php', array(
 				'page' => $this->page
 			) );
-			$tab = $this->addTab( 'comments', tra('Comments'), $link, $this->getCommentCount() );
-			$tab->setSelected( $this->isMode('comment') );
+			$this->addTab( 'comments', tra('Comments'), $link, $this->getCommentCount() )
+				->setSelected( $this->isMode('comment') );
 		}
 
 		if( $this->hasPref('feature_wiki_attachments')
@@ -344,8 +344,8 @@ class TikiPageControls_Wiki extends TikiPageControls
 			$link = $this->link( 'url', 'tiki-index.php', array(
 				'page' => $this->page
 			) );
-			$tab = $this->addTab( 'attachments', tra('Attachments'), $link, $this->getAttachmentCount() );
-			$tab->setSelected( $this->isMode('attach') );
+			$this->addTab( 'attachments', tra('Attachments'), $link, $this->getAttachmentCount() )
+				->setSelected( $this->isMode('attach') );
 		}
 
 		if( $this->hasPref('feature_history')
@@ -354,8 +354,8 @@ class TikiPageControls_Wiki extends TikiPageControls
 			$link = $this->link( 'url', 'tiki-pagehistory.php', array(
 				'page' => $this->page
 			) );
-			$tab = $this->addTab( 'history', tra('History'), $link );
-			$tab->setSelected( $this->isMode('history') );
+			$this->addTab( 'history', tra('History'), $link )
+				->setSelected( $this->isMode('history') );
 		}
 	} // }}}
 

@@ -17,6 +17,8 @@ class TikiPageControls_Element implements ArrayAccess
 	function setText( $text ) // {{{
 	{
 		$this->text = $text;
+
+		return $this;
 	} // }}}
 
 	function setLink( $link ) // {{{
@@ -25,16 +27,22 @@ class TikiPageControls_Element implements ArrayAccess
 			throw new Exception("Expecting link instance.");
 
 		$this->link = $link;
+
+		return $this;
 	} // }}}
 
 	function setArgument( $value ) // {{{
 	{
 		$this->argument = $value;
+
+		return $this;
 	} // }}}
 
 	function setSelected( $selected ) // {{{
 	{
 		$this->selected = (bool) $selected;
+
+		return $this;
 	} // }}}
 
 	function offsetGet( $name ) // {{{
@@ -250,6 +258,8 @@ abstract class TikiPageControls implements ArrayAccess
 	public function setUser( $user ) // {{{
 	{
 		$this->user = $user;
+
+		return $this;
 	} // }}}
 
 	public function setHeading( $label, $link = null ) // {{{
@@ -257,6 +267,8 @@ abstract class TikiPageControls implements ArrayAccess
 		$this->heading = new TikiPageControls_Element('heading');
 		$this->heading->setText( $label );
 		$this->heading->setLink( $link );
+
+		return $this;
 	} // }}}
 
 	public function link( $type, $object, array $arguments = array() ) // {{{
@@ -345,6 +357,8 @@ abstract class TikiPageControls implements ArrayAccess
 	function setMode( $mode ) // {{{
 	{
 		$this->mode = $mode;
+
+		return $this;
 	} // }}}
 
 	protected function getMode() // {{{
