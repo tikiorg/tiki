@@ -286,13 +286,14 @@ if (isset($_REQUEST["send"])) {
 	foreach ($users as $us) {
 		$userEmail  = $us["login"];
 		$email = $us["email"];
-		if ($email == "") {
-			$errors[] = array("user"=>$userEmail, "email"=>"");
+		if (!preg_match('/^([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+$/', trim($email))) {
+			$errors[] = array("user"=>$userEmail, "email"=>$email);
 			continue;
 		}
 		if ($userEmail == "") {
 			$userEmail = $userlib->get_user_by_email($email);
 		}
+		$email=trim($email);
 
 		if ($userEmail) {
 			$mail->setUser($userEmail);
