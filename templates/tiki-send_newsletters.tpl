@@ -49,6 +49,9 @@
 <input type="hidden" name="datatxt" value="{$datatxt|escape}" />
 <input type="submit" name="send" value="{tr}Send{/tr}" />
 <input type="submit" name="preview" value="{tr}Cancel{/tr}" />
+{foreach from=$info.files item=newsletterfile key=fileid}
+  <input type='hidden' name='newsletterfile[{$fileid}]' value='{$newsletterfile.id}'/>
+{/foreach}
 </form>
 </p>
 <div class="title">

@@ -239,6 +239,7 @@ if (isset($_REQUEST["save"])) {
 	$smarty->assign('subject', $_REQUEST["subject"]);
 	$cant = count($subscribers);
 	$smarty->assign('subscribers', $cant);
+	$smarty->assign('info', $info);
 }
 
 $smarty->assign('emited', 'n');
@@ -278,10 +279,12 @@ if (isset($_REQUEST["send"])) {
 
 	$nllib->memo_subscribers_edition($editionId, $users);
 	$sender_email = $prefs['sender_email'];
-
-	$info['files']=$nllib->get_edition_files($editionId);
+	
+	if (!isset($info['files']) || $info['files']===null || count($info['files']) <= 0)
+		$info['files']=$nllib->get_edition_files($editionId);
 	foreach($info['files'] as $f) {
-		$mail->addAttachment(file_get_contents($prefs['tmpDir'].'/newsletterfile-'.$f['filename']), $f['name'], $f['type']);
+		$fpath=isset($f['path']) ? $f['path'] : $prefs['tmpDir'].'/newsletterfile-'.$f['filename'];
+		$mail->addAttachment(file_get_contents($fpath), $f['name'], $f['type']);
 	}
 
 	foreach ($users as $us) {
