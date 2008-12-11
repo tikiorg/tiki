@@ -89,6 +89,8 @@ input[type=file],
 input[type=reset],
 select {}
 
+span.button {display: inline-block; margin: 2px 1px}
+
 /* Links in buttons */
 .button a,
 .button a:visited,
@@ -211,13 +213,15 @@ ul.jumplinks a:active {
 #c1c2 #wrapper .marginleft {margin-left: 230px}
 #c1c2 #wrapper .marginright {margin-right: 230px}
 
-#c1c2 #wrapper #col1 {position: relative}
+#c1c2 #wrapper #col1 {/*position: relative*/}
 
 #c1c2 #wrapper #col1 > .content {
 	background: url(coelesce/tiki-centerbg.jpg) repeat-x;
 	color: #2d2d2d;
 	margin-left: 30px;
 	margin-right: 30px}
+	
+body.tiki_wiki #c1c2 #wrapper #col1 > .content {background: none}
 
 #c1c2 #col2 {
 	width: 230px;
@@ -299,13 +303,19 @@ div#sitead {margin: auto}
 #sioptionscentered #sitead.floatleft {padding-left: 10px}
 .floatright img {}
 
-#siteloginbar {
-	text-align: right;
+#login_search {
+	display: block;
 	position: absolute;
-	bottom: 3px;
-	right: 10px;
-	font-size: 90%}
+	right: 30px;
+	bottom: 12px;
+	text-align: right;
+	color: #fff}
 	
+#login_search a,
+#login_search a:visited {color: #fff}
+	
+#siteloginbar * {display: inline}
+/*	
 #siteloginbar #register{
  float: right;
  padding-left: 5px;
@@ -313,9 +323,41 @@ div#sitead {margin: auto}
 #siteloginbar #pass{
  float: right;
  padding-left: 5px;
-}
+}*/
 	
-/* #siteloginbar.logged-in {bottom: 120px} */
+#login_language {display: none/*inline*/}
+
+#sitesearchbar {
+	display: block;
+	float: right;
+	margin: 0;
+	margin-top: 3px;
+	height: 33px;
+	max-width: 320px;
+	background: url(coelesce/search_wide.jpg) no-repeat;
+	padding-left: 15px;
+	color: #517ea7;}
+	
+#sitesearchbar > .wrapper {
+	height: 33px;
+	background: url(coelesce/search_wide.jpg) 100% 0 no-repeat;
+	margin: 0;
+	padding: 0}
+	
+#sitesearchbar form { padding-top: 8px;margin-right: 8px }
+
+#sitesearchbar form input.wikiaction {
+	color: transparent;
+	background: transparent;
+	border: none}
+
+input#fuser,
+select[name="where"] {border: none}
+
+input#fuser,
+select[name="where"],
+input[name="search"] {}
+	
 
 input[id="sl-login-user"],
 input[id="sl-login-pass"] {}
@@ -369,31 +411,14 @@ input[id="sl-login-pass"] {}
 #tiki-top a {}
 #tiki-top table {width: auto}
 
-#sitesearchbar {
-	float: right;
-	padding-right: 4px;
-	text-align: right;
-	display: block;
-	margin: 0}
-
-input#fuser,
-select[name="where"],
-input[name="search"] {}
-
 /* end header */
 
 /* centercolumn */
 
 #showhide_columns {
-	position: absolute;
-	top: -18px;
 	min-width: 100%}
 	
-*:first-child+html #showhide_columns {
-	margin-top: -10px;
-	position: relative;
-	background: yellow;
-	min-width: 50%}
+*:first-child+html #showhide_columns {}
 
 a.flip,
 a.flip:visited,
@@ -483,17 +508,21 @@ a.flip img {display: none}
 	background: inherit;
 	color: #cfe3fb;
 	font-size: 12px}
-	
+
+.cssmenu_horiz li.selectedAscendant > a {background: none}
 #tiki-top > .cssmenu_horiz,
-#tiki-top .cssmenu_horiz ul li {background: #ccdceb;z-index: 215}
+#tiki-top .cssmenu_horiz ul li {background: none}
 	
 #tiki-top .cssmenu_horiz ul li a:hover {padding-right: 0}
-	
-#tiki-top > .cssmenu_horiz > li > a {
-	background: #ccdceb;
+
+#tiki-top > ul.cssmenu_horiz > li > a {
 	border-left: 1px solid #acc4e0;
 	border-right: 1px solid #2e5276;
-	width: 9em;
+	padding-top: 9px;
+	padding-bottom: 10px}
+	
+#tiki-top > ul.cssmenu_horiz > li > ul> a {
+	background: #ccdceb;
 	padding-top: 10px;
 	padding-bottom: 9px}
 	
@@ -501,21 +530,21 @@ a.flip img {display: none}
 	background: #335075;
 	color: #fff}
 	
-.pageactions .cssmenu_horiz li ul li {overflow: auto}
-.pageactions .cssmenu_horiz ul * {}
+.pageactions .cssmenu_horiz li ul li a {overflow: auto}
+/*.pageactions .cssmenu_horiz li,
+.pageactions .cssmenu_horiz li ul {width: 8em !important}*/
 
-.pageactions .cssmenu_horiz > li {
-	/*width: 8em;*/
+.pageactions .cssmenu_horiz li {
+	width: 8em !important;
 	border-left: #517ba5 1px solid;}
 	
 .pageactions .cssmenu_horiz li ul {margin-top: -1px}
 
-.pageactions .cssmenu_horiz a { 
+.pageactions .cssmenu_horiz li a { 
 	font-size: 12px;
 	border: 0;
 	color: #265076;
 	padding: 11px 0 11px 12px;
-	width: 8em;
 	border-left: #ebf5fe 1px solid}
 
 .horbaritem a:hover {
@@ -1176,7 +1205,10 @@ table.admin div#content1 div.tabcontent div.cbox {background: transparent}
 
 /* Page controls */
 
-.pagecontrols {z-index: 210}
+.pagecontrols {
+	z-index: 210;
+	background: url(coelesce/tiki-centerbg.jpg) repeat-x;
+	min-width: 100%}
 
 .top {
 	height: 34px;
@@ -1184,7 +1216,7 @@ table.admin div#content1 div.tabcontent div.cbox {background: transparent}
 	z-index: 211}
 	
 *:first-child+html .top {min-width: 100% !important}
-.wikiinfo {margin-top: -18px !important}
+.wikiinfo {float:none !important/*margin-top: -18px !important*/}
 	
 .top h1 {
 	padding-top: 10px;
