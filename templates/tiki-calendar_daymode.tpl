@@ -19,7 +19,7 @@
 		{assign var=event value=$hrows[$h][hr]}
 		{assign var=calendarId value=$event.calendarId}
 		{assign var=over value=$event.over}
-		<div id="event_{$event.calitemId}" {if $hrows[$h][hr].calname ne ""}class="Cal{$event.type} vevent"{/if} style="position:absolute;z-index:100;top:{$event.top}px;left:{$event.left}%;width:{$event.width}%;height:{$event.duree}px;background-color:#{$infocals.$calendarId.custombgcolor};border-color:#{$infocals.$calendarId.customfgcolor};color:#{$infocals.$calendarId.customfgcolor};opacity:0.7;filter:Alpha(opacity=70);text-align:center;overflow:hidden">
+		<div id="event_{$event.calitemId}" {if $hrows[$h][hr].calname ne ""}class="Cal{$event.type} vevent"{/if} style="position:absolute;z-index:100;top:{$event.top}px;left:{$event.left}%;width:{$event.width}%;height:{$event.duree}px;background-color:#{$infocals.$calendarId.custombgcolor};border-color:#{$infocals.$calendarId.customfgcolor};opacity:{if $event.status eq '0'}0.6{else}0.8{/if};filter:Alpha(opacity={if $event.status eq '0'}60{else}80{/if});text-align:center;overflow:hidden">
 			<span style="padding-top:4px;padding-right:4px;float:right"><a style="padding:0 3px;"
 			{if $event.modifiable eq "y" || $event.visible eq 'y'}
 			    href="tiki-calendar_edit_item.php?viewcalitemId={$event.calitemId}"
@@ -32,7 +32,7 @@
 			{/if}
 		><img src="pics/icons/more_info.gif" alt="{tr}Details{/tr}" border="0"/></a></span>
 		{if $myurl eq "tiki-action_calendar.php"}
-		<a href="{$event.url}" class="url" title="{$event.web|escape}" class="linkmenu summary" style="color:#{$infocals.$calendarId.customfgcolor}">{$event.name}</a>
+		<a href="{$event.url}" class="url" title="{$event.web|escape}" class="linkmenu summary" style="color:#{$infocals.$calendarId.customfgcolor};{if $event.status eq '2'}text-decoration:line-through{/if}">{$event.name}</a>
 		{else}
 		<a href="tiki-calendar_edit_item.php?viewcalitemId={$event.calitemId}" class="linkmenu summary" style="color:#{$infocals.$calendarId.customfgcolor}">{$event.name}</a>
 		{/if}

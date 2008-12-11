@@ -41,9 +41,9 @@
 	{assign var=calendarId value=$cell[w][d].items[item].calendarId}
 		<tr valign="top">
 {if is_array($cell[w][d].items[item])}
-		  <td class="Cal{$cell[w][d].items[item].type} calId{$cell[w][d].items[item].calendarId}" style="padding:0px;height:14px;background-color:#{$infocals.$calendarId.custombgcolor};border-color:#{$infocals.$calendarId.customfgcolor};border-width:1px {if $cell[w][d].items[item].endTimeStamp <= ($cell[w][d].day + 86400)}1{else}0{/if}px 1px {if $cell[w][d].items[item].startTimeStamp >= $cell[w][d].day}1{else}0{/if}px" nowrap>
+			<td class="Cal{$cell[w][d].items[item].type} calId{$cell[w][d].items[item].calendarId}" style="padding:0px;height:14px;background-color:#{$infocals.$calendarId.custombgcolor};border-color:#{$infocals.$calendarId.customfgcolor};opacity:{if $cell[w][d].items[item].status eq '0'}0.6{else}0.8{/if};filter:Alpha(opacity={if $cell[w][d].items[item].status eq '0'}60{else}80{/if});text-align:center;border-width:1px {if $cell[w][d].items[item].endTimeStamp <= ($cell[w][d].day + 86400)}1{else}0{/if}px 1px {if $cell[w][d].items[item].startTimeStamp >= $cell[w][d].day}1{else}0{/if}px">
 			{if $cell[w][d].items[item].startTimeStamp >= $cell[w][d].day or $smarty.section.d.index eq '0' or $cell[w][d].firstDay}
-			<a style="padding:1px 3px;"
+		<a style="padding:1px 3px;{if $cell[w][d].items[item].status eq '2'}text-decoration:line-through;{/if}"
 			{if $myurl eq "tiki-action_calendar.php"}
 			{if $cell[w][d].items[item].modifiable eq "y" || $cell[w][d].items[item].visible eq 'y'}href="{$cell[w][d].items[item].url}"{/if}
 			{else}

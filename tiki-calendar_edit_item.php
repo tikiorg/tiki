@@ -210,6 +210,11 @@ if (isset($_REQUEST['act']) || isset($_REQUEST['preview']) || isset($_REQUEST['c
 		$save['duration'] = max(0, $save['end'] - $save['start']);
 	}
 }
+$impossibleDates = false;
+if (isset($save['start']) && isset($save['end'])) {
+	if (($save['end'] - $save['start']) < 0)
+		$impossibleDates = true;
+}
 
 $impossibleDates = false;
 if (isset($save['start']) && isset($save['end'])) {
@@ -222,7 +227,7 @@ if (isset($_POST['act'])) {
 	$newcalid = $save['calendarId'];
 
 	if ((empty($save['calitemId']) and $caladd["$newcalid"]['tiki_p_add_events'])
-	or (!empty($save['calitemId']) and $caladd["$newcalid"]['tiki_p_change_events'])) {
+			or (!empty($save['calitemId']) and $caladd["$newcalid"]['tiki_p_change_events'])) {
 		if (empty($save['name'])) $save['name'] = tra("event without name");
 		if (empty($save['priority'])) $save['priority'] = 0;
 
@@ -235,70 +240,70 @@ if (isset($_POST['act'])) {
 			} else
 				$impossibleDates = false;
 			if (!$impossibleDates) {
-			$calRecurrence = new CalRecurrence($_POST['recurrenceId'] ? $_POST['recurrenceId'] : -1);
-			$calRecurrence->setCalendarId($save['calendarId']);
-			$calRecurrence->setStart($_POST['start_Hour'] . str_pad($_POST['start_Minute'],2,'0',STR_PAD_LEFT));
-			$calRecurrence->setEnd($_POST['end_Hour'] . str_pad($_POST['end_Minute'],2,'0',STR_PAD_LEFT));
-			$calRecurrence->setAllday($save['allday'] == 1);
-			$calRecurrence->setLocationId($save['locationId']);
-			$calRecurrence->setCategoryId($save['categoryId']);
-			$calRecurrence->setNlId(0); //TODO : What id nlId ?
-			$calRecurrence->setPriority($save['priority']);
-			$calRecurrence->setStatus($save['status']);
-			$calRecurrence->setUrl($save['url']);
-			$calRecurrence->setLang(strLen($save['lang']) > 0 ? $save['lang'] : 'en');
-			$calRecurrence->setName($save['name']);
-			$calRecurrence->setDescription($save['description']);
-			switch($_POST['recurrenceType']) {
-				case "weekly":
-					$calRecurrence->setWeekly(true);
+				$calRecurrence = new CalRecurrence($_POST['recurrenceId'] ? $_POST['recurrenceId'] : -1);
+				$calRecurrence->setCalendarId($save['calendarId']);
+				$calRecurrence->setStart($_POST['start_Hour'] . str_pad($_POST['start_Minute'],2,'0',STR_PAD_LEFT));
+				$calRecurrence->setEnd($_POST['end_Hour'] . str_pad($_POST['end_Minute'],2,'0',STR_PAD_LEFT));
+				$calRecurrence->setAllday($save['allday'] == 1);
+				$calRecurrence->setLocationId($save['locationId']);
+				$calRecurrence->setCategoryId($save['categoryId']);
+				$calRecurrence->setNlId(0); //TODO : What id nlId ?
+				$calRecurrence->setPriority($save['priority']);
+				$calRecurrence->setStatus($save['status']);
+				$calRecurrence->setUrl($save['url']);
+				$calRecurrence->setLang(strLen($save['lang']) > 0 ? $save['lang'] : 'en');
+				$calRecurrence->setName($save['name']);
+				$calRecurrence->setDescription($save['description']);
+				switch($_POST['recurrenceType']) {
+					case "weekly":
+						$calRecurrence->setWeekly(true);
 					$calRecurrence->setWeekday($_POST['weekday']);
 					$calRecurrence->setMonthly(false);
 					$calRecurrence->setYearly(false);
 					break;
-				case "monthly":
-					$calRecurrence->setWeekly(false);
+					case "monthly":
+						$calRecurrence->setWeekly(false);
 					$calRecurrence->setMonthly(true);
 					$calRecurrence->setDayOfMonth($_POST['dayOfMonth']);
 					$calRecurrence->setYearly(false);
 					break;
-				case "yearly":
-					$calRecurrence->setWeekly(false);
+					case "yearly":
+						$calRecurrence->setWeekly(false);
 					$calRecurrence->setMonthly(false);
 					$calRecurrence->setYearly(true);
 					$calRecurrence->setDateOfYear(str_pad($_POST['dateOfYear_month'],2,'0',STR_PAD_LEFT) . str_pad($_POST['dateOfYear_day'],2,'0',STR_PAD_LEFT));
 					break;
-			}
-			$calRecurrence->setStartPeriod($_POST['startPeriod']);
-			if ($_POST['endType'] == "dt")
-				$calRecurrence->setEndPeriod($_POST['endPeriod']);
-			else {
-				$calRecurrence->setNbRecurrences($_POST['nbRecurrences']);
-			}
-			$calRecurrence->setUser($save['user']);
-			$calRecurrence->save($_POST['affect'] == 'all');
-			header('Location: tiki-calendar.php');
-			die;
+				}
+				$calRecurrence->setStartPeriod($_POST['startPeriod']);
+				if ($_POST['endType'] == "dt")
+					$calRecurrence->setEndPeriod($_POST['endPeriod']);
+				else {
+					$calRecurrence->setNbRecurrences($_POST['nbRecurrences']);
+				}
+				$calRecurrence->setUser($save['user']);
+				$calRecurrence->save($_POST['affect'] == 'all');
+				header('Location: tiki-calendar.php');
+				die;
 			}
 		} else {
 			if (!$impossibleDates) {
-			if (array_key_exists('recurrenceId',$_POST)) {
-				$save['recurrenceId'] = $_POST['recurrenceId'];
-				$save['changed'] = true;
+				if (array_key_exists('recurrenceId',$_POST)) {
+					$save['recurrenceId'] = $_POST['recurrenceId'];
+					$save['changed'] = true;
+				}
+				$calitemId = $calendarlib->set_item($user,$save['calitemId'],$save);
+				header('Location: tiki-calendar.php');
+				die;
 			}
-			$calitemId = $calendarlib->set_item($user,$save['calitemId'],$save);
+
+			if ($prefs['feature_groupalert'] == 'y') {
+				$groupalertlib->Notify($_REQUEST['listtoalert'],"tiki-calendar_edit_item.php?viewcalitemId=".$calitemId);
+			}
+
 			header('Location: tiki-calendar.php');
 			die;
 		}
-
-		if ($prefs['feature_groupalert'] == 'y') {
-			$groupalertlib->Notify($_REQUEST['listtoalert'],"tiki-calendar_edit_item.php?viewcalitemId=".$calitemId);
-		}
-
-		header('Location: tiki-calendar.php');
-		die;
 	}
-}
 }
 
 if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["calitemId"]) and $tiki_p_change_events == 'y') {
