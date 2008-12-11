@@ -51,7 +51,7 @@ class NlLib extends TikiLib {
 		return $nlId;
 	}
 
-	function replace_edition($nlId, $subject, $data, $users, $editionId=0, $draft=false, $datatxt='') {
+	function replace_edition($nlId, $subject, $data, $users, $editionId=0, $draft=false, $datatxt='', $files=array()) {
 		if ($draft == false) {
 			if( $editionId > 0 && $this->getOne('select `sent` from `tiki_sent_newsletters` where `editionId`=?', array( (int)$editionId )) == -1 ) {
 				// save and send a draft
@@ -60,6 +60,8 @@ class NlLib extends TikiLib {
 				$result = $this->query($query,array($subject,$data, (int)$this->now, $users, $datatxt, (int)$editionId,(int)$nlId));
 				$query = "update `tiki_newsletters` set `editions`= `editions`+ 1 where `nlId`=? ";
 				$result = $this->query($query,array((int)$nlId));
+				$query = "delete from `tiki_sent_newsletters_files` where `editionId`=?";
+				$result = $this->query($query,array((int)$editionId));
 			} else {
 				 // save and send an edition
 				$query = "insert into `tiki_sent_newsletters`(`nlId`,`subject`,`data`,`sent`,`users` ,`datatxt`) values(?,?,?,?,?,?)";
@@ -74,12 +76,18 @@ class NlLib extends TikiLib {
 				$query = "update `tiki_sent_newsletters` set `subject`=?, `data`=?, `datatxt`=?";
 				$query.= "where editionId=? and nlId=?";
 				$result = $this->query($query,array($subject,$data,$datatxt,(int)$editionId,(int)$nlId));
+				$query = "delete from `tiki_sent_newsletters_files` where `editionId`=?";
+				$result = $this->query($query,array((int)$editionId));
 			} else {
 				// save a new draft
 				$query = "insert into `tiki_sent_newsletters`(`nlId`,`subject`,`data`,`sent`,`users`,`datatxt`) values(?,?,?,?,?,?)";
 				$result = $this->query($query,array((int)$nlId,$subject,$data,-1,0,$datatxt));
 				$editionId = $this->getOne('select max(`editionId`) from `tiki_sent_newsletters`');
 			}
+		}
+		foreach($files as $file) {
+			$query = "insert into `tiki_sent_newsletters_files` (`editionId`,`name`,`type`,`size`,`filename`) values (?,?,?,?,?)";
+			$result = $this->query($query, array((int)$editionId, $file['name'], $file['type'], (int)$file['size'], $file['filename']));
 		}
 		return $editionId;
 	}
@@ -391,6 +399,20 @@ class NlLib extends TikiLib {
 		$result = $this->query($query,array((int)$editionId));
 		if (!$result->numRows()) return false;
 		$res = $result->fetchRow();
+		$res['files']=$this->get_edition_files($editionId);
+		return $res;
+	}
+
+	function get_edition_files($editionId) {
+		global $prefs;
+		$res=array();
+		$query = "select * from `tiki_sent_newsletters_files` where `editionId`=?";
+		$result = $this->query($query,array((int)$editionId));
+		$res=array();
+		while ($f = $result->fetchRow()) {
+			$f['error']=0;
+			$res[]=$f;
+		}
 		return $res;
 	}
 

@@ -65,6 +65,14 @@
 	{if $info.datatxt}<div class="simplebox wikitext" >{$datatxt|escape|nl2br}</div>{/if}
 	{if $txt}<div class="simplebox wikitext">{$txt|escape|nl2br}</div>{/if}
 {/if}
+<h3>{tr}Files{/tr}</h3>
+<ul>
+     {foreach from=$info.files item=newsletterfile key=fileid}
+	<li>
+	    {$newsletterfile.name|escape} ({$newsletterfile.type|escape}, {$newsletterfile.size|escape} {tr}octets{/tr})
+        </li>
+     {/foreach}
+</ul>
 {else}
 {if $preview eq 'y'}
 <div class="title">
@@ -81,6 +89,16 @@
 	{if $info.datatxt}<div class="simplebox wikitext" >{$info.datatxt|escape|nl2br}</div>{/if}
 	{if $txt}<div class="simplebox wikitext">{$txt|escape|nl2br}</div>{/if}
 {/if}
+
+<h3>{tr}Files{/tr}</h3>
+<ul>
+     {foreach from=$info.files item=newsletterfile key=fileid}
+	<li>
+	    {$newsletterfile.name|escape} ({$newsletterfile.type|escape}, {$newsletterfile.size|escape} {tr}octets{/tr})
+        </li>
+     {/foreach}
+</ul>
+
 {/if}
 
 <br />
@@ -99,7 +117,7 @@
 <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $prefs.feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 
 <h2>{tr}Prepare a newsletter to be sent{/tr}</h2>
-<form action="tiki-send_newsletters.php" method="post" id='editpageform'>
+<form action="tiki-send_newsletters.php" method="post" id='editpageform' enctype='multipart/form-data'>
 <input type="hidden" name="editionId" value="{$info.editionId}"/>
 <table class="normal" id="newstable">
 <tr class="formcolor"><td class="formcolor">{tr}Subject{/tr}:</td><td class="formcolor"><input type="text" maxlength="250" size="80" name="subject" value="{$info.subject|escape}" /></td></tr>
@@ -159,6 +177,24 @@
   </td>
   <td class="formcolor" id="txtcol2" >
     <textarea id='editwikitxt' name="datatxt" rows="{$rows}" cols="{$cols}">{$info.datatxt|escape}</textarea>
+  </td>
+</tr>
+
+ <tr class="formcolor">
+  <td class="formcolor" id="txtcol1">
+    {tr}Attached Files{/tr} :
+  </td>
+  <td class="formcolor" id="txtcol2" >
+    <div id='newsletterfiles'>
+     {foreach from=$info.files item=newsletterfile key=fileid}
+	<div id='newsletterfileid_{$fileid}'>
+	    <a href="javascript:remove_newsletter_file('{$fileid}');">[{tr}remove{/tr}]</a>
+	    {$newsletterfile.name|escape} ({$newsletterfile.type|escape}, {$newsletterfile.size|escape} {tr}octets{/tr})
+	    <input type='hidden' name='newsletterfile[{$fileid}]' value='{$newsletterfile.id}'/>
+        </div>
+     {/foreach}
+    </div>
+    <p><a href="javascript:add_newsletter_file();">{tr}To add a file, click here{/tr}</a></p>
   </td>
 </tr>
 
@@ -225,5 +261,17 @@
 document.getElementById('txtcol1').style.display='none';
 document.getElementById('txtcol2').style.display='none';
 {/if}
+
+var newsletterfileid={$info.files|@count};
+{literal}
+function add_newsletter_file() {
+	document.getElementById('newsletterfiles').innerHTML+='<div id="newsletterfileid_'+newsletterfileid+'"><a href="javascript:remove_newsletter_file('+newsletterfileid+');">[{tr}remove{/tr}]</a> <input type="file" name="newsletterfile['+newsletterfileid+']"/></div>';
+	newsletterfileid++;
+}
+function remove_newsletter_file(id) {
+	document.getElementById('newsletterfiles').removeChild(document.getElementById('newsletterfileid_'+id));
+}
+{/literal}
+
 -->
 </script>
