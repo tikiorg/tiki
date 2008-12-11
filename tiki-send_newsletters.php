@@ -266,7 +266,7 @@ if (isset($_REQUEST["send"])) {
 	} else {
 		$html = $_REQUEST["dataparsed"];
 	}
-	$sent = 0;
+	$sent = array();
 	$unsubmsg = '';
 	$errors =  array();
 
@@ -283,6 +283,7 @@ if (isset($_REQUEST["send"])) {
 	foreach($info['files'] as $f) {
 		$mail->addAttachment(file_get_contents($prefs['tmpDir'].'/newsletterfile-'.$f['filename']), $f['name'], $f['type']);
 	}
+
 	foreach ($users as $us) {
 		$userEmail  = $us["login"];
 		$email = $us["email"];
@@ -294,6 +295,8 @@ if (isset($_REQUEST["send"])) {
 			$userEmail = $userlib->get_user_by_email($email);
 		}
 		$email=trim($email);
+
+		if (in_array($email, $sent)) continue; // do not send the mail again
 
 		if ($userEmail) {
 			$mail->setUser($userEmail);
@@ -316,7 +319,7 @@ if (isset($_REQUEST["send"])) {
 		$mail->setHtml($msg, $txt.strip_tags($unsubmsg));
 		$mail->buildMessage(array('text_encoding'=>'8bit'));
 		if ($mail->send(array($email))) {
-			$sent++;
+			$sent[]=$email;
 			$nllib->delete_edition_subscriber($editionId, $us);
 		} else {
 			$errors[] = array("user"=>$userEmail, "email"=>$email);
@@ -324,12 +327,12 @@ if (isset($_REQUEST["send"])) {
 		}
 	}
 
-	$smarty->assign('sent', $sent);
+	$smarty->assign('sent', count($sent));
 	$smarty->assign('emited', 'y');
 	if (count($errors) > 0) {
 		$smarty->assign_by_ref('errors', $errors);
 	}
-	$editionId = $nllib->replace_edition($_REQUEST["nlId"], $_REQUEST["subject"], $_REQUEST["data"], $sent, $editionId, false, $txt, $info['files']);
+	$editionId = $nllib->replace_edition($_REQUEST["nlId"], $_REQUEST["subject"], $_REQUEST["data"], count($sent), $editionId, false, $txt, $info['files']);
 	foreach($info['files'] as $k => $f) {
 		if ($f['savestate'] == 'tikitemp') {
 			$newpath=$prefs['tmpDir'].'/newsletterfile-'.$f['filename'];
