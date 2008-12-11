@@ -290,7 +290,7 @@ if (isset($_REQUEST["send"])) {
 	foreach ($users as $us) {
 		$userEmail  = $us["login"];
 		$email = $us["email"];
-		if (!preg_match('/^([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+$/', trim($email))) {
+		if (!preg_match('/([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+/', trim($email))) {
 			$errors[] = array("user"=>$userEmail, "email"=>$email, "msg"=>tra("invalid email"));
 			continue;
 		}
