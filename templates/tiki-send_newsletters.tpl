@@ -188,6 +188,7 @@
     {tr}Attached Files{/tr} :
   </td>
   <td class="formcolor" id="txtcol2" >
+    <div style='display: none' id='newsletterfileshack'></div>
     <div id='newsletterfiles'>
      {foreach from=$info.files item=newsletterfile key=fileid}
 	<div id='newsletterfileid_{$fileid}'>
@@ -268,7 +269,8 @@ document.getElementById('txtcol2').style.display='none';
 var newsletterfileid={$info.files|@count};
 {literal}
 function add_newsletter_file() {
-	document.getElementById('newsletterfiles').innerHTML+='<div id="newsletterfileid_'+newsletterfileid+'"><a href="javascript:remove_newsletter_file('+newsletterfileid+');">[{tr}remove{/tr}]</a> <input type="file" name="newsletterfile['+newsletterfileid+']"/></div>';
+	document.getElementById('newsletterfileshack').innerHTML='<div id="newsletterfileid_'+newsletterfileid+'"><a href="javascript:remove_newsletter_file('+newsletterfileid+');">[{tr}remove{/tr}]</a> <input type="file" name="newsletterfile['+newsletterfileid+']"/></div>';
+	document.getElementById('newsletterfiles').appendChild(document.getElementById('newsletterfileid_'+newsletterfileid));
 	newsletterfileid++;
 }
 function remove_newsletter_file(id) {
