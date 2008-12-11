@@ -288,7 +288,7 @@ if (isset($_REQUEST["send"])) {
 		$userEmail  = $us["login"];
 		$email = $us["email"];
 		if (!preg_match('/^([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+$/', trim($email))) {
-			$errors[] = array("user"=>$userEmail, "email"=>$email);
+			$errors[] = array("user"=>$userEmail, "email"=>$email, "msg"=>tra("invalid email"));
 			continue;
 		}
 		if ($userEmail == "") {
@@ -322,7 +322,7 @@ if (isset($_REQUEST["send"])) {
 			$sent[]=$email;
 			$nllib->delete_edition_subscriber($editionId, $us);
 		} else {
-			$errors[] = array("user"=>$userEmail, "email"=>$email);
+			$errors[] = array("user"=>$userEmail, "email"=>$email, "msg"=>$mail->errors);
 			$nllib->mark_edition_subscriber($editionId, $us);
 		}
 	}

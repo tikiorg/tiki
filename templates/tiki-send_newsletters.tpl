@@ -22,10 +22,10 @@
 {if $errors}
 <span class="attention">{tr}Errors detected{/tr}<br /></span>
 <table class="normal">
-<tr class="formcolor"><th>{tr}User{/tr}</th><th>{tr}Email{/tr}</th></tr>
+<tr class="formcolor"><th>{tr}User{/tr}</th><th>{tr}Email{/tr}</th><th>{tr}Message{/tr}</th></tr>
 {cycle values="odd,even" print=false}
 {section loop=$errors name=ix}
-<tr class="formcolor"><td class="{cycle advance=false}">{$errors[ix].user}</td><td class="{cycle}">{$errors[ix].email}</td></tr>
+<tr class="formcolor"><td class="{cycle advance=false}">{$errors[ix].user|escape}</td><td class="{cycle advance=false}">{$errors[ix].email|escape}</td><td class="{cycle}">{$errors[ix].msg|escape}</td></tr>
 {/section}
 </table><br /><br />
 {/if}
