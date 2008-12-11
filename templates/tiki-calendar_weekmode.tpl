@@ -19,13 +19,13 @@
   </tr>
 {/foreach}
 </table>
-{foreach key=k item=h from=$hours}
+{foreach key=k item=h from=$hours name=hours}
 	{section name=weekday loop=$weekdays}
 		{if $manyEvents[weekday].tooMany eq false}
 			{section name=hr loop=$hrows[weekday][$h]}
 				{assign var=event value=$hrows[weekday][$h][hr]}
 				{assign var=calendarId value=$event.calendarId}
-				{assign var=over value=$event.over}
+				{assign var=over value=$event.over|escape:"javascript"|escape:"html"}
 	  <div id="event_{$smarty.section.weekday.index}_{$event.calitemId}" {if $event.calname ne ""}class="Cal{$event.type} vevent"{/if} style="overflow:visible;position:absolute;top:{$event.top}px;height:{$event.duree-1}px;left:{$event.left}%;width:{$event.width}%;background-color:#{$infocals.$calendarId.custombgcolor};border-color:#{$infocals.$calendarId.customfgcolor};opacity:{if $event.status eq '0'}0.6{else}0.8{/if};filter:Alpha(opacity={if $event.status eq '0'}60{else}80{/if});text-align:center;overflow:hidden">
 		  <span style="padding-top:4px;float:right">
 			<a style="padding:0 3px;"
@@ -33,24 +33,24 @@
 			   href="tiki-calendar_edit_item.php?viewcalitemId={$event.calitemId}"
 			{/if}
 			{if $prefs.calendar_sticky_popup eq "y" and $event.calitemId}
-			   {popup sticky=true fullhtml="1" text=$over|escape:"javascript"|escape:"html"}
+			   {popup sticky=true fullhtml="1" text=$over}
 			{else}
-			   {popup fullhtml="1" text=$over|escape:"javascript"|escape:"html"}
+			   {popup fullhtml="1" text=$over}
 			{/if}
 		    ><img src="pics/icons/more_info.gif" alt="{tr}Details{/tr}" border="0"/></a>
 		  </span>
 	  	  <abbr class="dtstart" title="{$event.startTimeStamp|isodate}" {if $event.status eq '2'}style="text-decoration:line-through"{/if}>{$event.name}</abbr>
 	  </div>
 			{/section}
-		{else}
-			{assign var=overMany value=$manyEvents[weekday].overMany}
+		{elseif $smarty.foreach.hours.first}
+			{assign var=overMany value=$manyEvents[weekday].overMany|escape:"javascript"|escape:"html"}
 	  <div id="many_{$smarty.section.weekday.index}" style="position:absolute;top:{$manyEvents[weekday].top}px;left:{$manyEvents[weekday].left}%;width:{$manyEvents[weekday].width}%;height:{$manyEvents[weekday].duree-1}px;border:2px dotted #000">
 		<div style="position:absolute;top:50%;left:50%;margin-left:-40px;margin-top:-30px">
 		  <a style="padding:0 3px;" href="{$myurl}?viewmode=day&todate={$viewWeekDays[weekday]}"
 			{if $prefs.calendar_sticky_popup eq "y"}
-			 {popup sticky=true fullhtml="1" text=$overMany|escape:"javascript"|escape:"html"}
+			 {popup sticky=true fullhtml="1" text=$overMany}
 			{else}
-			 {popup fullhtml="1" text=$overMany|escape:"javascript"|escape:"html"}
+			 {popup fullhtml="1" text=$overMany}
 			{/if}
 		  ><img src="pics/icons/multiple_cal.png" alt="{tr}Details{/tr}" border="0"/></a>
 		</div>
