@@ -1138,6 +1138,12 @@ if ($tracker_info["useComments"] == 'y') {
 	if ($tiki_p_comment_tracker_items == 'y') {
 		if (isset($_REQUEST["save_comment"])) {
 			check_ticket('view-trackers-items');
+			if (empty($user) && $prefs['feature_antibot'] == 'y' && (!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $_REQUEST['antibotcode'])) {
+				$smarty->assign('msg',tra("You have mistyped the anti-bot verification code; please try again."));
+				$smarty->assign('errortype', 'no_redirect_login');
+				$smarty->display("error.tpl");
+				die;
+			}
 			$trklib->replace_item_comment($_REQUEST["commentId"], $_REQUEST["itemId"], $_REQUEST["comment_title"], $_REQUEST["comment_data"], $user, $tracker_info);
 			$smarty->assign('comment_title', '');
 			$smarty->assign('comment_data', '');

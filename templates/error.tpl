@@ -8,6 +8,7 @@ close();
 {* 402: need login
  * 401, 403: perm
  * 404: page does not exist
+ * no_redirect_login: error antibot, system...
  * login: error login
  *}
 
@@ -53,7 +54,7 @@ close();
 				{else}
 					{if $errortype eq 401 && empty($user) and $prefs.permission_denied_login_box eq 'y'} {* permission denied *}
 						{include file=tiki-login.tpl}
-					{elseif !isset($user) and $errortype != 'login'}
+					{elseif !isset($user) and $errortype != 'no_redirect_login' and $errortype != 'login'}
 						<div class="simplebox highlight">
 							{tr}You are not logged in.{/tr} <a href="tiki-login_scr.php">{tr}Go to Login Page{/tr}</a>
 						</div>
