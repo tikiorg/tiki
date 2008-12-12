@@ -335,9 +335,10 @@ class TikiPageControls_Wiki extends TikiPageControls
 
 		if( $this->hasPref('feature_wiki_comments')
 		 && $this->hasPerm('tiki_p_wiki_view_comments') ) {
-			// TODO : Determine where this goes
-			$link = $this->link( 'url', 'tiki-index.php', array(
-				'page' => $this->page
+			$link = $this->link( 'url', 'tiki-view_comments.php', array(
+				'objectType' => 'wiki page',
+				'objectId' => $this->page,
+				'objectName' => $this->page,
 			) );
 			$this->addTab( 'comments', tra('Comments'), $link, $this->getCommentCount() )
 				->setSelected( $this->isMode('comment') );
