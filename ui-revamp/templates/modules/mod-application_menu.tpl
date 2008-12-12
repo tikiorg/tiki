@@ -557,7 +557,6 @@
       {if $prefs.feature_theme_control eq 'y'}
       &nbsp;<a href="tiki-theme_control.php" class="linkmenu">{tr}Theme control{/tr}</a><br />
       {/if}
-      &nbsp;<a href="tiki-admin_quicktags.php" class="linkmenu">{tr}QuickTags{/tr}</a><br />
     {/if}
     {if $prefs.feature_categories eq 'y' and $tiki_p_admin_categories eq 'y'}
       &nbsp;<a href="tiki-admin_categories.php" class="linkmenu">{tr}Categories{/tr}</a><br />

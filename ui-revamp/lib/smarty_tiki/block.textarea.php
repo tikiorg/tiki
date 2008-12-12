@@ -10,7 +10,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  * smarty_block_textarea : add a textarea to a template.
  *
  * special params:
- *    _quicktags: if set to 'y', display quicktags above the textarea
  *
  * usage: {textarea id='my_area' name='my_area'}{tr}My Text{/tr}{/textarea}
  *
@@ -20,13 +19,6 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 	global $prefs;
 	if ( $repeat ) return;
 
-	if ( ! isset($params['_quicktags']) ) $params['quicktags'] = 'n';
-/*
-	if ( ! isset($params['_wikiparsed']) ) {
-		// Quicktags implies wiki parsing
-		$params['_wikiparsed'] = $params['quicktags'];
-	}
-*/
 	if ( ! isset($params['_wysiwyg']) ) $params['_wysiwyg'] = 'n';
 	if ( isset($params['_zoom']) && $params['_zoom'] == 'n' ) {
 		$feature_template_zoom_orig = $prefs['feature_template_zoom'];
@@ -44,15 +36,6 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 //		{editform Meat=$pagedata InstanceName='edit' ToolbarSet="Tiki"}
 //		<input type="hidden" name="wysiwyg" value="y" />
 	} else {
-		if ( $params['_quicktags'] == 'y' ) {
-			global $quicktagslib;
-			include_once ('lib/quicktags/quicktagslib.php');
-			$quicktags = $quicktagslib->list_quicktags(0, -1, 'taglabel_desc', '', $params['_section']);
-			$smarty->assign_by_ref('quicktags', $quicktags["data"]);
-		} else {
-			$smarty->clear_assign('quicktags');
-		}
-
 		$textarea_attributes = '';
 		foreach ( $params as $k => $v ) {
 			if ( $k == 'id' || $k == 'name' || $k == 'class' ) {

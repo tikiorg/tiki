@@ -1265,12 +1265,7 @@ if ($prefs['wiki_feature_copyrights'] == 'y' && $tiki_p_edit_copyrights == 'y') 
 }
 $defaultRows = $prefs['default_rows_textarea_wiki'];
 include_once("textareasize.php");
-include_once ('lib/quicktags/quicktagslib.php');
-$quicktags = QuicktagsList::fromPreference( $section );
-$smarty->assign('quicktags_html', $quicktags->getWikiHtml());
-$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_desc','','wiki');
-$smarty->assign_by_ref('quicktags', $quicktags["data"]);
-$smarty->assign('quicktagscant', $quicktags["cant"]);
+
 if (!$user or $user == 'anonymous') {
 	$smarty->assign('anon_user', 'y');
 }

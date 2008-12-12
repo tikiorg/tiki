@@ -439,9 +439,6 @@ if (count($tpls) > 0) {
 	$smarty->assign_by_ref('tpls', $tpls);
 }
 include_once("textareasize.php");
-include_once ('lib/quicktags/quicktagslib.php');
-$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_desc','','newsletters');
-$smarty->assign_by_ref('quicktags', $quicktags["data"]);
 
 include_once ('tiki-section_options.php');
 

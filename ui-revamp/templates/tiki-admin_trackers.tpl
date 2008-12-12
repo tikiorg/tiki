@@ -109,7 +109,7 @@
 	<td>
 	{tr}Description text is tiki-parsed:{/tr} <input type="checkbox" name="descriptionIsParsed" {if $descriptionIsParsed eq 'y'}checked="checked"{/if} onclick="toggleBlock('trackerDesc');" />
 	<div id="trackerDesc" style="display:none;" >
-		{include file=tiki-edit_help_tool.tpl qtnum="trackerDesc" area_name="trackerDescription"}
+		{quicktags qtnum="trackerDesc" area_name="trackerDescription"}
 		{if $descriptionIsParsed eq 'y'}<script language="javascript">
 			<!--//--><![CDATA[//><!--
 				toggleBlock('trackerDesc');
@@ -390,7 +390,7 @@ categories = {$catsdump}
 	<td colspan="2">
 		{tr}Description text is tiki-parsed:{/tr} <input type="checkbox" name="duplicateDescriptionIsParsed" {if $descriptionIsParsed eq 'y'}checked="checked"{/if} onclick="toggleBlock('duplicateTrackerDesc');" />
 		<div id="duplicateTrackerDesc" style="display:none;" >
-			{include file=tiki-edit_help_tool.tpl qtnum="duplicateTrackerDesc" area_name="duplicateTrackerDescription"}
+			{quicktags qtnum="duplicateTrackerDesc" area_name="duplicateTrackerDescription"}
 			{if $descriptionIsParsed eq 'y'}<script language="javascript">
 				<!--//--><![CDATA[//><!--
 					toggleBlock('duplicateTrackerDesc');

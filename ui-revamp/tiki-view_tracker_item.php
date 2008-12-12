@@ -699,12 +699,6 @@ if (!isset($mainfield)) {
 	$mainfield = 0;
 }
 
-if ($textarea_options) {
-	include_once ('lib/quicktags/quicktagslib.php');
-	$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_desc','','wiki');
-	$smarty->assign('quicktags', $quicktags["data"]);
-}
-
 if ($tiki_p_admin_trackers == 'y' or $tiki_p_modify_tracker_items == 'y') {
 	if (isset($_REQUEST["remove"])) {
 		check_ticket('view-trackers-items');

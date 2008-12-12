@@ -9,26 +9,6 @@
 {else}
 <p>{tr}Because the Wiki paragraph formatting feature is off, each line will be presented as you write it.  This means that if you want paragraphs to be wrapped properly, a paragraph should be all together on one line.{/tr}</p>
 {/if}
-{if ($wysiwyg ne 'y' or ($wysiwyg eq 'y' and $prefs.wysiwyg_wiki_parsed eq 'y')) and $quicktags}
-{* show quicktags in help *}
-<h3>{tr}Quicktags{/tr}{if $prefs.feature_help eq 'y'} <a href="{$prefs.helpurl}QuickTags" target="tikihelp" class="tikihelp" title="{tr}Quicktags{/tr}">{icon _id='help' style="vertical-align:middle"}</a>
-{/if}</h3>
-<br /><table width="95%" class="normal">
- <tr>
-  <th>{tr}Quicktag{/tr}</th>
-  <th>{tr}Description{/tr}</th>
-  <th>{tr}Wiki Syntax{/tr}</th>
- </tr>
-{cycle values="odd,even" print=false}
-{section name=qtg loop=$quicktags}
- <tr>
-  <td class="{cycle advance=false}"><img src='{$quicktags[qtg].tagicon}' alt='{tr}{$quicktags[qtg].taglabel}{/tr}' /></td>
-  <td class="{cycle advance=false}">{tr}{$quicktags[qtg].taglabel}{/tr}</td>
-  <td class="{cycle}">{$quicktags[qtg].taginsert|escape}</td>
- </tr>
-{/section}
-</table>
-{/if}
 <br /><h3>{tr}Wiki Help{/tr}{if $prefs.feature_help eq 'y'} <a href="{$prefs.helpurl}Wiki+Syntax" target="tikihelp" class="tikihelp" title="{tr}Wiki Syntax{/tr}">{icon _id=help style="vertical-align:middle"}</a>
 {/if}</h3>
 <br /><table width="95%" class="normal">

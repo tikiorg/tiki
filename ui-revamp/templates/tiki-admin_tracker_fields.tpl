@@ -100,7 +100,7 @@
 <tr class="formcolor"><td>{tr}Description{/tr}:
 {if $prefs.quicktags_over_textarea neq 'y'}
 	<div id="zStaticTextQuicktags" {if $type neq 'S'}style="display:none;"{/if}>
-	{include file=tiki-edit_help_tool.tpl qtnum="staticText" area_name="staticTextArea"}
+	{quicktags qtnum="staticText" area_name="staticTextArea"}
 	</div>
 {/if}
 </td><td><div id='zDescription' {if $type eq 'S'}style="display:none;"{else}style="display:block;"{/if}style="display:block;" >{if $type ne 'S'}{tr}Description text is tiki-parsed:{/tr} <input type="checkbox" name="descriptionIsParsed" {if $descriptionIsParsed eq 'y'}checked="checked"{/if} />{/if}
@@ -108,7 +108,7 @@
 <div id='zStaticText' {if $type neq 'S'}style="display:none;"{/if}>
 {if $prefs.quicktags_over_textarea eq 'y'}
 	<div id="zStaticTextQuicktags" {if $type neq 'S'}style="display:none;"{/if}>
-	{include file=tiki-edit_help_tool.tpl qtnum="staticText" area_name="staticTextArea"}
+	{quicktags qtnum="staticText" area_name="staticTextArea"}
 	</div>
 {/if}
 <textarea id="staticTextArea" name="descriptionStaticText" rows="20" cols="80" >{$description|escape}</textarea></div></td></tr>

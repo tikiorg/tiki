@@ -523,12 +523,6 @@ for ($i = 0; $i < $temp_max; $i++) {
 }
 
 }
-if ($textarea_options) {
-	global $quicktagslib; include_once ('lib/quicktags/quicktagslib.php');
-	$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_desc','','trackers');
-	$smarty->assign_by_ref('quicktags', $quicktags["data"]);
-}
-
 if (($tiki_p_admin_trackers == 'y' or $tiki_p_modify_tracker_items == 'y') and isset($_REQUEST["remove"])) {
   $area = 'deltrackeritem';
   if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {

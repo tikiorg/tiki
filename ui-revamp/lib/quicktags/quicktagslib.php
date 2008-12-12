@@ -13,7 +13,7 @@ abstract class Quicktag
 	protected $label;
 
 	abstract function isAccessible();
-	abstract function getWikiHtml();
+	abstract function getWikiHtml( $areaName );
 
 	function getWysiwygToken() // {{{
 	{
@@ -59,7 +59,7 @@ class QuicktagSeparator extends Quicktag
 		return true;
 	} // }}}
 
-	function getWikiHtml() // {{{
+	function getWikiHtml( $areaName ) // {{{
 	{
 		return '|';
 	} // }}}
@@ -139,7 +139,7 @@ class QuicktagFckOnly extends Quicktag
 		return true;
 	} // }}}
 
-	function getWikiHtml() // {{{
+	function getWikiHtml( $areaName ) // {{{
 	{
 		return null;
 	} // }}}
@@ -237,9 +237,9 @@ class QuicktagInline extends Quicktag
 		return true;
 	} // }}}
 
-	function getWikiHtml() // {{{
+	function getWikiHtml( $areaName ) // {{{
 	{
-		return '<a href="javascript:insertAt(\'editwiki\', \'' . htmlentities($this->syntax, ENT_QUOTES, 'UTF-8') . '\')" onclick="needToConfirm=false;" title="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '">' . $this->getIconHtml() . '</a>';
+		return '<a href="javascript:insertAt(\'' . $areaName . '\', \'' . htmlentities($this->syntax, ENT_QUOTES, 'UTF-8') . '\')" onclick="needToConfirm=false;" title="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '">' . $this->getIconHtml() . '</a>';
 	} // }}}
 }
 
@@ -334,7 +334,7 @@ class QuicktagFullscreen extends Quicktag
 		return true;
 	} // }}}
 
-	function getWikiHtml() // {{{
+	function getWikiHtml( $areaName ) // {{{
 	{
 		$name = 'zoom';
 		if( isset($_REQUEST['zoom']) )
@@ -394,7 +394,7 @@ class QuicktagWikiplugin extends Quicktag
 		}
 	} // }}}
 
-	function getWikiHtml() // {{{
+	function getWikiHtml( $areaName ) // {{{
 	{
 		return '<a href="javascript:popup_plugin_form(\'' . $this->pluginName . '\')" onclick="needToConfirm=false;" title="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '">' . $this->getIconHtml() . '</a>';
 	} // }}}
@@ -477,7 +477,7 @@ class QuicktagsList
 		return $lines;
 	} // }}}
 
-	function getWikiHtml() // {{{
+	function getWikiHtml( $areaName ) // {{{
 	{
 		$html = '';
 
@@ -485,7 +485,7 @@ class QuicktagsList
 			$lineHtml = '';
 
 			foreach( $line as $tag ) {
-				$lineHtml .= $tag->getWikiHtml();
+				$lineHtml .= $tag->getWikiHtml( $areaName );
 			}
 
 			if( ! empty($lineHtml) ) {
@@ -497,101 +497,4 @@ class QuicktagsList
 	} // }}}
 }
 
-// NOTE : Everything beyond this line is in the process of becoming obsolete
-
-class QuickTagsLib extends TikiLib {
-	function QuickTagsLib($db) {
-		$this->TikiLib($db);
-	}
-
-	function list_quicktags($offset, $maxRecords, $sort_mode, $find, $category=null) {
-		
-		$bindvars=array();
-		if ($find) {
-			$findesc = '%' . $find . '%';
-			$mid = " where (`taglabel` like ?)";
-			$bindvars[] = $findesc;
-		} else {
-			$mid = "";
-		}
-		if ( !empty($category) ) {
-			if ( is_array($category) ) {
-				$mid .= ( $mid ? ' and ' : ' where ' ) . '(';
-				foreach ( $category as $k => $v ) {
-					if ( $k > 0 ) $mid .= ' OR';
-					$mid .= ' `tagcategory` like ?';
-					$bindvars[] = $v;
-				}
-				$mid .= ')';
-			} else {
-				$mid .= ( $mid ? ' and ' : ' where ' ) . '(`tagcategory` like ?)';
-				$bindvars[] = $category;
-			}
-		}
-
-		$query = "select * from `tiki_quicktags` $mid order by ".$this->convert_sortmode($sort_mode);
-		$query_cant = "select count(*) from `tiki_quicktags` $mid";
-		$result = $this->query($query,$bindvars,$maxRecords,$offset);
-		$cant = $this->getOne($query_cant,$bindvars);
-		$ret = array();
-		while ($res = $result->fetchRow()) {
-			$res['iconpath'] = $res['tagicon'];
-			if (!is_file($res['tagicon'])) 
-                            $res['tagicon'] = 'pics/icons/page_white_code.png';
-			$ret[] = $res;
-		}
-		$retval = array();
-		$retval["data"] = $ret;
-		$retval["cant"] = $cant;
-		return $retval;
-	}
-
-	function replace_quicktag($tagId, $taglabel, $taginsert, $tagicon, $tagcategory) {
-		if ($tagId) {
-			$bindvars=array($taglabel, $taginsert, $tagicon, $tagcategory, $tagId);
-			$query = "update `tiki_quicktags` set `taglabel`=?,`taginsert`=?,`tagicon`=?,`tagcategory`=? where `tagId`=?";
-			$result = $this->query($query,$bindvars);
-		} else {
-			$bindvars=array($taglabel, $taginsert, $tagicon, $tagcategory);
-			$query = "delete from `tiki_quicktags` where `taglabel`=? and `taginsert`=? and `tagicon`=? and `tagcategory`=? ";
-			$result = $this->query($query,$bindvars);
-			$query = "insert into `tiki_quicktags`(`taglabel`,`taginsert`,`tagicon`,`tagcategory`) values(?,?,?,?)";
-			$result = $this->query($query,$bindvars);
-		}
-		return true;
-	}
-
-	function remove_quicktag($tagId) {
-		$query = "delete from `tiki_quicktags` where `tagId`=?";
-		$this->query($query,array($tagId));
-		return true;
-	}
-
-	function get_quicktag($tagId) {
-		$query = "select * from `tiki_quicktags` where `tagId`=?";
-		$result = $this->query($query,array($tagId));
-		if (!$result->numRows()) return false;
-		$res = $result->fetchRow();
-		return $res;
-	}
-
-	function list_icons($p) {
-          $back = array();
-		foreach($p as $path) {
-			$handle = opendir($path);
-			while ($file = readdir($handle)) {
-				if (((strtolower(substr($file, -4, 4)) == ".gif") 
-                                      or (strtolower(substr($file, -4, 4)) == ".png")) 
-                                  and (ereg("^[-_a-zA-Z0-9\.]*$", $file))) 
-                                {
-				  $back[] = $path .'/'  .$file;
-				}
-			}
-		}
-          return $back;
-	}
-
-}
-global $dbTiki;
-$quicktagslib = new QuickTagsLib($dbTiki);
 ?>

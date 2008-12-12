@@ -199,7 +199,7 @@
 	{/if}
 	{if $field_value.isMultilingual ne 'y'}
 		{if $prefs.quicktags_over_textarea eq 'y' and $field_value.options_array[0] eq 1}
-    		{include file=tiki-edit_help_tool.tpl qtnum=$field_value.fieldId area_name="area_"|cat:$field_value.fieldId}
+    		{quicktags qtnum=$field_value.fieldId area_name="area_"|cat:$field_value.fieldId}
 			{/if}
 		<textarea id="area_{$field_value.fieldId}" name="{$field_value.ins_id}" cols="{if $field_value.options_array[1] gt 1}{$field_value.options_array[1]}{else}50{/if}" rows="{if $field_value.options_array[2] gt 1}{$field_value.options_array[2]}{else}4{/if}"{if $field_value.options_array[5]} onKeyUp="wordCount({$field_value.options_array[5]}, this, 'cpt_{$field_value.fieldId}', '{tr}Word Limit Exceeded{/tr}')"{/if}>
 			{$field_value.value}
@@ -214,7 +214,7 @@
 			<td>{$ling.lang}</td>
       		<td>
 				{if $prefs.quicktags_over_textarea eq 'y' and $field_value.options_array[0] eq 1}
-        			{include file=tiki-edit_help_tool.tpl qtnum=$field_value.id area_name=area_`$field_value.id`_`$ling.lang`}
+        			{quicktags qtnum=$field_value.id area_name=area_`$field_value.id`_`$ling.lang`}
         		{/if}
 				<textarea id="area_{$field_value.id}_{$ling.lang}" name="{$field_value.ins_id}" cols="{if $field_value.options_array[1] gt 1}{$field_value.options_array[1]}{else}50{/if}" rows="{if $field_value.options_array[2] gt 1}{$field_value.options_array[2]}{else}4{/if}"{if $field_value.options_array[5] > 0} onKeyUp="wordCount({$field_value.options_array[5]}, this, 'cpt_{$field_value.fieldId}_{$ling.lang}', '{tr}Word Limit Exceeded{/tr}')"{/if}>
 					{$ling.value|escape}
