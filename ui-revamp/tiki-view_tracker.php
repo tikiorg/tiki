@@ -103,9 +103,9 @@ if ($tiki_p_create_tracker_items == 'y' && !empty($t['end'])) {
 }
 
 if ($tiki_p_view_trackers != 'y') {
-	if (!$my and isset($tracker_info['writerCanModify']) and $tracker_info['writerCanModify'] == 'y') {
+	if ($user && !$my and isset($tracker_info['writerCanModify']) and $tracker_info['writerCanModify'] == 'y') {
 		$my = $user;
-	} elseif (!$ours and isset($tracker_info['writergroupCanModify']) and $tracker_info['writergroupCanModify'] == 'y') {
+	} elseif ($user && !$ours and isset($tracker_info['writergroupCanModify']) and $tracker_info['writergroupCanModify'] == 'y') {
 		$ours = $group;
 	} elseif ($tiki_p_create_tracker_items != 'y') {
 		$smarty->assign('errortype', 401);

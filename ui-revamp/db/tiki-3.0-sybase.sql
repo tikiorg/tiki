@@ -620,6 +620,45 @@ go
 CREATE UNIQUE INDEX "tiki_calendar_categories_catname" ON "tiki_calendar_categories"("calendarId","name")
 go
 
+-- DROP TABLE "tiki_calendar_recurrence"
+go
+
+
+CREATE TABLE "tiki_calendar_recurrence" (
+  "recurrenceId" numeric(14 ,0) identity,
+  "calendarId" numeric(14,0) default '0' NOT NULL,
+  "start" numeric(4,0) default '0' NOT NULL,
+  "end" numeric(4,0) default '2359' NOT NULL,
+  "allday" numeric(1,0) default '0' NOT NULL,
+  "locationId" numeric(14,0) default NULL NULL,
+  "categoryId" numeric(14,0) default NULL NULL,
+  "nlId" numeric(12,0) default '0' NOT NULL,
+  "priority" varchar(3) default '1' NOT NULL CHECK ("priority" IN ('1','2','3','4','5','6','7','8','9')),
+  "status" varchar(3) default '0' NOT NULL CHECK ("status" IN ('0','1','2')),
+  "url" varchar(255) default NULL NULL,
+  "lang" char(16) default 'en' NOT NULL,
+  "name" varchar(255) default '' NOT NULL,
+  "description" image default '',
+  "weekly" numeric(1,0) default '0',
+  "weekday" numeric(1,0) default NULL NULL,
+  "monthly" numeric(1,0) default '0',
+  "dayOfMonth" numeric(2,0) default NULL NULL,
+  "yearly" numeric(1,0) default '0',
+  "dateOfYear" numeric(4,0) default NULL NULL,
+  "nbRecurrences" numeric(8,0) default NULL NULL,
+  "startPeriod" numeric(14,0) default NULL NULL,
+  "endPeriod" numeric(14,0) default NULL NULL,
+  "user" varchar(200) default '',
+  "created" numeric(14,0) default '0' NOT NULL,
+  "lastmodif" numeric(14,0) default '0' NOT NULL,
+  PRIMARY KEY (recurrenceId)
+) ENGINE=MyISAM  
+go
+
+
+CREATE  INDEX "tiki_calendar_recurrence_calendarId" ON "tiki_calendar_recurrence"("calendarId")
+go
+
 -- DROP TABLE "tiki_calendar_items"
 go
 
@@ -638,12 +677,17 @@ CREATE TABLE "tiki_calendar_items" (
   "lang" char(16) default 'en' NOT NULL,
   "name" varchar(255) default '' NOT NULL,
   "description" image default '',
+  "recurrenceId" numeric(14,0) default NULL NULL,
+  "changed" numeric(1,0) DEFAULT '0',
   "user" varchar(200) default '',
   "created" numeric(14,0) default '0' NOT NULL,
   "lastmodif" numeric(14,0) default '0' NOT NULL,
   "allday" numeric(1,0) default '0' NOT NULL,
-  PRIMARY KEY (calitemId)
-) ENGINE=MyISAM 
+  PRIMARY KEY (calitemId),
+  "CONSTRAINT" fk_calitems_recurrence
+  "FOREIGN" KEY (recurrenceId) REFERENCES tiki_calendar_recurrence(recurrenceId)
+  "ON" UPDATE CASCADE ON DELETE SET NULL
+) ENGINE=MyISAM  
 go
 
 
@@ -7216,6 +7260,24 @@ CREATE TABLE "tiki_groupalert" (
   "displayEachuser"  char( 1 ) default NULL NULL ,
   PRIMARY KEY ( objectType,objectId )
 ) ENGINE=MyISAM 
+go
+
+
+
+-- DROP TABLE `tiki_sent_newsletters_files`
+go
+
+
+CREATE TABLE `tiki_sent_newsletters_files` (
+  `id numeric(11 ,0) identity,
+  `editionId` numeric(11,0) NOT NULL,
+  `name` varchar(256) NOT NULL,
+  `type` varchar(64) NOT NULL,
+  `size` numeric(11,0) NOT NULL,
+  `filename` varchar(256) NOT NULL,
+  PRIMARY KEY ("`id`")
+  KEY `editionId` (`editionId`)
+)
 go
 
 

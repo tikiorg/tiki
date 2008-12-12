@@ -1,6 +1,6 @@
 <div class='opaque' style="position:absolute;left:50%;margin-left:-150px;width:400px">
 <div style="float:right"><a href="#" onClick="javascript:nd();"><img src="pics/icons/cross.png" alt="{tr}close{/tr}" border="0"/></a></div>
-<strong>
+<strong{if $cellstatus eq '2'} style="text-decoration:line-through"{/if}>
 {if $allday}
 	{tr}All-Day{/tr}
 {else}
@@ -12,7 +12,7 @@
 {/if}
 </strong>
 <br />
-<a href="tiki-calendar_edit_item.php?viewcalitemId={$cellid}" title="{tr}Details{/tr}">{$cellname}</a><br />
+<a href="tiki-calendar_edit_item.php?viewcalitemId={$cellid}" title="{tr}Details{/tr}"{if $cellstatus eq '2'} style="text-decoration:line-through"{/if}>{$cellname}</a><br />
 {if $show_description eq 'y'}<span class="box-data">{$celldescription}</span><br />{/if}
 {if $show_participants eq 'y' and $cellparticipants}
 <span class="box-title">{tr}Organized by{/tr}:</span> {$cellorganizers}<br />

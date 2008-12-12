@@ -41,6 +41,46 @@
 
 <table class="normal{if !$edit} vevent{/if}">
 <tr class="formcolor">
+	<td>{tr}Calendar{/tr}</td>
+	<td style="background-color:#{$calendar.custombgcolor};color:#{$calendar.customfgcolor};">
+{if $edit}
+	{if $prefs.javascript_enabled eq 'n'}
+		{$calendar.name|escape}<br />{tr}or{/tr}&nbsp;
+		<input type="submit" name="changeCal" value="{tr}Go to{/tr}" />
+	{/if}
+		<select name="save[calendarId]" id="calid" onchange="javascript:document.getElementById('editcalitem').submit();">
+			{foreach item=it key=itid from=$listcals}
+				<option value="{$it.calendarId}" style="background-color:#{$it.custombgcolor};color:#{$it.customfgcolor};"
+				{if $calitem.calendarId}
+					{if $calitem.calendarId eq $itid} selected="selected"{/if}
+				{else}
+					{if $calendarView}
+						{if $calendarView eq $itid} selected="selected"{/if}
+					{else}
+						{if $calendarId}
+							{if $calendarId eq $itid} selected="selected"{/if}
+						{/if}
+					{/if}
+				{/if}>{$it.name|escape}</option>
+			{/foreach}
+		</select>
+{else}
+	{$listcals[$calitem.calendarId].name|escape}
+{/if}
+	</td>
+</tr>
+
+<tr class="formcolor">
+<td>{tr}Title{/tr}</td>
+<td>
+{if $edit}
+	<input type="text" name="save[name]" value="{$calitem.name|escape}" size="32" style="width:90%;"/>
+{else}
+	<span class="summary">{$calitem.name|escape}</span>
+{/if}
+</td>
+</tr>
+<tr class="formcolor">
 	<td>{tr}Recurrence{/tr}</td>
 	<td>
 {if $edit}
@@ -48,7 +88,7 @@
 	<input type="hidden" name="recurrent" value="1"/>
 		{tr}This event depends on a recurrence rule{/tr}
 	{else}
-	  <input type="checkbox" id="id_recurrent" name="recurrent" value="1" onClick="javascript: toggle('recurrenceRules');"{if $calitem.recurrenceId gt 0}checked="checked"{/if}/><label for="id_recurrent">{tr}This event depends on a recurrence rule{/tr}</label>
+<input type="checkbox" id="id_recurrent" name="recurrent" value="1" onClick="javascript: toggle('recurrenceRules');"{if $calitem.recurrenceId gt 0}checked="checked"{/if}/><label for="id_recurrent">{tr}This event depends on a recurrence rule{/tr}</label>
 	{/if}
 {else}
 	<span class="summary">{if $calitem.recurrenceId gt 0}{tr}This event depends on a recurrence rule{/tr}{else}{tr}This event is not recurrent{/tr}{/if}</span>
@@ -59,7 +99,7 @@
 	<td>&nbsp;</td>
 	<td style="padding:5px 10px">
 {if $edit}
-	  <div id="recurrenceRules" style="position:relative;top:0px;left:0px;width:100%;{if !($calitem.recurrenceId gt 0)}display:none;{/if}">
+	  <div id="recurrenceRules" style="position:relative;top:0px;left:0px;width:100%;{if !($calitem.recurrenceId gt 0) && $prefs.javascript_enabled eq 'y'}display:none;{/if}">
 	  {if $calitem.recurrenceId gt 0}<input type="hidden" name="recurrenceId" value="{$recurrence.id}" />{/if}
 {if $recurrence.id gt 0}
 	{if $recurrence.weekly}
@@ -196,44 +236,6 @@
 {/if}
 {/if}
 	</td>
-</tr>
-<tr class="formcolor">
-	<td>{tr}Calendar{/tr}</td>
-	<td>
-{if $edit}
-		{if $id}<span class="summary">{$listcals[$calitem.calendarId].name|escape}</span><br />{tr}or{/tr}&nbsp;{/if}
-		<input type="submit" name="changeCal" value="{tr}Go to{/tr}" />
-		<select name="save[calendarId]" id="calid">
-			{foreach item=it key=itid from=$listcals}
-				<option value="{$it.calendarId}"
-				{if $calitem.calendarId}
-					{if $calitem.calendarId eq $itid} selected="selected"{/if}
-				{else}
-					{if $calendarView}
-						{if $calendarView eq $itid} selected="selected"{/if}
-					{else}
-						{if $calendarId}
-							{if $calendarId eq $itid} selected="selected"{/if}
-						{/if}
-					{/if}
-				{/if}>{$it.name|escape}</option>
-			{/foreach}
-		</select>
-{else}
-	<span class="summary">{$listcals[$calitem.calendarId].name|escape}</span>
-{/if}
-	</td>
-</tr>
-
-<tr class="formcolor">
-<td>{tr}Title{/tr}</td>
-<td>
-{if $edit}
-	<input type="text" name="save[name]" value="{$calitem.name|escape}" size="32" style="width:90%;"/>
-{else}
-	<span class="summary">{$calitem.name|escape}</span>
-{/if}
-</td>
 </tr>
 <tr class="formcolor">
 <td>{tr}Start{/tr}</td>
