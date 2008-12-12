@@ -5,8 +5,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-define('weekInSeconds', 604800);
-define('dayInSeconds', 86400);
+if (!defined('weekInSeconds')) define('weekInSeconds', 604800);
+if (!defined('dayInSeconds')) define('dayInSeconds', 86400);
 
 class CalRecurrence extends TikiLib {
 	private $id;

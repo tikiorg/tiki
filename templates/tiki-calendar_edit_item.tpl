@@ -44,6 +44,10 @@
 	<td>{tr}Calendar{/tr}</td>
 	<td style="background-color:#{$calendar.custombgcolor};color:#{$calendar.customfgcolor};">
 {if $edit}
+	{if $prefs.javascript_enabled eq 'n'}
+		{$calendar.name|escape}<br />{tr}or{/tr}&nbsp;
+		<input type="submit" name="changeCal" value="{tr}Go to{/tr}" />
+	{/if}
 		<select name="save[calendarId]" id="calid" onchange="javascript:document.getElementById('editcalitem').submit();">
 			{foreach item=it key=itid from=$listcals}
 				<option value="{$it.calendarId}" style="background-color:#{$it.custombgcolor};color:#{$it.customfgcolor};"
@@ -61,7 +65,7 @@
 			{/foreach}
 		</select>
 {else}
-	<span class="summary">{$listcals[$calitem.calendarId].name|escape}</span>
+	{$listcals[$calitem.calendarId].name|escape}
 {/if}
 	</td>
 </tr>
@@ -95,7 +99,7 @@
 	<td>&nbsp;</td>
 	<td style="padding:5px 10px">
 {if $edit}
-	  <div id="recurrenceRules" style="position:relative;top:0px;left:0px;width:100%;{if !($calitem.recurrenceId gt 0)}display:none;{/if}">
+	  <div id="recurrenceRules" style="position:relative;top:0px;left:0px;width:100%;{if !($calitem.recurrenceId gt 0) && $prefs.javascript_enabled eq 'y'}display:none;{/if}">
 	  {if $calitem.recurrenceId gt 0}<input type="hidden" name="recurrenceId" value="{$recurrence.id}" />{/if}
 {if $recurrence.id gt 0}
 	{if $recurrence.weekly}

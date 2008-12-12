@@ -6,7 +6,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-define('weekInSeconds', 604800);
+if (!defined('weekInSeconds')) define('weekInSeconds', 604800);
 
 class CalendarLib extends TikiLib {
 	function convert_sortmode($sort_mode) {

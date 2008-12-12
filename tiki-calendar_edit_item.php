@@ -185,7 +185,7 @@ if (isset($_REQUEST['act']) || isset($_REQUEST['preview']) || isset($_REQUEST['c
 		$_REQUEST['end_date_Year'] = TikiLib::date_format("%Y", $save['date_end']);
 
 	}
-    $save['allday'] = $_REQUEST['allday'] == 'true' ? 1 : 0;
+    $save['allday'] = (isset($_REQUEST['allday']) && $_REQUEST['allday'] == 'true') ? 1 : 0;
 	$save['start'] = TikiLib::make_time(
 		$_REQUEST['start_Hour'],
 		$_REQUEST['start_Minute'],
@@ -360,6 +360,8 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
 	$calitem = $save;
 	$calendar = $calendarlib->get_calendar($calitem['calendarId']);
 	$smarty->assign('edit',true);
+	$id = isset($save['calitemId'])?$save['calitemId']: 0;
+	$hour_minmax = ceil(($calendar['startday'])/(60*60)).'-'. ceil(($calendar['endday'])/(60*60));
 	$smarty->assign('changeCal', isset($_REQUEST['changeCal']));
 } elseif (isset($_REQUEST['viewcalitemId']) and $tiki_p_view_events == 'y') {
 	$calitem = $calendarlib->get_item($_REQUEST['viewcalitemId']);
@@ -392,7 +394,8 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
 		'nlId'=>0,
 		'start'=>$now,
 		'end'=>$now+(60*60),
-		'duration'=>(60*60)
+		'duration'=>(60*60),
+		'recurrenceId'=>0,
 		);
 	$id = 0;
 	$smarty->assign('edit',true);
