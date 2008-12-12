@@ -318,6 +318,11 @@ class QuicktagBlock extends QuicktagInline // Will change in the future
 		
 		return $tag;
 	} // }}}
+
+	function getWikiHtml( $areaName ) // {{{
+	{
+		return '<a href="javascript:insertAt(\'' . $areaName . '\', \'' . htmlentities($this->syntax, ENT_QUOTES, 'UTF-8') . '\', true)" onclick="needToConfirm=false;" title="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '">' . $this->getIconHtml() . '</a>';
+	} // }}}
 }
 
 class QuicktagFullscreen extends Quicktag

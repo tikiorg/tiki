@@ -326,7 +326,7 @@ function setSelectionRange(textarea, selectionStart, selectionEnd) {
 function setCaretToPos (textarea, pos) {
   setSelectionRange(textarea, pos, pos);
 }
-function insertAt(elementId, replaceString) {
+function insertAt(elementId, replaceString, blockLevel, perLine) {
   //inserts given text at selection or cursor position
   textarea = getElementById(elementId);
   var toBeReplaced = /text|page|area_name/g; //substrings in replaceString to be replaced by the selection if a selection was done
@@ -335,6 +335,18 @@ function insertAt(elementId, replaceString) {
     var selectionStart = textarea.selectionStart;
     var selectionEnd = textarea.selectionEnd;
     var scrollTop=textarea.scrollTop;
+
+	if( blockLevel ) {
+		// Block level operations apply to entire lines
+
+		// +1 and -1 to handle end of line caret position correctly
+		selectionStart = textarea.value.lastIndexOf( "\n", selectionStart - 1 ) + 1;
+		selectionEnd = textarea.value.indexOf( "\n", selectionEnd );
+
+		if( selectionEnd == -1 )
+			selectionEnd = textarea.value.length;
+	}
+
     if (selectionStart != selectionEnd) { // has there been a selection
       var newString = replaceString.replace(toBeReplaced, textarea.value.substring(selectionStart, selectionEnd));
       textarea.value = textarea.value.substring(0, selectionStart)
