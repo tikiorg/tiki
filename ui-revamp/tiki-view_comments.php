@@ -15,12 +15,34 @@ if (!isset(
 	die;
 }
 
-$comments_per_page = $prefs['wiki_comments_per_page'];
-$thread_sort_mode = $prefs['wiki_comments_default_ordering'];
+switch( $_REQUEST['objectType'] ) {
+case 'wiki':
+case 'wiki page':
+case 'wiki_page':
+	$comments_per_page = $prefs['wiki_comments_per_page'];
+	$thread_sort_mode = $prefs['wiki_comments_default_ordering'];
+	$comments_prefix_var='wiki page:';
+
+	if( $prefs['feature_wiki_comments'] != 'y' 
+	 || ! $tikilib->user_has_perm_on_object($user, $_REQUEST['objectId'], $_REQUEST['objectType'], 'tiki_p_wiki_view_comments' ) ) {
+		$smarty->assign('msg', tra("Impossible to view comments."));
+		$smarty->display("error.tpl");
+		die;
+	}
+
+	break;
+
+default:
+	$smarty->assign('msg', tra("Unsupported type."));
+
+	$smarty->display("error.tpl");
+	die;
+}
+
 $comments_vars=Array('objectName', 'objectType', 'objectId');
-$comments_prefix_var='wiki page:';
 $comments_object_var='objectId';
 $comments_show = 'y';
+
 include_once('comments.php');
 
 $smarty->assign('show_comzone', 'y');
