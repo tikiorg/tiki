@@ -6,7 +6,6 @@
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 include_once ("tiki-setup.php");
-error_reporting(E_ALL);
 
 if (!isset(
 	$_REQUEST['objectName']) || empty($_REQUEST['objectType']) || empty($_REQUEST['objectId'])) {
@@ -28,7 +27,7 @@ $smarty->assign('show_comzone', 'y');
 
 require_once('TikiPageControls.php');
 if( $controls = TikiPageControls::factory( $_REQUEST['objectType'], $_REQUEST['objectId'], $_REQUEST['objectName'] ) ) {
-	$controls->setMode('comments');
+	$controls->setMode('comment');
 	$controls->build();
 	$smarty->assign('object_page_controls', $controls);
 }
