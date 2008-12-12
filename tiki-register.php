@@ -59,6 +59,7 @@ if ($nbChoiceGroups) {
 
 if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && (isset($_REQUEST['pass']) || isset($_SESSION['openid_url']))) {
   check_ticket('register');
+  $smarty->assign('errortype', 'no_redirect_login');
   if($novalidation != 'yes' and ($_REQUEST["pass"] <> $_REQUEST["passAgain"]) and !isset($_SESSION['openid_url'])) {
     $smarty->assign('msg',tra("The passwords don't match"));
     $smarty->display("error.tpl");
