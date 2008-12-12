@@ -432,13 +432,25 @@ class QuicktagsList
 	private function addLine( array $tags ) // {{{
 	{
 		$elements = array();
+		$group = array();
 
 		foreach( $tags as $tagName ) {
-			if( ( $tag = $this->getTag( $tagName ) ) 
-				&& $tag->isAccessible() ) {
-				$elements[] = $tag;
+			if( $tagName == '-' ) {
+				if( count($group) ) {
+					$elements[] = $group;
+					$group = array();
+				}
+			} else {
+				if( ( $tag = $this->getTag( $tagName ) ) 
+					&& $tag->isAccessible() ) {
+
+					$group[] = $tag;
+				}
 			}
 		}
+
+		if( count($group) )
+			$elements[] = $group;
 
 		if( count( $elements ) )
 			$this->lines[] = $elements;
@@ -464,14 +476,22 @@ class QuicktagsList
 	{
 		$lines = array();
 		foreach( $this->lines as $line ) {
-			$out = array();
-			foreach( $line as $tag ) {
-				if( $token = $tag->getWysiwygToken() )
-					$out[] = $token;
+			$lineOut = array();
+
+			foreach( $line as $group ) {
+				foreach( $group as $tag ) {
+
+					if( $token = $tag->getWysiwygToken() )
+						$lineOut[] = $token;
+				}
+
+				$lineOut[] = '-';
 			}
 
-			if( count($out) ) 
-				$lines[] = array($out);
+			$lineOut = array_slice( $lineOut, 0, -1 );
+
+			if( count($lineOut) )
+				$lines[] = array($lineOut);
 		}
 
 		return $lines;
@@ -484,8 +504,16 @@ class QuicktagsList
 		foreach( $this->lines as $line ) {
 			$lineHtml = '';
 
-			foreach( $line as $tag ) {
-				$lineHtml .= $tag->getWikiHtml( $areaName );
+			foreach( $line as $group ) {
+				$groupHtml = '';
+				foreach( $group as $tag ) {
+					$groupHtml .= $tag->getWikiHtml( $areaName );
+				}
+
+				if( ! empty($groupHtml) ) {
+					$param = empty($lineHtml) ? '' : ' style="border-left: double gray; height: 20px;"';
+					$lineHtml .= "<span$param>$groupHtml</span>";
+				}
 			}
 
 			if( ! empty($lineHtml) ) {
