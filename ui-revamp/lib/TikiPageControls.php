@@ -246,17 +246,26 @@ abstract class TikiPageControls implements ArrayAccess
 	private $tabs = array();
 	private $user;
 
+	private $type;
+	private $objectId;
+	private $objectName;
+
 	private $mode = false;
 
 	private $headerTemplate = 'tiki-pagecontrols.tpl';
 	private $footerTemplate = 'tiki-pagecontrols-footer.tpl';
 
+	private $commentCount;
+
 	public abstract function build();
 
-	function __construct() // {{{
+	function __construct( $type, $objectId, $objectName ) // {{{
 	{
 		global $user;
 		$this->user = $user;
+		$this->type = $type;
+		$this->objectId = $objectId;
+		$this->objectName = $objectName;
 	} // }}}
 
 	public static function factory( $objectType, $objectId, $objectName = null ) // {{{
@@ -301,7 +310,12 @@ abstract class TikiPageControls implements ArrayAccess
 
 	protected function hasPerm( $permName ) // {{{
 	{
-		return isset( $GLOBALS[$permName] ) && $GLOBALS[$permName] == 'y';
+		if( ! isset( $GLOBALS[$permName] ) ) {
+			global $tikilib;
+			$GLOBALS[$permName] = $tikilib->user_has_perm_on_object( $this->user, $this->objectId, $this->type, $permName ) ? 'y' : 'n';
+		}
+		
+		return $GLOBALS[$permName] == 'y';
 	} // }}}
 
 	protected function hasAnyOfPerm( $permName ) // {{{
@@ -400,6 +414,20 @@ abstract class TikiPageControls implements ArrayAccess
 			$mode = func_get_args();
 
 		return in_array( $this->mode, $mode );
+	} // }}}
+
+	protected function getCommentCount() // {{{
+	{
+		if( !is_null($this->commentCount) )
+			return $this->commentCount;
+
+		global $commentslib, $dbTiki;
+		if( ! $commentslib ) {
+			require_once 'lib/commentslib.php';
+			$commentslib = new Comments($dbTiki);
+		}
+
+		return $this->commentCount = $commentslib->count_comments("{$this->type}:{$this->objectId}");
 	} // }}}
 
 	function offsetSet( $name, $value ) {}

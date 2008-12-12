@@ -19,11 +19,12 @@ class TikiPageControls_Wiki extends TikiPageControls
 	private $canSlideshow;
 	private $structureInfo;
 	private $attachmentCount;
-	private $commentCount;
 	private $isLocked;
 
 	function __construct( $info ) // {{{
 	{
+		parent::__construct( 'wiki page', $info['pageName'], $info['pageName'] );
+
 		$this->page = $info['pageName'];
 		$this->info = $info;
 	} // }}}
@@ -356,7 +357,6 @@ class TikiPageControls_Wiki extends TikiPageControls
 
 		if( $this->hasPref('feature_history')
 		 && $this->hasPerm('tiki_p_wiki_view_history') ) {
-			// TODO : Determine where this goes
 			$link = $this->link( 'url', 'tiki-pagehistory.php', array(
 				'page' => $this->page
 			) );
@@ -414,15 +414,9 @@ class TikiPageControls_Wiki extends TikiPageControls
 		if( ! is_null($this->attachmentCount) )
 			return $this->attachmentCount;
 
-		// TODO : Fetch attachment count here
-	} // }}}
-
-	private function getCommentCount() // {{{
-	{
-		if( !is_null($this->commentCount) )
-			return $this->commentCount;
-
-		// TODO : Fetch comment count here
+		global $wikilib; require_once 'lib/wiki/wikilib.php';
+		$att = $wikilib->list_wiki_attachments( $this->page );
+		return $this->attachmentCount = (int) $att['cant'];
 	} // }}}
 
 	private function hasSlideshow() // {{{
