@@ -70,8 +70,8 @@
 {cycle name=tabs values="1,2,3,4,5" print=false advance=false reset=true}
 <div class="tabs">
 <span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}View{/tr}</a></span>
-{if $tracker_info.useComments eq 'y' and $tiki_p_tracker_view_comments ne 'n'}
-<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}Comments{/tr} ({$commentCount})</a></span>
+{if $tracker_info.useComments eq 'y' and ($tiki_p_tracker_view_comments ne 'n' or $tiki_p_comment_tracker_items ne 'n') }
+<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}Comments{/tr}{if $tiki_p_tracker_view_comments ne 'n'} ({$commentCount}){/if}</a></span>
 {/if}
 {if $tracker_info.useAttachments eq 'y'}
 <span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark" style="border-color:{if $cookietab eq $tabi}black{else}white{/if};"><a href="javascript:tikitabs({cycle name=tabs},5);">{tr}Attachments{/tr} ({$attCount})</a></span>
@@ -136,7 +136,7 @@
 </div>
 
 {* -------------------------------------------------- tab with comments --- *}
-{if $tracker_info.useComments eq 'y' and $tiki_p_tracker_view_comments ne 'n'}
+{if $tracker_info.useComments eq 'y' and ($tiki_p_tracker_view_comments ne 'n' or $tiki_p_comment_tracker_items ne 'n') }
 <div id="content{cycle name=content assign=focustab}{$focustab}"{if $prefs.feature_tabs eq 'y'} class="tabcontent" style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 {if $tiki_p_comment_tracker_items eq 'y'}
 <h2>{tr}Add a Comment{/tr}</h2>
@@ -154,6 +154,7 @@
 </table>
 </form>
 {/if}
+{if $tiki_p_tracker_view_comments ne 'n'}
 <h2>{tr}Comments{/tr}</h2>
 {section name=ix loop=$comments}
 <div class="commentbloc">
@@ -166,6 +167,7 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>&nbsp;&nbsp;
 <hr />
 </div>
 {/section}
+{/if}
 </div>
 {/if}
 
