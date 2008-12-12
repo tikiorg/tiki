@@ -274,18 +274,6 @@ class QuicktagBlock extends QuicktagInline // Will change in the future
 			$wysiwyg = 'PageBreak';
 			$syntax = '---';
 			break;
-		case 'list':
-			$label = tra('Unordered List');
-			$icon = tra('pics/icons/text_list_bullets.png');
-			$wysiwyg = 'UnorderedList';
-			$syntax = '*text';
-			break;
-		case 'numlist':
-			$label = tra('Ordered List');
-			$icon = tra('pics/icons/text_list_numbers.png');
-			$wysiwyg = 'OrderedList';
-			$syntax = '#text';
-			break;
 		case 'blockquote':
 			$label = tra('Block Quote');
 			$icon = tra('pics/icons/box.png');
@@ -322,6 +310,44 @@ class QuicktagBlock extends QuicktagInline // Will change in the future
 	function getWikiHtml( $areaName ) // {{{
 	{
 		return '<a href="javascript:insertAt(\'' . $areaName . '\', \'' . htmlentities($this->syntax, ENT_QUOTES, 'UTF-8') . '\', true)" onclick="needToConfirm=false;" title="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '">' . $this->getIconHtml() . '</a>';
+	} // }}}
+}
+
+class QuicktagLineBased extends QuicktagInline // Will change in the future
+{
+	protected $syntax;
+
+	public static function fromName( $tagName ) // {{{
+	{
+		switch( $tagName ) {
+		case 'list':
+			$label = tra('Unordered List');
+			$icon = tra('pics/icons/text_list_bullets.png');
+			$wysiwyg = 'UnorderedList';
+			$syntax = '*text';
+			break;
+		case 'numlist':
+			$label = tra('Ordered List');
+			$icon = tra('pics/icons/text_list_numbers.png');
+			$wysiwyg = 'OrderedList';
+			$syntax = '#text';
+			break;
+		default:
+			return;
+		}
+
+		$tag = new self;
+		$tag->setLabel( $label )
+			->setWysiwygToken( $wysiwyg )
+			->setIcon( $icon )
+			->setSyntax( $syntax );
+		
+		return $tag;
+	} // }}}
+
+	function getWikiHtml( $areaName ) // {{{
+	{
+		return '<a href="javascript:insertAt(\'' . $areaName . '\', \'' . htmlentities($this->syntax, ENT_QUOTES, 'UTF-8') . '\', true, true)" onclick="needToConfirm=false;" title="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '">' . $this->getIconHtml() . '</a>';
 	} // }}}
 }
 
@@ -466,6 +492,8 @@ class QuicktagsList
 		if( $tag = QuicktagInline::fromName( $tagName ) )
 			return $tag;
 		elseif( $tag = QuicktagBlock::fromName( $tagName ) )
+			return $tag;
+		elseif( $tag = QuicktagLineBased::fromName( $tagName ) )
 			return $tag;
 		elseif( $tag = QuicktagFckOnly::fromName( $tagName ) )
 			return $tag;
