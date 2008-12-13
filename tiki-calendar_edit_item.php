@@ -183,37 +183,58 @@ if (isset($_REQUEST['act']) || isset($_REQUEST['preview']) || isset($_REQUEST['c
 		$_REQUEST['end_date_Month'] = TikiLib::date_format("%m", $save['date_end']);
 		$_REQUEST['end_date_Day'] = TikiLib::date_format("%d", $save['date_end']);
 		$_REQUEST['end_date_Year'] = TikiLib::date_format("%Y", $save['date_end']);
-
 	}
+
     $save['allday'] = (isset($_REQUEST['allday']) && $_REQUEST['allday'] == 'true') ? 1 : 0;
-	$save['start'] = TikiLib::make_time(
-		$_REQUEST['start_Hour'],
-		$_REQUEST['start_Minute'],
-		0,
-		$_REQUEST['start_date_Month'],
-		$_REQUEST['start_date_Day'],
-		$_REQUEST['start_date_Year']
-	);
-
-	if ($save['end_or_duration'] == 'duration') {
-		$save['duration'] = max(0, $_REQUEST['duration_Hour']*60*60 + $_REQUEST['duration_Minute']*60);
-		$save['end'] = $save['start'] + $save['duration'];
-	} else {
-		$save['end'] = TikiLib::make_time(
-			$_REQUEST['end_Hour'],
-			$_REQUEST['end_Minute'],
+	if ($_REQUEST['allday'] == 'true') {
+		$save['start'] = TikiLib::make_time(
 			0,
-			$_REQUEST['end_date_Month'],
-			$_REQUEST['end_date_Day'],
-			$_REQUEST['end_date_Year']
+			0,
+			0,
+			$_REQUEST['start_date_Month'],
+			$_REQUEST['start_date_Day'],
+			$_REQUEST['start_date_Year']
 		);
-		$save['duration'] = max(0, $save['end'] - $save['start']);
+
+		if ($save['end_or_duration'] == 'duration') {
+			$save['duration'] = 86399;
+			$save['end'] = $save['start'] + $save['duration'];
+		} else {
+			$save['end'] = TikiLib::make_time(
+				23,
+				59,
+				59,
+				$_REQUEST['end_date_Month'],
+				$_REQUEST['end_date_Day'],
+				$_REQUEST['end_date_Year']
+			);
+			$save['duration'] = max(0, $save['end'] - $save['start']);
+		}
+	} else {
+		$save['start'] = TikiLib::make_time(
+			$_REQUEST['start_Hour'],
+			$_REQUEST['start_Minute'],
+			0,
+			$_REQUEST['start_date_Month'],
+			$_REQUEST['start_date_Day'],
+			$_REQUEST['start_date_Year']
+		);
+
+		if ($save['end_or_duration'] == 'duration') {
+			$save['duration'] = max(0, $_REQUEST['duration_Hour']*60*60 + $_REQUEST['duration_Minute']*60);
+			$save['end'] = $save['start'] + $save['duration'];
+		} else {
+			$save['end'] = TikiLib::make_time(
+				$_REQUEST['end_Hour'],
+				$_REQUEST['end_Minute'],
+				0,
+				$_REQUEST['end_date_Month'],
+				$_REQUEST['end_date_Day'],
+				$_REQUEST['end_date_Year']
+			);
+			$save['duration'] = max(0, $save['end'] - $save['start']);
+		}
 	}
-}
-$impossibleDates = false;
-if (isset($save['start']) && isset($save['end'])) {
-	if (($save['end'] - $save['start']) < 0)
-		$impossibleDates = true;
 }
 
 $impossibleDates = false;
@@ -227,7 +248,7 @@ if (isset($_POST['act'])) {
 	$newcalid = $save['calendarId'];
 
 	if ((empty($save['calitemId']) and $caladd["$newcalid"]['tiki_p_add_events'])
-			or (!empty($save['calitemId']) and $caladd["$newcalid"]['tiki_p_change_events'])) {
+	or (!empty($save['calitemId']) and $caladd["$newcalid"]['tiki_p_change_events'])) {
 		if (empty($save['name'])) $save['name'] = tra("event without name");
 		if (empty($save['priority'])) $save['priority'] = 0;
 
@@ -257,22 +278,22 @@ if (isset($_POST['act'])) {
 				switch($_POST['recurrenceType']) {
 					case "weekly":
 						$calRecurrence->setWeekly(true);
-					$calRecurrence->setWeekday($_POST['weekday']);
-					$calRecurrence->setMonthly(false);
-					$calRecurrence->setYearly(false);
-					break;
+						$calRecurrence->setWeekday($_POST['weekday']);
+						$calRecurrence->setMonthly(false);
+						$calRecurrence->setYearly(false);
+						break;
 					case "monthly":
 						$calRecurrence->setWeekly(false);
-					$calRecurrence->setMonthly(true);
-					$calRecurrence->setDayOfMonth($_POST['dayOfMonth']);
-					$calRecurrence->setYearly(false);
-					break;
+						$calRecurrence->setMonthly(true);
+						$calRecurrence->setDayOfMonth($_POST['dayOfMonth']);
+						$calRecurrence->setYearly(false);
+						break;
 					case "yearly":
 						$calRecurrence->setWeekly(false);
-					$calRecurrence->setMonthly(false);
-					$calRecurrence->setYearly(true);
-					$calRecurrence->setDateOfYear(str_pad($_POST['dateOfYear_month'],2,'0',STR_PAD_LEFT) . str_pad($_POST['dateOfYear_day'],2,'0',STR_PAD_LEFT));
-					break;
+						$calRecurrence->setMonthly(false);
+						$calRecurrence->setYearly(true);
+						$calRecurrence->setDateOfYear(str_pad($_POST['dateOfYear_month'],2,'0',STR_PAD_LEFT) . str_pad($_POST['dateOfYear_day'],2,'0',STR_PAD_LEFT));
+						break;
 				}
 				$calRecurrence->setStartPeriod($_POST['startPeriod']);
 				if ($_POST['endType'] == "dt")
@@ -292,8 +313,6 @@ if (isset($_POST['act'])) {
 					$save['changed'] = true;
 				}
 				$calitemId = $calendarlib->set_item($user,$save['calitemId'],$save);
-				header('Location: tiki-calendar.php');
-				die;
 			}
 
 			if ($prefs['feature_groupalert'] == 'y') {
