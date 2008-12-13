@@ -1,9 +1,6 @@
 <?php
 
-error_reporting(E_ALL);
-
-require_once 'PHPUnit/Framework.php';
-require_once 'ShortestPathFinder.php';
+require_once 'Multilingual/Aligner/ShortestPathFinder.php';
 
 /**
  * This class implements the Dijkstra algorithm for finding the shortest path
@@ -17,7 +14,7 @@ require_once 'ShortestPathFinder.php';
  */
  
  
-class  ShortestPathFinder {
+class  Multilingual_Aligner_ShortestPathFinder {
 	var $visited = array();
 	var $distance = array();
 	var $previousNode = array();
@@ -30,7 +27,7 @@ class  ShortestPathFinder {
 	var $shortestPathes = array();
     var $nodes = array();
      
-	function ShortestPathFinder(&$ourMap, $infiniteDistance) {
+	function __construct(&$ourMap, $infiniteDistance) {
 		$this -> infiniteDistance = $infiniteDistance;
 		$this -> map = &$ourMap;
 		$this -> bestPath = 0;

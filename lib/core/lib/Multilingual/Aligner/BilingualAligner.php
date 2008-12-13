@@ -1,10 +1,8 @@
-<?PHP
+<?php
 
-error_reporting(E_ALL);
+require_once 'Multilingual/Aligner/SentenceSegmentor.php';
 
-require_once 'SentenceSegmentor.php';
-
-class BilingualAligner {
+class Multilingual_Aligner_BilingualAligner {
 
     var $l1_sentences = array();
     var $l2_sentences = array();
@@ -17,7 +15,7 @@ class BilingualAligner {
 	}
 	
 	public function _segment_into_sentences($text) {
-	    $segmentor = new SentenceSegmentor();
+	    $segmentor = new Multilingual_Aligner_SentenceSegmentor();
 	    $sentences = $segmentor->segment($text);
 	    return $sentences;
 	}

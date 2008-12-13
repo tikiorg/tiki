@@ -1,11 +1,6 @@
 <?php
 
-error_reporting(E_ALL);
-
-require_once 'PHPUnit/Framework.php';
-require_once 'ShortestPathFinder.php';
- 
-class  ShortestPathFinderTest extends PHPUnit_Framework_TestCase
+class Multilingual_Aligner_ShortestPathFinderTest extends PHPUnit_Framework_TestCase
 {
 
    ////////////////////////////////////////////////////////////////
@@ -18,7 +13,7 @@ class  ShortestPathFinderTest extends PHPUnit_Framework_TestCase
       $distances_matrix[0][2] = 23;
       $distances_matrix[1][2] = 5;
       $INFINITY = 9999999;
-      $this->pfinder = new ShortestPathFinder($distances_matrix, $INFINITY);   
+      $this->pfinder = new Multilingual_Aligner_ShortestPathFinder($distances_matrix, $INFINITY);   
    }
  
    //
@@ -38,7 +33,7 @@ class  ShortestPathFinderTest extends PHPUnit_Framework_TestCase
       // Need  to choose  a very large number to act as infinity.
       $INFINITY = 9999999;
       
-      $path_finder = new ShortestPathFinder($distances_matrix, $INFINITY);
+      $path_finder = new Multilingual_Aligner_ShortestPathFinder($distances_matrix, $INFINITY);
    }
    
    public function test_This_is_how_you_find_shortest_path_from_the_origin_to_another_node() {   
@@ -56,7 +51,7 @@ class  ShortestPathFinderTest extends PHPUnit_Framework_TestCase
      $distances_matrix['lyon']['marseilles'] = 5;
       $INFINITY = 9999999;
 
-      $this->pfinder = new ShortestPathFinder($distances_matrix, $INFINITY);   
+      $this->pfinder = new Multilingual_Aligner_ShortestPathFinder($distances_matrix, $INFINITY);   
       $this->pfinder->computeShortestPathes('paris');      
       $nodes_in_path = $this->pfinder->shortestPathTo('marseilles');
       $distance = $this->pfinder->shortestDistanceTo('marseilles');
@@ -103,7 +98,7 @@ class  ShortestPathFinderTest extends PHPUnit_Framework_TestCase
       $cost_matrix['toronto']['vancouver'] = 280;
       $INFINITY = 9999999;
 
-      $this->pfinder = new ShortestPathFinder($cost_matrix, $INFINITY);      
+      $this->pfinder = new Multilingual_Aligner_ShortestPathFinder($cost_matrix, $INFINITY);      
       $this->pfinder->computeShortestPathes('ottawa'); 
 
       $this->assertShortestPathIs('montreal', array("ottawa", "montreal"), 50, "Bad path to montreal");     

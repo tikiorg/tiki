@@ -1,11 +1,6 @@
 <?php
 
-error_reporting(E_ALL);
-
-require_once 'PHPUnit/Framework.php';
-require_once 'BilingualAligner.php';
- 
-class  BilingualAlignerTest extends PHPUnit_Framework_TestCase
+class  Multilingual_Aligner_BilingualAlignerTest extends PHPUnit_Framework_TestCase
 {
 
    public function ___test_reminder()  {
@@ -19,7 +14,7 @@ class  BilingualAlignerTest extends PHPUnit_Framework_TestCase
    ////////////////////////////////////////////////////////////////
     
     public function test_this_is_how_you_create_a_BilingualAligner() {
-       $aligner = new BilingualAligner();
+       $aligner = new Multilingual_Aligner_BilingualAligner();
     }
 
    ////////////////////////////////////////////////////////////////
@@ -29,11 +24,11 @@ class  BilingualAlignerTest extends PHPUnit_Framework_TestCase
    ////////////////////////////////////////////////////////////////
 
    protected function setUp()  {
-      $this->aligner = new BilingualAligner();
+      $this->aligner = new Multilingual_Aligner_BilingualAligner();
    }
      
     public function test_this_is_how_you_align_two_texts() {
-       $aligner = new BilingualAligner();
+       $aligner = new Multilingual_Aligner_BilingualAligner();
        $en_entences = array("Hello earthlings. Take me to your leader.");
        $fr_sentences = array("Bonjour terriens. Inutile de résister. Amenez moi à votre chef.");
        $aligned_sentences = $aligner->align($en_entences, $fr_sentences);

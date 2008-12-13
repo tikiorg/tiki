@@ -1,11 +1,6 @@
 <?php
 
-error_reporting(E_ALL);
-
-require_once 'PHPUnit/Framework.php';
-require_once 'SentenceSegmentor.php';
- 
-class  SentenceSegmentorTest extends PHPUnit_Framework_TestCase
+class Multilingual_Aligner_SentenceSegmentorTest extends PHPUnit_Framework_TestCase
 {
 
    ////////////////////////////////////////////////////////////////
@@ -14,11 +9,11 @@ class  SentenceSegmentorTest extends PHPUnit_Framework_TestCase
    ////////////////////////////////////////////////////////////////
 
    public function test_This_is_how_you_create_a_SentenceSegmentor() {
-      $segmentor = new SentenceSegmentor();
+      $segmentor = new Multilingual_Aligner_SentenceSegmentor();
    }
    
    public function test_this_is_how_you_segment_text_into_sentences() {
-      $segmentor = new SentenceSegmentor();
+      $segmentor = new Multilingual_Aligner_SentenceSegmentor();
       $text = "hello. world";
       $sentences = $segmentor->segment($text);  
    }
@@ -91,7 +86,7 @@ class  SentenceSegmentorTest extends PHPUnit_Framework_TestCase
    ////////////////////////////////////////////////////////////////
    
    public function do_test_basic_segmentation($text, $expSentences, $message) {    
-      $segmentor = new SentenceSegmentor();
+      $segmentor = new Multilingual_Aligner_SentenceSegmentor();
       $sentences = $segmentor->segment($text); 
       $got_sentences_as_string = implode(', ', $sentences);
       $exp_sentences_as_string = implode(', ', $expSentences);
