@@ -393,7 +393,7 @@ if ($calendarViewMode == 'day') {
 			: str_pad($maxHourOfDay,2,'0',STR_LEFT_PAD) . "59";
     	$rawhour =intval(substr($dayitems['time'],0,2));
     	$dayitems['mins'] = substr($dayitems['time'],2);
-		$dayitems['top'] = (($rawhour - $minHourOfDay) + $dayitems['mins']/60)*24 + 36;
+		$dayitems['top'] = (($rawhour - $minHourOfDay) + $dayitems['mins']/60)*24 + 35;
     if ($dayitems["result"]["allday"]) {
     	$arows[] = $dayitems;
     } else {
@@ -513,13 +513,13 @@ if ($max > 100) {
 			if ($rawhour < $minHourOfDay)
 				$rawhour = $minHourOfDay;
 			$dayitems['mins'] = substr($dayitems['time'],2);
-			$dayitems['top'] = 24 * (($rawhour - $minHourOfDay) + $dayitems['mins']/60) + 37;
+			$dayitems['top'] = 24 * (($rawhour - $minHourOfDay) + $dayitems['mins']/60) + 35;
 			$dayitems['left'] = 9 + 13 * $wd;
 			$dayitems['width'] = 12;
 			$hrows[$wd]["$rawhour"][] = $dayitems;
 			$eventHoraires[$wd][$dayitems['calitemId']]['start'] = ($dayitems['time'] < $minHourOfDay."00") ? str_pad($minHourOfDay."00",4,'0',STR_PAD_LEFT) : $dayitems['time'];
 			$eventHoraires[$wd][$dayitems['calitemId']]['end'] = ($dayitems['end'] > ($maxHourOfDay + 1)."00") ? str_pad(($maxHourOfDay + 1)."00",4,'0',STR_PAD_LEFT) : $dayitems['end'];
-			$eventHoraires[$wd][$dayitems['calitemId']]['duree'] = max(1,(mktime(substr($eventHoraires[$wd][$dayitems['calitemId']]['end'],0,2),substr($eventHoraires[$wd][$dayitems['calitemId']]['end'],2),0,1,1,2000) - mktime(substr($eventHoraires[$wd][$dayitems['calitemId']]['start'],0,2),substr($eventHoraires[$wd][$dayitems['calitemId']]['start'],2),0,1,1,2000)) / 3600);
+			$eventHoraires[$wd][$dayitems['calitemId']]['duree'] = max(1,(TikiLib::make_time(substr($eventHoraires[$wd][$dayitems['calitemId']]['end'],0,2),substr($eventHoraires[$wd][$dayitems['calitemId']]['end'],2),0,1,1,2000) - TikiLib::make_time(substr($eventHoraires[$wd][$dayitems['calitemId']]['start'],0,2),substr($eventHoraires[$wd][$dayitems['calitemId']]['start'],2),0,1,1,2000)) / 3600);
 
 			$tmpRes = array();
 			for ($h=0 ; $h<24 ; $h++) {
@@ -549,17 +549,13 @@ if ($max > 100) {
 		}
 	}
 	foreach(array_keys($concurrencies) as $wd) {
-		$i=0;
-		foreach(array_keys($concurrencies[$wd]) as $key) {
-			$concurrencies[$wd][$key]['value'] = count($concurrencies[$wd]);
-			$concurrencies[$wd][$key]['offset'] = 13*($i / $concurrencies[$wd][$key]['value']);
-			$i++;
-		}
+		foreach(array_keys($concurrencies[$wd]) as $key)
+			$concurrencies[$wd][$key]['offset'] = 13*($concurrencies[$wd][$key]['offset'] / $concurrencies[$wd][$key]['value']);
 	}
 	foreach(array_keys($hrows) as $aDay) {
 		foreach(array_keys($hrows[$aDay]) as $anHour) {
 			for($i=0 ; $i < count($hrows[$aDay][$anHour]) ; $i++) {
-				if ($concurrencies[$aDay][$hrows[$aDay][$anHour][$i]['calitemId']]['value'] <= $maxSimultaneousWeekViewEvents) {
+				if (!$manyEvents[$aDay]['tooMany'] && $concurrencies[$aDay][$hrows[$aDay][$anHour][$i]['calitemId']]['value'] <= $maxSimultaneousWeekViewEvents) {
 					$hrows[$aDay][$anHour][$i]['concurrences'] = $concurrencies[$aDay][$hrows[$aDay][$anHour][$i]['calitemId']]['value'];
 					$hrows[$aDay][$anHour][$i]['duree'] = $eventHoraires[$aDay][$hrows[$aDay][$anHour][$i]['calitemId']]['duree'] * 24;
 					$hrows[$aDay][$anHour][$i]['left'] = $hrows[$aDay][$anHour][$i]['left'] + $concurrencies[$aDay][$hrows[$aDay][$anHour][$i]['calitemId']]['offset'];
@@ -581,11 +577,11 @@ if ($max > 100) {
 						$tmpTop = str_pad(100*$minHourOfDay,4,'0',STR_PAD_LEFT);
 					if ($tmpBottom > 100*(1 + $maxHourOfDay))
 						$tmpBottom = str_pad(100*(1 + $maxHourOfDay),4,'0',STR_PAD_LEFT);
-					$top = 38 + 24*((intval(substr($tmpTop,0,2)) + intval(substr($tmpTop,2)/60)) - $minHourOfDay);
-					$duree = max(24,24 * ((TikiLib::make_time(substr($tmpBottom,0,2),substr($tmpBottom,2),0,1,1,2000) - TikiLib::make_time(substr($tmpTop,0,2),substr($tmpTop,2),0,1,1,2000)) / 3600));
+					$top = 36 + 24*((intval(substr($tmpTop,0,2)) + intval(substr($tmpTop,2))/60) - $minHourOfDay);
+					$duree = max(23.9,23.9 * ((TikiLib::make_time(substr($tmpBottom,0,2),substr($tmpBottom,2),0,1,1,2000) - TikiLib::make_time(substr($tmpTop,0,2),substr($tmpTop,2),0,1,1,2000)) / 3600));
 					$manyEvents[$aDay]['top'] = $top;
 					$manyEvents[$aDay]['left'] = 9 + ($aDay*13);
-					$manyEvents[$aDay]['width'] = 12.9;
+					$manyEvents[$aDay]['width'] = 12.8;
 					$manyEvents[$aDay]['duree'] = $duree;
 				}
 			}
