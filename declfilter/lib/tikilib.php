@@ -129,12 +129,29 @@ class TikiLib extends TikiDB {
 	}
 
 	/*shared*/
+  // Returns IP address or if 127.0.0.1 looks for a proxy address
+	function get_ip_address() {
+		$ip = "127.0.0.1";  // assume localhost
+    if (isset($_SERVER["REMOTE_ADDR"])) {
+      $ip = $_SERVER["REMOTE_ADDR"];
+    }
+    if ($ip == "127.0.0.1") {
+      if (isset($_SERVER["HTTP_X_FORWARDED_FOR"])) {
+        $fwips = explode(',', $_SERVER["HTTP_X_FORWARDED_FOR"]);
+        $ip = $fwips[0];  // There may be several but using first IP
+        // This might need improvement for configurations with multiple proxies.
+      }
+    }
+    return $ip;
+  }
+
+	/*shared*/
 	function check_rules($user, $section) {
 		// Admin is never banned
 		if ($user == 'admin')
 			return false;
 
-		$ips = explode('.', $_SERVER["REMOTE_ADDR"]);
+		$ips = $this->get_ip_address();
 		$query = "select tb.`message`,tb.`user`,tb.`ip1`,tb.`ip2`,tb.`ip3`,tb.`ip4`,tb.`mode` from `tiki_banning` tb, `tiki_banning_sections` tbs where tbs.`banId`=tb.`banId` and tbs.`section`=? and ( (tb.`use_dates` = ?) or (tb.`date_from` <= ? and tb.`date_to` >= ?))";
 		$result = $this->query($query,array($section,'n',(int)$this->now,(int)$this->now));
 

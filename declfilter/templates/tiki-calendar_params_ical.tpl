@@ -35,9 +35,9 @@
 		  </td>
 		  <td style="border:0;padding-top:2px;vertical-align:middle">
 			{if $prefs.feature_jscalendar eq 'y' and $prefs.javascript_enabled eq 'y'}
-				{jscalendar id="start" date=$calitem.start fieldname="tstart" align="Bc" showtime='n'}
+				{jscalendar id="start" date=$startTime fieldname="tstart" align="Bc" showtime='n'}
 			{else}
-				{html_select_date prefix="start_date_" time=$calitem.start field_order=$prefs.display_field_order start_year=$prefs.calendar_start_year end_year=$prefs.calendar_end_year}
+				{html_select_date prefix="start_date_" time=$startTime field_order=$prefs.display_field_order start_year=$prefs.calendar_start_year end_year=$prefs.calendar_end_year}
 			{/if}
 		  </td>
 		</tr>
@@ -56,9 +56,9 @@
 			  </td>
 			  <td style="border:0;padding-top:2px;vertical-align:middle">
 				{if $prefs.feature_jscalendar eq 'y' and $prefs.javascript_enabled eq 'y'}
-					{jscalendar id="end" date=$calitem.start fieldname="tstop" align="Bc" showtime='n'}
+					{jscalendar id="end" date=$stopTime fieldname="tstop" align="Bc" showtime='n'}
 				{else}
-					{html_select_date prefix="start_date_" time=$calitem.start field_order=$prefs.display_field_order start_year=$prefs.calendar_start_year end_year=$prefs.calendar_end_year}
+					{html_select_date prefix="stop_date_" time=$stopTime field_order=$prefs.display_field_order start_year=$prefs.calendar_start_year end_year=$prefs.calendar_end_year}
 				{/if}
 			  </td>
 			</tr>

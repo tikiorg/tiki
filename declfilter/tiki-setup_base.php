@@ -125,7 +125,6 @@ function remove_gpc(&$var) {
 }
 
 // mose : simulate strong var type checking for http vars
-$patterns['login']   = $prefs['username_pattern']; // special check for logins, not to be used in varcheck because compat with already created accounts
 $patterns['int']   = "/^[0-9]*$/"; // *Id
 $patterns['intSign']   = "/^[-+]?[0-9]*$/"; // *offset,
 $patterns['char']  = "/^(pref:)?[-,_a-zA-Z0-9]*$/"; // sort_mode 

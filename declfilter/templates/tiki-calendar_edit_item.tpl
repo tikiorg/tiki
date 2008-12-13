@@ -41,6 +41,46 @@
 
 <table class="normal{if !$edit} vevent{/if}">
 <tr class="formcolor">
+	<td>{tr}Calendar{/tr}</td>
+	<td style="background-color:#{$calendar.custombgcolor};color:#{$calendar.customfgcolor};">
+{if $edit}
+	{if $prefs.javascript_enabled eq 'n'}
+		{$calendar.name|escape}<br />{tr}or{/tr}&nbsp;
+		<input type="submit" name="changeCal" value="{tr}Go to{/tr}" />
+	{/if}
+		<select name="save[calendarId]" id="calid" onchange="javascript:document.getElementById('editcalitem').submit();">
+			{foreach item=it key=itid from=$listcals}
+				<option value="{$it.calendarId}" style="background-color:#{$it.custombgcolor};color:#{$it.customfgcolor};"
+				{if $calitem.calendarId}
+					{if $calitem.calendarId eq $itid} selected="selected"{/if}
+				{else}
+					{if $calendarView}
+						{if $calendarView eq $itid} selected="selected"{/if}
+					{else}
+						{if $calendarId}
+							{if $calendarId eq $itid} selected="selected"{/if}
+						{/if}
+					{/if}
+				{/if}>{$it.name|escape}</option>
+			{/foreach}
+		</select>
+{else}
+	{$listcals[$calitem.calendarId].name|escape}
+{/if}
+	</td>
+</tr>
+
+<tr class="formcolor">
+<td>{tr}Title{/tr}</td>
+<td>
+{if $edit}
+	<input type="text" name="save[name]" value="{$calitem.name|escape}" size="32" style="width:90%;"/>
+{else}
+	<span class="summary">{$calitem.name|escape}</span>
+{/if}
+</td>
+</tr>
+<tr class="formcolor">
 	<td>{tr}Recurrence{/tr}</td>
 	<td>
 {if $edit}
@@ -48,7 +88,7 @@
 	<input type="hidden" name="recurrent" value="1"/>
 		{tr}This event depends on a recurrence rule{/tr}
 	{else}
-	  <input type="checkbox" id="id_recurrent" name="recurrent" value="1" onChange="javascript: toggle('recurrenceRules');"{if $calitem.recurrenceId gt 0}checked="checked"{/if}/><label for="id_recurrent">{tr}This event depends on a recurrence rule{/tr}</label>
+<input type="checkbox" id="id_recurrent" name="recurrent" value="1" onClick="javascript: toggle('recurrenceRules');"{if $calitem.recurrenceId gt 0}checked="checked"{/if}/><label for="id_recurrent">{tr}This event depends on a recurrence rule{/tr}</label>
 	{/if}
 {else}
 	<span class="summary">{if $calitem.recurrenceId gt 0}{tr}This event depends on a recurrence rule{/tr}{else}{tr}This event is not recurrent{/tr}{/if}</span>
@@ -59,7 +99,7 @@
 	<td>&nbsp;</td>
 	<td style="padding:5px 10px">
 {if $edit}
-	  <div id="recurrenceRules" style="position:relative;top:0px;left:0px;width:100%;{if !($calitem.recurrenceId gt 0)}display:none;{/if}">
+	  <div id="recurrenceRules" style="position:relative;top:0px;left:0px;width:100%;{if !($calitem.recurrenceId gt 0) && $prefs.javascript_enabled eq 'y'}display:none;{/if}">
 	  {if $calitem.recurrenceId gt 0}<input type="hidden" name="recurrenceId" value="{$recurrence.id}" />{/if}
 {if $recurrence.id gt 0}
 	{if $recurrence.weekly}
@@ -182,54 +222,20 @@
 		<br />&nbsp;
 	  </div>
 {else}
-	{if $recurrence.weekly}
-	  {tr}Event is repeated {if $recurrence.nbRecurrences gt 0}{$recurrence.nbRecurrences} {tr}times{/tr}, {/if}every{/tr}&nbsp;{tr}{$daysnames[$recurrence.weekday]}{/tr}
-	{elseif $recurrence.monthly}
-	  {tr}Event is repeated {if $recurrence.nbRecurrences gt 0}{$recurrence.nbRecurrences} {tr}times{/tr}, {/if}on{/tr}&nbsp;{$recurrence.dayOfMonth} {tr}of every month{/tr}
-	{else}
-	  {tr}Event is repeated {if $recurrence.nbRecurrences gt 0}{$recurrence.nbRecurrences} {tr}times{/tr}, {/if}on each{/tr}&nbsp;{$recurrence.dateOfYear_day} {tr}of{/tr} {tr}{$monthnames[$recurrence.dateOfYear_month]}{/tr}
-	{/if}
+	{if $recurrence.id > 0}
+		{if $recurrence.weekly}
+	  		{tr}Event is repeated {if $recurrence.nbRecurrences gt 0}{$recurrence.nbRecurrences} {tr}times{/tr}, {/if}every{/tr}&nbsp;{tr}{$daysnames[$recurrence.weekday]}{/tr}
+		{elseif $recurrence.monthly}
+	  		{tr}Event is repeated {if $recurrence.nbRecurrences gt 0}{$recurrence.nbRecurrences} {tr}times{/tr}, {/if}on{/tr}&nbsp;{$recurrence.dayOfMonth} {tr}of every month{/tr}
+		{else}
+	  		{tr}Event is repeated {if $recurrence.nbRecurrences gt 0}{$recurrence.nbRecurrences} {tr}times{/tr}, {/if}on each{/tr}&nbsp;{$recurrence.dateOfYear_day} {tr}of{/tr} {tr}{$monthnames[$recurrence.dateOfYear_month]}{/tr}
+		{/if}
 	<br />
 	{tr}Starting on{/tr} {$recurrence.startPeriod|tiki_long_date}
 	{if $recurrence.endPeriod gt 0}, {tr}ending by{/tr} {$recurrence.endPeriod|tiki_long_date}{/if}.
+	{/if}
 {/if}
 	</td>
-</tr>
-<tr class="formcolor">
-	<td>{tr}Calendar{/tr}</td>
-	<td>
-{if $edit}
-		<select name="save[calendarId]" id="calid">
-			{foreach item=it key=itid from=$listcals}
-				<option value="{$it.calendarId}"
-				{if $calitem.calendarId}
-					{if $calitem.calendarId eq $itid} selected="selected"{/if}
-				{else}
-					{if $calendarView}
-						{if $calendarView eq $itid} selected="selected"{/if}
-					{else}
-						{if $calendarId}
-							{if $calendarId eq $itid} selected="selected"{/if}
-						{/if}
-					{/if}
-				{/if}>{$it.name|escape}</option>
-			{/foreach}
-		</select>
-{else}
-	<span class="summary">{$listcals[$calitem.calendarId].name|escape}</span>
-{/if}
-	</td>
-</tr>
-
-<tr class="formcolor">
-<td>{tr}Title{/tr}</td>
-<td>
-{if $edit}
-	<input type="text" name="save[name]" value="{$calitem.name|escape}" size="32" style="width:90%;"/>
-{else}
-	<span class="summary">{$calitem.name|escape}</span>
-{/if}
-</td>
 </tr>
 <tr class="formcolor">
 <td>{tr}Start{/tr}</td>
@@ -378,6 +384,10 @@
     {else}
         {if $calitem.end}<abbr class="dtend" title="{$calitem.end|isodate}">{/if}{$calitem.end|tiki_long_datetime}{if $calitem.end}</abbr>{/if}
     {/if}
+{/if}
+{if $impossibleDates}
+<br />
+<span style="color:#900;">{tr}Events cannot end before they start{/tr}</span>
 {/if}
 </td>
 </tr>
@@ -538,7 +548,11 @@ onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;">
 <td>{tr}Organized by{/tr}</td>
 <td>
 {if $edit}
-<input type="text" name="save[organizers]" value="{foreach item=org from=$calitem.organizers}{$org}, {/foreach}" style="width:90%;" />
+	{if $preview or $changeCal}
+		<input type="text" name="save[organizers]" value="{$calitem.organizers}" style="width:90%;" />
+	{else}
+		<input type="text" name="save[organizers]" value="{foreach item=org from=$calitem.organizers name=organizers}{if $org neq ''}{$org}{if !$smarty.foreach.organizers.last},{/if}{/if}{/foreach}" style="width:90%;" />
+	{/if}
 {else}
 {foreach item=org from=$calitem.organizers}
 {$org|escape}<br />
@@ -555,7 +569,11 @@ onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;">
 </td>
 <td>
 {if $edit}
-<input type="text" name="save[participants]" value="{foreach item=ppl from=$calitem.participants}{if $ppl.role}{$ppl.role}:{/if}{$ppl.name}, {/foreach}" style="width:90%;" />
+	{if $preview or $changeCal}
+		<input type="text" name="save[participants]" value="{$calitem.participants}" style="width:90%;" />
+	{else}
+		<input type="text" name="save[participants]" value="{foreach item=ppl from=$calitem.participants name=participants}{if $ppl.name neq ''}{if $ppl.role}{$ppl.role}:{/if}{$ppl.name}{if !$smarty.foreach.participants.last},{/if}{/if}{/foreach}" style="width:90%;" />
+	{/if}
 {else}
 {foreach item=ppl from=$calitem.participants}
 {$ppl.name|escape} {if $listroles[$ppl.role]}({$listroles[$ppl.role]}){/if}<br />

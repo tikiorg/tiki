@@ -33,9 +33,9 @@ $handled_requests = array('comments_per_page', 'thread_style', 'thread_sort_mode
 
 // Set global site prefs to initialize vars
 foreach ( $handled_requests as $request_name ) {
-	if ( isset($prefs['forum_'.$request_name]) ) {
-		$$request_name = $prefs['forum_'.$request_name];
-	}
+        if ( isset($prefs['forum_'.$request_name]) ) {
+                $$request_name = $prefs['forum_'.$request_name];
+        }
 }
 
 // First override existing values (e.g. coming from forum specific settings) by user specific requests if we allow them
@@ -70,11 +70,11 @@ if ( isset($forum_mode) && $forum_mode == 'y' ) {
 		// or - 'forum_thread_defaults_by_forum' is disabled (don't allow settings by forum)
 		//  !! Global value is not used when there is an explicit user request !!
 
-		foreach ( $handled_requests as $request_name )
-			if ( ( ! isset($$request_name) || $$request_name == '' || $prefs['forum_thread_defaults_by_forum'] != 'y' )
-					&& ! isset($_REQUEST[$request_name])
-			   ) $$request_name = $prefs['forum_'.$request_name];
-	}
+                foreach ( $handled_requests as $request_name )
+                        if ( ( ! isset($$request_name) || $$request_name == '' || $prefs['forum_thread_defaults_by_forum'] != 'y' )
+                                        && ! isset($_REQUEST[$request_name])
+                           ) $$request_name = $prefs['forum_'.$request_name];
+        }
 
 	if ( $forum_info['is_flat'] == 'y' ) {
 		// If we have a flat forum (i.e. we reply only to the first message / thread)
@@ -120,28 +120,28 @@ $comments_t_query = '';
 $comments_first = 1;
 
 foreach ($comments_vars as $c_name) {
-	$comments_avar["name"] = $c_name;
+        $comments_avar["name"] = $c_name;
 
-	if (isset($_REQUEST[$c_name])) {
-		$comments_avar["value"] = $_REQUEST[$c_name];
-		$comments_aux[] = $comments_avar;
-	}
+        if (isset($_REQUEST[$c_name])) {
+                $comments_avar["value"] = $_REQUEST[$c_name];
+                $comments_aux[] = $comments_avar;
+        }
 
-	if (isset($_REQUEST[$c_name])) {
-		if ($comments_first) {
-			$comments_first = 0;
+        if (isset($_REQUEST[$c_name])) {
+                if ($comments_first) {
+                        $comments_first = 0;
 
-			$comments_t_query .= "?$c_name=" . urlencode($_REQUEST["$c_name"]);
-		} else {
-			$comments_t_query .= "&amp;$c_name=" . urlencode($_REQUEST["$c_name"]);
-		}
-	}
+                        $comments_t_query .= "?$c_name=" . urlencode($_REQUEST["$c_name"]);
+                } else {
+                        $comments_t_query .= "&amp;$c_name=" . urlencode($_REQUEST["$c_name"]);
+                }
+        }
 }
 
 $smarty->assign('comments_request_data', $comments_aux);
 
 if (!isset($_REQUEST['comments_threshold'])) {
-	$_REQUEST['comments_threshold'] = 0;
+        $_REQUEST['comments_threshold'] = 0;
 } else {
 	$smarty->assign('comments_threshold_param', '&amp;comments_threshold='.$_REQUEST['comments_threshold']);
 }
@@ -204,6 +204,7 @@ if ( ($tiki_p_post_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n'
 	if (isset($_REQUEST["comments_postComment"])) {
 		if (empty($user) && $prefs['feature_antibot'] == 'y' && (!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $_REQUEST['antibotcode'])) {
 			$smarty->assign('msg',tra("You have mistyped the anti-bot verification code; please try again."));
+			$smarty->assign('errortype', 'no_redirect_login');
 			$smarty->display("error.tpl");
 			die;
 		}
@@ -287,7 +288,7 @@ if ( ($tiki_p_post_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n'
 							$post_author,
 							$_REQUEST["comments_title"],
 							$_REQUEST["comments_data"],
-							$message_id, $in_reply_to, 'n', '', '', isset($_REQUEST['contributions'])? $_REQUEST['contributions']: '', $anonymous_name);
+							$message_id, $in_reply_to, 'n', '', '', isset($_REQUEST['contributions'])? $_REQUEST['contributions']: '', $anonymous_name, $_REQUEST["comment_rating"]);
 					if ($object[0] != "forum") {
 						$smarty->assign("comments_parentId", 0); // to display all the comments
 						$_REQUEST["comments_parentId"] = 0;

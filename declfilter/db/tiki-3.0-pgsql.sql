@@ -478,6 +478,40 @@ CREATE TABLE "tiki_calendar_categories" (
 
 CREATE UNIQUE INDEX "tiki_calendar_categories_catname" ON "tiki_calendar_categories"("calendarId",substr("name", 0, 16));
 
+DROP TABLE "tiki_calendar_recurrence";
+
+CREATE TABLE "tiki_calendar_recurrence" (
+  "recurrenceId" bigserial,
+  "calendarId" bigint NOT NULL default '0',
+  "start" smallint NOT NULL default '0',
+  "end" smallint NOT NULL default '2359',
+  "allday" smallint NOT NULL default '0',
+  "locationId" bigint default NULL,
+  "categoryId" bigint default NULL,
+  "nlId" bigint NOT NULL default '0',
+  "priority" varchar(3) CHECK ("priority" IN ('1','2','3','4','5','6','7','8','9')) NOT NULL default '1',
+  "status" varchar(3) CHECK ("status" IN ('0','1','2')) NOT NULL default '0',
+  "url" varchar(255) default NULL,
+  "lang" char(16) NOT NULL default 'en',
+  "name" varchar(255) NOT NULL default '',
+  "description" bytea,
+  "weekly" smallint default '0',
+  "weekday" smallint,
+  "monthly" smallint default '0',
+  "dayOfMonth" smallint,
+  "yearly" smallint default '0',
+  "dateOfYear" smallint,
+  "nbRecurrences" integer,
+  "startPeriod" bigint,
+  "endPeriod" bigint,
+  "user" varchar(200) default '',
+  "created" bigint NOT NULL default '0',
+  "lastmodif" bigint NOT NULL default '0',
+  PRIMARY KEY ("recurrenceId")
+) ENGINE=MyISAM  ;
+
+CREATE  INDEX "tiki_calendar_recurrence_calendarId" ON "tiki_calendar_recurrence"("calendarId");
+
 DROP TABLE "tiki_calendar_items";
 
 CREATE TABLE "tiki_calendar_items" (
@@ -494,12 +528,17 @@ CREATE TABLE "tiki_calendar_items" (
   "lang" char(16) NOT NULL default 'en',
   "name" varchar(255) NOT NULL default '',
   "description" bytea,
+  "recurrenceId" bigint,
+  "changed" smallint DEFAULT '0',
   "user" varchar(200) default '',
   "created" bigint NOT NULL default '0',
   "lastmodif" bigint NOT NULL default '0',
   "allday" smallint NOT NULL default '0',
-  PRIMARY KEY ("calitemId")
-) ENGINE=MyISAM ;
+  PRIMARY KEY ("calitemId"),
+  "CONSTRAINT" fk_calitems_recurrence
+  "FOREIGN" KEY (recurrenceId) REFERENCES tiki_calendar_recurrence(recurrenceId)
+  "ON" UPDATE CASCADE ON DELETE SET NULL
+) ENGINE=MyISAM  ;
 
 CREATE  INDEX "tiki_calendar_items_calendarId" ON "tiki_calendar_items"("calendarId");
 
@@ -4812,5 +4851,19 @@ CREATE TABLE "tiki_groupalert" (
   PRIMARY KEY ("objectType","objectId")
 ) ENGINE=MyISAM ;
 
+
+DROP TABLE "tiki_sent_newsletters_files";
+
+CREATE TABLE "tiki_sent_newsletters_files" (
+  "id" bigserial,
+  "editionId" bigint NOT NULL,
+  "name" varchar(256) NOT NULL,
+  "type" varchar(64) NOT NULL,
+  "size" bigint NOT NULL,
+  "filename" varchar(256) NOT NULL,
+  PRIMARY KEY ("id")
+);
+
+CREATE  INDEX "tiki_sent_newsletters_files_editionId" ON "tiki_sent_newsletters_files"("editionId");
 ;
 

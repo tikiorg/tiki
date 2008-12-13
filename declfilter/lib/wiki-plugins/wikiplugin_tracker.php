@@ -268,7 +268,7 @@ function wikiplugin_tracker($data, $params) {
 							elseif ($flds['data'][$cpt]['type'] == 'g')
 								$_REQUEST['track'][$fl['fieldId']] = $group;
 							elseif ($flds['data'][$cpt]['type'] == 'I')
-								$_REQUEST['track'][$fl['fieldId']] = isset($_SERVER['REMOTE_ADDR'])?$_SERVER['REMOTE_ADDR']: '';
+								$_REQUEST['track'][$fl['fieldId']] = $tikilib->get_ip_address();
 							elseif ($flds['data'][$cpt]['type'] == 'k')
 								$_REQUEST['track'][$fl['fieldId']] = isset($_REQUEST['page'])?$_REQUEST['page']: '';
 						} elseif (!empty($itemId) && $flds['data'][$cpt]['options_array'][0] == '2') {
@@ -277,7 +277,7 @@ function wikiplugin_tracker($data, $params) {
 							elseif ($flds['data'][$cpt]['type'] == 'g')
 								$_REQUEST['track'][$fl['fieldId']] = $group;
 							elseif ($flds['data'][$cpt]['type'] == 'I')
-								$_REQUEST['track'][$fl['fieldId']] = isset($_SERVER['REMOTE_ADDR'])?$_SERVER['REMOTE_ADDR']: '';
+								$_REQUEST['track'][$fl['fieldId']] = $tikilib->get_ip_address();
 						}
 					} elseif ($flds['data'][$cpt]['type'] == 'f') {
 						$ins_id = 'track_'.$fl['fieldId'];
@@ -621,7 +621,7 @@ function wikiplugin_tracker($data, $params) {
 				$assocNumerics = array();
 				foreach ($flds['data'] as $f) {
 					if (empty($f['value']) && ($f['type'] == 'u' || $f['type'] == 'g' || $f['type'] == 'I') && ($f['options_array'][0] == '1' || $f['options_array'][0] == '2')) { //need to fill the selector fields for the join
-						$f['value'] = ($f['type'] == 'I')? $_SERVER['REMOTE_ADDR']: (($f['type'] == 'g')? $group: $user);
+						$f['value'] = ($f['type'] == 'I')? $tikilib->get_ip_address(): (($f['type'] == 'g')? $group: $user);
 					}
 					$assocValues[$f['fieldId']] = $f['value'];
 					$assocNumerics[$f['fieldId']] = preg_replace('/[^0-9\.\+]/', '', $f['value']); // get rid off the $ and such unit

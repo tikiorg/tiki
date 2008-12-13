@@ -34,10 +34,17 @@
 
 		{button href="#" _onclick="javascript:toggle('exportcal');" _text="{tr}Export Calendars{/tr}" _title="{tr}Click to export calendars{/tr}"}
 
+		{if $viewlist eq 'list'}
+			{button href="?viewlist=table" _text="{tr}Calendar View{/tr}"}
+		{else}
+			{button href="?viewlist=list" _text="{tr}List View{/tr}"}
+		{/if}
+
 		{if count($listcals) >= 1}
 			{button href="#" _onclick="javascript:toggle('filtercal');" _text="{tr}Visible Calendars{/tr}" _title="{tr}Click to select visible calendars{/tr}"}
 
 			{if count($thiscal)}
+				<div class="navbar">
 				{foreach item=k from=$listcals name=listc}
 					{if $thiscal.$k}
 						{assign var=thiscustombgcolor value=$infocals.$k.custombgcolor}
@@ -46,16 +53,12 @@
 						{button href="#" _style="background-color:#$thiscustombgcolor;color:#$thiscustomfgcolor;border:1px solid #$thiscustomfgcolor;" _onclick="toggle('filtercal');" _text="$thisinfocalsname"}
 					{/if}
 				{/foreach}
+				</div>
 			{else}
 				{button href="" _style="background-color:#fff;padding:0 4px;" _text="{tr}None{/tr}"}
 			{/if}
 		{/if}
 
-		{if $viewlist eq 'list'}
-			{button href="?viewlist=table" _text="{tr}Calendar View{/tr}"}
-		{else}
-			{button href="?viewlist=list" _text="{tr}List View{/tr}"}
-		{/if}
 	</div>
 
 	<br />
@@ -107,7 +110,6 @@
 </form>
 
 	{include file="tiki-calendar_nav.tpl"}
-
 	{if $viewlist eq 'list'}
 		{include file="tiki-calendar_listmode.tpl"'}
 	{elseif $viewmode eq 'day'}

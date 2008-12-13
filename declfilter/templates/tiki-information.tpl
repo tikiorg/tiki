@@ -6,12 +6,13 @@
 	 {tr}Information{/tr}
 	 </div>
 
-	 <div class="cbox-data">
-	 <br />
+	 <div class="simplebox highlight">
 	 {$msg|escape}
-	 <br /><br />
+	 </div>
+
+	<p>
 	 <a href="javascript:history.back()" class="linkmenu">{tr}Go back{/tr}</a><br /><br />
 	 <a href="{$prefs.tikiIndex}" class="linkmenu">{tr}Return to home page{/tr}</a>
-	  </div>
+	</p>
 </div>
 </div>

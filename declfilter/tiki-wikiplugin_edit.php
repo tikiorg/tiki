@@ -131,7 +131,7 @@ while( true )
 		else
 			$content = $before . $content . $after;
 
-		$tikilib->update_page( $page, $content, $_POST['message'], $user, $_SERVER['REMOTE_ADDR'] );
+		$tikilib->update_page( $page, $content, $_POST['message'], $user, $tikilib->get_ip_address() );
 	}
 }
 

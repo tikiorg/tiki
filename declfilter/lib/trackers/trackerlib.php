@@ -1040,9 +1040,11 @@ class TrackerLib extends TikiLib {
 					}
 				} elseif ($ins_fields['data'][$i]['type'] == 'A') { //attachment
 					global $tiki_p_attach_trackers;
+					echo 'GGGG';
 					if ($tiki_p_attach_trackers == 'y' && !empty($ins_fields['data'][$i]['file_name'])) {
 						if ($prefs['t_use_db'] == 'n') {
 							$fhash = md5($ins_fields['data'][$i]['file_name'].$this->now);
+							echo 'AAAA'.$ins_fields['data'][$i]['file_name'].'-'.$this->now;
 							if (!$fw = fopen($prefs['t_use_dir'] . $fhash, 'wb')) {
 								$smarty->assign('msg', tra('Cannot write to this file:'). $fhash);
 								$smarty->display("error.tpl");
@@ -1058,12 +1060,14 @@ class TrackerLib extends TikiLib {
 						continue;
 					}
 				} elseif ($ins_fields['data'][$i]['type'] == 'k') { //page selector
-					if (!$this->page_exists($ins_fields['data'][$i]['value'])) {
-						$opts = split(',', $ins_fields['data'][$i]['options']);
-						if (!empty($opts[2])) {
-							global $IP;
-							$info = $this->get_page_info($opts[2]);
-							$this->create_page($ins_fields['data'][$i]['value'], 0, $info['data'], $this->now, '', $user, $IP, $info['description'], $info['lang'], $info['is_html'], array(), $info['wysiwyyg'], $info['wiki_authors_style']);
+					if ($ins_fields['data'][$i]['value'] != '') {
+						if (!$this->page_exists($ins_fields['data'][$i]['value'])) {
+							$opts = split(',', $ins_fields['data'][$i]['options']);
+							if (!empty($opts[2])) {
+								global $IP;
+								$info = $this->get_page_info($opts[2]);
+								$this->create_page($ins_fields['data'][$i]['value'], 0, $info['data'], $this->now, '', $user, $IP, $info['description'], $info['lang'], $info['is_html'], array(), $info['wysiwyyg'], $info['wiki_authors_style']);
+							}
 						}
 					}
 				}
@@ -2462,7 +2466,8 @@ class TrackerLib extends TikiLib {
 				<dd><strong>[yListSize]</strong> sets the pixel height of the image in the list view;
 				<dd><strong>[xDetailSize]</strong> sets the pixel width of the image in the item view;
 				<dd><strong>[yDetailSize]</strong> sets the pixel height of the image in the item view;
-				<dd><strong>[uploadLimitScale]</strong> sets the maximum total size of the image, in pixels (width * height);
+				<dd><strong>[uploadLimitScale]</strong> sets the maximum total size of the image, in pixels (width or height);
+				<dd><strong>[shadowbox]</strong> actives a shadowbox(if feature on) = \'item\': to use the same shadowbox for an item, =\'individual\': to use a shadowbox only for this image, other value= to set the group of images of the shadowbox ;
 				<dd>images are stored in img/trackers;
 				<dd>multiple options must appear in the order specified, separated by commas.
 				</dl>'));

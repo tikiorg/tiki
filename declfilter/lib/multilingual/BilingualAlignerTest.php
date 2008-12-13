@@ -117,40 +117,123 @@ class  BilingualAlignerTest extends PHPUnit_Framework_TestCase
 
       $exp_cost_matrix = array();
       
-      $exp_cost_matrix["-1m1|-1m1"]["0m1|0m1"] = "match_cost";
-      $exp_cost_matrix["-1m1|-1m1"]["0m1|0m2"] = "match_cost";
-      $exp_cost_matrix["-1m1|-1m1"]["0m2|0m1"]  = "match_cost";
-      $exp_cost_matrix["-1m1|-1m1"]["0s1|0s0"] = "skip_cost";
-      $exp_cost_matrix["-1m1|-1m1"]["0s0|0s1"] = "skip_cost";
+      $exp_cost_matrix["-1m1|-1m1"]["0m1|0m1"]= "match_cost";
+      $exp_cost_matrix["-1m1|-1m1"]["0m1|0m2"]= "match_cost";
+      $exp_cost_matrix["-1m1|-1m1"]["0s1|0s0"]= "skip_cost";
+      $exp_cost_matrix["-1m1|-1m1"]["0s0|0s1"]= "skip_cost";
+      $exp_cost_matrix["-1m1|-1m1"]["END"]= "goto_end_cost";
 
-      $exp_cost_matrix["-1m1|-1m1"]["1m1|0m1"] = "match_cost";
-      $exp_cost_matrix["-1m1|-1m1"]["1m1|0m2"]  = "match_cost";
-      $exp_cost_matrix["-1m1|-1m1"]["1m2|0m1"] = "match_cost";
-      $exp_cost_matrix["-1m1|-1m1"]["1s1|0s0"]  = "skip_cost";
-      $exp_cost_matrix["-1m1|-1m1"]["1s0|0s1"] = "skip_cost";
+      $exp_cost_matrix["-1m2|-1m1"]["END"]= "goto_end_cost";
+      $exp_cost_matrix["-1m2|-1m1"]["1s0|0s1"]= "skip_cost";
 
-      $exp_cost_matrix["-1m1|-1m1"]["0m1|1m1"] = "match_cost";
-      $exp_cost_matrix["-1m1|-1m1"]["0m1|1m2"] = "match_cost";
-      $exp_cost_matrix["-1m1|-1m1"]["0m2|1m1"] = "match_cost";
-      $exp_cost_matrix["-1m1|-1m1"]["0s1|1s0"] = "skip_cost";
-      $exp_cost_matrix["-1m1|-1m1"]["0s0|1s1"] = "skip_cost";
+      $exp_cost_matrix["-1m1|-1m2"]["0m1|1m1"]= "match_cost";
+      $exp_cost_matrix["-1m1|-1m2"]["END"]= "goto_end_cost";
+      $exp_cost_matrix["-1m1|-1m2"]["0s1|1s0"]= "skip_cost";
+      $exp_cost_matrix["-1m1|-1m2"]["0s0|1s1"]= "skip_cost";
 
-      $exp_cost_matrix["-1m1|-1m1"]["0m1|-1m1"] = "match_cost";
-      $exp_cost_matrix["-1m1|-1m1"]["0m1|-1m2"] = "match_cost";
-      $exp_cost_matrix["-1m1|-1m1"]["0m2|-1m1"] = "match_cost";
-      $exp_cost_matrix["-1m1|-1m1"]["0s1|-1s0"] = "skip_cost";
-      $exp_cost_matrix["-1m1|-1m1"]["0s0|-1s1"] = "skip_cost";
+      $exp_cost_matrix["-1s1|-1s0"]["0m1|-1m1"]= "match_cost";
+      $exp_cost_matrix["-1s1|-1s0"]["END"]= "goto_end_cost";
+      $exp_cost_matrix["-1s1|-1s0"]["0m1|-1m2"]= "match_cost";
+      $exp_cost_matrix["-1s1|-1s0"]["0s1|-1s0"]= "skip_cost";
+      $exp_cost_matrix["-1s1|-1s0"]["0s0|-1s1"]= "skip_cost";
 
-      $exp_cost_matrix["-1m1|-1m1"]["-1m1|0m1"] = "match_cost";
-      $exp_cost_matrix["-1m1|-1m1"]["-1m1|0m2"] = "match_cost";
-      $exp_cost_matrix["-1m1|-1m1"]["-1m2|0m1"] = "match_cost";
-      $exp_cost_matrix["-1m1|-1m1"]["-1s1|0s0"] = "skip_cost";
-      $exp_cost_matrix["-1m1|-1m1"]["-1s0|0s1"] = "skip_cost";
+      $exp_cost_matrix["-1s0|-1s1"]["-1m1|0m1"]= "match_cost";
+      $exp_cost_matrix["-1s0|-1s1"]["-1m1|0m2"]= "match_cost";
+      $exp_cost_matrix["-1s0|-1s1"]["-1m2|0m1"]= "match_cost";
+      $exp_cost_matrix["-1s0|-1s1"]["-1s1|0s0"]= "skip_cost";
+      $exp_cost_matrix["-1s0|-1s1"]["-1s0|0s1"]= "skip_cost";
 
-      $this->fail("Cost Matrix is wrong. Pickup development from there");
-                  
+      $exp_cost_matrix["0m1|0m1"]["1s0|1s1"]= "skip_cost";
+      $exp_cost_matrix["0m1|0m1"]["END"]= "goto_end_cost";
+
+      $exp_cost_matrix["0m1|0m2"]["END"]= "goto_end_cost";
+      
+      $exp_cost_matrix["0s1|0s0"]["1s0|0s1"]= "skip_cost";
+      $exp_cost_matrix["0s1|0s0"]["END"]= "goto_end_cost";
+
+      $exp_cost_matrix["0s0|0s1"]["0m1|1m1"]= "match_cost";
+      $exp_cost_matrix["0s0|0s1"]["0s1|1s0"]= "skip_cost";
+      $exp_cost_matrix["0s0|0s1"]["0s0|1s1"]= "skip_cost";
+      $exp_cost_matrix["0s0|0s1"]["END"]= "goto_end_cost";
+
+      $exp_cost_matrix["1s0|0s1"]["1s0|1s1"]= "skip_cost";
+      $exp_cost_matrix["1s0|0s1"]["END"]= "goto_end_cost";
+
+      $exp_cost_matrix["0m1|1m1"]["END"]= "goto_end_cost";
+
+      $exp_cost_matrix["0s1|1s0"]["1s0|1s1"]= "skip_cost";
+      $exp_cost_matrix["0s1|1s0"]["END"]= "goto_end_cost";
+
+      $exp_cost_matrix["0s0|1s1"]["0s1|2s0"]= "skip_cost";
+      $exp_cost_matrix["0s0|1s1"]["END"]= "goto_end_cost";
+
+      $exp_cost_matrix["0m1|-1m1"]["1s0|0s1"]= "skip_cost";
+      $exp_cost_matrix["0m1|-1m1"]["END"]= "goto_end_cost";
+
+      $exp_cost_matrix["0m1|-1m2"]["1s0|1s1"]= "skip_cost";
+      $exp_cost_matrix["0m1|-1m2"]["END"]= "goto_end_cost";
+
+      $exp_cost_matrix["0s1|-1s0"]["1s0|-1s1"]= "skip_cost";
+      $exp_cost_matrix["0s1|-1s0"]["END"]= "goto_end_cost";
+
+      $exp_cost_matrix["0s0|-1s1"]["0m1|0m1"]= "match_cost";
+      $exp_cost_matrix["0s0|-1s1"]["0m1|0m2"]= "match_cost";
+      $exp_cost_matrix["0s0|-1s1"]["0s1|0s0"]= "skip_cost";
+      $exp_cost_matrix["0s0|-1s1"]["0s0|0s1"]= "skip_cost";
+      $exp_cost_matrix["0s0|-1s1"]["END"]= "goto_end_cost";
+
+      $exp_cost_matrix["-1m1|0m1"]["0m1|1m1"]= "match_cost";
+      $exp_cost_matrix["-1m1|0m1"]["0s1|1s0"]= "skip_cost";
+      $exp_cost_matrix["-1m1|0m1"]["0s0|1s1"]= "skip_cost";
+      $exp_cost_matrix["-1m1|0m1"]["END"]= "goto_end_cost";
+
+      $exp_cost_matrix["-1m1|0m2"]["0s1|2s0"]= "skip_cost";
+      $exp_cost_matrix["-1m1|0m2"]["END"]= "goto_end_cost";
+
+      $exp_cost_matrix["-1m2|0m1"]["1s0|1s1"]= "skip_cost";
+      $exp_cost_matrix["-1m2|0m1"]["END"]= "goto_end_cost";
+
+      $exp_cost_matrix["-1s1|0s0"]["0m1|0m1"]= "match_cost";
+      $exp_cost_matrix["-1s1|0s0"]["0m1|0m2"]= "match_cost";
+      $exp_cost_matrix["-1s1|0s0"]["0s1|0s0"]= "skip_cost";
+      $exp_cost_matrix["-1s1|0s0"]["0s0|0s1"]= "skip_cost";
+      $exp_cost_matrix["-1s1|0s0"]["END"]= "goto_end_cost";
+
+      $exp_cost_matrix["-1s0|0s1"]["-1m1|1m1"]= "match_cost";
+      $exp_cost_matrix["-1s0|0s1"]["-1m2|1m1"]= "match_cost";
+      $exp_cost_matrix["-1s0|0s1"]["-1s1|1s0"]= "skip_cost";
+      $exp_cost_matrix["-1s0|0s1"]["-1s0|1s1"]= "skip_cost";
+      $exp_cost_matrix["-1s0|0s1"]["END"]= "goto_end_cost";
+
+      $exp_cost_matrix["1s0|1s1"]["END"]= "goto_end_cost";
+      
+      $exp_cost_matrix["0s1|2s0"]["END"]= "goto_end_cost";
+
+      $exp_cost_matrix["1s0|-1s1"]["1s0|0s1"]= "skip_cost";
+      $exp_cost_matrix["1s0|-1s1"]["END"]= "goto_end_cost";
+
+      $exp_cost_matrix["-1m1|1m1"]["0s1|2s0"]= "skip_cost";
+      $exp_cost_matrix["-1m1|1m1"]["END"]= "goto_end_cost";
+
+      $exp_cost_matrix["-1m2|1m1"]["END"]= "goto_end_cost";
+
+      $exp_cost_matrix["-1s1|1s0"]["0m1|1m1"]= "match_cost";
+      $exp_cost_matrix["-1s1|1s0"]["0s1|1s0"]= "skip_cost";
+      $exp_cost_matrix["-1s1|1s0"]["0s0|1s1"]= "skip_cost";
+      $exp_cost_matrix["-1s1|1s0"]["END"]= "goto_end_cost";
+
+      $exp_cost_matrix["-1s0|1s1"]["-1s1|2s0"]= "skip_cost";
+      $exp_cost_matrix["-1s0|1s1"]["END"]= "goto_end_cost";
+
+      $exp_cost_matrix["-1s1|2s0"]["0s1|2s0"]= "skip_cost";
+      $exp_cost_matrix["-1s1|2s0"]["END"]= "goto_end_cost";
+      
+//      $exp_cost_matrix["1m1|0m1"]["END"] = "goto_end_cost";   
+      
       $this->assertCostMatrixEquals($exp_cost_matrix, $this->aligner->cost_matrix,  
                                     "Cost matrix was wrong.");
+                                    
+      $this->fail("Need to generate arcs from START node. Pickup development from there.");
    }
    
    function test__parse_node_ID() {
@@ -164,8 +247,14 @@ class  BilingualAlignerTest extends PHPUnit_Framework_TestCase
 
 
    function test__generate_node_ID() {
-      $this->assertEquals('5m2|4m1', 
-                          $this->aligner->_generate_node_ID(5, 'm', 2, 4, 'm', 1));
+      $this->_setup_segmented_sentences();
+      $this->assertEquals('0s1|0s0', 
+                          $this->aligner->_generate_node_ID(0, 's', 1, 0, 's', 0));
+      $this->assertEquals(null, 
+                          $this->aligner->_generate_node_ID(5, 'm', 2, 4, 'm', 1),
+                          "Node ID should be null when the L1 or L2 sentence number exceeds length of L1 or L2 document");
+
+
    }
 
    function test__sentences_at_this_node() {
@@ -208,16 +297,29 @@ class  BilingualAlignerTest extends PHPUnit_Framework_TestCase
 
    }
    
-   private function assertCostMatrixEquals($exp_cost_martix, $got_cost_matrix, $message) {
-//      $this->fail("TODO: Make the cost matrix check more user friendly when it fails.");
-      $exp_origins = array_keys($exp_cost_martix);
+   private function assertCostMatrixEquals($exp_cost_matrix, $got_cost_matrix, $message) {
+
+ //     print "-- assertCostMatrixEquals: \$exp_cost_matrix=\n";var_dump($exp_cost_matrix);print"\n";
+ //     print "-- assertCostMatrixEquals: \$got_cost_matrix=\n";var_dump($got_cost_matrix);print"\n";
+
+      $exp_origins = array_keys($exp_cost_matrix); 
+      sort($exp_origins);
       $got_origins = array_keys($got_cost_matrix);
-      $this->assertEquals($exp_origins, array_keys($got_cost_matrix), 
+      sort($got_origins);
+
+//      print "-- assertCostMatrixEquals: \$exp_origins=\n";var_dump($exp_origins);print"\n";
+//      print "-- assertCostMatrixEquals: \$got_origins=\n";var_dump($got_origins);print"\n";
+
+      $this->assertEquals($exp_origins, $got_origins, 
                           "List of origins in cost matrix differed.");
-      foreach (array_keys($exp_origins) as $origin) {
-         $this->assertEquals($exp_cost_matrix[$origin], $got_cost_matrix[$origin],
+
+       foreach (array_keys($exp_cost_matrix) as $origin) {
+ //         print "-- assertCostMatrixEquals: \$exp_cost_matrix[$origin]=";var_dump($exp_cost_matrix[$origin]);print"\n";
+ //         print "-- assertCostMatrixEquals: \$got_cost_matrix[$origin]=";var_dump($got_cost_matrix[$origin]);print"\n";
+          $this->assertEquals($got_cost_matrix[$origin], $exp_cost_matrix[$origin], 
                              "Costs from origin $origin differed");
-      }
+
+       }
    }   
 }
 ?>

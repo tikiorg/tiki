@@ -103,9 +103,9 @@ if ($tiki_p_create_tracker_items == 'y' && !empty($t['end'])) {
 }
 
 if ($tiki_p_view_trackers != 'y') {
-	if (!$my and isset($tracker_info['writerCanModify']) and $tracker_info['writerCanModify'] == 'y') {
+	if ($user && !$my and isset($tracker_info['writerCanModify']) and $tracker_info['writerCanModify'] == 'y') {
 		$my = $user;
-	} elseif (!$ours and isset($tracker_info['writergroupCanModify']) and $tracker_info['writergroupCanModify'] == 'y') {
+	} elseif ($user && !$ours and isset($tracker_info['writergroupCanModify']) and $tracker_info['writergroupCanModify'] == 'y') {
 		$ours = $group;
 	} elseif ($tiki_p_create_tracker_items != 'y') {
 		$smarty->assign('errortype', 401);
@@ -316,8 +316,8 @@ for ($i = 0; $i < $temp_max; $i++) {
 			if (isset($_REQUEST["$ins_id"]) and $_REQUEST["$ins_id"] and (!$fields["data"][$i]['options_array'][0] or $tiki_p_admin_trackers == 'y')) {
 				$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];
 			} else {
-				if ($fields["data"][$i]['options_array'][0] == 1 and $_SERVER['REMOTE_ADDR']) {
-					$ins_fields["data"][$i]["value"] = $_SERVER['REMOTE_ADDR'];
+				if ($fields["data"][$i]['options_array'][0] == 1 and $tikilib->get_ip_address()) {
+					$ins_fields["data"][$i]["value"] = $tikilib->get_ip_address();
 				} else {
 					$ins_fields["data"][$i]["value"] = '';
 				}

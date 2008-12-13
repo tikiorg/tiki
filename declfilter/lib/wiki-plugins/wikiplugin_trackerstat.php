@@ -165,8 +165,8 @@ function wikiplugin_trackerstat($data, $params) {
 			if ($iUser >= 0) {
 				global $user;
 				$userValues = $trklib->get_filtered_item_values($allFields["data"][$iUser]['fieldId'], $user, $allFields["data"][$i]['fieldId']);
-			} else if ($iIp >= 0 && isset($_SERVER['REMOTE_ADDR'])) {
-				$userValues = $trklib->get_filtered_item_values($allFields["data"][$iIp]['fieldId'],  $_SERVER['REMOTE_ADDR'], $allFields["data"][$i]['fieldId']);
+			} else if ($iIp >= 0) {
+				$userValues = $trklib->get_filtered_item_values($allFields["data"][$iIp]['fieldId'],  $tikilib->get_ip_address(), $allFields["data"][$i]['fieldId']);
 			}
 			
 			$allValues = $trklib->get_all_items($trackerId, $fieldId, $status);

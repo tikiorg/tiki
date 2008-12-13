@@ -1559,7 +1559,6 @@ INSERT INTO `tiki_menu_options` (`optionId`, `menuId`, `type`, `name`, `url`, `p
 INSERT INTO `tiki_menu_options` (`optionId`, `menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (157,42,'o','Referer stats','tiki-referer_stats.php',1195,'feature_referer_stats','tiki_p_view_referer_stats','',0);
 INSERT INTO `tiki_menu_options` (`optionId`, `menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (158,42,'o','Integrator','tiki-admin_integrator.php',1205,'feature_integrator','tiki_p_admin_integrator','',0);
 INSERT INTO `tiki_menu_options` (`optionId`, `menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (159,42,'o','phpinfo','tiki-phpinfo.php',1215,'','tiki_p_admin','',0);
-INSERT INTO `tiki_menu_options` (`optionId`, `menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (161,42,'o','Score','tiki-admin_include_score.php',1235,'feature_score','tiki_p_admin','',0);
 INSERT INTO `tiki_menu_options` (`optionId`, `menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (162,42,'o','Admin mods','tiki-mods.php',1240,'','tiki_p_admin','',0);
 INSERT INTO `tiki_menu_options` (`optionId`, `menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (163,42,'o','Tiki Logs','tiki-syslog.php',1245,'','tiki_p_admin','',0);
 INSERT INTO `tiki_menu_options` (`optionId`, `menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (164,42,'o','Security Admin','tiki-admin_security.php',1250,'','tiki_p_admin','',0);
@@ -3071,6 +3070,7 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_plugin_preview', 'Can execute unapproved plugin', 'registered', 'wiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_plugin_approve', 'Can approve plugin execution', 'editors', 'wiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_trust_input', 'Trust all user inputs (no security checks)', 'admin', 'tiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_backlink', 'View page backlinks', 'basic', 'wiki');
 
 UPDATE users_permissions SET feature_check = 'feature_wiki' WHERE permName IN(
 	'tiki_p_admin_wiki',
@@ -3717,3 +3717,15 @@ CREATE TABLE tiki_groupalert (
 	displayEachuser  char( 1 ) default NULL ,
 	PRIMARY KEY ( objectType,objectId )
 ) ENGINE=MyISAM ;
+
+DROP TABLE IF EXISTS `tiki_sent_newsletters_files`;
+CREATE TABLE `tiki_sent_newsletters_files` (
+  `id` int(11) NOT NULL auto_increment,
+  `editionId` int(11) NOT NULL,
+  `name` varchar(256) NOT NULL,
+  `type` varchar(64) NOT NULL,
+  `size` int(11) NOT NULL,
+  `filename` varchar(256) NOT NULL,
+  PRIMARY KEY  (`id`),
+  KEY `editionId` (`editionId`)
+);

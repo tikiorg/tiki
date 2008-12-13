@@ -2135,7 +2135,7 @@ function get_included_groups($group, $recur=true) {
 	function create_user_cookie($user,$hash=false) {
 		global $prefs;
 		if (!$hash) {
-			$hash = md5($_SERVER['REMOTE_ADDR'].$_SERVER['HTTP_USER_AGENT']) . ".". ($this->now + $prefs['remembertime']);
+			$hash = md5($this->get_ip_address().$_SERVER['HTTP_USER_AGENT']) . ".". ($this->now + $prefs['remembertime']);
 		}
 		$this->delete_user_cookie($user);
 		$this->set_user_preference($user,'cookie',$hash);
@@ -2149,7 +2149,7 @@ function get_included_groups($group, $recur=true) {
 
 	function get_user_by_cookie($hash,$bypasscheck=false) {
 		list($check,$expire,$userCookie) = explode('.',$hash, 3);
-		if ($check == md5($_SERVER['REMOTE_ADDR'].$_SERVER['HTTP_USER_AGENT']) or $bypasscheck) {
+		if ($check == md5($this->get_ip_address().$_SERVER['HTTP_USER_AGENT']) or $bypasscheck) {
 			$query = 'select `user` from `tiki_user_preferences` where `prefName`=? and `value` like ? and `user`=?';
 			$user = $this->getOne($query, array('cookie',"$check.%",$userCookie));
 			// $fp=fopen('temp/interlogtest','a+');fputs($fp,"main gubc -- $check.$expire.$userCookie -- $user --\n");fclose($fp);
@@ -2765,7 +2765,7 @@ function get_included_groups($group, $recur=true) {
 	function intervalidate($remote,$user,$pass,$get_info = false) {
 		global $prefs;
 		include_once('XML/RPC.php');
-		$hashkey = md5($_SERVER['REMOTE_ADDR'].$_SERVER['HTTP_USER_AGENT']) . ".". ($this->now + $prefs['remembertime']);
+		$hashkey = md5($this->get_ip_address().$_SERVER['HTTP_USER_AGENT']) . ".". ($this->now + $prefs['remembertime']);
 		$remote['path'] = preg_replace("/^\/?/","/",$remote['path']);
 		$client = new XML_RPC_Client($remote['path'], $remote['host'], $remote['port']);
 		$client->setDebug(0);

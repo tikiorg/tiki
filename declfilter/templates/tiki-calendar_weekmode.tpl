@@ -5,7 +5,8 @@
 {section name=dn loop=$daysnames}
     <td id="top_{$smarty.section.dn.index}" class="calHeading{if $focuscell eq $viewWeekDays[dn]}On{/if}" width="13%">
 	  {$daysnames[dn]}<br />
-	  <strong><a href="{$myurl}?todate={$viewWeekDays[dn]}" title="{tr}Change Focus{/tr}">{$viewWeekDays[dn]|tiki_date_format:"%B %e"}</a></strong>
+	  <strong><a href="{$myurl}?todate={$viewWeekDays[dn]}" title="{tr}Change Focus{/tr}">{$viewWeekDays[dn]|tiki_date_format:$short_format_day}</a></strong>
+	  {if $tiki_p_add_events eq 'y' and count($listcals) > 0}<a href="tiki-calendar_edit_item.php?todate={$viewWeekDays[dn]}{if $displayedcals|@count eq 1}&amp;calendarId={$displayedcals[0]}{/if}" title="{tr}Add Event{/tr}">{icon _id='calendar_add' alt="{tr}+{/tr}"}</a>{/if}
 	</td>
 {/section}
   </tr>
@@ -18,38 +19,38 @@
   </tr>
 {/foreach}
 </table>
-{foreach key=k item=h from=$hours}
+{foreach key=k item=h from=$hours name=hours}
 	{section name=weekday loop=$weekdays}
 		{if $manyEvents[weekday].tooMany eq false}
 			{section name=hr loop=$hrows[weekday][$h]}
 				{assign var=event value=$hrows[weekday][$h][hr]}
 				{assign var=calendarId value=$event.calendarId}
-				{assign var=over value=$event.over}
-	  <div id="event_{$smarty.section.weekday.index}_{$event.calitemId}" {if $event.calname ne ""}class="Cal{$event.type} vevent"{/if} style="overflow:visible;position:absolute;top:{$event.top}px;height:{$event.duree-1}px;left:{$event.left}%;width:{$event.width}%;background-color:#{$infocals.$calendarId.custombgcolor};border-color:#{$infocals.$calendarId.customfgcolor};color:#{$infocals.$calendarId.customfgcolor};opacity:0.7;filter:Alpha(opacity=70);text-align:center;overflow:hidden">
+				{assign var=over value=$event.over|escape:"javascript"|escape:"html"}
+	  <div id="event_{$smarty.section.weekday.index}_{$event.calitemId}" {if $event.calname ne ""}class="Cal{$event.type} vevent"{/if} style="overflow:visible;position:absolute;top:{$event.top}px;height:{$event.duree-1}px;left:{$event.left}%;width:{$event.width}%;background-color:#{$infocals.$calendarId.custombgcolor};border-color:#{$infocals.$calendarId.customfgcolor};opacity:{if $event.status eq '0'}0.6{else}0.8{/if};filter:Alpha(opacity={if $event.status eq '0'}60{else}80{/if});text-align:center;overflow:hidden">
 		  <span style="padding-top:4px;float:right">
 			<a style="padding:0 3px;"
 			{if $event.modifiable eq "y" || $event.visible eq 'y'}
 			   href="tiki-calendar_edit_item.php?viewcalitemId={$event.calitemId}"
 			{/if}
 			{if $prefs.calendar_sticky_popup eq "y" and $event.calitemId}
-			   {popup sticky=true fullhtml="1" text=$over|escape:"javascript"|escape:"html"}
+			   {popup sticky=true fullhtml="1" text=$over}
 			{else}
-			   {popup fullhtml="1" text=$over|escape:"javascript"|escape:"html"}
+			   {popup fullhtml="1" text=$over}
 			{/if}
 		    ><img src="pics/icons/more_info.gif" alt="{tr}Details{/tr}" border="0"/></a>
 		  </span>
-	  	  <abbr class="dtstart" title="{$event.startTimeStamp|isodate}">{$event.name}</abbr>
+	  	  <abbr class="dtstart" title="{$event.startTimeStamp|isodate}" {if $event.status eq '2'}style="text-decoration:line-through"{/if}>{$event.name}</abbr>
 	  </div>
 			{/section}
-		{else}
-			{assign var=overMany value=$manyEvents[weekday].overMany}
+		{elseif $smarty.foreach.hours.first}
+			{assign var=overMany value=$manyEvents[weekday].overMany|escape:"javascript"|escape:"html"}
 	  <div id="many_{$smarty.section.weekday.index}" style="position:absolute;top:{$manyEvents[weekday].top}px;left:{$manyEvents[weekday].left}%;width:{$manyEvents[weekday].width}%;height:{$manyEvents[weekday].duree-1}px;border:2px dotted #000">
 		<div style="position:absolute;top:50%;left:50%;margin-left:-40px;margin-top:-30px">
 		  <a style="padding:0 3px;" href="{$myurl}?viewmode=day&todate={$viewWeekDays[weekday]}"
 			{if $prefs.calendar_sticky_popup eq "y"}
-			 {popup sticky=true fullhtml="1" text=$overMany|escape:"javascript"|escape:"html"}
+			 {popup sticky=true fullhtml="1" text=$overMany}
 			{else}
-			 {popup fullhtml="1" text=$overMany|escape:"javascript"|escape:"html"}
+			 {popup fullhtml="1" text=$overMany}
 			{/if}
 		  ><img src="pics/icons/multiple_cal.png" alt="{tr}Details{/tr}" border="0"/></a>
 		</div>

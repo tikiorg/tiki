@@ -133,11 +133,18 @@ if ( ! isset($_REQUEST["calendarId"]) ) {
 		$calID = $calendarlib->get_calendarid($_REQUEST['viewcalitemId']);
 	}
 } elseif (isset($_REQUEST['calendarId'])) {
-		$calID=$_REQUEST["calendarId"];
+	$calID = $_REQUEST['calendarId'];
+} elseif (isset($_REQUEST['save']) && isset($_REQUEST['save']['calendarId'])) {
+	$calId = $_REQUEST['save']['calendarId'];
+}
+if (!isset($calID) and count($caladd)) {
+	$keys = array_keys($caladd);
+	$calID = array_shift($keys);
 }
 
-if ($prefs['feature_groupalert'] == 'y') {
+if ($prefs['feature_groupalert'] == 'y' && !empty($calID) ) {
 	$groupforalert=$groupalertlib->GetGroup ('calendar',$calID);
+	$showeachuser = '';
 	if ( $groupforalert != '' ) {
 		$showeachuser=$groupalertlib->GetShowEachUser('calendar',$calID, $groupforalert) ;
 		$listusertoalert=$userlib->get_users(0,-1,'login_asc','','',false,$groupforalert,'') ;
@@ -147,13 +154,9 @@ if ($prefs['feature_groupalert'] == 'y') {
 	$smarty->assign_by_ref('showeachuser',$showeachuser);
 }
 
-if (!isset($_REQUEST['calendarId']) and count($caladd)) {
-	$keys = array_keys($caladd);
-	$_REQUEST['calendarId'] = array_shift($keys);
-}
 if ($prefs['feature_categories'] == 'y') {
   global $categlib; include_once ('lib/categories/categlib.php');
-  $perms_array = $categlib->get_object_categories_perms($user, 'calendar', $_REQUEST['calendarId']);
+  $perms_array = $categlib->get_object_categories_perms($user, 'calendar', $calID);
   if ($perms_array) {
     foreach ($perms_array as $p=>$v) {
       $$p = $v;
@@ -180,32 +183,64 @@ if (isset($_REQUEST['act']) || isset($_REQUEST['preview']) || isset($_REQUEST['c
 		$_REQUEST['end_date_Month'] = TikiLib::date_format("%m", $save['date_end']);
 		$_REQUEST['end_date_Day'] = TikiLib::date_format("%d", $save['date_end']);
 		$_REQUEST['end_date_Year'] = TikiLib::date_format("%Y", $save['date_end']);
-
 	}
-    $save['allday'] = $_REQUEST['allday'] == 'true' ? 1 : 0;
-	$save['start'] = TikiLib::make_time(
-		$_REQUEST['start_Hour'],
-		$_REQUEST['start_Minute'],
-		0,
-		$_REQUEST['start_date_Month'],
-		$_REQUEST['start_date_Day'],
-		$_REQUEST['start_date_Year']
-	);
 
-	if ($save['end_or_duration'] == 'duration') {
-		$save['duration'] = max(0, $_REQUEST['duration_Hour']*60*60 + $_REQUEST['duration_Minute']*60);
-		$save['end'] = $save['start'] + $save['duration'];
-	} else {
-		$save['end'] = TikiLib::make_time(
-			$_REQUEST['end_Hour'],
-			$_REQUEST['end_Minute'],
+    $save['allday'] = (isset($_REQUEST['allday']) && $_REQUEST['allday'] == 'true') ? 1 : 0;
+	if ($_REQUEST['allday'] == 'true') {
+		$save['start'] = TikiLib::make_time(
 			0,
-			$_REQUEST['end_date_Month'],
-			$_REQUEST['end_date_Day'],
-			$_REQUEST['end_date_Year']
+			0,
+			0,
+			$_REQUEST['start_date_Month'],
+			$_REQUEST['start_date_Day'],
+			$_REQUEST['start_date_Year']
 		);
-		$save['duration'] = max(0, $save['end'] - $save['start']);
+
+		if ($save['end_or_duration'] == 'duration') {
+			$save['duration'] = 86399;
+			$save['end'] = $save['start'] + $save['duration'];
+		} else {
+			$save['end'] = TikiLib::make_time(
+				23,
+				59,
+				59,
+				$_REQUEST['end_date_Month'],
+				$_REQUEST['end_date_Day'],
+				$_REQUEST['end_date_Year']
+			);
+			$save['duration'] = max(0, $save['end'] - $save['start']);
+		}
+	} else {
+		$save['start'] = TikiLib::make_time(
+			$_REQUEST['start_Hour'],
+			$_REQUEST['start_Minute'],
+			0,
+			$_REQUEST['start_date_Month'],
+			$_REQUEST['start_date_Day'],
+			$_REQUEST['start_date_Year']
+		);
+
+		if ($save['end_or_duration'] == 'duration') {
+			$save['duration'] = max(0, $_REQUEST['duration_Hour']*60*60 + $_REQUEST['duration_Minute']*60);
+			$save['end'] = $save['start'] + $save['duration'];
+		} else {
+			$save['end'] = TikiLib::make_time(
+				$_REQUEST['end_Hour'],
+				$_REQUEST['end_Minute'],
+				0,
+				$_REQUEST['end_date_Month'],
+				$_REQUEST['end_date_Day'],
+				$_REQUEST['end_date_Year']
+			);
+			$save['duration'] = max(0, $save['end'] - $save['start']);
+		}
 	}
+}
+
+$impossibleDates = false;
+if (isset($save['start']) && isset($save['end'])) {
+	if (($save['end'] - $save['start']) < 0)
+		$impossibleDates = true;
 }
 
 if (isset($_POST['act'])) {
@@ -218,66 +253,75 @@ if (isset($_POST['act'])) {
 		if (empty($save['priority'])) $save['priority'] = 0;
 
 		if (array_key_exists('recurrent',$_POST) && ($_POST['recurrent'] == 1) && $_POST['affect']!='event') {
-			$calRecurrence = new CalRecurrence($_POST['recurrenceId'] ? $_POST['recurrenceId'] : -1);
-			$calRecurrence->setCalendarId($save['calendarId']);
-			$calRecurrence->setStart($_POST['start_Hour'] . str_pad($_POST['start_Minute'],2,'0',STR_PAD_LEFT));
-			$calRecurrence->setEnd($_POST['end_Hour'] . str_pad($_POST['end_Minute'],2,'0',STR_PAD_LEFT));
-			$calRecurrence->setAllday($save['allday'] == 1);
-			$calRecurrence->setLocationId($save['locationId']);
-			$calRecurrence->setCategoryId($save['categoryId']);
-			$calRecurrence->setNlId(0); //TODO : What id nlId ?
-			$calRecurrence->setPriority($save['priority']);
-			$calRecurrence->setStatus($save['status']);
-			$calRecurrence->setUrl($save['url']);
-			$calRecurrence->setLang(strLen($save['lang']) > 0 ? $save['lang'] : 'en');
-			$calRecurrence->setName($save['name']);
-			$calRecurrence->setDescription($save['description']);
-			switch($_POST['recurrenceType']) {
-				case "weekly":
-					$calRecurrence->setWeekly(true);
-					$calRecurrence->setWeekday($_POST['weekday']);
-					$calRecurrence->setMonthly(false);
-					$calRecurrence->setYearly(false);
-					break;
-				case "monthly":
-					$calRecurrence->setWeekly(false);
-					$calRecurrence->setMonthly(true);
-					$calRecurrence->setDayOfMonth($_POST['dayOfMonth']);
-					$calRecurrence->setYearly(false);
-					break;
-				case "yearly":
-					$calRecurrence->setWeekly(false);
-					$calRecurrence->setMonthly(false);
-					$calRecurrence->setYearly(true);
-					$calRecurrence->setDateOfYear(str_pad($_POST['dateOfYear_month'],2,'0',STR_PAD_LEFT) . str_pad($_POST['dateOfYear_day'],2,'0',STR_PAD_LEFT));
-					break;
+			$impossibleDates = false;
+			if ($_POST['end_Hour'] < $_POST['start_Hour']) {
+				$impossibleDates = true;
+			} elseif (($_POST['end_Hour'] == $_POST['start_Hour']) && ($_POST['end_Minute'] < $_POST['start_Minute'])) {
+				$impossibleDates = true;
+			} else
+				$impossibleDates = false;
+			if (!$impossibleDates) {
+				$calRecurrence = new CalRecurrence($_POST['recurrenceId'] ? $_POST['recurrenceId'] : -1);
+				$calRecurrence->setCalendarId($save['calendarId']);
+				$calRecurrence->setStart($_POST['start_Hour'] . str_pad($_POST['start_Minute'],2,'0',STR_PAD_LEFT));
+				$calRecurrence->setEnd($_POST['end_Hour'] . str_pad($_POST['end_Minute'],2,'0',STR_PAD_LEFT));
+				$calRecurrence->setAllday($save['allday'] == 1);
+				$calRecurrence->setLocationId($save['locationId']);
+				$calRecurrence->setCategoryId($save['categoryId']);
+				$calRecurrence->setNlId(0); //TODO : What id nlId ?
+				$calRecurrence->setPriority($save['priority']);
+				$calRecurrence->setStatus($save['status']);
+				$calRecurrence->setUrl($save['url']);
+				$calRecurrence->setLang(strLen($save['lang']) > 0 ? $save['lang'] : 'en');
+				$calRecurrence->setName($save['name']);
+				$calRecurrence->setDescription($save['description']);
+				switch($_POST['recurrenceType']) {
+					case "weekly":
+						$calRecurrence->setWeekly(true);
+						$calRecurrence->setWeekday($_POST['weekday']);
+						$calRecurrence->setMonthly(false);
+						$calRecurrence->setYearly(false);
+						break;
+					case "monthly":
+						$calRecurrence->setWeekly(false);
+						$calRecurrence->setMonthly(true);
+						$calRecurrence->setDayOfMonth($_POST['dayOfMonth']);
+						$calRecurrence->setYearly(false);
+						break;
+					case "yearly":
+						$calRecurrence->setWeekly(false);
+						$calRecurrence->setMonthly(false);
+						$calRecurrence->setYearly(true);
+						$calRecurrence->setDateOfYear(str_pad($_POST['dateOfYear_month'],2,'0',STR_PAD_LEFT) . str_pad($_POST['dateOfYear_day'],2,'0',STR_PAD_LEFT));
+						break;
+				}
+				$calRecurrence->setStartPeriod($_POST['startPeriod']);
+				if ($_POST['endType'] == "dt")
+					$calRecurrence->setEndPeriod($_POST['endPeriod']);
+				else {
+					$calRecurrence->setNbRecurrences($_POST['nbRecurrences']);
+				}
+				$calRecurrence->setUser($save['user']);
+				$calRecurrence->save($_POST['affect'] == 'all');
+				header('Location: tiki-calendar.php');
+				die;
 			}
-			$calRecurrence->setStartPeriod($_POST['startPeriod']);
-			if ($_POST['endType'] == "dt")
-				$calRecurrence->setEndPeriod($_POST['endPeriod']);
-			else {
-				$calRecurrence->setNbRecurrences($_POST['nbRecurrences']);
-			}
-			$calRecurrence->setUser($save['user']);
-			$calRecurrence->save($_POST['affect'] == 'all');
-			header('Location: tiki-calendar.php');
-			die;
 		} else {
-			if (array_key_exists('recurrenceId',$_POST)) {
-				$save['recurrenceId'] = $_POST['recurrenceId'];
-				$save['changed'] = true;
+			if (!$impossibleDates) {
+				if (array_key_exists('recurrenceId',$_POST)) {
+					$save['recurrenceId'] = $_POST['recurrenceId'];
+					$save['changed'] = true;
+				}
+				$calitemId = $calendarlib->set_item($user,$save['calitemId'],$save);
 			}
-			$calitemId = $calendarlib->set_item($user,$save['calitemId'],$save);
+
+			if ($prefs['feature_groupalert'] == 'y') {
+				$groupalertlib->Notify($_REQUEST['listtoalert'],"tiki-calendar_edit_item.php?viewcalitemId=".$calitemId);
+			}
+
 			header('Location: tiki-calendar.php');
 			die;
 		}
-
-		if ($prefs['feature_groupalert'] == 'y') {
-			$groupalertlib->Notify($_REQUEST['listtoalert'],"tiki-calendar_edit_item.php?viewcalitemId=".$calitemId);
-		}
-
-		header('Location: tiki-calendar.php');
-		die;
 	}
 }
 
@@ -312,7 +356,7 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
 	die;
 }  elseif (isset($_REQUEST['duplicate']) and $tiki_p_add_events == 'y') {
 	$calitem = $calendarlib->get_item($_REQUEST['calitemId']);
-	$calitem['calendarId'] = $_REQUEST['calendarId'];
+	$calitem['calendarId'] = $calID;
 	$calitem['calitemId'] = 0;
 	$calendarlib->set_item($user,0,$calitem);
 	$id = 0;
@@ -323,37 +367,39 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
   }
 	$smarty->assign('edit',true);
 	$hour_minmax = floor(($calendar['startday']-1)/(60*60)).'-'. ceil(($calendar['endday'])/(60*60));
-} elseif (isset($_REQUEST['preview'])) {
+} elseif (isset($_REQUEST['preview']) || $impossibleDates) {
 	$save['parsed'] = $tikilib->parse_data($save['description']);
 	$save['parsedName'] = $tikilib->parse_data($save['name']);
 	$id = $save['calitemId'];
 	$calitem = $save;
+	$calendar = $calendarlib->get_calendar($calitem['calendarId']);
 	$smarty->assign('edit',true);
-	$smarty->assign('preview', 'y');
+	$smarty->assign('preview', isset($_REQUEST['preview']));
 } elseif (isset($_REQUEST['changeCal'])) {
 	$calitem = $save;
+	$calendar = $calendarlib->get_calendar($calitem['calendarId']);
 	$smarty->assign('edit',true);
-	$_REQUEST['calendarId'] = $save['calendarId'];
+	$id = isset($save['calitemId'])?$save['calitemId']: 0;
+	$hour_minmax = ceil(($calendar['startday'])/(60*60)).'-'. ceil(($calendar['endday'])/(60*60));
+	$smarty->assign('changeCal', isset($_REQUEST['changeCal']));
 } elseif (isset($_REQUEST['viewcalitemId']) and $tiki_p_view_events == 'y') {
 	$calitem = $calendarlib->get_item($_REQUEST['viewcalitemId']);
 	$id = $_REQUEST['viewcalitemId'];
 	$calendar = $calendarlib->get_calendar($calitem['calendarId']);
 	$hour_minmax = ceil(($calendar['startday'])/(60*60)).'-'. ceil(($calendar['endday'])/(60*60));
-	$_REQUEST['calendarId'] = $calitem['calendarId'];
 } elseif (isset($_REQUEST['calitemId']) and ($tiki_p_change_events == 'y' or $tiki_p_view_events == 'y')) {
 	$calitem = $calendarlib->get_item($_REQUEST['calitemId']);
 	$id = $_REQUEST['calitemId'];
 	$calendar = $calendarlib->get_calendar($calitem['calendarId']);
 	$smarty->assign('edit',true);
 	$hour_minmax = ceil(($calendar['startday'])/(60*60)).'-'. ceil(($calendar['endday'])/(60*60));
-	$_REQUEST['calendarId'] = $calitem['calendarId'];
-} elseif (isset($_REQUEST['calendarId']) and $tiki_p_add_events == 'y') {
+} elseif (isset($calID) and $tiki_p_add_events == 'y') {
 	if (isset($_REQUEST['todate'])) {
 		$now = $_REQUEST['todate'];
 	} else {
 		$now = $tikilib->now;
 	}
-	$calendar = $calendarlib->get_calendar($_REQUEST['calendarId']);
+	$calendar = $calendarlib->get_calendar($calID);
 	$calitem = array(
 		'calitemId'=>0,
 		'user'=>$user,
@@ -367,7 +413,8 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
 		'nlId'=>0,
 		'start'=>$now,
 		'end'=>$now+(60*60),
-		'duration'=>(60*60)
+		'duration'=>(60*60),
+		'recurrenceId'=>0,
 		);
 	$id = 0;
 	$smarty->assign('edit',true);
@@ -384,14 +431,14 @@ if (!empty($calendar['eventstatus'])) {
 }
 
 if ($calendar['customlocations'] == 'y') {
-	$listlocs = $calendarlib->list_locations($_REQUEST['calendarId']);
+	$listlocs = $calendarlib->list_locations($calID);
 } else {
 	$listlocs = array();
 }
 $smarty->assign('listlocs', $listlocs);
 
 if ($calendar['customcategories'] == 'y') {
-	$listcats = $calendarlib->list_categories($_REQUEST['calendarId']);
+	$listcats = $calendarlib->list_categories($calID);
 } else {
 	$listcats = array();
 }
@@ -418,7 +465,7 @@ $smarty->assign('listroles',array('0'=>'','1'=>tra('required'),'2'=>tra('optiona
 
 if ($prefs['feature_theme_control'] == 'y') {
   $cat_type = "calendar";
-  $cat_objid = $_REQUEST['calendarId'];
+  $cat_objid = $calID;
   include('tiki-tc.php');
 }
 
@@ -438,7 +485,7 @@ if ($calitem['recurrenceId'] > 0) {
 }
 $smarty->assign('calitem', $calitem);
 $smarty->assign('calendar', $calendar);
-$smarty->assign('calendarId', $_REQUEST['calendarId']);
+$smarty->assign('calendarId', $calID);
 if (array_key_exists('CalendarViewGroups',$_SESSION) && count($_SESSION['CalendarViewGroups']) == 1)
 	$smarty->assign('calendarView',$_SESSION['CalendarViewGroups'][0]);
 if ($prefs['feature_ajax'] == "y") {
@@ -450,6 +497,7 @@ function edit_calendar_ajax() {
 }
 edit_calendar_ajax();
 }
+$smarty->assign('impossibleDates',$impossibleDates);
 $smarty->assign('mid', 'tiki-calendar_edit_item.tpl');
 $smarty->display("tiki.tpl");
 ?>

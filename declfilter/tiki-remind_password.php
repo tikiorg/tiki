@@ -84,7 +84,7 @@ if (isset($_REQUEST["remind"])) {
 		$smarty->assign('mail_same', $prefs['feature_clear_passwords']);
 		$smarty->assign('mail_pass', $pass);
 		$smarty->assign('mail_apass', md5($pass));
-		$smarty->assign('mail_ip', $_SERVER['REMOTE_ADDR']);
+		$smarty->assign('mail_ip', $tikilib->get_ip_address());
 		$mail_data = sprintf($smarty->fetchLang($languageEmail, 'mail/password_reminder_subject.tpl'),$_SERVER["SERVER_NAME"]);
 		$mail = new TikiMail($name);
 		$mail->setSubject(sprintf($mail_data, $_SERVER["SERVER_NAME"]));
