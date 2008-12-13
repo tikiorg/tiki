@@ -223,17 +223,17 @@
 	  </div>
 {else}
 	{if $recurrence.id > 0}
-	{if $recurrence.weekly}
-	  {tr}Event is repeated {if $recurrence.nbRecurrences gt 0}{$recurrence.nbRecurrences} {tr}times{/tr}, {/if}every{/tr}&nbsp;{tr}{$daysnames[$recurrence.weekday]}{/tr}
-	{elseif $recurrence.monthly}
-	  {tr}Event is repeated {if $recurrence.nbRecurrences gt 0}{$recurrence.nbRecurrences} {tr}times{/tr}, {/if}on{/tr}&nbsp;{$recurrence.dayOfMonth} {tr}of every month{/tr}
-	{else}
-	  {tr}Event is repeated {if $recurrence.nbRecurrences gt 0}{$recurrence.nbRecurrences} {tr}times{/tr}, {/if}on each{/tr}&nbsp;{$recurrence.dateOfYear_day} {tr}of{/tr} {tr}{$monthnames[$recurrence.dateOfYear_month]}{/tr}
-	{/if}
+		{if $recurrence.weekly}
+	  		{tr}Event is repeated {if $recurrence.nbRecurrences gt 0}{$recurrence.nbRecurrences} {tr}times{/tr}, {/if}every{/tr}&nbsp;{tr}{$daysnames[$recurrence.weekday]}{/tr}
+		{elseif $recurrence.monthly}
+	  		{tr}Event is repeated {if $recurrence.nbRecurrences gt 0}{$recurrence.nbRecurrences} {tr}times{/tr}, {/if}on{/tr}&nbsp;{$recurrence.dayOfMonth} {tr}of every month{/tr}
+		{else}
+	  		{tr}Event is repeated {if $recurrence.nbRecurrences gt 0}{$recurrence.nbRecurrences} {tr}times{/tr}, {/if}on each{/tr}&nbsp;{$recurrence.dateOfYear_day} {tr}of{/tr} {tr}{$monthnames[$recurrence.dateOfYear_month]}{/tr}
+		{/if}
 	<br />
 	{tr}Starting on{/tr} {$recurrence.startPeriod|tiki_long_date}
 	{if $recurrence.endPeriod gt 0}, {tr}ending by{/tr} {$recurrence.endPeriod|tiki_long_date}{/if}.
-{/if}
+	{/if}
 {/if}
 	</td>
 </tr>
