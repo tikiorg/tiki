@@ -5,6 +5,15 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // Initialization
 
+$inputConfiguration = array(
+	array( 'staticKeyFilters' => array(
+		'page' => 'pagename',
+	) ),
+	array( 'staticKeyUnset' => array(
+		'edit'
+	) ),
+);
+
 $section = "wiki page";
 require_once ('tiki-setup.php');
 include_once ('lib/wiki/wikilib.php');
@@ -624,7 +633,7 @@ if (isset($_REQUEST['do_suck']) && strlen($suck_url) > 0)
 	if ($parsehtml == 'y') {
 		$sdta = parse_html($sdta);
 	}
-	$_REQUEST['edit'] .= $sdta;
+	$_REQUEST['edit'] = $jitRequest['edit'] . $sdta;
 }
 // if "UserPage" complete with the user name
 if ($prefs['feature_wiki_userpage'] == 'y' && $tiki_p_admin != 'y' && $page == $prefs['feature_wiki_userpage_prefix']) {

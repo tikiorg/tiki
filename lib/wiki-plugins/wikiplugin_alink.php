@@ -40,6 +40,7 @@ function wikiplugin_alink_info() {
 				'required' => false,
 				'name' => tra('Page name'),
 				'description' => tra('The name of the wiki page containing the anchor.'),
+				'filter' => 'pagename',
 			),
 		),
 	);

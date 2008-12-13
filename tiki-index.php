@@ -5,6 +5,28 @@
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
+$inputConfiguration = array(
+	array( 'staticKeyFilters' => array(
+		'action' => 'word',
+		//'attach_comment' => '', TODO
+		// 'atts_show' => '', TODO
+		'best_lang' => 'alpha',
+		'bl' => 'alpha',
+		//'copyrightpage' => '', TODO
+		'page' => 'pagename',
+		'page_id' => 'digits',
+		'pagenum' => 'digits',
+		'page_ref_id' => 'digits',
+		'mode' => 'word',
+		'removeattach' => 'digits',
+		'sort_mode' => 'word',
+		//'structure' => '', TODO
+		'watch_action' => 'word',
+		'watch_event' => 'word',
+		//'watch_object' => 'word', TODO
+	) ),
+);
+
 // Initialization
 $section = 'wiki page';
 require_once('tiki-setup.php');

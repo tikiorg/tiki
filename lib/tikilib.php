@@ -5619,7 +5619,27 @@ class TikiLib extends TikiDB {
 		$func_name = 'wikiplugin_' . $name;
 
 		if( function_exists( $func_name ) ) {
+			$info = $this->plugin_info( $name );
+			$default = TikiFilter::get('xss');
+
+			// Apply filters on the body
+			$filter = isset($info['filter']) ? TikiFilter::get($info['filter']) : $default;
+			$data = $this->htmldecode($data);
+			$data = $filter->filter($data);
+
+			// Make sure all arguments are declared
+			$params = $info['params'];
+			$args = array_intersect_key( $args, $params );
+
+			// Apply filters on values individually
+			foreach( $args as $key => &$value ) {
+				$filter = isset($params[$key]['filter']) ? TikiFilter::get($params[$key]['filter']) : $default;
+				$value = $this->htmldecode($value);
+				$value = $filter->filter($value);
+			}
+
 			return $func_name( $data, $args, $offset );
+
 		} elseif( $info = $this->plugin_alias_info( $name ) ) {
 			$name = $info['implementation'];
 
