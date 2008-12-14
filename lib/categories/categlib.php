@@ -979,16 +979,21 @@ class CategLib extends ObjectLib {
 	// input is a array of category id's and return is a array of 
 	// maxRows related links with description
 	function get_related($categories,$maxRows=10) {
+		global $tiki_p_admin;
 		if(count($categories)==0) return (array());
 		$quarr=implode(",",array_fill(0,count($categories),'?'));
 		$query="select distinct o.`type`, o.`description`, o.`itemId`,o.`href` from `tiki_objects` o, `tiki_categorized_objects` cdo, `tiki_category_objects` co  where co.`categId` in (".$quarr.") and co.`catObjectId`=cdo.`catObjectId` and o.`objectId`=cdo.`catObjectId`";
 		$result=$this->query($query,$categories);
 		$ret=array();
+		if ($tiki_p_admin != 'y')
+			$permMap = $this->map_object_type_to_permission();
 		while ($res = $result->fetchRow()) {
-			if (empty($res["description"])) {
-				$ret[$res["href"]]=$res["type"].": ".$res["itemId"];
-			} else {
-				$ret[$res["href"]]=$res["type"].": ".$res["description"];
+			if ($tiki_p_admin == 'y' || $this->user_has_perm_on_object($user, $res['itemId'], $res['type'], $permMap[$res['type']])) {
+				if (empty($res["description"])) {
+					$ret[$res["href"]]=$res["type"].": ".$res["itemId"];
+				} else {
+					$ret[$res["href"]]=$res["type"].": ".$res["description"];
+				}
 			}
 		}
 		if (count($ret)>$maxRows) {
