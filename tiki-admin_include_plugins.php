@@ -33,6 +33,7 @@ if( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 				'description' => $_POST['description'],
 				'prefs' => array(),
 				'validate' => $_POST['validate'],
+				'filter' => $_POST['filter'],
 				'inline' => isset( $_POST['inline'] ),
 				'params' => array(),
 			),
@@ -60,6 +61,7 @@ if( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 						'safe' => isset($param['safe']),
 						'name' => $param['name'],
 						'description' => $param['description'],
+						'filter' => $param['filter'],
 					);
 				}
 			}

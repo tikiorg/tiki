@@ -39,14 +39,14 @@ class OIntegrate
 		global $cachelib;
 		require_once 'lib/cache/cachelib.php';
 
-		if( $cachelib->isCached( $url ) ) {
-			$cache = $cachelib->getCached( $url );
+		if( $cachelib->isCached( $url.$postBody ) ) {
+			$cache = $cachelib->getCached( $url.$postBody );
 			$cache = unserialize( $cache );
 
 			if( time() < $cache['expires'] )
 				return $cache['data'];
 
-			$cachelib->invalidate( $url );
+			$cachelib->invalidate( $url.$postBody );
 		}
 
 		if( empty($postBody) ) {

@@ -5633,10 +5633,10 @@ class TikiLib extends TikiDB {
 			$args = array_intersect_key( $args, $params );
 
 			// Apply filters on values individually
-			foreach( $args as $key => &$value ) {
-				$filter = isset($params[$key]['filter']) ? TikiFilter::get($params[$key]['filter']) : $default;
-				$value = $this->htmldecode($value);
-				$value = $filter->filter($value);
+			foreach( $args as $argKey => &$argValue ) {
+				$filter = isset($params[$argKey]['filter']) ? TikiFilter::get($params[$argKey]['filter']) : $default;
+				$argValue = $this->htmldecode($argValue);
+				$argValue = $filter->filter($argValue);
 			}
 		}
 
