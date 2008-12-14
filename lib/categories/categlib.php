@@ -944,7 +944,7 @@ class CategLib extends ObjectLib {
 			if ($userlib->user_has_permission($user, 'tiki_p_admin')) {
 				$ret[] = $res;				
 			} else {
-				if ($userlib->object_has_permission($user, $res['categId'], 'category', $perm)) {
+				if ($userlib->user_has_perm_on_object($user, $res['categId'], 'category', $perm)) {
 					$ret[] = $res;
 				}
 			}
