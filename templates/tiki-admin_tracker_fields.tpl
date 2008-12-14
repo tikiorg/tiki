@@ -198,6 +198,7 @@
 {tr}Export fieldId also{/tr}
 <input type="checkbox" name="exportAll"{if $export_all eq 'y'} checked="checked"{/if}/>
 <input type="submit" name="refresh" value="{tr}Refresh{/tr}" />
+{remarksbox}{tr}Check the box to re-import in this tracker and change the fields.{/tr}<br />{tr}Uncheck the box to import in another database.{/tr}{/remarksbox}
 </form>
 
 <form action="tiki-admin_tracker_fields.php" method="post">
