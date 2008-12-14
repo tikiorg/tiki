@@ -3693,6 +3693,7 @@ DROP TABLE IF EXISTS tiki_webservice;
 CREATE TABLE tiki_webservice (
 	service VARCHAR(25) NOT NULL PRIMARY KEY,
 	url VARCHAR(250),
+	body TEXT,
 	schema_version VARCHAR(5),
 	schema_documentation VARCHAR(250)
 ) ENGINE=MyISAM ;

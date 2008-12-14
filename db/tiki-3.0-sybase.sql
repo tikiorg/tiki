@@ -2710,10 +2710,6 @@ INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`",
 go
 
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (161,42,'o','Score','tiki-admin_include_score.php',1235,'feature_score','tiki_p_admin','',0)
-go
-
-
 INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (162,42,'o','Admin mods','tiki-mods.php',1240,'','tiki_p_admin','',0)
 go
 
@@ -5639,6 +5635,10 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 go
 
 
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_backlink', 'View page backlinks', 'basic', 'wiki')
+go
+
+
 
 UPDATE users_permissions SET feature_check = 'feature_wiki' WHERE permName IN(
 	'tiki_p_admin_wiki',
@@ -7224,6 +7224,7 @@ go
 CREATE TABLE "tiki_webservice" (
   "service" VARCHAR(25) NOT NULL PRIMARY KEY,
   "url" VARCHAR(250),
+  "body" TEXT,
   "schema_version" VARCHAR(5),
   "schema_documentation" VARCHAR(250)
 ) ENGINE=MyISAM 
