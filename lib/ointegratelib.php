@@ -34,7 +34,7 @@ class OIntegrate
 		}
 	} // }}}
 
-	function performRequest( $url ) // {{{
+	function performRequest( $url, $postBody = null ) // {{{
 	{
 		global $cachelib;
 		require_once 'lib/cache/cachelib.php';
@@ -49,15 +49,29 @@ class OIntegrate
 			$cachelib->invalidate( $url );
 		}
 
-		$opts = array(
-			'http' => array(
-				'method' => 'GET',
-				'header' =>
-					"Accept: application/json,text/x-yaml\r\n"
-					. "OIntegrate-Version: 1.0\r\n",
-				'content' => '',
-			),
-		);
+		if( empty($postBody) ) {
+			$opts = array(
+				'http' => array(
+					'method' => 'GET',
+					'header' =>
+						"Accept: application/json,text/x-yaml\r\n"
+						. "OIntegrate-Version: 1.0\r\n",
+					'content' => '',
+				),
+			);
+		} else {
+			$opts = array(
+				'http' => array(
+					'method' => 'POST',
+					'header' =>
+						"Accept: application/json,text/x-yaml\r\n"
+						. "OIntegrate-Version: 1.0\r\n"
+						. "Content-Type: application/x-www-form-urlencoded\r\n"
+						. "Content-Length: " . strlen($postBody) . "\r\n",
+					'content' => $postBody,
+				),
+			);
+		}
 
 		if( count( $this->schemaVersion ) )
 			$opts['http']['header'] .= "OIntegrate-SchemaVersion: " . implode( ', ', $this->schemaVersion ) . "\r\n";
@@ -74,7 +88,11 @@ class OIntegrate
 		$response->contentType = $contentType;
 		$response->cacheControl = $cacheControl;
 		$response->data = $this->unserialize( $contentType, $content );
-		make_clean( $response->data );
+
+		$filter = new DeclFilter;
+		$filter->addCatchAllFilter( 'xss' );
+
+		$response->data = $filter->filter( $response->data );
 		$response->version = $this->extractHeader( $http_response_header, 'OIntegrate-Version' );
 		$response->schemaVersion = $this->extractHeader( $http_response_header, 'OIntegrate-SchemaVersion' );
 		if( ! $response->schemaVersion && isset( $response->data->_version ) )
@@ -123,9 +141,24 @@ class OIntegrate
 		{
 		case 'application/json':
 		case 'text/javascript':
-			return json_decode( $data, true );
+			if( $out = json_decode( $data, true ) )
+				return $out;
+
+			// Handle invalid JSON too...
+			$fixed = preg_replace( '/(\w+):/', '"$1":', $data );
+			$out = json_decode( $fixed, true );
+			return $out;
 		case 'text/x-yaml':
+			require_once 'Horde/Yaml.php';
+			require_once 'Horde/Yaml/Loader.php';
+			require_once 'Horde/Yaml/Node.php';
 			return Horde_Yaml::load( $data );
+		default:
+			// Attempt anything...
+			if( $out = $this->unserialize( 'application/json', $data ) )
+				return $out;
+			if( $out = $this->unserialize( 'text/x-yaml', $data ) )
+				return $out;
 		}
 	} // }}}
 
@@ -289,6 +322,7 @@ class OIntegrate_Engine_Smarty implements OIntegrate_Engine // {{{
 		$smarty = new Smarty;
 		$smarty->security = true;
 		$smarty->template_dir = dirname($templateFile);
+		$smarty->plugins_dir = array();
 
 		if( $this->changeDelimiters ) {
 			$smarty->left_delimiter = '{{';

@@ -5,7 +5,7 @@ function wikiplugin_webservice_info() {
 		'name' => tra('Web Service'),
 		'description' => tra('Obtains and display remote information exposed in JSON or YAML. The plugin can be used to display registered or unregistered services. Registered services may use more parameters not defined in this interface.'),
 		'prefs' => array(),
-		'body' => tra('Template to apply to the data provided. Template format uses smarty templating engine using double brackets as delimiter. Output must provide wiki syntax.'),
+		'body' => tra('Template to apply to the data provided. Template format uses smarty templating engine using double brackets as delimiter. Output must provide wiki syntax. Body can be sent to a parameter instead by using the bodyname parameter.'),
 		'validate' => 'all',
 		'params' => array(
 			'url' => array(
@@ -25,6 +25,13 @@ function wikiplugin_webservice_info() {
 				'name' => tra('Template Name'),
 				'description' => tra('For use with registered services, name of the template to be used to display the service output. This parameter will be ignored if a body is provided.'),
 			),
+			'bodyname' => array(
+				'required' => false,
+				'filter' => 'word',
+				'safe' => true,
+				'name' => tra('Body as Parameter'),
+				'description' => tra('Name of the argument to send the body as for services with complex input. Named service required for this to be useful.'),
+			),
 		),
 	);
 }
@@ -35,6 +42,12 @@ function wikiplugin_webservice( $data, $params ) {
 	require_once( 'Horde/Yaml/Loader.php' );
 	require_once( 'Horde/Yaml/Node.php' );
 	require_once( 'Horde/Yaml/Exception.php' );
+
+	if( isset( $params['bodyname'] ) && ! empty($params['bodyname']) ) {
+		$params[ $params['bodyname'] ] = $data;
+		unset($params['bodyname']);
+		$data = '';
+	}
 
 	if( ! empty( $data ) ) {
 		$templateFile = realpath( './temp/cache/' . md5($data) );

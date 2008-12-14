@@ -1,6 +1,6 @@
 <?php
 
-require_once 'DeclFilter/Rule.php';
+require_once 'DeclFilter/FilterRule.php';
 require_once 'TikiFilter.php';
 
 class DeclFilter_CatchAllFilterRule extends DeclFilter_FilterRule

@@ -1,8 +1,7 @@
 <form method="post" action="tiki-admin.php?page=webservices">
 	<div class="navbar">
 		{foreach from=$webservices item=name}
-			{assign var=thisname value=$name|escape}
-			{button href="tiki-admin.php?page=webservices&amp;name=$thisname}" _text=$thisname}
+			{button href="tiki-admin.php?page=webservices&amp;name=$name" _text=$name}
 		{/foreach}
 		{if $storedName}
 			{button href="tiki-admin.php?page=webservices" _text="{tr}Create New{/tr}"}
@@ -15,10 +14,9 @@
 		<p>
 			{tr}Enter the URL of a web services returning either JSON or YAML. Parameters can be specified by enclosing a name between percentage signs. For example: %name%. %service% and %template% are reserved keywords and cannot be used.{/tr}
 		</p>
-		<p>
-			<input type="text" name="url" size="75" value="{$url|escape}" />
-			<input type="submit" name="parse" value="{tr}Lookup{/tr}"/>
-		</p>
+		<p><input type="text" name="url" size="75" value="{$url|escape}" /></p>
+		<p><textarea name="postbody">{$postbody|escape}</textarea></p>
+		<p><input type="submit" name="parse" value="{tr}Lookup{/tr}"/></p>
 	{/if}
 	{if $url and $params|@count}
 		<h3>{tr}Parameters{/tr}</h3>

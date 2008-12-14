@@ -5432,6 +5432,7 @@ class TikiLib extends TikiDB {
 
 	function plugin_alias_info( $name ) {
 		global $prefs;
+		$name = strtolower($name);
 		$prefName = "pluginalias_$name";
 
 		if( ! isset( $prefs[$prefName] ) )
@@ -5612,13 +5613,13 @@ class TikiLib extends TikiDB {
 		return "$name-$bodyHash-$argsHash-$bodyLen-$argsLen";
 	}
 
-	function plugin_execute( $name, $data = '', $args = array(), $offset = 0 ) {
+	function plugin_execute( $name, $data = '', $args = array(), $offset = 0, $validationPerformed = false ) {
 		if( ! $this->plugin_exists( $name, true ) )
 			return false;
 
 		$func_name = 'wikiplugin_' . $name;
-
-		if( function_exists( $func_name ) ) {
+		
+		if( ! $validationPerformed ) {
 			$info = $this->plugin_info( $name );
 			$default = TikiFilter::get('xss');
 
@@ -5637,9 +5638,10 @@ class TikiLib extends TikiDB {
 				$value = $this->htmldecode($value);
 				$value = $filter->filter($value);
 			}
+		}
 
+		if( function_exists( $func_name ) ) {
 			return $func_name( $data, $args, $offset );
-
 		} elseif( $info = $this->plugin_alias_info( $name ) ) {
 			$name = $info['implementation'];
 
@@ -5671,7 +5673,7 @@ class TikiLib extends TikiDB {
 				}
 			}
 
-			return $this->plugin_execute( $name, $data, $params, $offset );
+			return $this->plugin_execute( $name, $data, $params, $offset, true );
 		}
 	}
 
