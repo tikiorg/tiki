@@ -6,7 +6,6 @@
  
  @import "lite/lite.css"; /* here we import *lite as the base */
 
-
 /***** XHTML Elements ******/
 body {
 	background: white;
@@ -469,6 +468,42 @@ div#tiki-bot {}
 	
 /****** Menus ******/
 
+/** Links in  menus **/
+div.separator,
+div.separatorline {}
+.separator a:link,
+.separator a:visited,
+.separator a:hover {}
+div.option a.linkmenu:hover {}
+a.separator img {}
+.option {}
+div.optionline,
+.option a {}
+.option a:link,
+.option a:visited,
+a.linkmenu,
+.rsslink,
+.linkmenu:visited,
+.rsslink:visited {}
+.linkmenu:hover {}
+div.option a:hover,
+div.option a:active {}
+a.linkmodule {}
+a.linkmodule:hover {}
+.rsslist {}
+.rssitem {}
+.rssitem:first-child {}
+.rssdate {}
+
+/* From Tikineat -- check */
+div.menuSection div.menuSection,
+div.menuSection div.separator {
+	padding-left: 5px;
+}
+/* End from Tikineat */
+
+/* PHP Layers menus */
+
 .horbar {
 		bottom: 0;
 		width: 100%;
@@ -570,7 +605,6 @@ div#tiki-bot {}
 	white-space: nowrap;
 }
 
-
 .phplmnormal,
 a.phplmnormal:hover,
 a.phplm:link,
@@ -609,41 +643,155 @@ a.phplmselected:hover {
 	color: #808080;
 }
 
-/** Links in other menus **/
-div.separator,
-div.separatorline {}
-.separator a:link,
-.separator a:visited,
-.separator a:hover {}
-div.option a.linkmenu:hover {}
-a.separator img {}
-.option {}
-div.optionline,
-.option a {}
-.option a:link,
-.option a:visited,
-a.linkmenu,
-.rsslink,
-.linkmenu:visited,
-.rsslink:visited {}
-.linkmenu:hover {}
-div.option a:hover,
-div.option a:active {}
-a.linkmodule {}
-a.linkmodule:hover {}
-.rsslist {}
-.rssitem {}
-.rssitem:first-child {}
-.rssdate {}
+/* cssmenus (used by page controls and menus */
 
-/* From Tikineat -- check */
-div.menuSection div.menuSection,
-div.menuSection div.separator {
-	padding-left: 5px;
-}
-/* End from Tikineat */
+.cssmenu,
+.cssmenu ul {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	line-height: 1;
+	float: left;
+	min-width: 8em}
+
+.cssmenu li {
+	position: relative;
+	float: left;
+	line-height : 1.25em;
+	margin-bottom : -1px;
+	min-width: 8em}
+	
+* html .cssmenu li {width: 8em}
+
+.cssmenu > li {
+	background: url(../lib/phplayers/images/down-galaxy.png) 100% 70% no-repeat;
+	/*margin-bottom: 1px*/}
+	
+.cssmenu li ul {
+	position: absolute;
+	left: -999em;
+	margin-left: 2em;
+	background: #fff;
+	margin-top: -.2em}
+	
+/*.cssmenu li li {overflow: auto}
+.cssmenu li li a:active {overflow: hidden}*/
+.cssmenu li ul ul {left: -999em}
+
+.cssmenu li a {
+	display: block;
+	font-weight: normal;
+	text-decoration : none;
+	border: 0;
+	padding: 0 0.5em}
+	
+.cssmenu li:hover ul ul,
+.cssmenu li:hover ul ul ul,
+.cssmenu li.sfhover ul ul,
+.cssmenu li.sfhover ul ul ul {left: -999em}
+
+.cssmenu li:hover ul,
+.cssmenu li li:hover ul,
+.cssmenu li li li:hover ul,
+.cssmenu li.sfhover ul,
+.cssmenu li li.sfhover ul,
+.cssmenu li li li.sfhover ul {left: auto}
+
+/* Page top and page controls */
+
+.pagecontrols {z-index: 210}
+
+.top {
+	height: 34px;
+	position: relative;
+	z-index: 211}
+	
+*:first-child+html .top {min-width: 100% !important}
+.wikiinfo {float: none !important/*margin-top: -18px !important*/}
+	
+.top h1 {
+	padding-top: 10px;
+	z-index: 212}
+
+.pageactions {
+	z-index: 215;
+	float: right;
+	clear: none;
+	margin-top: -1em;
+	width: 8em;
+	border: 1px solid #aaaaaa;
+	padding: 5px;
+	background: #fff}
+	
+.pageactions .cssmenu {
+	z-index: 216}
+	
+.pageactions .cssmenu li { 
+/*	margin: 0;
+	padding: 0;
+	z-index: 216;
+	line-height: 1.25em*/}
+
+* html .pageactions .cssmenu li {width: 8em}
+.pageactions .cssmenu > li > a {z-index: 216}
+
+.pageactions .cssmenu li ul {
+	border: 1px solid #aaaaaa;
+	display: block;
+	background: #fff}
+	
+.pageactions > .cssmenu > li > ul {
+	z-index: 217 !important;
+	display: block}	
+
+.pageactions .cssmenu li a {
+	/*border: 0;
+	padding: 0 0.5em*/}
+	
+.pageactions .cssmenu li a:hover {
+	color: #005faa;
+	text-decoration: underline}
+
+.pageactions .cssmenu li.selected > a {background: #D3D3D3;}
+.pageactions .cssmenu li.selectedAscendant > a {background: #E6E6E6;}
+
+.pagecontrols .tabs {
+	margin: 0 !important;
+	padding-left: 10px !important;
+	border-bottom: 0;
+	height: 26px;
+	z-index: 216}
+	
+*:first-child+html .tabs {min-width: 100%}
+	
+.pagecontrols .tabs .tabmark {
+	margin-top: 8px;
+	display: inline-block;
+	border: 0; 
+	background: #fbfbfb;
+	font-size: 90% !important;}
+	
+*:first-child+html .pagecontrols .tabs .tabmark	 {margin-top: 9px}
+
+.pagecontrols .tabs .tabactive {
+	background: #fff;
+	border: 0 !important;
+	background: #fff !important}
+	
+.pagecontrols .tabs .tabmark a {
+	border: 1px solid #aaa;
+	color: #005faa;
+	font-size: 11px;
+	font-weight: normal;
+	padding: 3px 5px}
+
+.pagecontrols .tabs .tabactive a,
+.pagecontrols .tabs .tabmark a:hover {
+	cursor: pointer;
+	background: #E6E6F8;}
 
 /****** Misc. Global Classes (layout and style) ****/
+
 .hidden {position: absolute; left: -10000px; top: 0px; width: 1px; height: 1px; overflow: hidden;}.floatlist {	clear: left;list-style-type: none;margin: 0;padding-left: 0;}
 .floatlist li { float: left; }
 div#attzone,
@@ -929,15 +1077,15 @@ table.admin tr td div#page-bar {
 /** Tabs **/
 
 .tabs {
-	border-bottom: solid 1px #225566 !important;
-	margin-top: 10px !important; 
-  padding: 0 !important;
+	border-bottom: solid 1px #225566;
+	margin-top: 10px; 
+  padding: 0;
 }
 
 .tabactive {
-	border: solid 1px #225566 !important;
-	border-bottom: none !important;
-	border-top-width: 2px !important;
+	border: solid 1px #225566;
+	border-bottom: none;
+	border-top-width: 2px;
 	position: relative;
 	top: -2px;
 }
@@ -948,13 +1096,13 @@ table.admin tr td div#page-bar {
 	background: #eee;
 }
 .tabinactive {
-	border: solid 1px #666 !important;
-	border-bottom: none !important;
-	position: relative !important;
-	top: -3px !important;
+	border: solid 1px #666;
+	border-bottom: none;
+	position: relative;
+	top: -3px;
 }
 [class].tabinactive {
-	top: -2px !important;
+	top: -2px;
 }
 
 .tabmark {
@@ -1012,122 +1160,14 @@ form.admin .tabs {
 	padding: 0 !important;
 }
 
-/* Get the contextual info to make this specific.
-div.content {
-	padding: 3px;
-}
-
-div.content .tabs {
-	margin: 0;
-}
-
-.tab-wrapper {
-	border: 1px solid #EEEEEE;
-	padding: 0;
-}
-
-.tab-menu  {
-	clear: both;
-	line-height: 17px;
-	list-style-image: none;
-	list-style-position: outside;
-	list-style-type: none;
-	padding: 2px 0;
-	margin-bottom: 6px;
-	margin-top: 2px;
-	width: 100%;
-}
-
-.tab-menu li {
-	display: inline;
-	margin: 0 2px;
-	width: 200px;
-	padding-right: 1.5em;
-}
-
-.tab-menu li a 	{ 
-	padding: 1px 5px; 
-	background: #f5f5f5; 
-	color:  #222; 
-	font-weight: bold; 
-	text-decoration: none; 
-} 
-.tab-menu li a:hover, 
-.tab-menu li a:focus { 
-	background: #FAEC8F; 
-	border-bottom-color: #999; 
-} 
-
-.tab-menu li a:hover { 
-	background: #FAEC8F; 
-	border-bottom-color: #999; 
-} 
-
-.tab-menu li.tab-selected a { 
-	background: #BCEC8F; 
-}
-
-/* CHECK
-.tab-menu li img {
-	vertical-align: middle;
-}*/
-
-/*  tiki tabs -- deprecated?
-table.admin tr td div#page-bar {
-	margin-left: 5px;
-	margin-bottom: 0;
-	background-color: transparent;
-}
-
-span#tab1 {
-	background: #F5F5F5;
-}
-
-span#tab2 {
-	background: #ECECEC;
-}
-
-span#tab3 {
-	background: #DCDCDC;
-}
-
-#content1,
-#content2,
-#content3 {
-	border-top: 1px solid #A9A9A9;
-	border-left: 1px solid #A9A9A9;
-	border-right: 1px solid #696969;
-	border-bottom: 1px solid #696969;
-}
-
-#content1 {
-	padding: 10px;
-	background: #F5F5F5;
-
-}
-
-#content2 {
-	padding: 5px;
-	background: #ECECEC;
-}
-
-#content3 {
-	padding: 5px;
-	background: #DCDCDC;
-}
-table.admin div#content1 div.tabcontent div.cbox {
-	background-color: transparent;
-}
-*/
-
 /*** Feature-specific selectors ***/
 
 
 /***** Wiki *****/
 
-h1 a.pagetitle {
+/*h1 a.pagetitle {
 	font-size: 1.2em;
-}
+}*/
 
 span#description {
 	font-size: .9em;
@@ -2223,5 +2263,16 @@ a.icon,
 img.icon {
 	border: 0 !important;
 	background: transparent}
+	
+/* Minichat module */	
+	
+div.box-minichat {width: 95%}
+div.minichatchans {overflow: auto !important}
+.minichat {overflow: auto !important}
+
+div.minichatdiv {
+  font-size: .9em;
+  overflow: auto !important}
+ 
 /* end of css file */
 

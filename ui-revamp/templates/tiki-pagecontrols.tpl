@@ -1,8 +1,8 @@
 <div class="pagecontrols">
-	<div class="top">
+	<div class="clearfix top">
 		<h1>{$controls.heading}</h1>
 		<div class="pageactions">
-			<ul class="cssmenu">
+			<ul class="clearfix cssmenu">
 				{foreach from=$controls.menus item=menu}
 					<li><a href="#" title="{$menu} items">{$menu}</a>
 						<ul>

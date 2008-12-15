@@ -315,16 +315,6 @@ div#sitead {margin: auto}
 #login_search a:visited {color: #fff}
 	
 #siteloginbar * {display: inline}
-/*	
-#siteloginbar #register{
- float: right;
- padding-left: 5px;
-}
-#siteloginbar #pass{
- float: right;
- padding-left: 5px;
-}*/
-	
 #login_language {display: none/*inline*/}
 
 #sitesearchbar {
@@ -467,6 +457,53 @@ a.flip img {display: none}
 /** Border boxes (if any) **/
 
 /****** Menus ******/
+
+/** Links in menus **/
+div.separator, div.separatorline {}
+.separator a:link,
+.separator a:visited,
+.separator a:hover {
+	color: #314e6f;
+	font-weight: bold}
+
+div.option a.linkmenu:hover {}
+a.separator img {}
+.option {}
+
+div.optionline,
+.option a {
+	color: #295c83;
+	font-weight: bold}
+
+.option a:link,
+.option a:visited,
+a.linkmenu,
+.rsslink,
+.linkmenu:visited,
+.rsslink:visited {}
+
+.linkmenu,
+.linkmenu:visited {display: block}
+
+.linkmenu:hover {color: #82a7c8}
+
+div.option a:hover,
+div.option a:active {}
+
+a.linkmodule {}
+a.linkmodule:hover {color: #82a7c8}
+
+
+.rsslist {}
+.rssitem {}
+.rssitem:first-child {}
+.rssdate {}
+
+/* From Tikineat -- check */
+div.menuSection div.menuSection,
+div.menuSection div.separator {}
+/* End from Tikineat */
+
 /** PHP Layers Menus **/
 
 .horbar {
@@ -493,11 +530,9 @@ a.flip img {display: none}
 	border-left: 1px solid #9eb8d5;
 	border-right: 1px solid #264062}
 	
-.cssmenu_horiz li {
-	border-bottom: 0;
-	min-width: 11em}
+.cssmenu_horiz li {}
 	
-.cssmenu_horiz li ul { width: 11em }
+.cssmenu_horiz li ul {}
 	
 .cssmenu_horiz li a {
 	white-space: nowrap;
@@ -530,23 +565,6 @@ a.flip img {display: none}
 	background: #335075;
 	color: #fff}
 	
-.pageactions .cssmenu_horiz li ul li a {overflow: auto}
-/*.pageactions .cssmenu_horiz li,
-.pageactions .cssmenu_horiz li ul {width: 8em !important}*/
-
-.pageactions .cssmenu_horiz li {
-	width: 8em !important;
-	border-left: #517ba5 1px solid;}
-	
-.pageactions .cssmenu_horiz li ul {margin-top: -1px}
-
-.pageactions .cssmenu_horiz li a { 
-	font-size: 12px;
-	border: 0;
-	color: #265076;
-	padding: 11px 0 11px 12px;
-	border-left: #ebf5fe 1px solid}
-
 .horbaritem a:hover {
 	color: #fff !important;
 	text-decoration: none} 
@@ -633,7 +651,8 @@ a.flip img {display: none}
 
 .cssmenu_horiz ul li * {
 	text-align: left;
-	color: #5a7ea2}
+	color: #5a7ea2;
+	min-width: 10em}
 	
 /*
 .cssmenu_horiz li {
@@ -677,54 +696,147 @@ a.phplmselected:hover {color: #808080}
 	border: 0;
 	width: 16px;
 	height: 18px}
+	
+/* cssmenus (used by page controls and menus */
 
-/** Links in other menus **/
-div.separator, div.separatorline {}
-.separator a:link,
-.separator a:visited,
-.separator a:hover {
-	color: #314e6f;
-	font-weight: bold}
+.cssmenu,
+.cssmenu ul {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	line-height: 1;
+	z-index: 1000}
 
-div.option a.linkmenu:hover {}
-a.separator img {}
-.option {}
+.cssmenu a {
+	display: block;
+	text-decoration: none;
+	white-space: nowrap;
+	position: relative}
+	
+.cssmenu li {float: left}
+* html .cssmenu li {width: 10em}
 
-div.optionline,
-.option a {
-	color: #295c83;
-	font-weight: bold}
+.cssmenu li:hover ul ul,
+.cssmenu li:hover ul ul ul,
+.cssmenu li.sfhover ul ul,
+.cssmenu li.sfhover ul ul ul {left: -999em}
 
-.option a:link,
-.option a:visited,
-a.linkmenu,
-.rsslink,
-.linkmenu:visited,
-.rsslink:visited {}
+.cssmenu li:hover ul,
+.cssmenu li li:hover ul,
+.cssmenu li li li:hover ul,
+.cssmenu li.sfhover ul,
+.cssmenu li li.sfhover ul,
+.cssmenu li li li.sfhover ul {left: auto}
 
-.linkmenu,
-.linkmenu:visited {display: block}
+.cssmenu li ul {
+	position: absolute;
+	width: 10em;
+	left: -999em;
+	z-index: 1001}
 
-.linkmenu:hover {color: #82a7c8}
+/* Page top and page controls (inc. specif. cssmenu properties) */
 
-div.option a:hover,
-div.option a:active {}
+.pagecontrols {
+	z-index: 210;
+	background: url(coelesce/tiki-centerbg.jpg) repeat-x;
+	min-width: 100%}
+	
+*:first-child+html .pagecontrols {background: #5a7ea2}
 
-a.linkmodule {}
-a.linkmodule:hover {color: #82a7c8}
+.top {
+	height: 34px;
+	position: relative;
+	z-index: 211}
 
+*:first-child+html .top {
+	min-width: 100% !important;
+	background: url(coelesce/tiki-centerbg.jpg) repeat-x}
 
-.rsslist {}
-.rssitem {}
-.rssitem:first-child {}
-.rssdate {}
+.wikiinfo {float:none !important}
+	
+.top h1 {
+	padding-top: 10px;
+	z-index: 212}
 
-/* From Tikineat -- check */
-div.menuSection div.menuSection,
-div.menuSection div.separator {}
-/* End from Tikineat */
+.pageactions {
+	position: absolute;
+	top: 0;
+	right: 0;
+	z-index: 215;
+	background: #ccdceb url(coelesce/tiki-centerbg.jpg) repeat-x;}
 
+.pageactions .cssmenu > li {
+	padding-right: 5px;
+	background: url(../lib/phplayers/images/down-galaxy.png) 90% 75% no-repeat}
 
+.pageactions .cssmenu li ul * {min-width: 8em}
+
+.pageactions .cssmenu li ul { /* second-level lists */
+	background: #ccdceb;
+	color: #5a7ea2;
+	border-top: 1px solid #527ca6;
+	/*z-index: 1000 !important*/}
+
+.pageactions .cssmenu li ul ul {
+	margin: -1em 0 0 10em;
+	/*z-index: 1000 !important*/}
+
+.pageactions .cssmenu li a {
+	font-size: 12px;
+	border: 0;
+	color: #265076;
+	padding: 11px;
+	border-left: #ebf5fe 1px solid;
+	/*z-index: 1000 !important*/}
+	
+.pageactions .cssmenu li:hover ul {
+	border: 0;
+	background: #ccdceb;
+	color: #5a7ea2;}
+
+.pageactions .cssmenu li:hover ul li:hover {
+	background: #eff8ff;
+	color: #5a7ea2;}
+	
+/*.pageactions .cssmenu li li a {padding: 8px}
+.pageactions .cssmenu li li a:hover {padding: 8px 0}*/
+.pageactions .cssmenu li ul ul {margin: -1em 0 0 10em}
+.pageactions .cssmenu li.selected > a {/*background: #D3D3D3*/}
+.pageactions .cssmenu li.selectedAscendant > a {/*background: #E6E6E6*/}
+
+.pagecontrols .tabs {
+	margin: 0 !important;
+	padding-left: 5px !important;
+	height: 26px;
+	z-index: 216;
+	background: #5a7ea2;
+	position: inherit}
+	
+*:first-child+html .tabs {/*min-width: 100%;*/}
+	
+.pagecontrols .tabs .tabmark {
+	background: #5a7ea2;
+	margin-top: 8px;
+	display: inline-block;
+	border: 0}
+	
+*:first-child+html .pagecontrols .tabs .tabmark	 {margin-top: 9px}
+	
+.pagecontrols .tabs .tabactive {
+	background: #fff;
+	border: 0 !important;
+	background: #fff !important}
+	
+.pagecontrols .tabs .tabmark a {
+	color: #ccdceb;
+	font-size: 11px;
+	font-weight: bold;
+	padding: 3px 5px}
+
+.pagecontrols .tabs .tabactive a,
+.pagecontrols .tabs .tabmark a:hover {
+	color: #5a7ea2;
+	background: #fff;}
 
 /****** Misc. Global Classes (layout and style) ****/
 .hidden {
@@ -1144,7 +1256,7 @@ a.forumnameread { color: #517ea7}
 /** Tabs **/
 
 .tabs {
-	margin: 10px 2px -18px 2px !important;
+	margin: 10px 0 -18px 0 !important;
 	background: #5a7ea2;
 	border-bottom: solid 1px #4a6a90 !important;
 	padding: 0 5px !important;
@@ -1203,72 +1315,6 @@ a.forumnameread { color: #517ea7}
 .tabcontent table td {padding: 5px}
 table.admin div#content1 div.tabcontent div.cbox {background: transparent}
 
-/* Page controls */
-
-.pagecontrols {
-	z-index: 210;
-	background: url(coelesce/tiki-centerbg.jpg) repeat-x;
-	min-width: 100%}
-
-.top {
-	height: 34px;
-	position: relative;
-	z-index: 211}
-	
-*:first-child+html .top {min-width: 100% !important}
-.wikiinfo {float:none !important/*margin-top: -18px !important*/}
-	
-.top h1 {
-	padding-top: 10px;
-	z-index: 212}
-
-.top > .actions {
-	z-index: 214;
-	position: absolute;
-	top: 0;
-	right: 0}
-
-.pageactions {
-	position: absolute;
-	top: 0;
-	right: 0;
-	z-index: 215;
-	background: #ccdceb url(coelesce/tiki-centerbg.jpg) repeat-x;}
-	
-.pagecontrols .tabs {
-	margin: 0 !important;
-	padding-left: 10px !important;
-	height: 26px;
-	z-index: 216;
-	background: #5a7ea2;
-	position: inherit;}
-	
-*:first-child+html .tabs {min-width: 100%}
-	
-.pagecontrols .tabs .tabmark {
-	background: #5a7ea2;
-	margin-top: 8px;
-	display: inline-block;
-	border: 0}
-	
-*:first-child+html .pagecontrols .tabs .tabmark	 {margin-top: 9px}
-	
-.pagecontrols .tabs .tabactive {
-	background: #fff;
-	border: 0 !important;
-	background: #fff !important}
-	
-.pagecontrols .tabs .tabmark a {
-	color: #ccdceb;
-	font-size: 11px;
-	font-weight: bold;
-	padding: 3px 5px}
-
-.pagecontrols .tabs .tabactive a,
-.pagecontrols .tabs .tabmark a:hover {
-	color: #5a7ea2;
-	background: #fff;}
-	
 /*** Feature-specific selectors ***/
 
 /***** Wiki *****/
