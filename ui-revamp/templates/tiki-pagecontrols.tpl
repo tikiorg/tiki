@@ -2,13 +2,13 @@
 	<div class="top">
 		<h1>{$controls.heading}</h1>
 		<div class="pageactions">
-			<ul class="cssmenu_horiz">
+			<ul class="cssmenu">
 				{foreach from=$controls.menus item=menu}
 					<li><a href="#" title="{$menu} items">{$menu}</a>
 						<ul>
 							{foreach from=$menu.items item=item}
 								{if $item.selected}
-								<li class="highlight">{$item}</li>
+								<li class="selected">{$item}</li>
 								{else}
 								<li>{$item}</li>
 								{/if}
