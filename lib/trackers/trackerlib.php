@@ -1040,11 +1040,9 @@ class TrackerLib extends TikiLib {
 					}
 				} elseif ($ins_fields['data'][$i]['type'] == 'A') { //attachment
 					global $tiki_p_attach_trackers;
-					echo 'GGGG';
 					if ($tiki_p_attach_trackers == 'y' && !empty($ins_fields['data'][$i]['file_name'])) {
 						if ($prefs['t_use_db'] == 'n') {
 							$fhash = md5($ins_fields['data'][$i]['file_name'].$this->now);
-							echo 'AAAA'.$ins_fields['data'][$i]['file_name'].'-'.$this->now;
 							if (!$fw = fopen($prefs['t_use_dir'] . $fhash, 'wb')) {
 								$smarty->assign('msg', tra('Cannot write to this file:'). $fhash);
 								$smarty->display("error.tpl");
