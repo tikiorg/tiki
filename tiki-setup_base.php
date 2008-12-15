@@ -445,6 +445,7 @@ if( $magic_quotes_gpc ) {
 	remove_gpc($_GET);
 	remove_gpc($_POST);
 	remove_gpc($_COOKIE);
+	remove_gpc($_REQUEST);
 }
 
 // Preserve unfiltered values accessible through JIT filtering
