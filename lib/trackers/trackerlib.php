@@ -2411,7 +2411,7 @@ class TrackerLib extends TikiLib {
 			'opt'=>true,
 			'help'=>tra('<dl>
 				<dt>Function: Allows a selection from the list of pages.
-				<dt>Usage: <strong>auto-assign, size, maxlen</strong>
+				<dt>Usage: <strong>auto-assign, size, create</strong>
 				<dt>Description:
 				<dd><strong>[auto-assign]</strong> will auto-assign the creator of the item if set to 1
 				<dd><strong>[size]</strong> is the visible input length of the field in characters (<=0 not limited);
