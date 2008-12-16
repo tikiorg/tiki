@@ -82,6 +82,7 @@ if ( !empty($_REQUEST['submit_mult']) && isset($_REQUEST["checked"]) ) {
 
 if ( ! empty($multiprint_pages) ) {
 
+	$smarty->assign('print_page', 'y');
 	$smarty->assign_by_ref('pages', $multiprint_pages);
 
 	// disallow robots to index page:
