@@ -112,6 +112,12 @@ class  Multilingual_Aligner_BilingualAlignerTest extends PHPUnit_Framework_TestC
 
       $exp_cost_matrix = array();
       
+      $exp_cost_matrix["-1n0|-1n0"]["-1m1|-1m1"]= "match_cost";
+      $exp_cost_matrix["-1n0|-1n0"]["-1m2|-1m1"]= "match_cost";
+      $exp_cost_matrix["-1n0|-1n0"]["-1m1|-1m2"]= "match_cost";
+      $exp_cost_matrix["-1n0|-1n0"]["-1s1|-1s0"]= "skip_cost";
+      $exp_cost_matrix["-1n0|-1n0"]["-1s0|-1s1"]= "skip_cost";      
+      
       $exp_cost_matrix["-1m1|-1m1"]["0m1|0m1"]= "match_cost";
       $exp_cost_matrix["-1m1|-1m1"]["0m1|0m2"]= "match_cost";
       $exp_cost_matrix["-1m1|-1m1"]["0s1|0s0"]= "skip_cost";
@@ -223,12 +229,10 @@ class  Multilingual_Aligner_BilingualAlignerTest extends PHPUnit_Framework_TestC
       $exp_cost_matrix["-1s1|2s0"]["0s1|2s0"]= "skip_cost";
       $exp_cost_matrix["-1s1|2s0"]["END"]= "goto_end_cost";
       
-//      $exp_cost_matrix["1m1|0m1"]["END"] = "goto_end_cost";   
       
       $this->assertCostMatrixEquals($exp_cost_matrix, $this->aligner->cost_matrix,  
                                     "Cost matrix was wrong.");
                                     
-      $this->fail("Need to generate arcs from START node. Pickup development from there.");
    }
    
    function test__parse_node_ID() {
@@ -237,7 +241,10 @@ class  Multilingual_Aligner_BilingualAlignerTest extends PHPUnit_Framework_TestC
       $this->assert_parse_node_ID_yields('3s1|5m0', array(3, 's', 1, 5, 'm', 0),  
                                    "Parsed node ID info was wrong for case where sentences were skipped.");
       $this->assert_parse_node_ID_yields('-1m1|-1m1', array(-1, 'm', 1, -1, 'm', 1),  
-                                   "Parsed node ID info was wrong for case with sentence number = -1 (i.e., initial state).");
+                                   "Parsed node ID info was wrong for case with sentence number = -1 (i.e., cursor before first sentences on both sides).");
+      $this->assert_parse_node_ID_yields('-1n0|-1n0', array(-1, 'n', 0, -1, 'n', 0),  
+                                   "Parsed node ID info was wrong for START node '-1n0|-1n0'.");
+
    }
 
 
@@ -248,6 +255,9 @@ class  Multilingual_Aligner_BilingualAlignerTest extends PHPUnit_Framework_TestC
       $this->assertEquals(null, 
                           $this->aligner->_generate_node_ID(5, 'm', 2, 4, 'm', 1),
                           "Node ID should be null when the L1 or L2 sentence number exceeds length of L1 or L2 document");
+      $this->assertEquals('-1n0|-1n0', 
+                          $this->aligner->_generate_node_ID(-1, 'n', 0, -1, 'n', 0),
+                          "Node ID was wrong for START node '-1n0|-1n0'.");
 
 
    }
@@ -259,6 +269,9 @@ class  Multilingual_Aligner_BilingualAlignerTest extends PHPUnit_Framework_TestC
                                    "Current sentences were wrong for initial nodes (i.e., sentence number = -1)");
       $this->assert_sentences_at_this_node('4s1|5m0', array(5, 5), 
                                    "Current sentences were wrong for case where we skip a sentence.");
+      $this->assert_sentences_at_this_node('-1n0|-1n0', array(-1, -1), 
+                                   "Current sentences were wrong for START node '-1n0|-1n0'.");
+                                   
 
    }
 

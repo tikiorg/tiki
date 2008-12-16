@@ -28,8 +28,9 @@ class Multilingual_Aligner_BilingualAligner {
 	function _generate_shortest_path_matrix() {
 //        print "-- _generate_shortest_path_matrix: invoked\n";
 
-	    $this->nodes_at_current_level = array("-1m1|-1m1", "-1m2|-1m1", "-1m1|-1m2",
-	                                   "-1s1|-1s0", "-1s0|-1s1");
+
+	    $this->nodes_at_current_level = array("-1n0|-1n0");
+	    
 //	    print "-- _generate_shortest_path_matrix: count(\$this->nodes_at_current_level)=".count($this->nodes_at_current_level)."\n";
 
 	    while (count($this->nodes_at_current_level) > 0) {
@@ -127,6 +128,7 @@ class Multilingual_Aligner_BilingualAligner {
 	 *    $l1_operation: Operation performed on L1 sentence when moving to this node.
 	 *       'm' = match $l1_previous_sentence to current L2 sentences.
 	 *       's' = skip $l1_previous_sentence
+	 *       'n' = nothing (only used for initial start node).
 	 *
 	 *    $l1_num_times: Number of times that the above operation should be performed.
 	 *
@@ -141,7 +143,7 @@ class Multilingual_Aligner_BilingualAligner {
 	
     public function _parse_node_ID($node_id){
 //       print "-- _parse_node_ID: \$node_id='$node_id'\n";
-       preg_match('/([\-\d]+)([ms])([\d]+)\|([\-\d]+)([ms])([\d]+)/', $node_id, $info);
+       preg_match('/([\-\d]+)([msn])([\d]+)\|([\-\d]+)([msn])([\d]+)/', $node_id, $info);
 //       print "-- _parse_node_ID: \$info=\n";var_dump($info);print "\n";;
        return array($info[1], $info[2], $info[3], $info[4], $info[5], $info[6]);
     }    
