@@ -244,7 +244,6 @@ class  Multilingual_Aligner_BilingualAlignerTest extends PHPUnit_Framework_TestC
                                    "Parsed node ID info was wrong for case with sentence number = -1 (i.e., cursor before first sentences on both sides).");
       $this->assert_parse_node_ID_yields('-1n0|-1n0', array(-1, 'n', 0, -1, 'n', 0),  
                                    "Parsed node ID info was wrong for START node '-1n0|-1n0'.");
-
    }
 
 
@@ -271,10 +270,29 @@ class  Multilingual_Aligner_BilingualAlignerTest extends PHPUnit_Framework_TestC
                                    "Current sentences were wrong for case where we skip a sentence.");
       $this->assert_sentences_at_this_node('-1n0|-1n0', array(-1, -1), 
                                    "Current sentences were wrong for START node '-1n0|-1n0'.");
-                                   
-
    }
+   
+   function test__sentences_preceding_this_node() {  
+      $node = '3m1|5m1';
+      $sentences_preceding_node = $this->aligner->_sentences_preceding_this_node($node);
+      $this->assertEquals(array(3, 5), $sentences_preceding_node,
+                                   "Sentences preceding node '$node' were wrong.");
+   } 
 
+   public function test__compute_node_transition_cost() {
+      $this->_setup_segmented_sentences();
+      
+      $this->assert__compute_node_transition_cost__yields("0m1|0m1", 0, 
+               "Transition cost failed for 1 to 1 match"); 
+      $this->assert__compute_node_transition_cost__yields("0m1|0m2", 1.29, 
+               "Transition cost failed for 1 to 2 match");      
+      $this->assert__compute_node_transition_cost__yields("0m2|0m1", 0.58, 
+               "Transition cost failed for 2 to 1 match");      
+      $this->assert__compute_node_transition_cost__yields("0s1|0s0", 1, 
+               "Transition cost failed for L1 side skip");    
+      $this->assert__compute_node_transition_cost__yields("0s0|0s1", 1, 
+               "Transition cost failed for L2 side skip");     
+   }
    
    ////////////////////////////////////////////////////////////////
    // Helper methods
@@ -329,5 +347,14 @@ class  Multilingual_Aligner_BilingualAlignerTest extends PHPUnit_Framework_TestC
 
        }
    }   
+   
+   public function assert__compute_node_transition_cost__yields($destination_node,
+                      $exp_cost, $message) {
+      $got_cost = $this->aligner->_compute_node_transition_cost($destination_node);
+      $tolerance = 0.01;
+      $this->assertEquals($exp_cost, $got_cost, 
+                          $message."\nTransition cost to node '$destination_node' was wrong",
+                          $tolerance);  
+   }
 }
 ?>

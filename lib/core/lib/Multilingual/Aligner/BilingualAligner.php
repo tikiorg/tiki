@@ -189,6 +189,38 @@ class Multilingual_Aligner_BilingualAligner {
        
        return array($l1_next_sentence, $l2_next_sentence);
     }	
+    
+    function _sentences_preceding_this_node($node_id) {
+       $node_info = $this->_parse_node_ID($node_id);
+       $l1_sentence = $node_info[0];
+       $l2_sentence = $node_info[3];
+       return array($l1_sentence, $l2_sentence);
+    }
+    
+    function _compute_node_transition_cost($destination_node) {
+       $end_sentences = $this->_sentences_at_this_node($destination_node);
+       $l1_end_sentence = $end_sentences[0];
+       $l2_end_sentence = $end_sentences[1];
+       
+       $preceding_sentences = $this->_sentences_preceding_this_node($destination_node);
+       $l1_prec_sentence = $preceding_sentences[0];
+       $l2_prec_sentence = $preceding_sentences[1];
+       
+       $l1_sentences = array_slice($this->l1_sentences, $l1_prec_sentence,
+                                   $l1_end_sentence - $l1_prec_sentence);
+       $l2_sentences = array_slice($this->l2_sentences, $l2_prec_sentence,
+                                   $l2_end_sentence - $l2_prec_sentence);
+                                   
+       $l1_text = implode($l1_sentences);
+       $l2_text = implode($l2_sentences);      
+       
+//       print "\n-- BilingualAlignner._compute_node_transition_cost: \$l1_text='$l1_text', length=".strlen($l1_text)."\n";
+//       print "-- BilingualAlignner._compute_node_transition_cost: \$l2_text='$l2_text', length=".strlen($l2_text)."\n";
+       
+       $transition_cost = $this->_sentence_length_delta($l1_text, $l2_text);
+       
+       return $transition_cost;
+    }
 	
 }
 
