@@ -24,7 +24,6 @@
 </tr>
 </table>
 </form>
-</div>
 {/if}
 {section name=x loop=$poll_info_arr}
 <h2><a href="tiki-poll_results.php?pollId={$poll_info_arr[x].pollId}{if !empty($list_votes)}&amp;list=y{/if}">{$poll_info_arr[x].title}</a></h2>
