@@ -375,21 +375,17 @@ for ($i = 0; $i < $temp_max; $i++) {
 				$textarea_options = true;
 			}
 			 if ($fields["data"][$i]["isMultilingual"]=='y') {
-				 global $multilinguallib; include_once('lib/multilingual/multilinguallib.php');
-				 $multi_languages = $prefs['available_languages'];
-				 $smarty->assign('multi_languages',$multi_languages);
 				 $ins_fields['data'][$i]['isMultilingual']='y';
-				 $compteur=0;
-				 foreach ($multi_languages as $num=>$tmplang){
+				 foreach ($prefs['available_languages'] as $num=>$tmplang){
 					 //Case convert normal -> multilingual
-					 if (!isset($_REQUEST[$ins_id.'_'.$tmplang]) && isset($_REQUEST[$ins_id]))
-						 $_REQUEST[$ins_id.'_'.$tmplang]=$_REQUEST["$ins_id"];
+					 if (!isset($_REQUEST[$ins_id][$tmplang]) && isset($_REQUEST[$ins_id]))
+						 $_REQUEST[$ins_id][$tmplang] = $_REQUEST[$ins_id];
 					 $fields['data'][$i]['lingualvalue'][$num]['lang'] = $tmplang;
-					 if (isset($_REQUEST[$ins_id.'_'.$tmplang]))
-						 $fields['data'][$i]['lingualvalue'][$num]['value'] = $_REQUEST[$ins_id.'_'.$tmplang];
+					 if (isset($_REQUEST[$ins_id][$tmplang]))
+						 $fields['data'][$i]['lingualvalue'][$num]['value'] = $_REQUEST[$ins_id][$tmplang];
 					 $fields['data'][$i]['lingualpvalue'][$num]['lang'] = $tmplang;
-					 if (isset($_REQUEST[$ins_id.'_'.$tmplang]))
-						 $fields['data'][$i]['lingualpvalue'][$num]['value'] = $tikilib->parse_data(htmlspecialchars($_REQUEST[$ins_id.'_'.$tmplang]));
+					 if (isset($_REQUEST[$ins_id][$tmplang]))
+						 $fields['data'][$i]['lingualpvalue'][$num]['value'] = $tikilib->parse_data(htmlspecialchars($_REQUEST[$ins_id][$tmplang]));
 				 }
 				 $ins_fields['data'][$i]['lingualpvalue']=$fields['data'][$i]['lingualpvalue'];
 				 $ins_fields['data'][$i]['lingualvalue']=$fields['data'][$i]['lingualvalue'];
@@ -485,24 +481,20 @@ for ($i = 0; $i < $temp_max; $i++) {
 				}
 
 			} elseif (($fields["data"][$i]["type"] == 't')&& ($fields["data"][$i]["isMultilingual"]=='y')) {
-				global $multilinguallib; include_once('lib/multilingual/multilinguallib.php');
-				$multi_languages = $prefs['available_languages'];
-				$smarty->assign('multi_languages',$multi_languages);
-
 				$ins_fields['data'][$i]['isMultilingual']='y';
-				$compteur=0;
-				foreach ($multi_languages as $num=>$tmplang){
+				foreach ($prefs['available_languages'] as $num=>$tmplang){
 					//Case convert normal -> multilingual
-					if (!isset($_REQUEST[$ins_id.'_'.$tmplang]) && isset($_REQUEST["$ins_id"]))
-						$_REQUEST[$ins_id.'_'.$tmplang]=$_REQUEST["$ins_id"];
+					if (!isset($_REQUEST[$ins_id][$tmplang]) && isset($_REQUEST[$ins_id]))
+						$_REQUEST[$ins_id][$tmplang] = $_REQUEST[$ins_id];
 					$fields['data'][$i]['lingualvalue'][$num]['lang'] = $tmplang;
-					if (isset($_REQUEST[$ins_id.'_'.$tmplang]))
-						$fields['data'][$i]['lingualvalue'][$num]['value'] = $_REQUEST[$ins_id.'_'.$tmplang];
+					if (isset($_REQUEST[$ins_id][$tmplang]))
+						$fields['data'][$i]['lingualvalue'][$num]['value'] = $_REQUEST[$ins_id][$tmplang];
 					$fields['data'][$i]['lingualpvalue'][$num]['lang'] = $tmplang;
-					if (isset($_REQUEST[$ins_id.'_'.$tmplang]))
-						$fields['data'][$i]['lingualpvalue'][$num]['value'] = $tikilib->parse_data(htmlspecialchars($_REQUEST[$ins_id.'_'.$tmplang]));
+					if (isset($_REQUEST[$ins_id][$tmplang]))
+						$fields['data'][$i]['lingualpvalue'][$num]['value'] = $tikilib->parse_data(htmlspecialchars($_REQUEST[$ins_id][$tmplang]));
 
 				}
+				echo 'gggg'.$ins_id;print_r($fields['data'][$i]['lingualvalue']);print_r($_REQUEST);
 				$ins_fields['data'][$i]['lingualpvalue']=$fields['data'][$i]['lingualpvalue'];
 				$ins_fields['data'][$i]['lingualvalue']=$fields['data'][$i]['lingualvalue'];
 			}

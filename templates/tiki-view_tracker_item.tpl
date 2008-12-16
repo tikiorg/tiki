@@ -150,6 +150,9 @@
 {include file="textareasize.tpl" area_name='comment_data' formId='commentform' ToolbarSet='Tiki'}</td>
 <td><textarea rows="{if empty($rows)}4{else}{$rows}{/if}" cols="{if empty($cols)}50{else}{$cols}{/if}" name="comment_data" id="comment_data">{$comment_data|escape}</textarea>
 </td></tr>
+{if !$user and $prefs.feature_antibot eq 'y'}
+	{include file="antibot.tpl"}
+{/if}
 <tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="save_comment" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
@@ -357,23 +360,8 @@ document.write('<div class="categSelectAll"><input type="checkbox" id="clickall"
 {/if}
 
 {elseif $cur_field.type eq 't'}
+	{include file='tracker_item_field_input.tpl' field_value=$cur_field item=$item_info}
 
-    {if $cur_field.isMultilingual ne "y"}
-        {if $cur_field.options_array[2]}<span class="formunit">{$cur_field.options_array[2]}&nbsp;</span>{/if}
-        <input type="text" name="ins_{$cur_field.id}" value="{$cur_field.value|escape}" {if $cur_field.options_array[1]}size="{$cur_field.options_array[1]}" maxlength="{$cur_field.options_array[1]}"{/if} />
-        {if $cur_field.options_array[3]}<span class="formunit">&nbsp;{$cur_field.options_array[3]}</span>{/if}
-
-    {else}
-    <table>
-        {foreach from=$cur_field.lingualvalue item=ling}
-        <TR><TD>{$ling.lang}</td><td>
-                {if $cur_field.options_array[2]}<span class="formunit">{$cur_field.options_array[2]}&nbsp;</span>{/if}
-            <input type="text" name="ins_{$cur_field.id}_{$ling.lang}" value="{$ling.value|escape}" {if $cur_field.options_array[1]}size="{$cur_field.options_array[1]}" maxlength="{$cur_field.options_array[1]}"{/if} />
-            {if $cur_field.options_array[3]}<span class="formunit">&nbsp;{$cur_field.options_array[3]}</span>{/if}
-            </td></tr>
-        {/foreach}
-    </table>
-    {/if}
 {elseif $cur_field.type eq 'k'}
         <input type="text" name="ins_{$cur_field.id}" value="{$cur_field.value|escape}" {if $cur_field.options_array[1]}size="{$cur_field.options_array[1]}"{/if} />
 

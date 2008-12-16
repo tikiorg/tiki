@@ -1203,7 +1203,6 @@ class TrackerLib extends TikiLib {
 									$ins_fields["data"][$i]['lingualvalue'][] = array('lang'=>$prefs['language'], 'value'=>$ins_fields["data"][$i]['value']);
                                 }
 
-
 				  foreach ($ins_fields["data"][$i]['lingualvalue'] as $linvalue)
 	                                if ($itemId) {
 	                                        $result = $this->query('select `value` from `tiki_tracker_item_fields` where `itemId`=? and `fieldId`=? and `lang`=?',array((int) $itemId,(int) $fieldId,(string)$linvalue['lang']));

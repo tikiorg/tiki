@@ -532,28 +532,20 @@ foreach($xfields["data"] as $i=>$array) {
 		if ($fields["data"][$i]["options_array"][0])	{
 			$textarea_options = true;
 		}
-		        if ($fields["data"][$i]["isMultilingual"]=='y') {
-
-                                  global $multilinguallib;
-                                  include_once('lib/multilingual/multilinguallib.php');
-                                  $multi_languages = $prefs['available_languages'];
-                                  $smarty->assign('multi_languages',$multi_languages);
-
-                                  $ins_fields["data"][$i]['isMultilingual']='y';
-				            //print_r($multi_languages);
-				            $compteur=0;
-				            foreach ($multi_languages as $num=>$tmplang){
-				            //Case convert normal -> multilingual
-				            if (!isset($_REQUEST[$ins_id."_".$tmplang]) && isset($_REQUEST["$fid"]))
-				                $_REQUEST["$fid$lang"]=$_REQUEST["$fid"];
-				            $ins_fields["data"][$i]["lingualvalue"][$num]["lang"] = $tmplang;
-				            if (isset($_REQUEST[$ins_id."_".$tmplang]))
-				                $ins_fields["data"][$i]["lingualvalue"][$num]["value"] =     $_REQUEST[$ins_id."_".$tmplang];
-				            $ins_fields["data"][$i]["lingualpvalue"][$num]["lang"] = $tmplang;
-				            if (isset($_REQUEST[$ins_id."_".$tmplang]))
-				                $ins_fields["data"][$i]["lingualpvalue"][$num]["value"] =     $tikilib->parse_data(htmlspecialchars($_REQUEST[$ins_id."_".$tmplang]));
-					    }
-				        }
+		if ($fields["data"][$i]["isMultilingual"]=='y') {
+			$ins_fields["data"][$i]['isMultilingual']='y';
+			foreach ($prefs['available_languages'] as $num=>$tmplang){
+				//Case convert normal -> multilingual
+				if (!isset($_REQUEST[$ins_id][$tmplang]) && isset($_REQUEST[$fid]))
+					$_REQUEST["$fid$lang"] = $_REQUEST[$fid];
+				$ins_fields["data"][$i]['lingualvalue'][$num]['lang'] = $tmplang;
+				if (isset($_REQUEST[$ins_id][$tmplang]))
+					$ins_fields['data'][$i]['lingualvalue'][$num]['value'] = $_REQUEST[$ins_id][$tmplang];
+				$ins_fields['data'][$i]['lingualpvalue'][$num]['lang'] = $tmplang;
+				if (isset($_REQUEST[$ins_id][$tmplang]))
+					$ins_fields['data'][$i]['lingualpvalue'][$num]['value'] = $tikilib->parse_data(htmlspecialchars($_REQUEST[$ins_id][$tmplang]));
+			}
+		}
 
 		} elseif($fields["data"][$i]["type"] == 'y' ) { // country list
 			if (isset($_REQUEST["$ins_id"])) {
@@ -632,26 +624,19 @@ foreach($xfields["data"] as $i=>$array) {
 				}
 			}
 			 if (($fields["data"][$i]["isMultilingual"] == 'y') && $fields["data"][$i]["type"] == 't') {
-
-
-                                  global $multilinguallib;
-                                  include_once('lib/multilingual/multilinguallib.php');
-                                  $multi_languages = $prefs['available_languages'];
-                                  $smarty->assign('multi_languages',$multi_languages);
-                                  $ins_fields["data"][$i]['isMultilingual']='y';
-				            $compteur=0;
-				            foreach ($multi_languages as $num=>$lang){
-				            //Case convert normal -> multilingual
-				            if (!isset($_REQUEST[$ins_id."_".$lang]) && isset($_REQUEST["$fid"]))
-				                $_REQUEST["$fid$lang"]=$_REQUEST["$fid"];
-				            $ins_fields["data"][$i]["lingualvalue"][$num]["lang"] = $lang;
-				            if (isset($_REQUEST[$ins_id."_".$lang]))
-				            $ins_fields["data"][$i]["lingualvalue"][$num]["value"] =     $_REQUEST[$ins_id."_".$lang];
-				            $ins_fields["data"][$i]["lingualpvalue"][$num]["lang"] = $lang;
-				            if (isset($_REQUEST[$ins_id."_".$lang]))
-				            $ins_fields["data"][$i]["lingualpvalue"][$num]["value"] =     $tikilib->parse_data(htmlspecialchars($_REQUEST[$ins_id."_".$lang]));
-					    }
-				        }
+				 $ins_fields["data"][$i]['isMultilingual']='y';
+				 foreach ($prefs['available_languages'] as $num=>$lang){
+		            //Case convert normal -> multilingual
+					 if (!isset($_REQUEST[$ins_id][$lang]) && isset($_REQUEST[$fid]))
+						 $_REQUEST["$fid$lang"] = $_REQUEST[$fid];
+					 $ins_fields['data'][$i]['lingualvalue'][$num]['lang'] = $lang;
+					 if (isset($_REQUEST[$ins_id][$lang]))
+						 $ins_fields['data'][$i]['lingualvalue'][$num]['value'] = $_REQUEST[$ins_id][$lang];
+					 $ins_fields['data'][$i]['lingualpvalue'][$num]['lang'] = $lang;
+					 if (isset($_REQUEST[$ins_id][$lang]))
+						 $ins_fields['data'][$i]['lingualpvalue'][$num]['value'] = $tikilib->parse_data(htmlspecialchars($_REQUEST[$ins_id][$lang]));
+				}
+			}
 		}
 	} elseif ($xfields["data"][$i]["type"] == "u" and isset($xfields["data"][$i]['options_array'][0]) and $user and $xfields["data"][$i]['options_array'][0] == 1 and isset($tracker_info["writerCanModify"]) and $tracker_info["writerCanModify"] == 'y') {
 		// even if field is hidden need to pick up user for perm
