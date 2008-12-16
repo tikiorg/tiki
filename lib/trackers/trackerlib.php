@@ -440,7 +440,7 @@ class TrackerLib extends TikiLib {
 		$query.= " where tti.`trackerId`=ttf.`trackerId` and ttif.`fieldId`=ttf.`fieldId` and ttf.`trackerId`=? and ttf.`fieldId`=? and ttif.`value`=?";
 		$bindVars = array((int)$trackerId, (int)$fieldId, $value);
 		if (!empty($status)) {
-			$query .= 'and tti.`status`=?';
+			$query .= ' and tti.`status`=?';
 			$bindVars[] = $status;
 		}
 		$result = $this->query($query, $bindVars);
