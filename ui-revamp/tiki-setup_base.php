@@ -447,13 +447,19 @@ if( $magic_quotes_gpc ) {
 	remove_gpc($_COOKIE);
 }
 
+// Rebuild request after gpc fix
+// _REQUEST should only contain GET and POST in the app
+$_REQUEST = array_merge($_GET, $_POST);
+
 // Preserve unfiltered values accessible through JIT filtering
 $jitPost = new JitFilter( $_POST );
 $jitGet = new JitFilter( $_GET );
+$jitRequest = new JitFilter( $_REQUEST );
 $jitCookie = new JitFilter( $_COOKIE );
 
 $jitPost->setDefaultFilter( 'xss' );
 $jitGet->setDefaultFilter( 'xss' );
+$jitRequest->setDefaultFilter( 'xss' );
 $jitCookie->setDefaultFilter( 'xss' );
 
 // Apply configured filters to all other input
@@ -466,6 +472,9 @@ if( $clean_xss ) {
 $_GET = $inputFilter->filter( $_GET );
 $_POST = $inputFilter->filter( $_POST );
 $_COOKIE = $inputFilter->filter( $_COOKIE );
+
+// Rebuild request with filtered values
+$_REQUEST = array_merge($_GET, $_POST);
 
 if ( $tiki_p_trust_input != 'y' ) {
 	$varcheck_vars = array('_COOKIE', '_GET', '_POST', '_ENV', '_SERVER');
@@ -489,11 +498,6 @@ unset($GLOBALS['HTTP_SERVER_VARS']);
 unset($GLOBALS['HTTP_SESSION_VARS']);
 unset($GLOBALS['HTTP_POST_FILES']);
 
-// rebuild $_REQUEST after sanity check
-unset($_REQUEST);
-$_REQUEST = array_merge($_GET, $_POST);
-$jitRequest = new JitFilter( $_REQUEST );
-$jitRequest->setDefaultFilter( 'xss' );
 
 // --------------------------------------------------------------
 
