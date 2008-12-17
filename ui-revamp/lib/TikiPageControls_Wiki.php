@@ -31,6 +31,9 @@ class TikiPageControls_Wiki extends TikiPageControls
 
 	function build() // {{{
 	{
+		// TODO : Figure out what to do with this one
+		$this->setHelp( $this->link( 'url', '#' ) );
+
 		switch($mode) {
 		case 'translate_new':
 		case 'translate_update':

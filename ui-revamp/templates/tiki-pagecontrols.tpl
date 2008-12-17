@@ -16,6 +16,9 @@
 						</ul>
 					</li>
 				{/foreach}
+				{if $controls.help}
+					<li>{$controls.help.full}</li>
+				{/if}
 				</ul>
 			</div>
 		</div>

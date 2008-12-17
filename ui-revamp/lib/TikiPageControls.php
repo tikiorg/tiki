@@ -61,6 +61,7 @@ class TikiPageControls_Element implements ArrayAccess
 		case 'link': return $this->link;
 		case 'type': return $this->type;
 		case 'selected': return $this->selected;
+		case 'full': return $this->getFullLink();
 		case 'icon': return $this->getIconLink();
 		case 'iconsrc': return $this->iconPath;
 		}
@@ -74,6 +75,7 @@ class TikiPageControls_Element implements ArrayAccess
 		case 'link': return true;
 		case 'type': return true;
 		case 'selected': return true;
+		case 'full': return true;
 		case 'icon': return true;
 		case 'iconsrc': return true;
 		default: return false;
@@ -85,12 +87,41 @@ class TikiPageControls_Element implements ArrayAccess
 
 	private function getIconLink() // {{{
 	{
-		return '<a href="' . htmlentities($this->link->getHref(), ENT_QUOTES, 'UTF-8') . '">' . $this->getIcon() . '</a>';
+		if( $this->getIcon() ) {
+			return $this->getLinked( $this->getIcon() );
+		}
+	} // }}}
+
+	private function getFullLink() // {{{
+	{
+		return $this->getLinked( $this->getIcon() . $this->getText() );
 	} // }}}
 
 	private function getIcon() // {{{
 	{
-		return '<img src="' . htmlentities($this->iconPath, ENT_QUOTES, 'UTF-8') . '" alt="' . htmlentities($this->text, ENT_QUOTES, 'UTF-8') . '" title="' . htmlentities($this->text, ENT_QUOTES, 'UTF-8') . '" class="icon"/>';
+		if( $this->iconPath ) {
+			return '<img src="' . htmlentities($this->iconPath, ENT_QUOTES, 'UTF-8') . '" alt="' . htmlentities($this->text, ENT_QUOTES, 'UTF-8') . '" title="' . htmlentities($this->text, ENT_QUOTES, 'UTF-8') . '" class="icon"/>';
+		}
+	} // }}}
+
+	private function getText() // {{{
+	{
+		$text = htmlentities( $this->text, ENT_QUOTES, 'UTF-8' );
+
+		if( !is_null($this->argument) ) {
+			$text .= ' <span class="argument">' . htmlentities($this->argument, ENT_QUOTES, 'UTF-8') . '</span>';
+		}
+
+		return $text;
+	} // }}}
+
+	private function getLinked( $body ) // {{{
+	{
+		if( $href = $this->link ) {
+			return '<a href="' . htmlentities($href, ENT_QUOTES, 'UTF-8') . '">' . $body . '</a>';
+		} else {
+			return $body;
+		}
 	} // }}}
 
 	function __toString() // {{{
@@ -99,17 +130,7 @@ class TikiPageControls_Element implements ArrayAccess
 			return '<hr/>';
 		}
 
-		$text = htmlentities( $this->text, ENT_QUOTES, 'UTF-8' );
-
-		if( !is_null($this->argument) ) {
-			$text .= ' <span class="argument">' . htmlentities($this->argument, ENT_QUOTES, 'UTF-8') . '</span>';
-		}
-
-		if( $this->link ) {
-			$text = '<a href="' . htmlentities($this->link->getHref(), ENT_QUOTES, 'UTF-8') . '">' . $text . '</a>';
-		}
-
-		return $text;
+		return $this->getLinked( $this->getText() );
 	} // }}}
 }
 
@@ -244,6 +265,7 @@ abstract class TikiPageControls implements ArrayAccess
 	private $heading;
 	private $menus = array();
 	private $tabs = array();
+	private $help;
 	private $user;
 
 	private $type;
@@ -363,6 +385,15 @@ abstract class TikiPageControls implements ArrayAccess
 		return $tab;
 	} // }}}
 
+	protected function setHelp( $link ) // {{{
+	{
+		$this->help = new TikiPageControls_Element( 'help' );
+		$this->help
+			->setText( tra('Help') )
+			->setLink( $link )
+			->setIcon( 'pics/icons/help.png' );
+	} // }}}
+
 	private function renderTemplate( $template ) // {{{
 	{
 		global $smarty;
@@ -377,6 +408,7 @@ abstract class TikiPageControls implements ArrayAccess
 		case 'menus': return $this->menus;
 		case 'tabs': return $this->tabs;
 		case 'heading': return $this->heading;
+		case 'help': return $this->help;
 		case 'header': return $this->renderTemplate( $this->headerTemplate );
 		case 'footer': return $this->renderTemplate( $this->footerTemplate );
 		default: return $this->menus[$name];
@@ -391,6 +423,7 @@ abstract class TikiPageControls implements ArrayAccess
 		case 'heading':
 		case 'header': 
 		case 'footer': 
+		case 'help': 
 			return true;
 		default: return isset($this->menus[$name]);
 		}
