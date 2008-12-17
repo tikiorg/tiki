@@ -125,7 +125,7 @@ foreach($dirs as $i=>$d) {
 $smarty->assign_by_ref('dirs', $dirs);
 $smarty->assign_by_ref('dirsWritable', $dirsWritable);
 
-if (isset($_REQUEST['zip']) && isset($_REQUEST['zipPath'])) {
+if (isset($_REQUEST['zip']) && isset($_REQUEST['zipPath']) && $tiki_p_admin == 'y') {
 	include_once ('lib/pclzip.lib.php');
 	if (!$archive = new PclZip($_REQUEST['zipPath'])) {
 		$smarty->assign('msg', tra('Error:').$archive->errorInfo(true));

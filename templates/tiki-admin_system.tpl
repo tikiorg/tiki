@@ -28,7 +28,7 @@
 </tr>
 </table>
 <br />
-{if count($dirs)}
+{if count($dirs) && $tiki_p_admin eq 'y'}
 <h2>{tr}Directories to save{/tr}</h2>
 <form  method="post" action="{$smarty.server.PHP_SELF}">
 	{tr}Full Path to the Zip File:{/tr}<input type="text" name="zipPath" value="{$zipPath|escape}" />
