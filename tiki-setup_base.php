@@ -445,8 +445,11 @@ if( $magic_quotes_gpc ) {
 	remove_gpc($_GET);
 	remove_gpc($_POST);
 	remove_gpc($_COOKIE);
-	remove_gpc($_REQUEST);
 }
+
+// Rebuild request after gpc fix
+// _REQUEST should only contain GET and POST in the app
+$_REQUEST = array_merge($_GET, $_POST);
 
 // Preserve unfiltered values accessible through JIT filtering
 $jitPost = new JitFilter( $_POST );
@@ -470,6 +473,9 @@ $_GET = $inputFilter->filter( $_GET );
 $_POST = $inputFilter->filter( $_POST );
 $_COOKIE = $inputFilter->filter( $_COOKIE );
 
+// Rebuild request with filtered values
+$_REQUEST = array_merge($_GET, $_POST);
+
 if ( $tiki_p_trust_input != 'y' ) {
 	$varcheck_vars = array('_COOKIE', '_GET', '_POST', '_ENV', '_SERVER');
 	$varcheck_errors = '';
@@ -492,9 +498,6 @@ unset($GLOBALS['HTTP_SERVER_VARS']);
 unset($GLOBALS['HTTP_SESSION_VARS']);
 unset($GLOBALS['HTTP_POST_FILES']);
 
-// rebuild $_REQUEST after sanity check
-unset($_REQUEST);
-$_REQUEST = array_merge($_GET, $_POST);
 
 // --------------------------------------------------------------
 
