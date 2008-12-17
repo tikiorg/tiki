@@ -3582,6 +3582,10 @@ class TikiLib extends TikiDB {
 			$this->remove_from_structure($res["page_ref_id"]);
 		}
 
+		global $structlib;include_once('lib/structures/structlib.php');
+		$page_info = $structlib->s_get_page_info($page_ref_id);
+		$query = "update `tiki_structures` set `pos`=`pos`-1 where `pos`>? and `parent_id`=?";
+		$this->query($query ,array((int)$page_info['pos'], (int)$page_info['parent_id']));
 		$query = "delete from `tiki_structures` where `page_ref_id`=?";
 		$result = $this->query($query, array( $page_ref_id ) );
 		return true;
@@ -5139,7 +5143,7 @@ class TikiLib extends TikiDB {
 	}
 
 	// This recursive function handles pre- and no-parse sections and plugins
-	function parse_first(&$data, &$preparsed, &$noparsed, $real_start_diff='0') {
+	function parse_first(&$data, &$preparsed, &$noparsed, $real_start_diff='0', $options=null) {
 		global $dbTiki, $smarty, $tiki_p_edit, $prefs, $pluginskiplist;
 		if( ! is_array( $pluginskiplist ) )
 			$pluginskiplist = array();
@@ -5314,8 +5318,8 @@ class TikiLib extends TikiDB {
 								$ret = '~np~' . $smarty->fetch('tiki-plugin_blocked.tpl') . '~/np~';
 							}
 						}
-
-						if( $this->plugin_is_editable( $plugin_name ) ) {
+						//echo '<pre>'; debug_print_backtrace(); echo '</pre>';
+						if( $this->plugin_is_editable( $plugin_name ) && (empty($options['print']) || !$options['print'])) {
 							include_once('lib/smarty_tiki/function.icon.php');
 							global $headerlib, $page;
 							$headerlib->add_jsfile( 'tiki-jsplugin.php?plugin=' . urlencode( $plugin_name ) );
@@ -5929,6 +5933,7 @@ class TikiLib extends TikiDB {
 		$options['noparseplugins'] = $noparseplugins = isset($options['noparseplugins']) ? $options['noparseplugins'] : false;
 		$options['noheaderinc'] = $noheaderinc = isset($options['noheaderinc']) ? $options['noheaderinc'] : false;
 		$options['page'] = isset($options['page']) ? $options['page'] : $page;
+		$options['print'] = isset($options['print']) ? $options['print'] : false;
 
 		// if simple_wiki is true, disable some wiki syntax
 		// basically, allow wiki plugins, wiki links and almost
