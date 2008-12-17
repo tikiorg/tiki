@@ -445,18 +445,15 @@ if( $magic_quotes_gpc ) {
 	remove_gpc($_GET);
 	remove_gpc($_POST);
 	remove_gpc($_COOKIE);
-	remove_gpc($_REQUEST);
 }
 
 // Preserve unfiltered values accessible through JIT filtering
 $jitPost = new JitFilter( $_POST );
 $jitGet = new JitFilter( $_GET );
-$jitRequest = new JitFilter( $_REQUEST );
 $jitCookie = new JitFilter( $_COOKIE );
 
 $jitPost->setDefaultFilter( 'xss' );
 $jitGet->setDefaultFilter( 'xss' );
-$jitRequest->setDefaultFilter( 'xss' );
 $jitCookie->setDefaultFilter( 'xss' );
 
 // Apply configured filters to all other input
@@ -495,6 +492,8 @@ unset($GLOBALS['HTTP_POST_FILES']);
 // rebuild $_REQUEST after sanity check
 unset($_REQUEST);
 $_REQUEST = array_merge($_GET, $_POST);
+$jitRequest = new JitFilter( $_REQUEST );
+$jitRequest->setDefaultFilter( 'xss' );
 
 // --------------------------------------------------------------
 
