@@ -92,32 +92,7 @@ $listpages = $tikilib->list_blogs($offset, $maxRecords, $sort_mode, $find);
 
 $temp_max = count($listpages["data"]);
 for ($i = 0; $i < $temp_max; $i++) {
-	if ($userlib->object_has_one_permission($listpages["data"][$i]["blogId"], 'blog')) {
-		$listpages["data"][$i]["individual"] = 'y';
-
-		// blogs that user cannot read are not displayed at all
-		$listpages["data"][$i]["individual_tiki_p_read_blog"] = 'y';
-
-		if ($userlib->object_has_permission($user, $listpages["data"][$i]["blogId"], 'blog', 'tiki_p_blog_post')) {
-			$listpages["data"][$i]["individual_tiki_p_blog_post"] = 'y';
-		} else {
-			$listpages["data"][$i]["individual_tiki_p_blog_post"] = 'n';
-		}
-
-		if ($userlib->object_has_permission($user, $listpages["data"][$i]["blogId"], 'blog', 'tiki_p_create_blogs')) {
-			$listpages["data"][$i]["individual_tiki_p_create_blogs"] = 'y';
-		} else {
-			$listpages["data"][$i]["individual_tiki_p_create_blogs"] = 'n';
-		}
-
-		if ($tiki_p_admin == 'y' || $userlib->object_has_permission($user, $listpages["data"][$i]["blogId"], 'blog', 'tiki_p_blog_admin'))
-			{
-			$listpages["data"][$i]["individual_tiki_p_create_blogs"] = 'y';
-			$listpages["data"][$i]["individual_tiki_p_blog_post"] = 'y';
-		}
-	} else {
-		$listpages["data"][$i]["individual"] = 'n';
-	}
+	$bloglib->load_blog_permissions( $listpages['data'][$i], $user, $tiki_p_admin == 'y' );
 }
 
 // If there're more records then assign next_offset

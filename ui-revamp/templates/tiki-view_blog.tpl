@@ -1,12 +1,11 @@
-<div class="navbar">
-	{button href="tiki-list_blogs.php" _text="{tr}List Blogs{/tr}"}
-</div>
-
+{$object_page_controls.header}
+{*
 {if strlen($heading) > 0}
   {eval var=$heading}
 {else}
   {include file="blog-heading.tpl"}
 {/if}
+*}
 
 {if $use_find eq 'y'}
   <div class="blogtools">
@@ -160,3 +159,4 @@
 
   {include file=comments.tpl}
 {/if}
+{$object_page_controls.footer}

@@ -151,12 +151,26 @@ abstract class TikiPageControls_Link implements ArrayAccess
 				return new TikiPageControls_UrlLink( 'tiki-index.php',
 					array_merge( $arguments, array( 'page' => $object ) ) );
 
+		case 'bloglist':
+			if( $prefs['feature_sefurl'] == 'y' )
+				return new TikiPageControls_UrlLink( 'blogs', $arguments );
+			else
+				return new TikiPageControls_UrlLink( 'tiki-list_blogs.php', $arguments );
+			
+		case 'blog':
+			if( $prefs['feature_sefurl'] == 'y' )
+				return new TikiPageControls_UrlLink( urlencode('blog'.$object), 
+					$arguments );
+			else
+				return new TikiPageControls_UrlLink( 'tiki-view_blog.php',
+					array_merge( $arguments, array( 'blogId' => $object ) ) );
+
 		case 'url':
 			return new TikiPageControls_UrlLink( $object,
 				$arguments );
 
 		default:
-			throw Exception('Unknown link type: ' . $type);
+			throw new Exception('Unknown link type: ' . $type);
 		}
 	} // }}}
 
@@ -309,6 +323,12 @@ abstract class TikiPageControls implements ArrayAccess
 
 			$info = $tikilib->get_page_info( $objectId );
 			return new TikiPageControls_Wiki($info);
+		case 'blog':
+			global $tikilib;
+			require_once('TikiPageControls_Blog.php');
+
+			$info = $tikilib->get_blog( $objectId );
+			return new TikiPageControls_Blog($info);
 		}
 	} // }}}
 

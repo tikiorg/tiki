@@ -472,6 +472,41 @@ class BlogLib extends TikiLib {
 		$query = "update `tiki_blogs` set `activity`=? where `blogId`=?";
 		$result = $this->query($query,array($activity,(int) $blogId));
 	}
+
+	function load_blog_permissions( &$blog, $user, $isAdmin ) {
+		global $userlib;
+
+		// Already done
+		if( isset($blog['individual']) )
+			return;
+
+		if ($userlib->object_has_one_permission($blog["blogId"], 'blog')) {
+			$blog["individual"] = 'y';
+
+			// blogs that user cannot read are not displayed at all
+			$blog["individual_tiki_p_read_blog"] = 'y';
+
+			if ($userlib->object_has_permission($user, $blog["blogId"], 'blog', 'tiki_p_blog_post')) {
+				$blog["individual_tiki_p_blog_post"] = 'y';
+			} else {
+				$blog["individual_tiki_p_blog_post"] = 'n';
+			}
+
+			if ($userlib->object_has_permission($user, $blog["blogId"], 'blog', 'tiki_p_create_blogs')) {
+				$blog["individual_tiki_p_create_blogs"] = 'y';
+			} else {
+				$blog["individual_tiki_p_create_blogs"] = 'n';
+			}
+
+			if ($isAdmin || $userlib->object_has_permission($user, $blog["blogId"], 'blog', 'tiki_p_blog_admin'))
+				{
+				$blog["individual_tiki_p_create_blogs"] = 'y';
+				$blog["individual_tiki_p_blog_post"] = 'y';
+			}
+		} else {
+			$blog["individual"] = 'n';
+		}
+	}
 }
 global $dbTiki;
 $bloglib = new BlogLib($dbTiki);

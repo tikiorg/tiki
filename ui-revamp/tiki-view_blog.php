@@ -294,6 +294,13 @@ if ($prefs['feature_actionlog'] == 'y') {
 
 ask_ticket('blog');
 
+require_once 'TikiPageControls_Blog.php';
+$controls = new TikiPageControls_Blog($blog_data);
+$controls->setMode('list');
+$controls->build();
+$smarty->assign('object_page_controls', $controls);
+
+// Display the template
 // Display the template
 $smarty->assign('mid', 'tiki-view_blog.tpl');
 $smarty->display("tiki.tpl");
