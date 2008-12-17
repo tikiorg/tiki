@@ -35,28 +35,13 @@ if (isset($_REQUEST["blogId"])) {
 	$blogId = 0;
 }
 
-$smarty->assign('individual', 'n');
+$data = $tikilib->get_blog($_REQUEST["blogId"]);
+$bloglib->load_blog_permissions( $data, $user, $tiki_p_admin == 'y' );
 
-if ($userlib->object_has_one_permission($blogId, 'blog')) {
-	$smarty->assign('individual', 'y');
-
-	if ($tiki_p_admin != 'y') {
-		// Now get all the permissions that are set for this type of permissions 'image gallery'
-		$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'blogs');
-
-		foreach ($perms["data"] as $perm) {
-			$permName = $perm["permName"];
-
-			if ($userlib->object_has_permission($user, $_REQUEST["blogId"], 'blog', $permName)) {
-				$$permName = 'y';
-
-				$smarty->assign("$permName", 'y');
-			} else {
-				$$permName = 'n';
-
-				$smarty->assign("$permName", 'n');
-			}
-		}
+foreach( $data as $key => $value ) {
+	if( strpos( $key, 'individual_' ) === 0 ) {
+		$permName = substr( $key, 11 );
+		$$permName = $value;
 	}
 }
 
@@ -188,6 +173,12 @@ include_once ('tiki-section_options.php');
 
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
+
+require_once 'TikiPageControls_Blog.php';
+$controls = new TikiPageControls_Blog($data);
+$controls->setMode('edit');
+$controls->build();
+$smarty->assign('object_page_controls', $controls);
 
 // Display the Index Template
 $smarty->assign('mid', 'tiki-edit_blog.tpl');

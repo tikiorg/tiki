@@ -348,7 +348,10 @@ abstract class TikiPageControls implements ArrayAccess
 	{
 		$this->heading = new TikiPageControls_Element('heading');
 		$this->heading->setText( $label );
-		$this->heading->setLink( $link );
+
+		if( $link ) {
+			$this->heading->setLink( $link );
+		}
 
 		return $this;
 	} // }}}

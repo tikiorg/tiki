@@ -1,8 +1,4 @@
-{if $blogId > 0}
-  {title help="Blogs" url="tiki-edit_blog.php?blogId=$blogId" admpage="blogs"}{tr}Edit Blog:{/tr} {$title}{/title}
-{else}
-  {title help="Blogs"}{tr}Create Blog{/tr}{/title}
-{/if}
+{$object_page_controls.header}
 
 <div class="navbar">
 	{button href="tiki-list_blogs.php" _text="{tr}List Blogs{/tr}"}
@@ -110,3 +106,4 @@
   </table>
 </form>
 <br />
+{$object_page_controls.footer}

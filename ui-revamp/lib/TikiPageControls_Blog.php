@@ -20,7 +20,18 @@ class TikiPageControls_Blog extends TikiPageControls
 		require_once 'lib/blogs/bloglib.php';
 		$bloglib->load_blog_permissions( $blog_data, $this->getUser(), $this->hasPerm('tiki_p_admin') );
 
-		$this->setHeading( $this->info['title'], $this->link( 'blog', $this->blogId ) );
+		switch($this->getMode()) {
+		case 'edit':
+			if( $this->blogId > 0 ) {
+				$this->setHeading( tra('Edit') . ': ' . $this->info['title'], $this->link( 'blog', $this->blogId ) );
+			} else {
+				$this->setHeading( tra('Create Blog') );
+			}
+			break;
+		default:
+			$this->setHeading( $this->info['title'], $this->link( 'blog', $this->blogId ) );
+			break;
+		}
 
 		$this->addActionMenu();
 	} // }}}
