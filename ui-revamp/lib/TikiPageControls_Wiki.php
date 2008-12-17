@@ -31,9 +31,6 @@ class TikiPageControls_Wiki extends TikiPageControls
 
 	function build() // {{{
 	{
-		// TODO : Figure out what to do with this one
-		$this->setHelp( $this->link( 'url', '#' ) );
-
 		switch($mode) {
 		case 'translate_new':
 		case 'translate_update':
@@ -42,6 +39,10 @@ class TikiPageControls_Wiki extends TikiPageControls
 		default:
 			$this->setHeading( $this->page, $this->link( 'wiki page', $this->page ) );
 			break;
+		}
+
+		if( $this->isMode( 'edit', 'edit_section', 'translate_new', 'translate_update' ) ) {
+			$this->setHelp( new TikiPageControls_WikiHelpLink );
 		}
 
 		if( $this->hasPref('feature_multilingual') ) {
@@ -58,8 +59,7 @@ class TikiPageControls_Wiki extends TikiPageControls
 				$backlinksMenu->addItem( $back['fromPage'], $link );
 			}
 
-			if( $backlinksMenu->isEmpty() )
-				$this->removeMenu($backlinksMenu);
+			$this->removeMenu($backlinksMenu, 0);
 		}
 
 		$this->addTabs();
@@ -169,8 +169,7 @@ class TikiPageControls_Wiki extends TikiPageControls
 			}
 		}
 
-		if( $langMenu->isEmpty() )
-			$this->removeMenu( $langMenu );
+		$this->removeMenu( $langMenu, 0 );
 	} // }}}
 	
 	private function addActionMenu() // {{{
@@ -292,9 +291,7 @@ class TikiPageControls_Wiki extends TikiPageControls
 				->setSelected( $this->isMode('translate') );
 		}
 
-		if( $actionMenu->isEmpty() ) {
-			$this->removeMenu( $actionMenu );
-		}
+		$this->removeMenu( $actionMenu, 0 );
 	} // }}}
 
 	private function addTabs() // {{{
@@ -367,6 +364,8 @@ class TikiPageControls_Wiki extends TikiPageControls
 				->setIcon( 'pics/icons/page_white_stack.png' )
 				->setSelected( $this->isMode('history') );
 		}
+
+		$this->clearTabs( 1 );
 	} // }}}
 
 	private function canUndo() // {{{

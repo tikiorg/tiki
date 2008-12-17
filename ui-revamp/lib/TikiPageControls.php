@@ -117,8 +117,8 @@ class TikiPageControls_Element implements ArrayAccess
 
 	private function getLinked( $body ) // {{{
 	{
-		if( $href = $this->link ) {
-			return '<a href="' . htmlentities($href, ENT_QUOTES, 'UTF-8') . '">' . $body . '</a>';
+		if( $this->link ) {
+			return '<a href="' . htmlentities($this->link->getHref(), ENT_QUOTES, 'UTF-8') . '">' . $body . '</a>';
 		} else {
 			return $body;
 		}
@@ -201,6 +201,14 @@ class TikiPageControls_UrlLink extends TikiPageControls_Link
 	} // }}}
 }
 
+class TikiPageControls_WikiHelpLink extends TikiPageControls_UrlLink // {{{
+{
+	function __construct() // {{{
+	{
+		parent::__construct( 'javascript:flip(\'help_sections\')' );
+	} // }}}
+} // }}}
+
 class TikiPageControls_Menu extends TikiPageControls_Element
 {
 	private $itemList = array();
@@ -234,9 +242,9 @@ class TikiPageControls_Menu extends TikiPageControls_Element
 		}
 	} // }}}
 
-	function isEmpty() // {{{
+	function countIsBelow( $limit ) // {{{
 	{
-		return count($this->itemList) == 0;
+		return count($this->itemList) <= $limit;
 	} // }}}
 
 	function offsetGet( $name ) // {{{
@@ -368,9 +376,17 @@ abstract class TikiPageControls implements ArrayAccess
 		return $menu;
 	} // }}}
 
-	protected function removeMenu( TikiPageControls_Menu $menu ) // {{{
+	protected function removeMenu( TikiPageControls_Menu $menu, $minimum = false ) // {{{
 	{
-		$this->menus = array_diff( $this->menus, array( $menu ) );
+		if( $minimum === false || $menu->countIsBelow( $minimum ) ) {
+			$this->menus = array_diff( $this->menus, array( $menu ) );
+		}
+	} // }}}
+
+	protected function clearTabs( $minimum = false ) // {{{
+	{
+		if( $minimum === false || count( $this->tabs ) <= $minimum )
+			$this->tabs = array();
 	} // }}}
 
 	protected function addTab( $permanentName, $label, $link, $argument = null ) // {{{
