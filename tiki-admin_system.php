@@ -118,7 +118,31 @@ if ($prefs['feature_maps'] && !empty($prefs['map_path'])) {
 	$dirs[] = $prefs['map_path'];
 }
 $dirs = array_unique($dirs);
+$dirsExist = array();
+foreach($dirs as $i=>$d) {
+	$dirsWritable[$i] = is_writable($d);
+}
 $smarty->assign_by_ref('dirs', $dirs);
+$smarty->assign_by_ref('dirsWritable', $dirsWritable);
+
+if (isset($_REQUEST['zip']) && isset($_REQUEST['zipPath'])) {
+	include_once ('lib/pclzip.lib.php');
+	if (!$archive = new PclZip($_REQUEST['zipPath'])) {
+		$smarty->assign('msg', tra('Error:').$archive->errorInfo(true));
+		$smarty->display('error.tpl');
+		die;
+	}
+	foreach($dirs as $d) {
+		if (file_exists($d))
+			$dirs2[] = $d;
+	}
+	if (!$archive->add($dirs2)) {
+		$smarty->assign('msg', tra('Error:').$archive->errorInfo(true));
+		$smarty->display('error.tpl');
+		die;
+	}
+	$smarty->assign_by_ref('zipPath', $_REQUEST['zipPath']);
+}
 
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');

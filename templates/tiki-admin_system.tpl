@@ -29,16 +29,19 @@
 </table>
 <br />
 {if count($dirs)}
-<div class="cbox">
-<div class="cbox-title">{tr}Directories to save:{/tr}</div>
-<div class="cbox-data"> 
+<h2>{tr}Directories to save{/tr}</h2>
+<form  method="post" action="{$smarty.server.PHP_SELF}">
+	{tr}Full Path to the Zip File:{/tr}<input type="text" name="zipPath" value="{$zipPath|escape}" />
+	<input type="submit" name="zip" value="{tr}Generate a zip of those directories{/tr}" />
+	{if $zipPath}
+		<div class="simplebox highlight">{tr}A zip has been written to {$zipPath}{/tr}</div>
+	{/if}
+</form>
 <ul>
-{foreach from=$dirs item=d}
-	<li>{$d}</li>
+{foreach from=$dirs item=d key=k}
+	<li>{$d|escape}{if !$dirsWritable[$k]} <i>({tr}Directory is not writeable{/tr})</i>{/if}</li>
 {/foreach}
 </ul>
-</div>
-</div>
 {/if}
 
 {if count($templates)}
