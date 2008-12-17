@@ -374,8 +374,8 @@ if (isset($_REQUEST["save"])) {
 	}	
 
 
-	$_REQUEST["trackerId"] = $trklib->replace_tracker($_REQUEST["trackerId"], $_REQUEST["name"], $_REQUEST["description"], $tracker_options, $_REQUEST["descriptionIsParsed"]?'y':'');
-	$groupalertlib->AddGroup ('tracker',$_REQUEST["trackerId"] ,$_REQUEST["groupforAlert"],$_REQUEST["showeachuser"] );
+	$_REQUEST["trackerId"] = $trklib->replace_tracker($_REQUEST['trackerId'], $_REQUEST['name'], $_REQUEST['description'], $tracker_options, isset($_REQUEST['descriptionIsParsed'])?'y':'');
+	$groupalertlib->AddGroup ('tracker',$_REQUEST['trackerId'] ,$_REQUEST['groupforAlert'],!empty($_REQUEST['showeachuser'])?$_REQUEST['showeachuser']:'n' );
 	$logslib->add_log('admintrackers','changed or created tracker '.$_REQUEST["name"]);
 
 	$cat_desc = $_REQUEST["description"];

@@ -401,28 +401,11 @@ document.write('<div  class="categSelectAll"><input type="checkbox" id="clickall
 
 {* -------------------- text field / email -------------------- *}
 {elseif $field_value.type eq 't'}
-{if $field_value.isMultilingual ne "y"}
-{if $field_value.options_array[2]}<span class="formunit">{$field_value.options_array[2]}&nbsp;</span>{/if}
-<input type="text" name="{$field_value.ins_id}" {if $field_value.options_array[1]}size="{$field_value.options_array[1]}" maxlength="{$field_value.options_array[1]}"{/if} value="{if $input_err}{$field_value.value}{else}{$defaultvalues.$fid|escape}{/if}" />
-{if $field_value.options_array[3]}<span class="formunit">&nbsp;{$field_value.options_array[3]}</span>{/if}
-{else}
-<table>
-    {foreach from=$field_value.lingualvalue item=ling}
-    <tr><td>{$ling.lang}</td><td>
-            {if $field_value.options_array[2]}<span class="formunit">{$field_value.options_array[2]}&nbsp;</span>{/if}
-        <input type="text" name="{$field_value.ins_id}_{$ling.lang}" value="{$ling.value|escape}" {if $field_value.options_array[1]}size="{$field_value.options_array[1]}" maxlength="{$field_value.options_array[1]}"{/if} />
-        {if $field_value.options_array[3]}<span class="formunit">&nbsp;{$field_value.options_array[3]}</span>{/if}
-    </td></tr>
-    {/foreach}
-</table>
-{/if}
-
+{include file='tracker_item_field_input.tpl'}
 
 {* -------------------- numeric field -------------------- *}
 {elseif $field_value.type eq 'n'}
-{if $field_value.options_array[2]}<span class="formunit">{$field_value.options_array[2]}&nbsp;</span>{/if}
-<input type="text" name="{$field_value.ins_id}" {if $field_value.options_array[1]}size="{$field_value.options_array[1]}" maxlength="{$field_value.options_array[1]}"{/if} value="{if $input_err}{$field_value.value}{else}{$defaultvalues.$fid|escape}{/if}" />
-{if $field_value.options_array[3]}<span class="formunit">&nbsp;{$field_value.options_array[3]}</span>{/if}
+{include file='tracker_item_field_input.tpl'}
 
 {* -------------------- static text -------------------- *}
 {elseif $field_value.type eq 'S'}

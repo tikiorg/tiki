@@ -335,14 +335,14 @@ if ( $isvalid ) {
 	switch ( $error ) {
 	case PASSWORD_INCORRECT: $error = 'Invalid password'; break;
 	case USER_NOT_FOUND: $error = 'Invalid username'; break;
-	case ACCOUNT_DISABLED: $error = 'Account disabled'; $errortype = 'login'; break;
-	case ACCOUNT_WAITING_USER: $error = 'You did not validate your account'; $errortype = 'login'; break;
+	case ACCOUNT_DISABLED: $error = 'Account disabled'; break;
+	case ACCOUNT_WAITING_USER: $error = 'You did not validate your account'; break;
 	case USER_AMBIGOUS: $error = 'You must use the right case for your user name'; break;
 	case USER_NOT_VALIDATED: $error = 'You are not yet validated'; break;
 	default: $error = 'Invalid username or password';
 	}
 	if ( isset($user) and $prefs['feature_score'] == 'y' ) $tikilib->score_event($user, 'login');
-	if (isset($errortype)) $smarty->assign_by_ref('errortype', $errortype);
+	$smarty->assign('errortype', 'login');
 	$smarty->assign('msg',tra($error));
 	$smarty->display('error.tpl');
 	exit;

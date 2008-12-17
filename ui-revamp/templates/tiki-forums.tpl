@@ -84,7 +84,7 @@
 <a class="admlink" title="{tr}Configure Forum{/tr}" href="tiki-admin_forums.php?forumId={$channels[user].forumId}">{icon _id='page_edit'}</a>
 </span>
 {/if}{if $prefs.forum_list_desc eq 'y'}<br />
-<div class="subcomment">{$channels[user].description|truncate:240:"...":true}</div>{/if}
+<div class="subcomment">{$channels[user].description|truncate:240:"...":true|nl2br}</div>{/if}
 </td>
 {if $prefs.forum_list_topics eq 'y'}
 	<td style="text-align:right;" class="{cycle advance=false}">{$channels[user].threads}</td>

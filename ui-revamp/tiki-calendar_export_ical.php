@@ -93,6 +93,10 @@ if (is_array($calendarIds) && (count($calendarIds) > 0) && $_REQUEST["export"]==
 	}
 	$iCal->addCalendar($cal);
 	$iCal->sendHeader("calendar");
+	header("Accept-Ranges: bytes");
+	header("Content-Length: $len");
+	header("Expires: 0");
+	header("Cache-Control: private");
 	print($iCal->__toString());
 	die;
 }

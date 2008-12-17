@@ -58,7 +58,7 @@ function wikiplugin_trackerstat_info() {
 }
 
 function wikiplugin_trackerstat($data, $params) {
-	global $smarty, $prefs, $tiki_p_admin_trackers, $trklib;
+	global $smarty, $prefs, $tiki_p_admin_trackers, $trklib, $tikilib;
 	include_once('lib/trackers/trackerlib.php');
 	extract ($params,EXTR_SKIP);
 

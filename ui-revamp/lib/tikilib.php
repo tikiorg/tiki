@@ -5432,6 +5432,7 @@ class TikiLib extends TikiDB {
 
 	function plugin_alias_info( $name ) {
 		global $prefs;
+		$name = strtolower($name);
 		$prefName = "pluginalias_$name";
 
 		if( ! isset( $prefs[$prefName] ) )
@@ -5612,11 +5613,32 @@ class TikiLib extends TikiDB {
 		return "$name-$bodyHash-$argsHash-$bodyLen-$argsLen";
 	}
 
-	function plugin_execute( $name, $data = '', $args = array(), $offset = 0 ) {
+	function plugin_execute( $name, $data = '', $args = array(), $offset = 0, $validationPerformed = false ) {
 		if( ! $this->plugin_exists( $name, true ) )
 			return false;
 
 		$func_name = 'wikiplugin_' . $name;
+		
+		if( ! $validationPerformed ) {
+			$info = $this->plugin_info( $name );
+			$default = TikiFilter::get('xss');
+
+			// Apply filters on the body
+			$filter = isset($info['filter']) ? TikiFilter::get($info['filter']) : $default;
+			$data = $this->htmldecode($data);
+			$data = $filter->filter($data);
+
+			// Make sure all arguments are declared
+			$params = $info['params'];
+			$args = array_intersect_key( $args, $params );
+
+			// Apply filters on values individually
+			foreach( $args as $argKey => &$argValue ) {
+				$filter = isset($params[$argKey]['filter']) ? TikiFilter::get($params[$argKey]['filter']) : $default;
+				$argValue = $this->htmldecode($argValue);
+				$argValue = $filter->filter($argValue);
+			}
+		}
 
 		if( function_exists( $func_name ) ) {
 			return $func_name( $data, $args, $offset );
@@ -5651,7 +5673,7 @@ class TikiLib extends TikiDB {
 				}
 			}
 
-			return $this->plugin_execute( $name, $data, $params, $offset );
+			return $this->plugin_execute( $name, $data, $params, $offset, true );
 		}
 	}
 

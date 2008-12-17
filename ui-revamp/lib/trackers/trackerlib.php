@@ -440,7 +440,7 @@ class TrackerLib extends TikiLib {
 		$query.= " where tti.`trackerId`=ttf.`trackerId` and ttif.`fieldId`=ttf.`fieldId` and ttf.`trackerId`=? and ttf.`fieldId`=? and ttif.`value`=?";
 		$bindVars = array((int)$trackerId, (int)$fieldId, $value);
 		if (!empty($status)) {
-			$query .= 'and tti.`status`=?';
+			$query .= ' and tti.`status`=?';
 			$bindVars[] = $status;
 		}
 		$result = $this->query($query, $bindVars);
@@ -1040,11 +1040,9 @@ class TrackerLib extends TikiLib {
 					}
 				} elseif ($ins_fields['data'][$i]['type'] == 'A') { //attachment
 					global $tiki_p_attach_trackers;
-					echo 'GGGG';
 					if ($tiki_p_attach_trackers == 'y' && !empty($ins_fields['data'][$i]['file_name'])) {
 						if ($prefs['t_use_db'] == 'n') {
 							$fhash = md5($ins_fields['data'][$i]['file_name'].$this->now);
-							echo 'AAAA'.$ins_fields['data'][$i]['file_name'].'-'.$this->now;
 							if (!$fw = fopen($prefs['t_use_dir'] . $fhash, 'wb')) {
 								$smarty->assign('msg', tra('Cannot write to this file:'). $fhash);
 								$smarty->display("error.tpl");
@@ -1204,7 +1202,6 @@ class TrackerLib extends TikiLib {
                                 if (empty($ins_fields["data"][$i]['lingualvalue'])) {
 									$ins_fields["data"][$i]['lingualvalue'][] = array('lang'=>$prefs['language'], 'value'=>$ins_fields["data"][$i]['value']);
                                 }
-
 
 				  foreach ($ins_fields["data"][$i]['lingualvalue'] as $linvalue)
 	                                if ($itemId) {
@@ -2411,7 +2408,7 @@ class TrackerLib extends TikiLib {
 			'opt'=>true,
 			'help'=>tra('<dl>
 				<dt>Function: Allows a selection from the list of pages.
-				<dt>Usage: <strong>auto-assign, size, maxlen</strong>
+				<dt>Usage: <strong>auto-assign, size, create</strong>
 				<dt>Description:
 				<dd><strong>[auto-assign]</strong> will auto-assign the creator of the item if set to 1
 				<dd><strong>[size]</strong> is the visible input length of the field in characters (<=0 not limited);

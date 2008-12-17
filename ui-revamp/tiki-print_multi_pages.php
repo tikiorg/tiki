@@ -71,7 +71,7 @@ if ( isset($_REQUEST["print"]) || isset($_REQUEST["display"])) {
 			if ($struct_page['pos'] != '' && $struct_page['last'] == 1)
 				continue;
 			$page_info = $tikilib->get_page_info($struct_page['pageName']);
-			$page_info['parsed'] = $tikilib->parse_data($page_info['data'], array('is_html' => $page_info['is_html']));
+			$page_info['parsed'] = $tikilib->parse_data($page_info['data'], array('is_html' => $page_info['is_html'], 'print' => 'y'));
 			$page_info['pos'] = $struct_page['pos'];
 			$page_info['h'] = empty($struct_page['pos'])? 0: count(explode('.', $struct_page['pos']));
 			$h = $page_info['h'] + 5;
@@ -97,7 +97,8 @@ ask_ticket('multiprint');
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 $smarty->assign('print_page', 'y');
 
-$smarty->assign('display', $_REQUEST['display']);
+if ( isset($_REQUEST['display']) )
+	 $smarty->assign('display', $_REQUEST['display']);
 // Allow PDF export by installing a Mod that define an appropriate function
 if ( isset($_REQUEST['display']) && $_REQUEST['display'] == 'pdf' ) {
 	// Method using 'mozilla2ps' mod

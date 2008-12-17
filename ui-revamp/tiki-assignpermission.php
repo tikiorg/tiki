@@ -67,6 +67,12 @@ if (isset($_REQUEST["action"])) {
 		}
 	}
 }
+if (isset($_REQUEST['do']) && $_REQUEST['do'] == 'temp_cache') {
+	global $cachelib; include_once('lib/cache/cachelib.php');
+	global $logslib; include_once('lib/logs/logslib.php');
+	$cachelib->erase_dir_content("temp/cache/$tikidomain");
+	$logslib->add_log('system','erased temp/cache content');
+}
 
 $types = $userlib->get_permissions_types();
 $smarty->assign('types', $types);

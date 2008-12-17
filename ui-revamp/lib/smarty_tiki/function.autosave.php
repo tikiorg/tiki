@@ -19,7 +19,7 @@ function smarty_function_autosave($params, &$smarty)
 	$smarty->assign('autosave_msg',$file_name." "."$user:$user_ip:$request_uri:".$params['id']);
 	if (file_exists("temp/cache/wiki-$file_name") and $params['preview'] == 0) {
 		$tmp = str_replace("\n","\r\n",file_get_contents("temp/cache/wiki-$file_name"));
-		if ( $params['test'] == 'y' and $tmp == $params['default'] ) {
+		if ( isset($params['test']) && isset($params['default']) && $params['test'] == 'y' and $tmp == $params['default'] ) {
 			$smarty->assign('has_autosave','n');
 		} else {
 			$smarty->assign('has_autosave','y');

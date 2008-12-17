@@ -1,10 +1,8 @@
-<?PHP
+<?php
 
-error_reporting(E_ALL);
+require_once 'Multilingual/Aligner/SentenceSegmentor.php';
 
-require_once 'SentenceSegmentor.php';
-
-class BilingualAligner {
+class Multilingual_Aligner_BilingualAligner {
 
     var $l1_sentences = array();
     var $l2_sentences = array();
@@ -17,7 +15,7 @@ class BilingualAligner {
 	}
 	
 	public function _segment_into_sentences($text) {
-	    $segmentor = new SentenceSegmentor();
+	    $segmentor = new Multilingual_Aligner_SentenceSegmentor();
 	    $sentences = $segmentor->segment($text);
 	    return $sentences;
 	}
@@ -30,8 +28,9 @@ class BilingualAligner {
 	function _generate_shortest_path_matrix() {
 //        print "-- _generate_shortest_path_matrix: invoked\n";
 
-	    $this->nodes_at_current_level = array("-1m1|-1m1", "-1m2|-1m1", "-1m1|-1m2",
-	                                   "-1s1|-1s0", "-1s0|-1s1");
+
+	    $this->nodes_at_current_level = array("-1n0|-1n0");
+	    
 //	    print "-- _generate_shortest_path_matrix: count(\$this->nodes_at_current_level)=".count($this->nodes_at_current_level)."\n";
 
 	    while (count($this->nodes_at_current_level) > 0) {
@@ -129,6 +128,7 @@ class BilingualAligner {
 	 *    $l1_operation: Operation performed on L1 sentence when moving to this node.
 	 *       'm' = match $l1_previous_sentence to current L2 sentences.
 	 *       's' = skip $l1_previous_sentence
+	 *       'n' = nothing (only used for initial start node).
 	 *
 	 *    $l1_num_times: Number of times that the above operation should be performed.
 	 *
@@ -143,7 +143,7 @@ class BilingualAligner {
 	
     public function _parse_node_ID($node_id){
 //       print "-- _parse_node_ID: \$node_id='$node_id'\n";
-       preg_match('/([\-\d]+)([ms])([\d]+)\|([\-\d]+)([ms])([\d]+)/', $node_id, $info);
+       preg_match('/([\-\d]+)([msn])([\d]+)\|([\-\d]+)([msn])([\d]+)/', $node_id, $info);
 //       print "-- _parse_node_ID: \$info=\n";var_dump($info);print "\n";;
        return array($info[1], $info[2], $info[3], $info[4], $info[5], $info[6]);
     }    
@@ -189,6 +189,38 @@ class BilingualAligner {
        
        return array($l1_next_sentence, $l2_next_sentence);
     }	
+    
+    function _sentences_preceding_this_node($node_id) {
+       $node_info = $this->_parse_node_ID($node_id);
+       $l1_sentence = $node_info[0];
+       $l2_sentence = $node_info[3];
+       return array($l1_sentence, $l2_sentence);
+    }
+    
+    function _compute_node_transition_cost($destination_node) {
+       $end_sentences = $this->_sentences_at_this_node($destination_node);
+       $l1_end_sentence = $end_sentences[0];
+       $l2_end_sentence = $end_sentences[1];
+       
+       $preceding_sentences = $this->_sentences_preceding_this_node($destination_node);
+       $l1_prec_sentence = $preceding_sentences[0];
+       $l2_prec_sentence = $preceding_sentences[1];
+       
+       $l1_sentences = array_slice($this->l1_sentences, $l1_prec_sentence,
+                                   $l1_end_sentence - $l1_prec_sentence);
+       $l2_sentences = array_slice($this->l2_sentences, $l2_prec_sentence,
+                                   $l2_end_sentence - $l2_prec_sentence);
+                                   
+       $l1_text = implode($l1_sentences);
+       $l2_text = implode($l2_sentences);      
+       
+//       print "\n-- BilingualAlignner._compute_node_transition_cost: \$l1_text='$l1_text', length=".strlen($l1_text)."\n";
+//       print "-- BilingualAlignner._compute_node_transition_cost: \$l2_text='$l2_text', length=".strlen($l2_text)."\n";
+       
+       $transition_cost = $this->_sentence_length_delta($l1_text, $l2_text);
+       
+       return $transition_cost;
+    }
 	
 }
 

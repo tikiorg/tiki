@@ -1,11 +1,6 @@
 <?php
 
-error_reporting(E_ALL);
-
-require_once 'PHPUnit/Framework.php';
-require_once 'BilingualAligner.php';
- 
-class  BilingualAlignerTest extends PHPUnit_Framework_TestCase
+class  Multilingual_Aligner_BilingualAlignerTest extends PHPUnit_Framework_TestCase
 {
 
    public function ___test_reminder()  {
@@ -19,7 +14,7 @@ class  BilingualAlignerTest extends PHPUnit_Framework_TestCase
    ////////////////////////////////////////////////////////////////
     
     public function test_this_is_how_you_create_a_BilingualAligner() {
-       $aligner = new BilingualAligner();
+       $aligner = new Multilingual_Aligner_BilingualAligner();
     }
 
    ////////////////////////////////////////////////////////////////
@@ -29,11 +24,11 @@ class  BilingualAlignerTest extends PHPUnit_Framework_TestCase
    ////////////////////////////////////////////////////////////////
 
    protected function setUp()  {
-      $this->aligner = new BilingualAligner();
+      $this->aligner = new Multilingual_Aligner_BilingualAligner();
    }
      
     public function test_this_is_how_you_align_two_texts() {
-       $aligner = new BilingualAligner();
+       $aligner = new Multilingual_Aligner_BilingualAligner();
        $en_entences = array("Hello earthlings. Take me to your leader.");
        $fr_sentences = array("Bonjour terriens. Inutile de résister. Amenez moi à votre chef.");
        $aligned_sentences = $aligner->align($en_entences, $fr_sentences);
@@ -116,6 +111,12 @@ class  BilingualAlignerTest extends PHPUnit_Framework_TestCase
       $this->aligner->_generate_shortest_path_matrix();
 
       $exp_cost_matrix = array();
+      
+      $exp_cost_matrix["-1n0|-1n0"]["-1m1|-1m1"]= "match_cost";
+      $exp_cost_matrix["-1n0|-1n0"]["-1m2|-1m1"]= "match_cost";
+      $exp_cost_matrix["-1n0|-1n0"]["-1m1|-1m2"]= "match_cost";
+      $exp_cost_matrix["-1n0|-1n0"]["-1s1|-1s0"]= "skip_cost";
+      $exp_cost_matrix["-1n0|-1n0"]["-1s0|-1s1"]= "skip_cost";      
       
       $exp_cost_matrix["-1m1|-1m1"]["0m1|0m1"]= "match_cost";
       $exp_cost_matrix["-1m1|-1m1"]["0m1|0m2"]= "match_cost";
@@ -228,12 +229,10 @@ class  BilingualAlignerTest extends PHPUnit_Framework_TestCase
       $exp_cost_matrix["-1s1|2s0"]["0s1|2s0"]= "skip_cost";
       $exp_cost_matrix["-1s1|2s0"]["END"]= "goto_end_cost";
       
-//      $exp_cost_matrix["1m1|0m1"]["END"] = "goto_end_cost";   
       
       $this->assertCostMatrixEquals($exp_cost_matrix, $this->aligner->cost_matrix,  
                                     "Cost matrix was wrong.");
                                     
-      $this->fail("Need to generate arcs from START node. Pickup development from there.");
    }
    
    function test__parse_node_ID() {
@@ -242,7 +241,9 @@ class  BilingualAlignerTest extends PHPUnit_Framework_TestCase
       $this->assert_parse_node_ID_yields('3s1|5m0', array(3, 's', 1, 5, 'm', 0),  
                                    "Parsed node ID info was wrong for case where sentences were skipped.");
       $this->assert_parse_node_ID_yields('-1m1|-1m1', array(-1, 'm', 1, -1, 'm', 1),  
-                                   "Parsed node ID info was wrong for case with sentence number = -1 (i.e., initial state).");
+                                   "Parsed node ID info was wrong for case with sentence number = -1 (i.e., cursor before first sentences on both sides).");
+      $this->assert_parse_node_ID_yields('-1n0|-1n0', array(-1, 'n', 0, -1, 'n', 0),  
+                                   "Parsed node ID info was wrong for START node '-1n0|-1n0'.");
    }
 
 
@@ -253,6 +254,9 @@ class  BilingualAlignerTest extends PHPUnit_Framework_TestCase
       $this->assertEquals(null, 
                           $this->aligner->_generate_node_ID(5, 'm', 2, 4, 'm', 1),
                           "Node ID should be null when the L1 or L2 sentence number exceeds length of L1 or L2 document");
+      $this->assertEquals('-1n0|-1n0', 
+                          $this->aligner->_generate_node_ID(-1, 'n', 0, -1, 'n', 0),
+                          "Node ID was wrong for START node '-1n0|-1n0'.");
 
 
    }
@@ -264,9 +268,31 @@ class  BilingualAlignerTest extends PHPUnit_Framework_TestCase
                                    "Current sentences were wrong for initial nodes (i.e., sentence number = -1)");
       $this->assert_sentences_at_this_node('4s1|5m0', array(5, 5), 
                                    "Current sentences were wrong for case where we skip a sentence.");
-
+      $this->assert_sentences_at_this_node('-1n0|-1n0', array(-1, -1), 
+                                   "Current sentences were wrong for START node '-1n0|-1n0'.");
    }
+   
+   function test__sentences_preceding_this_node() {  
+      $node = '3m1|5m1';
+      $sentences_preceding_node = $this->aligner->_sentences_preceding_this_node($node);
+      $this->assertEquals(array(3, 5), $sentences_preceding_node,
+                                   "Sentences preceding node '$node' were wrong.");
+   } 
 
+   public function test__compute_node_transition_cost() {
+      $this->_setup_segmented_sentences();
+      
+      $this->assert__compute_node_transition_cost__yields("0m1|0m1", 0, 
+               "Transition cost failed for 1 to 1 match"); 
+      $this->assert__compute_node_transition_cost__yields("0m1|0m2", 1.29, 
+               "Transition cost failed for 1 to 2 match");      
+      $this->assert__compute_node_transition_cost__yields("0m2|0m1", 0.58, 
+               "Transition cost failed for 2 to 1 match");      
+      $this->assert__compute_node_transition_cost__yields("0s1|0s0", 1, 
+               "Transition cost failed for L1 side skip");    
+      $this->assert__compute_node_transition_cost__yields("0s0|0s1", 1, 
+               "Transition cost failed for L2 side skip");     
+   }
    
    ////////////////////////////////////////////////////////////////
    // Helper methods
@@ -321,5 +347,14 @@ class  BilingualAlignerTest extends PHPUnit_Framework_TestCase
 
        }
    }   
+   
+   public function assert__compute_node_transition_cost__yields($destination_node,
+                      $exp_cost, $message) {
+      $got_cost = $this->aligner->_compute_node_transition_cost($destination_node);
+      $tolerance = 0.01;
+      $this->assertEquals($exp_cost, $got_cost, 
+                          $message."\nTransition cost to node '$destination_node' was wrong",
+                          $tolerance);  
+   }
 }
 ?>
