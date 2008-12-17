@@ -41,7 +41,7 @@
 {/if}
 </div><!-- navbar -->
 {/if}
-<form class="forms" method="get" action="tiki-searchresults.php">
+<form class="forms" method="get" action="tiki-search.php">
 	{if !( $searchStyle eq "menu" )}
 		<label for="boolean">{tr}Boolean search:{/tr}<input type="checkbox" name="boolean"{if $boolean eq 'y'} checked="checked"{/if} /></label>
 		<a {popup text="<ul><li>+ : {tr}A leading plus sign indicates that this word must be present in every object returned.{/tr}</li>
@@ -56,7 +56,7 @@
 		</a>
 		<br />
 	{/if}
-    {tr}Find{/tr} <input id="fuser" name="highlight" size="14" type="text" accesskey="s" value="{$words}"/>
+    {tr}Find{/tr} <input id="main-search-field" name="keyword" size="14" type="text" accesskey="s" value="{$words}"/>
 {if ( $searchStyle eq "menu" )}
     {tr}in{/tr}
     <select name="where">
@@ -92,8 +92,27 @@
     <input type="hidden" name="where" value="{$where|escape}" />
 	{if $forumId}<input type="hidden" name="forumId" value="{$forumId}" />{/if}
 {/if}
-    <input type="submit" class="wikiaction" name="search" value="{tr}Go{/tr}"/>
-</form>
+	<input type="submit" class="wikiaction" name="search" value="{tr}Go{/tr}"/>
+{if $prefs.feature_wiki eq 'y'}
+	{if $tiki_p_view eq 'y'}
+		<input type="submit" class="wikiaction" name="view" value="{tr}View{/tr}"/>
+	{/if}
+	{if $tiki_p_edit eq 'y'}
+		<input type="submit" class="wikiaction" name="edit" value="{tr}Edit{/tr}"/>
+	{/if}
+	<script type="text/javascript">
+	{if $prefs.feature_mootools eq 'y'}
+	{literal}
+	window.addEvent('domready', function() {
+		var o = new Autocompleter.Request.JSON('main-search-field', 'tiki-listpages.php?listonly', {
+			'postVar': 'find'
+		});
+	});
+	{/literal}
+	{/if}
+	</script>
+	</form>
+{/if}
 </div><!--nohighlight-->
 
 {if $searchStyle ne "menu" }
