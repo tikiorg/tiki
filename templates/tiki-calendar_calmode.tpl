@@ -49,8 +49,8 @@
 			{else}
 			{if $cell[w][d].items[item].modifiable eq "y" || $cell[w][d].items[item].visible eq 'y'}href="tiki-calendar_edit_item.php?viewcalitemId={$cell[w][d].items[item].calitemId}"{/if}
 			{/if}
-			{if $prefs.calendar_sticky_popup eq "y" and $cell[w][d].items[item].calitemId}{popup sticky=true fullhtml="1" text=$over|escape:"javascript"|escape:"html"}{else}
-			{popup sticky=true fullhtml="1" text=$over|escape:"javascript"|escape:"html"}{/if}
+			{if $prefs.calendar_sticky_popup eq "y" and $cell[w][d].items[item].calitemId}{popup vauto=true hauto=true sticky=true fullhtml="1" text=$over|escape:"javascript"|escape:"html"}{else}
+			{popup vauto=true hauto=true sticky=true fullhtml="1" text=$over|escape:"javascript"|escape:"html"}{/if}
 			>{$cell[w][d].items[item].name|truncate:$trunc:".."|default:"..."}</a>
 			{if $cell[w][d].items[item].head > '...'} {* not continued - is real time- starts on this day *}
 			{/if}
@@ -64,7 +64,7 @@
 			{/if}
 		  </td>
 {else}
-		 <td class="Cal" style="height:14px;width:100%">&nbsp;</td>
+		 <td style="padding:0px;height:14px;border-style:solid;border-color: white; border-width:1px;width:100%;font-size:10px">&nbsp;</td>
 {/if}
 		</tr>
 {/section}

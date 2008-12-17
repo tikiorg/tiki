@@ -93,11 +93,16 @@ if (is_array($calendarIds) && (count($calendarIds) > 0) && $_REQUEST["export"]==
 	}
 	$iCal->addCalendar($cal);
 	$iCal->sendHeader("calendar");
-	header("Accept-Ranges: bytes");
-	header("Content-Length: $len");
+	$calendar_str = $iCal->__toString();
+	header("Content-Length: ".strlen($calendar_str));
 	header("Expires: 0");
+	// These two lines fix pb with IE and HTTPS
 	header("Cache-Control: private");
-	print($iCal->__toString());
+	header("Pragma: dummy=bogus");
+	// Outlook needs iso8859 encoding 
+	header("Content-Type:text/calendar; method=REQUEST; charset=iso-8859-15");
+	header("Content-Transfer-Encoding:quoted-printable");
+	print(recode('utf-8..iso8859-15',$calendar_str));
 	die;
 }
 

@@ -19,6 +19,7 @@
 		{assign var=event value=$hrows[$h][hr]}
 		{assign var=calendarId value=$event.calendarId}
 		{assign var=over value=$event.over}
+		{if $event.calitemId neq ''}
 		<div id="event_{$event.calitemId}" {if $hrows[$h][hr].calname ne ""}class="Cal{$event.type} vevent"{/if} style="position:absolute;z-index:100;top:{$event.top}px;left:{$event.left}%;width:{$event.width}%;height:{$event.duree}px;background-color:#{$infocals.$calendarId.custombgcolor};border-color:#{$infocals.$calendarId.customfgcolor};opacity:{if $event.status eq '0'}0.6{else}0.8{/if};filter:Alpha(opacity={if $event.status eq '0'}60{else}80{/if});text-align:center;overflow:hidden">
 			<span style="padding-top:4px;padding-right:4px;float:right"><a style="padding:0 3px;"
 			{if $event.modifiable eq "y" || $event.visible eq 'y'}
@@ -26,9 +27,9 @@
 			{/if}
 
 			{if $prefs.calendar_sticky_popup eq "y" and $event.calitemId}
-				{popup sticky=true fullhtml="1" text=$over|escape:"javascript"|escape:"html"}
+				{popup vauto=true hauto=true sticky=true fullhtml="1" text=$over|escape:"javascript"|escape:"html"}
 			{else}
-				{popup fullhtml="1" text=$over|escape:"javascript"|escape:"html"}
+				{popup vauto=true hauto=true fullhtml="1" text=$over|escape:"javascript"|escape:"html"}
 			{/if}
 		><img src="pics/icons/more_info.gif" alt="{tr}Details{/tr}" border="0"/></a></span>
 		{if $myurl eq "tiki-action_calendar.php"}
@@ -37,6 +38,7 @@
 		<a href="tiki-calendar_edit_item.php?viewcalitemId={$event.calitemId}" class="linkmenu summary" style="color:#{$infocals.$calendarId.customfgcolor}">{$event.name}</a>
 		{/if}
 		</div>
+		{/if}
 	{/section}
 {/foreach}
 
