@@ -8,7 +8,7 @@
 function wikiplugin_articles_help() {
         $help = tra("Includes articles listing into a wiki page");
         $help .= "<br />";
-        $help .= tra("~np~{ARTICLES(max=>3, topic=>topicName, topicId=>id, type=>type, categId=>Category parent ID, lang=>en, sort=>columnName_asc|columnName_desc), quiet=>y|n, titleonly=>1}{ARTICLES}~/np~");
+        $help .= tra("~np~{ARTICLES(max=>3, topic=>topicName, topicId=>id, type=>type, categId=>Category parent ID, lang=>en, sort=>columnName_asc|columnName_desc), quiet=>y|n, titleonly=>y|n}{ARTICLES}~/np~");
 
         return $help;
 }
@@ -65,6 +65,11 @@ function wikiplugin_articles_info() {
 				'required' => false,
 				'name' => tra('Quiet'),
 				'description' => tra('?'),
+			),
+			'titleonly' => array(
+				'required' => false,
+				'name' => tra('Title only'),
+				'description' => tra('Whether to only show the title of the articles.'),
 			),
 		),
 	);
@@ -140,7 +145,7 @@ function wikiplugin_articles($data,$params) {
 	// If there're more records then assign next_offset
 	$smarty->assign_by_ref('listpages', $listpages["data"]);
 
-	if (isset($titleonly)) {
+	if (isset($titleonly) && $titleonly == 'y') {
 		return "~np~ ".$smarty->fetch('tiki-view_articles-titleonly.tpl')." ~/np~";
 	} else {
 		return "~np~ ".$smarty->fetch('tiki-view_articles.tpl')." ~/np~";
