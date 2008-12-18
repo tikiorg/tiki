@@ -15,7 +15,7 @@
 {/if}
   {if count($categories) gt 0}
     <div class="multiselect">
- <div onclick="flip('categories_select');" class="{cycle}" style="white-space: nowrap;"><img align="right" src="pics/icons/hide_unhide.png"/>{tr}Choose Categories{/tr}</div>
+ <div onclick="flip('categories_select');" style="white-space: nowrap;"><img align="right" src="pics/icons/hide_unhide.png"/>{tr}Choose Categories{/tr}</div>
 {strip}
     <div id="categories_select" {*onmouseover="show('categories_select');" onmouseout="hide('categories_select');"*} class="selection">
       {cycle values="odd,even" print=false}
