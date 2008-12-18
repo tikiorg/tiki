@@ -9,9 +9,9 @@
 	{/if}
 {/title}
 
-<div id="calscreen">
+<div id="calscreen"{if $prefs.calendar_sticky_popup eq 'y'} onClick="nd();"{/if}>
 
-	<div id="configlinks">
+	<div class="navbar">
 		{if $displayedcals|@count eq 1 and $user and $prefs.feature_user_watches eq 'y'}
 			{if $user_watching eq 'y'}
 				<a href="tiki-calendar.php?watch_event=calendar_changed&amp;watch_action=remove" class="icon">{icon _id='no_eye' alt="{tr}Stop Monitoring this Page{/tr}"}</a>
@@ -32,7 +32,9 @@
 			{button href="tiki-calendar_edit_item.php" _text="{tr}Add Event{/tr}"}
 		{/if}
 
-		{button href="#" _onclick="javascript:toggle('exportcal');" _text="{tr}Export Calendars{/tr}" _title="{tr}Click to export calendars{/tr}"}
+		{if $tiki_p_admin_calendar eq 'y'}
+			{button href="#" _onclick="javascript:toggle('exportcal');" _text="{tr}Export Calendars{/tr}" _title="{tr}Click to export calendars{/tr}"}
+		{/if}
 
 		{if $viewlist eq 'list'}
 			{button href="?viewlist=table" _text="{tr}Calendar View{/tr}"}
@@ -44,7 +46,7 @@
 			{button href="#" _onclick="javascript:toggle('filtercal');" _text="{tr}Visible Calendars{/tr}" _title="{tr}Click to select visible calendars{/tr}"}
 
 			{if count($thiscal)}
-				<div class="navbar">
+				<div id="configlinks">
 				{foreach item=k from=$listcals name=listc}
 					{if $thiscal.$k}
 						{assign var=thiscustombgcolor value=$infocals.$k.custombgcolor}
@@ -95,6 +97,7 @@
 		</form>
 	{/if}
 
+{if $tiki_p_admin_calendar eq 'y'}
 <form id="exportcal" method="post" action="{$exportUrl}" name="f" style="display:none;">
 <input type="hidden" name="export" value="y"/>
 <div class="caltitle">{tr}Export calendars{/tr}</div>
@@ -108,6 +111,7 @@
 </div>
 <div class="calinput"><input type="submit" name="valid" value="{tr}Export{/tr}"/></div>
 </form>
+{/if}
 
 	{include file="tiki-calendar_nav.tpl"}
 	{if $viewlist eq 'list'}

@@ -1,5 +1,14 @@
 <div class='opaque' style="position:absolute;left:50%;margin-left:-150px;width:400px">
-<div style="float:right"><a href="#" onClick="javascript:nd();"><img src="pics/icons/cross.png" alt="{tr}close{/tr}" border="0"/></a></div>
+{if $prefs.calendar_sticky_popup eq "y"}
+<div style="float:right">
+	{if $tiki_p_change_events eq 'y'}
+	<a href="tiki-calendar_edit_item.php?calitemId={$cellid}">{icon _id="page_edit" alt="{tr}Edit event{/tr}"}</a>
+	<a href="tiki-calendar_edit_item.php?calitemId={$cellid}&amp;delete=y">{icon _id="cross" alt="{tr}Delete event{/tr}"}</a>
+	{/if}
+	<a href="tiki-calendar_edit_item.php?viewcalitemId={$cellid}">{icon _id="magnifier" alt="{tr}View event{/tr}"}</a>
+	<a href="#" onClick="nd();nd();return false;">{icon _id="minus_small" alt="{tr}Close{/tr}" width="11" height="8"}</a>
+</div>
+{/if}
 <strong{if $cellstatus eq '2'} style="text-decoration:line-through"{/if}>
 {if $allday}
 	{tr}All-Day{/tr}

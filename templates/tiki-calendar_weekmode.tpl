@@ -27,16 +27,20 @@
 				{assign var=calendarId value=$event.calendarId}
 				{assign var=over value=$event.over|escape:"javascript"|escape:"html"}
 		{if $event.calitemId neq ''}
-	  <div id="event_{$smarty.section.weekday.index}_{$event.calitemId}" {if $event.calname ne ""}class="Cal{$event.type} vevent"{/if} style="overflow:visible;position:absolute;top:{$event.top}px;height:{$event.duree-1}px;left:{$event.left}%;width:{$event.width}%;background-color:#{$infocals.$calendarId.custombgcolor};border-color:#{$infocals.$calendarId.customfgcolor};opacity:{if $event.status eq '0'}0.6{else}0.8{/if};filter:Alpha(opacity={if $event.status eq '0'}60{else}80{/if});text-align:center;overflow:hidden">
+	  <div id="event_{$smarty.section.weekday.index}_{$event.calitemId}" {if $event.calname ne ""}class="Cal{$event.type} vevent"{/if} style="overflow:visible;position:absolute;top:{$event.top}px;height:{$event.duree-1}px;left:{$event.left}%;width:{$event.width}%;background-color:#{$infocals.$calendarId.custombgcolor};border-color:#{$infocals.$calendarId.customfgcolor};opacity:{if $event.status eq '0'}0.6{else}0.8{/if};filter:Alpha(opacity={if $event.status eq '0'}60{else}80{/if});text-align:center;overflow:hidden;cursor:pointer"
+		{if $prefs.calendar_sticky_popup eq "y"}
+			{popup vauto=true hauto=true sticky=true fullhtml="1" trigger="onClick" text=$over}
+		{else}
+			{popup vauto=true hauto=true sticky=false fullhtml="1" text=$over}
+		{/if}>
 		  <span style="padding-top:4px;float:right">
 			<a style="padding:0 3px;"
 			{if $event.modifiable eq "y" || $event.visible eq 'y'}
-			   href="tiki-calendar_edit_item.php?viewcalitemId={$event.calitemId}"
-			{/if}
-			{if $prefs.calendar_sticky_popup eq "y" and $event.calitemId}
-			   {popup vauto=true hauto=true sticky=true fullhtml="1" text=$over}
-			{else}
-			   {popup vauto=true hauto=true fullhtml="1" text=$over}
+				{if $prefs.calendar_sticky_popup eq "y"}
+					href="#"
+				{else}
+					href="tiki-calendar_edit_item.php?viewcalitemId={$event.calitemId}"
+				{/if}
 			{/if}
 		    ><img src="pics/icons/more_info.gif" alt="{tr}Details{/tr}" border="0"/></a>
 		  </span>
@@ -46,14 +50,14 @@
 			{/section}
 		{elseif $smarty.foreach.hours.first}
 			{assign var=overMany value=$manyEvents[weekday].overMany|escape:"javascript"|escape:"html"}
-	  <div id="many_{$smarty.section.weekday.index}" style="position:absolute;top:{$manyEvents[weekday].top}px;left:{$manyEvents[weekday].left}%;width:{$manyEvents[weekday].width}%;height:{$manyEvents[weekday].duree-1}px;border:2px dotted #000">
+	  <div id="many_{$smarty.section.weekday.index}" style="position:absolute;top:{$manyEvents[weekday].top}px;left:{$manyEvents[weekday].left}%;width:{$manyEvents[weekday].width}%;height:{$manyEvents[weekday].duree-1}px;border:2px dotted #000"
+		{if $prefs.calendar_sticky_popup eq "y"}
+			{popup vauto=true hauto=true sticky=true trigger="onClick" fullhtml="1" text=$overMany}
+		{else}
+			{popup vauto=true hauto=true sticky=false fullhtml="1" text=$overMany}
+		{/if}>
 		<div style="position:absolute;top:50%;left:50%;margin-left:-40px;margin-top:-30px">
 		  <a style="padding:0 3px;" href="{$myurl}?viewmode=day&todate={$viewWeekDays[weekday]}"
-			{if $prefs.calendar_sticky_popup eq "y"}
-			 {popup vauto=true hauto=true sticky=true fullhtml="1" text=$overMany}
-			{else}
-			 {popup vauto=true hauto=true fullhtml="1" text=$overMany}
-			{/if}
 		  ><img src="pics/icons/multiple_cal.png" alt="{tr}Details{/tr}" border="0"/></a>
 		</div>
 	  </div>
