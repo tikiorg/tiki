@@ -7,9 +7,11 @@ function wikiplugin_img_info()
 		'description' => tra( 'Displays an image.' ),
 		'prefs' => array(),
 		'inline' => true,
+		'icon' => 'pics/icons/image.png',
 		'params' => array(
 			'src' => array(
 				'required' => false,
+				'type' => 'image',
 				'name' => tra('Image Source'),
 				'description' => tra('Full URL to the image to display.'),
 			),

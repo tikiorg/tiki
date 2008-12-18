@@ -20,7 +20,7 @@
 		{if $zoom_mode eq 'n'}
 		<div style='float:left; margin-right:5px'>{include file='textareasize.tpl' area_name='editwiki' formId='editpageform' ToolbarSet='Tiki'}</div>
 		{/if}
-		{quicktags area_name='editwiki' zoom_enable='y}
+		{quicktags area_name='editwiki' zoom_enable='y'}
 	</div>
 	{if $zoom_mode eq 'n' and $prefs.quicktags_over_textarea neq 'y'}</td><td style="border:0;">{/if}
 	<!--autosave -->

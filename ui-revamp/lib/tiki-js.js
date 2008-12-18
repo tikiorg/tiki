@@ -1292,7 +1292,11 @@ window.name = 'tiki';
 /* Function to add image from filegals in non wysiwyg editor */
 /* must be here when ajax is activated                       */
 function SetMyUrl(area,url) {
-  str = "{img src=" + url + " }\n";
+	if (area != 'fgal_picker') {
+	  str = "{img src=" + url + " }\n";
+	} else {
+		str = url;
+	}
   insertAt(area, str);
 }
 /* Count the number of words (spearated with space) */
@@ -1451,6 +1455,13 @@ function build_plugin_form( type, index, pageName, args, bodyContent )
     desc.innerHTML = meta.params[i].description;
 
     field.appendChild( input );
+		if (meta.params[i].type == 'image') {
+		var icon = document.createElement( 'img' );
+		icon.src = 'pics/icons/image.png';
+		input.id = 'fgal_picker';
+		icon.onclick = function() {openFgalsWindow('fgal_picker');};
+    field.appendChild( icon );
+		}
     field.appendChild( desc );
   }
 
@@ -1483,6 +1494,17 @@ function build_plugin_form( type, index, pageName, args, bodyContent )
   submitCell.className = 'submit';
 
   return form;
+}
+
+function openFgalsWindow(area) {
+if (typeof fgals_window == "undefined") {
+  var fgals_window = null;
+}
+  if(fgals_window && fgals_window.document) {
+    fgals_window.focus();
+  } else {
+    fgals_window=window.open('tiki-list_file_gallery.php?filegals_manager='+area,'_blank','menubar=1,scrollbars=1,resizable=1,height=500,width=800,left=50,top=50');
+  }
 }
 
 

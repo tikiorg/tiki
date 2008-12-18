@@ -306,11 +306,6 @@ class QuicktagBlock extends QuicktagInline // Will change in the future
 		
 		return $tag;
 	} // }}}
-
-	function getWikiHtml( $areaName ) // {{{
-	{
-		return '<a href="javascript:insertAt(\'' . $areaName . '\', \'' . htmlentities($this->syntax, ENT_QUOTES, 'UTF-8') . '\', true)" onclick="needToConfirm=false;" title="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '">' . $this->getIconHtml() . '</a>';
-	} // }}}
 }
 
 class QuicktagLineBased extends QuicktagInline // Will change in the future
@@ -343,11 +338,6 @@ class QuicktagLineBased extends QuicktagInline // Will change in the future
 			->setSyntax( $syntax );
 		
 		return $tag;
-	} // }}}
-
-	function getWikiHtml( $areaName ) // {{{
-	{
-		return '<a href="javascript:insertAt(\'' . $areaName . '\', \'' . htmlentities($this->syntax, ENT_QUOTES, 'UTF-8') . '\', true, true)" onclick="needToConfirm=false;" title="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '">' . $this->getIconHtml() . '</a>';
 	} // }}}
 }
 
@@ -384,10 +374,15 @@ class QuicktagWikiplugin extends Quicktag
 		if( substr( $name, 0, 11 ) == 'wikiplugin_'  ) {
 			$name = substr( $name, 11 );
 			if( $info = $tikilib->plugin_info( $name ) ) {
+				if (isset($info['icon']) and $info['icon'] != '') {
+					$icon = $info['icon'];
+				} else {
+					$icon = 'pics/icons/plugin_default.png';
+				}
 
 				$tag = new self;
 				$tag->setLabel( $info['name'] )
-					->setIcon( self::getIcon( $name ) )
+					->setIcon( $icon )
 					->setWysiwygToken( self::getToken( $name ) )
 					->setPluginName( $name );
 
@@ -414,7 +409,7 @@ class QuicktagWikiplugin extends Quicktag
 		// This property could be added to the plugin definition
 		switch($name) {
 		default:
-			return tra('pics/icons/plugin_default.png');
+			return 'pics/icons/plugin_default.png';
 		}
 	} // }}}
 
