@@ -264,8 +264,9 @@
 			<td style="border:0;padding-top:2px;vertical-align:middle">
 				<span id="starttimeminplus" style="display: {if $calitem.allday} none {else} inline {/if}"><a href="#" onclick="document.f.start_Minute.selectedIndex=(document.f.start_Minute.selectedIndex+1);">{icon _id='plus_small' align='left' width='11' height='8'}</a></span>
 			</td>
-			<td style="border:0;vertical-align:middle;" rowspan="2">
-				<input type="checkbox" name="allday" 
+			<td style="border:0;padding-top:2px;vertical-align:middle;" rowspan="2">
+				<label for="alldayid">
+				<input type="checkbox" id="alldayid" name="allday" 
 					   onclick="toggleSpan('starttimehourplus');
 					   			toggleSpan('starttimehourminus');
 					   			toggleSpan('starttime');
@@ -282,7 +283,7 @@
 					   			toggleSpan('duratione');
 					   			toggleSpan('durminplus');
 					   			toggleSpan('durminminus');"
-					   value="true" {if $calitem.allday} checked="checked" {/if}> All-Day</input>
+					   value="true" {if $calitem.allday} checked="checked" {/if} /> {tr}All-Day{/tr}</label>
 			</td>
 		</tr>
 		<tr>
@@ -517,7 +518,7 @@ onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;">
 {/foreach}
 </select>
 {else}
-{$calitem.lang}
+{$calitem.lang|langname}
 {/if}
 </td>
 </tr>
@@ -555,7 +556,7 @@ onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;">
 	{/if}
 {else}
 {foreach item=org from=$calitem.organizers}
-{$org|escape}<br />
+{$org|escape|userlink}<br />
 {/foreach}
 {/if}
 </td>
@@ -576,7 +577,7 @@ onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;">
 	{/if}
 {else}
 {foreach item=ppl from=$calitem.participants}
-{$ppl.name|escape} {if $listroles[$ppl.role]}({$listroles[$ppl.role]}){/if}<br />
+{$ppl.name|escape|userlink} {if $listroles[$ppl.role]}({$listroles[$ppl.role]}){/if}<br />
 {/foreach}
 {/if}
 </td>
@@ -617,8 +618,9 @@ onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;">
 </td></tr>
 {/if}
 <tr><td><input type="submit" name="act" value="{tr}Save{/tr}" />
-{if $id}&nbsp;<input type="submit" onclick='document.location="tiki-calendar_edit_item.php?calitemId={$id}&amp;delete=y";return false;' value="{tr}Delete Item{/tr}"/>{/if}
+{if $id}&nbsp;<input type="submit" onclick='document.location="tiki-calendar_edit_item.php?calitemId={$id}&amp;delete=y";return false;' value="{tr}Delete event{/tr}"/>{/if}
 {if $recurrence.id}&nbsp;<input type="submit" onclick='document.location="tiki-calendar_edit_item.php?recurrenceId={$recurrence.id}&amp;delete=y";return false;' value="{tr}Delete Recurrent events{/tr}"/>{/if}
+&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" onclick='document.location="{$referer|escape:'html'}";return false;' value="{tr}Cancel{/tr}"/>
 </td></tr>
 </table>
 {/if}
