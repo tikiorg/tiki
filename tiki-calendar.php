@@ -530,6 +530,7 @@ if ($max > 100) {
 	$eventHoraires = array();
 	$concurrencies = array();
 	foreach($weekdays as $wd) {
+		if ( is_array($cell[0][$wd]['items']) ) {
 		foreach ($cell[0][$wd]['items'] as $dayitems) {
 			$dayitems['time'] = ($dayitems['startTimeStamp'] >= $cell[0][$wd]['day'])
 				? $dayitems['time']
@@ -563,6 +564,7 @@ if ($max > 100) {
 						$tmpRes[] = $tmp;
 				}
 			}
+		}
 		}
 		$slots = array();
 		$maxConcurrency = 0;

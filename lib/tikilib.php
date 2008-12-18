@@ -8,6 +8,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 require_once('lib/tikidblib.php');
 require_once('lib/init/tra.php');
+if ( ! defined('DATE_FORMAT_UNIXTIME') ) define('DATE_FORMAT_UNIXTIME', 5);
 
 //performance collecting:
 //require_once ('lib/tikidblib-debug.php');
