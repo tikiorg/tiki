@@ -226,6 +226,8 @@ $firstDay = false;
 for ($i = 0; $i <= $numberofweeks; $i++) {
   $weeks[] = $curtikidate->getWeekOfYear();
 
+require_once('lib/smarty_tiki/modifier.userlink.php');
+
 $registeredIndexes = array();
   foreach ($weekdays as $w) {
     $leday = array();
@@ -285,12 +287,24 @@ $registeredIndexes = array();
 	$smarty->assign('cellstatus', $le['status']);
         $smarty->assign('cellstart', $le["startTimeStamp"]);
         $smarty->assign('cellend', $le["endTimeStamp"]);
-		$organizers = $le['result']['organizers'];
-		$participants = array();
-		foreach ($le['result']['participants'] as $parti)
-			$participants[] = $parti['name'];
-		$smarty->assign('cellorganizers', implode(',',$organizers));
-		$smarty->assign('cellparticipants', implode(',',$participants));
+
+	$organizers = $le['result']['organizers'];
+	$cellorganizers = '';
+	foreach ( $organizers as $org ) {
+		if ( $org == '' ) continue;
+		if ( $cellorganizers != '' ) $cellorganizers .= ', ';
+		$cellorganizers .= smarty_modifier_userlink(trim($org));
+	}
+	$smarty->assign('cellorganizers', $cellorganizers);
+
+	$cellparticipants = '';
+	foreach ( $le['result']['participants'] as $parti ) {
+		if ( empty($parti) || $parti['name'] == '' ) continue;
+		if ( $cellparticipants != '' ) $cellparticipants .= ', ';
+		$cellparticipants .= smarty_modifier_userlink(trim($parti['name']));
+	}
+	$smarty->assign('cellparticipants', $cellparticipants);
+
         $smarty->assign('show_calname', $lec['show_calname']);
         $smarty->assign('show_description', $lec['show_description']);
         $smarty->assign('show_location', $lec['show_location']);
@@ -594,7 +608,7 @@ if ($max > 100) {
 					$hrows[$aDay][$anHour][$i]['duree'] = $eventHoraires[$aDay][$hrows[$aDay][$anHour][$i]['calitemId']]['duree'] * 24;
 					$hrows[$aDay][$anHour][$i]['left'] = $hrows[$aDay][$anHour][$i]['left'] + $concurrencies[$aDay][$hrows[$aDay][$anHour][$i]['calitemId']]['offset'];
 					$hrows[$aDay][$anHour][$i]['width'] = 
-						$concurrencies[$aDay][$hrows[$aDay][$anHour][$i]['calitemId']]['value'] == 1 ? 13 : 
+						$concurrencies[$aDay][$hrows[$aDay][$anHour][$i]['calitemId']]['value'] == 1 ? 12.8 : 
 							$hrows[$aDay][$anHour][$i]['width']/$concurrencies[$aDay][$hrows[$aDay][$anHour][$i]['calitemId']]['value'];
 					$manyEvents[$aDay]['tooMany'] = false;
 				} else {
