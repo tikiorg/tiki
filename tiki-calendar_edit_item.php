@@ -251,6 +251,13 @@ if (isset($_POST['act'])) {
 	or (!empty($save['calitemId']) and $caladd["$newcalid"]['tiki_p_change_events'])) {
 		if (empty($save['name'])) $save['name'] = tra("event without name");
 		if (empty($save['priority'])) $save['priority'] = 0;
+		if (empty($save['status'])) {
+			if (empty($calendar['defaulteventstatus'])) {
+				$save['status'] = 1; // Confirmed
+			} else {
+				$save['status'] = $calendar['defaulteventstatus'];
+			}
+		}
 
 		if (array_key_exists('recurrent',$_POST) && ($_POST['recurrent'] == 1) && $_POST['affect']!='event') {
 			$impossibleDates = false;
