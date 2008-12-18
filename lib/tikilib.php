@@ -4606,12 +4606,14 @@ class TikiLib extends TikiDB {
 			}
 		}
 
-		$query = "delete from `tiki_user_preferences` where `user`=? and `prefName`=?";
-		$bindvars=array($my_user,$name);
-		$result = $this->query($query, $bindvars, -1,-1,false);
-		$query = "insert into `tiki_user_preferences`(`user`,`prefName`,`value`) values(?, ?, ?)";
-		$bindvars[]=$value;
-		$result = $this->query($query, $bindvars);
+		if (!empty($my_user)) {
+			$query = "delete from `tiki_user_preferences` where `user`=? and `prefName`=?";
+			$bindvars=array($my_user,$name);
+			$result = $this->query($query, $bindvars, -1,-1,false);
+			$query = "insert into `tiki_user_preferences`(`user`,`prefName`,`value`) values(?, ?, ?)";
+			$bindvars[]=$value;
+			$result = $this->query($query, $bindvars);
+		}
 
 		return true;
 	}
