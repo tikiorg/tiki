@@ -29,7 +29,7 @@ body.fullscreen {}
 
 a,
 a:visited {
-	color: #004276;
+	color: #005faa;
 	text-decoration: none;
 }
 
@@ -1256,8 +1256,16 @@ div.button2, .button3 {
 	margin-right: 5px;
 }
  
-.linkbut {}
-.linkbut:hover {}
+.linkbut {
+	border : 1px solid #9f9f9f;
+	padding: 2px;
+}
+
+.linkbut:hover {
+	background: #F5F5F5;
+	text-decoration: none;
+}
+
 div.cache {}
 div.cachedpage {}
 .wikicache, .wikicache:visited {}
