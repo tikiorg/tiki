@@ -64,7 +64,7 @@ function wikiplugin_articles_info() {
 			'quiet' => array(
 				'required' => false,
 				'name' => tra('Quiet'),
-				'description' => tra('?'),
+				'description' => tra('Whether to not report when there are no articles.'),
 			),
 			'titleonly' => array(
 				'required' => false,
