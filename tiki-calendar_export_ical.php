@@ -7,7 +7,7 @@ if ($prefs['feature_calendar'] != 'y') {
 	die;
 }
 
-if ($tiki_p_admin_calendar != 'y' and $tiki_p_admin != 'y') {
+if ($tiki_p_admin_calendar != 'y') {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 	$smarty->display("error.tpl");
