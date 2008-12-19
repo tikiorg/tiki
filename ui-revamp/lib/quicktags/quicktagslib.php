@@ -103,8 +103,6 @@ class QuicktagFckOnly extends Quicktag
 			return new self( 'SelectAll' );
 		case 'removeformat':
 			return new self( 'RemoveFormat' );
-		case 'smiley':
-			return new self( 'Smiley' );
 		case 'showblocks':
 			return new self( 'ShowBlocks' );
 		case 'left':
@@ -352,6 +350,19 @@ class QuicktagPicker extends Quicktag
 			$icon = tra('pics/img/world_edit.png');
 			// Line taken from DokuWiki
             $list = explode(' ','À à Á á Â â Ã ã Ä ä Ǎ ǎ Ă ă Å å Ā ā Ą ą Æ æ Ć ć Ç ç Č č Ĉ ĉ Ċ ċ Ð đ ð Ď ď È è É é Ê ê Ë ë Ě ě Ē ē Ė ė Ę ę Ģ ģ Ĝ ĝ Ğ ğ Ġ ġ Ĥ ĥ Ì ì Í í Î î Ï ï Ǐ ǐ Ī ī İ ı Į į Ĵ ĵ Ķ ķ Ĺ ĺ Ļ ļ Ľ ľ Ł ł Ŀ ŀ Ń ń Ñ ñ Ņ ņ Ň ň Ò ò Ó ó Ô ô Õ õ Ö ö Ǒ ǒ Ō ō Ő ő Œ œ Ø ø Ŕ ŕ Ŗ ŗ Ř ř Ś ś Ş ş Š š Ŝ ŝ Ţ ţ Ť ť Ù ù Ú ú Û û Ü ü Ǔ ǔ Ŭ ŭ Ū ū Ů ů ǖ ǘ ǚ ǜ Ų ų Ű ű Ŵ ŵ Ý ý Ÿ ÿ Ŷ ŷ Ź ź Ž ž Ż ż Þ þ ß Ħ ħ ¿ ¡ ¢ £ ¤ ¥ € ¦ § ª ¬ ¯ ° ± ÷ ‰ ¼ ½ ¾ ¹ ² ³ µ ¶ † ‡ · • º ∀ ∂ ∃ Ə ə ∅ ∇ ∈ ∉ ∋ ∏ ∑ ‾ − ∗ √ ∝ ∞ ∠ ∧ ∨ ∩ ∪ ∫ ∴ ∼ ≅ ≈ ≠ ≡ ≤ ≥ ⊂ ⊃ ⊄ ⊆ ⊇ ⊕ ⊗ ⊥ ⋅ ◊ ℘ ℑ ℜ ℵ ♠ ♣ ♥ ♦ 𝛼 𝛽 𝛤 𝛾 𝛥 𝛿 𝜀 𝜁 𝛨 𝜂 𝛩 𝜃 𝜄 𝜅 𝛬 𝜆 𝜇 𝜈 𝛯 𝜉 𝛱 𝜋 𝛳 𝜍 𝛴 𝜎 𝜏 𝜐 𝛷 𝜑 𝜒 𝛹 𝜓 𝛺 𝜔 𝛻 𝜕 ★ ☆ ☎ ☚ ☛ ☜ ☝ ☞ ☟ ☹ ☺ ✔ ✘ × „ “ ” ‚ ‘ ’ « » ‹ › — – … ← ↑ → ↓ ↔ ⇐ ⇑ ⇒ ⇓ ⇔ © ™ ® ′ ″');
+			$list = array_combine( $list, $list );
+			break;
+		case 'smiley':
+			$wysiwyg = 'Smiley';
+			$label = tra('Smileys');
+			$icon = tra('img/smiles/icon_smile.gif');
+			$rawList = array( 'biggrin', 'confused', 'cool', 'cry', 'eek', 'evil', 'exclaim', 'frown', 'idea', 'lol', 'mad', 'mrgreen', 'neutral', 'question', 'razz', 'redface', 'rolleyes', 'sad', 'smile', 'surprised', 'twisted', 'wink', 'arrow', 'santa' );
+
+			$list = array();
+			foreach( $rawList as $smiley ) {
+				$tra = htmlentities( tra($smiley), ENT_QUOTES, 'UTF-8' );
+				$list["(:$smiley:)"] = '<img src="img/smiles/icon_' .$smiley . '.gif" alt="' . $tra . '" title="' . $tra . '" border="0" width="15" height="15" />';
+			}
 			break;
 		default:
 			return;
@@ -391,22 +402,22 @@ function displayPicker( closeTo, list, areaname ) {
 	div.style.left = coord.left + 'px';
 	div.style.top = coord.bottom + 'px';
 
-	var prepareLink = function( link, char ) {
-		link.innerHTML = char;
+	var prepareLink = function( link, ins, disp ) {
+		link.innerHTML = disp;
 		link.href = 'javascript:void(0)';
 		link.onclick = function() {
-			insertAt( areaname, char );
+			insertAt( areaname, ins );
 			div.dispose();
 		}
 	};
 
-	for( i = 0; pickerData[list].length > i; ++i ) {
+	for( var i in pickerData[list] ) {
 		var char = pickerData[list][i];
 		var link = document.createElement( 'a' );
 
 		div.appendChild( link );
 		div.appendChild( document.createTextNode(' ') );
-		prepareLink( link, char );
+		prepareLink( link, i, char );
 	}
 }
 
