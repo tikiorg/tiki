@@ -202,15 +202,14 @@ $in_reply_to = '';
 if ( ($tiki_p_post_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n'))
 		|| ($tiki_p_forum_post == 'y' && isset($forum_mode) && $forum_mode == 'y') ) {
 	if (isset($_REQUEST["comments_postComment"])) {
+		$msgError = '';
+
 		if (empty($user) && $prefs['feature_antibot'] == 'y' && (!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $_REQUEST['antibotcode'])) {
-			$smarty->assign('msg',tra("You have mistyped the anti-bot verification code; please try again."));
-			$smarty->assign('errortype', 'no_redirect_login');
-			$smarty->display("error.tpl");
-			die;
+			$msgError = tra('You have mistyped the anti-bot verification code; please try again.');
 		}
 		$comments_show = 'y';
 
-		if (!empty($_REQUEST["comments_title"]) && !empty($_REQUEST["comments_data"]) && !($prefs['feature_contribution'] == 'y' && ((isset($forum_mode) && $forum_mode == 'y' && $prefs['feature_contribution_mandatory_forum'] == 'y') || ((empty($forum_mode) || $forum_mode == 'n') && $prefs['feature_contribution_mandatory_comment'] == 'y')) && empty($_REQUEST['contributions']))) {
+		if ( $msgError == '' && !empty($_REQUEST["comments_title"]) && !empty($_REQUEST["comments_data"]) && !($prefs['feature_contribution'] == 'y' && ((isset($forum_mode) && $forum_mode == 'y' && $prefs['feature_contribution_mandatory_forum'] == 'y') || ((empty($forum_mode) || $forum_mode == 'n') && $prefs['feature_contribution_mandatory_comment'] == 'y')) && empty($_REQUEST['contributions']))) {
 
 			if ( isset($forum_mode) && $forum_mode == 'y' && $forum_info['is_flat'] == 'y' && $_REQUEST["comments_grandParentId"] > 0 ) {
 				$smarty->assign('msg', tra("This forum is flat and doesn't allow replies to other replies"));
@@ -451,9 +450,10 @@ if ( ($tiki_p_post_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n'
 				header('location: ' . $url);
 			}
 		} else {
-			$msgError = '';
 			if (empty($_REQUEST["comments_title"]) || empty($_REQUEST["comments_data"])) {
-				$msgError = tra("Missing title or body when trying to post a comment");
+				if ($msgError)
+					$msgError .= '<br />';
+				$msgError .= tra("Missing title or body when trying to post a comment");
 			}
 			if ($prefs['feature_contribution'] == 'y' && empty($_REQUEST['contributions'])) {
 				if ($msgError)
@@ -575,7 +575,7 @@ $smarty->assign('comment_preview', 'n');
 
 if (isset($_REQUEST["comments_previewComment"]) || isset($msgError)) {
 	$smarty->assign('comments_preview_title', $_REQUEST["comments_title"]);
-
+	$comments_show = 'y';
 	$smarty->assign('comments_preview_data', $commentslib->parse_comment_data(strip_tags($_REQUEST["comments_data"])));
 	$smarty->assign('comment_title', $_REQUEST["comments_title"]);
 	$smarty->assign('comment_rating', $_REQUEST["comment_rating"]);		
@@ -585,8 +585,9 @@ if (isset($_REQUEST["comments_previewComment"]) || isset($msgError)) {
 }
 
 // Always show comments when a display setting has been explicitely specified
-if ( isset($_REQUEST['comments_per_page']) || isset($_REQUEST['thread_style']) || isset($_REQUEST['thread_sort_mode']) )
-$comments_show = 'y';
+if ( isset($_REQUEST['comments_per_page']) || isset($_REQUEST['thread_style']) || isset($_REQUEST['thread_sort_mode']) ) {
+	$comments_show = 'y';
+}
 
 if (!isset($_REQUEST["comments_commentFind"])) $_REQUEST["comments_commentFind"] = ''; else $comments_show = 'y';
 
@@ -703,4 +704,4 @@ if ( isset($_REQUEST['was_queued']) ) {
 	$smarty->assign('was_queued', $_REQUEST['was_queued']);
 }
 
-?>
+$smarty->assign('comments_show', $comments_show);

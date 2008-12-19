@@ -16,5 +16,10 @@
 {else}
 	{assign var=thisflipid value="comzone"}
 {/if}
+{if $comments_show eq 'y'}
+	{assign var=flip_open value='y'}
+{else}
+	{assign var=flip_open value=$prefs.wiki_comments_displayed_default}
+{/if}
 
-{button href="#comments" _flip_id=$thisflipid _class=$thisbuttonclass _text=$thistext _flip_default_open=$prefs.wiki_comments_displayed_default}
+{button href="#comments" _flip_id=$thisflipid _class=$thisbuttonclass _text=$thistext _flip_default_open=$flip_open}
