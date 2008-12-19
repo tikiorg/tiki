@@ -66,7 +66,7 @@ function wikiplugin_img_info()
 	);
 }
 
-function wikiplugin_img( $data, $params )
+function wikiplugin_img( $data, $params, $offset, $parseOptions )
 {
 	global $tikidomain, $tikiroot, $prefs;
 
@@ -102,8 +102,7 @@ function wikiplugin_img( $data, $params )
 
 	// Handle absolute links (e.g. to send a newsletter with images that remains on the tiki site)
 
-	$options = array(); // FIXME : From parse_data options
-	$absolute_links = isset($options['absolute_links']) ? $options['absolute_links'] : false;
+	$absolute_links = isset($parseOptions['absolute_links']) ? $parseOptions['absolute_links'] : false;
 	if ( $imgdata['src'] != '' && $absolute_links && ! preg_match('|^[a-zA-Z]+:\/\/|', $imgdata['src']) ) {
 		global $base_host, $url_path;
 		$imgdata['src'] = $base_host.( $imgdata['src'][0] == '/' ? '' : $url_path ).$imgdata['src'];
