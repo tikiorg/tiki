@@ -70,8 +70,8 @@
   </a>
   </td>
   <td class="{cycle}">
-<a class="tablename" href="tiki-edit_structure.php?page_ref_id={$channels[ix].page_ref_id}" title="{tr}Edit structure{/tr}">{icon _id='page_edit'}</a>
-<a class='link' href='tiki-index.php?page={$channels[ix].pageName|escape:"url"}&amp;structure={$channels[ix].pageName|escape:"url"}' title="{tr}View page{/tr}">{icon _id='magnifier' alt="{tr}View{/tr}"}</a>
+<a class="tablename" href="tiki-edit_structure.php?page_ref_id={$channels[ix].page_ref_id}" title="{tr}View structure{/tr}">{icon _id='information' alt="{tr}View structure{/tr}"}</a>
+<a class='link' href='tiki-index.php?page={$channels[ix].pageName|escape:"url"}&amp;structure={$channels[ix].pageName|escape:"url"}' title="{tr}View page{/tr}">{icon _id='magnifier' alt="{tr}View page{/tr}"}</a>
   {if $prefs.feature_wiki_export eq 'y' and $tiki_p_admin_wiki eq 'y'}<a title="{tr}Export Pages{/tr}" class="link" href="tiki-admin_structures.php?export={$channels[ix].page_ref_id|escape:"url"}">{icon _id='disk' alt="{tr}Export Pages{/tr}"}</a>{/if}
   {if $pdf_export eq 'y'}<a href="tiki-print_multi_pages.php?printstructures=a%3A1%3A%7Bi%3A0%3Bs%3A1%3A%22{$channels[ix].page_ref_id}%22%3B%7D&amp;display=pdf" title="{tr}PDF{/tr}">{icon _id='page_white_acrobat' alt="{tr}PDF{/tr}"}</a>{/if}
   {if $tiki_p_edit_structures == 'y'}<a title="{tr}Dump Tree{/tr}" class="link" href="tiki-admin_structures.php?export_tree={$channels[ix].page_ref_id|escape:"url"}">{icon _id='chart_organisation' alt="{tr}Dump Tree{/tr}"}</a>{/if}
