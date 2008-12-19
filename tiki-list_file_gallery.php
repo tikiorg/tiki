@@ -128,26 +128,50 @@ if ( $tiki_p_admin_file_galleries == 'y' ) {
 
 	if ( isset($_REQUEST['movesel']) ) {
 		check_ticket('fgal');
-		foreach ( array_values($_REQUEST['file']) as $file ) {
-			// To move a topic you just have to change the object
-			$filegallib->set_file_gallery($file, $_REQUEST['moveto']);
+		if (isset($_REQUEST['file'])) {
+			foreach ( array_values($_REQUEST['file']) as $file ) {
+				// To move a topic you just have to change the object
+				$filegallib->set_file_gallery($file, $_REQUEST['moveto']);
+			}
 		}
-		foreach ( array_values($_REQUEST['subgal']) as $subgal ) {
-			$filegallib->move_file_gallery($subgal, $_REQUEST['moveto']);
+		if (isset($_REQUEST['subgal'])) {
+			foreach ( array_values($_REQUEST['subgal']) as $subgal ) {
+				$filegallib->move_file_gallery($subgal, $_REQUEST['moveto']);
+			}
 		}
 	}
 }
 if (isset($_REQUEST['zipsel_x']) && $tiki_p_upload_files == 'y') {
 	check_ticket('fgal');
 	$href = array();
-	foreach (array_values($_REQUEST['file']) as $file) {
-		$href[] = "fileId[]=$file";
+	if (isset($_REQUEST['file'])) {
+		foreach (array_values($_REQUEST['file']) as $file) {
+			$href[] = "fileId[]=$file";
+		}
 	}
-	foreach ( array_values($_REQUEST['subgal']) as $subgal ) {
-		$href[] = "galId[]=$subgal";
+	if (isset($_REQUEST['subgal'])) {
+		foreach ( array_values($_REQUEST['subgal']) as $subgal ) {
+			$href[] = "galId[]=$subgal";
+		}
 	}
 	header("Location: tiki-download_file.php?".implode('&', $href));
 	die;
+}
+if (isset($_REQUEST['permsel_x']) && $tiki_p_assign_perm_file_gallery == 'y') {
+	$perms = $userlib->get_permissions(0, -1, 'permName_asc', '', 'file galleries');
+	$smarty->assign_by_ref('perms', $perms['data']);
+	$groups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');
+	$smarty->assign_by_ref('groups', $groups['data']);
+}
+if (isset($_REQUEST['permsel']) && $tiki_p_assign_perm_file_gallery == 'y' && isset($_REQUEST['subgal'])) {
+	check_ticket('fgal');
+	foreach($_REQUEST['subgal'] as $id) {
+		foreach ($_REQUEST['groups'] as $group) {
+			foreach ($_REQUEST['perms'] as $perm) {
+				$userlib->assign_object_permission($group, $id, 'file gallery', $perm);
+			}
+		}
+	}
 }
 
 // Lock a file
