@@ -7,7 +7,7 @@ if ($prefs['feature_calendar'] != 'y') {
 	die;
 }
 
-if ($tiki_p_admin_calendar != 'y' and $tiki_p_admin != 'y') {
+if ($tiki_p_admin_calendar != 'y') {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 	$smarty->display("error.tpl");
@@ -93,11 +93,16 @@ if (is_array($calendarIds) && (count($calendarIds) > 0) && $_REQUEST["export"]==
 	}
 	$iCal->addCalendar($cal);
 	$iCal->sendHeader("calendar");
-	header("Accept-Ranges: bytes");
-	header("Content-Length: $len");
+	$calendar_str = $iCal->__toString();
+	header("Content-Length: ".strlen($calendar_str));
 	header("Expires: 0");
+	// These two lines fix pb with IE and HTTPS
 	header("Cache-Control: private");
-	print($iCal->__toString());
+	header("Pragma: dummy=bogus");
+	// Outlook needs iso8859 encoding 
+	header("Content-Type:text/calendar; method=REQUEST; charset=iso-8859-15");
+	header("Content-Transfer-Encoding:quoted-printable");
+	print(recode('utf-8..iso8859-15',$calendar_str));
 	die;
 }
 

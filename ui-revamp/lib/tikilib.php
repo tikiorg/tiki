@@ -8,6 +8,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 require_once('lib/tikidblib.php');
 require_once('lib/init/tra.php');
+if ( ! defined('DATE_FORMAT_UNIXTIME') ) define('DATE_FORMAT_UNIXTIME', 5);
 
 //performance collecting:
 //require_once ('lib/tikidblib-debug.php');
@@ -3582,6 +3583,10 @@ class TikiLib extends TikiDB {
 			$this->remove_from_structure($res["page_ref_id"]);
 		}
 
+		global $structlib;include_once('lib/structures/structlib.php');
+		$page_info = $structlib->s_get_page_info($page_ref_id);
+		$query = "update `tiki_structures` set `pos`=`pos`-1 where `pos`>? and `parent_id`=?";
+		$this->query($query ,array((int)$page_info['pos'], (int)$page_info['parent_id']));
 		$query = "delete from `tiki_structures` where `page_ref_id`=?";
 		$result = $this->query($query, array( $page_ref_id ) );
 		return true;
@@ -4602,12 +4607,14 @@ class TikiLib extends TikiDB {
 			}
 		}
 
-		$query = "delete from `tiki_user_preferences` where `user`=? and `prefName`=?";
-		$bindvars=array($my_user,$name);
-		$result = $this->query($query, $bindvars, -1,-1,false);
-		$query = "insert into `tiki_user_preferences`(`user`,`prefName`,`value`) values(?, ?, ?)";
-		$bindvars[]=$value;
-		$result = $this->query($query, $bindvars);
+		if (!empty($my_user)) {
+			$query = "delete from `tiki_user_preferences` where `user`=? and `prefName`=?";
+			$bindvars=array($my_user,$name);
+			$result = $this->query($query, $bindvars, -1,-1,false);
+			$query = "insert into `tiki_user_preferences`(`user`,`prefName`,`value`) values(?, ?, ?)";
+			$bindvars[]=$value;
+			$result = $this->query($query, $bindvars);
+		}
 
 		return true;
 	}
@@ -5139,7 +5146,7 @@ class TikiLib extends TikiDB {
 	}
 
 	// This recursive function handles pre- and no-parse sections and plugins
-	function parse_first(&$data, &$preparsed, &$noparsed, $real_start_diff='0') {
+	function parse_first(&$data, &$preparsed, &$noparsed, $options=null, $real_start_diff='0') {
 		global $dbTiki, $smarty, $tiki_p_edit, $prefs, $pluginskiplist;
 		if( ! is_array( $pluginskiplist ) )
 			$pluginskiplist = array();
@@ -5248,7 +5255,7 @@ class TikiLib extends TikiDB {
 			} else {
 				// print "<pre>args1: :".htmlspecialchars( $plugins[2] ) .":</pre>";
 				// Handle nested plugins in the arguments.
-				$this->parse_first($plugins[2], $preparsed, $noparsed);
+				$this->parse_first($plugins[2], $preparsed, $noparsed, $options);
 				// print "<pre>args2: :".htmlspecialchars( $plugins[2] ) .":</pre>";
 
 				// Normal plugins
@@ -5285,10 +5292,10 @@ class TikiLib extends TikiDB {
 
 						} else {
 							// Handle nested plugins.
-							$this->parse_first($plugin_data, $preparsed, $noparsed, $real_start_diff + $pos+strlen($plugin_start));
+							$this->parse_first($plugin_data, $preparsed, $noparsed, $options, $real_start_diff + $pos+strlen($plugin_start));
 
 							if( true === $status = $this->plugin_can_execute( $plugin_name, $plugin_data, $arguments ) ) {
-								$ret = $this->plugin_execute( $plugin_name, $plugin_data, $arguments, $real_start_diff + $pos+strlen($plugin_start));
+								$ret = $this->plugin_execute( $plugin_name, $plugin_data, $arguments, $real_start_diff + $pos+strlen($plugin_start), false, $options);
 							} else {
 								global $tiki_p_plugin_viewdetail, $tiki_p_plugin_preview, $tiki_p_plugin_approve;
 								$details = $tiki_p_plugin_viewdetail == 'y' && $status != 'rejected';
@@ -5314,8 +5321,8 @@ class TikiLib extends TikiDB {
 								$ret = '~np~' . $smarty->fetch('tiki-plugin_blocked.tpl') . '~/np~';
 							}
 						}
-
-						if( $this->plugin_is_editable( $plugin_name ) ) {
+						//echo '<pre>'; debug_print_backtrace(); echo '</pre>';
+						if( $this->plugin_is_editable( $plugin_name ) && (empty($options['print']) || !$options['print'])) {
 							include_once('lib/smarty_tiki/function.icon.php');
 							global $headerlib, $page;
 							$headerlib->add_jsfile( 'tiki-jsplugin.php?plugin=' . urlencode( $plugin_name ) );
@@ -5324,7 +5331,7 @@ class TikiLib extends TikiDB {
 
 					} else {
 						// Handle nested plugins.
-						$this->parse_first($plugin_data, $preparsed, $noparsed);
+						$this->parse_first($plugin_data, $preparsed, $noparsed, $options);
 
 						$ret = tra( "__WARNING__: Plugin disabled $plugin!" ) . $plugin_data;
 					}
@@ -5333,7 +5340,7 @@ class TikiLib extends TikiDB {
 				} else {
 					if( $plugins['type'] == 'long' ) {
 						// Handle nested plugins.
-						$this->parse_first($plugin_data, $preparsed, $noparsed);
+						$this->parse_first($plugin_data, $preparsed, $noparsed, $options);
 						$ret = tra( "__WARNING__: No such module $plugin!" ) . $plugin_data;
 
 						$skip = false;
@@ -5347,7 +5354,7 @@ class TikiLib extends TikiDB {
 
 				if( ! $skip ) {
 					// Handle pre- & no-parse sections and plugins inserted by this plugin
-					$this->parse_first($ret, $preparsed, $noparsed);
+					$this->parse_first($ret, $preparsed, $noparsed, $options);
 					//$ret = $this->parse_data($ret);
 
 					// Replace plugin section with its output in data
@@ -5613,7 +5620,7 @@ class TikiLib extends TikiDB {
 		return "$name-$bodyHash-$argsHash-$bodyLen-$argsLen";
 	}
 
-	function plugin_execute( $name, $data = '', $args = array(), $offset = 0, $validationPerformed = false ) {
+	function plugin_execute( $name, $data = '', $args = array(), $offset = 0, $validationPerformed = false, $parseOptions = array() ) {
 		if( ! $this->plugin_exists( $name, true ) )
 			return false;
 
@@ -5641,7 +5648,7 @@ class TikiLib extends TikiDB {
 		}
 
 		if( function_exists( $func_name ) ) {
-			return $func_name( $data, $args, $offset );
+			return $func_name( $data, $args, $offset, $parseOptions );
 		} elseif( $info = $this->plugin_alias_info( $name ) ) {
 			$name = $info['implementation'];
 
@@ -5673,7 +5680,7 @@ class TikiLib extends TikiDB {
 				}
 			}
 
-			return $this->plugin_execute( $name, $data, $params, $offset, true );
+			return $this->plugin_execute( $name, $data, $params, $offset, true, $parseOptions );
 		}
 	}
 
@@ -5929,6 +5936,7 @@ class TikiLib extends TikiDB {
 		$options['noparseplugins'] = $noparseplugins = isset($options['noparseplugins']) ? $options['noparseplugins'] : false;
 		$options['noheaderinc'] = $noheaderinc = isset($options['noheaderinc']) ? $options['noheaderinc'] : false;
 		$options['page'] = isset($options['page']) ? $options['page'] : $page;
+		$options['print'] = isset($options['print']) ? $options['print'] : false;
 
 		// if simple_wiki is true, disable some wiki syntax
 		// basically, allow wiki plugins, wiki links and almost
@@ -5996,7 +6004,7 @@ class TikiLib extends TikiDB {
 		$preparsed = array('data'=>array(),'key'=>array());
 		$noparsed = array('data'=>array(),'key'=>array());
 		if (!$noparseplugins) {
-			$this->parse_first($data, $preparsed, $noparsed);
+			$this->parse_first($data, $preparsed, $noparsed, $options);
 		}
 
 		// Handle |# anchor links by turning them into ALINK module calls.
@@ -6035,7 +6043,7 @@ class TikiLib extends TikiDB {
 		}
 
 		if (!$noparseplugins) {
-			$this->parse_first($data, $preparsed, $noparsed);
+			$this->parse_first($data, $preparsed, $noparsed, $options);
 		}
 
 		// Handle ~pre~...~/pre~ sections

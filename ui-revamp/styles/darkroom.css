@@ -66,37 +66,10 @@ form {
 
 legend {color: #d8d8d8}
 
-input.button,
-button,
-input {
-	margin-right: 1px;
-	padding: 1px}
-	
-button {
-	background: #4E4E4E url(darkroom/button.png) top left repeat-x;
-	color: #B2B2B2;
-	font-size: 0.9em;
-	font-weight: bold;
-	border: 1px solid #3F3F3F;
-	border-top: 1px solid #818181;
-	margin: 2px;
-	padding: 0 4px;
-	vertical-align: middle;
-	cursor: pointer}
-
-button:hover {
-	border-top: 1px solid #A9A9A9;
-	border-left: 1px solid #A9A9A9;
-	border-right: 1px solid #696969;
-	border-bottom: 1px solid #696969}
-
-button,
 input,
 textarea,
 option,
 select {
-	border: solid 1px #aaa;
-	padding: 0.1em;
 	margin: 2px;
 	vertical-align: middle;
 	font-size: 0.9em;
@@ -120,13 +93,22 @@ input[type=password] {
 	width: 120px;
 	font-size: 0.9em;
 	cursor: text}
-	
-
 
 button,
-input[type=submit],
+.button,
 .submitbutton,
-.button input,
+.button input {
+	background:#4E4E4E url(darkroom/button.png) top left repeat-x;
+	color:#B2B2B2;
+	font-weight: bold;
+	border: 1px solid transparent;
+	border-top: 1px solid #818181;
+	padding: 0 4px;
+	vertical-align: middle;
+	cursor: pointer;
+}
+/* do not put this rule with button rule for IE6 */
+input[type=submit],
 input[type=reset] {
 	background:#4E4E4E url(darkroom/button.png) top left repeat-x;
 	color:#B2B2B2;
@@ -135,14 +117,18 @@ input[type=reset] {
 	border-top: 1px solid #818181;
 	padding: 0 4px;
 	vertical-align: middle;
-	cursor: pointer}
+	cursor: pointer;
+}
 
 button:hover,
+.button:hover,
 input[type=submit]:hover,
 .submitbutton:hover,
 .button input:hover {
 	border: 1px solid #B2B2B2;
-	text-decoration: none}
+}
+.button a:hover {text-decoration: none}
+.button {font-size: 0.8em;}
 
 input[type=file],
 select {
@@ -709,9 +695,9 @@ div#edithelpzone {display: none}
 .attention {color: red}
 
 .highlight, #highlight  {
-	background: #474747 !important;
+	background: #474747;
 	color: #fff}
-	
+
 /* OpenID  */
 .openid_url {
 	background: #fff url(../../img/icons/login-OpenID-bg.gif) no-repeat;
@@ -1165,18 +1151,6 @@ span#tab3 {background: #5c5c5c}
 	border-right: 1px solid #696969;
 	border-bottom: 1px solid #696969}
 
-#content1 {
-	padding: 10px;
-	background: #7d7d7d}
-
-#content2 {
-	padding: 5px;
-	background: #3A3A3A}
-
-#content3 {
-	padding: 5px;
-	background: #5c5c5c}
-
 table.admin div#content1 div.tabcontent div.cbox {background-color: transparent}
 
 /***** Feature-specific styles ****/
@@ -1275,30 +1249,6 @@ ul.floatleft li {
 .editdate ul.floatleft {margin-top: 8px}
 
 .navbar {line-height: 150%;margin-bottom: 10px;margin-top: 5px;}
-
-.navbar > a .button,
-.button {
-	margin: 2px;
-	padding: 0 4px;
-	background:#4E4E4E url(darkroom/button.png) top left repeat-x;
-	border: 1px solid #3F3F3F;
-	border-top: 1px solid #818181;
-}
-
-.navbar > a:hover{
-	border: 1px solid #B2B2B2;
-	text-decoration: none;
-}
-.button:hover {border: 1px solid #B2B2B2}
-
-.button a,
-.button a:visited {
-	font-weight: bold;
-	font-size: 0.8em;
-	text-decoration: none;
-	color: #ccc;}
-	
-.button a:hover {text-decoration: none}
 
 div.cache {}
 div.cachedpage {}
@@ -2094,7 +2044,6 @@ Caltrack a:visited {color: #00BD02}
 .Calwiki:before {background: #292929}
 
 .calcheckbox {background: #3F3F3F}
-#calscreen td a { color: #3f3f3f; }
 
 .calcontent {
   min-height: 60px;
@@ -2136,6 +2085,8 @@ Caltrack a:visited {color: #00BD02}
 .caltoggle {
 	font-size: 90%;
 	background: #3F3F3F}
+.calbuttonon a { text-decoration: underline;}
+.calHeadingOn a { text-decoration: underline;}
 
 .opaque {
 	font-size: .9em;

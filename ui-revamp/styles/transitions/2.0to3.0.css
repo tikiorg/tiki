@@ -445,6 +445,8 @@ ul.categories li{
 }
 #calscreen td {
 	vertical-align: top;
+	*height: 21px; /* fix for IE7 */
+	_height: ; /* fix for IE6 */
 }
 #calscreen td a {
 	text-decoration: none;

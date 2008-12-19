@@ -193,7 +193,7 @@ $smarty->assign('personal', $info["personal"]);
 
 $smarty->assign('startday', $info["startday"] < 0 ?0: round($info['startday']/(60*60)));
 $smarty->assign('endday', $info["endday"] < 0 ?0: round($info['endday']/(60*60)));
-$smarty->assign('hours', array('0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24'));
+$smarty->assign('hours', array('0','1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23'));
 $smarty->assign('defaulteventstatus', $info['defaulteventstatus']);
 
 $smarty->assign('eventstatus', array(

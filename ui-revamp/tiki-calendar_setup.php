@@ -78,7 +78,7 @@ if (isset($_REQUEST["gbi"])) {
 $smarty->assign_by_ref('group_by_item', $_SESSION['CalendarGroupByItem']);
 
 $calendarViewGroups = (isset($_SESSION['CalendarViewGroups'])) ? $_SESSION['CalendarViewGroups'] : '';
-$calendarViewList = $_SESSION['CalendarViewList'];
+$calendarViewList = array_key_exists('CalendarViewList',$_SESSION) ? $_SESSION['CalendarViewList'] : '';
 $calendarGroupByItem = $_SESSION['CalendarGroupByItem'];
 
 if ($prefs['calendar_firstDayofWeek'] == 'user') {

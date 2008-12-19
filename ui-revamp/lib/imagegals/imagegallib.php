@@ -1748,12 +1748,16 @@ class ImageGalsLib extends TikiLib {
     }
 
 
-   function get_imageid_byname($name) {
+   function get_imageid_byname($name, $galleryId=0) {
 	
 		$bindvars=array($name);
 
 		$query = "select `imageId` from `tiki_images` 
 						where `name` like ?";
+		if (!empty($galleryId)) {
+			$query .= ' and galleryId=?';
+			$bindvars[] = $galleryId;
+		}
 
 		$result = $this->query($query,$bindvars,1);
 		$res = $result->fetchRow(); 
