@@ -12,12 +12,29 @@ abstract class Quicktag
 	protected $icon;
 	protected $label;
 
-	abstract function isAccessible();
+	private $requiredPrefs = array();
+
 	abstract function getWikiHtml( $areaName );
+
+	function isAccessible() // {{{
+	{
+		global $prefs;
+
+		foreach( $this->requiredPrefs as $prefName )
+			if( ! isset($prefs[$prefName]) || $prefs[$prefName] != 'y' )
+				return false;
+
+		return true;
+	} // }}}
 
 	function getWysiwygToken() // {{{
 	{
 		return $this->wysiwyg;
+	} // }}}
+
+	protected function addRequiredPreference( $prefName ) // {{{
+	{
+		$this->requiredPrefs[] = $prefName;
 	} // }}}
 
 	protected function setIcon( $icon ) // {{{
@@ -52,11 +69,6 @@ class QuicktagSeparator extends Quicktag
 	function __construct() // {{{
 	{
 		$this->setWysiwygToken('-');
-	} // }}}
-
-	function isAccessible() // {{{
-	{
-		return true;
 	} // }}}
 
 	function getWikiHtml( $areaName ) // {{{
@@ -128,11 +140,6 @@ class QuicktagFckOnly extends Quicktag
 		case 'source':
 			return new self( 'Source' );
 		}
-	} // }}}
-
-	function isAccessible() // {{{
-	{
-		return true;
 	} // }}}
 
 	function getWikiHtml( $areaName ) // {{{
@@ -226,11 +233,6 @@ class QuicktagInline extends Quicktag
 		$this->syntax = $syntax;
 
 		return $this;
-	} // }}}
-
-	function isAccessible() // {{{
-	{
-		return true;
 	} // }}}
 
 	function getWikiHtml( $areaName ) // {{{
@@ -343,11 +345,13 @@ class QuicktagPicker extends Quicktag
 
 	public static function fromName( $tagName ) // {{{
 	{
+		$prefs = array();
+
 		switch( $tagName ) {
 		case 'specialchar':
 			$wysiwyg = 'SpecialChar';
 			$label = tra('Special Characters');
-			$icon = tra('pics/img/world_edit.png');
+			$icon = tra('pics/icons/world_edit.png');
 			// Line taken from DokuWiki
             $list = explode(' ','À à Á á Â â Ã ã Ä ä Ǎ ǎ Ă ă Å å Ā ā Ą ą Æ æ Ć ć Ç ç Č č Ĉ ĉ Ċ ċ Ð đ ð Ď ď È è É é Ê ê Ë ë Ě ě Ē ē Ė ė Ę ę Ģ ģ Ĝ ĝ Ğ ğ Ġ ġ Ĥ ĥ Ì ì Í í Î î Ï ï Ǐ ǐ Ī ī İ ı Į į Ĵ ĵ Ķ ķ Ĺ ĺ Ļ ļ Ľ ľ Ł ł Ŀ ŀ Ń ń Ñ ñ Ņ ņ Ň ň Ò ò Ó ó Ô ô Õ õ Ö ö Ǒ ǒ Ō ō Ő ő Œ œ Ø ø Ŕ ŕ Ŗ ŗ Ř ř Ś ś Ş ş Š š Ŝ ŝ Ţ ţ Ť ť Ù ù Ú ú Û û Ü ü Ǔ ǔ Ŭ ŭ Ū ū Ů ů ǖ ǘ ǚ ǜ Ų ų Ű ű Ŵ ŵ Ý ý Ÿ ÿ Ŷ ŷ Ź ź Ž ž Ż ż Þ þ ß Ħ ħ ¿ ¡ ¢ £ ¤ ¥ € ¦ § ª ¬ ¯ ° ± ÷ ‰ ¼ ½ ¾ ¹ ² ³ µ ¶ † ‡ · • º ∀ ∂ ∃ Ə ə ∅ ∇ ∈ ∉ ∋ ∏ ∑ ‾ − ∗ √ ∝ ∞ ∠ ∧ ∨ ∩ ∪ ∫ ∴ ∼ ≅ ≈ ≠ ≡ ≤ ≥ ⊂ ⊃ ⊄ ⊆ ⊇ ⊕ ⊗ ⊥ ⋅ ◊ ℘ ℑ ℜ ℵ ♠ ♣ ♥ ♦ 𝛼 𝛽 𝛤 𝛾 𝛥 𝛿 𝜀 𝜁 𝛨 𝜂 𝛩 𝜃 𝜄 𝜅 𝛬 𝜆 𝜇 𝜈 𝛯 𝜉 𝛱 𝜋 𝛳 𝜍 𝛴 𝜎 𝜏 𝜐 𝛷 𝜑 𝜒 𝛹 𝜓 𝛺 𝜔 𝛻 𝜕 ★ ☆ ☎ ☚ ☛ ☜ ☝ ☞ ☟ ☹ ☺ ✔ ✘ × „ “ ” ‚ ‘ ’ « » ‹ › — – … ← ↑ → ↓ ↔ ⇐ ⇑ ⇒ ⇓ ⇔ © ™ ® ′ ″');
 			$list = array_combine( $list, $list );
@@ -357,6 +361,7 @@ class QuicktagPicker extends Quicktag
 			$label = tra('Smileys');
 			$icon = tra('img/smiles/icon_smile.gif');
 			$rawList = array( 'biggrin', 'confused', 'cool', 'cry', 'eek', 'evil', 'exclaim', 'frown', 'idea', 'lol', 'mad', 'mrgreen', 'neutral', 'question', 'razz', 'redface', 'rolleyes', 'sad', 'smile', 'surprised', 'twisted', 'wink', 'arrow', 'santa' );
+			$prefs[] = 'feature_smileys';
 
 			$list = array();
 			foreach( $rawList as $smiley ) {
@@ -373,6 +378,9 @@ class QuicktagPicker extends Quicktag
 			->setLabel( $label )
 			->setIcon( $icon )
 			->setList( $list );
+		foreach( $prefs as $pref ) {
+			$tag->addRequiredPreference( $pref );
+		}
 
 		return $tag;
 	} // }}}
@@ -430,11 +438,6 @@ JS
 
 		return '<a href="javascript:void(0)" onclick="displayPicker( this, ' . $index . ', \'' . $areaName . '\'); needToConfirm=false;" title="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '">' . $this->getIconHtml() . '</a>';
 	} // }}}
-
-	function isAccessible() // {{{
-	{
-		return true;
-	} // }}}
 }
 
 class QuicktagFullscreen extends Quicktag
@@ -444,11 +447,6 @@ class QuicktagFullscreen extends Quicktag
 		$this->setLabel( tra('Full Screen Edit') )
 			->setIcon( 'pics/icons/application_get.png' )
 			->setWysiwygToken( 'FitWindow' );
-	} // }}}
-
-	function isAccessible() // {{{
-	{
-		return true;
 	} // }}}
 
 	function getWikiHtml( $areaName ) // {{{
@@ -497,7 +495,7 @@ class QuicktagWikiplugin extends Quicktag
 	function isAccessible() // {{{
 	{
 		global $tikilib;
-		return $tikilib->plugin_enabled( $this->pluginName );
+		return parent::isAccessible() && $tikilib->plugin_enabled( $this->pluginName );
 	} // }}}
 
 	private static function getIcon( $name ) // {{{
