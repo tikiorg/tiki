@@ -1,10 +1,9 @@
 {* $Id$ *}
-<div class="clearfix postbody-title">
-
+{*<div class="clearfix posttop">*}
+	<div class="author_actions">
 	{if $thread_style != 'commentStyle_headers' and $comment.threadId > 0
-		and $forum_mode neq 'y' || ( $forum_mode eq 'y' and $forumId > 0 and $comments_parentId > 0 )
-	}
-	<div class="actions">
+	and $forum_mode neq 'y' || ( $forum_mode eq 'y' and $forumId > 0 and $comments_parentId > 0 )}
+		<div class="actions">
 		{if $forum_mode neq 'y' && $prefs.feature_comments_moderation eq 'y' && $tiki_p_admin_comments eq 'y' && $comment.approved eq 'n'}
 			{self_link comments_approve='y' comments_threadId=$comment.threadId _icon='comment_approve'}{tr}Approve{/tr}{/self_link}
 			{self_link comments_approve='n' comments_threadId=$comment.threadId _icon='comment_reject'}{tr}Reject{/tr}{/self_link}
@@ -64,9 +63,69 @@
 			{/section}
 		{/if}	
 		{/if}
-	</div>
+		</div>
+	{/if}
+		<div class="clearfix author">
+	{if $thread_style != 'commentStyle_headers'}
+		{if $forum_info.ui_avatar eq 'y' and $comment.userName|avatarize}
+		<span class="avatar">{$comment.userName|avatarize}</span>
+		{/if}
 	{/if}
 
+		<span class="author_info">
+
+			<span class="author_post_info">
+				{if $comment.userName}
+					{tr}By{/tr} <span class="author_post_info_by">{$comment.userName|userlink}</span>
+				{/if}
+				{if $comment.commentDate > 0}
+					{tr}on{/tr} <span class="author_post_info_on">{$comment.commentDate|tiki_short_datetime}</span>{*{if $comment.userName}, {/if}*}
+				{/if}
+				
+			</span>
+		{if $thread_style != 'commentStyle_headers'}
+			{if $forum_info.ui_posts eq 'y' and $comment.user_posts}
+			<span class="author_posts">
+				{tr}posts:{/tr} {$comment.user_posts}
+			</span>
+			{/if}
+			{if $forum_info.ui_level eq 'y' and $comment.user_level}
+			<span class="author_stars">
+				<img src="img/icons/{$comment.user_level}stars.gif" alt='{$comment.user_level} {tr}stars{/tr}' title='{tr}User Level{/tr}' />
+			</span>
+			{/if}
+
+			{if $comment.userName}
+			<span class="clearfix icons">
+			<span class="actions">
+			{if $prefs.feature_messages eq 'y' and $tiki_p_messages eq 'y'}   
+				<a class="admlink" href="messu-compose.php?to={$comment.userName}&amp;subject={tr}Re:{/tr}%20{$comment.title|escape:"htmlall"}">{icon _id='user_go' alt="{tr}private message{/tr}"}</a>
+			{/if}
+			{if $forum_info.ui_email eq 'y' and strlen($comment.user_email) > 0 and $display eq ''}  
+				<a href="mailto:{$comment.user_email|escape:'hex'}">{icon _id='email' alt="{tr}Send eMail to User{/tr}"}</a>
+			{/if}
+			</span>
+			<span class="infos">
+			{if $forum_info.ui_online eq 'y'}
+				{if $comment.user_online eq 'y'}
+				{icon _id='user_red' alt='{tr}user online{/tr}'}
+				{elseif $comment.user_online eq 'n'}
+			  	{icon _id='user_gray' alt='{tr}user offline{/tr}'}
+				{/if}
+			{/if}
+			{if $forum_info.ui_flag eq 'y' and $comment.userName|countryflag}
+				{$comment.userName|countryflag}
+			{/if}
+			</span>
+			</span>
+			{/if}
+		{/if}
+		</span>
+		</div>
+	</div>
+	<div class="clearfix postbody-title">
+
+	
 	{if $first neq 'y'}
 	<div class="checkbox">
 		{if $tiki_p_admin_forum eq 'y' and $forum_mode eq 'y' and $comment.threadId > 0}
@@ -83,7 +142,7 @@
 		{if $comments_reply_threadId == $comment.threadId}
 		{icon _id='flag_blue'}<span class="highlight">
 		{/if}
-		<a class="link" href="{$comments_complete_father}comments_parentId={$comment.threadId}&amp;comments_per_page=1&amp;thread_style={$thread_style}">{$comment.title}</a>
+		<a class="link" href="{$comments_complete_father}comments_parentId={$comment.threadId}&amp;comments_per_page=1&amp;thread_style={$thread_style}"><h3>{$comment.title}</h3></a>
 		{if $comments_reply_threadId == $comment.threadId}
 		</span>
 		{/if}
@@ -95,5 +154,6 @@
 	{if $thread_style eq 'commentStyle_headers'}
 		{include file="comment-footer.tpl"  comment=$comments_coms[rep]}
 	{/if}
-	<br class="clear" />
+	{*<br class="clear" />*}
+{*</div>*}
 </div>

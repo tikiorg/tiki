@@ -14,8 +14,7 @@ body {
 	text-align: center;
 }
 
-*:first-child+html
-body {
+*:first-child+html body {
 	font-size: 75% !important;
 }
 
@@ -1605,7 +1604,7 @@ div.postbody {
 	margin-bottom: 1em;
 }
 
-div.postfooter {
+body.tiki_blog .postfooter {
 	clear: both;
 	float: right;
 	margin-bottom: 2em;
@@ -1660,6 +1659,8 @@ table.commentinfo {}
 
 /* forums new */
 
+.post {margin-bottom: 30px}
+
 .post .postbody {
 	clear: both;
 	border: solid 1px #E7EAED;
@@ -1670,30 +1671,57 @@ table.commentinfo {}
 	background-color: #F9FCFF;	font-size: 1.1em;}
 	
 * html .post .postbody {font-size: 11px}
-*:first-child+html .postbody { width: 55em }
+*:first-child+html .postbody {min-width: 100%}
 
-.post .postbody-title {
+/*.postbody .posttop {
+	position: relative;
+	width: 100%;
 	display: block;
+	min-height: 104px;
 	background-color: #E0EAF4; 
-	border-bottom: 1px solid #ACCCDD;
-	margin-bottom: 4px;
-	height: 100%;
-/*	overflow: auto;*/
-	padding-top: 2px;
-}
-.post .postbody-title .checkbox { float: left; }
-.post .postbody-title .title {
+	border-bottom: 1px solid #ACCCDD;}*/
+
+.postbody-title {
+	width: 75%;
 	float: left;
+	margin-top: 0;
+	margin-bottom: auto;
+	background-color: #E0EAF4; 
+	border-bottom: 1px solid #ACCCDD}
+	
+*:first-child+html .postbody-title {min-width: 74%}
+
+.post .postbody-title .checkbox {float: left}
+
+.post .postbody-title .title {
 	color: #29677B;
 	font-weight: bold;
 	font-size: 12px;
 	margin-left: 5px;
-	margin-top: 3px;
-}
-.post .author {	
+	margin-top: 3px}
+
+.author_actions {
+	/*height:auto; top:20px; margin:8px 8px auto auto; bottom:auto; left: auto;right: 0;
+position:absolute*/
+	width: 25%;
+	float: right;
 	text-align: right;
-	vertical-align: top;
-}
+	background-color: #E0EAF4;
+	border-bottom: 1px solid #ACCCDD;
+	border-left: 1px solid #ACCCDD;
+	margin-left: -1px}
+	
+*:first-child+html .author_actions {}
+	
+.author_actions .actions {
+	background-color: #E0EAF4}
+	
+.author_actions .actions a.link {padding: 2px}
+
+.author {	
+	text-align: right;
+	vertical-align: top}
+
 .post .author_post_info {
 	display: block;
 	background-color: #E0EAF4;
@@ -1705,13 +1733,10 @@ table.commentinfo {}
 .post .author_post_info_on { font-style: italic; }
 .post .author_info {
 	float: right;
-	background-color: #F0F8FF;
 	padding: 0 2px 2px 2px;
-	margin-left: 5px;
-	border-left: 1px solid #D7E5F3;
-	border-bottom: 1px solid #D7E5F3;
-}
-.commentStyle_headers .author_info { float: left; }
+	margin-left: 5px}
+
+.commentStyle_headers .author_info {}
 .post .postbody-title .actions {
 	float: right;
 	font-size: 10px;

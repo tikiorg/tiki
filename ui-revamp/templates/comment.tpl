@@ -10,7 +10,7 @@
 
 {if $thread_style != 'commentStyle_headers'}
 	{include file="comment-footer.tpl"}
-	<br style="clear: both;" />
+
 {/if}
 
 	<span class="corners-bottom"><span></span></span></div>

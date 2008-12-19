@@ -73,9 +73,13 @@ select,
 body.wikitext {
 	font-family: Verdana, Helvetica, Geneva, Arial, sans-serif;
 	font-size: 100% !important;
-	background: whitesmoke;
+	background: #ecf5ff;
 	color: #4a6a90;
 	margin: 1px}
+	
+textarea {
+	border: 1px solid #89a3c2;
+	color: #2d2d2d}
 
 * html .wikitopline select {font-size: .9em}
 
@@ -1632,52 +1636,32 @@ div.postinfo a.linkmodule {}
 
 .small {} /* Check ?? (from fluidindex */
 
-div.posthead {
-	text-align: left;
-	padding: 3px}
-
-span.posthead {
-	display: block;
-	font-weight: bold;
-	letter-spacing: .4pt}
-
-div.posthead h3 {font-size: 1.2em}
- 
-div.postbody {
-	margin-right: 8px;
-	line-height: 1.2em;
-	margin-bottom: 1em}
 
 * html .postbody table {font-size: 11px}
-
-div.postfooter {
-	clear: both;
-	float: right;
-	margin-bottom: 2em}
 
 /***** Forums *****/
 
 body.tiki_forums table.normal {margin: auto}
 #forumpost {display: none}
 #forumpostopen {display: block}
-.post {width: 100%}
+.post {
+	width: 100%;
+	margin-bottom: 30px}
 
 .post .postbody {
+	background: #fff;
 	clear: both;
 	width: 100%;
 	min-width: 100%;
-	border-top: solid 4px #446793;
-	border-bottom: solid 4px #446793;
 	margin: 0;
 	margin-top: 5px;
-	padding: 0;
-	background: #c3d3e5;
 	font-size: 1.1em}
 	
 * html .post .postbody {font-size: 11px}
 
+.top_post .post .postbody {background: #e6edf5  }
+
 .postbody .content {
-	float: left;
 	padding: 0;
 	text-align: left;
 	color: #fff;
@@ -1685,98 +1669,144 @@ body.tiki_forums table.normal {margin: auto}
 	
 .postbody .content p {  }
 
-.post .postbody-title {
-	display: block;
-	width: 68%;
-	min-width: 68%; /* IE7 */
-	padding: 12px;
-	border-right: 2px solid #fff;
-	color: #fff;
-	background: #e6edf5;
-	border-bottom: 0}
+.postbody-title {
+	color: #000;
+	background: inherit}
+	
+.top_post .post .postbody-title {border-top: 2px solid #fff}
 
-.post .postbody-title .checkbox {float: left}
+.postbody-title .checkbox {float: left}
 
-.post .postbody-title .title {
-	float: left;
-	color: #2d2d2d;
+.postbody-title .title {
+	color: #2d2d2d}
+	
+.postbody-title .title h2 {}
+.postbody-title .title h3 {  }
+.postbody-title .title a.link {color: #2d2d2d}
+.postbody-title .title br.clear {height: 1px}
+
+.post .author_actions {
+	position: relative;
+	background: #c3d3e5;
+	color: #000;
+	margin-bottom: 2px;
+	font-size: 11px;
 	font-weight: bold;
-	font-size: 1.2em;
-	margin-left: 5px;
-	margin-top: 3px}
-	
-.post .postbody-title .title a.link {color: #2d2d2d}
+	line-height: 1;
+	height: 21px;
+	vertical-align: middle;
+	min-width: 100%}
 
-.post .author {
-	float: right;
-	width: 25%;
-	min-width: 25%; /* IE7 */
+.author_actions .author {
+	position: absolute;
+	top: 0;
+	left: 0;
 	text-align: left;
-	vertical-align: top}
+	vertical-align: middle;
+	border-right: 2px solid #fff}
+/*
+*:first-child+html .author_actions .author { max-width:74% }
+*/
+.author_actions .author * img { vertical-align: middle }
 	
+.author_actions > .actions {
+	position: absolute;
+	top: 0;
+	right: 0;
+	height: 21px;
+	line-height: 21px;
+	text-align: right;
+	background: #446793;
+	color: #fff;
+	border-left: 2px solid #fff}
+/*
+*:first-child+html .author_actions > .actions { max-width:24% }
+*/
 .post .author_info {
-	float: left;
 	background: inherit;
+	display: inline-block;
 	color: #000;
 	text-align: left;
-	padding: 12px;
-	/*margin-left: 5px;
-	margin-bottom: 6px;*/
-	border: 0}
+	line-height: 21px;
+	vertical-align: middle;
+	padding-top: 0;
+	margin-top: 0;
+	height: 21px}
+	
+.post .author_info img {
+	height: 21px;
+	width: 21px}
+	
+.author_posts,
+.author_stars {
+	display: inline-block;
+	line-height: 21px;
+	height: 21px;
+	vertical-align: middle;
+	padding-left: 2px;
+	padding-right: 2px;
+	border-right: 2px solid #fff}
 	
 .post .author_info a.link,
 .post .author_info a.link:visited {
 	color: #000;
-	font-style: normal;
-	font-weight: bold}
+	font-style: normal}
 
 .post .author_post_info {
-	display: block;
-	float: left;
-	background: inherit;
-	padding: 0 2px 2px 2px}
+	display: inline-block;
+	height: 21px;
+	line-height: 21px;
+	padding-left: 3px;
+	padding-right: 3px;
+	border-right: 2px solid #fff}
 
-.post .author_info .icons {display: block}
-.post .author_info .icons .actions {margin-right: 10px}
+.post .author_info .icons {
+	padding: 0 2px}
+
+.post .author_info .icons .actions {}
 .post .author_post_info_on {font-style: normal}
-
 .commentStyle_headers .author_info {float: left}
-
-.post .postbody-title .actions {
+/*
+.postbody-title > .actions {
 	float: right;
 	font-size: 1em}
 
 .postbody-content {
-	float: left;
-	width: 68%;
 	padding: 12px;
-	margin-right: 2px;
 	background: #e6edf5;
-	color: #000;
-	border-right: 2px solid #fff;}
+	color: #000}*/
 
-.post .postbody .attachments {
+.postbody .attachments {
 	clear: both;
 	border: 0;
 	background: #c3d3e5;
 	color: #000;
 	border-top: 2px solid #fff}
 
-.post .postbody .attachments img {vertical-align: text-bottom}
+.postbody .attachments img {vertical-align: text-bottom}
 
-.post .postfooter .actions,
-.post .postfooter .status {
-	display: inline;
-	margin-left: 5px;
-	vertical-align: top}
-
-.post .postfooter .status {font-size: 10px}
-
-.post .postfooter {
-	float: right;
-	text-align: right;
+.postfooter {
+	width: 100%;
+	min-width: 100%;
+	height: 21px;
+	line-height: 21px;
+	vertical-align: middle;
+	text-align: left;
 	clear: both;
-	margin-top: 3px}
+	margin-top: 3px;
+	background: #e6edf5;
+	color: #ebf1f7;}
+
+.postfooter .actions {
+	width: 40px}
+
+.postfooter .status {
+	float: right;
+	clear: none;
+	width: 200px;
+	text-align: right;
+	margin-right: 5px;
+	font-size: 10px}
 
 .post .contribution {
 	background: #F0F8FF;
