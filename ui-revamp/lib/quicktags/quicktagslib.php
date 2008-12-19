@@ -458,6 +458,41 @@ class QuicktagFullscreen extends Quicktag
 	} // }}}
 }
 
+class QuicktagTextareaResize extends Quicktag
+{
+	private $diff;
+
+	function __construct( $type ) // {{{
+	{
+		switch( $type ) {
+		case 'reduce':
+			$this->setLabel( tra('Reduce area height') )
+				->setIcon( tra('pics/icons/arrow_in.png') );
+			$this->diff = '-10';
+			break;
+
+		case 'enlarge':
+			$this->setLabel( tra('Enlarge area height') )
+				->setIcon( tra('pics/icons/arrow_out.png') );
+			$this->diff = '+10';
+			break;
+
+		default:
+			throw new Exception('Unknown resize icon type type');
+		}
+	} // }}}
+
+	function getWikiHtml( $areaName ) // {{{
+	{
+		return '<a href="javascript:textareasize(\'' . $areaName . '\', ' . $this->diff . ', 0)" onclick="needToConfirm = false;" title="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '">' . $this->getIconHtml() . '</a>';
+	} // }}}
+
+	function isAccessible() // {{{
+	{
+		return parent::isAccessible() && ! isset($_REQUEST['zoom']);
+	} // }}}
+}
+
 class QuicktagWikiplugin extends Quicktag
 {
 	private $pluginName;
@@ -592,6 +627,10 @@ class QuicktagsList
 			return $tag;
 		elseif( $tagName == 'fullscreen' )
 			return new QuicktagFullscreen;
+		elseif( $tagName == 'enlarge' )
+			return new QuicktagTextareaResize( 'enlarge' );
+		elseif( $tagName == 'reduce' )
+			return new QuicktagTextareaResize( 'reduce' );
 		elseif( $tagName == '-' )
 			return new QuicktagSeparator;
 	} // }}}

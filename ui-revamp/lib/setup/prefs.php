@@ -157,7 +157,7 @@ function get_default_prefs() {
 		'wiki_validate_plugin' => 'y',
 
 		'toolbar_global' => '
-			fullscreen, templates, -, 
+			fullscreen, enlarge, reduce, templates, -, 
 			cut, copy, paste, pastetext, pasteword, print, spellcheck, -, 
 			undo, redo, -, find, replace, selectall, removeformat, -, 
 			table, rule, smiley, specialchar, pagebreak, showblocks
