@@ -18,6 +18,9 @@ include_once("lib/trackers/trackerlib.php");
 if (isset($_REQUEST["trkset"])) {
 	check_ticket('admin-inc-trackers');
 	$tikilib->set_preference('t_use_db', $_REQUEST["t_use_db"]);
+	if (substr($_REQUEST['t_use_dir'], -1) != "\\" && substr($_REQUEST['t_use_dir'], -1) != '/' && $_REQUEST['t_use_dir'] != '') {
+			$_REQUEST['t_use_dir'] .= '/';
+		}
 	$tikilib->set_preference('t_use_dir', $_REQUEST["t_use_dir"]);
 }
 
