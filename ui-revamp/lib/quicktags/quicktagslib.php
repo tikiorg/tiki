@@ -105,8 +105,6 @@ class QuicktagFckOnly extends Quicktag
 			return new self( 'RemoveFormat' );
 		case 'smiley':
 			return new self( 'Smiley' );
-		case 'specialchar':
-			return new self( 'SpecialChar' );
 		case 'showblocks':
 			return new self( 'ShowBlocks' );
 		case 'left':
@@ -341,6 +339,93 @@ class QuicktagLineBased extends QuicktagInline // Will change in the future
 	} // }}}
 }
 
+class QuicktagPicker extends Quicktag
+{
+	private $list;
+
+	public static function fromName( $tagName ) // {{{
+	{
+		switch( $tagName ) {
+		case 'specialchar':
+			$wysiwyg = 'SpecialChar';
+			$label = tra('Special Characters');
+			$icon = tra('pics/img/world_edit.png');
+			// Line taken from DokuWiki
+            $list = explode(' ','À à Á á Â â Ã ã Ä ä Ǎ ǎ Ă ă Å å Ā ā Ą ą Æ æ Ć ć Ç ç Č č Ĉ ĉ Ċ ċ Ð đ ð Ď ď È è É é Ê ê Ë ë Ě ě Ē ē Ė ė Ę ę Ģ ģ Ĝ ĝ Ğ ğ Ġ ġ Ĥ ĥ Ì ì Í í Î î Ï ï Ǐ ǐ Ī ī İ ı Į į Ĵ ĵ Ķ ķ Ĺ ĺ Ļ ļ Ľ ľ Ł ł Ŀ ŀ Ń ń Ñ ñ Ņ ņ Ň ň Ò ò Ó ó Ô ô Õ õ Ö ö Ǒ ǒ Ō ō Ő ő Œ œ Ø ø Ŕ ŕ Ŗ ŗ Ř ř Ś ś Ş ş Š š Ŝ ŝ Ţ ţ Ť ť Ù ù Ú ú Û û Ü ü Ǔ ǔ Ŭ ŭ Ū ū Ů ů ǖ ǘ ǚ ǜ Ų ų Ű ű Ŵ ŵ Ý ý Ÿ ÿ Ŷ ŷ Ź ź Ž ž Ż ż Þ þ ß Ħ ħ ¿ ¡ ¢ £ ¤ ¥ € ¦ § ª ¬ ¯ ° ± ÷ ‰ ¼ ½ ¾ ¹ ² ³ µ ¶ † ‡ · • º ∀ ∂ ∃ Ə ə ∅ ∇ ∈ ∉ ∋ ∏ ∑ ‾ − ∗ √ ∝ ∞ ∠ ∧ ∨ ∩ ∪ ∫ ∴ ∼ ≅ ≈ ≠ ≡ ≤ ≥ ⊂ ⊃ ⊄ ⊆ ⊇ ⊕ ⊗ ⊥ ⋅ ◊ ℘ ℑ ℜ ℵ ♠ ♣ ♥ ♦ 𝛼 𝛽 𝛤 𝛾 𝛥 𝛿 𝜀 𝜁 𝛨 𝜂 𝛩 𝜃 𝜄 𝜅 𝛬 𝜆 𝜇 𝜈 𝛯 𝜉 𝛱 𝜋 𝛳 𝜍 𝛴 𝜎 𝜏 𝜐 𝛷 𝜑 𝜒 𝛹 𝜓 𝛺 𝜔 𝛻 𝜕 ★ ☆ ☎ ☚ ☛ ☜ ☝ ☞ ☟ ☹ ☺ ✔ ✘ × „ “ ” ‚ ‘ ’ « » ‹ › — – … ← ↑ → ↓ ↔ ⇐ ⇑ ⇒ ⇓ ⇔ © ™ ® ′ ″');
+			break;
+		default:
+			return;
+		}
+
+		$tag = new self;
+		$tag->setWysiwygToken( $wysiwyg )
+			->setLabel( $label )
+			->setIcon( $icon )
+			->setList( $list );
+
+		return $tag;
+	} // }}}
+
+	function setList( $list ) // {{{
+	{
+		$this->list = $list;
+	} // }}}
+
+	function getWikiHtml( $areaName ) // {{{
+	{
+		static $pickerAdded = false;
+		static $index = -1;
+		global $headerlib;
+
+		if( ! $pickerAdded ) {
+			$headerlib->add_js( <<<JS
+var pickerData = [];
+
+function displayPicker( closeTo, list, areaname ) {
+	var div = document.createElement('div');
+	document.body.appendChild( div );
+
+	var coord = closeTo.getCoordinates();
+
+	div.className = 'quicktags-picker';
+	div.style.left = coord.left + 'px';
+	div.style.top = coord.bottom + 'px';
+
+	var prepareLink = function( link, char ) {
+		link.innerHTML = char;
+		link.href = 'javascript:void(0)';
+		link.onclick = function() {
+			insertAt( areaname, char );
+			div.dispose();
+		}
+	};
+
+	for( i = 0; pickerData[list].length > i; ++i ) {
+		var char = pickerData[list][i];
+		var link = document.createElement( 'a' );
+
+		div.appendChild( link );
+		div.appendChild( document.createTextNode(' ') );
+		prepareLink( link, char );
+	}
+}
+
+JS
+, 0 );
+		}
+
+		++$index;
+		$headerlib->add_js( "pickerData.push( " . json_encode($this->list) . " );", 1 );
+
+		return '<a href="javascript:void(0)" onclick="displayPicker( this, ' . $index . ', \'' . $areaName . '\'); needToConfirm=false;" title="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '">' . $this->getIconHtml() . '</a>';
+	} // }}}
+
+	function isAccessible() // {{{
+	{
+		return true;
+	} // }}}
+}
+
 class QuicktagFullscreen extends Quicktag
 {
 	function __construct() // {{{
@@ -493,6 +578,8 @@ class QuicktagsList
 		elseif( $tag = QuicktagFckOnly::fromName( $tagName ) )
 			return $tag;
 		elseif( $tag = QuicktagWikiplugin::fromName( $tagName ) )
+			return $tag;
+		elseif( $tag = QuicktagPicker::fromName( $tagName ) )
 			return $tag;
 		elseif( $tagName == 'fullscreen' )
 			return new QuicktagFullscreen;
