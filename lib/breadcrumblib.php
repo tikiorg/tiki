@@ -218,7 +218,7 @@ class Breadcrumb {
         global $prefs, $print_page, $info, $structure, $structure_path;
     
         if ( ($prefs['feature_siteidentity'] == 'n'|| $prefs['feature_breadcrumbs'] == 'n') || $prefs['feature_sitetitle'] == 'title' ) {
-            $ret = '<strong><a title="';
+            $ret = '<a title="';
         } else if ( $prefs['feature_sitetitle'] == 'y' ) {
             $class = "pagetitle";
 	    $ret = '<a class="'.$class.'" title="';
@@ -249,9 +249,6 @@ class Breadcrumb {
         $ret .= help_doclink(array('crumb'=>$crumbs[$len-1]));
         if( $info['flag'] == 'L' && $print_page != 'y' ) {
             $ret .= ' <img src="pics/icons/lock.png" border="0" height="16" width="16" alt="'.tra('locked').'" title="'.tra('locked by').' '.$info['user'].'" />';
-        }
-        if( ($prefs['feature_siteidentity'] == 'n' || $prefs['feature_breadcrumbs'] == 'n') || $prefs['feature_sitetitle'] == 'title' ) {
-            $ret .= '</strong>';          
         }
         return $ret;
     }
