@@ -40,13 +40,9 @@ if (!isset($_REQUEST["page"])) {
 $page = $_REQUEST['page'];
 $smarty->assign('page', $page);
 
-
-require_once ('tiki-pagesetup.php');
-
 // If the page doesn't exist then display an error
 if (!($info = $tikilib->get_page_info($page))) {
 	$smarty->assign('msg', tra("Page cannot be found"));
-
 	$smarty->display("error_raw.tpl");
 	die;
 }

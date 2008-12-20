@@ -32,10 +32,15 @@ if (!isset($_REQUEST["page"])) {
 	$smarty->assign_by_ref('page', $_REQUEST["page"]);
 }
 
-include_once ("tiki-pagesetup.php");
+if (!($info = $tikilib->get_page_info($page))) {
+	$smarty->assign('msg', tra('Page cannot be found'));
+	$smarty->display('error.tpl');
+	die;
+}
 
 // Now check permissions to access this page
-if ($tiki_p_remove != 'y' || !$wikilib->is_editable($page, $user)) {
+$tikilib->get_perm_object( $page, 'wiki page', $info);
+if ($tiki_p_remove != 'y' || !$tiki_p_edit != 'y') {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied you cannot remove versions from this page"));
 

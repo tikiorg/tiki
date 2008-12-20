@@ -13,29 +13,26 @@ require_once ('tiki-setup.php');
 
 include_once ('lib/structures/structlib.php');
 
-if ($tiki_p_view != 'y') {
-// This allows tiki_p_view in, in order to see structure tree - security hardening for editing features below.
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-
-	$smarty->display("error.tpl");
-	die;
-}
-
 if($prefs['feature_wiki'] != 'y') {
     $smarty->assign('msg', tra('This feature is disabled').': feature_wiki');
     $smarty->display('error.tpl');
     die;  
 }
-
 if($prefs['feature_wiki_structure'] != 'y') {
     $smarty->assign('msg', tra('This feature is disabled').': feature_wiki_structure');
     $smarty->display('error.tpl');
     die;  
 }
-
 if (!isset($_REQUEST["page_ref_id"])) {
 	$smarty->assign('msg', tra("No structure indicated"));
+	$smarty->display("error.tpl");
+	die;
+}
+if ($tiki_p_view != 'y') {
+// This allows tiki_p_view in, in order to see structure tree - security hardening for editing features below.
+	$smarty->assign('errortype', 401);
+	$smarty->assign('msg', tra("You do not have permission to use this feature"));
+
 	$smarty->display("error.tpl");
 	die;
 }
@@ -52,18 +49,19 @@ $smarty->assign('page_ref_id', $_REQUEST["page_ref_id"]);
 $smarty->assign('structure_id', $structure_info["page_ref_id"]);
 $smarty->assign('structure_name', $structure_info["pageName"]);
 
-if ($tiki_p_edit_structures  == 'y' && $tikilib->user_has_perm_on_object($user,$structure_info["pageName"],'wiki page','tiki_p_edit','tiki_p_edit_categorized'))
-	$editable = 'y';
-else
-	$editable = 'n';
-$smarty->assign('editable', $editable);
-	
 if (!$tikilib->user_has_perm_on_object($user,$structure_info["pageName"],'wiki page','tiki_p_view')) {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg',tra('Permission denied you cannot view this page'));
 	$smarty->display("error.tpl");
 	die;
 }
+
+if ($tiki_p_edit_structures  == 'y')
+	$editable = 'y';
+else
+	$editable = 'n';
+$smarty->assign('editable', $editable);
+	
 
 $alert_categorized = array();
 $alert_in_st = array();
@@ -106,8 +104,8 @@ if (isset($_REQUEST["sremove"])) {
   if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
 		$page = $page_info["pageName"];
-		require ('tiki-pagesetup.php');
-		$structlib->s_remove_page($_REQUEST["sremove"], $tiki_p_remove == 'y', empty($_REQUEST['page'])? '': $_REQUEST['page']);
+		$delete = $tikilib->user_has_perm_on_object($user, $page_info['pageName'],'wiki page','tiki_p_remove');
+		$structlib->s_remove_page($_REQUEST["sremove"], $delete, empty($_REQUEST['page'])? '': $_REQUEST['page']);
   	$_REQUEST["page_ref_id"] = $page_info["parent_id"];
   } else {
     key_get($area);
