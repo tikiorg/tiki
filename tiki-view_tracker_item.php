@@ -1164,9 +1164,9 @@ if ($tracker_info["useAttachments"] == 'y') {
 		$smarty->assign("attId", $att["attId"]);
 		$_REQUEST["show"] = "att";
 	}
-	if (isset($_REQUEST["attach"]) && ($tiki_p_attach_trackers == 'y')) {
+	if (isset($_REQUEST['attach']) && $tiki_p_attach_trackers == 'y' && isset($_FILES['userfile1'])) {
 		// Process an attachment here
-		if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
+		if (is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
 			$fp = fopen($_FILES['userfile1']['tmp_name'], "rb");
 			$data = '';
 			$fhash = '';
@@ -1196,11 +1196,9 @@ if ($tracker_info["useAttachments"] == 'y') {
 			$name = $_FILES['userfile1']['name'];
 			$type = $_FILES['userfile1']['type'];
 		} else {
-			$name = "";
-			$size = "";
-			$type = "";
-			$data = "";
-			$fhash="";
+			$smarty->assign('msg', $_FILES['userfile1']['name'].': '.tra('Upload was not successful').': '.$tikilib->uploaded_file_error($_FILES['userfile1']['error']));
+			$smarty->display("error.tpl");
+			die;
 		}
 		$trklib->replace_item_attachment($_REQUEST["attId"], $name, $type, $size, $data, $_REQUEST["attach_comment"], $user, $fhash,$_REQUEST["attach_version"],$_REQUEST["attach_longdesc"], $_REQUEST['trackerId'], $_REQUEST['itemId'], $tracker_info);
 		$_REQUEST["attId"] = 0;
