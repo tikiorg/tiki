@@ -327,7 +327,10 @@ div#sitead {margin: auto}
 	margin: 0;
 	margin-top: 3px;
 	height: 33px;
-	max-width: 320px;
+	text-align: left;
+	/*max-width: 380px;
+	min-width: 340px;*/
+	width: 350px;
 	background: url(coelesce/search_wide.jpg) no-repeat;
 	padding-left: 15px;
 	color: #517ea7;}
@@ -338,12 +341,31 @@ div#sitead {margin: auto}
 	margin: 0;
 	padding: 0}
 	
-#sitesearchbar form { padding-top: 8px;margin-right: 8px }
+#sitesearchbar form {
+	padding-top: 8px;
+	margin-right: 8px}
 
-#sitesearchbar form input.wikiaction {
-	color: transparent;
-	background: transparent;
-	border: none}
+#sitesearchbar form input.wikiaction {}
+	
+#sitesearchbar select[name="where"] {}
+#sitesearchbar ul.cssmenu * {
+	width: 40px;
+	/*line-height: 1;
+	float: left*/}
+	
+#sitesearchbar .nohighlight {position: relative} 
+	
+#sitesearchbar ul.cssmenu {
+	position: absolute;
+	top: 9px;
+	right: 30px;
+	width: 50px;
+	cursor: pointer;
+	color: #2d2d2d;}
+	
+#sitesearchbar ul.cssmenu > li { }
+	
+.sitesearchbar .cssmenu li ul ul {margin: -1em 0 0 2em}
 
 input#fuser,
 select[name="where"] {border: none}

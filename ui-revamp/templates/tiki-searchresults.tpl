@@ -92,14 +92,21 @@
     <input type="hidden" name="where" value="{$where|escape}" />
 	{if $forumId}<input type="hidden" name="forumId" value="{$forumId}" />{/if}
 {/if}
-	<input type="submit" class="wikiaction" name="search" value="{tr}Go{/tr}"/>
 {if $prefs.feature_wiki eq 'y'}
-	{if $tiki_p_view eq 'y'}
-		<input type="submit" class="wikiaction" name="view" value="{tr}View{/tr}"/>
-	{/if}
-	{if $tiki_p_edit eq 'y'}
-		<input type="submit" class="wikiaction" name="edit" value="{tr}Edit{/tr}"/>
-	{/if}
+	<ul class="clearfix cssmenu">
+		<li><a href="#">{/if}
+	<input type="submit" class="wikiaction" name="search" value="{tr}Go{/tr}"/>
+			{if $prefs.feature_wiki eq 'y'}</a>
+				<ul>
+					{if $tiki_p_view eq 'y'}
+						<li><input type="submit" class="wikiaction" name="view" value="{tr}View{/tr}"/></li>
+					{/if}
+					{if $tiki_p_edit eq 'y'}
+						<li><input type="submit" class="wikiaction" name="edit" value="{tr}Edit{/tr}"/></li>
+					{/if}
+				</ul>
+		</li>
+	</ul>
 	<script type="text/javascript">
 	{if $prefs.feature_mootools eq 'y'}
 	{literal}
