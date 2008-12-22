@@ -1,17 +1,14 @@
-{remarksbox type="tip" title="{tr}Tip{/tr}"}
-{tr}Use categories to regroup various Tiki objects{/tr}.
-<hr />
-{tr}Link to{/tr} <a class="rbox-link" href="tiki-browse_categories.php">{tr}Browse categories{/tr}</a>
-<hr />
-{tr}Link to{/tr} <a class="rbox-link" href="tiki-admin_categories.php">{tr}Administer categories{/tr}</a>
-{/remarksbox}
+{* $Id$ *}
+<div class="navbar">
+{button href="tiki-browse_categories.php" _text="{tr}Browse categories{/tr}"}
+{button href="tiki-admin_categories.php" _text="{tr}Administer categories{/tr}"}
+</div>
 
 <div class="cbox">
   <div class="cbox-title">
     {tr}{$crumbs[$crumb]->description}{/tr}
     {help crumb=$crumbs[$crumb]}
   </div>
-
 
       <form action="tiki-admin.php?page=category" method="post">
         <table class="admin">
