@@ -224,8 +224,7 @@ $smarty->assign('display_tz', $display_tz);
 
 $firstDay = false;
 for ($i = 0; $i <= $numberofweeks; $i++) {
-  $weeks[] = $curtikidate->getWeekOfYear();
-
+  $weeks[] = $weekNumbers[] = $curtikidate->getWeekOfYear();
 require_once('lib/smarty_tiki/modifier.userlink.php');
 
 $registeredIndexes = array();
@@ -529,8 +528,9 @@ if ($max > 100) {
  	$hours = range($minHourOfDay,$maxHourOfDay);
 	$eventHoraires = array();
 	$concurrencies = array();
+	$tmpRes = array();
 	foreach($weekdays as $wd) {
-		if ( is_array($cell[0][$wd]['items']) ) {
+		if ( isset($cell[0][$wd]['items']) && is_array($cell[0][$wd]['items']) ) {
 		foreach ($cell[0][$wd]['items'] as $dayitems) {
 			$dayitems['time'] = ($dayitems['startTimeStamp'] >= $cell[0][$wd]['day'])
 				? $dayitems['time']
@@ -680,6 +680,7 @@ $smarty->assign('firstweek', $firstweek);
 $smarty->assign('lastweek', $lastweek);
 $smarty->assign('weekdays', $weekdays);
 $smarty->assign('weeks', $weeks);
+$smarty->assign_by_ref('weekNumbers', $weekNumbers);
 $smarty->assign('daysnames', $daysnames);
 foreach($cell as $a=>$x) {
 	foreach($x as $b=>$y) {
