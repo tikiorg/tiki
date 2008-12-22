@@ -4242,14 +4242,22 @@ class TikiLib extends TikiDB {
 			case 'history':
 				if ($categPerms['tiki_p_view_categorized'] == 'y' || $categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
 					$ret['tiki_p_view'] = 'y';
+					$ret['tiki_p_wiki_view_source'] = 'y';
+					$ret['tiki_p_wiki_view_comments'] = 'y';
+					$ret['_wiki_view_attachments'] = 'y';
 				} else {
-					$ret['tiki_p_view'] = 'n';
+					foreach($perms['data'] as $p) {
+						if ($p['permName'] != 'tiki_p_use_as_template')
+							$ret[$p['permName']] = 'n';
+					}
 				}
 				if ($categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
 					$ret['tiki_p_edit'] = 'y';
+					$ret['tiki_p_remove'] = 'y';
 					$ret['tiki_p_wiki_attach_files'] = 'y';
 				} else {
 					$ret['tiki_p_edit'] = 'n';
+					$ret['tiki_p_remove'] = 'n';
 					$ret['tiki_p_wiki_attach_files'] = 'n';
 				}
 				break;
