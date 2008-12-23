@@ -203,6 +203,7 @@ if ( ($tiki_p_post_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n'
 		|| ($tiki_p_forum_post == 'y' && isset($forum_mode) && $forum_mode == 'y') ) {
 	if (isset($_REQUEST["comments_postComment"])) {
 		$msgError = '';
+		$smarty->assign('comments_postComment', 'y');
 
 		if (empty($user) && $prefs['feature_antibot'] == 'y' && (!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $_REQUEST['antibotcode'])) {
 			$msgError = tra('You have mistyped the anti-bot verification code; please try again.');
