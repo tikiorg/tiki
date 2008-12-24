@@ -79,7 +79,10 @@
   {if $prefs.feature_create_webhelp == 'y' && $tiki_p_edit_structures == 'y'}<a title="{tr}Create WebHelp{/tr}" class="link" href="tiki-create_webhelp.php?struct={$channels[ix].page_ref_id|escape:"url"}">{icon _id='help' alt="{tr}Create WebHelp{/tr}"}</a>{/if}
   {if $prefs.feature_create_webhelp == 'y' && $channels[ix].webhelp eq 'y'} 
   <a title="{tr}View WebHelp{/tr}" class="link" href="whelp/{$channels[ix].pageName}/index.html">{icon _id='book_open' alt="{tr}View WebHelp{/tr}"}</a>
-  {/if}&nbsp;
+  {/if}
+  {if $tiki_p_admin eq 'y'}
+    <a title="{tr}Xml Zip{/tr}" class="link" href="tiki-admin_structures.php?zip={$channels[ix].page_ref_id|escape:"url"}">{icon _id='pics/icons/mime/zip.png' alt="{tr}Xml Zip{/tr}"}</a>
+  {/if}
   </td>
 </tr>
 {sectionelse}

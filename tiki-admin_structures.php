@@ -83,6 +83,21 @@ if (isset($_REQUEST['export'])) {
 	}
 	$structlib->s_export_structure($_REQUEST['export']);
 }
+if (isset($_REQUEST['zip']) && $tiki_p_admin == 'y') {
+	check_ticket('admin-structures');
+	include_once('lib/wiki/xmllib.php');
+	$xmllib = new XmlLib();
+	$zipFile = 'dump/xml.zip';
+	$config['debug'] = false;
+	if ($xmllib->export_pages(null, $_REQUEST['zip'], $zipFile, $config)) {
+		if (!$config['debug']) {
+			header("location: $zipFile");
+			die;
+		}
+	} else {
+		$smarty->assign('error', $xmllib->get_error());
+	}
+}
 
 if (isset($_REQUEST['export_tree'])) {
 	check_ticket('admin-structures');
