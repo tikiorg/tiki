@@ -1,0 +1,80 @@
+/*text color: #244867
+background color: #bbdde7 */
+.annotation-areaborder{
+	position:absolute;
+	top : 0px;
+	left : 0px;
+	border: 1px solid #000;
+}
+.annotation-area {
+	position : absolute;  
+	background : url(images/ed_blank.gif);
+  	cursor : pointer;
+	border : 1px solid #FFF;
+	top : 0px;
+	left : 0px;
+	z-index :2;
+}
+
+.annotation-note {
+	position : absolute; 
+	padding-left : 2px;
+	padding-right : 2px;
+	background-color : #bbdde7;
+	display : block;
+	text-align : left;
+	color : #244867;
+	cursor : text;
+	visibility : inherit;
+	-moz-border-radius: 2px; 	
+}
+
+.annotation-edit-bar {
+	padding : 1px;
+	border : 1px solid #999999;
+	background-color : #bbdde7;
+	color : #244867;
+	cursor : pointer;
+	font-weight : bold;
+}
+
+.annotation-editframe {
+	background: transparent url(artwork/transparent.gif) repeat scroll 0% 0%; 
+	
+	-moz-background-clip: -moz-initial;
+	-moz-background-origin: -moz-initial;
+	-moz-background-inline-policy: -moz-initial;
+	z-index: 4; 
+	position: absolute; 
+	border: 2px dashed #bbdde7;
+	cursor:move;
+	visibility:hidden;
+}
+
+.annotation-areaform {
+	position : relative;
+	background-color: #bbdde7;
+	color : #244867;
+	padding : 2px;
+	border : 2px solid #999999; 
+	width : 300px;
+	cursor : text;
+}
+
+.annotation-areaform form label {
+	padding:1px;
+	border: 1px solid #999999;
+	background-color : #bbdde7;
+	color:#244867;
+	font-weight:bold;
+	cursor:pointer;
+}
+
+.annotation-dragresize{
+	position : absolute;
+ 	width : 5px;
+ 	height : 5px;
+ 	font-size : 1px;
+ 	background : #bbdde7;
+ 	border : 1px solid #244867;
+}
