@@ -149,7 +149,8 @@ class WikiRenderer
 		else
 			$this->smartyassign('struct_editable', 'n');	
 		// To show position    
-		if (count($structure_path) > 1) {		
+		if (count($structure_path) > 1) {
+			$cur_pos = '';
 			for ($i = 1; $i < count($structure_path); $i++) {
 				$cur_pos .= $structure_path[$i]["pos"] . "." ;
 			}
