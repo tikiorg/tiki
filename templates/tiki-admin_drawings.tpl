@@ -8,7 +8,7 @@
 <h2>{tr}Preview{/tr}</h2>
 <div align="center">
 	<a href='#' onclick="javascript:window.open('tiki-editdrawing.php?path={$path}&amp;drawing={$draw_info.name}','','menubar=no,width=252,height=25');">
-		<img width='154' height='98' border='0' src='img/wiki/{$draw_info.filename_draw}' alt='{tr}Edit{/tr}' /></a>
+		<img width='154' height='98' src='img/wiki/{$draw_info.filename_draw}' alt='{tr}Edit{/tr}' /></a>
 </div>
 {/if}
 

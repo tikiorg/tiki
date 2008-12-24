@@ -27,8 +27,8 @@
 		      {*	<input type="image" id="map" src="{$image_url}"  *}
 		        <img id="map" src="{$image_url}"
 						{if $xsize != ""}width="{$xsize}"{/if} 
-						{if $ysize != ""}height="{$ysize}"{/if} 
-					  border="0"
+						{if $ysize != ""}height="{$ysize}"{/if}
+						border="0"
 		  			alt="{tr}click on the map to zoom or pan, do not drag{/tr}" 
 					  title="{tr}click on the map to zoom or pan, do not drag{/tr}"
 					  style="z-index:20;position:relative"/> 
@@ -105,7 +105,7 @@
 				
 		  </td></tr>
 		  <tr><td align="center">
-		 	<img id="scale" src="{$image_scale_url}" border="0" alt="{tr}Scale{/tr}" title="{tr}Scale{/tr}" />
+		 	<img id="scale" src="{$image_scale_url}" alt="{tr}Scale{/tr}" title="{tr}Scale{/tr}" />
 		 	<div align="center">
 		 	<input type="text" id="xx"/><input type="text" id="yy"/>
 			</div>
@@ -159,11 +159,11 @@
 			</select>
 				<input type="submit" name="Go" value="{tr}Go{/tr}" />&nbsp;
 			{/if}
-			 <input type="image" name="maponly" value="yes" src="img/icn/png.gif" border="0" alt="{tr}View the Map Only{/tr}" title="{tr}View the Map Only{/tr}" />
+			 <input type="image" name="maponly" value="yes" src="img/icn/png.gif" alt="{tr}View the Map Only{/tr}" title="{tr}View the Map Only{/tr}" />
 			{if $tiki_p_map_edit eq 'y'}
 				&nbsp; 
 				<a class="link" href="tiki-map_edit.php?mapfile={$mapfile}&amp;mode=editing">
-				<img src="pics/icons/wrench.png" border="0" alt="{tr}Edit{/tr}" title="{tr}Edit{/tr}" width="16" height="16" /></a>
+				<img src="pics/icons/wrench.png" alt="{tr}Edit{/tr}" title="{tr}Edit{/tr}" width="16" height="16" /></a>
 			{/if}
 			&nbsp;
 			<a href="tiki-map.php?mapfile={$mapfile}" ><small>{tr}Reset Map{/tr}</small></a><br /> 
@@ -187,11 +187,11 @@
 		   <tr><td align="center" valign="middle" bgcolor="FFFFFF">
 		   <img id="ref" src="{$image_ref_url}" border="1" alt="{tr}Overview{/tr}" title="{tr}Overview{/tr}" /></td ></tr>
 		   <tr><th align="center"><b>{tr}Legend{/tr}</b></th></tr>
-		   <tr><td align="center" bgcolor="FFFFFF"><img id="leg" src="{$image_leg_url}" border="0" alt="{tr}Legend{/tr}" title="{tr}Legend{/tr}" /></td></tr>
+		   <tr><td align="center" bgcolor="FFFFFF"><img id="leg" src="{$image_leg_url}" alt="{tr}Legend{/tr}" title="{tr}Legend{/tr}" /></td></tr>
 		   <tr><td>
     			<div class="separator">
 			{if $prefs.feature_menusfolderstyle eq 'y'}
-				<a class="separator" href="javascript:toggle('layermenu');"><img src="img/icons/fo.gif" border="0" name="layermenuicn" alt=""/>&nbsp;</a>
+				<a class="separator" href="javascript:toggle('layermenu');"><img src="img/icons/fo.gif" name="layermenuicn" alt=""/>&nbsp;</a>
 			{else}
 			<a class="separator" href="javascript:toggle('layermenu');"><b>[+/-]</b></a>
 			{/if}
@@ -203,10 +203,10 @@
 				<th><b>{tr}Layer{/tr}</b></th>
 		  		<th><b>{tr}On{/tr}</b></th>
 		  		<th>
-				<img src="img/icons/edit.gif" border="0" alt="{tr}Label{/tr}" title="{tr}Label{/tr}" /></th>
+				<img src="img/icons/edit.gif" alt="{tr}Label{/tr}" title="{tr}Label{/tr}" /></th>
 		  		<th>
-				<img src="img/icons/question.gif" border="0" alt="{tr}Query{/tr}" title="{tr}Query{/tr}" /></th>
-		  		<th><img src="pics/icons/disk.png" width="16" height="16" border="0" alt="{tr}Download{/tr}" title="{tr}Download{/tr}" /></th>
+				<img src="img/icons/question.gif" alt="{tr}Query{/tr}" title="{tr}Query{/tr}" /></th>
+		  		<th><img src="pics/icons/disk.png" width="16" height="16" alt="{tr}Download{/tr}" title="{tr}Download{/tr}" /></th>
 			</tr>
 			{section name=j loop=$my_layers}
 			{if $my_layers[j]->group neq "" }
@@ -219,7 +219,7 @@
 				{/if}
 				<div class="separator">
 					{if $prefs.feature_menusfolderstyle eq 'y'}
-					<a class="separator" href="javascript:icntoggle('submenu{$unique_layer_group[j]}');"><img src="img/icons/fo.gif" border="0" name="layermenuicn" alt=""/>&nbsp;</a>
+					<a class="separator" href="javascript:icntoggle('submenu{$unique_layer_group[j]}');"><img src="img/icons/fo.gif" name="layermenuicn" alt=""/>&nbsp;</a>
 					{else}
 					
 					&nbsp;&nbsp;<a class="separator" href="javascript:toggle('submenu{$unique_layer_group[j]}');">[+/-]</a>
@@ -264,7 +264,7 @@
 						<td class="even" width=20px>
 						{/if}
 						{if $layer_query[i] eq "On"}
-						<img src="img/icons/question.gif" border="0" alt="{tr}Query{/tr}" title="{tr}Query{/tr}" />
+						<img src="img/icons/question.gif" alt="{tr}Query{/tr}" title="{tr}Query{/tr}" />
 						{else}
 						&nbsp;
 						{/if}
@@ -277,7 +277,7 @@
 						{if $layer_download[i] eq "T"}
 						<small>
 						<a href="tiki-map_download.phtml?mapfile={$mapfile}&amp;layer={$my_layers[i]->name}">
-						<img src="pics/icons/disk.png" border="0" alt="{tr}Download{/tr}" title="{tr}Download{/tr}" width="16" height="16" /></a>
+						<img src="pics/icons/disk.png" alt="{tr}Download{/tr}" title="{tr}Download{/tr}" width="16" height="16" /></a>
 						</small>
 						{/if}
 						</td>
@@ -323,7 +323,7 @@
 				<td class="even">
 				{/if}
 				{if $layer_query[j] eq "On"}
-				<img src="img/icons/question.gif" border="0" alt="{tr}Query{/tr}" title="{tr}Query{/tr}" />
+				<img src="img/icons/question.gif" alt="{tr}Query{/tr}" title="{tr}Query{/tr}" />
 				{else}
 				&nbsp;
 				{/if}
@@ -336,7 +336,7 @@
 				{if $layer_download[j] eq "T"}
 				<small>
 				<a href="tiki-map_download.phtml?mapfile={$mapfile}&amp;layer={$my_layers[j]->name}">
-				<img src="pics/icons/disk.png" border="0" alt="{tr}Download{/tr}" title="{tr}Download{/tr}" width="16" height="16" /></a>
+				<img src="pics/icons/disk.png" alt="{tr}Download{/tr}" title="{tr}Download{/tr}" width="16" height="16" /></a>
 				</small>
 				{/if}
 				</td>

@@ -25,20 +25,20 @@
 {if $useImage eq 'y'}
   {if $hasImage eq 'y'}
     {if $imageIsChanged eq 'y'}
-      <img alt="{tr}Article image{/tr}" border="0" src="article_image.php?image_type=preview&amp;id={$previewId}" 
+      <img alt="{tr}Article image{/tr}" src="article_image.php?image_type=preview&amp;id={$previewId}" 
 			{if $image_x > 0}width="{$image_x}"{/if}{if $image_y > 0 }height="{$image_y}"{/if} />
     {else}
 			{if $subId}
-      	<img alt="{tr}Article image{/tr}" border="0" src="article_image.php?image_type=submission&amp;id={$subId}" />
+      	<img alt="{tr}Article image{/tr}" src="article_image.php?image_type=submission&amp;id={$subId}" />
 			{else}
-      	<img alt="{tr}Article image{/tr}" border="0" src="article_image.php?image_type=article&amp;id={$articleId}" />
+      	<img alt="{tr}Article image{/tr}" src="article_image.php?image_type=article&amp;id={$articleId}" />
 			{/if}
     {/if}
   {else}
-    <img alt="{tr}Topic image{/tr}" border="0" src="article_image.php?image_type=topic&amp;id={$topicId}" />
+    <img alt="{tr}Topic image{/tr}" src="article_image.php?image_type=topic&amp;id={$topicId}" />
   {/if}
 {else}
-  <img alt="{tr}Topic image{/tr}" border="0" src="article_image.php?image_type=topic&amp;id={$topicId}" />
+  <img alt="{tr}Topic image{/tr}" src="article_image.php?image_type=topic&amp;id={$topicId}" />
 {/if}
 </td><td  valign="top">
 <span class="articleheading">{$parsed_heading}</span>

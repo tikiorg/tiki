@@ -241,7 +241,7 @@
 <td>{tr}Start{/tr}</td>
 <td>
 {if $edit}
-	<table cellpadding="0" cellspacing="0" border="0" style="border:0;">
+	<table cellpadding="0" cellspacing="0" border="0">
 		<tr>
 			<td style="border:0;padding-top:2px;vertical-align:middle">
 			{if $prefs.feature_jscalendar neq 'y' or $prefs.javascript_enabled neq 'y'}
@@ -313,7 +313,7 @@
 	<td>{tr}End{/tr}</td><td>
 	{if $edit}
 		<input type="hidden" name="save[end_or_duration]" value="end" id="end_or_duration" />
-		<table cellpadding="0" cellspacing="0" border="0" style="border:0;display:block;" id="end_date">
+		<table cellpadding="0" cellspacing="0" border="0" id="end_date">
 		<tr>
 			<td style="border:0;padding-top:2px;vertical-align:middle">
 			{if $prefs.feature_jscalendar neq 'y' or $prefs.javascript_enabled neq 'y'}
@@ -355,7 +355,7 @@
 	</tr>
 </table>
 
-<table cellpadding="0" cellspacing="0" border="0" style="border:0;display:none;" id="end_duration">
+<table cellpadding="0" cellspacing="0" border="0" style="display:none;" id="end_duration">
 	<tr>
 		<td style="border:0;padding-top:2px;vertical-align:middle">
 			<span id="durhourplus" style="display: {if $calitem.allday} none {else} inline {/if}"><a href="#" onclick="document.f.duration_Hour.selectedIndex=(document.f.duration_Hour.selectedIndex+1);">{icon _id='plus_small' align='left' width='11' height='8'}</a></span>

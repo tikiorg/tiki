@@ -7,13 +7,13 @@
   
       {if $prefs.feature_help eq 'y'}
 <a href="{$prefs.helpurl}GalaxiaUserActivities" target="tikihelp" class="tikihelp" title="{tr}Galaxia User Activities{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
+<img src="img/icons/help.gif" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
 
 
 
       {if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-g-user_activities.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Galaxia User Activities tpl{/tr}">
-<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}Edit Tpl{/tr}' /></a>{/if}
+<img src="img/icons/info.gif" height="16" width="16" alt='{tr}Edit Tpl{/tr}' /></a>{/if}
 
 </h1>
 {include file=tiki-g-user_bar.tpl}
@@ -84,10 +84,10 @@
 		{/if}
 		{if $items[ix].isInteractive eq 'y'}
 			{if $items[ix].type eq 'start'}
-				<a onclick="var answer = prompt('{tr}Enter the name of this instance{/tr}:','');while(answer == '')answer = prompt('{tr}The name is not valid. Please, enter the name again{/tr}:','');if (answer != null)window.location = 'tiki-g-run_activity.php?activityId={$items[ix].activityId}&name='+answer;"><img border="0" src='lib/Galaxia/img/icons/next.gif' alt='{tr}run{/tr}' title='{tr}run activity{/tr}' /></a>
+				<a onclick="var answer = prompt('{tr}Enter the name of this instance{/tr}:','');while(answer == '')answer = prompt('{tr}The name is not valid. Please, enter the name again{/tr}:','');if (answer != null)window.location = 'tiki-g-run_activity.php?activityId={$items[ix].activityId}&name='+answer;"><img src='lib/Galaxia/img/icons/next.gif' alt='{tr}run{/tr}' title='{tr}run activity{/tr}' /></a>
 			{/if}
 			{if $items[ix].type eq 'standalone'}
-				<a class="link" href="tiki-g-run_activity.php?activityId={$items[ix].activityId}"><img border="0" src='lib/Galaxia/img/icons/next.gif' alt='{tr}run{/tr}' title='{tr}run activity{/tr}' /></a>
+				<a class="link" href="tiki-g-run_activity.php?activityId={$items[ix].activityId}"><img src='lib/Galaxia/img/icons/next.gif' alt='{tr}run{/tr}' title='{tr}run activity{/tr}' /></a>
 			{/if}	
 		{/if}
 	</td>
@@ -118,12 +118,12 @@
       <td>
         <center>
           {if $map neq ''}
-            <img src="{$graph}" alt="{$procname}" border="0" usemap="#procmap" />
+            <img src="{$graph}" alt="{$procname}" usemap="#procmap" />
             <map name="procmap">
               {$map}
             </map>
           {else}
-            <img src="{$graph}" alt="{$procname}" border="0" />
+            <img src="{$graph}" alt="{$procname}" />
           {/if}
         </center>
       </td>

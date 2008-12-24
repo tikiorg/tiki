@@ -12,9 +12,9 @@
 <table cellpadding="0" cellspacing="0">
 <tr><td valign="top">
 {if $useImage eq 'y'}
-  <img alt="{tr}Article image{/tr}" border="0" src="received_article_image.php?id={$receivedArticleId}" />
+  <img alt="{tr}Article image{/tr}" src="received_article_image.php?id={$receivedArticleId}" />
 {else}
-  <img alt="{tr}Topic image{/tr}" border="0" src="article_image.php?image_type=topic&amp;id={$topic}" />
+  <img alt="{tr}Topic image{/tr}" src="article_image.php?image_type=topic&amp;id={$topic}" />
 {/if}
 </td><td valign="top">
 <span class="articleheading">{$parsed_heading}</span>

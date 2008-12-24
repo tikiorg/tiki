@@ -5,11 +5,11 @@
   
       {if $prefs.feature_help eq 'y'}
 <a href="{$prefs.helpurl}GalaxiaMonitorActivities" target="tikihelp" class="tikihelp" title="{tr}Galaxia Monitor Activities{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
+<img src="img/icons/help.gif" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
 
 
       {if $prefs.feature_view_tpl eq 'y'}
-<a href="tiki-edit_templates.php?template=tiki-g-monitor_activities.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Galaxia Monitor Activities tpl{/tr}"><img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}Edit Tpl{/tr}' /></a>{/if}
+<a href="tiki-edit_templates.php?template=tiki-g-monitor_activities.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Galaxia Monitor Activities tpl{/tr}"><img src="img/icons/info.gif" height="16" width="16" alt='{tr}Edit Tpl{/tr}' /></a>{/if}
 
 
 </h1>
@@ -122,10 +122,10 @@
 	<td class="{cycle advance=false}">
 	  <a class="link" href="tiki-g-admin_activities.php?pid={$act.pId}&amp;activityId={$act.activityId}">{$act.name}</a>
 	  {if $act.type eq 'standalone'}
-	  <a href="tiki-g-run_activity.php?activityId={$act.activityId}"><img alt='{tr}run{/tr}' title='{tr}run activity{/tr}' src='lib/Galaxia/img/icons/next.gif' border='0' /></a>
+	  <a href="tiki-g-run_activity.php?activityId={$act.activityId}"><img alt='{tr}run{/tr}' title='{tr}run activity{/tr}' src='lib/Galaxia/img/icons/next.gif' /></a>
 	  {/if}
 	  {if $act.type eq 'start'}
-	  <a onclick="var answer = prompt('{tr}Enter the name of this instance{/tr}:','');while(answer == '')answer = prompt('{tr}The name is not valid. Please, enter the name again{/tr}:','');if (answer != null)window.location = 'tiki-g-run_activity.php?activityId={$act.activityId}&createInstance=1&name='+answer;"><img border="0" src='lib/Galaxia/img/icons/next.gif' alt='{tr}run{/tr}' title='{tr}run activity{/tr}' /></a>{*<a href="tiki-g-run_activity.php?activityId={$act.activityId}&amp;createInstance=1"><img alt='{tr}run{/tr}' title='{tr}run activity{/tr}' src='lib/Galaxia/img/icons/next.gif' border='0' /></a>*}
+	  <a onclick="var answer = prompt('{tr}Enter the name of this instance{/tr}:','');while(answer == '')answer = prompt('{tr}The name is not valid. Please, enter the name again{/tr}:','');if (answer != null)window.location = 'tiki-g-run_activity.php?activityId={$act.activityId}&createInstance=1&name='+answer;"><img src='lib/Galaxia/img/icons/next.gif' alt='{tr}run{/tr}' title='{tr}run activity{/tr}' /></a>{*<a href="tiki-g-run_activity.php?activityId={$act.activityId}&amp;createInstance=1"><img alt='{tr}run{/tr}' title='{tr}run activity{/tr}' src='lib/Galaxia/img/icons/next.gif' /></a>*}
 	  {/if}
 	</td>
   

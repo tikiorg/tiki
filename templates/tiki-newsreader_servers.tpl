@@ -3,12 +3,12 @@
 
 {if $prefs.feature_help eq 'y'}
 <a href="{$prefs.helpurl}Newsreader" target="tikihelp" class="tikihelp" title="{tr}Configure Newsreader{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>
+<img src="img/icons/help.gif" height="16" width="16" alt='{tr}Help{/tr}' /></a>
 {/if}
 
 {if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-newsreader_servers.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}configure newsreader server tpl{/tr}">
-<img src="img/icons/info.gif" border="0" width="16" height="16" alt='{tr}Edit Template{/tr}' /></a>
+<img src="img/icons/info.gif" width="16" height="16" alt='{tr}Edit Template{/tr}' /></a>
 {/if}</h1>
 
 

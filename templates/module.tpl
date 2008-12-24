@@ -9,12 +9,12 @@
 			<span class="modcontrols">
 			<a title="{tr}Move module up{/tr}" 
 				href="{$current_location|escape}{$mpchar|escape}mc_up={$module_name|escape}"><img 
-				src="pics/icons/resultset_up.png" border="0" width="16" height="16" alt="[{tr}Up{/tr}]" /></a>
+				src="pics/icons/resultset_up.png" width="16" height="16" alt="[{tr}Up{/tr}]" /></a>
 			<a title="{tr}Move module down{/tr}" 
 				href="{$current_location|escape}{$mpchar|escape}mc_down={$module_name|escape}"><img 
-				src="pics/icons/resultset_down.png" border="0" width="16" height="16" alt="[{tr}Down{/tr}]" /></a>
-			<a title="{tr}Move module to opposite side{/tr}" href="{$current_location|escape}{$mpchar|escape}mc_move={$module_name|escape}"><img src="pics/icons/arrow_right-left.png" border="0" width="16" height="16" alt="[{tr}opp side{/tr}]" /></a>
-			<a title="{tr}Unassign this module{/tr}" href="{$current_location|escape}{$mpchar|escape}mc_unassign={$module_name|escape}" onclick="return confirmTheLink(this,'{tr}Are you sure you want to unassign this module?{/tr}')"><img border="0" width="16" height="16" alt="[{tr}Remove{/tr}]" src="pics/icons/cross.png" /></a>
+				src="pics/icons/resultset_down.png" width="16" height="16" alt="[{tr}Down{/tr}]" /></a>
+			<a title="{tr}Move module to opposite side{/tr}" href="{$current_location|escape}{$mpchar|escape}mc_move={$module_name|escape}"><img src="pics/icons/arrow_right-left.png" width="16" height="16" alt="[{tr}opp side{/tr}]" /></a>
+			<a title="{tr}Unassign this module{/tr}" href="{$current_location|escape}{$mpchar|escape}mc_unassign={$module_name|escape}" onclick="return confirmTheLink(this,'{tr}Are you sure you want to unassign this module?{/tr}')"><img width="16" height="16" alt="[{tr}Remove{/tr}]" src="pics/icons/cross.png" /></a>
 			</span>
 		{/if}
 		{if $module_notitle ne 'y' }
@@ -22,7 +22,7 @@
 		{/if}
 		{if $module_flip eq 'y' and $prefs.javascript_enabled ne 'n'}
 			<span class="moduleflip" id="moduleflip-{$module_name|cat:$module_position|cat:$module_ord|escape}">
-				<a title="{tr}Toggle module contents{/tr}" class="flipmodtitle" href="javascript:icntoggle('mod-{$module_name|cat:$module_position|cat:$module_ord|escape}','module.png');"><img name="icnmod-{$module_name|cat:$module_position|cat:$module_ord|escape}" class="flipmodimage" src="pics/icons/module.png" border="0" width="16" height="16" alt="[{tr}toggle{/tr}]" /></a>
+				<a title="{tr}Toggle module contents{/tr}" class="flipmodtitle" href="javascript:icntoggle('mod-{$module_name|cat:$module_position|cat:$module_ord|escape}','module.png');"><img name="icnmod-{$module_name|cat:$module_position|cat:$module_ord|escape}" class="flipmodimage" src="pics/icons/module.png" width="16" height="16" alt="[{tr}toggle{/tr}]" /></a>
 			</span>
 		{/if}
 		</h3>
@@ -35,7 +35,7 @@
 		{$module_title}
 		{if $module_flip eq 'y' and $prefs.javascript_enabled ne 'n'}
 			<span id="moduleflip-{$module_name|cat:$module_position|cat:$module_ord|escape}">
-				<a title="{tr}Toggle module contents{/tr}" class="flipmodtitle" href="javascript:icntoggle('mod-{$module_name|cat:$module_position|cat:$module_ord|escape}','module.png');"><img name="icnmod-{$module_name|cat:$module_position|cat:$module_ord|escape}" class="flipmodimage" src="pics/icons/module.png" border="0" alt="[{tr}Hide{/tr}]" /></a>
+				<a title="{tr}Toggle module contents{/tr}" class="flipmodtitle" href="javascript:icntoggle('mod-{$module_name|cat:$module_position|cat:$module_ord|escape}','module.png');"><img name="icnmod-{$module_name|cat:$module_position|cat:$module_ord|escape}" class="flipmodimage" src="pics/icons/module.png" alt="[{tr}Hide{/tr}]" /></a>
 			</span>
 		{/if}
 		</h3>

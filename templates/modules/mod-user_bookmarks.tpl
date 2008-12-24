@@ -6,7 +6,7 @@
 <ul class="module">
     {section name=ix loop=$modb_folders}
 	<li>
-        <a href="{$ownurl}{$modb_sep}bookmarks_parent={$modb_folders[ix].folderId}"><img border="0" src="img/icons/folderin.gif" /></a>&nbsp;{$modb_folders[ix].name}
+        <a href="{$ownurl}{$modb_sep}bookmarks_parent={$modb_folders[ix].folderId}"><img src="img/icons/folderin.gif" /></a>&nbsp;{$modb_folders[ix].name}
 	</li>
     {/section}
 </ul>

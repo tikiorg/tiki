@@ -42,7 +42,7 @@
 					href="tiki-calendar_edit_item.php?viewcalitemId={$event.calitemId}"
 				{/if}
 			{/if}
-		    ><img src="pics/icons/more_info.gif" alt="{tr}Details{/tr}" border="0"/></a>
+		    ><img src="pics/icons/more_info.gif" alt="{tr}Details{/tr}" /></a>
 		  </span>
 	  	  <abbr class="dtstart" title="{$event.startTimeStamp|isodate}" {if $event.status eq '2'}style="text-decoration:line-through"{/if}>{$event.name}</abbr>
 	  </div>
@@ -58,7 +58,7 @@
 		{/if}>
 		<div style="position:absolute;top:50%;left:50%;margin-left:-40px;margin-top:-30px">
 		  <a style="padding:0 3px;" href="{$myurl}?viewmode=day&todate={$viewWeekDays[weekday]}"
-		  ><img src="pics/icons/multiple_cal.png" alt="{tr}Details{/tr}" border="0"/></a>
+		  ><img src="pics/icons/multiple_cal.png" alt="{tr}Details{/tr}" /></a>
 		</div>
 	  </div>
 		{/if}

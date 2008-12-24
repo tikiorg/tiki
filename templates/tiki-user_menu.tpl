@@ -29,13 +29,13 @@
 			{if empty($menu_info.icon)}
 				{icon _id="ofolder" alt='Toggle' name="$icon_name"}
 			{else}
-				<img src="{$menu_info.oicon}" border="0" alt='{tr}Toggle{/tr}' name="{$icon_name}" />
+				<img src="{$menu_info.oicon}" alt='{tr}Toggle{/tr}' name="{$icon_name}" />
 			{/if}
 		{else}
 			{if empty($menu_info.icon)}
 				{icon _id="folder" alt='Toggle' name="$icon_name"}
 			{else}
-				<img src="{$menu_info.icon}" border="0" alt='{tr}Toggle{/tr}' name="{$icon_name}" />
+				<img src="{$menu_info.icon}" alt='{tr}Toggle{/tr}' name="{$icon_name}" />
 			{/if}
 		{/if}
 	</a>

@@ -65,7 +65,7 @@
 {/if}
 <tr>
 	<td>
-		<img src="{$img_accepted}" height="{$img_accepted_height}" width="{$img_accepted_width}" title='{tr}Accepted by Task User and Creator{/tr}' border='0' alt='{tr}Accepted User and Creator{/tr}' />:
+		<img src="{$img_accepted}" height="{$img_accepted_height}" width="{$img_accepted_width}" title='{tr}Accepted by Task User and Creator{/tr}' alt='{tr}Accepted User and Creator{/tr}' />:
 	</td>
 	<td>
 		{tr}Task is accepted by user and creator{/tr}.
@@ -73,7 +73,7 @@
 </tr>
 <tr>
 	<td>
-		<img src="{$img_not_accepted}" height="{$img_not_accepted_height}" width="{$img_not_accepted_width}" title='{tr}Not Accepted by One User{/tr}'  border='0' alt='{tr}Not Accepted User{/tr}' />:
+		<img src="{$img_not_accepted}" height="{$img_not_accepted_height}" width="{$img_not_accepted_width}" title='{tr}Not Accepted by One User{/tr}' alt='{tr}Not Accepted User{/tr}' />:
 	</td>
 	<td>
 		{tr}Task is rejected by one user{/tr}.
@@ -82,7 +82,7 @@
 {if $tiki_p_tasks_receive eq 'y'}
 <tr>
 	<td>
-		<img src="{$img_me_waiting}"  height="{$img_me_waiting_height}" width="{$img_me_waiting_width}" border='0' alt="{tr}Waiting for Me{/tr}" title="{tr}Waiting for Me{/tr}" />
+		<img src="{$img_me_waiting}"  height="{$img_me_waiting_height}" width="{$img_me_waiting_width}" alt="{tr}Waiting for Me{/tr}" title="{tr}Waiting for Me{/tr}" />
 	</td>
 	<td>
 		{tr}Task is not accepted by you, read the task and accept or reject it{/tr}.
@@ -92,7 +92,7 @@
 {if $tiki_p_tasks_receive eq 'y' or $tiki_p_tasks_send eq 'y'}
 <tr>
 	<td>
-		<img src="{$img_he_waiting}"  height="{$img_he_waiting_height}" width="{$img_he_waiting_width}" border='0' alt="{tr}Waiting for Other User{/tr}" title="{tr}Waiting for Other User{/tr}" />
+		<img src="{$img_he_waiting}"  height="{$img_he_waiting_height}" width="{$img_he_waiting_width}" alt="{tr}Waiting for Other User{/tr}" title="{tr}Waiting for Other User{/tr}" />
 	</td>
 	<td>
 		{tr}Task is not accepted/rejected by other user{/tr}.

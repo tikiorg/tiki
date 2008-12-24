@@ -6,13 +6,13 @@
   
       {if $prefs.feature_help eq 'y'}
 <a href="{$prefs.helpurl}GalaxiaAdminProcesses" target="tikihelp" class="tikihelp" title="{tr}Galaxia Admin Processes{/tr}">
-<img src="img/icons/help.gif" border="0" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
+<img src="img/icons/help.gif" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
 
 
 
       {if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-g-admin_processes.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Galaxia Admin Processes tpl{/tr}">
-<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}Edit Tpl{/tr}' /></a>{/if}
+<img src="img/icons/info.gif" height="16" width="16" alt='{tr}Edit Tpl{/tr}' /></a>{/if}
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}To learn more about the <a class="rbox-link" target="tikihelp" href="http://workflow.tikiwiki.org">Galaxia workflow engine</a>{/tr}{/remarksbox}
 

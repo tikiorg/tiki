@@ -66,16 +66,15 @@
 {if $hasImage eq 'y'}
 <a href="#" title="{if $show_image_caption and $image_caption}{$image_caption}{else}{tr}Article image{/tr}{/if}">
 <img {if $isfloat eq 'y'}style="margin-right:4px;float:left;"{else}class="articleimage"{/if} 
-alt="{if $show_image_caption and $image_caption}{$image_caption}{else}{tr}Article image{/tr}{/if}" 
-border="0" src="article_image.php?image_type=article&amp;id={$articleId}"{if $image_x > 0} width="{$image_x}"{/if}{if $image_y > 0 } height="{$image_y}"{/if} /></a>
+alt="{if $show_image_caption and $image_caption}{$image_caption}{else}{tr}Article image{/tr}{/if}" src="article_image.php?image_type=article&amp;id={$articleId}"{if $image_x > 0} width="{$image_x}"{/if}{if $image_y > 0 } height="{$image_y}"{/if} /></a>
 {else}
 <img {if $isfloat eq 'y'}style="margin-right:4px;float:left;"{else}class="articleimage"{/if} 
-alt="{tr}Topic image{/tr}" border="0" src="article_image.php?image_type=topic&amp;id={$topicId}" />
+alt="{tr}Topic image{/tr}" src="article_image.php?image_type=topic&amp;id={$topicId}" />
 {/if}
 {else}
 {section name=it loop=$topics}
 {if ($topics[it].topicId eq $topicId) and ($topics[it].image_size > 0)}
-<img {if $isfloat eq 'y'}style="margin-right:4px;float:left;"{else}class="articleimage"{/if} alt="{$topicName}" border="0" src="article_image.php?image_type=topic&amp;id={$topicId}" />
+<img {if $isfloat eq 'y'}style="margin-right:4px;float:left;"{else}class="articleimage"{/if} alt="{$topicName}" src="article_image.php?image_type=topic&amp;id={$topicId}" />
 {/if}
 {/section}
 {/if}
@@ -97,7 +96,7 @@ alt="{tr}Topic image{/tr}" border="0" src="article_image.php?image_type=topic&am
 {/if}
 {if $pages > 1}
 	<div align="center">
-		<a href="tiki-read_article.php?articleId={$articleId}&amp;page={$first_page}"><img src='pics/icons/resultset_first.png' border='0' alt='{tr}First page{/tr}' title='{tr}First page{/tr}' width='16' height='16' /></a>
+		<a href="tiki-read_article.php?articleId={$articleId}&amp;page={$first_page}"><img src='pics/icons/resultset_first.png' alt='{tr}First page{/tr}' title='{tr}First page{/tr}' width='16' height='16' /></a>
 
 		<a href="tiki-read_article.php?articleId={$articleId}&amp;page={$prev_page}">{icon _id='resultset_previous' alt='{tr}Previous page{/tr}'}</a>
 
@@ -106,7 +105,7 @@ alt="{tr}Topic image{/tr}" border="0" src="article_image.php?image_type=topic&am
 		<a href="tiki-read_article.php?articleId={$articleId}&amp;page={$next_page}">{icon _id='resultset_next' alt='{tr}Next page{/tr}'}</a>
 
 
-		<a href="tiki-read_article.php?articleId={$articleId}&amp;page={$last_page}"><img src='pics/icons/resultset_last.png' border='0' alt='{tr}Last page{/tr}' title='{tr}Last page{/tr}' width='16' height='16' ></a>
+		<a href="tiki-read_article.php?articleId={$articleId}&amp;page={$last_page}"><img src='pics/icons/resultset_last.png' alt='{tr}Last page{/tr}' title='{tr}Last page{/tr}' width='16' height='16' ></a>
 	</div>
 {/if}
 </div>

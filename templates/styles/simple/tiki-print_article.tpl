@@ -12,12 +12,12 @@
 <tr><td width="25%" valign="top">
 {if $useImage eq 'y'}
   {if $hasImage eq 'y'}
-    <img alt="{tr}Article image{/tr}" border="0" src="article_image.php?id={$articleId}" />
+    <img alt="{tr}Article image{/tr}" src="article_image.php?id={$articleId}" />
   {else}
-    <img alt="{tr}Topic image{/tr}" border="0" src="article_image.php?image_type=preview&amp;id={$topicId}" />
+    <img alt="{tr}Topic image{/tr}" src="article_image.php?image_type=preview&amp;id={$topicId}" />
   {/if}
 {else}
-  <img alt="{tr}Topic image{/tr}" border="0" src="article_image.php?image_type=preview&amp;id={$topicId}" />
+  <img alt="{tr}Topic image{/tr}" src="article_image.php?image_type=preview&amp;id={$topicId}" />
 {/if}
 </td><td width="75%" valign="top">
 <span class="articleheading">{$parsed_heading}</span>
