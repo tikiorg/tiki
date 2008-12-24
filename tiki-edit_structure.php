@@ -79,10 +79,11 @@ if (isset($_REQUEST["remove"])) {
   $remove_info = $structlib->s_get_page_info($_REQUEST["remove"]);
   	$structs = $structlib->get_page_structures($remove_info['pageName'],$structure);
     //If page is member of more than one structure, do not give option to remove page
-    $single_struct = count($structs) == 1; 
-	if ($tiki_p_remove == 'y' && $single_struct && $tikilib->user_has_perm_on_object($user,$remove_info["pageName"],'wiki page','tiki_p_edit','tiki_p_edit_categorized'))
+    $single_struct = (count($structs) == 1);
+	$perms = $tikilib->get_perm_object($remove_info['pageName'],'wiki page', $tikilib->get_page_info($remove_info['pageName']) , false);
+	if ($single_struct && $perms['tiki_p_remove'] == 'y') {
 		$smarty->assign('page_removable', 'y');
-	else
+	} else
 		$smarty->assign('page_removable', 'n');
 	$smarty->assign('removepage', $_REQUEST["remove"]);
 	$smarty->assign('removePageName', $remove_info["pageName"]);
