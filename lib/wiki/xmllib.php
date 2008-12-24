@@ -262,7 +262,11 @@ class XmlLib extends TikiLib {
 			foreach ($info['comments'] as $comment) {
 				global $commentslib; include_once('lib/commentslib.php'); $commentslib = new Comments($dbTiki);
 				$parentId = empty($comment['parentId']) ? 0: $newThreadIds[$comment['parentId']];
-				$newThreadIds[$comment['threadId']] = $commentslib->post_new_comment('wiki page'.$info['name'], $parentId, $config['fromUser']? $config['fromUser']: $comment['user'], $comment['title'], $comment['data'], $message_id);
+				if ($parentId) {
+					$reply_info = $commentslib->get_comment($parentd);
+					$in_reply_to = $reply_info['message_id'];
+				}
+				$newThreadIds[$comment['threadId']] = $commentslib->post_new_comment('wiki page:'.$info['name'], $parentId, $config['fromUser']? $config['fromUser']: $comment['user'], $comment['title'], $comment['data'], $message_id, $reply_to);
 			}
 		}
 		if ($prefs['feature_wiki_attachments'] == 'y' && $tiki_p_wiki_attach_files == 'y') {
