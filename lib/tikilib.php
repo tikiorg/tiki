@@ -7800,6 +7800,13 @@ class TikiLib extends TikiDB {
 		}
 	}
 
+	function get_attach_hash_file_name($file_name) {
+		global $prefs;
+		do {
+			$fhash = '§'.md5($file_name.date('U').rand()).'§';
+		} while (file_exists($prefs['w_use_dir'].$fhash));
+		return $fhash;
+		}
 	function attach_file($file_name, $file_tmp_name, $store_type) {
 		global $prefs;
 		$tmp_dest = $prefs['tmpDir'] . "/" . $file_name.".tmp";
@@ -7810,10 +7817,10 @@ class TikiLib extends TikiDB {
 		$fhash = '';
 		$chunk = '';
 		if ($store_type == 'dir') {
-			$fhash = '§'.md5($name = $file_name.date('U')).'§';
+			$fhash = $this->get_attach_hash_file_name($file_name);
 			$fw = fopen($prefs['w_use_dir'].$fhash, "wb");
 			if (!$fw)
-				return array("ok"=>false, "error"=>tra('Cannot write to this file:').$fhash);
+				return array("ok"=>false, "error"=>tra('Cannot write to this file:').$prefs['w_use_dir'].$fhash);
 		}
 		while(!feof($fp)) {
 			$chunk = fread($fp, 8192*16);
