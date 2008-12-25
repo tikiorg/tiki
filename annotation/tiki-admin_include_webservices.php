@@ -19,13 +19,19 @@ if( isset( $_REQUEST['name'] ) && $webservice = Tiki_Webservice::getService( $_R
 	}
 } else {
 	$url = '';
+	$body = '';
 
 	if( isset( $_REQUEST['url'] ) ) {
 		$url = $_REQUEST['url'];
 	}
 
+	if( isset( $_REQUEST['postbody'] ) ) {
+		$body = $_REQUEST['postbody'];
+	}
+
 	$webservice = new Tiki_Webservice;
 	$webservice->url = $url;
+	$webservice->body = $body;
 
 	$storedTemplates = array();
 }
@@ -35,7 +41,7 @@ if( !isset( $_REQUEST['params'] ) )
 
 if( $response = $webservice->performRequest( $_REQUEST['params'] ) ) {
 	$data = $response->data;
-	if( $data ) {
+	if( is_array($data) ) {
 		unset( $data['_template'] );
 		unset( $data['_version'] );
 	}
@@ -84,6 +90,7 @@ if( $response = $webservice->performRequest( $_REQUEST['params'] ) ) {
 		if( ! empty( $name ) && ! Tiki_Webservice::getService( $name ) ) {
 			if( $service = Tiki_Webservice::create( $name ) ) {
 				$service->url = $url;
+				$service->body = $body;
 				$service->schemaDocumentation = $response->schemaDocumentation;
 				$service->schemaVersion = $response->schemaVersion;
 				$service->save();
@@ -118,6 +125,7 @@ $smarty->assign( 'webservices', Tiki_Webservice::getList() );
 $smarty->assign( 'storedName', $webservice->getName() );
 $smarty->assign( 'storedTemplates', $storedTemplates );
 $smarty->assign( 'url', $webservice->url );
+$smarty->assign( 'postbody', $webservice->body );
 $smarty->assign( 'params', $webservice->getParameterMap($_REQUEST['params']) );
 
 ?>

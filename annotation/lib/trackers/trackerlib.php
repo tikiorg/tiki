@@ -196,8 +196,8 @@ class TrackerLib extends TikiLib {
 			$query = "insert into `tiki_tracker_item_attachments`(`itemId`,`filename`,`filesize`,`filetype`,`data`,`created`,`hits`,`user`,";
 			$query.= "`comment`,`path`,`version`,`longdesc`) values(?,?,?,?,?,?,?,?,?,?,?,?)";
 			$result = $this->query($query,array((int) $itemId,$filename,$size,$type,$data,(int) $now,0,$user,$comment,$fhash,$version,$longdesc));
-			$query = 'select `attId` from `tiki_tracker_item_attachments` where `itemId`=? and `user`=? and `created`=?';
-			$attId = $this->getOne($query, array($itemId, $user, $now));
+			$query = 'select `attId` from `tiki_tracker_item_attachments` where `itemId`=? and `user`=? and `created`=? and `filename`=?';
+			$attId = $this->getOne($query, array($itemId, $user, $now, $filename));
 		} elseif (empty($filename)) {
 			$query = "update `tiki_tracker_item_attachments` set `comment`=?,`user`=?,`version`=?,`longdesc`=? where `attId`=?";
 			$result = $this->query($query,array($comment, $user, $version, $longdesc, $attId));
@@ -440,7 +440,7 @@ class TrackerLib extends TikiLib {
 		$query.= " where tti.`trackerId`=ttf.`trackerId` and ttif.`fieldId`=ttf.`fieldId` and ttf.`trackerId`=? and ttf.`fieldId`=? and ttif.`value`=?";
 		$bindVars = array((int)$trackerId, (int)$fieldId, $value);
 		if (!empty($status)) {
-			$query .= 'and tti.`status`=?';
+			$query .= ' and tti.`status`=?';
 			$bindVars[] = $status;
 		}
 		$result = $this->query($query, $bindVars);
@@ -1058,12 +1058,14 @@ class TrackerLib extends TikiLib {
 						continue;
 					}
 				} elseif ($ins_fields['data'][$i]['type'] == 'k') { //page selector
-					if (!$this->page_exists($ins_fields['data'][$i]['value'])) {
-						$opts = split(',', $ins_fields['data'][$i]['options']);
-						if (!empty($opts[2])) {
-							global $IP;
-							$info = $this->get_page_info($opts[2]);
-							$this->create_page($ins_fields['data'][$i]['value'], 0, $info['data'], $this->now, '', $user, $IP, $info['description'], $info['lang'], $info['is_html'], array(), $info['wysiwyyg'], $info['wiki_authors_style']);
+					if ($ins_fields['data'][$i]['value'] != '') {
+						if (!$this->page_exists($ins_fields['data'][$i]['value'])) {
+							$opts = split(',', $ins_fields['data'][$i]['options']);
+							if (!empty($opts[2])) {
+								global $IP;
+								$info = $this->get_page_info($opts[2]);
+								$this->create_page($ins_fields['data'][$i]['value'], 0, $info['data'], $this->now, '', $user, $IP, $info['description'], $info['lang'], $info['is_html'], array(), $info['wysiwyyg'], $info['wiki_authors_style']);
+							}
 						}
 					}
 				}
@@ -1200,7 +1202,6 @@ class TrackerLib extends TikiLib {
                                 if (empty($ins_fields["data"][$i]['lingualvalue'])) {
 									$ins_fields["data"][$i]['lingualvalue'][] = array('lang'=>$prefs['language'], 'value'=>$ins_fields["data"][$i]['value']);
                                 }
-
 
 				  foreach ($ins_fields["data"][$i]['lingualvalue'] as $linvalue)
 	                                if ($itemId) {
@@ -2407,7 +2408,7 @@ class TrackerLib extends TikiLib {
 			'opt'=>true,
 			'help'=>tra('<dl>
 				<dt>Function: Allows a selection from the list of pages.
-				<dt>Usage: <strong>auto-assign, size, maxlen</strong>
+				<dt>Usage: <strong>auto-assign, size, create</strong>
 				<dt>Description:
 				<dd><strong>[auto-assign]</strong> will auto-assign the creator of the item if set to 1
 				<dd><strong>[size]</strong> is the visible input length of the field in characters (<=0 not limited);
@@ -2462,7 +2463,8 @@ class TrackerLib extends TikiLib {
 				<dd><strong>[yListSize]</strong> sets the pixel height of the image in the list view;
 				<dd><strong>[xDetailSize]</strong> sets the pixel width of the image in the item view;
 				<dd><strong>[yDetailSize]</strong> sets the pixel height of the image in the item view;
-				<dd><strong>[uploadLimitScale]</strong> sets the maximum total size of the image, in pixels (width * height);
+				<dd><strong>[uploadLimitScale]</strong> sets the maximum total size of the image, in pixels (width or height);
+				<dd><strong>[shadowbox]</strong> actives a shadowbox(if feature on) = \'item\': to use the same shadowbox for an item, =\'individual\': to use a shadowbox only for this image, other value= to set the group of images of the shadowbox ;
 				<dd>images are stored in img/trackers;
 				<dd>multiple options must appear in the order specified, separated by commas.
 				</dl>'));

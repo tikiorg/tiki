@@ -25,7 +25,11 @@ if ($prefs['feature_galleries'] != 'y') {
 
 $id = 0;
 if (isset($_REQUEST["name"])) {
-	$id=$imagegallib->get_imageid_byname($_REQUEST["name"]);
+	if (!empty($_REQUEST['galleryId'])) {
+		$id=$imagegallib->get_imageid_byname($_REQUEST['name'], $_REQUEST['galleryId']);
+	} else {
+		$id = $imagegallib->get_imageid_byname($_REQUEST['name']);
+	}
 } elseif (isset($_REQUEST["id"])) {
 	$id=$_REQUEST["id"];
 } elseif (isset($_REQUEST["galleryId"])) {

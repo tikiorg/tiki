@@ -5,6 +5,15 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 // Initialization
 
+$inputConfiguration = array(
+	array( 'staticKeyFilters' => array(
+		'page' => 'pagename',
+	) ),
+	array( 'staticKeyUnset' => array(
+		'edit'
+	) ),
+);
+
 $section = "wiki page";
 require_once ('tiki-setup.php');
 include_once ('lib/wiki/wikilib.php');
@@ -624,7 +633,7 @@ if (isset($_REQUEST['do_suck']) && strlen($suck_url) > 0)
 	if ($parsehtml == 'y') {
 		$sdta = parse_html($sdta);
 	}
-	$_REQUEST['edit'] .= $sdta;
+	$_REQUEST['edit'] = $jitRequest['edit'] . $sdta;
 }
 // if "UserPage" complete with the user name
 if ($prefs['feature_wiki_userpage'] == 'y' && $tiki_p_admin != 'y' && $page == $prefs['feature_wiki_userpage_prefix']) {
@@ -992,7 +1001,7 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
 		   $cachedlinks = array_diff($links, $notcachedlinks);
 		   $tikilib->cache_links($cachedlinks);
 		 */
-		$tikilib->create_page($_REQUEST["page"], 0, $edit, $tikilib->now, $_REQUEST["comment"],$user,$_SERVER["REMOTE_ADDR"],$description, $pageLang, $is_html, $hash, $_REQUEST['wysiwyg'], $wiki_authors_style);
+		$tikilib->create_page($_REQUEST["page"], 0, $edit, $tikilib->now, $_REQUEST["comment"],$user,$tikilib->get_ip_address(),$description, $pageLang, $is_html, $hash, $_REQUEST['wysiwyg'], $wiki_authors_style);
 		$info_new = $tikilib->get_page_info($page);
 
 		if ($prefs['wiki_watch_author'] == 'y') {
@@ -1070,7 +1079,7 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
 		if (isset($_REQUEST['wysiwyg']) && $_REQUEST['wysiwyg'] == 'y' && $prefs['wysiwyg_wiki_parsed'] == 'y') {//take away the <p> that fck introduces around wiki heading ! to have maketoc/edit section working
 			$edit = preg_replace('/<p>!(.*)<\/p>/u', "!$1\n", $edit);
 		}
-		$tikilib->update_page($_REQUEST["page"],$edit,$_REQUEST["comment"],$user,$_SERVER["REMOTE_ADDR"],$description,$minor,$pageLang, $is_html, $hash, null, $_REQUEST['wysiwyg'], $wiki_authors_style);
+		$tikilib->update_page($_REQUEST["page"],$edit,$_REQUEST["comment"],$user,$tikilib->get_ip_address(),$description,$minor,$pageLang, $is_html, $hash, null, $_REQUEST['wysiwyg'], $wiki_authors_style);
 		$info_new = $tikilib->get_page_info($page);
 
 		// Handle translation bits

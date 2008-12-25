@@ -27,6 +27,11 @@
   {* The $parent_com is only set in this case *}
   {* WARNING: when previewing a new reply to a forum post, $parent_com is also set *}
 
+{if $comments_postComment eq 'y' and $prefs.feature_comments_moderation eq 'y' and $tiki_p_admin_comments neq 'y'}
+	<div class="simplebox highlight">
+		 {tr}Your comment will have to be approved by the moderator before it is displayed.{/tr}
+	</div>
+{/if}
   {if $comments_cant gt 0}
 
 <form method="get" action="{$comments_father}" class="comments">

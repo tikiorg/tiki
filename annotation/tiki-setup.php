@@ -12,47 +12,13 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
+require_once 'tiki-filter-base.php';
+
 // Enable Versioning
 // Please update the specified class below at release time, as well as
 // adding new release to http://tikiwiki.org/{$branch}.version file
 include_once ('lib/setup/twversion.class.php');
 $TWV = new TWVersion();
-
-/* Automatically set params used for absolute URLs - BEGIN */
-
-$tiki_setup_dir = realpath(dirname(__FILE__));
-$tiki_script_filename = realpath($_SERVER['SCRIPT_FILENAME']);
-
-// On some systems, SCRIPT_FILENAME contains the full path to the cgi script that 
-//   calls the script we are looking for. In this case, we have to fallback to 
-//   PATH_TRANSLATED. This one may be wrong on some systems, this is why SCRIPT_FILENAME
-//   is tried first.
-
-if ( substr($tiki_script_filename, 0, strlen($tiki_setup_dir)) != $tiki_setup_dir ) {
-	$tiki_script_filename = realpath($_SERVER['PATH_TRANSLATED']);
-}
-$tmp = dirname(str_replace($tiki_setup_dir,'',$tiki_script_filename));
-
-if ($tmp != '/') {
-        $dir_level = substr_count($tmp,"/");
-} else {
-        $dir_level = 0;
-}
-unset($tmp);
-
-$tikiroot = dirname($_SERVER['PHP_SELF']);
-$tikipath = dirname($tiki_script_filename);
-
-if ($dir_level > 0) {
-        $tikiroot = preg_replace('#(/[^/]+){'.$dir_level.'}$#','',$tikiroot);
-        $tikipath = preg_replace('#(/[^/]+){'.$dir_level.'}$#','',$tikipath);
-        chdir(join('../',array_fill(0,$dir_level+1,'')));
-}
-
-if ( substr($tikiroot,-1,1) != '/' ) $tikiroot .= '/';
-if ( substr($tikipath,-1,1) != '/' ) $tikipath .= '/';
-
-require_once('lib/init/initlib.php');
 
 $num_queries = 0;
 $elapsed_in_db = 0.0;
@@ -61,9 +27,6 @@ $area = 'tiki';
 $crumbs = array();
 
 require_once('lib/setup/tikisetup.class.php');
-TikiSetup::prependIncludePath($tikipath);
-TikiSetup::prependIncludePath('lib');
-TikiSetup::prependIncludePath('lib/pear');
 
 require_once('lib/setup/timer.class.php');
 $tiki_timer = new timer();

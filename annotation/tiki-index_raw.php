@@ -40,18 +40,15 @@ if (!isset($_REQUEST["page"])) {
 $page = $_REQUEST['page'];
 $smarty->assign('page', $page);
 
-
-require_once ('tiki-pagesetup.php');
-
 // If the page doesn't exist then display an error
-if (!$tikilib->page_exists($page)) {
+if (!($info = $tikilib->get_page_info($page))) {
 	$smarty->assign('msg', tra("Page cannot be found"));
-
 	$smarty->display("error_raw.tpl");
 	die;
 }
 
 // Now check permissions to access this page
+$tikilib->get_perm_object( $page, 'wiki page', $info);
 if ($tiki_p_view != 'y') {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied you cannot view this page"));

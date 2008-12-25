@@ -9,24 +9,24 @@
   
   <td>
     <a href="tiki-webmail.php?locSection=mailbox" title="{tr}Mailbox{/tr}">
-    <img border="0" src="img/webmail/mailbox.gif" alt="{tr}Mailbox{/tr}" /></A><br />
+    <img src="img/webmail/mailbox.gif" alt="{tr}Mailbox{/tr}" /></A><br />
     <a class="link" href="tiki-webmail.php?locSection=mailbox" title="{tr}Mailbox{/tr}">{tr}Mailbox{/tr}</a>
   </td>
   <td>
     <a href="tiki-webmail.php?locSection=compose" title="{tr}Compose{/tr}">
-    <img border="0" src="img/webmail/compose.gif" alt="{tr}Compose{/tr}" /></a><br />
+    <img src="img/webmail/compose.gif" alt="{tr}Compose{/tr}" /></a><br />
     <a class="link" href="tiki-webmail.php?locSection=compose" title="{tr}Compose{/tr}">{tr}Compose{/tr}</a>
   </td>
   <td>
     <a href="tiki-webmail.php?locSection=contacts" title="{tr}Contacts{/tr}">
-    <img border="0" src="img/webmail/contact.gif" alt="{tr}Contacts{/tr}" /></A><br />
+    <img src="img/webmail/contact.gif" alt="{tr}Contacts{/tr}" /></A><br />
     <a class="link" href="tiki-webmail.php?locSection=contacts" title="{tr}Contacts{/tr}">{tr}Contacts{/tr}</a>
   </td>
 <TD width="50%">
 	</TD>
 <td>
     <a href="tiki-webmail.php?locSection=settings" title="{tr}Settings{/tr}">
-    <img border="0" src="img/webmail/settings.gif" alt="{tr}Settings{/tr}" /></A><br />
+    <img src="img/webmail/settings.gif" alt="{tr}Settings{/tr}" /></A><br />
     <a class="link" href="tiki-webmail.php?locSection=settings" title="{tr}Settings{/tr}">{tr}Settings{/tr}</a>
   </td>
 </tr>
@@ -208,14 +208,14 @@ setTimeout("location.reload(true);",{$autoRefresh}*1000);
 </td>
 <td style="background:{$class};">
 {if $list[ix].isFlagged eq 'y'}
-<A href="javascript: submit_form('{$list[ix].realmsgid|escape}','n')"><img src="img/webmail/flagged.gif" border="0" alt='{tr}Flagged{/tr}'></A>
+<A href="javascript: submit_form('{$list[ix].realmsgid|escape}','n')"><img src="img/webmail/flagged.gif" alt='{tr}Flagged{/tr}'></A>
 {else}
 {if $prefs.webmail_quick_flags eq 'y'}
-<A href="javascript: submit_form('{$list[ix].realmsgid|escape}','y')"><img src="img/webmail/unflagged.gif" border="0" alt='{tr}unFlagged{/tr}'></A>
+<A href="javascript: submit_form('{$list[ix].realmsgid|escape}','y')"><img src="img/webmail/unflagged.gif" alt='{tr}unFlagged{/tr}'></A>
 {/if}
 {/if}
 {if $list[ix].isReplied eq 'y'}
-<img src="img/webmail/replied.gif" border="0" alt='{tr}Replied{/tr}'/>
+<img src="img/webmail/replied.gif" alt='{tr}Replied{/tr}'/>
 {/if}
 </td>
 <td style="background:{$class};">{$list[ix].sender.name}</td>

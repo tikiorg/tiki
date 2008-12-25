@@ -51,6 +51,7 @@ if ( !empty($_REQUEST['submit_mult']) && isset($_REQUEST["checked"]) ) {
 				}
 				$page_info = $tikilib->get_page_info($check);
 				$page_info['parsed'] = $tikilib->parse_data($page_info['data']);
+				$page_info['h'] = 1;
 				$multiprint_pages[] = $page_info;
 			}
 			break;
@@ -75,12 +76,28 @@ if ( !empty($_REQUEST['submit_mult']) && isset($_REQUEST["checked"]) ) {
 					}	
 			}
 			break;
-
+	case 'zip':
+		if ($tiki_p_admin == 'y') {
+			include_once('lib/wiki/xmllib.php');
+			$xmllib = new XmlLib();
+			$zipFile = 'dump/xml.zip';
+			$config['debug'] = false;
+			if ($xmllib->export_pages($_REQUEST['checked'], null, $zipFile, $config)) {
+				if (!$config['debug']) {
+					header("location: $zipFile");
+					die;
+				}
+			} else {
+				$smarty->assign('error', $xmllib->get_error());
+			}
+		}
+		break;
 	}
 }
 
 if ( ! empty($multiprint_pages) ) {
 
+	$smarty->assign('print_page', 'y');
 	$smarty->assign_by_ref('pages', $multiprint_pages);
 
 	// disallow robots to index page:

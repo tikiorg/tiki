@@ -265,20 +265,17 @@ if ($_REQUEST["galleryId"] == 0) {
 	$nextscaleinfo = $imagegallib->get_gallery_next_scale($_REQUEST["galleryId"]);
 }
 
-if (!isset($info["maxRows"]))
-	$info["maxRows"] = 10;
+if (empty($info['maxRows']) || $info['maxRows'] < 0)
+	$info['maxRows'] = 10;
 
-if (!isset($info["rowImages"]))
-	$info["rowImages"] = 5;
+if (empty($info['rowImages']) || $info['rowImages'] < 0)
+	$info['rowImages'] = 5;
 
 if (!isset($nextscaleinfo['scale'])) {
 	$nextscaleinfo['scale'] = 0;
 
 	$nextscaleinfo['scale'] = 0;
 }
-
-if ($info["maxRows"] == 0)
-	$info["maxRows"] = 10;
 
 //print $info["rowImages"] ;
 $maxImages = $info["maxRows"] * $info["rowImages"];

@@ -5,7 +5,7 @@
 {foreach from=$userGroups key=group item=type}
 	<tr>
 	<td class="{cycle advance=false}">{if $type eq 'included'}<i>{$group|escape}</i>{else}{$group|escape}{/if}</td>
-	<td class="{cycle}">{if $type ne 'included'}<a href="{$smarty.server.REQUEST_URI}{if strstr($smarty.server.REQUEST_URI, '?')}&amp;{else}?{/if}unassign={$group|escape:'url'}"><img src="pics/icons/cross.png" border="0" height="16" width="16" alt="{tr}Unsubscribe{/tr}" /></a>{/if}</td>
+	<td class="{cycle}">{if $type ne 'included'}<a href="{$smarty.server.REQUEST_URI}{if strstr($smarty.server.REQUEST_URI, '?')}&amp;{else}?{/if}unassign={$group|escape:'url'}"><img src="pics/icons/cross.png" height="16" width="16" alt="{tr}Unsubscribe{/tr}" /></a>{/if}</td>
 	</tr>
 {/foreach}
 </table>

@@ -39,7 +39,7 @@
   {if $prefs.rss_file_gallery eq 'y'}
     {if $gal_info.type eq "podcast" or $gal_info.type eq "vidcast"}
       <a href="tiki-file_gallery_rss.php?galleryId={$galleryId}&amp;ver=PODCAST">
-      <img src='img/rss_podcast_80_15.png' border='0' alt="{tr}RSS feed{/tr}" title="{tr}RSS feed{/tr}"  align='right' /></a>
+      <img src='img/rss_podcast_80_15.png' alt="{tr}RSS feed{/tr}" title="{tr}RSS feed{/tr}"  align='right' /></a>
     {else}
       <a href="tiki-file_gallery_rss.php?galleryId={$galleryId}">{icon _id='feed' alt="{tr}RSS feed{/tr}" title="{tr}RSS feed{/tr}" align='right'}</a>
     {/if}
@@ -108,7 +108,7 @@
 {/if}
 
 {if $edit_mode neq 'y'}
-  {button _text="{tr}SlideShow{/tr}" href="#" _onclick="javascript:window.open('tiki-list_file_gallery.php?galleryId=$galleryId&amp;slideshow','','menubar=no,width=600,height=500');"}
+  {button _text="{tr}SlideShow{/tr}" href="#" _onclick="javascript:window.open('tiki-list_file_gallery.php?galleryId=$galleryId&amp;slideshow','','menubar=no,width=600,height=500,resizable=yes');"}
 {/if}
 
 </div>
@@ -195,18 +195,9 @@ if (getCookie("fgalKeepOpen")) {
     ||  $tiki_p_post_comments  == 'y'
     ||  $tiki_p_edit_comments  == 'y')}
 
-    <span class="button">
-      <a href="#" onclick="javascript:flip('comzone');flip('comzone_close','inline');return false;"{if $comments_cant gt 0} class="highlight"{/if}>
-        {if $comments_cant == 0 or ($tiki_p_read_comments  == 'n' and $tiki_p_post_comments  == 'y')}
-          {tr}Add Comment{/tr}
-        {elseif $comments_cant == 1}
-          {tr}1 comment{/tr}
-        {else}
-          {$comments_cant} {tr}comments{/tr}
-        {/if}
-        <span id="comzone_close" style="display:{if isset($smarty.session.tiki_cookie_jar.show_comzone) and $smarty.session.tiki_cookie_jar.show_comzone eq 'y' or (!isset($smarty.session.tiki_cookie_jar.$cookie_key) and $prefs.wiki_comments_displayed_default eq 'y') or (isset($prefs.show_comzone) and $prefs.show_comzone eq 'y') or $show_comzone eq 'y' or $show_comments or $edit_reply eq '1'}inline{else}none{/if};">({tr}Hide{/tr})</span>
-      </a>
-    </span>
+    <div id="page-bar">
+		  {include file=comments_button.tpl}
+    </div>
 
   {include file=comments.tpl}
   {/if}

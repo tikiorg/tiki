@@ -23,7 +23,6 @@ function discardUser($u, $reason) {
 }
 
 function batchImportUsers() {
-	$patterns['login'] = "/^[-_a-zA-Z0-9@\.]*$/";
 	global $userlib, $smarty, $logslib, $tiki_p_admin, $user, $prefs;
 
 	$fname = $_FILES['csvlist']['tmp_name'];
@@ -162,7 +161,7 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 				$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("User %s already exists"),$_REQUEST["name"]));
 			} elseif ($prefs['login_is_email'] == 'y' && !validate_email($_REQUEST['name'])) {
 				$tikifeedback[] = array('num'=>1,'mes'=>tra("Invalid email").' '.$_REQUEST['name']);
-			} elseif (!preg_match($patterns['login'],$_REQUEST['name'])) {
+			} elseif (!empty($prefs['username_pattern']) && !preg_match($prefs['username_pattern'], $_REQUEST['name'])) {
 				$tikifeedback[] = array('num'=>1,'mes'=>tra("User login contains invalid characters"));
 			} else {
 				$pass_first_login = (isset($_REQUEST['pass_first_login']) && $_REQUEST['pass_first_login'] == 'on') ? true: false;
@@ -429,7 +428,7 @@ if (isset($_REQUEST["user"]) and $_REQUEST["user"]) {
 			if ( $userinfo['login'] != $_POST['name'] && $userinfo['login'] != 'admin' ) {
 				if ($userlib->user_exists($_POST['name'])) {
 					$tikifeedback[] = array('num'=>1,'mes'=>tra('User already exists'));
-				} elseif (!preg_match($patterns['login'],$_POST['name'])) {
+				} elseif (!empty($prefs['username_pattern']) && !preg_match($prefs['username_pattern'], $_POST['name'])) {
 					$tikifeedback[] = array('num'=>1,'mes'=>tra("Login contains invalid characters"));
 				} elseif ($userlib->change_login($userinfo['login'],$_POST['name'])) {
 					$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s changed from %s to %s"),tra("login"),$userinfo['login'],$_POST["name"]));

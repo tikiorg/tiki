@@ -275,6 +275,7 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
     if (isset($_REQUEST["comments_postComment"])) {
 	  if (empty($user) && $prefs['feature_antibot'] == 'y' && (!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $_REQUEST['antibotcode'])) {
 			$smarty->assign('msg',tra("You have mistyped the anti-bot verification code; please try again."));
+			$smarty->assign('errortype', 'no_redirect_login');
 			$smarty->display("error.tpl");
 			die;
 		}

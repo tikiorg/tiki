@@ -4,6 +4,7 @@ class Tiki_Webservice
 {
 	private $name;
 	public $url;
+	public $body;
 	public $schemaVersion;
 	public $schemaDocumentation;
 
@@ -27,13 +28,14 @@ class Tiki_Webservice
 		$name = strtolower( $name );
 
 		global $tikilib;
-		$result = $tikilib->query( "SELECT url, schema_version, schema_documentation FROM tiki_webservice WHERE service = ?", array( $name ) );
+		$result = $tikilib->query( "SELECT url, body, schema_version, schema_documentation FROM tiki_webservice WHERE service = ?", array( $name ) );
 
 		while( $row = $result->fetchRow() ) {
 			$service = new self;
 
 			$service->name = $name;
 			$service->url = $row['url'];
+			$service->body = $row['body'];
 			$service->schemaVersion = $row['schema_version'];
 			$service->schemaDocumentation = $row['schema_documentation'];
 
@@ -59,10 +61,11 @@ class Tiki_Webservice
 		global $tikilib;
 		$tikilib->query( "DELETE FROM tiki_webservice WHERE service = ?", array( $this->name ) );
 
-		$tikilib->query( "INSERT INTO tiki_webservice (service, url, schema_version, schema_documentation) VALUES(?,?,?,?)", 
+		$tikilib->query( "INSERT INTO tiki_webservice (service, url, body, schema_version, schema_documentation) VALUES(?,?,?,?,?)", 
 			array(
 				$this->name,
 				$this->url,
+				$this->body,
 				$this->schemaVersion,
 				$this->schemaDocumentation,
 			) );
@@ -77,7 +80,7 @@ class Tiki_Webservice
 
 	function getParameters() // {{{
 	{
-		if( preg_match_all( "/%(\w+)%/", $this->url, $matches, PREG_PATTERN_ORDER ) )
+		if( preg_match_all( "/%(\w+)%/", $this->url . ' ' . $this->body, $matches, PREG_PATTERN_ORDER ) )
 			return array_diff( $matches[1], array( 'service', 'template' ) );
 		else
 			return array();
@@ -101,10 +104,13 @@ class Tiki_Webservice
 	function performRequest( $params ) // {{{
 	{
 		$built = $this->url;
+		$builtBody = $this->body;
 
 		$map = $this->getParameterMap( $params );
-		foreach( $map as $name => $value )
+		foreach( $map as $name => $value ) {
 			$built = str_replace( "%$name%", urlencode( $value ), $built );
+			$builtBody = str_replace( "%$name%", urlencode( $value ), $builtBody );
+		}
 
 		if( $built ) {
 			$ointegrate = new OIntegrate;
@@ -116,7 +122,7 @@ class Tiki_Webservice
 				$ointegrate->addSchemaVersion( $this->schemaVersion );
 			}
 
-			$response = $ointegrate->performRequest( $built );
+			$response = $ointegrate->performRequest( $built, $builtBody );
 			
 			return $response;
 		}
@@ -224,13 +230,13 @@ class Tiki_Webservice_Template
 	function getTemplateFile() // {{{
 	{
 		$token = sprintf( "%s_%s", $this->webservice->getName(), $this->name );
-		$file = realpath( "temp/cache/" . md5( $token ) );
+		$file = "temp/cache/" . md5( $token ) . '.tpl';
 
 		if( ! file_exists($file) || $this->lastModif > filemtime($file) ) {
 			file_put_contents( $file, $this->content );
 		}
 
-		return $file;
+		return realpath($file);
 	} // }}}
 
 	function render( OIntegrate_Response $response, $outputContext ) // {{{

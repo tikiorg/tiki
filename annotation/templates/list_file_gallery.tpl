@@ -70,9 +70,9 @@
           {include file='list_file_gallery_content.tpl'}
         {/if}
       
-        {if $files and $gal_info.show_checked neq 'n' and ($tiki_p_admin_file_galleries eq 'y' or $tiki_p_upload_files eq 'y')}
-        <div>
-          <div style="float:left">
+        {if $files and $gal_info.show_checked neq 'n' and ($tiki_p_admin_file_galleries eq 'y' or $tiki_p_upload_files eq 'y' or $tiki_p_assign_perm_file_gallery eq 'y')}
+        <div id="sel">
+          <div>
           {tr}Perform action with checked:{/tr} 
           {if !isset($file_info)}
             {if $offset}<input type="hidden" name="offset" value="{$offset}" />{/if}
@@ -84,6 +84,9 @@
             {icon _id='cross' _tag='input_image' _confirm='{tr}Are you sure you want to delete the selected files?{/tr}' name='delsel' alt='{tr}Delete{/tr}' style='vertical-align: middle;'}
           {/if}
           {icon _id='pics/icons/mime/zip.png' _tag='input_image' name='zipsel' alt='{tr}Download the zip{/tr}' style='vertical-align: middle;'}
+          {if $tiki_p_assign_perm_file_gallery eq 'y'}
+             {icon _id='key' _tag='input_image' name='permsel' alt='{tr}Assign Permissions{/tr}' title='{tr}Assign Permissions{/tr}' style='vertical-align: middle;'}
+          {/if}
           </div>
           {if $smarty.request.movesel_x and !isset($file_info)} 
           <div>
@@ -99,6 +102,22 @@
           </div>
           {/if}
         </div>
+        {if $perms}
+        <div>
+           {tr}Assign Permissions{/tr}
+           <select name="perms[]" multiple="multiple" size="5"}
+              {foreach from=$perms item=perm}
+                <option value="assign_{$perm.permName|escape}">{$perm.permName|escape}</option>
+              {/foreach}
+           </select>
+           <select name="groups[]" multiple="multiple" size="5"}
+              {section name=grp loop=$groups}
+                <option value="{$groups[grp].groupName|escape}" {if $groupName eq $groups[grp].groupName }selected="selected"{/if}>{$groups[grp].groupName|escape}</option>
+              {/section}
+           </select>
+           <input type="submit" name="permsel" value="{tr}Assign{/tr}" />
+        </div>
+        {/if}
         <br style="clear:both"/>
         {/if}
 

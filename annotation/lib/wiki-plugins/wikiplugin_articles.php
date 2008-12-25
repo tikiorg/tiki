@@ -8,7 +8,7 @@
 function wikiplugin_articles_help() {
         $help = tra("Includes articles listing into a wiki page");
         $help .= "<br />";
-        $help .= tra("~np~{ARTICLES(max=>3, topic=>topicName, topicId=>id, type=>type, categId=>Category parent ID, lang=>en, sort=>columnName_asc|columnName_desc), quiet=>y|n}{ARTICLES}~/np~");
+        $help .= tra("~np~{ARTICLES(max=>3, topic=>topicName, topicId=>id, type=>type, categId=>Category parent ID, lang=>en, sort=>columnName_asc|columnName_desc), quiet=>y|n, titleonly=>y|n}{ARTICLES}~/np~");
 
         return $help;
 }
@@ -24,16 +24,19 @@ function wikiplugin_articles_info() {
 				'required' => false,
 				'name' => tra('Articles displayed'),
 				'description' => tra('The amount of articles to display in the list.'),
+				'filter' => 'digits',
 			),
 			'topic' => array(
 				'required' => false,
 				'name' => tra('Topic name'),
 				'description' => tra('The name of the topic.'),
+				'filter' => 'topicname',
 			),
 			'topicId' => array(
 				'required' => false,
 				'name' => tra('Topic ID'),
 				'description' => tra('The ID of the topic.'),
+				'filter' => 'digits',
 			),
 			'type' => array(
 				'required' => false,
@@ -44,21 +47,29 @@ function wikiplugin_articles_info() {
 				'required' => false,
 				'name' => tra('Category ID'),
 				'description' => tra('The ID of the category to list from.'),
+				'filter' => 'digits',
 			),
 			'lang' => array(
 				'required' => false,
 				'name' => tra('Language'),
 				'description' => tra('The article language to list.'),
+				'filter' => 'lang',
 			),
 			'sort' => array(
 				'required' => false,
 				'name' => tra('Sort order'),
 				'description' => tra('The column and order of the sort in columnName_asc or columnName_desc format.'),
+				'filter' => 'word',
 			),
 			'quiet' => array(
 				'required' => false,
 				'name' => tra('Quiet'),
-				'description' => tra('?'),
+				'description' => tra('Whether to not report when there are no articles.'),
+			),
+			'titleonly' => array(
+				'required' => false,
+				'name' => tra('Title only'),
+				'description' => tra('Whether to only show the title of the articles.'),
 			),
 		),
 	);
@@ -134,7 +145,11 @@ function wikiplugin_articles($data,$params) {
 	// If there're more records then assign next_offset
 	$smarty->assign_by_ref('listpages', $listpages["data"]);
 
-	return "~np~ ".$smarty->fetch('tiki-view_articles.tpl')." ~/np~";
+	if (isset($titleonly) && $titleonly == 'y') {
+		return "~np~ ".$smarty->fetch('tiki-view_articles-titleonly.tpl')." ~/np~";
+	} else {
+		return "~np~ ".$smarty->fetch('tiki-view_articles.tpl')." ~/np~";
+	}
 	//return str_replace("\n","",$smarty->fetch('tiki-view_articles.tpl')); // this considers the hour in the header like a link
 }
 ?>

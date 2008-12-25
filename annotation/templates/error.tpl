@@ -8,6 +8,7 @@ close();
 {* 402: need login
  * 401, 403: perm
  * 404: page does not exist
+ * no_redirect_login: error antibot, system...
  * login: error login
  *}
 
@@ -17,6 +18,9 @@ close();
 	{elseif ($errortype eq 401 or $errortype eq 403) and !empty($prefs.permission_denied_url)}
 		{redirect url=$prefs.permission_denied_url}
 	{else}
+		{if $errortype eq 401 && empty($user) and  $prefs.permission_denied_login_box eq 'y'} {* permission denied *}
+			{assign var='errortitle' value='{tr}Please login{/tr}' }
+		{/if}
 		<br />
 		<div class="cbox">
 			<div class="cbox-title">{icon _id=exclamation alt={tr}Error{/tr} style=vertical-align:middle} {$errortitle|default:"{tr}Error{/tr}"}</div>
@@ -48,19 +52,20 @@ close();
 
 					<br />
 				{else}
-					{if ( isset($msg) ) }
-						<div class="simplebox error">
-							{$msg}
-						</div>
-						<br /><br />
-					{/if}
 					{if $errortype eq 401 && empty($user) and $prefs.permission_denied_login_box eq 'y'} {* permission denied *}
 						{include file=tiki-login.tpl}
-					{elseif !isset($user) and $errortype != 'login'}
+					{elseif !isset($user) and $errortype != 'no_redirect_login' and $errortype != 'login'}
 						<div class="simplebox highlight">
 							{tr}You are not logged in.{/tr} <a href="tiki-login_scr.php">{tr}Go to Login Page{/tr}</a>
 						</div>
 						<br /><br />
+					{else}
+						{if ( isset($msg) ) }
+							<div class="simplebox error">
+								{$msg}
+							</div>
+							<br /><br />
+						{/if}
 					{/if}
 				{/if}
 				{if $page and $create eq 'y' and ($tiki_p_admin eq 'y' or $tiki_p_admin_wiki eq 'y' or $tiki_p_edit eq 'y')}{button href="tiki-editpage.php?page=$page" _text="{tr}Create this page{/tr}"} {tr}(page will be orphaned){/tr}<br /><br />{/if}

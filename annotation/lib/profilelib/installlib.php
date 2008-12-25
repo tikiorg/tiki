@@ -1196,6 +1196,7 @@ class Tiki_Profile_InstallHandler_Webservice extends Tiki_Profile_InstallHandler
 
 		$ws = Tiki_Webservice::create( $data['name'] );
 		$ws->url = $data['url'];
+		$ws->body = $data['body'];
 		$ws->schemaVersion = $data['schema_version'];
 		$ws->schemaDocumentation = $data['schema_documentation'];
 		$ws->save();

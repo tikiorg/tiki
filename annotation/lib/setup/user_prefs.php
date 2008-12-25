@@ -58,10 +58,7 @@ if ( $user ) {
 	$allowMsgs = 'n';
 }
 
-if ( isset($_SERVER['REMOTE_ADDR']) ) {
-	$IP = $_SERVER['REMOTE_ADDR'];
-	$smarty->assign('IP', $IP);
-}
+$smarty->assign('IP', $tikilib->get_ip_address());
 
 if ($prefs['users_prefs_display_timezone'] == 'Site' || (isset($user_preferences[$user]['display_timezone']) && $user_preferences[$user]['display_timezone'] == 'Site')) {
 	// Everybody stays in the time zone of the server

@@ -18,7 +18,7 @@ if ( isset($_REQUEST['pollVote']) ) {
 			$identification = $user;
 			$pollinfo = $polllib->get_poll($_REQUEST['polls_pollId']);
 			$anonym=$pollinfo['anonym'];
-			if($anonym=='i') $identification=$_SERVER['REMOTE_ADDR'];
+			if($anonym=='i') $identification=$tikilib->get_ip_address();
 			if($anonym=='c') $identification = ( isset($_COOKIE['tiki_wiki_poll_'.$_REQUEST['polls_pollId']])
 				? $_COOKIE['tiki_wiki_poll_'.$_REQUEST['polls_pollId']] : MD5(time().'_'.rand(0,1000)) );
 			if($anonym=='a'||!$polllib->id_has_voted($_REQUEST['polls_pollId'],$identification)) {

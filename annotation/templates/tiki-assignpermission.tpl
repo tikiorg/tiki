@@ -8,6 +8,7 @@
 		{button href="tiki-admingroups.php" _text="{tr}Admin groups{/tr}"}
 	{/if}
 	{button href="tiki-adminusers.php" _text="{tr}Admin users{/tr}"}
+	{button href="?do=temp_cache&amp;group=$escgroup" _text="{tr}Clear Cache{/tr}"}
 </div>
 
 <h2>{tr}Group Information{/tr}</h2>

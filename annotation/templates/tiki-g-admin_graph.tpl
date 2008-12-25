@@ -5,13 +5,13 @@
 
   
       {if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}Workflow"  target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Galaxia Admin Graph{/tr}"><img border='0' src='img/icons/help.gif' alt="{tr}Help{/tr}" /></a>{/if}
+<a href="{$prefs.helpurl}Workflow"  target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}: {tr}Galaxia Admin Graph{/tr}"><img src='img/icons/help.gif' alt="{tr}Help{/tr}" /></a>{/if}
 
 
 
       {if $prefs.feature_view_tpl eq 'y'}
 <a href="tiki-edit_templates.php?template=tiki-g-admin_graph.tpl" target="tikihelp" class="tikihelp" title="{tr}View tpl{/tr}: {tr}Galaxia Admin Graph tpl{/tr}">
-<img src="img/icons/info.gif" border="0" height="16" width="16" alt='{tr}Edit Tpl{/tr}' /></a>{/if}
+<img src="img/icons/info.gif" height="16" width="16" alt='{tr}Edit Tpl{/tr}' /></a>{/if}
 
 
 
@@ -35,12 +35,12 @@
         <td>
           <center>
             {if $info.map neq ''}
-              <img src="{$info.graph}" alt="{$info.name}" border="0" usemap="#procmap" />
+              <img src="{$info.graph}" alt="{$info.name}" usemap="#procmap" />
               <map name="procmap">
                 {$info.map}
               </map>
             {else}
-              <img src="{$info.graph}" alt="{$info.name}" border="0" />
+              <img src="{$info.graph}" alt="{$info.name}" />
             {/if}
           </center>
         </td>

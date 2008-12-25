@@ -6,7 +6,7 @@
 <th><a href="{$myurl}?sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a></th>
 <th>{tr}Action{/tr}</th>
 </tr>
-{if $listevents|@count eq 0}<tr><td colspan="5">{tr}No records found{/tr}</td></tr>{/if}
+{if $listevents|@count eq 0}<tr><td colspan="4">{tr}No records found{/tr}</td></tr>{/if}
 {cycle values="odd,even" print=false}
 {section name=w loop=$listevents}
 {assign var=calendarId value=$listevents[w].calendarId}

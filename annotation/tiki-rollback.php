@@ -14,7 +14,6 @@ include_once ('lib/wiki/wikilib.php');
 
 if ($prefs['feature_wiki'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_wiki");
-
 	$smarty->display("error.tpl");
 	die;
 }
@@ -22,18 +21,15 @@ if ($prefs['feature_wiki'] != 'y') {
 // Get the page from the request var or default it to HomePage
 if (!isset($_REQUEST["page"])) {
 	$smarty->assign('msg', tra("No page indicated"));
-
 	$smarty->display("error.tpl");
 	die;
 } else {
 	$page = $_REQUEST["page"];
-
 	$smarty->assign_by_ref('page', $_REQUEST["page"]);
 }
 
 if (!isset($_REQUEST["version"])) {
 	$smarty->assign('msg', tra("No version indicated"));
-
 	$smarty->display("error.tpl");
 	die;
 } else {
@@ -42,17 +38,20 @@ if (!isset($_REQUEST["version"])) {
 	$smarty->assign_by_ref('version', $_REQUEST["version"]);
 }
 
+if (!($info = $tikilib->get_page_info($page))) {
+	$smarty->assign('msg', tra('Page cannot be found'));
+	$smarty->display('error.tpl');
+	die;
+}
 if (!$histlib->version_exists($page, $version)) {
 	$smarty->assign('msg', tra("Non-existent version"));
-
 	$smarty->display("error.tpl");
 	die;
 }
 
-include_once ("tiki-pagesetup.php");
-
 // Now check permissions to access this page
-if ($tiki_p_rollback != 'y'  || !$wikilib->is_editable($page, $user)) {
+$tikilib->get_perm_object( $page, 'wiki page', $info);
+if ($tiki_p_rollback != 'y'  || !$tiki_p_edit != 'y') {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied you cannot rollback this page"));
 
@@ -63,14 +62,6 @@ if ($tiki_p_rollback != 'y'  || !$wikilib->is_editable($page, $user)) {
 $version = $histlib->get_version($page, $version);
 $version["data"] = $tikilib->parse_data($version["data"]);
 $smarty->assign_by_ref('preview', $version);
-
-// If the page doesn't exist then display an error
-if (!$tikilib->page_exists($page)) {
-	$smarty->assign('msg', tra("Page cannot be found"));
-
-	$smarty->display("error.tpl");
-	die;
-}
 
 if (isset($_REQUEST["rollback"])) {
   $area = 'delrollbackpage';

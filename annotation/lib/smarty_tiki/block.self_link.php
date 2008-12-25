@@ -39,10 +39,6 @@ function smarty_block_self_link($params, $content, &$smarty, $repeat = false) {
 
     if ( is_array($params) ) {
 
-			if ( isset($params['xajax']) ) {
-				$params['xajaxargs'] = $params['xajaxr'] = $params['xajax'] = 'NULL';
-			}
-
       if ( ! isset($content) ) $content = '';
       if ( ! isset($params['_ajax']) ) $params['_ajax'] = 'y';
       if ( ! isset($params['_script']) ) $params['_script'] = '';
@@ -114,6 +110,7 @@ function smarty_block_self_link($params, $content, &$smarty, $repeat = false) {
         }
 
         $link = ( ( isset($params['_class']) && $params['_class'] != '' ) ? 'class="'.$params['_class'].'" ' : '' )
+              . ( ( isset($params['_style']) && $params['_style'] != '' ) ? 'style="'.$params['_style'].'" ' : '' )
               . ( ( isset($params['_title']) && $params['_title'] != '' ) ? 'title="'.str_replace('"','\"',$params['_title']).'" ' : '' );
 				foreach ( $params as $k => $v ) {
 					if ( strlen($k) > 3 && substr($k, 0, 3) == '_on' ) {

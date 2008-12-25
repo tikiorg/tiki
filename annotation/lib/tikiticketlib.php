@@ -45,7 +45,7 @@ function key_get($area, $confirmation_text = '', $confirmaction='') {
 		if ($user) {
 			$whose = $user;
 		} else { 
-	  		$whose = ' '. md5($_SERVER['REMOTE_ADDR'].$_SERVER['USER_AGENT']);
+	  		$whose = ' '. md5($tikilib->get_ip_address().$_SERVER['USER_AGENT']);
 		}
 		$ticket = md5(uniqid(rand()));
 		$tikilib->set_user_preference($whose,'ticket',$ticket);
@@ -83,7 +83,7 @@ function key_check($area) {
 			if ($user) {
 				$whose = $user;
 			} else { 
-				$whose = ' '. md5($_SERVER['REMOTE_ADDR'].$_SERVER['USER_AGENT']);
+				$whose = ' '. md5($tikilib->get_ip_address().$_SERVER['USER_AGENT']);
 			}
 			if (isset($_REQUEST) and is_array($_REQUEST)
 				and (!isset($_REQUEST['ticket']) 

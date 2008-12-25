@@ -1,156 +1,99 @@
-{* $Id$ *}
-
-<html>
-	<head>
-
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<script type="text/javascript" src="lib/mootools/mootools_packed.js"></script>
-<script type="text/javascript" src="lib/slideshow/slideshow.rc1.packed.js"></script>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>{$title} - Slideshow</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" href="lib/slideshow/css/slideshow.css" type="text/css" media="screen" />
+	<style type="text/css">
 {literal}
-<script type="text/javascript">		
-<!--//--><![CDATA[//><!--
-	window.onload = function() { new editor(); }
-//--><!]]>
-</script>
-<style type="text/css">
-		div.slideshow {
-			margin: 18px auto;
-		}
-		div.slideshow ul {
-			background: #FFF;
-			bottom: 0;
-			position: absolute;
-			overflow: hidden;
-			padding: 4px 8px;
-			right: 0;
-			z-index: 1000;
-		}
-		div.slideshow ul a {
-			background: url(lib/slideshow/icons/bullet_blue.png) no-repeat;
-			cursor: pointer;
-			display: block;
-			float: left;
-			height: 16px;
-			margin: 0 4px 0 0;
-			overflow: hidden;
-			width: 16px;
-			opacity: 0.5;
-		}
-		div.slideshow ul a.prev {
-			background-image: url(lib/slideshow/icons/control_rewind_blue.png);
-			width: 16px;
-		}
-		div.slideshow ul a.next {
-			background-image: url(lib/slideshow/icons/control_fastforward_blue.png);
-			margin-right: 0;
-			width: 16px;
-		}
-		div.slideshow ul a.active,
-		div.slideshow ul a.prev:hover,
-		div.slideshow ul a.next:hover {
-			opacity: 1.0;
-		}
-		div.slideshow ul li {
-			float: left;
-			list-style: none;
-		}
+	html, body { background-color: black; height: 100%; width: 100%; }
+	* { margin: 0; padding: 0; }
+	.slideshow { right: 70px; }
+	.slideshow-thumbnails a { padding: 0; }
+	.slideshow-thumbnails a:hover { padding: 5px; }
+	.slideshow, .slideshow-thumbnails { top: 30px; }
+	.slideshow-thumbnails {
+		height: 100%;
+		left: auto;
+		right: 10px;
+		width: 130px;
+		position: fixed;
+	}
+	.slideshow-thumbnails ul {
+		height: 500px;
+		width: 70px;
+		bottom: 30px;
+	}
+	.button a {
+		color: gray;
+		font-weight: bold;
+		text-decoration: none;
+	}
+	.button a:hover {
+		color: white;
+	}
+	.slideshow-thumbnails .overlay {
+		right: 10px;
+		width: 130px;
+		position: absolute;
+		height: 60px;
+		z-index: 10000;
+	}
+	.slideshow-thumbnails .overlay.a {
+		background: transparent url(lib/slideshow_tiki/thumbnails-a.png) repeat scroll 0 0;
+	}
+	.slideshow-thumbnails .overlay.b {
+		background: transparent url(lib/slideshow_tiki/thumbnails-b.png) repeat scroll 0 0;
+		bottom: 30px;
+	}
 {/literal}
-</style>
-
+	</style>
+	<script type="text/javascript" src="lib/mootools/mootools-1.2-core.js"></script>
+	<script type="text/javascript" src="lib/mootools/mootools-1.2-more.js"></script>
+	<script type="text/javascript" src="lib/slideshow/js/slideshow.js"></script>
+	<script type="text/javascript" src="lib/slideshow_tiki/slideshow.fullsize.js"></script>
+	<script type="text/javascript">
+	<!--//--><![CDATA[//><!--
+	var myShow;
+	window.addEvent('domready', function(){ldelim}
+		var data = {ldelim}
+{foreach from=$file key=i item=f name=files}
+{if $smarty.foreach.files.first}{assign var=first value=$f.id}{/if}
+			'tiki-download_file.php?preview&fileId={$f.id}': {ldelim}
+				caption: '{$f.name|escape:'javascript'}',
+				href: 'tiki-download_file.php?fileId={$f.id}'
+			{rdelim}{if !$smarty.foreach.files.last},
+{/if}
+{/foreach}
+		{rdelim};
+		myShow = new Slideshow.Fullsize('show', data, {ldelim}
+			controller: true,
+			hu: '{if $tikiroot neq ""}{$tikiroot}{else}/{/if}',
+			thumbnails: true,
+			replace: [/\?preview/, '?thumbnail'],
+			overlap: false,
+			delay: 2000,
+			duration: 500,
+			random: false,
+			loop: true,
+			linked: false,
+			fast: false,
+			captions: true,
+			adjustheight: -60,
+			adjustwidth: -180
+		{rdelim});
+	{rdelim});
+	//--><!]]>
+	</script>
 </head>
 <body>
-
-
- <div id="my_slideshow" class="slideshow">
-   <img src="{if $tikiroot neq ""}{$tikiroot}{else}/{/if}tiki-download_file.php?fileId={$firstId}" alt="A picture" />
- </div>
-{*
-<p>
-{tr}Size{/tr}
-<span><input name="width" type="text" size="4" value="400" /></span>
-<span><input name="height" type="text" size="4" value="300" /></span>
-</p>
-<p>
-{tr}Navigation{/tr}:<select name="navigation">
-    <option value="arrows">{tr}thumbnails{/tr}</option>
-    <option value="arrows">{tr}arrows{/tr}</option>
-    <option value="arrows+">{tr}arrows{/tr}+</option>
-</select>
-{tr}Resize{/tr}:<select name="resize">
-    <option value="true">{tr}true{/tr}</option>
-    <option value="false">{tr}false{/tr}</option>
-</select>
-{tr}Type{/tr}:<select name="type">
-  <option value="fade">{tr}fade{/tr}</option>
-  <option value="pan">{tr}pan{/tr}</option>
-  <option value="zoom">{tr}zoom{/tr}</option>
-  <option value="combo">{tr}combo{/tr}</option>
-  <option value="push">{tr}push{/tr}</option>
-  <option value="wipe">{tr}wipe{/tr}</option>
-</select>
-</p>
-<p>
-{tr}Transition{/tr}:<select name="transition">
-  <option value="Fx.Transitions.linear">linear</option>
-  <option value="Fx.Transitions.quadIn">quadIn</option>
-  <option value="Fx.Transitions.quadOut">quadOut</option>
-  
-  <option value="Fx.Transitions.quadInOut">quadInOut</option>
-  <option value="Fx.Transitions.cubicIn">cubicIn</option>
-  <option value="Fx.Transitions.cubicOut">cubicOut</option>
-  <option value="Fx.Transitions.cubicInOut">cubicInOut</option>
-  <option value="Fx.Transitions.quartIn">quartIn</option>
-  <option value="Fx.Transitions.quartOut">quartOut</option>
-  
-  <option value="Fx.Transitions.quartInOut">quartInOut</option>
-  <option value="Fx.Transitions.quintIn">quintIn</option>
-  <option value="Fx.Transitions.quintOut">quintOut</option>
-  <option value="Fx.Transitions.quintInOut">quintInOut</option>
-  <option value="Fx.Transitions.sineIn">sineIn</option>
-  <option value="Fx.Transitions.sineOut">sineOut</option>
-  
-  <option value="Fx.Transitions.sineInOut">sineInOut</option>
-  <option value="Fx.Transitions.expoIn">expoIn</option>
-  <option value="Fx.Transitions.expoOut">expoOut</option>
-  <option value="Fx.Transitions.expoInOut">expoInOut</option>
-  <option value="Fx.Transitions.circIn">circIn</option>
-  <option value="Fx.Transitions.circOut">circOut</option>
-  
-  <option value="Fx.Transitions.circInOut">circInOut</option>
-  <option value="Fx.Transitions.elasticIn">elasticIn</option>
-  <option value="Fx.Transitions.elasticOut">elasticOut</option>
-  <option value="Fx.Transitions.elasticInOut">elasticInOut</option>
-  <option value="Fx.Transitions.backIn">backIn</option
-  ><option value="Fx.Transitions.backOut">backOut</option>
-  <option value="Fx.Transitions.backInOut">backInOut</option>
-  
-  <option value="Fx.Transitions.bounceIn">bounceIn</option>
-  <option value="Fx.Transitions.bounceOut" selected="selected">bounceOut</option>
-  <option value="Fx.Transitions.bounceInOut">bounceInOut</option>
-</select>
-{tr}Duration{/tr}:
-<span><input type="text" value="[4000, 4000]" name="duration" /></span>
-</p>
-*}
-
-<script type="text/javascript">
-<!--//--><![CDATA[//><!--
-   myShow = new Slideshow('my_slideshow', 
-   {ldelim} thumbnailre: [ new RegExp("display") ,"display\&max=16" ], 
-   type: 'push', 
-   navigation: 'thumbnails', 
-   transition: Fx.Transitions.backInOut, 
-   duration: [4000, 4000], 
-   hu: '{if $tikiroot neq ""}{$tikiroot}{else}/{/if}tiki-download_file.php?', 
-   images: [{foreach from=$filesid item=id name=images}'display&fileId={$id}'{if !$smarty.foreach.images.last},{/if}{/foreach}],
-   height:300, 
-   width:400, 
-   resize:true, 
-   captions: [{foreach from=$file item=f name=files}'{if $gal_info.show_name eq 'a' || $gal_info.show_name eq 'n'}{if $f.name ne ''}{$f.name|escape:"utf-8"}-{/if}{/if}{if $gal_info.show_name eq 'a' || $gal_info.show_name eq 'f'}{$f.filename|escape:"utf-8"}{/if}'{if !$smarty.foreach.files.last},{/if}{/foreach}]
-   {rdelim});
-//--><!]]>
-</script>
-
-	</body>
+<div style="position:fixed; top:5px; right:10px;">{button href='#' _onclick='javascript:window.close();' _text="{tr}Close{/tr}"}</div>
+<div id="show" class="slideshow">
+	<div id="images" class="slideshow-images">
+		<img src="{if $tikiroot neq ""}{$tikiroot}{else}/{/if}tiki-download_file.php?preview&amp;fileId={$first}" />
+	</div>
+</div>
+</body>
 </html>
-

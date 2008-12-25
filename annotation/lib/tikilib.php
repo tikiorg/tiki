@@ -8,6 +8,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 require_once('lib/tikidblib.php');
 require_once('lib/init/tra.php');
+if ( ! defined('DATE_FORMAT_UNIXTIME') ) define('DATE_FORMAT_UNIXTIME', 5);
 
 //performance collecting:
 //require_once ('lib/tikidblib-debug.php');
@@ -129,12 +130,29 @@ class TikiLib extends TikiDB {
 	}
 
 	/*shared*/
+  // Returns IP address or if 127.0.0.1 looks for a proxy address
+	function get_ip_address() {
+		$ip = "127.0.0.1";  // assume localhost
+    if (isset($_SERVER["REMOTE_ADDR"])) {
+      $ip = $_SERVER["REMOTE_ADDR"];
+    }
+    if ($ip == "127.0.0.1") {
+      if (isset($_SERVER["HTTP_X_FORWARDED_FOR"])) {
+        $fwips = explode(',', $_SERVER["HTTP_X_FORWARDED_FOR"]);
+        $ip = $fwips[0];  // There may be several but using first IP
+        // This might need improvement for configurations with multiple proxies.
+      }
+    }
+    return $ip;
+  }
+
+	/*shared*/
 	function check_rules($user, $section) {
 		// Admin is never banned
 		if ($user == 'admin')
 			return false;
 
-		$ips = explode('.', $_SERVER["REMOTE_ADDR"]);
+		$ips = $this->get_ip_address();
 		$query = "select tb.`message`,tb.`user`,tb.`ip1`,tb.`ip2`,tb.`ip3`,tb.`ip4`,tb.`mode` from `tiki_banning` tb, `tiki_banning_sections` tbs where tbs.`banId`=tb.`banId` and tbs.`section`=? and ( (tb.`use_dates` = ?) or (tb.`date_from` <= ? and tb.`date_to` >= ?))";
 		$result = $this->query($query,array($section,'n',(int)$this->now,(int)$this->now));
 
@@ -3565,6 +3583,10 @@ class TikiLib extends TikiDB {
 			$this->remove_from_structure($res["page_ref_id"]);
 		}
 
+		global $structlib;include_once('lib/structures/structlib.php');
+		$page_info = $structlib->s_get_page_info($page_ref_id);
+		$query = "update `tiki_structures` set `pos`=`pos`-1 where `pos`>? and `parent_id`=?";
+		$this->query($query ,array((int)$page_info['pos'], (int)$page_info['parent_id']));
 		$query = "delete from `tiki_structures` where `page_ref_id`=?";
 		$result = $this->query($query, array( $page_ref_id ) );
 		return true;
@@ -4220,14 +4242,22 @@ class TikiLib extends TikiDB {
 			case 'history':
 				if ($categPerms['tiki_p_view_categorized'] == 'y' || $categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
 					$ret['tiki_p_view'] = 'y';
+					$ret['tiki_p_wiki_view_source'] = 'y';
+					$ret['tiki_p_wiki_view_comments'] = 'y';
+					$ret['_wiki_view_attachments'] = 'y';
 				} else {
-					$ret['tiki_p_view'] = 'n';
+					foreach($perms['data'] as $p) {
+						if ($p['permName'] != 'tiki_p_use_as_template')
+							$ret[$p['permName']] = 'n';
+					}
 				}
 				if ($categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
 					$ret['tiki_p_edit'] = 'y';
+					$ret['tiki_p_remove'] = 'y';
 					$ret['tiki_p_wiki_attach_files'] = 'y';
 				} else {
 					$ret['tiki_p_edit'] = 'n';
+					$ret['tiki_p_remove'] = 'n';
 					$ret['tiki_p_wiki_attach_files'] = 'n';
 				}
 				break;
@@ -4585,12 +4615,14 @@ class TikiLib extends TikiDB {
 			}
 		}
 
-		$query = "delete from `tiki_user_preferences` where `user`=? and `prefName`=?";
-		$bindvars=array($my_user,$name);
-		$result = $this->query($query, $bindvars, -1,-1,false);
-		$query = "insert into `tiki_user_preferences`(`user`,`prefName`,`value`) values(?, ?, ?)";
-		$bindvars[]=$value;
-		$result = $this->query($query, $bindvars);
+		if (!empty($my_user)) {
+			$query = "delete from `tiki_user_preferences` where `user`=? and `prefName`=?";
+			$bindvars=array($my_user,$name);
+			$result = $this->query($query, $bindvars, -1,-1,false);
+			$query = "insert into `tiki_user_preferences`(`user`,`prefName`,`value`) values(?, ?, ?)";
+			$bindvars[]=$value;
+			$result = $this->query($query, $bindvars);
+		}
 
 		return true;
 	}
@@ -5122,7 +5154,7 @@ class TikiLib extends TikiDB {
 	}
 
 	// This recursive function handles pre- and no-parse sections and plugins
-	function parse_first(&$data, &$preparsed, &$noparsed, $real_start_diff='0') {
+	function parse_first(&$data, &$preparsed, &$noparsed, $options=null, $real_start_diff='0') {
 		global $dbTiki, $smarty, $tiki_p_edit, $prefs, $pluginskiplist;
 		if( ! is_array( $pluginskiplist ) )
 			$pluginskiplist = array();
@@ -5231,7 +5263,7 @@ class TikiLib extends TikiDB {
 			} else {
 				// print "<pre>args1: :".htmlspecialchars( $plugins[2] ) .":</pre>";
 				// Handle nested plugins in the arguments.
-				$this->parse_first($plugins[2], $preparsed, $noparsed);
+				$this->parse_first($plugins[2], $preparsed, $noparsed, $options);
 				// print "<pre>args2: :".htmlspecialchars( $plugins[2] ) .":</pre>";
 
 				// Normal plugins
@@ -5268,10 +5300,10 @@ class TikiLib extends TikiDB {
 
 						} else {
 							// Handle nested plugins.
-							$this->parse_first($plugin_data, $preparsed, $noparsed, $real_start_diff + $pos+strlen($plugin_start));
+							$this->parse_first($plugin_data, $preparsed, $noparsed, $options, $real_start_diff + $pos+strlen($plugin_start));
 
 							if( true === $status = $this->plugin_can_execute( $plugin_name, $plugin_data, $arguments ) ) {
-								$ret = $this->plugin_execute( $plugin_name, $plugin_data, $arguments, $real_start_diff + $pos+strlen($plugin_start));
+								$ret = $this->plugin_execute( $plugin_name, $plugin_data, $arguments, $real_start_diff + $pos+strlen($plugin_start), false, $options);
 							} else {
 								global $tiki_p_plugin_viewdetail, $tiki_p_plugin_preview, $tiki_p_plugin_approve;
 								$details = $tiki_p_plugin_viewdetail == 'y' && $status != 'rejected';
@@ -5297,8 +5329,8 @@ class TikiLib extends TikiDB {
 								$ret = '~np~' . $smarty->fetch('tiki-plugin_blocked.tpl') . '~/np~';
 							}
 						}
-
-						if( $this->plugin_is_editable( $plugin_name ) ) {
+						//echo '<pre>'; debug_print_backtrace(); echo '</pre>';
+						if( $this->plugin_is_editable( $plugin_name ) && (empty($options['print']) || !$options['print'])) {
 							include_once('lib/smarty_tiki/function.icon.php');
 							global $headerlib, $page;
 							$headerlib->add_jsfile( 'tiki-jsplugin.php?plugin=' . urlencode( $plugin_name ) );
@@ -5307,7 +5339,7 @@ class TikiLib extends TikiDB {
 
 					} else {
 						// Handle nested plugins.
-						$this->parse_first($plugin_data, $preparsed, $noparsed);
+						$this->parse_first($plugin_data, $preparsed, $noparsed, $options);
 
 						$ret = tra( "__WARNING__: Plugin disabled $plugin!" ) . $plugin_data;
 					}
@@ -5316,7 +5348,7 @@ class TikiLib extends TikiDB {
 				} else {
 					if( $plugins['type'] == 'long' ) {
 						// Handle nested plugins.
-						$this->parse_first($plugin_data, $preparsed, $noparsed);
+						$this->parse_first($plugin_data, $preparsed, $noparsed, $options);
 						$ret = tra( "__WARNING__: No such module $plugin!" ) . $plugin_data;
 
 						$skip = false;
@@ -5330,7 +5362,7 @@ class TikiLib extends TikiDB {
 
 				if( ! $skip ) {
 					// Handle pre- & no-parse sections and plugins inserted by this plugin
-					$this->parse_first($ret, $preparsed, $noparsed);
+					$this->parse_first($ret, $preparsed, $noparsed, $options);
 					//$ret = $this->parse_data($ret);
 
 					// Replace plugin section with its output in data
@@ -5415,6 +5447,7 @@ class TikiLib extends TikiDB {
 
 	function plugin_alias_info( $name ) {
 		global $prefs;
+		$name = strtolower($name);
 		$prefName = "pluginalias_$name";
 
 		if( ! isset( $prefs[$prefName] ) )
@@ -5595,14 +5628,35 @@ class TikiLib extends TikiDB {
 		return "$name-$bodyHash-$argsHash-$bodyLen-$argsLen";
 	}
 
-	function plugin_execute( $name, $data = '', $args = array(), $offset = 0 ) {
+	function plugin_execute( $name, $data = '', $args = array(), $offset = 0, $validationPerformed = false, $parseOptions = array() ) {
 		if( ! $this->plugin_exists( $name, true ) )
 			return false;
 
 		$func_name = 'wikiplugin_' . $name;
+		
+		if( ! $validationPerformed ) {
+			$info = $this->plugin_info( $name );
+			$default = TikiFilter::get('xss');
+
+			// Apply filters on the body
+			$filter = isset($info['filter']) ? TikiFilter::get($info['filter']) : $default;
+			$data = $this->htmldecode($data);
+			$data = $filter->filter($data);
+
+			// Make sure all arguments are declared
+			$params = $info['params'];
+			$args = array_intersect_key( $args, $params );
+
+			// Apply filters on values individually
+			foreach( $args as $argKey => &$argValue ) {
+				$filter = isset($params[$argKey]['filter']) ? TikiFilter::get($params[$argKey]['filter']) : $default;
+				$argValue = $this->htmldecode($argValue);
+				$argValue = $filter->filter($argValue);
+			}
+		}
 
 		if( function_exists( $func_name ) ) {
-			return $func_name( $data, $args, $offset );
+			return $func_name( $data, $args, $offset, $parseOptions );
 		} elseif( $info = $this->plugin_alias_info( $name ) ) {
 			$name = $info['implementation'];
 
@@ -5634,7 +5688,7 @@ class TikiLib extends TikiDB {
 				}
 			}
 
-			return $this->plugin_execute( $name, $data, $params, $offset );
+			return $this->plugin_execute( $name, $data, $params, $offset, true, $parseOptions );
 		}
 	}
 
@@ -5890,6 +5944,7 @@ class TikiLib extends TikiDB {
 		$options['noparseplugins'] = $noparseplugins = isset($options['noparseplugins']) ? $options['noparseplugins'] : false;
 		$options['noheaderinc'] = $noheaderinc = isset($options['noheaderinc']) ? $options['noheaderinc'] : false;
 		$options['page'] = isset($options['page']) ? $options['page'] : $page;
+		$options['print'] = isset($options['print']) ? $options['print'] : false;
 
 		// if simple_wiki is true, disable some wiki syntax
 		// basically, allow wiki plugins, wiki links and almost
@@ -5957,7 +6012,7 @@ class TikiLib extends TikiDB {
 		$preparsed = array('data'=>array(),'key'=>array());
 		$noparsed = array('data'=>array(),'key'=>array());
 		if (!$noparseplugins) {
-			$this->parse_first($data, $preparsed, $noparsed);
+			$this->parse_first($data, $preparsed, $noparsed, $options);
 		}
 
 		// Handle |# anchor links by turning them into ALINK module calls.
@@ -5996,7 +6051,7 @@ class TikiLib extends TikiDB {
 		}
 
 		if (!$noparseplugins) {
-			$this->parse_first($data, $preparsed, $noparsed);
+			$this->parse_first($data, $preparsed, $noparsed, $options);
 		}
 
 		// Handle ~pre~...~/pre~ sections
@@ -7423,7 +7478,12 @@ class TikiLib extends TikiDB {
 		return $short_datetime_format;
 	}
 
-	function date_format($format, $timestamp = false, $_user = false, $input_format = DATE_FORMAT_UNIXTIME) {
+	function date_format2($format, $timestamp = false, $_user = false, $input_format = DATE_FORMAT_UNIXTIME) {
+		global $tikilib;
+		return $tikilib->date_format($format, $timestamp, $_user, $input_format, false);
+	}
+
+	function date_format($format, $timestamp = false, $_user = false, $input_format = DATE_FORMAT_UNIXTIME, $is_strftime_format = true) {
 		global $tikidate, $tikilib;
 		if ( ! $timestamp ) {
 			$timestamp = time();
@@ -7438,7 +7498,8 @@ class TikiLib extends TikiDB {
 		if ( $tz != 'UTC' ) {
 			$tikidate->convertTZByID($tz);
 		}
-		return $tikidate->format($format);
+
+		return $tikidate->format($format, $is_strftime_format);
 	}
 
 	function make_time($hour,$minute,$second,$month,$day,$year) {

@@ -128,26 +128,50 @@ if ( $tiki_p_admin_file_galleries == 'y' ) {
 
 	if ( isset($_REQUEST['movesel']) ) {
 		check_ticket('fgal');
-		foreach ( array_values($_REQUEST['file']) as $file ) {
-			// To move a topic you just have to change the object
-			$filegallib->set_file_gallery($file, $_REQUEST['moveto']);
+		if (isset($_REQUEST['file'])) {
+			foreach ( array_values($_REQUEST['file']) as $file ) {
+				// To move a topic you just have to change the object
+				$filegallib->set_file_gallery($file, $_REQUEST['moveto']);
+			}
 		}
-		foreach ( array_values($_REQUEST['subgal']) as $subgal ) {
-			$filegallib->move_file_gallery($subgal, $_REQUEST['moveto']);
+		if (isset($_REQUEST['subgal'])) {
+			foreach ( array_values($_REQUEST['subgal']) as $subgal ) {
+				$filegallib->move_file_gallery($subgal, $_REQUEST['moveto']);
+			}
 		}
 	}
 }
 if (isset($_REQUEST['zipsel_x']) && $tiki_p_upload_files == 'y') {
 	check_ticket('fgal');
 	$href = array();
-	foreach (array_values($_REQUEST['file']) as $file) {
-		$href[] = "fileId[]=$file";
+	if (isset($_REQUEST['file'])) {
+		foreach (array_values($_REQUEST['file']) as $file) {
+			$href[] = "fileId[]=$file";
+		}
 	}
-	foreach ( array_values($_REQUEST['subgal']) as $subgal ) {
-		$href[] = "galId[]=$subgal";
+	if (isset($_REQUEST['subgal'])) {
+		foreach ( array_values($_REQUEST['subgal']) as $subgal ) {
+			$href[] = "galId[]=$subgal";
+		}
 	}
 	header("Location: tiki-download_file.php?".implode('&', $href));
 	die;
+}
+if (isset($_REQUEST['permsel_x']) && $tiki_p_assign_perm_file_gallery == 'y') {
+	$perms = $userlib->get_permissions(0, -1, 'permName_asc', '', 'file galleries');
+	$smarty->assign_by_ref('perms', $perms['data']);
+	$groups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');
+	$smarty->assign_by_ref('groups', $groups['data']);
+}
+if (isset($_REQUEST['permsel']) && $tiki_p_assign_perm_file_gallery == 'y' && isset($_REQUEST['subgal'])) {
+	check_ticket('fgal');
+	foreach($_REQUEST['subgal'] as $id) {
+		foreach ($_REQUEST['groups'] as $group) {
+			foreach ($_REQUEST['perms'] as $perm) {
+				$userlib->assign_object_permission($group, $id, 'file gallery', $perm);
+			}
+		}
+	}
 }
 
 // Lock a file
@@ -713,13 +737,8 @@ if (isset($_GET['slideshow'])) {
   $files = $tikilib->get_files(0, -1, $_REQUEST['sort_mode'], $_REQUEST['find'], $_REQUEST['galleryId'] == 0 ? -1 : $_REQUEST['galleryId'], false, false, false, true, false, false, false, true, '', false);
   $smarty->assign('cant', $files['cant']);
   $i = 0;
-  foreach( $files['data'] as $file) {
-    $filesid[] = $file['fileId'];
-    $file_info[$i]['filename'] = $file['filename'];
-    $file_info[$i++]['name'] = $file['name'];
-  }
   $smarty->assign_by_ref('filesid', $filesid);
-  $smarty->assign_by_ref('file', $file_info);
+  $smarty->assign_by_ref('file', $files['data']);
   reset($filesid);
   $smarty->assign('firstId',current($filesid));
   $smarty->assign('show_find', 'n');

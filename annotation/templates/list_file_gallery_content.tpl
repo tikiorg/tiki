@@ -231,7 +231,9 @@
           {assign var=propval value=$files[changes].filename|iconify:$files[changes].type}
         {/if}
       {elseif $propname eq 'description' and $gal_info.max_desc gt 0}
-        {assign var=propval value=$propval|truncate:$gal_info.max_desc:"...":false}
+        {assign var=propval value=$propval|truncate:$gal_info.max_desc:"...":false|nl2br}
+      {elseif $propname eq 'description' }
+        {assign var=propval value=$propval|nl2br}
       {elseif $propname eq 'lockedby' and $propval neq ''}
         {if $gal_info.show_lockedby eq 'i' or $gal_info.show_lockedby eq 'a'}
           {assign var=propval value=$propval|username}

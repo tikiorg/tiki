@@ -110,19 +110,7 @@
 				|| $tiki_p_post_comments == 'y'
 				||$tiki_p_edit_comments == 'y')}
 				{assign var=pagemd5 value=$page|@md5}
-				{if $comments_cant gt 0}
-					{assign var=thisbuttonclass value='highlight'}
-				{else}
-					{assign var=thisbuttonclass value=''}
-				{/if}
-				{if $comments_cant == 0 or ($tiki_p_read_comments == 'n' and $tiki_p_post_comments == 'y')}
-					{assign var=thistext value="{tr}Add Comment{/tr}"}
-				{elseif $comments_cant == 1}
-					{assign var=thistext value="{tr}1 comment{/tr}"}
-				{else}
-					{assign var=thistext value="$comments_cant&nbsp;{tr}comments{/tr}"}
-				{/if}
-				{button href="#comments" _flip_id="comzone$pagemd5" _class=$thisbuttonclass _text=$thistext}
+				{include file=comments_button.tpl}
 			{/if}
 
 			{* don't show attachments button if feature disabled or no corresponding rights or no attached files and r/o*}
@@ -148,7 +136,7 @@
 						{tr}{$atts|@count} files attached{/tr}
 					{/if}
 				{/strip}{/capture}
-				{button href="#attachments" _flip_id="attzone$pagemd5" _class=$thisbuttonclass _text=$thistext}
+				{button href="#attachments" _flip_id="attzone$pagemd5" _class=$thisbuttonclass _text=$thistext _flip_default_open=$prefs.w_displayed_default}
 			{/if}{* attachments *}
 
 			{if $prefs.feature_multilingual eq 'y' and $tiki_p_edit eq 'y' and !$lock}

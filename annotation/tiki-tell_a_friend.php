@@ -138,6 +138,7 @@ if (isset($_REQUEST['send'])) {
 		}
 	}
 	$smarty->assign_by_ref('errors', $errors);
+	$smarty->assign('errortype', 'no_redirect_login');
 } else {
 	$smarty->assign_by_ref('name', $user);
 	$smarty->assign('email', $userlib->get_user_email($user));

@@ -60,6 +60,7 @@ if ($_REQUEST["nlId"]) {
 		$info["datatxt"] = '';
 		$info["subject"] = '';
 		$info["editionId"] = 0;
+		$info["files"] = array();
 	}
 	$smarty->assign('info', $info);
 }else{
@@ -113,8 +114,55 @@ if (isset($_REQUEST["templateId"]) && $_REQUEST["templateId"] > 0 && (!isset($_R
 	$smarty->assign("templateId", $_REQUEST["templateId"]);
 }
 
-$smarty->assign('preview', 'n');
+$newsletterfiles_post=isset($_REQUEST['newsletterfile']) && is_array($_REQUEST['newsletterfile']) ? $_REQUEST['newsletterfile'] : array();
+$newsletterfiles=array();
+foreach($newsletterfiles_post as $k => $id) {
+	$f=array();
+	if ((strlen($id) == 32) && preg_match('/^[0-9a-f]{32}$/', $id)) { // this is a valid md5 hash, so the file was just saved at preview time
+		$fpath=$prefs['tmpDir'].'/newsletterfile-preview-'.$id;
+		$f=unserialize(file_get_contents($fpath.'.infos'));
+		$f['path']=$fpath;
+		$newsletterfiles[]=$f;
+	} else if ((int)$_REQUEST['nlId'] > 0) {
+		foreach($info['files'] as $f) {
+			if ($f['id'] == (int)$id) {
+				$newsletterfiles[]=$f;
+				break;
+			}
+		}
+	}
+}
 
+if (!empty($_FILES) && !empty($_FILES['newsletterfile'])) {
+	foreach ($_FILES['newsletterfile']['name'] as $i => $v) {
+		$newsletterfiles[]=array('name' => $_FILES['newsletterfile']['name'][$i],
+								 'type' => $_FILES['newsletterfile']['type'][$i],
+								 'path' => $_FILES['newsletterfile']['tmp_name'][$i],
+								 'error' => $_FILES['newsletterfile']['error'][$i],
+								 'size' => $_FILES['newsletterfile']['size'][$i],
+								 'savestate' => 'phptmp');
+	}
+}
+
+$info['files']=$newsletterfiles;
+
+foreach($info['files'] as $k => $newsletterfile) {
+	if ($newsletterfile['savestate'] == 'phptmp') {
+		// move it to temp
+		$tmpfnamekey=md5(rand().time().$newsletterfile['path'].$newsletterfile['name'].$newsletterfile['type']);
+		$tmpfname=$prefs['tmpDir'].'/newsletterfile-preview-'.$tmpfnamekey;
+		if (move_uploaded_file($newsletterfile['path'], $tmpfname)) {
+			$info['files'][$k]['savestate']='tikitemp';
+			$info['files'][$k]['path']=$tmpfname;
+			$info['files'][$k]['id']=$tmpfnamekey;
+			$info['files'][$k]['filename']=$tmpfnamekey;
+			file_put_contents($tmpfname.'.infos', serialize($info['files'][$k]));
+		}
+	}
+}
+
+
+$smarty->assign('preview', 'n');
 if (isset($_REQUEST["preview"])) {
 	$smarty->assign('preview', 'y');
 	//if (eregi("\<[ \t]*html[ \t\>]",  $_REQUEST["data"]))  // html newsletter - this will be the text sent with the html part
@@ -152,6 +200,7 @@ if (isset($_REQUEST["preview"])) {
 	} else {
 		$info["dataparsed"] = "<html><body>".(($info['wikiparse'] == 'y')?$tikilib->parse_data($info["data"], array('absolute_links' => true)):$info['data'])."</body></html>";
 	}
+	
 	$smarty->assign('info', $info);
 }
 
@@ -190,6 +239,7 @@ if (isset($_REQUEST["save"])) {
 	$smarty->assign('subject', $_REQUEST["subject"]);
 	$cant = count($subscribers);
 	$smarty->assign('subscribers', $cant);
+	$smarty->assign('info', $info);
 }
 
 $smarty->assign('emited', 'n');
@@ -208,6 +258,7 @@ if (empty($txt)&&!empty($_REQUEST["data"])) {
 
 if (isset($_REQUEST["send"])) {
 	include_once ('lib/webmail/tikimaillib.php');
+	$editionId=$_REQUEST['editionId'];
 	check_ticket('send-newsletter');
 	set_time_limit(0);
 	$mail = new TikiMail();	
@@ -216,7 +267,7 @@ if (isset($_REQUEST["send"])) {
 	} else {
 		$html = $_REQUEST["dataparsed"];
 	}
-	$sent = 0;
+	$sent = array();
 	$unsubmsg = '';
 	$errors =  array();
 
@@ -228,16 +279,27 @@ if (isset($_REQUEST["send"])) {
 
 	$nllib->memo_subscribers_edition($editionId, $users);
 	$sender_email = $prefs['sender_email'];
+	
+	if (!isset($info['files']) || $info['files']===null || count($info['files']) <= 0)
+		$info['files']=$nllib->get_edition_files($editionId);
+	foreach($info['files'] as $f) {
+		$fpath=isset($f['path']) ? $f['path'] : $prefs['tmpDir'].'/newsletterfile-'.$f['filename'];
+		$mail->addAttachment(file_get_contents($fpath), $f['name'], $f['type']);
+	}
+
 	foreach ($users as $us) {
 		$userEmail  = $us["login"];
 		$email = $us["email"];
-		if ($email == "") {
-			$errors[] = array("user"=>$userEmail, "email"=>"");
+		if (!preg_match('/([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+/', trim($email))) {
+			$errors[] = array("user"=>$userEmail, "email"=>$email, "msg"=>tra("invalid email"));
 			continue;
 		}
 		if ($userEmail == "") {
 			$userEmail = $userlib->get_user_by_email($email);
 		}
+		$email=trim($email);
+
+		if (in_array($email, $sent)) continue; // do not send the mail again
 
 		if ($userEmail) {
 			$mail->setUser($userEmail);
@@ -260,26 +322,44 @@ if (isset($_REQUEST["send"])) {
 		$mail->setHtml($msg, $txt.strip_tags($unsubmsg));
 		$mail->buildMessage(array('text_encoding'=>'8bit'));
 		if ($mail->send(array($email))) {
-			$sent++;
+			$sent[]=$email;
 			$nllib->delete_edition_subscriber($editionId, $us);
 		} else {
-			$errors[] = array("user"=>$userEmail, "email"=>$email);
+			$errors[] = array("user"=>$userEmail, "email"=>$email, "msg"=>$mail->errors);
 			$nllib->mark_edition_subscriber($editionId, $us);
 		}
 	}
 
-	$smarty->assign('sent', $sent);
+	$smarty->assign('sent', count($sent));
 	$smarty->assign('emited', 'y');
 	if (count($errors) > 0) {
 		$smarty->assign_by_ref('errors', $errors);
 	}
-	$editionId = $nllib->replace_edition($_REQUEST["nlId"], $_REQUEST["subject"], $_REQUEST["data"], $sent, $editionId, false, $txt);
+	$editionId = $nllib->replace_edition($_REQUEST["nlId"], $_REQUEST["subject"], $_REQUEST["data"], count($sent), $editionId, false, $txt, $info['files']);
+	foreach($info['files'] as $k => $f) {
+		if ($f['savestate'] == 'tikitemp') {
+			$newpath=$prefs['tmpDir'].'/newsletterfile-'.$f['filename'];
+			rename($f['path'], $newpath);
+			unlink($f['path'].'.infos');
+			$info['files'][$k]['savestate']='tiki';
+			$info['files'][$k]['path']=$newpath;
+		}
+	}
 }
 
 if (isset($_REQUEST["save_only"])) {
 	if (!isset($txt))$txt="";
 	$smarty->assign('nlId', $_REQUEST['nlId']);	
-	$editionId = $nllib->replace_edition($_REQUEST['nlId'], $_REQUEST['subject'], $_REQUEST['data'], -1, $_REQUEST['editionId'], true,$txt);
+	$editionId = $nllib->replace_edition($_REQUEST['nlId'], $_REQUEST['subject'], $_REQUEST['data'], -1, $_REQUEST['editionId'], true,$txt, $info['files']);
+	foreach($info['files'] as $k => $f) {
+		if ($f['savestate'] == 'tikitemp') {
+			$newpath=$prefs['tmpDir'].'/newsletterfile-'.$f['filename'];
+			rename($f['path'], $newpath);
+			unlink($f['path'].'.infos');
+			$info['files'][$k]['savestate']='tiki';
+			$info['files'][$k]['path']=$newpath;
+		}
+	}
 	$info = $nllib->get_edition($editionId);
 	$smarty->assign('info', $info);
 }
@@ -311,8 +391,8 @@ if (isset($_REQUEST['ed_find']) && isset($_REQUEST['dr_find'])) {
 $smarty->assign_by_ref('ed_find', $ed_find);
 $smarty->assign_by_ref('dr_find', $dr_find);
 	
-$editions = $nllib->list_editions($_REQUEST["nlId"], $ed_offset, $maxRecords, $ed_sort_mode, $ed_find);
-$drafts = $nllib->list_editions($_REQUEST["nlId"], $dr_offset, $maxRecords, $dr_sort_mode, $dr_find);
+$editions = $nllib->list_editions($_REQUEST["nlId"], $ed_offset, $maxRecords, $ed_sort_mode, $ed_find, false);
+$drafts = $nllib->list_editions($_REQUEST["nlId"], $dr_offset, $maxRecords, $dr_sort_mode, $dr_find, true);
 
 $ed_cant_pages = ceil($editions["cant"] / $maxRecords);
 $dr_cant_pages = ceil($drafts["cant"] / $maxRecords);

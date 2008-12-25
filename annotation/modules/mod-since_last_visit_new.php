@@ -492,6 +492,6 @@ function since_last_visit_new($user, $params = null) {
 
 $slvn_info = since_last_visit_new($user, $module_params);
 $smarty->assign('slvn_info', $slvn_info);
-$smarty->assign('nonums', isset($module_params["nonums"]) ? $module_params["noms"] : 'n');
+$smarty->assign('nonums', isset($module_params["nonums"]) ? $module_params["nonums"] : 'n');
 
 

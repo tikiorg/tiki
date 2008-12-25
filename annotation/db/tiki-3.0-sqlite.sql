@@ -481,6 +481,40 @@ CREATE TABLE 'tiki_calendar_categories' (
 
 CREATE UNIQUE INDEX "tiki_calendar_categories_catname" ON "tiki_calendar_categories"("calendarId","name");
 
+DROP TABLE IF EXISTS 'tiki_calendar_recurrence';
+
+CREATE TABLE 'tiki_calendar_recurrence' (
+  "recurrenceId" INTEGER,
+  "calendarId" bigint NOT NULL default '0',
+  "start" smallint NOT NULL default '0',
+  "end" smallint NOT NULL default '2359',
+  "allday" smallint NOT NULL default '0',
+  "locationId" bigint default NULL,
+  "categoryId" bigint default NULL,
+  "nlId" bigint NOT NULL default '0',
+  "priority" varchar(3) CHECK ("priority" IN ('1','2','3','4','5','6','7','8','9')) NOT NULL default '1',
+  "status" varchar(3) CHECK ("status" IN ('0','1','2')) NOT NULL default '0',
+  "url" varchar(255) default NULL,
+  "lang" char(16) NOT NULL default 'en',
+  "name" varchar(255) NOT NULL default '',
+  "description" bytea,
+  "weekly" smallint default '0',
+  "weekday" smallint,
+  "monthly" smallint default '0',
+  "dayOfMonth" smallint,
+  "yearly" smallint default '0',
+  "dateOfYear" smallint,
+  "nbRecurrences" integer,
+  "startPeriod" bigint,
+  "endPeriod" bigint,
+  "user" varchar(200) default '',
+  "created" bigint NOT NULL default '0',
+  "lastmodif" bigint NOT NULL default '0',
+  PRIMARY KEY (recurrenceId)
+) ENGINE=MyISAM ;
+
+CREATE  INDEX "tiki_calendar_recurrence_calendarId" ON "tiki_calendar_recurrence"("calendarId");
+
 DROP TABLE IF EXISTS 'tiki_calendar_items';
 
 CREATE TABLE 'tiki_calendar_items' (
@@ -497,12 +531,17 @@ CREATE TABLE 'tiki_calendar_items' (
   "lang" char(16) NOT NULL default 'en',
   "name" varchar(255) NOT NULL default '',
   "description" bytea,
+  "recurrenceId" bigint,
+  "changed" smallint DEFAULT '0',
   "user" varchar(200) default '',
   "created" bigint NOT NULL default '0',
   "lastmodif" bigint NOT NULL default '0',
   "allday" smallint NOT NULL default '0',
-  PRIMARY KEY (calitemId)
-) ENGINE=MyISAM;
+  PRIMARY KEY (calitemId),
+  "CONSTRAINT" fk_calitems_recurrence
+  "FOREIGN" KEY (recurrenceId) REFERENCES tiki_calendar_recurrence(recurrenceId)
+  "ON" UPDATE CASCADE ON DELETE SET NULL
+) ENGINE=MyISAM ;
 
 CREATE  INDEX "tiki_calendar_items_calendarId" ON "tiki_calendar_items"("calendarId");
 
@@ -1878,8 +1917,6 @@ INSERT INTO "," ("optionId","menuId","type","name","url","position","section","p
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (158,42,'o','Integrator','tiki-admin_integrator.php',1205,'feature_integrator','tiki_p_admin_integrator','',0);
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (159,42,'o','phpinfo','tiki-phpinfo.php',1215,'','tiki_p_admin','',0);
-
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (161,42,'o','Score','tiki-admin_include_score.php',1235,'feature_score','tiki_p_admin','',0);
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (162,42,'o','Admin mods','tiki-mods.php',1240,'','tiki_p_admin','',0);
 
@@ -3854,6 +3891,8 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_trust_input', 'Trust all user inputs (no security checks)', 'admin', 'tiki');
 
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_backlink', 'View page backlinks', 'basic', 'wiki');
+
 
 UPDATE users_permissions SET feature_check = 'feature_wiki' WHERE permName IN(
 	'tiki_p_admin_wiki',
@@ -4794,6 +4833,7 @@ DROP TABLE IF EXISTS 'tiki_webservice';
 CREATE TABLE 'tiki_webservice' (
   "service" VARCHAR(25) NOT NULL PRIMARY KEY,
   "url" VARCHAR(250),
+  "body" TEXT,
   "schema_version" VARCHAR(5),
   "schema_documentation" VARCHAR(250)
 ) ENGINE=MyISAM ;
@@ -4822,6 +4862,20 @@ CREATE TABLE 'tiki_groupalert' (
   "displayEachuser"  char( 1 ) default NULL ,
   PRIMARY KEY ( objectType,objectId )
 ) ENGINE=MyISAM ;
+
+
+DROP TABLE IF EXISTS 'tiki_sent_newsletters_files';
+
+CREATE TABLE tiki_sent_newsletters_files (
+  id INTEGER,
+  editionId bigint NOT NULL,
+  name varchar(256) NOT NULL,
+  type varchar(64) NOT NULL,
+  size bigint NOT NULL,
+  filename varchar(256) NOT NULL,
+  PRIMARY KEY ("id")
+  KEY editionId (editionId)
+);
 
 ;
 

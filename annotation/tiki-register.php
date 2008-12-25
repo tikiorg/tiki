@@ -59,6 +59,7 @@ if ($nbChoiceGroups) {
 
 if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && (isset($_REQUEST['pass']) || isset($_SESSION['openid_url']))) {
   check_ticket('register');
+  $smarty->assign('errortype', 'no_redirect_login');
   if($novalidation != 'yes' and ($_REQUEST["pass"] <> $_REQUEST["passAgain"]) and !isset($_SESSION['openid_url'])) {
     $smarty->assign('msg',tra("The passwords don't match"));
     $smarty->display("error.tpl");
@@ -73,7 +74,7 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && (isset($_REQUEST
   
   if($prefs['rnd_num_reg'] == 'y' && !isset($_SESSION['in_tracker'])) {
   	if (!isset($_SESSION['random_number']) || $_SESSION['random_number']!=$_REQUEST['antibotcode']) {
-    $smarty->assign('msg',tra("Wrong registration code"));
+    $smarty->assign('msg',tra("You have mistyped the anti-bot verification code; please try again."));
     $smarty->display("error.tpl");
     die;	
   	}
@@ -127,7 +128,7 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && (isset($_REQUEST
     die;
   }
     
-  if (!preg_match($patterns['login'],$_REQUEST["name"])) {
+  if (!empty($prefs['username_pattern']) && !preg_match($prefs['username_pattern'],$_REQUEST["name"])) {
     $smarty->assign('msg',tra("Invalid username"));
     $smarty->display("error.tpl");
     die;

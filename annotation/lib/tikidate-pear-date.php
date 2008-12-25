@@ -29,11 +29,11 @@ class TikiDate extends Date {
 		Date::Date(date("Y-m-d H:i:s Z"));
 	}
 
-	function format($format) {
+	function format($format, $is_strftime_format = true) {
 		global $prefs;
 
 		// Format the date
-		$return = parent::format($format);
+		$return = $is_strftime_format ? parent::format($format) : parent::format3($format);
 
 		// Translate the date if we are not already in english
 

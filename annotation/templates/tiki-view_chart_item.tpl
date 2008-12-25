@@ -28,7 +28,7 @@
 </tr>
 <tr>
 	<td  class="{cycle advance=false}">{tr}Dif{/tr}</td>
-	<td class="{cycle }">{if $info.dif eq "new"}{html_image file='img/icons/new.gif' border='0' alt='{tr}New{/tr}'}{else}{$info.dif}{/if}</td>
+	<td class="{cycle }">{if $info.dif eq "new"}{html_image file='img/icons/new.gif' alt='{tr}New{/tr}'}{else}{$info.dif}{/if}</td>
 </tr>
 <tr>
 	<td  class="{cycle advance=false}">{tr}Best Position{/tr}</td>

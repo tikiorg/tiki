@@ -6,16 +6,13 @@
 // Initialization
 $section = 'mytiki';
 require_once ('tiki-setup.php');
-if ($prefs['feature_ajax'] == "y") {
-require_once ('lib/ajax/ajaxlib.php');
-}
-include_once ('lib/webmail/contactlib.php');
 
 if ($prefs['feature_contacts'] != 'y') {
   $smarty->assign('msg', tra("This feature is disabled").": feature_contacts");
   $smarty->display("error.tpl");
   die;
 }
+include_once ('lib/webmail/contactlib.php');
 
 if (!isset($_REQUEST["contactId"])) {
 	$_REQUEST["contactId"] = 0;
@@ -180,14 +177,7 @@ include_once ('tiki-section_options.php');
 
 ask_ticket('contacts');
 if ($prefs['feature_ajax'] == "y") {
-function user_contacts_ajax() {
-    global $ajaxlib, $xajax;
-    $ajaxlib->registerTemplate("tiki-contacts.tpl");
-    $ajaxlib->registerFunction("loadComponent");
-    $ajaxlib->processRequests();
-}
-user_contacts_ajax();
-$smarty->assign("mootab",'y');
+	$smarty->assign("mootab",'y');
 }
 $smarty->assign('myurl', 'tiki-contacts.php');
 

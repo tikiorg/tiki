@@ -80,8 +80,8 @@ class Tiki_Text_Diff_Renderer extends Text_Diff_Renderer {
 }
 
 function diff2($page1, $page2, $type='sidediff') {
+	global $tikilib, $prefs;
 	if ($type == 'htmldiff') {
-		global $tikilib, $prefs;
 		//$search = "#(<[^>]+>|\s*[^\s<]+\s*|</[^>]+>)#";
 		$search = "#(<[^>]+>|[,\"':\s]+|[^\s,\"':<]+|</[^>]+>)#";
 		preg_match_all($search,$page1,$out,PREG_PATTERN_ORDER);

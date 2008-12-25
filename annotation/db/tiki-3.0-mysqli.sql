@@ -425,6 +425,38 @@ CREATE TABLE tiki_calendar_categories (
   UNIQUE KEY catname (calendarId,name(16))
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
+DROP TABLE IF EXISTS tiki_calendar_recurrence;
+CREATE TABLE tiki_calendar_recurrence (
+  recurrenceId int(14) NOT NULL auto_increment,
+  calendarId int(14) NOT NULL default '0',
+  start int(4) NOT NULL default '0',
+  end int(4) NOT NULL default '2359',
+  allday tinyint(1) NOT NULL default '0',
+  locationId int(14) default NULL,
+  categoryId int(14) default NULL,
+  nlId int(12) NOT NULL default '0',
+  priority enum('1','2','3','4','5','6','7','8','9') NOT NULL default '1',
+  status enum('0','1','2') NOT NULL default '0',
+  url varchar(255) default NULL,
+  lang char(16) NOT NULL default 'en',
+  name varchar(255) NOT NULL default '',
+  description blob,
+  weekly tinyint(1) default '0',
+  weekday tinyint(1),
+  monthly tinyint(1) default '0',
+  dayOfMonth int(2),
+  yearly tinyint(1) default '0',
+  dateOfYear int(4),
+  nbRecurrences int(8),
+  startPeriod int(14),
+  endPeriod int(14),
+  user varchar(200) default '',
+  created int(14) NOT NULL default '0',
+  lastmodif int(14) NOT NULL default '0',
+  PRIMARY KEY (recurrenceId),
+  KEY calendarId (calendarId)
+) ENGINE=MyISAM AUTO_INCREMENT=1 ;
+
 DROP TABLE IF EXISTS tiki_calendar_items;
 CREATE TABLE tiki_calendar_items (
   calitemId int(14) NOT NULL auto_increment,
@@ -440,13 +472,18 @@ CREATE TABLE tiki_calendar_items (
   lang char(16) NOT NULL default 'en',
   name varchar(255) NOT NULL default '',
   description blob,
+  recurrenceId int(14),
+  changed tinyint(1) DEFAULT '0',
   user varchar(200) default '',
   created int(14) NOT NULL default '0',
   lastmodif int(14) NOT NULL default '0',
   allday tinyint(1) NOT NULL default '0',
   PRIMARY KEY (calitemId),
-  KEY calendarId (calendarId)
-) ENGINE=MyISAM AUTO_INCREMENT=1;
+  KEY calendarId (calendarId),
+  CONSTRAINT fk_calitems_recurrence
+	FOREIGN KEY (recurrenceId) REFERENCES tiki_calendar_recurrence(recurrenceId)
+	ON UPDATE CASCADE ON DELETE SET NULL
+) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS tiki_calendar_locations;
 CREATE TABLE tiki_calendar_locations (
@@ -1522,7 +1559,6 @@ INSERT INTO `tiki_menu_options` (`optionId`, `menuId`, `type`, `name`, `url`, `p
 INSERT INTO `tiki_menu_options` (`optionId`, `menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (157,42,'o','Referer stats','tiki-referer_stats.php',1195,'feature_referer_stats','tiki_p_view_referer_stats','',0);
 INSERT INTO `tiki_menu_options` (`optionId`, `menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (158,42,'o','Integrator','tiki-admin_integrator.php',1205,'feature_integrator','tiki_p_admin_integrator','',0);
 INSERT INTO `tiki_menu_options` (`optionId`, `menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (159,42,'o','phpinfo','tiki-phpinfo.php',1215,'','tiki_p_admin','',0);
-INSERT INTO `tiki_menu_options` (`optionId`, `menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (161,42,'o','Score','tiki-admin_include_score.php',1235,'feature_score','tiki_p_admin','',0);
 INSERT INTO `tiki_menu_options` (`optionId`, `menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (162,42,'o','Admin mods','tiki-mods.php',1240,'','tiki_p_admin','',0);
 INSERT INTO `tiki_menu_options` (`optionId`, `menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (163,42,'o','Tiki Logs','tiki-syslog.php',1245,'','tiki_p_admin','',0);
 INSERT INTO `tiki_menu_options` (`optionId`, `menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (164,42,'o','Security Admin','tiki-admin_security.php',1250,'','tiki_p_admin','',0);
@@ -3034,6 +3070,7 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_plugin_preview', 'Can execute unapproved plugin', 'registered', 'wiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_plugin_approve', 'Can approve plugin execution', 'editors', 'wiki');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_trust_input', 'Trust all user inputs (no security checks)', 'admin', 'tiki');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_backlink', 'View page backlinks', 'basic', 'wiki');
 
 UPDATE users_permissions SET feature_check = 'feature_wiki' WHERE permName IN(
 	'tiki_p_admin_wiki',
@@ -3656,6 +3693,7 @@ DROP TABLE IF EXISTS tiki_webservice;
 CREATE TABLE tiki_webservice (
 	service VARCHAR(25) NOT NULL PRIMARY KEY,
 	url VARCHAR(250),
+	body TEXT,
 	schema_version VARCHAR(5),
 	schema_documentation VARCHAR(250)
 ) ENGINE=MyISAM ;
@@ -3680,3 +3718,15 @@ CREATE TABLE tiki_groupalert (
 	displayEachuser  char( 1 ) default NULL ,
 	PRIMARY KEY ( objectType,objectId )
 ) ENGINE=MyISAM ;
+
+DROP TABLE IF EXISTS `tiki_sent_newsletters_files`;
+CREATE TABLE `tiki_sent_newsletters_files` (
+  `id` int(11) NOT NULL auto_increment,
+  `editionId` int(11) NOT NULL,
+  `name` varchar(256) NOT NULL,
+  `type` varchar(64) NOT NULL,
+  `size` int(11) NOT NULL,
+  `filename` varchar(256) NOT NULL,
+  PRIMARY KEY  (`id`),
+  KEY `editionId` (`editionId`)
+);

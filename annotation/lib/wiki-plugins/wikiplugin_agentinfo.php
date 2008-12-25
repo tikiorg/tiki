@@ -30,7 +30,7 @@ function wikiplugin_agentinfo($data, $params) {
 	}
 
 	if ($info == 'IP') {
-		$asetup = $_SERVER["REMOTE_ADDR"];
+		$asetup = $tikilib->get_ip_address();
 	}
 
 	if ($info == 'SVRSW') {

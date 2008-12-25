@@ -23,7 +23,7 @@ class LogsLib extends TikiLib {
 			}
 		}
 		if (!$ip) {
-			$ip = $_SERVER['REMOTE_ADDR'];
+			$ip = $this->get_ip_address();
 		}
 		if (!$client) {
 			if (!$_SERVER['HTTP_USER_AGENT']) {
@@ -113,7 +113,7 @@ class LogsLib extends TikiLib {
 		if ($who == '')
 			$who = $user;
 		if ($ip == '')
-			$ip = $_SERVER['REMOTE_ADDR'];;
+			$ip = $this->get_ip_address();
 		if ($client == '')
 			$client = $_SERVER['HTTP_USER_AGENT'];
 		if ($logCateg) {

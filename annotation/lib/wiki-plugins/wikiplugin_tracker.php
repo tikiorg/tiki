@@ -268,7 +268,7 @@ function wikiplugin_tracker($data, $params) {
 							elseif ($flds['data'][$cpt]['type'] == 'g')
 								$_REQUEST['track'][$fl['fieldId']] = $group;
 							elseif ($flds['data'][$cpt]['type'] == 'I')
-								$_REQUEST['track'][$fl['fieldId']] = isset($_SERVER['REMOTE_ADDR'])?$_SERVER['REMOTE_ADDR']: '';
+								$_REQUEST['track'][$fl['fieldId']] = $tikilib->get_ip_address();
 							elseif ($flds['data'][$cpt]['type'] == 'k')
 								$_REQUEST['track'][$fl['fieldId']] = isset($_REQUEST['page'])?$_REQUEST['page']: '';
 						} elseif (!empty($itemId) && $flds['data'][$cpt]['options_array'][0] == '2') {
@@ -277,7 +277,7 @@ function wikiplugin_tracker($data, $params) {
 							elseif ($flds['data'][$cpt]['type'] == 'g')
 								$_REQUEST['track'][$fl['fieldId']] = $group;
 							elseif ($flds['data'][$cpt]['type'] == 'I')
-								$_REQUEST['track'][$fl['fieldId']] = isset($_SERVER['REMOTE_ADDR'])?$_SERVER['REMOTE_ADDR']: '';
+								$_REQUEST['track'][$fl['fieldId']] = $tikilib->get_ip_address();
 						}
 					} elseif ($flds['data'][$cpt]['type'] == 'f') {
 						$ins_id = 'track_'.$fl['fieldId'];
@@ -296,6 +296,7 @@ function wikiplugin_tracker($data, $params) {
 					if (isset($_REQUEST['ins_cat_'.$fl['fieldId']])) { // to remember if error
 						$_REQUEST['track'][$fl['fieldId']] = $_REQUEST['ins_cat_'.$fl['fieldId']];
 					}
+
 					if(isset($_REQUEST['track'][$fl['fieldId']])) {
 						$flds['data'][$cpt]['value'] = $_REQUEST['track'][$fl['fieldId']];
 					} else {
@@ -311,6 +312,14 @@ function wikiplugin_tracker($data, $params) {
 					}
 					if (!empty($_REQUEST['other_track'][$fl['fieldId']])) {
 						$flds['data'][$cpt]['value'] = $_REQUEST['other_track'][$fl['fieldId']];
+					}
+					if ($flds['data'][$cpt]['isMultilingual'] == 'y') {
+						foreach ($prefs['available_languages'] as $num=>$tmplang) {
+							if (isset($_REQUEST['track'][$fl['fieldId']][$tmplang])) {
+								$fl['lingualvalue'][$num]['value'] = $_REQUEST['track'][$fl['fieldId']][$tmplang];
+								$fl['lingualvalue'][$num]['lang'] = $tmplang;
+							}
+						}
 					}
 					$full_fields[$fl['fieldId']] = $fl;
 					
@@ -331,6 +340,7 @@ function wikiplugin_tracker($data, $params) {
 						$ins_fields["data"][] = array_merge(array('value' => $val), $full_fields[$fld]);
 					}
 				}
+
 				if (isset($_FILES['track'])) {// image or attachment fields
 					foreach ($_FILES['track'] as $label=>$w) {
 						foreach ($w as $fld=>$val) {
@@ -390,6 +400,7 @@ function wikiplugin_tracker($data, $params) {
 					} else {
 						$status = '';
 					}
+
 					$rid = $trklib->replace_item($trackerId,$itemId,$ins_fields, $status, $ins_categs);
 					$trklib->categorized_item($trackerId, $rid, $mainfield, $ins_categs);
 					if (isset($newItemRate)) {
@@ -621,7 +632,7 @@ function wikiplugin_tracker($data, $params) {
 				$assocNumerics = array();
 				foreach ($flds['data'] as $f) {
 					if (empty($f['value']) && ($f['type'] == 'u' || $f['type'] == 'g' || $f['type'] == 'I') && ($f['options_array'][0] == '1' || $f['options_array'][0] == '2')) { //need to fill the selector fields for the join
-						$f['value'] = ($f['type'] == 'I')? $_SERVER['REMOTE_ADDR']: (($f['type'] == 'g')? $group: $user);
+						$f['value'] = ($f['type'] == 'I')? $tikilib->get_ip_address(): (($f['type'] == 'g')? $group: $user);
 					}
 					$assocValues[$f['fieldId']] = $f['value'];
 					$assocNumerics[$f['fieldId']] = preg_replace('/[^0-9\.\+]/', '', $f['value']); // get rid off the $ and such unit
@@ -639,6 +650,12 @@ function wikiplugin_tracker($data, $params) {
 					}
 					if ($f['type'] == 's' && ($f['name'] == 'Rating' || $f['name'] == tra('Rating')) && $tiki_p_tracker_vote_ratings == 'y' && isset($item)) {
 						$item['my_rate'] = $tikilib->get_user_vote("tracker$trackerId.$itemId", $user);
+					}
+					if ($f['isMultilingual'] == 'y') {
+						$multi_languages = $prefs['available_languages'];
+						foreach ($multi_languages as $num=>$tmplang){
+							$flds['data'][$i]['lingualvalue'][$num]['lang'] = $tmplang;
+						}
 					}
 					if ($f['type'] == 'r') {
 						$flds['data'][$i]['list'] = array_unique($trklib->get_all_items($f['options_array'][0],$f['options_array'][1],'o'));

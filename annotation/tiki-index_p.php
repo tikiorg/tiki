@@ -56,15 +56,12 @@ if (!$tikilib->page_exists($prefs['wikiHomePage'])) {
 	$tikilib->create_page($prefs['wikiHomePage'], 0, '', $tikilib->now, 'Tiki initialization');
 }
 
-require_once('tiki-pagesetup.php');
-
-// If the page doesn't exist then display an error
-if (!$tikilib->page_exists($page)) {
-	$smarty->assign('msg', tra("Page cannot be found"));
-
-	$smarty->display("error.tpl");
+if (!($info = $tikilib->get_page_info($page))) {
+	$smarty->assign('msg', tra('Page cannot be found'));
+	$smarty->display('error.tpl');
 	die;
 }
+$tikilib->get_perm_object( $page, 'wiki page', $info);
 
 // Check to see if page is categorized
 $objId = urldecode($page);

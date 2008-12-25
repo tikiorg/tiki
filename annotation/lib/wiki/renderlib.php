@@ -149,7 +149,8 @@ class WikiRenderer
 		else
 			$this->smartyassign('struct_editable', 'n');	
 		// To show position    
-		if (count($structure_path) > 1) {		
+		if (count($structure_path) > 1) {
+			$cur_pos = '';
 			for ($i = 1; $i < count($structure_path); $i++) {
 				$cur_pos .= $structure_path[$i]["pos"] . "." ;
 			}
@@ -229,9 +230,9 @@ class WikiRenderer
 
 	private function setupBacklinks() // {{{
 	{
-		global $prefs, $wikilib;
+		global $prefs, $wikilib, $tiki_p_view_backlinks;
 
-		if ( $prefs['feature_backlinks'] == 'y' ) {
+		if ( $prefs['feature_backlinks'] == 'y' && $tiki_p_view_backlinks == 'y') {
 			$backlinks = $wikilib->get_backlinks($this->page);
 			$this->smartyassign('backlinks', $backlinks);
 		}

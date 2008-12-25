@@ -55,6 +55,10 @@
 			<td colspan="2"><input type="text" name="prefs" value="{','|implode:$plugin.description.prefs}"/></td>
 		</tr>
 		<tr>
+			<td>{tr}Filter{/tr}</td>
+			<td colspan="2"><input type="text" name="filter" value="{$plugin.description.filter|default:'xss'|escape}"/></td>
+		</tr>
+		<tr>
 			<td>{tr}Validation{/tr}</td>
 			<td colspan="2">
 				<select name="validate">
@@ -75,7 +79,7 @@
 
 		{foreach from=$plugin.description.params key=token item=detail}
 			<tr>
-				<td rowspan="4"><input type="text" name="input[{$token|escape}][token]" value="{if $token neq '__NEW__'}{$token|escape}{/if}" size="10"/></td>
+				<td rowspan="5"><input type="text" name="input[{$token|escape}][token]" value="{if $token neq '__NEW__'}{$token|escape}{/if}" size="10"/></td>
 				<td>{tr}Name{/tr}</td>
 				<td><input type="text" name="input[{$token|escape}][name]" value="{$detail.name|escape}"/></td>
 			</tr>
@@ -90,6 +94,10 @@
 			<tr>
 				<td>{tr}Safe{/tr}</td>
 				<td><input type="checkbox" name="input[{$token|escape}][safe]" value="y"{if $detail.safe} checked="checked"{/if}/></td>
+			</tr>
+			<tr>
+				<td>{tr}Filter{/tr}</td>
+				<td><input type="text" name="input[{$token|escape}][filter]" value="{$detail.filter|default:xss|escape}"/></td>
 			</tr>
 		{/foreach}
 

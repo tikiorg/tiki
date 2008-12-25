@@ -30,14 +30,24 @@ if ($prefs['feature_wysiwyg'] == 'y') {
 if ($_SESSION['wysiwyg'] == 'y') {
 	$is_html = true;
 } elseif ($prefs['feature_wiki_allowhtml'] == 'y' and ($tiki_p_admin == 'y' or $tiki_p_use_HTML == 'y')) {
-	if (isset($_REQUEST['preview']) || isset($_REQUEST['edit'])) {
+	if (isset($_REQUEST['preview']) || isset($jitRequest['edit'])) {
 		if (isset($_REQUEST["allowhtml"]) && $_REQUEST["allowhtml"] == "on") {
 			$is_html = true;
 		}
 	} else {
-		if ((isset($info['is_html']) and $info['is_html'])) {
+		if (isset($info['is_html']) and $info['is_html']) {
 			$is_html = true;
 		}
 	}
 }
+
+if( isset($jitRequest['edit']) ) {
+	// Restore the property for the rest of the script
+	if( $is_html ) {
+		$_REQUEST['edit'] = $jitRequest->edit->xss();
+	} else {
+		$_REQUEST['edit'] = $jitRequest->edit->wikicontent();
+	}
+}
+
 ?>
