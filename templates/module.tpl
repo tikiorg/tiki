@@ -40,7 +40,7 @@
 		{/if}
 		</h3>
 	{/if}
-		<div id="mod-{$module_name|cat:$module_position|cat:$module_ord|escape}" style="display: block" class="box-data">
+		<div id="mod-{$module_name|cat:$module_position|cat:$module_ord|escape}" style="display: block" class="clearfix box-data">
 {/if}
 {$module_content}
 {$module_error}
