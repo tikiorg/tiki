@@ -17,6 +17,7 @@ if ( ! (isset($_REQUEST['user']) or isset($_REQUEST['username'])) ) {
 // Alert user if cookies are switched off
 if ( ini_get('session.use_cookies') == 1 && ! isset($_COOKIE['PHPSESSID']) ) {
 	$smarty->assign('msg',tra('You have to enable cookies to be able to login to this site'));
+	$smarty->assing('errortype', 'login');
 	$smarty->display('error.tpl');
 	exit;
 }

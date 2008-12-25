@@ -124,7 +124,7 @@
 {/if}
 {if $tracker_info.useAttachments eq 'y' and $tracker_info.showAttachments eq 'y'}
 <td  style="text-align:center;"><a href="tiki-view_tracker_item.php?trackerId={$trackerId}&amp;itemId={$items[user].itemId}&amp;show=att" 
-link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" border="0" alt="{tr}List Attachments{/tr}" 
+link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" alt="{tr}List Attachments{/tr}" 
 /></a>{$items[user].attachments}</td>
 {/if}
 </tr>

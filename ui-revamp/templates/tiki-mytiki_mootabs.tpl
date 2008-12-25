@@ -1,13 +1,13 @@
 <div id="container" >
 	<div id="tab-block-1" >
 		{if $prefs.feature_userPreferences eq 'y'}
-		<h5><img  border="0" src="img/mytiki/mytiki.gif" alt="{tr}MyTiki{/tr}" />{tr}MyTiki{/tr}</h5>
+		<h5><img src="img/mytiki/mytiki.gif" alt="{tr}MyTiki{/tr}" />{tr}MyTiki{/tr}</h5>
 		<div>
 		</div>
 		{/if}
 		{if $prefs.feature_userPreferences eq 'y'}
 		<h5><a {ajax_href template=tiki-user_preferences.tpl
-		htmlelement=user_preferences}tiki-user_preferences.php{/ajax_href}><img  border="0" src="img/mytiki/prefs.gif" alt="{tr}Prefs{/tr}" />{tr}Preferences{/tr}</a></h5>
+		htmlelement=user_preferences}tiki-user_preferences.php{/ajax_href}><img src="img/mytiki/prefs.gif" alt="{tr}Prefs{/tr}" />{tr}Preferences{/tr}</a></h5>
 		<div id="user_preferences">
 		</div>
 		{/if}
@@ -19,91 +19,91 @@
 
 		{if $prefs.feature_messages eq 'y' and $tiki_p_messages eq 'y'}
 		<h5><a {ajax_href template=messu-mailbox.tpl
-		htmlelement=user_messages}messu-mailbox.php{/ajax_href}><img  border="0" src="img/mytiki/messages.gif" alt="{tr}Messages{/tr}" />{tr}Messages{/tr}<small>({$unread})</small></a></h5>
+		htmlelement=user_messages}messu-mailbox.php{/ajax_href}><img src="img/mytiki/messages.gif" alt="{tr}Messages{/tr}" />{tr}Messages{/tr}<small>({$unread})</small></a></h5>
 		<div id="user_messages">
 		</div>
 		{/if}
 
 		{if $prefs.feature_tasks eq 'y' and $tiki_p_tasks eq 'y'}
 		<h5><a {ajax_href template=tiki-user_tasks.tpl
-		htmlelement=user_tasks}tiki-user_tasks.php{/ajax_href}><img  border="0" src="img/mytiki/tasks.gif" alt="{tr}Tasks{/tr}" />{tr}Tasks{/tr}</a></h5>
+		htmlelement=user_tasks}tiki-user_tasks.php{/ajax_href}><img src="img/mytiki/tasks.gif" alt="{tr}Tasks{/tr}" />{tr}Tasks{/tr}</a></h5>
 		<div id="user_tasks">
 		</div>
 		{/if}
 
 		{if $prefs.feature_user_bookmarks eq 'y' and $tiki_p_create_bookmarks eq 'y'}
 		<h5><a {ajax_href template=tiki-user_bookmarks.tpl
-		htmlelement=user_bookmarks}tiki-user_bookmarks.php{/ajax_href}><img  border="0" src="img/mytiki/bookmarks.gif" alt="{tr}Bookmarks{/tr}" />{tr}Bookmarks{/tr}</a></h5>
+		htmlelement=user_bookmarks}tiki-user_bookmarks.php{/ajax_href}><img src="img/mytiki/bookmarks.gif" alt="{tr}Bookmarks{/tr}" />{tr}Bookmarks{/tr}</a></h5>
 		<div id="user_bookmarks">
 		</div>
 		{/if}
 
 		{if $prefs.user_assigned_modules eq 'y' and $tiki_p_configure_modules eq 'y'}
 		<h5><a {ajax_href template=tiki-user_assigned_modules.tpl
-		htmlelement=user_modules}tiki-user_assigned_modules.php{/ajax_href}><img  border="0" src="img/mytiki/modules.gif" alt="{tr}Modules{/tr}" />{tr}Modules{/tr}</a></h5>
+		htmlelement=user_modules}tiki-user_assigned_modules.php{/ajax_href}><img src="img/mytiki/modules.gif" alt="{tr}Modules{/tr}" />{tr}Modules{/tr}</a></h5>
 		<div id="user_modules">
 		</div>
 		{/if}
 
 		{if $prefs.feature_newsreader eq 'y' and $tiki_p_newsreader eq 'y'}
 		<h5><a {ajax_href template=tiki-newsreader_servers.tpl
-		htmlelement=user_newsreaders}tiki-newsreader_servers.php{/ajax_href}><img  border="0" src="img/mytiki/news.gif" alt="{tr}Newsreader{/tr}" />{tr}Newsreader{/tr}</a></h5>
+		htmlelement=user_newsreaders}tiki-newsreader_servers.php{/ajax_href}><img src="img/mytiki/news.gif" alt="{tr}Newsreader{/tr}" />{tr}Newsreader{/tr}</a></h5>
 		<div id="user_newsreaders">
 		</div>
 		{/if}
 
 		{if $prefs.feature_webmail eq 'y' and $tiki_p_use_webmail eq 'y'}
 		<h5><a {ajax_href template=tiki-webmail.tpl
-		htmlelement=user_webmails}tiki-webmail.php{/ajax_href}><img  border="0" src="img/mytiki/webmail.gif" alt="{tr}Webmail{/tr}" />{tr}Webmail{/tr}</a></h5>
+		htmlelement=user_webmails}tiki-webmail.php{/ajax_href}><img src="img/mytiki/webmail.gif" alt="{tr}Webmail{/tr}" />{tr}Webmail{/tr}</a></h5>
 		<div id="user_webmails">
 		</div>
 		{/if}
 
 		{if $prefs.feature_contacts eq 'y'}
 		<h5><a {ajax_href template=tiki-contacts.tpl
-		htmlelement=user_contacts}tiki-contacts.php{/ajax_href}><img  border="0" src="img/mytiki/stock_contact.png" alt="{tr}My Contacts{/tr}" />{tr}My Contacts{/tr}</a></h5>
+		htmlelement=user_contacts}tiki-contacts.php{/ajax_href}><img src="img/mytiki/stock_contact.png" alt="{tr}My Contacts{/tr}" />{tr}My Contacts{/tr}</a></h5>
 		<div id="user_contacts">
 		</div>
 		{/if}
 		
 		{*if $prefs.feature_newsletters eq 'y'}
 		<h5><a {ajax_href template=tiki-user_newsletters.tpl
-		htmlelement=user_newsletters}tiki-user_newsletters.php{/ajax_href}><img  border="0" src="img/mytiki/stock_contact.png" alt="{tr}My Newsletters{/tr}" />{tr}My Newsletters{/tr}</a></h5>
+		htmlelement=user_newsletters}tiki-user_newsletters.php{/ajax_href}><img src="img/mytiki/stock_contact.png" alt="{tr}My Newsletters{/tr}" />{tr}My Newsletters{/tr}</a></h5>
 		<div id="user_newsletters">
 		</div>
 		{/if*}
 		
 		{if $prefs.feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
 		<h5><a {ajax_href template=tiki-notepad_list.tpl
-		htmlelement=user_notepads}tiki-notepad_list.php{/ajax_href}><img border="0" src="img/mytiki/notes.gif" alt="{tr}Notepad{/tr}" />{tr}Notepad{/tr}</a></h5>
+		htmlelement=user_notepads}tiki-notepad_list.php{/ajax_href}><img src="img/mytiki/notes.gif" alt="{tr}Notepad{/tr}" />{tr}Notepad{/tr}</a></h5>
 		<div id="user_notepads">
 		</div>
 		{/if}
 
 		{if $prefs.feature_userfiles eq 'y' and $tiki_p_userfiles eq 'y'}
 		<h5><a {ajax_href template=tiki-userfiles.tpl
-		htmlelement=user_files}tiki-userfiles.php{/ajax_href}><img  border="0" src="img/mytiki/myfiles.gif" alt="{tr}MyFiles{/tr}" />{tr}MyFiles{/tr}</a></h5>
+		htmlelement=user_files}tiki-userfiles.php{/ajax_href}><img src="img/mytiki/myfiles.gif" alt="{tr}MyFiles{/tr}" />{tr}MyFiles{/tr}</a></h5>
 		<div id="user_files">
 		</div>
 		{/if}
 
 		{if $prefs.feature_minical eq 'y' and $tiki_p_minical eq 'y'}
 		<h5><a {ajax_href template=tiki-minical.tpl
-		htmlelement=user_minical}tiki-minical.php{/ajax_href}><img  border="0" src="img/mytiki/minical.gif" alt="{tr}Mini Calendar{/tr}" />{tr}Mini Calendar{/tr}</a></h5>
+		htmlelement=user_minical}tiki-minical.php{/ajax_href}><img src="img/mytiki/minical.gif" alt="{tr}Mini Calendar{/tr}" />{tr}Mini Calendar{/tr}</a></h5>
 		<div id="user_minical">
 		</div>
 		{/if}
 
 		{if $prefs.feature_user_watches eq 'y'}
 		<h5><a {ajax_href template=tiki-user_watches.tpl
-		htmlelement=user_watches}tiki-user_watches.php{/ajax_href}><img  border="0" src="img/mytiki/mywatches.gif" alt="{tr}My watches{/tr}" />{tr}My watches{/tr}</a></h5>
+		htmlelement=user_watches}tiki-user_watches.php{/ajax_href}><img src="img/mytiki/mywatches.gif" alt="{tr}My watches{/tr}" />{tr}My watches{/tr}</a></h5>
 		<div id="user_watches">
 		</div>
 		{/if}
 
 		{if $prefs.feature_actionlog == 'y' and !empty($user) and ($tiki_p_view_actionlog eq 'y' or $tiki_p_view_actionlog_owngroups eq 'y')}
 		<h5><a {ajax_href template=tiki-admin_actionlog.tpl
-		htmlelement=user_logs}tiki-admin_actionlog.php?selectedUsers[]=$user{/ajax_href}"><img  border="0" src="img/mytiki/gnome-vumeter.png" alt="{tr}Action Log{/tr}" width="32" height="32" />{tr}Action Log{/tr}</a></h5>
+		htmlelement=user_logs}tiki-admin_actionlog.php?selectedUsers[]=$user{/ajax_href}><img src="img/mytiki/gnome-vumeter.png" alt="{tr}Action Log{/tr}" width="32" height="32" />{tr}Action Log{/tr}</a></h5>
 		<div id="user_logs">
 		</div>
 		{/if}

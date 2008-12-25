@@ -76,7 +76,22 @@ if ( !empty($_REQUEST['submit_mult']) && isset($_REQUEST["checked"]) ) {
 					}	
 			}
 			break;
-
+	case 'zip':
+		if ($tiki_p_admin == 'y') {
+			include_once('lib/wiki/xmllib.php');
+			$xmllib = new XmlLib();
+			$zipFile = 'dump/xml.zip';
+			$config['debug'] = false;
+			if ($xmllib->export_pages($_REQUEST['checked'], null, $zipFile, $config)) {
+				if (!$config['debug']) {
+					header("location: $zipFile");
+					die;
+				}
+			} else {
+				$smarty->assign('error', $xmllib->get_error());
+			}
+		}
+		break;
 	}
 }
 

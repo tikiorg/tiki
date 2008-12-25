@@ -86,10 +86,10 @@
 {else}
 	<td {if $page_ref_id eq $subtree[ix].page_ref_id}style="border-style:dotted; border-width:1px; border-color:gray;"{/if}>
 	<!--
-		<a href='tiki-edit_structure.php?page_ref_id={$subtree[ix].page_ref_id}&amp;move_node=1'><img src="img/icons2/nav_dot_right.gif" hspace="3" height="11" width="8" border="0" title="{tr}Promote{/tr}" alt="{tr}Promote{/tr}" /></a>
-		<a href='tiki-edit_structure.php?page_ref_id={$subtree[ix].page_ref_id}&amp;move_node=4'><img src="img/icons2/nav_dot_left.gif" hspace="3" height="11" width="8" border="0" title="{tr}Demote{/tr}" alt="{tr}Demote{/tr}" /></a>
-		<a href='tiki-edit_structure.php?page_ref_id={$subtree[ix].page_ref_id}&amp;move_node=2'><img src="img/icons2/nav_home.gif" hspace="3" height="11" width="13" border="0" title="{tr}Previous{/tr}" alt="{tr}Previous{/tr}" /></a>
-		<a href='tiki-edit_structure.php?page_ref_id={$subtree[ix].page_ref_id}&amp;move_node=3'><img src="img/icons2/nav_down.gif" hspace="3" height="11" width="13" border="0" title="{tr}Next{/tr}" alt="{tr}Next{/tr}" /></a>
+		<a href='tiki-edit_structure.php?page_ref_id={$subtree[ix].page_ref_id}&amp;move_node=1'><img src="img/icons2/nav_dot_right.gif" hspace="3" height="11" width="8" title="{tr}Promote{/tr}" alt="{tr}Promote{/tr}" /></a>
+		<a href='tiki-edit_structure.php?page_ref_id={$subtree[ix].page_ref_id}&amp;move_node=4'><img src="img/icons2/nav_dot_left.gif" hspace="3" height="11" width="8" title="{tr}Demote{/tr}" alt="{tr}Demote{/tr}" /></a>
+		<a href='tiki-edit_structure.php?page_ref_id={$subtree[ix].page_ref_id}&amp;move_node=2'><img src="img/icons2/nav_home.gif" hspace="3" height="11" width="13" title="{tr}Previous{/tr}" alt="{tr}Previous{/tr}" /></a>
+		<a href='tiki-edit_structure.php?page_ref_id={$subtree[ix].page_ref_id}&amp;move_node=3'><img src="img/icons2/nav_down.gif" hspace="3" height="11" width="13" title="{tr}Next{/tr}" alt="{tr}Next{/tr}" /></a>
 	-->
 		{if $editable == 'y'}<a href='tiki-edit_structure.php?page_ref_id={$subtree[ix].page_ref_id}&amp;move_node=1'>{icon _id='resultset_previous' alt="{tr}Promote{/tr}"}</a><a href='tiki-edit_structure.php?page_ref_id={$subtree[ix].page_ref_id}&amp;move_node=4'>{icon _id='resultset_next' alt="{tr}Demote{/tr}"}</a><a href='tiki-edit_structure.php?page_ref_id={$subtree[ix].page_ref_id}&amp;move_node=2'>{icon _id='resultset_up' alt="{tr}Previous{/tr}"}</a><a href='tiki-edit_structure.php?page_ref_id={$subtree[ix].page_ref_id}&amp;move_node=3'>{icon _id='resultset_down' style="margin-right:10px;" alt="{tr}Next{/tr}"}{/if}</a>
 		{if $subtree[ix].viewable == 'y'}<a class='link' href='tiki-index.php?page={$subtree[ix].pageName|escape:"url"}&amp;structure={$structure_name|escape:"url"}' title="{tr}View{/tr}">{icon _id='magnifier' alt="{tr}View{/tr}"}</a>{else}&nbsp;{/if}

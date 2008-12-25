@@ -7,7 +7,7 @@
 {foreach key=st item=stdata from=$status_types}
 <td><div class="{$stdata.class}">
 <a href="tiki-view_tracker.php?trackerId={$trackerId}{if $filtervalue}&amp;filtervalue={$filtervalue|escape:"url"}{/if}{if $filterfield}&amp;filterfield={$filterfield|escape:"url"}{/if}{if $sort_mode}&amp;sort_mode={$sort_mode}{/if}&amp;status={$stdata.statuslink}" 
-class="statusimg"><img src="{$stdata.image}" title="{$stdata.label}" alt="{$stdata.label}" align="top" border="0" width="12" height="12" /></a></div></td>
+class="statusimg"><img src="{$stdata.image}" title="{$stdata.label}" alt="{$stdata.label}" align="top" width="12" height="12" /></a></div></td>
 {/foreach}
 {/if}
 

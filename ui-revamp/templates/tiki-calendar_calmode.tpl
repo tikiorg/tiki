@@ -8,6 +8,7 @@
 
 <table border="0" cellpading="0" cellspacing="0" style="width:100%;border-collapse:collapse">
   <tr valign="middle" style="height:36px">
+<td width="1%" class="weeks"></td>
 {section name=dn loop=$daysnames}
     <td id="top_{$smarty.section.dn.index}" class="calHeading" width="14%">{$daysnames[dn]}</td>
 {/section}
@@ -15,6 +16,7 @@
 {cycle values="odd,even" print=false}
 {section name=w loop=$cell}
   <tr id="row_{$smarty.section.w.index}" style="height:80px">
+  <td width="1%" class="weeks"><a href="{$url}?viewmode=week&amp;todate={$cell[w][0].day}" title="{tr}View this Week{/tr}">{$weekNumbers[w]}</a></td>
   {section name=d loop=$weekdays}
 	{if $cell[w][d].focus}
 	{cycle values="calodd,caleven" print=false advance=false}
@@ -58,10 +60,10 @@
 			{/if}
 			>{$cell[w][d].items[item].name|truncate:$trunc:".."|default:"..."}</a>
 			{if $cell[w][d].items[item].web}
-			<a href="{$cell[w][d].items[item].web}" target="_other" class="calweb" title="{$cell[w][d].items[item].web}"><img src="img/icons/external_link.gif" width="7" height="7" alt="&gt;" border="0"/></a>
+			<a href="{$cell[w][d].items[item].web}" target="_other" class="calweb" title="{$cell[w][d].items[item].web}"><img src="img/icons/external_link.gif" width="7" height="7" alt="&gt;" /></a>
 			{/if}
 			{if $cell[w][d].items[item].nl}
-			<a href="tiki-newsletters.php?nlId={$cell[w][d].items[item].nl}&info=1" class="calweb" title="Subscribe"><img src="img/icons/external_link.gif" width="7" height="7" alt="&gt;" border="0"/></a>
+			<a href="tiki-newsletters.php?nlId={$cell[w][d].items[item].nl}&info=1" class="calweb" title="Subscribe"><img src="img/icons/external_link.gif" width="7" height="7" alt="&gt;" /></a>
 			{/if}
 			{else}&nbsp;
 			{/if}

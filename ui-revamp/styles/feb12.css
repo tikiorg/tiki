@@ -86,7 +86,7 @@ select {
 /* IE */
 * html .wikitopline select {font-size: .9em}
 
-input.button { 
+.button { 
 	margin: 0; 
 	font: bold 1em Arial, Sans-serif; 
 	border: 1px solid #CCC;

@@ -54,7 +54,7 @@
 <input type="hidden" name="editable" value="{$editable|escape}" />
 <table class="normal">
   <tr><td class="formcolor" style="text-align:center; vertical-align:bottom">
-        <a href="tiki-list_games.php?edit={$games[$editable].game}"><img border='0' src="games/thumbs/{$games[$editable].game}" alt=''/></td>
+        <a href="tiki-list_games.php?edit={$games[$editable].game}"><img src="games/thumbs/{$games[$editable].game}" alt=''/></td>
       <td class="formcolor">{tr}Description{/tr}<br />
       <textarea name="description" rows="4" cols="40">{$data|escape}</textarea></td>
   </tr>
@@ -71,7 +71,7 @@
 <table class="normal">
 {foreach from=$games item=ix}
    <tr><td class="even">
-      <a href="tiki-list_games.php?game={$ix.game}"><img border='0' src="games/thumbs/{$ix.game}" alt=''/></a>
+      <a href="tiki-list_games.php?game={$ix.game}"><img src="games/thumbs/{$ix.game}" alt=''/></a>
 
   {if $tiki_p_admin_games eq 'y'}
   <div align="center"><small>

@@ -26,7 +26,7 @@
     <td>{tr}Start{/tr}</td>
 	<td>
 	  <input type="hidden" name="tstart" />
-      <table cellpadding="0" cellspacing="0" border="0" style="border:0;">
+      <table cellpadding="0" cellspacing="0" border="0">
 	    <tr>
 		  <td style="border:0;padding-top:2px;vertical-align:middle">
 			{if $prefs.feature_jscalendar neq 'y' or $prefs.javascript_enabled neq 'y'}
@@ -47,7 +47,7 @@
   <tr class="formcolor">
 	<td>{tr}End{/tr}</td>
 		<td>
-	      <table cellpadding="0" cellspacing="0" border="0" style="border:0;">
+	      <table cellpadding="0" cellspacing="0" border="0">
 		    <tr>
 			  <td style="border:0;padding-top:2px;vertical-align:middle">
 				{if $prefs.feature_jscalendar neq 'y' or $prefs.javascript_enabled neq 'y'}

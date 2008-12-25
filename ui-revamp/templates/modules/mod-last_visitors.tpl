@@ -13,7 +13,7 @@
 	<li>
 {if $showavatars eq 'y'}
          <table class="admin"><tr class="odd"><td width="50">
-	 <img src="img/icons/gradient.gif" width="48" height="48" alt="{tr}No avatar.{/tr}" border="0"/>
+	 <img src="img/icons/gradient.gif" width="48" height="48" alt="{tr}No avatar.{/tr}" />
          </td><td>
 {/if}
 	 {if $prefs.allowRegister eq 'y'}<a class="linkmodule" href="tiki-register.php" title="{tr}Register{/tr}">{/if}{tr}You{/tr}{if $prefs.allowRegister eq 'y'}</a>{/if}<div align="right">{$currentLogin|tiki_short_datetime}</div>

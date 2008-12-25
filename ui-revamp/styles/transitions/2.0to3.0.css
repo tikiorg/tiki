@@ -483,3 +483,6 @@ div.tabrow {
 	border: thin solid black;
 	z-index: 300;
 }
+
+img {border: 0}
+

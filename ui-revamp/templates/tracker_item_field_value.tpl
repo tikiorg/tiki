@@ -116,13 +116,13 @@
 			{if !empty($field_value.options_array[5]) and $prefs.feature_shadowbox eq 'y'}
 				<a href="{$field_value.value}" rel="{if $field_value.options_array[5] eq 'item'}shadowbox[{$item.itemId}]{elseif $field_value.options_array[5]} eq 'individual'}shadowbox{else}shadowbox[{$field_value.options_array[5]}{/if};type=img">
 			{/if}
-			<img border="0" src="{$field_value.value}"{if $field_value.options_array[0]} width="{$field_value.options_array[0]}"{/if}{if $field_value.options_array[1]} height="{$field_value.options_array[1]}"{/if} alt="" />
+			<img src="{$field_value.value}"{if $field_value.options_array[0]} width="{$field_value.options_array[0]}"{/if}{if $field_value.options_array[1]} height="{$field_value.options_array[1]}"{/if} alt="" />
 			{if $field_value.options_array[5] and $prefs.feature_shadowbox eq 'y'}</a>{/if}
 		{else}
-			<img border="0" src="{$field_value.value}"{if $field_value.options_array[2]} width="{$field_value.options_array[2]}"{/if}{if $field_value.options_array[3]} height="{$field_value.options_array[3]}"{/if} alt="" />
+			<img src="{$field_value.value}"{if $field_value.options_array[2]} width="{$field_value.options_array[2]}"{/if}{if $field_value.options_array[3]} height="{$field_value.options_array[3]}"{/if} alt="" />
 		{/if}
 	{else}
-		<img border="0" src="img/icons/na_pict.gif" alt="n/a" />
+		<img src="img/icons/na_pict.gif" alt="n/a" />
 	{/if}
 
 {* -------------------- Multimedia -------------------- *}
@@ -234,7 +234,7 @@
 		{capture name=flag}
 		{tr}{$field_value.value}{/tr}
 		{/capture}
-		{if $o_opt ne '1'}<img border="0" src="img/flags/{$field_value.value}.gif" title="{$smarty.capture.flag|replace:'_':' '}" alt="{$smarty.capture.flag|replace:'_':' '}" />{/if}
+		{if $o_opt ne '1'}<img src="img/flags/{$field_value.value}.gif" title="{$smarty.capture.flag|replace:'_':' '}" alt="{$smarty.capture.flag|replace:'_':' '}" />{/if}
 		{if $o_opt ne '1' and $o_opt ne '2'}&nbsp;{/if}
 		{if $o_opt ne '2'}{$smarty.capture.flag|replace:'_':' '}{/if}
 	{else}

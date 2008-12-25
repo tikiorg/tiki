@@ -37,12 +37,16 @@ if ($prefs['feature_wikiapproval'] == 'y' && substr($page, 0, strlen($prefs['wik
 	$smarty->display("error.tpl");
 	die;		
 }
+if (!($info = $tikilib->get_page_info($page))) {
+	$smarty->assign('msg', tra('Page cannot be found'));
+	$smarty->display('error.tpl');
+	die;
+}
 
-include_once ("tiki-pagesetup.php");
+$tikilib->get_perm_object( $page, 'wiki page', $info);
 
 // Now check permissions to rename this page
-$info = $tikilib->get_page_info($page);
-if ($tiki_p_rename == 'y') {
+if ($tiki_p_rename == 'y' && $tiki_p_view == 'y') {
 	if ($tiki_p_admin_wiki != 'y' && $prefs['feature_wiki_usrlock'] == 'y') {
 		$allowed = ($wikilib->is_editable($page, $user, $info))? 'y': 'n';
 	} else {
@@ -51,17 +55,10 @@ if ($tiki_p_rename == 'y') {
 } else {
 	$allowed = 'n';
 }
+
 if ($allowed == 'n') {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied you cannot rename this page"));
-
-	$smarty->display("error.tpl");
-	die;
-}
-
-// If the page doesn't exist then display an error
-if (!$tikilib->page_exists($page,true)) { // true: casesensitive check here
-	$smarty->assign('msg', tra("Page cannot be found"));
 
 	$smarty->display("error.tpl");
 	die;

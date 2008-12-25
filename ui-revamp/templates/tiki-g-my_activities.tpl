@@ -36,38 +36,38 @@
             {*exception*}
             {if $tiki_p_exception_instance eq 'y'}
               {if $process.status ne 'aborted' and $process.status ne 'exception' and $process.user eq $user}
-                <a onclick="javascript:return confirm('Are you sure you want to exception this instance?');" href="tiki-g-user_instances.php?abort=1&amp;iid={$process.instanceId}&amp;aid={$process.activityId}"><img border='0' title='{tr}exception instance{/tr}' alt='{tr}exceptions instance{/tr}' src='lib/Galaxia/img/icons/stop.gif' /></a>
+                <a onclick="javascript:return confirm('Are you sure you want to exception this instance?');" href="tiki-g-user_instances.php?abort=1&amp;iid={$process.instanceId}&amp;aid={$process.activityId}"><img title='{tr}exception instance{/tr}' alt='{tr}exceptions instance{/tr}' src='lib/Galaxia/img/icons/stop.gif' /></a>
               {else}
-                <img border='0' src='lib/Galaxia/img/icons/trdot.gif' width="16" />
+                <img src='lib/Galaxia/img/icons/trdot.gif' width="16" />
               {/if}
             {/if}
             {if $process.isAutoRouted eq 'n' and $process.actstatus eq 'completed'}
               {*send*}
-              <a href="tiki-g-user_instances.php?send=1&amp;iid={$process.instanceId}&amp;aid={$process.activityId}"><img border='0' title='{tr}Send Instance{/tr}' alt='{tr}Send Instance{/tr}' src='lib/Galaxia/img/icons/linkto.gif' /></a>
+              <a href="tiki-g-user_instances.php?send=1&amp;iid={$process.instanceId}&amp;aid={$process.activityId}"><img title='{tr}Send Instance{/tr}' alt='{tr}Send Instance{/tr}' src='lib/Galaxia/img/icons/linkto.gif' /></a>
             {else}
-              <img border='0' src='lib/Galaxia/img/icons/trdot.gif' width="16" />
+              <img src='lib/Galaxia/img/icons/trdot.gif' width="16" />
             {/if}
             {if $process.isInteractive eq 'y' and $process.status eq 'active'}
               {*run*}
-              <a href="tiki-g-run_activity.php?iid={$process.instanceId}&amp;activityId={$process.activityId}"><img border='0' title='{tr}run instance{/tr}' alt='{tr}run instance{/tr}' src='lib/Galaxia/img/icons/next.gif' /></a>
+              <a href="tiki-g-run_activity.php?iid={$process.instanceId}&amp;activityId={$process.activityId}"><img title='{tr}run instance{/tr}' alt='{tr}run instance{/tr}' src='lib/Galaxia/img/icons/next.gif' /></a>
             {else}
-              <img border='0' src='lib/Galaxia/img/icons/trdot.gif' width="16" />
+              <img src='lib/Galaxia/img/icons/trdot.gif' width="16" />
             {/if}
             {*abort*}
             {if $tiki_p_abort_instance eq 'y'}
               {if $process.status ne 'aborted' and $process.user eq $user}
-                <a onclick="javascript:return confirm('Are you sure you want to abort this instance?');" href="tiki-g-user_instances.php?abort=1&amp;iid={$process.instanceId}&amp;aid={$process.activityId}"><img border='0' title='{tr}abort instance{/tr}' alt='{tr}abort instance{/tr}' src='lib/Galaxia/img/icons/trash.gif' /></a>
+                <a onclick="javascript:return confirm('Are you sure you want to abort this instance?');" href="tiki-g-user_instances.php?abort=1&amp;iid={$process.instanceId}&amp;aid={$process.activityId}"><img title='{tr}abort instance{/tr}' alt='{tr}abort instance{/tr}' src='lib/Galaxia/img/icons/trash.gif' /></a>
               {else}
-                <img border='0' src='lib/Galaxia/img/icons/trdot.gif' width="16" />
+                <img src='lib/Galaxia/img/icons/trdot.gif' width="16" />
               {/if}
             {/if}
             {if $process.user eq '*' and $process.status eq 'active'}
               {*grab*}
-              <a href="tiki-g-user_instances.php?grab=1&amp;iid={$process.instanceId}&amp;aid={$process.activityId}"><img border='0' title='{tr}grab instance{/tr}' alt='{tr}grab instance{/tr}' src='lib/Galaxia/img/icons/fix.gif' /></a>
+              <a href="tiki-g-user_instances.php?grab=1&amp;iid={$process.instanceId}&amp;aid={$process.activityId}"><img title='{tr}grab instance{/tr}' alt='{tr}grab instance{/tr}' src='lib/Galaxia/img/icons/fix.gif' /></a>
             {else}
               {*release*}
               {if $process.status eq 'active'}
-                <a href="tiki-g-user_instances.php?release=1&amp;iid={$process.instanceId}&amp;aid={$process.activityId}"><img border='0' title='{tr}release instance{/tr}' alt='{tr}release instance{/tr}' src='lib/Galaxia/img/icons/float.gif' /></a>
+                <a href="tiki-g-user_instances.php?release=1&amp;iid={$process.instanceId}&amp;aid={$process.activityId}"><img title='{tr}release instance{/tr}' alt='{tr}release instance{/tr}' src='lib/Galaxia/img/icons/float.gif' /></a>
               {/if}
             {/if}
           </tr>

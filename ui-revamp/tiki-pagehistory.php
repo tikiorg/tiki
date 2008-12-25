@@ -43,8 +43,6 @@ if (!isset($_REQUEST["page"])) {
 	$smarty->assign_by_ref('page', $_REQUEST["page"]);
 }
 
-include_once ("tiki-pagesetup.php");
-
 // Now check permissions to access this page
 if (!isset($_REQUEST["source"])) {
     if (!$tikilib->user_has_perm_on_object($user, $_REQUEST["page"],'wiki page','tiki_p_view')  || (isset($tiki_p_wiki_view_history) && $tiki_p_wiki_view_history != 'y') ) {

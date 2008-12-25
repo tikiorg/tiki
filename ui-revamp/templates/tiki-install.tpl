@@ -1,11 +1,11 @@
-<div style="margin:10px 30px;">
+<div style="margin:10px 30px">
 
 
-<h1>{tr}Tiki installer{/tr} v{$tiki_version_name} <a title='help' href='http://doc.tikiwiki.org/Installation' target="help"><img border='0' src='img/icons/help.gif' alt="{tr}Help{/tr}" /></a></h1>
+<h1>{tr}Tiki installer{/tr} v{$tiki_version_name} <a title='help' href='http://doc.tikiwiki.org/Installation' target="help"><img style="border: 0" src='img/icons/help.gif' alt="{tr}Help{/tr}" /></a></h1>
 <hr />
 {if $tikifeedback}
 <br />{section name=n loop=$tikifeedback}
-<div class="simplebox {if $tikifeedback[n].num > 0} highlight{/if}" style="margin:10px 0px 10px 0px">
+<div class="simplebox {if $tikifeedback[n].num > 0} highlight{/if}" style="margin: 10px 0">
 <img src="pics/icons/{if $tikifeedback[n].num > 0}delete.png" alt="{tr}Error{/tr}"{else}accept.png" alt="{tr}Success{/tr}"{/if} style="vertical-align:middle"/> {$tikifeedback[n].mes}
 </div>
 {/section}
@@ -17,7 +17,7 @@
 <table><tr><td width="180">
 <div class="box">
 <div class="box-title">
-<a title='{tr}Help{/tr}' href='http://doc.tikiwiki.org/MultiTiki' target="help"><img border='0' src='img/icons/help.gif' alt="{tr}Help{/tr}" /></a>
+<a title='{tr}Help{/tr}' href='http://doc.tikiwiki.org/MultiTiki' target="help"><img style="border:0" src='img/icons/help.gif' alt="{tr}Help{/tr}" /></a>
 {tr}MultiTiki setup{/tr}</div>
 <div class="box-data">
 <div><a href="tiki-install.php">default</a></div><br />
@@ -49,7 +49,7 @@
 {* we do not have a valid db connection or db reset is requested *}
 
 {if $dbcon eq 'n' or $resetdb eq 'y'}
-<p><img src="pics/icons/delete.png" alt="alert" style="vertical-align:middle" /> <strong>{tr}Tiki cannot find a database connection{/tr}</strong></p>
+<p><img src="pics/icons/delete.png" alt="alert" style="vertical-align:middle" /> <span style="font-weight: bold">{tr}Tiki cannot find a database connection{/tr}</span></p>
 <p>{tr}Please enter your database connection information{/tr}:</p>
 <form action="tiki-install.php" method="post">
 {if $multi}<input type="hidden" name="multi" value="{$multi}" />{/if}
@@ -110,7 +110,7 @@ hosting provider.  Normally Tiki tables won't conflict with other product names{
 
 			
 <tr class="formcolor">
-<td colspan="2"><p align="center"><input type="hidden" name="resetdb" value="{$resetdb}" />
+<td colspan="2"><p style="text-align: center"><input type="hidden" name="resetdb" value="{$resetdb}" />
 <input type="submit" name="dbinfo" value=" {tr}Connect{/tr} " /></p></td>
 </tr>
 	  	
@@ -144,7 +144,7 @@ hosting provider.  Normally Tiki tables won't conflict with other product names{
 			</script>
 			<div id="install-link">
 			<p><a href="javascript:install()">{tr}Reinstall database.{/tr}</a></p>
-			<p align="center"><img src="img/silk/sticky.png" alt="warning" style="vertical-align:middle"/> <strong>{tr}Warning{/tr}</strong>: {tr}This will destroy your current database{/tr}.</p>
+			<p style="text-align: center"><img src="img/silk/sticky.png" alt="warning" style="vertical-align:middle"/> <strong>{tr}Warning{/tr}</strong>: {tr}This will destroy your current database{/tr}.</p>
 			</div>
 		    <table id="install-table" style="visibility:hidden">
 			{else}
@@ -154,7 +154,7 @@ hosting provider.  Normally Tiki tables won't conflict with other product names{
 		     <td><h2>{tr}Install{/tr}</h2></td>
 		    </tr>
 			 <tr>
-			  <td>{if $tikidb_created}<p align="center"><img src="img/silk/sticky.png" alt="warning" style="vertical-align:middle"/> <strong>{tr}Warning{/tr}</strong>: {tr}This will destroy your current database{/tr}.</p>{/if}			  
+			  <td>{if $tikidb_created}<p style="text-align: center"><img src="img/silk/sticky.png" alt="warning" style="vertical-align:middle"/> <strong>{tr}Warning{/tr}</strong>: {tr}This will destroy your current database{/tr}.</p>{/if}			  
 			  <p>{tr}Create a new database (clean install) with profile{/tr}:<br />
 			<select name="profile" size="{if $profiles}{$profiles|@count}{else}3{/if}">
 			{section name=ix loop=$profiles}
@@ -195,7 +195,7 @@ hosting provider.  Normally Tiki tables won't conflict with other product names{
 <p>&nbsp;</p>
 		  {else}
 			{* we are not logged then no admin account found and user not logged*}
-			<p><img src="pics/icons/delete.png" alt="alert" style="vertical-align:middle" />  <strong>{tr}This site has an admin account configured{/tr}</strong>.</p>
+			<p><img src="pics/icons/delete.png" alt="alert" style="vertical-align:middle" />  <span style="font-weight: bold">{tr}This site has an admin account configured{/tr}</span>.</p>
 		   <p>{tr}Please login with your admin password to continue{/tr}.</p>
 
      <form name="loginbox" action="tiki-install.php" method="post">
@@ -212,8 +212,8 @@ hosting provider.  Normally Tiki tables won't conflict with other product names{
 		  {/if}
     	{else}
 
-		<div style="margin:10px 0px 5px 0px;border-style: solid; border-width: 1; padding: 5px; background-color: #a9ff9b;">
-		<p align="center" style="font-size: large;">{if isset($smarty.post.update)}{tr}Upgrade{/tr}{else}{tr}Installation{/tr}{/if} {tr}complete{/tr}.</p>
+		<div style="margin: 10px 0 5px 0; border: solid 1px #000; padding: 5px; background: #a9ff9b;">
+		<p style="text-align:center; font-size: large;">{if isset($smarty.post.update)}{tr}Upgrade{/tr}{else}{tr}Installation{/tr}{/if} {tr}complete{/tr}.</p>
 		<p>{tr}Your database has been configured and Tikiwiki is ready to run!{/tr} 
       {if isset($smarty.post.scratch)}
         {tr}If this is your first install, your admin password is <strong>admin</strong>.{/tr}
@@ -222,7 +222,7 @@ hosting provider.  Normally Tiki tables won't conflict with other product names{
 		</p>
 		</div>
     	
-<p><img src="pics/icons/accept.png" alt="{tr}Success{/tr}" style="vertical-align:middle"/> <strong>{if isset($smarty.post.update)}{tr}Upgrade{/tr}{else}{tr}Installation{/tr}{/if} {tr}operations executed successfully{/tr}</strong>: {$installer->success|@count} {tr}SQL queries{/tr}.</p>
+<p><img src="pics/icons/accept.png" alt="{tr}Success{/tr}" style="vertical-align:middle"/> <span style="font-weight: bold">{if isset($smarty.post.update)}{tr}Upgrade{/tr}{else}{tr}Installation{/tr}{/if} {tr}operations executed successfully{/tr}</span>: {$installer->success|@count} {tr}SQL queries{/tr}.</p>
 {if $installer->failures|@count > 0}
 			<script type="text/javascript">
 			<!--//--><![CDATA[//><!--
@@ -258,15 +258,15 @@ hosting provider.  Normally Tiki tables won't conflict with other product names{
 {tr}TikiWiki requires <strong>at least</strong> 32MB of PHP memory for script execution. Use the <strong>memory_limit</strong> key in your <strong>php.ini </strong> file (for example: memory_limit = 32M) and restart your webserver{/tr}.
 <p>{tr}Allocating too little memory will cause TikiWiki to display blank pages{/tr}.</p>
 {if $php_memory_limit <= 0}
-	<div style="border-style: solid; border-width: 1; padding: 5px; background-color: #a9ff9b;">
+	<div style="border: solid 1px #000; padding: 5px; background: #a9ff9b;">
 		<p align="center"><img src="pics/icons/accept.png" alt="{tr}Success{/tr}" style="vertical-align:middle"/> {tr}Tiki has not detected your PHP memory_limit. This probably means you have no set limit (all is well){/tr}. </p>
 	</div>	
 {elseif $php_memory_limit <= 32 * 1024 * 1024}
-	<div style="border-style: solid; border-width: 1; padding: 5px; background-color: #FF0000">
+	<div style="border-style: solid; border-width: 1; padding: 5px; background: #FF0000">
 		<p align="center"><img src="pics/icons/delete.png" alt="alert" style="vertical-align:middle" /> {tr}Tiki has detected your PHP memory limit at{/tr}: {$php_memory_limit|kbsize:true:0}</p>
 	</div>
 {else}
-	<div style="border-style: solid; border-width: 1; padding: 4">
+	<div style="border: solid 1px #000; padding: 4px">
 	  <p align="center">
 		  <span style="font-size: large; padding: 4px;">
 		  {tr}Tiki has detected your PHP memory_limit at{/tr}: {$php_memory_limit|kbsize:true:0}. 
@@ -277,7 +277,7 @@ hosting provider.  Normally Tiki tables won't conflict with other product names{
 
 {if isset($htaccess_error)}
 <h3><img src="pics/icons/information.png" alt="{tr}Note{/tr}" style="vertical-align:middle"/> {tr}Security{/tr}</h3>
-{tr}To secure your TikiWiki installation - and if you are using Apache web server - you should rename the <strong>_htaccess</strong> file to <strong>.htaccess</strong> (this file is in the main directory){/tr}.
+{tr}To secure your TikiWiki installation - and if you are using Apache web server - you should rename the <span style="font-weight: bold">_htaccess</span> file to <span style="font-weight: bold">.htaccess</span> (this file is in the main directory){/tr}.
 <p>&nbsp;</p>
 {/if}
 
@@ -325,4 +325,4 @@ hosting provider.  Normally Tiki tables won't conflict with other product names{
 {* / multitiki --------------------------- *}
 
 <hr />
-<p align="center"><a href="http://www.tikiwiki.org" title="Tikiwiki"><img src="img/tiki/tikibutton2.png" alt="Tikiwiki" width="80" height="31" border="0" /></p>
+<p align="center"><a href="http://www.tikiwiki.org" title="Tikiwiki"><img src="img/tiki/tikibutton2.png" alt="Tikiwiki" style="width: 80px; height: 31px; border:0" /></p>

@@ -267,7 +267,7 @@ class StructLib extends TikiLib {
       $aux["flag"]  = $res["flag"];
 	  $aux["user"]  = $res["user"];
 		global $user;
-		if ($this->user_has_perm_on_object($user,$res['pageName'],'wiki page','tiki_p_edit')) {	
+		if ($this->user_has_perm_on_object($user,$res['pageName'],'wiki page','tiki_p_edit', 'tiki_p_edit_categorized')) {	
       		$aux['editable'] = 'y';
       		$aux['viewable'] = 'y';
 		} else {

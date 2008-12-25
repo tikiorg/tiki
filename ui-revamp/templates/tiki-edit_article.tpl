@@ -109,9 +109,9 @@
 	<tr class="formcolor">
 		<td>{tr}Own Image{/tr}</td>
   	{if $imageIsChanged eq 'y'}
-			<td><img alt="{tr}Article image{/tr}" border="0" src="article_image.php?image_type=preview&amp;id={$previewId}" /></td>
+			<td><img alt="{tr}Article image{/tr}" src="article_image.php?image_type=preview&amp;id={$previewId}" /></td>
 		{else}
-			<td><img alt="{tr}Article image{/tr}" border="0" src="article_image.php?image_type=article&amp;id={$articleId}" /></td>
+			<td><img alt="{tr}Article image{/tr}" src="article_image.php?image_type=article&amp;id={$articleId}" /></td>
 		{/if}
 	</tr>
 {/if}

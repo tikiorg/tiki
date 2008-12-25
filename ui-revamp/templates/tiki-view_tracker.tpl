@@ -16,7 +16,7 @@
 	{/if}
 
 	{if $prefs.rss_tracker eq "y"}
-		<a href="tiki-tracker_rss.php?trackerId={$trackerId}"><img src='img/rss.png' border='0' alt='{tr}RSS feed{/tr}' title='{tr}RSS feed{/tr}' align="right" /></a>
+		<a href="tiki-tracker_rss.php?trackerId={$trackerId}"><img src='img/rss.png' alt='{tr}RSS feed{/tr}' title='{tr}RSS feed{/tr}' align="right" /></a>
 	{/if}
 
 	{if (isset($tiki_p_list_trackers) and $tiki_p_list_trackers eq 'y') or (!isset($tiki_p_list_trackers) and $tiki_p_view_trackers eq 'y')}
@@ -210,7 +210,7 @@ $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Created{/tr
 {/if}
 {if $tracker_info.useAttachments eq 'y' and $tracker_info.showAttachments eq 'y'}
 <td style="text-align:center;"><a href="tiki-view_tracker_item.php?itemId={$items[user].itemId}&amp;show=att{if $offset}&amp;offset={$offset}{/if}{foreach key=urlkey item=urlval from=$urlquery}{if $urlval}&amp;{$urlkey}={$urlval|escape:"url"}{/if}{/foreach}{section name=mix loop=$fields}{if $fields[mix].value}&amp;{$fields[mix].name}={$fields[mix].value}{/if}{/section}"
-link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" border="0" alt="{tr}List Attachments{/tr}"
+link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" alt="{tr}List Attachments{/tr}"
 /></a> {$items[user].attachments}</td>
 {if $tiki_p_admin_trackers eq 'y'}<td  style="text-align:center;">{$items[user].hits}</td>{/if}
 {/if}

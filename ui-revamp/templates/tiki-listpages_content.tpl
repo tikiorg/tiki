@@ -353,6 +353,10 @@
 				<option value="lock_pages" >{tr}Lock{/tr}</option>
 				<option value="unlock_pages" >{tr}Unlock{/tr}</option>
 			{/if}
+			{if $tiki_p_admin eq 'y'}
+				<option value="zip">{tr}Xml Zip{/tr}</option>
+			{/if}
+
 			{* add here e.g. <option value="categorize" >{tr}categorize{/tr}</option> *}
 		</select>                
 
