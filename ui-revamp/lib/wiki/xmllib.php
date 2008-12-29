@@ -14,6 +14,7 @@ class XmlLib extends TikiLib {
 	var $xml = '';
 	var $zip = '';
 	var $config = array('comments'=>true, 'attachments'=>true, 'history'=>true, 'images'=>true, 'debug'=>false);
+	var $structureStack = array();
 	function XmlLib() {
 		global $dbTiki;
 		parent::TikiLib($dbTiki);
@@ -72,11 +73,10 @@ class XmlLib extends TikiLib {
 					return false;
 				}
 			}
-			while (count($stack) && $stack[count($stack) - 1] != $page['parentId']) {
+			while (count($stack)) {
 				array_pop($stack);
 				$this->xml .= '</structure>';
 			}
-			$this->xml .= '</structure>';
 		}
 
 		if (!$this->zip->addFromString(WIKI_XML, $this->xml) ) {
@@ -327,7 +327,14 @@ class XmlLib extends TikiLib {
 				$this->query($query,array($info['name'], $version['version'], $tikilib->now, $version['user'], $version['ip'], $version['comment'], $version['data'], $version['description']));
 			}
 		}
-
+		if ($prefs['feature_wiki_structure'] == 'y' && !empty($info['structure'])) {
+			global $structlib; include_once('lib/structures/structlib.php');
+			if ($info['structure'] == 1) {
+				$this->structureStack[$info['structure']] = $structlib->s_create_page(null, null , $info['name'], $info['alias']);
+			} else {
+				$structlib->s_create_page($this->structureStack[$info['structure'] - 1], $after, $info['name'], '');
+			}
+		}
 		return true;
 	}
 
@@ -343,13 +350,21 @@ class page_Parser extends XML_Parser {
 	var $folding = false; // keep tag as original
 	var $commentsStack = array();
 	var $commentId = 0;
+	var $iStructure = 0;
 	function startHandler($parser, $name, $attribs) {
 		switch ($name) {
 		case 'page':
-			if ($attribs) {
+			$this->context = null;
+			if (is_array($attribs)) {
 				$this->page = array('data'=>'', 'comment'=>'', 'description'=>'', 'user'=>'admin', 'ip'=>'0.0.0.0', 'lang'=>'', 'is_html'=>false, 'hash'=>null, 'wysiwyg'=>null);
 				$this->page = array_merge($this->page, $attribs);
 			}
+			if ($this->iStructure > 0 ) {
+				$this->page['structure'] = $this->iStructure;
+			}
+			break;
+		case 'structure':
+			++$this->iStructure;
 			break;
 		case 'comments':
 			$comentsStack = array();
@@ -404,6 +419,10 @@ class page_Parser extends XML_Parser {
 			break;
 		case 'page':
 			$this->pages[] = $this->page;
+			break;
+		case 'structure':
+			--$this->iStructure;
+			break;
 		}
 	}
 	function cdataHandler($parser, $data) {

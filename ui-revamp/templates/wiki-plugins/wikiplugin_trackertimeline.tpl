@@ -21,8 +21,8 @@ ttl_showdetails = function( data ) {
 	<tr>
 		<td></td>
 		<td>
-			<div style="display: inline-block; display: -moz-inline-stack; width: {$layout.pad}%; height: 15px; border: 0;"></div>
-			{foreach from=$layout.blocks item=label}<div style="display: inline-block; display: -moz-inline-stack; width: {$layout.size}%; height: 15px; border: 0; overflow:hidden; background: lightblue; padding: 0; margin: 0;">{$label}</div>{/foreach}
+			<span style="display: inline-block; display: -moz-inline-stack; width: {$layout.pad}%; height: 15px; border: 0;"></span>
+			{foreach from=$layout.blocks item=label}<span style="display: inline-block; display: -moz-inline-stack; width: {$layout.size}%; height: 15px; border: 0; overflow:hidden; background: lightblue; padding: 0; margin: 0;">{$label}</span>{/foreach}
 		</td>
 	</tr>
 	{/foreach}
@@ -31,7 +31,7 @@ ttl_showdetails = function( data ) {
 			<th>{$datagroup|escape}</th>
 			<td>
 				<div>
-				{foreach from=$list item=block}{if $block.lpad > 0}<div style="display: inline-block; display: -moz-inline-stack; width: {$block.lpad}%; height: 30px; border: 0;"></div>{/if}<div style="display: inline-block; display: -moz-inline-stack; width: {$block.lsize}%; height: 30px; border: 0; overflow:hidden; background: lightgreen;">
+				{foreach from=$list item=block}{if $block.lpad > 0}<span style="display: inline-block; display: -moz-inline-stack; width: {$block.lpad}%; height: 30px; border: 0;"></span>{/if}<span style="display: inline-block; display: -moz-inline-stack; width: {$block.lsize}%; height: 30px; border: 0; overflow:hidden; background: lightgreen;">
 						{if $block.lstart neq $block.start}&lt;&lt;&lt;{/if}
 
 						{if $prefs.feature_shadowbox eq 'y'}
@@ -45,7 +45,7 @@ ttl_showdetails = function( data ) {
 						<div class="comment">
 							{$block.fstart}&nbsp;to&nbsp;{$block.fend}
 						</div>
-					</div>{/foreach}
+					</span>{/foreach}
 				</div>
 			</td>
 		</tr>
