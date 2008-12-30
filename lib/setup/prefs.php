@@ -419,7 +419,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'forum_comments_per_page' => 20,
 		'forum_comments_no_title_prefix' => 'n',
 		'forum_thread_style' => 'commentStyle_plain',
-		'forum_thread_sort_mode' => 'commentDate_desc',
+		'forum_thread_sort_mode' => 'commentDate_asc',
 
 		// articles
 		'feature_articles' => 'n',
