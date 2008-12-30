@@ -13,7 +13,7 @@ require_once('lib/init/initlib.php');
 // Otherwise you will be ok.
 //$api_tiki		= 'pear';
 //$api_tiki			= 'pdo';
-$api_tiki			= 'adodb';
+$api_tiki			= 'pdo';
 $db_tiki			= 'mysql';
 $dbversion_tiki = '2.0';
 $host_tiki		= 'localhost';
@@ -131,3 +131,93 @@ unset ($host_tiki);
 unset ($user_tiki);
 unset ($pass_tiki);
 unset ($dbs_tiki);
+
+class TikiDb_LegacyErrorHandler implements TikiDb_ErrorHandler
+{
+	function handle( TikiDb $db, $query, $values, $result ) // {{{
+	{
+		global $smarty, $prefs, $ajaxlib;
+
+		trigger_error($db->getServerType . " error:  " . htmlspecialchars($db->getErrorMessage()). " in query:<br /><pre>\n" . htmlspecialchars($query) . "\n</pre><br />", E_USER_WARNING);
+		// only for debugging.
+		$outp = "<div class='simplebox'><b>".htmlspecialchars(tra("An error occured in a database query!"))."</b></div>";
+		$outp.= "<br /><table class='form'>";
+		$outp.= "<tr class='heading'><td colspan='2'>Context:</td></tr>";
+		$outp.= "<tr class='formcolor'><td>File</td><td>".htmlspecialchars(basename($_SERVER['SCRIPT_NAME']))."</td></tr>";
+		$outp.= "<tr class='formcolor'><td>Url</td><td>".htmlspecialchars(basename($_SERVER['REQUEST_URI']))."</td></tr>";
+		$outp.= "<tr class='heading'><td colspan='2'>Query:</td></tr>";
+		$outp.= "<tr class='formcolor'><td colspan='2'><tt>".htmlspecialchars($query)."</tt></td></tr>";
+		$outp.= "<tr class='heading'><td colspan='2'>Values:</td></tr>";
+		foreach ($values as $k=>$v) {
+			if (is_null($v)) $v='<i>NULL</i>';
+			else $v=htmlspecialchars($v);
+			$outp.= "<tr class='formcolor'><td>".htmlspecialchars($k)."</td><td>$v</td></tr>";
+		}
+		$outp.= "<tr class='heading'><td colspan='2'>Message:</td></tr><tr class='formcolor'><td colspan='2'>".htmlspecialchars($db->getErrorMessage())."</td></tr>\n";
+
+		$q=$query;
+		foreach($values as $v) {
+			if (is_null($v)) $v='NULL';
+			else $v="'".addslashes($v)."'";
+			$pos=strpos($q, '?');
+			if ($pos !== FALSE)
+				$q=substr($q, 0, $pos)."$v".substr($q, $pos+1);
+		}
+
+		$outp.= "<tr class='heading'><td colspan='2'>Built query was probably:</td></tr><tr class='formcolor'><td colspan='2'>".htmlspecialchars($q)."</td></tr>\n";
+
+		if (function_exists('xdebug_get_function_stack')) {
+			function mydumpstack($stack) {
+				$o='';
+				foreach($stack as $line) {
+					$o.='* '.$line['file']." : ".$line['line']." -> ".$line['function']."(".var_export($line['params'], true).")<br />";
+				}
+				return $o;
+			}
+			$outp.= "<tr class='heading'><th>Stack Trace</th><td>".mydumpstack(xdebug_get_function_stack())."</td></tr>";
+		}
+
+		$outp.= "</table>";
+		//if($result===false) echo "<br>\$result is false";
+		//if($result===null) echo "<br>\$result is null";
+		//if(empty($result)) echo "<br>\$result is empty";
+
+		$showviaajax=false;
+		if ($prefs['feature_ajax'] == 'y') {
+			global $ajaxlib;
+			include_once('lib/ajax/xajax/xajax_core/xajaxAIO.inc.php');
+			if ($ajaxlib && $ajaxlib->canProcessRequest()) {
+				// this was a xajax request -> return a xajax answer
+				$objResponse = new xajaxResponse();
+				$page ="<html><head>";
+				$page.=" <title>Tiki SQL Error (xajax)</title>";
+				$page.=" <link rel='stylesheet' href='styles/tikineat.css' type='text/css' />";
+				$page.="</head><body>$outp</body></html>";
+				$page=addslashes(str_replace(array("\n", "\r"), array(' ', ' '), $page));
+				$objResponse->script("bugwin=window.open('', 'tikierror', 'width=760,height=500,scrollbars=1,resizable=1');".
+						"bugwin.document.write('$page');");
+				echo $objResponse->getOutput();
+				die();
+			}
+		}
+
+		if ( ! isset($_SESSION['fatal_error']) ) {
+			// Do not show the error if an error has already occured during the same script execution (error.tpl already called),
+			//   because tiki should have died before another error.
+			// This happens when error.tpl is called by tiki.sql... and tiki.sql is also called again in error.tpl, entering in an infinite loop.
+			require_once('tiki-setup.php');
+			if ( $smarty ) {
+				$smarty->assign('msg', $outp);
+				$_SESSION['fatal_error'] = 'y';
+				$smarty->display('error.tpl');
+				unset($_SESSION['fatal_error']);
+			} else {
+				echo $outp;
+			}
+			die;
+		}
+	} // }}}
+}
+
+TikiDb::get()->setErrorHandler( new TikiDb_LegacyErrorHandler );
+

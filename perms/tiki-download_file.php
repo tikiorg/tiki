@@ -9,8 +9,7 @@ if ( isset($_GET['fileId']) && isset($_GET['thumbnail']) && isset($_COOKIE['PHPS
 	session_start();
 	if ( $_SESSION['allowed'][$_GET['fileId']] ) {
 		include('db/tiki-db.php');
-		include('lib/tikidblib.php');
-		$db = new TikiDB($dbTiki);
+		$db = TikiDb::get();
 
 		$query = "select * from `tiki_files` where `fileId`=?";
 		$result = $db->query($query, array((int)$_GET['fileId']));

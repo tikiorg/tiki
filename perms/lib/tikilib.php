@@ -6,12 +6,10 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 	exit;
 }
 
-require_once('lib/tikidblib.php');
 require_once('lib/init/tra.php');
 if ( ! defined('DATE_FORMAT_UNIXTIME') ) define('DATE_FORMAT_UNIXTIME', 5);
 
 //performance collecting:
-//require_once ('lib/tikidblib-debug.php');
 
 // This class is included by all the Tiki php scripts, so it's important
 // to keep the class as small as possible to improve performance.
@@ -20,7 +18,7 @@ if ( ! defined('DATE_FORMAT_UNIXTIME') ) define('DATE_FORMAT_UNIXTIME', 5);
 // * shared functions (marked as /*shared*/) are functions that are
 //   called from Tiki modules.
 
-class TikiLib extends TikiDB {
+class TikiLib extends TikiDb {
 	var $buffer;
 	var $flag;
 	var $parser;
@@ -36,12 +34,7 @@ class TikiLib extends TikiDB {
 	var $sessionId = null;
 
 	// Constructor receiving a PEAR::Db database object.
-	function TikiLib($db) {
-		if (!$db) {
-			die ("Invalid db object passed to TikiLib constructor");
-		}
-
-		$this->TikiDB($db);
+	function TikiLib() {
 		$this->now = (int) date('U');
 	}
 
@@ -8028,6 +8021,18 @@ JS;
 			$asetup .= "<embed src=\"$movie\" quality=\"$quality\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\" type=\"application/x-shockwave-flash\" width=\"$width\" height=\"$height\" wmode=\"transparent\"></embed></object>";
 			return $asetup;
 		}
+	}
+
+	function convert_sortmode( $mode ) {
+		return $this->convertSortMode( $mode );
+	}
+
+	function convert_binary() {
+		return $this->convertBinary();
+	}
+
+	function sql_cast( $var, $type ) {
+		return $this->cast( $var, $type );
 	}
 }
 // end of class ------------------------------------------------------
