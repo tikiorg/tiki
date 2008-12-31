@@ -24,6 +24,7 @@ class AllTests
         $suite->addTest(TikiFilter_AllTests::suite());
         $suite->addTest(DeclFilter_AllTests::suite());
         $suite->addTest(Multilingual_AllTests::suite());
+        $suite->addTest(AccessControl_AllTests::suite());
 
         return $suite;
     }
