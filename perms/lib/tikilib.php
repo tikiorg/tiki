@@ -1378,14 +1378,12 @@ class TikiLib extends TikiDb {
 			$userid = $this->get_user_id($user);
 			$query = "select `groupName`  from `users_usergroups` where `userId`=?";
 			$result=$this->query($query,array((int) $userid));
-			$ret = array();
+			$ret = array( "Registered" );
 			while ($res = $result->fetchRow()) {
 				$ret[] = $res["groupName"];
 				$included = $this->get_included_groups($res["groupName"]);
 				$ret = array_merge($ret, $included);
 			}
-			$ret[] = "Registered";
-			$ret[] = "Anonymous";
 			$ret = array_unique($ret);
 			$this->usergroups_cache[$user] = $ret;
 			return $ret;
