@@ -219,5 +219,14 @@ class TikiDb_LegacyErrorHandler implements TikiDb_ErrorHandler
 	} // }}}
 }
 
-TikiDb::get()->setErrorHandler( new TikiDb_LegacyErrorHandler );
+global $db_table_prefix, $common_users_table_prefix;
+
+$db = TikiDb::get();
+$db->setErrorHandler( new TikiDb_LegacyErrorHandler );
+
+if( isset( $db_table_prefix ) )
+	$db->setTablePrefix( $db_table_prefix );
+
+if( isset( $common_users_table_prefix ) )
+	$db->setUsersTablePrefix( $common_users_table_prefix );
 

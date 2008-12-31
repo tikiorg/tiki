@@ -11,6 +11,9 @@ class TikiDb
 
 	protected $savedQuery;
 
+	private $tablePrefix;
+	private $usersTablePrefix;
+
 	public static function get() // {{{
 	{
 		return self::$instance;
@@ -63,6 +66,16 @@ class TikiDb
 	function setErrorHandler( TikiDb_ErrorHandler $handler ) // {{{
 	{
 		$this->errorHandler = $handler;
+	} // }}}
+
+	function setTablePrefix( $prefix ) // {{{
+	{
+		$this->tablePrefix = $prefix;
+	} // }}}
+
+	function setUsersTablePrefix( $prefix ) // {{{
+	{
+		$this->usersTablePrefix = $prefix;
 	} // }}}
 
 	protected function getServerType() // {{{
@@ -132,13 +145,12 @@ class TikiDb
 
 	protected function convertQueryTablePrefixes( &$query ) // {{{
 	{
-		$db_table_prefix = isset($GLOBALS["db_table_prefix"])?$GLOBALS["db_table_prefix"]:'' ;
-		$common_tiki_users = isset($GLOBALS["common_tiki_users"])?$GLOBALS["common_tiki_users"]:'';
-		$common_users_table_prefix = isset($GLOBALS["common_users_table_prefix"])?$GLOBALS["common_users_table_prefix"]:'';
+		$db_table_prefix = $this->tablePrefix;
+		$common_users_table_prefix = $this->usersTablePrefix;
 
-		if ( isset($db_table_prefix) && !is_null($db_table_prefix) && !empty($db_table_prefix) ) {
+		if ( !is_null($db_table_prefix) && !empty($db_table_prefix) ) {
 
-			if( isset($common_users_table_prefix) && !is_null($common_users_table_prefix) && !empty($common_users_table_prefix) ) {
+			if( !is_null($common_users_table_prefix) && !empty($common_users_table_prefix) ) {
 				$query = str_replace("`users_", "`".$common_users_table_prefix."users_", $query);
 			} else {
 				$query = str_replace("`users_", "`".$db_table_prefix."users_", $query);
