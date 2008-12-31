@@ -286,6 +286,13 @@ class TikiDb
 		return " IFNULL($field, $ifNull) "; // if MySQL
 	} // }}}
 
+	function in( $field, $values ) // {{{
+	{
+		$values = array_map( array( $this, 'qstr' ), $values );
+		$values = implode( ', ', $values );
+		return " $field IN( $values ) ";
+	} // }}}
+
 	function concat() // {{{
 	{
 		$arr = func_get_args();
