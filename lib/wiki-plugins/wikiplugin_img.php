@@ -3,7 +3,7 @@
 function wikiplugin_img_info()
 {
 	return array(
-		'name' => tra( 'Image' ),
+		'name' => tra( 'Img' ),
 		'description' => tra( 'Displays an image.' ),
 		'prefs' => array(),
 		'params' => array(
