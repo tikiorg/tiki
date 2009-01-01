@@ -1,0 +1,29 @@
+Filename: htaccess.readme
+Written by Dennis Heltzel, 7/23/03
+
+  The htaccess file in this directory can be moved to .htaccess in the tiki docroot with this command:
+
+mv htaccess ../.htaccess
+
+On Apache, this will use rewrite rules to allow for short URL's, but it can cause some errors and issues, so you have to move it yourself, that way it counts as "self-inflicted".
+
+If you implement this on RedHat 8 or 9, which uses Apache 2.0, it may refuse access to the entire tiki site and log errors. If you want to use it anyway, edit your httpd.conf file (vi /etc/httpd/conf/httpd.conf) and change this:
+
+<Directory />
+    Options FollowSymLinks
+    AllowOverride AuthConfig 
+</Directory>
+
+to this:
+
+<Directory />
+    Options FollowSymLinks
+    AllowOverride AuthConfig FileInfo
+</Directory>
+
+or in your virtual host setup:
+
+<Directory /path/to/hosting/space>
+    Options FollowSymLinks
+    AllowOverride AuthConfig FileInfo
+</Directory>
