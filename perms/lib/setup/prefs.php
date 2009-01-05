@@ -37,6 +37,8 @@ function get_default_prefs() {
 		'tiki_version_check_frequency' => 604800,
 		'lastUpdatePrefs' => 1,
 
+		'feature_print_indexed' => 'y',
+
 		// wiki
 		'feature_wiki' => 'y',
 		'default_wiki_diff_style' => 'minsidediff',

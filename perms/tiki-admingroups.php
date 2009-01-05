@@ -75,6 +75,19 @@ if (isset($_REQUEST["newgroup"]) and $_REQUEST["name"]) {
 	$logslib->add_log('admingroups','created group '.$_REQUEST["group"]);
 }
 
+if( isset($_REQUEST['adduser']) ) {
+	$user = $_REQUEST['user'];
+	$group = $_REQUEST['group'];
+
+	if( $user && $group ) {
+		if( $userlib->assign_user_to_group($user, $group) ) {
+			$logslib->add_log('admingroups',"added $user to $group");
+		}
+	}
+
+	$cookietab = "3";
+}
+
 // modification
 if (isset($_REQUEST["save"]) and isset($_REQUEST["olgroup"]) and !empty($_REQUEST["name"])) {
 	check_ticket('admin-groups');
@@ -236,7 +249,8 @@ if (!empty($_REQUEST["group"])) {
 		}
 	}
 	$memberslist = $userlib->get_group_users($_REQUEST['group']);
-	$cookietab = "2";
+	if( $cookietab == '1' )
+		$cookietab = "2";
 } else {
 	$allgroups = $userlib->list_all_groups();
 	foreach ($allgroups as $rr) {
@@ -320,6 +334,8 @@ $av_themes = $tikilib->list_styles();
 $smarty->assign_by_ref('av_themes', $av_themes);
 
 $smarty->assign('memberslist',$memberslist);
+
+$smarty->assign('userslist', $userlib->list_all_users());
 
 $smarty->assign('inc', $inc);
 $smarty->assign('group', $_REQUEST["group"]);

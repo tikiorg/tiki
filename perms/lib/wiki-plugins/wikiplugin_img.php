@@ -3,7 +3,7 @@
 function wikiplugin_img_info()
 {
 	return array(
-		'name' => tra( 'Image' ),
+		'name' => tra( 'Img' ),
 		'description' => tra( 'Displays an image.' ),
 		'prefs' => array(),
 		'params' => array(
@@ -40,7 +40,12 @@ function wikiplugin_img_info()
 			'align' => array(
 				'required' => false,
 				'name' => tra('Alignment'),
-				'description' => tra('Image alignment in the page. (left, right, center)'),
+				'description' => tra('Image alignment in the page. (left, right, center) Uses HTML IMG tag.'),
+			),
+			'imalign' => array(
+				'required' => false,
+				'name' => tra('Alignment'),
+				'description' => tra('Image alignment in the page. (left, right, center) Uses CSS class img.'),
 			),
 			'desc' => array(
 				'required' => false,
