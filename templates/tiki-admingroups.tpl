@@ -241,6 +241,19 @@ class="prevnext">{tr}All{/tr}</a>
 {/section}
 </tr></table>
 <div class="box">{$smarty.section.ix.total} {tr}users in group{/tr} {$groupname}</div>
+<form method="post" action="tiki-admingroups.php">
+	<p>
+		<input type="hidden" name="group" value="{$groupname|escape}"/>
+		<select name="user">
+			{foreach from=$userslist item=user}
+				{if ! in_array( $user, $memberslist ) }
+				<option>{$user|escape}</option>
+				{/if}
+			{/foreach}
+		</select>
+		<input type="submit" name="adduser" value="{tr}Add to group{/tr}"/>
+	</p>
+</form>
 </div>
 {/if}
 
