@@ -2185,8 +2185,8 @@ class TrackerLib extends TikiLib {
 			$bindvars[] = $option;
 		}
 		if (!empty($find)) {
-			$where[] = "`value` like %$find%";
-			$bindvars[] = $find;
+			$where[] = '`value` like ?';
+			$bindvars[] = "%$find%";
 		}
 		if ($not == 'null') {
 			$where[] = '`value` is not null';
