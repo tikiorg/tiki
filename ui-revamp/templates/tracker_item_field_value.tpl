@@ -234,8 +234,8 @@
 		{capture name=flag}
 		{tr}{$field_value.value}{/tr}
 		{/capture}
-		{if $o_opt ne '1'}<img src="img/flags/{$field_value.value}.gif" title="{$smarty.capture.flag|replace:'_':' '}" alt="{$smarty.capture.flag|replace:'_':' '}" />{/if}
-		{if $o_opt ne '1' and $o_opt ne '2'}&nbsp;{/if}
+		{if $o_opt ne '1' and $list_mode ne 'csv'}<img src="img/flags/{$field_value.value}.gif" title="{$smarty.capture.flag|replace:'_':' '}" alt="{$smarty.capture.flag|replace:'_':' '}" />{/if}
+		{if $o_opt ne '1' and $o_opt ne '2' and $list_mode ne 'csv'}&nbsp;{/if}
 		{if $o_opt ne '2'}{$smarty.capture.flag|replace:'_':' '}{/if}
 	{else}
 		&nbsp;

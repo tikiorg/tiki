@@ -106,7 +106,10 @@ button,
 	padding: 0 4px;
 	vertical-align: middle;
 	cursor: pointer;
+	white-space: nowrap;
 }
+#page-bar .button {margin: 0 2px;}
+
 /* do not put this rule with button rule for IE6 */
 input[type=submit],
 input[type=reset] {
@@ -1230,9 +1233,11 @@ td.wikicell {
 
 div#page-bar {
 	display: block;
-	margin-top: 0}
+	margin-top: 0;
+	text-align:center;
+	line-height: 150%;
+}
 
-#page-bar span {float: left}
 
 ul.floatleft {
 	display: block;
@@ -1861,7 +1866,6 @@ div.imgaldescr {margin: 10px}
 .sorttitle {margin-left: 10px}
 
 div#browse_image {
-	background: white;
 	width: 100%}
 
 /***** File Galleries *****/
@@ -2384,7 +2388,6 @@ a.admbox.off {border: 1px solid #9f9f9f}
 a.admbox.off:hover,
 a.admbox.off:focus,
 a.admbox.off:active {border: 1px solid #9f9f9f}
-#page_bar {text-align:center;}
 
 a.icon,
 img.icon {border: 0 !important;

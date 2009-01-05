@@ -1,4 +1,5 @@
 {* $Id$ *}{include file="header.tpl"}
+{include file="tiki-admin_bar.tpl"}
 {* TikiTest ToolBar *}
 {if $prefs.feature_tikitests eq 'y' and $tikitest_state neq 0}
 {include file="tiki-tests_topbar.tpl"}
