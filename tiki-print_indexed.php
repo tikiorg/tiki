@@ -45,14 +45,14 @@ class ObjectList // {{{
 			if( array_key_exists( 'languages', $options ) )
 				$renderer = new ObjectRenderer_MultilingualWiki( $type, $object, $options );
 			else
-				$renderer = new ObjectRenderer_Wiki( $type, $object );
+				$renderer = new ObjectRenderer_Wiki( $type, $object, $options );
 			break;
 		default:
-			$renderer = null;
+			$renderer = new ObjectRenderer_TrackerItem( $type, $object, $options );
 			break;
 		}
 
-		if( $renderer ) {
+		if( $renderer && $renderer->isValid() ) {
 			$index = ++$this->lastIndex;
 
 			$this->renderers[$index] = $renderer;
@@ -88,8 +88,8 @@ class ObjectList // {{{
 
 abstract class ObjectRenderer // {{{
 {
-	private $objectType;
-	private $objectId;
+	protected $objectType;
+	protected $objectId;
 
 	function __construct( $objectType, $objectId )
 	{
@@ -105,9 +105,83 @@ abstract class ObjectRenderer // {{{
 		$smarty->display( $options['decorator_template'] );
 	}
 
+	function isValid()
+	{
+		return true;
+	}
+
 	abstract function _render( $smarty, $template );
 
 	abstract function getIndexValue( $key );
+} // }}}
+
+class ObjectRenderer_TrackerItem extends ObjectRenderer // {{{
+{
+	private static $trackers = array();
+
+	private $valid = false;
+	private $tracker;
+	private $info;
+
+	function __construct( $type, $object, $options = array() )
+	{
+		parent::__construct( $type, $object, $options );
+
+		global $trklib;
+		require_once 'lib/trackers/trackerlib.php';
+
+		$info = $trklib->get_tracker_item( $object );
+		$trackerId = $info['trackerId'];
+
+		if( !isset(self::$trackers[$trackerId]) ) {
+			if( self::$trackers[$trackerId] = $trklib->get_tracker( $trackerId ) ) {
+				$fields = $trklib->list_tracker_fields( $trackerId );
+				self::$trackers[$trackerId]['fields'] = $fields['data'];
+			} else {
+				$this->valid = false;
+				return;
+			}
+		}
+
+		$this->tracker = self::$trackers[ $info['trackerId'] ];
+		$this->info = $info;
+		$this->valid = ($type == $this->tracker['name']);
+
+		foreach( $this->tracker['fields'] as & $field ) {
+			$field['value'] = $this->info[ $field['fieldId'] ];
+		}
+	}
+
+	function isValid()
+	{
+		return $this->valid;
+	}
+
+	function _render( $smarty, $options )
+	{
+		$smarty->assign( 'title', $this->getTitle() );
+		$smarty->assign( 'tracker', $this->tracker );
+		$smarty->assign( 'item', $this->info );
+
+		$options['display_template'] = 'print/print-' . $options['display'] . '_trackeritem.tpl';
+		return $smarty->fetch( $options['display_template'] );
+	}
+
+	function getIndexValue( $key )
+	{
+		switch( $key ) {
+		case 'title':
+			return $this->getTitle();
+		}
+	}
+
+	function getTitle()
+	{
+		foreach( $this->tracker['fields'] as $field ) {
+			if( $field['isMain'] == 'y' )
+				return $field['value'];
+		}
+	}
 } // }}}
 
 class ObjectRenderer_Wiki extends ObjectRenderer // {{{
