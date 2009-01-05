@@ -123,7 +123,7 @@ class DeclFilter implements Zend_Filter_Interface
 	 */
 	function addCatchAllUnset( $param = null )
 	{
-		require_once 'DeclFilter/StaticKeyUnsetRule.php';
+		require_once 'DeclFilter/CatchAllUnsetRule.php';
 		$rule = new DeclFilter_CatchAllUnsetRule();
 
 		$this->rules[] = $rule;
