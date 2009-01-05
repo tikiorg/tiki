@@ -37,6 +37,8 @@ function get_default_prefs() {
 		'tiki_version_check_frequency' => 604800,
 		'lastUpdatePrefs' => 1,
 
+		'feature_print_indexed' => 'y',
+
 		// wiki
 		'feature_wiki' => 'y',
 		'default_wiki_diff_style' => 'minsidediff',
@@ -419,7 +421,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'forum_comments_per_page' => 20,
 		'forum_comments_no_title_prefix' => 'n',
 		'forum_thread_style' => 'commentStyle_plain',
-		'forum_thread_sort_mode' => 'commentDate_desc',
+		'forum_thread_sort_mode' => 'commentDate_asc',
 
 		// articles
 		'feature_articles' => 'n',
