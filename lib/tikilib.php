@@ -8035,7 +8035,7 @@ class TikiLib extends TikiDB {
 		$params = array_merge( $defaults, $params );
 		if ( ((empty($javascript) && $prefs['javascript_enabled'] == 'y') || $javascript == 'y')) {
 			$myId = 'wp-flash-' . md5($params['movie']);
-			$movie = json_encode( $params['movie'] );
+			$movie = '"'.$params['movie'].'"';
 			$div = json_encode( $myId );
 			$width = (int) $params['width'];
 			$height = (int) $params['height'];
