@@ -71,18 +71,25 @@ document.write("<input name=\"switcher\" title=\"{tr}Select All{/tr}\" id=\"clic
 			<th>{self_link _sort_arg="sort_mode" _sort_field="event"}{tr}Event{/tr}{/self_link}</th>
 			<th>{self_link _sort_arg="sort_mode" _sort_field="object"}{tr}Object{/tr}{/self_link}</th>
 			<th>{self_link _sort_arg="sort_mode" _sort_field="email"}{tr}eMail{/tr}{/self_link}</th>
-			<th>{self_link _sort_arg="sort_mode" _sort_field="user"}{tr}User{/tr}{/self_link}</th>
+			<th>{self_link _sort_arg="sort_mode" _sort_field="user"}{tr}User / Group{/tr}{/self_link}</th>
 			<th>{tr}Action{/tr}</th>
 		</tr>
 		{cycle print=false values="even,odd"}
 		{section name=user loop=$channels}
 			<tr class="{cycle}">
-				<td><input type="checkbox" name="checked[]" value="{$channels[user].watchId|escape}" {if $smarty.request.checked and in_array($channels[user].watchId,$smarty.request.checked)}checked="checked"{/if} /></td>
+				<td><input type="checkbox" name="checked[]" value="{$channels[user].watchtype}{$channels[user].watchId|escape}" {if $smarty.request.checked and in_array($channels[user].watchId,$smarty.request.checked)}checked="checked"{/if} /></td>
 				<td>{$channels[user].event}</td>
 				<td>{if $channels[user].url}<a href="{$channels[user].url}" title="{$channels[user].title|escape}">{$channels[user].object|escape}</a>{else}{$channels[user].object|escape}{/if}</td>
-				<td>{$channels[user].email}</td>
-				<td>{$channels[user].user}</td>
-				<td><a class="link" href="{$smarty.server.PHP_SELF}?{query removeevent=$channels[user].watchId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a></td>
+				<td>{if $channels[user].watchtype eq 'user'}{$channels[user].email}{else}<em>{tr}Multiple{/tr}</em>{/if}</td>
+				<td>
+					{if $channels[user].watchtype eq 'group'}
+						{icon _id='group'}
+					{else}
+						{icon _id='user'}
+					{/if}
+					{$channels[user].user}
+				</td>
+				<td><a class="link" href="{$smarty.server.PHP_SELF}?{query removeevent=$channels[user].watchId removetype=$channels[user].watchtype}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a></td>
 			</tr>
 		{sectionelse}
 			<tr class="odd"><td colspan="6"><b>{tr}No records found.{/tr}</b></td></tr>

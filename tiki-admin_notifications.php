@@ -6,6 +6,25 @@
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
+$inputConfiguration = array(
+	'staticKeyFilters' => array(
+		'offset' => 'digits',
+		'maxRecords' => 'digits',
+		'sort_mode' => 'word',
+		'find' => 'striptags',
+		'login' => 'username',
+		'email' => 'email',
+		'event' => 'word',
+
+		'add' => 'alpha',
+		'delsel_x' => 'alpha',
+	),
+	'staticKeyFiltersForArrays' => array(
+		'checked' => 'alnum',
+	),
+	'catchAllUnset' => null,
+);
+
 // Initialization
 require_once ('tiki-setup.php');
 include_once ('lib/notifications/notificationlib.php');
@@ -92,11 +111,15 @@ if (isset($_REQUEST["add"])) {
 if (!empty($tikifeedback)) {
 	$smarty->assign_by_ref('tikifeedback', $tikifeedback);
 }
-if (isset($_REQUEST["removeevent"])) {
+if (isset($_REQUEST["removeevent"]) && isset($_REQUEST['removetype'])) {
 	$area = 'delnotif';
 	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 		key_check($area);
-		$tikilib->remove_user_watch_by_id($_REQUEST["removeevent"]);
+		if( $_REQUEST['removetype'] == 'user' ) {
+			$tikilib->remove_user_watch_by_id($_REQUEST["removeevent"]);
+		} else {
+			$tikilib->remove_group_watch_by_id($_REQUEST["removeevent"]);
+		}
 	} else {
 		key_get($area);
 	}
@@ -104,7 +127,10 @@ if (isset($_REQUEST["removeevent"])) {
 if (isset($_REQUEST['delsel_x']) && isset($_REQUEST['checked'])) {
 	check_ticket('admin-notif');
 	foreach($_REQUEST['checked'] as $id) {
-		$tikilib->remove_user_watch_by_id($id);
+		if( strpos( $id, 'user' ) === 0 )
+			$tikilib->remove_user_watch_by_id(substr($id, 4));
+		else
+			$tikilib->remove_group_watch_by_id(substr($id, 5));
 	}
  }	
 

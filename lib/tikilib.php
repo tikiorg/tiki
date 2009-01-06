@@ -202,9 +202,16 @@ class TikiLib extends TikiDB {
 		$bindvars = array();
 		if ($find) {	
 			$mid = ' where `event` like ? or `email` like ?';
-			$bindvars = array('%'.$find.'%', '%'.$find.'%');
+			$mid2 = ' where `event` like ? or `email` like ?';
+			$bindvars = array('%'.$find.'%', '%'.$find.'%', '%'.$find.'%');
 		}
-		$query = 'select * from `tiki_user_watches`'.$mid.' order by '.$this->convert_sortmode($sort_mode);
+		$query = "select 'user' as watchtype, watchId, `user`, event, object, title, type, url, email from `tiki_user_watches` $mid 
+			UNION ALL
+			(
+				select 'group' as watchtype, watchId, `group`, event, object, title, type, url, '' as email
+				from tiki_group_watches $mid2
+			)
+			order by ".$this->convert_sortmode($sort_mode);
 		$query_cant = 'select count(*) from `tiki_user_watches`'.$mid;
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -237,6 +244,11 @@ class TikiLib extends TikiDB {
 	/*shared*/
 	function remove_user_watch_by_id($id) {
 		$query = "delete from `tiki_user_watches` where `watchId`=?";
+		$this->query($query,array($id));
+	}
+
+	function remove_group_watch_by_id($id) {
+		$query = "delete from `tiki_group_watches` where `watchId`=?";
 		$this->query($query,array($id));
 	}
 
