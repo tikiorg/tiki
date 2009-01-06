@@ -165,7 +165,7 @@
 					<td class="formcolor">&nbsp;</td>
 					<td class="formcolor">
 						<input type="submit" name="upload" value="{tr}Upload{/tr}" />
-						<span class="rbox-data">{tr}Note: Maximum image size is limited to{/tr} {$max_img_upload_size|kbsize}</span>
+						<span class="rbox-data">{tr}Note: Maximum image size is limited to{/tr} {$max_upload_size|kbsize}</span>
 					</td>
 				</tr>
 			</table>
