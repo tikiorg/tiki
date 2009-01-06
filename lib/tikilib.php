@@ -3588,6 +3588,8 @@ class TikiLib extends TikiDB {
 
 		$query = "delete from `tiki_user_watches` where `event`=? and `object`=?";
 		$this->query($query,array('wiki_page_changed', $page));
+		$query = "delete from `tiki_group_watches` where `event`=? and `object`=?";
+		$this->query($query,array('wiki_page_changed', $page));
 
 		$atts = $wikilib->list_wiki_attachments($page, 0, -1, 'created_desc', '');
 		foreach ($atts["data"] as $at) {

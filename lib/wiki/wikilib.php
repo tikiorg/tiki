@@ -245,6 +245,8 @@ class WikiLib extends TikiLib {
 		$newId = 'wikipage' . $newName;
 		$query = "update `tiki_user_watches` set `object`=? where `object`=?";
 		$this->query($query, array( $newId, $oldId ) );
+		$query = "update `tiki_group_watches` set `object`=? where `object`=?";
+		$this->query($query, array( $newId, $oldId ) );
 
 		// theme_control_objects(objId,name)
 		$oldId = md5('wiki page' . $oldName);
@@ -289,6 +291,8 @@ class WikiLib extends TikiLib {
 		// ... then update the watches table
 		// user watches
 		$query = "update `tiki_user_watches` set `object`=?, `title`=?, `url`=? where `object`=? and `type` = 'wiki page'";
+		$this->query($query, array( $newName, $newName, 'tiki-index.php?page='.$newName, $oldName ) );
+		$query = "update `tiki_group_watches` set `object`=?, `title`=?, `url`=? where `object`=? and `type` = 'wiki page'";
 		$this->query($query, array( $newName, $newName, 'tiki-index.php?page='.$newName, $oldName ) );
 
 		// now send notification email to all on the watchlist:
