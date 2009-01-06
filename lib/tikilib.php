@@ -5675,7 +5675,10 @@ class TikiLib extends TikiDB {
 
 			// Make sure all arguments are declared
 			$params = $info['params'];
-			$args = array_intersect_key( $args, $params );
+
+			if( ! isset( $info['extraparams'] ) ) {
+				$args = array_intersect_key( $args, $params );
+			}
 
 			// Apply filters on values individually
 			foreach( $args as $argKey => &$argValue ) {

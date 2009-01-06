@@ -36,11 +36,14 @@ if( isset( $_REQUEST['export'] ) ) { // {{{
 
 	function populate_node( $node, $pageName, $remainingLevels = 3, $pages = array() )
 	{
-		global $wikilib;
+		global $wikilib, $tikilib, $user;
 		$child = $wikilib->wiki_get_neighbours( $pageName );
 		$child = array_diff( $child, $pages );
 
 		foreach( $child as $page ) {
+			if( ! $tikilib->user_has_perm_on_object( $user, $page, 'wiki page', 'tiki_p_view' ) )
+				continue;
+
 			$node->appendChild( $new = create_node( $node->ownerDocument, $page ) );
 
 			if( $remainingLevels != 0 )
@@ -68,6 +71,7 @@ if( isset( $_REQUEST['export'] ) ) { // {{{
 } // }}}
 
 $page = isset( $_REQUEST['page'] ) ? $_REQUEST['page'] : $prefs['wikiHomePage'];
+
 $ePage = urlencode( $page );
 
 $plugin = $tikilib->plugin_execute( 'flash', '', array(
