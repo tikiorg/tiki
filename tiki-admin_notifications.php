@@ -93,13 +93,13 @@ if (!empty($tikifeedback)) {
 	$smarty->assign_by_ref('tikifeedback', $tikifeedback);
 }
 if (isset($_REQUEST["removeevent"])) {
-  $area = 'delnotif';
-  if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-    key_check($area);
+	$area = 'delnotif';
+	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+		key_check($area);
 		$tikilib->remove_user_watch_by_id($_REQUEST["removeevent"]);
-  } else {
-    key_get($area);
-  }
+	} else {
+		key_get($area);
+	}
 }
 if (isset($_REQUEST['delsel_x']) && isset($_REQUEST['checked'])) {
 	check_ticket('admin-notif');
