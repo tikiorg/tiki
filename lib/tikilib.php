@@ -7348,7 +7348,7 @@ class TikiLib extends TikiDB {
 						array( $lang, $info['page_id'] ) );
 			}
 
-			if ($prefs['feature_user_watches'] == 'y' && ($prefs['wiki_watch_minor'] != 'n' || !$minor)) {
+			if ($prefs['wiki_watch_minor'] != 'n' || !$minor) {
 				//  Deal with mail notifications.
 				include_once('lib/notifications/notificationemaillib.php');
 				global $histlib; include_once ("lib/wiki/histlib.php");
