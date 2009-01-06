@@ -326,88 +326,104 @@ class TikiLib extends TikiDB {
 				$bindvars[] = $page['objName'];
 			}
 			$mid .= 'and ('.implode(' or ', $mids).')';
-					} else if ( $prefs['feature_user_watches_translations'] == 'y' 
-						&& $event == 'wiki_page_created' ) {
-					$page_info = $this->get_page_info( $object );
-					$mid = "`event`='wiki_page_in_lang_created' and `object`=? and `type`='lang'";
-					$bindvars[] = $page_info['lang'];
-					} else if ($event == 'forum_post_topic') {
-					$mid = "(`event`=? or `event`=?) and `object`=?";
-					$bindvars[] = $event;
-					$bindvars[] = 'forum_post_topic_and_thread';
-					$bindvars[] = $object;
-					} else if ($event == 'forum_post_thread') {
-					$mid = "(`event`=? and `object`=?) or ( `event`=? and `object`=?)";
-					$bindvars[] = $event;
-					$bindvars[] = $object;
-					$bindvars[] = 'forum_post_topic_and_thread';
-					$forumId = $info['forumId'];
-					$bindvars[] = $forumId;
-					} else {
-					$mid = "`event`=? and `object`=?";
-					$bindvars[] = $event;
-					$bindvars[] = $object;
-					}
+		} elseif ( $prefs['feature_user_watches_translations'] == 'y' 
+			&& $event == 'wiki_page_created' ) {
+			$page_info = $this->get_page_info( $object );
+			$mid = "`event`='wiki_page_in_lang_created' and `object`=? and `type`='lang'";
+			$bindvars[] = $page_info['lang'];
+		} elseif ($event == 'forum_post_topic') {
+			$mid = "(`event`=? or `event`=?) and `object`=?";
+			$bindvars[] = $event;
+			$bindvars[] = 'forum_post_topic_and_thread';
+			$bindvars[] = $object;
+		} elseif ($event == 'forum_post_thread') {
+			$mid = "(`event`=? and `object`=?) or ( `event`=? and `object`=?)";
+			$bindvars[] = $event;
+			$bindvars[] = $object;
+			$bindvars[] = 'forum_post_topic_and_thread';
+			$forumId = $info['forumId'];
+			$bindvars[] = $forumId;
+		} else {
+			$mid = "`event`=? and `object`=?";
+			$bindvars[] = $event;
+			$bindvars[] = $object;
+		}
+
+		// Obtain the list of watches on event/object for user watches
+		// Union obtains all users member of groups being watched
+		// Distinct union insures there are no duplicates
 		$query = "select tuw.*, tup1.`value` as language, tup2.`value` as mailCharset from `tiki_user_watches` tuw 
 			left join `tiki_user_preferences` tup1 on (tup1.`user`=tuw.`user` and tup1.`prefName`='language') 
 			left join `tiki_user_preferences` tup2 on (tup2.`user`=tuw.`user` and tup2.`prefName`='mailCharset')
-			where $mid";
-		$result = $this->query($query,$bindvars);
+			where $mid
+			UNION DISTINCT
+			select tgw.watchId, uu.login, tgw.event, tgw.object, tgw.title, tgw.type, tgw.url, uu.email,
+				tup1.value as language, tup2.value as mailCharset
+			from
+				tiki_group_watches tgw
+				inner join users_usergroups ug on tgw.`group` = ug.groupName
+				inner join users_users uu on ug.userId = uu.userId and uu.email is not null and uu.email <> ''
+				left join `tiki_user_preferences` tup1 on (tup1.`user`=uu.`login` and tup1.`prefName`='language') 
+				left join `tiki_user_preferences` tup2 on (tup2.`user`=uu.`login` and tup2.`prefName`='mailCharset')
+				where $mid
+				";
+
+		$result = $this->query($query,array_merge( $bindvars, $bindvars ));
 
 		if ($result->numRows()) {
 
 			while ($res = $result->fetchRow()) {
 				switch($event) {
-					case 'wiki_page_changed':
-					case 'wiki_page_created':
-						$res['perm']=($this->user_has_perm_on_object($res['user'],$object,'wiki page','tiki_p_view') ||
-								$this->user_has_perm_on_object($res['user'],$object,'wiki page','tiki_p_admin_wiki'));
-						break;
-					case 'tracker_modified':
-						$res['perm'] = $this->user_has_perm_on_object($res['user'],$object,'tracker','tiki_p_view_trackers');
-						break;
-					case 'tracker_item_modified':
-						$res['perm'] = $this->user_has_perm_on_object($res['user'],$info['trackerId'],'tracker','tiki_p_view_trackers');
-						break;
-					case 'blog_post':
-						$res['perm']=($this->user_has_perm_on_object($res['user'],$object,'blog','tiki_p_read_blog') ||
-								$this->user_has_perm_on_object($res['user'],$object,'blog','tiki_p_admin_blog'));
-						break;
-					case 'map_changed':
-						$res['perm']=$this->user_has_perm_on_object($res['user'],$object,'map','tiki_p_map_view');
-						break;
-					case 'forum_post_topic':
-						$res['perm']=($this->user_has_perm_on_object($res['user'],$object,'forum','tiki_p_forum_read') ||
-								$this->user_has_perm_on_object($res['user'],$object,'forum','tiki_p_admin_forum'));
-						break;
-					case 'forum_post_thread':
-						$res['perm']=($this->user_has_perm_on_object($res['user'],$forumId,'forum','tiki_p_forum_read') ||
-								$this->user_has_perm_on_object($res['user'],$object,'forum','tiki_p_admin_forum'));
-						break;
-					case 'file_gallery_changed':
-						$res['perm']=($this->user_has_perm_on_object($res['user'],$object,'file gallery','tiki_p_view_file_gallery') ||
-								$this->user_has_perm_on_object($res['user'],$object,'file gallery','tiki_p_download_files'));                    	
-						break;
-					case 'article_submitted':
-					case 'topic_article_created':
-						global $userlib, $topicId;
-						$res['perm']= ($userlib->user_has_permission($res['user'],'tiki_p_read_article') &&
-								(empty($topicId) || $this->user_has_perm_on_object($res['user'],$topicId,'topic','tiki_p_topic_read')));
-						break;
-					case 'calendar_changed':
-						$res['perm']= $this->user_has_perm_on_object($res['user'],$object,'calendar','tiki_p_view_calendar');
-						break;
-					case 'image_gallery_changed':
-						$res['perm'] = $this->user_has_perm_on_object($res['user'],$object,'image gallery','tiki_p_view_image_gallery');
-						break;
-					case 'category_changed':
-						global $categlib;
-						$res['perm']= $categlib->has_view_permission($res['user'],$object);
-						break;				
-					default:
-						// for security we deny all others.
-						$res['perm']=FALSE;
-						break;
+				case 'wiki_page_changed':
+				case 'wiki_page_created':
+					$res['perm']=($this->user_has_perm_on_object($res['user'],$object,'wiki page','tiki_p_view') ||
+							$this->user_has_perm_on_object($res['user'],$object,'wiki page','tiki_p_admin_wiki'));
+					break;
+				case 'tracker_modified':
+					$res['perm'] = $this->user_has_perm_on_object($res['user'],$object,'tracker','tiki_p_view_trackers');
+					break;
+				case 'tracker_item_modified':
+					$res['perm'] = $this->user_has_perm_on_object($res['user'],$info['trackerId'],'tracker','tiki_p_view_trackers');
+					break;
+				case 'blog_post':
+					$res['perm']=($this->user_has_perm_on_object($res['user'],$object,'blog','tiki_p_read_blog') ||
+							$this->user_has_perm_on_object($res['user'],$object,'blog','tiki_p_admin_blog'));
+					break;
+				case 'map_changed':
+					$res['perm']=$this->user_has_perm_on_object($res['user'],$object,'map','tiki_p_map_view');
+					break;
+				case 'forum_post_topic':
+					$res['perm']=($this->user_has_perm_on_object($res['user'],$object,'forum','tiki_p_forum_read') ||
+							$this->user_has_perm_on_object($res['user'],$object,'forum','tiki_p_admin_forum'));
+					break;
+				case 'forum_post_thread':
+					$res['perm']=($this->user_has_perm_on_object($res['user'],$forumId,'forum','tiki_p_forum_read') ||
+							$this->user_has_perm_on_object($res['user'],$object,'forum','tiki_p_admin_forum'));
+					break;
+				case 'file_gallery_changed':
+					$res['perm']=($this->user_has_perm_on_object($res['user'],$object,'file gallery','tiki_p_view_file_gallery') ||
+							$this->user_has_perm_on_object($res['user'],$object,'file gallery','tiki_p_download_files'));                    	
+					break;
+				case 'article_submitted':
+				case 'topic_article_created':
+					global $userlib, $topicId;
+					$res['perm']= ($userlib->user_has_permission($res['user'],'tiki_p_read_article') &&
+							(empty($topicId) || $this->user_has_perm_on_object($res['user'],$topicId,'topic','tiki_p_topic_read')));
+					break;
+				case 'calendar_changed':
+					$res['perm']= $this->user_has_perm_on_object($res['user'],$object,'calendar','tiki_p_view_calendar');
+					break;
+				case 'image_gallery_changed':
+					$res['perm'] = $this->user_has_perm_on_object($res['user'],$object,'image gallery','tiki_p_view_image_gallery');
+					break;
+				case 'category_changed':
+					global $categlib;
+					$res['perm']= $categlib->has_view_permission($res['user'],$object);
+					break;				
+				default:
+					// for security we deny all others.
+					$res['perm']=FALSE;
+					break;
 				}
 
 				if($res['perm']) {
@@ -422,17 +438,17 @@ class TikiLib extends TikiDB {
 				global $categlib; require_once('lib/categories/categlib.php');
 				$objectType="";
 				switch($event) {
-					case 'wiki_page_changed': $objectType="wiki page"; break;
-					case 'blog_post': $objectType="blog"; break;
-					case 'map_changed': $objectType="map_changed"; break;
-					case 'forum_post_topic': $objectType="forum"; break;
-					case 'forum_post_thread': $objectType="forum"; break;
-					case 'file_gallery_changed': $objectType="file gallery"; break;
-					case 'article_submitted': $objectType="topic"; break;			
-					case 'image_gallery_changed': $objectType="image gallery"; break;
-					case 'tracker_modified': $objectType="tracker"; break; 	
-					case 'tracker_item_modified': $objectType="tracker"; break;
-					case 'calendar_changed': $objectType="calendar"; break;
+				case 'wiki_page_changed': $objectType="wiki page"; break;
+				case 'blog_post': $objectType="blog"; break;
+				case 'map_changed': $objectType="map_changed"; break;
+				case 'forum_post_topic': $objectType="forum"; break;
+				case 'forum_post_thread': $objectType="forum"; break;
+				case 'file_gallery_changed': $objectType="file gallery"; break;
+				case 'article_submitted': $objectType="topic"; break;			
+				case 'image_gallery_changed': $objectType="image gallery"; break;
+				case 'tracker_modified': $objectType="tracker"; break; 	
+				case 'tracker_item_modified': $objectType="tracker"; break;
+				case 'calendar_changed': $objectType="calendar"; break;
 				}
 				if ( $objectType != "") {
 
