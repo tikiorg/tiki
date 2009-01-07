@@ -10,7 +10,7 @@ require_once('tiki-setup.php');
 include_once('lib/commentslib.php');
 $commentslib = new Comments($dbTiki);
 
-if ($tiki_p_admin != 'y') {
+if ($tiki_p_admin_comments != 'y') {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("You do not have permission to use this feature"));
 	$smarty->display("error.tpl");
