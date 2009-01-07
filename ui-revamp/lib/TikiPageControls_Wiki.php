@@ -20,6 +20,7 @@ class TikiPageControls_Wiki extends TikiPageControls
 	private $structureInfo;
 	private $attachmentCount;
 	private $isLocked;
+	private $isCached;
 
 	function __construct( $info ) // {{{
 	{
@@ -98,6 +99,11 @@ class TikiPageControls_Wiki extends TikiPageControls
 	function setAttachmentCount( $count ) // {{{
 	{
 		$this->attachmentCount = (int) $count;
+	} // }}}
+
+	function setPageCached( $cached ) // {{{
+	{
+		$this->isCached = (boolean) $cached;
 	} // }}}
 
 	function isAllLanguage( $isAllLanguage ) // {{{
@@ -290,6 +296,111 @@ class TikiPageControls_Wiki extends TikiPageControls
 			$actionMenu->addItem( tra('Translate'), $link, 'translate' )
 				->setSelected( $this->isMode('translate') );
 		}
+
+		if( file_exists('lib/mozilla2ps/mod_urltopdf.php') ) {
+			$link = $this->link( 'url', 'tiki-print.php', array(
+				'display' => 'pdf',
+				'page' => $this->page,
+			) );
+			$actionMenu->addItem( tra('PDF'), $link, 'pdf' )
+				->setIcon( 'pics/icons/page_white_acrobat.png' );
+		}
+
+		if( $this->hasPref('feature_wiki_print') ) {
+			$args = array( 'page' => $this->page );
+			if( $this->structureInfo )
+				$args['page_ref_id'] = $this->structureInfo['page_ref_id'];
+
+			$link = $this->link( 'url', 'tiki-print.php', $args );
+			$actionMenu->addItem( tra('Print'), $link, 'print' )
+				->setIcon('pics/icons/printer.png');
+		}
+
+		if( $this->hasPref('feature_morcego', 'wiki_feature_3d') ) {
+			$link = $this->link( 'jscall', 'wiki3d_open', array(
+				$this->page,
+				$this->getPref('wiki_3d_width'),
+				$this->getPref('wiki_3d_height'),
+			) );
+			$actionMenu->addItem( tra('3d browser'), $link, '3dbrowser' )
+				->setIcon( 'pics/icons/wiki3d.png' );
+		}
+
+		if( $this->isCached ) {
+			$link = $this->link( 'wiki page', $this->page, array(
+				'refresh' => 1,
+			) );
+			$actionMenu->addItem( tra('Refresh cache'), $link, 'refresh' )
+				->setIcon( 'pics/icons/refresh.png' );
+		}
+
+		if( $this->hasPref('feature_tell_a_friend') 
+			&& $this->hasPerm('tiki_p_tell_a_friend') ) {
+
+			$link = $this->link( 'url', 'tiki-tell_a_friend.php', array(
+				'url' => $_SERVER['REQUEST_URI'],
+			) );
+			$actionMenu->addItem( tra('Send a link'), $link, 'tellafriend' )
+				->setIcon( 'pics/icons/email_link.png' );
+		}
+
+		if( $this->getUser() 
+			&& $this->hasPref( 'feature_notepad' ) 
+			&& $this->hasPerm( 'tiki_p_notepad' ) ) {
+
+			$args = array( 'savenotepad' => 1 );
+			if( $this->structureInfo )
+				$args['page_ref_id'] = $this->structureInfo['page_ref_id'];
+			$link = $this->link( 'wiki page', $this->page, $args );
+			$actionMenu->addItem( tra('Save to notepad'), $link, 'notepad' )
+				->setIcon( 'pics/icons/disk.png' );
+		}
+
+		if( $this->getUser()
+			&& $this->hasPref('feature_user_watches') ) {
+
+			if( $this->eventIsWatched( 'wiki_page_changed' ) ) {
+				$action = 'remove';
+				$icon = 'pics/icons/no_eye.png';
+				$label = tra('Stop Monitoring this Page');
+			} else {
+				$action = 'add';
+				$icon = 'pics/icons/eye.png';
+				$label = tra('Monitor this Page');
+			}
+
+			$link = $this->link( 'wiki page', $this->page, array(
+				'watch_event' => 'wiki_page_changed',
+				'watch_object' => $this->page,
+				'watch_action' => $action,
+				'structure_info' => $this->page,
+			) );
+			$actionMenu->addItem( $label, $link, 'watch' );
+		}
+
+		if( $this->getUser()
+			&& $this->structureInfo
+			&& $this->hasPref('feature_user_watches') ) {
+
+			if( $this->eventIsWatched( 'structure_changed', 'structure', $this->structureInfo['page_ref_id'] ) ) {
+				$action = 'remove_desc';
+				$icon = 'pics/icons/no_eye_arrow_down.png';
+				$label = tra('Stop Monitoring this Sub-Structure');
+			} else {
+				$action = 'add_desc';
+				$icon = 'pics/icons/eye_arrow_down.png';
+				$label = tra('Monitor this Sub-Structure');
+			}
+
+			$link = $this->link( 'wiki page', $this->page, array(
+				'watch_event' => 'structure_changed',
+				'watch_object' => $this->structureInfo['page_ref_id'],
+				'watch_action' => $action,
+				'structure_info' => $this->page,
+			) );
+			$actionMenu->addItem( $label, $link, 'watch' );
+		}
+
 
 		$this->removeMenu( $actionMenu, 0 );
 	} // }}}

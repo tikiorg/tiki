@@ -326,6 +326,8 @@ class WikiRenderer
 		$pdata = $wikilib->get_parse($this->page, $canBeRefreshed);
 		if ($canBeRefreshed) {
 			$this->smartyassign('cached_page','y');
+			if( $this->pageControls )
+				$this->pageControls->setPageCached( true );
 		}
 
 		$pages = $wikilib->get_number_of_pages($pdata);

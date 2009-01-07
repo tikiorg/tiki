@@ -181,6 +181,17 @@ abstract class TikiPageControls_Link implements ArrayAccess
 		case 'url':
 			return new TikiPageControls_UrlLink( $object,
 				$arguments );
+		
+		case 'jscall':
+			$func = $object;
+			$args = array_map( 'json_encode', $arguments );
+			return new TikiPageControls_UrlLink(
+				'javascript:'
+				. $func
+				. '('
+				. implode( ',', $args )
+				. ')'
+			);
 
 		default:
 			throw new Exception('Unknown link type: ' . $type);
@@ -345,7 +356,7 @@ abstract class TikiPageControls implements ArrayAccess
 		}
 	} // }}}
 
-	public function getUser( $user ) // {{{
+	public function getUser() // {{{
 	{
 		return $this->user;
 	} // }}}
@@ -399,7 +410,20 @@ abstract class TikiPageControls implements ArrayAccess
 	protected function hasPref( $prefName ) // {{{
 	{
 		global $prefs;
-		return isset( $prefs[$prefName] ) && $prefs[$prefName] == 'y';
+		
+		foreach( func_get_args() as $prefName )
+			if( ! isset( $prefs[$prefName] ) || $prefs[$prefName] != 'y' )
+				return false;
+
+		return true;
+	} // }}}
+
+	protected function getPref( $prefName ) // {{{
+	{
+		global $prefs;
+		
+		if( isset( $prefs[$prefName] ) )
+			return $prefs[$prefName];
 	} // }}}
 
 	protected function addMenu( $permanentName, $label ) // {{{
@@ -513,6 +537,20 @@ abstract class TikiPageControls implements ArrayAccess
 		}
 
 		return $this->commentCount = $commentslib->count_comments("{$this->type}:{$this->objectId}");
+	} // }}}
+
+	function eventIsWatched( $event, $type = null, $objectId = null ) // {{{
+	{
+		global $tikilib;
+		if( ! $this->user )
+			return false;
+
+		if( ! $type )
+			$type = $this->type;
+		if( ! $objectId )
+			$objectId = $this->objectId;
+
+		return $tikilib->user_watches( $this->user, $event, $objectId, $type );
 	} // }}}
 
 	function offsetSet( $name, $value ) {}
