@@ -14,7 +14,7 @@
 	{assign var=cookie_key value="show_attzone"}
 	id="attzone"
 {/if}
-{if (isset($smarty.session.tiki_cookie_jar.$cookie_key) and $smarty.session.tiki_cookie_jar.$cookie_key eq 'y')
+{if $nohide_atts or (isset($smarty.session.tiki_cookie_jar.$cookie_key) and $smarty.session.tiki_cookie_jar.$cookie_key eq 'y')
 or (!isset($smarty.session.tiki_cookie_jar.$cookie_key) and $prefs.w_displayed_default eq 'y')}
 	style="display:block;"
 {else}

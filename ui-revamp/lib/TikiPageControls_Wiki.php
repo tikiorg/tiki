@@ -32,7 +32,7 @@ class TikiPageControls_Wiki extends TikiPageControls
 
 	function build() // {{{
 	{
-		switch($mode) {
+		switch($this->getMode()) {
 		case 'translate_new':
 		case 'translate_update':
 			$this->setHeading( tr('%0 (translation of %1)', $this->page, $this->translationSource), $this->link( 'wiki page', $this->page ) );
@@ -459,8 +459,10 @@ class TikiPageControls_Wiki extends TikiPageControls
 		if( $this->hasPref('feature_wiki_attachments')
 		 && $this->hasPerm('tiki_p_wiki_view_attachments') ) {
 			// TODO : Determine where this goes
-			$link = $this->link( 'url', 'tiki-index.php', array(
-				'page' => $this->page
+			$link = $this->link( 'url', 'tiki-view_attachments.php', array(
+				'objectType' => 'wiki page',
+				'objectId' => $this->page,
+				'objectName' => $this->page,
 			) );
 			$this->addTab( 'attachments', tra('Attachments'), $link, $this->getAttachmentCount() )
 				->setSelected( $this->isMode('attach') );
@@ -504,7 +506,7 @@ class TikiPageControls_Wiki extends TikiPageControls
 			return $this->canEdit;
 
 		global $wikilib; require_once 'lib/wiki/wikilib.php';
-		$this->canEdit = $wikilib->is_editable($this->page, $this->user, $this->info);
+		$this->canEdit = $wikilib->is_editable($this->page, $this->getUser(), $this->info);
 		return $this->canEdit;
 	} // }}}
 
@@ -537,7 +539,7 @@ class TikiPageControls_Wiki extends TikiPageControls
 		if( ! is_null( $this->canSlideshow ) )
 			return $this->canSlideshow;
 
-		if ($prefs['wiki_uses_slides'] != 'y') {
+		if ($this->hasPref('wiki_uses_slides') != 'y') {
 			return $this->canSlideshow = false;
 		}
 

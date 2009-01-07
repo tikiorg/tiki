@@ -367,38 +367,38 @@ if ($prefs['feature_wiki_comments'] == 'y' and $tiki_p_wiki_view_comments == 'y'
 }
 
 if($prefs['feature_wiki_attachments'] == 'y') {
-    if(isset($_REQUEST['removeattach'])) {
-	check_ticket('index');
-	$owner = $wikilib->get_attachment_owner($_REQUEST['removeattach']);
-	if( ($user && ($owner == $user) ) || ($tiki_p_wiki_admin_attachments == 'y') ) {
-		$area = 'removeattach';
-	    if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
-			key_check($area);
-			$wikilib->remove_wiki_attachment($_REQUEST['removeattach']);
-		} else {
-			key_get($area);
+	if(isset($_REQUEST['removeattach'])) {
+		check_ticket('index');
+		$owner = $wikilib->get_attachment_owner($_REQUEST['removeattach']);
+		if( ($user && ($owner == $user) ) || ($tiki_p_wiki_admin_attachments == 'y') ) {
+			$area = 'removeattach';
+			if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+				key_check($area);
+				$wikilib->remove_wiki_attachment($_REQUEST['removeattach']);
+			} else {
+				key_get($area);
+			}
+		}
+		$pageRenderer->setShowAttachments( 'y' );
+	}
+	if(isset($_REQUEST['attach']) && ($tiki_p_wiki_admin_attachments == 'y' || $tiki_p_wiki_attach_files == 'y')) {
+		check_ticket('index');
+		// Process an attachment here
+		if(isset($_FILES['userfile1'])&&is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
+			$ret = $tikilib->attach_file($_FILES['userfile1']['name'], $_FILES['userfile1']['tmp_name'], $prefs['w_use_db']== 'y'? 'db': 'dir');	
+			if ($ret['ok']) {
+				// Set "data" field only if we're using db
+				if( $prefs['w_use_db'] == 'y' )
+				{
+					$wikilib->wiki_attach_file($page, $_FILES['userfile1']['name'], $_FILES['userfile1']['type'], $_FILES['userfile1']['size'], $ret['data'], $_REQUEST['attach_comment'], $user, $ret['fhash']);
+				} else {
+					$wikilib->wiki_attach_file($page, $_FILES['userfile1']['name'], $_FILES['userfile1']['type'], $_FILES['userfile1']['size'], '', $_REQUEST['attach_comment'], $user, $ret['fhash']);
+				}
+			} else {
+				$access->display_error( '', $ret['error'] );
+			}		
 		}
 	}
-	$pageRenderer->setShowAttachments( 'y' );
-    }
-    if(isset($_REQUEST['attach']) && ($tiki_p_wiki_admin_attachments == 'y' || $tiki_p_wiki_attach_files == 'y')) {
-	check_ticket('index');
-	// Process an attachment here
-	if(isset($_FILES['userfile1'])&&is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
-	    $ret = $tikilib->attach_file($_FILES['userfile1']['name'], $_FILES['userfile1']['tmp_name'], $prefs['w_use_db']== 'y'? 'db': 'dir');	
-	    if ($ret['ok']) {
-	    	// Set "data" field only if we're using db
-	    	if( $prefs['w_use_db'] == 'y' )
-		{
-		    $wikilib->wiki_attach_file($page, $_FILES['userfile1']['name'], $_FILES['userfile1']['type'], $_FILES['userfile1']['size'], $ret['data'], $_REQUEST['attach_comment'], $user, $ret['fhash']);
-		} else {
-		    $wikilib->wiki_attach_file($page, $_FILES['userfile1']['name'], $_FILES['userfile1']['type'], $_FILES['userfile1']['size'], '', $_REQUEST['attach_comment'], $user, $ret['fhash']);
-		}
-	    } else {
-			$access->display_error( '', $ret['error'] );
-		}		
-	}
-    }
 
 	if( isset( $_REQUEST['sort_mode'] ) )
 		$pageRenderer->setSortMode( $_REQUEST['sort_mode'] );
