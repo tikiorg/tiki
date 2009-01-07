@@ -63,6 +63,7 @@ class TikiPageControls_Element implements ArrayAccess
 		case 'selected': return $this->selected;
 		case 'full': return $this->getFullLink();
 		case 'icon': return $this->getIconLink();
+		case 'button': return $this->getButton();
 		case 'iconsrc': return $this->iconPath;
 		}
 	} // }}}
@@ -121,6 +122,18 @@ class TikiPageControls_Element implements ArrayAccess
 			return '<a href="' . htmlentities($this->link->getHref(), ENT_QUOTES, 'UTF-8') . '">' . $body . '</a>';
 		} else {
 			return $body;
+		}
+	} // }}}
+
+	private function getButton() // {{{
+	{
+		require_once 'lib/smarty_tiki/function.button.php';
+
+		if( $this->link ) {
+			return smarty_function_button( array(
+				'href' => $this->link->getHref(),
+				'_text' => $this->text,
+			), $GLOBALS['smarty'] );
 		}
 	} // }}}
 
