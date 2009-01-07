@@ -21,8 +21,8 @@ class DeclFilter implements Zend_Filter_Interface
 	{
 		$filter = new self;
 
-		foreach( $configuration as $list ) {
-			if (is_array($list)) {
+		foreach( $configuration as $key => $list ) {
+			if (is_array($list) && is_numeric( $key ) ) {
 				foreach( $list as $method => $argument ) {
 					$real = 'add' . ucfirst( $method );
 
@@ -35,6 +35,8 @@ class DeclFilter implements Zend_Filter_Interface
 						trigger_error( 'Disallowed filtering rule: ' . $method, E_USER_ERROR );
 					}
 				}
+			} else {
+				trigger_error( 'Invalid input configuration structure', E_USER_ERROR );
 			}
 		}
 

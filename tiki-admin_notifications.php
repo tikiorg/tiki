@@ -6,8 +6,8 @@
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
-$inputConfiguration = array(
-	array('staticKeyFilters' => array(
+$inputConfiguration = array( array(
+	'staticKeyFilters' => array(
 		'offset' => 'digits',
 		'maxRecords' => 'digits',
 		'sort_mode' => 'word',
@@ -18,13 +18,12 @@ $inputConfiguration = array(
 
 		'add' => 'alpha',
 		'delsel_x' => 'alpha',
-	) ),
-	array('staticKeyFiltersForArrays' => array(
+	),
+	'staticKeyFiltersForArrays' => array(
 		'checked' => 'alnum',
-	) ),
-	array('catchAllUnset' => null,
-	)
-);
+	),
+	'catchAllUnset' => null,
+) );
 
 // Initialization
 require_once ('tiki-setup.php');
