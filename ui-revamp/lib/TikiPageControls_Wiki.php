@@ -182,7 +182,7 @@ class TikiPageControls_Wiki extends TikiPageControls
 	{
 		$actionMenu = $this->addMenu( 'actions', tra('Actions') );
 
-		if( $this->hasPerm('tiki_p_rename') ) {
+		if( $this->hasPerm('tiki_p_rename') && $this->page != 'sandbox' ) {
 			$link = $this->link( 'url', 'tiki-rename_page.php', array(
 				'page' => $this->page,
 			) );
@@ -411,7 +411,7 @@ class TikiPageControls_Wiki extends TikiPageControls
 		$this->addTab( 'view', tra('View'), $link )
 			->setSelected( $this->isMode('view') );
 
-		if( $this->hasPerm('tiki_p_edit') ) {
+		if( $this->getEditablePageName() ) {
 			$link = $this->link( 'url', 'tiki-editpage.php', array(
 				'page' => $this->page
 			) );
@@ -499,6 +499,19 @@ class TikiPageControls_Wiki extends TikiPageControls
 		return $this->canUndo;
 		
 	} // }}}
+
+	private function getEditablePageName()
+	{
+		if( ! $this->canEdit() )
+			return;
+
+		if( $this->hasPerm('tiki_p_edit') 
+			|| $this->page == 'sandbox'
+			|| $this->hasPerm( 'tiki_p_admin_wiki' ) ) {
+
+			return $this->page;
+		}
+	}
 
 	private function canEdit() // {{{
 	{
