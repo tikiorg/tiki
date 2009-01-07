@@ -101,7 +101,11 @@ class TikiPageControls_Element implements ArrayAccess
 	private function getIcon() // {{{
 	{
 		if( $this->iconPath ) {
-			return '<img src="' . htmlentities($this->iconPath, ENT_QUOTES, 'UTF-8') . '" alt="' . htmlentities($this->text, ENT_QUOTES, 'UTF-8') . '" title="' . htmlentities($this->text, ENT_QUOTES, 'UTF-8') . '" class="icon"/>';
+			require_once 'lib/smarty_tiki/function.icon.php';
+			return smarty_function_icon( array(
+				'_id' => $this->iconPath,
+				'_text' => $this->text
+			), $GLOBALS['smarty'] );
 		}
 	} // }}}
 
@@ -467,7 +471,7 @@ abstract class TikiPageControls implements ArrayAccess
 		$this->help
 			->setText( tra('Help') )
 			->setLink( $link )
-			->setIcon( 'pics/icons/help.png' );
+			->setIcon( 'help' );
 	} // }}}
 
 	private function renderTemplate( $template ) // {{{

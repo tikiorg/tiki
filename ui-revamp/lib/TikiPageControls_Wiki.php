@@ -196,7 +196,7 @@ class TikiPageControls_Wiki extends TikiPageControls
 				'version' => 'last',
 			) );
 			$actionMenu->addItem( tra('Remove'), $link, 'remove' )
-				->setIcon( 'pics/icons/cross.png' )
+				->setIcon( 'cross' )
 				->setSelected( $this->isMode('remove') );
 		}
 
@@ -229,7 +229,7 @@ class TikiPageControls_Wiki extends TikiPageControls
 				'permType' => 'wiki',
 			) );
 			$actionMenu->addItem( tra('Permissions'), $link, 'permissions' )
-				->setIcon( 'pics/icons/key.png' )
+				->setIcon( 'key' )
 				->setSelected( $this->isMode('permissions') );
 		}
 
@@ -303,7 +303,7 @@ class TikiPageControls_Wiki extends TikiPageControls
 				'page' => $this->page,
 			) );
 			$actionMenu->addItem( tra('PDF'), $link, 'pdf' )
-				->setIcon( 'pics/icons/page_white_acrobat.png' );
+				->setIcon( 'page_white_acrobat' );
 		}
 
 		if( $this->hasPref('feature_wiki_print') ) {
@@ -313,7 +313,7 @@ class TikiPageControls_Wiki extends TikiPageControls
 
 			$link = $this->link( 'url', 'tiki-print.php', $args );
 			$actionMenu->addItem( tra('Print'), $link, 'print' )
-				->setIcon('pics/icons/printer.png');
+				->setIcon('printer');
 		}
 
 		if( $this->hasPref('feature_morcego', 'wiki_feature_3d') ) {
@@ -323,7 +323,7 @@ class TikiPageControls_Wiki extends TikiPageControls
 				$this->getPref('wiki_3d_height'),
 			) );
 			$actionMenu->addItem( tra('3d browser'), $link, '3dbrowser' )
-				->setIcon( 'pics/icons/wiki3d.png' );
+				->setIcon( 'wiki3d' );
 		}
 
 		if( $this->isCached ) {
@@ -331,7 +331,7 @@ class TikiPageControls_Wiki extends TikiPageControls
 				'refresh' => 1,
 			) );
 			$actionMenu->addItem( tra('Refresh cache'), $link, 'refresh' )
-				->setIcon( 'pics/icons/refresh.png' );
+				->setIcon( 'refresh' );
 		}
 
 		if( $this->hasPref('feature_tell_a_friend') 
@@ -341,7 +341,7 @@ class TikiPageControls_Wiki extends TikiPageControls
 				'url' => $_SERVER['REQUEST_URI'],
 			) );
 			$actionMenu->addItem( tra('Send a link'), $link, 'tellafriend' )
-				->setIcon( 'pics/icons/email_link.png' );
+				->setIcon( 'email_link' );
 		}
 
 		if( $this->getUser() 
@@ -353,7 +353,7 @@ class TikiPageControls_Wiki extends TikiPageControls
 				$args['page_ref_id'] = $this->structureInfo['page_ref_id'];
 			$link = $this->link( 'wiki page', $this->page, $args );
 			$actionMenu->addItem( tra('Save to notepad'), $link, 'notepad' )
-				->setIcon( 'pics/icons/disk.png' );
+				->setIcon( 'disk' );
 		}
 
 		if( $this->getUser()
@@ -419,17 +419,17 @@ class TikiPageControls_Wiki extends TikiPageControls
 			case 'translate_new':
 			case 'translate_update':
 				$this->addTab( 'edit', tra('Translate'), $link )
-					->setIcon( 'pics/icons/page_edit.png' )
+					->setIcon( 'page_edit' )
 					->setSelected( $this->isMode('translate_new', 'translate_update') );
 				break;
 			case 'edit_section':
 				$this->addTab( 'edit', tra('Edit Section'), $link )
-					->setIcon( 'pics/icons/page_edit.png' )
+					->setIcon( 'page_edit' )
 					->setSelected( $this->isMode('edit_section') );
 				break;
 			default:
 				$this->addTab( 'edit', tra('Edit'), $link )
-					->setIcon( 'pics/icons/page_edit.png' )
+					->setIcon( 'page_edit' )
 					->setSelected( $this->isMode('edit') );
 				break;
 			}
@@ -472,7 +472,7 @@ class TikiPageControls_Wiki extends TikiPageControls
 				'page' => $this->page
 			) );
 			$this->addTab( 'history', tra('History'), $link )
-				->setIcon( 'pics/icons/page_white_stack.png' )
+				->setIcon( 'page_white_stack' )
 				->setSelected( $this->isMode('history') );
 		}
 
