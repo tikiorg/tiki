@@ -791,9 +791,12 @@ a.phplmselected:hover {color: #808080}
 	z-index: 215;
 	background: #ccdceb url(coelesce/tiki-centerbg.jpg) repeat-x;}
 
-.pageactions .cssmenu > li {
+.pageactions .cssmenu > li.more {
 	padding-right: 5px;
 	background: url(../lib/phplayers/images/down-galaxy.png) 90% 75% no-repeat}
+
+.pageactions .cssmenu > li {
+	padding-right: 5px; }
 
 .pageactions .cssmenu li ul * {min-width: 8em}
 

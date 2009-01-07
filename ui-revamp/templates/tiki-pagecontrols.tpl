@@ -4,7 +4,7 @@
 		<div class="pageactions">
 			<ul class="clearfix cssmenu">
 				{foreach from=$controls.menus item=menu}
-					<li><a href="#" title="{$menu} items">{$menu}</a>
+					<li{if $menu.items} class="more"{/if}><a href="#" title="{$menu} items">{$menu}</a>
 						<ul>
 							{foreach from=$menu.items item=item}
 								{if $item.selected}
