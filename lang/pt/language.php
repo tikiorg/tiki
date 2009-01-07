@@ -5495,6 +5495,7 @@ $lang=Array(
 "Allow secure (https) login" => "Permitir login seguro (https)",
 "Encourage secure (https) login" => "Encourajar login seguro (HTTPS)",
 "Consider we are in always in HTTPS, but do not check" => "Assumir HTTPS, mas sem verificar",
+"Consider we are always in HTTPS, but do not check" => "Assumir HTTPS, mas sem verificar",
 "Require secure (https) login" => "Exigir login seguro (https)",
 "Just Tiki" => "Apenas Tiki",
 "Web Server" => "Servidor Web",

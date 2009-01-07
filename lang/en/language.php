@@ -511,6 +511,7 @@ $lang=Array(
 // "Allow secure (https) login" => "Allow secure (https) login",
 // "Encourage secure (https) login" => "Encourage secure (https) login",
 // "Consider we are in always in HTTPS, but do not check" => "Consider we are in always in HTTPS, but do not check",
+// "Consider we are always in HTTPS, but do not check" => "Consider we are in always in HTTPS, but do not check",
 // "Require secure (https) login" => "Require secure (https) login",
 // "crypt-md5" => "crypt-md5",
 // "crypt-des" => "crypt-des",
