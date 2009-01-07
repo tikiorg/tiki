@@ -815,8 +815,8 @@ class WikiLib extends TikiLib {
 
 	// get all modified pages for a user (if actionlog is not clean
 	function get_user_all_pages($user, $sort_mode) {
-		$query = "select  distinct(p.`pageName`), p.`user` as lastEditor, p.`creator`, max(a.`lastModif`) as date from `tiki_actionlog` as a, `tiki_pages` as p where a.`object`= p.`pageName` and a.`user`= ? group by p.`pagename` order by ".$this->convert_sortmode($sort_mode);
-		$result = $this->query($query, array($user));
+		$query = "select  distinct(p.`pageName`), p.`user` as lastEditor, p.`creator`, max(a.`lastModif`) as date from `tiki_actionlog` as a, `tiki_pages` as p where a.`object`= p.`pageName` and a.`user`= ? and (a.`action`=? or a.`action`=?) group by p.`pagename` order by ".$this->convert_sortmode($sort_mode);
+		$result = $this->query($query, array($user, 'Updated', 'Created'));
 		$ret = array();
 		while ($res = $result->fetchRow()) {
 				$ret[] = $res;
