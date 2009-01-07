@@ -14,8 +14,7 @@
 {/if}
 		</div>
 
-{* Display the entire page controls here. See tiki-pagecontrols.tpl *}
-{$object_page_controls.header}
+{include file='tiki-pagecontrols.tpl' controls=$object_page_controls}
 
 {* Superseeded by page controls? TODO : Verify and clean-up
 {if $print_page ne 'y'}

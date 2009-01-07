@@ -59,7 +59,7 @@ window.onload = timeIt;
 {/if}
 
 {* Page controls... see tiki-pagecontrols.tpl *}
-{$object_page_controls.header}
+{include file='tiki-pagecontrols.tpl' controls=$object_page_controls}
    
 {if $beingStaged eq 'y'}
 <br /><div class="tocnav">{icon _id=information style="vertical-align:middle" align="left"} 
@@ -473,5 +473,5 @@ function searchrep() {
 </form>
 <br />
 {include file='tiki-page_bar.tpl'}
-{$object_page_controls.footer}
+{include file='tiki-pagecontrols-footer.tpl' controls=$object_page_controls}
 {include file='tiki-edit_help.tpl'}

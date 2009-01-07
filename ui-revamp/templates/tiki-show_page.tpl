@@ -264,4 +264,4 @@ must not overlap the wiki content that could contain floated elements *}
 {include  file=tiki-page_bar.tpl}
 {/if}
 {/if}
-{$object_page_controls.footer}
+{include file='tiki-pagecontrols-footer.tpl' controls=$object_page_controls}

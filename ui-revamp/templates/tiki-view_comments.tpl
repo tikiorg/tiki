@@ -1,7 +1,7 @@
 
-{$object_page_controls.header}
+{include file='tiki-pagecontrols.tpl' controls=$object_page_controls}
 
 {include file=comments.tpl}
 
-{$object_page_controls.footer}
+{include file='tiki-pagecontrols-footer.tpl' controls=$object_page_controls}
 

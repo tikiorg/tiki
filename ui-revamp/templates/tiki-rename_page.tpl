@@ -1,5 +1,5 @@
 {assign var=thispage value=$page|escape:url}
-{$object_page_controls.header}
+{include file='tiki-pagecontrols.tpl' controls=$object_page_controls}
 
 <form action="tiki-rename_page.php" method="post">
   <input type="hidden"  name="page" value="{$page|escape}" />
@@ -18,4 +18,4 @@
 
 {include file=tiki-page_bar.tpl}
 
-{$object_page_controls.footer}
+{include file='tiki-pagecontrols-footer.tpl' controls=$object_page_controls}

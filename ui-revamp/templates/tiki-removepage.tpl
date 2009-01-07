@@ -1,6 +1,6 @@
 {assign var=thispage value=$page|escape:'url'}
 
-{$object_page_controls.header}
+{include file='tiki-pagecontrols.tpl' controls=$object_page_controls}
 
 <form action="tiki-removepage.php" method="post">
   <p>{tr}You are about to remove the page{/tr} {$page} {tr}permanently{/tr}.</p>
@@ -11,4 +11,4 @@
   <input type="submit" name="remove" value="{tr}Remove{/tr}" />
 </form>
 
-{$object_page_controls.footer}
+{include file='tiki-pagecontrols-footer.tpl' controls=$object_page_controls}

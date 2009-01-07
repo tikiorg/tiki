@@ -1,4 +1,4 @@
-{$object_page_controls.header}
+{include file='tiki-pagecontrols.tpl' controls=$object_page_controls}
 {if $likepages|@count ge '2'}
 <ul>
 {section name=back loop=$likepages}
@@ -16,4 +16,4 @@
 
 {include file=tiki-page_bar.tpl}
 
-{$object_page_controls.footer}
+{include file='tiki-pagecontrols-footer.tpl' controls=$object_page_controls}

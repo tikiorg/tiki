@@ -1,7 +1,7 @@
 {* $Id$ *}
 
 {if $object_page_controls}
-	{$object_page_controls.header}
+	{include file='tiki-pagecontrols.tpl' controls=$object_page_controls}
 {else}
 {title help="Permission"}{tr}Assign permissions to {/tr}{tr}{$objectType|escape}{/tr}: {$objectName|escape}{/title}
 
@@ -189,5 +189,5 @@
 </fieldset>
 
 {if $object_page_controls}
-	{$object_page_controls.footer}
+	{include file='tiki-pagecontrols-footer.tpl' controls=$object_page_controls}
 {/if}

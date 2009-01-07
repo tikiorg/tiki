@@ -1,4 +1,4 @@
-{$object_page_controls.header}
+{include file='tiki-pagecontrols.tpl' controls=$object_page_controls}
 <a class="link" href="tiki-list_blogs.php">{tr}Blogs{/tr}</a> {$prefs.site_crumb_seper} {$title}
 {if strlen($heading) > 0}
   {eval var=$heading}
@@ -135,4 +135,4 @@
 
   {include file=comments.tpl}
 {/if}
-{$object_page_controls.footer}
+{include file='tiki-pagecontrols-footer.tpl' controls=$object_page_controls}

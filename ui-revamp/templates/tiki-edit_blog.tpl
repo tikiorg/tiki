@@ -1,4 +1,4 @@
-{$object_page_controls.header}
+{include file='tiki-pagecontrols.tpl' controls=$object_page_controls}
 
 <div class="navbar">
 	{button href="tiki-list_blogs.php" _text="{tr}List Blogs{/tr}"}
@@ -106,4 +106,4 @@
   </table>
 </form>
 <br />
-{$object_page_controls.footer}
+{include file='tiki-pagecontrols-footer.tpl' controls=$object_page_controls}

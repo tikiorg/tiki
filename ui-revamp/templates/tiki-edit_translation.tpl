@@ -1,5 +1,5 @@
 {if $object_page_controls}
-	{$object_page_controls.header}
+	{include file='tiki-pagecontrols.tpl' controls=$object_page_controls}
 {else}
 	{title help="i18n" admpage="i18n"}{tr}Translate:{/tr}&nbsp;{$name}{if isset($languageName)}&nbsp;({$languageName}, {$langpage}){/if}{/title}
 
@@ -147,5 +147,5 @@ function validate_translation_request() {
 	</form>
 {/if}
 {if $object_page_controls}
-	{$object_page_controls.footer}
+	{include file='tiki-pagecontrols-footer.tpl' controls=$object_page_controls}
 {/if}
