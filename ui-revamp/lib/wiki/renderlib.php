@@ -622,6 +622,8 @@ class WikiRenderer
 
 	function hasSlideshow() // {{{
 	{
+		global $prefs;
+
 		if( ! is_null( $this->canSlideshow ) )
 			return $this->canSlideshow;
 
