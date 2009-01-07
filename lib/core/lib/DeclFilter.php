@@ -22,16 +22,18 @@ class DeclFilter implements Zend_Filter_Interface
 		$filter = new self;
 
 		foreach( $configuration as $list ) {
-			foreach( $list as $method => $argument ) {
-				$real = 'add' . ucfirst( $method );
+			if (is_array($list)) {
+				foreach( $list as $method => $argument ) {
+					$real = 'add' . ucfirst( $method );
 
-				// Accept all methods begining with 'add' except those that are disallowed
-				if( method_exists( $filter, $real ) 
-					&& ! in_array( $method, $reject )
-				) {
-					$filter->$real( $argument );
-				} else {
-					trigger_error( 'Disallowed filtering rule: ' . $method, E_USER_ERROR );
+					// Accept all methods begining with 'add' except those that are disallowed
+					if( method_exists( $filter, $real ) 
+						&& ! in_array( $method, $reject )
+						) {
+						$filter->$real( $argument );
+					} else {
+						trigger_error( 'Disallowed filtering rule: ' . $method, E_USER_ERROR );
+					}
 				}
 			}
 		}

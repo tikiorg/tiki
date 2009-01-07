@@ -7,7 +7,7 @@
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 $inputConfiguration = array(
-	'staticKeyFilters' => array(
+	array('staticKeyFilters' => array(
 		'offset' => 'digits',
 		'maxRecords' => 'digits',
 		'sort_mode' => 'word',
@@ -18,11 +18,12 @@ $inputConfiguration = array(
 
 		'add' => 'alpha',
 		'delsel_x' => 'alpha',
-	),
-	'staticKeyFiltersForArrays' => array(
+	) ),
+	array('staticKeyFiltersForArrays' => array(
 		'checked' => 'alnum',
-	),
-	'catchAllUnset' => null,
+	) ),
+	array('catchAllUnset' => null,
+	)
 );
 
 // Initialization
