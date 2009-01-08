@@ -90,11 +90,11 @@
     </div>
   {/if}
 
-  {if $prefs.feature_trackers eq 'y' and $mytiki_items eq 'y'}
+  {if $prefs.feature_trackers eq 'y' and $mytiki_user_items eq 'y'}
     <div id="content3" class="content">
       <div class="cbox">
         <div class="cbox-title">
-          {if $userwatch eq $user}{tr}My items{/tr}{else}{tr}Assigned items{/tr}{/if}
+          {if $userwatch eq $user}{tr}My User Items{/tr}{else}{tr}User Items{/tr}{/if}
         </div>
         <div class="cbox-data">
           <table class="normal">
