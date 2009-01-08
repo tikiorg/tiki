@@ -129,6 +129,15 @@ if ($prefs['feature_workflow'] == 'y' && $tiki_p_use_workflow == 'y') {
 		$smarty->assign('mytiki_workflow', 'y');
 	}
 }
+if ($prefs['feature_articles'] == 'y') {
+	$mytiki_articles = $tikilib->get_user_preference($user, 'mytiki_articles', 'y');
+	if ($mytiki_articles == 'y') {
+		include_once ('lib/articles/artlib.php');
+		$user_articles = $artlib->get_user_articles($userwatch, -1);
+		$smarty->assign_by_ref('user_articles', $user_articles);
+		$smarty->assign('mytiki_articles', 'y');
+	}
+}
 
 include_once ('tiki-section_options.php');
 

@@ -90,6 +90,37 @@
     </div>
   {/if}
 
+  {if $prefs.feature_articles eq 'y' and $mytiki_articles eq 'y'}
+    <div id="content2" class="content">
+      <div class="cbox">
+        <div class="cbox-title">
+          {if $userwatch eq $user}{tr}My Articles{/tr}{else}{tr}User Articles{/tr}{/if}
+        </div>
+        <div class="cbox-data">
+          <table class="normal">
+            <tr>
+              <th>{tr}Article{/tr}</th>
+              <th style="width:50px">{tr}Actions{/tr}</th>
+            </tr>
+            {cycle values="even,odd" print=false}
+            {section name=ix loop=$user_articles}
+              <tr>
+                <td class="{cycle advance=false}">
+                  <a class="link" href="{$user_articles[ix].articleId|sefurl:article}">{$user_articles[ix].title}</a>
+                </td>
+                <td class="{cycle}" style="text-align:center;" width="50px">
+                  <a class="link" href="tiki-edit_article.php?articleId={$user_articles[ix].articleId}">
+                    {icon _id='page_edit'}
+                  </a>
+                </td>
+              </tr>
+            {/section}
+          </table>
+        </div>
+      </div>
+    </div>
+  {/if}
+
   {if $prefs.feature_trackers eq 'y' and $mytiki_user_items eq 'y'}
     <div id="content3" class="content">
       <div class="cbox">

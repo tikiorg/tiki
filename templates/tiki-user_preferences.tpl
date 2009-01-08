@@ -489,6 +489,15 @@
       {/if}
     {/if}
 
+    {if $prefs.feature_articles eq 'y'}
+      <tr>
+        <td class="{cycle advance=false}">{tr}My Articles{/tr}</td>
+        <td class="{cycle}">
+          <input type="checkbox" name="mytiki_articles" {if $user_prefs.mytiki_articles eq 'y'}checked="checked"{/if} />
+        </td>
+      </tr>
+    {/if}
+
     {if $prefs.feature_userlevels eq 'y'}
       <tr>
         <td class="{cycle advance=false}">{tr}My level{/tr}</td>

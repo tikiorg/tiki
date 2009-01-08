@@ -298,6 +298,11 @@ if ($prefs['feature_userPreferences'] == 'y' && isset($_REQUEST["new_prefs"])) {
 	} else {
 		$tikilib->set_user_preference($userwatch, 'mytiki_workflow', 'n');
 	}
+	if (isset($_REQUEST['mytiki_articles']) && $_REQUEST['mytiki_articles'] == 'on') {
+		$tikilib->set_user_preference($userwatch, 'mytiki_articles', 'y');
+	} else {
+		$tikilib->set_user_preference($userwatch, 'mytiki_articles', 'n');
+	}
 
 	if (isset($_REQUEST['tasks_maxRecords']))
 		$tikilib->set_user_preference($userwatch, 'tasks_maxRecords', $_REQUEST['tasks_maxRecords']);

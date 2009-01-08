@@ -36,6 +36,12 @@ function smarty_modifier_sefurl($source, $type='wiki', $with_next = '' ) {
 	        } else {
 	            return 'tiki-browse_gallery.php?galleryId='. $source . ($with_next ? '&' : '');
 		}
+	case 'article':
+		if ($prefs['feature_sefurl'] == 'y') {
+			return 'article'.$source . ($with_next ? '?' : '') ;
+		} else {
+			return 'tiki-read_article.php?articleId='. $source . ($with_next ? '&' : '');
+		}
 	}
 
 
