@@ -45,6 +45,7 @@ class TikiFilter
 		case 'wikicontent':
 			require_once 'TikiFilter/RawUnsafe.php';
 			return new TikiFilter_RawUnsafe;
+		case 'email':
 		case 'url':
 		case 'lang':
 			// TODO

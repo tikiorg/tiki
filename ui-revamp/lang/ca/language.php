@@ -2234,6 +2234,7 @@ $lang=Array(
 // "20 hours" => "20 hours",
 // "1 year" => "1 year",
 // "Consider we are in always in HTTPS, but do not check" => "Consider we are in always in HTTPS, but do not check",
+// "Consider we are always in HTTPS, but do not check" => "Consider we are in always in HTTPS, but do not check",
 // "crypt-md5" => "crypt-md5",
 // "crypt-des" => "crypt-des",
 // "Shibboleth" => "Shibboleth",
