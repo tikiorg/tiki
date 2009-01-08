@@ -437,9 +437,10 @@ class TikiPageControls_Wiki extends TikiPageControls
 
 		if( $this->hasPref('feature_categories')
 		 && $this->hasPerm('tiki_p_view_categories') ) {
-			// TODO : Determine where this goes
-			$link = $this->link( 'url', 'tiki-index.php', array(
-				'page' => $this->page
+			$link = $this->link( 'url', 'tiki-view_categories.php', array(
+				'objectType' => 'wiki page',
+				'objectId' => $this->page,
+				'objectName' => $this->page,
 			) );
 			$this->addTab( 'categories', tra('Categorize'), $link )
 				->setSelected( $this->isMode('category') );
