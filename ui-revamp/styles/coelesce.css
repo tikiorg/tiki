@@ -2120,12 +2120,6 @@ div.gallerypath a:hover {}
 /* also for categorize.tpl */
 div.multiselect {
 	vertical-align: middle;
-	/*overflow-y: auto;
-	overflow-x: hidden;*/
-	overflow: auto;
-	height: 5em;
-	width: 100%;
-	border: 1px solid #696969}
 
 /***** Calendar *****/
 /* Overrides calendar.css, etc. */
