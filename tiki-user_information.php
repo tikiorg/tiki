@@ -19,6 +19,7 @@ include_once ('lib/trackers/trackerlib.php');
 if (isset($_REQUEST['userId'])) {
 	$userwatch = $tikilib->get_user_login($_REQUEST['userId']);
 	if ($userwatch === NULL) {
+		$smarty->assign('errortype', 'no_redirect_login');
 		$smarty->assign('msg', tra("Unknown user"));
 		$smarty->display("error.tpl");
 		die;
@@ -26,6 +27,7 @@ if (isset($_REQUEST['userId'])) {
 } elseif (isset($_REQUEST['view_user'])) {
 	$userwatch = $_REQUEST['view_user'];
 	if (!$userlib->user_exists($userwatch)) {
+		$smarty->assign('errortype', 'no_redirect_login');
 		$smarty->assign('msg', tra("Unknown user"));
 		$smarty->display("error.tpl");
 		die;
@@ -58,6 +60,7 @@ if ($tiki_p_admin != 'y') {
 
 	// If the user is trying to pull info on themselves, allow it.
 	if ($user_information == 'private' && $userwatch != $user) {
+		$smarty->assign('errortype', 'no_redirect_login');
 		$smarty->assign('msg', tra("The user has chosen to make his information private"));
 		$smarty->display("error.tpl");
 		die;
