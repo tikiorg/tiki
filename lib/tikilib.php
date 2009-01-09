@@ -593,6 +593,9 @@ class TikiLib extends TikiDB {
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
+			if (!$this->user_has_perm_on_object($user, $res['trackerId'], 'tracker', 'tiki_p_view_trackers')) {
+				continue;
+			}
 			$itemId = $res["itemId"];
 
 			$trackerId = $res["trackerId"];
@@ -2707,7 +2710,9 @@ class TikiLib extends TikiDB {
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
-			$ret[] = $res;
+			if ($this->user_has_perm_on_object($user, $res['blogId'], 'blog', 'tiki_p_read_blog')) {
+				$ret[] = $res;
+			}
 		}
 		return $ret;
 	}
@@ -4868,7 +4873,9 @@ class TikiLib extends TikiDB {
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
-			$ret[] = $res;
+			if ($this->user_has_perm_on_object($user, $res['galleryId'], 'image gallery', 'tiki_p_view_image_gallery')) {
+				$ret[] = $res;
+			}
 		}
 		return $ret;
 	}

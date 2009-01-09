@@ -819,7 +819,9 @@ class WikiLib extends TikiLib {
 		$result = $this->query($query, array($user, 'Updated', 'Created'));
 		$ret = array();
 		while ($res = $result->fetchRow()) {
+			if ($this->user_has_perm_on_object($user, $res['pageName'], 'wiki page', 'tiki_p_view')) {
 				$ret[] = $res;
+			}
 		}
 		return $ret;
 	}

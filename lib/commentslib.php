@@ -1244,7 +1244,9 @@ class Comments extends TikiLib {
 	$ret = array();
 	
 	while ($res = $result->fetchRow()) {
-	    $ret[] = $res;
+		if ($this->user_has_perm_on_object($user, $res['forumId'], 'forum', 'tiki_p_forum_read')) {
+			$ret[] = $res;
+		}
 	}
 	
 	return $ret;
