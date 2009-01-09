@@ -15,10 +15,10 @@ $tagname = "";
 $tagid = 0;
 if (isset($sections[$section])) {
 	$par = $sections[$section];
-	if (isset($par['itemkey']) and isset($_REQUEST["{$par['itemkey']}"])) {
+	if (isset($par['itemkey']) && !empty($_REQUEST["{$par['itemkey']}"])) {
 		$tagid = $_REQUEST["{$par['itemkey']}"];
-		$taglabel = "$section $key";
-	} elseif (isset($par['key']) and isset($_REQUEST["{$par['key']}"])) {
+		$taglabel = "$section ".$_REQUEST[$par['key']];
+	} elseif (isset($par['key']) && !empty($_REQUEST["{$par['key']}"])) {
 		$tagid = $_REQUEST["{$par['key']}"];
 		$taglabel = $section;
 	}
