@@ -154,7 +154,7 @@
 <table class="normal">
 {cycle values="even,odd" print=false}
 {section name=ix loop=$user_items}
-<tr><td class="{cycle}"> <a class="link" title="{tr}View{/tr}" href="tiki-view_tracker.php?trackerId={$user_items[ix].trackerId}">{$user_items[ix].name}</a></td></tr>
+<tr><td class="{cycle}"> <a class="link" title="{tr}View{/tr}" href="tiki-view_tracker_item.php?trackerId={$user_items[ix].trackerId}&amp;itemId={$user_items[ix].itemId}">{$user_items[ix].name|escape}: {$user_items[ix].value}</a></td></tr>
 {/section}
 </table>
 {/if}
