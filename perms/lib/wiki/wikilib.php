@@ -245,6 +245,8 @@ class WikiLib extends TikiLib {
 		$newId = 'wikipage' . $newName;
 		$query = "update `tiki_user_watches` set `object`=? where `object`=?";
 		$this->query($query, array( $newId, $oldId ) );
+		$query = "update `tiki_group_watches` set `object`=? where `object`=?";
+		$this->query($query, array( $newId, $oldId ) );
 
 		// theme_control_objects(objId,name)
 		$oldId = md5('wiki page' . $oldName);
@@ -289,6 +291,8 @@ class WikiLib extends TikiLib {
 		// ... then update the watches table
 		// user watches
 		$query = "update `tiki_user_watches` set `object`=?, `title`=?, `url`=? where `object`=? and `type` = 'wiki page'";
+		$this->query($query, array( $newName, $newName, 'tiki-index.php?page='.$newName, $oldName ) );
+		$query = "update `tiki_group_watches` set `object`=?, `title`=?, `url`=? where `object`=? and `type` = 'wiki page'";
 		$this->query($query, array( $newName, $newName, 'tiki-index.php?page='.$newName, $oldName ) );
 
 		// now send notification email to all on the watchlist:
@@ -810,11 +814,13 @@ class WikiLib extends TikiLib {
 
 	// get all modified pages for a user (if actionlog is not clean
 	function get_user_all_pages($user, $sort_mode) {
-		$query = "select  distinct(p.`pageName`), p.`user` as lastEditor, p.`creator`, max(a.`lastModif`) as date from `tiki_actionlog` as a, `tiki_pages` as p where a.`object`= p.`pageName` and a.`user`= ? group by p.`pagename` order by ".$this->convert_sortmode($sort_mode);
-		$result = $this->query($query, array($user));
+		$query = "select  distinct(p.`pageName`), p.`user` as lastEditor, p.`creator`, max(a.`lastModif`) as date from `tiki_actionlog` as a, `tiki_pages` as p where a.`object`= p.`pageName` and a.`user`= ? and (a.`action`=? or a.`action`=?) group by p.`pagename` order by ".$this->convert_sortmode($sort_mode);
+		$result = $this->query($query, array($user, 'Updated', 'Created'));
 		$ret = array();
 		while ($res = $result->fetchRow()) {
+			if ($this->user_has_perm_on_object($user, $res['pageName'], 'wiki page', 'tiki_p_view')) {
 				$ret[] = $res;
+			}
 		}
 		return $ret;
 	}

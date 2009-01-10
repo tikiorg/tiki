@@ -526,7 +526,9 @@ $show_expdate, $show_reads, $show_size, $show_topline, $show_subtitle, $show_lin
 	    $ret = array();
 	    
 	    while ($res = $result->fetchRow()) {
-		$ret[] = $res;
+			if ($this->user_has_perm_on_object($user, $res['articleId'], 'article', 'tiki_p_read_article')) {
+				$ret[] = $res;
+			}
 	    }
 	    
 	    return $ret;

@@ -189,6 +189,26 @@ function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user 
 			$objResponse->script("tikitabs($tab,$max_tikitabs);");
 		}
 
+	} elseif ( $ajaxlib->templateIsRegistered('confirm.tpl') ) {
+		global $area;
+
+		$params = array(
+			'_tag' => 'n',
+			'_keepall' => 'y'
+		);
+
+		if ( $prefs['feature_ticketlib2'] == 'y' ) {
+			$objResponse->confirmCommands(1, $smarty->get_template_vars('confirmation_text'));
+			$params['daconfirm'] = 'y';
+			$params['ticket'] = $smarty->get_template_vars('ticket');
+		}
+
+		require_once('lib/smarty_tiki/block.self_link.php');
+		require_once('lib/smarty_tiki/modifier.escape.php');
+
+		$uri = smarty_modifier_escape(smarty_block_self_link($params, '', $smarty), 'javascript');
+		$objResponse->call("loadComponent('$uri','$template','$htmlElementId',".((int)$max_tikitabs).",'$last_user')");
+
 	} else {
 		$objResponse->alert(sprintf(tra("Template %s not registered"),$template));
 	}

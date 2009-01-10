@@ -1324,6 +1324,7 @@ function get_included_groups($group, $recur=true) {
 	$query[] = "delete from `users_objectpermissions` where `groupName` = ?";
 	$query[] = "delete from `tiki_newsletter_groups` where `groupName` = ?";
 	$query[] = "delete from `tiki_newsreader_marks` where `groupName` = ?";
+	$query[] = "delete from `tiki_group_watches` where `group` = ?";
 	foreach ( $query as $q ) $this->query($q, array($group));
 
 	global $cachelib;

@@ -189,7 +189,7 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 } elseif (isset($_REQUEST["action"])) {
 	if ( $_REQUEST["action"] == 'delete' && isset($_REQUEST["user"]) && $_REQUEST["user"] != 'admin' ) {
 		$area = 'deluser';
-		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_REQUEST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 			key_check($area);
 			$userlib->remove_user($_REQUEST["user"]);
 			$tikifeedback = array();
@@ -201,7 +201,7 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 	}
 	if ( $_REQUEST["action"] == 'removegroup' && isset($_REQUEST["user"]) ) {
 		$area = 'deluserfromgroup';
-		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_REQUEST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 			key_check($area);
 			$userlib->remove_user_from_group($_REQUEST["user"], $_REQUEST["group"]);
 			$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s %s removed from %s %s."),tra("user"),$_REQUEST["user"],tra("group"),$_REQUEST["group"]));
@@ -216,7 +216,7 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 } elseif (!empty($_REQUEST["submit_mult"]) && !empty($_REQUEST["checked"])) {
 	if ($_REQUEST['submit_mult'] == 'remove_users' || $_REQUEST['submit_mult'] == 'remove_users_with_page') {
 		$area = 'batchdeluser';
-		if ($prefs['feature_ticketlib2'] == 'n' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
+		if ($prefs['feature_ticketlib2'] == 'n' or (isset($_REQUEST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 			key_check($area);
 			foreach ($_REQUEST["checked"] as $deleteuser) if ( $deleteuser != 'admin' ) {
 				$userlib->remove_user($deleteuser);

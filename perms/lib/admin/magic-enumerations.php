@@ -80,7 +80,7 @@ $enumerations['remembertime'] = array ('0'=>'5 minutes','1'=>'15 minutes','2'=>'
 //get_strings ('0'=>tra('5 minutes'),'1'=>tra('15 minutes'),'2'=>tra('30 minutes'),'3'=>tra('1 hour'),'4'=>tra('2 hours'),'5'=>tra('10 hours'),'6'=>tra('20 hours'),'7'=>tra('1 day'),'8'=>tra('1 week'),'9'=>tra('1 month'),'10'=>tra('1 year'));
 
 $enumerations['httpslogin'] = array ('0'=>'Disabled','1'=>'Allow secure (https) login','2'=>'Encourage secure (https) login','3'=>'Consider we are in always in HTTPS, but do not check','4'=>'Require secure (https) login');
-//get_strings ('0'=>tra('Disabled'),'1'=>tra('Allow secure (https) login'),'2'=>tra('Encourage secure (https) login'),'3'=>tra('Consider we are in always in HTTPS, but do not check'),'4'=>tra('Require secure (https) login'));
+//get_strings ('0'=>tra('Disabled'),'1'=>tra('Allow secure (https) login'),'2'=>tra('Encourage secure (https) login'),'3'=>tra('Consider we are always in HTTPS, but do not check'),'4'=>tra('Require secure (https) login'));
 
 $enumerations['featurecryptpasswords'] = array ('crypt-md5'=>'crypt-md5','crypt-des'=>'crypt-des','tikihash'=>'tikihash (old)');
 //get_strings ('crypt-md5'=>tra('crypt-md5'),'crypt-des'=>tra('crypt-des'),'tikihash'=>tra('tikihash (old)'));

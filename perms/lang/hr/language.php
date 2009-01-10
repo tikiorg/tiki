@@ -1274,6 +1274,7 @@ $lang=Array(
 // "1 year" => "1 year",
 // "Encourage secure (https) login" => "Encourage secure (https) login",
 // "Consider we are in always in HTTPS, but do not check" => "Consider we are in always in HTTPS, but do not check",
+// "Consider we are always in HTTPS, but do not check" => "Consider we are in always in HTTPS, but do not check",
 // "crypt-md5" => "crypt-md5",
 // "crypt-des" => "crypt-des",
 // "tikihash (old)" => "tikihash (old)",

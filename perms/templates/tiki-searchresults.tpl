@@ -58,7 +58,8 @@
 	{/if}
     {tr}Find{/tr} <input id="fuser" name="highlight" size="14" type="text" accesskey="s" value="{$words}"/>
 {if ( $searchStyle eq "menu" )}
-    {tr}in{/tr}
+ <span class='searchMenu'>
+   {tr}in{/tr}
     <select name="where">
     <option value="pages">{tr}Entire Site{/tr}</option>
     {if $prefs.feature_wiki eq 'y'}
@@ -88,6 +89,7 @@
        <option value="articles">{tr}Articles{/tr}</option>
     {/if}
     </select>
+</span>
 {else}
     <input type="hidden" name="where" value="{$where|escape}" />
 	{if $forumId}<input type="hidden" name="forumId" value="{$forumId}" />{/if}

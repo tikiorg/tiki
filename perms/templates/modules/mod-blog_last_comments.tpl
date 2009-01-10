@@ -12,8 +12,12 @@
 {if $nonums != 'y'}<ol>{else}<ul>{/if}
     {section name=ix loop=$comments}
           <li><a class="linkmodule" href="tiki-view_blog_post.php?postId={$comments[ix].postId}&amp;comzone=show#threadId{$comments[ix].threadId}" title="{$comments[ix].commentDate|tiki_short_datetime}, {tr}by{/tr} {$comments[ix].userName}{if $moretooltips eq 'y'} {tr}on blogpost{/tr} {$comments[ix].title}{/if}">
-            {if $moretooltips ne 'y'}<b>{$comments[ix].title}:</b>{/if} {$comments[ix].commentTitle}</a>
-          </li>
+		{if $moretooltips ne 'y'}<b>{$comments[ix].title}:</b>{/if}
+		{$comments[ix].commentTitle}
+		{if $module_params.nodate neq 'y'}
+			<small>{$comments[ix].commentDate|tiki_short_datetime}</small>
+		{/if}
+          </a></li>
     {/section}
 {if $nonums != 'y'}</ol>{else}</ul>{/if}
 {/tikimodule}

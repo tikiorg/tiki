@@ -15,6 +15,7 @@ function wikiplugin_flash_info() {
 		'documentation' => 'PluginFlash',
 		'description' => tra('Displays a SWF on the wiki page'),
 		'prefs' => array('wikiplugin_flash'),
+		'extraparams' => true,
 		'params' => array(
 			'movie' => array(
 				'required' => true,
