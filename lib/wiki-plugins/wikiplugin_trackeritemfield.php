@@ -177,7 +177,11 @@ function wikiplugin_trackeritemfield($data, $params) {
 			} elseif ($test) { 
 				return $data;
 			} else {
-				return $val;
+				if( $field['type'] == 'i' ) {
+					return "<img src=\"$val\"/>";
+				} else {
+					return $val;
+				}
 			}
 		} else {
 			return tra('Incorrect param').': fieldId';
