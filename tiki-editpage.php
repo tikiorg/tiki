@@ -843,6 +843,8 @@ if (isset($_REQUEST['mode_normal'])) {
 	$prefs['wiki_edit_section'] = 'n';		// get rid of the section edit icons
 	$exticons = $prefs['feature_wiki_ext_icon'];
 	$prefs['feature_wiki_ext_icon'] = 'n';		// and the external link icons
+	$editplugin = $prefs['feature_wiki_editplugin_icon'];
+	$prefs['feature_wiki_editplugin_icon'] = 'n';		// and the external link icons
 	$edit_data = preg_replace('/(!!*)[\+\-]/m','$1', $edit_data);		// remove show/hide headings
 	$parsed = $tikilib->parse_data($edit_data,array('absolute_links'=>true, 'noparseplugins'=>true,'noheaderinc'=>true));
 	$parsed = preg_replace('/<span class=\"img\">(.*?)<\/span>/im','$1', $parsed);					// remove spans round img's
@@ -854,6 +856,7 @@ if (isset($_REQUEST['mode_normal'])) {
 	$smarty->assign('pagedata', $parsed);
 	$prefs['wiki_edit_section'] = $secedit;
 	$prefs['feature_wiki_ext_icon'] = $exticons;
+	$prefs['feature_wiki_editplugin_icon'] = $editplugin;
 	$is_html = true;
 	$info['is_html'] = true;
 	$info['wysiwyg'] = true;

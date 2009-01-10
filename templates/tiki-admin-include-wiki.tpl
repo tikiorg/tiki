@@ -607,6 +607,7 @@ name="w_displayed_default"{if $prefs.w_displayed_default eq 'y'} checked="checke
     <tr><td class="form">{tr}Categorize structure pages together:{/tr}</td><td><input type="checkbox" name="feature_wiki_categorize_structure" {if $prefs.feature_wiki_categorize_structure eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Create webhelp from structure:{/tr}</td><td><input type="checkbox" name="feature_create_webhelp" {if $prefs.feature_create_webhelp eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Use external link icons:{/tr}</td><td><input type="checkbox" name="feature_wiki_ext_icon" {if $prefs.feature_wiki_ext_icon eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}Use plugin edit icons:{/tr}</td><td><input type="checkbox" name="feature_wiki_editplugin_icon" {if $prefs.feature_wiki_editplugin_icon eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}User's Page:{/tr}</td><td><input type="checkbox" name="feature_wiki_userpage" {if $prefs.feature_wiki_userpage eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}UserPage prefix:{/tr}</td><td><input type="text" name="feature_wiki_userpage_prefix" value="{$prefs.feature_wiki_userpage_prefix|default:'UserPage'}" size="12" /></td></tr>
     <tr><td class="form">{tr}Page creators are admin of their pages:{/tr}</td><td><input type="checkbox" name="wiki_creator_admin" {if $prefs.wiki_creator_admin eq 'y'}checked="checked"{/if}/></td></tr>    
