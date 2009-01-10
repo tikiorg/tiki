@@ -5281,9 +5281,9 @@ class TikiLib extends TikiDB {
 				$key = "§".md5($this->genPass())."§";
 				$noparsed["key"][] = preg_quote($key);
 				$plugin_data = str_replace('\\','\\\\',$plugin_data);
-				if( strstr( $plugin_data, '$' ) ) {
-					$plugin_data = str_replace('$', '\$', $plugin_data);
-				}
+				//if( strstr( $plugin_data, '$' ) ) {
+					//$plugin_data = str_replace('$', '\$', $plugin_data);
+				//}
 				if( $plugin_start == "~pp~" ) {
 					$noparsed["data"][] = "<pre>" . $plugin_data . "</pre>";
 				} elseif( preg_match( "/^ *&lt;[pP][rR][eE]&gt;/", $plugin_start ) ) {

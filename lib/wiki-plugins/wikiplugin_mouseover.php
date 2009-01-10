@@ -4,7 +4,7 @@
  * PLugin mouseover - See documentation http://www.bosrup.com/web/overlib/?Documentation
  */
 function wikiplugin_mouseover_help() {
-	return tra("Create a mouseover feature on some text").":<br />~np~{MOUSEOVER(url=url,text=text,parse=y,width=300,height=300, sticky=>y,left=y,right=n,center=n,above=n,below=y,offsetx=0,offsety=0,sticky=0|1)}".tra('text')."{MOUSEOVER}~/np~";
+	return tra("Create a mouseover feature on some text").":<br />~np~{MOUSEOVER(url=url,text=text,parse=y,width=300,height=300)}".tra('text')."{MOUSEOVER}~/np~";
 }
 
 function wikiplugin_mouseover_info() {
@@ -18,107 +18,66 @@ function wikiplugin_mouseover_info() {
 				'required' => false,
 				'name' => tra('URL'),
 				'description' => tra('?'),
+				'filter' => 'url',
 			),
 			'text' => array(
 				'required' => true,
 				'name' => tra('Text'),
 				'description' => tra('Text displayed on the page.'),
-			),
-			'parse' => array(
-				'required' => false,
-				'name' => tra('Parse'),
-				'description' => 'y|n',
+				'filter' => 'striptags',
 			),
 			'width' => array(
 				'required' => false,
 				'name' => tra('Width'),
 				'description' => tra('Mouse over box width.'),
+				'filter' => 'digits',
 			),
 			'height' => array(
 				'required' => false,
 				'name' => tra('Height'),
 				'description' => tra('Mouse over box height.'),
-			),
-			'sticky' => array(
-				'required' => false,
-				'name' => tra('Sticky'),
-				'description' => 'y|n',
-			),
-			'left' => array(
-				'required' => false,
-				'name' => tra('Left'),
-				'description' => 'y|n',
-			),
-			'right' => array(
-				'required' => false,
-				'name' => tra('Right'),
-				'description' => 'y|n',
-			),
-			'center' => array(
-				'required' => false,
-				'name' => tra('Center'),
-				'description' => 'y|n',
-			),
-			'above' => array(
-				'required' => false,
-				'name' => tra('Above'),
-				'description' => 'y|n',
-			),
-			'below' => array(
-				'required' => false,
-				'name' => tra('Below'),
-				'description' => 'y|n',
-			),
-			'offsetx' => array(
-				'required' => false,
-				'name' => tra('Horizontal Offset'),
-				'description' => tra('Numeric'),
-			),
-			'offsety' => array(
-				'required' => false,
-				'name' => tra('Vertical Offset'),
-				'description' => tra('Numeric'),
+				'filter' => 'digits',
 			),
 		),
 	);
 }
 
-function wikiplugin_mouseover($data, $params) {
+function wikiplugin_mouseover( $data, $params ) {
 	global $smarty, $tikilib;
-	extract ($params,EXTR_SKIP);
-	$html = '';
-	if (empty($url)) {
-		$url = 'javascript:void()';
-	}
-	if (!$smarty->get_template_vars('overlib_loaded')) {
-		$html .= '<div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>';
-		$html .= '<script type="text/javascript" src="lib/overlib.js"></script>';
-		$smarty->assign('overlib_loaded',1);
-	}
-	$html .= "<a href='$url'";
-	if (!empty($parse) && ($parse == 'y' || $parse == '1')) {
-		$data = $tikilib->parse_data($data);
-		$data = substr($data, 0, -1);// do not ask me why - but the parsing adds a CR
-	} else {
-		// Really don't parse...
-		$data = "~np~ $data ~/np~";
-	}
-	$data = preg_replace('/\r\n/', '<br />', $data);
-	$html .= " onmouseover=\"return overlib('".str_replace("'", "\'", htmlspecialchars($data))."'";
-	foreach ($params as $param=>$value) {
-		$p = strtoupper($param);
-		if ($p != 'URL' && $p != 'TEXT' && $p != 'PARSE') {
-			if ((!empty($value) || $value != 'n') && ($p == 'STICKY' || $p == 'LEFT' || $p == 'RIGHT' || $p == 'CENTER' || $p == 'ABOVE'  || $p == 'BELOW'  || $p == 'AUTOSTATUS' || $p == 'AUTOSTATUSCAP' || $p == 'HAUTO' || $p == 'VAUTO' || $p == 'CLOSECLICK' || $p == 'FULLHTML' || $p == 'CSSOFF' || $p == 'CSSSTYLE' || $p == 'CSSCLASS' || $p == 'NOCLOSE')) {
-				$html .= ','.$p;
-			} else {
-				$html .= ','.$p;
-				$html .= ','.$value;	
-			}
-		}
-	}
-	$html .= ");\" onmouseout='nd();' >";
-	$html .= "$text</a>";
 
-	return $html;
+	if( ! isset($params['url']) ) {
+		$url = 'javascript:void()';
+	} else {
+		$url = $params['url'];
+	}
+
+	$width = isset( $params['width'] ) ? (int) $params['width'] : 300;
+	$height = isset( $params['height'] ) ? (int) $params['height'] : 300;
+
+	$text = isset( $params['text'] ) ? $params['text'] : 'No label specified';
+
+	static $lastval = 0;
+	$id = "mo" . ++$lastval;
+
+	$url = htmlentities( $url, ENT_QUOTES, 'UTF-8' );
+
+	global $headerlib;
+
+	$headerlib->add_js( "
+window.addEvent('domready', function() {
+	$('$id-link').addEvent( 'mouseover', function(event) {
+		$('$id').setStyle('left', event.page.x + 'px');
+		$('$id').setStyle('top', event.page.y + 'px');
+		$('$id').setStyle('display','block');
+	} );
+	$('$id-link').addEvent( 'mouseout', function(event) {
+		$('$id').setStyle('display','none');
+	} );
+} );
+" );
+
+	return "~np~<a id=\"$id-link\" href=\"$url\">$text</a><div id=\"$id\" style=\"width: {$width}px; height: {$height}px; display:none; position: absolute; z-index: 500; background: white;\">~/np~
+$data
+~np~</div>~/np~";
 }
 ?>
