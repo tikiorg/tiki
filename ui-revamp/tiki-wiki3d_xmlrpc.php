@@ -8,6 +8,7 @@ if($prefs['feature_xmlrpc'] != 'y' || $prefs['wiki_feature_3d'] != 'y') {
 }
 
 require_once("XML/Server.php");
+include_once('lib/wiki/wikilib.php');
 
 $map = array ("getSubGraph" => array( "function" => "getSubGraph" ) );
 $server = new XML_RPC_Server( $map );

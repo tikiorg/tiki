@@ -16,6 +16,7 @@
 <form class="forms" method="get" action="tiki-searchindex.php">
     {tr}Find{/tr} <input id="fuser" name="highlight" size="14" type="text" accesskey="s" value="{$words}"/>
 {if ( $searchStyle eq "menu" )}
+<span class='searchMenu'>
     {tr}in{/tr}
     <select name="where">
 	{if empty($where_list)}
@@ -36,6 +37,7 @@
     	{/foreach}
 	{/if}
     </select>
+</span>
 {else}
     <input type="hidden" name="where" value="{$where|escape}" />
 {/if}
