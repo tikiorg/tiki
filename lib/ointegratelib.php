@@ -137,6 +137,10 @@ class OIntegrate
 		$parts = explode( ';', $type );
 		$type = trim($parts[0]);
 
+		if( empty($data) ) {
+			return null;
+		}
+
 		switch( $type )
 		{
 		case 'application/json':

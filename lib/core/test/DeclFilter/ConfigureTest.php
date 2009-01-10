@@ -47,6 +47,18 @@ class DeclFilter_ConfigureTest extends PHPUnit_Framework_TestCase
 		$filter = DeclFilter::fromConfiguration( $configuration, array( 'catchAllFilter' ) );
 	}
 
+	/**
+	 * @expectedException Exception
+	 */
+	function testMissingLevel()
+	{
+		$configuration = array(
+			'catchAllUnset' => null,
+		);
+
+		$filter = DeclFilter::fromConfiguration( $configuration );
+	}
+
 	function testUnsetSome()
 	{
 		$configuration = array(
