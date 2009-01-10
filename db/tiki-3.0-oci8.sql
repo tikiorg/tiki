@@ -1550,6 +1550,27 @@ CREATE TABLE "tiki_group_inclusion" (
 ) ENGINE=MyISAM;
 
 
+DROP TABLE "tiki_group_watches";
+
+CREATE SEQUENCE "tiki_group_watches_sequ" INCREMENT BY 1 START WITH 1;
+CREATE TABLE "tiki_group_watches" (
+  "watchId" number(12) NOT NULL,
+  `group` varchar(200) default '' NOT NULL,
+  "event" varchar(40) default '' NOT NULL,
+  "object" varchar(200) default '' NOT NULL,
+  "title" varchar(250) default NULL,
+  "type" varchar(200) default NULL,
+  "url" varchar(250) default NULL,
+  PRIMARY KEY (`group`(50),event,object(100))
+) ENGINE=MyISAM;
+
+CREATE TRIGGER "tiki_group_watches_trig" BEFORE INSERT ON "tiki_group_watches" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
+BEGIN
+SELECT "tiki_group_watches_sequ".nextval into :NEW."watchId" FROM DUAL;
+END;
+/
+CREATE  INDEX "tiki_group_watches_watchId" ON "tiki_group_watches"("watchId");
+
 DROP TABLE "tiki_history";
 
 CREATE SEQUENCE "tiki_history_sequ" INCREMENT BY 1 START WITH 1;
