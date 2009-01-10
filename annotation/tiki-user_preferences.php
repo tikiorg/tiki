@@ -91,7 +91,7 @@ $smarty->assign('show_mouseover_user_info',
 if ($prefs['feature_userPreferences'] == 'y' && isset($_REQUEST["new_prefs"])) {
 	check_ticket('user-prefs');
 	// setting preferences
-	if ($prefs['change_theme'] == 'y' && $group_theme == '') {
+	if ($prefs['change_theme'] == 'y' && $group_style == '') {
 		if (isset($_REQUEST["mystyle"])) {
 			if ($user == $userwatch) {
 				$t = $tikidomain? $tikidomain.'/':'';
@@ -297,6 +297,11 @@ if ($prefs['feature_userPreferences'] == 'y' && isset($_REQUEST["new_prefs"])) {
 		$tikilib->set_user_preference($userwatch, 'mytiki_workflow', 'y');
 	} else {
 		$tikilib->set_user_preference($userwatch, 'mytiki_workflow', 'n');
+	}
+	if (isset($_REQUEST['mytiki_articles']) && $_REQUEST['mytiki_articles'] == 'on') {
+		$tikilib->set_user_preference($userwatch, 'mytiki_articles', 'y');
+	} else {
+		$tikilib->set_user_preference($userwatch, 'mytiki_articles', 'n');
 	}
 
 	if (isset($_REQUEST['tasks_maxRecords']))

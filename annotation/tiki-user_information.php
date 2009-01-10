@@ -16,17 +16,10 @@ include_once ('lib/userprefs/scrambleEmail.php');
 include_once ('lib/registration/registrationlib.php');
 include_once ('lib/trackers/trackerlib.php');
 
-if ($prefs['feature_display_my_to_others'] == 'y') {
-    include_once ('lib/wiki/wikilib.php');
-    include_once ('lib/articles/artlib.php');
-    include_once ("lib/commentslib.php");
-    //Not sure if the line below should be here or in the lib
-    $commentslib = new Comments($dbTiki);
-}
-
 if (isset($_REQUEST['userId'])) {
 	$userwatch = $tikilib->get_user_login($_REQUEST['userId']);
 	if ($userwatch === NULL) {
+		$smarty->assign('errortype', 'no_redirect_login');
 		$smarty->assign('msg', tra("Unknown user"));
 		$smarty->display("error.tpl");
 		die;
@@ -34,6 +27,7 @@ if (isset($_REQUEST['userId'])) {
 } elseif (isset($_REQUEST['view_user'])) {
 	$userwatch = $_REQUEST['view_user'];
 	if (!$userlib->user_exists($userwatch)) {
+		$smarty->assign('errortype', 'no_redirect_login');
 		$smarty->assign('msg', tra("Unknown user"));
 		$smarty->display("error.tpl");
 		die;
@@ -66,6 +60,7 @@ if ($tiki_p_admin != 'y') {
 
 	// If the user is trying to pull info on themselves, allow it.
 	if ($user_information == 'private' && $userwatch != $user) {
+		$smarty->assign('errortype', 'no_redirect_login');
 		$smarty->assign('msg', tra("The user has chosen to make his information private"));
 		$smarty->display("error.tpl");
 		die;
@@ -143,16 +138,35 @@ $exist = $tikilib->page_exists($userPage);
 $smarty->assign("userPage_exists", $exist);
 
 if ($prefs['feature_display_my_to_others'] == 'y') {
-	$user_pages = $wikilib->get_user_all_pages($userwatch, 'pageName_asc');
-	$smarty->assign_by_ref('user_pages', $user_pages);
-	$user_blogs = $tikilib->list_user_blogs($userwatch,false);
-	$smarty->assign_by_ref('user_blogs', $user_blogs);
-	$user_galleries = $tikilib->get_user_galleries($userwatch, -1);
-	$smarty->assign_by_ref('user_galleries', $user_galleries);
-	$user_articles = $artlib->get_user_articles($userwatch, -1);
-	$smarty->assign_by_ref('user_articles', $user_articles);
-	$user_forum_comments = $commentslib->get_user_forum_comments($userwatch, -1);
-	$smarty->assign_by_ref('user_forum_comments', $user_forum_comments);
+	if ($prefs['feature_wiki'] == 'y') {
+		include_once ('lib/wiki/wikilib.php');
+		$user_pages = $wikilib->get_user_all_pages($userwatch, 'pageName_asc');
+		$smarty->assign_by_ref('user_pages', $user_pages);
+	}
+	if ($prefs['feature_blogs'] == 'y') {
+		$user_blogs = $tikilib->list_user_blogs($userwatch,false);
+		$smarty->assign_by_ref('user_blogs', $user_blogs);
+	}
+	if ($prefs['feature_galleries'] == 'y') {
+		$user_galleries = $tikilib->get_user_galleries($userwatch, -1);
+		$smarty->assign_by_ref('user_galleries', $user_galleries);
+	}
+	if ($prefs['feature_trackers'] == 'y') {
+		$user_items = $tikilib->get_user_items($userwatch);
+		$smarty->assign_by_ref('user_items', $user_items);
+	}
+	if ($prefs['feature_articles'] == 'y') {
+	    include_once ('lib/articles/artlib.php');
+		$user_articles = $artlib->get_user_articles($userwatch, -1);
+		$smarty->assign_by_ref('user_articles', $user_articles);
+	}
+	if ($prefs['feature_forums'] == 'y') {
+		include_once ("lib/commentslib.php"); $commentslib = new Comments($dbTiki);
+		$user_forum_comments = $commentslib->get_user_forum_comments($userwatch, -1);
+		$smarty->assign_by_ref('user_forum_comments', $user_forum_comments);
+		$user_forum_topics = $commentslib->get_user_forum_comments($userwatch, -1, 'topics');
+		$smarty->assign_by_ref('user_forum_topics', $user_forum_topics);
+	}
 }
 
 if ( $prefs['user_tracker_infos'] ) {
@@ -164,7 +178,7 @@ if ( $prefs['user_tracker_infos'] ) {
 	foreach ($fields['data'] as $field) {
 		$lll[$field['fieldId']] = $field;
 	}
-	$items = $trklib->list_items($userTrackerId, 0, 1, '',  $lll, $trklib->get_field_id_from_type($userTrackerId, 'u', '1%'), $userwatch);
+	$items = $trklib->list_items($userTrackerId, 0, 1, '',  $lll, $trklib->get_field_id_from_type($userTrackerId, 'u', '1%'), '', '', '', $userwatch);
 	$smarty->assign_by_ref('userItem',$items['data'][0]);
 }
 

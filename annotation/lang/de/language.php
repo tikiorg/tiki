@@ -5032,6 +5032,7 @@ $lang=Array(
 "Allow secure (https) login" => "Erlaube sicheren Login (https)",
 "Encourage secure (https) login" => "Schlage sicheren Login (https) vor",
 "Consider we are in always in HTTPS, but do not check" => "Gehe von HTTPS aus, aber pr&uuml;fe nicht nach",
+"Consider we are always in HTTPS, but do not check" => "Gehe von HTTPS aus, aber pr&uuml;fe nicht nach",
 "Require secure (https) login" => "Sicherer Login (https) notwendig",
 "tikihash (old)" => "tikihash (alt)",
 "Just Tiki" => "Nur &uuml;ber Tiki",

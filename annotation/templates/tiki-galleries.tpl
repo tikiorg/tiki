@@ -37,10 +37,22 @@
 <tr><td class="formcolor">{tr}Geographic{/tr}:</td><td class="formcolor"><input type="checkbox" name="geographic" {if $geographic eq 'y'}checked="checked"{/if} /></td></tr>
 {/if}
 {if $prefs.preset_galleries_info ne 'y'}
-<tr><td class="formcolor">{tr}Max Rows per page{/tr}:</td><td class="formcolor"><input type="text" name="maxRows" value="{$maxRows|escape}" /></td></tr>
-<tr><td class="formcolor">{tr}Images per row{/tr}:</td><td class="formcolor"><input type="text" name="rowImages" value="{$rowImages|escape}" /></td></tr>
-<tr><td class="formcolor">{tr}Thumbnails size X{/tr}:</td><td class="formcolor"><input type="text" name="thumbSizeX" value="{$thumbSizeX|escape}" /></td></tr>
-<tr><td class="formcolor">{tr}Thumbnails size Y{/tr}:</td><td class="formcolor"><input type="text" name="thumbSizeY" value="{$thumbSizeY|escape}" /></td></tr>
+<tr><td class="formcolor">{tr}Max Rows per page{/tr}:</td><td class="formcolor">
+	<input type="text" name="maxRows"{if !empty($maxRows)} value="{$maxRows|escape}"{/if} />
+	<i>{tr}Default:{/tr} {if !empty($prefs.maxRowsGalleries)}{$prefs.maxRowsGalleries}{else}10{/if}</i>
+</td></tr>
+<tr><td class="formcolor">{tr}Images per row{/tr}:</td><td class="formcolor">
+	<input type="text" name="rowImages"{if !empty($rowImages)} value="{$rowImages|escape}"{/if} />
+	<i>{tr}Default:{/tr} {if !empty($prefs.rowImagesGalleries)}{$prefs.rowImagesGalleries}{else}6{/if}</i>
+</td></tr>
+<tr><td class="formcolor">{tr}Thumbnails size X{/tr}:</td><td class="formcolor">
+	<input type="text" name="thumbSizeX"{if !empty($thumbSizeX)} value="{$thumbSizeX|escape}"{/if} />
+	<i>{tr}Default:{/tr} {if !empty($prefs.thumbSizeXGalleries)}{$prefs.thumbSizeXGalleries}{else}80{/if}</i>
+</td></tr>
+<tr><td class="formcolor">{tr}Thumbnails size Y{/tr}:</td><td class="formcolor">
+	<input type="text" name="thumbSizeY"{if !empty($thumbSizeY)} value="{$thumbSizeY|escape}"{/if} />
+	<i>{tr}Default:{/tr} {if !empty($prefs.thumbSizeYGalleries)}{$prefs.thumbSizeYGalleries}{else}80{/if}</i>
+</td></tr>
 {/if}
 <tr><td class="formcolor">{tr}Default sort order{/tr}:</td><td class="formcolor"><select name="sortorder">
 {foreach from=$options_sortorder key=key item=item}

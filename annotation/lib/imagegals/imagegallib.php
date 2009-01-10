@@ -844,29 +844,21 @@ class ImageGalsLib extends TikiLib {
 		} else {
 			// Store data in directory
 			$fhash = md5(uniqid($filename));
-
-			@$fw = fopen($prefs['gal_use_dir'] . $fhash, "wb");
-
-			if (!$fw) {
+			if (!($fw = fopen($prefs['gal_use_dir'] . $fhash, "wb"))) {
 				return false;
 			}
-
 			fwrite($fw, $data);
 			fclose ($fw);
+			$data = '';
 
 			if ($t_data) {
-				@$fw = fopen($prefs['gal_use_dir'] . $fhash . '.thumb', "wb");
-
-				if (!$fw) {
+				if (!($fw = fopen($prefs['gal_use_dir'] . $fhash . '.thumb', "wb"))) {
 					return false;
 				}
-
 				fwrite($fw, $t_data['data']);
 				fclose ($fw);
-				$t_data = '';
+				$t_data['data'] = '';
 			}
-
-			$data = '';
 			$path = $fhash;
 		}
 
@@ -877,25 +869,22 @@ class ImageGalsLib extends TikiLib {
 		$imageId = $this->getOne($query,array((int)$this->now));
 		// insert data
 		$this->blob_encode($data);
-		$query = "insert into `tiki_images_data`(`imageId`,`xsize`,`ysize`,
-                                `type`,`filesize`,`filetype`,`filename`,`data`)
+		$query = "insert into `tiki_images_data`(`imageId`,`xsize`,`ysize`, `type`,`filesize`,`filetype`,`filename`,`data`)
                         values (?,?,?,?,?,?,?,?)";
 		$result = $this->query($query,array((int)$imageId,(int)$xsize,(int)$ysize,'o',(int)$size,$filetype,$filename,$data));
 
 		// insert thumb
 		if ($t_data) {
+echo 'THUMB'.$imageId;
 			$this->blob_encode($t_data['data']);
-			$query = "insert into `tiki_images_data`(`imageId`,`xsize`,`ysize`,
-                                `type`,`filesize`,`filetype`,`filename`,`data`)
+			$query = "insert into `tiki_images_data`(`imageId`,`xsize`,`ysize`, `type`,`filesize`,`filetype`,`filename`,`data`)
                         values (?,?,?,?,?,?,?,?)";
-
 			$result = $this->query($query,array((int)$imageId,(int)$t_data['xsize'],(int)$t_data['ysize'],'t',(int)$size,$t_type,$filename,$t_data['data']));
 		}
 
 		$query = "update `tiki_galleries` set `lastModif`=? where `galleryId`=?";
 		$result = $this->query($query,array((int)$this->now,(int)$galleryId));
 
-		global $prefs;
 		if ($prefs['feature_score'] == 'y') {
 		    $this->score_event($user, 'igallery_new_img');
 		}
@@ -1598,7 +1587,6 @@ class ImageGalsLib extends TikiLib {
                      i.`imageId`=? and d.`imageId`=i.`imageId`
                      and d.`type`=?
                      $mid";
-
 
 		$result = $this->query($query,$bindvars,1);
 

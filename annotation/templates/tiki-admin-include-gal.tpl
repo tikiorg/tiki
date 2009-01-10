@@ -65,10 +65,10 @@
 	<td><label>{tr}Use default max rows, images per row, thumbnails size and scale size for all galleries (set values below){/tr}</label></td>
 	<td><input type="checkbox" name="preset_galleries_info" {if $prefs.preset_galleries_info eq 'y'}checked="checked"{/if} /></td>
     </tr>
-    <tr><td class="form">{tr}Max Rows per page{/tr}:</td><td class="form"><input type="text" name="maxRows" value="{$maxRows|escape}" /></td></tr>
-    <tr><td class="form">{tr}Images per row{/tr}:</td><td class="form"><input type="text" name="rowImages" value="{$rowImages|escape}" /></td></tr>
-    <tr><td class="form">{tr}Thumbnails size X{/tr}:</td><td class="form"><input type="text" name="thumbSizeX" value="{$thumbSizeX|escape}" /></td></tr>
-    <tr><td class="form">{tr}Thumbnails size Y{/tr}:</td><td class="form"><input type="text" name="thumbSizeY" value="{$thumbSizeY|escape}" /></td></tr>
+    <tr><td class="form">{tr}Max Rows per page{/tr}:</td><td class="form"><input type="text" name="maxRows" value="{$maxRows|escape}" /><i>{tr}Default:{/tr} {if !empty($prefs.maxRowsGalleries)}{$prefs.maxRowsGalleries}{else}10{/if}</i></td></tr>
+    <tr><td class="form">{tr}Images per row{/tr}:</td><td class="form"><input type="text" name="rowImages" value="{$rowImages|escape}" /><i>{tr}Default:{/tr} {if !empty($prefs.rowImagesGalleries)}{$prefs.rowImagesGalleries}{else}6{/if}</i></td></tr>
+    <tr><td class="form">{tr}Thumbnails size X{/tr}:</td><td class="form"><input type="text" name="thumbSizeX" value="{$thumbSizeX|escape}" /><i>{tr}Pixels Default:{/tr} {if !empty($prefs.thumbSizeXGalleries)}{$prefs.thumbSizeXGalleries}{else}80{/if}</i></td></tr>
+    <tr><td class="form">{tr}Thumbnails size Y{/tr}:</td><td class="form"><input type="text" name="thumbSizeY" value="{$thumbSizeY|escape}" /><i>{tr}Pixels Default:{/tr} {if !empty($prefs.thumbSizeYGalleries)}{$prefs.thumbSizeYGalleries}{else}80{/if}</i></td></tr>
     <tr><td class="form">{tr}Default scale size{/tr}:</td><td class="form"><input type="text" name="scaleSize" size="4" value="{$scaleSize|escape}" />{tr}pixels{/tr}</td></tr>
 
     <tr><td colspan="2" class="button"><input type="submit" name="galfeatures" value="{tr}Set features{/tr}" /></td></tr>

@@ -185,6 +185,64 @@
           <td class="form"><label for="search-list_length">{tr}LRU list length{/tr}: </label></td>
           <td><input size="5" type="text" name="search_lru_length" id="search-list_length" value="{$prefs.search_lru_length|escape}" /></td>
         </tr>
+
+        <tr>
+          <th colspan="2">{tr}Search results page{/tr}</th>
+        </tr>
+        <tr>
+          <td class="form">
+            {tr}Show object filter{/tr}:
+          </td>
+          <td>
+            <input type="checkbox" name="feature_search_show_object_filter"
+              {if $prefs.feature_search_show_object_filter eq 'y'}checked="checked"{/if}/>
+          </td>
+        </tr>
+        <tr>
+          <td class="form">
+            {tr}Show search box{/tr}:
+          </td>
+          <td>
+            <input type="checkbox" name="feature_search_show_search_box"
+              {if $prefs.feature_search_show_search_box eq 'y'}checked="checked"{/if}/>
+          </td>
+        </tr>
+        <tr>
+          <td class="form">
+            {tr}Show visit count{/tr}:
+          </td>
+          <td>
+            <input type="checkbox" name="feature_search_show_visit_count"
+              {if $prefs.feature_search_show_visit_count eq 'y'}checked="checked"{/if}/>
+          </td>
+        </tr>
+        <tr>
+          <td class="form">
+            {tr}Show pertinence{/tr}:
+          </td>
+          <td>
+            <input type="checkbox" name="feature_search_show_pertinence"
+              {if $prefs.feature_search_show_pertinence eq 'y'}checked="checked"{/if}/>
+          </td>
+        </tr>
+        <tr>
+          <td class="form">
+            {tr}Show object type{/tr}:
+          </td>
+          <td>
+            <input type="checkbox" name="feature_search_show_object_type"
+              {if $prefs.feature_search_show_object_type eq 'y'}checked="checked"{/if}/>
+          </td>
+        </tr>
+        <tr>
+          <td class="form">
+            {tr}Show last modification{/tr}:
+          </td>
+          <td>
+            <input type="checkbox" name="feature_search_show_last_modification"
+              {if $prefs.feature_search_show_last_modification eq 'y'}checked="checked"{/if}/>
+          </td>
+        </tr>
         
         <tr>
           <td colspan="2" class="button"><input type="submit" name="searchprefs" value="{tr}Change settings{/tr}" /></td>

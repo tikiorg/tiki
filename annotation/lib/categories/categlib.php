@@ -1336,6 +1336,8 @@ class CategLib extends ObjectLib {
 	 function remove_category_from_watchlists($categId) {
 	 	$query = 'delete from `tiki_user_watches` where `object`=? and `type`=?';
 	 	$this->query($query, array((int) $categId, 'Category'));
+	 	$query = 'delete from `tiki_group_watches` where `object`=? and `type`=?';
+	 	$this->query($query, array((int) $categId, 'Category'));
 	 }
 	
 	

@@ -14,6 +14,7 @@ class TikiDB {
 
 var $db;   // The ADODB db object used to access the database
 var $_sql; // Internal variable to store the query string
+var $driver; // name of the driver used to access the DB
 
 function TikiDB($db)
 {
@@ -22,6 +23,7 @@ function TikiDB($db)
   }
 
   $this->db=$db;
+  $this->driver = $db->databaseType;
 }
 
 function startTimer() {

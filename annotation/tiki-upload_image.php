@@ -419,9 +419,8 @@ $cat_type = 'image';
 $cat_objid = '0';
 include_once ("categorize_list.php");
 
+include('lib/filegals/max_upload_size.php');
 include_once ('tiki-section_options.php');
-
-$smarty->assign("max_img_upload_size", $imagegallib->max_img_upload_size());
 
 ask_ticket('upload-image');
 
