@@ -54,7 +54,7 @@ function wikiplugin_trackeritemfield_info() {
 }
 
 function wikiplugin_trackeritemfield($data, $params) {
-	global $userTracker, $group, $user, $userlib, $tiki_p_admin_trackers, $prefs;
+	global $userTracker, $group, $user, $userlib, $tiki_p_admin_trackers, $prefs, $smarty;
 	global $trklib; include_once('lib/trackers/trackerlib.php');
 	static $memoItemId = 0;
 	static $memoTrackerId = 0;
@@ -92,6 +92,7 @@ function wikiplugin_trackeritemfield($data, $params) {
 			$item = $trklib->get_tracker_item($itemId);
 			$trackerId = $item['trackerId'];
 		}
+
 		if (empty($itemId) && empty($test) && empty($status)) {// need an item
 			return tra('Incorrect param').': itemId';
 		}
@@ -152,6 +153,7 @@ function wikiplugin_trackeritemfield($data, $params) {
 			}
 		}
 	} elseif (!empty($fieldId)) {
+
 		if (!($field = $trklib->get_tracker_field($fieldId))) {
 			return tra('Incorrect param').': fieldId';
 		}
@@ -177,11 +179,12 @@ function wikiplugin_trackeritemfield($data, $params) {
 			} elseif ($test) { 
 				return $data;
 			} else {
-				if( $field['type'] == 'i' ) {
-					return "<img src=\"$val\"/>";
-				} else {
-					return $val;
-				}
+				$field['value'] = $val;
+				$field['itemId'] = $itemId;
+				$smarty->assign('field_value', $field);
+				$smarty->assign('list_mode', 'n');
+				$smarty->assign('showlinks', 'n');
+				return $smarty->fetch('tracker_item_field_value.tpl');
 			}
 		} else {
 			return tra('Incorrect param').': fieldId';
