@@ -1633,6 +1633,26 @@ go
 
 
 
+-- DROP TABLE "tiki_group_watches"
+go
+
+
+CREATE TABLE "tiki_group_watches" (
+  "watchId" numeric(12 ,0) identity,
+  `group` varchar(200) default '' NOT NULL,
+  "event" varchar(40) default '' NOT NULL,
+  "object" varchar(200) default '' NOT NULL,
+  "title" varchar(250) default NULL NULL,
+  "type" varchar(200) default NULL NULL,
+  "url" varchar(250) default NULL NULL,
+  PRIMARY KEY (`group`(50),event,object(100))
+) ENGINE=MyISAM
+go
+
+
+CREATE  INDEX "tiki_group_watches_watchId" ON "tiki_group_watches"("watchId")
+go
+
 -- DROP TABLE "tiki_history"
 go
 

@@ -1275,6 +1275,21 @@ CREATE TABLE 'tiki_group_inclusion' (
 ) ENGINE=MyISAM;
 
 
+DROP TABLE IF EXISTS 'tiki_group_watches';
+
+CREATE TABLE 'tiki_group_watches' (
+  "watchId" INTEGER,
+  group varchar(200) NOT NULL default '',
+  "event" varchar(40) NOT NULL default '',
+  "object" varchar(200) NOT NULL default '',
+  "title" varchar(250) default NULL,
+  "type" varchar(200) default NULL,
+  "url" varchar(250) default NULL,
+  PRIMARY KEY (group(50),event,object(100))
+) ENGINE=MyISAM;
+
+CREATE  INDEX "tiki_group_watches_watchId" ON "tiki_group_watches"("watchId");
+
 DROP TABLE IF EXISTS 'tiki_history';
 
 CREATE TABLE 'tiki_history' (

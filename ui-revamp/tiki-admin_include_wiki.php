@@ -169,6 +169,7 @@ if (isset($_REQUEST["wikifeatures"])) {
 	'feature_wiki_categorize_structure',
 	'feature_create_webhelp',
 	'feature_wiki_ext_icon',
+	'wiki_edit_plugin',
 	'feature_wiki_userpage',
 	'feature_wiki_protect_email',
 	'feature_wiki_1like_redirection',

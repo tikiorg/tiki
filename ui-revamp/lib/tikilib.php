@@ -242,6 +242,16 @@ class TikiLib extends TikiDB {
 		return true;
 	}
 
+	function add_group_watch($group, $event, $object, $type, $title, $url) {
+
+		$query = "delete from `tiki_group_watches` where ".$this->convert_binary()." `group`=? and `event`=? and `object`=?";
+		$this->query($query,array($group,$event,$object));
+		$query = "insert into `tiki_group_watches`(`group`,`event`,`object`,`type`,`title`,`url`) ";
+		$query.= "values(?,?,?,?,?,?)";
+		$this->query($query,array($group,$event,$object,$type,$title,$url));
+		return true;
+	}
+
 	/*shared*/
 	function remove_user_watch_by_id($id) {
 		$query = "delete from `tiki_user_watches` where `watchId`=?";
@@ -257,6 +267,11 @@ class TikiLib extends TikiDB {
 	function remove_user_watch($user, $event, $object) {
 		$query = "delete from `tiki_user_watches` where ".$this->convert_binary()." `user`=? and `event`=? and `object`=?";
 		$this->query($query,array($user,$event,$object));
+	}
+
+	function remove_group_watch($group, $event, $object) {
+		$query = "delete from `tiki_group_watches` where ".$this->convert_binary()." `group`=? and `event`=? and `object`=?";
+		$this->query($query,array($group,$event,$object));
 	}
 
 	/*shared*/
@@ -306,6 +321,18 @@ class TikiLib extends TikiDB {
 			$query = "select count(*) from `tiki_user_watches` where `user`=? and `object`=? and `type`=? and `event`=? ";
 			return $this->getOne($query,array($user,$object,$type,$event));
 		}
+	}
+
+	function get_groups_watching( $type, $object, $event ) {
+		$result = $this->query( 'SELECT `group` FROM tiki_group_watches WHERE object = ? AND type = ? AND event = ?',
+			array( $object, $type, $event ) );
+
+		$groups = array();
+		while( $row = $result->fetchRow() ) {
+			$groups[] = $row['group'];
+		}
+
+		return $groups;
 	}
 
 	/*shared*/
@@ -5281,9 +5308,9 @@ class TikiLib extends TikiDB {
 				$key = "§".md5($this->genPass())."§";
 				$noparsed["key"][] = preg_quote($key);
 				$plugin_data = str_replace('\\','\\\\',$plugin_data);
-				if( strstr( $plugin_data, '$' ) ) {
-					$plugin_data = str_replace('$', '\$', $plugin_data);
-				}
+				//if( strstr( $plugin_data, '$' ) ) {
+					//$plugin_data = str_replace('$', '\$', $plugin_data);
+				//}
 				if( $plugin_start == "~pp~" ) {
 					$noparsed["data"][] = "<pre>" . $plugin_data . "</pre>";
 				} elseif( preg_match( "/^ *&lt;[pP][rR][eE]&gt;/", $plugin_start ) ) {
@@ -5368,11 +5395,29 @@ class TikiLib extends TikiDB {
 							}
 						}
 						//echo '<pre>'; debug_print_backtrace(); echo '</pre>';
-						if( $this->plugin_is_editable( $plugin_name ) && (empty($options['print']) || !$options['print'])) {
+						if( $this->plugin_is_editable( $plugin_name ) && (empty($options['print']) || !$options['print']) ) {
 							include_once('lib/smarty_tiki/function.icon.php');
 							global $headerlib, $page;
+							$id = $plugin_name . $current_index;
 							$headerlib->add_jsfile( 'tiki-jsplugin.php?plugin=' . urlencode( $plugin_name ) );
-							$ret = '~np~<a style="float:right" href="javascript:void(0)" onclick="popup_plugin_form(\'' . addslashes($plugin_name) . '\', ' . addslashes($current_index) . ', \'' . addslashes($page) . '\', ' . htmlentities(json_encode($arguments),ENT_COMPAT,'utf-8') . ', ' . htmlentities(json_encode(trim($plugin_data)),ENT_COMPAT,'utf-8') . ',this)">'.smarty_function_icon(array('_id'=>'shape_square_edit', 'alt'=>tra('Edit Plugin')), $smarty).'</a><span id="' . $plugin_name . $current_index . '"></span>~/np~'.$ret;
+							$headerlib->add_js( "
+window.addEvent('domready', function() {
+	$('$id').addEvent( 'click', function(event) {
+		popup_plugin_form("
+			. json_encode($plugin_name) 
+			. ', ' 
+			. json_encode($current_index) 
+			. ', ' 
+			. json_encode($page) 
+			. ', ' 
+			. json_encode($arguments) 
+			. ', ' 
+			. json_encode(trim($plugin_data)) 
+			. ", event.target);
+	} );
+} );
+" );
+							$ret = '~np~<a id="' .$id. '" style="float:right" href="javascript:void(0)" class="editplugin">'.smarty_function_icon(array('_id'=>'shape_square_edit', 'alt'=>tra('Edit Plugin')), $smarty).'</a>~/np~'.$ret;
 						}
 
 					} else {
