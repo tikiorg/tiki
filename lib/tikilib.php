@@ -242,6 +242,16 @@ class TikiLib extends TikiDB {
 		return true;
 	}
 
+	function add_group_watch($group, $event, $object, $type, $title, $url) {
+
+		$query = "delete from `tiki_group_watches` where ".$this->convert_binary()." `group`=? and `event`=? and `object`=?";
+		$this->query($query,array($group,$event,$object));
+		$query = "insert into `tiki_group_watches`(`group`,`event`,`object`,`type`,`title`,`url`) ";
+		$query.= "values(?,?,?,?,?,?)";
+		$this->query($query,array($group,$event,$object,$type,$title,$url));
+		return true;
+	}
+
 	/*shared*/
 	function remove_user_watch_by_id($id) {
 		$query = "delete from `tiki_user_watches` where `watchId`=?";
@@ -306,6 +316,18 @@ class TikiLib extends TikiDB {
 			$query = "select count(*) from `tiki_user_watches` where `user`=? and `object`=? and `type`=? and `event`=? ";
 			return $this->getOne($query,array($user,$object,$type,$event));
 		}
+	}
+
+	function get_groups_watching( $type, $object, $event ) {
+		$result = $this->query( 'SELECT `group` FROM tiki_group_watches WHERE object = ? AND type = ? AND event = ?',
+			array( $object, $type, $event ) );
+
+		$groups = array();
+		while( $row = $result->fetchRow() ) {
+			$groups[] = $row['group'];
+		}
+
+		return $groups;
 	}
 
 	/*shared*/

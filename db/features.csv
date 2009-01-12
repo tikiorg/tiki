@@ -951,3 +951,4 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 1060,Show object type,70,,feature_search_show_object_type,flag,,tiki_p_admin,,,,,,
 1061,Show last modification,70,,feature_search_show_last_modification,flag,,tiki_p_admin,,,,,,
 1062,Use edit plugin icons,1025,,wiki_edit_plugin,flag,,tiki_p_admin,,,,,, 
+1063,Group Watches,6,,feature_group_watches,feature,,tiki_p_admin,,,,,, 
