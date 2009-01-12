@@ -12,7 +12,7 @@ function wikiplugin_mouseover_info() {
 		'name' => tra('Mouse Over'),
 		'description' => tra('Create a mouseover feature on some text'),
 		'prefs' => array( 'wikiplugin_mouseover' ),
-		'body' => tra('Mouseover text is param label exists. Page text is text param exists'),
+		'body' => tra('Mouseover text if param label exists. Page text if text param exists'),
 		'params' => array(
 			'url' => array(
 				'required' => false,
@@ -20,16 +20,22 @@ function wikiplugin_mouseover_info() {
 				'description' => tra('?'),
 				'filter' => 'url',
 			),
-			'text' => array(
+			'label' => array(
 				'required' => true,
-				'name' => tra('Text'),
+				'name' => tra('Label'),
 				'description' => tra('Text displayed on the page. The body is the mouseover content'),
 				'filter' => 'striptags',
 			),
 			'text' => array(
 				'required' => true,
 				'name' => tra('Text'),
-				'description' => tra('Text displayed on the page.'),
+				'description' => tra('DEPRECATED').' '.tra('Text displayed on the mouseover. The body contains the text of the page.'),
+				'filter' => 'striptags',
+			),
+			'label' => array(
+				'required' => true,
+				'name' => tra('Label'),
+				'description' => tra('Text displayed on the page. The body contains the mouseover text.'),
 				'filter' => 'striptags',
 			),
 			'width' => array(
@@ -100,13 +106,18 @@ function wikiplugin_mouseover( $data, $params ) {
 	$parse = ! isset($params['parse']) || $params['parse'] != 'n';
 	$sticky = isset($params['sticky']) && $params['sticky'] == 'y';
 
-	$text = isset( $params['text'] ) ? $params['text'] : tra('No label specified');
+	if (empty($params['label']) && empty($params['text'])) {
+		$label = tra('No label specified');
+	} else {
+		$label = !empty( $params['label'] ) ? $params['label'] : $data;
+		$text = !empty( $params['text'] ) ? $params['text'] : $data;
+	}
 
-	$data = trim($data);
+	$text = trim($text);
 
 	if( $parse ) {
 		// Default output of the plugin is in ~np~, so escape it if content has to be parsed.
-		$data = "~/np~$data~np~";
+		$text = "~/np~$text~np~";
 	}
 
 	static $lastval = 0;
@@ -114,32 +125,9 @@ function wikiplugin_mouseover( $data, $params ) {
 
 	$url = htmlentities( $url, ENT_QUOTES, 'UTF-8' );
 
-	if ( !empty($param['center']) || !empty($param['left']) || !empty($param['right']) || !empty($param['above']) || !empty($param['bellow'])) {
-		if (!$smarty->get_template_vars('overlib_loaded')) {
-			$html .= '<div id="'.$id.'" style="position:absolute; visibility:hidden; z-index:1000;"></div>';
-			$html .= '<script type="text/javascript" src="lib/overlib.js"></script>';
-			$smarty->assign('overlib_loaded',1);
-		}
-		$data = preg_replace('/\r\n/', '<br />', $data);
-		$html .= "<a href='$url'";
-		$html .= " onmouseover=\"return overlib('".str_replace("'", "\'", htmlspecialchars($data))."'";
-		foreach ($params as $param=>$value) {
-			$p = strtoupper($param);
-			if ($p != 'URL' && $p != 'TEXT' && $p != 'PARSE' && $p != 'LABEL') {
-				if ((!empty($value) || $value != 'n') && ($p == 'STICKY' || $p == 'LEFT' || $p == 'RIGHT' || $p == 'CENTER' || $p == 'ABOVE'  || $p == 'BELOW'  || $p == 'AUTOSTATUS' || $p == 'AUTOSTATUSCAP' || $p == 'HAUTO' || $p == 'VAUTO' || $p == 'CLOSECLICK' || $p == 'FULLHTML' || $p == 'CSSOFF' || $p == 'CSSSTYLE' || $p == 'CSSCLASS' || $p == 'NOCLOSE')) {
-					$html .= ','.$p;
-				} else {
-					$html .= ','.$p;
-					$html .= ",'$value'";	
-				}
-			}
-		}
-		$html .= ");\" onmouseout='nd();' >";
-		$html .= "$text</a>";
-	} else {
-		global $headerlib;
+	global $headerlib;
 
-		$headerlib->add_js( "
+	$headerlib->add_js( "
 window.addEvent('domready', function() {
 	$('$id-link').addEvent( 'mouseover', function(event) {
 		if( window.wikiplugin_mouseover )
@@ -160,11 +148,11 @@ window.addEvent('domready', function() {
 	} ); " ) . "
 } );
 " );
-		$bgcolor = "background-color: " . ( isset($params['bgcolor']) ? $params['bgcolor'] : 'white' ) . ';';
-		$textcolor = isset($params['textcolor']) ? ("color:" . $params['textcolor'] . ';') : '';
+	$bgcolor = "background-color: " . ( isset($params['bgcolor']) ? $params['bgcolor'] : 'white' ) . ';';
+	$textcolor = isset($params['textcolor']) ? ("color:" . $params['textcolor'] . ';') : '';
 
-		$html = "~np~<a id=\"$id-link\" href=\"$url\">$text</a><div id=\"$id\" style=\"width: {$width}px; height: {$height}px; {$bgcolor} {$textcolor} display:none; position: absolute; z-index: 500;\">$data</div>~/np~";
-	}
+	$html = "~np~<a id=\"$id-link\" href=\"$url\">$label</a><div id=\"$id\" style=\"width: {$width}px; height: {$height}px; {$bgcolor} {$textcolor} display:none; position: absolute; z-index: 500;\">$text</div>~/np~";
+
 	return $html;
 }
 ?>
