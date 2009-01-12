@@ -520,52 +520,76 @@ class CategLib extends ObjectLib {
 				$perms = unserialize($cachelib->getCached("categories_permission_names"));
 			}
 
+			$permission_names = array();
 			foreach ($perms["data"] as $perm) {
-				$perm = $perm["permName"];
-				if ($tiki_p_admin == 'y') {
-					$return_perms["$perm"] = 'y';
-				} else {
-					foreach ($parents as $categId) {
-						if ($userlib->object_has_one_permission($categId, 'category')) {
-							if ($userlib->object_has_permission($user, $categId, 'category', $perm)) {
-								$return_perms["$perm"] = 'y';
-								if ($prefs['feature_category_reinforce'] == "n") {
-									break 1;
-								}
-							} else {
-								$return_perms["$perm"] = 'n';
-								// better-sorry-than-safe approach:
-								// if a user lacks a given permission regarding a particular category,
-								// that category takes precedence when considering if user has that permission
-								if ($prefs['feature_category_reinforce'] == "y") {
-									break 1;
-								}
-								// break out of one FOREACH loop
-							}
-						} else {
-							$categpath = $this->get_category_path($categId);
-							foreach ($categpath as $cat) {
-								if ($userlib->object_has_one_permission($cat['categId'], 'category')) {
-									if ($userlib->object_has_permission($user, $cat['categId'], 'category', $perm)) {
-										$return_perms["$perm"] = 'y';
-								   		break 1;
-									} else {
-										$return_perms["$perm"] = 'n';
-										// better-sorry-than-safe approach:
-										// if a user lacks a given permission regarding a particular category,
-										// that category takes precedence when considering if user has that permission
-										if ($prefs['feature_category_reinforce'] == "y") {
-											break 2;
-										}
-										// break out of one FOR loop and one FOREACH loop
-									}
-								} else { /* no special perm on cat  so general perm: (to see the categ panel as anonymous */ 
-									$return_perms[$perm] = $GLOBALS[$perm];
-								}
+				$permission_names[] = $perm["permName"];
+			}
 
+			//admins get it all
+			if ($tiki_p_admin == 'y') {
+				foreach ($permission_names as $perm) {
+					$return_perms["$perm"] = 'y';
+				}
+				return $return_perms;
+			}
+
+			//find out which permissions we're allowed or denied (or both, in the case of multiple categories)
+			$allowed_permissions = array();
+			$denied_permissions = array();
+			foreach ($parents as $categId) {
+				if ($userlib->object_has_one_permission($categId, 'category')) {
+					$user_perms = $userlib->get_object_permissions_for_user($categId, 'category', $user);
+					foreach ($permission_names as $perm) {
+						if (in_array($perm, $user_perms)) {
+							$allowed_permissions[] = $perm;
+						} else {
+							$denied_permissions[] = $perm;
+						}
+					}
+				} else {
+					$categpath = $this->get_category_path($categId);
+					foreach ($categpath as $cat) {
+						if ($userlib->object_has_one_permission($cat['categId'], 'category')) {
+							$user_perms = $userlib->get_object_permissions_for_user($categId, 'category', $user);
+							foreach ($permission_names as $perm) {
+								if (in_array($perm, $user_perms)) {
+									$allowed_permissions[] = $perm;
+								} else {
+									$denied_permissions[] = $perm;
+								}
 							}
 						}
+					}
+				}
+			}
+			$allowed_permissions = array_unique($allowed_permissions);
+			$denied_permissions = array_unique($denied_permissions);
+			//if this is yes, the user has to have the permission in every category to be granted permission
+			if ($prefs['feature_category_reinforce'] == "y") {
+				foreach ($allowed_permissions as $allowed_permission) {
+					if (!in_array($allowed_permission, $denied_permissions)) {
+						$return_perms["$allowed_permission"] =  'y';
+					} else {
+						$return_perms["$allowed_permission"] =  'n';
+					}
+				}
+			} else {
+				//otherwise, they just need the permission once
+				foreach ($allowed_permissions as $allowed_permission) {
+					$return_perms["$allowed_permission"] =  'y';
+				}
+			}
 
+			/* if no special perm on cat  so general perm: (to see the categ panel as anonymous */ 
+			if (!$allowed_permissions && !$denied_permissions) {
+				foreach ($permission_names as $perm) {
+					$return_perms[$perm] = $GLOBALS[$perm];
+				}
+			} else {
+				//set the rest to no
+				foreach ($permission_names as $perm) {
+					if (!in_array($perm, $allowed_permissions)) {
+						$return_perms["$perm"] =  'n';
 					}
 				}
 			}
@@ -573,7 +597,6 @@ class CategLib extends ObjectLib {
 		} else {
 			return FALSE;
 		}
-		
 	}
 
 	// Get all the objects in a category
