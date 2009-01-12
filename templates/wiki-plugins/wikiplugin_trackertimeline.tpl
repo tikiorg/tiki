@@ -28,16 +28,20 @@ ttl_showdetails = function( data ) {
 	{/foreach}
 	{foreach from=$wp_ttl_data item=list key=datagroup}
 		<tr>
-			<th>{$datagroup|escape}</th>
+			<th>{if $link_group_names}<a href="{$datagroup|sefurl:'wiki page'}">{/if}{$datagroup|escape}{if $link_group_names}</a>{/if}</th>
 			<td>
 				<div>
 				{foreach from=$list item=block}{if $block.lpad > 0}<span style="display: inline-block; display: -moz-inline-stack; width: {$block.lpad}%; height: 30px; border: 0;"></span>{/if}<span style="display: inline-block; display: -moz-inline-stack; width: {$block.lsize}%; height: 30px; border: 0; overflow:hidden; background: lightgreen;">
 						{if $block.lstart neq $block.start}&lt;&lt;&lt;{/if}
 
-						{if $prefs.feature_shadowbox eq 'y'}
-							<a href="javascript:ttl_showdetails({$block.encoded|escape})">{$block.title|escape}</a>
+						{if $block.link}
+							<a href="{$block.link|sefurl:'wiki page'}">{$block.title|escape}</a>
 						{else}
-							<a href="tiki-view_tracker_item.php?itemId={$block.item|escape}">{$block.title|escape}</a>
+							{if $prefs.feature_shadowbox eq 'y'}
+								<a href="javascript:ttl_showdetails({$block.encoded|escape})">{$block.title|escape}</a>
+							{else}
+								<a href="tiki-view_tracker_item.php?itemId={$block.item|escape}">{$block.title|escape}</a>
+							{/if}
 						{/if}
 
 						{if $block.lend neq $block.end}&gt;&gt;&gt;{/if}

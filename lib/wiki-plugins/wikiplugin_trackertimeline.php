@@ -10,51 +10,73 @@ function wikiplugin_trackertimeline_info() {
 				'required' => true,
 				'name' => tra('Tracker ID'),
 				'description' => tra('Numeric value'),
+				'filter' => 'digits',
 			),
 			'title' => array(
 				'required' => true,
 				'name' => tra('Title Field'),
 				'description' => tra('Tracker Field ID containing the item title.'),
+				'filter' => 'digits',
 			),
 			'summary' => array(
 				'required' => true,
 				'name' => tra('Summary Field'),
 				'description' => tra('Tracker Field ID containing the summary of the item. The summary will be displayed on the timeline when the item is focused.'),
+				'filter' => 'digits',
 			),
 			'start' => array(
 				'required' => true,
 				'name' => tra('Start Date'),
 				'description' => tra('Tracker Field ID containing the element start date. The field must be a datetime/jscalendar field.'),
+				'filter' => 'digits',
 			),
 			'end' => array(
 				'required' => true,
 				'name' => tra('End Date'),
 				'description' => tra('Tracker Field ID containing the element end date. The field must be a datetime/jscalendar field.'),
+				'filter' => 'digits',
 			),
 			'group' => array(
 				'required' => true,
 				'name' => tra('Element Group'),
 				'description' => tra('Tracker Field ID containing the element\'s group. Elements of a same group are displayed on the same row.'),
+				'filter' => 'digits',
 			),
 			'lower' => array(
 				'required' => true,
 				'name' => tra('Lower Bound'),
 				'description' => tra('Date from which element should be displayed. Date must be provided in YYYY-MM-DD HH:mm:ss format.'),
+				'filter' => 'striptags',
 			),
 			'upper' => array(
 				'required' => true,
 				'name' => tra('Upper Bound'),
 				'description' => tra('Date until which element should be displayed. Date must be provided in YYYY-MM-DD HH:mm:ss format.'),
+				'filter' => 'striptags',
 			),
 			'scale1' => array(
 				'required' => false,
 				'name' => tra('Primary Scale Unit'),
 				'description' => tra('hour, day, week, month or year (default to hour)'),
+				'filter' => 'alpha',
 			),
 			'scale2' => array(
 				'required' => false,
 				'name' => tra('Secondary Scale Unit'),
 				'description' => tra('hour, day, week, month, year or empty (default to empty)'),
+				'filter' => 'alpha',
+			),
+			'link_group' => array(
+				'required' => false,
+				'name' => tra('Link Group Name'),
+				'description' => tra('Convert the group name to a link. (y|n)'),
+				'filter' => 'alpha',
+			),
+			'link_page' => array(
+				'required' => false,
+				'name' => tra('Page Link Field'),
+				'description' => tra('Tracker Field ID containing the page name for item details.'),
+				'filter' => 'digits',
 			),
 		),
 	);
@@ -81,6 +103,10 @@ function wikiplugin_trackertimeline( $data, $params ) {
 		$params['end'] => 'end', 
 		$params['group'] => 'group',
 	);
+
+	if( isset($params['link_page']) ) {
+		$fieldIds[ $params['link_page'] ] = 'link';
+	}
 
 	$fields = array();
 	foreach( $fieldIds as $id => $label )
@@ -135,6 +161,7 @@ function wikiplugin_trackertimeline( $data, $params ) {
 	$layouts[] = wp_ttl_genlayout( $start, $end, $size, isset($params['scale1']) ? $params['scale1'] : 'hour' );
 
 	$smarty->assign( 'layouts', $layouts );
+	$smarty->assign( 'link_group_names', isset($params['link_group']) && $params['link_group'] == 'y' );
 
 	return $smarty->fetch('wiki-plugins/wikiplugin_trackertimeline.tpl');
 }
