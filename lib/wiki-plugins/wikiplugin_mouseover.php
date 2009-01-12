@@ -77,7 +77,7 @@ function wikiplugin_mouseover_info() {
 			'sticky' => array(
 				'required' => false,
 				'name' => tra('Sticky'),
-				'description' => 'y|n',
+				'description' => 'y|n, when enabled, popup stays visible until an other one is displayed or it is clicked.',
 				'filter' => 'alpha',
 			),
 		),
@@ -98,6 +98,7 @@ function wikiplugin_mouseover( $data, $params ) {
 	$offsetx = isset( $params['offsetx'] ) ? (int) $params['offsetx'] : 0;
 	$offsety = isset( $params['offsety'] ) ? (int) $params['offsety'] : 0;
 	$parse = ! isset($params['parse']) || $params['parse'] != 'n';
+	$sticky = isset($params['sticky']) && $params['sticky'] == 'y';
 
 	$text = isset( $params['text'] ) ? $params['text'] : tra('No label specified');
 
@@ -113,7 +114,7 @@ function wikiplugin_mouseover( $data, $params ) {
 
 	$url = htmlentities( $url, ENT_QUOTES, 'UTF-8' );
 
-	if (!empty($params['sticky']) || !empty($param['center']) || !empty($param['left']) || !empty($param['right']) || !empty($param['above']) || !empty($param['bellow'])) {
+	if ( !empty($param['center']) || !empty($param['left']) || !empty($param['right']) || !empty($param['above']) || !empty($param['bellow'])) {
 		if (!$smarty->get_template_vars('overlib_loaded')) {
 			$html .= '<div id="'.$id.'" style="position:absolute; visibility:hidden; z-index:1000;"></div>';
 			$html .= '<script type="text/javascript" src="lib/overlib.js"></script>';
@@ -141,13 +142,22 @@ function wikiplugin_mouseover( $data, $params ) {
 		$headerlib->add_js( "
 window.addEvent('domready', function() {
 	$('$id-link').addEvent( 'mouseover', function(event) {
-		$('$id').setStyle('left', (event.page.x + $offsetx) + 'px');
-		$('$id').setStyle('top', (event.page.y + $offsety) + 'px');
-		$('$id').setStyle('display','block');
+		if( window.wikiplugin_mouseover )
+			window.wikiplugin_mouseover.setStyle('display', 'none');
+
+		window.wikiplugin_mouseover = $('$id');
+		window.wikiplugin_mouseover.setStyle('left', (event.page.x + $offsetx) + 'px');
+		window.wikiplugin_mouseover.setStyle('top', (event.page.y + $offsety) + 'px');
+		window.wikiplugin_mouseover.setStyle('display','block');
+
+		window.wikiplugin_mouseover.addEvent( 'click', function(event) {
+			window.wikiplugin_mouseover.setStyle( 'display', 'none' );
+		} );
 	} );
+	" . ( $sticky ? '' : "
 	$('$id-link').addEvent( 'mouseout', function(event) {
 		$('$id').setStyle('display','none');
-	} );
+	} ); " ) . "
 } );
 " );
 		$bgcolor = "background-color: " . ( isset($params['bgcolor']) ? $params['bgcolor'] : 'white' ) . ';';
