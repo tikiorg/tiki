@@ -32,12 +32,6 @@ function wikiplugin_mouseover_info() {
 				'description' => tra('DEPRECATED').' '.tra('Text displayed on the mouseover. The body contains the text of the page.'),
 				'filter' => 'striptags',
 			),
-			'label' => array(
-				'required' => true,
-				'name' => tra('Label'),
-				'description' => tra('Text displayed on the page. The body contains the mouseover text.'),
-				'filter' => 'striptags',
-			),
 			'width' => array(
 				'required' => false,
 				'name' => tra('Width'),
