@@ -269,6 +269,11 @@ class TikiLib extends TikiDB {
 		$this->query($query,array($user,$event,$object));
 	}
 
+	function remove_group_watch($group, $event, $object) {
+		$query = "delete from `tiki_group_watches` where ".$this->convert_binary()." `group`=? and `event`=? and `object`=?";
+		$this->query($query,array($group,$event,$object));
+	}
+
 	/*shared*/
 	function get_user_watches($user, $event = '') {
 		$mid = '';

@@ -408,7 +408,7 @@ if($prefs['feature_wiki_attachments'] == 'y') {
 
 // Watches
 if ($prefs['feature_user_watches'] == 'y') {
-	if($user && isset($_REQUEST['watch_event'])) {
+	if($user && isset($_REQUEST['watch_event']) && !isset($_REQUEST['watch_group'])) {
 		check_ticket('index');
 		if (($_REQUEST['watch_action'] == 'add_desc' || $_REQUEST['watch_action'] == 'del_desc') && $tiki_p_watch_structure != 'y') {
 			$access->display_error( $page, tra('Permission denied'), '403');
@@ -430,9 +430,9 @@ if ($prefs['feature_group_watches'] == 'y'
 		if($_REQUEST['watch_action']=='add') {
 			$tikilib->add_group_watch($_REQUEST['watch_group'],$_REQUEST['watch_event'],$_REQUEST['watch_object'],'wiki page',$page,"tiki-index.php?page=$page");
 		} elseif($_REQUEST['watch_action'] == 'add_desc') {
-			$tikilib->add_user_watch($_REQUEST['watch_group'],$_REQUEST['watch_event'],$_REQUEST['watch_object'],'structure',$page,"tiki-index.php?page=$page&amp;structure=$struct");
+			$tikilib->add_group_watch($_REQUEST['watch_group'],$_REQUEST['watch_event'],$_REQUEST['watch_object'],'structure',$page,"tiki-index.php?page=$page&amp;structure=$struct");
 		} else {
-			$tikilib->remove_user_watch($_REQUEST['watch_group'],$_REQUEST['watch_event'],$_REQUEST['watch_object']);
+			$tikilib->remove_group_watch($_REQUEST['watch_group'],$_REQUEST['watch_event'],$_REQUEST['watch_object']);
 		}
 	}
 }

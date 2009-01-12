@@ -477,3 +477,11 @@ div.tabrow {
 }
 
 img {border: 0}
+
+.popup-group-watch {
+	overflow: auto;
+	width: 100px;
+	max-width: 200px;
+	border: solid thin black;
+	background: white;
+}

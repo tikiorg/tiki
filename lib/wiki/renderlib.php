@@ -382,7 +382,7 @@ class WikiRenderer
 
 	private function setupWatch() // {{{
 	{
-		global $prefs, $tikilib, $categlib;
+		global $prefs, $tikilib, $categlib, $userlib;
 		require_once 'lib/categories/categlib.php';
 		if ($prefs['feature_user_watches'] != 'y')
 			return;
@@ -410,6 +410,16 @@ class WikiRenderer
 				$this->smartyassign('watching_categories', $watching_categories);
 			}    
 		}    
+
+		if( $prefs['feature_group_watches'] 
+			&& ( $GLOBALS['tiki_p_admin'] == 'y' || $GLOBALS['tiki_p_admin_users'] == 'y' ) ) {
+
+			$this->smartyassign( 'grouplist', $userlib->list_all_groups() );
+			$this->smartyassign( 'page_group_watches', $tikilib->get_groups_watching( 'wiki page', $this->page, 'wiki_page_changed' ) );
+
+			if( $this->structureInfo )
+				$this->smartyassign( 'structure_group_watches', $tikilib->get_groups_watching( 'structure', $this->structureInfo['page_ref_id'], 'structure_changed' ) );
+		}
 	} // }}}
 
 	private function setupCategories() // {{{
