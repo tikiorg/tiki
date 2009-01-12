@@ -848,6 +848,11 @@ a.phplmselected:hover {color: #808080}
 	margin-top: 8px;
 	display: inline-block;
 	border: 0}
+
+.pagecontrols .tabs .icons {
+	margin-top: 6px;
+	float: right;
+}
 	
 *:first-child+html .pagecontrols .tabs .tabmark	 {margin-top: 9px}
 	

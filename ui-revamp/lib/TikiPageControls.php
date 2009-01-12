@@ -3,6 +3,7 @@
 class TikiPageControls_Element implements ArrayAccess
 {
 	private $text;
+	private $tip;
 	private $argument;
 	private $link;
 	private $type;
@@ -18,6 +19,17 @@ class TikiPageControls_Element implements ArrayAccess
 	function setText( $text ) // {{{
 	{
 		$this->text = $text;
+
+		// If no tip is set, text should be used
+		if( ! $this->tip )
+			$this->tip = $text;
+
+		return $this;
+	} // }}}
+
+	function setTip( $text ) // {{{
+	{
+		$this->tip = $tip;
 
 		return $this;
 	} // }}}
@@ -104,7 +116,8 @@ class TikiPageControls_Element implements ArrayAccess
 			require_once 'lib/smarty_tiki/function.icon.php';
 			return smarty_function_icon( array(
 				'_id' => $this->iconPath,
-				'_text' => $this->text
+				'_text' => $this->tip,
+				'alt' => $this->tip
 			), $GLOBALS['smarty'] );
 		}
 	} // }}}
@@ -167,6 +180,10 @@ abstract class TikiPageControls_Link implements ArrayAccess
 			else
 				return new TikiPageControls_UrlLink( 'tiki-index.php',
 					array_merge( $arguments, array( 'page' => $object ) ) );
+
+		case 'structure':
+			return new TikiPageControls_UrlLink( 'tiki-index.php',
+				array_merge( $arguments, array( 'page_ref_id' => $object ) ) );
 
 		case 'bloglist':
 			if( $prefs['feature_sefurl'] == 'y' )
@@ -555,6 +572,52 @@ abstract class TikiPageControls implements ArrayAccess
 			$objectId = $this->objectId;
 
 		return $tikilib->user_watches( $this->user, $event, $objectId, $type );
+	} // }}}
+
+	function addGroupWatchMenu( // {{{
+		$menuName,
+		$menuLabel,
+		$enableLabel,
+		$disableLabel,
+		$event,
+		$enableIcon,
+		$disableIcon,
+		$type,
+		$object,
+		$addBaseParams,
+		$removeBaseParams
+	)
+	{
+		global $tikilib, $userlib;
+
+		$menu = $this->addMenu( $menuName, $menuLabel )
+			->setIcon( $enableIcon );
+
+		$groups = $userlib->list_all_groups();
+		$watching = $tikilib->get_groups_watching( $type, $object, $event );
+
+		foreach( $groups as $group ) {
+			if( in_array( $group, $watching ) ) {
+				$label = $disableLabel;
+				$icon = $disableIcon;
+				$params = array_merge( $removeBaseParams, array(
+					'watch_group' => $group
+				) );
+			} else {
+				$label = $enableLabel;
+				$icon = $enableIcon;
+				$params = array_merge( $addBaseParams, array(
+					'watch_group' => $group
+				) );
+			}
+
+			$link = $this->link( $type, $object, $params );
+			$menu->addItem( $group, $link )
+				->setIcon( $icon )
+				->setTip( $label . $group );
+
+			$this->removeMenu( $menu, 0 );
+		}
 	} // }}}
 
 	function offsetSet( $name, $value ) {}

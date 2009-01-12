@@ -63,6 +63,56 @@ class TikiPageControls_Wiki extends TikiPageControls
 			$this->removeMenu($backlinksMenu, 0);
 		}
 
+		if( $this->hasPref('feature_group_watches')
+			&& $this->hasAnyOfPerm( 'tiki_p_admin', 'tiki_p_admin_users' ) ) {
+
+			$this->addGroupWatchMenu( 
+				'watchgroup',
+				tra('Show Group Watches on page'),
+				tra('Enable Page Monitoring for group '),
+				tra('Disable Page Monitoring for group '),
+				'wiki_page_changed',
+				'eye', 'no_eye',
+				'wiki page', $this->page,
+				array(
+					'watch_event' => 'wiki_page_changed',
+					'watch_object' => $this->page,
+					'watch_action' => 'add',
+					'structure' => $this->page,
+				),
+				array(
+					'watch_event' => 'wiki_page_changed',
+					'watch_object' => $this->page,
+					'watch_action' => 'remove',
+					'structure' => $this->page,
+				)
+			);
+
+			if( $this->structureInfo ) {
+				$this->addGroupWatchMenu( 
+					'structwatchgroup',
+					tra('Show Group Watches on structure'),
+					tra('Enable Sub-Structure Monitoring for group '),
+					tra('Disable Sub-Structure Monitoring for group '),
+					'structure_changed',
+					'eye_arrow_down', 'no_eye_arrow_down',
+					'structure', $this->structureInfo['page_ref_id'],
+					array(
+						'watch_event' => 'structure_changed',
+						'watch_object' => $this->structureInfo['page_ref_id'],
+						'watch_action' => 'add_desc',
+						'structure' => $this->page,
+					),
+					array(
+						'watch_event' => 'structure_changed',
+						'watch_object' => $this->structureInfo['page_ref_id'],
+						'watch_action' => 'remove_desc',
+						'structure' => $this->page,
+					)
+				);
+			}
+		}
+
 		$this->addTabs();
 	} // }}}
 
@@ -361,11 +411,11 @@ class TikiPageControls_Wiki extends TikiPageControls
 
 			if( $this->eventIsWatched( 'wiki_page_changed' ) ) {
 				$action = 'remove';
-				$icon = 'pics/icons/no_eye.png';
+				$icon = 'no_eye';
 				$label = tra('Stop Monitoring this Page');
 			} else {
 				$action = 'add';
-				$icon = 'pics/icons/eye.png';
+				$icon = 'eye';
 				$label = tra('Monitor this Page');
 			}
 
@@ -375,7 +425,8 @@ class TikiPageControls_Wiki extends TikiPageControls
 				'watch_action' => $action,
 				'structure_info' => $this->page,
 			) );
-			$actionMenu->addItem( $label, $link, 'watch' );
+			$actionMenu->addItem( $label, $link, 'watch' )
+				->setIcon( $icon );
 		}
 
 		if( $this->getUser()
@@ -384,11 +435,11 @@ class TikiPageControls_Wiki extends TikiPageControls
 
 			if( $this->eventIsWatched( 'structure_changed', 'structure', $this->structureInfo['page_ref_id'] ) ) {
 				$action = 'remove_desc';
-				$icon = 'pics/icons/no_eye_arrow_down.png';
+				$icon = 'no_eye_arrow_down';
 				$label = tra('Stop Monitoring this Sub-Structure');
 			} else {
 				$action = 'add_desc';
-				$icon = 'pics/icons/eye_arrow_down.png';
+				$icon = 'eye_arrow_down';
 				$label = tra('Monitor this Sub-Structure');
 			}
 
@@ -398,7 +449,8 @@ class TikiPageControls_Wiki extends TikiPageControls
 				'watch_action' => $action,
 				'structure_info' => $this->page,
 			) );
-			$actionMenu->addItem( $label, $link, 'watch' );
+			$actionMenu->addItem( $label, $link, 'structwatch' )
+				->setIcon( $icon );
 		}
 
 
@@ -501,7 +553,7 @@ class TikiPageControls_Wiki extends TikiPageControls
 		
 	} // }}}
 
-	private function getEditablePageName()
+	private function getEditablePageName() // {{{
 	{
 		if( ! $this->canEdit() )
 			return;
@@ -512,7 +564,7 @@ class TikiPageControls_Wiki extends TikiPageControls
 
 			return $this->page;
 		}
-	}
+	} // }}}
 
 	private function canEdit() // {{{
 	{

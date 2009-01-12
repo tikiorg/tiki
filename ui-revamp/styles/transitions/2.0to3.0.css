@@ -480,5 +480,6 @@ img {border: 0}
 	max-width: 200px;
 	border: solid thin black;
 	background: white;
+	display: none;
 }
 
