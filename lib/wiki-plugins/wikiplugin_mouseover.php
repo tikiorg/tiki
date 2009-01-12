@@ -29,12 +29,6 @@ function wikiplugin_mouseover_info() {
 			'text' => array(
 				'required' => true,
 				'name' => tra('Text'),
-				'description' => tra('Text displayed on the popup.'),
-				'filter' => 'striptags',
-			),
-			'label' => array(
-				'required' => true,
-				'name' => tra('Text'),
 				'description' => tra('Text displayed on the page.'),
 				'filter' => 'striptags',
 			),
@@ -68,20 +62,23 @@ function wikiplugin_mouseover_info() {
 				'description' => tra('y|n, parse the body of the plugin as wiki content. (Default to y)'),
 				'filter' => 'alpha',
 			),
-			'fgcolor' => array(
+			'bgcolor' => array(
 				'required' => false,
 				'name' => tra('Color of the inside popup'),
 				'description' => tra('#000000'),
+				'filter' => 'striptags',
 			),
 			'textcolor' => array(
 				'required' => false,
 				'name' => tra('Text popup color'),
 				'description' => tra('#FFFFFF'),
+				'filter' => 'striptags',
 			),
 			'sticky' => array(
 				'required' => false,
 				'name' => tra('Sticky'),
 				'description' => 'y|n',
+				'filter' => 'alpha',
 			),
 		),
 	);
@@ -102,16 +99,13 @@ function wikiplugin_mouseover( $data, $params ) {
 	$offsety = isset( $params['offsety'] ) ? (int) $params['offsety'] : 0;
 	$parse = ! isset($params['parse']) || $params['parse'] != 'n';
 
-	$text = isset( $params['text'] ) ? $params['text'] : $data;
-	$label = isset( $params['label'] ) ? $params['label'] : $data;
+	$text = isset( $params['text'] ) ? $params['text'] : tra('No label specified');
 
-	$text = trim($text);
+	$data = trim($data);
 
-	if( $parse == 'y' or $parse == '1') {
-		$text = $tikilib->parse_data($text);
-		$text = substr($text, 0, -1);// do not ask me why - but the parsing adds a CR
-	} else {		// Default output of the plugin is in ~np~, so escape it if content has to be parsed.
-		$text = "~/np~$text~np~";
+	if( $parse ) {
+		// Default output of the plugin is in ~np~, so escape it if content has to be parsed.
+		$data = "~/np~$data~np~";
 	}
 
 	static $lastval = 0;
@@ -119,15 +113,15 @@ function wikiplugin_mouseover( $data, $params ) {
 
 	$url = htmlentities( $url, ENT_QUOTES, 'UTF-8' );
 
-	if (!empty($params['sticky']) || !empty($param['center']) || !empty($param['left']) || !empty($param['right']) || !empty($param['above']) || !empty($param['bellow']) || !empty($param['offsetx']) || !empty($param['offsety'])) {
+	if (!empty($params['sticky']) || !empty($param['center']) || !empty($param['left']) || !empty($param['right']) || !empty($param['above']) || !empty($param['bellow'])) {
 		if (!$smarty->get_template_vars('overlib_loaded')) {
 			$html .= '<div id="'.$id.'" style="position:absolute; visibility:hidden; z-index:1000;"></div>';
 			$html .= '<script type="text/javascript" src="lib/overlib.js"></script>';
 			$smarty->assign('overlib_loaded',1);
 		}
-		$text = preg_replace('/\r\n/', '<br />', $text);
+		$data = preg_replace('/\r\n/', '<br />', $data);
 		$html .= "<a href='$url'";
-		$html .= " onmouseover=\"return overlib('".str_replace("'", "\'", htmlspecialchars($text))."'";
+		$html .= " onmouseover=\"return overlib('".str_replace("'", "\'", htmlspecialchars($data))."'";
 		foreach ($params as $param=>$value) {
 			$p = strtoupper($param);
 			if ($p != 'URL' && $p != 'TEXT' && $p != 'PARSE' && $p != 'LABEL') {
@@ -140,7 +134,7 @@ function wikiplugin_mouseover( $data, $params ) {
 			}
 		}
 		$html .= ");\" onmouseout='nd();' >";
-		$html .= "$label</a>";
+		$html .= "$text</a>";
 	} else {
 		global $headerlib;
 
@@ -156,10 +150,10 @@ window.addEvent('domready', function() {
 	} );
 } );
 " );
-		$fg = (isset($params['fgcolor']))?"background-color:".$params['fgcolor'].';':'';
-		$tc = (isset($params['textcolor']))?"color:".$params['textcolor'].';':'';
+		$bgcolor = "background-color: " . ( isset($params['bgcolor']) ? $params['bgcolor'] : 'white' ) . ';';
+		$textcolor = isset($params['textcolor']) ? ("color:" . $params['textcolor'] . ';') : '';
 
-		$html = "~np~<a id=\"$id-link\" href=\"$url\">$label</a><div id=\"$id\" style=\"width: {$width}px; height: {$height}px; {$fg}{$tc}display:none; position: absolute; z-index: 500; background: white;\">$text</div>~/np~";
+		$html = "~np~<a id=\"$id-link\" href=\"$url\">$text</a><div id=\"$id\" style=\"width: {$width}px; height: {$height}px; {$bgcolor} {$textcolor} display:none; position: absolute; z-index: 500;\">$data</div>~/np~";
 	}
 	return $html;
 }
