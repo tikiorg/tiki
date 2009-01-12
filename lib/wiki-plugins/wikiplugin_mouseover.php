@@ -38,6 +38,24 @@ function wikiplugin_mouseover_info() {
 				'description' => tra('Mouse over box height.'),
 				'filter' => 'digits',
 			),
+			'offsetx' => array(
+				'required' => false,
+				'name' => tra('Offset X'),
+				'description' => tra('Shifts the overlay to the right by the specified amount of pixels in relation to the cursor.'),
+				'filter' => 'digits',
+			),
+			'offsety' => array(
+				'required' => false,
+				'name' => tra('Offset Y'),
+				'description' => tra('Shifts the overlay to the bottom by the specified amount of pixels in relation to the cursor.'),
+				'filter' => 'digits',
+			),
+			'parse' => array(
+				'required' => false,
+				'name' => tra('Parse Body'),
+				'description' => tra('y|n, parse the body of the plugin as wiki content. (Default to y)'),
+				'filter' => 'alpha',
+			),
 		),
 	);
 }
@@ -53,8 +71,18 @@ function wikiplugin_mouseover( $data, $params ) {
 
 	$width = isset( $params['width'] ) ? (int) $params['width'] : 300;
 	$height = isset( $params['height'] ) ? (int) $params['height'] : 300;
+	$offsetx = isset( $params['offsetx'] ) ? (int) $params['offsetx'] : 0;
+	$offsety = isset( $params['offsety'] ) ? (int) $params['offsety'] : 0;
+	$parse = ! isset($params['parse']) || $params['parse'] != 'n';
 
 	$text = isset( $params['text'] ) ? $params['text'] : 'No label specified';
+
+	$data = trim($data);
+
+	if( $parse ) {
+		// Default output of the plugin is in ~np~, so escape it if content has to be parsed.
+		$data = "~/np~$data~np~";
+	}
 
 	static $lastval = 0;
 	$id = "mo" . ++$lastval;
@@ -66,8 +94,8 @@ function wikiplugin_mouseover( $data, $params ) {
 	$headerlib->add_js( "
 window.addEvent('domready', function() {
 	$('$id-link').addEvent( 'mouseover', function(event) {
-		$('$id').setStyle('left', event.page.x + 'px');
-		$('$id').setStyle('top', event.page.y + 'px');
+		$('$id').setStyle('left', (event.page.x + $offsetx) + 'px');
+		$('$id').setStyle('top', (event.page.y + $offsety) + 'px');
 		$('$id').setStyle('display','block');
 	} );
 	$('$id-link').addEvent( 'mouseout', function(event) {
@@ -76,8 +104,6 @@ window.addEvent('domready', function() {
 } );
 " );
 
-	return "~np~<a id=\"$id-link\" href=\"$url\">$text</a><div id=\"$id\" style=\"width: {$width}px; height: {$height}px; display:none; position: absolute; z-index: 500; background: white;\">~/np~
-$data
-~np~</div>~/np~";
+	return "~np~<a id=\"$id-link\" href=\"$url\">$text</a><div id=\"$id\" style=\"width: {$width}px; height: {$height}px; display:none; position: absolute; z-index: 500; background: white;\">$data</div>~/np~";
 }
 ?>
