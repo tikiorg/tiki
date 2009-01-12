@@ -28,10 +28,21 @@
 		</div>
 	<div class="tabs">
 		<div class="icons">
-			{$controls.actions.watch.icon}
-			{$controls.actions.structwatch.icon}
-			{popup_link block=page_group_watch}{$controls.watchgroup.icon}{/popup_link}
-			{popup_link block=structure_group_watch}{$controls.structwatchgroup.icon}{/popup_link}
+			{if $controls.actions.watch}
+				{$controls.actions.watch.icon}
+			{/if}
+
+			{if $controls.actions.structwatch}
+				{$controls.actions.structwatch.icon}
+			{/if}
+
+			{if $controls.watchgroup}
+				{popup_link block=page_group_watch}{$controls.watchgroup.icon}{/popup_link}
+			{/if}
+
+			{if $controls.structwatchgroup}
+				{popup_link block=structure_group_watch}{$controls.structwatchgroup.icon}{/popup_link}
+			{/if}
 			<div id="page_group_watch" class="popup-group-watch">
 				{foreach from=$controls.watchgroup.items item=watch}
 					<div>{$watch.icon} {$watch.text}</div>
