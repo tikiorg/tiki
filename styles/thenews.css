@@ -338,11 +338,11 @@ div#sitead {
 }
 
 #c1c2 #wrapper .marginleft {
-	margin-left: 160px;
+	margin-left: 214px;
 }
 
 #c1c2 #wrapper .marginright {
-	margin-right: 316px;
+	margin-right: 214px;
 }
 
 div#showhide_columns,
@@ -404,7 +404,7 @@ a.flip img {
 }
 
 #c1c2 #col2 {
-	width: 160px;
+	width: 214px;
 	overflow: hidden;
 }
 
@@ -415,8 +415,8 @@ a.flip img {
 }
 
 #col3 {
-	margin-left: -316px;
-	width: 316px;
+	margin-left: -214px;
+	width: 214px;
 	text-align: left;
 	font-size: 1em;
 }
