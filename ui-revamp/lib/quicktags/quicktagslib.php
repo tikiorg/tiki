@@ -46,6 +46,7 @@ abstract class Quicktag
 			$name = "wikiplugin_$name";
 
 		return array_merge( array(
+			'-',
 			'templates',
 			'cut',
 			'copy',

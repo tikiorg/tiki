@@ -34,6 +34,7 @@
       &nbsp;<a href="tiki-admin_menus.php" class="linkmenu">{tr}Menus{/tr}</a><br />
       &nbsp;<a href="tiki-admin_polls.php" class="linkmenu">{tr}Polls{/tr}</a><br />
       &nbsp;<a href="tiki-admin_notifications.php" class="linkmenu">{tr}Mail notifications{/tr}</a><br />
+      &nbsp;<a href="tiki-admin_quicktags.php" class="linkmenu">{tr}Quicktags{/tr}</a><br />
       &nbsp;<a href="tiki-search_stats.php" class="linkmenu">{tr}Search stats{/tr}</a><br />
     {/if}
     {if $tiki_p_admin_chat eq 'y'}

@@ -497,19 +497,18 @@ img {border: 0}
 
 .quicktags-admin .full {
 	border: solid thin black;
-	position: absolute;
-	height: 478px;
+	float: left;
+	margin-right: 10px;
+	height: 510px;
 	overflow-y: auto;
 	overflow-x: hidden;
-}
-
-.quicktags-admin .rows {
-	position: relative; 
-	left: 210px;
-	top: 12px;
-	width: 400px;
 }
 
 .quicktags-admin .quicktag {
 	cursor: pointer;
 }
+
+.quicktags-admin .qt-wys { font-weight: bold; }
+
+.quicktags-admin .qt-wiki { font-style: italic; }
+
