@@ -211,7 +211,6 @@ must not overlap the wiki content that could contain floated elements *}
   {/section}.<br />
   {tr}Page last modified on{/tr} {$lastModif|tiki_long_datetime}. {if $prefs.wiki_show_version eq 'y'}({tr}Version{/tr} {$lastVersion}){/if}
 {elseif isset($wiki_authors_style) && $wiki_authors_style eq 'collaborative'}
-<br />
   {tr}Contributors to this page{/tr}: {$lastUser|userlink}
   {section name=author loop=$contributors}
    {if !$smarty.section.author.last},
@@ -224,7 +223,6 @@ must not overlap the wiki content that could contain floated elements *}
 {elseif isset($wiki_authors_style) && $wiki_authors_style eq 'lastmodif'}
 	{tr}Page last modified on{/tr} {$lastModif|tiki_long_datetime}
 {else}
-<br />
   {tr 0=$creator|userlink}Created by %0{/tr}.
   {tr 0=$lastModif|tiki_long_datetime 1=$lastUser|userlink}Last Modification: %0 by %1{/tr}. {if $prefs.wiki_show_version eq 'y'}({tr}Version{/tr} {$lastVersion}){/if}
 {/if}
