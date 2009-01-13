@@ -512,3 +512,12 @@ img {border: 0}
 
 .quicktags-admin .qt-wiki { font-style: italic; }
 
+
+span.categpath {
+	display: block;
+}
+
+p.editdate {
+	padding-top: 10px;
+}
+

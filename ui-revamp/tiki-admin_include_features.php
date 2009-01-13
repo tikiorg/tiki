@@ -15,7 +15,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 if (isset($_REQUEST["features"])) {
 
 	$features_toggles = array(
-		"contact_anon",
 		"feature_action_calendar",
 		"feature_actionlog",
 		"feature_ajax",
@@ -97,6 +96,7 @@ if (isset($_REQUEST["features"])) {
 		"feature_swffix",
 		"layout_section",
 		"feature_sefurl",
+		"feature_sefurl_filter",
 		"feature_tikitests",
 		"feature_magic",
 		"feature_minichat",

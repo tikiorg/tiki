@@ -335,6 +335,7 @@ class TikiModInfo extends TikiModAvailable {
 		} else {
 			$this->md5 = md5_file($filename);
 		}
+		chmod($filename, 0644); // needed on some servers
 		
 		chdir($oldir);
 		return $err;
