@@ -483,3 +483,33 @@ img {border: 0}
 	display: none;
 }
 
+.quicktags-admin .rows .row {
+	height: 150px;
+	width: 200px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	display: inline-block
+	display: inline;
+	border: solid thin black;
+}
+
+.quicktags-admin .li { display: block; }
+
+.quicktags-admin .full {
+	border: solid thin black;
+	position: absolute;
+	height: 478px;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+.quicktags-admin .rows {
+	position: relative; 
+	left: 210px;
+	top: 12px;
+	width: 400px;
+}
+
+.quicktags-admin .quicktag {
+	cursor: pointer;
+}

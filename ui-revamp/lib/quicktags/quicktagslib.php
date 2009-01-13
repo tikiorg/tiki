@@ -14,6 +14,93 @@ abstract class Quicktag
 
 	private $requiredPrefs = array();
 
+	public static function getTag( $tagName ) // {{{
+	{
+		if( $tag = QuicktagInline::fromName( $tagName ) )
+			return $tag;
+		elseif( $tag = QuicktagBlock::fromName( $tagName ) )
+			return $tag;
+		elseif( $tag = QuicktagLineBased::fromName( $tagName ) )
+			return $tag;
+		elseif( $tag = QuicktagFckOnly::fromName( $tagName ) )
+			return $tag;
+		elseif( $tag = QuicktagWikiplugin::fromName( $tagName ) )
+			return $tag;
+		elseif( $tag = QuicktagPicker::fromName( $tagName ) )
+			return $tag;
+		elseif( $tagName == 'fullscreen' )
+			return new QuicktagFullscreen;
+		elseif( $tagName == 'enlarge' )
+			return new QuicktagTextareaResize( 'enlarge' );
+		elseif( $tagName == 'reduce' )
+			return new QuicktagTextareaResize( 'reduce' );
+		elseif( $tagName == '-' )
+			return new QuicktagSeparator;
+	} // }}}
+
+	public static function getList() // {{{
+	{
+		global $tikilib;
+		$plugins = $tikilib->plugin_get_list();
+		foreach( $plugins as & $name )
+			$name = "wikiplugin_$name";
+
+		return array_merge( array(
+			'templates',
+			'cut',
+			'copy',
+			'paste',
+			'pastetext',
+			'pasteword',
+			'print',
+			'spellcheck',
+			'undo',
+			'redo',
+			'find',
+			'replace',
+			'selectall',
+			'removeformat',
+			'showblocks',
+			'left',
+			'right',
+			'full',
+			'indent',
+			'outdent',
+			'underline',
+			'unlink',
+			'style',
+			'fontname',
+			'fontsize',
+			'source',
+			'bold',
+			'italic',
+			'strike',
+			'sub',
+			'sup',
+			'tikilink',
+			'link',
+			'anchor',
+			'color',
+			'bgcolor',
+			'center',
+			'table',
+			'rule',
+			'pagebreak',
+			'blockquote',
+			'h1',
+			'h2',
+			'h3',
+			'image',
+			'list',
+			'numlist',
+			'specialchar',
+			'smiley',
+			'fullscreen',
+			'enlarge',
+			'reduce',
+		), $plugins );
+	} // }}}
+
 	abstract function getWikiHtml( $areaName );
 
 	function isAccessible() // {{{
@@ -596,7 +683,7 @@ class QuicktagsList
 					$group = array();
 				}
 			} else {
-				if( ( $tag = $this->getTag( $tagName ) ) 
+				if( ( $tag = Quicktag::getTag( $tagName ) ) 
 					&& $tag->isAccessible() ) {
 
 					$group[] = $tag;
@@ -609,30 +696,6 @@ class QuicktagsList
 
 		if( count( $elements ) )
 			$this->lines[] = $elements;
-	} // }}}
-
-	private function getTag( $tagName ) // {{{
-	{
-		if( $tag = QuicktagInline::fromName( $tagName ) )
-			return $tag;
-		elseif( $tag = QuicktagBlock::fromName( $tagName ) )
-			return $tag;
-		elseif( $tag = QuicktagLineBased::fromName( $tagName ) )
-			return $tag;
-		elseif( $tag = QuicktagFckOnly::fromName( $tagName ) )
-			return $tag;
-		elseif( $tag = QuicktagWikiplugin::fromName( $tagName ) )
-			return $tag;
-		elseif( $tag = QuicktagPicker::fromName( $tagName ) )
-			return $tag;
-		elseif( $tagName == 'fullscreen' )
-			return new QuicktagFullscreen;
-		elseif( $tagName == 'enlarge' )
-			return new QuicktagTextareaResize( 'enlarge' );
-		elseif( $tagName == 'reduce' )
-			return new QuicktagTextareaResize( 'reduce' );
-		elseif( $tagName == '-' )
-			return new QuicktagSeparator;
 	} // }}}
 
 	function getWysiwygArray() // {{{
