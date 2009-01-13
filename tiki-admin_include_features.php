@@ -97,6 +97,7 @@ if (isset($_REQUEST["features"])) {
 		"feature_swffix",
 		"layout_section",
 		"feature_sefurl",
+		"feature_sefurl_filter",
 		"feature_tikitests",
 		"feature_magic",
 		"feature_minichat",
