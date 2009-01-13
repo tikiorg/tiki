@@ -485,3 +485,8 @@ img {border: 0}
 	border: solid thin black;
 	background: white;
 }
+
+span.categpath {
+	display: block;
+}
+

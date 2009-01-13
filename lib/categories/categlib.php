@@ -1076,11 +1076,8 @@ class CategLib extends ObjectLib {
 					}
 				}
 				$smarty->assign('catp',array_reverse($catp,true));
-				// this line here needed to preserve old behavior where multiple categpaths
-				// are shown on different lines, since the line break has been taken out of categpath.tpl
-				// to avoid line break in the case where there is only one categpath
-				// TODO: perhaps the categpath should be returned as array so that templates can style with complete control?  
-				if ($catpath > '') $catpath .= '<br />';
+				// hard coded line break removed and span.categpath defined as display:block in transitions/2.0to3.0.css
+				// to preserve previous behaviour (all aligned left on separate lines)
 				$catpath.= $smarty->fetch('categpath.tpl');
 			}
 			return $catpath;
