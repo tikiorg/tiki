@@ -1115,7 +1115,8 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_comments_post_as_anonymous' => 'n',
 		'feature_comments_moderation' => 'n',
 		'feature_template_zoom' => 'y',
-
+		'feature_jquery' => 'n',
+	
 		// TikiTests
 		'feature_tikitests' => 'n',
 

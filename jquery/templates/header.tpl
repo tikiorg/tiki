@@ -109,6 +109,10 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 <script src="lib/mootools/extensions/tabs/SimpleTabs.js" type="text/javascript" ></script> 
 {/if}
 {/if}
+{if $prefs.feature_jquery eq "y"}
+<script type="text/javascript" src="lib/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="lib/jquery_tiki/tiki-jquery.js"></script>
+{/if}
 
 {if $prefs.feature_swffix eq "y"}{* to interpret old banners done with swffix *}
 <script type="text/javascript" src="lib/swffix/swffix.js"></script>
