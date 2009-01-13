@@ -1146,7 +1146,7 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
 	if ($prefs['feature_best_language'] == 'y') {
 		$url .= '&bl=n';
 	}
-	$url .= '&saved_msg=y';
+	$_SESSION['saved_msg'] = $_REQUEST["page"];
 
 	header("location: $url");
 	die;
