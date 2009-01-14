@@ -426,7 +426,7 @@ if ($prefs['feature_user_watches'] == 'y') {
 
 if ($prefs['feature_group_watches'] == 'y'
 	&& ( $tiki_p_admin == 'y' || $tiki_p_admin_users == 'y' ) ) {
-	if($_REQUEST['watch_group'] && isset($_REQUEST['watch_event'])) {
+	if(!empty($_REQUEST['watch_event'])) {
 		check_ticket('index');
 		if($_REQUEST['watch_action']=='add') {
 			$tikilib->add_group_watch($_REQUEST['watch_group'],$_REQUEST['watch_event'],$_REQUEST['watch_object'],'wiki page',$page,"tiki-index.php?page=$page");
