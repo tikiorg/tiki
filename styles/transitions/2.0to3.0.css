@@ -24,6 +24,7 @@ They should be added to themes (possibly with tweaks) to make the theme v3.0 rea
 	max-height: 80%;
 	overflow: auto;
 	background: white;
+	color: black;
 	padding: 10px;
 	border: solid 2px black;
 }
@@ -41,6 +42,7 @@ h3.box-title span.moduleflip {
 
 #shadowbox_content {
 	background: white;
+	color: black;
 }
 
 /* To enable removing deprecated tag from img.icon and prevent border on a.icon. */
@@ -190,6 +192,7 @@ div.help_section {
 	margin: 5px;
 	padding: 5px;
 	background-color: white;
+	color: black;
 }
 
 .findtable ul {
@@ -279,10 +282,10 @@ ul.categories li{
 .calbuttonoff a:visited {
 	color: #000;
 }
-.calbuttonon a {
-	color: #00f;
-}
 */
+.calbuttonon a {
+	text-decoration: underline;
+}
 .calbuttonLeft {
 	float: left;
 	width: 3px;
@@ -312,6 +315,9 @@ ul.categories li{
 }
 .calnavigation {
 	border-width: 0px;
+	text-align: center;
+	font-weight: bold;
+	padding: 4px;
 /*	color: #e8ffff;*/
 }
 .button2 .linkbut,
@@ -484,6 +490,7 @@ img {border: 0}
 	max-width: 200px;
 	border: solid thin black;
 	background: white;
+	color: black;
 }
 
 span.categpath {
