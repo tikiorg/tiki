@@ -20,6 +20,7 @@ if (isset($_REQUEST["looksetup"])) {
 
 	if (isset($_REQUEST["site_style"])) {
 	    check_ticket('admin-inc-general');
+	    simple_set_value("controls_style", "controls_style");
 	    simple_set_value("site_style", "style");
 		simple_set_value("site_style", "site_style");
 	    		

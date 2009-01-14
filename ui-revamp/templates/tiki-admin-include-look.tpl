@@ -52,6 +52,18 @@
 					</tr>
 					<tr>
 						<td class="form" >
+							<label for="general-theme">{tr}Controls Style{/tr}:</label>
+						</td>
+						<td width="67%">
+							<select name="controls_style">
+								<option value="tab"{if $prefs.controls_style eq 'tab'} selected="selected"{/if}>{tr}Tab &amp; Menu{/tr}</option>
+								<option value="classic"{if $prefs.controls_style eq 'classic'} selected="selected"{/if}>{tr}TikiWiki Classic{/tr}</option>
+							</select>
+							{if $prefs.site_style != $a_style}<span class="highlight">{tr}* Note: Theme displayed differs from "site" theme ({$prefs.site_style}).{/tr}</span>{/if}
+						</td>
+					</tr>
+					<tr>
+						<td class="form" >
 							<label for="general-theme">{tr}Theme options{/tr}:</label>
 						</td>
 						<td width="67%">

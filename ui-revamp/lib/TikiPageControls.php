@@ -147,9 +147,14 @@ class TikiPageControls_Element implements ArrayAccess
 		require_once 'lib/smarty_tiki/function.button.php';
 
 		if( $this->link ) {
+			$text = $this->text;
+			if( !is_null($this->argument) ) {
+				$text .= " ({$this->argument})";
+			}
+
 			return smarty_function_button( array(
 				'href' => $this->link->getHref(),
-				'_text' => $this->text,
+				'_text' => $text,
 			), $GLOBALS['smarty'] );
 		}
 	} // }}}

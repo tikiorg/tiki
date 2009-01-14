@@ -871,6 +871,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_custom_home' => 'n',
 
 		// site identity
+		'controls_style' => 'tab',
 		'feature_siteidentity' => 'y',
 		'site_crumb_seper' => '>',
 		'site_nav_seper' => '|',
