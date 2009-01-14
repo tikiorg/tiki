@@ -1,1 +1,0 @@
-{tr}You're invited to join my network of friends!{/tr}
