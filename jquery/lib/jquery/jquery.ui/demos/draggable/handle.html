@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<title>jQuery UI Draggable - Handle Demo</title>
+	<link type="text/css" href="../../themes/default/ui.all.css" rel="stylesheet" />
+	<script type="text/javascript" src="../../jquery-1.2.6.js"></script>
+	<script type="text/javascript" src="../../ui/ui.core.js"></script>
+	<script type="text/javascript" src="../../ui/ui.draggable.js"></script>
+	<link type="text/css" href="../demos.css" rel="stylesheet" />
+	<style type="text/css">
+	#draggable { width: 100px; height: 100px; padding: 0.5em; float: left; margin: 5px; }
+	#draggable p { cursor: move; }
+	</style>
+	<script type="text/javascript">
+	$(function() {
+		$("#draggable").draggable({ handle: 'p' });
+	});
+	</script>
+</head>
+<body>
+<div class="demo">
+	
+<div id="draggable" class="ui-widget-content">
+	<p class="ui-widget-header">I can be dragged only by this handle</p>
+</div>
+
+</div><!-- End demo -->
+
+<div class="demo-description">
+
+<p>
+<!-- Add description here -->
+</p>
+
+</div><!-- End demo-description -->
+</body>
+</html>

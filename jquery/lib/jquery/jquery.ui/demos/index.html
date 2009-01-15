@@ -1,0 +1,123 @@
+<?php if(!isset($plain)) { ?>
+<!doctype html>
+<html lang="en">
+<head>
+	<title>jQuery UI Demos</title>
+	<link type="text/css" href="../themes/default/ui.all.css" rel="stylesheet" />
+	<link type="text/css" href="demos.css" rel="stylesheet" />
+	<script type="text/javascript" src="../jquery-1.2.6.js"></script>
+	<script type="text/javascript" src="../ui/ui.core.js"></script>
+	<script type="text/javascript" src="../ui/ui.accordion.js"></script>
+	<script type="text/javascript" src="../ui/ui.datepicker.js"></script>
+	<script type="text/javascript" src="../ui/ui.dialog.js"></script>
+	<script type="text/javascript" src="../ui/ui.draggable.js"></script>
+	<script type="text/javascript" src="../ui/ui.droppable.js"></script>
+	<script type="text/javascript" src="../ui/ui.progressbar.js"></script>
+	<script type="text/javascript" src="../ui/ui.resizable.js"></script>
+	<script type="text/javascript" src="../ui/ui.selectable.js"></script>
+	<script type="text/javascript" src="../ui/ui.slider.js"></script>
+	<script type="text/javascript" src="../ui/ui.sortable.js"></script>
+	<script type="text/javascript" src="../ui/ui.tabs.js"></script>
+	<script type="text/javascript" src="../ui/effects.core.js"></script>
+	<script type="text/javascript" src="../ui/effects.blind.js"></script>
+	<script type="text/javascript" src="../ui/effects.bounce.js"></script>
+	<script type="text/javascript" src="../ui/effects.clip.js"></script>
+	<script type="text/javascript" src="../ui/effects.drop.js"></script>
+	<script type="text/javascript" src="../ui/effects.explode.js"></script>
+	<script type="text/javascript" src="../ui/effects.fold.js"></script>
+	<script type="text/javascript" src="../ui/effects.highlight.js"></script>
+	<script type="text/javascript" src="../ui/effects.pulsate.js"></script>
+	<script type="text/javascript" src="../ui/effects.scale.js"></script>
+	<script type="text/javascript" src="../ui/effects.shake.js"></script>
+	<script type="text/javascript" src="../ui/effects.slide.js"></script>
+	<script type="text/javascript" src="../ui/effects.transfer.js"></script>
+	<script type="text/javascript">
+	jQuery(function($) {
+		$('.left-nav a').click(function(ev) {
+			var section = this.href.replace('/index.html','');
+			var header = section.replace(/.+\/([^\/]+)/,'$1');
+			$('td.normal div.normal')
+				.empty()
+				.append('<h4 class="demo-subheader">Functional demo:</h4>')
+				.append('<h3 class="demo-header">'+ header +'</h3>')
+				.append('<div id="demo-config"></div>')
+				.find('#demo-config')
+					.append('<iframe id="demo-frame" name="demo-frame" width="520" height="314" scrolling="auto" frameborder="0" src="'+ section +'/default.html"></iframe><div id="demo-config-menu"></div>')
+					.find('#demo-config-menu')
+						.load(this.href + ' .demos-nav', function() {
+							$('#demo-config-menu a').each(function() {
+								this.setAttribute('href', section + '/' + this.getAttribute('href').replace(/.+\/([^\/]+)/,'$1'));
+								$(this).attr('target', 'demo-frame');
+								$(this).click(function() {
+									$(this).parents('ul').find('li').removeClass('demo-config-on');
+									$(this).parent().addClass('demo-config-on');
+									$('#demo-notes').hide();
+								});
+							});
+
+							$('#demo-frame').load(function() {
+								var content = $(this)[0].contentWindow.document || $(this).contents()[0];
+								var notes = $('.demo-description', content);
+								if ($('#demo-notes').length == 0) {
+									$('<div id="demo-notes"></div>').insertAfter('#demo-config');
+								}
+								$('#demo-notes').hide().empty().html(notes.html());
+								$('#demo-notes').fadeIn();
+								notes.hide();
+							});
+
+							if ($('#demo-frame .demo-description:visible'))
+								$('#demo-frame').trigger('load');
+						})
+					.end()
+				.end()
+			;
+			ev.preventDefault();
+		});
+	});
+	</script>
+</head>
+<body>
+<?php } ?>
+
+<table class="layout-grid" cellspacing="0" cellpadding="0">
+	<tr>
+		<td class="left-nav">
+			<dl class="demos-nav">
+				<dt>Interactions</dt>
+					<dd><a href="draggable/index.html">Draggable</a></dd>
+					<dd><a href="droppable/index.html">Droppable</a></dd>
+					<dd><a href="resizable/index.html">Resizable</a></dd>
+					<dd><a href="selectable/index.html">Selectable</a></dd>
+					<dd><a href="sortable/index.html">Sortable</a></dd>
+				<dt>Widgets</dt>
+					<dd><a href="accordion/index.html">Accordion</a></dd>
+					<dd><a href="datepicker/index.html">Datepicker</a></dd>
+					<dd><a href="dialog/index.html">Dialog</a></dd>
+					<dd><a href="progressbar/index.html">Progressbar</a></dd>
+					<dd><a href="slider/index.html">Slider</a></dd>
+					<dd><a href="tabs/index.html">Tabs</a></dd>
+				<dt>Effects</dt>
+					<dd><a href="effects_general/index.html">General</a></dd>
+					<dd><a href="effects_showhide/index.html">Show/Hide</a></dd>
+			</dl>
+		</td>
+		<td class="normal">
+
+			<div class="normal">
+					<?php if(isset($plain) && $content) { echo $content; } else { ?>
+
+					<h3>Instructions</h3>
+					<p>
+						These demos showcase some common uses of each jQuery UI plugin. Simply copy and paste code from the demos to get started. Have fun playing with them.
+					</p>
+					<?php  } ?>
+			</div>
+
+		</td>
+	</tr>
+</table>
+<?php if(!isset($plain)) { ?>
+</body>
+</html>
+<?php } ?>
