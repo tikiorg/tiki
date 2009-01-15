@@ -305,12 +305,24 @@ div#sitead {
 }
 
 #sitesearchbar {
-	font-size: .95em;
-	text-align: right;
-/*	max-width: 300px;*/
+	font-size: 11px;
+	/*text-align: right;
+	max-width: 300px;*/
+	margin-right: 10px;
 	float: right; 
 }
 
+#sitesearchbar select[name="where"] {margin-right: 50px  }
+
+#sitesearchbar .cssmenu li {border-top: 0}
+#sitesearchbar .cssmenu li:hover {background: none!important}
+
+#sitesearchbar ul.cssmenu > li > ul{
+	margin-top: -22px;
+	padding: 0;
+	margin-left: 6px;
+	border: 0}
+	
 /** Middle **/
 
 #middle {
@@ -738,12 +750,11 @@ div.box-data {
 .box-data ol {padding-left: 2em; margin-top: 0; margin-bottom: 0;}
 .box-data ul {padding-left: 0; margin-top: 0; margin-bottom: 0; list-style:none;}
 /* IE */
-* html .box-data ol {margin-left: 0em;}
-* html .box-data ul {margin-left: 0em;}
+* html .box-data ol {margin-left: 0}
+* html .box-data ul {margin-left: 0}
 /* IE7 */
 *:first-child+html .box-data ol {margin-left: 0em;}
 *:first-child+html .box-data ul {margin-left: 0em;}
-
 
 td.module {
 	font-size: .95em;
@@ -1356,7 +1367,7 @@ p.editdate {
 	color: #223344;
 	border-top: 1px solid #8CACBB;
 	font-size: 1em;
-	padding: 10px 10px 0;
+	padding: 0 10px;
 }
 
 div.wiki-edithelp {
@@ -2855,4 +2866,24 @@ div.multiselect div.even {
 div.multiselect div.even:hover {
 	background: #FFF7E6;
 }
+
+/** CSS (suckerfish) menus **/
+
+.cssmenu li,
+.cssmenu_horiz li,
+.cssmenu_vert li {border-top: 1px solid #dedede}
+
+.cssmenu li:hover,
+.cssmenu_horiz li:hover,
+.cssmenu_vert li:hover,
+.cssmenu li.sfhover,
+.cssmenu_horiz li.sfhover,
+.cssmenu_vert li.sfhover {background: #e9ecef}
+
+.cssmenu li ul,
+.cssmenu_horiz li ul,
+.cssmenu_vert li ul {border: 1px solid black}
+
+.cssmenu_horiz li ul ul {margin: -1em 0 0 11em}
+
 /***** End of file ******/

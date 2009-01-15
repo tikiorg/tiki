@@ -1,5 +1,5 @@
 <div class="wikiactions" style="float: right; padding-left:10px; white-space: nowrap">
-	<div class="icons" style="float: left;">
+	<div class="icons">
 		{if $controls.actions.pdf}{$controls.actions.pdf.icon}{/if}
 		{if $controls.tabs.edit}{$controls.tabs.edit.icon}{/if}
 		{if $controls.actions.wiki3d}{$controls.actions.wiki3d.icon}{/if}
@@ -30,7 +30,7 @@
 		</div>
 	</div>
 	{if $controls.backlinks}
-		<form action="tiki-index.php" method="get" style="display: block; float: left">
+		<form action="tiki-index.php" method="get">
 			<select name="page" onchange="page.form.submit()">
 				<option>{tr}Backlinks{/tr}...</option>
 				{foreach from=$backlinks item=back}

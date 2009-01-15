@@ -1,7 +1,7 @@
 <div class="wikitopline" style="clear: both;">
 	<div class="content">
 		{if !$hide_page_header}
-		<div class="wikiinfo" style="float: left">
+		<div class="wikiinfo">
 {if $prefs.feature_wiki_pageid eq 'y' and $print_page ne 'y'}
 			<small><a class="link" href="tiki-index.php?page_id={$page_id}">{tr}page id{/tr}: {$page_id}</a></small>
 {/if}
@@ -39,12 +39,12 @@
 	{/if}
 
 	{if $prefs.feature_multilingual == 'y' && $prefs.show_available_translations eq 'y'}
-			<div style="float: left">
+			<div>
 		{include file="translated-lang.tpl" td='n'}
 			</div>
 	{/if}
 		</div>
-		<br class="clear" style="clear: both" />
+		<br class="clear" />
 {/if}
 *}
 {/if} {*hide_page_header*}

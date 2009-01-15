@@ -330,7 +330,7 @@ div#sitead {margin: auto}
 	text-align: left;
 	/*max-width: 380px;
 	min-width: 340px;*/
-	width: 350px;
+	width: 330px;
 	background: url(coelesce/search_wide.jpg) no-repeat;
 	padding-left: 15px;
 	color: #517ea7;}
@@ -340,10 +340,11 @@ div#sitead {margin: auto}
 	background: url(coelesce/search_wide.jpg) 100% 0 no-repeat;
 	margin: 0;
 	padding: 0}
-	
+
 #sitesearchbar form {
 	padding-top: 8px;
-	margin-right: 8px}
+	margin-right: 8px;
+	font-size: 12px}
 
 #sitesearchbar form input.wikiaction {}
 	
@@ -353,26 +354,42 @@ div#sitead {margin: auto}
 	/*line-height: 1;
 	float: left*/}
 	
-#sitesearchbar .nohighlight {position: relative} 
-	
-#sitesearchbar ul.cssmenu {
+.nohighlight {position: relative}
+
+#sitesearchbar .nohighlight ul.cssmenu {
 	position: absolute;
-	top: 9px;
-	right: 30px;
+	top: 6px;
+	right: 40px;
 	width: 50px;
+	margin-left: 4px;
 	cursor: pointer;
 	color: #2d2d2d;}
 	
 #sitesearchbar ul.cssmenu > li { }
+
+.cbox-data .nohighlight {
+	position: static;
+	height: 30px;
+	white-space: nowrap;}
 	
-.sitesearchbar .cssmenu li ul ul {margin: -1em 0 0 2em}
+.cbox-data .nohighlight form {display: inline}
+
+.cbox-data .nohighlight ul.cssmenu {
+	margin-left: 5px;
+	width: 40px}
+	
+.nohighlight ul.cssmenu li ul {
+	background: none;
+	border: none }
+
+.nohighlight .cssmenu li ul {margin: -23px 0 0 6px}
 
 input#fuser,
 select[name="where"] {border: none}
 
 input#fuser,
 select[name="where"],
-input[name="search"] {}
+input[name="search"] {display: inline}
 	
 
 input[id="sl-login-user"],
@@ -556,41 +573,6 @@ div.menuSection div.separator {}
 	border-left: 1px solid #9eb8d5;
 	border-right: 1px solid #264062}
 	
-.cssmenu_horiz li {}
-	
-.cssmenu_horiz li ul {}
-	
-.cssmenu_horiz li a {
-	white-space: nowrap;
-	display: block;
-	padding: 6px 10px;
-	font-weight: bold;
-	text-decoration: none;
-	background: inherit;
-	color: #cfe3fb;
-	font-size: 12px}
-
-.cssmenu_horiz li.selectedAscendant > a {background: none}
-#tiki-top > .cssmenu_horiz,
-#tiki-top .cssmenu_horiz ul li {background: none}
-	
-#tiki-top .cssmenu_horiz ul li a:hover {padding-right: 0}
-
-#tiki-top > ul.cssmenu_horiz > li > a {
-	border-left: 1px solid #acc4e0;
-	border-right: 1px solid #2e5276;
-	padding-top: 9px;
-	padding-bottom: 10px}
-	
-#tiki-top > ul.cssmenu_horiz > li > ul> a {
-	background: #ccdceb;
-	padding-top: 10px;
-	padding-bottom: 9px}
-	
-#tiki-top > .cssmenu_horiz > li > a:hover { 
-	background: #335075;
-	color: #fff}
-	
 .horbaritem a:hover {
 	color: #fff !important;
 	text-decoration: none} 
@@ -616,19 +598,6 @@ div.menuSection div.separator {}
 	border: 0;
 	background: #ccdceb}
 	
-.cssmenu_horiz li:hover ul {
-	border: 0;
-	background: #ccdceb;
-	color: #5a7ea2;}
-	
-*:first-child+html .pageactions .cssmenu_horiz li:hover ul {z-index: 300 !important}
-	
-.cssmenu_horiz li:hover ul li:hover {
-	background: #eff8ff;
-	color: #5a7ea2;}
-	
-.cssmenu_horiz li.selected > a {background: inherit}
-
 .mdkitem {
 	position: relative;
 	text-align: left;
@@ -639,52 +608,25 @@ div.menuSection div.separator {}
 	top: 5px;
 	right: 12px} 
 
-.mdkitem a,
-.cssmenu_vert li a {
+.mdkitem a {
 	padding: 3px 6px;
 	position: relative;
 	display: block;
 	font-weight: normal;
 	font-size: 1.2em} 
 
-.mdkitem a:link,
-.cssmenu_vert li a {
+.mdkitem a:link {
 	font-weight: normal;
 	text-decoration: none} 
 
 .mdkitem a:visited {text-decoration: none} 
 
-.mdkitem a:hover, 
-.cssmenu_vert li a:hover {
+.mdkitem a:hover {
 	color: #82a7c8;
 	text-decoration: none;
 	background: #eff8ff} 
 
 .mdkitem a:active {} 
-
-.cssmenu_vert li {}
-.cssmenu_ver li a ul {border: 0}
-.cssmenu_vert li:hover ul,
-.cssmenu_vert li li:hover ul,
-.cssmenu_vert li li li:hover ul,
-.cssmenu_vert li.sfhover ul,
-.cssmenu_vert li li.sfhover ul,
-.cssmenu_vert li li li.sfhover ul { /* lists nested under hovered list items */border: 0}
-
-.cssmenu_vert li.selected > a {}
-
-/*.cssmenu_horiz ul {width: 8em}*/
-
-.cssmenu_horiz ul li * {
-	text-align: left;
-	color: #5a7ea2;
-	min-width: 10em}
-	
-/*
-.cssmenu_horiz li {
-	border-bottom: 0;
-	text-align: left;
-	width: 8em}*/
 
 /* Tree menu (also on Browse Categories */
 .treemenudiv {
@@ -725,40 +667,93 @@ a.phplmselected:hover {color: #808080}
 	
 /* cssmenus (used by page controls and menus */
 
-.cssmenu,
-.cssmenu ul {
-	padding: 0;
-	margin: 0;
-	list-style: none;
-	line-height: 1;
-	z-index: 1000}
-
-.cssmenu a {
-	display: block;
-	text-decoration: none;
-	white-space: nowrap;
-	position: relative}
-	
-.cssmenu li {float: left}
 * html .cssmenu li {width: 10em}
 
-.cssmenu li:hover ul ul,
-.cssmenu li:hover ul ul ul,
-.cssmenu li.sfhover ul ul,
-.cssmenu li.sfhover ul ul ul {left: -999em}
+.cssmenu_horiz ul li * {
+	text-align: left;
+	color: #5a7ea2;
+	/*min-width: 10em*/}
 
-.cssmenu li:hover ul,
-.cssmenu li li:hover ul,
-.cssmenu li li li:hover ul,
-.cssmenu li.sfhover ul,
-.cssmenu li li.sfhover ul,
-.cssmenu li li li.sfhover ul {left: auto}
+.cssmenu_horiz li a {
+	white-space: nowrap;
+	display: block;
+	padding: 6px 10px;
+	font-weight: bold;
+	text-decoration: none;
+	background: inherit;
+	color: #cfe3fb;
+	font-size: 12px}
+	
+.cssmenu_horiz li.selected > a {background: inherit}
 
-.cssmenu li ul {
-	position: absolute;
-	width: 10em;
-	left: -999em;
-	z-index: 1001}
+.cssmenu_horiz li:hover ul {
+	border: 0;
+	background: #ccdceb;
+	color: #5a7ea2;}
+
+.cssmenu_horiz li:hover ul li:hover {
+	background: #eff8ff;
+	color: #5a7ea2;}
+	
+.cssmenu_vert li {background: #ccdceb}
+
+.cssmenu_vert li:hover ul {
+	background: #ccdceb;
+	color: #5a7ea2;}
+	
+*:first-child+html .pageactions .cssmenu_horiz li:hover ul {z-index: 300 !important}
+	
+.cssmenu_horiz li:hover ul li:hover {
+	background: #eff8ff;
+	color: #5a7ea2;}
+	
+.cssmenu_horiz li.selected > a {}
+
+.cssmenu_vert li a {
+	padding: 3px 0;
+	position: relative;
+	display: block;
+	font-weight: normal;
+	font-size: 1.2em} 
+
+.cssmenu_vert li a {
+	font-size: 1em;
+	color: #295C83;
+	font-weight: bold;
+	text-decoration: none} 
+
+.cssmenu_vert li a:hover {
+	color: #82a7c8;
+	text-decoration: underline;
+	/*background: #eff8ff*/} 
+	
+.cssmenu_horiz li.selectedAscendant > a {}
+#tiki-top > .cssmenu_horiz > li:hover { background: url(coelesce/pagebg.jpg) 0 -2px repeat-x }
+
+#tiki-top > .cssmenu_horiz {
+	padding-left: 20px;
+	border-left: 1px solid #2E5276;
+	border-right: 1px solid #ACC4E0}
+
+#tiki-top .cssmenu_horiz ul li {}
+
+#tiki-top .cssmenu_horiz ul li a { color: #5a7ea2 }
+#tiki-top .cssmenu_horiz ul li:hover {background: #ecf5ff;}
+
+#tiki-top > ul.cssmenu_horiz > li > a {
+	border-left: 1px solid #acc4e0;
+	border-right: 1px solid #2e5276;
+	padding-top: 9px;
+	padding-bottom: 10px}
+	
+#tiki-top > ul.cssmenu_horiz > li > ul> a {
+	background: #ccdceb;
+	padding-top: 10px;
+	padding-bottom: 9px}
+	
+#tiki-top > .cssmenu_horiz > li > a:hover { 
+	/*background: url(coelesce/pagebg.jpg) 0 -2px repeat-x;*/
+	color: #fff}
 
 /* Page top and page controls (inc. specif. cssmenu properties) */
 
@@ -771,7 +766,7 @@ a.phplmselected:hover {color: #808080}
 
 .top {
 	height: 34px;
-	position: relative;
+	text-align: right;
 	z-index: 211}
 
 *:first-child+html .top {
@@ -782,28 +777,34 @@ a.phplmselected:hover {color: #808080}
 	
 .top h1 {
 	padding-top: 10px;
-	z-index: 212}
+	z-index: 215;
+	float: left;
+	clear: none}
 
 .pageactions {
-	position: absolute;
-	top: 0;
-	right: 0;
 	z-index: 215;
 	background: #ccdceb url(coelesce/tiki-centerbg.jpg) repeat-x;}
 
-.pageactions .cssmenu > li.more {
+.pageactions .cssmenu {float: right}
+.pageactions .cssmenu li
+	{float: left;
+	width: 6em;
+	text-align: left}
+	
+.pageactions .cssmenu > li {padding-right: 5px}
+
+.pageactions .cssmenu > li.menuSection {
 	padding-right: 5px;
 	background: url(../lib/phplayers/images/down-galaxy.png) 90% 75% no-repeat}
-
-.pageactions .cssmenu > li {
-	padding-right: 5px; }
-
-.pageactions .cssmenu li ul * {min-width: 8em}
+	
+.pageactions .cssmenu li ul * {min-width: 9em}
+/* * html .pageactions .cssmenu li ul {margin-left: -8em }*/
 
 .pageactions .cssmenu li ul { /* second-level lists */
 	background: #ccdceb;
 	color: #5a7ea2;
 	border-top: 1px solid #527ca6;
+	width: 9em;
 	/*z-index: 1000 !important*/}
 
 .pageactions .cssmenu li ul ul {
@@ -814,9 +815,11 @@ a.phplmselected:hover {color: #808080}
 	font-size: 12px;
 	border: 0;
 	color: #265076;
-	padding: 11px;
+	padding: 11px 0 11px 6px;
 	border-left: #ebf5fe 1px solid;
 	/*z-index: 1000 !important*/}
+
+.pageactions .cssmenu li a:hover {text-decoration: none}
 	
 .pageactions .cssmenu li:hover ul {
 	border: 0;
@@ -826,6 +829,10 @@ a.phplmselected:hover {color: #808080}
 .pageactions .cssmenu li:hover ul li:hover {
 	background: #eff8ff;
 	color: #5a7ea2;}
+
+.pageactions .cssmenu li ul a {width: 9em}
+
+
 	
 /*.pageactions .cssmenu li li a {padding: 8px}
 .pageactions .cssmenu li li a:hover {padding: 8px 0}*/
@@ -837,9 +844,13 @@ a.phplmselected:hover {color: #808080}
 	margin: 0 !important;
 	padding-left: 5px !important;
 	height: 26px;
-	z-index: 216;
+	z-index: 214;
 	background: #5a7ea2;
-	position: inherit}
+	position: static !important}
+	
+.pagecontrols .tabs .icons {
+	float: right;
+	margin-top: 6px}
 	
 *:first-child+html .tabs {/*min-width: 100%;*/}
 	
@@ -848,11 +859,6 @@ a.phplmselected:hover {color: #808080}
 	margin-top: 8px;
 	display: inline-block;
 	border: 0}
-
-.pagecontrols .tabs .icons {
-	margin-top: 6px;
-	float: right;
-}
 	
 *:first-child+html .pagecontrols .tabs .tabmark	 {margin-top: 9px}
 	
@@ -1395,7 +1401,16 @@ div.description {
 	font-size: small}
 
 .categpath {}
-.wikiactions {display: inline}
+
+.wikiactions {white-space: nowrap !important;}
+.wikiactions .icons,
+.wikiactions form {display: inline-block}
+
+*:first-child+html .wikiactions .icons,
+*:first-child+html .wikiactions form,
+* html .wikiactions .icons,
+* html .wikiactions form {display: inline}
+
 #backlinks { display: inline }
 
 .wikitext {}
@@ -2125,6 +2140,12 @@ div.gallerypath a:hover {}
 /* also for categorize.tpl */
 div.multiselect {
 	vertical-align: middle;
+	/*overflow-y: auto;
+	overflow-x: hidden;*/
+	overflow: auto;
+	height: 5em;
+	width: 100%;
+	border: 1px solid #696969}
 
 /***** Calendar *****/
 /* Overrides calendar.css, etc. */

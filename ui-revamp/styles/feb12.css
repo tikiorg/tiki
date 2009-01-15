@@ -6,11 +6,11 @@
 
 body {
 	text-align: left;
-	font: normal 62.5%/1.5em 'Trebuchet MS', sans-serif;
+	font: normal 75%/1.5em 'Trebuchet MS', sans-serif;
 	color: #333;
 	background: #fff url(feb12/pagebg.jpg) repeat-x}
 	
-html>body {font-size: 75% !important}
+/*html>body {font-size: 75% !important}*/
 
 *:first-child+html body {font-size: 74% !important}
 
@@ -83,10 +83,9 @@ select {
 	
 }
 
-/* IE */
 * html .wikitopline select {font-size: .9em}
 
-.button { 
+input.button { 
 	margin: 0; 
 	font: bold 1em Arial, Sans-serif; 
 	border: 1px solid #CCC;
@@ -120,19 +119,40 @@ button,
 input[type=submit],
 .submitbutton,
 .button input,
-input[type=reset] {
+input[type=reset],
+span.button {
 	vertical-align: middle;	
 	margin: 2px;
-	vertical-align: middle}
+	background: url(feb12/header.jpg) repeat-x 0 -2px;
+	border: 1px solid #5aa5cf;
+	color: #F5F5F5;
+	font-size: 80%}
 	
-*:first-child+html input { font-weight: normal }
+*:first-child+html input {font-weight: normal}
 
 button:hover,
 input[type=submit]:hover,
 .submitbutton:hover,
-.button input:hover {
-	background: #FFFFFF;
+button input:hover,
+span.button:hover {
+	background: url(feb12/header.jpg) repeat-x 0 -15px;
 	cursor: pointer}
+	
+span.button {
+	margin: 1px 2px;
+	padding: 0 2px}
+
+span.button a,
+span.button a:visited {color: #F5F5F5}
+
+* html span.button a,
+* html span.button a:visited {background: url(feb12/header.jpg) repeat-x 0 -2px}
+
+* html span.button a:hover {
+	color: #F5F5F5;
+	background: url(feb12/header.jpg) repeat-x 0 -15px}
+
+span.button a:hover {text-decoration: none}
 
 input[type=checkbox] {border: 0}
 * html .findtable input {font-size: 1em}
@@ -197,10 +217,11 @@ ul.jumplinks a:focus, ul.jumplinks a:active {
 #main {font-size: 1.24em}
 
 #header {
-	height: 137px;
-	text-align: left}
+	/*height: 137px;*/
+	text-align: left;
+	position: static}
 
-#middle {}
+#middle {background: #fff url(feb12/page.jpg) repeat-x;}
 
 #c1c2 {
 	text-align: left;
@@ -227,7 +248,7 @@ ul.jumplinks a:focus, ul.jumplinks a:active {
 
 #c1c2 #col2 {
 	width: 240px;
-	overflow: hidden;
+	overflow: visible;
 	background: #A8CCE2 url(feb12/columnbg.jpg) repeat-x}
 
 #c1c2 #col2 .content {padding: 1em}
@@ -267,7 +288,8 @@ div#tiki-bot {}
 /* Site Header & Identity */
 
 #header-top {
-	height: 98px;
+	background: url(feb12/header.jpg) repeat-x bottom;
+	min-height: 98px;
 	position: relative}
 
 #siteheader {
@@ -345,12 +367,13 @@ input[id="sl-login-pass"] {}
 /* tiki-top_bar.tpl - menu and search */
 
 #tiki-top {
+	background: url(feb12/header.jpg) repeat-x;
 	color: #F5F5F5;
 	height: 34px;
-	padding-top: 10px;
-	font-size: 1em}
+	padding-top: 3px;
+	font-size: 14px}
 	
-* html #tiki-top { font-size: 11px }
+* html #tiki-top { font-size: 11px}
 #tiki-top a {color: #F5F5F5}
 
 #tiki-top table {
@@ -359,11 +382,18 @@ input[id="sl-login-pass"] {}
 
 #sitesearchbar {
 	float: right;
-	padding-right: 4px;
-	text-align: right;
-	display: block;
-	margin: 0}
+	margin-right: 4px;
+	margin-top: 6px;
+	clear: none}
 
+#sitesearchbar select[name="where"] {margin-right: 50px}
+	
+#sitesearchbar ul.cssmenu > li > ul {
+	margin-top: -24px;
+	padding: 0;
+	margin-left: 0;
+	border: 0}
+	
 input#fuser,
 select[name="where"],
 input[name="search"] {}
@@ -399,8 +429,6 @@ a.flip img {display: none}
 
 /* Also is .content */
 #tiki-center {}
-
-/* IE */
 * html #tiki-center {font-size: 1em}
 
 #rss {padding: 1em 1em 0}
@@ -529,6 +557,47 @@ a.phplmselected:hover {color: #808080}
 	border: 0;
 	width: 16px;
 	height: 18px}
+
+/** CSS (suckerfish) menus **/
+
+.csmenu ul li,
+.cssmenu_horiz ul li,
+.cssmenu_vert ul li {border-top: 1px solid #57A5D0}
+
+.cssmenu_vert li ul,
+.cssmenu_horiz li ul {
+	background: #a8cce2 !important}
+	
+.cssmenu_horiz ul li:hover {background: none}
+
+.cssmenu ul a,	
+.cssmenu_horiz ul a,
+.cssmenu_vert ul a {
+	padding: 6px;
+	color: #000}
+
+#tiki-top > .cssmenu_horiz > li > a {
+	padding: 8px 3px;
+	text-decoration: none;
+	font: 14px Verdana, Helvetica, Arial, Sans-Serif;
+	color: white;
+	margin: 0}
+	
+* html #tiki-top .cssmenu_horiz li a {
+	font-size: 14px;
+	padding: 6px 3px;
+	display: block}
+
+#tiki-top > .cssmenu_horiz > li:hover {
+	background: url(feb12/pagebg.jpg) repeat-x;
+	color: #eee !important;
+	text-decoration: none}
+	
+#tiki-top .cssmenu_horiz li ul a {color: #000}
+
+#tiki-top .cssmenu_horiz ul li a:hover {
+	color: #993300;
+	text-decoration: none}
 
 /** Links in other menus **/
 div.separator, div.separatorline {color: #794a93}
@@ -677,6 +746,7 @@ h3.box-title {
 	border-bottom: 1px solid #57A5D0;
 	position: relative}
 
+* html h3.box-title {position: static}
 .box a.flipmodtitle img {display: none}
 
 * html .box a.flipmodtitle img,
@@ -688,6 +758,11 @@ h3.box-title {
 	border: 1px solid transparent}
 
 * html .box a.flipmodtitle img {border: none}
+* html #col2 a.flipmodtitle img,
+* html #col3 a.flipmodtitle img {
+	position: static;
+	float: right;
+	margin-top: -12px}
 
 a.flipmodtitle:hover img {
 	border: 1px solid #58A7D2 !important}
@@ -701,7 +776,7 @@ a.flipmodtitle:hover img {
 
 .box-data ol,
 .box-data ul {
-	padding-right: 1em;
+	/*padding-right: 1em;*/
 	overflow: hidden}
 
 /** Other boxes **/
@@ -966,9 +1041,19 @@ h1 a.pagetitle:visited {
 
 h1 a.pagetitle:hover {text-decoration: none}
 
-.wikitopline {}
+.wikitopline {min-width: 99%}
+.wikiinfo { float: none !important }
 
-div#description {
+.wikiactions {float: right; white-space: nowrap !important;}
+.wikiactions .icons,
+.wikiactions form {display: inline-block}
+
+*:first-child+html .wikiactions .icons,
+*:first-child+html .wikiactions form,
+* html .wikiactions .icons,
+* html .wikiactions form {display: inline}
+
+#description {
 	font-size: .9em;
 	font-style: italic}
 
