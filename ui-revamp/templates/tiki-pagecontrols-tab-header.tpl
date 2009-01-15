@@ -2,10 +2,10 @@
 	<div class="clearfix top">
 		<h1>{$controls.heading}</h1>
 		<div class="pageactions">
-			<ul class="clearfix cssmenu">
+			<ul class="clearfix cssmenu" id="pagecontrols">
 				{foreach from=$controls.menus item=menu key=m}
 					{if $m ne 'watchgroup' and $m ne 'structwatchgroup'}
-					<li{if $menu.items} class="more"{/if}><a href="#" title="{$menu} items">{$menu}</a>
+					<li{if $menu.items} class="menuSection"{/if}><a href="#" title="{$menu} items">{$menu}</a>
 						<ul>
 							{foreach from=$menu.items key=k item=item}
 								{if $k ne 'watch' and $k ne 'structwatch'}
