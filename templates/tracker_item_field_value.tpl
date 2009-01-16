@@ -84,7 +84,7 @@
 	{/if}
 
 {* -------------------- empty field -------------------- *}
-{elseif empty($field_value.value) and $field_value.type ne 'U' and $field_value.type ne 's' and $field_value.type ne 'q'}
+{elseif empty($field_value.value) and $field_value.type ne 'U' and $field_value.type ne 's' and $field_value.type ne 'q' and $field_value.type ne 'n' and $field_value.type ne 'C'}
 	{if $list_mode ne 'csv' and $is_link eq 'y'}&nbsp;{/if} {* to have something to click on *}
 
 {* -------------------- text field, numeric, drop down, radio,user/group/IP selector, autopincrement, dynamic list *}
