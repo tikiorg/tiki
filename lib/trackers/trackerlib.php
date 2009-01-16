@@ -645,6 +645,7 @@ class TrackerLib extends TikiLib {
 				// Do we need a numerical sort on the field ?
 				$field = $this->get_tracker_field($asort_mode);
 				switch ($field['type']) {
+				case 'C':
 					case 'q':
 					case 'n': $numsort = true;
 						break;
