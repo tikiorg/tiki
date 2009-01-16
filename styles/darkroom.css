@@ -1717,9 +1717,9 @@ span.commentstitle {
 
 /* Find */
 .subcomment {margin-left: 10px}
-div.findtable {padding: 15px 0; float: left;}
-div.findtable ul {list-style: none;padding:0; margin: 0;float: left;}
-div.findtable ul li {float: left;}
+.findtable {padding: 15px 0; float: left;}
+.findtable ul {list-style: none;padding:0; margin: 0;float: left;}
+.findtable ul li {float: left;}
 
 /* Help box*/
 div.commentsedithelp {
