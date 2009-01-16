@@ -7761,7 +7761,7 @@ window.addEvent('domready', function() {
 		// run through all the language codes:
 		if (isset($short) && $short == "y") {
 			foreach ($languages as $lc) {
-				if ( !is_array($prefs['available_languages'] ) || (!$all and in_array($lc,$prefs['available_languages']))) {
+				if ( empty($prefs['available_languages'] ) || (!$all and in_array($lc,$prefs['available_languages']))) {
 					if (isset($langmapping[$lc]))
 						$formatted[] = array('value' => $lc, 'name' => $langmapping[$lc][0]);
 					else
