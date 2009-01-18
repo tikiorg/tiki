@@ -3,10 +3,10 @@
 // Written by billferrett@wellbehavedsystems.co.uk   January 2009
 //
 // Amended by billferrett@wellbehavedsystems.co.uk   January 2009
+//   Included styling of <col> elements (not supported by MediaWiki syntax).
+//   Include styling of <caption>.
 //   Corrected parsing of html attributes in $data.
-//   Included styling of <col> elements which is not supported by MediaWiki 
-//   syntax.
-//   Included styling of <caption> element.
+//   Corrected setting of default wiki classes.
 //
 // Description:
 // Displays a table using (sort of) MediaWiki syntax.  
@@ -33,7 +33,7 @@
 //     optional html attributes that end with a | followed by the caption text.
 //   Optionally, html attributes for <col> elements can be specified next on
 //     one or more lines starting with a ?.
-//   Each columns attributes start on a new line with ? or on the same line 
+//   Each column's attributes start on a new line with ? or on the same line 
 //     preceeded by ?? and become a <col>. 
 //   Optionally, column headings can be specified next on one or more lines
 //     starting with a !.
@@ -129,7 +129,7 @@ function wikiplugin_mwtable($data, $params) {
         } else if ($wiki_classes) {
             $default_class_table = "wikitable";
             $default_class_td_odd = "wikicell";
-            $default_class_td_odd = "wikicell";
+            $default_class_td_even = "wikicell";
         }
 
         // soe = start-of-element; eoe = end-of-element
@@ -281,13 +281,15 @@ function wikiplugin_mwtable($data, $params) {
                 if (strpos($cell, "|")) {
                     list($attribs, $text) = explode("|", $cell, 2);
                     $attributes = _get_attributes($attribs);
-                    _check_class_attribute($attributes,$default_class_td);        
-                    $wret .= _output_tag_with_attributes("td",$attributes);
-                    $wret .= trim($text);
                 } else {
                     // only one part so use as text
-                    $wret .= "<td>".trim($cell);
+                    $attributes = array();
+                    $text = $cell;
                 }
+                _check_class_attribute($attributes,$default_class_td);        
+                $wret .= _output_tag_with_attributes("td",$attributes);
+                $wret .= trim($text);
+
                 // end of cell
                 $wret .= "</td>\n";
             }
