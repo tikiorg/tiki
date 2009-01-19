@@ -9,7 +9,7 @@ class Tiki_Profile
 {
 	const SHORT_PATTERN = '/^\$((([\w\.-]+):)?((\w+):))?(\w+)$/';
 	const LONG_PATTERN = '/\$profileobject:((([\w\.-]+):)?((\w+):))?(\w+)\$/';
-	const INFO_REQUEST = '/\$profilerequest:([^\$]+)\$([^\$]+)\$/';
+	const INFO_REQUEST = '/\$profilerequest:([^\$\|]+)(\|(\w+))?\$([^\$]+)\$/';
 
 	private $url;
 	private $pageUrl;
@@ -394,12 +394,20 @@ class Tiki_Profile
 			if( preg_match_all( self::INFO_REQUEST, $data, $parts, PREG_SET_ORDER ) )
 				foreach( $parts as $row )
 				{
-					list( $full, $label, $default ) = $row;
+					list( $full, $label, $junk, $filter, $default ) = $row;
 
 					if( ! array_key_exists( $label, $suppliedUserData ) )
 						$value = $default;
 					else
 						$value = $suppliedUserData[$label];
+
+					if( $filter )
+						$value = TikiFilter::get($filter)->filter($value);
+					else
+						$value = TikiFilter::get('xss')->filter($value);
+
+					if( empty($value) )
+						$value = $default;
 
 					$needles[] = $full;
 					$replacements[] = $value;
