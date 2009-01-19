@@ -137,11 +137,33 @@ class Tiki_Profile
 
 	public static function fromNames( $domain, $profile ) // {{{
 	{
-		if( strpos( $domain, 'http' ) !== 0 )
+		if( strpos( $domain, '://' ) === false )
 			$domain = "http://$domain";
 
-		$url = "$domain/tiki-export_wiki_pages.php?page=" . urlencode( $profile );
-		return self::fromUrl( $url );
+		if( $domain == 'tiki://local' ) {
+			return self::fromDb( $profile );
+		} else {
+			$url = "$domain/tiki-export_wiki_pages.php?page=" . urlencode( $profile );
+			return self::fromUrl( $url );
+		}
+	} // }}}
+	
+	public static function fromDb( $pageName ) // {{{
+	{
+		global $tikilib, $wikilib;
+		require_once 'lib/wiki/wikilib.php';
+
+		$profile = new self;
+		$profile->domain = 'tiki://local';
+		$profile->profile = $pageName;
+		$profile->pageUrl = $wikilib->sefurl($pageName);
+		$profile->url = 'tiki://local/' . urlencode($pageName);
+
+		$info = $tikilib->get_page_info( $pageName );
+		$content = html_entity_decode( $info['data'] );
+		$profile->loadYaml( $content );
+
+		return $profile;
 	} // }}}
 
 	private function __construct() // {{{
