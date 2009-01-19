@@ -535,7 +535,7 @@ class Tiki_Profile
 	{
 		global $tikilib;
 		$tikilib->query( "DELETE FROM tiki_profile_symbols WHERE domain = ? AND profile = ?",
-			array( $this->domain, $this->profile ) );
+			array( $this->domain, self::withPrefix($this->profile) ) );
 	} // }}}
 
 	function getProfileKey() // {{{

@@ -63,7 +63,8 @@ function showDetails( id, domain, profile ) { // {{{
 					var form = document.createElement( 'form' );
 					var p = document.createElement('p');
 					var submit = document.createElement('input');
-					var hidden = document.createElement('input');
+					var pd = document.createElement('input');
+					var pp = document.createElement('input');
 					form.method = 'post';
 					form.action = document.location.href;
 
@@ -72,10 +73,14 @@ function showDetails( id, domain, profile ) { // {{{
 					submit.name = 'forget';
 					submit.value = 'Forget Past Installation';
 					p.appendChild(submit);
-					hidden.type = 'hidden';
-					hidden.name = 'url';
-					hidden.value = data.url;
-					p.appendChild(hidden);
+					pd.type = 'hidden';
+					pd.name = 'pd';
+					pd.value = domain;
+					p.appendChild(pd);
+					pp.type = 'hidden';
+					pp.name = 'pp';
+					pp.value = profile;
+					p.appendChild(pp);
 
 					cell.appendChild(form);
 				}
@@ -84,7 +89,8 @@ function showDetails( id, domain, profile ) { // {{{
 					var form = document.createElement( 'form' );
 					var p = document.createElement('p');
 					var submit = document.createElement('input');
-					var hidden = document.createElement('input');
+					var pd = document.createElement('input');
+					var pp = document.createElement('input');
 					form.method = 'post';
 					form.action = document.location.href;
 
@@ -120,10 +126,14 @@ function showDetails( id, domain, profile ) { // {{{
 					submit.name = 'install';
 					submit.value = 'Install Now';
 					p.appendChild(submit);
-					hidden.type = 'hidden';
-					hidden.name = 'url';
-					hidden.value = data.url;
-					p.appendChild(hidden);
+					pd.type = 'hidden';
+					pd.name = 'pd';
+					pd.value = domain;
+					p.appendChild(pd);
+					pp.type = 'hidden';
+					pp.name = 'pp';
+					pp.value = profile;
+					p.appendChild(pp);
 
 					cell.appendChild(form);
 				}
