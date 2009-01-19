@@ -234,8 +234,7 @@ class TikiLib extends TikiDB {
 			global $userlib;
 			$email = $userlib->get_user_email($user);
 		}
-		$query = "delete from `tiki_user_watches` where ".$this->convert_binary()." `user`=? and `event`=? and `object`=?";
-		$this->query($query,array($user,$event,$object));
+		$this->remove_user_watch( $user, $event, $object, $type );
 		$query = "insert into `tiki_user_watches`(`user`,`event`,`object`,`email`,`type`,`title`,`url`) ";
 		$query.= "values(?,?,?,?,?,?,?)";
 		$this->query($query,array($user,$event,$object,$email,$type,$title,$url));
@@ -244,8 +243,7 @@ class TikiLib extends TikiDB {
 
 	function add_group_watch($group, $event, $object, $type, $title, $url) {
 
-		$query = "delete from `tiki_group_watches` where ".$this->convert_binary()." `group`=? and `event`=? and `object`=?";
-		$this->query($query,array($group,$event,$object));
+		$this->remove_group_watch( $group, $event, $object, $type );
 		$query = "insert into `tiki_group_watches`(`group`,`event`,`object`,`type`,`title`,`url`) ";
 		$query.= "values(?,?,?,?,?,?)";
 		$this->query($query,array($group,$event,$object,$type,$title,$url));
@@ -264,14 +262,14 @@ class TikiLib extends TikiDB {
 	}
 
 	/*shared*/
-	function remove_user_watch($user, $event, $object) {
-		$query = "delete from `tiki_user_watches` where ".$this->convert_binary()." `user`=? and `event`=? and `object`=?";
-		$this->query($query,array($user,$event,$object));
+	function remove_user_watch($user, $event, $object, $type = 'wiki page') {
+		$query = "delete from `tiki_user_watches` where ".$this->convert_binary()." `user`=? and `event`=? and `object`=? and `type` = ?";
+		$this->query($query,array($user,$event,$object,$type));
 	}
 
-	function remove_group_watch($group, $event, $object) {
-		$query = "delete from `tiki_group_watches` where ".$this->convert_binary()." `group`=? and `event`=? and `object`=?";
-		$this->query($query,array($group,$event,$object));
+	function remove_group_watch($group, $event, $object, $type = 'wiki page') {
+		$query = "delete from `tiki_group_watches` where ".$this->convert_binary()." `group`=? and `event`=? and `object`=? and `type` = ?";
+		$this->query($query,array($group,$event,$object,$type));
 	}
 
 	/*shared*/
@@ -5059,7 +5057,7 @@ class TikiLib extends TikiDB {
 		if( !is_array( $pluginskiplist ) )
 			$pluginskiplist = array();
 
-		$matcher_fake = array("~pp~","~np~","&lt;pre&gt;","CODE");
+		$matcher_fake = array("~pp~","~np~","&lt;pre&gt;");
 		$matcher = "/\{([A-Z]+)\(|\{([a-z]+)(\s|\})|~pp~|~np~|&lt;[pP][rR][eE]&gt;/";
 
 		$plugins = array();
@@ -5192,7 +5190,7 @@ class TikiLib extends TikiDB {
 				// Closing quote found
 				if( $quote !== false ) {
 					$value = substr( $params_string, 1, $quote - 1 );
-					$arguments[$name] = $value;
+					$arguments[$name] = str_replace( '\"', '"', $value );
 
 					$params_string = substr( $params_string, $quote + 1 );
 					continue;
@@ -5348,52 +5346,36 @@ class TikiLib extends TikiDB {
 
 						$current_index = ++$plugin_indexes[$plugin_name];
 
-						// We store CODE stuff out of the way too, but then process it as a plugin as well.
-						if( preg_match( '/^ *\{CODE\(/', $plugin_start ) ) {
-							$ret = wikiplugin_code($plugin_data, $arguments);
+						// Handle nested plugins.
+						$this->parse_first($plugin_data, $preparsed, $noparsed, $options, $real_start_diff + $pos+strlen($plugin_start));
 
-							// Pull the np out.
-							preg_match( "/~np~(.*)~\/np~/s", $ret, $stuff );
-
-							if( count( $stuff ) > 0 ) {
-								$key = "§".md5($this->genPass())."§";
-								$noparsed["key"][] =  preg_quote($key);
-								$noparsed["data"][] = $stuff[1];
-
-								$ret = preg_replace( "/~np~.*~\/np~/s", $key, $ret );
-							}
-
+						if( true === $status = $this->plugin_can_execute( $plugin_name, $plugin_data, $arguments ) ) {
+							$ret = $this->plugin_execute( $plugin_name, $plugin_data, $arguments, $real_start_diff + $pos+strlen($plugin_start), false, $options);
 						} else {
-							// Handle nested plugins.
-							$this->parse_first($plugin_data, $preparsed, $noparsed, $options, $real_start_diff + $pos+strlen($plugin_start));
+							global $tiki_p_plugin_viewdetail, $tiki_p_plugin_preview, $tiki_p_plugin_approve;
+							$details = $tiki_p_plugin_viewdetail == 'y' && $status != 'rejected';
+							$preview = $tiki_p_plugin_preview == 'y' && $details;
+							$approve = $tiki_p_plugin_approve == 'y' && $details;
 
-							if( true === $status = $this->plugin_can_execute( $plugin_name, $plugin_data, $arguments ) ) {
-								$ret = $this->plugin_execute( $plugin_name, $plugin_data, $arguments, $real_start_diff + $pos+strlen($plugin_start), false, $options);
-							} else {
-								global $tiki_p_plugin_viewdetail, $tiki_p_plugin_preview, $tiki_p_plugin_approve;
-								$details = $tiki_p_plugin_viewdetail == 'y' && $status != 'rejected';
-								$preview = $tiki_p_plugin_preview == 'y' && $details;
-								$approve = $tiki_p_plugin_approve == 'y' && $details;
-
-								if( $status != 'rejected' ) {
-									$smarty->assign( 'plugin_fingerprint', $status );
-									$status = 'pending';
-								}
-
-								$smarty->assign( 'plugin_name', $plugin_name );
-								$smarty->assign( 'plugin_index', $current_index );
-
-								$smarty->assign( 'plugin_status', $status );
-								$smarty->assign( 'plugin_details', $details );
-								$smarty->assign( 'plugin_preview', $preview );
-								$smarty->assign( 'plugin_approve', $approve );
-
-								$smarty->assign( 'plugin_body', $plugin_data );
-								$smarty->assign( 'plugin_args', $arguments );
-
-								$ret = '~np~' . $smarty->fetch('tiki-plugin_blocked.tpl') . '~/np~';
+							if( $status != 'rejected' ) {
+								$smarty->assign( 'plugin_fingerprint', $status );
+								$status = 'pending';
 							}
+
+							$smarty->assign( 'plugin_name', $plugin_name );
+							$smarty->assign( 'plugin_index', $current_index );
+
+							$smarty->assign( 'plugin_status', $status );
+							$smarty->assign( 'plugin_details', $details );
+							$smarty->assign( 'plugin_preview', $preview );
+							$smarty->assign( 'plugin_approve', $approve );
+
+							$smarty->assign( 'plugin_body', $plugin_data );
+							$smarty->assign( 'plugin_args', $arguments );
+
+							$ret = '~np~' . $smarty->fetch('tiki-plugin_blocked.tpl') . '~/np~';
 						}
+
 						//echo '<pre>'; debug_print_backtrace(); echo '</pre>';
 						if( $this->plugin_is_editable( $plugin_name ) && (empty($options['print']) || !$options['print']) ) {
 							include_once('lib/smarty_tiki/function.icon.php');
@@ -5412,7 +5394,7 @@ window.addEvent('domready', function() {
 			. ', ' 
 			. json_encode($arguments) 
 			. ', ' 
-			. json_encode(trim($plugin_data)) 
+			. json_encode(trim(TikiLib::htmldecode($plugin_data))) 
 			. ", event.target);
 	} );
 } );

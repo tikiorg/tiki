@@ -146,14 +146,14 @@ function wikiplugin_code($data, $params) {
 		$pre_style = 'overflow:auto;';
 	}
 
-	$out = '<pre class="codelisting" dir="'.( (isset($rtl) && $rtl == 1) ? 'rtl' : 'ltr').'" style="'.$pre_style.'">'
+	$out = '~np~<pre class="codelisting" dir="'.( (isset($rtl) && $rtl == 1) ? 'rtl' : 'ltr').'" style="'.$pre_style.'">~/np~'
 		.(( $parse_wiki ) ? '' : '~np~')
 		.$out
 		.(( $parse_wiki ) ? '' : '~/np~')
-		.'</pre>';
+		.'~np~</pre>~/np~';
 
 	if ( isset($caption) ) {
-		$out = '<div class="codecaption">'.$caption.'</div>'.$out;
+		$out = '~np~<div class="codecaption">~/np~'.$caption.'~np~</div>~/np~'.$out;
 	}
 
 	return $out;
