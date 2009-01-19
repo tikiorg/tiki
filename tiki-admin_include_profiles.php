@@ -23,6 +23,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 
 	if( isset($_POST['config']) ) { // {{{
 		$tikilib->set_preference( 'profile_sources', $_POST['profile_sources'] );
+		$tikilib->set_preference( 'profile_channels', $_POST['profile_channels'] );
 		
 		header( 'Location: tiki-admin.php?page=profiles' );
 		exit;

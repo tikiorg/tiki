@@ -261,32 +261,46 @@ class TikiAccessLib extends TikiLib {
 			return $result;
 		}
 
-		//http basic auth headers if no user specified in http header.
-		if (empty($_SERVER['PHP_AUTH_USER'])) {
-			$result['header']='y';
-			return $result;
-		}
-
-		$user = $_SERVER['PHP_AUTH_USER'] ;
-		$pass = $_SERVER['PHP_AUTH_PW'] ;
-		list($res,$rest)=$userlib->validate_user_tiki($user, $pass, false, false);
-		if ($res==USER_VALID) {
-			$perms = $userlib->get_user_permissions($user);
-			foreach ($perms as $perm) {
-				$GLOBALS[$perm] = 'y';
-				$smarty->assign($perm, 'y');
-			}
+		if( $this->http_auth() ) {
 			foreach ($rssrights as $perm) {
 				if ($GLOBALS[$perm] == 'y') {
 					// if user/password and the appropriate rights are correct, allow.
 					return;
 				}
 			}
-		} 
+		}
 
-		//try to (re)authenticate the user
-		$result['header']='y';
 		return $result;
+	}
+
+	function http_auth()
+	{
+		global $tikidomain, $userlib, $user, $smarty;
+
+		if (! isset($_SERVER['PHP_AUTH_USER']) ) {
+			header('WWW-Authenticate: Basic realm="'.$tikidomain.'"');
+			header('HTTP/1.0 401 Unauthorized');
+			return false;
+		}
+		
+		$attempt = $_SERVER['PHP_AUTH_USER'] ;
+		$pass = $_SERVER['PHP_AUTH_PW'] ;
+		list($res,$rest)=$userlib->validate_user_tiki($attempt, $pass, false, false);
+
+		if ($res==USER_VALID) {
+			$user = $attempt;
+			$perms = $userlib->get_user_permissions($user);
+			foreach ($perms as $perm) {
+				$GLOBALS[$perm] = 'y';
+				$smarty->assign($perm, 'y');
+			}
+
+			return true;
+		} else {
+			header('WWW-Authenticate: Basic realm="'.$tikidomain.'"');
+			header('HTTP/1.0 401 Unauthorized');
+			return false;
+		}
 	}
 
 	function get_accept_types() {

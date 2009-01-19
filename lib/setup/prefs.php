@@ -1135,6 +1135,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 
 		// Tiki Profiles
 		'profile_sources' => 'http://profiles.tikiwiki.org/profiles',
+		'profile_channels' => '',
 
 		// Minichat
 		'feature_minichat' => 'n',

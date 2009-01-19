@@ -228,6 +228,13 @@ class Tiki_Profile_Installer
 					$userlib->remove_object_permission( $groupName, $data['id'], $data['type'], $perm );
 			}
 	} // }}}
+
+	function forget( Tiki_Profile $profile ) // {{{
+	{
+		$key = $profile->getProfileKey();
+		unset($this->installed[$key]);
+		$profile->removeSymbols();
+	} // }}}
 }
 
 abstract class Tiki_Profile_InstallHandler // {{{
@@ -680,7 +687,7 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler /
 			else
 				return null;
 		} else {
-			$info = $tikilib->get_page_info( $this->name );
+			$info = $tikilib->get_page_info( $this->name, true, true );
 
 			if( ! $this->description )
 				$this->description = $info['description'];

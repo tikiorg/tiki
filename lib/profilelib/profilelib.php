@@ -558,6 +558,11 @@ class Tiki_Profile
 		global $tikilib;
 		$tikilib->query( "DELETE FROM tiki_profile_symbols WHERE domain = ? AND profile = ?",
 			array( $this->domain, self::withPrefix($this->profile) ) );
+
+		$key = self::getProfileKeyFor( $this->domain, self::withPrefix($this->profile) );
+		foreach( array_keys(self::$known) as $obj )
+			if( strpos( $obj, $key ) === 0 )
+				unset(self::$known[$obj]);
 	} // }}}
 
 	function getProfileKey() // {{{
@@ -576,7 +581,7 @@ class Tiki_Profile_Object
 
 	public static function serializeNamedObject( $object ) // {{{
 	{
-		return sprintf( "http://%s/%s#%s", $object['domain'], $object['profile'], $object['object'] );
+		return sprintf( "%s#%s", Tiki_Profile::getProfileKeyFor($object['domain'], $object['profile']), $object['object'] );
 	} // }}}
 
 	public static function getNamedObjects() // {{{

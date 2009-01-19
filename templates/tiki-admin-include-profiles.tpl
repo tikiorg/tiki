@@ -284,6 +284,21 @@ function showDetails( id, domain, profile ) { // {{{
 						<textarea name="profile_sources" rows="5">{$prefs.profile_sources|escape}</textarea>
 					</td>
 				</tr>
+
+				<tr>
+					<td class="form">
+						{tr}Data Channels{/tr}:
+						<div>
+							<small>{tr}Data channels create a named pipe to run profiles from user space. One channel per line. Each line is comma delimited and contain <strong>channel name, domain, profile, allowed groups</strong>. {/tr}</small>
+						</div>
+						<div>
+							<small><a href="http://profiles.tikiwiki.org/Data+Channels">{tr}More information{/tr}</a></small>
+						</div>
+					</td>
+					<td>
+						<textarea name="profile_channels" rows="5">{$prefs.profile_channels|escape}</textarea>
+					</td>
+				</tr>
 				<tr>		
 					<td colspan="2" class="button"><input type="submit" name="config" value="{tr}Save{/tr}" /></td>
 				</tr>
