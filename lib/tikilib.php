@@ -4905,9 +4905,9 @@ class TikiLib extends TikiDB {
 		return $ret;
 	}
 
-	function get_page_info($pageName, $retrieve_datas = true) {
+	function get_page_info($pageName, $retrieve_datas = true, $skipCache = false) {
 		$pageNameEncode = urlencode($pageName);
-		if ( isset($this->cache_page_info[$pageNameEncode])
+		if ( !$skipCache && isset($this->cache_page_info[$pageNameEncode])
 			&& ( ! $retrieve_datas || isset($this->cache_page_info[$pageNameEncode]['data']) )
 		) {
 			return $this->cache_page_info[$pageNameEncode];
@@ -7241,6 +7241,7 @@ window.addEvent('domready', function() {
 	}
 
 	function invalidate_cache($page) {
+		unset( $this->cache_page_info[urlencode($page)] );
 		$query = "update `tiki_pages` set `cache_timestamp`=? where `pageName`=?";
 		$this->query($query, array(0,$page) );
 	}
