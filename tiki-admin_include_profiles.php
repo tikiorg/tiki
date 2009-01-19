@@ -31,7 +31,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 	if( isset($_POST['forget'], $_POST['url']) ) { // {{{
 		require_once 'lib/profilelib/profilelib.php';
 
-		$profile = new Tiki_Profile( $_POST['url'] );
+		$profile = Tiki_Profile::fromUrl( $_POST['url'] );
 		$profile->removeSymbols();
 		
 		header( 'Location: ' . $_SERVER['REQUEST_URI'] );
@@ -50,7 +50,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 		$installer = new Tiki_Profile_Installer;
 		$installer->setUserData( $data );
 
-		$profile = new Tiki_Profile( $_POST['url'] );
+		$profile = Tiki_Profile::fromUrl( $_POST['url'] );
 		$installer->install( $profile );
 		
 		header( 'Location: ' . $_SERVER['REQUEST_URI'] );
@@ -77,8 +77,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 
 		$installer = new Tiki_Profile_Installer;
 
-		$url = $_GET['pd'] . '/tiki-export_wiki_pages.php?page=' . urlencode( $_GET['pp'] );
-		$profile = new Tiki_Profile( $url );
+		$profile = Tiki_Profile::fromNames( $_GET['pd'], $_GET['pp'] );
 		$error = '';
 
 		try

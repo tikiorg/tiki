@@ -22,6 +22,7 @@ class Tiki_Profile
 	private $objects = null;
 
 	private static $known = array();
+	private static $resolvePrefix = null;
 
 	public static function convertLists( $data, $conversion, $prependKey = false ) // {{{
 	{
@@ -59,6 +60,43 @@ class Tiki_Profile
 		return $copy;
 	} // }}}
 
+	public static function getProfileKeyFor( $domain, $profile ) // {{{
+	{
+		return $domain . '/' . $profile;
+	} // }}}
+
+	public static function useUnicityPrefix( $prefix ) // {{{
+	{
+		self::$resolvePrefix = $prefix;
+	} // }}}
+
+	public static function withPrefix( $profile ) // {{{
+	{
+		if( self::$resolvePrefix )
+			return self::$resolvePrefix . ':' . $profile;
+		else
+			return $profile;
+	} // }}}
+
+	private static function getObjectReference( $object, $full = true ) // {{{
+	{
+		// If a prefix was set, attempt to isolate the lookup to the prefix first
+		if( $full ) {
+			$withPrefix = $object;
+			$withPrefix['profile'] = self::withPrefix( $withPrefix['profile'] );
+
+			if( ! is_null( $ref = self::getObjectReference( $withPrefix, false ) ) )
+				return $ref;
+		}
+
+		$serialized = Tiki_Profile_Object::serializeNamedObject( $object );
+
+		if( ! isset( self::$known[$serialized] ) )
+			self::$known[$serialized] = self::findObjectReference( $object );
+
+		return self::$known[$serialized];
+	} // }}}
+
 	private static function findObjectReference( $object ) // {{{
 	{
 		global $tikilib;
@@ -68,14 +106,46 @@ class Tiki_Profile
 
 		if( $row = $result->fetchRow() )
 			return $row['value'];
+
+		return null;
 	} // }}}
 
-	function __construct( $url ) // {{{
+	public static function fromUrl( $url ) // {{{
 	{
-		$this->url = $url;
+		$profile = new self;
+		$profile->url = $url;
 
-		if( $this->analyseMeta( $url ) )
-			$this->loadYaml( $url );
+		if( $profile->analyseMeta( $url ) ) {
+
+			// Obtain the page export
+			$content = tiki_get_remote_file( $url );
+			$content = html_entity_decode( $content );
+			$content = str_replace( "\r", '', $content );
+
+			// Find content start (strip headers)
+			$begin = strpos( $content, "\n\n" );
+			if( ! $begin )
+				return false;
+
+			$content = substr( $content, $begin + 2 );
+
+			$profile->loadYaml( $content );
+		}
+
+		return $profile;
+	} // }}}
+
+	public static function fromNames( $domain, $profile ) // {{{
+	{
+		if( strpos( $domain, 'http' ) !== 0 )
+			$domain = "http://$domain";
+
+		$url = "$domain/tiki-export_wiki_pages.php?page=" . urlencode( $profile );
+		return self::fromUrl( $url );
+	} // }}}
+
+	private function __construct() // {{{
+	{
 	} // }}}
 
 	function __get( $name ) // {{{
@@ -111,17 +181,8 @@ class Tiki_Profile
 		return true;
 	} // }}}
 
-	private function loadYaml( $url ) // {{{
+	private function loadYaml( $content ) // {{{
 	{
-		$content = tiki_get_remote_file( $url );
-		$content = html_entity_decode( $content );
-		$content = str_replace( "\r", '', $content );
-
-		$begin = strpos( $content, "\n\n" );
-		if( ! $begin )
-			return false;
-
-		$content = substr( $content, $begin + 2 );
 		$this->pageContent = $content;
 
 		$pos = 0;
@@ -251,11 +312,11 @@ class Tiki_Profile
 
 		foreach( $this->getExternalReferences() as $ext )
 		{
-			$url = "http://{$ext['domain']}/tiki-export_wiki_pages.php?page=" . urlencode( $ext['profile'] );
-			if( array_key_exists( $url, $known ) || array_key_exists( $url, $profiles ) )
+			$key = Tiki_Profile::getProfileKeyFor( $ext['domain'], $ext['profile'] );
+			if( array_key_exists( $key, $known ) || array_key_exists( $key, $profiles ) )
 				continue;
 
-			$profiles[$url] = new self( $url );
+			$profiles[$key] = self::fromNames( $ext['domain'], $ext['profile'] );
 		}
 
 		if( $recursive )
@@ -292,12 +353,7 @@ class Tiki_Profile
 			if( preg_match( self::SHORT_PATTERN, $data, $parts ) )
 			{
 				$object = $this->convertReference( $parts );
-				$serialized = Tiki_Profile_Object::serializeNamedObject( $object );
-
-				if( ! isset( self::$known[$serialized] ) )
-					self::$known[$serialized] = self::findObjectReference( $object );
-
-				$data = self::$known[$serialized];
+				$data = self::getObjectReference( $object );
 				return;
 			}
 
@@ -308,13 +364,9 @@ class Tiki_Profile
 				foreach( $parts as $row )
 				{
 					$object = $this->convertReference( $row );
-					$serialized = Tiki_Profile_Object::serializeNamedObject( $object );
-
-					if( ! isset( self::$known[$serialized] ) )
-						self::$known[$serialized] = self::findObjectReference( $object );
 
 					$needles[] = $row[0];
-					$replacements[] = self::$known[$serialized];
+					$replacements[] = self::getObjectReference( $object );
 				}
 
 			if( preg_match_all( self::INFO_REQUEST, $data, $parts, PREG_SET_ORDER ) )
@@ -485,6 +537,11 @@ class Tiki_Profile
 		$tikilib->query( "DELETE FROM tiki_profile_symbols WHERE domain = ? AND profile = ?",
 			array( $this->domain, $this->profile ) );
 	} // }}}
+
+	function getProfileKey() // {{{
+	{
+		return self::getProfileKeyFor( $this->domain, $this->withPrefix( $this->profile ) );
+	} // }}}
 }
 
 class Tiki_Profile_Object
@@ -555,7 +612,7 @@ class Tiki_Profile_Object
 		}
 
 		$tikilib->query( "INSERT INTO tiki_profile_symbols (domain, profile, object, type, value, named) VALUES(?, ?, ?, ?, ?, ?)", 
-			array( $this->profile->domain, $this->profile->profile, $name, $this->getType(), $this->id, $named ) );
+			array( $this->profile->domain, $this->profile->withPrefix($this->profile->profile), $name, $this->getType(), $this->id, $named ) );
 	} // }}}
 
 	function getInternalReferences() // {{{

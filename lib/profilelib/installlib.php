@@ -50,7 +50,7 @@ class Tiki_Profile_Installer
 
 		$result = $tikilib->query( "SELECT DISTINCT domain, profile FROM tiki_profile_symbols" );
 		while( $row = $result->fetchRow() )
-			$this->installed[sprintf( "http://%s/tiki-export_wiki_pages.php?page=%s", $row['domain'], urlencode($row['profile']) )] = true;
+			$this->installed[Tiki_Profile::getProfileKeyFor( $row['domain'], $row['profile'] )] = true;
 	} // }}}
 
 	function setUserData( $userData ) // {{{
@@ -62,7 +62,7 @@ class Tiki_Profile_Installer
 	{
 		// Obtain the list of all required profiles
 		$dependencies = $profile->getRequiredProfiles(true);
-		$dependencies[$profile->url] = $profile;
+		$dependencies[$profile->getProfileKey()] = $profile;
 
 		$referenced = array();
 		$knownObjects = array();
@@ -71,11 +71,11 @@ class Tiki_Profile_Installer
 
 		// Build the list of dependencies for each profile
 		$short = array();
-		foreach( $dependencies as $url => $profile )
+		foreach( $dependencies as $key => $profile )
 		{
-			$short[$url] = array();
-			foreach( $profile->getRequiredProfiles() as $u => $p )
-				$short[$url][] = $u;
+			$short[$key] = array();
+			foreach( $profile->getRequiredProfiles() as $k => $p )
+				$short[$key][] = $k;
 
 			foreach( $profile->getNamedObjects() as $o )
 				$knownObjects[] = Tiki_Profile_Object::serializeNamedObject( $o );
@@ -93,9 +93,9 @@ class Tiki_Profile_Installer
 
 		// Build the list of packages that need to be installed
 		$toSequence = array();
-		foreach( $dependencies as $url => $profile )
+		foreach( $dependencies as $key => $profile )
 			if( ! $this->isInstalled( $profile ) )
-				$toSequence[] = $url;
+				$toSequence[] = $key;
 
 		// Order the packages to make sure all dependencies are met
 		$toInstall = array();
@@ -107,13 +107,13 @@ class Tiki_Profile_Installer
 			if( $counter++ > count( $toSequence ) * 2 )
 				throw new Exception( "Profiles could not be ordered: " . implode( ", ", $toSequence ) );
 
-			$url = reset( $toSequence );
+			$key = reset( $toSequence );
 
 			// Remove packages that are already scheduled or installed from dependencies
-			$short[$url] = array_diff( $short[$url], array_keys( $this->installed ), $toInstall );
+			$short[$key] = array_diff( $short[$key], array_keys( $this->installed ), $toInstall );
 
 			$element = array_shift( $toSequence );
-			if( count( $short[$url] ) )
+			if( count( $short[$key] ) )
 				$toSequence[] = $element;
 			else
 			{
@@ -124,8 +124,8 @@ class Tiki_Profile_Installer
 
 		$final = array();
 		// Perform the actual install
-		foreach( $toInstall as $url )
-			$final[] = $dependencies[$url];
+		foreach( $toInstall as $key )
+			$final[] = $dependencies[$key];
 
 		return $final;
 	} // }}}
@@ -146,7 +146,7 @@ class Tiki_Profile_Installer
 
 	function isInstalled( Tiki_Profile $profile ) // {{{
 	{
-		return array_key_exists( $profile->url, $this->installed );
+		return array_key_exists( $profile->getProfileKey(), $this->installed );
 	} // }}}
 
 	function isInstallable( Tiki_Profile $profile ) // {{{
@@ -179,7 +179,7 @@ class Tiki_Profile_Installer
 	{
 		global $tikilib;
 		
-		$this->installed[$profile->url] = $profile;
+		$this->installed[$profile->getProfileKey()] = $profile;
 
 		foreach( $profile->getObjects() as $object )
 			$this->getInstallHandler( $object )->install();
@@ -608,6 +608,9 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler /
 	private $name;
 	private $lang;
 
+	private $mode = 'create_or_update';
+	private $exists;
+
 	function fetchData()
 	{
 		if( $this->name )
@@ -623,6 +626,8 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler /
 			$this->lang = $data['lang'];
 		if( array_key_exists( 'content', $data ) )
 			$this->content = $data['content'];
+		if( array_key_exists( 'mode', $data ) )
+			$this->mode = $data['mode'];
 	}
 
 	function canInstall()
@@ -631,11 +636,37 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler /
 		if( empty( $this->name ) || empty( $this->content ) )
 			return false;
 
+		global $tikilib;
+		$this->exists = $tikilib->page_exists($this->name);
+
+		switch( $this->mode ) {
+		case 'create':
+			if( $this->exists )
+				throw new Exception( "Page {$this->name} already exists and profile does not allow update." );
+			break;
+		case 'update':
+		case 'append':
+			if( ! $this->exists )
+				throw new Exception( "Page {$this->name} does not exist and profile only allows update." );
+			break;
+		case 'create_or_update':
+			$this->mode = $this->exists ? 'update' : 'create';
+			break;
+		case 'create_or_append':
+			$this->mode = $this->exists ? 'append' : 'create';
+			break;
+		default:
+			throw new Exception( "Invalid mode '{$this->mode}' for wiki handler." );
+		}
+
 		return true;
 	}
 
 	function _install()
 	{
+		// Normalize mode
+		$this->canInstall();
+
 		global $tikilib;
 		$this->fetchData();
 		$this->replaceReferences( $this->name );
@@ -643,10 +674,27 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler /
 		$this->replaceReferences( $this->content );
 		$this->replaceReferences( $this->lang );
 
-		if( $tikilib->create_page( $this->name, 0, $this->content, time(), 'Created by profile installer.', 'admin', '0.0.0.0', $this->description, $this->lang ) )
+		if( $this->mode == 'create' ) {
+			if( $tikilib->create_page( $this->name, 0, $this->content, time(), tra('Created by profile installer'), 'admin', '0.0.0.0', $this->description, $this->lang ) )
+				return $this->name;
+			else
+				return null;
+		} else {
+			$info = $tikilib->get_page_info( $this->name );
+
+			if( ! $this->description )
+				$this->description = $info['description'];
+
+			if( ! $this->lang )
+				$this->lang = $info['lang'];
+
+			if( $this->mode == 'append' ) {
+				$this->content = rtrim( $info['data'] ) . "\n" . trim($this->content) . "\n";
+			}
+
+			$tikilib->update_page( $this->name, $this->content, tra('Page updated by profile installer'), 'admin', '0.0.0.0', $this->description, false, $this->lang );
 			return $this->name;
-		else
-			return null;
+		}
 	}
 } // }}}
 
