@@ -273,12 +273,11 @@ class TikiAccessLib extends TikiLib {
 		if ($res==USER_VALID) {
 			$perms = $userlib->get_user_permissions($user);
 			foreach ($perms as $perm) {
-				eval('global $' . $perm . ';');
-				$$perm = 'y';
+				$GLOBALS[$perm] = 'y';
 				$smarty->assign($perm, 'y');
 			}
 			foreach ($rssrights as $perm) {
-				if ($$perm == 'y') {
+				if ($GLOBALS[$perm] == 'y') {
 					// if user/password and the appropriate rights are correct, allow.
 					return;
 				}
