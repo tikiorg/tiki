@@ -475,6 +475,7 @@ class Tiki_Profile_InstallHandler_TrackerField extends Tiki_Profile_InstallHandl
 				'computed' => 'C',
 				'preference' => 'p',
 				'attachment' => 'A',
+				'page' => 'k',
 			) ), // }}}
 			'visible' => new Tiki_Profile_ValueMapConverter( array(
 				'public' => 'n',
