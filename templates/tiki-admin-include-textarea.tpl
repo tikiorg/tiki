@@ -73,7 +73,7 @@
 		</table>
 
 		<div class="cbox-title">
-			{tr}Plugins{/tr}
+			{tr}Plugins{/tr} (<a href="tiki-admin.php?page=plugins">{tr}Plugin Alias Manager{/tr}</a>)
 		</div>
 
 		<table class="admin">
