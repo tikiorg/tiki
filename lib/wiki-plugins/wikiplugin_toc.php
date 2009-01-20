@@ -50,6 +50,7 @@ function wikiplugin_toc( $data, $params )
 		'type' => 'plain',
 		'structId' => '',
 		'maxdepth' => 0,
+		'numberPrefix' => '',
 	);
 
 	$params = array_merge( $defaults, $params );
@@ -57,19 +58,20 @@ function wikiplugin_toc( $data, $params )
 
 	global $structlib, $page_ref_id;
 	include_once ("lib/structures/structlib.php");
-	if ($structId == '') {
-		//And we are currently viewing a structure
-		$page_info = $structlib->s_get_page_info($page_ref_id);
-		$structure_info = $structlib->s_get_structure_info($page_ref_id);
-		if (isset($page_info)) {
-			$html = $structlib->get_toc($page_ref_id,$order,$showdesc,$shownum,'',$type,'',$maxdepth, $structure_info['pageName']);
-			return "~np~$html~/np~";
-		} else {
-			//Dont display the {toc} string for non structure pages
-			return '';
+	if (empty($structId)) {
+		if (!empty($page_ref_id)) {	//And we are currently viewing a structure
+			$page_info = $structlib->s_get_page_info($page_ref_id);
+			$structure_info = $structlib->s_get_structure_info($page_ref_id);
+			if (isset($page_info)) {
+				$html = $structlib->get_toc($page_ref_id, $order, $showdesc, $shownum, $numberPrefix, $type, '', $maxdepth, $structure_info['pageName']);
+				return "~np~$html~/np~";
+			}
 		}
+			//Dont display the {toc} string for non structure pages
+		return '';
 	} else {
-		$html = $structlib->fetch_toc($structlib->build_subtree_toc($structId),$showdesc,$shownum,$type,'',$maxdepth, 0, $structure_info['pageName']);
+		$structure_info = $structlib->s_get_structure_info($structId);
+		$html = $structlib->get_toc($structId, $order, $showdesc, $shownum, $numberPrefix, $type,'',$maxdepth, $structure_info['pageName']);
 
 		return "~np~$html~/np~";
 	}
