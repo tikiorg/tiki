@@ -392,6 +392,11 @@ class QuicktagBlock extends QuicktagInline // Will change in the future
 		
 		return $tag;
 	} // }}}
+
+	function getWikiHtml( $areaName ) // {{{
+	{
+		return '<a href="javascript:insertAt(\'' . $areaName . '\', \'' . htmlentities($this->syntax, ENT_QUOTES, 'UTF-8') . '\', true)" onclick="needToConfirm=false;" title="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '">' . $this->getIconHtml() . '</a>';
+	} // }}}
 }
 
 class QuicktagLineBased extends QuicktagInline // Will change in the future
@@ -424,6 +429,11 @@ class QuicktagLineBased extends QuicktagInline // Will change in the future
 			->setSyntax( $syntax );
 		
 		return $tag;
+	} // }}}
+
+	function getWikiHtml( $areaName ) // {{{
+	{
+		return '<a href="javascript:insertAt(\'' . $areaName . '\', \'' . htmlentities($this->syntax, ENT_QUOTES, 'UTF-8') . '\', true, true)" onclick="needToConfirm=false;" title="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '">' . $this->getIconHtml() . '</a>';
 	} // }}}
 }
 
