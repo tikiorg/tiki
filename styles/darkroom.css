@@ -2405,4 +2405,5 @@ div.multiselect {
 div.multiselect div.odd {background: #292929}
 div.multiselect div.even {background: #3F3F3F}
 .help_section table { color: white; }
+.button .iconmenu {display:inline;}
 /* end of css file */

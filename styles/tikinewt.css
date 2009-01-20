@@ -2855,4 +2855,5 @@ div.multiselect div.even {
 div.multiselect div.even:hover {
 	background: #FFF7E6;
 }
+.button .iconmenu {display:inline;}
 /***** End of file ******/

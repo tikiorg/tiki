@@ -2026,5 +2026,6 @@ a.icon,
 img.icon {
 	border: 0 !important;
 	background: transparent}
+.button .iconmenu {display:inline;}
 
 /* end of css file */
