@@ -2,7 +2,15 @@
 {* $Id$ *}
 {if !empty($popupfields)}{popup_init src="lib/overlib.js"}{/if}
 {if $showtitle eq 'y'}<div class="pagetitle">{$tracker_info.name}</div>{/if}
-{if $showdesc eq 'y'}<div class="wikitext">{$tracker_info.description}</div>{/if}
+{if $showdesc eq 'y'}
+	<div class="wikitext">
+		 {if $tracker_info.descriptionIsParsed eq 'y'}
+		 	 {wiki}{$tracker_info.description}{/wiki}
+		 {else}
+		 	 {$tracker_info.description}
+		 {/if}
+	</div>
+{/if}
 
 {if $shownbitems eq 'y'}<div class="nbitems">{tr}Items found:{/tr} {$count_item}</div>{/if}
 
@@ -181,7 +189,7 @@ link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" alt="{tr}List
 {else}
 {pagination_links cant=$count_item step=$max offset=$tr_offset offset_arg=tr_offset}{/pagination_links}
 {/if}
-{if $export eq 'y' && $tiki_p_export_tracker eq 'y'}
+{if $export eq 'y' && $iperms['tiki_p_export_tracker'] eq 'y'}
 	{button href="$exportUrl" _text="{tr}Export{/tr}"}
 {/if}
 {/strip}

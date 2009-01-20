@@ -107,7 +107,7 @@
            {tr}Assign Permissions{/tr}
            <select name="perms[]" multiple="multiple" size="5"}
               {foreach from=$perms item=perm}
-                <option value="assign_{$perm.permName|escape}">{$perm.permName|escape}</option>
+                <option value="{$perm.permName|escape}">{$perm.permName|escape}</option>
               {/foreach}
            </select>
            <select name="groups[]" multiple="multiple" size="5"}

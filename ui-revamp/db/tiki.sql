@@ -2825,6 +2825,7 @@ INSERT INTO users_permissions (permName, permDesc, level, type, admin) VALUES ('
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_edit_categorized', 'Can edit items in categories', 'registered', 'category');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_categories', 'Can view categories', 'basic', 'category');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_categorized', 'Can view categorized items', 'basic', 'category');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_search_categorized', 'Can search on objects of this category', 'basic', 'category');
 
 INSERT INTO users_permissions (permName, permDesc, level, type, admin) VALUES ('tiki_p_admin_charts', 'Can admin charts', 'admin', 'charts', 'y');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_autoval_chart_suggestio', 'Autovalidate suggestions', 'editors', 'charts');

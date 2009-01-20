@@ -1145,6 +1145,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 
 		// Tiki Profiles
 		'profile_sources' => 'http://profiles.tikiwiki.org/profiles',
+		'profile_channels' => '',
 
 		// Minichat
 		'feature_minichat' => 'n',
@@ -1249,14 +1250,11 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 		}
 	}
 
-	// Be absolutely sure we have a value for tikiIndex
-	if ( $modified['tikiIndex'] == '' ) $modified['tikiIndex'] = 'tiki-index.php';
-
 	// Keep some useful sites values available before overriding with user prefs
 	// (they could be used in templates, so we need to set them even for Anonymous)
 	global $user_overrider_prefs;
 	foreach ( $user_overrider_prefs as $uop ) {
-		$modified['site_'.$uop] = $modified[$uop];
+		$modified['site_'.$uop] = isset($modified[$uop])?$modified[$uop]:$defaults[$uop];
 	}
 
 	// Assign prefs to the session

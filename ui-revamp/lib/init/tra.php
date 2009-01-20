@@ -14,7 +14,7 @@ function tra($content, $lg='', $no_interactive = false, $args = array()) {
 
 	if ($content != '') {
 		if ($prefs['lang_use_db'] != 'y') {
-			global $lang;
+			global $lang, $tikidomain;
 			if ($lg != "") {
 				if (is_file("lang/$lg/language.php")) {
 					$l = $lg;
@@ -34,6 +34,9 @@ function tra($content, $lg='', $no_interactive = false, $args = array()) {
 				  include_once("lang/$l/language.php");
 				  if (is_file("lang/$l/custom.php")) {
 					include_once("lang/$l/custom.php");
+				  }
+				  if (!empty($tikidomain) && is_file("lang/$l/$tikidomain/custom.php")) {
+					include_once("lang/$l/$tikidomain/custom.php");
 				  }
 				  ${"lang_$l"} = $lang;
 				  unset($lang);

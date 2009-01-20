@@ -350,10 +350,11 @@ if( isset( $_REQUEST['pagenum'] ) && $_REQUEST['pagenum'] > 0 ) {
 	$pageRenderer->setPageNumber( (int) $_REQUEST['pagenum'] );
 }
 
-if ( isset($_REQUEST['saved_msg']) && $info['user'] == $user ) {
+if (isset($_SESSION['saved_msg']) && $_SESSION['saved_msg'] == $info['pageName'] && $info['user'] == $user ) {
 	// Generate the 'Page has been saved...' message
 	require_once('lib/smarty_tiki/modifier.userlink.php');
 	$smarty->assign('saved_msg', sprintf( tra('Page saved (version %d).'), $info['version'] ) );
+	unset($_SESSION['saved_msg']);
 }
 
 // Comments engine!
@@ -425,7 +426,7 @@ if ($prefs['feature_user_watches'] == 'y') {
 
 if ($prefs['feature_group_watches'] == 'y'
 	&& ( $tiki_p_admin == 'y' || $tiki_p_admin_users == 'y' ) ) {
-	if($_REQUEST['watch_group'] && isset($_REQUEST['watch_event'])) {
+	if(!empty($_REQUEST['watch_event'])) {
 		check_ticket('index');
 		if($_REQUEST['watch_action']=='add') {
 			$tikilib->add_group_watch($_REQUEST['watch_group'],$_REQUEST['watch_event'],$_REQUEST['watch_object'],'wiki page',$page,"tiki-index.php?page=$page");

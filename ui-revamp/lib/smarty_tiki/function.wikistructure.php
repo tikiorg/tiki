@@ -14,46 +14,17 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 
-function smarty_function_wikistructure($params, &$smarty)
-{
+function smarty_function_wikistructure($params, &$smarty) {
+	include_once('lib/wiki-plugins/wikiplugin_toc.php');
 
-    global $tikilib, $user, $dbTiki, $structlib;
-
-extract($params);
-
-require_once ('lib/structures/structlib.php');
-if (!isset($structlib)) {
-  $structlib = new StructLib($dbTiki);
-}
-if (!isset($_REQUEST["page"])) $_REQUEST["page"]='';
-if ($_REQUEST["page"] == '') {
-if (isset($_REQUEST["page_ref_id"])) {
-    // If a structure page has been requested
-    $page_ref_id = $_REQUEST["page_ref_id"];
-}
-}
-else {
-//Get the structures this page is a member of
-if (!isset($structure)) $structure='';
-$structs = $structlib->get_page_structures($_REQUEST["page"],$structure);
-//If page is only member of one structure, display if requested
-$single_struct = count($structs) == 1;
-if ($single_struct) {
-$page_ref_id=$structs[0]['req_page_ref_id'];
-$_REQUEST["page_ref_id"]=$page_ref_id;
-}
-}
-if (!isset($channels)) $channels='';
-if (isset($page_ref_id) && isset($detail)) {
-  $channels.= $structlib->get_toc($page_ref_id,'asc',false,false,'','plain',$_REQUEST["page"]);
-}
-else {
-  $channels.= $structlib->get_toc($id,'asc',false,false,'','plain',$_REQUEST["page"]);
+	if (!empty($params['id'])) {
+		$params['structId'] = $params['id'];
+	}
+	$html =  wikiplugin_toc('', $params);
+	$html = str_replace(array('~np~', '~/np~'), '', $html);
+	return $html;
 }
 
-return $channels;
-
-}
 
 
 

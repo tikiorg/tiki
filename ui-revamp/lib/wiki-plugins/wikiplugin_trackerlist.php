@@ -157,8 +157,8 @@ function wikiplugin_trackerlist_info() {
 			),
 			'itemId' => array(
 				'required' => false,
-				'name' => tra('Item ID'),
-				'description' => tra('?'),
+				'name' => tra('Item ID separated with :'),
+				'description' => tra('List of items Ids'),
 			),
 			'url' => array(
 				'required' => false,
@@ -430,6 +430,8 @@ function wikiplugin_trackerlist($data, $params) {
 		}
 
 		if (isset($itemId)) {
+			if (strstr($itemId, ':'))
+				$itemId = explode(':', $itemId);
 			$filter = array('tti.`itemId`'=> $itemId);
 		} else {
 			$filter = '';

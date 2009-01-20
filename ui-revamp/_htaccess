@@ -95,7 +95,7 @@ RewriteRule \.(css|gif|jpg|png|php|html|js|htm|shtml|cgi|sql|phtml|txt|ihtml)   
 # todo add support for all characters allowed in a Wiki name
 # make sure this is the last rule!
 RewriteRule ^show:(~?)([-_\+A-Za-z0-9]+)$  tiki-slideshow.php?page=$1$2      [QSA,L]
-RewriteRule     ^([^/\.]+)$    tiki-index.php?page=$1                   [QSA,L]
+RewriteRule     ^(.+)$    tiki-index.php?page=$1                   [QSA,L]
 # Following one rule added to support &bl "Best Language". SEWilco 2008-07-15
 RewriteRule ^([-_\+A-Za-z0-9]+)&bl$    tiki-index.php?page=$1&bl             [QSA,L]
 
