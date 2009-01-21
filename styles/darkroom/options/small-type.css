@@ -1,0 +1,26 @@
+@CHARSET "UTF-8";
+
+/* Variation on darkroom.css */
+
+body { font-size: 60% !important; }
+html>body {font-size: 60% !important}
+*:first-child+html body {font-size: 62% !important;}
+
+h3.box-title { font-size: 1.2em; }
+div#adminBar { font-size: 1em }
+
+.button a,
+.button a:visited { font-size: 0.9em; }
+
+#siteloginbar {
+	font-size: 1em;
+	bottom: 110px;
+}
+
+#siteloginbar.logged-in {
+	bottom: 135px;
+}
+
+ul.autocompleter-choices {
+	font-size: .7em;
+}
