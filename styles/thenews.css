@@ -6,7 +6,6 @@
  
  @import "lite/lite.css"; /* here we import *lite as the base */
 
-
 /***** XHTML Elements ******/
 body {
 	background: white;
@@ -15,8 +14,7 @@ body {
 	text-align: center;
 }
 
-*:first-child+html
-body {
+*:first-child+html body {
 	font-size: 75% !important;
 }
 
@@ -126,21 +124,36 @@ button,
 input[type=submit],
 .submitbutton,
 .button input,
-input[type=reset] {
+input[type=reset],
+.button  {
 	border: 1px solid #aaa; 
 	background: #fbfbfb;
-	font-weight: normal;
-	color: #4C4C4C;
-	font-size: 90% !important;
-}
+	color: #000;
+	text-transform: uppercase;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 75%/* !important*/}
 
 button:hover,
 input[type=submit]:hover,
 .submitbutton:hover,
-.button input:hover {
+.button input:hover,
+.button:hover {
 	cursor: pointer;
 	background: #E6E6F8;
 }
+
+span.button {
+	display: inline-block;
+	margin: 1px 2px;
+	padding: 2px}
+
+span.button a {
+	color: #000;
+	text-transform: uppercase;
+	font-family: Arial, Helvetica, sans-serif;
+	/*font-size: 80%*/}
+
+span.button a:hover {text-decoration: none}
 
 #col2 input { width: 100px }
 
@@ -570,7 +583,6 @@ div#tiki-bot {}
 	white-space: nowrap;
 }
 
-
 .phplmnormal,
 a.phplmnormal:hover,
 a.phplm:link,
@@ -644,7 +656,8 @@ div.menuSection div.separator {
 /* End from Tikineat */
 
 /****** Misc. Global Classes (layout and style) ****/
-.hidden {position: absolute; left: -10000px; top: 0px; width: 1px; height: 1px; overflow: hidden;}.floatlist {	clear: left;list-style-type: none;margin: 0;padding-left: 0;}
+
+.hidden {position: absolute; left: -10000px; top: 0; width: 1px; height: 1px; overflow: hidden;}.floatlist {	clear: left;list-style-type: none;margin: 0;padding-left: 0;}
 .floatlist li { float: left; }
 div#attzone,
 div#comzone {	display: none;	margin-top: 10px;}
@@ -719,8 +732,8 @@ h3.box-title {
 	text-transform: uppercase;
 	font-family: Arial, Helvetica, sans-serif;
 	display: block;
-	font-size:90%;
-	font-weight:bold;
+	font-size: 90%;
+	font-weight: bold;
 	text-indent: 1em;
 	position: relative;
 }
@@ -1565,7 +1578,7 @@ div.postbody {
 	margin-bottom: 1em;
 }
 
-div.postfooter {
+body.tiki_blog .postfooter {
 	clear: both;
 	float: right;
 	margin-bottom: 2em;
@@ -1620,6 +1633,8 @@ table.commentinfo {}
 
 /* forums new */
 
+.post {margin-bottom: 30px}
+
 .post .postbody {
 	clear: both;
 	border: solid 1px #E7EAED;
@@ -1630,30 +1645,57 @@ table.commentinfo {}
 	background-color: #F9FCFF;	font-size: 1.1em;}
 	
 * html .post .postbody {font-size: 11px}
-*:first-child+html .postbody { width: 55em }
+*:first-child+html .postbody {min-width: 100%}
 
-.post .postbody-title {
+/*.postbody .posttop {
+	position: relative;
+	width: 100%;
 	display: block;
+	min-height: 104px;
 	background-color: #E0EAF4; 
-	border-bottom: 1px solid #ACCCDD;
-	margin-bottom: 4px;
-	height: 100%;
-/*	overflow: auto;*/
-	padding-top: 2px;
-}
-.post .postbody-title .checkbox { float: left; }
-.post .postbody-title .title {
+	border-bottom: 1px solid #ACCCDD;}*/
+
+.postbody-title {
+	width: 75%;
 	float: left;
+	margin-top: 0;
+	margin-bottom: auto;
+	background-color: #E0EAF4; 
+	border-bottom: 1px solid #ACCCDD}
+	
+*:first-child+html .postbody-title {min-width: 74%}
+
+.post .postbody-title .checkbox {float: left}
+
+.post .postbody-title .title {
 	color: #29677B;
 	font-weight: bold;
 	font-size: 12px;
 	margin-left: 5px;
-	margin-top: 3px;
-}
-.post .author {	
+	margin-top: 3px}
+
+.author_actions {
+	/*height:auto; top:20px; margin:8px 8px auto auto; bottom:auto; left: auto;right: 0;
+position:absolute*/
+	width: 25%;
+	float: right;
 	text-align: right;
-	vertical-align: top;
-}
+	background-color: #E0EAF4;
+	border-bottom: 1px solid #ACCCDD;
+	border-left: 1px solid #ACCCDD;
+	margin-left: -1px}
+	
+*:first-child+html .author_actions {}
+	
+.author_actions .actions {
+	background-color: #E0EAF4}
+	
+.author_actions .actions a.link {padding: 2px}
+
+.author {	
+	text-align: right;
+	vertical-align: top}
+
 .post .author_post_info {
 	display: block;
 	background-color: #E0EAF4;
@@ -1665,13 +1707,10 @@ table.commentinfo {}
 .post .author_post_info_on { font-style: italic; }
 .post .author_info {
 	float: right;
-	background-color: #F0F8FF;
 	padding: 0 2px 2px 2px;
-	margin-left: 5px;
-	border-left: 1px solid #D7E5F3;
-	border-bottom: 1px solid #D7E5F3;
-}
-.commentStyle_headers .author_info { float: left; }
+	margin-left: 5px}
+
+.commentStyle_headers .author_info {}
 .post .postbody-title .actions {
 	float: right;
 	font-size: 10px;
@@ -2223,5 +2262,16 @@ a.icon,
 img.icon {
 	border: 0 !important;
 	background: transparent}
+	
+/* Minichat module */	
+	
+div.box-minichat {width: 95%}
+div.minichatchans {overflow: auto !important}
+.minichat {overflow: auto !important}
+
+div.minichatdiv {
+  font-size: .9em;
+  overflow: auto !important}
+ 
 /* end of css file */
 
