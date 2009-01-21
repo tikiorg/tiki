@@ -10,7 +10,9 @@ class WikiParser_PluginMatcher implements Iterator, Countable
 
 	private $text;
 
-	private $scanPosition;
+	private $scanPosition = -1;
+
+	private $leftOpen = 0;
 
 	public static function match( $text )
 	{
@@ -34,8 +36,14 @@ class WikiParser_PluginMatcher implements Iterator, Countable
 	private function appendSubMatcher( $matcher )
 	{
 		foreach( $matcher->starts as $match ) {
+			$match->changeMatcher( $this );
 			$this->recordMatch( $match );
 		}
+	}
+
+	private function isComplete()
+	{
+		return $this->leftOpen == 0;
 	}
 
 	function findMatches( $start, $end )
@@ -73,42 +81,32 @@ class WikiParser_PluginMatcher implements Iterator, Countable
 
 			} else {
 
+				++$this->leftOpen;
+
 				$bodyStart = $match->getBodyStart();
+				$lookupStart = $bodyStart;
 
-				if( ! $match->findEnd( $bodyStart, $end ) ) {
-					$pos = $bodyStart;
-					continue;
+				while( $match->findEnd( $lookupStart, $end ) ) {
+					$candidate = $match->getEnd();
+					$sub = $this->getSubMatcher( $bodyStart, $candidate - 1 );
+
+					if( $sub->isComplete() ) {
+						$this->recordMatch( $match );
+						$this->appendSubMatcher( $sub );
+						$pos = $match->getEnd();
+						--$this->leftOpen;
+						break;
+					}
+
+					$lookupStart = $candidate + 1;
 				}
-
-				$candidate = $match->getEnd();
-
-				$sub = $this->getSubMatcher( $bodyStart, $candidate );
-				$nextBegin = $sub->getFirstStart( $bodyStart );
-
-				// Look for closing before any matches
-				if( $nextBegin === false || $candidate < $nextBegin ) {
-					$this->recordMatch( $match );
-					$pos = $match->getEnd();
-					continue;
-				}
-
-				$sub = $this->getSubMatcher( $bodyStart, $end );
-				// Find matches as part of the body
-				$last = $sub->getLastEnd();
-
-				if( ! $match->findEnd( $last, $end ) ) {
-					// This one could not match, but the sub matcher still contains valid matches
-					$this->appendSubMatcher( $sub );
-					$pos = $last;
-					continue;
-				}
-
-				// Closing and adding sub matcher
-				$this->recordMatch( $match );
-				$this->appendSubMatcher( $sub );
-				$pos = $match->getEnd();
 			}
 		}
+	}
+
+	function getText()
+	{
+		return $this->text;
 	}
 
 	private function recordMatch( $match )
@@ -170,7 +168,7 @@ class WikiParser_PluginMatcher implements Iterator, Countable
 
 	function valid()
 	{
-		return $this->scanPosition != -1;
+		return isset($this->starts[$this->scanPosition]);
 	}
 
 	function rewind()
@@ -200,12 +198,60 @@ class WikiParser_PluginMatcher implements Iterator, Countable
 
 	function findText( $string, $from, $to )
 	{
+		if( $from >= strlen($this->text) )
+			return false;
+
 		$pos = strpos( $this->text, $string, $from );
 
 		if( $pos === false || $pos + strlen($string) > $to )
 			return false;
 
 		return $pos;
+	}
+
+	function performReplace( $match, $string )
+	{
+		$start = $match->getStart();
+		$end = $match->getEnd();
+
+		$sizeDiff = - ($end - $start - strlen( $string ) );
+		$this->text = substr_replace( $this->text, $string, $start, $end - $start ); 
+
+		unset($this->ends[$end]);
+		$matches = $this->ends;
+
+		foreach( $matches as $key => $m ) {
+			if( $m->inside( $match ) ) {
+				$m->invalidate();
+				unset( $this->ends[$key] );
+			} elseif( $key > $end ) {
+				$m->applyOffset( $sizeDiff );
+			}
+		}
+
+		$list = $this->ends;
+
+		$sub = $this->getSubMatcher( $start, $start + strlen( $string ) );
+		foreach( $sub as $m ) {
+			$list[] = $m;
+		}
+
+		$this->ends = array();
+		$this->starts = array();
+
+		foreach( $list as $m ) {
+			$this->ends[$m->getEnd()] = $m;
+			$this->starts[$m->getStart()] = $m;
+		}
+
+		ksort( $this->ends );
+		ksort( $this->starts );
+
+		$match->invalidate();
+
+		if( $this->scanPosition == $start ) {
+			$this->scanPosition = $start - 1;
+		}
 	}
 }
 
@@ -234,7 +280,7 @@ class WikiParser_PluginMatcher_Match
 	function findName( $limit )
 	{
 		$candidate = $this->matcher->getChunkFrom( $this->start + 1, self::NAME_MAX_LENGTH );
-		$name = strtok( $candidate, " (\n\r," );
+		$name = strtok( $candidate, " (}\n\r," );
 
 		if( empty( $name ) || !ctype_alpha( $name ) ) {
 			$this->invalidate();
@@ -338,6 +384,11 @@ class WikiParser_PluginMatcher_Match
 			&& $this->end < $match->end;
 	}
 
+	function replaceWith( $string )
+	{
+		$this->matcher->performReplace( $this, $string );
+	}
+
 	function getName()
 	{
 		return $this->name;
@@ -375,6 +426,15 @@ class WikiParser_PluginMatcher_Match
 		$this->end = false;
 	}
 
+	function applyOffset( $offset )
+	{
+		$this->start += $offset;
+		$this->end += $offset;
+		$this->nameEnd = false;
+		$this->bodyStart = false;
+		$this->bodyEnd = false;
+	}
+
 	private function countUnescapedQuotes( $from, $to )
 	{
 		$string = $this->matcher->getChunkFrom( $from, $to - $from );
@@ -388,6 +448,11 @@ class WikiParser_PluginMatcher_Match
 		}
 
 		return $count;
+	}
+
+	function changeMatcher( $matcher )
+	{
+		$this->matcher = $matcher;
 	}
 
 	public function __toString()

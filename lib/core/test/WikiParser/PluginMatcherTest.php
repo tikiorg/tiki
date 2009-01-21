@@ -23,7 +23,6 @@ class WikiParser_PluginMatcherTest extends PHPUnit_Framework_TestCase
 
 		return $ret;
 	}
-
 	function testShortMatch()
 	{
 		$matches = $this->doMatch( ' {img src=foo.png} ', 1 );
@@ -127,11 +126,11 @@ class WikiParser_PluginMatcherTest extends PHPUnit_Framework_TestCase
 
 	function testUnclosedFullMatch()
 	{
-		$matches = $this->doMatch( '{A(foo=>bar)} {A(hello=world)} middle {A}', 1 );
+		$matches = $this->doMatch( '{A(unclosed=>bar)} {A(unclosed=world)} middle {A}', 1 );
 
 		$match = $matches[0];
 		$this->assertEquals( 'a', $match->getName() );
-		$this->assertEquals( 'hello=world', $match->getArguments() );
+		$this->assertEquals( 'unclosed=world', $match->getArguments() );
 		$this->assertEquals( ' middle ', $match->getBody() );
 	}
 
@@ -148,6 +147,14 @@ class WikiParser_PluginMatcherTest extends PHPUnit_Framework_TestCase
 	{
 		$matches = $this->doMatch( '{A()} ~np~ {A} {b} {B()} {B} ~/np~ {A} ~np~ {b} ~/np~', 1 );
 		$this->assertEquals( ' ~np~ {A} {b} {B()} {B} ~/np~ ', $matches[0]->getBody() );
+	}
+
+
+	function testVerySimpleMatch()
+	{
+		$string = '{c}';
+		$matches = WikiParser_PluginMatcher::match( $string );
+		$this->assertEquals( 1, count($matches) );
 	}
 
 	function testSimpleReplacement()
@@ -260,8 +267,10 @@ class WikiParser_PluginMatcherTest extends PHPUnit_Framework_TestCase
 		}
 	}
 
+/*
 	// TODO : Replacement re-find existing
 	// TODO : Replacement original vs generated
+	*/
 }
 
 ?>
