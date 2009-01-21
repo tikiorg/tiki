@@ -20,6 +20,13 @@ class WikiParser_PluginArgumentParserTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals( $parser->parse( 'foo => "bar"' ), $out );
 	}
 
+	function testEqualsWithinQuotes()
+	{
+		$out = array( 'foo' => 'bar=baz' );
+		$parser = new WikiParser_PluginArgumentParser;
+		$this->assertEquals( $parser->parse( 'foo="bar=baz"' ), $out );
+	}
+
 	function testArgumentChaining()
 	{
 		$out = array(

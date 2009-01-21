@@ -11,8 +11,9 @@ class WikiParser_AllTests
     {
         $suite = new PHPUnit_Framework_TestSuite('WikiParserSuite');
 
+        //$suite->addTestSuite('WikiParser_PluginMatcherTest');
         $suite->addTestSuite('WikiParser_PluginArgumentParserTest');
-        $suite->addTestSuite('WikiParser_PluginParserTest');
+        //$suite->addTestSuite('WikiParser_PluginParserTest');
 
         return $suite;
     }
