@@ -5,8 +5,9 @@ class WikiParser_PluginMatcherTest extends PHPUnit_Framework_TestCase
 	function toArray( $matcher )
 	{
 		$ret = array();
-		foreach( $matcher as $match )
+		foreach( $matcher as $match ) {
 			$ret[] = $match;
+		}
 
 		return $ret;
 	}
@@ -14,9 +15,13 @@ class WikiParser_PluginMatcherTest extends PHPUnit_Framework_TestCase
 	function doMatch( $string, $expecting )
 	{
 		$matches = WikiParser_PluginMatcher::match( $string );
-		$this->assertEquals( $expecting, count($matches) );
 
-		return $this->toArray( $matches );
+		$ret = $this->toArray( $matches );
+
+		$this->assertEquals( $expecting, count($matches) );
+		$this->assertEquals( $expecting, count($ret) );
+
+		return $ret;
 	}
 
 	function testShortMatch()
@@ -65,6 +70,27 @@ class WikiParser_PluginMatcherTest extends PHPUnit_Framework_TestCase
 		$this->assertFalse( $matches[0]->inside( $matches[1] ) );
 	}
 
+	function testSideBySideFullMatch()
+	{
+		$matches = $this->doMatch( '{A(hello=world)} middle {A} between {A(bar=baz)} center {A}', 2 );
+
+		// Make sure the matches found are those we expect
+		
+		$match = $matches[0];
+		$this->assertEquals( 'a', $match->getName() );
+		$this->assertEquals( 'hello=world', $match->getArguments() );
+		$this->assertEquals( ' middle ', $match->getBody() );
+
+		$match = $matches[1];
+		$this->assertEquals( 'a', $match->getName() );
+		$this->assertEquals( 'bar=baz', $match->getArguments() );
+		$this->assertEquals( ' center ', $match->getBody() );
+
+		// Corrolary of the above
+		$this->assertFalse( $matches[0]->inside( $matches[1] ) );
+		$this->assertFalse( $matches[1]->inside( $matches[0] ) );
+	}
+
 	function testNestedFullMatch()
 	{
 		$matches = $this->doMatch( '{A(foo=>bar)} {A(hello=world)} middle {A} between {A(bar=baz)} center {A} {A}', 3 );
@@ -74,7 +100,7 @@ class WikiParser_PluginMatcherTest extends PHPUnit_Framework_TestCase
 		$match = $matches[0];
 		$this->assertEquals( 'a', $match->getName() );
 		$this->assertEquals( 'foo=>bar', $match->getArguments() );
-		$this->assertEquals( ' {a hello=world} ', $match->getBody() );
+		$this->assertEquals( ' {A(hello=world)} middle {A} between {A(bar=baz)} center {A} ', $match->getBody() );
 		
 		$match = $matches[1];
 		$this->assertEquals( 'a', $match->getName() );
@@ -198,6 +224,7 @@ class WikiParser_PluginMatcherTest extends PHPUnit_Framework_TestCase
 	{
 		$string = '{c} {A()} {b} {A} {d}';
 		$matches = WikiParser_PluginMatcher::match( $string );
+		$this->assertEquals( 4, count($matches) );
 
 		$expected = array( 'c', 'a', 'd' );
 		$iteration = 0;
@@ -218,6 +245,7 @@ class WikiParser_PluginMatcherTest extends PHPUnit_Framework_TestCase
 	{
 		$string = '{c} {A()} {b} {A} {d}';
 		$matches = WikiParser_PluginMatcher::match( $string );
+		$this->assertEquals( 4, count($matches) );
 
 		$expected = array( 'c', 'a', 'b', 'f', 'd' );
 		$iteration = 0;
