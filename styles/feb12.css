@@ -1,4 +1,5 @@
-/* Type 1 -- based on *litecss -- */
+/* Feb12 theme for TikiWiki CMS/Groupware, released under LGPL license.
+ * See http://themes.tikwiki.org for more information. -- */
 
  @import "lite/lite.css"; /* here we import *lite as the base */
 
@@ -2047,6 +2048,7 @@ a.icon,
 img.icon {
 	border: 0 !important;
 	background: transparent}
+
 .button .iconmenu {display:inline;}
 
 /* end of css file */
