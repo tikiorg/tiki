@@ -3,9 +3,9 @@
 		{$link.button}
 	{/foreach}
 	{foreach from=$controls.menus key=name item=menu}
-		{if $name neq 'watchgroup' and $name neq 'structwatchgroup' and $name neq 'language' and $name neq 'backlinks'}
+		{if $name !== 'watchgroup' and $name !== 'structwatchgroup' and $name !== 'language' and $name !== 'backlinks'}
 			{foreach from=$menu.items key=n item=item}
-				{if $n neq 'watch' and $n neq 'structwatch' and $n neq 'view' and n neq 'print'}
+				{if $n !== 'watch' and $n !== 'structwatch' and $n !== 'view' and n !== 'print'}
 					{$item.button}
 				{/if}
 			{/foreach}
