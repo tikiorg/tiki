@@ -22,9 +22,6 @@ RewriteEngine On
 RewriteCond %{SCRIPT_FILENAME}/ -d
 RewriteRule [^/]$ %{REQUEST_URI}/ [R=301,L] 
 
-# Skip index.php and go right to tiki-index.php
-#RewriteRule ^$             tiki-index.php                        [L]
-
 # direct one-word access
 RewriteRule ^calendar$             tiki-calendar.php                        [L]
 RewriteRule ^articles$             tiki-view_articles.php                   [L]
@@ -83,8 +80,6 @@ RewriteRule ^quiz([0-9]+)          tiki-take_quiz.php?quizId=$1             [QSA
 RewriteRule ^survey([0-9]+)        tiki-take_survey.php?surveyId=$1         [QSA,L]
 RewriteRule ^tracker([0-9]+)       tiki-view_tracker.php?trackerId=$1       [QSA,L]
 RewriteRule ^item([0-9]+)          tiki-view_tracker_item.php?itemId=$1     [QSA,L]
-RewriteRule ^wiki-([A-Za-z0-9]+)   tiki-index.php?page=$1                   [QSA,L]
-RewriteRule ^page-([A-Za-z0-9]+)   tiki-index.php?page=$1                   [QSA,L]
 RewriteRule ^irc([0-9]+)           tiki-irc_logs.php?focus=$1               [QSA,L]
 RewriteRule ^int([0-9]+)           tiki-integrator.php?repID=$1             [QSA,L]
 RewriteRule ^sheet([0-9]+)         tiki-view_sheets.php?sheetId=$1          [QSA,L]
@@ -92,15 +87,16 @@ RewriteRule ^ws([0-9]+)            tiki-workspaces_desktop.php?workspaceId=$1   
 
 RewriteRule \.(css|gif|jpg|png|php|html|js|htm|shtml|cgi|sql|phtml|txt|ihtml)   -       [L]
 
-# todo add support for all characters allowed in a Wiki name
-# make sure this is the last rule!
-RewriteRule ^show:(~?)([-_\+A-Za-z0-9]+)$  tiki-slideshow.php?page=$1$2      [QSA,L]
+RewriteRule ^wiki-([A-Za-z0-9]+)   tiki-index.php?page=$1                   [QSA,L]
+RewriteRule ^page-([A-Za-z0-9]+)   tiki-index.php?page=$1                   [QSA,L]
+RewriteRule ^show:(~?)(.+)$  tiki-slideshow.php?page=$1$2      [QSA,L]
 RewriteRule     ^(.+)$    tiki-index.php?page=$1                   [QSA,L]
-# Following one rule added to support &bl "Best Language". SEWilco 2008-07-15
-RewriteRule ^([-_\+A-Za-z0-9]+)&bl$    tiki-index.php?page=$1&bl             [QSA,L]
 
-# how to redirect to a wiki page on a not found error: take away the comment + adapt the pagename 
+# how to redirect to a wiki page on a not found error: uncomment + adapt the pagename 
 # ErrorDocument 404 tiki-index.php?page=Page+not+found
+
+# to active the error display, uncomment
+#php_flag display_errors on
 
 </IfModule>
 # End of rewrite rules
