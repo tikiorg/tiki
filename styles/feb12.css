@@ -6,11 +6,11 @@
 
 body {
 	text-align: left;
-	font: normal 62.5%/1.5em 'Trebuchet MS', sans-serif;
+	font: normal 75%/1.5em 'Trebuchet MS', sans-serif;
 	color: #333;
 	background: #fff url(feb12/pagebg.jpg) repeat-x}
 	
-html>body {font-size: 75% !important}
+/*html>body {font-size: 75% !important}*/
 
 *:first-child+html body {font-size: 74% !important}
 
@@ -86,7 +86,7 @@ select {
 /* IE */
 * html .wikitopline select {font-size: .9em}
 
-.button { 
+input.button { 
 	margin: 0; 
 	font: bold 1em Arial, Sans-serif; 
 	border: 1px solid #CCC;
@@ -120,19 +120,40 @@ button,
 input[type=submit],
 .submitbutton,
 .button input,
-input[type=reset] {
+input[type=reset],
+span.button {
 	vertical-align: middle;	
 	margin: 2px;
-	vertical-align: middle}
+	background: url(feb12/header.jpg) repeat-x 0 -2px;
+	border: 1px solid #5aa5cf;
+	color: #F5F5F5;
+	font-size: 80%}
 	
-*:first-child+html input { font-weight: normal }
+*:first-child+html input {font-weight: normal}
 
 button:hover,
 input[type=submit]:hover,
 .submitbutton:hover,
-.button input:hover {
-	background: #FFFFFF;
+button input:hover,
+span.button:hover {
+	background: url(feb12/header.jpg) repeat-x 0 -15px;
 	cursor: pointer}
+	
+span.button {
+	margin: 1px 2px;
+	padding: 0 2px}
+
+span.button a,
+span.button a:visited {color: #F5F5F5}
+
+* html span.button a,
+* html span.button a:visited {background: url(feb12/header.jpg) repeat-x 0 -2px}
+
+* html span.button a:hover {
+	color: #F5F5F5;
+	background: url(feb12/header.jpg) repeat-x 0 -15px}
+
+span.button a:hover {text-decoration: none}
 
 input[type=checkbox] {border: 0}
 * html .findtable input {font-size: 1em}
@@ -197,10 +218,11 @@ ul.jumplinks a:focus, ul.jumplinks a:active {
 #main {font-size: 1.24em}
 
 #header {
-	height: 137px;
-	text-align: left}
+	/*height: 137px;*/
+	text-align: left;
+	position: static}
 
-#middle {}
+#middle {background: #fff url(feb12/page.jpg) repeat-x;}
 
 #c1c2 {
 	text-align: left;
@@ -267,7 +289,8 @@ div#tiki-bot {}
 /* Site Header & Identity */
 
 #header-top {
-	height: 98px;
+	background: url(feb12/header.jpg) repeat-x bottom;
+	min-height: 98px;
 	position: relative}
 
 #siteheader {
@@ -345,12 +368,13 @@ input[id="sl-login-pass"] {}
 /* tiki-top_bar.tpl - menu and search */
 
 #tiki-top {
+	background: url(feb12/header.jpg) repeat-x;
 	color: #F5F5F5;
 	height: 34px;
-	padding-top: 10px;
-	font-size: 1em}
+	padding-top: 3px;
+	font-size: 14px}
 	
-* html #tiki-top { font-size: 11px }
+* html #tiki-top { font-size: 11px}
 #tiki-top a {color: #F5F5F5}
 
 #tiki-top table {
@@ -968,7 +992,7 @@ h1 a.pagetitle:hover {text-decoration: none}
 
 .wikitopline {}
 
-div#description {
+#description {
 	font-size: .9em;
 	font-style: italic}
 
