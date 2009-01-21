@@ -74,6 +74,7 @@
 	{include file="tiki-site_header_login.tpl"}
 {/if}
 {/if}
+<!--[if IE]><br style="clear:both; height: 0" /> <![endif]-->
 </div>{*  end div#header-top *}
 {* navbar and search *}
 <div class="clearfix" id="tiki-top">

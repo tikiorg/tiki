@@ -23,22 +23,23 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 
 	if( isset($_POST['config']) ) { // {{{
 		$tikilib->set_preference( 'profile_sources', $_POST['profile_sources'] );
+		$tikilib->set_preference( 'profile_channels', $_POST['profile_channels'] );
 		
 		header( 'Location: tiki-admin.php?page=profiles' );
 		exit;
 	} // }}}
 
-	if( isset($_POST['forget'], $_POST['url']) ) { // {{{
+	if( isset($_POST['forget'], $_POST['pp'], $_POST['pd']) ) { // {{{
 		require_once 'lib/profilelib/profilelib.php';
 
-		$profile = new Tiki_Profile( $_POST['url'] );
+		$profile = Tiki_Profile::fromNames( $_POST['pd'], $_POST['pp'] );
 		$profile->removeSymbols();
 		
 		header( 'Location: ' . $_SERVER['REQUEST_URI'] );
 		exit;
 	} // }}}
 
-	if( isset($_POST['install'], $_POST['url']) ) { // {{{
+	if( isset($_POST['install'], $_POST['pd'], $_POST['pp']) ) { // {{{
 		require_once 'lib/profilelib/profilelib.php';
 		require_once 'lib/profilelib/installlib.php';
 
@@ -50,7 +51,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 		$installer = new Tiki_Profile_Installer;
 		$installer->setUserData( $data );
 
-		$profile = new Tiki_Profile( $_POST['url'] );
+		$profile = Tiki_Profile::fromNames( $_POST['pd'], $_POST['pp'] );
 		$installer->install( $profile );
 		
 		header( 'Location: ' . $_SERVER['REQUEST_URI'] );
@@ -77,8 +78,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 
 		$installer = new Tiki_Profile_Installer;
 
-		$url = $_GET['pd'] . '/tiki-export_wiki_pages.php?page=' . urlencode( $_GET['pp'] );
-		$profile = new Tiki_Profile( $url );
+		$profile = Tiki_Profile::fromNames( $_GET['pd'], $_GET['pp'] );
 		$error = '';
 
 		try

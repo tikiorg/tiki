@@ -136,7 +136,7 @@ input[type=submit]:hover,
 input[type=file],
 select {
 	border: solid 1px #aaa;
-	background: #292929;
+	background-color: #292929;
 	color: #F5F5F5;
 	font-size: 1em;
 	vertical-align: middle;
@@ -971,8 +971,8 @@ form.admin legend.heading a:hover {}
 form.admin legend.heading a span {}
 form.admin legend.heading a:hover span {}
 div.heading {} */
-tr.odd {background: #292929}
-tr.even {background: #3F3F3F}
+tr.odd {background: #292929;}
+tr.even {background: #3F3F3F;}
 
 tr.odd td,
 td.odd {
@@ -1152,7 +1152,9 @@ span#tab3 {background: #5c5c5c}
 	border-top: 1px solid #A9A9A9;
 	border-left: 1px solid #A9A9A9;
 	border-right: 1px solid #696969;
-	border-bottom: 1px solid #696969}
+	border-bottom: 1px solid #696969;
+	margin-bottom: 10px;
+}
 
 table.admin div#content1 div.tabcontent div.cbox {background-color: transparent}
 
@@ -1717,9 +1719,9 @@ span.commentstitle {
 
 /* Find */
 .subcomment {margin-left: 10px}
-div.findtable {padding: 15px 0; float: left;}
-div.findtable ul {list-style: none;padding:0; margin: 0;float: left;}
-div.findtable ul li {float: left;}
+.findtable {padding: 15px 0; float: left;}
+.findtable ul {list-style: none;padding:0; margin: 0;float: left;}
+.findtable ul li {float: left;}
 
 /* Help box*/
 div.commentsedithelp {
@@ -2402,4 +2404,6 @@ div.multiselect {
 
 div.multiselect div.odd {background: #292929}
 div.multiselect div.even {background: #3F3F3F}
+.help_section table { color: white; }
+.button .iconmenu {display:inline;}
 /* end of css file */

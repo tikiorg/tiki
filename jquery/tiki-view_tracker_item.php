@@ -284,35 +284,6 @@ if (!isset($item_info)) {
 }
 $smarty->assign_by_ref('item_info', $item_info);
 
-$smarty->assign('individual', 'n');
-if ($userlib->object_has_one_permission($_REQUEST["trackerId"], 'tracker')) {
-	$smarty->assign('individual', 'y');
-	if ($tiki_p_admin != 'y') {
-		$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'trackers');
-		foreach ($perms["data"] as $perm) {
-			$permName = $perm["permName"];
-			if ($userlib->object_has_permission($user, $_REQUEST["trackerId"], 'tracker', $permName)) {
-				$$permName = 'y';
-				$smarty->assign("$permName", 'y');
-				if ($permName == 'tiki_p_admin_trackers') {
-					$propagate = true;
-				}
-			} else {
-				$$permName = 'n';
-				$smarty->assign("$permName", 'n');
-			}
-		}
-	}
-}
-if (!empty($propagate) && $propagate) { // if local set of tiki_p_admin_trackers, need to other perm
-    $perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'trackers');
-    foreach ($perms['data'] as $perm) {
-        $perm = $perm['permName'];
-        $smarty->assign("$perm", 'y');
-        $$perm = 'y';
-    }
-}
-
 $tracker_info = $trklib->get_tracker($_REQUEST["trackerId"]);
 if ($t = $trklib->get_tracker_options($_REQUEST["trackerId"]))
 	$tracker_info = array_merge($tracker_info,$t);
@@ -322,6 +293,7 @@ if (!isset($tracker_info["writerCanModify"]) or (isset($utid) and ($_REQUEST['tr
 if (!isset($tracker_info["writerGroupCanModify"]) or (isset($gtid) and ($_REQUEST['trackerId'] != $gtid['groupTrackerId']))) {
 	$tracker_info["writerGroupCanModify"] = 'n';
 }
+$tikilib->get_perm_object($_REQUEST['trackerId'], 'tracker', $tracker_info);
 
 if ($tiki_p_view_trackers != 'y' and $tracker_info["writerCanModify"] != 'y' and $tracker_info["writerGroupCanModify"] != 'y'&& !$special) {
 	$smarty->assign('errortype', 401);
@@ -799,9 +771,9 @@ if (isset($tracker_info['useRatings']) and $tracker_info['useRatings'] == 'y' an
 if ($_REQUEST["itemId"]) {
 	$info = $trklib->get_tracker_item($_REQUEST["itemId"]);
 	if (!isset($info['trackerId'])) $info['trackerId'] = $_REQUEST['trackerId'];
-	if ((isset($info['status']) and $info['status'] == 'p' && !$tikilib->user_has_perm_on_object($user, $info['trackerId'], 'tracker', 'tiki_p_view_trackers_pending'))
-	||  (isset($info['status']) and $info['status'] == 'c' && !$tikilib->user_has_perm_on_object($user, $info['trackerId'], 'tracker', 'tiki_p_view_trackers_closed'))
-	||  ($tiki_p_admin_trackers != 'y' && !$tikilib->user_has_perm_on_object($user, $info['trackerId'], 'tracker', 'tiki_p_view_trackers') &&
+	if ((isset($info['status']) and $info['status'] == 'p' && $tiki_p_view_trackers_pending != 'y')
+	||  (isset($info['status']) and $info['status'] == 'c' && $tiki_p_view_trackers_closed != 'y')
+	||  ($tiki_p_admin_trackers != 'y' && $tiki_p_view_trackers != 'y' &&
 	  (!isset($utid) || $_REQUEST['trackerId'] != $utid['usersTrackerId']) &&
 		(!isset($gtid) || $_REQUEST['trackerId'] != $utid['groupTrackerId']) &&
 		 ($tracker_info['writerCanModify'] != 'y' || $user != $itemUser)

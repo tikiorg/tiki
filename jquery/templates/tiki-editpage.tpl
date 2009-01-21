@@ -363,6 +363,9 @@ function searchrep() {
 
 {if $page|lower neq 'sandbox'}
 <tr class="formcolor" id="input_edit_summary"><td>{tr}Edit Comment{/tr}:</td><td><input style="width:98%;" class="wikiedit" type="text" name="comment" value="{$commentdata|escape}" /></td></tr>
+{if $show_watch eq 'y'}
+	<tr class="formcolor"><td>{tr}Monitor this page{/tr}:</td><td><input type="checkbox" name="watch" value="1"{if $watch_checked eq 'y'} checked="checked"{/if} /></td></tr>
+{/if}
 {if $prefs.wiki_feature_copyrights  eq 'y'}
 <tr class="formcolor"><td>{tr}Copyright{/tr}:</td><td>
 <table border="0">

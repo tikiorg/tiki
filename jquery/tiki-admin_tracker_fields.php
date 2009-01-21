@@ -62,7 +62,7 @@ if ($_REQUEST["fieldId"]) {
 	$info["name"] = '';
 	$info["options"] = '';
 	$info["position"] = $trklib->get_last_position($_REQUEST["trackerId"])+1;
-	$info["type"] = 'o';
+	$info["type"] = 't';
 	$info["isMain"] = 'n';
 	$info["isMultilingual"] = 'n';
 	$info["isSearchable"] = 'n';
@@ -209,7 +209,7 @@ function replace_tracker_from_request( $tracker_info )
     $logslib->add_log('admintrackerfields','changed or created tracker field '.$_REQUEST["name"].' in tracker '.$tracker_info['name']);
     $smarty->assign('fieldId', 0);
     $smarty->assign('name', '');
-    $smarty->assign('type', '');
+    $smarty->assign('type', 't');
     $smarty->assign('options', '');
     $smarty->assign('isMain', $isMain);
     $smarty->assign('isMultilingual', $isMultilingual);

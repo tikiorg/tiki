@@ -11,7 +11,7 @@
 <div class="article">
 {if $listpages[ix].show_topline eq 'y' and $listpages[ix].topline}<div class="articletopline">{$listpages[ix].topline}</div>{/if}
 <div class="articletitle">
-<span class="titlea"><a href="tiki-read_article.php?articleId={$listpages[ix].articleId}">{$listpages[ix].title}</a></span><br />
+<span class="titlea"><a href="{$listpages[ix].articleId|sefurl:article}">{$listpages[ix].title}</a></span><br />
 {if $listpages[ix].show_subtitle eq 'y' and $listpages[ix].subtitle}<div class="articlesubtitle">{$listpages[ix].subtitle}</div>{/if}
 {if ($listpages[ix].show_author eq 'y')
  or ($listpages[ix].show_pubdate eq 'y')
@@ -52,13 +52,13 @@
 {if $listpages[ix].show_image eq 'y'}
 {if $listpages[ix].useImage eq 'y'}
 {if $listpages[ix].hasImage eq 'y'}
-<a href="tiki-read_article.php?articleId={$listpages[ix].articleId}" title="{if $listpages[ix].show_image_caption and
+<a href="{$listpages[ix].articleId|sefurl:article}" title="{if $listpages[ix].show_image_caption and
 $listpages[ix].image_caption}{$listpages[ix].image_caption}{else}{$listpages[ix].topicName}{/if}"><img 
 {if $listpages[ix].isfloat eq 'y'}style="margin-right:4px;float:left;"{else}class="articleimage"{/if} 
 alt="{if $listpages[ix].show_image_caption and $listpages[ix].image_caption}{$listpages[ix].image_caption}{else}{$listpages[ix].topicName}{/if}" src="article_image.php?image_type=article&amp;id={$listpages[ix].articleId}"
 {if $listpages[ix].image_x > 0} width="{$listpages[ix].image_x}"{/if}{if $listpages[ix].image_y > 0 } height="{$listpages[ix].image_y}"{/if} /></a>
 {else}
-<a href="tiki-read_article.php?articleId={$listpages[ix].articleId}" title="{if $listpages[ix].show_image_caption and
+<a href="$listpages[ix].articleId|sefurl:article}" title="{if $listpages[ix].show_image_caption and
 $listpages[ix].image_caption}{$listpages[ix].image_caption}{else}{$listpages[ix].topicName}{/if}"><img 
 {if $listpages[ix].isfloat eq 'y'}style="margin-right:4px;float:left;"{else}class="articleimage"{/if} 
 alt="{if $listpages[ix].show_image_caption and $listpages[ix].image_caption}{$listpages[ix].image_caption}{else}{$listpages[ix].topicName}{/if}" src="article_image.php?image_type=topic&amp;id={$listpages[ix].topicId}" /></a>
@@ -66,7 +66,7 @@ alt="{if $listpages[ix].show_image_caption and $listpages[ix].image_caption}{$li
 {else}
 {section name=it loop=$topics}
 {if ($topics[it].topicId eq $listpages[ix].topicId) and ($topics[it].image_size > 0)}
-<a href="tiki-read_article.php?articleId={$listpages[ix].articleId}" title="{if $listpages[ix].show_image_caption and
+<a href="{$listpages[ix].articleId|sefurl:article}" title="{if $listpages[ix].show_image_caption and
 $listpages[ix].image_caption}{$listpages[ix].image_caption}{else}{$listpages[ix].topicName}{/if}"><img 
 {if $listpages[ix].isfloat eq 'y'}style="margin-right:4px;float:left;"{else}class="articleimage"{/if} 
 alt="{if $listpages[ix].show_image_caption and $listpages[ix].image_caption}{$listpages[ix].image_caption}{else}{$listpages[ix].topicName}{/if}" src="article_image.php?image_type=topic&amp;id={$listpages[ix].topicId}" /></a>
@@ -91,7 +91,7 @@ alt="{if $listpages[ix].show_image_caption and $listpages[ix].image_caption}{$li
   {if ($listpages[ix].heading_only ne 'y')}
     {if ($listpages[ix].size > 0)}
 	    <td class="articletrailer">
-	    <a href="tiki-read_article.php?articleId={$listpages[ix].articleId}" class="trailer">{tr}Read More{/tr}</a>
+	    <a href="{$listpages[ix].articleId|sefurl:article}" class="trailer">{tr}Read More{/tr}</a>
 	    </td>
 	    {if ($listpages[ix].show_size eq 'y')}
 	      <td class="articletrailer">
@@ -104,7 +104,7 @@ alt="{if $listpages[ix].show_image_caption and $listpages[ix].image_caption}{$li
    and ($tiki_p_read_comments eq 'y')
    and ($listpages[ix].allow_comments eq 'y')}
     <td class="articletrailer">
-      <a href="tiki-read_article.php?articleId={$listpages[ix].articleId}&amp;show_comzone=y#comments"{if $listpages[ix].comments_cant > 0} class="highlight"{/if}>
+      <a href="{$listpages[ix].articleId|sefurl:article:with_next}show_comzone=y#comments"{if $listpages[ix].comments_cant > 0} class="highlight"{/if}>
         {if $listpages[ix].comments_cant == 0 or ($tiki_p_read_comments  == 'n' and $tiki_p_post_comments  == 'y')}
           {tr}Add Comment{/tr}
         {elseif $listpages[ix].comments_cant == 1}

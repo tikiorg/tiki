@@ -35,7 +35,7 @@
 
 {if (!isset($noHistory))}
 {if $preview || $source || $diff_style}<h2>{tr}History{/tr}</h2>{/if}
-<form action="tiki-pagehistory.php" method="post">
+<form action="tiki-pagehistory.php" method="get">
 <input type="hidden" name="page" value="{$page|escape}" />
 <div style="text-align:center;">
 <div class="simplebox"><b>{tr}Legend:{/tr}</b> {tr}v=view{/tr}{if $tiki_p_wiki_view_source eq "y" and $prefs.feature_source eq "y"}, {tr}s=source{/tr} {/if}{if $prefs.default_wiki_diff_style eq "old"}, {tr}c=compare{/tr}, {tr}d=diff{/tr}{/if}{if $tiki_p_rollback eq 'y'}, {tr}b=rollback{/tr}{/if}</div>

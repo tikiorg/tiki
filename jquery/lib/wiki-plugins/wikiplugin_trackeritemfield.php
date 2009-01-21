@@ -84,7 +84,7 @@ function wikiplugin_trackeritemfield($data, $params) {
 		if (!empty($trackerId) && !empty($_REQUEST['view_user'])) {
 			$itemId = $trklib->get_user_item($trackerId, $tracker_info, $_REQUEST['view_user']);
 		}
-		if (empty($itemId) && ((isset($userTracker) && $userTracker == 'y') || (isset($prefs) && $prefs['userTracker'] == 'y')) && !empty($group) && ($utid = $userlib->get_tracker_usergroup($user)) && $utid['usersTrackerId']) {
+		if (empty($trackerId) && empty($itemId) && ((isset($userTracker) && $userTracker == 'y') || (isset($prefs) && $prefs['userTracker'] == 'y')) && !empty($group) && ($utid = $userlib->get_tracker_usergroup($user)) && $utid['usersTrackerId']) {
 			$trackerId = $utid['usersTrackerId'];
 			$itemId = $trklib->get_item_id($trackerId, $utid['usersFieldId'], $user);
 			$memoUserTracker = true;

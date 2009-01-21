@@ -106,7 +106,7 @@ function smarty_block_self_link($params, $content, &$smarty, $repeat = false) {
           if ( isset($params['_menu_icon']) ) $icon_params['_menu_icon'] = $params['_menu_icon'];
           if ( isset($params['_icon_class']) ) $icon_params['class'] = $params['_icon_class'];
 
-          $content = smarty_function_icon($icon_params, $smarty).$content;
+          $content = smarty_function_icon($icon_params, $smarty);
         }
 
         $link = ( ( isset($params['_class']) && $params['_class'] != '' ) ? 'class="'.$params['_class'].'" ' : '' )
