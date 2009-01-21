@@ -8061,7 +8061,7 @@ window.addEvent('domready', function() {
 		return (array($start, $end));
 	}
 	/* javascript = y or n to force to generate a version with javascript or not, ='' user prefs */
-	function embed_flash($params, $javascript='') {
+	function embed_flash($params, $javascript='', $flashvars = false) {
 		global $prefs;
 		global $headerlib; include_once('lib/headerlib.php');
 		if (! isset($params['movie']) ) {
@@ -8074,8 +8074,9 @@ window.addEvent('domready', function() {
 						  'version' => '9.0.0',
 						  );
 		$params = array_merge( $defaults, $params );
+		
 		if ( ((empty($javascript) && $prefs['javascript_enabled'] == 'y') || $javascript == 'y')) {
-			$myId = 'wp-flash-' . md5($params['movie']);
+			$myId = ($params['id']) ? ($params['id']) : 'wp-flash-' . md5($params['movie']);
 			$movie = '"'.$params['movie'].'"';
 			$div = json_encode( $myId );
 			$width = (int) $params['width'];
@@ -8083,8 +8084,15 @@ window.addEvent('domready', function() {
 			$version = json_encode( $params['version'] );
 			unset( $params['movie'], $params['width'], $params['height'], $params['version'] );
 			$params = json_encode($params);
+			
+			if (!$flashvars) {
+				$flashvars = '{}';
+			} else {
+				$flashvars = json_encode($flashvars);
+				$flashvars = str_replace('\\/', '/', $flashvars);
+			}
 			$js = <<<JS
-swfobject.embedSWF( $movie, $div, $width, $height, $version, {}, $params, {} );
+swfobject.embedSWF( $movie, $div, $width, $height, $version, '', $flashvars, $params, {} );
 JS;
 			$headerlib->add_jsfile( 'lib/swfobject.js' );
 			return "<div id=\"$myId\">" . tra('Flash player not available.') . "</div><script type=\"text/javascript\">\n<!--//--><![CDATA[//><!--\n$js\n//--><!]]>\n</script>\n";
