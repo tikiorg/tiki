@@ -8,13 +8,13 @@ body {
 	text-align: left;
 	font: normal 75%/1.5em 'Trebuchet MS', sans-serif;
 	color: #333;
-	background: #fff url(feb12/pagebg.jpg) repeat-x}
+	background: #fff}
 	
 /*html>body {font-size: 75% !important}*/
 
 *:first-child+html body {font-size: 74% !important}
 
-body#fullscreen {background: #fff url(feb12/pagebg.jpg) repeat-x 0 -137px}
+body#fullscreen {background: #fff url(feb12/page.jpg) repeat-x}
 
 a, a:visited { 
 	background: inherit;
@@ -83,7 +83,6 @@ select {
 	
 }
 
-/* IE */
 * html .wikitopline select {font-size: .9em}
 
 input.button { 
@@ -134,7 +133,7 @@ span.button {
 button:hover,
 input[type=submit]:hover,
 .submitbutton:hover,
-button input:hover,
+.button input:hover,
 span.button:hover {
 	background: url(feb12/header.jpg) repeat-x 0 -15px;
 	cursor: pointer}
@@ -423,8 +422,6 @@ a.flip img {display: none}
 
 /* Also is .content */
 #tiki-center {}
-
-/* IE */
 * html #tiki-center {font-size: 1em}
 
 #rss {padding: 1em 1em 0}
