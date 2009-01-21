@@ -91,8 +91,8 @@ if( isset($_REQUEST['adduser']) ) {
 // modification
 if (isset($_REQUEST["save"]) and isset($_REQUEST["olgroup"]) and !empty($_REQUEST["name"])) {
 	check_ticket('admin-groups');
-	if (!$userlib->group_exists($_REQUEST['name'])) {
-		$smarty->assign('msg', tra('Group does not exists'));
+	if ($_REQUEST['olgroup'] != $_REQUEST['name'] && $userlib->group_exists($_REQUEST['name'])) {
+		$smarty->assign('msg', tra('Group already exists'));
 		$smarty->display("error.tpl");
 		die;
 	}
