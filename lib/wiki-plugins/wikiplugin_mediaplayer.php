@@ -1,9 +1,13 @@
 <?php
-function wikiplugin_mp3_flv_player_info() {
+// $Id: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_flash.php,v 1.8.2.1 2007-11-29 00:25:57 xavidp Exp $
+function wikiplugin_mediaplayer_help() {
+	return tra('Inline Flash mp3 and flv Player.')."<br />~np~{MEDIAPLAYER(mp3=\"url_to_mp3\", flv=\"url_to_flv\",style=normal) /}"; 
+}
+function wikiplugin_mediaplayer_info() {
 	return array(
-				 'name' => tra('Flash Mp3 Player'),
-				 'documentation' => 'See http://flash-mp3-player.net/ http://code.google.com/p/mp3player for additional parameters',
-				 'description' => 'Simple MP3 Player',
+				 'name' => tra('Inline Flash mp3 and flv Player.'),
+				 'documentation' => 'See http://flash-mp3-player.net/  http://flv-player.net/, http://code.google.com/p/mp3player for additional parameters',
+				 'description' => 'Simple mp3 or flv Player',
 				 'params' => array(
 								   'mp3' => array(
 												  'required' => false,
@@ -24,7 +28,7 @@ function wikiplugin_mp3_flv_player_info() {
 								   ),
 				 );
 }
-function wikiplugin_mp3_flv_player($data, $params) {
+function wikiplugin_mediaplayer($data, $params) {
 	if (empty($params['mp3']) && empty($params['flv'])) {
 		return;
 	}
