@@ -22,7 +22,7 @@ function capLock(e){
 
 {if $showmsg eq 'y'}
 <div class="simplebox highlight">
-{$msg}
+{$msg|nl2br}
 </div>
 
 {elseif $userTrackerData}
