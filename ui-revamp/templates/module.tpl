@@ -59,6 +59,7 @@
 {/if}
 {$module_content}
 {$module_error}
+<!--[if IE 7]><br class="clear" /><![endif]-->
 {if $module_nobox neq 'y'}
 {if $module_flip eq 'y'}
 			<script type="text/javascript">
