@@ -146,7 +146,7 @@ abstract class Quicktag
 		return $this;
 	} // }}}
 
-	protected function getIconHtml() // {{{
+	function getIconHtml() // {{{
 	{
 		return '<img src="' . htmlentities($this->icon, ENT_QUOTES, 'UTF-8') . '" alt="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '" title="' . htmlentities($this->label, ENT_QUOTES, 'UTF-8') . '" class="icon"/>';
 	} // }}}

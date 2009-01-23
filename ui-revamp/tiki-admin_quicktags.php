@@ -51,10 +51,11 @@ foreach( Quicktag::getList() as $name ) {
 
 	$wys = strlen($tag->getWysiwygToken()) ? 'qt-wys' : '';
 	$wiki = strlen($tag->getWikiHtml('')) ? 'qt-wiki' : '';
+	$icon = $tag->getIconHtml();
 	$map[$name] = <<<JS
 item = document.createElement('li');
 item.className = 'quicktag qt-$name $wys $wiki';
-item.innerHTML = '$name';
+item.innerHTML = '$icon$name';
 JS;
 
 	$init .= $map[$name];
@@ -82,7 +83,7 @@ window.addEvent( 'domready', function(event) {
 	$init
 	window.quicktags_sortable = new Sortables( $('full-list'), {
 		constrain: false,
-		clone: false,
+		clone: true,
 		revert: true
 	} );
 

@@ -23,7 +23,7 @@ function smarty_function_quicktags($params, $content, &$smarty, $repeat)
 	}
 
 	include_once( 'lib/quicktags/quicktagslib.php' );
-	$list = QuicktagsList::fromPreference( $params['wikiedit'] );
+	$list = QuicktagsList::fromPreference( $params['section'] );
 	return $list->getWikiHtml( $params['area_name'] );
 }
 

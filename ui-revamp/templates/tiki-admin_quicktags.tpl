@@ -10,10 +10,12 @@
 			<input name="load" type="submit" value="{tr}Load{/tr}"/>
 		</div>
 	</form>
+	<label>{tr}All Quicktags:{/tr}</label><br/>
 	<ul id="full-list" class="full"></ul>
 
 	<div class="rows">
 		{foreach from=$rows item=i}
+			<label>{tr}Line{/tr}&nbsp;{$i}:</label>
 			<ul id="row-{$i|escape}" class="row"></ul>
 		{/foreach}
 	</div>

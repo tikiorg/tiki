@@ -1364,10 +1364,17 @@ function popup_plugin_form( type, index, pageName, args, bodyContent, edit_icon 
       var val = form['params[' + k + ']'].value;
 
       if( val != '' )
-        params.push( k + '="' + val + '"' );
+        if (meta.params_name == null) 
+          params.push( k + '="' + val + '"' );
+        else
+          params.push( val );
     }
 
-    var blob = '{' + type.toUpperCase() + '(' + params.join(',') + ')}' + form.content.value + '{' + type.toUpperCase() + '}';
+		if (meta.start != null) start = meta.start; else start = '{' + type.toUpperCase();
+		if (meta.end != null) end = meta.end; else end = '{' + type.toUpperCase() + '}';
+		if (meta.params_start != null) params_start = meta.params_start; else params_start = '(';
+		if (meta.params_end != null) params_end = meta.params_end; else params_end = ')}';
+    var blob = start + params_start + params.join(',') + params_end + form.content.value + end;
 
     insertAt( 'editwiki', blob );
 
@@ -1447,6 +1454,7 @@ function build_plugin_form( type, index, pageName, args, bodyContent )
     var input = document.createElement( 'input' );
     input.type = 'text';
     input.name = 'params[' + i + ']';
+    input.id =  'input'+i ;
     if( args[i] )
       input.value = args[i];
 
@@ -1454,16 +1462,16 @@ function build_plugin_form( type, index, pageName, args, bodyContent )
     desc.style.fontSize = 'x-small';
     desc.innerHTML = meta.params[i].description;
 
-    field.appendChild( input );
+		field.appendChild( input );
 		if (meta.params[i].type == 'image') {
-		var icon = document.createElement( 'img' );
-		icon.src = 'pics/icons/image.png';
-		input.id = 'fgal_picker';
-		icon.onclick = function() {openFgalsWindow('fgal_picker');};
-    field.appendChild( icon );
+			var icon = document.createElement( 'img' );
+			icon.src = 'pics/icons/image.png';
+			input.id = 'fgal_picker';
+			icon.onclick = function() {openFgalsWindow('fgal_picker');};
+			field.appendChild( icon );
 		}
-    field.appendChild( desc );
-  }
+		field.appendChild( desc );
+	}
 
   var bodyRow = table.insertRow(rowNumber++);
   var bodyCell = bodyRow.insertCell(0);
