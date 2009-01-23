@@ -5583,7 +5583,7 @@ CREATE TABLE `tiki_sefurl_regex_out` (
   `comment` varchar(256),
   `order` number(11) NULL default 0,
   PRIMARY KEY(`id`),
-  UNIQUE KEY (`left`),
+  UNIQUE KEY `left` (`left`(256)),
   "INDEX" `idx1` (silent, type, feature(30))
 );
 

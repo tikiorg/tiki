@@ -3755,7 +3755,7 @@ CREATE TABLE `tiki_sefurl_regex_out` (
   `comment` varchar(256),
   `order` int(11) NULL default 0,
   PRIMARY KEY(`id`),
-  UNIQUE KEY (`left`),
+  UNIQUE KEY `left` (`left`(256)),
   INDEX `idx1` (silent, type, feature(30))
 );
 INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`) VALUES('tiki-index.php\\?page=(.+)', '$1', 'wiki', 'feature_wiki');
