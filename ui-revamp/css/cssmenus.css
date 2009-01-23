@@ -41,7 +41,8 @@
 	position: absolute;
 	left: -999em;
 	z-index: 1901}
-	
+
+.box-CSS_menu .box-data .cssmenu_vert li ul,
 .cssmenu_vert li ul,
 .cssmenu_vert li.sfhover ul { /* second-level lists */
 	margin-left: 11em;
