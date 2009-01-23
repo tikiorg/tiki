@@ -23,7 +23,7 @@ function refreshCache( entry ) { // {{{
 				alert("Error loading page\n");
 		}
 	};
-	req.send(null);
+	req.send('');
 } // }}}
 
 function showDetails( id, domain, profile ) { // {{{
@@ -188,7 +188,7 @@ function showDetails( id, domain, profile ) { // {{{
 			}
 		}
 	}
-	req.send(null);
+	req.send('');
 } // }}}
 {/literal}
 </script>
