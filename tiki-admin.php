@@ -39,8 +39,9 @@ function simple_set_toggle($feature) {
 }
 
 function simple_set_value($feature, $pref = '', $isMultiple = false) {
-	global $_REQUEST, $tikilib ,$prefs;
+	global $_REQUEST, $tikilib ,$prefs, $tikifeedback;
 
+	$old = $prefs[$feature];
 	if (isset($_REQUEST[$feature])) {
 		if ( $pref != '' ) {
 			$tikilib->set_preference($pref, $_REQUEST[$feature]);
@@ -60,12 +61,18 @@ function simple_set_value($feature, $pref = '', $isMultiple = false) {
 			$tikilib->set_preference($feature, array());
 		}
 	}
+	if (isset($_REQUEST[$feature]) && $old != $_REQUEST[$feature]) {
+		$tikifeedback[] = array('mes' => sprintf((($_REQUEST[$feature])? tra('%s set'):tra('%s unset')), $feature));
+	}
 }
 
 function simple_set_int($feature) {
-        global $_REQUEST, $tikilib, $smarty;
+	global $_REQUEST, $tikilib, $smarty, $tikifeedback;
 	if (isset($_REQUEST[$feature]) && is_numeric($_REQUEST[$feature])) {
+		$old = $prefs[$feature];
 		$tikilib->set_preference($feature, $_REQUEST[$feature]);
+		if (isset($_REQUEST[$feature]) && $old != $_REQUEST[$feature])
+			$tikifeedback[] = array('mes'=>sprintf(tra("%s set"),$feature));
 	}
 }
 
