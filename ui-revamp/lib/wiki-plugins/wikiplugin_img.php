@@ -25,6 +25,11 @@ function wikiplugin_img_info()
 				'name' => tra('Width'),
 				'description' => tra('Width of the image to display.'),
 			),
+			'mode' => array(
+				'required' => false,
+				'name' => tra('View mode for the image'),
+				'description' => tra('View image either normal (leave blank) or thumbnail or icon'),
+			),
 			'link' => array(
 				'required' => false,
 				'name' => tra('Link'),
@@ -91,6 +96,7 @@ function wikiplugin_img( $data, $params, $offset, $parseOptions )
 	$imgdata["alt"] = '';
 	$imgdata["usemap"] = '';
 	$imgdata["class"] = '';
+	$imgdata["mode"] = '';
 
 	$imgdata = array_merge( $imgdata, $params );
 
@@ -131,6 +137,9 @@ function wikiplugin_img( $data, $params, $offset, $parseOptions )
 		//
 		//   Note: ctype_digit is used to ensure there is only digits in width and height strings (e.g. to avoid '50%', ...)
 		//
+		if ( $imgdata['mode'] == 'icon' or $imgdata['mode'] == 'thumbnail') {
+			$imgdata['src'] = preg_replace('/&display/',"\&".$imgdata['mode'],$imgdata['src']);
+		}
 		if ( (int)$imgdata['width'] > 0 && ctype_digit($imgdata['width']) ) $imgdata['src'] .= '&amp;x='.$imgdata['width'];
 		if ( (int)$imgdata['height'] > 0 && ctype_digit($imgdata['height']) ) $imgdata['src'] .= '&amp;y='.$imgdata['height'];
 	}
