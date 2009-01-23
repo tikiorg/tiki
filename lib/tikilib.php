@@ -202,20 +202,22 @@ class TikiLib extends TikiDB {
 		$mid2 = '';
 		$bindvars = array();
 		if ($find) {	
-			$mid = ' where `event` like ? or `email` like ?';
-			$mid2 = ' where `event` like ? or `email` like ?';
-			$bindvars = array('%'.$find.'%', '%'.$find.'%', '%'.$find.'%');
+			$mid = ' where `event` like ? or `email` like ? or `user` like ? or `object` like ? or `type` like ?';
+			$mid2 = ' where `event` like ? or `group` like ? or `object` like ? or `type` like ?';
+			$bindvars1 = array("%$find%", "%$find%", "%$find%", "%$find%", "%$find%");
+			$bindvars2 = array("%$find%", "%$find%", "%$find%", "%$find%");
 		}
-		$query = "select 'user' as watchtype, watchId, `user`, event, object, title, type, url, email from `tiki_user_watches` $mid 
+		$query = "select 'user' as watchtype, `watchId`, `user`, `event`, `object`, `title`, `type`, `url`, `email` from `tiki_user_watches` $mid 
 			UNION ALL
 			(
-				select 'group' as watchtype, watchId, `group`, event, object, title, type, url, '' as email
-				from tiki_group_watches $mid2
+				select 'group' as watchtype, `watchId`, `group`, `event`, `object`, `title`, `type`, `url`, '' as `email`
+				from `tiki_group_watches` $mid2
 			)
 			order by ".$this->convert_sortmode($sort_mode);
-		$query_cant = 'select count(*) from `tiki_user_watches`'.$mid;
-		$result = $this->query($query,$bindvars,$maxRecords,$offset);
-		$cant = $this->getOne($query_cant,$bindvars);
+		$query_cant = 'select count(*) from `tiki_user_watches` '.$mid;
+		$query_cant2 = 'select count(*) from `tiki_group_watches` '. $mid2;
+		$result = $this->query($query, array_merge($bindvars1, $bindvars2), $maxRecords, $offset);
+		$cant = $this->getOne($query_cant, $bindvars1) + $this->getOne($query_cant2, $bindvars2);
 		$ret = array();
 		while ($res = $result->fetchRow()) {
 			$ret[] = $res;
