@@ -1,4 +1,5 @@
 {title help="FAQs"}{tr}{$faq_info.title}{/tr}{/title}
+<div class="description">{$faq_info.description|escape}</div>
 
 <div class="navbar">
 	{button href="tiki-list_faqs.php" _text="{tr}List FAQs{/tr}"}
