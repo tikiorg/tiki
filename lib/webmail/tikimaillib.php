@@ -8,7 +8,7 @@ include_once("lib/webmail/htmlMimeMail.php");
 
 class TikiMail extends HtmlMimeMail {
 		var $charset;
-	
+
 	/* $user = user you send the mail
 	   $from = email you send from*/
 	function TikiMail($user = null, $from=null) {
@@ -26,8 +26,8 @@ class TikiMail extends HtmlMimeMail {
 		$this->setFrom($from);
 		if (!@ini_get('safe_mode'))
 			$this->setReturnPath($from); // in safe-mode, return-path must then be configured at the server level
-		$this->setHeader("Return-Path", "<".$from.">"); // just in case, mainly will not work as usually the server rewrites the envelop
-		$this->setHeader("Reply-To",  "<".$from.">");
+		$this->setHeader("Return-Path", $from); // just in case, mainly will not work as usually the server rewrites the envelop
+		$this->setHeader("Reply-To",  $from);
 	}
 
 	function setUser($user) {
