@@ -78,7 +78,7 @@
 {cycle name=tabs values="1,2,3,4" print=false advance=false reset=true}
 <div class="tabs">
 {if $tiki_p_view_trackers eq 'y' or ($tracker_info.writerCanModify eq 'y' and $user)}
-<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Tracker Items for{/tr} <i>{$tracker_info.name}</i></a></span>
+<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Tracker Items{/tr}</a></span>
 {/if}
 {if $tiki_p_create_tracker_items eq 'y'}
 <span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Insert New Item{/tr}</a></span>
@@ -255,9 +255,8 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
 <input type="hidden" name="trackerId" value="{$trackerId|escape}" />
 
 <h2>{tr}Insert New Item{/tr}</h2>
+<em>{tr}Fields marked with a * are mandatory.{/tr}</em>
 <table class="normal">
-<tr class="formcolor"><td  class="formlabel">&nbsp;</td><td colspan="3" class="formcontent">
-<input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 
 {if $tracker_info.showStatus eq 'y' and ($tracker_info.showStatusAdminOnly ne 'y' or $tiki_p_admin_trackers eq 'y')}
 <tr class="formcolor"><td>{tr}Status{/tr}</td>
@@ -521,10 +520,10 @@ document.write('<div  class="categSelectAll"><input type="checkbox" id="clickall
 
 
 <tr class="formcolor"><td class="formlabel">&nbsp;</td><td colspan="3" class="formcontent">
-<input type="submit" name="save" value="{tr}Save{/tr}" /> <input type="checkbox" name="viewitem"/> {tr}View inserted item{/tr}</td></tr>
+<input type="submit" name="save" value="{tr}Save{/tr}" /> <input type="checkbox" name="viewitem"/> {tr}View inserted item{/tr}<br /><em>{tr}Fields marked with a * are mandatory.{/tr}</em>
+</td></tr>
 </table>
 </form>
-<br /><em>{tr}Fields marked with a * are mandatory.{/tr}</em>
 </div>
 {/if}
 
