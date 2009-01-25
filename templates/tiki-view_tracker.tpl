@@ -52,9 +52,9 @@
 
 {if !empty($tracker_info.description)}
 	{if $tracker_info.descriptionIsParsed eq 'y' }
-		<div class="wikitext">{wiki}{$tracker_info.description}{/wiki}</div>
+		<div class="description">{wiki}{$tracker_info.description}{/wiki}</div>
 	{else}
-		<div class="wikitext">{$tracker_info.description|escape|nl2br}</div>
+		<div class="description">{$tracker_info.description|escape|nl2br}</div>
 	{/if}
 {/if}
 
