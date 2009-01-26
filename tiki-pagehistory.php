@@ -109,8 +109,8 @@ if (isset($source)) {
 	else {
 		$version = $histlib->get_version($page, $source);
 		if ($version) {
-			if ($info['is_html'] == 1 ) {
-				$smarty->assign('sourced', $info["data"]);
+			if ($version['is_html'] == 1 ) {
+				$smarty->assign('sourced', $version['data']);
 			} else {
 				$smarty->assign('sourced', nl2br($version["data"]));
 			}
