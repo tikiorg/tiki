@@ -1,7 +1,5 @@
 {* $Id$ *}
-{if !( $searchNoResults ) }
-  {title}{tr}Search results{/tr}{/title}
-{/if}
+{title}{if $words neq '' and !$searchNoResults}{tr}Search results{/tr}{else}{tr}Search{/tr}{/if}{/title}
 
 {if !( $searchStyle eq "menu" )}
   <div class="nohighlight navbar">
