@@ -388,7 +388,7 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 466,Display Timezone,48,,display_timezone,timezone,,tiki_p_admin,,,Time+and+Date,,,Not sure how/where this is used
 467,Mail end of line,1022,,mail_crlf,mailcrlf,,tiki_p_admin,,,,,, 
 468,Log Mail in Tiki Logs,1022,,log_mail,flag,,tiki_p_admin,,,,,, 
-469,Close site,1002,,site_closed,flag,,tiki_p_admin,5,,,Users with permission can sill login. ,, 
+469,Close site,1002,,site_closed,flag,,tiki_p_admin,5,,,Users with permission can still login. ,, 
 470,Long time format,48,,long_time_format,byref,,tiki_p_admin,,,Time+and+Date,Sample: {$now|tiki_long_date},, 
 471,URI to be used as Home Page,911,,urlIndex,simple,,tiki_p_admin,,430,,,, 
 473,Default Y Coordinate,22,,gmap_defaulty,simple,,tiki_p_admin,,,Gmap,,, 
@@ -552,7 +552,7 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 639,feature_bot_logo,3,,feature_bot_logo,flag,,tiki_p_admin,9,,,,, 
 640,feature_editcss,3,,feature_editcss,flag,,tiki_p_admin,13,,,,, 
 641,feature_topbar_debug,3,,feature_topbar_debug,flag,,tiki_p_admin,33,,,,, 
-642,Debug Info,3,,feature_bot_bar_debug,flag,,tiki_p_admin,6,602,,Display adminstrative debug information. ,, 
+642,Debug Info,3,,feature_bot_bar_debug,flag,,tiki_p_admin,6,602,,Display administrative debug information. ,, 
 643,Site Log Alt Description,876,,sitelogo_alt,simple,,tiki_p_admin,,,,"For example, for text browsers.  ",, 
 644,Use page description,912,,feature_sitedesc,byref,,tiki_p_admin,21,,,,, 
 645,feature_sitemenu,3,,feature_sitemenu,flag,,tiki_p_admin,25,,,,, 
