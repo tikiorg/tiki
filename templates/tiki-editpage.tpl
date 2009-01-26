@@ -275,7 +275,7 @@ window.onload = timeIt;
 {/if}
 <tr class="formcolor">
 <td colspan="2">
-{if $wysiwyg ne 'y'}
+{if $wysiwyg ne 'y' or $feature.javascript_enable ne 'y'}
 {include file="wiki_edit.tpl"}
 <input type="hidden" name="rows" value="{$rows}"/>
 <input type="hidden" name="cols" value="{$cols}"/>
