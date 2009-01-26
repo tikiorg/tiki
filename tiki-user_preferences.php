@@ -95,22 +95,20 @@ if ($prefs['feature_userPreferences'] == 'y' && isset($_REQUEST["new_prefs"])) {
 		if (isset($_REQUEST["mystyle"])) {
 			if ($user == $userwatch) {
 				$t = $tikidomain? $tikidomain.'/':'';
-                                if ($_REQUEST["mystyle"] == "") {
-                                  //If mystyle is empty --> user has selected "Site Default" theme
-                                  $sitestyle = $tikilib->getOne("select `value` from `tiki_preferences` where `name`=?", 'style');
-		                  $headerlib->replace_cssfile('styles/'.$t.$prefs['style'], 'styles/'.$t.$sitestyle, 51);
-                                }
-                                else  {
-				  $headerlib->replace_cssfile('styles/'.$t.$prefs['style'], 'styles/'.$t.$_REQUEST['mystyle'], 51);
-                                }
+				if ($_REQUEST["mystyle"] == "") {
+					//If mystyle is empty --> user has selected "Site Default" theme
+					$sitestyle = $tikilib->getOne("select `value` from `tiki_preferences` where `name`=?", 'style');
+					$headerlib->replace_cssfile('styles/'.$t.$prefs['style'], 'styles/'.$t.$sitestyle, 51);
+				} else {
+					$headerlib->replace_cssfile('styles/'.$t.$prefs['style'], 'styles/'.$t.$_REQUEST['mystyle'], 51);
+				}
 			}
-                        
-                        if ($_REQUEST["mystyle"] == "") {
-			  $tikilib->set_user_preference($userwatch, 'theme', "");
-                        }
-                        else {
-                          $tikilib->set_user_preference($userwatch, 'theme', $_REQUEST["mystyle"]);
-                        }
+
+			if ($_REQUEST["mystyle"] == "") {
+				$tikilib->set_user_preference($userwatch, 'theme', "");
+			} else {
+				$tikilib->set_user_preference($userwatch, 'theme', $_REQUEST["mystyle"]);
+			}
 		}
 	}
 
@@ -130,7 +128,7 @@ if ($prefs['feature_userPreferences'] == 'y' && isset($_REQUEST["new_prefs"])) {
 
 	if (isset($_REQUEST['read_language'])) {
 		$list = array();
-		
+
 		$tok = strtok($_REQUEST['read_language'], ' ');
 		while (false !== $tok) {
 			$list[] = $tok;
@@ -166,13 +164,13 @@ if ($prefs['feature_userPreferences'] == 'y' && isset($_REQUEST["new_prefs"])) {
 	}
 
 	if ($prefs['feature_community_mouseover'] == 'y') {
-	    if (isset($_REQUEST['show_mouseover_user_info']) && $_REQUEST['show_mouseover_user_info'] == 'on') {
-		$tikilib->set_user_preference($userwatch, 'show_mouseover_user_info', 'y');
-		$smarty->assign('show_mouseover_user_info','y');
-	    } else {
-		$tikilib->set_user_preference($userwatch, 'show_mouseover_user_info', 'n');
-		$smarty->assign('show_mouseover_user_info','n');
-	    }
+		if (isset($_REQUEST['show_mouseover_user_info']) && $_REQUEST['show_mouseover_user_info'] == 'on') {
+			$tikilib->set_user_preference($userwatch, 'show_mouseover_user_info', 'y');
+			$smarty->assign('show_mouseover_user_info','y');
+		} else {
+			$tikilib->set_user_preference($userwatch, 'show_mouseover_user_info', 'n');
+			$smarty->assign('show_mouseover_user_info','n');
+		}
 	}
 
 	$email_isPublic = isset($_REQUEST['email_isPublic']) ? $_REQUEST['email_isPublic']: 'n';
@@ -189,38 +187,38 @@ if ($prefs['feature_userPreferences'] == 'y' && isset($_REQUEST["new_prefs"])) {
 		$tikilib->set_user_preference($userwatch, 'realName', $_REQUEST["realName"]);
 
 	/* this should be optional
-	if (isset($_REQUEST["gender"]))
-		$tikilib->set_user_preference($userwatch, 'gender', $_REQUEST["gender"]);
-	*/
+	   if (isset($_REQUEST["gender"]))
+	   $tikilib->set_user_preference($userwatch, 'gender', $_REQUEST["gender"]);
+	 */
 
 	if (isset($_REQUEST["homePage"]))
 		$tikilib->set_user_preference($userwatch, 'homePage', $_REQUEST["homePage"]);
 
 	if (isset($_REQUEST["lat"])) {
-	  if (is_numeric($_REQUEST["lat"])) {
-	  	$lat=floatval($_REQUEST["lat"]);
-	  } else {
-	  	$lat=NULL;
-	  }
+		if (is_numeric($_REQUEST["lat"])) {
+			$lat=floatval($_REQUEST["lat"]);
+		} else {
+			$lat=NULL;
+		}
 		$smarty->assign('lat', $lat);
 		$tikilib->set_user_preference($userwatch, 'lat', $lat);
 	}
 	if (isset($_REQUEST["lon"])) {
-		  if (is_numeric($_REQUEST["lon"])) {
-	  	$lon=floatval($_REQUEST["lon"]);
-	  } else {
-	  	$lon=NULL;
-	  }
+		if (is_numeric($_REQUEST["lon"])) {
+			$lon=floatval($_REQUEST["lon"]);
+		} else {
+			$lon=NULL;
+		}
 		$smarty->assign('lon', $lon);
 		$tikilib->set_user_preference($userwatch, 'lon', $lon);
 	}
 
-        // Custom fields
-        foreach ($customfields as $custpref=>$prefvalue ) {
-                // print $customfields[$custpref]['prefName'];
-                // print $_REQUEST[$customfields[$custpref]['prefName']];
-                $tikilib->set_user_preference($userwatch, $customfields[$custpref]['prefName'], $_REQUEST[$customfields[$custpref]['prefName']]);
-        }
+	// Custom fields
+	foreach ($customfields as $custpref=>$prefvalue ) {
+		// print $customfields[$custpref]['prefName'];
+		// print $_REQUEST[$customfields[$custpref]['prefName']];
+		$tikilib->set_user_preference($userwatch, $customfields[$custpref]['prefName'], $_REQUEST[$customfields[$custpref]['prefName']]);
+	}
 
 	$tikilib->set_user_preference($userwatch, 'country', $_REQUEST["country"]);
 
@@ -280,13 +278,13 @@ if ($prefs['feature_userPreferences'] == 'y' && isset($_REQUEST["new_prefs"])) {
 	} else {
 		$tikilib->set_user_preference($userwatch, 'mytiki_forum_topics', 'n');
 	}
-	
+
 	if (isset($_REQUEST['mytiki_forum_replies']) && $_REQUEST['mytiki_forum_replies'] == 'on') {
 		$tikilib->set_user_preference($userwatch, 'mytiki_forum_replies', 'y');
 	} else {
 		$tikilib->set_user_preference($userwatch, 'mytiki_forum_replies', 'n');
 	}
-	
+
 	if (isset($_REQUEST['mytiki_items']) && $_REQUEST['mytiki_items'] == 'on') {
 		$tikilib->set_user_preference($userwatch, 'mytiki_items', 'y');
 	} else {
@@ -321,9 +319,9 @@ if (isset($_REQUEST['chgadmin'])) {
 	check_ticket('user-prefs');
 
 	if (isset($_REQUEST['pass'])) {
-	    $pass = $_REQUEST['pass'];
+		$pass = $_REQUEST['pass'];
 	} else {
-	    $pass = '';
+		$pass = '';
 	}
 
 	// check user's password, admin doesn't need it to change other user's info
@@ -336,7 +334,7 @@ if (isset($_REQUEST['chgadmin'])) {
 			list($ok, $userwatch, $error) = $userlib->validate_user($userwatch, $pass, '', '');
 		}
 		if (!$ok) {
-			$smarty->assign('msg', tra("Invalid password.  Your current password is required to change administrative information"));
+			$smarty->assign('msg', tra("Invalid password. Your current password is required to change administrative information"));
 			$smarty->display("error.tpl");
 			die;
 		}
@@ -353,17 +351,17 @@ if (isset($_REQUEST['chgadmin'])) {
 	// If user has provided new password, let's try to change
 	if (!empty($_REQUEST["pass1"])) {
 
-	    if ($_REQUEST["pass1"] != $_REQUEST["pass2"]) {
-		$smarty->assign('msg', tra("The passwords did not match"));
-		$smarty->display("error.tpl");
-		die;
-	    }
+		if ($_REQUEST["pass1"] != $_REQUEST["pass2"]) {
+			$smarty->assign('msg', tra("The passwords did not match"));
+			$smarty->display("error.tpl");
+			die;
+		}
 
 		$polerr = $userlib->check_password_policy($_REQUEST["pass1"]);
 		if ( strlen($polerr)>0 ) {
 			$smarty->assign('msg',$polerr);
-		    $smarty->display("error.tpl");
-		    die;
+			$smarty->display("error.tpl");
+			die;
 		}
 
 		$userlib->change_user_password($userwatch, $_REQUEST["pass1"]);
@@ -475,12 +473,12 @@ include_once ('tiki-section_options.php');
 
 ask_ticket('user-prefs');
 if ($prefs['feature_ajax'] == "y") {
-function user_preferences_ajax() {
-    global $ajaxlib, $xajax;
-    $ajaxlib->registerTemplate("tiki-user_preferences.tpl");
-    $ajaxlib->registerFunction("loadComponent");
-    $ajaxlib->processRequests();
-}
+	function user_preferences_ajax() {
+		global $ajaxlib, $xajax;
+		$ajaxlib->registerTemplate("tiki-user_preferences.tpl");
+		$ajaxlib->registerFunction("loadComponent");
+		$ajaxlib->processRequests();
+	}
 user_preferences_ajax();
 $smarty->assign("mootab",'y');
 }
