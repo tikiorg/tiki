@@ -971,7 +971,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'smarty_notice_reporting' => 'n',
 		'smarty_security' => 'y',
 		'feature_ajax' => 'n',
-		'feature_ajax_autosave' => 'y',
+		'feature_ajax_autosave' => 'n',
 		'feature_antibot' => 'n',
 		'feature_banners' => 'n',
 		'feature_banning' => 'n',
@@ -1132,7 +1132,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_tikitests' => 'n',
 
 		// Magic Admin Panel
-		'feature_magic' => 'y',
+		'feature_magic' => 'n',
 
 		// Tiki Profiles
 		'profile_sources' => 'http://profiles.tikiwiki.org/profiles',
