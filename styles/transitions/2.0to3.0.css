@@ -31,6 +31,7 @@ They should be added to themes (possibly with tweaks) to make the theme v3.0 rea
 
 .icon_edit_section {
 	float: right;
+	margin-top: 1em;
 }
 
 h3.box-title span.moduletitle {
