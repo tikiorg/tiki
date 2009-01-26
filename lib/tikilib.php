@@ -8038,12 +8038,20 @@ window.addEvent('domready', function() {
 
 	/* return the positions in data where the hdr-nth header is find
 	 */
-	function get_wiki_section($data, $hdr) {
-		$start = 0;
-		$end = strlen($data);
-		$lines = explode("\n", $data);
-		$header = 0;
-		for ($i = 0; $i < count($lines); ++$i) {
+function get_wiki_section($data, $hdr) {
+	$start = 0;
+	$end = strlen($data);
+	$lines = explode("\n", $data);
+	$header = 0;
+	$pp_level = 0;
+	$np_level = 0;
+	for ($i = 0; $i < count($lines); ++$i) {
+		$pp_level += preg_match ('/~pp~/',$lines[$i]);
+		$pp_level -= preg_match ('/~\/pp~/',$lines[$i]);
+		$np_level += preg_match ('/~np~/',$lines[$i]);
+		$np_level -= preg_match ('/~\/np~/',$lines[$i]);
+		// We test if we are inside nonparsed or pre section to ignore !*
+		if ($pp_level%2 == 0 and $np_level%2 == 0) {
 			if (substr($lines[$i], 0, 1) == '!') {
 				++$header;
 				if ($header == $hdr) { // we are on it - now find the next header at same or lower level
@@ -8058,10 +8066,11 @@ window.addEvent('domready', function() {
 					break;
 				}
 			}
-			$start += strlen($lines[$i]) + 1;
 		}
-		return (array($start, $end));
+		$start += strlen($lines[$i]) + 1;
 	}
+	return (array($start, $end));
+}
 	/* javascript = y or n to force to generate a version with javascript or not, ='' user prefs */
 	function embed_flash($params, $javascript='', $flashvars = false) {
 		global $prefs;
