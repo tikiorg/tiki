@@ -24,8 +24,6 @@ RewriteCond %{REQUEST_FILENAME}/ -l [OR]
 RewriteCond %{REQUEST_FILENAME}/ -d
 RewriteRule [^/]$ %{REQUEST_URI}/ [R=301,L]
 
-RewriteRule multiplayer.swf\?u<x>rl		multiplayer.swf?url		[L]
-
 # direct one-word access
 RewriteRule ^calendar$             tiki-calendar.php                        [L]
 RewriteRule ^articles$             tiki-view_articles.php                   [L]
