@@ -648,6 +648,13 @@ name="w_displayed_default"{if $prefs.w_displayed_default eq 'y'} checked="checke
     </td></tr>
     <tr><td class="form">{tr}Regex search and replace:{/tr}</td><td><input type="checkbox" name="feature_wiki_replace" {if $prefs.feature_wiki_replace eq 'y'}checked="checked"{/if}/></td></tr>
 	<tr><td class="form">{tr}Edit section:{/tr}</td><td><input type="checkbox" name="wiki_edit_section" {if $prefs.wiki_edit_section eq 'y'}checked="checked"{/if}/></td></tr>
+	<tr><td class="form">{tr}Edit section level:{/tr}</td><td>
+		<select name="wiki_edit_section_level">
+		{section name=level start=0 loop=7 step=1}
+		<option value="{$smarty.section.level.index}" {if $smarty.section.level.index eq $prefs.wiki_edit_section_level}selected="selected"{/if}>{if $smarty.section.level.index eq 0}{tr}All{/tr}{else}{$smarty.section.level.index}{/if}</option>
+		{/section}
+		</select>
+	</td></tr>
 	<tr><td class="form">{tr}Log bytes changes (+/-) in Action Logs (slows each page modifications){/tr}</td><td><input type="checkbox" name="feature_actionlog_bytes" {if $prefs.feature_actionlog_bytes eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Wiki top line (description, icons, backlinks etc):{/tr}</td><td>
     <select name="wiki_topline_position">
