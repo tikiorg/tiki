@@ -260,7 +260,7 @@ function get_default_prefs() {
 		'wysiwyg_default' => 'y',
 		'wysiwyg_memo' => 'y',
 		'wysiwyg_wiki_parsed' => 'y',
-		'wysiwyg_wiki_semi_parsed' => 'y',
+		'wysiwyg_wiki_semi_parsed' => 'n',
 		'wysiwyg_toolbar_skin' => 'default',
 		'wysiwyg_toolbar' =>"FitWindow,Templates,-,Cut,Copy,Paste,PasteText,PasteWord,Print,SpellCheck
 Undo,Redo,-,Find,Replace,SelectAll,RemoveFormat,-,Table,Rule,Smiley,SpecialChar,PageBreak,ShowBlocks
