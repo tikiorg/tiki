@@ -5394,11 +5394,11 @@ class TikiLib extends TikiDB {
 						if( $this->plugin_is_editable( $plugin_name ) && (empty($options['print']) || !$options['print']) ) {
 							include_once('lib/smarty_tiki/function.icon.php');
 							global $headerlib, $page;
-							$id = $plugin_name . $current_index;
+							$id = 'plugin-edit-' . $plugin_name . $current_index;
 							$headerlib->add_jsfile( 'tiki-jsplugin.php?plugin=' . urlencode( $plugin_name ) );
 							$headerlib->add_js( "
 window.addEvent('domready', function() {
-	$('$id').addEvent( 'click', function(event) {
+	if( $('$id') ) $('$id').addEvent( 'click', function(event) {
 		popup_plugin_form("
 			. json_encode($plugin_name) 
 			. ', ' 

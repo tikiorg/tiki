@@ -493,6 +493,7 @@ img {border: 0}
 	border: solid thin black;
 	background: white;
 	color: black;
+	display: none;
 }
 
 span.categpath {
