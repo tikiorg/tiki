@@ -199,20 +199,20 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>&nbsp;&nbsp;
 {/if}
 {/section}
 
-
+{remarksbox type="note"}{tr}Fields marked with a * are mandatory.{/tr}{/remarksbox}
 <table class="normal">
-{if count($fields) >= 5}
 <tr class="formcolor">
 <td class="formcontent">&nbsp;</td>
 <td colspan="3" class="formcontent">
+{if count($fields) >= 5}
 <input type="submit" name="save" value="{tr}Save{/tr}" />
 {* --------------------------- to return to tracker list after saving --------- *}
 {if $tiki_p_view_trackers eq 'y'}
 <input type="submit" name="save_return" value="{tr}Save{/tr} &amp; {tr}Back{/tr} {tr}Items list{/tr}" />
 {if $tiki_p_admin_trackers eq 'y' or $tiki_p_modify_tracker_items eq 'y'}<a class="link" href="tiki-view_tracker.php?trackerId={$trackerId}&amp;remove={$itemId}" title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>{/if}
 {/if}
-</td></tr>
 {/if}
+</td></tr>
 {* ------------------- *}
 {if $tracker_info.showStatus eq 'y' or $tiki_p_admin_trackers eq 'y'}
 <tr class="formcolor">
@@ -528,7 +528,6 @@ or $cur_field.type eq 'i'}
 <h2>{tr}Special Operations{/tr}</h2>
 {$trkact}
 {/if}
-<br /><em>{tr}fields marked with a * are mandatory{/tr}</em>
 </div>{*nohighlight - important comment to delimit the zone not to highlight in a search result*}
 {/if}
 

@@ -255,7 +255,7 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
 <input type="hidden" name="trackerId" value="{$trackerId|escape}" />
 
 <h2>{tr}Insert New Item{/tr}</h2>
-<em>{tr}Fields marked with a * are mandatory.{/tr}</em>
+{remarksbox type="note"}{tr}Fields marked with a * are mandatory.{/tr}{/remarksbox}
 <table class="normal">
 
 {if $tracker_info.showStatus eq 'y' and ($tracker_info.showStatusAdminOnly ne 'y' or $tiki_p_admin_trackers eq 'y')}
@@ -520,7 +520,7 @@ document.write('<div  class="categSelectAll"><input type="checkbox" id="clickall
 
 
 <tr class="formcolor"><td class="formlabel">&nbsp;</td><td colspan="3" class="formcontent">
-<input type="submit" name="save" value="{tr}Save{/tr}" /> <input type="checkbox" name="viewitem"/> {tr}View inserted item{/tr}<br /><em>{tr}Fields marked with a * are mandatory.{/tr}</em>
+<input type="submit" name="save" value="{tr}Save{/tr}" /> <input type="checkbox" name="viewitem"/> {tr}View inserted item{/tr}
 </td></tr>
 </table>
 </form>
