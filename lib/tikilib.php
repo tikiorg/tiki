@@ -3863,11 +3863,11 @@ class TikiLib extends TikiDB {
 			if (is_array($initial)) {
 				foreach($initial as $i) {
 					if ( ! empty($tmp_mid) ) $tmp_mid .= ' or ';
-					$tmp_mid .= '`pageName` like ? ';
+					$tmp_mid .= ' `pageName` like ? ';
 					$bindvars[] = $i.'%';
 				}
 			} else {
-				$tmp_mid = " `pageName` like ?";
+				$tmp_mid = " `pageName` like ? ";
 				$bindvars[] = $initial.'%';
 			}
 			$mid .= $tmp_mid.')';
@@ -3894,6 +3894,18 @@ class TikiLib extends TikiDB {
 		$n = -1;
 		$ret = array();
 		while ($res = $result->fetchRow()) {
+			if( $initial ) {
+				$valid = false;
+				foreach( (array) $initial as $candidate ) {
+					if( strpos( $res['pageName'], $candidate ) === 0 ) {
+						$valid = true;
+						break;
+					}
+				}
+
+				if( ! $valid )
+					continue;
+			}
 			//WYSIWYCA
 			$res['perms'] = $this->get_perm_object($res['pageName'], 'wiki page', $res, false);
 			if ( $res['perms']['tiki_p_view'] != 'y' ) continue;
