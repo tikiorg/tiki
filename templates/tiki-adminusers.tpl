@@ -13,8 +13,11 @@
 	{/if}
 </div>
 
-{if $prefs.feature_intertiki eq 'y' and !empty($prefs.feature_intertiki_mymaster)}
-	<b>{tr}Warning: since this tiki site is in slave mode, all user information you enter manually will be automatically overriden by other site's data, including users permissions{/tr}</b>
+{if $prefs.feature_intertiki eq 'y' and ($prefs.feature_intertiki_import_groups eq 'y' or $prefs.feature_intertiki_import_preferences eq 'y')}
+	{remarksbox type="warning" title="{tr}Warning{/tr}"}
+		{if $prefs.feature_intertiki_import_groups eq 'y'}{tr}Since this tiki site is in slave mode and import groups, the master groups will be automatically reimported at each login{/tr}{/if}
+		{if $prefs.feature_intertiki_import_preferences eq 'y'}{tr}Since this tiki site is in slave mode and import preferences, the master user preferences will be automatically reimported at each login{/tr}{/if}
+	{/remarksbox}
 {/if}
 
 {if $tikifeedback}
