@@ -19,7 +19,9 @@
 RewriteEngine On
 
 # rewrite for multitiki sites, when configured as symlinks, not as apache aliases
-RewriteCond %{SCRIPT_FILENAME}/ -d
+RewriteCond %{REQUEST_FILENAME}/ -s [OR]
+RewriteCond %{REQUEST_FILENAME}/ -l [OR]
+RewriteCond %{REQUEST_FILENAME}/ -d
 RewriteRule [^/]$ %{REQUEST_URI}/ [R=301,L]
 
 RewriteRule multiplayer.swf\?u<x>rl		multiplayer.swf?url		[L]
