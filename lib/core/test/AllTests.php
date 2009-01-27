@@ -2,7 +2,7 @@
 ini_set( 'display_errors', 'on' );
 error_reporting( E_ALL );
 
-ini_set( 'include_path', ini_get('include_path') . ':.:../lib:../../..' );
+ini_set( 'include_path', ini_get('include_path') . ';.;../lib;../../..' );
 
 function tra( $string ) {
 	return $string;
