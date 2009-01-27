@@ -1,4 +1,5 @@
-/* Type 1 -- based on *litecss -- */
+/* Feb12 theme for TikiWiki CMS/Groupware, released under LGPL license.
+ * See http://themes.tikwiki.org for more information. -- */
 
  @import "lite/lite.css"; /* here we import *lite as the base */
 
@@ -8,13 +9,13 @@ body {
 	text-align: left;
 	font: normal 75%/1.5em 'Trebuchet MS', sans-serif;
 	color: #333;
-	background: #fff url(feb12/pagebg.jpg) repeat-x}
+	background: #fff}
 	
 /*html>body {font-size: 75% !important}*/
 
 *:first-child+html body {font-size: 74% !important}
 
-body#fullscreen {background: #fff url(feb12/pagebg.jpg) repeat-x 0 -137px}
+body#fullscreen {background: #fff url(feb12/page.jpg) repeat-x}
 
 a, a:visited { 
 	background: inherit;
@@ -133,7 +134,7 @@ span.button {
 button:hover,
 input[type=submit]:hover,
 .submitbutton:hover,
-button input:hover,
+.button input:hover,
 span.button:hover {
 	background: url(feb12/header.jpg) repeat-x 0 -15px;
 	cursor: pointer}
@@ -153,6 +154,8 @@ span.button a:visited {color: #F5F5F5}
 	background: url(feb12/header.jpg) repeat-x 0 -15px}
 
 span.button a:hover {text-decoration: none}
+
+.button .iconmenu {display:inline;}
 
 input[type=checkbox] {border: 0}
 * html .findtable input {font-size: 1em}
