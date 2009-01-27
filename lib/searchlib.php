@@ -349,6 +349,26 @@ class SearchLib extends TikiLib {
 		return ($a['relevance'] > $b['relevance']) ? -1 : (($a['relevance'] < $b['relevance']) ? 1 : 0);
 	}
 
+	function find_calendars($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n') {
+		static $search_calendar = array(
+			'from' => '`tiki_calendar_items` c',
+			'name' => 'c.`name`',
+			'data' => 'c.`description`',
+			'hits' => 'c.`priority`',
+			'lastModif' => '`lastmodif`',
+			'href' => 'tiki-calendar_edit_item.php?viewcalitemId=%d',
+			'id' => array('calitemId'),
+			'pageName' => 'c.`name`',
+			'search' => array('c.`name`', 'c.`description`'),
+
+			'permName' => 'tiki_p_view_image_gallery',
+			'objectType' => 'calendar',
+			'objectKey' => '`viewcalitemId`',
+		);
+
+		return $this->_find($search_calendar, $words, $offset, $maxRecords, $fulltext, $filter, $boolean);
+	}
+
 	function find_galleries($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n') {
 		static $search_galleries = array(
 			'from' => '`tiki_galleries` g',
@@ -727,6 +747,18 @@ class SearchLib extends TikiLib {
 
 		foreach ($rv['data'] as $a) {
 			$a['type'] = tra('Tracker item');
+			array_push($data, $a);
+		}
+
+		$cant += $rv['cant'];
+		}
+
+		global $tiki_p_view_events, $tiki_p_view_calendar;		
+		if ($prefs['feature_calendar'] == 'y' && ($tiki_p_view_events == 'y' or $tiki_p_view_calendar == 'y') ) {
+			$rv = $this->find_calendars($words, $offset, $maxRecords, $fulltext, $filter, $boolean);
+
+		foreach ($rv['data'] as $a) {
+			$a['type'] = tra('Calendar item');
 			array_push($data, $a);
 		}
 

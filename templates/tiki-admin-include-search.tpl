@@ -92,6 +92,17 @@
           <td>&nbsp;</td>
         </tr>
 	
+        {if $refresh_index_all_now neq 'y'}
+	  <tr>
+	    <td>
+              <a href="tiki-admin.php?page=search&amp;refresh_index_all_now=y" class="link" title="{tr}Refresh all search index now{/tr}">
+                {tr}Refresh all search index now{/tr}
+              </a>
+            </td>
+            <td>&nbsp;</td>
+	  </tr>
+	{/if}
+	
         {if $refresh_index_now neq 'y'}
 	  <tr>
 	    <td>

@@ -5,13 +5,30 @@
 {/if}
 
 
+{capture name=boolean_search}
+		<label for="boolean">{tr}Boolean search:{/tr}<input type="checkbox" name="boolean"{if $boolean eq 'y'} checked="checked"{/if} /></label>
+		<a {popup text="<ul><li>+ : {tr}A leading plus sign indicates that this word must be present in every object returned.{/tr}</li>
+		<li>- : {tr}A leading minus sign indicates that this word must not be present in any row returned.{/tr}</li>
+    	<li>{tr}By default (when neither plus nor minus is specified) the word is optional, but the object that contain it will be rated higher.{/tr}</li>
+		<li>< > : {tr}These two operators are used to change a word's contribution to the relevance value that is assigned to a row.{/tr}</li>
+		<li>( ) : {tr}Parentheses are used to group words into subexpressions.{/tr}</li>
+		<li>~ : {tr}A leading tilde acts as a negation operator, causing the word's contribution to the object relevance to be negative. It's useful for marking noise words. An object that contains such a word will be rated lower than others, but will not be excluded altogether, as it would be with the - operator.{/tr}</li>
+		<li>* : {tr}An asterisk is the truncation operator. Unlike the other operators, it should be appended to the word, not prepended.{/tr}</li>
+		<li>&quot; : {tr}The phrase, that is enclosed in double quotes &quot;, matches only objects that contain this phrase literally, as it was typed.{/tr}</li></ul>" width=300 center=true}>
+			  {icon _id='help' style="vertical-align:middle"}
+		</a>
+{/capture}
+
 
 	<div class="nohighlight">
-		{if !( $searchStyle eq "menu" )}
+		{if !( $searchStyle eq "menu" )} 
         	{if $prefs.feature_search_show_object_filter eq 'y'}
 			<div class="navbar">
                 {tr}Search in{/tr}:<br />
                 <a href="{$smarty.server.PHP_SELF}?{query where=pages}"{if $where eq 'pages'} class='highlight'{/if}>{tr}All{/tr}</a>
+                {if $prefs.feature_calendar eq 'y'}
+                 <a href="{$smarty.server.PHP_SELF}?{query where=calendars}"{if $where eq 'calendars'} class='highlight'{/if}>{tr}Calendars{/tr}</a>
+                {/if}
                 {if $prefs.feature_wiki eq 'y'}
                  <a href="{$smarty.server.PHP_SELF}?{query where=wikis}"{if $where eq 'wikis'} class='highlight'{/if}>{tr}Wiki{/tr}</a>
                 {/if}
@@ -48,24 +65,10 @@
 
 
 
-
 {if $prefs.feature_search_show_search_box eq 'y'}
 <form class="forms" method="get" action="tiki-searchresults.php">
-	{if !( $searchStyle eq "menu" )}
-		<label for="boolean">{tr}Boolean search:{/tr}<input type="checkbox" name="boolean"{if $boolean eq 'y'} checked="checked"{/if} /></label>
-		<a {popup text="<ul><li>+ : {tr}A leading plus sign indicates that this word must be present in every object returned.{/tr}</li>
-		<li>- : {tr}A leading minus sign indicates that this word must not be present in any row returned.{/tr}</li>
-    	<li>{tr}By default (when neither plus nor minus is specified) the word is optional, but the object that contain it will be rated higher.{/tr}</li>
-		<li>< > : {tr}These two operators are used to change a word's contribution to the relevance value that is assigned to a row.{/tr}</li>
-		<li>( ) : {tr}Parentheses are used to group words into subexpressions.{/tr}</li>
-		<li>~ : {tr}A leading tilde acts as a negation operator, causing the word's contribution to the object relevance to be negative. It's useful for marking noise words. An object that contains such a word will be rated lower than others, but will not be excluded altogether, as it would be with the - operator.{/tr}</li>
-		<li>* : {tr}An asterisk is the truncation operator. Unlike the other operators, it should be appended to the word, not prepended.{/tr}</li>
-		<li>&quot; : {tr}The phrase, that is enclosed in double quotes &quot;, matches only objects that contain this phrase literally, as it was typed.{/tr}</li></ul>" width=300 center=true}>
-			  {icon _id='help' style="vertical-align:middle"}
-		</a>
-		<br />
-	{/if}
     {tr}Find{/tr} <input id="fuser" name="highlight" size="14" type="text" accesskey="s" value="{$words}"/>
+		{$smarty.capture.boolean_search}
 {if ( $searchStyle eq "menu" )}
 <span class='searchMenu'>
     {tr}in{/tr}
@@ -73,6 +76,9 @@
     <option value="pages">{tr}Entire Site{/tr}</option>
     {if $prefs.feature_wiki eq 'y'}
        <option value="wikis">{tr}Wiki Pages{/tr}</option>
+    {/if}
+    {if $prefs.feature_calendar eq 'y'}
+       <option value="calendars">{tr}Calendar Items{/tr}</option>
     {/if}
     {if $prefs.feature_galleries eq 'y'}
        <option value="galleries">{tr}Galleries{/tr}</option>
@@ -122,7 +128,7 @@
 <div class="searchresults">
 <br /><br />
 {section  name=search loop=$results}
-<a href="{$results[search].href}&amp;highlight={$words}" class="wiki">{$results[search].pageName|strip_tags}</a> {if $prefs.feature_search_show_visit_count eq 'y'}({tr}Hits{/tr}: {$results[search].hits}){/if}
+{$results[search].type}:<a href="{$results[search].href}&amp;highlight={$words}" class="wiki">{$results[search].pageName|strip_tags}</a> {if $prefs.feature_search_show_visit_count eq 'y'}({tr}Hits{/tr}: {$results[search].hits}){/if}
 
 
 {if $prefs.feature_search_show_pertinence eq 'n'}

@@ -173,6 +173,9 @@ if ((!isset($_REQUEST["words"])) || (empty($_REQUEST["words"]))) {
 	$smarty->assign('words', '');
 } else {
 	$words = strip_tags($_REQUEST["words"]);
+	if ( !method_exists($searchlib,$find_where)) {
+		$find_where = "find_pages";
+	}
 	$results = $searchlib->$find_where($words, $offset, $maxRecords, $fulltext, $filter, $boolean);
 	//	echo '<pre>'; print_r($results);
 
@@ -210,6 +213,7 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 ask_ticket('searchresults');
 
+$smarty->assign('searchStyle','menu');
 // Display the template
 $smarty->assign('mid', 'tiki-searchresults.tpl');
 // $smarty->assign('searchNoResults', 'true');       // false is default
