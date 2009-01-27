@@ -337,7 +337,7 @@ if (isset($_REQUEST["upload"])) {
 					$aux['size'] = $size;
 					$aux['fileId'] = $fileId;
 					if ($podCastGallery) {
-						$aux['dllink'] = $podcast_url.$fhash.$extension;
+						$aux['dllink'] = $podcast_url.$fhash.$extension.'&amp;thumbnail=y';
 					} else {
 						$aux['dllink'] = $url_browse."?fileId=".$fileId;
 					}
