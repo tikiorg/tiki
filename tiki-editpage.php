@@ -766,9 +766,15 @@ if(isset($_REQUEST["edit"])) {
 	if (isset($info['draft'])) {
 		$edit_data = $info['draft']['data'];
 	} elseif (isset($info["data"])) {
-		if ((!empty($_REQUEST['hdr']) || (!empty($_REQUEST['pos']) && isset($_REQUEST['cell']))) && $prefs['wiki_edit_section'] == 'y') {
-			if (!empty($_REQUEST['hdr'])) {
-				list($real_start, $real_len) = $tikilib->get_wiki_section($info['data'], $_REQUEST['hdr']);
+		if ((isset($_REQUEST['hdr']) || (!empty($_REQUEST['pos']) && isset($_REQUEST['cell']))) && $prefs['wiki_edit_section'] == 'y') {
+			if (isset($_REQUEST['hdr'])) {
+				if ($_REQUEST['hdr'] == 0) {
+					list($real_start, $real_len) = $tikilib->get_wiki_section($info['data'], 1);
+					$real_len = $real_start;
+					$real_start = 0;
+				} else {
+					list($real_start, $real_len) = $tikilib->get_wiki_section($info['data'], $_REQUEST['hdr']);
+				}
 			} else {
 				include_once('lib/wiki-plugins/wikiplugin_split.php');
 				list($real_start, $real_len) = wikiplugin_split_cell($info['data'], $_REQUEST['pos'], $_REQUEST['cell']);
@@ -1116,9 +1122,15 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
 		} else {
 			$minor=false;
 		}
-		if ((!empty($_REQUEST['hdr']) || (!empty($_REQUEST['pos']) && isset($_REQUEST['cell']))) && $prefs['wiki_edit_section'] == 'y') {
-			if (!empty($_REQUEST['hdr'])) {
-				list($real_start, $real_len) = $tikilib->get_wiki_section($info['data'], $_REQUEST['hdr']);
+		if ((isset($_REQUEST['hdr']) || (!empty($_REQUEST['pos']) && isset($_REQUEST['cell']))) && $prefs['wiki_edit_section'] == 'y') {
+			if (isset($_REQUEST['hdr'])) {
+				if ($_REQUEST['hdr'] == 0) {
+					list($real_start, $real_len) = $tikilib->get_wiki_section($info['data'], 1);
+					$real_len = $real_start;
+					$real_start = 0;
+				} else {
+					list($real_start, $real_len) = $tikilib->get_wiki_section($info['data'], $_REQUEST['hdr']);
+				}
 			} else {
 				include_once('lib/wiki-plugins/wikiplugin_split.php');
 				list($real_start, $real_len) = wikiplugin_split_cell($info['data'], $_REQUEST['pos'], $_REQUEST['cell']);
@@ -1204,7 +1216,7 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
 	}
 	$_SESSION['saved_msg'] = $_REQUEST["page"];
 
-	if (isset($_REQUEST['hdr'])) {
+	if (!empty($_REQUEST['hdr'])) {
 		$tmp = $tikilib->parse_data($edit);
 		$url .= "#".$anch[$_REQUEST['hdr']-1]['id'];
 	}

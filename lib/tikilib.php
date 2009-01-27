@@ -7087,6 +7087,15 @@ window.addEvent('domready', function() {
 			}
 		}
 		$data = $new_data.$data;
+		// Add icon to edit the text before the first section
+		if ($prefs['wiki_edit_section'] == 'y' && $section == 'wiki page' && $tiki_p_edit == 'y' ){
+			$button = '<div class="icon_edit_section"><a href="tiki-editpage.php?';
+			if (!empty($options['page'])) {
+				$button .= 'page='.urlencode($options['page']).'&amp;';
+			}
+			$button .= 'hdr=0">'.smarty_function_icon(array('_id'=>'page_edit', 'alt'=>tra('Edit Section')), $smarty).'</a></div>';
+			$data = $button.$data;
+		}
 	}
 
 	function get_wiki_link_replacement( $pageLink, $extra = array() ) {
