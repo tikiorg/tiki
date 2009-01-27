@@ -1175,8 +1175,7 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
 				$last_child_ref_id = $last_child["page_ref_id"];
 			}
 			$page_ref_id = $structlib->s_create_page($_REQUEST['current_page_id'], $last_child_ref_id, $_REQUEST["page"], '');
-		}
-		else {
+		} else {
 			//Insert page after current page
 			$page_ref_id = $structlib->s_create_page($page_info["parent_id"], $_REQUEST['current_page_id'], $_REQUEST["page"], '');
 		}
@@ -1205,6 +1204,10 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
 	}
 	$_SESSION['saved_msg'] = $_REQUEST["page"];
 
+	if (isset($_REQUEST['hdr'])) {
+		$tmp = $tikilib->parse_data($edit);
+		$url .= "#".$anch[$_REQUEST['hdr']-1]['id'];
+	}
 	header("location: $url");
 	die;
 } //save

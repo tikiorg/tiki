@@ -6517,6 +6517,7 @@ window.addEvent('domready', function() {
 		$need_autonumbering = ( preg_match('/^\!+[\-\+]?#/m', $data) > 0 );
 
 		$anch = array();
+		global $anch;
 		$pageNum = 1;
 
 		// 08-Jul-2003, by zaufi
@@ -6851,16 +6852,16 @@ window.addEvent('domready', function() {
 						}
 
 						// Collect TOC entry if any {maketoc} is present on the page
-						if ( $need_maketoc !== false ) {
-							array_push($anch, array(
+						//if ( $need_maketoc !== false ) {
+						$anch[] =  array(
 										'id' => $thisid,
 										'hdrlevel' => $hdrlevel,
 										'pagenum' => $pageNum,
 										'title' => $title_text_base,
 										'title_displayed_num' => $current_title_num,
 										'title_real_num' => $current_title_real_num
-										));
-						}
+										);
+						//}
 						global $tiki_p_edit, $section;
 						if ($prefs['wiki_edit_section'] == 'y' && $section == 'wiki page' && $tiki_p_edit == 'y' and ( $prefs['wiki_edit_section_level'] == 0 or $hdrlevel <= $prefs['wiki_edit_section_level']) ){
 							global $smarty;
@@ -7026,7 +7027,7 @@ window.addEvent('domready', function() {
 						$maketoc_footer = '</span>';
 						$link_class = 'link';
 				}
-				if ( count($anch) ) {
+				if ( count($anch) and $need_maketoc !== false) {
 					foreach ( $anch as $tocentry ) {
 						if ( $maketoc_args['maxdepth'] > 0 && $tocentry['hdrlevel'] > $maketoc_args['maxdepth'] ) {
 							continue;
