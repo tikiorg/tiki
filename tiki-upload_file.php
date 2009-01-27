@@ -193,14 +193,14 @@ if (isset($_REQUEST["upload"])) {
 			}
 			// Check the name
 			if (!empty($prefs['fgal_match_regex'])) {
-				if (!preg_match('/'.$prefs['fgal_match_regex'].'/', $_FILES["userfile"]['name'][$key], $reqs)) {
+				if (!preg_match('/'.$prefs['fgal_match_regex'].'/', $_FILES["userfile"]['name'][$key])) {
 					$errors[] = tra('Invalid filename (using filters for filenames)'). ': ' . $_FILES["userfile"]["name"][$key];
 					continue;
 				}
 			}
 
 			if (!empty($prefs['fgal_nmatch_regex'])) {
-				if (preg_match('/'.$prefs['fgal_nmatch_regex'].'/', $_FILES["userfile"]["name"][$key], $reqs)) {
+				if (preg_match('/'.$prefs['fgal_nmatch_regex'].'/', $_FILES["userfile"]["name"][$key])) {
 					$errors[] = tra('Invalid filename (using filters for filenames)'). ': ' . $_FILES["userfile"]["name"][$key];
 					continue ;
 				}
@@ -313,12 +313,12 @@ if (isset($_REQUEST["upload"])) {
 			if (isset($data)) {
 				if ($editFile) {
 					$didFileReplace = true;
-					$fileId = $filegallib->replace_file($editFileId, $_REQUEST["name"][$key], $_REQUEST["description"][$key], $name, $data, $size, $type, $_REQUEST['user'][$key], $fhash, $_REQUEST['comment'][$key], $gal_info, $didFileReplace, $_REQUEST['author'][$key], $fileInfo['lastModif'], $fileInfo['lockedby']);
+					$fileId = $filegallib->replace_file($editFileId, $_REQUEST["name"][$key], $_REQUEST["description"][$key], $name, $data, $size, $type, $_REQUEST['user'][$key], $fhash.$extension, $_REQUEST['comment'][$key], $gal_info, $didFileReplace, $_REQUEST['author'][$key], $fileInfo['lastModif'], $fileInfo['lockedby']);
 					if( $prefs['fgal_limit_hits_per_file'] == 'y' ) {
 						$filegallib->set_download_limit( $editFileId, $_REQUEST['hit_limit'][$key] );
 					}
 				} else {
-					$fileId= $filegallib->insert_file($_REQUEST["galleryId"][$key], $_REQUEST["name"][$key], $_REQUEST["description"][$key], $name, $data, $size, $type, $_REQUEST['user'][$key], $fhash, '', $_REQUEST['author'][$key]);
+					$fileId= $filegallib->insert_file($_REQUEST["galleryId"][$key], $_REQUEST["name"][$key], $_REQUEST["description"][$key], $name, $data, $size, $type, $_REQUEST['user'][$key], $fhash.$extension, '', $_REQUEST['author'][$key]);
 				}
 
 				if (!$fileId) {
@@ -337,7 +337,7 @@ if (isset($_REQUEST["upload"])) {
 					$aux['size'] = $size;
 					$aux['fileId'] = $fileId;
 					if ($podCastGallery) {
-						$aux['dllink'] = $podcast_url.$fhash;
+						$aux['dllink'] = $podcast_url.$fhash.$extension;
 					} else {
 						$aux['dllink'] = $url_browse."?fileId=".$fileId;
 					}
@@ -348,7 +348,7 @@ if (isset($_REQUEST["upload"])) {
 					$cat_name =  empty($_REQUEST['name'][$key])? $name: $_REQUEST['name'][$key];
 					$cat_href = $aux['dllink'];
 
-					if ($prefs['feature_groupalert'] == 'y') {
+					if ($prefs['feature_groupalert'] == 'y' && isset($_REQUEST['listtoalert'])) {
 						$groupalertlib->Notify($_REQUEST['listtoalert'],"tiki-download_file.php?fileId=".$fileId);
 					}
 
