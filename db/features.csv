@@ -954,3 +954,5 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 1063,Group Watches,6,,feature_group_watches,feature,,tiki_p_admin,,,,,, 
 1064,Search Friendly URLs Filter,68,experimental,feature_sefurl_filter,feature,,tiki_p_admin,,,,,,Requires .htaccess file. Filters all output; uses more CPU than non-filter version. Can be used with non-filter SEF URL.
 1065,Iframe,913,,wikiplugin_iframe,flag,,tiki_p_admin,,,,,, 
+1066,Media Player,913,,wikiplugin_mediaplayer,flag,,tiki_p_admin,,,,,, 
+1067,Show freetags in middle column,26,,freetags_show_middle,flag,,tiki_p_admin,,,,,, 

@@ -257,7 +257,7 @@ function get_default_prefs() {
 		// wysiwyg
 		'feature_wysiwyg' => 'n',
 		'wysiwyg_optional' => 'y',
-		'wysiwyg_default' => 'y',
+		'wysiwyg_default' => 'n',
 		'wysiwyg_memo' => 'y',
 		'wysiwyg_wiki_parsed' => 'y',
 		'wysiwyg_wiki_semi_parsed' => 'n',
@@ -578,6 +578,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'freetags_multilingual' => 'n',
 		'morelikethis_algorithm' => 'basic',
 		'morelikethis_basic_mincommon' => '2',
+		'freetags_show_middle' => 'y',
 
 		// search
 		'feature_search_stats' => 'n',
