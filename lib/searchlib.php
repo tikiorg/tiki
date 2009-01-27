@@ -133,7 +133,7 @@ class SearchLib extends TikiLib {
 
 		if ($chkObjPerm) {
 
-		    $sqlJoin .= " JOIN `users_objectpermissions` u ON u.`objectId` = md5(" . $this->db->concat("'$objType'", "lower($objKeyPerm)") . ") AND u.`objectType`= ? ";
+		    $sqlJoin .= " JOIN `users_objectpermissions` u ON u.`objectId` = md5(" . $this->concat("'$objType'", "lower($objKeyPerm)") . ") AND u.`objectType`= ? ";
 		    $bindJoin[] = $objType;
 		      
 			$sqlJoin = ' LEFT ' . $sqlJoin;
@@ -294,7 +294,7 @@ class SearchLib extends TikiLib {
 			'hits' => 'p.`hits`', // c.hits is always null for a page comment!!
 			'lastModif' => 'c.`commentDate`',
 			'id' => array('p.`pageName`', 'c.`threadId`'),
-			'pageName' => $this->db->concat('p.`pageName`', "': '", 'c.`title`'),
+			'pageName' => $this->concat('p.`pageName`', "': '", 'c.`title`'),
 			'search' => array('c.`title`', 'c.`data`'),
 			'filter' => 'c.`objectType` = "wiki page" AND p.`pageName`=c.`object`',
 
@@ -398,7 +398,7 @@ class SearchLib extends TikiLib {
 			'lastModif' => 'f.`created`',
 			'href' => 'tiki-view_faq.php?faqId=%d',
 			'id' => array('f.`faqId`'),
-			'pageName' => $this->db->concat('f.`title`', "': '", 'q.`question`'),
+			'pageName' => $this->concat('f.`title`', "': '", 'q.`question`'),
 			'search' => array('q.`question`', 'q.`answer`'),
 			'filter' => 'q.`faqId` = f.`faqId`',
 		);
@@ -456,7 +456,7 @@ class SearchLib extends TikiLib {
 			'lastModif' => 'c.`commentDate`',
 			'href' => 'tiki-view_forum_thread.php?forumId=%d&amp;comments_parentId=%d',
 			'id' => array('f.`forumId`', 'c.`threadId`'),
-			'pageName' => $this->db->concat('f.`name`', "': '", '`title`'),
+			'pageName' => $this->concat('f.`name`', "': '", '`title`'),
 			'search' => array('c.`title`', 'c.`data`'),
 			'filter' => 'c.`objectType` = "forum" AND f.`forumId` = c.`object`',
 
