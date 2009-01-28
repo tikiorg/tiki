@@ -320,7 +320,7 @@ class DirLib extends TikiLib {
 			$res["path"] = $this->dir_get_path_text($res["categId"]);
 			$res["belongs"] = 'n';
 			if ($siteId) {
-				$belongs = $this->db->getOne( "select count(*) from `tiki_category_sites` where `siteId`=? and `categId`=?",array((int)$siteId,(int)$res["categId"]));
+				$belongs = $this->getOne( "select count(*) from `tiki_category_sites` where `siteId`=? and `categId`=?",array((int)$siteId,(int)$res["categId"]));
 				if ($belongs) {
 					$res["belongs"] = 'y';
 				}
@@ -373,12 +373,12 @@ class DirLib extends TikiLib {
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
-			$res["sites"] = $this->db->getOne("select count(*) from `tiki_category_sites` where `categId`=" . $res["categId"]);
+			$res["sites"] = $this->getOne("select count(*) from `tiki_category_sites` where `categId`=" . $res["categId"]);
 			$res["path"] = $this->dir_get_path_text($res["categId"]);
 			$res["belongs"] = 'n';
 
 			if ($siteId) {
-				$belongs = $this->db->getOne( "select count(*) from `tiki_category_sites` where `siteId`=? and `categId`=?",array((int)$siteId,(int)$res["categId"]));
+				$belongs = $this->getOne( "select count(*) from `tiki_category_sites` where `siteId`=? and `categId`=?",array((int)$siteId,(int)$res["categId"]));
 				if ($belongs) {
 					$res["belongs"] = 'y';
 				}
@@ -395,12 +395,12 @@ class DirLib extends TikiLib {
 	}
 
 	function dir_replace_site($siteId, $name, $description, $url, $country, $isValid) {
-		global $prefs;
+		global $prefs, $inputFilter;
 
-		make_clean($name);
-		make_clean($description);
-		make_clean($url);
-		make_clean($country);
+		$name = $inputFilter->filter( $name );
+		$description = $inputFilter->filter( $description );
+		$url = $inputFilter->filter( $url );
+		$country = $inputFilter->filter( $country );
 
 		if ($siteId) {
 			$query = "update `tiki_directory_sites` set `name`=?, `description`=?, `url`=?, `country`=?, `isValid`=?, `lastModif`=?  where `siteId`=?";
@@ -408,7 +408,7 @@ class DirLib extends TikiLib {
 		} else {
 			$query = "insert into `tiki_directory_sites`(`name`,`description`,`url`,`country`,`isValid`,`hits`,`created`,`lastModif`) values(?,?,?,?,?,?,?,?)";
 			$this->query($query,array($name,$description,$url,$country,$isValid,0,(int)$this->now,(int)$this->now));
-			$siteId = $this->db->getOne("select max(siteId) from `tiki_directory_sites` where `created`=? and `name`=?",array((int)$this->now,$name));
+			$siteId = $this->getOne("select max(siteId) from `tiki_directory_sites` where `created`=? and `name`=?",array((int)$this->now,$name));
 
 			if ($prefs['cachepages'] == 'y') {
 				$this->cache_url($url);
@@ -499,7 +499,7 @@ class DirLib extends TikiLib {
 				$siteId = $res2["siteId"];
 				$query3 = "delete from `tiki_category_sites` where `siteId`=? and `categId`=?";
 				$result3 = $this->query($query3,array((int)$siteId,(int)$categId));
-				$cant = $this->db->getOne("select count(*) from `tiki_category_sites` where `siteId`=?",array((int)$siteId));
+				$cant = $this->getOne("select count(*) from `tiki_category_sites` where `siteId`=?",array((int)$siteId));
 				if (!$cant) {
 					$this->dir_remove_site($siteId);
 				}
@@ -544,7 +544,7 @@ class DirLib extends TikiLib {
 	}
 
 	function dir_url_exists($url) {
-		$cant = $this->db->getOne("select count(*) from `tiki_directory_sites` where `url`=?",array($url));
+		$cant = $this->getOne("select count(*) from `tiki_directory_sites` where `url`=?",array($url));
 		return $cant;
 	}
 
@@ -575,7 +575,7 @@ class DirLib extends TikiLib {
 			$word = $words[$i];
 			if (!empty($word)) {
 				// Check if the term is in the stats then add it or increment it
-				if ($this->db->getOne("select count(*) from `tiki_directory_search` where `term`=?",array($word))) {
+				if ($this->getOne("select count(*) from `tiki_directory_search` where `term`=?",array($word))) {
 					$query = "update `tiki_directory_search` set `hits`=`hits`+1 where `term`=?";
 					$this->query($query,array($word));
 				} else {
@@ -592,7 +592,7 @@ class DirLib extends TikiLib {
 
 		$words = implode($how, $words);
 		$query = "select * from `tiki_directory_sites` where `isValid`=? and $words  order by ".$this->convert_sortmode($sort_mode);
-		$cant = $this->db->getOne("select count(*) from tiki_directory_sites where `isValid`=? and $words", $bindvars);
+		$cant = $this->getOne("select count(*) from tiki_directory_sites where `isValid`=? and $words", $bindvars);
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$ret = array();
 		while ($res = $result->fetchRow()) {
@@ -614,7 +614,7 @@ class DirLib extends TikiLib {
 			$words[$i] = trim($words[$i]);
 			$word = $words[$i];
 			// Check if the term is in the stats then add it or increment it
-			if ($this->db->getOne("select count(*) from `tiki_directory_search` where `term`=?",array($word))) {
+			if ($this->getOne("select count(*) from `tiki_directory_search` where `term`=?",array($word))) {
 				$query = "update `tiki_directory_search` set `hits`=`hits`+1 where `term`=?";
 				$this->query($query,array($word));
 			} else {
@@ -632,7 +632,7 @@ class DirLib extends TikiLib {
 		$query = "select distinct tds.`name`, tds.`siteId`, tds.`description`, tds.`url`, tds.`country`, tds.`hits`, ";
 		$query.= " tds.`created`, tds.`lastModif` from `tiki_directory_sites` tds, `tiki_category_sites` tcs, `tiki_directory_categories` tdc ";
 		$query.= " where tds.`siteId`=tcs.`siteId` and tcs.`categId`=tdc.`categId` and `isValid`=? and tdc.`categId`=? and $words order by ".$this->convert_sortmode($sort_mode);
-		$cant = $this->db->getOne("select count(*) from `tiki_directory_sites` tds,`tiki_category_sites` tcs,`tiki_directory_categories` tdc 
+		$cant = $this->getOne("select count(*) from `tiki_directory_sites` tds,`tiki_category_sites` tcs,`tiki_directory_categories` tdc 
 			where tds.`siteId`=tcs.`siteId` and tcs.`categId`=tdc.`categId` and `isValid`=? and tdc.`categId`=? and $words",$bindvars);
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$ret = array();
