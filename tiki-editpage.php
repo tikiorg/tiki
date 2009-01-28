@@ -292,8 +292,7 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
 			}
 			if (isset($_REQUEST["save"]) && !$category_needed && !$contribution_needed) {
 				if (strtolower($pagename) != 'sandbox' || $tiki_p_admin == 'y') {
-					global $inputFilter;
-					$description = $inputFilter->filter( $description );
+					$description = TikiFilter::get('striptags')->filter($description);
 					if ($tikilib->page_exists($pagename)) {
 						if ($prefs['feature_multilingual'] == 'y') {
 							$info = $tikilib->get_page_info($pagename);

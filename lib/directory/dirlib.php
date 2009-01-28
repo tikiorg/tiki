@@ -395,12 +395,12 @@ class DirLib extends TikiLib {
 	}
 
 	function dir_replace_site($siteId, $name, $description, $url, $country, $isValid) {
-		global $prefs, $inputFilter;
+		global $prefs;
 
-		$name = $inputFilter->filter( $name );
-		$description = $inputFilter->filter( $description );
-		$url = $inputFilter->filter( $url );
-		$country = $inputFilter->filter( $country );
+		$name = TikiFilter::get('striptags')->filter( $name );
+		$description = TikiFilter::get('striptags')->filter( $description );
+		$url = TikiFilter::get('url')->filter( $url );
+		$country = TikiFilter::get('word')->filter( $country );
 
 		if ($siteId) {
 			$query = "update `tiki_directory_sites` set `name`=?, `description`=?, `url`=?, `country`=?, `isValid`=?, `lastModif`=?  where `siteId`=?";
