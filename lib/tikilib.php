@@ -3837,8 +3837,8 @@ class TikiLib extends TikiDB {
 			$tmp_mid = array();
 			foreach ($filter as $type=>$val) {
 				if ($type == 'categId') {
-					$join_tables .= " inner join `tiki_objects` as tob on (tob.`itemId`= tp.`pageName` and tob.`type`= ?) inner join `tiki_category_objects` as tc on (tc.`catObjectId`=tob.`objectId` and tc.`categId`=?) ";
-					$join_bindvars = array('wiki page', $val);
+					$join_tables .= " inner join `tiki_objects` as tob on (tob.`itemId`= tp.`pageName` and tob.`type`= ?) inner join `tiki_category_objects` as tc on (tc.`catObjectId`=tob.`objectId` and tc.`categId` IN(" . implode(', ', array_fill(0, count( (array) $val ), '?')) . ")) ";
+					$join_bindvars = array_merge(array('wiki page'), (array) $val);
 				} elseif ($type == 'lang') {
 					$tmp_mid[] = 'tp.`lang`=?';
 					$bindvars[] = $val;
