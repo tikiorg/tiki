@@ -97,6 +97,7 @@ For more information:
 	}
 }
 
+$structs_with_perm = array(); 
 if( $prefs['feature_wiki_structure'] == 'y' ) {
 	$structure = 'n';
 	$smarty->assign('structure',$structure);
@@ -121,7 +122,6 @@ if( $prefs['feature_wiki_structure'] == 'y' ) {
 		}
 		//Get the structures this page is a member of
 		$structs = $structlib->get_page_structures($_REQUEST["page"],$struct);
-		$structs_with_perm = array(); 
 		foreach ($structs as $t_structs) {
 			if ($tikilib->user_has_perm_on_object($user,$t_structs['pageName'],'wiki page','tiki_p_view')) {
 				$structs_with_perm[] = $t_structs;
