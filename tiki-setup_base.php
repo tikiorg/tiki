@@ -117,7 +117,7 @@ require_once("lib/breadcrumblib.php");
 function remove_gpc(&$var) {
 	if ( is_array($var) ) {
 		foreach ( $var as $key=>$val ) {
-			remove_gpc($var[$key],$gpc,$clean_xss);
+			remove_gpc($var[$key]);
 		}
 	} else {
 		$var = stripslashes($var);
