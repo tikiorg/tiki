@@ -43,7 +43,7 @@
   </td> </tr>
   {/section}
 </table>
-{else if $tiki_p_admin eq 'y'}
+{elseif $tiki_p_admin eq 'y'}
 <small><strong>Babelfish ({tr}debug{/tr}): {tr}Fatal error{/tr}</strong></small>
 {/if}
 </div>
