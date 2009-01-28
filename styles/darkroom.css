@@ -734,8 +734,8 @@ div.searchdate {
 
 div#debugconsole {
 	position: absolute;
-	background: #F3F6F9;
-	color: #000;
+	background: #333;
+	color: #fff;
 	top: 0;
 	left: 20px;
 	right: 310px;
@@ -744,7 +744,12 @@ div#debugconsole {
 	padding: 5px;
 	border: 6px ridge #996600;
 	font-size: 1.2em}
-
+#debugconsole form {
+	color: #000;
+}
+#debugconsole input[type="text"] {
+	width: auto;
+}
 .mini {
 	width: 100%;
 	text-align: center;
