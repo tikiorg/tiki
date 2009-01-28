@@ -361,7 +361,7 @@ class SearchLib extends TikiLib {
 			'pageName' => 'c.`name`',
 			'search' => array('c.`name`', 'c.`description`'),
 
-			'permName' => 'tiki_p_view_image_gallery',
+			'permName' => 'tiki_p_view_calendar',
 			'objectType' => 'calendar',
 			'objectKey' => '`viewcalitemId`',
 		);
@@ -401,6 +401,9 @@ class SearchLib extends TikiLib {
 			'pageName' => $this->concat('f.`title`', "': '", 'q.`question`'),
 			'search' => array('q.`question`', 'q.`answer`'),
 			'filter' => 'q.`faqId` = f.`faqId`',
+			'permName' => 'tiki_p_view_faqs',
+			'objectType' => 'faqs',
+			'objectKey' => 'f.`faqId`',
 		);
 
 		return $this->_find($search_faqs, $words, $offset, $maxRecords, $fulltext, $filter, $boolean);
@@ -417,6 +420,9 @@ class SearchLib extends TikiLib {
 			'id' => array('`siteId`'),
 			'pageName' => 'd.`name`',
 			'search' => array('d.`name`', 'd.`description`'),
+			'permName' => 'tiki_p_view_directory',
+			'objectType' => 'directory',
+			'objectKey' => 'd.`siteId`',
 		);
 		global $tiki_p_admin;
 		if ($tiki_p_admin != 'y') {
