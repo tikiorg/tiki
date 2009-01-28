@@ -5725,15 +5725,17 @@ window.addEvent('domready', function() {
 			// Make sure all arguments are declared
 			$params = $info['params'];
 
-			if( ! isset( $info['extraparams'] ) ) {
+			if( ! isset( $info['extraparams'] ) && is_array($params) ) {
 				$args = array_intersect_key( $args, $params );
 			}
 
 			// Apply filters on values individually
-			foreach( $args as $argKey => &$argValue ) {
-				$filter = isset($params[$argKey]['filter']) ? TikiFilter::get($params[$argKey]['filter']) : $default;
-				$argValue = $this->htmldecode($argValue);
-				$argValue = $filter->filter($argValue);
+			if (!empty($args)) {
+				foreach( $args as $argKey => &$argValue ) {
+					$filter = isset($params[$argKey]['filter']) ? TikiFilter::get($params[$argKey]['filter']) : $default;
+					$argValue = $this->htmldecode($argValue);
+					$argValue = $filter->filter($argValue);
+				}
 			}
 		}
 
