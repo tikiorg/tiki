@@ -36,6 +36,8 @@ function simple_set_toggle($feature) {
 			$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("%s disabled"),$feature));
 		}
 	}
+	global $cachelib; require_once("lib/cache/cachelib.php");
+	$cachelib->invalidate('allperms');
 }
 
 function simple_set_value($feature, $pref = '', $isMultiple = false) {
