@@ -143,7 +143,7 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 	<script type="text/javascript" src="lib/shadowbox/build/js/adapter/shadowbox-jquery.js" charset="utf-8"></script>
 {/if}
 
-	<script type="text/javascript" src="lib/shadowbox/build/js/shadowbox.js" charset="utf-8"></script>
+	<script type="text/javascript" src="lib/shadowbox/src/js/shadowbox.js" charset="utf-8"></script>
 
 	<script type="text/javascript">
 <!--//--><![CDATA[//><!--
@@ -168,7 +168,7 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 				handleUnsupported: 'remove',
 				loadingImage: 'lib/shadowbox/images/loading.gif',
 				overlayBgImage: 'lib/shadowbox/images/overlay-85.png',
-				resizeLgImages: true,
+				handleLgImages:     'resize',
 				text: {
 {/literal}
 					cancel:   '{tr}Cancel{/tr}',
