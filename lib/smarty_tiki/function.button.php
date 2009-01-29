@@ -58,6 +58,11 @@ function smarty_function_button($params, &$smarty) {
 	if ( !empty($params['_auto_args']) ) {
 		if ( !isset($auto_query_args) ) $auto_query_args = null;
 		$auto_query_args = explode(',', $params['_auto_args']);
+		foreach ($auto_query_args as $arg) {
+			if (isset($_REQUEST[$arg])) {
+				$params[$arg] = $_REQUEST[$arg];
+			}
+		}
 	} else {
 		$params['_noauto'] = 'y';
 	}
