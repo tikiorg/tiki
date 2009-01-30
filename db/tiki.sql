@@ -471,7 +471,7 @@ CREATE TABLE tiki_calendar_items (
   url varchar(255) default NULL,
   lang char(16) NOT NULL default 'en',
   name varchar(255) NOT NULL default '',
-  description blob,
+  description text,
   recurrenceId int(14),
   changed tinyint(1) DEFAULT '0',
   user varchar(200) default '',
@@ -480,6 +480,7 @@ CREATE TABLE tiki_calendar_items (
   allday tinyint(1) NOT NULL default '0',
   PRIMARY KEY (calitemId),
   KEY calendarId (calendarId),
+  FULLTEXT KEY ft (name,description),
   CONSTRAINT fk_calitems_recurrence
 	FOREIGN KEY (recurrenceId) REFERENCES tiki_calendar_recurrence(recurrenceId)
 	ON UPDATE CASCADE ON DELETE SET NULL

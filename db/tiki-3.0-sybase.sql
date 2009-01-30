@@ -676,7 +676,7 @@ CREATE TABLE "tiki_calendar_items" (
   "url" varchar(255) default NULL NULL,
   "lang" char(16) default 'en' NOT NULL,
   "name" varchar(255) default '' NOT NULL,
-  "description" image default '',
+  "description" text default '',
   "recurrenceId" numeric(14,0) default NULL NULL,
   "changed" numeric(1,0) DEFAULT '0',
   "user" varchar(200) default '',
@@ -692,6 +692,8 @@ go
 
 
 CREATE  INDEX "tiki_calendar_items_calendarId" ON "tiki_calendar_items"("calendarId")
+go
+CREATE  INDEX "tiki_calendar_items_ft" ON "tiki_calendar_items"("name","description")
 go
 
 -- DROP TABLE "tiki_calendar_locations"

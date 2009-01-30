@@ -527,7 +527,7 @@ CREATE TABLE "tiki_calendar_items" (
   "url" varchar(255) default NULL,
   "lang" char(16) NOT NULL default 'en',
   "name" varchar(255) NOT NULL default '',
-  "description" bytea,
+  "description" text,
   "recurrenceId" bigint,
   "changed" smallint DEFAULT '0',
   "user" varchar(200) default '',

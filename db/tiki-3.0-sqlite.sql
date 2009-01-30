@@ -530,7 +530,7 @@ CREATE TABLE 'tiki_calendar_items' (
   "url" varchar(255) default NULL,
   "lang" char(16) NOT NULL default 'en',
   "name" varchar(255) NOT NULL default '',
-  "description" bytea,
+  "description" text,
   "recurrenceId" bigint,
   "changed" smallint DEFAULT '0',
   "user" varchar(200) default '',
@@ -544,6 +544,7 @@ CREATE TABLE 'tiki_calendar_items' (
 ) ENGINE=MyISAM ;
 
 CREATE  INDEX "tiki_calendar_items_calendarId" ON "tiki_calendar_items"("calendarId");
+CREATE  INDEX "tiki_calendar_items_ft" ON "tiki_calendar_items"("name","description");
 
 DROP TABLE IF EXISTS 'tiki_calendar_locations';
 
