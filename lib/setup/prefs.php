@@ -190,6 +190,7 @@ function get_default_prefs() {
 		'wikiplugin_flash' => 'y',
 		'wikiplugin_ftp' => 'n',
 		'wikiplugin_gauge' => 'y',
+		'wikiplugin_googleanalytics' => 'n',
 		'wikiplugin_group' => 'y',
 		'wikiplugin_iframe' => 'n',
 		'wikiplugin_image' => 'y',
