@@ -273,7 +273,6 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 351,Topics,128,,forum_list_topics,flag,,tiki_p_admin,,,Forums,,, 
 352,Last post,128,,forum_list_lastpost,flag,,tiki_p_admin,,,Forums,,, 
 353,Description,128,,forum_list_desc,flag,,tiki_p_admin,,,Forums,,, 
-354,feature_forum_topicd,127,,feature_forum_topicd,flag,,tiki_p_admin,,,Forums,,,cant find topic id
 355,Search method when searching in content: Non-Tiki search local to a forum,127,,feature_forum_local_search,flag,,tiki_p_admin,,,Forums,,, 
 356,Reply posts are empty,127,,feature_forum_replyempty,flag,,tiki_p_admin,,,Forums,,, 
 357,Allow first posts of a thread to have an empty body (will be a thread title),127,,feature_forums_allow_thread_titles,flag,,tiki_p_admin,,,Forums,,, 
