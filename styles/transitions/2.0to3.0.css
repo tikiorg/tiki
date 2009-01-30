@@ -156,8 +156,8 @@ div#tikihelp {
 	_position:absolute;
 	right: 0px;
 	top: 15%;
-	max-height: 85%;
-	max-width: 350px;
+	height: 80%;
+	max-width: 50%;
 	padding:0;
 	margin:0;
 	border: none;
@@ -180,13 +180,13 @@ div.help_section_select {
 	font-size: 120%;
 	background-color : #E7E9EA;
 	color: black;
-	width: 340px;
+	width: 100%;
 	margin: 2px;
 }
 div.help_sections {
 	padding:  2px;
 	background-color: #AAC9E9;
-	max-height : 500px;
+	height : 100%;
 	overflow: auto;
 }
 div.help_section {
