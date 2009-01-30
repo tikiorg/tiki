@@ -65,13 +65,13 @@
 {/if}
 <table class="normal">
 <tr>
-<th><a href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'pollId_desc'}pollId_asc{else}pollId_desc{/if}">{tr}ID{/tr}</a></th>
-<th><a href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}Title{/tr}</a></th>
+<th>{self_link _sort_arg='sort_mode' _sort_field='pollId' title="{tr}ID{/tr}"}{tr}ID{/tr}{/self_link}</th>
+<th>{self_link _sort_arg='sort_mode' _sort_field='title' title="{tr}Title{/tr}"}{tr}Title{/tr}{/self_link}</th>
 {if $prefs.poll_list_categories eq 'y'}<th>{tr}Categories{/tr}</th>{/if}
 {if $prefs.poll_list_objects eq 'y'}<th>{tr}Objects{/tr}</th>{/if}
-<th><a href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'active_desc'}active_asc{else}active_desc{/if}">{tr}Active{/tr}</a></th>
-<th><a href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'votes_desc'}votes_asc{else}votes_desc{/if}">{tr}Votes{/tr}</a></th>
-<th><a href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'publishDate_desc'}publishDate_asc{else}publishDate_desc{/if}">{tr}Publish{/tr}</a></th>
+<th>{self_link _sort_arg='sort_mode' _sort_field='active' title="{tr}Active{/tr}"}{tr}Active{/tr}{/self_link}</th>
+<th>{self_link _sort_arg='sort_mode' _sort_field='votes' title="{tr}Votes{/tr}"}{tr}Votes{/tr}{/self_link}</th>
+<th>{self_link _sort_arg='sort_mode' _sort_field='publishDate' title="{tr}Publish{/tr}"}{tr}Publish{/tr}{/self_link}</th>
 <th>{tr}Options{/tr}</th>
 <th>{tr}Action{/tr}</th>
 </tr>
@@ -88,9 +88,10 @@
 <td class="{cycle advance=false}">{$channels[user].publishDate|tiki_short_datetime}</td>
 <td class="{cycle advance=false}">{$channels[user].options}</td>
 <td class="{cycle}">
-   <a class="link" href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].pollId}" title="{tr}Delete{/tr}">{icon _id=cross alt="{tr}Delete{/tr}"}</a>
-   <a class="link" href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;pollId={$channels[user].pollId}" title="{tr}Edit{/tr}">{icon _id=page_edit}</a>
+   {self_link pollId=$channels[user].pollId}{icon _id=page_edit}{/self_link}
    <a class="link" href="tiki-admin_poll_options.php?pollId={$channels[user].pollId}" title="{tr}Options{/tr}">{icon _id=table alt="{tr}Options{/tr}"}</a>
+   <a class="link" href="tiki-poll_results.php?pollId={$channels[user].pollId}">{icon _id="chart_curve" alt="{tr}Results{/tr}"}</a>
+   <a class="link" href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].pollId}" title="{tr}Delete{/tr}">{icon _id=cross alt="{tr}Delete{/tr}"}</a>
 </td>
 </tr>
 {sectionelse}
