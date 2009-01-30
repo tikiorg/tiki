@@ -93,7 +93,7 @@
 
 {/if}
 
-{if $prefs.feature_poll_comments == 'y'
+{if $prefs.feature_poll_comments == 'y' && !empty($smarty.request.pollId)
   && (($tiki_p_read_comments  == 'y'
     && $comments_cant != 0)
   ||  $tiki_p_post_comments  == 'y'
