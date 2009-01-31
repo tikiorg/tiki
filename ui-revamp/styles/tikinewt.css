@@ -379,7 +379,7 @@ a.flip img {
 #c1c2 #wrapper #col1 #tiki-center {
 	background: #F3F6F9;
 	margin: 0 3px;
-	padding: 0 5px;
+	padding: 0 5px 5px;
 	border: 1px solid #8CACBB
 }
 
@@ -1058,9 +1058,9 @@ td.third {
 /** Tabs **/
 /* Style for tikitabs */
 .tabs {
-	border-bottom: solid 1px #225566 !important;
-	margin-top: 10px !important; 
-  padding: 0 !important;
+	border-bottom: solid 1px #8cacbb !important;
+	margin-top: 10px !important;
+	padding: 0 !important;
 }
 
 .tabactive {
@@ -1105,6 +1105,7 @@ td.third {
 	color: #666666;
 	font-weight: bold;
 	padding: 1px 5px;
+	text-decoration: none;
 }
 .tabmark a:active {
 	background-color: white;
@@ -1235,6 +1236,8 @@ div#page-bar table, div#page-bar td, div#page-bar tr {
 	margin: 5px 0px 10px 0px;
 }
 
+body.tiki_wiki .navbar {display: none}
+
 /* Links in buttons */
 .button a,
 .button a:visited,
@@ -1307,11 +1310,13 @@ div.wikitext {
 	padding: 10px;
 	clear: both;
 	width: auto;
+	border: 1px solid #8cacbb;
 }
 
 body.wikitext {
 	margin: 10px !important;
 	background: #F3F6F9;
+	
 }
 
 body.wikitext a {
@@ -1365,7 +1370,6 @@ textarea.wikiedit {
 
 p.editdate {
 	color: #223344;
-	border-top: 1px solid #8CACBB;
 	font-size: 1em;
 	padding: 0 10px;
 }
@@ -2885,5 +2889,13 @@ div.multiselect div.even:hover {
 .cssmenu_vert li ul {border: 1px solid black}
 
 .cssmenu_horiz li ul ul {margin: -1em 0 0 11em}
+
+/* Page top and page controls (inc. specif. cssmenu properties) */
+
+.pageactions .cssmenu {
+	float: right;
+	border: 1px solid #dedede}
+
+.pageactions .cssmenu li {float: left}
 
 /***** End of file ******/
