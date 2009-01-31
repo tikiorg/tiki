@@ -18,9 +18,8 @@ body {
 	font-size: 75% !important;
 }
 
-
 html>body {
-	font-size: /*84.5%*/74%;
+	font-size: 12px;
 	text-align: left;
 }
 
