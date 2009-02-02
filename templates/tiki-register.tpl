@@ -75,8 +75,12 @@ function capLock(e){
 	  {if $prefs.feature_ajax ne 'y' and $prefs.min_pass_length > 1}<em>{tr}Minimum {$prefs.min_pass_length} characters long{/tr}</em>. {/if}
 	  {if $prefs.feature_ajax ne 'y' and $prefs.pass_chr_num eq 'y'}<em>{tr}Password must contain both letters and numbers{/tr}</em>.{/if}
 {if $prefs.feature_ajax ne 'y'}</div></p>{/if}
+	  </td>
+      </tr>
 
-
+      <tr><td class="formcolor">{tr}Repeat password{/tr}:</td>
+      <td class="formcolor"><input style="float:left" id='pass2' type="password" name="passAgain" onkeypress="capLock(event)" 
+        {if $prefs.feature_ajax eq'y'}onKeyUp="check_pass()"{/if}/>{if $prefs.feature_ajax eq'y'}<div style="float:left;margin-left:5px;" id="checkpass"></div>{/if}
 {if $prefs.generate_password eq 'y'}
 	<p>
 		<div>
@@ -89,13 +93,7 @@ function capLock(e){
 		</div>
 	</p>
 {/if}
-
-	  </td>
-      </tr>
-
-      <tr><td class="formcolor">{tr}Repeat password{/tr}:</td>
-      <td class="formcolor"><input style="float:left" id='pass2' type="password" name="passAgain" onkeypress="capLock(event)" 
-        {if $prefs.feature_ajax eq'y'}onKeyUp="check_pass()"{/if}/>{if $prefs.feature_ajax eq'y'}<div style="float:left;margin-left:5px;" id="checkpass"></div>{/if}</td>
+		</td>
       </tr>
 
 {if $prefs.login_is_email ne 'y'}
