@@ -142,7 +142,7 @@
 		</tr><tr>
 
 		
-          <td colspan="2" class="button"><input type="submit" name="i18nsetup" value="{tr}Save{/tr}" /></td>
+          <td colspan="2" class="input_submit_container"><input type="submit" name="i18nsetup" value="{tr}Save{/tr}" /></td>
 		  
         </tr></table>
       </form>

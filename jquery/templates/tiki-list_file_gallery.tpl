@@ -20,9 +20,9 @@
   {/strip}
 {/title}
 
-{if $edit_mode neq 'y' and $description neq ''}
-  <div class="simplebox">
-    {$description|escape}
+{if $edit_mode neq 'y' and $gal_info.description neq ''}
+  <div class="description">
+    {$gal_info.description|escape}
   </div>
 {/if}
 

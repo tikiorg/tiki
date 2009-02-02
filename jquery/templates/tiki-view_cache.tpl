@@ -5,7 +5,7 @@
 <html>
   <head>
   <base href="{$info.url}" />
-	<title>Cached: {$info.url}</title>
+	<title>{tr}Cached:{/tr} {$info.url}</title>
   </head>
   <body>
 <br />

@@ -23,7 +23,7 @@ function refreshCache( entry ) { // {{{
 				alert("Error loading page\n");
 		}
 	};
-	req.send(null);
+	req.send('');
 } // }}}
 
 function showDetails( id, domain, profile ) { // {{{
@@ -188,7 +188,7 @@ function showDetails( id, domain, profile ) { // {{{
 			}
 		}
 	}
-	req.send(null);
+	req.send('');
 } // }}}
 {/literal}
 </script>
@@ -244,7 +244,7 @@ function showDetails( id, domain, profile ) { // {{{
 					</td>
 				</tr>
 				<tr>
-					<td colspan="2" class="button"><input type="submit" name="list" value="{tr}List{/tr}" /></td>
+					<td colspan="2" class="input_submit_container"><input type="submit" name="list" value="{tr}List{/tr}" /></td>
 				</tr>
 			</table>
 		</form>
@@ -300,7 +300,7 @@ function showDetails( id, domain, profile ) { // {{{
 					</td>
 				</tr>
 				<tr>		
-					<td colspan="2" class="button"><input type="submit" name="config" value="{tr}Save{/tr}" /></td>
+					<td colspan="2" class="input_submit_container"><input type="submit" name="config" value="{tr}Save{/tr}" /></td>
 				</tr>
 			</table>
 		</form>

@@ -82,12 +82,17 @@ class Multilingual_Aligner_BilingualAligner {
                                             $l2_curr_sentence, 'm', $l2_n_matches);
 //       print "-- _match_current_l1_and_l2_sentences: extending to \$new_node='$new_node'\n";
 
-      if ($new_node != null) {
+      if (strcmp($node_to_extend, $new_node) != 0 &&
+          !in_array($new_node, $this->nodes_at_next_level)) {
+      
+//          print "-- _match_current_l1_and_l2_sentences: adding '$new_node' to list of nodes to expand at next iteration\n";
+          
           array_push($this->nodes_at_next_level, $new_node);
           
           // For now, assume same cost for links between nodes.
           $this->cost_matrix[$node_to_extend][$new_node] = 'match_cost';
        } else {
+//          print "-- _match_current_l1_and_l2_sentences: current node '$node_to_extend' is at the end both L1 and L2 texts. Go to END node.\n";
           $this->cost_matrix[$node_to_extend]['END'] = 'goto_end_cost';
        }
 
@@ -102,14 +107,15 @@ class Multilingual_Aligner_BilingualAligner {
        $l1_curr_sentence = $sentences_this_node[0];
        $l2_curr_sentence = $sentences_this_node[1];
     
-       $new_node = $this->_generate_node_ID($l1_curr_sentence, 's', $l1_n_skips,
-                                            $l2_curr_sentence, 's', $l2_n_skips);
+       $new_node = $this->_generate_node_ID($l1_curr_sentence, 'm', $l1_n_skips,
+                                            $l2_curr_sentence, 'm', $l2_n_skips);
 
-       if ($new_node != null) {
+       if (strcmp($node_to_extend, $new_node) != 0 &&
+          !in_array($new_node, $this->nodes_at_next_level)) {
           array_push($this->nodes_at_next_level, $new_node);
        
           // For now, assume same cost for links between nodes.
-          $this->cost_matrix[$node_to_extend][$new_node] = 'skip_cost';
+          $this->cost_matrix[$node_to_extend][$new_node] = 'match_cost';
        } else {
           $this->cost_matrix[$node_to_extend]['END'] = 'goto_end_cost';       
        }
@@ -127,7 +133,6 @@ class Multilingual_Aligner_BilingualAligner {
 	 *    
 	 *    $l1_operation: Operation performed on L1 sentence when moving to this node.
 	 *       'm' = match $l1_previous_sentence to current L2 sentences.
-	 *       's' = skip $l1_previous_sentence
 	 *       'n' = nothing (only used for initial start node).
 	 *
 	 *    $l1_num_times: Number of times that the above operation should be performed.
@@ -148,13 +153,17 @@ class Multilingual_Aligner_BilingualAligner {
        return array($info[1], $info[2], $info[3], $info[4], $info[5], $info[6]);
     }    
     
-    public function _generate_node_ID($l1_sentence, $l1_operation, $l1_n_times,
-                                      $l2_sentence, $l2_operation, $l2_n_times) {
-       $id = null;
-       if ($l1_sentence + $l1_n_times < count($this->l1_sentences) &&
-           $l2_sentence + $l2_n_times < count($this->l2_sentences)) {
-           $id = "$l1_sentence$l1_operation$l1_n_times|$l2_sentence$l2_operation$l2_n_times";
+    public function _generate_node_ID($l1_sentence_num, $l1_operation, $l1_n_times,
+                                      $l2_sentence_num, $l2_operation, $l2_n_times) {
+       $next_l1_sentence_num = $l1_sentence_num + $l1_n_times;
+       $next_l2_sentence_num = $l2_sentence_num + $l2_n_times;
+       if ($next_l1_sentence_num >= count($this->l1_sentences)) {
+          $l1_n_times = count($this->l1_sentences) - $l1_sentence_num - 1;
        }
+       if ($next_l2_sentence_num >= count($this->l2_sentences)) {
+          $l2_n_times = count($this->l2_sentences) - $l2_sentence_num - 1;
+       }
+       $id = "$l1_sentence_num$l1_operation$l1_n_times|$l2_sentence_num$l2_operation$l2_n_times";
        return $id;
     }
    

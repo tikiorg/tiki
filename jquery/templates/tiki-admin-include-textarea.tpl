@@ -68,7 +68,7 @@
 				<td><input type="text" name="default_rows_textarea_forumthread" id="default_rows_textarea_forumthread" value="{$prefs.default_rows_textarea_forumthread}" size="4" /></td>
 			</tr>
 			<tr>
-				<td colspan="2" class="button"><input type="submit" name="textareasetup" value="{tr}Save{/tr}" /></td>
+				<td colspan="2" class="input_submit_container"><input type="submit" name="textareasetup" value="{tr}Save{/tr}" /></td>
 			</tr>
 		</table>
 
@@ -94,7 +94,7 @@
 			{/foreach}
 
 			<tr>
-				<td colspan="2" class="button"><input type="submit" name="textareasetup" value="{tr}Save{/tr}" /></td>
+				<td colspan="2" class="input_submit_container"><input type="submit" name="textareasetup" value="{tr}Save{/tr}" /></td>
 			</tr>
 		</table>
 	</form>

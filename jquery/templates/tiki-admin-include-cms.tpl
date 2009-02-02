@@ -48,7 +48,7 @@
           <td><input type="checkbox" name="feature_cms_emails" id="articles-emails"
               {if $prefs.feature_cms_emails eq 'y'}checked="checked"{/if} /></td>
         </tr><tr>
-          <td colspan="2" class="button"><input type="submit" name="cmsfeatures"
+          <td colspan="2" class="input_submit_container"><input type="submit" name="cmsfeatures"
               value="{tr}Change preferences{/tr}" /></td>
         </tr></table>
       </form>
@@ -72,7 +72,7 @@
 				<option value="articles"{if $prefs.art_home_title eq 'articles'} selected="selected"{/if}>'{tr}Articles{/tr}'</option>
 			</select></td>
 		</tr><tr>
-          <td colspan="2" class="button"><input type="submit" name="cmsprefs"
+          <td colspan="2" class="input_submit_container"><input type="submit" name="cmsprefs"
               value="{tr}Change preferences{/tr}" /></td>
         </tr></table>
       </form>
@@ -95,7 +95,7 @@
               <option value="points_desc" {if $prefs.article_comments_default_ordering eq 'points_desc'}selected="selected"{/if}>{tr}Points{/tr}</option>
               </select></td>
         </tr><tr>
-          <td colspan="2" class="button"><input type="submit"
+          <td colspan="2" class="input_submit_container"><input type="submit"
               name="articlecomprefs" value="{tr}Change preferences{/tr}" /></td>
         </tr></table>
       </form>
@@ -155,7 +155,7 @@
           <td class="form"><input type="checkbox" name="art_list_img" id="articles-img"
               {if $prefs.art_list_img eq 'y'}checked="checked"{/if} /></td>
         </tr><tr>
-          <td colspan="2" class="button"><input type="submit" name="artlist" 
+          <td colspan="2" class="input_submit_container"><input type="submit" name="artlist" 
               value="{tr}Change preferences{/tr}" /></td>
         </tr></table>
       </form>    
@@ -169,7 +169,7 @@
 <form action="tiki-admin.php?page=cms" method="post" enctype="multipart/form-data">
 <table class="admin">
 <tr><td>{tr}Batch upload (CSV file):{/tr}<a {popup text='title,authorName,heading,body,lang,user....'}>{icon _id='help'}</a></td><td><input type="file" name="csvlist" /></td></tr>
-<tr><td colspan="2" class="button"><input type="submit" name="import" value="{tr}Import{/tr}" /></td></tr>
+<tr><td colspan="2" class="input_submit_container"><input type="submit" name="import" value="{tr}Import{/tr}" /></td></tr>
 </table>
 </form>
 </div>

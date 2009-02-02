@@ -26,7 +26,7 @@
 				</span>
 			{/if}
 			{if $prefs.rememberme eq 'always'}<input type="hidden" name="rme" value="on" />
-			{else if $prefs.rememberme eq 'all'}<span class="rme">
+			{elseif $prefs.rememberme eq 'all'}<span class="rme">
 				<label for="login-remember">{tr}Remember me{/tr}</label> <input type="checkbox" name="rme" id="login-remember" value="on" checked="checked" />
 			</span>{/if}
 			</div>

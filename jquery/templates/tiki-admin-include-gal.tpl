@@ -71,7 +71,7 @@
     <tr><td class="form">{tr}Thumbnails size Y{/tr}:</td><td class="form"><input type="text" name="thumbSizeY" value="{$thumbSizeY|escape}" /><i>{tr}Pixels Default:{/tr} {if !empty($prefs.thumbSizeYGalleries)}{$prefs.thumbSizeYGalleries}{else}80{/if}</i></td></tr>
     <tr><td class="form">{tr}Default scale size{/tr}:</td><td class="form"><input type="text" name="scaleSize" size="4" value="{$scaleSize|escape}" />{tr}pixels{/tr}</td></tr>
 
-    <tr><td colspan="2" class="button"><input type="submit" name="galfeatures" value="{tr}Set features{/tr}" /></td></tr>
+    <tr><td colspan="2" class="input_submit_container"><input type="submit" name="galfeatures" value="{tr}Set features{/tr}" /></td></tr>
     </table>
     </form>
   </div>
@@ -86,7 +86,7 @@
 {tr}Remove images in the system gallery not being used in Wiki pages, articles or blog posts{/tr}
 </label>
 <input type="hidden" name="rmvorphimg" value="1" /></td><!--/tr>
-<tr><td colspan="2" class="button"--><td><input type="submit" name="button" value="{tr}Remove{/tr}" /></td></tr>
+<tr><td colspan="2" class="input_submit_container"--><td><input type="submit" name="button" value="{tr}Remove{/tr}" /></td></tr>
 </table>                 
 </form>
 </div>
@@ -174,7 +174,7 @@
 		<td><input type="checkbox" name="gal_list_visits" {if $prefs.gal_list_visits eq 'y'}checked="checked"{/if} /></td>
 	</tr>
 
-	<tr><td colspan="2" class="button"><input type="submit" name="imagegallistprefs" value="{tr}Change configuration{/tr}" /></td></tr>
+	<tr><td colspan="2" class="input_submit_container"><input type="submit" name="imagegallistprefs" value="{tr}Change configuration{/tr}" /></td></tr>
 
 	</table>	
 	</form>	
@@ -195,7 +195,7 @@
     <option value="points_desc" {if $prefs.image_galleries_comments_default_order eq 'points_desc'}selected="selected"{/if}>{tr}Points{/tr}</option>
     </select>
     </td></tr>
-    <tr><td colspan="2" class="button"><input type="submit" name="imagegalcomprefs" value="{tr}Change settings{/tr}" /></td></tr>
+    <tr><td colspan="2" class="input_submit_container"><input type="submit" name="imagegalcomprefs" value="{tr}Change settings{/tr}" /></td></tr>
     </table>
     </form>
   </div>

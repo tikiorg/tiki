@@ -1189,7 +1189,7 @@ function addEvent(elm, evType, fn, useCapture)
     var r = elm.attachEvent("on"+evType, fn);
     return r;
   } else {
-    alert("Handler could not be removed");
+ 	return false;	//formerly: alert("Handler could not be removed");
   }
 }
 

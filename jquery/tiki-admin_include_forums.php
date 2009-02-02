@@ -25,12 +25,11 @@ if (isset($_REQUEST["forumprefs"])) {
 	'feature_forum_topics_archiving',
 	'feature_forum_replyempty',
 	'feature_forum_quickjump',
-	'feature_forum_topicd',
 	'feature_forum_local_search',
 	'feature_forum_local_tiki_search',
 	'feature_forums_search',
-        'feature_forum_content_search',
-        'feature_forums_name_search',
+  'feature_forum_content_search',
+  'feature_forums_name_search',
 	'feature_forums_allow_thread_titles',
 	'forum_comments_no_title_prefix'
 	);

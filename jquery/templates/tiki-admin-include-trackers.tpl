@@ -26,7 +26,7 @@
         </tr>
 
         <tr>
-          <td colspan="2" class="button">
+          <td colspan="2" class="input_submit_container">
             <input type="submit" name="trkset" value="{tr}Change preferences{/tr}" />
           </td>
         </tr>
@@ -53,7 +53,7 @@
         </tr>
 
         <tr>
-          <td colspan="2" class="button">
+          <td colspan="2" class="input_submit_container">
             <input type="submit" name="trkMirrorTables" value="{tr}Validate choice{/tr}" />
           </td>
         </tr>

@@ -46,7 +46,7 @@
 		<td><input type="checkbox" name="categories_used_in_tpl" {if $prefs.categories_used_in_tpl eq 'y'}checked="checked"{/if}/></td>
 	</tr>
 	<tr>
-          <td colspan="2" class="button"><input type="submit" name="categorysetup" value="{tr}Save{/tr}" /></td>
+          <td colspan="2" class="input_submit_container"><input type="submit" name="categorysetup" value="{tr}Save{/tr}" /></td>
 		  
         </tr>
         </table>

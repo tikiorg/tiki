@@ -53,8 +53,12 @@
           <td class="form">{tr}Handle multilingual freetags{/tr}: </td>
           <td><input type="checkbox" name="freetags_multilingual" {if $prefs.freetags_multilingual eq 'y'}checked="checked"{/if} /></td>
         </tr>
+      <tr>
+        <td class="form">{tr}Show freetags in middle column{/tr}: </td>
+	<td><input type="checkbox" name="freetags_show_middle"{if $prefs.freetags_show_middle eq 'y'} checked="checked"{/if} /></td>
+      </tr>
         <tr>
-          <td colspan="2" class="button"><input type="submit" name="freetagsfeatures" value="{tr}Change preferences{/tr}" /></td>
+          <td colspan="2" class="input_submit_container"><input type="submit" name="freetagsfeatures" value="{tr}Change preferences{/tr}" /></td>
         </tr>
       </table>
     </form>
@@ -107,7 +111,7 @@
 	  </tr>
 	
           <tr>
-	    <td colspan="2" class="button"><input type="submit" name="morelikethisoptions" value="{tr}Change preferences{/tr}"/></td>
+	    <td colspan="2" class="input_submit_container"><input type="submit" name="morelikethisoptions" value="{tr}Change preferences{/tr}"/></td>
 	  </tr>
         </table>    
       </form>
@@ -213,7 +217,7 @@
       </tr>
 
       <tr>
-        <td colspan="2" class="button"><input type="submit" name="freetagsset3d" value="{tr}Change configuration{/tr}" /></td>
+        <td colspan="2" class="input_submit_container"><input type="submit" name="freetagsset3d" value="{tr}Change configuration{/tr}" /></td>
       </tr>    
     </table>
     </form>

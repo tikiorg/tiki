@@ -17,7 +17,7 @@
 {if $prefs.feature_siteidentity ne 'y' or $prefs.feature_breadcrumbs ne 'y'}
 <a class="dirlink" href="tiki-directory_browse.php?parent=0">Top</a>{if $parent > 0} >> {/if}{$path}
 {/if}
-<div class="description">{$parent_info.description}</div>
+<div class="description">{$parent_info.description|escape}</div>
 <br /><br />
 {if count($items) > 0}
 <div class="findtable">
@@ -115,9 +115,7 @@
 				{if $prefs.cachepages eq 'y'}
 					(<a  class="dirsitelink" href="tiki-view_cache.php?url={$items[ix].url}" target="_blank">{tr}Cache{/tr}</a>)
 				{/if}
-				<br />
-				<span class="dirsitedesc">{$items[ix].description}</span>
-				<br />
+				<div class="description">{$items[ix].description}</div>
 				{assign var=fsfs value=1}
 				<span class="dirsitecats">
 					{tr}Categories{/tr}:

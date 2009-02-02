@@ -42,7 +42,7 @@
               <option value="f" {if $prefs.directory_open_links eq 'f'}selected="selected"{/if}>{tr}inline frame{/tr}</option>
               </select></td>
         </tr><tr>
-          <td colspan="2" class="button"><input type="submit" name="directory"
+          <td colspan="2" class="input_submit_container"><input type="submit" name="directory"
               value="{tr}Change preferences{/tr}" /></td>
         </tr></table>
       </form>

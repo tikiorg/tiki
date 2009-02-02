@@ -37,7 +37,7 @@
         </tr>
    
         <tr>
-          <td colspan="2" class="button">
+          <td colspan="2" class="input_submit_container">
             <input type="submit" name="webmail" value="{tr}Change preferences{/tr}" />
           </td>
         </tr>    

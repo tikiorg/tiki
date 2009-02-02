@@ -3,7 +3,7 @@
 {title help="forums" admpage="forums"}{$forum_info.name}{/title}
 
 {if $forum_info.show_description eq 'y'}
-	<div class="description">{$forum_info.description}</div>
+	<div class="description">{$forum_info.description|nl2br}</div>
 	<br />
 {/if}
 
@@ -84,10 +84,6 @@
 		</tr>
 	</table>
 </div>
-
-<a class="link" href="tiki-forums.php">{tr}Forums{/tr}</a> {$prefs.site_crumb_seper} <a class="link" href="tiki-view_forum.php?forumId={$forumId}">{$forum_info.name}</a>
-
-<br />
 
 {if $unread > 0}
 	<a class='link' href='messu-mailbox.php'>{tr}You have {$unread} unread private messages{/tr}<br /></a>

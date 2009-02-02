@@ -410,6 +410,7 @@ div.cbox-data {
 /** rbox: remarks box (note/warning/tip/comment) */
 .rbox {
   margin-top: 10px;
+  text-align: left;
 }
 .rbox-data {
   padding: 2px;

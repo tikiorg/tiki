@@ -6,7 +6,7 @@
 <input type="hidden" name="surveyId" value="{$surveyId|escape}" />
 <input type="hidden" name="vote" value="yes" />
   {if !isset($show_name) or $show_name eq 'y'}<h2>{$survey_info.name}</h2>{/if}
-    <div class="quizdescription">{wiki}{$survey_info.description|escape}{/wiki}</div>
+    <div class="description">{wiki}{$survey_info.description|escape}{/wiki}</div>
     {section name=ix loop=$questions}
     <div class="questionblock">
       <div class="quizquestion">{$questions[ix].question}</div>

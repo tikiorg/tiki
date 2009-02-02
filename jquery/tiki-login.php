@@ -14,10 +14,10 @@ if ( ! (isset($_REQUEST['user']) or isset($_REQUEST['username'])) ) {
 	header('Location: '.$base_url.'tiki-login_scr.php');
 	die;
 }
+$smarty->assign('errortype', 'login'); // to avoid any redirection to the login box if error
 // Alert user if cookies are switched off
 if ( ini_get('session.use_cookies') == 1 && ! isset($_COOKIE['PHPSESSID']) ) {
 	$smarty->assign('msg',tra('You have to enable cookies to be able to login to this site'));
-	$smarty->assing('errortype', 'login');
 	$smarty->display('error.tpl');
 	exit;
 }
@@ -214,7 +214,6 @@ if ( $isvalid ) {
 		$smarty->assign_by_ref('msg', $msg);
 		$smarty->assign('user', '');
 		unset($user);
-		$smarty->assign('errortype', 'login');
 		$smarty->assign('mid', 'tiki-information.tpl');
 		$smarty->display("tiki.tpl");
 		die;
@@ -343,7 +342,6 @@ if ( $isvalid ) {
 	default: $error = 'Invalid username or password';
 	}
 	if ( isset($user) and $prefs['feature_score'] == 'y' ) $tikilib->score_event($user, 'login');
-	$smarty->assign('errortype', 'login');
 	$smarty->assign('msg',tra($error));
 	$smarty->display('error.tpl');
 	exit;

@@ -7,7 +7,7 @@ $skip = false;
 
 if ( isset($_GET['fileId']) && isset($_GET['thumbnail']) && isset($_COOKIE['PHPSESSID']) && count($_GET) == 2 ) {
 	session_start();
-	if ( $_SESSION['allowed'][$_GET['fileId']] ) {
+	if ( isset($_SESSION['allowed'][$_GET['fileId']]) ) {
 		include('db/tiki-db.php');
 		include('lib/tikidblib.php');
 		$db = new TikiDB($dbTiki);
@@ -145,7 +145,11 @@ $content = &$info['data'];
 
 $md5 = '';
 if ( ! empty($info['path']) )  {
-	$filepath = $prefs['fgal_use_dir'].$info['path'];
+	if ($filegallib->isPodCastGallery($info['galleryId'])) {
+		$filepath = $prefs['fgal_podcast_dir'].$info['path'];
+	} else {
+		$filepath = $prefs['fgal_use_dir'].$info['path'];
+	}
 	if ( is_readable($filepath) ) {
 		$file_stats = stat($filepath);
 		$last_modified = $file_stats['mtime'];

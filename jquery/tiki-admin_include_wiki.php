@@ -195,6 +195,7 @@ if (isset($_REQUEST["wikifeatures"])) {
 	'wiki_page_navigation_bar',
 	'wiki_actions_bar',
 	'wiki_topline_position',
+	'wiki_edit_section_level',
 	'page_bar_position'
 	);
 	foreach ($pref_values as $value) {

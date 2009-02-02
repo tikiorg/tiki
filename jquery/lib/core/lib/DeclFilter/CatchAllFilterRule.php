@@ -1,7 +1,7 @@
 <?php
 
-require_once 'DeclFilter/FilterRule.php';
-require_once 'TikiFilter.php';
+require_once 'lib/core/lib/DeclFilter/FilterRule.php';
+require_once 'lib/core/lib/TikiFilter.php';
 
 class DeclFilter_CatchAllFilterRule extends DeclFilter_FilterRule
 {

@@ -202,20 +202,22 @@ class TikiLib extends TikiDB {
 		$mid2 = '';
 		$bindvars = array();
 		if ($find) {	
-			$mid = ' where `event` like ? or `email` like ?';
-			$mid2 = ' where `event` like ? or `email` like ?';
-			$bindvars = array('%'.$find.'%', '%'.$find.'%', '%'.$find.'%');
+			$mid = ' where `event` like ? or `email` like ? or `user` like ? or `object` like ? or `type` like ?';
+			$mid2 = ' where `event` like ? or `group` like ? or `object` like ? or `type` like ?';
+			$bindvars1 = array("%$find%", "%$find%", "%$find%", "%$find%", "%$find%");
+			$bindvars2 = array("%$find%", "%$find%", "%$find%", "%$find%");
 		}
-		$query = "select 'user' as watchtype, watchId, `user`, event, object, title, type, url, email from `tiki_user_watches` $mid 
+		$query = "select 'user' as watchtype, `watchId`, `user`, `event`, `object`, `title`, `type`, `url`, `email` from `tiki_user_watches` $mid 
 			UNION ALL
 			(
-				select 'group' as watchtype, watchId, `group`, event, object, title, type, url, '' as email
-				from tiki_group_watches $mid2
+				select 'group' as watchtype, `watchId`, `group`, `event`, `object`, `title`, `type`, `url`, '' as `email`
+				from `tiki_group_watches` $mid2
 			)
 			order by ".$this->convert_sortmode($sort_mode);
-		$query_cant = 'select count(*) from `tiki_user_watches`'.$mid;
-		$result = $this->query($query,$bindvars,$maxRecords,$offset);
-		$cant = $this->getOne($query_cant,$bindvars);
+		$query_cant = 'select count(*) from `tiki_user_watches` '.$mid;
+		$query_cant2 = 'select count(*) from `tiki_group_watches` '. $mid2;
+		$result = $this->query($query, array_merge($bindvars1, $bindvars2), $maxRecords, $offset);
+		$cant = $this->getOne($query_cant, $bindvars1) + $this->getOne($query_cant2, $bindvars2);
 		$ret = array();
 		while ($res = $result->fetchRow()) {
 			$ret[] = $res;
@@ -3835,8 +3837,8 @@ class TikiLib extends TikiDB {
 			$tmp_mid = array();
 			foreach ($filter as $type=>$val) {
 				if ($type == 'categId') {
-					$join_tables .= " inner join `tiki_objects` as tob on (tob.`itemId`= tp.`pageName` and tob.`type`= ?) inner join `tiki_category_objects` as tc on (tc.`catObjectId`=tob.`objectId` and tc.`categId`=?) ";
-					$join_bindvars = array('wiki page', $val);
+					$join_tables .= " inner join `tiki_objects` as tob on (tob.`itemId`= tp.`pageName` and tob.`type`= ?) inner join `tiki_category_objects` as tc on (tc.`catObjectId`=tob.`objectId` and tc.`categId` IN(" . implode(', ', array_fill(0, count( (array) $val ), '?')) . ")) ";
+					$join_bindvars = array_merge(array('wiki page'), (array) $val);
 				} elseif ($type == 'lang') {
 					$tmp_mid[] = 'tp.`lang`=?';
 					$bindvars[] = $val;
@@ -3861,11 +3863,11 @@ class TikiLib extends TikiDB {
 			if (is_array($initial)) {
 				foreach($initial as $i) {
 					if ( ! empty($tmp_mid) ) $tmp_mid .= ' or ';
-					$tmp_mid .= '`pageName` like ? ';
+					$tmp_mid .= ' `pageName` like ? ';
 					$bindvars[] = $i.'%';
 				}
 			} else {
-				$tmp_mid = " `pageName` like ?";
+				$tmp_mid = " `pageName` like ? ";
 				$bindvars[] = $initial.'%';
 			}
 			$mid .= $tmp_mid.')';
@@ -3892,6 +3894,18 @@ class TikiLib extends TikiDB {
 		$n = -1;
 		$ret = array();
 		while ($res = $result->fetchRow()) {
+			if( $initial ) {
+				$valid = false;
+				foreach( (array) $initial as $candidate ) {
+					if( strpos( $res['pageName'], $candidate ) === 0 ) {
+						$valid = true;
+						break;
+					}
+				}
+
+				if( ! $valid )
+					continue;
+			}
 			//WYSIWYCA
 			$res['perms'] = $this->get_perm_object($res['pageName'], 'wiki page', $res, false);
 			if ( $res['perms']['tiki_p_view'] != 'y' ) continue;
@@ -4303,9 +4317,9 @@ class TikiLib extends TikiDB {
 			case 'history':
 				if ($categPerms['tiki_p_view_categorized'] == 'y' || $categPerms['tiki_p_edit_categorized'] == 'y' || $categPerms['tiki_p_admin_categories'] == 'y') {
 					$ret['tiki_p_view'] = 'y';
-					$ret['tiki_p_wiki_view_source'] = 'y';
-					$ret['tiki_p_wiki_view_comments'] = 'y';
-					$ret['_wiki_view_attachments'] = 'y';
+					global $tiki_p_wiki_view_source; $ret['tiki_p_wiki_view_source'] = $tiki_p_wiki_view_source;
+					global $tiki_p_wiki_view_comments; $ret['tiki_p_wiki_view_comments'] = $tiki_p_wiki_view_comments;
+					global $tiki_p_wiki_view_attachments; $ret['tiki_p_wiki_view_attachments'] = $tiki_p_wiki_view_attachments;
 				} else {
 					foreach($perms['data'] as $p) {
 						if ($p['permName'] != 'tiki_p_use_as_template')
@@ -5058,7 +5072,7 @@ class TikiLib extends TikiDB {
 			$pluginskiplist = array();
 
 		$matcher_fake = array("~pp~","~np~","&lt;pre&gt;");
-		$matcher = "/\{([A-Z]+)\(|\{([a-z]+)(\s|\})|~pp~|~np~|&lt;[pP][rR][eE]&gt;/";
+		$matcher = "/\{([A-Z0-9_]+)\(|\{([a-z]+)(\s|\})|~pp~|~np~|&lt;[pP][rR][eE]&gt;/";
 
 		$plugins = array();
 		preg_match_all( $matcher, $data, $tmp, PREG_SET_ORDER );
@@ -5380,11 +5394,11 @@ class TikiLib extends TikiDB {
 						if( $this->plugin_is_editable( $plugin_name ) && (empty($options['print']) || !$options['print']) ) {
 							include_once('lib/smarty_tiki/function.icon.php');
 							global $headerlib, $page;
-							$id = $plugin_name . $current_index;
+							$id = 'plugin-edit-' . $plugin_name . $current_index;
 							$headerlib->add_jsfile( 'tiki-jsplugin.php?plugin=' . urlencode( $plugin_name ) );
 							$headerlib->add_js( "
 window.addEvent('domready', function() {
-	$('$id').addEvent( 'click', function(event) {
+	if( $('$id') ) $('$id').addEvent( 'click', function(event) {
 		popup_plugin_form("
 			. json_encode($plugin_name) 
 			. ', ' 
@@ -5711,15 +5725,17 @@ window.addEvent('domready', function() {
 			// Make sure all arguments are declared
 			$params = $info['params'];
 
-			if( ! isset( $info['extraparams'] ) ) {
+			if( ! isset( $info['extraparams'] ) && is_array($params) ) {
 				$args = array_intersect_key( $args, $params );
 			}
 
 			// Apply filters on values individually
-			foreach( $args as $argKey => &$argValue ) {
-				$filter = isset($params[$argKey]['filter']) ? TikiFilter::get($params[$argKey]['filter']) : $default;
-				$argValue = $this->htmldecode($argValue);
-				$argValue = $filter->filter($argValue);
+			if (!empty($args)) {
+				foreach( $args as $argKey => &$argValue ) {
+					$filter = isset($params[$argKey]['filter']) ? TikiFilter::get($params[$argKey]['filter']) : $default;
+					$argValue = $this->htmldecode($argValue);
+					$argValue = $filter->filter($argValue);
+				}
 			}
 		}
 
@@ -6503,6 +6519,7 @@ window.addEvent('domready', function() {
 		$need_autonumbering = ( preg_match('/^\!+[\-\+]?#/m', $data) > 0 );
 
 		$anch = array();
+		global $anch;
 		$pageNum = 1;
 
 		// 08-Jul-2003, by zaufi
@@ -6837,18 +6854,18 @@ window.addEvent('domready', function() {
 						}
 
 						// Collect TOC entry if any {maketoc} is present on the page
-						if ( $need_maketoc !== false ) {
-							array_push($anch, array(
+						//if ( $need_maketoc !== false ) {
+						$anch[] =  array(
 										'id' => $thisid,
 										'hdrlevel' => $hdrlevel,
 										'pagenum' => $pageNum,
 										'title' => $title_text_base,
 										'title_displayed_num' => $current_title_num,
 										'title_real_num' => $current_title_real_num
-										));
-						}
+										);
+						//}
 						global $tiki_p_edit, $section;
-						if ($prefs['wiki_edit_section'] == 'y' && $section == 'wiki page' && $tiki_p_edit == 'y') {
+						if ($prefs['wiki_edit_section'] == 'y' && $section == 'wiki page' && $tiki_p_edit == 'y' and ( $prefs['wiki_edit_section_level'] == 0 or $hdrlevel <= $prefs['wiki_edit_section_level']) ){
 							global $smarty;
 							include_once('lib/smarty_tiki/function.icon.php');
 							$button = '<div class="icon_edit_section"><a href="tiki-editpage.php?';
@@ -7012,7 +7029,7 @@ window.addEvent('domready', function() {
 						$maketoc_footer = '</span>';
 						$link_class = 'link';
 				}
-				if ( count($anch) ) {
+				if ( count($anch) and $need_maketoc !== false) {
 					foreach ( $anch as $tocentry ) {
 						if ( $maketoc_args['maxdepth'] > 0 && $tocentry['hdrlevel'] > $maketoc_args['maxdepth'] ) {
 							continue;
@@ -7072,6 +7089,15 @@ window.addEvent('domready', function() {
 			}
 		}
 		$data = $new_data.$data;
+		// Add icon to edit the text before the first section
+		if ($prefs['wiki_edit_section'] == 'y' && isset($section) && $section == 'wiki page' && $tiki_p_edit == 'y' ){
+			$button = '<div class="icon_edit_section"><a href="tiki-editpage.php?';
+			if (!empty($options['page'])) {
+				$button .= 'page='.urlencode($options['page']).'&amp;';
+			}
+			$button .= 'hdr=0">'.smarty_function_icon(array('_id'=>'page_edit', 'alt'=>tra('Edit Section')), $smarty).'</a></div>';
+			$data = $button.$data;
+		}
 	}
 
 	function get_wiki_link_replacement( $pageLink, $extra = array() ) {
@@ -8036,12 +8062,20 @@ window.addEvent('domready', function() {
 
 	/* return the positions in data where the hdr-nth header is find
 	 */
-	function get_wiki_section($data, $hdr) {
-		$start = 0;
-		$end = strlen($data);
-		$lines = explode("\n", $data);
-		$header = 0;
-		for ($i = 0; $i < count($lines); ++$i) {
+function get_wiki_section($data, $hdr) {
+	$start = 0;
+	$end = strlen($data);
+	$lines = explode("\n", $data);
+	$header = 0;
+	$pp_level = 0;
+	$np_level = 0;
+	for ($i = 0; $i < count($lines); ++$i) {
+		$pp_level += preg_match ('/~pp~/',$lines[$i]);
+		$pp_level -= preg_match ('/~\/pp~/',$lines[$i]);
+		$np_level += preg_match ('/~np~/',$lines[$i]);
+		$np_level -= preg_match ('/~\/np~/',$lines[$i]);
+		// We test if we are inside nonparsed or pre section to ignore !*
+		if ($pp_level%2 == 0 and $np_level%2 == 0) {
 			if (substr($lines[$i], 0, 1) == '!') {
 				++$header;
 				if ($header == $hdr) { // we are on it - now find the next header at same or lower level
@@ -8056,10 +8090,11 @@ window.addEvent('domready', function() {
 					break;
 				}
 			}
-			$start += strlen($lines[$i]) + 1;
 		}
-		return (array($start, $end));
+		$start += strlen($lines[$i]) + 1;
 	}
+	return (array($start, $end));
+}
 	/* javascript = y or n to force to generate a version with javascript or not, ='' user prefs */
 	function embed_flash($params, $javascript='', $flashvars = false) {
 		global $prefs;

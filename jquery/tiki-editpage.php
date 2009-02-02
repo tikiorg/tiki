@@ -292,7 +292,7 @@ if (isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_na
 			}
 			if (isset($_REQUEST["save"]) && !$category_needed && !$contribution_needed) {
 				if (strtolower($pagename) != 'sandbox' || $tiki_p_admin == 'y') {
-					make_clean($description);
+					$description = TikiFilter::get('striptags')->filter($description);
 					if ($tikilib->page_exists($pagename)) {
 						if ($prefs['feature_multilingual'] == 'y') {
 							$info = $tikilib->get_page_info($pagename);
@@ -766,9 +766,15 @@ if(isset($_REQUEST["edit"])) {
 	if (isset($info['draft'])) {
 		$edit_data = $info['draft']['data'];
 	} elseif (isset($info["data"])) {
-		if ((!empty($_REQUEST['hdr']) || (!empty($_REQUEST['pos']) && isset($_REQUEST['cell']))) && $prefs['wiki_edit_section'] == 'y') {
-			if (!empty($_REQUEST['hdr'])) {
-				list($real_start, $real_len) = $tikilib->get_wiki_section($info['data'], $_REQUEST['hdr']);
+		if ((isset($_REQUEST['hdr']) || (!empty($_REQUEST['pos']) && isset($_REQUEST['cell']))) && $prefs['wiki_edit_section'] == 'y') {
+			if (isset($_REQUEST['hdr'])) {
+				if ($_REQUEST['hdr'] == 0) {
+					list($real_start, $real_len) = $tikilib->get_wiki_section($info['data'], 1);
+					$real_len = $real_start;
+					$real_start = 0;
+				} else {
+					list($real_start, $real_len) = $tikilib->get_wiki_section($info['data'], $_REQUEST['hdr']);
+				}
 			} else {
 				include_once('lib/wiki-plugins/wikiplugin_split.php');
 				list($real_start, $real_len) = wikiplugin_split_cell($info['data'], $_REQUEST['pos'], $_REQUEST['cell']);
@@ -1116,9 +1122,15 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
 		} else {
 			$minor=false;
 		}
-		if ((!empty($_REQUEST['hdr']) || (!empty($_REQUEST['pos']) && isset($_REQUEST['cell']))) && $prefs['wiki_edit_section'] == 'y') {
-			if (!empty($_REQUEST['hdr'])) {
-				list($real_start, $real_len) = $tikilib->get_wiki_section($info['data'], $_REQUEST['hdr']);
+		if ((isset($_REQUEST['hdr']) || (!empty($_REQUEST['pos']) && isset($_REQUEST['cell']))) && $prefs['wiki_edit_section'] == 'y') {
+			if (isset($_REQUEST['hdr'])) {
+				if ($_REQUEST['hdr'] == 0) {
+					list($real_start, $real_len) = $tikilib->get_wiki_section($info['data'], 1);
+					$real_len = $real_start;
+					$real_start = 0;
+				} else {
+					list($real_start, $real_len) = $tikilib->get_wiki_section($info['data'], $_REQUEST['hdr']);
+				}
 			} else {
 				include_once('lib/wiki-plugins/wikiplugin_split.php');
 				list($real_start, $real_len) = wikiplugin_split_cell($info['data'], $_REQUEST['pos'], $_REQUEST['cell']);
@@ -1175,8 +1187,7 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
 				$last_child_ref_id = $last_child["page_ref_id"];
 			}
 			$page_ref_id = $structlib->s_create_page($_REQUEST['current_page_id'], $last_child_ref_id, $_REQUEST["page"], '');
-		}
-		else {
+		} else {
 			//Insert page after current page
 			$page_ref_id = $structlib->s_create_page($page_info["parent_id"], $_REQUEST['current_page_id'], $_REQUEST["page"], '');
 		}
@@ -1205,6 +1216,10 @@ if (isset($_REQUEST["save"]) && (strtolower($_REQUEST['page']) != 'sandbox' || $
 	}
 	$_SESSION['saved_msg'] = $_REQUEST["page"];
 
+	if (!empty($_REQUEST['hdr'])) {
+		$tmp = $tikilib->parse_data($edit);
+		$url .= "#".$anch[$_REQUEST['hdr']-1]['id'];
+	}
 	header("location: $url");
 	die;
 } //save

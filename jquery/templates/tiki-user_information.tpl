@@ -110,7 +110,7 @@
 <table class="normal">
 {cycle values="even,odd" print=false}
 {section name=ix loop=$user_galleries}
-<tr><td class="{cycle}"><a class="link" href="{$user_galleries[ix].galleryId|sefurl:gallery}">{$user_galleries[ix].name}</a>{/section}</td></tr>
+<tr><td class="{cycle}"><a class="link" href="{$user_galleries[ix].galleryId|sefurl:gallery}">{$user_galleries[ix].name|escape}</a>{/section}</td></tr>
 </table>
 {/if}
 {if $user_blogs|@count > 0}
@@ -118,7 +118,7 @@
 <table class="normal">
 {cycle values="even,odd" print=false}
 {section name=ix loop=$user_blogs}
-<tr><td class="{cycle}"><a class="link" title="{tr}View{/tr}" href="{$user_blogs[ix].blogId|sefurl:blog}">{$user_blogs[ix].title}</a></td></tr>
+<tr><td class="{cycle}"><a class="link" title="{tr}View{/tr}" href="{$user_blogs[ix].blogId|sefurl:blog}">{$user_blogs[ix].title|escape}</a></td></tr>
 {/section}
 </table>
 {/if}
@@ -127,7 +127,7 @@
 <table class="normal">
 {cycle values="even,odd" print=false}
 {section name=ix loop=$user_articles}
-<tr><td class="{cycle}"><a class="link" title="{tr}View{/tr}" href="tiki-read_article.php?articleId={$user_articles[ix].articleId}">{$user_articles[ix].title}</a></td></tr>
+<tr><td class="{cycle}"><a class="link" title="{tr}View{/tr}" href="{$user_articles[ix].articleId|sefurl:article}">{$user_articles[ix].title|escape}</a></td></tr>
 {/section}
 </table>
 {/if}
@@ -136,7 +136,7 @@
 <table class="normal">
 {cycle values="even,odd" print=false}
 {section name=ix loop=$user_forum_comments}
-<tr><td class="{cycle}"><a class="link" title="{tr}View{/tr}" href="tiki-view_forum_thread.php?comments_parentId={$user_forum_comments[ix].threadId}&forumId={$user_forum_comments[ix].object}">{$user_forum_comments[ix].title}</a></td></tr>
+<tr><td class="{cycle}"><a class="link" title="{tr}View{/tr}" href="tiki-view_forum_thread.php?comments_parentId={$user_forum_comments[ix].threadId}&forumId={$user_forum_comments[ix].object}">{$user_forum_comments[ix].title|escape}</a></td></tr>
 {/section}
 </table>
 {/if}
@@ -145,7 +145,7 @@
 <table class="normal">
 {cycle values="even,odd" print=false}
 {section name=ix loop=$user_forum_topics}
-<tr><td class="{cycle}"><a class="link" title="{tr}View{/tr}" href="tiki-view_forum_thread.php?comments_parentId={$user_forum_topics[ix].threadId}&forumId={$user_forum_topics[ix].object}">{$user_forum_topics[ix].title}</a></td></tr>
+<tr><td class="{cycle}"><a class="link" title="{tr}View{/tr}" href="tiki-view_forum_thread.php?comments_parentId={$user_forum_topics[ix].threadId}&forumId={$user_forum_topics[ix].object}">{$user_forum_topics[ix].title|escape}</a></td></tr>
 {/section}
 </table>
 {/if}
@@ -154,7 +154,7 @@
 <table class="normal">
 {cycle values="even,odd" print=false}
 {section name=ix loop=$user_items}
-<tr><td class="{cycle}"> <a class="link" title="{tr}View{/tr}" href="tiki-view_tracker_item.php?trackerId={$user_items[ix].trackerId}&amp;itemId={$user_items[ix].itemId}">{$user_items[ix].name|escape}: {$user_items[ix].value}</a></td></tr>
+<tr><td class="{cycle}"> <a class="link" title="{tr}View{/tr}" href="tiki-view_tracker_item.php?trackerId={$user_items[ix].trackerId}&amp;itemId={$user_items[ix].itemId}">{$user_items[ix].name|escape}: {$user_items[ix].value|escape}</a></td></tr>
 {/section}
 </table>
 {/if}

@@ -51,7 +51,7 @@ if (!$histlib->version_exists($page, $version)) {
 
 // Now check permissions to access this page
 $tikilib->get_perm_object( $page, 'wiki page', $info);
-if ($tiki_p_rollback != 'y'  || !$tiki_p_edit != 'y') {
+if ($tiki_p_rollback != 'y'  || $tiki_p_edit != 'y') {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied you cannot rollback this page"));
 

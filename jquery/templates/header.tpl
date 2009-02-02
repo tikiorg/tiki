@@ -36,7 +36,7 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 <title>
 {if isset($trail)}{breadcrumbs type="fulltrail" loc="head" crumbs=$trail}
 {else}
-{$prefs.siteTitle}
+{$prefs.sitetitle}
 {if !empty($headtitle)} : {$headtitle}
 {elseif !empty($page)} : {if $beingStaged eq 'y' and $prefs.wikiapproval_hideprefix == 'y'}{$approvedPageName|escape}{else}{$page|escape}{/if} {* add $description|escape if you want to put the description + update breadcrumb_build replace return $crumbs->title; with return empty($crumbs->description)? $crumbs->title: $crumbs->description; *}
 {elseif !empty($arttitle)} : {$arttitle}
@@ -172,7 +172,7 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 				handleUnsupported: 'remove',
 				loadingImage: 'lib/shadowbox/images/loading.gif',
 				overlayBgImage: 'lib/shadowbox/images/overlay-85.png',
-				resizeLgImages: true,
+				handleLgImages:     'resize',
 				text: {
 {/literal}
 					cancel:   '{tr}Cancel{/tr}',

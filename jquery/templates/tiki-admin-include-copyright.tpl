@@ -16,7 +16,7 @@
   <tr><td class="form">{tr}Enable Feature for Blogues{/tr}:</td><td><input type="checkbox" name="blogues_feature_copyrights" {if $prefs.blogues_feature_copyrights eq 'y'}checked="checked"{/if}/></td></tr>
   <tr><td class="form">{tr}Enable Feature for Faqs{/tr}:</td><td><input type="checkbox" name="faqs_feature_copyrights" {if $prefs.faqs_feature_copyrights eq 'y'}checked="checked"{/if}/></td></tr>
   
-    <tr><td colspan="2" class="button"><input type="submit" name="setcopyright" value="{tr}Change preferences{/tr}" /></td></tr>    
+    <tr><td colspan="2" class="input_submit_container"><input type="submit" name="setcopyright" value="{tr}Change preferences{/tr}" /></td></tr>    
 
 
      
