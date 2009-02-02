@@ -62,7 +62,9 @@ function smarty_function_button($params, &$smarty) {
 	}
 
 	//apply class only to the button
-	$class = $params['_class'];
+	if (!empty($params['_class'])) {
+		$class = $params['_class'];
+	}
 	unset($params['_class']);
 
 	if (!$disabled) {
@@ -112,9 +114,11 @@ function smarty_function_button($params, &$smarty) {
 				$smarty,
 				false
 				);
-		foreach ($auto_query_args as $arg) {
-			if (isset($_REQUEST[$arg])) {
-				$params[$arg] = $_REQUEST[$arg];
+		if (is_array($auto_query_args)) {
+			foreach ($auto_query_args as $arg) {
+				if (isset($_REQUEST[$arg])) {
+					$params[$arg] = $_REQUEST[$arg];
+				}
 			}
 		}
 	} else {
