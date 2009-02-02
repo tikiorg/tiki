@@ -7,7 +7,7 @@
   </div>
   <div class="cbox-data">
     <form action="tiki-admin.php?page=general" method="post">
-		<div class="heading button" style="text-align: right">
+		<div class="heading" style="text-align: right">
 		<input type="submit" name="new_prefs" value="{tr}Change preferences{/tr}" />
     </div>
 

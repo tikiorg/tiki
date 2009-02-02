@@ -7,7 +7,7 @@
 	</div>
 
 	<form action="tiki-admin.php?page=ads"  onreset="return(confirm('{tr}Cancel Edit{/tr}'))" class="admin" method="post">
-		<div class="heading button" style="text-align: right">
+		<div class="heading" style="text-align: right">
 			<input type="submit" name="adssetup" value="{tr}Apply{/tr}" />
 			<input type="reset" name="adssetupreset" value="{tr}Reset{/tr}" />
 		</div>

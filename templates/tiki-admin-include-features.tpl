@@ -7,7 +7,7 @@
 <div class="cbox">
 	<div class="cbox-title">{tr}{$crumbs[$crumb]->title}{/tr} {help crumb=$crumbs[$crumb]}</div>
 		<form class="admin" id="features" name="features" action="tiki-admin.php?page=features" method="post">
-			<div class="heading button" style="text-align: right">
+			<div class="heading" style="text-align: right">
         {if $prefs.feature_tabs eq 'y'}
           {tr}No tabs{/tr}
           <input type="checkbox" name="tabs"{if $tabs eq 'n'} checked="checked"{/if} onclick="document.features.submit();"/>
