@@ -1,5 +1,5 @@
 {if $plugins_alias|@count}
-	<div class="button">
+	<div>
 		<h2>{tr}Available Alias{/tr}</h2>
 		<form method="post" action="tiki-admin.php?page=plugins">
 			{foreach from=$plugins_alias item=name}

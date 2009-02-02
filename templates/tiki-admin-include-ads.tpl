@@ -46,6 +46,6 @@
 {if $prefs.feature_tabs neq 'y'}			</div>{/if}
 		</fieldset>
 
-		<div class="button" style="text-align: center"><input type="submit" name="adssetup" value="{tr}Apply{/tr}" /></div>
+		<div style="text-align: center"><input type="submit" name="adssetup" value="{tr}Apply{/tr}" /></div>
 	</form>
 </div><!-- cbox end -->

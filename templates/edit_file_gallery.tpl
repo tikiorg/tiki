@@ -15,7 +15,7 @@
 				<span id="tab2" class="tabmark tabactive"><a href="javascript:tikitabs(2,3);">{tr}Display Properties{/tr}</a></span>
 			</div>
 			{else}
-       <div class="button" style="text-align: right"><input type="submit" value="{tr}Save{/tr}" name="edit" />&nbsp;<input type="checkbox" name="viewitem" checked="checked"/> {tr}View inserted gallery{/tr}</div>
+       <div style="text-align: right"><input type="submit" value="{tr}Save{/tr}" name="edit" />&nbsp;<input type="checkbox" name="viewitem" checked="checked"/> {tr}View inserted gallery{/tr}</div>
 			{/if}
 
 			<fieldset {if $prefs.feature_tabs eq 'y'}id="content1"  class="tabcontent" style="clear:both;display:block;"{/if}>

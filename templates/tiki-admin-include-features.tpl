@@ -450,7 +450,7 @@
 				</div>
 			</fieldset>
 
-		<div class="button" style="margin-top: 5px; text-align: center">
+		<div style="margin-top: 5px; text-align: center">
 			<input type="submit" name="features" value="{tr}Apply{/tr}" />
 		</div>
 	</form>
