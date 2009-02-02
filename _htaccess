@@ -25,6 +25,7 @@ RewriteCond %{REQUEST_FILENAME}/ -d
 RewriteRule [^/]$ %{REQUEST_URI}/ [R=301,L]
 
 # direct one-word access
+RewriteRule ^(img\/trackers\/.*)		$1		[L]
 RewriteRule ^calendar$             tiki-calendar.php                        [L]
 RewriteRule ^articles$             tiki-view_articles.php                   [L]
 RewriteRule ^blogs$                tiki-list_blogs.php                      [L]
