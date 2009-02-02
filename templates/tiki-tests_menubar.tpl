@@ -8,12 +8,12 @@
 {/if}
 {if $http or $curl}
 {remarksbox type="notice" title="{tr}Notice{/tr}"}
-{if $http}{tr}PECL HTPP extension present{/tr}<br/>{/if}
+{if $http}{tr}PECL HTTP extension present{/tr}<br/>{/if}
 {if $curl}{tr}cURL extension present{/tr}{/if}
 {/remarksbox}
 {/if}
 {if !$http and !$curl}
-{remarksbox type="warning" title="{tr}Notice{/tr}"}{tr}PECL HTPP and cURL extension not present. Replay of the TikiTest will not be possible.{/tr}{/remarksbox}
+{remarksbox type="warning" title="{tr}Notice{/tr}"}{tr}PECL HTTP and cURL extension not present. Replay of the TikiTest will not be possible.{/tr}{/remarksbox}
 {/if}
 <div class="navbar">
 	{if $tiki_p_admin_tikitests eq 'y' or $tiki_p_play_tikitests eq 'y'}
