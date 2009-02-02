@@ -143,7 +143,7 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 
 {if $prefs.feature_mootools eq "y"}
 	<script type="text/javascript" src="lib/shadowbox/build/js/adapter/shadowbox-mootools.js" charset="utf-8"></script>
-{else}
+{elseif $prefs.feature_jquery eq "y"}
 	<script type="text/javascript" src="lib/shadowbox/build/js/adapter/shadowbox-jquery.js" charset="utf-8"></script>
 {/if}
 
@@ -155,9 +155,15 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 	{literal}
 		window.addEvent('domready', function() {
 	{/literal}
+{elseif $prefs.feature_jquery eq "y"}
+	{literal}
+		$jq(document).ready(function() {
+	{/literal}
 {else}
 	{literal}
-		$(document).ready(function() {
+		// *** ERROR *** feature_shadowbox enabled but without feature_mootools or feature_jquery
+		// Dummy function follows to prevent JavaScript errors
+		function shadowbox_dummy_function() {
 	{/literal}
 {/if}
 {literal}
