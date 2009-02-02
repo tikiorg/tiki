@@ -1,5 +1,5 @@
 /*
- * The Darkroom theme for Tiki CMS/Groupware by Gary Cunningham-Lee (chibaguy),
+ * The Darkroom theme for TikiWiki CMS/Groupware.
  * Released under the LGPL license. For use with default Tiki templates.
  * Imports lite/lite.css. Be sure the file is available for proper layout. 
  * For more information on Darkroom, please visit http://themes.tikiwiki.org.
@@ -106,8 +106,8 @@ button,
 	padding: 0 4px;
 	vertical-align: middle;
 	cursor: pointer;
-	white-space: nowrap;
-}
+	white-space: nowrap}
+
 #page-bar .button {margin: 0 2px;}
 
 /* do not put this rule with button rule for IE6 */
@@ -120,27 +120,24 @@ input[type=reset] {
 	border-top: 1px solid #818181;
 	padding: 0 4px;
 	vertical-align: middle;
-	cursor: pointer;
-}
+	cursor: pointer}
 
 button:hover,
 .button:hover,
 input[type=submit]:hover,
 .submitbutton:hover,
-.button input:hover {
-	border: 1px solid #B2B2B2;
-}
+.button input:hover {border: 1px solid #B2B2B2}
+
 .button a:hover {text-decoration: none}
 .button {font-size: 0.8em;}
+input[type=file] {color: #000}
 
-input[type=file],
 select {
 	border: solid 1px #aaa;
 	background-color: #292929;
 	color: #F5F5F5;
 	font-size: 1em;
-	vertical-align: middle;
-}
+	vertical-align: middle}
 
 option {border: 0}
 select[multiple] {height: 10em}
@@ -152,7 +149,7 @@ select[name="theme"] {
 	border-right: 1px solid #696969;
 	border-bottom: 1px solid #696969}
 	
-#col1 select[type=file] { font-size: .95em }
+#col1 select[type=file] {font-size: .95em}
 
 input[type=wikiaction] {margin-bottom: 2px}
 * html .findtable input {font-size: 1em}
@@ -890,7 +887,7 @@ a.flipmodtitle:hover img {border: 1px solid #818181 !important}
 	background: transparent;
 	border: 1px solid #606060}
 
-.rbox a {text-decoration: underline}
+.rbox a {}
 
 .warning .rbox-title {color: #ffe6db}
 .warning .rbox-data { }
@@ -966,16 +963,8 @@ th {
 	background: #292929 !important;
 	text-align: center;
 	color: #F5F5F5;
-	border-bottom: 1px solid #696969}
+	/*border-bottom: 1px solid #696969*/}
 
-/* form.admin {}
-form.admin fieldset {}
-form.admin legend.heading {}
-form.admin legend.heading a {}
-form.admin legend.heading a:hover {}
-form.admin legend.heading a span {}
-form.admin legend.heading a:hover span {}
-div.heading {} */
 tr.odd {background: #292929;}
 tr.even {background: #3F3F3F;}
 
@@ -994,14 +983,6 @@ td.third { }
 td.form {
 	padding: .2em;
 	color: #F5F5F5}
-
-/* td.normal,
-td.bloglist,
-td.odd,
-td.even {}
-
-td.formlabel {}
-td.formcontent {} */
 
 /* Needed for light-on-dark theme */
 div.quicktag {}
@@ -1026,19 +1007,21 @@ a.forumnameread {} */
 /** Tabs **/
 
 .tabs {
-	border-bottom: solid 1px #225566 !important;
-	margin-top: 10px !important;
-	padding: 0 !important}
+	border-bottom: 0;
+	margin: 10px 5px -14px 5px !important;
+	padding: 0 !important;
+	position: relative;
+	z-index: 201}
 
 .tabactive {
-	border: solid 1px #225566 !important;
+	border: solid 1px #696969 !important;
 	border-bottom: none !important;
 	border-top-width: 2px !important;
 	position: relative;
 	top: -2px}
 
 [class].tabactive {top: -1px}
-.tabactive a {background: #767676}
+.tabactive a {background: #696969}
 
 .tabinactive {
 	border: solid 1px #666 !important;
@@ -1053,13 +1036,14 @@ a.forumnameread {} */
 	font-size: 10px;
 	background: #4E4E4E url(darkroom/button.png);
 	border: 1px solid #666666;
+	border-bottom: 1px solid #696969;
 	margin: 0;
 	margin-right: 5px;
 	padding: 2px 0;
 	color: #F5F5F5}
 
 .tabmark a { 
-	border-bottom: 0;
+	border: 1px solid transparent;
 	font-weight: bold;
 	padding: 1px 5px;
 	color: #F5F5F5}
@@ -1070,15 +1054,17 @@ a.forumnameread {} */
 .tabmark a:hover {
 	color: #F5F5F5;
 	text-decoration: none;
-	border: 1px solid #a9a9a9;}
+	border: 1px solid #a9a9a9;
+	border-bottom-color: transparent}
 
 .tabcontent {
 	z-index: 200;
 	position: relative;
-	padding: 6px 2px 2px 2px;
+	padding: 26px 2px 2px 2px;
 	margin: 5px;
 	margin-top: 0;
-	background-color: #474747}
+	border: 1px solid #666666;
+	background-color: #696969}
 
 .tabcontent table {
 	margin: 1% auto 2% auto;
@@ -1087,21 +1073,22 @@ a.forumnameread {} */
 	
 .tabcontent table td {padding: 5px}
 
-form fieldset.tabcontent {
+/*form fieldset.tabcontent {
 	border: 1px solid #225566;
 	border-top: none !important}
 
 form.admin .tabs {
-	border-bottom: solid 1px #225566 !important;
 	margin: 10px 1px 0 0 !important;
-	padding: 0 !important}
+	padding: 0 !important}*/
 
-/* Get the contextual info to make this specific. 
-div.content {
-	padding: 3px}
-
-div.content .tabs {
-	margin: 0}*/
+form.admin {background: #292929}
+form.admin fieldset {border: 0}
+/*
+form.admin legend.heading {}
+form.admin legend.heading a {}
+form.admin legend.heading a:hover {}
+form.admin legend.heading a span {}
+form.admin legend.heading a:hover span {} */
 
 .tab-wrapper {
 	border: 1px solid #eee;
@@ -1147,21 +1134,7 @@ div.content .tabs {
 	text-decoration: underline}
 
 .tab-menu li img {vertical-align: middle}
-span#tab1 {background: #7d7d7d}
-span#tab2 {background: #6c6c6c}
-span#tab3 {background: #5c5c5c}
-
-#content1,
-#content2,
-#content3 {
-	border-top: 1px solid #A9A9A9;
-	border-left: 1px solid #A9A9A9;
-	border-right: 1px solid #696969;
-	border-bottom: 1px solid #696969;
-	margin-bottom: 10px;
-}
-
-table.admin div#content1 div.tabcontent div.cbox {background-color: transparent}
+table.admin .tabcontent .cbox {background: transparent}
 
 /***** Feature-specific styles ****/
 
