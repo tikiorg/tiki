@@ -66,7 +66,7 @@
 </td></tr><tr class="formcolor">
 <td></td><td>{tr}bytes{/tr}<input type="radio" name="unit" value="bytes"{if $unit ne 'kb'} checked="checked"{/if} /> {tr}kb{/tr}<input type="radio" name="unit" value="kb"{if $unit eq 'kb'} checked="checked"{/if} /></td></tr>
 <tr class="formcolor"><td></td><td>{tr}Week{/tr}<input type="radio" name="contribTime" value="w"{if $contribTime ne 'd'} checked="checked"{/if} /> {tr}Day{/tr}<input type="radio" name="contribTime" value="d"{if $contribTime eq 'd'} checked="checked"{/if} /></td></tr>
-<tr class="formcolor"><td colspan="2" class="button"><input type="submit" name="list" value="{tr}Report{/tr}" /></td></tr>
+<tr class="formcolor"><td colspan="2" class="input_submit_container"><input type="submit" name="list" value="{tr}Report{/tr}" /></td></tr>
 {if $prefs.feature_contribution eq 'y'}
 <tr class="formcolor"><td colspan="2"><input type="submit" name="graph" value="{tr}Graph Contributions{/tr}" />
 {if $prefs.feature_jpgraph eq 'y'}
@@ -77,7 +77,7 @@
 {/if}</td></tr>
 {/if}
 {if $tiki_p_admin eq 'y'}
-<tr class="formcolor"><td colspan="2" class="button"><input type="submit" name="export" value="{tr}Export{/tr}" /></td></tr>
+<tr class="formcolor"><td colspan="2" class="input_submit_container"><input type="submit" name="export" value="{tr}Export{/tr}" /></td></tr>
 {/if}
 </table>
 </form>
@@ -408,7 +408,7 @@
 {/if}
 </tr>
 {/section}
-<tr><td colspan="4" class="button"><input type="submit" name="save" value="{tr}Set{/tr}" /></td></tr>
+<tr><td colspan="4" class="input_submit_container"><input type="submit" name="save" value="{tr}Set{/tr}" /></td></tr>
 </table>
 <div class="rbox">{tr}Wiki page actions except viewed will always be recorded but can be not reported{/tr}</div>
 </form>

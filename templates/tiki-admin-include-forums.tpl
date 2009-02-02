@@ -86,7 +86,7 @@
           <td><input type="checkbox" name="forum_comments_no_title_prefix"
               {if $prefs.forum_comments_no_title_prefix eq 'y'}checked="checked"{/if}/></td>			
         </tr><tr class="form">
-          <td colspan="2" class="button"><input type="submit" name="forumprefs"
+          <td colspan="2" class="input_submit_container"><input type="submit" name="forumprefs"
               value="{tr}Change preferences{/tr}" /></td>
         </tr></table>
       </form>
@@ -122,7 +122,7 @@
           <td><input type="checkbox" name="forum_list_desc"
               {if $prefs.forum_list_desc eq 'y'}checked="checked"{/if} /></td>
         </tr><tr>
-          <td colspan="2" class="button"><input type="submit" name="forumlistprefs"
+          <td colspan="2" class="input_submit_container"><input type="submit" name="forumlistprefs"
               value="{tr}Change preferences{/tr}" /></td>
         </tr></table>
       </form>
@@ -184,7 +184,7 @@
         </tr>
         
         <tr>
-          <td colspan="2" class="button">
+          <td colspan="2" class="input_submit_container">
             <input type="submit" name="forumthreadprefs" value="{tr}Change preferences{/tr}" />
           </td>
         </tr>

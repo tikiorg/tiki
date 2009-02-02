@@ -31,7 +31,7 @@
               <option value="question_id" {if $prefs.faq_prefix eq 'question_id'}selected="selected"{/if}>{tr}Question ID{/tr}</option>
               </select></td>
         </tr><tr>
-          <td colspan="2" class="button"><input type="submit" name="faqcomprefs"
+          <td colspan="2" class="input_submit_container"><input type="submit" name="faqcomprefs"
               value="{tr}Change settings{/tr}" /></td>
         </tr></table>
       </form>

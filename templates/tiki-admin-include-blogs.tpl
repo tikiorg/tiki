@@ -76,7 +76,7 @@
         </td></tr>
         {/if}
         <tr>
-          <td colspan="2" class="button"><input type="submit" name="blogfeatures"
+          <td colspan="2" class="input_submit_container"><input type="submit" name="blogfeatures"
               value="{tr}Change preferences{/tr}" /></td>
         </tr></table>
       </form>
@@ -128,7 +128,7 @@
           <td class="form"><input type="checkbox" name="blog_list_activity" id="blogs-activity"
               {if $prefs.blog_list_activity eq 'y'}checked="checked"{/if} /></td>
         </tr><tr>
-          <td colspan="2" class="button"><input type="submit" name="bloglistconf"
+          <td colspan="2" class="input_submit_container"><input type="submit" name="bloglistconf"
               value="{tr}Change preferences{/tr}" /></td>
         </tr></table>
       </form>
@@ -151,7 +151,7 @@
               <option value="points_desc" {if $prefs.blog_comments_default_ordering eq 'points_desc'}selected="selected"{/if}>{tr}Points{/tr}</option>
            </select></td>
         </tr><tr>
-          <td colspan="2" class="button"><input type="submit" name="blogcomprefs" value="{tr}Change preferences{/tr}" /></td>
+          <td colspan="2" class="input_submit_container"><input type="submit" name="blogcomprefs" value="{tr}Change preferences{/tr}" /></td>
         </tr></table>
       </form>
   </div>

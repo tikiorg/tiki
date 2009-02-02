@@ -39,7 +39,7 @@
           <td><input type="checkbox" name="feature_community_mouseover_distance" id="community-mouseover-distance"
               {if $prefs.feature_community_mouseover_distance eq 'y'}checked="checked"{/if} /></td>
         </tr><tr>
-          <td colspan="2" class="button"><input type="submit" name="mouseoverfeatures"
+          <td colspan="2" class="input_submit_container"><input type="submit" name="mouseoverfeatures"
               value="{tr}Set features{/tr}" /></td>
         </tr></table>
       </form>
@@ -77,7 +77,7 @@
             <option value="login_desc" {if $prefs.user_list_order=="login_desc"}selected="selected"{/if}>{tr}Login descending{/tr}</option>
           </select></td>
        </tr><tr>
-          <td colspan="2" class="button"><input type="submit" name="listfeatures"
+          <td colspan="2" class="input_submit_container"><input type="submit" name="listfeatures"
               value="{tr}Set features{/tr}" /></td>
         </tr></table>
       </form>
@@ -97,7 +97,7 @@
           <td><input type="text" size="1" maxlength="1" name="feature_community_friends_permission_dep" id="community-friends-permission-dep"
               value="{$prefs.feature_community_friends_permission_dep}" /></td>
         </tr><tr>
-          <td colspan="2" class="button"><input type="submit" name="friendshipfeatures"
+          <td colspan="2" class="input_submit_container"><input type="submit" name="friendshipfeatures"
               value="{tr}Change preferences{/tr}" /></td>
         </tr></table>
       </form>

@@ -256,7 +256,7 @@
         </tr>
         
         <tr>
-          <td colspan="2" class="button"><input type="submit" name="searchprefs" value="{tr}Change settings{/tr}" /></td>
+          <td colspan="2" class="input_submit_container"><input type="submit" name="searchprefs" value="{tr}Change settings{/tr}" /></td>
         </tr>
       </table>
     </form>

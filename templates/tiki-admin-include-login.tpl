@@ -190,7 +190,7 @@ name="eponymousGroups" {if $prefs.eponymousGroups eq 'y'}checked="checked"{/if}/
 <tr><td class="form">{tr}On permission denied, send to this url:{/tr}</td>
 <td><input type="text" name="permission_denied_url" value="{$prefs.permission_denied_url|escape}" /></td></tr>
 
-<tr><td colspan="2" class="button"><input type="submit" name="loginprefs" value="{tr}Change preferences{/tr}" /></td></tr>
+<tr><td colspan="2" class="input_submit_container"><input type="submit" name="loginprefs" value="{tr}Change preferences{/tr}" /></td></tr>
 </table>
 </form>
 </div>
@@ -230,7 +230,7 @@ name="eponymousGroups" {if $prefs.eponymousGroups eq 'y'}checked="checked"{/if}/
 <tr><td class="form">{tr}LDAP Admin Pwd{/tr}:</td><td><input type="password" name="auth_ldap_adminpass" value="{$prefs.auth_ldap_adminpass|escape}" /></td></tr>
 <tr><td class="form">{tr}LDAP Version{/tr}:</td><td><input type="text" name="auth_ldap_version" value="{$prefs.auth_ldap_version|escape}" /></td></tr>
 <tr><td class="form">{tr}LDAP Realname Attribute{/tr}:</td><td><input type="text" name="auth_ldap_nameattr" value="{$prefs.auth_ldap_nameattr|escape}" /></td></tr>
-<tr><td colspan="2" class="button"><input type="submit" name="auth_pear" value="{tr}Change preferences{/tr}" /></td></tr>
+<tr><td colspan="2" class="input_submit_container"><input type="submit" name="auth_pear" value="{tr}Change preferences{/tr}" /></td></tr>
 </table>
 </form>
 </div>
@@ -247,7 +247,7 @@ name="eponymousGroups" {if $prefs.eponymousGroups eq 'y'}checked="checked"{/if}/
 <tr><td class="form">{tr}Create user if not in Tiki?{/tr}</td><td><input type="checkbox" name="pam_create_user_tiki" {if $prefs.pam_create_user_tiki eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="form">{tr}Just use Tiki auth for admin?{/tr}</td><td><input type="checkbox" name="pam_skip_admin" {if $prefs.pam_skip_admin eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="form">{tr}PAM service{/tr} ({tr}Currently unused{/tr})</td><td><input type="text" name="pam_service" value="{$prefs.pam_service|escape}"/></td></tr>
-<tr><td colspan="2" class="button"><input type="submit" name="auth_pam" value="{tr}Change preferences{/tr}" /></td></tr>
+<tr><td colspan="2" class="input_submit_container"><input type="submit" name="auth_pam" value="{tr}Change preferences{/tr}" /></td></tr>
 </table>
 </form>
 </div>
@@ -277,7 +277,7 @@ name="eponymousGroups" {if $prefs.eponymousGroups eq 'y'}checked="checked"{/if}/
 <tr><td class="form">{tr}CAS server hostname{/tr}:</td><td><input type="text" name="cas_hostname" value="{$prefs.cas_hostname|escape}" size="50" /></td></tr>
 <tr><td class="form">{tr}CAS server port{/tr}:</td><td><input type="text" name="cas_port" size="5" value="{$prefs.cas_port|escape}" /></td></tr>
 <tr><td class="form">{tr}CAS server path{/tr}:</td><td><input type="text" name="cas_path" value="{$prefs.cas_path|escape}" size="50" /></td></tr>
-<tr><td colspan="2" class="button"><input type="submit" name="auth_cas" value="{tr}Change CAS preferences{/tr}" /></td></tr>
+<tr><td colspan="2" class="input_submit_container"><input type="submit" name="auth_cas" value="{tr}Change CAS preferences{/tr}" /></td></tr>
 </table>
 </form>
 </div>
@@ -298,7 +298,7 @@ name="eponymousGroups" {if $prefs.eponymousGroups eq 'y'}checked="checked"{/if}/
 <tr><td class="form">{tr}Valid Affiliations (separated by commas){/tr}:</td><td><input type="text" name="shib_affiliation" value="{$prefs.shib_affiliation}" size="50" /></td></tr>
 <tr><td class="form">{tr}Create with default group?{/tr}</td><td><input type="checkbox" name="shib_usegroup" {if $prefs.shib_usegroup eq 'y'}checked="checked"{/if} /></td></tr>
 <tr><td class="form">{tr}Default group: {/tr}</td><td><input type="text" name="shib_group" value="{$prefs.shib_group}" size="30"/></td></tr>
-<tr><td colspan="2" class="button"><input type="submit" name="auth_shib" value="{tr}Change Shibboleth preferences{/tr}" /></td></tr>
+<tr><td colspan="2" class="input_submit_container"><input type="submit" name="auth_shib" value="{tr}Change Shibboleth preferences{/tr}" /></td></tr>
 </table>
 </form>
 </div>
@@ -528,7 +528,7 @@ name="eponymousGroups" {if $prefs.eponymousGroups eq 'y'}checked="checked"{/if}/
   {/if}
 {/if}
 
-<tr><td colspan="2" class="button"><input type="submit" name="users_defaults" value="{tr}Change users defaults{/tr}" /></td></tr>
+<tr><td colspan="2" class="input_submit_container"><input type="submit" name="users_defaults" value="{tr}Change users defaults{/tr}" /></td></tr>
 
 </table>
 </form>

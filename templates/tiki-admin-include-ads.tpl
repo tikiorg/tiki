@@ -7,7 +7,7 @@
 	</div>
 
 	<form action="tiki-admin.php?page=ads"  onreset="return(confirm('{tr}Cancel Edit{/tr}'))" class="admin" method="post">
-		<div class="heading" style="text-align: right">
+		<div class="heading input_submit_container" style="text-align: right">
 			<input type="submit" name="adssetup" value="{tr}Apply{/tr}" />
 			<input type="reset" name="adssetupreset" value="{tr}Reset{/tr}" />
 		</div>
@@ -46,6 +46,6 @@
 {if $prefs.feature_tabs neq 'y'}			</div>{/if}
 		</fieldset>
 
-		<div style="text-align: center"><input type="submit" name="adssetup" value="{tr}Apply{/tr}" /></div>
+		<div class="input_submit_container" style="text-align: center"><input type="submit" name="adssetup" value="{tr}Apply{/tr}" /></div>
 	</form>
 </div><!-- cbox end -->

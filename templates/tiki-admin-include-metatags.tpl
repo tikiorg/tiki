@@ -24,7 +24,7 @@
         <tr><td class="form">{tr}meta robots{/tr}:</td><td><input type="text" name="adm_metatag_robots" value="{$adm_metatag_robots}" size="50" /></td></tr>
         <tr><td class="form">{tr}revisit after{/tr}:</td><td><input type="text" name="metatag_revisitafter" value="{$prefs.metatag_revisitafter}" size="50" /></td></tr>
         <tr><td class="form" colspan="3">&nbsp;</td></tr>
-        <tr><td colspan="3" class="button"><input type="submit" name="metatags" value="{tr}Change settings{/tr}" /></td></tr>
+        <tr><td colspan="3" class="input_submit_container"><input type="submit" name="metatags" value="{tr}Change settings{/tr}" /></td></tr>
         </table>
         </form>
 </div>

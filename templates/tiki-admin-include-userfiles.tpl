@@ -11,7 +11,7 @@
 				</td></tr>
   				<tr><td class="form">{tr}Use database to store userfiles{/tr}:</td><td><input type="radio" name="uf_use_db" value="y" {if $prefs.uf_use_db eq 'y'}checked="checked"{/if}/></td></tr>
     			<tr><td class="form">{tr}Use a directory to store userfiles{/tr}:</td><td><input type="radio" name="uf_use_db" value="n" {if $prefs.uf_use_db eq 'n'}checked="checked"{/if}/> {tr}Path{/tr}:<br /><input type="text" name="uf_use_dir" value="{$prefs.uf_use_dir|escape}" size="50" /> </td></tr>
-    			<tr><td colspan="2" class="button"><input type="submit" name="userfilesprefs" value="{tr}Change preferences{/tr}" /></td></tr>
+    			<tr><td colspan="2" class="input_submit_container"><input type="submit" name="userfilesprefs" value="{tr}Change preferences{/tr}" /></td></tr>
     			</table>
 				</form>
 		</div>

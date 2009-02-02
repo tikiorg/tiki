@@ -127,7 +127,7 @@
 <input type="hidden" name="objectType" value="{$objectType|escape}" />
 <input type="hidden" name="objectId" value="{$objectId|escape}" />
 <input type="hidden" name="permType" value="{$permType|escape}" />
-<div style="text-align: center">
+<div class="input_submit_container" style="text-align: center">
 	<input type="submit" name="assign" value="{tr}Assign{/tr}" />
 </div>
 
@@ -161,7 +161,7 @@
 {/section}
 </table></td></tr>
 </table>
-<div style="text-align: center">
+<div class="input_submit_container" style="text-align: center">
 	<input type="submit" name="assign" value="{tr}Assign{/tr}" />
 </div>
 {if ($objectType eq 'wiki' or $objectType eq 'wiki page') and !empty($inStructure)}

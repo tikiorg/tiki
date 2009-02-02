@@ -23,7 +23,7 @@
     </td></tr>
 	<tr><td class="form">{tr}Show categories{/tr}</td><td><input type="checkbox" name="poll_list_categories" {if $prefs.poll_list_categories eq 'y'}checked="checked"{/if}/></td></tr>
 	<tr><td class="form">{tr}Show objects{/tr}</td><td><input type="checkbox" name="poll_list_objects" {if $prefs.poll_list_objects eq 'y'}checked="checked"{/if}/></td></tr>
-    <tr><td colspan="2" class="button"><input type="submit" name="pollprefs" value="{tr}Change settings{/tr}" /></td></tr>
+    <tr><td colspan="2" class="input_submit_container"><input type="submit" name="pollprefs" value="{tr}Change settings{/tr}" /></td></tr>
     </table>
     </form>
 </div>

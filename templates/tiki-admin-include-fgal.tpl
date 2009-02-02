@@ -145,7 +145,7 @@
         </tr>
         
         <tr class="formcolor">
-          <td colspan="2" class="button">
+          <td colspan="2" class="input_submit_container">
             <input type="submit" name="filegalfeatures" value="{tr}Set features{/tr}" /></td>
        </tr>
       </table>
@@ -171,7 +171,7 @@
 		</td>
 		</tr>
         <tr class="formcolor">
-          <td colspan="2" class="button"><input type="submit"
+          <td colspan="2" class="input_submit_container"><input type="submit"
               name="filegallistprefs" value="{tr}Change configuration{/tr}" /></td>
         </tr></table>
       </form>
@@ -194,7 +194,7 @@
               <option value="points_desc" {if $prefs.file_galleries_comments_default_ordering eq 'points_desc'}selected="selected"{/if}>{tr}Points{/tr}</option>
               </select></td>
         </tr><tr class="formcolor">
-          <td colspan="2" class="button"><input type="submit" name="filegalcomprefs"
+          <td colspan="2" class="input_submit_container"><input type="submit" name="filegalcomprefs"
               value="{tr}Change settings{/tr}" /></td>
         </tr></table>
       </form>
@@ -248,7 +248,7 @@
         </tr>
     
         <tr class="formcolor">
-          <td colspan="2" class="button">
+          <td colspan="2" class="input_submit_container">
             <input type="submit" name="filegalhandlers" value="{tr}Change preferences{/tr}" />
           </td>
         </tr>

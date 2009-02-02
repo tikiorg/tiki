@@ -15,7 +15,7 @@
 				<tr><td class="form">{tr}Maximum mail archive size (messages, 0=unlimited){/tr}:</td><td><input type="text" name="messu_archive_size" value="{$prefs.messu_archive_size|escape}" /></td></tr>
 				<tr><td class="form">{tr}Maximum sent box size (messages, 0=unlimited){/tr}:</td><td><input type="text" name="messu_sent_size" value="{$prefs.messu_sent_size|escape}" /></td></tr>
 
-				<tr><td colspan="2" class="button"><input type="submit" name="messagesprefs" value="{tr}Apply{/tr}" /></td></tr>
+				<tr><td colspan="2" class="input_submit_container"><input type="submit" name="messagesprefs" value="{tr}Apply{/tr}" /></td></tr>
 			</table>
 		</form>
 	</div>

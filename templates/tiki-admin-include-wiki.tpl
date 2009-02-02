@@ -70,7 +70,7 @@
     </td></tr>
 <tr><td class="form">{tr}List displayed by default{/tr}</td><td><input type="checkbox" 
 name="wiki_comments_displayed_default"{if $prefs.wiki_comments_displayed_default eq 'y'} checked="checked"{/if} /></td></tr>
-    <tr><td colspan="2" class="button"><input type="submit" name="wikiprefs" value="{tr}Change settings{/tr}" /></td></tr>
+    <tr><td colspan="2" class="input_submit_container"><input type="submit" name="wikiprefs" value="{tr}Change settings{/tr}" /></td></tr>
     </table>
     </form>
     </div>
@@ -105,7 +105,7 @@ name="wiki_comments_displayed_default"{if $prefs.wiki_comments_displayed_default
     <tr><td class="form">{tr}Path:{/tr}</td><td><input type="text" name="w_use_dir" value="{$prefs.w_use_dir}" /></td></tr>
 	<tr><td class="form">{tr}List displayed by default{/tr}</td><td><input type="checkbox" 
 name="w_displayed_default"{if $prefs.w_displayed_default eq 'y'} checked="checked"{/if} /></td></tr>
-		<tr><td colspan="2" class="button"><input type="submit" name="wikiattprefs" value="{tr}Change preferences{/tr}" /></td></tr>
+		<tr><td colspan="2" class="input_submit_container"><input type="submit" name="wikiattprefs" value="{tr}Change preferences{/tr}" /></td></tr>
 		</table>
 		</form>
 
@@ -264,7 +264,7 @@ name="w_displayed_default"{if $prefs.w_displayed_default eq 'y'} checked="checke
 	{/foreach}
 	</select>
     </td></tr>
-    <tr><td colspan="2" class="button"><input type="submit" name="wikiapprovalprefs" value="{tr}Change configuration{/tr}" />
+    <tr><td colspan="2" class="input_submit_container"><input type="submit" name="wikiapprovalprefs" value="{tr}Change configuration{/tr}" />
     </td>
     </tr></table>
     </form>
@@ -410,7 +410,7 @@ name="w_displayed_default"{if $prefs.w_displayed_default eq 'y'} checked="checke
 		</tr>
 
     	<tr>
-    		<td colspan="2" class="button">
+    		<td colspan="2" class="input_submit_container">
    	 			<input type="submit" name="wikilistprefs" value="{tr}Change configuration{/tr}" />
     		</td>
     	</tr>
@@ -520,7 +520,7 @@ name="w_displayed_default"{if $prefs.w_displayed_default eq 'y'} checked="checke
       </tr>
 
       <tr>
-        <td colspan="2" class="button"><input type="submit" name="wikiset3d" value="{tr}Change configuration{/tr}" /></td>
+        <td colspan="2" class="input_submit_container"><input type="submit" name="wikiset3d" value="{tr}Change configuration{/tr}" /></td>
       </tr>    
     </table>
     </form>
@@ -671,7 +671,7 @@ name="w_displayed_default"{if $prefs.w_displayed_default eq 'y'} checked="checke
     <option value="none" {if $prefs.page_bar_position eq 'none'}selected="selected"{/if}>{tr}Neither{/tr}</option>
     </select>
     </td></tr>
-    <tr><td colspan="2" class="button"><input type="submit" name="wikifeatures" value="{tr}Set features{/tr}" /></td></tr>
+    <tr><td colspan="2" class="input_submit_container"><input type="submit" name="wikifeatures" value="{tr}Set features{/tr}" /></td></tr>
     </table>
     </form>
     </div>
@@ -694,7 +694,7 @@ name="w_displayed_default"{if $prefs.w_displayed_default eq 'y'} checked="checke
        <option value="minsidediff" {if $prefs.default_wiki_diff_style ne 'old'}selected="selected"{/if}>{tr}Any 2 versions{/tr}</option>
     </select></td></tr>
 	<tr><td class="form">{tr}History only for data, description, comment change{/tr}</td><td><input type="checkbox" name="feature_wiki_history_full" {if $prefs.feature_wiki_history_full eq 'y'}checked="checked"{/if}/></td></tr>
-    <tr><td colspan="2" class="button"><input type="submit" name="wikisetprefs" value="{tr}Change preferences{/tr}" /></td></tr>
+    <tr><td colspan="2" class="input_submit_container"><input type="submit" name="wikisetprefs" value="{tr}Change preferences{/tr}" /></td></tr>
     </table>
     </form>
     </div>
@@ -712,7 +712,7 @@ name="w_displayed_default"{if $prefs.w_displayed_default eq 'y'} checked="checke
     <tr><td class="form">{tr}Enable watch events when I am the editor:{/tr}</td><td><input type="checkbox" name="wiki_watch_editor" {if $prefs.wiki_watch_editor eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Enable watches on comments:{/tr}</td><td><input type="checkbox" name="wiki_watch_comments" {if $prefs.wiki_watch_comments eq 'y'}checked="checked"{/if}/></td></tr>
 	<tr><td class="form">{tr}Watch minor:{/tr}</td><td><input type="checkbox" name="wiki_watch_minor" {if $prefs.wiki_watch_minor eq 'y'}checked="checked"{/if}/></td></tr>
-    <tr><td colspan="2" class="button"><input type="submit" name="wikisetwatch" value="{tr}Change preferences{/tr}" /></td></tr>
+    <tr><td colspan="2" class="input_submit_container"><input type="submit" name="wikisetwatch" value="{tr}Change preferences{/tr}" /></td></tr>
     </table>
     </form>
     </div>
