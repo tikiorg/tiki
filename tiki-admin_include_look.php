@@ -15,14 +15,13 @@ if (!isset($prefs['site_style'])) {	// what am i missing here? shouldn't these g
 }
 $a_style = $prefs['site_style'];
 
-if (isset($_REQUEST["looksetup"])) {
+if (isset($_REQUEST["looksetup"]) || (!empty($_REQUEST['site_style']) && $_REQUEST['site_style'] != $prefs['site_style'])) {
     ask_ticket('admin-inc-look');
 
 	if (isset($_REQUEST["site_style"])) {
 	    check_ticket('admin-inc-general');
 	    simple_set_value("site_style", "style");
 		simple_set_value("site_style", "site_style");
-	    		
 		if (!isset($_REQUEST["site_style_option"]) || $_REQUEST["site_style_option"] == tra('None')) {	// style has no options
 			$_REQUEST["site_style_option"] = '';
 		}
