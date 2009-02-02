@@ -1125,11 +1125,12 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_sefurl' => 'n',
 		'feature_sefurl_filter' => 'n',
 		'feature_mootools' => 'y', // Needed for shadowbox
-		'javascript_enabled' => 'n',
+		'javascript_enabled' => 'y',	// Needed for MooTools andJQuery
 		'feature_comments_post_as_anonymous' => 'n',
 		'feature_comments_moderation' => 'n',
 		'feature_template_zoom' => 'y',
-
+		'feature_jquery' => 'y',
+	
 		// TikiTests
 		'feature_tikitests' => 'n',
 
