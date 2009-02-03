@@ -85,7 +85,7 @@ if (isset($_REQUEST["bannerId"]) && $_REQUEST["bannerId"] > 0) {
 		}
 	}
 	$smarty->assign("HTMLData", $info["HTMLData"]);
-	$smarty->assign("fixedURLdata", $info["fixedURLData"]);
+	$smarty->assign("fixedURLData", $info["fixedURLData"]);
 	$smarty->assign("textData", $info["textData"]);
 	$smarty->assign("url", $info["url"]);
 	$smarty->assign("imageName", $info["imageName"]);
