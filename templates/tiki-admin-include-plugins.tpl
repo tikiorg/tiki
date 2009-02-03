@@ -109,7 +109,7 @@
 		</tr>
 		<tr>
 			<td>{tr}Default Content{/tr}</td>
-			<td colspan="2"><textarea name="defaultbody">{$plugin.body.default|escape}</textarea></td>
+			<td colspan="2"><textarea cols="60" rows="12" name="defaultbody">{$plugin.body.default|escape}</textarea></td>
 		</tr>
 
 		<tr>
