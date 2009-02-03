@@ -955,3 +955,4 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 1065,Iframe,913,,wikiplugin_iframe,flag,,tiki_p_admin,,,,,, 
 1066,Media Player,913,,wikiplugin_mediaplayer,flag,,tiki_p_admin,,,,,, 
 1067,Show freetags in middle column,26,,freetags_show_middle,flag,,tiki_p_admin,,,,,, 
+1068,Image plugin,913,,wikiplugin_image,flag,,tiki_p_admin,,,,,, 
