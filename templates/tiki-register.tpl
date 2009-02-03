@@ -1,3 +1,4 @@
+{* $Id$ *}
 {* test for caps lock*}
 {literal}
 	<script type="text/javascript">
@@ -59,8 +60,8 @@
 						<em>{tr}Minimum {$prefs.min_username_length} characters long{/tr}</em>.{/if}
 		{if $prefs.lowercase_username eq 'y'}
 						<em>{tr}Lowercase only{/tr}</em>.{/if}
-					</td>
 	{/if}
+					</td>
 				</tr>
 
 	{if $prefs.useRegisterPasscode eq 'y'}
