@@ -50,7 +50,7 @@
 				<tr>
 					<td class="formcolor">{if $prefs.login_is_email eq 'y'}{tr}Email{/tr}{else}{tr}Username{/tr}{/if}:</td>
 					<td class="formcolor">
-						<input type="text" name="name" id="name"{if $prefs.feature_ajax eq 'y'} onKeyUp="return check_name()"{/if} />
+						<input type="text" name="name" id="name"{if $prefs.feature_ajax eq 'y'} onkeyup="return check_name()"{/if} />
 	{if $prefs.feature_ajax eq'y'}
 						<div id="checkfield" style="float:left"></div>{/if}
 	{if $prefs.login_is_email eq 'y'}
@@ -78,7 +78,7 @@
 				<tr>
 					<td class="formcolor">{tr}Password{/tr}:</td>
 					<td class="formcolor">
-						<input style="float:left"  id='pass1' type="password" name="pass" onkeypress="capLock(event)" onKeyUp="runPassword(this.value, 'mypassword');{if $prefs.feature_ajax eq 'y'}check_pass();{/if}" />
+						<input style="float:left"  id='pass1' type="password" name="pass" onkeypress="capLock(event)" onkeyup="runPassword(this.value, 'mypassword');{if $prefs.feature_ajax eq 'y'}check_pass();{/if}" />
 						<div style="float:left;width:150px;margin-left:5px;">
 							<div id="mypassword_text"></div>
 							<div id="mypassword_bar" style="font-size: 5px; height: 2px; width: 0px;"></div> 
@@ -100,7 +100,7 @@
 					<td class="formcolor">{tr}Repeat password{/tr}:</td>
 					<td class="formcolor">
 						<input style="float:left" id='pass2' type="password" name="passAgain" onkeypress="capLock(event)" 
-	{if $prefs.feature_ajax eq'y'}onKeyUp="check_pass()"{/if}/>
+	{if $prefs.feature_ajax eq'y'}onkeyup="check_pass()"{/if}/>
 	{if $prefs.feature_ajax eq'y'}
 						<div style="float:left;margin-left:5px;" id="checkpass"></div>{/if}
 	{if $prefs.generate_password eq 'y'}
@@ -122,7 +122,7 @@
 				<tr>
 					<td class="formcolor">{tr}Email{/tr}:</td>
 					<td class="formcolor"><input style="float:left" type="text" id="email" name="email"
-		{if $prefs.validateUsers eq 'y' and $prefs.feature_ajax eq 'y'}onKeyUp="return check_mail()"{/if}/>
+		{if $prefs.validateUsers eq 'y' and $prefs.feature_ajax eq 'y'}onkeyup="return check_mail()"{/if}/>
 		{if $prefs.feature_ajax eq'y'}
 						<div id="checkmail" style="float:left"></div>{/if}&nbsp;
 		{if $prefs.validateUsers eq 'y' and $prefs.validateEmail ne 'y'}
