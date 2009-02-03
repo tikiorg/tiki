@@ -65,6 +65,7 @@
 {if $prefs.feature_search_show_search_box eq 'y'}
 <form class="forms" method="get" action="tiki-searchresults.php">
     {tr}Find{/tr} <input id="fuser" name="highlight" size="14" type="text" accesskey="s" value="{$words}"/>
+		{if !( $searchStyle eq "menu" )} 
 		<label for="boolean">{tr}Advanced search:{/tr}<input type="checkbox" name="boolean"{if $boolean eq 'y'} checked="checked"{/if} /></label>
 		{add_help show='y' title="{tr}Advance Search Help{/tr}" id="advance_search_help"}
 			{$smarty.capture.advanced_search_help}
@@ -75,6 +76,7 @@
 		<option value="{$smarty.section.date.index}" {if $smarty.section.date.index eq $date}selected="selected"{/if}>{if $smarty.section.date.index eq 0}{tr}All dates{/tr}{else}{$smarty.section.date.index} {tr}Month{/tr}{/if}</option>
 		{/section}
 		</select>
+		{/if}
 {if ( $searchStyle eq "menu" )}
 <span class='searchMenu'>
     {tr}in{/tr}
