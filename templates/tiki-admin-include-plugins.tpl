@@ -79,7 +79,7 @@
 
 		{foreach from=$plugin.description.params key=token item=detail}
 			<tr>
-				<td rowspan="5"><input type="text" name="input[{$token|escape}][token]" value="{if $token neq '__NEW__'}{$token|escape}{/if}" size="10"/></td>
+				<td rowspan="5"><input type="text" name="input[{$token|escape}][token]" value="{if $token neq '__NEW__'}{$token|escape}{/if}" size="20"/></td>
 				<td>{tr}Name{/tr}</td>
 				<td><input type="text" name="input[{$token|escape}][name]" value="{$detail.name|escape}"/></td>
 			</tr>
@@ -120,7 +120,7 @@
 		{foreach from=$plugin.body.params key=token item=detail}
 			<tr>
 				<td></td>
-				<td colspan="2"><input type="text" name="bodyparam[{$token|escape}][token]" value="{if $token neq '__NEW__'}{$token|escape}{/if}" size="10"/></td>
+				<td colspan="2"><input type="text" name="bodyparam[{$token|escape}][token]" value="{if $token neq '__NEW__'}{$token|escape}{/if}" size="20"/></td>
 			</tr>
 			<tr>
 				<td></td>
@@ -150,14 +150,14 @@
 		{foreach from=$plugin.params key=token item=value}
 			{if ! $value|is_array}
 			<tr>
-				<td><input type="text" name="sparams[{$token|escape}][token]" value="{$token|escape}" size="10"/></td>
+				<td><input type="text" name="sparams[{$token|escape}][token]" value="{$token|escape}" size="20"/></td>
 				<td>{tr}Default{/tr}</td>
 				<td><input type="text" name="sparams[{$token|escape}][default]" value="{$value|escape}"/></td>
 			</tr>
 			{/if}
 		{/foreach}
 		<tr>
-			<td><input type="text" name="sparams[__NEW__][token]" value="" size="10"/></td>
+			<td><input type="text" name="sparams[__NEW__][token]" value="" size="20"/></td>
 			<td>{tr}Default{/tr}</td>
 			<td><input type="text" name="sparams[__NEW__][default]" value=""/></td>
 		</tr>
@@ -167,7 +167,7 @@
 		{foreach from=$plugin.params key=token item=detail}
 			{if $detail|is_array}
 				<tr>
-					<td><input type="text" name="cparams[{$token|escape}][token]" value="{if $token neq '__NEW__'}{$token|escape}{/if}" size="10"/></td>
+					<td><input type="text" name="cparams[{$token|escape}][token]" value="{if $token neq '__NEW__'}{$token|escape}{/if}" size="20"/></td>
 					<td>{tr}Pattern{/tr}</td>
 					<td><input type="text" name="cparams[{$token|escape}][pattern]" value="{$detail.pattern|escape}"/></td>
 				</tr>
@@ -179,7 +179,7 @@
 				{foreach from=$detail.params key=t item=d}
 					<tr>
 						<td></td>
-						<td colspan="2"><input type="text" name="cparams[{$token|escape}][params][{$t|escape}][token]" value="{if $t neq '__NEW__'}{$t|escape}{/if}" size="10"/></td>
+						<td colspan="2"><input type="text" name="cparams[{$token|escape}][params][{$t|escape}][token]" value="{if $t neq '__NEW__'}{$t|escape}{/if}" size="20"/></td>
 					</tr>
 					<tr>
 						<td></td>
