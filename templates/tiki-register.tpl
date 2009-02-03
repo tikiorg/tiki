@@ -15,7 +15,7 @@ function capLock(e){
 {/literal}
 <h2>{tr}Register as a new user{/tr}</h2>
 <div id="divCapson" style="visibility:hidden">{icon _id=error style="vertical-align:middle"} {tr}CapsLock is on.{/tr}</div>
-<br />
+
 {if $prefs.feature_ajax eq 'y'}
   <script src="lib/registration/register_ajax.js" type="text/javascript"></script>
 {/if}
@@ -29,7 +29,7 @@ function capLock(e){
 {$userTrackerData}
 
 {elseif $email_valid eq 'n'}
-{icon _id=error style="vertical-align:middle" align="left"} {tr}Your email could not be validated; make sure you email is correct and click register below.{/tr}<br />
+{icon _id=error style="vertical-align:middle" align="left"} {tr}Your email could not be validated; make sure you email is correct and click register below.{/tr}
   <form action="tiki-register.php" method="post">
     <input type="text" name="email" value="{$smarty.post.email}"/>
     <input type="hidden" name="name" value="{$smarty.post.name}"/>
@@ -43,12 +43,12 @@ function capLock(e){
 
 {else}
 
-  <form action="tiki-register.php" method="post" name="RegForm"> <br />
+  <form action="tiki-register.php" method="post" name="RegForm"> 
     <table class="normal">
 
       <tr><td class="formcolor">{if $prefs.login_is_email eq 'y'}{tr}Email{/tr}{else}{tr}Username{/tr}{/if}:</td>
       <td class="formcolor">
-        <input type="text" name="name" id="name"{if $prefs.feature_ajax eq 'y'} onKeyUp="return check_name()"{/if} /><br />
+        <input type="text" name="name" id="name"{if $prefs.feature_ajax eq 'y'} onKeyUp="return check_name()"{/if} />
           {if $prefs.feature_ajax eq'y'}<div id="checkfield" style="float:left"></div>{/if}
 		{if $prefs.login_is_email eq 'y'} 
 		<em>{tr}Use your email as login{/tr}</em>. 
@@ -60,7 +60,7 @@ function capLock(e){
 
 {if $prefs.useRegisterPasscode eq 'y'}
         <tr><td class="formcolor">{tr}Passcode to register{/tr}:</td>
-	<td class="formcolor"><input type="password" name="passcode" onkeypress="capLock(event)" /><br /><em>{tr}Not your password.{/tr} {tr}To request a passcode, {if $prefs.feature_contact eq 'y'}<a href="tiki-contact.php">{/if}
+	<td class="formcolor"><input type="password" name="passcode" onkeypress="capLock(event)" /><em>{tr}Not your password.{/tr} {tr}To request a passcode, {if $prefs.feature_contact eq 'y'}<a href="tiki-contact.php">{/if}
 	contact the sytem administrator{if $prefs.feature_contact eq 'y'}</a>{/if}{/tr}.</em> </td></tr>
       {/if}
  
@@ -121,7 +121,7 @@ function capLock(e){
 			<td class="formcolor">{tr}Select your group{/tr}:</td>
 			<td class="formcolor">
 {foreach item=gr from=$listgroups}
-{if $gr.registrationChoice eq 'y'}			<input type="radio" name="chosenGroup" id="gr_{$gr.groupName}" value="{$gr.groupName|escape}" /> <label for="gr_{$gr.groupName}">{if $gr.groupDesc}{tr}{$gr.groupDesc}{/tr}{else}{$gr.groupName}{/if}</label><br />{/if}
+{if $gr.registrationChoice eq 'y'}			<input type="radio" name="chosenGroup" id="gr_{$gr.groupName}" value="{$gr.groupName|escape}" /> <label for="gr_{$gr.groupName}">{if $gr.groupDesc}{tr}{$gr.groupDesc}{/tr}{else}{$gr.groupName}{/if}</label>{/if}
 {/foreach}
 			</td>
 		</tr>
@@ -134,8 +134,8 @@ function capLock(e){
       </tr>
     </table>
   </form>
-<br /><div class="simplebox">
+<div class="simplebox">
 {icon _id=information style="vertical-align:middle" align="left"}{tr}NOTE: Make sure to whitelist this domain to prevent registration emails being canned by your spam filter!{/tr}
 </div>
-  <br />
+  
 {/if}
