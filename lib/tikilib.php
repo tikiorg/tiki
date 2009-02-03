@@ -5413,7 +5413,7 @@ window.addEvent('domready', function() {
 	} );
 } );
 " );
-							$ret = '~np~<a id="' .$id. '" style="float:right" href="javascript:void(0)" class="editplugin">'.smarty_function_icon(array('_id'=>'shape_square_edit', 'alt'=>tra('Edit Plugin')), $smarty).'</a>~/np~'.$ret;
+							$ret = '~np~<a id="' .$id. '" style="float:right" href="javascript:void(1)" class="editplugin">'.smarty_function_icon(array('_id'=>'shape_square_edit', 'alt'=>tra('Edit Plugin').':'.$plugin_name), $smarty).'</a>~/np~'.$ret;
 						}
 
 					} else {
