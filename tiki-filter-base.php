@@ -41,12 +41,7 @@ if ( substr($tikiroot,-1,1) != '/' ) $tikiroot .= '/';
 if ( substr($tikipath,-1,1) != '/' ) $tikipath .= '/';
 
 require_once('lib/init/initlib.php');
-TikiInit::prependIncludePath($tikipath);
-TikiInit::prependIncludePath($tikipath.'lib');
-TikiInit::prependIncludePath($tikipath.'lib/pear');
-TikiInit::prependIncludePath($tikipath.'lib/core/lib');
-
-require_once 'DeclFilter.php';
-require_once 'JitFilter.php';
+require_once('lib/core/lib/DeclFilter.php');
+require_once('lib/core/lib/JitFilter.php');
 
 ?>

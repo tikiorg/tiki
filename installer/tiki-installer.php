@@ -590,8 +590,6 @@ if ($errors) {
 //   then get con or nocon
 
 //adodb settings
-TikiInit::prependIncludePath('lib/adodb');
-TikiInit::prependIncludePath('lib/pear');
 
 define('ADODB_FORCE_NULLS', 1);
 define('ADODB_ASSOC_CASE', 2);
