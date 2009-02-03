@@ -22,33 +22,33 @@ if( file_exists( 'db/lock' ) )
 	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link type="text/css" href="styles/tikineat.css" rel="stylesheet" />
-<title>TikiWiki Installer Disabled</title>
-</head>
-<body class="tiki_wiki">
-<div id="siteheader">
-	<div id="sitelogo" style="text-align: left;">
-		<img style="border: medium none ;" alt="Site Logo" src="img/tiki/tikilogo.png" />
-	</div>
-</div>
-<div id="tiki-main">
-	<div id="tiki-mid">
-		<table id="tiki-midtbl" width="100%" cellspacing="0" cellpadding="0" border="0">
-			<tr>
-				<td id="centercolumn" valign="top">
-					<h1>TikiWiki Installer Disabled</h1>
-					<p>As a security precaution, the TikiWiki Installer has been disabled. To re-enable the installer:<br /><ol><li>Use your file manager application to remove the <code>&lt;INSTALL DIRECTORY&gt;\db\lock</code> file.</li><li>Re-run <strong><a href="tiki-install.php" alt="TikiWiki Installer">tiki-install.php</a></strong>.</li></ol></p>
-				</td>
-			</tr>
-		</table>
-	</div>
-	<div id="tiki-bot" align="center">
-		<a title="This is TikiWiki CMS/Groupware" href="http://info.tikiwiki.org" target="_blank"><img src="img/tiki/tikibutton2.png" alt="TikiWiki" border="0" /></a>
-	</div>
-</div>
-</body>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<link type="text/css" href="styles/tikineat.css" rel="stylesheet" />
+		<title>TikiWiki Installer Disabled</title>
+	</head>
+	<body class="tiki_wiki">
+		<div id="siteheader">
+			<div id="sitelogo" style="text-align: left;">
+				<img style="border: medium none ;" alt="Site Logo" src="img/tiki/tikilogo.png" />
+			</div>
+		</div>
+		<div id="tiki-main">
+			<div id="tiki-mid">
+				<table id="tiki-midtbl" width="100%" cellspacing="0" cellpadding="0" border="0">
+					<tr>
+						<td id="centercolumn" valign="top">
+							<h1>TikiWiki Installer Disabled</h1>
+							<p>As a security precaution, the TikiWiki Installer has been disabled. To re-enable the installer:<br /><ol><li>Use your file manager application to remove the <code>&lt;INSTALL DIRECTORY&gt;\db\lock</code> file.</li><li>Re-run <strong><a href="tiki-install.php" alt="TikiWiki Installer">tiki-install.php</a></strong>.</li></ol></p>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div id="tiki-bot" align="center">
+				<a title="This is TikiWiki CMS/Groupware" href="http://info.tikiwiki.org" target="_blank"><img src="img/tiki/tikibutton2.png" alt="TikiWiki" border="0" /></a>
+			</div>
+		</div>
+	</body>
 </html>
 <?php
 	die;
@@ -81,39 +81,39 @@ if ( installer_is_accessible() ) {
 	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link type="text/css" href="styles/tikineat.css" rel="stylesheet" />
-<title>TikiWiki Installer Security Alert</title>
-</head>
-<body class="tiki_wiki">
-<div id="siteheader">
-	<div id="sitelogo" style="text-align: left;">
-		<img style="border: medium none ;" alt="Site Logo" src="img/tiki/tikilogo.png" />
-	</div>
-</div>
-<div id="tiki-main">
-	<div id="tiki-mid">
-		<table id="tiki-midtbl" width="100%" cellspacing="0" cellpadding="0" border="0">
-			<tr>
-				<td id="centercolumn" valign="top">
-					<h1>TikiWiki Installer Security Alert</h1>
-					<p>You are attempting to run the TikiWiki Installer. For your protection, this installer can be used only by a site administrator.</p>
-					<p>To verify that you are a site administrator, enter your <strong><em>database</em></strong> credentials (Username and Password) here. If you have forgotten your database credentials, they are located in the <code>&lt;INSTALL DIRECTORY&gt;\db\local.php</code> file.</p>
-					<form method="post" action="tiki-install.php">
-						<p><label for="dbuser">Database username</label>: <input type="text" name="dbuser"/></p>
-						<p><label for="dbpass">Database password</label>: <input type="password" name="dbpass"/></p>
-						<p><input type="submit" value=" Validate and Continue "/></p>
-					</form>
-				</td>
-			</tr>
-		</table>
-	</div>
-	<div id="tiki-bot" align="center">
-		<a title="This is TikiWiki CMS/Groupware" href="http://info.tikiwiki.org" target="_blank"><img src="img/tiki/tikibutton2.png" alt="TikiWiki" border="0" /></a>
-	</div>
-</div>
-</body>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<link type="text/css" href="styles/tikineat.css" rel="stylesheet" />
+		<title>TikiWiki Installer Security Alert</title>
+	</head>
+	<body class="tiki_wiki">
+		<div id="siteheader">
+			<div id="sitelogo" style="text-align: left;">
+				<img style="border: medium none ;" alt="Site Logo" src="img/tiki/tikilogo.png" />
+			</div>
+		</div>
+		<div id="tiki-main">
+			<div id="tiki-mid">
+				<table id="tiki-midtbl" width="100%" cellspacing="0" cellpadding="0" border="0">
+					<tr>
+						<td id="centercolumn" valign="top">
+							<h1>TikiWiki Installer Security Alert</h1>
+							<p>You are attempting to run the TikiWiki Installer. For your protection, this installer can be used only by a site administrator.</p>
+							<p>To verify that you are a site administrator, enter your <strong><em>database</em></strong> credentials (Username and Password) here. If you have forgotten your database credentials, they are located in the <code>&lt;INSTALL DIRECTORY&gt;\db\local.php</code> file.</p>
+							<form method="post" action="tiki-install.php">
+								<p><label for="dbuser">Database username</label>: <input type="text" name="dbuser"/></p>
+								<p><label for="dbpass">Database password</label>: <input type="password" name="dbpass"/></p>
+								<p><input type="submit" value=" Validate and Continue "/></p>
+							</form>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div id="tiki-bot" align="center">
+				<a title="This is TikiWiki CMS/Groupware" href="http://info.tikiwiki.org" target="_blank"><img src="img/tiki/tikibutton2.png" alt="TikiWiki" border="0" /></a>
+			</div>
+		</div>
+	</body>
 </html>
 <?php
 }
