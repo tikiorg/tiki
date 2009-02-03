@@ -718,7 +718,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_gmap' => 'n',
 		'gmap_defaultx' => '0',
 		'gmap_defaulty' => '0',
-		'gmap_defaultz' => '17',
+		'gmap_defaultz' => '0',
 		'gmap_key' => '',
 
 		// auth

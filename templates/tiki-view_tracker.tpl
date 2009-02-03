@@ -466,8 +466,7 @@ document.write('<div  class="categSelectAll"><input type="checkbox" id="clickall
 
 {* -------------------- Google Map -------------------- *}
 {elseif $field_value.type eq 'G'}
-<input type="text" name="{$field_value.ins_id}" value="{$field_value.value}" />
-<br />{tr}Format : x,y,zoom - You can use Google Map Locator in the item view script.{/tr}
+{include file='tracker_item_field_input.tpl'}
 
 {* -------------------- country selector -------------------- *}
 {elseif $field_value.type eq 'y'}

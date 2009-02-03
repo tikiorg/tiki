@@ -352,7 +352,7 @@
 {* -------------------- Google Map -------------------- *}
 {elseif $field_value.type eq 'G'}
 	<input type="text" name="{$field_value.ins_id}" value="{$field_value.value}" />
-	<br />{tr}Format : x,y,zoom - You can use Google Map Locator in the item view script.{/tr}
+	<br />{tr}Format: x,y,zoom where x is the longitude, and y is the latitude. Zoom is between 0(view Earth) and 19. You can use <a href="tiki-gmap_locator.php?for=item&amp;itemId={$item.itemId}&amp;trackerId={$item.trackerId}&amp;fieldId={$field_value.fieldId}">{tr}Google Map Locator{/tr}</a>.{/tr}
 
 {* -------------------- country selector -------------------- *}
 {elseif $field_value.type eq 'y'}
