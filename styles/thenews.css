@@ -305,7 +305,9 @@ div#sitead {
 	bottom: 3px;
 	right: 10px;
 	font-size: 90%}
-
+#siteloginbar * {
+	padding: 0.2em;
+}
  #siteloginbar.logged-in {
 	bottom: 3px;
 }
