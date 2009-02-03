@@ -85,14 +85,12 @@
 						</div>
 	{if $prefs.feature_ajax ne 'y'}
 						<p>
-							<div>{/if}
-	{if $prefs.feature_ajax ne 'y' and $prefs.min_pass_length > 1}
+		{if $prefs.min_pass_length > 1}
 								<em>{tr}Minimum {$prefs.min_pass_length} characters long{/tr}</em>.{/if}
-	{if $prefs.feature_ajax ne 'y' and $prefs.pass_chr_num eq 'y'}
+		{if $prefs.pass_chr_num eq 'y'}
 								<em>{tr}Password must contain both letters and numbers{/tr}</em>.{/if}
-	{if $prefs.feature_ajax ne 'y'}
-							</div>
-						</p>{/if}
+						</p>
+	{/if}
 					</td>
 				</tr>
 
@@ -105,14 +103,13 @@
 						<div style="float:left;margin-left:5px;" id="checkpass"></div>{/if}
 	{if $prefs.generate_password eq 'y'}
 						<p>
-							<div>
 		{if $prefs.feature_ajax eq	'y'}
 			{button href="#" _onclick="genPass('genepass','pass1','pass2');runPassword(document.RegForm.genpass.value, 'mypassword');check_pass();"	_text="{tr}Generate a password:{/tr}"}
 		{else}
 			{button href="#" _onclick="genPass('genepass','pass1','pass2');runPassword(document.RegForm.genpass.value, 'mypassword');"	_text="{tr}Generate a	password:{/tr}"}
 		{/if}
 							<input id='genepass' name="genpass" type="text" />
-							</div>
+							
 						</p>
 	{/if}
 					</td>
