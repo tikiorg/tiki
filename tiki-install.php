@@ -99,7 +99,7 @@ if ( installer_is_accessible() ) {
 				<td id="centercolumn" valign="top">
 					<h1>TikiWiki Installer Security Alert</h1>
 					<p>You are attempting to run the TikiWiki Installer. For your protection, this installer can be used only by a site administrator.</p>
-					<p>To verify that you are a site administrator, enter your your <strong><em>database</em></strong> credentials (Username and Password) here. If you have forgotten your database credentials, they are located in the <code>&lt;INSTALL DIRECTORY&gt;\db\local.php</code> file.</p>
+					<p>To verify that you are a site administrator, enter your <strong><em>database</em></strong> credentials (Username and Password) here. If you have forgotten your database credentials, they are located in the <code>&lt;INSTALL DIRECTORY&gt;\db\local.php</code> file.</p>
 					<form method="post" action="tiki-install.php">
 						<p><label for="dbuser">Database username</label>: <input type="text" name="dbuser"/></p>
 						<p><label for="dbpass">Database password</label>: <input type="password" name="dbpass"/></p>
