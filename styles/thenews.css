@@ -2208,8 +2208,8 @@ table.default	td {
   border-color: #A9A9A9;
   border-width: 1px;
   border-style: solid;
-  background-color: black;
-  color: #D8D8D8;
+  background-color: #ccc;
+  color: #000;
 }
 
 .advanced:before { content:url(../img/icons/mini_blue_diamond.gif)" "; }
