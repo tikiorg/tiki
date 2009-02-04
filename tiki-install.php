@@ -14,10 +14,46 @@ function installer_is_accessible()
 	return true;
 }
 
-if( file_exists( 'db/lock' ) )
-{
- echo '<?xml version="1.0" encoding="UTF-8"?>';
-?>
+if (version_compare(PHP_VERSION, '5.0.0', '<')) {
+	echo '<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html 
+  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<link type="text/css" href="styles/tikineat.css" rel="stylesheet" />
+		<title>TikiWiki Installer Disabled</title>
+	</head>
+	<body class="tiki_wiki">
+		<div id="siteheader">
+			<div id="sitelogo" style="text-align: left;">
+				<img style="border: medium none ;" alt="Site Logo" src="img/tiki/tikilogo.png" />
+			</div>
+		</div>
+		<div id="tiki-main">
+			<div id="tiki-mid">
+				<table id="tiki-midtbl" width="100%" cellspacing="0" cellpadding="0" border="0">
+					<tr>
+						<td id="centercolumn" valign="top">
+							<h1>TikiWiki Installer Disabled</h1>
+							<p>You need PHP5 for TikiWiki 3.0</p>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div id="tiki-bot" align="center">
+				<a title="This is TikiWiki CMS/Groupware" href="http://info.tikiwiki.org" target="_blank"><img src="img/tiki/tikibutton2.png" alt="TikiWiki" border="0" /></a>
+			</div>
+		</div>
+	</body>
+</html>';
+	die();
+}
+
+if( file_exists( 'db/lock' ) ) {
+ echo <<<END
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html 
 	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -50,7 +86,7 @@ if( file_exists( 'db/lock' ) )
 		</div>
 	</body>
 </html>
-<?php
+END;
 	die;
 	}
 session_start();
@@ -75,8 +111,8 @@ if ( installer_is_accessible() ) {
 	$admin_acc = 'y';
 	include_once("installer/tiki-installer.php");
 } else {
-	echo '<?xml version="1.0" encoding="UTF-8"?>';
-?>
+	echo <<<END
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html 
 	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -115,7 +151,7 @@ if ( installer_is_accessible() ) {
 		</div>
 	</body>
 </html>
-<?php
+END;
 }
 
 ?>
