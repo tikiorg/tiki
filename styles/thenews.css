@@ -933,7 +933,6 @@ td.form {
 table.normal, 
 table.admin,
 table.bloglist {
-	padding: 0;
 	margin: 0;
 	border-collapse: collapse;
 	width: 100%;
@@ -951,92 +950,116 @@ table.admin tr td div#page-bar {
 	background-color: transparent;
 }
 
-/** Tabs **/
+/** Tiki Tabs **/
+
+div.content {
+	padding: 3px
+}
+
+div.content .tabs {
+	margin: 0px;
+}
 
 .tabs {
-	border-bottom: solid 1px #225566 !important;
-	margin-top: 10px !important; 
-  padding: 0 !important;
+	border-bottom: solid 1px #0a6aa6 !important;
+	margin-top: 10px !important;
+	padding: 0 !important;
 }
 
-.tabactive {
-	border: solid 1px #225566 !important;
-	border-bottom: none !important;
-	border-top-width: 2px !important;
-	position: relative;
-	top: -2px;
-}
-[class].tabactive {
-	top: -1px
-}
-.tabactive a {
-	background: #eee;
-}
-.tabinactive {
-	border: solid 1px #666 !important;
-	border-bottom: none !important;
-	position: relative !important;
-	top: -3px !important;
-}
-[class].tabinactive {
-	top: -2px !important;
+.admin {
+	padding: 2px;
 }
 
 .tabmark {
 	display: inline;
-	font-size: 85%;
-	background: #abcdef;
-	border: 1px solid #abcdef;
-	margin: 0;
+	font-size: 10px;
+	background-color: #bfbfbf;
+	margin: 0px;
 	margin-right: 5px;
-	padding: 1px 0 1px 0;
+	padding: 2px 0;
 }
 
-.tabmark a { 
-	border-bottom :0;
+.tabmark a {
+	border-bottom: 0;
 	color: #000;
-	padding: 1px 5px 1px 5px;
-	text-decoration: none;
+	font-weight: bold;
+	padding: 1px 5px;
 }
 
 .tabmark a:active {
-	background: #fff;
-	color: red;
+	background-color: #f2f2f2;
+	color: #0a6aa6;
 }
 
 .tabmark a:hover {
-	color: black;
-	background: #f0f9ff;
+	color: #0a6aa6;
+	background-color: #CFCFCF;
+	text-decoration: none;
 }
 
-.tabcontent {
-	z-index: 200;
+
+/* active (current) tab */
+.tabactive {
+	background-color : #f2f2f2 !important;
+	border: solid 1px #0a6aa6 !important;
+	border-bottom: none !important;
+	border-top-width: 2px !important;
 	position: relative;
-	border: 1px solid #abcdef;
+	bottom: 2px;
+	z-index: 2;
+}
+
+[class].tabactive {
+	bottom: 1px
+}
+.tabactive a:hover {
+	background-color : #f2f2f2 !important;
+}
+
+/* link of active tab */
+.tabactive a {
+	color: #0a6aa6 !important;
+}
+
+/* inactive tabs */
+.tabinactive {
+	border: solid 1px #666666 !important;
+	border-bottom: none !important;
+	position: relative !important;
+ 	top: -3px !important;
+}
+
+[class].tabinactive {
+	top: -2px !important
+}
+
+
+
+.tabcontent {
+	background-color: #f2f2f2;
+	border: solid 1px #0a6aa6 !important;
+	border-top: none !important;
+	margin: 0;
 	padding: 6px 2px 2px 2px;
-	margin-bottom: 25px;
-	background: #f0f9ff;
+	text-align: center;
 }
 
 .tabcontent table {
-	margin: 1% auto 2% auto;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 1%;
+	margin-bottom: 2%;
 	text-align: left;
 	width: 95%;
 }
+
 .tabcontent table td {
 	padding: 5px;
 }
 
-form fieldset.tabcontent {
-	border: 1px solid #225566;
-	border-top: none !important;
+.commentbloc {
+	text-align: left;
 }
-form.admin .tabs {
-	border-bottom: solid 1px #225566 !important;
-	margin: 10px 1px 0 0 !important;
-	padding: 0 !important;
-}
-
 /* Get the contextual info to make this specific.
 div.content {
 	padding: 3px;
