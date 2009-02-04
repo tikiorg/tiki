@@ -930,7 +930,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_actionlog_bytes' => 'n',
 
 		// admin
-		'siteTitle' => '',
+		'siteTitle' => 'My Tiki',
 		'tmpDir' => 'temp',
 
 		// tell a friend
