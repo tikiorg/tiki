@@ -3,19 +3,20 @@
 {literal}
 	<script type="text/javascript">
 	<!--
-		function capLock(e){
+		function regCapsLock(e){
 			kc = e.keyCode?e.keyCode:e.which;
 			sk = e.shiftKey?e.shiftKey:((kc == 16)?true:false);
 			if(((kc >= 65 && kc <= 90) && !sk)||((kc >= 97 && kc <= 122) && sk))
-				document.getElementById('divCapson').style.visibility = 'visible';
+				document.getElementById('divRegCapson').style.visibility = 'visible';
 			else
-				document.getElementById('divCapson').style.visibility = 'hidden';
+				document.getElementById('divRegCapson').style.visibility = 'hidden';
 		}
 	// -->
 	</script>
 {/literal}
-	<h2>{tr}Register as a new user{/tr}</h2>
-	<div id="divCapson" style="visibility:hidden">{icon _id=error style="vertical-align:middle"} {tr}CapsLock is on.{/tr}</div>
+	<h1>{tr}Registration{/tr}</h1>
+	
+	<div id="divRegCapson" style="visibility:hidden">{icon _id=error style="vertical-align:middle"} {tr}CapsLock is on.{/tr}</div>
 
 {if $prefs.feature_ajax eq 'y'}
 		<script src="lib/registration/register_ajax.js" type="text/javascript"></script>
@@ -44,8 +45,9 @@
 
 {else}
 
-		<form action="tiki-register.php" method="post" name="RegForm"> 
-			<table class="normal">
+		<form action="tiki-register.php" method="post" name="RegForm">
+		<fieldset><legend>{tr}Register as a new user{/tr}</legend>
+			<table class="form">
 
 				<tr>
 					<td class="formcolor">{if $prefs.login_is_email eq 'y'}{tr}Email{/tr}{else}{tr}Username{/tr}{/if}:</td>
@@ -68,7 +70,7 @@
 				<tr>
 					<td class="formcolor">{tr}Passcode to register{/tr}:</td>
 					<td class="formcolor">
-						<input type="password" name="passcode" onkeypress="capLock(event)" />
+						<input type="password" name="passcode" onkeypress="regCapsLock(event)" />
 						<em>{tr}Not your password.{/tr} {tr}To request a passcode, {if $prefs.feature_contact eq 'y'}<a href="tiki-contact.php">{/if}
 	contact the sytem administrator{if $prefs.feature_contact eq 'y'}</a>{/if}{/tr}.</em>
 					</td>
@@ -78,7 +80,7 @@
 				<tr>
 					<td class="formcolor">{tr}Password{/tr}:</td>
 					<td class="formcolor">
-						<input style="float:left"  id='pass1' type="password" name="pass" onkeypress="capLock(event)" onkeyup="runPassword(this.value, 'mypassword');{if $prefs.feature_ajax eq 'y'}check_pass();{/if}" />
+						<input style="float:left"  id='pass1' type="password" name="pass" onkeypress="regCapsLock(event)" onkeyup="runPassword(this.value, 'mypassword');{if $prefs.feature_ajax eq 'y'}check_pass();{/if}" />
 						<div style="float:left;width:150px;margin-left:5px;">
 							<div id="mypassword_text"></div>
 							<div id="mypassword_bar" style="font-size: 5px; height: 2px; width: 0px;"></div> 
@@ -97,7 +99,7 @@
 				<tr>
 					<td class="formcolor">{tr}Repeat password{/tr}:</td>
 					<td class="formcolor">
-						<input style="float:left" id='pass2' type="password" name="passAgain" onkeypress="capLock(event)" 
+						<input style="float:left" id='pass2' type="password" name="passAgain" onkeypress="regCapsLock(event)" 
 	{if $prefs.feature_ajax eq'y'}onkeyup="check_pass()"{/if}/>
 	{if $prefs.feature_ajax eq'y'}
 						<div style="float:left;margin-left:5px;" id="checkpass"></div>{/if}
@@ -159,6 +161,7 @@
 					<td class="formcolor"><input type="submit" name="register" value="{tr}Register{/tr}" /></td>
 				</tr>
 			</table>
+			</fieldset>
 		</form>
 		<div class="simplebox">
 	{icon _id=information style="vertical-align:middle" align="left"}{tr}NOTE: Make sure to whitelist this domain to prevent registration emails being canned by your spam filter!{/tr}
