@@ -41,7 +41,7 @@ function get_default_prefs() {
 
 		// wiki
 		'feature_wiki' => 'y',
-		'default_wiki_diff_style' => 'minsidediff',
+		'default_wiki_diff_style' => 'sidediff',
 		'feature_backlinks' => 'n',
 		'feature_dump' => 'n',
 		'feature_history' => 'y',

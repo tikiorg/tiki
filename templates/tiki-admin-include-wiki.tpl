@@ -691,7 +691,18 @@ name="w_displayed_default"{if $prefs.w_displayed_default eq 'y'} checked="checke
     </td></tr>
      <tr><td class="form">{tr}Diff style:{/tr} </td><td><select name="default_wiki_diff_style">
        <option value="old" {if $prefs.default_wiki_diff_style eq 'old'}selected="selected"{/if}>{tr}Only with last version{/tr}</option>
-       <option value="minsidediff" {if $prefs.default_wiki_diff_style ne 'old'}selected="selected"{/if}>{tr}Any 2 versions{/tr}</option>
+  <option value="htmldiff" {if $prefs.default_wiki_diff_style == "htmldiff"}selected="selected"{/if}>{tr}HTML diff{/tr}</option>
+  <option value="sidediff" {if $prefs.default_wiki_diff_style == "sidediff"}selected="selected"{/if}>{tr}Side-by-side diff{/tr}</option>
+  <option value="sidediff-char" {if $prefs.default_wiki_diff_style == "sidediff-char"}selected="selected"{/if}>{tr}Side-by-side diff by characters{/tr}</option>
+  <option value="inlinediff" {if $prefs.default_wiki_diff_style == "inlinediff"}selected="selected"{/if}>{tr}Inline diff{/tr}</option>
+  <option value="inlinediff-char" {if $prefs.default_wiki_diff_style == "inlinediff-char"}selected="selected"{/if}>{tr}Inline diff by characters{/tr}</option>
+  <option value="sidediff-full" {if $prefs.default_wiki_diff_style == "sidediff-full"}selected="selected"{/if}>{tr}Full side-by-side diff{/tr}</option>
+  <option value="sidediff-full-char" {if $prefs.default_wiki_diff_style == "sidediff-full-char"}selected="selected"{/if}>{tr}Full side-by-side diff by characters{/tr}</option>
+  <option value="inlinediff-full" {if $prefs.default_wiki_diff_style == "inlinediff-full"}selected="selected"{/if}>{tr}Full inline diff{/tr}</option>
+  <option value="inlinediff-full-char" {if $prefs.default_wiki_diff_style == "inlinediff-full-char"}selected="selected"{/if}>{tr}Full inline diff by characters{/tr}</option>
+  <option value="unidiff" {if $prefs.default_wiki_diff_style == "unidiff"}selected="selected"{/if}>{tr}Unified diff{/tr}</option>
+  <option value="sideview" {if $prefs.default_wiki_diff_style == "sideview"}selected="selected"{/if}>{tr}Side-by-side view{/tr}</option>
+
     </select></td></tr>
 	<tr><td class="form">{tr}History only for data, description, comment change{/tr}</td><td><input type="checkbox" name="feature_wiki_history_full" {if $prefs.feature_wiki_history_full eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td colspan="2" class="input_submit_container"><input type="submit" name="wikisetprefs" value="{tr}Change preferences{/tr}" /></td></tr>
