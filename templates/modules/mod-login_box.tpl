@@ -114,7 +114,7 @@ function capLock(e){
 			  </div>
             {/if}
           {/if}
-          <div style="text-align: center"><input type="submit" name="login" value="{tr}Login{/tr}" /></div>
+          <div style="text-align: center"><input class="button submit" type="submit" name="login" value="{tr}Login{/tr}" /></div>
        </fieldset>
           
           {if $prefs.forgotPass eq 'y' and $prefs.allowRegister eq 'y' and $prefs.change_password eq 'y'}
