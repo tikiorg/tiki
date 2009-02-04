@@ -80,7 +80,11 @@ img {	border: 0;}
 .wikitext img {}
 legend {color: #000}
 
-fieldset {border: solid 1px #A9A9A9; margin-bottom: 2px}
+fieldset {
+	border: solid 1px #A9A9A9;
+	margin-bottom: 2px;
+	padding: 0.3em;
+}
 #col2 fieldset { width: 100px }
 
 form {
@@ -125,7 +129,7 @@ input[type=submit],
 .button input,
 input[type=reset],
 .button  {
-	border: 1px solid #aaa; 
+	border: solid 1px #aaa; 
 	background: #fbfbfb;
 	color: #000;
 	text-transform: uppercase;
