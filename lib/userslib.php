@@ -2666,7 +2666,7 @@ function get_included_groups($group, $recur=true) {
 				if ($prefs['userTracker'] == 'y') {
 					global $trklib; include_once('lib/trackers/trackerlib.php');
 					$re = $this->get_group_info(isset($chosenGroup)? $chosenGroup: 'Registered');
-					$fields = $trklib->list_tracker_fields($re['usersTrackerId'], 0, -1, 'position_asc', '', true, array('fieldId'=>$re['registrationUsersFieldIds']));
+					$fields = $trklib->list_tracker_fields($re['usersTrackerId'], 0, -1, 'position_asc', '', true, array('fieldId'=>explode(':',$re['registrationUsersFieldIds'])));
 					$listfields = array();
 					foreach ($fields['data'] as $field) {
 						$listfields[$field['fieldId']] = $field;
