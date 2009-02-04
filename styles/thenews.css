@@ -105,7 +105,7 @@ input,
 textarea,
 option,
 select {
-	
+	margin: 0.2em;
 }
 
 /* IE */
