@@ -2663,6 +2663,18 @@ function get_included_groups($group, $recur=true) {
 		} elseif ($prefs['validateRegistration'] == 'y') {
 			if (!empty($chosenGroup)) {
 				$smarty->assign_by_ref('chosenGroup', $chosenGroup);
+				if ($prefs['userTracker'] == 'y') {
+					global $trklib; include_once('lib/trackers/trackerlib.php');
+					$re = $this->get_group_info(isset($chosenGroup)? $chosenGroup: 'Registered');
+					$fields = $trklib->list_tracker_fields($re['usersTrackerId'], 0, -1, 'position_asc', '', true, array('fieldId'=>$re['registrationUsersFieldIds']));
+					$listfields = array();
+					foreach ($fields['data'] as $field) {
+						$listfields[$field['fieldId']] = $field;
+					}
+					$items = $trklib->list_items($re['usersTrackerId'], 0, 1, '',  $listfields, $trklib->get_field_id_from_type($re['usersTrackerId'], 'u', '1%'), '', '', '', $name);
+					if (isset($items['data'][0]))
+						$smarty->assign_by_ref('item', $items['data'][0]);
+				}
 			}
 			$mail_data = $smarty->fetch('mail/moderate_validation_mail.tpl');
 			$mail_subject = $smarty->fetch('mail/moderate_validation_mail_subject.tpl');
