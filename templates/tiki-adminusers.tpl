@@ -82,7 +82,7 @@
 	<h2>{tr}Users{/tr}</h2>
 
 	<form method="get" action="tiki-adminusers.php">
-		<table class="findtable">
+		<table class="clearfix">
 			<tr>
 				<td>{tr}Find{/tr}</td>
 				<td><input type="text" name="find" value="{$find|escape}" /></td>
