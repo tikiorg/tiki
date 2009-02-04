@@ -111,8 +111,6 @@ select {
 /* IE */
 * html .wikitopline select {font-size: .9em;}
 
-input.button {}
-
 input[type=checkbox],
 input[type=radio] {
 	border: 0;
@@ -123,19 +121,28 @@ input[type=password] {
 
 }
 
-button,
-input[type=submit],
-.submitbutton,
-.button input,
-input[type=reset],
-.button  {
+/* all button variations */
+input.button, button, .submitbutton, .button input, .button {
 	border: solid 1px #aaa; 
 	background: #fbfbfb;
 	color: #000;
 	text-transform: uppercase;
 	font-family: Arial, Helvetica, sans-serif;
-	font-size: 75%/* !important*/}
+	font-size: .8em;
+}
 
+/* styles by type separated from the above because IE6 doesn't like multiple class specifications with bracket selectors together */
+input[type=submit],
+input[type=reset] {
+	border: solid 1px #aaa; 
+	background: #fbfbfb;
+	color: #000;
+	text-transform: uppercase;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: .8em}
+
+/* hovered buttons */
+input.button:hover,
 button:hover,
 input[type=submit]:hover,
 .submitbutton:hover,
