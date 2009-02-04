@@ -80,7 +80,7 @@ img {	border: 0;}
 .wikitext img {}
 legend {color: #000}
 
-fieldset {border: solid 1px #A9A9A9}
+fieldset {border: solid 1px #A9A9A9; margin-bottom: 2px}
 #col2 fieldset { width: 100px }
 
 form {
