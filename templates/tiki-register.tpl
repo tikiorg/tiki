@@ -158,7 +158,7 @@
 
 				<tr>
 					<td class="formcolor">&nbsp;</td>
-					<td class="formcolor"><input type="submit" name="register" value="{tr}Register{/tr}" /></td>
+					<td class="formcolor"><input class="button submit" type="submit" name="register" value="{tr}Register{/tr}" /></td>
 				</tr>
 			</table>
 			</fieldset>
