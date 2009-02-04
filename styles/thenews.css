@@ -937,7 +937,9 @@ table.bloglist {
 	border-collapse: collapse;
 	width: 100%;
 }
-
+table.normalnoborder {
+	width: 100%;
+}
 table.normal,
 table.bloglist {
 	border: solid 1px #909090;

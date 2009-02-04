@@ -881,7 +881,9 @@ table.bloglist {
 	border-collapse: collapse;
 	width: 100%;
 }
-
+table.normalnoborder {
+	width: 100%;
+}
 /* cells in tracker items display */
 td.formlabel {
 	white-space: nowrap;

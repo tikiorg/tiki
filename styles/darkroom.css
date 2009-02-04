@@ -922,6 +922,8 @@ table.bloglist  {
 	border-collapse: collapse;
 	margin-top: 1em;
 	margin-bottom: 1em}
+table.normalnoborder {
+	width: 100%}
 	
 * html table.normal, 
 * html table.admin,

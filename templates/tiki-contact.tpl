@@ -10,7 +10,7 @@
   <input type="hidden" name="to" value="{$prefs.contact_user|escape}" />
   <table class="normalnoborder">
   <tr>
-    <td class="form">{tr}Priority{/tr}:</td><td class="form">
+    <td class="form">{tr}Priority{/tr}:</td><td class="form" style="width:99%">
     <select name="priority">
       <option value="1" {if $priority eq 1}selected="selected"{/if}>1 -{tr}Lowest{/tr}-</option>
       <option value="2" {if $priority eq 2}selected="selected"{/if}>2 -{tr}Low{/tr}-</option>
@@ -26,10 +26,10 @@
 {/if}
   
   <tr>
-    <td class="form">{tr}Subject{/tr}:</td><td class="form"><input type="text" name="subject" value="{$subject}" size="80" maxlength="255" /></td>
+    <td class="form">{tr}Subject{/tr}:</td><td class="form"><input type="text" name="subject" value="{$subject}" maxlength="255"  style="width:99%" /></td>
   </tr>
   <tr><td class="form">{tr}Message{/tr}:</td>
-      <td class="form"><textarea rows="20" cols="80" name="body">{$body}</textarea></td>
+      <td class="form"><textarea rows="20" name="body" style="width:99%">{$body}</textarea></td>
   </tr>
   <tr><td class="form"></td><td class="form"><input type="submit" name="send" value="{tr}Send{/tr}" /></td></tr>
 </table>
