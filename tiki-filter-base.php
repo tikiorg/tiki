@@ -41,6 +41,7 @@ if ( substr($tikiroot,-1,1) != '/' ) $tikiroot .= '/';
 if ( substr($tikipath,-1,1) != '/' ) $tikipath .= '/';
 
 require_once('lib/init/initlib.php');
+TikiInit::appendIncludePath($tikipath.'lib/core/lib');
 require_once('lib/core/lib/DeclFilter.php');
 require_once('lib/core/lib/JitFilter.php');
 

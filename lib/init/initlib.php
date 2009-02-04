@@ -56,6 +56,40 @@ class TikiInit {
 	}
 
 
+/** Prepend $path to the include path
+  * \static
+  */
+	function prependIncludePath($path) {
+		$include_path = ini_get('include_path');
+		if ($include_path) {
+			$include_path = $path . TikiInit::pathSeparator(). $include_path;
+		} else {
+			$include_path = $path;
+		}
+		if (phpversion() >= '4.3')
+			return set_include_path ($include_path);
+		else
+			return ini_set('include_path', $include_path);
+	}
+
+
+/** Append $path to the include path
+  * \static
+  */
+	function appendIncludePath($path) {
+		$include_path = ini_get('include_path');
+		if ($include_path) {
+			$include_path .= TikiInit::pathSeparator(). $path;
+		} else {
+			$include_path = $path;
+		}
+		if (phpversion() >= '4.3')
+			return set_include_path ($include_path);
+		else
+			return ini_set('include_path', $include_path);		
+	}
+
+
 /** Return system defined temporary directory.
   * In Unix, this is usually /tmp
   * In Windows, this is usually c:\windows\temp or c:\winnt\temp
