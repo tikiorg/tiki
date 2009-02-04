@@ -17,7 +17,7 @@ function wikiplugin_mouseover_info() {
 			'url' => array(
 				'required' => false,
 				'name' => tra('URL'),
-				'description' => tra('?'),
+				'description' => tra('Destination link when moused-over text is clicked. Use http:// for external links'),
 				'filter' => 'url',
 			),
 			'label' => array(
@@ -27,7 +27,7 @@ function wikiplugin_mouseover_info() {
 				'filter' => 'striptags',
 			),
 			'text' => array(
-				'required' => true,
+				'required' => false,
 				'name' => tra('Text'),
 				'description' => tra('DEPRECATED').' '.tra('Text displayed on the mouseover. The body contains the text of the page.'),
 				'filter' => 'striptags',
@@ -35,25 +35,25 @@ function wikiplugin_mouseover_info() {
 			'width' => array(
 				'required' => false,
 				'name' => tra('Width'),
-				'description' => tra('Mouse over box width.'),
+				'description' => tra('Mouse over box width. Default: 400px'),
 				'filter' => 'digits',
 			),
 			'height' => array(
 				'required' => false,
 				'name' => tra('Height'),
-				'description' => tra('Mouse over box height.'),
+				'description' => tra('Mouse over box height. Default: 200px'),
 				'filter' => 'digits',
 			),
 			'offsetx' => array(
 				'required' => false,
 				'name' => tra('Offset X'),
-				'description' => tra('Shifts the overlay to the right by the specified amount of pixels in relation to the cursor.'),
+				'description' => tra('Shifts the overlay to the right by the specified amount of pixels in relation to the cursor. Default: 5px'),
 				'filter' => 'digits',
 			),
 			'offsety' => array(
 				'required' => false,
 				'name' => tra('Offset Y'),
-				'description' => tra('Shifts the overlay to the bottom by the specified amount of pixels in relation to the cursor.'),
+				'description' => tra('Shifts the overlay to the bottom by the specified amount of pixels in relation to the cursor. Default: 0px'),
 				'filter' => 'digits',
 			),
 			'parse' => array(
@@ -65,7 +65,7 @@ function wikiplugin_mouseover_info() {
 			'bgcolor' => array(
 				'required' => false,
 				'name' => tra('Color of the inside popup'),
-				'description' => tra('#000000'),
+				'description' => tra('Default: #F5F5F5'),
 				'filter' => 'striptags',
 			),
 			'textcolor' => array(
@@ -79,6 +79,12 @@ function wikiplugin_mouseover_info() {
 				'name' => tra('Sticky'),
 				'description' => 'y|n, when enabled, popup stays visible until an other one is displayed or it is clicked.',
 				'filter' => 'alpha',
+			),				
+			'padding' => array(
+				'required' => false,
+				'name' => tra('Padding'),
+				'description' => 'Default: 5px',
+				'filter' => 'digits',
 			),
 		),
 	);
@@ -93,13 +99,14 @@ function wikiplugin_mouseover( $data, $params ) {
 		$url = $params['url'];
 	}
 
-	$width = isset( $params['width'] ) ? (int) $params['width'] : 300;
-	$height = isset( $params['height'] ) ? (int) $params['height'] : 300;
-	$offsetx = isset( $params['offsetx'] ) ? (int) $params['offsetx'] : 0;
+	$width = isset( $params['width'] ) ? (int) $params['width'] : 400;
+	$height = isset( $params['height'] ) ? (int) $params['height'] : 200;
+	$offsetx = isset( $params['offsetx'] ) ? (int) $params['offsetx'] : 5;
 	$offsety = isset( $params['offsety'] ) ? (int) $params['offsety'] : 0;
 	$parse = ! isset($params['parse']) || $params['parse'] != 'n';
 	$sticky = isset($params['sticky']) && $params['sticky'] == 'y';
-
+	$padding = isset( $params['padding'] ) ? (int) $params['padding'] : 5;
+	
 	if (empty($params['label']) && empty($params['text'])) {
 		$label = tra('No label specified');
 	} else {
@@ -142,10 +149,10 @@ window.addEvent('domready', function() {
 	} ); " ) . "
 } );
 " );
-	$bgcolor = "background-color: " . ( isset($params['bgcolor']) ? $params['bgcolor'] : 'white' ) . ';';
+	$bgcolor = "background-color: " . ( isset($params['bgcolor']) ? $params['bgcolor'] : '#F5F5F5' ) . ';';
 	$textcolor = isset($params['textcolor']) ? ("color:" . $params['textcolor'] . ';') : '';
 
-	$html = "~np~<a id=\"$id-link\" href=\"$url\">$label</a><div id=\"$id\" style=\"width: {$width}px; height: {$height}px; {$bgcolor} {$textcolor} display:none; position: absolute; z-index: 500;\">$text</div>~/np~";
+	$html = "~np~<a id=\"$id-link\" href=\"$url\">$label</a><div id=\"$id\" style=\"width: {$width}px; height: {$height}px; {$bgcolor} {$textcolor} display:none; padding: {$padding}px ;position: absolute; z-index: 500;\">$text</div>~/np~";
 
 	return $html;
 }
