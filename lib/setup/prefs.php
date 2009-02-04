@@ -859,13 +859,13 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 
 		// site identity
 		'feature_siteidentity' => 'y',
-		'site_crumb_seper' => '>',
+		'site_crumb_seper' => '»',
 		'site_nav_seper' => '|',
 		'feature_sitemycode' => 'n',
 		'sitemycode' => '<div align="center"><b>{tr}Here you can (as an admin) place a piece of custom XHTML and/or Smarty code. Be careful and properly close all the tags before you choose to publish ! (Javascript, applets and object tags are stripped out.){/tr}</b></div>', // must be max. 250 chars now unless it'll change in tiki_prefs db table field value from VARCHAR(250) to BLOB by default
 		'sitemycode_publish' => 'n',
 		'feature_sitelogo' => 'y',
-		'sitelogo_bgcolor' => '',
+		'sitelogo_bgcolor' => '#FFF',
 		'sitelogo_bgstyle' => '',
 		'sitelogo_align' => 'left',
 		'sitelogo_title' => 'Tikiwiki powered site',
@@ -930,7 +930,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_actionlog_bytes' => 'n',
 
 		// admin
-		'siteTitle' => 'My Tiki',
+		'siteTitle' => 'Tiki 3.x',
 		'tmpDir' => 'temp',
 
 		// tell a friend
