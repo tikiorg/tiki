@@ -828,9 +828,29 @@ div.cbox {
 	padding: 3px;
 }
 
-.rbox {}
-.rbox-title {}
-.rbox-data {}
+/* rbox: remarks box (note/warning/tip/comment) */
+.rbox {
+	margin: 0.2em 0 0.4em;
+	text-align: left;
+}
+.rbox-title {
+	background-color: #f2cd5e;
+	border: none;
+	float: left;
+	font-size: 1em;
+	padding: 0.2em 0.8em;
+	line-height: 1.4em;
+	position: relative;
+	top: 1px;
+	z-index: 2;
+}
+.rbox-data {
+	background-color: #fff;
+	border: solid 1px #f2cd5e;
+	clear: left;
+	margin: 0;
+	padding: 6px 2px 2px 2px;
+}
 
 .warning .rbox-title {}
 .warning .rbox-data {}
