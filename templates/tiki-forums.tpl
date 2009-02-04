@@ -83,7 +83,7 @@
 <span style="float:right">
 <a class="admlink" title="{tr}Configure Forum{/tr}" href="tiki-admin_forums.php?forumId={$channels[user].forumId}">{icon _id='page_edit'}</a>
 </span>
-{/if}{if $prefs.forum_list_desc eq 'y'}<br />
+{/if}
 {if $prefs.forum_list_desc eq 'y'}
 	<br />
 	<div class="subcomment">
