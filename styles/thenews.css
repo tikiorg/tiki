@@ -122,7 +122,7 @@ input[type=password] {
 }
 
 /* all button variations */
-input.button, button, .submitbutton, .button input, .button {
+input.button, button, .submitbutton, .button input, .button, input.wikiaction {
 	border: solid 1px #aaa; 
 	background: #fbfbfb;
 	color: #000;
@@ -315,9 +315,9 @@ div#sitead {
 	position: absolute;
 	bottom: 3px;
 	right: 10px;
-	font-size: 90%}
+	font-size: 1em}
 #siteloginbar * {
-	padding: 0.2em;
+	margin: .2em; padding: .2em;
 }
  #siteloginbar.logged-in {
 	bottom: 3px;
