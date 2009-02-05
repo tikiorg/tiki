@@ -1,6 +1,6 @@
 <?php
 
-class  Multilingual_Aligner_BilingualAlignerTest extends PHPUnit_Framework_TestCase
+class  Multilingual_Aligner_BilingualAlignerTest extends TikiTestCase
 {
 
    public function ___test_reminder()  {

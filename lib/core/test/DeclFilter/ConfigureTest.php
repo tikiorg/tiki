@@ -1,6 +1,6 @@
 <?php
 
-class DeclFilter_ConfigureTest extends PHPUnit_Framework_TestCase
+class DeclFilter_ConfigureTest extends TikiTestCase
 {
 	function testSimple()
 	{

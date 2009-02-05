@@ -4,9 +4,11 @@
  *
  */
  
-class Multilingual_MachineTranslation_GoogleTranslateWrapperTest extends PHPUnit_Framework_TestCase {
+class Multilingual_MachineTranslation_GoogleTranslateWrapperTest extends TikiTestCase {
+	
+//  protected $backupGlobals = FALSE;
 
-   function test_This_is_how_you_create_a_GoogleTranslateWrapper() {
+   public function test_This_is_how_you_create_a_GoogleTranslateWrapper() {
       $source_lang = 'en';
       $target_lang = 'it'; 	   	
       $translator = new Multilingual_MachineTranslation_GoogleTranslateWrapper($source_lang,$target_lang);
@@ -27,10 +29,16 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapperTest extends PHPUnit
    }
    
    
-   function test_This_is_how_you_translate_some_text() {
+   public function test_This_is_how_you_translate_some_text() {
    	  $text = "Hello";
    	  $translation = $this->translator->translateText($text);
-   	  $this->assertEquals($translation, "Ciao", "The translation was not correct for text: $text.");
+   	  $this->assertEquals("Ciao", $translation, "The translation was not correct for text: $text.");
+   }
+
+   public function test_This_is_how_you_translate_sentence_by_sentence() {
+   	  $text = "Hello world! How are you?";
+   	  $translation = $this->translator->translateSentenceBySentence($text);
+   	  $this->assertEquals("Ciao mondo!Come stai?", $translation, "The translation was not correct for text: $text.");
    }
 
    

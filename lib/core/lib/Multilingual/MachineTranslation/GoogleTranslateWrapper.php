@@ -5,6 +5,7 @@
  */
  
  require_once 'lib/ointegratelib.php';
+ require_once 'Multilingual/Aligner/SentenceSegmentor.php'; 
  
 class Multilingual_MachineTranslation_GoogleTranslateWrapper {
    	var $source_lang;
@@ -16,12 +17,31 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapper {
    		$this->target_lang = $target_lang;
    	}
    	
+   	
    	function translateText($text) {
    		$langpair = $this->source_lang."|".$this->target_lang;
-   		$url = $this->google_ajax_url."&q=".urlencode($text)."&langpair=".urlencode($langpair);
+		$url = $this->google_ajax_url."&q=".rawurlencode($text)."&langpair=".urlencode($langpair);
         $ointegrate = new OIntegrate();
         $oi_result = $ointegrate->performRequest($url);
         $result = $oi_result->data['responseData']['translatedText'];
+   		return $result;
+   	}
+   	
+   	function translateSentenceBySentence($text) {
+   		$langpair = $this->source_lang."|".$this->target_lang;
+   		$segmentor = new Multilingual_Aligner_SentenceSegmentor();
+   		$sentences = $segmentor->segment($text); 
+   		$ii = 0;
+   		$result = "";
+   		while ($ii < sizeof($sentences)) {
+   		  $text_to_translate = $sentences[$ii];	
+   		  $url = $this->google_ajax_url."&q=".rawurlencode($text_to_translate)."&langpair=".urlencode($langpair);
+          $ointegrate = new OIntegrate();
+          $oi_result = $ointegrate->performRequest($url);
+          $result .= $oi_result->data['responseData']['translatedText'];
+          $ii++;
+   		}  
+        
         return $result;		
    	} 
    	

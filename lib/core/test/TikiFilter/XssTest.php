@@ -1,6 +1,6 @@
 <?php
 
-class TikiFilter_XssTest extends PHPUnit_Framework_TestCase
+class TikiFilter_XssTest extends TikiTestCase
 {
 	function testSimple()
 	{

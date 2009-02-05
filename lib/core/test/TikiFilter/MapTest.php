@@ -1,6 +1,6 @@
 <?php
 
-class TikiFilter_MapTest extends PHPUnit_Framework_TestCase
+class TikiFilter_MapTest extends TikiTestCase
 {
 	private $array;
 
