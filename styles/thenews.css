@@ -1460,6 +1460,9 @@ ul.toc * {
 .diffchar {
 	color: red;
 }
+.diffadded > .diffchar {
+	color : blue;
+}
 
 /***** Articles ****/
 
