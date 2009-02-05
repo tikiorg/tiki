@@ -406,7 +406,7 @@
 
 </td></tr>
 <tr><td colspan="2" class="odd">{tr}Data{/tr}<br />
-{textarea id='usermoduledata' name="um_data" rows="6" cols="80" _quicktags='y' _zoom='n' style="width:95%"}{$um_data|escape}{/textarea}<br />
+{textarea name='usermoduledata' rows="6" cols="80" _quicktags='y' _zoom='n'}{$um_data|escape}{/textarea}<br />
 <input type="submit" name="um_update" value="{if $um_title eq ''}{tr}Create{/tr}{else}{tr}Save{/tr}{/if}" /></td></tr>
 </table>
 
