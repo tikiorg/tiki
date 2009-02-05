@@ -14,7 +14,8 @@
 	// -->
 	</script>
 {/literal}
-	<h1>{tr}Registration{/tr}</h1>
+
+{title}{tr}Registration{/tr}{/title}
 	
 	<div class="simplebox highlight" id="divRegCapson" style="visibility:hidden">{icon _id=error style="vertical-align:middle"} {tr}CapsLock is on.{/tr}</div>
 
