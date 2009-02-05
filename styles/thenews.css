@@ -165,11 +165,11 @@ span.button a {
 
 span.button a:hover {text-decoration: none}
 
-#col2 input { width: 100px }
+#col2 input[type=text] {width: 95%}
 
-input[type=checkbox] {border: 0;}
+input[type=checkbox] {border: 0}
 
-* html .findtable input { font-size: 1em;}
+* html .findtable input {font-size: 1em}
 
 form.admin input[name="features"] {
 	margin-bottom: 3px !important;
