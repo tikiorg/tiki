@@ -496,6 +496,8 @@ div#tiki-bot {}
 
 .horbar {
 		bottom: 0;
+		border-bottom: 1px solid #D3D3D3; border-top: 1px solid #fff;
+		position: relative;
 		width: 100%;
 } 
 
@@ -514,7 +516,8 @@ div#tiki-bot {}
 } 
 
 .horbaritem a:hover {
-	text-decoration: underline;
+	background-color: #fff;
+	text-decoration: none;
 } 
 
 .horbaritem a:visited {
@@ -535,8 +538,7 @@ div#tiki-bot {}
 	z-index: 999;
 	position: absolute;
 	left: 0;
-	top: 0;
-	background: #FFFFFF;
+	background-color: transparent;
 	visibility: hidden;
 }
 
@@ -547,8 +549,11 @@ div#tiki-bot {}
 .mdksubframe {
 	z-index: 1000;
 	position: relative;
+	left: -1px;
+	top: 1px;
+	background-color: #fff;
 	display: block;
-	border: 1px solid #999;
+	border: 1px solid #D3D3D3;
 } 
 
 /* Menu items in drop down frame */
