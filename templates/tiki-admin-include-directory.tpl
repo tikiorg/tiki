@@ -1,5 +1,5 @@
 
-{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}To configure your directory, find "Admin directory" under "Directory" on the application menu, or{/tr} <a class="rbox-link" href="tiki-directory_admin.php">{tr}Click Here{/tr}</a>.{/remarksbox}
+{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}To configure your directory, find "Admin Directory" under "Directory" on the application menu, or{/tr} <a class="rbox-link" href="tiki-directory_admin.php">{tr}Click Here{/tr}</a>.{/remarksbox}
 
 <div class="cbox">
   <div class="cbox-title">

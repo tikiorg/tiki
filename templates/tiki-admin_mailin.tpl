@@ -85,7 +85,7 @@
 {/section}
 <option value="" {if $info.article_topicId eq 0}selected="selected"{/if}>{tr}None{/tr}</option>
 </select>
-{if $tiki_p_admin_cms eq 'y'}<a href="tiki-admin_topics.php" class="link">{tr}Admin topics{/tr}</a>{/if}
+{if $tiki_p_admin_cms eq 'y'}<a href="tiki-admin_topics.php" class="link">{tr}Admin Topics{/tr}</a>{/if}
 </td><td></td><td></td></tr>
 <tr id='article_type' class="formcolor" {if $info.type ne 'article-put'}style="display:none;"{/if}><td>{tr}Article Type{/tr}</td><td>
 <select id='articletype' name='article_type'>
@@ -94,7 +94,7 @@
 <option value="{$types[t].type|escape}" {if $info.article_type eq $types[t].type}selected="selected"{/if}>{tr}{$types[t].type}{/tr}</option>
 {/section}
 </select>
-{if $tiki_p_admin_cms eq 'y'}<a href="tiki-article_types.php" class="link">{tr}Admin types{/tr}</a>{/if}
+{if $tiki_p_admin_cms eq 'y'}<a href="tiki-article_types.php" class="link">{tr}Admin Types{/tr}</a>{/if}
 </td><td></td><td></td></tr>
 
     <tr class="formcolor">

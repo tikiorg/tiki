@@ -38,7 +38,7 @@
   </div>
   <div id="mymenu" style="{$mnu_mymenu}">
 	{if $prefs.feature_userPreferences eq 'y'}
-			&nbsp;<a href="tiki-my_tiki.php" class="linkmenu">{tr}MyTiki home{/tr}</a><br />
+			&nbsp;<a href="tiki-my_tiki.php" class="linkmenu">{tr}MyTiki Home{/tr}</a><br />
 	{/if}
   {if $prefs.feature_userPreferences eq 'y' || $user eq 'admin'}
       &nbsp;<a href="tiki-user_preferences.php" class="linkmenu">{tr}Preferences{/tr}</a><br />  
@@ -66,16 +66,16 @@
     &nbsp;<a href="tiki-notepad_list.php" class="linkmenu">{tr}Notepad{/tr}</a><br />  
   {/if}
   {if $prefs.feature_userfiles eq 'y' and $tiki_p_userfiles eq 'y'}
-    &nbsp;<a href="tiki-userfiles.php" class="linkmenu">{tr}My files{/tr}</a><br />  
+    &nbsp;<a href="tiki-userfiles.php" class="linkmenu">{tr}My Files{/tr}</a><br />  
   {/if}
   {if $prefs.feature_usermenu eq 'y'}
-     &nbsp;<a href="tiki-usermenu.php" class="linkmenu">{tr}User menu{/tr}</a><br />    
+     &nbsp;<a href="tiki-usermenu.php" class="linkmenu">{tr}User Menu{/tr}</a><br />    
   {/if}
   {if $prefs.feature_minical eq 'y'}
-     &nbsp;<a href="tiki-minical.php" class="linkmenu">{tr}Mini calendar{/tr}</a><br />    
+     &nbsp;<a href="tiki-minical.php" class="linkmenu">{tr}Mini Calendar{/tr}</a><br />    
   {/if}
   {if $prefs.feature_user_watches eq 'y'}
-    &nbsp;<a href="tiki-user_watches.php" class="linkmenu">{tr}My watches{/tr}</a><br />      
+    &nbsp;<a href="tiki-user_watches.php" class="linkmenu">{tr}My Watches{/tr}</a><br />      
   {/if}
   </div>
 {/if}
@@ -90,14 +90,14 @@
   </div>
   <div id="wfmenu" style="{$mnu_wfmenu}">
   {if $tiki_p_admin_workflow eq 'y'}
-      &nbsp;<a href="tiki-g-admin_processes.php" class="linkmenu">{tr}Admin processes{/tr}</a><br />  
-      &nbsp;<a href="tiki-g-monitor_processes.php" class="linkmenu">{tr}Monitor processes{/tr}</a><br />  
-      &nbsp;<a href="tiki-g-monitor_activities.php" class="linkmenu">{tr}Monitor activities{/tr}</a><br />  
-      &nbsp;<a href="tiki-g-monitor_instances.php" class="linkmenu">{tr}Monitor instances{/tr}</a><br />  
+      &nbsp;<a href="tiki-g-admin_processes.php" class="linkmenu">{tr}Admin Processes{/tr}</a><br />  
+      &nbsp;<a href="tiki-g-monitor_processes.php" class="linkmenu">{tr}Monitor Processes{/tr}</a><br />  
+      &nbsp;<a href="tiki-g-monitor_activities.php" class="linkmenu">{tr}Monitor Activities{/tr}</a><br />  
+      &nbsp;<a href="tiki-g-monitor_instances.php" class="linkmenu">{tr}Monitor Instances{/tr}</a><br />  
   {/if}
-  &nbsp;<a href="tiki-g-user_processes.php" class="linkmenu">{tr}User processes{/tr}</a><br />  
-  &nbsp;<a href="tiki-g-user_activities.php" class="linkmenu">{tr}User activities{/tr}</a><br />  
-  &nbsp;<a href="tiki-g-user_instances.php" class="linkmenu">{tr}User instances{/tr}</a><br />  
+  &nbsp;<a href="tiki-g-user_processes.php" class="linkmenu">{tr}User Processes{/tr}</a><br />  
+  &nbsp;<a href="tiki-g-user_activities.php" class="linkmenu">{tr}User Activities{/tr}</a><br />  
+  &nbsp;<a href="tiki-g-user_instances.php" class="linkmenu">{tr}User Instances{/tr}</a><br />  
   </div>
 {/if}
 
@@ -111,7 +111,7 @@
   </div>
   <div id="friendsmenu" style="{$mnu_friendsmenu}">
   {if $tiki_p_list_users eq 'y'}
-    &nbsp;<a href="tiki-list_users.php" class="linkmenu">{tr}User list{/tr}</a><br />
+    &nbsp;<a href="tiki-list_users.php" class="linkmenu">{tr}User List{/tr}</a><br />
   {/if}
   {if $prefs.feature_friends eq 'y'}
     &nbsp;<a href="tiki-friends.php" class="linkmenu">{tr}Friendship Network{/tr}</a><br />
@@ -141,8 +141,8 @@
     &nbsp;<a href="tiki-wiki_rankings.php" class="linkmenu">{tr}Rankings{/tr}</a><br />
   {/if}
   {if $prefs.feature_listPages eq 'y' and $tiki_p_view eq 'y'}
-    &nbsp;<a href="tiki-listpages.php" class="linkmenu">{tr}List pages{/tr}</a><br />
-    &nbsp;<a href="tiki-orphan_pages.php" class="linkmenu">{tr}Orphan pages{/tr}</a><br />
+    &nbsp;<a href="tiki-listpages.php" class="linkmenu">{tr}List Pages{/tr}</a><br />
+    &nbsp;<a href="tiki-orphan_pages.php" class="linkmenu">{tr}Orphan Pages{/tr}</a><br />
   {/if}
   {if $prefs.feature_sandbox eq 'y' and $tiki_p_view eq 'y'}
     &nbsp;<a href="tiki-editpage.php?page=SandBox" class="linkmenu">{tr}Sandbox{/tr}</a><br />
@@ -151,10 +151,10 @@
     &nbsp;<a href="tiki-print_pages.php" class="linkmenu">{tr}Print{/tr}</a><br />
   {/if}
   {if $tiki_p_send_pages eq 'y' and $prefs.feature_comm eq 'y'}
-    &nbsp;<a href="tiki-send_objects.php" class="linkmenu">{tr}Send pages{/tr}</a><br />
+    &nbsp;<a href="tiki-send_objects.php" class="linkmenu">{tr}Send Pages{/tr}</a><br />
   {/if}
   {if $tiki_p_admin_received_pages eq 'y' and $prefs.feature_comm eq 'y'}
-    &nbsp;<a href="tiki-received_pages.php" class="linkmenu">{tr}Received pages{/tr}</a><br />
+    &nbsp;<a href="tiki-received_pages.php" class="linkmenu">{tr}Received Pages{/tr}</a><br />
   {/if}
   {if $tiki_p_edit_structures eq 'y'}
    &nbsp;<a href="tiki-admin_structures.php" class="linkmenu">{tr}Structures{/tr}</a><br />
@@ -178,10 +178,10 @@
     &nbsp;<a href="tiki-galleries_rankings.php" class="linkmenu">{tr}Rankings{/tr}</a><br />
   {/if}
   {if $tiki_p_upload_images eq 'y'}
-    &nbsp;<a href="tiki-upload_image.php" class="linkmenu">{tr}Upload image{/tr}</a><br />
+    &nbsp;<a href="tiki-upload_image.php" class="linkmenu">{tr}Upload Image{/tr}</a><br />
   {/if}
   {if $tiki_p_admin_galleries eq 'y'}
-  &nbsp;<a href="tiki-list_gallery.php?galleryId=0" class="linkmenu">{tr}System gallery{/tr}</a><br />
+  &nbsp;<a href="tiki-list_gallery.php?galleryId=0" class="linkmenu">{tr}System Gallery{/tr}</a><br />
   {/if}
   </div>
 {/if}
@@ -196,32 +196,32 @@
   </div>
   <div id="cmsmenu" style="{$mnu_cmsmenu}">
   {if $tiki_p_read_article eq 'y'}
-  &nbsp;<a href="tiki-view_articles.php" class="linkmenu">{tr}Articles home{/tr}</a><br />
-  &nbsp;<a href="tiki-list_articles.php" class="linkmenu">{tr}List articles{/tr}</a><br />
+  &nbsp;<a href="tiki-view_articles.php" class="linkmenu">{tr}Articles Home{/tr}</a><br />
+  &nbsp;<a href="tiki-list_articles.php" class="linkmenu">{tr}List Articles{/tr}</a><br />
   {/if}
   {if $prefs.feature_cms_rankings eq 'y' and $tiki_p_read_article eq 'y'}
   &nbsp;<a href="tiki-cms_rankings.php" class="linkmenu">{tr}Rankings{/tr}</a><br />
   {/if}
   {if $prefs.feature_submissions eq 'y'}
     {if $tiki_p_submit_article eq 'y'}
-    &nbsp;<a href="tiki-edit_submission.php" class="linkmenu">{tr}Submit article{/tr}</a><br />
+    &nbsp;<a href="tiki-edit_submission.php" class="linkmenu">{tr}Submit Article{/tr}</a><br />
     {/if}
     {if $tiki_p_submit_article eq 'y' or $tiki_p_approve_submission eq 'y' or $tiki_p_remove_submission eq 'y'}
-    &nbsp;<a href="tiki-list_submissions.php" class="linkmenu">{tr}View submissions{/tr}</a><br />
+    &nbsp;<a href="tiki-list_submissions.php" class="linkmenu">{tr}View Submissions{/tr}</a><br />
     {/if}
   {/if}
   {if $tiki_p_edit_article eq 'y' && $prefs.feature_submissions ne 'y'}
-      &nbsp;<a href="tiki-edit_article.php" class="linkmenu">{tr}New article{/tr}</a><br />
+      &nbsp;<a href="tiki-edit_article.php" class="linkmenu">{tr}New Article{/tr}</a><br />
   {/if}
   {if $tiki_p_send_articles eq 'y' and $prefs.feature_comm eq 'y'}
-    &nbsp;<a href="tiki-send_objects.php" class="linkmenu">{tr}Send articles{/tr}</a><br />
+    &nbsp;<a href="tiki-send_objects.php" class="linkmenu">{tr}Send Articles{/tr}</a><br />
   {/if}
   {if $tiki_p_admin_received_articles eq 'y' and $prefs.feature_comm eq 'y'}
-    &nbsp;<a href="tiki-received_articles.php" class="linkmenu">{tr}Received articles{/tr}</a><br />
+    &nbsp;<a href="tiki-received_articles.php" class="linkmenu">{tr}Received Articles{/tr}</a><br />
   {/if}
   {if $tiki_p_admin_cms eq 'y'}
-      &nbsp;<a href="tiki-admin_topics.php" class="linkmenu">{tr}Admin topics{/tr}</a><br />
-      &nbsp;<a href="tiki-article_types.php" class="linkmenu">{tr}Admin types{/tr}</a><br />
+      &nbsp;<a href="tiki-admin_topics.php" class="linkmenu">{tr}Admin Topics{/tr}</a><br />
+      &nbsp;<a href="tiki-article_types.php" class="linkmenu">{tr}Admin Types{/tr}</a><br />
   {/if}  
   </div>
 {/if}
@@ -236,19 +236,19 @@
   </div>
   <div id="blogmenu" style="{$mnu_blogmenu}">
   {if $tiki_p_read_blog eq 'y'}
-  &nbsp;<a href="tiki-list_blogs.php" class="linkmenu">{tr}List blogs{/tr}</a><br />
+  &nbsp;<a href="tiki-list_blogs.php" class="linkmenu">{tr}List Blogs{/tr}</a><br />
   {/if}
   {if $prefs.feature_blog_rankings eq 'y' and $tiki_p_read_blog eq 'y'}
   &nbsp;<a href="tiki-blog_rankings.php" class="linkmenu">{tr}Rankings{/tr}</a><br />
   {/if}
   {if $tiki_p_create_blogs eq 'y'}
-  &nbsp;<a href="tiki-edit_blog.php" class="linkmenu">{tr}Create/Edit blog{/tr}</a><br />
+  &nbsp;<a href="tiki-edit_blog.php" class="linkmenu">{tr}Create/Edit Blog{/tr}</a><br />
   {/if}
   {if $tiki_p_blog_post eq 'y'}
   &nbsp;<a href="tiki-blog_post.php" class="linkmenu">{tr}Post{/tr}</a><br />
   {/if}
   {if $tiki_p_blog_admin eq 'y'}
-  &nbsp;<a href="tiki-list_posts.php" class="linkmenu">{tr}Admin posts{/tr}</a><br />
+  &nbsp;<a href="tiki-list_posts.php" class="linkmenu">{tr}Admin Posts{/tr}</a><br />
   {/if}
   </div>
 {/if}
@@ -263,13 +263,13 @@
   </div>
   <div id="formenu" style="{$mnu_formenu}">
   {if $tiki_p_forum_read eq 'y'}
-  &nbsp;<a href="tiki-forums.php" class="linkmenu">{tr}List forums{/tr}</a><br />
+  &nbsp;<a href="tiki-forums.php" class="linkmenu">{tr}List Forums{/tr}</a><br />
   {/if}
   {if $prefs.feature_forum_rankings eq 'y' and $tiki_p_forum_read eq 'y'}
   &nbsp;<a href="tiki-forum_rankings.php" class="linkmenu">{tr}Rankings{/tr}</a><br />
   {/if}
   {if $tiki_p_admin_forum eq 'y'}
-  &nbsp;<a href="tiki-admin_forums.php" class="linkmenu">{tr}Admin forums{/tr}</a><br />
+  &nbsp;<a href="tiki-admin_forums.php" class="linkmenu">{tr}Admin Forums{/tr}</a><br />
   {/if}
   </div>
 {/if}
@@ -284,13 +284,13 @@
   </div>
   <div id="dirmenu" style="{$mnu_dirmenu}">
 	{if $tiki_p_submit_link eq 'y'}
-	&nbsp;<a href="tiki-directory_add_site.php" class="linkmenu">{tr}Submit a new link{/tr}</a><br />
+	&nbsp;<a href="tiki-directory_add_site.php" class="linkmenu">{tr}Submit a New Link{/tr}</a><br />
 	{/if}
   {if $tiki_p_view_directory eq 'y'}
-  &nbsp;<a href="tiki-directory_browse.php" class="linkmenu">{tr}Browse directory{/tr}</a><br />
+  &nbsp;<a href="tiki-directory_browse.php" class="linkmenu">{tr}Browse Directory{/tr}</a><br />
   {/if}
   {if $tiki_p_admin_directory_cats eq 'y' or $tiki_p_admin_directory_sites eq 'y' or $tiki_p_validate_links eq 'y'}
-  &nbsp;<a href="tiki-directory_admin.php" class="linkmenu">{tr}Admin directory{/tr}</a><br />
+  &nbsp;<a href="tiki-directory_admin.php" class="linkmenu">{tr}Admin Directory{/tr}</a><br />
   {/if}
   </div>
 {/if}
@@ -305,13 +305,13 @@
   </div>
   <div id="filegalmenu" style="{$mnu_filegalmenu}">
   {if $tiki_p_view_file_gallery eq 'y'}
-  &nbsp;<a href="tiki-list_file_gallery.php" class="linkmenu">{tr}List galleries{/tr}</a><br />
+  &nbsp;<a href="tiki-list_file_gallery.php" class="linkmenu">{tr}List Galleries{/tr}</a><br />
   {/if}
   {if $prefs.feature_file_galleries_rankings eq 'y' and $tiki_p_view_file_gallery eq 'y'}
   &nbsp;<a href="tiki-file_galleries_rankings.php" class="linkmenu">{tr}Rankings{/tr}</a><br />
   {/if}
   {if $tiki_p_upload_files eq 'y'}
-  &nbsp;<a href="tiki-upload_file.php" class="linkmenu">{tr}Upload file{/tr}</a><br />
+  &nbsp;<a href="tiki-upload_file.php" class="linkmenu">{tr}Upload File{/tr}</a><br />
   {/if}
   </div>
 {/if}
@@ -347,7 +347,7 @@
   &nbsp;<a href="tiki-map_edit.php" class="linkmenu">{tr}Mapfiles{/tr}</a><br />
   {/if}
   {if $tiki_p_map_edit eq 'y'}
-  &nbsp;<a href="tiki-map_upload.php" class="linkmenu">{tr}Layer management{/tr}</a><br />
+  &nbsp;<a href="tiki-map_upload.php" class="linkmenu">{tr}Layer Management{/tr}</a><br />
   {/if}
   </div>
 {/if}
@@ -361,12 +361,12 @@
   {if $prefs.feature_menusfolderstyle ne 'y'}<a class="separator" href="javascript:toggle('quizmenu');">[+]</a>{/if}
   </div>
   <div id="quizmenu" style="{$mnu_quizmenu}">
-  &nbsp;<a href="tiki-list_quizzes.php" class="linkmenu">{tr}List quizzes{/tr}</a><br />
+  &nbsp;<a href="tiki-list_quizzes.php" class="linkmenu">{tr}List Quizzes{/tr}</a><br />
   {if $tiki_p_view_quiz_stats eq 'y'}
   &nbsp;<a href="tiki-quiz_stats.php" class="linkmenu">{tr}Quiz stats{/tr}</a><br />
   {/if}
   {if $tiki_p_admin_quizzes eq 'y'}
-  &nbsp;<a href="tiki-edit_quiz.php" class="linkmenu">{tr}Admin quiz{/tr}</a><br />
+  &nbsp;<a href="tiki-edit_quiz.php" class="linkmenu">{tr}Admin Quizzes{/tr}</a><br />
   {/if}
   </div>
 {/if}
@@ -392,7 +392,7 @@
   {if $prefs.feature_menusfolderstyle ne 'y'}<a class="separator" href="javascript:toggle('trkmenu');">[+]</a>{/if}
   </div>
   <div id="trkmenu" style="{$mnu_trkmenu}">
-  &nbsp;<a href="tiki-list_trackers.php" class="linkmenu">{tr}List trackers{/tr}</a><br />
+  &nbsp;<a href="tiki-list_trackers.php" class="linkmenu">{tr}List Trackers{/tr}</a><br />
   {if $tiki_p_admin_trackers eq 'y'}
   &nbsp;<a href="tiki-admin_trackers.php" class="linkmenu">{tr}Admin trackers{/tr}</a><br />
   {/if}
@@ -408,12 +408,12 @@
   {if $prefs.feature_menusfolderstyle ne 'y'}<a class="separator" href="javascript:toggle('srvmenu');">[+]</a>{/if}
   </div>
   <div id="srvmenu" style="{$mnu_srvmenu}">
-  &nbsp;<a href="tiki-list_surveys.php" class="linkmenu">{tr}List surveys{/tr}</a><br />
+  &nbsp;<a href="tiki-list_surveys.php" class="linkmenu">{tr}List Surveys{/tr}</a><br />
   {if $tiki_p_view_survey_stats eq 'y'}
   &nbsp;<a href="tiki-survey_stats.php" class="linkmenu">{tr}Stats{/tr}</a><br />
   {/if}
   {if $tiki_p_admin_surveys eq 'y'}
-  &nbsp;<a href="tiki-admin_surveys.php" class="linkmenu">{tr}Admin surveys{/tr}</a><br />
+  &nbsp;<a href="tiki-admin_surveys.php" class="linkmenu">{tr}Admin Surveys{/tr}</a><br />
   {/if}
   </div>
 {/if}
@@ -428,10 +428,10 @@
   </div>
   <div id="nlmenu" style="{$mnu_nlmenu}">
   {if $tiki_p_send_newsletters eq 'y'}
-  &nbsp;<a href="tiki-send_newsletters.php" class="linkmenu">{tr}Send newsletters{/tr}</a><br />
+  &nbsp;<a href="tiki-send_newsletters.php" class="linkmenu">{tr}Send Newsletters{/tr}</a><br />
   {/if}
   {if $tiki_p_admin_newsletters eq 'y'}
-  &nbsp;<a href="tiki-admin_newsletters.php" class="linkmenu">{tr}Admin newsletters{/tr}</a><br />
+  &nbsp;<a href="tiki-admin_newsletters.php" class="linkmenu">{tr}Admin Newsletters{/tr}</a><br />
   {/if}
   </div>
 {/if}
@@ -514,14 +514,14 @@
   <div id="admmnu" style="{$mnu_admmnu}">
   {sortlinks}
 	{if $tiki_p_admin eq 'y'}
-		&nbsp;<a href="tiki-admin.php" class="linkmenu">{tr}Admin home{/tr}</a><br />
+		&nbsp;<a href="tiki-admin.php" class="linkmenu">{tr}Admin Home{/tr}</a><br />
 	{/if}
 	{if $prefs.feature_debug_console eq 'y'}
 		&nbsp;<a href="javascript:toggle('debugconsole');" class="linkmenu">{tr}Debugger console{/tr}</a><br />
 	{/if}
 
 	{if $prefs.feature_live_support eq 'y' and ($tiki_p_live_support_admin eq 'y' or $user_is_operator eq 'y')}
-  		&nbsp;<a href="tiki-live_support_admin.php" class="linkmenu">{tr}Live support{/tr}</a><br />
+  		&nbsp;<a href="tiki-live_support_admin.php" class="linkmenu">{tr}Live Support{/tr}</a><br />
 	{/if}
 
 	{if $prefs.feature_banning eq 'y' and ($tiki_p_admin_banning eq 'y')}
@@ -545,17 +545,17 @@
       {if $prefs.feature_hotwords eq 'y'}
       &nbsp;<a href="tiki-admin_hotwords.php" class="linkmenu">{tr}Hotwords{/tr}</a><br />
       {/if}
-      &nbsp;<a href="tiki-admin_rssmodules.php" class="linkmenu">{tr}RSS modules{/tr}</a><br />
+      &nbsp;<a href="tiki-admin_rssmodules.php" class="linkmenu">{tr}RSS Modules{/tr}</a><br />
       &nbsp;<a href="tiki-admin_menus.php" class="linkmenu">{tr}Menus{/tr}</a><br />
       {if $prefs.feature_polls eq 'y'}
       &nbsp;<a href="tiki-admin_polls.php" class="linkmenu">{tr}Polls{/tr}</a><br />
       {/if}
-      &nbsp;<a href="tiki-admin_notifications.php" class="linkmenu">{tr}Mail notifications{/tr}</a><br />
+      &nbsp;<a href="tiki-admin_notifications.php" class="linkmenu">{tr}Mail Notifications{/tr}</a><br />
       {if $prefs.feature_search_stats eq 'y'}
-      &nbsp;<a href="tiki-search_stats.php" class="linkmenu">{tr}Search stats{/tr}</a><br />
+      &nbsp;<a href="tiki-search_stats.php" class="linkmenu">{tr}Search Stats{/tr}</a><br />
 	  {/if}
       {if $prefs.feature_theme_control eq 'y'}
-      &nbsp;<a href="tiki-theme_control.php" class="linkmenu">{tr}Theme control{/tr}</a><br />
+      &nbsp;<a href="tiki-theme_control.php" class="linkmenu">{tr}Theme Control{/tr}</a><br />
       {/if}
       &nbsp;<a href="tiki-admin_quicktags.php" class="linkmenu">{tr}QuickTags{/tr}</a><br />
     {/if}
@@ -566,13 +566,13 @@
       &nbsp;<a href="tiki-list_banners.php" class="linkmenu">{tr}Banners{/tr}</a><br />
     {/if}
     {if $prefs.feature_edit_templates eq 'y' and $tiki_p_edit_templates eq 'y'}
-      &nbsp;<a href="tiki-edit_templates.php" class="linkmenu">{tr}Edit templates{/tr}</a><br />
+      &nbsp;<a href="tiki-edit_templates.php" class="linkmenu">{tr}Edit Templates{/tr}</a><br />
     {/if}
     {if $prefs.feature_drawings eq 'y' and $tiki_p_admin_drawings eq 'y'}
       &nbsp;<a href="tiki-admin_drawings.php" class="linkmenu">{tr}Drawings{/tr}</a><br />
     {/if}
     {if $prefs.feature_dynamic_content eq 'y' and $tiki_p_admin_dynamic eq 'y'}
-      &nbsp;<a href="tiki-list_contents.php" class="linkmenu">{tr}Dynamic content{/tr}</a><br />
+      &nbsp;<a href="tiki-list_contents.php" class="linkmenu">{tr}Dynamic Content{/tr}</a><br />
     {/if}
     {if $tiki_p_edit_cookies eq 'y'}
       &nbsp;<a href="tiki-admin_cookies.php" class="linkmenu">{tr}Cookies{/tr}</a><br />
@@ -581,17 +581,17 @@
       &nbsp;<a href="tiki-admin_mailin.php" class="linkmenu">{tr}Mail-in{/tr}</a><br />
     {/if}
     {if $tiki_p_edit_content_templates eq 'y'}
-      &nbsp;<a href="tiki-admin_content_templates.php" class="linkmenu">{tr}Content templates{/tr}</a><br />
+      &nbsp;<a href="tiki-admin_content_templates.php" class="linkmenu">{tr}Content Templates{/tr}</a><br />
     {/if}
     {if $prefs.feature_html_pages eq 'y' and $tiki_p_edit_html_pages eq 'y'}
-      &nbsp;<a href="tiki-admin_html_pages.php" class="linkmenu">{tr}HTML pages{/tr}</a><br />
+      &nbsp;<a href="tiki-admin_html_pages.php" class="linkmenu">{tr}HTML Pages{/tr}</a><br />
     {/if}
     {if $prefs.feature_shoutbox eq 'y' and $tiki_p_admin_shoutbox eq 'y'}
       &nbsp;<a href="tiki-shoutbox.php" class="linkmenu">{tr}Shoutbox{/tr}</a><br />
       &nbsp;<a href="tiki-admin_shoutbox_words.php" class="linkmenu">{tr}Shoutbox Words{/tr}</a><br />
     {/if}
     {if $prefs.feature_referer_stats eq 'y' and $tiki_p_view_referer_stats eq 'y'}
-    &nbsp;<a href="tiki-referer_stats.php" class="linkmenu">{tr}Referer stats{/tr}</a><br />
+    &nbsp;<a href="tiki-referer_stats.php" class="linkmenu">{tr}Referer Stats{/tr}</a><br />
     {/if}
     {if $tiki_p_edit_languages eq 'y' && $prefs.lang_use_db eq 'y'}
       &nbsp;<a href="tiki-edit_languages.php" class="linkmenu">{tr}Edit languages{/tr}</a><br />

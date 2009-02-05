@@ -224,11 +224,9 @@
 <table>
 <tr><td class="form">{tr}Name{/tr}</td><td><input type="text" name="um_name" value="{$um_name|escape}" /></td></tr>
 <tr><td class="form">{tr}Title{/tr}</td><td><input type="text" name="um_title" value="{$um_title|escape}" /></td></tr>
-<tr><td class="form">{tr}Data{/tr}</td><td>
-<textarea id='usermoduledata' name="um_data" rows="10" cols="40" style="width:95%">{$um_data|escape}</textarea>
-</td></tr>
 <tr><td class="form"></td><td class="form"><input type="checkbox" name="um_parse" value="y" {if $um_parse eq "y"}checked="checked"{/if} /> {tr}Must be wiki parsed{/tr}</td></tr>
-<tr><td>&nbsp;</td><td><input type="submit" name="um_update" value="{if $um_title eq ''}{tr}Create{/tr}{else}{tr}Save{/tr}{/if}" /></td></tr>
+</td></tr>
+
 </table>
 </form>
 
@@ -299,7 +297,7 @@
 {if $rss}
 <tr>
   <td class="form">
-    {tr}RSS modules{/tr}:
+    {tr}RSS Modules{/tr}:
   </td>
   <td>
     <select name="rsss" id='list_rsss'>
@@ -406,7 +404,11 @@
   {tr}To use menu in a css/suckerfish format:{/tr} {literal}{menu id=X css=y}{/literal}
 {/remarksbox}
 
-</td></tr></table>
+</td></tr>
+<tr><td colspan="2" class="odd">{tr}Data{/tr}<br />
+{textarea id='usermoduledata' name="um_data" rows="6" cols="80" _quicktags='y' _zoom='n' style="width:95%"}{$um_data|escape}{/textarea}<br />
+<input type="submit" name="um_update" value="{if $um_title eq ''}{tr}Create{/tr}{else}{tr}Save{/tr}{/if}" /></td></tr>
+</table>
 
 </fieldset>
 

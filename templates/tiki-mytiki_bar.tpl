@@ -55,7 +55,7 @@
 {/if}
 
 {if $prefs.feature_user_watches eq 'y'}
-	{button _icon="img/mytiki/mywatches.gif" _text="{tr}My watches{/tr}" href="tiki-user_watches.php" _menu_text="y}
+	{button _icon="img/mytiki/mywatches.gif" _text="{tr}My Watches{/tr}" href="tiki-user_watches.php" _menu_text="y}
 {/if}
 
 {if $prefs.feature_actionlog == 'y' and !empty($user) and ($tiki_p_view_actionlog eq 'y' || $tiki_p_view_actionlog_owngroups eq 'y')}
