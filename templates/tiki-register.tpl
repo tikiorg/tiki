@@ -16,7 +16,7 @@
 {/literal}
 	<h1>{tr}Registration{/tr}</h1>
 	
-	<div id="divRegCapson" style="visibility:hidden">{icon _id=error style="vertical-align:middle"} {tr}CapsLock is on.{/tr}</div>
+	<div class="simplebox highlight" id="divRegCapson" style="visibility:hidden">{icon _id=error style="vertical-align:middle"} {tr}CapsLock is on.{/tr}</div>
 
 {if $prefs.feature_ajax eq 'y'}
 		<script src="lib/registration/register_ajax.js" type="text/javascript"></script>
@@ -59,9 +59,9 @@
 						<em>{tr}Use your email as login{/tr}</em>.
 	{else}
 		{if $prefs.min_username_length > 1}
-						<em>{tr}Minimum {$prefs.min_username_length} characters long{/tr}</em>.{/if}
+						<div class="highlight"><em>{tr}Minimum {$prefs.min_username_length} characters long{/tr}</em></div>{/if}
 		{if $prefs.lowercase_username eq 'y'}
-						<em>{tr}Lowercase only{/tr}</em>.{/if}
+						<div class="highlight"><em>{tr}Lowercase only{/tr}</em></div>{/if}
 	{/if}
 					</td>
 				</tr>
@@ -80,18 +80,16 @@
 				<tr>
 					<td class="formcolor">{tr}Password{/tr}:</td>
 					<td class="formcolor">
-						<input style="float:left"  id='pass1' type="password" name="pass" onkeypress="regCapsLock(event)" onkeyup="runPassword(this.value, 'mypassword');{if $prefs.feature_ajax eq 'y'}check_pass();{/if}" />
-						<div style="float:left;width:150px;margin-left:5px;">
+						<div style="float:right;width:150px;margin-left:5px;">
 							<div id="mypassword_text"></div>
 							<div id="mypassword_bar" style="font-size: 5px; height: 2px; width: 0px;"></div> 
 						</div>
+						<input id='pass1' type="password" name="pass" onkeypress="regCapsLock(event)" onkeyup="runPassword(this.value, 'mypassword');{if $prefs.feature_ajax eq 'y'}check_pass();{/if}" />
 	{if $prefs.feature_ajax ne 'y'}
-						<p>
 		{if $prefs.min_pass_length > 1}
-								<em>{tr}Minimum {$prefs.min_pass_length} characters long{/tr}</em>.{/if}
+								<div class="highlight"><em>{tr}Minimum {$prefs.min_pass_length} characters long{/tr}</em></div>{/if}
 		{if $prefs.pass_chr_num eq 'y'}
-								<em>{tr}Password must contain both letters and numbers{/tr}</em>.{/if}
-						</p>
+								<div class="highlight"><em>{tr}Password must contain both letters and numbers{/tr}</em></div>{/if}
 	{/if}
 					</td>
 				</tr>
@@ -99,7 +97,7 @@
 				<tr>
 					<td class="formcolor">{tr}Repeat password{/tr}:</td>
 					<td class="formcolor">
-						<input style="float:left" id='pass2' type="password" name="passAgain" onkeypress="regCapsLock(event)" 
+						<input id='pass2' type="password" name="passAgain" onkeypress="regCapsLock(event)" 
 	{if $prefs.feature_ajax eq'y'}onkeyup="check_pass()"{/if}/>
 	{if $prefs.feature_ajax eq'y'}
 						<div style="float:left;margin-left:5px;" id="checkpass"></div>{/if}
@@ -120,12 +118,12 @@
 	{if $prefs.login_is_email ne 'y'}
 				<tr>
 					<td class="formcolor">{tr}Email{/tr}:</td>
-					<td class="formcolor"><input style="float:left" type="text" id="email" name="email"
+					<td class="formcolor"><input type="text" id="email" name="email"
 		{if $prefs.validateUsers eq 'y' and $prefs.feature_ajax eq 'y'}onkeyup="return check_mail()"{/if}/>
 		{if $prefs.feature_ajax eq'y'}
 						<div id="checkmail" style="float:left"></div>{/if}&nbsp;
 		{if $prefs.validateUsers eq 'y' and $prefs.validateEmail ne 'y'}
-						<em>{tr}A valid email is mandatory to register{/tr}</em>.{/if}
+						<div class="highlight"><em>{tr}A valid email is mandatory to register{/tr}</em></div>{/if}
 					</td>
 				</tr>
 	{/if}
