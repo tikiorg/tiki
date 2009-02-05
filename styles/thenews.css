@@ -641,7 +641,11 @@ div.separatorline {}
 .separator a:hover {}
 div.option a.linkmenu:hover {}
 a.separator img {}
-.option {}
+/* menu option */
+.option {
+	background: transparent url('../img/icons2/corner-dots.gif') center left no-repeat;
+	padding: 0.2em 0.2em 0.2em 1.6em;
+}
 div.optionline,
 .option a {}
 .option a:link,
