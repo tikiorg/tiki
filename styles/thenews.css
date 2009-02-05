@@ -646,6 +646,10 @@ a.separator img {}
 	background: transparent url('../img/icons2/corner-dots.gif') center left no-repeat;
 	padding: 0.2em 0.2em 0.2em 1.6em;
 }
+/* selected menu item */
+.selected {
+	font-weight: bold;
+}
 div.optionline,
 .option a {}
 .option a:link,
