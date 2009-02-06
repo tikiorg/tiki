@@ -8,46 +8,18 @@ jQuery(document).ready( function() {// JQuery's DOM is ready event - before onlo
 	// override existing show/hide routines here
 	show = function (foo,f,section) {
 		if ($jq("#" + foo).hasClass("tabcontent")) {
-			if (jqueryTiki.effect_tabs == '') {
-				$jq("#" + foo).show();
-			} else if (jqueryTiki.effect_tabs == 'normal') {
-				$jq("#" + foo).show(jqueryTiki.effect_speed);
-			} else if (jqueryTiki.effect_tabs == 'slide') {
-				$jq("#" + foo).slideDown(jqueryTiki.effect_speed);
-			} else if (jqueryTiki.effect_tabs == 'fade') {
-				$jq("#" + foo).fadeIn(jqueryTiki.effect_speed);
-			}
+			showJQ("#" + foo, jqueryTiki.effect_tabs, jqueryTiki.effect_speed);
 		} else {
-			if (jqueryTiki.effect == '') {
-				$jq("#" + foo).show(jqueryTiki.effect_speed);
-			} else if (jqueryTiki.effect == 'slide') {
-				$jq("#" + foo).slideDown(jqueryTiki.effect_speed);
-			} else if (jqueryTiki.effect == 'fade') {
-				$jq("#" + foo).fadeIn(jqueryTiki.effect_speed);
-			}
+			showJQ("#" + foo, jqueryTiki.effect, jqueryTiki.effect_speed);
 		}
 		if (f) { setCookie(foo, "o", section); }
 	}
 	
 	hide = function (foo,f, section) {
 		if ($jq("#" + foo).hasClass("tabcontent")) {
-			if (jqueryTiki.effect_tabs == '') {
-				$jq("#" + foo).hide();
-			} else if (jqueryTiki.effect_tabs == 'normal') {
-				$jq("#" + foo).hide(jqueryTiki.effect_speed);
-			} else if (jqueryTiki.effect_tabs == 'slide') {
-				$jq("#" + foo).slideUp(jqueryTiki.effect_speed);
-			} else if (jqueryTiki.effect_tabs == 'fade') {
-				$jq("#" + foo).fadeOut(jqueryTiki.effect_speed);
-			}
+			hideJQ("#" + foo, jqueryTiki.effect_tabs, jqueryTiki.effect_speed);
 		} else {
-			if (jqueryTiki.effect == '') {
-				$jq("#" + foo).hide(jqueryTiki.effect_speed);
-			} else if (jqueryTiki.effect == 'slide') {
-				$jq("#" + foo).slideUp(jqueryTiki.effect_speed);
-			} else if (jqueryTiki.effect == 'fade') {
-				$jq("#" + foo).fadeOut(jqueryTiki.effect_speed);
-			}
+			hideJQ("#" + foo, jqueryTiki.effect, jqueryTiki.effect_speed);
 		}
 		if (f) {
 			var wasnot = getCookie(foo, section, 'x') == 'x';
@@ -57,5 +29,30 @@ jQuery(document).ready( function() {// JQuery's DOM is ready event - before onlo
 			}
 		}
 	}
+	
+	showJQ = function (selector, effect, speed) {
+		if (effect == 'none') {
+			$jq(selector).show();
+		} else if (effect == '' || effect == 'normal') {
+			$jq(selector).show(speed);
+		} else if (effect == 'slide') {
+			$jq(selector).slideDown(speed);
+		} else if (effect == 'fade') {
+			$jq(selector).fadeIn(speed);
+		}
+	}
+	
+	hideJQ = function (selector, effect, speed) {
+		if (effect == 'none') {
+			$jq(selector).hide();
+		} else if (effect == '' || effect == 'normal') {
+			$jq(selector).hide(speed);
+		} else if (effect == 'slide') {
+			$jq(selector).slideUp(speed);
+		} else if (effect == 'fade') {
+			$jq(selector).fadeOut(speed);
+		}
+	}
+	
 	
 });
