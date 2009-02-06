@@ -214,13 +214,13 @@
 {/if}
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Create your new custom module below. Make sure to preview first and make sure all is OK before <a href="#assign">assigning it</a>. Using html, you will be fine. However, if you improperly use wiki syntax or Smarty code, you could lock yourself out of the site.{/tr}{/remarksbox}
 
+<form name='editusr' method="post" action="tiki-admin_modules.php">
 <table class="normal">
  <tr valign="top">
   <td valign="top" class="odd">
 {if $um_name ne ''}
 <a href="tiki-admin_modules.php#editcreate">{tr}Create new user module{/tr}</a>
 {/if}
-<form name='editusr' method="post" action="tiki-admin_modules.php">
 <table>
 <tr><td class="form">{tr}Name{/tr}</td><td><input type="text" name="um_name" value="{$um_name|escape}" /></td></tr>
 <tr><td class="form">{tr}Title{/tr}</td><td><input type="text" name="um_title" value="{$um_title|escape}" /></td></tr>
@@ -228,10 +228,10 @@
 </td></tr>
 
 </table>
-</form>
 
 </td><td class="even" style="vertical-align:top">
 <h3>{tr}Objects that can be included{/tr}</h3>
+
 <table>
 {if $polls}
 <tr>
@@ -406,10 +406,10 @@
 
 </td></tr>
 <tr><td colspan="2" class="odd">{tr}Data{/tr}<br />
-{textarea name='usermoduledata' rows="6" cols="80" _quicktags='y' _zoom='n'}{$um_data|escape}{/textarea}<br />
+{textarea name='um_data' rows="6" cols="80" _quicktags='y' _zoom='n'}{$um_data|escape}{/textarea}<br />
 <input type="submit" name="um_update" value="{if $um_title eq ''}{tr}Create{/tr}{else}{tr}Save{/tr}{/if}" /></td></tr>
 </table>
-
+</form>
 </fieldset>
 
 {/strip}
