@@ -34,7 +34,7 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 	}
 	if ( ! isset($params['_section']) ) {
 		global $section;
-		$params['_section'] = $section;
+		$params['_section'] = $section? $section: 'wiki';
 	}
 	if ( ! isset($params['style']) ) $params['style'] = 'width:99%';
 	$html = '';

@@ -503,6 +503,7 @@ table.forumformtable, table.viewthread, table.jukeboxlist {
 }
 table.normalnoborder {
 	border: none;
+	width: 100%;
 }
 table.admin td {
 	padding-left: 2px;

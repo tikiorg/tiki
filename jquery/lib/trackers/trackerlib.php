@@ -897,6 +897,12 @@ class TrackerLib extends TikiLib {
 					$fopt['info'] = $this->get_item_attachment($fopt['value']);
 				}
 				break;
+			case 'G':
+				$vals = preg_split('/ *, */', $fopt['value']);
+				$fopt['x'] = $vals[0];
+				$fopt['y'] = $vals[1];
+				$fopt['z'] = $vals[2];
+				break;
 			default:
 				break;
 			}
@@ -2608,9 +2614,7 @@ class TrackerLib extends TikiLib {
 			'opt'=>false,
 			'help'=>tra('<dl>
 				<dt>Function: Use Google Maps.
-				<dt>Usage: <strong>Unknown</strong>
-				<dt>Description:
-				<dd><strong></strong> needs explanation;
+				<dt>Will display a Google Maps around a point.
 				</dl>'));
 		$type['s'] = array(
 			'label'=>tra('system'),

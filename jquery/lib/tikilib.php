@@ -200,7 +200,7 @@ class TikiLib extends TikiDB {
 	function list_watches($offset, $maxRecords, $sort_mode, $find) {
 		$mid = '';
 		$mid2 = '';
-		$bindvars = array();
+		$bindvars = $bindvars1 = $bindvars2 = array();
 		if ($find) {	
 			$mid = ' where `event` like ? or `email` like ? or `user` like ? or `object` like ? or `type` like ?';
 			$mid2 = ' where `event` like ? or `group` like ? or `object` like ? or `type` like ?';
@@ -5413,7 +5413,7 @@ window.addEvent('domready', function() {
 	} );
 } );
 " );
-							$ret = '~np~<a id="' .$id. '" style="float:right" href="javascript:void(0)" class="editplugin">'.smarty_function_icon(array('_id'=>'shape_square_edit', 'alt'=>tra('Edit Plugin')), $smarty).'</a>~/np~'.$ret;
+							$ret = '~np~<a id="' .$id. '" style="float:right" href="javascript:void(1)" class="editplugin">'.smarty_function_icon(array('_id'=>'shape_square_edit', 'alt'=>tra('Edit Plugin').':'.$plugin_name), $smarty).'</a>~/np~'.$ret;
 						}
 
 					} else {

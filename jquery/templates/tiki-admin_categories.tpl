@@ -141,7 +141,8 @@
       
 			{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset }{/pagination_links}
       
-      </div>
+	</div>
+</div>
 
 {if $parentId != 0}
     <div class="cbox">

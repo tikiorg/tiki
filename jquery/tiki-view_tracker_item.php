@@ -283,6 +283,7 @@ if (!isset($item_info)) {
 	}
 }
 $smarty->assign_by_ref('item_info', $item_info);
+$smarty->assign('item', array('itemId'=>$_REQUEST['itemId'], 'trackerId'=>$_REQUEST['trackerId']));
 
 $tracker_info = $trklib->get_tracker($_REQUEST["trackerId"]);
 if ($t = $trklib->get_tracker_options($_REQUEST["trackerId"]))

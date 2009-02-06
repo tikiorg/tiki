@@ -1,9 +1,10 @@
 <?php
+require_once('tiki-setup.php');
 
 if ($prefs['feature_ajax'] != 'y' || $prefs['feature_ajax_autosave'] != 'y') {
 	return;
 }
-require_once('tiki-setup.php');
+
 require_once('lib/ajax/ajaxlib.php');
 
 if (isset($_REQUEST['id']) and isset($_REQUEST['data'])) {

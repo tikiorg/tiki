@@ -58,7 +58,7 @@
 				{/if}
 				{if $prefs.feature_html_pages eq 'y'}
 					<input type="checkbox" name="section_html" {if $info.section_html eq 'y'}checked="checked"{/if} />
-					{tr}HTML pages{/tr}
+					{tr}HTML Pages{/tr}
 					<br />
 				{/if}
 				{if ($prefs.feature_cms_templates ne 'y') and ($prefs.feature_wiki_templates ne 'y') and ($prefs.feature_newsletters ne 'y') and ($prefs.feature_events ne 'y') and ($prefs.feature_html_pages ne 'y')}

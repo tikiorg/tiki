@@ -1,6 +1,6 @@
 <?php
 
-class WikiParser_PluginRepositoryTest extends PHPUnit_Framework_TestCase
+class WikiParser_PluginRepositoryTest extends TikiTestCase
 {
 	function testPluginDoesNotExist()
 	{

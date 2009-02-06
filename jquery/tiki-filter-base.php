@@ -9,22 +9,25 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 /* Automatically set params used for absolute URLs - BEGIN */
 
 $tiki_setup_dir = realpath(dirname(__FILE__));
-$tiki_script_filename = realpath($_SERVER['SCRIPT_FILENAME']);
-
-// On some systems, SCRIPT_FILENAME contains the full path to the cgi script that 
-//   calls the script we are looking for. In this case, we have to fallback to 
-//   PATH_TRANSLATED. This one may be wrong on some systems, this is why SCRIPT_FILENAME
-//   is tried first.
-
-if ( substr($tiki_script_filename, 0, strlen($tiki_setup_dir)) != $tiki_setup_dir ) {
-	$tiki_script_filename = realpath($_SERVER['PATH_TRANSLATED']);
+$tiki_script_filename = getcwd();
+if ($tiki_script_filename !== false) {
+	$tiki_script_filename .= '/index.php';
+} else {
+	$tiki_script_filename = realpath($_SERVER['SCRIPT_FILENAME']);
+	// On some systems, SCRIPT_FILENAME contains the full path to the cgi script that 
+	//   calls the script we are looking for. In this case, we have to fallback to 
+	//   PATH_TRANSLATED. This one may be wrong on some systems, this is why SCRIPT_FILENAME
+	//   is tried first.
+	if ( substr($tiki_script_filename, 0, strlen($tiki_setup_dir)) != $tiki_setup_dir ) {
+		$tiki_script_filename = realpath($_SERVER['PATH_TRANSLATED']);
+	}
 }
 $tmp = dirname(str_replace($tiki_setup_dir,'',$tiki_script_filename));
 
 if ($tmp != '/') {
-        $dir_level = substr_count($tmp,"/");
+	$dir_level = substr_count($tmp,"/");
 } else {
-        $dir_level = 0;
+	$dir_level = 0;
 }
 unset($tmp);
 
@@ -41,12 +44,9 @@ if ( substr($tikiroot,-1,1) != '/' ) $tikiroot .= '/';
 if ( substr($tikipath,-1,1) != '/' ) $tikipath .= '/';
 
 require_once('lib/init/initlib.php');
-TikiInit::prependIncludePath($tikipath);
-TikiInit::prependIncludePath($tikipath.'lib');
 TikiInit::prependIncludePath($tikipath.'lib/pear');
-TikiInit::prependIncludePath($tikipath.'lib/core/lib');
-
-require_once 'DeclFilter.php';
-require_once 'JitFilter.php';
+TikiInit::appendIncludePath($tikipath.'lib/core/lib');
+require_once('lib/core/lib/DeclFilter.php');
+require_once('lib/core/lib/JitFilter.php');
 
 ?>

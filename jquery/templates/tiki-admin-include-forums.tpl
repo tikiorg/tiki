@@ -121,10 +121,17 @@
           <td><label>{tr}Description{/tr}</label></td>
           <td><input type="checkbox" name="forum_list_desc"
               {if $prefs.forum_list_desc eq 'y'}checked="checked"{/if} /></td>
-        </tr><tr>
-          <td colspan="2" class="input_submit_container"><input type="submit" name="forumlistprefs"
-              value="{tr}Change preferences{/tr}" /></td>
-        </tr></table>
+        </tr>
+				<tr>
+					<td class="form">{tr}Description length:{/tr}</td>
+					<td class="form">
+						<input type="text" name="forum_list_description_len" value="{$prefs.forum_list_description_len}" size="3" />
+					</td>
+				</tr>
+				<tr>
+          <td colspan="2" class="input_submit_container"><input type="submit" name="forumlistprefs" value="{tr}Change preferences{/tr}" /></td>
+        </tr>
+			</table>
       </form>
   </div>
 </div>    

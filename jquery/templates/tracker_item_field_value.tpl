@@ -320,7 +320,13 @@
 {* -------------------- google map -------------------- *}
 {elseif $field_value.type eq 'G'}
 	{if $prefs.feature_gmap eq 'y'}
-		{include file='tracker_item_field_googlemap_value.tpl'}
+		{if $list_mode eq 'y'}
+			{include file='tracker_item_field_googlemap_value.tpl' width=200 height=200 control='n'}
+		{elseif $list_mode eq 'csv'}
+			{$field_value.value}
+		{else}
+			{include file='tracker_item_field_googlemap_value.tpl' width=500 height=400 control='y'}
+		{/if}
 	{else}
 	  {tr}Google Maps is not enabled.{/tr}
 	{/if}

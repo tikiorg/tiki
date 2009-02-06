@@ -7,10 +7,6 @@ if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== false) {
 }
 
 if (preg_match('/^adodb$/i', $api_tiki)) {
-	TikiInit::prependIncludePath('lib/adodb');
-	if (strpos(ini_get('include_path'),'lib/pear') !== 0) 
-		TikiInit::prependIncludePath('lib/pear');
-
 	define('ADODB_FORCE_NULLS', 1);
 	define('ADODB_ASSOC_CASE', 2);
 	define('ADODB_CASE_ASSOC', 2); // typo in adodb's driver for sybase?

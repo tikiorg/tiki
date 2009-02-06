@@ -80,7 +80,11 @@ img {	border: 0;}
 .wikitext img {}
 legend {color: #000}
 
-fieldset {border: solid 1px #A9A9A9}
+fieldset {
+	border: solid 1px #A9A9A9;
+	margin-bottom: 2px;
+	padding: 0.3em;
+}
 #col2 fieldset { width: 100px }
 
 form {
@@ -101,13 +105,11 @@ input,
 textarea,
 option,
 select {
-	
+	margin: 0.2em;
 }
 
 /* IE */
 * html .wikitopline select {font-size: .9em;}
-
-input.button {}
 
 input[type=checkbox],
 input[type=radio] {
@@ -119,19 +121,28 @@ input[type=password] {
 
 }
 
-button,
-input[type=submit],
-.submitbutton,
-.button input,
-input[type=reset],
-.button  {
-	border: 1px solid #aaa; 
+/* all button variations */
+input.button, button, .submitbutton, .button input, .button, input.wikiaction {
+	border: solid 1px #aaa; 
 	background: #fbfbfb;
 	color: #000;
 	text-transform: uppercase;
 	font-family: Arial, Helvetica, sans-serif;
-	font-size: 75%/* !important*/}
+	font-size: .8em;
+}
 
+/* styles by type separated from the above because IE6 doesn't like multiple class specifications with bracket selectors together */
+input[type=submit],
+input[type=reset] {
+	border: solid 1px #aaa; 
+	background: #fbfbfb;
+	color: #000;
+	text-transform: uppercase;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: .8em}
+
+/* hovered buttons */
+input.button:hover,
 button:hover,
 input[type=submit]:hover,
 .submitbutton:hover,
@@ -154,11 +165,11 @@ span.button a {
 
 span.button a:hover {text-decoration: none}
 
-#col2 input { width: 100px }
+#col2 input[type=text] {width: 95%}
 
-input[type=checkbox] {border: 0;}
+input[type=checkbox] {border: 0}
 
-* html .findtable input { font-size: 1em;}
+* html .findtable input {font-size: 1em}
 
 form.admin input[name="features"] {
 	margin-bottom: 3px !important;
@@ -182,14 +193,6 @@ label {
 	cursor: pointer;
 }
 
-/*
-ul, ol {
-
-	}
-	
-li {
-	
-}*/
 
 /***** Pasic Page Layout 
 	Including Site Header *****/
@@ -304,8 +307,10 @@ div#sitead {
 	position: absolute;
 	bottom: 3px;
 	right: 10px;
-	font-size: 90%}
-
+	font-size: 1em}
+#siteloginbar * {
+	margin: .2em; padding: .2em;
+}
  #siteloginbar.logged-in {
 	bottom: 3px;
 }
@@ -483,6 +488,8 @@ div#tiki-bot {}
 
 .horbar {
 		bottom: 0;
+		border-bottom: 1px solid #D3D3D3; border-top: 1px solid #fff;
+		position: relative;
 		width: 100%;
 } 
 
@@ -501,7 +508,8 @@ div#tiki-bot {}
 } 
 
 .horbaritem a:hover {
-	text-decoration: underline;
+	background-color: #fff;
+	text-decoration: none;
 } 
 
 .horbaritem a:visited {
@@ -522,8 +530,7 @@ div#tiki-bot {}
 	z-index: 999;
 	position: absolute;
 	left: 0;
-	top: 0;
-	background: #FFFFFF;
+	background-color: transparent;
 	visibility: hidden;
 }
 
@@ -534,8 +541,11 @@ div#tiki-bot {}
 .mdksubframe {
 	z-index: 1000;
 	position: relative;
+	left: -1px;
+	top: 1px;
+	background-color: #fff;
 	display: block;
-	border: 1px solid #999;
+	border: 1px solid #D3D3D3;
 } 
 
 /* Menu items in drop down frame */
@@ -628,7 +638,15 @@ div.separatorline {}
 .separator a:hover {}
 div.option a.linkmenu:hover {}
 a.separator img {}
-.option {}
+/* menu option */
+.option {
+	background: transparent url('../img/icons2/corner-dots.gif') center left no-repeat;
+	padding: 0.2em 0.2em 0.2em 1.6em;
+}
+/* selected menu item */
+.selected {
+	font-weight: bold;
+}
 div.optionline,
 .option a {}
 .option a:link,
@@ -725,7 +743,7 @@ div.box {
 
 h3.box-title {
 	font-weight: normal;
-	margin: 0 0 7px 0;
+	margin: 0 0 7px 1em;
 	padding: 0;
 	color: black;
 	text-transform: uppercase;
@@ -733,7 +751,6 @@ h3.box-title {
 	display: block;
 	font-size: 90%;
 	font-weight: bold;
-	text-indent: 1em;
 	position: relative;
 }
 
@@ -816,9 +833,29 @@ div.cbox {
 	padding: 3px;
 }
 
-.rbox {}
-.rbox-title {}
-.rbox-data {}
+/* rbox: remarks box (note/warning/tip/comment) */
+.rbox {
+	margin: 0.2em 0 0.4em;
+	text-align: left;
+}
+.rbox-title {
+	background-color: #f2cd5e;
+	border: none;
+	float: left;
+	font-size: 1em;
+	padding: 0.2em 0.8em;
+	line-height: 1.4em;
+	position: relative;
+	top: 1px;
+	z-index: 2;
+}
+.rbox-data {
+	background-color: #fff;
+	border: solid 1px #f2cd5e;
+	clear: left;
+	margin: 0;
+	padding: 6px 2px 2px 2px;
+}
 
 .warning .rbox-title {}
 .warning .rbox-data {}
@@ -920,12 +957,13 @@ td.form {
 table.normal, 
 table.admin,
 table.bloglist {
-	padding: 0;
 	margin: 0;
 	border-collapse: collapse;
 	width: 100%;
 }
-
+table.normalnoborder {
+	width: 100%;
+}
 table.normal,
 table.bloglist {
 	border: solid 1px #909090;
@@ -938,199 +976,117 @@ table.admin tr td div#page-bar {
 	background-color: transparent;
 }
 
-/** Tabs **/
+/** Tiki Tabs **/
+
+div.content {
+	padding: 3px
+}
+
+div.content .tabs {
+	margin: 0px;
+}
 
 .tabs {
-	border-bottom: solid 1px #225566 !important;
-	margin-top: 10px !important; 
-  padding: 0 !important;
+	border-bottom: solid 1px #0a6aa6 !important;
+	margin-top: 10px !important;
+	padding: 0 !important;
 }
 
-.tabactive {
-	border: solid 1px #225566 !important;
-	border-bottom: none !important;
-	border-top-width: 2px !important;
-	position: relative;
-	top: -2px;
-}
-[class].tabactive {
-	top: -1px
-}
-.tabactive a {
-	background: #eee;
-}
-.tabinactive {
-	border: solid 1px #666 !important;
-	border-bottom: none !important;
-	position: relative !important;
-	top: -3px !important;
-}
-[class].tabinactive {
-	top: -2px !important;
+.admin {
+	padding: 2px;
 }
 
 .tabmark {
 	display: inline;
-	font-size: 85%;
-	background: #abcdef;
-	border: 1px solid #abcdef;
-	margin: 0;
+	font-size: 10px;
+	background-color: #bfbfbf;
+	margin: 0px;
 	margin-right: 5px;
-	padding: 1px 0 1px 0;
+	padding: 2px 0;
 }
 
-.tabmark a { 
-	border-bottom :0;
+.tabmark a {
+	border-bottom: 0;
 	color: #000;
-	padding: 1px 5px 1px 5px;
-	text-decoration: none;
+	font-weight: bold;
+	padding: 1px 5px;
 }
 
 .tabmark a:active {
-	background: #fff;
-	color: red;
+	background-color: #f2f2f2;
+	color: #0a6aa6;
 }
 
 .tabmark a:hover {
-	color: black;
-	background: #f0f9ff;
+	color: #0a6aa6;
+	background-color: #CFCFCF;
+	text-decoration: none;
 }
 
-.tabcontent {
-	z-index: 200;
+
+/* active (current) tab */
+.tabactive {
+	background-color : #f2f2f2 !important;
+	border: solid 1px #0a6aa6 !important;
+	border-bottom: none !important;
+	border-top-width: 2px !important;
 	position: relative;
-	border: 1px solid #abcdef;
+	bottom: 2px;
+	z-index: 2;
+}
+
+[class].tabactive {
+	bottom: 1px
+}
+.tabactive a:hover {
+	background-color : #f2f2f2 !important;
+}
+
+/* link of active tab */
+.tabactive a {
+	color: #0a6aa6 !important;
+}
+
+/* inactive tabs */
+.tabinactive {
+	border: solid 1px #666666 !important;
+	border-bottom: none !important;
+	position: relative !important;
+ 	top: -3px !important;
+}
+
+[class].tabinactive {
+	top: -2px !important
+}
+
+
+
+.tabcontent {
+	background-color: #f2f2f2;
+	border: solid 1px #0a6aa6 !important;
+	border-top: none !important;
+	margin: 0;
 	padding: 6px 2px 2px 2px;
-	margin-bottom: 25px;
-	background: #f0f9ff;
+	text-align: center;
 }
 
 .tabcontent table {
-	margin: 1% auto 2% auto;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 1%;
+	margin-bottom: 2%;
 	text-align: left;
 	width: 95%;
 }
+
 .tabcontent table td {
 	padding: 5px;
 }
 
-form fieldset.tabcontent {
-	border: 1px solid #225566;
-	border-top: none !important;
-}
-form.admin .tabs {
-	border-bottom: solid 1px #225566 !important;
-	margin: 10px 1px 0 0 !important;
-	padding: 0 !important;
+.commentbloc {
+	text-align: left;
 }
 
-/* Get the contextual info to make this specific.
-div.content {
-	padding: 3px;
-}
-
-div.content .tabs {
-	margin: 0;
-}
-
-.tab-wrapper {
-	border: 1px solid #EEEEEE;
-	padding: 0;
-}
-
-.tab-menu  {
-	clear: both;
-	line-height: 17px;
-	list-style-image: none;
-	list-style-position: outside;
-	list-style-type: none;
-	padding: 2px 0;
-	margin-bottom: 6px;
-	margin-top: 2px;
-	width: 100%;
-}
-
-.tab-menu li {
-	display: inline;
-	margin: 0 2px;
-	width: 200px;
-	padding-right: 1.5em;
-}
-
-.tab-menu li a 	{ 
-	padding: 1px 5px; 
-	background: #f5f5f5; 
-	color:  #222; 
-	font-weight: bold; 
-	text-decoration: none; 
-} 
-.tab-menu li a:hover, 
-.tab-menu li a:focus { 
-	background: #FAEC8F; 
-	border-bottom-color: #999; 
-} 
-
-.tab-menu li a:hover { 
-	background: #FAEC8F; 
-	border-bottom-color: #999; 
-} 
-
-.tab-menu li.tab-selected a { 
-	background: #BCEC8F; 
-}
-
-/* CHECK
-.tab-menu li img {
-	vertical-align: middle;
-}*/
-
-/*  tiki tabs -- deprecated?
-table.admin tr td div#page-bar {
-	margin-left: 5px;
-	margin-bottom: 0;
-	background-color: transparent;
-}
-
-span#tab1 {
-	background: #F5F5F5;
-}
-
-span#tab2 {
-	background: #ECECEC;
-}
-
-span#tab3 {
-	background: #DCDCDC;
-}
-
-#content1,
-#content2,
-#content3 {
-	border-top: 1px solid #A9A9A9;
-	border-left: 1px solid #A9A9A9;
-	border-right: 1px solid #696969;
-	border-bottom: 1px solid #696969;
-}
-
-#content1 {
-	padding: 10px;
-	background: #F5F5F5;
-
-}
-
-#content2 {
-	padding: 5px;
-	background: #ECECEC;
-}
-
-#content3 {
-	padding: 5px;
-	background: #DCDCDC;
-}
-table.admin div#content1 div.tabcontent div.cbox {
-	background-color: transparent;
-}
-*/
 
 /*** Feature-specific selectors ***/
 
@@ -1390,6 +1346,9 @@ ul.toc * {
 .diffchar {
 	color: red;
 }
+.diffadded > .diffchar {
+	color : blue;
+}
 
 /***** Articles ****/
 
@@ -1511,7 +1470,6 @@ div.bloginfo {
 div.blogtools {
 	padding: 3px;
 	text-align: right;
-	/*margin-bottom: -2em;*/
 }
 
 .blogpost {
@@ -1588,14 +1546,7 @@ body.tiki_blog .postfooter {
 body.tiki_forums table.normal {
 	margin: auto;
 }
-/* can't find in 1.10
-div.forumtoolbar {
-	margin-bottom: 20px;
-	border: 0;
-}
-td.threadseparator {}
 
-*/
  
 td.threadsevenl {}
 td.threadsevenr {}
@@ -1646,13 +1597,6 @@ table.commentinfo {}
 * html .post .postbody {font-size: 11px}
 *:first-child+html .postbody {min-width: 100%}
 
-/*.postbody .posttop {
-	position: relative;
-	width: 100%;
-	display: block;
-	min-height: 104px;
-	background-color: #E0EAF4; 
-	border-bottom: 1px solid #ACCCDD;}*/
 
 .postbody-title {
 	width: 75%;
@@ -1674,8 +1618,6 @@ table.commentinfo {}
 	margin-top: 3px}
 
 .author_actions {
-	/*height:auto; top:20px; margin:8px 8px auto auto; bottom:auto; left: auto;right: 0;
-position:absolute*/
 	width: 25%;
 	float: right;
 	text-align: right;
@@ -1787,7 +1729,6 @@ position:absolute*/
 }
 .nb_replies { white-space: nowrap; }
 .post_preview, .top_post { margin-bottom: 15px; }
-/*.post .postbody .signature { float: left; }*/
 
 /* Comments */
 
@@ -1874,11 +1815,6 @@ div.freetagObjectType {
 }
 
 /***** Image Galleries *****/
-/*
-div.browsegallery {
-	text-align: center;
-	width: 100%;
-}*/
 
 table.galtable {
 	border-collapse: collapse;
@@ -2208,8 +2144,8 @@ table.default	td {
   border-color: #A9A9A9;
   border-width: 1px;
   border-style: solid;
-  background-color: black;
-  color: #D8D8D8;
+  background-color: #ccc;
+  color: #000;
 }
 
 .advanced:before { content:url(../img/icons/mini_blue_diamond.gif)" "; }

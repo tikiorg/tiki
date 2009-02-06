@@ -1,6 +1,6 @@
 <?php
 
-class WikiParser_PluginArgumentParserTest extends PHPUnit_Framework_TestCase
+class WikiParser_PluginArgumentParserTest extends TikiTestCase
 {
 	function testSingleSimpleArgument()
 	{

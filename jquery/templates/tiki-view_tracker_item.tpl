@@ -447,9 +447,7 @@ or $cur_field.type eq 'i'}
 <input type="text" name="ins_{$cur_field.id}" value="{$cur_field.value}" />
 
 {elseif $cur_field.type eq 'G'}
-<input type="text" name="ins_{$cur_field.id}" value="{$cur_field.value}" />
-<a href="tiki-gmap_locator.php?for=item&amp;itemId={$itemId}&amp;trackerId={$trackerId}&amp;fieldId={$cur_field.id}">{tr}Google Map Locator{/tr}</a>
-
+{include file='tracker_item_field_input.tpl' field_value=$cur_field}
 
 {elseif $cur_field.type eq 'j'}
 {include file='tracker_item_field_input.tpl' field_value=$cur_field}

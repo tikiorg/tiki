@@ -1,6 +1,6 @@
 {popup_init src="lib/overlib.js"}
 {*Smarty template*}
-<h1><a class="pagetitle" href="tiki-g-monitor_processes.php">{tr}Monitor processes{/tr}</a>
+<h1><a class="pagetitle" href="tiki-g-monitor_processes.php">{tr}Monitor Processes{/tr}</a>
 
   
       {if $prefs.feature_help eq 'y'}

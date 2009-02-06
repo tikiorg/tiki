@@ -461,6 +461,7 @@
         </legend>
         <div id="layout" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_layout) and $smarty.session.tiki_cookie_jar.show_layout neq 'y'}none{else}block{/if};">{/if}
         <table class="admin" width="100%">
+		<th colspan="2" align="center">{tr}Admin Password{/tr}</th>
       <tr>
         <td class="form" ><label for="general-new_pass">{tr}New password{/tr}:</label></td>
         <td ><input type="password" name="adminpass" id="general-new_pass" /></td>

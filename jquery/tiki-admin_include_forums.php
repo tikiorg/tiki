@@ -48,6 +48,9 @@ if (isset($_REQUEST["forumlistprefs"])) {
 	'forum_list_visits',
 	'forum_list_desc'
 	);
+	
+	simple_set_int('forum_list_description_len');
+	
 	foreach ($pref_toggles as $toggle) {
 		simple_set_toggle ($toggle);
 	}

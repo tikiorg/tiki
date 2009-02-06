@@ -1,6 +1,6 @@
 <?php
 
-class WikiParser_PluginMatcherTest extends PHPUnit_Framework_TestCase
+class WikiParser_PluginMatcherTest extends TikiTestCase
 {
 	function toArray( $matcher )
 	{

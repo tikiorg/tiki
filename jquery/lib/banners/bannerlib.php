@@ -226,7 +226,7 @@ class BannerLib extends TikiLib {
                 `hourFrom`, `hourTo`, `maxImpressions`,`maxClicks`,`created`,`zone`,`imageName`,`impressions`,`clicks`)
                 values(?,?,?,?,?,?,?,?,
                 ?,?,?,?,?,?,?,?,?,
-                ?,?,?,?,?,?,?,?,?,?,???)";
+                ?,?,?,?,?,?,?,?,?,?,?,?)";
 
                 $bindvars=array($client,$url,$title,$alt,$use,$imageData,$imageType,$HTMLData,
                                 $fixedURLData, $textData, $fromDate, $toDate, $useDates, $mon,$tue,$wed,$thu,

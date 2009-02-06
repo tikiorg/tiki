@@ -41,7 +41,7 @@ function get_default_prefs() {
 
 		// wiki
 		'feature_wiki' => 'y',
-		'default_wiki_diff_style' => 'minsidediff',
+		'default_wiki_diff_style' => 'sidediff',
 		'feature_backlinks' => 'n',
 		'feature_dump' => 'n',
 		'feature_history' => 'y',
@@ -415,6 +415,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'forum_list_lastpost' =>  'y',
 		'forum_list_visits' =>  'y',
 		'forum_list_desc' =>  'y',
+		'forum_list_description_len' => '240',
 		'feature_forum_local_search' => 'n',
 		'feature_forum_local_tiki_search' => 'n',
 		'forum_thread_defaults_by_forum' => 'n',
@@ -718,7 +719,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_gmap' => 'n',
 		'gmap_defaultx' => '0',
 		'gmap_defaulty' => '0',
-		'gmap_defaultz' => '17',
+		'gmap_defaultz' => '0',
 		'gmap_key' => '',
 
 		// auth
@@ -859,13 +860,13 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 
 		// site identity
 		'feature_siteidentity' => 'y',
-		'site_crumb_seper' => '>',
+		'site_crumb_seper' => '»',
 		'site_nav_seper' => '|',
 		'feature_sitemycode' => 'n',
 		'sitemycode' => '<div align="center"><b>{tr}Here you can (as an admin) place a piece of custom XHTML and/or Smarty code. Be careful and properly close all the tags before you choose to publish ! (Javascript, applets and object tags are stripped out.){/tr}</b></div>', // must be max. 250 chars now unless it'll change in tiki_prefs db table field value from VARCHAR(250) to BLOB by default
 		'sitemycode_publish' => 'n',
 		'feature_sitelogo' => 'y',
-		'sitelogo_bgcolor' => '',
+		'sitelogo_bgcolor' => '#FFF',
 		'sitelogo_bgstyle' => '',
 		'sitelogo_align' => 'left',
 		'sitelogo_title' => 'Tikiwiki powered site',
@@ -908,9 +909,9 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'slide_style' => 'slidestyle.css',
 		'site_favicon' => 'favicon.png',
 		'site_favicon_type' => 'image/png',
-		'style' => 'tikineat.css',
+		'style' => 'thenews.css',
 		'style_option' => '',
-		'site_style' => 'tikineat.css',
+		'site_style' => 'thenews.css',
 		'site_style_option' => '',
 		'use_context_menu_icon' => 'y',
 		'use_context_menu_text' => 'y',
@@ -930,7 +931,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_actionlog_bytes' => 'n',
 
 		// admin
-		'siteTitle' => '',
+		'siteTitle' => 'Tiki 3.x',
 		'tmpDir' => 'temp',
 
 		// tell a friend
@@ -1129,7 +1130,15 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_comments_post_as_anonymous' => 'n',
 		'feature_comments_moderation' => 'n',
 		'feature_template_zoom' => 'y',
-		'feature_jquery' => 'y',
+		'feature_jquery' => 'y',			// Alternative lib for shadowbox etc
+		'feature_jquery_ui' => 'y',			// include UI lib for more effects
+		'jquery_effect' => '',				// Default effect for general show/hide: ['' | 'slide' | 'fade' | and
+											// see http://docs.jquery.com/UI/Effects: 'blind' | 'clip' | 'explode' etc]
+		'jquery_effect_tabs' => 'none',			// Different effect for tabs (['none' | 'normal' (for jq) | 'slide' etc]
+		'jquery_effect_direction' => 'vertical',
+									// ['horizontal' | 'vertical' | 'left' | 'right' | 'up' | 'down' ]
+		'jquery_effect_speed' => 'fast',
+									// ['slow' | 'normal' | 'fast' | milliseconds (int) ]
 	
 		// TikiTests
 		'feature_tikitests' => 'n',

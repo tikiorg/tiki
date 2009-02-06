@@ -305,6 +305,43 @@
 					<div class="float_r" style="width: 49%; text-align: left; float: right">
 						<span class="checkbox"><input type="checkbox" name="feature_jquery" {if $prefs.feature_jquery eq 'y'}checked="checked"{/if}/></span>
 						<span class="label"> <a href="{$prefs.helpurl}JQuery" target="tikihelp" class="tikihelp" title="{tr}JQuery: JavaScript UI effects{/tr}"> {tr}JQuery{/tr}</a></span>
+						{if $prefs.feature_jquery eq 'y'}
+						{button _text="JQuery admin:" _flip_id="jquery-admin"}
+						<div id="jquery-admin" class="float_r" style="display: none;">
+							<input type="checkbox" name="feature_jquery_ui" {if $prefs.feature_jquery_ui eq 'y'}checked="checked"{/if}/>
+							<a href="{$prefs.helpurl}JQuery_UI" target="tikihelp" class="tikihelp" title="{tr}JQuery UI: More JQuery functionality{/tr}"> {tr}JQuery UI{/tr}</a>
+							<select name="jquery_effect" id="jquery_effect">
+					            <option value="" {if $prefs.jquery_effect eq ''}selected="selected"{/if}>
+					              {tr}Default{/tr}</option>
+					            <option value="slide" {if $prefs.jquery_effect eq 'slide'}selected="selected"{/if}>
+					              {tr}Slide{/tr}</option>
+					            <option value="fade" {if $prefs.jquery_effect eq 'fade'}selected="selected"{/if}>
+					              {tr}Fade{/tr}</option>
+					         </select>
+							<a href="{$prefs.helpurl}JQuery" target="tikihelp" class="tikihelp" title="{tr}Main JQuery effect{/tr}"> {tr}Effect{/tr}</a>
+							<select name="jquery_effect_tabs" id="jquery_effect_tabs">
+					            <option value="none" {if $prefs.jquery_effect_tabs eq 'none'}selected="selected"{/if}>
+					              {tr}None{/tr}</option>
+					            <option value="normal" {if $prefs.jquery_effect_tabs eq 'normal'}selected="selected"{/if}>
+					              {tr}Normal{/tr}</option>
+					            <option value="slide" {if $prefs.jquery_effect_tabs eq 'slide'}selected="selected"{/if}>
+					              {tr}Slide{/tr}</option>
+					            <option value="fade" {if $prefs.jquery_effect_tabs eq 'fade'}selected="selected"{/if}>
+					              {tr}Fade{/tr}</option>
+					         </select>
+							<a href="{$prefs.helpurl}JQuery" target="tikihelp" class="tikihelp" title="{tr}JQuery effect for tabs{/tr}"> {tr}Effect for tabs{/tr}</a>
+							<select name="jquery_effect_speed" id="jquery_effect_speed">
+					            <option value="fast" {if $prefs.jquery_effect_speed eq 'fast'}selected="selected"{/if}>
+					              {tr}Fast{/tr}</option>
+					            <option value="normal" {if $prefs.jquery_effect_speed eq 'normal'}selected="selected"{/if}>
+					              {tr}Normal{/tr}</option>
+					            <option value="slow" {if $prefs.jquery_effect_speed eq 'slow'}selected="selected"{/if}>
+					              {tr}Slow{/tr}</option>
+					         </select>
+							<a href="{$prefs.helpurl}JQuery" target="tikihelp" class="tikihelp" title="{tr}Speed of JQuery effects{/tr}"> {tr}Effect speed{/tr}</a>
+							
+						</div>
+						{/if}
 					</div>
 				</div>
 			</fieldset>

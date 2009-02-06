@@ -81,7 +81,7 @@
 </table>
 </form>
 
-<h2>{tr}Admin topics{/tr}</h2>
+<h2>{tr}Admin Topics{/tr}</h2>
 <form  enctype="multipart/form-data"  action="tiki-minical_prefs.php" method="post">
 <table class="normal">
 <tr>

@@ -93,9 +93,9 @@ if (isset($_REQUEST["features"])) {
 		"feature_userlevels",
 		"feature_mootools",
 		"feature_jquery",
+		"feature_jquery_ui",
 		"feature_shadowbox",
 		"feature_swffix",
-		"layout_section",
 		"feature_sefurl",
 		"feature_sefurl_filter",
 		"feature_tikitests",
@@ -109,13 +109,24 @@ if (isset($_REQUEST["features"])) {
 		"user_flip_modules"
 	);
 
-	check_ticket('admin-inc-features');
+    $pref_simple_values = array(
+		'jquery_effect',
+    	'jquery_effect_tabs',
+    	'jquery_effect_direction',
+    	'jquery_effect_speed',
+    );
+    
+    check_ticket('admin-inc-features');
 	foreach ($features_toggles as $toggle) {
 		simple_set_toggle ($toggle);
 	}
 	foreach ($pref_byref_values as $britem) {
 		byref_set_value ($britem);
 	}
+
+	foreach ($pref_simple_values as $svitem) {
+        simple_set_value ($svitem);
+    }
 
 	$smarty->clear_compiled_tpl();
 

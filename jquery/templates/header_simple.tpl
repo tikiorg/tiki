@@ -53,6 +53,7 @@
 <script src="lib/mootools/extensions/tabs/SimpleTabs.js" type="text/javascript" ></script> 
 {/if}
 {/if}
+{if $prefs.feature_jquery eq "y"}{include file="header_jquery.tpl"}{/if}
 
 {if $prefs.feature_swffix eq "y"}
 <script type="text/javascript" src="lib/swffix/swffix.js"></script>
