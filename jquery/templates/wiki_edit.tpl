@@ -15,13 +15,15 @@
 	{assign var=textarea_attributes value=" rows='$rows' cols='$cols' style='width:99%'"}
 {/if}
 <div id='edit-zone'>
-	{if isset($quicktags)}
+	{if isset($quicktags) or isset($enlarge)}
 		{if $zoom_mode eq 'n' and $prefs.quicktags_over_textarea neq 'y'}<table style="border:0; width:100%"><tr><td style="border:0;">{/if}
 	<div id='textarea-toolbar' style='padding:3px; font-size:10px; {if $zoom_mode eq 'n' and $prefs.quicktags_over_textarea neq 'y'}float:left;{/if}'>
 		{if $zoom_mode eq 'n'}
 		<div style='float:left; margin-right:5px'>{include file='textareasize.tpl' area_name='editwiki' formId='editpageform' ToolbarSet='Tiki'}</div>
 		{/if}
-		{include file=tiki-edit_help_tool.tpl area_name='editwiki' zoom_enable='y}
+		{if isset($quicktags)}
+			{include file=tiki-edit_help_tool.tpl area_name='editwiki' zoom_enable='y}
+		{/if}
 	</div>
 	{/if}
 	{if $zoom_mode eq 'n' and $prefs.quicktags_over_textarea neq 'y'}</td><td style="border:0;">{/if}

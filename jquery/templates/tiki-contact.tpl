@@ -29,7 +29,7 @@
     <td class="form">{tr}Subject{/tr}:</td><td class="form"><input type="text" name="subject" value="{$subject}" maxlength="255"  style="width:99%" /></td>
   </tr>
   <tr><td class="form">{tr}Message{/tr}:</td>
-      <td class="form"><textarea rows="20" name="body" style="width:99%">{$body}</textarea></td>
+      <td class="form">{textarea rows="20" name="body" cols="80" _enlarge="y"}{$body}{/textarea}</td>
   </tr>
   <tr><td class="form"></td><td class="form"><input type="submit" name="send" value="{tr}Send{/tr}" /></td></tr>
 </table>

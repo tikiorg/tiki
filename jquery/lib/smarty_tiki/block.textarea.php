@@ -11,6 +11,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *
  * special params:
  *    _quicktags: if set to 'y', display quicktags above the textarea
+ *    _enlarge: if set to 'y', display the enlarge buttons above the textarea
  *
  * usage: {textarea id='my_area' name='my_area'}{tr}My Text{/tr}{/textarea}
  *
@@ -20,7 +21,7 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 	global $prefs;
 	if ( $repeat ) return;
 
-	if ( ! isset($params['_quicktags']) ) $params['quicktags'] = 'n';
+	if ( ! isset($params['_quicktags']) ) $params['_quicktags'] = 'n';
 /*
 	if ( ! isset($params['_wikiparsed']) ) {
 		// Quicktags implies wiki parsing
@@ -52,6 +53,8 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 		} else {
 			$smarty->clear_assign('quicktags');
 		}
+		if ( isset($params['_enlarge']) && $params['_enlarge'] == 'y' )
+			$smarty->assign_by_ref('enlarge', $params['_enlarge']);
 
 		$textarea_attributes = '';
 		foreach ( $params as $k => $v ) {
@@ -65,7 +68,7 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 		if ( $textarea_attributes != '' ) {
 			$smarty->assign('textarea_attributes', $textarea_attributes);
 		}
-		$smarty->assign('pagedata', $content);
+		$smarty->assign_by_ref('pagedata', $content);
 
 		$html .= $smarty->fetch('wiki_edit.tpl');
 

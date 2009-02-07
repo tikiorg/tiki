@@ -1084,7 +1084,6 @@ form.admin .tabs {
 	padding: 0 !important}*/
 
 form.admin {background: #292929}
-form.admin fieldset {border: 0}
 /*
 form.admin legend.heading {}
 form.admin legend.heading a {}
@@ -1699,7 +1698,7 @@ span.commentstitle {
 
 /* Find */
 .subcomment {margin-left: 10px}
-.findtable {padding: 15px 0; float: left;}
+.findtable {padding: 15px 0;}
 .findtable ul {list-style: none;padding:0; margin: 0;float: left;}
 .findtable ul li {float: left;}
 
