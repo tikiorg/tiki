@@ -508,3 +508,14 @@ p.editdate {
 	margin-top: 2em;
 	font-size: 0.9em;
 }
+
+/* JQuery defaults */
+
+#jquery-admin {
+	border: 1px #aaa solid;
+	float:right;
+	position:relative;
+	top:-7em;
+}
+
+
