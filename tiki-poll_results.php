@@ -10,18 +10,12 @@
 $section = 'poll';
 require_once ('tiki-setup.php');
 
-include_once ('lib/polls/polllib.php');
-
-if (!isset($polllib)) {
-	$polllib = new PollLib($dbTiki);
-}
-
 if ($prefs['feature_polls'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_polls");
-
 	$smarty->display("error.tpl");
 	die;
 }
+global $pollib; include_once ('lib/polls/polllib.php');
 
 // Now check permissions to access this page
 if ($tiki_p_view_poll_results != 'y') {
@@ -31,23 +25,23 @@ if ($tiki_p_view_poll_results != 'y') {
 	die;
 }
 
-if (!isset($_REQUEST["maxRecords"])) {
-	$_REQUEST["maxRecords"] = 30;
-	$smarty->assign('maxRecords', $_REQUEST['maxRecords']);
-} elseif ($_REQUEST["maxRecords"] == '') {
-	$_REQUEST["maxRecords"] = -1;
-	$smarty->assign('maxRecords', '');
+if (!isset($_REQUEST['maxRecords'])) {
+	$_REQUEST['maxRecords'] = 30;
+} elseif (empty($_REQUEST['maxRecords'])) {
+	$_REQUEST['maxRecords'] = -1;
 }
+$smarty->assign_by_ref('maxRecords', $_REQUEST['maxRecords']);
+
 if (!isset($_REQUEST['find'])) {
 	$_REQUEST['find'] = '';
 }
 $smarty->assign_by_ref('find', $_REQUEST['find']);
 
-$polls = $polllib->list_active_polls(0, $_REQUEST["maxRecords"], "votes_desc", $_REQUEST['find']);
 $pollIds = array();
 if (isset($_REQUEST["pollId"])) {
 	$pollIds[] = $_REQUEST["pollId"];
 } else {
+	$polls = $polllib->list_active_polls(0, $_REQUEST["maxRecords"], "votes_desc", $_REQUEST['find']);
 	foreach ($polls["data"] as $pId) {
 		$pollIds[] = $pId["pollId"];
 	}
@@ -129,7 +123,7 @@ if (isset($_REQUEST["scoresort_asc"]) || isset($_REQUEST["scoresort_desc"])) {
 
 if ($tiki_p_admin_polls == 'y' && !empty($_REQUEST['list']) && isset($_REQUEST['pollId'])) {
 	if (empty($_REQUEST['sort_mode'])) {
-		$_REQUEST['sort_mode'] = 'identification_asc';
+		$_REQUEST['sort_mode'] = 'user_asc';
 	}
 	$smarty->assign_by_ref('sort_mode', $_REQUEST['sort_mode']);
 	if (!isset($_REQUEST['offset'])) {
@@ -137,7 +131,7 @@ if ($tiki_p_admin_polls == 'y' && !empty($_REQUEST['list']) && isset($_REQUEST['
 	}
 	$smarty->assign_by_ref('offset', $_REQUEST['offset']);
 
-	$list_votes = $polllib->list_votes($_REQUEST['pollId'], $_REQUEST['offset'], $maxRecords, $_REQUEST['sort_mode']);
+	$list_votes = $tikilib->list_votes('poll'.$_REQUEST['pollId'], $_REQUEST['offset'], $maxRecords, $_REQUEST['sort_mode'], $_REQUEST['find'], 'tiki_poll_options', 'title');
 	$smarty->assign_by_ref('list_votes', $list_votes['data']);
 	$smarty->assign_by_ref('list_votes_options', $list_votes['options'] );
 
@@ -160,7 +154,6 @@ $smarty->assign_by_ref('poll_info_arr', $poll_info_arr);
 // the following 4 lines preserved to preserve environment for old templates
 $smarty->assign_by_ref('poll_info', $poll_info);
 $smarty->assign('title', $poll_info['title']);
-$smarty->assign_by_ref('polls', $polls["data"]);
 $smarty->assign_by_ref('options', $options);
 
 ask_ticket('poll-results');

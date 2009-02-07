@@ -23,17 +23,6 @@
 </select>
 </td></tr>
 <tr>
-<td class="formcolor">{tr}Authencity:{/tr}</td>
-<td>
-<select name="anonym">
-<option value='u' {if $anonym eq 'u'}selected="selected"{/if}>{tr}user{/tr}</option>
-<option value='a' {if $anonym eq 'a'}selected="selected"{/if}>{tr}anonym{/tr}</option>
-<option value='i' {if $anonym eq 'i'}selected="selected"{/if}>{tr}ip {/tr}</option>
-<option value='c' {if $anonym eq 'c'}selected="selected"{/if}>{tr}cookie {/tr}</option>
-</select>
-</td>
-</tr>
-<tr>
 <td class="formcolor">{tr}Options:{/tr}</td>
 <td>
 	<div><a href="javascript://toggle quick options" onclick="pollsToggleQuickOptions()">{tr}Toggle Quick Options{/tr}</a></div>

@@ -151,8 +151,7 @@ class PollLibShared extends TikiLib {
   }
 
   function create_poll($template_id,$title) {
-  	$anonym = $this->getOne( "SELECT `anonym` FROM `tiki_polls` WHERE `pollId`=?", array((int)$template_id) );
-    $pollid = $this->replace_poll(0,$title,"o",date('U'),$anonym);
+    $pollid = $this->replace_poll(0,$title,"o",date('U'));
     $options = $this->list_poll_options($template_id);
     foreach ($options as $op) {
       $this->replace_poll_option($pollid,0,$op['title'],$op['position']);
@@ -171,13 +170,13 @@ class PollLibShared extends TikiLib {
     return true;
   }
 
-  function replace_poll($pollId, $title, $active, $publishDate,$anonym) {
+  function replace_poll($pollId, $title, $active, $publishDate) {
     if ($pollId) {
-      $query = "update `tiki_polls` set `title`=?,`active`=?,`publishDate`=?,`anonym`=? where `pollId`=?";
-      $result = $this->query($query,array($title,$active,$publishDate,$anonym,$pollId));
+      $query = "update `tiki_polls` set `title`=?,`active`=?,`publishDate`=? where `pollId`=?";
+      $result = $this->query($query,array($title,$active,$publishDate, $pollId));
     } else {
-      $query = "insert into tiki_polls(`title`,`active`,`publishDate`,`votes`,`anonym`) values(?,?,?,?,?)";
-      $result = $this->query($query,array($title,$active,$publishDate,0,$anonym));
+      $query = "insert into tiki_polls(`title`,`active`,`publishDate`,`votes`) values(?,?,?,?)";
+      $result = $this->query($query,array($title,$active,$publishDate,0));
       $pollId = $this->getOne("select max(`pollId`) from `tiki_polls` where `title`=? and `publishDate`=?",array($title,$publishDate));
     }
     return $pollId;
@@ -226,45 +225,6 @@ class PollLibShared extends TikiLib {
 		}
 
 		return $pollId_new;
-	}
-
-	function id_has_voted($pollId,$identification)
-	{
-		$qry = 'SELECT count(*) FROM `tiki_poll_votes` WHERE `pollId`=? AND `identification`=?';
-		return (int)$this->getOne($qry, array((int)$pollId, $identification))>0;
-	}
-
-	function register_id_vote($pollId,$optionId,$identification)
-	{
-		$this->query( 'INSERT INTO `tiki_poll_votes` (`pollId`,`optionId`,`identification`,`time`) VALUES(?,?,?,?)'
-			,array((int)$pollId,(int)$optionId,$identification,time()));
-	}
-
-	function list_votes($id, $offset=0, $maxRecords=-1, $sort_mode='user_asc', $find='')
-	{
-		$mid = 'where  `pollId`=?';
-		$bindvars[] = $id;
-		if (!empty($find)) {
-			$mid .= " and `identification` like ?";
-			$bindvars[] = '%'.$find.'%';
-		}
-		$query = "select * from `tiki_poll_votes` $mid order by ".$this->convert_sortmode($sort_mode);
-		$query_cant = "select count(*) from `tiki_poll_votes` $mid";
-		$result = $this->query($query, $bindvars, $maxRecords, $offset);
-		$cant = $this->getOne($query_cant, $bindvars);
-		$ret = array();
-		$options = array();
-		while ($res = $result->fetchRow()) {
-			$ret[] = $res;
-			$optionRes = $this->query( "SELECT `title` FROM `tiki_poll_options` WHERE `optionId`=?;", array( (int)$res[ 'optionId' ] ) );
-			$optionRes = $optionRes->fetchRow();
-			$options[] = $optionRes[ 'title' ];
-		}
-		$retval = array();
-		$retval["data"] = $ret;
-		$retval["cant"] = $cant;
-		$retval["options"] = $options;
-		return $retval;
 	}
 
 }

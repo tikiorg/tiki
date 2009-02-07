@@ -1823,16 +1823,6 @@ CREATE TABLE tiki_polls (
   PRIMARY KEY (pollId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
-DROP TABLE IF EXISTS `tiki_poll_votes`;
-CREATE TABLE IF NOT EXISTS `tiki_poll_votes` (
-  `pollId` int(11) NOT NULL,
-  `optionId` int(11) NOT NULL,
-  `voteId` int(11) NOT NULL auto_increment,
-  `identification` varchar(300) NOT NULL,
-  `time` int(11) NOT NULL,
-  PRIMARY KEY  (`voteId`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 ;
-
 DROP TABLE IF EXISTS tiki_preferences;
 CREATE TABLE tiki_preferences (
   name varchar(40) NOT NULL default '',
@@ -2648,10 +2638,14 @@ CREATE TABLE tiki_user_tasks (
 
 DROP TABLE IF EXISTS tiki_user_votings;
 CREATE TABLE tiki_user_votings (
-  user varchar(200) NOT NULL default '',
+  user varchar(200) default '',
+  ip varchar(15) default NULL,
   id varchar(255) NOT NULL default '',
   optionId int(10) NOT NULL default 0,
-  PRIMARY KEY (`user`(100),id(100))
+  time int(14) NOT NULL default 
+  PRIMARY KEY (`user`(100),id(100)),
+  KEY ip (`ip`),
+  KEY id (`id`)
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS tiki_user_watches;
