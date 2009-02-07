@@ -249,7 +249,7 @@
 
   </td>
   <td class="form">
-    <a class="link" href="javascript:setUserModuleFromCombo('list_polls');" title="{tr}Use Poll{/tr}">{icon _id='add' alt='{tr}Use{/tr}'}</a>
+    <a class="link" href="javascript:setUserModuleFromCombo('list_polls', 'um_data');" title="{tr}Use Poll{/tr}">{icon _id='add' alt='{tr}Use{/tr}'}</a>
   </td><td class="form">
 	<a {popup text="Params: id= rate=" width=100 center=true}>{icon _id='help'}</a>
   </td>
@@ -269,7 +269,7 @@
    </select>
   </td>
   <td class="form">
-   <a class="link" href="javascript:setUserModuleFromCombo('list_galleries');" title="{tr}Use Gallery{/tr}">{icon _id='add' alt='{tr}Use{/tr}'}</a>
+   <a class="link" href="javascript:setUserModuleFromCombo('list_galleries', 'um_data');" title="{tr}Use Gallery{/tr}">{icon _id='add' alt='{tr}Use{/tr}'}</a>
   </td><td class="form">
 	<a {popup text="Params: id= showgalleryname=1 hideimgname=1 hidelink=1" width=100 center=true}>{icon _id='help'}</a>
   </td>
@@ -288,7 +288,7 @@
     </select>
   </td>
   <td class="form">
-    <a class="link" href="javascript:setUserModuleFromCombo('list_contents');" title="{tr}Use Dynamic Content{/tr}">{icon _id='add' alt='{tr}Use{/tr}'}</a>
+    <a class="link" href="javascript:setUserModuleFromCombo('list_contents', 'um_data');" title="{tr}Use Dynamic Content{/tr}">{icon _id='add' alt='{tr}Use{/tr}'}</a>
   </td><td class="form">
 	<a {popup text="Params: id=" width=100 center=true}>{icon _id='help'}</a>
   </td>
@@ -307,7 +307,7 @@
     </select>
   </td>
   <td class="form">
-    <a class="link" href="javascript:setUserModuleFromCombo('list_rsss');" title="{tr}Use RSS Module{/tr}">{icon _id='add' alt='{tr}Use{/tr}'}</a>
+    <a class="link" href="javascript:setUserModuleFromCombo('list_rsss', 'um_data');" title="{tr}Use RSS Module{/tr}">{icon _id='add' alt='{tr}Use{/tr}'}</a>
   </td><td class="form">
 	<a {popup text="Params: id= max= skip=x,y " width=100 center=true}>{icon _id='help'}</a>
   </td>
@@ -326,7 +326,7 @@
     </select>
   </td>
   <td class="form">
-    <a class="link" href="javascript:setUserModuleFromCombo('list_menus');" title="{tr}Use Menu{/tr}">{icon _id='add' alt='{tr}Use{/tr}'}</a>
+    <a class="link" href="javascript:setUserModuleFromCombo('list_menus', 'um_data');" title="{tr}Use Menu{/tr}">{icon _id='add' alt='{tr}Use{/tr}'}</a>
 
 
   </td><td class="form">
@@ -345,7 +345,7 @@
     </select>
   </td>
   <td class="form">
-    <a class="link" href="javascript:setUserModuleFromCombo('list_phpmenus');" title="{tr}Use phplayermenu{/tr}">{icon _id='add' alt='{tr}Use{/tr}'}</a>
+    <a class="link" href="javascript:setUserModuleFromCombo('list_phpmenus', 'um_data');" title="{tr}Use phplayermenu{/tr}">{icon _id='add' alt='{tr}Use{/tr}'}</a>
   </td><td class="form">
 	<a {popup text="Params: id= type=tree|phptree|plain|horiz|vert file= sectionLevel=" width=100 center=true}>{icon _id='help'}</a>
 
@@ -366,7 +366,7 @@
     </select>
   </td>
   <td class="form">
-    <a class="link" href="javascript:setUserModuleFromCombo('list_banners');" title="{tr}Use Banner Zone{/tr}">{icon _id='add' alt='{tr}Use{/tr}'}</a>
+    <a class="link" href="javascript:setUserModuleFromCombo('list_banners', 'um_data');" title="{tr}Use Banner Zone{/tr}">{icon _id='add' alt='{tr}Use{/tr}'}</a>
   </td><td class="form">
 	<a {popup text="Params: zone= target=_blank|_self|" width=100 center=true}>{icon _id='help'}</a>
   </td>
@@ -385,7 +385,7 @@
     </select>
   </td>
   <td class="form">
-    <a class="link" href="javascript:setUserModuleFromCombo('list_wikistructures');" title="{tr}Use Wiki Structure{/tr}">{icon _id='add' alt='{tr}Use{/tr}'}</a>
+    <a class="link" href="javascript:setUserModuleFromCombo('list_wikistructures', 'um_data');" title="{tr}Use Wiki Structure{/tr}">{icon _id='add' alt='{tr}Use{/tr}'}</a>
   </td><td class="form">
 	<a {popup text="Params: id=" width=100 center=true}>{icon _id='help'}</a>
   </td>
@@ -406,7 +406,7 @@
 
 </td></tr>
 <tr><td colspan="2" class="odd">{tr}Data{/tr}<br />
-{textarea name='um_data' rows="6" cols="80" _quicktags='y' _zoom='n'}{$um_data|escape}{/textarea}<br />
+{textarea name='um_data' id='um_data' rows="6" cols="80" _quicktags='y' _zoom='n'}{$um_data|escape}{/textarea}<br />
 <input type="submit" name="um_update" value="{if $um_title eq ''}{tr}Create{/tr}{else}{tr}Save{/tr}{/if}" /></td></tr>
 </table>
 </form>
