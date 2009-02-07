@@ -306,8 +306,8 @@
 						<span class="checkbox"><input type="checkbox" name="feature_jquery" {if $prefs.feature_jquery eq 'y'}checked="checked"{/if}/></span>
 						<span class="label"> <a href="{$prefs.helpurl}JQuery" target="tikihelp" class="tikihelp" title="{tr}JQuery: JavaScript UI effects{/tr}"> {tr}JQuery{/tr}</a></span>
 						{if $prefs.feature_jquery eq 'y'}
-						{button _text="JQuery admin:" _flip_id="jquery-admin" _flip_default_open="y"}
-						<div id="jquery-admin" class="float_r">
+						{button _text="JQuery admin:" _flip_id="jquery_admin" _flip_default_open="y"}
+						<div id="jquery_admin" class="float_r">
 							<div>
 								<input type="checkbox" name="feature_jquery_ui" {if $prefs.feature_jquery_ui eq 'y'}checked="checked"{/if}/>
 								<a href="{$prefs.helpurl}JQuery_UI" target="tikihelp" class="tikihelp" title="{tr}JQuery UI: More JQuery functionality{/tr}"> {tr}JQuery UI{/tr}</a>
