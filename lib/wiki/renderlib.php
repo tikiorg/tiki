@@ -35,6 +35,7 @@ class WikiRenderer
 
 	public $canView = false;
 	public $canUndo = null;
+	public $trads = null;	// translated pages
 
 	function __construct( $info, $user )
 	{
@@ -197,8 +198,8 @@ class WikiRenderer
 		include_once('lib/multilingual/multilinguallib.php');
 
 		if( $this->info['lang'] && $this->info['lang'] != 'NULL') { //NULL is a temporary patch
-			$trads = $multilinguallib->getTranslations('wiki page', $this->info['page_id'], $this->page, $this->info['lang']);
-			$this->smartyassign('trads', $trads);
+			$this->trads = $multilinguallib->getTranslations('wiki page', $this->info['page_id'], $this->page, $this->info['lang']);
+			$this->smartyassign('trads', $this->trads);
 			$pageLang = $this->info['lang'];
 			$this->smartyassign('pageLang', $pageLang);
 		}

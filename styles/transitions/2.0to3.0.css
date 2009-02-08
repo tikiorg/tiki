@@ -508,3 +508,27 @@ p.editdate {
 	margin-top: 2em;
 	font-size: 0.9em;
 }
+
+/* flag languages */
+
+.box-switch_lang .box-data img {
+  padding: .2em;
+  vertical-align: middle;
+}
+
+.box-switch_lang .box-data img.highlight {
+  padding: .1em;
+  border: .1em solid #f00 !important;	/* too many !importants about! */
+}
+
+.box-switch_lang .box-data span.highlight {
+  border: .1em solid #f00 !important;
+}
+
+.box-switch_lang .box-data img.unavailable,
+.box-switch_lang .box-data span.unavailable  {
+  opacity: .3;
+}
+
+
+
