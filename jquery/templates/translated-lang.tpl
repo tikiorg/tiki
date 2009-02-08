@@ -54,8 +54,6 @@
 					<option value="_translate_">{tr}Translate{/tr}</option>
 					{/if}
 				</select>
-  				{* Hidden input to distinguish a selection from this list, from any other request. *}
-  				<input type="hidden" name="userLanguageSelected" value="1">
 				</form>
 			{/if}
 
