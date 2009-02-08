@@ -225,6 +225,13 @@ class MultilingualLib extends TikiLib {
 		global $user, $prefs, $tikilib;
 		$langs = array();
 
+		// If the user's preferred language is stored as a session variable,
+		// then make it the first element in the langs array.
+		if ( isset($_SESSION['prefLang']) )
+		{
+			$langs[] = $_SESSION['prefLang'] ;
+		}
+		
 		if ($langContext) {
 			$langs[] = $langContext;
 			if (strchr($langContext, "-")) // add en if en-uk

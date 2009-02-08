@@ -372,8 +372,8 @@ function insertAt(elementId, replaceString) {
   }
 }
 
-function setUserModuleFromCombo(id) {
-  document.getElementById('usermoduledata').value = document.getElementById('usermoduledata').value
+function setUserModuleFromCombo(id, textarea) {
+  document.getElementById(textarea).value = document.getElementById(textarea).value
     + document.getElementById(id).options[document.getElementById(id).selectedIndex].value;
 //document.getElementById('usermoduledata').value='das';
 }

@@ -66,7 +66,7 @@ if (isset($_REQUEST["save"])) {
   $publishDate = mktime($_REQUEST["Time_Hour"], $_REQUEST["Time_Minute"],
     0, $_REQUEST["Date_Month"], $_REQUEST["Date_Day"], $_REQUEST["Date_Year"]);
 
-  $pid = $polllib->replace_poll($_REQUEST["pollId"], $_REQUEST["title"], $_REQUEST["active"], $publishDate,$_REQUEST["anonym"]);
+  $pid = $polllib->replace_poll($_REQUEST["pollId"], $_REQUEST["title"], $_REQUEST["active"], $publishDate);
   $position = 0;
   if(isset($_REQUEST['options'])&&is_array($_REQUEST['options']))
   {
@@ -119,14 +119,12 @@ if ($_REQUEST["pollId"]) {
   $info["title"] = '';
   $info["active"] = 'y';
   $info["publishDate"] = $tikilib->now;
-  $info["anonym"] = 'u';
   $options = array();
 }
 $smarty->assign('title', $info["title"]);
 $smarty->assign('active', $info["active"]);
 $smarty->assign('publishDate', $info["publishDate"]);
 $smarty->assign('options', $options);
-$smarty->assign('anonym', $info["anonym"]);
 
 if (!isset($_REQUEST["sort_mode"])) {
   $sort_mode = 'publishDate_desc';

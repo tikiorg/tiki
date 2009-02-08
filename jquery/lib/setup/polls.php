@@ -15,22 +15,14 @@ if ( isset($_REQUEST['pollVote']) ) {
 			if ( ! isset($polllib) or ! is_object($polllib) ) {
 				include_once('lib/polls/polllib_shared.php');
 			}
-			$identification = $user;
-			$pollinfo = $polllib->get_poll($_REQUEST['polls_pollId']);
-			$anonym=$pollinfo['anonym'];
-			if($anonym=='i') $identification=$tikilib->get_ip_address();
-			if($anonym=='c') $identification = ( isset($_COOKIE['tiki_wiki_poll_'.$_REQUEST['polls_pollId']])
-				? $_COOKIE['tiki_wiki_poll_'.$_REQUEST['polls_pollId']] : MD5(time().'_'.rand(0,1000)) );
-			if($anonym=='a'||!$polllib->id_has_voted($_REQUEST['polls_pollId'],$identification)) {
+			if (($prefs['feature_poll_revote'] == 'y' && $user) || !$tikilib->user_has_voted($user, 'poll'.$_REQUEST['polls_pollId'])) {
 				$polllib->poll_vote($user, $_REQUEST['polls_pollId'], $_REQUEST['polls_optionId']);
-				// Poll vote must go first, or the new vote will be seen as the previous one.
-				if($anonym!='a') $polllib->register_id_vote($_REQUEST['polls_pollId'], $_REQUEST['polls_optionId'],$identification);
-				if($anonym=='c') setcookie('tiki_wiki_poll_'.$_REQUEST['polls_pollId'],$identification,time()+60*60*24*300);
+				$tikilib->register_user_vote($user, 'poll' . $_REQUEST['polls_pollId'], $_REQUEST['polls_optionId']);
 			}
 		}
 	}
 	$pollId = $_REQUEST['polls_pollId'];
-	if ( ! isset($_REQUEST['wikipoll']) ) {
+	if ( ! isset($_REQUEST['wikipoll']) && $tiki_p_view_poll_results == 'y') {
 		header ("location: tiki-poll_results.php?pollId=$pollId");
 	}
 }

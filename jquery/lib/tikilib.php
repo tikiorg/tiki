@@ -1955,25 +1955,29 @@ class TikiLib extends TikiDB {
 	// Checks if a user has voted
 	/*shared*/
 	function user_has_voted($user, $id) {
-		// If user is not logged in then check the session
+		global $prefs;
+		$ret = false;
+		$votes = $_SESSION['votes'];
+		if (is_array($votes) && in_array($id, $votes)) { // has already voted in the session (logged or not)
+			$ret = true;
+		}
 		if (!$user) {
-			if (!isset($_COOKIE['PHPSESSID'])) {// cookie has not been activated
+			if ($prefs['ip_can_be_checked'] != 'y' && !isset($_COOKIE['PHPSESSID'])) {// cookie has not been activated too bad for him
 				$ret = true;
-			} else {
-				$votes = $_SESSION["votes"];
-				if (in_array($id, $votes)) {
-					$ret = true;
-				} else {
-					$ret = false;
-				}
+			} elseif (isset($_COOKIE[md5("tiki_wiki_poll_$id")])) {
+				$ret = true;
 			}
+			// we have no idea if cookie was deleted  or if really he has not voted
 		} else {
 			$query = "select count(*) from `tiki_user_votings` where `user`=? and `id`=?";
-			$result = $this->getOne($query,array($user,(string) $id));
-			if ($result) {
+			if ($this->getOne($query,array($user,(string) $id)) > 0) {
 				$ret = true;
-			} else {
-				$ret = false;
+			}
+		}
+		if ($prefs['ip_can_be_checked'] == 'y') {
+			$query = 'select count(*) from `tiki_user_votings` where `ip`=? and `id`=?';
+			if ($this->getOne($query, array($this->get_ip_address(), $id)) > 0) {
+				return true; // IP has already voted logged or not
 			}
 		}
 		return $ret;
@@ -1982,24 +1986,47 @@ class TikiLib extends TikiDB {
 	// Registers a user vote
 	/*shared*/
 	function register_user_vote($user, $id, $optionId=false) {
-		// If user is not logged in then register in the session
+		global $prefs;
+		$ip = $this->get_ip_address();
+		$_SESSION['votes'][] = $id;
+		setcookie(md5("tiki_wiki_poll_$id"), $ip, time()+60*60*24*300);
 		if (!$user) {
-			$_SESSION["votes"][] = $id;
-		} else {
-			if ( $optionId === false ) {
-				$optionId = 0;
+			if ($prefs['ip_can_be_checked'] == 'y') {
+				$query = 'delete from `tiki_user_votings` where `ip`=? and `id`=?';
+				$result = $this->query($query, array($ip, $id));
+				if ( $optionId !== false ) {
+					$query = 'insert into `tiki_user_votings` (`user`, `ip`,`id`,`optionId`, `time`) values(?,?,?,?,?)';
+					$result = $this->query($query, array('', $ip, (string)$id, (int)$optionId, (int)$this->now));
+				}
+			} elseif ($optionId !== false) {
+				$query = 'insert into `tiki_user_votings` (`user`, `ip`,`id`,`optionId`, `time`) values(?,?,?,?,?)';
+				$result = $this->query($query, array('', $ip, (string)$id, (int)$optionId, (int)$this->now));
 			}
-			$query = 'delete from `tiki_user_votings` where `user`=? and `id`=?';
-			$result = $this->query($query, array($user, (string)$id));
-			if ( $optionId !== null ) {
-				$query = 'insert into `tiki_user_votings` (`user`,`id`,`optionId`) values(?,?,?)';
-				$result = $this->query($query, array($user, (string)$id, $optionId));
+		} else {
+			if ($prefs['ip_can_be_checked'] == 'y') {
+				$query = 'delete from `tiki_user_votings` where (`user`=? or `ip`=?)and `id`=?';
+				$this->query($query, array($user, $ip, $id));
+			} else {
+				$query = 'delete from `tiki_user_votings` where `user`=? and `id`=?';
+				$this->query($query, array($user, (string)$id));
+			}
+			if ( $optionId !== false ) {
+				$query = 'insert into `tiki_user_votings` (`user`,`ip`, `id`,`optionId`, `time`) values(?,?,?,?,?)';
+				$result = $this->query($query, array($user, $ip, (string)$id, (int)$optionId, (int)$this->now));
 			}
 		}
 	}
 
 	function get_user_vote($id,$user) {
-		return $this->getOne("select `optionId` from `tiki_user_votings` where `user` = ? and `id` = ?",array( $user, $id));
+		global $prefs;
+		$vote = null;
+		if ($user) {
+			$vote = $this->getOne("select `optionId` from `tiki_user_votings` where `user` = ? and `id` = ?",array( $user, $id));
+		}
+		if ($vote == null && $prefs['ip_can_be_checked'] == 'y') {
+			$vote = $this->getOne("select `optionId` from `tiki_user_votings` where `ip` = ? and `id` = ?",array( $user, $id));
+		}
+		return $vote;
 	}
 	// end of user voting methods
 
