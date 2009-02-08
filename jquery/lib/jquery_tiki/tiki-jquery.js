@@ -8,18 +8,18 @@ jQuery(document).ready( function() {// JQuery's DOM is ready event - before onlo
 	// override existing show/hide routines here
 	show = function (foo,f,section) {
 		if ($jq("#" + foo).hasClass("tabcontent")) {
-			showJQ("#" + foo, jqueryTiki.effect_tabs, jqueryTiki.effect_speed);
+			showJQ("#" + foo, jqueryTiki.effect_tabs, jqueryTiki.effect_speed, jqueryTiki.effect_direction);
 		} else {
-			showJQ("#" + foo, jqueryTiki.effect, jqueryTiki.effect_speed);
+			showJQ("#" + foo, jqueryTiki.effect, jqueryTiki.effect_speed, jqueryTiki.effect_direction);
 		}
 		if (f) { setCookie(foo, "o", section); }
 	}
 	
 	hide = function (foo,f, section) {
 		if ($jq("#" + foo).hasClass("tabcontent")) {
-			hideJQ("#" + foo, jqueryTiki.effect_tabs, jqueryTiki.effect_speed);
+			hideJQ("#" + foo, jqueryTiki.effect_tabs, jqueryTiki.effect_speed, jqueryTiki.effect_direction);
 		} else {
-			hideJQ("#" + foo, jqueryTiki.effect, jqueryTiki.effect_speed);
+			hideJQ("#" + foo, jqueryTiki.effect, jqueryTiki.effect_speed, jqueryTiki.effect_direction);
 		}
 		if (f) {
 			var wasnot = getCookie(foo, section, 'x') == 'x';
@@ -30,7 +30,7 @@ jQuery(document).ready( function() {// JQuery's DOM is ready event - before onlo
 		}
 	}
 	
-	showJQ = function (selector, effect, speed) {
+	showJQ = function (selector, effect, speed, dir) {
 		if (effect == 'none') {
 			$jq(selector).show();
 		} else if (effect == '' || effect == 'normal') {
@@ -39,10 +39,14 @@ jQuery(document).ready( function() {// JQuery's DOM is ready event - before onlo
 			$jq(selector).slideDown(speed);
 		} else if (effect == 'fade') {
 			$jq(selector).fadeIn(speed);
+		} else if (effect.match(/(.*)_ui$/).length > 1) {
+			$jq(selector).show(effect.match(/(.*)_ui$/)[1], {direction: dir }, speed);
+		} else {
+			$jq(selector).show();
 		}
 	}
 	
-	hideJQ = function (selector, effect, speed) {
+	hideJQ = function (selector, effect, speed, dir) {
 		if (effect == 'none') {
 			$jq(selector).hide();
 		} else if (effect == '' || effect == 'normal') {
@@ -51,6 +55,10 @@ jQuery(document).ready( function() {// JQuery's DOM is ready event - before onlo
 			$jq(selector).slideUp(speed);
 		} else if (effect == 'fade') {
 			$jq(selector).fadeOut(speed);
+		} else if (effect.match(/(.*)_ui$/).length > 1) {
+			$jq(selector).hide(effect.match(/(.*)_ui$/)[1], {direction: dir }, speed);
+		} else {
+			$jq(selector).hide();
 		}
 	}
 	

@@ -320,6 +320,22 @@
 						              {tr}Slide{/tr}</option>
 						            <option value="fade" {if $prefs.jquery_effect eq 'fade'}selected="selected"{/if}>
 						              {tr}Fade{/tr}</option>
+						            {if $prefs.feature_jquery eq 'y'}
+						            <option value="blind_ui" {if $prefs.jquery_effect eq 'blind_ui'}selected="selected"{/if}>
+						              {tr}Blind (UI){/tr}</option>
+						            <option value="clip_ui" {if $prefs.jquery_effect eq 'clip_ui'}selected="selected"{/if}>
+						              {tr}Clip (UI){/tr}</option>
+						            <option value="drop_ui" {if $prefs.jquery_effect eq 'drop_ui'}selected="selected"{/if}>
+						              {tr}Drop (UI){/tr}</option>
+						            <option value="explode_ui" {if $prefs.jquery_effect eq 'explode_ui'}selected="selected"{/if}>
+						              {tr}Explode (UI){/tr}</option>
+						            <option value="fold_ui" {if $prefs.jquery_effect eq 'fold_ui'}selected="selected"{/if}>
+						              {tr}Fold (UI){/tr}</option>
+						            <option value="puff_ui" {if $prefs.jquery_effect eq 'puff_ui'}selected="selected"{/if}>
+						              {tr}Puff (UI){/tr}</option>
+						            <option value="slide_ui" {if $prefs.jquery_effect eq 'slide_ui'}selected="selected"{/if}>
+						              {tr}Slide (UI){/tr}</option>
+						            {/if}
 						         </select>
 								<a href="{$prefs.helpurl}JQuery" target="tikihelp" class="tikihelp" title="{tr}Main JQuery effect{/tr}"> {tr}Effect for modules etc{/tr}</a>
 						    </div>
@@ -333,6 +349,22 @@
 						              {tr}Slide{/tr}</option>
 						            <option value="fade" {if $prefs.jquery_effect_tabs eq 'fade'}selected="selected"{/if}>
 						              {tr}Fade{/tr}</option>
+						            {if $prefs.feature_jquery eq 'y'}
+						            <option value="blind_ui" {if $prefs.jquery_effect_tabs eq 'blind_ui'}selected="selected"{/if}>
+						              {tr}Blind (UI){/tr}</option>
+						            <option value="clip_ui" {if $prefs.jquery_effect_tabs eq 'clip_ui'}selected="selected"{/if}>
+						              {tr}Clip (UI){/tr}</option>
+						            <option value="drop_ui" {if $prefs.jquery_effect_tabs eq 'drop_ui'}selected="selected"{/if}>
+						              {tr}Drop (UI){/tr}</option>
+						            <option value="explode_ui" {if $prefs.jquery_effect_tabs eq 'explode_ui'}selected="selected"{/if}>
+						              {tr}Explode (UI){/tr}</option>
+						            <option value="fold_ui" {if $prefs.jquery_effect_tabs eq 'fold_ui'}selected="selected"{/if}>
+						              {tr}Fold (UI){/tr}</option>
+						            <option value="puff_ui" {if $prefs.jquery_effect_tabs eq 'puff_ui'}selected="selected"{/if}>
+						              {tr}Puff (UI){/tr}</option>
+						            <option value="slide_ui" {if $prefs.jquery_effect_tabs eq 'slide_ui'}selected="selected"{/if}>
+						              {tr}Slide (UI){/tr}</option>
+						            {/if}
 						         </select>
 								<a href="{$prefs.helpurl}JQuery" target="tikihelp" class="tikihelp" title="{tr}JQuery effect for tabs{/tr}"> {tr}Effect for tabs{/tr}</a>
 						    </div>
@@ -346,6 +378,23 @@
 						              {tr}Slow{/tr}</option>
 						         </select>
 								<a href="{$prefs.helpurl}JQuery" target="tikihelp" class="tikihelp" title="{tr}Speed of JQuery effects{/tr}"> {tr}Effect speed{/tr}</a>
+						    </div>							
+						    <div>
+								<select name="jquery_effect_direction" id="jquery_effect_direction">
+						            <option value="vertical" {if $prefs.jquery_effect_direction eq 'vertical'}selected="selected"{/if}>
+						              {tr}Vertical{/tr}</option>
+						            <option value="horizontal" {if $prefs.jquery_effect_direction eq 'horizontal'}selected="selected"{/if}>
+						              {tr}Horizontal{/tr}</option>
+						            <option value="left" {if $prefs.jquery_effect_direction eq 'left'}selected="selected"{/if}>
+						              {tr}Left{/tr}</option>
+						            <option value="right" {if $prefs.jquery_effect_direction eq '"right"'}selected="selected"{/if}>
+						              {tr}Right{/tr}</option>
+						            <option value="up" {if $prefs.jquery_effect_direction eq 'up'}selected="selected"{/if}>
+						              {tr}Up{/tr}</option>
+						            <option value="down" {if $prefs.jquery_effect_direction eq 'down'}selected="selected"{/if}>
+						              {tr}Down{/tr}</option>
+						         </select>
+								<a href="{$prefs.helpurl}JQuery" target="tikihelp" class="tikihelp" title="{tr}Direction of JQuery effects{/tr}"> {tr}Effect direction{/tr}</a>
 						    </div>							
 						</div>
 						{/if}
