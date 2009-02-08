@@ -92,12 +92,9 @@ For more information:
 	} else {
 		$access->display_error( '', tra('No name indicated for wiki page'));
 	}
-}
-
-// Always choose the best language, unless the page has been selected from the
-// dropdown language list, as indicated by the intut userLanguageSelected.
-if ( ( !isset($_REQUEST['userLanguageSelected']) ) and ($prefs['feature_best_language'] == 'y') ) {
-	$use_best_language = true;
+	if ($prefs['feature_best_language'] == 'y') {
+		$use_best_language = true;
+	}
 }
 
 $structs_with_perm = array(); 
@@ -194,12 +191,6 @@ if ($prefs['feature_multilingual'] == 'y' && $use_best_language) { // chose the 
 if (!$info)
 	$info = $tikilib->get_page_info($page);
 
-// If the user has selected a language from the dropdown lise, then make
-// the selected language the user's preferred language.
-if ( isset($_REQUEST['userLanguageSelected']) )
-{
-	$_SESSION['prefLang'] = $info['lang'] ;
-}
 
 // If the page doesn't exist then display an error
 if(empty($info) && !($user && $prefs['feature_wiki_userpage'] == 'y' && strcasecmp($prefs['feature_wiki_userpage_prefix'].$user, $page) == 0)) {
