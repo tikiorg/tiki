@@ -1,7 +1,7 @@
 {* $Id: $ *}
 
 <!--  start jquery-tiki -->
-{if 0}{* set to "if 0" to debug *}<script type="text/javascript" src="lib/jquery/jquery.min.js"></script>{else}
+{if 1}{* set to "if 0" to debug *}<script type="text/javascript" src="lib/jquery/jquery.min.js"></script>{else}
 <script type="text/javascript" src="lib/jquery/jquery.js"></script>{/if}
 <script type="text/javascript" src="lib/jquery_tiki/tiki-jquery.js"></script>
 {if isset($prefs.feature_jquery_ui) and $prefs.feature_jquery_ui eq 'y'}{* TODO optimise so not including all *}
@@ -11,7 +11,7 @@
 var $old = $; $ = $jq;
 //--><!]]>
 </script>
-{if 0}{* set to "if 0" to debug *}<script type="text/javascript" src="lib/jquery/jquery.ui/ui/minified/jquery.ui.all.min.js"></script>{else}
+{if 1}{* set to "if 0" to debug *}<script type="text/javascript" src="lib/jquery/jquery.ui/ui/minified/jquery.ui.all.min.js"></script>{else}
 <script type="text/javascript" src="lib/jquery/jquery.ui/ui/jquery.ui.all.js"></script>{/if}
 <script type="text/javascript">
 <!--//--><![CDATA[//><!--
