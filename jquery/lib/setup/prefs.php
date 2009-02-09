@@ -868,11 +868,11 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'sitemycode' => '<div align="center"><b>{tr}Here you can (as an admin) place a piece of custom XHTML and/or Smarty code. Be careful and properly close all the tags before you choose to publish ! (Javascript, applets and object tags are stripped out.){/tr}</b></div>', // must be max. 250 chars now unless it'll change in tiki_prefs db table field value from VARCHAR(250) to BLOB by default
 		'sitemycode_publish' => 'n',
 		'feature_sitelogo' => 'y',
-		'sitelogo_bgcolor' => '#FFF',
+		'sitelogo_bgcolor' => 'transparent',
 		'sitelogo_bgstyle' => '',
 		'sitelogo_align' => 'left',
 		'sitelogo_title' => 'Tikiwiki powered site',
-		'sitelogo_src' => 'img/tiki/tikilogo.png',
+		'sitelogo_src' => 'img/tiki/tiki3.png',
 		'sitelogo_alt' => 'Site Logo',
 		'feature_siteloc' => 'y',
 		'feature_sitenav' => 'n',
@@ -933,7 +933,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_actionlog_bytes' => 'n',
 
 		// admin
-		'siteTitle' => 'Tiki 3.x',
+		'siteTitle' => 'Tiki 3.0',
 		'tmpDir' => 'temp',
 
 		// tell a friend
