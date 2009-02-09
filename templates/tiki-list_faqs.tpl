@@ -61,9 +61,6 @@
 		<th>
 			<a href="tiki-list_faqs.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}Title{/tr}</a>
 		</th>
-		<th>
-			<a href="tiki-list_faqs.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}Description{/tr}</a>
-		</th>
 		<th style="text-align:right;">
 			<a href="tiki-list_faqs.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'hits_desc'}hits_asc{else}hits_desc{/if}">{tr}Visits{/tr}</a>
 		</th>
@@ -79,9 +76,9 @@
 		<tr>
 			<td class="{cycle advance=false}">
 				<a class="tablename" href="tiki-view_faq.php?faqId={$channels[user].faqId}">{$channels[user].title}</a>
-			</td>
-			<td class="{cycle advance=false}">
-				{$channels[user].description}
+				<div class="subcomment">
+					{$channels[user].description|escape|nl2br}
+				</div>
 			</td>
 			<td style="text-align:right;" class="{cycle advance=false}">
 				{$channels[user].hits}
@@ -90,7 +87,7 @@
 				{$channels[user].questions} ({$channels[user].suggested})
 			</td>
 			{if $tiki_p_admin_faqs eq 'y'}
-				<td class="{cycle}">
+				<td class="{cycle}" style="text-align:right">
 					<a class="link" href="tiki-list_faqs.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;faqId={$channels[user].faqId}">{icon _id='page_edit'}</a>
 					<a class="link" href="tiki-faq_questions.php?faqId={$channels[user].faqId}">{icon _id='help' alt='{tr}Questions{/tr}'}</a>
 					<a class="link" href="tiki-list_faqs.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].faqId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
