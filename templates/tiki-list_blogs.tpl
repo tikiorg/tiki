@@ -14,11 +14,8 @@
 
 <table class="normal">
 <tr>
-{if $prefs.blog_list_title eq 'y'}
-	<th><a href="tiki-list_blogs.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}Title{/tr}</a></th>
-{/if}
-{if $prefs.blog_list_description eq 'y'}
-	<th>{tr}Description{/tr}</th>
+{if $prefs.blog_list_title eq 'y' or $prefs.blog_list_description eq 'y'}
+	<th><a href="tiki-list_blogs.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}Blog{/tr}</a></th>
 {/if}
 {if $prefs.blog_list_created eq 'y'}
 	<th><a href="tiki-list_blogs.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Created{/tr}</a></th>
@@ -40,14 +37,27 @@
 {/if}
 <th>{tr}Action{/tr}</th>
 </tr>
+
 {cycle values="odd,even" print=false}
 {section name=changes loop=$listpages}
 <tr>
-{if $prefs.blog_list_title eq 'y'}
-	<td class="{cycle advance=false}">{if ($tiki_p_admin eq 'y') or ($listpages[changes].individual eq 'n') or ($listpages[changes].individual_tiki_p_read_blog eq 'y' ) }<a class="blogname" href="{$listpages[changes].blogId|sefurl:blog}" title="{$listpages[changes].title}">{/if}{if $listpages[changes].title}{$listpages[changes].title|truncate:$prefs.blog_list_title_len:"...":true}{else}&nbsp;{/if}{if ($tiki_p_admin eq 'y') or ($listpages[changes].individual eq 'n') or ($listpages[changes].individual_tiki_p_read_blog eq 'y' ) }</a>{/if}</td>
-{/if}
-{if $prefs.blog_list_description eq 'y'}
-	<td class="{cycle advance=false}">{$listpages[changes].description}</td>
+{if $prefs.blog_list_title eq 'y' or $prefs.blog_list_description eq 'y'}
+	<td class="{cycle advance=false}">
+		{if ($tiki_p_admin eq 'y') or ($listpages[changes].individual eq 'n') or ($listpages[changes].individual_tiki_p_read_blog eq 'y' ) }
+			<a class="blogname" href="{$listpages[changes].blogId|sefurl:blog}" title="{$listpages[changes].title}">
+		{/if}
+		{if $listpages[changes].title}
+			{$listpages[changes].title|truncate:$prefs.blog_list_title_len:"...":true}
+		{else}
+			&nbsp;
+		{/if}
+		{if ($tiki_p_admin eq 'y') or ($listpages[changes].individual eq 'n') or ($listpages[changes].individual_tiki_p_read_blog eq 'y' ) }
+			</a>
+		{/if}
+		{if $prefs.blog_list_description eq 'y'}
+			<div class="subcomment">{$listpages[changes].description}</div>
+		{/if}
+	</td>
 {/if}
 {if $prefs.blog_list_created eq 'y'}
 	<td class="{cycle advance=false}">&nbsp;{$listpages[changes].created|tiki_short_date}&nbsp;</td><!--tiki_date_format:"%b %d" -->
