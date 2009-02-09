@@ -27,9 +27,7 @@
 		{if $module_flip eq 'y' and $prefs.javascript_enabled ne 'n'}
 			<span class="moduleflip" id="moduleflip-{$module_name|cat:$module_position|cat:$module_ord|escape}">
 				<a title="{tr}Toggle module contents{/tr}" class="flipmodtitle" href="javascript:icntoggle('mod-{$module_name|cat:$module_position|cat:$module_ord|escape}','module.png');">
-					{capture name=name}
-						icnmod-{$module_name|cat:$module_position|cat:$module_ord|escape}
-					{/capture}
+					{capture name=name}icnmod-{$module_name|cat:$module_position|cat:$module_ord|escape}{/capture}
 					{icon name=$smarty.capture.name class="flipmodimage" _id="module" alt="[{tr}toggle{/tr}]"}
 				</a>
 			</span>
