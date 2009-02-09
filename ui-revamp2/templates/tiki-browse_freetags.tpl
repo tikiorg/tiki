@@ -5,7 +5,7 @@
 {if $prefs.feature_morcego eq 'y' and $prefs.freetags_feature_3d eq 'y'}
   <div class="morcego_embedded">
     <h2>{tr}Network of Tags related to{/tr}: <span id="currentTag1">{$tag}</span></h2>
-      <applet codebase="./lib/wiki3d" archive="morcego-0.4.0.jar" code="br.arca.morcego.Morcego" width="{$prefs.freetags_3d_width}" height="{$prefs.freetags_3d_height}">
+      <applet codebase="./lib/wiki3d" archive="morcego-0.6.0.jar" code="br.arca.morcego.Morcego" width="{$prefs.freetags_3d_width}" height="{$prefs.freetags_3d_height}">
         <param name="serverUrl" value="{$base_url}tiki-freetag3d_xmlrpc.php">
         <param name="startNode" value="{$tag}">
         <param name="windowWidth" value="{$prefs.freetags_3d_width}">

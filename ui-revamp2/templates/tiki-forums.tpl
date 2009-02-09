@@ -61,6 +61,10 @@
     {if $prefs.forum_list_visits eq 'y'}
 	    <th>{self_link _sort_arg='sort_mode' _sort_field='hits'}{tr}Visits{/tr}{/self_link}</th>
     {/if}	
+		
+		{if ($tiki_p_admin eq 'y' or $tiki_p_admin_forum eq 'y')}
+			<th>{tr}Actions{/tr}</th>
+		{/if}
   </tr>
 
 {assign var=section_old value=""}
@@ -72,18 +76,16 @@
   <tr><td class="third" colspan="6">{$section}</td></tr>
 {/if}
 <tr>
-<td class="{cycle advance=false}"><span style="float:left">
-{if ($channels[user].individual eq 'n') or ($tiki_p_admin eq 'y') or ($channels[user].individual_tiki_p_forum_read eq 'y')}
-<a class="forumname" href="tiki-view_forum.php?forumId={$channels[user].forumId}">{$channels[user].name}</a>
-{else}
-{$channels[user].name}
-{/if}
-</span>
-{if ($tiki_p_admin eq 'y') or (($channels[user].individual eq 'n') and ($tiki_p_admin_forum eq 'y')) or ($channels[user].individual_tiki_p_admin_forum eq 'y')}
-<span style="float:right">
-<a class="admlink" title="{tr}Configure Forum{/tr}" href="tiki-admin_forums.php?forumId={$channels[user].forumId}">{icon _id='page_edit'}</a>
-</span>
-{/if}
+
+<td class="{cycle advance=false}">
+	<span style="float:left">
+		{if ($channels[user].individual eq 'n') or ($tiki_p_admin eq 'y') or ($channels[user].individual_tiki_p_forum_read eq 'y')}
+			<a class="forumname" href="tiki-view_forum.php?forumId={$channels[user].forumId}">{$channels[user].name}</a>
+		{else}
+			{$channels[user].name}
+		{/if}
+	</span>
+
 {if $prefs.forum_list_desc eq 'y'}
 	<br />
 	<div class="subcomment">
@@ -111,6 +113,13 @@
 {if $prefs.forum_list_visits eq 'y'}
 	<td style="text-align:right;" class="{cycle advance=false}">{$channels[user].hits}</td>
 {/if}	
+
+{if ($tiki_p_admin eq 'y') or (($channels[user].individual eq 'n') and ($tiki_p_admin_forum eq 'y')) or ($channels[user].individual_tiki_p_admin_forum eq 'y')}
+	<td style="text-align:right;" class="{cycle advance=false}">
+		<a class="admlink" title="{tr}Configure Forum{/tr}" href="tiki-admin_forums.php?forumId={$channels[user].forumId}">{icon _id='page_edit'}</a>
+	</td>
+{/if}
+
 </tr>
 {sectionelse}
 <td class="odd" colspan="6"><strong>{tr}No records found.{/tr}</strong><td>

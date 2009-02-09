@@ -96,7 +96,7 @@
 
 		{if $prefs.feature_user_watches eq 'y'}
 		<h5><a {ajax_href template=tiki-user_watches.tpl
-		htmlelement=user_watches}tiki-user_watches.php{/ajax_href}><img src="img/mytiki/mywatches.gif" alt="{tr}My watches{/tr}" />{tr}My watches{/tr}</a></h5>
+		htmlelement=user_watches}tiki-user_watches.php{/ajax_href}><img src="img/mytiki/mywatches.gif" alt="{tr}My Watches{/tr}" />{tr}My Watches{/tr}</a></h5>
 		<div id="user_watches">
 		</div>
 		{/if}

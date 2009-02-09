@@ -382,6 +382,8 @@
 			{if $forum_info.topics_list_author eq 'y'}
 				<th>{self_link _sort_arg='thread_sort_mode' _sort_field='userName'}{tr}Author{/tr}{/self_link}</th>
 			{/if}
+				
+			<th>{tr}Actions{/tr}</th>
 		</tr>
 		
 		{cycle values="odd,even" print=false}
@@ -425,43 +427,14 @@
 				{/if}
 
 				<td class="{cycle advance=false}">
-					<table width="100%">
-						<tr>
-							<td>
-								<a {if $comments_coms[ix].is_marked}class="forumnameread"{else}class="forumname"{/if} href="tiki-view_forum_thread.php?comments_parentId={$comments_coms[ix].threadId}{if $comments_threshold}&amp;topics_threshold={$comments_threshold}{/if}{if $comments_offset or $smarty.section.ix.index}&amp;topics_offset={math equation="x + y" x=$comments_offset y=$smarty.section.ix.index}{/if}{if $thread_sort_mode ne 'commentDate_desc'}&amp;topics_sort_mode={$thread_sort_mode}{/if}{if $topics_find}&amp;topics_find={$comments_find}{/if}&amp;forumId={$forum_info.forumId}">{$comments_coms[ix].title}</a>
-								{if $forum_info.topic_summary eq 'y'}
-									<br />
-									<small>{$comments_coms[ix].summary|truncate:240:"...":true}</small>
-								{/if}
-							</td>
+					<a {if $comments_coms[ix].is_marked}class="forumnameread"{else}class="forumname"{/if} href="tiki-view_forum_thread.php?comments_parentId={$comments_coms[ix].threadId}{if $comments_threshold}&amp;topics_threshold={$comments_threshold}{/if}{if $comments_offset or $smarty.section.ix.index}&amp;topics_offset={math equation="x + y" x=$comments_offset y=$smarty.section.ix.index}{/if}{if $thread_sort_mode ne 'commentDate_desc'}&amp;topics_sort_mode={$thread_sort_mode}{/if}{if $topics_find}&amp;topics_find={$comments_find}{/if}&amp;forumId={$forum_info.forumId}">{$comments_coms[ix].title}</a>
+					{if $forum_info.topic_summary eq 'y'}
+						<div class="subcomment">
+							{$comments_coms[ix].summary|truncate:240:"...":true}
+						</div>
+					{/if}
+				</td>
 
-							<td style="text-align:right;" nowrap="nowrap">
-								{if count($comments_coms[ix].attachments) or $tiki_p_admin_forum eq 'y'}
-									{if count($comments_coms[ix].attachments)}
-										<img src='img/icons/attachment.gif' alt='attachments' />
-									{/if}
-								{else}
-									&nbsp;
-								{/if}
-
-								{if $tiki_p_admin_forum eq 'y' or ($comments_coms[ix].userName == $user && $tiki_p_forum_post eq 'y') }
-									<a href="tiki-view_forum.php?openpost=1&amp;comments_threadId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}" class="admlink">{icon _id='page_edit'}</a>
-								{/if}
-
-								{if $prefs.feature_forum_topics_archiving eq 'y' && $tiki_p_admin_forum eq 'y'}
-									{if $comments_coms[ix].archived eq 'y'}
-										<a href="{$smarty.server.PHP_SELF}?{query archive="n" comments_parentId=$comments_coms[ix].threadId}" title="{tr}Unarchive{/tr}">{icon _id='package_go' alt='{tr}Unarchive{/tr}'}</a>
-									{else}
-										<a href="{$smarty.server.PHP_SELF}?{query archive="y" comments_parentId=$comments_coms[ix].threadId}" title="{tr}Archive{/tr}">{icon _id='package' alt='{tr}Archive{/tr}'}</a>
-									{/if}
-								{/if}
-
-								{if $tiki_p_admin_forum eq 'y' }
-									<a href="tiki-view_forum.php?comments_remove=1&amp;comments_threadId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}" class="admlink">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
-								{/if}
-							</td>
- 						</tr>
-					</table>
 				</td>
 				{if $forum_info.topics_list_replies eq 'y'}
 					<td style="text-align:right;" class="{cycle advance=false}">{$comments_coms[ix].replies}</td>
@@ -481,8 +454,34 @@
 					</td>
 				{/if}
 				{if $forum_info.topics_list_author eq 'y'}
-					<td class="{cycle}">{$comments_coms[ix].userName|userlink}</td>
+					<td class="{cycle advance=false}">{$comments_coms[ix].userName|userlink}</td>
 				{/if}
+				
+				<td style="text-align:right;" nowrap="nowrap" class="{cycle}">
+					{if count($comments_coms[ix].attachments) or $tiki_p_admin_forum eq 'y'}
+						{if count($comments_coms[ix].attachments)}
+							<img src='img/icons/attachment.gif' alt='attachments' />
+						{/if}
+					{else}
+						&nbsp;
+					{/if}
+
+					{if $tiki_p_admin_forum eq 'y' or ($comments_coms[ix].userName == $user && $tiki_p_forum_post eq 'y') }
+						<a href="tiki-view_forum.php?openpost=1&amp;comments_threadId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}" class="admlink">{icon _id='page_edit'}</a>
+					{/if}
+
+					{if $prefs.feature_forum_topics_archiving eq 'y' && $tiki_p_admin_forum eq 'y'}
+						{if $comments_coms[ix].archived eq 'y'}
+							<a href="{$smarty.server.PHP_SELF}?{query archive="n" comments_parentId=$comments_coms[ix].threadId}" title="{tr}Unarchive{/tr}">{icon _id='package_go' alt='{tr}Unarchive{/tr}'}</a>
+						{else}
+							<a href="{$smarty.server.PHP_SELF}?{query archive="y" comments_parentId=$comments_coms[ix].threadId}" title="{tr}Archive{/tr}">{icon _id='package' alt='{tr}Archive{/tr}'}</a>
+						{/if}
+					{/if}
+
+					{if $tiki_p_admin_forum eq 'y' }
+						<a href="tiki-view_forum.php?comments_remove=1&amp;comments_threadId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}" class="admlink">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
+					{/if}
+				</td>
 			</tr>
 		{sectionelse}
 			<tr>

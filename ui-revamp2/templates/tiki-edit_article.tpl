@@ -68,7 +68,7 @@
 {/section}
 <option value="" {if $topicId eq 0}selected="selected"{/if}>{tr}None{/tr}</option>
 </select>
-{if $tiki_p_admin_cms eq 'y'}<a href="tiki-admin_topics.php" class="link">{tr}Admin topics{/tr}</a>{/if}
+{if $tiki_p_admin_cms eq 'y'}<a href="tiki-admin_topics.php" class="link">{tr}Admin Topics{/tr}</a>{/if}
 </td></tr>
 <tr class="formcolor"><td>{tr}Type{/tr}</td><td>
 <select id='articletype' name='type' onchange='javascript:chgArtType();'>
@@ -76,7 +76,7 @@
 <option value="{$typei|escape}" {if $type eq $typei}selected="selected"{/if}>{tr}{$typei}{/tr}</option>
 {/foreach}
 </select>
-{if $tiki_p_admin_cms eq 'y'}<a href="tiki-article_types.php" class="link">{tr}Admin types{/tr}</a>{/if}
+{if $tiki_p_admin_cms eq 'y'}<a href="tiki-article_types.php" class="link">{tr}Admin Types{/tr}</a>{/if}
 </td></tr>
 <tr id='use_ratings' {if $types.$type.use_ratings eq 'y'}style="display:;"{else}style="display:none;"{/if} class="formcolor"><td>{tr}Rating{/tr}</td><td>
 <select name='rating'>

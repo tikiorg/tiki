@@ -56,6 +56,7 @@ if (isset($_REQUEST["new_prefs"])) {
         "urlIndex",
         "proxy_host",
         "proxy_port",
+		"ip_can_be_checked",
         "session_lifetime",
         "load_threshold",
         "site_busy_msg",

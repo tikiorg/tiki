@@ -1,6 +1,6 @@
 {popup_init src="lib/overlib.js"}
 {*Smarty template*}
-<h1><a class="pagetitle" href="tiki-g-user_instances.php">{tr}User instances{/tr}</a>
+<h1><a class="pagetitle" href="tiki-g-user_instances.php">{tr}User Instances{/tr}</a>
 
   
       {if $prefs.feature_help eq 'y'}

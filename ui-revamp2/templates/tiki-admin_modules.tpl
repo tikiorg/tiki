@@ -214,26 +214,24 @@
 {/if}
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Create your new custom module below. Make sure to preview first and make sure all is OK before <a href="#assign">assigning it</a>. Using html, you will be fine. However, if you improperly use wiki syntax or Smarty code, you could lock yourself out of the site.{/tr}{/remarksbox}
 
+<form name='editusr' method="post" action="tiki-admin_modules.php">
 <table class="normal">
  <tr valign="top">
   <td valign="top" class="odd">
 {if $um_name ne ''}
 <a href="tiki-admin_modules.php#editcreate">{tr}Create new user module{/tr}</a>
 {/if}
-<form name='editusr' method="post" action="tiki-admin_modules.php">
 <table>
 <tr><td class="form">{tr}Name{/tr}</td><td><input type="text" name="um_name" value="{$um_name|escape}" /></td></tr>
 <tr><td class="form">{tr}Title{/tr}</td><td><input type="text" name="um_title" value="{$um_title|escape}" /></td></tr>
-<tr><td class="form">{tr}Data{/tr}</td><td>
-<textarea id='usermoduledata' name="um_data" rows="10" cols="40" style="width:95%">{$um_data|escape}</textarea>
-</td></tr>
 <tr><td class="form"></td><td class="form"><input type="checkbox" name="um_parse" value="y" {if $um_parse eq "y"}checked="checked"{/if} /> {tr}Must be wiki parsed{/tr}</td></tr>
-<tr><td>&nbsp;</td><td><input type="submit" name="um_update" value="{if $um_title eq ''}{tr}Create{/tr}{else}{tr}Save{/tr}{/if}" /></td></tr>
+</td></tr>
+
 </table>
-</form>
 
 </td><td class="even" style="vertical-align:top">
 <h3>{tr}Objects that can be included{/tr}</h3>
+
 <table>
 {if $polls}
 <tr>
@@ -251,7 +249,7 @@
 
   </td>
   <td class="form">
-    <a class="link" href="javascript:setUserModuleFromCombo('list_polls');" title="{tr}Use Poll{/tr}">{icon _id='add' alt='{tr}Use{/tr}'}</a>
+    <a class="link" href="javascript:setUserModuleFromCombo('list_polls', 'um_data');" title="{tr}Use Poll{/tr}">{icon _id='add' alt='{tr}Use{/tr}'}</a>
   </td><td class="form">
 	<a {popup text="Params: id= rate=" width=100 center=true}>{icon _id='help'}</a>
   </td>
@@ -271,7 +269,7 @@
    </select>
   </td>
   <td class="form">
-   <a class="link" href="javascript:setUserModuleFromCombo('list_galleries');" title="{tr}Use Gallery{/tr}">{icon _id='add' alt='{tr}Use{/tr}'}</a>
+   <a class="link" href="javascript:setUserModuleFromCombo('list_galleries', 'um_data');" title="{tr}Use Gallery{/tr}">{icon _id='add' alt='{tr}Use{/tr}'}</a>
   </td><td class="form">
 	<a {popup text="Params: id= showgalleryname=1 hideimgname=1 hidelink=1" width=100 center=true}>{icon _id='help'}</a>
   </td>
@@ -290,7 +288,7 @@
     </select>
   </td>
   <td class="form">
-    <a class="link" href="javascript:setUserModuleFromCombo('list_contents');" title="{tr}Use Dynamic Content{/tr}">{icon _id='add' alt='{tr}Use{/tr}'}</a>
+    <a class="link" href="javascript:setUserModuleFromCombo('list_contents', 'um_data');" title="{tr}Use Dynamic Content{/tr}">{icon _id='add' alt='{tr}Use{/tr}'}</a>
   </td><td class="form">
 	<a {popup text="Params: id=" width=100 center=true}>{icon _id='help'}</a>
   </td>
@@ -299,7 +297,7 @@
 {if $rss}
 <tr>
   <td class="form">
-    {tr}RSS modules{/tr}:
+    {tr}RSS Modules{/tr}:
   </td>
   <td>
     <select name="rsss" id='list_rsss'>
@@ -309,7 +307,7 @@
     </select>
   </td>
   <td class="form">
-    <a class="link" href="javascript:setUserModuleFromCombo('list_rsss');" title="{tr}Use RSS Module{/tr}">{icon _id='add' alt='{tr}Use{/tr}'}</a>
+    <a class="link" href="javascript:setUserModuleFromCombo('list_rsss', 'um_data');" title="{tr}Use RSS Module{/tr}">{icon _id='add' alt='{tr}Use{/tr}'}</a>
   </td><td class="form">
 	<a {popup text="Params: id= max= skip=x,y " width=100 center=true}>{icon _id='help'}</a>
   </td>
@@ -328,7 +326,7 @@
     </select>
   </td>
   <td class="form">
-    <a class="link" href="javascript:setUserModuleFromCombo('list_menus');" title="{tr}Use Menu{/tr}">{icon _id='add' alt='{tr}Use{/tr}'}</a>
+    <a class="link" href="javascript:setUserModuleFromCombo('list_menus', 'um_data');" title="{tr}Use Menu{/tr}">{icon _id='add' alt='{tr}Use{/tr}'}</a>
 
 
   </td><td class="form">
@@ -347,7 +345,7 @@
     </select>
   </td>
   <td class="form">
-    <a class="link" href="javascript:setUserModuleFromCombo('list_phpmenus');" title="{tr}Use phplayermenu{/tr}">{icon _id='add' alt='{tr}Use{/tr}'}</a>
+    <a class="link" href="javascript:setUserModuleFromCombo('list_phpmenus', 'um_data');" title="{tr}Use phplayermenu{/tr}">{icon _id='add' alt='{tr}Use{/tr}'}</a>
   </td><td class="form">
 	<a {popup text="Params: id= type=tree|phptree|plain|horiz|vert file= sectionLevel=" width=100 center=true}>{icon _id='help'}</a>
 
@@ -368,7 +366,7 @@
     </select>
   </td>
   <td class="form">
-    <a class="link" href="javascript:setUserModuleFromCombo('list_banners');" title="{tr}Use Banner Zone{/tr}">{icon _id='add' alt='{tr}Use{/tr}'}</a>
+    <a class="link" href="javascript:setUserModuleFromCombo('list_banners', 'um_data');" title="{tr}Use Banner Zone{/tr}">{icon _id='add' alt='{tr}Use{/tr}'}</a>
   </td><td class="form">
 	<a {popup text="Params: zone= target=_blank|_self|" width=100 center=true}>{icon _id='help'}</a>
   </td>
@@ -387,7 +385,7 @@
     </select>
   </td>
   <td class="form">
-    <a class="link" href="javascript:setUserModuleFromCombo('list_wikistructures');" title="{tr}Use Wiki Structure{/tr}">{icon _id='add' alt='{tr}Use{/tr}'}</a>
+    <a class="link" href="javascript:setUserModuleFromCombo('list_wikistructures', 'um_data');" title="{tr}Use Wiki Structure{/tr}">{icon _id='add' alt='{tr}Use{/tr}'}</a>
   </td><td class="form">
 	<a {popup text="Params: id=" width=100 center=true}>{icon _id='help'}</a>
   </td>
@@ -406,8 +404,12 @@
   {tr}To use menu in a css/suckerfish format:{/tr} {literal}{menu id=X css=y}{/literal}
 {/remarksbox}
 
-</td></tr></table>
-
+</td></tr>
+<tr><td colspan="2" class="odd">{tr}Data{/tr}<br />
+{textarea name='um_data' id='um_data' rows="6" cols="80" _quicktags='y' _zoom='n'}{$um_data|escape}{/textarea}<br />
+<input type="submit" name="um_update" value="{if $um_title eq ''}{tr}Create{/tr}{else}{tr}Save{/tr}{/if}" /></td></tr>
+</table>
+</form>
 </fieldset>
 
 {/strip}

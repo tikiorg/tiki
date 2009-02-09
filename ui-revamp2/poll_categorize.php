@@ -11,7 +11,7 @@ require_once('tiki-setup.php');
 $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
 global $prefs;
-if ($prefs['feature_categories'] == 'y' and $prefs['feature_polls'] == 'y') {
+if ($prefs['feature_polls'] == 'y') {
 	global $categlib, $polllib;
 	#echo '<div>hier</div>';
 	if (!is_object($categlib))  include_once('lib/categories/categlib.php');

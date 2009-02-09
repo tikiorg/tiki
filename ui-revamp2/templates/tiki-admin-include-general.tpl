@@ -294,11 +294,13 @@
       </tr><tr>
         <td class="form"><label for="general-proxy_port">{tr}Proxy port{/tr}:</label></td>
         <td><input size="5" type="text" name="proxy_port" id="general-proxy_port" value="{$prefs.proxy_port|escape}" /></td>
+	  </tr><tr>
+        <td class="form"><label for="general-ip_can_be_checked">{tr}IP can be used to identify anonymous voting(only for some intranet){/tr}:</label></td>
+        <td><input type="checkbox" name="ip_can_be_checked" id="general-ip_can_be_checked"{if $prefs.ip_can_be_checked} checked="checked"{/if} /></td>
       </tr><tr>
         <td class="form"><label for="general-max_records">{tr}Maximum number of records in listings{/tr}:</label></td>
         <td><input size="5" type="text" name="maxRecords" id="general-max_records"
                    value="{$prefs.maxRecords|escape}" /></td>
-
       </tr><tr>
         <td class="form"><label for="feature_help">{tr}Help System{/tr}:</label></td>
         <td><input type="checkbox" name="feature_help" id="feature_help" {if $prefs.feature_help eq 'y'}checked="checked"{/if} /></td>
@@ -461,6 +463,7 @@
         </legend>
         <div id="layout" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_layout) and $smarty.session.tiki_cookie_jar.show_layout neq 'y'}none{else}block{/if};">{/if}
         <table class="admin" width="100%">
+		<th colspan="2" align="center">{tr}Admin Password{/tr}</th>
       <tr>
         <td class="form" ><label for="general-new_pass">{tr}New password{/tr}:</label></td>
         <td ><input type="password" name="adminpass" id="general-new_pass" /></td>

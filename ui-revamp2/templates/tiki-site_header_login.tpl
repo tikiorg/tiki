@@ -15,9 +15,10 @@
 			<input type="password" name="pass" id="sl-login-pass" size="10" />
 			<input class="wikiaction" type="submit" name="login" value="{tr}Login{/tr}" />
 			<div>
-			{if $prefs.allowRegister eq 'y'}
-				<span class="register">
-					 <a href="tiki-register.php" title="{tr}Click here to register{/tr}">{tr}Register{/tr}</a>
+			{if $prefs.rememberme eq 'always'}<input type="hidden" name="rme" value="on" />
+			{elseif $prefs.rememberme eq 'all'}
+				<span class="rme">
+					<label for="login-remember">{tr}Remember me{/tr}</label><input type="checkbox" name="rme" id="login-remember" value="on" checked="checked" />
 				</span>
 			{/if}
 			{if $prefs.change_password eq 'y' and $prefs.forgotPass eq 'y'}
@@ -25,10 +26,11 @@
 					 <a href="tiki-remind_password.php" title="{tr}Click here if you've forgotten your password{/tr}">{tr}I forgot my password{/tr}</a>
 				</span>
 			{/if}
-			{if $prefs.rememberme eq 'always'}<input type="hidden" name="rme" value="on" />
-			{elseif $prefs.rememberme eq 'all'}<span class="rme">
-				<label for="login-remember">{tr}Remember me{/tr}</label> <input type="checkbox" name="rme" id="login-remember" value="on" checked="checked" />
-			</span>{/if}
+			{if $prefs.allowRegister eq 'y'}
+				<span class="register">
+					<a href="tiki-register.php" title="{tr}Click here to register{/tr}">{tr}Register{/tr}</a>
+				</span>
+			{/if}		
 			</div>
 		</form>
 	{/if}

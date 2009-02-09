@@ -4,7 +4,7 @@
 {if !empty($smarty.request.actpass)}
 <input type="hidden" name="actpass" value="{$smarty.request.actpass|escape}" />
 {/if}
-<table class="normal">
+<table class="form">
 <tr>
   <td class="formcolor">{tr}User{/tr}:</td>
   <td class="formcolor"><input type="text" name="user" value="{$userlogin|escape}" /></td>

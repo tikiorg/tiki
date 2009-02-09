@@ -112,7 +112,7 @@
 <td>
 <select name="move_gallery">
 <option value="-1">{tr}All galleries{/tr}</option>
-<option value="0">{tr}System gallery{/tr}</option>
+<option value="0">{tr}System Gallery{/tr}</option>
 {section name=ix loop=$galleries}
 <option value="{$galleries[ix].galleryId|escape}">{$galleries[ix].name|truncate:20:"...":true}</option>
 {/section}

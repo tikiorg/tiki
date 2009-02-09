@@ -93,6 +93,7 @@ RewriteRule \.(css|gif|jpg|png|php|html|js|htm|shtml|cgi|sql|phtml|txt|ihtml|mpa
 RewriteRule ^wiki-([A-Za-z0-9]+)   tiki-index.php?page=$1                   [QSA,L]
 RewriteRule ^page-([A-Za-z0-9]+)   tiki-index.php?page=$1                   [QSA,L]
 RewriteRule ^show:(~?)(.+)$  tiki-slideshow.php?page=$1$2      [QSA,L]
+RewriteRule ^(lib/wiki3d/.+\.jar)$ $1                                       [L]
 RewriteRule     ^(.+)$    tiki-index.php?page=$1                   [QSA,L]
 
 # how to redirect to a wiki page on a not found error: uncomment + adapt the pagename 

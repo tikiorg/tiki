@@ -1,7 +1,7 @@
 <html>
 
   <body style="margin-top: 0px; margin-left: 0px">
-    <applet codebase="./lib/wiki3d" archive="morcego-0.4.0.jar" code="br.arca.morcego.Morcego" width="{$prefs.wiki_3d_width}" height="{$prefs.wiki_3d_height}">
+    <applet codebase="./lib/wiki3d" archive="morcego-0.6.0.jar" code="br.arca.morcego.Morcego" width="{$prefs.wiki_3d_width}" height="{$prefs.wiki_3d_height}">
       <param name="serverUrl" value="{$base_url}tiki-wiki3d_xmlrpc.php">
       <param name="startNode" value="{$page}">
       <param name="windowWidth" value="{$prefs.wiki_3d_width}">

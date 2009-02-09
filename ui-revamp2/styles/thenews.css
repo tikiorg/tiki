@@ -193,14 +193,6 @@ label {
 	cursor: pointer;
 }
 
-/*
-ul, ol {
-
-	}
-	
-li {
-	
-}*/
 
 /***** Pasic Page Layout 
 	Including Site Header *****/
@@ -1094,113 +1086,7 @@ div.content .tabs {
 .commentbloc {
 	text-align: left;
 }
-/* Get the contextual info to make this specific.
-div.content {
-	padding: 3px;
-}
 
-div.content .tabs {
-	margin: 0;
-}
-
-.tab-wrapper {
-	border: 1px solid #EEEEEE;
-	padding: 0;
-}
-
-.tab-menu  {
-	clear: both;
-	line-height: 17px;
-	list-style-image: none;
-	list-style-position: outside;
-	list-style-type: none;
-	padding: 2px 0;
-	margin-bottom: 6px;
-	margin-top: 2px;
-	width: 100%;
-}
-
-.tab-menu li {
-	display: inline;
-	margin: 0 2px;
-	width: 200px;
-	padding-right: 1.5em;
-}
-
-.tab-menu li a 	{ 
-	padding: 1px 5px; 
-	background: #f5f5f5; 
-	color:  #222; 
-	font-weight: bold; 
-	text-decoration: none; 
-} 
-.tab-menu li a:hover, 
-.tab-menu li a:focus { 
-	background: #FAEC8F; 
-	border-bottom-color: #999; 
-} 
-
-.tab-menu li a:hover { 
-	background: #FAEC8F; 
-	border-bottom-color: #999; 
-} 
-
-.tab-menu li.tab-selected a { 
-	background: #BCEC8F; 
-}
-
-/* CHECK
-.tab-menu li img {
-	vertical-align: middle;
-}*/
-
-/*  tiki tabs -- deprecated?
-table.admin tr td div#page-bar {
-	margin-left: 5px;
-	margin-bottom: 0;
-	background-color: transparent;
-}
-
-span#tab1 {
-	background: #F5F5F5;
-}
-
-span#tab2 {
-	background: #ECECEC;
-}
-
-span#tab3 {
-	background: #DCDCDC;
-}
-
-#content1,
-#content2,
-#content3 {
-	border-top: 1px solid #A9A9A9;
-	border-left: 1px solid #A9A9A9;
-	border-right: 1px solid #696969;
-	border-bottom: 1px solid #696969;
-}
-
-#content1 {
-	padding: 10px;
-	background: #F5F5F5;
-
-}
-
-#content2 {
-	padding: 5px;
-	background: #ECECEC;
-}
-
-#content3 {
-	padding: 5px;
-	background: #DCDCDC;
-}
-table.admin div#content1 div.tabcontent div.cbox {
-	background-color: transparent;
-}
-*/
 
 /*** Feature-specific selectors ***/
 
@@ -1584,7 +1470,6 @@ div.bloginfo {
 div.blogtools {
 	padding: 3px;
 	text-align: right;
-	/*margin-bottom: -2em;*/
 }
 
 .blogpost {
@@ -1661,14 +1546,7 @@ body.tiki_blog .postfooter {
 body.tiki_forums table.normal {
 	margin: auto;
 }
-/* can't find in 1.10
-div.forumtoolbar {
-	margin-bottom: 20px;
-	border: 0;
-}
-td.threadseparator {}
 
-*/
  
 td.threadsevenl {}
 td.threadsevenr {}
@@ -1719,13 +1597,6 @@ table.commentinfo {}
 * html .post .postbody {font-size: 11px}
 *:first-child+html .postbody {min-width: 100%}
 
-/*.postbody .posttop {
-	position: relative;
-	width: 100%;
-	display: block;
-	min-height: 104px;
-	background-color: #E0EAF4; 
-	border-bottom: 1px solid #ACCCDD;}*/
 
 .postbody-title {
 	width: 75%;
@@ -1747,8 +1618,6 @@ table.commentinfo {}
 	margin-top: 3px}
 
 .author_actions {
-	/*height:auto; top:20px; margin:8px 8px auto auto; bottom:auto; left: auto;right: 0;
-position:absolute*/
 	width: 25%;
 	float: right;
 	text-align: right;
@@ -1860,7 +1729,6 @@ position:absolute*/
 }
 .nb_replies { white-space: nowrap; }
 .post_preview, .top_post { margin-bottom: 15px; }
-/*.post .postbody .signature { float: left; }*/
 
 /* Comments */
 
@@ -1947,11 +1815,6 @@ div.freetagObjectType {
 }
 
 /***** Image Galleries *****/
-/*
-div.browsegallery {
-	text-align: center;
-	width: 100%;
-}*/
 
 table.galtable {
 	border-collapse: collapse;

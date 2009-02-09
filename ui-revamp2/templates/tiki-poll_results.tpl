@@ -43,7 +43,7 @@
 {if $smarty.section.x.total > 1}</a>{/if}
 
 {if $prefs.feature_poll_public == 'y'}
-   {tr}Users Voting For This Option{/tr}: {section name=iix loop=$poll_info_arr[x].options[ix].users}
+   <br />{tr}Users Voting For This Option{/tr}: {section name=iix loop=$poll_info_arr[x].options[ix].users}
    {if $smarty.section.iix.index >= 1}
    , 
    {/if}
@@ -80,12 +80,12 @@
 </table>
 </div>
 <table class="normal">
-<tr><th>{tr}Identification{/tr}</th><th>{tr}option{/tr}</th></tr>
+<tr><th>{tr}User{/tr}</th><th>{tr}IP{/tr}</th><th>{tr}Option{/tr}</th><th>{tr}Date{/tr}</th></tr>
 {cycle values="odd,even" print=false}
 {section name=ix loop=$list_votes}
-<tr><td class="{cycle advance=false}">{$list_votes[ix].identification}</td><td class="{cycle}">{$list_votes_options[ix]}</td></tr>
+<tr><td class="{cycle advance=false}">{$list_votes[ix].user|userlink}</td><td class="{cycle advance=false}">{$list_votes[ix].ip}</td><td class="{cycle advance=false}">{$list_votes[ix].title|escape}</td><td class="{cycle}">{$list_votes[ix].time|tiki_short_date}</td></tr>
 {sectionelse}
-<tr><td colspan="2">{tr}No records found{/tr}</td></tr>
+<tr><td colspan="4">{tr}No records found{/tr}</td></tr>
 {/section}
 </table>
 

@@ -6,7 +6,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 include_once ('magic-enumerations.php');
-include_once('tikilib.php');
+include_once('lib/tikilib.php');
 include_once ('lib/categories/categlib.php');
 include_once ('lib/userslib.php');
 include_once ("lib/commentslib.php");
