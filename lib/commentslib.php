@@ -1615,13 +1615,13 @@ class Comments extends TikiLib {
 	$bindvars = array_merge(array($object[0], $object[1], (float) $threshold), $bind_time);
 
 	if ( $tiki_p_admin_comments != 'y' ) {
-		$queue_cond = 'and `approved`=?';
+		$queue_cond = 'and tc1.`approved`=?';
 		$bindvars[] = $approved;
 	} else {
 		$queue_cond = '';
 	}
 
-	$query = "select count(*) from `tiki_comments` where
+	$query = "select count(*) from `tiki_comments` as tc1 where
 	    `objectType`=? and `object`=? and `average` < ? $time_cond $queue_cond";
 	$below = $this->getOne($query, $bindvars);
 
