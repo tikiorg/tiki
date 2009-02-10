@@ -635,7 +635,7 @@ class Comments extends TikiLib {
 	 */
     }
 
-    function get_forum_topics($forumId, $offset = 0, $max = -1, $sort_mode = 'commentDate_asc', $include_archived = false) {
+    function get_forum_topics($forumId, $offset = 0, $max = -1, $sort_mode = 'commentDate_asc', $include_archived = false, $who = '', $type = '', $reply_state = '') {
 	if ($sort_mode == 'points_asc') {
 	    $sort_mode = 'average_asc';
 	}
@@ -647,9 +647,35 @@ class Comments extends TikiLib {
 	    $time_cond = '';
 	    $bind_time = array();
 	}
-
+	if (!empty($who)) {
+		$time_cond .= ' and a.`threadId` IN (';
+		//get a list of threads the user has posted in
+		//this needs to be a separate query otherwise it'll run once for every row in the db!
+		$user_thread_ids_query = "SELECT DISTINCT IF(parentId=0, threadId, parentId) threadId FROM tiki_comments WHERE object = ? AND userName = ? ORDER BY threadId DESC";
+		$user_thread_ids_params = array($forumId, $who);
+		$user_thread_ids_result = $this->query($user_thread_ids_query, $user_thread_ids_params, 1000);
+		if ($user_thread_ids_result->numRows() == 0) {
+			return array();
+		}
+		$user_thread_ids = array();
+	    while ($res = $user_thread_ids_result->fetchRow()) {
+			$user_thread_ids[] = $res['threadId'];
+		}
+		$time_cond .= implode(",", $user_thread_ids);
+		$time_cond .= ") ";
+	}
+	if ($reply_state == 'none') {
+		$time_cond .= ' and  (SELECT count(b.`threadId`) as replies from `tiki_comments` b where `parentId`=a.`threadId`) =0  ';
+	}
+	if (empty($type)) {
+		$operators = array('=', '<>');
+		$type = 's';
+	} else {
+		$operators = array('=');
+	}
+		
 	$ret = array();
-	foreach (array('=', '<>') as $stickytest) {
+	foreach ($operators as $stickytest) {
 	    $query = "select a.`threadId`,a.`object`,a.`objectType`,a.`parentId`,
 	    a.`userName`,a.`commentDate`,a.`hits`,a.`type`,a.`points`,
 	    a.`votes`,a.`average`,a.`title`,a.`data`,a.`hash`,a.`user_ip`,
@@ -672,7 +698,7 @@ class Comments extends TikiLib {
 
 	    $bind_vars = array((string) $forumId);
 	    if ( ! $include_archived ) $bind_vars[] = 'n';
-	    $bind_vars[] = 's';
+	    $bind_vars[] = $type;
 	    $bind_vars[] = 0;
 
 	    $result = $this->query($query, array_merge($bind_vars, $bind_time), $max, $offset);
@@ -1252,7 +1278,7 @@ class Comments extends TikiLib {
 	return $ret;
     }
     // FORUMS END
-    function get_comment($id, $message_id=null) {
+    function get_comment($id, $message_id=null, $forum_info=null) {
 	if ($message_id) {
 		$query = "select * from `tiki_comments` where `message_id`=?";
 		$result = $this->query($query, array($message_id ) );
@@ -1263,7 +1289,7 @@ class Comments extends TikiLib {
 	}
 	$res = $result->fetchRow();
 	if($res) { //if there is a comment with that id
-	   $this->add_comments_extras($res);
+	   $this->add_comments_extras($res, $forum_info);
 	}
 
 	return $res;
@@ -1279,7 +1305,7 @@ class Comments extends TikiLib {
 		return $result;
 	}
 
-    function add_comments_extras(&$res) { 
+    function add_comments_extras(&$res, $forum_info=null) { 
 	    // this function adds some extras to the referenced array. 
 	    // This array should already contain the contents of the tiki_comments table row
 	    // used in $this->get_comment and $this->get_comments
@@ -1288,18 +1314,18 @@ class Comments extends TikiLib {
 	    $res["parsed"] = $this->parse_comment_data($res["data"]);
 
 	    // these could be cached or probably queried along with the original query of the tiki_comments table
-	    $result2=$this->query("select `posts`, `level` from `tiki_user_postings` where `user`=?",
-	    	array( $res['userName'] ) );
+	    if ($forum_info == null || $forum_info['ui_posts'] == 'y' || $forum_info['ui_level'] == 'y') {
+			$result2=$this->query("select `posts`, `level` from `tiki_user_postings` where `user`=?", array( $res['userName'] ) );
             $res2=$result2->fetchRow();
-	    $res['user_posts'] = $res2['posts'];
-	    $res['user_level'] = $res2['level'];
-
+			$res['user_posts'] = $res2['posts'];
+			$res['user_level'] = $res2['level'];
+		}
 	    // 'email is public' never has 'y' value, because it is now used to choose the email scrambling method
 	    // ... so, we need to test if it's not equal to 'n'
-	    if ($this->get_user_preference($res['userName'], 'email is public', 'n') != 'n') {
-		$res['user_email'] = $this->getOne("select `email` from `users_users` where `login`=?", array( $res['userName'] ) );
+	    if (($forum_info == null || $forum_info['ui_email'] == 'y') && $this->get_user_preference($res['userName'], 'email is public', 'n') != 'n') {
+			$res['user_email'] = $this->getOne("select `email` from `users_users` where `login`=?", array( $res['userName'] ) );
 	    } else {
-		$res['user_email'] = '';
+			$res['user_email'] = '';
 	    }
 
 	    $res['attachments'] = $this->get_thread_attachments($res['threadId'], 0);
