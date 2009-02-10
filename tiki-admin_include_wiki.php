@@ -159,7 +159,6 @@ if (isset($_REQUEST["wikifeatures"])) {
 	'feature_sandbox',
 	'feature_wiki_print',
 	'feature_wiki_replace',
-	'feature_antibot',
 	'feature_backlinks',
 	'feature_likePages',
 	'wiki_uses_slides',

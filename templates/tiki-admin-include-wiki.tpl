@@ -539,7 +539,6 @@ name="w_displayed_default"{if $prefs.w_displayed_default eq 'y'} checked="checke
     <form action="tiki-admin.php?page=wiki" method="post">
     <table class="admin">
     <tr><td class="form">{tr}Sandbox:{/tr}</td><td><input type="checkbox" name="feature_sandbox" {if $prefs.feature_sandbox eq 'y'}checked="checked"{/if}/></td></tr>
-    <tr><td class="form">{tr}Anonymous editors must input anti-bot code:{/tr}</td><td><input type="checkbox" name="feature_antibot" {if $prefs.feature_antibot eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Last changes:{/tr}</td><td><input type="checkbox" name="feature_lastChanges" {if $prefs.feature_lastChanges eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Dump:{/tr}</td><td><input type="checkbox" name="feature_dump" {if $prefs.feature_dump eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Export:{/tr}</td><td><input type="checkbox" name="feature_wiki_export" {if $prefs.feature_wiki_export eq 'y'}checked="checked"{/if}/></td></tr>

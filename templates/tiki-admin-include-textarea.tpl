@@ -12,6 +12,10 @@
 	<form action="tiki-admin.php?page=textarea" method="post">
 		<table class="admin">
 			<tr>
+				<td class="form"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Spam+Protection" target="tikihelp" class="tikihelp" title="{tr}Anonymous editors must input anti-bot code:{/tr}">{/if} {tr}Anonymous editors must input anti-bot code:{/tr} {if $prefs.feature_help eq 'y'}</a>{/if} </td>
+				<td><input type="checkbox" name="feature_antibot" {if $prefs.feature_antibot eq 'y'}checked="checked"{/if}/></td>
+			</tr>
+			<tr>
 				<td class="form"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Smiley" target="tikihelp" class="tikihelp" title="{tr}Allow Smileys{/tr}">{/if} {tr}Allow Smileys{/tr} {if $prefs.feature_help eq 'y'}</a>{/if} </td>
 				<td><input type="checkbox" name="feature_smileys" {if $prefs.feature_smileys eq 'y'}checked="checked"{/if}/></td>
 			</tr>
