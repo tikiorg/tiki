@@ -3641,7 +3641,8 @@ class TikiLib extends TikiDB {
 		//get_strings tra("Removed");
 		$query = "update `users_groups` set `groupHome`=? where `groupHome`=?";
 		$this->query($query, array(NULL, $page));
-
+		$query = 'delete from `tiki_theme_control_objects` where `name`=? and `type`=?';
+		$this->query($query, array($page, 'wiki page'));
 		$this->remove_object('wiki page', $page);
 
 		$query = "delete from `tiki_user_watches` where `event`=? and `object`=?";
