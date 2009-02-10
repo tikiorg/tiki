@@ -209,10 +209,8 @@ class TikiLib extends TikiDB {
 		}
 		$query = "select 'user' as watchtype, `watchId`, `user`, `event`, `object`, `title`, `type`, `url`, `email` from `tiki_user_watches` $mid 
 			UNION ALL
-			(
 				select 'group' as watchtype, `watchId`, `group`, `event`, `object`, `title`, `type`, `url`, '' as `email`
 				from `tiki_group_watches` $mid2
-			)
 			order by ".$this->convert_sortmode($sort_mode);
 		$query_cant = 'select count(*) from `tiki_user_watches` '.$mid;
 		$query_cant2 = 'select count(*) from `tiki_group_watches` '. $mid2;
