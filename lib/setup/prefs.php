@@ -940,7 +940,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_actionlog_bytes' => 'n',
 
 		// admin
-		'sitetitle' => 'Tiki 3.0',
+		'siteTitle' => 'Tiki 3.0',
 		'tmpDir' => 'temp',
 
 		// tell a friend

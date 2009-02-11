@@ -81,7 +81,7 @@ if (isset($_REQUEST["looksetup"]) || (!empty($_REQUEST['site_style']) && $_REQUE
 	"sitelogo_bgstyle",
 	"sitelogo_title",
 	"sitelogo_alt",
-	"sitetitle",
+	"siteTitle",
 	"sitesubtitle",
 	"sitemycode",
 	"site_favicon",
