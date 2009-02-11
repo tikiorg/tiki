@@ -166,10 +166,7 @@
 			<a href="tiki-edit_quiz.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'quizId_desc'}quizId_asc{else}quizId_desc{/if}">{tr}ID{/tr}</a>
 		</th>
 		<th>
-			<a href="tiki-edit_quiz.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a>
-		</th>
-		<th>
-			<a href="tiki-edit_quiz.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}Description{/tr}</a>
+			<a href="tiki-edit_quiz.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Quiz{/tr}</a>
 		</th>
 		<th>
 			<a href="tiki-edit_quiz.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'canRepeat_desc'}canRepeat_asc{else}canRepeat_desc{/if}">{tr}canRepeat{/tr}</a>
@@ -189,15 +186,19 @@
 			</th>
 		*}
 
-		<th>{tr}Action{/tr}</th>
+		<th>{tr}Actions{/tr}</th>
 	</tr>
 	<!-- end header data -->
 	{cycle values="odd,even" print=false}
 	{section name=user loop=$channels}
 		<tr>
 			<td class="{cycle advance=false}">{$channels[user].quizId}</td>
-			<td class="{cycle advance=false}">{$channels[user].name}</td>
-			<td class="{cycle advance=false}">{$channels[user].description}</td>
+			<td class="{cycle advance=false}">
+				{$channels[user].name}
+				<div class="subcomment">
+					{$channels[user].description}
+				</div>
+			</td>
 			<td class="{cycle advance=false}">{$channels[user].canRepeat}</td>
 			<td class="{cycle advance=false}">{$channels[user].timeLimited} {if $channels[user].timeLimited eq 'y'}({$channels[user].timeLimit} mins){/if}</td>
 			<td class="{cycle advance=false}">{$channels[user].questions}</td>

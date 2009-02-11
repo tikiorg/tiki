@@ -96,7 +96,7 @@
 				</tr>
 
 				<tr>
-					<td class="formcolor">{tr}Repeat password{/tr}:</td>
+					<td class="formcolor" style="vertical-align:top">{tr}Repeat password{/tr}:</td>
 					<td class="formcolor">
 						<input id='pass2' type="password" name="passAgain" onkeypress="regCapsLock(event)" 
 	{if $prefs.feature_ajax eq'y'}onkeyup="check_pass()"{/if}/>

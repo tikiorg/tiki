@@ -22,7 +22,6 @@ REPLACE INTO tiki_preferences VALUES ('feature_categories','y');
 REPLACE INTO tiki_preferences VALUES ('feature_categorypath','y');
 REPLACE INTO tiki_preferences VALUES ('feature_contact','y');
 REPLACE INTO tiki_preferences VALUES ('feature_debug_console','n');
-REPLACE INTO tiki_preferences VALUES ('feature_drawings','y');
 REPLACE INTO tiki_preferences VALUES ('feature_editcss','n');
 REPLACE INTO tiki_preferences VALUES ('feature_file_galleries','y');
 REPLACE INTO tiki_preferences VALUES ('feature_file_galleries_comments','y');

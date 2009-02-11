@@ -67,7 +67,7 @@
     {tr}Find{/tr} <input id="fuser" name="highlight" size="14" type="text" accesskey="s" value="{$words}"/>
 		{if !( $searchStyle eq "menu" )} 
 		<label for="boolean">{tr}Advanced search:{/tr}<input type="checkbox" name="boolean"{if $boolean eq 'y'} checked="checked"{/if} /></label>
-		{add_help show='y' title="{tr}Advance Search Help{/tr}" id="advance_search_help"}
+		{add_help show='y' title="{tr}Advanced Search Help{/tr}" id="advanced_search_help"}
 			{$smarty.capture.advanced_search_help}
 		{/add_help}
 		<label for="date">{tr}Date Search:{/tr}
@@ -77,6 +77,8 @@
 		{/section}
 		</select>
 		{/if}
+
+{if $prefs.feature_search_show_object_filter eq 'y'}
 {if ( $searchStyle eq "menu" )}
 <span class='searchMenu'>
     {tr}in{/tr}
@@ -117,9 +119,11 @@
     <input type="hidden" name="where" value="{$where|escape}" />
 	{if $forumId}<input type="hidden" name="forumId" value="{$forumId}" />{/if}
 {/if}
+{/if}
     <input type="submit" class="wikiaction" name="search" value="{tr}Go{/tr}"/>
 </form>
 {/if}
+
 </div><!--nohighlight-->
 
 
@@ -139,12 +143,11 @@
 		{strip}
 		{if $prefs.feature_search_show_object_type eq 'y'}
 		  {if $results[search].type > ''}
-				<b>{$results[search].type}</b>
+				<b>{$results[search].type}::</b>
 			{/if}
 		{/if}
 		{if !empty($results[search].parentName)}
 			::<a href="{$results[search].parentHref}">{$results[search].parentName|escape}</a>&nbsp;-&gt;
-		{else}:&nbsp;
 		{/if}
 		{/strip}
 		<a href="{$results[search].href}&amp;highlight={$words}" class="wiki">{$results[search].pageName|strip_tags}</a>

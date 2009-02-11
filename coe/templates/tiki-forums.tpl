@@ -26,7 +26,7 @@
 
       {if $prefs.feature_forums_search eq 'y' and $prefs.feature_search eq 'y'}
         <td>
-          <form  class="forms" method="get" action="{if $prefs.feature_forum_local_tiki_search eq 'y'}tiki-searchindex.php{else}tiki-searchresults.php{/if}">
+          <form class="forms" method="get" action="{if $prefs.feature_forum_local_tiki_search eq 'y'}tiki-searchindex.php{else}tiki-searchresults.php{/if}">
             <input name="highlight" size="30" type="text" />
             <input type="hidden" name="where" value="forums" />
             <input type="submit" class="wikiaction" name="search" value="{tr}Search in content{/tr}"/>
@@ -35,7 +35,7 @@
       {/if}
     </tr>
   </table>
-{/if}  
+{/if}
 {/if}
 <br />
 <table class="normal">
@@ -67,14 +67,21 @@
 		{/if}
   </tr>
 
-{assign var=section_old value=""}
 {section name=user loop=$channels}
 {cycle values="odd,even" print=false}
 {assign var=section value=$channels[user].section}
-{if $section ne $section_old}
-  {assign var=section_old value=$section}
-  <tr><td class="third" colspan="6">{$section}</td></tr>
+{if $section ne ""}
+	{if ($tiki_p_admin eq 'y' or $tiki_p_admin_forum eq 'y')} 
+		<tr>
+			<td class="third" colspan="7">{$section}</td>
+		</tr>
+	{else}
+		<tr>
+			<td class="third" colspan="6">{$section}</td>
+		</tr>
+	{/if}
 {/if}
+
 <tr>
 
 <td class="{cycle advance=false}">

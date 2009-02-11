@@ -69,7 +69,7 @@ if ($prefs['feature_theme_control'] == 'y') {
 		$stlstl = split("-|\.",$tc_theme);
 		$style_base = $stlstl[0];
 	
-		if ($tc_theme_option == '') {	// special handling for 'None' case
+		if (empty($tc_theme_option)) {	// special handling for 'None' case
 			if ($tikidomain) {
 				$headerlib->drop_cssfile('styles/'.$style_base.'/options/'.$tikidomain.'/'.$prefs['style_option']);
 			} else {
