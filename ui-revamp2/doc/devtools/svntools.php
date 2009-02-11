@@ -111,7 +111,7 @@ function find_last_merge( $path, $source )
 	);
 
 	$ePath = escapeshellarg( $path );
-	info( "svn log --stop-on-copy $ePath" );die;
+
 	$process = proc_open( "svn log --stop-on-copy $ePath", $descriptorspec, $pipes );
 	$rev = 0;
 
@@ -143,7 +143,6 @@ function merge( $localPath, $source, $from, $to )
 	$source = escapeshellarg( $source );
 	$from = (int) $from;
 	$to = (int) $to;
-	info( "svn merge $source -r$from:$to\n[MRG] Automatic merge, $short $from to $to" ); die;
 	passthru( "svn merge $source -r$from:$to" );
 
 	$message = "[MRG] Automatic merge, $short $from to $to";

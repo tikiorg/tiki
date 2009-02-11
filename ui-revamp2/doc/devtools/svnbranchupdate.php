@@ -22,7 +22,7 @@ if( ! is_valid_merge_source( $local->entry->url, $source ) )
 if( has_uncommited_changes( '.' ) )
 	error( "Working copy has uncommited changes. Revert or commit them before merging a branch." );
 
-//Proceed to update
+// Proceed to update
 info( "Updating..." );
 update_working_copy( '.' );
 
@@ -33,8 +33,6 @@ info( "Merging..." );
 
 $last = find_last_merge( '.', $source );
 
-info( 'last='.$last.' source='.$source.' revision='.$revision ); ///FIXME
-die;
 if( ! $last )
 	error( "Could not find previous merge. Impossible to merge automatically." );
 
