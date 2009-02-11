@@ -99,7 +99,7 @@ function get_default_prefs() {
 		'wikiHomePage' => 'HomePage',
 		'wikiLicensePage' => '',
 		'wikiSubmitNotice' => '',
-		'wiki_authors_style' => 'classic',
+		'wiki_authors_style' => 'none',
 		'wiki_authors_style_by_page' => 'n',
 		'wiki_show_version' => 'n',
 		'wiki_bot_bar' => 'n',
