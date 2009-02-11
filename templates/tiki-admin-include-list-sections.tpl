@@ -28,6 +28,10 @@
       <img src="pics/trans.png" alt="{tr}Login{/tr}" title="{tr}Login{/tr}" /><span>{tr}Login{/tr}</span>
     </a>
 
+    <a href="tiki-admin.php?page=profiles" class="admbox" style="background-image: url('')">
+      <img src="pics/trans.png" alt="{tr}Profiles{/tr}" title="{tr}Profiles{/tr}" /><span>{tr}Profiles{/tr}</span>
+    </a>	
+	
     <a href="tiki-admin.php?page=look" class="admbox" style="background-image: url('pics/large/gnome-settings-background48x48.png')">
       <img src="pics/trans.png" alt="{tr}Look &amp; Feel{/tr}" title="{tr}Customize look and feel of your Tiki{/tr}" /><span>{tr}Look &amp; Feel{/tr}</span>
     </a>

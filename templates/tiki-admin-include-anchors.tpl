@@ -5,6 +5,8 @@
 
 <a href="tiki-admin.php?page=login" title="{tr}Login{/tr}" class="icon"><img class="icon" src="pics/large/stock_quit.png" alt="{tr}Login{/tr}" width="32" height="32" /></a>
 
+<a href="tiki-admin.php?page=profiles" title="{tr}Profiles{/tr}" class="icon"><img class="icon" src="" alt="{tr}Profiles{/tr}" width="32" height="32" /></a>
+
 <a href="tiki-admin.php?page=look" title="{tr}Customize look and feel of your Tiki{/tr}" class="icon"><img class="icon" src="pics/large/gnome-settings-background.png" alt="{tr}Look &amp; Feel{/tr}" /></a>
 
 <a href="tiki-admin.php?page=i18n" title="{tr}i18n{/tr}" class="icon"><img class="icon" src="pics/large/i18n.png" alt="{tr}i18n{/tr}" width="32" height="32" /></a>
