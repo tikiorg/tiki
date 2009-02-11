@@ -77,6 +77,8 @@
 		{/section}
 		</select>
 		{/if}
+
+{if $prefs.feature_search_show_object_filter eq 'y'}
 {if ( $searchStyle eq "menu" )}
 <span class='searchMenu'>
     {tr}in{/tr}
@@ -117,9 +119,11 @@
     <input type="hidden" name="where" value="{$where|escape}" />
 	{if $forumId}<input type="hidden" name="forumId" value="{$forumId}" />{/if}
 {/if}
+{/if}
     <input type="submit" class="wikiaction" name="search" value="{tr}Go{/tr}"/>
 </form>
 {/if}
+
 </div><!--nohighlight-->
 
 
