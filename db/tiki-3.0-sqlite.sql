@@ -1616,7 +1616,7 @@ CREATE UNIQUE INDEX "tiki_menu_options_uniq_menu" ON "tiki_menu_options"("menuId
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (1,42,'o','Home','./',10,'','','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (3,42,'o','Contact us','tiki-contact.php',20,'feature_contact','','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (3,42,'o','Contact Us','tiki-contact.php',20,'feature_contact','','',0);
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (4,42,'o','Stats','tiki-stats.php',23,'feature_stats','tiki_p_view_stats','',0);
 
@@ -1626,7 +1626,7 @@ INSERT INTO "," ("optionId","menuId","type","name","url","position","section","p
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (7,42,'o','Calendar','tiki-calendar.php',35,'feature_calendar','tiki_p_view_calendar','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (8,42,'o','Users map','tiki-gmap_usermap.php',36,'feature_gmap','','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (8,42,'o','Users Map','tiki-gmap_usermap.php',36,'feature_gmap','','',0);
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (9,42,'o','Mobile','tiki-mobile.php',37,'feature_mobile','','',0);
 
@@ -1634,7 +1634,7 @@ INSERT INTO "," ("optionId","menuId","type","name","url","position","section","p
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (11,42,'s','MyTiki','tiki-my_tiki.php',50,'feature_mytiki','','Registered',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (12,42,'o','MyTiki home','tiki-my_tiki.php',51,'feature_mytiki','','Registered',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (12,42,'o','MyTiki Home','tiki-my_tiki.php',51,'feature_mytiki','','Registered',0);
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (13,42,'o','Preferences','tiki-user_preferences.php',55,'feature_mytiki,feature_userPreferences','','Registered',0);
 
@@ -1652,25 +1652,25 @@ INSERT INTO "," ("optionId","menuId","type","name","url","position","section","p
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (20,42,'o','Notepad','tiki-notepad_list.php',90,'feature_mytiki,feature_notepad','tiki_p_notepad','Registered',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (21,42,'o','My files','tiki-userfiles.php',95,'feature_mytiki,feature_userfiles','tiki_p_userfiles','Registered',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (21,42,'o','My Files','tiki-userfiles.php',95,'feature_mytiki,feature_userfiles','tiki_p_userfiles','Registered',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (22,42,'o','User menu','tiki-usermenu.php',100,'feature_mytiki,feature_usermenu','tiki_p_usermenu','Registered',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (22,42,'o','User Menu','tiki-usermenu.php',100,'feature_mytiki,feature_usermenu','tiki_p_usermenu','Registered',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (23,42,'o','Mini calendar','tiki-minical.php',105,'feature_mytiki,feature_minical','tiki_p_minical','Registered',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (23,42,'o','Mini Calendar','tiki-minical.php',105,'feature_mytiki,feature_minical','tiki_p_minical','Registered',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (24,42,'o','My watches','tiki-user_watches.php',110,'feature_mytiki,feature_user_watches','','Registered',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (24,42,'o','My Watches','tiki-user_watches.php',110,'feature_mytiki,feature_user_watches','','Registered',0);
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (25,42,'s','Workflow','tiki-g-user_processes.php',150,'feature_workflow','tiki_p_use_workflow','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (26,42,'o','Admin processes','tiki-g-admin_processes.php',155,'feature_workflow','tiki_p_admin_workflow','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (26,42,'o','Admin Processes','tiki-g-admin_processes.php',155,'feature_workflow','tiki_p_admin_workflow','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (27,42,'o','Monitor processes','tiki-g-monitor_processes.php',160,'feature_workflow','tiki_p_admin_workflow','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (27,42,'o','Monitor Processes','tiki-g-monitor_processes.php',160,'feature_workflow','tiki_p_admin_workflow','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (28,42,'o','Monitor activities','tiki-g-monitor_activities.php',165,'feature_workflow','tiki_p_admin_workflow','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (28,42,'o','Monitor Activities','tiki-g-monitor_activities.php',165,'feature_workflow','tiki_p_admin_workflow','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (29,42,'o','Monitor instances','tiki-g-monitor_instances.php',170,'feature_workflow','tiki_p_admin_workflow','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (29,42,'o','Monitor Instances','tiki-g-monitor_instances.php',170,'feature_workflow','tiki_p_admin_workflow','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (30,42,'o','User processes','tiki-g-user_processes.php',175,'feature_workflow','tiki_p_use_workflow','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (30,42,'o','User Processes','tiki-g-user_processes.php',175,'feature_workflow','tiki_p_use_workflow','',0);
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (31,42,'o','User activities','tiki-g-user_activities.php',180,'feature_workflow','tiki_p_use_workflow','',0);
 
@@ -1678,7 +1678,7 @@ INSERT INTO "," ("optionId","menuId","type","name","url","position","section","p
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (33,42,'s','Community','tiki-list_users.php',187,'feature_friends','tiki_p_list_users','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (34,42,'o','User list','tiki-list_users.php',188,'feature_friends','tiki_p_list_users','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (34,42,'o','User List','tiki-list_users.php',188,'feature_friends','tiki_p_list_users','',0);
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (35,42,'o','Friendship Network','tiki-friends.php',189,'feature_friends','','Registered',0);
 
@@ -1692,17 +1692,17 @@ INSERT INTO "," ("optionId","menuId","type","name","url","position","section","p
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (40,42,'o','Rankings','tiki-wiki_rankings.php',215,'feature_wiki,feature_wiki_rankings','tiki_p_view','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (41,42,'o','List pages','tiki-listpages.php',220,'feature_wiki,feature_listPages','tiki_p_view','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (41,42,'o','List Pages','tiki-listpages.php',220,'feature_wiki,feature_listPages','tiki_p_view','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,42,'o','Orphan pages','tiki-orphan_pages.php',225,'feature_wiki,feature_listPages','tiki_p_view','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,42,'o','Orphan Pages','tiki-orphan_pages.php',225,'feature_wiki,feature_listPages','tiki_p_view','',0);
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (43,42,'o','Sandbox','tiki-editpage.php?page=sandbox',230,'feature_wiki,feature_sandbox','tiki_p_view','',0);
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (44,42,'o','Multiple Print','tiki-print_pages.php',235,'feature_wiki,feature_wiki_multiprint','tiki_p_view','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (45,42,'o','Send pages','tiki-send_objects.php',240,'feature_wiki,feature_comm','tiki_p_view,tiki_p_send_pages','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (45,42,'o','Send Pages','tiki-send_objects.php',240,'feature_wiki,feature_comm','tiki_p_view,tiki_p_send_pages','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (46,42,'o','Received pages','tiki-received_pages.php',245,'feature_wiki,feature_comm','tiki_p_view,tiki_p_admin_received_pages','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (46,42,'o','Received Pages','tiki-received_pages.php',245,'feature_wiki,feature_comm','tiki_p_view,tiki_p_admin_received_pages','',0);
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (47,42,'o','Structures','tiki-admin_structures.php',250,'feature_wiki,feature_wiki_structure','tiki_p_view','',0);
 
@@ -1714,77 +1714,77 @@ INSERT INTO "," ("optionId","menuId","type","name","url","position","section","p
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (50,42,'o','Rankings','tiki-galleries_rankings.php',310,'feature_galleries,feature_gal_rankings','tiki_p_list_image_galleries','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (51,42,'o','Upload image','tiki-upload_image.php',315,'feature_galleries','tiki_p_upload_images','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (51,42,'o','Upload Image','tiki-upload_image.php',315,'feature_galleries','tiki_p_upload_images','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (52,42,'o','Directory batch','tiki-batch_upload.php',318,'feature_galleries,feature_gal_batch','tiki_p_batch_upload','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (52,42,'o','Directory Batch','tiki-batch_upload.php',318,'feature_galleries,feature_gal_batch','tiki_p_batch_upload','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (53,42,'o','System gallery','tiki-list_gallery.php?galleryId=0',320,'feature_galleries','tiki_p_admin_galleries','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (53,42,'o','System Gallery','tiki-list_gallery.php?galleryId=0',320,'feature_galleries','tiki_p_admin_galleries','',0);
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (54,42,'s','Articles','tiki-view_articles.php',350,'feature_articles','tiki_p_read_article','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (55,42,'o','Articles home','tiki-view_articles.php',355,'feature_articles','tiki_p_read_article','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (55,42,'o','Articles Home','tiki-view_articles.php',355,'feature_articles','tiki_p_read_article','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (56,42,'o','List articles','tiki-list_articles.php',360,'feature_articles','tiki_p_read_article','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (56,42,'o','List Articles','tiki-list_articles.php',360,'feature_articles','tiki_p_read_article','',0);
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (57,42,'o','Rankings','tiki-cms_rankings.php',365,'feature_articles,feature_cms_rankings','tiki_p_read_article','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (58,42,'o','Submit article','tiki-edit_submission.php',370,'feature_articles,feature_submissions','tiki_p_read_article,tiki_p_submit_article','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (58,42,'o','Submit Article','tiki-edit_submission.php',370,'feature_articles,feature_submissions','tiki_p_read_article,tiki_p_submit_article','',0);
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (59,42,'o','View submissions','tiki-list_submissions.php',375,'feature_articles,feature_submissions','tiki_p_read_article,tiki_p_submit_article','',0);
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (60,42,'o','View submissions','tiki-list_submissions.php',375,'feature_articles,feature_submissions','tiki_p_read_article,tiki_p_approve_submission','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (61,42,'o','View submissions','tiki-list_submissions.php',375,'feature_articles,feature_submissions','tiki_p_read_article,tiki_p_remove_submission','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (61,42,'o','View Submissions','tiki-list_submissions.php',375,'feature_articles,feature_submissions','tiki_p_read_article,tiki_p_remove_submission','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (62,42,'o','New article','tiki-edit_article.php',380,'feature_articles','tiki_p_read_article,tiki_p_edit_article','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (62,42,'o','New Article','tiki-edit_article.php',380,'feature_articles','tiki_p_read_article,tiki_p_edit_article','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (63,42,'o','Send articles','tiki-send_objects.php',385,'feature_articles,feature_comm','tiki_p_read_article,tiki_p_send_articles','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (63,42,'o','Send Articles','tiki-send_objects.php',385,'feature_articles,feature_comm','tiki_p_read_article,tiki_p_send_articles','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (64,42,'o','Received articles','tiki-received_articles.php',385,'feature_articles,feature_comm','tiki_p_read_article,tiki_p_admin_received_articles','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (64,42,'o','Received Articles','tiki-received_articles.php',385,'feature_articles,feature_comm','tiki_p_read_article,tiki_p_admin_received_articles','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (196,42,'o','Admin types','tiki-article_types.php',395,'feature_articles','tiki_p_articles_admin_types','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (196,42,'o','Admin Types','tiki-article_types.php',395,'feature_articles','tiki_p_articles_admin_types','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (195,42,'o','Admin topics','tiki-admin_topics.php',390,'feature_articles','tiki_p_articles_admin_topics','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (195,42,'o','Admin Topics','tiki-admin_topics.php',390,'feature_articles','tiki_p_articles_admin_topics','',0);
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (67,42,'s','Blogs','tiki-list_blogs.php',450,'feature_blogs','tiki_p_read_blog','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (68,42,'o','List blogs','tiki-list_blogs.php',455,'feature_blogs','tiki_p_read_blog','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (68,42,'o','List Blogs','tiki-list_blogs.php',455,'feature_blogs','tiki_p_read_blog','',0);
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (69,42,'o','Rankings','tiki-blog_rankings.php',460,'feature_blogs,feature_blog_rankings','tiki_p_read_blog','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (70,42,'o','Create/Edit blog','tiki-edit_blog.php',465,'feature_blogs','tiki_p_read_blog,tiki_p_create_blogs','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (70,42,'o','Create/Edit Blog','tiki-edit_blog.php',465,'feature_blogs','tiki_p_read_blog,tiki_p_create_blogs','',0);
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (71,42,'o','Post','tiki-blog_post.php',470,'feature_blogs','tiki_p_read_blog,tiki_p_blog_post','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (72,42,'o','Admin posts','tiki-list_posts.php',475,'feature_blogs','tiki_p_read_blog,tiki_p_blog_admin','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (72,42,'o','Admin Posts','tiki-list_posts.php',475,'feature_blogs','tiki_p_read_blog,tiki_p_blog_admin','',0);
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (73,42,'s','Forums','tiki-forums.php',500,'feature_forums','tiki_p_forum_read','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (74,42,'o','List forums','tiki-forums.php',505,'feature_forums','tiki_p_forum_read','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (74,42,'o','List Forums','tiki-forums.php',505,'feature_forums','tiki_p_forum_read','',0);
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (75,42,'o','Rankings','tiki-forum_rankings.php',510,'feature_forums,feature_forum_rankings','tiki_p_forum_read','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (76,42,'o','Admin forums','tiki-admin_forums.php',515,'feature_forums','tiki_p_forum_read,tiki_p_admin_forum','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (76,42,'o','Admin Forums','tiki-admin_forums.php',515,'feature_forums','tiki_p_forum_read,tiki_p_admin_forum','',0);
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (77,42,'s','Directory','tiki-directory_browse.php',550,'feature_directory','tiki_p_view_directory','',0);
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (78,42,'o','Submit a new link','tiki-directory_add_site.php',555,'feature_directory','tiki_p_submit_link','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (79,42,'o','Browse directory','tiki-directory_browse.php',560,'feature_directory','tiki_p_view_directory','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (79,42,'o','Browse Directory','tiki-directory_browse.php',560,'feature_directory','tiki_p_view_directory','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (80,42,'o','Admin directory','tiki-directory_admin.php',565,'feature_directory','tiki_p_view_directory,tiki_p_admin_directory_cats','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (80,42,'o','Admin Directory','tiki-directory_admin.php',565,'feature_directory','tiki_p_view_directory,tiki_p_admin_directory_cats','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (81,42,'o','Admin directory','tiki-directory_admin.php',565,'feature_directory','tiki_p_view_directory,tiki_p_admin_directory_sites','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (81,42,'o','Admin Directory','tiki-directory_admin.php',565,'feature_directory','tiki_p_view_directory,tiki_p_admin_directory_sites','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (82,42,'o','Admin directory','tiki-directory_admin.php',565,'feature_directory','tiki_p_view_directory,tiki_p_validate_links','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (82,42,'o','Admin Directory','tiki-directory_admin.php',565,'feature_directory','tiki_p_view_directory,tiki_p_validate_links','',0);
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (83,42,'s','File Galleries','tiki-list_file_gallery.php',600,'feature_file_galleries','tiki_p_view_file_gallery','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (84,42,'o','List galleries','tiki-list_file_gallery.php',605,'feature_file_galleries','tiki_p_list_file_galleries','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (84,42,'o','List Galleries','tiki-list_file_gallery.php',605,'feature_file_galleries','tiki_p_list_file_galleries','',0);
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (85,42,'o','Rankings','tiki-file_galleries_rankings.php',610,'feature_file_galleries,feature_file_galleries_rankings','tiki_p_list_file_galleries','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (86,42,'o','Upload file','tiki-upload_file.php',615,'feature_file_galleries','tiki_p_view_file_gallery,tiki_p_upload_files','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (86,42,'o','Upload File','tiki-upload_file.php',615,'feature_file_galleries','tiki_p_view_file_gallery,tiki_p_upload_files','',0);
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (87,42,'s','FAQs','tiki-list_faqs.php',650,'feature_faqs','tiki_p_view_faqs','',0);
 
@@ -1796,31 +1796,31 @@ INSERT INTO "," ("optionId","menuId","type","name","url","position","section","p
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (91,42,'o','Mapfiles','tiki-map_edit.php',705,'feature_maps','tiki_p_map_view','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (92,42,'o','Layer management','tiki-map_upload.php',710,'feature_maps','tiki_p_map_edit','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (92,42,'o','Layer Management','tiki-map_upload.php',710,'feature_maps','tiki_p_map_edit','',0);
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (93,42,'s','Quizzes','tiki-list_quizzes.php',750,'feature_quizzes','tiki_p_take_quiz','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (94,42,'o','List quizzes','tiki-list_quizzes.php',755,'feature_quizzes','tiki_p_take_quiz','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (94,42,'o','List Quizzes','tiki-list_quizzes.php',755,'feature_quizzes','tiki_p_take_quiz','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (95,42,'o','Quiz stats','tiki-quiz_stats.php',760,'feature_quizzes','tiki_p_view_quiz_stats','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (95,42,'o','Quiz Stats','tiki-quiz_stats.php',760,'feature_quizzes','tiki_p_view_quiz_stats','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (96,42,'o','Admin quiz','tiki-edit_quiz.php',765,'feature_quizzes','tiki_p_admin_quizzes','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (96,42,'o','Admin Quizzes','tiki-edit_quiz.php',765,'feature_quizzes','tiki_p_admin_quizzes','',0);
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (97,42,'s','TikiSheet','tiki-sheets.php',780,'feature_sheet','tiki_p_view_sheet','',0);
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (98,42,'s','Trackers','tiki-list_trackers.php',800,'feature_trackers','tiki_p_view_trackers','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (99,42,'o','List trackers','tiki-list_trackers.php',805,'feature_trackers','tiki_p_view_trackers','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (99,42,'o','List Trackers','tiki-list_trackers.php',805,'feature_trackers','tiki_p_view_trackers','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (100,42,'o','Admin trackers','tiki-admin_trackers.php',810,'feature_trackers','tiki_p_admin_trackers','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (100,42,'o','Admin Trackers','tiki-admin_trackers.php',810,'feature_trackers','tiki_p_admin_trackers','',0);
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (101,42,'s','Surveys','tiki-list_surveys.php',850,'feature_surveys','tiki_p_take_survey','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (102,42,'o','List surveys','tiki-list_surveys.php',855,'feature_surveys','tiki_p_take_survey','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (102,42,'o','List Surveys','tiki-list_surveys.php',855,'feature_surveys','tiki_p_take_survey','',0);
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (103,42,'o','Stats','tiki-survey_stats.php',860,'feature_surveys','tiki_p_view_survey_stats','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (104,42,'o','Admin surveys','tiki-admin_surveys.php',865,'feature_surveys','tiki_p_admin_surveys','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (104,42,'o','Admin Surveys','tiki-admin_surveys.php',865,'feature_surveys','tiki_p_admin_surveys','',0);
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (105,42,'s','Newsletters','tiki-newsletters.php',900,'feature_newsletters','tiki_p_subscribe_newsletters','',0);
 
@@ -1828,13 +1828,13 @@ INSERT INTO "," ("optionId","menuId","type","name","url","position","section","p
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (107,42,'s','Newsletters','tiki-newsletters.php',900,'feature_newsletters','tiki_p_admin_newsletters','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (108,42,'o','Send newsletters','tiki-send_newsletters.php',905,'feature_newsletters','tiki_p_send_newsletters','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (108,42,'o','Send Newsletters','tiki-send_newsletters.php',905,'feature_newsletters','tiki_p_send_newsletters','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (109,42,'o','Admin newsletters','tiki-admin_newsletters.php',910,'feature_newsletters','tiki_p_admin_newsletters','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (109,42,'o','Admin Newsletters','tiki-admin_newsletters.php',910,'feature_newsletters','tiki_p_admin_newsletters','',0);
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (112,42,'s','Charts','tiki-charts.php',1000,'feature_charts','tiki_p_view_chart','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (113,42,'o','Admin charts','tiki-admin_charts.php',1005,'feature_charts','tiki_p_admin_charts','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (113,42,'o','Admin Charts','tiki-admin_charts.php',1005,'feature_charts','tiki_p_admin_charts','',0);
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (114,42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin','',0);
 
@@ -1872,11 +1872,11 @@ INSERT INTO "," ("menuId","type","name","url","position","section","perm","group
 
 INSERT INTO "," ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'r','Admin','tiki-admin.php',1050,'feature_editcss','tiki_p_create_css','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (130,42,'o','Admin home','tiki-admin.php',1051,'','tiki_p_admin','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (130,42,'o','Admin Home','tiki-admin.php',1051,'','tiki_p_admin','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (131,42,'o','Live support','tiki-live_support_admin.php',1055,'feature_live_support','tiki_p_live_support_admin','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (131,42,'o','Live Support','tiki-live_support_admin.php',1055,'feature_live_support','tiki_p_live_support_admin','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (132,42,'o','Live support','tiki-live_support_admin.php',1055,'feature_live_support','user_is_operator','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (132,42,'o','Live Support','tiki-live_support_admin.php',1055,'feature_live_support','user_is_operator','',0);
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (133,42,'o','Banning','tiki-admin_banning.php',1060,'feature_banning','tiki_p_admin_banning','',0);
 
@@ -1892,17 +1892,17 @@ INSERT INTO "," ("optionId","menuId","type","name","url","position","section","p
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (139,42,'o','Hotwords','tiki-admin_hotwords.php',1095,'feature_hotwords','tiki_p_admin','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (140,42,'o','RSS modules','tiki-admin_rssmodules.php',1100,'','tiki_p_admin_rssmodules','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (140,42,'o','RSS Modules','tiki-admin_rssmodules.php',1100,'','tiki_p_admin_rssmodules','',0);
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (141,42,'o','Menus','tiki-admin_menus.php',1105,'','tiki_p_edit_menu','',0);
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (142,42,'o','Polls','tiki-admin_polls.php',1110,'feature_polls','tiki_p_admin_polls','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (143,42,'o','Mail notifications','tiki-admin_notifications.php',1120,'','tiki_p_admin','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (143,42,'o','Mail Notifications','tiki-admin_notifications.php',1120,'','tiki_p_admin','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (182,42,'o','Search stats','tiki-search_stats.php',1125,'feature_search_stats','tiki_p_admin','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (182,42,'o','Search Stats','tiki-search_stats.php',1125,'feature_search_stats','tiki_p_admin','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (145,42,'o','Theme control','tiki-theme_control.php',1130,'feature_theme_control','tiki_p_admin','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (145,42,'o','Theme Control','tiki-theme_control.php',1130,'feature_theme_control','tiki_p_admin','',0);
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (183,42,'o','QuickTags','tiki-admin_quicktags.php',1135,'','tiki_p_admin_quicktags','',0);
 
@@ -1910,7 +1910,7 @@ INSERT INTO "," ("optionId","menuId","type","name","url","position","section","p
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (149,42,'o','Banners','tiki-list_banners.php',1150,'feature_banners','tiki_p_admin_banners','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (150,42,'o','Edit templates','tiki-edit_templates.php',1155,'feature_edit_templates','tiki_p_edit_templates','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (150,42,'o','Edit Templates','tiki-edit_templates.php',1155,'feature_edit_templates','tiki_p_edit_templates','',0);
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (147,42,'o','View Templates','tiki-edit_templates.php',1155,'feature_view_tpl','tiki_p_edit_templates','',2);
 
@@ -1922,19 +1922,17 @@ INSERT INTO "," ("optionId","menuId","type","name","url","position","section","p
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (153,42,'o','Mail-in','tiki-admin_mailin.php',1175,'feature_mailin','tiki_p_admin_mailin','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (154,42,'o','HTML pages','tiki-admin_html_pages.php',1185,'feature_html_pages','tiki_p_edit_html_pages','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (154,42,'o','HTML Pages','tiki-admin_html_pages.php',1185,'feature_html_pages','tiki_p_edit_html_pages','',0);
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (155,42,'o','Shoutbox','tiki-shoutbox.php',1190,'feature_shoutbox','tiki_p_admin_shoutbox','',0);
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (156,42,'o','Shoutbox Words','tiki-admin_shoutbox_words.php',1191,'feature_shoutbox','tiki_p_admin_shoutbox','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (157,42,'o','Referer stats','tiki-referer_stats.php',1195,'feature_referer_stats','tiki_p_view_referer_stats','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (157,42,'o','Referer Stats','tiki-referer_stats.php',1195,'feature_referer_stats','tiki_p_view_referer_stats','',0);
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (158,42,'o','Integrator','tiki-admin_integrator.php',1205,'feature_integrator','tiki_p_admin_integrator','',0);
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (159,42,'o','phpinfo','tiki-phpinfo.php',1215,'','tiki_p_admin','',0);
-
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (162,42,'o','Admin mods','tiki-mods.php',1240,'','tiki_p_admin','',0);
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (163,42,'o','Tiki Logs','tiki-syslog.php',1245,'','tiki_p_admin','',0);
 
@@ -1984,13 +1982,15 @@ INSERT INTO "," ("optionId","menuId","type","name","url","position","section","p
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (190,42,'s','Articles','tiki-view_articles.php',350,'feature_articles','tiki_p_articles_read_heading','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (191,42,'o','Articles home','tiki-view_articles.php',355,'feature_articles','tiki_p_articles_read_heading','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (191,42,'o','Articles Home','tiki-view_articles.php',355,'feature_articles','tiki_p_articles_read_heading','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (192,42,'o','List articles','tiki-list_articles.php',360,'feature_articles','tiki_p_articles_read_heading','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (192,42,'o','List Articles','tiki-list_articles.php',360,'feature_articles','tiki_p_articles_read_heading','',0);
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (193,42,'o','Action Log','tiki-admin_actionlog.php',1255,'feature_actionlog','tiki_p_view_actionlog','',0);
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (194,42,'o','Action Log','tiki-admin_actionlog.php',1255,'feature_actionlog','tiki_p_view_actionlog_owngroups','',0);
+
+INSERT INTO "," ("menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,'o','Content Templates','tiki-admin_content_templates.php',1256,'','tiki_p_edit_content_templates','',0);
 
 
 DROP TABLE IF EXISTS 'tiki_menus';
@@ -2185,7 +2185,7 @@ CREATE TABLE 'tiki_pages' (
   "is_html" smallint default 0,
   "created" bigint,
   "wysiwyg" char(1) default NULL,
-  "wiki_authors_style" varchar(20) NOT NULL default '',
+  "wiki_authors_style" varchar(20) default '',
   PRIMARY KEY (page_id),
   KEY lastModif(lastModif)
 ) ENGINE=MyISAM;
@@ -2249,18 +2249,6 @@ CREATE TABLE 'tiki_polls' (
   "publishDate" bigint default NULL,
   "anonym" varchar(5) CHECK ("anonym" IN ( 'a', 'u', 'i', 'c' )) NOT NULL DEFAULT 'u',
   PRIMARY KEY (pollId)
-) ENGINE=MyISAM ;
-
-
-DROP TABLE IF EXISTS 'tiki_poll_votes';
-
-CREATE TABLE 'IF' NOT EXISTS tiki_poll_votes (
-  pollId bigint NOT NULL,
-  optionId bigint NOT NULL,
-  voteId INTEGER,
-  identification varchar(300) NOT NULL,
-  time bigint NOT NULL,
-  PRIMARY KEY ("voteId")
 ) ENGINE=MyISAM ;
 
 
@@ -3209,12 +3197,16 @@ CREATE TABLE 'tiki_user_tasks' (
 DROP TABLE IF EXISTS 'tiki_user_votings';
 
 CREATE TABLE 'tiki_user_votings' (
-  "user" varchar(200) NOT NULL default '',
+  "user" varchar(200) default '',
+  "ip" varchar(15) default NULL,
   "id" varchar(255) NOT NULL default '',
   "optionId" bigint NOT NULL default 0,
+  "time" bigint NOT NULL default 
   PRIMARY KEY (user(100),id(100))
 ) ENGINE=MyISAM;
 
+CREATE  INDEX "tiki_user_votings_ip" ON "tiki_user_votings"(`"ip"`);
+CREATE  INDEX "tiki_user_votings_id" ON "tiki_user_votings"(`"id"`);
 
 DROP TABLE IF EXISTS 'tiki_user_watches';
 
