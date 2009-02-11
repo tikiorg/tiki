@@ -22,12 +22,12 @@ if (version_compare(PHP_VERSION, '5.0.0', '<')) {
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<link type="text/css" href="styles/tikineat.css" rel="stylesheet" />
+		<link type="text/css" href="styles/thenews.css" rel="stylesheet" />
 		<title>TikiWiki Installer Disabled</title>
 	</head>
-	<body class="tiki_wiki">
+	<body class="tiki_wiki" style="text-align: center;">
 		<div id="siteheader">
-			<div id="sitelogo" style="text-align: left;">
+			<div id="sitelogo" style="text-align: center;">
 				<img style="border: medium none ;" alt="Site Logo" src="img/tiki/tikilogo.png" />
 			</div>
 		</div>
@@ -119,7 +119,7 @@ if ( installer_is_accessible() ) {
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<link type="text/css" href="styles/tikineat.css" rel="stylesheet" />
+		<link type="text/css" href="styles/thenews.css" rel="stylesheet" />
 		<title>TikiWiki Installer Security Alert</title>
 	</head>
 	<body class="tiki_wiki">
