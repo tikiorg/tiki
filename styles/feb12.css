@@ -1279,18 +1279,57 @@ span.posthead {
 	display: block;
 	font-weight: bold;
 	letter-spacing: .4pt}
+	
+body.tiki_blogs .post .title {  }
  
-div.posthead h3 {font-size:1.2em}
+/*div.posthead h3*/
+body.tiki_blogs .post .title h2 {
+	font-size: 1.2em;
+	margin-top: 0;
+	margin-bottom: 0}
  
-div.postbody {
+/*div.postbody*/
+body.tiki_blogs .post .postbody {
 	margin-right: 8px;
 	line-height: 1.2em;
-	margin-bottom: 1em}
+	margin-bottom: 1em;
+	border: 0;
+	background: none}
+	
+/* Maybe needs override to differentiate from forums */
+	
+body.tiki_blogs div.author_actions {
+	float: none;
+	text-align: right;
+	background: none;
+	border: 0;
+	width: 100%}
+	
+body.tiki_blogs .actions {background: none}
 
-div.postfooter {
-	clear: both;
-	float: right;
+body.tiki_blogs .author_info {
+	width: 100%;
+	float: none;
+	text-align: left;
+	background: none;
+	border: 0}
+
+.postbody-title {
+	background: none;
+	border: 0}
+	
+body.tiki_blogs .postbody-title {
+	float: none;
+	width: 100%;
+	background: none;
+	border: 0}
+
+body.tiki_blogs .postfooter {
+	width: 100%;
 	margin-bottom: 2em}
+	
+body.tiki_blogs .postfooter .actions {float: left}
+
 
 /***** Forums *****/
 body.tiki_forums table.normal {margin: auto}

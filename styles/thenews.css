@@ -1526,20 +1526,50 @@ span.posthead span.link {
 	font-weight: bold;
 }
 
-div.posthead h3 {
-	font-size:1.2em}
+body.tiki_blogs .post .title {margin-top: 0}
+
+/*div.posthead h3*/
+body.tiki_blogs .post .title h2 {
+	font-size: 1.2em;
+	margin-top: 0}
  
-div.postbody {
+/*div.postbody*/
+body.tiki_blogs .post .postbody {
 	margin-right: 8px;
 	line-height: 1.4em;
 	margin-bottom: 1em;
 }
 
-body.tiki_blog .postfooter {
-	clear: both;
-	float: right;
+/* Maybe needs override to differentiate from forums */
+body.tiki_blogs .post .postbody {
+	background: none;
+	border: 0  }
+	
+body.tiki_blogs div.author_actions {
+	float: none;
+	background: none;
+	border: 0;
+	width: 100%}
+	
+body.tiki_blogs .actions {background: none}
+
+body.tiki_blogs .author_info {  }
+.postbody-title {
+	background: none;
+	border: 0}
+	
+body.tiki_blogs .postbody-title {
+	float: none;
+	width: 100%;
+	background: none;
+	border: 0}
+
+body.tiki_blogs .postfooter {
+	width: 100%;
 	margin-bottom: 2em;
 }
+
+body.tiki_blogs .postfooter .actions {float: left}
 
 /***** Forums *****/
 
