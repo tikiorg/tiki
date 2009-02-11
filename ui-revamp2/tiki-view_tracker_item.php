@@ -1198,10 +1198,10 @@ if (isset($_REQUEST['show'])) {
 	} elseif ($_REQUEST['show'] == "mod") {
 		$tabi = 2;
 		if ($tracker_info["useAttachments"] == 'y') $tabi++;
-		if ($tracker_info["useComments"] == 'y') $tabi++;
+		if ($tracker_info["useComments"] == 'y' && $tiki_p_tracker_view_comments == 'y') $tabi++;
 	} elseif ($_REQUEST['show'] == "att") {
 		$tabi = 2;
-		if ($tracker_info["useComments"] == 'y') $tabi = 3;
+		if ($tracker_info["useComments"] == 'y' && $tiki_p_tracker_view_comments == 'y') $tabi = 3;
 	}
 }
 

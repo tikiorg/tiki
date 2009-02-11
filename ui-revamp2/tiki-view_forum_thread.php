@@ -258,14 +258,14 @@ if (isset($_REQUEST["post_reported"]) && $_REQUEST["post_reported"] == 'y') {
 }
 
 $smarty->assign_by_ref('forum_info', $forum_info);
-$thread_info = $commentslib->get_comment($_REQUEST["comments_parentId"]);
+$thread_info = $commentslib->get_comment($_REQUEST["comments_parentId"], null, $forum_info);
 if (empty($thread_info)) {
 	$smarty->assign('msg', tra("Incorrect thread"));
 	$smarty->display("error.tpl");
 	die;
 }
 if (!empty($thread_info['parentId'])) {
-	$thread_info['topic'] = $commentslib->get_comment($thread_info['parentId']);
+	$thread_info['topic'] = $commentslib->get_comment($thread_info['parentId'], null, $forum_info);
 }
 
 if ($tiki_p_admin_forum != 'y' && $thread_info['type'] == 'l') {
@@ -282,7 +282,8 @@ $thread_style = $forum_info['threadStyle'];
 $comments_vars = array('forumId');
 $comments_prefix_var = 'forum:';
 $comments_object_var = 'forumId';
-$commentslib->process_inbound_mail($_REQUEST['forumId']);
+if (isset($forum_info["inbound_pop_server"]) && !empty($forum_info["inbound_pop_server"]))
+	$commentslib->process_inbound_mail($_REQUEST['forumId']);
 
 //$end_time = microtime(true);
 
@@ -309,7 +310,7 @@ include_once ('tiki-section_options.php');
 
 if ($user && $tiki_p_notepad == 'y' && $prefs['feature_notepad'] == 'y' && isset($_REQUEST['savenotepad'])) {
     check_ticket('view-forum');
-    $info = $commentslib->get_comment($_REQUEST['savenotepad']);
+    $info = $commentslib->get_comment($_REQUEST['savenotepad'], null, $forum_info);
     $tikilib->replace_note($user, 0, $info['title'], $info['data']);
 }
 

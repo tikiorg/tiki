@@ -77,4 +77,6 @@ FCKConfig.ajaxAutoSaveRefreshTime = 30 ;
 // Sensitivity to key strokes
 FCKConfig.ajaxAutoSaveSensitivity = 2 ;
 
-
+// as tikiwiki, we prefer <br> instead of <p> for newlines
+FCKConfig.EnterMode = 'br' ;			// p | div | br
+FCKConfig.ShiftEnterMode = 'p' ;	// p | div | br

@@ -620,9 +620,26 @@ $show_archived = isset($_REQUEST['show_archived']);
 $smarty->assign('show_archived', $show_archived);
 $view_archived_topics = ( $show_archived == 'y' && ( $tiki_p_admin_forum == 'y' || $prefs['feature_forum_topics_archiving'] == 'n' ) );
 
+if (!isset($_REQUEST['poster']) || $_REQUEST['poster'] == '')
+	$user_param = '';
+elseif ($_REQUEST['poster'] == '_me')
+	$user_param = $user;
+else
+	$user_param = $_REQUEST['poster'];
+
+if (!isset($_REQUEST['filter_type']))
+	$type_param = '';
+else
+	$type_param = $_REQUEST['filter_type'];
+
+if (!isset($_REQUEST['reply_state']))
+	$reply_state = '';
+else
+	$reply_state = $_REQUEST['reply_state'];
+
 $comments_coms = $commentslib->get_forum_topics($_REQUEST['forumId'],
 		$comments_offset, $_REQUEST['comments_per_page'],
-		$_REQUEST['thread_sort_mode'], $view_archived_topics);
+		$_REQUEST['thread_sort_mode'], $view_archived_topics, $user_param, $type_param, $reply_state);
 
 // Get the last "n" comments to this forum
 $last_comments = $commentslib->get_last_forum_posts($_REQUEST['forumId'],

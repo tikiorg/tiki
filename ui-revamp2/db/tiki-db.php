@@ -86,7 +86,7 @@ if ( $re === FALSE) {
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>Installation begins: '.$local_php.' not found</title>
-	<link rel="stylesheet" href="styles/tikineat.css" type="text/css">
+	<link rel="stylesheet" href="styles/thenews.css" type="text/css">
 </head>
 <body >
 	<div id="tiki-main">
