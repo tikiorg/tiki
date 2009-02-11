@@ -103,7 +103,7 @@
 	{/if}
 			</div><!-- END of icons -->
 
-	{if $prefs.feature_backlinks eq 'y' and $backlinks and $tiki_p_view_backlinks eq 'y'}
+	{if $prefs.feature_backlinks eq 'y' and $backlinks and $tiki_p_view_backlink eq 'y'}
 			<form action="tiki-index.php" method="get" style="display: block; float: left">
 				<select name="page" onchange="page.form.submit()">
 					<option>{tr}Backlinks{/tr}...</option>
