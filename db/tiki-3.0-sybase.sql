@@ -2804,7 +2804,8 @@ INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`",
 go
 
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (187,42,'o','Search','tiki-searchindex.php',13,'feature_search','tiki_p_search','',0)
+INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES 
+(187,42,'o','Search','tiki-searchresults.php',13,'feature_search','tiki_p_search','',0)
 go
 
 

@@ -2317,7 +2317,8 @@ INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`",
 
 INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (180,42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_users','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (187,42,'o','Search','tiki-searchindex.php',13,'feature_search','tiki_p_search','',0);
+INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES 
+(187,42,'o','Search','tiki-searchresults.php',13,'feature_search','tiki_p_search','',0);
 
 INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (184,42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_quicktags','',0);
 
