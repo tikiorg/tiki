@@ -2642,7 +2642,7 @@ CREATE TABLE tiki_user_votings (
   ip varchar(15) default NULL,
   id varchar(255) NOT NULL default '',
   optionId int(10) NOT NULL default 0,
-  time int(14) NOT NULL default 
+  time int(14) NOT NULL default 0,
   PRIMARY KEY (`user`(100),id(100)),
   KEY ip (`ip`),
   KEY id (`id`)

@@ -3202,7 +3202,7 @@ CREATE TABLE 'tiki_user_votings' (
   "ip" varchar(15) default NULL,
   "id" varchar(255) NOT NULL default '',
   "optionId" bigint NOT NULL default 0,
-  "time" bigint NOT NULL default 
+  "time" bigint NOT NULL default 0,
   PRIMARY KEY (user(100),id(100))
 ) ENGINE=MyISAM;
 

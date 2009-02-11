@@ -4420,7 +4420,7 @@ CREATE TABLE "tiki_user_votings" (
   "ip" varchar(15) default NULL NULL,
   "id" varchar(255) default '' NOT NULL,
   "optionId" numeric(10,0) default 0 NOT NULL,
-  "time" numeric(14,0) NOT NULL default 
+  "time" numeric(14,0) default 0 NOT NULL,
   PRIMARY KEY (`user`(100),id(100))
 ) ENGINE=MyISAM
 go
