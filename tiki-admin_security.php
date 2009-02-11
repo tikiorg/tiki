@@ -98,24 +98,59 @@ if($prefs['feature_edit_templates']=='y') {
      'message' => tra('The feature "Edit Templates" is switched on. Do not allow anyone you cannot trust to use this feature. It can easily be used to inject php code.'));
 }
 
-if(file_exists('lib/wiki-plugins/wikiplugin_snarf.php')) {
-   $tikisettings['wikiplugin_snarf']=array('risk' => tra('unsafe'),'setting' => tra('installed'),
-     'message' => tra('The "Snarf Wikiplugin" is installed. It can be used by wiki editors to include pages from the local network and via regex replacement create any html.'));
+if($prefs['wikiplugin_snarf']=='y') {
+   $tikisettings['wikiplugin_snarf']=array('risk' => tra('unsafe'),'setting' => tra('on'),
+     'message' => tra('The "Snarf Wikiplugin" is activated. It can be used by wiki editors to include pages from the local network and via regex replacement create any html.'));
 } 
 
-if(file_exists('lib/wiki-plugins/wikiplugin_regex.php')) {
-   $tikisettings['wikiplugin_regex']=array('risk' => tra('unsafe'),'setting' => tra('installed'),
-     'message' => tra('The "Regex Wikiplugin" is installed. It can be used by wiki editors to create any html via regex replacement.'));
+if($prefs['wikiplugin_regex']=='y') {
+   $tikisettings['wikiplugin_regex']=array('risk' => tra('unsafe'),'setting' => tra('on'),
+     'message' => tra('The "Regex Wikiplugin" is activated. It can be used by wiki editors to create any html via regex replacement.'));
 }
 
-if(file_exists('lib/wiki-plugins/wikiplugin_lsdir.php')) {
-   $tikisettings['wikiplugin_lsdir']=array('risk' => tra('unsafe'),'setting' => tra('installed'),
-     'message' => tra('The "Lsdir Wikiplugin" is installed. It can be used by wiki editors to view the contents of any directory.'));
+if($prefs['wikiplugin_lsdir']=='y') {
+   $tikisettings['wikiplugin_lsdir']=array('risk' => tra('unsafe'),'setting' => tra('on'),
+     'message' => tra('The "Lsdir Wikiplugin" is activated. It can be used by wiki editors to view the contents of any directory.'));
 }
 
-if(file_exists('lib/wiki-plugins/wikiplugin_bloglist.php')) {
-   $tikisettings['wikiplugin_bloglist']=array('risk' => tra('unsafe'),'setting' => tra('installed'),
-     'message' => tra('The "Bloglist Wikiplugin" is installed. It can be used by wiki editors to disclose private blog posts.'));
+if($prefs['wikiplugin_bloglist']=='y') {
+   $tikisettings['wikiplugin_bloglist']=array('risk' => tra('unsafe'),'setting' => tra('on'),
+     'message' => tra('The "Bloglist Wikiplugin" is activated. It can be used by wiki editors to disclose private blog posts.'));
+}
+
+if($prefs['wikiplugin_iframe']=='y') {
+   $tikisettings['wikiplugin_iframe']=array('risk' => tra('unsafe'),'setting' => tra('on'),
+     'message' => tra('The "iframe Wikiplugin" is activated. It can be used by wiki editors for cross site scripting attacks.'));
+}
+
+if($prefs['wikiplugin_js']=='y') {
+   $tikisettings['wikiplugin_js']=array('risk' => tra('unsafe'),'setting' => tra('on'),
+     'message' => tra('The "js Wikiplugin" is activated. It can be used by wiki editors to use Javascript, which can be used to do all kind of nasty things like cross site scripting attacks, etc.'));
+}
+
+if($prefs['wikiplugin_redirect']=='y') {
+   $tikisettings['wikiplugin_redirect']=array('risk' => tra('unsafe'),'setting' => tra('on'),
+     'message' => tra('The "Redirect Wikiplugin" is activated. It can be used by wiki editors for cross site scripting attacks.'));
+}
+
+if($prefs['wikiplugin_modules']=='y') {
+   $tikisettings['wikiplugin_module']=array('risk' => tra('unsafe'),'setting' => tra('on'),
+     'message' => tra('The "Module Wikiplugin" is activated. It can be used by wiki editors to add modules which permit to access information (see module list).'));
+}
+
+if($prefs['wikiplugin_userlist']=='y') {
+   $tikisettings['wikiplugin_userlist']=array('risk' => tra('unsafe'),'setting' => tra('on'),
+     'message' => tra('The "Userlist Wikiplugin" is activated. It can be used by wiki editors to display the list of users.'));
+}
+
+if($prefs['wikiplugin_usercount']=='y') {
+   $tikisettings['wikiplugin_usercount']=array('risk' => tra('unsafe'),'setting' => tra('on'),
+     'message' => tra('The "Usercount Wikiplugin" is activated. It can be used by wiki editors to display a count of the number of users.'));
+}
+
+if($prefs['wikiplugin_sql']=='y') {
+   $tikisettings['wikiplugin_sql']=array('risk' => tra('unsafe'),'setting' => tra('on'),
+     'message' => tra('The "SQL Wikiplugin" is activated. It can be used by wiki editors to execute SQL commands.'));
 }
 
 ksort($tikisettings);
