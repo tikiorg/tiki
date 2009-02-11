@@ -9,6 +9,18 @@ if ($tiki_p_admin != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
+if ($api_tiki != 'adodb') {
+	$smarty->assign('msg', tra('This feature is disabled').': adodb');
+	$smarty->display('error.tpl');
+	die;
+}
+$query = "show tables like 'adodb_logsql'";
+$result = $tikilib->query($query, array());
+if (!$result->numRows()) {
+	$smarty->assign('msg', tra('This feature is disabled').': log_sql');
+	$smarty->display('error.tpl');
+	die;
+}
 // let look at the log even if not active for older logs
 //if ($prefs['log_sql'] != 'y') {
 //	$smarty->assign('msg', tra('This feature is disabled').': log_sql');
