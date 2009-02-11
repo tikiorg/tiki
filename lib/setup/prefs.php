@@ -48,7 +48,7 @@ function get_default_prefs() {
 		'feature_lastChanges' => 'y',
 		'feature_likePages' => 'n',
 		'feature_listPages' => 'y',
-		'feature_listorphanPages' => 'n',
+		'feature_listorphanPages' => 'y',
 		'feature_page_title' => 'y',
 		'feature_sandbox' => 'n',
 		'feature_warn_on_edit' => 'y',
