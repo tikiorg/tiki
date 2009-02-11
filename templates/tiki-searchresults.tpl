@@ -139,12 +139,11 @@
 		{strip}
 		{if $prefs.feature_search_show_object_type eq 'y'}
 		  {if $results[search].type > ''}
-				<b>{$results[search].type}</b>
+				<b>{$results[search].type}::</b>
 			{/if}
 		{/if}
 		{if !empty($results[search].parentName)}
 			::<a href="{$results[search].parentHref}">{$results[search].parentName|escape}</a>&nbsp;-&gt;
-		{else}:&nbsp;
 		{/if}
 		{/strip}
 		<a href="{$results[search].href}&amp;highlight={$words}" class="wiki">{$results[search].pageName|strip_tags}</a>
