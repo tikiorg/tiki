@@ -88,7 +88,7 @@ function get_default_prefs() {
 		'feature_wiki_userpage_prefix' => 'UserPage',
 		'feature_wiki_usrlock' => 'n',
 		'feature_wiki_save_draft' => 'n', // Broken in 2.0 RC2 http://dev.tikiwiki.org/wish1888
-		'feature_wikiwords' => 'y',
+		'feature_wikiwords' => 'n',
 		'feature_wikiwords_usedash' => 'y',
 		'feature_wiki_pagealias' => 'y',
 		'mailin_autocheck' => 'n',
