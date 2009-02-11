@@ -22,6 +22,8 @@ include_once ('lib/structures/structlib.php');
 include_once ('lib/notifications/notificationlib.php');
 require_once ("lib/ajax/ajaxlib.php");
 require_once ("lib/wiki/wiki-ajax.php");
+require_once ("lib/ajax/tikitohtml.php");
+
 
 // Define all templates files that may be used with the 'zoom' feature
 $zoom_templates = array('wiki_edit');
@@ -908,7 +910,7 @@ if (isset($_REQUEST['mode_normal'])) {
 	$editplugin = $prefs['wiki_edit_plugin'];
 	$prefs['wiki_edit_plugin'] = 'n';		// and the external link icons
 	$edit_data = preg_replace('/(!!*)[\+\-]/m','$1', $edit_data);		// remove show/hide headings
-	$parsed = $tikilib->parse_data($edit_data,array('absolute_links'=>true, 'noparseplugins'=>true,'noheaderinc'=>true));
+	$parsed = $tikilib->parse_data($edit_data,array('absolute_links'=>true, 'noparseplugins'=>true,'noheaderinc'=>true, 'fck' => 'y'));
 	$parsed = preg_replace('/<span class=\"img\">(.*?)<\/span>/im','$1', $parsed);					// remove spans round img's
 	$parsed = preg_replace("/src=\"img\/smiles\//im","src=\"".$tikiroot."img/smiles/", $parsed);	// fix smiley src's
 	$parsed = str_replace( 
@@ -919,8 +921,8 @@ if (isset($_REQUEST['mode_normal'])) {
 	$prefs['wiki_edit_section'] = $secedit;
 	$prefs['feature_wiki_ext_icon'] = $exticons;
 	$prefs['wiki_edit_plugin'] = $editplugin;
-	$is_html = true;
-	$info['is_html'] = true;
+	$is_html = false;
+	$info['is_html'] = false;
 	$info['wysiwyg'] = true;
 	$smarty->assign('allowhtml','y');
 }

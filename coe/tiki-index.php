@@ -166,13 +166,13 @@ if(isset($page_ref_id)) {
     $info = null;
     // others still need a good set page name or they will get confused.
     // comments of home page were all visible on every structure page
-    $page = $page_info['pageName'];
+    $_REQUEST['page'] = $page_info['pageName'];
 } else {
     $page_ref_id = '';
 	$smarty->assign('showstructs', $structs_with_perm);
 	$smarty->assign('page_ref_id', $page_ref_id);
 }
-$_REQUEST['page'] = $page;
+$page = $_REQUEST['page'];
 $smarty->assign_by_ref('page',$page);
 
 if ( function_exists('utf8_encode') ) {

@@ -9,7 +9,7 @@ var _FileBrowserExtension     = 'php' ;
 FCKConfig.BodyClass = 'wikitext';
 FCKConfig.FontNames = 'sans serif;serif;monospace;Arial;Comic Sans MS;Courier New;Tahoma;Times New Roman;Verdana' ;
 
-FCKConfig.ToolbarSets["Tiki"] = [ 
+FCKConfig.ToolbarSets["Tiki3"] = [ 
 {foreach item=it from=$toolbar name=lines}
   {foreach item=i from=$it name=item}
   [{foreach item=m from=$i name=im}'{$m}'{if $smarty.foreach.im.index+1 ne $smarty.foreach.im.total},{/if}{/foreach}]{if $smarty.foreach.lines.index+1 ne $smarty.foreach.lines.total},{/if}
@@ -77,4 +77,117 @@ FCKConfig.ajaxAutoSaveRefreshTime = 30 ;
 // Sensitivity to key strokes
 FCKConfig.ajaxAutoSaveSensitivity = 2 ;
 
+
+/*
+ * FCKeditor Extension for MediaWiki specific settings.
+ */
+
+// When using the modified image dialog you must set this variable. It must
+// correspond to $wgScriptPath in LocalSettings.php.
+FCKConfig.mwScriptPath = '' ;     
+
+// Setup the editor toolbar.
+FCKConfig.ToolbarSets['Tiki'] = [
+	['Source'],
+	['ajaxAutoSave'],
+	['Cut','Copy','Paste',/*'PasteText','PasteWord',*/'-','Print'],
+	['Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat'],
+	['SpecialChar','Table','Image','Rule'],
+//	['MW_Template','MW_Special','MW_Ref','MW_References','MW_Math'],
+	'/',
+	['FontFormat'],
+	['Bold','Italic','Underline','StrikeThrough','-','Subscript','Superscript'],
+	['OrderedList','UnorderedList','-','Blockquote'],
+//	['JustifyLeft','JustifyCenter','JustifyRight','JustifyFull'],
+	['Link','Unlink','Anchor'],
+//	['TextColor','BGColor'],
+	['FitWindow','-','About']
+] ;
+
+// Load the extension plugins.
+FCKConfig.Plugins.Add( 'mediawiki', 'en,pl',  _TikiRoot + 'lib/fckeditor_tiki/plugins/') ;
+
+FCKConfig.ForcePasteAsPlainText = true ;
+FCKConfig.FontFormats	= 'p;h1;h2;h3;h4;h5;h6;pre' ;
+
+FCKConfig.AutoDetectLanguage	= true ;
+FCKConfig.DefaultLanguage		= 'en' ;
+
+// FCKConfig.DisableObjectResizing = true ;
+
+FCKConfig.EditorAreaStyles = '\
+.FCK__MWTemplate, .FCK__MWRef, .FCK__MWSpecial, .FCK__MWReferences, .FCK__MWMath, .FCK__MWNowiki, .FCK__MWIncludeonly, .FCK__MWNoinclude, .FCK__MWOnlyinclude, .FCK__MWGallery \
+{ \
+	border: 1px dotted #00F; \
+	background-position: center center; \
+	background-repeat: no-repeat; \
+	vertical-align: middle; \
+} \
+.FCK__MWTemplate \
+{ \
+	background-image: url(' + FCKConfig.PluginsPath + 'mediawiki/images/icon_template.gif); \
+	width: 20px; \
+	height: 15px; \
+} \
+.FCK__MWRef \
+{ \
+	background-image: url(' + FCKConfig.PluginsPath + 'mediawiki/images/icon_ref.gif); \
+	width: 18px; \
+	height: 15px; \
+} \
+.FCK__MWSpecial \
+{ \
+	background-image: url(' + FCKConfig.PluginsPath + 'mediawiki/images/icon_special.gif); \
+	width: 66px; \
+	height: 15px; \
+} \
+.FCK__MWNowiki \
+{ \
+	background-image: url(' + FCKConfig.PluginsPath + 'mediawiki/images/icon_nowiki.gif); \
+	width: 66px; \
+	height: 15px; \
+} \
+.FCK__MWHtml \
+{ \
+	background-image: url(' + FCKConfig.PluginsPath + 'mediawiki/images/icon_html.gif); \
+	width: 66px; \
+	height: 15px; \
+} \
+.FCK__MWMath \
+{ \
+	background-image: url(' + FCKConfig.PluginsPath + 'mediawiki/images/icon_math.gif); \
+	width: 66px; \
+	height: 15px; \
+} \
+.FCK__MWIncludeonly \
+{ \
+	background-image: url(' + FCKConfig.PluginsPath + 'mediawiki/images/icon_includeonly.gif); \
+	width: 66px; \
+	height: 15px; \
+} \
+.FCK__MWNoinclude \
+{ \
+	background-image: url(' + FCKConfig.PluginsPath + 'mediawiki/images/icon_noinclude.gif); \
+	width: 66px; \
+	height: 15px; \
+} \
+.FCK__MWGallery \
+{ \
+	background-image: url(' + FCKConfig.PluginsPath + 'mediawiki/images/icon_gallery.gif); \
+	width: 66px; \
+	height: 15px; \
+} \
+.FCK__MWOnlyinclude \
+{ \
+	background-image: url(' + FCKConfig.PluginsPath + 'mediawiki/images/icon_onlyinclude.gif); \
+	width: 66px; \
+	height: 15px; \
+} \
+.FCK__MWReferences \
+{ \
+	background-image: url(' + FCKConfig.PluginsPath + 'mediawiki/images/icon_references.gif); \
+	width: 66px; \
+	height: 15px; \
+} \
+' ;
 

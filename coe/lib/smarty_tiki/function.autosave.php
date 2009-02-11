@@ -24,7 +24,23 @@ function smarty_function_autosave($params, &$smarty)
 		} else {
 			$smarty->assign('has_autosave','y');
 		}
-		return $tmp;
+		if ($params['mode'] == 'fck') {
+			$editplugin = $prefs['wiki_edit_plugin'];
+			$prefs['wiki_edit_plugin'] = 'n';   // and the external link icons
+			$parsed = $tikilib->parse_data($tmp,array('absolute_links'=>true, 'noparseplugins'=>true,'noheaderinc'=>true, 'fck' => 'y'));
+			$parsed = preg_replace('/<span class=\"img\">(.*?)<\/span>/im','$1', $parsed);          // remove spans round img's
+				$parsed = preg_replace("/src=\"img\/smiles\//im","src=\"".$tikiroot."img/smiles/", $parsed);  // fix smiley src's
+			$parsed = str_replace(
+					array( '{SUP()}', '{SUP}', '{SUB()}', '{SUB}', '<table' ),
+					array( '<sup>', '</sup>', '<sub>', '</sub>', '<table border="1"' ),
+					$parsed );
+			$prefs['wiki_edit_section'] = $secedit;
+			$prefs['feature_wiki_ext_icon'] = $exticons;
+			$prefs['wiki_edit_plugin'] = $editplugin;
+			return $parsed;
+		} else {
+			return $tmp;
+		}
 	} else {
 		$smarty->assign('has_autosave','n');
 		return $params['default'];	

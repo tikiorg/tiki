@@ -6542,7 +6542,11 @@ window.addEvent('domready', function() {
 
 		global $prefs;
 
-		$need_maketoc = strpos($data, "{maketoc");
+		if ( $options['fck'] == 'y' ) {
+			$need_maketoc = false ;
+		} else {
+			$need_maketoc = strpos($data, "{maketoc");
+		}
 		$need_autonumbering = ( preg_match('/^\!+[\-\+]?#/m', $data) > 0 );
 
 		$anch = array();
@@ -6713,8 +6717,10 @@ window.addEvent('domready', function() {
 								$listate = substr($line, $listlevel, 1);
 								if (($listate == '+' || $listate == '-') && !($litype == '*' && !strstr(current($listbeg), '</ul>') || $litype == '#' && !strstr(current($listbeg), '</ol>'))) {
 									$thisid = 'id' . microtime() * 1000000;
-									$data .= '<br /><a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($listate == '-' ? '+' : '-') . ']</a>';
-									$listyle = ' id="' . $thisid . '" style="display:' . ($listate == '+' ? 'block' : 'none') . ';"';
+									if ( $options['fck'] != 'y' ) {
+										$data .= '<br /><a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($listate == '-' ? '+' : '-') . ']</a>';
+									}
+									$listyle = ' id="' . $thisid . '" style="display:' . ($listate == '+' || $options['fck'] == 'y' ? 'block' : 'none') . ';"';
 									$addremove = 1;
 								}
 							}
@@ -6728,8 +6734,10 @@ window.addEvent('domready', function() {
 						$listate = substr($line, $listlevel, 1);
 						if (($listate == '+' || $listate == '-')) {
 							$thisid = 'id' . microtime() * 1000000;
-							$data .= '<br /><a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($listate == '-' ? '+' : '-') . ']</a>';
-							$listyle = ' id="' . $thisid . '" style="display:' . ($listate == '+' ? 'block' : 'none') . ';"';
+							if ( $options['fck'] != 'y' ) {
+								$data .= '<br /><a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($listate == '-' ? '+' : '-') . ']</a>';
+							}
+							$listyle = ' id="' . $thisid . '" style="display:' . ($listate == '+' || $options['fck'] == 'y' ? 'block' : 'none') . ';"';
 							$addremove = 1;
 						}
 						$data .= ($litype == '*' ? "<ul$listyle>" : "<ol$listyle>");
@@ -6850,9 +6858,15 @@ window.addEvent('domready', function() {
 						if ($divstate == '+' || $divstate == '-') {
 							// OK. Must insert flipper after HEADER, and then open new div...
 							$thisid = 'id' . ereg_replace('[^a-zA-z0-9]', '',urlencode($options['page'])) .$nb_hdrs;
-							$aclose = '<a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($divstate == '-' ? '+' : '-') . ']</a>';
-							$aclose2 = '<div id="' . $thisid . '" class="showhide_heading" style="display:' . ($divstate == '+' ? 'block' : 'none') . ';">';
-							$aclose2 = $aclose2 . '<script type="text/javascript">'."\n".'<!--//--><![CDATA[//><!--'."\n".'setheadingstate(\''. $thisid .'\')'."\n".' //--><!]]>'."\n".'</script>';
+							if ($options['fck'] != 'y') {
+								$aclose = '<a id="flipper' . $thisid . '" class="link" href="javascript:flipWithSign(\'' . $thisid . '\')">[' . ($divstate == '-' ? '+' : '-') . ']</a>';
+							} else {
+								$aclode = '';
+							}
+							$aclose2 = '<div id="' . $thisid . '" class="showhide_heading" style="display:' . ($divstate == '+' || $options['fck'] != 'y' ? 'block' : 'none') . ';">';
+							if ($options['fck'] != 'y') {
+								$aclose2 = $aclose2 . '<script type="text/javascript">'."\n".'<!--//--><![CDATA[//><!--'."\n".'setheadingstate(\''. $thisid .'\')'."\n".' //--><!]]>'."\n".'</script>';
+							}
 							array_unshift($divdepth, $hdrlevel);
 							$addremove += 1;
 						}
@@ -6892,7 +6906,7 @@ window.addEvent('domready', function() {
 										);
 						//}
 						global $tiki_p_edit, $section;
-						if ($prefs['wiki_edit_section'] == 'y' && $section == 'wiki page' && $tiki_p_edit == 'y' and ( $prefs['wiki_edit_section_level'] == 0 or $hdrlevel <= $prefs['wiki_edit_section_level']) ){
+						if ($options['fck'] != 'y' and $prefs['wiki_edit_section'] == 'y' && $section == 'wiki page' && $tiki_p_edit == 'y' and ( $prefs['wiki_edit_section_level'] == 0 or $hdrlevel <= $prefs['wiki_edit_section_level']) ){
 							global $smarty;
 							include_once('lib/smarty_tiki/function.icon.php');
 							$button = '<div class="icon_edit_section"><a href="tiki-editpage.php?';
@@ -6997,6 +7011,7 @@ window.addEvent('domready', function() {
 		 */
 		$new_data = '';
 		$search_start = 0;
+		if ( $options['fck'] != 'y') {
 		while ( ($maketoc_start = strpos($data, "{maketoc", $search_start)) !== false ) {
 			$maketoc_length = strpos($data, "}", $maketoc_start) + 1 - $maketoc_start;
 			$maketoc_string = substr($data, $maketoc_start, $maketoc_length);
@@ -7115,9 +7130,10 @@ window.addEvent('domready', function() {
 				$search_start = $maketoc_start + $maketoc_length;
 			}
 		}
+		}
 		$data = $new_data.$data;
 		// Add icon to edit the text before the first section
-		if ($prefs['wiki_edit_section'] == 'y' && isset($section) && $section == 'wiki page' && $tiki_p_edit == 'y' ){
+		if ( $options['fck'] != 'y' && $prefs['wiki_edit_section'] == 'y' && isset($section) && $section == 'wiki page' && $tiki_p_edit == 'y' ){
 			$button = '<div class="icon_edit_section"><a href="tiki-editpage.php?';
 			if (!empty($options['page'])) {
 				$button .= 'page='.urlencode($options['page']).'&amp;';
@@ -7307,9 +7323,11 @@ window.addEvent('domready', function() {
 		include_once ("lib/wiki/histlib.php");
 		include_once ("lib/commentslib.php");
 
+/*
 		if( $wysiwyg == 'y' ) {
 			$is_html = 1;
 		}
+*/
 
 		if( ! $is_html ) {
 			$edit_data = str_replace( '&lt;x&gt;', '', $edit_data );
