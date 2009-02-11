@@ -51,7 +51,8 @@ if ( $result === FALSE ) {
 	<div id="tiki-main">
 		<div id="tiki-mid">
 			<div style="margin:10px 30px;">
-				<h1><font color="red">Tikiwiki is unable to connect to the database.</font> <a title="help" href="http://doc.tikiwiki.org/Installation" target="help"><img border="0" src="img/icons/help.gif" alt="Help" /></a></h1>
+				<h1><font color="red">TikiWiki is unable to connect to the database.</font> <a title="help" 
+href="http://doc.tikiwiki.org/Installation" target="help"><img border="0" src="img/icons/help.gif" alt="Help" /></a></h1>
 ';
 	print '<p>The following error message was returned:<div class="simplebox">';
 	$errors = $dbTiki->errorInfo();
@@ -62,8 +63,8 @@ if ( $result === FALSE ) {
 		</div>
 		<hr>
 		<p align="center">
-			<a href="http://www.tikiwiki.org" title="Tikiwiki">
-  			<img src="img/tiki/tikibutton2.png" alt="Tikiwiki" border="0" height="31" width="80">
+			<a href="http://www.tikiwiki.org" title="TikiWiki">
+  			<img src="img/tiki/tikibutton2.png" alt="TikiWiki" border="0" height="31" width="80">
 			</a>
 		</p>
 	</div>
