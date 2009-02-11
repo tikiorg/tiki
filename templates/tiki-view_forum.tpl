@@ -551,7 +551,7 @@
 							<label for="show_archived">{tr}Show archived posts{/tr}</label>
 						</th>
 						<td>
-							<input style="margin-left:20px" type="checkbox" id="show_archived" name="show_archived" {if $show_archived eq 'y' }checked="checked"{/if} onchange="javascript:document.getElementById('time_control').submit();" />
+							<input style="margin-left:20px" type="checkbox" id="show_archived" name="show_archived" {if $show_archived eq 'y' }checked="checked"{/if} />
 						</td>
 					</tr>
 				{/if}
@@ -603,7 +603,7 @@
 			</form>
 		</td>
 		<td style="text-align:right;">
-			{if $prefs.feature_forum_quickjump eq 'y'}
+			{if $prefs.feature_forum_quickjump eq 'y' and count($all_forums) > 1}
 				<form id='quick' method="post" action="tiki-view_forum.php">
 					<small>{tr}Jump to forum{/tr}:</small>
 					<select name="forumId" onchange="javascript:document.getElementById('quick').submit();">

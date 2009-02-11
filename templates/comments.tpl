@@ -330,7 +330,7 @@
 		<tr>
 			<td class="formcolor">{tr}Attach file{/tr}</td>
 			<td class="formcolor">
-				<input type="hidden" name="MAX_FILE_SIZE" value="{$forum_info.att_max_size|escape}" /><input name="userfile1" type="file" />
+				<input type="hidden" name="MAX_FILE_SIZE" value="{$forum_info.att_max_size|escape}" /><input name="userfile1" type="file" />{tr}Maximum size:{/tr} {$forum_info.att_max_size|kbsize}
 			</td>
 		</tr>
 		{/if}

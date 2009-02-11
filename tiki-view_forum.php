@@ -240,7 +240,8 @@ $comments_vars = array('forumId');
 $comments_prefix_var = 'forum:';
 $comments_object_var = 'forumId';
 
-$commentslib->process_inbound_mail($_REQUEST['forumId']);
+if (isset($forum_info['inbound_pop_server']) && !empty($forum_info['inbound_pop_server']))
+	$commentslib->process_inbound_mail($_REQUEST['forumId']);
 
 /******************************/
 if (!isset($_REQUEST['comments_threshold'])) {
@@ -300,7 +301,6 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 
 		if ($forum_info['forum_use_password'] != 'n' && $_REQUEST['password'] != $forum_info['forum_password']) {
 		    $smarty->assign('msg', tra("Wrong password. Cannot post comment"));
-
 		    $smarty->display("error.tpl");
 		    die;
 		}
@@ -313,26 +313,7 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 			    $user, $_REQUEST["comments_title"], $_REQUEST["comments_data"], $_REQUEST["comment_topictype"],
 			    $_REQUEST['comment_topicsmiley'], $_REQUEST["comment_topicsummary"], $_REQUEST["comments_title"], '');
 		
-		    // PROCESS ATTACHMENT HERE        
-		    if ($qId && isset($_FILES['userfile1']) && !empty($_FILES['userfile1']['name'])) {
-				if (is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
-					check_ticket('view-forum');
-					$fp = fopen($_FILES['userfile1']['tmp_name'], "rb");
-					$commentslib->add_thread_attachment(
-						$forum_info, $qId, $fp, '',
-						$_FILES['userfile1']['name'],
-						$_FILES['userfile1']['type'],
-						$_FILES['userfile1']['size'] );
-		    		}
-				else {
-					$smarty->assign('msg', $tikilib->uploaded_file_error($_FILES['userfile1']['error']));
-					$smarty->display("error.tpl");
-					die;
-				}
-			}
-		    //END ATTACHMENT PROCESSING
-		    // Now process attchement here (queued attachment)
-		} else {
+		} else { // not in queue mode
 		    $smarty->assign('was_queued', 'n');
 
 		    if ($_REQUEST["comments_threadId"] == 0) {
@@ -381,19 +362,6 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 			    $cat_href="tiki-view_forum_thread.php?comments_parentId=" . $threadId . "&forumId=" . $_REQUEST["forumId"];
 			    include_once ("freetag_apply.php");
 			    
-				// PROCESS ATTACHMENT HERE
-				if ($threadId && isset($_FILES['userfile1']) && !empty($_FILES['userfile1']['name'])) {
-					if (is_uploaded_file($_FILES['userfile1']['tmp_name']))	{
-						check_ticket('view-forum');
-						$fp = fopen($_FILES['userfile1']['tmp_name'], "rb");
-						$commentslib->add_thread_attachment($forum_info, $threadId, $fp, '', $_FILES['userfile1']['name'], $_FILES['userfile1']['type'], $_FILES['userfile1']['size'] );
-					} else {
-						$smarty->assign('msg', $tikilib->uploaded_file_error($_FILES['userfile1']['error']));
-						$smarty->display("error.tpl");
-						die;
-					}
-				} //END ATTACHMENT PROCESSING
-
 				if( $threadId ) { // Deal with mail notifications.
 					include_once('lib/notifications/notificationemaillib.php');
 					sendForumEmailNotification('forum_post_topic', $_REQUEST['forumId'], $forum_info, $_REQUEST['comments_title'], $_REQUEST['comments_data'], $user, $_REQUEST['comments_title'], $message_id, '', $threadId, isset($_REQUEST['comments_parentId'])?$_REQUEST['comments_parentId']: 0, isset($_REQUEST['contributions'])? $_REQUEST['contributions']: '' );
@@ -405,6 +373,25 @@ if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
 				$smarty->assign('duplic', 'y');
 				unset($_REQUEST['comments_postComment']);// not to go in the topic redirection
 			}
+		    // PROCESS ATTACHMENT HERE        
+		    if ((!empty($qId) || !empty($threadId)) && isset($_FILES['userfile1']) && !empty($_FILES['userfile1']['name'])) {
+				if (is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
+					if (!empty($prefs['forum_match_regex']) && !preg_match($prefs['forum_match_regex'], $_FILES['userfile1']['name'])) {
+						$smarty->assign('msg', 'Invalid filename (using filters for filenames)');
+						$smarty->display("error.tpl");
+						die;
+					}
+					check_ticket('view-forum');
+					$fp = fopen($_FILES['userfile1']['tmp_name'], "rb");
+					$commentslib->add_thread_attachment($forum_info, !empty($qId)?$qid: $threadId, $fp, '',	$_FILES['userfile1']['name'], $_FILES['userfile1']['type'],	$_FILES['userfile1']['size'] );
+		    		}
+				else {
+					$smarty->assign('msg', $tikilib->uploaded_file_error($_FILES['userfile1']['error']));
+					$smarty->display("error.tpl");
+					die;
+				}
+			}
+		    //END ATTACHMENT PROCESSING
 
 
 			$commentslib->register_forum_post($_REQUEST["forumId"], 0);
