@@ -1694,7 +1694,7 @@ INSERT INTO "," ("optionId","menuId","type","name","url","position","section","p
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (41,42,'o','List Pages','tiki-listpages.php',220,'feature_wiki,feature_listPages','tiki_p_view','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,42,'o','Orphan Pages','tiki-orphan_pages.php',225,'feature_wiki,feature_listPages','tiki_p_view','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (42,42,'o','Orphan Pages','tiki-orphan_pages.php',225,'feature_wiki,feature_listorphanPages','tiki_p_view','',0);
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (43,42,'o','Sandbox','tiki-editpage.php?page=sandbox',230,'feature_wiki,feature_sandbox','tiki_p_view','',0);
 
