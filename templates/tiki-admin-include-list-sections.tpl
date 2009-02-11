@@ -28,7 +28,7 @@
       <img src="pics/trans.png" alt="{tr}Login{/tr}" title="{tr}Login{/tr}" /><span>{tr}Login{/tr}</span>
     </a>
 
-    <a href="tiki-admin.php?page=profiles" class="admbox" style="background-image: url('')">
+    <a href="tiki-admin.php?page=profiles" class="admbox" style="background-image: url('pics/large/profiles48x48.png')">
       <img src="pics/trans.png" alt="{tr}Profiles{/tr}" title="{tr}Profiles{/tr}" /><span>{tr}Profiles{/tr}</span>
     </a>	
 	
@@ -158,7 +158,20 @@
 	<a href="tiki-admin.php?page=intertiki" class="admbox{if $prefs.feature_intertiki ne 'y'} off{/if}" style="background-image: url('pics/large/intertiki48x48.png')">
       <img src="pics/trans.png" alt="{tr}InterTiki{/tr}" title="{tr}InterTiki{/tr}{if $prefs.feature_intertiki ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}InterTiki{/tr}</span>
     </a>
+	{* TODO: these new features seem not to have feature prefs - eg $prefs.feature_profiles so are on by default for now *}
+	<a href="tiki-admin.php?page=plugins" class="admbox{if $prefs.feature_plugins eq 'n'} off{/if}" style="background-image: url('pics/large/plugins48x48.png')">
+      <img src="pics/trans.png" alt="{tr}Plugin aliases{/tr}" title="{tr}Plugin aliases{/tr}{if $prefs.feature_plugins eq 'n'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Plugin aliases{/tr}</span>
+    </a>
+
+	<a href="tiki-admin.php?page=semantic" class="admbox{if $prefs.feature_semantic eq 'n'} off{/if}" style="background-image: url('pics/large/semantic48x48.png')">
+      <img src="pics/trans.png" alt="{tr}Semantic{/tr}" title="{tr}Semantic wiki links{/tr}{if $prefs.feature_semantic eq 'n'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Semantic links{/tr}</span>
+    </a>
+
+	<a href="tiki-admin.php?page=webservices" class="admbox{if $prefs.feature_webservices eq 'n'} off{/if}" style="background-image: url('pics/large/webservices48x48.png')">
+      <img src="pics/trans.png" alt="{tr}Webservices{/tr}" title="{tr}Webservices management{/tr}{if $prefs.feature_webservices eq 'n'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Webservices{/tr}</span>
+    </a>
 
 	</div>
 </div>
 
+{* $Id$ *}

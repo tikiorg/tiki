@@ -5,7 +5,7 @@
 
 <a href="tiki-admin.php?page=login" title="{tr}Login{/tr}" class="icon"><img class="icon" src="pics/large/stock_quit.png" alt="{tr}Login{/tr}" width="32" height="32" /></a>
 
-<a href="tiki-admin.php?page=profiles" title="{tr}Profiles{/tr}" class="icon"><img class="icon" src="" alt="{tr}Profiles{/tr}" width="32" height="32" /></a>
+<a href="tiki-admin.php?page=profiles" title="{tr}Profiles{/tr}" class="icon"><img class="icon" src="pics/large/profiles.png" alt="{tr}Profiles{/tr}" width="32" height="32" /></a>
 
 <a href="tiki-admin.php?page=look" title="{tr}Customize look and feel of your Tiki{/tr}" class="icon"><img class="icon" src="pics/large/gnome-settings-background.png" alt="{tr}Look &amp; Feel{/tr}" /></a>
 
@@ -120,3 +120,16 @@
 {if $prefs.feature_intertiki eq 'y'}
 <a href="tiki-admin.php?page=intertiki" title="{tr}Intertiki{/tr}" class="icon"><img class="icon" src="pics/large/intertiki.png" alt="{tr}InterTiki{/tr}" width="32" height="32" /></a>
 {/if}
+
+{if $prefs.feature_plugins neq 'n'}
+<a href="tiki-admin.php?page=plugins" title="{tr}Plugin aliases{/tr}" class="icon"><img class="icon" src="pics/large/plugins.png" alt="{tr}Plugin aliases{/tr}" width="32" height="32" /></a>
+{/if}
+
+{if $prefs.feature_semantic neq 'n'}
+<a href="tiki-admin.php?page=semantic" title="{tr}Semantic wiki links{/tr}" class="icon"><img class="icon" src="pics/large/semantic.png" alt="{tr}Semantic links{/tr}" width="32" height="32" /></a>
+{/if}
+
+{if $prefs.feature_webservices neq 'n'}
+<a href="tiki-admin.php?page=webservices" title="{tr}Webservices{/tr}" class="icon"><img class="icon" src="pics/large/webservices.png" alt="{tr}Webservices{/tr}" width="32" height="32" /></a>
+{/if}
+
