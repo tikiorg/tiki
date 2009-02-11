@@ -244,7 +244,7 @@ function get_default_prefs() {
 		'wikiplugin_trackerstat' => 'y',
 		'wikiplugin_translated' => 'y',
 		'wikiplugin_tr' => 'y',
-		'wikiplugin_usercount' => 'y',
+		'wikiplugin_usercount' => 'n',
 		'wikiplugin_userlist' => 'n',
 		'wikiplugin_versions' => 'y',
 		'wikiplugin_vote' => 'y',
