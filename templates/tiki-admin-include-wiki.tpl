@@ -546,6 +546,7 @@ name="w_displayed_default"{if $prefs.w_displayed_default eq 'y'} checked="checke
     <tr><td class="form">{tr}History:{/tr}</td><td><input type="checkbox" name="feature_history" {if $prefs.feature_history eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}View source:{/tr}</td><td><input type="checkbox" name="feature_source" {if $prefs.feature_source eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}List pages:{/tr}</td><td><input type="checkbox" name="feature_listPages" {if $prefs.feature_listPages eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}List orphan pages:{/tr}</td><td><input type="checkbox" name="feature_listorphanPages" {if $prefs.feature_listorphanPages eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Backlinks:{/tr}</td><td><input type="checkbox" name="feature_backlinks" {if $prefs.feature_backlinks eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Similar:{/tr}</td><td><input type="checkbox" name="feature_likePages" {if $prefs.feature_likePages eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Rankings:{/tr}</td><td><input type="checkbox" name="feature_wiki_rankings" {if $prefs.feature_wiki_rankings eq 'y'}checked="checked"{/if}/></td></tr>

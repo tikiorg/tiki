@@ -154,6 +154,7 @@ if (isset($_REQUEST["wikifeatures"])) {
 	'feature_wiki_multiprint',
 	// 'feature_wiki_pdf',
 	'feature_listPages',
+	'feature_listorphanPages',	
 	'feature_history',
 	'feature_source',
 	'feature_sandbox',
