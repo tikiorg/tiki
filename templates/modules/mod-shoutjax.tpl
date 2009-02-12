@@ -1,5 +1,6 @@
-{* $Id: mod-shoutjax.tpl $ *}
+{* $Id$ *}
 {if $prefs.feature_shoutbox eq 'y' and $tiki_p_view_shoutbox eq 'y'}
+{popup_init src="lib/overlib.js"}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Shoutjax{/tr}"}{/if}
   {tikimodule title=$tpl_module_title name="shoutjax" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
     {if $tiki_p_post_shoutbox eq 'y'}
