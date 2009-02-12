@@ -81,10 +81,13 @@
           <td><label>{tr}Search method when searching in content: Non-Tiki search local to a forum{/tr}</label></td>
           <td><input type="checkbox" name="feature_forum_local_search"
               {if $prefs.feature_forum_local_search eq 'y'}checked="checked"{/if}/></td>			
-        </tr><tr class="form">
+               </tr><tr class="form">
           <td><label>{tr}Do not prefix messages titles by 'Re: '{/tr}</label></td>
           <td><input type="checkbox" name="forum_comments_no_title_prefix"
               {if $prefs.forum_comments_no_title_prefix eq 'y'}checked="checked"{/if}/></td>			
+        </tr><tr class="form">
+          <td><label>{tr}Uploaded filenames must match regex:{/tr}</label></td>
+          <td><input type="text" name="forum_match_regex" value="{$prefs.forum_match_regex|escape}"/></td>			
         </tr><tr class="form">
           <td colspan="2" class="input_submit_container"><input type="submit" name="forumprefs"
               value="{tr}Change preferences{/tr}" /></td>

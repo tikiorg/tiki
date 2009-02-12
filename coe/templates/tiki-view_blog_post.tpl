@@ -1,16 +1,10 @@
-{title help="Blogs"}{tr}Viewing blog post{/tr} - {$blog_data.title}{/title}
+{title help="Blogs"}{$blog_data.title}{/title}
+<a class="link" href="tiki-list_blogs.php">{tr}Blogs{/tr}</a> {$prefs.site_crumb_seper} <a class="link" href="tiki-view_blog.php?blogId={$post_info.blogId}">{$blog_data.title}</a> {$prefs.site_crumb_seper} {$post_info.title}
 
-<div class="navbar">
-	{button href="tiki-view_blog.php?blogId=$blogId" _auto_args="find,offset,sort_mode" _text="{tr}Return to blog{/tr}"}
-</div>
-
-<div class="posthead">
-{if $blog_data.use_title eq 'y'}
-	<h3>{$post_info.title}</h3>
-{else}
-	<h3>{$post_info.created|tiki_short_datetime}</h3>
-{/if}
-
+<div class="post">
+	<div class="postbody">
+		<div class="author_actions clearfix">
+			<div class="actions">
 {if $prefs.feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y'}
   {if $tags.data|@count >0}
     <div class="freetaglist">
@@ -20,16 +14,6 @@
     </div>
   {/if}
 {/if}
-
-<table ><tr><td align="left">
-<span class="posthead">
-{if $blog_data.use_title eq 'y'}
-	<small> {tr}Posted by{/tr} {$post_info.user} {tr}on{/tr} {$post_info.created|tiki_short_datetime}</small>
-{else}
-	<small> {tr}Posted by{/tr} {$post_info.user}</small>
-{/if}
-</span>
-</td><td align="right">
 {if ($ownsblog eq 'y') or ($user and $post_info.user eq $user) or $tiki_p_blog_admin eq 'y'}
 <a class="blogt" href="tiki-blog_post.php?blogId={$post_info.blogId}&amp;postId={$post_info.postId}">{icon _id='page_edit'}</a>
 <a class="blogt" href="tiki-view_blog.php?blogId={$post_info.blogId}&amp;remove={$post_info.postId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
@@ -39,10 +23,37 @@
 	{icon_id='disk' alt='{tr}Save to notepad{/tr}'}
 </a>
 {/if}
-</td></tr></table>
+			</div>
+		<div class="author_info">
+			{if $blog_data.use_title eq 'y'}
+				{tr}By{/tr} {$post_info.user} {tr}on{/tr} {$post_info.created|tiki_short_datetime}
+			{else}
+				{tr}By{/tr} {$post_info.user}
+			{/if}
+		</div>
+	</div>
+	<div class="clearfix postbody-title">
+		<div class="title">
+			{if $blog_data.use_title eq 'y'}
+				<h2>{$post_info.title}</h2>
+			{else}
+				<h2>{$post_info.created|tiki_short_datetime}</h2>
+			{/if}
+		</div>
+	{if $prefs.feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y'}
+		{if $tags.data|@count >0}
+			<div class="freetaglist">
+    			{foreach from=$tags.data item=tag}
+					<a class="freetag" href="tiki-browse_freetags.php?tag={$tag.tag}">{$tag.tag}</a> 
+				{/foreach}
+			</div>
+		{/if}
+	{/if}
 </div>
-<div class="postbody">
+{*<div class="content">
+<div class="postbody-content">*}
 {$parsed_data}
+{*</div>*}
 {if $pages > 1}
 	<div align="center">
 		<a href="tiki-view_blog_post.php?blogId={$smarty.request.blogId}&amp;postId={$smarty.request.postId}&amp;page={$first_page}">{icon _id='resultset_first' alt='{tr}First page{/tr}'}</a>
@@ -52,9 +63,9 @@
 		<a href="tiki-view_blog_post.php?blogId={$smarty.request.blogId}&amp;postId={$smarty.request.postId}&amp;page={$last_page}">{icon _id='resultset_last' alt='{tr}Last page{/tr}'}</a>
 	</div>
 {/if}
-
-{if $prefs.blogues_feature_copyrights eq 'y' and $prefs.wikiLicensePage}
-  {if $prefs.wikiLicensePage == $page}
+{*</div>*}
+	{if $prefs.blogs_feature_copyrights eq 'y' and $prefs.wikiLicensePage}
+		{if $prefs.wikiLicensePage == $page}
     {if $tiki_p_edit_copyrights eq 'y'}
       <p class="editdate">{tr}To edit the copyright notices{/tr} <a href="copyrights.php?page={$copyrightpage}">{tr}Click Here{/tr}</a>.</p>
     {/if}
@@ -62,10 +73,13 @@
     <p class="editdate">{tr}The content on this page is licensed under the terms of the{/tr} <a href="tiki-index.php?page={$prefs.wikiLicensePage}&amp;copyrightpage={$page|escape:"url"}">{$prefs.wikiLicensePage}</a>.</p>
   {/if}
 {/if}
-<hr style="clear:both"/>
-<table >
-<tr><td>
-<small>
+</div>
+<div class="postfooter">
+	<div class="status"> {* renamed to match forum footer layout *}
+		<a href='tiki-print_blog_post.php?postId={$postId}'>{icon _id='printer' alt='{tr}Print{/tr}'}</a>
+		<a href='tiki-send_blog_post.php?postId={$postId}'>{icon _id='email' alt='{tr}Email This Post{/tr}'}</a>
+	</div>
+	<div class="actions"> {* renamed to match forum footer layout *}
 <a class="link" href="{$postId|sefurl:blogpost}">{tr}Permalink{/tr}</a>
 {if $post_info.trackbacks_from_count}
   ({tr}referenced by{/tr}: {$post_info.trackbacks_from_count}
@@ -77,11 +91,7 @@
 {$listpages[ix].comments} {tr}comments{/tr}
  [<a class="link" href="tiki-view_blog_post.php?find={$find}&amp;blogId={$blogId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;postId={$listpages[ix].postId}">{tr}View Comments{/tr}</a>]
 {/if}
-</small>
-</td><td style='text-align:right'>
-<a href='tiki-print_blog_post.php?postId={$postId}'>{icon _id='printer' alt='{tr}Print{/tr}'}</a>
-<a href='tiki-send_blog_post.php?postId={$postId}'>{icon _id='email' alt='{tr}Email This Post{/tr}'}</a>
-</td></tr></table>
+	</div>
 </div>
 {if $post_info.trackbacks_from_count > 0}
 <h3>{tr}Trackback pings{/tr}:</h3>
@@ -107,7 +117,7 @@
 {/foreach}
 </table>
 {/if}
-
+</div>
 {if $prefs.feature_blogposts_comments == 'y'
   && ($blog_data.allow_comments == 'y' or $blog_data.allow_comments == 'c')
   && (($tiki_p_read_comments == 'y'

@@ -1209,8 +1209,7 @@ div.titlebar {
 div#page-bar {
 	padding-bottom: 40px;
 	display: block;
-  border-top: 1px solid #8CACBB;
-  padding-top: 5px;
+	padding-top: 5px;
 }
 
 div#page-bar table, div#page-bar td, div#page-bar tr {
@@ -1356,9 +1355,8 @@ textarea.wikiedit {
 
 p.editdate {
 	color: #223344;
-	border-top: 1px solid #8CACBB;
 	font-size: 1em;
-	padding: 10px 10px 0;
+	padding: 0 10px;
 }
 
 div.wiki-edithelp {
@@ -1677,14 +1675,52 @@ span.posthead small {
 	font-weight: normal;
 }
 
-.blogt {  }
+body.tiki_blogs .post {margin-bottom: 20px}
 
-.blogpost .postbody {
+/*div.postbody*/
+body.tiki_blogs .post .postbody {
 	border-top: 1px solid #AEAEAE;
 	border-bottom: 1px solid #AEAEAE;
 	font-size: .95em;
 	color: black;
 	padding: 10px}
+
+/* Maybe needs override to differentiate from forums */
+body.tiki_blogs .post .postbody {
+	background: none;
+	border-bottom:1px solid #AEAEAE;
+	border-top: 1px solid #AEAEAE;
+	color :black;
+	font-size: 0.95em;
+	padding: 10px;}
+	
+body.tiki_blogs div.author_actions {
+	float: none;
+	background: none;
+	border: 0;
+	width: 100%}
+	
+body.tiki_blogs .actions {
+	background: none;
+	text-align: right}
+
+body.tiki_blogs .author_info {border-bottom: 1px solid #aeaeae}
+.postbody-title {
+	background: none;
+	border: 0}
+	
+body.tiki_blogs .postbody-title {
+	float: none;
+	width: 100%;
+	background: none;
+	border: 0}
+
+body.tiki_blogs .postfooter {
+	width: 100%;
+}
+
+body.tiki_blogs .postfooter .actions {float: left}
+
 
 /***** Forums *****/
 
