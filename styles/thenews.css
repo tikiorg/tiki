@@ -177,6 +177,46 @@ form.admin input[name="features"] {
 	margin-bottom: 3px !important;
 }
 
+/* look of admin form fieldsets when tabs are off */
+
+form.admin {padding: 3px}
+
+form.admin fieldset {border: solid 1px #8CACBB; margin: 0px; margin-bottom: 3px;}
+
+form.admin legend.heading {
+	background-color: transparent;
+	border: none;
+	line-height: 2em;
+	margin-top: -2px;
+	padding-left: 0px; padding-right: 0px;
+	}
+
+form.admin legend.heading a {
+	background-color: #8CACBB;
+	display: block;
+	top: -1em;
+	margin-top: 2px;
+	padding: 1px 1px 0;
+	position: relative;
+	text-decoration: none;
+}
+form.admin legend.heading a:hover {
+	background-color: #ACBB8C;
+	padding: 1px 0px 0;
+}
+form.admin legend.heading a span {
+	background-color: #EBEBEB;
+	display: block;
+	font-size: 1em;
+	line-height: 2em;
+	padding: 0 1em;
+}
+form.admin legend.heading a:hover span {
+	line-height: 1.9em;
+	margin-top: 0.1em; border-left: solid 1px #8CACBB; border-right: solid 1px #8CACBB;
+}
+
+
 select {
 }
 
