@@ -431,6 +431,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'forum_comments_no_title_prefix' => 'n',
 		'forum_thread_style' => 'commentStyle_plain',
 		'forum_thread_sort_mode' => 'commentDate_asc',
+		'forum_match_regex' => '',
 
 		// articles
 		'feature_articles' => 'n',

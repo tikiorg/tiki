@@ -1,4 +1,7 @@
-{title url="tiki-lastchanges.php?days=$days"}{tr}Last Changes{/tr}{/title}
+{* $Id$ *}
+
+{title admpage="wiki" help="Using+Wiki+Pages#Last_Changes" url="tiki-lastchanges.php?days=$days"}{tr}Last Changes{/tr}{/title}
+
 <div class="navbar">
 {if $days eq '1'}{assign var=thisclass value='highlight'}{else}{assign var=thisclass value=''}{/if}
 {button href="tiki-lastchanges.php?days=1" _text="{tr}Today{/tr}" _class=$thisclass}

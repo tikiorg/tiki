@@ -36,6 +36,7 @@ if (isset($_REQUEST["forumprefs"])) {
 	foreach ( $pref_toggles as $toggle) simple_set_toggle($toggle);
 
 	simple_set_value('forums_ordering');
+	simple_set_value('forum_match_regex');
 }
 
 if (isset($_REQUEST["forumlistprefs"])) {

@@ -250,6 +250,11 @@ if ( ($tiki_p_post_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n'
 				// PROCESS ATTACHMENT HERE
 				if ( $qId && isset($_FILES['userfile1']) && ! empty($_FILES['userfile1']['name']) ) {
 					if ( is_uploaded_file($_FILES['userfile1']['tmp_name']) ) {
+						if (!empty($prefs['forum_match_regex']) && !preg_match($prefs['forum_match_regex'], $_FILES['userfile1']['name'])) {
+							$smarty->assign('msg', 'Invalid filename (using filters for filenames)');
+							$smarty->display("error.tpl");
+							die;
+						}
 						check_ticket('view-forum');
 						$fp = fopen($_FILES['userfile1']['tmp_name'], "rb");
 						$commentslib->add_thread_attachment(
@@ -319,6 +324,11 @@ if ( ($tiki_p_post_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n'
 							|| ($forum_info['att'] == 'att_admin' && $tiki_p_admin_forum == 'y')
 							|| ($forum_info['att'] == 'att_perm' && $tiki_p_forum_attach == 'y'))
 						&&  isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_name'])){
+					if (!empty($prefs['forum_match_regex']) && !preg_match($prefs['forum_match_regex'], $_FILES['userfile1']['name'])) {
+						$smarty->assign('msg', 'Invalid filename (using filters for filenames)');
+						$smarty->display("error.tpl");
+						die;
+					}
 					$fp = fopen($_FILES['userfile1']['tmp_name'], "rb");
 
 					$data = '';

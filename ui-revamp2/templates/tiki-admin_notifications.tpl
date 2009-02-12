@@ -1,4 +1,5 @@
-{title help="Mail+Notifications"}{tr}EMail notifications{/tr}{/title}
+{* $Id$ *}
+{title help="Mail+Notifications"}{tr}Mail notifications{/tr}{/title}
 
 {if empty($prefs.sender_email)}
 	<br />
@@ -52,7 +53,7 @@
 	</table>
 </form>
 <br />
-<h2>{tr}EMail notifications{/tr}</h2>
+<h2>{tr}Mail notifications{/tr}</h2>
 {if $channels or ($find ne '')}
   {include file='find.tpl' _sort_mode='y' find_show_num_rows='y'}
 {/if}
@@ -70,7 +71,7 @@ document.write("<input name=\"switcher\" title=\"{tr}Select All{/tr}\" id=\"clic
 			</th>
 			<th>{self_link _sort_arg="sort_mode" _sort_field="event"}{tr}Event{/tr}{/self_link}</th>
 			<th>{self_link _sort_arg="sort_mode" _sort_field="object"}{tr}Object{/tr}{/self_link}</th>
-			<th>{self_link _sort_arg="sort_mode" _sort_field="email"}{tr}eMail{/tr}{/self_link}</th>
+			<th>{self_link _sort_arg="sort_mode" _sort_field="email"}{tr}Email{/tr}{/self_link}</th>
 			<th>{self_link _sort_arg="sort_mode" _sort_field="user"}{tr}User / Group{/tr}{/self_link}</th>
 			<th>{tr}Action{/tr}</th>
 		</tr>

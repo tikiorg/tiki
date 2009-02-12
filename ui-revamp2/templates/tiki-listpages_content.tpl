@@ -375,7 +375,7 @@
 {if $find && $tiki_p_edit eq 'y' and $pagefound eq 'n'}
 	{button _text="{tr}Create Page{/tr}: $find" href="tiki-editpage.php?page=$find" _title="{tr}Create{/tr}"}
 {/if}
-
+{if $checkboxes_on eq 'y'}
 </form>
-
+{/if}
 {pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}

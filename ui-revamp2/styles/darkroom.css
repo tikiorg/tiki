@@ -1422,10 +1422,11 @@ div.blogdesc {
 	padding: 8px}
 
 div.bloginfo {
+	text-align: right;
 	display: block;
 	padding: 3px;
-	line-height: 150%;
-	background: #292929}
+	font-size: 95%;
+	background: none}
 
 div.blogtools {
 	margin-right: 4px;
@@ -1456,21 +1457,51 @@ div.posthead {
 	font-weight: bold;
 	letter-spacing: .4pt;
 	border-bottom: 1px solid #B0B0B0}
+	
+body.tiki_blogs .post {margin-bottom: 20px  }
  
-div.posthead h3 {
+body.tiki_blogs .post .title {
+	width: 100%}
+
+/*div.posthead h3*/
+body.tiki_blogs .post .title h2 {
 	background: #343434 url(darkroom/button.png) repeat-x;
 	color: #D8D8D8;
 	text-align: left;
 	margin-bottom: 10px;
+	margin-left: 0;
+	padding-left: 6px;
 	font-size: 1.1em}
  
-.blogpost .postbody {
+/*div.postbody*/
+body.tiki_blogs .post .postbody {
 	margin-right: 8px;
-	line-height: 1.5em}
+	padding: 6px 0}
 
-div.postfooter {
-	clear: both;
-	float: right}
+body.tiki_blogs div.author_actions {
+	float: none;
+	background: none;
+	border: 0;
+	width: 100%}
+	
+body.tiki_blogs .actions {
+	background: none;
+	text-align: right}
+
+body.tiki_blogs .author_info {background: none}
+
+.postbody-title {
+	background: none;
+	border: 0}
+	
+body.tiki_blogs .postbody-title {
+	float: none;
+	width: 100%;
+	background: none;
+	border: 0}
+	
+body.tiki_blogs .postfooter {width: 100%}	
+body.tiki_blogs .postfooter .actions {float: left}
 
 /***** Forums *****/
 

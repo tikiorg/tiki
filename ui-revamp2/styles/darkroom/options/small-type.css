@@ -11,6 +11,20 @@ h3.box-title {
 	margin: 0;
 }
 
+.box a.flipmodtitle img {
+	display: block;
+	position: absolute;
+	right: 0;
+	top: 0;
+	border: 1px solid transparent;
+	opacity: .4;
+}
+
+* html .box a.flipmodtitle img,
+.box:hover a.flipmodtitle img {
+	opacity: 1;
+}
+
 .box-data {
 	margin: .2em .8em .6em;
 	padding:2px;

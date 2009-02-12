@@ -106,7 +106,7 @@ class Comments extends TikiLib {
 	return $this->getOne("select count(*) from `tiki_forum_reads` where `user`=? and `threadId`=?",array($user,$threadId));
     }
 
-    function add_thread_attachment( $forum_info, $threadId, $fp = '', $data = '', $name, $type, $size, $inbound_mail = 0 ) {
+    function add_thread_attachment( $forum_info, $threadId, $fp = '', $data = '', $name, $type, $size, $inbound_mail = 0, $qId=0 ) {
 	global $smarty, $tiki_p_admin_forum, $tiki_p_forum_attach;
 
 	// Deal with attachment
@@ -162,7 +162,7 @@ class Comments extends TikiLib {
 		die;
 	    }
 
-	    return $this->attach_file($threadId, 0, $name, $type, $size, $data,
+	    return $this->attach_file($threadId, $qId, $name, $type, $size, $data,
 		    $fhash, $forum_info['att_store_dir'], $_REQUEST['forumId']);
 	/* attachment */
 	} else {
@@ -509,7 +509,7 @@ class Comments extends TikiLib {
 
     /* queue management */
     function replace_queue($qId, $forumId, $object, $parentId, $user, $title, $data, $type = 'n', $topic_smiley = '', $summary = '',
-	    $topic_title = '', $in_reply_to = '') {
+						   $topic_title = '', $in_reply_to = '', $anonymous_name='', $tags='', $email='') {
 	// timestamp
 
 	$hash2 = md5($title . $data);
@@ -517,6 +517,9 @@ class Comments extends TikiLib {
 	if ($qId == 0 && $this->getOne("select count(*) from
 		    `tiki_forums_queue` where `hash`=?",array($hash2)))
 	    return false;
+	if (!$user && $anonymous_name) {
+		$user = $anonymous_name;
+	}
 
 	if ($qId) {
 	    $query = "update `tiki_forums_queue` set
@@ -532,22 +535,24 @@ class Comments extends TikiLib {
 	    `topic_smiley`=?,
 	    `summary` = ?,
 	    `timestamp` = ?,
-	    `in_reply_to` = ?
+	    `in_reply_to` = ?,
+	    `tags` = ?,
+	    `email` = ?,
 		where `qId`=?
 		";
 
-	    $this->query($query,array($object,$parentId,$user,$title,$data,$forumId,$type,$hash2,$topic_title,$topic_smiley,$summary,(int)$this->now,$in_reply_to,$qId));
+	    $this->query($query,array($object,$parentId,$user,$title,$data,$forumId,$type,$hash2,$topic_title,$topic_smiley,$summary,(int)$this->now,$in_reply_to,$tags, $email, $qId));
 	    return $qId;
 	} else {
 	    $query = "insert into
 		`tiki_forums_queue`(`object`, `parentId`, `user`,
 			`title`, `data`, `type`, `topic_smiley`, `summary`,
-			`timestamp`, `topic_title`, `hash`, `forumId`, `in_reply_to`)
-		values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			`timestamp`, `topic_title`, `hash`, `forumId`, `in_reply_to`, `tags`, `email`)
+		values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 	    $this->query($query, array($object, $parentId, $user,
 			$title, $data, $type, $topic_smiley, $summary, (int)$this->now,
-			$topic_title, $hash2, $forumId, $in_reply_to));
+								   $topic_title, $hash2, $forumId, $in_reply_to, $tags, $email));
 	    $qId = $this->getOne("select max(`qId`) from
 		    `tiki_forums_queue` where `hash`=? and
 		    `timestamp`=?",array($hash2,(int)$this->now));
@@ -612,27 +617,45 @@ class Comments extends TikiLib {
 
     //Approve queued message -> post as new comment
     function approve_queued($qId) {
+		global $userlib, $tikilib, $prefs;
 	$info = $this->queue_get($qId);
 
 	$message_id = '';
+	if ($userlib->user_exists($info['user'])) {
+		$u = $w = $info['user'];
+		$a = '';
+	} else {
+		$u = '';
+		$a = $info['user'];
+		$w = $a. ' '. tra('(not registered)', $prefs['site_language']);
+	}
 	$threadId = $this->post_new_comment(
 		'forum:' . $info['forumId'], $info['parentId'],
-		$info['user'], $info['title'], $info['data'], 
+		$u, $info['title'], $info['data'], 
 		$message_id, $info['in_reply_to'],
 		$info['type'],
-		$info['summary'], $info['topic_smiley']
+		$info['summary'], $info['topic_smiley'], '', $a
 		);
+	if (!$threadId) {
+		return null;
+	}
+	if ($info['email']) {
+		$tikilib->add_user_watch($w, 'forum_post_thread', $threadId, 'forum topic', '' . ':' . $info['title'], 'tiki-view_forum_thread.php?forumId=' . $info['forumId'] . '&amp;comments_parentId=' . $threadId, $info['email']);
+	}
+	if ($info['tags']) {
+		$cat_type = 'forum post';
+		$cat_objid = $threadId;
+		$cat_desc = substr($info['data'],0,200);
+		$cat_name = $info['title'];
+		$cat_href='tiki-view_forum_thread.php?comments_parentId=' . $threadId . '&forumId=' . $info['forumId'];
+		$_REQUEST['freetag_string'] = $info['tags'];
+		include ('freetag_apply.php');
+	}
+	$query = "update `tiki_forum_attachments` set `threadId`=?, `qId`=? where `qId`=?";
+	$this->query($query, array($threadId, 0, $qId));
 	$this->remove_queued($qId);
 
-	/* This all looks redundant to me -dheltzel
-	   if ($threadId) {
-	   $query = "update `tiki_forum_attachments` set `threadId`=$threadId where `qId`=$qId";
-
-	   $this->query($query);
-	   $query = "delete from `tiki_forum_attachments` where `qId`=$qId";
-	   $this->query($query);
-	   }
-	 */
+	return $threadId;
     }
 
     function get_forum_topics($forumId, $offset = 0, $max = -1, $sort_mode = 'commentDate_asc', $include_archived = false, $who = '', $type = '', $reply_state = '') {
@@ -667,58 +690,54 @@ class Comments extends TikiLib {
 	if ($reply_state == 'none') {
 		$time_cond .= ' and  (SELECT count(b.`threadId`) as replies from `tiki_comments` b where `parentId`=a.`threadId`) =0  ';
 	}
-	if (empty($type)) {
-		$operators = array('=', '<>');
-		$type = 's';
-	} else {
-		$operators = array('=');
+	if (!empty($type)) {
+		$time_cond .= ' and a.`type` = ? ';
+		$bind_time[] = $type;
 	}
 		
 	$ret = array();
-	foreach ($operators as $stickytest) {
-	    $query = "select a.`threadId`,a.`object`,a.`objectType`,a.`parentId`,
+	$query = "select a.`threadId`,a.`object`,a.`objectType`,a.`parentId`,
 	    a.`userName`,a.`commentDate`,a.`hits`,a.`type`,a.`points`,
 	    a.`votes`,a.`average`,a.`title`,a.`data`,a.`hash`,a.`user_ip`,
 	    a.`summary`,a.`smiley`,a.`message_id`,a.`in_reply_to`,a.`comment_rating`,".
 		$this->ifNull("a.`archived`", "'n'")." as `archived`,".
-		$this->ifNull("max(b.`commentDate`)","a.`commentDate`")." as `lastPost`,
+		$this->ifNull("max(b.`commentDate`)","a.`commentDate`")." as `lastPost`,".
+	    $this->ifNull("a.`type`", "'s'")." as `sticky`,
 	    count(b.`threadId`) as `replies`
 		from `tiki_comments` a left join `tiki_comments` b 
 		on b.`parentId`=a.`threadId`
 		where a.`object`=?"
 		.(( $include_archived ) ? '' : ' and (a.`archived` is null or a.`archived`=?)')
-		." and a.`type` $stickytest ?  and a.`objectType` = 'forum'
+		." and a.`objectType` = 'forum'
 		and a.`parentId` = ? $time_cond group by a.`threadId`";
 		
 
-	    if($this->driver != 'sybase') {
+	if($this->driver != 'sybase') {
 		$query .=",a.`object`,a.`objectType`,a.`parentId`,a.`userName`,a.`commentDate`,a.`hits`,a.`type`,a.`points`,a.`votes`,a.`average`,a.`title`,a.`data`,a.`hash`,a.`user_ip`,a.`summary`,a.`smiley`,a.`message_id`,a.`in_reply_to`,a.`comment_rating` ";
-	    }
-	    $query .="order by ".$this->convert_sortmode($sort_mode).", `threadId`";
+	}
+	$query .="order by `sticky` desc, ".$this->convert_sortmode($sort_mode).", `threadId`";
 
-	    $bind_vars = array((string) $forumId);
-	    if ( ! $include_archived ) $bind_vars[] = 'n';
-	    $bind_vars[] = $type;
-	    $bind_vars[] = 0;
+	$bind_vars = array((string) $forumId);
+	if ( ! $include_archived ) $bind_vars[] = 'n';
+	$bind_vars[] = 0;
 
-	    $result = $this->query($query, array_merge($bind_vars, $bind_time), $max, $offset);
+	$result = $this->query($query, array_merge($bind_vars, $bind_time), $max, $offset);
 
-	    while ($res = $result->fetchRow()) {
+	while ($res = $result->fetchRow()) {
 		$tid = $res['threadId'];
 		if ($res["lastPost"]!=$res["commentDate"]) {
-		    // last post data is for tiki-view_forum.php. 
-		    // you can see the title and author of last post
-		    $query = "select * from `tiki_comments`
+			// last post data is for tiki-view_forum.php. 
+			// you can see the title and author of last post
+			$query = "select * from `tiki_comments`
 			where `parentId` = ? and `commentDate` = ?
 			order by `threadId` desc";
-		    $r2 = $this->query($query, array($tid, $res['lastPost']));
-		    $res['lastPostData'] = $r2->fetchRow();
+			$r2 = $this->query($query, array($tid, $res['lastPost']));
+			$res['lastPostData'] = $r2->fetchRow();
 		}
 
 		// Has the user read it?
 		$res['is_marked'] = $this->is_marked($tid);
 		$ret[] = $res;
-	    }
 	}
 
 	return $ret;
