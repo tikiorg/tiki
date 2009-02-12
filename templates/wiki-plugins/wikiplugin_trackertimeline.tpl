@@ -28,7 +28,7 @@ ttl_showdetails = function( data ) {
 	{/foreach}
 	{foreach from=$wp_ttl_data item=list key=datagroup}
 		<tr>
-			<th>{if $link_group_names}<a href="{$datagroup|sefurl:'wiki page'}">{/if}{$datagroup|escape}{if $link_group_names}</a>{/if}</th>
+			<th>{if $link_group_names}<a href="{$datagroup|sefurl:'wiki page'}">{/if}{$datagroup|tr_if|escape}{if $link_group_names}</a>{/if}</th>
 			<td>
 				<div>
 				{foreach from=$list item=block}{if $block.lpad > 0}<span style="display: inline-block; display: -moz-inline-stack; width: {$block.lpad}%; height: 30px; border: 0;"></span>{/if}<span style="display: inline-block; display: -moz-inline-stack; width: {$block.lsize}%; height: 30px; border: 0; overflow:hidden; background: lightgreen;">
