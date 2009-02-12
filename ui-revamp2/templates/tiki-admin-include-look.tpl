@@ -681,6 +681,10 @@
 				<div id="other" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_other) and $smarty.session.tiki_cookie_jar.show_other neq 'y'}none{else}block{/if};">
 			{/if}
 			<div class="clear floatleft">
+				<input type="checkbox" id="menus_items_icons" name="menus_items_icons" {if $prefs.menus_items_icons eq 'y'}checked="checked"{/if} />
+				<label for="menus_items_icons">{tr}Allow users to define icons for menus entries{/tr}</label>
+			</div>
+			<div class="clear floatleft">
 				<input type="checkbox" id="use_context_menu_icon" name="use_context_menu_icon" {if $prefs.use_context_menu_icon eq 'y'}checked="checked"{/if} />
 				<label for="use_context_menu_icon">{tr}Use context menus for actions (icons) (only in file galleries yet){/tr}</label>
 			</div>

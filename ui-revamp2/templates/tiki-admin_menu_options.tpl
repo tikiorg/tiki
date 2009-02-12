@@ -48,7 +48,7 @@
 {/if}
 </td></tr>
 {if $prefs.feature_userlevels eq 'y'}
-<tr class="formcolor"><td>{tr}Level{/tr}:</td><td colspan="3">
+<tr class="formcolor"><td>{tr}Level:{/tr}</td><td colspan="3">
 <select name="level">
 <option value="0"{if $level eq 0} selected="selected"{/if}>{tr}All{/tr}</option>
 {foreach key=levn item=lev from=$prefs.userlevels}
@@ -58,7 +58,7 @@
 </td>
 </tr>
 {/if}
-<tr class="formcolor"><td>{tr}Type{/tr}:</td><td>
+<tr class="formcolor"><td>{tr}Type:{/tr}</td><td>
 <select name="type">
 <option value="o" {if $type eq 'o'}selected="selected"{/if}>{tr}option{/tr}</option>
 <option value="s" {if $type eq 's'}selected="selected"{/if}>{tr}section level 0{/tr}</option>
@@ -69,14 +69,20 @@
 <option value="-" {if $type eq '-'}selected="selected"{/if}>{tr}separator{/tr}</option>
 </select>
 </td>
-<td>{tr}Position{/tr}:</td><td><input type="text" name="position" value="{$position|escape}" size="6" /></td></tr>
-<tr class="formcolor"><td>&nbsp;</td><td colspan="3"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
+<td>{tr}Position:{/tr}</td><td><input type="text" name="position" value="{$position|escape}" size="6" /></td></tr>
+{if $prefs.menus_items_icons eq 'y'}
+<tr><td>{tr}Icon:{/tr}</td><td colspan="3"><input type="text" name="icon" value="{$icon|escape}" size="20" /></td></tr>
+{/if}
+<tr class="formcolor"><td>&nbsp;</td><td colspan="3">
+	<input type="submit" name="save" value="{tr}Save{/tr}" />
+	{if $prefs.menus_items_icons neq 'y'}<input type="hidden" name="icon" value="{$icon|escape}" />{/if}
+</td></tr>
 </table>
 </form>
 </td>
 <td valign="top" class="even" id="weburls" style="display:none;">
 <table>
-<tr><td>{tr}Home{/tr}: </td><td><select name="wikilinks" onchange="setMenuCon(options[selectedIndex].value);return true;">
+<tr><td>{tr}Home:{/tr} </td><td><select name="wikilinks" onchange="setMenuCon(options[selectedIndex].value);return true;">
 <option value=",,,">{tr}Choose{/tr} ...</option>
 <option value="{$prefs.tikiIndex},{tr}Home Page{/tr}">{tr}Home Page{/tr}</option>
 {if $prefs.home_blog}<option value="{$prefs.home_blog|sefurl:blog},{tr}Home Blog{/tr},feature_blogs,tiki_p_view_blogs">{tr}Home Blog{/tr}</option>{/if}

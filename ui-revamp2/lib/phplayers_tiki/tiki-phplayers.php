@@ -35,10 +35,12 @@ class TikiPhplayers extends TikiLib {
 			return array('', 0);
 		}
 	}
-	function mkMenuEntry($idMenu, &$curOption, $sectionLevel='', $translate='y') {
+	function mkMenuEntry($idMenu, &$curOption, $sectionLevel='', $translate='y', &$use_items_icons = null) {
 		global $tikilib, $wikilib, $mylevel, $prefs;
 		global $menulib; include_once('lib/menubuilder/menulib.php');
 		$menu_info = $tikilib->get_menu($idMenu);
+		$use_items_icons = $menu_info['use_items_icons'] == 'y';
+
 		$channels = $tikilib->list_menu_options($idMenu, 0, -1, 'position_asc', '','',$mylevel);
 		$channels = $menulib->setSelected($channels, $sectionLevel);
 		if (empty($channels['data'])) {
@@ -58,6 +60,7 @@ class TikiPhplayers extends TikiLib {
 		}
 		$realKey = 0;
 		$level = 0;
+		$display_icon = false;
 		foreach ($channels['data'] as $key=>$cd) {
 			if ($translate != 'n') {
 				$cd["name"] = tra($cd["name"]);
@@ -92,19 +95,33 @@ class TikiPhplayers extends TikiLib {
 						$curOption = $realKey;
 						if ($cd['type'] != 's' && $cd['type'] != 'r') {
 							for ($i = $level - 1; $i >= 0; --$i) {
-								$res = str_replace($cur[$i], $cur[$i].'||||1', $res);
+								$res = str_replace($cur[$i], $cur[$i].'||1', $res);
 							}
 						}
 					}
 				}
 			}
-			$res.= ".|".$cd["name"]."|";
-			$res.= ($prefs['feature_sefurl'] == 'y' && !empty($cd['sefurl']))? $cd['sefurl']: $cd['url'];
+
+			$res .= ".|".$cd["name"]."|";
+			$res .= ($prefs['feature_sefurl'] == 'y' && !empty($cd['sefurl']))? $cd['sefurl']: $cd['url'];
+			$res .= '||';
+
+			$display_icon = ( $level == 0 || ( $level == 1 && ( $cd['type'] == 's' || $cd['type'] == 'r' ) ) );
+			if ( $use_items_icons && $display_icon ) {
+				global $smarty;
+				require_once('lib/smarty_tiki/function.icon.php');
+				$res .= smarty_function_icon(array(
+					'_id' => $cd['icon'],
+					'_notag' => 'y',
+					'_defaultdir' => 'pics/large'
+				), $smarty);
+			}
 			if (empty($curOption) && $cd['type'] != 'o' && $cd['type'] != '-') {
 				$cur[$level - 1] = $res;
 			}
  			$res .= "\n";
 		}
+
 		return $res;
 	}
 	function getParamsStyle($style) {
@@ -212,4 +229,3 @@ class TikiPhplayers extends TikiLib {
 }
 global $dbTiki;
 $tikiphplayers = new TikiPhpLayers($dbTiki);
-?>
