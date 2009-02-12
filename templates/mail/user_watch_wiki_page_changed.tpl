@@ -9,7 +9,7 @@
 {$mail_machine_raw}/tiki-index.php?page={$mail_page|escape:"url"}
 
 {if !$new_page}{tr}You can view a diff back to the previous version by following this link:{/tr} {* Using the full diff syntax so the links are still valid, even after a new version has been made.  -rlpowell *}
-{$mail_machine_raw}/tiki-pagehistory.php?page={$mail_page|escape:"url"}&compare=1&oldver={$mail_oldver}&newver={$mail_newver}&diff_style=minsidediff
+{$mail_machine_raw}/tiki-pagehistory.php?page={$mail_page|escape:"url"}&compare=1&oldver={$mail_oldver}&newver={$mail_newver}
 {/if}
 
 {if $mail_hash}{tr}If you don't want to receive these notifications follow this link:{/tr}
