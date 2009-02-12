@@ -144,7 +144,7 @@ hosting provider.  Normally Tiki tables won't conflict with other product names{
 			</script>
 			<div id="install-link">
 			<p><a href="javascript:install()">{tr}Reinstall database.{/tr}</a></p>
-			<p style="text-align: center"><img src="img/silk/sticky.png" alt="warning" style="vertical-align:middle"/> <strong>{tr}Warning{/tr}</strong>: {tr}This will destroy your current database{/tr}.</p>
+			<p style="text-align: center"><img src="pics/icons/sticky.png" alt="{tr}Warning{/tr}" style="vertical-align:middle" /> <strong>{tr}Warning{/tr}</strong>: {tr}This will destroy your current database{/tr}.</p>
 			</div>
 		    <table id="install-table" style="visibility:hidden">
 			{else}
@@ -154,7 +154,7 @@ hosting provider.  Normally Tiki tables won't conflict with other product names{
 		     <td><h2>{tr}Install{/tr}</h2></td>
 		    </tr>
 			 <tr>
-			  <td>{if $tikidb_created}<p style="text-align: center"><img src="img/silk/sticky.png" alt="warning" style="vertical-align:middle"/> <strong>{tr}Warning{/tr}</strong>: {tr}This will destroy your current database{/tr}.</p>{/if}			  
+			  <td>{if $tikidb_created}<p style="text-align: center"><img src="pics/icons/sticky.png" alt="{tr}Warning{/tr}" style="vertical-align:middle" /> <strong>{tr}Warning{/tr}</strong>: {tr}This will destroy your current database{/tr}.</p>{/if}			  
 			  <p>{tr}Create a new database (clean install) with profile{/tr}:<br />
 			<select name="profile" size="{if $profiles}{$profiles|@count}{else}3{/if}">
 			{section name=ix loop=$profiles}
