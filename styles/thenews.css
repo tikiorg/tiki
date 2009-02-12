@@ -106,6 +106,7 @@ textarea,
 option,
 select {
 	margin: 0.2em;
+	vertical-align: middle;
 }
 
 /* IE */
@@ -114,6 +115,7 @@ select {
 input[type=checkbox],
 input[type=radio] {
 	border: 0;
+	vertical-align: middle !important;
 }
 
 input[type=text],
@@ -674,7 +676,8 @@ div.menuSection div.separator {
 
 /****** Misc. Global Classes (layout and style) ****/
 
-.hidden {position: absolute; left: -10000px; top: 0; width: 1px; height: 1px; overflow: hidden;}.floatlist {	clear: left;list-style-type: none;margin: 0;padding-left: 0;}
+.hidden {position: absolute; left: -10000px; top: 0; width: 1px; height: 1px; overflow: hidden;}
+.floatlist {	clear: left;list-style-type: none;margin: 0;padding-left: 0;}
 .floatlist li { float: left; }
 div#attzone,
 div#comzone {	display: none;	margin-top: 10px;}
