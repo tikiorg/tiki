@@ -679,7 +679,7 @@ class Comments extends TikiLib {
 	    $query = "select a.`threadId`,a.`object`,a.`objectType`,a.`parentId`,
 	    a.`userName`,a.`commentDate`,a.`hits`,a.`type`,a.`points`,
 	    a.`votes`,a.`average`,a.`title`,a.`data`,a.`hash`,a.`user_ip`,
-	    a.`summary`,a.`smiley`,a.`message_id`,a.`in_reply_to`,a.`comment_rating`,".
+	    a.`summary`,a.`smiley`,a.`message_id`,a.`in_reply_to`,a.`comment_rating`,a.`locked`, ".
 		$this->ifNull("a.`archived`", "'n'")." as `archived`,".
 		$this->ifNull("max(b.`commentDate`)","a.`commentDate`")." as `lastPost`,
 	    count(b.`threadId`) as `replies`
@@ -692,7 +692,7 @@ class Comments extends TikiLib {
 		
 
 	    if($this->driver != 'sybase') {
-		$query .=",a.`object`,a.`objectType`,a.`parentId`,a.`userName`,a.`commentDate`,a.`hits`,a.`type`,a.`points`,a.`votes`,a.`average`,a.`title`,a.`data`,a.`hash`,a.`user_ip`,a.`summary`,a.`smiley`,a.`message_id`,a.`in_reply_to`,a.`comment_rating` ";
+		$query .=",a.`object`,a.`objectType`,a.`parentId`,a.`userName`,a.`commentDate`,a.`hits`,a.`type`,a.`points`,a.`votes`,a.`average`,a.`title`,a.`data`,a.`hash`,a.`user_ip`,a.`summary`,a.`smiley`,a.`message_id`,a.`in_reply_to`,a.`comment_rating`,a.`locked` ";
 	    }
 	    $query .="order by ".$this->convert_sortmode($sort_mode).", `threadId`";
 
@@ -930,6 +930,8 @@ class Comments extends TikiLib {
 
 	$result = $this->query($query,array((int) $forumId));
 	$res = $result->fetchRow();
+	if ( !empty($res) ) $res['is_locked'] = $this->is_object_locked('forum:'.$forumId) ? 'y' : 'n';
+
 	return $res;
     }
 
@@ -979,6 +981,9 @@ class Comments extends TikiLib {
 			'select count(distinct `userName`) from `tiki_comments` where `object`=? and `objectType`=?',
 			array($res['forumId'], 'forum')
 		    );
+
+		    // Get lock status
+		    $res['is_locked'] = $this->is_object_locked('forum:'.$res['forumId']) ? 'y' : 'n';
 
 		    // Get data of the last post of this forum
 		    if ( $res['comments'] > 0 ) {
@@ -1289,7 +1294,7 @@ class Comments extends TikiLib {
 	}
 	$res = $result->fetchRow();
 	if($res) { //if there is a comment with that id
-	   $this->add_comments_extras($res, $forum_info);
+		$this->add_comments_extras($res, $forum_info);
 	}
 
 	return $res;
@@ -1677,7 +1682,7 @@ class Comments extends TikiLib {
 	    $query = "select `message_id` from `tiki_comments` where `threadId` = ?";
 	    $parent_message_id = $this->getOne($query, array( $parentId ) );
 
-	    $query = "select tc1.`threadId`, tc1.`object`, tc1.`objectType`, tc1.`parentId`, tc1.`userName`, tc1.`commentDate`, tc1.`hits`, tc1.`type`, tc1.`points`, tc1.`votes`, tc1.`average`, tc1.`title`, tc1.`data`, tc1.`hash`, tc1.`user_ip`, tc1.`summary`, tc1.`smiley`, tc1.`message_id`, tc1.`in_reply_to`, tc1.`comment_rating`  from `tiki_comments` as tc1
+	    $query = "select tc1.`threadId`, tc1.`object`, tc1.`objectType`, tc1.`parentId`, tc1.`userName`, tc1.`commentDate`, tc1.`hits`, tc1.`type`, tc1.`points`, tc1.`votes`, tc1.`average`, tc1.`title`, tc1.`data`, tc1.`hash`, tc1.`user_ip`, tc1.`summary`, tc1.`smiley`, tc1.`message_id`, tc1.`in_reply_to`, tc1.`comment_rating`, tc1.`locked`  from `tiki_comments` as tc1
 		left outer join `tiki_comments` as tc2 on tc1.`in_reply_to` = tc2.`message_id`
 		and tc1.`parentId` = ?
 		and tc2.`parentId` = ?
@@ -1920,7 +1925,7 @@ class Comments extends TikiLib {
 
     function lock_comment($threadId) {
 	$query = "update `tiki_comments`
-	    set `type`='l' where `threadId`=?";
+	    set `locked`='y' where `threadId`=?";
 
 	$this->query($query, array( (int) $threadId ) );
     }
@@ -1948,9 +1953,31 @@ class Comments extends TikiLib {
 
     function unlock_comment($threadId) {
 	$query = "update `tiki_comments`
-	    set `type`='n' where `threadId`=?";
+	    set `locked`='n' where `threadId`=?";
 
 	$this->query($query, array( (int) $threadId ) );
+    }
+
+    // Lock all comments of an object
+    function lock_object_thread($objectId, $status = 'y') {
+	if ( empty($objectId) ) return false;
+	$object = explode( ":", $objectId, 2);
+	if ( count($object) < 2 ) return false;
+	$query = "UPDATE `tiki_objects` SET `comments_locked`=? WHERE `Type`=? AND `itemId`=?";
+	return $this->query($query, array( $status, $object[0], $object[1] ));
+    }
+
+    // Unlock all comments of an object
+    function unlock_object_thread($objectId) {
+	return $this->lock_object_thread($objectId, 'n');
+    }
+
+    // Get the status of an object (Lock / Unlock)
+    function is_object_locked($objectId) {
+	if ( empty($objectId) ) return false;
+	$object = explode( ":", $objectId, 2);
+	if ( count($object) < 2 ) return false;
+	return $this->getOne('SELECT `comments_locked` FROM `tiki_objects` WHERE `Type`=? AND `itemId`=?', array( $object[0], $object[1] )) == 'y';
     }
 
     function update_comment_links($data, $objectType, $threadId) {
@@ -2127,10 +2154,10 @@ class Comments extends TikiLib {
 			`commentDate`, `userName`, `title`, `data`, `votes`,
 			`points`, `hash`, `parentId`, `average`, `hits`,
 			`type`, `summary`, `smiley`, `user_ip`,
-			`message_id`, `in_reply_to`, `approved`)
+			`message_id`, `in_reply_to`, `approved`, `locked`)
 		values ( ?, ?, ?, ?, ?, ?,
 			0, 0, ?, ?, 0, 0, ?, ?, 
-			?, ?, ?, ?, ?)";
+			?, ?, ?, ?, ?, 'n')";
 	    $result = $this->query($query, 
 		    array( $object[0], (string) $object[1],(int) $this->now, $userName,
 			$title, $data, $hash, (int) $parentId, $type,
@@ -2400,5 +2427,3 @@ function r_compare_lastPost($ar1, $ar2) {
 	return $ar1['type'] == 's' ? -1 : 1;
     }
 }
-
-?>

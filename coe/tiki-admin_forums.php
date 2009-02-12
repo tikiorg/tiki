@@ -66,6 +66,16 @@ if (isset($_REQUEST["remove"])) {
     key_get($area);
   }
 }
+
+if ( isset($_REQUEST['lock']) && isset($_REQUEST['forumId']) ) {
+	check_ticket('view-forum');
+	if ( $_REQUEST['lock'] == 'y' ) {
+		$commentslib->lock_object_thread('forum:'.((int)$_REQUEST['forumId']));
+	} elseif ( $_REQUEST['lock'] == 'n' ) {
+		$commentslib->unlock_object_thread('forum:'.((int)$_REQUEST['forumId']));
+	}
+}
+
 if (isset($_REQUEST['batchaction']) && $_REQUEST['batchaction'] = 'delsel_x' && isset($_REQUEST['checked'])) {
 	check_ticket('admin-forums');
 	foreach($_REQUEST['checked'] as $id) {

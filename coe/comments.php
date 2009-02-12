@@ -180,10 +180,10 @@ if (!isset($_REQUEST["comments_reply_threadId"])) {
 }
 $smarty->assign("comments_reply_threadId", $_REQUEST["comments_reply_threadId"]);
 
+// Include the library for comments (if not included)
 include_once ("lib/commentslib.php");global $dbTiki;
 $commentslib = new Comments($dbTiki);
 
-// Include the library for comments (if not included)
 if (!isset($comments_prefix_var)) {
 	$comments_prefix_var = '';
 }
@@ -192,12 +192,12 @@ if( ! isset( $comments_objectId ) ) {
 	if (!isset($_REQUEST[$comments_object_var])) {
 		die ("The comments_object_var variable cannot be found as a REQUEST variable");
 	}
-
 	$comments_objectId = $comments_prefix_var . $_REQUEST["$comments_object_var"];
 }
 
 $message_id = '';
 $in_reply_to = '';
+
 // Process a post form here 
 if ( ($tiki_p_post_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n'))
 		|| ($tiki_p_forum_post == 'y' && isset($forum_mode) && $forum_mode == 'y') ) {
@@ -236,6 +236,24 @@ if ( ($tiki_p_post_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n'
 
 			// Remove HTML tags and empty lines at the end of the posted comment
 			$_REQUEST["comments_data"] = rtrim(strip_tags($_REQUEST["comments_data"]));
+
+			if ( isset($forum_mode) && $forum_mode == 'y' ) {
+				if ( $forum_info['is_locked'] == 'y' ) {
+					$smarty->assign('msg', tra("This forum is locked"));
+					$smarty->display("error.tpl");
+					die;
+				}
+			} elseif ( $commentslib->is_object_locked($comments_objectId) ) {
+				$smarty->assign('msg', tra("Those comments are locked"));
+				$smarty->display("error.tpl");
+				die;
+			}
+			$parent_comment_info = $commentslib->get_comment($parent_id);
+			if ( $parent_comment_info['locked'] == 'y' ) {
+				$smarty->assign('msg', tra("This thread is locked"));
+				$smarty->display("error.tpl");
+				die;
+			}
 
 			if ( $tiki_p_forum_autoapp != 'y'
 					&& ( $forum_info['approval_type'] == 'queue_all' || ( ! $user && $forum_info['approval_type'] == 'queue_anon' ) )
@@ -495,11 +513,23 @@ if (($tiki_p_vote_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n')
 	}
 }
 
-if ( (!isset($forum_mode) || $forum_mode == 'n') && $tiki_p_admin_comments == 'y' && isset($_REQUEST['comments_approve']) && isset($_REQUEST["comments_threadId"]) ) {
+// Comments Moderation
+if ( (!isset($forum_mode) || $forum_mode == 'n') && $tiki_p_admin_comments == 'y' && isset($_REQUEST["comments_threadId"]) && !empty($_REQUEST['comments_approve']) ) {
+
 	if ( $_REQUEST['comments_approve'] == 'y' ) {
 		$commentslib->approve_comment($_REQUEST["comments_threadId"]);
 	} elseif ( $_REQUEST['comments_approve'] == 'n' ) {
 		$commentslib->reject_comment($_REQUEST["comments_threadId"]);
+	}
+}
+
+// Comments and Forum Locking
+if ( ! empty($_REQUEST['comments_lock']) && ! empty($comments_objectId) && ( ! isset($forum_mode) || $forum_mode == 'n' ) && $tiki_p_lock_comments == 'y'
+) {
+	if ( $_REQUEST['comments_lock'] == 'y' ) {
+		$commentslib->lock_object_thread($comments_objectId);
+	} elseif ( $_REQUEST['comments_lock'] == 'n' ) {
+		$commentslib->unlock_object_thread($comments_objectId);
 	}
 }
 
@@ -678,6 +708,7 @@ if ( ! isset($forum_mode) || $forum_mode == 'n' ) {
 	}
 	$smarty->assign('queued', $queued);
 }
+
 $smarty->assign('comments_coms', $comments_coms["data"] );
 
 // Grab the parent comment to show.  -rlpowell
@@ -689,6 +720,18 @@ if (isset($_REQUEST["comments_parentId"]) &&
 	$parent_com = $commentslib->get_comment($_REQUEST["comments_parentId"]);
 	$smarty->assign_by_ref('parent_com', $parent_com);
 }
+
+// Get comments / forum lock status
+///if ( ! isset($forum_mode) || $forum_mode == 'n' ) {
+$thread_is_locked = ( ! empty($comments_objectId) && $commentslib->is_object_locked($comments_objectId) ) ? 'y' : 'n';
+///} else {
+if ( isset($forum_mode) && $forum_mode == 'y' ) {
+	$forum_is_locked = $thread_is_locked;
+	$thread_is_locked = $comment_info['locked'];
+	$smarty->assign('forum_is_locked', $forum_is_locked);
+}
+///}
+$smarty->assign('thread_is_locked', $thread_is_locked);
 
 if (!empty($_REQUEST['post_reply'])) {
 	$smarty->assign('post_reply', $_REQUEST['post_reply']);
