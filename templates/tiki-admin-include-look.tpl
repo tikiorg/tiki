@@ -283,10 +283,10 @@
 							</tr>
 							<tr>
 								<td class="form">
-									<label for="_siteTitle">{tr}Browser title{/tr}:</label>
+									<label for="_siteheadertitle">{tr}Site title{/tr}:</label>
 								</td>
 								<td>
-									<input type="text" name="siteTitle" id="_siteTitle" value="{$prefs.siteTitle}" size="50" maxlength="50" />
+									<input type="text" name="siteheadertitle" id="_sitetitle" value="{$prefs.siteheadertitle}" size="50" maxlength="50" />
 								</td>
 							</tr>
 							<tr>
