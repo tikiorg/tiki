@@ -102,6 +102,7 @@ button:hover {
 
 button,
 input,
+label,
 textarea,
 option,
 select {
@@ -172,6 +173,7 @@ span.button a:hover {text-decoration: none}
 input[type=checkbox] {border: 0}
 
 * html .findtable input {font-size: 1em}
+.findtable ul {list-style-type: none}
 
 form.admin input[name="features"] {
 	margin-bottom: 3px !important;
@@ -731,7 +733,7 @@ div#edithelpzone {	display: none;}
 * html .clearfix {	height: 1%;}
 #overdiv table {	width: auto !important;}
 .attention {	color: red;}
-.highlight, #highlight  {}
+.highlight, #highlight  {background-color: #f2cd5e}
 
 /* OpenID  */
 .openid_url {
