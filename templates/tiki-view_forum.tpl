@@ -262,6 +262,12 @@
 						</td>
 					</tr>
 				{/if}
+				{if empty($user) && $prefs.feature_user_watches eq 'y'}
+					<tr>
+						<td><label for="anonymous_email">{tr}If you would like to be notified when someone replies<br />please tell us your e-mail address{/tr}:</label></td>
+						<td><input type="text" size="30" id="anonymous_email" name="anonymous_email" /></td>
+					</tr>
+				{/if}
 
 				<tr class="formcolor">
 					<td>{tr}Post{/tr}</td>

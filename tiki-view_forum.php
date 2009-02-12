@@ -27,6 +27,7 @@ if ($prefs['feature_forums'] != 'y') {
     $smarty->display("error.tpl");
     die;
 }
+$auto_query_args = array('forumId', 'comment_threadId', 'comment_offset', 'comment_threshold', 'thread_sort_mode', 'time_control', 'show_archived', 'poster', 'filter_type', 'reply_state');
 
 // the following code is needed to pass $_REQUEST variables that are not passed as URL parameters
 $phpself = $_SERVER['PHP_SELF'];
@@ -47,8 +48,8 @@ include_once ("lib/commentslib.php");
 $commentslib = new Comments($dbTiki);
 
 if (!isset($_REQUEST["forumId"]) || !($forum_info = $commentslib->get_forum($_REQUEST["forumId"]))) {
+	$smarty->assign('errortype', 'no_redirect_login');
     $smarty->assign('msg', tra("No forum indicated"));
-
     $smarty->display("error.tpl");
     die;
 }
@@ -67,86 +68,40 @@ if (isset($_REQUEST["openpost"])) {
 
 $smarty->assign('forumId', $_REQUEST["forumId"]);
 
-$commentslib->forum_add_hit($_REQUEST["forumId"]);
+$tikilib->get_perm_object($_REQUEST['forumId'], 'forum', $forum_info, true);
 
-$smarty->assign('individual', 'n');
-
-if ($userlib->object_has_one_permission($_REQUEST["forumId"], 'forum')) {
-    $smarty->assign('individual', 'y');
-
-    if ($tiki_p_admin != 'y') {
-	$perms = $userlib->get_permissions(0, -1, 'permName_desc', '', 'forums');
-
-	foreach ($perms["data"] as $perm) {
-	    $permName = $perm["permName"];
-
-	    if ($userlib->object_has_permission($user, $_REQUEST["forumId"], 'forum', $permName)) {
-		$$permName = 'y';
-
-		$smarty->assign("$permName", 'y');
-	    } else {
-		$$permName = 'n';
-
-		$smarty->assign("$permName", 'n');
-	    }
+// Now if the user is the moderator then give him forum admin privs -. SHOULD BE IN get_perm_object
+if ($tiki_p_admin_forum != 'y' && $user) {
+	if ($forum_info["moderator"] == $user) {
+		$tiki_p_admin_forum = 'y';
+	} elseif (in_array($forum_info['moderator_group'], $userlib->get_user_groups($user))) {
+		$tiki_p_admin_forum = 'y';
 	}
+	
+	if ($tiki_p_admin_forum == 'y') {
+		$smarty->assign('tiki_p_admin_forum', 'y');
+		$tiki_p_forum_post = 'y';
+		$smarty->assign('tiki_p_forum_post', 'y');
+		$tiki_p_forum_read = 'y';
+		$smarty->assign('tiki_p_forum_read', 'y');
+		$tiki_p_forum_vote = 'y';
+		$smarty->assign('tiki_p_forum_vote', 'y');
+		$tiki_p_forum_post_topic = 'y';
+		$smarty->assign('tiki_p_forum_post_topic', 'y');
     }
-} elseif ($tiki_p_admin != 'y' && $prefs['feature_categories'] == 'y') {
-	$perms_array = $categlib->get_object_categories_perms($user, 'forum', $_REQUEST['forumId']);
-   	if ($perms_array) {
-   		$is_categorized = TRUE;
-    	foreach ($perms_array as $perm => $value) {
-    		$$perm = $value;
-   	}
-	} else {
-   		$is_categorized = FALSE;
-   	}
-	if ($is_categorized && isset($tiki_p_view_categorized) && $tiki_p_view_categorized != 'y') {
-		$smarty->assign('errortype', 401);
-		$smarty->assign('msg',tra("Permission denied you cannot view this page"));
-		$smarty->display("error.tpl");
-		die;
-	}
 }
 
 if ($tiki_p_admin_forum != 'y' && $tiki_p_forum_read != 'y') {
 	$smarty->assign('errortype', 401);
     $smarty->assign('msg', tra("Permission denied to use this feature"));
-
     $smarty->display("error.tpl");
     die;
 }
+$commentslib->forum_add_hit($_REQUEST["forumId"]);
 
-// Now if the user is the moderator then give him forum admin privs
-if ($user) {
-    if ($forum_info["moderator"] == $user) {
-	$tiki_p_admin_forum = 'y';
-
-	$smarty->assign('tiki_p_admin_forum', 'y');
-    } elseif (in_array($forum_info['moderator_group'], $userlib->get_user_groups($user))) {
-	$tiki_p_admin_forum = 'y';
-
-	$smarty->assign('tiki_p_admin_forum', 'y');
-    }
-}
-
-if ($tiki_p_admin_forum == 'y') {
-    $tiki_p_forum_post = 'y';
-
-    $smarty->assign('tiki_p_forum_post', 'y');
-    $tiki_p_forum_read = 'y';
-    $smarty->assign('tiki_p_forum_read', 'y');
-    $tiki_p_forum_vote = 'y';
-    $smarty->assign('tiki_p_forum_vote', 'y');
-    $tiki_p_forum_post_topic = 'y';
-    $smarty->assign('tiki_p_forum_post_topic', 'y');
-}
-
-if ($tiki_p_forums_report == 'y') {
-    if (isset($_REQUEST['report'])) {
+if (isset($_REQUEST['report']) && $tiki_p_forums_report == 'y') {
 	check_ticket('view-forum');
 	$commentslib->report_post($_REQUEST['forumId'], 0, $_REQUEST['report'], $user, '');
-    }
 }
 
 if ($tiki_p_admin_forum == 'y') {
@@ -272,181 +227,151 @@ if ($tiki_p_forum_post_topic == 'n' && isset($_REQUEST['comments_postComment']) 
 	$tiki_p_forum_post_topic = 'y';
 }
 
-if ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y') {
-    if (isset($_REQUEST["comments_postComment"])) {
-	  if (empty($user) && $prefs['feature_antibot'] == 'y' && (!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $_REQUEST['antibotcode'])) {
-			$smarty->assign('msg',tra("You have mistyped the anti-bot verification code; please try again."));
-			$smarty->assign('errortype', 'no_redirect_login');
-			$smarty->display("error.tpl");
-			die;
-		}
-	  if ( ! empty($_REQUEST["comments_title"])
-		&& ! ( empty($_REQUEST["comments_data"]) && $prefs['feature_forums_allow_thread_titles'] != 'y' )
-		&& ! ( $prefs['feature_contribution'] == 'y' && $prefs['feature_contribution_mandatory_forum'] == 'y' && empty($_REQUEST['contributions']) )
-	  ) {
-	    if ($tiki_p_admin_forum == 'y' || $commentslib->user_can_post_to_forum($user, $_REQUEST["forumId"])) {
-    
+if (isset($_REQUEST['comments_postComment']) && ($tiki_p_admin_forum == 'y' || $tiki_p_forum_post_topic == 'y')) {
+	if (empty($user) && $prefs['feature_antibot'] == 'y' && (!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $_REQUEST['antibotcode'])) {
+		$smarty->assign('msg',tra('You have mistyped the anti-bot verification code; please try again.'));
+		$smarty->assign('errortype', 'no_redirect_login');
+		$smarty->display('error.tpl');
+		die;
+	}
+	if ($forum_info['controlFlood'] == 'y' && !$commentslib->user_can_post_to_forum($user, $forumId) ) {
+		$smarty->assign('errortype', 'no_redirect_login');
+		$smarty->assign('msg', sprintf(tra('Please wait %d secondes between posts'). $forum_info['floodInterval']));
+		$smarty->display('error.tpl');
+		die;
+	}
+	if ($tiki_p_admin_forum != 'y' && $forum_info['forum_use_password'] != 'n' && $_REQUEST['password'] != $forum_info['forum_password']) {
+		$smarty->assign('errortype', 'no_redirect_login');
+		$smarty->assign('msg', tra('Wrong password. Cannot post comment'));
+		$smarty->display('error.tpl');
+		die;
+	}
+
+	check_ticket('view-forum');
+	if ( ! empty($_REQUEST['comments_title'])
+		&& ! ( empty($_REQUEST['comments_data']) && $prefs['feature_forums_allow_thread_titles'] != 'y' )
+		&& ! ( $prefs['feature_contribution'] == 'y' && $prefs['feature_contribution_mandatory_forum'] == 'y' && empty($_REQUEST['contributions']) ) ) {
 		// Remove HTML tags and empty lines at the end of the posted comment
-		$_REQUEST["comments_data"] = rtrim(strip_tags($_REQUEST["comments_data"])); 
-
-		if ($tiki_p_admin_forum != 'y') {
-		    $_REQUEST["comment_topictype"] = 'n';
+		$_REQUEST['comments_data'] = rtrim(strip_tags($_REQUEST['comments_data'])); 
+		if ($tiki_p_admin_forum != 'y') {// non admin can only post normal
+			$_REQUEST['comment_topictype'] = 'n';
 		}
-
 		if ($forum_info['topic_summary'] != 'y')
-		    $_REQUEST['comment_topicsummary'] = '';
-
+			$_REQUEST['comment_topicsummary'] = '';
 		if ($forum_info['topic_smileys'] != 'y')
-		    $_REQUEST['comment_topicsmiley'] = '';
-
-		if ($forum_info['forum_use_password'] != 'n' && $_REQUEST['password'] != $forum_info['forum_password']) {
-		    $smarty->assign('msg', tra("Wrong password. Cannot post comment"));
-		    $smarty->display("error.tpl");
-		    die;
+			$_REQUEST['comment_topicsmiley'] = '';
+		if ( isset($_REQUEST['anonymous_name']) ) {
+			$anonymous_name = trim(strip_tags($_REQUEST['anonymous_name']));
+		} else {
+			$anonymous_name = '';
 		}
-	    
+		if (!isset($_REQUEST['freetag_string'])) {
+			$_REQUEST['freetag_string'] = '';
+		}
+		if (!empty($_REQUEST['anonymous_email'])) {
+			if (!validate_email($_REQUEST['anonymous_email'], $prefs['validateEmail'])) {
+				$smarty->assign('msg', tra('Invalid Email'));
+				$smarty->assign('errortype', 'no_redirect_login');
+				$smarty->display('error.tpl');
+				die;
+			}
+		} else {
+			$_REQUEST['anonymous_email'] = '';
+		}
+
 		if (($tiki_p_forum_autoapp != 'y')
 			&& ($forum_info['approval_type'] == 'queue_all' || (!$user && $forum_info['approval_type'] == 'queue_anon'))) {
-		    $smarty->assign('was_queued', 'y');
-
-		    $qId = $commentslib->replace_queue(0, $_REQUEST['forumId'], $comments_objectId, 0,
-			    $user, $_REQUEST["comments_title"], $_REQUEST["comments_data"], $_REQUEST["comment_topictype"],
-			    $_REQUEST['comment_topicsmiley'], $_REQUEST["comment_topicsummary"], $_REQUEST["comments_title"], '');
+			$threadId = 0;
+			$smarty->assign('was_queued', 'y');
+			$qId = $commentslib->replace_queue(0, $_REQUEST['forumId'], $comments_objectId, 0,
+				$user, $_REQUEST['comments_title'], $_REQUEST['comments_data'], $_REQUEST['comment_topictype'],
+											   $_REQUEST['comment_topicsmiley'], $_REQUEST['comment_topicsummary'], $_REQUEST['comments_title'], '', $anonymous_name, $_REQUEST['freetag_string'], $_REQUEST['anonymous_email']);
 		
 		} else { // not in queue mode
-		    $smarty->assign('was_queued', 'n');
+			$qId = 0;
+			$smarty->assign('was_queued', 'n');
 
-		    if ($_REQUEST["comments_threadId"] == 0) {
-			if (!isset($_REQUEST['comment_topicsummary']))
-			    $_REQUEST['comment_topicsummary'] = '';
+			if ($_REQUEST['comments_threadId'] == 0) { // new post
+				if (!isset($_REQUEST['comment_topicsummary']))
+					$_REQUEST['comment_topicsummary'] = '';
+				if (!isset($_REQUEST['comment_topicsmiley']))
+					$_REQUEST['comment_topicsmiley'] = '';
+				$message_id = '';
 
-			if (!isset($_REQUEST['comment_topicsmiley']))
-			    $_REQUEST['comment_topicsmiley'] = '';
+				// Check if the thread/topic already exist
+				$threadId = $commentslib->check_for_topic($_REQUEST['comments_title'], $_REQUEST['comments_data']);
 
-			$message_id = '';
+				// The thread/topic does not already exist
+				if( ! $threadId ) {
+					$threadId =	$commentslib->post_new_comment($comments_objectId, 0, $user, $_REQUEST['comments_title'], $_REQUEST['comments_data'], $message_id,
+						'', // in_reply_to
+						$_REQUEST['comment_topictype'],	$_REQUEST['comment_topicsummary'], $_REQUEST['comment_topicsmiley'], isset($_REQUEST['contributions'])? $_REQUEST['contributions']: '',	$anonymous_name	);
+					// The thread *WAS* successfully created.
 
-			// Check if the thread/topic already exist
-			$threadId = $commentslib->check_for_topic(
-				$_REQUEST["comments_title"],
-				$_REQUEST["comments_data"]
-				);
+					if( $threadId ) {
 
-			// The thread/topic does not already exist
-			if( ! $threadId )
-			{
-				if ( isset($_REQUEST["anonymous_name"]) ) {
-					$anonymous_name = trim(strip_tags($_REQUEST["anonymous_name"]));
-				} else {
-					$anonymous_name = '';
+						 // Deal with mail notifications.
+						include_once('lib/notifications/notificationemaillib.php');
+						sendForumEmailNotification('forum_post_topic', $_REQUEST['forumId'], $forum_info, $_REQUEST['comments_title'], $_REQUEST['comments_data'], $user, $_REQUEST['comments_title'], $message_id, '', $threadId, isset($_REQUEST['comments_parentId'])?$_REQUEST['comments_parentId']: 0, isset($_REQUEST['contributions'])? $_REQUEST['contributions']: '' );
+						// Set watch if requested
+						if ($prefs['feature_user_watches'] == 'y') {
+							if ($user && isset($_REQUEST['set_thread_watch']) && $_REQUEST['set_thread_watch'] == 'y') {
+								$tikilib->add_user_watch($user, 'forum_post_thread', $threadId, 'forum topic', $forum_info['name'] . ':' . $_REQUEST['comments_title'], 'tiki-view_forum_thread.php?forumId=' . $forum_info['forumId'] . '&amp;comments_parentId=' . $threadId);
+							} elseif (!empty($_REQUEST['anonymous_email'])) { // Add an anonymous watch, if email address supplied.
+								$tikilib->add_user_watch($anonymous_name. ' ' . tra('(not registered)', $prefs['site_language']), 'forum_post_thread', $threadId, 'forum topic', $forum_info['name'] . ':' . $_REQUEST['comments_title'], 'tiki-view_forum_thread.php?forumId=' . $forum_info['forumId'] . '&amp;comments_parentId=' . $threadId, $_REQUEST['anonymous_email'], isset($prefs['language']) ? $prefs['language'] : '');
+							}
+						}
+
+						// TAG Stuff
+						$cat_type = 'forum post';
+						$cat_objid = $threadId;
+						$cat_desc = substr($_REQUEST['comments_data'],0,200);
+						$cat_name = $_REQUEST['comments_title'];
+						$cat_href='tiki-view_forum_thread.php?comments_parentId=' . $threadId . '&forumId=' . $_REQUEST['forumId'];
+						include ('freetag_apply.php');
+					}
+				} elseif ($_REQUEST['forumId'] != $prefs['wiki_forum_id']) { // the threadId already exists
+					$smarty->assign('duplic', 'y');
+					unset($_REQUEST['comments_postComment']);// not to go in the topic redirection
 				}
-			    $threadId =
-				$commentslib->post_new_comment(
-					$comments_objectId,
-					0, $user, $_REQUEST["comments_title"],
-					($_REQUEST["comments_data"]),
-					$message_id,
-					'', // in_reply_to
-					$_REQUEST["comment_topictype"],
-					$_REQUEST["comment_topicsummary"],
-					$_REQUEST['comment_topicsmiley'],
-					isset($_REQUEST['contributions'])? $_REQUEST['contributions']: '',
-					$anonymous_name
-					);
-			    // The thread *WAS* successfully created.
 
-			    // TAG Stuff
-			    $cat_type = 'forum post';
-			    $cat_objid = $threadId;
-			    $cat_desc = substr($_REQUEST["comments_data"],0,200);
-			    $cat_name = $_REQUEST["comments_title"];
-			    $cat_href="tiki-view_forum_thread.php?comments_parentId=" . $threadId . "&forumId=" . $_REQUEST["forumId"];
-			    include_once ("freetag_apply.php");
-			    
-				if( $threadId ) { // Deal with mail notifications.
-					include_once('lib/notifications/notificationemaillib.php');
-					sendForumEmailNotification('forum_post_topic', $_REQUEST['forumId'], $forum_info, $_REQUEST['comments_title'], $_REQUEST['comments_data'], $user, $_REQUEST['comments_title'], $message_id, '', $threadId, isset($_REQUEST['comments_parentId'])?$_REQUEST['comments_parentId']: 0, isset($_REQUEST['contributions'])? $_REQUEST['contributions']: '' );
-					// Set watch if requested
-					if ($prefs['feature_user_watches'] == 'y' && $user && isset($_REQUEST['set_thread_watch']) && $_REQUEST['set_thread_watch'] == 'y') 
-						$tikilib->add_user_watch($user, 'forum_post_thread', $threadId, 'forum topic', $forum_info['name'] . ':' . $_REQUEST["comments_title"], "tiki-view_forum_thread.php?forumId=" . $forum_info['forumId'] . "&amp;comments_parentId=" . $threadId); 
-				}
-			} elseif ($_REQUEST['forumId'] != $prefs['wiki_forum_id']) { // the threadId already exists
-				$smarty->assign('duplic', 'y');
-				unset($_REQUEST['comments_postComment']);// not to go in the topic redirection
+				$commentslib->register_forum_post($_REQUEST['forumId'], 0);
+			} elseif ($tiki_p_admin_forum == 'y' || $commentslib->user_can_edit_post($user, $_REQUEST['comments_threadId'])) {
+				$threadId = $_REQUEST['comments_threadId'];
+				$commentslib->update_comment($threadId, $_REQUEST['comments_title'], '', ($_REQUEST['comments_data']), $_REQUEST['comment_topictype'], $_REQUEST['comment_topicsummary'], $_REQUEST['comment_topicsmiley'], 'forum:'.$_REQUEST['forumId'], isset($_REQUEST['contributions'])? $_REQUEST['contributions']: '');
 			}
-		    // PROCESS ATTACHMENT HERE        
-		    if ((!empty($qId) || !empty($threadId)) && isset($_FILES['userfile1']) && !empty($_FILES['userfile1']['name'])) {
+		}
+		if (!empty($threadId) || !empty($qId)) {
+			// PROCESS ATTACHMENT HERE
+			if (isset($_FILES['userfile1']) && !empty($_FILES['userfile1']['name'])) {
 				if (is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
 					if (!empty($prefs['forum_match_regex']) && !preg_match($prefs['forum_match_regex'], $_FILES['userfile1']['name'])) {
-						$smarty->assign('msg', 'Invalid filename (using filters for filenames)');
-						$smarty->display("error.tpl");
+						$smarty->assign('msg', tra('Invalid filename (using filters for filenames)'));
+						$smarty->assign('errortype', 'no_redirect_login');
+						$smarty->display('error.tpl');
 						die;
 					}
-					check_ticket('view-forum');
-					$fp = fopen($_FILES['userfile1']['tmp_name'], "rb");
-					$commentslib->add_thread_attachment($forum_info, !empty($qId)?$qid: $threadId, $fp, '',	$_FILES['userfile1']['name'], $_FILES['userfile1']['type'],	$_FILES['userfile1']['size'] );
-		    		}
-				else {
+					$fp = fopen($_FILES['userfile1']['tmp_name'], 'rb');
+					$commentslib->add_thread_attachment($forum_info, $threadId, $fp, '',	$_FILES['userfile1']['name'], $_FILES['userfile1']['type'],	$_FILES['userfile1']['size'], 0, $qId );
+				} else {
 					$smarty->assign('msg', $tikilib->uploaded_file_error($_FILES['userfile1']['error']));
-					$smarty->display("error.tpl");
+					$smarty->assign('errortype', 'no_redirect_login');
+					$smarty->display('error.tpl');
 					die;
 				}
-			}
-		    //END ATTACHMENT PROCESSING
-
-
-			$commentslib->register_forum_post($_REQUEST["forumId"], 0);
-		    } elseif ($tiki_p_admin_forum == 'y' || $commentslib->user_can_edit_post($user, $_REQUEST["comments_threadId"])) {
-			    $commentslib->update_comment($_REQUEST["comments_threadId"], $_REQUEST["comments_title"], '', ($_REQUEST["comments_data"]), $_REQUEST["comment_topictype"], $_REQUEST['comment_topicsummary'], $_REQUEST['comment_topicsmiley'], 'forum:'.$_REQUEST["forumId"], isset($_REQUEST['contributions'])? $_REQUEST['contributions']: '');
-
-
-			    // TAG Stuff
-			    $cat_type = 'forum post';
-			    $cat_objid = $_REQUEST["comments_threadId"];
-			    $cat_desc = substr($_REQUEST["comments_data"],0,200);
-			    $cat_name = $_REQUEST["comments_title"];
-			    $cat_href="tiki-view_forum_thread.php?comments_parentId=" . $_REQUEST["comments_threadId"] . "&forumId=" . $_REQUEST["forumId"];
-			    include_once ("freetag_apply.php");
-			    
-			    // PROCESS ATTACHMENT HERE
-			    if ($_REQUEST['comments_threadId'] && isset($_FILES['userfile1']) && !empty($_FILES['userfile1']['name'])) {
-					if (is_uploaded_file($_FILES['userfile1']['tmp_name'])) {
-						check_ticket('view-forum');
-						$fp = fopen($_FILES['userfile1']['tmp_name'], "rb");
-						$commentslib->add_thread_attachment(
-							$forum_info, $_REQUEST["comments_threadId"], $fp, '',
-							$_FILES['userfile1']['name'],
-							$_FILES['userfile1']['type'],
-							$_FILES['userfile1']['size'] );
-			    		}
-					else {
-						$smarty->assign('msg', $tikilib->uploaded_file_error($_FILES['userfile1']['error']));
-						$smarty->display("error.tpl");
-						die;
-					}
-				}
-			    //END ATTACHMENT PROCESSING
-		    }
+			} //END ATTACHMENT PROCESSING
 		}
-	    } else {
-		$smarty->assign('msg', tra("Please wait 2 minutes between posts"));
-
-		$smarty->display("error.tpl");
-		die;
-	    }
 	} else {
-	    //User didn't give title or data.
-	    // give him a chance to correct this
-	    $smarty->assign('openpost', 'y');
+		//User didn't give title or data. give him a chance to correct this
+		$smarty->assign('openpost', 'y');
+		if ( empty($_REQUEST['comments_title']) || ( empty($_REQUEST['comments_data']) && $prefs['feature_forums_allow_thread_titles'] != 'y' ) )
+			$smarty->assign('warning', 'y');
 
-	    if ( empty($_REQUEST["comments_title"]) || ( empty($_REQUEST["comments_data"]) && $prefs['feature_forums_allow_thread_titles'] != 'y' ) )
-		    $smarty->assign('warning', 'y');
-
-	    if ($prefs['feature_contribution'] == 'y' && $prefs['feature_contribution_mandatory_forum'] == 'y' && empty($_REQUEST['contributions'])) {
-		$smarty->assign('contribution_needed', 'y');
-		unset($_REQUEST['comments_postComment']);// not to go in the topic redirection
-	    }
+		if ($prefs['feature_contribution'] == 'y' && $prefs['feature_contribution_mandatory_forum'] == 'y' && empty($_REQUEST['contributions'])) {
+			$smarty->assign('contribution_needed', 'y');
+			unset($_REQUEST['comments_postComment']);// not to go in the topic redirection
+		}
 	}
-    }
 }
 
 // Here we send the user to the right thread/topic if it already exists; this
@@ -533,7 +458,7 @@ if (isset($_REQUEST["comments_remove"]) && isset($_REQUEST["comments_threadId"])
 		  }
     } else { // user can't edit this post
         $smarty->assign('msg', tra('You are not permitted to remove someone else\'s post!'));
-
+		$smarty->assign('errortype', 'no_redirect_login');
         $smarty->display("error.tpl");
         die;
     }
