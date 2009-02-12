@@ -117,7 +117,7 @@ function _enlightColor($matches) {
      if (empty($referer['query'])) {
          return '';
      }
-     parse_str($referer['query'],$vars);
+     TikiLib::parse_str($referer['query'],$vars);
      if (isset($vars['q'])) {
          return $vars['q'];
      } else if (isset($vars['p'])) {

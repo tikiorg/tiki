@@ -53,7 +53,7 @@ $show_columns[$these_modules_name] = 'n';
 for ($mod_counter = 0; $mod_counter < $temp_max; $mod_counter++) {
 
 	$mod_reference = &$these_modules[$mod_counter];
-	parse_str($mod_reference["params"], $module_params);
+	TikiLib::parse_str($mod_reference["params"], $module_params);
 	if (!isset($module_params['decorations'])) $module_params['decorations'] = 'y';
 	if (isset($prefs['user_flip_modules']) && $prefs['user_flip_modules'] != 'module')
 		$module_params['flip'] = $prefs['user_flip_modules'];
