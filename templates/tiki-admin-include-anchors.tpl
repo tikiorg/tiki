@@ -122,7 +122,7 @@
 {/if}
 
 {if $prefs.feature_plugins neq 'n'}
-<a href="tiki-admin.php?page=plugins" title="{tr}Plugin aliases{/tr}" class="icon"><img class="icon" src="pics/large/plugins.png" alt="{tr}Plugin aliases{/tr}" width="32" height="32" /></a>
+<a href="tiki-admin.php?page=plugins" title="{tr}Plugin aliases{/tr}" class="icon"><img class="icon" src="pics/large/stock_line-in.png" alt="{tr}Plugin aliases{/tr}" width="32" height="32" /></a>
 {/if}
 
 {if $prefs.feature_semantic neq 'n'}
