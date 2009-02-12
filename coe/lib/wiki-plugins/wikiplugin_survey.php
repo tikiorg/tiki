@@ -57,7 +57,7 @@ function wikiplugin_survey($data, $params) {
 		}
 	}
 
-	include_once ('lib/surveys/surveylib.php');
+	global $srvlib; include_once ('lib/surveys/surveylib.php');
 	$questions = $srvlib->list_survey_questions($params['id'], 0, -1, 'position_asc', '');
 
 	$error_msg = '';
