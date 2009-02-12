@@ -330,6 +330,11 @@ div#sitead {margin: auto}
 	bottom: 7px;
 	right: 3px;
 	color: #f5f5f5}
+	
+#siteloginbar a:link,
+#siteloginbar a:visited {
+	color: #fff;
+	text-decoration: none}
 
 input[id="sl-login-user"],
 input[id="sl-login-pass"] {}
@@ -386,7 +391,8 @@ input[id="sl-login-pass"] {}
 	padding-right: 4px;
 	text-align: right;
 	display: block;
-	margin: 0}
+	margin: 0;
+	margin-top: 4px}
 
 input#fuser,
 select[name="where"],
@@ -441,10 +447,12 @@ a.flip img {display: none}
 	text-align: left}
 
 .horbaritem a,
+.horbaritem a:link,
 .horbaritem a:visited {
-	padding: 6px 3px;
+	display: block;
+	padding: 8px 0 8px 5px;
 	text-decoration: none;
-	font: 1em Verdana, Helvetica, Arial, Sans-Serif;
+	font: 14px Verdana, Helvetica, Arial, Sans-Serif;
 	color: white;
 	margin: 0}
 	
@@ -453,12 +461,11 @@ a.flip img {display: none}
 * html .horbaritem a:visited {font-size: 1.3em }
 
 .horbaritem a:hover {
-	background: url(feb12/pagebg.jpg) repeat-x;
+	background: url(feb12/header.jpg) 0 -40px repeat-x;
 	color: #eee !important;
 	text-decoration: none} 
 
 .horbaritem a:visited {} 
-* html .horbaritem a {font-size: .8em}
 .mdkverbar {} 
 
 .mdksubmenu {
@@ -468,7 +475,7 @@ a.flip img {display: none}
 	top: 0;
 	background: #FFFFFF;
 	visibility: hidden;
-	margin-top: 10px}
+	margin-top: 0}
 
 * html .mdksubmenu {margin-top: 0}
 *:first-child+html .mdksubmenu { margin-top: 0 }
