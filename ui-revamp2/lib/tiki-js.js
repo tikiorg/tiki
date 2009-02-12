@@ -475,6 +475,14 @@ function flip_thumbnail_status(id) {
   }
 }
 
+function flip_class(itemid, class1, class2) {
+	var elem = document.getElementById(itemid);
+	if (elem && typeof elem != 'undefined') {
+		elem.className = elem.className == class1 ? class2 : class1;
+		setCookie('flip_class_' + itemid, elem.className);
+	}
+}
+
 function tikitabs(focus,max) {
   for (var i = 1; i < max; i++) {
     var tabname = 'tab' + i;
@@ -560,7 +568,7 @@ function setsectionstate(foo, def, img) {
 }
 
 function icntoggle(foo, img) {
-    if (!img) {
+  if (!img) {
     if (document.getElementsByName('icn' + foo)[0].src.search(/[\\\/]/))
       img = document.getElementsByName('icn' + foo)[0].src.replace(/.*[\\\/]([^\\\/]*)$/, "$1");
     else
