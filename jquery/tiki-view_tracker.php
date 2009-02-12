@@ -580,6 +580,12 @@ if (isset($_REQUEST['import'])) {
 } elseif (isset($_REQUEST["save"])) {
 
 	if ($tiki_p_create_tracker_items == 'y') {
+		if (empty($user) && $prefs['feature_antibot'] == 'y' && (!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $_REQUEST['antibotcode'])) {
+				$smarty->assign('msg',tra("You have mistyped the anti-bot verification code; please try again."));
+				$smarty->assign('errortype', 'no_redirect_login');
+				$smarty->display("error.tpl");
+				die;
+		}
 
 		// Check field values for each type and presence of mandatory ones
 		$mandatory_missing = array();

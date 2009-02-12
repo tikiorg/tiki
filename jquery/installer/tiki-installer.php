@@ -539,7 +539,7 @@ $smarty = new Smarty_Tikiwiki();
 $smarty->load_filter('pre', 'tr');
 $smarty->load_filter('output', 'trimwhitespace');
 $smarty->assign('mid', 'tiki-install.tpl');
-$smarty->assign('style', 'tikineat.css');
+$smarty->assign('style', 'thenews.css');
 $smarty->assign('virt',$virt);
 $smarty->assign('multi', $multi);
 if ($language != 'en')
@@ -762,7 +762,7 @@ $smarty->assign('php_memory_limit', intval($php_memory_limit));
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 include "lib/headerlib.php";
-$headerlib->add_cssfile('styles/tikineat.css');
+$headerlib->add_cssfile('styles/thenews.css');
 $smarty->assign_by_ref('headerlib',$headerlib);
 
 $mid_data = $smarty->fetch('tiki-install.tpl');

@@ -539,7 +539,6 @@ name="w_displayed_default"{if $prefs.w_displayed_default eq 'y'} checked="checke
     <form action="tiki-admin.php?page=wiki" method="post">
     <table class="admin">
     <tr><td class="form">{tr}Sandbox:{/tr}</td><td><input type="checkbox" name="feature_sandbox" {if $prefs.feature_sandbox eq 'y'}checked="checked"{/if}/></td></tr>
-    <tr><td class="form">{tr}Anonymous editors must input anti-bot code:{/tr}</td><td><input type="checkbox" name="feature_antibot" {if $prefs.feature_antibot eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Last changes:{/tr}</td><td><input type="checkbox" name="feature_lastChanges" {if $prefs.feature_lastChanges eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Dump:{/tr}</td><td><input type="checkbox" name="feature_dump" {if $prefs.feature_dump eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Export:{/tr}</td><td><input type="checkbox" name="feature_wiki_export" {if $prefs.feature_wiki_export eq 'y'}checked="checked"{/if}/></td></tr>
@@ -547,6 +546,7 @@ name="w_displayed_default"{if $prefs.w_displayed_default eq 'y'} checked="checke
     <tr><td class="form">{tr}History:{/tr}</td><td><input type="checkbox" name="feature_history" {if $prefs.feature_history eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}View source:{/tr}</td><td><input type="checkbox" name="feature_source" {if $prefs.feature_source eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}List pages:{/tr}</td><td><input type="checkbox" name="feature_listPages" {if $prefs.feature_listPages eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}List orphan pages:{/tr}</td><td><input type="checkbox" name="feature_listorphanPages" {if $prefs.feature_listorphanPages eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Backlinks:{/tr}</td><td><input type="checkbox" name="feature_backlinks" {if $prefs.feature_backlinks eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Similar:{/tr}</td><td><input type="checkbox" name="feature_likePages" {if $prefs.feature_likePages eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Rankings:{/tr}</td><td><input type="checkbox" name="feature_wiki_rankings" {if $prefs.feature_wiki_rankings eq 'y'}checked="checked"{/if}/></td></tr>

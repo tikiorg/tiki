@@ -102,10 +102,12 @@ button:hover {
 
 button,
 input,
+label,
 textarea,
 option,
 select {
 	margin: 0.2em;
+	vertical-align: middle;
 }
 
 /* IE */
@@ -114,6 +116,7 @@ select {
 input[type=checkbox],
 input[type=radio] {
 	border: 0;
+	vertical-align: middle !important;
 }
 
 input[type=text],
@@ -170,10 +173,51 @@ span.button a:hover {text-decoration: none}
 input[type=checkbox] {border: 0}
 
 * html .findtable input {font-size: 1em}
+.findtable ul {list-style-type: none}
 
 form.admin input[name="features"] {
 	margin-bottom: 3px !important;
 }
+
+/* look of admin form fieldsets when tabs are off */
+
+form.admin {padding: 3px}
+
+form.admin fieldset {border: solid 1px #8CACBB; margin: 0px; margin-bottom: 3px;}
+
+form.admin legend.heading {
+	background-color: transparent;
+	border: none;
+	line-height: 2em;
+	margin-top: -2px;
+	padding-left: 0px; padding-right: 0px;
+	}
+
+form.admin legend.heading a {
+	background-color: #8CACBB;
+	display: block;
+	top: -1em;
+	margin-top: 2px;
+	padding: 1px 1px 0;
+	position: relative;
+	text-decoration: none;
+}
+form.admin legend.heading a:hover {
+	background-color: #ACBB8C;
+	padding: 1px 0px 0;
+}
+form.admin legend.heading a span {
+	background-color: #EBEBEB;
+	display: block;
+	font-size: 1em;
+	line-height: 2em;
+	padding: 0 1em;
+}
+form.admin legend.heading a:hover span {
+	line-height: 1.9em;
+	margin-top: 0.1em; border-left: solid 1px #8CACBB; border-right: solid 1px #8CACBB;
+}
+
 
 select {
 }
@@ -674,7 +718,8 @@ div.menuSection div.separator {
 
 /****** Misc. Global Classes (layout and style) ****/
 
-.hidden {position: absolute; left: -10000px; top: 0; width: 1px; height: 1px; overflow: hidden;}.floatlist {	clear: left;list-style-type: none;margin: 0;padding-left: 0;}
+.hidden {position: absolute; left: -10000px; top: 0; width: 1px; height: 1px; overflow: hidden;}
+.floatlist {	clear: left;list-style-type: none;margin: 0;padding-left: 0;}
 .floatlist li { float: left; }
 div#attzone,
 div#comzone {	display: none;	margin-top: 10px;}
@@ -688,7 +733,7 @@ div#edithelpzone {	display: none;}
 * html .clearfix {	height: 1%;}
 #overdiv table {	width: auto !important;}
 .attention {	color: red;}
-.highlight, #highlight  {}
+.highlight, #highlight  {background-color: #f2cd5e}
 
 /* OpenID  */
 .openid_url {
@@ -1526,20 +1571,50 @@ span.posthead span.link {
 	font-weight: bold;
 }
 
-div.posthead h3 {
-	font-size:1.2em}
+body.tiki_blogs .post .title {margin-top: 0}
+
+/*div.posthead h3*/
+body.tiki_blogs .post .title h2 {
+	font-size: 1.2em;
+	margin-top: 0}
  
-div.postbody {
+/*div.postbody*/
+body.tiki_blogs .post .postbody {
 	margin-right: 8px;
 	line-height: 1.4em;
 	margin-bottom: 1em;
 }
 
-body.tiki_blog .postfooter {
-	clear: both;
-	float: right;
+/* Maybe needs override to differentiate from forums */
+body.tiki_blogs .post .postbody {
+	background: none;
+	border: 0  }
+	
+body.tiki_blogs div.author_actions {
+	float: none;
+	background: none;
+	border: 0;
+	width: 100%}
+	
+body.tiki_blogs .actions {background: none}
+
+body.tiki_blogs .author_info {  }
+.postbody-title {
+	background: none;
+	border: 0}
+	
+body.tiki_blogs .postbody-title {
+	float: none;
+	width: 100%;
+	background: none;
+	border: 0}
+
+body.tiki_blogs .postfooter {
+	width: 100%;
 	margin-bottom: 2em;
 }
+
+body.tiki_blogs .postfooter .actions {float: left}
 
 /***** Forums *****/
 

@@ -209,10 +209,8 @@ class TikiLib extends TikiDB {
 		}
 		$query = "select 'user' as watchtype, `watchId`, `user`, `event`, `object`, `title`, `type`, `url`, `email` from `tiki_user_watches` $mid 
 			UNION ALL
-			(
 				select 'group' as watchtype, `watchId`, `group`, `event`, `object`, `title`, `type`, `url`, '' as `email`
 				from `tiki_group_watches` $mid2
-			)
 			order by ".$this->convert_sortmode($sort_mode);
 		$query_cant = 'select count(*) from `tiki_user_watches` '.$mid;
 		$query_cant2 = 'select count(*) from `tiki_group_watches` '. $mid2;
@@ -3643,7 +3641,8 @@ class TikiLib extends TikiDB {
 		//get_strings tra("Removed");
 		$query = "update `users_groups` set `groupHome`=? where `groupHome`=?";
 		$this->query($query, array(NULL, $page));
-
+		$query = 'delete from `tiki_theme_control_objects` where `name`=? and `type`=?';
+		$this->query($query, array($page, 'wiki page'));
 		$this->remove_object('wiki page', $page);
 
 		$query = "delete from `tiki_user_watches` where `event`=? and `object`=?";

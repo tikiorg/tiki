@@ -7,6 +7,9 @@ $force_no_compression = true;
 include('tiki-setup.php');
 
 $fckstyle = 'styles/'.$prefs['style'];
+if ( $tikidomain and is_file('styles/'.$tikidomain.'/'.$prefs['style']) ) {
+	$fckstyle = 'styles/'.$tikidomain.'/'.$prefs['style'];
+}
 $smarty->assign('fckstyle',$fckstyle);
 
 $tools = split("\r\n|\n",$prefs['wysiwyg_toolbar']);

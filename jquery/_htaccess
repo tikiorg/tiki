@@ -88,7 +88,7 @@ RewriteRule ^int([0-9]+)           tiki-integrator.php?repID=$1             [QSA
 RewriteRule ^sheet([0-9]+)         tiki-view_sheets.php?sheetId=$1          [QSA,L]
 RewriteRule ^ws([0-9]+)            tiki-workspaces_desktop.php?workspaceId=$1    [QSA,L]
 
-RewriteRule \.(css|gif|jpg|png|php|html|js|htm|shtml|cgi|sql|phtml|txt|ihtml|mpa|mp2|wav|aif|aiff|au|mid|mp3|mp4|m4v|flv|mov|avi|mpg|swf|m4a|pdf|htc)$   -       [L]
+RewriteRule \.(css|gif|jpg|png|php|html|js|htm|shtml|cgi|sql|phtml|txt|ihtml|mpa|mp2|wav|aif|aiff|au|mid|mp3|mp4|m4v|flv|mov|avi|mpg|swf|m4a|pdf|htc|xml)$   -       [L]
 
 RewriteRule ^wiki-([A-Za-z0-9]+)   tiki-index.php?page=$1                   [QSA,L]
 RewriteRule ^page-([A-Za-z0-9]+)   tiki-index.php?page=$1                   [QSA,L]

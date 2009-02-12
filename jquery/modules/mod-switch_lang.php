@@ -19,7 +19,7 @@ if (isset($module_params["mode"]) && $module_params["mode"] == 'flags') {
 		if (isset($flagmapping[$languages[$i]['value']])) {
 			$languages[$i]['flag'] = $flagmapping[$languages[$i]['value']][0];
 		}
-		if (count($pageRenderer->trads) > 0) {
+		if (isset($pageRenderer) && count($pageRenderer->trads) > 0) {
 			$languages[$i]['class'] = ' unavailable';
 			for ($t = 0; $t < count($pageRenderer->trads); $t++) {
 				if ($pageRenderer->trads[$t]['lang'] == $languages[$i]['value']) {

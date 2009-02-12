@@ -231,9 +231,9 @@ class WikiRenderer
 
 	private function setupBacklinks() // {{{
 	{
-		global $prefs, $wikilib, $tiki_p_view_backlinks;
+		global $prefs, $wikilib, $tiki_p_view_backlink;
 
-		if ( $prefs['feature_backlinks'] == 'y' && $tiki_p_view_backlinks == 'y') {
+		if ( $prefs['feature_backlinks'] == 'y' && $tiki_p_view_backlink == 'y') {
 			$backlinks = $wikilib->get_backlinks($this->page);
 			$this->smartyassign('backlinks', $backlinks);
 		}

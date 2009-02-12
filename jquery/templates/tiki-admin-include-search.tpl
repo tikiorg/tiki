@@ -247,7 +247,7 @@
         </tr>
         <tr>
           <td class="form">
-            {tr}Show last modification{/tr}:
+            {tr}Show last modification date{/tr}:
           </td>
           <td>
             <input type="checkbox" name="feature_search_show_last_modification"
