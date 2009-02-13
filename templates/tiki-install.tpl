@@ -359,7 +359,7 @@
 	<br /><em>{tr}This will appear in the browser title bar{/tr}.</em></div>
 </div>
 <div style="padding:5px"><label for="sender_email">{tr}Sender email{/tr}:</label>
-	<div style="margin-left:1em;"<input type="text" size="40" name="sender_email" id="sender_email" />
+	<div style="margin-left:1em;"><input type="text" size="40" name="sender_email" id="sender_email" />
 	<br /><em>{tr}Email sent by your site will use this address{/tr}.</em></div>
 </div>
 </fieldset>
