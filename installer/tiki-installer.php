@@ -772,7 +772,6 @@ $smarty->assign_by_ref('tikifeedback', $tikifeedback);
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 
-
 //  Sytem requirements test. 
 if ($install_step == '2') {
 
