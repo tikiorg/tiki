@@ -94,7 +94,7 @@
 	<h2>{tr}Mail{/tr}</h2>
 	<p>{tr}TikiWiki uses the PHP <strong>mail</strong> function to send email notifications and messages{/tr}.</p>
 {if $perform_mail_test ne 'y'}
-	<p>{tr}To test your system configuration, TikiWiki will attempt to send a test messgae to info@tikiwiki.org{/tr}.</p>
+	<p>{tr}To test your system configuration, TikiWiki will attempt to send a test message to info@tikiwiki.org{/tr}.</p>
 	<div align="center">
 	<form action="tiki-install.php#mail" method="post">
 		<input type="hidden" name="install_step" value="2" />
@@ -115,7 +115,7 @@
 	<div style="border: solid 1px #000; padding: 5px; background: #FF0000">
 		<p align="center"><img src="pics/icons/delete.png" alt="{tr}alert{/tr}" style="vertical-align:middle" /> {tr}Tiki was not able to send a test message{/tr}. {tr}Review your mail log for details{/tr}.</p>
 	</div>
-	<p>{tr}Review the mail settings in your <strong>php.ini</strong> file (for example: confirm that the <strong>sendmail_path</strong> is correct).{/tr} {tr}If your host requires SMTP authendication, additional configuration may be necessary{/tr}.</p>
+	<p>{tr}Review the mail settings in your <strong>php.ini</strong> file (for example: confirm that the <strong>sendmail_path</strong> is correct).{/tr} {tr}If your host requires SMTP authentication, additional configuration may be necessary{/tr}.</p>
 {/if}
 {/if}
 	<br />
@@ -239,7 +239,7 @@
 <h1>{tr}Installation{/tr} {if $tikidb_created}&amp; {tr}Upgrade{/tr} {/if}{tr}Profiles{/tr}</h1>
 <div style="float:left;width:60px"><img src="pics/large/profiles48x48.png" alt="{tr}Profiles{/tr}" /></div>
 <div class="clearfix">
-<p>{tr}Select the installation{/tr} {if $tikidb_created}{tr}(or upgrade){/tr} {/if}{tr}script to use{/tr}. {tr}This script will populate {if $tikidb_created}(or upgrade){/if}, to populate the database{/tr}.</p>
+<p>{tr}Select the installation{/tr} {if $tikidb_created}{tr}(or upgrade){/tr} {/if}{tr}script to use{/tr}. {tr}This script will populate {if $tikidb_created}(or upgrade){/if} the database{/tr}.</p>
 <p>{tr}Profiles can be used to pre-configure your site with specific features and settings{/tr}. {tr}Visit <a href="http://profiles.tikiwiki.org" target="_blank">http://profiles.tikiwiki.org</a> for more information{/tr}.</p> 
 	  {if $dbdone eq 'n'}
 		  {if $logged eq 'y'}
@@ -369,7 +369,7 @@
 <p>&nbsp;</p>
 <div align="center">
 <form action="tiki-install.php" method="post">
-	<input type="hidden" name="install_step" value="6" />
+	<input type="hidden" name="install_step" value="{if isset($smarty.post.update)}7{else}6{/if}" />
 	<input type="submit" value=" {tr}Continue{/tr} " />
 {if $multi}		<input type="hidden" name="multi" value="{$multi}" />{/if}
 {if $lang}		<input type="hidden" name="lang" value="{$lang}" />{/if}
@@ -391,7 +391,7 @@
 			<br /><em>{tr}This will appear in the browser title bar{/tr}.</em></div>
 		</div>
 		<div style="padding:5px"><label for="sender_email">{tr}Sender email{/tr}:</label>
-			<div style="margin-left:1em;"><input type="text" size="40" name="sender_email" id="sender_email" />
+			<div style="margin-left:1em;"><input type="text" size="40" name="sender_email" id="sender_email" value="{$prefs.sender_email|escape}" />
 			<br /><em>{tr}Email sent by your site will use this address{/tr}.</em>
 			</div>
 		</div>
@@ -531,7 +531,7 @@ others?
 					<li>{if $install_step eq '3'}<strong>{elseif $dbcon eq 'y'}<a href="tiki-install.php?install_step=3{if $multi}&multi={$multi}{/if}{if $lang}&lang={$lang}{/if}" title="{tr}Database Connection{/tr}">{/if}{if $dbcon eq 'y'}{tr}Reset{/tr} {/if}{tr}Database Connection{/tr}{if $install_step eq '3'}</strong>{elseif $dbcon eq 'y'}</a>{/if}</li>
 					<li>{if $install_step eq '4'}<strong>{elseif $dbcon eq 'y' or isset($smarty.post.scratch) or isset($smarty.post.update)}<a href="tiki-install.php?install_step=4{if $multi}&multi={$multi}{/if}{if $lang}&lang={$lang}{/if}" title="{tr}Install{/tr}{if $tikidb_created} &amp; {tr}Upgrade{/tr}{/if} {tr}Profile{/tr}">{/if}{tr}Install{/tr}{if $tikidb_created}/{tr}Upgrade{/tr}{/if} {tr}Profile{/tr}{if $install_step eq '4'}</strong>{elseif ($dbcon eq 'y') or (isset($smarty.post.scratch)) or (isset($smarty.post.update))}</a>{/if}</li>
 					<li>{if $install_step eq '5'}<strong>{/if}{tr}Review{/tr} {if isset($smarty.post.update)}{tr}Upgrade{/tr}{else}{tr}Installation{/tr}{/if}{if $install_step eq '5'}</strong>{/if}</li>
-					<li>{if $install_step eq '6'}<strong>{elseif $tikidb_is20}<a href="tiki-install.php?install_step=6{if $multi}&multi={$multi}{/if}{if $lang}&lang={$lang}{/if}">{/if}{tr}General Settings{/tr}{if $install_step eq '6'}</strong>{elseif $tikidb_is20}</a>{/if}</li>
+					<li>{if $install_step eq '6'}<strong>{elseif $tikidb_is20 and !isset($smarty.post.update)}<a href="tiki-install.php?install_step=6{if $multi}&multi={$multi}{/if}{if $lang}&lang={$lang}{/if}">{/if}{tr}General Settings{/tr}{if $install_step eq '6'}</strong>{elseif $tikidb_is20 and !isset($smarty.post.update)}</a>{/if}</li>
 					<li>{if $install_step eq '7'}<strong>{elseif $tikidb_is20}<a href="tiki-install.php?install_step=7{if $multi}&multi={$multi}{/if}{if $lang}&lang={$lang}{/if}">{/if}{tr}Enter Tiki{/tr}{if $install_step eq '7'}</strong>{elseif $tikidb_is20}</a>{/if}</li>
 				</ol>
 				</div>
