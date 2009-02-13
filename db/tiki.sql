@@ -1821,7 +1821,7 @@ CREATE TABLE tiki_polls (
   votes int(8) default NULL,
   active char(1) default NULL,
   publishDate int(14) default NULL,
-  anonym enum( 'a', 'u', 'i', 'c' ) NOT NULL DEFAULT 'u',
+  voteConsiderationSpan int(4) default 0,
   PRIMARY KEY (pollId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
@@ -2950,6 +2950,7 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type, admin) VALUES ('tiki_p_admin_polls','Can admin polls', 'admin', 'polls', 'y');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_poll_results', 'Can view poll results', 'basic', 'polls');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_vote_poll', 'Can vote polls', 'basic', 'polls');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_poll_voters', 'Can view poll voters', 'basic', 'polls');
 
 INSERT INTO users_permissions (permName, permDesc, level, type, admin) VALUES ('tiki_p_admin_quicktags', 'Can admin quicktags', 'admin', 'quicktags', 'y');
 

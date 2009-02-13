@@ -158,7 +158,7 @@ if (isset($_REQUEST['scoresort_desc'])) {
 } elseif (isset($_REQUEST['scoresort_asc'])) {
 	$smarty->assign('scoresort_asc', $_REQUEST['scoresort_asc']);
 }
-if (isset($_REQUEST['scoresort_asc']) || isset($_REQUEST['scoresort_desc'])) {
+if (isset($_REQUEST['scoresort']) || isset($_REQUEST['scoresort_desc'])) {
 	$t_arr = $poll_info_arr;
 	$sort_ok = usort($t_arr, 'scoresort');
 	if ($sort_ok)  $poll_info_arr = $t_arr;
