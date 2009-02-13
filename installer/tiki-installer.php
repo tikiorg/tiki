@@ -729,6 +729,7 @@ if ( isset($dbTiki) && is_object($dbTiki) && isset($_SESSION["install-logged-$mu
 		$installer->cleanInstall();
 		$smarty->assign('installer', $installer);
 		$smarty->assign('dbdone', 'y');
+		$install_type = 'scratch';
 		if ( isset($_REQUEST['profile']) ) process_sql_file('profiles/'.$_REQUEST['profile'], $db_tiki);
 		$_SESSION[$cookie_name] = 'admin';
 	}
@@ -738,6 +739,7 @@ if ( isset($dbTiki) && is_object($dbTiki) && isset($_SESSION["install-logged-$mu
 		$installer->update();
 		$smarty->assign('installer', $installer);
 		$smarty->assign('dbdone', 'y');
+		$install_type = 'update';
 	}
 
 	// Try to activate Apache htaccess file by renaming _htaccess into .htaccess
@@ -773,11 +775,16 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 //  Sytem requirements test. 
 if ($install_step == '2') {
+
+	if (($_REQUEST['perform_mail_test']) == 'y') {
+
 	$sentmail = mail("info@tikiwiki.org","Mail test","Mail test");
 	if($sentmail){
 		$mail_test = 'y'; } else {
 		$mail_test = 'n'; }
 	$smarty->assign('mail_test', $mail_test);
+	$smarty->assign('perform_mail_test', 'y');
+	}
 
 	$php_memory_limit = return_bytes(ini_get('memory_limit'));
 	$smarty->assign('php_memory_limit', intval($php_memory_limit));
@@ -806,6 +813,8 @@ $headerlib->add_cssfile('styles/thenews.css');
 $smarty->assign_by_ref('headerlib',$headerlib);
 
 $smarty->assign('install_step', $install_step);
+$smarty->assign('install_type', $install_type);
+
 
 $mid_data = $smarty->fetch('tiki-install.tpl');
 $smarty->assign('mid_data', $mid_data);

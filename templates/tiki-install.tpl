@@ -93,6 +93,19 @@
 	<br />
 	<h2>{tr}Mail{/tr}</h2>
 	<p>{tr}TikiWiki uses the PHP <strong>mail</strong> function to send email notifications and messages{/tr}.</p>
+{if $perform_mail_test ne 'y'}
+	<p>To test your system configuration, TikiWiki will attempt to send a test messgae to info@tikiwiki.org.</p>
+	<div align="center">
+	<form action="tiki-install.php#mail" method="post">
+		<input type="hidden" name="install_step" value="2" />
+		<input type="hidden" name="perform_mail_test" value="y" />
+		<input type="submit" value=" {tr}Send Test Message{/tr} " />
+{if $multi}		<input type="hidden" name="multi" value="{$multi}" />{/if}
+{if $lang}		<input type="hidden" name="lang" value="{$lang}" />{/if}
+	</form>
+	</div>
+{else}
+	
 {if $mail_test eq 'y'}
 	<div style="border: solid 1px #000; padding: 5px; background: #a9ff9b;">
 		<p align="center"><img src="pics/icons/accept.png" alt="{tr}Success{/tr}" style="vertical-align:middle"/> {tr}Tiki was able to send a test message to info@tikiwiki.org.{/tr}. </p>
@@ -100,9 +113,10 @@
 	<p>&nbsp;</p>
 {else}
 	<div style="border: solid 1px #000; padding: 5px; background: #FF0000">
-		<p align="center"><img src="pics/icons/delete.png" alt="alert" style="vertical-align:middle" /> {tr}Tiki was not able to send a test message{/tr}.</p>
+		<p align="center"><img src="pics/icons/delete.png" alt="alert" style="vertical-align:middle" /> {tr}Tiki was not able to send a test message{/tr}. {tr}Review your mail log for details{/tr}.</p>
 	</div>
 	<p>{tr}Review the mail settings in your <strong>php.ini</strong> file (for example: confirm that the <strong>sendmail_path</strong> is correct).{/tr} {tr}If your host requires SMTP authendication, additional configuration may be necessary{/tr}.</p>
+{/if}
 {/if}
 	<br />
 	<h2>Image Processing</h2>
@@ -123,6 +137,8 @@
 <form action="tiki-install.php" method="post">
 	<input type="hidden" name="install_step" value="3" />
 	<input type="submit" value=" {tr}Continue{/tr} " />
+{if $multi}		<input type="hidden" name="multi" value="{$multi}" />{/if}
+{if $lang}		<input type="hidden" name="lang" value="{$lang}" />{/if}
 </form>
 </div>
 
@@ -345,6 +361,8 @@
 <form action="tiki-install.php" method="post">
 	<input type="hidden" name="install_step" value="6" />
 	<input type="submit" value=" {tr}Continue{/tr} " />
+{if $multi}		<input type="hidden" name="multi" value="{$multi}" />{/if}
+{if $lang}		<input type="hidden" name="lang" value="{$lang}" />{/if}
 </form>
 </div>
 
@@ -415,6 +433,7 @@ others?
 
 {elseif $install_step eq '7'}
 <h1>{tr}Enter Your Tiki{/tr}</h1>
+installtype: {$install_type}
 <div style="float:left;width:60px"><img src="pics/large/stock_quit48x48.png" alt="Login" /></div>
 <div class="clearfix">
 	<p>{tr}The installation is complete{/tr}! {tr}Your database has been configured and Tikiwiki is ready to run.{/tr} </p>
