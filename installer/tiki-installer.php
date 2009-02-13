@@ -27,6 +27,13 @@ require_once ('installer/installlib.php');
 $commands = array();
 ini_set('magic_quotes_runtime',0);
 
+// Which step of the installer
+if (empty($_REQUEST['install_step'])) {
+	$install_step = '0'; } else {
+	$install_step = ($_REQUEST['install_step']); } 
+
+
+
 if (!empty($_REQUEST['lang'])) {
 	$language = $prefs['language'] = $_REQUEST['lang'];
 } else {
@@ -601,6 +608,9 @@ include_once ('lib/adodb/adodb.inc.php');
 if (!file_exists($local)) {
 	$dbcon = false;
 	$smarty->assign('dbcon', 'n');
+	if ($install_step == '3') {
+		$install_step = '3';
+	}
 } else {
 	// include the file to get the variables
 	include ($local);
@@ -757,13 +767,45 @@ if( isset( $_GET['lockchange'] ) )
 
 $smarty->assign_by_ref('tikifeedback', $tikifeedback);
 
-$php_memory_limit = return_bytes(ini_get('memory_limit'));
-$smarty->assign('php_memory_limit', intval($php_memory_limit));
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
+
+
+
+//  Sytem requirements test. 
+if ($install_step == '2') {
+	$sentmail = mail("info@tikiwiki.org","Mail test","Mail test");
+	if($sentmail){
+		$mail_test = 'y'; } else {
+		$mail_test = 'n'; }
+	$smarty->assign('mail_test', $mail_test);
+
+	$php_memory_limit = return_bytes(ini_get('memory_limit'));
+	$smarty->assign('php_memory_limit', intval($php_memory_limit));
+	
+	if ((extension_loaded('gd') && function_exists('gd_info'))) {
+		$gd_test = 'y';
+		$gd_info = gd_info();
+		$smarty->assign('gd_info', $gd_info['GD Version']);
+		} else {
+		$gd_test = 'n'; }
+	$smarty->assign('gd_test', $gd_test);
+	
+}
+
+// write general settings
+if (($_REQUEST['general_settings']) == 'y') {
+global $dbTiki;
+$query = "INSERT INTO `tiki_preferences` (`name`, `value`) VALUES ('siteTitle', '".$_REQUEST['site_title']."'), ('sender_email', '".$_REQUEST['sender_email']."'), ('https_login', '".$_REQUEST['https_login']."'), ('https_port', '".$_REQUEST['https_port']."'), ('feature_swtich_ssl_mode', '".$_REQUEST['feature_switch_ssl_mode']."'), ('feature_show_stay_in_ssl_mode', '".$_REQUEST['feature_show_stay_in_ssl_mode']."')";
+$query .= ";UPDATE  `users_users` SET  `email` =  '".$_REQUEST['admin_email']."' WHERE  `users_users`.`userId` =1";
+$dbTiki->Execute($query);
+}
+
 
 include "lib/headerlib.php";
 $headerlib->add_cssfile('styles/thenews.css');
 $smarty->assign_by_ref('headerlib',$headerlib);
+
+$smarty->assign('install_step', $install_step);
 
 $mid_data = $smarty->fetch('tiki-install.tpl');
 $smarty->assign('mid_data', $mid_data);
