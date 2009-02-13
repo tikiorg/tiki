@@ -629,7 +629,6 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'poll_comments_per_page' => 10,
 		'poll_list_categories' => 'n',
 		'poll_list_objects' => 'n',
-		'feature_poll_public' => 'n',
 		'feature_poll_revote' => 'y',
 
 		// surveys

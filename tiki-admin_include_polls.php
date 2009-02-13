@@ -15,37 +15,11 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 if (isset($_REQUEST["pollprefs"])) {
 	check_ticket('admin-inc-polls');
-	if (isset($_REQUEST["poll_comments_per_page"])) {
-		$tikilib->set_preference("poll_comments_per_page", $_REQUEST["poll_comments_per_page"]);
-	}
-
-	if (isset($_REQUEST["poll_comments_default_ordering"])) {
-		$tikilib->set_preference("poll_comments_default_ordering", $_REQUEST["poll_comments_default_ordering"]);
-	}
-
-	if (isset($_REQUEST["feature_poll_comments"]) && $_REQUEST["feature_poll_comments"] == "on") {
-		$tikilib->set_preference("feature_poll_comments", 'y');
-	} else {
-		$tikilib->set_preference("feature_poll_comments", 'n');
-	}
-
-	if (isset($_REQUEST["feature_poll_anonymous"]) && $_REQUEST["feature_poll_anonymous"] == "on") {
-		$tikilib->set_preference("feature_poll_anonymous", 'y');
-	} else {
-		$tikilib->set_preference("feature_poll_anonymous", 'n');
-	}
-
-	if (isset($_REQUEST["feature_poll_public"]) && $_REQUEST["feature_poll_public"] == "on") {
-		$tikilib->set_preference("feature_poll_public", 'y');
-	} else {
-		$tikilib->set_preference("feature_poll_public", 'n');
-	}
-
-	if (isset($_REQUEST["feature_poll_revote"]) && $_REQUEST["feature_poll_revote"] == "on") {
-		$tikilib->set_preference("feature_poll_revote", 'y');
-	} else {
-		$tikilib->set_preference("feature_poll_revote", 'n');
-	}
+	simple_set_value('poll_comments_per_page');
+	simple_set_value('poll_comments_default_ordering');
+	simple_set_toggle('feature_poll_comments');
+	simple_set_toggle('feature_poll_anonymous');
+	simple_set_toggle('feature_poll_revote');
 	simple_set_toggle('poll_list_categories');
 	simple_set_toggle('poll_list_objects');
 }

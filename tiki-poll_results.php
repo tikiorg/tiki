@@ -11,117 +11,161 @@ $section = 'poll';
 require_once ('tiki-setup.php');
 
 if ($prefs['feature_polls'] != 'y') {
-	$smarty->assign('msg', tra("This feature is disabled").": feature_polls");
-	$smarty->display("error.tpl");
+	$smarty->assign('msg', tra('This feature is disabled').': feature_polls');
+	$smarty->display('error.tpl');
 	die;
 }
-global $pollib; include_once ('lib/polls/polllib.php');
 
 // Now check permissions to access this page
 if ($tiki_p_view_poll_results != 'y') {
 	$smarty->assign('errortype', 401);
-	$smarty->assign('msg',tra("Permission denied you cannot view this page"));
-	$smarty->display("error.tpl");
+	$smarty->assign('msg',tra('Permission denied you cannot view this page'));
+	$smarty->display('error.tpl');
 	die;
 }
+global $pollib; include_once ('lib/polls/polllib.php');
 
-if (!isset($_REQUEST['maxRecords'])) {
-	$_REQUEST['maxRecords'] = 30;
-} elseif (empty($_REQUEST['maxRecords'])) {
+$auto_query_args = array('offset', 'pollId', 'maxRecords', 'scoresort_desc', 'scoresort_asc', 'sort_mode', 'list', 'vote_from_date', 'vote_to_date', 'which_date', 'from_Day', 'from_Month', 'from_Year', 'to_Day', 'to_Month', 'to_Year');
+$smarty->assign('auto_args', implode(',',$auto_query_args));
+
+if (!empty($_REQUEST['maxRecords'])) {
+	$_REQUEST['maxRecords'] = $_REQUEST['maxRecords'];
+	$smarty->assign('maxRecords', $_REQUEST['maxRecords']);
+} else {
 	$_REQUEST['maxRecords'] = -1;
 }
-$smarty->assign_by_ref('maxRecords', $_REQUEST['maxRecords']);
 
 if (!isset($_REQUEST['find'])) {
 	$_REQUEST['find'] = '';
 }
 $smarty->assign_by_ref('find', $_REQUEST['find']);
 
-$pollIds = array();
-if (isset($_REQUEST["pollId"])) {
-	$pollIds[] = $_REQUEST["pollId"];
+$now = $vote_from_date = $vote_to_date = $tikilib->now;
+if ( isset( $_REQUEST['which_date'] )) {
+	$which_date = $_REQUEST['which_date'];
+	if ( $which_date == 'between') {
+		if (!empty($_REQUEST['vote_from_date'])) {
+			$vote_from_date = $_REQUEST['vote_from_date'];
+		} else {
+			$vote_from_date = TikiLib::make_time(0, 0, 0, $_REQUEST['from_Month'], $_REQUEST['from_Day'], $_REQUEST['from_Year']);
+		}
+		if (!empty($_REQUEST['vote_to_date'])) {
+			$vote_to_date = $_REQUEST['vote_to_date'];
+		} else {
+			$vote_to_date = TikiLib::make_time(23, 59, 59, $_REQUEST['to_Month'], $_REQUEST['to_Day'], $_REQUEST['to_Year']);
+		}
+	}
+	$smarty->assign_by_ref('which_date', $which_date);
 } else {
-	$polls = $polllib->list_active_polls(0, $_REQUEST["maxRecords"], "votes_desc", $_REQUEST['find']);
-	foreach ($polls["data"] as $pId) {
-		$pollIds[] = $pId["pollId"];
+	$which_date = '';
+}
+
+$pollIds = array();
+if (!empty($_REQUEST['pollId'])) {
+	$pollIds[] = $_REQUEST['pollId'];
+	$smarty->assign_by_ref('pollId', $_REQUEST['pollId']);
+} else {
+	$polls = $polllib->list_active_polls(0, $_REQUEST['maxRecords'], 'votes_desc', $_REQUEST['find']);
+	foreach ($polls['data'] as $pId) {
+		$pollIds[] = $pId['pollId'];
 	}
 }
 
 $poll_info_arr = array();
-foreach ($pollIds as $pK => $pId) {
-// iterate each poll
-$poll_info = $polllib->get_poll($pId);
-$poll_info_arr[$pK] = $poll_info;
-$options = $polllib->list_poll_options($pId);
-$temp_max = count($options);
-$total = 0;
-$isNum = true; // try to find if it is a numeric poll with a title like +1, -2, 1 point...
-for ($i = 0; $i < $temp_max; $i++) {
-	if ($poll_info["votes"] == 0) {
-		$percent = 0;
-	} else {
-		$percent = number_format($options[$i]["votes"] * 100 / $poll_info["votes"], 2);
+$start_year = date('Y', $now);
+foreach ($pollIds as $pK => $pId) {// iterate each poll
+	$poll_info = $polllib->get_poll($pId);
 
-		$options[$i]["percent"] = $percent;
-		if ($isNum) {
-			if (preg_match('/^([+-]?[0-9]+).*/', $options[$i]['title'], $matches)) {
-				$total += $options[$i]['votes'] * $matches[1];
-			} else {
-				$isNum = false; // it is not a nunmeric poll
-			}
+	$start_year = min($start_year, date('Y', $poll_info['publishDate']));
+	if( $which_date == 'all' ) {
+		$vote_from_date = $vote_to_date = 0;
+	} elseif ( $which_date == 'between' ) {
+		$poll_info['from'] = $vote_from_date;
+		$poll_info['to'] = $vote_to_date;
+	} elseif ( $poll_info['voteConsiderationSpan'] > 0 ) {
+		$poll_info['from'] = $vote_from_date = $now - $poll_info['voteConsiderationSpan']*24*3600;
+		$vote_to_date = $now;
+	} else {
+		$vote_from_date = $vote_to_date = 0;
+	}
+	$options = $polllib->list_poll_options($pId, $vote_from_date, $vote_to_date);
+	//echo '<pre>'; print_r($options); echo '</pre>';
+	$poll_info_arr[$pK] = $poll_info;
+	if ($vote_from_date != 0) {
+		$poll_info_arr[$pK]['votes'] = 0;
+		foreach ($options as $option) {
+			$poll_info_arr[$pK]['votes'] += $option['votes'];
 		}
 	}
+	$temp_max = count($options);
+	$total = 0;
+	$isNum = true; // try to find if it is a numeric poll with a title like +1, -2, 1 point...
+	foreach ($options as $i=>$option) {
+		if ($option['votes'] == 0) {
+			$percent = 0;
+		} else {
+			$percent = number_format($option['votes'] * 100 / $poll_info_arr[$pK]['votes'], 2);
 
-	$width = $percent * 200 / 100;
-	$options[$i]["width"] = $percent;
+			$options[$i]['percent'] = $percent;
+			if ($isNum) {
+				if (preg_match('/^([+-]?[0-9]+).*/', $option['title'], $matches)) {
+					$total += $option['votes'] * $matches[1];
+				} else {
+					$isNum = false; // it is not a nunmeric poll
+				}
+			}
+		}
 
-	$options[$i]["users"] = $polllib->get_poll_voters( $options[$i]["optionId"] );
-}
-$poll_info_arr[$pK]["options"] = $options;
-$poll_info_arr[$pK]["total"] = $total;
+		$width = $percent * 200 / 100;
+		$options[$i]['width'] = $percent;
+	}
+	$poll_info_arr[$pK]['options'] = $options;
+	$poll_info_arr[$pK]['total'] = $total;
 } // end iterate each poll
+//echo '<pre>'; print_r($poll_info_arr); echo '</pre>';
 
 function scoresort($a, $b) {
-	if (isset($_REQUEST["scoresort_asc"])) {
-		$i = $_REQUEST["scoresort_asc"];
+	if (isset($_REQUEST['scoresort_asc'])) {
+		$i = $_REQUEST['scoresort_asc'];
 	} else {
-		$i = $_REQUEST["scoresort_desc"];
+		$i = $_REQUEST['scoresort_desc'];
 	}
 	// must first sort based on missing, otherwise missing index will occur when trying to read more info.
-	if (count($a["options"]) <= $i && count($b["options"]) <= $i ) {
+	if (count($a['options']) <= $i && count($b['options']) <= $i ) {
 		return 0;
-	} elseif (count($a["options"]) <= $i ) {
+	} elseif (count($a['options']) <= $i ) {
 		return -1;
-	} elseif (count($b["options"]) <= $i ) {
+	} elseif (count($b['options']) <= $i ) {
 		return 1;
 	}
-	if ($a["options"][$i]["title"] == $poll_info_arr["options"][$i]["title"] && $b["options"][$i]["title"] != $poll_info_arr["options"][$i]["title"] ) {
+	if ($a['options'][$i]['title'] == $poll_info_arr['options'][$i]['title'] && $b['options'][$i]['title'] != $poll_info_arr['options'][$i]['title'] ) {
     	return 1;
     }
-	if ($a["options"][$i]["title"] != $poll_info_arr["options"][$i]["title"] && $b["options"][$i]["title"] == $poll_info_arr["options"][$i]["title"] ) {
+	if ($a['options'][$i]['title'] != $poll_info_arr['options'][$i]['title'] && $b['options'][$i]['title'] == $poll_info_arr['options'][$i]['title'] ) {
     	return -1;
     }
-    if ($a["options"][$i]["width"] == $b["options"][$i]["width"]) {
+    if ($a['options'][$i]['width'] == $b['options'][$i]['width']) {
     	return 0;
     }
-	if (isset($_REQUEST["scoresort_asc"])) {
-		return ($a["options"][$i]["width"] < $b["options"][$i]["width"]) ? -1 : 1;
+	if (isset($_REQUEST['scoresort_asc'])) {
+		return ($a['options'][$i]['width'] < $b['options'][$i]['width']) ? -1 : 1;
 	} else {
-		return ($a["options"][$i]["width"] > $b["options"][$i]["width"]) ? -1 : 1;
+		return ($a['options'][$i]['width'] > $b['options'][$i]['width']) ? -1 : 1;
 	}
 }
-if (isset($_REQUEST["scoresort_desc"])) {
-	$smarty->assign('scoresort_desc', $_REQUEST["scoresort_desc"]);
-} elseif (isset($_REQUEST["scoresort_asc"])) {
-	$smarty->assign('scoresort_asc', $_REQUEST["scoresort_asc"]);
+if (isset($_REQUEST['scoresort_desc'])) {
+	$smarty->assign('scoresort_desc', $_REQUEST['scoresort_desc']);
+} elseif (isset($_REQUEST['scoresort_asc'])) {
+	$smarty->assign('scoresort_asc', $_REQUEST['scoresort_asc']);
 }
-if (isset($_REQUEST["scoresort_asc"]) || isset($_REQUEST["scoresort_desc"])) {
+if (isset($_REQUEST['scoresort_asc']) || isset($_REQUEST['scoresort_desc'])) {
 	$t_arr = $poll_info_arr;
-	$sort_ok = usort($t_arr, "scoresort");
+	$sort_ok = usort($t_arr, 'scoresort');
 	if ($sort_ok)  $poll_info_arr = $t_arr;
 }
 
-if ($tiki_p_admin_polls == 'y' && !empty($_REQUEST['list']) && isset($_REQUEST['pollId'])) {
+if ($tiki_p_view_poll_voters == 'y' && !empty($_REQUEST['list']) && isset($_REQUEST['pollId'])) {
+	$smarty->assign_by_ref('list', $_REQUEST['list']);
 	if (empty($_REQUEST['sort_mode'])) {
 		$_REQUEST['sort_mode'] = 'user_asc';
 	}
@@ -131,10 +175,8 @@ if ($tiki_p_admin_polls == 'y' && !empty($_REQUEST['list']) && isset($_REQUEST['
 	}
 	$smarty->assign_by_ref('offset', $_REQUEST['offset']);
 
-	$list_votes = $tikilib->list_votes('poll'.$_REQUEST['pollId'], $_REQUEST['offset'], $maxRecords, $_REQUEST['sort_mode'], $_REQUEST['find'], 'tiki_poll_options', 'title');
+	$list_votes = $tikilib->list_votes('poll'.$_REQUEST['pollId'], $_REQUEST['offset'], $prefs['maxRecords'], $_REQUEST['sort_mode'], $_REQUEST['find'], 'tiki_poll_options', 'title', $vote_from_date, $vote_to_date);
 	$smarty->assign_by_ref('list_votes', $list_votes['data']);
-	$smarty->assign_by_ref('list_votes_options', $list_votes['options'] );
-
 	$smarty->assign_by_ref('cant_pages', $list_votes['cant']);
 }
 
@@ -146,10 +188,13 @@ if ($prefs['feature_poll_comments'] == 'y' && isset($_REQUEST['pollId'])) {
 	$comments_vars = array('pollId');
 	$comments_prefix_var = 'poll:';
 	$comments_object_var = 'pollId';
-	include_once ("comments.php");
+	include_once ('comments.php');
 }
 
 $smarty->assign_by_ref('poll_info_arr', $poll_info_arr);
+$smarty->assign_by_ref('start_year', $start_year);
+$smarty->assign_by_ref('vote_from_date', $vote_from_date);
+$smarty->assign_by_ref('vote_to_date', $vote_to_date);
 
 // the following 4 lines preserved to preserve environment for old templates
 $smarty->assign_by_ref('poll_info', $poll_info);
@@ -160,6 +205,6 @@ ask_ticket('poll-results');
 
 // Display the template
 $smarty->assign('mid', 'tiki-poll_results.tpl');
-$smarty->display("tiki.tpl");
+$smarty->display('tiki.tpl');
 
 ?>
