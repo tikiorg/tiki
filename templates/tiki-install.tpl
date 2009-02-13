@@ -148,9 +148,23 @@
 <div style="float:left;width:60px"><img src="pics/large/stock_line-in48x48.png" alt="Database" /></div>
 <div class="clearfix">
 	<p>{tr}TikiWiki requires an active database connection{/tr}. {tr}You must create the database and user <em>before</em> completing this page{/tr}.</p>
+{if $dbcon ne 'y'}
 	<div align="center" style="padding:1em;">
-		<p><img src="pics/icons/delete.png" alt="alert" style="vertical-align:middle" /> <span style="font-weight: bold">{tr}Tiki cannot find a database connection{/tr}</span>. {tr}This is normal for a new installation{/tr}.</p>
-	</div>	
+		<img src="pics/icons/delete.png" alt="alert" style="vertical-align:middle" /> <span style="font-weight: bold">{tr}Tiki cannot find a database connection{/tr}</span>. {tr}This is normal for a new installation{/tr}.
+	</div>
+{else}
+	<div align="center" style="padding:1em;">
+		<img src="pics/icons/information.png" alt="alert" style="vertical-align:middle" /> {tr}Tiki found an existing database connection in your local.php file{/tr}.
+	<form action="tiki-install.php" method="post">
+		<input type="hidden" name="install_step" value="4" />
+{if $multi}		<input type="hidden" name="multi" value="{$multi}" />{/if}
+{if $lang}		<input type="hidden" name="lang" value="{$lang}" />{/if}
+		<input type="submit" value="{tr}Use Existing Connection{/tr}" />
+	</form>
+		
+	</div>
+{/if}		
+	
 {if $tikifeedback}
 	<br />
 {section name=n loop=$tikifeedback}
@@ -159,6 +173,7 @@
 	</div>
 {/section}
 {/if}
+	<p>{tr}Use this page to create a new database connection{/tr}.</p>
 	<form action="tiki-install.php" method="post">
 		<input type="hidden" name="install_step" value="4" />
 {if $multi}		<input type="hidden" name="multi" value="{$multi}" />{/if}
