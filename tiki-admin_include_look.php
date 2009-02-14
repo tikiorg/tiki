@@ -48,7 +48,7 @@ if (isset($_REQUEST["looksetup"]) || (!empty($_REQUEST['site_style']) && $_REQUE
     "feature_siteidentity",
 	"feature_siteloclabel",
 	"feature_sitelogo",
-	"feature_siteheadertitle",
+	"feature_sitetitle",
 	"feature_sitesubtitle",
 	"feature_sitenav",
 	"feature_sitesearch",
@@ -81,7 +81,7 @@ if (isset($_REQUEST["looksetup"]) || (!empty($_REQUEST['site_style']) && $_REQUE
 	"sitelogo_bgstyle",
 	"sitelogo_title",
 	"sitelogo_alt",
-	"siteheadertitle",
+	"sitetitle",
 	"sitesubtitle",
 	"sitemycode",
 	"site_favicon",
@@ -106,7 +106,7 @@ if (isset($_REQUEST["looksetup"]) || (!empty($_REQUEST['site_style']) && $_REQUE
 	"feature_right_column",
 	"slide_style",
 	"feature_siteloc",
-        "feature_siteheadertitle",
+        "feature_sitetitle",
         "feature_sitedesc",
         "sitelogo_align"
     );
