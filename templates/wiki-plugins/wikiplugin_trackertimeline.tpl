@@ -47,7 +47,7 @@ ttl_showdetails = function( data ) {
 						{if $block.lend neq $block.end}&gt;&gt;&gt;{/if}
 
 						<div class="comment">
-							{$block.fstart}&nbsp;to&nbsp;{$block.fend}
+							{$block.fstart}&nbsp;{tr}to{/tr}&nbsp;{$block.fend}
 						</div>
 					</span>{/foreach}
 				</div>
