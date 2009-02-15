@@ -22,7 +22,7 @@
   <tr>
     <th>&nbsp;</th>
     {foreach from=$table_headers item=header key=sort_field}
-    <th>{self_link _template='tiki-admin_quicktags_content.tpl' _htmlelement='quicktags-content' _sort_field=$sort_field _sort_arg='sort_mode' _class='tableheading'}{$header}{/self_link}</th>
+    <th>{self_link _template='tiki-admin_quicktags_content.tpl' _htmlelement='quicktags-content' _sort_field=$sort_field _sort_arg='sort_mode'}{$header}{/self_link}</th>
     {/foreach}
     <th>{tr}Action{/tr}</th>
   </tr>

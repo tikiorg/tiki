@@ -123,7 +123,7 @@ document.write("<input name=\"switcher\" id=\"clickall2\" title=\"{tr}Select All
 {foreach from=$fields key=ix item=field_value}
 {if ( $field_value.type eq 's' and ($field_value.name eq "Rating" or $field_value.name eq tra("Rating")) and $field_value.isTblVisible eq 'y' ) || ( $field_value.isTblVisible eq 'y' and $field_value.type ne 'x' and $field_value.type ne 'h' and ($field_value.isHidden eq 'n' or $field_value.isHidden eq 'p' or $tiki_p_admin_trackers eq 'y') ) and ($field_value.type ne 'p' or $field_value.options_array[0] ne 'password') and (empty($field_value.visibleBy) or in_array($default_group, $field_value.visibleBy) or $tiki_p_admin_trackers eq 'y') }
 	<th class="auto">
-		{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='f_'|cat:$field_value.fieldId}{$field_value.name|truncate:255:"..."|default:"&nbsp;"}{/self_link}
+		{self_link _sort_arg='sort_mode' _sort_field='f_'|cat:$field_value.fieldId}{$field_value.name|truncate:255:"..."|default:"&nbsp;"}{/self_link}
 	</th>
 	{if $field_value.type eq 's' and ($field_value.name eq "Rating" or $field_value.name eq tra("Rating"))}
 		{assign var=rateFieldId value=$field_value.fieldId}
