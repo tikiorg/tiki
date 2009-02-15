@@ -227,7 +227,7 @@
 			<label for="user">{tr}User name:{/tr}</label> <input type="text" id="user" name="user" />
 		</div>
 		<div style="padding:5px;">
-			<label for="pass">{tr}Password:{/tr}</label> <input type="text" id="pass" name="pass" />
+			<label for="pass">{tr}Password:{/tr}</label> <input type="password" id="pass" name="pass" />
 		</div>
 		</fieldset>
 		<input type="hidden" name="resetdb" value="{$resetdb}" />
