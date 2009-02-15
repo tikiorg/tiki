@@ -32,33 +32,26 @@
 </div>
 {/if}
 <div class="articletrailer">
-<table cellpadding="0" cellspacing="0" ><tr>
-<td>
 <span>{if $show_size eq 'y'}
 ({$size} bytes)
 {/if}</span>
-</td>
 {if $prefs.feature_multilingual eq 'y' and $show_lang eq 'y' and $lang and $prefs.show_available_translations eq 'y'}{include file="translated-lang.tpl" td='y' type='article'}{/if}
-<td>
 {if $tiki_p_edit_article eq 'y'}
-<a class="trailer" href="tiki-edit_article.php?articleId={$articleId}">{icon _id='page_edit'}</a>
+<a class="icon" href="tiki-edit_article.php?articleId={$articleId}">{icon _id='page_edit'}</a>
 {/if}
 {if $prefs.feature_cms_print eq 'y'}
-<a class="trailer" href="tiki-print_article.php?articleId={$articleId}">{icon _id='printer' alt='{tr}Print{/tr}'}</a>
+<a class="icon" href="tiki-print_article.php?articleId={$articleId}">{icon _id='printer' alt='{tr}Print{/tr}'}</a>
 {/if}
 {if $prefs.feature_tell_a_friend eq 'y' && $tiki_p_tell_a_friend eq 'y'}
 <a title="{tr}Send a link{/tr}" href="tiki-tell_a_friend.php?url={$smarty.server.REQUEST_URI|escape:'url'}">{icon _id='email_link' alt="{tr}Send a link{/tr}"}</a>
 {/if}
 {if $prefs.feature_multilingual eq 'y' and $tiki_p_edit_article eq 'y'}
-<a class="trailer" href="tiki-edit_translation.php?id={$articleId}&amp;type=article">{icon _id='world' alt='{tr}Translation{/tr}'}</a> &nbsp;
+<a class="icon" href="tiki-edit_translation.php?id={$articleId}&amp;type=article">{icon _id='world' alt='{tr}Translation{/tr}'}</a>
 {/if}
 {if $tiki_p_remove_article eq 'y'}
-<a class="trailer" href="tiki-list_articles.php?remove={$articleId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
+<a class="icon" href="tiki-list_articles.php?remove={$articleId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
 {/if}
-</td>
-</tr></table>
 </div>
-
 <div class="articleheading">
 <table  cellpadding="0" cellspacing="0">
 <tr>{if $isfloat eq 'n'}<td  valign="top">{else}<td valign="top">{/if}
