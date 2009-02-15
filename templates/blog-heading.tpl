@@ -1,4 +1,4 @@
-<div class="blogtitle">{tr}Blog{/tr}: {$title}</div>
+<h1>{$title}</h1>
 {if $description neq ""}
   <div class="description">{$description|escape}</div>
 {/if}

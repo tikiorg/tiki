@@ -1,4 +1,4 @@
-<a class="link" href="tiki-list_blogs.php">{tr}Blogs{/tr}</a> {$prefs.site_crumb_seper} {$title}
+<div class="breadcrumbs"><a class="link" href="tiki-list_blogs.php">{tr}Blogs{/tr}</a> {$prefs.site_crumb_seper} {$title}</div>
 {if strlen($heading) > 0}
   {eval var=$heading}
 {else}
@@ -66,7 +66,7 @@
 	  
 			{if $prefs.feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y'}
 				{if $listpages[ix].freetags.data|@count >0}
-				<div class="freetaglist">
+				<div class="freetaglist">{tr}Tags{/tr}:
 					{foreach from=$listpages[ix].freetags.data item=taginfo}
 						<a class="freetag" href="tiki-browse_freetags.php?tag={$taginfo.tag}">{$taginfo.tag}</a>
 					{/foreach}
