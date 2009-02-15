@@ -72,14 +72,6 @@
 					{/if}
 				</div>
 
-				{if $prefs.feature_forum_content_search eq 'y' and $prefs.feature_search eq 'y'}
-					<form class="forms" method="get" action="{if $prefs.feature_forum_local_tiki_search eq 'y'}tiki-searchindex.php{else}tiki-searchresults.php{/if}">
-						<input name="highlight" size="30" type="text" />
-						<input type="hidden" name="where" value="forums" />
-						<input type="hidden" name="forumId" value="{$forum_info.forumId}" />
-						<input type="submit" class="wikiaction" name="search" value="{tr}Find{/tr}"/>
-					</form>
-				{/if}
 			</td>
 		</tr>
 	</table>
@@ -89,9 +81,20 @@
 	<a class='link' href='messu-mailbox.php'>{tr}You have {$unread} unread private messages{/tr}<br /></a>
 {/if}
 
-{if $was_queued eq 'y'}
-	{remarksbox type="warning" title="{tr}Information{/tr}" icon="information"}
-		{tr}Your message has been queued for approval, the message will be posted after a moderator approves it.{/tr}
+{if !empty($errors)}
+	{remarksbox type="warning" title="{tr}Errors{/tr}"}
+		{foreach from=$errors item=error name=error}
+			{if !$smarty.foreach.error.first}<br />{/if}
+			{$error|escape}
+		{/foreach}
+	{/remarksbox}
+{/if}
+{if !empty($feedbacks)}
+	{remarksbox type="feddback"}
+		{foreach from=$feedbacks item=feedback name=feedback}
+			{$feedback|escape}
+			{if !$smarty.foreach.feedback.first}<br />{/if}
+		{/foreach}
 	{/remarksbox}
 {/if}
 
@@ -124,26 +127,6 @@
 		</div>
 	{/if}
 
-	{if $warning eq 'y'}
-		<br /><br />
-		<div class="simplebox highlight">
-			{icon _id=exclamation alt="{tr}Error{/tr}" style="vertical-align:middle"} {tr}You have to enter a title and text{/tr}!
-		</div>
-		<br />
-	{/if}
-	{if $contribution_needed eq 'y'}
-		<br /><br />
-		<div class="simplebox highlight">
-			{icon _id=exclamation alt="{tr}Error{/tr}" style="vertical-align:middle"} {tr}A contribution is mandatory{/tr}
-		</div>
-		<br />
-	{/if}
-	{if $duplic eq 'y'}
-		<div class="simplebox highlight">
-			{icon _id=exclamation alt="{tr}Error{/tr}" style="vertical-align:middle"}{tr}Another post with the same title and content already exists.{/tr}<br />{tr}Please change your title or content then click Post.{/tr}
-		</div>
-		<br />
-	{/if}
 
 	<div id="forumpost" style="display:{if $comments_threadId > 0 or $openpost eq 'y' or $warning eq 'y' or $comment_title neq '' or $smarty.request.comments_previewComment neq ''}block{else}none{/if};">
 		{if $comments_threadId > 0}
@@ -264,7 +247,7 @@
 				{/if}
 				{if empty($user) && $prefs.feature_user_watches eq 'y'}
 					<tr>
-						<td><label for="anonymous_email">{tr}If you would like to be notified when someone replies<br />please tell us your e-mail address{/tr}:</label></td>
+						<td><label for="anonymous_email">{tr}If you would like to be notified when someone replies to this topic<br />please tell us your e-mail address{/tr}:</label></td>
 						<td><input type="text" size="30" id="anonymous_email" name="anonymous_email" /></td>
 					</tr>
 				{/if}
@@ -298,6 +281,17 @@
 	</div> <!-- end forumpost -->
 
 	<br />
+{/if}
+
+{if $prefs.feature_forum_content_search eq 'y' and $prefs.feature_search eq 'y'}
+	<div class="findtable">
+		<form class="forms" method="get" action="{if $prefs.feature_forum_local_tiki_search eq 'y'}tiki-searchindex.php{else}tiki-searchresults.php{/if}">
+				<input name="highlight" size="30" type="text" />
+				<input type="hidden" name="where" value="forums" />
+				<input type="hidden" name="forumId" value="{$forum_info.forumId}" />
+				<input type="submit" class="wikiaction" name="search" value="{tr}Find{/tr}"/>
+		</form>
+	</div>
 {/if}
 
 <form method="post" action="tiki-view_forum.php">

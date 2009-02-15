@@ -391,6 +391,10 @@ if ($prefs['feature_freetags'] == 'y') {
     $tags = $freetaglib->get_tags_on_object($cat_objid, $cat_type);
     $smarty->assign('freetags',$tags);
 }
+if (isset($_SESSION['feedbacks'])) {
+	$smarty->assign('feedbacks', $_SESSION['feedbacks']);
+	unset($_SESSION['feedbacks']);
+}
 
 $defaultRows = $prefs['default_rows_textarea_forumthread'];
 include_once("textareasize.php");
