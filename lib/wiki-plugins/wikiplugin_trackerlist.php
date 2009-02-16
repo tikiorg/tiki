@@ -210,8 +210,10 @@ function wikiplugin_trackerlist($data, $params) {
 		}
 
 		if ($tiki_p_admin_trackers != 'y') {
+			$userCreatorFieldId = $trklib->get_field_id_from_type($trackerId, 'u', '1%');
+			$groupCreatorFieldId = $trklib->get_field_id_from_type($trackerId, 'g', '1%');
 			$perms = $tikilib->get_perm_object($trackerId, 'tracker', $tracker_info, false);
-			if ($perms['tiki_p_view_trackers'] != 'y' && $tracker_info['writerCanModify'] != 'y') {
+			if ($perms['tiki_p_view_trackers'] != 'y' && $tracker_info['writerCanModify'] != 'y' && empty($userCreatorFieldId) && empty($groupCreatorFieldId)) {
 				return;
 			}
 			$smarty->assign_by_ref('perms', $perms);
@@ -485,12 +487,12 @@ function wikiplugin_trackerlist($data, $params) {
 				return tra('incorrect filterfield');
 			}
 		}
-		if ($tiki_p_admin_trackers != 'y' && $perms['tiki_p_view_trackers'] != 'y' && $tracker_info['writerCanModify'] == 'y' && $user && ($fieldId = $trklib->get_field_id_from_type($trackerId, 'u', '1%'))) { //patch this should be in list_items
-			if ($filterfield != $fieldId || (is_array($filterfield) && !in_array($fieldId, $filterfield))) {
+		if ($tiki_p_admin_trackers != 'y' && $perms['tiki_p_view_trackers'] != 'y' && $tracker_info['writerCanModify'] == 'y' && $user && $userCreatorFieldId) { //patch this should be in list_items
+			if ($filterfield != $userCreatorFieldId || (is_array($filterfield) && !in_array($$userCreatorFieldId, $filterfield))) {
 				if (is_array($filterfield))
-					$filterfield[] = $fieldId;
+					$filterfield[] = $userCreatorFieldId;
 				elseif (empty($filterfield))
-					$filterfield = $fieldId;
+					$filterfield = $userCreatorFieldId;
 				else
 					$filterfield = array($filterfield, $fieldId);
 				if (is_array($exactvalue))
@@ -501,7 +503,23 @@ function wikiplugin_trackerlist($data, $params) {
 					$exactvalue = array($exactvalue, $user);
 			}
 		}
-
+		if ($tiki_p_admin_trackers != 'y' && $perms['tiki_p_view_trackers'] != 'y' && $user && $groupCreatorFieldId) {
+			if ($filterfield != $groupCreatorFieldId || (is_array($filterfield) && !in_array($groupCreatorFieldId, $filterfield))) {
+				global $group;
+				if (is_array($filterfield))
+					$filterfield[] = $groupCreatorFieldId;
+				elseif (empty($filterfield))
+					$filterfield = $groupCreatorFieldId;
+				else
+					$filterfield = array($filterfield, $fieldId);
+				if (is_array($exactvalue))
+					$exactvalue[] = $group;
+				elseif (empty($exactvalue))
+					$exactvalue = $group;
+				else
+					$exactvalue = array($exactvalue, $user);
+			}
+		}
 
 		for ($i = 0; $i < count($allfields["data"]); $i++) {
 			if ((in_array($allfields["data"][$i]['fieldId'],$listfields) or in_array($allfields["data"][$i]['fieldId'],$popupfields))and $allfields["data"][$i]['isPublic'] == 'y') {
