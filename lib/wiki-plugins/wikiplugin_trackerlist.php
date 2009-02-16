@@ -505,7 +505,7 @@ function wikiplugin_trackerlist($data, $params) {
 		}
 		if ($tiki_p_admin_trackers != 'y' && $perms['tiki_p_view_trackers'] != 'y' && $user && $groupCreatorFieldId) {
 			if ($filterfield != $groupCreatorFieldId || (is_array($filterfield) && !in_array($groupCreatorFieldId, $filterfield))) {
-				global $group;
+				$groups = $userlib->get_user_groups($user);
 				if (is_array($filterfield))
 					$filterfield[] = $groupCreatorFieldId;
 				elseif (empty($filterfield))
@@ -513,11 +513,11 @@ function wikiplugin_trackerlist($data, $params) {
 				else
 					$filterfield = array($filterfield, $fieldId);
 				if (is_array($exactvalue))
-					$exactvalue[] = $group;
+					$exactvalue[] = array_merge($exactvalue, $groups);
 				elseif (empty($exactvalue))
-					$exactvalue = $group;
+					$exactvalue = $groups;
 				else
-					$exactvalue = array($exactvalue, $user);
+					$exactvalue = array_merge(array($exactvalue), $groups);
 			}
 		}
 
