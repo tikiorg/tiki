@@ -425,40 +425,6 @@ function has_admin() {
         }
 }
 
-function load_profiles() {
-	// the profiles are only mysql-safe at this time, so make other DB's only show the default, which is empty
-	global $db_tiki;
-	global $smarty;
-	if ($db_tiki == 'mysql' || $db_tiki == 'mysqli') {
-        	$profiles = array();
-        	$h = opendir('db/profiles/');
-
-        	while ($file = readdir($h)) {
-                	if (substr($file,-4,4) == '.prf') {
-                        	// Assign the filename of the profile to the name field
-                        	$prof1 = array("name" => $file);
-                        	// Open the profile and pull out the description from the first line
-                        	$fp = fopen("db/profiles/$file", "r");
-                        	$desc = substr(fgets($fp,40),2);
-                        	fclose($fp);
-                        	$prof1["desc"] = $desc;
-                        	// Assign the record to the profile array
-                        	$profiles[] = $prof1;
-                	}
-        	}
-
-        	closedir ($h);
-        	sort($profiles);
-	} else {
-        	$prof1 = array("name" => "_default.prf");
-        	$prof1["desc"] = "Default installation profile";
-        	$profiles[] = $prof1;
-	}
-	$smarty->assign('profiles', $profiles);
-}
-
-
-
 function load_sql_scripts() {
 	global $smarty;
 	global $dbversion_tiki;
@@ -707,8 +673,6 @@ if( $dbcon )
 
 if ( isset($_REQUEST['restart']) ) $_SESSION["install-logged-$multi"] = '';
 
-//Load Profiles
-load_profiles();
 
 //Load SQL scripts
 load_sql_scripts();
@@ -730,7 +694,22 @@ if ( isset($dbTiki) && is_object($dbTiki) && isset($_SESSION["install-logged-$mu
 		$smarty->assign('installer', $installer);
 		$smarty->assign('dbdone', 'y');
 		$install_type = 'scratch';
-		if ( isset($_REQUEST['profile']) ) process_sql_file('profiles/'.$_REQUEST['profile'], $db_tiki);
+		require_once 'lib/tikilib.php';
+		$tikilib = new TikiLib( $dbTiki );
+		require_once 'lib/userslib.php';
+		$userlib = new UsersLib( $dbTiki );
+		require_once 'lib/profilelib/profilelib.php';
+		require_once 'lib/profilelib/installlib.php';
+		require_once 'lib/setup/compat.php';
+		
+		$installer = new Tiki_Profile_Installer;
+		//$installer->setUserData( $data ); // TODO
+
+	if ( isset($_REQUEST['profile']) and !empty($_REQUEST['profile']) ) {
+		$profile = Tiki_Profile::fromNames( 'http://profiles.tikiwiki.org', $_REQUEST['profile'] );
+		$installer->install( $profile );
+	}
+		
 		$_SESSION[$cookie_name] = 'admin';
 	}
 
