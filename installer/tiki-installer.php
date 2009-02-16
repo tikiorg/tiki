@@ -17,7 +17,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 error_reporting (E_ALL);
 
-include_once("lib/init/initlib.php");
+require_once( 'tiki-filter-base.php' );
 
 // Define and load Smarty components
 define('SMARTY_DIR', "lib/smarty/libs/");
@@ -701,6 +701,8 @@ if ( isset($dbTiki) && is_object($dbTiki) && isset($_SESSION["install-logged-$mu
 		require_once 'lib/profilelib/profilelib.php';
 		require_once 'lib/profilelib/installlib.php';
 		require_once 'lib/setup/compat.php';
+		require_once 'lib/tikidate.php';
+		$tikidate = new TikiDate();
 		
 		$installer = new Tiki_Profile_Installer;
 		//$installer->setUserData( $data ); // TODO
