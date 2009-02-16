@@ -1050,6 +1050,8 @@ CREATE TABLE tiki_forums_queue (
   topic_title varchar(240) default NULL,
   summary varchar(240) default NULL,
   in_reply_to varchar(128) default NULL,
+  tags varchar(255) default NULL,
+  email varchar(255) default NULL,
   PRIMARY KEY (qId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
@@ -1819,7 +1821,7 @@ CREATE TABLE tiki_polls (
   votes int(8) default NULL,
   active char(1) default NULL,
   publishDate int(14) default NULL,
-  anonym enum( 'a', 'u', 'i', 'c' ) NOT NULL DEFAULT 'u',
+  voteConsiderationSpan int(4) default 0,
   PRIMARY KEY (pollId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
@@ -2948,6 +2950,7 @@ INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_
 INSERT INTO users_permissions (permName, permDesc, level, type, admin) VALUES ('tiki_p_admin_polls','Can admin polls', 'admin', 'polls', 'y');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_poll_results', 'Can view poll results', 'basic', 'polls');
 INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_vote_poll', 'Can vote polls', 'basic', 'polls');
+INSERT INTO users_permissions (permName, permDesc, level, type) VALUES ('tiki_p_view_poll_voters', 'Can view poll voters', 'basic', 'polls');
 
 INSERT INTO users_permissions (permName, permDesc, level, type, admin) VALUES ('tiki_p_admin_quicktags', 'Can admin quicktags', 'admin', 'quicktags', 'y');
 
@@ -3574,7 +3577,7 @@ DROP TABLE IF EXISTS tiki_freetagged_objects;
 CREATE TABLE tiki_freetagged_objects (
   tagId int(12) NOT NULL auto_increment,
   objectId int(11) NOT NULL default 0,
-  user varchar(200) NOT NULL default '',
+  user varchar(200) default '',
   created int(14) NOT NULL default '0',
   PRIMARY KEY (tagId,user,objectId),
   KEY (tagId),

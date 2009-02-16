@@ -1214,7 +1214,7 @@ class TikiLib extends TikiDB {
 		$ret["pages"] = $this->getOne("select count(*) from `tiki_pages` where `lastModif`>?",array((int)$last));
 		$ret["files"] = $this->getOne("select count(*) from `tiki_files` where `created`>?",array((int)$last));
 		$ret["comments"] = $this->getOne("select count(*) from `tiki_comments` where `commentDate`>?",array((int)$last));
-		$ret["users"] = $this->getOne("select count(*) from `users_users` where `registrationDate`>?",array((int)$last));
+		$ret["users"] = $this->getOne("select count(*) from `users_users` where `registrationDate`>? and `provpass`=?",array((int)$last, ''));
 		$ret["trackers"] = $this->getOne("select count(*) from `tiki_tracker_items` where `lastModif`>?",array((int)$last));
 		$ret["calendar"] = $this->getOne("select count(*) from `tiki_calendar_items` where `lastmodif`>?",array((int)$last));
 		return $ret;
@@ -7971,21 +7971,29 @@ window.addEvent('domready', function() {
 		return strlen($data);
 	}
 
-	function list_votes($id, $offset=0, $maxRecords=-1, $sort_mode='user_asc', $find='', $table='', $column='') {
+	function list_votes($id, $offset=0, $maxRecords=-1, $sort_mode='user_asc', $find='', $table='', $column='', $from='', $to='') {
 		$mid = 'where  `id`=?';
 		$bindvars[] = $id;
 		$select = '';
 		$join = '';
 		if (!empty($find)) {
-			$mid .= " and `user` like ?";
+			$mid .= ' and (`user` like ? or `title` like ? or `ip` like ?)';
 			$bindvars[] = '%'.$find.'%';
+			$bindvars[] = '%'.$find.'%';
+			$bindvars[] = '%'.$find.'%';
+		}
+		if (!empty($from) && !empty($to)) {
+			$mid .= ' and ((time >= ? and time <= ?) or time = ?)';
+			$bindvars[] = $from;
+			$bindvars[] = $to;
+			$bindvars[] = 0;
 		}
 		if (!empty($table) && !empty($column)) {
 			$select = ", `$table`.`$column` as title";
 			$join = "left join `$table` on (`tiki_user_votings`.`optionId` = `$table`.`optionId`)";
 		}
 		$query = "select * $select from `tiki_user_votings` $join $mid order by ".$this->convert_sortmode($sort_mode);
-		$query_cant = "select count(*) from `tiki_user_votings` $mid";
+		$query_cant = "select count(*) from `tiki_user_votings` $join $mid";
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);
 		$cant = $this->getOne($query_cant, $bindvars);
 		$ret = array();

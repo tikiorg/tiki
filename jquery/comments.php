@@ -92,13 +92,6 @@ if ( isset($forum_mode) && $forum_mode == 'y' ) {
 // Assign final values to smarty vars in order
 foreach ( $handled_requests as $request_name ) $smarty->assign($request_name, $$request_name);
 
-// Handle "Post as Anonymous" feature
-$post_as_anonymous = false;
-if ( isset($_REQUEST['comments_postComment_anonymous']) && ! empty($user) && $prefs['feature_comments_post_as_anonymous'] == 'y' ) {
-	$_REQUEST['comments_postComment'] = $_REQUEST['comments_postComment_anonymous'];
-	$post_as_anonymous = true;
-}
-
 if ( ! isset($_REQUEST["comment_rating"]) ) $_REQUEST["comment_rating"] = '';
 $comments_aux = array();
 
@@ -196,202 +189,32 @@ if( ! isset( $comments_objectId ) ) {
 	$comments_objectId = $comments_prefix_var . $_REQUEST["$comments_object_var"];
 }
 
-$message_id = '';
-$in_reply_to = '';
-// Process a post form here 
-if ( ($tiki_p_post_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n'))
-		|| ($tiki_p_forum_post == 'y' && isset($forum_mode) && $forum_mode == 'y') ) {
-	if (isset($_REQUEST["comments_postComment"])) {
-		$msgError = '';
-		$smarty->assign('comments_postComment', 'y');
-
-		if (empty($user) && $prefs['feature_antibot'] == 'y' && (!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $_REQUEST['antibotcode'])) {
-			$msgError = tra('You have mistyped the anti-bot verification code; please try again.');
+$feedbacks = array();
+$errors = array();
+if (isset($_REQUEST['comments_postComment']) || isset($_REQUEST['comments_postComment_anonymous'])) {
+	if (isset($forum_mode) && $forum_mode == 'y') {
+		$forum_info = $commentslib->get_forum($_REQUEST['forumId']);
+		$threadId = $commentslib->post_in_forum($forum_info, $_REQUEST, $feedbacks, $errors);
+		if (!empty($threadId) && empty($errors)) {
+				$url = "tiki-view_forum_thread.php?forumId=" . $_REQUEST['forumId'] . "&comments_parentId=" . $_REQUEST['comments_parentId'];
+				if (!empty($_REQUEST['comments_threshold'])) 
+					$url .= "&amp;comments_threshold=".$_REQUEST['comments_threshold'];
+				if (!empty($_REQUEST['comments_offset'])) 
+					$url .= "&amp;comments_offset=".$_REQUEST['comments_offset'];
+				if (!empty($_REQUEST['comments_per_page'])) 
+					$url .= "&amp;comments_per_page=".$_REQUEST['comments_per_page'];
+				if (!empty($_REQUEST['thread_style'])) 
+					$url .= "&amp;thread_style=".$_REQUEST['thread_style'];
+				if (!empty($_REQUEST['thread_sort_mode'])) 
+					$url .= "&amp;thread_sort_mode=".$_REQUEST['thread_sort_mode'];			
+				if (!empty($feedbacks)) {
+					$_SESSION['feedbacks'] = $feedbacks;
+				}
+				header('location: ' . $url);
 		}
-		$comments_show = 'y';
-
-		if ( $msgError == '' && !empty($_REQUEST["comments_title"]) && !empty($_REQUEST["comments_data"]) && !($prefs['feature_contribution'] == 'y' && ((isset($forum_mode) && $forum_mode == 'y' && $prefs['feature_contribution_mandatory_forum'] == 'y') || ((empty($forum_mode) || $forum_mode == 'n') && $prefs['feature_contribution_mandatory_comment'] == 'y')) && empty($_REQUEST['contributions']))) {
-
-			if ( isset($forum_mode) && $forum_mode == 'y' && $forum_info['is_flat'] == 'y' && $_REQUEST["comments_grandParentId"] > 0 ) {
-				$smarty->assign('msg', tra("This forum is flat and doesn't allow replies to other replies"));
-				$smarty->display("error.tpl");
-				die;
-			}
-
-			if ( empty($_REQUEST["comments_parentId"]) ) $_REQUEST["comments_parentId"] = 0;
-
-			$object = explode(':', $comments_objectId );
-			if( $object[0] == 'forum' && ! empty($_REQUEST["comments_grandParentId"] )) {
-				$parent_id = $_REQUEST["comments_grandParentId"];
-			} else {
-				$parent_id = $_REQUEST["comments_parentId"];
-			}
-
-			if ( isset($_REQUEST["comments_reply_threadId"]) && ! empty($_REQUEST["comments_reply_threadId"]) ) {
-				$reply_info = $commentslib->get_comment($_REQUEST["comments_reply_threadId"]);
-				$in_reply_to = $reply_info["message_id"];
-			} else {
-				$in_reply_to = '';
-			}
-
-			// Remove HTML tags and empty lines at the end of the posted comment
-			$_REQUEST["comments_data"] = rtrim(strip_tags($_REQUEST["comments_data"]));
-
-			if ( $tiki_p_forum_autoapp != 'y'
-					&& ( $forum_info['approval_type'] == 'queue_all' || ( ! $user && $forum_info['approval_type'] == 'queue_anon' ) )
-			   ) {
-
-				$smarty->assign('was_queued', 'y');
-				$_REQUEST['was_queued'] = 'y';
-
-				$qId = $commentslib->replace_queue(0, $_REQUEST['forumId'], $comments_objectId, $parent_id,
-						$user, $_REQUEST["comments_title"], $_REQUEST["comments_data"], 'n', '', '', $thread_info['title'], $in_reply_to);
-
-				// PROCESS ATTACHMENT HERE
-				if ( $qId && isset($_FILES['userfile1']) && ! empty($_FILES['userfile1']['name']) ) {
-					if ( is_uploaded_file($_FILES['userfile1']['tmp_name']) ) {
-						if (!empty($prefs['forum_match_regex']) && !preg_match($prefs['forum_match_regex'], $_FILES['userfile1']['name'])) {
-							$smarty->assign('msg', 'Invalid filename (using filters for filenames)');
-							$smarty->display("error.tpl");
-							die;
-						}
-						check_ticket('view-forum');
-						$fp = fopen($_FILES['userfile1']['tmp_name'], "rb");
-						$commentslib->add_thread_attachment(
-								$forum_info, $qId, $fp, '',
-								$_FILES['userfile1']['name'],
-								$_FILES['userfile1']['type'],
-								$_FILES['userfile1']['size']
-								);
-					} else {
-						$smarty->assign('msg', $tikilib->uploaded_file_error($_FILES['userfile1']['error']));
-						$smarty->display("error.tpl");
-						die;
-					}
-				}
-				//END ATTACHMENT PROCESSING
-
-			} else {
-
-				$smarty->assign('was_queued', 'n');
-				$_REQUEST['was_queued'] = 'n';
-
-				if ( $_REQUEST["comments_threadId"] == 0 ) {
-
-					$message_id = '';
-
-					if ( isset($_REQUEST["anonymous_name"]) ) {
-						$anonymous_name = trim(strip_tags($_REQUEST["anonymous_name"]));
-					} else {
-						$anonymous_name = '';
-					}
-
-					// Handle "Post as Anonymous" feature
-					$post_author = $post_as_anonymous ? '' : $user;
-
-					$qId = $commentslib->post_new_comment($comments_objectId, $parent_id,
-							$post_author,
-							$_REQUEST["comments_title"],
-							$_REQUEST["comments_data"],
-							$message_id, $in_reply_to, 'n', '', '', isset($_REQUEST['contributions'])? $_REQUEST['contributions']: '', $anonymous_name, $_REQUEST["comment_rating"]);
-					if ($object[0] != "forum") {
-						$smarty->assign("comments_parentId", 0); // to display all the comments
-						$_REQUEST["comments_parentId"] = 0;
-					}
-					$_REQUEST["comments_reply_threadId"] = $_REQUEST["comments_parentId"]; // to have the right re:
-					$smarty->assign("comments_reply_threadId", $_REQUEST["comments_parentId"]); // without the flag
-				} else {
-
-					$qId = $_REQUEST["comments_threadId"];
-					if (($tiki_p_edit_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n'))
-							|| (($tiki_p_forum_post == 'y' || $tiki_p_admin_forum == 'y') && isset($forum_mode) && $forum_mode == 'y' )
-							|| ($commentslib->user_can_edit_post($user, $_REQUEST["comments_threadId"]))) {
-						$commentslib->update_comment($_REQUEST["comments_threadId"], $_REQUEST["comments_title"],
-								$_REQUEST["comment_rating"], $_REQUEST["comments_data"], 'n', '', '', $comments_objectId, isset($_REQUEST['contributions'])? $_REQUEST['contributions']: '');
-					}
-				}
-
-			}
-			if (isset($_REQUEST['contributions']))
-				unset($_REQUEST['contributions']);
-
-			$object = explode(':', $comments_objectId );
-
-			if( $object[0] == 'forum' )
-			{
-				// Deal with attachment
-				if (($forum_info['att'] == 'att_all'
-							|| ($forum_info['att'] == 'att_admin' && $tiki_p_admin_forum == 'y')
-							|| ($forum_info['att'] == 'att_perm' && $tiki_p_forum_attach == 'y'))
-						&&  isset($_FILES['userfile1']) && is_uploaded_file($_FILES['userfile1']['tmp_name'])){
-					if (!empty($prefs['forum_match_regex']) && !preg_match($prefs['forum_match_regex'], $_FILES['userfile1']['name'])) {
-						$smarty->assign('msg', 'Invalid filename (using filters for filenames)');
-						$smarty->display("error.tpl");
-						die;
-					}
-					$fp = fopen($_FILES['userfile1']['tmp_name'], "rb");
-
-					$data = '';
-					$fhash = '';
-
-					if ($forum_info['att_store'] == 'dir') {
-						$name = $_FILES['userfile1']['name'];
-						$fhash = md5(uniqid('.'));
-						// Just in case the directory doesn't have the trailing slash
-						if (substr($forum_info['att_store_dir'], strlen($forum_info['att_store_dir']) - 1, 1) == '\\') {
-							$forum_info['att_store_dir'] = substr($forum_info['att_store_dir'],
-									0, strlen($forum_info['att_store_dir']) - 1). '/';
-						} elseif (
-								substr($forum_info['att_store_dir'], strlen($forum_info['att_store_dir']) - 1, 1) != '/') {
-							$forum_info['att_store_dir'] .= '/';
-						}
-
-						@$fw = fopen($forum_info['att_store_dir'] . $fhash, "wb");
-						if (!$fw) {
-							$msg = tra('Cannot write to this file:'). $fhash;
-							$access->display_error(basename(__FILE__), $msg);
-						}
-					}
-					while (!feof($fp)) {
-						if ($forum_info['att_store'] == 'db') {
-							$data .= fread($fp, 8192 * 16);
-						} else {
-							$data = fread($fp, 8192 * 16);
-							fwrite($fw, $data);
-						}
-					}
-					fclose ($fp);
-
-					if ($forum_info['att_store'] == 'dir') {
-						fclose ($fw);
-						$data = '';
-					}
-
-					$size = $_FILES['userfile1']['size'];
-					$name = $_FILES['userfile1']['name'];
-					$type = $_FILES['userfile1']['type'];
-
-					if ($size > $forum_info['att_max_size']) {
-						$msg = tra('Cannot upload this file maximum upload size exceeded');
-						$access->display_error(basename(__FILE__), $msg);
-					}
-
-					$commentslib->attach_file($qId, 0, $name, $type, $size, $data,
-							$fhash, $forum_info['att_store_dir'], $_REQUEST['forumId']);
-				} /* attachment */
-
-				// Deal with mail notifications.
-				include_once('lib/notifications/notificationemaillib.php');
-				sendForumEmailNotification('forum_post_thread',
-						$qId, $forum_info,
-						$_REQUEST["comments_title"], $_REQUEST["comments_data"], $user,
-						$thread_info['title'], $message_id, $in_reply_to, 
-						$_REQUEST['comments_parentId'], 
-						$_REQUEST['comments_grandParentId'] );
-
-				$commentslib->register_forum_post($_REQUEST["forumId"], $_REQUEST["comments_parentId"]);
-			}
-			if (($prefs['feature_user_watches'] == 'y') && ($prefs['wiki_watch_comments'] == 'y') && (isset($_REQUEST["page"]))) {
+	} else {
+		$threadId =  $commentslib->post_in_object($comments_objectId, $_REQUEST, $feedbacks, $errors);
+		if ((!empty($threadId) && empty($errors) && $prefs['feature_user_watches'] == 'y') && ($prefs['wiki_watch_comments'] == 'y') && (isset($_REQUEST["page"]))) {
 				include_once ('lib/webmail/tikimaillib.php');
 				$nots = $commentslib->get_event_watches('wiki_page_changed', $_REQUEST["page"]);
 				$isBuilt = false;
@@ -443,44 +266,9 @@ if ( ($tiki_p_post_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n'
 					$mail->send(array($not['email']));
 				}
 			}
-			// redirect back to parent after edit/post to create GET request instead of POST to allow proper bookmarking/refreshing, etc.
-			if (isset($forum_mode) && $forum_mode == 'y') {
-				$url = "tiki-view_forum_thread.php?forumId=" . $_REQUEST['forumId'] . "&comments_parentId=" . $_REQUEST['comments_parentId'];
-				if (!empty($_REQUEST['comments_threshold'])) 
-					$url .= "&comments_threshold=".$_REQUEST['comments_threshold'];
-				if (!empty($_REQUEST['comments_offset'])) 
-					$url .= "&comments_offset=".$_REQUEST['comments_offset'];
-				if (!empty($_REQUEST['comments_per_page'])) 
-					$url .= "&comments_per_page=".$_REQUEST['comments_per_page'];
-				if (!empty($_REQUEST['thread_style'])) 
-					$url .= "&thread_style=".$_REQUEST['thread_style'];
-				if (!empty($_REQUEST['thread_sort_mode'])) 
-					$url .= "&thread_sort_mode=".$_REQUEST['thread_sort_mode'];			
-				if (!empty($_REQUEST['was_queued']))
-					$url .= "&was_queued=".$_REQUEST['was_queued'];
-				header('location: ' . $url);
-			}
-		} else {
-			if (empty($_REQUEST["comments_title"]) || empty($_REQUEST["comments_data"])) {
-				if ($msgError)
-					$msgError .= '<br />';
-				$msgError .= tra("Missing title or body when trying to post a comment");
-			}
-			if ($prefs['feature_contribution'] == 'y' && empty($_REQUEST['contributions'])) {
-				if ($msgError)
-					$msgError .= '<br />';
-				$msgError .= tra("A contribution is mandatory");
-			}
-			if ($msgError)
-				$msgError = tra('Your post has not been posted').'<br />'.$msgError;
-			$smarty->assign('msgError', $msgError);
-		}
 	}
-} elseif (isset($_REQUEST['comments_postComment'])) {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
+	$smarty->assign_by_ref('errors', $errors);
+	$smarty->assign_by_ref('feedbacks', $feedbacks);
 }
 
 if (($tiki_p_vote_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n')) || ($tiki_p_forum_vote == 'y' && isset($forum_mode) && $forum_mode == 'y')) {
@@ -584,7 +372,7 @@ if ($_REQUEST["comments_threadId"] > 0) {
 
 $smarty->assign('comment_preview', 'n');
 
-if (isset($_REQUEST["comments_previewComment"]) || isset($msgError)) {
+if (isset($_REQUEST["comments_previewComment"]) || !empty($errors)) {
 	$smarty->assign('comments_preview_title', $_REQUEST["comments_title"]);
 	$comments_show = 'y';
 	$smarty->assign('comments_preview_data', $commentslib->parse_comment_data(strip_tags($_REQUEST["comments_data"])));
@@ -709,10 +497,6 @@ if (!empty($_REQUEST['post_reply'])) {
 if ($prefs['feature_contribution'] == 'y') {
 	$contributionItemId = $_REQUEST["comments_threadId"];
 	include_once('contribution.php');
-}
-
-if ( isset($_REQUEST['was_queued']) ) {
-	$smarty->assign('was_queued', $_REQUEST['was_queued']);
 }
 
 $smarty->assign('comments_show', $comments_show);

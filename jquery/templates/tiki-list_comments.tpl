@@ -11,6 +11,7 @@
 {query _type='form_input'}
 {/if}
 
+{assign var='cntcol' value=2}
 <table class="normal">
 	<tr>
 		<th>
@@ -26,12 +27,14 @@
 	
 		{foreach key=headerKey item=headerName from=$headers}
 		<th>
+			{assign var='cntcol' value=$cntcol+1}
 			{self_link _sort_arg="sort_mode" _sort_field=$headerKey}{tr}{$headerName}{/tr}{/self_link}
 		</th>
 		{/foreach}
 
 		{if $tiki_p_admin_comments eq 'y' and $prefs.feature_comments_moderation eq 'y'}
 		<th>
+			{assign var='cntcol' value=$cntcol+1}
 			{self_link _sort_arg="sort_mode" _sort_field='approved'}{tr}Approval{/tr}{/self_link}
 		</th>
 		{/if}
@@ -85,7 +88,7 @@
 		{cycle print=false}
 	</tr>
 	{sectionelse}
-	<tr><td class="odd" colspan="7">{tr}No records found.{/tr}</td></tr>
+	<tr><td class="odd" colspan="{$cntcol}">{tr}No records found.{/tr}</td></tr>
 	{/section}
 </table>
 

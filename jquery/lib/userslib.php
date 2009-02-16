@@ -1950,31 +1950,32 @@ function get_included_groups($group, $recur=true) {
 	}
     }
 
-    function confirm_user($user) {
-	global $prefs,$cachelib;
+	function confirm_user($user) {
+		global $prefs,$cachelib;
 
-	$query = "select `provpass`, `login` from `users_users` where `login`=?";
-	$result = $this->query($query, array($user));
-	$res = $result->fetchRow();
-	$hash = $this->hash_pass($res['provpass']);
-	$provpass = $res["provpass"];
+		$query = "select `provpass`, `login` from `users_users` where `login`=?";
+		$result = $this->query($query, array($user));
+		$res = $result->fetchRow();
+		$hash = $this->hash_pass($res['provpass']);
+		$provpass = $res["provpass"];
 
-	if ($prefs['feature_clear_passwords'] == 'n') {
-	    $provpass = '';
+		if ($prefs['feature_clear_passwords'] == 'n') {
+			$provpass = '';
+		}
+
+		$query = "update `users_users` set `password`=? ,`hash`=? ,`provpass`=?, valid=?, `email_confirm`=?, `waiting`=?, `registrationDate`=? where `login`=?";
+		$result = $this->query($query, array(
+				$provpass,
+				$hash,
+				'',
+				NULL,
+				$this->now,
+				NULL,
+				$this->now,
+				$user
+				));
+		$cachelib->invalidate('userslist');
 	}
-
-	$query = "update `users_users` set `password`=? ,`hash`=? ,`provpass`=?, valid=?, `email_confirm`=?, `waiting`=? where `login`=?";
-	$result = $this->query($query, array(
-		    $provpass,
-		    $hash,
-		    '',
-			NULL,
-			$this->now,
-			NULL,
-		    $user
-		    ));
-	$cachelib->invalidate('userslist');
-    }
 
 	function change_user_waiting($user, $who) {
 		$query = 'update `users_users` set `waiting`=?, `currentLogin`=?, `lastLogin`=? where `login`=?';
@@ -2744,8 +2745,8 @@ function get_included_groups($group, $recur=true) {
 			return false;
 		}
 		if (md5($res['provpass']) == $pass){
-			$query = 'update `users_users` set `provpass`=?, `email_confirm`=?, `unsuccessful_logins`=? where `login`=? and `provpass`=?';
-			$this->query($query, array('', $tikilib->now, 0, $user, $res['provpass']));
+			$query = 'update `users_users` set `provpass`=?, `email_confirm`=?, `unsuccessful_logins`=?, `registrationDate`=? where `login`=? and `provpass`=?';
+			$this->query($query, array('', $tikilib->now, 0, $this->now, $user, $res['provpass']));
 			return true;
 		}
 		return false;
