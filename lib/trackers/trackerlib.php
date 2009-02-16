@@ -2767,6 +2767,13 @@ class TrackerLib extends TikiLib {
 			return null;
 		}
 	}
+	function get_item_group_creator($trackerId, $itemId) {
+		if ($fieldId = $this->get_field_id_from_type($trackerId, 'g', '1%')) { // group creator field
+			return $this->get_item_value($trackerId, $itemId, $fieldId);
+		} else {
+			return null;
+		}
+	}
 	/* find the best fieldwhere you can do a filter on the initial
 	 * 1) if sort_mode and sort_mode is a text and the field is visible
 	 * 2) the first main taht is text

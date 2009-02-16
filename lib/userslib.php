@@ -1048,6 +1048,14 @@ function get_included_groups($group, $recur=true) {
 		}
 		return $ret;
 	}
+	function user_is_in_group($user, $group) {
+		$user_details = $this->get_user_details($user);
+		if (in_array($group, $user_details['groups'])) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
     function remove_user_from_group($user, $group) {
 	global $cachelib; require_once("lib/cache/cachelib.php");

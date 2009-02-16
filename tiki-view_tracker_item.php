@@ -70,7 +70,6 @@ if (!isset($_REQUEST['trackerId']) && $prefs['userTracker'] == 'y' && !isset($_R
 		}
 	}
 }
-
 if (!isset($_REQUEST['trackerId']) && $prefs['groupTracker'] == 'y') {
 	if (isset($_REQUEST['view']) and $_REQUEST['view'] == ' group') {
 		$gtid = $userlib->get_grouptrackerid($group);
@@ -316,6 +315,7 @@ $tabi = 1;
 
 $itemUser = $trklib->get_item_creator($_REQUEST['trackerId'], $_REQUEST['itemId']);
 $smarty->assign_by_ref('itemUser', $itemUser);
+
 foreach($xfields["data"] as $i=>$array) {
 	$fid = $xfields["data"][$i]["fieldId"];
 
@@ -777,12 +777,15 @@ if ($_REQUEST["itemId"]) {
 	||  ($tiki_p_admin_trackers != 'y' && $tiki_p_view_trackers != 'y' &&
 	  (!isset($utid) || $_REQUEST['trackerId'] != $utid['usersTrackerId']) &&
 		(!isset($gtid) || $_REQUEST['trackerId'] != $utid['groupTrackerId']) &&
-		 ($tracker_info['writerCanModify'] != 'y' || $user != $itemUser)
+		 ($tracker_info['writerCanModify'] != 'y' || $user != $itemUser) && !$special
 	) ) {
-		$smarty->assign('errortype', 401);
-		$smarty->assign('msg', tra('Permission denied'));
-		$smarty->display('error.tpl');
-		die;
+		$itemGroup = $trklib->get_item_group_creator($_REQUEST['trackerId'], $_REQUEST['itemId']);
+		if (empty($itemGroup) || !$userlib->user_is_in_group($user, $itemGroup)) {
+			$smarty->assign('errortype', 401);
+			$smarty->assign('msg', tra('Permission denied'));
+			$smarty->display('error.tpl');
+			die;
+		}
 	}
 	$last = array();
 	$lst = '';
