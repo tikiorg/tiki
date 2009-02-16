@@ -1214,7 +1214,7 @@ class TikiLib extends TikiDB {
 		$ret["pages"] = $this->getOne("select count(*) from `tiki_pages` where `lastModif`>?",array((int)$last));
 		$ret["files"] = $this->getOne("select count(*) from `tiki_files` where `created`>?",array((int)$last));
 		$ret["comments"] = $this->getOne("select count(*) from `tiki_comments` where `commentDate`>?",array((int)$last));
-		$ret["users"] = $this->getOne("select count(*) from `users_users` where `registrationDate`>?",array((int)$last));
+		$ret["users"] = $this->getOne("select count(*) from `users_users` where `registrationDate`>? and `provpass`=?",array((int)$last, ''));
 		$ret["trackers"] = $this->getOne("select count(*) from `tiki_tracker_items` where `lastModif`>?",array((int)$last));
 		$ret["calendar"] = $this->getOne("select count(*) from `tiki_calendar_items` where `lastmodif`>?",array((int)$last));
 		return $ret;
