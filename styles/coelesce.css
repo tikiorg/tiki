@@ -108,7 +108,7 @@ input[type=submit],
 	font-size: .95em;
 	font-weight: bold;
 	color: #449cd0;
-	background: #5f5f5f;
+	background: #f5f5f5;
 	border: 1px solid #c5c5c5;
 	padding: 0 4px;
 	margin-right: 1px;
@@ -485,7 +485,7 @@ a.flip img {display: none}
 
 .error,
 #error {
-	background: #5f5f5f !important;
+	background: #f5f5f5 !important;
 	color: #2d2d2d}
 
 /* display PHP/Smarty errors on top */
@@ -910,7 +910,7 @@ div.help_section {
 	width: 340px;
 	margin: 5px;
 	padding: 5px;
-	background: #5f5f5f}
+	background: #f5f5f5}
 	
 #site_report {text-align: center}
 
@@ -1015,7 +1015,7 @@ div.cbox {
 	padding: 2px}
 
 .cboxlink {}
-.cbox-data {background: #5f5f5f}
+.cbox-data {background: #f5f5f5}
 
 .rbox {
 	margin: 5px 10px 5px;
@@ -2324,7 +2324,7 @@ div.messureadbody {
 	top: 10%;
 	max-height: 80%;
 	overflow: auto;
-	background: #5f5f5f;
+	background: #f5f5f5;
 	padding: 10px;
 	border: solid 2px #696969}
 
@@ -2358,12 +2358,12 @@ div#ajaxLoading {
 	white-space: normal !important;
 	padding: 5px 0 4px 8px}
 	
-#shadowbox_content {background: #5f5f5f}
+#shadowbox_content {background: #f5f5f5}
 	
 /* MyTiki Preferences Ajax */
 
 .tab-wrapper {
-	border: 1px solid #5f5f5f;
+	border: 1px solid #f5f5f5;
 	padding: 0}
 
 .tab-menu  {
@@ -2387,7 +2387,7 @@ div#ajaxLoading {
 
 .tab-menu li a 	{ 
 	padding: 1px 5px; 
-	background: #5f5f5f; 
+	background: #f5f5f5; 
 	color: #517ea7; 
 	font-weight: bold; 
 	text-decoration: none}
@@ -2470,7 +2470,7 @@ div.minichatchans {overflow: auto}
 .minichat {
 	overflow: auto !important;
 	border: 1px solid #527ca6;
-	background: #5f5f5f}
+	background: #f5f5f5}
 
 div.minichatdiv {
 	font-size: .9em;
