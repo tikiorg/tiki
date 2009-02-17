@@ -1,0 +1,968 @@
+<?php
+/* Show image in configured format.
+// Developed by Scot E. Wilcoxon for Tiki CMS
+// Based on img, SHARETHIS, and THUMBDIV plugins.
+// Usage:
+// {IMAGE(<options=>"values">)}{IMAGE}
+//
+// 2008-12-08 SEWilco
+//   Initial version.
+//
+// License: GNU/LGPL: GNU Lesser General Public License
+*/
+
+function wikiplugin_image_help() {
+	return tra("Display an image using configured format. Allows presentation of all images to be changed without having to alter existing content.").":<br />~np~" . '{IMAGE(
+[ id="Numeric ID of an image in an Image Gallery. "id" or "src" required." ]
+[ src="Full URL to the image to display. "id" or "src" required." ]
+[ scalesize="Maximum height or width in pixels (largest dimension is scaled). If no scalesize is given one will be attempted from default or given height or width. If scale does not match a defined scale for the gallery the full sized image is downloaded." ]
+[ height="Height in pixels." ]
+[ width="Width in pixels." ]
+[ link="Alias: lnk. Location the image should point to." ]
+[ rel="\"rel\" attribute to add to the link." ]
+[ title="Title text." ]
+[ alt="Alternate text to display if impossible to load the image." ]
+[ align="Alias:imalign. Image alignment in the page. (left, right)" ]
+[ block="Whether to block items from flowing next to image from the top or bottom. (top,bottom,both,none)" ]
+[ desc="Image description to display on the page." ]
+[ usemap="Name of the image map to use for the image." ]
+[ class="CSS class to apply to the image'."'".'s img tag." ]
+[ style="CSS styling to apply to the plugin. (Usually used in configuration rather than on individual images.)" ]
+[ test=""true" to test combinations of parameters for which no values were given. Does not test imagemap and class. (Admin users only)" ]
+)}{IMAGE}~/np~';
+}
+
+function wikiplugin_image_info() {
+	return array(
+		'name' => tra('Image'),
+		'description' => tra("Display an image."),
+		'prefs' => array( 'wikiplugin_image'),
+		'params' => array(
+			'id' => array(
+				'required' => false,
+				'name' => tra('Image ID'),
+				'description' => tra('Numeric ID of an image in an Image Gallery. "id" or "src" required.'),
+			),
+			'src' => array(
+				'required' => false,
+				'name' => tra('Image Source'),
+				'description' => tra('Full URL to the image to display. "id" or "src" required.'),
+			),
+			'scalesize' => array(
+				'required' => false,
+				'name' => tra('Image size'),
+				'description' => tra('Maximum height or width in pixels (largest dimension is scaled).  If no scalesize is given one will be attempted from default or given height or width.  If scale does not match a defined scale for the gallery the full sized image is downloaded.'),
+			),
+			'height' => array(
+				'required' => false,
+				'name' => tra('Image height'),
+				'description' => tra('Height in pixels.'),
+			),
+			'width' => array(
+				'required' => false,
+				'name' => tra('Image width'),
+				'description' => tra('Width in pixels.'),
+			),
+			'link' => array(
+				'required' => false,
+				'name' => tra('Link'),
+				'description' => tra('Alias: lnk. Location the image should point to.'),
+			),
+			'rel' => array(
+				'required' => false,
+				'name' => tra('Link Relation'),
+				'description' => tra('"rel" attribute to add to the link.'),
+			),
+			'title' => array(
+				'required' => false,
+				'name' => tra('Link title'),
+				'description' => tra('Title text.'),
+			),
+			'alt' => array(
+				'required' => false,
+				'name' => tra('Image alt text'),
+				'description' => tra('Alternate text to display if impossible to load the image.'),
+			),
+			'align' => array(
+				'required' => false,
+				'name' => tra('Alignment'),
+				'description' => tra('Alias:imalign. Image alignment in the page. (left, right)'),
+			),
+			'block' => array(
+				'required' => false,
+				'name' => tra('Alignment'),
+				'description' => tra('Whether to block items from flowing next to image from the top or bottom. (top,bottom,both,none)'),
+			),
+			'desc' => array(
+				'required' => false,
+				'name' => tra('Description'),
+				'description' => tra('Image description to display on the page.'),
+			),
+			'usemap' => array(
+				'required' => false,
+				'name' => tra('Image Map'),
+				'description' => tra('Name of the image map to use for the image.'),
+			),
+			'class' => array(
+				'required' => false,
+				'name' => tra('CSS Class'),
+				'description' => tra('CSS class to apply to the image'."'".'s img tag. (Usually used in configuration rather than on individual images.)'),
+			),
+			'style' => array(
+				'required' => false,
+				'name' => tra('CSS Style'),
+				'description' => tra('CSS styling to apply to the plugin. (Usually used in configuration rather than on individual images.)'),
+			),
+			'default' => array(
+				'required' => false,
+				'name' => tra('Default configuration'),
+				'description' => tra('Default configuration definitions. (Usually used in configuration rather than on individual images.)'),
+			),
+			'mandatory' => array(
+				'required' => false,
+				'name' => tra('Mandatory configuration'),
+				'description' => tra('Mandatory configuration definitions. (Usually used in configuration rather than on individual images.)'),
+			),
+			"test" => array(
+				'required' => false,
+				'name' => tra('Test mode'),
+				'description' => tra('"true" to test combinations of parameters for which no values were given.  Does not test imagemap and class. (Admin users only)'),
+			),
+		),
+	);
+}
+
+/**
+
+The 'default' option allow definition of default values,
+although those can be overridden when using the plugin.
+The 'mandatory' settings are specified using the same syntax
+as 'default', but are applied after the plugin-specified
+parameters.
+
+The default values are specified as:
+  condition ? parameter = value [, parameter = value ...][; condition ? parameter = value ...]
+
+The defined conditions are:
+  default - default values
+  mode_mobile - When in mobile mode
+  module_*  - When in any module
+  section_* - When in any section (The 'section_*' applies to any section)
+    - (A specific section name can be specified instead of *)
+  section_cms_article   - When in a CMS (Article) section of type Article
+  section_cms_review    - When in a CMS (Article) section of type Review
+  section_cms_event   - When in a CMS (Article) section of type Event
+  section_cms_classified    - When in a CMS (Article) section of type Classified
+
+The parameter is the name of any IMAGE option (id, scalesize, width, ...).
+
+Current list of section names:
+    blogs, calendar, categories, cms, directory, faqs,
+    featured_links, file_galleries, forums, freetags, friends,
+    galleries, games, html_pages, livesupport, maps, mytiki,
+    newsletters, newsreader, poll, quizzes, sheet, surveys,
+    trackers, user_messages, users, webmail, wiki page
+
+sample:
+  $imgdata["default"] = 'default ? scalesize = 200, align = right, style = text-align:center; mode_mobile ? scalesize = 150; module_* ? scalesize = 150; section_cms_article ? scalesize = 400';
+**/
+
+function wikiplugin_image( $data, $params, $offset, $parseOptions='' ) {
+	global $tikidomain, $tikiroot, $prefs, $section, $smarty;
+
+	$imgdata = array();
+	
+	$imgdata["id"] = '';
+	$imgdata["src"] = '';
+	$imgdata["scalesize"] = '';
+	$imgdata["height"] = '';
+	$imgdata["width"] = '';
+	$imgdata["lnk"] = '';
+	$imgdata["rel"] = '';
+	$imgdata["title"] = '';
+	$imgdata["align"] = '';
+	$imgdata["imalign"] = '';
+	$imgdata["block"] = '';
+	$imgdata["desc"] = '';
+	$imgdata["alt"] = '';
+	$imgdata["usemap"] = '';
+	$imgdata["class"] = '';
+	$imgdata["style"] = '';
+	$imgdata["default"] = '';
+	$imgdata["mandatory"] = '';
+	$imgdata["test"] = '';
+
+	/*
+	** Define default parameters here.
+	*/
+	
+  // The following causes the image to be centered.
+	$imgdata["style"] = 'text-align:center';
+
+  // The following are local defaults copied and modified from above.
+  $imgdata["default"] = 'default ? scalesize = 200, align = right, style = text-align:center; section_cms_article ? scalesize = 400, width= , height=';
+  // Force certain scalesize and ignore any specified width or height
+  $imgdata["mandatory"] = 'mode_mobile ? scalesize = 150, width= , height=; module_* ? scalesize = 150, width= , height=; section_cms_article ? scalesize = 400';
+
+  /*
+  ** Start processing... first defaults, then given parameters, then mandatory settings.
+  */
+
+	// Get parameters once in case there is a 'default' parameter.
+  // This will be done again later so parameters can override defaults.
+	$imgdata = array_merge( $imgdata, $params );
+
+	if( !empty($imgdata['default']) ) { // If defaults have been specified
+    $imgdata['default'] = trim($imgdata['default']) . ';'; // trim whitespace and ensure at least one semicolon
+    $img_conditions_array = explode( ";", $imgdata['default'] ); // conditions separated by semicolons
+    if( !empty($img_conditions_array) ) {
+      foreach($img_conditions_array as $key => $var) { // for each condition
+        if( !empty($var) ) {
+          $img_condition = explode( "?", $var ); // condition separated from parameters by question mark
+          if( !empty($img_condition) ) {
+            $img_condition_name = trim($img_condition[0]);
+            if( !empty($img_condition[1]) ) { // if there is at least one parameter
+              $img_condition[1] = trim($img_condition[1]) . ',';  // at least one comma
+              $img_parameters_array = explode( ",", $img_condition[1] ); // separate multiple parameters
+              if( !empty($img_parameters_array) ) {  // if a parameter has been extracted
+                foreach($img_parameters_array as $param_key => $param_var) {  // for each parameter
+                  if( !empty($param_var) ) {  // if a parameter exists
+                    $img_parameter_array = explode( "=", trim($param_var) ); // separate parameters and values
+                    if( !empty($img_parameter_array[0]) ) {  // if a parameter with a value has been extracted
+
+                      $img_condition_status = false;  // initialise condition as not being true
+
+                      $img_condition_name = strtolower(trim($img_condition_name));
+                      switch ($img_condition_name) {
+                        case "default":
+                          $img_condition_status = true; // default is always true
+                          break;
+                        case "mode_mobile":
+                          if( $_REQUEST['mode'] == "mobile" ) $img_condition_status = true;
+                          break;
+                        case "module_*":
+                          if( !empty($smarty) ) {
+                            $image_module_params = $smarty->get_template_vars('module_params');
+                            if( !empty($image_module_params) ) $img_condition_status = true;
+                          }
+                          break;
+                        case "section_*":
+                          if( !empty($section) ) $img_condition_status = true;
+                          break;
+                        case "section_cms_article":
+                          if( !empty($section) ) {
+                            if( $section == "cms" ) {
+                              if( !empty($smarty) ) {
+                                $image_article_type = $smarty->get_template_vars('type');
+                                if( !empty($image_article_type) ) {
+                                  if( strtolower(trim($image_article_type)) == "article" ) $img_condition_status = true;
+                                } // if(!empty($image_article_type))
+                              } // if(!empty($smarty))
+                            }
+                          }
+                          break;
+                        case "section_cms_review":
+                          if( !empty($section) ) {
+                            if( $section == "cms" ) {
+                              if( !empty($smarty) ) {
+                                $image_article_type = $smarty->get_template_vars('type');
+                                if( !empty($image_article_type) ) {
+                                  if( strtolower(trim($image_article_type)) == "review" ) $img_condition_status = true;
+                                } // if(!empty($image_article_type))
+                              } // if(!empty($smarty))
+                            }
+                          }
+                          break;
+                        case "section_cms_event":
+                          if( !empty($section) ) {
+                            if( $section == "cms" ) {
+                              if( !empty($smarty) ) {
+                                $image_article_type = $smarty->get_template_vars('type');
+                                if( !empty($image_article_type) ) {
+                                  if( strtolower(trim($image_article_type)) == "event" ) $img_condition_status = true;
+                                } // if(!empty($image_article_type))
+                              } // if(!empty($smarty))
+                            }
+                          }
+                          break;
+                        case "section_cms_classified":
+                          if( !empty($section) ) {
+                            if( $section == "cms" ) {
+                              if( !empty($smarty) ) {
+                                $image_article_type = $smarty->get_template_vars('type');
+                                if( !empty($image_article_type) ) {
+                                  if( strtolower(trim($image_article_type)) == "classified" ) $img_condition_status = true;
+                                } // if(!empty($image_article_type))
+                              } // if(!empty($smarty))
+                            }
+                          }
+                          break;
+                      } // switch ($img_condition_name)
+
+                      if( $img_condition_status != true ) {
+                        // if match not found yet, examine more specific conditions
+                        if( !empty($section) ) {  // if we have a section name
+                          if( substr($img_condition_name,0,8) == "section_" ) {
+                            if( strlen($img_condition_name) > 8 ) {
+                              $img_condition_part = substr($img_condition,8); // get part after "section_"
+                              $img_condition_part = strtolower($img_condition_part);
+                              $img_condition_part = trim(strtr($img_condition_part, "_", " ")); // replace underscore with spaces
+                              if( $section == $img_condition_part ) $img_condition_status = true;
+                            } // if( length($img_condition_name) > 8 )
+                          } // if( substr($img_condition_name,0,8) == "section_" )
+                        } // if( !empty($section) )
+                      }
+
+                      if( $img_condition_status == true ) {
+                        // set the parameters to their values
+                        switch (strtolower(trim($img_parameter_array[0]))) {
+                          case "id":
+                            $imgdata["id"] = trim($img_parameter_array[1]);
+                            break;
+                          case "src":
+                            $imgdata["src"] = trim($img_parameter_array[1]);
+                            break;
+                          case "scalesize":
+                            $imgdata["scalesize"] = trim($img_parameter_array[1]);
+                            break;
+                          case "height":
+                            $imgdata["height"] = trim($img_parameter_array[1]);
+                            break;
+                          case "width":
+                            $imgdata["width"] = trim($img_parameter_array[1]);
+                            break;
+                          case "lnk":
+                          case "link":
+                            $imgdata["lnk"] = trim($img_parameter_array[1]);
+                            break;
+                          case "rel":
+                            $imgdata["rel"] = trim($img_parameter_array[1]);
+                            break;
+                          case "title":
+                            $imgdata["title"] = trim($img_parameter_array[1]);
+                            break;
+                          case "align":
+                            $imgdata["align"] = trim($img_parameter_array[1]);
+                            break;
+                          case "imalign":
+                            $imgdata["imalign"] = trim($img_parameter_array[1]);
+                            break;
+                          case "block":
+                            $imgdata["block"] = trim($img_parameter_array[1]);
+                            break;
+                          case "desc":
+                            $imgdata["desc"] = trim($img_parameter_array[1]);
+                            break;
+                          case "alt":
+                            $imgdata["alt"] = trim($img_parameter_array[1]);
+                            break;
+                          case "usemap":
+                            $imgdata["usemap"] = trim($img_parameter_array[1]);
+                            break;
+                          case "class":
+                            $imgdata["class"] = trim($img_parameter_array[1]);
+                            break;
+                          case "style":
+                            $imgdata["style"] = trim($img_parameter_array[1]);
+                            break;
+                        } // switch ($img_parameter_array[0])
+                      } // if( $img_condition_status == true )
+
+                    } // if( !empty($img_parameter_array[0] )
+                  } // if a parameter exists
+                } // for each parameter
+              } // if( !empty($img_parameters_array) )
+            } // if( !empty($img_condition[1]) )
+          }  // if( !empty($img_condition) )
+        } // if( !empty($var) )
+      } // for each condition
+    } // if( !empty($img_conditions_array) )
+	} // if( !empty($imgdata['default']) )
+
+	// merge specified parameters over default values
+	$imgdata = array_merge( $imgdata, $params );
+
+	if( !empty($imgdata['mandatory']) ) { // If defaults have been specified
+    $imgdata['mandatory'] = trim($imgdata['mandatory']) . ';'; // trim whitespace and ensure at least one semicolon
+    $img_conditions_array = explode( ";", $imgdata['mandatory'] ); // conditions separated by semicolons
+    if( !empty($img_conditions_array) ) {
+      foreach($img_conditions_array as $key => $var) { // for each condition
+        if( !empty($var) ) {
+          $img_condition = explode( "?", $var ); // condition separated from parameters by question mark
+          if( !empty($img_condition) ) {
+            $img_condition_name = trim($img_condition[0]);
+            if( !empty($img_condition[1]) ) { // if there is at least one parameter
+              $img_condition[1] = trim($img_condition[1]) . ',';  // at least one comma
+              $img_parameters_array = explode( ",", $img_condition[1] ); // separate multiple parameters
+              if( !empty($img_parameters_array) ) {  // if a parameter has been extracted
+                foreach($img_parameters_array as $param_key => $param_var) {  // for each parameter
+                  if( !empty($param_var) ) {  // if a parameter exists
+                    $img_parameter_array = explode( "=", trim($param_var) ); // separate parameters and values
+                    if( !empty($img_parameter_array[0]) ) {  // if a parameter with a value has been extracted
+
+                      $img_condition_status = false;  // initialise condition as not being true
+
+                      $img_condition_name = strtolower(trim($img_condition_name));
+                      switch ($img_condition_name) {
+                        case "default":
+                          $img_condition_status = true; // default is always true
+                          break;
+                        case "mode_mobile":
+                          if( $_REQUEST['mode'] == "mobile" ) $img_condition_status = true;
+                          break;
+                        case "module_*":
+                          if( !empty($smarty) ) {
+                            $image_module_params = $smarty->get_template_vars('module_params');
+                            if( !empty($image_module_params) ) $img_condition_status = true;
+                          }
+                          break;
+                        case "section_*":
+                          if( !empty($section) ) $img_condition_status = true;
+                          break;
+                        case "section_cms_article":
+                          if( !empty($section) ) {
+                            if( $section == "cms" ) {
+                              if( !empty($smarty) ) {
+                                $image_article_type = $smarty->get_template_vars('type');
+                                if( !empty($image_article_type) ) {
+                                  if( strtolower(trim($image_article_type)) == "article" ) $img_condition_status = true;
+                                } // if(!empty($image_article_type))
+                              } // if(!empty($smarty))
+                            }
+                          }
+                          break;
+                        case "section_cms_review":
+                          if( !empty($section) ) {
+                            if( $section == "cms" ) {
+                              if( !empty($smarty) ) {
+                                $image_article_type = $smarty->get_template_vars('type');
+                                if( !empty($image_article_type) ) {
+                                  if( strtolower(trim($image_article_type)) == "review" ) $img_condition_status = true;
+                                } // if(!empty($image_article_type))
+                              } // if(!empty($smarty))
+                            }
+                          }
+                          break;
+                        case "section_cms_event":
+                          if( !empty($section) ) {
+                            if( $section == "cms" ) {
+                              if( !empty($smarty) ) {
+                                $image_article_type = $smarty->get_template_vars('type');
+                                if( !empty($image_article_type) ) {
+                                  if( strtolower(trim($image_article_type)) == "event" ) $img_condition_status = true;
+                                } // if(!empty($image_article_type))
+                              } // if(!empty($smarty))
+                            }
+                          }
+                          break;
+                        case "section_cms_classified":
+                          if( !empty($section) ) {
+                            if( $section == "cms" ) {
+                              if( !empty($smarty) ) {
+                                $image_article_type = $smarty->get_template_vars('type');
+                                if( !empty($image_article_type) ) {
+                                  if( strtolower(trim($image_article_type)) == "classified" ) $img_condition_status = true;
+                                } // if(!empty($image_article_type))
+                              } // if(!empty($smarty))
+                            }
+                          }
+                          break;
+                      } // switch ($img_condition_name)
+
+                      if( $img_condition_status != true ) {
+                        // if match not found yet, examine more specific conditions
+                        if( !empty($section) ) {  // if we have a section name
+                          if( substr($img_condition_name,0,8) == "section_" ) {
+                            if( strlen($img_condition_name) > 8 ) {
+                              $img_condition_part = substr($img_condition,8); // get part after "section_"
+                              $img_condition_part = strtolower($img_condition_part);
+                              $img_condition_part = trim(strtr($img_condition_part, "_", " ")); // replace underscore with spaces
+                              if( $section == $img_condition_part ) $img_condition_status = true;
+                            } // if( length($img_condition_name) > 8 )
+                          } // if( substr($img_condition_name,0,8) == "section_" )
+                        } // if( !empty($section) )
+                      }
+
+                      if( $img_condition_status == true ) {
+                        // set the parameters to their values
+                        switch (strtolower(trim($img_parameter_array[0]))) {
+                          case "id":
+                            $imgdata["id"] = trim($img_parameter_array[1]);
+                            break;
+                          case "src":
+                            $imgdata["src"] = trim($img_parameter_array[1]);
+                            break;
+                          case "scalesize":
+                            $imgdata["scalesize"] = trim($img_parameter_array[1]);
+                            break;
+                          case "height":
+                            $imgdata["height"] = trim($img_parameter_array[1]);
+                            break;
+                          case "width":
+                            $imgdata["width"] = trim($img_parameter_array[1]);
+                            break;
+                          case "lnk":
+                          case "link":
+                            $imgdata["lnk"] = trim($img_parameter_array[1]);
+                            break;
+                          case "rel":
+                            $imgdata["rel"] = trim($img_parameter_array[1]);
+                            break;
+                          case "title":
+                            $imgdata["title"] = trim($img_parameter_array[1]);
+                            break;
+                          case "align":
+                            $imgdata["align"] = trim($img_parameter_array[1]);
+                            break;
+                          case "imalign":
+                            $imgdata["imalign"] = trim($img_parameter_array[1]);
+                            break;
+                          case "block":
+                            $imgdata["block"] = trim($img_parameter_array[1]);
+                            break;
+                          case "desc":
+                            $imgdata["desc"] = trim($img_parameter_array[1]);
+                            break;
+                          case "alt":
+                            $imgdata["alt"] = trim($img_parameter_array[1]);
+                            break;
+                          case "usemap":
+                            $imgdata["usemap"] = trim($img_parameter_array[1]);
+                            break;
+                          case "class":
+                            $imgdata["class"] = trim($img_parameter_array[1]);
+                            break;
+                          case "style":
+                            $imgdata["style"] = trim($img_parameter_array[1]);
+                            break;
+                        } // switch ($img_parameter_array[0])
+                      } // if( $img_condition_status == true )
+
+                    } // if( !empty($img_parameter_array[0] )
+                  } // if a parameter exists
+                } // for each parameter
+              } // if( !empty($img_parameters_array) )
+            } // if( !empty($img_condition[1]) )
+          }  // if( !empty($img_condition) )
+        } // if( !empty($var) )
+      } // for each condition
+    } // if( !empty($img_conditions_array) )
+	} // if( !empty($imgdata['default']) )
+
+  if (empty($imgdata["id"]) and empty($imgdata["src"]) ) {
+    return "''no image''";
+  }
+
+  // If test mode, call this plugin with combinations of options.
+  // Test mode uses way too much CPU.
+  if( (!empty($imgdata["test"])) and ($imgdata["test"] != 'true_add_text') ) {
+    global $tiki_p_admin;
+
+    if ($tiki_p_admin != 'y') {
+      return "\nIMAGE(test): " . tra("You do not have permission to use IMAGE test option.");
+    }
+
+    $repl = '';
+    $test_separator .= "\n\r<br style=\"clear:both\" />\r<hr>\n"; // separate each test section
+
+    if( empty($imgdata["scalesize"]) ) {
+      $imgdata["scalesize"] = '200';
+      $repl .= wikiplugin_image( $data . ' (scalesize)', $imgdata, $offset, $parseOptions );
+      $repl .= $test_separator;
+      $imgdata["scalesize"] = '';
+    }
+    if( empty($imgdata["height"]) ) {
+      $imgdata["height"] = '200';
+      $repl .= wikiplugin_image( $data . ' (height)', $imgdata, $offset, $parseOptions );
+      $repl .= $test_separator;
+      $imgdata["height"] = '';
+    }
+    if( empty($imgdata["width"]) ) {
+      $imgdata["width"] = '200';
+      $repl .= wikiplugin_image( $data . ' (width)', $imgdata, $offset, $parseOptions );
+      $repl .= $test_separator;
+      $imgdata["width"] = '';
+    }
+    if( empty($imgdata["lnk"]) ) {
+      $imgdata["lnk"] = 'http://www.example.com/';
+      $repl .= wikiplugin_image( $data . ' (lnk)', $imgdata, $offset, $parseOptions );
+      $repl .= $test_separator;
+      $imgdata["lnk"] = '';
+    }
+    if( empty($imgdata["rel"]) ) {
+      $imgdata["rel"] = 'next';
+      $repl .= wikiplugin_image( $data . ' (rel)', $imgdata, $offset, $parseOptions );
+      $repl .= $test_separator;
+      $imgdata["rel"] = '';
+    }
+    if( empty($imgdata["title"]) ) {
+      $imgdata["title"] = 'This is a test title.';
+      $repl .= wikiplugin_image( $data . ' (title)', $imgdata, $offset, $parseOptions );
+      $repl .= $test_separator;
+      $imgdata["title"] = '';
+    }
+    if( empty($imgdata["align"]) ) {
+      $imgdata["align"] = 'left';
+      $imgdata["test"] = 'true_add_text';  // force subtests to add surrounding text
+      $repl .= wikiplugin_image( $data . ' (align left)', $imgdata, $offset, $parseOptions );
+      $repl .= $test_separator;
+      $imgdata["align"] = 'right';
+      $imgdata["test"] = 'true_add_text';  // force subtests to add surrounding text
+      $repl .= wikiplugin_image( $data . ' (align right)', $imgdata, $offset, $parseOptions );
+      $repl .= $test_separator;
+      $imgdata["test"] = true;  // restore normal test mode
+      $imgdata["align"] = '';
+    }
+    if( empty($imgdata["block"]) ) {
+      $imgdata["block"] = 'top';
+      $imgdata["test"] = 'true_add_text';  // force subtests to add surrounding text
+      $repl .= wikiplugin_image( $data . ' (block top)', $imgdata, $offset, $parseOptions );
+      $repl .= $test_separator;
+      $imgdata["block"] = 'bottom';
+      $imgdata["test"] = 'true_add_text';  // force subtests to add surrounding text
+      $repl .= wikiplugin_image( $data . ' (block bottom)', $imgdata, $offset, $parseOptions );
+      $repl .= $test_separator;
+      $imgdata["block"] = 'both';
+      $imgdata["test"] = 'true_add_text';  // force subtests to add surrounding text
+      $repl .= wikiplugin_image( $data . ' (block both)', $imgdata, $offset, $parseOptions );
+      $repl .= $test_separator;
+      $imgdata["block"] = 'none';
+      $imgdata["test"] = 'true_add_text';  // force subtests to add surrounding text
+      $repl .= wikiplugin_image( $data . ' (block none)', $imgdata, $offset, $parseOptions );
+      $repl .= $test_separator;
+      $imgdata["test"] = true;  // restore normal test mode
+      $imgdata["clear"] = '';
+    }
+    if( empty($imgdata["desc"]) ) {
+      $imgdata["desc"] = 'This is a test description.';
+      $repl .= wikiplugin_image( $data . ' (desc)', $imgdata, $offset, $parseOptions );
+      $repl .= $test_separator;
+      $imgdata["desc"] = '';
+    }
+    if( empty($imgdata["alt"]) ) {
+      $imgdata["alt"] = 'This is an alt description.';
+      $repl .= wikiplugin_image( $data . ' (alt)', $imgdata, $offset, $parseOptions );
+      $repl .= $test_separator;
+      $imgdata["alt"] = '';
+    }
+
+    $imgdata["test"] = '';  // remove test mode now that it is done.
+    return $repl;
+  } // if( (!empty($imgdata["test"])) and ($imgdata["test"] == 'true') )
+
+
+	// If an image gallery ID was given expand it into a URL
+	if ( !empty($imgdata['id']) ) {
+		$imgdata['src'] = "show_image.php?id=" . $imgdata['id'];
+	}
+	
+	// Support both 'imalign' and 'align' syntax
+	if ( (!empty($imgdata['imalign'])) && empty($imgdata['align']) )
+		$imgdata['align'] = $imgdata['imalign'];
+	
+	// Support both 'link' and 'lnk' syntax
+	if ( (!empty($imgdata['link'])) && empty($imgdata['lnk']) )
+		$imgdata['lnk'] = $imgdata['link'];
+
+	// If clear was specified, add it to the CSS style
+	if ( !empty($imgdata['clear']) )
+		$imgdata['style'] = 'clear:' . $imgdata['clear'] . ';' . $imgdata['style'];
+
+	// Clean up src URLs
+	if (stristr(str_replace(' ', '', $imgdata["src"]),'javascript:')) {
+		$imgdata["src"]  = '';
+	}
+	if ($tikidomain && !preg_match('|^https?:|', $imgdata['src'])) {
+		$imgdata["src"] = preg_replace("~img/wiki_up/~","img/wiki_up/$tikidomain/",$imgdata["src"]);
+	}
+	if (strstr($imgdata["src"],'javascript:')) {
+		$imgdata["src"]  = '';
+	}
+
+	// Handle absolute links (e.g. to send a newsletter with images that remain on the tiki site)
+
+	$absolute_links = (!empty($parseOptions['absolute_links'])) ? $parseOptions['absolute_links'] : false;
+	if ( (!empty($imgdata['src'])) && $absolute_links && ! preg_match('|^[a-zA-Z]+:\/\/|', $imgdata['src']) ) {
+		global $base_host, $url_path;
+		$imgdata["src"] = $base_host.( $imgdata["src"][0] == '/' ? '' : $url_path ).$imgdata["src"];
+	}
+  $browse_full_image = $imgdata["src"]; // URL of original image without sizing additions which come later.
+
+
+	$scalesize = 0; // Less than one means no scaling
+	if( !empty($imgdata["scalesize"]) ) {
+		if(ctype_digit($imgdata["scalesize"])) {
+			$scalesize = (int)$imgdata["scalesize"];
+		}
+	}
+
+/***
+  // If being used in mobile mode then force a small image size
+  if($_REQUEST['mode']=="mobile") {
+    $scalesize="150";
+    $imgdata["width"] = '';
+    $imgdata["height"] = '';
+  }
+***/
+
+/***
+  // If being used within a module then force a small image size
+  if( !empty($smarty) ) {
+    $image_module_params = $smarty->get_template_vars('module_params');
+    if( !empty($image_module_params) ) {
+      $scalesize = 150;
+      $imgdata["width"] = '';
+      $imgdata["height"] = '';
+    }
+  }
+
+***/
+
+/***
+	// If no image size given, specify one.
+	if( empty($imgdata["width"]) and empty($imgdata["height"]) and empty($scalesize) ) {
+		$scalesize = 200; // Default image size.
+		if( !empty($section) ) {
+			switch ($section) {
+			case 'cms': 
+			        $scalesize = 200;
+			        if( !empty($smarty) ) {
+				        $image_article_type = $smarty->get_template_vars('type');
+				        if( !empty($image_article_type) ) {
+					        if( $image_article_type == "Article" ) $scalesize = 400; // Articles get bigger images than other article types.
+				        } // if(!empty($image_article_type))
+			        } // if(!empty($smarty))
+			        break;
+			case 'wiki page':
+			        $scalesize = 200;
+			        break;
+			} // switch ($section)
+		} // if(!empty($section))
+	} // if((!empty($imgdata["width"])) and (!empty($imgdata["height"])))
+***/
+
+	// Several sections dealing with image dimension.
+
+  // If a width or height were specified choose the largest as the scalesize
+	if( (!empty($imgdata["width"])) and (ctype_digit($imgdata["width"])) ) $scalesize = $imgdata["width"];
+	if( (!empty($imgdata["height"])) and (ctype_digit($imgdata["height"])) ) {
+		if( $imgdata["width"] < $imgdata["height"]) $scalesize = $imgdata["height"];
+	}
+
+  // Is filegals enabled?  Need to know for following section.
+  $imgdata_dim = '';
+	if ( $prefs['feature_filegals_manager'] == 'y' ) {
+		global $detected_lib;
+		include_once('lib/images/images.php');
+	} else {
+		$detected_lib = '';
+	}
+
+  // If image is from a file gallery then arbitrary width and height are supported.
+	if ( $detected_lib != '' && ereg('^.*tiki-download_file.php\?', $imgdata["src"]) ) {
+		// If an image lib has been detected and if we are using an image from a file gallery,
+		//   then also resize the image server-side, because it will generally imply less data to download from the user
+		//   (i.e. speed up the page download) and a better image quality (browser resize algorithms are quick but bad)
+		//
+		//   Note: ctype_digit is used to ensure there is only digits in width and height strings (e.g. to avoid '50%', ...)
+		//
+		if ( (int)$imgdata["width"] > 0 && ctype_digit($imgdata["width"]) ) $imgdata["src"] .= '&amp;x='.$imgdata["width"];
+		if ( (int)$imgdata["height"] > 0 && ctype_digit($imgdata["height"]) ) $imgdata["src"] .= '&amp;y='.$imgdata["height"];
+	}
+	if ( !empty($imgdata["width"]) ) $imgdata_dim .= ' width="' . $imgdata["width"] . '"';
+	if ( !empty($imgdata["height"]) ) $imgdata_dim .= ' height="' . $imgdata["height"] . '"';
+
+  // Things to do for images in image galleries
+  if ( ereg('^.*show_image.php\?', $imgdata["src"]) ) {
+    // If this is an image gallery URL but we don't know its image ID, try to get the image ID.
+    if( empty($imgdata["id"]) ) {
+      $imgdata["id"] = preg_replace('~^.*show_image.php\?id=~',"",$imgdata["src"]);
+      $imgdata["id"] = preg_replace('~[&].*~',"",$imgdata["id"]);
+    }
+    // For image galleries, try to determine width and height of image if both have not been provided
+    if( empty($imgdata["width"]) or empty($imgdata["height"]) ) {
+      global $imagegallib; include_once('lib/imagegals/imagegallib.php');
+      if (isset($original) && $original == 'y') {
+        $imagedata = $imagegallib->get_image($imgdata["id"], 'o');
+        $info = $imagegallib->get_image_info($imgdata["id"], 'o');
+        $scalesize = 0;
+      } else {
+        if( (!empty($imgdata["width"])) or (!empty($imgdata["height"])) ) {
+          $imagedata = $imagegallib->get_image($imgdata["id"], 's', $imgdata["width"], $imgdata["height"]);
+          $info = $imagegallib->get_image_info($imgdata["id"], 's', $imgdata["width"], $imgdata["height"]);
+        } else {
+          if( !empty($scalesize) ) {
+            $imagedata = $imagegallib->get_image($imgdata["id"], 's', $scalesize);  // if only scalesize, pass that as width.
+            $info = $imagegallib->get_image_info($imgdata["id"], 's', $scalesize);  // if only scalesize, pass that as width.
+          } else {
+            $imagedata = $imagegallib->get_image($imgdata["id"], 's');
+            $info = $imagegallib->get_image_info($imgdata["id"], 's');
+          }
+        }
+        if (empty($info)) {
+          $imagedata = $imagegallib->get_image($imgdata["id"], 'o');
+          $info = $imagegallib->get_image_info($imgdata["id"], 'o');
+          // $scalesize = 0;  // In this tool don't override scalesize
+          $original = 'y';
+        } else {
+          // else no scaled image yet so if no scale size defined get the default
+          if( empty($scalesize) ) $scalesize = $imagegallib->get_gallery_default_scale($info['galleryId']);                       
+        }
+      }
+    } // if( empty($imgdata["width"]) or empty($imgdata["height"])
+    // As this is in an image gallery, if there is a scalesize then use it.
+    if( $scalesize > 0 ) {
+      $imgdata["src"] .= "&scalesize=" . $scalesize;
+    }
+    // If we don't have a description or data for a caption, try to use image's description.
+    if( empty($imgdata["desc"]) and empty($data) ) {
+      if( !empty($info["description"]) ) $imgdata["desc"] = $info["description"];
+    }
+  } // if ( ereg('^.*show_image.php\?', $imgdata["src"]) ) 
+
+	// Start the image and decorations.
+// At present, use a bordered table as a frame so it works without CSS changes.
+//	$repl = "<table cellpadding=\"0\" cellspacing=\"0\"";
+//	if (!empty($scalesize) ) {
+//    $repl .= " style=\"border-style:solid;padding:0.1cm;width:" . $scalesize . "px\"";
+//  }
+
+//	if (!empty($imgdata["align"]) ) {
+//    $repl .= "style=\"float:" . $imgdata["align"] . "\"";
+//  }
+
+//	$repl .= "<tbody><tr><td valign=\"top\"";
+//  if( $imgdata["width"] > 0 ) {
+//    $repl .= " width=\"" . $imgdata["width"] . "\"";
+//  }
+//  else
+//  {
+//    if( !empty($imgdata["width"]) && (ctype_digit($imgdata["width"])) ) {
+//      $repl .= " width=\"" . $imgdata["width"] . "\"";
+//    }
+//  }
+//	$repl .= ">\r";
+	
+  // Create the HTML img tag.
+
+//	$replimg = '<div align="center"><img src="' . $imgdata["src"]. '"';
+	$replimg = '<img src="' . $imgdata["src"]. '"';
+	$replimg .= ' border="0" ' . $imgdata_dim;
+
+	if( !empty($imgdata["alt"]) ) {
+		$replimg .= " alt=\"" . $imgdata["alt"] . "\"";
+	}
+	if( !empty($imgdata["height"]) ) {
+		$replimg .= " height=\"" . $imgdata["height"] . "\"";
+	}
+	if( !empty($imgdata["width"]) ) {
+		$replimg .= " width=\"" . $imgdata["width"] . "\"";
+	}
+	if ( !empty($imgdata["usemap"]) ) {
+		$replimg .= ' usemap="#'.$imgdata["usemap"].'"';
+	}
+	if ( !empty($imgdata["class"]) ) {
+		$replimg .= ' class="'.$imgdata["class"].'"';
+	}
+//	$replimg .= " /></div>";
+	$replimg .= " />";
+
+	// Image tag has been assembled, now see if it should be wrapped in an anchor tag.
+
+	if ($imgdata["lnk"]) {
+		$imgtarget= '';
+
+		if ($prefs['popupLinks'] == 'y' && (preg_match('#^([a-z0-9]+?)://#i', $imgdata["lnk"]) || preg_match('#^www\.([a-z0-9\-]+)\.#i',$imgdata["lnk"]))) {
+			$imgtarget = ' target="_blank"';
+		}
+
+		if ( !empty($imgdata["rel"]) )
+			$linkrel = ' rel="'.$imgdata["rel"].'"';
+		else
+			$linkrel = '';
+
+		if ( !empty($imgdata["title"]) )
+			$linktitle = ' title="'.$imgdata["title"].'"';
+		else
+			$linktitle = '';
+		$replimg = '<a href="'.$imgdata["lnk"].'" class="internal"'.$linkrel.$imgtarget.$linktitle.'>' . $replimg . '</a>';
+	}
+  $repl .= $replimg;
+//  $repl .= '</td></tr>';
+
+	// Add decorations and caption under the image.
+//  $repl .= '<tr><td class="mini">';
+  $repl .= '<div class="mini">';
+	$repl .= "\r\t\t<div class=\"thumbcaption\">";
+	$repl .= "\r\t\t\t<div class=\"magnify\" style=\"float:right\">";
+  // If an image ID was given, point magnify at the Image browse page
+  if( !empty($imgdata["id"]) ) {
+    $repl .= "<a href=\"tiki-browse_image.php?imageId=" . $imgdata["id"];
+  } else {
+    $repl .= "<a href=\"" . $browse_full_image; // Unknown image detail page so just point at the original image
+  }
+	$repl .= "\" class=\"internal\" title=\"Enlarge\"><img src=\"./img/icons2/icn_view.gif\" width=\"12\" height=\"12\" alt=\"Enlarge\" /></a></div>";
+  if ( !empty($imgdata["desc"]) ) {
+    $repl .= $imgdata["desc"];
+  }
+	if ( (!empty($imgdata["desc"])) and (!empty($data)) ) {
+    $repl .= ' ';
+  }
+  if( !empty($data) ) {
+    $repl .= $data;
+	}
+	$repl .= "\r\t</div>";
+//  $repl .= '</td></tr>';
+//	$repl .= "\r</tbody></table>";
+  $repl .= "</div>";
+
+	if( (!empty($imgdata["align"]) ) or (!empty($scalesize)) ) {
+		$repl = "\r" . '<div class="img" style="' . ( (empty($imgdata["align"])) ? '' : ( 'float:' . $imgdata["align"] . ';' ) ) . ( (empty($scalesize)) ? '' : ( 'width:' . $scalesize . 'px;' ) ) . $imgdata["style"] . '">' . $repl . '</div>';
+	} else {
+		$repl = "\r" . '<div class="img">' . $repl . '</div>';
+	}
+
+  if( !empty($imgdata["block"]) ) {
+    switch ($imgdata["block"]) {
+    case 'top': 
+            $repl = "\n\r<br style=\"clear:both\" />\r" . $repl;
+            break;
+    case 'bottom': 
+            $repl = $repl . "\n\r<br style=\"clear:both\" />\r";
+            break;
+    case 'both': 
+            $repl = "\n\r<br style=\"clear:both\" />\r" . $repl . "\n\r<br style=\"clear:both\" />\r";
+            break;
+    case 'top': 
+            break;
+    } // switch
+	} // if((!empty($imgdata["width"])) and (!empty($imgdata["height"])))
+
+	// Several sections dealing with image dimension.
+
+  // If a width or height were specified choose the largest as the scalesize
+	if( (!empty($imgdata["width"])) and (ctype_digit($imgdata["width"])) ) $scalesize = $imgdata["width"];
+	if( (!empty($imgdata["height"])) and (ctype_digit($imgdata["height"])) ) {
+  } // if( !empty($imgdata["block"]) )
+
+  if( (!empty($imgdata["test"])) and ($imgdata["test"] == 'true_add_text') ) {
+    $leftside_test_text = "The quick brown fox jumped over the lazy dog.";
+    $repl = "BEFORE IMAGE. " . $leftside_test_text . " " . $leftside_test_text . " " . $leftside_test_text . " " . $leftside_test_text . " BEFORE IMAGE.\n" . $repl;
+  } // if( (!empty($imgdata["test"])) and ($imgdata["test"] == 'true_add_text') )
+
+  if( (!empty($imgdata["test"])) and ($imgdata["test"] == 'true_add_text') ) {
+    $rightside_test_text = "Now is the time for all good men to come to the aid of the party.";
+    $repl .= "\r~/np~\nAFTER IMAGE. " . $rightside_test_text . " " . $rightside_test_text . " " . $rightside_test_text . " " . $rightside_test_text . " AFTER IMAGE.~np~";
+    $imgdata["test"] = '';  // remove test mode so there won't be a fatal loop
+  } // if( (!empty($imgdata["test"])) and ($imgdata["test"] == 'true_add_text') )
+
+  // Wrap the whole thing
+  if($_REQUEST['mode']!="mobile") {
+	$repl = "\r~hc~ IMAGE BEGIN ~/hc~\r" . "~np~" . $repl . "~/np~" . "\r~hc~ IMAGE END ~/hc~\r";
+  } else {
+	$repl = "{img src=".$imgdata["src"] . "\"}\n<p>" . $imgdata["desc"] . "</p>";	
+  }
+	return $repl;
+}
+
+?>
