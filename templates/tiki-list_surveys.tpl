@@ -15,9 +15,6 @@
 		<th>
 			<a href="tiki-list_surveys.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a>
 		</th>
-		<th>
-			<a href="tiki-list_surveys.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}Description{/tr}</a>
-		</th>
 		<th>{tr}Questions{/tr}</th>
 		<th>{tr}Actions{/tr}</th>
 	</tr>
@@ -31,14 +28,16 @@
 					{else}
 						<a class="link" href="tiki-survey_stats_survey.php?surveyId={$channels[user].surveyId}">{$channels[user].name}</a>
 					{/if}
+					<div class="subcomment">{wiki}{$channels[user].description|escape}{/wiki}</div>
 				</td>
 				<td class="{cycle advance=false}">
-					{wiki}{$channels[user].description|escape}{/wiki}
-				</td>
-				<td style="text-align:right;" class="{cycle advance=false}">
 					{$channels[user].questions}
 				</td>
-				<td style="text-align:right;" class="{cycle}">
+				<td class="{cycle}">
+					{if ($tiki_p_admin eq 'y') or ($channels[user].individual eq 'n' and $tiki_p_admin_surveys eq 'y') or ($channels[user].individual_tiki_p_admin_surveys eq 'y')}
+						<a href="tiki-admin_surveys.php?surveyId={$channels[user].surveyId}">{icon _id='page_edit' alt='{tr}Edit this Survey{/tr}'}</a>
+					{/if}
+					
 					{if ($tiki_p_admin_surveys eq 'y') or ($channels[user].status eq 'o' and $channels[user].taken_survey eq 'n')}
 						<a href="tiki-take_survey.php?surveyId={$channels[user].surveyId}">{icon _id='control_play' alt='{tr}Take Survey{/tr}'}</a>
 					{/if}
@@ -46,16 +45,12 @@
 					{if ($tiki_p_admin eq 'y') or ($channels[user].individual eq 'n' and $tiki_p_view_survey_stats eq 'y') or ($channels[user].individual_tiki_p_view_survey_stats eq 'y')}
 						<a href="tiki-survey_stats_survey.php?surveyId={$channels[user].surveyId}">{icon _id='chart_curve' alt='{tr}Stats{/tr}'}</a>
 					{/if}
-
-					{if ($tiki_p_admin eq 'y') or ($channels[user].individual eq 'n' and $tiki_p_admin_surveys eq 'y') or ($channels[user].individual_tiki_p_admin_surveys eq 'y')}
-						<a href="tiki-admin_surveys.php?surveyId={$channels[user].surveyId}">{icon _id='page_edit' alt='{tr}Edit this Survey{/tr}'}</a>
-					{/if}
 				</td>
 			</tr>
 		{/if}
 	{sectionelse}
 		<tr>
-			<td class="odd" colspan="4">
+			<td class="odd" colspan="3">
 				<b>{tr}No records found{/tr}</b>
 			</td>
 		</tr>
