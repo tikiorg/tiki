@@ -513,16 +513,16 @@ class WikipluginDBReportGroup {
 		for($i=0; $i<$this->field_count; $i++) {
 			$field =& $this->fields[$i];
 			$value =& $row[$field->index];
-			if($value != $field->break) {
+			if($value !== $field->break) {
 				$ret = true;
 				$field->break =& $value;
 			}
 		}
 		return $ret;
 	}
-	function start_html(&$data) {
+	function start_html($row) {
 		global $wikiplugin_dbreport_record;
-		$wikiplugin_dbreport_record =& $data;
+		$wikiplugin_dbreport_record = $row;
 		$html = '';
 		// generate a new <div> with the report content at the top
 		if(isset($this->style)) {
@@ -545,11 +545,33 @@ class WikipluginDBReportParameter extends WikipluginDBReportContent {
 	var $name;
 	function code($indent='') {
 		$result = $indent.'PARAM';
-		if(isset($this->name)) $result .= ' :'.$this->name;
+		// if(isset($this->name)) $result .= ' :'.$this->name;
 		if(isset($this->elements)) foreach($this->elements as $element) $result .= ' ' . $element->code();
 		$result .= "\n";
 		// $result .= ' "' . parent::code() . "\"\n";
 		return $result;
+	}
+}
+
+class WikipluginDBReportFail {
+	var $link;
+	var $style;
+	var $contents;
+	function code($mode) {
+		$result = 'FAIL';
+		if(isset($this->style)) $result .= ' ' . $this->style->code();
+		if(isset($this->link)) $result .= ' ' . $this->link->code();
+		if(isset($this->contents)) foreach($this->contents as $content) $result .= ' '.$content->code();
+		return $result;
+	}
+	function html($heading=false) {
+		$html = '<div';
+		if(isset($this->style)) $html .= $this->style->attributes();
+		if(isset($this->link)) $html .= ' ' . $this->link->html_onclick();
+		$html .= '>';
+		if(isset($this->contents)) foreach($this->contents as $content) $html .= $content->html();
+		$html .= '</div>';
+		return $html;
 	}
 }
 
@@ -559,12 +581,14 @@ class WikipluginDBReport {
 	var $groups;
 	var $table;
 	var $columns;
-	function code($indent='  ') {
+	var $fail;
+	function code($indent='') {
 		// write the report in cannonical form.
 		$result = $indent.'SQL {' . $this->sql . '}'."\n";
 		if(isset($this->params)) foreach($this->params as $param) $result .= $param->code($indent.'  ');
 		if(isset($this->groups)) foreach($this->groups as $group) $result .= $group->code($indent);
 		if(isset($this->table)) $result .= $this->table->code($indent);
+		if(isset($this->fail)) $result .= $this->fail->code($indent);
 		return $result;
 	}
 }
@@ -911,6 +935,7 @@ function wikiplugin_dbreport_parse(&$code) {
 					case 'SQL':
 						$parse_state = 1;	// switch state
 						unset($next_token);	// consume the token
+						$wikiplugin_dbreport_fields_allowed = false; // no fields in sql
 						break;
 					case 'PARAM':
 						// create the parameter object
@@ -918,6 +943,7 @@ function wikiplugin_dbreport_parse(&$code) {
 						$parse_report->params[] =& $parse_object;
 						$parse_state = 2;	// switch state
 						unset($next_token);	// consume the token	
+						$wikiplugin_dbreport_fields_allowed = false; // no fields in sql params
 						break;
 					case 'GROUP':
 						// create the group object
@@ -934,6 +960,14 @@ function wikiplugin_dbreport_parse(&$code) {
 						$parse_state = 4;	// switch state
 						unset($next_token);	// consume the token
 						$wikiplugin_dbreport_fields_allowed = true; // we can now parse fields
+						break;
+					case 'FAIL':
+						// create the fail object
+						$parse_object =& new WikipluginDBReportFail();
+						$parse_report->fail =& $parse_object;
+						$parse_state = 10;	// switch state
+						unset($next_token);	// consume the token
+						$wikiplugin_dbreport_fields_allowed = false; // no fields in fail message
 						break;
 					default:
 						return wikiplugin_dbreport_parse_error($token, "Invalid keyword '$token->content'");
@@ -1152,6 +1186,7 @@ function wikiplugin_dbreport_parse(&$code) {
 					case 'HEADER':
 					case 'ROW':
 					case 'FOOTER':
+					case 'FAIL':
 						$parse_state = $parse_line_return;
 						break;
 					default:
@@ -1209,6 +1244,7 @@ function wikiplugin_dbreport_parse(&$code) {
 					case 'ROW':
 					case 'COLUMN':
 					case 'FOOTER':
+					case 'FAIL':
 						$parse_state = $parse_cell_return;	// switch state and reparse the token
 						break;
 					default:
@@ -1261,6 +1297,42 @@ function wikiplugin_dbreport_parse(&$code) {
 				default:
 					$parse_state = $parse_text_return;	// return to the previous state
 					break;
+				}
+				break;
+			case 10: // Fail content
+				switch($token->type) {
+				case 'eof':
+					$parse_state = 0;	// switch state and reparse the token
+					break;
+				case 'var':
+				case 'txt':
+					$parse_text =& new WikipluginDBReportText($token);
+					$parse_object->contents[] =& $parse_text;
+					$parse_text_return = $parse_state; // return to this state
+					$parse_state = 9;		// switch state
+					unset($next_token);		// consume the token
+					break;
+				case 'sty':
+					$parse_object->style =& new WikipluginDBReportStyle($token);
+					unset($next_token);		// consume the token
+					break;
+				case 'key':
+					switch(strtoupper($token->content)) {
+					case '<':
+						$parse_link =& new WikipluginDBReportLink($token);	// create the link object
+						$parse_object->link =& $parse_link;
+						$parse_link_return = $parse_state; // return to this state
+						$parse_state = 5;	// switch state
+						unset($next_token);		// consume the token
+						break;
+					default:
+						unset($parse_object); // we are finished parsing the fail
+						$parse_state = 0;	// switch state and reparse the token
+						break;
+					}
+					break;
+				default:
+					return wikiplugin_dbreport_parse_error($token, "Unexpected " . $token->type_name() . " '$token->content' after 'FAIL'.");
 				}
 				break;
 			default:
@@ -1478,7 +1550,7 @@ function wikiplugin_dbreport($data, $params) {
 	if(!$wiki) $ret .= '~np~';
 	if(!$query->EOF) {
 		// get the first row
-		$current_row =& $query->FetchRow();
+		$current_row = $query->FetchRow();
 		// start the group breaks
 		if (isset($report->groups)) {
 			foreach($report->groups as $group) {
@@ -1496,10 +1568,10 @@ function wikiplugin_dbreport($data, $params) {
 			$ret .= $report->table->record_row_html($current_row);
 			// get the next row
 			if($query->EOF) {
-				$next_row = null;
+				unset($next_row);
 				$breaking = true;
 			} else {
-				$next_row =& $query->FetchRow();
+				$next_row = $query->FetchRow();
 				$breaking = false;
 			}
 			// check group breaks
@@ -1520,8 +1592,11 @@ function wikiplugin_dbreport($data, $params) {
 				$ret .= $break_start;
 			}
 			// move to the next row
-			$current_row =& $next_row;
+			$current_row = $next_row;
 		}
+	} else {
+		// no records returned. output the fail message
+		if($report->fail) $ret .= $report->fail->html();
 	}
 	if(!$wiki) $ret .= '~/np~';
 	// close the database connection
