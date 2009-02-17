@@ -1,7 +1,7 @@
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}To configure your trackers, look for "Admin trackers" under "Trackers" on the application menu, or{/tr} <a class="rbox-link" href="tiki-admin_trackers.php">{tr}Click Here{/tr}</a>.{/remarksbox}
 
 <div class="cbox">
-  <div class="cbox-title">{tr}Trackers attachments preferences{/tr}</div>
+  <div class="cbox-title">{tr}Tracker attachment preferences{/tr}</div>
 
   <div class="cbox-data">
     <form action="tiki-admin.php?page=trackers" method="post">
@@ -63,7 +63,7 @@
 </div>
 
 <div class="cbox">
-  <div class="cbox-title">{tr}Trackers attachments{/tr}</div>
+  <div class="cbox-title">{tr}Tracker attachments{/tr}</div>
   <div class="cbox-data">
     <div class="admin">
 {if $attachments}

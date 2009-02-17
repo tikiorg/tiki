@@ -18,7 +18,7 @@
   {/if}
 
   {if $tiki_p_view_trackers eq 'y'}
-		{button href="tiki-view_tracker.php" _auto_args="trackerId,status,sort_mode" _text="{tr}View This Tracker's Items{/tr}"}
+		{button href="tiki-view_tracker.php?trackerId=$trackerId" _auto_args="status,sort_mode" _text="{tr}View This Tracker's Items{/tr}"}
   {/if}
 
   {if $tiki_p_admin_trackers eq 'y'}

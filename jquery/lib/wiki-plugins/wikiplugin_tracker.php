@@ -152,6 +152,13 @@ function wikiplugin_tracker($data, $params) {
 		$itemId = $_REQUEST['itemId'];
 		$item = $trklib->get_tracker_item($itemId);
 		$trackerId = $item['trackerId'];
+	} elseif (!empty($view) && $view == 'group') {
+		$gtid = $userlib->get_grouptrackerid($group);
+		if(isset($gtid['groupTrackerId'])) {
+			$trackerId = $gtid['groupTrackerId'];
+			$itemId = $trklib->get_item_id($trackerId,$gtid['groupFieldId'],$group);
+			$grouptracker = true;
+		}
 	}
 	if (!isset($trackerId)) {
 		return $smarty->fetch("wiki-plugins/error_tracker.tpl");
@@ -203,6 +210,7 @@ function wikiplugin_tracker($data, $params) {
 
 	if (empty($_SERVER['SCRIPT_NAME']) || !strstr($_SERVER['SCRIPT_NAME'],'tiki-register.php')) {
 		if (!empty($itemId) && $tracker['writerCanModify'] == 'y' && isset($usertracker) && $usertracker) { // user tracker he can modify
+		} elseif (!empty($itemId) && isset($grouptracker) && $grouptracker) {
 		} else {
 			$perms = $tikilib->get_perm_object($trackerId, 'tracker', $tracker, false);
 			if ($perms['tiki_p_create_tracker_items'] == 'n' && empty($itemId)) {

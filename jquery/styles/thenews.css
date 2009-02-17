@@ -466,7 +466,7 @@ a.flip img {
 
 #c1c2 #col2 {
 	width: 214px;
-	overflow: hidden;
+	overflow: visible;
 }
 
 #c1c2 #col2 .content {
@@ -674,6 +674,40 @@ a.phplmselected:hover {
 	color: #808080;
 }
 
+/* cssmenus.css overrides (page controls and menus) */
+.cssmenu_vert,
+.cssmenu_vert ul,
+.cssmenu li,
+.cssmenu_horiz li,
+.cssmenu_vert li,
+.cssmenu li ul,
+.cssmenu_vert li ul,
+.cssmenu_horiz li ul {
+	width: 9em;
+	background: #fff}
+* html div.box-CSS_menu ul {margin-left: 0}
+.cssmenu_vert li ul {margin-left: 9em !important}
+
+.cssmenu li ul ul {/*left: -999em*/}
+.cssmenu_horiz li ul ul {margin: -1em 0 0 9em}
+.cssmenu a,	
+.cssmenu_horiz a,
+.cssmenu_vert a {
+	text-decoration: none;
+	display: block;
+	text-decoration: none;
+	padding: 3px 0 3px 6px}
+	
+.cssmenu a:hover,	
+.cssmenu_horiz a:hover,
+.cssmenu_vert a:hover {text-decoration: underline}
+
+#tiki-top > .cssmenu_horiz {
+	padding-left: 20px;
+	border-left: 1px solid #aaa}
+
+#tiki-top > .cssmenu_horiz > li > a {border-right: 1px solid #aaa}
+
 /** Links in other menus **/
 div.separator,
 div.separatorline {}
@@ -799,9 +833,8 @@ h3.box-title {
 	position: relative;
 }
 
-.box a.flipmodtitle img {
-	display: none;
-}
+* html h3.box-title {position: static}
+.box a.flipmodtitle img {display: none}
 
 * html .box a.flipmodtitle img,
 .box:hover a.flipmodtitle img {

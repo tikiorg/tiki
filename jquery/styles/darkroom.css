@@ -221,7 +221,8 @@ ul.jumplinks a:focus, ul.jumplinks a:active {
 #c1c2 #col2 {
 	width: 200px;
 	font-size: 1em;
-	margin-top: 10px}
+	/*margin-top: 10px;*/
+	overflow: visible;}
 
 #c1c2 #col2 .content {
 	margin: 0;
@@ -465,9 +466,6 @@ ul#cssmenu li a:visited,
 	position: relative;
 	display: block}
 
-#box-menu_43_CSS_vert,
-#menu_43_CSS_vert {overflow: visible}
-
 ul.cssmenu_vert {width: 172px}
 
 .cssmenu li,
@@ -583,6 +581,84 @@ a.phplmselected:active {
 	font-weight: normal}
 
 a.phplmselected:hover {color: #AAAAAA}
+
+/** CSS (suckerfish) menus **/
+	
+.cssmenu li,
+.cssmenu_horiz li,
+.cssmenu_vert li,
+.cssmenu li ul,
+.cssmenu_horiz li ul,
+.cssmenu_vert li ul {background: #474747}
+	
+#col2 .cssmenu_vert > li {
+	width: 172px;
+	padding: 0 !important}
+
+#col2 .cssmenu_vert li { padding:0 }
+/*#col2 .cssmenu_vert > li > ul > li > ul {margin-left: 9em }
+.cssmenu ul,
+.cssmenu_vert li ul,
+.cssmenu_horiz li ul {width: 9em}*/
+
+.cssmenu_vert li ul { 
+	/*margin-left: 9em;*/
+	margin-top: -1.35em;
+	padding-bottom: 1px;}
+
+#col2 .cssmenu_vert > li > ul {margin-left: 172px}
+/*.cssmenu_horiz li ul ul {margin: -1em 0 0 9em}*/
+
+.cssmenu li ul,
+.cssmenu_horiz li ul,
+.cssmenu_vert li ul {
+	border: 1px solid #6A6A6A;
+	padding: 0}
+
+.cssmenu a,	
+.cssmenu_horiz a,
+.cssmenu_vert a {
+	text-decoration: none;
+	font-weight: normal;
+	display: block;
+	text-decoration: none;
+	padding: 3px 0 3px 6px}
+	
+.cssmenu_vert a {padding: 3px 2px 3px 8px;}
+.cssmenu a:hover,
+.cssmenu_vert a:hover,	
+.cssmenu_horiz a:hover {color: #F5F5F5}
+
+.cssmenu li:hover,
+.cssmenu_horiz li:hover,
+.cssmenu_vert li:hover,
+.cssmenu li.sfhover,
+.cssmenu_horiz li.sfhover,
+.cssmenu_vert li.sfhover {background: #b2b2b2}
+
+.cssmenu li:hover > a,
+.cssmenu_horiz li:hover > a,
+.cssmenu_vert li:hover > a {color: #303030}
+
+#tiki-top > .cssmenu_horiz > li {
+	background: inherit;
+	width: 10em}
+
+#tiki-top > .cssmenu_horiz > li > a {
+	border: 1px solid transparent;
+	border-right: 1px solid #6A6A6A;
+	color: #A6A68D;
+	font-weight: bold;
+	font-size: 12px;
+	padding: 6px 2px 6px 8px}
+
+#tiki-top > .cssmenu_horiz > li > a:hover {
+	border: 1px solid #909090;
+	color: #909090 !important}
+	
+* html #tiki-top .cssmenu_horiz li {background: transparent}
+* html #tiki-top .cssmenu_horiz li ul li {background: #999}
+
 
 /** Links in other menus **/
  
@@ -789,8 +865,6 @@ div.box {
 	padding-bottom: 2px;
 	width: 190px}
 
-.box-menu_43_CSS_horiz {overflow: visible}
-
 h3.box-title {
 	overflow: hidden;
 	color:#9D9D9D;
@@ -800,6 +874,7 @@ h3.box-title {
 	padding: 4px;
 	position: relative}
 
+* html h3.box-title {position: static}
 .box-title a {color: #9D9D9D}
 .box a.flipmodtitle img {display: none}
 
@@ -818,11 +893,9 @@ a.flipmodtitle:hover img {border: 1px solid #818181 !important}
 	padding: 2px 2px;
 	color: #DCDCDC;
 	line-height:1.4em;
-	margin: 8px;
-	overflow: hidden}
+	margin: 8px}
 
 * html .box a.flipmodtitle img {border: none}
-.box-menu_43_CSS_horiz .box-data {overflow: visible}
 .box-data a.linkmenu {display: block}
 .box-data select {width: 120px}
 .box-data table {margin: auto}

@@ -276,11 +276,11 @@
 			 {if $tikidb_created}<p style="text-align: center"><img src="img/silk/sticky.png" alt="warning" style="vertical-align:middle"/> <strong>{tr}Warning{/tr}</strong>: {tr}This will destroy your current database{/tr}.</p>{/if}			  
 			  <p>{tr}Create a new database (clean install) with profile{/tr}:</p>
 			<select name="profile" size="{if $profiles}{$profiles|@count}{else}3{/if}">
-			{section name=ix loop=$profiles}
-			<option value="{$profiles[ix].name|escape}"{if $profiles[ix].name|escape eq '_default.prf'} selected="selected"{/if}>{$profiles[ix].desc}  </option>
-			{sectionelse}
-			<option value="" disabled="disabled">{tr}No profiles available.{/tr}</option>
-			{/section}
+			<option value="" selected="selected">Bare-bones default install</option>
+			<option value="Simple_Bug_Tracker">Simple Bug Tracker</option>
+			<option value="Small_Business_Web_Presence">Small Business Web Presence</option>
+			<option value="Open_Collaboration_Permissions">Open Collaboration Permissions</option>
+			<option value="Intranet">Intranet</option>
 			</select>
 			 <p>{tr}See the documentation for <a target="_blank" href="http://doc.tikiwiki.org/Profiles" class="link" title="{tr}Description of available profiles.{/tr}">descriptions of the available profiles{/tr}</a>.</p>
 			 <p>&nbsp;</p>
