@@ -343,7 +343,7 @@
 		{/if}
 
 		{if $prefs.feature_antibot eq 'y'}
-			{include file="antibot.tpl"}
+			{include file="antibot.tpl" td_style="formcolor"}
 		{/if}
 
 		{if !$user}

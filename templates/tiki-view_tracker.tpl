@@ -497,7 +497,7 @@ document.write('<div  class="categSelectAll"><input type="checkbox" id="clickall
 
 {* -------------------- antibot code -------------------- *}
 {if $prefs.feature_antibot eq 'y' && $user eq ''}
-{include file="antibot.tpl"}
+{include file="antibot.tpl" tr_style="formcolor"}
 {/if}
 
 {if $groupforalert ne ''}

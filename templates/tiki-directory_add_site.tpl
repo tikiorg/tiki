@@ -91,7 +91,7 @@
   -->
   <input name="isValid" type="hidden" value="" />
 {if $prefs.feature_antibot eq 'y' && $user eq ''}
-{include file="antibot.tpl"}
+{include file="antibot.tpl" td_style="formcolor"}
 {/if}
   <tr>
     <td class="formcolor">&nbsp;</td>
