@@ -229,7 +229,7 @@ body.tiki_wiki #c1c2 #wrapper #col1 > .content {position: relative}
 */
 #c1c2 #col2 {
 	width: 230px;
-	overflow: hidden}
+	overflow: visible;}
 
 #c1c2 #col2 .content {
 	padding-left: 18px;
@@ -936,17 +936,14 @@ ul.categories li {
 .box-shadow {}
 
 div.box {
-	overflow: hidden;
 	background: #ccdceb;
 	border: 1px solid #527ca6;
 	margin-top: -1px;
-	text-align: left}
+	text-align: left;
+	overflow: visible}
 	
-#col3 div.box {width: 205px}
-
-#col2 div.box {
-	width: 205px;
-	overflow: hidden}
+#col3 div.box,
+#col2 div.box {width: 205px}
 
 h3.box-title {
 	position: relative;

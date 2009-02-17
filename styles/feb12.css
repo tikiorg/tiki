@@ -249,7 +249,7 @@ ul.jumplinks a:focus, ul.jumplinks a:active {
 
 #c1c2 #col2 {
 	width: 240px;
-	overflow: hidden;
+	overflow: visible;
 	background: #A8CCE2 url(feb12/columnbg.jpg) repeat-x}
 
 #c1c2 #col2 .content {padding: 1em}
@@ -559,6 +559,47 @@ a.phplmselected:hover {color: #808080}
 	width: 16px;
 	height: 18px}
 
+/** CSS (suckerfish) menus **/
+
+.csmenu ul li,
+.cssmenu_horiz ul li,
+.cssmenu_vert ul li {border-top: 1px solid #57A5D0}
+
+.cssmenu_vert li ul,
+.cssmenu_horiz li ul {
+	background: #a8cce2 !important}
+	
+.cssmenu_horiz ul li:hover {background: none}
+
+.cssmenu ul a,	
+.cssmenu_horiz ul a,
+.cssmenu_vert ul a {
+	padding: 6px;
+	color: #000}
+
+#tiki-top > .cssmenu_horiz > li > a {
+	padding: 8px 3px;
+	text-decoration: none;
+	font: 14px Verdana, Helvetica, Arial, Sans-Serif;
+	color: white;
+	margin: 0}
+	
+* html #tiki-top .cssmenu_horiz li a {
+	font-size: 14px;
+	padding: 6px 3px;
+	display: block}
+
+#tiki-top > .cssmenu_horiz > li:hover {
+	background: url(feb12/pagebg.jpg) repeat-x;
+	color: #eee !important;
+	text-decoration: none}
+	
+#tiki-top .cssmenu_horiz li ul a {color: #000}
+
+#tiki-top .cssmenu_horiz ul li a:hover {
+	color: #993300;
+	text-decoration: none}
+
 /** Links in other menus **/
 div.separator, div.separatorline {color: #794a93}
 
@@ -706,6 +747,7 @@ h3.box-title {
 	border-bottom: 1px solid #57A5D0;
 	position: relative}
 
+* html h3.box-title {position: static}
 .box a.flipmodtitle img {display: none}
 
 * html .box a.flipmodtitle img,
@@ -717,6 +759,11 @@ h3.box-title {
 	border: 1px solid transparent}
 
 * html .box a.flipmodtitle img {border: none}
+* html #col2 a.flipmodtitle img,
+* html #col3 a.flipmodtitle img {
+	position: static;
+	float: right;
+	margin-top: -12px}
 
 a.flipmodtitle:hover img {
 	border: 1px solid #58A7D2 !important}
