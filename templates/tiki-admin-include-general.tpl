@@ -5,48 +5,33 @@
     {tr}{$crumbs[$crumb]->description}{/tr}
     {help crumb=$crumbs[$crumb]}
   </div>
-  <div class="cbox-data">
-    <form action="tiki-admin.php?page=general" class="admin" method="post">
-		<div class="heading input_submit_container" style="text-align: right">
-			<input type="submit" name="new_prefs" value="{tr}Change preferences{/tr}" />
-		</div>
+	<div class="cbox-data">
+		<form action="tiki-admin.php?page=general" class="admin" method="post">
+			<div class="heading input_submit_container" style="text-align: right">
+				<input type="submit" name="new_prefs" value="{tr}Change preferences{/tr}" />
+			</div>
 
-    {if $prefs.feature_tabs eq 'y'}
-      {cycle name=tabs values="1,2,3,4,5,6,7" print=false advance=false reset=true}
-			{strip}
-      <div class="tabs">
-        <span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark tabinactive">
-          <a href="#theme" onclick="javascript:tikitabs({cycle name=tabs},7); return false;">{tr}General Preferences{/tr}</a>
-        </span>
-        <span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark tabinactive">
-          <a href="#layout" onclick="javascript:tikitabs({cycle name=tabs},7); return false;">{tr}General Settings{/tr}</a>
-        </span>
-        <span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark tabinactive">
-          <a href="#other" onclick="javascript:tikitabs({cycle name=tabs},7); return false;">{tr}Release check{/tr}</a>
-        </span>
-        <span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark tabinactive">
-          <a href="#other" onclick="javascript:tikitabs({cycle name=tabs},7); return false;">{tr}Date and Time Formats{/tr}</a>
-        </span>
-        <span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark tabinactive">
-          <a href="#other" onclick="javascript:tikitabs({cycle name=tabs},7); return false;">{tr}Other{/tr}</a>
-        </span>
-        <span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark tabinactive">
-          <a href="#other" onclick="javascript:tikitabs({cycle name=tabs},7); return false;">{tr}Change password{/tr}</a>
-        </span>
-      </div>
-			{/strip}
-      {cycle name=content values="1,2,3,4,5,6,7" print=false advance=false reset=true}
-    {/if}
+{if $prefs.feature_tabs eq 'y'}
+			{tabs}{strip}
+				{tr}General Preferences{/tr}|
+				{tr}General Settings{/tr}|
+				{tr}Release check{/tr}|
+				{tr}Date and Time Formats{/tr}|
+				{tr}Other{/tr}|
+				{tr}Change password{/tr}
+			{/strip}{/tabs}
+{/if}
 
+      {cycle name=content values="1,2,3,4,5,6" print=false advance=false reset=true}
 
     <fieldset{if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}"{/if}>
       {if $prefs.feature_tabs neq 'y'}
         <legend class="heading">
-          <a href="#theme" onclick="flip('theme'); return false;">
+          <a href="#content{cycle name=content assign=focus}{$focus}" onclick="flip('content{$focus}'); return false;">
             <span>{tr}General Preferences{/tr}</span>
           </a>
         </legend>
-        <div id="theme" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_theme) and $smarty.session.tiki_cookie_jar.show_theme neq 'y'}none{else}block{/if};">
+        <div id="content{$focus}" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_content.$focus) and $smarty.session.tiki_cookie_jar.show_content.$focus neq 'y'}none{else}block{/if};">
       {/if}
       <table class="admin">
 	<tr>
@@ -173,11 +158,13 @@
     <fieldset{if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}"{/if}>
       {if $prefs.feature_tabs neq 'y'}
         <legend class="heading" id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}">
-          <a href="#layout" onclick="flip('layout'); return false;">
+          <a href="#content{cycle name=content assign=focus}{$focus}" onclick="flip('content{$focus}'); return false;">
             <span>{tr}General Settings{/tr}</span>
           </a>
         </legend>
-        <div id="layout" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_layout) and $smarty.session.tiki_cookie_jar.show_layout neq 'y'}none{else}block{/if};">{/if}
+        <div id="content{$focus}" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_content.$focus) and $smarty.session.tiki_cookie_jar.show_content.$focus neq 'y'}none{else}block{/if};">
+      {/if}
+        
         <table class="admin" width="100%">
 		
 		<tr>
@@ -320,7 +307,8 @@
             <span>{tr}Release Check{/tr}</span>
           </a>
         </legend>
-        <div id="layout" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_layout) and $smarty.session.tiki_cookie_jar.show_layout neq 'y'}none{else}block{/if};">{/if}
+        <div id="layout" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_layout) and $smarty.session.tiki_cookie_jar.show_layout neq 'y'}none{else}block{/if};">
+      {/if}
         <table class="admin" width="100%">
 			<tr>
 				<td class="form"><label for="general-versioncheck">{tr}Release check{/tr}</label></td>
@@ -435,9 +423,6 @@
       </table>
       {if $prefs.feature_tabs neq 'y'}</div>{/if}
     </fieldset>
-		<div class="button clear" style="text-align: center">
-		<input type="submit" name="new_prefs" value="{tr}Change preferences{/tr}" />
-		</div>
     </form>
     
     <form class="admin" method="post" action="tiki-admin.php?page=general">
@@ -459,12 +444,11 @@
         <td><input type="password" name="again" id="general-repeat_pass" /></td>
       </tr>
       </table>
+      <div class="button clear" style="text-align: center">
+        <input type="submit" name="newadminpass" value="{tr}Change password{/tr}" />
+      </div>
       {if $prefs.feature_tabs neq 'y'}</div>{/if}
     </fieldset>
-    
-        <div class="button clear" style="text-align: center">
-          <input type="submit" name="newadminpass" value="{tr}Change password{/tr}" />
-        </div>
     
     </form>
   </div>
