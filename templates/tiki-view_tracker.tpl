@@ -518,9 +518,15 @@ document.write('<div  class="categSelectAll"><input type="checkbox" id="clickall
 {/if}
 
 
-<tr class="formcolor"><td class="formlabel">&nbsp;</td><td colspan="3" class="formcontent">
-<input type="submit" name="save" value="{tr}Save{/tr}" /> <input type="checkbox" name="viewitem"/> {tr}View inserted item{/tr}
-</td></tr>
+<tr class="formcolor">
+	<td class="formlabel">&nbsp;</td>
+	<td colspan="3" class="formcontent">
+		<input type="submit" name="save" value="{tr}Save{/tr}" /> 
+		<input type="radio" name="viewitem" value="view" /> {tr}View inserted item{/tr}
+		{* --------------------------- to continue inserting items after saving --------- *}
+		<input type="radio" name="viewitem" value="new" /> {tr}Insert new item{/tr}
+	</td>
+</tr>
 </table>
 </form>
 </div>
