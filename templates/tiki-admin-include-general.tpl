@@ -1,13 +1,10 @@
 {* $Id$ *}
 
 <div class="cbox">
-  <div class="cbox-title">
-    {tr}{$crumbs[$crumb]->description}{/tr}
-    {help crumb=$crumbs[$crumb]}
-  </div>
-	<div class="cbox-data">
+
+<table class="admin"><tr><td>
 		<form action="tiki-admin.php?page=general" class="admin" method="post">
-			<div class="heading input_submit_container" style="text-align: right">
+			<div class="heading input_submit_container" style="text-align: center;padding:1em;">
 				<input type="submit" name="new_prefs" value="{tr}Change preferences{/tr}" />
 			</div>
 
@@ -17,12 +14,11 @@
 				{tr}General Settings{/tr}|
 				{tr}Release check{/tr}|
 				{tr}Date and Time Formats{/tr}|
-				{tr}Other{/tr}|
-				{tr}Change password{/tr}
+				{tr}Admin Password{/tr}
 			{/strip}{/tabs}
 {/if}
 
-      {cycle name=content values="1,2,3,4,5,6" print=false advance=false reset=true}
+      {cycle name=content values="1,2,3,4,5" print=false advance=false reset=true}
 
     <fieldset{if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}"{/if}>
       {if $prefs.feature_tabs neq 'y'}
@@ -40,15 +36,15 @@
 </div>
 
 <fieldset><legend>{tr}Home Page{/tr}</legend>
-<div style="padding:5px;">	  
+<div style="padding:5px;clear:both">	  
 <div style="float:left;padding-right:10px;"><input type="checkbox" name="useGroupHome" id="general-homepages"{if $prefs.useGroupHome eq 'y'} checked="checked"{/if} onclick="flip('group_homepages');" /></div>
-<div align="left"><label for="general-homepages">{tr}Use group homepages{/tr}.</label></div>
+<div align="left"><label for="general-homepages">{tr}Use group homepages{/tr}.</label>{if $prefs.feature_help eq 'y'} {help url="Groups"}{/if}</div>
 <div id="group_homepages" style="display:{if $prefs.useGroupHome eq 'y'}block{else}none{/if};margin-left:30px;padding:5px;">
-	<div style="float:left;padding-right:10px;"><input type="checkbox" name="limitedGoGroupHome" id="general-gogrouphome"{if $prefs.limitedGoGroupHome eq 'y'}checked="checked"{/if}/></div>
+	<div style="float:left;padding-right:10px;"><input type="checkbox" name="limitedGoGroupHome" id="general-gogrouphome" {if $prefs.limitedGoGroupHome eq 'y'}checked="checked" {/if}/></div>
 	<div align="left"><label for="general-gogrouphome">{tr}Go to group homepage only if login from default homepage{/tr}.</label></div>
 </div>
 </div>
-<div style="padding:5px" align="left">
+<div style="padding:5px;clear:both" align="left">
 <div id="tiki_home_page" style="display:{if $prefs.useUrlIndex eq 'y'}none{else}block{/if};">{tr}Use TikiWiki feature as homepage{/tr}: 
 		<select name="tikiIndex" id="general-homepage">
             <option value="tiki-index.php"
@@ -90,7 +86,7 @@
 </fieldset>
 
 <fieldset><legend>{tr}Miscellaneous{/tr}</legend>
-<div style="padding:5px;" align="left"><label for="general-os">{tr}Server OS{/tr}</label>:<select name="system_os" id="general-os">
+<div style="padding:5px;clear:both" align="left"><label for="general-os">{tr}Server OS{/tr}</label>:<select name="system_os" id="general-os">
             <option value="unix"
               {if $prefs.system_os eq 'unix'}selected="selected"{/if}>{tr}Unix{/tr}</option>
             <option value="windows"
@@ -99,21 +95,21 @@
               {if $prefs.system_os eq 'unknown'}selected="selected"{/if}>{tr}Unknown/Other{/tr}</option>
             </select>
 </div>
-<div style="padding:5px;">	  
+<div style="padding:5px;clear:both">	  
 	<div style="float:left;padding-right:10px;"><input type="checkbox" name="smarty_security" id="smarty-security"{if $prefs.smarty_security eq 'y'} checked="checked"{/if} /></div>
-	<div align="left"><label for="smarty-security">{tr}Smarty Security{/tr}</label><br /><em>({tr}Do not allow php code in smarty templates{/tr}.)</em></div>
+	<div align="left"><label for="smarty-security">{tr}Smarty Security{/tr}<br /><em>({tr}Do not allow php code in smarty templates{/tr}.)</em></label></div>
 </div>
-<div style="padding:5px;">	  
+<div style="padding:5px;clear:both">	  
 	<div style="float:left;padding-right:10px;"><input type="checkbox" id="feature_pear_date" name="feature_pear_date"{if $prefs.feature_pear_date eq 'y'} checked="checked"{/if} /></div>
 	<div align="left"><label for="feature_pear_date">{tr}Use PEAR::Date library{/tr}.</label></div>
 </div>
-<div style="padding:5px;" align="left"><label for="general-charset">{tr}Default charset for sending mail{/tr}:</label> 
+<div style="padding:5px;clear:both" align="left"><label for="general-charset">{tr}Default charset for sending mail{/tr}:</label> 
 	<select name="default_mail_charset" id="general-charset">
 		<option value="utf-8" {if $prefs.default_mail_charset eq "utf-8"}selected="selected"{/if}>utf-8</option>
 		<option value="iso-8859-1" {if $prefs.default_mail_charset eq "iso-8859-1"}selected="selected"{/if}>iso-8859-1</option>
 	</select>
 </div>
-<div style="padding:5px;" align="left"><label for="mail_crlf">{tr}Mail end of line{/tr}:</label> 
+<div style="padding:5px;clear:both" align="left"><label for="mail_crlf">{tr}Mail end of line{/tr}:</label> 
 	<select name="mail_crlf" id="mail_crlf">
 		<option value="CRLF" {if $prefs.mail_crlf eq "CRLF"}selected="selected"{/if}>CRLF {tr}(standard){/tr}</option>
 		<option value="LF" {if $prefs.mail_crlf eq "LF"}selected="selected"{/if}>LF {tr}(some Unix MTA){/tr}</option>
@@ -122,30 +118,30 @@
 </fieldset>
 
 <fieldset><legend>{tr}Logging and Reporting{/tr}</legend>
-<div style="padding:5px" align="left">
+<div style="padding:5px;clear:both" align="left">
 	<label for="general-error">{tr}PHP error reporting level:{/tr}</label> 
 	<select name="error_reporting_level" id="general-error">
 		<option value="0" {if $prefs.error_reporting_level eq 0}selected="selected"{/if}>{tr}No error reporting{/tr}</option>
 		<option value="2047" {if $prefs.error_reporting_level eq 2047}selected="selected"{/if}>{tr}Report all PHP errors{/tr}</option>
 		<option value="2039" {if $prefs.error_reporting_level eq 2039}selected="selected"{/if}>{tr}Report all errors except notices{/tr}</option>
 	</select>
-	<div style="margin-left:20px;padding:5px;">
+	<div style="margin-left:20px;padding:5px;clear:both">
 		<div style="float:left;padding-right:10px;"><input type="checkbox" id="error_reporting_adminonly" name="error_reporting_adminonly"{if $prefs.error_reporting_adminonly eq 'y'} checked="checked"{/if} /></div>
-		<div align="left"><label for="error_reporting_adminonly">{tr}Visible to Admin only{/tr}</label>.</div>
+		<div align="left"><label for="error_reporting_adminonly">{tr}Visible to Admin only{/tr}.</label></div>
 <br />
-		<div style="float:left;padding-right:10px;"><input type="checkbox" id="smarty_notice_reporting" name="smarty_notice_reporting"{if $prefs.smarty_notice_reporting eq 'y'} checked="checked"{/if} /></div>
+		<div style="float:left;padding-right:10px;clear:both"><input type="checkbox" id="smarty_notice_reporting" name="smarty_notice_reporting"{if $prefs.smarty_notice_reporting eq 'y'} checked="checked"{/if} /></div>
 		<div align="left"><label for="smarty_notice_reporting">{tr}Include Smarty notices{/tr}</label>.</div>
 	</div>
 </div>
-<div style="padding:5px;">	  
+<div style="padding:5px;clear:both">	  
 	<div style="float:left;padding-right:10px;"><input type="checkbox" id="log_mail" name="log_mail"{if $prefs.log_mail eq 'y'} checked="checked"{/if} /></div>
-	<div align="left"><label for="log_mail">{tr}Log mail in Tiki logs{/tr}.</label></div>
+	<div align="left"><label for="log_mail">{tr}Log mail in Tiki logs{/tr}.</label>{if $prefs.feature_help eq 'y'}{help url="System+Log"}{/if}</div>
 </div>
-<div style="padding:5px;">	  
+<div style="padding:5px;clear:both">	  
 	<div style="float:left;padding-right:10px;"><input type="checkbox" id="log_sql" name="log_sql"{if $prefs.log_sql eq 'y'} checked="checked"{/if} onclick="flip('log_sql_queries');" /></div>
 	<div align="left"><label for="log_sql">{tr}Log SQL{/tr}.</label></div>
 </div>
-<div id="log_sql_queries" align="left" style="margin-left:20px;padding:5px;;display:{if $prefs.log_sql eq 'y'}display{else}none{/if};">
+<div id="log_sql_queries" align="left" style="margin-left:20px;padding:5px;display:{if $prefs.log_sql eq 'y'}display{else}none{/if};">
 {tr}Log queries using more than{/tr} <input type="text" name="log_sql_perf_min" value="{$prefs.log_sql_perf_min}" size="5" /> {tr}seconds{/tr}<br /><em>{tr}This may impact performance{/tr}.</em>
 </div>
 </fieldset>
@@ -166,14 +162,14 @@
 		
 <h2>{tr}General Settings{/tr}</h2>
 <fieldset><legend>{tr}Site Access{/tr}</legend>
-<div style="padding:5px;">
+<div style="padding:5px;clear:both">
 <div style="margin:0px;float:left;padding-right:10px"><input type="checkbox" name="site_closed" id="general-access" {if $prefs.site_closed eq 'y'}checked="checked" {/if}onclick="flip('close_site_message');" /></div>
 <div align="left"><label for="general-access">{tr}Close site (except for those with permission){/tr}.</label></div>
 <div align="left" id="close_site_message" style="display:{if $prefs.site_closed eq 'y'}block{else}none{/if};margin-left:30px;padding:5px;">
-	<div><label for="general-site_closed">{tr}Message to display{/tr}:</label><br /><input type="text" name="site_closed_msg" id="general-site_closed" value="{$prefs.site_closed_msg}" size="60"/></div>
+	<div><label for="general-site_closed">{tr}Message to display{/tr}:</label><br /><input type="text" name="site_closed_msg" id="general-site_closed" value="{$prefs.site_closed_msg}" size="60" /></div>
 </div></div>
 
-<div style="padding:5px;">
+<div style="padding:5px;clear:both">
 <div style="float:left;padding-right:10px;margin:0px;"><input type="checkbox" name="use_load_threshold" id="general-load" {if $prefs.use_load_threshold eq 'y'}checked="checked" {/if}onclick="flip('close_threshold_message');" /></div>
 <div align="left"><label for="general-load">{tr}Close site when server load is above the threshold  (except for those with permission){/tr}.</label></div>
 <div align="left" id="close_threshold_message" style="display:{if $prefs.use_load_threshold eq 'y'}block{else}none{/if};margin-left:30px;padding:5px;">
@@ -181,11 +177,11 @@
 <label for="general-max_load">{tr}Maximum average server load threshold in the last minute{/tr}:</label><input type="text" name="load_threshold" id="general-max_load" value="{$prefs.load_threshold}" size="5" />
 	</div>
 
-	<div><label for="general-load_mess">{tr}Message to display{/tr}:<br /><input type="text" name="site_busy_msg" id="general-load_mess" value="{$prefs.site_busy_msg}" size="60" /></div>
+	<div><label for="general-load_mess">{tr}Message to display{/tr}:</label><br /><input type="text" name="site_busy_msg" id="general-load_mess" value="{$prefs.site_busy_msg}" size="60" /></div>
 </div>
 </div>
 
-<div style="padding:5px;">
+<div style="padding:5px;clear:both">
 	<div style="float:left;padding-right:10px;margin:0px;"><input type="checkbox" name="use_proxy" id="general-proxy" {if $prefs.use_proxy eq 'y'}checked="checked" {/if}onclick="flip('use_proxy_settings');" /></div>
 	<div align="left"><label for="general-proxy">{tr}Use proxy{/tr}.</label></div>
 	<div align="left" id="use_proxy_settings" style="display:{if $prefs.use_proxy eq 'y'}block{else}none{/if};margin-left:30px;padding:5px;">
@@ -196,15 +192,15 @@
 </fieldset>
 
 <fieldset><legend>{tr}Performance{/tr}</legend>
-<div style="padding:5px;">	  
+<div style="padding:5px;clear:both">	  
 	<div style="float:left;padding-right:10px;"><input type="checkbox" name="cachepages" id="general-cache_ext_pages" {if $prefs.cachepages eq 'y'}checked="checked" {/if}/></div>
 	<div align="left"><label for="general-cache_ext_pages">{tr}Cache external pages{/tr}</label>.</div>
 </div>
-<div style="padding:5px;">	  
+<div style="padding:5px;clear:both">	  
 	<div style="float:left;padding-right:10px;"><input type="checkbox" name="cacheimages" id="general-cache_ext_imgs" {if $prefs.cacheimages eq 'y'}checked="checked" {/if}/></div>
 	<div align="left"><label for="general-cache_ext_imgs">{tr}Cache external images{/tr}</label>.</div>
 </div>
-<div style="padding:5px;">	  
+<div style="padding:5px;clear:both">	  
 	<div style="float:left;padding-right:10px;"><input type="checkbox" name="feature_obzip" id="general-gzip" {if $prefs.feature_obzip eq 'y'}checked="checked" {/if}/></div>
 	<div align="left"><label for="general-gzip">{tr}GZip output{/tr}</label>.{if $prefs.feature_help eq 'y'}
 	<a href="{$prefs.helpurl}Compression" target="tikihelp" class="tikihelp" title="{tr}Tikiwiki.org help{/tr}:">{icon _id=help}</a>{/if}
@@ -233,7 +229,7 @@
 {/if}
 <div style="padding:5px;">	  
 	<div style="float:left;padding-right:10px;"><input type="checkbox" name="contact_anon" id="contact_anon" {if $prefs.contact_anon eq 'y'}checked="checked" {/if}{if $prefs.feature_contact ne 'y'}disabled="disabled" {/if}/></div>
-	<div align="left"><label for="contact_anon">{tr}Allow anonymous visitors to use the "Contact Us"{/tr} feature.</label></div>
+	<div align="left"><label for="contact_anon">{tr}Allow anonymous visitors to use the "Contact Us"{/tr} feature.</label>{if $prefs.feature_help eq 'y'}{help url="Contact+Us"}{/if}</div>
 </div>
 <div style="padding:5px;">	  
 	<div align="left"><label for="general-contact">{tr}Contact user{/tr}</label>:<br /><input type="text" name="contact_user" id="general-contact" value="{$prefs.contact_user|escape}" size="40" {if $prefs.feature_contact ne 'y'}disabled="disabled" {/if}/></div>
@@ -241,29 +237,41 @@
 </fieldset>
 
 <fieldset><legend>{tr}Miscellaneous{/tr}</legend>
-<div style="padding:5px;">	  
+<div style="padding:5px;clear:both">	  
 	<div style="float:left;padding-right:10px;"><input type="checkbox" name="count_admin_pvs" id="general-pageviews" {if $prefs.count_admin_pvs eq 'y'}checked="checked" {/if}/></div>
 	<div align="left"><label for="general-pageviews">{tr}Count admin pageviews{/tr}</label>.</div>
 </div>
-<div style="padding:5px;">	  
+<div style="padding:5px;clear:both">	  
 	<div align="left"><label for="general-browser_title">{tr}Browser title{/tr}:</label><br /><input type="text" name="siteTitle" id="general-browser_title" value="{$prefs.siteTitle|escape}" size="50" /></div>
 </div>
-<div style="padding:5px;">	  
+<div style="padding:5px;clear:both">	  
 	<div align="left"><label for="general-temp">{tr}Temporary directory{/tr}:</label><br /><input type="text" name="tmpDir" id="general-temp" value="{$prefs.tmpDir|escape}" size="50" /></div>
 </div>
-<div style="padding:5px;">	  
+<div style="padding:5px;clear:both">	  
 	<div align="left"><label for="general-send_email">{tr}Sender email{/tr}:</label><br /><input type="text" name="sender_email" id="general-send_email" value="{$prefs.sender_email|escape}" size="50" /></div>
 </div>
-<div style="padding:5px;">	  
+<div style="padding:5px;clear:both">	  
 	<div align="left"><label for="general-max_records">{tr}Maximum number of records in listings{/tr}:</label> <input size="5" type="text" name="maxRecords" id="general-max_records" value="{$prefs.maxRecords|escape}" /></div>
 </div>
-<div style="padding:5px;">	  
+<div style="padding:5px;clear:both">	  
 	<div style="float:left;padding-right:10px;"><input type="checkbox" name="feature_help" id="feature_help" {if $prefs.feature_help eq 'y'}checked="checked" {/if}onclick="flip('use_help_system');" /></div>
-	<div align="left"><label for="feature_help">{tr}Help System{/tr}:</label></div>
+	<div align="left"><label for="feature_help">{tr}Help System{/tr}:</label>{if $prefs.feature_help eq 'y'}{help url="Documentation"}{/if}</div>
 	<div align="left" id="use_help_system" style="display:{if $prefs.feature_help eq 'y'}block{else}none{/if};margin-left:30px;padding:5px;">
 		<div><label for="general-helpurl">{tr}Help URL{/tr}:</label> <input type="text" name="helpurl" id="general-helpurl" value="{$prefs.helpurl|escape}" size="40" /><br />
-		<em>{tr}The default help system may not be complete.{/tr} {tr}You can help with the TikiWiki documentation.{/tr}</em></div>
+		<em>{tr}The default help system may not be complete.{/tr} {tr}You can help with the TikiWiki documentation.{/tr}</em>{help url="Welcome+Authors"}</div>
 	</div>	
+</div>
+<div style="padding:5px;clear:both">	  
+	<div style="float:left;padding-right:10px;"><input type="checkbox" name="user_show_realnames" id="user_show_realnames" {if $prefs.user_show_realnames eq 'y'}checked="checked"{/if}/></div>
+	<div align="left"><label for="user_show_realnames">{tr}Show user's real name instead of login (when possible){/tr}.</label>{if $prefs.feature_help eq 'y'} {help url="User+Preferences"}{/if}</div>
+</div>
+</fieldset>
+<fieldset><legend>{tr}Seperators{/tr}</legend>
+<div style="padding:5px;clear:both">	  
+	<div align="left"><label for="site_crumb_seper">{tr}Locations (breadcrumbs){/tr}:</label> <input type="text" name="site_crumb_seper" id="site_crumb_seper" value="{$prefs.site_crumb_seper}" size="5" maxlength="8" /><br /><em>{tr}Examples{/tr}: &nbsp; &raquo; &nbsp; / &nbsp; &gt; &nbsp; : &nbsp; -> &nbsp; &#8594;</em></div>
+</div>
+<div style="padding:5px;clear:both">	  
+	<div align="left"><label for="site_nav_seper">{tr}Choices{/tr}:</label> <input type="text" name="site_nav_seper" id="site_nav_seper" value="{$prefs.site_nav_seper}" size="5" maxlength="8" /><br /><em>{tr}Examples{/tr}: &nbsp; | &nbsp; / &nbsp; &brvbar; &nbsp; :</em></div>
 </div>
 </fieldset>
 
@@ -289,7 +297,7 @@
 </div>
 
 <div style="padding:5px;">	  
-	<div style="float:left;padding-right:10px;"><input type="checkbox" id="general-versioncheck" name="feature_version_checks" {if $prefs.feature_version_checks eq 'y'}checked="checked"{/if}onclick="flip('check_for_updates');" /></div>
+	<div style="float:left;padding-right:10px;"><input type="checkbox" id="general-versioncheck" name="feature_version_checks" {if $prefs.feature_version_checks eq 'y'}checked="checked" {/if}onclick="flip('check_for_updates');" /></div>
 	<div align="left"><label for="general-versioncheck">{tr}Check for updates automatically{/tr}.</label></div>
 	<div align="left" id="check_for_updates" style="display:{if $prefs.feature_version_checks eq 'y'}block{else}none{/if};margin-left:30px;padding:5px;">
 		<div>{tr}Check frequency{/tr}: 
@@ -357,42 +365,13 @@
 </div>
 <div style="padding:5px;">	
 {assign var="fcnlink" value="http://www.php.net/manual/en/function.strftime.php"}
-<a class="link" target="strftime" href="{$fcnlink}">{tr}Date and Time Format Help{/tr}</a></div>
+<a class="link" target="strftime" href="{$fcnlink}">{tr}Date and Time Format Help{/tr}</a>{if $prefs.feature_help eq 'y'} {help url="Date+and+Time"}{/if}</div>
 
       {if $prefs.feature_tabs neq 'y'}</div>{/if}
     </fieldset>
-      
     
-    <fieldset{if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}"{/if}>
-      {if $prefs.feature_tabs neq 'y'}
-        <legend class="heading" id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}">
-          <a href="#layout" onclick="flip('layout'); return false;">
-            <span>{tr}Other{/tr}</span>
-          </a>
-        </legend>
-        <div id="layout" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_layout) and $smarty.session.tiki_cookie_jar.show_layout neq 'y'}none{else}block{/if};">{/if}
-
-<div style="padding:5px;">	  
-<div style="float:left;padding-right:10px;"><input type="checkbox" name="user_show_realnames" id="user_show_realnames" {if $prefs.user_show_realnames eq 'y'}checked="checked"{/if}/></div>
-<div align="left"><label for="user_show_realnames">{tr}Show user's real name instead of login (when possible){/tr}.</label></div>
-</div>
-<fieldset><legend>{tr}Seperators{/tr}</legend>
-<div style="padding:5px;">	  
-	<div align="left"><label for="site_crumb_seper">{tr}Locations (breadcrumbs){/tr}:</label> <input type="text" name="site_crumb_seper" id="site_crumb_seper" value="{$prefs.site_crumb_seper}" size="5" maxlength="8" /><br /><em>{tr}Examples{/tr}: &nbsp; &raquo; &nbsp; / &nbsp; &gt; &nbsp; : &nbsp; -> &nbsp; &#8594;</em></div>
-</div>
-<div style="padding:5px;">	  
-	<div align="left"><label for="site_nav_seper">{tr}Choices{/tr}:</label> <input type="text" name="site_nav_seper" id="site_nav_seper" value="{$prefs.site_nav_seper}" size="5" maxlength="8" /><br /><em>{tr}Examples{/tr}: &nbsp; | &nbsp; / &nbsp; &brvbar; &nbsp; :</em></div>
-</div>
-</fieldset>
-
-
-
-      {if $prefs.feature_tabs neq 'y'}</div>{/if}
-    </fieldset>
-		<div class="button clear" style="text-align: center">
-		<input type="submit" name="new_prefs" value="{tr}Change preferences{/tr}" />
-		</div>
     </form>
+	
     <form method="post" action="tiki-admin.php?page=general">
     <fieldset{if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}"{/if}>
       {if $prefs.feature_tabs neq 'y'}
@@ -402,23 +381,39 @@
           </a>
         </legend>
         <div id="adminpass" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_adminpass) and $smarty.session.tiki_cookie_jar.show_adminpass neq 'y'}none{else}block{/if};">{/if}
-<p>Change the <strong>Admin</strong> password.</p>
-        <table class="admin" width="100%">
-      <tr>
-        <td class="form" ><label for="general-new_pass">{tr}New password{/tr}:</label></td>
-        <td ><input type="password" name="adminpass" id="general-new_pass" /></td>
-      </tr><tr>
-        <td class="form"><label for="general-repeat_pass">{tr}Repeat password{/tr}:</label></td>
-        <td><input type="password" name="again" id="general-repeat_pass" /></td>
-      </tr><tr>
-        <td colspan="2" class="button">
-          <input type="submit" name="newadminpass" value="{tr}Change password{/tr}" />
-        </td>
-      </tr>
-      </table>
+<p>{tr}Change the <strong>Admin</strong> password{/tr}.</p>
+						<div style="float:right;width:150px;margin-left:5px">
+							<div id="mypassword_text"></div>
+							<div id="mypassword_bar" style="font-size: 5px; height: 2px; width: 0px;"></div> 
+						</div>
+
+<div style="padding:5px;">	  
+	<div align="left"><label for="general-new_pass">{tr}New password{/tr}:</label><br /><input type="password" name="adminpass" id="general-new_pass" onkeyup="runPassword(this.value, 'mypassword');" />
+		{if $prefs.min_pass_length > 1}
+								<div class="highlight"><em>{tr}Minimum {$prefs.min_pass_length} characters long{/tr}</em></div>{/if}
+		{if $prefs.pass_chr_num eq 'y'}
+								<div class="highlight"><em>{tr}Password must contain both letters and numbers{/tr}</em></div>{/if}
+
+	</div>
+</div>
+
+<div style="padding:5px;">	  
+	<div align="left"><label for="general-repeat_pass">{tr}Repeat password{/tr}:</label><br /><input type="password" name="again" id="general-repeat_pass" />
+	</div>
+</div>
+
+<div style="padding:1em;" align="center">
+	<input type="submit" name="newadminpass" value="{tr}Change password{/tr}" />
+</div>
+
+
+
       {if $prefs.feature_tabs neq 'y'}</div>{/if}
     </fieldset>
+			<div class="heading input_submit_container" style="text-align: center;padding:1em;">
+				<input type="submit" name="new_prefs" value="{tr}Change preferences{/tr}" />
+			</div>
     
     </form>
-  </div>
+</td></tr></table>
 </div>
