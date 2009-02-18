@@ -153,7 +153,7 @@
 				</tr>
 	{/if}
 
-	{if $prefs.rnd_num_reg eq 'y'}{include file='antibot.tpl'}{/if}
+	{if $prefs.rnd_num_reg eq 'y'}{include file='antibot.tpl' td_style='formcolor'}{/if}
 
 				<tr>
 					<td class="formcolor">&nbsp;</td>

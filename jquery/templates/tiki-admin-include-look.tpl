@@ -12,19 +12,8 @@
 		</div>
 
 		{if $prefs.feature_tabs eq 'y'}
-			{cycle name=tabs values="1,2,3,4" print=false advance=false reset=true}
-			<div class="tabs">
-				<span	id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark tabinactive">
-					<a href="#theme" onclick="javascript:tikitabs({cycle name=tabs},4); return false;">{tr}Theme{/tr}</a>
-				</span>
-				<span	id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark tabinactive">
-					<a href="#layout" onclick="javascript:tikitabs({cycle name=tabs},4); return false;">{tr}General Layout{/tr}</a>
-				</span>
-				<span	id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark tabinactive">
-					<a href="#other" onclick="javascript:tikitabs({cycle name=tabs},4); return false;">{tr}Other{/tr}</a>
-				</span>
-			</div>
-			{cycle name=content values="1,2,3,4" print=false advance=false reset=true}
+			{tabs}{tr}Theme{/tr}|{tr}General Layout{/tr}|{tr}Other{/tr}{/tabs}
+			{cycle name=content values="1,2,3" print=false advance=false reset=true}
 		{/if}
 
 		<fieldset{if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}"{/if}>

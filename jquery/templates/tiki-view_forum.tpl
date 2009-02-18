@@ -226,7 +226,7 @@
 				{/if}
 
 				{if $prefs.feature_antibot eq 'y'}
-					{include file="antibot.tpl"}
+					{include file="antibot.tpl" tr_style="formcolor"}
 				{/if}
  
 				{if $prefs.feature_freetags eq 'y' and $tiki_p_freetags_tag eq 'y'}

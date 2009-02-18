@@ -1,4 +1,4 @@
-// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.81.2.15 2008-03-04 15:47:50 sept_7 Exp $
+// $Id$
 var feature_no_cookie = 'n';
 
 function browser() {
@@ -476,7 +476,7 @@ function flip_thumbnail_status(id) {
 }
 
 function tikitabs(focus,max) {
-  for (var i = 1; i < max; i++) {
+  for (var i = 1; i <= max; i++) {
     var tabname = 'tab' + i;
     var content = 'content' + i;
     if (document.getElementById(tabname) && typeof document.getElementById(tabname) != 'undefined') {

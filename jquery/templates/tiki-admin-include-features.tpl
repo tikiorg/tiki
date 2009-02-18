@@ -15,16 +15,16 @@
 			</div>
 
 {if $prefs.feature_tabs eq 'y' and $tabs ne 'n'}
-			<div class="tabs" style="clear: both;">
-				<span id="tab1" class="tabmark tabactive"><a href="javascript:tikitabs(1,10);">{tr}Main{/tr}</a></span>
-				<span id="tab2" class="tabmark tabinactive"><a href="javascript:tikitabs(2,10);">{tr}Global Features{/tr}</a></span>
-				<span id="tab3" class="tabmark tabinactive"><a href="javascript:tikitabs(3,10);">{tr}More Functionality{/tr}</a></span>
-				<span id="tab4" class="tabmark tabinactive"><a href="javascript:tikitabs(4,10);">{tr}UI Enhancements{/tr}</a></span>
-				<span id="tab5" class="tabmark tabinactive"><a href="javascript:tikitabs(5,10);">{tr}Experimental{/tr}</a></span>
-				<span id="tab6" class="tabmark tabinactive"><a href="javascript:tikitabs(6,10);">{tr}Admin{/tr}</a></span>
-				<span id="tab7" class="tabmark tabinactive"><a href="javascript:tikitabs(7,10);">{tr}User{/tr}</a></span>
-				<span id="tab8" class="tabmark tabinactive"><a href="javascript:tikitabs(8,10);">{tr}Programmer{/tr}</a></span>
-			</div>
+			{tabs}{strip}
+				{tr}Main{/tr}|
+				{tr}Global Features{/tr}|
+				{tr}More Functionality{/tr}|
+				{tr}UI Enhancements{/tr}|
+				{tr}Experimental{/tr}|
+				{tr}Admin{/tr}|
+				{tr}User{/tr}|
+				{tr}Programmer{/tr}
+			{/strip}{/tabs}
 {/if}
 
 {*
