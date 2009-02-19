@@ -1178,6 +1178,8 @@ CREATE TABLE "tiki_forums_queue" (
   "topic_title" varchar(240) default NULL,
   "summary" varchar(240) default NULL,
   "in_reply_to" varchar(128) default NULL,
+  "tags" varchar(255) default NULL,
+  "email" varchar(255) default NULL,
   PRIMARY KEY ("qId")
 ) ENGINE=MyISAM  ;
 
@@ -1888,7 +1890,7 @@ INSERT INTO "tiki_menu_options" ("optionId","menuId","type","name","url","positi
 
 INSERT INTO "tiki_menu_options" ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (142,42,'o','Polls','tiki-admin_polls.php',1110,'feature_polls','tiki_p_admin_polls','',0);
 
-INSERT INTO "tiki_menu_options" ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (143,42,'o','Mail Notifications','tiki-admin_notifications.php',1120,'','tiki_p_admin','',0);
+INSERT INTO "tiki_menu_options" ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (143,42,'o','Mail Notifications','tiki-admin_notifications.php',1120,'','tiki_p_admin_notifications','',0);
 
 INSERT INTO "tiki_menu_options" ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (182,42,'o','Search Stats','tiki-search_stats.php',1125,'feature_search_stats','tiki_p_admin','',0);
 
@@ -2237,7 +2239,7 @@ CREATE TABLE "tiki_polls" (
   "votes" integer default NULL,
   "active" char(1) default NULL,
   "publishDate" bigint default NULL,
-  "anonym" varchar(5) CHECK ("anonym" IN ( 'a', 'u', 'i', 'c' )) NOT NULL DEFAULT 'u',
+  "voteConsiderationSpan" smallint default 0,
   PRIMARY KEY ("pollId")
 ) ENGINE=MyISAM  ;
 
@@ -3647,6 +3649,8 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_vote_poll', 'Can vote polls', 'basic', 'polls');
 
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_poll_voters', 'Can view poll voters', 'basic', 'polls');
+
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_quicktags', 'Can admin quicktags', 'admin', 'quicktags', 'y');
 
@@ -3891,6 +3895,9 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_trust_input', 'Trust all user inputs (no security checks)', 'admin', 'tiki');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_backlink', 'View page backlinks', 'basic', 'wiki');
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_notifications', 'Can admin mail notifications', 'editors', 'mail notifications');
 
 
 UPDATE users_permissions SET feature_check = 'feature_wiki' WHERE permName IN(
@@ -4676,7 +4683,7 @@ DROP TABLE "tiki_freetagged_objects";
 CREATE TABLE "tiki_freetagged_objects" (
   "tagId" bigserial,
   "objectId" bigint NOT NULL default 0,
-  "user" varchar(200) NOT NULL default '',
+  "user" varchar(200) default '',
   "created" bigint NOT NULL default '0',
   PRIMARY KEY ("tagId","user","objectId"),
   KEY (tagId),
