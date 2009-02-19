@@ -683,30 +683,48 @@ a.phplmselected:hover {
 .cssmenu li ul,
 .cssmenu_vert li ul,
 .cssmenu_horiz li ul {
-	width: 9em;
-	background: #fff}
+	background: #fff;
+	width: auto;
+}
+
+[class].cssmenu_horiz li ul {
+	margin-left: -1px;
+}
+
 * html div.box-CSS_menu ul {margin-left: 0}
+
 .cssmenu_vert li ul {margin-left: 9em !important}
 
 .cssmenu li ul ul {/*left: -999em*/}
+
 .cssmenu_horiz li ul ul {margin: -1em 0 0 9em}
+
 .cssmenu a,	
 .cssmenu_horiz a,
 .cssmenu_vert a {
 	text-decoration: none;
 	display: block;
-	text-decoration: none;
+	line-height: 1.8em;
 	padding: 3px 0 3px 6px}
+
+[class].cssmenu_horiz a {
+	min-width: 9em;
+	width: auto;
+}
 	
-.cssmenu a:hover,	
+.cssmenu a:hover,
 .cssmenu_horiz a:hover,
 .cssmenu_vert a:hover {text-decoration: underline}
 
-#tiki-top > .cssmenu_horiz {
-	padding-left: 20px;
-	border-left: 1px solid #aaa}
+/* border on the left of the first option */
+.cssmenu_horiz .option1 {border-left: solid 1px #aaa}
 
-#tiki-top > .cssmenu_horiz > li > a {border-right: 1px solid #aaa}
+#tiki-top .cssmenu_horiz {
+	margin-left: 9px
+}
+
+#tiki-top > .cssmenu_horiz > li > a {
+	border-right: 1px solid #aaa}
 
 /** Links in other menus **/
 div.separator,
