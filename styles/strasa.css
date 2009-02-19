@@ -627,8 +627,7 @@ a.flip img {display: none}
 	top: 5px;
 	right: 12px} 
 
-.mdkitem a,
-.cssmenu_vert li a {
+.mdkitem a {
 	color: #5ae0ff;
 	padding: 3px;
 	position: relative;
@@ -641,8 +640,7 @@ a.flip img {display: none}
 
 .mdkitem a:visited {text-decoration: none} 
 
-.mdkitem a:hover, 
-.cssmenu_vert li a:hover {
+.mdkitem a:hover {
 	color: #fff;
 	text-decoration: none} 
 
@@ -687,10 +685,6 @@ a.phplmselected:hover {color: #808080}
 	
 /** CSS (suckerfish) menus **/
 
-
-.cssmenu_horiz li:hover,
-.cssmenu_vert li:hover {background: #1b3a50}
-
 .cssmenu ul,
 .cssmenu_vert li ul,
 .cssmenu_horiz li ul {
@@ -701,7 +695,14 @@ a.phplmselected:hover {color: #808080}
 	margin-left: 11.05em;
 	margin-top: -1.35em;
 	padding-bottom: 1px; /*enable border to show */}
-
+	
+.cssmenu_vert li ul {
+	background: #ccedff;
+	border: 1px solid #233039}
+	
+.cssmenu_horiz li:hover {background: #1b3a50}
+.cssmenu_ver li:hover {background: none}
+	
 .cssmenu a,	
 .cssmenu_horiz a,
 .cssmenu_vert a {
@@ -711,27 +712,19 @@ a.phplmselected:hover {color: #808080}
 	padding: 3px 0 3px 6px;
 	color: #006699}
 	
-.cssmenu a {  }
+.cssmenu_vert a:link,
+.cssmenu_vert a:visited {color: #006699}
 
-.cssmenu_vert a {
-	padding: 0 0.5em}
+.cssmenu_vert a:hover {
+	color: #000;
+	text-decoration: underline}
 
-.cssmenu_horiz .menuSection0 > a {background: url(../lib/phplayers/images/down-galaxy.png)  85% 65% no-repeat}
+.cssmenu_vert ul a:link,
+.cssmenu_vert ul a:visited {color: #006699}
 
-div.box-CSS_menu {overflow: visible !important}
-.box-data .cssmenu_vert {z-index: 1900}
-
-#tiki-top .cssmenu_horiz {
-	z-index: 2000;
-	position: relative}
+.cssmenu_vert ul a:hover {color: #000000}
 
 #tiki-top .cssmenu_horiz {text-align: left; float: right; margin-right: 100px}
-#tiki-top > .cssmenu_horiz > li {}
-#tiki-top > .cssmenu_horiz > li > a {}
-#tiki-top > .cssmenu_horiz > li > a:hover {}
-#tiki-top .cssmenu_horiz li:hover {}
-#tiki-top ul.cssmenu_horiz li ul a {}
-#tiki-top .cssmenu_horiz ul li a:hover {}
 
 /** Links in other menus **/
 div.separator {
