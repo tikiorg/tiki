@@ -119,7 +119,7 @@ function wikiplugin_tracker_name($fieldId, $name, $field_errors) {
 	return $name;
 }
 function wikiplugin_tracker($data, $params) {
-	global $tikilib, $userlib, $dbTiki, $user, $group, $page, $tiki_p_admin, $tiki_p_create_tracker_items, $smarty, $prefs, $trklib, $tiki_p_tracker_vote_ratings, $tiki_p_wiki_admin_attachments;
+	global $tikilib, $userlib, $dbTiki, $user, $group, $page, $tiki_p_admin, $tiki_p_create_tracker_items, $smarty, $prefs, $trklib, $tiki_p_tracker_vote_ratings, $tiki_p_wiki_admin_attachments, $tiki_p_admin_trackers;
 	include_once('lib/trackers/trackerlib.php');
 	
 	//var_dump($_REQUEST);
@@ -679,7 +679,7 @@ function wikiplugin_tracker($data, $params) {
 							array_multisort($flagsTranslated, $flds['data'][$i]['flags']);
 						}
 					} elseif ($f['type'] == 'u') {
-						if ($tiki_p_admin == 'y' || ($f['options_array'][0] != 1 && $f['options_array'][0] != 2))
+						if ($tiki_p_admin_trackers == 'y' || ($f['options_array'][0] != 1 && $f['options_array'][0] != 2))
 							$flds['data'][$i]['list'] = $userlib->list_all_users();
 					} elseif ($f['type'] == 'g') {
 						if ($tiki_p_admin == 'y' || $f['options_array'][0] != 1 && $f['options_array'][0] != 2)
