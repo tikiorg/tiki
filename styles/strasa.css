@@ -617,10 +617,6 @@ a.flip img {display: none}
 	border: 1px solid #08698f;
 	background: #1b3a50}
 	
-.cssmenu_vert li:hover ul {
-	border: 1px solid #08698f;
-	background: #1b3a50}
-
 .mdkitem {
 	position: relative;
 	text-align: left;
@@ -639,8 +635,7 @@ a.flip img {display: none}
 	display: block;
 	font-weight: normal} 
 
-.mdkitem a:link,
-.cssmenu_vert li a {
+.mdkitem a:link {
 	font-weight: normal;
 	text-decoration: none} 
 
@@ -652,17 +647,6 @@ a.flip img {display: none}
 	text-decoration: none} 
 
 .mdkitem a:active {} 
-
-.cssmenu_vert li {}
-.cssmenu_ver li a ul {border: 0}
-.cssmenu_vert li:hover ul,
-.cssmenu_vert li li:hover ul,
-.cssmenu_vert li li li:hover ul,
-.cssmenu_vert li.sfhover ul,
-.cssmenu_vert li li.sfhover ul,
-.cssmenu_vert li li li.sfhover ul { /* lists nested under hovered list items */border: 0}
-
-.cssmenu_vert li.selected > a {}
 
 /* Tree menu (also on Browse Categories */
 .treemenudiv {
@@ -702,107 +686,22 @@ a.phplmselected:hover {color: #808080}
 	height: 18px}
 	
 /** CSS (suckerfish) menus **/
-.cssmenu,
-.cssmenu_horiz,
-.cssmenu_horiz ul,
-.cssmenu_vert,
-.cssmenu_vert ul { /* all lists */
-	padding: 0;
-	margin: 0;
-	list-style: none;
-	line-height: 1}
 
-.cssmenu_vert,
-.cssmenu_vert ul { /* all lists */
-	float: left;
-	width: 11em}
 
-/* Special case in left column (from Darkroom)
-.box-CSS_menu .cssmenu_vert,
-.box-CSS_menu .cssmenu_vert > li { width: 172px }
-
-.box-CSS_menu .cssmenu_vert li { padding:0 }
-.box-CSS_menu .cssmenu_vert > li > ul > li > ul {margin-left: 9em }
-.box-CSS_menu .cssmenu_vert > li > ul {margin-left: 172px}
-.box-CSS_menu .cssmenu_vert li:hover { background: #b2b2b2 }
-.box-CSS_menu .cssmenu_vert li:hover > a { color: #303030 }
-*/
-
-.cssmenu li,
-.cssmenu_horiz li,
-.cssmenu_vert li {
-	float: left;
-	width: 11em;  }
-
-.cssmenu li,	
-.cssmenu_vert li {
-	position: relative;
-	line-height: 1.25em;
-	margin-bottom: -1px}
-
-.cssmenu > li {background: url(../lib/phplayers/images/down-galaxy.png) 100% 70% no-repeat}
-	
 .cssmenu_horiz li:hover,
-.cssmenu_vert li:hover {background: #dedede}
+.cssmenu_vert li:hover {background: #1b3a50}
 
 .cssmenu ul,
 .cssmenu_vert li ul,
 .cssmenu_horiz li ul {
-	position: absolute;
-	left: -999em;
-	width: 11em}
+	border: 1px solid #08698f;
+	background: #1b3a50}
 	
 .cssmenu_vert li ul { /* second-level lists */
 	margin-left: 11.05em;
 	margin-top: -1.35em;
 	padding-bottom: 1px; /*enable border to show */}
 
-.cssmenu li ul ul {left: -999em}
-.cssmenu_horiz li ul ul {margin: -1em 0 0 10em}
-
-.cssmenu li:hover ul ul,
-.cssmenu li:hover ul ul ul,
-.cssmenu_horiz li:hover ul ul,
-.cssmenu_horiz li:hover ul ul ul,
-.cssmenu_vert li:hover ul ul,
-.cssmenu_vert li:hover ul ul ul,
-.cssmenu li.sfhover ul ul,
-.cssmenu li.sfhover ul ul ul,
-.cssmenu_horiz li.sfhover ul ul,
-.cssmenu_horiz li.sfhover ul ul ul,
-.cssmenu_vert li.sfhover ul ul,
-.cssmenu_vert li.sfhover ul ul ul {left: -999em}
-
-.cssmenu li:hover ul,
-.cssmenu li li:hover ul,
-.cssmenu li li li:hover ul,
-.cssmenu_horiz li:hover ul,
-.cssmenu_horiz li li:hover ul,
-.cssmenu_horiz li li li:hover ul,
-.cssmenu_vert li:hover ul,
-.cssmenu_vert li li:hover ul,
-.cssmenu_vert li li li:hover ul,
-.cssmenu li.sfhover ul,
-.cssmenu li li.sfhover ul,
-.cssmenu li li li.sfhover ul,
-.cssmenu_horiz li.sfhover ul,
-.cssmenu_horiz li li.sfhover ul,
-.cssmenu_horiz li li li.sfhover ul,
-.cssmenu_vert li.sfhover ul,
-.cssmenu_vert li li.sfhover ul,
-.cssmenu_vert li li li.sfhover ul {
-	left: auto;
-	border: 1px solid #acccdd;
-	background: white;}
-
-.cssmenu li.selected,
-.cssmenu_horiz li.selected,
-.cssmenu_vert li.selected {background: #D3D3D3}
-
-.cssmenu li.selectedAscendant,
-.cssmenu_horiz li.selectedAscendant,
-.cssmenu_vert li.selectedAscendant {background: #E6E6E6}
-	
 .cssmenu a,	
 .cssmenu_horiz a,
 .cssmenu_vert a {
@@ -817,16 +716,6 @@ a.phplmselected:hover {color: #808080}
 .cssmenu_vert a {
 	padding: 0 0.5em}
 
-.cssmenu a:hover,
-.cssmenu_vert a:hover,	
-.cssmenu_horiz a:hover {color: #000000}
-
-.cssmenu_vert .menuSection > a,
-.cssmenu_vert .menuSection > a:hover,
-.menuSection1 > a,
-.menuSection2 > a,
-.menuSection3 > a {background: url(../lib/phplayers/images/forward-galaxy.png) 80% center no-repeat}
-
 .cssmenu_horiz .menuSection0 > a {background: url(../lib/phplayers/images/down-galaxy.png)  85% 65% no-repeat}
 
 div.box-CSS_menu {overflow: visible !important}
@@ -836,24 +725,13 @@ div.box-CSS_menu {overflow: visible !important}
 	z-index: 2000;
 	position: relative}
 
-#tiki-top > .cssmenu_horiz {}
+#tiki-top .cssmenu_horiz {text-align: left; float: right; margin-right: 100px}
 #tiki-top > .cssmenu_horiz > li {}
 #tiki-top > .cssmenu_horiz > li > a {}
 #tiki-top > .cssmenu_horiz > li > a:hover {}
 #tiki-top .cssmenu_horiz li:hover {}
 #tiki-top ul.cssmenu_horiz li ul a {}
 #tiki-top .cssmenu_horiz ul li a:hover {}
-
-.pageactions .cssmenu > li {}
-.pageactions .cssmenu li ul * {}
-.pageactions .cssmenu li:hover ul {}
-.pageactions .cssmenu li ul {}
-.pageactions .cssmenu li ul ul {}
-.pageactions .cssmenu li:hover ul li:hover {}
-.pageactions .cssmenu li a {}
-.pageactions .cssmenu li ul ul {}
-.pageactions .cssmenu li.selected > a {}
-.pageactions .cssmenu li.selectedAscendant > a {}
 
 /** Links in other menus **/
 div.separator {
@@ -1095,8 +973,7 @@ h3.box-title {
 	padding-top: 4px;
 	padding-left: 10px}
 	
-#col3 .box-title {
-	}
+#col2 .box-title {margin-top: 0; margin-bottom: 0}
 
 .box-title a,
 .box-title a:link {  }
