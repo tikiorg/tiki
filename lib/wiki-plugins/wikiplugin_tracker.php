@@ -119,7 +119,7 @@ function wikiplugin_tracker_name($fieldId, $name, $field_errors) {
 	return $name;
 }
 function wikiplugin_tracker($data, $params) {
-	global $tikilib, $userlib, $dbTiki, $user, $group, $page, $tiki_p_admin, $tiki_p_create_tracker_items, $smarty, $prefs, $trklib, $tiki_p_tracker_vote_ratings, $tiki_p_wiki_admin_attachments, $tiki_p_admin_trackers;
+	global $tikilib, $userlib, $dbTiki, $user, $group, $page, $tiki_p_admin_trackers, $smarty, $prefs, $trklib;
 	include_once('lib/trackers/trackerlib.php');
 	
 	//var_dump($_REQUEST);
@@ -223,7 +223,7 @@ function wikiplugin_tracker($data, $params) {
 
 	if (isset($_REQUEST['removeattach']) && $tracker['useAttachments'] == 'y') {
 		$owner = $trklib->get_item_attachment_owner($_REQUEST['removeattach']);
-		if ($tiki_p_wiki_admin_attachments == 'y' || ($user && $user == $owner)) {
+		if ($perms['tiki_p_admin_trackers'] == 'y' || ($user && $user == $owner)) {
 			$trklib->remove_item_attachment($_REQUEST["removeattach"]);
 			unset($_REQUEST['removeattach']);
 		}
@@ -269,7 +269,7 @@ function wikiplugin_tracker($data, $params) {
 						} else {
 							$newItemRate = NULL;
 						}
-					} elseif (($flds['data'][$cpt]['type'] == 'u' || $flds['data'][$cpt]['type'] == 'g' || $flds['data'][$cpt]['type'] == 'I' || $flds['data'][$cpt]['type'] == 'k') && ($flds['data'][$cpt]['options_array'][0] == '1' || $flds['data'][$cpt]['options_array'][0] == '2') && $tiki_p_admin_trackers != 'y' && empty($_REQUEST['track'][$fl['fieldId']])) {
+					} elseif (($flds['data'][$cpt]['type'] == 'u' || $flds['data'][$cpt]['type'] == 'g' || $flds['data'][$cpt]['type'] == 'I' || $flds['data'][$cpt]['type'] == 'k') && ($flds['data'][$cpt]['options_array'][0] == '1' || $flds['data'][$cpt]['options_array'][0] == '2') && $perms['tiki_p_admin_trackers'] != 'y' && empty($_REQUEST['track'][$fl['fieldId']])) {
 						if (empty($itemId) && ($flds['data'][$cpt]['options_array'][0] == '1' || $flds['data'][$cpt]['options_array'][0] == '2')) {
 							if ($flds['data'][$cpt]['type'] == 'u')
 								$_REQUEST['track'][$fl['fieldId']] = empty($user)?(empty($_REQUEST['name'])? '':$_REQUEST['name']):$user;
@@ -601,6 +601,7 @@ function wikiplugin_tracker($data, $params) {
 			}
 			if (!empty($page))
 				$back .= '~np~';
+			$smarty->assign_by_ref('tiki_p_admin_trackers', $perms['tiki_p_admin_trackers']);
 			$back.= '<form enctype="multipart/form-data" method="post"><input type="hidden" name="trackit" value="'.$trackerId.'" />';
 			if (isset($fields))
 				$back .= '<input type="hidden" name="fields" value="'.$params['fields'].'" />';//if plugin inserted twice with the same trackerId
@@ -656,7 +657,7 @@ function wikiplugin_tracker($data, $params) {
 					if ($f['isHidden'] == 'c' && !empty($itemId) && !isset($item['creator'])) {
 						$item['creator'] = $trklib->get_item_creator($trackerId, $itemId);
 					}
-					if ($f['type'] == 's' && ($f['name'] == 'Rating' || $f['name'] == tra('Rating')) && $tiki_p_tracker_vote_ratings == 'y' && isset($item)) {
+					if ($f['type'] == 's' && ($f['name'] == 'Rating' || $f['name'] == tra('Rating')) && $perms['tiki_p_tracker_vote_ratings'] == 'y' && isset($item)) {
 						$item['my_rate'] = $tikilib->get_user_vote("tracker$trackerId.$itemId", $user);
 					}
 					if ($f['isMultilingual'] == 'y') {
@@ -679,10 +680,10 @@ function wikiplugin_tracker($data, $params) {
 							array_multisort($flagsTranslated, $flds['data'][$i]['flags']);
 						}
 					} elseif ($f['type'] == 'u') {
-						if ($tiki_p_admin_trackers == 'y' || ($f['options_array'][0] != 1 && $f['options_array'][0] != 2))
+						if ($perms['tiki_p_admin_trackers'] == 'y' || ($f['options_array'][0] != 1 && $f['options_array'][0] != 2))
 							$flds['data'][$i]['list'] = $userlib->list_all_users();
 					} elseif ($f['type'] == 'g') {
-						if ($tiki_p_admin == 'y' || $f['options_array'][0] != 1 && $f['options_array'][0] != 2)
+						if ($perms['tiki_p_admin_trackers'] == 'y' || $f['options_array'][0] != 1 && $f['options_array'][0] != 2)
 							$flds['data'][$i]['list'] = $userlib->list_all_groups();
 					} elseif ($f['type'] == 'e') {
 						global $categlib; include_once('lib/categories/categlib.php');
@@ -801,6 +802,7 @@ function wikiplugin_tracker($data, $params) {
 			$back.= '</form>';
 			if (!empty($page))
 				$back .= '~/np~';
+			$smarty->assign_by_ref('tiki_p_admin_trackers', $tiki_p_admin_trackers);
 		return $back;
 	}
 	else {
