@@ -132,7 +132,7 @@ if (isset($_REQUEST['mvimg']) && isset($_REQUEST['move_gallery'])) {
 	$smarty->assign('scaleSize', $_REQUEST['scaleSize']);
 
 if($imagegallib->havegd) {
-	$gdlib=tra('Detected, Version:').' '.$imagegallib->gdversion.' '.tra('<img src=testGD.php alt="Cannot Initialize new GD image stream">'); 
+	$gdlib=tra('Detected, Version:').' '.$imagegallib->gdversion.' ('.tra('Test Image').': <img src="testGD.php" alt="" />)'; 
         
 } else {
 	$gdlib=tra('Not detected.');
