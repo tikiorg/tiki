@@ -275,7 +275,7 @@
 			{/if}
 			 {if $tikidb_created}<p style="text-align: center"><img src="img/silk/sticky.png" alt="warning" style="vertical-align:middle"/> <strong>{tr}Warning{/tr}</strong>: {tr}This will destroy your current database{/tr}.</p>{/if}			  
 			  <p>{tr}Create a new database (clean install) with profile{/tr}:</p>
-			<select name="profile" size="{if $profiles}{$profiles|@count}{else}3{/if}">
+			<select name="profile" size="{if $profiles}{$profiles|@count}{else}5{/if}">
 			<option value="" selected="selected">Bare-bones default install</option>
 			<option value="Simple_Bug_Tracker">Simple Bug Tracker</option>
 			<option value="Small_Business_Web_Presence">Small Business Web Presence</option>
@@ -385,21 +385,21 @@
 	<p>{tr}Complete these fields to configure common, general settings for your site{/tr}. {tr}The information you enter here can be changed later{/tr}.</p>
 	<p>{tr}Refer to the <a href="http://doc.tikiwiki.org/Admin+Panels" target="_blank">documentation</a> for complete information on these, and other, settings{/tr}.</p>
 	<br />
-	<fieldset><legend>{tr}General{/tr} <a href="http://doc.tikiwiki.org/general+admin&bl=y" target="_blank" title="{tr}Help{/tr}"><img src="pics/icons/help.png" alt="{tr}Help{/tr}" /></a></legend>
-<div style="padding:5px"><label for="site_title">{tr}Site title{/tr}:</label>
+	<fieldset style="width:100%"><legend>{tr}General{/tr} <a href="http://doc.tikiwiki.org/general+admin&amp;bl=y" target="_blank" title="{tr}Help{/tr}"><img src="pics/icons/help.png" alt="{tr}Help{/tr}" /></a></legend>
+<div style="padding:5px;clear:both;"><label for="site_title">{tr}Site title{/tr}:</label>
 		<div style="margin-left:1em;"><input type="text" size="40" name="site_title" id="site_title" value="Tiki {$tiki_version_name}" />
 			<br /><em>{tr}This will appear in the browser title bar{/tr}.</em></div>
 		</div>
-		<div style="padding:5px"><label for="sender_email">{tr}Sender email{/tr}:</label>
+		<div style="padding:5px;clear:both;"><label for="sender_email">{tr}Sender email{/tr}:</label>
 			<div style="margin-left:1em;"><input type="text" size="40" name="sender_email" id="sender_email" value="{$prefs.sender_email|escape}" />
 			<br /><em>{tr}Email sent by your site will use this address{/tr}.</em>
 			</div>
 		</div>
 	</fieldset>
 <br />
-	<fieldset><legend>{tr}Login{/tr} <a href="http://doc.tikiwiki.org/login+config&bl=y" target="_blank" title="{tr}Help{/tr}"><img src="pics/icons/help.png" alt="{tr}Help{/tr}" /></a></legend>
-		<div style="padding:5px"><label for="https_login">{tr}HTTPS login{/tr}:</label>
-	<select name="https_login" id="https_login">
+	<fieldset><legend>{tr}Secure Login{/tr} <a href="http://doc.tikiwiki.org/login+config&mp;bl=y" target="_blank" title="{tr}Help{/tr}"><img src="pics/icons/help.png" alt="{tr}Help{/tr}" /></a></legend>
+		<div style="padding:5px;clear:both"><label for="https_login">{tr}HTTPS login{/tr}:</label>
+	<select name="https_login" id="https_login" onchange="hidedisabled('httpsoptions',this.value);">
 		<option value="disabled"{if $prefs.https_login eq 'disabled'} selected="selected"{/if}>{tr}Disabled{/tr}</option>
 		<option value="allowed"{if $prefs.https_login eq 'allowed'} selected="selected"{/if}>{tr}Allow secure (https) login{/tr}</option>
 		<option value="encouraged"{if $prefs.https_login eq 'encouraged'} selected="selected"{/if}>{tr}Encourage secure (https) login{/tr}</option>
@@ -407,16 +407,18 @@
 		<option value="required"{if $prefs.https_login eq 'required'} selected="selected"{/if}>{tr}Require secure (https) login{/tr}</option>
 	</select>
 		</div>
+<div id="httpsoptions" style="display:{if $prefs.https_login eq 'disabled' or $prefs.https_login eq ''}none{else}block{/if};">
 		<div style="padding:5px">
 			<label for="https_port">{tr}HTTPS port{/tr}:</label> <input type="text" name="https_port" id="https_port" size="5" value="{$prefs.https_port|escape}" />
 		</div>
-<div style="padding:5px">
+<div style="padding:5px;clear:both">
 	<div style="float:left"><input type="checkbox" id="feature_show_stay_in_ssl_mode" name="feature_show_stay_in_ssl_mode" {if $prefs.feature_show_stay_in_ssl_mode eq 'y'}checked="checked"{/if}/></div>
 	<div style="margin-left:20px;"><label for="feature_show_stay_in_ssl_mode"> {tr}Users can choose to stay in SSL mode after an HTTPS login{/tr}.</label></div>
 </div>
-<div style="padding:5px">
+<div style="padding:5px;clear:both">
 	<div style="float:left"><input type="checkbox" id="feature_switch_ssl_mode" name="feature_switch_ssl_mode" {if $prefs.feature_switch_ssl_mode eq 'y'}checked="checked"{/if}/></div>
 	<div style="margin-left:20px;"><label for="feature_switch_ssl_mode">{tr}Users can switch between secured or standard mode at login{/tr}.</label></div>
+</div>
 </div>
 </fieldset>
 <br />
@@ -429,6 +431,7 @@
 {*
 others?
 *}
+
 </div>
 
 <div align="center" style="margin-top:1em;">
