@@ -720,6 +720,7 @@ a.phplmselected:hover {
 .cssmenu_horiz .option1 {border-left: solid 1px #aaa}
 
 #tiki-top .cssmenu_horiz {
+	float: left;
 	margin-left: 9px
 }
 
