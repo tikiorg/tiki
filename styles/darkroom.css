@@ -466,7 +466,8 @@ ul#cssmenu li a:visited,
 	position: relative;
 	display: block}
 
-ul.cssmenu_vert {width: 172px}
+ul.cssmenu_vert {width: 172px;}
+ul.cssmenu_vert li {line-height: 30px;}
 
 .cssmenu li,
 .cssmenu a,
@@ -498,11 +499,6 @@ li.menuSection:hover a {color: #F5F5F5;}
 .cssmenu_horiz li.selectedAscendant > a,
 .cssmenu_horiz li.selected > a,
 .cssmenu_horiz li a:hover{text-decoration:none; background: #909090; }
-.cssmenu_horiz li.menuSection0{background: #3B3B3B url(darkroom/down.png) no-repeat 96% 50%;}
-.cssmenu_horiz li.menuSection1,
-.cssmenu_horiz li.menuSection2,
-.cssmenu_horiz li.menuSection3
-{background: url(darkroom/right.png) no-repeat 96% 50%;}
 
 /* These override css/cssmenu_vert.css */
 .cssmenu_vert li a,
