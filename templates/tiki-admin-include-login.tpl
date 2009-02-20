@@ -138,8 +138,13 @@ name="eponymousGroups" {if $prefs.eponymousGroups eq 'y'}checked="checked"{/if}/
 <option value="disabled" {if $prefs.rememberme eq 'disabled'}selected="selected"{/if}>{tr}Disabled{/tr}</option>
 <option value="all" {if $prefs.rememberme eq 'all'} selected="selected"{/if}>{tr}User's choice{/tr}</option>
 <option value="always" {if $prefs.rememberme eq 'always'} selected="selected"{/if}>{tr}Always{/tr}</option>
-</select><br />
-{tr}Duration:{/tr}
+</select></td></tr>
+<tr><td class="form">{tr}Remember me method{/tr}:</td><td class="form">
+<select name="remembermethod">
+<option value="" {if $prefs.remembermethod eq ''}selected="selected"{/if}>{tr}Standard{/tr}</option>
+<option value="simple" {if $prefs.remembermethod eq 'simple'} selected="selected"{/if}>{tr}Simple{/tr}</option>
+</select><br /><i>{tr}"Standard" method uses the client's IP to remember, "Simple" uses a unique ID so is more reliable but may not be as secure{/tr}</i></td></tr>
+<tr><td class="form">{tr}Remember me duration:{/tr}</td><td class="form">
 <select name="remembertime">
 <option value="300" {if $prefs.remembertime eq 300} selected="selected"{/if}>5 {tr}minutes{/tr}</option>
 <option value="900" {if $prefs.remembertime eq 900} selected="selected"{/if}>15 {tr}minutes{/tr}</option>
