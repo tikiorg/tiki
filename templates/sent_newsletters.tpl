@@ -18,7 +18,6 @@
 
 	<table class="normal">
 		<tr>
-			<th>&nbsp;</th>
 			<th>
 				<a href="{$url}?nlId={$nlId}&amp;{$cur}_offset={$offset}&amp;{$bak}_offset={$offset_bak}&amp;{$cur}_sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}&amp;{$bak}_sort_mode={$sort_mode_bak}&amp;cookietab={$tab}">{tr}Newsletter{/tr}</a>
 			</th>
@@ -39,13 +38,6 @@
 		{cycle values="odd,even" print=false}
 		{section name=user loop=$channels}
 			<tr>
-				<td class="{cycle advance=false}">
-					{if $channels[user].tiki_p_admin_newsletters eq 'y'}
-						<a class="link" href="{$url}?nlId={$channels[user].nlId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;nlId={$channels[user].nlId}&amp;remove={$channels[user].editionId}" title="{tr}Remove{/tr}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
-					{else}
-						&nbsp;
-					{/if}
-				</td>
 				<td class="{cycle advance=false}">{$channels[user].name}</td>
 				<td class="{cycle advance=false}">{$channels[user].subject}</td>
 				{if $view_editions eq 'y'}
@@ -62,14 +54,17 @@
 				<td class="{cycle}">
 					{if $url == "tiki-newsletter_archives.php"}
 						<a class="link" href="{$url}?{if $nl_info}nlId={$channels[user].nlId}&amp;{/if}offset={$offset}&amp;sort_mode={$sort_mode}&amp;editionId={$channels[user].editionId}">{tr}View{/tr}</a>
-						&nbsp;
 					{/if}
 					{if ($channels[user].tiki_p_send_newsletters eq 'y') or ($channels[user].tiki_p_admin_newsletters eq 'y') }
-						<a class="link" href="tiki-send_newsletters.php?nlId={$channels[user].nlId}&amp;editionId={$channels[user].editionId}">{tr}Use{/tr}
+						<a class="link" href="tiki-send_newsletters.php?nlId={$channels[user].nlId}&amp;editionId={$channels[user].editionId}">{icon _id='email' alt="{tr}Send Newsletter{/tr}"}</a>
 					{else}
 						&nbsp;
 					{/if}
-					</a>
+					{if $channels[user].tiki_p_admin_newsletters eq 'y'}
+						<a class="link" href="{$url}?nlId={$channels[user].nlId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].editionId}" title="{tr}Remove{/tr}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
+					{else}
+						&nbsp;
+					{/if}
 				</td>
 			</tr>
 		{/section}

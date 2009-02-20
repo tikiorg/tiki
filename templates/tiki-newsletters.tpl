@@ -76,10 +76,7 @@
 	<table class="normal">
 		<tr>
 			<th>
-				<a href="tiki-admin_newsletters.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a>
-			</th>
-			<th>
-				<a href="tiki-admin_newsletters.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}Description{/tr}</a>
+				<a href="tiki-admin_newsletters.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Newsletter{/tr}</a>
 			</th>
 			<th style="width:80px">&nbsp;</th>
 		</tr>
@@ -89,8 +86,8 @@
 				<tr class="{cycle}">
 					<td>
 						<a class="tablename" href="tiki-newsletters.php?nlId={$channels[user].nlId}&amp;info=1" title="{tr}Subscribe to Newsletter{/tr}">{$channels[user].name}</a>
+						<div class="subcomment">{$channels[user].description|escape|nl2br}</div>
 					</td>
-					<td>{$channels[user].description|escape|nl2br}</td>
 					<td>
 						{if $channels[user].tiki_p_subscribe_newsletters eq 'y'}
 							<a class="link" href="tiki-newsletters.php?nlId={$channels[user].nlId}&amp;info=1" title="{tr}Subscribe to Newsletter{/tr}">{icon _id='group' alt='{tr}Subscribe to Newsletter{/tr}'}</a>
