@@ -1709,3 +1709,14 @@ function pollsToggleQuickOptions()
 	else $( 'tikiPollsQuickOptions' ).setStyle( 'display', 'none' );
 }
 
+/**
+* toggles div for droplist with Disabled option
+*/
+
+function hidedisabled(divid,value) {
+	if(value=='disabled') {
+	document.getElementById(divid).style.display = 'none';
+	} else {
+	document.getElementById(divid).style.display = 'block';
+	}
+}
