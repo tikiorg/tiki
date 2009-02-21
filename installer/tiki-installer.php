@@ -35,9 +35,9 @@ if (empty($_REQUEST['install_step'])) {
 
 
 if (!empty($_REQUEST['lang'])) {
-	$language = $prefs['language'] = $_REQUEST['lang'];
+	$language = $prefs['site_language'] = $prefs['language'] = $_REQUEST['lang'];
 } else {
-	$language = $prefs['language'] = 'en';
+	$language = $prefs['site_language'] = $prefs['language'] = 'en';
 }
 include_once('lib/init/tra.php');
 
@@ -569,6 +569,12 @@ define('ADODB_ASSOC_CASE', 2);
 define('ADODB_CASE_ASSOC', 2); // typo in adodb's driver for sybase?
 include_once ('lib/adodb/adodb.inc.php');
 
+include('lib/tikilib.php');
+// Get list of available languages
+$languages = array();
+$languages = TikiLib::list_languages(false,null,true);
+$smarty->assign_by_ref("languages", $languages);
+
 // next block checks if there is a local.php and if we can connect through this.
 // sets $dbcon to false if there is no valid local.php
 if (!file_exists($local)) {
@@ -794,6 +800,7 @@ $smarty->assign_by_ref('headerlib',$headerlib);
 
 $smarty->assign('install_step', $install_step);
 $smarty->assign('install_type', $install_type);
+$smarty->assign_by_ref('prefs', $prefs);
 
 
 $mid_data = $smarty->fetch('tiki-install.tpl');

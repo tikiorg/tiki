@@ -1,11 +1,9 @@
 <div id="siteheader" class="clearfix">
 	<div id="header-top">
-		<div id="sitelogo" style="text-align: center; padding-left: 70px;"><img style="border: medium none ;" alt="{tr}TikiWiki CMS/Groupware{/tr}" src="img/tiki/tiki3.png" /></div>
+		<div id="sitelogo" style="padding-left: 70px;"><h1><img style="border: medium none ; vertical-align: middle;" alt="{tr}TikiWiki CMS/Groupware{/tr}" src="img/tiki/tiki3.png" />
+	<span style="vertical-align: middle">{tr}Tiki installer{/tr} v{$tiki_version_name} <a title='help' href='http://doc.tikiwiki.org/Installation' target="help"><img style="border: 0" src='img/icons/help.gif' alt="{tr}Help{/tr}" /></a></span></h1>
 	</div>
-</div>
-
-<div id="tiki-top" class="clearfix">
-	<h1>{tr}Tiki installer{/tr} v{$tiki_version_name} <a title='help' href='http://doc.tikiwiki.org/Installation' target="help"><img style="border: 0" src='img/icons/help.gif' alt="{tr}Help{/tr}" /></a></h1>
+	</div>
 </div>
 
 <div id="middle" class="clearfix">
@@ -25,11 +23,16 @@
 		<li>{tr}For complete documentation, please visit{/tr} <a href="http://doc.tikiwiki.org" target="_blank">http://doc.tikiwiki.org</a>.</li>
 		<li>{tr}For more information about TikiWiki, please visit{/tr} <a href="http://www.tikiwiki.org" target="_blank">http://www.tikiwiki.org</a>.</li>
 	</ul>
-	<p><img src="pics/icons/information.png" style="vertical-align:middle" alt="{tr}Information{/tr}" /> {tr}To run this installer in your language, use <strong>tiki-install.php?lang=XX</strong> where <strong>XX</strong> is the two-letter code for your language{/tr}.</p>
 
-{* not working?
-{include file="modules/mod-switch_lang.tpl"}
-*}
+		<form action="tiki-install.php" method="get">
+        {tr}Select your language:{/tr}<select name="lang" id="general-lang" onchange="javascript:submit()">
+          {section name=ix loop=$languages}
+          <option value="{$languages[ix].value|escape}"
+          {if $prefs.site_language eq $languages[ix].value}selected="selected"{/if}>{$languages[ix].name}</option>
+          {/section}
+        </select>
+		</form>
+
 
 </div>
 <div align="center" style="margin-top:1em;">
@@ -63,26 +66,26 @@
 	<p>{tr}This installer will perform some basic checks automatically{/tr}.</p>
 	<br />
 	<h2>{tr}Memory{/tr}</h2>
-	<p>{tr}TikiWiki requires <strong>at least</strong> 32MB of PHP memory for script execution{/tr}. {tr}Allocating too little memory will cause TikiWiki to display blank pages{/tr}.</p>
 {if $php_memory_limit <= 0}
 	<div style="border: solid 1px #000; padding: 5px; background: #a9ff9b;">
 		<p align="center"><img src="pics/icons/accept.png" alt="{tr}Success{/tr}" style="vertical-align:middle"/> {tr}Tiki has not detected your PHP memory_limit{/tr}. {tr}This probably means you have no set limit (all is well){/tr}. </p>
 	</div>	
-{elseif $php_memory_limit <= 32 * 1024 * 1024}
+{elseif $php_memory_limit < 32 * 1024 * 1024}
 	<div style="border-style: solid; border-width: 1; padding: 5px; background: #FF0000">
 		<p align="center"><img src="pics/icons/delete.png" alt="{tr}alert{/tr}" style="vertical-align:middle" /> {tr}Tiki has detected your PHP memory limit at{/tr}: {$php_memory_limit|kbsize:true:0}</p>
 	</div>
+	<p>{tr}TikiWiki requires <strong>at least</strong> 32MB of PHP memory for script execution{/tr}. {tr}Allocating too little memory will cause TikiWiki to display blank pages{/tr}.</p>
+	<p>{tr}To change the memory limit, use the <strong>memory_limit</strong> key in your <strong>php.ini </strong> file (for example: memory_limit = 32M) and restart your webserver{/tr}.</p>
+
 {else}
-	<div style="border: solid 1px #000; padding: 4px">
+	<div style="border: solid 1px #000; padding: 4px; background-color: #a9ff9b;">
 		<p align="center">
 		  <span style="font-size: large; padding: 4px;">
-		  {tr}Tiki has detected your PHP memory_limit at{/tr}: {$php_memory_limit|kbsize:true:0}. 
+		  <img src="pics/icons/accept.png" alt="{tr}Success{/tr}" style="vertical-align:middle"/> {tr}Tiki has detected your PHP memory_limit at{/tr}: {$php_memory_limit|kbsize:true:0}. 
 		  </span>
 		</p>
 	</div>	
 {/if}			
-	<p>{tr}To change the memory limit, use the <strong>memory_limit</strong> key in your <strong>php.ini </strong> file (for example: memory_limit = 32M) and restart your webserver{/tr}.</p>
-
 {* how to test?
 	<br />
 	<h2>TMP Directory</h2>
@@ -120,7 +123,6 @@
 {/if}
 	<br />
 	<h2>{tr}Image Processing{/tr}</h2>
-	<p>{tr}TikiWiki uses the GD library to process images for the Image Gallery and CAPTCHA support{/tr}.</p>
 {if $gd_test eq 'y'}
 	<div style="border: solid 1px #000; padding: 5px; background: #a9ff9b;">
 		<p align="center"><img src="pics/icons/accept.png" alt="{tr}Success{/tr}" style="vertical-align:middle"/> {tr}Tiki detected{/tr} GD {$gd_info}.</p>
@@ -131,6 +133,7 @@
 	</div>
 	<p>&nbsp;</p>
 {/if}
+	<p>{tr}TikiWiki uses the GD library to process images for the Image Gallery and CAPTCHA support{/tr}.</p>
 </div>
 
 <div align="center" style="margin-top:1em;">
@@ -397,7 +400,7 @@
 		</div>
 	</fieldset>
 <br />
-	<fieldset><legend>{tr}Secure Login{/tr} <a href="http://doc.tikiwiki.org/login+config&mp;bl=y" target="_blank" title="{tr}Help{/tr}"><img src="pics/icons/help.png" alt="{tr}Help{/tr}" /></a></legend>
+	<fieldset><legend>{tr}Secure Login{/tr} <a href="http://doc.tikiwiki.org/login+config&amp;bl=y" target="_blank" title="{tr}Help{/tr}"><img src="pics/icons/help.png" alt="{tr}Help{/tr}" /></a></legend>
 		<div style="padding:5px;clear:both"><label for="https_login">{tr}HTTPS login{/tr}:</label>
 	<select name="https_login" id="https_login" onchange="hidedisabled('httpsoptions',this.value);">
 		<option value="disabled"{if $prefs.https_login eq 'disabled'} selected="selected"{/if}>{tr}Disabled{/tr}</option>
