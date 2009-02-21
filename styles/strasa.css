@@ -205,7 +205,7 @@ ul.jumplinks a:active {
 	position: absolute;
 	top: 9010px;
 	left: 9010px;
-	background: #ccedff;
+	background: #cce5ff;
 	color: #006699;
 	padding: 5px;
 	font-weight: bold;
@@ -697,7 +697,7 @@ a.phplmselected:hover {color: #808080}
 	padding-bottom: 1px; /*enable border to show */}
 	
 .cssmenu_vert li ul {
-	background: #ccedff;
+	background: #cce5ff;
 	border: 1px solid #233039}
 	
 .cssmenu_horiz li:hover {background: #1b3a50}
@@ -955,7 +955,7 @@ ul.categories li {
 div.box {
 	overflow: hidden}
 	
-#col2 .box {background: #ccedff}
+#col2 .box {background: #cce5ff}
 
 #col3 .box {
 	border-bottom: 1px solid #cfcfcf;
@@ -1026,7 +1026,7 @@ div.cbox {border: 1px solid #1b3a50}
 	text-align: left}
 
 .rbox-title {
-	background-color: #ccedff;
+	background-color: #cce5ff;
 	border: none;
 	float: left;
 	font-size: 1em;
@@ -1038,7 +1038,7 @@ div.cbox {border: 1px solid #1b3a50}
 
 .rbox-data {
 	background-color: #fff;
-	border: solid 1px #ccedff;
+	border: solid 1px #cce5ff;
 	clear: left;
 	margin: 0;
 	padding: 6px 2px 2px 2px}
@@ -1176,7 +1176,7 @@ a.forumnameread { color: #006699}
 	font-size: 85%;
 	background: #1d9ccf;
 	border: 1px solid;
-	border-color: #41cbe7 #223845 #ccedff #41cbe7;
+	border-color: #41cbe7 #223845 #cce5ff #41cbe7;
 	margin: 0;
 	margin-right: 5px;
 	padding: 2px 0}
@@ -1207,7 +1207,7 @@ a.forumnameread { color: #006699}
 [class].tabactive {bottom: 1px}
 
 .tabactive a {
-	background: #ccedff;
+	background: #cce5ff;
 	color: #077aa7}
 
 .tabinactive {
@@ -1224,7 +1224,7 @@ a.forumnameread { color: #006699}
 	padding: 32px 2px 2px 2px;
 	margin: 5px;
 	margin-top: 0;
-	background: #ccedff;
+	background: #cce5ff;
 	border-top: 0}
 
 .tabcontent table {
@@ -1751,7 +1751,7 @@ body.tiki_forums table.normal {margin: auto}
 
 .post .contribution {
 	background: #F0F8FF;
-	border: 1px solid #ccedff;
+	border: 1px solid #cce5ff;
 	padding: 0 2px}
 
 .post .avatar {
@@ -1771,7 +1771,7 @@ body.tiki_forums table.normal {margin: auto}
 .forum_actions .actions {
 	clear: both;
 	border: 0;
-	background: #ccedff;
+	background: #cce5ff;
 	padding: 3px;
 	vertical-align: middle}
 
@@ -2154,7 +2154,7 @@ div.multiselect {
 .Caltrack:before,
 .Calwiki:before {background: #f8f8ff}
 
-.calfocus {font-size: 90%; background: #ccedff}
+.calfocus {font-size: 90%; background: #cce5ff}
 .calfocuson {font-size: 90%}
 
 .calprio1 a,
@@ -2312,10 +2312,10 @@ div.multiselect {
 
 .calinput {background: #223845}
 .calfocuson + .calcontent { background: #F5F5F5}
-.days {color: #ccedff}
+.days {color: #cce5ff}
 #caltable .weeks {
 	background: #1b3a50;
-	color: #ccedff}
+	color: #cce5ff}
 
 .addevent {padding: 0 5px; float: right}
 * html .addevent {padding: 0}
@@ -2513,7 +2513,7 @@ table.default tfoot td {
 	font-weight: bold;
 	text-align:	center;
 	background: #223845;
-	color: #ccedff}
+	color: #cce5ff}
 
 table.default td {
 	border: solid 1px #A9A9A9;
