@@ -426,8 +426,6 @@ a.flip img {display: none}
 	text-decoration: none;
 	padding: 4px 2px 4px 7px}
 
-/* .mdkverbar {} */
-
 .mdksubmenu {
 	z-index: 999;
 	position: absolute;
@@ -449,14 +447,11 @@ a.flip img {display: none}
 	position: relative;
 	text-align: left;
 	white-space: nowrap;
-	/*width: 125px;*/
 	font-size: 1em}
 
-ul#cssmenu li a,
 .horbaritem a,
 .mdkverbar a,
 .mdkitem a,
-ul#cssmenu li a:visited,
 .horbaritem a:visited,
 .mdkverbar a:visited,
 .mdkitem a:visited  {
@@ -465,63 +460,6 @@ ul#cssmenu li a:visited,
 	padding: 5px 2px 5px 8px;
 	position: relative;
 	display: block}
-
-ul.cssmenu_vert {width: 172px;}
-ul.cssmenu_vert li {line-height: 30px;}
-
-.cssmenu li,
-.cssmenu a,
-.cssmenu h2,
-li.menuoption {
-	background: #474747;
-	border: none}
-
-.cssmenu ul li ul {border: 1px solid #6A6A6A}
-
-.cssmenu a,
-.cssmenu a:visited,
-.cssmenu h2 {
-	background: #474747;
-	color: #A6A68D;
-	border: none;
-	text-decoration: none}
-
-.cssmenu a:hover,
-.cssmenu h2:hover,
-li.menuSection:hover a {color: #F5F5F5;}
-
-.cssmenu_horiz li { border-bottom:0;background-color: #3B3B3B;}
-.cssmenu_horiz li a {
-	border-bottom: 1px solid transparent;
-	border-right: 1px solid #6A6A6A;
-	padding: 6px;
-}
-.cssmenu_horiz li.selectedAscendant > a,
-.cssmenu_horiz li.selected > a,
-.cssmenu_horiz li a:hover{text-decoration:none; background: #909090; }
-
-/* These override css/cssmenu_vert.css */
-.cssmenu_vert li a,
-.cssmenu_vert a:visited {
-	background: #474747;
-	border: none;
-	padding: 0}
-
-#cssmenu_vert li ul {
-	background: #474747;
-	margin-left: 174px}
-
-.cssmenu_vert,
-.cssmenu_vert ul,
-.cssmenu_vert li ul {
-	width: 184px;
-	background: #474747}
-
-.cssmenu_vert li ul li ul,
-.cssmenu_vert li ul {
-	margin-left: 114px;
-	padding-left: 0;
-	width: 11em}
 
 .mdksubframe .mdkitem a:hover {
 	text-decoration: none;
@@ -556,7 +494,7 @@ a.phplm:active {
 	color: #F5F5F5;
 	text-decoration: none;
 	font-weight: normal;
-	background: #999/*#3F3F3F*/}
+	background: #999}
 
 td.phplmnormal {background: #999}
 a.phplm:visited {color: #F5F5F5}
@@ -579,7 +517,7 @@ a.phplmselected:active {
 a.phplmselected:hover {color: #AAAAAA}
 
 /** CSS (suckerfish) menus **/
-	
+
 .cssmenu li,
 .cssmenu_horiz li,
 .cssmenu_vert li,
@@ -591,19 +529,13 @@ a.phplmselected:hover {color: #AAAAAA}
 	width: 172px;
 	padding: 0 !important}
 
-#col2 .cssmenu_vert li { padding:0 }
-/*#col2 .cssmenu_vert > li > ul > li > ul {margin-left: 9em }
-.cssmenu ul,
-.cssmenu_vert li ul,
-.cssmenu_horiz li ul {width: 9em}*/
+#col2 .cssmenu_vert li {padding: 0}
 
 .cssmenu_vert li ul { 
-	/*margin-left: 9em;*/
 	margin-top: -1.35em;
 	padding-bottom: 1px;}
 
 #col2 .cssmenu_vert > li > ul {margin-left: 172px}
-/*.cssmenu_horiz li ul ul {margin: -1em 0 0 9em}*/
 
 .cssmenu li ul,
 .cssmenu_horiz li ul,
@@ -632,6 +564,8 @@ a.phplmselected:hover {color: #AAAAAA}
 .cssmenu_horiz li.sfhover,
 .cssmenu_vert li.sfhover {background: #b2b2b2}
 
+.cssmenu_vert li:hover {background: #b2b2b2}
+
 .cssmenu li:hover > a,
 .cssmenu_horiz li:hover > a,
 .cssmenu_vert li:hover > a {color: #303030}
@@ -654,7 +588,6 @@ a.phplmselected:hover {color: #AAAAAA}
 	
 * html #tiki-top .cssmenu_horiz li {background: transparent}
 * html #tiki-top .cssmenu_horiz li ul li {background: #999}
-
 
 /** Links in other menus **/
  
