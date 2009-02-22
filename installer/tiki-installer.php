@@ -30,9 +30,8 @@ ini_set('magic_quotes_runtime',0);
 // Which step of the installer
 if (empty($_REQUEST['install_step'])) {
 	$install_step = '0'; } else {
-	$install_step = ($_REQUEST['install_step']); } 
-
-
+	$install_step = ($_REQUEST['install_step']);
+} 
 
 if (!empty($_REQUEST['lang'])) {
 	$language = $prefs['site_language'] = $prefs['language'] = $_REQUEST['lang'];
@@ -783,6 +782,15 @@ if ($install_step == '2') {
 		$gd_test = 'n'; }
 	$smarty->assign('gd_test', $gd_test);
 	
+}
+
+// Preference settings
+// just after DB initialization or DB update
+if ( $install_step == '5' && isset($dbTiki) && is_object($dbTiki) ) {
+    require_once 'lib/tikilib.php';
+    $tikilib = new TikiLib( $dbTiki );
+		$tikilib->set_preference("language",$language);
+		$tikilib->set_preference("site_language",$language);
 }
 
 // write general settings

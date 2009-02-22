@@ -24,16 +24,17 @@
 		<li>{tr}For more information about TikiWiki, please visit{/tr} <a href="http://www.tikiwiki.org" target="_blank">http://www.tikiwiki.org</a>.</li>
 	</ul>
 
-		<form action="tiki-install.php" method="get">
-        {tr}Select your language:{/tr}<select name="lang" id="general-lang" onchange="javascript:submit()">
-          {section name=ix loop=$languages}
-          <option value="{$languages[ix].value|escape}"
-          {if $prefs.site_language eq $languages[ix].value}selected="selected"{/if}>{$languages[ix].name}</option>
-          {/section}
-        </select>
-		</form>
-
-
+	<form action="tiki-install.php" method="post">
+		{tr}Select your language:{/tr}
+		<select name="lang" id="general-lang" onchange="javascript:submit()">
+			{section name=ix loop=$languages}
+				<option value="{$languages[ix].value|escape}"
+					{if $prefs.site_language eq $languages[ix].value}selected="selected"{/if}>{$languages[ix].name}</option>
+			{/section}
+		</select>
+		<input type="hidden" name="install_step" value="1" />
+		{if $multi}		<input type="hidden" name="multi" value="{$multi}" />{/if}
+	</form>
 </div>
 <div align="center" style="margin-top:1em;">
 	<form action="tiki-install.php" method="post">
