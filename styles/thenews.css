@@ -683,12 +683,12 @@ a.phplmselected:hover {
 .cssmenu li ul,
 .cssmenu_vert li ul,
 .cssmenu_horiz li ul {
-	background: #fff;
-	width: auto;
-}
+	width: 9em;
+	background: #fff}
 
 [class].cssmenu_horiz li ul {
-	margin-left: -1px;
+	width: auto;
+	min-width: 9em;
 }
 
 * html div.box-CSS_menu ul {margin-left: 0}
@@ -706,18 +706,13 @@ a.phplmselected:hover {
 	display: block;
 	line-height: 1.8em;
 	padding: 3px 0 3px 6px}
-
-[class].cssmenu_horiz a {
-	min-width: 9em;
-	width: auto;
-}
 	
-.cssmenu a:hover,
+.cssmenu a:hover,	
 .cssmenu_horiz a:hover,
 .cssmenu_vert a:hover {text-decoration: underline}
 
-/* border on the left of the first option */
-.cssmenu_horiz .option1 {border-left: solid 1px #aaa}
+#tiki-top > .cssmenu_horiz {
+	border-left: 1px solid #aaa}
 
 #tiki-top .cssmenu_horiz {
 	float: left;
