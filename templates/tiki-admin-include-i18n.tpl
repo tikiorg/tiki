@@ -45,7 +45,7 @@
 			{if $prefs.feature_multilingual eq 'y'}checked="checked"{/if}/></td>
         </tr><tr>
 
-			<td class="form"><label for="feature_translation">{tr}Translation Assitant{/tr}:</label></td>
+			<td class="form"><label for="feature_translation">{tr}Translation Assistant{/tr}:</label></td>
 			<td><input type="checkbox" name="feature_translation" id="feature_translation"
 			{if $prefs.feature_translation eq 'y'}checked="checked"{/if}/></td>
 
