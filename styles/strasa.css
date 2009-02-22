@@ -1164,59 +1164,83 @@ a.forumnameread { color: #006699}
 
 /** Tabs **/
 .tabs {
-	border-bottom: solid 1px #a8e1ff !important;
-	background: #d0efff;
-	margin: 10px 10px -19px 10px;
+	border-bottom: solid 1px #1d9ccf !important;
+	margin: 10px 6px 0 !important;
 	padding: 0 !important;
-	position: relative;
-	z-index: 201}
+}
 
 .tabmark {
 	display: inline;
 	font-size: 85%;
-	background: #1d9ccf;
-	border: 1px solid;
-	border-color: #41cbe7 #223845 #cce5ff #41cbe7;
-	margin: 0;
+	background-color: #cce5ff;
+	margin: 0px;
+	margin-left: 1px;	
 	margin-right: 5px;
-	padding: 2px 0}
+	padding: 2px 0;
+}
 
 .tabmark a {
-	border-bottom :0;
-	color: #fff;
-	padding: 1px 5px;
-	text-decoration: none;
-	white-space: nowrap;}
-/*
+	border-bottom: 0;
+	color: #0a6aa6;
+	font-weight: normal;
+	padding: 2px 5px;
+}
+
 .tabmark a:active {
-	background: #fff;
-	color: red}*/
+	background-color: #f2f2f2;
+	color: #0a6aa6;
+}
 
 .tabmark a:hover {
-	color: #000000;
-	background-color: #1e7ea6;}
+	background: #1d9ccf;
+	color: #fff;
+	text-decoration: none;
+}
 
+
+/* active (current) tab */
 .tabactive {
-	border: solid 1px #223845 !important;
+	background-color : #cce5ff !important;
+	border: solid 1px #1d9ccf !important;
 	border-bottom: none !important;
 	border-top-width: 2px !important;
 	position: relative;
-	bottom: 2px;
-	z-index: 2;}
+	bottom: 0px;
+	z-index: 2;
+}
 
-[class].tabactive {bottom: 1px}
+[class].tabactive {
+	bottom: -1px
+}
 
+/* link of active tab */
 .tabactive a {
-	background: #cce5ff;
-	color: #077aa7}
+	color: #0a6aa6 !important;
+	font-weight: bold;
+}
+.tabactive a:hover {
+	background-color: #cce5ff !important;
+	color : #000 !important;
+}
 
+/* inactive tabs */
 .tabinactive {
-	border: solid 1px #666 !important;
-	border-bottom: none !important;
+	background-color: #1e7ea6;
 	position: relative !important;
-	/*top: -3px !important*/}
-/*
-[class].tabinactive {top: -2px !important}*/
+ 	top: -1px !important;
+}
+
+.tabinactive a {
+	color: #fff;
+}
+
+[class].tabinactive {
+	top: 0px !important
+}
+
+
+
+
 
 .tabcontent {
 	z-index: 200;
