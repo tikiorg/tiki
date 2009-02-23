@@ -1357,7 +1357,28 @@ div.description {
 
 .wikitext ul li {} 
 .wikitext ul li ul li {}
-.wikitext ol {}
+.wikitext .fancylist {
+	margin: .5em 0; padding: 0;
+}
+.wikitext .fancylist li {
+	background: transparent url('strasa/list_icon.png') top left no-repeat;
+	color: #f90;
+	font: italic 2em Verdana, Geneva, Arial, Helvetica, sans-serif;
+	line-height: 27px;
+	list-style-position: inside;
+	margin-left: 10px; padding: 6px 0px 7px 15px;
+}
+
+.wikitext .fancylist li p {
+	color: #000;
+	display: inline;
+	font-size: 50%;
+	font-style: normal;
+	margin-left: 12px;
+}
+[class].wikitext .fancylist li p {
+	margin-left: -3px;
+}
 
 /* From Tikineat */
 .wikitext div.box {}

@@ -1239,6 +1239,23 @@ span#description {
 
 }
 
+/* fancylist wikiplugin */
+.wikitext .fancylist {
+	margin-left: 30px; padding-left: 30px;
+}
+.wikitext .fancylist li {
+	color: #999;
+	font: italic 2.2em Georgia, "Times New Roman", sans-serif;
+	list-style-position: outside;
+}
+
+.wikitext .fancylist li p {
+	color: #000;
+	display: inline;
+	font-size: 50%;
+	font-style: normal;
+}
+
 .titlebar {
 	padding: 0.1em;
 	border-top: 1px solid #999;
