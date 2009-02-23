@@ -793,6 +793,9 @@ if ($_REQUEST["itemId"]) {
 	foreach($xfields["data"] as $i=>$array) {
 		if ($xfields["data"][$i]['isHidden'] == 'n' or $xfields["data"][$i]['isHidden'] == 'p' or $tiki_p_admin_trackers == 'y' or ($xfields["data"][$i]['type'] == 's' and $xfields[$i]['name'] == 'Rating' and $tiki_p_tracker_view_ratings == 'y')or ($xfields['data'][$i]['isHidden'] == 'c' && !empty($user) && $user == $itemUser)) {
 			$fields["data"][$i] = $xfields["data"][$i];
+			if ($fields['data'][$i]['type'] == 'f' || $fields['data'][$i]['type'] == 'j') {
+				$dateFields[] = $fields['data'][$i]['fieldId'];
+			}
 			if ($fields["data"][$i]["type"] != 'h') {
 				$fid = $fields["data"][$i]["fieldId"];
 				$ins_fields["data"][$i]["id"] = $fid;
@@ -914,6 +917,20 @@ if ($_REQUEST["itemId"]) {
 					eval('$computed = '.$calc.';');
 					$ins_fields["data"][$i]["value"] = $computed;
 					$info[$fields['data'][$i]['fieldId']] = $computed; // in case a computed field use this one
+					preg_match('/#([0-9]+)/', $fields["data"][$i]['options_array'][0], $matches);
+					foreach ($matches as $k=>$match) {
+						if (!$k) continue;
+						foreach ($fields['data'] as $k=>$f) {
+							if ($f['fieldId'] == $match && ($f['type'] == 'f' || $f['type'] == 'j')) {
+								$ins_fields['data'][$i]['type'] = 'f';
+								$ins_fields['data'][$i]['options_array'] = $f['options_array'];
+								$k = -1;
+								break;
+							}
+						}
+						if ($k == -1)
+							break;
+					}
 				} elseif ($fields["data"][$i]["type"] == 'g') {
 					if (isset($fields["data"][$i]['options_array'][0]) && $fields["data"][$i]['options_array'][0] == 2 and !$info["$fid"]) {
 						$ins_fields["data"][$i]["defvalue"] = $group;

@@ -837,6 +837,15 @@ class TrackerLib extends TikiLib {
 				eval('$computed = '.$calc.';');
 				$fopt['value'] = $computed;
 				$fil[$fieldId] = $computed;
+				preg_match('/#([0-9]+)/', $fopt['options'], $matches);
+				foreach ($matches as $k=>$match) {
+					if (!$k) continue;
+					if ($listfields[$match]['type'] == 'f' || $listfields[$match]['type'] == 'j') {
+						$fopt['type'] = 'f';
+						$fopt['options_array'] = $listfields[$match]['options_array'];
+						break;
+					}
+				}
 				break;
 			case 's':
 				$key = 'tracker.'.$trackerId.'.'.$itemId;
