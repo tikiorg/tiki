@@ -24,35 +24,34 @@
 </div>
 
 {section name=dx loop=$catree}
-{assign var=after value=$smarty.section.dx.index_next}
-{assign var=before value=$smarty.section.dx.index_prev}
-{if $smarty.section.dx.index > 0 and $catree[dx].deep > $catree[$before].deep}
-<div id="id{$catree[$before].categId}" style="display:{if $catree[$before].incat eq 'y'}inline{else}none{/if};">
-{/if}
-<div class="treenode{if $catree[dx].categId eq $smarty.request.parentId}select{/if}">
-<!-- {$catree[dx].parentId} :: {$catree[dx].categId} :: -->
-{if $catree[dx].children > 0}<i class="mini">{$catree[dx].children} {tr}Child categories{/tr}</i>{/if}
-{if $catree[dx].objects > 0}<i class="mini">{$catree[dx].objects} {tr}Child categories{/tr}</i>{/if}
-<a class="link" href="tiki-admin_categories.php?parentId={$catree[dx].parentId}&amp;categId={$catree[dx].categId}" title="{tr}Edit{/tr}">
-{icon _id='page_edit' hspace="5" vspace="1"}</a>
-<a class="link" href="tiki-admin_categories.php?parentId={$catree[dx].parentId}&amp;removeCat={$catree[dx].categId}" title="{tr}Delete{/tr}">
-{icon _id='cross' hspace="5" vspace="1"}</a>
-{if $catree[dx].has_perm eq 'y'}
-<a title="{tr}Edit permissions for this category{/tr}" href="tiki-categpermissions.php?categId={$catree[dx].categId}">{icon hspace="5" vspace="1" _id='key_active' alt="{tr}Edit permissions for this category{/tr}"}</a>
-{else}
-<a title="{tr}Assign Permissions{/tr}" href="tiki-categpermissions.php?categId={$catree[dx].categId}">{icon hspace="5" vspace="1" _id='key' alt="{tr}Assign Permissions{/tr}"}</a>
-{/if}
-<div style="display: inline; padding-left:{$catree[dx].deep*30+5}px;">
-<a class="catname" href="tiki-admin_categories.php?parentId={$catree[dx].categId}">{$catree[dx].name}</a>
-{if $catree[dx].deep < $catree[$after].deep}
-<a href="javascript:toggle('id{$catree[dx].categId}');" class="linkmenu">&gt;&gt;&gt;</a></div>
-{elseif $catree[dx].deep eq $catree[$after].deep}
-</div>
-{else}
-</div>
-{repeat count=$catree[dx].deep-$catree[$after].deep}</div>{/repeat}
-{/if}
-</div>
+	{assign var=after value=$smarty.section.dx.index_next}
+	{assign var=before value=$smarty.section.dx.index_prev}
+	{if $smarty.section.dx.index > 0 and $catree[dx].deep > $catree[$before].deep}
+		<div id="id{$catree[$before].categId}" style="display:{if $catree[$before].incat eq 'y'}inline{else}none{/if};">
+	{/if}
+	<div class="treenode{if $catree[dx].categId eq $smarty.request.parentId}select{/if}">
+		<!-- {$catree[dx].parentId} :: {$catree[dx].categId} :: -->
+		{if $catree[dx].children > 0}<i class="mini">{$catree[dx].children} {tr}Child categories{/tr}</i>{/if}
+		{if $catree[dx].objects > 0}<i class="mini">{$catree[dx].objects} {tr}Child categories{/tr}</i>{/if}
+		<a class="link" href="tiki-admin_categories.php?parentId={$catree[dx].parentId}&amp;categId={$catree[dx].categId}" title="{tr}Edit{/tr}">{icon _id='page_edit' hspace="5" vspace="1"}</a>
+		<a class="link" href="tiki-admin_categories.php?parentId={$catree[dx].parentId}&amp;removeCat={$catree[dx].categId}" title="{tr}Delete{/tr}">{icon _id='cross' hspace="5" vspace="1"}</a>
+		{if $catree[dx].has_perm eq 'y'}
+			<a title="{tr}Edit permissions for this category{/tr}" href="tiki-categpermissions.php?categId={$catree[dx].categId}">{icon hspace="5" vspace="1" _id='key_active' alt="{tr}Edit permissions for this category{/tr}"}</a>
+		{else}
+				<a title="{tr}Assign Permissions{/tr}" href="tiki-categpermissions.php?categId={$catree[dx].categId}">{icon hspace="5" vspace="1" _id='key' alt="{tr}Assign Permissions{/tr}"}</a>
+		{/if}
+		<div style="display: inline; padding-left:{$catree[dx].deep*30+5}px;">
+			<a class="catname" href="tiki-admin_categories.php?parentId={$catree[dx].categId}">{$catree[dx].name}</a>
+			{if $catree[dx].deep < $catree[$after].deep}
+				<a href="javascript:toggle('id{$catree[dx].categId}');" class="linkmenu">&gt;&gt;&gt;</a>
+				</div>
+			{elseif $catree[dx].deep eq $catree[$after].deep}
+				</div>
+			{else}
+				</div>
+				{repeat count=$catree[dx].deep-$catree[$after].deep}</div>{/repeat}
+			{/if}
+	</div>
 {/section}
 
 <a name="editcreate"></a>
