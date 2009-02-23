@@ -2750,6 +2750,24 @@ class TikiLib extends TikiDB {
 	}
 
 	/*shared*/
+	function get_blog_by_title($blogTitle) {
+		global $prefs, $user;
+
+    // Avoiding select by name so as to avoid SQL injection problems.
+		$query = "select `title`, `blogId` from `tiki_blogs` where `use_title` = 'y' ";
+		$result = $this->query($query);
+		if ($result->numRows()) {
+      while ($res = $result->fetchRow()) {
+        if( strtolower($res['title']) == strtolower($blogTitle) ) {
+          return $this->get_blog($res['blogId']);
+        }
+      }
+		}
+
+		return false;
+	}
+
+	/*shared*/
 	function list_user_blogs($user, $include_public = false) {
 		$query = "select * from `tiki_blogs` where `user`=? ";
 		$bindvars=array($user);
