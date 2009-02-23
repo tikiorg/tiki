@@ -41,8 +41,10 @@
 				<a title="{tr}Assign Permissions{/tr}" href="tiki-categpermissions.php?categId={$catree[dx].categId}">{icon hspace="5" vspace="1" _id='key' alt="{tr}Assign Permissions{/tr}"}</a>
 		{/if}
 		<div style="display: inline; padding-left:{$catree[dx].deep*30+5}px;">
-			<a class="catname" href="tiki-admin_categories.php?parentId={$catree[dx].categId}">{$catree[dx].name}</a>
-			{if $catree[dx].deep < $catree[$after].deep}
+			<a class="catname" href="tiki-admin_categories.php?parentId={$catree[dx].categId}">{$catree[dx].name|escape}</a>
+			{if $smarty.section.dx.last}
+				{repeat count=$catree[dx].deep}</div>{/repeat}
+			{elseif $catree[dx].deep < $catree[$after].deep}
 				<a href="javascript:toggle('id{$catree[dx].categId}');" class="linkmenu">&gt;&gt;&gt;</a>
 				</div>
 			{elseif $catree[dx].deep eq $catree[$after].deep}
