@@ -68,7 +68,8 @@ if (isset($_REQUEST["looksetup"]) || (!empty($_REQUEST['site_style']) && $_REQUE
 	"use_context_menu_icon",
 	"use_context_menu_text",
 	"feature_site_report",
-	"feature_site_send_link"
+	"feature_site_send_link",
+	"change_theme",
     );
 
     foreach ($pref_toggles as $toggle) {
@@ -95,6 +96,7 @@ if (isset($_REQUEST["looksetup"]) || (!empty($_REQUEST['site_style']) && $_REQUE
 	"direct_pagination_max_ending_links",
 	'feature_site_report_email',
 	'feature_endbody_code',
+	'users_prefs_theme',
     );
 
     foreach ($pref_simple_values as $svitem) {
