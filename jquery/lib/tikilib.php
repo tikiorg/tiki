@@ -7688,7 +7688,7 @@ window.addEvent('domready', function() {
 		closedir ($h);
 
 		// Format and return the list
-		return $this->format_language_list($languages, $short, $all);
+		return TikiLib::format_language_list($languages, $short, $all);
 	}
 
 	function is_valid_language( $language ) {

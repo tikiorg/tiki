@@ -188,6 +188,7 @@ function get_default_prefs() {
 		'wikiplugin_events' => 'y',
 		'wikiplugin_example' => 'n',
                 'wikiplugin_fade' => 'y',
+		'wikiplugin_fancylist' => 'y',
 		'wikiplugin_fancytable' => 'y',
 		'wikiplugin_files' => 'y',
 		'wikiplugin_flash' => 'y',

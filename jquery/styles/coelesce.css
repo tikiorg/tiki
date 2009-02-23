@@ -1830,8 +1830,16 @@ ul.catitems li a.link {}
 
 /***** Tags (freetags) *****/
 div.freetaglist {
-	text-align: right;
-	margin-bottom: 8px}
+	border: 1px solid #527ca6;
+	margin: 5px 10px 8px 10px;
+	padding: 3px;
+	text-align: left;
+}
+
+div.freetagitemlist {
+	margin-top: 5px;
+	background-color: #ccdceb;
+}
 
 li.freetag {
 	list-style: none !important;

@@ -1,5 +1,5 @@
 <?php
-// $Id: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.198.2.22 2008-03-12 15:10:01 ricks99 Exp $
+// $Id$
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -75,11 +75,12 @@ You can change this page after logging in. Please review the [http://doc.tikiwik
 
 !!{img src=pics/icons/star.png alt="Star"} Get started.
 To begin configuring your site:
-#Log in as the __admin__ with password __admin__.
-#Change the admin password.
-#Enable specific Tiki features.
-#Configure the features.
-
+{FANCYLIST()}
+1) Log in as the __admin__ with password __admin__.
+2) Change the admin password.
+3) Enable specific Tiki features.
+4) Configure the features.
+{FANCYLIST}
 
 !!{img src=pics/icons/help.png alt="Help"} Need help?
 For more information:
