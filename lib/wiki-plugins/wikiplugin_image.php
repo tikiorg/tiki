@@ -31,8 +31,9 @@
  */
 function wikiplugin_image_help() {
 	return tra("Display an image using configured format. Allows presentation of all images to be changed without having to alter existing content.").":<br />~np~" . '{IMAGE(
-[ id="Numeric ID of an image in an Image Gallery. "id" or "src" required." ]
-[ src="Full URL to the image to display. "id" or "src" required." ]
+[ fileId="Numeric ID of an image in a File Gallery. "fileId", "id" or "src" required." ]
+[ id="Numeric ID of an image in an Image Gallery. "fileId", "id" or "src" required." ]
+[ src="Full URL to the image to display. "fileId", "id" or "src" required." ]
 [ scalesize="Maximum height or width in pixels (largest dimension is scaled). If no scalesize is given one will be attempted from default or given height or width. If scale does not match a defined scale for the gallery the full sized image is downloaded." ]
 [ height="Height in pixels." ]
 [ width="Width in pixels." ]
@@ -63,15 +64,20 @@ function wikiplugin_image_info() {
 		'description' => tra("Display an image."),
 		'prefs' => array( 'wikiplugin_image'),
 		'params' => array(
+			'fileId' => array(
+				'required' => false,
+				'name' => tra('File ID'),
+				'description' => tra('Numeric ID of an image in a File Gallery. "fileId", "id" or "src" required.'),
+			),
 			'id' => array(
 				'required' => false,
 				'name' => tra('Image ID'),
-				'description' => tra('Numeric ID of an image in an Image Gallery. "id" or "src" required.'),
+				'description' => tra('Numeric ID of an image in an Image Gallery. "fileId", "id" or "src" required.'),
 			),
 			'src' => array(
 				'required' => false,
 				'name' => tra('Image Source'),
-				'description' => tra('Full URL to the image to display. "id" or "src" required.'),
+				'description' => tra('Full URL to the image to display. "fileId", "id" or "src" required.'),
 			),
 			'scalesize' => array(
 				'required' => false,
@@ -235,6 +241,7 @@ function wikiplugin_image( $data, $params, $offset, $parseOptions='' ) {
 
 	$imgdata = array();
 	
+	$imgdata["fileId"] = '';
 	$imgdata["id"] = '';
 	$imgdata["src"] = '';
 	$imgdata["scalesize"] = '';
@@ -386,6 +393,10 @@ function wikiplugin_image( $data, $params, $offset, $parseOptions='' ) {
                       if( $img_condition_status == true ) {
                         // set the parameters to their values
                         switch (strtolower(trim($img_parameter_array[0]))) {
+                          case "fileid":
+                          case "fileId":
+                            $imgdata["fileId"] = trim($img_parameter_array[1]);
+                            break;
                           case "id":
                             $imgdata["id"] = trim($img_parameter_array[1]);
                             break;
@@ -562,6 +573,10 @@ function wikiplugin_image( $data, $params, $offset, $parseOptions='' ) {
                       if( $img_condition_status == true ) {
                         // set the parameters to their values
                         switch (strtolower(trim($img_parameter_array[0]))) {
+                          case "fileid":
+                          case "fileId":
+                            $imgdata["fileId"] = trim($img_parameter_array[1]);
+                            break;
                           case "id":
                             $imgdata["id"] = trim($img_parameter_array[1]);
                             break;
@@ -625,7 +640,7 @@ function wikiplugin_image( $data, $params, $offset, $parseOptions='' ) {
     } // if( !empty($img_conditions_array) )
 	} // if( !empty($imgdata['default']) )
 
-  if (empty($imgdata["id"]) and empty($imgdata["src"]) ) {
+  if ( empty($imgdata["fileId"]) and empty($imgdata["fileid"]) and empty($imgdata["id"]) and empty($imgdata["src"]) ) {
     return "''no image''";
   }
 
@@ -732,6 +747,15 @@ function wikiplugin_image( $data, $params, $offset, $parseOptions='' ) {
 		$imgdata['src'] = "show_image.php?id=" . $imgdata['id'];
 	}
 	
+	// Support both 'fileId' and 'fileid' syntax
+	if ( (!empty($imgdata['fileid'])) && empty($imgdata['fileId']) )
+		$imgdata['fileId'] = $imgdata['fileid'];
+
+	// If a file gallery ID was given expand it into a URL
+	if ( !empty($imgdata['fileId']) ) {
+		$imgdata['src'] = "tiki-download_file.php?fileId=" . $imgdata['fileId'] . "&display";
+	}
+	
 	// Support both 'imalign' and 'align' syntax
 	if ( (!empty($imgdata['imalign'])) && empty($imgdata['align']) )
 		$imgdata['align'] = $imgdata['imalign'];
@@ -795,51 +819,6 @@ function wikiplugin_image( $data, $params, $offset, $parseOptions='' ) {
 			$scalesize = (int)$imgdata["scalesize"];
 		}
 	}
-
-/***
-  // If being used in mobile mode then force a small image size
-  if($_REQUEST['mode']=="mobile") {
-    $scalesize="150";
-    $imgdata["width"] = '';
-    $imgdata["height"] = '';
-  }
-***/
-
-/***
-  // If being used within a module then force a small image size
-  if( !empty($smarty) ) {
-    $image_module_params = $smarty->get_template_vars('module_params');
-    if( !empty($image_module_params) ) {
-      $scalesize = 150;
-      $imgdata["width"] = '';
-      $imgdata["height"] = '';
-    }
-  }
-
-***/
-
-/***
-	// If no image size given, specify one.
-	if( empty($imgdata["width"]) and empty($imgdata["height"]) and empty($scalesize) ) {
-		$scalesize = 200; // Default image size.
-		if( !empty($section) ) {
-			switch ($section) {
-			case 'cms': 
-			        $scalesize = 200;
-			        if( !empty($smarty) ) {
-				        $image_article_type = $smarty->get_template_vars('type');
-				        if( !empty($image_article_type) ) {
-					        if( $image_article_type == "Article" ) $scalesize = 400; // Articles get bigger images than other article types.
-				        } // if(!empty($image_article_type))
-			        } // if(!empty($smarty))
-			        break;
-			case 'wiki page':
-			        $scalesize = 200;
-			        break;
-			} // switch ($section)
-		} // if(!empty($section))
-	} // if((!empty($imgdata["width"])) and (!empty($imgdata["height"])))
-***/
 
 	// Several sections dealing with image dimension.
 
