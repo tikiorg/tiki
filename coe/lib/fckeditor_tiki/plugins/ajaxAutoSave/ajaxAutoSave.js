@@ -17,7 +17,7 @@ var AxpObject = function (editorInstance)
 {
 	this.editorInstance	= editorInstance;
 	this.FCKConfig		= editorInstance.Config;
-	this.FCKLang		= editorInstance.EditorWindow.parent.FCKLang;
+	//this.FCKLang		= editorInstance.EditorWindow.parent.FCKLang;
 
 	this.IsDirty 		= false;
 }
