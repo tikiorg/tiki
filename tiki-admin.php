@@ -283,6 +283,11 @@ if (isset($_REQUEST["page"])) {
 		$description = "Discover and register web services to allow direct use in wiki pages.";
 		$helpUrl = "WebServices";
 		include_once ('tiki-admin_include_webservices.php');
+	} else if ($adminPage == 'sefurl') {
+		$admintitle = 'Search engine friendly url';
+		$description = 'Search engine friendly url';
+		$helpUrl = 'Rewrite+Rules';
+		include_once ('tiki-admin_include_sefurl.php');
 	}
 
 	$url = 'tiki-admin.php'.'?page='.$adminPage;
