@@ -954,11 +954,18 @@ class TrackerLib extends TikiLib {
 		return($fields);
 	}
 
-	function replace_item($trackerId, $itemId, $ins_fields, $status = '', $ins_categs = array(), $bulk_import = false) {
+	function replace_item($trackerId, $itemId, $ins_fields, $status = '', $ins_categs = array(), $bulk_import = false, $tracker_info='') {
 		global $user, $smarty, $notificationlib, $prefs, $cachelib, $categlib, $tiki_p_admin_trackers, $userlib, $tikilib;
 		include_once('lib/categories/categlib.php');
 		include_once('lib/notifications/notificationlib.php');
 		$fil = array();
+
+		if (empty($tracker_info)) {
+			$tracker_info = $this->get_tracker($trackerId);
+			if ($options = $this->get_tracker_options($trackerId)) {
+				$tracker_info = array_merge($tracker_info, $options);
+			}
+		}
 
 		if (!empty($itemId)) {
 			$new_itemId = 0;
@@ -1004,6 +1011,7 @@ class TrackerLib extends TikiLib {
 		foreach($ins_fields["data"] as $i=>$array) {
 			if (!isset($ins_fields["data"][$i]["type"]) or $ins_fields["data"][$i]["type"] == 's') {
 				// system type, do nothing
+				continue;
 			} else if ($ins_fields["data"][$i]["type"] != 'u' && $ins_fields["data"][$i]["type"] != 'g' && $ins_fields["data"][$i]["type"] != 'I' && isset($ins_fields['data'][$i]['isHidden']) && ($ins_fields["data"][$i]["isHidden"] == 'p' or $ins_fields["data"][$i]["isHidden"] == 'y')and $tiki_p_admin_trackers != 'y') {
 					// hidden field type require tracker amdin perm
 			} elseif (empty($ins_fields["data"][$i]["fieldId"])) {
@@ -1102,6 +1110,10 @@ class TrackerLib extends TikiLib {
 			// Normalize on/y on a checkbox
 			if ($ins_fields["data"][$i]["type"] == 'c' && $ins_fields['data'][$i]['value'] == 'on') {
 				$ins_fields['data'][$i]['value'] = 'y';
+			}
+			
+			if ($ins_fields['data'][$i]['type'] == 'g' && $ins_fields['data'][$i]['options_array'][0] == 1) {
+				$creatorGroupFieldId = $ins_fields['data'][$i]['fieldId'];
 			}
 
 			if ( $ins_fields["data"][$i]["type"] == 'M' && $ins_fields["data"][$i]["options_array"][0] >= '3' && isset($ins_fields["data"][$i]['value'])) {
@@ -1413,23 +1425,34 @@ class TrackerLib extends TikiLib {
 		$query = "update `tiki_trackers` set `items`=?,`lastModif`=?  where `trackerId`=?";
 		$result = $this->query($query,array((int)$cant_items,(int) $this->now,(int) $trackerId));
 
+		if ($prefs['groupTracker'] == 'y' && isset($tracker_info['autoCreateGroup']) && $tracker_info['autoCreateGroup'] == 'y' && empty($itemId)) {
+			$groupName = $tracker_info['name'].' '.$new_itemId;
+			if (!empty($creatorGroupFieldId)) {
+				$query = 'update `tiki_tracker_item_fields` set `value`=? where `itemId`=? and `fieldId`=?';
+				$this->query($query, array($groupName, $new_itemId, $creatorGroupFieldId));
+			}
+			if ($userlib->add_group($groupName, $tracker_info['description'], '', 0, $trackerId, '', '', 0, '', '', $creatorGroupFieldId)) {
+				if ($userlib->group_exists($tracker_info['name'])) {
+					$userlib->group_inclusion($groupName, $tracker_info['name']);
+				}
+			}
+			$userlib->assign_user_to_group($user, $groupName);
+			//$userlib->set_default_group($user, $groupName);
+		}
+
 		if (!$itemId) $itemId = $new_itemId;
 
 		global $cachelib;
 		require_once('lib/cache/cachelib.php');
 		$cachelib->invalidate('trackerItemLabel'.$itemId);
 
-		$options = $this->get_tracker_options($trackerId);
-
-		if ( isset($options) && isset($options['autoCreateCategories']) && $options['autoCreateCategories'] == 'y' && $prefs['feature_categories'] == 'y' ) {
-			$trackerName = $this->getOne("select `name` from `tiki_trackers` where `trackerId`=?", array((int) $trackerId));
-			$trackerDescription = $this->getOne("select `description` from `tiki_trackers` where `trackerId`=?", array((int) $trackerId));
+		if ( isset($tracker_info['autoCreateCategories']) && $tacker_info['autoCreateCategories'] == 'y' && $prefs['feature_categories'] == 'y' ) {
 			$tracker_item_desc = $this->get_isMain_value($trackerId, $itemId);
 
 			// Verify that parentCat exists Or Create It
 			$parentcategId = $categlib->get_category_id("Tracker $trackerId");
 			if ( ! isset($parentcategId) ) {
-				$parentcategId = $categlib->add_category(0,"Tracker $trackerId",$trackerDescription);
+				$parentcategId = $categlib->add_category(0,"Tracker $trackerId",$tracker_info['description']);
 			}
 			// Verify that the sub Categ doesn't already exists
 			$currentCategId = $categlib->get_category_id("Tracker Item $itemId");

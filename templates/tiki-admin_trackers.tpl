@@ -30,7 +30,7 @@
 <div id="content{cycle name=content assign=focustab}{$focustab}"{if $prefs.feature_tabs eq 'y'} class="tabcontent" style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 <h2>{tr}Trackers{/tr}</h2>
 {if ($channels) or ($find)}
-  {include file='find.tpl' _sort_mode='y'}
+  {include file='find.tpl' _sort_mode='y' filters=''}
   {if ($find) and ($channels)}
     <p>{tr}Found{/tr} {$channels|@count} {tr}trackers{/tr}:</p>
   {/if}
@@ -124,6 +124,11 @@
 {include file=categorize.tpl colsCategorize=2}
 <tr class="formcolor"><td>{tr}Auto create corresponding categories{/tr}</td><td>
 <input type="checkbox" name="autoCreateCategories" {if $autoCreateCategories eq 'y' }checked="checked"{/if} /></td></tr>
+{/if}
+
+{if $prefs.groupTracker eq 'y'}
+<tr class="formcolor"><td><label for="autoCreateGroup">{tr}Create a group for each item{/tr}</label></td><td>
+<input type="checkbox" id="autoCreateGroup" name="autoCreateGroup" {if $autoCreateGroup eq 'y' }checked="checked"{/if} /></td></tr>
 {/if}
 
 {if $prefs.trk_with_mirror_tables eq 'y'}
