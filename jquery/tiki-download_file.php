@@ -145,7 +145,7 @@ $content = &$info['data'];
 
 $md5 = '';
 if ( ! empty($info['path']) )  {
-	if ($filegallib->isPodCastGallery($info['galleryId'])) {
+	if (!$skip and $filegallib->isPodCastGallery($info['galleryId'])) {
 		$filepath = $prefs['fgal_podcast_dir'].$info['path'];
 	} else {
 		$filepath = $prefs['fgal_use_dir'].$info['path'];

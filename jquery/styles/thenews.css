@@ -296,6 +296,7 @@ ul.jumplinks a:focus, ul.jumplinks a:active {
 #sitetitle a:visited {color: #000}
 
 #header-top {position: relative}
+* html #header-top {height: 1%}
 
 /* Look & Feel options */
 #siteheader {
@@ -399,8 +400,11 @@ div#sitead {
 }
 
 #c1c2 #wrapper .marginleft {
-	margin-left: 214px;
-}
+	margin-left: 214px}
+
+* html #c1c2 #wrapper .marginleft {
+	margin-left: 216px}
+
 
 #c1c2 #wrapper .marginright {
 	margin-right: 214px;
@@ -549,7 +553,7 @@ div#tiki-bot {}
 	font: .9em Verdana, Helvetica, Arial, Sans-Serif;
 	display: block;
 	border-right: 1px solid #aaa;
-} 
+}
 
 .horbaritem a:hover {
 	background-color: #fff;
@@ -561,9 +565,9 @@ div#tiki-bot {}
 } 
 
 /* IE */
-* html .horbaritem a {
-	font-size: .8em;
-}
+* html .horbaritem a,
+* html .mdkitem a {
+	font-size: 1em}
 
 .mdkverbar {
 	

@@ -34,6 +34,8 @@ h1 {
 	margin: 0;
 	padding-left: 14px}
 	
+* html h1 {margin-bottom: auto}
+	
 body.tiki_wiki h1 {
 	/*display: inline;
 	float: left;
@@ -118,6 +120,15 @@ input[type=submit],
 	display: inline;
 	outline: none;
 	/*line-height: 2em*/}
+	
+* html span.button a {background: #f5f5f5}
+	
+* html span.button a:link,
+* html span.button a:visited {
+	text-decoration: none;
+	border: 0;
+	padding: 0 4px}
+
 	/*
 *:first-child+html .button a,
 *:first-child+html .button a:visited,
@@ -217,11 +228,12 @@ ul.jumplinks a:active {
 
 #c1c2 #wrapper #col1 {/*position: relative*/}
 
-#c1c2 #wrapper #col1 > .content {
+#c1c2 #wrapper #col1 #tiki-center {
 	background: url(coelesce/tiki-centerbg.jpg) repeat-x;
 	color: #2d2d2d;
 	margin-left: 30px;
-	margin-right: 30px}
+	margin-right: 30px;
+	position: relative}
 	
 body.tiki_wiki #c1c2 #wrapper #col1 > .content {position: relative}
 	
@@ -273,7 +285,9 @@ div#tiki-bot {}
 #header-top {
 	position: relative;
 	background: url(coelesce/pagebg.jpg) repeat-x bottom;
-	min-height: 80px;}
+	min-height: 80px}
+	
+* html #header-top {height: 80px}
 
 #siteheader {
 	text-align: left;
@@ -670,7 +684,8 @@ a.phplmselected:hover {color: #808080}
 	color: #5a7ea2;
 	/*min-width: 10em*/}
 
-.cssmenu_horiz li a {
+.cssmenu_horiz li a:link,
+.cssmenu_horiz li a:visited {
 	white-space: nowrap;
 	display: block;
 	padding: 6px 10px;
@@ -1202,7 +1217,7 @@ h1 a:hover {
 
 body.tiki_wiki .wikitopline {
 	position: absolute;
-	top: -1.5em;
+	top: -2em;
 	left: 80px;
 	width: 70%}
 	
