@@ -15,10 +15,18 @@ class NlLib extends TikiLib {
 
 	function replace_newsletter($nlId, $name, $description, $allowUserSub, $allowAnySub, $unsubMsg, $validateAddr,$allowTxt, $frequency , $author) {
 		if ($nlId) {
-			$query = "update `tiki_newsletters` set `name`=?, `description`=?, `allowUserSub`=?, `allowAnySub`=?, `unsubMsg`=?, `validateAddr`=?, `frequency`=? where `nlId`=?";
-			$result = $this->query($query, array($name, $description, $allowUserSub, $allowAnySub, $unsubMsg, $validateAddr, $frequency, (int)$nlId));
+			$query = "update `tiki_newsletters` set `name`=?, 
+								`description`=?, 
+								`allowUserSub`=?,
+								`allowTxt`=?, 
+								`allowAnySub`=?, 
+								`unsubMsg`=?, 
+								`validateAddr`=?, 
+								`frequency`=? where `nlId`=?";
+			$result = $this->query($query, array($name, $description, $allowUserSub, $allowTxt, $allowAnySub, $unsubMsg, $validateAddr, $frequency, (int)$nlId));
 		} else {
-			$query = "insert into `tiki_newsletters`(`name`,
+			$query = "insert into `tiki_newsletters`(
+								`name`,
 								`description`,
 								`created`,
 								`lastSent`,
@@ -30,7 +38,8 @@ class NlLib extends TikiLib {
 								`unsubMsg`,
 								`validateAddr`,
 								`frequency`,
-								`author`) ";
+								`author`
+								) ";
       $query.= " values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			$result = $this->query($query, array($name,
 							$description,
