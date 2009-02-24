@@ -225,7 +225,7 @@ function wikiplugin_image_info() {
  *  This is a stability and security risk, as an editor might break out
  *  of the current HTML context and emit something awkward to the
  *  reader's browser.  One solution: scan a copy of parameters which are to be
- *  inserted, and remove recognized terms ("border:", "#FFFFFF"), and if
+ *  inserted, and remove recognized terms ("border:", "#292929"), and if
  *  anything remains then error and quit.
  */
 function wikiplugin_image( $data, $params, $offset, $parseOptions='' ) {
@@ -263,7 +263,7 @@ function wikiplugin_image( $data, $params, $offset, $parseOptions='' ) {
 	$imgdata["style"] = 'text-align:center';
   // The following is the default border.  "border" is name of parameter, which might modify "borderstyle".
   $imgdata["border"] = 'on';
-  $imgdata["borderstyle"] = 'border:3px double #FFFFFF; padding:.1cm; font-size:12px; line-height:1.5em; margin-left:4px';
+  $imgdata["borderstyle"] = 'border:3px double #292929; padding:.1cm; font-size:12px; line-height:1.5em; margin-left:4px';
   // The following is the default caption options.  "descoptions" is name of parameter, which might modify "captionstyle".
   $imgdata["captionstyle"] = 'text-align:center width:100% font-size:0.9em';
 
