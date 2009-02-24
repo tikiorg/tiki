@@ -18,7 +18,7 @@
   {/if}
 
   {if $tiki_p_view_trackers eq 'y'}
-		{button href="tiki-view_tracker.php" _auto_args="trackerId,status,sort_mode" _text="{tr}View This Tracker's Items{/tr}"}
+		{button href="tiki-view_tracker.php?trackerId=$trackerId" _auto_args="status,sort_mode" _text="{tr}View This Tracker's Items{/tr}"}
   {/if}
 
   {if $tiki_p_admin_trackers eq 'y'}
@@ -151,7 +151,7 @@
 <td><textarea rows="{if empty($rows)}4{else}{$rows}{/if}" cols="{if empty($cols)}50{else}{$cols}{/if}" name="comment_data" id="comment_data">{$comment_data|escape}</textarea>
 </td></tr>
 {if !$user and $prefs.feature_antibot eq 'y'}
-	{include file="antibot.tpl"}
+	{include file="antibot.tpl" tr_style="formcolor"}
 {/if}
 <tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="save_comment" value="{tr}Save{/tr}" /></td></tr>
 </table>

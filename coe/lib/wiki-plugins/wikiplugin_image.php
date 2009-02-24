@@ -1,16 +1,32 @@
 <?php
-/* Show image in configured format.
-// Developed by Scot E. Wilcoxon for Tiki CMS
-// Based on img, SHARETHIS, and THUMBDIV plugins.
-// Usage:
-// {IMAGE(<options=>"values">)}{IMAGE}
-//
-// 2008-12-08 SEWilco
-//   Initial version.
-//
-// License: GNU/LGPL: GNU Lesser General Public License
-*/
+/**
+ * Show image in configured format.
+ * Developed by Scot E. Wilcoxon for Tiki CMS
+ * Based on img, SHARETHIS, and THUMBDIV plugins.
+ * Usage:
+ * {IMAGE(<options=>"values">)}{IMAGE}
+ *
+ * @package IMAGE plugin.
+ * @author Scot E. Wilcoxon <scot@wilcoxon.org>
+ * @version 1.2
+ *
+ * 2008-12-08 SEWilco
+ *   Initial version.
+ * 2009-02-10 SEWilco
+ * Add default border because default styles don't know this object.
+ * 2009-02-13 SEWilco
+ * Add descoptions - description option control
+ * 
+ * Copyright (c) 2002-2009, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+ * All Rights Reserved. See copyright.txt for details and a complete list of authors.
+ * Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+ */
 
+/**
+ * Return older-style help message, with summary and parameter options.
+ *
+ * @return string Summary with plugin's description and parameters.
+ */
 function wikiplugin_image_help() {
 	return tra("Display an image using configured format. Allows presentation of all images to be changed without having to alter existing content.").":<br />~np~" . '{IMAGE(
 [ id="Numeric ID of an image in an Image Gallery. "id" or "src" required." ]
@@ -28,10 +44,17 @@ function wikiplugin_image_help() {
 [ usemap="Name of the image map to use for the image." ]
 [ class="CSS class to apply to the image'."'".'s img tag." ]
 [ style="CSS styling to apply to the plugin. (Usually used in configuration rather than on individual images.)" ]
+[ border="Border configuration.  Values "on" and "off" control visibility, or else specify CSS styling options. (Usually used in configuration rather than on individual images.)" ]
+[ descoptions="Description configuration.  Values "on" and "off" control visibility, or else specify CSS styling options. (Usually used in configuration rather than on individual images.)" ]
 [ test=""true" to test combinations of parameters for which no values were given. Does not test imagemap and class. (Admin users only)" ]
 )}{IMAGE}~/np~';
 }
 
+/**
+ * Return plugin information, with description and parameter list.
+ *
+ * @return array
+ */
 function wikiplugin_image_info() {
 	return array(
 		'name' => tra('Image'),
@@ -113,6 +136,16 @@ function wikiplugin_image_info() {
 				'name' => tra('CSS Style'),
 				'description' => tra('CSS styling to apply to the plugin. (Usually used in configuration rather than on individual images.)'),
 			),
+      'border' => array(
+        'required' => false,
+        'name' => tra('Border options'),
+        'description' => tra('Border configuration.  Values "on" and "off" control visibility, or else specify CSS styling options. (Usually used in configuration rather than on individual images.)'),
+			),
+      'descoptions' => array(
+        'required' => false,
+        'name' => tra('Description options'),
+        'description' => tra('Description configuration.  Values "on" and "off" control visibility, or else specify CSS styling options. (Usually used in configuration rather than on individual images.)'),
+			),
 			'default' => array(
 				'required' => false,
 				'name' => tra('Default configuration'),
@@ -132,43 +165,71 @@ function wikiplugin_image_info() {
 	);
 }
 
+
 /**
+ * Display specified image.
+ * @param string $data Data provided between start and end of plugin.
+ * @param array $params Plugin parameters.
+ * @param integer $offset Offset.
+ * @param array $parseOptions Parsing options such as is_html, language, page, print.
+ * @return string Content to add to the current page.
+ *
+ * @global $tikidomain  Domain can be used to determine formatting context.
+ * @global $prefs       Some behavior is controlled by configured preferences.
+ * @global $section     Section can be used to determine formatting context.
+ * @global $smarty      Some smarty variables are read to determine formatting context.
+ *
 
-The 'default' option allow definition of default values,
-although those can be overridden when using the plugin.
-The 'mandatory' settings are specified using the same syntax
-as 'default', but are applied after the plugin-specified
-parameters.
-
-The default values are specified as:
-  condition ? parameter = value [, parameter = value ...][; condition ? parameter = value ...]
-
-The defined conditions are:
-  default - default values
-  mode_mobile - When in mobile mode
-  module_*  - When in any module
-  section_* - When in any section (The 'section_*' applies to any section)
-    - (A specific section name can be specified instead of *)
-  section_cms_article   - When in a CMS (Article) section of type Article
-  section_cms_review    - When in a CMS (Article) section of type Review
-  section_cms_event   - When in a CMS (Article) section of type Event
-  section_cms_classified    - When in a CMS (Article) section of type Classified
-
-The parameter is the name of any IMAGE option (id, scalesize, width, ...).
-
-Current list of section names:
-    blogs, calendar, categories, cms, directory, faqs,
-    featured_links, file_galleries, forums, freetags, friends,
-    galleries, games, html_pages, livesupport, maps, mytiki,
-    newsletters, newsreader, poll, quizzes, sheet, surveys,
-    trackers, user_messages, users, webmail, wiki page
-
-sample:
-  $imgdata["default"] = 'default ? scalesize = 200, align = right, style = text-align:center; mode_mobile ? scalesize = 150; module_* ? scalesize = 150; section_cms_article ? scalesize = 400';
-**/
-
+ * Configuration with 'default' and 'mandatory' options:
+ *
+ * The 'default' option allow definition of default values,
+ * although those can be overridden when using the plugin.
+ * The 'mandatory' settings are specified using the same syntax
+ * as 'default', but are applied after the plugin-specified
+ * parameters.
+ * 
+ * The default values are specified as:
+ *   condition ? parameter = value [, parameter = value ...][; condition ? parameter = value ...]
+ *
+ * The conditions are some recognized contexts, so the plugin can behave 
+ * differently in various contexts.  For example, the image can be shown
+ * in a small size within a module while a different size within an
+ * article.  This means that an image in the heading of an article can
+ * be made to fit in a module which automatically shows the heading of
+ * recent articles.
+ * 
+ * The defined conditions are:
+ *   - default - default values
+ *   - mode_mobile - When in mobile mode
+ *   - module_*  - When in any module
+ *   - section_* - When in any section (The 'section_*' applies to any section)
+ *   - section_cms_article   - When in a CMS (Article) section of type Article
+ *   - section_cms_review    - When in a CMS (Article) section of type Review
+ *   - section_cms_event   - When in a CMS (Article) section of type Event
+ *   - section_cms_classified    - When in a CMS (Article) section of type Classified
+ *   - A specific section name can be specified instead of '*'.
+ *     - Current list of section names:
+ *      - blogs, calendar, categories, cms, directory, faqs,
+ *        featured_links, file_galleries, forums, freetags, friends,
+ *        galleries, games, html_pages, livesupport, maps, mytiki,
+ *        newsletters, newsreader, poll, quizzes, sheet, surveys,
+ *        trackers, user_messages, users, webmail, wiki page
+ * 
+ * The parameter is the name of any IMAGE option (id, scalesize, width, ...).
+ * 
+ * sample:
+ *   $imgdata["default"] = 'default ? scalesize = 200, align = right, style = text-align:center; mode_mobile ? scalesize = 150; module_* ? scalesize = 150; section_cms_article ? scalesize = 400';
+ *
+ *  @internal
+ *  Presently some options insert editor-supplied values into CSS fields.
+ *  This is a stability and security risk, as an editor might break out
+ *  of the current HTML context and emit something awkward to the
+ *  reader's browser.  One solution: scan a copy of parameters which are to be
+ *  inserted, and remove recognized terms ("border:", "#FFFFFF"), and if
+ *  anything remains then error and quit.
+ */
 function wikiplugin_image( $data, $params, $offset, $parseOptions='' ) {
-	global $tikidomain, $tikiroot, $prefs, $section, $smarty;
+	global $tikidomain, $prefs, $section, $smarty;
 
 	$imgdata = array();
 	
@@ -188,6 +249,8 @@ function wikiplugin_image( $data, $params, $offset, $parseOptions='' ) {
 	$imgdata["usemap"] = '';
 	$imgdata["class"] = '';
 	$imgdata["style"] = '';
+	$imgdata["border"] = '';
+	$imgdata["descoptions"] = '';
 	$imgdata["default"] = '';
 	$imgdata["mandatory"] = '';
 	$imgdata["test"] = '';
@@ -198,6 +261,11 @@ function wikiplugin_image( $data, $params, $offset, $parseOptions='' ) {
 	
   // The following causes the image to be centered.
 	$imgdata["style"] = 'text-align:center';
+  // The following is the default border.  "border" is name of parameter, which might modify "borderstyle".
+  $imgdata["border"] = 'on';
+  $imgdata["borderstyle"] = 'border:3px double #FFFFFF; padding:.1cm; font-size:12px; line-height:1.5em; margin-left:4px';
+  // The following is the default caption options.  "descoptions" is name of parameter, which might modify "captionstyle".
+  $imgdata["captionstyle"] = 'text-align:center width:100% font-size:0.9em';
 
   // The following are local defaults copied and modified from above.
   $imgdata["default"] = 'default ? scalesize = 200, align = right, style = text-align:center; section_cms_article ? scalesize = 400, width= , height=';
@@ -364,6 +432,12 @@ function wikiplugin_image( $data, $params, $offset, $parseOptions='' ) {
                             break;
                           case "style":
                             $imgdata["style"] = trim($img_parameter_array[1]);
+                            break;
+                          case "border":
+                            $imgdata["border"] = trim($img_parameter_array[1]);
+                            break;
+                          case "descoptions":
+                            $imgdata["descoptions"] = trim($img_parameter_array[1]);
                             break;
                         } // switch ($img_parameter_array[0])
                       } // if( $img_condition_status == true )
@@ -664,6 +738,30 @@ function wikiplugin_image( $data, $params, $offset, $parseOptions='' ) {
 	if ( (!empty($imgdata['link'])) && empty($imgdata['lnk']) )
 		$imgdata['lnk'] = $imgdata['link'];
 
+  // Enable, disable, or configure the border style
+  if ( (!empty($imgdata['border'])) ) {
+    if ( $imgdata['border'] != 'on' ) {
+      if ( $imgdata['border'] == 'off' ) {
+        $imgdata['borderstyle'] = ''; // Set to off so emit no style.  CSS file might do something.
+      } else {
+        $imgdata['borderstyle'] .= ';' . $imgdata['border']; // Append specified style alterations
+      }
+    } // if border is not 'on'
+  } // if border specified
+
+  // Enable, disable, or configure the caption style
+  if ( (!empty($imgdata['descoptions'])) ) {
+    if ( $imgdata['descoptions'] != 'on' ) {
+      if ( $imgdata['descoptions'] == 'off' ) {
+        $imgdata['captionstyle'] = ''; // Set to off so emit no style.  CSS file might do something.
+      } else {
+        $imgdata['captionstyle'] .= ';' . $imgdata['descoptions']; // Append specified style alterations
+      }
+    } // if caption is not 'on'
+  } else {
+    $imgdata['descoptions'] = 'on';
+  } // if no description options, turn it on
+
 	// If clear was specified, add it to the CSS style
 	if ( !empty($imgdata['clear']) )
 		$imgdata['style'] = 'clear:' . $imgdata['clear'] . ';' . $imgdata['style'];
@@ -821,31 +919,9 @@ function wikiplugin_image( $data, $params, $offset, $parseOptions='' ) {
   } // if ( ereg('^.*show_image.php\?', $imgdata["src"]) ) 
 
 	// Start the image and decorations.
-// At present, use a bordered table as a frame so it works without CSS changes.
-//	$repl = "<table cellpadding=\"0\" cellspacing=\"0\"";
-//	if (!empty($scalesize) ) {
-//    $repl .= " style=\"border-style:solid;padding:0.1cm;width:" . $scalesize . "px\"";
-//  }
-
-//	if (!empty($imgdata["align"]) ) {
-//    $repl .= "style=\"float:" . $imgdata["align"] . "\"";
-//  }
-
-//	$repl .= "<tbody><tr><td valign=\"top\"";
-//  if( $imgdata["width"] > 0 ) {
-//    $repl .= " width=\"" . $imgdata["width"] . "\"";
-//  }
-//  else
-//  {
-//    if( !empty($imgdata["width"]) && (ctype_digit($imgdata["width"])) ) {
-//      $repl .= " width=\"" . $imgdata["width"] . "\"";
-//    }
-//  }
-//	$repl .= ">\r";
 	
   // Create the HTML img tag.
 
-//	$replimg = '<div align="center"><img src="' . $imgdata["src"]. '"';
 	$replimg = '<img src="' . $imgdata["src"]. '"';
 	$replimg .= ' border="0" ' . $imgdata_dim;
 
@@ -864,7 +940,6 @@ function wikiplugin_image( $data, $params, $offset, $parseOptions='' ) {
 	if ( !empty($imgdata["class"]) ) {
 		$replimg .= ' class="'.$imgdata["class"].'"';
 	}
-//	$replimg .= " /></div>";
 	$replimg .= " />";
 
 	// Image tag has been assembled, now see if it should be wrapped in an anchor tag.
@@ -888,36 +963,38 @@ function wikiplugin_image( $data, $params, $offset, $parseOptions='' ) {
 		$replimg = '<a href="'.$imgdata["lnk"].'" class="internal"'.$linkrel.$imgtarget.$linktitle.'>' . $replimg . '</a>';
 	}
   $repl .= $replimg;
-//  $repl .= '</td></tr>';
 
 	// Add decorations and caption under the image.
-//  $repl .= '<tr><td class="mini">';
-  $repl .= '<div class="mini">';
-	$repl .= "\r\t\t<div class=\"thumbcaption\">";
-	$repl .= "\r\t\t\t<div class=\"magnify\" style=\"float:right\">";
-  // If an image ID was given, point magnify at the Image browse page
-  if( !empty($imgdata["id"]) ) {
-    $repl .= "<a href=\"tiki-browse_image.php?imageId=" . $imgdata["id"];
-  } else {
-    $repl .= "<a href=\"" . $browse_full_image; // Unknown image detail page so just point at the original image
-  }
-	$repl .= "\" class=\"internal\" title=\"Enlarge\"><img src=\"./img/icons2/icn_view.gif\" width=\"12\" height=\"12\" alt=\"Enlarge\" /></a></div>";
-  if ( !empty($imgdata["desc"]) ) {
-    $repl .= $imgdata["desc"];
-  }
-	if ( (!empty($imgdata["desc"])) and (!empty($data)) ) {
-    $repl .= ' ';
-  }
-  if( !empty($data) ) {
-    $repl .= $data;
-	}
-	$repl .= "\r\t</div>";
-//  $repl .= '</td></tr>';
-//	$repl .= "\r</tbody></table>";
-  $repl .= "</div>";
+  if( $imgdata["descoptions"] != "off" ) {
+    if( !empty($imgdata["captionstyle"]) ) {
+      $repl .= '<div class="mini" style="' . $imgdata["captionstyle"] . '">';
+    } else {
+      $repl .= '<div class="mini">';
+    }
+    $repl .= "\r\t\t<div class=\"thumbcaption\">";
+    $repl .= "\r\t\t\t<div class=\"magnify\" style=\"float:right\">";
+    // If an image ID was given, point magnify at the Image browse page
+    if( !empty($imgdata["id"]) ) {
+      $repl .= "<a href=\"tiki-browse_image.php?imageId=" . $imgdata["id"];
+    } else {
+      $repl .= "<a href=\"" . $browse_full_image; // Unknown image detail page so just point at the original image
+    }
+    $repl .= "\" class=\"internal\" title=\"Enlarge\"><img src=\"./img/icons2/icn_view.gif\" width=\"12\" height=\"12\" alt=\"Enlarge\" /></a></div>";
+    if ( !empty($imgdata["desc"]) ) {
+      $repl .= $imgdata["desc"];
+    }
+    if ( (!empty($imgdata["desc"])) and (!empty($data)) ) {
+      $repl .= ' ';
+    }
+    if( !empty($data) ) {
+      $repl .= $data;
+    }
+    $repl .= "\r\t</div>";
+    $repl .= "</div>";
+  } // if no desc options or they're not turned off, show desc
 
-	if( (!empty($imgdata["align"]) ) or (!empty($scalesize)) ) {
-		$repl = "\r" . '<div class="img" style="' . ( (empty($imgdata["align"])) ? '' : ( 'float:' . $imgdata["align"] . ';' ) ) . ( (empty($scalesize)) ? '' : ( 'width:' . $scalesize . 'px;' ) ) . $imgdata["style"] . '">' . $repl . '</div>';
+	if( (!empty($imgdata["align"]) ) or (!empty($imgdata["borderstyle"])) or (!empty($scalesize)) ) {
+    $repl = "\r" . '<div class="img" style="' . ( (empty($imgdata["borderstyle"])) ? '' : ( $imgdata["borderstyle"] . ';' ) ) . ( (empty($imgdata["align"])) ? '' : ( 'float:' . $imgdata["align"] . ';' ) ) . ( (empty($scalesize)) ? '' : ( 'width:' . $scalesize . 'px;' ) ) . $imgdata["style"] . '">' . $repl . '</div>';
 	} else {
 		$repl = "\r" . '<div class="img">' . $repl . '</div>';
 	}

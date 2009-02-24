@@ -17,7 +17,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 error_reporting (E_ALL);
 
-include_once("lib/init/initlib.php");
+require_once( 'tiki-filter-base.php' );
 
 // Define and load Smarty components
 define('SMARTY_DIR', "lib/smarty/libs/");
@@ -27,10 +27,16 @@ require_once ('installer/installlib.php');
 $commands = array();
 ini_set('magic_quotes_runtime',0);
 
+// Which step of the installer
+if (empty($_REQUEST['install_step'])) {
+	$install_step = '0'; } else {
+	$install_step = ($_REQUEST['install_step']);
+} 
+
 if (!empty($_REQUEST['lang'])) {
-	$language = $prefs['language'] = $_REQUEST['lang'];
+	$language = $prefs['site_language'] = $prefs['language'] = $_REQUEST['lang'];
 } else {
-	$language = $prefs['language'] = 'en';
+	$language = $prefs['site_language'] = $prefs['language'] = 'en';
 }
 include_once('lib/init/tra.php');
 
@@ -418,40 +424,6 @@ function has_admin() {
         }
 }
 
-function load_profiles() {
-	// the profiles are only mysql-safe at this time, so make other DB's only show the default, which is empty
-	global $db_tiki;
-	global $smarty;
-	if ($db_tiki == 'mysql' || $db_tiki == 'mysqli') {
-        	$profiles = array();
-        	$h = opendir('db/profiles/');
-
-        	while ($file = readdir($h)) {
-                	if (substr($file,-4,4) == '.prf') {
-                        	// Assign the filename of the profile to the name field
-                        	$prof1 = array("name" => $file);
-                        	// Open the profile and pull out the description from the first line
-                        	$fp = fopen("db/profiles/$file", "r");
-                        	$desc = substr(fgets($fp,40),2);
-                        	fclose($fp);
-                        	$prof1["desc"] = $desc;
-                        	// Assign the record to the profile array
-                        	$profiles[] = $prof1;
-                	}
-        	}
-
-        	closedir ($h);
-        	sort($profiles);
-	} else {
-        	$prof1 = array("name" => "_default.prf");
-        	$prof1["desc"] = "Default installation profile";
-        	$profiles[] = $prof1;
-	}
-	$smarty->assign('profiles', $profiles);
-}
-
-
-
 function load_sql_scripts() {
 	global $smarty;
 	global $dbversion_tiki;
@@ -596,11 +568,20 @@ define('ADODB_ASSOC_CASE', 2);
 define('ADODB_CASE_ASSOC', 2); // typo in adodb's driver for sybase?
 include_once ('lib/adodb/adodb.inc.php');
 
+include('lib/tikilib.php');
+// Get list of available languages
+$languages = array();
+$languages = TikiLib::list_languages(false,null,true);
+$smarty->assign_by_ref("languages", $languages);
+
 // next block checks if there is a local.php and if we can connect through this.
 // sets $dbcon to false if there is no valid local.php
 if (!file_exists($local)) {
 	$dbcon = false;
 	$smarty->assign('dbcon', 'n');
+	if ($install_step == '3') {
+		$install_step = '3';
+	}
 } else {
 	// include the file to get the variables
 	include ($local);
@@ -697,8 +678,6 @@ if( $dbcon )
 
 if ( isset($_REQUEST['restart']) ) $_SESSION["install-logged-$multi"] = '';
 
-//Load Profiles
-load_profiles();
 
 //Load SQL scripts
 load_sql_scripts();
@@ -719,7 +698,25 @@ if ( isset($dbTiki) && is_object($dbTiki) && isset($_SESSION["install-logged-$mu
 		$installer->cleanInstall();
 		$smarty->assign('installer', $installer);
 		$smarty->assign('dbdone', 'y');
-		if ( isset($_REQUEST['profile']) ) process_sql_file('profiles/'.$_REQUEST['profile'], $db_tiki);
+		$install_type = 'scratch';
+		require_once 'lib/tikilib.php';
+		$tikilib = new TikiLib( $dbTiki );
+		require_once 'lib/userslib.php';
+		$userlib = new UsersLib( $dbTiki );
+		require_once 'lib/profilelib/profilelib.php';
+		require_once 'lib/profilelib/installlib.php';
+		require_once 'lib/setup/compat.php';
+		require_once 'lib/tikidate.php';
+		$tikidate = new TikiDate();
+		
+		$installer = new Tiki_Profile_Installer;
+		//$installer->setUserData( $data ); // TODO
+
+	if ( isset($_REQUEST['profile']) and !empty($_REQUEST['profile']) ) {
+		$profile = Tiki_Profile::fromNames( 'http://profiles.tikiwiki.org', $_REQUEST['profile'] );
+		$installer->install( $profile );
+	}
+		
 		$_SESSION[$cookie_name] = 'admin';
 	}
 
@@ -728,6 +725,7 @@ if ( isset($dbTiki) && is_object($dbTiki) && isset($_SESSION["install-logged-$mu
 		$installer->update();
 		$smarty->assign('installer', $installer);
 		$smarty->assign('dbdone', 'y');
+		$install_type = 'update';
 	}
 
 	// Try to activate Apache htaccess file by renaming _htaccess into .htaccess
@@ -757,13 +755,61 @@ if( isset( $_GET['lockchange'] ) )
 
 $smarty->assign_by_ref('tikifeedback', $tikifeedback);
 
-$php_memory_limit = return_bytes(ini_get('memory_limit'));
-$smarty->assign('php_memory_limit', intval($php_memory_limit));
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
+
+
+//  Sytem requirements test. 
+if ($install_step == '2') {
+
+	if (($_REQUEST['perform_mail_test']) == 'y') {
+
+	$sentmail = mail("info@tikiwiki.org","Mail test","Mail test");
+	if($sentmail){
+		$mail_test = 'y'; } else {
+		$mail_test = 'n'; }
+	$smarty->assign('mail_test', $mail_test);
+	$smarty->assign('perform_mail_test', 'y');
+	}
+
+	$php_memory_limit = return_bytes(ini_get('memory_limit'));
+	$smarty->assign('php_memory_limit', intval($php_memory_limit));
+	
+	if ((extension_loaded('gd') && function_exists('gd_info'))) {
+		$gd_test = 'y';
+		$gd_info = gd_info();
+		$smarty->assign('gd_info', $gd_info['GD Version']);
+		} else {
+		$gd_test = 'n'; }
+	$smarty->assign('gd_test', $gd_test);
+	
+}
+
+// Preference settings
+// just after DB initialization or DB update
+if ( $install_step == '5' && isset($dbTiki) && is_object($dbTiki) ) {
+    require_once 'lib/tikilib.php';
+    $tikilib = new TikiLib( $dbTiki );
+		$tikilib->set_preference("language",$language);
+		$tikilib->set_preference("site_language",$language);
+}
+
+// write general settings
+if (($_REQUEST['general_settings']) == 'y') {
+global $dbTiki;
+$query = "INSERT INTO `tiki_preferences` (`name`, `value`) VALUES ('siteTitle', '".$_REQUEST['site_title']."'), ('sender_email', '".$_REQUEST['sender_email']."'), ('https_login', '".$_REQUEST['https_login']."'), ('https_port', '".$_REQUEST['https_port']."'), ('feature_swtich_ssl_mode', '".$_REQUEST['feature_switch_ssl_mode']."'), ('feature_show_stay_in_ssl_mode', '".$_REQUEST['feature_show_stay_in_ssl_mode']."')";
+$query .= ";UPDATE  `users_users` SET  `email` =  '".$_REQUEST['admin_email']."' WHERE  `users_users`.`userId` =1";
+$dbTiki->Execute($query);
+}
+
 
 include "lib/headerlib.php";
 $headerlib->add_cssfile('styles/thenews.css');
 $smarty->assign_by_ref('headerlib',$headerlib);
+
+$smarty->assign('install_step', $install_step);
+$smarty->assign('install_type', $install_type);
+$smarty->assign_by_ref('prefs', $prefs);
+
 
 $mid_data = $smarty->fetch('tiki-install.tpl');
 $smarty->assign('mid_data', $mid_data);

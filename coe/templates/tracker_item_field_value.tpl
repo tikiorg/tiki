@@ -39,7 +39,7 @@
 {* -------------------- category -------------------- *}
 {if $field_value.type eq 'e'}
 	{foreach from=$field_value.categs item=categ name=fcategs}
-		{$categ.name}
+		{$categ.name|tr_if}
 		{if !$smarty.foreach.fcategs.last}<br />{/if}
 	{/foreach}
 

@@ -837,6 +837,15 @@ class TrackerLib extends TikiLib {
 				eval('$computed = '.$calc.';');
 				$fopt['value'] = $computed;
 				$fil[$fieldId] = $computed;
+				preg_match('/#([0-9]+)/', $fopt['options'], $matches);
+				foreach ($matches as $k=>$match) {
+					if (!$k) continue;
+					if ($listfields[$match]['type'] == 'f' || $listfields[$match]['type'] == 'j') {
+						$fopt['type'] = 'f';
+						$fopt['options_array'] = $listfields[$match]['options_array'];
+						break;
+					}
+				}
 				break;
 			case 's':
 				$key = 'tracker.'.$trackerId.'.'.$itemId;
@@ -2762,6 +2771,13 @@ class TrackerLib extends TikiLib {
 	}
 	function get_item_creator($trackerId, $itemId) {
 		if ($fieldId = $this->get_field_id_from_type($trackerId, 'u', '1%')) { // user creator field
+			return $this->get_item_value($trackerId, $itemId, $fieldId);
+		} else {
+			return null;
+		}
+	}
+	function get_item_group_creator($trackerId, $itemId) {
+		if ($fieldId = $this->get_field_id_from_type($trackerId, 'g', '1%')) { // group creator field
 			return $this->get_item_value($trackerId, $itemId, $fieldId);
 		} else {
 			return null;

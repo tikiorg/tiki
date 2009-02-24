@@ -2894,4 +2894,23 @@ div.multiselect div.even:hover {
 	background: #FFF7E6;
 }
 .button .iconmenu {display:inline;}
+
+/** CSS (suckerfish) menus **/
+
+.cssmenu li,
+.cssmenu_horiz li,
+.cssmenu_vert li {border-top: 1px solid #dedede}
+
+.cssmenu li:hover,
+.cssmenu_horiz li:hover,
+.cssmenu_vert li:hover,
+.cssmenu li.sfhover,
+.cssmenu_horiz li.sfhover,
+.cssmenu_vert li.sfhover {background: #e9ecef}
+
+.cssmenu li ul,
+.cssmenu_horiz li ul,
+.cssmenu_vert li ul {border: 1px solid black}
+
+.cssmenu_horiz li ul ul {margin: -1em 0 0 11em}
 /***** End of file ******/

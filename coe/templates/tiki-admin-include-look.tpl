@@ -12,19 +12,8 @@
 		</div>
 
 		{if $prefs.feature_tabs eq 'y'}
-			{cycle name=tabs values="1,2,3,4" print=false advance=false reset=true}
-			<div class="tabs">
-				<span	id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark tabinactive">
-					<a href="#theme" onclick="javascript:tikitabs({cycle name=tabs},4); return false;">{tr}Theme{/tr}</a>
-				</span>
-				<span	id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark tabinactive">
-					<a href="#layout" onclick="javascript:tikitabs({cycle name=tabs},4); return false;">{tr}General Layout{/tr}</a>
-				</span>
-				<span	id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark tabinactive">
-					<a href="#other" onclick="javascript:tikitabs({cycle name=tabs},4); return false;">{tr}Other{/tr}</a>
-				</span>
-			</div>
-			{cycle name=content values="1,2,3,4" print=false advance=false reset=true}
+			{tabs}{tr}Theme{/tr}|{tr}General Layout{/tr}|{tr}Other{/tr}{/tabs}
+			{cycle name=content values="1,2,3" print=false advance=false reset=true}
 		{/if}
 
 		<fieldset{if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}"{/if}>
@@ -50,6 +39,33 @@
 							{if $prefs.site_style != $a_style}<span class="highlight">{tr}* Note: Theme displayed differs from "site" theme ({$prefs.site_style}).{/tr}</span>{/if}
 						</td>
 					</tr>
+					
+<tr>					
+  <td class="form">{tr}Reg users can change theme{/tr}:</td>
+  <td>
+    <table><tr>
+    <td style="width: 20px"><input type="checkbox" name="change_theme" {if $prefs.change_theme eq 'y'}checked="checked"{/if}/></td>
+    <td>
+      <div id="select_available_styles" {if count($prefs.available_styles) > 0 and $prefs.available_styles[0] ne ''}style="display:none;"{else}style="display:block;"{/if}>
+        <a class="link" href="javascript:show('available_styles');hide('select_available_styles');">{tr}Restrict available themes{/tr}</a>
+      </div>
+      <div id="available_styles" {if count($prefs.available_styles) == 0 or $prefs.available_styles[0] eq ''}style="display:none;"{else}style="display:block;"{/if}>
+        {tr}Available styles:{/tr}<br />
+        <select name="available_styles[]" multiple="multiple" size="5">
+		  <option value=''>{tr}All{/tr}</option>
+          {section name=ix loop=$styles}
+            <option value="{$styles[ix]|escape}"
+              {if in_array($styles[ix], $prefs.available_styles)}selected="selected"{/if}>
+              {$styles[ix]}
+            </option>
+          {/section}
+        </select>
+      </div>
+    </td>
+    </tr></table>
+  </td>					
+					</tr>
+					
 					<tr>
 						<td class="form" >
 							<label for="general-theme">{tr}Theme options{/tr}:</label>
@@ -283,10 +299,10 @@
 							</tr>
 							<tr>
 								<td class="form">
-									<label for="_siteheadertitle">{tr}Site title{/tr}:</label>
+									<label for="_sitetitle">{tr}Site title{/tr}:</label>
 								</td>
 								<td>
-									<input type="text" name="siteheadertitle" id="_sitetitle" value="{$prefs.siteheadertitle}" size="50" maxlength="50" />
+									<input type="text" name="sitetitle" id="_sitetitle" value="{$prefs.sitetitle}" size="50" maxlength="50" />
 								</td>
 							</tr>
 							<tr>

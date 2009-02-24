@@ -530,5 +530,20 @@ p.editdate {
   opacity: .3;
 }
 
+/* for wikiplugin_fancylist */
 
+.wikitext .fancylist {
+	margin: .5em 0;
+	padding: 0;
+}
 
+.wikitext .fancylist li {
+	list-style-position: inside;
+}
+
+.wikitext .fancylist li p {
+	display: inline;
+	font-size: 1em;
+}
+
+[class].wikitext .fancylist li p {}

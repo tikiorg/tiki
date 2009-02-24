@@ -48,7 +48,7 @@ if (isset($_REQUEST["looksetup"]) || (!empty($_REQUEST['site_style']) && $_REQUE
     "feature_siteidentity",
 	"feature_siteloclabel",
 	"feature_sitelogo",
-	"feature_siteheadertitle",
+	"feature_sitetitle",
 	"feature_sitesubtitle",
 	"feature_sitenav",
 	"feature_sitesearch",
@@ -68,7 +68,8 @@ if (isset($_REQUEST["looksetup"]) || (!empty($_REQUEST['site_style']) && $_REQUE
 	"use_context_menu_icon",
 	"use_context_menu_text",
 	"feature_site_report",
-	"feature_site_send_link"
+	"feature_site_send_link",
+	"change_theme",
     );
 
     foreach ($pref_toggles as $toggle) {
@@ -81,7 +82,7 @@ if (isset($_REQUEST["looksetup"]) || (!empty($_REQUEST['site_style']) && $_REQUE
 	"sitelogo_bgstyle",
 	"sitelogo_title",
 	"sitelogo_alt",
-	"siteheadertitle",
+	"sitetitle",
 	"sitesubtitle",
 	"sitemycode",
 	"site_favicon",
@@ -95,6 +96,7 @@ if (isset($_REQUEST["looksetup"]) || (!empty($_REQUEST['site_style']) && $_REQUE
 	"direct_pagination_max_ending_links",
 	'feature_site_report_email',
 	'feature_endbody_code',
+	'users_prefs_theme',
     );
 
     foreach ($pref_simple_values as $svitem) {
@@ -106,7 +108,7 @@ if (isset($_REQUEST["looksetup"]) || (!empty($_REQUEST['site_style']) && $_REQUE
 	"feature_right_column",
 	"slide_style",
 	"feature_siteloc",
-        "feature_siteheadertitle",
+        "feature_sitetitle",
         "feature_sitedesc",
         "sitelogo_align"
     );
