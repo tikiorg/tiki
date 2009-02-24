@@ -8,7 +8,7 @@
  *
  * @package IMAGE plugin.
  * @author Scot E. Wilcoxon <scot@wilcoxon.org>
- * @version 1.2
+ * @version 1.3
  *
  * 2008-12-08 SEWilco
  *   Initial version.
@@ -16,6 +16,8 @@
  * Add default border because default styles don't know this object.
  * 2009-02-13 SEWilco
  * Add descoptions - description option control
+ * 2009-02-24 SEWilco
+ * Dark border.  Higher priority rules at end of list.
  * 
  * Copyright (c) 2002-2009, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
  * All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -267,10 +269,10 @@ function wikiplugin_image( $data, $params, $offset, $parseOptions='' ) {
   // The following is the default caption options.  "descoptions" is name of parameter, which might modify "captionstyle".
   $imgdata["captionstyle"] = 'text-align:center width:100% font-size:0.9em';
 
-  // The following are local defaults copied and modified from above.
+  // The following are local defaults copied and modified from above.  Later items have priority.
   $imgdata["default"] = 'default ? scalesize = 200, align = right, style = text-align:center; section_cms_article ? scalesize = 400, width= , height=';
-  // Force certain scalesize and ignore any specified width or height
-  $imgdata["mandatory"] = 'mode_mobile ? scalesize = 150, width= , height=; module_* ? scalesize = 150, width= , height=; section_cms_article ? scalesize = 400';
+  // Force certain scalesize and ignore any specified width or height.  Later items have priority.
+  $imgdata["mandatory"] = 'section_cms_article ? scalesize = 400; module_* ? scalesize = 150, width= , height=; mode_mobile ? scalesize = 150, width= , height=;';
 
   /*
   ** Start processing... first defaults, then given parameters, then mandatory settings.
