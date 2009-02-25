@@ -115,6 +115,10 @@
 						<span class="checkbox"><input type="checkbox" name="feature_contribution"{if $prefs.feature_contribution eq 'y'} checked="checked"{/if}/></span>
 						<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Contribution" target="tikihelp" class="tikihelp" title="{tr}Contribution{/tr}">{/if} {tr}Contribution{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
 					</div>
+					<div class="float_l" style="width: 49%; text-align: left; float: left">
+						<span class="checkbox"><input type="checkbox" name="feature_multilingual"{if $prefs.feature_multilingual eq 'y'} checked="checked"{/if}/></span>
+						<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Internationalization" target="tikihelp" class="tikihelp" title="{tr}Internationalization{/tr}">{/if} {tr}Multilingual{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
+					</div>
 				</div>
 			</fieldset>
 
@@ -270,27 +274,31 @@
 						<span class="checkbox"><input type="checkbox" name="feature_sheet" {if $prefs.feature_sheet eq 'y'}checked="checked"{/if}/></span>
 						<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Spreadsheet" target="tikihelp" class="tikihelp" title="{tr}Spreadsheet{/tr}: {tr}TikiSheet{/tr}">{/if} {tr}Tiki Sheet{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
 					</div>
+					<div class="float_l" style="width: 49%; text-align: left; float: left">
+						 <span class="checkbox"><input type="checkbox" name="feature_sefurl" {if $prefs.feature_sefurl eq 'y'}checked="checked"{/if}/></span>
+						 <span class="label">{if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Rewrite+Rules" target="tikihelp" class="tikihelp" title="{tr}Menus{/tr}">{/if} {tr}Search engine friendly url{/tr}{if $prefs.feature_help eq 'y'}</a>{/if}</span>
+					</div>
 					<div class="float_r" style="width: 49%; text-align: left; float: right">
 						<span class="checkbox"><input type="checkbox" name="feature_swffix" {if $prefs.feature_swffix eq 'y'}checked="checked"{/if}/></span>
 						<span class="label"> <a href="{$prefs.helpurl}Swffix" target="tikihelp" class="tikihelp" title="{tr}Swffix{/tr}"> {tr}Swffix{/tr}</a></span>
 					</div>
-					<div class="float_r" style="width: 49%; text-align: left; float: right">
+					<div class="float_l" style="width: 49%; text-align: left; float: left">
 						<span class="checkbox"><input type="checkbox" name="feature_drawings" {if $prefs.feature_drawings eq 'y'}checked="checked"{/if}/></span>
 						<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Drawings" target="tikihelp" class="tikihelp" title="{tr}Drawings{/tr}">{/if} {tr}Drawings{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
 					</div>
-					<div class="float_l" style="width: 49%; text-align: left; float: left">
+					<div class="float_r" style="width: 49%; text-align: left; float: right">
 						<span class="checkbox"><input type="checkbox" name="feature_purifier" {if $prefs.feature_purifier eq 'y'}checked="checked"{/if}/></span>
 						<span class="label"> <a href="{$prefs.helpurl}Purifier" target="tikihelp" class="tikihelp" title="{tr}HTML Purifier{/tr}"> {tr}HTML Purifier (Content is cleaned to XHTML 1.1 Strict on each save){/tr}</a> </span>
 					</div>					
-					<div class="float_r" style="width: 49%; text-align: left; float: right">
+					<div class="float_l" style="width: 49%; text-align: left; float: left">
 						<span class="checkbox"><input type="checkbox" name="feature_intertiki" {if $prefs.feature_intertiki eq 'y'}checked="checked"{/if}/></span>
 						<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}InterTiki" target="tikihelp" class="tikihelp" title="{tr}Intertiki{/tr}: {tr}Intertiki{/tr}">{/if} {tr}Intertiki{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
 					</div>
-					<div class="float_l" style="width: 49%; text-align: left; float: left">
+					<div class="float_r" style="width: 49%; text-align: left; float: right">
 						<span class="checkbox"><input type="checkbox" name="feature_magic" {if $prefs.feature_magic eq 'y'}checked="checked"{/if}/></span>
 						<span class="label">{tr}Magic Admin Panel{/tr}</span>
 					</div>
-					<div class="float_r" style="width: 49%; text-align: left; float: right">
+					<div class="float_l" style="width: 49%; text-align: left; float: left">
 						<span class="checkbox"><input type="checkbox" name="feature_charts"	{if $prefs.feature_charts eq 'y'}checked="checked"{/if}/></span>
 						<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Charts" target="tikihelp" class="tikihelp" title="{tr}Charts{/tr}">{/if} {tr}Charts{/tr} {if $prefs.feature_help eq 'y'}</a>{/if} </span>
 					</div>
