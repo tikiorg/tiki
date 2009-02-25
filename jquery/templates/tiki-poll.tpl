@@ -1,7 +1,7 @@
 {$menu_info.title|escape}<br />
 <form method="post" action="{$ownurl}">
 <input type="hidden" name="polls_pollId" value="{$menu_info.pollId|escape}" />
-{if $tiki_p_vote_poll ne 'n' && ($user ||  $prefs['feature_poll_anonymous'] == 'y')}
+{if $tiki_p_vote_poll ne 'n' && ($user ||  $prefs.feature_poll_anonymous == 'y')}
 {section name=ix loop=$channels}
   <input type="radio" name="polls_optionId" value="{$channels[ix].optionId|escape}" />{tr}{$channels[ix].title|escape}{/tr}<br />
 {/section}
@@ -13,7 +13,7 @@
   </ul>
 {/if}
 <div align="center">
-{if $tiki_p_vote_poll ne 'n' && ($user ||  $prefs['feature_poll_anonymous'] == 'y')}
+{if $tiki_p_vote_poll ne 'n' && ($user ||  $prefs.feature_poll_anonymous == 'y')}
 	<input type="submit" name="pollVote" value="{tr}vote{/tr}" /><br />
 {/if}
 {if $tiki_p_view_poll_results == 'y'}

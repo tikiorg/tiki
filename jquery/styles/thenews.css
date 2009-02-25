@@ -1540,7 +1540,7 @@ img.articleimage {
 
 div.articletrailer {
 	position: relative;
-	text-align: right;
+	text-align: center;
 	margin-top: 1.1em}
 	
 div.articletrailer img {}
@@ -1549,17 +1549,16 @@ div.article .status {
 	position: absolute;
 	left: 0}
 
-div.articletrailer span {margin-left: 45%; margin-right: 55%}
+div.articletrailer span {
+	display: inline-block;
+	margin: auto;
+	white-space: nowrap}
 
 div.article .actions {
 	position: absolute;
 	right: 0;
 	top: 0}
 
-div.articletrailer .wikitopline {
-	float: left;
-} 
- 
 div.articlebody {
 	font-size: 125%;
 	line-height: 1.5em;
@@ -1766,15 +1765,13 @@ table.commentinfo {}
 
 
 .postbody-title {
-	width: 75%;
-	float: left;
+	width: 100%;
+	float: none;
 	margin-top: 0;
 	margin-bottom: auto;
 	background-color: #E0EAF4; 
 	border-bottom: 1px solid #ACCCDD}
 	
-*:first-child+html .postbody-title {min-width: 74%}
-
 .post .postbody-title .checkbox {float: left}
 
 .post .postbody-title .title {

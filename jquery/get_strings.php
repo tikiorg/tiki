@@ -79,6 +79,32 @@ function collect_perms_desc($file)
   fclose($pstr);
 }
 
+/**
+  * Reads all the permission descriptions in tikiwiki database and writes
+  *   it to the file $file. All the strings will be surrounded by smarty translate tags
+  *     ex: {tr}preference name{/tr}
+  *
+  * @param $file string: target file for the pref names
+  * @returns: nothing but creates the file with the pref names (take care about the acl's in the target directory !)
+  */
+function collect_prefs_names($file)
+{
+  global $tikilib;
+
+  $result = $tikilib->query("select `name` from `tiki_preferences`");
+
+  $prefs_strings = array();
+  while( $row = $result->fetchRow() )
+    $prefs_strings[] = $row['name'];
+
+  $pstr = fopen($file,'w');
+  foreach ($prefs_strings as $strg)
+  {
+    fwrite ($pstr,  "{tr}" . str_replace('_',' ',$strg) . "{/tr}" . "\n");
+  }
+  fclose($pstr);
+}
+
 function addphpslashes ($string) {
   // Translate as in "Table 7-1 Escaped characters" in the PHP manual
   // $string = str_replace ("\n", '\n',   $string);
@@ -288,12 +314,15 @@ hardwire_file ('./img/flags/flagnames.php');
 
 ## Adding a file in ./temp which contains all the perms descriptions
 ## This file is called permstrings.tpl. The extension has to be .tpl in order to be
-##   taken in charge by the scipt (tpl or php)
+##   taken in charge by the script (tpl or php)
 ## This file is, of course, temporary and will be deleted during the next cache clear !
 
 $permsfile = "./temp/permstrings.tpl";
 $permsstrgs = collect_perms_desc($permsfile);
+$prefsfile = "./temp/prefnames.tpl";
+collect_prefs_names($prefsfile);
 hardwire_file ($permsfile);
+hardwire_file ($prefsfile);
 
 // Sort files to make generated strings appear in language.php in the same 
 // order across different systems

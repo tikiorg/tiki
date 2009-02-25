@@ -30,10 +30,29 @@ Add a value in first check when you create a new admin page. *}
 {/if}
 
 {if $tikifeedback}
-<br /><div class="simplebox highlight">{section name=n loop=$tikifeedback}
-{if strstr($tikifeedback[n].mes, 'disabled')}{icon _id=delete alt="{tr}disabled{/tr}" style="vertical-align:middle"}{else}{icon _id=accept alt="{tr}enabled{/tr}" style="vertical-align:middle"}{/if}
- {$tikifeedback[n].mes}<br />{/section}</div><br />
+	{remarksbox type="note" title="{tr}Note{/tr}"}
+		{cycle values="odd,even" print=false}
+		{tr}The following list of changes has been applied:{/tr}
+		<ul>
+		{section name=n loop=$tikifeedback}
+			<li class="{cycle}">
+				<p>
+			{if $tikifeedback[n].st eq 0}
+				{icon _id=delete alt="{tr}disabled{/tr}" style="vertical-align: middle"}
+			{elseif $tikifeedback[n].st eq 1}
+				{icon _id=accept alt="{tr}enabled{/tr}" style="vertical-align: middle"}
+			{else}
+				{icon _id=accept alt="{tr}changed{/tr}" style="vertical-align: middle"}
+			{/if}
+					{tr}preference{/tr} <strong>{tr}{$tikifeedback[n].mes|stringfix}{/tr}</strong><br />
+					(<em>{tr}preference name:{/tr}</em> {$tikifeedback[n].name})
+				</p>
+			</li>
+		{/section}
+		</ul>
+	{/remarksbox}
 {/if}
+
 {include file="tiki-admin-include-$include.tpl"}
 
 <br style="clear:both" />
