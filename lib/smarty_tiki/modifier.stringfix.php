@@ -8,7 +8,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 /**
  * \brief Smarty modifier plugin to replace strings
  * 
- * $Id $
+ * $Id$
  *
  * - type:     modifier
  * - name:     stringfix
