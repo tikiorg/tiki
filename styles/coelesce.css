@@ -1084,7 +1084,14 @@ tr.odd {background: #dddfdf}
 tr.even {background: #f0f0f0}
 td.odd {background: #dddfdf}
 td.even {background: #f0f0f0}
-td.third {text-align: center}
+
+.normal td.third {
+	padding: 20px 0 5px 20px;
+	font-weight: bold;
+	font-size: 120%;
+	color: #527DA8;
+	background-color: #F7F7F7;
+}
 
 .normal td,
 td.normal,
