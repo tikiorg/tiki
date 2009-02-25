@@ -748,6 +748,15 @@ function wikiplugin_image( $data, $params, $offset, $parseOptions='' ) {
         $imgdata["src"] .= "&max=" . $scalesize;
       }
     }
+    // If we don't have a description or data for a caption, try to use image's description.
+    if( $imgdata["descoptions"] != "off" ) {
+      if( empty($imgdata["desc"]) and empty($data) ) {
+        require_once('lib/filegals/filegallib.php');
+
+        $file_info = $filegallib->get_file_info($imgdata["fileId"]);
+        if( !empty($file_info["description"]) ) $imgdata["desc"] = $file_info["description"];
+      }
+    }
 	}
 	if ( !empty($imgdata["width"]) ) $imgdata_dim .= ' width="' . $imgdata["width"] . '"';
 	if ( !empty($imgdata["height"]) ) $imgdata_dim .= ' height="' . $imgdata["height"] . '"';
@@ -761,7 +770,9 @@ function wikiplugin_image( $data, $params, $offset, $parseOptions='' ) {
     }
     // For image galleries, try to determine width and height of image if both have not been provided
     if( empty($imgdata["width"]) or empty($imgdata["height"]) ) {
-      global $imagegallib; include_once('lib/imagegals/imagegallib.php');
+      global $imagegallib;
+      include_once('lib/imagegals/imagegallib.php');
+
       if (isset($original) && $original == 'y') {
         $imagedata = $imagegallib->get_image($imgdata["id"], 'o');
         $info = $imagegallib->get_image_info($imgdata["id"], 'o');
@@ -795,8 +806,10 @@ function wikiplugin_image( $data, $params, $offset, $parseOptions='' ) {
       $imgdata["src"] .= "&scalesize=" . $scalesize;
     }
     // If we don't have a description or data for a caption, try to use image's description.
-    if( empty($imgdata["desc"]) and empty($data) ) {
-      if( !empty($info["description"]) ) $imgdata["desc"] = $info["description"];
+    if( $imgdata["descoptions"] != "off" ) {
+      if( empty($imgdata["desc"]) and empty($data) ) {
+        if( !empty($info["description"]) ) $imgdata["desc"] = $info["description"];
+      }
     }
   } // if ( ereg('^.*show_image.php\?', $imgdata["src"]) ) 
 
