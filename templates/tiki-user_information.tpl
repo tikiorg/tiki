@@ -31,7 +31,7 @@
   <tr><td class="form">{tr}Email{/tr}:</td><td>{$userinfo.email}</td></tr>
 {/if}  
 {if !empty($country) and $country != 'Other'}
-  <tr><td class="form">{tr}Country{/tr}:</td><td>{$userinfo.login|countryflag} {tr}{$country}{/tr}</td></tr>
+  <tr><td class="form">{tr}Country{/tr}:</td><td>{$userinfo.login|countryflag} {tr}{$country|stringfix}{/tr}</td></tr>
 {/if}
   {if $prefs.change_theme ne 'n'}<tr><td class="form">{tr}Theme{/tr}:</td><td>{$user_style}</td></tr>{/if}
   {if $prefs.change_language eq 'y'}<tr><td  class="form">{tr}Language{/tr}:</td><td>{$user_language}</td></tr>{/if}
