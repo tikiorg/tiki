@@ -1561,10 +1561,24 @@ img.articleimage {
 	padding:2px 0;
 	margin-bottom:10px}
 
-div.articletrailer {text-align: right}
-div.articletrailer .wikitopline {float: left} 
-.trailer {}
-.trailer:hover {}
+div.articletrailer {
+	position: relative;
+	text-align: right;
+	margin-top: 1.1em}
+	
+div.articletrailer img {}
+
+div.article .status {
+	position: absolute;
+	left: 0}
+
+div.articletrailer span {margin-left: 45%; margin-right: 55%}
+
+div.article .actions {
+	position: absolute;
+	right: 0;
+	top: 0}
+
 div.articlebody {}
 
 div.articlesource {
