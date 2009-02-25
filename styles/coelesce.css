@@ -236,9 +236,8 @@ ul.jumplinks a:active {
 	position: relative}
 	
 body.tiki_wiki #c1c2 #wrapper #col1 > .content {position: relative}
-	
-/* body.tiki_wiki #c1c2 #wrapper #col1 > .content {background: none}
-*/
+body.tiki_cms #tiki-center {background: none !important}
+
 #c1c2 #col2 {
 	width: 230px;
 	overflow: visible;}
@@ -1415,6 +1414,7 @@ div.articletitle {
 span.titlea {
 	display: block;
 	min-height: 26px;
+	background: url(coelesce/tiki-centerbg.jpg) repeat-x;
 	font-size: 1.8em;
 	font-weight: bold;
 	margin: 0;
