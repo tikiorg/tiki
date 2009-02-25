@@ -99,9 +99,11 @@ if (isset($_REQUEST["looksetup"]) || (!empty($_REQUEST['site_style']) && $_REQUE
 	'feature_endbody_code',
 	'users_prefs_theme',
 	'jquery_effect',
-    'jquery_effect_tabs',
     'jquery_effect_direction',
     'jquery_effect_speed',
+    'jquery_effect_tabs',
+    'jquery_effect_tabs_direction',
+    'jquery_effect_tabs_speed',
     );
 
     foreach ($pref_simple_values as $svitem) {

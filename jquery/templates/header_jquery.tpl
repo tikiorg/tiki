@@ -28,9 +28,11 @@ $jq = $; $ = $old; $old = false;
 var jqueryTiki = new Object();
 jqueryTiki.ui = {if isset($prefs.feature_jquery_ui) and $prefs.feature_jquery_ui eq 'y'}true{else}false{/if}; // included UI lib?
 jqueryTiki.effect = "{$prefs.jquery_effect}";	// Default effect
-jqueryTiki.effect_tabs = "{$prefs.jquery_effect_tabs}";	// Different effect for tabs
 jqueryTiki.effect_direction = "{$prefs.jquery_effect_direction}";	// 'horizontal' | 'vertical' etc
 jqueryTiki.effect_speed = "{$prefs.jquery_effect_speed}";	// 'slow' | 'normal' | 'fast' | milliseconds (int) ]
+jqueryTiki.effect_tabs = "{$prefs.jquery_effect_tabs}";	// Different effect for tabs
+jqueryTiki.effect_tabs_direction = "{$prefs.jquery_effect_tabs_direction}";
+jqueryTiki.effect_tabs_speed = "{$prefs.jquery_effect_tabs_speed}";
 
 
 //--><!]]>

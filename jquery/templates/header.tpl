@@ -137,10 +137,10 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 <!-- Includes for Shadowbox script -->
 	<link rel="stylesheet" type="text/css" href="lib/shadowbox/build/css/shadowbox.css" />
 
-{if $prefs.feature_mootools eq "y"}
-	<script type="text/javascript" src="lib/shadowbox/build/js/adapter/shadowbox-mootools.js" charset="utf-8"></script>
-{elseif $prefs.feature_jquery eq "y"}
+{if $prefs.feature_jquery eq "y"}
 	<script type="text/javascript" src="lib/shadowbox/build/js/adapter/shadowbox-jquery.js" charset="utf-8"></script>
+{elseif $prefs.feature_mootools eq "y"}
+	<script type="text/javascript" src="lib/shadowbox/build/js/adapter/shadowbox-mootools.js" charset="utf-8"></script>
 {/if}
 
 	<script type="text/javascript" src="lib/shadowbox/build/js/shadowbox.js" charset="utf-8"></script>

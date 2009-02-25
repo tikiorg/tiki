@@ -1144,12 +1144,13 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_jquery_ui' => 'y',			// include UI lib for more effects
 		'jquery_effect' => '',				// Default effect for general show/hide: ['' | 'slide' | 'fade' | and
 											// see http://docs.jquery.com/UI/Effects: 'blind' | 'clip' | 'explode' etc]
-		'jquery_effect_tabs' => 'none',			// Different effect for tabs (['none' | 'normal' (for jq) | 'slide' etc]
-		'jquery_effect_direction' => 'vertical',
-									// ['horizontal' | 'vertical' | 'left' | 'right' | 'up' | 'down' ]
-		'jquery_effect_speed' => 'fast',
-									// ['slow' | 'normal' | 'fast' | milliseconds (int) ]
-	
+		'jquery_effect_direction' => '', 	// ['horizontal' | 'vertical' | 'left' | 'right' | 'up' | 'down' ]
+		'jquery_effect_speed' => 'normal', 	// ['slow' | 'normal' | 'fast' | milliseconds (int) ]
+
+		'jquery_effect_tabs' => 'slide',	// Different effect for tabs (['none' | 'normal' (for jq) | 'slide' etc]
+		'jquery_effect_tabs_direction' => 'vertical',
+		'jquery_effect_tabs_speed' => 'fast',
+
 		// TikiTests
 		'feature_tikitests' => 'n',
 

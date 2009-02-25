@@ -1,14 +1,14 @@
-// $Id:  $
+// $Id$
 // JavaScript glue for JQuery (1.2.6) in TikiWiki (3.0)
 
 var $jq = jQuery.noConflict();
 
-jQuery(document).ready( function() {// JQuery's DOM is ready event - before onload
+$jq(document).ready( function() { // JQuery's DOM is ready event - before onload
 
 	// override existing show/hide routines here
 	show = function (foo,f,section) {
 		if ($jq("#" + foo).hasClass("tabcontent")) {
-			showJQ("#" + foo, jqueryTiki.effect_tabs, jqueryTiki.effect_speed, jqueryTiki.effect_direction);
+			showJQ("#" + foo, jqueryTiki.effect_tabs, jqueryTiki.effect_tabs_speed, jqueryTiki.effect_tabs_direction);
 		} else {
 			showJQ("#" + foo, jqueryTiki.effect, jqueryTiki.effect_speed, jqueryTiki.effect_direction);
 		}
@@ -17,7 +17,7 @@ jQuery(document).ready( function() {// JQuery's DOM is ready event - before onlo
 	
 	hide = function (foo,f, section) {
 		if ($jq("#" + foo).hasClass("tabcontent")) {
-			hideJQ("#" + foo, jqueryTiki.effect_tabs, jqueryTiki.effect_speed, jqueryTiki.effect_direction);
+			hideJQ("#" + foo, jqueryTiki.effect_tabs, jqueryTiki.effect_tabs_speed, jqueryTiki.effect_tabs_direction);
 		} else {
 			hideJQ("#" + foo, jqueryTiki.effect, jqueryTiki.effect_speed, jqueryTiki.effect_direction);
 		}
@@ -29,6 +29,37 @@ jQuery(document).ready( function() {// JQuery's DOM is ready event - before onlo
 			}
 		}
 	}
+	
+	// flip function... unfortunately didn't use show/hide (ay?)
+	
+	flip = function (foo,style) {
+		if ($jq("#" + foo).css("display") == "none") {
+			show(foo);
+			setCookie('show_' + escape(foo),'y');
+		} else {
+			hide(foo);
+			setCookie('show_' + escape(foo), 'n');
+		}
+	}
+
+	/* toggle CSS (tableless) layout columns */
+	toggleCols = function (id,zeromargin,maincol) {	// TODO (it properly!)
+		var showit = 'show_' + escape(id);
+		if (!zeromargin) zeromargin = '';
+		if (!id) id = '';
+		if (!maincol) maincol = 'col1';
+		if (document.getElementById(id).style.display == "none") {
+			show(id);
+			setCookie(showit,'y');
+		} else {
+			hide(id);
+			setCookie(showit,'n');
+		}
+	}
+
+
+	
+	// handle JQ effects
 	
 	showJQ = function (selector, effect, speed, dir) {
 		if (effect == 'none') {
