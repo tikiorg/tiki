@@ -88,7 +88,8 @@ function get_default_prefs() {
 		'feature_wiki_userpage' => 'y',
 		'feature_wiki_userpage_prefix' => 'UserPage',
 		'feature_wiki_usrlock' => 'n',
-		'feature_wiki_save_draft' => 'n', // Broken in 2.0 RC2 http://dev.tikiwiki.org/wish1888
+		'feature_wiki_feedback_polls' => array(),
+		'feature_wiki_save_draft' => 'n',
 		'feature_wikiwords' => 'n',
 		'feature_wikiwords_usedash' => 'y',
 		'feature_wiki_pagealias' => 'y',
@@ -1138,13 +1139,16 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'thumbSizeYGalleries' => '',
 		'wiki_3d_adjust_camera' => 'true',
 		'wiki_3d_autoload' => '',
-		'feature_sefurl' => 'n',
-		'feature_sefurl_filter' => 'n',
 		'feature_mootools' => 'y', // Needed for shadowbox
 		'javascript_enabled' => 'n',
 		'feature_comments_post_as_anonymous' => 'n',
 		'feature_comments_moderation' => 'n',
 		'feature_template_zoom' => 'y',
+
+		// SefUrl
+		'feature_sefurl' => 'n',
+		'feature_sefurl_filter' => 'n',
+		'feature_sefurl_paths' => array(),
 
 		// TikiTests
 		'feature_tikitests' => 'n',

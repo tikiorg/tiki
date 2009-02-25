@@ -97,7 +97,7 @@ For more information:
 		$use_best_language = true;
 	}
 }
-$use_best_language = $use_best_language || isset($_REQUEST['bl']) || isset($_REQUEST['best_lang']);
+$use_best_language = $use_best_language || isset($_REQUEST['bl']) || isset($_REQUEST['best_lang']) || isset($_REQUEST['switchLang']);
 
 $info = null;
 if ($prefs['feature_multilingual'] == 'y' && $use_best_language && !empty($_REQUEST['page'])) { // chose the best language page
