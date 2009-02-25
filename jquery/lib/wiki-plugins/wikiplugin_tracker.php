@@ -216,7 +216,11 @@ function wikiplugin_tracker($data, $params) {
 			if ($perms['tiki_p_create_tracker_items'] == 'n' && empty($itemId)) {
 				return '<b>'.tra("You do not have permission to insert an item").'</b>';
 			} elseif ($perms['tiki_p_modify_tracker_items'] == 'n' && !empty($itemId)) { 
-				return '<b>'.tra("You do not have permission to modify an item").'</b>';
+				if ($tracker['writerGroupCanModify'] == 'y' && in_array($trklib->get_item_group_creator($trackerId, $itemId), $tikilib->get_user_groups($user))) {
+					global $group;
+					$smarty->assign_by_ref('ours', $group);
+				} else 
+					return '<b>'.tra("You do not have permission to modify an item").'</b>';
 			}
 		}
 	}

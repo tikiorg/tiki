@@ -10,7 +10,7 @@
 // RULE2: put array() in default prefs for serialized values
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if ( basename($_SERVER['SCRIPT_NAME']) == basename(__FILE__) ) {
   header("location: index.php");
   exit;
 }
@@ -182,6 +182,7 @@ function get_default_prefs() {
 		'wikiplugin_cookie' => 'y',
 		'wikiplugin_copyright' => 'y',
 		'wikiplugin_countdown' => 'y',
+		'wikiplugin_dbreport' => 'n',
 		'wikiplugin_div' => 'y',
 		'wikiplugin_dl' => 'y',
 		'wikiplugin_equation' => 'y',
@@ -198,6 +199,7 @@ function get_default_prefs() {
 		'wikiplugin_gauge' => 'y',
 		'wikiplugin_googleanalytics' => 'n',
 		'wikiplugin_group' => 'y',
+		'wikiplugin_html' => 'y',
 		'wikiplugin_iframe' => 'n',
 		'wikiplugin_image' => 'y',
 		'wikiplugin_include' => 'y',
@@ -499,8 +501,10 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_minical' => 'n',
 		'feature_notepad' => 'n',
 		'feature_userfiles' => 'n',
+		'feature_community_gender' => 'n',
 		'feature_community_mouseover' => 'n',
 		'feature_community_mouseover_name' => 'y',
+		'feature_community_mouseover_gender' => 'y',
 		'feature_community_mouseover_picture' => 'y',
 		'feature_community_mouseover_friends' => 'y',
 		'feature_community_mouseover_score' => 'y',
@@ -549,6 +553,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'users_prefs_mytiki_forum_topics' => 'y',
 		'users_prefs_mytiki_forum_replies' => 'y',
 		'users_prefs_realName' => '',
+		'users_prefs_gender' => '',
 		'users_prefs_show_mouseover_user_info' => 'n',
 		'users_prefs_tasks_maxRecords' => '10',
 		'users_prefs_user_dbl' => 'n',

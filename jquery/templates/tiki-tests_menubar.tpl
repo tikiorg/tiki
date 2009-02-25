@@ -1,8 +1,3 @@
-{php}
-	$this->assign("tidy",extension_loaded("tidy"));
-	$this->assign("http",extension_loaded("http"));
-	$this->assign("curl",extension_loaded("curl"));
-{/php}
 {if !$tidy}
 {remarksbox type="warning" title="{tr}Warning{/tr}"}{tr}Tidy extension not present{/tr}{/remarksbox}
 {/if}
