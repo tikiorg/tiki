@@ -2,7 +2,7 @@
 
 <table class="admin"><tr><td>
 
-<div align="center" style="margin:1em;"><input type="submit" value=" {tr}Change Preferences{/tr} " /></div>
+<div align="center" style="margin:1em;"><input type="submit" value=" {tr}Change Preferences{/tr} " name="mouseoverfeatures" /></div>
 
 <fieldset><legend>{tr}User Information{/tr}</legend>
 <div style="padding:0.5em;clear:both">
@@ -41,7 +41,7 @@
 	<div><label for="community-mouseover-email">{tr}E-mail{/tr}</label></div>
 </div>
 <div style="padding:0.5em;clear:both">
-	<div style="float:left;margin-right:1em;"><input type="checkbox" name="feature_community_mouseover_lastlogin" id="community-mouseover-lastlogin"{if $prefs.feature_community_mouseover_lastlogin eq 'y'} hecked="checked"{/if} /></div>
+	<div style="float:left;margin-right:1em;"><input type="checkbox" name="feature_community_mouseover_lastlogin" id="community-mouseover-lastlogin" {if $prefs.feature_community_mouseover_lastlogin eq 'y'}checked="checked"{/if} /></div>
 	<div><label for="community-mouseover-lastlogin">{tr}Last login{/tr}</label></div>
 </div>
 <div style="padding:0.5em;clear:both">
@@ -91,7 +91,7 @@
 {/if}
 </fieldset>
 
-<div align="center" style="margin:1em;"><input type="submit" name="modulesetup" value=" {tr}Change Preferences{/tr} " class="button" /></div>
+<div align="center" style="margin:1em;"><input type="submit" name="listfeatures" value=" {tr}Change Preferences{/tr} " class="button" /></div>
 
 </td></tr></table>
 
