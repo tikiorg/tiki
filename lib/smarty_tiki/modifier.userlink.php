@@ -98,7 +98,7 @@ function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set',
 					$gender = $userlib->get_user_preference($other_user, "gender");
 					if (!empty($gender) && $gender != 'Hidden') {
 						$content .= tra('Gender:').'&nbsp;';
-						$content .= $gender.'<br />';
+						$content .= tra($gender).'<br />';
 					}
 				}
 			    if ($prefs['feature_community_mouseover_friends'] == 'y' && $prefs['feature_friends'] == 'y') {
