@@ -1,1 +1,1 @@
- | {tr}Theme{/tr}: <a href="http://themes.tikiwiki.org">Feb12</a>
+ | {tr}Theme{/tr}: Feb12
