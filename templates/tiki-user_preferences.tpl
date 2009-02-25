@@ -55,15 +55,15 @@
       </td>
     </tr>
 
-    {* this should be optional
+	{if $prefs.feature_community_gender eq 'y'}
       <tr><td class="{cycle advance=false}">{tr}Gender{/tr}:</td>
         <td class="{cycle}">
-          <input type="radio" name="gender" value="Male" {if $gender eq 'Male'}checked="checked"{/if}/> {tr}Male{/tr}
-          <input type="radio" name="gender" value="Female" {if $gender eq 'Female'}checked="checked"{/if}/> {tr}Female{/tr}
-          <input type="radio" name="gender" value="Hidden" {if $gender ne 'Male' and $gender ne 'Female'}checked="checked"{/if}/> {tr}Hidden{/tr}
+          <input type="radio" name="gender" value="Male" {if $user_prefs.gender eq 'Male'}checked="checked"{/if}/> {tr}Male{/tr}
+          <input type="radio" name="gender" value="Female" {if $user_prefs.gender eq 'Female'}checked="checked"{/if}/> {tr}Female{/tr}
+          <input type="radio" name="gender" value="Hidden" {if $user_prefs.gender ne 'Male' and $user_prefs.gender ne 'Female'}checked="checked"{/if}/> {tr}Hidden{/tr}
         </td>
       </tr>
-    *}
+	{/if}
 
     <tr>
       <td class="{cycle advance=false}">{tr}Country{/tr}:</td>

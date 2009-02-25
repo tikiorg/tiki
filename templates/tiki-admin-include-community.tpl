@@ -2,10 +2,14 @@
 
 <table class="admin"><tr><td>
 
-<div align="center" style="margin:1em;"><input type="submit" value=" {tr}Change Preferences{/tr} " name="mouseoverfeatures" /></div>
+<div align="center" style="margin:1em;"><input type="submit" value=" {tr}Change Preferences{/tr} " name="userfeatures" /></div>
 
 <fieldset><legend>{tr}User Information{/tr}</legend>
 <div style="padding:0.5em;clear:both">
+	<div style="float:left;margin-right:1em;"><input type="checkbox" name="feature_community_gender" id="community-gender" {if $prefs.feature_community_gender eq 'y'}checked="checked" {/if}/></div>
+	<div><label for="community-gender">{tr}Users can choose to show their gender{/tr}.</label>
+	{if $prefs.feature_help eq 'y'}<br /><em>{tr}Requires User Preferences feature{/tr}.</em> {help url="User+Preferences"}{/if}
+	</div>
 	<div style="float:left;margin-right:1em;"><input type="checkbox" onclick="flip('userinformation');" name="feature_community_mouseover" id="community-mouseover" {if $prefs.feature_community_mouseover eq 'y'}checked="checked" {/if}/></div>
 	<div><label for="community-mouseover">{tr}Show user's information on mouseover{/tr}.</label>
 	{if $prefs.feature_help eq 'y'}<br /><em>{tr}Requires user's information to be public{/tr}.</em> {help url="User+Preferences"}{/if}
@@ -14,6 +18,10 @@
 <div style="padding:0.5em;clear:both">
 	<div style="float:left;margin-right:1em;"><input type="checkbox" name="feature_community_mouseover_name" id="community-mouseover-name"{if $prefs.feature_community_mouseover_name eq 'y'} checked="checked"{/if} /></div>
 	<div><label for="community-mouseover-name">{tr}Real name{/tr}</label></div>
+</div>
+<div style="padding:0.5em;clear:both">
+	<div style="float:left;margin-right:1em;"><input type="checkbox" name="feature_community_mouseover_gender" id="community-mouseover-gender"{if $prefs.feature_community_mouseover_gender eq 'y'} checked="checked"{/if} /></div>
+	<div><label for="community-mouseover-gender">{tr}Gender{/tr}</label></div>
 </div>
 <div style="padding:0.5em;clear:both">
 	<div style="float:left;margin-right:1em;"><input type="checkbox" name="feature_community_mouseover_picture" id="community-mouseover-picture" {if $prefs.feature_community_mouseover_picture eq 'y'}checked="checked"{/if} /></div>
@@ -91,7 +99,7 @@
 {/if}
 </fieldset>
 
-<div align="center" style="margin:1em;"><input type="submit" name="listfeatures" value=" {tr}Change Preferences{/tr} " class="button" /></div>
+<div align="center" style="margin:1em;"><input type="submit" name="userlistfeatures" value=" {tr}Change Preferences{/tr} " class="button" /></div>
 
 </td></tr></table>
 

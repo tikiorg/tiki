@@ -38,7 +38,7 @@
   {if $realName }
   <tr><td class="form">{tr}Real Name{/tr}:</td><td>{$realName}</td></tr>
   {/if}
-{if $gender neq 'Hidden' and $gender}
+{if $prefs.feature_community_gender eq 'y' and $gender neq 'Hidden' and $gender}
   <tr><td>{tr}Gender{/tr}:</td><td>{tr}{$gender}{/tr}</td></tr>
 {/if}
 
