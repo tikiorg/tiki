@@ -69,14 +69,14 @@
       <td class="{cycle advance=false}">{tr}Country{/tr}:</td>
       <td class="{cycle}">
         {if isset($user_prefs.country) && $user_prefs.country != "None" && $user_prefs.country != "Other"}
-          <img alt="{tr}{$user_prefs.country}{/tr}" title="{tr}{$user_prefs.country}{/tr}" src="img/flags/{$user_prefs.country}.gif" />
+          {$userinfo.login|countryflag}
         {/if}
         <select name="country">
           <option value="Other" {if $user_prefs.country eq "Other"}selected="selected"{/if}>{tr}Other{/tr}</option>
           {sortlinks}
             {section name=ix loop=$flags}
               {if $flags[ix] ne "Other"}
-                <option value="{$flags[ix]|escape}" {if $user_prefs.country eq $flags[ix]}selected="selected"{/if}>{tr}{$flags[ix]}{/tr}</option>
+                <option value="{$flags[ix]|escape}" {if $user_prefs.country eq $flags[ix]}selected="selected"{/if}>{tr}{$flags[ix]|stringfix}{/tr}</option>
               {/if}
             {/section}
           {/sortlinks}
