@@ -36,9 +36,11 @@ function filter_out_sefurl($tpl_output, &$smarty, $type=null) {
 	foreach ($sefurl_regex_out as $regex) {
 		if (strlen($tpl_output) <= 0) echo ' '.$regex['id'];
 		if (empty($type) || $type == $regex['type']) {
+      // if a question mark in pattern, deal with possible additional terms
+      // The '?&' isn't pretty but seems to work.
       if( strpos($regex['left'],'?') !== FALSE ) {
-        $tpl_output = preg_replace( '/'.$regex['left'].'&/', $regex['right'].'?', $tpl_output );
-      } // if a question mark in pattern, deal with possible additional terms
+        $tpl_output = preg_replace( '/'.$regex['left'].'&/', $regex['right'].'?&', $tpl_output );
+      }
       $tpl_output = preg_replace( '/'.$regex['left'].'/', $regex['right'], $tpl_output );
 		}
 	}
