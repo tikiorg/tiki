@@ -103,7 +103,9 @@ button,
 input[type=reset],
 input[type=submit],
 span.button input,
-.submitbutton {
+.submitbutton,
+.calbuttonoff,
+.calbuttonon {
 	font-family: Verdana, Helvetica, Geneva, Arial, sans-serif;
 	font-size: 94%;
 	font-weight: normal;
@@ -646,6 +648,9 @@ a.flip img {display: none}
 
 .mdkitem a:active {} 
 
+#col2 .mdkitem a {color: #006699}
+#col2 .mdkitem a:hover {color: #000}
+
 /* Tree menu (also on Browse Categories */
 .treemenudiv {
 	display: block;
@@ -987,7 +992,7 @@ a.flipmodtitle:hover img {border: 1px solid #58A7D2 !important}
 #col2 .box-title a,
 #col2 .box-title a:link {}
 .box-title a:hover {}
-.box-data {padding: 0 5px 10px 5px}
+.box-data {padding: 0 5px 10px 10px}
 
 .box-data ol,
 .box-data ul {}
@@ -1001,7 +1006,7 @@ a.flipmodtitle:hover img {border: 1px solid #58A7D2 !important}
 	float: right;
 	width: 64px;
 	height: 16px}
-
+	
 /** Other boxes **/
 div.cbox {border: 1px solid #1b3a50}
 
