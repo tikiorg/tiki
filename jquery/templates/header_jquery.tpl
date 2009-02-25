@@ -1,32 +1,40 @@
 {* $Id: $ *}
 
 <!--  start jquery-tiki -->
-{if 1}{* set to "if 0" to debug *}<script type="text/javascript" src="lib/jquery/jquery.min.js"></script>{else}
-<script type="text/javascript" src="lib/jquery/jquery.js"></script>{/if}
+{if !isset($jqdebug)}{assign var=jqdebug value=false}{/if}
+{if $jqdebug}<script type="text/javascript" src="lib/jquery/jquery.js"></script>{else}
+<script type="text/javascript" src="lib/jquery/jquery.min.js"></script>{/if}
 <script type="text/javascript" src="lib/jquery_tiki/tiki-jquery.js"></script>
-{if isset($prefs.feature_jquery_ui) and $prefs.feature_jquery_ui eq 'y'}{* TODO optimise so not including all *}
 <script type="text/javascript">
 <!--//--><![CDATA[//><!--
 // Save $ as it's used for moo
 var $old = $; $ = $jq;
 //--><!]]>
 </script>
-{if 1}{* set to "if 0" to debug *}<script type="text/javascript" src="lib/jquery/jquery.ui/ui/minified/jquery.ui.all.min.js"></script>{else}
-<script type="text/javascript" src="lib/jquery/jquery.ui/ui/jquery.ui.all.js"></script>{/if}
+{if $prefs.feature_jquery_ui eq 'y'}{* TODO optimise so not including all - maybe *}
+{if $jqdebug}<script type="text/javascript" src="lib/jquery/jquery.ui/ui/jquery.ui.all.js"></script>{else}
+<script type="text/javascript" src="lib/jquery/jquery.ui/ui/minified/jquery.ui.all.min.js"></script>{/if}
+{/if}
+{if $prefs.feature_jquery_tooltips eq 'y'}
+<script type="text/javascript" src="lib/jquery/cluetip/jquery.dimensions.js"></script>
+<script type="text/javascript" src="lib/jquery/cluetip/jquery.hoverIntent.js"></script>
+<script type="text/javascript" src="lib/jquery/cluetip/jquery.cluetip.js"></script>
+<link rel="stylesheet" href="lib/jquery/cluetip/jquery.cluetip.css" type="text/css" /> 
+{/if}
 <script type="text/javascript">
 <!--//--><![CDATA[//><!--
 // Restore $
 $jq = $; $ = $old; $old = false;
 //--><!]]>
 </script>
-{/if}
 
 <script type="text/javascript">
 <!--//--><![CDATA[//><!--
 
 {* Object to hold prefs for jq *}
 var jqueryTiki = new Object();
-jqueryTiki.ui = {if isset($prefs.feature_jquery_ui) and $prefs.feature_jquery_ui eq 'y'}true{else}false{/if}; // included UI lib?
+jqueryTiki.ui = {if $prefs.feature_jquery_ui eq 'y'}true{else}false{/if};		// included UI lib?
+jqueryTiki.tooltips = {if $prefs.feature_jquery_tooltips eq 'y'}true{else}false{/if};	// included clueTip lib?
 jqueryTiki.effect = "{$prefs.jquery_effect}";	// Default effect
 jqueryTiki.effect_direction = "{$prefs.jquery_effect_direction}";	// 'horizontal' | 'vertical' etc
 jqueryTiki.effect_speed = "{$prefs.jquery_effect_speed}";	// 'slow' | 'normal' | 'fast' | milliseconds (int) ]

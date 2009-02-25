@@ -1155,6 +1155,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'jquery_effect_tabs' => 'slide',	// Different effect for tabs (['none' | 'normal' (for jq) | 'slide' etc]
 		'jquery_effect_tabs_direction' => 'vertical',
 		'jquery_effect_tabs_speed' => 'fast',
+		'feature_jquery_tooltips',					// use JQuery tooltips and override Overlib
 
 		// TikiTests
 		'feature_tikitests' => 'n',

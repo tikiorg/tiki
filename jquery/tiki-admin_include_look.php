@@ -71,6 +71,7 @@ if (isset($_REQUEST["looksetup"]) || (!empty($_REQUEST['site_style']) && $_REQUE
 	"feature_site_send_link",
 	"change_theme",
 	"feature_jquery_ui",
+	"feature_jquery_tooltips",
     );
 
     foreach ($pref_toggles as $toggle) {

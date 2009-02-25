@@ -93,5 +93,9 @@ $jq(document).ready( function() { // JQuery's DOM is ready event - before onload
 		}
 	}
 	
-	
+	// tooltip functions and setup
+	if (jqueryTiki.tooltips) {	// apply "cluetips" to all .tips class anchors
+		$jq('a.tips').cluetip({splitTitle: '|', showTitle: false, width: '150px'});
+		$jq('a.titletips').cluetip({splitTitle: '|'});
+	}
 });

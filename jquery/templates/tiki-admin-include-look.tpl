@@ -706,6 +706,10 @@
 					<input type="checkbox" name="feature_jquery_ui" {if $prefs.feature_jquery_ui eq 'y'}checked="checked"{/if}/>
 					<a href="{$prefs.helpurl}JQuery_UI" target="tikihelp" class="tikihelp" title="{tr}JQuery UI: More JQuery functionality{/tr}"> {tr}JQuery UI{/tr}</a>
 				</div>
+				<div class="clear floatleft">
+					<input type="checkbox" name="feature_jquery_tooltips" {if $prefs.feature_jquery_tooltips eq 'y'}checked="checked"{/if}/>
+					<a href="{$prefs.helpurl}JQuery_UI" target="tikihelp" class="tikihelp" title="{tr}JQuery Tooltips: Customisable help tips{/tr}"> {tr}JQuery tooltips{/tr}</a>
+				</div>
 			</fieldset>
 			<fieldset>
 				<legend>
