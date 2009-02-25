@@ -8,7 +8,7 @@
  *
  * @package IMAGE plugin.
  * @author Scot E. Wilcoxon <scot@wilcoxon.org>
- * @version 1.3
+ * @version 1.4
  *
  * 2008-12-08 SEWilco
  *   Initial version.
@@ -18,6 +18,7 @@
  * Add descoptions - description option control
  * 2009-02-24 SEWilco
  * Dark border.  Higher priority rules at end of list.
+ * Add fileId support.
  * 
  * Copyright (c) 2002-2009, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
  * All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -49,7 +50,6 @@ function wikiplugin_image_help() {
 [ style="CSS styling to apply to the plugin. (Usually used in configuration rather than on individual images.)" ]
 [ border="Border configuration.  Values "on" and "off" control visibility, or else specify CSS styling options. (Usually used in configuration rather than on individual images.)" ]
 [ descoptions="Description configuration.  Values "on" and "off" control visibility, or else specify CSS styling options. (Usually used in configuration rather than on individual images.)" ]
-[ test=""true" to test combinations of parameters for which no values were given. Does not test imagemap and class. (Admin users only)" ]
 )}{IMAGE}~/np~';
 }
 
@@ -164,11 +164,6 @@ function wikiplugin_image_info() {
 				'name' => tra('Mandatory configuration'),
 				'description' => tra('Mandatory configuration definitions. (Usually used in configuration rather than on individual images.)'),
 			),
-			"test" => array(
-				'required' => false,
-				'name' => tra('Test mode'),
-				'description' => tra('"true" to test combinations of parameters for which no values were given.  Does not test imagemap and class. (Admin users only)'),
-			),
 		),
 	);
 }
@@ -262,7 +257,6 @@ function wikiplugin_image( $data, $params, $offset, $parseOptions='' ) {
 	$imgdata["descoptions"] = '';
 	$imgdata["default"] = '';
 	$imgdata["mandatory"] = '';
-	$imgdata["test"] = '';
 
 	/*
 	** Define default parameters here.
@@ -644,104 +638,6 @@ function wikiplugin_image( $data, $params, $offset, $parseOptions='' ) {
     return "''no image''";
   }
 
-  // If test mode, call this plugin with combinations of options.
-  // Test mode uses way too much CPU.
-  if( (!empty($imgdata["test"])) and ($imgdata["test"] != 'true_add_text') ) {
-    global $tiki_p_admin;
-
-    if ($tiki_p_admin != 'y') {
-      return "\nIMAGE(test): " . tra("You do not have permission to use IMAGE test option.");
-    }
-
-    $repl = '';
-    $test_separator .= "\n\r<br style=\"clear:both\" />\r<hr>\n"; // separate each test section
-
-    if( empty($imgdata["scalesize"]) ) {
-      $imgdata["scalesize"] = '200';
-      $repl .= wikiplugin_image( $data . ' (scalesize)', $imgdata, $offset, $parseOptions );
-      $repl .= $test_separator;
-      $imgdata["scalesize"] = '';
-    }
-    if( empty($imgdata["height"]) ) {
-      $imgdata["height"] = '200';
-      $repl .= wikiplugin_image( $data . ' (height)', $imgdata, $offset, $parseOptions );
-      $repl .= $test_separator;
-      $imgdata["height"] = '';
-    }
-    if( empty($imgdata["width"]) ) {
-      $imgdata["width"] = '200';
-      $repl .= wikiplugin_image( $data . ' (width)', $imgdata, $offset, $parseOptions );
-      $repl .= $test_separator;
-      $imgdata["width"] = '';
-    }
-    if( empty($imgdata["lnk"]) ) {
-      $imgdata["lnk"] = 'http://www.example.com/';
-      $repl .= wikiplugin_image( $data . ' (lnk)', $imgdata, $offset, $parseOptions );
-      $repl .= $test_separator;
-      $imgdata["lnk"] = '';
-    }
-    if( empty($imgdata["rel"]) ) {
-      $imgdata["rel"] = 'next';
-      $repl .= wikiplugin_image( $data . ' (rel)', $imgdata, $offset, $parseOptions );
-      $repl .= $test_separator;
-      $imgdata["rel"] = '';
-    }
-    if( empty($imgdata["title"]) ) {
-      $imgdata["title"] = 'This is a test title.';
-      $repl .= wikiplugin_image( $data . ' (title)', $imgdata, $offset, $parseOptions );
-      $repl .= $test_separator;
-      $imgdata["title"] = '';
-    }
-    if( empty($imgdata["align"]) ) {
-      $imgdata["align"] = 'left';
-      $imgdata["test"] = 'true_add_text';  // force subtests to add surrounding text
-      $repl .= wikiplugin_image( $data . ' (align left)', $imgdata, $offset, $parseOptions );
-      $repl .= $test_separator;
-      $imgdata["align"] = 'right';
-      $imgdata["test"] = 'true_add_text';  // force subtests to add surrounding text
-      $repl .= wikiplugin_image( $data . ' (align right)', $imgdata, $offset, $parseOptions );
-      $repl .= $test_separator;
-      $imgdata["test"] = true;  // restore normal test mode
-      $imgdata["align"] = '';
-    }
-    if( empty($imgdata["block"]) ) {
-      $imgdata["block"] = 'top';
-      $imgdata["test"] = 'true_add_text';  // force subtests to add surrounding text
-      $repl .= wikiplugin_image( $data . ' (block top)', $imgdata, $offset, $parseOptions );
-      $repl .= $test_separator;
-      $imgdata["block"] = 'bottom';
-      $imgdata["test"] = 'true_add_text';  // force subtests to add surrounding text
-      $repl .= wikiplugin_image( $data . ' (block bottom)', $imgdata, $offset, $parseOptions );
-      $repl .= $test_separator;
-      $imgdata["block"] = 'both';
-      $imgdata["test"] = 'true_add_text';  // force subtests to add surrounding text
-      $repl .= wikiplugin_image( $data . ' (block both)', $imgdata, $offset, $parseOptions );
-      $repl .= $test_separator;
-      $imgdata["block"] = 'none';
-      $imgdata["test"] = 'true_add_text';  // force subtests to add surrounding text
-      $repl .= wikiplugin_image( $data . ' (block none)', $imgdata, $offset, $parseOptions );
-      $repl .= $test_separator;
-      $imgdata["test"] = true;  // restore normal test mode
-      $imgdata["clear"] = '';
-    }
-    if( empty($imgdata["desc"]) ) {
-      $imgdata["desc"] = 'This is a test description.';
-      $repl .= wikiplugin_image( $data . ' (desc)', $imgdata, $offset, $parseOptions );
-      $repl .= $test_separator;
-      $imgdata["desc"] = '';
-    }
-    if( empty($imgdata["alt"]) ) {
-      $imgdata["alt"] = 'This is an alt description.';
-      $repl .= wikiplugin_image( $data . ' (alt)', $imgdata, $offset, $parseOptions );
-      $repl .= $test_separator;
-      $imgdata["alt"] = '';
-    }
-
-    $imgdata["test"] = '';  // remove test mode now that it is done.
-    return $repl;
-  } // if( (!empty($imgdata["test"])) and ($imgdata["test"] == 'true') )
-
-
 	// If an image gallery ID was given expand it into a URL
 	if ( !empty($imgdata['id']) ) {
 		$imgdata['src'] = "show_image.php?id=" . $imgdata['id'];
@@ -753,7 +649,7 @@ function wikiplugin_image( $data, $params, $offset, $parseOptions='' ) {
 
 	// If a file gallery ID was given expand it into a URL
 	if ( !empty($imgdata['fileId']) ) {
-		$imgdata['src'] = "tiki-download_file.php?fileId=" . $imgdata['fileId'] . "&display";
+		$imgdata['src'] = "tiki-download_file.php?fileId=" . $imgdata['fileId'] . "&preview=y";
 	}
 	
 	// Support both 'imalign' and 'align' syntax
@@ -847,6 +743,11 @@ function wikiplugin_image( $data, $params, $offset, $parseOptions='' ) {
 		//
 		if ( (int)$imgdata["width"] > 0 && ctype_digit($imgdata["width"]) ) $imgdata["src"] .= '&amp;x='.$imgdata["width"];
 		if ( (int)$imgdata["height"] > 0 && ctype_digit($imgdata["height"]) ) $imgdata["src"] .= '&amp;y='.$imgdata["height"];
+    if( $scalesize > 0 ) {
+      if( empty($imgdata["width"]) && empty($imgdata["height"]) ) {
+        $imgdata["src"] .= "&max=" . $scalesize;
+      }
+    }
 	}
 	if ( !empty($imgdata["width"]) ) $imgdata_dim .= ' width="' . $imgdata["width"] . '"';
 	if ( !empty($imgdata["height"]) ) $imgdata_dim .= ' height="' . $imgdata["height"] . '"';
@@ -1002,17 +903,6 @@ function wikiplugin_image( $data, $params, $offset, $parseOptions='' ) {
 	if( (!empty($imgdata["width"])) and (ctype_digit($imgdata["width"])) ) $scalesize = $imgdata["width"];
 	if( (!empty($imgdata["height"])) and (ctype_digit($imgdata["height"])) ) {
   } // if( !empty($imgdata["block"]) )
-
-  if( (!empty($imgdata["test"])) and ($imgdata["test"] == 'true_add_text') ) {
-    $leftside_test_text = "The quick brown fox jumped over the lazy dog.";
-    $repl = "BEFORE IMAGE. " . $leftside_test_text . " " . $leftside_test_text . " " . $leftside_test_text . " " . $leftside_test_text . " BEFORE IMAGE.\n" . $repl;
-  } // if( (!empty($imgdata["test"])) and ($imgdata["test"] == 'true_add_text') )
-
-  if( (!empty($imgdata["test"])) and ($imgdata["test"] == 'true_add_text') ) {
-    $rightside_test_text = "Now is the time for all good men to come to the aid of the party.";
-    $repl .= "\r~/np~\nAFTER IMAGE. " . $rightside_test_text . " " . $rightside_test_text . " " . $rightside_test_text . " " . $rightside_test_text . " AFTER IMAGE.~np~";
-    $imgdata["test"] = '';  // remove test mode so there won't be a fatal loop
-  } // if( (!empty($imgdata["test"])) and ($imgdata["test"] == 'true_add_text') )
 
   // Wrap the whole thing
   if($_REQUEST['mode']!="mobile") {
