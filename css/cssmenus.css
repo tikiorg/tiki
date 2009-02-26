@@ -92,7 +92,7 @@
 .cssmenu li ul,
 .cssmenu_horiz li ul,
 .cssmenu_vert li ul {
-	border: 1px solid #acccdd;
+	/*border: 1px solid #acccdd;*/
 	background: #fff}
 
 /* selected and selected ascendant */
@@ -121,7 +121,6 @@
 .cssmenu_vert a:hover,	
 .cssmenu_horiz a:hover {/*color: darkviolet*/}
 
-.cssmenu > li.more > a {background: url(../lib/phplayers/images/down-galaxy.png) 100% 80% no-repeat}
 * html .cssmenu li ul a {background: none}
 
 /* Top-item (menuSection) link background arrow img */
@@ -132,6 +131,8 @@
 .menuSection3 > a {background: url(../lib/phplayers/images/forward-galaxy.png) 94% center no-repeat !important}
 
 .cssmenu_horiz .menuSection0 > a {background: url(../lib/phplayers/images/down-galaxy.png)  85% 65% no-repeat}
+.cssmenu_horiz .menuLevel0 > a {background: none !important}
+.cssmenu_horiz .menuLevel0 > li {background: none !important}
 
 div#col2,
 td#leftcolumn {overflow: visible !important}
