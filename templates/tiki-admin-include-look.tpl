@@ -717,7 +717,7 @@
 			{if $prefs.feature_tabs neq 'y'}</div>{/if}
 		</fieldset>
 
-		<div class="button clear" style="text-align: center"><input type="submit" name="looksetup" value="{tr}Apply{/tr}" /></div>
+		<div class="input_submit_container clear" style="text-align: center"><input type="submit" name="looksetup" value="{tr}Apply{/tr}" /></div>
 	</form>
 </div><!-- cbox end -->
 {/strip}
