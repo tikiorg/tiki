@@ -353,13 +353,11 @@
 					{* --- Top Bar --- *}
 						<fieldset>
 							<legend>
-								<a href="#">
 								<span>
 									<input type="checkbox" name="feature_top_bar" {if $prefs.feature_top_bar eq 'y'}checked="checked"{/if}/>
-									{tr}Top Bar{/tr}
+								<a href="#"> {tr}Top Bar{/tr}</a>
 								</span>
-								</a>
-							</legend>
+							</legend> 
 							<table class="admin">
 							<tr> 
 								<td class="form">
