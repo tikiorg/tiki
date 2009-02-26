@@ -2385,6 +2385,12 @@ div.minichatchans {overflow: auto !important}
 div.minichatdiv {
   font-size: .9em;
   overflow: auto !important}
+
+body.tiki_mytiki #tiki-center form {border: 1px solid #aaa}
+  
+body.tiki_mytiki #tiki-center form table.normal {
+	border: 0;
+margin: 10px}
  
 /* end of css file */
 
