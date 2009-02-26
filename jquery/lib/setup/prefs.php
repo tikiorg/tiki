@@ -88,7 +88,8 @@ function get_default_prefs() {
 		'feature_wiki_userpage' => 'y',
 		'feature_wiki_userpage_prefix' => 'UserPage',
 		'feature_wiki_usrlock' => 'n',
-		'feature_wiki_save_draft' => 'n', // Broken in 2.0 RC2 http://dev.tikiwiki.org/wish1888
+		'feature_wiki_feedback_polls' => array(),
+		'feature_wiki_save_draft' => 'n',
 		'feature_wikiwords' => 'n',
 		'feature_wikiwords_usedash' => 'y',
 		'feature_wiki_pagealias' => 'y',
@@ -1138,13 +1139,13 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'thumbSizeYGalleries' => '',
 		'wiki_3d_adjust_camera' => 'true',
 		'wiki_3d_autoload' => '',
-		'feature_sefurl' => 'n',
-		'feature_sefurl_filter' => 'n',
 		'feature_mootools' => 'y', // Needed for shadowbox
 		'javascript_enabled' => 'y',	// Needed for MooTools andJQuery
 		'feature_comments_post_as_anonymous' => 'n',
 		'feature_comments_moderation' => 'n',
 		'feature_template_zoom' => 'y',
+		
+		// JQuery
 		'feature_jquery' => 'y',			// Alternative lib for shadowbox etc
 		'feature_jquery_ui' => 'y',			// include UI lib for more effects
 		'jquery_effect' => '',				// Default effect for general show/hide: ['' | 'slide' | 'fade' | and
@@ -1156,6 +1157,11 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'jquery_effect_tabs_direction' => 'vertical',
 		'jquery_effect_tabs_speed' => 'fast',
 		'feature_jquery_tooltips',					// use JQuery tooltips and override Overlib
+
+		// SefUrl
+		'feature_sefurl' => 'n',
+		'feature_sefurl_filter' => 'n',
+		'feature_sefurl_paths' => array(),
 
 		// TikiTests
 		'feature_tikitests' => 'n',

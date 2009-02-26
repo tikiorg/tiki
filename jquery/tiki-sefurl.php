@@ -33,15 +33,19 @@ function filter_out_sefurl($tpl_output, &$smarty, $type=null) {
 			$sefurl_regex_out = unserialize($cachelib->getCached('sefurl_regex_out'));
 		}
 	}
+	foreach ($prefs['feature_sefurl_paths'] as $path) {
+		if (isset($_REQUEST[$path])) {
+			$tpl_output = $_REQUEST[$path]."/$tpl_output";
+		}
+	}
 	foreach ($sefurl_regex_out as $regex) {
-		if (strlen($tpl_output) <= 0) echo ' '.$regex['id'];
 		if (empty($type) || $type == $regex['type']) {
-      // if a question mark in pattern, deal with possible additional terms
-      // The '?&' isn't pretty but seems to work.
-      if( strpos($regex['left'],'?') !== FALSE ) {
-        $tpl_output = preg_replace( '/'.$regex['left'].'&/', $regex['right'].'?&', $tpl_output );
-      }
-      $tpl_output = preg_replace( '/'.$regex['left'].'/', $regex['right'], $tpl_output );
+			// if a question mark in pattern, deal with possible additional terms
+			// The '?&' isn't pretty but seems to work.
+			if( strpos($regex['left'],'?') !== FALSE ) {
+				$tpl_output = preg_replace( '/'.$regex['left'].'&/', $regex['right'].'?&', $tpl_output );
+			}
+			$tpl_output = preg_replace( '/'.$regex['left'].'/', $regex['right'], $tpl_output );
 		}
 	}
 	return $tpl_output;

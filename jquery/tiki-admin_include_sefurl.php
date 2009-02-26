@@ -10,7 +10,11 @@ if (isset($_REQUEST['save'])) {
 	
 	simple_set_toggle('feature_sefurl');
 	simple_set_toggle('feature_sefurl_filter');
+	$_REQUEST['feature_sefurl_paths'] = preg_split('/ *[,\/] */', $_REQUEST['feature_sefurl_paths']);
+	simple_set_value('feature_sefurl_paths');
 }
-
+if (!file_exists('.htaccess')) {
+	$smarty->assign('warning', tra('If you use apache, you need a .htaccess file to have this feature working'));
+}
 ask_ticket('admin-inc-sefurl');
 ?>
