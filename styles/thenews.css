@@ -909,7 +909,7 @@ a.flipmodtitle:hover img {border: 1px solid #AAAAAA !important}
 
 .box-data ul li {list-style: square}
 .cssmenu li, .cssmenu_horiz li, .cssmenu_vert li {list-style: none !important}
-
+.box-data ul.cssmenu_vert {padding: 0}
 .box-since_last_visit_new div.box-data div {
 text-align: left !important}
 
@@ -1402,11 +1402,15 @@ div.code {
 
 /* Quote plugin */
 div.quoteheader {
-	margin-left: 20px;
+	margin-left: 30px;
+	
 }
 
 div.quotebody {
+	margin: 0 15px 10px 30px;
 	font-style: italic;
+	border-left: 5px solid #D3D3D3;
+	padding-left: 6px
 }
 
 table.wikiplugin-split {
