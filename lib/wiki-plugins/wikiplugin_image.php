@@ -8,7 +8,7 @@
  *
  * @package IMAGE plugin.
  * @author Scot E. Wilcoxon <scot@wilcoxon.org>
- * @version 1.6
+ * @version 1.7
  *
  * 2008-12-08 SEWilco
  *   Initial version.
@@ -656,6 +656,7 @@ function wikiplugin_image( $data, $params, $offset, $parseOptions='' ) {
     $id_list = array();
     $id_list = explode(',',$imgdata["fileId"]);
     if( empty($params["align"]) ) $params["align"] = "left";
+    $params["fileid"] = "";
     foreach ($id_list as $i => $value) {
       $params["fileId"] = trim($value);
       $repl .= wikiplugin_image( $data, $params, $offset, $parseOptions );
@@ -944,13 +945,6 @@ function wikiplugin_image( $data, $params, $offset, $parseOptions='' ) {
     case 'top': 
             break;
     } // switch
-	} // if((!empty($imgdata["width"])) and (!empty($imgdata["height"])))
-
-	// Several sections dealing with image dimension.
-
-  // If a width or height were specified choose the largest as the scalesize
-	if( (!empty($imgdata["width"])) and (ctype_digit($imgdata["width"])) ) $scalesize = $imgdata["width"];
-	if( (!empty($imgdata["height"])) and (ctype_digit($imgdata["height"])) ) {
   } // if( !empty($imgdata["block"]) )
 
   // Wrap the whole thing
