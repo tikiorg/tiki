@@ -460,28 +460,28 @@ ul.categories li{
 	text-decoration: none;
 }
 div.tabrow {
-	position:relative;
-	left:0%;
-	font-size : 11px;
-	height:40px;
-	width:720px;
+	position: relative;
+	left: 0;
+	font-size: 1em;
+	height: 24px !important;
+	width: 720px;
 /*	padding-top:11px;*/
 }
 .tabrowLeft {
-	position:absolute;
-	top:0px;
-	left:0px;
-	float:left;
-	width:23px;
-	height:40px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	float: left;
+	width: 23px;
+	height: 24px !important;
 }
 .tabrowRight {
 	position:absolute;
-	top:0px;
-	right:0px;
-	float:left;
-	width:30px;
-	height:40px;
+	top: 0;
+	right: 0;
+	float: left;
+	width: 30px;
+	height: 24px !important;
 }
 
 img {border: 0}
