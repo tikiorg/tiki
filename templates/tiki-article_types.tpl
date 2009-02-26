@@ -4,11 +4,11 @@
 <h2>{tr}List of types{/tr}</h2>
 
 <div class="navbar">
-	{button _onclick="javascript:toggle('wiki-edithelp')" _text="{tr}show help{/tr}"}
+	{button _onclick="javascript:toggle('wiki-edithelp')" _text="{tr}Show Help{/tr}"}
 </div>
 
 <div class="wiki-edithelp" id="wiki-edithelp" style="display:none;">
-	<b>{tr}Name{/tr}</b> - {tr}Shows up in the drop down list of article types{/tr}<br />
+	<b>{tr}Article type{/tr}</b> - {tr}Shows up in the drop down list of article types{/tr}<br />
 	<b>{tr}Rate{/tr}</b> - {tr}Allow ratings by the author{/tr}<br />
 	<b>{tr}Show before publish date{/tr}</b> - {tr}non-admins can view before the publish date{/tr}<br />
 	<b>{tr}Show after expire date{/tr}</b> - {tr}non-admins can view after the expire date{/tr}<br />
@@ -28,13 +28,14 @@
 	<b>{tr}Show Image Caption{/tr}</b> - {tr}Show a legend under the image{/tr}<br />
 	<b>{tr}Show Language{/tr}</b> - {tr}Show the language{/tr}<br />
 	<b>{tr}Creator can edit{/tr}</b> - {tr}The person who submits an article of this type can edit it{/tr}<br />
-	<b>{tr}Delete{/tr}</b> - {tr}Delete this type{/tr}<br />
+	<b>{tr}Action{/tr}</b> - {tr}Actions on this article type{/tr}<br />
 </div>
 
 <form enctype="multipart/form-data" action="tiki-article_types.php" method="post">
 	<table class="normal">
 		<tr>
-			<th>{tr}Name{/tr}</th>
+			<th>{tr}Article type{/tr}</th>
+			<th>{tr}Articles{/tr}</th>
 			<th>{tr}Rate{/tr}</th>
 			<th>{tr}Show before publish date{/tr}</th>
 			<th>{tr}Show after expire date{/tr}</th>
@@ -54,8 +55,7 @@
 			<th>{tr}Show Image Caption{/tr}</th>
 			<th>{tr}Show lang{/tr}</th>
 			<th>{tr}Creator can edit{/tr}</th>
-			<th>{tr}Articles{/tr}</th>
-			<th>{tr}Delete{/tr}</th>
+			<th>{tr}Action{/tr}</th>
 		</tr>
 		{cycle print=false values="even,odd"}
 		{section name=user loop=$types}
@@ -65,6 +65,7 @@
 					<a class="link" href="tiki-view_articles.php?type={$types[user].type}">{tr}{$types[user].type}{/tr}</a>
 				</td>
 				{*get_strings {tr}Article{/tr}{tr}Review{/tr}{tr}Event{/tr}{tr}Classified{/tr} *}
+				<td class="{cycle advance=false}">{$types[user].article_cnt}</td>
 				<td class="{cycle advance=false}">
 					<input type="checkbox" name="use_ratings[{$types[user].type}]" {if $types[user].use_ratings eq 'y'}checked="checked"{/if} />
 				</td>
@@ -122,7 +123,6 @@
 				<td class="{cycle advance=false}">
 					<input type="checkbox" name="creator_edit[{$types[user].type}]" {if $types[user].creator_edit eq 'y'}checked="checked"{/if} />
 				</td>
-				<td class="{cycle advance=false}">{$types[user].article_cnt}</td>
 				<td class="{cycle}">
 					{if $types[user].article_cnt eq 0}
 						<a class="link" href="tiki-article_types.php?remove_type={$types[user].type}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
