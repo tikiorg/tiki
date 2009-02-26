@@ -5440,7 +5440,26 @@ class TikiLib extends TikiDB {
 							global $headerlib, $page;
 							$id = 'plugin-edit-' . $plugin_name . $current_index;
 							$headerlib->add_jsfile( 'tiki-jsplugin.php?plugin=' . urlencode( $plugin_name ) );
-							$headerlib->add_js( "
+							if ($prefs.feature_jquery) {
+								$headerlib->add_js( "
+\$jq(document).ready( function() {
+	if( \$jq('#$id') ) \$jq('#$id').click( function(event) {
+		popup_plugin_form("
+			. json_encode($plugin_name) 
+			. ', ' 
+			. json_encode($current_index) 
+			. ', ' 
+			. json_encode($page) 
+			. ', ' 
+			. json_encode($arguments) 
+			. ', ' 
+			. json_encode(trim(TikiLib::htmldecode($plugin_data))) 
+			. ", event.target);
+	} );
+} );
+" );
+							} else if ($prefs.feature_mootools) {
+								$headerlib->add_js( "
 window.addEvent('domready', function() {
 	if( $('$id') ) $('$id').addEvent( 'click', function(event) {
 		popup_plugin_form("
@@ -5457,6 +5476,7 @@ window.addEvent('domready', function() {
 	} );
 } );
 " );
+							}
 							$ret = '~np~<a id="' .$id. '" style="float:right" href="javascript:void(1)" class="editplugin">'.smarty_function_icon(array('_id'=>'shape_square_edit', 'alt'=>tra('Edit Plugin').':'.$plugin_name), $smarty).'</a>~/np~'.$ret;
 						}
 
