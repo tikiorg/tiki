@@ -389,7 +389,7 @@
 	<p>{tr}Complete these fields to configure common, general settings for your site{/tr}. {tr}The information you enter here can be changed later{/tr}.</p>
 	<p>{tr}Refer to the <a href="http://doc.tikiwiki.org/Admin+Panels" target="_blank">documentation</a> for complete information on these, and other, settings{/tr}.</p>
 	<br />
-	<fieldset style="width:100%"><legend>{tr}General{/tr} <a href="http://doc.tikiwiki.org/general+admin&amp;bl=y" target="_blank" title="{tr}Help{/tr}"><img src="pics/icons/help.png" alt="{tr}Help{/tr}" /></a></legend>
+	<fieldset><legend>{tr}General{/tr} <a href="http://doc.tikiwiki.org/general+admin&amp;bl=y" target="_blank" title="{tr}Help{/tr}"><img src="pics/icons/help.png" alt="{tr}Help{/tr}" /></a></legend>
 <div style="padding:5px;clear:both;"><label for="site_title">{tr}Site title{/tr}:</label>
 		<div style="margin-left:1em;"><input type="text" size="40" name="site_title" id="site_title" value="Tiki {$tiki_version_name}" />
 			<br /><em>{tr}This will appear in the browser title bar{/tr}.</em></div>
