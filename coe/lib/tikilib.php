@@ -5071,24 +5071,24 @@ class TikiLib extends TikiDB {
 	// that textarea won't leave alone.
 	function parse_htmlchar(&$data) {
 		// cleaning some user input
-		$data = preg_replace('/&(?![a-z]+;|#\d+;)/i', '&amp;', $data);
-
+		$patterns[] = '/&(?![a-z]+;|#\d+;)/i'; $replace[] = '&amp;';
 		// oft-used characters (case insensitive)
-		$data = preg_replace("/~bs~/i", "&#92;", $data);
-		$data = preg_replace("/~hs~/i", "&nbsp;", $data);
-		$data = preg_replace("/~amp~/i", "&amp;", $data);
-		$data = preg_replace("/~ldq~/i", "&ldquo;", $data);
-		$data = preg_replace("/~rdq~/i", "&rdquo;", $data);
-		$data = preg_replace("/~lsq~/i", "&lsquo;", $data);
-		$data = preg_replace("/~rsq~/i", "&rsquo;", $data);
-		$data = preg_replace("/~c~/i", "&copy;", $data);
-		$data = preg_replace("/~--~/", "&mdash;", $data);
-		$data = preg_replace("/ -- /", " &mdash; ", $data);
-		$data = preg_replace("/~lt~/i", "&lt;", $data);
-		$data = preg_replace("/~gt~/i", "&gt;", $data);
-
+		$patterns[] = "/~bs~/i"; $replace[] = "&#92;";
+		$patterns[] = "/~hs~/i"; $replace[] = "&nbsp;";
+		$patterns[] = "/~amp~/i"; $replace[] = "&amp;";
+		$patterns[] = "/~ldq~/i"; $replace[] = "&ldquo;";
+		$patterns[] = "/~rdq~/i"; $replace[] = "&rdquo;";
+		$patterns[] = "/~lsq~/i"; $replace[] = "&lsquo;";
+		$patterns[] = "/~rlq~/i"; $replace[] = "&rsquo;";
+		$patterns[] = "/~c~/i"; $replace[] = "&copy;";
+		$patterns[] = "/~--~/i"; $replace[] = "&mdash;";
+		$patterns[] = "/ -- /i"; $replace[] = "&mdash;";
+		$patterns[] = "/~lt~/i"; $replace[] = "&lt;";
+		$patterns[] = "/~gt~/i"; $replace[] = "&gt;";
 		// HTML numeric character entities
-		$data = preg_replace("/~([0-9]+)~/", "&#$1;", $data);
+		$patterns[] = "/~([0-9]+)~/"; $replace[] = "&#$1;";
+
+		$data = preg_replace($patterns, $replace, $data);
 	}
 
 	// Reverses parse_first.
@@ -5755,6 +5755,7 @@ window.addEvent('domready', function() {
 		if( ! $this->plugin_exists( $name, true ) )
 			return false;
 
+
 		$func_name = 'wikiplugin_' . $name;
 		
 		if( ! $validationPerformed ) {
@@ -5775,12 +5776,25 @@ window.addEvent('domready', function() {
 
 			// Apply filters on values individually
 			if (!empty($args)) {
-				foreach( $args as $argKey => &$argValue ) {
+				foreach( $args as $argKey => $argValue ) {
 					$filter = isset($params[$argKey]['filter']) ? TikiFilter::get($params[$argKey]['filter']) : $default;
 					$argValue = $this->htmldecode($argValue);
 					$argValue = $filter->filter($argValue);
+					$args[$argKey] = $argValue;
 				}
 			}
+		}
+
+		if (isset($parseOptions['fck']) and $parseOptions['fck'] == 'y' ) {
+			$ret = '{'.strtoupper($name).' (';
+			if (!empty($args)) {
+				foreach( $args as $argKey => $argValue ) {
+					$ret .= $argKey.'="'.$argValue.'" ';
+				}
+			}
+			$ret .= ')}'.$data.'{/'.strtoupper($name).'}';
+			//return '<span _fckfakelement="true" _fck_true_content="'.htmlspecialchars($ret,'UTF-8').'">Tiki Plugin '.$name.'</span>';
+			return '<span _plugin="'.urlencode($ret).'">Tiki Plugin '.$name.'</span>';
 		}
 
 		if( function_exists( $func_name ) ) {
@@ -6051,6 +6065,251 @@ window.addEvent('domready', function() {
 		return $closed;
 	}
 
+	function parse_data_replace_dynvars(&$data) {
+		global $tiki_p_edit_dynvar;
+		// Dynamic variables are similar to dynamic content but they are editable
+		// from the page directly, intended for short data, not long text but text
+		// will work too
+		//     Now won't match HTML-style '%nn' letter codes and some special utf8
+		//     situations...
+		if (preg_match_all("/%([^% 0-9A-Z][^% 0-9A-Z][^% ]*)%/",$data,$dvars)) {
+			// remove repeated elements
+			$dvars = array_unique($dvars[1]);
+			// Now replace each dynamic variable by a pair composed of the
+			// variable value and a text field to edit the variable. Each
+			foreach($dvars as $dvar) {
+				$query = "select `data` from `tiki_dynamic_variables` where `name`=?";
+				$result = $this->query($query,Array($dvar));
+				if($result->numRows()) {
+					$value = $result->fetchRow();
+					$value = $value["data"];
+				} else {
+					//Default value is NULL
+					$value = "NaV";
+				}
+				// Now build 2 divs
+				$id = 'dyn_'.$dvar;
+
+				if(isset($tiki_p_edit_dynvar)&& $tiki_p_edit_dynvar=='y') {
+					$span1 = "<span  style='display:inline;' id='dyn_".$dvar."_display'><a class='dynavar' onclick='javascript:toggle_dynamic_var(\"$dvar\");' title='".tra('Click to edit dynamic variable','',true).": $dvar'>$value</a></span>";
+					$span2 = "<span style='display:none;' id='dyn_".$dvar."_edit'><input type='text' name='dyn_".$dvar."' value='".$value."' />".'<input type="submit" name="_dyn_update" value="'.tra('Update variables','',true).'"/></span>';
+				} else {
+					$span1 = "<span class='dynavar' style='display:inline;' id='dyn_".$dvar."_display'>$value</span>";
+					$span2 = '';
+				}
+				$html = $span1.$span2;
+				//It's important to replace only once
+				$dvar_preg = preg_quote( $dvar );
+				$data = preg_replace("+%$dvar_preg%+",$html,$data,1);
+				//Further replacements only with the value
+				$data = str_replace("%$dvar%",$value,$data);
+			}
+			//At the end put an update button
+			// <br /><div align="center"><input type="submit" name="dyn_update"
+			// value="'.tra('Update variables','',true).'"/></div>
+			$data='<form method="post" name="dyn_vars">'."\n".$data.'</form>';
+		}
+	}
+
+	function parse_data_table(&$data) {
+		global $simple_wiki, $prefs;
+		/*
+		 * Wiki Tables syntax
+		 */
+		// New syntax for tables
+		// REWRITE THIS CODE
+		if (!$simple_wiki) {
+			if (preg_match_all("/\|\|(.*?)\|\|/s", $data, $tables)) {
+				$maxcols = 1;
+				$cols = array();
+				$temp_max5 = count($tables[0]);
+				for ($i = 0; $i < $temp_max5; $i++) {
+					// join continue lines
+					$tables[1][$i] = preg_replace('/\n\+/','',$tables[1][$i]); 
+					$rows = split("\n|\<br\/\>", $tables[1][$i]);
+					$col[$i] = array();
+					$temp_max6 = count($rows);
+					for ($j = 0; $j < $temp_max6; $j++) {
+						$cols[$i][$j] = explode('|', $rows[$j]);
+						if (count($cols[$i][$j]) > $maxcols)
+							$maxcols = count($cols[$i][$j]);
+					}
+				}
+				$temp_max7 = count($tables[0]);
+				for ($i = 0; $i < $temp_max7; $i++) {
+					$repl = '<table class="wikitable">';
+					$temp_max8 = count($cols[$i]);
+					for ($j = 0; $j < $temp_max8; $j++) {
+						$ncols = count($cols[$i][$j]);
+	
+						if ($ncols == 1 && !$cols[$i][$j][0])
+							continue;
+	
+						$repl .= '<tr>';
+	
+						for ($k = 0; $k < $ncols; $k++) {
+							$repl .= '<td class="wikicell" ';
+							if ($k == $ncols - 1 && $ncols < $maxcols)
+								$repl .= ' colspan="' . ($maxcols - $k).'"';
+	
+							$repl .= '>' . $cols[$i][$j][$k] . '</td>';
+						}
+						$repl .= '</tr>';
+					}
+					$repl .= '</table>';
+					$data = str_replace($tables[0][$i], $repl, $data);
+				}
+			}
+		}
+	}
+
+	function parse_data_external_links(&$data) {
+		global $prefs;
+
+		$links = $this->get_links($data);
+		$notcachedlinks = $this->get_links_nocache($data);
+		$cachedlinks = array_diff($links, $notcachedlinks);
+		$this->cache_links($cachedlinks);
+
+		// Note that there're links that are replaced
+		foreach ($links as $link) {
+			$target = '';
+			$class = 'class="wiki"';
+			$ext_icon = '';
+			$rel='';
+
+			if ($prefs['popupLinks'] == 'y') {
+				$target = 'target="_blank"';
+			}
+
+			if (!isset($_SERVER['SERVER_NAME']) && isset($_SERVER['HTTP_HOST'])) {
+				$_SERVER['SERVER_NAME'] = $_SERVER['HTTP_HOST'];
+			}
+			if (empty($_SERVER['SERVER_NAME']) || strstr($link, $_SERVER["SERVER_NAME"]) || !strstr($link, '://')) {
+				$target = '';
+			} else {
+				$class = 'class="wiki external"';
+				if ($prefs['feature_wiki_ext_icon'] == 'y') {
+					$ext_icon = "<img border=\"0\" class=\"externallink\" src=\"img/icons/external_link.gif\" alt=\" (external link)\" />";
+				}
+				$rel='external';
+			}
+
+			// The (?<!\[) stuff below is to give users an easy way to
+			// enter square brackets in their output; things like [[foo]
+			// get rendered as [foo]. -rlpowell
+
+			if ($prefs['cachepages'] == 'y' && $this->is_cached($link)) {
+				//use of urlencode for using cached versions of dynamic sites
+				$cosa = "<a class=\"wikicache\" target=\"_blank\" href=\"tiki-view_cache.php?url=".urlencode($link)."\">(cache)</a>";
+
+				$link2 = str_replace("/", "\/", preg_quote($link));
+				//< last param expected here is always nocache
+				$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)\|([^\]\|]+)\|([^\]]+)\]/"; 
+				$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$2 $rel\">$1</a>$ext_icon", $data);
+				//< last param here ($2) is used for relation (rel) attribute (e.g.
+				//shadowbox) or nocache
+				$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)\|([^\]]+)\]/";
+				preg_match($pattern, $data, $matches);
+				if (isset($matches[2]) && $matches[2]=='nocache') {
+					$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$rel\">$1</a>$ext_icon", $data);
+				} else {
+					$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$2 $rel\">$1</a>$ext_icon $cosa", $data);
+				}
+				$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)\]/";
+				$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$rel\">$1</a>$ext_icon $cosa", $data);
+				$pattern = "/(?<!\[)\[$link2\]/";
+				$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$rel\">$link</a>$ext_icon $cosa", $data);
+			} else {
+				$link2 = str_replace("/", "\/", preg_quote($link));
+				$data = str_replace("|nocache", "", $data);
+
+				$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)\|([^\]]+)\]/";
+				$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$2 $rel\">$1</a>$ext_icon", $data);
+				$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)([^\]])*\]/";
+				$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$rel\">$1</a>$ext_icon", $data);
+				$pattern = "/(?<!\[)\[$link2\]/";
+				$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$rel\">$link</a>$ext_icon", $data);
+			}
+		}
+	}
+
+	function parse_data_internal_links(&$data) {
+		global $prefs, $page_regex, $simple_wiki;
+		// New syntax for wiki pages ((name|desc)) Where desc can be anything
+		// preg_match_all("/\(\(($page_regex)\|(.+?)\)\)/", $data, $pages);
+		// match ((name|desc)) as well as ((name|)) as well as ((name))
+		//preg_match_all("/\(([a-z0-9-]+)?\(($page_regex)(\|([^\)]*?))*?\)\)/", $data, $pages);
+		preg_match_all("/\(([a-z0-9-]+)?\(($page_regex)(\|#[^)|]+)?(\|[^\|)]+?)?\)\)/", $data, $pages);
+
+		$temp_max = count($pages[1]);
+		for ($i = 0; $i < $temp_max; $i++) {
+			$replacement = $this->get_wiki_link_replacement( $pages[2][$i], array( 
+						'anchor' => substr($pages[6][$i],2),
+						'description' => substr($pages[7][$i],1), 
+						'reltype' => $pages[1][$i] ) );
+			$data = str_replace($pages[0][$i], $replacement, $data);
+		}
+
+		// Links to internal pages
+		// If they are parenthesized then don't treat as links
+		// Prevent ))PageName(( from being expanded \"\'
+		// [A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*
+		if ( ! $simple_wiki && $prefs['feature_wiki'] == 'y' && $prefs['feature_wikiwords'] == 'y' ) {
+			// The first part is now mandatory to prevent [Foo|MyPage] from being converted!
+			$usedash = "";
+			if ($prefs['feature_wikiwords_usedash'] == 'y') {
+				$usedash = "_\-";
+			}
+			// real utf8 Wikiword where the capitals can be a utf8 capital
+			// \P{Lu} unicode upper \P{Ll} unicode lower \P{N} unicode number
+			preg_match_all("/(?<=[ \n\t\r\,\;]|^)((?:\p{Lu}[\p{Ll}\p{N}$usedash]+){2}[\p{L}\p{N}$usedash]*)(?=$|[ \n\t\r\,\;\.])/u", $data, $pages);
+			//preg_match_all("/(?<=[ \n\t\r\,\;]|^)((?:\p{Lu}[\p{Ll}\p{N}$usedash]+){2}[\p{L}\p{N}$usedash]*)(?=$|[ \n\t\r\,\;\.])/u", $data, $pages);
+			$words = ( $prefs['feature_hotwords'] == 'y' ) ? $this->get_hotwords() : array();
+			foreach ( array_unique($pages[1]) as $page_parse ) {
+				// Exclude md5 hash from WikiWord... strange but...
+				if ( ! array_key_exists($page_parse, $words) and !preg_match('/§[a-z0-9]{32}§/',$page_parse) ) {
+					$repl = $this->get_wiki_link_replacement( $page_parse, array(
+								'plural' => $prefs['feature_wiki_plurals'] == 'y' ) );
+
+					$data = preg_replace("/(?<=[ \n\t\r\,\;]|^)$page_parse(?=$|[ \n\t\r\,\;\.])/", "$1" . $repl . "$2", $data);
+				}
+			}
+		}
+	}
+
+	function parse_data_argvariables(&$data, $options = null) {
+
+		if (preg_match_all("/\\{\\{((\w+)(\\|([^\\}]+))?)\\}\\}/",$data,$args, PREG_SET_ORDER)) {
+			$needles = array();
+			$replacements = array();
+
+			foreach( $args as $arg ) {
+				$value = $arg[4];
+				$name = $arg[2];
+
+				switch( $name ) {
+					case 'user':
+						$value = $user;
+						break;
+					case 'page':
+						$value = $options['page'];
+						break;
+					default:
+						if( isset($_GET[$name]) )
+							$value = $_GET[$name];
+						break;
+				}
+
+				if( ! empty( $value ) ) {
+					$needles[] = $arg[0];
+					$replacements[] = $value;
+				}
+			}
+			$data = str_replace( $needles, $replacements, $data );
+		}
+	}
+
 	//PARSEDATA
 	// options defaults : is_html => false, absolute_links => false, language => ''
 	function parse_data($data, $options = null) {
@@ -6087,35 +6346,7 @@ window.addEvent('domready', function() {
 		}
 
 		if( $prefs['feature_wiki_argvariable'] == 'y' ) {
-			if (preg_match_all("/\\{\\{((\w+)(\\|([^\\}]+))?)\\}\\}/",$data,$args, PREG_SET_ORDER)) {
-				$needles = array();
-				$replacements = array();
-
-				foreach( $args as $arg ) {
-					$value = $arg[4];
-					$name = $arg[2];
-
-					switch( $name ) {
-					case 'user':
-						$value = $user;
-						break;
-					case 'page':
-						$value = $options['page'];
-						break;
-					default:
-						if( isset($_GET[$name]) )
-							$value = $_GET[$name];
-						break;
-					}
-
-					if( ! empty( $value ) ) {
-						$needles[] = $arg[0];
-						$replacements[] = $value;
-					}
-				}
-
-				$data = str_replace( $needles, $replacements, $data );
-			}
+			$this->parse_data_argvariable($data, $options);
 		}
 
 		/* <x> XSS Sanitization handling */
@@ -6139,60 +6370,24 @@ window.addEvent('domready', function() {
 		// Handle pre- and no-parse sections and plugins
 		$preparsed = array('data'=>array(),'key'=>array());
 		$noparsed = array('data'=>array(),'key'=>array());
-		if (!$noparseplugins) {
-			$this->parse_first($data, $preparsed, $noparsed, $options);
-		}
-
-		// Handle |# anchor links by turning them into ALINK module calls.
-		preg_match_all("/\(\(([^)]*\|#[^)]*)\)\)/", $data, $anchors);
-
-		foreach( array_unique($anchors[1]) as $anchor_line ) {
-			$parts1 = explode( "|#", $anchor_line );
-			$anchor_page = "";
-			$anchor_desc = "";
-			$anchor = "";
-
-			// Break out |desc bits from whatever section they happen to be in
-			if( strpos( $parts1[0], "|" ) ) {
-				$parts2 = explode( "|", $parts1[0] );
-				$anchor_page = $parts2[0];
-				$anchor_desc = $parts2[1];
-				$anchor = $parts1[1];
-			} elseif( strpos( $parts1[1], "|" ) ) {
-				$parts2 = explode( "|", $parts1[1] );
-				$anchor_page = $parts1[0];
-				$anchor = $parts2[0];
-				$anchor_desc = $parts2[1];
-			} else {
-				// No |desc bit
-				$anchor_page = $parts1[0];
-				$anchor_desc = $parts1[0];
-				$anchor = $parts1[1];
-			}
-
-			if ( !$anchor_page && $options['page'] ) {
-				$anchor_page = $options['page'];
-				if ( !$anchor_desc )  $anchor_desc = $options['page'];
-			}
-			$repl = "{ALINK(pagename=>".$anchor_page.",aname=>".$anchor.")}".$anchor_desc."{ALINK}";
-			$data = str_replace( "((".$anchor_line."))", $repl, $data);
-		}
 
 		if (!$noparseplugins) {
 			$this->parse_first($data, $preparsed, $noparsed, $options);
 		}
 
 		// Handle ~pre~...~/pre~ sections
-		$data = preg_replace(';~pre~(.*?)~/pre~;s', '<pre>$1</pre>', $data);
+		$patterns[] = ';~pre~(.*?)~/pre~;s' ; $replace[] = '<pre>$1</pre>';
 
 		// Strike-deleted text --text--
 		if (!$simple_wiki) {
-			$data = preg_replace("/--(.+?)--/", "<del>$1</del>", $data);
+			$patterns[] = "/--(.+?)--/s"; $replace[] = "<del>$1</del>";
 		}
 
 		// Handle comment sections
-		$data = preg_replace(';~tc~(.*?)~/tc~;s', '', $data);
-		$data = preg_replace(';~hc~(.*?)~/hc~;s', '<!-- $1 -->', $data);
+		$patterns[] = ';~tc~(.*?)~/tc~;s'; $replace[] = '';
+		$patterns[] = ';~hc~(.*?)~/hc~;s'; $replace[] = '<!-- $1 -->'; 
+		$data = preg_replace($patterns, $replace, $data);
+
 		// Replace special characters
 		// done after url catching because otherwise urls of dyn. sites will be modified
 		// not done in wysiwyg mode, i.e. $prefs['feature_wysiwyg'] set to something other than 'no' or not set at all
@@ -6210,21 +6405,7 @@ window.addEvent('domready', function() {
 		if (!$simple_wiki) {
 			// Replace colors ~~foreground[,background]:text~~
 			// must be done before []as the description may contain color change
-			$data = preg_replace("/\~\~([^\:\,]+)(,([^\:]+))?:([^\~]+)\~\~/", "<span style=\"color:$1; background:$3\">$4</span>", $data);
-		}
-		// This section matches [...].
-		// Added handling for [[foo] sections.  -rlpowell
-		if (!$simple_wiki) {
-			preg_match_all("/(?<!\[)(\[[^\[][^\]]+\])/", $data, $noparseurl);
-
-			foreach (array_unique($noparseurl[1])as $np) {
-				$key = '§'.md5($this->genPass()).'§';
-
-				$aux["key"] = $key;
-				$aux["data"] = $np;
-				$noparsedlinks[] = $aux;
-				$data = preg_replace('/(^|[^a-zA-Z0-9])'.preg_quote($np,'/').'([^a-zA-Z0-9]|$)/', '\1'.$key.'\2', $data);
-			}
+			$data = preg_replace("/\~\~([^\:\,]+)(,([^\:]+))?:([^\~]+)\~\~/s", "<span style=\"color:$1; background:$3\">$4</span>", $data);
 		}
 
 		// BiDi markers
@@ -6232,66 +6413,41 @@ window.addEvent('domready', function() {
 		$bidiCount = preg_match_all("/(\{l2r\})/", $data, $pages);
 		$bidiCount += preg_match_all("/(\{r2l\})/", $data, $pages);
 
-		$data = preg_replace("/\{l2r\}/", "<div dir='ltr'>", $data);
-		$data = preg_replace("/\{r2l\}/", "<div dir='rtl'>", $data);
-		$data = preg_replace("/\{lm\}/", "&lrm;", $data);
-		$data = preg_replace("/\{rm\}/", "&rlm;", $data);
 		// smileys
 		$data = $this->parse_smileys($data);
 
-		// linebreaks using %%%
-		$data = str_replace("%%%", "<br />", $data);
-
 		// Replace dynamic variables
-		// Dynamic variables are similar to dynamic content but they are editable
-		// from the page directly, intended for short data, not long text but text
-		// will work too
-		//     Now won't match HTML-style '%nn' letter codes and some special utf8 situations...
-		if (preg_match_all("/%([^% 0-9A-Z][^% 0-9A-Z][^% ]*)%/",$data,$dvars)) {
-			// remove repeated elements
-			$dvars = array_unique($dvars[1]);
-			// Now replace each dynamic variable by a pair composed of the
-			// variable value and a text field to edit the variable. Each
-			foreach($dvars as $dvar) {
-				$query = "select `data` from `tiki_dynamic_variables` where `name`=?";
-				$result = $this->query($query,Array($dvar));
-				if($result->numRows()) {
-					$value = $result->fetchRow();
-					$value = $value["data"];
-				} else {
-					//Default value is NULL
-					$value = "NaV";
-				}
-				// Now build 2 divs
-				$id = 'dyn_'.$dvar;
+		$this->parse_data_replace_dynvars($data);
 
-				if(isset($tiki_p_edit_dynvar)&& $tiki_p_edit_dynvar=='y') {
-					$span1 = "<span  style='display:inline;' id='dyn_".$dvar."_display'><a class='dynavar' onclick='javascript:toggle_dynamic_var(\"$dvar\");' title='".tra('Click to edit dynamic variable','',true).": $dvar'>$value</a></span>";
-					$span2 = "<span style='display:none;' id='dyn_".$dvar."_edit'><input type='text' name='dyn_".$dvar."' value='".$value."' />".'<input type="submit" name="_dyn_update" value="'.tra('Update variables','',true).'"/></span>';
-				} else {
-					$span1 = "<span class='dynavar' style='display:inline;' id='dyn_".$dvar."_display'>$value</span>";
-					$span2 = '';
-				}
-				$html = $span1.$span2;
-				//It's important to replace only once
-				$dvar_preg = preg_quote( $dvar );
-				$data = preg_replace("+%$dvar_preg%+",$html,$data,1);
-				//Further replacements only with the value
-				$data = str_replace("%$dvar%",$value,$data);
-			}
-			//At the end put an update button
-			//<br /><div align="center"><input type="submit" name="dyn_update" value="'.tra('Update variables','',true).'"/></div>
-			$data='<form method="post" name="dyn_vars">'."\n".$data.'</form>';
-		}
+		$patterns = $replace = array();
+		$patterns[] = "/\{l2r\}/"; $replace[] = "<div dir='ltr'>";
+		$patterns[] = "/\{r2l\}/"; $replace[] = "<div dir='rtl'>";
+		$patterns[] = "/\{lm\}/"; $replace[] = "&lrm;";
+		$patterns[] = "/\{rm\}/"; $replace[] = "&rlm;";
+		// linebreaks using %%%
+		$patterns[] = "/%%%/"; $replace[] = "<br />";
 
 		if (!$simple_wiki) {
 			// Replace boxes
-			$data = preg_replace("/\^([^\^]+)\^/", "<div class=\"simplebox\">$1</div>", $data);
+			$patterns[] = "/\^([^\^]+)\^/s"; $replace[] = "<div class=\"simplebox\">$1</div>";
 			// Underlined text
-			$data = preg_replace("/===(.+?)===/", "<span style=\"text-decoration:underline;\">$1</span>", $data);
+			$patterns[] = "/===(.+?)===/s"; $replace[] =  "<span style=\"text-decoration:underline;\">$1</span>";
 			// Center text
-			$data = preg_replace("/::(.+?)::/", "<div style=\"text-align: center;\">$1</div>", $data);
+			$patterns[] = "/::(.+?)::/s"; $replace[] = "<div style=\"text-align: center;\">$1</div>";
 		}
+
+		// Replace monospaced text
+		$patterns[] = "/(^|\s)-\+(.*?)\+-/s"; $replace[] = "<code>$2</code>";
+		// Replace bold text
+		$patterns[] = "/__(.*?)__/s"; $replace[] = "<b>$1</b>";
+		// Replace italic text ''it'' or //it//
+		$patterns[] = "/\'\'(.*?)\'\'/s"; $replace[] = "<i>$1</i>";
+		$patterns[] = "/(?<!:)\/\/(.*?)(?<!:)\/\//s"; $replace[] = "<i>$1</i>";
+		// Replace definition lists
+		$patterns[] = "/^;([^:]*):([^\/\/].*)/s"; $replace[] = "<dl><dt>$1</dt><dd>$2</dd></dl>";
+		$patterns[] = "/^;(<a [^<]*<\/a>):([^\/\/].*)/s"; $replace[] = "<dl><dt>$1</dt><dd>$2</dd></dl>";
+
+		$data = preg_replace($patterns,$replace,$data);
 
 		// definitively put out the protected words ))protectedWord((
 		preg_match_all("/\)\)(\S*?)\(\(/", $data, $matches);
@@ -6299,246 +6455,29 @@ window.addEvent('domready', function() {
 		$noParseWikiLinksT = array();
 		foreach ($matches[0] as $mi=>$match) {
 			do {
-				$randNum = chr(0xff).rand(0, 1048576).chr(0xff);
+				$randNum = '£'.rand(0, 1048576).'£';
 			} while (strstr($data, $randNum));
 			$data = str_replace($match, $randNum, $data);
 			$noParseWikiLinksK[] = $randNum;
 			$noParseWikiLinksT[] = $matches[1][$mi];
 		}
 
-		// New syntax for wiki pages ((name|desc)) Where desc can be anything
-		// preg_match_all("/\(\(($page_regex)\|(.+?)\)\)/", $data, $pages);
-		// match ((name|desc)) as well as ((name|))
-		preg_match_all("/\(([a-z0-9-]+)?\(($page_regex)\|([^\)]*?)\)\)/", $data, $pages);
-
-		$temp_max = count($pages[1]);
-		for ($i = 0; $i < $temp_max; $i++) {
-			$exactMatch = $pages[0][$i];
-			$replacement = $this->get_wiki_link_replacement( $pages[2][$i], array( 
-				'description' => $pages[6][$i], 
-				'reltype' => $pages[1][$i] ) );
-
-			$data = str_replace($exactMatch, $replacement, $data);
-		}
-
-		// New syntax for wiki pages ((name)) Where name can be anything
-		preg_match_all("/\(([a-z0-9-]+)?\( *($page_regex) *\)\)/", $data, $pages);
-
-		foreach ($pages[2] as $idx => $page_parse) {
-			$exactMatch = $pages[0][$idx];
-			$replacement = $this->get_wiki_link_replacement( $page_parse, array( 'reltype' => $pages[1][$idx] ) );
-
-			$data = str_replace($exactMatch, $replacement, $data);
-		}
-
-		// Links to internal pages
-		// If they are parenthesized then don't treat as links
-		// Prevent ))PageName(( from being expanded \"\'
-		//[A-Z][a-z0-9_\-]+[A-Z][a-z0-9_\-]+[A-Za-z0-9\-_]*
-		if ( ! $simple_wiki && $prefs['feature_wiki'] == 'y' && $prefs['feature_wikiwords'] == 'y' ) {
-			// The first part is now mandatory to prevent [Foo|MyPage] from being converted!
-			if ($prefs['feature_wikiwords_usedash'] == 'y') {
-				preg_match_all("/(?<=[ \n\t\r\,\;]|^)([A-Z][a-z0-9_\-\x80-\xFF]+[A-Z][a-z0-9_\-\x80-\xFF]+[A-Za-z0-9\-_\x80-\xFF]*)(?=$|[ \n\t\r\,\;\.])/", $data, $pages);
-			} else {
-				preg_match_all("/(?<=[ \n\t\r\,\;]|^)([A-Z][a-z0-9\x80-\xFF]+[A-Z][a-z0-9\x80-\xFF]+[A-Za-z0-9\x80-\xFF]*)(?=$|[ \n\t\r\,\;\.])/", $data, $pages);
-			}
-			//TODO to have a real utf8 Wikiword where the capitals can be a utf8 capital
-			$words = ( $prefs['feature_hotwords'] == 'y' ) ? $this->get_hotwords() : array();
-			foreach ( array_unique($pages[1]) as $page_parse ) {
-				if ( ! array_key_exists($page_parse, $words) ) {
-					$repl = $this->get_wiki_link_replacement( $page_parse, array(
-						'plural' => $prefs['feature_wiki_plurals'] == 'y' ) );
-
-					$data = preg_replace("/(?<=[ \n\t\r\,\;]|^)$page_parse(?=$|[ \n\t\r\,\;\.])/", "$1" . $repl . "$2", $data);
-				}
-			}
-		}
+		$this->parse_data_internal_links($data);
 
 		// Reinsert ))Words((
 		$data = str_replace($noParseWikiLinksK, $noParseWikiLinksT, $data);
 
-		// reinsert hash-replaced links into page
-		foreach ($noparsedlinks as $np) {
-			$data = str_replace($np["key"], $np["data"], $data);
-		}
-
-		// *****
-		// This section handles external links of the form [url] and such.
-		// *****
-
-		$links = $this->get_links($data);
-		$notcachedlinks = $this->get_links_nocache($data);
-		$cachedlinks = array_diff($links, $notcachedlinks);
-		$this->cache_links($cachedlinks);
-
-		// Note that there're links that are replaced
-		foreach ($links as $link) {
-			$target = '';
-			$class = 'class="wiki"';
-			$ext_icon = '';
-			$rel='';
-
-			if ($prefs['popupLinks'] == 'y') {
-				$target = 'target="_blank"';
-			}
-
-			if (!isset($_SERVER['SERVER_NAME']) && isset($_SERVER['HTTP_HOST'])) {
-				$_SERVER['SERVER_NAME'] = $_SERVER['HTTP_HOST'];
-			}
-			if (empty($_SERVER['SERVER_NAME']) || strstr($link, $_SERVER["SERVER_NAME"]) || !strstr($link, '://')) {
-				$target = '';
-		} else {
-			$class = 'class="wiki external"';
-			if ($prefs['feature_wiki_ext_icon'] == 'y') {
-				$ext_icon = "<img border=\"0\" class=\"externallink\" src=\"img/icons/external_link.gif\" alt=\" (external link)\" />";
-			}
-			$rel='external';
-		}
-
-		// The (?<!\[) stuff below is to give users an easy way to
-		// enter square brackets in their output; things like [[foo]
-		// get rendered as [foo]. -rlpowell
-
-		if ($prefs['cachepages'] == 'y' && $this->is_cached($link)) {
-			//use of urlencode for using cached versions of dynamic sites
-			$cosa = "<a class=\"wikicache\" target=\"_blank\" href=\"tiki-view_cache.php?url=".urlencode($link)."\">(cache)</a>";
-
-			//$link2 = str_replace("/","\/",$link);
-			//$link2 = str_replace("?","\?",$link2);
-			//$link2 = str_replace("&","\&",$link2);
-			$link2 = str_replace("/", "\/", preg_quote($link));
-			$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)\|([^\]\|]+)\|([^\]]+)\]/"; //< last param expected here is always nocache
-			$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$2 $rel\">$1</a>$ext_icon", $data);
-			$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)\|([^\]]+)\]/";//< last param here ($2) is used for relation (rel) attribute (e.g. shadowbox) or nocache
-			preg_match($pattern, $data, $matches);
-			if (isset($matches[2]) && $matches[2]=='nocache') {
-				$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$rel\">$1</a>$ext_icon", $data);
-			} else {
-				$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$2 $rel\">$1</a>$ext_icon $cosa", $data);
-			}
-			$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)\]/";
-			$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$rel\">$1</a>$ext_icon $cosa", $data);
-			$pattern = "/(?<!\[)\[$link2\]/";
-			$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$rel\">$link</a>$ext_icon $cosa", $data);
-		} else {
-			//$link2 = str_replace("/","\/",$link);
-			//$link2 = str_replace("?","\?",$link2);
-			//$link2 = str_replace("&","\&",$link2);
-			$link2 = str_replace("/", "\/", preg_quote($link));
-			$data = str_replace("|nocache", "", $data);
-
-			$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)\|([^\]]+)\]/";
-			$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$2 $rel\">$1</a>$ext_icon", $data);
-			$pattern = "/(?<!\[)\[$link2\|([^\]\|]+)([^\]])*\]/";
-			$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$rel\">$1</a>$ext_icon", $data);
-			$pattern = "/(?<!\[)\[$link2\]/";
-			$data = preg_replace($pattern, "<a $class $target href=\"$link\" rel=\"$rel\">$link</a>$ext_icon", $data);
-		}
-		}
+		// Handle external links of the form [url] and such.
+		$this->parse_data_external_links($data);
 
 		// Handle double square brackets.  -rlpowell
 		$data = str_replace( "[[", "[", $data );
 
-		/*
-		 * Wiki Tables syntax
-		 */
-		// tables in old style
-		if ($prefs['feature_wiki_tables'] != 'new') {
-			if (preg_match_all("/\|\|(.*)\|\|/", $data, $tables)) {
-				$maxcols = 1;
-				$cols = array();
-				$temp_max = count($tables[0]);
-				for ($i = 0; $i < $temp_max; $i++) {
-					$rows = explode('||', $tables[0][$i]);
-					$temp_max2 = count($rows);
-					for ($j = 0; $j < $temp_max2; $j++) {
-						$cols[$i][$j] = explode('|', $rows[$j]);
-						if (count($cols[$i][$j]) > $maxcols)
-							$maxcols = count($cols[$i][$j]);
-					}
-				} // for ($i ...
-
-				$temp_max3 = count($tables[0]);
-				for ($i = 0; $i < $temp_max3; $i++) {
-					$repl = '<table class="wikitable">';
-
-					$temp_max4 = count($cols[$i]);
-					for ($j = 0; $j < $temp_max4; $j++) {
-						$ncols = count($cols[$i][$j]);
-
-						if ($ncols == 1 && !$cols[$i][$j][0])
-							continue;
-
-						$repl .= '<tr>';
-
-						for ($k = 0; $k < $ncols; $k++) {
-							$repl .= '<td class="wikicell" ';
-
-							if ($k == $ncols - 1 && $ncols < $maxcols)
-								$repl .= ' colspan="' . ($maxcols - $k).'"';
-
-							$repl .= '>' . $cols[$i][$j][$k] . '</td>';
-						} // // for ($k ...
-
-						$repl .= '</tr>';
-					} // for ($j ...
-
-					$repl .= '</table>';
-					$data = str_replace($tables[0][$i], $repl, $data);
-				} // for ($i ...
-			} // if (preg_match_all("/\|\|(.*)\|\|/", $data, $tables))
-		} else {
-			// New syntax for tables
-			// REWRITE THIS CODE
-			if (!$simple_wiki) {
-				if (preg_match_all("/\|\|(.*?)\|\|/s", $data, $tables)) {
-					$maxcols = 1;
-					$cols = array();
-					$temp_max5 = count($tables[0]);
-					for ($i = 0; $i < $temp_max5; $i++) {
-						$rows = split("\n|\<br\/\>", $tables[0][$i]);
-						$col[$i] = array();
-						$temp_max6 = count($rows);
-						for ($j = 0; $j < $temp_max6; $j++) {
-							$rows[$j] = str_replace('||', '', $rows[$j]);
-							$cols[$i][$j] = explode('|', $rows[$j]);
-							if (count($cols[$i][$j]) > $maxcols)
-								$maxcols = count($cols[$i][$j]);
-						}
-					}
-
-					$temp_max7 = count($tables[0]);
-					for ($i = 0; $i < $temp_max7; $i++) {
-						$repl = '<table class="wikitable">';
-						$temp_max8 = count($cols[$i]);
-						for ($j = 0; $j < $temp_max8; $j++) {
-							$ncols = count($cols[$i][$j]);
-
-							if ($ncols == 1 && !$cols[$i][$j][0])
-								continue;
-
-							$repl .= '<tr>';
-
-							for ($k = 0; $k < $ncols; $k++) {
-								$repl .= '<td class="wikicell" ';
-								if ($k == $ncols - 1 && $ncols < $maxcols)
-									$repl .= ' colspan="' . ($maxcols - $k).'"';
-
-								$repl .= '>' . $cols[$i][$j][$k] . '</td>';
-							}
-							$repl .= '</tr>';
-						}
-						$repl .= '</table>';
-						$data = str_replace($tables[0][$i], $repl, $data);
-					}
-				}
-			}
-		}
+		$this->parse_data_table($data);
 
 		if (!$simple_wiki) {
 			$this->parse_data_process_maketoc( $data, $options);
-
-		} // closing if ($simple_wiki)
+		}
 
 		// Close BiDi DIVs if any
 		for ($i = 0; $i < $bidiCount; $i++) {
@@ -6699,16 +6638,6 @@ window.addEvent('domready', function() {
 			if ($prefs['feature_autolinks'] == 'y') {
 				$line = $this->autolinks($line);
 			}
-
-			// Replace monospaced text
-			$line = preg_replace("/(^|\s)-\+(.*?)\+-/", "<code>$2</code>", $line);
-			// Replace bold text
-			$line = preg_replace("/__(.*?)__/", "<b>$1</b>", $line);
-			// Replace italic text
-			$line = preg_replace("/\'\'(.*?)\'\'/", "<i>$1</i>", $line);
-			// Replace definition lists
-			$line = preg_replace("/^;([^:]*):([^\/\/].*)/", "<dl><dt>$1</dt><dd>$2</dd></dl>", $line);
-			$line = preg_replace("/^;(<a [^<]*<\/a>):([^\/\/].*)/", "<dl><dt>$1</dt><dd>$2</dd></dl>", $line);
 
 			// This line is parseable then we have to see what we have
 			if (substr($line, 0, 3) == '---') {
@@ -7175,6 +7104,8 @@ window.addEvent('domready', function() {
 
 		if( array_key_exists( 'description', $extra ) )
 			$description = $extra['description'];
+		if( array_key_exists( 'anchor', $extra ) )
+			$anchor = $extra['anchor'];
 		if( array_key_exists( 'reltype', $extra ) )
 			$reltype = $extra['reltype'];
 		if( array_key_exists( 'plural', $extra ) )
@@ -7190,7 +7121,7 @@ window.addEvent('domready', function() {
 				if ($this->getOne("select count(*) from `tiki_extwiki` where `name`=?",array($wkname)) == 1) {
 					$wkurl = $this->getOne("select `extwiki`  from `tiki_extwiki` where `name`=?",array($wkname));
 
-					$wkurl = '<a href="' . str_replace('$page', urlencode($wexs[1]), $wkurl). '" class="wiki external ' . $reltype . '">' . $wexs[1] . '</a>';
+					$wkurl = '<a href="' . str_replace('$page', urlencode($wexs[1]), $wkurl).(!empty($anchor)?"#$anchor":'').'" class="wiki external ' . $reltype . '">' . $wexs[1] . '</a>';
 					return $wkurl;
 				}
 			}
@@ -7218,7 +7149,7 @@ window.addEvent('domready', function() {
 				$linktext = $displayLink;
 			}
 
-			$repl = '<a title="'.$desc.'" href="'.$uri_ref.'" class="wiki ' . $reltype . '">' . $linktext . '</a>';
+			$repl = '<a title="'.$desc.'" href="'.$uri_ref. (!empty($anchor)?"#$anchor":"").'" class="wiki ' . $reltype . '">' . $linktext . '</a>';
 
 			// Check is timeout expired?
 			if (isset($text[1]) && (time() - intval($this->page_exists_modtime($pageLink))) < intval($text[1])) {
@@ -7241,7 +7172,7 @@ window.addEvent('domready', function() {
 			$plural_tmp = preg_replace("/([A-Za-rt-z])s$/", "$1", $plural_tmp);
 
 			if($desc = $this->page_exists_desc($plural_tmp, true)) {
-				$repl = "<a title='".$desc."' href='".$wikilib->sefurl($plural_tmp).$bestLang."' class='wiki'>$displayLink</a>";
+				$repl = "<a title='".$desc."' href='".$wikilib->sefurl($plural_tmp).$bestLang.(!empty($anchor)?"#$anchor":"")."' class='wiki'>$displayLink</a>";
 				return $repl;
 			}
 		}

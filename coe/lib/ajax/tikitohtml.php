@@ -15,6 +15,9 @@ $ajaxlib->registerFunction('WikiToHTML');
 function WikiToHTML($data) {
 	global $user,$tikilib;
 	
+	$options['absolute_links'] = true;
+	$options['noparseplugins'] = false;
+	$options['noheaderinc'] = true;
 	$options['fck'] = 'y';
 	$response =  new xajaxResponse('UTF-8');
 	$content = $tikilib->parse_data($data,$options);
