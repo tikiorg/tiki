@@ -8,7 +8,7 @@
  *
  * @package IMAGE plugin.
  * @author Scot E. Wilcoxon <scot@wilcoxon.org>
- * @version 1.4
+ * @version 1.5
  *
  * 2008-12-08 SEWilco
  *   Initial version.
@@ -19,6 +19,8 @@
  * 2009-02-24 SEWilco
  * Dark border.  Higher priority rules at end of list.
  * Add fileId support.
+ * 2009-02-25 SEWilco
+ * Add comma-separated list of images.
  * 
  * Copyright (c) 2002-2009, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
  * All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -32,8 +34,8 @@
  */
 function wikiplugin_image_help() {
 	return tra("Display an image using configured format. Allows presentation of all images to be changed without having to alter existing content.").":<br />~np~" . '{IMAGE(
-[ fileId="Numeric ID of an image in a File Gallery. "fileId", "id" or "src" required." ]
-[ id="Numeric ID of an image in an Image Gallery. "fileId", "id" or "src" required." ]
+[ fileId="Numeric ID of an image in a File Gallery (or comma-separated list). "fileId", "id" or "src" required." ]
+[ id="Numeric ID of an image in an Image Gallery (or comma-separated list). "fileId", "id" or "src" required." ]
 [ src="Full URL to the image to display. "fileId", "id" or "src" required." ]
 [ scalesize="Maximum height or width in pixels (largest dimension is scaled). If no scalesize is given one will be attempted from default or given height or width. If scale does not match a defined scale for the gallery the full sized image is downloaded." ]
 [ height="Height in pixels." ]
@@ -67,12 +69,12 @@ function wikiplugin_image_info() {
 			'fileId' => array(
 				'required' => false,
 				'name' => tra('File ID'),
-				'description' => tra('Numeric ID of an image in a File Gallery. "fileId", "id" or "src" required.'),
+				'description' => tra('Numeric ID of an image in a File Gallery (or comma-separated list). "fileId", "id" or "src" required.'),
 			),
 			'id' => array(
 				'required' => false,
 				'name' => tra('Image ID'),
-				'description' => tra('Numeric ID of an image in an Image Gallery. "fileId", "id" or "src" required.'),
+				'description' => tra('Numeric ID of an image in an Image Gallery (or comma-separated list). "fileId", "id" or "src" required.'),
 			),
 			'src' => array(
 				'required' => false,
@@ -232,7 +234,8 @@ function wikiplugin_image_info() {
  *  anything remains then error and quit.
  */
 function wikiplugin_image( $data, $params, $offset, $parseOptions='' ) {
-	global $tikidomain, $prefs, $section, $smarty;
+	// global $tikidomain, $prefs, $section, $smarty;
+  global $tikidomain, $tikiroot, $prefs, $section, $smarty;
 
 	$imgdata = array();
 	
@@ -637,19 +640,43 @@ function wikiplugin_image( $data, $params, $offset, $parseOptions='' ) {
   if ( empty($imgdata["fileId"]) and empty($imgdata["fileid"]) and empty($imgdata["id"]) and empty($imgdata["src"]) ) {
     return "''no image''";
   }
-
-	// If an image gallery ID was given expand it into a URL
-	if ( !empty($imgdata['id']) ) {
-		$imgdata['src'] = "show_image.php?id=" . $imgdata['id'];
-	}
 	
 	// Support both 'fileId' and 'fileid' syntax
 	if ( (!empty($imgdata['fileid'])) && empty($imgdata['fileId']) )
 		$imgdata['fileId'] = $imgdata['fileid'];
 
-	// If a file gallery ID was given expand it into a URL
+  // If a comma-separated list of filegal images was given, show them.
+  if( ( !empty($imgdata["fileId"]) ) && ( strpos($imgdata["fileId"], ',') !== FALSE ) ) {
+    $repl = "";
+    $id_list = array();
+    $id_list = explode(',',$imgdata["fileId"]);
+    foreach ($id_list as $i => $value) {
+      $params["fileId"] = trim($value);
+      $repl .= wikiplugin_image( $data, $params, $offset, $parseOptions );
+    }
+    return $repl; // return the result of those images
+	}
+
+  // If a comma-separated list of imagegal images was given, show them.
+  if( ( !empty($imgdata["id"]) ) && ( strpos($imgdata["id"], ',') !== FALSE ) ) {
+    $repl = "";
+    $id_list = array();
+    $id_list = explode(',',$imgdata["id"]);
+    foreach ($id_list as $i => $value) {
+      $params["fileId"] = trim($value);
+      $repl .= wikiplugin_image( $data, $params, $offset, $parseOptions );
+    }
+    return $repl; // return the result of those images
+	}
+
+	// If a file ID was given expand it into a URL
 	if ( !empty($imgdata['fileId']) ) {
 		$imgdata['src'] = "tiki-download_file.php?fileId=" . $imgdata['fileId'] . "&preview=y";
+	}
+
+	// If an image ID was given expand it into a URL
+	if ( !empty($imgdata['id']) ) {
+		$imgdata['src'] = "show_image.php?id=" . $imgdata['id'];
 	}
 	
 	// Support both 'imalign' and 'align' syntax
@@ -751,10 +778,10 @@ function wikiplugin_image( $data, $params, $offset, $parseOptions='' ) {
     // If we don't have a description or data for a caption, try to use image's description.
     if( $imgdata["descoptions"] != "off" ) {
       if( empty($imgdata["desc"]) and empty($data) ) {
-        require_once('lib/filegals/filegallib.php');
+        global $tikilib;
 
-        $file_info = $filegallib->get_file_info($imgdata["fileId"]);
-        if( !empty($file_info["description"]) ) $imgdata["desc"] = $file_info["description"];
+        $image_file_info = $tikilib->get_file($imgdata["fileId"]);
+        if( !empty($image_file_info["description"]) ) $imgdata["desc"] = $image_file_info["description"];
       }
     }
 	}
