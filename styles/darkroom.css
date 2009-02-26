@@ -481,8 +481,8 @@ a.flip img {display: none}
 .treemenudiv {
 	display: block;
 	white-space: nowrap;
-	padding-right: 2em;
-	margin-left: 2em}
+	/*padding-right: 2em;
+	margin-left: 2em*/}
 
 .phplmnormal,
 a.phplmnormal:hover,
@@ -494,9 +494,9 @@ a.phplm:active {
 	color: #F5F5F5;
 	text-decoration: none;
 	font-weight: normal;
-	background: #999}
+	background: #474747}
 
-td.phplmnormal {background: #999}
+td.phplmnormal {background: #474747}
 a.phplm:visited {color: #F5F5F5}
 
 a.phplm:hover {
@@ -515,6 +515,8 @@ a.phplmselected:active {
 	font-weight: normal}
 
 a.phplmselected:hover {color: #AAAAAA}
+
+img.imgs {background: #999}
 
 /** CSS (suckerfish) menus **/
 
@@ -827,7 +829,7 @@ a.flipmodtitle:hover img {border: 1px solid #818181 !important}
 * html .box a.flipmodtitle img {border: none}
 .box-data a.linkmenu {display: block}
 .box-data select {width: 120px}
-.box-data table {margin: auto}
+.box-data table {width: 100%}
 
 .box-data table td {
 	padding: 0.2em;

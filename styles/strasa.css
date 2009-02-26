@@ -655,6 +655,8 @@ a.flip img {display: none}
 .treemenudiv {
 	display: block;
 	white-space: nowrap}
+	
+#col2 .treemenudiv { background: #cce5ff }
 
 .phplmnormal,
 a.phplmnormal:hover,
@@ -668,7 +670,7 @@ a.phplm:active {
 	font-weight: normal}
 
 a.phplm:visited {color: #006699}
-a.phplm:hover {color: #000000; background: #fff;text-decoration: underline}
+a.phplm:hover {color: #000; background: none;text-decoration: underline}
 a.phplm:active {color: #006699}
 
 a.phplmselected:link,

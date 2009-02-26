@@ -640,7 +640,8 @@ div.menuSection div.separator {}
 /* Tree menu (also on Browse Categories */
 .treemenudiv {
 	display: block;
-	white-space: nowrap}
+	white-space: nowrap;
+	background: #ccdceb;}
 
 .phplmnormal,
 a.phplmnormal:hover,
@@ -648,14 +649,19 @@ a.phplm:link,
 a.phplm:visited,
 a.phplm:hover,
 a.phplm:active {
-	font: 100% Verdana, Tahoma, Arial, sans-serif;
-	color: #517ea7;
+	font-family: Verdana, Tahoma, Arial, sans-serif;
+	color: #295c8e;
 	text-decoration: none;
-	font-weight: bold}
+	font-weight: normal}
 
-a.phplm:visited {color: #517ea7}
-a.phplm:hover {color: #82a7c8}
-a.phplm:active {color: #517ea7}
+a.phplm:visited {color: #295c8e}
+
+a.phplm:hover {
+	color: #82a7c8;
+	text-decoration: underline;
+	background: none}
+
+a.phplm:active {color: #82a7c8}
 
 a.phplmselected:link,
 a.phplmselected:visited,

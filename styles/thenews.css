@@ -638,7 +638,7 @@ div#tiki-bot {}
 .treemenudiv {
 	display: block;
 	white-space: nowrap;
-}
+	background: #fff}
 
 .phplmnormal,
 a.phplmnormal:hover,
@@ -646,22 +646,25 @@ a.phplm:link,
 a.phplm:visited,
 a.phplm:hover,
 a.phplm:active {
-	font: 100% Verdana, Tahoma, Arial, sans-serif;
-	color: #303030;
+	font-family: Georgia, serif;;
+	color: #005faa;
 	text-decoration: none;
-	font-weight: bold;
+	font-weight: normal;
 }
 
 a.phplm:visited {
-	color: #726461;
+	color: #005faa;
 }
 
 a.phplm:hover {
-	color: #808080;
+	color: #005faa;
+	text-decoration: underline;
+	background: none;
 }
 
 a.phplm:active {
-	color: #ff0000;
+	color: #005faa;
+	font-weight: bold;
 }
 
 a.phplmselected:link,

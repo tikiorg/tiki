@@ -521,6 +521,14 @@ a.phplm:hover, .phplmnormal a:hover {
 	top: 5px;
 	right: 12px;
 }
+div.treemenudiv {background: #fff}
+#col2 div.treemenudiv {font-size: 1em}
+
+#col2 a.phplm:hover {
+	background:#DDD;
+	color:#224466;
+	text-decoration: none}
+
 div.separator, div.separatorline {
 	background: #FFFFFF;
 	color: black;
