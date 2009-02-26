@@ -700,6 +700,10 @@ a.phplmselected:hover {
 
 * html div.box-CSS_menu ul {margin-left: 0}
 
+.cssmenu li ul,
+.cssmenu_horiz li ul,
+.cssmenu_vert li ul {border: 1px solid #D3D3D3}
+
 .cssmenu_vert li ul {margin-left: 9em !important}
 
 .cssmenu li ul ul {/*left: -999em*/}
