@@ -114,8 +114,12 @@
 .cssmenu_vert a {
 	text-decoration: none;
 	display: block;
-	padding: 3px 0 3px 6px;
+	padding: 3px 3px 3px 6px;
 	/*color: mediumblue*/}
+	
+* html .cssmenu a,	
+* html .cssmenu_horiz a,
+* html .cssmenu_vert a {padding: 0}
 
 .cssmenu a:hover,
 .cssmenu_vert a:hover,	
@@ -131,8 +135,6 @@
 .menuSection3 > a {background: url(../lib/phplayers/images/forward-galaxy.png) 94% center no-repeat !important}
 
 .cssmenu_horiz .menuSection0 > a {background: url(../lib/phplayers/images/down-galaxy.png)  85% 65% no-repeat}
-.cssmenu_horiz .menuLevel0 > a {background: none !important}
-.cssmenu_horiz .menuLevel0 > li {background: none !important}
 
 div#col2,
 td#leftcolumn {overflow: visible !important}
