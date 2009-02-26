@@ -8,7 +8,7 @@
  *
  * @package IMAGE plugin.
  * @author Scot E. Wilcoxon <scot@wilcoxon.org>
- * @version 1.5
+ * @version 1.6
  *
  * 2008-12-08 SEWilco
  *   Initial version.
@@ -21,6 +21,8 @@
  * Add fileId support.
  * 2009-02-25 SEWilco
  * Add comma-separated list of images.
+ * 2009-02-26 SEWilco
+ * Only allow one of fileId, id, src options.
  * 
  * Copyright (c) 2002-2009, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
  * All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -50,7 +52,7 @@ function wikiplugin_image_help() {
 [ usemap="Name of the image map to use for the image." ]
 [ class="CSS class to apply to the image'."'".'s img tag." ]
 [ style="CSS styling to apply to the plugin. (Usually used in configuration rather than on individual images.)" ]
-[ border="Border configuration.  Values "on" and "off" control visibility, or else specify CSS styling options. (Usually used in configuration rather than on individual images.)" ]
+[ border="Border configuration.  Values "on" and "off" control visibility, or else specify CSS styling options." ]
 [ descoptions="Description configuration.  Values "on" and "off" control visibility, or else specify CSS styling options. (Usually used in configuration rather than on individual images.)" ]
 )}{IMAGE}~/np~';
 }
@@ -149,7 +151,7 @@ function wikiplugin_image_info() {
       'border' => array(
         'required' => false,
         'name' => tra('Border options'),
-        'description' => tra('Border configuration.  Values "on" and "off" control visibility, or else specify CSS styling options. (Usually used in configuration rather than on individual images.)'),
+        'description' => tra('Border configuration.  Values "on" and "off" control visibility, or else specify CSS styling options.'),
 			),
       'descoptions' => array(
         'required' => false,
@@ -234,8 +236,7 @@ function wikiplugin_image_info() {
  *  anything remains then error and quit.
  */
 function wikiplugin_image( $data, $params, $offset, $parseOptions='' ) {
-	// global $tikidomain, $prefs, $section, $smarty;
-  global $tikidomain, $tikiroot, $prefs, $section, $smarty;
+	global $tikidomain, $prefs, $section, $smarty;
 
 	$imgdata = array();
 	
@@ -640,6 +641,10 @@ function wikiplugin_image( $data, $params, $offset, $parseOptions='' ) {
   if ( empty($imgdata["fileId"]) and empty($imgdata["fileid"]) and empty($imgdata["id"]) and empty($imgdata["src"]) ) {
     return "''no image''";
   }
+
+  if ( ! ( empty($imgdata["fileId"]) Xor empty($imgdata["fileid"]) Xor empty($imgdata["id"]) Xor empty($imgdata["src"]) ) ) {
+    return "''IMAGE: Only use one of fileId, id, or src.''";
+  }
 	
 	// Support both 'fileId' and 'fileid' syntax
 	if ( (!empty($imgdata['fileid'])) && empty($imgdata['fileId']) )
@@ -650,10 +655,12 @@ function wikiplugin_image( $data, $params, $offset, $parseOptions='' ) {
     $repl = "";
     $id_list = array();
     $id_list = explode(',',$imgdata["fileId"]);
+    if( empty($params["align"]) ) $params["align"] = "left";
     foreach ($id_list as $i => $value) {
       $params["fileId"] = trim($value);
       $repl .= wikiplugin_image( $data, $params, $offset, $parseOptions );
     }
+    $repl = "\n\r<br style=\"clear:both\" />\r" . $repl . "\n\r<br style=\"clear:both\" />\r";
     return $repl; // return the result of those images
 	}
 
@@ -662,10 +669,12 @@ function wikiplugin_image( $data, $params, $offset, $parseOptions='' ) {
     $repl = "";
     $id_list = array();
     $id_list = explode(',',$imgdata["id"]);
+    if( empty($params["align"]) ) $params["align"] = "left";
     foreach ($id_list as $i => $value) {
-      $params["fileId"] = trim($value);
+      $params["id"] = trim($value);
       $repl .= wikiplugin_image( $data, $params, $offset, $parseOptions );
     }
+    $repl = "\n\r<br style=\"clear:both\" />\r" . $repl . "\n\r<br style=\"clear:both\" />\r";
     return $repl; // return the result of those images
 	}
 
