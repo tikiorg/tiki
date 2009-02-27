@@ -15,7 +15,7 @@ if (!isset($prefs['site_style'])) {	// what am i missing here? shouldn't these g
 }
 $a_style = $prefs['site_style'];
 
-if (isset($_REQUEST["looksetup"]) || (!empty($_REQUEST['site_style']) && $_REQUEST['site_style'] != $prefs['site_style'])) {
+if (isset($_REQUEST["looksetup"]) || (!empty($_REQUEST['site_style']) && $_REQUEST['site_style'] != $prefs['site_style']) ) {
     ask_ticket('admin-inc-look');
 
 	if (isset($_REQUEST["site_style"])) {
@@ -26,7 +26,7 @@ if (isset($_REQUEST["looksetup"]) || (!empty($_REQUEST['site_style']) && $_REQUE
 			$_REQUEST["site_style_option"] = '';
 		}
 	    check_ticket('admin-inc-general');
-	    simple_set_value("site_style_option", "style_option");
+		simple_set_value("site_style_option", "style_option");
 		simple_set_value("site_style_option", "site_style_option");
 	}
 
@@ -139,7 +139,7 @@ closedir ($h);
 
 $smarty->assign_by_ref("slide_styles", $slide_styles);
 
-if (isset($_REQUEST["looksetup"]) && (isset($_REQUEST["site_style"]) || isset($_REQUEST["site_style_option"]))) {
+if (isset($_REQUEST["site_style"]) || isset($_REQUEST["site_style_option"])) {
 	// If the theme has changed, reload the page to use the new theme
 	$location= 'location: tiki-admin.php?page=look';
 	if ($prefs['feature_tabs'] == 'y') {
