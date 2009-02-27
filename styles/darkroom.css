@@ -125,6 +125,7 @@ input[type=reset] {
 button:hover,
 .button:hover,
 input[type=submit]:hover,
+input[type=reset]:hover,
 .submitbutton:hover,
 .button input:hover {border: 1px solid #B2B2B2}
 
