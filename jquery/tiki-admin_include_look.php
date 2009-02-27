@@ -72,6 +72,9 @@ if (isset($_REQUEST["looksetup"]) || (!empty($_REQUEST['site_style']) && $_REQUE
 	"change_theme",
 	"feature_jquery_ui",
 	"feature_jquery_tooltips",
+	'feature_jquery_autocomplete',
+	'feature_jquery_superfish',
+	'feature_jquery_reflection',
     );
 
     foreach ($pref_toggles as $toggle) {

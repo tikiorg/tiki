@@ -702,11 +702,23 @@
 				</legend>
 				<div class="clear floatleft">
 					<input type="checkbox" name="feature_jquery_ui" {if $prefs.feature_jquery_ui eq 'y'}checked="checked"{/if}/>
-					<a href="{$prefs.helpurl}JQuery_UI" target="tikihelp" class="tikihelp" title="{tr}JQuery UI: More JQuery functionality{/tr}"> {tr}JQuery UI{/tr}</a>
+					<a href="{$prefs.helpurl}JQuery#UI" target="tikihelp" class="tikihelp" title="{tr}JQuery UI: More JQuery functionality{/tr}"> {tr}JQuery UI{/tr}</a>
 				</div>
 				<div class="clear floatleft">
 					<input type="checkbox" name="feature_jquery_tooltips" {if $prefs.feature_jquery_tooltips eq 'y'}checked="checked"{/if}/>
-					<a href="{$prefs.helpurl}JQuery_UI" target="tikihelp" class="tikihelp" title="{tr}JQuery Tooltips: Customisable help tips{/tr}"> {tr}JQuery tooltips{/tr}</a>
+					<a href="{$prefs.helpurl}JQuery#Tooltips" target="tikihelp" class="tikihelp" title="{tr}JQuery Tooltips: Customisable help tips{/tr}"> {tr}JQuery tooltips{/tr}</a>
+				</div>
+				<div class="clear floatleft">
+					<input type="checkbox" name="feature_jquery_autocomplete" {if $prefs.feature_jquery_autocomplete eq 'y'}checked="checked"{/if}/>
+					<a href="{$prefs.helpurl}JQuery#Autocomplete" target="tikihelp" class="tikihelp" title="{tr}JQuery Autocomplete{/tr}"> {tr}JQuery autocomplete{/tr}</a>
+				</div>
+				<div class="clear floatleft">
+					<input type="checkbox" name="feature_jquery_superfish" {if $prefs.feature_jquery_superfish eq 'y'}checked="checked"{/if}/>
+					<a href="{$prefs.helpurl}JQuery#Superfish" target="tikihelp" class="tikihelp" title="{tr}JQuery Superfish{/tr}"> {tr}JQuery Superfish (effects on CSS menus){/tr}</a>
+				</div>
+				<div class="clear floatleft">
+					<input type="checkbox" name="feature_jquery_reflection" {if $prefs.feature_jquery_reflection eq 'y'}checked="checked"{/if}/>
+					<a href="{$prefs.helpurl}JQuery#Reflection" target="tikihelp" class="tikihelp" title="{tr}JQuery Reflection{/tr}"> {tr}JQuery Reflection (reflection effect on images){/tr}</a>
 				</div>
 			</fieldset>
 			<fieldset>
