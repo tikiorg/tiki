@@ -99,3 +99,17 @@ $jq(document).ready( function() { // JQuery's DOM is ready event - before onload
 		$jq('a.titletips').cluetip({splitTitle: '|'});
 	}
 });
+
+
+/* Autocomplete assistants */
+
+function parseAutoJSON(data) {
+	var parsed = [];
+	return $jq.map(data, function(row) {
+		return {
+			data: row,
+			value: row,
+			result: row
+		}
+	});
+}
