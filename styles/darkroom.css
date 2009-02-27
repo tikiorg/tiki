@@ -424,7 +424,7 @@ a.flip img {display: none}
 	border: 1px solid #909090;
 	color: #909090;
 	text-decoration: none;
-	padding: 4px 2px 4px 7px}
+	/*padding: 4px 2px 4px 7px*/}
 
 .mdksubmenu {
 	z-index: 999;
