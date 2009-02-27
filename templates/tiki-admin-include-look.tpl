@@ -192,7 +192,7 @@
 					{* --- Customize Site Header --- *}
 						<fieldset class="admin">
 							<legend>
-								<a href="#">
+								<a href="#" title="{tr}Top{/tr}">
 									<span>{tr}Custom Site Header{/tr}</span>
 								</a>
 							</legend>
@@ -232,7 +232,7 @@
 					{* --- Customize Site Logo and Site Titile--- *}
 						<fieldset>
 							<legend>
-								<a href="#"><span>{tr}Site Logo and Title{/tr}</span></a>
+								<a href="#" title="{tr}Top{/tr}"><span>{tr}Site Logo and Title{/tr}</span></a>
 							</legend>
 							<table class="admin">
 							<tr>
@@ -319,7 +319,7 @@
 					{* --- Site Search Bar --- *}
         		<fieldset>
         			<legend>
-								<a href="#"><span>{tr}Site Search Bar{/tr}</span></a>
+								<a href="#" title="{tr}Top{/tr}"><span>{tr}Site Search Bar{/tr}</span></a>
 							</legend>
 							<table class="admin">
 							<tr> 
@@ -336,7 +336,7 @@
 					{* --- Site Login Bar --- *}
 						<fieldset>
 							<legend>
-								<a href="#"><span>{tr}Site Login Bar{/tr}</span></a>
+								<a href="#" title="{tr}Top{/tr}"><span>{tr}Site Login Bar{/tr}</span></a>
 							</legend>
 							<table class="admin">
 							<tr> 
@@ -355,7 +355,7 @@
 							<legend>
 								<span>
 									<input type="checkbox" name="feature_top_bar" {if $prefs.feature_top_bar eq 'y'}checked="checked"{/if}/>
-								<a href="#"> {tr}Top Bar{/tr}</a>
+								<a href="#" title="{tr}Top{/tr}">{tr}Top Bar{/tr}</a>
 								</span>
 							</legend> 
 							<table class="admin">
@@ -416,7 +416,7 @@
         	<td>
 						<fieldset>
 							<legend>
-								<a href="#"><span>
+								<a href="#" title="{tr}Top{/tr}"><span>
 								{if $prefs.feature_help eq 'y'}
 									<a href="{$prefs.helpurl}Users+Flip+Columns" target="tikihelp" class="tikihelp" title="{tr}Users can Flip Columns{/tr}">
 								{/if}
@@ -435,7 +435,7 @@
 					{* --- Site Breadcrumbs --- *}
 						<fieldset class="admin">
 							<legend>
-								<a href="#"><span>{tr}Site Breadcrumbs{/tr}</span></a>
+								<a href="#" title="{tr}Top{/tr}"><span>{tr}Site Breadcrumbs{/tr}</span></a>
 							</legend>
 							<table class="admin">
 							<tr>
@@ -496,7 +496,7 @@
 					<td class="form">
 						<fieldset>
 							<legend>
-								<a href="#"><span>
+								<a href="#" title="{tr}Top{/tr}"><span>
 									{if $prefs.feature_help eq 'y'}
 										<a href="{$prefs.helpurl}Users+Flip+Columns" target="tikihelp" class="tikihelp" title="{tr}Users can Flip Columns{/tr}">
 									{/if}
@@ -517,7 +517,7 @@
 					<td colspan="5">
 						<fieldset>
 							<legend>
-								<a href="#"><span>{tr}Site Report Bar{/tr}</span></a>
+								<a href="#" title="{tr}Top{/tr}"><span>{tr}Site Report Bar{/tr}</span></a>
 							</legend>
 							<table class="admin">
 							<tr> 
@@ -553,7 +553,7 @@
 					<td colspan="5">
 						<fieldset>
 							<legend>
-								<a href="#"><span>{tr}Custom Site Footer{/tr}</span></a>
+								<a href="#" title="{tr}Top{/tr}"><span>{tr}Custom Site Footer{/tr}</span></a>
 							</legend>
 							<table class="admin">
 							<tr>
@@ -582,7 +582,7 @@
 					<td colspan="5">
 						<fieldset>
 							<legend>
-								<a href="#"><span>{tr}Custom End of <body> Code{/tr}</span></a>
+								<a href="#" title="{tr}Top{/tr}"><span>{tr}Custom End of <body> Code{/tr}</span></a>
 							</legend>
 							<table class="admin">
 							<tr>
@@ -603,7 +603,7 @@
 					<td colspan="5" class="form">
 						<fieldset>
 							<legend>
-								<a href="#"><span>{tr}Bottom bar{/tr}</span></a>
+								<a href="#" title="{tr}Top{/tr}"><span>{tr}Bottom bar{/tr}</span></a>
 							</legend>
 							<label for="feature_bot_bar">{tr}Activate{/tr}:</label>
 							<input type="checkbox" name="feature_bot_bar" {if $prefs.feature_bot_bar eq 'y'}checked="checked"{/if}/>
@@ -626,7 +626,7 @@
 					<td colspan="5" class="form">
 						<fieldset>
 							<legend>
-								<a href="#"><span>{tr}Pagination links{/tr}</span></a>
+								<a href="#" title="{tr}Top{/tr}"><span>{tr}Pagination links{/tr}</span></a>
 							</legend>
 							<input type="checkbox" name="nextprev_pagination" id="nextprev_pagination" {if $prefs.nextprev_pagination eq 'y'}checked="checked"{/if}/>
 							<label for="nextprev_pagination">{tr}Use relative (next / previous) pagination links{/tr}</label>
