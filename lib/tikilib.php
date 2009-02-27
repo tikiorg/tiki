@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.90 2008-03-19 18:08:39 sylvieg Exp $
+// CVS: $Id$
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 	header("location: index.php");
@@ -8147,7 +8147,14 @@ function get_wiki_section($data, $hdr) {
 	}
 	return (array($start, $end));
 }
-	/* javascript = y or n to force to generate a version with javascript or not, ='' user prefs */
+
+/**
+ * \brief Function to embed a flash object (using JS method by default when JS in user's browser is detected)
+ *
+ * So far it's being called from wikiplugin_flash.php and tiki-edit_banner.php
+ *
+ * @param javascript = y or n to force to generate a version with javascript or not, ='' user prefs
+ */
 	function embed_flash($params, $javascript='', $flashvars = false) {
 		global $prefs;
 		global $headerlib; include_once('lib/headerlib.php');
@@ -8185,10 +8192,10 @@ JS;
 			return "<div id=\"$myId\">" . tra('Flash player not available.') . "</div><script type=\"text/javascript\">\n<!--//--><![CDATA[//><!--\n$js\n//--><!]]>\n</script>\n";
 		} else { // link on the movie will not work with IE6
 			extract ($params,EXTR_SKIP);
-			$asetup = "<OBJECT CLASSID=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0\" WIDTH=\"$width\" HEIGHT=\"$height\">";
-			$asetup .= "<PARAM NAME=\"movie\" VALUE=\"$movie\">";
-			$asetup .= "<PARAM NAME=\"quality\" VALUE=\"$quality\">";
-			$asetup .= "<PARAM NAME=\"wmode\" VALUE=\"transparent\">";
+			$asetup = "<object classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0\" width=\"$width\" height=\"$height\">";
+			$asetup .= "<param name=\"movie\" value=\"$movie\" />";
+			$asetup .= "<param name=\"quality\" value=\"$quality\" />";
+			$asetup .= "<param name=\"wmode\" value=\"transparent\" />";
 			$asetup .= "<embed src=\"$movie\" quality=\"$quality\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\" type=\"application/x-shockwave-flash\" width=\"$width\" height=\"$height\" wmode=\"transparent\"></embed></object>";
 			return $asetup;
 		}
