@@ -12,10 +12,12 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-if (isset($_REQUEST["mouseoverfeatures"])) {
+if (isset($_REQUEST["userfeatures"])) {
 	check_ticket('admin-inc-community');
+	simple_set_toggle("feature_community_gender");
 	simple_set_toggle("feature_community_mouseover");
 	simple_set_toggle("feature_community_mouseover_name");
+	simple_set_toggle("feature_community_mouseover_gender");
 	simple_set_toggle("feature_community_mouseover_picture");
 	simple_set_toggle("feature_community_mouseover_friends");
 	simple_set_toggle("feature_community_mouseover_score");
@@ -25,7 +27,7 @@ if (isset($_REQUEST["mouseoverfeatures"])) {
 	simple_set_toggle("feature_community_mouseover_distance");
 }
 
-if (isset($_REQUEST["listfeatures"])) {
+if (isset($_REQUEST["userlistfeatures"])) {
 	check_ticket('admin-inc-community');
 	simple_set_toggle("feature_community_list_name");
 	simple_set_toggle("feature_community_list_score");

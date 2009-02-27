@@ -2303,11 +2303,11 @@ function get_included_groups($group, $recur=true) {
 	return true;
 	}
 
-	function add_group($group, $desc='', $home='', $utracker=0, $gtracker=0, $rufields='', $userChoice='', $defcat=0, $theme='') {
+	function add_group($group, $desc='', $home='', $utracker=0, $gtracker=0, $rufields='', $userChoice='', $defcat=0, $theme='', $ufield='', $gfield='') {
 		if ( $this->group_exists($group) ) return false;
 
-		$query = "insert into `users_groups` (`groupName`, `groupDesc`, `groupHome`,`groupDefCat`,`groupTheme`,`usersTrackerId`,`groupTrackerId`, `registrationUsersFieldIds`, `userChoice`) values(?,?,?,?,?,?,?,?,?)";
-		$this->query($query, array($group, $desc, $home, $defcat, $theme, (int)$utracker, (int)$gtracker, $rufields, $userChoice) );
+		$query = "insert into `users_groups` (`groupName`, `groupDesc`, `groupHome`,`groupDefCat`,`groupTheme`,`usersTrackerId`,`groupTrackerId`, `registrationUsersFieldIds`, `userChoice`, `usersFieldId`, `groupFieldId`) values(?,?,?,?,?,?,?,?,?,?,?)";
+		$this->query($query, array($group, $desc, $home, $defcat, $theme, (int)$utracker, (int)$gtracker, $rufields, $userChoice, $ufield, $gfield) );
 
 		global $cachelib;
 		$cachelib->invalidate('grouplist');

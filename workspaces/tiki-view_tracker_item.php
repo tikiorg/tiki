@@ -295,13 +295,6 @@ if (!isset($tracker_info["writerGroupCanModify"]) or (isset($gtid) and ($_REQUES
 }
 $tikilib->get_perm_object($_REQUEST['trackerId'], 'tracker', $tracker_info);
 
-if ($tiki_p_view_trackers != 'y' and $tracker_info["writerCanModify"] != 'y' and $tracker_info["writerGroupCanModify"] != 'y'&& !$special) {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
-}
-
 $status_types = $trklib->status_types();
 $smarty->assign('status_types', $status_types);
 
@@ -646,12 +639,21 @@ if (isset($tracker_info["authorfield"])) {
 		$smarty->assign("tiki_p_view_trackers","y");
 	}
 }
-if ($tiki_p_view_trackers != 'y' && !$special) {
-	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
-	$smarty->display("error.tpl");
-	die;
+
+if ($tiki_p_view_trackers != 'y' and $tracker_info["writerCanModify"] != 'y' and $tracker_info["writerGroupCanModify"] != 'y' && !$special) {
+	if ($prefs['feature_categories'] == 'y' && $categlib->is_categorized('tracker '.$_REQUEST['trackerId'], $_REQUEST['itemId'])) {
+		$perms = $categlib->get_object_categories_perms($user, 'tracker '.$_REQUEST['trackerId'], $_REQUEST['itemId']);
+		echo 'sdfsdf';
+		if ($perms['tiki_p_view_categorized'] == 'y')
+			$tiki_p_view_trackers = 'y';
+	} else {
+		$smarty->assign('errortype', 401);
+		$smarty->assign('msg', tra("You do not have permission to use this feature"));
+		$smarty->display("error.tpl");
+		die;
+	}
 }
+
 
 if (!isset($mainfield)) {
 	$mainfield = 0;
@@ -914,6 +916,22 @@ if ($_REQUEST["itemId"]) {
 					eval('$computed = '.$calc.';');
 					$ins_fields["data"][$i]["value"] = $computed;
 					$info[$fields['data'][$i]['fieldId']] = $computed; // in case a computed field use this one
+					preg_match('/#([0-9]+)/', $fields["data"][$i]['options_array'][0], $matches);
+					foreach ($matches as $k=>$match) {
+						if (!$k) continue;
+						foreach ($fields['data'] as $k=>$f) {
+							if ($f['fieldId'] == $match && ($f['type'] == 'f' || $f['type'] == 'j')) {
+								if (!$info[$match])
+									$ins_fields['data'][$i]['value'] = '';
+								$ins_fields['data'][$i]['computedtype'] = 'f';
+								$ins_fields['data'][$i]['options_array'] = $f['options_array'];
+								$k = -1;
+								break;
+							}
+						}
+						if ($k == -1)
+							break;
+					}
 				} elseif ($fields["data"][$i]["type"] == 'g') {
 					if (isset($fields["data"][$i]['options_array'][0]) && $fields["data"][$i]['options_array'][0] == 2 and !$info["$fid"]) {
 						$ins_fields["data"][$i]["defvalue"] = $group;

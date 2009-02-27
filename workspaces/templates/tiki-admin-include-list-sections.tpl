@@ -171,6 +171,9 @@
       <img src="pics/trans.png" alt="{tr}Webservices{/tr}" title="{tr}Webservices management{/tr}{if $prefs.feature_webservices eq 'n'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Webservices{/tr}</span>
     </a>
 
+	<a href="tiki-admin.php?page=sefurl" class="admbox{if $prefs.feature_sefurl eq 'n'} off{/if}" style="background-image: url('pics/large/goto48x48.png')">
+      <img src="pics/trans.png" alt="{tr}Search engine friendly url{/tr}" title="{tr}Search engine friendly url{/tr}{if $prefs.feature_sefurl eq 'n'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Search engine friendly url{/tr}</span>
+    </a>
 	</div>
 </div>
 

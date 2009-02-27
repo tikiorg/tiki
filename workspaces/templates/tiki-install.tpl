@@ -1,11 +1,9 @@
 <div id="siteheader" class="clearfix">
 	<div id="header-top">
-		<div id="sitelogo" style="text-align: center; padding-left: 70px;"><img style="border: medium none ;" alt="{tr}TikiWiki CMS/Groupware{/tr}" src="img/tiki/tiki3.png" /></div>
+		<div id="sitelogo" style="padding-left: 70px;"><h1><img style="border: medium none ; vertical-align: middle;" alt="{tr}TikiWiki CMS/Groupware{/tr}" src="img/tiki/tiki3.png" />
+	<span style="vertical-align: middle">{tr}Tiki installer{/tr} v{$tiki_version_name} <a title='help' href='http://doc.tikiwiki.org/Installation' target="help"><img style="border: 0" src='img/icons/help.gif' alt="{tr}Help{/tr}" /></a></span></h1>
 	</div>
-</div>
-
-<div id="tiki-top" class="clearfix">
-	<h1>{tr}Tiki installer{/tr} v{$tiki_version_name} <a title='help' href='http://doc.tikiwiki.org/Installation' target="help"><img style="border: 0" src='img/icons/help.gif' alt="{tr}Help{/tr}" /></a></h1>
+	</div>
 </div>
 
 <div id="middle" class="clearfix">
@@ -25,12 +23,18 @@
 		<li>{tr}For complete documentation, please visit{/tr} <a href="http://doc.tikiwiki.org" target="_blank">http://doc.tikiwiki.org</a>.</li>
 		<li>{tr}For more information about TikiWiki, please visit{/tr} <a href="http://www.tikiwiki.org" target="_blank">http://www.tikiwiki.org</a>.</li>
 	</ul>
-	<p><img src="pics/icons/information.png" style="vertical-align:middle" alt="{tr}Information{/tr}" /> {tr}To run this installer in your language, use <strong>tiki-install.php?lang=XX</strong> where <strong>XX</strong> is the two-letter code for your language{/tr}.</p>
 
-{* not working?
-{include file="modules/mod-switch_lang.tpl"}
-*}
-
+	<form action="tiki-install.php" method="post">
+		{tr}Select your language:{/tr}
+		<select name="lang" id="general-lang" onchange="javascript:submit()">
+			{section name=ix loop=$languages}
+				<option value="{$languages[ix].value|escape}"
+					{if $prefs.site_language eq $languages[ix].value}selected="selected"{/if}>{$languages[ix].name}</option>
+			{/section}
+		</select>
+		<input type="hidden" name="install_step" value="1" />
+		{if $multi}		<input type="hidden" name="multi" value="{$multi}" />{/if}
+	</form>
 </div>
 <div align="center" style="margin-top:1em;">
 	<form action="tiki-install.php" method="post">
@@ -63,26 +67,26 @@
 	<p>{tr}This installer will perform some basic checks automatically{/tr}.</p>
 	<br />
 	<h2>{tr}Memory{/tr}</h2>
-	<p>{tr}TikiWiki requires <strong>at least</strong> 32MB of PHP memory for script execution{/tr}. {tr}Allocating too little memory will cause TikiWiki to display blank pages{/tr}.</p>
 {if $php_memory_limit <= 0}
 	<div style="border: solid 1px #000; padding: 5px; background: #a9ff9b;">
 		<p align="center"><img src="pics/icons/accept.png" alt="{tr}Success{/tr}" style="vertical-align:middle"/> {tr}Tiki has not detected your PHP memory_limit{/tr}. {tr}This probably means you have no set limit (all is well){/tr}. </p>
 	</div>	
-{elseif $php_memory_limit <= 32 * 1024 * 1024}
+{elseif $php_memory_limit < 32 * 1024 * 1024}
 	<div style="border-style: solid; border-width: 1; padding: 5px; background: #FF0000">
 		<p align="center"><img src="pics/icons/delete.png" alt="{tr}alert{/tr}" style="vertical-align:middle" /> {tr}Tiki has detected your PHP memory limit at{/tr}: {$php_memory_limit|kbsize:true:0}</p>
 	</div>
+	<p>{tr}TikiWiki requires <strong>at least</strong> 32MB of PHP memory for script execution{/tr}. {tr}Allocating too little memory will cause TikiWiki to display blank pages{/tr}.</p>
+	<p>{tr}To change the memory limit, use the <strong>memory_limit</strong> key in your <strong>php.ini </strong> file (for example: memory_limit = 32M) and restart your webserver{/tr}.</p>
+
 {else}
-	<div style="border: solid 1px #000; padding: 4px">
+	<div style="border: solid 1px #000; padding: 4px; background-color: #a9ff9b;">
 		<p align="center">
 		  <span style="font-size: large; padding: 4px;">
-		  {tr}Tiki has detected your PHP memory_limit at{/tr}: {$php_memory_limit|kbsize:true:0}. 
+		  <img src="pics/icons/accept.png" alt="{tr}Success{/tr}" style="vertical-align:middle"/> {tr}Tiki has detected your PHP memory_limit at{/tr}: {$php_memory_limit|kbsize:true:0}. 
 		  </span>
 		</p>
 	</div>	
 {/if}			
-	<p>{tr}To change the memory limit, use the <strong>memory_limit</strong> key in your <strong>php.ini </strong> file (for example: memory_limit = 32M) and restart your webserver{/tr}.</p>
-
 {* how to test?
 	<br />
 	<h2>TMP Directory</h2>
@@ -120,7 +124,6 @@
 {/if}
 	<br />
 	<h2>{tr}Image Processing{/tr}</h2>
-	<p>{tr}TikiWiki uses the GD library to process images for the Image Gallery and CAPTCHA support{/tr}.</p>
 {if $gd_test eq 'y'}
 	<div style="border: solid 1px #000; padding: 5px; background: #a9ff9b;">
 		<p align="center"><img src="pics/icons/accept.png" alt="{tr}Success{/tr}" style="vertical-align:middle"/> {tr}Tiki detected{/tr} GD {$gd_info}.</p>
@@ -131,6 +134,7 @@
 	</div>
 	<p>&nbsp;</p>
 {/if}
+	<p>{tr}TikiWiki uses the GD library to process images for the Image Gallery and CAPTCHA support{/tr}.</p>
 </div>
 
 <div align="center" style="margin-top:1em;">
@@ -275,7 +279,7 @@
 			{/if}
 			 {if $tikidb_created}<p style="text-align: center"><img src="img/silk/sticky.png" alt="warning" style="vertical-align:middle"/> <strong>{tr}Warning{/tr}</strong>: {tr}This will destroy your current database{/tr}.</p>{/if}			  
 			  <p>{tr}Create a new database (clean install) with profile{/tr}:</p>
-			<select name="profile" size="{if $profiles}{$profiles|@count}{else}3{/if}">
+			<select name="profile" size="{if $profiles}{$profiles|@count}{else}5{/if}">
 			<option value="" selected="selected">Bare-bones default install</option>
 			<option value="Simple_Bug_Tracker">Simple Bug Tracker</option>
 			<option value="Small_Business_Web_Presence">Small Business Web Presence</option>
@@ -385,21 +389,21 @@
 	<p>{tr}Complete these fields to configure common, general settings for your site{/tr}. {tr}The information you enter here can be changed later{/tr}.</p>
 	<p>{tr}Refer to the <a href="http://doc.tikiwiki.org/Admin+Panels" target="_blank">documentation</a> for complete information on these, and other, settings{/tr}.</p>
 	<br />
-	<fieldset><legend>{tr}General{/tr} <a href="http://doc.tikiwiki.org/general+admin&bl=y" target="_blank" title="{tr}Help{/tr}"><img src="pics/icons/help.png" alt="{tr}Help{/tr}" /></a></legend>
-<div style="padding:5px"><label for="site_title">{tr}Site title{/tr}:</label>
+	<fieldset><legend>{tr}General{/tr} <a href="http://doc.tikiwiki.org/general+admin&amp;bl=y" target="_blank" title="{tr}Help{/tr}"><img src="pics/icons/help.png" alt="{tr}Help{/tr}" /></a></legend>
+<div style="padding:5px;clear:both;"><label for="site_title">{tr}Site title{/tr}:</label>
 		<div style="margin-left:1em;"><input type="text" size="40" name="site_title" id="site_title" value="Tiki {$tiki_version_name}" />
 			<br /><em>{tr}This will appear in the browser title bar{/tr}.</em></div>
 		</div>
-		<div style="padding:5px"><label for="sender_email">{tr}Sender email{/tr}:</label>
+		<div style="padding:5px;clear:both;"><label for="sender_email">{tr}Sender email{/tr}:</label>
 			<div style="margin-left:1em;"><input type="text" size="40" name="sender_email" id="sender_email" value="{$prefs.sender_email|escape}" />
 			<br /><em>{tr}Email sent by your site will use this address{/tr}.</em>
 			</div>
 		</div>
 	</fieldset>
 <br />
-	<fieldset><legend>{tr}Login{/tr} <a href="http://doc.tikiwiki.org/login+config&bl=y" target="_blank" title="{tr}Help{/tr}"><img src="pics/icons/help.png" alt="{tr}Help{/tr}" /></a></legend>
-		<div style="padding:5px"><label for="https_login">{tr}HTTPS login{/tr}:</label>
-	<select name="https_login" id="https_login">
+	<fieldset><legend>{tr}Secure Login{/tr} <a href="http://doc.tikiwiki.org/login+config&amp;bl=y" target="_blank" title="{tr}Help{/tr}"><img src="pics/icons/help.png" alt="{tr}Help{/tr}" /></a></legend>
+		<div style="padding:5px;clear:both"><label for="https_login">{tr}HTTPS login{/tr}:</label>
+	<select name="https_login" id="https_login" onchange="hidedisabled('httpsoptions',this.value);">
 		<option value="disabled"{if $prefs.https_login eq 'disabled'} selected="selected"{/if}>{tr}Disabled{/tr}</option>
 		<option value="allowed"{if $prefs.https_login eq 'allowed'} selected="selected"{/if}>{tr}Allow secure (https) login{/tr}</option>
 		<option value="encouraged"{if $prefs.https_login eq 'encouraged'} selected="selected"{/if}>{tr}Encourage secure (https) login{/tr}</option>
@@ -407,16 +411,18 @@
 		<option value="required"{if $prefs.https_login eq 'required'} selected="selected"{/if}>{tr}Require secure (https) login{/tr}</option>
 	</select>
 		</div>
+<div id="httpsoptions" style="display:{if $prefs.https_login eq 'disabled' or $prefs.https_login eq ''}none{else}block{/if};">
 		<div style="padding:5px">
 			<label for="https_port">{tr}HTTPS port{/tr}:</label> <input type="text" name="https_port" id="https_port" size="5" value="{$prefs.https_port|escape}" />
 		</div>
-<div style="padding:5px">
+<div style="padding:5px;clear:both">
 	<div style="float:left"><input type="checkbox" id="feature_show_stay_in_ssl_mode" name="feature_show_stay_in_ssl_mode" {if $prefs.feature_show_stay_in_ssl_mode eq 'y'}checked="checked"{/if}/></div>
 	<div style="margin-left:20px;"><label for="feature_show_stay_in_ssl_mode"> {tr}Users can choose to stay in SSL mode after an HTTPS login{/tr}.</label></div>
 </div>
-<div style="padding:5px">
+<div style="padding:5px;clear:both">
 	<div style="float:left"><input type="checkbox" id="feature_switch_ssl_mode" name="feature_switch_ssl_mode" {if $prefs.feature_switch_ssl_mode eq 'y'}checked="checked"{/if}/></div>
 	<div style="margin-left:20px;"><label for="feature_switch_ssl_mode">{tr}Users can switch between secured or standard mode at login{/tr}.</label></div>
+</div>
 </div>
 </fieldset>
 <br />
@@ -429,6 +435,7 @@
 {*
 others?
 *}
+
 </div>
 
 <div align="center" style="margin-top:1em;">

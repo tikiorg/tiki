@@ -34,6 +34,8 @@ h1 {
 	margin: 0;
 	padding-left: 14px}
 	
+* html h1 {margin-bottom: auto}
+	
 body.tiki_wiki h1 {
 	/*display: inline;
 	float: left;
@@ -118,6 +120,15 @@ input[type=submit],
 	display: inline;
 	outline: none;
 	/*line-height: 2em*/}
+	
+* html span.button a {background: #f5f5f5}
+	
+* html span.button a:link,
+* html span.button a:visited {
+	text-decoration: none;
+	border: 0;
+	padding: 0 4px}
+
 	/*
 *:first-child+html .button a,
 *:first-child+html .button a:visited,
@@ -217,16 +228,16 @@ ul.jumplinks a:active {
 
 #c1c2 #wrapper #col1 {/*position: relative*/}
 
-#c1c2 #wrapper #col1 > .content {
+#c1c2 #wrapper #col1 #tiki-center {
 	background: url(coelesce/tiki-centerbg.jpg) repeat-x;
 	color: #2d2d2d;
 	margin-left: 30px;
-	margin-right: 30px}
+	margin-right: 30px;
+	position: relative}
 	
 body.tiki_wiki #c1c2 #wrapper #col1 > .content {position: relative}
-	
-/* body.tiki_wiki #c1c2 #wrapper #col1 > .content {background: none}
-*/
+body.tiki_cms #tiki-center {background: none !important}
+
 #c1c2 #col2 {
 	width: 230px;
 	overflow: visible;}
@@ -273,7 +284,9 @@ div#tiki-bot {}
 #header-top {
 	position: relative;
 	background: url(coelesce/pagebg.jpg) repeat-x bottom;
-	min-height: 80px;}
+	min-height: 80px}
+	
+* html #header-top {height: 80px}
 
 #siteheader {
 	text-align: left;
@@ -627,7 +640,8 @@ div.menuSection div.separator {}
 /* Tree menu (also on Browse Categories */
 .treemenudiv {
 	display: block;
-	white-space: nowrap}
+	white-space: nowrap;
+	background: #ccdceb;}
 
 .phplmnormal,
 a.phplmnormal:hover,
@@ -635,14 +649,19 @@ a.phplm:link,
 a.phplm:visited,
 a.phplm:hover,
 a.phplm:active {
-	font: 100% Verdana, Tahoma, Arial, sans-serif;
-	color: #517ea7;
+	font-family: Verdana, Tahoma, Arial, sans-serif;
+	color: #295c8e;
 	text-decoration: none;
-	font-weight: bold}
+	font-weight: normal}
 
-a.phplm:visited {color: #517ea7}
-a.phplm:hover {color: #82a7c8}
-a.phplm:active {color: #517ea7}
+a.phplm:visited {color: #295c8e}
+
+a.phplm:hover {
+	color: #82a7c8;
+	text-decoration: underline;
+	background: none}
+
+a.phplm:active {color: #82a7c8}
 
 a.phplmselected:link,
 a.phplmselected:visited,
@@ -670,7 +689,8 @@ a.phplmselected:hover {color: #808080}
 	color: #5a7ea2;
 	/*min-width: 10em*/}
 
-.cssmenu_horiz li a {
+.cssmenu_horiz li a:link,
+.cssmenu_horiz li a:visited {
 	white-space: nowrap;
 	display: block;
 	padding: 6px 10px;
@@ -1070,7 +1090,14 @@ tr.odd {background: #dddfdf}
 tr.even {background: #f0f0f0}
 td.odd {background: #dddfdf}
 td.even {background: #f0f0f0}
-td.third {text-align: center}
+
+.normal td.third {
+	padding: 20px 0 5px 20px;
+	font-weight: bold;
+	font-size: 120%;
+	color: #527DA8;
+	background-color: #F7F7F7;
+}
 
 .normal td,
 td.normal,
@@ -1202,7 +1229,7 @@ h1 a:hover {
 
 body.tiki_wiki .wikitopline {
 	position: absolute;
-	top: -1.5em;
+	top: -2em;
 	left: 80px;
 	width: 70%}
 	
@@ -1400,6 +1427,7 @@ div.articletitle {
 span.titlea {
 	display: block;
 	min-height: 26px;
+	background: url(coelesce/tiki-centerbg.jpg) repeat-x;
 	font-size: 1.8em;
 	font-weight: bold;
 	margin: 0;
@@ -1446,8 +1474,27 @@ img.articleimage {
 	padding: 2px 0;
 	margin-bottom: 10px}
 
-div.articletrailer {text-align: right}
-div.articletrailer .status {float: left} 
+div.articletrailer {
+	position: relative;
+	text-align: center;
+	margin-top: 1.1em}
+	
+div.articletrailer img {}
+
+div.article .status {
+	position: absolute;
+	left: 0}
+
+div.articletrailer span {
+	display: inline-block;
+	margin: auto;
+	white-space: nowrap}
+
+div.article .actions {
+	position: absolute;
+	right: 0;
+	top: 0}
+
 div.articlebody {}
 
 div.articlesource {
@@ -1683,7 +1730,8 @@ body.tiki_forums table.normal {margin: auto}
 	color: #ebf1f7;}
 
 .postfooter .actions {
-	width: 40px}
+	width: 200px;
+	}
 
 .postfooter .status {
 	float: right;
@@ -1829,8 +1877,16 @@ ul.catitems li a.link {}
 
 /***** Tags (freetags) *****/
 div.freetaglist {
-	text-align: right;
-	margin-bottom: 8px}
+	border: 1px solid #527ca6;
+	margin: 5px 10px 8px 10px;
+	padding: 3px;
+	text-align: left;
+}
+
+div.freetagitemlist {
+	margin-top: 5px;
+	background-color: #ccdceb;
+}
 
 li.freetag {
 	list-style: none !important;

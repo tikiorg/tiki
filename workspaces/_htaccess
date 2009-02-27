@@ -24,6 +24,11 @@ RewriteCond %{REQUEST_FILENAME}/ -l [OR]
 RewriteCond %{REQUEST_FILENAME}/ -d
 RewriteRule [^/]$ %{REQUEST_URI}/ [R=301,L]
 
+# Tiki 3.0 requires PHP5. If your host doesn't offer PHP5 by default, it's possible that it can be activated by using (uncommenting) the lines below. Check with your host.
+# AddType application/x-httpd-php5 .php
+# AddHandler application/x-httpd-php5 .php
+ 
+ 
 # direct one-word access
 RewriteRule ^(img\/trackers\/.*)		$1		[L]
 RewriteRule ^calendar$             tiki-calendar.php                        [L]
@@ -96,8 +101,10 @@ RewriteRule ^show:(~?)(.+)$  tiki-slideshow.php?page=$1$2      [QSA,L]
 RewriteRule ^(lib/wiki3d/.+\.jar)$ $1                                       [L]
 RewriteRule     ^(.+)$    tiki-index.php?page=$1                   [QSA,L]
 
-# how to redirect to a wiki page on a not found error: uncomment + adapt the pagename 
-# ErrorDocument 404 tiki-index.php?page=Page+not+found
+# Error pages, handled by Apache (not by TikiWiki)
+# TikiWiki can catch some errors and deal with them by redirecting to a similar page, sending you to the search, etc. However, some errors bypass TikiWiki and must be handled by Apache (ex.: impossiblepagename.php) 
+# To use Apache error handling, uncomment the following line and adapt the page name. You must create the page before trying to use it. 
+# ErrorDocument 404 /tiki-index.php?page=Page+not+found
 
 # to active the error display, uncomment
 #php_flag display_errors on

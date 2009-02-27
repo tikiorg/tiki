@@ -53,6 +53,7 @@ if (isset($_REQUEST["loginprefs"])) {
 	simple_set_value('https_port');
 	simple_set_value('rememberme');
 	simple_set_value('remembertime');
+	simple_set_value('remembermethod');
 	simple_set_value('cookie_name');
 	simple_set_value('cookie_domain');
 	simple_set_value('cookie_path');

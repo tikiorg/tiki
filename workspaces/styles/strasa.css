@@ -103,7 +103,9 @@ button,
 input[type=reset],
 input[type=submit],
 span.button input,
-.submitbutton {
+.submitbutton,
+.calbuttonoff,
+.calbuttonon {
 	font-family: Verdana, Helvetica, Geneva, Arial, sans-serif;
 	font-size: 94%;
 	font-weight: normal;
@@ -205,7 +207,7 @@ ul.jumplinks a:active {
 	position: absolute;
 	top: 9010px;
 	left: 9010px;
-	background: #ccedff;
+	background: #cce5ff;
 	color: #006699;
 	padding: 5px;
 	font-weight: bold;
@@ -617,10 +619,6 @@ a.flip img {display: none}
 	border: 1px solid #08698f;
 	background: #1b3a50}
 	
-.cssmenu_vert li:hover ul {
-	border: 1px solid #08698f;
-	background: #1b3a50}
-
 .mdkitem {
 	position: relative;
 	text-align: left;
@@ -631,43 +629,34 @@ a.flip img {display: none}
 	top: 5px;
 	right: 12px} 
 
-.mdkitem a,
-.cssmenu_vert li a {
+.mdkitem a {
 	color: #5ae0ff;
 	padding: 3px;
 	position: relative;
 	display: block;
 	font-weight: normal} 
 
-.mdkitem a:link,
-.cssmenu_vert li a {
+.mdkitem a:link {
 	font-weight: normal;
 	text-decoration: none} 
 
 .mdkitem a:visited {text-decoration: none} 
 
-.mdkitem a:hover, 
-.cssmenu_vert li a:hover {
+.mdkitem a:hover {
 	color: #fff;
 	text-decoration: none} 
 
 .mdkitem a:active {} 
 
-.cssmenu_vert li {}
-.cssmenu_ver li a ul {border: 0}
-.cssmenu_vert li:hover ul,
-.cssmenu_vert li li:hover ul,
-.cssmenu_vert li li li:hover ul,
-.cssmenu_vert li.sfhover ul,
-.cssmenu_vert li li.sfhover ul,
-.cssmenu_vert li li li.sfhover ul { /* lists nested under hovered list items */border: 0}
-
-.cssmenu_vert li.selected > a {}
+#col2 .mdkitem a {color: #006699}
+#col2 .mdkitem a:hover {color: #000}
 
 /* Tree menu (also on Browse Categories */
 .treemenudiv {
 	display: block;
 	white-space: nowrap}
+	
+#col2 .treemenudiv { background: #cce5ff }
 
 .phplmnormal,
 a.phplmnormal:hover,
@@ -681,7 +670,7 @@ a.phplm:active {
 	font-weight: normal}
 
 a.phplm:visited {color: #006699}
-a.phplm:hover {color: #000000; background: #fff;text-decoration: underline}
+a.phplm:hover {color: #000; background: none;text-decoration: underline}
 a.phplm:active {color: #006699}
 
 a.phplmselected:link,
@@ -702,106 +691,24 @@ a.phplmselected:hover {color: #808080}
 	height: 18px}
 	
 /** CSS (suckerfish) menus **/
-.cssmenu,
-.cssmenu_horiz,
-.cssmenu_horiz ul,
-.cssmenu_vert,
-.cssmenu_vert ul { /* all lists */
-	padding: 0;
-	margin: 0;
-	list-style: none;
-	line-height: 1}
-
-.cssmenu_vert,
-.cssmenu_vert ul { /* all lists */
-	float: left;
-	width: 11em}
-
-/* Special case in left column (from Darkroom)
-.box-CSS_menu .cssmenu_vert,
-.box-CSS_menu .cssmenu_vert > li { width: 172px }
-
-.box-CSS_menu .cssmenu_vert li { padding:0 }
-.box-CSS_menu .cssmenu_vert > li > ul > li > ul {margin-left: 9em }
-.box-CSS_menu .cssmenu_vert > li > ul {margin-left: 172px}
-.box-CSS_menu .cssmenu_vert li:hover { background: #b2b2b2 }
-.box-CSS_menu .cssmenu_vert li:hover > a { color: #303030 }
-*/
-
-.cssmenu li,
-.cssmenu_horiz li,
-.cssmenu_vert li {
-	float: left;
-	width: 11em;  }
-
-.cssmenu li,	
-.cssmenu_vert li {
-	position: relative;
-	line-height: 1.25em;
-	margin-bottom: -1px}
-
-.cssmenu > li {background: url(../lib/phplayers/images/down-galaxy.png) 100% 70% no-repeat}
-	
-.cssmenu_horiz li:hover,
-.cssmenu_vert li:hover {background: #dedede}
 
 .cssmenu ul,
 .cssmenu_vert li ul,
 .cssmenu_horiz li ul {
-	position: absolute;
-	left: -999em;
-	width: 11em}
+	border: 1px solid #08698f;
+	background: #1b3a50}
 	
 .cssmenu_vert li ul { /* second-level lists */
 	margin-left: 11.05em;
 	margin-top: -1.35em;
 	padding-bottom: 1px; /*enable border to show */}
-
-.cssmenu li ul ul {left: -999em}
-.cssmenu_horiz li ul ul {margin: -1em 0 0 10em}
-
-.cssmenu li:hover ul ul,
-.cssmenu li:hover ul ul ul,
-.cssmenu_horiz li:hover ul ul,
-.cssmenu_horiz li:hover ul ul ul,
-.cssmenu_vert li:hover ul ul,
-.cssmenu_vert li:hover ul ul ul,
-.cssmenu li.sfhover ul ul,
-.cssmenu li.sfhover ul ul ul,
-.cssmenu_horiz li.sfhover ul ul,
-.cssmenu_horiz li.sfhover ul ul ul,
-.cssmenu_vert li.sfhover ul ul,
-.cssmenu_vert li.sfhover ul ul ul {left: -999em}
-
-.cssmenu li:hover ul,
-.cssmenu li li:hover ul,
-.cssmenu li li li:hover ul,
-.cssmenu_horiz li:hover ul,
-.cssmenu_horiz li li:hover ul,
-.cssmenu_horiz li li li:hover ul,
-.cssmenu_vert li:hover ul,
-.cssmenu_vert li li:hover ul,
-.cssmenu_vert li li li:hover ul,
-.cssmenu li.sfhover ul,
-.cssmenu li li.sfhover ul,
-.cssmenu li li li.sfhover ul,
-.cssmenu_horiz li.sfhover ul,
-.cssmenu_horiz li li.sfhover ul,
-.cssmenu_horiz li li li.sfhover ul,
-.cssmenu_vert li.sfhover ul,
-.cssmenu_vert li li.sfhover ul,
-.cssmenu_vert li li li.sfhover ul {
-	left: auto;
-	border: 1px solid #acccdd;
-	background: white;}
-
-.cssmenu li.selected,
-.cssmenu_horiz li.selected,
-.cssmenu_vert li.selected {background: #D3D3D3}
-
-.cssmenu li.selectedAscendant,
-.cssmenu_horiz li.selectedAscendant,
-.cssmenu_vert li.selectedAscendant {background: #E6E6E6}
+	
+.cssmenu_vert li ul {
+	background: #cce5ff;
+	border: 1px solid #233039}
+	
+.cssmenu_horiz li:hover {background: #1b3a50}
+.cssmenu_ver li:hover {background: none}
 	
 .cssmenu a,	
 .cssmenu_horiz a,
@@ -812,48 +719,19 @@ a.phplmselected:hover {color: #808080}
 	padding: 3px 0 3px 6px;
 	color: #006699}
 	
-.cssmenu a {  }
+.cssmenu_vert a:link,
+.cssmenu_vert a:visited {color: #006699}
 
-.cssmenu_vert a {
-	padding: 0 0.5em}
+.cssmenu_vert a:hover {
+	color: #000;
+	text-decoration: underline}
 
-.cssmenu a:hover,
-.cssmenu_vert a:hover,	
-.cssmenu_horiz a:hover {color: #000000}
+.cssmenu_vert ul a:link,
+.cssmenu_vert ul a:visited {color: #006699}
 
-.cssmenu_vert .menuSection > a,
-.cssmenu_vert .menuSection > a:hover,
-.menuSection1 > a,
-.menuSection2 > a,
-.menuSection3 > a {background: url(../lib/phplayers/images/forward-galaxy.png) 80% center no-repeat}
+.cssmenu_vert ul a:hover {color: #000000}
 
-.cssmenu_horiz .menuSection0 > a {background: url(../lib/phplayers/images/down-galaxy.png)  85% 65% no-repeat}
-
-div.box-CSS_menu {overflow: visible !important}
-.box-data .cssmenu_vert {z-index: 1900}
-
-#tiki-top .cssmenu_horiz {
-	z-index: 2000;
-	position: relative}
-
-#tiki-top > .cssmenu_horiz {}
-#tiki-top > .cssmenu_horiz > li {}
-#tiki-top > .cssmenu_horiz > li > a {}
-#tiki-top > .cssmenu_horiz > li > a:hover {}
-#tiki-top .cssmenu_horiz li:hover {}
-#tiki-top ul.cssmenu_horiz li ul a {}
-#tiki-top .cssmenu_horiz ul li a:hover {}
-
-.pageactions .cssmenu > li {}
-.pageactions .cssmenu li ul * {}
-.pageactions .cssmenu li:hover ul {}
-.pageactions .cssmenu li ul {}
-.pageactions .cssmenu li ul ul {}
-.pageactions .cssmenu li:hover ul li:hover {}
-.pageactions .cssmenu li a {}
-.pageactions .cssmenu li ul ul {}
-.pageactions .cssmenu li.selected > a {}
-.pageactions .cssmenu li.selectedAscendant > a {}
+#tiki-top .cssmenu_horiz {text-align: left; float: right; margin-right: 100px}
 
 /** Links in other menus **/
 div.separator {
@@ -1084,7 +962,7 @@ ul.categories li {
 div.box {
 	overflow: hidden}
 	
-#col2 .box {background: #ccedff}
+#col2 .box {background: #cce5ff}
 
 #col3 .box {
 	border-bottom: 1px solid #cfcfcf;
@@ -1095,8 +973,7 @@ h3.box-title {
 	padding-top: 4px;
 	padding-left: 10px}
 	
-#col3 .box-title {
-	}
+#col2 .box-title {margin-top: 0; margin-bottom: 0}
 
 .box-title a,
 .box-title a:link {  }
@@ -1117,7 +994,7 @@ a.flipmodtitle:hover img {border: 1px solid #58A7D2 !important}
 #col2 .box-title a,
 #col2 .box-title a:link {}
 .box-title a:hover {}
-.box-data {padding: 0 5px 10px 5px}
+.box-data {padding: 0 5px 10px 10px}
 
 .box-data ol,
 .box-data ul {}
@@ -1131,7 +1008,7 @@ a.flipmodtitle:hover img {border: 1px solid #58A7D2 !important}
 	float: right;
 	width: 64px;
 	height: 16px}
-
+	
 /** Other boxes **/
 div.cbox {border: 1px solid #1b3a50}
 
@@ -1156,7 +1033,7 @@ div.cbox {border: 1px solid #1b3a50}
 	text-align: left}
 
 .rbox-title {
-	background-color: #ccedff;
+	background-color: #cce5ff;
 	border: none;
 	float: left;
 	font-size: 1em;
@@ -1168,7 +1045,7 @@ div.cbox {border: 1px solid #1b3a50}
 
 .rbox-data {
 	background-color: #fff;
-	border: solid 1px #ccedff;
+	border: solid 1px #cce5ff;
 	clear: left;
 	margin: 0;
 	padding: 6px 2px 2px 2px}
@@ -1294,59 +1171,83 @@ a.forumnameread { color: #006699}
 
 /** Tabs **/
 .tabs {
-	border-bottom: solid 1px #a8e1ff !important;
-	background: #d0efff;
-	margin: 10px 10px -19px 10px;
+	border-bottom: solid 1px #1d9ccf !important;
+	margin: 10px 6px 0 !important;
 	padding: 0 !important;
-	position: relative;
-	z-index: 201}
+}
 
 .tabmark {
 	display: inline;
 	font-size: 85%;
-	background: #1d9ccf;
-	border: 1px solid;
-	border-color: #41cbe7 #223845 #ccedff #41cbe7;
-	margin: 0;
+	background-color: #cce5ff;
+	margin: 0px;
+	margin-left: 1px;	
 	margin-right: 5px;
-	padding: 2px 0}
+	padding: 2px 0;
+}
 
 .tabmark a {
-	border-bottom :0;
-	color: #fff;
-	padding: 1px 5px;
-	text-decoration: none;
-	white-space: nowrap;}
-/*
+	border-bottom: 0;
+	color: #0a6aa6;
+	font-weight: normal;
+	padding: 2px 5px;
+}
+
 .tabmark a:active {
-	background: #fff;
-	color: red}*/
+	background-color: #f2f2f2;
+	color: #0a6aa6;
+}
 
 .tabmark a:hover {
-	color: #000000;
-	background-color: #1e7ea6;}
+	background: #1d9ccf;
+	color: #fff;
+	text-decoration: none;
+}
 
+
+/* active (current) tab */
 .tabactive {
-	border: solid 1px #223845 !important;
+	background-color : #cce5ff !important;
+	border: solid 1px #1d9ccf !important;
 	border-bottom: none !important;
 	border-top-width: 2px !important;
 	position: relative;
-	bottom: 2px;
-	z-index: 2;}
+	bottom: 0px;
+	z-index: 2;
+}
 
-[class].tabactive {bottom: 1px}
+[class].tabactive {
+	bottom: -1px
+}
 
+/* link of active tab */
 .tabactive a {
-	background: #ccedff;
-	color: #077aa7}
+	color: #0a6aa6 !important;
+	font-weight: bold;
+}
+.tabactive a:hover {
+	background-color: #cce5ff !important;
+	color : #000 !important;
+}
 
+/* inactive tabs */
 .tabinactive {
-	border: solid 1px #666 !important;
-	border-bottom: none !important;
+	background-color: #1e7ea6;
 	position: relative !important;
-	/*top: -3px !important*/}
-/*
-[class].tabinactive {top: -2px !important}*/
+ 	top: -1px !important;
+}
+
+.tabinactive a {
+	color: #fff;
+}
+
+[class].tabinactive {
+	top: 0px !important
+}
+
+
+
+
 
 .tabcontent {
 	z-index: 200;
@@ -1354,7 +1255,7 @@ a.forumnameread { color: #006699}
 	padding: 32px 2px 2px 2px;
 	margin: 5px;
 	margin-top: 0;
-	background: #ccedff;
+	background: #cce5ff;
 	border-top: 0}
 
 .tabcontent table {
@@ -1463,7 +1364,28 @@ div.description {
 
 .wikitext ul li {} 
 .wikitext ul li ul li {}
-.wikitext ol {}
+.wikitext .fancylist {
+	margin: .5em 0; padding: 0;
+}
+.wikitext .fancylist li {
+	background: transparent url('strasa/list_icon.png') top left no-repeat;
+	color: #f90;
+	font: italic 2em Verdana, Geneva, Arial, Helvetica, sans-serif;
+	line-height: 27px;
+	list-style-position: inside;
+	margin-left: 10px; padding: 6px 0px 7px 15px;
+}
+
+.wikitext .fancylist li p {
+	color: #000;
+	display: inline;
+	font-size: 50%;
+	font-style: normal;
+	margin-left: 12px;
+}
+[class].wikitext .fancylist li p {
+	margin-left: -3px;
+}
 
 /* From Tikineat */
 .wikitext div.box {}
@@ -1641,10 +1563,27 @@ img.articleimage {
 	padding:2px 0;
 	margin-bottom:10px}
 
-div.articletrailer {text-align: right}
-div.articletrailer .wikitopline {float: left} 
-.trailer {}
-.trailer:hover {}
+div.articletrailer {
+	position: relative;
+	text-align: center;
+	margin-top: 1.1em}
+	
+div.articletrailer img {}
+
+div.article .status {
+	position: absolute;
+	left: 0}
+
+div.articletrailer span {
+	display: inline-block;
+	margin: auto;
+	white-space: nowrap}
+
+div.article .actions {
+	position: absolute;
+	right: 0;
+	top: 0}
+
 div.articlebody {}
 
 div.articlesource {
@@ -1881,7 +1820,7 @@ body.tiki_forums table.normal {margin: auto}
 
 .post .contribution {
 	background: #F0F8FF;
-	border: 1px solid #ccedff;
+	border: 1px solid #cce5ff;
 	padding: 0 2px}
 
 .post .avatar {
@@ -1901,7 +1840,7 @@ body.tiki_forums table.normal {margin: auto}
 .forum_actions .actions {
 	clear: both;
 	border: 0;
-	background: #ccedff;
+	background: #cce5ff;
 	padding: 3px;
 	vertical-align: middle}
 
@@ -2284,7 +2223,7 @@ div.multiselect {
 .Caltrack:before,
 .Calwiki:before {background: #f8f8ff}
 
-.calfocus {font-size: 90%; background: #ccedff}
+.calfocus {font-size: 90%; background: #cce5ff}
 .calfocuson {font-size: 90%}
 
 .calprio1 a,
@@ -2442,10 +2381,10 @@ div.multiselect {
 
 .calinput {background: #223845}
 .calfocuson + .calcontent { background: #F5F5F5}
-.days {color: #ccedff}
+.days {color: #cce5ff}
 #caltable .weeks {
 	background: #1b3a50;
-	color: #ccedff}
+	color: #cce5ff}
 
 .addevent {padding: 0 5px; float: right}
 * html .addevent {padding: 0}
@@ -2643,7 +2582,7 @@ table.default tfoot td {
 	font-weight: bold;
 	text-align:	center;
 	background: #223845;
-	color: #ccedff}
+	color: #cce5ff}
 
 table.default td {
 	border: solid 1px #A9A9A9;

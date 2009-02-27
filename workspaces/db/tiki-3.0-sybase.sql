@@ -1518,6 +1518,8 @@ CREATE TABLE "tiki_forums_queue" (
   "topic_title" varchar(240) default NULL NULL,
   "summary" varchar(240) default NULL NULL,
   "in_reply_to" varchar(128) default NULL NULL,
+  "tags" varchar(255) default NULL NULL,
+  "email" varchar(255) default NULL NULL,
   PRIMARY KEY (qId)
 ) ENGINE=MyISAM  
 go
@@ -2660,7 +2662,7 @@ INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`",
 go
 
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (143,42,'o','Mail Notifications','tiki-admin_notifications.php',1120,'','tiki_p_admin','',0)
+INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (143,42,'o','Mail Notifications','tiki-admin_notifications.php',1120,'','tiki_p_admin_notifications','',0)
 go
 
 
@@ -3188,7 +3190,7 @@ CREATE TABLE "tiki_polls" (
   "votes" numeric(8,0) default NULL NULL,
   "active" char(1) default NULL NULL,
   "publishDate" numeric(14,0) default NULL NULL,
-  "anonym" varchar(5) DEFAULT 'u' NOT NULL CHECK ("anonym" IN ( 'a', 'u', 'i', 'c' )),
+  "voteConsiderationSpan" numeric(4,0) default 0,
   PRIMARY KEY (pollId)
 ) ENGINE=MyISAM  
 go
@@ -5187,6 +5189,10 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 go
 
 
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_poll_voters', 'Can view poll voters', 'basic', 'polls')
+go
+
+
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_quicktags', 'Can admin quicktags', 'admin', 'quicktags', 'y')
 go
@@ -5653,6 +5659,11 @@ go
 
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_backlink', 'View page backlinks', 'basic', 'wiki')
+go
+
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_notifications', 'Can admin mail notifications', 'editors', 'mail notifications')
 go
 
 
@@ -7035,7 +7046,7 @@ go
 CREATE TABLE "tiki_freetagged_objects" (
   "tagId" numeric(12 ,0) identity,
   "objectId" numeric(11,0) default 0 NOT NULL,
-  "user" varchar(200) default '' NOT NULL,
+  "user" varchar(200) default '',
   "created" numeric(14,0) default '0' NOT NULL,
   PRIMARY KEY (tagId,user,objectId),
   KEY (tagId),

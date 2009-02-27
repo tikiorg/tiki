@@ -129,7 +129,7 @@ $smarty->assign('showdescription','n');
 $smarty->assign('showcreated','n');
 $smarty->assign('showuser','n');
 $smarty->assign('showhits','y');
-$smarty->assign('showxysize','y');
+$smarty->assign('showxysize','n');
 $smarty->assign('showfilesize','n');
 $smarty->assign('showfilename','n');
 $options_galleryimage=array(tra('first uploaded image') => 'firstu',

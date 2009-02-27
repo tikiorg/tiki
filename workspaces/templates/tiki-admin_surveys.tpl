@@ -60,10 +60,7 @@
 			<a href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'surveyId_desc'}surveyId_asc{else}surveyId_desc{/if}">{tr}ID{/tr}</a>
 		</th>
 		<th>
-			<a href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Name{/tr}</a>
-		</th>
-		<th>
-			<a href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}Description{/tr}</a>
+			<a href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'name_desc'}name_asc{else}name_desc{/if}">{tr}Survey{/tr}</a>
 		</th>
 		<th>
 			<a href="tiki-admin_surveys.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'status_desc'}status_asc{else}status_desc{/if}">{tr}Status{/tr}</a>
@@ -76,8 +73,12 @@
 	{section name=user loop=$channels}
 		<tr>
 			<td class="{cycle advance=false}">{$channels[user].surveyId}</td>
-			<td class="{cycle advance=false}">{$channels[user].name}</td>
-			<td class="{cycle advance=false}">{wiki}{$channels[user].description|escape}{/wiki}</td>
+			<td class="{cycle advance=false}">
+				<b>{$channels[user].name}</b>
+				<div class="subcomment">
+					{wiki}{$channels[user].description|escape}{/wiki}
+				</div>
+			</td>
 			<td style="text-align:center;" class="{cycle advance=false}">
 				{if $channels[user].status eq 'o'}
 					{icon _id=ofolder alt="Open"}

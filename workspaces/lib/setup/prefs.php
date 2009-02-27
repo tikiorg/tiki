@@ -10,7 +10,7 @@
 // RULE2: put array() in default prefs for serialized values
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if ( basename($_SERVER['SCRIPT_NAME']) == basename(__FILE__) ) {
   header("location: index.php");
   exit;
 }
@@ -48,7 +48,7 @@ function get_default_prefs() {
 		'feature_lastChanges' => 'y',
 		'feature_likePages' => 'n',
 		'feature_listPages' => 'y',
-		'feature_listorphanPages' => 'y',
+		'feature_listorphanPages' => 'n',
 		'feature_page_title' => 'y',
 		'feature_sandbox' => 'n',
 		'feature_warn_on_edit' => 'y',
@@ -88,7 +88,8 @@ function get_default_prefs() {
 		'feature_wiki_userpage' => 'y',
 		'feature_wiki_userpage_prefix' => 'UserPage',
 		'feature_wiki_usrlock' => 'n',
-		'feature_wiki_save_draft' => 'n', // Broken in 2.0 RC2 http://dev.tikiwiki.org/wish1888
+		'feature_wiki_feedback_polls' => array(),
+		'feature_wiki_save_draft' => 'n',
 		'feature_wikiwords' => 'n',
 		'feature_wikiwords_usedash' => 'y',
 		'feature_wiki_pagealias' => 'y',
@@ -182,12 +183,14 @@ function get_default_prefs() {
 		'wikiplugin_cookie' => 'y',
 		'wikiplugin_copyright' => 'y',
 		'wikiplugin_countdown' => 'y',
+		'wikiplugin_dbreport' => 'n',
 		'wikiplugin_div' => 'y',
 		'wikiplugin_dl' => 'y',
 		'wikiplugin_equation' => 'y',
 		'wikiplugin_events' => 'y',
 		'wikiplugin_example' => 'n',
                 'wikiplugin_fade' => 'y',
+		'wikiplugin_fancylist' => 'y',
 		'wikiplugin_fancytable' => 'y',
 		'wikiplugin_files' => 'y',
 		'wikiplugin_flash' => 'y',
@@ -197,6 +200,7 @@ function get_default_prefs() {
 		'wikiplugin_gauge' => 'y',
 		'wikiplugin_googleanalytics' => 'n',
 		'wikiplugin_group' => 'y',
+		'wikiplugin_html' => 'y',
 		'wikiplugin_iframe' => 'n',
 		'wikiplugin_image' => 'y',
 		'wikiplugin_include' => 'y',
@@ -498,8 +502,10 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_minical' => 'n',
 		'feature_notepad' => 'n',
 		'feature_userfiles' => 'n',
+		'feature_community_gender' => 'n',
 		'feature_community_mouseover' => 'n',
 		'feature_community_mouseover_name' => 'y',
+		'feature_community_mouseover_gender' => 'y',
 		'feature_community_mouseover_picture' => 'y',
 		'feature_community_mouseover_friends' => 'y',
 		'feature_community_mouseover_score' => 'y',
@@ -548,6 +554,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'users_prefs_mytiki_forum_topics' => 'y',
 		'users_prefs_mytiki_forum_replies' => 'y',
 		'users_prefs_realName' => '',
+		'users_prefs_gender' => '',
 		'users_prefs_show_mouseover_user_info' => 'n',
 		'users_prefs_tasks_maxRecords' => '10',
 		'users_prefs_user_dbl' => 'n',
@@ -737,7 +744,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'registerPasscode' => md5($tikilib->genPass()),
 		'rememberme' => 'disabled',
 		'remembertime' => 7200,
-		'remembermethod' => '',
+		'remembermethod' => '',	// '' = IP based (default) | 'simple' = unique id based
 		'feature_clear_passwords' => 'n',
 		'feature_crypt_passwords' => (CRYPT_MD5 == 1)? 'crypt-md5': 'tikihash',
 		'feature_challenge' => 'n',
@@ -1132,13 +1139,16 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'thumbSizeYGalleries' => '',
 		'wiki_3d_adjust_camera' => 'true',
 		'wiki_3d_autoload' => '',
-		'feature_sefurl' => 'n',
-		'feature_sefurl_filter' => 'n',
 		'feature_mootools' => 'y', // Needed for shadowbox
 		'javascript_enabled' => 'n',
 		'feature_comments_post_as_anonymous' => 'n',
 		'feature_comments_moderation' => 'n',
 		'feature_template_zoom' => 'y',
+
+		// SefUrl
+		'feature_sefurl' => 'n',
+		'feature_sefurl_filter' => 'n',
+		'feature_sefurl_paths' => array(),
 
 		// TikiTests
 		'feature_tikitests' => 'n',
