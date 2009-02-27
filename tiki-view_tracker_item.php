@@ -295,6 +295,13 @@ if (!isset($tracker_info["writerGroupCanModify"]) or (isset($gtid) and ($_REQUES
 }
 $tikilib->get_perm_object($_REQUEST['trackerId'], 'tracker', $tracker_info);
 
+if ($tiki_p_view_trackers != 'y' and $tracker_info["writerCanModify"] != 'y' and $tracker_info["writerGroupCanModify"] != 'y'&& !$special) {
+	$smarty->assign('errortype', 401);
+	$smarty->assign('msg', tra("You do not have permission to use this feature"));
+	$smarty->display("error.tpl");
+	die;
+}
+
 $status_types = $trklib->status_types();
 $smarty->assign('status_types', $status_types);
 
@@ -639,21 +646,12 @@ if (isset($tracker_info["authorfield"])) {
 		$smarty->assign("tiki_p_view_trackers","y");
 	}
 }
-
-if ($tiki_p_view_trackers != 'y' and $tracker_info["writerCanModify"] != 'y' and $tracker_info["writerGroupCanModify"] != 'y' && !$special) {
-	if ($prefs['feature_categories'] == 'y' && $categlib->is_categorized('tracker '.$_REQUEST['trackerId'], $_REQUEST['itemId'])) {
-		$perms = $categlib->get_object_categories_perms($user, 'tracker '.$_REQUEST['trackerId'], $_REQUEST['itemId']);
-		echo 'sdfsdf';
-		if ($perms['tiki_p_view_categorized'] == 'y')
-			$tiki_p_view_trackers = 'y';
-	} else {
-		$smarty->assign('errortype', 401);
-		$smarty->assign('msg', tra("You do not have permission to use this feature"));
-		$smarty->display("error.tpl");
-		die;
-	}
+if ($tiki_p_view_trackers != 'y' && !$special) {
+	$smarty->assign('errortype', 401);
+	$smarty->assign('msg', tra("You do not have permission to use this feature"));
+	$smarty->display("error.tpl");
+	die;
 }
-
 
 if (!isset($mainfield)) {
 	$mainfield = 0;
@@ -795,6 +793,9 @@ if ($_REQUEST["itemId"]) {
 	foreach($xfields["data"] as $i=>$array) {
 		if ($xfields["data"][$i]['isHidden'] == 'n' or $xfields["data"][$i]['isHidden'] == 'p' or $tiki_p_admin_trackers == 'y' or ($xfields["data"][$i]['type'] == 's' and $xfields[$i]['name'] == 'Rating' and $tiki_p_tracker_view_ratings == 'y')or ($xfields['data'][$i]['isHidden'] == 'c' && !empty($user) && $user == $itemUser)) {
 			$fields["data"][$i] = $xfields["data"][$i];
+			if ($fields['data'][$i]['type'] == 'f' || $fields['data'][$i]['type'] == 'j') {
+				$dateFields[] = $fields['data'][$i]['fieldId'];
+			}
 			if ($fields["data"][$i]["type"] != 'h') {
 				$fid = $fields["data"][$i]["fieldId"];
 				$ins_fields["data"][$i]["id"] = $fid;
