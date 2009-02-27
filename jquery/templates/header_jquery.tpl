@@ -27,6 +27,12 @@ var $old = $; $ = $jq;
 <script type="text/javascript" src="lib/jquery/jquery-autocomplete/jquery.autocomplete.min.js"></script>
 <link rel="stylesheet" href="lib/jquery/jquery-autocomplete/jquery.autocomplete.css" type="text/css" /> 
 {/if}
+{if $prefs.feature_jquery_superfish eq 'y'}
+{*<script type="text/javascript" src="lib/jquery/cluetip/jquery.hoverIntent.js"></script>*} 
+{*<link rel="stylesheet" type="text/css" media="screen" href="lib/jquery/superfish/css/superfish.css" />*} 
+<script type="text/javascript" src="lib/jquery/superfish/js/superfish.js"></script> 
+{/if}
+
 <script type="text/javascript">
 <!--//--><![CDATA[//><!--
 // Restore $
@@ -39,8 +45,12 @@ $jq = $; $ = $old; $old = false;
 
 {* Object to hold prefs for jq *}
 var jqueryTiki = new Object();
-jqueryTiki.ui = {if $prefs.feature_jquery_ui eq 'y'}true{else}false{/if};		// included UI lib?
-jqueryTiki.tooltips = {if $prefs.feature_jquery_tooltips eq 'y'}true{else}false{/if};	// included clueTip lib?
+jqueryTiki.ui = {if $prefs.feature_jquery_ui eq 'y'}true{else}false{/if};
+jqueryTiki.tooltips = {if $prefs.feature_jquery_tooltips eq 'y'}true{else}false{/if};
+jqueryTiki.autocomplete = {if $prefs.feature_jquery_autocomplete eq 'y'}true{else}false{/if};
+jqueryTiki.superfish = {if $prefs.feature_jquery_superfish eq 'y'}true{else}false{/if};
+jqueryTiki.replection = {if $prefs.feature_jquery_reflection eq 'y'}true{else}false{/if};
+
 jqueryTiki.effect = "{$prefs.jquery_effect}";	// Default effect
 jqueryTiki.effect_direction = "{$prefs.jquery_effect_direction}";	// 'horizontal' | 'vertical' etc
 jqueryTiki.effect_speed = "{$prefs.jquery_effect_speed}";	// 'slow' | 'normal' | 'fast' | milliseconds (int) ]

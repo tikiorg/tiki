@@ -98,7 +98,12 @@ $jq(document).ready( function() { // JQuery's DOM is ready event - before onload
 		$jq('a.tips').cluetip({splitTitle: '|', showTitle: false, width: '150px'});
 		$jq('a.titletips').cluetip({splitTitle: '|'});
 	}
-});
+	
+	// superfish setup (CSS menu effects)
+	if (jqueryTiki.superfish) {
+		$jq('ul.cssmenu_horiz').superfish();
+	}
+});		// end $jq(document).ready
 
 
 /* Autocomplete assistants */
