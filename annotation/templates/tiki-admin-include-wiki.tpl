@@ -70,7 +70,7 @@
     </td></tr>
 <tr><td class="form">{tr}List displayed by default{/tr}</td><td><input type="checkbox" 
 name="wiki_comments_displayed_default"{if $prefs.wiki_comments_displayed_default eq 'y'} checked="checked"{/if} /></td></tr>
-    <tr><td colspan="2" class="button"><input type="submit" name="wikiprefs" value="{tr}Change settings{/tr}" /></td></tr>
+    <tr><td colspan="2" class="input_submit_container"><input type="submit" name="wikiprefs" value="{tr}Change settings{/tr}" /></td></tr>
     </table>
     </form>
     </div>
@@ -105,7 +105,7 @@ name="wiki_comments_displayed_default"{if $prefs.wiki_comments_displayed_default
     <tr><td class="form">{tr}Path:{/tr}</td><td><input type="text" name="w_use_dir" value="{$prefs.w_use_dir}" /></td></tr>
 	<tr><td class="form">{tr}List displayed by default{/tr}</td><td><input type="checkbox" 
 name="w_displayed_default"{if $prefs.w_displayed_default eq 'y'} checked="checked"{/if} /></td></tr>
-		<tr><td colspan="2" class="button"><input type="submit" name="wikiattprefs" value="{tr}Change preferences{/tr}" /></td></tr>
+		<tr><td colspan="2" class="input_submit_container"><input type="submit" name="wikiattprefs" value="{tr}Change preferences{/tr}" /></td></tr>
 		</table>
 		</form>
 
@@ -264,7 +264,7 @@ name="w_displayed_default"{if $prefs.w_displayed_default eq 'y'} checked="checke
 	{/foreach}
 	</select>
     </td></tr>
-    <tr><td colspan="2" class="button"><input type="submit" name="wikiapprovalprefs" value="{tr}Change configuration{/tr}" />
+    <tr><td colspan="2" class="input_submit_container"><input type="submit" name="wikiapprovalprefs" value="{tr}Change configuration{/tr}" />
     </td>
     </tr></table>
     </form>
@@ -410,7 +410,7 @@ name="w_displayed_default"{if $prefs.w_displayed_default eq 'y'} checked="checke
 		</tr>
 
     	<tr>
-    		<td colspan="2" class="button">
+    		<td colspan="2" class="input_submit_container">
    	 			<input type="submit" name="wikilistprefs" value="{tr}Change configuration{/tr}" />
     		</td>
     	</tr>
@@ -520,7 +520,7 @@ name="w_displayed_default"{if $prefs.w_displayed_default eq 'y'} checked="checke
       </tr>
 
       <tr>
-        <td colspan="2" class="button"><input type="submit" name="wikiset3d" value="{tr}Change configuration{/tr}" /></td>
+        <td colspan="2" class="input_submit_container"><input type="submit" name="wikiset3d" value="{tr}Change configuration{/tr}" /></td>
       </tr>    
     </table>
     </form>
@@ -539,7 +539,6 @@ name="w_displayed_default"{if $prefs.w_displayed_default eq 'y'} checked="checke
     <form action="tiki-admin.php?page=wiki" method="post">
     <table class="admin">
     <tr><td class="form">{tr}Sandbox:{/tr}</td><td><input type="checkbox" name="feature_sandbox" {if $prefs.feature_sandbox eq 'y'}checked="checked"{/if}/></td></tr>
-    <tr><td class="form">{tr}Anonymous editors must input anti-bot code:{/tr}</td><td><input type="checkbox" name="feature_antibot" {if $prefs.feature_antibot eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Last changes:{/tr}</td><td><input type="checkbox" name="feature_lastChanges" {if $prefs.feature_lastChanges eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Dump:{/tr}</td><td><input type="checkbox" name="feature_dump" {if $prefs.feature_dump eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Export:{/tr}</td><td><input type="checkbox" name="feature_wiki_export" {if $prefs.feature_wiki_export eq 'y'}checked="checked"{/if}/></td></tr>
@@ -547,6 +546,7 @@ name="w_displayed_default"{if $prefs.w_displayed_default eq 'y'} checked="checke
     <tr><td class="form">{tr}History:{/tr}</td><td><input type="checkbox" name="feature_history" {if $prefs.feature_history eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}View source:{/tr}</td><td><input type="checkbox" name="feature_source" {if $prefs.feature_source eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}List pages:{/tr}</td><td><input type="checkbox" name="feature_listPages" {if $prefs.feature_listPages eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}List orphan pages:{/tr}</td><td><input type="checkbox" name="feature_listorphanPages" {if $prefs.feature_listorphanPages eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Backlinks:{/tr}</td><td><input type="checkbox" name="feature_backlinks" {if $prefs.feature_backlinks eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Similar:{/tr}</td><td><input type="checkbox" name="feature_likePages" {if $prefs.feature_likePages eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Rankings:{/tr}</td><td><input type="checkbox" name="feature_wiki_rankings" {if $prefs.feature_wiki_rankings eq 'y'}checked="checked"{/if}/></td></tr>
@@ -607,6 +607,7 @@ name="w_displayed_default"{if $prefs.w_displayed_default eq 'y'} checked="checke
     <tr><td class="form">{tr}Categorize structure pages together:{/tr}</td><td><input type="checkbox" name="feature_wiki_categorize_structure" {if $prefs.feature_wiki_categorize_structure eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Create webhelp from structure:{/tr}</td><td><input type="checkbox" name="feature_create_webhelp" {if $prefs.feature_create_webhelp eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Use external link icons:{/tr}</td><td><input type="checkbox" name="feature_wiki_ext_icon" {if $prefs.feature_wiki_ext_icon eq 'y'}checked="checked"{/if}/></td></tr>
+    <tr><td class="form">{tr}Use plugin edit icons:{/tr}</td><td><input type="checkbox" name="wiki_edit_plugin" {if $prefs.wiki_edit_plugin eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}User's Page:{/tr}</td><td><input type="checkbox" name="feature_wiki_userpage" {if $prefs.feature_wiki_userpage eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}UserPage prefix:{/tr}</td><td><input type="text" name="feature_wiki_userpage_prefix" value="{$prefs.feature_wiki_userpage_prefix|default:'UserPage'}" size="12" /></td></tr>
     <tr><td class="form">{tr}Page creators are admin of their pages:{/tr}</td><td><input type="checkbox" name="wiki_creator_admin" {if $prefs.wiki_creator_admin eq 'y'}checked="checked"{/if}/></td></tr>    
@@ -647,6 +648,13 @@ name="w_displayed_default"{if $prefs.w_displayed_default eq 'y'} checked="checke
     </td></tr>
     <tr><td class="form">{tr}Regex search and replace:{/tr}</td><td><input type="checkbox" name="feature_wiki_replace" {if $prefs.feature_wiki_replace eq 'y'}checked="checked"{/if}/></td></tr>
 	<tr><td class="form">{tr}Edit section:{/tr}</td><td><input type="checkbox" name="wiki_edit_section" {if $prefs.wiki_edit_section eq 'y'}checked="checked"{/if}/></td></tr>
+	<tr><td class="form">{tr}Edit section level:{/tr}</td><td>
+		<select name="wiki_edit_section_level">
+		{section name=level start=0 loop=7 step=1}
+		<option value="{$smarty.section.level.index}" {if $smarty.section.level.index eq $prefs.wiki_edit_section_level}selected="selected"{/if}>{if $smarty.section.level.index eq 0}{tr}All{/tr}{else}{$smarty.section.level.index}{/if}</option>
+		{/section}
+		</select>
+	</td></tr>
 	<tr><td class="form">{tr}Log bytes changes (+/-) in Action Logs (slows each page modifications){/tr}</td><td><input type="checkbox" name="feature_actionlog_bytes" {if $prefs.feature_actionlog_bytes eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Wiki top line (description, icons, backlinks etc):{/tr}</td><td>
     <select name="wiki_topline_position">
@@ -663,7 +671,7 @@ name="w_displayed_default"{if $prefs.w_displayed_default eq 'y'} checked="checke
     <option value="none" {if $prefs.page_bar_position eq 'none'}selected="selected"{/if}>{tr}Neither{/tr}</option>
     </select>
     </td></tr>
-    <tr><td colspan="2" class="button"><input type="submit" name="wikifeatures" value="{tr}Set features{/tr}" /></td></tr>
+    <tr><td colspan="2" class="input_submit_container"><input type="submit" name="wikifeatures" value="{tr}Set features{/tr}" /></td></tr>
     </table>
     </form>
     </div>
@@ -683,10 +691,21 @@ name="w_displayed_default"{if $prefs.w_displayed_default eq 'y'} checked="checke
     </td></tr>
      <tr><td class="form">{tr}Diff style:{/tr} </td><td><select name="default_wiki_diff_style">
        <option value="old" {if $prefs.default_wiki_diff_style eq 'old'}selected="selected"{/if}>{tr}Only with last version{/tr}</option>
-       <option value="minsidediff" {if $prefs.default_wiki_diff_style ne 'old'}selected="selected"{/if}>{tr}Any 2 versions{/tr}</option>
+  <option value="htmldiff" {if $prefs.default_wiki_diff_style == "htmldiff"}selected="selected"{/if}>{tr}HTML diff{/tr}</option>
+  <option value="sidediff" {if $prefs.default_wiki_diff_style == "sidediff"}selected="selected"{/if}>{tr}Side-by-side diff{/tr}</option>
+  <option value="sidediff-char" {if $prefs.default_wiki_diff_style == "sidediff-char"}selected="selected"{/if}>{tr}Side-by-side diff by characters{/tr}</option>
+  <option value="inlinediff" {if $prefs.default_wiki_diff_style == "inlinediff"}selected="selected"{/if}>{tr}Inline diff{/tr}</option>
+  <option value="inlinediff-char" {if $prefs.default_wiki_diff_style == "inlinediff-char"}selected="selected"{/if}>{tr}Inline diff by characters{/tr}</option>
+  <option value="sidediff-full" {if $prefs.default_wiki_diff_style == "sidediff-full"}selected="selected"{/if}>{tr}Full side-by-side diff{/tr}</option>
+  <option value="sidediff-full-char" {if $prefs.default_wiki_diff_style == "sidediff-full-char"}selected="selected"{/if}>{tr}Full side-by-side diff by characters{/tr}</option>
+  <option value="inlinediff-full" {if $prefs.default_wiki_diff_style == "inlinediff-full"}selected="selected"{/if}>{tr}Full inline diff{/tr}</option>
+  <option value="inlinediff-full-char" {if $prefs.default_wiki_diff_style == "inlinediff-full-char"}selected="selected"{/if}>{tr}Full inline diff by characters{/tr}</option>
+  <option value="unidiff" {if $prefs.default_wiki_diff_style == "unidiff"}selected="selected"{/if}>{tr}Unified diff{/tr}</option>
+  <option value="sideview" {if $prefs.default_wiki_diff_style == "sideview"}selected="selected"{/if}>{tr}Side-by-side view{/tr}</option>
+
     </select></td></tr>
 	<tr><td class="form">{tr}History only for data, description, comment change{/tr}</td><td><input type="checkbox" name="feature_wiki_history_full" {if $prefs.feature_wiki_history_full eq 'y'}checked="checked"{/if}/></td></tr>
-    <tr><td colspan="2" class="button"><input type="submit" name="wikisetprefs" value="{tr}Change preferences{/tr}" /></td></tr>
+    <tr><td colspan="2" class="input_submit_container"><input type="submit" name="wikisetprefs" value="{tr}Change preferences{/tr}" /></td></tr>
     </table>
     </form>
     </div>
@@ -704,7 +723,7 @@ name="w_displayed_default"{if $prefs.w_displayed_default eq 'y'} checked="checke
     <tr><td class="form">{tr}Enable watch events when I am the editor:{/tr}</td><td><input type="checkbox" name="wiki_watch_editor" {if $prefs.wiki_watch_editor eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Enable watches on comments:{/tr}</td><td><input type="checkbox" name="wiki_watch_comments" {if $prefs.wiki_watch_comments eq 'y'}checked="checked"{/if}/></td></tr>
 	<tr><td class="form">{tr}Watch minor:{/tr}</td><td><input type="checkbox" name="wiki_watch_minor" {if $prefs.wiki_watch_minor eq 'y'}checked="checked"{/if}/></td></tr>
-    <tr><td colspan="2" class="button"><input type="submit" name="wikisetwatch" value="{tr}Change preferences{/tr}" /></td></tr>
+    <tr><td colspan="2" class="input_submit_container"><input type="submit" name="wikisetwatch" value="{tr}Change preferences{/tr}" /></td></tr>
     </table>
     </form>
     </div>

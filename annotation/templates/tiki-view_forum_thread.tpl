@@ -9,12 +9,6 @@
   <a class='link' href='messu-mailbox.php'>{tr}You have{/tr} {$unread} {tr}unread private messages{/tr}<br /><br /></a>
 {/if}
 
-{if $was_queued eq 'y'}
-  {remarksbox type="warning" title="{tr}Information{/tr}" icon="information"}
-    {tr}Your message has been queued for approval, the message will be posted after a moderator approves it.{/tr}
-  {/remarksbox}
-{/if}
-
 {if $post_reported eq 'y'}
   <br />
 	<div class="simplebox highlight reported_note">
@@ -58,7 +52,7 @@
 {/if}
 
 <div class="top_post">
-  {if $prefs.feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y' and isset($freetags.data[0])}
+  {if $prefs.feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y' and isset($freetags.data[0]) and $prefs.freetags_show_middle eq 'y'}
     {include file="freetag_list.tpl"}
   {/if}
 

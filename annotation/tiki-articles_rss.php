@@ -72,7 +72,7 @@ if ($output["data"]=="EMPTY") {
 	$changes = $tikilib -> list_articles(0, $prefs['max_rss_articles'], $dateId.'_desc', '', 0, $tikilib->now, $user, '', $topic, 'y', '', '', '', '', $articleLang);
 	$tmp = array();
 	foreach ($changes["data"] as $data)  {
-		$data["$descId"] = $tikilib->parse_data($data["$descId"]);
+		$data["$descId"] = $tikilib->parse_data($data[$descId], array('print'=>true));
 		$data["body"] = null;
 		$tmp[] = $data;
 	}

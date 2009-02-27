@@ -8,7 +8,7 @@
 	{assign var='is_link' value='n'}
 {elseif $field_value.isMain eq 'y'
  and ($tiki_p_view_trackers eq 'y' or $tiki_p_modify_tracker_items eq 'y' or $tiki_p_comment_tracker_items eq 'y'
- or ($tracker_info.writerCanModify eq 'y' and $user and $my eq $user) or ($tracker_info.writerCanModify eq 'y' and $group and $ours eq $group))}
+ or ($tracker_info.writerCanModify eq 'y' and $user and $my eq $user) or ($tracker_info.writerGroupCanModify eq 'y' and $group and $ours eq $group))}
 	{if empty($url) and !empty($item.itemId)}
 		{assign var=urll value="tiki-view_tracker_item.php?itemId=`$item.itemId`&amp;trackerId=`$item.trackerId`&amp;show=view"}
 	{elseif strstr($url, 'itemId') and !empty($item.itemId)}
@@ -39,7 +39,7 @@
 {* -------------------- category -------------------- *}
 {if $field_value.type eq 'e'}
 	{foreach from=$field_value.categs item=categ name=fcategs}
-		{$categ.name}
+		{$categ.name|tr_if}
 		{if !$smarty.foreach.fcategs.last}<br />{/if}
 	{/foreach}
 
@@ -84,7 +84,7 @@
 	{/if}
 
 {* -------------------- empty field -------------------- *}
-{elseif empty($field_value.value) and $field_value.type ne 'U' and $field_value.type ne 's' and $field_value.type ne 'q'}
+{elseif empty($field_value.value) and $field_value.type ne 'U' and $field_value.type ne 's' and $field_value.type ne 'q' and $field_value.type ne 'n' and $field_value.type ne 'C'}
 	{if $list_mode ne 'csv' and $is_link eq 'y'}&nbsp;{/if} {* to have something to click on *}
 
 {* -------------------- text field, numeric, drop down, radio,user/group/IP selector, autopincrement, dynamic list *}
@@ -320,7 +320,13 @@
 {* -------------------- google map -------------------- *}
 {elseif $field_value.type eq 'G'}
 	{if $prefs.feature_gmap eq 'y'}
-		{include file='tracker_item_field_googlemap_value.tpl'}
+		{if $list_mode eq 'y'}
+			{include file='tracker_item_field_googlemap_value.tpl' width=200 height=200 control='n'}
+		{elseif $list_mode eq 'csv'}
+			{$field_value.value}
+		{else}
+			{include file='tracker_item_field_googlemap_value.tpl' width=500 height=400 control='y'}
+		{/if}
 	{else}
 	  {tr}Google Maps is not enabled.{/tr}
 	{/if}

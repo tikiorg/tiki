@@ -85,13 +85,12 @@
 </table>
 <input type="submit" name="update" value="{tr}Update{/tr}" />
 <br/>
-<div class="advanced">{tr}Advanced feature{/tr}: {tr}level configuration{/tr}:
+{remarksbox type="warning" title="{tr}Advanced feature{/tr}"}{tr}Level configuration{/tr}:
 {if $advanced_features ne 'y'}
 <a href="tiki-assignpermission.php?find={$find}&amp;type={$type}&amp;group={$group|escape:url}&amp;sort_mode={$sort_mode}&amp;advanced_features=y">{tr}Show{/tr}</a>
 {else}
 <a href="tiki-assignpermission.php?find={$find}&amp;type={$type}&amp;group={$group|escape:url}&amp;sort_mode={$sort_mode}">{tr}Hide{/tr}</a>
-{/if}<br /><br />
-</div>
+{/if}
 </form>
 <div {if $advanced_features ne 'y'}style="display:none;"{else}style="display:block;"{/if}>
 <h2>{tr}Create level{/tr}</h2>
@@ -115,5 +114,5 @@
 </select>
 <input type="submit" name="allper" value="{tr}Update{/tr}" />
 </form>
+{/remarksbox}
 </div>
-<br />

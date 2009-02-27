@@ -881,7 +881,9 @@ table.bloglist {
 	border-collapse: collapse;
 	width: 100%;
 }
-
+table.normalnoborder {
+	width: 100%;
+}
 /* cells in tracker items display */
 td.formlabel {
 	white-space: nowrap;
@@ -1207,8 +1209,7 @@ div.titlebar {
 div#page-bar {
 	padding-bottom: 40px;
 	display: block;
-  border-top: 1px solid #8CACBB;
-  padding-top: 5px;
+	padding-top: 5px;
 }
 
 div#page-bar table, div#page-bar td, div#page-bar tr {
@@ -1230,7 +1231,9 @@ div#page-bar table, div#page-bar td, div#page-bar tr {
 button,
 input[type=submit],
 .button input,
-.submitbutton {
+.submitbutton,
+.calbuttonoff,
+.calbuttonon {
         font-family : Verdana, Helvetica, Geneva, Arial, sans-serif;
 	font-size: .95em;
         font-weight: bold;
@@ -1354,7 +1357,6 @@ textarea.wikiedit {
 
 p.editdate {
 	color: #223344;
-	border-top: 1px solid #8CACBB;
 	font-size: 1em;
 	padding: 0 10px;
 }
@@ -1549,6 +1551,7 @@ div.split {
 
 div.article {
 	font-size: 1.1em;
+	margin-bottom: 1.8em;
 }
 
 .wikitext .article {
@@ -1570,8 +1573,8 @@ span.titlea {
 	font-weight: bold;
 	border-radius-bottomright: 20px;
 	-moz-border-radius-bottomright: 20px;
-	-khtml-border-radius-bottomright: 20px;
-}
+	-khtml-border-radius-bottomright: 20px}
+span.titlea a {text-decoration: none}
 span.titleb,
 span.titleb:after {
 	color: #666666;
@@ -1591,12 +1594,28 @@ div.articletrailer {
 	margin-bottom: 10px;
 	margin-right: 20px;
 	margin-left: 20px;
-	text-align: right;
-	clear: both;
-}
+	position: relative;
+	text-align: center;
+	font-size: 90%;
+	margin-top: 1.1em}
+	
+div.articletrailer img {}
 
-span.trailer {
-}
+div.article .status {
+	position: absolute;
+	left: 0}
+
+div.articletrailer span {
+	display: inline-block;
+	margin: auto;
+	white-space: nowrap}
+
+div.article .actions {
+	position: absolute;
+	right: 0;
+	top: 0}
+
+
 
 .articleimage {
 	margin-right: 20px;
@@ -1675,14 +1694,52 @@ span.posthead small {
 	font-weight: normal;
 }
 
-.blogt {  }
+body.tiki_blogs .post {margin-bottom: 20px}
 
-.blogpost .postbody {
+/*div.postbody*/
+body.tiki_blogs .post .postbody {
 	border-top: 1px solid #AEAEAE;
 	border-bottom: 1px solid #AEAEAE;
 	font-size: .95em;
 	color: black;
 	padding: 10px}
+
+/* Maybe needs override to differentiate from forums */
+body.tiki_blogs .post .postbody {
+	background: none;
+	border-bottom:1px solid #AEAEAE;
+	border-top: 1px solid #AEAEAE;
+	color :black;
+	font-size: 0.95em;
+	padding: 10px;}
+	
+body.tiki_blogs div.author_actions {
+	float: none;
+	background: none;
+	border: 0;
+	width: 100%}
+	
+body.tiki_blogs .actions {
+	background: none;
+	text-align: right}
+
+body.tiki_blogs .author_info {border-bottom: 1px solid #aeaeae}
+.postbody-title {
+	background: none;
+	border: 0}
+	
+body.tiki_blogs .postbody-title {
+	float: none;
+	width: 100%;
+	background: none;
+	border: 0}
+
+body.tiki_blogs .postfooter {
+	width: 100%;
+}
+
+body.tiki_blogs .postfooter .actions {float: left}
+
 
 /***** Forums *****/
 
@@ -2855,4 +2912,24 @@ div.multiselect div.even {
 div.multiselect div.even:hover {
 	background: #FFF7E6;
 }
+.button .iconmenu {display:inline;}
+
+/** CSS (suckerfish) menus **/
+
+.cssmenu li,
+.cssmenu_horiz li,
+.cssmenu_vert li {border-top: 1px solid #dedede}
+
+.cssmenu li:hover,
+.cssmenu_horiz li:hover,
+.cssmenu_vert li:hover,
+.cssmenu li.sfhover,
+.cssmenu_horiz li.sfhover,
+.cssmenu_vert li.sfhover {background: #e9ecef}
+
+.cssmenu li ul,
+.cssmenu_horiz li ul,
+.cssmenu_vert li ul {border: 1px solid black}
+
+.cssmenu_horiz li ul ul {margin: -1em 0 0 11em}
 /***** End of file ******/

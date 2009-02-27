@@ -77,7 +77,7 @@
 	<td  class="form">{tr}ID of System File Galleries to upload multimedia files{/tr}:</td><td class="form"><input type="text" name="MultimediaGalerie" value="{$prefs.MultimediaGalerie|escape}" size="4"/></td>
 	</tr>
    	<tr>
-	<td colspan="4" class="button"><input type="submit" name="multimediasetup" value="{tr}Save{/tr}" /></td>
+	<td colspan="4" class="input_submit_container"><input type="submit" name="multimediasetup" value="{tr}Save{/tr}" /></td>
 	</tr>
         </table>
       </form>

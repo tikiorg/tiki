@@ -1,5 +1,5 @@
 <?php
-// $Id: /cvsroot/tikiwiki/tiki/tiki-index.php,v 1.198.2.22 2008-03-12 15:10:01 ricks99 Exp $
+// $Id$
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -75,11 +75,12 @@ You can change this page after logging in. Please review the [http://doc.tikiwik
 
 !!{img src=pics/icons/star.png alt="Star"} Get started.
 To begin configuring your site:
-#Log in as the __admin__ with password __admin__.
-#Change the admin password.
-#Enable specific Tiki features.
-#Configure the features.
-
+{FANCYLIST()}
+1) Log in as the __admin__ with password __admin__.
+2) Change the admin password.
+3) Enable specific Tiki features.
+4) Configure the features.
+{FANCYLIST}
 
 !!{img src=pics/icons/help.png alt="Help"} Need help?
 For more information:
@@ -96,7 +97,32 @@ For more information:
 		$use_best_language = true;
 	}
 }
+$use_best_language = $use_best_language || isset($_REQUEST['bl']) || isset($_REQUEST['best_lang']) || isset($_REQUEST['switchLang']);
 
+$info = null;
+if ($prefs['feature_multilingual'] == 'y' && $use_best_language && !empty($_REQUEST['page'])) { // chose the best language page
+	global $multilinguallib;
+	include_once('lib/multilingual/multilinguallib.php');
+	$info = $tikilib->get_page_info($_REQUEST['page']);
+	$bestLangPageId = $multilinguallib->selectLangObj('wiki page', $info['page_id']);
+	if ($info['page_id'] != $bestLangPageId) {
+		$_REQUEST['page'] = $tikilib->get_page_name_from_id($bestLangPageId);
+		//TODO: introduce a get_info_from_id to save a sql request
+		$info = null;
+	} elseif ($info['lang'] != $prefs['language'] && $prefs['feature_homePage_if_bl_missing'] == 'y') {
+		if (!isset($userPageName))
+			$userPageName = $userlib->get_user_default_homepage2($user);
+		$_REQUEST['page'] = $userPageName;
+		$info = $tikilib->get_page_info($_REQUEST['page']);
+		$bestLangPageId = $multilinguallib->selectLangObj('wiki page', $info['page_id']);
+		if ($info['page_id'] != $bestLangPageId) {
+			$_REQUEST['page'] = $tikilib->get_page_name_from_id($bestLangPageId);
+			$info = null;
+		}
+	}
+}
+
+$structs_with_perm = array(); 
 if( $prefs['feature_wiki_structure'] == 'y' ) {
 	$structure = 'n';
 	$smarty->assign('structure',$structure);
@@ -121,7 +147,6 @@ if( $prefs['feature_wiki_structure'] == 'y' ) {
 		}
 		//Get the structures this page is a member of
 		$structs = $structlib->get_page_structures($_REQUEST["page"],$struct);
-		$structs_with_perm = array(); 
 		foreach ($structs as $t_structs) {
 			if ($tikilib->user_has_perm_on_object($user,$t_structs['pageName'],'wiki page','tiki_p_view')) {
 				$structs_with_perm[] = $t_structs;
@@ -142,14 +167,12 @@ if(isset($page_ref_id)) {
     $info = null;
     // others still need a good set page name or they will get confused.
     // comments of home page were all visible on every structure page
-    $page = $page_info['pageName'];
-    $_REQUEST['page']=$page;
+    $_REQUEST['page'] = $page_info['pageName'];
 } else {
     $page_ref_id = '';
 	$smarty->assign('showstructs', $structs_with_perm);
 	$smarty->assign('page_ref_id', $page_ref_id);
 }
-
 $page = $_REQUEST['page'];
 $smarty->assign_by_ref('page',$page);
 
@@ -157,31 +180,6 @@ if ( function_exists('utf8_encode') ) {
 	$pagename_utf8 = utf8_encode($page);
 	if ( $page != $pagename_utf8 && ! $tikilib->page_exists($page) && $tikilib->page_exists($pagename_utf8) ) {
 		$page = $_REQUEST["page"] = $pagename_utf8;
-	}
-}
-
-$use_best_language = $use_best_language || isset($_REQUEST['bl']) || isset($_REQUEST['best_lang']);
-
-$info = null;
-if ($prefs['feature_multilingual'] == 'y' && $use_best_language) { // chose the best language page
-	global $multilinguallib;
-	include_once('lib/multilingual/multilinguallib.php');
-	$info = $tikilib->get_page_info($page);
-	$bestLangPageId = $multilinguallib->selectLangObj('wiki page', $info['page_id']);
-	if ($info['page_id'] != $bestLangPageId) {
-		$page = $tikilib->get_page_name_from_id($bestLangPageId);
-		//TODO: introduce a get_info_from_id to save a sql request
-		$info = null;
-	} elseif ($info['lang'] != $prefs['language'] && $prefs['feature_homePage_if_bl_missing'] == 'y') {
-		if (!isset($userPageName))
-			$userPageName = $userlib->get_user_default_homepage2($user);
-		$page = $userPageName;
-		$info = $tikilib->get_page_info($page);
-		$bestLangPageId = $multilinguallib->selectLangObj('wiki page', $info['page_id']);
-		if ($info['page_id'] != $bestLangPageId) {
-			$page = $tikilib->get_page_name_from_id($bestLangPageId);
-			$info = null;
-		}
 	}
 }
 
@@ -350,10 +348,11 @@ if( isset( $_REQUEST['pagenum'] ) && $_REQUEST['pagenum'] > 0 ) {
 	$pageRenderer->setPageNumber( (int) $_REQUEST['pagenum'] );
 }
 
-if ( isset($_REQUEST['saved_msg']) && $info['user'] == $user ) {
+if (isset($_SESSION['saved_msg']) && $_SESSION['saved_msg'] == $info['pageName'] && $info['user'] == $user ) {
 	// Generate the 'Page has been saved...' message
 	require_once('lib/smarty_tiki/modifier.userlink.php');
 	$smarty->assign('saved_msg', sprintf( tra('Page saved (version %d).'), $info['version'] ) );
+	unset($_SESSION['saved_msg']);
 }
 
 // Comments engine!
@@ -408,17 +407,35 @@ if($prefs['feature_wiki_attachments'] == 'y') {
 
 // Watches
 if ($prefs['feature_user_watches'] == 'y') {
-	if($user && isset($_REQUEST['watch_event'])) {
+	if($user && isset($_REQUEST['watch_event']) && !isset($_REQUEST['watch_group'])) {
 		check_ticket('index');
-		if (($_REQUEST['watch_action'] == 'add_desc' || $_REQUEST['watch_action'] == 'del_desc') && $tiki_p_watch_structure != 'y') {
+		if (($_REQUEST['watch_action'] == 'add_desc' || $_REQUEST['watch_action'] == 'remove_desc') && $tiki_p_watch_structure != 'y') {
 			$access->display_error( $page, tra('Permission denied'), '403');
 		}
 		if($_REQUEST['watch_action']=='add') {
 			$tikilib->add_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object'],'wiki page',$page,"tiki-index.php?page=$page");
 		} elseif($_REQUEST['watch_action'] == 'add_desc') {
 			$tikilib->add_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object'],'structure',$page,"tiki-index.php?page=$page&amp;structure=$struct");
+		} elseif($_REQUEST['watch_action'] == 'remove_desc') {
+			$tikilib->remove_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object'],'structure');
 		} else {
 			$tikilib->remove_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object']);
+		}
+	}
+}
+
+if ($prefs['feature_group_watches'] == 'y'
+	&& ( $tiki_p_admin == 'y' || $tiki_p_admin_users == 'y' ) ) {
+	if(isset( $_REQUEST['watch_group'] ) && isset($_REQUEST['watch_event'])) {
+		check_ticket('index');
+		if($_REQUEST['watch_action']=='add') {
+			$tikilib->add_group_watch($_REQUEST['watch_group'],$_REQUEST['watch_event'],$_REQUEST['watch_object'],'wiki page',$page,"tiki-index.php?page=$page");
+		} elseif($_REQUEST['watch_action'] == 'add_desc') {
+			$tikilib->add_group_watch($_REQUEST['watch_group'],$_REQUEST['watch_event'],$_REQUEST['watch_object'],'structure',$page,"tiki-index.php?page=$page&amp;structure=$struct");
+		} elseif($_REQUEST['watch_action'] == 'remove_desc') {
+			$tikilib->remove_group_watch($_REQUEST['watch_group'],$_REQUEST['watch_event'],$_REQUEST['watch_object'], 'structure');
+		} else {
+			$tikilib->remove_group_watch($_REQUEST['watch_group'],$_REQUEST['watch_event'],$_REQUEST['watch_object']);
 		}
 	}
 }

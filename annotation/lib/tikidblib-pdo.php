@@ -217,7 +217,7 @@ class TikiDB {
 				$objResponse = new xajaxResponse();
 				$page ="<html><head>";
 				$page.=" <title>Tiki SQL Error (xajax)</title>";
-				$page.=" <link rel='stylesheet' href='styles/tikineat.css' type='text/css' />";
+				$page.=" <link rel='stylesheet' href='styles/thenews.css' type='text/css' />";
 				$page.="</head><body>$outp</body></html>";
 				$page=addslashes(str_replace(array("\n", "\r"), array(' ', ' '), $page));
 				$objResponse->script("bugwin=window.open('', 'tikierror', 'width=760,height=500,scrollbars=1,resizable=1');".

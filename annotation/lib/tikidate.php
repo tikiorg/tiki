@@ -6,7 +6,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-if (version_compare(PHP_VERSION, '5.0.0', '>=') and $prefs['feature_pear_date'] != 'y')  {
+if (version_compare(PHP_VERSION, '5.1.0', '>=') and $prefs['feature_pear_date'] != 'y' and function_exists("date_create"))  {
 	require_once('tikidate-php5.php');
 } else {
 	require_once('tikidate-pear-date.php');

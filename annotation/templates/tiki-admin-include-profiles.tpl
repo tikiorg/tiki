@@ -23,7 +23,7 @@ function refreshCache( entry ) { // {{{
 				alert("Error loading page\n");
 		}
 	};
-	req.send(null);
+	req.send('');
 } // }}}
 
 function showDetails( id, domain, profile ) { // {{{
@@ -63,7 +63,8 @@ function showDetails( id, domain, profile ) { // {{{
 					var form = document.createElement( 'form' );
 					var p = document.createElement('p');
 					var submit = document.createElement('input');
-					var hidden = document.createElement('input');
+					var pd = document.createElement('input');
+					var pp = document.createElement('input');
 					form.method = 'post';
 					form.action = document.location.href;
 
@@ -72,10 +73,14 @@ function showDetails( id, domain, profile ) { // {{{
 					submit.name = 'forget';
 					submit.value = 'Forget Past Installation';
 					p.appendChild(submit);
-					hidden.type = 'hidden';
-					hidden.name = 'url';
-					hidden.value = data.url;
-					p.appendChild(hidden);
+					pd.type = 'hidden';
+					pd.name = 'pd';
+					pd.value = domain;
+					p.appendChild(pd);
+					pp.type = 'hidden';
+					pp.name = 'pp';
+					pp.value = profile;
+					p.appendChild(pp);
 
 					cell.appendChild(form);
 				}
@@ -84,7 +89,8 @@ function showDetails( id, domain, profile ) { // {{{
 					var form = document.createElement( 'form' );
 					var p = document.createElement('p');
 					var submit = document.createElement('input');
-					var hidden = document.createElement('input');
+					var pd = document.createElement('input');
+					var pp = document.createElement('input');
 					form.method = 'post';
 					form.action = document.location.href;
 
@@ -120,10 +126,14 @@ function showDetails( id, domain, profile ) { // {{{
 					submit.name = 'install';
 					submit.value = 'Install Now';
 					p.appendChild(submit);
-					hidden.type = 'hidden';
-					hidden.name = 'url';
-					hidden.value = data.url;
-					p.appendChild(hidden);
+					pd.type = 'hidden';
+					pd.name = 'pd';
+					pd.value = domain;
+					p.appendChild(pd);
+					pp.type = 'hidden';
+					pp.name = 'pp';
+					pp.value = profile;
+					p.appendChild(pp);
 
 					cell.appendChild(form);
 				}
@@ -178,102 +188,124 @@ function showDetails( id, domain, profile ) { // {{{
 			}
 		}
 	}
-	req.send(null);
+	req.send('');
 } // }}}
 {/literal}
 </script>
 {remarksbox type="tip" title="{tr}Tip{/tr}"}<a class="rbox-link" href="http://profiles.tikiwiki.org">{tr}TikiWiki Profiles{/tr}</a>{/remarksbox}
 
 <div class="cbox">
-  <div class="cbox-title">{tr}Configuration{/tr}</div>
-  <div class="cbox-data">
-      <form action="tiki-admin.php?page=profiles" method="post">
-        <table class="admin"><tr>
-			<col width="30%"/>
-			<col width="70%"/>
-		
+	<div class="cbox-title">{tr}Profile repository status{/tr}</div>
+	<div class="cbox-data">
+		<table class="normal">
 			<tr>
-			<td class="form">{tr}Profile repositories{/tr}:
-			<div>
-			<small>{tr}Profiles can be installed from multiple repositories. Enter one repository URL per line.{/tr}</small>
-			</div>
-			</td>
-			<td>
-				<textarea name="profile_sources" rows="5">{$prefs.profile_sources|escape}</textarea>
-			</td>
-		</tr><tr>		
-          <td colspan="2" class="button"><input type="submit" name="config" value="{tr}Save{/tr}" /></td>
-		  </tr>
+				<th>Profile repository</th>
+				<th>Status</th>
+				<th>Last update</th>
+			</tr>
+			{foreach key=k item=entry from=$sources}
+				<tr>
+					<td>{$entry.short}</td>
+					<td><img id="profile-status-{$k}" src="img/icons2/status_{$entry.status}.gif"/></td>
+					<td><span id="profile-date-{$k}">{$entry.formatted}</span> <a href="javascript:refreshCache({$k})" class="icon"><img src="pics/icons/arrow_refresh.png" class="icon" alt="{tr}Refresh{/tr}"/></a></td>
+				</tr>
+			{/foreach}
 		</table>
-	</form>
-  </div>
-</div>
-<div class="cbox">
-  <div class="cbox-title">{tr}Profile repository status{/tr}</div>
-  <div class="cbox-data">
-  	<table class="normal">
-		<tr>
-			<th>Profile repository</th>
-			<th>Status</th>
-			<th>Last update</th>
-		</tr>
-		{foreach key=k item=entry from=$sources}
-		<tr>
-			<td>{$entry.short}</td>
-			<td><img id="profile-status-{$k}" src="img/icons2/status_{$entry.status}.gif"/></td>
-			<td><span id="profile-date-{$k}">{$entry.formatted}</span> <a href="javascript:refreshCache({$k})" class="icon"><img src="pics/icons/arrow_refresh.png" class="icon" alt="{tr}Refresh{/tr}"/></a></td>
-		</tr>
-		{/foreach}
-	</table>
-  </div>
+	</div>
 </div>
 
 <div class="cbox">
-  <div class="cbox-title"><a name="profile-results">{tr}Profile list{/tr}</a></div>
-  <div class="cbox-data">
-  	<form method="get" action="tiki-admin.php#profile-results">
-        <table class="admin"><tr>
-			<col width="30%"/>
-			<col width="70%"/>
-		
+	<div class="cbox-title"><a name="profile-results">{tr}Profile list{/tr}</a></div>
+	<div class="cbox-data">
+		<form method="get" action="tiki-admin.php#profile-results">
+			<table class="admin"><tr>
+				<col width="30%"/>
+				<col width="70%"/>
+
+				<tr>
+					<td class="form">{tr}Profile{/tr}:</td>
+					<td><input type="text" name="profile" value="{$profile|escape}"/></td>
+				</tr>
+				<tr>
+					<td class="form">{tr}Category{/tr}:</td>
+					<td><input type="text" name="category" value="{$category|escape}"/></td>
+				</tr>
+			
+				<tr>
+					<td class="form">{tr}Repository{/tr}:</td>
+					<td>
+						<select name="repository">
+							<option value="">All</option>
+							{foreach item=source from=$sources}
+								<option value="{$source.url|escape}"{if $repository eq $source.url} selected="selected"{/if}>{$source.short|escape}</option>
+							{/foreach}
+						</select>
+						<input type="hidden" name="page" value="profiles"/>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" class="input_submit_container"><input type="submit" name="list" value="{tr}List{/tr}" /></td>
+				</tr>
+			</table>
+		</form>
+		<table class="normal">
 			<tr>
-			<td class="form">{tr}Repository{/tr}:</td>
-			<td>
-				<select name="repository">
-					<option value="">All</option>
-				{foreach item=source from=$sources}
-					<option value="{$source.url|escape}"{if $repository eq $source.url} selected="selected"{/if}>{$source.short|escape}</option>
-				{/foreach}
-				</select><input type="hidden" name="page" value="profiles"/>
-			</td>
-		</tr><tr>
-			<td class="form">{tr}Category{/tr}:</td>
-			<td><input type="text" name="category" value="{$category|escape}"/></td>
-		</tr><tr>
-			<td class="form">{tr}Profile{/tr}:</td>
-			<td><input type="text" name="profile" value="{$profile|escape}"/></td>
-		</tr><tr>
-          <td colspan="2" class="button"><input type="submit" name="list" value="{tr}List{/tr}" /></td>
-		  </tr>
+				<th>{tr}Profile{/tr}</th>
+				<th>{tr}Repository{/tr}</th>
+				<th>{tr}Category{/tr}</th>
+			</tr>
+			{foreach key=k item=profile from=$result}
+				<tr id="profile-{$k}">
+					<td><a href="javascript:showDetails( 'profile-{$k}', '{$profile.domain|escape}', '{$profile.name|escape}' )">{$profile.name|escape}</a></td>
+					<td>{$profile.domain}</td>
+					<td>{$profile.category}</td>
+				</tr>
+			{/foreach}
 		</table>
-	</form>
-	<table class="normal">
-		<tr>
-			<th>{tr}Profile{/tr}</th>
-			<th>{tr}Repository{/tr}</th>
-			<th>{tr}Category{/tr}</th>
-		</tr>
-		{foreach key=k item=profile from=$result}
-		<tr id="profile-{$k}">
-			<td><a href="javascript:showDetails( 'profile-{$k}', '{$profile.domain|escape}', '{$profile.name|escape}' )">{$profile.name|escape}</a></td>
-			<td>{$profile.domain}</td>
-			<td>{$profile.category}</td>
-		</tr>
-		{/foreach}
-	</table>
-  </div>
+	</div>
 </div>
 
+<div class="cbox">
+	<div class="cbox-title">{tr}Configuration{/tr}</div>
+	<div class="cbox-data">
+		<form action="tiki-admin.php?page=profiles" method="post">
+			<table class="admin"><tr>
+				<col width="30%"/>
+				<col width="70%"/>
+		
+				<tr>
+					<td class="form">
+						{tr}Profile repositories{/tr}:
+						<div>
+							<small>{tr}Profiles can be installed from multiple repositories. Enter one repository URL per line.{/tr}</small>
+						</div>
+					</td>
+					<td>
+						<textarea name="profile_sources" rows="5">{$prefs.profile_sources|escape}</textarea>
+					</td>
+				</tr>
+
+				<tr>
+					<td class="form">
+						{tr}Data Channels{/tr}:
+						<div>
+							<small>{tr}Data channels create a named pipe to run profiles from user space. One channel per line. Each line is comma delimited and contain <strong>channel name, domain, profile, allowed groups</strong>. {/tr}</small>
+						</div>
+						<div>
+							<small><a href="http://profiles.tikiwiki.org/Data+Channels">{tr}More information{/tr}</a></small>
+						</div>
+					</td>
+					<td>
+						<textarea name="profile_channels" rows="5">{$prefs.profile_channels|escape}</textarea>
+					</td>
+				</tr>
+				<tr>		
+					<td colspan="2" class="input_submit_container"><input type="submit" name="config" value="{tr}Save{/tr}" /></td>
+				</tr>
+			</table>
+		</form>
+	</div>
+</div>
 
 <script type="text/javascript">
 {foreach item=k from=$oldSources}

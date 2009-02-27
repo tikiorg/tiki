@@ -265,9 +265,15 @@ if (isset($_REQUEST["save"])) {
 			or $_REQUEST["autoCreateCategories"] == 'y')) {
 		$tracker_options["autoCreateCategories"] = 'y';
 	} else {
-		$tracker_options["autoCreateCategories"] = 'n';
+		$tracker_options['autoCreateCategories'] = 'n';
 	}
-
+	if (isset($_REQUEST['autoCreateGroup'])
+		&& ($_REQUEST['autoCreateGroup'] == 'on'
+			or $_REQUEST['autoCreateGroup'] == 'y')) {
+		$tracker_options['autoCreateGroup'] = 'y';
+	} else {
+		$tracker_options['autoCreateGroup'] = 'n';
+	}
 	if (isset($_REQUEST["oneUserItem"])
 		&& ($_REQUEST["oneUserItem"] == 'on'
 			or $_REQUEST["oneUserItem"] == 'y')) {
@@ -432,6 +438,7 @@ $info["showeachuser"] = $groupalertlib->GetShowEachUser('tracker',$_REQUEST["tra
 $info['start']= 0;
 $info['end'] = 0;
 $info['autoCreateCategories']='';
+$info['autoCreateGroup'] = '';
 
 if ($_REQUEST["trackerId"]) {
 	$info = array_merge($info,$tikilib->get_tracker($_REQUEST["trackerId"]));
@@ -492,6 +499,7 @@ $smarty->assign('writerGroupCanModify', $info["writerGroupCanModify"]);
 $smarty->assign('defaultStatus', $info["defaultStatus"]);
 $smarty->assign('defaultStatusList', $info["defaultStatusList"]);
 $smarty->assign('autoCreateCategories', $info["autoCreateCategories"]);
+$smarty->assign('autoCreateGroup', $info['autoCreateGroup']);
 $smarty->assign_by_ref('groupforAlertList', $groupforAlertList);
 $smarty->assign('groupforAlert', $info["groupforAlert"]);
 $smarty->assign('showeachuser', $info["showeachuser"]);

@@ -28,7 +28,7 @@
 <table class="normal">
 <tr><td class="formcolor">{tr}Message{/tr}:</td><td class="formcolor"><textarea rows="4" cols="60" name="message">{$message|escape}</textarea></td></tr>
 {if $prefs.feature_antibot eq 'y' && $user eq ''}
-{include file=antibot.tpl}
+{include file='antibot.tpl' td_style="formcolor"}
 {/if}
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>

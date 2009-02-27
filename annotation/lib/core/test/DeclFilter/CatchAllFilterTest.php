@@ -1,6 +1,6 @@
 <?php
 
-class DeclFilter_CatchAllFilterTest extends PHPUnit_Framework_TestCase
+class DeclFilter_CatchAllFilterTest extends TikiTestCase
 {
 	function testMatch()
 	{

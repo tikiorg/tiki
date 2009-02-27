@@ -852,16 +852,21 @@ class WikiLib extends TikiLib {
 
 	    return $this->query($query, $bindvals) ? true : false;
 	}
-	function sefurl($page) {
-		global $prefs;
+	function sefurl($page, $with_next='') {
+		global $prefs, $smarty;
 		if( basename( $_SERVER['PHP_SELF'] ) == 'tiki-all_languages.php' ) {
 			return 'tiki-all_languages.php?page='.urlencode($page);
 		}
 
+		$href = 'tiki-index.php?page='.urlencode($page);
+		if ($with_next) {
+			$href .= '&amp;';
+		}
 		if ($prefs['feature_sefurl'] == 'y') {
-			return urlencode($page);
+			include_once('tiki-sefurl.php');
+			return  filter_out_sefurl($href, $smarty, 'wiki');
 		} else {
-			return 'tiki-index.php?page='.urlencode($page);
+			return $href;
 		}
 	}
 	function move_attachments($old, $new) {

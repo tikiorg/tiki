@@ -81,12 +81,15 @@
           <td><label>{tr}Search method when searching in content: Non-Tiki search local to a forum{/tr}</label></td>
           <td><input type="checkbox" name="feature_forum_local_search"
               {if $prefs.feature_forum_local_search eq 'y'}checked="checked"{/if}/></td>			
-        </tr><tr class="form">
+               </tr><tr class="form">
           <td><label>{tr}Do not prefix messages titles by 'Re: '{/tr}</label></td>
           <td><input type="checkbox" name="forum_comments_no_title_prefix"
               {if $prefs.forum_comments_no_title_prefix eq 'y'}checked="checked"{/if}/></td>			
         </tr><tr class="form">
-          <td colspan="2" class="button"><input type="submit" name="forumprefs"
+          <td><label>{tr}Uploaded filenames must match regex:{/tr}</label></td>
+          <td><input type="text" name="forum_match_regex" value="{$prefs.forum_match_regex|escape}"/></td>			
+        </tr><tr class="form">
+          <td colspan="2" class="input_submit_container"><input type="submit" name="forumprefs"
               value="{tr}Change preferences{/tr}" /></td>
         </tr></table>
       </form>
@@ -121,10 +124,17 @@
           <td><label>{tr}Description{/tr}</label></td>
           <td><input type="checkbox" name="forum_list_desc"
               {if $prefs.forum_list_desc eq 'y'}checked="checked"{/if} /></td>
-        </tr><tr>
-          <td colspan="2" class="button"><input type="submit" name="forumlistprefs"
-              value="{tr}Change preferences{/tr}" /></td>
-        </tr></table>
+        </tr>
+				<tr>
+					<td class="form">{tr}Description length:{/tr}</td>
+					<td class="form">
+						<input type="text" name="forum_list_description_len" value="{$prefs.forum_list_description_len}" size="3" />
+					</td>
+				</tr>
+				<tr>
+          <td colspan="2" class="input_submit_container"><input type="submit" name="forumlistprefs" value="{tr}Change preferences{/tr}" /></td>
+        </tr>
+			</table>
       </form>
   </div>
 </div>    
@@ -184,7 +194,7 @@
         </tr>
         
         <tr>
-          <td colspan="2" class="button">
+          <td colspan="2" class="input_submit_container">
             <input type="submit" name="forumthreadprefs" value="{tr}Change preferences{/tr}" />
           </td>
         </tr>

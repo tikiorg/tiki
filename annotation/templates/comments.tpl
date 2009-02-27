@@ -20,6 +20,23 @@
 >
 {/if}
 
+{if !empty($errors)}
+	{remarksbox type="warning" title="{tr}Errors{/tr}"}
+		{foreach from=$errors item=error name=error}
+			{if !$smarty.foreach.error.first}<br />{/if}
+			{$error|escape}
+		{/foreach}
+	{/remarksbox}
+{/if}
+{if !empty($feedbacks)}
+	{remarksbox type="feddback"}
+		{foreach from=$feedbacks item=feedback name=feedback}
+			{$feedback|escape}
+			{if !$smarty.foreach.feedback.first}<br />{/if}
+		{/foreach}
+	{/remarksbox}
+{/if}
+
 {if ($tiki_p_read_comments eq 'y' and $forum_mode ne 'y') or ($tiki_p_forum_read eq 'y' and $forum_mode eq 'y')}
 
   {* This section (comment) is only displayed * }
@@ -27,11 +44,7 @@
   {* The $parent_com is only set in this case *}
   {* WARNING: when previewing a new reply to a forum post, $parent_com is also set *}
 
-{if $comments_postComment eq 'y' and $prefs.feature_comments_moderation eq 'y' and $tiki_p_admin_comments neq 'y'}
-	<div class="simplebox highlight">
-		 {tr}Your comment will have to be approved by the moderator before it is displayed.{/tr}
-	</div>
-{/if}
+
   {if $comments_cant gt 0}
 
 <form method="get" action="{$comments_father}" class="comments">
@@ -46,6 +59,7 @@
 	{if $smarty.request.topics_find}<input type="hidden" name="topics_find" value="{$smarty.request.topics_find|escape}" />{/if}
 	{if $smarty.request.topics_sort_mode}<input type="hidden" name="topics_sort_mode" value="{$smarty.request.topics_sort_mode|escape}" />{/if}
 	{if $smarty.request.topics_threshold}<input type="hidden" name="topics_threshold" value="{$smarty.request.topics_threshold|escape}" />{/if}
+	{if $forumId}<input type="hidden" name="forumId" value="{$forumId|escape}" />{/if}
 
 	{if $tiki_p_admin_forum eq 'y' and $forum_mode eq 'y'}
 	<div class="forum_actions">
@@ -218,10 +232,6 @@
 		</h2>
 	</div>
 
-	{if $msgError}<div id="msgError" class="simplebox highlight">
-	{icon _id=exclamation alt="{tr}Error{/tr}" style="vertical-align:middle"} 
-	{$msgError}</div><br />{/if}
-
 	{if $comment_preview eq 'y'}
 	<div class="clearfix post_preview">
 		{if $forum_mode neq 'y'}<b>{tr}Preview{/tr}</b>{/if}
@@ -253,12 +263,6 @@
 	{/section}
 
 	<table class="normal">
-		{if empty($user)}
-			<tr>
-				<td class="formcolor">{tr}Your name{/tr}:</td>
-				<td class="formcolor"><input type="text" maxlength="50" size="50" id="anonymous_name" name="anonymous_name" /></td>
-			</tr>
-		{/if}
 		<tr>
 			<td class="formcolor">
 				<label for="comments-title">{tr}Title{/tr} <span class="attention">({tr}required{/tr})</span>: </label>
@@ -329,7 +333,7 @@
 		<tr>
 			<td class="formcolor">{tr}Attach file{/tr}</td>
 			<td class="formcolor">
-				<input type="hidden" name="MAX_FILE_SIZE" value="{$forum_info.att_max_size|escape}" /><input name="userfile1" type="file" />
+				<input type="hidden" name="MAX_FILE_SIZE" value="{$forum_info.att_max_size|escape}" /><input name="userfile1" type="file" />{tr}Maximum size:{/tr} {$forum_info.att_max_size|kbsize}
 			</td>
 		</tr>
 		{/if}
@@ -339,9 +343,21 @@
 		{/if}
 
 		{if $prefs.feature_antibot eq 'y'}
-			{include file="antibot.tpl"}
+			{include file="antibot.tpl" td_style="formcolor"}
 		{/if}
 
+		{if !$user}
+			<tr>
+				<td class="formcolor"><label for="anonymus_name">{tr}Enter your name{/tr}</label></td>
+				<td class="formcolor"><input type="text" maxlength="50" size="12" id="anonymous_name" name="anonymous_name" /></td>
+			</tr>
+			{if $forum_mode eq 'y'}
+				<tr>
+					<td class="formcolor"><label for="anonymous_email">{tr}If you would like to be notified when someone replies to this topic<br />please tell us your e-mail address{/tr}</label></td>
+					<td class="formcolor"><input type="text" size="30" id="anonymous_email" name="anonymous_email" /></td>
+				</tr>
+			{/if}
+		{/if}
 		<tr>
 			<td class="formcolor">
 			{if $parent_coms}

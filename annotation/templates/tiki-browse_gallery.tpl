@@ -65,8 +65,8 @@
 {/if}
 
 {if strlen($description) > 0}
-	<div class="imgaldescr">
-	  {$description}
+	<div class="description">
+	  {$description|escape}
   </div>
 {/if}
 

@@ -1,4 +1,7 @@
-{title url="tiki-lastchanges.php?days=$days"}{tr}Last Changes{/tr}{/title}
+{* $Id$ *}
+
+{title admpage="wiki" help="Using+Wiki+Pages#Last_Changes" url="tiki-lastchanges.php?days=$days"}{tr}Last Changes{/tr}{/title}
+
 <div class="navbar">
 {if $days eq '1'}{assign var=thisclass value='highlight'}{else}{assign var=thisclass value=''}{/if}
 {button href="tiki-lastchanges.php?days=1" _text="{tr}Today{/tr}" _class=$thisclass}
@@ -47,7 +50,9 @@
 <th>{self_link _sort_arg='sort_mode' _sort_field='object'}{tr}Page{/tr}{/self_link}</th>
 <th>{self_link _sort_arg='sort_mode' _sort_field='action'}{tr}Action{/tr}{/self_link}</th>
 <th>{self_link _sort_arg='sort_mode' _sort_field='user'}{tr}User{/tr}{/self_link}</th>
+{if $prefs.feature_wiki_history_ip ne 'n'}
 <th>{self_link _sort_arg='sort_mode' _sort_field='ip'}{tr}Ip{/tr}{/self_link}</th>
+{/if}
 <th>{self_link _sort_arg='sort_mode' _sort_field='comment'}{tr}Comment{/tr}{/self_link}</th>
 <th>{tr}Action{/tr}</th>
 </tr>
@@ -60,7 +65,9 @@
 
 <td>{tr}{$lastchanges[changes].action|escape}{/tr}</td>
 <td>{$lastchanges[changes].user|userlink}</td>
+{if $prefs.feature_wiki_history_ip ne 'n'}
 <td>{$lastchanges[changes].ip}</td>
+{/if}
 <td>{$lastchanges[changes].comment}</td>
 <td>
 {if $tiki_p_wiki_view_history eq 'y'} 

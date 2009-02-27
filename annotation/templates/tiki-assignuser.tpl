@@ -12,10 +12,10 @@
 	{/if}
 </div>
 
-{if $tiki_p_admin eq 'y' or $tiki_p_admin_users eq 'y'}
-{if $prefs.feature_intertiki eq 'y' and !empty($prefs.feature_intertiki_mymaster)}
-  <br /><b>{tr}Warning: since this tiki site is in slave mode, all user information you enter manually will be automatically overriden by other site's data, including users permissions{/tr}</b>
-{/if}
+{if $prefs.feature_intertiki eq 'y' and $prefs.feature_intertiki_import_groups eq 'y'}
+	{remarksbox type="warning" title="{tr}Warning{/tr}"}
+		{tr}Since this tiki site is in slave mode and import groups, the master groups will be automatically reimported at each login{/tr}
+	{/remarksbox}
 {/if}
   
 <h2>{tr}User Information{/tr}</h2>

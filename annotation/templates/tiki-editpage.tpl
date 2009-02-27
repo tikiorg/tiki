@@ -275,7 +275,7 @@ window.onload = timeIt;
 {/if}
 <tr class="formcolor">
 <td colspan="2">
-{if $wysiwyg ne 'y'}
+{if $wysiwyg ne 'y' or $prefs.javascript_enabled ne 'y'}
 {include file="wiki_edit.tpl"}
 <input type="hidden" name="rows" value="{$rows}"/>
 <input type="hidden" name="cols" value="{$cols}"/>
@@ -363,6 +363,9 @@ function searchrep() {
 
 {if $page|lower neq 'sandbox'}
 <tr class="formcolor" id="input_edit_summary"><td>{tr}Edit Comment{/tr}:</td><td><input style="width:98%;" class="wikiedit" type="text" name="comment" value="{$commentdata|escape}" /></td></tr>
+{if $show_watch eq 'y'}
+	<tr class="formcolor"><td>{tr}Monitor this page{/tr}:</td><td><input type="checkbox" name="watch" value="1"{if $watch_checked eq 'y'} checked="checked"{/if} /></td></tr>
+{/if}
 {if $prefs.wiki_feature_copyrights  eq 'y'}
 <tr class="formcolor"><td>{tr}Copyright{/tr}:</td><td>
 <table border="0">
@@ -450,7 +453,7 @@ function searchrep() {
 </td></tr>
 {/if}
 {if $prefs.feature_antibot eq 'y' && $anon_user eq 'y'}
-{include file=antibot.tpl}
+{include file="antibot.tpl" tr_style="formcolor"}
 {/if}
 {if $prefs.wiki_feature_copyrights  eq 'y'}
 <tr class="formcolor"><td>{tr}License{/tr}:</td><td><a href="{$prefs.wikiLicensePage|sefurl}">{tr}{$prefs.wikiLicensePage}{/tr}</a></td></tr>

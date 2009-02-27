@@ -60,8 +60,7 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 
 {*-- css menus block --*}
 {if $prefs.feature_cssmenus eq 'y'}
-<link rel="StyleSheet" href="css/cssmenu_vert.css" type="text/css"></link>
-<link rel="StyleSheet" href="css/cssmenu_horiz.css" type="text/css"></link>
+<link rel="StyleSheet" href="css/cssmenus.css" type="text/css"></link>
 {/if}
 
 {* --- universaleditbutton.org --- *}
@@ -168,7 +167,7 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 				handleUnsupported: 'remove',
 				loadingImage: 'lib/shadowbox/images/loading.gif',
 				overlayBgImage: 'lib/shadowbox/images/overlay-85.png',
-				resizeLgImages: true,
+				handleLgImages:     'resize',
 				text: {
 {/literal}
 					cancel:   '{tr}Cancel{/tr}',

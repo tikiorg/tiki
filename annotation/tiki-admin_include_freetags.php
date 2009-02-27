@@ -24,6 +24,7 @@ if (isset($_REQUEST["freetagsfeatures"])) {
 	simple_set_value('freetags_normalized_valid_chars');
 	
 	simple_set_value('freetags_cloud_colors');
+	simple_set_toggle('freetags_show_middle');
 }
 
 if (isset($_REQUEST["cleanup"])) {

@@ -15,7 +15,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 if (isset($_REQUEST["features"])) {
 
 	$features_toggles = array(
-		"contact_anon",
 		"feature_action_calendar",
 		"feature_actionlog",
 		"feature_ajax",
@@ -31,6 +30,7 @@ if (isset($_REQUEST["features"])) {
 		"feature_contact",
 		"feature_contacts",
 		"feature_contribution",
+		"feature_multilingual",
 		"feature_custom_home",
 		"feature_debug_console",
 		"feature_directory",
@@ -71,6 +71,7 @@ if (isset($_REQUEST["features"])) {
 		"feature_score",
 		"feature_search",
 		"feature_sheet",
+		"feature_sefurl",
 		"feature_shoutbox",
 		"feature_stats",
 		"feature_surveys",
@@ -80,6 +81,7 @@ if (isset($_REQUEST["features"])) {
 		"feature_userPreferences",
 		"feature_user_bookmarks",
 		"feature_user_watches",
+		"feature_group_watches",
 		"feature_user_watches_translations",
 		"feature_userfiles",
 		"feature_usermenu",
@@ -94,8 +96,6 @@ if (isset($_REQUEST["features"])) {
 		"feature_mootools",
 		"feature_shadowbox",
 		"feature_swffix",
-		"layout_section",
-		"feature_sefurl",
 		"feature_tikitests",
 		"feature_magic",
 		"feature_minichat",

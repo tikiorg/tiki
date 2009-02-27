@@ -84,7 +84,7 @@
 		</tr>
 	{/foreach}
 		<tr>
-			<td class="button" colspan="{$languageList|@count - (in_array('',$languageList)?1:0)}">
+			<td colspan="{$languageList|@count - (in_array('',$languageList)?1:0)}">
 				<input type="submit" name="save" value="{tr}Save{/tr}"/>
 			</td>
 		</tr>

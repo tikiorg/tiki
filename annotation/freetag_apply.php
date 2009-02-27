@@ -8,6 +8,7 @@
 //this script may only be included - so its better to err & die if called directly.
 //smarty is not there - we need setup
 require_once('tiki-setup.php');  
+global $access; require_once("lib/tikiaccesslib.php");
 $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
 global $prefs;

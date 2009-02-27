@@ -40,7 +40,7 @@
               <option value="19" {if $prefs.gmap_defaultz eq '17'}selected="selected"{/if}>19 - {tr}max zoom{/tr}</option>
               </select></td>
         </tr><tr>
-          <td colspan="2" class="button"><input type="submit" name="gmapsetup" value="{tr}Save{/tr}" /></td>
+          <td colspan="2" class="input_submit_container"><input type="submit" name="gmapsetup" value="{tr}Save{/tr}" /></td>
         </tr></table>
       </form>
   </div>

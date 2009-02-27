@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-{title admpage="wiki"}{tr}Pages{/tr}{/title}
+{title admpage="wiki" help="Using+Wiki+Pages#List_Pages"}{tr}Pages{/tr}{/title}
 
 {include file="find.tpl" find_show_languages='y' find_show_categories='y' find_show_num_rows='y'}
 

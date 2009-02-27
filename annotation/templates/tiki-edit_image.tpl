@@ -47,6 +47,8 @@
     <td class="even">
     <small>
     {tr}You can include the image in an HTML page using one of these lines{/tr}:<br /><br />
+    &lt;img src="show_image.php?id={$imageId}" /&gt;<br />
+    &lt;img src="show_image.php?name={$name|escape}&amp;galleryId={$galleryId}" /&gt;<br />
     &lt;img src="{$url_show}?id={$imageId}" /&gt;<br />
     &lt;img src="{$url_show}?name={$name|escape}&amp;galleryId={$galleryId}" /&gt;<br />
     </small>
@@ -56,6 +58,8 @@
     <td class="even">
     <small>
     {tr}You can include the image in a tiki page using one of these lines{/tr}:<br /><br />
+    {literal}{{/literal}img src="show_image.php?id={$imageId}" {literal}}{/literal}<br />
+    {literal}{{/literal}img src="show_image.php?name={$name|escape}&amp;galleryId={$galleryId}" {literal}}{/literal}<br />
     {literal}{{/literal}img src="{$url_show}?id={$imageId}" {literal}}{/literal}<br />
     {literal}{{/literal}img src="{$url_show}?name={$name|escape}&amp;galleryId={$galleryId}" {literal}}{/literal}<br />
     </small>

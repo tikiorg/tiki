@@ -165,15 +165,19 @@ if (isset($_REQUEST['boolean']) && ($_REQUEST['boolean'] == 'on' || $_REQUEST['b
 	$boolean = 'n';
 }
 $smarty->assign_by_ref('boolean', $boolean);
+$smarty->assign('date',$_REQUEST['date']);
 
 // Build the query using words
-if ((!isset($_REQUEST["words"])) || (empty($_REQUEST["words"]))) {
+if ( !isset($_REQUEST["words"]) || empty($_REQUEST["words"]) ) {
 	$results = array('cant'=>0);
 
 	$smarty->assign('words', '');
 } else {
 	$words = strip_tags($_REQUEST["words"]);
-	$results = $searchlib->$find_where($words, $offset, $maxRecords, $fulltext, $filter, $boolean);
+	if ( !method_exists($searchlib,$find_where)) {
+		$find_where = "find_pages";
+	}
+	$results = $searchlib->$find_where($words, $offset, $maxRecords, $fulltext, $filter, $boolean, $_REQUEST["date"]);
 	//	echo '<pre>'; print_r($results);
 
 	$smarty->assign('words', $words);
@@ -212,7 +216,7 @@ ask_ticket('searchresults');
 
 // Display the template
 $smarty->assign('mid', 'tiki-searchresults.tpl');
-// $smarty->assign('searchNoResults', 'true');       // false is default
+$smarty->assign('searchNoResults', !isset($_REQUEST['words']) );       // false is default
 // $smarty->assign('searchStyle', 'menu');           // buttons is default
 // $smarty->assign('searchOrientation', 'horiz');    // vert is default 
 $smarty->display("tiki.tpl");

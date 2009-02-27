@@ -205,6 +205,9 @@ class Installer
 			while( $row = $results->fetchRow() ) {
 				$installed[] = reset($row);
 			}
+		} else {
+			// Erase initial error
+			$this->failures = array();
 		}
 
 		$this->patches = array_diff( $this->patches, $installed );

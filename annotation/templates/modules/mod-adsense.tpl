@@ -47,6 +47,14 @@
     google_ad_width = 120;
     google_ad_height = 140;
     google_ad_format = "120x140_as";
+{elseif $display == '120*240_as'}
+    google_ad_width = 120;
+    google_ad_height = 240;
+    google_ad_format = "120x240_as";
+{elseif $display == '200*200_as'}
+    google_ad_width = 200;
+    google_ad_height = 200;
+    google_ad_format = "200x200_as";
 {/if}
 {/capture}
 {if $smarty.capture.disparam}

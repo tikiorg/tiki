@@ -36,9 +36,10 @@ if (isset($module_params["submit"])) {
 }
 if (isset($module_params["size"])) {
 	$size = $module_params["size"];
-} else {
+	$smarty->assign('size', $size);
+}/* else {
 	$size = 15;
-}
+}*/
 if (isset($module_params["mod_quickedit_heading"])) {
 	$mod_quickedit_heading = $module_params["mod_quickedit_heading"];
 } else {
@@ -52,7 +53,6 @@ if (isset($module_params["categId"])) {
 $smarty->assign('categId', $categId);
 $smarty->assign('mod_quickedit_heading', $mod_quickedit_heading);
 $smarty->assign('templateId', $templateId);
-$smarty->assign('size', $size);
 $smarty->assign('qe_action', $qe_action);
 $smarty->assign('submit', $submit);
 

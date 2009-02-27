@@ -2,11 +2,11 @@
 
 $inputConfiguration = array(
 	array( 'staticKeyFilters' => array(
-		'categId' => 'digits',
 		'list' => 'alpha',
 	) ),
 	array( 'staticKeyFiltersForArrays' => array(
 		'languages' => 'alpha',
+		'categId' => 'digits',
 	) ),
 	array( 'catchAllUnset' => null ),
 );

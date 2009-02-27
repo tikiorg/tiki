@@ -1,6 +1,6 @@
 {title help="Edit+CSS"}{tr}Edit Style Sheet{/tr}{/title}
 
-<div class=:navbar">
+<div class="navbar">
 	 {if ($prefs.feature_view_tpl eq 'y' || $prefs.feature_edit_templates eq 'y') && $tiki_p_edit_templates == 'y'}
 		 {button href="tiki-edit_templates.php" _text="{tr}View Templates{/tr}"}
 	{/if}

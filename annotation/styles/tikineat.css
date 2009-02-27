@@ -410,6 +410,7 @@ div.cbox-data {
 /** rbox: remarks box (note/warning/tip/comment) */
 .rbox {
   margin-top: 10px;
+  text-align: left;
 }
 .rbox-data {
   padding: 2px;
@@ -502,6 +503,7 @@ table.forumformtable, table.viewthread, table.jukeboxlist {
 }
 table.normalnoborder {
 	border: none;
+	width: 100%;
 }
 table.admin td {
 	padding-left: 2px;
@@ -882,7 +884,7 @@ p.editdate {
 	color : #223344;
 	border-top : 1px solid #8CACBB;
 	font-size : 9px;
-	padding : 0 10px;
+	padding : 10px 10px 0;
 }
 div.wiki-edithelp {
 	background : white;
@@ -2319,4 +2321,5 @@ div.poll div.poll-data
 }
 
 img {border: 0}
+.button .iconmenu {display:inline;}
 /* end of css file */

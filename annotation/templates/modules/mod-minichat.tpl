@@ -6,7 +6,7 @@
 
 <div style='width: 100%; overflow: hidden;'>
  <form name='minichatinputform' action='javascript:minichatpost();'>
-  <input name='minichatinput' id='minichatinput' type='text' style='width: 95%;' autocomplete='off' /><input type='submit' value='Ok' style='display: none;' />
+  <input name='minichatinput' id='minichatinput' type='text' style='width: 95%;' autocomplete='off' /><input type='submit' value='{tr}OK{/tr}' style='display: none;' />
  </form>
 </div>
 {/tikimodule}

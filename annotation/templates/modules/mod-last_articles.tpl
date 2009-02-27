@@ -23,11 +23,11 @@
 		</div>		
 		{/if}
  		  {if $absurl == 'y'}
-          <a class="linkmodule" href="{$base_url}tiki-read_article.php?articleId={$modLastArticles[ix].articleId}" title="{$modLastArticles[ix].publishDate|tiki_short_datetime}, {tr}by{/tr} {$modLastArticles[ix].author}">
+          <a class="linkmodule" href="{$base_url}{$modLastArticles[ix].articleId|sefurl:article}" title="{$modLastArticles[ix].publishDate|tiki_short_datetime}, {tr}by{/tr} {$modLastArticles[ix].author}">
             {$modLastArticles[ix].title}
           </a>
 		  {else}
-		  <a class="linkmodule" href="tiki-read_article.php?articleId={$modLastArticles[ix].articleId}" title="{$modLastArticles[ix].publishDate|tiki_short_datetime}, {tr}by{/tr} {$modLastArticles[ix].author}">
+		  <a class="linkmodule" href="{$modLastArticles[ix].articleId|sefurl:article}" title="{$modLastArticles[ix].publishDate|tiki_short_datetime}, {tr}by{/tr} {$modLastArticles[ix].author}">
             {$modLastArticles[ix].title}
           </a>
 		  {/if}

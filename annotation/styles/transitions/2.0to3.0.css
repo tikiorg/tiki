@@ -24,12 +24,14 @@ They should be added to themes (possibly with tweaks) to make the theme v3.0 rea
 	max-height: 80%;
 	overflow: auto;
 	background: white;
+	color: black;
 	padding: 10px;
 	border: solid 2px black;
 }
 
 .icon_edit_section {
 	float: right;
+	margin-top: 1em;
 }
 
 h3.box-title span.moduletitle {
@@ -41,6 +43,7 @@ h3.box-title span.moduleflip {
 
 #shadowbox_content {
 	background: white;
+	color: black;
 }
 
 /* To enable removing deprecated tag from img.icon and prevent border on a.icon. */
@@ -153,8 +156,8 @@ div#tikihelp {
 	_position:absolute;
 	right: 0px;
 	top: 15%;
-	max-height: 85%;
-	max-width: 350px;
+	height: 80%;
+	max-width: 50%;
 	padding:0;
 	margin:0;
 	border: none;
@@ -176,13 +179,14 @@ div.help_section_select {
 	font-weight : bold;
 	font-size: 120%;
 	background-color : #E7E9EA;
-	width: 340px;
+	color: black;
+	width: 100%;
 	margin: 2px;
 }
 div.help_sections {
 	padding:  2px;
 	background-color: #AAC9E9;
-	max-height : 500px;
+	height : 100%;
 	overflow: auto;
 }
 div.help_section {
@@ -190,6 +194,7 @@ div.help_section {
 	margin: 5px;
 	padding: 5px;
 	background-color: white;
+	color: black;
 }
 
 .findtable ul {
@@ -279,10 +284,10 @@ ul.categories li{
 .calbuttonoff a:visited {
 	color: #000;
 }
-.calbuttonon a {
-	color: #00f;
-}
 */
+.calbuttonon a {
+	text-decoration: underline;
+}
 .calbuttonLeft {
 	float: left;
 	width: 3px;
@@ -312,6 +317,9 @@ ul.categories li{
 }
 .calnavigation {
 	border-width: 0px;
+	text-align: center;
+	font-weight: bold;
+	padding: 4px;
 /*	color: #e8ffff;*/
 }
 .button2 .linkbut,
@@ -452,28 +460,90 @@ ul.categories li{
 	text-decoration: none;
 }
 div.tabrow {
-	position:relative;
-	left:0%;
-	font-size : 11px;
-	height:40px;
-	width:720px;
+	position: relative;
+	left: 0;
+	font-size: 1em;
+	height: 24px !important;
+	width: 720px;
 /*	padding-top:11px;*/
 }
 .tabrowLeft {
-	position:absolute;
-	top:0px;
-	left:0px;
-	float:left;
-	width:23px;
-	height:40px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	float: left;
+	width: 23px;
+	height: 24px !important;
 }
 .tabrowRight {
 	position:absolute;
-	top:0px;
-	right:0px;
-	float:left;
-	width:30px;
-	height:40px;
+	top: 0;
+	right: 0;
+	float: left;
+	width: 30px;
+	height: 24px !important;
 }
 
 img {border: 0}
+
+.popup-group-watch {
+	overflow: auto;
+	width: 100px;
+	max-width: 200px;
+	border: solid thin black;
+	background: white;
+	color: black;
+	display: none;
+}
+
+span.categpath {
+	display: block;
+}
+
+p.editdate {
+	padding-top: 10px;
+}
+
+.footnotearea {
+	margin-top: 2em;
+	font-size: 0.9em;
+}
+
+/* flag languages */
+
+.box-switch_lang .box-data img {
+  padding: .2em;
+  vertical-align: middle;
+}
+
+.box-switch_lang .box-data img.highlight {
+  padding: .1em;
+  border: .1em solid #f00 !important;	/* too many !importants about! */
+}
+
+.box-switch_lang .box-data span.highlight {
+  border: .1em solid #f00 !important;
+}
+
+.box-switch_lang .box-data img.unavailable,
+.box-switch_lang .box-data span.unavailable  {
+  opacity: .3;
+}
+
+/* for wikiplugin_fancylist */
+
+.wikitext .fancylist {
+	margin: .5em 0;
+	padding: 0;
+}
+
+.wikitext .fancylist li {
+	list-style-position: inside;
+}
+
+.wikitext .fancylist li p {
+	display: inline;
+	font-size: 1em;
+}
+
+[class].wikitext .fancylist li p {}

@@ -875,7 +875,6 @@ class ImageGalsLib extends TikiLib {
 
 		// insert thumb
 		if ($t_data) {
-echo 'THUMB'.$imageId;
 			$this->blob_encode($t_data['data']);
 			$query = "insert into `tiki_images_data`(`imageId`,`xsize`,`ysize`, `type`,`filesize`,`filetype`,`filename`,`data`)
                         values (?,?,?,?,?,?,?,?)";

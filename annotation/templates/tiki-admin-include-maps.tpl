@@ -16,8 +16,8 @@
 <tr><td class="form">{tr}Map Zone{/tr}:</td><td>
 {html_radios name="mapzone" options=$checkboxes_mapzone selected=$prefs.mapzone separator="  "}
 </td></tr>
-<tr><td colspan="2" class="button"><input type="submit" name="mapsset" value="{tr}Change preferences{/tr}" /></td></tr> 
-<tr><td colspan="2" class="button"><input type="submit" name="mapuser" value="{tr}Generate User Map{/tr}" /></td></tr> 
+<tr><td colspan="2" class="input_submit_container"><input type="submit" name="mapsset" value="{tr}Change preferences{/tr}" /></td></tr> 
+<tr><td colspan="2" class="input_submit_container"><input type="submit" name="mapuser" value="{tr}Generate User Map{/tr}" /></td></tr> 
 {if $map_error neq ''}
 {/if}   
 </table>

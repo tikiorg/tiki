@@ -201,7 +201,7 @@
 		{if $prefs.quicktags_over_textarea eq 'y' and $field_value.options_array[0] eq 1}
     		{include file=tiki-edit_help_tool.tpl qtnum=$field_value.fieldId area_name="area_"|cat:$field_value.fieldId}
 			{/if}
-		<textarea id="area_{$field_value.fieldId}" name="{$field_value.ins_id}" cols="{if $field_value.options_array[1] gt 1}{$field_value.options_array[1]}{else}50{/if}" rows="{if $field_value.options_array[2] gt 1}{$field_value.options_array[2]}{else}4{/if}"{if $field_value.options_array[5]} onKeyUp="wordCount({$field_value.options_array[5]}, this, 'cpt_{$field_value.fieldId}', '{tr}Word Limit Exceeded{/tr}')"{/if}>
+		<textarea id="area_{$field_value.fieldId}" name="{$field_value.ins_id}" cols="{if $field_value.options_array[1] >= 1}{$field_value.options_array[1]}{else}50{/if}" rows="{if $field_value.options_array[2] >= 1}{$field_value.options_array[2]}{else}4{/if}"{if $field_value.options_array[5]} onKeyUp="wordCount({$field_value.options_array[5]}, this, 'cpt_{$field_value.fieldId}', '{tr}Word Limit Exceeded{/tr}')"{/if}>
 			{$field_value.value}
 		</textarea>
 		{if $field_value.options_array[5]}
@@ -352,7 +352,7 @@
 {* -------------------- Google Map -------------------- *}
 {elseif $field_value.type eq 'G'}
 	<input type="text" name="{$field_value.ins_id}" value="{$field_value.value}" />
-	<br />{tr}Format : x,y,zoom - You can use Google Map Locator in the item view script.{/tr}
+	<br />{tr}Format: x,y,zoom where x is the longitude, and y is the latitude. Zoom is between 0(view Earth) and 19. You can use <a href="tiki-gmap_locator.php?for=item&amp;itemId={$item.itemId}&amp;trackerId={$item.trackerId}&amp;fieldId={$field_value.fieldId}">{tr}Google Map Locator{/tr}</a>.{/tr}
 
 {* -------------------- country selector -------------------- *}
 {elseif $field_value.type eq 'y'}

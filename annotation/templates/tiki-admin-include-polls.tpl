@@ -9,7 +9,6 @@
     <form method="post" action="tiki-admin.php?page=polls">
     <table class="admin">
     <tr><td class="form">{tr}Allow Anonymous Poll Voting{/tr}:</td><td><input type="checkbox" name="feature_poll_anonymous" {if $prefs.feature_poll_anonymous eq 'y'}checked="checked"{/if}/></td></tr>
-    <tr><td class="form">{tr}Show who voted{/tr}:</td><td><input type="checkbox" name="feature_poll_public" {if $prefs.feature_poll_public eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Allow re-voting{/tr}:</td><td><input type="checkbox" name="feature_poll_revote" {if $prefs.feature_poll_revote eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Comments{/tr}:</td><td><input type="checkbox" name="feature_poll_comments" {if $prefs.feature_poll_comments eq 'y'}checked="checked"{/if}/></td></tr>
     <tr><td class="form">{tr}Default number of comments per page{/tr}: </td><td><input size="5" type="text" name="poll_comments_per_page" value="{$prefs.poll_comments_per_page|escape}" /></td></tr>
@@ -23,7 +22,7 @@
     </td></tr>
 	<tr><td class="form">{tr}Show categories{/tr}</td><td><input type="checkbox" name="poll_list_categories" {if $prefs.poll_list_categories eq 'y'}checked="checked"{/if}/></td></tr>
 	<tr><td class="form">{tr}Show objects{/tr}</td><td><input type="checkbox" name="poll_list_objects" {if $prefs.poll_list_objects eq 'y'}checked="checked"{/if}/></td></tr>
-    <tr><td colspan="2" class="button"><input type="submit" name="pollprefs" value="{tr}Change settings{/tr}" /></td></tr>
+    <tr><td colspan="2" class="input_submit_container"><input type="submit" name="pollprefs" value="{tr}Change settings{/tr}" /></td></tr>
     </table>
     </form>
 </div>

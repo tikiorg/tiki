@@ -1,6 +1,6 @@
 <?php
 
-class Multilingual_Aligner_SentenceSegmentorTest extends PHPUnit_Framework_TestCase
+class Multilingual_Aligner_SentenceSegmentorTest extends TikiTestCase
 {
 
    ////////////////////////////////////////////////////////////////

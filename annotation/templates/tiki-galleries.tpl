@@ -5,6 +5,9 @@
 {if $edit_mode ne 'y' or $galleryId ne 0}
 	<div class="navbar">
 		{button href="?edit_mode=1&amp;galleryId=0" _text="{tr}Create New Gallery{/tr}"}
+		{if $galleryId ne 0}
+			{button href="tiki-browse_gallery.php?galleryId=$galleryId" _text="{tr}Browse Gallery{/tr}"}
+		{/if}
 	</div>
 {/if}
 

@@ -1,4 +1,4 @@
-// $Header: /cvsroot/tikiwiki/tiki/lib/tiki-js.js,v 1.81.2.15 2008-03-04 15:47:50 sept_7 Exp $
+// $Id$
 var feature_no_cookie = 'n';
 
 function browser() {
@@ -12,7 +12,11 @@ function browser() {
     this.safari = (navigator.userAgent.indexOf('Safari')>-1)
     this.op7 = (navigator.userAgent.indexOf('Opera')>-1 && this.v>=7)
     this.ie56 = (this.version.indexOf('MSIE 5')>-1||this.version.indexOf('MSIE 6')>-1)
+/* ie567 added by Enmore */
+	this.ie567 = (this.version.indexOf('MSIE 5')>-1||this.version.indexOf('MSIE 6')>-1||this.version.indexOf('MSIE 7')>-1)
     this.iewin = (this.ie56 && navigator.userAgent.indexOf('Windows')>-1)
+/* iewin7 added by Enmore */	
+	this.iewin7 = (this.ie567 && navigator.userAgent.indexOf('Windows')>-1)
     this.iemac = (this.ie56 && navigator.userAgent.indexOf('Mac')>-1)
     this.moz = (navigator.userAgent.indexOf('Mozilla')>-1)
     this.moz13 = (navigator.userAgent.indexOf('Mozilla')>-1 && navigator.userAgent.indexOf('1.3')>-1)
@@ -372,8 +376,8 @@ function insertAt(elementId, replaceString) {
   }
 }
 
-function setUserModuleFromCombo(id) {
-  document.getElementById('usermoduledata').value = document.getElementById('usermoduledata').value
+function setUserModuleFromCombo(id, textarea) {
+  document.getElementById(textarea).value = document.getElementById(textarea).value
     + document.getElementById(id).options[document.getElementById(id).selectedIndex].value;
 //document.getElementById('usermoduledata').value='das';
 }
@@ -427,7 +431,8 @@ function flip(foo,style) {
   showit = 'show_' + escape(foo);
 
   if (style == null) style = 'block';
-  if (this.iewin && style == 'table-cell') {
+/* iewin changed to iewin7 by Enmore */	
+	if (this.iewin7 && style == 'table-cell') {
     style = 'block';
   }
 
@@ -476,7 +481,7 @@ function flip_thumbnail_status(id) {
 }
 
 function tikitabs(focus,max) {
-  for (var i = 1; i < max; i++) {
+  for (var i = 1; i <= max; i++) {
     var tabname = 'tab' + i;
     var content = 'content' + i;
     if (document.getElementById(tabname) && typeof document.getElementById(tabname) != 'undefined') {
@@ -1189,7 +1194,7 @@ function addEvent(elm, evType, fn, useCapture)
     var r = elm.attachEvent("on"+evType, fn);
     return r;
   } else {
-    alert("Handler could not be removed");
+ 	return false;	//formerly: alert("Handler could not be removed");
   }
 }
 
@@ -1709,3 +1714,14 @@ function pollsToggleQuickOptions()
 	else $( 'tikiPollsQuickOptions' ).setStyle( 'display', 'none' );
 }
 
+/**
+* toggles div for droplist with Disabled option
+*/
+
+function hidedisabled(divid,value) {
+	if(value=='disabled') {
+	document.getElementById(divid).style.display = 'none';
+	} else {
+	document.getElementById(divid).style.display = 'block';
+	}
+}

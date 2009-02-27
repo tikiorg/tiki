@@ -52,9 +52,9 @@
 
 {if !empty($tracker_info.description)}
 	{if $tracker_info.descriptionIsParsed eq 'y' }
-		<div class="wikitext">{wiki}{$tracker_info.description}{/wiki}</div>
+		<div class="description">{wiki}{$tracker_info.description}{/wiki}</div>
 	{else}
-		<div class="wikitext">{$tracker_info.description|escape|nl2br}</div>
+		<div class="description">{$tracker_info.description|escape|nl2br}</div>
 	{/if}
 {/if}
 
@@ -78,7 +78,7 @@
 {cycle name=tabs values="1,2,3,4" print=false advance=false reset=true}
 <div class="tabs">
 {if $tiki_p_view_trackers eq 'y' or ($tracker_info.writerCanModify eq 'y' and $user)}
-<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Tracker Items for{/tr} <i>{$tracker_info.name}</i></a></span>
+<span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Tracker Items{/tr}</a></span>
 {/if}
 {if $tiki_p_create_tracker_items eq 'y'}
 <span id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark"><a href="javascript:tikitabs({cycle name=tabs},4);">{tr}Insert New Item{/tr}</a></span>
@@ -123,7 +123,7 @@ document.write("<input name=\"switcher\" id=\"clickall2\" title=\"{tr}Select All
 {foreach from=$fields key=ix item=field_value}
 {if ( $field_value.type eq 's' and ($field_value.name eq "Rating" or $field_value.name eq tra("Rating")) and $field_value.isTblVisible eq 'y' ) || ( $field_value.isTblVisible eq 'y' and $field_value.type ne 'x' and $field_value.type ne 'h' and ($field_value.isHidden eq 'n' or $field_value.isHidden eq 'p' or $tiki_p_admin_trackers eq 'y') ) and ($field_value.type ne 'p' or $field_value.options_array[0] ne 'password') and (empty($field_value.visibleBy) or in_array($default_group, $field_value.visibleBy) or $tiki_p_admin_trackers eq 'y') }
 	<th class="auto">
-		{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='f_'|cat:$field_value.fieldId}{$field_value.name|truncate:255:"..."|default:"&nbsp;"}{/self_link}
+		{self_link _sort_arg='sort_mode' _sort_field='f_'|cat:$field_value.fieldId}{$field_value.name|truncate:255:"..."|default:"&nbsp;"}{/self_link}
 	</th>
 	{if $field_value.type eq 's' and ($field_value.name eq "Rating" or $field_value.name eq tra("Rating"))}
 		{assign var=rateFieldId value=$field_value.fieldId}
@@ -255,9 +255,8 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
 <input type="hidden" name="trackerId" value="{$trackerId|escape}" />
 
 <h2>{tr}Insert New Item{/tr}</h2>
+{remarksbox type="note"}{tr}Fields marked with a * are mandatory.{/tr}{/remarksbox}
 <table class="normal">
-<tr class="formcolor"><td  class="formlabel">&nbsp;</td><td colspan="3" class="formcontent">
-<input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 
 {if $tracker_info.showStatus eq 'y' and ($tracker_info.showStatusAdminOnly ne 'y' or $tiki_p_admin_trackers eq 'y')}
 <tr class="formcolor"><td>{tr}Status{/tr}</td>
@@ -467,8 +466,7 @@ document.write('<div  class="categSelectAll"><input type="checkbox" id="clickall
 
 {* -------------------- Google Map -------------------- *}
 {elseif $field_value.type eq 'G'}
-<input type="text" name="{$field_value.ins_id}" value="{$field_value.value}" />
-<br />{tr}Format : x,y,zoom - You can use Google Map Locator in the item view script.{/tr}
+{include file='tracker_item_field_input.tpl'}
 
 {* -------------------- country selector -------------------- *}
 {elseif $field_value.type eq 'y'}
@@ -499,7 +497,7 @@ document.write('<div  class="categSelectAll"><input type="checkbox" id="clickall
 
 {* -------------------- antibot code -------------------- *}
 {if $prefs.feature_antibot eq 'y' && $user eq ''}
-{include file="antibot.tpl"}
+{include file="antibot.tpl" tr_style="formcolor"}
 {/if}
 
 {if $groupforalert ne ''}
@@ -520,11 +518,17 @@ document.write('<div  class="categSelectAll"><input type="checkbox" id="clickall
 {/if}
 
 
-<tr class="formcolor"><td class="formlabel">&nbsp;</td><td colspan="3" class="formcontent">
-<input type="submit" name="save" value="{tr}Save{/tr}" /> <input type="checkbox" name="viewitem"/> {tr}View inserted item{/tr}</td></tr>
+<tr class="formcolor">
+	<td class="formlabel">&nbsp;</td>
+	<td colspan="3" class="formcontent">
+		<input type="submit" name="save" value="{tr}Save{/tr}" /> 
+		<input type="radio" name="viewitem" value="view" /> {tr}View inserted item{/tr}
+		{* --------------------------- to continue inserting items after saving --------- *}
+		<input type="radio" name="viewitem" value="new" /> {tr}Insert new item{/tr}
+	</td>
+</tr>
 </table>
 </form>
-<br /><em>{tr}Fields marked with a * are mandatory.{/tr}</em>
 </div>
 {/if}
 

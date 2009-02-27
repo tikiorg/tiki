@@ -87,7 +87,7 @@ if ( ( $galleryId != 0 || $tiki_p_list_file_galleries != 'y' ) && ($galleryId ==
 $smarty->assign('fname', '');
 $smarty->assign('fdescription', '');
 $smarty->assign('max_desc', 1024);
-$smarty->assign('maxRows', 10);
+$smarty->assign('maxRows', $maxRecords);
 $smarty->assign('edited', 'n');
 $smarty->assign('edit_mode', 'n');
 $smarty->assign('dup_mode', 'n');

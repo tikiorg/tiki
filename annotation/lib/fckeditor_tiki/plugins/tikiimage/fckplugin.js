@@ -1,4 +1,4 @@
-﻿/* 
+/* 
  *  FCKPlugin.js
  *  ------------
  *  This is a generic file which is needed for plugins that are developed
@@ -40,16 +40,26 @@ FCKTikiImages.SetupImage  = function( img, sSrc, sHeight, sWidth, sLink, sAlign,
 	if ( sWidth ) img.width = sWidth ;
 	if ( sAlign ) img.align = sAlign ;
 	if ( sAlt ) img.alt = sAlt ;
-	var reg = new RegExp ("(img/wiki_up/)("+_TikiDomain+"/)?(.*)","gi");
-	if (sSrc.match('https?://'))
-		img.src = sSrc;
-	else
-		img.src = sSrc.replace(reg,'$1'+_TikiDomain+'/$3') ;
+	img.src = FCKTikiImages._AdaptUrl(sSrc);
 	img._tikiimage = true ;
 	img.onresizestart = function() {
 		FCK.EditorWindow.event.returnValue = false ;
 		return false ;
 	}
+}
+FCKTikiImages._AdaptUrl = function ( sSrc) {
+	var reg =  new RegExp ("\"","gi");
+	sSrc = sSrc.replace(reg, '');// {img src="show_image.php?id=1"}
+	if (sSrc.match('https?:\/\/')) {
+		src = sSrc;
+	} else if (sSrc.indexOf(_TikiRoot) == -1 && sSrc.match('\.php\?')) {//case {img src=tiki-download_file.php?fileId=1}
+		src = _TikiRoot+sSrc; // need the tikiroot as fck in working in an iframe
+	} else {
+		src = sSrc;
+	}
+	var reg = new RegExp ("(img/wiki_up/)("+_TikiDomain+"/)?(.*)","gi");
+	src = src.replace(reg,'$1'+_TikiDomain+'/$3');
+	return src;
 }
 
 FCKTikiImages._SetupClickListener = function() {
@@ -100,7 +110,7 @@ if ( FCKBrowserInfo.IsIE ) {
 						var lParam = sImg[j].substring(0, equalindex);
 						var lValue = sImg[j].substring(equalindex+1);
 						if ( lParam == 'src') {
-							sSrc = lValue ;
+							sSrc = FCKTikiImages._AdaptUrl(lValue);
 						} else if ( lParam == 'height' ) {
 							sHeight = lValue ;
 						} else if ( lParam == 'width' ) {
@@ -114,12 +124,11 @@ if ( FCKBrowserInfo.IsIE ) {
 				}
 				if ( sSrc ) {
 					var extra = '' ;
-					var reg = new RegExp ("(img/wiki_up/)("+_TikiDomain+"/)?(.*)","gi");
 					if ( sHeight ) extra = extra + ' height="' + sHeight + '"' ;
 					if ( sWidth ) extra = extra + ' width="' + sWidth + '"' ;
 					if ( sClass ) extra = extra + ' class="' + sClass + '"' ;
 					if ( sAlign ) extra = extra + ' align="' + sAlign + '"' ;
-					oRange.pasteHTML( '<img src="' + sSrc.replace(reg,'$1'+_TikiDomain+'/$3') + '" ' + extra + 'contenteditable="false" _tikiimage="true" />' );
+					oRange.pasteHTML( '<img src="' + sSrc + '" ' + extra + 'contenteditable="false" _tikiimage="true" />' );
 				}
 			}
 		}
@@ -147,17 +156,13 @@ if ( FCKBrowserInfo.IsIE ) {
 						var sAlt = '' ;
 						var sUsemap = '' ;
 						var sClass = '' ;
-						var reg = new RegExp ("(img/wiki_up/)("+_TikiDomain+"/)?(.*)","gi");
 						for ( var j = 0 ; j < sImg.length ; j++ ) {
 							var equalindex=sImg[j].indexOf( '=' );
 							if ( equalindex != -1 ) {
 								var lParam = sImg[j].substring(0, equalindex);
 								var lValue = sImg[j].substring(equalindex+1);
 								if ( lParam == 'src') {
-									if (!lValue.match('https?://'))
-										sSrc = lValue.replace(reg,'$1'+_TikiDomain+'/$3') ;
-									else
-										sSrc = lValue;
+									sSrc = FCKTikiImages._AdaptUrl(lValue);
 								} else if ( lParam == 'height' ) {
 									sHeight = lValue ;
 								} else if ( lParam == 'width' ) {

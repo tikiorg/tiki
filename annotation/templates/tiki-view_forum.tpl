@@ -3,7 +3,7 @@
 {title help="forums" admpage="forums"}{$forum_info.name}{/title}
 
 {if $forum_info.show_description eq 'y'}
-	<div class="description">{$forum_info.description}</div>
+	<div class="description">{$forum_info.description|nl2br}</div>
 	<br />
 {/if}
 
@@ -72,30 +72,29 @@
 					{/if}
 				</div>
 
-				{if $prefs.feature_forum_content_search eq 'y' and $prefs.feature_search eq 'y'}
-					<form class="forms" method="get" action="{if $prefs.feature_forum_local_tiki_search eq 'y'}tiki-searchindex.php{else}tiki-searchresults.php{/if}">
-						<input name="highlight" size="30" type="text" />
-						<input type="hidden" name="where" value="forums" />
-						<input type="hidden" name="forumId" value="{$forum_info.forumId}" />
-						<input type="submit" class="wikiaction" name="search" value="{tr}Find{/tr}"/>
-					</form>
-				{/if}
 			</td>
 		</tr>
 	</table>
 </div>
 
-<a class="link" href="tiki-forums.php">{tr}Forums{/tr}</a> {$prefs.site_crumb_seper} <a class="link" href="tiki-view_forum.php?forumId={$forumId}">{$forum_info.name}</a>
-
-<br />
-
 {if $unread > 0}
 	<a class='link' href='messu-mailbox.php'>{tr}You have {$unread} unread private messages{/tr}<br /></a>
 {/if}
 
-{if $was_queued eq 'y'}
-	{remarksbox type="warning" title="{tr}Information{/tr}" icon="information"}
-		{tr}Your message has been queued for approval, the message will be posted after a moderator approves it.{/tr}
+{if !empty($errors)}
+	{remarksbox type="warning" title="{tr}Errors{/tr}"}
+		{foreach from=$errors item=error name=error}
+			{if !$smarty.foreach.error.first}<br />{/if}
+			{$error|escape}
+		{/foreach}
+	{/remarksbox}
+{/if}
+{if !empty($feedbacks)}
+	{remarksbox type="feddback"}
+		{foreach from=$feedbacks item=feedback name=feedback}
+			{$feedback|escape}
+			{if !$smarty.foreach.feedback.first}<br />{/if}
+		{/foreach}
 	{/remarksbox}
 {/if}
 
@@ -128,26 +127,6 @@
 		</div>
 	{/if}
 
-	{if $warning eq 'y'}
-		<br /><br />
-		<div class="simplebox highlight">
-			{icon _id=exclamation alt="{tr}Error{/tr}" style="vertical-align:middle"} {tr}You have to enter a title and text{/tr}!
-		</div>
-		<br />
-	{/if}
-	{if $contribution_needed eq 'y'}
-		<br /><br />
-		<div class="simplebox highlight">
-			{icon _id=exclamation alt="{tr}Error{/tr}" style="vertical-align:middle"} {tr}A contribution is mandatory{/tr}
-		</div>
-		<br />
-	{/if}
-	{if $duplic eq 'y'}
-		<div class="simplebox highlight">
-			{icon _id=exclamation alt="{tr}Error{/tr}" style="vertical-align:middle"}{tr}Another post with the same title and content already exists.{/tr}<br />{tr}Please change your title or content then click Post.{/tr}
-		</div>
-		<br />
-	{/if}
 
 	<div id="forumpost" style="display:{if $comments_threadId > 0 or $openpost eq 'y' or $warning eq 'y' or $comment_title neq '' or $smarty.request.comments_previewComment neq ''}block{else}none{/if};">
 		{if $comments_threadId > 0}
@@ -237,7 +216,7 @@
 					<tr class="formcolor">
 						<td>{tr}Attach file{/tr}</td>
 						<td>
-							<input type="hidden" name="MAX_FILE_SIZE" value="{$forum_info.att_max_size|escape}" /><input name="userfile1" type="file" />
+							<input type="hidden" name="MAX_FILE_SIZE" value="{$forum_info.att_max_size|escape}" /><input name="userfile1" type="file" />{tr}Maximum size:{/tr} {$forum_info.att_max_size|kbsize}
 						</td>
 					</tr>
 				{/if}
@@ -247,7 +226,7 @@
 				{/if}
 
 				{if $prefs.feature_antibot eq 'y'}
-					{include file="antibot.tpl"}
+					{include file="antibot.tpl" tr_style="formcolor"}
 				{/if}
  
 				{if $prefs.feature_freetags eq 'y' and $tiki_p_freetags_tag eq 'y'}
@@ -264,6 +243,12 @@
 							<input type="radio" name="set_thread_watch" value="n" id="thread_watch_no" />
 							<label for="thread_watch_no">{tr}Don't send me any e-mails{/tr}</label>
 						</td>
+					</tr>
+				{/if}
+				{if empty($user) && $prefs.feature_user_watches eq 'y'}
+					<tr>
+						<td><label for="anonymous_email">{tr}If you would like to be notified when someone replies to this topic<br />please tell us your e-mail address{/tr}:</label></td>
+						<td><input type="text" size="30" id="anonymous_email" name="anonymous_email" /></td>
 					</tr>
 				{/if}
 
@@ -296,6 +281,17 @@
 	</div> <!-- end forumpost -->
 
 	<br />
+{/if}
+
+{if $prefs.feature_forum_content_search eq 'y' and $prefs.feature_search eq 'y'}
+	<div class="findtable">
+		<form class="forms" method="get" action="{if $prefs.feature_forum_local_tiki_search eq 'y'}tiki-searchindex.php{else}tiki-searchresults.php{/if}">
+				<input name="highlight" size="30" type="text" />
+				<input type="hidden" name="where" value="forums" />
+				<input type="hidden" name="forumId" value="{$forum_info.forumId}" />
+				<input type="submit" class="wikiaction" name="search" value="{tr}Find{/tr}"/>
+		</form>
+	</div>
 {/if}
 
 <form method="post" action="tiki-view_forum.php">
@@ -386,6 +382,8 @@
 			{if $forum_info.topics_list_author eq 'y'}
 				<th>{self_link _sort_arg='thread_sort_mode' _sort_field='userName'}{tr}Author{/tr}{/self_link}</th>
 			{/if}
+				
+			<th>{tr}Actions{/tr}</th>
 		</tr>
 		
 		{cycle values="odd,even" print=false}
@@ -429,43 +427,14 @@
 				{/if}
 
 				<td class="{cycle advance=false}">
-					<table width="100%">
-						<tr>
-							<td>
-								<a {if $comments_coms[ix].is_marked}class="forumnameread"{else}class="forumname"{/if} href="tiki-view_forum_thread.php?comments_parentId={$comments_coms[ix].threadId}{if $comments_threshold}&amp;topics_threshold={$comments_threshold}{/if}{if $comments_offset or $smarty.section.ix.index}&amp;topics_offset={math equation="x + y" x=$comments_offset y=$smarty.section.ix.index}{/if}{if $thread_sort_mode ne 'commentDate_desc'}&amp;topics_sort_mode={$thread_sort_mode}{/if}{if $topics_find}&amp;topics_find={$comments_find}{/if}&amp;forumId={$forum_info.forumId}">{$comments_coms[ix].title}</a>
-								{if $forum_info.topic_summary eq 'y'}
-									<br />
-									<small>{$comments_coms[ix].summary|truncate:240:"...":true}</small>
-								{/if}
-							</td>
+					<a {if $comments_coms[ix].is_marked}class="forumnameread"{else}class="forumname"{/if} href="tiki-view_forum_thread.php?comments_parentId={$comments_coms[ix].threadId}{if $comments_threshold}&amp;topics_threshold={$comments_threshold}{/if}{if $comments_offset or $smarty.section.ix.index}&amp;topics_offset={math equation="x + y" x=$comments_offset y=$smarty.section.ix.index}{/if}{if $thread_sort_mode ne 'commentDate_desc'}&amp;topics_sort_mode={$thread_sort_mode}{/if}{if $topics_find}&amp;topics_find={$comments_find}{/if}&amp;forumId={$forum_info.forumId}">{$comments_coms[ix].title}</a>
+					{if $forum_info.topic_summary eq 'y'}
+						<div class="subcomment">
+							{$comments_coms[ix].summary|truncate:240:"...":true}
+						</div>
+					{/if}
+				</td>
 
-							<td style="text-align:right;" nowrap="nowrap">
-								{if count($comments_coms[ix].attachments) or $tiki_p_admin_forum eq 'y'}
-									{if count($comments_coms[ix].attachments)}
-										<img src='img/icons/attachment.gif' alt='attachments' />
-									{/if}
-								{else}
-									&nbsp;
-								{/if}
-
-								{if $tiki_p_admin_forum eq 'y' or ($comments_coms[ix].userName == $user && $tiki_p_forum_post eq 'y') }
-									<a href="tiki-view_forum.php?openpost=1&amp;comments_threadId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}" class="admlink">{icon _id='page_edit'}</a>
-								{/if}
-
-								{if $prefs.feature_forum_topics_archiving eq 'y' && $tiki_p_admin_forum eq 'y'}
-									{if $comments_coms[ix].archived eq 'y'}
-										<a href="{$smarty.server.PHP_SELF}?{query archive="n" comments_parentId=$comments_coms[ix].threadId}" title="{tr}Unarchive{/tr}">{icon _id='package_go' alt='{tr}Unarchive{/tr}'}</a>
-									{else}
-										<a href="{$smarty.server.PHP_SELF}?{query archive="y" comments_parentId=$comments_coms[ix].threadId}" title="{tr}Archive{/tr}">{icon _id='package' alt='{tr}Archive{/tr}'}</a>
-									{/if}
-								{/if}
-
-								{if $tiki_p_admin_forum eq 'y' }
-									<a href="tiki-view_forum.php?comments_remove=1&amp;comments_threadId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}" class="admlink">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
-								{/if}
-							</td>
- 						</tr>
-					</table>
 				</td>
 				{if $forum_info.topics_list_replies eq 'y'}
 					<td style="text-align:right;" class="{cycle advance=false}">{$comments_coms[ix].replies}</td>
@@ -485,8 +454,34 @@
 					</td>
 				{/if}
 				{if $forum_info.topics_list_author eq 'y'}
-					<td class="{cycle}">{$comments_coms[ix].userName|userlink}</td>
+					<td class="{cycle advance=false}">{$comments_coms[ix].userName|userlink}</td>
 				{/if}
+				
+				<td style="text-align:right;" nowrap="nowrap" class="{cycle}">
+					{if count($comments_coms[ix].attachments) or $tiki_p_admin_forum eq 'y'}
+						{if count($comments_coms[ix].attachments)}
+							<img src='img/icons/attachment.gif' alt='attachments' />
+						{/if}
+					{else}
+						&nbsp;
+					{/if}
+
+					{if $tiki_p_admin_forum eq 'y' or ($comments_coms[ix].userName == $user && $tiki_p_forum_post eq 'y') }
+						<a href="tiki-view_forum.php?openpost=1&amp;comments_threadId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}" class="admlink">{icon _id='page_edit'}</a>
+					{/if}
+
+					{if $prefs.feature_forum_topics_archiving eq 'y' && $tiki_p_admin_forum eq 'y'}
+						{if $comments_coms[ix].archived eq 'y'}
+							<a href="{$smarty.server.PHP_SELF}?{query archive="n" comments_parentId=$comments_coms[ix].threadId}" title="{tr}Unarchive{/tr}">{icon _id='package_go' alt='{tr}Unarchive{/tr}'}</a>
+						{else}
+							<a href="{$smarty.server.PHP_SELF}?{query archive="y" comments_parentId=$comments_coms[ix].threadId}" title="{tr}Archive{/tr}">{icon _id='package' alt='{tr}Archive{/tr}'}</a>
+						{/if}
+					{/if}
+
+					{if $tiki_p_admin_forum eq 'y' }
+						<a href="tiki-view_forum.php?comments_remove=1&amp;comments_threadId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}" class="admlink">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
+					{/if}
+				</td>
 			</tr>
 		{sectionelse}
 			<tr>
@@ -525,26 +520,90 @@
 	<tr>
 		<td style="text-align:left;">
 			<form id='time_control' method="post" action="tiki-view_forum.php">
-				<input type="hidden" name="comments_offset" value="{$comments_offset|escape}" />
-				<input type="hidden" name="comments_threadId" value="{$comments_threadId|escape}" />
-				<input type="hidden" name="comments_threshold" value="{$comments_threshold|escape}" />
+				{if $comments_offset neq 0 }
+					<input type="hidden" name="comments_offset" value="{$comments_offset|escape}" />
+				{/if}
+				{if $comments_threadId neq 0 }
+					<input type="hidden" name="comments_threadId" value="{$comments_threadId|escape}" />
+				{/if}
+				{if $comments_threshold neq 0 }
+					<input type="hidden" name="comments_threshold" value="{$comments_threshold|escape}" />
+				{/if}
 				<input type="hidden" name="thread_sort_mode" value="{$thread_sort_mode|escape}" />
 				<input type="hidden" name="forumId" value="{$forumId|escape}" />
-				<small>{tr}Show posts{/tr}:</small>
-				<select name="time_control" onchange="javascript:document.getElementById('time_control').submit();">
-					<option value="" {if $smarty.request.time_control eq ''}selected="selected"{/if}>{tr}All posts{/tr}</option>
-					<option value="3600" {if $smarty.request.time_control eq 3600}selected="selected"{/if}>{tr}Last hour{/tr}</option>
-					<option value="86400" {if $smarty.request.time_control eq 86400}selected="selected"{/if}>{tr}Last 24 hours{/tr}</option>
-					<option value="172800" {if $smarty.request.time_control eq 172800}selected="selected"{/if}>{tr}Last 48 hours{/tr}</option>
-				</select>
+				<table>
+					<tr>
+						<th>
+							<label for="filter_time">{tr}Last post date{/tr}</label>
+						</th>
+						<td>
+							<select id="filter_time" name="time_control">
+							<option value="" {if $smarty.request.time_control eq ''}selected="selected"{/if}>{tr}All posts{/tr}</option>
+							<option value="3600" {if $smarty.request.time_control eq 3600}selected="selected"{/if}>{tr}Last hour{/tr}</option>
+							<option value="86400" {if $smarty.request.time_control eq 86400}selected="selected"{/if}>{tr}Last 24 hours{/tr}</option>
+							<option value="172800" {if $smarty.request.time_control eq 172800}selected="selected"{/if}>{tr}Last 48 hours{/tr}</option>
+							</select>
+						</td>
+					</tr>
 				{if $prefs.feature_forum_topics_archiving eq 'y'}
-					<input style="margin-left:20px" type="checkbox" id="show_archived" name="show_archived" {if $show_archived eq 'y' }checked="checked"{/if} onchange="javascript:document.getElementById('time_control').submit();" />
-					<label for="show_archived"><small>{tr}Show archived posts{/tr}</small></label>
+					<tr>
+						<th>
+							<label for="show_archived">{tr}Show archived posts{/tr}</label>
+						</th>
+						<td>
+							<input style="margin-left:20px" type="checkbox" id="show_archived" name="show_archived" {if $show_archived eq 'y' }checked="checked"{/if} />
+						</td>
+					</tr>
 				{/if}
+				{if $user}
+					<tr>
+						<th>
+							<label for="filter_poster">{tr}Containing posts by{/tr}</label>
+						</th>
+						<td>
+							<select id="filter_poster" name="poster">
+							<option value="" {if $smarty.request.poster eq ''}selected="selected"{/if}>{tr}All posts{/tr}</option>
+							<option value="_me" {if $smarty.request.poster eq '_me'}selected="selected"{/if}>{tr}Me{/tr}</option>
+							</select>
+						</td>
+					</tr>
+				{/if}				
+				<tr>
+					<th>
+						<label for="filter_type">{tr}Type{/tr}</label>
+					</th>
+					<td>
+						<select id="filter_type" name="filter_type">
+						<option value="" {if empty($smarty.request.filter_type)}selected="selected"{/if}>{tr}All posts{/tr}</option>
+						<option value="n" {if $smarty.request.filter_type eq 'n'}selected="selected"{/if}>{tr}normal{/tr}</option>
+						<option value="a" {if $smarty.request.filter_type eq 'a'}selected="selected"{/if}>{tr}announce{/tr}</option>
+						<option value="h" {if $smarty.request.filter_type eq 'h'}selected="selected"{/if}>{tr}hot{/tr}</option>
+						<option value="s" {if $smarty.request.filter_type eq 's'}selected="selected"{/if}>{tr}sticky{/tr}</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<th>
+						<label for="filter_replies">{tr}Replies{/tr}</label>
+					</th>
+					<td>
+						<select id="filter_replies" name="reply_state">
+						<option value="" {if $smarty.request.reply_state eq ''}selected="selected"{/if}>{tr}All posts{/tr}</option>
+						<option value="none" {if $smarty.request.reply_state eq 'none'}selected="selected"{/if}>{tr}Posts with no replies{/tr}</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td>
+						<input type="submit" id="filter_submit" value="{tr}Filter{/tr}" />
+					</td>
+				</tr>
+				</table>
 			</form>
 		</td>
 		<td style="text-align:right;">
-			{if $prefs.feature_forum_quickjump eq 'y'}
+			{if $prefs.feature_forum_quickjump eq 'y' and count($all_forums) > 1}
 				<form id='quick' method="post" action="tiki-view_forum.php">
 					<small>{tr}Jump to forum{/tr}:</small>
 					<select name="forumId" onchange="javascript:document.getElementById('quick').submit();">

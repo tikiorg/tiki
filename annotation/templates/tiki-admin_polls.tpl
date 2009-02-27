@@ -12,27 +12,16 @@
 <form action="tiki-admin_polls.php" method="post">
 <input type="hidden" name="pollId" value="{$pollId|escape}" />
 <table class="normal">
-<tr><td class="formcolor">{tr}Title{/tr}:</td><td class="formcolor"><input type="text" name="title" value="{$title|escape}" /></td></tr>
+<tr><td class="formcolor">{tr}Title{/tr}:</td><td class="formcolor"><input type="text" name="title" value="{$info.title|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Active{/tr}:</td><td class="formcolor">
 <select name="active">
-<option value='a' {if $active eq 'a'}selected="selected"{/if}>{tr}active{/tr}</option>
-<option value='c' {if $active eq 'c'}selected="selected"{/if}>{tr}current{/tr}</option>
-<option value='x' {if $active eq 'x'}selected="selected"{/if}>{tr}closed{/tr}</option>
-<option value='t' {if $active eq 't'}selected="selected"{/if} style="border-top:1px solid black;">{tr}template{/tr}</option>
-<option value='o' {if $active eq 'o'}selected="selected"{/if}>{tr}object{/tr}</option>
+<option value='a' {if $info.active eq 'a'}selected="selected"{/if}>{tr}active{/tr}</option>
+<option value='c' {if $info.active eq 'c'}selected="selected"{/if}>{tr}current{/tr}</option>
+<option value='x' {if $info.active eq 'x'}selected="selected"{/if}>{tr}closed{/tr}</option>
+<option value='t' {if $info.active eq 't'}selected="selected"{/if} style="border-top:1px solid black;">{tr}template{/tr}</option>
+<option value='o' {if $info.active eq 'o'}selected="selected"{/if}>{tr}object{/tr}</option>
 </select>
 </td></tr>
-<tr>
-<td class="formcolor">{tr}Authencity:{/tr}</td>
-<td>
-<select name="anonym">
-<option value='u' {if $anonym eq 'u'}selected="selected"{/if}>{tr}user{/tr}</option>
-<option value='a' {if $anonym eq 'a'}selected="selected"{/if}>{tr}anonym{/tr}</option>
-<option value='i' {if $anonym eq 'i'}selected="selected"{/if}>{tr}ip {/tr}</option>
-<option value='c' {if $anonym eq 'c'}selected="selected"{/if}>{tr}cookie {/tr}</option>
-</select>
-</td>
-</tr>
 <tr>
 <td class="formcolor">{tr}Options:{/tr}</td>
 <td>
@@ -53,8 +42,12 @@
 </tr>
 {include file=categorize.tpl}
 <tr><td class="formcolor">{tr}PublishDate{/tr}:</td><td class="formcolor">
-{html_select_date time=$publishDate end_year="+1" field_order=$prefs.display_field_order} {tr}at{/tr} {html_select_time time=$publishDate display_seconds=false}
+{html_select_date time=$info.publishDate end_year="+1" field_order=$prefs.display_field_order} {tr}at{/tr} {html_select_time time=$info.publishDate display_seconds=false}
 </td></tr>
+<tr>
+	<td><label id="voteConsiderationSpan">{tr}Votes older than these days are no more considered{/tr}</label></td>
+	<td><input type="text" id="voteConsiderationSpan" name="voteConsiderationSpan" size="5" value="{$info.voteConsiderationSpan|escape}"/><br /><i>{tr}0 for no limit{/tr}</i></td>
+</tr>
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
 </form>
@@ -65,13 +58,14 @@
 {/if}
 <table class="normal">
 <tr>
-<th><a href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'pollId_desc'}pollId_asc{else}pollId_desc{/if}">{tr}ID{/tr}</a></th>
-<th><a href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}Title{/tr}</a></th>
+<th>{self_link _sort_arg='sort_mode' _sort_field='pollId' title="{tr}ID{/tr}"}{tr}ID{/tr}{/self_link}</th>
+<th>{self_link _sort_arg='sort_mode' _sort_field='title' title="{tr}Title{/tr}"}{tr}Title{/tr}{/self_link}</th>
 {if $prefs.poll_list_categories eq 'y'}<th>{tr}Categories{/tr}</th>{/if}
 {if $prefs.poll_list_objects eq 'y'}<th>{tr}Objects{/tr}</th>{/if}
-<th><a href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'active_desc'}active_asc{else}active_desc{/if}">{tr}Active{/tr}</a></th>
-<th><a href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'votes_desc'}votes_asc{else}votes_desc{/if}">{tr}Votes{/tr}</a></th>
-<th><a href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'publishDate_desc'}publishDate_asc{else}publishDate_desc{/if}">{tr}Publish{/tr}</a></th>
+<th>{self_link _sort_arg='sort_mode' _sort_field='active' title="{tr}Active{/tr}"}{tr}Active{/tr}{/self_link}</th>
+<th>{self_link _sort_arg='sort_mode' _sort_field='votes' title="{tr}Votes{/tr}"}{tr}Votes{/tr}{/self_link}</th>
+<th>{self_link _sort_arg='sort_mode' _sort_field='publishDate' title="{tr}Publish{/tr}"}{tr}Publish{/tr}{/self_link}</th>
+<th>{self_link _sort_arg='sort_mode' _sort_field='voteConsiderationSpan' title="{tr}Span{/tr}"}{tr}Span{/tr}{/self_link}</th>
 <th>{tr}Options{/tr}</th>
 <th>{tr}Action{/tr}</th>
 </tr>
@@ -86,11 +80,13 @@
 <td class="{cycle advance=false}">{$channels[user].active}</td>
 <td class="{cycle advance=false}">{$channels[user].votes}</td>
 <td class="{cycle advance=false}">{$channels[user].publishDate|tiki_short_datetime}</td>
+<td class="{cycle advance=false}">{$channels[user].voteConsiderationSpan|escape}</td>
 <td class="{cycle advance=false}">{$channels[user].options}</td>
 <td class="{cycle}">
-   <a class="link" href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].pollId}" title="{tr}Delete{/tr}">{icon _id=cross alt="{tr}Delete{/tr}"}</a>
-   <a class="link" href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;pollId={$channels[user].pollId}" title="{tr}Edit{/tr}">{icon _id=page_edit}</a>
+   {self_link pollId=$channels[user].pollId}{icon _id=page_edit}{/self_link}
    <a class="link" href="tiki-admin_poll_options.php?pollId={$channels[user].pollId}" title="{tr}Options{/tr}">{icon _id=table alt="{tr}Options{/tr}"}</a>
+   <a class="link" href="tiki-poll_results.php?pollId={$channels[user].pollId}">{icon _id="chart_curve" alt="{tr}Results{/tr}"}</a>
+   <a class="link" href="tiki-admin_polls.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;remove={$channels[user].pollId}" title="{tr}Delete{/tr}">{icon _id=cross alt="{tr}Delete{/tr}"}</a>
 </td>
 </tr>
 {sectionelse}
