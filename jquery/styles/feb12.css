@@ -523,7 +523,8 @@ a.flip img {display: none}
 
 .treemenudiv {
 	display: block;
-	white-space: nowrap}
+	white-space: nowrap:
+	background: #a8cce2;}
 
 .box-data table {width: 100%}
 * html .box-data table {width: 95%}
@@ -534,25 +535,28 @@ a.phplm:link,
 a.phplm:visited,
 a.phplm:hover,
 a.phplm:active {
-	font: 100% Verdana, Tahoma, Arial, sans-serif;
-	color: #303030;
+	font: 1em 'Trebuchet MS', sans-serif;
+	color: #794a93;
 	text-decoration: none;
-	font-weight: bold}
+	font-weight: normal}
 
-a.phplm:visited {color: #726461}
-a.phplm:hover {color: #808080}
-a.phplm:active {color: #ff0000}
+a.phplm:visited {color: #794a93}
+a.phplm:hover,
+a.phplm:active {
+	color: #006699;
+	text-decoration: underline;
+	background: none}
 
 a.phplmselected:link,
 a.phplmselected:visited,
 a.phplmselected:hover,
 a.phplmselected:active {
-	font: 100% Verdana, Tahoma, Arial, sans-serif;
-	color: black;
+	font-family: 'Trebuchet MS', sans-serif;
+	color: #794a93;
 	text-decoration: underline;
-	font-weight: bold}
+	font-weight: normal}
 
-a.phplmselected:hover {color: #808080}
+a.phplmselected:hover {color: #006699}
 
 .imgs	{
 	border: 0;

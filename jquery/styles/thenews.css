@@ -638,7 +638,7 @@ div#tiki-bot {}
 .treemenudiv {
 	display: block;
 	white-space: nowrap;
-}
+	background: #fff}
 
 .phplmnormal,
 a.phplmnormal:hover,
@@ -646,36 +646,42 @@ a.phplm:link,
 a.phplm:visited,
 a.phplm:hover,
 a.phplm:active {
-	font: 100% Verdana, Tahoma, Arial, sans-serif;
-	color: #303030;
+	font-family: Georgia, serif;;
+	color: #005faa;
 	text-decoration: none;
-	font-weight: bold;
+	font-weight: normal;
 }
 
 a.phplm:visited {
-	color: #726461;
+	color: #005faa;
 }
 
 a.phplm:hover {
-	color: #808080;
+	color: #005faa;
+	text-decoration: underline;
+	background: none;
 }
 
 a.phplm:active {
-	color: #ff0000;
+	color: #005faa;
+	font-weight: normal;
 }
 
 a.phplmselected:link,
 a.phplmselected:visited,
 a.phplmselected:hover,
 a.phplmselected:active {
-	font: 100% Verdana, Tahoma, Arial, sans-serif;
-	color: black;
-	text-decoration: underline;
-	font-weight: bold;
+	font: 100% Georgia, serif;;
+	color: #005faa;
+	text-decoration: none;
+	font-weight: normal;
+	background: none;
+	font-style: italic;
 }
 
 a.phplmselected:hover {
-	color: #808080;
+	color: #005faa;
+	text-decoration: underline;
 }
 
 /* cssmenus.css overrides (page controls and menus) */
@@ -696,6 +702,10 @@ a.phplmselected:hover {
 }
 
 * html div.box-CSS_menu ul {margin-left: 0}
+
+.cssmenu li ul,
+.cssmenu_horiz li ul,
+.cssmenu_vert li ul {border: 1px solid #D3D3D3}
 
 .cssmenu_vert li ul {margin-left: 9em !important}
 
@@ -899,7 +909,7 @@ a.flipmodtitle:hover img {border: 1px solid #AAAAAA !important}
 
 .box-data ul li {list-style: square}
 .cssmenu li, .cssmenu_horiz li, .cssmenu_vert li {list-style: none !important}
-
+.box-data ul.cssmenu_vert {padding: 0}
 .box-since_last_visit_new div.box-data div {
 text-align: left !important}
 
@@ -1392,11 +1402,15 @@ div.code {
 
 /* Quote plugin */
 div.quoteheader {
-	margin-left: 20px;
+	margin-left: 30px;
+	
 }
 
 div.quotebody {
+	margin: 0 15px 10px 30px;
 	font-style: italic;
+	border-left: 5px solid #D3D3D3;
+	padding-left: 6px
 }
 
 table.wikiplugin-split {
@@ -2371,6 +2385,12 @@ div.minichatchans {overflow: auto !important}
 div.minichatdiv {
   font-size: .9em;
   overflow: auto !important}
+
+body.tiki_mytiki #tiki-center form {border: 1px solid #aaa}
+  
+body.tiki_mytiki #tiki-center form table.normal {
+	border: 0;
+margin: 10px}
  
 /* end of css file */
 

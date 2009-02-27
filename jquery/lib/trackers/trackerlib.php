@@ -841,7 +841,9 @@ class TrackerLib extends TikiLib {
 				foreach ($matches as $k=>$match) {
 					if (!$k) continue;
 					if ($listfields[$match]['type'] == 'f' || $listfields[$match]['type'] == 'j') {
-						$fopt['type'] = 'f';
+						if (!$fil[$match])
+							$fopt['value'] = '';
+						$fopt['computedtype'] = 'f';
 						$fopt['options_array'] = $listfields[$match]['options_array'];
 						break;
 					}
@@ -1446,7 +1448,7 @@ class TrackerLib extends TikiLib {
 		require_once('lib/cache/cachelib.php');
 		$cachelib->invalidate('trackerItemLabel'.$itemId);
 
-		if ( isset($tracker_info['autoCreateCategories']) && $tacker_info['autoCreateCategories'] == 'y' && $prefs['feature_categories'] == 'y' ) {
+		if ( isset($tracker_info['autoCreateCategories']) && $tracker_info['autoCreateCategories'] == 'y' && $prefs['feature_categories'] == 'y' ) {
 			$tracker_item_desc = $this->get_isMain_value($trackerId, $itemId);
 
 			// Verify that parentCat exists Or Create It
