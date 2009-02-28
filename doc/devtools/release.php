@@ -29,6 +29,11 @@ list( $script, $version, $subrelease ) = $_SERVER['argv'];
 if( ! preg_match( "/^\d+\.\d+$/", $version ) )
 	die( "Version number should be in X.X format.\n" );
 
+print "\nChecking syntax of all PHP files\n";
+$error_msg = '';
+$dir = '.';
+check_php_syntax( $dir, $error_msg ) or die( $error_msg );
+
 $isPre = strpos( $subrelease, 'pre' ) === 0;
 
 if( $isPre )
@@ -107,7 +112,7 @@ function md5_check_dir($root,$dir,$fp,$version) { // save all files in $result
   while (false !== ($e = $d->read())) {
     $entry=$dir.'/'.$e;
     if(is_dir($entry)) {
-      if($e != '..' && $e != '.' && $e != 'CVS' && $e != '.svn' && $entry!='./templates_c') { // do not descend and no CVS files
+      if($e != '..' && $e != '.' && $e != 'CVS' && $e != '.svn' && $entry!='./templates_c') { // do not descend and no CVS/Subversion files
         md5_check_dir($root,$entry,$fp,$version);
       }
     } else {
@@ -123,4 +128,31 @@ function md5_check_dir($root,$dir,$fp,$version) { // save all files in $result
   $d->close();
 }
 
-?>
+function check_php_syntax(&$dir, &$error_msg) {
+  print ".";
+  $d = dir($dir);
+
+  while (false !== ($e = $d->read())) {
+    $entry = $dir.'/'.$e;
+    if(is_dir($entry)) {
+      if($e != '..' && $e != '.' && $e != 'CVS' && $e != '.svn' && $entry!='./templates_c') { // do not descend and no CVS/Subversion files
+        if ( ! check_php_syntax($entry, $error_msg) ) return false;
+      }
+    } else {
+       if ( substr($e,-4,4) == ".php" && realpath( $entry ) != __FILE__ ) {
+         $return_var = 0;
+         $output = null;
+	 exec("php -l $entry", $output, $return_var);
+         if ( $return_var !== 0 ) {
+           $error_msg = "\nParsing error in '$entry' ($return_var)\n";
+           return false;
+	 }
+       }
+    }
+  }
+
+  $d->close();
+  unset($return_var, $output, $entry, $d);
+
+  return true;
+}
