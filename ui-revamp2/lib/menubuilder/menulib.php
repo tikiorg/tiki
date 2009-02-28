@@ -60,7 +60,7 @@ class MenuLib extends TikiLib {
 			$this->empty_menu_cache($menuId);
 		} else {
 			// was: replace into. probably we need a delete here
-			$query = "insert into `tiki_menus` (`name`,`description`,`type`,`icon`,`use_items_icons`) values(?,?,?,?)";
+			$query = "insert into `tiki_menus` (`name`,`description`,`type`,`icon`,`use_items_icons`) values(?,?,?,?,?)";
 			$bindvars = array($name,$description,$type,$icon,$use_items_icons);
 		}
 
