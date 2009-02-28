@@ -12,6 +12,11 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
+if (version_compare(PHP_VERSION, '5.0.0', '<')) {
+  header("location: tiki-install.php");
+  exit;
+}
+
 require_once 'tiki-filter-base.php';
 
 // Enable Versioning
