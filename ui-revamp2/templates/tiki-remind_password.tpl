@@ -1,8 +1,5 @@
-{title}{tr}I forgot my password{/tr}{/title}
-
-<div class="navbar">
-	{button href=$prefs.tikiIndex _text="{tr}Return to HomePage{/tr}"}
-</div>
+{* $Id$ *}
+{title help='Registration' admpage='login'}{tr}I forgot my password{/tr}{/title}
 
 {if $showmsg ne 'n'}
   {if $showmsg eq 'e'}<span class="warn">{icon _id=exclamation alt="{tr}Error{/tr}" style="vertical-align:middle;align:left;"}{else}{icon _id=accept alt="{tr}OK{/tr}" style="vertical-align:middle;align:left;"} {/if} 
@@ -17,7 +14,7 @@
 
 {if $showfrm eq 'y'}
   <form action="tiki-remind_password.php" method="post">
-  <table class="normal">
+  <table class="form">
   {if $prefs.login_is_email ne 'y'}
   <tr>
     <td class="formcolor">{tr}Username{/tr}</td>

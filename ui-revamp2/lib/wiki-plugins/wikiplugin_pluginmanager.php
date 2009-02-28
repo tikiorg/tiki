@@ -38,7 +38,7 @@ function wikiplugin_pluginmanager_help() {
             return wikiplugin_pluginmanager_help();
         }
         function run($data, $params) {
-            global $wikilib, $helpurl;
+            global $wikilib, $helpurl, $tikilib;
             if (!is_dir(PLUGINS_DIR)) {
                 return $this->error("No plugins directory defined");
             }
@@ -51,19 +51,32 @@ function wikiplugin_pluginmanager_help() {
                 $sPlugin= $match[1];
                 include_once(PLUGINS_DIR.'/'.$sPluginFile);
                 // First, locate the new format ;)
+				$infoPlugin = $tikilib->plugin_info($sPlugin);
                 if (class_exists("WikiPlugin".$sPlugin)) {
                     $sClassName="WikiPlugin".$sPlugin;
                     $oClass=new $sClassName();
                     if (method_exists($oClass,'getName')) {
                         $sPlugin=$oClass->getName();
-                    }
-                    $aData[$sPlugin]["description"]=$this->processDescription($oClass->getDescription());
+                    } elseif (isset($infoPlugin['name'])) {
+						$sPlugin=$infoPlugin['name'];
+					}
+                    if (method_exists($oClass,'getDescription')) {
+						$aData[$sPlugin]["description"]=$this->processDescription($oClass->getDescription());
+					} elseif (isset($infoPlugin['description'])) {
+						$aData[$sPlugin]["description"]=$infoPlugin['description'];
+					} else {
+						$aData[$sPlugin]["description"]="---";
+					}
                     if (method_exists($oClass,'getVersion')) {
                         $aData[$sPlugin]["version"]=$oClass->getVersion();
                     } else {
                         $aData[$sPlugin]["version"]=" -- ";
                     }
-                    $aParams=$oClass->getDefaultArguments();
+                    if (method_exists($oClass,'getDefaultArguments')) {
+						$aParams=$oClass->getDefaultArguments();
+					} else {
+						$aParams=array();
+					}
                         $aData[$sPlugin]["arguments"]="";
                         foreach ($aParams as $arg => $default) {
                         if (stristr($default, ' ')) {

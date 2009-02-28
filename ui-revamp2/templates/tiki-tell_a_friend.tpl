@@ -74,7 +74,7 @@
       </td>
     </tr>
 	{if $prefs.feature_antibot eq 'y' && $user eq ''}
-		{include file="antibot.tpl"}
+		{include file="antibot.tpl" td_style="formcolor"}
 	{/if}
 
     

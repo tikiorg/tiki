@@ -215,6 +215,7 @@ static $mimetypes = array(
 //	"m3u" => "audio/mpegurl",
 	"m3u" => "audio/x-mpegurl",
 	"m4a" => "audio/mpeg",
+	"m4v" => "video/mpeg",
 	"maker" => "application/x-maker",
 	"man" => "application/x-troff-man",
 	"mcif" => "chemical/x-mmcif",

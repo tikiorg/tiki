@@ -626,10 +626,15 @@ if (isset($_REQUEST['import'])) {
 				$trackerId = $_REQUEST["trackerId"];
 				$trklib->replace_rating($trackerId,$itemid,$newItemRateField,$user,$newItemRate);
 			}
-			if(isset($_REQUEST["viewitem"])) {
+			if(isset($_REQUEST["viewitem"]) && $_REQUEST["viewitem"] == 'view' ) {
 				header('location: '.preg_replace('#[\r\n]+#', '',"tiki-view_tracker_item.php?trackerId=".$_REQUEST["trackerId"]."&itemId=".$itemid));
 				die;
-			}
+			}				
+			elseif(isset($_REQUEST["viewitem"]) && $_REQUEST["viewitem"] == 'new')
+			{
+				header('location: '.preg_replace('#[\r\n]+#', '',"tiki-view_tracker.php?trackerId=".$_REQUEST["trackerId"]."&cookietab=2"));
+				die;
+			}			
 			if (isset($tracker_info["defaultStatus"])) {
 				$_REQUEST['status'] = $tracker_info["defaultStatus"];
 			}

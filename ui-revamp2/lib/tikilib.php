@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.90 2008-03-19 18:08:39 sylvieg Exp $
+// CVS: $Id$
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 	header("location: index.php");
@@ -1214,7 +1214,7 @@ class TikiLib extends TikiDB {
 		$ret["pages"] = $this->getOne("select count(*) from `tiki_pages` where `lastModif`>?",array((int)$last));
 		$ret["files"] = $this->getOne("select count(*) from `tiki_files` where `created`>?",array((int)$last));
 		$ret["comments"] = $this->getOne("select count(*) from `tiki_comments` where `commentDate`>?",array((int)$last));
-		$ret["users"] = $this->getOne("select count(*) from `users_users` where `registrationDate`>?",array((int)$last));
+		$ret["users"] = $this->getOne("select count(*) from `users_users` where `registrationDate`>? and `provpass`=?",array((int)$last, ''));
 		$ret["trackers"] = $this->getOne("select count(*) from `tiki_tracker_items` where `lastModif`>?",array((int)$last));
 		$ret["calendar"] = $this->getOne("select count(*) from `tiki_calendar_items` where `lastmodif`>?",array((int)$last));
 		return $ret;
@@ -2747,6 +2747,24 @@ class TikiLib extends TikiDB {
 		}
 
 		return $res;
+	}
+
+	/*shared*/
+	function get_blog_by_title($blogTitle) {
+		global $prefs, $user;
+
+    // Avoiding select by name so as to avoid SQL injection problems.
+		$query = "select `title`, `blogId` from `tiki_blogs` where `use_title` = 'y' ";
+		$result = $this->query($query);
+		if ($result->numRows()) {
+      while ($res = $result->fetchRow()) {
+        if( strtolower($res['title']) == strtolower($blogTitle) ) {
+          return $this->get_blog($res['blogId']);
+        }
+      }
+		}
+
+		return false;
 	}
 
 	/*shared*/
@@ -7688,7 +7706,7 @@ window.addEvent('domready', function() {
 		closedir ($h);
 
 		// Format and return the list
-		return $this->format_language_list($languages, $short, $all);
+		return TikiLib::format_language_list($languages, $short, $all);
 	}
 
 	function is_valid_language( $language ) {
@@ -7971,21 +7989,29 @@ window.addEvent('domready', function() {
 		return strlen($data);
 	}
 
-	function list_votes($id, $offset=0, $maxRecords=-1, $sort_mode='user_asc', $find='', $table='', $column='') {
+	function list_votes($id, $offset=0, $maxRecords=-1, $sort_mode='user_asc', $find='', $table='', $column='', $from='', $to='') {
 		$mid = 'where  `id`=?';
 		$bindvars[] = $id;
 		$select = '';
 		$join = '';
 		if (!empty($find)) {
-			$mid .= " and `user` like ?";
+			$mid .= ' and (`user` like ? or `title` like ? or `ip` like ?)';
 			$bindvars[] = '%'.$find.'%';
+			$bindvars[] = '%'.$find.'%';
+			$bindvars[] = '%'.$find.'%';
+		}
+		if (!empty($from) && !empty($to)) {
+			$mid .= ' and ((time >= ? and time <= ?) or time = ?)';
+			$bindvars[] = $from;
+			$bindvars[] = $to;
+			$bindvars[] = 0;
 		}
 		if (!empty($table) && !empty($column)) {
 			$select = ", `$table`.`$column` as title";
 			$join = "left join `$table` on (`tiki_user_votings`.`optionId` = `$table`.`optionId`)";
 		}
 		$query = "select * $select from `tiki_user_votings` $join $mid order by ".$this->convert_sortmode($sort_mode);
-		$query_cant = "select count(*) from `tiki_user_votings` $mid";
+		$query_cant = "select count(*) from `tiki_user_votings` $join $mid";
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);
 		$cant = $this->getOne($query_cant, $bindvars);
 		$ret = array();
@@ -8121,7 +8147,14 @@ function get_wiki_section($data, $hdr) {
 	}
 	return (array($start, $end));
 }
-	/* javascript = y or n to force to generate a version with javascript or not, ='' user prefs */
+
+/**
+ * \brief Function to embed a flash object (using JS method by default when JS in user's browser is detected)
+ *
+ * So far it's being called from wikiplugin_flash.php and tiki-edit_banner.php
+ *
+ * @param javascript = y or n to force to generate a version with javascript or not, ='' user prefs
+ */
 	function embed_flash($params, $javascript='', $flashvars = false) {
 		global $prefs;
 		global $headerlib; include_once('lib/headerlib.php');
@@ -8159,10 +8192,10 @@ JS;
 			return "<div id=\"$myId\">" . tra('Flash player not available.') . "</div><script type=\"text/javascript\">\n<!--//--><![CDATA[//><!--\n$js\n//--><!]]>\n</script>\n";
 		} else { // link on the movie will not work with IE6
 			extract ($params,EXTR_SKIP);
-			$asetup = "<OBJECT CLASSID=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0\" WIDTH=\"$width\" HEIGHT=\"$height\">";
-			$asetup .= "<PARAM NAME=\"movie\" VALUE=\"$movie\">";
-			$asetup .= "<PARAM NAME=\"quality\" VALUE=\"$quality\">";
-			$asetup .= "<PARAM NAME=\"wmode\" VALUE=\"transparent\">";
+			$asetup = "<object classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0\" width=\"$width\" height=\"$height\">";
+			$asetup .= "<param name=\"movie\" value=\"$movie\" />";
+			$asetup .= "<param name=\"quality\" value=\"$quality\" />";
+			$asetup .= "<param name=\"wmode\" value=\"transparent\" />";
 			$asetup .= "<embed src=\"$movie\" quality=\"$quality\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\" type=\"application/x-shockwave-flash\" width=\"$width\" height=\"$height\" wmode=\"transparent\"></embed></object>";
 			return $asetup;
 		}

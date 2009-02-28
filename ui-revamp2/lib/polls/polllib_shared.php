@@ -29,9 +29,19 @@ class PollLibShared extends TikiLib {
 		return $ret;
 	}
 
-	function list_poll_options($pollId) {
-		$query = "select * from `tiki_poll_options` where `pollId`=? order by `position`";
-		$result = $this->query($query,array((int) $pollId));
+	function list_poll_options($pollId, $from=0, $to=0) {
+		if ( empty($from) && empty($to) ) {
+			$query = 'select * from `tiki_poll_options` where `pollId`=?';
+			$bindVars = array((int) $pollId);
+		} else {
+			$query = 'select tpo.`pollId`, tpo.`optionId`, tpo.`title`, tpo.`position`, count(tuv.`id`) as votes from `tiki_poll_options` tpo
+				left join `tiki_user_votings` tuv on (tpo.`optionId` = tuv.`optionId`)
+				where `pollId`=? and ((tuv.`time` >= ? and tuv.`time` <= ?) or tuv.`time` = ?)
+				group by `votes`';
+			$bindVars = array((int)$pollId, (int)$from, (int)$to, 0);
+		}
+		$query .= ' order by `position`';
+		$result = $this->query($query, $bindVars);
 		$ret = array();
 		while ($res = $result->fetchRow()) {
 			$ret[] = $res;
@@ -170,13 +180,13 @@ class PollLibShared extends TikiLib {
     return true;
   }
 
-  function replace_poll($pollId, $title, $active, $publishDate) {
+  function replace_poll($pollId, $title, $active, $publishDate, $voteConsiderationSpan=0) {
     if ($pollId) {
-      $query = "update `tiki_polls` set `title`=?,`active`=?,`publishDate`=? where `pollId`=?";
-      $result = $this->query($query,array($title,$active,$publishDate, $pollId));
+      $query = "update `tiki_polls` set `title`=?,`active`=?,`publishDate`=?, `voteConsiderationSpan`=? where `pollId`=?";
+      $result = $this->query($query,array($title,$active,$publishDate, $voteConsiderationSpan, $pollId));
     } else {
-      $query = "insert into tiki_polls(`title`,`active`,`publishDate`,`votes`) values(?,?,?,?)";
-      $result = $this->query($query,array($title,$active,$publishDate,0));
+      $query = "insert into tiki_polls(`title`,`active`,`publishDate`,`votes`, `voteConsiderationSpan`) values(?,?,?,?,?)";
+      $result = $this->query($query,array($title,$active,$publishDate,0, $voteConsiderationSpan));
       $pollId = $this->getOne("select max(`pollId`) from `tiki_polls` where `title`=? and `publishDate`=?",array($title,$publishDate));
     }
     return $pollId;

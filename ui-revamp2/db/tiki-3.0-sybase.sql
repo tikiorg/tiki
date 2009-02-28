@@ -3192,7 +3192,7 @@ CREATE TABLE "tiki_polls" (
   "votes" numeric(8,0) default NULL NULL,
   "active" char(1) default NULL NULL,
   "publishDate" numeric(14,0) default NULL NULL,
-  "anonym" varchar(5) DEFAULT 'u' NOT NULL CHECK ("anonym" IN ( 'a', 'u', 'i', 'c' )),
+  "voteConsiderationSpan" numeric(4,0) default 0,
   PRIMARY KEY (pollId)
 ) ENGINE=MyISAM  
 go
@@ -5188,6 +5188,10 @@ go
 
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_vote_poll', 'Can vote polls', 'basic', 'polls')
+go
+
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_poll_voters', 'Can view poll voters', 'basic', 'polls')
 go
 
 

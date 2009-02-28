@@ -132,4 +132,7 @@
 {if $prefs.feature_webservices neq 'n'}
 <a href="tiki-admin.php?page=webservices" title="{tr}Webservices{/tr}" class="icon"><img class="icon" src="pics/large/webservices.png" alt="{tr}Webservices{/tr}" width="32" height="32" /></a>
 {/if}
+{if $prefs.feature_sefurl neq 'n'}
+<a href="tiki-admin.php?page=sefurl" title="{tr}Sef URL{/tr}" class="icon"><img class="icon" src="pics/large/goto.png" alt="{tr}Sef URL{/tr}" width="32" height="32" /></a>
+{/if}
 

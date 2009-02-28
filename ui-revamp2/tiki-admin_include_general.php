@@ -12,7 +12,23 @@
 require_once('tiki-setup.php');  
 $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
+
+
 if (isset($_REQUEST["new_prefs"])) {
+
+		$listgroups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n');
+		$in = array();
+		$out = array();
+		foreach ($listgroups['data'] as $gr) {
+			if ($gr['groupName'] == 'Anonymous')
+				continue;
+			if ($gr['registrationChoice'] == 'y' && !in_array($gr['groupName'], $_REQUEST['registration_choices'])) // deselect
+				$out[] = $gr['groupName'];
+			elseif ($gr['registrationChoice'] != 'y' && in_array($gr['groupName'], $_REQUEST['registration_choices'])) //select
+				$in[] = $gr['groupName'];
+		}
+
+
 	check_ticket('admin-inc-general');
     $pref_toggles = array(
         "anonCanEdit",
@@ -37,6 +53,10 @@ if (isset($_REQUEST["new_prefs"])) {
 		"log_mail",
 		"smarty_security",
 		"feature_pear_date",
+		"permission_denied_login_box",
+		"feature_ticketlib",
+		"feature_ticketlib2",
+		"feature_display_my_to_others",
     );
 
     foreach ($pref_toggles as $toggle) {
@@ -64,6 +84,9 @@ if (isset($_REQUEST["new_prefs"])) {
         "helpurl",
         "tiki_version_check_frequency",
 		'log_sql_perf_min',
+		"permission_denied_url",
+		"highlight_group",
+		"user_tracker_infos",
     );
 
     foreach ($pref_simple_values as $svitem) {
@@ -79,7 +102,8 @@ if (isset($_REQUEST["new_prefs"])) {
         "short_date_format",
         "short_time_format",
         "siteTitle",
-        "tikiIndex"
+        "tikiIndex",
+		"users_prefs_display_timezone"
     );
 
     foreach ($pref_byref_values as $britem) {
@@ -175,6 +199,10 @@ if ($prefs['home_file_gallery']) {
 } else {
 	$smarty->assign("home_fil_name", '');
 }
+
+$listgroups = $userlib->get_groups(0, -1, 'groupName_desc', '', '', 'n');
+$smarty->assign("listgroups", $listgroups['data']);
+
 
 ask_ticket('admin-inc-general');
 ?>

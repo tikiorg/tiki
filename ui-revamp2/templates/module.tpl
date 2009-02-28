@@ -2,7 +2,7 @@
 {* Module layout with controls *}
 {if $module_nobox neq 'y'}
 <div class="box-shadow">
-	<div class="box box-{$module_name|escape}">
+	<div class="box box-{$module_name|escape}"{if $module_params.overflow} style="overflow:visible !important"{/if}>
 	{if $module_decorations ne 'n'}
 		<h3 class="box-title clearfix"{if !empty($module_params.bgcolor)} style="background-color:{$module_params.bgcolor};"{/if}>
 		{if $user and $prefs.user_assigned_modules == 'y' and $prefs.feature_modulecontrols eq 'y'}

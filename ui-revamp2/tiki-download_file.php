@@ -145,7 +145,7 @@ $content = &$info['data'];
 
 $md5 = '';
 if ( ! empty($info['path']) )  {
-	if ($filegallib->isPodCastGallery($info['galleryId'])) {
+	if (!$skip and $filegallib->isPodCastGallery($info['galleryId'])) {
 		$filepath = $prefs['fgal_podcast_dir'].$info['path'];
 	} else {
 		$filepath = $prefs['fgal_use_dir'].$info['path'];
@@ -169,7 +169,12 @@ if ( ! empty($info['path']) )  {
 }
 
 // ETag: Entity Tag used for strong cache validation.
-$etag = '"' . $md5 . '-' . crc32($md5) . '"';
+if ( ! isset($_GET['display']) || isset($_GET['x']) || isset($_GET['y']) || isset($_GET['scale']) || isset($_GET['max']) || isset($_GET['format']) ) {
+  // if image will be modified, emit a different ETag for modifications.
+  $etag = '"' . $md5 . '-' . crc32($md5) . '-' . crc32( $_GET['x'] . 'x' . $_GET['y'] . 'y' . $_GET['scale'] . 's' . $_GET['max'] . 'm' . $_GET['format'] . 'f' ) . '"';
+} else {
+  $etag = '"' . $md5 . '-' . crc32($md5) . '"';
+}
 header('ETag: '.$etag);
 
 $use_client_cache = false;

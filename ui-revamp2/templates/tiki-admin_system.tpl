@@ -66,9 +66,8 @@
 <br />
 
 {if $tiki_p_admin eq 'y'}
-<div class="advanced">{tr}Advanced feature{/tr}: {tr}Fix UTF-8 Errors in Tables{/tr}:
-<a href="javascript:toggle('fixutf8')">{tr}Show{/tr}/{tr}Hide{/tr}</a>
-<br /><br />
+{remarksbox type="warning" title="{tr}Advanced feature{/tr}"}
+{tr}Fix UTF-8 Errors in Tables{/tr} <a href="javascript:toggle('fixutf8')">: {tr}Show{/tr}/{tr}Hide{/tr}</a>
 <div id="fixutf8" {if $advanced_features ne 'y'}style="display:none;"{else}style="display:block;"{/if}>
 <h2>{tr}Fix UTF-8 Errors in Tables{/tr}</h2>
 <table class="normal">
@@ -95,5 +94,5 @@
 {/foreach}
 </table>
 </div>
-</div>
+{/remarksbox}
 {/if}

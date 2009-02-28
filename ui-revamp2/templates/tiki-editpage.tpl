@@ -453,7 +453,7 @@ function searchrep() {
 </td></tr>
 {/if}
 {if $prefs.feature_antibot eq 'y' && $anon_user eq 'y'}
-{include file=antibot.tpl}
+{include file="antibot.tpl" tr_style="formcolor"}
 {/if}
 {if $prefs.wiki_feature_copyrights  eq 'y'}
 <tr class="formcolor"><td>{tr}License{/tr}:</td><td><a href="{$prefs.wikiLicensePage|sefurl}">{tr}{$prefs.wikiLicensePage}{/tr}</a></td></tr>

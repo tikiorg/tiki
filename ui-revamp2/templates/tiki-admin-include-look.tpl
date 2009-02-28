@@ -12,19 +12,8 @@
 		</div>
 
 		{if $prefs.feature_tabs eq 'y'}
-			{cycle name=tabs values="1,2,3,4" print=false advance=false reset=true}
-			<div class="tabs">
-				<span	id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark tabinactive">
-					<a href="#theme" onclick="javascript:tikitabs({cycle name=tabs},4); return false;">{tr}Theme{/tr}</a>
-				</span>
-				<span	id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark tabinactive">
-					<a href="#layout" onclick="javascript:tikitabs({cycle name=tabs},4); return false;">{tr}General Layout{/tr}</a>
-				</span>
-				<span	id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}" class="tabmark tabinactive">
-					<a href="#other" onclick="javascript:tikitabs({cycle name=tabs},4); return false;">{tr}Other{/tr}</a>
-				</span>
-			</div>
-			{cycle name=content values="1,2,3,4" print=false advance=false reset=true}
+			{tabs}{tr}Theme{/tr}|{tr}General Layout{/tr}|{tr}Other{/tr}{/tabs}
+			{cycle name=content values="1,2,3" print=false advance=false reset=true}
 		{/if}
 
 		<fieldset{if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}"{/if}>
@@ -50,6 +39,33 @@
 							{if $prefs.site_style != $a_style}<span class="highlight">{tr}* Note: Theme displayed differs from "site" theme ({$prefs.site_style}).{/tr}</span>{/if}
 						</td>
 					</tr>
+					
+<tr>					
+  <td class="form">{tr}Reg users can change theme{/tr}:</td>
+  <td>
+    <table><tr>
+    <td style="width: 20px"><input type="checkbox" name="change_theme" {if $prefs.change_theme eq 'y'}checked="checked"{/if}/></td>
+    <td>
+      <div id="select_available_styles" {if count($prefs.available_styles) > 0 and $prefs.available_styles[0] ne ''}style="display:none;"{else}style="display:block;"{/if}>
+        <a class="link" href="javascript:show('available_styles');hide('select_available_styles');">{tr}Restrict available themes{/tr}</a>
+      </div>
+      <div id="available_styles" {if count($prefs.available_styles) == 0 or $prefs.available_styles[0] eq ''}style="display:none;"{else}style="display:block;"{/if}>
+        {tr}Available styles:{/tr}<br />
+        <select name="available_styles[]" multiple="multiple" size="5">
+		  <option value=''>{tr}All{/tr}</option>
+          {section name=ix loop=$styles}
+            <option value="{$styles[ix]|escape}"
+              {if in_array($styles[ix], $prefs.available_styles)}selected="selected"{/if}>
+              {$styles[ix]}
+            </option>
+          {/section}
+        </select>
+      </div>
+    </td>
+    </tr></table>
+  </td>					
+					</tr>
+					
 					<tr>
 						<td class="form" >
 							<label for="general-theme">{tr}Theme options{/tr}:</label>
@@ -176,7 +192,7 @@
 					{* --- Customize Site Header --- *}
 						<fieldset class="admin">
 							<legend>
-								<a href="#">
+								<a href="#" title="{tr}Top{/tr}">
 									<span>{tr}Custom Site Header{/tr}</span>
 								</a>
 							</legend>
@@ -216,7 +232,7 @@
 					{* --- Customize Site Logo and Site Titile--- *}
 						<fieldset>
 							<legend>
-								<a href="#"><span>{tr}Site Logo and Title{/tr}</span></a>
+								<a href="#" title="{tr}Top{/tr}"><span>{tr}Site Logo and Title{/tr}</span></a>
 							</legend>
 							<table class="admin">
 							<tr>
@@ -283,10 +299,10 @@
 							</tr>
 							<tr>
 								<td class="form">
-									<label for="_siteheadertitle">{tr}Site title{/tr}:</label>
+									<label for="_sitetitle">{tr}Site title{/tr}:</label>
 								</td>
 								<td>
-									<input type="text" name="siteheadertitle" id="_sitetitle" value="{$prefs.siteheadertitle}" size="50" maxlength="50" />
+									<input type="text" name="sitetitle" id="_sitetitle" value="{$prefs.sitetitle}" size="50" maxlength="50" />
 								</td>
 							</tr>
 							<tr>
@@ -303,7 +319,7 @@
 					{* --- Site Search Bar --- *}
         		<fieldset>
         			<legend>
-								<a href="#"><span>{tr}Site Search Bar{/tr}</span></a>
+								<a href="#" title="{tr}Top{/tr}"><span>{tr}Site Search Bar{/tr}</span></a>
 							</legend>
 							<table class="admin">
 							<tr> 
@@ -320,7 +336,7 @@
 					{* --- Site Login Bar --- *}
 						<fieldset>
 							<legend>
-								<a href="#"><span>{tr}Site Login Bar{/tr}</span></a>
+								<a href="#" title="{tr}Top{/tr}"><span>{tr}Site Login Bar{/tr}</span></a>
 							</legend>
 							<table class="admin">
 							<tr> 
@@ -337,13 +353,11 @@
 					{* --- Top Bar --- *}
 						<fieldset>
 							<legend>
-								<a href="#">
 								<span>
 									<input type="checkbox" name="feature_top_bar" {if $prefs.feature_top_bar eq 'y'}checked="checked"{/if}/>
-									{tr}Top Bar{/tr}
+								<a href="#" title="{tr}Top{/tr}">{tr}Top Bar{/tr}</a>
 								</span>
-								</a>
-							</legend>
+							</legend> 
 							<table class="admin">
 							<tr> 
 								<td class="form">
@@ -402,7 +416,7 @@
         	<td>
 						<fieldset>
 							<legend>
-								<a href="#"><span>
+								<a href="#" title="{tr}Top{/tr}"><span>
 								{if $prefs.feature_help eq 'y'}
 									<a href="{$prefs.helpurl}Users+Flip+Columns" target="tikihelp" class="tikihelp" title="{tr}Users can Flip Columns{/tr}">
 								{/if}
@@ -421,7 +435,7 @@
 					{* --- Site Breadcrumbs --- *}
 						<fieldset class="admin">
 							<legend>
-								<a href="#"><span>{tr}Site Breadcrumbs{/tr}</span></a>
+								<a href="#" title="{tr}Top{/tr}"><span>{tr}Site Breadcrumbs{/tr}</span></a>
 							</legend>
 							<table class="admin">
 							<tr>
@@ -482,7 +496,7 @@
 					<td class="form">
 						<fieldset>
 							<legend>
-								<a href="#"><span>
+								<a href="#" title="{tr}Top{/tr}"><span>
 									{if $prefs.feature_help eq 'y'}
 										<a href="{$prefs.helpurl}Users+Flip+Columns" target="tikihelp" class="tikihelp" title="{tr}Users can Flip Columns{/tr}">
 									{/if}
@@ -503,7 +517,7 @@
 					<td colspan="5">
 						<fieldset>
 							<legend>
-								<a href="#"><span>{tr}Site Report Bar{/tr}</span></a>
+								<a href="#" title="{tr}Top{/tr}"><span>{tr}Site Report Bar{/tr}</span></a>
 							</legend>
 							<table class="admin">
 							<tr> 
@@ -539,7 +553,7 @@
 					<td colspan="5">
 						<fieldset>
 							<legend>
-								<a href="#"><span>{tr}Custom Site Footer{/tr}</span></a>
+								<a href="#" title="{tr}Top{/tr}"><span>{tr}Custom Site Footer{/tr}</span></a>
 							</legend>
 							<table class="admin">
 							<tr>
@@ -568,7 +582,7 @@
 					<td colspan="5">
 						<fieldset>
 							<legend>
-								<a href="#"><span>{tr}Custom End of <body> Code{/tr}</span></a>
+								<a href="#" title="{tr}Top{/tr}"><span>{tr}Custom End of <body> Code{/tr}</span></a>
 							</legend>
 							<table class="admin">
 							<tr>
@@ -589,7 +603,7 @@
 					<td colspan="5" class="form">
 						<fieldset>
 							<legend>
-								<a href="#"><span>{tr}Bottom bar{/tr}</span></a>
+								<a href="#" title="{tr}Top{/tr}"><span>{tr}Bottom bar{/tr}</span></a>
 							</legend>
 							<label for="feature_bot_bar">{tr}Activate{/tr}:</label>
 							<input type="checkbox" name="feature_bot_bar" {if $prefs.feature_bot_bar eq 'y'}checked="checked"{/if}/>
@@ -612,7 +626,7 @@
 					<td colspan="5" class="form">
 						<fieldset>
 							<legend>
-								<a href="#"><span>{tr}Pagination links{/tr}</span></a>
+								<a href="#" title="{tr}Top{/tr}"><span>{tr}Pagination links{/tr}</span></a>
 							</legend>
 							<input type="checkbox" name="nextprev_pagination" id="nextprev_pagination" {if $prefs.nextprev_pagination eq 'y'}checked="checked"{/if}/>
 							<label for="nextprev_pagination">{tr}Use relative (next / previous) pagination links{/tr}</label>
@@ -707,7 +721,7 @@
 			{if $prefs.feature_tabs neq 'y'}</div>{/if}
 		</fieldset>
 
-		<div class="button clear" style="text-align: center"><input type="submit" name="looksetup" value="{tr}Apply{/tr}" /></div>
+		<div class="input_submit_container clear" style="text-align: center"><input type="submit" name="looksetup" value="{tr}Apply{/tr}" /></div>
 	</form>
 </div><!-- cbox end -->
 {/strip}

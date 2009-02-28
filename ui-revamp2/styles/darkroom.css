@@ -125,6 +125,7 @@ input[type=reset] {
 button:hover,
 .button:hover,
 input[type=submit]:hover,
+input[type=reset]:hover,
 .submitbutton:hover,
 .button input:hover {border: 1px solid #B2B2B2}
 
@@ -221,7 +222,8 @@ ul.jumplinks a:focus, ul.jumplinks a:active {
 #c1c2 #col2 {
 	width: 200px;
 	font-size: 1em;
-	margin-top: 10px}
+	/*margin-top: 10px;*/
+	overflow: visible;}
 
 #c1c2 #col2 .content {
 	margin: 0;
@@ -423,9 +425,7 @@ a.flip img {display: none}
 	border: 1px solid #909090;
 	color: #909090;
 	text-decoration: none;
-	padding: 4px 2px 4px 7px}
-
-/* .mdkverbar {} */
+	/*padding: 4px 2px 4px 7px*/}
 
 .mdksubmenu {
 	z-index: 999;
@@ -448,14 +448,11 @@ a.flip img {display: none}
 	position: relative;
 	text-align: left;
 	white-space: nowrap;
-	/*width: 125px;*/
 	font-size: 1em}
 
-ul#cssmenu li a,
 .horbaritem a,
 .mdkverbar a,
 .mdkitem a,
-ul#cssmenu li a:visited,
 .horbaritem a:visited,
 .mdkverbar a:visited,
 .mdkitem a:visited  {
@@ -464,70 +461,6 @@ ul#cssmenu li a:visited,
 	padding: 5px 2px 5px 8px;
 	position: relative;
 	display: block}
-
-#box-menu_43_CSS_vert,
-#menu_43_CSS_vert {overflow: visible}
-
-ul.cssmenu_vert {width: 172px}
-
-.cssmenu li,
-.cssmenu a,
-.cssmenu h2,
-li.menuoption {
-	background: #474747;
-	border: none}
-
-.cssmenu ul li ul {border: 1px solid #6A6A6A}
-
-.cssmenu a,
-.cssmenu a:visited,
-.cssmenu h2 {
-	background: #474747;
-	color: #A6A68D;
-	border: none;
-	text-decoration: none}
-
-.cssmenu a:hover,
-.cssmenu h2:hover,
-li.menuSection:hover a {color: #F5F5F5;}
-
-.cssmenu_horiz li { border-bottom:0;background-color: #3B3B3B;}
-.cssmenu_horiz li a {
-	border-bottom: 1px solid transparent;
-	border-right: 1px solid #6A6A6A;
-	padding: 6px;
-}
-.cssmenu_horiz li.selectedAscendant > a,
-.cssmenu_horiz li.selected > a,
-.cssmenu_horiz li a:hover{text-decoration:none; background: #909090; }
-.cssmenu_horiz li.menuSection0{background: #3B3B3B url(darkroom/down.png) no-repeat 96% 50%;}
-.cssmenu_horiz li.menuSection1,
-.cssmenu_horiz li.menuSection2,
-.cssmenu_horiz li.menuSection3
-{background: url(darkroom/right.png) no-repeat 96% 50%;}
-
-/* These override css/cssmenu_vert.css */
-.cssmenu_vert li a,
-.cssmenu_vert a:visited {
-	background: #474747;
-	border: none;
-	padding: 0}
-
-#cssmenu_vert li ul {
-	background: #474747;
-	margin-left: 174px}
-
-.cssmenu_vert,
-.cssmenu_vert ul,
-.cssmenu_vert li ul {
-	width: 184px;
-	background: #474747}
-
-.cssmenu_vert li ul li ul,
-.cssmenu_vert li ul {
-	margin-left: 114px;
-	padding-left: 0;
-	width: 11em}
 
 .mdksubframe .mdkitem a:hover {
 	text-decoration: none;
@@ -549,8 +482,8 @@ li.menuSection:hover a {color: #F5F5F5;}
 .treemenudiv {
 	display: block;
 	white-space: nowrap;
-	padding-right: 2em;
-	margin-left: 2em}
+	/*padding-right: 2em;
+	margin-left: 2em*/}
 
 .phplmnormal,
 a.phplmnormal:hover,
@@ -562,9 +495,9 @@ a.phplm:active {
 	color: #F5F5F5;
 	text-decoration: none;
 	font-weight: normal;
-	background: #999/*#3F3F3F*/}
+	background: #474747}
 
-td.phplmnormal {background: #999}
+td.phplmnormal {background: #474747}
 a.phplm:visited {color: #F5F5F5}
 
 a.phplm:hover {
@@ -583,6 +516,81 @@ a.phplmselected:active {
 	font-weight: normal}
 
 a.phplmselected:hover {color: #AAAAAA}
+
+img.imgs {background: #999}
+
+/** CSS (suckerfish) menus **/
+
+.cssmenu li,
+.cssmenu_horiz li,
+.cssmenu_vert li,
+.cssmenu li ul,
+.cssmenu_horiz li ul,
+.cssmenu_vert li ul {background: #474747}
+	
+#col2 .cssmenu_vert > li {
+	width: 172px;
+	padding: 0 !important}
+
+#col2 .cssmenu_vert li {padding: 0}
+
+.cssmenu_vert li ul { 
+	margin-top: -1.35em;
+	padding-bottom: 1px;}
+
+#col2 .cssmenu_vert > li > ul {margin-left: 172px}
+
+.cssmenu li ul,
+.cssmenu_horiz li ul,
+.cssmenu_vert li ul {
+	border: 1px solid #6A6A6A;
+	padding: 0}
+
+.cssmenu a,	
+.cssmenu_horiz a,
+.cssmenu_vert a {
+	text-decoration: none;
+	font-weight: normal;
+	display: block;
+	text-decoration: none;
+	padding: 3px 0 3px 6px}
+	
+.cssmenu_vert a {padding: 3px 2px 3px 8px;}
+.cssmenu a:hover,
+.cssmenu_vert a:hover,	
+.cssmenu_horiz a:hover {color: #F5F5F5}
+
+.cssmenu li:hover,
+.cssmenu_horiz li:hover,
+.cssmenu_vert li:hover,
+.cssmenu li.sfhover,
+.cssmenu_horiz li.sfhover,
+.cssmenu_vert li.sfhover {background: #b2b2b2}
+
+.cssmenu_vert li:hover {background: #b2b2b2}
+
+.cssmenu li:hover > a,
+.cssmenu_horiz li:hover > a,
+.cssmenu_vert li:hover > a {color: #303030}
+
+#tiki-top > .cssmenu_horiz > li {
+	background: inherit;
+	width: 10em}
+
+#tiki-top > .cssmenu_horiz > li > a {
+	border: 1px solid transparent;
+	border-right: 1px solid #6A6A6A;
+	color: #A6A68D;
+	font-weight: bold;
+	font-size: 12px;
+	padding: 6px 2px 6px 8px}
+
+#tiki-top > .cssmenu_horiz > li > a:hover {
+	border: 1px solid #909090;
+	color: #909090 !important}
+	
+* html #tiki-top .cssmenu_horiz li {background: transparent}
+* html #tiki-top .cssmenu_horiz li ul li {background: #999}
 
 /** Links in other menus **/
  
@@ -789,8 +797,6 @@ div.box {
 	padding-bottom: 2px;
 	width: 190px}
 
-.box-menu_43_CSS_horiz {overflow: visible}
-
 h3.box-title {
 	overflow: hidden;
 	color:#9D9D9D;
@@ -800,6 +806,7 @@ h3.box-title {
 	padding: 4px;
 	position: relative}
 
+* html h3.box-title {position: static}
 .box-title a {color: #9D9D9D}
 .box a.flipmodtitle img {display: none}
 
@@ -818,14 +825,12 @@ a.flipmodtitle:hover img {border: 1px solid #818181 !important}
 	padding: 2px 2px;
 	color: #DCDCDC;
 	line-height:1.4em;
-	margin: 8px;
-	overflow: hidden}
+	margin: 8px}
 
 * html .box a.flipmodtitle img {border: none}
-.box-menu_43_CSS_horiz .box-data {overflow: visible}
 .box-data a.linkmenu {display: block}
 .box-data select {width: 120px}
-.box-data table {margin: auto}
+.box-data table {width: 100%}
 
 .box-data table td {
 	padding: 0.2em;
@@ -1388,8 +1393,27 @@ img.articleimage {
 	background: Black;
 	border: 1px solid #989898}
 
-div.articletrailer {text-align: right}
-div.articletrailer .wikitopline {float: left} 
+div.articletrailer {
+	position: relative;
+	text-align: center;
+	margin-top: 1.1em}
+	
+div.articletrailer img {}
+
+div.article .status {
+	position: absolute;
+	left: 0}
+
+div.articletrailer span {
+	display: inline-block;
+	margin: auto;
+	white-space: nowrap}
+
+div.article .actions {
+	position: absolute;
+	right: 0;
+	top: 0}
+
 div.articlebody {}
  
 div.articlesource {

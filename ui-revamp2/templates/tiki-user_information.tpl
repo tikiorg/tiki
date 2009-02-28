@@ -1,3 +1,5 @@
+{* $Id$ *}
+
 {title url="tiki-user_information.php?view_user=$userwatch"}{tr}User Information{/tr}{/title}
 
 {if $prefs.feature_display_my_to_others eq 'y' and $user and $prefs.feature_messages eq 'y' and $tiki_p_messages eq 'y' and $allowMsgs eq 'y'}
@@ -28,15 +30,15 @@
 {if $email_isPublic neq 'n'}
   <tr><td class="form">{tr}Email{/tr}:</td><td>{$userinfo.email}</td></tr>
 {/if}  
-{if !empty($country) and $contry != 'Other'}
-  <tr><td class="form">{tr}Country{/tr}:</td><td><img alt="{tr}{$country}{/tr}" src="img/flags/{$country}.gif" /> {tr}{$country}{/tr}</td></tr>
+{if !empty($country) and $country != 'Other'}
+  <tr><td class="form">{tr}Country{/tr}:</td><td>{$userinfo.login|countryflag} {tr}{$country|stringfix}{/tr}</td></tr>
 {/if}
   {if $prefs.change_theme ne 'n'}<tr><td class="form">{tr}Theme{/tr}:</td><td>{$user_style}</td></tr>{/if}
   {if $prefs.change_language eq 'y'}<tr><td  class="form">{tr}Language{/tr}:</td><td>{$user_language}</td></tr>{/if}
   {if $realName }
   <tr><td class="form">{tr}Real Name{/tr}:</td><td>{$realName}</td></tr>
   {/if}
-{if $gender neq 'Hidden' and $gender}
+{if $prefs.feature_community_gender eq 'y' and $gender neq 'Hidden' and $gender}
   <tr><td>{tr}Gender{/tr}:</td><td>{tr}{$gender}{/tr}</td></tr>
 {/if}
 

@@ -505,7 +505,9 @@ if (isset($_REQUEST['highlight']) || (isset($prefs['feature_referer_highlight'])
   $smarty->load_filter('output','highlight');
 }
 
-mb_internal_encoding("UTF-8");
+if (function_exists('mb_internal_encoding')) {
+	mb_internal_encoding("UTF-8");
+}
 
 // --------------------------------------------------------------
 

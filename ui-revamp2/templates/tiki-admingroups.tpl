@@ -245,9 +245,9 @@ class="prevnext">{tr}All{/tr}</a>
 	<p>
 		<input type="hidden" name="group" value="{$groupname|escape}"/>
 		<select name="user">
-			{foreach from=$userslist item=user}
-				{if ! in_array( $user, $memberslist ) }
-				<option>{$user|escape}</option>
+			{foreach from=$userslist item=iuser}
+				{if ! in_array( $iuser, $memberslist ) }
+				<option>{$iuser|escape}</option>
 				{/if}
 			{/foreach}
 		</select>

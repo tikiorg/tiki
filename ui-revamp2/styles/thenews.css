@@ -296,6 +296,7 @@ ul.jumplinks a:focus, ul.jumplinks a:active {
 #sitetitle a:visited {color: #000}
 
 #header-top {position: relative}
+* html #header-top {height: 1%}
 
 /* Look & Feel options */
 #siteheader {
@@ -399,8 +400,11 @@ div#sitead {
 }
 
 #c1c2 #wrapper .marginleft {
-	margin-left: 214px;
-}
+	margin-left: 214px}
+
+* html #c1c2 #wrapper .marginleft {
+	margin-left: 216px}
+
 
 #c1c2 #wrapper .marginright {
 	margin-right: 214px;
@@ -466,7 +470,7 @@ a.flip img {
 
 #c1c2 #col2 {
 	width: 214px;
-	overflow: hidden;
+	overflow: visible;
 }
 
 #c1c2 #col2 .content {
@@ -549,7 +553,7 @@ div#tiki-bot {}
 	font: .9em Verdana, Helvetica, Arial, Sans-Serif;
 	display: block;
 	border-right: 1px solid #aaa;
-} 
+}
 
 .horbaritem a:hover {
 	background-color: #fff;
@@ -561,9 +565,9 @@ div#tiki-bot {}
 } 
 
 /* IE */
-* html .horbaritem a {
-	font-size: .8em;
-}
+* html .horbaritem a,
+* html .mdkitem a {
+	font-size: 1em}
 
 .mdkverbar {
 	
@@ -634,7 +638,7 @@ div#tiki-bot {}
 .treemenudiv {
 	display: block;
 	white-space: nowrap;
-}
+	background: #fff}
 
 .phplmnormal,
 a.phplmnormal:hover,
@@ -642,37 +646,95 @@ a.phplm:link,
 a.phplm:visited,
 a.phplm:hover,
 a.phplm:active {
-	font: 100% Verdana, Tahoma, Arial, sans-serif;
-	color: #303030;
+	font-family: Georgia, serif;;
+	color: #005faa;
 	text-decoration: none;
-	font-weight: bold;
+	font-weight: normal;
 }
 
 a.phplm:visited {
-	color: #726461;
+	color: #005faa;
 }
 
 a.phplm:hover {
-	color: #808080;
+	color: #005faa;
+	text-decoration: underline;
+	background: none;
 }
 
 a.phplm:active {
-	color: #ff0000;
+	color: #005faa;
+	font-weight: normal;
 }
 
 a.phplmselected:link,
 a.phplmselected:visited,
 a.phplmselected:hover,
 a.phplmselected:active {
-	font: 100% Verdana, Tahoma, Arial, sans-serif;
-	color: black;
-	text-decoration: underline;
-	font-weight: bold;
+	font: 100% Georgia, serif;;
+	color: #005faa;
+	text-decoration: none;
+	font-weight: normal;
+	background: none;
+	font-style: italic;
 }
 
 a.phplmselected:hover {
-	color: #808080;
+	color: #005faa;
+	text-decoration: underline;
 }
+
+/* cssmenus.css overrides (page controls and menus) */
+.cssmenu_vert,
+.cssmenu_vert ul,
+.cssmenu li,
+.cssmenu_horiz li,
+.cssmenu_vert li,
+.cssmenu li ul,
+.cssmenu_vert li ul,
+.cssmenu_horiz li ul {
+	width: 9em;
+	background: #fff}
+
+[class].cssmenu_horiz li ul {
+	width: auto;
+	min-width: 9em;
+}
+
+* html div.box-CSS_menu ul {margin-left: 0}
+
+.cssmenu li ul,
+.cssmenu_horiz li ul,
+.cssmenu_vert li ul {border: 1px solid #D3D3D3}
+
+.cssmenu_vert li ul {margin-left: 9em !important}
+
+.cssmenu li ul ul {/*left: -999em*/}
+
+.cssmenu_horiz li ul ul {margin: -1em 0 0 9em}
+
+.cssmenu a,	
+.cssmenu_horiz a,
+.cssmenu_vert a {
+	text-decoration: none;
+	display: block;
+	/*line-height: 1.8em;*/
+	padding: 3px 0 3px 6px}
+	
+.cssmenu a:hover,	
+.cssmenu_horiz a:hover,
+.cssmenu_vert a:hover {text-decoration: underline}
+
+#tiki-top > .cssmenu_horiz {
+	border-left: 1px solid #aaa}
+
+#tiki-top .cssmenu_horiz {
+	float: left;
+	margin-left: 9px
+}
+
+#tiki-top > .cssmenu_horiz > li > a {
+	border-right: 1px solid #aaa}
 
 /** Links in other menus **/
 div.separator,
@@ -799,9 +861,8 @@ h3.box-title {
 	position: relative;
 }
 
-.box a.flipmodtitle img {
-	display: none;
-}
+* html h3.box-title {position: static}
+.box a.flipmodtitle img {display: none}
 
 * html .box a.flipmodtitle img,
 .box:hover a.flipmodtitle img {
@@ -825,8 +886,9 @@ a.flipmodtitle:hover img {border: 1px solid #AAAAAA !important}
 	border-top: 1px solid #D3D3D3;
 	border-bottom: 1px solid #D3D3D3;
 	padding: 7px;
-	margin: 0;
-}
+	margin: 0}
+	
+.box-data {padding-bottom: 8px}
 
 * html .box-data {
 	padding: 7px 7px 30px 7px;
@@ -836,7 +898,7 @@ a.flipmodtitle:hover img {border: 1px solid #AAAAAA !important}
 .box-data ul {padding-right: .6em}
 
 .box-data ol {padding-left: 2em; margin-top: 0; margin-bottom: 0;}
-.box-data ul {padding-left: 0; margin-top: 0; margin-bottom: 0}
+.box-data ul {padding-left: 1em; margin-top: 0; margin-bottom: 0}
 /* IE */
 * html .box-data ol {margin-left: 0em}
 * html .box-data ul {margin-left: 1em}
@@ -845,9 +907,16 @@ a.flipmodtitle:hover img {border: 1px solid #AAAAAA !important}
 *:first-child+html .box-data ul {margin-left: 1em}
 
 
-.box-data ul li {
-	list-style: square;
-}
+.box-data ul li {list-style: square}
+.cssmenu li, .cssmenu_horiz li, .cssmenu_vert li {list-style: none !important}
+.box-data ul.cssmenu_vert {padding: 0}
+.box-since_last_visit_new div.box-data div {
+text-align: left !important}
+
+.box-since_last_visit_new a.linkmodule b {
+	font-family: Arial,Helvetica,sans-serif;
+	font-size: 85%;
+	text-transform: uppercase}
 
 /** Other boxes **/
 div.cbox {
@@ -1192,6 +1261,23 @@ span#description {
 
 }
 
+/* fancylist wikiplugin */
+.wikitext .fancylist {
+	margin-left: 30px; padding-left: 30px;
+}
+.wikitext .fancylist li {
+	color: #999;
+	font: italic 2.2em Georgia, "Times New Roman", sans-serif;
+	list-style-position: outside;
+}
+
+.wikitext .fancylist li p {
+	color: #000;
+	display: inline;
+	font-size: 50%;
+	font-style: normal;
+}
+
 .titlebar {
 	padding: 0.1em;
 	border-top: 1px solid #999;
@@ -1316,11 +1402,15 @@ div.code {
 
 /* Quote plugin */
 div.quoteheader {
-	margin-left: 20px;
+	margin-left: 30px;
+	
 }
 
 div.quotebody {
+	margin: 0 15px 10px 30px;
 	font-style: italic;
+	border-left: 5px solid #D3D3D3;
+	padding-left: 6px
 }
 
 table.wikiplugin-split {
@@ -1462,12 +1552,27 @@ img.articleimage {
 	margin-bottom:10px;
 }
 
-div.articletrailer {text-align: right}
+div.articletrailer {
+	position: relative;
+	text-align: center;
+	margin-top: 1.1em}
+	
+div.articletrailer img {}
 
-div.articletrailer .wikitopline {
-	float: left;
-} 
- 
+div.article .status {
+	position: absolute;
+	left: 0}
+
+div.articletrailer span {
+	display: inline-block;
+	margin: auto;
+	white-space: nowrap}
+
+div.article .actions {
+	position: absolute;
+	right: 0;
+	top: 0}
+
 div.articlebody {
 	font-size: 125%;
 	line-height: 1.5em;
@@ -1674,15 +1779,13 @@ table.commentinfo {}
 
 
 .postbody-title {
-	width: 75%;
-	float: left;
+	width: 100%;
+	float: none;
 	margin-top: 0;
 	margin-bottom: auto;
 	background-color: #E0EAF4; 
 	border-bottom: 1px solid #ACCCDD}
 	
-*:first-child+html .postbody-title {min-width: 74%}
-
 .post .postbody-title .checkbox {float: left}
 
 .post .postbody-title .title {
@@ -2282,6 +2385,12 @@ div.minichatchans {overflow: auto !important}
 div.minichatdiv {
   font-size: .9em;
   overflow: auto !important}
+
+body.tiki_mytiki #tiki-center form {border: 1px solid #aaa}
+  
+body.tiki_mytiki #tiki-center form table.normal {
+	border: 0;
+margin: 10px}
  
 /* end of css file */
 

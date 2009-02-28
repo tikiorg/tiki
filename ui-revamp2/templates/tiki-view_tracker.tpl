@@ -123,7 +123,7 @@ document.write("<input name=\"switcher\" id=\"clickall2\" title=\"{tr}Select All
 {foreach from=$fields key=ix item=field_value}
 {if ( $field_value.type eq 's' and ($field_value.name eq "Rating" or $field_value.name eq tra("Rating")) and $field_value.isTblVisible eq 'y' ) || ( $field_value.isTblVisible eq 'y' and $field_value.type ne 'x' and $field_value.type ne 'h' and ($field_value.isHidden eq 'n' or $field_value.isHidden eq 'p' or $tiki_p_admin_trackers eq 'y') ) and ($field_value.type ne 'p' or $field_value.options_array[0] ne 'password') and (empty($field_value.visibleBy) or in_array($default_group, $field_value.visibleBy) or $tiki_p_admin_trackers eq 'y') }
 	<th class="auto">
-		{self_link _class='tableheading' _sort_arg='sort_mode' _sort_field='f_'|cat:$field_value.fieldId}{$field_value.name|truncate:255:"..."|default:"&nbsp;"}{/self_link}
+		{self_link _sort_arg='sort_mode' _sort_field='f_'|cat:$field_value.fieldId}{$field_value.name|truncate:255:"..."|default:"&nbsp;"}{/self_link}
 	</th>
 	{if $field_value.type eq 's' and ($field_value.name eq "Rating" or $field_value.name eq tra("Rating"))}
 		{assign var=rateFieldId value=$field_value.fieldId}
@@ -497,7 +497,7 @@ document.write('<div  class="categSelectAll"><input type="checkbox" id="clickall
 
 {* -------------------- antibot code -------------------- *}
 {if $prefs.feature_antibot eq 'y' && $user eq ''}
-{include file="antibot.tpl"}
+{include file="antibot.tpl" tr_style="formcolor"}
 {/if}
 
 {if $groupforalert ne ''}
@@ -518,9 +518,15 @@ document.write('<div  class="categSelectAll"><input type="checkbox" id="clickall
 {/if}
 
 
-<tr class="formcolor"><td class="formlabel">&nbsp;</td><td colspan="3" class="formcontent">
-<input type="submit" name="save" value="{tr}Save{/tr}" /> <input type="checkbox" name="viewitem"/> {tr}View inserted item{/tr}
-</td></tr>
+<tr class="formcolor">
+	<td class="formlabel">&nbsp;</td>
+	<td colspan="3" class="formcontent">
+		<input type="submit" name="save" value="{tr}Save{/tr}" /> 
+		<input type="radio" name="viewitem" value="view" /> {tr}View inserted item{/tr}
+		{* --------------------------- to continue inserting items after saving --------- *}
+		<input type="radio" name="viewitem" value="new" /> {tr}Insert new item{/tr}
+	</td>
+</tr>
 </table>
 </form>
 </div>

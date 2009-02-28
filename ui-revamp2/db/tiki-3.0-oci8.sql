@@ -2648,7 +2648,7 @@ CREATE TABLE "tiki_polls" (
   "votes" number(8) default NULL,
   "active" char(1) default NULL,
   "publishDate" number(14) default NULL,
-  "anonym" varchar(5) DEFAULT 'u' NOT NULL CHECK ("anonym" IN ( 'a', 'u', 'i', 'c' )),
+  "voteConsiderationSpan" number(4) default 0,
   PRIMARY KEY (pollId)
 ) ENGINE=MyISAM  ;
 
@@ -4290,6 +4290,8 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") V
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_poll_results', 'Can view poll results', 'basic', 'polls');
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_vote_poll', 'Can vote polls', 'basic', 'polls');
+
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_poll_voters', 'Can view poll voters', 'basic', 'polls');
 
 
 INSERT INTO "users_permissions" ("permName","permDesc","level","type","admin") VALUES ('tiki_p_admin_quicktags', 'Can admin quicktags', 'admin', 'quicktags', 'y');
