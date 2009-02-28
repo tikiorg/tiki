@@ -402,7 +402,7 @@
 	</fieldset>
 <br />
 	<fieldset><legend>{tr}Secure Login{/tr} <a href="http://doc.tikiwiki.org/login+config&amp;bl=y" target="_blank" title="{tr}Help{/tr}"><img src="pics/icons/help.png" alt="{tr}Help{/tr}" /></a></legend>
-		<div style="padding:5px;clear:both"><label for="https_login">{tr}HTTPS login{/tr}:'{$prefs.https_login}'</label>
+		<div style="padding:5px;clear:both"><label for="https_login">{tr}HTTPS login{/tr}:</label>
 	<select name="https_login" id="https_login" onchange="hidedisabled('httpsoptions',this.value);">
 		<option value="disabled"{if $prefs.https_login eq 'disabled'} selected="selected"{/if}>{tr}Disabled{/tr}</option>
 		<option value="allowed"{if $prefs.https_login eq 'allowed'} selected="selected"{/if}>{tr}Allow secure (https) login{/tr}</option>
