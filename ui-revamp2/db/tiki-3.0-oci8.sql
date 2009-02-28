@@ -1451,6 +1451,8 @@ CREATE TABLE "tiki_forums_queue" (
   "topic_title" varchar(240) default NULL,
   "summary" varchar(240) default NULL,
   "in_reply_to" varchar(128) default NULL,
+  "tags" varchar(255) default NULL,
+  "email" varchar(255) default NULL,
   PRIMARY KEY (qId)
 ) ENGINE=MyISAM  ;
 
@@ -1951,6 +1953,7 @@ CREATE TABLE "tiki_menu_options" (
   "perm" varchar(255) default NULL,
   "groupname" varchar(255) default NULL,
   "userlevel" number(4) default 0,
+  "icon" varchar(200),
   PRIMARY KEY (optionId)
 ) ENGINE=MyISAM  ;
 
@@ -2245,7 +2248,7 @@ INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`",
 
 INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (142,42,'o','Polls','tiki-admin_polls.php',1110,'feature_polls','tiki_p_admin_polls','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (143,42,'o','Mail Notifications','tiki-admin_notifications.php',1120,'','tiki_p_admin','',0);
+INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (143,42,'o','Mail Notifications','tiki-admin_notifications.php',1120,'','tiki_p_admin_notifications','',0);
 
 INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (182,42,'o','Search Stats','tiki-search_stats.php',1125,'feature_search_stats','tiki_p_admin','',0);
 
@@ -2350,6 +2353,7 @@ CREATE TABLE "tiki_menus" (
   "description" clob,
   "type" char(1) default NULL,
   "icon" varchar(200) default NULL,
+  "use_items_icons" char(1) DEFAULT 'n' NOT NULL,
   PRIMARY KEY (menuId)
 ) ENGINE=MyISAM  ;
 
@@ -4532,6 +4536,9 @@ INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('
 INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_view_backlink', 'View page backlinks', 'basic', 'wiki');
 
 
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_notifications', 'Can admin mail notifications', 'editors', 'mail notifications');
+
+
 UPDATE users_permissions SET feature_check = 'feature_wiki' WHERE permName IN(
 	'tiki_p_admin_wiki',
 	'tiki_p_assign_perm_wiki_page',
@@ -5355,7 +5362,7 @@ CREATE SEQUENCE "tiki_freetagged_objects_sequ" INCREMENT BY 1 START WITH 1;
 CREATE TABLE "tiki_freetagged_objects" (
   "tagId" number(12) NOT NULL,
   "objectId" number(11) default 0 NOT NULL,
-  "user" varchar(200) default '' NOT NULL,
+  "user" varchar(200) default '',
   "created" number(14) default '0' NOT NULL,
   PRIMARY KEY (tagId,user,objectId),
   KEY (tagId),

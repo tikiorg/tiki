@@ -1411,6 +1411,7 @@ CREATE TABLE tiki_menu_options (
   perm varchar(255) default NULL,
   groupname varchar(255) default NULL,
   userlevel int(4) default 0,
+  icon varchar(200),
   PRIMARY KEY (optionId),
   UNIQUE KEY uniq_menu (menuId,name(30),url(50),position,section(60),perm(50),groupname(50))
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
@@ -1613,6 +1614,7 @@ CREATE TABLE tiki_menus (
   description text,
   type char(1) default NULL,
   icon varchar(200) default NULL,
+  use_items_icons char(1) NOT NULL DEFAULT 'n',
   PRIMARY KEY (menuId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 

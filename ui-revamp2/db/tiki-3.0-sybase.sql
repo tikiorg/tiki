@@ -1518,6 +1518,8 @@ CREATE TABLE "tiki_forums_queue" (
   "topic_title" varchar(240) default NULL NULL,
   "summary" varchar(240) default NULL NULL,
   "in_reply_to" varchar(128) default NULL NULL,
+  "tags" varchar(255) default NULL NULL,
+  "email" varchar(255) default NULL NULL,
   PRIMARY KEY (qId)
 ) ENGINE=MyISAM  
 go
@@ -2084,6 +2086,7 @@ CREATE TABLE "tiki_menu_options" (
   "perm" varchar(255) default NULL NULL,
   "groupname" varchar(255) default NULL NULL,
   "userlevel" numeric(4,0) default 0,
+  "icon" varchar(200) default '',
   PRIMARY KEY (optionId)
 ) ENGINE=MyISAM  
 go
@@ -2660,7 +2663,7 @@ INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`",
 go
 
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (143,42,'o','Mail Notifications','tiki-admin_notifications.php',1120,'','tiki_p_admin','',0)
+INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (143,42,'o','Mail Notifications','tiki-admin_notifications.php',1120,'','tiki_p_admin_notifications','',0)
 go
 
 
@@ -2860,6 +2863,7 @@ CREATE TABLE "tiki_menus" (
   "description" text default '',
   "type" char(1) default NULL NULL,
   "icon" varchar(200) default NULL NULL,
+  "use_items_icons" char(1) DEFAULT 'n' NOT NULL,
   PRIMARY KEY (menuId)
 ) ENGINE=MyISAM  
 go
@@ -5657,6 +5661,11 @@ go
 
 
 
+INSERT INTO "users_permissions" ("permName","permDesc","level","type") VALUES ('tiki_p_admin_notifications', 'Can admin mail notifications', 'editors', 'mail notifications')
+go
+
+
+
 UPDATE users_permissions SET feature_check = 'feature_wiki' WHERE permName IN(
 	'tiki_p_admin_wiki',
 	'tiki_p_assign_perm_wiki_page',
@@ -7035,7 +7044,7 @@ go
 CREATE TABLE "tiki_freetagged_objects" (
   "tagId" numeric(12 ,0) identity,
   "objectId" numeric(11,0) default 0 NOT NULL,
-  "user" varchar(200) default '' NOT NULL,
+  "user" varchar(200) default '',
   "created" numeric(14,0) default '0' NOT NULL,
   PRIMARY KEY (tagId,user,objectId),
   KEY (tagId),
