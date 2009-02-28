@@ -1723,6 +1723,8 @@ $lang=Array(
 "Install Profile" => "Installer un profil",
 "Support Forums" => "Forums de support",
 "TikiWiki Web Site" => "Site web TikiWiki",
+"Upgrade complete" => "Mise à jour terminée",
+"Installation complete" => "Installation terminée",
 // "You can also use {literal}{content label=x}{/literal}, where x is the label of the content block" => "You can also use {literal}{content label=x}{/literal}, where x is the label of the content block",
 // "Edit content block" => "Edit content block",
 // "Create content block" => "Create content block",
