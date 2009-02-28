@@ -809,6 +809,7 @@ $smarty->assign_by_ref('headerlib',$headerlib);
 $smarty->assign('install_step', $install_step);
 $smarty->assign('install_type', $install_type);
 $smarty->assign_by_ref('prefs', $prefs);
+$smarty->assign('detected_https',$_SERVER["HTTPS"]);
 
 
 $mid_data = $smarty->fetch('tiki-install.tpl');
