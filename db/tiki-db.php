@@ -98,10 +98,20 @@ if ( $re === FALSE) {
 <html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>'.$prefs['site_title'].': '.tra('Installation begins').': '.$local_php.tra(' not found').'</title>
+	<title>'.$prefs['siteTitle'].': '.tra('Installation begins').': '.$local_php.tra(' not found').'</title>
 	<link rel="stylesheet" href="styles/thenews.css" type="text/css">
 </head>
-<body >
+<body>
+    <div id="siteheader" class="clearfix">
+	<div id="header-top">
+		<div id="sitelogo" style="padding-left: 70px; text-align: center">
+		    <h1>
+			<img style="border: medium none; vertical-align: middle;" alt="TikiWiki CMS/Groupware" src="img/tiki/tiki3.png" />
+		    </h1>
+		</div>
+	</div>
+    </div>
+
 	<div id="tiki-main">
 		<div id="tiki-mid">
 			<div style="margin:10px 30px;">
