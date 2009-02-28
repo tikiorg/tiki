@@ -14,7 +14,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 if (isset($_REQUEST["loginprefs"])) {
 	check_ticket('admin-inc-login');
-	simple_set_toggle('change_theme');
 	simple_set_toggle('change_language');
 	simple_set_toggle('change_password');
 	simple_set_value('messu_mailbox_size');
