@@ -18,8 +18,8 @@ $title='';
 $content='';
 
 if (version_compare(PHP_VERSION, '5.0.0', '<')) {
-	$title='Tiki Installer Disabled';
-	$content='<p>You need at least PHP5 for Tiki 3.0</p>';
+	$title='PHP5 is required for Tiki 3.0.';
+	$content='Please contact your site administrator.</p>';
 	createPage($title,$content);
 }
 
@@ -109,5 +109,3 @@ function createPage($title,$content){
 END;
 	die;
 }
-
-?>
