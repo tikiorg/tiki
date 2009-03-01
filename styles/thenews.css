@@ -1014,9 +1014,9 @@ table.admin tr td div#page-bar {
 }
 
 table.normal th {
-	font-size: 1em;
-}
-td {}
+	font-size: 1em}
+	
+td {vertical-align: top}
 * html td {	font-size: 11px}
 
 td.normal,
@@ -1026,8 +1026,6 @@ td.even {
 	margin: 0;
 	padding: 0.2em;
 	vertical-align: top}
-	
-table.admin td.form {border-bottom: 1px solid #fafafa}
 
 tr.odd td,
 td.odd {background: #eeeeee}
