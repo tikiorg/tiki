@@ -11,7 +11,10 @@
 	 </div>
 
 	<p>
-	 <a href="javascript:history.back()" class="linkmenu">{tr}Go back{/tr}</a><br /><br />
+
+	{if $show_history_back_link eq 'y' }
+		<a href="javascript:history.back()" class="linkmenu">{tr}Go back{/tr}</a><br /><br />
+	{/if}
 	 <a href="{$prefs.tikiIndex}" class="linkmenu">{tr}Return to home page{/tr}</a>
 	</p>
 </div>

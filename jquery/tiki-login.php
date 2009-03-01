@@ -323,6 +323,7 @@ if ( $isvalid ) {
 				$smarty->assign('msg', $msg.' '.tra('An email has been sent to you with the instructions to follow.'));
 			$smarty->assign('user', '');
 			unset($user);
+			$smarty->assign_by_ref('show_history_back_link', 'y');
 			$smarty->assign('mid', 'tiki-information.tpl');
 			$smarty->display("tiki.tpl");
 			die;
