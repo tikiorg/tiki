@@ -200,7 +200,7 @@
 		<div style="padding:5px;">
 			<label for="host">{tr}Host name:{/tr}</label>
 			<div style="margin-left:1em;">
-			<input type="text" name="host" id="host" value="localhost" size="40" /> <a href="#" onclick="flip('host_help');" title="{tr}Help{/tr}"><img src="pics/icons/help.png" alt="{tr}Help{/tr}" /></a>
+			<input type="text" name="host" id="host" value="{if isset($smarty.request.host)}{$smarty.request.host|escape:"html"}{else}localhost{/if}" size="40" /> <a href="#" onclick="flip('host_help');" title="{tr}Help{/tr}"><img src="pics/icons/help.png" alt="{tr}Help{/tr}" /></a>
 			<br /><em>{tr}Enter the host name or IP for your database.{/tr}</em>
 			<div style="display:none;" id="host_help">
 				<p>{tr}Use <strong>localhost</strong> if the database is running on the same machine as Tiki{/tr}. {tr}For SQLite, enter the path and filename to your database file{/tr}.</p>
@@ -210,7 +210,7 @@
 		<div style="padding:5px;">
 			<label for="name">{tr}Database name:{/tr}</label>
 			<div style="margin-left:1em;">
-			<input type="text" id="name" name="name" size="40" /> <a href="#" onclick="flip('name_help');" title="{tr}Help{/tr}"><img src="pics/icons/help.png" alt="{tr}Help{/tr}" /></a>
+			<input type="text" id="name" name="name" size="40" value="{$smarty.request.name|escape:"html"}" /> <a href="#" onclick="flip('name_help');" title="{tr}Help{/tr}"><img src="pics/icons/help.png" alt="{tr}Help{/tr}" /></a>
 		
 			<br /><em>{tr}Enter the name of the database that Tiki will use.{/tr}</em> 
 			<div style="margin-left:1em;display:none;" id="name_help">
@@ -228,7 +228,7 @@
 		<fieldset><legend>{tr}Database user{/tr}</legend>
 		<p>{tr}Enter a database user with administrator permission for the Database{/tr}.</p>
 		<div style="padding:5px;">
-			<label for="user">{tr}User name:{/tr}</label> <input type="text" id="user" name="user" />
+			<label for="user">{tr}User name:{/tr}</label> <input type="text" id="user" name="user" value="{$smarty.request.user|escape:"html"}" />
 		</div>
 		<div style="padding:5px;">
 			<label for="pass">{tr}Password:{/tr}</label> <input type="password" id="pass" name="pass" />
