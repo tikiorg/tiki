@@ -18,8 +18,8 @@ $title='';
 $content='';
 
 if (version_compare(PHP_VERSION, '5.0.0', '<')) {
-	$title='PHP5 is required for Tiki 3.0.';
-	$content='Please contact your site administrator.</p>';
+	$title='PHP5 is required for Tiki 3.0';
+	$content='<p>Please contact your system administrator ( if you are not one ;) ).</p>';
 	createPage($title,$content);
 }
 
