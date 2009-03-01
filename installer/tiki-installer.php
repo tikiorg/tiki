@@ -796,7 +796,7 @@ if ( $install_step == '5' && isset($dbTiki) && is_object($dbTiki) ) {
 // write general settings
 if (($_REQUEST['general_settings']) == 'y') {
 global $dbTiki;
-$query = "INSERT INTO `tiki_preferences` (`name`, `value`) VALUES ('siteTitle', '".$_REQUEST['site_title']."'), ('sender_email', '".$_REQUEST['sender_email']."'), ('https_login', '".$_REQUEST['https_login']."'), ('https_port', '".$_REQUEST['https_port']."'), ('feature_swtich_ssl_mode', '".$_REQUEST['feature_switch_ssl_mode']."'), ('feature_show_stay_in_ssl_mode', '".$_REQUEST['feature_show_stay_in_ssl_mode']."')";
+$query = "INSERT INTO `tiki_preferences` (`name`, `value`) VALUES ('browsertitle', '".$_REQUEST['site_title']."'), ('sender_email', '".$_REQUEST['sender_email']."'), ('https_login', '".$_REQUEST['https_login']."'), ('https_port', '".$_REQUEST['https_port']."'), ('feature_swtich_ssl_mode', '".$_REQUEST['feature_switch_ssl_mode']."'), ('feature_show_stay_in_ssl_mode', '".$_REQUEST['feature_show_stay_in_ssl_mode']."')";
 $query .= ";UPDATE  `users_users` SET  `email` =  '".$_REQUEST['admin_email']."' WHERE  `users_users`.`userId` =1";
 $dbTiki->Execute($query);
 }
