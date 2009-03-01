@@ -272,9 +272,6 @@
 	<div align="left"><label for="general-pageviews">{tr}Count admin pageviews{/tr}</label>.</div>
 </div>
 <div style="padding:.5em;clear:both">	  
-	<div align="left"><label for="general-browser_title">{tr}Browser title{/tr}:</label><br /><input type="text" name="siteTitle" id="general-browser_title" value="{$prefs.siteTitle|escape}" size="50" /></div>
-</div>
-<div style="padding:.5em;clear:both">	  
 	<div align="left"><label for="general-temp">{tr}Temporary directory{/tr}:</label><br /><input type="text" name="tmpDir" id="general-temp" value="{$prefs.tmpDir|escape}" size="50" /></div>
 </div>
 <div style="padding:.5em;clear:both">	  
