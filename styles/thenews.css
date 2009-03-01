@@ -353,13 +353,12 @@ div#sitead {
 	bottom: 3px;
 	right: 10px;
 	font-size: 1em}
-#siteloginbar * {
-	margin: .2em; padding: .2em;
-}
+
+#siteloginbar * {margin: .2em}
+
  #siteloginbar.logged-in {
 	bottom: 3px;
 }
-
 
 /* tiki-top_bar.tpl - menu and search */
 
