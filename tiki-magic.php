@@ -5,6 +5,13 @@ $featureChain = $_REQUEST['featurechain'];
 $featurePage = explode('/', $featureChain);
 $featureId = $featurePage[count($featurePage) - 1];
 
+
+if ($prefs['feature_magic'] != 'y') {
+	$smarty->assign('msg', tra("This feature is disabled").": feature_magic");
+	$smarty->display("error.tpl");
+	die;
+}
+
 $feature = $magiclib->get_feature($featureId);
 $smarty->assign('feature', $feature);
 $smarty->assign('title', $feature['feature_name']);
