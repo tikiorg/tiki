@@ -14,7 +14,6 @@
 			{tabs}{strip}
 				{tr}General Preferences{/tr}|
 				{tr}General Settings{/tr}|
-				{tr}Release check{/tr}|
 				{tr}Date and Time Formats{/tr}|
 				{tr}Admin Password{/tr}
 			{/strip}{/tabs}
@@ -33,9 +32,42 @@
       {/if}
 
 <h2>{tr}General Preferences{/tr}</h2>
-<div style="padding:.5em;" align="left">{tr}Tikiwiki version{/tr}: <strong>{$tiki_version}</strong> 
-	{button href="tiki-install.php" _text="{tr}Reset or upgrade your database{/tr}"}
+
+
+    <fieldset>
+	<legend>{tr}Release Check{/tr}</legend>
+
+	<div style="padding:.5em;">{tr}Tiki version{/tr}: <strong>{$tiki_version}</strong> 
+	    {button href="tiki-install.php" _text="{tr}Reset or upgrade your database{/tr}"}
+	</div>
+	
+	<div style="padding:.5em;">
+	    <div style="float:left;padding-right:1em;"><input type="checkbox" id="general-versioncheck" name="feature_version_checks" {if $prefs.feature_version_checks eq 'y'}checked="checked" {/if}onclick="flip('check_for_updates');" /></div>
+	    <div align="left"><label for="general-versioncheck">{tr}Check for updates automatically{/tr}.</label></div>
+	    <div align="left" id="check_for_updates" style="display:{if $prefs.feature_version_checks eq 'y'}block{else}none{/if};margin-left:30px;padding:.5em;">
+		<div>{tr}Check frequency{/tr}: 
+		<select name="tiki_version_check_frequency">
+        <option value="86400"{if $prefs.tiki_version_check_frequency eq 86400} selected="selected"{/if}>{tr}Each day{/tr}</option>
+        <option value="604800"{if $prefs.tiki_version_check_frequency eq 604800} selected="selected"{/if}>{tr}Each week{/tr}</option>
+        <option value="2592000"{if $prefs.tiki_version_check_frequency eq 2592000} selected="selected"{/if}>{tr}Each month{/tr}</option>
+        </select>		
+		</div>
+		<em>{tr}TikiWiki will check for updates when you access the main Administration page{/tr}.</em>
+	</div>	
 </div>
+
+        <div style="padding:.5em">
+{button href="tiki-admin.php?page=general&amp;forcecheck=1" _text="{tr}Check for updates now{/tr}."}
+	</div>
+    </fieldset>
+
+    <fieldset>
+	<legend>{tr}Site Identity{/tr}</legend>
+	<div style="text-align: left"><label for="browsertitle">{tr}Browser title{/tr}:</label> <input type="text" name="browsertitle" id="browsertitle" value="{$prefs.browsertitle|escape}" size="50" /></div>
+
+	<div style="padding:.5em;clear:both">{tr}Go to <a href="tiki-admin.php?page=look" title=""><strong>Look &amp; Feel</strong></a> section for additional site related customization preferences{/tr}.
+    </fieldset>
+    
 <fieldset><legend>{tr}Home Page{/tr}</legend>
 <div style="padding:.5em;clear:both">	  
 <div style="float:left;padding-right:1em;"><input type="checkbox" name="useGroupHome" id="general-homepages"{if $prefs.useGroupHome eq 'y'} checked="checked"{/if} onclick="flip('group_homepages');" /></div>
@@ -335,43 +367,6 @@
     </fieldset>
       
     
-    <fieldset{if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}"{/if}>
-      {if $prefs.feature_tabs neq 'y'}
-        <legend class="heading" id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}">
-          <a href="#layout" onclick="flip('layout'); return false;">
-            <span>{tr}Release Check{/tr}</span>
-          </a>
-        </legend>
-        <div id="layout" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_layout) and $smarty.session.tiki_cookie_jar.show_layout neq 'y'}none{else}block{/if};">{/if}
-
-<h2>{tr}Release Check{/tr}</h2>
-
-<div style="padding:.5em;">	  
-	<div align="left">{tr}TikiWiki version{/tr}: {$tiki_version}</div>
-</div>
-
-<div style="padding:.5em;">	  
-	<div style="float:left;padding-right:1em;"><input type="checkbox" id="general-versioncheck" name="feature_version_checks" {if $prefs.feature_version_checks eq 'y'}checked="checked" {/if}onclick="flip('check_for_updates');" /></div>
-	<div align="left"><label for="general-versioncheck">{tr}Check for updates automatically{/tr}.</label></div>
-	<div align="left" id="check_for_updates" style="display:{if $prefs.feature_version_checks eq 'y'}block{else}none{/if};margin-left:30px;padding:.5em;">
-		<div>{tr}Check frequency{/tr}: 
-		<select name="tiki_version_check_frequency">
-        <option value="86400"{if $prefs.tiki_version_check_frequency eq 86400} selected="selected"{/if}>{tr}Each day{/tr}</option>
-        <option value="604800"{if $prefs.tiki_version_check_frequency eq 604800} selected="selected"{/if}>{tr}Each week{/tr}</option>
-        <option value="2592000"{if $prefs.tiki_version_check_frequency eq 2592000} selected="selected"{/if}>{tr}Each month{/tr}</option>
-        </select>		
-		</div>
-		<em>{tr}TikiWiki will check for updates when you access the main Administration page{/tr}.</em>
-	</div>	
-</div>
-
-<div style="padding:.5em">
-{button href="tiki-admin.php?page=general&amp;forcecheck=1" _text="{tr}Check for updates now{/tr}."}
-</div>
-
-	  
-      {if $prefs.feature_tabs neq 'y'}</div>{/if}
-    </fieldset>
       
     
     <fieldset{if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}"{/if}>
