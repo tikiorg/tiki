@@ -1356,8 +1356,7 @@ img.externallink {
 	
 }
 
-/* Wiki plugins */
-/* Code plugin  */
+/* code examples after uploaded file */
 div.code {
 	font-size: 90%;
 	padding: 3px;
@@ -1366,28 +1365,33 @@ div.code {
 	font-family: "Courier New", Courier, monospace;
 }
 
+
+/* Wiki plugins */
+
+/* Code plugin  */
+.codecaption {
+	font-size: 0.9em;
+	padding: 0 10px;
+	position: relative;
+	bottom: -1em;
+	display: inline;
+	border: 1px solid #ADACAF;
+	border-bottom: 0;
+	margin-left: 4px;
+	line-height: 1em;
+	color: #666666;
+	background: #F5F5F5;
+	font-weight: bold;
+}
+
 .codelisting {
 	font-family: "Courier New", Courier, monospace;
 	padding: 10px;
 	background: #F5F5F5;
-	margin: 4px;
 	border: 1px dashed #ADACAF;
-	overflow: auto; 
-   width: 90%;
-}
-
-.codecaption {
-	font-size: 90%;
-	padding: 0 10px;
-	position: relative;
-	bottom: -5px;
-	display: inline;
-	border: 1px solid #ADACAF;
-	border-bottom: 0;
-	margin: 0;
-	color: #666666;
-	background: #F5F5F5;
-	font-weight: bold;
+	margin-left: 4px;
+	overflow: auto;
+	width: 90%;
 }
 
 /* Quote plugin */
