@@ -111,7 +111,6 @@ if (isset($_REQUEST["looksetup"]) || (!empty($_REQUEST['site_style']) && $_REQUE
         "feature_sitetitle",
         "feature_sitedesc",
         "sitelogo_align",
-		"browsertitle",
     );
 
     foreach ($pref_byref_values as $britem) {

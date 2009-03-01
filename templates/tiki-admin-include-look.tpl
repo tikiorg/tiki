@@ -694,9 +694,7 @@
 				</legend>
 				<div id="other" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_other) and $smarty.session.tiki_cookie_jar.show_other neq 'y'}none{else}block{/if};">
 			{/if}
-			<div>	  
-	<div style="text-align: left"><label for="browsertitle">{tr}Browser title{/tr}:</label> <input type="text" name="browsertitle" id="browsertitle" value="{$prefs.browsertitle|escape}" size="50" /></div>
-</div>
+
 			<div class="clear floatleft">
 				<input type="checkbox" id="use_context_menu_icon" name="use_context_menu_icon" {if $prefs.use_context_menu_icon eq 'y'}checked="checked"{/if} />
 				<label for="use_context_menu_icon">{tr}Use context menus for actions (icons) (only in file galleries yet){/tr}</label>
