@@ -30,6 +30,7 @@ if (isset($_REQUEST["change"])) {
 	// Check that pass and pass2 match, otherwise display error and exit
 	if ($_REQUEST["pass"] != $_REQUEST["pass2"]) {
 		$smarty->assign('msg', tra("The passwords do not match"));
+		$smarty->assign('errortype', 'no_redirect_login');
 		$smarty->display("error.tpl");
 		die;
 	}
@@ -37,6 +38,7 @@ if (isset($_REQUEST["change"])) {
 	// Check that new password is different from old password, otherwise display error and exit
 	if ($_REQUEST["pass"] == $_REQUEST["oldpass"]) {
 		$smarty->assign('msg', tra("You can not use the same password again"));
+		$smarty->assign('errortype', 'no_redirect_login');
 		$smarty->display("error.tpl");
 		die;
 	}
@@ -44,6 +46,7 @@ if (isset($_REQUEST["change"])) {
 	$polerr = $userlib->check_password_policy($_REQUEST["pass"]);
 	if ( strlen($polerr)>0 ) {
 		$smarty->assign('msg',$polerr);
+		$smarty->assign('errortype', 'no_redirect_login');
 	    $smarty->display("error.tpl");
 	    die;
 	}
@@ -52,6 +55,7 @@ if (isset($_REQUEST["change"])) {
 		$_REQUEST['oldpass'] = $userlib->activate_password($_REQUEST['user'], $_REQUEST['actpass']);
 		if (empty($_REQUEST['oldpass'])) {
 			$smarty->assign('msg', tra('Invalid username or activation code. Maybe this code has already been used.'));
+			$smarty->assign('errortype', 'no_redirect_login');
 			$smarty->display('error.tpl');
 			die;
 		}
@@ -60,6 +64,7 @@ if (isset($_REQUEST["change"])) {
 	list($isvalid, $_REQUEST["user"], $error) = $userlib->validate_user($_REQUEST["user"], $_REQUEST["oldpass"], '', '');
 	if (!$isvalid) {
 		$smarty->assign('msg', tra("Invalid old password or unknown user"));
+		$smarty->assign('errortype', 'no_redirect_login');
 		$smarty->display("error.tpl");
 		die;
 	}
