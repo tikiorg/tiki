@@ -995,16 +995,14 @@ table {
 }
 
 table.normal, 
-table.admin,
-table.bloglist {
+table.admin{
 	padding: 0;
 	margin: 0;
 	border-collapse: collapse;
 	width: 100%;
 }
 
-table.normal,
-table.bloglist {
+table.normal {
 	border: solid 1px #909090;
 	border-collapse: collapse;
 }
@@ -1022,13 +1020,14 @@ td {}
 * html td {	font-size: 11px}
 
 td.normal,
-td.bloglist,
 .wikitable td,
 td.odd,
 td.even {
 	margin: 0;
 	padding: 0.2em;
 	vertical-align: top}
+	
+table.admin td.form {border-bottom: 1px solid #fafafa}
 
 tr.odd td,
 td.odd {background: #eeeeee}
@@ -1042,11 +1041,6 @@ th {
 	text-align: center;
 	background: #F0F4F5;
 	border: 1px solid #999999;
-	border-collapse: collapse;
-}
-
-.bloglist td {
-	border: solid 1px #909090;
 	border-collapse: collapse;
 }
 
@@ -1069,8 +1063,7 @@ td.form {
 
 /* Tables (list reduced due to classes not found in files) */
 table.normal, 
-table.admin,
-table.bloglist {
+table.admin {
 	margin: 0;
 	border-collapse: collapse;
 	width: 100%;
@@ -1078,8 +1071,7 @@ table.bloglist {
 table.normalnoborder {
 	width: 100%;
 }
-table.normal,
-table.bloglist {
+table.normal {
 	border: solid 1px #909090;
 	border-collapse: collapse;
 }
