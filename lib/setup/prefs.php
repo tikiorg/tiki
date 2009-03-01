@@ -1173,7 +1173,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'magic_last_load' => 0,
 
 		//groupalert
-		'feature_groupalert' => 'y',
+		'feature_groupalert' => 'n',
 	);
 
 	// spellcheck
