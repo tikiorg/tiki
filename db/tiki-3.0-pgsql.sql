@@ -1948,7 +1948,7 @@ INSERT INTO "tiki_menu_options" ("optionId","menuId","type","name","url","positi
 
 INSERT INTO "tiki_menu_options" ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (173,42,'o','Freetags','tiki-browse_freetags.php',27,'feature_freetags','tiki_p_view_freetags','',0);
 
-INSERT INTO "tiki_menu_options" ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (174,42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_contribution','',0);
+INSERT INTO "tiki_menu_options" ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (174,42,'r','Admin','',1050,'','tiki_p_admin_contribution','',0);
 
 INSERT INTO "tiki_menu_options" ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (175,42,'o','Contribution','tiki-admin_contribution.php',1265,'feature_contribution','tiki_p_admin_contribution','',0);
 
@@ -1960,18 +1960,18 @@ INSERT INTO "tiki_menu_options" ("optionId","menuId","type","name","url","positi
 
 INSERT INTO "tiki_menu_options" ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (179,42,'o','Tiki Calendar','tiki-action_calendar.php',36,'feature_action_calendar','tiki_p_view_tiki_calendar','',0);
 
-INSERT INTO "tiki_menu_options" ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (180,42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_users','',0);
+INSERT INTO "tiki_menu_options" ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (180,42,'r','Admin','',1050,'','tiki_p_admin_users','',0);
 
 INSERT INTO "tiki_menu_options" ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES 
 (187,42,'o','Search','tiki-searchresults.php',13,'feature_search','tiki_p_search','',0);
 
-INSERT INTO "tiki_menu_options" ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (184,42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_quicktags','',0);
+INSERT INTO "tiki_menu_options" ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (184,42,'r','Admin','',1050,'','tiki_p_admin_quicktags','',0);
 
-INSERT INTO "tiki_menu_options" ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (185,42,'r','Admin','tiki-admin.php',1050,'','tiki_p_edit_menu','',0);
+INSERT INTO "tiki_menu_options" ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (185,42,'r','Admin','',1050,'','tiki_p_edit_menu','',0);
 
 INSERT INTO "tiki_menu_options" ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (188,42,'o','Tiki Cache/Sys Admin','tiki-admin_system.php',1230,'','tiki_p_clean_cache','',0);
 
-INSERT INTO "tiki_menu_options" ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (186,42,'r','Admin','tiki-admin.php',1050,'','tiki_p_clean_cache','',0);
+INSERT INTO "tiki_menu_options" ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (186,42,'r','Admin','',1050,'','tiki_p_clean_cache','',0);
 
 INSERT INTO "tiki_menu_options" ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (190,42,'s','Articles','tiki-view_articles.php',350,'feature_articles','tiki_p_articles_read_heading','',0);
 
