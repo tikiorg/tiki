@@ -2778,7 +2778,7 @@ INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`",
 go
 
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (174,42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_contribution','',0)
+INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (174,42,'r','Admin','',1050,'','tiki_p_admin_contribution','',0)
 go
 
 
@@ -2802,7 +2802,7 @@ INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`",
 go
 
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (180,42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_users','',0)
+INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (180,42,'r','Admin','',1050,'','tiki_p_admin_users','',0)
 go
 
 
@@ -2811,11 +2811,11 @@ INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`",
 go
 
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (184,42,'r','Admin','tiki-admin.php',1050,'','tiki_p_admin_quicktags','',0)
+INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (184,42,'r','Admin','',1050,'','tiki_p_admin_quicktags','',0)
 go
 
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (185,42,'r','Admin','tiki-admin.php',1050,'','tiki_p_edit_menu','',0)
+INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (185,42,'r','Admin','',1050,'','tiki_p_edit_menu','',0)
 go
 
 
@@ -2823,7 +2823,7 @@ INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`",
 go
 
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (186,42,'r','Admin','tiki-admin.php',1050,'','tiki_p_clean_cache','',0)
+INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (186,42,'r','Admin','',1050,'','tiki_p_clean_cache','',0)
 go
 
 
