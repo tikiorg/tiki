@@ -1,5 +1,9 @@
 # $Id: tiki_2.0to3.0.sql 13749 2008-07-19 23:57:28Z m_stef $
 
+# ATTENTION:
+# This file is now obsolete. To modify the database, simply add a file to the installer/schema/
+# directory. For more information, see http://dev.tikiwiki.org/DatabaseSchemaUpgrade
+
 # The following script will update a tiki database from version 2.0 to 3.0
 #
 # To execute this file do the following:
@@ -65,6 +69,6 @@ CREATE TABLE tiki_schema (
 	install_date TIMESTAMP
 ) ENGINE=MyISAM;
 
-# This file is now obsolete. To modify the database, simple add a file to the installer/schema/
+# This file is now obsolete. To modify the database, simply add a file to the installer/schema/
 # directory. For more information, see http://dev.tikiwiki.org/DatabaseSchemaUpgrade
 
