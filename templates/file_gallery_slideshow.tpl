@@ -74,7 +74,7 @@
 			thumbnails: {$slideshow_thumbnails|default:"true"},
 			replace: [/\?preview/, '?thumbnail'],
 			overlap: {$slideshow_overlap|default:"false"},
-			delay: {$slideshow_delay|default:2000},
+			delay: {$slideshow_delay|default:4000},
 			duration: {$slideshow_duration|default:500},
 			random: {$slideshow_random|default:"false"},
 			loop: {$slideshow_loop|default:"true"},
@@ -89,7 +89,9 @@
 	</script>
 </head>
 <body>
+{if ( ! $slideshow_noclose )}
 <div style="position:fixed; top:5px; right:10px;">{button href='#' _onclick='javascript:window.close();' _text="{tr}Close{/tr}"}</div>
+{/if}
 <div id="show" class="slideshow">
 	<div id="images" class="slideshow-images">
 		<img src="{if $tikiroot neq ""}{$tikiroot}{else}/{/if}tiki-download_file.php?preview&amp;fileId={$first}" />
