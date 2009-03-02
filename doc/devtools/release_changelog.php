@@ -60,7 +60,11 @@ if ($handle) {
 				}
 				$currentParsedRevision = (int)$matches[1];
 			} elseif ( $currentParsedRevision > 0 && $buffer[0] != '-' ) {
-				$lastReleaseLogs[$currentParsedRevision] .= $buffer;
+				if ( isset( $lastReleaseLogs[$currentParsedRevision] ) ) {
+					$lastReleaseLogs[$currentParsedRevision] .= $buffer;
+				} else {
+					$lastReleaseLogs[$currentParsedRevision] = $buffer;
+				}
 			}
 		}
 		if ( $lastReleaseMajorNumber == 0 ) {

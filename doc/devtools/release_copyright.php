@@ -28,7 +28,7 @@ $nbCommiters = 0;
 $contributors = array();
 $repositoryInfo = get_info(TIKISVN);
 
-get_contributors_data(TIKISVN, $contributors, 1, (int)get_info($source)->entry->commit['revision']);
+get_contributors_data(TIKISVN, $contributors, 1, (int)$repositoryInfo->entry->commit['revision']);
 ksort($contributors);
 
 $totalContributors = count($contributors);
