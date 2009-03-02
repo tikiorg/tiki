@@ -788,7 +788,7 @@ foreach ($listfields as $sfid => $oneitem) {
 		{
 			$listfields[$listfields[$sfid]['options_array'][2]]['http_request'][$i] .=
 				($listfields[$listfields[$sfid]['options_array'][2]]['http_request'][$i] ? "," : "") .
-				 $listfields[$sfid]['options_array'][$i];
+				isset($listfields[$sfid]['options_array'][$i])?$listfields[$sfid]['options_array'][$i]:'';
 		}
 		$listfields[$listfields[$sfid]['options_array'][2]]['http_request'][5] .=
 			($listfields[$listfields[$sfid]['options_array'][2]]['http_request'][5] ? "," : "") .
