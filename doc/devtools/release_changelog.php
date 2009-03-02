@@ -8,7 +8,7 @@ require_once TOOLS . '/svntools.php';
 if( $_SERVER['argc'] <= 1 )
 	die( "Usage: php doc/devtools/release_changelog.php <version-number>
 Example:
-	php doc/devtools/release.php 2.0
+	php doc/devtools/release_changelog.php 2.0
 " );
 $newVersion = $_SERVER['argv'][1];
 
