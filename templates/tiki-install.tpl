@@ -281,10 +281,7 @@
 			  <p>{tr}Create a new database (clean install) with profile{/tr}:</p>
 			<select name="profile" size="{if $profiles}{$profiles|@count}{else}5{/if}">
 			<option value="" selected="selected">Bare-bones default install</option>
-			<option value="Simple_Bug_Tracker">Simple Bug Tracker</option>
 			<option value="Small_Business_Web_Presence">Small Business Web Presence</option>
-			<option value="Open_Collaboration_Permissions">Open Collaboration Permissions</option>
-			<option value="Intranet">Intranet</option>
 			</select>
 			 <p>{tr}See the documentation for <a target="_blank" href="http://doc.tikiwiki.org/Profiles" class="link" title="{tr}Description of available profiles.{/tr}">descriptions of the available profiles{/tr}</a>.</p>
 			 <p>&nbsp;</p>
