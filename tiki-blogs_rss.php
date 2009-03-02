@@ -10,6 +10,12 @@ require_once ('lib/tikilib.php');
 require_once ('lib/blogs/bloglib.php');
 require_once ('lib/rss/rsslib.php');
 
+if ($prefs['feature_blogs'] != 'y') {
+	$smarty->assign('msg', tra("This feature is disabled").": feature_blogs");
+	$smarty->display("error.tpl");
+	die;
+}
+
 if ($prefs['rss_blogs'] != 'y') {
         $errmsg=tra("rss feed disabled");
         require_once ('tiki-rss_error.php');

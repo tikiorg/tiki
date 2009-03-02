@@ -274,7 +274,7 @@ if (empty($_SERVER['SERVER_NAME'])) {
 
 
 // in the case of tikis on same domain we have to distinguish the realm
-// changed cookie and session variable name by a name made with siteTitle 
+// changed cookie and session variable name by a name made with browsertitle 
 $cookie_site = ereg_replace("[^a-zA-Z0-9]", "", $prefs['cookie_name']);
 $user_cookie_site = 'tiki-user-'.$cookie_site;
 

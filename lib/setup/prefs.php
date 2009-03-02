@@ -787,7 +787,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'login_scr' => 'tiki-login_scr.php',
 		'register_url' => 'tiki-register.php',
 		'error_url' => 'tiki-error.php',
-		'highlight_group' => '',
+		'highlight_group' => '0',
 		'cookie_path' => '/',
 		'cookie_domain' => '',
 		'cookie_name' => 'tikiwiki',
@@ -946,7 +946,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_actionlog_bytes' => 'n',
 
 		// admin
-		'siteTitle' => 'Tiki 3.0',
+		'browsertitle' => 'Tiki 3.0',
 		'tmpDir' => 'temp',
 
 		// tell a friend
@@ -1173,7 +1173,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'magic_last_load' => 0,
 
 		//groupalert
-		'feature_groupalert' => 'y',
+		'feature_groupalert' => 'n',
 	);
 
 	// spellcheck

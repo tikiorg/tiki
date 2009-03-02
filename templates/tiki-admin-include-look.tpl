@@ -286,7 +286,7 @@
 									<label for="sitelogo_title">{tr}Site logo title (on mouse over){/tr}:</label>
 								</td>
 								<td>
-									<input type="text" name="sitelogo_title" id="sitelogo_title" value="{$prefs.sitelogo_title}" size="50" maxlength="50" />
+									<input type="text" name="sitelogo_title" id="sitelogo_title" value="{$prefs.sitelogo_title}" size="50" maxlength="200" />
 								</td>
 							</tr>
 							<tr>
@@ -294,7 +294,7 @@
 									<label for="sitelogo_alt">{tr}Alt. description (e.g. for text browsers){/tr}:</label>
 								</td>
 								<td>
-									<input type="text" name="sitelogo_alt" id="sitelogo_alt" value="{$prefs.sitelogo_alt}" size="50" maxlength="50" />
+									<input type="text" name="sitelogo_alt" id="sitelogo_alt" value="{$prefs.sitelogo_alt}" size="50" maxlength="200" />
 								</td>
 							</tr>
 							<tr>
@@ -302,7 +302,7 @@
 									<label for="_sitetitle">{tr}Site title{/tr}:</label>
 								</td>
 								<td>
-									<input type="text" name="sitetitle" id="_sitetitle" value="{$prefs.sitetitle}" size="50" maxlength="50" />
+									<input type="text" name="sitetitle" id="_sitetitle" value="{$prefs.sitetitle}" size="50" maxlength="200" />
 								</td>
 							</tr>
 							<tr>
@@ -310,7 +310,7 @@
 									<label for="_sitesubtitle">{tr}Site subtitle{/tr}:</label>
 								</td>
 								<td>
-									<input type="text" name="sitesubtitle" id="_sitesubtitle" value="{$prefs.sitesubtitle}" size="50" maxlength="50" />
+									<input type="text" name="sitesubtitle" id="_sitesubtitle" value="{$prefs.sitesubtitle}" size="50" maxlength="200" />
 								</td>
 							</tr>
 							</table>
@@ -694,6 +694,7 @@
 				</legend>
 				<div id="other" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_other) and $smarty.session.tiki_cookie_jar.show_other neq 'y'}none{else}block{/if};">
 			{/if}
+
 			<div class="clear floatleft">
 				<input type="checkbox" id="use_context_menu_icon" name="use_context_menu_icon" {if $prefs.use_context_menu_icon eq 'y'}checked="checked"{/if} />
 				<label for="use_context_menu_icon">{tr}Use context menus for actions (icons) (only in file galleries yet){/tr}</label>

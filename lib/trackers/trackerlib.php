@@ -3027,6 +3027,10 @@ class TrackerLib extends TikiLib {
 			return NULL;
 		}
 	}
+	function rename_page($old, $new) {
+		$query = "update `tiki_tracker_item_fields` ttif left join `tiki_tracker_fields` ttf on (ttif.fieldId = ttf.fieldId) set ttif.`value`=? where ttif.`value`=? and ttf.`type` = ?";
+		$this->query($query, array($new, $old, 'k'));
+	}
 }
 
 global $dbTiki, $tikilib, $prefs;

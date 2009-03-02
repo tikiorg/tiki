@@ -20,7 +20,7 @@ $tmp2 = isset($_SERVER["PHP_SELF"]) ? $_SERVER["PHP_SELF"] : "";
 $url = $tmp1.dirname($tmp2);
 
 $info = Array();
-$info["name"] = $prefs['siteTitle'];
+$info["name"] = $prefs['browsertitle'];
 $info["description"] = '';
 $info["url"] = $url;
 $info["country"] = 'None';

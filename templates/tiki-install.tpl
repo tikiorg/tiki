@@ -19,9 +19,9 @@
 <div class="clearfix">
 	<p>{tr}Welcome to the TikiWiki installation and upgrade script.{/tr} {tr}Use this script to install a new TikiWiki database or upgrade your existing database to release{/tr} <strong>{$tiki_version_name}</strong></p>
 	<ul>
-		<li>{tr}For the latest information about this release, please read the{/tr} <a href="http://www.tikiwiki.org/{$tiki_version_name}" target="_blank">{tr}Release Notes{/tr}</a>.</li>
+		<li>{tr}For the latest information about this release, please read the{/tr} <a href="http://tikiwiki.org/ReleaseNotes{$tiki_version_name}" target="_blank">{tr}Release Notes{/tr}</a>.</li>
 		<li>{tr}For complete documentation, please visit{/tr} <a href="http://doc.tikiwiki.org" target="_blank">http://doc.tikiwiki.org</a>.</li>
-		<li>{tr}For more information about TikiWiki, please visit{/tr} <a href="http://www.tikiwiki.org" target="_blank">http://www.tikiwiki.org</a>.</li>
+		<li>{tr}For more information about TikiWiki, please visit{/tr} <a href="http://tikiwiki.org" target="_blank">http://tikiwiki.org</a>.</li>
 	</ul>
 
 	<form action="tiki-install.php" method="post">
@@ -200,7 +200,7 @@
 		<div style="padding:5px;">
 			<label for="host">{tr}Host name:{/tr}</label>
 			<div style="margin-left:1em;">
-			<input type="text" name="host" id="host" value="localhost" size="40" /> <a href="#" onclick="flip('host_help');" title="{tr}Help{/tr}"><img src="pics/icons/help.png" alt="{tr}Help{/tr}" /></a>
+			<input type="text" name="host" id="host" value="{if isset($smarty.request.host)}{$smarty.request.host|escape:"html"}{else}localhost{/if}" size="40" /> <a href="#" onclick="flip('host_help');" title="{tr}Help{/tr}"><img src="pics/icons/help.png" alt="{tr}Help{/tr}" /></a>
 			<br /><em>{tr}Enter the host name or IP for your database.{/tr}</em>
 			<div style="display:none;" id="host_help">
 				<p>{tr}Use <strong>localhost</strong> if the database is running on the same machine as Tiki{/tr}. {tr}For SQLite, enter the path and filename to your database file{/tr}.</p>
@@ -210,7 +210,7 @@
 		<div style="padding:5px;">
 			<label for="name">{tr}Database name:{/tr}</label>
 			<div style="margin-left:1em;">
-			<input type="text" id="name" name="name" size="40" /> <a href="#" onclick="flip('name_help');" title="{tr}Help{/tr}"><img src="pics/icons/help.png" alt="{tr}Help{/tr}" /></a>
+			<input type="text" id="name" name="name" size="40" value="{$smarty.request.name|escape:"html"}" /> <a href="#" onclick="flip('name_help');" title="{tr}Help{/tr}"><img src="pics/icons/help.png" alt="{tr}Help{/tr}" /></a>
 		
 			<br /><em>{tr}Enter the name of the database that Tiki will use.{/tr}</em> 
 			<div style="margin-left:1em;display:none;" id="name_help">
@@ -228,7 +228,7 @@
 		<fieldset><legend>{tr}Database user{/tr}</legend>
 		<p>{tr}Enter a database user with administrator permission for the Database{/tr}.</p>
 		<div style="padding:5px;">
-			<label for="user">{tr}User name:{/tr}</label> <input type="text" id="user" name="user" />
+			<label for="user">{tr}User name:{/tr}</label> <input type="text" id="user" name="user" value="{$smarty.request.user|escape:"html"}" />
 		</div>
 		<div style="padding:5px;">
 			<label for="pass">{tr}Password:{/tr}</label> <input type="password" id="pass" name="pass" />
@@ -548,9 +548,9 @@ others?
 			<div class="box">
 				<h3 class="box-title">{tr}Help{/tr}</h3>
 				<div class="clearfix box-data">
-				<p><img src="favicon.png" alt="{tr}TikiWiki{/tr}" style="vertical-align:middle;" /> <a href="http://www.tikiwiki.org" target="_blank">{tr}TikiWiki Web Site{/tr}</a></p>
+				<p><img src="favicon.png" alt="{tr}TikiWiki{/tr}" style="vertical-align:middle;" /> <a href="http://tikiwiki.org" target="_blank">{tr}TikiWiki Web Site{/tr}</a></p>
 				<p><img src="pics/icons/book_open.png" alt="{tr}Documentation{/tr}" style="vertical-align:middle;" /> <a href="http://doc.tikiwiki.org" target="_blank">{tr}Documentation{/tr}</a></p>
-				<p><img src="pics/icons/group.png" alt="{tr}Forums{/tr}" style="vertical-align:middle;" /> <a href="http://www.tikiwiki.org/forums" target="_blank">{tr}Support Forums{/tr}</a></p>
+				<p><img src="pics/icons/group.png" alt="{tr}Forums{/tr}" style="vertical-align:middle;" /> <a href="http://tikiwiki.org/forums" target="_blank">{tr}Support Forums{/tr}</a></p>
 				</div>
 			</div>
 		</div>
@@ -560,4 +560,4 @@ others?
 	  	</div>
 </div>
 <hr />
-<p align="center"><a href="http://www.tikiwiki.org" target="_blank" title="{tr}Powered by{/tr} {tr}TikiWiki CMS/Groupware{/tr} &#169; 2002&#8211;{$smarty.now|date_format:"%Y"} "><img src="img/tiki/tikibutton2.png" alt="Tikiwiki" style="width: 80px; height: 31px; border:0" /></a></p>
+<p align="center"><a href="http://tikiwiki.org" target="_blank" title="{tr}Powered by{/tr} {tr}TikiWiki CMS/Groupware{/tr} &#169; 2002&#8211;{$smarty.now|date_format:"%Y"} "><img src="img/tiki/tikibutton2.png" alt="Tikiwiki" style="width: 80px; height: 31px; border:0" /></a></p>

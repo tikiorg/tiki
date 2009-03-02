@@ -1,4 +1,5 @@
 <?php
+// $Id$
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -304,10 +305,10 @@ class RSSLib extends TikiLib {
 		$rss->feedURL = $url;
 		
 		$image = new FeedImage();
-		$image->title = $prefs['siteTitle'];
+		$image->title = $prefs['browsertitle'];
 		$image->url = $img;
 		$image->link = $home;
-		$image->description = sprintf(tra('Feed provided by %s. Click to visit.'), $prefs['siteTitle']);
+		$image->description = sprintf(tra('Feed provided by %s. Click to visit.'), $prefs['browsertitle']);
 	
 		//optional
 		$image->descriptionTruncSize = 500;

@@ -329,6 +329,10 @@ class WikiLib extends TikiLib {
 		if ($prefs['wikiHomePage'] == $oldName) {
 			$tikilib->set_preference('wikiHomePage', $newName);
 		}
+		if ($prefs['feature_trackers'] == 'y') {
+			global $trklib; include_once('lib/trackers/trackerlib.php');
+			$trklib->rename_page($oldName, $newName);
+		}
 
 		return true;
 	}
