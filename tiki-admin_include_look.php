@@ -70,6 +70,11 @@ if (isset($_REQUEST["looksetup"]) || (!empty($_REQUEST['site_style']) && $_REQUE
 	"feature_site_report",
 	"feature_site_send_link",
 	"change_theme",
+	"feature_jquery_ui",
+	"feature_jquery_tooltips",
+	'feature_jquery_autocomplete',
+	'feature_jquery_superfish',
+	'feature_jquery_reflection',
     );
 
     foreach ($pref_toggles as $toggle) {
@@ -97,6 +102,12 @@ if (isset($_REQUEST["looksetup"]) || (!empty($_REQUEST['site_style']) && $_REQUE
 	'feature_site_report_email',
 	'feature_endbody_code',
 	'users_prefs_theme',
+	'jquery_effect',
+    'jquery_effect_direction',
+    'jquery_effect_speed',
+    'jquery_effect_tabs',
+    'jquery_effect_tabs_direction',
+    'jquery_effect_tabs_speed',
     );
 
     foreach ($pref_simple_values as $svitem) {

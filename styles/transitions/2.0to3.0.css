@@ -547,3 +547,33 @@ p.editdate {
 }
 
 [class].wikitext .fancylist li p {}
+
+/***************************************
+   Cluetip - JQuery tooltips
+   =cluetipClass: 'default' 
+-------------------------------------- */
+
+.cluetip-default {
+  background-color: #BED8F1;
+}
+.cluetip-default #cluetip-outer {
+  background-color: #BED8F1;
+}
+.cluetip-default h3#cluetip-title {
+  background-color: #1B3A50;
+  color: #fff;
+}
+.cluetip-default #cluetip-title a {
+  color: #BED8F1;
+  font-size: 0.95em;
+}  
+.cluetip-default #cluetip-inner {
+  padding: .9em;
+}
+.cluetip-default div#cluetip-close { 
+  text-align: right;
+  margin: -10px 0 0 0;
+  color: #900;
+}
+
+
