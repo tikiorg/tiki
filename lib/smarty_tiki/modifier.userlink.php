@@ -157,7 +157,12 @@ function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set',
 			    }
 
 			    if (!empty($content)) {
-				$mouseover = " onmouseover=\"return overlib('".addslashes($content)."',HAUTO,VAUTO,CAPTION,'<div align=\'center\'>".tra("User information - Click for more info")."</div>');\" onmouseout=\"nd()\" ";
+			    	if ($prefs.feature_jquery_tooltips) {
+			    		// not really mouseover, this goes in title for JQ
+			    		$mouseover = tra('User information - Click for more info').'|'.htmlspecialchars($content);
+			    	} else {
+						$mouseover = " onmouseover=\"return overlib('".addslashes($content)."',HAUTO,VAUTO,CAPTION,'<div align=\'center\'>".tra("User information - Click for more info")."</div>');\" onmouseout=\"nd()\" ";
+			    	}
 			    }
 			}
 
@@ -167,7 +172,11 @@ function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set',
                     $cachelib->cacheItem($cacheItem, $ret);
                     return $ret;
 		} else {
-                    $ret = "<a class='$class' $mouseover target='_top' href='tiki-user_information.php?userId=".urlencode($info['userId'])."' >$ou</a>$friend$star";
+			if ($prefs.feature_jquery_tooltips) {
+				$ret = "<a class='$class titletips' title=\"$mouseover\" href='tiki-user_information.php?userId=".urlencode($info['userId'])."' >$ou</a>$friend$star";
+			} else {
+				$ret = "<a class='$class' $mouseover target='_top' href='tiki-user_information.php?userId=".urlencode($info['userId'])."' >$ou</a>$friend$star";
+			}
                     $cachelib->cacheItem($cacheItem, $ret);
                     return $ret;
 		}

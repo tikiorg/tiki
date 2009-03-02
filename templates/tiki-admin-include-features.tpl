@@ -219,7 +219,7 @@
 					</div>
 					<div class="float_l" style="width: 49%; text-align: left; float: left">
 						<span class="checkbox"><input type="checkbox" name="feature_shadowbox"{if $prefs.feature_shadowbox eq 'y'} checked="checked"{/if}/></span>
-						<span class="label"><a href="{$prefs.helpurl}Shadowbox" target="tikihelp" class="tikihelp" title="{tr}Shadowbox{/tr}"> {tr}Shadowbox{/tr}</a>{if $prefs.feature_mootools neq 'y'} ({tr}required{/tr}: {tr}Mootools{/tr}){/if}</span>
+						<span class="label"><a href="{$prefs.helpurl}Shadowbox" target="tikihelp" class="tikihelp" title="{tr}Shadowbox{/tr}"> {tr}Shadowbox{/tr}</a>{if $prefs.feature_mootools neq 'y' and $prefs.feature_jquery neq 'y'} ({tr}required{/tr}: {tr}Mootools or JQuery{/tr}){/if}</span>
 					</div>
 					<div class="float_r" style="width: 49%; text-align: left; float: right">
 						<span class="checkbox"><input type="checkbox" name="feature_mootools" {if $prefs.feature_mootools eq 'y'}checked="checked"{/if}/></span>
@@ -296,11 +296,15 @@
 					</div>
 					<div class="float_r" style="width: 49%; text-align: left; float: right">
 						<span class="checkbox"><input type="checkbox" name="feature_magic" {if $prefs.feature_magic eq 'y'}checked="checked"{/if}/></span>
-						<span class="label">{tr}Magic Admin Panel{/tr}</span>
+						<span class="label"><a>{tr}Magic Admin Panel{/tr}</a></span>
 					</div>
 					<div class="float_l" style="width: 49%; text-align: left; float: left">
 						<span class="checkbox"><input type="checkbox" name="feature_charts"	{if $prefs.feature_charts eq 'y'}checked="checked"{/if}/></span>
 						<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Charts" target="tikihelp" class="tikihelp" title="{tr}Charts{/tr}">{/if} {tr}Charts{/tr} {if $prefs.feature_help eq 'y'}</a>{/if} </span>
+					</div>
+					<div class="float_r" style="width: 49%; text-align: left; float: right">
+						<span class="checkbox"><input type="checkbox" name="feature_jquery" {if $prefs.feature_jquery eq 'y'}checked="checked"{/if}/></span>
+						<span class="label"> <a href="{$prefs.helpurl}JQuery" target="tikihelp" class="tikihelp" title="{tr}JQuery: JavaScript UI effects{/tr}"> {tr}JQuery{/tr}</a></span>
 					</div>
 				</div>
 			</fieldset>

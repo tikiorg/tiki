@@ -6,11 +6,24 @@
 {if $categId}<input type="hidden" name="categId" value="{$categId}" />{/if}
 {if $templateId}<input type="hidden" name="templateId" value="{$templateId}" />{/if}
 {if $mod_quickedit_heading}<div class="bod-data">{$mod_quickedit_heading}</div>{/if}
-<input id="{$qefield}" type="text" {if $module_params.size}size="{$size}"{/if}name="page" />
+<input id="{$qefield}" type="text" {if $module_params.size}size="{$size}"{/if}name="page" {if $prefs.feature_jquery eq 'y' and $prefs.feature_jquery_autocomplete eq 'y'}autocomplete="off"{/if} />
 <input type="submit" name="quickedit" value="{$submit}" />
 </form>
 <script type="text/javascript">
-{if $prefs.feature_mootools eq 'y'}
+<!--//--><![CDATA[//><!--
+{if $prefs.feature_jquery eq 'y' and $prefs.feature_jquery_autocomplete eq 'y'}
+{literal}
+$jq(document).ready( function() {
+	$jq("#{/literal}{$qefield}{literal}")
+		.autocomplete('tiki-listpages.php?listonly',
+			{extraParams: {'httpaccept': 'text/javascript'},
+			 dataType: "json",
+			 parse: parseAutoJSON,
+			 formatItem: function(row) { return row; }
+			});
+});
+{/literal}
+{elseif $prefs.feature_mootools eq 'y'}
 {literal}
 window.addEvent('domready', function() {
 	var o = new Autocompleter.Request.JSON('{/literal}{$qefield}{literal}', 'tiki-listpages.php?listonly', {
@@ -19,5 +32,6 @@ window.addEvent('domready', function() {
 });
 {/literal}
 {/if}
+//--><!]]>
 </script>
 {/tikimodule}

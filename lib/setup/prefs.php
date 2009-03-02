@@ -1144,7 +1144,24 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_comments_post_as_anonymous' => 'n',
 		'feature_comments_moderation' => 'n',
 		'feature_template_zoom' => 'y',
+		
+		// JQuery
+		'feature_jquery' => 'y',			// Alternative lib for shadowbox etc
+		'jquery_effect' => '',				// Default effect for general show/hide: ['' | 'slide' | 'fade' | and
+											// see http://docs.jquery.com/UI/Effects: 'blind' | 'clip' | 'explode' etc]
+		'jquery_effect_direction' => '', 	// ['horizontal' | 'vertical' | 'left' | 'right' | 'up' | 'down' ]
+		'jquery_effect_speed' => 'normal', 	// ['slow' | 'normal' | 'fast' | milliseconds (int) ]
 
+		'jquery_effect_tabs' => 'slide',	// Different effect for tabs (['none' | 'normal' (for jq) | 'slide' etc]
+		'jquery_effect_tabs_direction' => 'vertical',
+		'jquery_effect_tabs_speed' => 'fast',
+		
+		'feature_jquery_ui' => 'y',				// include UI lib for more effects
+		'feature_jquery_tooltips' => 'y',		// use JQuery tooltips and override Overlib
+		'feature_jquery_autocomplete' => 'y',	// autocomplete on pages in QuickEdit (more coming soon)
+		'feature_jquery_superfish' => 'y',		// Effects on CSS (Suckerfish) menus
+		'feature_jquery_reflection' => 'y',		// reflection effects on images
+	
 		// SefUrl
 		'feature_sefurl' => 'n',
 		'feature_sefurl_filter' => 'n',
