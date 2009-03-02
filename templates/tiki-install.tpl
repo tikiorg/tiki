@@ -283,7 +283,7 @@
 			<option value="" selected="selected">Bare-bones default install</option>
 			<option value="Small_Organization_Web_Presence">Small Organization Web Presence</option>
 			</select>
-			 <p>{tr}See the documentation for <a target="_blank" href="http://doc.tikiwiki.org/Profiles" class="link" title="{tr}Description of available profiles.{/tr}">descriptions of the available profiles{/tr}</a>.</p>
+			 <p>{tr}See the documentation for <a target="_blank" href="http://profiles.tikiwiki.org/Profiles_in_30_installer" class="link" title="{tr}Description of available profiles.{/tr}">descriptions of the available profiles{/tr}</a>.</p>
 			 <p>&nbsp;</p>
 				<div align="center">
 					<input type="submit" name="scratch" value=" {tr}Install{/tr} " />
