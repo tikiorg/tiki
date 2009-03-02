@@ -104,13 +104,10 @@
 <p>{tr}Note that plugin arguments can be enclosed with double quotes (&quot;); this allows them to contain , or = or &gt;{/tr}.</p>
 <br />
 <table width="95%" class="normal">
-	<tr><th>{tr}Plugin{/tr}</th><th>{tr}Description{/tr}</th></tr>
+	<tr><th>{tr}Description{/tr}</th></tr>
   {cycle values="even,odd" print=false}
   {section name=i loop=$plugins}
     <tr>
-      <td width="20%" class="{cycle advance=false}">
-        <code>{$plugins[i].name}</code>
-      </td>
       <td class="{cycle advance=false}">
         {if $plugins[i].help eq ''}
           {tr}No description available{/tr}
