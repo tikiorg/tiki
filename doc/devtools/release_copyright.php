@@ -38,23 +38,29 @@ $copyrights = <<<EOS
 Tiki Copyright
 ----------------
 
-The following list gathers the copyrights holders for tikiwiki
-at the state of $newVersion version. Each member of that list wrote
-at least one line, directly or indirectly, in tikiwiki code source.
-The exact proportion of the contribution of each is not an issue,
-as any copyright change will involve the agreement of everybody.
+The following list attempts to gather the copyright holders for tikiwiki
+as of version $newVersion.
 
-This is how we implement the TikiwikiSocialContract.
+Accounts listed below with commits have contributed source code to CVS or SVN. 
+Please note that even more people contributed on various other aspects (documentation, 
+bug reporting, testing, etc.)
+
+This is how we implement the Tikiwiki Social Contract.
 http://dev.tikiwiki.org/SocialContract
 
 List of members of the Community
-As of on $now, the community has:
+As of $now, the community has:
   * $totalContributors members on Sourceforge,
-  * $nbCommiters of those people who made at least one commit
+  * $nbCommiters of those people who made at least one code commit
 
 This list is automatically generated and alphabetically sorted
 from subversion repository by the following script:
   doc/devtools/release_copyright.php
+
+Counting the commits is not as trivial as it may sound. If your number of commits
+seems incorrect, it could be that the script is not detecting them all. This 
+has been reported especially for commits early on in the project. Nonetheless, 
+the list provides a general idea.
 
 ====================================================================
 
@@ -93,12 +99,12 @@ function get_contributors_data($path, &$contributors, $minRevision, $maxRevision
 			if ( !isset($contributors[$author]) ) $contributors[$author] = array();
 
 			$contributors[$author]['author'] = $logEntry[2];
-			$contributors[$author]['last_commit'] = $logEntry[2];
 			$contributors[$author]['first_commit'] = $logEntry[3];
 
 			if ( isset($contributors[$author]['nb_commits']) ) {
 				$contributors[$author]['nb_commits']++;
 			} else {
+				$contributors[$author]['last_commit'] = $logEntry[3];
 				$nbCommiters++;
 				$contributors[$author]['nb_commits'] = 1;
 			}
