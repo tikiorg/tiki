@@ -1457,6 +1457,7 @@ ul.toc * {
 .diffheader {
 	background: #A9B8C2;
 	font-weight: bold;
+	width: 50%;
 }
 .diffadded {
 	background: #CCFFCC;
