@@ -14,12 +14,17 @@ function installer_is_accessible()
 	return true;
 }
 
-$title='';
-$content='';
+if (!isset($title)) $title = '';
+if (!isset($content)) $content = '';
+if (!isset($dberror)) $dberror = false;
 
 if (version_compare(PHP_VERSION, '5.0.0', '<')) {
 	$title='PHP5 is required for Tiki 3.0';
 	$content='<p>Please contact your system administrator ( if you are not one ;) ).</p>';
+	createPage($title,$content);
+}
+
+if ($dberror===true) {
 	createPage($title,$content);
 }
 
