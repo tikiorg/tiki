@@ -92,48 +92,7 @@ if (is_file('db/virtuals.inc')) {
 }
 $re = include($local_php);
 if ( $re === FALSE) {
-	print '<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>'.$prefs['siteTitle'].': '.tra('Installation begins').': '.$local_php.tra(' not found').'</title>
-	<link rel="stylesheet" href="styles/thenews.css" type="text/css">
-</head>
-<body>
-    <div id="siteheader" class="clearfix">
-	<div id="header-top">
-		<div id="sitelogo" style="padding-left: 70px; text-align: center">
-		    <h1>
-			<img style="border: medium none; vertical-align: middle;" alt="TikiWiki CMS/Groupware" src="img/tiki/tiki3.png" />
-		    </h1>
-		</div>
-	</div>
-    </div>
-
-	<div id="tiki-main">
-		<div id="tiki-mid">
-			<div style="margin:10px 30px;">
-				<h1 style="color: red">'.tra("Tiki cannot find your $local_php file.").' <a title="help" href="http://doc.tikiwiki.org/Installation" target="help"><img border="0" src="img/icons/help.gif" alt="Help" /></a></h1>
-				<p>'.tra('This is normal for a brand new Tiki installation.').'</p>
-				<p>'.tra('Run the Tiki Installer ').'(<a 
-href=tiki-install.php>tiki-install.php</a>)'.tra(' to create and transfer information to your db/local.php file.
-This file contains the information (username/password/database name/etc.) to connect to a database.').'</p>
-				<p>'.tra('Please see <a 
-href="http://doc.tikiwiki.org/">the documentation</a> for more information.').'</p>
-			</div>
-		</div>
-		<hr />
-		<p style="text-align: center">
-			<a href="http://tikiwiki.org" title="TikiWiki CMS/Gropuware Project">
- 	 			<img src="img/tiki/tikibutton2.png" alt="TikiWiki" border="0" height="31" width="80" />
-			</a>
-		</p>
-	</div>
-</body>
-</html>
-';
+	header('location: tiki-install.php');
 	exit;
 }
 

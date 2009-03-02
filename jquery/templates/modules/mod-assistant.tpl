@@ -33,7 +33,7 @@
 	</p>
 	{/if}
 	<p>
-		<a href="http://www.tikiwiki.org" title="{tr}The Tikiwiki Community{/tr}" target="_blank"><img src="favicon.png" alt="{tr}The Tikiwiki Community{/tr}" style="border:0;margin-right:2px;vertical-align:middle" align="left" /></a>{tr}To learn more, visit: <a href="http://www.tikiwiki.org" title="The Tikiwiki Community" target="_blank">http://www.tikiwiki.org</a>{/tr}.
+		<a href="http://tikiwiki.org" title="{tr}The Tikiwiki Community{/tr}" target="_blank"><img src="favicon.png" alt="{tr}The Tikiwiki Community{/tr}" style="border:0;margin-right:2px;vertical-align:middle" align="left" /></a>{tr}To learn more, visit: <a href="http://tikiwiki.org" title="The Tikiwiki Community" target="_blank">http://tikiwiki.org</a>{/tr}.
 	</p>
 	<p>
 		<a href="http://doc.tikiwiki.org" title="{tr}Tikiwiki Documentation{/tr}" target="_blank"><img src="pics/icons/help.png" alt="{tr}Tikiwiki Documentation{/tr}" style="border:0px;margin-right:2px;vertical-align:middle" align="left" /></a>{tr}For help, visit <a href="http://doc.tikiwiki.org" title="Tikiwiki Documentation" target="_blank">http://doc.tikiwiki.org</a>{/tr}.

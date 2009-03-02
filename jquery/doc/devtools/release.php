@@ -8,9 +8,9 @@ require_once TOOLS . '/svntools.php';
 if( $_SERVER['argc'] <= 1 )
 	die( "Usage: php doc/devtools/release.php <version-number> [ <subrelease> ]
 Examples:
-	php doc/devtoos/release.php 2.0 preRC3
-	php doc/devtoos/release.php 2.0 RC3
-	php doc/devtoos/release.php 2.0
+	php doc/devtools/release.php 2.0 preRC3
+	php doc/devtools/release.php 2.0 RC3
+	php doc/devtools/release.php 2.0
 
 Notes:
 	Subreleases begining with pre will not be tagged.

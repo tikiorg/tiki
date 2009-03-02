@@ -172,4 +172,12 @@ function branch( $source, $branch, $revision )
 	return isset( $f->entry );
 }
 
-?>
+function get_logs( $localPath, $minRevision, $maxRevision = 'HEAD' ) {
+	if ( empty($minRevision) || empty($maxRevision) ) return false;
+	$logs = '';
+
+	// svn log -rHEAD:15184 https://tikiwiki.svn.sourceforge.net/svnroot/tikiwiki/branches/3.0
+	$logs = `svn log -r$maxRevision:$minRevision $localPath`;
+
+	return $logs;
+}

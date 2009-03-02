@@ -81,7 +81,7 @@ REPLACE INTO tiki_preferences VALUES ('rssfeed_language','en-us');
 REPLACE INTO tiki_preferences VALUES ('rssfeed_webmaster','');
 REPLACE INTO tiki_preferences VALUES ('session_db','n');
 REPLACE INTO tiki_preferences VALUES ('session_lifetime','0');
-REPLACE INTO tiki_preferences VALUES ('siteTitle','Tikiwiki');
+REPLACE INTO tiki_preferences VALUES ('browsertitle','Tiki 3.0');
 REPLACE INTO tiki_preferences VALUES ('site_busy_msg','Server is currently too busy, please come back later.');
 REPLACE INTO tiki_preferences VALUES ('site_closed','n');
 REPLACE INTO tiki_preferences VALUES ('site_closed_msg','Site is closed for maintenance, please come back later.');

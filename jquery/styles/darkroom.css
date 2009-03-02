@@ -1040,6 +1040,7 @@ a.forumnameread {} */
 
 .tabmark {
 	display: inline;
+	white-space: nowrap;
 	font-size: 10px;
 	background: #4E4E4E url(darkroom/button.png);
 	border: 1px solid #666666;

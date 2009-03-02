@@ -10,6 +10,12 @@ require_once ('tiki-setup.php');
 require_once ('lib/tikilib.php');
 require_once ('lib/rss/rsslib.php');
 
+if ($prefs['feature_maps'] != 'y') {
+	$smarty->assign('msg', tra("This feature is disabled").": feature_maps");
+	$smarty->display("error.tpl");
+	die;
+}
+
 if ($prefs['rss_mapfiles'] != 'y') {
         $errmsg=tra("rss feed disabled");
         require_once ('tiki-rss_error.php');
