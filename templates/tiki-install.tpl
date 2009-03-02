@@ -333,7 +333,11 @@
       {tr}You can now log in into Tikiwiki as user <strong>admin</strong> and start configuring the application.{/tr}
 		</p>
 		</div>
-<p><img src="pics/icons/accept.png" alt="{tr}Success{/tr}" style="vertical-align:middle"/> <span style="font-weight: bold">{if isset($smarty.post.update)}{tr}Upgrade{/tr}{else}{tr}Installation{/tr}{/if} {tr}operations executed successfully{/tr}</span>: {$installer->success|@count} {tr}SQL queries{/tr}.</p>
+{if $installer->success|@count gt 0}
+	<p><img src="pics/icons/accept.png" alt="{tr}Success{/tr}" style="vertical-align:middle"/> <span style="font-weight: bold">{if isset($smarty.post.update)}{tr}Upgrade{/tr}{else}{tr}Installation{/tr}{/if} {tr}operations executed successfully{/tr}</span>: {$installer->success|@count} {tr}SQL queries{/tr}.</p>
+{else}
+	<p><img src="pics/icons/accept.png" alt="{tr}Success{/tr}" style="vertical-align:middle"/> <span style="font-weight: bold">{tr}Database was left unchanged.{/tr}</span></p>
+{/if}
 {if $installer->failures|@count > 0}
 			<script type="text/javascript">
 			<!--//--><![CDATA[//><!--
@@ -534,7 +538,7 @@ others?
 					<li>{if $install_step eq '2'}<strong>{elseif $install_step ge '3' or $dbcon eq 'y'}<a href="tiki-install.php?install_step=2{if $multi}&multi={$multi}{/if}{if $lang}&lang={$lang}{/if}" title="{tr}System Requirements{/tr}">{/if}{tr}System Requirements{/tr}{if $install_step eq '2'}</strong>{elseif $install_step ge '3' or $dbcon eq 'y'}</a>{/if}</li>
 					<li>{if $install_step eq '3'}<strong>{elseif $dbcon eq 'y'}<a href="tiki-install.php?install_step=3{if $multi}&multi={$multi}{/if}{if $lang}&lang={$lang}{/if}" title="{tr}Database Connection{/tr}">{/if}{if $dbcon eq 'y'}{tr}Reset{/tr} {/if}{tr}Database Connection{/tr}{if $install_step eq '3'}</strong>{elseif $dbcon eq 'y'}</a>{/if}</li>
 					<li>{if $install_step eq '4'}<strong>{elseif $dbcon eq 'y' or isset($smarty.post.scratch) or isset($smarty.post.update)}<a href="tiki-install.php?install_step=4{if $multi}&multi={$multi}{/if}{if $lang}&lang={$lang}{/if}" title="{tr}Install{/tr}{if $tikidb_created} &amp; {tr}Upgrade{/tr}{/if} {tr}Profile{/tr}">{/if}{if $tikidb_created}{tr}Install/Upgrade Profile{/tr}{else}{tr}Install Profile{/tr}{/if}{if $install_step eq '4'}</strong>{elseif ($dbcon eq 'y') or (isset($smarty.post.scratch)) or (isset($smarty.post.update))}</a>{/if}</li>
-					<li>{if $install_step eq '5'}<strong>{/if}{if isset($smarty.post.update)}{tr}Review Upgrade{/tr}{else}{tr}Review Installation{/tr}{/if}{if $install_step eq '5'}</strong>{/if}</li>
+					<li>{if $install_step eq '5'}<strong>{elseif $tikidb_is20}<a href="tiki-install.php?install_step=5{if $multi}&multi={$multi}{/if}{if $lang}&lang={$lang}{/if}">{/if}{if isset($smarty.post.update)}{tr}Review Upgrade{/tr}{else}{tr}Review Installation{/tr}{/if}{if $install_step eq '5'}</strong>{elseif $tikidb_is20}</a>{/if}</li>
 					<li>{if $install_step eq '6'}<strong>{elseif $tikidb_is20 and !isset($smarty.post.update)}<a href="tiki-install.php?install_step=6{if $multi}&multi={$multi}{/if}{if $lang}&lang={$lang}{/if}">{/if}{tr}General Settings{/tr}{if $install_step eq '6'}</strong>{elseif $tikidb_is20 and !isset($smarty.post.update)}</a>{/if}</li>
 					<li>{if $install_step eq '7'}<strong>{elseif $tikidb_is20}<a href="tiki-install.php?install_step=7{if $multi}&multi={$multi}{/if}{if $lang}&lang={$lang}{/if}">{/if}{tr}Enter Tiki{/tr}{if $install_step eq '7'}</strong>{elseif $tikidb_is20}</a>{/if}</li>
 				</ol>
