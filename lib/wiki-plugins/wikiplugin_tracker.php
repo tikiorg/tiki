@@ -706,6 +706,26 @@ function wikiplugin_tracker($data, $params) {
 						$opts[1] = split(':', $f['options_array'][1]);
 						$finalFields = explode('|', $f['options_array'][3]);
 						$flds['data'][$i]['value'] = $trklib->get_join_values($itemId, array_merge(array($f['options_array'][2]), array($f['options_array'][1]), array($finalFields[0])), $f['options_array'][0], $finalFields);
+					} elseif ($f['type'] == 'w') {
+						$refFieldId = $f['options_array'][2];
+						foreach ($flds['data'] as $i=>$f) {
+							if ($f['fieldId'] == $refFieldId) {
+								$refFieldId = $i;
+							}
+						}
+						if (!isset($flds['data'][$refFieldId]['http_request']))
+							$flds['data'][$refFieldId]['http_request'] = array('','','','','','','','','');
+						for ($i = 0; $i < 5; $i++) {
+							$flds['data'][$refFieldId]['http_request'][$i] .= 
+								($flds['data'][$refFieldId]['http_request'][$i] ? "," : "") .
+								isset($f['options_array'][$i])?$f['options_array'][$i]:'';
+						}
+						$flds['data'][$refFieldId]['http_request'][5] .=
+							($flds['data'][$refFieldId]['http_request'][5] ? ",":"") .
+							$f['fieldId'];
+						$flds['data'][$refFieldId]['http_request'][6] .=
+							($flds['data'][$refFieldId]['http_request'][6] ? "," : "") .
+							$f['isMandatory'];
 					}
 				}
 			}

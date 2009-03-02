@@ -494,7 +494,6 @@ for ($i = 0; $i < $temp_max; $i++) {
 						$fields['data'][$i]['lingualpvalue'][$num]['value'] = $tikilib->parse_data(htmlspecialchars($_REQUEST[$ins_id][$tmplang]));
 
 				}
-				echo 'gggg'.$ins_id;print_r($fields['data'][$i]['lingualvalue']);print_r($_REQUEST);
 				$ins_fields['data'][$i]['lingualpvalue']=$fields['data'][$i]['lingualpvalue'];
 				$ins_fields['data'][$i]['lingualvalue']=$fields['data'][$i]['lingualvalue'];
 			}
