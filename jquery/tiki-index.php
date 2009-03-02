@@ -120,8 +120,6 @@ if ($prefs['feature_multilingual'] == 'y' && $use_best_language && !empty($_REQU
 			$info = null;
 		}
 	}
-} else if (!empty($_REQUEST['page'])) {
-	$page = $_REQUEST['page'];
 }
 
 $structs_with_perm = array(); 

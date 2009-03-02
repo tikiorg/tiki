@@ -1140,7 +1140,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'wiki_3d_adjust_camera' => 'true',
 		'wiki_3d_autoload' => '',
 		'feature_mootools' => 'y', // Needed for shadowbox
-		'javascript_enabled' => 'y',	// Needed for MooTools andJQuery
+		'javascript_enabled' => 'n',
 		'feature_comments_post_as_anonymous' => 'n',
 		'feature_comments_moderation' => 'n',
 		'feature_template_zoom' => 'y',

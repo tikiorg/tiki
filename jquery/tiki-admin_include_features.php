@@ -108,8 +108,7 @@ if (isset($_REQUEST["features"])) {
 		"user_flip_modules"
 	);
 
-    
-    check_ticket('admin-inc-features');
+	check_ticket('admin-inc-features');
 	foreach ($features_toggles as $toggle) {
 		simple_set_toggle ($toggle);
 	}
