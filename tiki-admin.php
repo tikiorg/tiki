@@ -325,13 +325,13 @@ if (!empty($_GET['forcecheck'])) {
 		$prefs['tiki_needs_upgrade'] = 'y';
 	} else {
 		$prefs['tiki_needs_upgrade'] = 'n';
-		$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("Current version is up to date : <b>%s</b>"), $TWV->version));
+		$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("Current version is up to date : <b>%s</b>"), $TWV->version),'st'=>3);
 	}
 	$smarty->assign('tiki_needs_upgrade', $prefs['tiki_needs_upgrade']);
 
 	// See if a major release is available.
 	if ($upgrades[1]) {
-		$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("A new %s  major release branch is available."), $TWV->branch));
+		$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("A new %s  major release branch is available."), $TWV->branch),'st'=>3);
 	}
 
 	// If the versioning feature has been enabled, then store the current
@@ -363,7 +363,7 @@ if ($prefs['feature_version_checks'] == 'y') {
 			$tikilib->set_preference('tiki_release', $TWV->release);
 			$smarty->assign('tiki_release', $TWV->release);
 			if ($upgrades[1]) {
-				$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("A new %s  major release branch is available."), $TWV->branch));
+				$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("A new %s  major release branch is available."), $TWV->branch),'st'=>3);
 			}
 		} else {
 			$prefs['tiki_needs_upgrade'] = 'n';
