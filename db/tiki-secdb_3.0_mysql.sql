@@ -44,7 +44,7 @@ INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) V
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('1cef1cfeaa95bca2403833a4b1f353e5', './remote.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('e86ece9bb177a56a3e7e255b2b09b568', './tiki-mods.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('24c27efa4f0505d5fce2fe54ae1797d0', './tiki-mobile.php', '3.0beta1', 0);
-INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('3e7c4df553c631142ce56a61c0f32375', './tiki-admin_include_look.php', '3.0beta1', 0);
+INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('0d2690804626129319ad6ac6b2eea87f', './tiki-admin_include_look.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('832b02e882e7d82e25e7235942395b49', './tiki-admin_links.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('d3e2d058dbd1c78b2c8079a846122011', './tiki-quiz_stats.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('c914a591b6f8da12e9255786c47fc39e', './fgal_listing_conf.php', '3.0beta1', 0);
@@ -177,7 +177,7 @@ INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) V
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('cfda241546447f024e511bc72c93de80', './lib/trackers/index.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('54f5a0597eda4a99ed92bf60923101c7', './lib/trackers/trkWithMirrorTablesLib.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('80c63b9a37757b06dd5fa6d5de0a3e94', './lib/trackers/trackerlib.php', '3.0beta1', 0);
-INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('48184562d8b074c3fb544a3afeb97d29', './lib/tikilib.php', '3.0beta1', 0);
+INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('f1fadc28e1b6145170c9361c0ddbff06', './lib/tikilib.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('ef59cfb81e42ff5d55cebc817635fed2', './lib/searchlib.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('5544c17ce67cbbdaaaaec942738a101c', './lib/tikiticketlib.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('c6bfdf83947ac547eb92ecd17f365296', './lib/tikihelplib.php', '3.0beta1', 0);
@@ -187,6 +187,7 @@ INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) V
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('6bf8edf13d361d4a8c96d1e4312e4487', './lib/init/setup_inc.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('3771f7a54a760b5192aa569a206f1a36', './lib/tar.class.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('1388fea65533e2bbb6d67599f678ae0b', './lib/sharelib.php', '3.0beta1', 0);
+INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('4d851fc7e5435440d3182293e6ffb311', './lib/jquery/index.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('e562fc4f4c7d80dd008202d3e331aa33', './lib/imagegals/imagegallib.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('67ec26634ef4efd858a8d2ba6800281d', './lib/imagegals/index.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('c6c50e710ee16c438b745a043bad53d5', './lib/newsreader/index.php', '3.0beta1', 0);
@@ -1803,7 +1804,7 @@ INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) V
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('b0f84c0f711d1730e0d35f314b167164', './lib/wiki-plugins/wikiplugin_usercount.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('ddbf843e4a9d7601259d4b8284829be3', './lib/wiki-plugins/wikiplugin_map.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('1e84867f3040042fe3e9c4101e0d5541', './lib/wiki-plugins/wikiplugin_rcontent.php', '3.0beta1', 0);
-INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('f159784818532df0cb9059a9345c7c12', './lib/wiki-plugins/wikiplugin_tracker.php', '3.0beta1', 0);
+INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('808e39a0df371fe9454afb9d23dd7684', './lib/wiki-plugins/wikiplugin_tracker.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('e11499ef973b5a1247af7bee521230e0', './lib/wiki-plugins/wikiplugin_sql.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('cbc706eb999000f7719a1d8a48d561da', './lib/wiki-plugins/wikiplugin_share.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('8b57e2aae7bf86a1588ee4c62cbd0aee', './lib/wiki-plugins/wikiplugin_sup.php', '3.0beta1', 0);
@@ -2202,6 +2203,7 @@ INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) V
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('46a21a3bb37d30c8b985ba9208873fc3', './lib/diff.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('6d4cd3c1a6b097fd06815d91f173481c', './lib/quizzes/index.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('29ccc0a73e1901472a662f8311b0c9bc', './lib/quizzes/quizlib.php', '3.0beta1', 0);
+INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('4d851fc7e5435440d3182293e6ffb311', './lib/jquery_tiki/index.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('d099eb5d4bded2b6857245ce28505eb9', './lib/shoutbox/shoutboxlib.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('faeed11a7b7cdfaecd035d325563fb6d', './lib/shoutbox/index.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('fa1e408a5862c9b19cb7f3a185f6b96f', './lib/fckeditor/index.php', '3.0beta1', 0);
@@ -2350,7 +2352,7 @@ INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) V
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('d9db33bea89df8d149655e4394c5c215', './lib/setup/timer.class.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('cc799ab27441c48a444df17681796fff', './lib/setup/last_update.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('8e657f34caa7e5b48e52f17ed145b5d1', './lib/setup/site_closed.php', '3.0beta1', 0);
-INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('50757ce59a0f732412f2f7fbc7fac0c7', './lib/setup/twversion.class.php', '3.0beta1', 0);
+INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('1eda6cb997e0ee2b32fa805bd97fbbb3', './lib/setup/twversion.class.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('9b6b3b89701e7829d7adb2a3fb38456f', './lib/setup/cookies.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('4ab767ea745cde5d94fe8daa4d93a2a7', './lib/setup/language.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('c18883a297ba2cbea5e7a8b8e79d751f', './lib/setup/patches.php', '3.0beta1', 0);
@@ -2361,7 +2363,7 @@ INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) V
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('eb46e646c1092185b90ecbeadf283e16', './lib/setup/freetags.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('4fe4782510c478c545008ea40e1fe0eb', './lib/setup/stats.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('fd8fa92fb278fa4ee800cbf076f72514', './lib/setup/live_support.php', '3.0beta1', 0);
-INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('b66ee76f93fd158e714b3b32060fbc05', './lib/setup/prefs.php', '3.0beta1', 0);
+INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('5566865460049b7db6c47c1c86c425ae', './lib/setup/prefs.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('d6ae19ba2d9c2b5ce67e6457970c664d', './lib/setup/challenge.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('fca03cc3a2a409826e69a27eeaf1f32e', './lib/setup/phplayers.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('906aebe267d1b97065cfdff4e5772303', './lib/setup/menus.php', '3.0beta1', 0);
@@ -2804,7 +2806,7 @@ INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) V
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('d3efdc0fbe9f8c8bfadb7169687a4c40', './lib/smarty_tiki/function.rss.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('83864be625f153af913b9955f190fc04', './lib/smarty_tiki/modifier.username.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('41ae11c33ecc2889edf8bc54c84da596', './lib/smarty_tiki/function.initials_filter_links.php', '3.0beta1', 0);
-INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('c8c2aad82e8766cb71e92213b6e87520', './lib/smarty_tiki/modifier.userlink.php', '3.0beta1', 0);
+INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('8c657b924c87392393ce969520513f95', './lib/smarty_tiki/modifier.userlink.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('5cae0b9344454ea7a0ddb29b6daca115', './lib/smarty_tiki/modifier.tiki_long_datetime.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('37e76731512748616903e4f87954a35f', './lib/smarty_tiki/block.repeat.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('e78ad806e67a683519dcf7bb236d3f51', './lib/smarty_tiki/block.wiki.php', '3.0beta1', 0);
@@ -2985,7 +2987,7 @@ INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) V
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('c60a87e2937f7c0265dd1f1b2ad1f8d4', './lib/profilelib/installlib.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('28c8302b21cc3aec8ca912ffbeebd661', './lib/profilelib/profilelib.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('5689183e7feac81ae7d962d442b705e5', './lib/profilelib/channellib.php', '3.0beta1', 0);
-INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('57876094e230295574e64f7f4f6ba544', './lib/profilelib/listlib.php', '3.0beta1', 0);
+INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('f9fe8761584301e97523a0b2c57f3c00', './lib/profilelib/listlib.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('aad98a32aee9372a79ff8c807cd7f12c', './tiki-admin_include_blogs.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('d13db33cf6023f0dea31d0718bd93dd1', './tiki-print_multi_pages.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('a7fe42e79045bb4b8ea2068451df7152', './games/index.php', '3.0beta1', 0);
@@ -3061,7 +3063,7 @@ INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) V
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('9f787917ce807a51dbc3d759b5f68197', './tiki-tracker_rss.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('2cb30d22069539b1cee4766ecfe02774', './tiki-articles_rss.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('8b53eb904436d472bad1d05dc6e8f046', './tiki-show_user_avatar.php', '3.0beta1', 0);
-INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('e6fa40bb884c5dec7de666cfef1162d6', './tiki-admin_include_features.php', '3.0beta1', 0);
+INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('bd62585ee47426659340f84853fc4fba', './tiki-admin_include_features.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('f8f72de1ccaa8f0e21f63e405db8f0e4', './tiki-g-my_instances.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('f876eb701c6da33fd8434c9ea6412a40', './tiki-slideshow2.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('7612aeaf4dae87c6557ba10f87ff040d', './tiki-g-run_activity.php', '3.0beta1', 0);
@@ -3100,11 +3102,11 @@ INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) V
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('752e6b1695c93875fd111ffd9d4736c7', './tiki-feature-load-postprocessor.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('bd07ef57bd7ea63fdab85f23776264f9', './tiki-jsplugin.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('41efd4366c406b3ae119c16837341625', './tiki-admin_include_intertiki.php', '3.0beta1', 0);
-INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('e68ce7b8d5001575ad7114b5e489e2a7', './tiki-admin_include_profiles.php', '3.0beta1', 0);
+INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('e89d8c5d4b6be5eeb8587161c53b706e', './tiki-admin_include_profiles.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('22732e8a00e8a4ca710c854f24d3a242', './tiki-calendar.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('a643d80644c4fdc008caea409cb447d6', './tiki-mindmap.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('940700657945b568e78926ab673524c7', './tiki-directory_add_tiki_site.php', '3.0beta1', 0);
-INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('93c0e84f60032201bfe8b03447f07662', './tiki-admin_include_i18n.php', '3.0beta1', 0);
+INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('7e842cc429a27d21c51bb9a7052ba961', './tiki-admin_include_i18n.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('de5aeab9b09b83e2a3cfd7d2d7a4a173', './tiki-mytiki_shared.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('d442007ccc5cd07721c077c8c20a96bb', './tiki-debug_console.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('88a5999b71c8fb808de99d3c36d25c99', './tiki-export_tracker.php', '3.0beta1', 0);
@@ -3116,13 +3118,13 @@ INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) V
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('04a772d5ad8cb53b67c30a6b5de1e9b9', './tiki-admin_include_login.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('222363b739dad1b5cc1e5508a23b6c29', './tiki-users3d_xmlrpc.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('dbe19b55f0190e1f77bb5a0c71c98cec', './tiki-mods_admin.php', '3.0beta1', 0);
-INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('3f6fb6747578a0541a52351f2b9a9dcb', './tiki-view_tracker.php', '3.0beta1', 0);
+INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('86aadefb04bc7ea22541a9e5a0c0ffed', './tiki-view_tracker.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('c99fb8044e719cbd6d60dfb898722954', './tiki-admin_hotwords.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('a0480beacd4259adb950fdb18ce15e26', './tiki-admin_include_polls.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('ffe3a32dbd76cebbb7504d7d8fe267b9', './tiki-admin_include_wikiatt.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('54d4159df0e22a118ca50dd112003331', './tiki-view_chart.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('ea978da04112e6b3d5fc263ed204bf04', './x_maps.php', '3.0beta1', 0);
-INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('d87d8dcfc43aa042fb4b2cf8561891f3', './tiki-listpages.php', '3.0beta1', 0);
+INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('24fc7ee0fd9e01d85ed2d129bc8ef082', './tiki-listpages.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('da5ec3662926b1adbc6135147f2bdda1', './tiki-theme_control_objects.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('9f3bd0f2ce24c3f748e207e73faafa82', './tiki-assignuser.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('07f4b4c3a6aa051ca9b6465d5ae9922d', './tiki-g-admin_roles.php', '3.0beta1', 0);
@@ -3199,7 +3201,7 @@ INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) V
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('d8116ae0dab5f421243d10220d1f8dff', './doc/devtools/search_smarty_prefs-2.0.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('b9c6185e71811671e4549264502b82bb', './doc/devtools/cleanCatTrackers.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('993788daae4188dc07ff036874f7970e', './doc/devtools/index.php', '3.0beta1', 0);
-INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('ba69d5f43f50d153cd54caa58ba3bb1e', './doc/devtools/release_changelog.php', '3.0beta1', 0);
+INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('e1eebbc763e97db44ccaa4e08b74e059', './doc/devtools/release_changelog.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('d5f98e6c1ffeb11e9724212e130c51a2', './doc/devtools/tiki-create_md5.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('7746952ab46fe9051ffe3ed180525cda', './doc/devtools/securitycheck.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('f0db7e17c544f518ffcda1895ddd672c', './doc/devtools/buildincrement.php', '3.0beta1', 0);
@@ -3214,7 +3216,9 @@ INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) V
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('3a47397ad6adeab625ffb6ac0271eb05', './doc/devtools/svnbranchreview.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('642192a280220fb484477817d0fd4afa', './doc/devtools/tiki-show_raw_links.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('a7855a353c3c38f68f769f06f334afd4', './doc/devtools/sync.php', '3.0beta1', 0);
-INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('c40a120628bb3964b6ab89f41fe0eb18', './doc/devtools/svntools.php', '3.0beta1', 0);
+INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('7d78ea6de0c97390906515698c9c2c6b', './doc/devtools/svntools.php', '3.0beta1', 0);
+INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('78de62aef337680b9442f2a25a571254', './doc/devtools/release_copyright.php', '3.0beta1', 0);
+INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('9a409ed2e223ec6c53dced8d598a4992', './doc/devtools/rel.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('da8a55568ec35d0130d764a5976a0f94', './doc/devtools/usergeo.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('3bd515c5bd89e945caf9e08b59fe7619', './doc/devtools/ggg-trace.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('3514b40bf6f4151f3b19c05bb84d82b9', './doc/devtools/restorehelp.php', '3.0beta1', 0);
@@ -3325,7 +3329,6 @@ INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) V
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('1f1e4f3ea6c1eac1df148804dd149e6e', './tiki-section_options.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('dc67e73f86afb6f0e9a6fb674855dfd8', './tiki-view_minical_topic.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('22d2f8a3fe6799cd265955dd0307b602', './tiki-list_blogs.php', '3.0beta1', 0);
-INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('ec75c5fa3f718c640767be649417a5b7', './bin/index.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('ea0f08aec0869d3c5ca841c9dd7e3413', './tiki-modules.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('22a699c2aaa01f259b79bfcbc2759dcf', './tiki-edit_banner.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('d3732bfc222b978a17dfca2d6f96f8c8', './tiki-poll_form.php', '3.0beta1', 0);
@@ -3364,7 +3367,7 @@ INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) V
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('ace068b4f73055e14ab0d0ba212b0f22', './import/index.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('8c93dbcc682faa31be73b8c722b45c82', './import/import_mediawiki_dump.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('4a5670a2bad84d82c30ce997223e5f5a', './xmlrpc.php', '3.0beta1', 0);
-INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('09813229528eca1295fd37bbc044c2cb', './tiki-install.php', '3.0beta1', 0);
+INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('f908830c01e1feaa879023c0e77d284a', './tiki-install.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('9da72346796138dc46abca7c1f7a6542', './tiki-admin_security.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('8de1e2fd79c7b83bee154a155a6b5ecb', './tiki-admin_include_directory.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('241f2cdec8cbe96f62576aa330f829d1', './tiki-calendar_setup.php', '3.0beta1', 0);
@@ -3412,7 +3415,7 @@ INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) V
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('3305fa3097619444ecb4a837e917cab5', './comments.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('89c0fedb5ef34c9e08de13d314df4be7', './installer/index.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('295f6547f994d1aff05ce66b1500545f', './installer/installlib.php', '3.0beta1', 0);
-INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('e2204e40fa0fb45580616240c9bf8969', './installer/tiki-installer.php', '3.0beta1', 0);
+INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('674ae77ceb5eddb091392cd63dcc2b42', './installer/tiki-installer.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('9ca659ef4a21eea40446fc872327cd7e', './installer/shell.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('cb78adaffd1ccb9db94721db9725ccb6', './tiki-edit_quiz_results.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('de29b1f940a2a54ed23245e1f8caddf1', './tiki-list_users.php', '3.0beta1', 0);
@@ -3447,14 +3450,20 @@ INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) V
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('42cd81128e3260424aefdd40f6523e26', './templates_c/en^%%74^746^746E86FB%%tiki-show_page.tpl.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('9c7f0327bca33c2599fe9921e4a78d03', './templates_c/en^%%F7^F7F^F7F34188%%header.tpl.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('4d1c170c2093d54187247582c2c4f042', './templates_c/en^%%DD^DD2^DD29EF94%%tiki.tpl.php', '3.0beta1', 0);
-INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('4b3720dee0f1c65dc686ed30e4ff1aab', './templates_c/en^%%9E^9E2^9E21ED1B%%mod-login_box.tpl.php', '3.0beta1', 0);
+INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('ce30e1ac479f07053944c88525291e5e', './templates_c/en^%%B4^B49^B493989A%%remarksbox.tpl.php', '3.0beta1', 0);
+INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('50aca72a246706f533b57566f11029cd', './templates_c/en^%%66^664^6645E1DC%%tiki-admin-include-list-sections.tpl.php', '3.0beta1', 0);
+INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('76d27d17b46e08ee54c2857a5f42cf89', './templates_c/en^%%9E^9E2^9E21ED1B%%mod-login_box.tpl.php', '3.0beta1', 0);
+INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('2fc418e7e3c1913d17c3e80e6f7e8d94', './templates_c/en^%%92^92B^92B5CE6C%%tiki-admin-include-anchors.tpl.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('56a41ac0e93b99b00a404ab5905bcd9c', './templates_c/en^%%2D^2D2^2D26B06E%%tiki-site_header.tpl.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('c47854ec26bf356b0d3669fd5cf35864', './templates_c/en^%%86^860^860ECFEA%%credits.tpl.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('31f5a260334c970675faa7152c7f850c', './templates_c/en^%%48^481^481EAFBB%%tiki-page_bar.tpl.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('4842e12f3e45c78da4d326d23a9114d2', './templates_c/en^%%B8^B86^B86EE203%%tiki-view_cache.tpl.php', '3.0beta1', 0);
-INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('0a02e473d077eef57cba4f458228fb44', './templates_c/en^%%08^08E^08E7654E%%mod-assistant.tpl.php', '3.0beta1', 0);
+INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('57c32afa81f6e727bb7e95e5ce918f4b', './templates_c/en^%%08^08E^08E7654E%%mod-assistant.tpl.php', '3.0beta1', 0);
+INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('f505546efdf71d53cdc1b8b67c4c9549', './templates_c/en^%%E7^E7E^E7EBB0CD%%tiki-admin.tpl.php', '3.0beta1', 0);
+INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('59f5760222058e59ca2a8163af58c99f', './templates_c/en^%%18^18F^18F11867%%tiki-admin_security.tpl.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('b349e4db4634a314b72b3e2b81794c5c', './templates_c/en^%%29^29B^29B27A88%%tiki-top_bar.tpl.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('8a210c35556a36fc94563c7c5d2f4142', './templates_c/en^%%4B^4B8^4B839B3D%%user_module.tpl.php', '3.0beta1', 0);
+INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('e0bb1747cdb19bdb5d960f0b3a50c969', './templates_c/en^%%92^927^9273886F%%tiki-admin-include-profiles.tpl.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('f6138465ff0c13158a5ece939c63240a', './templates_c/en^%%E8^E85^E859C608%%tiki-admin_bar.tpl.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('c9e5b45fd46da243b575a9a2d68d9579', './templates_c/en^%%96^96A^96AB65ED%%bidi.tpl.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('220e841559b7f10137d4e2da79394330', './templates_c/en^%%32^321^321D250C%%tiki-bot_bar.tpl.php', '3.0beta1', 0);
@@ -3485,7 +3494,7 @@ INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) V
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('53cd2b4041805498ae82265d49763a9f', './db/tiki-db-pdo.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('6ec85e38214bb3333a4ec87b093d11ee', './db/local.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('ff3e4a668ea84b79decd9f7dc641c46d', './db/oracle/index.php', '3.0beta1', 0);
-INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('87da1ad81d1e0cec78f13dcb52e92b77', './db/tiki-db-adodb.php', '3.0beta1', 0);
+INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('02527907329b5fb5878187e918b3d686', './db/tiki-db-adodb.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('758fe7e1b2d65e5e201ac82cf0dfc032', './db/case_patch.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('bf84860943e17da637716f4730da3b96', './tiki-wiki_rankings.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('cc1f431d38140f4fb0d55527f926cd3e', './tiki-switch_lang.php', '3.0beta1', 0);
@@ -3612,7 +3621,7 @@ INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) V
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('3bf5b21ec597983ec180cbd3642e5eff', './tiki-file_galleries_rss.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('8746418da35cd8b6123d09e5e11a8caa', './tiki-atom.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('b72b90546996196540ad6e6a75bd58e4', './tiki-directories_rss.php', '3.0beta1', 0);
-INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('9c172532a8744c1bbe73e1d92cfd728d', './get_strings.php', '3.0beta1', 0);
+INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('246a491b849c305d18af475cb15765b5', './get_strings.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('b6df4db7b322f7b8b18d920537cb3cfb', './tiki-index_p.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('e0684b76e5c8007064c3d86db77dfedb', './tiki-admin_menus.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('2f675979fd6e2f23d8ed4c9f7c89bafc', './tiki-handlers.php', '3.0beta1', 0);
