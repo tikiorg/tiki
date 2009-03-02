@@ -1,6 +1,8 @@
-------------------------------------------
-JQuery/Tiki readme [jonnybradley Feb 2009]
-------------------------------------------
+-------------------------
+JQuery/Tiki readme
+-------------------------
+jonnybradley March 2009
+- - - - - - - - - - - - -
 
 This directory /lib/jquery/ contains the JQuery library and selected plugins for TikiWiki 3.0
 
@@ -13,6 +15,7 @@ The suggested layout is as follows:
 
 Plugins and other additions are added in their default named directories (with version numbers removed where applicable).
 These are added generally complete and without modification - such as jquery.ui/ and jquery-autocomplete/
+(note: removed plugin "demo" and "test" dirs now, saves another 10MB and several hundred more files)
 
 Duplicate files, such as other copies of jquery.js etc should be removed to avoid conflicts. Demos could also be removed if large.
 
