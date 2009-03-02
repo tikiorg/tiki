@@ -509,15 +509,6 @@ p.editdate {
 	font-size: 0.9em;
 }
 
-/* JQuery defaults */
-
-#jquery_admin {
-	border: 1px #aaa solid;
-	float:right;
-	position:relative;
-	top:-7em;
-}
-
 /* flag languages */
 
 .box-switch_lang .box-data img {
@@ -527,7 +518,7 @@ p.editdate {
 
 .box-switch_lang .box-data img.highlight {
   padding: .1em;
-  border: .1em solid #f00 !important;	/* too many !importants about!? */
+  border: .1em solid #f00 !important;	/* too many !importants about! */
 }
 
 .box-switch_lang .box-data span.highlight {
