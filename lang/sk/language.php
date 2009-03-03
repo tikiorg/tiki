@@ -7112,6 +7112,7 @@ $lang=Array(
 "Custom home" => "Moja úvodná stránka",
 "Unknown/Other" => "Neznámy/Iný",
 "General Settings" => "Všeobecné nastavenia",
+"Configure General Settings" => "Všeobecné nastavenia",
 "Use cache for external pages" => "Použiť cache pre externé stránky",
 "Use cache for external images" => "Použiť cache pre externé obrázky",
 "Tikiwiki.org help" => "Help Tikiwiki.org",

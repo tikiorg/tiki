@@ -7232,6 +7232,7 @@ $lang=Array(
 "OS" => "作業系統",
 "Unknown/Other" => "未知/其他",
 "General Settings" => "一般設定",
+"Configure General Settings" => "一般設定",
 "Use cache for external pages" => "快取外部頁面",
 "Use cache for external images" => "快取外部影像",
 "Tikiwiki.org help" => "Tikiwiki.org 說明",

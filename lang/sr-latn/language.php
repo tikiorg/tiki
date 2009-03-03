@@ -6907,6 +6907,7 @@ $lang=Array(
 "Custom home" => "Custom glavna strana",
 "Unknown/Other" => "Nepoznato/Ostalo",
 "General Settings" => "Generalna podešavanja",
+"Configure General Settings" => "Generalna podešavanja",
 "Disallow access to the site (except for those with permission)" => "Zabrani pristup sajtu (osim onima koji imaju dozvolu)",
 "Message to display when site is closed" => "Poruka za prikaz kada je sajt zatvoren",
 "Disallow access when load is above the threshold (except for those with permission)" => "Zabrani pristup sajtu kada je opterećenje iznad odabranog (osim onima koji imaju dozvolu)",

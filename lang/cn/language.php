@@ -7436,6 +7436,7 @@ $lang=Array(
 "OS" => "操作系统",
 "Unknown/Other" => "未知/其他",
 "General Settings" => "一般设置",
+"Configure General Settings" => "一般设置",
 "Disallow access to the site (except for those with permission)" => "不允许存取这个网站(除非有相应权限)",
 "Message to display when site is closed" => "当这个网站关闭时显示信息",
 "Disallow access when load is above the threshold (except for those with permission)" => "当超过最大吞吐量不允许存取(除非有相应权限)",

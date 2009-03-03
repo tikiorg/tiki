@@ -6253,6 +6253,7 @@ $lang=Array(
 "Mail end of line:" => "Zeilenende in eMails:",
 "(some Unix MTA)" => "(Unix)",
 "General Settings" => "Verschiedene Einstellungen II",
+"Configure General Settings" => "Verschiedene Einstellungen II",
 "Disallow access to the site (except for those with permission)" => "Zugriff auf den Server verbieten (au&szlig;er f&uuml;r Personen mit Berechtigung)",
 "Message to display when site is closed" => "Angezeigte Meldung, wenn der Server geschlossen ist",
 "Disallow access when load is above the threshold (except for those with permission)" => "Zugriff auf den Server bei &Uuml;berschreiben der eingestellten Maximallast verbieten (au&szlig;er f&uuml;r Personen mit Berechtigung)",

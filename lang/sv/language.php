@@ -7054,6 +7054,7 @@ $lang=Array(
 "Custom home" => "Egen startsida",
 "Unknown/Other" => "Okänd/Annat",
 "General Settings" => "Generella inställningar",
+"Configure General Settings" => "Generella inställningar",
 "Disallow access to the site (except for those with permission)" => "Neka åtkomst till denna sajt (utom för de som har tillstånd)",
 "Message to display when site is closed" => "Meddelande att visa när sajten är stängd",
 "Disallow access when load is above the threshold (except for those with permission)" => "Neka åtkomst till sajten när belastningen är över en viss nivå (utom för dom som har tillstånd)",

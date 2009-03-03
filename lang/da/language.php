@@ -7157,6 +7157,7 @@ $lang=Array(
 "Custom home" => "Selvvalgt startside",
 "Unknown/Other" => "Ukendt/andet",
 "General Settings" => "Generelle Instillinger",
+"Configure General Settings" => "Generelle Instillinger",
 "Use cache for external pages" => "Brug cache til eksterne sider",
 "Use cache for external images" => "Brug cache til eksterne billeder",
 "Tikiwiki.org help" => "Tikiwiki.org hjælp (Engelsk)",

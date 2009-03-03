@@ -7223,6 +7223,7 @@ $lang=Array(
 "Custom home" => "Egyedi home",
 "Unknown/Other" => "Ismeretlen/Más",
 "General Settings" => "Általános beállítások",
+"Configure General Settings" => "Általános beállítások",
 "Use cache for external pages" => "Cache használata a külső lapokhoz",
 "Use cache for external images" => "Cache használata a külső képekhez",
 "Tikiwiki.org help" => "doc.tikiwiki.org felhasználói kézikönyv",

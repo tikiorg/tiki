@@ -6647,6 +6647,7 @@ $lang=Array(
 "(standard)" => "(standartní)",
 "(some Unix MTA)" => "(některé Unix MTA)",
 "General Settings" => "Obecná nastavení",
+"Configure General Settings" => "Obecná nastavení",
 "Disallow access to the site (except for those with permission)" => "Disallow access to web (except pro those s právem)",
 "Message to display when site is closed" => "Message pro zobrazení when web je closed",
 "Disallow access when load is above the threshold (except for those with permission)" => "Disallow access when load je above threshold (except pro those s právem)",

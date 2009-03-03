@@ -6321,6 +6321,7 @@ $lang=Array(
 "(standard)" => "(standaard)",
 "(some Unix MTA)" => "(eenderwelke Unix MTA)",
 "General Settings" => "Algemene Instellingen",
+"Configure General Settings" => "Algemene Instellingen",
 "Disallow access to the site (except for those with permission)" => "Verbied toegang tot de site (behalve voor diegenen met toestemming)",
 "Message to display when site is closed" => "Dit bericht wordt getoond als de site gesloten is",
 "Disallow access when load is above the threshold (except for those with permission)" => "Verbied toegang tot de site wanneer de belasting boven de toegestane limiet is (behalve voor diegenen met toestemming)",

@@ -7073,6 +7073,7 @@ $lang=Array(
 "Windows" => "Prozori",
 "Unknown/Other" => "Nepoznato/Ostalo",
 "General Settings" => "Općenite postavke",
+"Configure General Settings" => "Općenite postavke",
 "Use cache for external pages" => "Koristi skladište za vanjske stranice",
 "Use cache for external images" => "Koristi skladište za vanjske slike",
 "Tikiwiki.org help" => "Tikiwiki.org pomoć",
