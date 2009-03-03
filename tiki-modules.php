@@ -61,6 +61,8 @@ for ($mod_counter = 0; $mod_counter < $temp_max; $mod_counter++) {
 		$module_params['flip'] = 'n';
 	if (!isset($module_params['overflow'])) $module_params['overflow'] = 'n';
 	if (!isset($module_params['nobox'])) $module_params['nobox'] = 'n';
+	if (!isset($module_params['notitle'])) $module_params['notitle'] = 'n';
+	if (!isset($module_params['error'])) $module_params['error'] = '';
 	if (isset($module_params['section']) && $module_params['section'] == 'wiki' && $section == 'wiki page') $module_params['section'] = 'wiki page';
 	$pass = 'y';
 	if (isset($module_params["lang"]) && ((gettype($module_params["lang"]) == "array" && !in_array($prefs['language'], $module_params["lang"])) ||  (gettype($module_params["lang"]) == "string" && $module_params["lang"] != $prefs['language']))) {
