@@ -76,7 +76,7 @@ function get_default_prefs() {
 		'feature_wiki_paragraph_formatting_add_br' => 'n',
 		'feature_wiki_pictures' => 'y',
 		'feature_wiki_plurals' => 'y',
-		'feature_wiki_print' => 'y',
+		'feature_wiki_print' => 'n',
 		'feature_wiki_protect_email' => 'y',
 		'feature_wiki_rankings' => 'n',
 		'feature_wiki_ratings' => 'n',
