@@ -488,7 +488,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'user_assigned_modules' => 'n',
 		'user_flip_modules' => 'module',
 		'user_show_realnames' => 'n',
-		'feature_mytiki' => 'y',
+		'feature_mytiki' => 'n',
 		'feature_userPreferences' => 'n',
 		'feature_user_bookmarks' => 'n',
 		'feature_tasks' => 'n',
@@ -597,7 +597,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 
 		// search
 		'feature_search_stats' => 'n',
-		'feature_search' => 'y',
+		'feature_search' => 'n',
 		'feature_search_fulltext' => 'y',
 		'feature_search_show_forbidden_obj' => 'n',
 		'feature_search_show_forbidden_cat' => 'n',
@@ -793,7 +793,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'cookie_name' => 'tikiwiki',
 		'user_tracker_infos' => '',
 		'desactive_login_autocomplete' => 'n',
-		'permission_denied_login_box' => 'y',
+		'permission_denied_login_box' => 'n',
 		'permission_denied_url' => '',
 
 		// intertiki
@@ -1146,7 +1146,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_template_zoom' => 'y',
 		
 		// JQuery
-		'feature_jquery' => 'y',			// Alternative lib for shadowbox etc
+		'feature_jquery' => 'n',			// Alternative lib for shadowbox etc
 		'jquery_effect' => '',				// Default effect for general show/hide: ['' | 'slide' | 'fade' | and
 											// see http://docs.jquery.com/UI/Effects: 'blind' | 'clip' | 'explode' etc]
 		'jquery_effect_direction' => '', 	// ['horizontal' | 'vertical' | 'left' | 'right' | 'up' | 'down' ]
