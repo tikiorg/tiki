@@ -5363,7 +5363,8 @@ class TikiLib extends TikiDB {
 				// ~pp~ type "plugins"
 				$key = "§".md5($this->genPass())."§";
 				$noparsed["key"][] = preg_quote($key);
-				$plugin_data = str_replace('\\','\\\\',$plugin_data);
+				// comment out the following line: create problem with TRACKERLIST and popup because the <\/td> are changed
+				//$plugin_data = str_replace('\\','\\\\',$plugin_data);
 				//if( strstr( $plugin_data, '$' ) ) {
 					//$plugin_data = str_replace('$', '\$', $plugin_data);
 				//}
