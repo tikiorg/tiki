@@ -310,7 +310,7 @@
   
     {if $prefs.feature_community_mouseover eq 'y'}
       <tr>
-        <td class="{cycle advance=false}">{tr}Show user's info on mouseover{/tr}:<br /><i>{tr}Applies to all users' info, including yours{/tr}</i></td>
+        <td class="{cycle advance=false}">{tr}Displays users' info tooltip on mouseover for every user who allows his information to be public{/tr}</td>
         <td class="{cycle}">
           <input type="checkbox" name="show_mouseover_user_info" {if $show_mouseover_user_info eq 'y'}checked="checked"{/if} />
         </td>
