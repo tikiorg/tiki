@@ -50,7 +50,6 @@
 <p>{tr}TikiWiki is software distributed under the LGPL license{/tr}. {tr}Please read the following license agreement{/tr}.</p>
 <iframe src="license.txt" width="700px" height="400px"> </iframe>
 <div align="center" style="margin-top:1em;">
-	<p>{tr}By clicking &quot;Continue&quot; you agree to the terms of this license{/tr}.</p>
 	<form action="tiki-install.php" method="post">
 {if $multi}			<input type="hidden" name="multi" value="{$multi}" />{/if}
 {if $lang}			<input type="hidden" name="lang" value="{$lang}" />{/if}
