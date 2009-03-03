@@ -700,6 +700,9 @@
 				<legend>
 					<a href="#"><span>{tr}JQuery plugins and add-ons{/tr}</span></a>
 				</legend>
+				{if $prefs.feature_jquery eq 'n'}
+				 	 {remarksbox type="warning" title="{tr}Warning{/tr}"}{tr}Requires jquery feature{/tr}</em>{icon _id="arrow_right" href="tiki-admin.php?page=features"}{/remarksbox}
+				{/if}
 				<div class="clear floatleft">
 					<input type="checkbox" name="feature_jquery_ui" {if $prefs.feature_jquery_ui eq 'y'}checked="checked"{/if}/>
 					<a href="{$prefs.helpurl}JQuery#UI" target="tikihelp" class="tikihelp" title="{tr}JQuery UI: More JQuery functionality{/tr}"> {tr}JQuery UI{/tr}</a>
