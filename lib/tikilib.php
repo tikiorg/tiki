@@ -5440,7 +5440,7 @@ class TikiLib extends TikiDB {
 							global $headerlib, $page;
 							$id = 'plugin-edit-' . $plugin_name . $current_index;
 							$headerlib->add_jsfile( 'tiki-jsplugin.php?plugin=' . urlencode( $plugin_name ) );
-							if ($prefs.feature_jquery) {
+							if ($prefs['feature_jquery'] == 'y') {
 								$headerlib->add_js( "
 \$jq(document).ready( function() {
 	if( \$jq('#$id') ) \$jq('#$id').click( function(event) {
