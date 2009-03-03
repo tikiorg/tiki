@@ -1454,7 +1454,7 @@ ul.toc * {
 .diff div {
 	border-top: 1px solid #A9B8C2;
 }
-.diffheader {
+.diffheader td {
 	background: #A9B8C2;
 	font-weight: bold;
 	width: 50%;
