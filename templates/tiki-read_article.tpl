@@ -29,7 +29,7 @@
 		<br />
 	</div>
 
-	{if $type eq 'Review'}
+	{if $use_ratings eq 'y'}
 		<div class="articleheading">
 			{tr}Rating{/tr}: 
 			{repeat count=$rating}

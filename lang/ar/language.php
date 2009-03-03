@@ -3263,6 +3263,7 @@ $lang=Array(
 // "(standard)" => "(standard)",
 // "(some Unix MTA)" => "(some Unix MTA)",
 // "General Settings" => "General Settings",
+// "Configure General Settings" => "General Settings",
 // "Disallow access to the site (except for those with permission)" => "Disallow access to the site (except for those with permission)",
 // "Message to display when site is closed" => "Message to display when site is closed",
 // "Disallow access when load is above the threshold (except for those with permission)" => "Disallow access when load is above the threshold (except for those with permission)",

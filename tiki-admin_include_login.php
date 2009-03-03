@@ -203,5 +203,7 @@ $smarty->assign("listgroups", $listgroups['data']);
 $mailCharsets = array('utf-8', 'iso-8859-1');
 $smarty->assign_by_ref('mailCharsets', $mailCharsets);
 
+$headerlib->add_cssfile('css/admin.css');
+
 ask_ticket('admin-inc-login');
 ?>

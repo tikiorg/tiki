@@ -7428,6 +7428,7 @@ $lang=Array(
 "Windows" => "Olketa windo",
 "Unknown/Other" => "Nosave long hem/Narakaen",
 "General Settings" => "Olketa General Setting",
+"Configure General Settings" => "Olketa General Setting",
 "Disallow access to the site (except for those with permission)" => "No letem pasis go long site (oketa wea garem permission nomoa save letem)",
 "Message to display when site is closed" => "Mesij fo som taem site hem klos finis",
 "Max average server load threshold in the last minute" => "Max average server load threshold long las minit wea hemi go finis ia",

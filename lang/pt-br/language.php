@@ -6209,6 +6209,7 @@ $lang=Array(
 "(standard)" => "(padrão)",
 "(some Unix MTA)" => "(alguns Unix MTA)",
 "General Settings" => "Configurações Gerais",
+"Configure General Settings" => "Configurações Gerais",
 "Disallow access to the site (except for those with permission)" => "Desabilitar o acesso ao site (exceto para quem tem permissão)",
 "Message to display when site is closed" => "Mostrar mensagem quando o site estiver fechado",
 "Disallow access when load is above the threshold (except for those with permission)" => "Desabilitar o acesso quando a carga do servidor está acima do seu limiar (exceto para quem possui permissão)",

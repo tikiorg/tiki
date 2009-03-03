@@ -6542,6 +6542,7 @@ $lang=Array(
 "(standard)" => "(standardi)",
 "(some Unix MTA)" => "(jotkin Unix MTA)",
 "General Settings" => "Yleiset Asetukset",
+"Configure General Settings" => "Yleiset Asetukset",
 "Disallow access to the site (except for those with permission)" => "Älä salli pääsyä sivustolle (paitsi niiltä joilla on lupa)",
 "Message to display when site is closed" => "Näytettävä viesti kun sivusto on suljettu",
 "Disallow access when load is above the threshold (except for those with permission)" => "Älä salli palvelimen käyttöä kun kuormituskynnys ylittyy (paitsi niiltä joilla on lupa)",

@@ -185,7 +185,7 @@
       </td>
     </tr>
     
-    {if $prefs.change_theme eq 'y' && $group_style eq ''}
+    {if $prefs.change_theme eq 'y' && (isset($group_style) and $group_style eq '')}
       <tr>
         <td class="{cycle advance=false}">{tr}Theme{/tr}:</td>
         <td class="{cycle}">
@@ -269,11 +269,11 @@
       <td class="{cycle}">
         <select name="display_timezone" id="display_timezone">
 	  <option value="" style="font-style:italic;">{tr}Detect user timezone if browser allows, otherwise site default{/tr}</option>
-	  <option value="Site" style="font-style:italic;border-bottom:1px dashed #666;"{if $user_prefs.display_timezone eq 'Site'} selected="selected"{/if}>{tr}Site default{/tr}</option>
+	  <option value="Site" style="font-style:italic;border-bottom:1px dashed #666;"{if isset($user_prefs.display_timezone) and $user_prefs.display_timezone eq 'Site'} selected="selected"{/if}>{tr}Site default{/tr}</option>
           {foreach key=tz item=tzinfo from=$timezones}
             {math equation="floor(x / (3600000))" x=$tzinfo.offset assign=offset}
             {math equation="(x - (y*3600000)) / 60000" y=$offset x=$tzinfo.offset assign=offset_min format="%02d"}
-            <option value="{$tz|escape}"{if $user_prefs.display_timezone eq $tz} selected="selected"{/if}>{$tz|escape} (UTC{if $offset >= 0}+{/if}{$offset}h{if $offset_min gt 0}{$offset_min}{/if})</option>
+            <option value="{$tz|escape}"{if isset($user_prefs.display_timezone) and $user_prefs.display_timezone eq $tz} selected="selected"{/if}>{$tz|escape} (UTC{if $offset >= 0}+{/if}{$offset}h{if $offset_min gt 0}{$offset_min}{/if})</option>
           {/foreach}
         </select>
       </td>
@@ -310,7 +310,7 @@
   
     {if $prefs.feature_community_mouseover eq 'y'}
       <tr>
-        <td class="{cycle advance=false}">{tr}Show user's info on mouseover{/tr}:</td>
+        <td class="{cycle advance=false}">{tr}Displays users' info tooltip on mouseover for every user who allows his information to be public{/tr}</td>
         <td class="{cycle}">
           <input type="checkbox" name="show_mouseover_user_info" {if $show_mouseover_user_info eq 'y'}checked="checked"{/if} />
         </td>

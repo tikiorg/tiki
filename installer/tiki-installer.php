@@ -712,10 +712,14 @@ if ( isset($dbTiki) && is_object($dbTiki) && isset($_SESSION["install-logged-$mu
 		$installer = new Tiki_Profile_Installer;
 		//$installer->setUserData( $data ); // TODO
 
-	if ( isset($_REQUEST['profile']) and !empty($_REQUEST['profile']) ) {
-		$profile = Tiki_Profile::fromNames( 'http://profiles.tikiwiki.org', $_REQUEST['profile'] );
-		$installer->install( $profile );
-	}
+		if ( $has_internet_connection && isset($_REQUEST['profile']) and !empty($_REQUEST['profile']) ) {
+			if ( $_REQUEST['profile'] == 'Small_Organization_Web_Presence' ) {
+				$profile = $remote_profile_test;
+			} else {
+				$profile = Tiki_Profile::fromNames( 'http://profiles.tikiwiki.org', $_REQUEST['profile'] );
+			}
+			$installer->install( $profile );
+		}
 		
 		$_SESSION[$cookie_name] = 'admin';
 	}
@@ -782,21 +786,17 @@ if ($install_step == '2') {
 		$gd_test = 'n'; }
 	$smarty->assign('gd_test', $gd_test);
 	
-}
-
-// Preference settings
-// just after DB initialization or DB update
-if ( $install_step == '5' && isset($dbTiki) && is_object($dbTiki) ) {
-    require_once 'lib/tikilib.php';
-    $tikilib = new TikiLib( $dbTiki );
-		$tikilib->set_preference("language",$language);
-		$tikilib->set_preference("site_language",$language);
+} elseif ( $install_step == '4' ) {
+	require_once 'lib/profilelib/profilelib.php';
+	$remote_profile_test = Tiki_Profile::fromNames( 'http://profiles.tikiwiki.org', 'Small_Organization_Web_Presence' );
+	$has_internet_connection = empty($remote_profile_test) ? 'n' : 'y';
+	$smarty->assign('has_internet_connection', $has_internet_connection);
 }
 
 // write general settings
 if (($_REQUEST['general_settings']) == 'y') {
 global $dbTiki;
-$query = "INSERT INTO `tiki_preferences` (`name`, `value`) VALUES ('browsertitle', '".$_REQUEST['site_title']."'), ('sender_email', '".$_REQUEST['sender_email']."'), ('https_login', '".$_REQUEST['https_login']."'), ('https_port', '".$_REQUEST['https_port']."'), ('feature_swtich_ssl_mode', '".$_REQUEST['feature_switch_ssl_mode']."'), ('feature_show_stay_in_ssl_mode', '".$_REQUEST['feature_show_stay_in_ssl_mode']."')";
+$query = "INSERT INTO `tiki_preferences` (`name`, `value`) VALUES ('browsertitle', '".$_REQUEST['browsertitle']."'), ('sender_email', '".$_REQUEST['sender_email']."'), ('https_login', '".$_REQUEST['https_login']."'), ('https_port', '".$_REQUEST['https_port']."'), ('feature_swtich_ssl_mode', '".$_REQUEST['feature_switch_ssl_mode']."'), ('feature_show_stay_in_ssl_mode', '".$_REQUEST['feature_show_stay_in_ssl_mode']."'), ('language', '".$language."'), ('site_language', '".$language."')";
 $query .= ";UPDATE  `users_users` SET  `email` =  '".$_REQUEST['admin_email']."' WHERE  `users_users`.`userId` =1";
 $dbTiki->Execute($query);
 }

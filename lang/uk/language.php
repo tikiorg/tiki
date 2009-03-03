@@ -7095,6 +7095,7 @@ $lang=Array(
 "Windows" => "Віндовс",
 "Unknown/Other" => "Невідома/інша",
 "General Settings" => "Загальні установки",
+"Configure General Settings" => "Загальні установки",
 "Disallow access to the site (except for those with permission)" => "Заборонити доступ до майданчику (за виключенням тих, хто отримав дозвіл)",
 "Message to display when site is closed" => "Повідомлення, яке показується, коли майданчик закрито",
 "Disallow access when load is above the threshold (except for those with permission)" => "Заборонити доступ до майданчику, коли навантаження більше за норму (за виключенням тих, хто отримав дозвіл)",

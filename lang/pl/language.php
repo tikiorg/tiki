@@ -7722,6 +7722,7 @@ $lang=Array(
 "Home page" => "Strona startowa",
 "Unknown/Other" => "Nieznany/Inny",
 "General Settings" => "Ustawienia ogólne",
+"Configure General Settings" => "Ustawienia ogólne",
 "Use cache for external pages" => "Używaj cache dla stron zewnętrznych",
 "Use cache for external images" => "Używaj cache dla obrazów zewnętrznych",
 "Tikiwiki.org help" => "Pomoc Tikiwiki.org",

@@ -6425,6 +6425,7 @@ $lang=Array(
 "(standard)" => "(استاندارد)",
 "(some Unix MTA)" => "(برخي از MTAهاي يونيكس)",
 "General Settings" => "تنظيمات عمومي",
+"Configure General Settings" => "تنظيمات عمومي",
 "Disallow access to the site (except for those with permission)" => "دسترسي به اين پايگاه را -مگر براي كساني كه دسترسي دارند- ممكن نساز",
 "Message to display when site is closed" => "پيغامي كه بايد هنگام تعطيل بودن پايگاه نمايش داده شود",
 "Disallow access when load is above the threshold (except for those with permission)" => "هنگامي كه بار پايگاه پيش از حد مجاز مي‌شود، دسترسي به اين پايگاه را -مگر براي كساني كه دسترسي دارند- ممكن نساز",

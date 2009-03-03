@@ -7580,6 +7580,7 @@ $lang=Array(
 "Windows" => "윈도",
 "Unknown/Other" => "알려지지 않음",
 "General Settings" => "일반 설정들",
+"Configure General Settings" => "일반 설정들",
 "Use cache for external pages" => "외부 페이지 캐시하기",
 "Use cache for external images" => "외부 그림파일 캐시하기",
 "Tikiwiki.org help" => "Tikiwiki.org 도움말",

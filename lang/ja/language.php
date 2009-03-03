@@ -7508,6 +7508,7 @@ $lang=Array(
 "Custom home" => "カスタムホーム",
 "Unknown/Other" => "わからない/その他",
 "General Settings" => "一般機能",
+"Configure General Settings" => "一般機能",
 "Disallow access to the site (except for those with permission)" => "権限を持っている物以外、サイトのアクセスを拒否する",
 "Message to display when site is closed" => "サイトが「メンテ中」時に表示するメッセージ",
 "Disallow access when load is above the threshold (except for those with permission)" => "権限を持っている物以外、ロードが一定値より高い場合、サイトへのアクセスを拒否する",

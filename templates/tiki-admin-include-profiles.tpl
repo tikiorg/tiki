@@ -228,7 +228,14 @@ function showDetails( id, domain, profile ) { // {{{
 				</tr>
 				<tr>
 					<td class="form">{tr}Category{/tr}:</td>
-					<td><input type="text" name="category" value="{$category|escape}"/></td>
+					<td>
+						<select name="category">
+							<option value="">All</option>
+							{foreach item=cat from=$category_list}
+					 			<option value="{$cat|escape}"{if $cat eq $category} selected="selected"{/if}>{$cat|escape}</option>
+							{/foreach}
+						</select>
+					</td>
 				</tr>
 			
 				<tr>

@@ -8,7 +8,7 @@ require_once TOOLS . '/svntools.php';
 if( $_SERVER['argc'] <= 1 )
 	die( "Usage: php doc/devtools/release_changelog.php <version-number>
 Example:
-	php doc/devtools/release.php 2.0
+	php doc/devtools/release_changelog.php 2.0
 " );
 $newVersion = $_SERVER['argv'][1];
 
@@ -60,7 +60,11 @@ if ($handle) {
 				}
 				$currentParsedRevision = (int)$matches[1];
 			} elseif ( $currentParsedRevision > 0 && $buffer[0] != '-' ) {
-				$lastReleaseLogs[$currentParsedRevision] .= $buffer;
+				if ( isset( $lastReleaseLogs[$currentParsedRevision] ) ) {
+					$lastReleaseLogs[$currentParsedRevision] .= $buffer;
+				} else {
+					$lastReleaseLogs[$currentParsedRevision] = $buffer;
+				}
 			}
 		}
 		if ( $lastReleaseMajorNumber == 0 ) {

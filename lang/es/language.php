@@ -6493,6 +6493,7 @@ $lang=Array(
 "Mail end of line:" => "Fin de línea para correo:",
 "(some Unix MTA)" => "(algun MTA de Unix)",
 "General Settings" => "Configuraciones Generales",
+"Configure General Settings" => "Configuraciones Generales",
 "Disallow access to the site (except for those with permission)" => "Desactivar acceso al sitio (excepto para aquellos con permiso)",
 "Message to display when site is closed" => "Mensaje a desplegar cuando el sitio está cerrado",
 "Disallow access when load is above the threshold (except for those with permission)" => "Desactivar acceso cuando la carga esté por encima del límite (excepto para aquellos con permiso)",

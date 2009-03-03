@@ -7683,6 +7683,7 @@ $lang=Array(
 "OS" => "Λειτουργικό Σύστημα",
 "Unknown/Other" => "Άγνωστο/Άλλο",
 "General Settings" => "Γενικές Επιλογές",
+"Configure General Settings" => "Γενικές Επιλογές",
 "Use cache for external pages" => "Χρήση cache για εξωτερικές σελίδες",
 "Use cache for external images" => "Χρήση cache για εξωτερικές εικόνες",
 "Sender Email" => "Email αποστολέα",

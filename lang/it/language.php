@@ -7515,6 +7515,7 @@ $lang=Array(
 "Custom home" => "Homepage personalizzata",
 "Unknown/Other" => "Sconosciuto/Altro",
 "General Settings" => "Impostazioni Generali",
+"Configure General Settings" => "Impostazioni Generali",
 "Disallow access to the site (except for those with permission)" => "Disabilita l'accesso al sito (salvo a chi ha i permessi di accesso)",
 "Message to display when site is closed" => "Messaggio da mostrare quando il sito � chiuso",
 "Use cache for external pages" => "Usa cache per pagine esterne",

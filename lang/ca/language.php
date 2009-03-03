@@ -6479,6 +6479,7 @@ $lang=Array(
 "(standard)" => "(estàndard)",
 "(some Unix MTA)" => "(alguns MTA Unix)",
 "General Settings" => "Configuracions Generals",
+"Configure General Settings" => "Configuracions Generals",
 "Disallow access to the site (except for those with permission)" => "No permetre accès a la web (excepte aquells amb permís)",
 "Message to display when site is closed" => "Missatge a mostrar quan una web és tancada",
 "Disallow access when load is above the threshold (except for those with permission)" => "No permetre accès quan la càrrega encara no s'ha completat (excepte aquells amb permís)",

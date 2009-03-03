@@ -5363,7 +5363,8 @@ class TikiLib extends TikiDB {
 				// ~pp~ type "plugins"
 				$key = "§".md5($this->genPass())."§";
 				$noparsed["key"][] = preg_quote($key);
-				$plugin_data = str_replace('\\','\\\\',$plugin_data);
+				// comment out the following line: create problem with TRACKERLIST and popup because the <\/td> are changed
+				//$plugin_data = str_replace('\\','\\\\',$plugin_data);
 				//if( strstr( $plugin_data, '$' ) ) {
 					//$plugin_data = str_replace('$', '\$', $plugin_data);
 				//}
@@ -5440,7 +5441,7 @@ class TikiLib extends TikiDB {
 							global $headerlib, $page;
 							$id = 'plugin-edit-' . $plugin_name . $current_index;
 							$headerlib->add_jsfile( 'tiki-jsplugin.php?plugin=' . urlencode( $plugin_name ) );
-							if ($prefs.feature_jquery) {
+							if ($prefs['feature_jquery'] == 'y') {
 								$headerlib->add_js( "
 \$jq(document).ready( function() {
 	if( \$jq('#$id') ) \$jq('#$id').click( function(event) {
@@ -5458,7 +5459,7 @@ class TikiLib extends TikiDB {
 	} );
 } );
 " );
-							} else if ($prefs.feature_mootools) {
+							} else if ($prefs['feature_mootools'] == 'y') {
 								$headerlib->add_js( "
 window.addEvent('domready', function() {
 	if( $('$id') ) $('$id').addEvent( 'click', function(event) {

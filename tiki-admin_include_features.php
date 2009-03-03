@@ -122,6 +122,8 @@ if (isset($_REQUEST["features"])) {
 
 if (!empty($_REQUEST['tabs'])) {
 	$smarty->assign('tabs', $_REQUEST['tabs']=='on'?'n':'');
+} else {
+	$smarty->assign('tabs', '');
 }
 
 $smarty->assign('php_major_version', substr(PHP_VERSION, 0, strpos(PHP_VERSION, '.')));

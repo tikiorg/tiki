@@ -258,13 +258,15 @@
 	{if $list_mode eq 'csv'}
 		{$field_value.value}
 	{else}
-		<span style="padding-right:2em"><b title="{tr}Rating{/tr}: {$field_value.value|default:"-"}, {tr}Number of voices{/tr}: {$field_value.numvotes|default:"-"}, {tr}Average{/tr}: {$field_value.voteavg|default:"-"}" style="position:absolute">
-		&nbsp;{if $field_value.value >= 0}&nbsp;{/if}{$field_value.value|default:"-"}&nbsp;</b>
+		{capture name=stat}
+		{tr}Rating{/tr}: {$field_value.value|default:"-"}, {tr}Number of voices{/tr}: {$field_value.numvotes|default:"-"}, {tr}Average{/tr}: {$field_value.voteavg|default:"-"}, {tr}Your vote{/tr}: {if $item.my_rate}{$item.my_rate}{else}-{/if}
+		{/capture}
+		<span style="padding-right:2em"><b title="{$smarty.capture.stat}" style="position:absolute">
+		{if $field_value.value}{$field_value.voteavg}/{$field_value.value}{else}&nbsp;-&nbsp;{/if}</b>
 		</span>
 		{if $tiki_p_tracker_vote_ratings eq 'y'}
-			<span><span class="button2">
-			{if $item.my_rate eq NULL}
-				<b class="linkbut highlight">-</b>
+			{if $item.my_rate}
+				<b class="highlight">-</b>
 			{else}
 				<a href="{$smarty.server.PHP_SELF}{if $query_string}?{$query_string}{else}?{/if}
 					trackerId={$item.trackerId}
@@ -274,16 +276,16 @@
 			{/if}
 				{section name=i loop=$field_value.options_array}
 					{if $field_value.options_array[i] eq $item.my_rate}
-						<b class="linkbut highlight">{$field_value.options_array[i]}</b>
+						<b class="highlight">{$field_value.options_array[i]}</b>
 					{else}
 						<a href="{$smarty.server.PHP_SELF}?
 						trackerId={$item.trackerId}
 						&amp;itemId={$item.itemId}
 						&amp;ins_{$field_value.fieldId}={$field_value.options_array[i]}
-						{if $page}&amp;page={$page|escape:url}{/if}">{$field_value.options_array[i]}</a>
+						{if $page}&amp;page={$page|escape:url}{/if}"
+						title="{tr}Click to vote for this value.{/tr} {$smarty.capture.stat}">{$field_value.options_array[i]}</a>
 					{/if}
 				{/section}
-			</span></span>
 		{/if}
 	{/if}
 
