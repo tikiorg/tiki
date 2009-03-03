@@ -14,7 +14,7 @@
 
 {if $install_step eq '0' or !$install_step}
 {* start of installation *}
-<h1>{tr}Welcome to TikiWiki{/tr}</h1>
+<h1>{tr}Welcome{/tr}</h1>
 <div style="float:right;"><img src="img/tiki/tikilogo.png" alt="TikiWiki" /></div>
 <div class="clearfix">
 	<p>{tr}Welcome to the TikiWiki installation and upgrade script.{/tr} {tr}Use this script to install a new TikiWiki database or upgrade your existing database to release{/tr} <strong>{$tiki_version_name}</strong></p>
@@ -148,7 +148,7 @@
 
 {elseif $install_step eq '3' or ($dbcon eq 'n' or $resetdb eq 'y')}
 {* we do not have a valid db connection or db reset is requested *}
-<h1>{tr}Set Database Connection{/tr}</h1>
+<h1>{tr}Set the Database Connection{/tr}</h1>
 <div style="float:left;width:60px"><img src="pics/large/stock_line-in48x48.png" alt="{tr}Database{/tr}" /></div>
 <div class="clearfix">
 	<p>{tr}TikiWiki requires an active database connection{/tr}. {tr}You must create the database and user <em>before</em> completing this page{/tr}.</p>
@@ -240,7 +240,7 @@
 </div>
 
 {elseif $install_step eq '4'}
-<h1>{tr}Installation{/tr} {if $tikidb_created}&amp; {tr}Upgrade{/tr} {/if}{tr}Profiles{/tr}</h1>
+<h1>{tr}Install{/tr} {if $tikidb_created}&amp; {tr}Update{/tr} {/if}{tr}Profile{/tr}</h1>
 <div style="float:left;width:60px"><img src="pics/large/profiles48x48.png" alt="{tr}Profiles{/tr}" /></div>
 <div class="clearfix">
 <p>{tr}Select the installation{/tr} {if $tikidb_created}{tr}(or upgrade){/tr} {/if}{tr}script to use{/tr}. {tr}This script will populate {if $tikidb_created}(or upgrade){/if} the database{/tr}.</p>
@@ -270,7 +270,7 @@
 			</script>
 			<div id="install-link">
 			
-			<p style="text-align:center;"><a class="button" href="javascript:install()">{tr}Reinstall the database.{/tr}</a></p>
+			<p style="text-align:center;"><a class="button" href="javascript:install()">{tr}Reinstall the database{/tr}</a></p>
 			<p style="text-align: center"><img src="img/silk/sticky.png" alt="warning" style="vertical-align:middle"/> <strong>{tr}Warning{/tr}</strong>: {tr}This will destroy your current database{/tr}.</p>
 			</div>
 		    <div id="install-table" style="visibility:hidden">
@@ -383,9 +383,9 @@
 
 
 {elseif $install_step eq '6'}
-<h1>{tr}General Settings{/tr}</h1>
+<h1>{tr}Configure General Settings{/tr}</h1>
 <form action="tiki-install.php" method="post">
-<div style="float:left;width:60px"><img src="pics/large/icon-configuration48x48.png" alt="{tr}General Settings{/tr}" /></div>
+<div style="float:left;width:60px"><img src="pics/large/icon-configuration48x48.png" alt="{tr}Configure General Settings{/tr}" /></div>
 <div class="clearfix">
 	<p>{tr}Complete these fields to configure common, general settings for your site{/tr}. {tr}The information you enter here can be changed later{/tr}.</p>
 	<p>{tr}Refer to the <a href="http://doc.tikiwiki.org/Admin+Panels" target="_blank">documentation</a> for complete information on these, and other, settings{/tr}.</p>
@@ -449,7 +449,7 @@ others?
 </form>
 
 {elseif $install_step eq '7'}
-<h1>{tr}Enter Your Tiki{/tr}</h1>
+<h1>{tr}Enter Your TikiWiki{/tr}</h1>
 <div style="float:left;width:60px"><img src="pics/large/stock_quit48x48.png" alt="{tr}Login{/tr}" /></div>
 <div class="clearfix">
 	<p>{tr}The installation is complete{/tr}! {tr}Your database has been configured and Tikiwiki is ready to run.{/tr} </p>
@@ -469,13 +469,13 @@ others?
 	<h3><img src="pics/icons/information.png" alt="{tr}Note{/tr}" style="vertical-align:middle"/> {tr}Upgrade{/tr}</h3>
 	<p>{tr}If this is an upgrade, clean the Tiki caches manually (the <strong>templates_c</strong> directory) or by using the <strong>Admin &gt; System</strong> option from the Admin menu.{/tr}</p>
 {/if}
-	<ul>
+
 {if $tikidb_is20}
-		<li><a href="tiki-install.php?lockenter" class="link">{tr}Lock installer and enter Tiki{/tr}</a>. ({tr}Recommended{/tr})</li>
-		<li><a href="tiki-index.php" class="link">{tr}Do nothing and enter Tiki{/tr}</a>.</li>
+		<span class="button"><a href="tiki-install.php?lockenter">{tr}Lock installer and enter Tiki{/tr} ({tr}Recommended{/tr})</a></span>
+		<span class="button"><a href="tiki-index.php">{tr}Do nothing and enter TikiWiki{/tr}</a></span>
 {/if}
-		<li><a href="tiki-install.php?reset=yes{if $lang}&amp;lang={$lang}{/if}" class="link">{tr}Restart the installer{/tr}</a>.</li>
-	</ul>
+		<span class="button"><a href="tiki-install.php?reset=yes{if $lang}&amp;lang={$lang}{/if}">{tr}Restart the installer{/tr}</a></span>
+
 </div>
 {/if}
 </div>
@@ -534,13 +534,13 @@ others?
 				<div class="clearfix box-data">
 				<ol>
 					<li>{if $install_step eq '0'}<strong>{else}<a href="tiki-install.php?reset=y{if $multi}&multi={$multi}{/if}{if $lang}&lang={$lang}{/if}" title="{tr}Welcome{/tr}/{tr}Restart the installer{/tr}.">{/if}{tr}Welcome{/tr}{if $install_step eq '0'}</strong>{else}</a>{/if}</li>
-					<li>{if $install_step eq '1'}<strong>{else}<a href="tiki-install.php?install_step=1{if $multi}&multi={$multi}{/if}{if $lang}&lang={$lang}{/if}" title="{tr}License{/tr}">{/if}{tr}License{/tr}{if $install_step eq '1'}</strong>{else}</a>{/if}</li>
-					<li>{if $install_step eq '2'}<strong>{elseif $install_step ge '3' or $dbcon eq 'y'}<a href="tiki-install.php?install_step=2{if $multi}&multi={$multi}{/if}{if $lang}&lang={$lang}{/if}" title="{tr}System Requirements{/tr}">{/if}{tr}System Requirements{/tr}{if $install_step eq '2'}</strong>{elseif $install_step ge '3' or $dbcon eq 'y'}</a>{/if}</li>
-					<li>{if $install_step eq '3'}<strong>{elseif $dbcon eq 'y'}<a href="tiki-install.php?install_step=3{if $multi}&multi={$multi}{/if}{if $lang}&lang={$lang}{/if}" title="{tr}Database Connection{/tr}">{/if}{if $dbcon eq 'y'}{tr}Reset{/tr} {/if}{tr}Database Connection{/tr}{if $install_step eq '3'}</strong>{elseif $dbcon eq 'y'}</a>{/if}</li>
+					<li>{if $install_step eq '1'}<strong>{else}<a href="tiki-install.php?install_step=1{if $multi}&multi={$multi}{/if}{if $lang}&lang={$lang}{/if}" title="{tr}Read the License{/tr}">{/if}{tr}Read the License{/tr}{if $install_step eq '1'}</strong>{else}</a>{/if}</li>
+					<li>{if $install_step eq '2'}<strong>{elseif $install_step ge '3' or $dbcon eq 'y'}<a href="tiki-install.php?install_step=2{if $multi}&multi={$multi}{/if}{if $lang}&lang={$lang}{/if}" title="{tr}Review the System Requirements{/tr}">{/if}{tr}Review the System Requirements{/tr}{if $install_step eq '2'}</strong>{elseif $install_step ge '3' or $dbcon eq 'y'}</a>{/if}</li>
+					<li>{if $install_step eq '3'}<strong>{elseif $dbcon eq 'y'}<a href="tiki-install.php?install_step=3{if $multi}&multi={$multi}{/if}{if $lang}&lang={$lang}{/if}" title="{tr}Database Connection{/tr}">{/if}{if $dbcon eq 'y'}{tr}Reset the{/tr} {/if}{tr}Database Connection{/tr}{if $install_step eq '3'}</strong>{elseif $dbcon eq 'y'}</a>{/if}</li>
 					<li>{if $install_step eq '4'}<strong>{elseif $dbcon eq 'y' or isset($smarty.post.scratch) or isset($smarty.post.update)}<a href="tiki-install.php?install_step=4{if $multi}&multi={$multi}{/if}{if $lang}&lang={$lang}{/if}" title="{tr}Install{/tr}{if $tikidb_created} &amp; {tr}Upgrade{/tr}{/if} {tr}Profile{/tr}">{/if}{if $tikidb_created}{tr}Install/Upgrade Profile{/tr}{else}{tr}Install Profile{/tr}{/if}{if $install_step eq '4'}</strong>{elseif ($dbcon eq 'y') or (isset($smarty.post.scratch)) or (isset($smarty.post.update))}</a>{/if}</li>
-					<li>{if $install_step eq '5'}<strong>{elseif $tikidb_is20}<a href="tiki-install.php?install_step=5{if $multi}&multi={$multi}{/if}{if $lang}&lang={$lang}{/if}">{/if}{if isset($smarty.post.update)}{tr}Review Upgrade{/tr}{else}{tr}Review Installation{/tr}{/if}{if $install_step eq '5'}</strong>{elseif $tikidb_is20}</a>{/if}</li>
-					<li>{if $install_step eq '6'}<strong>{elseif $tikidb_is20 and !isset($smarty.post.update)}<a href="tiki-install.php?install_step=6{if $multi}&multi={$multi}{/if}{if $lang}&lang={$lang}{/if}">{/if}{tr}General Settings{/tr}{if $install_step eq '6'}</strong>{elseif $tikidb_is20 and !isset($smarty.post.update)}</a>{/if}</li>
-					<li>{if $install_step eq '7'}<strong>{elseif $tikidb_is20}<a href="tiki-install.php?install_step=7{if $multi}&multi={$multi}{/if}{if $lang}&lang={$lang}{/if}">{/if}{tr}Enter Tiki{/tr}{if $install_step eq '7'}</strong>{elseif $tikidb_is20}</a>{/if}</li>
+					<li>{if $install_step eq '5'}<strong>{elseif $tikidb_is20}<a href="tiki-install.php?install_step=5{if $multi}&multi={$multi}{/if}{if $lang}&lang={$lang}{/if}">{/if}{if isset($smarty.post.update)}{tr}Review the Upgrade{/tr}{else}{tr}Review the Installation{/tr}{/if}{if $install_step eq '5'}</strong>{elseif $tikidb_is20}</a>{/if}</li>
+					<li>{if $install_step eq '6'}<strong>{elseif $tikidb_is20 and !isset($smarty.post.update)}<a href="tiki-install.php?install_step=6{if $multi}&multi={$multi}{/if}{if $lang}&lang={$lang}{/if}">{/if}{tr}Configure the General Settings{/tr}{if $install_step eq '6'}</strong>{elseif $tikidb_is20 and !isset($smarty.post.update)}</a>{/if}</li>
+					<li>{if $install_step eq '7'}<strong>{elseif $tikidb_is20}<a href="tiki-install.php?install_step=7{if $multi}&multi={$multi}{/if}{if $lang}&lang={$lang}{/if}">{/if}{tr}Enter Your TikiWiki{/tr}{if $install_step eq '7'}</strong>{elseif $tikidb_is20}</a>{/if}</li>
 				</ol>
 				</div>
 			</div>
