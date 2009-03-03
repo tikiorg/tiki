@@ -5458,7 +5458,7 @@ class TikiLib extends TikiDB {
 	} );
 } );
 " );
-							} else if ($prefs.feature_mootools) {
+							} else if ($prefs['feature_mootools'] == 'y') {
 								$headerlib->add_js( "
 window.addEvent('domready', function() {
 	if( $('$id') ) $('$id').addEvent( 'click', function(event) {
