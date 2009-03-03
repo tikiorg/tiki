@@ -471,10 +471,9 @@ others?
 {/if}
 
 {if $tikidb_is20}
-		<span class="button"><a href="tiki-install.php?lockenter">{tr}Lock installer and enter Tiki{/tr} ({tr}Recommended{/tr})</a></span>
-		<span class="button"><a href="tiki-index.php">{tr}Do nothing and enter TikiWiki{/tr}</a></span>
+		<span class="button"><a href="tiki-install.php?lockenter">{tr}Enter TikiWiki and Lock Installer{/tr} ({tr}Recommended{/tr})</a></span>
+		<span class="button"><a href="tiki-index.php">{tr}Enter TikiWiki Without Locking Installer{/tr}</a></span>
 {/if}
-		<span class="button"><a href="tiki-install.php?reset=yes{if $lang}&amp;lang={$lang}{/if}">{tr}Restart the installer{/tr}</a></span>
 
 </div>
 {/if}
