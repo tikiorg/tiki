@@ -8504,5 +8504,27 @@ $lang=Array(
 "TikiTest Replay" => "Rejouer TikiTest",
 "The page is empty" => "La page est vide",
 "Configure the General Settings" => "Configurer les paramètres généraux",
+"_HOMEPAGE_CONTENT_" => '
+!Félicitation
+Ceci est la "))HomePage((" de votre Tiki. Si vous voyez cette page, votre installation est un succès.
+
+Vous pouvez changer cette page après s\'être authentifié. Veuillez consulter la [http://doc.tikiwiki.org/wiki+syntax|syntaxe wiki] pour les détails relatifs à l\'édition.
+
+
+!!{img src=pics/icons/star.png alt="Démarrage"} Mise en route.
+Pour commencer la configuration de votre site:
+{FANCYLIST()}
+1) Connectez-vous en tant que __admin__ avec le mot de passe __admin__.
+2) Changez le mot de passe de l\'utilisateur admin.
+3) Activez des fonctionnalités spécifiques de Tiki.
+4) Configurez les fonctionnalités.
+{FANCYLIST}
+
+!!{img src=pics/icons/help.png alt="Aide"} Besoin d\'aide ?
+Pour plus d\'informations:
+*[http://info.tikiwiki.org/Learn+More|Apprenez plus au sujet de TikiWiki].
+*[http://info.tikiwiki.org/Help+Others|Obtenez de l\'aide], incluant la [http://doc.tikiwiki.org|documentation officielle] et [http://www.tikiwiki.org/forums|forums de support].
+*[http://info.tikiwiki.org/Join+the+community|Rejoignez la communauté TikiWiki].
+',
 "###end###"=>"###end###");
 ?>
