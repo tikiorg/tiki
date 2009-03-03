@@ -173,7 +173,11 @@ function smarty_modifier_userlink($other_user,$class='link',$idletime='not_set',
                     return $ret;
 		} else {
 			if ($prefs.feature_jquery_tooltips) {
-				$ret = "<a class='$class titletips' title=\"$mouseover\" href='tiki-user_information.php?userId=".urlencode($info['userId'])."' >$ou</a>$friend$star";
+				if ($show_mouseover) {
+					$ret = "<a class='$class titletips' title=\"$mouseover\" href='tiki-user_information.php?userId=".urlencode($info['userId'])."' >$ou</a>$friend$star";
+				} else {
+					$ret = "<a class='$class' href='tiki-user_information.php?userId=".urlencode($info['userId'])."' >$ou</a>$friend$star";
+									}
 			} else {
 				$ret = "<a class='$class' $mouseover target='_top' href='tiki-user_information.php?userId=".urlencode($info['userId'])."' >$ou</a>$friend$star";
 			}
