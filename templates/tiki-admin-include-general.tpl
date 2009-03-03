@@ -65,7 +65,7 @@
 	<legend>{tr}Site Identity{/tr}</legend>
 	<div style="text-align: left"><label for="browsertitle">{tr}Browser title{/tr}:</label> <input type="text" name="browsertitle" id="browsertitle" value="{$prefs.browsertitle|escape}" size="50" /></div>
 
-	<div style="padding:.5em;clear:both">{tr}Go to <a href="tiki-admin.php?page=look" title=""><strong>Look &amp; Feel</strong></a> section for additional site related customization preferences{/tr}.
+	<div style="padding:.5em;clear:both">{tr}Go to <a href="tiki-admin.php?page=look" title=""><strong>Look &amp; Feel</strong></a> section for additional site related customization preferences{/tr}.</div>
     </fieldset>
     
 <fieldset><legend>{tr}Home Page{/tr}</legend>
@@ -192,7 +192,7 @@
 	<div align="left"><label for="feature_ticketlib2">{tr}Protect against CSRF with a ticket{/tr}.</label></div>
 </div>
 
-<div style="padding:.5em;clear:both">{tr}See <a href="tiki-admin_security.php" title="Security"><strong>Admin &gt; Security Admin</strong></a> for additional security settings{/tr}.
+<div style="padding:.5em;clear:both">{tr}See <a href="tiki-admin_security.php" title="Security"><strong>Admin &gt; Security Admin</strong></a> for additional security settings{/tr}.</div>
 </fieldset>
 
       {if $prefs.feature_tabs neq 'y'}</div>{/if}
