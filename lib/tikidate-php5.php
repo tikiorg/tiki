@@ -157,7 +157,7 @@ class TikiDate {
 	}
 
 	function TimezoneIsValidId($id) {
-		return timezone_open($id) !== FALSE ;
+		return empty($id) ? FALSE : timezone_open($id) !== FALSE ;
 	}
 
 }
