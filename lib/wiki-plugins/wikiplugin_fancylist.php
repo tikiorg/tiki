@@ -22,14 +22,13 @@ function wikiplugin_fancylist($data, $params) {
 	if (isset($param))
 		extract ($params,EXTR_SKIP);
 	$result = '<ol class="fancylist">';
-	$lines = split("\n", $data);
+	// split data by lines (trimed whitespace from start and end)
+	$lines = split("\n", trim($data));
 
 	foreach ($lines as $line) {
-		$parts = explode(")", $line);
-
-		if (isset($parts[0]) && isset($parts[1])) {
-			$result .= '<li><p>' . $parts[1] . '</p></li>';
-		}
+		// replace all before and including the ")"
+		$part = preg_replace("/[\w]+\)(.*)/", "$1", $line);
+		$result .= '<li><p>' . $part . '</p></li>';
 	}
 
 	$result .= '</ol>';
