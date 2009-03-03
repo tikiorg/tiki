@@ -1707,8 +1707,8 @@ $lang=Array(
 // "Administrator" => "Administrator",
 // "Admin email" => "Admin email",
 // "This is the email address for your administrator account" => "This is the email address for your administrator account",
-// "Enter Your Tiki" => "Enter Your Tiki",
-// "Enter Your TikiWiki" => "Enter Your Tiki",
+"Enter Your Tiki" => "Accéder à votre Tiki",
+"Enter Your TikiWiki" => "Accéder à votre TikiWiki",
 // "The installation is complete" => "The installation is complete",
 // "Your database has been configured and Tikiwiki is ready to run" => "Your database has been configured and Tikiwiki is ready to run",
 // "TikiWiki is an opensource project, <em>you</em> can <a href='http://info.tikiwiki.org/Join+the+Community' target='_blank'>join the community</a> and help <a href='http://info.tikiwiki.org/tiki-index.php?page=Develop+Tiki' target='_blank'>develop Tiki</a>" => "TikiWiki is an opensource project, <em>you</em> can <a href='http://info.tikiwiki.org/Join+the+Community' target='_blank'>join the community</a> and help <a href='http://info.tikiwiki.org/tiki-index.php?page=Develop+Tiki' target='_blank'>develop Tiki</a>",
@@ -8503,5 +8503,6 @@ $lang=Array(
 "TikiTest Record" => "Enregistrement TikiTest",
 "TikiTest Replay" => "Rejouer TikiTest",
 "The page is empty" => "La page est vide",
+"Configure the General Settings" => "Configurer les paramètres généraux",
 "###end###"=>"###end###");
 ?>
