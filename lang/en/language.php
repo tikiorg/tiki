@@ -72,6 +72,28 @@ $lang=Array(
 "Oct" => "Oct.",
 "Nov" => "Nov.",
 "Dec" => "Dec.",
+"_HOMEPAGE_CONTENT_" => '
+!Congratulations
+This is the default ))HomePage(( for your Tiki. If you are seeing this page, your installation was successful.
+
+You can change this page after logging in. Please review the [http://doc.tikiwiki.org/wiki+syntax|wiki syntax] for editing details.
+
+
+!!{img src=pics/icons/star.png alt="Star"} Get started.
+To begin configuring your site:
+{FANCYLIST()}
+1) Log in as the __admin__ with password __admin__.
+2) Change the admin password.
+3) Enable specific Tiki features.
+4) Configure the features.
+{FANCYLIST}
+
+!!{img src=pics/icons/help.png alt="Help"} Need help?
+For more information:
+*[http://info.tikiwiki.org/Learn+More|Learn more about TikiWiki].
+*[http://info.tikiwiki.org/Help+Others|Get help], including the [http://doc.tikiwiki.org|official documentation] and [http://www.tikiwiki.org/forums|support forums].
+*[http://info.tikiwiki.org/Join+the+community|Join the TikiWiki community].
+',
 // "This feature is disabled" => "This feature is disabled",
 // "Permission denied you cannot view pages" => "Permission denied you cannot view pages",
 // "Cannot write to this file" => "Cannot write to this file",
