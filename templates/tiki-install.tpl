@@ -277,13 +277,19 @@
 			{else}
 		    <div id="install-table">
 			{/if}
-			 {if $tikidb_created}<p style="text-align: center"><img src="img/silk/sticky.png" alt="warning" style="vertical-align:middle"/> <strong>{tr}Warning{/tr}</strong>: {tr}This will destroy your current database{/tr}.</p>{/if}			  
+			 {if $tikidb_created}<p style="text-align: center"><img src="img/silk/sticky.png" alt="warning" style="vertical-align:middle"/> <strong>{tr}Warning{/tr}</strong>: {tr}This will destroy your current database{/tr}.</p>{/if}
+			{if $has_internet_connection eq 'y'}
 			  <p>{tr}Create a new database (clean install) with profile{/tr}:</p>
 			<select name="profile" size="{if $profiles}{$profiles|@count}{else}5{/if}">
 			<option value="" selected="selected">Bare-bones default install</option>
 			<option value="Small_Organization_Web_Presence">Small Organization Web Presence</option>
 			</select>
 			 <p>{tr}See the documentation for <a target="_blank" href="http://profiles.tikiwiki.org/Profiles_in_30_installer" class="link" title="{tr}Description of available profiles.{/tr}">descriptions of the available profiles{/tr}</a>.</p>
+			{else}
+			  <p style="text-align: center; color:red">{tr}No Internet Connection has been found.{/tr}</p>
+			  <p style="text-align: center">{tr}The default installation profile will be used.{/tr}</p>
+			<input type="hidden" name="profile" value="" />
+			{/if}
 			 <p>&nbsp;</p>
 				<div align="center">
 					<input type="submit" name="scratch" value=" {tr}Install{/tr} " />
