@@ -959,20 +959,22 @@ class Tiki_Profile_InstallHandler_Menu extends Tiki_Profile_InstallHandler // {{
 
 		$item['position'] = $position;
 
+		$item['type'] = 's';
+
 		if( $parent )
 		{
-			if( $parent['type'] == 's' )
-				$item['type'] == 1;
+			if( $parent['type'] === 's' )
+				$item['type'] = 1;
 			else
 				$item['type'] = $parent['type'] + 1;
+
+			$item['level'] = $parent['level'] + 1;
 
 			$item['permissions'] = array_unique( 
 				array_merge( $parent['permissions'], $item['permissions'] ) );
 			$item['groups'] = array_unique( 
 				array_merge( $parent['groups'], $item['groups'] ) );
 		}
-		else
-			$item['type'] = 's';
 
 		foreach( $item['items'] as &$child )
 			$this->fixItem( $child, $position, $item );
@@ -980,9 +982,6 @@ class Tiki_Profile_InstallHandler_Menu extends Tiki_Profile_InstallHandler // {{
 		foreach( $item['permissions'] as &$perm )
 			if( strpos( $perm, 'tiki_p_' ) !== 0 )
 				$perm = 'tiki_p_' . $perm;
-
-		if( count( $item['items'] ) == 0 )
-			$item['type'] = 'o';
 	} // }}}
 
 	function canInstall()
