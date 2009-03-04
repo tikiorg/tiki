@@ -721,6 +721,10 @@
 					<input type="checkbox" name="feature_jquery_reflection" {if $prefs.feature_jquery_reflection eq 'y'}checked="checked"{/if}/>
 					<a href="{$prefs.helpurl}JQuery#Reflection" target="tikihelp" class="tikihelp" title="{tr}JQuery Reflection{/tr}"> {tr}JQuery Reflection (reflection effect on images){/tr}</a>
 				</div>
+				<div class="clear floatleft">
+					<input type="checkbox" name="feature_jquery_sheet" {if $prefs.feature_jquery_sheet eq 'y'}checked="checked"{/if}/>
+					<a href="{$prefs.helpurl}JQuery#Sheet" target="tikihelp" class="tikihelp" title="{tr}JQuery Spreadsheet{/tr}"> {tr}JQuery Sheet{/tr}</a>
+				</div>
 			</fieldset>
 			<fieldset>
 				<legend>

@@ -31,6 +31,10 @@
 {if $prefs.feature_jquery_reflection eq 'y'}
 <script type="text/javascript" src="lib/jquery/reflection-jquery/js/reflection.js"></script> 
 {/if}
+{if $prefs.feature_jquery_sheet eq 'y'}
+<link rel="stylesheet" href="lib/jquery/jquery.sheet/jquery.sheet.base.css" type="text/css" /> 
+<script type="text/javascript" src="lib/jquery/jquery.sheet/jquery.sheet.min.js"></script> 
+{/if}
 <script type="text/javascript">
 <!--//--><![CDATA[//><!--
 // Restore $
