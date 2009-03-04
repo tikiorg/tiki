@@ -509,7 +509,8 @@ p.editdate {
 	font-size: 0.9em;
 }
 
-/* flag languages */
+/* mod-switch_lang now does mode=menu|flags|words */
+/* flags */
 
 .box-switch_lang .box-data img {
   padding: .2em;
@@ -528,6 +529,24 @@ p.editdate {
 .box-switch_lang .box-data img.unavailable,
 .box-switch_lang .box-data span.unavailable  {
   opacity: .3;
+}
+
+/* words */
+
+.box-switch_lang li {
+	list-style: none;
+}
+
+.box-switch_lang .box-data a.highlight {
+  font-weight: bold;
+}
+
+.box-switch_lang .box-data a.unavailable  {
+  opacity: .6;
+}
+
+.box-switch_lang ul {
+	padding: 0 1em;
 }
 
 /* for wikiplugin_fancylist */
@@ -575,5 +594,4 @@ p.editdate {
   margin: -10px 0 0 0;
   color: #900;
 }
-
 

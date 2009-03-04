@@ -24,18 +24,7 @@
 {if $prefs.feature_multilingual ne 'y'}
 	{tr}This feature is disabled{/tr}
 {elseif $prefs.change_language ne 'n' or $user eq ''}
-{if !$module_params.mode or $module_params.mode eq 'menu'}
-<form method="get" action="tiki-switch_lang.php" target="_self">
-       <select name="language" size="1" onchange="this.form.submit();">
-        {section name=ix loop=$languages}
-        <option value="{$languages[ix].value|escape}"
-          {if $prefs.language eq $languages[ix].value}selected="selected"{/if}>
-          {$languages[ix].name}
-        </option>
-        {/section}
-        </select>
-</form>
-{elseif $module_params.mode eq 'flags'}
+{if $module_params.mode eq 'flags'}
 	{section name=ix loop=$languages}
 		{assign var='val' value=$languages[ix].value|escape}
 		{assign var='name' value=$languages[ix].name|escape}
@@ -47,6 +36,27 @@
 			{button _text="$name" href="tiki-switch_lang.php?language=$val" _title="$name" _class="$class" }
 		{/if}
 	{/section}
+{elseif $module_params.mode eq 'words'}
+	<ul>
+	{section name=ix loop=$languages}
+	  <li>
+	    <a title="{$languages[ix].name|escape}" class="linkmodule {$languages[ix].class}" href="tiki-switch_lang.php?language={$languages[ix].value|escape}">
+	      {$languages[ix].name|escape}
+	    </a>
+	  </li>
+	{/section}
+	</ul>
+{else}{* do menu as before is not flags or words *}
+<form method="get" action="tiki-switch_lang.php" target="_self">
+       <select name="language" size="1" onchange="this.form.submit();">
+        {section name=ix loop=$languages}
+        <option value="{$languages[ix].value|escape}"
+          {if $prefs.language eq $languages[ix].value}selected="selected"{/if}>
+          {$languages[ix].name}
+        </option>
+        {/section}
+        </select>
+</form>
 {/if}
 {else}
 	{tr}Permission denied{/tr}
