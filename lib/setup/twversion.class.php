@@ -31,7 +31,7 @@ class TWVersion {
 
 		// Set everything else, including defaults.
 		$this->version 	= '4.0';
-		$this->star		= '???';
+		$this->star	= 'Aldebaran';
 		$this->release 	= $this->version;
 		$this->releases	= array();
 		$this->ridx 	= array();
@@ -62,7 +62,8 @@ class TWVersion {
 				11=>'Polaris',
 				12=>'Sirius',
 				13=>'Arcturus',
-				14=>'Betelgeuse'
+				14=>'Betelgeuse',
+				15=>'Aldebaran'
 				);
 	}
 
