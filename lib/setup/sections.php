@@ -187,8 +187,8 @@ $sections = array(
 		'itemkey' => '',
 		'objectType' => 'html page',
 	),
-	'swffix' => array(
-		'feature' => 'feature_swffix',
+	'swfobj' => array(
+		'feature' => 'feature_swfobj',
 	),
 	// tra('Newsletter')
 	'newsletters' => array(

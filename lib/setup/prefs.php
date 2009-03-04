@@ -956,8 +956,8 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_copyright' => 'n',
 		'feature_multimedia' => 'n',
 
-		// swffix
-		'feature_swffix' => 'n',
+		// swfobj
+		'feature_swfobj' => 'y',
 
 		// textarea
 		'feature_smileys' => 'n',

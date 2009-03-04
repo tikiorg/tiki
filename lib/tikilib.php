@@ -8207,9 +8207,9 @@ function get_wiki_section($data, $hdr) {
 				$flashvars = str_replace('\\/', '/', $flashvars);
 			}
 			$js = <<<JS
-swfobject.embedSWF( $movie, $div, $width, $height, $version, '', $flashvars, $params, {} );
+swfobject.embedSWF( $movie, $div, $width, $height, $version, 'lib/swfobject/expressInstall.swf', $flashvars, $params, {} );
 JS;
-			$headerlib->add_jsfile( 'lib/swfobject.js' );
+			$headerlib->add_jsfile( 'lib/swfobject/swfobject.js' );
 			return "<div id=\"$myId\">" . tra('Flash player not available.') . "</div><script type=\"text/javascript\">\n<!--//--><![CDATA[//><!--\n$js\n//--><!]]>\n</script>\n";
 		} else { // link on the movie will not work with IE6
 			extract ($params,EXTR_SKIP);
