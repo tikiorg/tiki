@@ -1863,23 +1863,46 @@ class TikiLib extends TikiDB {
 				$res['sefurl'] = $wikilib->sefurl($matches[1]);
 			}
 			if (!$full) {
-				$display = true;
 				if (isset($res['section']) and $res['section']) {
-					$sections = preg_split('/\s*,\s*/',$res['section']);
-					foreach ($sections as $sec) {
-						if (!isset($prefs[$sec]) or $prefs[$sec] != 'y') {
-							$display = false;
-							break;
+					if (strstr($res['section'], '|')) {
+						$display = false;
+						$sections = preg_split('/\s*|\s*/',$res['section']);
+						foreach ($sections as $sec) {
+							if (!isset($prefs[$sec]) or $prefs[$sec] != 'y') {
+								$display = true;
+								break;
+							}
+						}
+					} else {
+						$display = true;
+						$sections = preg_split('/\s*,\s*/',$res['section']);
+						foreach ($sections as $sec) {
+							if (!isset($prefs[$sec]) or $prefs[$sec] != 'y') {
+								$display = false;
+								break;
+							}
 						}
 					}
 				}
 				if ($display && $tiki_p_admin != 'y') {
 					if (isset($res['perm']) and $res['perm']) {
-						$sections = preg_split('/\s*,\s*/',$res['perm']);
-						foreach ($sections as $sec) {
-							if (!isset($GLOBALS[$sec]) or $GLOBALS[$sec] != 'y') {
-								$display = false;
-								break;
+						if (strstr($res['perm'], '|')) {
+							$display = false;
+							$sections = preg_split('/\s*|\s*/',$res['perm']);
+							foreach ($sections as $sec) {
+								if (!isset($GLOBALS[$sec]) or $GLOBALS[$sec] != 'y') {
+									$display = true;
+									break;
+								}
+							}
+						} else {
+							$sections = preg_split('/\s*,\s*/',$res['perm']);
+							$display = true;
+							foreach ($sections as $sec) {
+								if (!isset($GLOBALS[$sec]) or $GLOBALS[$sec] != 'y') {
+									$display = false;
+									break;
+								}
 							}
 						}
 					}
