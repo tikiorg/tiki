@@ -5404,6 +5404,23 @@ class TikiLib extends TikiDB {
 							$plugin_indexes[$plugin_name] = 0;
 
 						$current_index = ++$plugin_indexes[$plugin_name];
+						// We store CODE stuff out of the way too, but then process it as a plugin as well.
+						if( preg_match( '/^ *\{CODE\(/', $plugin_start ) ) {
+							$ret = wikiplugin_code($plugin_data, $arguments);
+
+							// Pull the np out.
+							preg_match( "/~np~(.*)~\/np~/s", $ret, $stuff );
+
+							if( count( $stuff ) > 0 ) {
+								$key = "§".md5($this->genPass())."§";
+								$noparsed["key"][] =  preg_quote($key);
+								$noparsed["data"][] = $stuff[1];
+
+								$ret = preg_replace( "/~np~.*~\/np~/s", $key, $ret );
+							}
+
+						} else {
+
 
 						// Handle nested plugins.
 						$this->parse_first($plugin_data, $preparsed, $noparsed, $options, $real_start_diff + $pos+strlen($plugin_start));
@@ -5434,7 +5451,7 @@ class TikiLib extends TikiDB {
 
 							$ret = '~np~' . $smarty->fetch('tiki-plugin_blocked.tpl') . '~/np~';
 						}
-
+						}
 						//echo '<pre>'; debug_print_backtrace(); echo '</pre>';
 						if( $this->plugin_is_editable( $plugin_name ) && (empty($options['print']) || !$options['print']) ) {
 							include_once('lib/smarty_tiki/function.icon.php');
