@@ -6909,7 +6909,7 @@ window.addEvent('domready', function() {
 						$thisid = ereg_replace('</?[^>]+>', '', $thisid);
 						$thisid = ereg_replace('[^a-zA-Z0-9\:\.\-\_]+', '_', $thisid);
 						$thisid = ereg_replace('^[^a-zA-Z]*', '', $thisid);
-						if (empty($thisid)) $thisid = tra('anchor');
+						if (empty($thisid)) $thisid = 'a'.md5($title_text);
 
 						// Add a number to the anchor if it already exists, to avoid duplicated anchors
 						if ( isset($all_anchors[$thisid]) ) {
