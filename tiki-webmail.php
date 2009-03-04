@@ -49,21 +49,6 @@ require_once ("lib/mail/mimelib.php");
 include_once ("lib/webmail/class.rc4crypt.php");
 include_once ("lib/webmail/tikimaillib.php");
 
-function decode_subject_utf8($string){
-	if (ereg('=\?.*\?.*\?=', $string) === false)
-		return $string;
-	$string = explode('?', $string);
-	$str = strtolower($string[2]) == 'q' ?quoted_printable_decode($string[3]):base64_decode($string[3]);
- 	if (strtolower($string[1]) == "iso-8859-1")
-		return utf8_encode($str);
-	else if (strtolower($string[1]) == "utf-8")
-		return $str;
-	else if (function_exists('mb_convert_encoding'))
-		return mb_convert_encoding($str, "utf-8", $string[1]);
-	else
-		return $str;
-} 
-
 if (!$user) {
 	$smarty->assign('msg', tra("You are not logged in"));
 

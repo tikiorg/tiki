@@ -5,7 +5,7 @@ function wikiplugin_file_info()
 	return array(
 		'name' => tra( 'File' ),
 		'description' => tra("Displays a file attachment or a list of them"),
-		'prefs' => array( 'feature_wiki_attachments', 'wikiplugin_attach' ),
+		'prefs' => array( 'feature_wiki_attachments', 'wikiplugin_file' ),
 		'inline' => true,
 		'params' => array(
     		'name' => array(

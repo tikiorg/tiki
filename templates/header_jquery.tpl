@@ -6,8 +6,8 @@
 {if $prefs.feature_jquery_ui eq 'y' or $prefs.feature_jquery_tooltips eq 'y' or $prefs.feature_jquery_autocomplete eq 'y' or $prefs.feature_jquery_superfish eq 'y' or $prefs.feature_jquery_reflection eq 'y'}
 <script type="text/javascript">
 <!--//--><![CDATA[//><!--
-// Save $ as it's used for moo
-var $old = $; $ = $jq;
+// Save $ if it's used for moo
+{literal}var $old; if ($) {$old = $;} $ = $jq;{/literal}
 //--><!]]>
 </script>
 {if $prefs.feature_jquery_ui eq 'y'}{* TODO optimise so not including all - maybe - one day *}
@@ -31,10 +31,14 @@ var $old = $; $ = $jq;
 {if $prefs.feature_jquery_reflection eq 'y'}
 <script type="text/javascript" src="lib/jquery/reflection-jquery/js/reflection.js"></script> 
 {/if}
+{if $prefs.feature_jquery_sheet eq 'y'}
+<link rel="stylesheet" href="lib/jquery/jquery.sheet/jquery.sheet.base.css" type="text/css" /> 
+<script type="text/javascript" src="lib/jquery/jquery.sheet/jquery.sheet.min.js"></script> 
+{/if}
 <script type="text/javascript">
 <!--//--><![CDATA[//><!--
 // Restore $
-$jq = $; $ = $old; $old = false;
+{literal}$jq = $; if ($old) { $ = $old; $old = $jq.undefined };{/literal}
 //--><!]]>
 </script>
 {/if}{* end if $prefs.feature_jquery_ui eq 'y' or $prefs.feature_jquery_tooltips etc *}

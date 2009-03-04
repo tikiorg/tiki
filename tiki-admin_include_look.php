@@ -75,6 +75,7 @@ if (isset($_REQUEST["looksetup"])) {
 	'feature_jquery_autocomplete',
 	'feature_jquery_superfish',
 	'feature_jquery_reflection',
+    'feature_jquery_sheet',
     );
 
     foreach ($pref_toggles as $toggle) {
