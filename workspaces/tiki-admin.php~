@@ -294,7 +294,7 @@ if (isset($_REQUEST["page"])) {
 		$admintitle = 'Workspaces';
 		$description = 'Allow workspaces in your Tiki';
 		$helpUrl = 'Workspaces';
-		include_once ('tiki-admin_include_workspaces.php');
+		include_once ('tiki-admin_include_sefurl.php');
 	}
 
 	$url = 'tiki-admin.php'.'?page='.$adminPage;
