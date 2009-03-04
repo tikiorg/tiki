@@ -6907,8 +6907,9 @@ window.addEvent('domready', function() {
 						//  with images and HTML tags
 						$thisid = ereg_replace('§[a-z0-9]{32}§', '', $title_text);
 						$thisid = ereg_replace('</?[^>]+>', '', $thisid);
-						$thisid = ereg_replace('[^a-zA-Z0-9]+', '_', $thisid);
-						$thisid = ereg_replace('^_', '', $thisid);
+						$thisid = ereg_replace('[^a-zA-Z0-9\:\.\-\_]+', '_', $thisid);
+						$thisid = ereg_replace('^[^a-zA-Z]*', '', $thisid);
+						if (empty($thisid)) $thisid = tra('anchor');
 
 						// Add a number to the anchor if it already exists, to avoid duplicated anchors
 						if ( isset($all_anchors[$thisid]) ) {
