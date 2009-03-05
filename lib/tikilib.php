@@ -6759,7 +6759,7 @@ window.addEvent('domready', function() {
 			}
 
 			// Replace monospaced text
-			$line = preg_replace("/(^|\s)-\+(.*?)\+-/", "<code>$2</code>", $line);
+			$line = preg_replace("/(^|\s)-\+(.*?)\+-/", "$1<code>$2</code>", $line);
 			// Replace bold text
 			$line = preg_replace("/__(.*?)__/", "<b>$1</b>", $line);
 			// Replace italic text
