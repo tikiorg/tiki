@@ -45,11 +45,11 @@ class Smarty_Tikiwiki extends Smarty {
 
 		$this->security_settings['MODIFIER_FUNCS'] = array_merge(
 			$this->security_settings['MODIFIER_FUNCS'],
-			array('addslashes', 'ucfirst', 'ucwords', 'urlencode', 'md5', 'implode', 'explode', 'is_array')
+			array('addslashes', 'ucfirst', 'ucwords', 'urlencode', 'md5', 'implode', 'explode', 'is_array', 'htmlentities')
 		);
 		$this->security_settings['IF_FUNCS'] = array_merge(
 			$this->security_settings['IF_FUNCS'],
-			array('tra', 'strlen', 'strstr', 'strtolower', 'basename')
+			array('tra', 'strlen', 'strstr', 'strtolower', 'basename', 'ereg')
 		);
 		$secure_dirs[] = 'img/icons2';
 		$this->secure_dir = $secure_dirs;
