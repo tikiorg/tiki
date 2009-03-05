@@ -87,7 +87,6 @@
 														</td>
 													</tr>
 												{/foreach}
-											{/cycle}
 										</table>
 									</td>
 								</tr>
