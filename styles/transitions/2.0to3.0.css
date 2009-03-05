@@ -595,3 +595,9 @@ p.editdate {
   color: #900;
 }
 
+/* for admin section */
+
+span.disabled {
+	opacity: .5;
+	font-style: italic;
+}
