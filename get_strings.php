@@ -72,6 +72,9 @@ function collect_perms_desc($file)
     $perm_strings[] = $row['permDesc'];
 
   $pstr = fopen($file,'w');
+  if (!$pstr) {
+	  echo "The file $file can not be written";
+  }
   foreach ($perm_strings as $strg)
   {
     fwrite ($pstr,  "{tr}" . $strg . "{/tr}" . "\n");
@@ -98,6 +101,9 @@ function collect_prefs_names($file)
     $prefs_strings[] = $row['name'];
 
   $pstr = fopen($file,'w');
+  if (!$pstr) {
+	  echo "The file $file can not be written";
+  }
   foreach ($prefs_strings as $strg)
   {
     fwrite ($pstr,  "{tr}" . str_replace('_',' ',$strg) . "{/tr}" . "\n");
@@ -390,6 +396,9 @@ foreach ($languages as $sel) {
 
   if (!$completion) {
     $fw = fopen("lang/$sel/new_language.php",'w');
+	if (!$fw) {
+		echo "The file lang/$sel/new_language.php can not be written";
+	}
   
     print("&lt;");
     fwrite($fw,"<");
@@ -735,6 +744,9 @@ foreach ($languages as $sel) {
 
   if ($spelling) {
     $fw = fopen("lang/$sel/spellcheck_me.txt", 'w');
+	if (!$fw) {
+		echo "The file lang/$sel//spellcheck_me.txt can not be written";
+	}
     ksort ($wordlist);
     reset ($wordlist);
     foreach ($wordlist as $word => $dummy) {

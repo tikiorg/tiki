@@ -16,14 +16,14 @@
 
 	<div class="clearfix cbox-data">
 
-    <a href="tiki-admin.php?page=features" class="admbox" style="background-image: url('pics/large/boot48x48.png')">
-      <img src="pics/trans.png" alt="{tr}Features{/tr}" title="{tr}Features{/tr}" /><span>{tr}Features{/tr}</span>
-    </a>
-	
 	<a href="tiki-admin.php?page=general" class="admbox" style="background-image: url('pics/large/icon-configuration48x48.png')">
 			<img src="pics/trans.png" alt="{tr}General{/tr}" title="{tr}General{/tr}" /><span>{tr}General{/tr}</span>
 	</a>
 
+    <a href="tiki-admin.php?page=features" class="admbox" style="background-image: url('pics/large/boot48x48.png')">
+      <img src="pics/trans.png" alt="{tr}Features{/tr}" title="{tr}Features{/tr}" /><span>{tr}Features{/tr}</span>
+    </a>
+	
     <a href="tiki-admin.php?page=login" class="admbox" style="background-image: url('pics/large/stock_quit48x48.png')">
       <img src="pics/trans.png" alt="{tr}Login{/tr}" title="{tr}Login{/tr}" /><span>{tr}Login{/tr}</span>
     </a>

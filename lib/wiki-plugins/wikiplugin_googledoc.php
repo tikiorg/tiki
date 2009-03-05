@@ -16,7 +16,7 @@ function wikiplugin_googledoc_info() {
 		'name' => tra('googledoc'),
 		'documentation' => 'PluginGoogleDoc',
 		'description' => tra("Displays a Google document"),
-//		'prefs' => array( 'wikiplugin_googleDoc' ),
+		'prefs' => array( 'wikiplugin_googledoc' ),
 		'body' => tra('Leave this empty.'),
 //		'validate' => 'all',
 		'params' => array(

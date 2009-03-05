@@ -54,7 +54,7 @@
 <tr><td class="formcolor">{tr}Password{/tr}</td><td colspan="3" class="formcolor"><input type="password" name="pass" value="{$info.pass|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Messages per page{/tr}</td><td colspan="3" class="formcolor"><input type="text" name="msgs" size="4" value="{$info.msgs|escape}" /></td></tr>
 
-{if ($tiki_p_admin_group_webmail eq 'y' and tiki_p_admin_personal_webmail) or $tiki_p_admin eq 'y'}
+{if ($tiki_p_admin_group_webmail eq 'y' and $tiki_p_admin_personal_webmail eq 'y') or $tiki_p_admin eq 'y'}
 <tr><td class="formcolor">{tr}Group (shared mail inbox) or private{/tr}</td><td colspan="3" class="formcolor">{tr}Group{/tr}<input type="radio" name="flagsPublic" value="y" {if $info.flagsPublic eq 'y'}checked="checked"{/if} /> {tr}Private{/tr}<input type="radio" name="flagsPublic" value="n" {if $info.flagsPublic eq 'n'}checked="checked"{/if} /></td></tr>
 {else}
 <tr><td></td><td><input type="hidden" name="flagsPublic" {if $tiki_p_admin_group_webmail eq 'y'}value="y"{else} value="n"{/if}>

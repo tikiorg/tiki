@@ -1865,21 +1865,45 @@ class TikiLib extends TikiDB {
 			if (!$full) {
 				$display = true;
 				if (isset($res['section']) and $res['section']) {
-					$sections = preg_split('/\s*,\s*/',$res['section']);
-					foreach ($sections as $sec) {
-						if (!isset($prefs[$sec]) or $prefs[$sec] != 'y') {
-							$display = false;
-							break;
+					if (strstr($res['section'], '|')) {
+						$display = false;
+						$sections = preg_split('/\s*|\s*/',$res['section']);
+						foreach ($sections as $sec) {
+							if (!isset($prefs[$sec]) or $prefs[$sec] != 'y') {
+								$display = true;
+								break;
+							}
+						}
+					} else {
+						$display = true;
+						$sections = preg_split('/\s*,\s*/',$res['section']);
+						foreach ($sections as $sec) {
+							if (!isset($prefs[$sec]) or $prefs[$sec] != 'y') {
+								$display = false;
+								break;
+							}
 						}
 					}
 				}
 				if ($display && $tiki_p_admin != 'y') {
 					if (isset($res['perm']) and $res['perm']) {
-						$sections = preg_split('/\s*,\s*/',$res['perm']);
-						foreach ($sections as $sec) {
-							if (!isset($GLOBALS[$sec]) or $GLOBALS[$sec] != 'y') {
-								$display = false;
-								break;
+						if (strstr($res['perm'], '|')) {
+							$display = false;
+							$sections = preg_split('/\s*|\s*/',$res['perm']);
+							foreach ($sections as $sec) {
+								if (!isset($GLOBALS[$sec]) or $GLOBALS[$sec] != 'y') {
+									$display = true;
+									break;
+								}
+							}
+						} else {
+							$sections = preg_split('/\s*,\s*/',$res['perm']);
+							$display = true;
+							foreach ($sections as $sec) {
+								if (!isset($GLOBALS[$sec]) or $GLOBALS[$sec] != 'y') {
+									$display = false;
+									break;
+								}
 							}
 						}
 					}
@@ -5116,7 +5140,7 @@ class TikiLib extends TikiDB {
 			$pluginskiplist = array();
 
 		$matcher_fake = array("~pp~","~np~","&lt;pre&gt;");
-		$matcher = "/\{([A-Z0-9_]+)\(|\{([a-z]+)(\s|\})|~pp~|~np~|&lt;[pP][rR][eE]&gt;/";
+		$matcher = "/\{([A-Z0-9_]+) *\(|\{([a-z]+)(\s|\})|~pp~|~np~|&lt;[pP][rR][eE]&gt;/";
 
 		$plugins = array();
 		preg_match_all( $matcher, $data, $tmp, PREG_SET_ORDER );
@@ -6735,7 +6759,7 @@ window.addEvent('domready', function() {
 			}
 
 			// Replace monospaced text
-			$line = preg_replace("/(^|\s)-\+(.*?)\+-/", "<code>$2</code>", $line);
+			$line = preg_replace("/(^|\s)-\+(.*?)\+-/", "$1<code>$2</code>", $line);
 			// Replace bold text
 			$line = preg_replace("/__(.*?)__/", "<b>$1</b>", $line);
 			// Replace italic text
