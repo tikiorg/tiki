@@ -76,7 +76,7 @@ function get_default_prefs() {
 		'feature_wiki_paragraph_formatting_add_br' => 'n',
 		'feature_wiki_pictures' => 'y',
 		'feature_wiki_plurals' => 'y',
-		'feature_wiki_print' => 'y',
+		'feature_wiki_print' => 'n',
 		'feature_wiki_protect_email' => 'y',
 		'feature_wiki_rankings' => 'n',
 		'feature_wiki_ratings' => 'n',
@@ -327,7 +327,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_file_galleries_rankings' => 'n',
 		'fgal_enable_auto_indexing' => 'y',
 		'fgal_asynchronous_indexing' => 'y',
-		'fgal_allow_duplicates' => 'n',
+		'fgal_allow_duplicates' => 'different_galleries',
 		'fgal_sort_mode' => '',
 		'feature_file_galleries_author' => 'n',
 		'fgal_list_id' => 'n',
@@ -488,7 +488,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'user_assigned_modules' => 'n',
 		'user_flip_modules' => 'module',
 		'user_show_realnames' => 'n',
-		'feature_mytiki' => 'y',
+		'feature_mytiki' => 'n',
 		'feature_userPreferences' => 'n',
 		'feature_user_bookmarks' => 'n',
 		'feature_tasks' => 'n',
@@ -597,7 +597,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 
 		// search
 		'feature_search_stats' => 'n',
-		'feature_search' => 'y',
+		'feature_search' => 'n',
 		'feature_search_fulltext' => 'y',
 		'feature_search_show_forbidden_obj' => 'n',
 		'feature_search_show_forbidden_cat' => 'n',
@@ -787,13 +787,13 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'login_scr' => 'tiki-login_scr.php',
 		'register_url' => 'tiki-register.php',
 		'error_url' => 'tiki-error.php',
-		'highlight_group' => '',
+		'highlight_group' => '0',
 		'cookie_path' => '/',
 		'cookie_domain' => '',
 		'cookie_name' => 'tikiwiki',
 		'user_tracker_infos' => '',
 		'desactive_login_autocomplete' => 'n',
-		'permission_denied_login_box' => 'y',
+		'permission_denied_login_box' => 'n',
 		'permission_denied_url' => '',
 
 		// intertiki
@@ -898,9 +898,9 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_sitesearch' => 'y',
 		'feature_site_login' => 'n',
 		'feature_sitemenu' => 'n',
-		'feature_topbar_version' => 'y',
-		'feature_topbar_date' => 'y',
-		'feature_topbar_debug' => 'y',
+		'feature_topbar_version' => 'n',
+		'feature_topbar_date' => 'n',
+		'feature_topbar_debug' => 'n',
 		'feature_topbar_id_menu' => '42',
 		'feature_topbar_custom_code' => '',
 		'feature_sitetitle' => 'y',
@@ -946,7 +946,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_actionlog_bytes' => 'n',
 
 		// admin
-		'siteTitle' => 'Tiki 3.0',
+		'browsertitle' => 'Tiki 3.0',
 		'tmpDir' => 'temp',
 
 		// tell a friend
@@ -956,8 +956,8 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_copyright' => 'n',
 		'feature_multimedia' => 'n',
 
-		// swffix
-		'feature_swffix' => 'n',
+		// swfobj
+		'feature_swfobj' => 'y',
 
 		// textarea
 		'feature_smileys' => 'n',
@@ -1046,7 +1046,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_use_quoteplugin' => 'n',
 		'feature_user_watches' => 'n',
 		'feature_group_watches' => 'n',
-		'feature_user_watches_translations' => 'y',
+		'feature_user_watches_translations' => 'n',
 		'feature_workflow' => 'n',
 		'feature_xmlrpc' => 'n',
 		'helpurl' => "http://doc.tikiwiki.org/",
@@ -1144,7 +1144,25 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_comments_post_as_anonymous' => 'n',
 		'feature_comments_moderation' => 'n',
 		'feature_template_zoom' => 'y',
+		
+		// JQuery
+		'feature_jquery' => 'y',			// Alternative lib for shadowbox etc
+		'jquery_effect' => '',				// Default effect for general show/hide: ['' | 'slide' | 'fade' | and
+											// see http://docs.jquery.com/UI/Effects: 'blind' | 'clip' | 'explode' etc]
+		'jquery_effect_direction' => '', 	// ['horizontal' | 'vertical' | 'left' | 'right' | 'up' | 'down' ]
+		'jquery_effect_speed' => 'normal', 	// ['slow' | 'normal' | 'fast' | milliseconds (int) ]
 
+		'jquery_effect_tabs' => 'slide',	// Different effect for tabs (['none' | 'normal' (for jq) | 'slide' etc]
+		'jquery_effect_tabs_direction' => 'vertical',
+		'jquery_effect_tabs_speed' => 'fast',
+		
+		'feature_jquery_ui' => 'y',				// include UI lib for more effects
+		'feature_jquery_tooltips' => 'y',		// use JQuery tooltips and override Overlib
+		'feature_jquery_autocomplete' => 'y',	// autocomplete on pages in QuickEdit (more coming soon)
+		'feature_jquery_superfish' => 'y',		// Effects on CSS (Suckerfish) menus
+		'feature_jquery_reflection' => 'y',		// reflection effects on images
+		'feature_jquery_sheet' => 'n',			// spreadsheet TODO: implement
+	
 		// SefUrl
 		'feature_sefurl' => 'n',
 		'feature_sefurl_filter' => 'n',
@@ -1173,7 +1191,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'magic_last_load' => 0,
 
 		//groupalert
-		'feature_groupalert' => 'y',
+		'feature_groupalert' => 'n',
 	);
 
 	// spellcheck

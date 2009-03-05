@@ -1,18 +1,19 @@
 #!/bin/sh
 # $Id$
-# originally written by mose (mose.com) 
+#
+# ===========================================================
+# IMPORTANT NOTE : This script should not be called manually.
+#   It is called by doc/devtools/release.php
+# ===========================================================
 #
 # HOWTO release Tikiwiki ?
 # --------------------------
-#
 # 
 # pre/
-#    - update changelog.txt (from SVN commit logs)
-#    - update copyright.txt (we _need_ a way to automate this - it was omitted for 1.9.2 release)
+#    - run doc/devtools/release_changelog.php to update changelog.txt and check the diff with the last version
+#    - run doc/devtools/release_copyright.php to update copyright.txt and check the diff with the last version
 #    - update README
-#    - update all links in the application to the online documentation
-#    - before first Release Candidate, proceed to the cleanup of admin panels (ex.: making sure all 
-#      settings are in the appropriate tab, etc.) 
+#    - Test the whole Installer and check if everything is OK
 #    - run doc/devtools/securitycheck.php and check each "potentially unsafe" file.
 #    - run doc/devtools/diffsql.sh to make sure tiki.sql and upgrade script from 
 #        previous version give the same db structure (but not necessarily the same data).
@@ -23,7 +24,6 @@
 #    - in lib/setup/twversion.class.php
 #      - increment the version number in the constructor
 #      - update list of valid releases in getVersions()
-#    - check for PHP syntax errors: find . -type f -name \*.php -exec php -l {} \;  | grep Parse
 #    - commit your changes
 #
 # 1/ Create and test pre-release packages by executing the script with the release
@@ -94,23 +94,15 @@ fi
 mkdir $VER
 cd $VER
 svn export $SVNROOT/$RELTAG $MODULE-$VER
-find $MODULE-$VER -name CVS -type d | xargs -- rm -rf
-find $MODULE-$VER -name .svn -type d | xargs -- rm -rf
 find $MODULE-$VER -name .cvsignore -type f -exec rm -f {} \;
 find $MODULE-$VER -name .svnignore -type f -exec rm -f {} \;
-find $MODULE-$VER -name Thumbs.db -exec rm -f {} \;
 find $MODULE-$VER -type d -exec chmod 775 {} \;
 find $MODULE-$VER -type f -exec chmod 664 {} \;
+
 # some more cleanup
 rm -rf $MODULE-$VER/tests
 rm -rf $MODULE-$VER/db/convertscripts
-rm -rf $MODULE-$VER/db/convert_nulls_to_non_nulls.*
 rm -rf $MODULE-$VER/doc/devtools
-rm -rf $MODULE-$VER/bin
-rm -rf $MODULE-$VER/CVSROOT
-rm -rf $MODULE-$VER/SPIDERCORE
-rm -rf $MODULE-$VER/Smarty
-rm -rf $MODULE-$VER/templates_c/%*
 
 tar -czf $MODULE-$VER.tar.gz $MODULE-$VER
 tar -cjf $MODULE-$VER.tar.bz2 $MODULE-$VER

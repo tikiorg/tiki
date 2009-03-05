@@ -10,7 +10,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 //Create a list of languages
 $languages = array();
 $languages = $tikilib->list_languages(false, 'y');
-if (isset($module_params["mode"]) && $module_params["mode"] == 'flags') {
+if (isset($module_params["mode"]) && ($module_params["mode"] == 'flags' || $module_params["mode"] == 'words')) {
 	include('lang/flagmapping.php');
 	global $pageRenderer;
 	//$trads = $multilinguallib->getTranslations('wiki page', $page_id, $page, $prefs['language']);

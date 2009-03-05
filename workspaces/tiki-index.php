@@ -67,27 +67,7 @@ if ((!isset($_REQUEST['page']) || $_REQUEST['page'] == '') and !isset($_REQUEST[
 	// Create the HomePage if it doesn't exist
 	if ( ! empty($userHomePage) ) {
 		if ( ! $tikilib->page_exists($userHomePage)) {
-			$tikilib->create_page($userHomePage,0,'!Congratulations
-This is the default ))HomePage(( for your Tiki. If you are seeing this page, your installation was successful.
-
-You can change this page after logging in. Please review the [http://doc.tikiwiki.org/wiki+syntax|wiki syntax] for editing details.
-
-
-!!{img src=pics/icons/star.png alt="Star"} Get started.
-To begin configuring your site:
-{FANCYLIST()}
-1) Log in as the __admin__ with password __admin__.
-2) Change the admin password.
-3) Enable specific Tiki features.
-4) Configure the features.
-{FANCYLIST}
-
-!!{img src=pics/icons/help.png alt="Help"} Need help?
-For more information:
-*[http://info.tikiwiki.org/Learn+More|Learn more about TikiWiki].
-*[http://info.tikiwiki.org/Help+Others|Get help], including the [http://doc.tikiwiki.org|official documentation] and [http://www.tikiwiki.org/forums|support forums].
-*[http://info.tikiwiki.org/Join+the+community|Join the TikiWiki community].
-',$tikilib->now,'Tiki initialization', 'admin', '0.0.0.0', '', 'en', false, null, 'n', '');
+			$tikilib->create_page($userHomePage, 0,'{TR()}_HOMEPAGE_CONTENT_{TR}',$tikilib->now,'Tiki initialization', 'admin', '0.0.0.0', '', 'en', false, null, 'n', '');
 			header('Location: tiki-index.php?page='.$userHomePage);
 		}
 	} else {

@@ -895,7 +895,7 @@ if ( isset($_REQUEST['view']) && $_REQUEST['view'] == 'browse') {
 	}
 }
 
-if ( $_REQUEST['galleryId'] != 0 ) {
+if ( $_REQUEST['galleryId'] == 0 ) {
 
 	$smarty->assign('download_path', ( $podCastGallery ? $prefs['fgal_podcast_dir'] : $prefs['fgal_use_dir'] ) );
 

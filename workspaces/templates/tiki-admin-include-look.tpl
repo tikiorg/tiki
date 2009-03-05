@@ -12,8 +12,8 @@
 		</div>
 
 		{if $prefs.feature_tabs eq 'y'}
-			{tabs}{tr}Theme{/tr}|{tr}General Layout{/tr}|{tr}Other{/tr}{/tabs}
-			{cycle name=content values="1,2,3" print=false advance=false reset=true}
+			{tabs}{tr}Theme{/tr}|{tr}General Layout{/tr}|{tr}UI Effects{/tr}|{tr}Other{/tr}{/tabs}
+			{cycle name=content values="1,2,3,4" print=false advance=false reset=true}
 		{/if}
 
 		<fieldset{if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}"{/if}>
@@ -286,7 +286,7 @@
 									<label for="sitelogo_title">{tr}Site logo title (on mouse over){/tr}:</label>
 								</td>
 								<td>
-									<input type="text" name="sitelogo_title" id="sitelogo_title" value="{$prefs.sitelogo_title}" size="50" maxlength="50" />
+									<input type="text" name="sitelogo_title" id="sitelogo_title" value="{$prefs.sitelogo_title}" size="50" maxlength="200" />
 								</td>
 							</tr>
 							<tr>
@@ -294,7 +294,7 @@
 									<label for="sitelogo_alt">{tr}Alt. description (e.g. for text browsers){/tr}:</label>
 								</td>
 								<td>
-									<input type="text" name="sitelogo_alt" id="sitelogo_alt" value="{$prefs.sitelogo_alt}" size="50" maxlength="50" />
+									<input type="text" name="sitelogo_alt" id="sitelogo_alt" value="{$prefs.sitelogo_alt}" size="50" maxlength="200" />
 								</td>
 							</tr>
 							<tr>
@@ -302,7 +302,7 @@
 									<label for="_sitetitle">{tr}Site title{/tr}:</label>
 								</td>
 								<td>
-									<input type="text" name="sitetitle" id="_sitetitle" value="{$prefs.sitetitle}" size="50" maxlength="50" />
+									<input type="text" name="sitetitle" id="_sitetitle" value="{$prefs.sitetitle}" size="50" maxlength="200" />
 								</td>
 							</tr>
 							<tr>
@@ -310,7 +310,7 @@
 									<label for="_sitesubtitle">{tr}Site subtitle{/tr}:</label>
 								</td>
 								<td>
-									<input type="text" name="sitesubtitle" id="_sitesubtitle" value="{$prefs.sitesubtitle}" size="50" maxlength="50" />
+									<input type="text" name="sitesubtitle" id="_sitesubtitle" value="{$prefs.sitesubtitle}" size="50" maxlength="200" />
 								</td>
 							</tr>
 							</table>
@@ -684,6 +684,178 @@
 			</table>
 			{if $prefs.feature_tabs neq 'y'}</div>{/if}
 		</fieldset>
+		
+{* --- UI Effects (JQuery) --- *}
+
+		<fieldset{if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}"{/if}>
+			{if $prefs.feature_tabs neq 'y'}
+				<legend class="heading" id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}">
+					<a href="#ui_effects" onclick="flip('ui_effects'); return false;">
+					<span>{tr}UI Effects{/tr}</span>
+					</a>
+				</legend>
+				<div id="ui_effects" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_other) and $smarty.session.tiki_cookie_jar.show_other neq 'y'}none{else}block{/if};">
+			{/if}
+			<fieldset>
+				<legend>
+					<a href="#"><span>{tr}JQuery plugins and add-ons{/tr}</span></a>
+				</legend>
+				{if $prefs.feature_jquery eq 'n'}
+				 	 {remarksbox type="warning" title="{tr}Warning{/tr}"}{tr}Requires jquery feature{/tr}</em>{icon _id="arrow_right" href="tiki-admin.php?page=features"}{/remarksbox}
+				{/if}
+				<div class="clear floatleft">
+					<input type="checkbox" name="feature_jquery_ui" {if $prefs.feature_jquery_ui eq 'y'}checked="checked"{/if}/>
+					<a href="{$prefs.helpurl}JQuery#UI" target="tikihelp" class="tikihelp" title="{tr}JQuery UI: More JQuery functionality{/tr}"> {tr}JQuery UI{/tr}</a>
+				</div>
+				<div class="clear floatleft">
+					<input type="checkbox" name="feature_jquery_tooltips" {if $prefs.feature_jquery_tooltips eq 'y'}checked="checked"{/if}/>
+					<a href="{$prefs.helpurl}JQuery#Tooltips" target="tikihelp" class="tikihelp" title="{tr}JQuery Tooltips: Customisable help tips{/tr}"> {tr}JQuery tooltips{/tr}</a>
+				</div>
+				<div class="clear floatleft">
+					<input type="checkbox" name="feature_jquery_autocomplete" {if $prefs.feature_jquery_autocomplete eq 'y'}checked="checked"{/if}/>
+					<a href="{$prefs.helpurl}JQuery#Autocomplete" target="tikihelp" class="tikihelp" title="{tr}JQuery Autocomplete{/tr}"> {tr}JQuery autocomplete{/tr}</a>
+				</div>
+				<div class="clear floatleft">
+					<input type="checkbox" name="feature_jquery_superfish" {if $prefs.feature_jquery_superfish eq 'y'}checked="checked"{/if}/>
+					<a href="{$prefs.helpurl}JQuery#Superfish" target="tikihelp" class="tikihelp" title="{tr}JQuery Superfish{/tr}"> {tr}JQuery Superfish (effects on CSS menus){/tr}</a>
+				</div>
+				<div class="clear floatleft">
+					<input type="checkbox" name="feature_jquery_reflection" {if $prefs.feature_jquery_reflection eq 'y'}checked="checked"{/if}/>
+					<a href="{$prefs.helpurl}JQuery#Reflection" target="tikihelp" class="tikihelp" title="{tr}JQuery Reflection{/tr}"> {tr}JQuery Reflection (reflection effect on images){/tr}</a>
+				</div>
+				<div class="clear floatleft">
+					<input type="checkbox" name="feature_jquery_sheet" {if $prefs.feature_jquery_sheet eq 'y'}checked="checked"{/if}/>
+					<a href="{$prefs.helpurl}JQuery#Sheet" target="tikihelp" class="tikihelp" title="{tr}JQuery Spreadsheet{/tr}"> {tr}JQuery Sheet{/tr}</a>
+				</div>
+			</fieldset>
+			<fieldset>
+				<legend>
+					<a href="#"><span>{tr}Standard UI effects{/tr}</span></a>
+				</legend>
+				<div class="clear floatleft" style="width: 33%;">
+					<select name="jquery_effect" id="jquery_effect">
+			            <option value="none" {if $prefs.jquery_effect_tabs eq 'none'}selected="selected"{/if}>
+			              {tr}None{/tr}</option>
+			            <option value="" {if $prefs.jquery_effect eq ''}selected="selected"{/if}>
+			              {tr}Default{/tr}</option>
+			            <option value="slide" {if $prefs.jquery_effect eq 'slide'}selected="selected"{/if}>
+			              {tr}Slide{/tr}</option>
+			            <option value="fade" {if $prefs.jquery_effect eq 'fade'}selected="selected"{/if}>
+			              {tr}Fade{/tr}</option>
+			            {if $prefs.feature_jquery eq 'y'}
+			            <option value="blind_ui" {if $prefs.jquery_effect eq 'blind_ui'}selected="selected"{/if}>
+			              {tr}Blind (UI){/tr}</option>
+			            <option value="clip_ui" {if $prefs.jquery_effect eq 'clip_ui'}selected="selected"{/if}>
+			              {tr}Clip (UI){/tr}</option>
+			            <option value="drop_ui" {if $prefs.jquery_effect eq 'drop_ui'}selected="selected"{/if}>
+			              {tr}Drop (UI){/tr}</option>
+			            <option value="explode_ui" {if $prefs.jquery_effect eq 'explode_ui'}selected="selected"{/if}>
+			              {tr}Explode (UI){/tr}</option>
+			            <option value="fold_ui" {if $prefs.jquery_effect eq 'fold_ui'}selected="selected"{/if}>
+			              {tr}Fold (UI){/tr}</option>
+			            <option value="puff_ui" {if $prefs.jquery_effect eq 'puff_ui'}selected="selected"{/if}>
+			              {tr}Puff (UI){/tr}</option>
+			            <option value="slide_ui" {if $prefs.jquery_effect eq 'slide_ui'}selected="selected"{/if}>
+			              {tr}Slide (UI){/tr}</option>
+			            {/if}
+			         </select>
+					<a href="{$prefs.helpurl}JQuery" target="tikihelp" class="tikihelp" title="{tr}Main JQuery effect{/tr}"> {tr}Effect for modules etc{/tr}</a>
+			    </div>
+			    <div class="clear floatleft" style="width: 33%;">
+					<select name="jquery_effect_speed" id="jquery_effect_speed">
+			            <option value="fast" {if $prefs.jquery_effect_speed eq 'fast'}selected="selected"{/if}>
+			              {tr}Fast{/tr}</option>
+			            <option value="normal" {if $prefs.jquery_effect_speed eq 'normal'}selected="selected"{/if}>
+			              {tr}Normal{/tr}</option>
+			            <option value="slow" {if $prefs.jquery_effect_speed eq 'slow'}selected="selected"{/if}>
+			              {tr}Slow{/tr}</option>
+			         </select>
+					<a href="{$prefs.helpurl}JQuery" target="tikihelp" class="tikihelp" title="{tr}Speed of JQuery effects{/tr}"> {tr}Effect speed{/tr}</a>
+			    </div>
+			    <div class="clear floatleft" style="width: 33%;">
+					<select name="jquery_effect_direction" id="jquery_effect_direction">
+			            <option value="vertical" {if $prefs.jquery_effect_direction eq 'vertical'}selected="selected"{/if}>
+			              {tr}Vertical{/tr}</option>
+			            <option value="horizontal" {if $prefs.jquery_effect_direction eq 'horizontal'}selected="selected"{/if}>
+			              {tr}Horizontal{/tr}</option>
+			            <option value="left" {if $prefs.jquery_effect_direction eq 'left'}selected="selected"{/if}>
+			              {tr}Left{/tr}</option>
+			            <option value="right" {if $prefs.jquery_effect_direction eq '"right"'}selected="selected"{/if}>
+			              {tr}Right{/tr}</option>
+			            <option value="up" {if $prefs.jquery_effect_direction eq 'up'}selected="selected"{/if}>
+			              {tr}Up{/tr}</option>
+			            <option value="down" {if $prefs.jquery_effect_direction eq 'down'}selected="selected"{/if}>
+			              {tr}Down{/tr}</option>
+			         </select>
+					<a href="{$prefs.helpurl}JQuery" target="tikihelp" class="tikihelp" title="{tr}Direction of JQuery effects{/tr}"> {tr}Effect direction{/tr}</a>
+				</div>
+			</fieldset>
+			<fieldset>
+				<legend>
+					<a href="#"><span>{tr}Tab UI effects{/tr}</span></a>
+				</legend>
+			    <div class="clear floatleft" style="width: 33%;">
+					<select name="jquery_effect_tabs" id="jquery_effect_tabs">
+			            <option value="none" {if $prefs.jquery_effect_tabs eq 'none'}selected="selected"{/if}>
+			              {tr}None{/tr}</option>
+			            <option value="normal" {if $prefs.jquery_effect_tabs eq 'normal'}selected="selected"{/if}>
+			              {tr}Normal{/tr}</option>
+			            <option value="slide" {if $prefs.jquery_effect_tabs eq 'slide'}selected="selected"{/if}>
+			              {tr}Slide{/tr}</option>
+			            <option value="fade" {if $prefs.jquery_effect_tabs eq 'fade'}selected="selected"{/if}>
+			              {tr}Fade{/tr}</option>
+			            {if $prefs.feature_jquery eq 'y'}
+			            <option value="blind_ui" {if $prefs.jquery_effect_tabs eq 'blind_ui'}selected="selected"{/if}>
+			              {tr}Blind (UI){/tr}</option>
+			            <option value="clip_ui" {if $prefs.jquery_effect_tabs eq 'clip_ui'}selected="selected"{/if}>
+			              {tr}Clip (UI){/tr}</option>
+			            <option value="drop_ui" {if $prefs.jquery_effect_tabs eq 'drop_ui'}selected="selected"{/if}>
+			              {tr}Drop (UI){/tr}</option>
+			            <option value="explode_ui" {if $prefs.jquery_effect_tabs eq 'explode_ui'}selected="selected"{/if}>
+			              {tr}Explode (UI){/tr}</option>
+			            <option value="fold_ui" {if $prefs.jquery_effect_tabs eq 'fold_ui'}selected="selected"{/if}>
+			              {tr}Fold (UI){/tr}</option>
+			            <option value="puff_ui" {if $prefs.jquery_effect_tabs eq 'puff_ui'}selected="selected"{/if}>
+			              {tr}Puff (UI){/tr}</option>
+			            <option value="slide_ui" {if $prefs.jquery_effect_tabs eq 'slide_ui'}selected="selected"{/if}>
+			              {tr}Slide (UI){/tr}</option>
+			            {/if}
+			         </select>
+					<a href="{$prefs.helpurl}JQuery" target="tikihelp" class="tikihelp" title="{tr}JQuery effect for tabs{/tr}"> {tr}Effect for tabs{/tr}</a>
+			    </div>
+			    <div class="clear floatleft" style="width: 33%;">
+					<select name="jquery_effect_tabs_speed" id="jquery_effect_tabs_speed">
+			            <option value="fast" {if $prefs.jquery_effect_tabs_speed eq 'fast'}selected="selected"{/if}>
+			              {tr}Fast{/tr}</option>
+			            <option value="normal" {if $prefs.jquery_effect_tabs_speed eq 'normal'}selected="selected"{/if}>
+			              {tr}Normal{/tr}</option>
+			            <option value="slow" {if $prefs.jquery_effect_tabs_speed eq 'slow'}selected="selected"{/if}>
+			              {tr}Slow{/tr}</option>
+			         </select>
+					<a href="{$prefs.helpurl}JQuery" target="tikihelp" class="tikihelp" title="{tr}Speed of JQuery tab effects{/tr}"> {tr}Effect speed for tabs{/tr}</a>
+			    </div>
+			    <div class="clear floatleft" style="width: 33%;">
+					<select name="jquery_effect_tabs_direction" id="jquery_effect_tabs_direction">
+			            <option value="vertical" {if $prefs.jquery_effect_tabs_direction eq 'vertical'}selected="selected"{/if}>
+			              {tr}Vertical{/tr}</option>
+			            <option value="horizontal" {if $prefs.jquery_tabs_effect_direction eq 'horizontal'}selected="selected"{/if}>
+			              {tr}Horizontal{/tr}</option>
+			            <option value="left" {if $prefs.jquery_effect_tabs_direction eq 'left'}selected="selected"{/if}>
+			              {tr}Left{/tr}</option>
+			            <option value="right" {if $prefs.jquery_effect_tabs_direction eq '"right"'}selected="selected"{/if}>
+			              {tr}Right{/tr}</option>
+			            <option value="up" {if $prefs.jquery_effect_tabs_direction eq 'up'}selected="selected"{/if}>
+			              {tr}Up{/tr}</option>
+			            <option value="down" {if $prefs.jquery_effect_tabs_direction eq 'down'}selected="selected"{/if}>
+			              {tr}Down{/tr}</option>
+			         </select>
+					<a href="{$prefs.helpurl}JQuery" target="tikihelp" class="tikihelp" title="{tr}Direction of JQuery effects for tabs{/tr}"> {tr}Effect direction for tabs{/tr}</a>
+				</div>
+			</fieldset>
+			{if $prefs.feature_tabs neq 'y'}</div>{/if}
+		</fieldset>
+
+{* --- Other --- *}
 
 		<fieldset{if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}"{/if}>
 			{if $prefs.feature_tabs neq 'y'}
@@ -694,6 +866,7 @@
 				</legend>
 				<div id="other" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_other) and $smarty.session.tiki_cookie_jar.show_other neq 'y'}none{else}block{/if};">
 			{/if}
+
 			<div class="clear floatleft">
 				<input type="checkbox" id="use_context_menu_icon" name="use_context_menu_icon" {if $prefs.use_context_menu_icon eq 'y'}checked="checked"{/if} />
 				<label for="use_context_menu_icon">{tr}Use context menus for actions (icons) (only in file galleries yet){/tr}</label>
@@ -716,7 +889,7 @@
 			</div>
 			{if $prefs.feature_tabs neq 'y'}</div>{/if}
 		</fieldset>
-
+		
 		<div class="input_submit_container clear" style="text-align: center"><input type="submit" name="looksetup" value="{tr}Apply{/tr}" /></div>
 	</form>
 </div><!-- cbox end -->

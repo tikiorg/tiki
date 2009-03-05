@@ -1,6 +1,12 @@
 <?php
 include_once ('lib/admin/magiclib.php');
 
+if ($prefs['feature_magic'] != 'y') {
+	$smarty->assign('msg', tra("This feature is disabled").": feature_magic");
+	$smarty->display("error.tpl");
+	die;
+}
+
 $feature = $smarty->get_template_vars('feature');
 $features = $magiclib->get_child_features($feature['feature_id'], 'feature');
 

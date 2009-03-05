@@ -74,7 +74,9 @@
 			<td><input type="checkbox" name="feature_detect_language" id="feature_detect_language"
 			{if $prefs.feature_detect_language eq 'y'}checked="checked"{/if}/></td>
 		</tr><tr>
-		
+			<td class="form"><label for="change_language">{tr}Users can change language{/tr}:</label></td>
+			<td><input type="checkbox" name="change_language" id="change_language"{if $prefs.change_language eq 'y'} checked="checked"{/if}>
+		</tr><tr>
 		
 			<td class="form"><label for="restrict_language">{tr}Restrict supported languages{/tr}:</label></td>
 			<td><input type="checkbox" name="restrict_language" id="restrict_language"

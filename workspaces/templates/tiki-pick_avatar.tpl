@@ -1,3 +1,5 @@
+{* $Id$ *}
+
 {title}
   {if $user ne $userwatch}
     {tr}Avatar:{/tr} {$userwatch}
@@ -17,14 +19,10 @@
 {/if}
 
 <h2>{if $user eq $userwatch}{tr}Your current avatar{/tr}{else}{tr}Avatar{/tr}{/if}</h2>
-<table class="normal">
-<tr>
-  <td class="formcolor">{if $avatar}{$avatar}{else}{tr}no avatar{/tr}{/if}</td>
+{if $avatar}{$avatar}{else}{tr}no avatar{/tr}{/if}
 {if sizeof($avatars) eq 0 and $avatar}
- <td class="formcolor"><a class="link" href="tiki-pick_avatar.php?reset=y" title="{tr}reset{/tr}">{icon _id='cross' alt='{tr}reset{/tr}'}</a></td>
+<a class="link" href="tiki-pick_avatar.php?reset=y" title="{tr}reset{/tr}">{icon _id='cross' alt='{tr}reset{/tr}'}</a>
 {/if}
-</tr>
-</table>
 
 {if sizeof($avatars) > 0}
 
@@ -96,14 +94,15 @@ function subavt() {
 
 {/if}
 
-<h2>{tr}Upload your own avatar{/tr}</h2>
+<div class="normal">
 <form enctype="multipart/form-data" action="tiki-pick_avatar.php" method="post">
+<fieldset>
+<legend><strong>{tr}Upload your own avatar{/tr}</strong></legend>
 {if $user ne $userwatch}<input type="hidden" name="view_user" value="{$userwatch|escape}" />{/if}
-<table class="normal">
-<tr><td class="formcolor">{tr}File{/tr} {tr}(Only .gif images, and aproximately 45px x 45px){/tr}:</td><td class="formcolor">
+<label for="userfile1">{tr}File (only .gif, .jpg and .png images approximately 45px × 45px){/tr}:</label>
 <input type="hidden" name="MAX_FILE_SIZE" value="10000000" />
-<input name="userfile1" type="file" />
-</td></tr>
-<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="upload" value="{tr}Upload{/tr}" /></td></tr>
-</table>
+<input id="userfile1" name="userfile1" type="file" />
+<input class="submitbutton" type="submit" name="upload" value="{tr}Upload{/tr}" />
+</fieldset>
 </form>
+</div>

@@ -5363,7 +5363,8 @@ class TikiLib extends TikiDB {
 				// ~pp~ type "plugins"
 				$key = "§".md5($this->genPass())."§";
 				$noparsed["key"][] = preg_quote($key);
-				$plugin_data = str_replace('\\','\\\\',$plugin_data);
+				// comment out the following line: create problem with TRACKERLIST and popup because the <\/td> are changed
+				//$plugin_data = str_replace('\\','\\\\',$plugin_data);
 				//if( strstr( $plugin_data, '$' ) ) {
 					//$plugin_data = str_replace('$', '\$', $plugin_data);
 				//}
@@ -5403,6 +5404,23 @@ class TikiLib extends TikiDB {
 							$plugin_indexes[$plugin_name] = 0;
 
 						$current_index = ++$plugin_indexes[$plugin_name];
+						// We store CODE stuff out of the way too, but then process it as a plugin as well.
+						if( preg_match( '/^ *\{CODE\(/', $plugin_start ) ) {
+							$ret = wikiplugin_code($plugin_data, $arguments);
+
+							// Pull the np out.
+							preg_match( "/~np~(.*)~\/np~/s", $ret, $stuff );
+
+							if( count( $stuff ) > 0 ) {
+								$key = "§".md5($this->genPass())."§";
+								$noparsed["key"][] =  preg_quote($key);
+								$noparsed["data"][] = $stuff[1];
+
+								$ret = preg_replace( "/~np~.*~\/np~/s", $key, $ret );
+							}
+
+						} else {
+
 
 						// Handle nested plugins.
 						$this->parse_first($plugin_data, $preparsed, $noparsed, $options, $real_start_diff + $pos+strlen($plugin_start));
@@ -5433,14 +5451,33 @@ class TikiLib extends TikiDB {
 
 							$ret = '~np~' . $smarty->fetch('tiki-plugin_blocked.tpl') . '~/np~';
 						}
-
+						}
 						//echo '<pre>'; debug_print_backtrace(); echo '</pre>';
 						if( $this->plugin_is_editable( $plugin_name ) && (empty($options['print']) || !$options['print']) ) {
 							include_once('lib/smarty_tiki/function.icon.php');
 							global $headerlib, $page;
 							$id = 'plugin-edit-' . $plugin_name . $current_index;
 							$headerlib->add_jsfile( 'tiki-jsplugin.php?plugin=' . urlencode( $plugin_name ) );
-							$headerlib->add_js( "
+							if ($prefs['feature_jquery'] == 'y') {
+								$headerlib->add_js( "
+\$jq(document).ready( function() {
+	if( \$jq('#$id') ) \$jq('#$id').click( function(event) {
+		popup_plugin_form("
+			. json_encode($plugin_name) 
+			. ', ' 
+			. json_encode($current_index) 
+			. ', ' 
+			. json_encode($page) 
+			. ', ' 
+			. json_encode($arguments) 
+			. ', ' 
+			. json_encode(trim(TikiLib::htmldecode($plugin_data))) 
+			. ", event.target);
+	} );
+} );
+" );
+							} else if ($prefs['feature_mootools'] == 'y') {
+								$headerlib->add_js( "
 window.addEvent('domready', function() {
 	if( $('$id') ) $('$id').addEvent( 'click', function(event) {
 		popup_plugin_form("
@@ -5457,6 +5494,7 @@ window.addEvent('domready', function() {
 	} );
 } );
 " );
+							}
 							$ret = '~np~<a id="' .$id. '" style="float:right" href="javascript:void(1)" class="editplugin">'.smarty_function_icon(array('_id'=>'shape_square_edit', 'alt'=>tra('Edit Plugin').':'.$plugin_name), $smarty).'</a>~/np~'.$ret;
 						}
 
@@ -6886,8 +6924,9 @@ window.addEvent('domready', function() {
 						//  with images and HTML tags
 						$thisid = ereg_replace('§[a-z0-9]{32}§', '', $title_text);
 						$thisid = ereg_replace('</?[^>]+>', '', $thisid);
-						$thisid = ereg_replace('[^a-zA-Z0-9]+', '_', $thisid);
-						$thisid = ereg_replace('^_', '', $thisid);
+						$thisid = ereg_replace('[^a-zA-Z0-9\:\.\-\_]+', '_', $thisid);
+						$thisid = ereg_replace('^[^a-zA-Z]*', '', $thisid);
+						if (empty($thisid)) $thisid = 'a'.md5($title_text);
 
 						// Add a number to the anchor if it already exists, to avoid duplicated anchors
 						if ( isset($all_anchors[$thisid]) ) {
@@ -8186,9 +8225,9 @@ function get_wiki_section($data, $hdr) {
 				$flashvars = str_replace('\\/', '/', $flashvars);
 			}
 			$js = <<<JS
-swfobject.embedSWF( $movie, $div, $width, $height, $version, '', $flashvars, $params, {} );
+swfobject.embedSWF( $movie, $div, $width, $height, $version, 'lib/swfobject/expressInstall.swf', $flashvars, $params, {} );
 JS;
-			$headerlib->add_jsfile( 'lib/swfobject.js' );
+			$headerlib->add_jsfile( 'lib/swfobject/swfobject.js' );
 			return "<div id=\"$myId\">" . tra('Flash player not available.') . "</div><script type=\"text/javascript\">\n<!--//--><![CDATA[//><!--\n$js\n//--><!]]>\n</script>\n";
 		} else { // link on the movie will not work with IE6
 			extract ($params,EXTR_SKIP);

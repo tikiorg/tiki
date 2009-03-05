@@ -1,4 +1,5 @@
 <?php
+/* $Id$ */
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== false) {
@@ -7,6 +8,18 @@ if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== false) {
 }
 
 require_once('lib/init/initlib.php');
+
+// Define and load Smarty components
+define('SMARTY_DIR', "lib/smarty/libs/");
+require_once ( 'lib/smarty/libs/Smarty.class.php');
+
+// Define lang and load translation functions
+if (!empty($_REQUEST['lang'])) {
+	$language = $prefs['site_language'] = $prefs['language'] = $_REQUEST['lang'];
+} else {
+	$language = $prefs['site_language'] = $prefs['language'] = 'en';
+}
+include_once('lib/init/tra.php');
 
 // Please use the local.php file instead containing these variables
 // If you set sessions to store in the database, you will need a local.php file
@@ -23,11 +36,11 @@ $dbs_tiki			= 'tiki';
 $tikidomain		= '';
 
 /*
-CVS Developers: Do not change any of the above.
+SVN Developers: Do not change any of the above.
 Instead, create a file, called db/local.php, containing any of
 the variables listed above that are different for your 
 development environment.  This will protect you from 
-accidentally committing your username/password to CVS!
+accidentally committing your username/password to SVN!
 
 example of db/local.php
 <?php
@@ -79,35 +92,7 @@ if (is_file('db/virtuals.inc')) {
 }
 $re = include($local_php);
 if ( $re === FALSE) {
-	print '<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>Installation begins: '.$local_php.' not found</title>
-	<link rel="stylesheet" href="styles/thenews.css" type="text/css">
-</head>
-<body >
-	<div id="tiki-main">
-		<div id="tiki-mid">
-			<div style="margin:10px 30px;">
-				<h1><font color="red">TikiWiki could not find your '.$local_php.' file.</font> <a title="help" href="http://doc.tikiwiki.org/Installation" target="help"><img border="0" src="img/icons/help.gif" alt="Help" /></a></h1>
-				<p>This is normal for a brand new TikiWiki installation.</p><p>Run the TikiWiki installer (<a 
-href=tiki-install.php>tiki-install.php</a>) to create and add information to your db/local.php file. This file contains the information (username/password/database name/etc) to connect to a database.</p><p>Please see <a 
-href="http://doc.tikiwiki.org/">the documentation</a> for more information.</p>
-			</div>
-		</div>
-		<hr>
-		<p align="center">
-			<a href="http://www.tikiwiki.org" title="Tikiwiki">
- 	 			<img src="img/tiki/tikibutton2.png" alt="Tikiwiki" border="0" height="31" width="80">
-			</a>
-		</p>
-	</div>
-</body>
-</html>
-';
+	header('location: tiki-install.php');
 	exit;
 }
 

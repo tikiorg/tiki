@@ -509,7 +509,8 @@ p.editdate {
 	font-size: 0.9em;
 }
 
-/* flag languages */
+/* mod-switch_lang now does mode=menu|flags|words */
+/* flags */
 
 .box-switch_lang .box-data img {
   padding: .2em;
@@ -530,6 +531,24 @@ p.editdate {
   opacity: .3;
 }
 
+/* words */
+
+.box-switch_lang li {
+	list-style: none;
+}
+
+.box-switch_lang .box-data a.highlight {
+  font-weight: bold;
+}
+
+.box-switch_lang .box-data a.unavailable  {
+  opacity: .6;
+}
+
+.box-switch_lang ul {
+	padding: 0 1em;
+}
+
 /* for wikiplugin_fancylist */
 
 .wikitext .fancylist {
@@ -547,3 +566,32 @@ p.editdate {
 }
 
 [class].wikitext .fancylist li p {}
+
+/***************************************
+   Cluetip - JQuery tooltips
+   =cluetipClass: 'default' 
+-------------------------------------- */
+
+.cluetip-default {
+  background-color: #BED8F1;
+}
+.cluetip-default #cluetip-outer {
+  background-color: #BED8F1;
+}
+.cluetip-default h3#cluetip-title {
+  background-color: #1B3A50;
+  color: #fff;
+}
+.cluetip-default #cluetip-title a {
+  color: #BED8F1;
+  font-size: 0.95em;
+}  
+.cluetip-default #cluetip-inner {
+  padding: .9em;
+}
+.cluetip-default div#cluetip-close { 
+  text-align: right;
+  margin: -10px 0 0 0;
+  color: #900;
+}
+

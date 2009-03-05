@@ -35,94 +35,40 @@ $dsn = "$db_tiki://$user_tiki:$pass_tiki@$host_tiki/$dbs_tiki";
 $dbTiki = &ADONewConnection($db_tiki);
 
 if (!@$dbTiki->Connect($host_tiki, $user_tiki, $pass_tiki, $dbs_tiki)) {
-	print '<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>Error: Unable to connect to the database !</title>
-	<link rel="stylesheet" href="styles/thenews.css" type="text/css">
-</head>
-<body >
-	<div id="tiki-main">
-		<div id="tiki-mid">
-			<div style="margin:10px 30px;">
-				<h1>
-					<font color="red">TikiWiki is unable to connect to the database.</font>
-					<a title="help" href="http://doc.tikiwiki.org/Installation" target="help"><img border="0" src="img/icons/help.gif" alt="Help" /></a>
-				</h1>
-				<p>The following error message was returned:
-					<div class="simplebox">';
-	print $dbTiki->ErrorMsg();
-	print '</div>
-				</p>
-				<p>Things to check:
-					<ul>
-						<li>Is your database up and running?</li>
-						<li>Are your database login credentials correct?</li>
-						<li>Did you complete the Tiki Installer?</li>
-					</ul>
-				</p>
-				<p>Please see <a href="http://doc.tikiwiki.org/">the documentation</a> for more information.</p>
-			</div>
-		</div>
-		<hr>
-		<p align="center">
-			<a href="http://www.tikiwiki.org" title="TikiWiki">
-			<img src="img/tiki/tikibutton2.png" alt="TikiWiki" border="0" height="31" width="80">
-			</a>
-		</p>
-	</div>
-</body>
-</html>
-';
-	exit;
+	$title='Tiki is unable to connect to the database !';
+	$content =	"		<p>The following error message was returned:</p>\n" .
+				"		<strong>\n";
+	$content .= '			'.$dbTiki->ErrorMsg();
+	$content .= "		</strong>\n" .
+				"		<div class=\"wikitext\" style=\"border: solid 1px #ccc; margin: 1em auto; padding: 1em; text-align: left; width: 30%;\">\n" .
+				"			<p>Things to check:</p>\n" .
+				"			<ol class=\"fancylist\">\n" .
+				"				<li><p>Is your database up and running?</p></li>\n" .
+				"				<li><p>Are your database login credentials correct?</p></li>\n" .
+				"				<li><p>Did you complete the Tiki Installer?</p></li>\n" .
+				"			</ol>\n" .
+				"		</div>\n" .
+				"		<p>Please see <a href=\"http://doc.tikiwiki.org/\">the documentation</a> for more information.</p>\n";
+	$dberror = true;
+	include_once('tiki-install.php');
 }
 
 if (!@$dbTiki->Execute('select `login` from `users_users` limit 1')) {
-	print '<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>Error: Unable to retrieve login from the database !</title>
-	<link rel="stylesheet" href="styles/thenews.css" type="text/css">
-</head>
-<body >
-	<div id="tiki-main">
-		<div id="tiki-mid">
-			<div style="margin:10px 30px;">
-				<h1>
-					<font color="red">TikiWiki is unable to retrieve login data from the database.</font>
-					<a title="help" href="http://doc.tikiwiki.org/Installation" target="help"><img border="0" src="img/icons/help.gif" alt="Help" /></a>
-				</h1>
-				<p>The following error message was returned:
-					<div class="simplebox">';
-	print $dbTiki->ErrorMsg();
-	print '</div>
-				</p>
-				<p>Things to check:
-					<ul>
-						<li>Are your database login credentials correct?</li>
-						<li>Did you complete the Tiki Installer?</li>
-					</ul>
-				</p>
-				<p>Please see <a href="http://doc.tikiwiki.org/">the documentation</a> for more information.</p>
-			</div>
-		</div>
-		<hr>
-		<p align="center">
-			<a href="http://www.tikiwiki.org" title="TikiWiki">
-			<img src="img/tiki/tikibutton2.png" alt="TikiWiki" border="0" height="31" width="80">
-			</a>
-		</p>
-	</div>
-</body>
-</html>
-';
-	exit;
+	$title='Tiki was unable to retrieve login data from the database !';
+	$content =	"		<p>The following error message was returned:</p>\n" .
+				"		<strong>\n";
+	$content .= '			'.$dbTiki->ErrorMsg();
+	$content .= "		</strong>\n" .
+				"		<div class=\"wikitext\" style=\"border: solid 1px #ccc; margin: 1em auto; padding: 1em; text-align: left; width: 30%;\">\n" .
+				"			<p>Things to check:</p>\n" .
+				"			<ol class=\"fancylist\">\n" .
+				"				<li><p>Are your database login credentials correct?</p></li>\n" .
+				"				<li><p>Did you complete the Tiki Installer?</p></li>\n" .
+				"			</ol>\n" .
+				"		</div>\n" .
+				"		<p>Please see <a href=\"http://doc.tikiwiki.org/\">the documentation</a> for more information.</p>\n";
+	$dberror = true;
+	include_once('tiki-install.php');
 }
 
 if ($db_tiki == 'sybase') {

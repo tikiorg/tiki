@@ -455,9 +455,7 @@ document.write('<div  class="categSelectAll"><input type="checkbox" id="clickall
 
 {* -------------------- dynamic list -------------------- *}
 {elseif $field_value.type eq 'w'}
-<select name="{$field_value.ins_id}" {if $listfields.$fid.http_request}onchange="selectValues('trackerIdList={$listfields.$fid.http_request[0]}&amp;fieldlist={$listfields.$fid.http_request[3]}&amp;filterfield={$listfields.$fid.http_request[1]}&amp;status={$listfields.$fid.http_request[4]}&amp;mandatory={$listfields.$fid.http_request[6]}&amp;filtervalue='+escape(this.value),'{$listfields.$fid.http_request[5]}')"{/if}>
-</select>
-
+{include file='tracker_item_field_input.tpl'}
 
 {* -------------------- User subscription -------------------- *}
 {elseif $field_value.type eq 'U'}

@@ -94,8 +94,9 @@ if (isset($_REQUEST["features"])) {
 		"feature_multimedia",
 		"feature_userlevels",
 		"feature_mootools",
+		"feature_jquery",
 		"feature_shadowbox",
-		"feature_swffix",
+		"feature_swfobj",
 		"feature_tikitests",
 		"feature_magic",
 		"feature_minichat",
@@ -121,6 +122,8 @@ if (isset($_REQUEST["features"])) {
 
 if (!empty($_REQUEST['tabs'])) {
 	$smarty->assign('tabs', $_REQUEST['tabs']=='on'?'n':'');
+} else {
+	$smarty->assign('tabs', '');
 }
 
 $smarty->assign('php_major_version', substr(PHP_VERSION, 0, strpos(PHP_VERSION, '.')));

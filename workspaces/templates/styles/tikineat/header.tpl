@@ -107,10 +107,9 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 {/if}
 {/if}
 
-{if $prefs.feature_swffix eq "y"} {* to interpret old banners done with swffix *}
-<script type="text/javascript" src="lib/swffix/swffix.js"></script>
+{if $prefs.feature_swfobj eq "y"}
+<script type="text/javascript" src="lib/swfobject/swfobject.js"></script>
 {/if}
-<script type="text/javascript" src="lib/swfobject.js"></script>
 
 {if $headerlib}{$headerlib->output_headers()}{/if}
 {if ($mid eq 'tiki-editpage.tpl')}

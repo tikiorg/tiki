@@ -36,7 +36,7 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 <title>
 {if isset($trail)}{breadcrumbs type="fulltrail" loc="head" crumbs=$trail}
 {else}
-{$prefs.siteTitle}
+{$prefs.browsertitle}
 {if !empty($headtitle)} : {$headtitle}
 {elseif !empty($page)} : {if $beingStaged eq 'y' and $prefs.wikiapproval_hideprefix == 'y'}{$approvedPageName|escape}{else}{$page|escape}{/if} {* add $description|escape if you want to put the description + update breadcrumb_build replace return $crumbs->title; with return empty($crumbs->description)? $crumbs->title: $crumbs->description; *}
 {elseif !empty($arttitle)} : {$arttitle}
@@ -108,11 +108,11 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 <script src="lib/mootools/extensions/tabs/SimpleTabs.js" type="text/javascript" ></script> 
 {/if}
 {/if}
+{if $prefs.feature_jquery eq "y"}{include file="header_jquery.tpl"}{/if}
 
-{if $prefs.feature_swffix eq "y"}{* to interpret old banners done with swffix *}
-<script type="text/javascript" src="lib/swffix/swffix.js"></script>
+{if $prefs.feature_swfobj eq "y"}
+<script type="text/javascript" src="lib/swfobject/swfobject.js"></script>
 {/if}
-<script type="text/javascript" src="lib/swfobject.js"></script>
 
 {if $headerlib}{$headerlib->output_headers()}{/if}
 {if ($mid eq 'tiki-editpage.tpl')}
@@ -136,10 +136,10 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 <!-- Includes for Shadowbox script -->
 	<link rel="stylesheet" type="text/css" href="lib/shadowbox/build/css/shadowbox.css" />
 
-{if $prefs.feature_mootools eq "y"}
-	<script type="text/javascript" src="lib/shadowbox/build/js/adapter/shadowbox-mootools.js" charset="utf-8"></script>
-{else}
+{if $prefs.feature_jquery eq "y"}
 	<script type="text/javascript" src="lib/shadowbox/build/js/adapter/shadowbox-jquery.js" charset="utf-8"></script>
+{elseif $prefs.feature_mootools eq "y"}
+	<script type="text/javascript" src="lib/shadowbox/build/js/adapter/shadowbox-mootools.js" charset="utf-8"></script>
 {/if}
 
 	<script type="text/javascript" src="lib/shadowbox/build/js/shadowbox.js" charset="utf-8"></script>
@@ -150,9 +150,15 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 	{literal}
 		window.addEvent('domready', function() {
 	{/literal}
+{elseif $prefs.feature_jquery eq "y"}
+	{literal}
+		$jq(document).ready(function() {
+	{/literal}
 {else}
 	{literal}
-		$(document).ready(function() {
+		// *** ERROR *** feature_shadowbox enabled but without feature_mootools or feature_jquery
+		// Dummy function follows to prevent JavaScript errors
+		function shadowbox_dummy_function() {
 	{/literal}
 {/if}
 {literal}

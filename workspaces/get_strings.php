@@ -455,7 +455,11 @@ foreach ($languages as $sel) {
     writeFile_and_User ($fw, "// http://www.neonchart.com/get_strings.php?nohelp&nosections\n");
     writeFile_and_User ($fw, "// Prepare all languages for release\n\n\n");
 
-		writeFile_and_User ($fw, "// ### Note for translators about translation of text ending with colons (':')\n");
+		writeFile_and_User ($fw, "// ### Note for translators about translation of text ending with punctuation\n");
+		writeFile_and_User ($fw, "// ###\n");
+		writeFile_and_User ($fw, "// ### The current list of concerned punctuation can be found in 'lib/init/tra.php'\n");
+		writeFile_and_User ($fw, "// ### On 2009-03-02, it is: (':', '!', ';', '.', ',', '?')\n");
+		writeFile_and_User ($fw, "// ### For clarity, we explain here only for colons: ':' but it is the same for the rest\n");
 		writeFile_and_User ($fw, "// ###\n");
 		writeFile_and_User ($fw, "// ### Short version: it is not a problem that string \"Login:\" has no translation. Only \"Login\" needs to be translated.\n");
 		writeFile_and_User ($fw, "// ###\n");

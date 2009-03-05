@@ -64,6 +64,7 @@ if (isset($_REQUEST["new_prefs"])) {
     }
 
     $pref_simple_values = array(
+        "browsertitle",
         "site_crumb_seper",
         "site_nav_seper",
         "contact_user",
@@ -76,7 +77,7 @@ if (isset($_REQUEST["new_prefs"])) {
         "urlIndex",
         "proxy_host",
         "proxy_port",
-		"ip_can_be_checked",
+	"ip_can_be_checked",
         "session_lifetime",
         "load_threshold",
         "site_busy_msg",
@@ -101,9 +102,8 @@ if (isset($_REQUEST["new_prefs"])) {
         "long_time_format",
         "short_date_format",
         "short_time_format",
-        "siteTitle",
         "tikiIndex",
-		"users_prefs_display_timezone"
+	"users_prefs_display_timezone"
     );
 
     foreach ($pref_byref_values as $britem) {
@@ -203,6 +203,7 @@ if ($prefs['home_file_gallery']) {
 $listgroups = $userlib->get_groups(0, -1, 'groupName_desc', '', '', 'n');
 $smarty->assign("listgroups", $listgroups['data']);
 
+$headerlib->add_cssfile('css/admin.css');
 
 ask_ticket('admin-inc-general');
 ?>

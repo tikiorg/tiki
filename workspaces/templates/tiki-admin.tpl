@@ -41,11 +41,13 @@ Add a value in first check when you create a new admin page. *}
 				{icon _id=delete alt="{tr}disabled{/tr}" style="vertical-align: middle"}
 			{elseif $tikifeedback[n].st eq 1}
 				{icon _id=accept alt="{tr}enabled{/tr}" style="vertical-align: middle"}
-			{else}
+			{elseif $tikifeedback[n].st eq 2}
 				{icon _id=accept alt="{tr}changed{/tr}" style="vertical-align: middle"}
+			{else}
+				{icon _id=information alt="{tr}information{/tr}" style="vertical-align: middle"}
 			{/if}
-					{tr}preference{/tr} <strong>{tr}{$tikifeedback[n].mes|stringfix}{/tr}</strong><br />
-					(<em>{tr}preference name:{/tr}</em> {$tikifeedback[n].name})
+					{if $tikifeedback[n].st ne 3}{tr}preference{/tr} {/if}<strong>{tr}{$tikifeedback[n].mes|stringfix}{/tr}</strong><br />
+					{if $tikifeedback[n].st ne 3}(<em>{tr}preference name:{/tr}</em> {$tikifeedback[n].name}){/if}
 				</p>
 			</li>
 		{/section}
