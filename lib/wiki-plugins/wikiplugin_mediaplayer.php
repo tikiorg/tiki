@@ -5,9 +5,10 @@ function wikiplugin_mediaplayer_help() {
 }
 function wikiplugin_mediaplayer_info() {
 	return array(
-				 'name' => tra('Inline Flash mp3 and flv Player.'),
+				 'name' => tra('Mediaplayer'),
 				 'documentation' => 'See http://flash-mp3-player.net/  http://flv-player.net/, http://code.google.com/p/mp3player for additional parameters',
 				 'description' => 'Simple mp3 or flv Player',
+				 'prefs' => array( 'wikiplugin_mediaplayer' ),
 				 'params' => array(
 								   'mp3' => array(
 												  'required' => false,
