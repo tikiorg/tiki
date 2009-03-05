@@ -1863,6 +1863,7 @@ class TikiLib extends TikiDB {
 				$res['sefurl'] = $wikilib->sefurl($matches[1]);
 			}
 			if (!$full) {
+				$display = true;
 				if (isset($res['section']) and $res['section']) {
 					if (strstr($res['section'], '|')) {
 						$display = false;
