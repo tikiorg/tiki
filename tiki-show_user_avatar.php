@@ -13,7 +13,7 @@ if( $prefs['feature_userPreferences'] != 'y' ) {
 	$smarty->display("error.tpl");
 	die;
 }
-include_once ('lib/userprefs/userprefslib.php');
+global $userprefslib; include_once ('lib/userprefs/userprefslib.php');
 
 // application to display an image from the database with 
 // option to resize the image dynamically creating a thumbnail on the fly.
