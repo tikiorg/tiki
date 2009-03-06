@@ -1891,7 +1891,7 @@ class TikiLib extends TikiDB {
 							$display = false;
 							$sections = preg_split('/\s*|\s*/',$res['perm']);
 							foreach ($sections as $sec) {
-								if (!isset($GLOBALS[$sec]) or $GLOBALS[$sec] != 'y') {
+								if (isset($GLOBALS[$sec]) && $GLOBALS[$sec] == 'y') {
 									$display = true;
 									break;
 								}
