@@ -61,6 +61,10 @@ class UsersLib extends TikiLib {
 	    values(?, ?, ?, ?)";
 	$result = $this->query($query, array($groupName, $objectId,
 		    $objectType, $permName));
+	if ($objectType == 'file gallery') {
+		global $cachelib; require_once('lib/cache/cachelib.php');
+		$cachelib->empty_type_cache('fgals_perms_'.$objectId."_");
+	}
 	return true;
     }
 
@@ -87,6 +91,10 @@ class UsersLib extends TikiLib {
 	$bindvars = array($groupName, $objectId, $objectType,
 		$permName);
 	$result = $this->query($query, $bindvars);
+	if ($objectType == 'file gallery') {
+		global $cachelib; require_once('lib/cache/cachelib.php');
+		$cachelib->empty_type_cache('fgals_perms_'.$objectId."_");
+	}
 	return true;
     }
 
