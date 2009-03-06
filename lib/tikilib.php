@@ -1867,7 +1867,7 @@ class TikiLib extends TikiDB {
 				if (isset($res['section']) and $res['section']) {
 					if (strstr($res['section'], '|')) {
 						$display = false;
-						$sections = preg_split('/\s*|\s*/',$res['section']);
+						$sections = preg_split('/\s*\|\s*/',$res['section']);
 						foreach ($sections as $sec) {
 							if (!isset($prefs[$sec]) or $prefs[$sec] != 'y') {
 								$display = true;
@@ -1889,7 +1889,7 @@ class TikiLib extends TikiDB {
 					if (isset($res['perm']) and $res['perm']) {
 						if (strstr($res['perm'], '|')) {
 							$display = false;
-							$sections = preg_split('/\s*|\s*/',$res['perm']);
+							$sections = preg_split('/\s*\|\s*/',$res['perm']);
 							foreach ($sections as $sec) {
 								if (isset($GLOBALS[$sec]) && $GLOBALS[$sec] == 'y') {
 									$display = true;
