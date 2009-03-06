@@ -412,9 +412,9 @@ function searchrep() {
 </td></tr>
 {/if}
 {if $wysiwyg neq 'y'}
-{if $prefs.feature_wiki_pictures eq 'y' and $tiki_p_upload_picture eq 'y' and $wysiwyg ne 'y'{* and (!$quicktags or $prefs.feature_filegals_manager eq 'n') *}}
+{if $prefs.feature_wiki_pictures eq 'y' and $tiki_p_upload_picture eq 'y'}
 <tr class="formcolor"><td>{tr}Upload picture{/tr}:</td><td>
-{if $prefs.feature_filegals_manager eq 'y'}
+{if $prefs.feature_filegals_manager eq 'y' and $prefs.feature_file_galleries == 'y' and $tiki_p_list_file_galleries == 'y'}
 <input type="submit" class="wikiaction" value="{tr}Add another image{/tr}" onclick="javascript:needToConfirm = false;javascript:window.open('{$url_path}tiki-list_file_gallery.php?filegals_manager=editwiki','_blank','menubar=1,scrollbars=1,resizable=1,height=400,width=800');return false;" />
 {else}
 <input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
