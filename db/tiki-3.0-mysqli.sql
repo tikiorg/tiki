@@ -1407,9 +1407,9 @@ CREATE TABLE tiki_menu_options (
   name varchar(200) default NULL,
   url varchar(255) default NULL,
   position int(4) default NULL,
-  section varchar(255) default NULL,
-  perm varchar(255) default NULL,
-  groupname varchar(255) default NULL,
+  section text default NULL,
+  perm text default NULL,
+  groupname text default NULL,
   userlevel int(4) default 0,
   PRIMARY KEY (optionId),
   UNIQUE KEY uniq_menu (menuId,name(30),url(50),position,section(60),perm(50),groupname(50))

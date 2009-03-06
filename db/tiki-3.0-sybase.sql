@@ -2082,9 +2082,9 @@ CREATE TABLE "tiki_menu_options" (
   "name" varchar(200) default NULL NULL,
   "url" varchar(255) default NULL NULL,
   "position" numeric(4,0) default NULL NULL,
-  "section" varchar(255) default NULL NULL,
-  "perm" varchar(255) default NULL NULL,
-  "groupname" varchar(255) default NULL NULL,
+  "section" text default NULL NULL,
+  "perm" text default NULL NULL,
+  "groupname" text default NULL NULL,
   "userlevel" numeric(4,0) default 0,
   PRIMARY KEY (optionId)
 ) ENGINE=MyISAM  
