@@ -32,8 +32,7 @@
 <tr><td class="formcolor">{tr}Creator{/tr}:</td><td class="formcolor">
 		<select name="creator">
 		<option value=""></option>
-		{section name=ix loop=$users}<option value="{$users[ix].login|escape}"{if $creator eq $users[ix].login} selected="sele
-cted"{/if}>{$users[ix].login|username}</option>{/section}
+		{section name=ix loop=$users}<option value="{$users[ix].login|escape}"{if $creator eq $users[ix].login} selected="selected"{/if}>{$users[ix].login|username}</option>{/section}
 		</select>
 </td></tr>
 {/if}
@@ -55,16 +54,15 @@ cted"{/if}>{$users[ix].login|username}</option>{/section}
 {/if}
 {/if}
 <h2>{tr}Available Sheets{/tr}</h2>
-<div align="center">
 {if $sheets or $find ne ''}
   {include file='find.tpl' _sort_mode='y'}
 {/if}
 
 <table class="normal">
 <tr>
-<th><a href="tiki-sheets.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'title_desc'}title_asc{else}title_desc{/if}">{tr}Title{/tr}</a></th>
-<th><a href="tiki-sheets.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'description_desc'}description_asc{else}description_desc{/if}">{tr}Description{/tr}</a></th>
-<th><a href="tiki-sheets.php?offset={$offset}&amp;sort_mode={if $sort_mode eq 'user_desc'}user_asc{else}user_desc{/if}">{tr}User{/tr}</a></th>
+<th>{self_link _sort_arg='sort_mode' _sort_field='title'}{tr}Title{/tr}{/self_link}</th>
+<th>{self_link _sort_arg='sort_mode' _sort_field='description'}{tr}Description{/tr}{/self_link}</th>
+<th>{self_link _sort_arg='sort_mode' _sort_field='user'}{tr}User{/tr}{/self_link}</th>
 <th>{tr}Actions{/tr}</th>
 </tr>
 {cycle values="odd,even" print=false}
