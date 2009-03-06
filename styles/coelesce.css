@@ -1776,7 +1776,7 @@ body.tiki_blogs .post .avatar {
 .forum_actions .headers {vertical-align: bottom}
 .forum_actions .headers .title {
 	float: left;
-	background: honedew;
+	background: #f0f0f0;
 	border: 1px solid #a9a9a9;
 	border-bottom: 0;
 	padding: 1px}
