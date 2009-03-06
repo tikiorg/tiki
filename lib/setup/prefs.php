@@ -208,6 +208,7 @@ function get_default_prefs() {
 		'wikiplugin_iframe' => 'n',
 		'wikiplugin_image' => 'y',
 		'wikiplugin_include' => 'y',
+		'wikiplugin_invite' => 'y',
 		'wikiplugin_jabber' => 'n',
 		'wikiplugin_js' => 'n',
 		'wikiplugin_lang' => 'y',
