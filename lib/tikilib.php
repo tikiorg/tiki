@@ -757,15 +757,14 @@ class TikiLib extends TikiDB {
 		$this->compute_quiz_stats();
 		if ($find) {
 			$findesc = '%' . $find . '%';
-
-			$mid = "  `quizName` like ? ";
+			$mid = " where `quizName` like ? ";
 			$bindvars=array($findesc);
 		} else {
 			$mid = "  ";
 			$bindvars=array();
 		}
 
-		$query = "select * from `tiki_quiz_stats_sum` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select * from `tiki_quiz_stats_sum` $mid order by " . $this->convert_sortmode($sort_mode);
 		$query_cant = "select count(*) from `tiki_quiz_stats_sum` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
