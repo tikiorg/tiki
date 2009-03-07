@@ -1780,30 +1780,30 @@ class TikiLib extends TikiDB {
 	function list_received_pages($offset, $maxRecords, $sort_mode = 'pageName_asc', $find='', $type='', $structureName='') {
 		$bindvars = array();
 		if ($type == 's')
-			$mid = ' `structureName` is not null ';
+			$mid = ' `trp`.`structureName` is not null ';
 		elseif ($type == 'p')
-			$mid = ' `structureName` is null ';
+			$mid = ' `trp`.`structureName` is null ';
 		else
 			$mid = '';
 		if ($find) {
 			$findesc = '%'.$find.'%';
 			if ($mid)
 				$mid .= ' and ';
-			$mid .= "(`pagename` like ? or `data` like ?)";
+			$mid .= "(`trp`.`pagename` like ? or `trp`.`data` like ?)";
 			$bindvars[] = $findesc;
 			$bindvars[] = $findesc;
 		}
 		if ($structureName) {
 			if ($mid)
 				$mid .= ' and ';
-			$mid .= ' `structureName`=? ';
+			$mid .= ' `trp`.`structureName`=? ';
 			$bindvars[] = $structureName;
 		}
 		if ($mid)
 			$mid = "where $mid";
 
 		$query = "select trp.*, tp.`pageName` as pageExists from `tiki_received_pages` trp left join `tiki_pages` tp on (tp.`pageName`=trp.`pageName`) $mid order by `structureName` asc, `pos` asc,".$this->convert_sortmode($sort_mode);
-		$query_cant = "select count(*) from `tiki_received_pages` $mid";
+		$query_cant = "select count(*) from `tiki_received_pages` trp $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
