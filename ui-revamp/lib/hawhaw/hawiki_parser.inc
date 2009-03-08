@@ -205,11 +205,11 @@ function HAWIKI_parser(&$input, $isFirstColumn)
     if (count($wikiname) > 1)
     {
       global $tikilib;
-      if ($tikilib->db->getOne("select count(*) from `tiki_extwiki` where `name`=?",
+      if ($tikilib->getOne("select count(*) from `tiki_extwiki` where `name`=?",
                         array($wikiname[0])) == 1)
       {
         // external wiki found in DB
-        $po["extwiki"] = $tikilib->db->getOne("select `extwiki`  from `tiki_extwiki` where `name`=?",
+        $po["extwiki"] = $tikilib->getOne("select `extwiki`  from `tiki_extwiki` where `name`=?",
                          array($wikiname[0]));
       }
       else

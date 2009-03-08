@@ -70,7 +70,6 @@ if (!isset($_REQUEST['trackerId']) && $prefs['userTracker'] == 'y' && !isset($_R
 		}
 	}
 }
-
 if (!isset($_REQUEST['trackerId']) && $prefs['groupTracker'] == 'y') {
 	if (isset($_REQUEST['view']) and $_REQUEST['view'] == ' group') {
 		$gtid = $userlib->get_grouptrackerid($group);
@@ -283,6 +282,7 @@ if (!isset($item_info)) {
 	}
 }
 $smarty->assign_by_ref('item_info', $item_info);
+$smarty->assign('item', array('itemId'=>$_REQUEST['itemId'], 'trackerId'=>$_REQUEST['trackerId']));
 
 $tracker_info = $trklib->get_tracker($_REQUEST["trackerId"]);
 if ($t = $trklib->get_tracker_options($_REQUEST["trackerId"]))
@@ -315,6 +315,7 @@ $tabi = 1;
 
 $itemUser = $trklib->get_item_creator($_REQUEST['trackerId'], $_REQUEST['itemId']);
 $smarty->assign_by_ref('itemUser', $itemUser);
+
 foreach($xfields["data"] as $i=>$array) {
 	$fid = $xfields["data"][$i]["fieldId"];
 
@@ -770,12 +771,15 @@ if ($_REQUEST["itemId"]) {
 	||  ($tiki_p_admin_trackers != 'y' && $tiki_p_view_trackers != 'y' &&
 	  (!isset($utid) || $_REQUEST['trackerId'] != $utid['usersTrackerId']) &&
 		(!isset($gtid) || $_REQUEST['trackerId'] != $utid['groupTrackerId']) &&
-		 ($tracker_info['writerCanModify'] != 'y' || $user != $itemUser)
+		 ($tracker_info['writerCanModify'] != 'y' || $user != $itemUser) && !$special
 	) ) {
-		$smarty->assign('errortype', 401);
-		$smarty->assign('msg', tra('Permission denied'));
-		$smarty->display('error.tpl');
-		die;
+		$itemGroup = $trklib->get_item_group_creator($_REQUEST['trackerId'], $_REQUEST['itemId']);
+		if (empty($itemGroup) || !$userlib->user_is_in_group($user, $itemGroup)) {
+			$smarty->assign('errortype', 401);
+			$smarty->assign('msg', tra('Permission denied'));
+			$smarty->display('error.tpl');
+			die;
+		}
 	}
 	$last = array();
 	$lst = '';
@@ -783,6 +787,9 @@ if ($_REQUEST["itemId"]) {
 	foreach($xfields["data"] as $i=>$array) {
 		if ($xfields["data"][$i]['isHidden'] == 'n' or $xfields["data"][$i]['isHidden'] == 'p' or $tiki_p_admin_trackers == 'y' or ($xfields["data"][$i]['type'] == 's' and $xfields[$i]['name'] == 'Rating' and $tiki_p_tracker_view_ratings == 'y')or ($xfields['data'][$i]['isHidden'] == 'c' && !empty($user) && $user == $itemUser)) {
 			$fields["data"][$i] = $xfields["data"][$i];
+			if ($fields['data'][$i]['type'] == 'f' || $fields['data'][$i]['type'] == 'j') {
+				$dateFields[] = $fields['data'][$i]['fieldId'];
+			}
 			if ($fields["data"][$i]["type"] != 'h') {
 				$fid = $fields["data"][$i]["fieldId"];
 				$ins_fields["data"][$i]["id"] = $fid;
@@ -904,6 +911,22 @@ if ($_REQUEST["itemId"]) {
 					eval('$computed = '.$calc.';');
 					$ins_fields["data"][$i]["value"] = $computed;
 					$info[$fields['data'][$i]['fieldId']] = $computed; // in case a computed field use this one
+					preg_match('/#([0-9]+)/', $fields["data"][$i]['options_array'][0], $matches);
+					foreach ($matches as $k=>$match) {
+						if (!$k) continue;
+						foreach ($fields['data'] as $k=>$f) {
+							if ($f['fieldId'] == $match && ($f['type'] == 'f' || $f['type'] == 'j')) {
+								if (!$info[$match])
+									$ins_fields['data'][$i]['value'] = '';
+								$ins_fields['data'][$i]['computedtype'] = 'f';
+								$ins_fields['data'][$i]['options_array'] = $f['options_array'];
+								$k = -1;
+								break;
+							}
+						}
+						if ($k == -1)
+							break;
+					}
 				} elseif ($fields["data"][$i]["type"] == 'g') {
 					if (isset($fields["data"][$i]['options_array'][0]) && $fields["data"][$i]['options_array'][0] == 2 and !$info["$fid"]) {
 						$ins_fields["data"][$i]["defvalue"] = $group;
@@ -1191,10 +1214,10 @@ if (isset($_REQUEST['show'])) {
 	} elseif ($_REQUEST['show'] == "mod") {
 		$tabi = 2;
 		if ($tracker_info["useAttachments"] == 'y') $tabi++;
-		if ($tracker_info["useComments"] == 'y') $tabi++;
+		if ($tracker_info["useComments"] == 'y' && $tiki_p_tracker_view_comments == 'y') $tabi++;
 	} elseif ($_REQUEST['show'] == "att") {
 		$tabi = 2;
-		if ($tracker_info["useComments"] == 'y') $tabi = 3;
+		if ($tracker_info["useComments"] == 'y' && $tiki_p_tracker_view_comments == 'y') $tabi = 3;
 	}
 }
 

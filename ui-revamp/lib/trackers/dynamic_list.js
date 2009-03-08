@@ -9,6 +9,8 @@ function selectValues(args,me,filter) {
 	for (var i=0; i < tabsel.length; i++)
 	{
 		sel[i] = document.getElementsByName("ins_" + tabsel[i])[0];
+		if (typeof sel[i] == "undefined")
+			sel[i] = document.getElementsByName("track[" + tabsel[i]+"]")[0];
 		while (sel[i].childNodes.length != 0) {
 			sel[i].removeChild(sel[i].lastChild);
 		}

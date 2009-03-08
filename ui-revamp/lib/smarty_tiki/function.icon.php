@@ -20,11 +20,17 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  */
 function smarty_function_icon($params, &$smarty) {
 	if ( ! is_array($params) || ! isset($params['_id']) ) return;
+	global $prefs;
 
 	$serialized_params = serialize($params);
 	if ( isset($_SESSION['icons'][$serialized_params]) ) {
-		return $_SESSION['icons'][$serialized_params];
+		if ( !empty($_SESSION['icons_theme']) && $_SESSION['icons_theme'] == $prefs['style'] ) {
+			return $_SESSION['icons'][$serialized_params];
+		} else {
+			unset($_SESSION['icons']);
+		}
 	}
+	$_SESSION['icons_theme'] = $prefs['style'];
 
 	$basedirs = array('pics/icons', 'images', 'img/icons', 'pics/icons/mime');
 	$icons_extension = '.png';

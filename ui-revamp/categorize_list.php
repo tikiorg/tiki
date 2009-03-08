@@ -49,15 +49,9 @@ if ($prefs['feature_categories'] == 'y' && isset($cat_type) && isset($cat_objid)
 	$categories = array();
 	for ($i = 0; $i < count($all_categories); $i++) {
 		if ( $tikilib->user_has_perm_on_object($user,$all_categories[$i]['categId'],'category','tiki_p_view_categories')
-			|| $tikilib->user_has_perm_on_object($user,$all_categories[$i]['categId'],'category','tiki_p_edit_categorized')
 			|| $tikilib->user_has_perm_on_object($user,$all_categories[$i]['categId'],'category','tiki_p_admin_categories')
 		) {
 			$categories[] = $all_categories[$i];
-			// remove category for approved pages from category list if this is a staging page
-			if ($prefs["feature_wikiapproval"] == 'y' && $cat_type == 'wiki page' && substr($cat_objid, 0, strlen($prefs['wikiapproval_prefix'])) == $prefs['wikiapproval_prefix']
-			 && $prefs['wikiapproval_approved_category'] > 0 && $prefs['wikiapproval_approved_category'] == $all_categories[$i]['categId']) {			
-				array_pop($categories);
-			}	
 		}
 	}
 

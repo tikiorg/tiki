@@ -52,8 +52,8 @@ function wikiplugin_img_info()
 			),
 			'imalign' => array(
 				'required' => false,
-				'name' => tra('Alignment'),
-				'description' => tra('Image alignment in the page. (left, right, center) Uses CSS class img.'),
+				'name' => tra('Float Alignment'),
+				'description' => tra('Image alignment in the flow of the document. (left, right, none) Uses CSS float property.'),
 			),
 			'desc' => array(
 				'required' => false,
@@ -149,7 +149,7 @@ function wikiplugin_img( $data, $params, $offset, $parseOptions )
 	$repl = '<img alt="' . $imgdata["alt"] . '" src="'.$imgdata["src"].'" border="0" '.$imgdata_dim;
 
 	if ($imgdata["imalign"]) {
-		$repl .= ' align="' . $imgdata["imalign"] . '"';
+		$repl .= ' style="float: ' . $imgdata["imalign"] . '"';
 	}
 	if ($imgdata["usemap"]) {
 		$repl .= ' usemap="#'.$imgdata["usemap"].'"';

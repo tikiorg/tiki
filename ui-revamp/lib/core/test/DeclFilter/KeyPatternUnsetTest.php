@@ -1,6 +1,6 @@
 <?php
 
-class DeclFilter_KeyPatternUnsetTest extends PHPUnit_Framework_TestCase
+class DeclFilter_KeyPatternUnsetTest extends TikiTestCase
 {
 	function testMatch()
 	{

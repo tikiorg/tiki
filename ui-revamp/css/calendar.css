@@ -234,11 +234,11 @@
 .tabrow .daterow { border : 1px #ddd; }
 .calnavigation {
 	text-align : center;
-	border : 1px solid #ccc;
-	font-size : 13px;
+	font-size : 1.1em;
 	font-weight : bold;
 	clear: both;
 	vertical-align : middle;
+	margin: 7px 0;
 }
 .calnavigation a {
 	padding : 0 20px 4px 20px;
@@ -387,3 +387,16 @@ a.addevent:hover { border-bottom:0px; }
 .caldark .calfocus { background: #def; }
 .calfocuson + .calcontent { background: #f1e5ae; }
 .html_select_time { white-space: nowrap; }
+
+.tabrow {  }
+.tabrowLeft {  }
+.tabrowRight {  }
+.viewmode {width: 100%; text-align: center}
+.viewmode div {display: inline-block}
+.calbuttonBox {  }
+.calbuttonLeft {  }
+.calbuttonRight {  }
+.calbuttonoff {  }
+#prev {  }
+#next {  }
+

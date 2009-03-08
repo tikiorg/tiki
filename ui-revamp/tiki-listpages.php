@@ -141,7 +141,11 @@ if ( ! empty($multiprint_pages) ) {
 	if (!empty($_REQUEST["find"])) {
 		$find = strip_tags($_REQUEST["find"]);
 	} else {
-		$find = '';
+		if (!empty($_REQUEST["q"])) {
+			$find = strip_tags($_REQUEST["q"]);
+		} else {
+			$find = '';
+		}
 	}
 	$smarty->assign('find', $find);
 	
@@ -249,7 +253,7 @@ if ( ! empty($multiprint_pages) ) {
 
 	if( $access->is_serializable_request() ) {
 		
-		if( isset( $_REQUEST['listonly'] ) && $prefs['feature_mootools'] == 'y' ) {
+		if( isset( $_REQUEST['listonly'] ) && ($prefs['feature_mootools'] == 'y' || ($prefs['feature_jquery'] == 'y' && $prefs['feature_jquery_autocomplete'] == 'y')) ) {
 			$pages = array();
 			foreach( $listpages['data'] as $page )
 				$pages[] = $page['pageName'];

@@ -233,7 +233,7 @@ class SurveyLib extends TikiLib
 					$ret2[] = $res2;
 				}
 
-				$ids[$res2['qoption']]++;
+				$ids[$res2['qoption']] = true;
 			}
 		
 			// For a multiple choice from a file gallery, show all files in the stats results, even if there was no vote for those files

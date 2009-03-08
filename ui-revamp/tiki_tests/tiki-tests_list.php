@@ -14,6 +14,10 @@ if ($tiki_p_admin_tikitests != 'y' and $tiki_p_play_tikitests != 'y') {
 	die;
 }
 
+$smarty->assign("tidy",extension_loaded("tidy"));
+$smarty->assign("http",extension_loaded("http"));
+$smarty->assign("curl",extension_loaded("curl"));
+
 function delete_test($file) {
 	if (isset($_POST['daconfirm']) and isset($_SESSION["ticket_tiki-tests"])) {
 		key_check('tiki-tests');

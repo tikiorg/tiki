@@ -30,6 +30,7 @@ if (isset($_REQUEST["features"])) {
 		"feature_contact",
 		"feature_contacts",
 		"feature_contribution",
+		"feature_multilingual",
 		"feature_custom_home",
 		"feature_debug_console",
 		"feature_directory",
@@ -70,6 +71,7 @@ if (isset($_REQUEST["features"])) {
 		"feature_score",
 		"feature_search",
 		"feature_sheet",
+		"feature_sefurl",
 		"feature_shoutbox",
 		"feature_stats",
 		"feature_surveys",
@@ -92,11 +94,9 @@ if (isset($_REQUEST["features"])) {
 		"feature_multimedia",
 		"feature_userlevels",
 		"feature_mootools",
+		"feature_jquery",
 		"feature_shadowbox",
-		"feature_swffix",
-		"layout_section",
-		"feature_sefurl",
-		"feature_sefurl_filter",
+		"feature_swfobj",
 		"feature_tikitests",
 		"feature_magic",
 		"feature_minichat",
@@ -122,6 +122,8 @@ if (isset($_REQUEST["features"])) {
 
 if (!empty($_REQUEST['tabs'])) {
 	$smarty->assign('tabs', $_REQUEST['tabs']=='on'?'n':'');
+} else {
+	$smarty->assign('tabs', '');
 }
 
 $smarty->assign('php_major_version', substr(PHP_VERSION, 0, strpos(PHP_VERSION, '.')));

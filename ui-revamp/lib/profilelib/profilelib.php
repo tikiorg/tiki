@@ -1,8 +1,8 @@
 <?php
-require_once( 'Horde/Yaml.php' );
-require_once( 'Horde/Yaml/Loader.php' );
-require_once( 'Horde/Yaml/Node.php' );
-require_once( 'Horde/Yaml/Exception.php' );
+require_once( 'lib/Horde/Yaml.php' );
+require_once( 'lib/Horde/Yaml/Loader.php' );
+require_once( 'lib/Horde/Yaml/Node.php' );
+require_once( 'lib/Horde/Yaml/Exception.php' );
 
 
 class Tiki_Profile

@@ -14,8 +14,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 if (isset($_REQUEST["loginprefs"])) {
 	check_ticket('admin-inc-login');
-	simple_set_toggle('change_theme');
-	simple_set_toggle('change_language');
 	simple_set_toggle('change_password');
 	simple_set_value('messu_mailbox_size');
 	simple_set_value('messu_archive_size');
@@ -53,12 +51,11 @@ if (isset($_REQUEST["loginprefs"])) {
 	simple_set_value('https_port');
 	simple_set_value('rememberme');
 	simple_set_value('remembertime');
+	simple_set_value('remembermethod');
 	simple_set_value('cookie_name');
 	simple_set_value('cookie_domain');
 	simple_set_value('cookie_path');
 	simple_set_value('auth_method');
-	simple_set_toggle('feature_ticketlib');
-	simple_set_toggle('feature_ticketlib2');
 	simple_set_value('highlight_group');
 	simple_set_value('user_tracker_infos');
 	simple_set_toggle('desactive_login_autocomplete');
@@ -203,6 +200,8 @@ $smarty->assign("listgroups", $listgroups['data']);
 // Users Defaults
 $mailCharsets = array('utf-8', 'iso-8859-1');
 $smarty->assign_by_ref('mailCharsets', $mailCharsets);
+
+$headerlib->add_cssfile('css/admin.css');
 
 ask_ticket('admin-inc-login');
 ?>

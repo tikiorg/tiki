@@ -329,6 +329,10 @@ class WikiLib extends TikiLib {
 		if ($prefs['wikiHomePage'] == $oldName) {
 			$tikilib->set_preference('wikiHomePage', $newName);
 		}
+		if ($prefs['feature_trackers'] == 'y') {
+			global $trklib; include_once('lib/trackers/trackerlib.php');
+			$trklib->rename_page($oldName, $newName);
+		}
 
 		return true;
 	}
@@ -852,16 +856,21 @@ class WikiLib extends TikiLib {
 
 	    return $this->query($query, $bindvals) ? true : false;
 	}
-	function sefurl($page) {
-		global $prefs;
+	function sefurl($page, $with_next='') {
+		global $prefs, $smarty;
 		if( basename( $_SERVER['PHP_SELF'] ) == 'tiki-all_languages.php' ) {
 			return 'tiki-all_languages.php?page='.urlencode($page);
 		}
 
+		$href = 'tiki-index.php?page='.urlencode($page);
+		if ($with_next) {
+			$href .= '&amp;';
+		}
 		if ($prefs['feature_sefurl'] == 'y') {
-			return urlencode($page);
+			include_once('tiki-sefurl.php');
+			return  filter_out_sefurl($href, $smarty, 'wiki');
 		} else {
-			return 'tiki-index.php?page='.urlencode($page);
+			return $href;
 		}
 	}
 	function move_attachments($old, $new) {

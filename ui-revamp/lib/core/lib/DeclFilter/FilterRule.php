@@ -1,6 +1,6 @@
 <?php
 
-require_once 'DeclFilter/Rule.php';
+require_once 'lib/core/lib/DeclFilter/Rule.php';
 
 abstract class DeclFilter_FilterRule implements DeclFilter_Rule
 {

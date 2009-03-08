@@ -1,6 +1,6 @@
 <?php
 
-class TikiFilter_WordTest extends PHPUnit_Framework_TestCase
+class TikiFilter_WordTest extends TikiTestCase
 {
 	private $array;
 

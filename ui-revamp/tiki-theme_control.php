@@ -32,7 +32,7 @@ $smarty->assign('categories', $categories);
 
 $list_styles = $tikilib->list_styles();
 $smarty->assign_by_ref('styles',$list_styles);
-if ($_REQUEST['theme']) {
+if (!empty($_REQUEST['theme'])) {
 	$a_style = $_REQUEST['theme'];
 } else {
 	$a_style = $prefs['style'];

@@ -10,6 +10,12 @@ require_once ('lib/tikilib.php');
 require_once ('lib/blogs/bloglib.php');
 require_once ('lib/rss/rsslib.php');
 
+if ($prefs['feature_blogs'] != 'y') {
+	$smarty->assign('msg', tra("This feature is disabled").": feature_blogs");
+	$smarty->display("error.tpl");
+	die;
+}
+
 if ($prefs['rss_blogs'] != 'y') {
         $errmsg=tra("rss feed disabled");
         require_once ('tiki-rss_error.php');
@@ -50,9 +56,9 @@ if ($output["data"]=="EMPTY") {
 	foreach ($changes["data"] as $data)  {
       global $bloglib;
       if($prefs['summary_rss_blogs'] == "y") {
-         $data["$descId"] = $tikilib->parse_data($bloglib->get_page($data["$descId"],1));
+         $data["$descId"] = $tikilib->parse_data($bloglib->get_page($data[$descId],1), array('print'=>true));
       } else {
-         $data["$descId"] = $tikilib->parse_data($data["$descId"]);
+         $data["$descId"] = $tikilib->parse_data($data[$descId], array('print'=>true));
       }
 		$tmp[] = $data;
 	}

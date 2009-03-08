@@ -109,8 +109,8 @@ if (isset($source)) {
 	else {
 		$version = $histlib->get_version($page, $source);
 		if ($version) {
-			if ($info['is_html'] == 1 ) {
-				$smarty->assign('sourced', $info["data"]);
+			if ($version['is_html'] == 1 ) {
+				$smarty->assign('sourced', $version['data']);
 			} else {
 				$smarty->assign('sourced', nl2br($version["data"]));
 			}
@@ -197,7 +197,7 @@ if ($prefs['feature_multilingual'] == 'y') {
 			}
 
 		// Build URI / Redirect
-		$diff_style = isset( $_REQUEST['diff_style'] ) ? rawurlencode( $_REQUEST['diff_style'] ) : '';
+		$diff_style = isset( $_REQUEST['diff_style'] ) ? rawurlencode( $_REQUEST['diff_style'] ) : rawurlencode($prefs['default_wiki_diff_style']);
 		$comment = rawurlencode( "Updating from $page at version {$info['version']}" );
 
 		if( $newver == 0 ) {
@@ -218,7 +218,7 @@ if ($prefs['feature_multilingual'] == 'y') {
 if (isset($_REQUEST["compare"]))
 	histlib_helper_setup_diff( $page, $oldver, $newver );
 else
-	$smarty->assign('diff_style', '');
+	$smarty->assign('diff_style', $prefs['default_wiki_diff_style']);
 
 if($info["flag"] == 'L')
     $smarty->assign('lock',true);  

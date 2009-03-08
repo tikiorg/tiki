@@ -273,7 +273,6 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 351,Topics,128,,forum_list_topics,flag,,tiki_p_admin,,,Forums,,, 
 352,Last post,128,,forum_list_lastpost,flag,,tiki_p_admin,,,Forums,,, 
 353,Description,128,,forum_list_desc,flag,,tiki_p_admin,,,Forums,,, 
-354,feature_forum_topicd,127,,feature_forum_topicd,flag,,tiki_p_admin,,,Forums,,,cant find topic id
 355,Search method when searching in content: Non-Tiki search local to a forum,127,,feature_forum_local_search,flag,,tiki_p_admin,,,Forums,,, 
 356,Reply posts are empty,127,,feature_forum_replyempty,flag,,tiki_p_admin,,,Forums,,, 
 357,Allow first posts of a thread to have an empty body (will be a thread title),127,,feature_forums_allow_thread_titles,flag,,tiki_p_admin,,,Forums,,, 
@@ -353,7 +352,7 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 431,Proxy Host,1009,,proxy_host,simple,,tiki_p_admin,-9,,,,, 
 432,Long date format,48,,long_date_format,byref,,tiki_p_admin,,,Time+and+Date,Sample: {$now|tiki_long_date},, 
 433,Short date format,48,,short_date_format,byref,,tiki_p_admin,,,Time+and+Date,Sample: {$now|tiki_short_date},, 
-434,Site Title,876,,siteTitle,byref,,tiki_p_admin,,,,Will display in the browser's titlebar. ,,What is difference with sitetitle?
+434,Site Title,876,,browsertitle,byref,,tiki_p_admin,,,,Will display in the browser's titlebar. ,,What is difference with sitetitle?
 435,Short time format,48,,short_time_format,byref,,tiki_p_admin,,,Time+and+Date,Sample: {$now|tiki_short_time},, 
 436,Contact user,1000,,contact_user,simple,,tiki_p_admin,,,,,, 
 437,Store session in database,859,,session_db,flag,,tiki_p_admin,,,,,, 
@@ -388,7 +387,7 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 466,Display Timezone,48,,display_timezone,timezone,,tiki_p_admin,,,Time+and+Date,,,Not sure how/where this is used
 467,Mail end of line,1022,,mail_crlf,mailcrlf,,tiki_p_admin,,,,,, 
 468,Log Mail in Tiki Logs,1022,,log_mail,flag,,tiki_p_admin,,,,,, 
-469,Close site,1002,,site_closed,flag,,tiki_p_admin,5,,,Users with permission can sill login. ,, 
+469,Close site,1002,,site_closed,flag,,tiki_p_admin,5,,,Users with permission can still login. ,, 
 470,Long time format,48,,long_time_format,byref,,tiki_p_admin,,,Time+and+Date,Sample: {$now|tiki_long_date},, 
 471,URI to be used as Home Page,911,,urlIndex,simple,,tiki_p_admin,,430,,,, 
 473,Default Y Coordinate,22,,gmap_defaulty,simple,,tiki_p_admin,,,Gmap,,, 
@@ -552,7 +551,7 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 639,feature_bot_logo,3,,feature_bot_logo,flag,,tiki_p_admin,9,,,,, 
 640,feature_editcss,3,,feature_editcss,flag,,tiki_p_admin,13,,,,, 
 641,feature_topbar_debug,3,,feature_topbar_debug,flag,,tiki_p_admin,33,,,,, 
-642,Debug Info,3,,feature_bot_bar_debug,flag,,tiki_p_admin,6,602,,Display adminstrative debug information. ,, 
+642,Debug Info,3,,feature_bot_bar_debug,flag,,tiki_p_admin,6,602,,Display administrative debug information. ,, 
 643,Site Log Alt Description,876,,sitelogo_alt,simple,,tiki_p_admin,,,,"For example, for text browsers.  ",, 
 644,Use page description,912,,feature_sitedesc,byref,,tiki_p_admin,21,,,,, 
 645,feature_sitemenu,3,,feature_sitemenu,flag,,tiki_p_admin,25,,,,, 
@@ -953,3 +952,7 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 1062,Use edit plugin icons,1025,,wiki_edit_plugin,flag,,tiki_p_admin,,,,,, 
 1063,Group Watches,6,,feature_group_watches,feature,,tiki_p_admin,,,,,, 
 1064,Search Friendly URLs Filter,68,experimental,feature_sefurl_filter,feature,,tiki_p_admin,,,,,,Requires .htaccess file. Filters all output; uses more CPU than non-filter version. Can be used with non-filter SEF URL.
+1065,Iframe,913,,wikiplugin_iframe,flag,,tiki_p_admin,,,,,, 
+1066,Media Player,913,,wikiplugin_mediaplayer,flag,,tiki_p_admin,,,,,, 
+1067,Show freetags in middle column,26,,freetags_show_middle,flag,,tiki_p_admin,,,,,, 
+1068,Image plugin,913,,wikiplugin_image,flag,,tiki_p_admin,,,,,, 

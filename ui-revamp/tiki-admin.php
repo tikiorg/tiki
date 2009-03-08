@@ -1,12 +1,13 @@
 <?php
 
-// $Id: /cvsroot/tikiwiki/tiki/tiki-admin.php,v 1.128.2.13 2008-03-24 21:25:44 kerrnel22 Exp $
+// $Id$
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
 
 // Initialization
+$section = 'admin';
 require_once ('tiki-setup.php');
 
 include_once ('lib/admin/adminlib.php');
@@ -27,20 +28,23 @@ function simple_set_toggle($feature) {
 		if ((!isset($prefs[$feature]) || $prefs[$feature] != 'y')) {
 			// not yet set at all or not set to y
 			$tikilib->set_preference($feature, 'y');
-			$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("%s enabled"),$feature));
+			$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("%s enabled"),$feature),'st'=>1,'name'=>$feature);
 		}
 	} else {
 		if ((!isset($prefs[$feature]) || $prefs[$feature] != 'n')) {
 			// not yet set at all or not set to n
 			$tikilib->set_preference($feature, 'n');
-			$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("%s disabled"),$feature));
+			$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("%s disabled"),$feature),'st'=>0,'name'=>$feature);
 		}
 	}
+	global $cachelib; require_once("lib/cache/cachelib.php");
+	$cachelib->invalidate('allperms');
 }
 
 function simple_set_value($feature, $pref = '', $isMultiple = false) {
-	global $_REQUEST, $tikilib ,$prefs;
+	global $_REQUEST, $tikilib ,$prefs, $tikifeedback;
 
+	$old = $prefs[$feature];
 	if (isset($_REQUEST[$feature])) {
 		if ( $pref != '' ) {
 			$tikilib->set_preference($pref, $_REQUEST[$feature]);
@@ -60,12 +64,20 @@ function simple_set_value($feature, $pref = '', $isMultiple = false) {
 			$tikilib->set_preference($feature, array());
 		}
 	}
+	if (isset($_REQUEST[$feature]) && $old != $_REQUEST[$feature]) {
+		$tikifeedback[] = array('mes' => sprintf((($_REQUEST[$feature])? tra('%s set'):tra('%s unset')), $feature),'st'=>2,'name'=>$feature);
+	}
+	global $cachelib; require_once("lib/cache/cachelib.php");
+	$cachelib->invalidate('allperms');
 }
 
 function simple_set_int($feature) {
-        global $_REQUEST, $tikilib, $smarty;
+	global $_REQUEST, $tikilib, $prefs, $tikifeedback;
 	if (isset($_REQUEST[$feature]) && is_numeric($_REQUEST[$feature])) {
+		$old = $prefs[$feature];
 		$tikilib->set_preference($feature, $_REQUEST[$feature]);
+		if (isset($_REQUEST[$feature]) && $old != $_REQUEST[$feature])
+			$tikifeedback[] = array('mes'=>sprintf(tra("%s set"),$feature),'st'=>2,'name'=>$feature);
 	}
 }
 
@@ -273,6 +285,11 @@ if (isset($_REQUEST["page"])) {
 		$description = "Discover and register web services to allow direct use in wiki pages.";
 		$helpUrl = "WebServices";
 		include_once ('tiki-admin_include_webservices.php');
+	} else if ($adminPage == 'sefurl') {
+		$admintitle = 'Search engine friendly url';
+		$description = 'Search engine friendly url';
+		$helpUrl = 'Rewrite+Rules';
+		include_once ('tiki-admin_include_sefurl.php');
 	}
 
 	$url = 'tiki-admin.php'.'?page='.$adminPage;
@@ -308,13 +325,13 @@ if (!empty($_GET['forcecheck'])) {
 		$prefs['tiki_needs_upgrade'] = 'y';
 	} else {
 		$prefs['tiki_needs_upgrade'] = 'n';
-		$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("Current version is up to date : <b>%s</b>"), $TWV->version));
+		$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("Current version is up to date : <b>%s</b>"), $TWV->version),'st'=>3);
 	}
 	$smarty->assign('tiki_needs_upgrade', $prefs['tiki_needs_upgrade']);
 
 	// See if a major release is available.
 	if ($upgrades[1]) {
-		$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("A new %s  major release branch is available."), $TWV->branch));
+		$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("A new %s  major release branch is available."), $TWV->branch),'st'=>3);
 	}
 
 	// If the versioning feature has been enabled, then store the current
@@ -346,7 +363,7 @@ if ($prefs['feature_version_checks'] == 'y') {
 			$tikilib->set_preference('tiki_release', $TWV->release);
 			$smarty->assign('tiki_release', $TWV->release);
 			if ($upgrades[1]) {
-				$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("A new %s  major release branch is available."), $TWV->branch));
+				$tikifeedback[] = array('num'=>1,'mes'=>sprintf(tra("A new %s  major release branch is available."), $TWV->branch),'st'=>3);
 			}
 		} else {
 			$prefs['tiki_needs_upgrade'] = 'n';

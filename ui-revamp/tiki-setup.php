@@ -12,6 +12,11 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
+if (version_compare(PHP_VERSION, '5.0.0', '<')) {
+  header("location: tiki-install.php");
+  exit;
+}
+
 require_once 'tiki-filter-base.php';
 
 // Enable Versioning
@@ -38,7 +43,7 @@ require_once('tiki-setup_base.php');
 if ($prefs['feature_tikitests'] == 'y' and version_compare(PHP_VERSION, '5.0.0', '>='))  {
 	require_once('tiki_tests/tikitestslib.php');
 }
-$crumbs[] = new Breadcrumb($prefs['siteTitle'], '', $prefs['tikiIndex']);
+$crumbs[] = new Breadcrumb($prefs['browsertitle'], '', $prefs['tikiIndex']);
 
 if ( $prefs['site_closed'] == 'y' ) require_once('lib/setup/site_closed.php');
 require_once('lib/setup/error_reporting.php');

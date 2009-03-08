@@ -1,5 +1,5 @@
 <?php
-require_once 'TikiFilter.php';
+require_once 'lib/core/lib/TikiFilter.php';
 
 class JitFilter implements ArrayAccess, Iterator, Countable
 {

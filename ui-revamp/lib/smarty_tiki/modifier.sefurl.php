@@ -10,41 +10,36 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 function smarty_modifier_sefurl($source, $type='wiki', $with_next = '' ) {
-	global $prefs, $wikilib;
+	global $prefs, $wikilib, $smarty;
 	include_once('lib/wiki/wikilib.php');
 
 	switch($type){
 	case 'wiki page':
 	case 'wiki':
-		return $wikilib->sefurl($source);
-	// rewrite other things so htaccess can unrewrite
+		return $wikilib->sefurl($source, $with_next);
 	case 'blog':
-	        if ($prefs['feature_sefurl'] == 'y') {
-			return "blog" . $source;
-	        } else {
-			return 'tiki-view_blog.php?blogId='.$source;
-		}
+		$href = 'tiki-view_blog.php?blogId='.$source;
+		break;
 	case 'blogpost':
-	        if ($prefs['feature_sefurl'] == 'y') {
-	            return "blogpost" . $source;
-	        } else {
-	            return 'tiki-view_blog_post.php?postId='.$source;
-		}
+		$href = 'tiki-view_blog_post.php?postId='.$source;
+		break;
 	case 'gallery':
-	        if ($prefs['feature_sefurl'] == 'y') {
-	            return "gallery" . $source . ($with_next ? '?' : '') ;
-	        } else {
-	            return 'tiki-browse_gallery.php?galleryId='. $source . ($with_next ? '&' : '');
-		}
+		$href = 'tiki-browse_gallery.php?galleryId='. $source;
+		break;
 	case 'article':
-		if ($prefs['feature_sefurl'] == 'y') {
-			return 'article'.$source . ($with_next ? '?' : '') ;
-		} else {
-			return 'tiki-read_article.php?articleId='. $source . ($with_next ? '&' : '');
-		}
+		$href = 'tiki-read_article.php?articleId='. $source;
+		break;
+	default:
+		$href = $source;
+		break;
 	}
-
-
-	return $source;
+	if ($with_next) {
+		$href .= '&amp;';
+	}
+	if ($prefs['feature_sefurl'] == 'y') {
+		include_once('tiki-sefurl.php');
+		return filter_out_sefurl($href, $smarty, $type);
+	} else {
+		return $href;
+	}
 }
-?>

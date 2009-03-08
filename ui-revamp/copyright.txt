@@ -1,1489 +1,2242 @@
 Tiki Copyright
 ----------------
-$Header: /cvsroot/tikiwiki/tiki/copyright.txt,v 1.13 2007-03-02 19:49:07 luciash Exp $
 
-The following list gathers the copyrights holders for tikiwiki 
-at the state of 1.9.5 (CVS) version. Each member of that list wrote at 
-least one line, directly or indirectly, in tikiwiki code source. 
-The exact proportion of the contribution of each is not an issue, 
-as any copyright change will involve the agreement of everybody. 
+The following list attempts to gather the copyright holders for tikiwiki
+as of version 3.0.
 
-This is how we implement the TikiwikiSocialContract.
+Accounts listed below with commits have contributed source code to CVS or SVN. 
+Please note that even more people contributed on various other aspects (documentation, 
+bug reporting, testing, etc.)
+
+This is how we implement the Tikiwiki Social Contract.
 http://dev.tikiwiki.org/SocialContract
 
 List of members of the Community
-Total on 2005-08-21 : 
-* 309 registered contributors
-* 155 have used cvs commit at least once
+As of 2009-03-02, the community has:
+  * 434 members on Sourceforge,
+  * 199 of those people who made at least one code commit
 
-If you are not on that list and are member of the tikiwiki community,
-please contact an admin to be added. Operation is manual for now,
-working on its automatisation ..
+This list is automatically generated and alphabetically sorted
+from subversion repository by the following script:
+  doc/devtools/release_copyright.php
 
-That list is accessible on http://tikiwiki.org/tiki-community.php 
-for people that are listed.
+Counting the commits is not as trivial as it may sound. If your number of commits
+seems incorrect, it could be that the script is not detecting them all. This 
+has been reported especially for commits early on in the project. Nonetheless, 
+the list provides a general idea.
 
-albrown
-Country: United_States
+====================================================================
+
+Nickname: abbasmousavi
+SF Role: Developer
+
+Nickname: ace_mtp
+Name: Vianney Lecroart
+SF Role: Developer
+
+Nickname: adren67
+Name: Cyril Chaboisseau
+First Commit: 2008-10-09
+Last Commit: 2009-02-03
+Number of Commits: 7
+SF Role: Developer
+
+Nickname: afahlvik
+Name: Arve Fahlvik
+First Commit: 2004-03-25
+Last Commit: 2004-04-21
+Number of Commits: 6
+SF Role: Developer
+
+Nickname: agorski
+Name: Adam Gorski
+SF Role: Developer
+
+Nickname: aigarius
+Name: Aigars Mahinovs
+SF Role: Developer
+
+Nickname: ajd24
+Name: Art
+
+Nickname: alain_desilets
+Name: Alain Désilets
+First Commit: 2008-03-11
+Last Commit: 2009-02-24
+Number of Commits: 21
+SF Role: Developer
+
+Nickname: albrown
 Name: Al Brown
-Url: http://thetinfoilhat.com
-Registered on tw.o : Thu 03 Jul, 2003
-Last login on tw.o : Mon 15 Sep, 2003
+SF Role: Developer
 
-ohertel
-Country: Germany
-Role: Developer, Translator de
-Name: Oliver Hertel
-Registered on tw.o : Thu 03 Jul, 2003
-Last login on tw.o : Mon 27 Jun, 2005
+Nickname: alercunha
+Name: Alexandre Cunha
 
-zaufi
-Country: Russia
-Registered on tw.o : Thu 03 Jul, 2003
-Last login on tw.o : Tue 05 Apr, 2005
+Nickname: alex_freire
+Name: Alexandre Freire
+SF Role: Developer
 
-mose
-Country: France
-Role: misc technical lead and community support
-Name: mose
-Registered on tw.o : Thu 03 Jul, 2003
-Last login on tw.o : Thu 18 Aug, 2005
+Nickname: amette
+Name: Alexander Mette
+First Commit: 2005-05-19
+Last Commit: 2009-03-02
+Number of Commits: 112
+SF Role: Developer
 
-patvdv
-Country: Ireland
-Name: Patrick Van der Veken
-Registered on tw.o : Fri 04 Jul, 2003
-Last login on tw.o : Fri 29 Apr, 2005
+Nickname: amotl
+Name: Andreas Motl
+SF Role: Developer
 
-marclaporte
-Country: Argentina
-Name: Marc Laporte
-Registered on tw.o : Fri 04 Jul, 2003
-Last login on tw.o : Sat 23 Jul, 2005
+Nickname: andreas_bac
+Name: Andreas Bacouroff
+SF Role: Developer
 
-Terence
-Country: United_States
-Role: SpiderDog
-Name: Terence?
-Registered on tw.o : Fri 04 Jul, 2003
-Last login on tw.o : Thu 31 Mar, 2005
+Nickname: anenga
+Name: Chris Kaleiki
+SF Role: Developer
 
-tex
-Country: Germany
-Name: Christoph Drieschner
-Url: http://texorama.de
-Registered on tw.o : Fri 04 Jul, 2003
-Last login on tw.o : Fri 19 Dec, 2003
+Nickname: aneuhaus
+Name: Andreas Neuhaus
+First Commit: 2003-12-03
+Last Commit: 2003-12-03
+Number of Commits: 1
+SF Role: Developer
 
-DennisDaniels
-Country: United_States
-Name: Dennis Daniels
-Registered on tw.o : Fri 04 Jul, 2003
-Last login on tw.o : Sun 23 Jan, 2005
+Nickname: ang23
+Name: Lorinc Czegledi
+First Commit: 2004-08-11
+Last Commit: 2008-05-29
+Number of Commits: 23
+SF Role: Doc Writer
 
-gmuslera
-Country: Uruguay
-Name: Gustavo Muslera
-Registered on tw.o : Fri 04 Jul, 2003
-Last login on tw.o : Wed 18 May, 2005
+Nickname: anope
+Name: Andrzej
+First Commit: 2004-07-13
+Last Commit: 2005-05-06
+Number of Commits: 5
+SF Role: Translator (I18N/L10N)
 
-MLimburg
-Country: Australia
-Name: Mark Limburg
-Registered on tw.o : Sat 05 Jul, 2003
-Last login on tw.o : Mon 08 Mar, 2004
+Nickname: aproulx
+Name: AndrÃ© Proulx
+First Commit: 2008-11-07
+Last Commit: 2008-11-21
+Number of Commits: 10
 
-redflo
-Country: Germany
-Registered on tw.o : Sat 05 Jul, 2003
-Last login on tw.o : Sat 06 Aug, 2005
+Nickname: as6o
+Name: Aaron Siri
+SF Role: Developer
 
-sylvie
-Country: None
-Name: sylvie greverend
-Registered on tw.o : Sat 05 Jul, 2003
-Last login on tw.o : Mon 01 Aug, 2005
+Nickname: atooni
+First Commit: 2005-10-21
+Last Commit: 2005-10-21
+Number of Commits: 1
+SF Role: Developer
 
-Damian
-Country: United_Kingdom
-Role: project admin, developer
-Name: Damian Parker
-Registered on tw.o : Sat 05 Jul, 2003
-Last login on tw.o : Tue 02 Aug, 2005
+Nickname: aurel42
+Name: Marc Packenius
+First Commit: 2004-03-01
+Last Commit: 2004-03-15
+Number of Commits: 10
+SF Role: Developer
 
-jpg
-Country: Argentina
-Name: Juan Pablo Gim�nez
-Url: UserPagejpg
-Registered on tw.o : Sat 05 Jul, 2003
-Last login on tw.o : Thu 09 Sep, 2004
+Nickname: avdwheel
+Name: Andre
+SF Role: Developer
 
-NorbertHuffschmid
-Country: Germany
-Registered on tw.o : Sat 05 Jul, 2003
-Last login on tw.o : Thu 16 Jun, 2005
+Nickname: awcolley
+First Commit: 2003-06-17
+Last Commit: 2003-11-17
+Number of Commits: 27
 
-ang
-Country: Hungary
-Registered on tw.o : Sat 05 Jul, 2003
-Last login on tw.o : Sat 13 Aug, 2005
+Nickname: awolfff
+Name: Andreas Wolff
+First Commit: 2007-01-21
+Last Commit: 2007-03-26
+Number of Commits: 4
+SF Role: Developer
 
-DaveSanders
-Country: United_States
-Role: Anything
-Name: Dave Sanders
-Url: http://www.steelsphere.com
-Registered on tw.o : Sun 06 Jul, 2003
-Last login on tw.o : Tue 23 Mar, 2004
+Nickname: axold
+Name: Aldo Bg
+First Commit: 2008-11-19
+Last Commit: 2009-02-17
+Number of Commits: 4
 
-rasa
-Country: United_States
-Registered on tw.o : Sun 06 Jul, 2003
-Last login on tw.o : Fri 11 Mar, 2005
+Nickname: axonrg
+First Commit: 2003-05-15
+Last Commit: 2003-06-20
+Number of Commits: 7
 
-tom
-Country: France
-Role: developer
-Name: Tom Bouillut
-Registered on tw.o : Mon 07 Jul, 2003
-Last login on tw.o : Mon 21 Feb, 2005
+Nickname: az3rty
+SF Role: Translator (I18N/L10N)
 
-TonyColley
-Country: United_States
-Registered on tw.o : Mon 07 Jul, 2003
-Last login on tw.o : Tue 15 Jun, 2004
+Nickname: baci
+Name: Chris Bacigalupo
+SF Role: Developer
 
-luis
-Country: Argentina
-Registered on tw.o : Mon 07 Jul, 2003
-Last login on tw.o : Tue 24 Feb, 2004
+Nickname: bburgaud
+Name: Baptiste Burgaud
+First Commit: 2003-12-15
+Last Commit: 2003-12-17
+Number of Commits: 8
+SF Role: Developer
 
-van_woods
-Country: United_States
-Registered on tw.o : Mon 07 Jul, 2003
-Last login on tw.o : Wed 10 Nov, 2004
+Nickname: beastrider
+Name: Wayne Herbert
+SF Role: Developer
 
-mariana
-Country: Argentina
-Registered on tw.o : Mon 07 Jul, 2003
-Last login on tw.o : Mon 07 Jul, 2003
+Nickname: berryweb
+Name: Berry Parker
+First Commit: 2004-05-14
+Last Commit: 2004-10-25
+Number of Commits: 4
+SF Role: All-Hands Person
 
-jahlewis
-Country: United_States
-Registered on tw.o : Tue 08 Jul, 2003
-Last login on tw.o : Mon 16 Aug, 2004
+Nickname: beuc
+Name: Sylvain BEUCLER
+First Commit: 2006-05-22
+Last Commit: 2008-08-22
+Number of Commits: 5
 
-freephile
-Country: Other
-Registered on tw.o : Tue 08 Jul, 2003
-Last login on tw.o : Tue 27 Jul, 2004
+Nickname: billsos
+First Commit: 2009-01-15
+Last Commit: 2009-01-18
+Number of Commits: 3
+SF Role: Developer
 
-btallman
-Country: United_States
-Registered on tw.o : Wed 09 Jul, 2003
-Last login on tw.o : Sun 03 Aug, 2003
+Nickname: bitey
+Name: Bitey McBiterson
+First Commit: 2008-08-27
+Last Commit: 2008-10-26
+Number of Commits: 7
 
-djamel
-Country: France
-Name: djamel
-Registered on tw.o : Wed 09 Jul, 2003
-Last login on tw.o : Wed 26 Nov, 2003
+Nickname: bligneri
+Name: Benoit des Ligneris
+First Commit: 2003-09-14
+Last Commit: 2003-09-26
+Number of Commits: 3
+SF Role: Developer
 
-chris.holman
-Country: United_Kingdom
-Registered on tw.o : Thu 10 Jul, 2003
-Last login on tw.o : Mon 12 Jul, 2004
+Nickname: bludok
+Name: Bludok Systems Limited
+SF Role: Developer
 
-jjongsma
-Country: United_States
-Registered on tw.o : Fri 11 Jul, 2003
-Last login on tw.o : Tue 25 May, 2004
+Nickname: bluestrain
+Name: Dave Thacker
+First Commit: 2006-11-19
+Last Commit: 2008-03-25
+Number of Commits: 8
+SF Role: Developer
 
-einstine
-Country: United_States
-Registered on tw.o : Fri 11 Jul, 2003
-Last login on tw.o : Thu 18 Mar, 2004
+Nickname: bluybrink
+Name: Bluy Brink
+SF Role: Translator (I18N/L10N)
 
-loic
-Country: France
-Name: Lo�c Monthorin
-Registered on tw.o : Mon 14 Jul, 2003
-Last login on tw.o : Mon 09 Feb, 2004
+Nickname: bobenrieth
+SF Role: Tester
 
-paradime
-Country: Other
-Registered on tw.o : Mon 14 Jul, 2003
-Last login on tw.o : Sun 21 Dec, 2003
+Nickname: bozze
+Name: Bruno Zuzzé
+SF Role: Developer
 
-phil
-Country: France
-Registered on tw.o : Tue 15 Jul, 2003
-Last login on tw.o : Thu 18 Aug, 2005
+Nickname: brab
+Name: Alan Schmitt
+First Commit: 2004-02-10
+Last Commit: 2004-02-10
+Number of Commits: 1
+SF Role: Developer
 
-Stryker
-Country: Canada
+Nickname: brian_moore
+Name: Brian Moore
+First Commit: 2008-04-16
+Last Commit: 2008-10-17
+Number of Commits: 6
+
+Nickname: broubrou
+Name: Vincent B
+First Commit: 2004-08-26
+Last Commit: 2004-08-26
+Number of Commits: 1
+SF Role: Developer
+
+Nickname: btallman
+Name: Ben Tallman
+SF Role: Developer
+
+Nickname: btodoroff
+Name: Brian Todoroff
+First Commit: 2004-01-09
+Last Commit: 2004-01-31
+Number of Commits: 9
+SF Role: Developer
+
+Nickname: bulldogtor
+Name: Nick Rapitosovich
+SF Role: Developer
+
+Nickname: c0ldfusi0n
+Name: Pier Luc Petitclerc
+SF Role: Developer
+
+Nickname: c_schmitz
+Name: Carsten Schmitz
+First Commit: 2008-11-06
+Last Commit: 2008-12-20
+Number of Commits: 2
+SF Role: Developer
+
+Nickname: campbe13
+Name: Patricia  M Campbell
+First Commit: 2009-02-19
+Last Commit: 2009-02-28
+Number of Commits: 6
+SF Role: Developer
+
+Nickname: carlom
+SF Role: Developer
+
+Nickname: carolg
+Name: Carol Gauthier
+SF Role: Developer
+
+Nickname: caustin_ats
 Name: Chris Austin
-Registered on tw.o : Tue 15 Jul, 2003
-Last login on tw.o : Mon 22 Nov, 2004
+First Commit: 2003-10-21
+Last Commit: 2003-11-05
+Number of Commits: 5
+SF Role: Developer
 
-kodewulf
-Country: Australia
-Registered on tw.o : Tue 15 Jul, 2003
-Last login on tw.o : Mon 15 Sep, 2003
+Nickname: cbowman
+Name: Christopher
+SF Role: Developer
 
-ZZamboni
-Country: Switzerland
-Registered on tw.o : Tue 15 Jul, 2003
-Last login on tw.o : Thu 14 Apr, 2005
+Nickname: cdx
+Name: Claudio Bustos
+First Commit: 2003-10-08
+Last Commit: 2003-11-11
+Number of Commits: 23
+SF Role: Developer
 
-magius
-Country: Italy
-Registered on tw.o : Fri 18 Jul, 2003
-Last login on tw.o : Thu 02 Jun, 2005
+Nickname: cfreeze
+Name: Chris Freeze
+SF Role: Developer
 
-natster
-Country: Other
-Registered on tw.o : Thu 24 Jul, 2003
-Last login on tw.o : Wed 12 Nov, 2003
+Nickname: chandi
+Name: Chandi Bernier
+SF Role: Developer
 
-sting
-Country: Taiwan
-Registered on tw.o : Thu 24 Jul, 2003
-Last login on tw.o : Wed 09 Jun, 2004
+Nickname: chealer
+Name: Philippe Cloutier
+First Commit: 2003-09-27
+Last Commit: 2004-10-27
+Number of Commits: 75
+SF Role: Developer
 
-shinhan
-Country: Yugoslavia
-Registered on tw.o : Mon 28 Jul, 2003
-Last login on tw.o : Thu 05 May, 2005
+Nickname: chessy
+Name: Juanan Pereira
+SF Role: Developer
 
-connermo
-Country: Other
-Registered on tw.o : Tue 29 Jul, 2003
-Last login on tw.o : Sun 16 Nov, 2003
+Nickname: chibaguy
+Name: Gary Cunningham-Lee
+First Commit: 2006-02-04
+Last Commit: 2009-03-02
+Number of Commits: 482
+SF Role: Web Designer
 
-mwexler
-Country: United_States
-Registered on tw.o : Tue 29 Jul, 2003
-Last login on tw.o : Thu 09 Sep, 2004
+Nickname: chris_holman
+Name: Chris Holman
+First Commit: 2003-10-08
+Last Commit: 2004-09-06
+Number of Commits: 39
+SF Role: Developer
 
-reid
-Country: United_States
-Registered on tw.o : Tue 29 Jul, 2003
-Last login on tw.o : Sat 08 Jan, 2005
+Nickname: chriscramer
+Name: Chris Cramer
+First Commit: 2008-03-04
+Last Commit: 2008-03-04
+Number of Commits: 5
 
-zcecil
-Country: Taiwan
-Registered on tw.o : Wed 30 Jul, 2003
-Last login on tw.o : Thu 11 Mar, 2004
+Nickname: chuck
+Name: Chuck Hagenbuch
+SF Role: Developer
 
-luci
-Country: Czech_Republic
-Registered on tw.o : Wed 30 Jul, 2003
-Last login on tw.o : Mon 01 Aug, 2005
+Nickname: claborne
+Name: Chris Claborne
+SF Role: Developer
 
-mortenson
-Country: Japan
-Registered on tw.o : Thu 31 Jul, 2003
-Last login on tw.o : Sun 03 Aug, 2003
+Nickname: colinmo
+Name: Colin Morris
+SF Role: Developer
 
-lueders
-Country: Germany
-Registered on tw.o : Sat 02 Aug, 2003
-Last login on tw.o : Sun 13 Feb, 2005
+Nickname: coloradoweb
+First Commit: 2004-01-10
+Last Commit: 2004-06-29
+Number of Commits: 9
 
-Franck
-Country: Fiji
-Role: mapserver expert
+Nickname: connermo
+Name: Conner Mo
+First Commit: 2003-07-30
+Last Commit: 2003-08-17
+Number of Commits: 2
+SF Role: Developer
+
+Nickname: cyantree
+First Commit: 2004-08-10
+Last Commit: 2004-08-10
+Number of Commits: 1
+SF Role: Translator (I18N/L10N)
+
+Nickname: cyberdrek
+Name: Daniel Cedilotte
+SF Role: Developer
+
+Nickname: dabright
+Name: D.A. Bright
+First Commit: 2003-11-12
+Last Commit: 2004-03-25
+Number of Commits: 2
+SF Role: Developer
+
+Nickname: damienmckenna
+First Commit: 2003-03-24
+Last Commit: 2003-04-09
+Number of Commits: 7
+
+Nickname: damosoft
+First Commit: 2003-12-07
+Last Commit: 2006-09-17
+Number of Commits: 401
+
+Nickname: darzee
+Name: C. Outteryck
+First Commit: 2007-01-23
+Last Commit: 2007-01-31
+Number of Commits: 5
+
+Nickname: dcengija
+First Commit: 2003-10-07
+Last Commit: 2004-02-04
+Number of Commits: 6
+
+Nickname: debenbain
+Name: Deben
+SF Role: Developer
+
+Nickname: deragon
+First Commit: 2004-08-27
+Last Commit: 2004-08-27
+Number of Commits: 1
+
+Nickname: derisavi
+Name: Salem Derisavi
+SF Role: Translator (I18N/L10N)
+
+Nickname: devniv
+Name: Nicolas Vilz
+SF Role: Developer
+
+Nickname: dgdaniels
+First Commit: 2003-08-10
+Last Commit: 2004-06-20
+Number of Commits: 152
+
+Nickname: dgreen34
+Name: Douglas Green
+
+Nickname: dheltzel
+First Commit: 2003-07-15
+Last Commit: 2003-12-29
+Number of Commits: 137
+
+Nickname: die
+Name: diE
+SF Role: Developer
+
+Nickname: dim_m
+Name: Dimitris Moraitis
+SF Role: Developer
+
+Nickname: dimaz-z
+Name: dimaz
+SF Role: Developer
+
+Nickname: djnz
+Name: OneOfMany
+First Commit: 2004-03-02
+Last Commit: 2004-04-01
+Number of Commits: 7
+SF Role: Developer
+
+Nickname: djoguet
+Name: Damien Joguet
+SF Role: Developer
+
+Nickname: dmytro
+Name: Dmytro Kovalov
+SF Role: Translator (I18N/L10N)
+
+Nickname: docekal
+Name: Jan Lindåker
+First Commit: 2003-09-03
+Last Commit: 2003-11-22
+Number of Commits: 3
+SF Role: Developer
+
+Nickname: drieschner
+Name: Christoph Drieschner
+First Commit: 2003-07-01
+Last Commit: 2003-07-04
+Number of Commits: 5
+SF Role: Developer
+
+Nickname: duebel
+First Commit: 2008-11-15
+Last Commit: 2008-11-15
+Number of Commits: 4
+SF Role: Developer
+
+Nickname: eesa
+Name: Abdul-Wahid Paterson
+SF Role: Developer
+
+Nickname: einstine
+Name: Thomas
+SF Role: Developer
+
+Nickname: elecnix
+Name: Nicolas Marchildon
+SF Role: Developer
+
+Nickname: emanuelquintana
+Name: emanuelq
+SF Role: Developer
+
+Nickname: emenems
+Name: Marcel van Groenigen
+SF Role: Developer
+
+Nickname: epolidor
+Name: Eduardo Daniel Polidor
+First Commit: 2002-11-25
+Last Commit: 2003-12-20
+Number of Commits: 12
+SF Role: All-Hands Person
+
+Nickname: eraserhd
+Name: Jason M. Felice
+SF Role: Developer
+
+Nickname: ericisgood
+Name: EricIsGood
+First Commit: 2008-11-02
+Last Commit: 2008-11-02
+Number of Commits: 1
+SF Role: Developer
+
+Nickname: essele
+Name: Lee Essen
+SF Role: Developer
+
+Nickname: etuate
+Name: edagentile
+First Commit: 2008-05-14
+Last Commit: 2008-09-22
+Number of Commits: 12
+SF Role: Developer
+
+Nickname: evanprodromou
+Name: Evan Prodromou
+First Commit: 2008-01-05
+Last Commit: 2008-01-06
+Number of Commits: 5
+SF Role: Developer
+
+Nickname: ewuerfel
+Name: Enrico Würfel
+SF Role: Developer
+
+Nickname: ezago
+Name: Eric Zago
+SF Role: Developer
+
+Nickname: fbergeron
+Name: Frederic Bergeron
+SF Role: Developer
+
+Nickname: fernao_lopes
+Name: Fernão Lopes
+SF Role: Developer
+
+Nickname: fhcorrea
+Name: Fernando Henrique
+First Commit: 2004-06-15
+Last Commit: 2004-06-15
+Number of Commits: 1
+SF Role: Developer
+
+Nickname: filmil
+Name: Filip Miletic
+First Commit: 2004-03-31
+Last Commit: 2004-05-17
+Number of Commits: 9
+SF Role: Developer
+
+Nickname: florianlink
+Name: Florian Link
+First Commit: 2004-02-16
+Last Commit: 2004-03-03
+Number of Commits: 4
+
+Nickname: fmathias
+Name: Fabio Rampazzo Mathias
+First Commit: 2006-09-07
+Last Commit: 2006-09-07
+Number of Commits: 1
+
+Nickname: fmjrey
+Name: François Rey
+SF Role: Developer
+
+Nickname: fmk_ca
+Name: Frank M. Kromann
+First Commit: 2007-01-10
+Last Commit: 2007-01-10
+Number of Commits: 1
+SF Role: Developer
+
+Nickname: fr_rodo
+Name: rodo
+First Commit: 2006-11-28
+Last Commit: 2008-06-15
+Number of Commits: 29
+SF Role: Developer
+
+Nickname: franck
 Name: Franck Martin
-Registered on tw.o : Mon 04 Aug, 2003
-Last login on tw.o : Mon 08 Aug, 2005
+First Commit: 2003-08-06
+Last Commit: 2008-11-13
+Number of Commits: 96
+SF Role: Developer
 
-fukuchi
-Country: Japan
+Nickname: frank_p
+Name: FrankP
+First Commit: 2007-09-14
+Last Commit: 2009-03-02
+Number of Commits: 18
+SF Role: Developer
+
+Nickname: freephile
+Name: Greg Rundlett
+SF Role: Developer
+
+Nickname: freevic
+Name: alain vicet
+SF Role: Developer
+
+Nickname: fukuchi
 Name: Kentaro Fukuchi
-Registered on tw.o : Tue 05 Aug, 2003
-Last login on tw.o : Fri 07 Jan, 2005
+First Commit: 2003-08-10
+Last Commit: 2003-09-23
+Number of Commits: 7
+SF Role: Developer
 
-marcius
-Country: Italy
-Registered on tw.o : Tue 05 Aug, 2003
-Last login on tw.o : Thu 29 Jul, 2004
+Nickname: fumphco
+Name: John Bair
+First Commit: 2006-09-27
+Last Commit: 2006-10-28
+Number of Commits: 6
+SF Role: Developer
 
-dthacker
-Registered on tw.o : Wed 06 Aug, 2003
-Last login on tw.o : Thu 08 Jul, 2004
+Nickname: garem
+Name: Alain Gaeremynck
+SF Role: Developer
 
-Mixolyde
-Country: United_States
-Registered on tw.o : Thu 07 Aug, 2003
-Last login on tw.o : Mon 01 Mar, 2004
+Nickname: garfield-sf
+Name: Garfield
 
-chibaguy
-Country: Japan
-Registered on tw.o : Fri 08 Aug, 2003
-Last login on tw.o : Wed 10 Aug, 2005
+Nickname: garygriffin
+Name: Gary Griffin
+First Commit: 2007-01-20
+Last Commit: 2007-02-06
+Number of Commits: 2
+SF Role: Developer
 
-mgfeller
-Country: Switzerland
-Registered on tw.o : Sun 10 Aug, 2003
-Last login on tw.o : Thu 27 May, 2004
+Nickname: gene203
+Name: Gene
+SF Role: Translator (I18N/L10N)
 
-guidewebmaster
-Country: Canada
-Registered on tw.o : Mon 11 Aug, 2003
-Last login on tw.o : Wed 07 Jan, 2004
+Nickname: georger_br
+Name: Georger Araujo
+SF Role: Developer
 
-bluybrink
-Country: Slovakia
-Registered on tw.o : Thu 14 Aug, 2003
-Last login on tw.o : Mon 22 Nov, 2004
+Nickname: gertdewit
+Name: Gert Dewit
+SF Role: Developer
 
-terris
-Country: Other
-Registered on tw.o : Thu 14 Aug, 2003
-Last login on tw.o : Sat 12 Mar, 2005
+Nickname: ggeller
+Name: George Geller
+First Commit: 2003-12-07
+Last Commit: 2005-11-30
+Number of Commits: 159
+SF Role: Developer
 
-jkring
-Country: United_States
-Name: Jim Kring
-Registered on tw.o : Wed 20 Aug, 2003
-Last login on tw.o : Fri 29 Apr, 2005
+Nickname: giak
+Name: Giacomel
+SF Role: Developer
 
-pacoit
-Country: United_States
-Registered on tw.o : Thu 21 Aug, 2003
-Last login on tw.o : Fri 30 Jan, 2004
+Nickname: gillesm
+Name: Gilles Maire
+First Commit: 2003-11-04
+Last Commit: 2008-11-30
+Number of Commits: 100
+SF Role: Developer
 
-DavidBright
-Country: United_States
-Registered on tw.o : Thu 21 Aug, 2003
-Last login on tw.o : Sat 24 Apr, 2004
+Nickname: gilshwartz
+Name: Gil Shwartz
+First Commit: 2002-12-31
+Last Commit: 2003-07-17
+Number of Commits: 49
+SF Role: Developer
 
-DanielX
-Country: Canada
-Registered on tw.o : Thu 21 Aug, 2003
-Last login on tw.o : Tue 09 Dec, 2003
+Nickname: gimpster
+First Commit: 2003-08-03
+Last Commit: 2003-08-06
+Number of Commits: 6
 
-mchurchward
-Country: Canada
-Registered on tw.o : Mon 25 Aug, 2003
-Last login on tw.o : Tue 24 Aug, 2004
+Nickname: giottomx
+Name: Giotto
+First Commit: 2004-07-15
+Last Commit: 2004-08-24
+Number of Commits: 15
+SF Role: Developer
 
-mitchmurphy
-Country: Other
-Registered on tw.o : Tue 26 Aug, 2003
-Last login on tw.o : Thu 23 Oct, 2003
+Nickname: gmuslera
+Name: Gustavo Muslera
+First Commit: 2003-10-22
+Last Commit: 2004-10-03
+Number of Commits: 33
+SF Role: Analysis / Design
 
-massimoi
-Country: Italy
-Registered on tw.o : Tue 26 Aug, 2003
-Last login on tw.o : Fri 27 Aug, 2004
+Nickname: gongo
+Name: Dimitri Smits
+First Commit: 2003-11-09
+Last Commit: 2004-02-03
+Number of Commits: 51
+SF Role: Developer
 
-jenolan
-Country: Australia
-Role: Dogsbody
-Name: Larry
-Url: http://www.jenolan.org
-Registered on tw.o : Tue 26 Aug, 2003
-Last login on tw.o : Sun 30 May, 2004
+Nickname: gravesweeper
+Name: spider
+First Commit: 2004-01-06
+Last Commit: 2004-01-07
+Number of Commits: 5
+SF Role: Developer
 
-michiel
-Registered on tw.o : Tue 26 Aug, 2003
-Last login on tw.o : Tue 20 Jul, 2004
+Nickname: gregmartin
+Name: Greg Martin
+First Commit: 2006-12-19
+Last Commit: 2008-04-05
+Number of Commits: 7
+SF Role: Developer
 
-wvdploeg
-Registered on tw.o : Wed 27 Aug, 2003
-Last login on tw.o : Wed 27 Aug, 2003
-
-phunkymunky
-Country: United_Kingdom
-Registered on tw.o : Thu 28 Aug, 2003
-Last login on tw.o : Tue 28 Dec, 2004
-
-BeastRider
-Country: Other
-Registered on tw.o : Fri 29 Aug, 2003
-Last login on tw.o : Sat 14 Feb, 2004
-
-jmj
-Country: Switzerland
-Registered on tw.o : Fri 29 Aug, 2003
-Last login on tw.o : Wed 20 Apr, 2005
-
-Karneevor
-Country: Denmark
-Registered on tw.o : Mon 01 Sep, 2003
-Last login on tw.o : Tue 14 Jun, 2005
-
-Traivor
-Country: United_States
-Registered on tw.o : Tue 02 Sep, 2003
-Last login on tw.o : Thu 09 Sep, 2004
-
-bligneri
-Country: Canada
-Registered on tw.o : Sat 06 Sep, 2003
-Last login on tw.o : Mon 13 Oct, 2003
-
-aw
-Country: United_Kingdom
-Registered on tw.o : Sat 06 Sep, 2003
-Last login on tw.o : Thu 09 Sep, 2004
-
-ysoya
-Country: South_Korea
-Registered on tw.o : Mon 08 Sep, 2003
-Last login on tw.o : Mon 08 Mar, 2004
-
-clbustos
-Country: Other
-Registered on tw.o : Tue 09 Sep, 2003
-Last login on tw.o : Wed 15 Oct, 2003
-
-ibtubed
-Country: United_States
-Registered on tw.o : Thu 11 Sep, 2003
-Last login on tw.o : Tue 04 Jan, 2005
-
-elecnix
-Registered on tw.o : Thu 11 Sep, 2003
-Last login on tw.o : Thu 24 Jun, 2004
-
-richtl
-Country: United_States
-Name: Richard Tango-Lowy
-Registered on tw.o : Sun 14 Sep, 2003
-Last login on tw.o : Fri 14 Nov, 2003
-
-DavorCengija
-Country: Croatia
-Registered on tw.o : Sun 14 Sep, 2003
-Last login on tw.o : Mon 02 Feb, 2004
-
-gongo
-Country: Belgium
-Registered on tw.o : Sun 14 Sep, 2003
-Last login on tw.o : Wed 18 Aug, 2004
-
-kadams54
-Registered on tw.o : Sun 14 Sep, 2003
-Last login on tw.o : Wed 22 Oct, 2003
-
-spaztica
-Country: Turkey
-Registered on tw.o : Mon 15 Sep, 2003
-Last login on tw.o : Mon 16 Feb, 2004
-
-wu-lee
-Country: Other
-Registered on tw.o : Mon 15 Sep, 2003
-Last login on tw.o : Wed 07 Jan, 2004
-
-avdwheel
-Country: Netherlands
-Registered on tw.o : Tue 16 Sep, 2003
-Last login on tw.o : Wed 10 Aug, 2005
-
-markusvk
-Country: Japan
-Registered on tw.o : Wed 17 Sep, 2003
-Last login on tw.o : Wed 29 Sep, 2004
-
-grom
+Nickname: grom_3
 Name: Cameron Zemek
-Url: http://jeppers.sourceforge.net/
-Registered on tw.o : Wed 17 Sep, 2003
-Last login on tw.o : Wed 01 Oct, 2003
+SF Role: Developer
 
-rlpowell
-Country: United_States
-Name: Robin Lee Powell
-Registered on tw.o : Thu 18 Sep, 2003
-Last login on tw.o : Thu 28 Apr, 2005
+Nickname: gspira
+Name: Greg Spira
+SF Role: Developer
 
-leehongfay
-Registered on tw.o : Fri 19 Sep, 2003
-Last login on tw.o : Wed 08 Oct, 2003
+Nickname: guideweb
+Name: Samuel Denis D'Ortun
+First Commit: 2003-08-24
+Last Commit: 2003-08-25
+Number of Commits: 2
+SF Role: Developer
 
-freevic
-Country: Canada
-Registered on tw.o : Fri 19 Sep, 2003
-Last login on tw.o : Wed 13 Oct, 2004
+Nickname: guidoscherp
+Name: Guido Scherp
+First Commit: 2007-08-10
+Last Commit: 2007-08-10
+Number of Commits: 4
+SF Role: Developer
 
-docekal
-Country: Sweden
-Registered on tw.o : Thu 25 Sep, 2003
-Last login on tw.o : Mon 20 Dec, 2004
+Nickname: gunnarre
+Name: Gunnar René Øie
+First Commit: 2004-04-22
+Last Commit: 2004-12-07
+Number of Commits: 7
+SF Role: Developer
 
-luca
-Country: Italy
-Registered on tw.o : Fri 26 Sep, 2003
-Last login on tw.o : Thu 28 Jul, 2005
+Nickname: gunner98
+Name: Sean
+SF Role: Developer
 
-lfagundes
-Country: Brazil
-Registered on tw.o : Sat 27 Sep, 2003
-Last login on tw.o : Mon 02 May, 2005
+Nickname: guyfr
+Name: Francois Guy
+SF Role: Developer
 
-mikespub
-Country: Belgium
-Registered on tw.o : Sun 28 Sep, 2003
-Last login on tw.o : Thu 23 Sep, 2004
+Nickname: halon
+Name: Dieter Verfaillie
+First Commit: 2004-01-19
+Last Commit: 2004-02-14
+Number of Commits: 27
+SF Role: Developer
 
-ingesol
-Registered on tw.o : Tue 30 Sep, 2003
-Last login on tw.o : Tue 30 Sep, 2003
+Nickname: hangerman
+Name: Marc Kalberer
+First Commit: 2006-07-31
+Last Commit: 2007-02-01
+Number of Commits: 27
+SF Role: Developer
 
-andrzej
-Country: Poland
-Registered on tw.o : Wed 01 Oct, 2003
-Last login on tw.o : Sat 29 Jan, 2005
+Nickname: hartsa1
+Name: Hartsa1
 
-vikas
-Registered on tw.o : Thu 02 Oct, 2003
-Last login on tw.o : Mon 10 Nov, 2003
+Nickname: hina
+Name: hinasita
+SF Role: Developer
 
-isotopp
-Registered on tw.o : Fri 03 Oct, 2003
-Last login on tw.o : Thu 09 Oct, 2003
+Nickname: homunq
+Name: Homunq
+SF Role: Developer
 
-siridhar
-Country: India
-Role: Documentation (video tutorials)
+Nickname: hsaelens
+Name: Hans Saelens
+First Commit: 2004-01-28
+Last Commit: 2006-12-13
+Number of Commits: 4
+SF Role: Developer
+
+Nickname: hubert_doublev3
+Name: Hubert Sirois
+SF Role: Developer
+
+Nickname: hybridruide
+Name: Peter.Lucius
+SF Role: Translator (I18N/L10N)
+
+Nickname: hyper
+Name: Bobby Joe
+SF Role: Developer
+
+Nickname: ibtubed
+Name: Dennis Cooley
+SF Role: Developer
+
+Nickname: ice8878
+Name: Conrad Rentsch
+First Commit: 2006-03-03
+Last Commit: 2006-03-03
+Number of Commits: 1
+SF Role: Developer
+
+Nickname: ikky
+
+Nickname: illori
+First Commit: 2006-09-12
+Last Commit: 2008-03-24
+Number of Commits: 8
+SF Role: Tester
+
+Nickname: ingesol
+Name: Inge Solvoll
+First Commit: 2003-05-28
+Last Commit: 2003-10-05
+Number of Commits: 6
+SF Role: Developer
+
+Nickname: ipso
+Name: Mike Benoit
+SF Role: Developer
+
+Nickname: isotopp
+Name: Kristian Köhntopp
+First Commit: 2003-07-25
+Last Commit: 2003-07-25
+Number of Commits: 1
+SF Role: Developer
+
+Nickname: isotrol
+Name: Elvira
+SF Role: Developer
+
+Nickname: jaan1024
+Name: Ivan Muravyev
+
+Nickname: jahlewis
+Name: John Lewis
+SF Role: Doc Writer
+
+Nickname: jamk
+Name: Djamel Kadi
+SF Role: Developer
+
+Nickname: jasondiceman
+Name: Jason Diceman
+SF Role: Developer
+
+Nickname: jasonlam604
+Name: Jason Lam
+SF Role: Developer
+
+Nickname: javaguru1729
+Name: Chandra
+SF Role: Developer
+
+Nickname: jaw959
+First Commit: 2003-02-15
+Last Commit: 2003-02-16
+Number of Commits: 9
+
+Nickname: jaycampbell
+Name: Jay Campbell
+SF Role: Developer
+
+Nickname: jburleyebuilt
+Name: Josh Burley
+First Commit: 2004-12-02
+Last Commit: 2005-01-05
+Number of Commits: 2
+SF Role: Developer
+
+Nickname: jcwinnie
+Name: Jonathan Smith
+SF Role: All-Hands Person
+
+Nickname: jdrexler
+Name: Josef Drexler
+First Commit: 2006-02-01
+Last Commit: 2006-02-04
+Number of Commits: 4
+SF Role: Developer
+
+Nickname: jeanhabib
+Name: habib
+SF Role: Developer
+
+Nickname: jenolan1701
+Name: Larry Lewis
+First Commit: 2003-09-02
+Last Commit: 2003-09-06
+Number of Commits: 3
+SF Role: Developer
+
+Nickname: jeremy_lee
+Name: Jeremy Lee
+First Commit: 2009-02-16
+Last Commit: 2009-02-17
+Number of Commits: 2
+SF Role: Developer
+
+Nickname: jfnoubel
+Name: Jean-François Noubel
+
+Nickname: jjolly
+Name: John Jolly
+First Commit: 2004-10-13
+Last Commit: 2004-10-13
+Number of Commits: 1
+SF Role: Developer
+
+Nickname: jjongsma
+Name: Jeremy Jongsma
+SF Role: Developer
+
+Nickname: jkring
+Name: Jim Kring
+First Commit: 2003-10-07
+Last Commit: 2003-10-07
+Number of Commits: 1
+SF Role: Developer
+
+Nickname: jlgordo
+Name: José Luis Gordo Romero
+SF Role: Developer
+
+Nickname: jm0rin
+Name: Joshua Morin
+SF Role: Developer
+
+Nickname: jmaspons
+Name: Joan Maspons
+First Commit: 2006-06-11
+Last Commit: 2006-10-07
+Number of Commits: 7
+
+Nickname: jmjuzan
+Name: Juzan Jean-Michel
+
+Nickname: joeyhartmann
+Name: Johann-Peter Hartmann
+First Commit: 2005-07-13
+Last Commit: 2005-07-13
+Number of Commits: 1
+SF Role: Developer
+
+Nickname: johan_mx
+Name: Johan Hovold
+SF Role: Developer
+
+Nickname: johannesmoser
+Name: Johannes Moser
+First Commit: 2008-11-20
+Last Commit: 2008-11-20
+Number of Commits: 1
+SF Role: Developer
+
+Nickname: jonnybradley
+Name: jonny Bradley
+First Commit: 2007-08-15
+Last Commit: 2009-03-02
+Number of Commits: 195
+SF Role: Developer
+
+Nickname: jorgercosta
+Name: Jorge Costa
+First Commit: 2004-04-14
+Last Commit: 2004-04-19
+Number of Commits: 13
+SF Role: Translator (I18N/L10N)
+
+Nickname: josefgc
+First Commit: 2006-11-20
+Last Commit: 2006-11-20
+Number of Commits: 2
+SF Role: Developer
+
+Nickname: jpgimenez
+Name: Juan Pablo Giménez
+First Commit: 2003-08-04
+Last Commit: 2003-08-04
+Number of Commits: 1
+SF Role: Developer
+
+Nickname: jpowys
+Name: Jason powers
+SF Role: Developer
+
+Nickname: jreyesg
+Name: Javier Reyes
+First Commit: 2006-01-14
+Last Commit: 2007-03-03
+Number of Commits: 21
+
+Nickname: jtpuk
+Name: Suzanne Jones
+SF Role: Developer
+
+Nickname: jujusl
+Name: It is just me
+SF Role: Developer
+
+Nickname: jwigdahl
+Name: James Wigdahl
+First Commit: 2003-08-20
+Last Commit: 2003-10-29
+Number of Commits: 2
+SF Role: Developer
+
+Nickname: jyesbeat
+Name: Jyes Beat
+
+Nickname: jyhem
+Name: Jean-Marc Libs
+First Commit: 2006-12-11
+Last Commit: 2009-03-02
+Number of Commits: 285
+SF Role: Developer
+
+Nickname: k2s
+Name: Martin Minka
+First Commit: 2005-12-18
+Last Commit: 2005-12-20
+Number of Commits: 2
+SF Role: Developer
+
+Nickname: kadams54
+Name: Kyle Adams
+SF Role: Developer
+
+Nickname: kalendin
+Name: Till
+SF Role: Developer
+
+Nickname: karneevor
+First Commit: 2006-02-16
+Last Commit: 2006-02-22
+Number of Commits: 3
+
+Nickname: kerrnel22
+Name: Mike Kerr
+First Commit: 2007-08-29
+Last Commit: 2008-11-26
+Number of Commits: 64
+SF Role: Developer
+
+Nickname: kodewulf
+Name: KodeWulf
+SF Role: Developer
+
+Nickname: kokohuyb
+Name: koko
+First Commit: 2008-03-25
+Last Commit: 2008-04-06
+Number of Commits: 9
+
+Nickname: koobla
+Name: Simon Vogl
+First Commit: 2004-02-08
+Last Commit: 2004-02-20
+Number of Commits: 4
+SF Role: Developer
+
+Nickname: krose
+Name: Kent Primrose
+SF Role: Developer
+
+Nickname: ksumacgyver
+Name: Scott Harmon
+SF Role: Developer
+
+Nickname: kyori
+Name: Kyori Yaganagi
+SF Role: Developer
+
+Nickname: lack
+Name: Jim Ramsay
+SF Role: Developer
+
+Nickname: lady_6thofau
+Name: lady
+
+Nickname: laetzer
+First Commit: 2004-01-09
+Last Commit: 2004-01-10
+Number of Commits: 4
+SF Role: Developer
+
+Nickname: lechuckdapirate
+Name: Joan Vilariño
+First Commit: 2003-05-02
+Last Commit: 2003-05-12
+Number of Commits: 15
+SF Role: Developer
+
+Nickname: leehongfay
+Name: Vincent Lee
+SF Role: Developer
+
+Nickname: leyan
+Name: Yan Levasseur
+First Commit: 2008-03-01
+Last Commit: 2008-05-18
+Number of Commits: 8
+SF Role: Developer
+
+Nickname: lfagundes
+Name: Luis Fagundes
+First Commit: 2004-02-23
+Last Commit: 2006-11-30
+Number of Commits: 159
+SF Role: Developer
+
+Nickname: lihaowei2008
+Name: Nathanael
+First Commit: 2007-09-09
+Last Commit: 2007-09-11
+Number of Commits: 2
+SF Role: Support Technician
+
+Nickname: limako
+Name: Steve Brewer
+SF Role: Developer
+
+Nickname: limited1
+Name: Lee Wilson (aka stella12)
+SF Role: Developer
+
+Nickname: llunax
+Name: Lluna
+SF Role: Developer
+
+Nickname: lmoss
+Name: Laurent Moss
+First Commit: 2005-12-28
+Last Commit: 2006-11-29
+Number of Commits: 3
+
+Nickname: lnewby
+Name: Lew Newby
+SF Role: Developer
+
+Nickname: lonelyp
+Name: Wells Wang
+SF Role: Developer
+
+Nickname: lorfds
+Name: Jon
+
+Nickname: lphuberdeau
+Name: Louis-Philippe Huberdeau
+First Commit: 2004-04-10
+Last Commit: 2009-02-27
+Number of Commits: 880
+SF Role: Developer
+
+Nickname: lrargerich
+Name: Luis Argerich
+First Commit: 2002-10-08
+Last Commit: 2003-11-28
+Number of Commits: 399
+SF Role: All-Hands Person
+
+Nickname: lsces
+Name: Lester Caine
+SF Role: Developer
+
+Nickname: lucamarletta
+Name: Luca Marletta
+SF Role: Developer
+
+Nickname: luciash
+Name: luciash d' being
+First Commit: 2003-08-05
+Last Commit: 2009-03-02
+Number of Commits: 456
+SF Role: Developer
+
+Nickname: lueders
+Name: Ralf E. Lueders
+First Commit: 2003-08-18
+Last Commit: 2005-03-13
+Number of Commits: 24
+SF Role: Developer
+
+Nickname: lukian-dev
+Name: Lukian Tabandjov
+SF Role: Developer
+
+Nickname: m_akat
+Name: loxs
+SF Role: Translator (I18N/L10N)
+
+Nickname: m_stef
+Name: stef
+First Commit: 2008-07-09
+Last Commit: 2008-08-17
+Number of Commits: 19
+
+Nickname: magius
+SF Role: Developer
+
+Nickname: makenai
+Name: Pawel Szymczykowski
+SF Role: Developer
+
+Nickname: mangapower
+Name: Ben Palacios
+
+Nickname: marcius
+Name: marcello mannino
+First Commit: 2003-11-25
+Last Commit: 2003-11-29
+Number of Commits: 4
+SF Role: Developer
+
+Nickname: marclaporte
+Name: Marc Laporte
+First Commit: 2003-11-28
+Last Commit: 2009-03-02
+Number of Commits: 309
+SF Role: Project Manager
+
+Nickname: marcmont
+Name: SnowCrash
+First Commit: 2006-04-18
+Last Commit: 2006-05-16
+Number of Commits: 8
+
+Nickname: marcoaasilva
+Name: Marco AurÃ©lio Silva
+First Commit: 2008-06-18
+Last Commit: 2008-07-15
+Number of Commits: 3
+SF Role: Developer
+
+Nickname: marcop13
+Name: marco parronchi
+SF Role: Developer
+
+Nickname: marianat
+Name: Mariana Tome
+SF Role: Developer
+
+Nickname: markajaroski
+Name: Mark A. Jaroski
+SF Role: Developer
+
+Nickname: marklubin
+Name: Mark Lubin
+SF Role: Developer
+
+Nickname: markusvk
+Name: Markus Gunske von Koelln
+First Commit: 2003-11-12
+Last Commit: 2003-12-03
+Number of Commits: 7
+SF Role: Developer
+
+Nickname: marp2901
+Name: Philippe Marcoux
+SF Role: Developer
+
+Nickname: martinmanyhats
+SF Role: All-Hands Person
+
+Nickname: marylly
+Name: **Mya**
+SF Role: Developer
+
+Nickname: mashmorgan
+Name: Pete Morgan
+First Commit: 2005-08-18
+Last Commit: 2005-10-31
+Number of Commits: 7
+SF Role: Developer
+
+Nickname: massimoi
+Name: Massimo Infunti
+SF Role: Developer
+
+Nickname: mastre
+SF Role: Developer
+
+Nickname: mattlangley1
+Name: Matt Langley
+SF Role: Developer
+
+Nickname: matwho
+Name: Matthew Bickerton
+First Commit: 2008-08-25
+Last Commit: 2009-02-15
+Number of Commits: 25
+
+Nickname: mbrackeva
+Name: Mario Brackeva
+First Commit: 2008-06-22
+Last Commit: 2008-06-22
+Number of Commits: 1
+SF Role: Developer
+
+Nickname: mbravo
+Name: Michael Bravo
+SF Role: Developer
+
+Nickname: mcfarland
+First Commit: 2006-02-04
+Last Commit: 2007-07-20
+Number of Commits: 5
+SF Role: Developer
+
+Nickname: mcgucken
+Name: Dr. Elliot McGucken
+SF Role: Developer
+
+Nickname: mchurch
+Name: Mike Churchward
+
+Nickname: melmut
+Name: Yannick Majoros
+First Commit: 2004-02-11
+Last Commit: 2004-04-07
+Number of Commits: 6
+SF Role: Developer
+
+Nickname: mgfeller
+Name: Michael Gfeller
+SF Role: Developer
+
+Nickname: mhausi
+Name: Hausi
+First Commit: 2005-02-08
+Last Commit: 2005-02-25
+Number of Commits: 4
+SF Role: Developer
+
+Nickname: mhryciuk
+Name: Michal Hryciuk
+SF Role: Translator (I18N/L10N)
+
+Nickname: michael_davey
+Name: Michael Davey
+First Commit: 2005-01-31
+Last Commit: 2005-10-11
+Number of Commits: 144
+SF Role: Developer
+
+Nickname: mikelcu
+Name: Mike Culbertson
+First Commit: 2004-02-12
+Last Commit: 2004-02-12
+Number of Commits: 1
+SF Role: Developer
+
+Nickname: mikenielsen
+Name: Mike Nielsen
+SF Role: Developer
+
+Nickname: mikespub
+Name: Mike's Pub
+First Commit: 2003-09-29
+Last Commit: 2004-09-23
+Number of Commits: 16
+
+Nickname: mikewalsh
+Name: Michael Walsh
+SF Role: Tester
+
+Nickname: millette
+Name: Robin Millette
+SF Role: Developer
+
+Nickname: mitchmurphy
+Name: Mitch Murphy
+SF Role: Developer
+
+Nickname: mixolyde
+Name: Brian Williams
+SF Role: Developer
+
+Nickname: mlinton
+Name: Michael Linton
+First Commit: 2004-11-26
+Last Commit: 2005-04-13
+Number of Commits: 14
+SF Role: Developer
+
+Nickname: mlpvolt
+First Commit: 2008-08-19
+Last Commit: 2008-08-19
+Number of Commits: 2
+SF Role: Doc Writer
+
+Nickname: monthorin
+Name: Loïc Monthorin
+SF Role: Developer
+
+Nickname: moresun
+SF Role: Developer
+
+Nickname: morgamic
+Name: Michael Morgan
+SF Role: Developer
+
+Nickname: mortenson
+Name: Leif Mortenson
+SF Role: Developer
+
+Nickname: mose
+First Commit: 2003-06-12
+Last Commit: 2008-03-22
+Number of Commits: 1950
+SF Role: Project Manager
+
+Nickname: mrbuiu
+Name: Renato da Silva Pereira
+SF Role: Translator (I18N/L10N)
+
+Nickname: musus
+First Commit: 2003-12-18
+Last Commit: 2004-02-25
+Number of Commits: 108
+
+Nickname: mwexler
+Name: Michael Wexler
+SF Role: Developer
+
+Nickname: mystic_ca
+Name: Tom A.
+First Commit: 2008-03-02
+Last Commit: 2008-03-02
+Number of Commits: 1
+SF Role: Developer
+
+Nickname: najb
+Name: Jan B
+SF Role: Developer
+
+Nickname: nalsar
+Name: prashant
+SF Role: Developer
+
+Nickname: nanoia
+SF Role: Developer
+
+Nickname: natig
+Name: Natalia Golmar
+SF Role: Developer
+
+Nickname: natster
+Name: Nathan Waterhouse
+SF Role: Developer
+
+Nickname: neidhart
+Name: Dietmar Neidhart
+SF Role: Developer
+
+Nickname: nhuffschmid
+Name: Norbert Huffschmid
+First Commit: 2003-06-23
+Last Commit: 2003-12-03
+Number of Commits: 28
+SF Role: Developer
+
+Nickname: niclone
+Name: Nicolas Dimitrijevic
+First Commit: 2006-07-23
+Last Commit: 2009-02-10
+Number of Commits: 403
+SF Role: Developer
+
+Nickname: nikchankov
+Name: Nik Chankov
+First Commit: 2006-02-06
+Last Commit: 2006-02-08
+Number of Commits: 3
+
+Nickname: nkoth
+Name: Nelson
+First Commit: 2007-05-17
+Last Commit: 2009-03-02
+Number of Commits: 314
+SF Role: Developer
+
+Nickname: normandaoust
+Name: Norm
+
+Nickname: notgod
+Name: Brian Nelson
+SF Role: Developer
+
+Nickname: notix
+SF Role: Developer
+
+Nickname: ntavares
+Name: Nuno M. C. Tavares
+First Commit: 2007-11-08
+Last Commit: 2007-11-26
+Number of Commits: 16
+SF Role: Developer
+
+Nickname: nyloth
+Name: Patrice W.
+First Commit: 2006-11-09
+Last Commit: 2009-03-02
+Number of Commits: 1112
+SF Role: Developer
+
+Nickname: obnoxxx
+Name: Michael Adam
+First Commit: 2008-11-05
+Last Commit: 2009-02-15
+Number of Commits: 15
+SF Role: Developer
+
+Nickname: ohertel
+Name: Oliver Hertel
+First Commit: 2003-03-16
+Last Commit: 2008-07-23
+Number of Commits: 371
+SF Role: Developer
+
+Nickname: oliverscheck
+Name: Oliver Scheck
+SF Role: Developer
+
+Nickname: omstefanov
+Name: Olaf-Michael Stefanov
+SF Role: Developer
+
+Nickname: opn-tech
+Name: David Bovill
+SF Role: Developer
+
+Nickname: orionrobots
+Name: Danny Staple
+SF Role: Developer
+
+Nickname: otalunak
+Name: Ota Lunak
+SF Role: Developer
+
+Nickname: panathos
+Name: Panathos
+SF Role: Translator (I18N/L10N)
+
+Nickname: papercrane
+Name: Justin Patrin
+First Commit: 2005-05-18
+Last Commit: 2005-06-27
+Number of Commits: 58
+SF Role: Developer
+
+Nickname: parkercroft
+Name: Damian Parker-Croft
+First Commit: 2007-09-02
+Last Commit: 2007-09-02
+Number of Commits: 1
+SF Role: Developer
+
+Nickname: patrickallard
+Name: Patrick Allard
+First Commit: 2009-01-26
+Last Commit: 2009-01-26
+Number of Commits: 1
+SF Role: Graphic/Other Designer
+
+Nickname: patrickmc
+Name: Patrick McCormick
+SF Role: Developer
+
+Nickname: patvdv
+First Commit: 2003-06-09
+Last Commit: 2004-05-13
+Number of Commits: 4
+
+Nickname: pemen
+SF Role: Developer
+
+Nickname: penny336
+Name: Alex
+SF Role: Developer
+
+Nickname: peoman
+Name: Cedric Fontaine
+SF Role: Developer
+
+Nickname: philbaret
+Name: Philippe Baret
+SF Role: Developer
+
+Nickname: philippeback
+Name: Philippe Back
+First Commit: 2008-09-30
+Last Commit: 2008-09-30
+Number of Commits: 6
+
+Nickname: philwhipps
+Name: Phil
+First Commit: 2006-05-22
+Last Commit: 2006-05-22
+Number of Commits: 2
+SF Role: Developer
+
+Nickname: phunkymunky
+SF Role: Developer
+
+Nickname: pippone
+First Commit: 2003-05-02
+Last Commit: 2003-05-12
+Number of Commits: 2
+
+Nickname: pistoljitsu
+Name: Pete Thompson
+SF Role: Developer
+
+Nickname: pjollans
+Name: Phil Jollans
+First Commit: 2009-02-08
+Last Commit: 2009-02-08
+Number of Commits: 1
+
+Nickname: pkdille
+First Commit: 2007-03-14
+Last Commit: 2009-02-26
+Number of Commits: 559
+SF Role: Developer
+
+Nickname: plillevold
+Name: Peter Lillevold
+SF Role: Translator (I18N/L10N)
+
+Nickname: plungerman
+Name: Stephen Kurkowski
+SF Role: Support Manager
+
+Nickname: pmichelazzo
+Name: Paulino Michelazzo
+First Commit: 2004-03-23
+Last Commit: 2004-03-23
+Number of Commits: 1
+SF Role: Developer
+
+Nickname: pnimish
+Name: Nimish Pachapurkar
+SF Role: Developer
+
+Nickname: popovich
+Name: Peter Popovich
+First Commit: 2004-06-10
+Last Commit: 2004-06-10
+Number of Commits: 1
+SF Role: Developer
+
+Nickname: porsh
+Name: p0r$h
+First Commit: 2008-12-24
+Last Commit: 2008-12-24
+Number of Commits: 1
+SF Role: Developer
+
+Nickname: pratesi
+Name: Marco Pratesi
+SF Role: Developer
+
+Nickname: prezkennedy
+Name: Matthew Kennedy
+SF Role: Developer
+
+Nickname: princessxine
+First Commit: 2008-08-01
+Last Commit: 2008-08-17
+Number of Commits: 9
+
+Nickname: ptalindstrom
+Name: Peter
+SF Role: Developer
+
+Nickname: ptydotcc
+Name: Tom Salter
+SF Role: Developer
+
+Nickname: pyrotknix
+Name: Aaron Holmes
+First Commit: 2003-05-08
+Last Commit: 2003-05-08
+Number of Commits: 1
+SF Role: Developer
+
+Nickname: r1_r1
+Name: Erwan
+SF Role: Developer
+
+Nickname: rabiddog
+Name: Everard Brown
+First Commit: 2005-09-18
+Last Commit: 2005-09-19
+Number of Commits: 2
+SF Role: Developer
+
+Nickname: ragnvald
+Name: Ragnvald Larsen
+SF Role: Developer
+
+Nickname: ramiro_v
+Name: Ramiro Vera
+SF Role: Developer
+
+Nickname: raspencer
+Name: Reid Spencer
+SF Role: Developer
+
+Nickname: razorwyre
+Name: Matt E. Patterson
+SF Role: Developer
+
+Nickname: rbschmidt
+Name: Rodrigo B. Schmidt
+SF Role: Developer
+
+Nickname: rcogley
+Name: Rick Cogley
+SF Role: Doc Writer
+
+Nickname: redflo
+Name: Florian Gleixner
+First Commit: 2003-03-04
+Last Commit: 2007-11-30
+Number of Commits: 330
+SF Role: Developer
+
+Nickname: rhwinter
+Name: Roberto H. Winter
+SF Role: Developer
+
+Nickname: richardsnow
+Name: Richard Snow
+
+Nickname: richtl
+Name: Richard Tango-Lowy
+SF Role: Developer
+
+Nickname: ricks99
+Name: rick
+First Commit: 2007-07-19
+Last Commit: 2009-02-23
+Number of Commits: 230
+SF Role: Developer
+
+Nickname: ripero
+Name: JosÃ© MarÃ­a EscartÃ­n
+SF Role: Developer
+
+Nickname: rischconsulting
+Name: mrisch
+First Commit: 2006-06-24
+Last Commit: 2008-12-09
+Number of Commits: 22
+SF Role: Developer
+
+Nickname: rleibman
+Name: Roberto Leibman
+First Commit: 2005-05-03
+Last Commit: 2005-05-03
+Number of Commits: 3
+SF Role: Developer
+
+Nickname: rlopezs
+First Commit: 2009-02-15
+Last Commit: 2009-02-27
+Number of Commits: 5
+SF Role: Developer
+
+Nickname: rlpowell
+Name: Robin Powell
+First Commit: 2003-09-17
+Last Commit: 2008-11-20
+Number of Commits: 178
+SF Role: Developer
+
+Nickname: robferguson
+Name: Rob Ferguson
+First Commit: 2008-08-19
+Last Commit: 2009-01-20
+Number of Commits: 9
+
+Nickname: rockpaper
+Name: Chris Campbell
+SF Role: Developer
+
+Nickname: ronchon
+Name: Patrice ALBARET
+SF Role: Developer
+
+Nickname: rook1666
+Name: Simon Grabher
+First Commit: 2008-11-05
+Last Commit: 2008-11-21
+Number of Commits: 11
+
+Nickname: rossta
+Name: Ross Smith
+First Commit: 2002-12-03
+Last Commit: 2004-03-16
+Number of Commits: 132
+SF Role: Developer
+
+Nickname: roysinn
+Name: Roy Sinn
+First Commit: 2004-08-13
+Last Commit: 2004-08-13
+Number of Commits: 1
+SF Role: Developer
+
+Nickname: rpgoldman
+Name: Robert P. Goldman
+SF Role: Developer
+
+Nickname: rubaiyat
+Name: James Morgan
+SF Role: Doc Writer
+
+Nickname: runix2
+Name: martin sarsale
+SF Role: Developer
+
+Nickname: russwilde
+First Commit: 2004-05-13
+Last Commit: 2004-05-13
+Number of Commits: 1
+
+Nickname: rv540
+Name: Hervé Schoenenberger
+First Commit: 2005-07-20
+Last Commit: 2005-09-01
+Number of Commits: 4
+SF Role: Developer
+
+Nickname: sabdelma
+SF Role: Developer
+
+Nickname: sampaioprimo
+Name: Rodrigo Sampaio Primo
+First Commit: 2005-10-17
+Last Commit: 2009-02-05
+Number of Commits: 113
+SF Role: Developer
+
+Nickname: scarle
+Name: Sylvain Carle
+SF Role: Developer
+
+Nickname: sdlee
+Name: Stephen Lee
+SF Role: Developer
+
+Nickname: sebpaquet
+Name: Seb
+SF Role: Developer
+
+Nickname: sept_7
+Name: StÃ©phane Casset
+First Commit: 2007-07-03
+Last Commit: 2009-02-26
+Number of Commits: 460
+
+Nickname: sewilco
+Name: Scot Wilcoxon
+First Commit: 2008-09-18
+Last Commit: 2009-03-02
+Number of Commits: 44
+SF Role: Developer
+
+Nickname: sghane
+Name: sameh
+SF Role: Developer
+
+Nickname: shinhan
+Name: Daniyel Sili
+SF Role: Developer
+
+Nickname: shiroitenshi
+Name: Chris White
+
+Nickname: sideshow_bob
+Name: Flo Wunderle
+
+Nickname: sikko23
+Name: Sikko
+SF Role: Translator (I18N/L10N)
+
+Nickname: siridhar
 Name: Sridhar
-Registered on tw.o : Sun 05 Oct, 2003
-Last login on tw.o : Fri 29 Apr, 2005
-
-beerlounge.de
-Country: Germany
-Registered on tw.o : Mon 06 Oct, 2003
-Last login on tw.o : Mon 28 Mar, 2005
-
-limako
-Registered on tw.o : Wed 08 Oct, 2003
-Last login on tw.o : Wed 19 Jan, 2005
-
-roysinn
-Country: Canada
-Registered on tw.o : Thu 09 Oct, 2003
-Last login on tw.o : Wed 03 Aug, 2005
-
-xavidp
-Country: Spain
-Registered on tw.o : Thu 09 Oct, 2003
-Last login on tw.o : Wed 03 Aug, 2005
-
-xenfasa
-Country: Other
-Registered on tw.o : Mon 13 Oct, 2003
-Last login on tw.o : Fri 27 Aug, 2004
-
-colorado
-Country: United_States
-Registered on tw.o : Wed 15 Oct, 2003
-Last login on tw.o : Sat 20 Aug, 2005
-
-YannickMajoros
-Country: Belgium
-Registered on tw.o : Wed 15 Oct, 2003
-Last login on tw.o : Fri 04 Mar, 2005
-
-rubaiyat
-Country: United_States
-Registered on tw.o : Wed 15 Oct, 2003
-Last login on tw.o : Wed 26 Jan, 2005
-
-MagicFab
-Country: Canada
-Registered on tw.o : Fri 17 Oct, 2003
-Last login on tw.o : Sun 29 Aug, 2004
-
-Buiu
-Country: Brazil
-Registered on tw.o : Thu 23 Oct, 2003
-Last login on tw.o : Thu 23 Sep, 2004
-
-swayambhu
-Registered on tw.o : Fri 24 Oct, 2003
-Last login on tw.o : Fri 19 Mar, 2004
-
-halon
-Country: Belgium
-Registered on tw.o : Sat 25 Oct, 2003
-Last login on tw.o : Fri 03 Dec, 2004
-
-mattlangley
-Country: United_States
-Registered on tw.o : Mon 27 Oct, 2003
-Last login on tw.o : Fri 03 Dec, 2004
-
-thraxisp
-Country: Canada
-Registered on tw.o : Mon 27 Oct, 2003
-Last login on tw.o : Fri 08 Jul, 2005
-
-george.geller
-Country: Other
-Registered on tw.o : Wed 29 Oct, 2003
-Last login on tw.o : Tue 10 May, 2005
-
-die
-Registered on tw.o : Thu 30 Oct, 2003
-Last login on tw.o : Tue 17 Feb, 2004
-
-yoni
-Country: Israel
-Registered on tw.o : Mon 03 Nov, 2003
-Last login on tw.o : Sun 21 Aug, 2005
-
-sdl
-Country: United_Kingdom
-Registered on tw.o : Mon 03 Nov, 2003
-Last login on tw.o : Thu 26 May, 2005
-
-gillesm
-Registered on tw.o : Mon 03 Nov, 2003
-Last login on tw.o : Wed 20 Apr, 2005
-
-cipuf
-Registered on tw.o : Wed 05 Nov, 2003
-Last login on tw.o : Thu 28 Jul, 2005
-
-ipso
-Registered on tw.o : Thu 06 Nov, 2003
-Last login on tw.o : Thu 06 Nov, 2003
-
-djoguet
-Country: France
-Registered on tw.o : Thu 13 Nov, 2003
-Last login on tw.o : Thu 13 Jan, 2005
-
-StarRider
-Country: United_States
-Registered on tw.o : Sat 15 Nov, 2003
-Last login on tw.o : Tue 22 Jun, 2004
-
-MacGyver
-Country: United_States
-Registered on tw.o : Wed 19 Nov, 2003
-Last login on tw.o : Tue 07 Sep, 2004
-
-pyrotknix
-Registered on tw.o : Sun 23 Nov, 2003
-Last login on tw.o : Wed 10 Dec, 2003
-
-cube
-Registered on tw.o : Sat 29 Nov, 2003
-Last login on tw.o : Sat 29 Nov, 2003
-
-aigarius
-Country: Latvia
-Registered on tw.o : Tue 02 Dec, 2003
-Last login on tw.o : Mon 09 May, 2005
-
-aneuhaus
-Country: Germany
-Registered on tw.o : Wed 03 Dec, 2003
-Last login on tw.o : Fri 28 Jan, 2005
-
-millette
-Country: Canada
-Registered on tw.o : Thu 04 Dec, 2003
-Last login on tw.o : Sat 05 Jun, 2004
-
-bburgaud
-Registered on tw.o : Thu 04 Dec, 2003
-Last login on tw.o : Fri 20 Aug, 2004
-
-eduardo
-Country: Argentina
-Registered on tw.o : Thu 04 Dec, 2003
-Last login on tw.o : Mon 25 Apr, 2005
-
-JeanFrancoisNoubel
-Country: France
-Registered on tw.o : Fri 05 Dec, 2003
-Last login on tw.o : Sat 28 Aug, 2004
-
-Squee-D
-Country: New_Zealand
-Registered on tw.o : Sun 07 Dec, 2003
-Last login on tw.o : Thu 18 Dec, 2003
-
-sQuare
-Country: Austria
-Registered on tw.o : Sun 07 Dec, 2003
-Last login on tw.o : Tue 14 Sep, 2004
-
-jcwinnie
-Country: United_States
-Registered on tw.o : Mon 08 Dec, 2003
-Last login on tw.o : Sun 07 Nov, 2004
-
-techtonik
-Country: Belarus
-Registered on tw.o : Wed 10 Dec, 2003
-Last login on tw.o : Mon 04 Jul, 2005
-
-mbravo
-Registered on tw.o : Thu 11 Dec, 2003
-Last login on tw.o : Thu 08 Jan, 2004
-
-btodoroff
-Country: United_States
-Registered on tw.o : Thu 18 Dec, 2003
-Last login on tw.o : Tue 10 Feb, 2004
-
-zibas
-Country: Other
-Registered on tw.o : Fri 19 Dec, 2003
-Last login on tw.o : Thu 30 Sep, 2004
-
-RussWilde
-Country: United_Kingdom
-Registered on tw.o : Sat 20 Dec, 2003
-Last login on tw.o : Wed 27 Jul, 2005
-
-koobla
-Country: Austria
-Registered on tw.o : Mon 29 Dec, 2003
-Last login on tw.o : Sat 21 Feb, 2004
-
-DevNiv
-Country: Germany
-Registered on tw.o : Wed 31 Dec, 2003
-Last login on tw.o : Wed 24 Nov, 2004
-
-broubrou
-Country: Other
-Registered on tw.o : Wed 31 Dec, 2003
-Last login on tw.o : Thu 21 Apr, 2005
-
-spider
-Country: United_States
-Registered on tw.o : Sun 04 Jan, 2004
-Last login on tw.o : Sun 21 Nov, 2004
-
-jujusl
-Country: France
-Registered on tw.o : Wed 07 Jan, 2004
-Last login on tw.o : Thu 18 Nov, 2004
-
-rcogley
-Country: Japan
-Registered on tw.o : Fri 09 Jan, 2004
-Last login on tw.o : Sat 27 Mar, 2004
-
-florianlink
-Country: Germany
-Registered on tw.o : Sat 17 Jan, 2004
-Last login on tw.o : Wed 03 Mar, 2004
-
-schmitta
-Country: France
-Registered on tw.o : Thu 22 Jan, 2004
-Last login on tw.o : Sat 21 Feb, 2004
-
-OneOfMany
-Country: Other
-Registered on tw.o : Fri 23 Jan, 2004
-Last login on tw.o : Wed 12 May, 2004
-
-hsaelens
-Country: Belgium
-Registered on tw.o : Mon 26 Jan, 2004
-Last login on tw.o : Tue 09 Aug, 2005
-
-claborne
-Registered on tw.o : Mon 02 Feb, 2004
-Last login on tw.o : Thu 12 May, 2005
-
-deragon
-Country: Canada
-Registered on tw.o : Mon 02 Feb, 2004
-Last login on tw.o : Thu 26 Aug, 2004
-
-derisavi
-Country: Other
-Registered on tw.o : Wed 04 Feb, 2004
-Last login on tw.o : Thu 07 Oct, 2004
-
-filmil
-Country: Netherlands
-Registered on tw.o : Thu 05 Feb, 2004
-Last login on tw.o : Tue 28 Jun, 2005
-
-avgasse
-Country: Belgium
-Registered on tw.o : Sat 07 Feb, 2004
-Last login on tw.o : Wed 10 Aug, 2005
-
-baci
-Country: United_States
-Registered on tw.o : Sun 08 Feb, 2004
-Last login on tw.o : Sat 25 Jun, 2005
-
-mikelcu
-Country: United_States
-Registered on tw.o : Tue 10 Feb, 2004
-Last login on tw.o : Fri 13 Feb, 2004
-
-lsces
-Country: United_Kingdom
-Registered on tw.o : Wed 11 Feb, 2004
-Last login on tw.o : Mon 15 Mar, 2004
-
-pmichelazzo
-Country: Brazil
-Registered on tw.o : Sun 15 Feb, 2004
-Last login on tw.o : Tue 20 Jul, 2004
-
-liedekef
-Registered on tw.o : Mon 23 Feb, 2004
-Last login on tw.o : Tue 24 Feb, 2004
-
-GunnarRene
-Country: Norway
-Registered on tw.o : Tue 24 Feb, 2004
-Last login on tw.o : Wed 13 Jul, 2005
-
-hina
-Country: France
-Registered on tw.o : Wed 25 Feb, 2004
-Last login on tw.o : Thu 21 Oct, 2004
-
-gertdewit
-Registered on tw.o : Fri 05 Mar, 2004
-Last login on tw.o : Fri 12 Mar, 2004
-
-plillevold
-Country: Norway
-Registered on tw.o : Sun 07 Mar, 2004
-Last login on tw.o : Sun 16 May, 2004
-
-gene203
-Country: South_Korea
-Registered on tw.o : Sun 04 Apr, 2004
-Last login on tw.o : Fri 03 Jun, 2005
-
-az3rty
-Country: Greece
-Registered on tw.o : Mon 05 Apr, 2004
-Last login on tw.o : Sun 05 Sep, 2004
-
-sikko
-Country: Netherlands
-Registered on tw.o : Wed 07 Apr, 2004
-Last login on tw.o : Sun 26 Jun, 2005
-
-stella12
-Country: New_Zealand
-Registered on tw.o : Thu 08 Apr, 2004
-Last login on tw.o : Mon 30 May, 2005
-
-tofreal
-Registered on tw.o : Thu 08 Apr, 2004
-Last login on tw.o : Tue 25 May, 2004
-
-lphuberdeau
-Country: Canada
-Registered on tw.o : Fri 09 Apr, 2004
-Last login on tw.o : Sat 25 Jun, 2005
-
-telenieko
-Country: Spain
-Registered on tw.o : Thu 15 Apr, 2004
-Last login on tw.o : Thu 05 May, 2005
-
-jorgercosta
-Country: Other
-Registered on tw.o : Fri 16 Apr, 2004
-Last login on tw.o : Tue 29 Mar, 2005
-
-jburley
-Country: United_States
-Registered on tw.o : Sat 17 Apr, 2004
-Last login on tw.o : Wed 09 Feb, 2005
-
-mhryciuk
-Registered on tw.o : Mon 19 Apr, 2004
-Last login on tw.o : Fri 14 Jan, 2005
-
-as6o
-Country: United_States
-Registered on tw.o : Fri 23 Apr, 2004
-Last login on tw.o : Mon 07 Mar, 2005
-
-guyfr
-Country: Canada
-Registered on tw.o : Mon 26 Apr, 2004
-Last login on tw.o : Tue 31 May, 2005
-
-pemen
-Registered on tw.o : Tue 04 May, 2004
-Last login on tw.o : Fri 22 Apr, 2005
-
-wesleywillians
-Registered on tw.o : Mon 10 May, 2004
-Last login on tw.o : Tue 12 Jul, 2005
-
-notgod
-Registered on tw.o : Wed 12 May, 2004
-Last login on tw.o : Wed 12 May, 2004
-
-berryweb
-Country: United_Kingdom
-Registered on tw.o : Fri 14 May, 2004
-Last login on tw.o : Tue 03 May, 2005
-
-Giotto
-Country: Hungary
-Registered on tw.o : Tue 18 May, 2004
-Last login on tw.o : Thu 18 Nov, 2004
-
-martinmanyhats
-Registered on tw.o : Wed 02 Jun, 2004
-Last login on tw.o : Wed 02 Jun, 2004
-
-jasondiceman
-Country: Canada
-Registered on tw.o : Sun 06 Jun, 2004
-Last login on tw.o : Wed 16 Mar, 2005
-
-stuartd
-Registered on tw.o : Tue 08 Jun, 2004
-Last login on tw.o : Fri 29 Oct, 2004
-
-popovich
-Country: United_States
-Registered on tw.o : Thu 10 Jun, 2004
-Last login on tw.o : Wed 01 Dec, 2004
-
-dmytro
-Country: Japan
-Registered on tw.o : Sat 12 Jun, 2004
-Last login on tw.o : Mon 13 Sep, 2004
-
-jaan1024
-Country: Other
-Registered on tw.o : Thu 17 Jun, 2004
-Last login on tw.o : Fri 16 Jul, 2004
-
-agorski
-Registered on tw.o : Mon 21 Jun, 2004
-Last login on tw.o : Mon 21 Jun, 2004
-
-ptalindstrom
-Country: Canada
-Registered on tw.o : Tue 22 Jun, 2004
-Last login on tw.o : Fri 13 May, 2005
-
-sabdelma
-Registered on tw.o : Mon 28 Jun, 2004
-Last login on tw.o : Thu 30 Sep, 2004
-
-papercrane
-Country: United_States
-Registered on tw.o : Fri 02 Jul, 2004
-Last login on tw.o : Mon 06 Jun, 2005
-
-na
-Country: Solomon_Islands
-Registered on tw.o : Tue 13 Jul, 2004
-Last login on tw.o : Tue 22 Feb, 2005
-
-MichaelLinton
-Registered on tw.o : Sun 01 Aug, 2004
-Last login on tw.o : Sun 01 Aug, 2004
-
-najb
-Country: Canada
-Registered on tw.o : Mon 02 Aug, 2004
-Last login on tw.o : Wed 02 Mar, 2005
-
-gunner98
-Registered on tw.o : Thu 05 Aug, 2004
-Last login on tw.o : Thu 05 Aug, 2004
-
-cyantree.guo
-Registered on tw.o : Fri 06 Aug, 2004
-Last login on tw.o : Fri 06 Aug, 2004
-
-frey
-Registered on tw.o : Mon 30 Aug, 2004
-Last login on tw.o : Wed 16 Feb, 2005
-
-dimm
-Country: Greece
-Registered on tw.o : Sun 05 Sep, 2004
-Last login on tw.o : Wed 20 Jul, 2005
-
-runix
-Country: Argentina
-Registered on tw.o : Mon 06 Sep, 2004
-Last login on tw.o : Mon 14 Feb, 2005
-
-jayCampbell
-Country: United_States
-Registered on tw.o : Wed 08 Sep, 2004
-Last login on tw.o : Thu 30 Sep, 2004
-
-gg
-Country: Ireland
-Registered on tw.o : Wed 08 Sep, 2004
-Last login on tw.o : Thu 18 Aug, 2005
-
-giak
-Country: France
-Registered on tw.o : Wed 22 Sep, 2004
-Last login on tw.o : Thu 12 May, 2005
-
-rbschmidt
-Registered on tw.o : Fri 24 Sep, 2004
-Last login on tw.o : Wed 06 Apr, 2005
-
-nalsar
-Country: India
-Registered on tw.o : Sat 25 Sep, 2004
-Last login on tw.o : Sun 15 May, 2005
-
-Kyori
-Country: Chile
-Registered on tw.o : Sat 25 Sep, 2004
-Last login on tw.o : Fri 21 Jan, 2005
-
-jjolly
-Registered on tw.o : Mon 27 Sep, 2004
-Last login on tw.o : Tue 09 Nov, 2004
-
-Hausi
-Country: Austria
-Registered on tw.o : Fri 17 Dec, 2004
-Last login on tw.o : Tue 22 Mar, 2005
-
-mdavey
-Country: United_Kingdom
-Registered on tw.o : Wed 05 Jan, 2005
-Last login on tw.o : Mon 08 Aug, 2005
-
-uiprncss
-Registered on tw.o : Tue 11 Jan, 2005
-Last login on tw.o : Wed 02 Feb, 2005
-
-toggg
-Country: France
-Registered on tw.o : Sat 22 Jan, 2005
-Last login on tw.o : Sun 21 Aug, 2005
-
-gspira
-Registered on tw.o : Mon 21 Feb, 2005
-Last login on tw.o : Mon 21 Feb, 2005
-
-ikky
-Country: Malaysia
-Registered on tw.o : Mon 07 Mar, 2005
-Last login on tw.o : Thu 21 Apr, 2005
-
-alex_freire
-Registered on tw.o : Sat 12 Mar, 2005
-Last login on tw.o : Sun 13 Mar, 2005
-
-hyper
-Registered on tw.o : Fri 18 Mar, 2005
-Last login on tw.o : Fri 18 Mar, 2005
-
-emanuelq
-Registered on tw.o : Wed 23 Mar, 2005
-Last login on tw.o : Wed 23 Mar, 2005
-
-amette
-Country: Germany
-Registered on tw.o : Mon 04 Apr, 2005
-Last login on tw.o : Fri 19 Aug, 2005
-
-rleibman
-Country: United_States
-Registered on tw.o : Wed 11 May, 2005
-Last login on tw.o : Wed 11 May, 2005
-
-cbowman
-Registered on tw.o : Thu 12 May, 2005
-Last login on tw.o : Thu 12 May, 2005
-
-jyesbeat
-Country: Spain
-Registered on tw.o : Fri 13 May, 2005
-Last login on tw.o : Wed 15 Jun, 2005
-
-georger_br
-Country: Brazil
-Registered on tw.o : Fri 20 May, 2005
-Last login on tw.o : Wed 27 Jul, 2005
-
-rv540
-Registered on tw.o : Thu 09 Jun, 2005
-Last login on tw.o : Thu 07 Jul, 2005
-
-pistoljitsu
-Registered on tw.o : Thu 16 Jun, 2005
-Last login on tw.o : Thu 16 Jun, 2005
-
-chandi
-Registered on tw.o : Fri 15 Jul, 2005
-Last login on tw.o : Fri 15 Jul, 2005
-
-swf
-Country: United_States
-Name: Scott W Fischer
-Registered on tw.o : Thu 03 Jul, 2003
-Last login on tw.o : Thu 28 Oct, 2004
-
-ricardo
-Registered on tw.o : Mon 07 Jul, 2003
-Last login on tw.o : Fri 25 Jul, 2003
-
-dheltzel
-Country: United_States
-Name: Dennis Heltzel
-Registered on tw.o : Mon 07 Jul, 2003
-Last login on tw.o : Mon 31 Jan, 2005
-
-jasko
-Country: United_States
-Registered on tw.o : Mon 14 Jul, 2003
-Last login on tw.o : Mon 12 Jan, 2004
-
-soshea
-Country: Other
-Registered on tw.o : Tue 08 Jul, 2003
-Last login on tw.o : Fri 03 Oct, 2003
-
-wolff_borg
-Country: Australia
-Registered on tw.o : Tue 29 Jul, 2003
-Last login on tw.o : Thu 16 Sep, 2004
-
-gclift
-Country: Other
-Registered on tw.o : Fri 08 Aug, 2003
-Last login on tw.o : Sun 28 Dec, 2003
-
-oliver
-Country: Other
-Registered on tw.o : Mon 18 Aug, 2003
-Last login on tw.o : Mon 22 Mar, 2004
-
-bpfaffenberger
-Country: United_States
-Registered on tw.o : Tue 09 Sep, 2003
-Last login on tw.o : Sun 29 Feb, 2004
-
-swythan
-Country: United_Kingdom
-Registered on tw.o : Sat 19 Jul, 2003
-Last login on tw.o : Mon 16 Feb, 2004
-
-MartinGeisler
-Country: Denmark
-Name: Martin Geisler
-Url: http://gimpster.com/
-Registered on tw.o : Mon 28 Jul, 2003
-Last login on tw.o : Mon 25 Aug, 2003
-
-maymann
-Registered on tw.o : Sun 21 Sep, 2003
-Last login on tw.o : Fri 31 Oct, 2003
-
-jomar
-Country: United_States
-Registered on tw.o : Wed 04 Feb, 2004
-Last login on tw.o : Mon 28 Jun, 2004
-
-mnemoc
-Country: Chile
-Registered on tw.o : Fri 27 Feb, 2004
-Last login on tw.o : Thu 21 Oct, 2004
-
-egodwin
-Country: Canada
-Registered on tw.o : Mon 01 Mar, 2004
-Last login on tw.o : Thu 26 May, 2005
-
-yturgeon
-Country: Canada
-Registered on tw.o : Sat 28 Aug, 2004
-Last login on tw.o : Tue 05 Oct, 2004
-
-spatialguru
-Country: Canada
-Registered on tw.o : Thu 01 Jul, 2004
-Last login on tw.o : Thu 05 Aug, 2004
-
-CharlyP
-Country: Germany
-Registered on tw.o : Tue 01 Jun, 2004
-Last login on tw.o : Thu 10 Mar, 2005
-
-CoolOs
-Country: Canada
-Registered on tw.o : Sun 02 Nov, 2003
-Last login on tw.o : Mon 11 Jul, 2005
-
-marclaporte_test_developers_group
-Registered on tw.o : Sun 13 Feb, 2005
-Last login on tw.o : Sun 13 Feb, 2005
-
-mlpvolt
-Registered on tw.o : Thu 24 Mar, 2005
-Last login on tw.o : Tue 29 Mar, 2005
 
-triple5
-Country: Germany
-Registered on tw.o : Wed 22 Sep, 2004
-Last login on tw.o : Wed 13 Jul, 2005
-
-abbasmousavi
-
-ace_mtp
-
-afahlvik
-
-alercunha
-
-amotl
-
-andreas_bac
-
-anenga
-
-aurel42
-
-avanderbilt
-
-benjf
-
-bludok
-
-bobenrieth
-
-bozze
-
-bulldogtor
-
-c0ldfusi0n
-
-carolg
-
-chealer
-
-chuck
-
-dabase
-
-debenbain
-
-dgreen34
-
-eraserhd
-
-essele
-
-ezago
-
-fhcorrea
-
-fmathias
-
-garem
-
-garfield-sf
-
-gilshwartz
-
-gravesweeper
-
-hubert_doublev3
-
-jasonlam604
-
-javaguru1729
-
-jeanhabib
-
-jlgordo
-
-joeyhartmann
-
-jpowys
-
-jwigdahl
-
-kehoe
-
-krose
-
-lechuckdapirate
-
-llunax
-
-lnewby
-
-lonelyp
-
-marcop13
-
-marp2901
-
-mashmorgan
-
-mastre
-
-mcgucken
-
-mikewalsh
-
-moresun
-
-nanoia
-
-natig
-
-neidhart
-
-notix
-
-oliverscheck
-
-opn-tech
-
-otalunak
-
-p3k
-
-penny336
-
-pippone
-
-plungerman
-
-pnimish
-
-pratesi
-
-prezkennedy
-
-ptydotcc
-
-rabiddog
-
-ramiro_v
-
-razorwyre
-
-rockpaper
-
-ronchon
-
-rpgoldman
-
-rsaugier
-
-sampaioprimo
-
-scarle
-
-sghane
-
-shiroitenshi
-
-sideshow_bob
-
-strgt
-
-subnoodle
-
-swillie
-
-todd_here
-
-vaguery
-
-vinsz
-
-xbtheria
-
-zippy314
-
-Adeoba Oguntonade
-
-alain_desilets
-
-bluestrain
-
-brian_moore
-
-chriscramer
-
-etuate
-
-evanprodromou
-
-franck
-
-frank_p
-
-fr_rodo
-
-gregmartin
-
-illori
-
-jonnybradley
-
-Jyhem
-
-kerrnel22
-
-kokohuyb
-
-leyan
-
-marcoaasilva
-
-mbrackeva
-
-m_stef
-
-mystic_ca
-
-niclone
-
-nkoth
-
-ntavares
-
-nyloth
-
-pkdille
-
-princessxine
-
-ricks99
-
-rischconsulting
-
-sept_7
-
---
-EOF
-=======
-
-That list is constantly evolving and new contributors 
-are very welcome to grow that file. Maybe some recent 
-contributor can have been omitted, and some of above
-information can be inadequate or outdated.
-
-In case of need for modification, please contact 
-admin@tikiwiki.org (alias to dennis, luci, luis, marc,
-mose, oliver, sylvie and redflo)
-
+Nickname: slordjette
+Name: SÃ©bastien Lord-JettÃ©
+
+Nickname: smacvicar
+Name: Scott MacVicar
+SF Role: Developer
+
+Nickname: spaztica
+Name: cem gencer
+
+Nickname: spiderr
+Name: Christian Fowler
+SF Role: Developer
+
+Nickname: squareing
+Name: Max Kremmel
+SF Role: Developer
+
+Nickname: squee-d
+Name: Rasheed Abdal-Aziz
+SF Role: Developer
+
+Nickname: starrrider
+Name: Lee L Bell
+SF Role: Doc Writer
+
+Nickname: stingtao
+Name: sting tao
+SF Role: Developer
+
+Nickname: stojanovim
+Name: Marta S.
+First Commit: 2009-01-27
+Last Commit: 2009-02-24
+Number of Commits: 5
+SF Role: Developer
+
+Nickname: stuartd
+Name: Stuart Donaldson
+SF Role: Developer
+
+Nickname: subnoodle
+Name: Sam
+SF Role: Developer
+
+Nickname: swayambhu
+Name: Vijay Aswadhati
+SF Role: Developer
+
+Nickname: swillie
+Name: Wil Huijben
+First Commit: 2004-01-30
+Last Commit: 2004-01-30
+Number of Commits: 1
+SF Role: Developer
+
+Nickname: sylvieg
+Name: Sylvie Greverend
+First Commit: 2003-05-27
+Last Commit: 2009-03-02
+Number of Commits: 4043
+SF Role: Developer
+
+Nickname: syracine
+Name: S Racine
+First Commit: 2008-08-17
+Last Commit: 2008-08-17
+Number of Commits: 3
+SF Role: Developer
+
+Nickname: techtonik
+Name: anatoly techtonik
+First Commit: 2004-02-21
+Last Commit: 2004-03-16
+Number of Commits: 11
+SF Role: Developer
+
+Nickname: teedog
+First Commit: 2003-08-07
+Last Commit: 2004-08-18
+Number of Commits: 330
+SF Role: Developer
+
+Nickname: telenieko
+Name: TeLeNiEkO
+First Commit: 2004-04-24
+Last Commit: 2005-01-18
+Number of Commits: 22
+SF Role: Developer
+
+Nickname: terris
+Name: tmg
+SF Role: Developer
+
+Nickname: thenano
+Name: Fernando Freire
+SF Role: Developer
+
+Nickname: thraxisp
+Name: Glenn Henshaw
+SF Role: Developer
+
+Nickname: tibistibi
+Name: tibi stibi
+First Commit: 2007-08-06
+Last Commit: 2007-08-06
+Number of Commits: 4
+SF Role: Developer
+
+Nickname: timedout_net
+Name: TimeO
+SF Role: Developer
+
+Nickname: tna
+First Commit: 2004-07-20
+Last Commit: 2004-07-20
+Number of Commits: 1
+SF Role: Developer
+
+Nickname: todd_here
+Name: Technical Writer
+SF Role: Developer
+
+Nickname: tofreal
+Name: Real
+SF Role: Developer
+
+Nickname: toggg
+Name: bertrand Gugger
+First Commit: 2005-03-23
+Last Commit: 2007-06-16
+Number of Commits: 45
+SF Role: Developer
+
+Nickname: tombombadilom
+First Commit: 2003-11-01
+Last Commit: 2008-07-31
+Number of Commits: 110
+
+Nickname: traivor
+Name: Harold Campbell
+First Commit: 2003-09-09
+Last Commit: 2003-11-13
+Number of Commits: 31
+SF Role: Developer
+
+Nickname: troworld
+First Commit: 2004-05-08
+Last Commit: 2004-08-03
+Number of Commits: 2
+
+Nickname: uid138927
+First Commit: 2006-12-07
+Last Commit: 2006-12-07
+Number of Commits: 1
+
+Nickname: uiprncss
+Name: Toni
+First Commit: 2005-03-22
+Last Commit: 2005-03-22
+Number of Commits: 2
+SF Role: Developer
+
+Nickname: username
+Name: Developer
+SF Role: Role/Position
+
+Nickname: v-woods
+Name: Van Woods
+SF Role: Developer
+
+Nickname: vaguery
+Name: Mickey Mullin
+SF Role: Developer
+
+Nickname: vikasrij
+Name: Vikas Rijsinghani
+SF Role: Developer
+
+Nickname: vinsz
+Name: Vincent Guffens
+SF Role: Developer
+
+Nickname: vradd
+Name: cnd
+SF Role: Developer
+
+Nickname: vulgrin
+Name: Dave Sanders
+First Commit: 2003-12-27
+Last Commit: 2003-12-27
+Number of Commits: 2
+SF Role: Developer
+
+Nickname: wbeaver
+SF Role: Developer
+
+Nickname: wesleywillians
+Name: Wesley Willians
+First Commit: 2005-08-20
+Last Commit: 2006-09-06
+Number of Commits: 10
+SF Role: Developer
+
+Nickname: wggley
+Name: Wallace Goulart Gaudie Ley
+First Commit: 2009-02-11
+Last Commit: 2009-02-18
+Number of Commits: 2
+
+Nickname: whomaj
+Name: Maj
+SF Role: Developer
+
+Nickname: wikiman
+Name: Eric Kelner
+First Commit: 2008-12-21
+Last Commit: 2008-12-21
+Number of Commits: 2
+SF Role: Developer
+
+Nickname: wings-of-glory
+Name: A. Zargamy
+First Commit: 2008-09-07
+Last Commit: 2008-09-18
+Number of Commits: 3
+SF Role: Developer
+
+Nickname: wolff_borg
+First Commit: 2003-08-06
+Last Commit: 2004-02-24
+Number of Commits: 42
+
+Nickname: wu-lee
+Name: Nick Woolley
+SF Role: Developer
+
+Nickname: wvdploeg
+Name: W van der Ploeg
+SF Role: Developer
+
+Nickname: xaman
+SF Role: Developer
+
+Nickname: xavidp
+Name: Xavier de Pedro
+First Commit: 2005-07-08
+Last Commit: 2009-01-13
+Number of Commits: 73
+SF Role: All-Hands Person
+
+Nickname: xbtheria
+Name: Xavier Barnabé-Thériault
+SF Role: Developer
+
+Nickname: xenfasa
+Name: Ben
+First Commit: 2003-11-15
+Last Commit: 2003-11-18
+Number of Commits: 4
+SF Role: Developer
+
+Nickname: xeno_tt
+Name: Martin Zwickel
+SF Role: Developer
+
+Nickname: yanturgeon
+Name: yturgeon
+SF Role: Developer
+
+Nickname: ybey
+Name: Youcef Bey
+SF Role: Developer
+
+Nickname: yonixxx
+Name: Yoni
+First Commit: 2008-02-25
+Last Commit: 2008-06-11
+Number of Commits: 19
+
+Nickname: ysoya
+Name: YongHa Kim
+SF Role: Developer
+
+Nickname: yuzhenxin
+Name: Yu Zhen Xin
+First Commit: 2005-11-21
+Last Commit: 2005-12-05
+Number of Commits: 11
+SF Role: Translator (I18N/L10N)
+
+Nickname: zamboni
+Name: Diego Zamboni
+SF Role: Developer
+
+Nickname: zaufi
+First Commit: 2003-06-22
+Last Commit: 2005-04-17
+Number of Commits: 226
+SF Role: Developer
+
+Nickname: zcecil
+Name: Cecil Sheng
+First Commit: 2003-12-20
+Last Commit: 2004-02-19
+Number of Commits: 4
+SF Role: Translator (I18N/L10N)
+
+Nickname: zcopley
+Name: Zach Copley
+SF Role: Developer
+
+Nickname: zibas
+Name: Ziba
+SF Role: Developer
+
+Nickname: zippy314
+Name: Eric Harris-Braun
+SF Role: Developer

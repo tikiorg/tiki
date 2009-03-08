@@ -256,7 +256,7 @@ class UsersLib extends TikiLib {
     }
 
     function validate_hash($user, $hash) {
-	return $this->db->getOne(
+	return $this->getOne(
 		"select count(*) from `users_users` where " . $this->convert_binary(). " `login` = ? and `hash`=?",
 		array($user, $hash)
 		);
@@ -1047,6 +1047,14 @@ function get_included_groups($group, $recur=true) {
 			$ret = array_merge($ret, $this->get_including_groups($res['groupName']));
 		}
 		return $ret;
+	}
+	function user_is_in_group($user, $group) {
+		$user_details = $this->get_user_details($user);
+		if (in_array($group, $user_details['groups'])) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
     function remove_user_from_group($user, $group) {
@@ -1950,31 +1958,32 @@ function get_included_groups($group, $recur=true) {
 	}
     }
 
-    function confirm_user($user) {
-	global $prefs,$cachelib;
+	function confirm_user($user) {
+		global $prefs,$cachelib;
 
-	$query = "select `provpass`, `login` from `users_users` where `login`=?";
-	$result = $this->query($query, array($user));
-	$res = $result->fetchRow();
-	$hash = $this->hash_pass($res['provpass']);
-	$provpass = $res["provpass"];
+		$query = "select `provpass`, `login` from `users_users` where `login`=?";
+		$result = $this->query($query, array($user));
+		$res = $result->fetchRow();
+		$hash = $this->hash_pass($res['provpass']);
+		$provpass = $res["provpass"];
 
-	if ($prefs['feature_clear_passwords'] == 'n') {
-	    $provpass = '';
+		if ($prefs['feature_clear_passwords'] == 'n') {
+			$provpass = '';
+		}
+
+		$query = "update `users_users` set `password`=? ,`hash`=? ,`provpass`=?, valid=?, `email_confirm`=?, `waiting`=?, `registrationDate`=? where `login`=?";
+		$result = $this->query($query, array(
+				$provpass,
+				$hash,
+				'',
+				NULL,
+				$this->now,
+				NULL,
+				$this->now,
+				$user
+				));
+		$cachelib->invalidate('userslist');
 	}
-
-	$query = "update `users_users` set `password`=? ,`hash`=? ,`provpass`=?, valid=?, `email_confirm`=?, `waiting`=? where `login`=?";
-	$result = $this->query($query, array(
-		    $provpass,
-		    $hash,
-		    '',
-			NULL,
-			$this->now,
-			NULL,
-		    $user
-		    ));
-	$cachelib->invalidate('userslist');
-    }
 
 	function change_user_waiting($user, $who) {
 		$query = 'update `users_users` set `waiting`=?, `currentLogin`=?, `lastLogin`=? where `login`=?';
@@ -2137,7 +2146,7 @@ function get_included_groups($group, $recur=true) {
 	function create_user_cookie($user,$hash=false) {
 		global $prefs;
 		if (!$hash) {
-			$hash = md5($this->get_ip_address().$_SERVER['HTTP_USER_AGENT']) . ".". ($this->now + $prefs['remembertime']);
+			$hash = $this->get_cookie_check() . ".". ($this->now + $prefs['remembertime']);
 		}
 		$this->delete_user_cookie($user);
 		$this->set_user_preference($user,'cookie',$hash);
@@ -2148,10 +2157,21 @@ function get_included_groups($group, $recur=true) {
 		$query = 'delete from `tiki_user_preferences` where `prefName`=? and `user`=?';
 		$this->query($query, array('cookie',$user));
 	}
+	
+	function get_cookie_check() {
+		global $prefs;
+		if ($prefs['remembermethod'] == 'simple') {
+			// this only makes sense in setting the cookie - it will always be different if checked
+			return md5(session_id() . uniqid(mt_rand(), true));
+		} else {
+			return md5($this->get_ip_address().$_SERVER['HTTP_USER_AGENT']);
+		}
+	}
 
 	function get_user_by_cookie($hash,$bypasscheck=false) {
+		global $prefs;
 		list($check,$expire,$userCookie) = explode('.',$hash, 3);
-		if ($check == md5($this->get_ip_address().$_SERVER['HTTP_USER_AGENT']) or $bypasscheck) {
+		if ($check == $this->get_cookie_check() or $bypasscheck or $prefs['remembermethod'] == 'simple') {
 			$query = 'select `user` from `tiki_user_preferences` where `prefName`=? and `value` like ? and `user`=?';
 			$user = $this->getOne($query, array('cookie',"$check.%",$userCookie));
 			// $fp=fopen('temp/interlogtest','a+');fputs($fp,"main gubc -- $check.$expire.$userCookie -- $user --\n");fclose($fp);
@@ -2283,11 +2303,11 @@ function get_included_groups($group, $recur=true) {
 	return true;
 	}
 
-	function add_group($group, $desc='', $home='', $utracker=0, $gtracker=0, $rufields='', $userChoice='', $defcat=0, $theme='') {
+	function add_group($group, $desc='', $home='', $utracker=0, $gtracker=0, $rufields='', $userChoice='', $defcat=0, $theme='', $ufield='', $gfield='') {
 		if ( $this->group_exists($group) ) return false;
 
-		$query = "insert into `users_groups` (`groupName`, `groupDesc`, `groupHome`,`groupDefCat`,`groupTheme`,`usersTrackerId`,`groupTrackerId`, `registrationUsersFieldIds`, `userChoice`) values(?,?,?,?,?,?,?,?,?)";
-		$this->query($query, array($group, $desc, $home, $defcat, $theme, (int)$utracker, (int)$gtracker, $rufields, $userChoice) );
+		$query = "insert into `users_groups` (`groupName`, `groupDesc`, `groupHome`,`groupDefCat`,`groupTheme`,`usersTrackerId`,`groupTrackerId`, `registrationUsersFieldIds`, `userChoice`, `usersFieldId`, `groupFieldId`) values(?,?,?,?,?,?,?,?,?,?,?)";
+		$this->query($query, array($group, $desc, $home, $defcat, $theme, (int)$utracker, (int)$gtracker, $rufields, $userChoice, $ufield, $gfield) );
 
 		global $cachelib;
 		$cachelib->invalidate('grouplist');
@@ -2652,6 +2672,18 @@ function get_included_groups($group, $recur=true) {
 		} elseif ($prefs['validateRegistration'] == 'y') {
 			if (!empty($chosenGroup)) {
 				$smarty->assign_by_ref('chosenGroup', $chosenGroup);
+				if ($prefs['userTracker'] == 'y') {
+					global $trklib; include_once('lib/trackers/trackerlib.php');
+					$re = $this->get_group_info(isset($chosenGroup)? $chosenGroup: 'Registered');
+					$fields = $trklib->list_tracker_fields($re['usersTrackerId'], 0, -1, 'position_asc', '', true, array('fieldId'=>explode(':',$re['registrationUsersFieldIds'])));
+					$listfields = array();
+					foreach ($fields['data'] as $field) {
+						$listfields[$field['fieldId']] = $field;
+					}
+					$items = $trklib->list_items($re['usersTrackerId'], 0, 1, '',  $listfields, $trklib->get_field_id_from_type($re['usersTrackerId'], 'u', '1%'), '', '', '', $name);
+					if (isset($items['data'][0]))
+						$smarty->assign_by_ref('item', $items['data'][0]);
+				}
 			}
 			$mail_data = $smarty->fetch('mail/moderate_validation_mail.tpl');
 			$mail_subject = $smarty->fetch('mail/moderate_validation_mail_subject.tpl');
@@ -2721,8 +2753,8 @@ function get_included_groups($group, $recur=true) {
 			return false;
 		}
 		if (md5($res['provpass']) == $pass){
-			$query = 'update `users_users` set `provpass`=?, `email_confirm`=?, `unsuccessful_logins`=? where `login`=? and `provpass`=?';
-			$this->query($query, array('', $tikilib->now, 0, $user, $res['provpass']));
+			$query = 'update `users_users` set `provpass`=?, `email_confirm`=?, `unsuccessful_logins`=?, `registrationDate`=? where `login`=? and `provpass`=?';
+			$this->query($query, array('', $tikilib->now, 0, $this->now, $user, $res['provpass']));
 			return true;
 		}
 		return false;
@@ -2767,7 +2799,7 @@ function get_included_groups($group, $recur=true) {
 	function intervalidate($remote,$user,$pass,$get_info = false) {
 		global $prefs;
 		include_once('XML/RPC.php');
-		$hashkey = md5($this->get_ip_address().$_SERVER['HTTP_USER_AGENT']) . ".". ($this->now + $prefs['remembertime']);
+		$hashkey = $this->get_cookie_check() . ".". ($this->now + $prefs['remembertime']);
 		$remote['path'] = preg_replace("/^\/?/","/",$remote['path']);
 		$client = new XML_RPC_Client($remote['path'], $remote['host'], $remote['port']);
 		$client->setDebug(0);

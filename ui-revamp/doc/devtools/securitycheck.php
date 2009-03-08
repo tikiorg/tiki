@@ -80,9 +80,16 @@ function includeonly_pattern() // {{{
 	return "/strpos\s*\(\s*\\\$_SERVER\s*\[\s*[\"']SCRIPT_NAME[\"']\s*\]\s*,\s*basename\s*\(\s*__FILE__\s*\)\s*\)\s*!==\s*(false|FALSE)/";
 } // }}}
 
+function includeonly_pattern3() // {{{
+{
+        return "/basename\s*\(\s*\\\$_SERVER\s*\[\s*[\"']SCRIPT_NAME[\"']\s*\]\s*\)\s*==\s*basename\s*\(\s*__FILE__\s*\)\s*\)/";
+} // }}}
+
+
 function includeonly_pattern2() // {{{
 {
-	return "/\\\$access\s*->\s*check_script\s*\\(\s*\\\$_SERVER\s*\\[\s*[\"']SCRIPT_NAME[\"']\s*\\]\s*,\s*basename\s*\\(\s*__FILE__\s*\\)\s*\\)/";
+	return "/\\\$access\s*->\s*check_script\s*\(\s*\\\$_SERVER\s*\[\s*[\"']SCRIPT_NAME[\"']\s*\]\s*,\s*basename\s*\(\s*__FILE__\s*\)\s*\)/s";
+	//return "/\\\$access\s*\->\s*check_script\s*\(\s*\\\$_SERVER\s*\[\s*[\"']SCRIPT_NAME[\"']\s*\]\s*,\s*basename\s*\(\s*__FILE__\s*\)\s*\)/";
 } // }}}
 
 function noweb_pattern() // {{{
@@ -207,6 +214,7 @@ function perform_feature_check( &$file ) // {{{
 function perform_permission_check( &$file ) // {{{
 {
 	$index = 0;
+	
 	$permission_pattern = permission_pattern( $index );
 
 	preg_match_all( $permission_pattern, get_content( $file['path'] ), $parts );
@@ -217,19 +225,25 @@ function perform_permission_check( &$file ) // {{{
 
 function perform_includeonly_check( &$file ) // {{{
 {
+	$index = 0;
 	$pattern = includeonly_pattern($index);
 
 	preg_match_all( $pattern, get_content($file['path']), $parts );
 
-	$pattern = includeonly_pattern2($index);
+        $pattern = includeonly_pattern2($index);
 
-	preg_match_all( $pattern, get_content($file['path']), $parts2 );
+        preg_match_all( $pattern, get_content($file['path']), $parts2 );
 
-	$file['includeonly'] = count( $parts[0] ) > 0 || count( $parts2[0] ) > 0;
+	$pattern = includeonly_pattern3($index);
+
+        preg_match_all( $pattern, get_content($file['path']), $parts3 );
+
+	$file['includeonly'] = count( $parts[0] ) > 0 || count( $parts2[0] ) > 0 || count( $parts3[0] ) > 0;
 } // }}}
 
 function perform_noweb_check( &$file ) // {{{
 {
+	$index = 0;
 	$pattern = noweb_pattern($index);
 
 	preg_match_all( $pattern, get_content($file['path']), $parts );
@@ -239,6 +253,8 @@ function perform_noweb_check( &$file ) // {{{
 
 function perform_tikisetup_check( &$file ) // {{{
 {
+	$index = 0;
+
 	$pattern = tikisetup_pattern($index);
 
 	preg_match_all( $pattern, get_content($file['path']), $parts );
@@ -336,7 +352,7 @@ To be safe, files must have either an include only check, block web access, have
 		) ) ): ?>
 		<tr>
 			<td><a href="<?php echo htmlentities( substr( $file['path'], 2 ) ) ?>"><?php echo htmlentities( $file['path'] ) ?></a></td>
-			<td><?php if( $file['includeonly'] ) echo 'X' ?></td>
+			<td><?php if( isset($file['includeonly']) && $file['includeonly'] ) echo 'X' ?></td>
 			<td><?php if( $file['noweb'] ) echo 'X' ?></td>
 			<td><?php if( $file['tikisetup'] ) echo 'X' ?></td>
 			<td><?php if( $file['unsafeextract'] ) echo 'X' ?></td>

@@ -11,14 +11,29 @@ function wikiplugin_footnotearea_help() {
 	return tra("Inserts a section for collected footnotes within the wiki page").":<br />~np~{FOOTNOTEAREA()/}~/np~";
 }
 
+function wikiplugin_footnotearea_info() {
+	return array(
+		'name' => tra( 'Footnotearea' ),
+		'documentation' => 'Footnotearea',
+		'description' => tra( 'Inserts a section for collected footnotes within the wiki page.' ),
+		'prefs' => array('wikiplugin_footnotearea'),
+		'params' => array(),
+	);
+}
+
 function wikiplugin_footnotearea($data, $params) {
 
-	extract ($params,EXTR_SKIP);
+	$html = '<div class="footnotearea">';
+	$html .= '<hr />';
+
 	foreach($GLOBALS["footnotesData"] as $key => $value){
-		$footnoteOuput .= "<sup>". ($key + 1) ."</sup>".$value."<br />";
+		$noteId = $key + 1;
+		$html .= '<div class="onefootnote" id="footnote' . $noteId . '">';
+		$html .= '<a href="#ref_footnote' . $noteId . '">'. $noteId . '.</a> ';
+		$html .= $value;
+		$html .= '</div>';
 	}
-	return "<div style=\"border-top:2px solid #999;float:left;min-width:300px;font-size:11px;\">$footnoteOuput</div>";
+	$html .= '</div>';
+	
+	return $html;
 }
-?>
-
-

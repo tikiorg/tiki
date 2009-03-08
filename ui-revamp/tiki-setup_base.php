@@ -117,7 +117,7 @@ require_once("lib/breadcrumblib.php");
 function remove_gpc(&$var) {
 	if ( is_array($var) ) {
 		foreach ( $var as $key=>$val ) {
-			remove_gpc($var[$key],$gpc,$clean_xss);
+			remove_gpc($var[$key]);
 		}
 	} else {
 		$var = stripslashes($var);
@@ -274,7 +274,7 @@ if (empty($_SERVER['SERVER_NAME'])) {
 
 
 // in the case of tikis on same domain we have to distinguish the realm
-// changed cookie and session variable name by a name made with siteTitle 
+// changed cookie and session variable name by a name made with browsertitle 
 $cookie_site = ereg_replace("[^a-zA-Z0-9]", "", $prefs['cookie_name']);
 $user_cookie_site = 'tiki-user-'.$cookie_site;
 
@@ -505,7 +505,9 @@ if (isset($_REQUEST['highlight']) || (isset($prefs['feature_referer_highlight'])
   $smarty->load_filter('output','highlight');
 }
 
-mb_internal_encoding("UTF-8");
+if (function_exists('mb_internal_encoding')) {
+	mb_internal_encoding("UTF-8");
+}
 
 // --------------------------------------------------------------
 

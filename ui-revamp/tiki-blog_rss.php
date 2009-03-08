@@ -76,7 +76,7 @@ if ($output["data"]=="EMPTY") {
 	$changes = $bloglib -> list_blog_posts($_REQUEST["$id"], 0, $prefs['max_rss_blog'], $dateId.'_desc', '', '', $tikilib->now);
 	$tmp = array();
 	foreach ($changes["data"] as $data)  {
-		$data["$descId"] = $tikilib->parse_data($data["$descId"]);
+		$data["$descId"] = $tikilib->parse_data($data[$descId], array('print'=>true));
 		$tmp[] = $data;
 	}
 	$changes["data"] = $tmp;

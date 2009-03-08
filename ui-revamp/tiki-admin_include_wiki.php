@@ -154,12 +154,12 @@ if (isset($_REQUEST["wikifeatures"])) {
 	'feature_wiki_multiprint',
 	// 'feature_wiki_pdf',
 	'feature_listPages',
+	'feature_listorphanPages',	
 	'feature_history',
 	'feature_source',
 	'feature_sandbox',
 	'feature_wiki_print',
 	'feature_wiki_replace',
-	'feature_antibot',
 	'feature_backlinks',
 	'feature_likePages',
 	'wiki_uses_slides',
@@ -195,6 +195,7 @@ if (isset($_REQUEST["wikifeatures"])) {
 	'wiki_page_navigation_bar',
 	'wiki_actions_bar',
 	'wiki_topline_position',
+	'wiki_edit_section_level',
 	'page_bar_position'
 	);
 	foreach ($pref_values as $value) {

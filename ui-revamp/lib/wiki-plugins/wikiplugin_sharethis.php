@@ -12,7 +12,74 @@
 function wikiplugin_sharethis_help() {
 	return tra("Insert a ShareThis Button from www.sharethis.com").":<br />~np~{SHARETHIS(publisher='varchar',webtab=y|n,posttab=y|n,emailtab=y|n,rotateimage=y|n,inactivebg='varchar',inactivefg='varchar',headerbg='varchar',linkfg='varchar',offsetTop='int',offsetLeft='int',popup=true|false,embed=true|false)}{SHARETHIS}<br />A ShareThis account is optional and is to be passed via the 'publisher' parameter or hardcoded into the wiki-plugin.~/np~";
 }
-
+function wikiplugin_sharethis_info() {
+	return array(
+		'name' => tra('sharethis'),
+		'documentation' => 'PluginShareThis',
+		'description' => tra("Display a social networking tool."),
+		'prefs' => array( 'wikiplugin_sharethis' ),
+		'params' => array(
+			'publisher' => array(
+				'required' => false,
+				'name' => 'publisher',
+			),
+			'webtab' => array(
+				'required' => false,
+				'name' => 'webtab',
+				'description' => 'y|n',
+			),
+			'posttab' => array(
+				'required' => false,
+				'name' => 'postab',
+				'description' => 'y|n',
+			),
+			'emailtab' => array(
+				'required' => false,
+				'name' => 'emailtab',
+				'description' => 'y|n',
+			),
+			'rotateimageb' => array(
+				'required' => false,
+				'name' => 'rotateimageb',
+				'description' => 'y|n',
+			),
+			'inactivebg' => array(
+				'required' => false,
+				'name' => 'inactivebg',
+				'description' => 'y|n',
+			),
+			'inactivefg' => array(
+				'required' => false,
+				'name' => 'inactivefg',
+			),
+			'headerbg' => array(
+				'required' => false,
+				'name' => 'headerbg',
+			),
+			'linkfg' => array(
+				'required' => false,
+				'name' => 'linkfg',
+			),
+			'offsetTop' => array(
+				'required' => false,
+				'name' => 'offsetTop',
+			),
+			'offsetLeft' => array(
+				'required' => false,
+				'name' => 'offsetLeft',
+			),
+			'popup' => array(
+				'required' => false,
+				'name' => 'popup',
+				'description' => 'true|false',
+			),
+			'embed' => array(
+				'required' => false,
+				'name' => 'embed',
+				'description' => 'true|false',
+			),		)
+	);
+}
 function wikiplugin_sharethis($data, $params) {
 
 	extract ($params,EXTR_SKIP);

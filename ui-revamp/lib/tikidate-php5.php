@@ -62,7 +62,9 @@ class TikiDate {
 	 * Default constructor
 	 */
 	function TikiDate() {
-		$this->date = new DateTime(date("Y-m-d H:i:s Z"));
+		$this->date = new DateTime();	// was: DateTime(date("Y-m-d H:i:s Z"))
+										// the Z (timezone) param was causing an error
+										// DateTime constructor defaults to "now" anyway so unnecessary?
 		$this->search = array_keys($this->translation_array);
 		$this->replace = array_values($this->translation_array);
 	}
@@ -157,7 +159,7 @@ class TikiDate {
 	}
 
 	function TimezoneIsValidId($id) {
-		return timezone_open($id) !== FALSE ;
+		return empty($id) ? FALSE : timezone_open($id) !== FALSE ;
 	}
 
 }
