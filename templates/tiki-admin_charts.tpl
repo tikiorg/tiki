@@ -113,11 +113,9 @@
 
 
 <h2>{tr}Charts{/tr}</h2>
-<form action="tiki-admin_charts.php" method="post">
-<input type="hidden" name="offset" value="{$offset|escape}" />
-<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-<table class="findtable"><tr><td class="findtable">{tr}Find{/tr}</td><td class="findtable"><input type="text" name="find" value="{$find|escape}" /><input type="submit" value="{tr}Find{/tr}" name="search" /></td></tr></table>
-</form>
+
+{include file='find.tpl' _sort_mode='y'}
+
 <form action="tiki-admin_charts.php" method="post">
 <input type="hidden" name="offset" value="{$offset|escape}" />
 <input type="hidden" name="find" value="{$find|escape}" />

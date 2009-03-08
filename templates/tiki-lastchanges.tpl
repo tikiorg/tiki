@@ -22,25 +22,14 @@
 </div>
 
 {if $lastchanges or ($find ne '')}
-<table class="findtable">
-<tr><td class="findtable">{tr}Find{/tr}</td>
-   <td class="findtable">
-   <form method="get" action="tiki-lastchanges.php">
-     <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}Find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-     <input type="hidden" name="days" value="0" />
-   </form>
-   </td>
-{if $findwhat != ""}
-   <td>
-   <a href="tiki-lastchanges.php" class="wiki">{tr}Search by Date{/tr}</a>
-   </td>
-{/if}   
-</tr>
-</table>
+	{include file='find.tpl' _sort_mode='y'}
+	{if $findwhat != ""}
+		{button href="tiki-lastchanges.php" _text="{tr}Search by Date{/tr}"}
+	{/if}
 {/if}
+
 <br />
+
 {if $findwhat!=""}
 {tr}Found{/tr} "<b>{$findwhat}</b>" {tr}in{/tr} {$cant_records} {tr}LastChanges{/tr} 
 {/if}

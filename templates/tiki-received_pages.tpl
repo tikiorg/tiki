@@ -31,18 +31,9 @@
 
 <h2>{tr}Received Pages{/tr}</h2>
 <div align="center">
-<table class="findtable">
-<tr><td class="findtable">{tr}Find{/tr}</td>
-   <td class="findtable">
-   <form method="get" action="tiki-received_pages.php">
-     <input type="text" name="find" />
-     <input type="submit" name="search" value="{tr}Find{/tr}" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-	 <input type="hidden" name="sort_modes" value="{$sort_modes|escape}" />
-   </form>
-   </td>
-</tr>
-</table>
+
+{include file='find.tpl' _sort_mode='y'}
+
 {if $channels|@count > 0}<p><span class="highlight">{tr}The highlight pages already exist.{/tr}</span> {tr}Please, change the name if you want the page to be uploaded.{/tr}</p>{/if}
 <table class="normal">
 <tr>
