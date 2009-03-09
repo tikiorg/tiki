@@ -346,8 +346,6 @@ div.menuSection div.menuSection, div.menuSection div.separator {
 	border-top: 0;
 }
 .rssdate {
-  display: block;
-  margin-left: 10%;
 	color: #999999;
   font-size: 70%;
 	font-style: italic;
