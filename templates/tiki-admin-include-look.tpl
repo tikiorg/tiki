@@ -36,7 +36,12 @@
 								<option value="{$styles[ix]|escape}"{if $a_style eq $styles[ix]} selected="selected"{/if}>{$styles[ix]}</option>
 							{/section}
 							</select>
-							{if $prefs.site_style != $a_style} <span class="highlight">{tr}* Note: theme not saved yet - click "Apply"{/tr}</span>{/if}
+	  						{if $prefs.change_theme eq 'y'}
+	  							{remarksbox type="warning" title="{tr}Admin{/tr}"}{tr}The Switch Theme Module will override the theme setting if you have it enabled.{/tr}{/remarksbox}
+							{/if}
+							{if $prefs.site_style != $a_style}
+								{remarksbox type="note" title="{tr}Note{/tr}}{tr}Theme not saved yet - click "Apply"{/tr}{/remarksbox}
+							{/if}
 						</td>
 					</tr>
 					<tr>
