@@ -1622,9 +1622,9 @@ class TrackerLib extends TikiLib {
 						} elseif ($field['type'] == 'e') {
 							$cats = split('%%%', trim($data[$i]));
 							if (!empty($cats)) {
-								foreach ($cats as $cId) {
+								foreach ($cats as $c) {
 									global $categlib; include_once('lib/categories/categlib.php');
-									if ($cId = $categlib->get_category_id($c))
+									if ($cId = $categlib->get_category_id(trim($c)))
 										$catIds[] = $cId;
 								}
 								if (!empty($catIds)) {
@@ -1888,10 +1888,10 @@ class TrackerLib extends TikiLib {
 
 		$options=$this->get_tracker_options($trackerId);
 		if (isset ($option) && isset($option['autoCreateCategories']) && $option['autoCreateCategories']=='y') {
-
-		$currentCategId=$categlib->get_category_id("Tracker Item $itemId");
-		$categlib->remove_category($currentCategId);
+			$currentCategId=$categlib->get_category_id("Tracker Item $itemId");
+			$categlib->remove_category($currentCategId);
 		}
+		$this->remove_object("tracker $trackerId", $itemId);
 		return true;
 	}
 
