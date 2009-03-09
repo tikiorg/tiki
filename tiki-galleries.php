@@ -10,8 +10,8 @@
 $section = 'galleries';
 require_once ('tiki-setup.php');
 
-include_once ("lib/imagegals/imagegallib.php");
-include_once ('lib/categories/categlib.php');
+global $imagegallib; include_once ("lib/imagegals/imagegallib.php");
+global $categlib; include_once ('lib/categories/categlib.php');
 include_once ('lib/map/usermap.php');
 
 if ($prefs['feature_galleries'] != 'y') {

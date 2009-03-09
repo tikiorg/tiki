@@ -251,12 +251,13 @@ fieldset {
 	border: solid 1px #99ccff;
 	padding: 0.9em;
 }
-
 /* All select elements, NOTE: text-align: start is RTL languages compatible */
 select {
-  _font-size: 1em; /* MSIE workaround for simmilar height like input and submit */
-  text-align: start;
-  _vertical-align: top; /* MSIE workaround for simmilar height like input and submit */
+	text-align: start;
+}
+* html select {
+  font-size: 1em; /* MSIE workaround for simmilar height like input and submit */
+  vertical-align: top; /* MSIE workaround for simmilar height like input and submit */
 }
 /*select[name="lang"], select[name="language"] {
   height: 2em;

@@ -1607,9 +1607,9 @@ CREATE TABLE 'tiki_menu_options' (
   "name" varchar(200) default NULL,
   "url" varchar(255) default NULL,
   "position" smallint default NULL,
-  "section" varchar(255) default NULL,
-  "perm" varchar(255) default NULL,
-  "groupname" varchar(255) default NULL,
+  "section" text default NULL,
+  "perm" text default NULL,
+  "groupname" text default NULL,
   "userlevel" smallint default 0,
   PRIMARY KEY (optionId)
 ) ENGINE=MyISAM ;
@@ -1780,13 +1780,13 @@ INSERT INTO "," ("optionId","menuId","type","name","url","position","section","p
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (82,42,'o','Admin Directory','tiki-directory_admin.php',565,'feature_directory','tiki_p_view_directory,tiki_p_validate_links','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (83,42,'s','File Galleries','tiki-list_file_gallery.php',600,'feature_file_galleries','tiki_p_view_file_gallery','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (83,42,'s','File Galleries','tiki-list_file_gallery.php',600,'feature_file_galleries','tiki-list_file_gallery.php|tiki_p_view_file_gallery|tiki_p_upload_files','',0);
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (84,42,'o','List Galleries','tiki-list_file_gallery.php',605,'feature_file_galleries','tiki_p_list_file_galleries','',0);
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (85,42,'o','Rankings','tiki-file_galleries_rankings.php',610,'feature_file_galleries,feature_file_galleries_rankings','tiki_p_list_file_galleries','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (86,42,'o','Upload File','tiki-upload_file.php',615,'feature_file_galleries','tiki_p_view_file_gallery,tiki_p_upload_files','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (86,42,'o','Upload File','tiki-upload_file.php',615,'feature_file_galleries','tiki_p_upload_files','',0);
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (87,42,'s','FAQs','tiki-list_faqs.php',650,'feature_faqs','tiki_p_view_faqs','',0);
 

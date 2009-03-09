@@ -16,9 +16,13 @@ if ( $prefs['feature_calendar'] == 'y' && $tiki_p_view_calendar == 'y' ) {
 	$calendarViewMode = 'month';
 	$group_by = 'day';
 
+	if (empty($module_params['calIds'])) {
+		$module_params['calIds'] = array();
+	}
+
 	include('tiki-calendar_setup.php');
 
-	$tc_infos = $calendarlib->getCalendar(array(1), $viewstart, $viewend, $group_by);
+	$tc_infos = $calendarlib->getCalendar($module_params['calIds'], $viewstart, $viewend, $group_by);
 
 	foreach ( $tc_infos as $tc_key => $tc_val ) {
         	$smarty->assign($tc_key, $tc_val);

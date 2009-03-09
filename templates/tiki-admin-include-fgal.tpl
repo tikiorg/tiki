@@ -157,6 +157,7 @@
   <div class="cbox-title">{tr}Gallery listing configuration{/tr}</div>
   <div class="cbox-data">
       <form method="post" action="tiki-admin.php?page=fgal">
+  	  {remarksbox title="warning"}{tr}Some changes below will affect only new file galleries{/tr}{/remarksbox}
         <table class="admin">
 		{include file="fgal_listing_conf.tpl"}
 		<tr class="formcolor">

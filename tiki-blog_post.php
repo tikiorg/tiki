@@ -50,7 +50,8 @@ if ( count($blogs) == 0 ) {
 $smarty->assign('blogId', $blogId);
 
 // Now check permissions to access this page
-if (!($tiki_p_blog_admin == 'y' || (empty($blogId) && $tiki_p_blog_post == 'y') || (!empty($blogId) && $blog_data['public']== 'y' && $tikilib->user_has_perm_on_object($user, $blogId, 'blog', 'tiki_p_blog_post')))) {
+if (!($tiki_p_blog_admin == 'y' || (!empty($blogId) && $tiki_p_blog_post == 'y') || (!empty($blogId) && $blog_data['public']== 'y' && $tikilib->user_has_perm_on_object($user, $blogId, 'blog', 'tiki_p_blog_post')))) {
+$msg="tiki_p_blog_admin: $tiki_p_blog_admin -- blogId: $blogId -- tiki_p_blog_post: $tiki_p_blog_post -- blog_data(public): ".$blog_data['public']." -- tikilib: ".$tikilib->user_has_perm_on_object($user, $blogId, 'blog', 'tiki_p_blog_post')." -- user: $user ";
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied you cannot post"));
 

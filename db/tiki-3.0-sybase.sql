@@ -2082,9 +2082,9 @@ CREATE TABLE "tiki_menu_options" (
   "name" varchar(200) default NULL NULL,
   "url" varchar(255) default NULL NULL,
   "position" numeric(4,0) default NULL NULL,
-  "section" varchar(255) default NULL NULL,
-  "perm" varchar(255) default NULL NULL,
-  "groupname" varchar(255) default NULL NULL,
+  "section" text default NULL NULL,
+  "perm" text default NULL NULL,
+  "groupname" text default NULL NULL,
   "userlevel" numeric(4,0) default 0,
   PRIMARY KEY (optionId)
 ) ENGINE=MyISAM  
@@ -2422,7 +2422,7 @@ INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`",
 go
 
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (83,42,'s','File Galleries','tiki-list_file_gallery.php',600,'feature_file_galleries','tiki_p_view_file_gallery','',0)
+INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (83,42,'s','File Galleries','tiki-list_file_gallery.php',600,'feature_file_galleries','tiki-list_file_gallery.php|tiki_p_view_file_gallery|tiki_p_upload_files','',0)
 go
 
 
@@ -2434,7 +2434,7 @@ INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`",
 go
 
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (86,42,'o','Upload File','tiki-upload_file.php',615,'feature_file_galleries','tiki_p_view_file_gallery,tiki_p_upload_files','',0)
+INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (86,42,'o','Upload File','tiki-upload_file.php',615,'feature_file_galleries','tiki_p_upload_files','',0)
 go
 
 

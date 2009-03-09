@@ -1866,7 +1866,7 @@ class TikiLib extends TikiDB {
 				if (isset($res['section']) and $res['section']) {
 					if (strstr($res['section'], '|')) {
 						$display = false;
-						$sections = preg_split('/\s*|\s*/',$res['section']);
+						$sections = preg_split('/\s*\|\s*/',$res['section']);
 						foreach ($sections as $sec) {
 							if (!isset($prefs[$sec]) or $prefs[$sec] != 'y') {
 								$display = true;
@@ -1888,9 +1888,9 @@ class TikiLib extends TikiDB {
 					if (isset($res['perm']) and $res['perm']) {
 						if (strstr($res['perm'], '|')) {
 							$display = false;
-							$sections = preg_split('/\s*|\s*/',$res['perm']);
+							$sections = preg_split('/\s*\|\s*/',$res['perm']);
 							foreach ($sections as $sec) {
-								if (!isset($GLOBALS[$sec]) or $GLOBALS[$sec] != 'y') {
+								if (isset($GLOBALS[$sec]) && $GLOBALS[$sec] == 'y') {
 									$display = true;
 									break;
 								}
@@ -2274,7 +2274,7 @@ class TikiLib extends TikiDB {
 					global $cachelib; include_once('lib/cache/cachelib.php');
 				  $cacheName = md5("group:".implode("\n", $this->get_user_groups($user)));
   				$cacheType = 'fgals_perms_'.$galleryId."_";
-					if ($cachelib->isCached($cacheName, $cacheType)) {
+					if ($galleryId > 0 && $cachelib->isCached($cacheName, $cacheType)) {
 						$fgal_perms = unserialize($cachelib->getCached($cacheName, $cacheType));
 					} else {
 						$fgal_perms = array();
@@ -2285,6 +2285,9 @@ class TikiLib extends TikiDB {
 							$res['perms'] = $fgal_perms[$res['id']];
 						} else {
 							$fgal_perms[$res['id']] = $res['perms'] = $this->get_perm_object($res['id'], $object_type, array(), false);
+						}
+						if ($galleryId <=0) {
+							$cachelib->cacheItem($cacheName, serialize($fgal_perms), 'fgals_perms_'.$res['id'].'_');
 						}
 						// Don't return the current item, if :
 						//  the user has no rights to view the file gallery AND no rights to list all galleries (in case it's a gallery)
@@ -2313,7 +2316,8 @@ class TikiLib extends TikiDB {
 
 						$cant++;
 					}
-					$cachelib->cacheItem($cacheName, serialize($fgal_perms), $cacheType);
+					if ($galleryId > 0)
+						$cachelib->cacheItem($cacheName, serialize($fgal_perms), $cacheType);
 					if ( ! $need_everything ) $cant += $offset;
 
 
@@ -7887,7 +7891,7 @@ window.addEvent('domready', function() {
 			return $formatted;
 		}
 		foreach ($languages as $lc) {
-			if (!is_array($prefs['available_languages']) || (!$all and in_array($lc,$prefs['available_languages'])) or $all) {
+			if (empty($prefs['available_languages']) || (!$all and in_array($lc,$prefs['available_languages'])) or $all) {
 				if (isset($langmapping[$lc])) {
 					// known language
 					if ($langmapping[$lc][0] == $langmapping[$lc][1]) {
