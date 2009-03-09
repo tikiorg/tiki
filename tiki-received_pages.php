@@ -159,7 +159,7 @@ if (!isset($_REQUEST['sort_modes'])) {
 } else {
 	$sort_modes = $_REQUEST['sort_modes'];
 }
-$structures = $tikilib->list_received_pages(0, -1, $sort_modes, '', 's');
+$structures = $tikilib->list_received_pages(0, -1, $sort_modes, $find, 's');
 $smarty->assign_by_ref('structures', $structures['data']);
 
 if (!empty($errors)) {
