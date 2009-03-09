@@ -7892,7 +7892,7 @@ window.addEvent('domready', function() {
 			return $formatted;
 		}
 		foreach ($languages as $lc) {
-			if (!is_array($prefs['available_languages']) || (!$all and in_array($lc,$prefs['available_languages'])) or $all) {
+			if (empty($prefs['available_languages']) || (!$all and in_array($lc,$prefs['available_languages'])) or $all) {
 				if (isset($langmapping[$lc])) {
 					// known language
 					if ($langmapping[$lc][0] == $langmapping[$lc][1]) {
