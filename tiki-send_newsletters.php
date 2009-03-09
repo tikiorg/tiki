@@ -335,7 +335,7 @@ if (isset($_REQUEST["send"])) {
 	if (count($errors) > 0) {
 		$smarty->assign_by_ref('errors', $errors);
 	}
-	$editionId = $nllib->replace_edition($_REQUEST["nlId"], $_REQUEST["subject"], $_REQUEST["data"], count($sent), $editionId, false, $txt, $info['files']);
+	$editionId = $nllib->replace_edition($_REQUEST["nlId"], $_REQUEST["subject"], $_REQUEST["data"], count($sent), $editionId, false, !empty($_REQUEST['datatxt'])?$txt:'', $info['files']);
 	foreach($info['files'] as $k => $f) {
 		if ($f['savestate'] == 'tikitemp') {
 			$newpath=$prefs['tmpDir'].'/newsletterfile-'.$f['filename'];
