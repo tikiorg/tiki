@@ -152,7 +152,7 @@ window.addEvent('domready', function() {
 	$bgcolor = "background-color: " . ( isset($params['bgcolor']) ? $params['bgcolor'] : '#F5F5F5' ) . ';';
 	$textcolor = isset($params['textcolor']) ? ("color:" . $params['textcolor'] . ';') : '';
 
-	$html = "~np~<a id=\"$id-link\" href=\"$url\">$label</a><div id=\"$id\" style=\"width: {$width}px; height: {$height}px; {$bgcolor} {$textcolor} display:none; padding: {$padding}px ;position: absolute; z-index: 500;\">$text</div>~/np~";
+	$html = "~np~<a id=\"$id-link\" href=\"$url\">$label</a><div id=\"$id\" style=\"width: {$width}px; " . (isset($params['height']) ? "height: {$height}px; " : "") . "{$bgcolor} {$textcolor} display:none; padding: {$padding}px ;position: absolute; z-index: 500;\">$text</div>~/np~";
 
 	return $html;
 }
