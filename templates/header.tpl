@@ -60,7 +60,7 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 
 {*-- css menus block --*}
 {if $prefs.feature_cssmenus eq 'y'}
-<link rel="StyleSheet" href="css/cssmenus.css" type="text/css"></link>
+<link rel="StyleSheet" href="css/cssmenus.css" type="text/css" />
 {/if}
 
 {* --- universaleditbutton.org --- *}
