@@ -958,7 +958,7 @@ function get_users($offset = 0, $maxRecords = -1, $sort_mode = 'login_asc', $fin
 	// Return an array of users indicating name, email, last changed pages, versions, lastLogin
 
 	//TODO : recurse included groups
-	if($group) {
+	if(!empty($group)) {
 		if (!is_array($group)) {
 			$group = array($group);
 		}

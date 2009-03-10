@@ -106,7 +106,9 @@
 						<select name="filterGroup">
 							<option value=""></option>
 							{section name=ix loop=$all_groups}
-								<option value="{$all_groups[ix].groupName|escape}" {if $filterGroup eq $all_groups[ix].groupName}selected{/if}>{$all_groups[ix].groupName|escape}</option>
+								{if $all_groups[ix] != 'Registered' && $all_groups[ix] != 'Anonymous'}
+									<option value="{$all_groups[ix]|escape}" {if $filterGroup eq $all_groups[ix]}selected{/if}>{$all_groups[ix]|escape}</option>
+								{/if}
 							{/section}
 						</select>
 					</td>
@@ -193,17 +195,17 @@
 
 					<td>
 						{foreach from=$users[user].groups key=grs item=what name=gr}
-							<div>
-								{if $grs != "Anonymous"}
+							<div style="white-space:nowrap">
+								{if $grs != "Anonymous" and ($tiki_p_admin eq 'y' || in_array($grs, $all_groups))}
 									{if $what ne 'included' and $grs != "Registered"}
-										{self_link _class='link' user=$users[user].user action='removegroup' group=$grs _icon='delete' _title="{tr}Remove{/tr} `$users[user].user` {tr}from{/tr} $grs"}{/self_link}
+										{self_link _class='link' user=$users[user].user action='removegroup' group=$grs _icon='cross' _title="{tr}Remove{/tr} `$users[user].user` {tr}from{/tr} $grs"}{/self_link}
 									{else}
 										{icon _id='bullet_white'}
 									{/if}
 									{if $what eq 'included'}<i>{/if}
 									<a class="link" {$link_style} href="tiki-admingroups.php?group={$grs|escape:"url"}" title={if $what eq 'included'}"{tr}Edit Included Group{/tr}"{else}"{tr}Edit Group{/tr}: {$grs}"{/if}>{$grs}</a>
 									{if $what eq 'included'}</i>{/if}
-									{if $grs eq $users[user].default_group}({tr}default{/tr}){/if}
+									{if $grs eq $users[user].default_group}<small>({tr}default{/tr})</small>{/if}
 									{if !$smarty.foreach.gr.last}<br />{/if}
 								{/if}
 							</div>
@@ -258,8 +260,9 @@
 								{tr}the following groups:{/tr}
 								<br />
 								<select name="checked_groups[]" multiple="multiple" size="20">
-									{section name=ix loop=$groups}
-										<option value="{$groups[ix].groupName}">{$groups[ix].groupName}</option>
+									{section name=ix loop=$all_groups}
+											 
+										<option value="{$all_groups[ix]|escape}">{$all_groups[ix]|escape}</option>
 									{/section}
 								</select>
 								<br />
@@ -269,8 +272,8 @@
 								{tr}Set the default group of the selected users to{/tr}:
 								<br />
 								<select name="checked_group" size="20">
-									{section name=ix loop=$groups}
-										<option value="{$groups[ix].groupName|escape}" />{$groups[ix].groupName}</option>
+									{section name=ix loop=$all_groups}
+										<option value="{$all_groups[ix]|escape}" />{$all_groups[ix]|escape}</option>
 									{/section}
 								</select>
 								<br />
