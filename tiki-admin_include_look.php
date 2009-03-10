@@ -10,9 +10,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-if (!isset($prefs['site_style'])) {	// what am i missing here? shouldn't these get set earlier?
-	$prefs = array_merge($prefs, $tikilib->get_preferences('site_style%'));
-}
 $a_style = $prefs['site_style'];
 
 if (isset($_REQUEST["looksetup"])) {
