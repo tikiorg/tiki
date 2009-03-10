@@ -757,7 +757,7 @@ class TikiLib extends TikiDB {
 		$this->compute_quiz_stats();
 		if ($find) {
 			$findesc = '%' . $find . '%';
-			$mid = " where `quizName` like ? ";
+			$mid = ' where `quizName` like ? ';
 			$bindvars=array($findesc);
 		} else {
 			$mid = "  ";
@@ -1777,19 +1777,25 @@ class TikiLib extends TikiDB {
 	}
 
 	/*shared*/
-	function list_received_pages($offset, $maxRecords, $sort_mode = 'pageName_asc', $find='', $type='', $structureName='') {
+	function list_received_pages($offset, $maxRecords, $sort_mode, $find='', $type='', $structureName='') {
 		$bindvars = array();
 		if ($type == 's')
 			$mid = ' `trp`.`structureName` is not null ';
+			if (!$sort_mode) 
+				$sort_mode = '`structureName_asc';
 		elseif ($type == 'p')
 			$mid = ' `trp`.`structureName` is null ';
+			if (!$sort_mode) 
+				$sort_mode = '`pageName_asc';
 		else
 			$mid = '';
+
 		if ($find) {
 			$findesc = '%'.$find.'%';
 			if ($mid)
 				$mid .= ' and ';
-			$mid .= "(`trp`.`pagename` like ? or `trp`.`data` like ?)";
+			$mid .= '(`trp`.`pageName` like ? or `trp`.`structureName` like ? or `trp`.`data` like ?)';
+			$bindvars[] = $findesc;
 			$bindvars[] = $findesc;
 			$bindvars[] = $findesc;
 		}
@@ -1802,7 +1808,7 @@ class TikiLib extends TikiDB {
 		if ($mid)
 			$mid = "where $mid";
 
-		$query = "select trp.*, tp.`pageName` as pageExists from `tiki_received_pages` trp left join `tiki_pages` tp on (tp.`pageName`=trp.`pageName`) $mid order by `structureName` asc, `pos` asc,".$this->convert_sortmode($sort_mode);
+		$query = "select trp.*, tp.`pageName` as pageExists from `tiki_received_pages` trp left join `tiki_pages` tp on (tp.`pageName`=trp.`pageName`) $mid order by `structureName` asc, `pos` asc," . $this->convert_sortmode($sort_mode);
 		$query_cant = "select count(*) from `tiki_received_pages` trp $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);

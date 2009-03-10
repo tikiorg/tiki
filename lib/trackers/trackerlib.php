@@ -1605,9 +1605,7 @@ class TrackerLib extends TikiLib {
 			}
 			$need_reindex[] = $itemId;
 			if (!empty($cats)) {
-				foreach ($cats as $c) {
-					$this->categorized_item($trackerId, $itemId, "item $itemId", $cats);
-				}
+				$this->categorized_item($trackerId, $itemId, "item $itemId", $cats);
 			}
 			$query = "insert into `tiki_tracker_item_fields`(`itemId`,`fieldId`,`value`) values(?,?,?)";
 			$query2 = "update `tiki_tracker_item_fields` set `value`=? where `itemId`=? and `fieldId`=?";
@@ -1621,7 +1619,20 @@ class TrackerLib extends TikiLib {
 						if ($field['type'] == 'p' && $field['options_array'][0] == 'password') {
 							//$userlib->change_user_password($user, $ins_fields['data'][$i]['value']);
 							continue;
-						} elseif ($field['type'] == 'e' or $field['type'] == 's') {
+						} elseif ($field['type'] == 'e') {
+							$cats = split('%%%', trim($data[$i]));
+							if (!empty($cats)) {
+								foreach ($cats as $c) {
+									global $categlib; include_once('lib/categories/categlib.php');
+									if ($cId = $categlib->get_category_id(trim($c)))
+										$catIds[] = $cId;
+								}
+								if (!empty($catIds)) {
+									$this->categorized_item($trackerId, $itemId, "item $itemId", $catIds);
+								}
+							}
+							$data[$i] = '';
+						} elseif ($field['type'] == 's') {
 							$data[$i] = '';
 						} elseif ($field['type'] == 'a') {
 							$data[$i] = preg_replace('/\%\%\%/',"\r\n",$data[$i]);
@@ -1877,10 +1888,10 @@ class TrackerLib extends TikiLib {
 
 		$options=$this->get_tracker_options($trackerId);
 		if (isset ($option) && isset($option['autoCreateCategories']) && $option['autoCreateCategories']=='y') {
-
-		$currentCategId=$categlib->get_category_id("Tracker Item $itemId");
-		$categlib->remove_category($currentCategId);
+			$currentCategId=$categlib->get_category_id("Tracker Item $itemId");
+			$categlib->remove_category($currentCategId);
 		}
+		$this->remove_object("tracker $trackerId", $itemId);
 		return true;
 	}
 

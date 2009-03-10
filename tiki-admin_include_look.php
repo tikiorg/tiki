@@ -10,9 +10,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-if (!isset($prefs['site_style'])) {	// what am i missing here? shouldn't these get set earlier?
-	$prefs = array_merge($prefs, $tikilib->get_preferences('site_style%'));
-}
 $a_style = $prefs['site_style'];
 
 if (isset($_REQUEST["looksetup"])) {
@@ -48,7 +45,6 @@ if (isset($_REQUEST["looksetup"])) {
     "feature_siteidentity",
 	"feature_siteloclabel",
 	"feature_sitelogo",
-	"feature_sitetitle",
 	"feature_sitesubtitle",
 	"feature_sitenav",
 	"feature_sitesearch",
@@ -151,13 +147,17 @@ closedir ($h);
 
 $smarty->assign_by_ref("slide_styles", $slide_styles);
 
-if (isset($_REQUEST["looksetup"]) && (isset($_REQUEST["site_style"]) || isset($_REQUEST["site_style_option"]))) {
-	// If the theme has changed, reload the page to use the new theme
-	$location= 'location: tiki-admin.php?page=look';
-	if ($prefs['feature_tabs'] == 'y') {
-		$location .= "&cookietab=".$_COOKIE['tab'];
+if (isset($_REQUEST["looksetup"])) {
+	for ($i = 0; $i < count($tikifeedback); $i++) {
+		if (substr($tikifeedback[$i]['name'], 0, 10) == 'site_style') {	// if site_style or site_style_option
+			// If the theme has changed, reload the page to use the new theme
+			$location= 'location: tiki-admin.php?page=look';
+			if ($prefs['feature_tabs'] == 'y') {
+				$location .= "&cookietab=".$_COOKIE['tab'];
+			}
+			header($location);
+			exit;
+		}
 	}
-	header($location);
-	exit;
 }
 ?>

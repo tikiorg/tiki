@@ -23,7 +23,7 @@
 						<span>{tr}Theme{/tr}</span>
 					</a>
 				</legend>
-				<div id="theme" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_theme) and $smarty.session.tiki_cookie_jar.show_theme neq 'y'}none{else}block{/if};">
+				<div id="theme" style="display:{if isset($smarty.session.tiki_cookie_jar.show_theme) and $smarty.session.tiki_cookie_jar.show_theme neq 'y'}none{else}block{/if};">
 			{/if}
 				<table class="admin">
 					<tr>
@@ -36,7 +36,15 @@
 								<option value="{$styles[ix]|escape}"{if $a_style eq $styles[ix]} selected="selected"{/if}>{$styles[ix]}</option>
 							{/section}
 							</select>
-							{if $prefs.site_style != $a_style}<span class="highlight">{tr}* Note: Theme displayed differs from "site" theme ({$prefs.site_style}).{/tr}</span>{/if}
+							{if $prefs.javascript_enabled eq 'n'}
+								<input type="submit" name="changestyle" value="{tr}Go{/tr}" />
+							{/if}
+	  						{if $prefs.change_theme eq 'y'}
+	  							{remarksbox type="warning" title="{tr}Admin{/tr}"}{tr}The Switch Theme Module will override the theme setting if you have it enabled.{/tr}{/remarksbox}
+							{/if}
+							{if $prefs.site_style != $a_style}
+								{remarksbox type="note" title="{tr}Note{/tr}}{tr}Theme not saved yet - click "Apply"{/tr}{/remarksbox}
+							{/if}
 						</td>
 					</tr>
 					
@@ -185,7 +193,7 @@
 						<span>{tr}General Layout options{/tr}</span>
 					</a>
 				</legend>
-				<div id="layout" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_layout) and $smarty.session.tiki_cookie_jar.show_layout neq 'y'}none{else}block{/if};">{/if}
+				<div id="layout" style="display:{if isset($smarty.session.tiki_cookie_jar.show_layout) and $smarty.session.tiki_cookie_jar.show_layout neq 'y'}none{else}block{/if};">{/if}
 				<table class="admin" width="100%">
 				<tr>
 					<td class="form" colspan="5">
@@ -660,7 +668,7 @@
 					<span>{tr}UI Effects{/tr}</span>
 					</a>
 				</legend>
-				<div id="ui_effects" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_other) and $smarty.session.tiki_cookie_jar.show_other neq 'y'}none{else}block{/if};">
+				<div id="ui_effects" style="display:{if isset($smarty.session.tiki_cookie_jar.show_other) and $smarty.session.tiki_cookie_jar.show_other neq 'y'}none{else}block{/if};">
 			{/if}
 			<fieldset class="admin">
 				<legend>
@@ -914,7 +922,7 @@
 					<span>{tr}Other options{/tr}</span>
 					</a>
 				</legend>
-				<div id="other" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_other) and $smarty.session.tiki_cookie_jar.show_other neq 'y'}none{else}block{/if};">
+				<div id="other" style="display:{if isset($smarty.session.tiki_cookie_jar.show_other) and $smarty.session.tiki_cookie_jar.show_other neq 'y'}none{else}block{/if};">
 			{/if}
 			<fieldset class="admin">
 				<legend>

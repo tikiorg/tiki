@@ -12,7 +12,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 $flagmapping = array(
     'ar' 	=> array(  ''),
     'ca' 	=> array(  'Spain'),
-    'cn' 	=> array(  'Cina'),
+    'cn' 	=> array(  'China'),
     'zh' 	=> array(  'China'),
     'cs' 	=> array(  'Czech_Republic'),
     'da' 	=> array(  'Denmark'),
