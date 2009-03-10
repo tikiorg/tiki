@@ -36,6 +36,9 @@
 								<option value="{$styles[ix]|escape}"{if $a_style eq $styles[ix]} selected="selected"{/if}>{$styles[ix]}</option>
 							{/section}
 							</select>
+							{if $prefs.javascript_enabled eq 'n'}
+								<input type="submit" name="changestyle" value="{tr}Go{/tr}" />
+							{/if}
 	  						{if $prefs.change_theme eq 'y'}
 	  							{remarksbox type="warning" title="{tr}Admin{/tr}"}{tr}The Switch Theme Module will override the theme setting if you have it enabled.{/tr}{/remarksbox}
 							{/if}
