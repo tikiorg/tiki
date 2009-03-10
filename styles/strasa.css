@@ -396,7 +396,8 @@ div.floatleft {
 	clear: none}
 
 div#sitelogo {
-	width: 66%;
+	position: absolute;
+	top: 10px; left: 10px;
 	margin: auto}
 
 div#sitead {margin: auto}
@@ -438,14 +439,16 @@ input[id="sl-login-pass"] {
  float: right;
  padding-left: 5px}
  
- #siteloginbar .rme {display: inline; margin-left: 1em}
+#siteloginbar .rme {display: inline; margin-left: 1em}
 
 #siteloginbar .register {
 	float: right;
 	height: 24px !important;
+	line-height: 22px;
 	padding-left: 60px;
 	padding-right: 10px;
-	padding-top: 2px;
+	padding-top: 0;
+	margin-top: -1px;
 	background: url(strasa/register.jpg) no-repeat}
 
 *:first-child+html #siteloginbar .register {margin-top: -26px}
@@ -499,7 +502,7 @@ input[id="sl-login-pass"] {
 #tiki-top {
 	text-align: right;
 	margin-right: 40px;
-	padding-top: 20px}
+	}
 
 * html #tiki-top { font-size: 11px }
 #tiki-top a,
@@ -585,19 +588,29 @@ a.flip img {display: none}
 /* Text in the top level (visible by default) of the menu */
 .horbaritem a,
 .horbaritem a:visited {
-	padding: 3px;
+	padding: 0 3px;
 	text-decoration: none;
 	font: 1em Verdana, Helvetica, Arial, Sans-Serif;
 	margin: 0}
 	
-#header .horbaritem a {color: #5ae0ff}
+#header .horbaritem a {
+	border-color: transparent; border-width: 0 1px;
+	color: #5ae0ff; 
+	display: block; 
+	line-height: 97px;
+	min-height: 97px; min-width: 80px;
+	text-align: center}
 
 .horbaritem a:hover {
 	background: #fff;
 	color: #eee !important;
 	text-decoration: none} 
 	
-#header .horbaritem a:hover {color: #fff;background: none}
+#header .horbaritem a:hover {
+	background: url('strasa/headermenuitem-hover.png') bottom center repeat-x;
+	border-color: #336699; border-width: 0 1px;
+	color: #fff;
+}
 
 * html .horbaritem a {font-size: .8em}
 .mdkverbar {} 
@@ -643,6 +656,7 @@ a.flip img {display: none}
 .mdkitem a:visited {text-decoration: none} 
 
 .mdkitem a:hover {
+	background: transparent url('styles/strasa/headerbg.jpg') repeat-x;
 	color: #fff;
 	text-decoration: none} 
 
