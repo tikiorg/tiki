@@ -103,7 +103,7 @@ if (!$skip) {
 
 	if ( !$zip && $tiki_p_admin_file_galleries != 'y' && !$userlib->user_has_perm_on_object($user, $info['galleryId'], 'file gallery', 'tiki_p_download_files')) {
 		$smarty->assign('errortype', 401);
-		$smarty->assign('msg', tra('You can not download files'));
+		$smarty->assign('msg', tra('Permission denied'));
 		$smarty->display('error.tpl');
 		die;
 	}
