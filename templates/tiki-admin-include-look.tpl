@@ -39,8 +39,8 @@
 							{if $prefs.javascript_enabled eq 'n'}
 								<input type="submit" name="changestyle" value="{tr}Go{/tr}" />
 							{/if}
-	  						{if $prefs.change_theme eq 'y'}
-	  							{remarksbox type="warning" title="{tr}Admin{/tr}"}{tr}The Switch Theme Module will override the theme setting if you have it enabled.{/tr}{/remarksbox}
+	  						{if $prefs.change_theme eq 'y' and ($user_prefs.theme neq '' and $prefs.site_style neq $user_prefs.theme) or ($prefs.style neq '' and $prefs.site_style neq $prefs.style)}
+	  							{remarksbox type="warning" title="{tr}Admin{/tr}"}{tr}The "users can change theme" feature will override the theme displayed.{/tr}{/remarksbox}
 							{/if}
 							{if $prefs.site_style != $a_style}
 								{remarksbox type="note" title="{tr}Note{/tr}}{tr}Theme not saved yet - click "Apply"{/tr}{/remarksbox}
