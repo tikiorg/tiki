@@ -17,7 +17,7 @@ if ($prefs['feature_trackers'] != 'y') {
 include_once ('lib/trackers/trackerlib.php');
 
 if ($prefs['feature_categories'] == 'y') {
-	include_once('lib/categories/categlib.php');
+	global $categlib; include_once('lib/categories/categlib.php');
 }
 include_once ("lib/filegals/filegallib.php");
 include_once ('lib/notifications/notificationlib.php');
@@ -297,9 +297,18 @@ $tikilib->get_perm_object($_REQUEST['trackerId'], 'tracker', $tracker_info);
 
 if ($tiki_p_view_trackers != 'y' and $tracker_info["writerCanModify"] != 'y' and $tracker_info["writerGroupCanModify"] != 'y'&& !$special) {
 	$smarty->assign('errortype', 401);
-	$smarty->assign('msg', tra("You do not have permission to use this feature"));
+	$smarty->assign('msg', tra("Permission denied"));
 	$smarty->display("error.tpl");
 	die;
+}
+if ($tiki_p_admin_trackers != 'y') {
+	$itemPerms = $categlib->get_object_categories_perms($user, 'tracker '.$_REQUEST['trackerId'], $_REQUEST['itemId']);
+	if (isset($itemPerms['tiki_p_view_categorized']) && $itemPerms['tiki_p_view_categorized'] == 'n') {
+		$smarty->assign('errortype', 401);
+		$smarty->assign('msg', tra("Permission denied"));
+		$smarty->display("error.tpl");
+		die;
+	}
 }
 
 $status_types = $trklib->status_types();
