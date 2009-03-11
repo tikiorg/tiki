@@ -594,7 +594,7 @@ a.flip img {display: none}
 	margin: 0}
 	
 #header .horbaritem a {
-	border-color: transparent; border-width: 0 1px;
+	border-color: transparent; border-style: solid; border-width: 0 1px;
 	color: #5ae0ff; 
 	display: block; 
 	line-height: 97px;
@@ -608,7 +608,7 @@ a.flip img {display: none}
 	
 #header .horbaritem a:hover {
 	background: url('strasa/headermenuitem-hover.png') bottom center repeat-x;
-	border-color: #336699; border-width: 0 1px;
+	border-color: #336699; border-style: solid; border-width: 0 1px;
 	color: #fff;
 }
 
