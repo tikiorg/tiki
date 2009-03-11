@@ -61,6 +61,8 @@ option,
 select,
 body.wikitext {background: #F3FCFE; color: #000}
 
+select {margin: 0 2px}
+
 /** html .wikitopline select {font-size: .9em}*/
 input.button {}
 
@@ -428,11 +430,11 @@ div.logged-in {padding-right: 20px}
 #siteloginbar * {white-space: nowrap}
 #siteloginbar form {padding-right: 0}
 
-input[id="sl-login-user"],
-input[id="sl-login-pass"] {
+#sl-login-user,
+#sl-login-pass {
 	background: /*#1b98c6*/transparent;
 	color: #fff;
-	border: 0;
+	border: solid 1px #fff;
 	width: 8em !important}
 	
 #siteloginbar #pass {
@@ -535,23 +537,38 @@ input[name="search"] {}
 #showhide_columns {}
 
 a.flip,
-a.flip:visited,
+a.flip:visited {
+
+}
 .tellafriend a,
 .tellafriend a:visited {
+	background: transparent url(strasa/fold-topright.jpg) 0 0 no-repeat;
+	display: block;
+	float: right;
 	font-size: 80%;
-	color: silver}
+	color: #fff;
+	min-height: 24px; line-height: 22px;
+	padding-right: 1em;
+	width: 16em;
+}
 
-a.flip:hover,
+
 .tellafriend a:hover {
-	color: #006699;
+	color: #fff;
 	text-decoration: none}
 
 a.flip img {display: none}
-.tellafriend {}
+.tellafriend {
+	border-bottom: solid 1px #cce5ff;
+	margin: 4px 0; 
+	min-height: 24px;
+	text-align: right;
+}
+
 .fullscreen .tellafriend {}
 
 /* Also is .content */
-#tiki-center {}
+#tiki-center {clear: both;}
 
 /* IE */
 * html #tiki-center {font-size: 1em}
@@ -2660,5 +2677,10 @@ div.minichatchans {overflow: auto}
 div.minichatdiv {
 	font-size: .9em;
 	overflow: auto}
+
+/* submit buttons input type="submit" in a container */
+.input_submit_container {
+	padding: 1px;
+}
 
 /* end of file */
