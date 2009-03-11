@@ -346,7 +346,7 @@ ul.categories li{
 .calodd .calfocuson,
 .caleven .calfocus,
 .caleven .calfocuson {
-	background-color: none;
+	background: none;
 	border-width: 0px;
 	padding-top: 2px;
 	padding-left: 2px;
