@@ -106,6 +106,7 @@ if (isset($_REQUEST["looksetup"])) {
     'jquery_effect_tabs',
     'jquery_effect_tabs_direction',
     'jquery_effect_tabs_speed',
+	'available_styles',
     );
 
     foreach ($pref_simple_values as $svitem) {
