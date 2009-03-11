@@ -75,7 +75,7 @@
 								  <option value=''>{tr}All{/tr}</option>
 						          {section name=ix loop=$styles}
 						            <option value="{$styles[ix]|escape}"
-						              {if in_array($styles[ix], $prefs.available_styles)}selected="selected"{/if}>
+						              {if $prefs.available_styles|count gt 0 and in_array($styles[ix], $prefs.available_styles)}selected="selected"{/if}>
 						              {$styles[ix]}
 						            </option>
 						          {/section}
