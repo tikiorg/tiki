@@ -984,6 +984,16 @@
 							</select>
 						</td>
 					</tr>
+					<tr>
+						<td width=30%>
+			        		<label for="feature_ie56_correct_png">{tr}Correct PNG transparency in IE5.5 and IE6 (experimental){/tr}</label>
+						</td>
+						<td width=2%>
+						</td>
+						<td>
+							<input type="checkbox" name="feature_ie56_correct_png" id="feature_ie56_correct_png" {if $prefs.feature_ie56_correct_png eq 'y'}checked="checked"{/if}/>
+						</td>
+					</tr>
 				</table>
 				<fieldset>
 					<legend>
