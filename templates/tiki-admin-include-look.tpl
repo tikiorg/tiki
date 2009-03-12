@@ -31,7 +31,7 @@
 							<label for="general-theme">{tr}Theme{/tr}:</label>
 						</td>
 						<td width="67%">
-							<select name="site_style" id="general-theme" onchange="this.form.submit();">
+							<select name="site_style" id="general-theme">
 							{section name=ix loop=$styles}
 								<option value="{$styles[ix]|escape}"{if $a_style eq $styles[ix]} selected="selected"{/if}>{$styles[ix]}</option>
 							{/section}
