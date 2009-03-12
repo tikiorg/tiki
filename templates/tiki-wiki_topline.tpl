@@ -54,7 +54,7 @@
 	{/if}
 	{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
 		{popup_link block=page_group_watch}
-			{icon _id=eye alt='{tr}Show Group Watches on page{/tr}'}
+			{icon _id=eye_group alt='{tr}Show Group Watches on page{/tr}'}
 		{/popup_link}
 		<div id="page_group_watch" class="popup-group-watch">
 			{foreach from=$grouplist item=g}

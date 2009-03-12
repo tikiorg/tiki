@@ -133,9 +133,55 @@ if (isset($_REQUEST["looksetup"])) {
 	}
 }
 
-$smarty->assign_by_ref( "styles", $tikilib->list_styles());
+$styles = $tikilib->list_styles();
+$smarty->assign_by_ref( "styles", $styles);
 $smarty->assign('a_style', $a_style);
 $smarty->assign_by_ref( "style_options", $tikilib->list_style_options($a_style));
+
+if ($prefs['feature_jquery']) {
+	// hash of themes and their options
+	$js = 'var style_options = {';
+	foreach($styles as $s) {
+		$js .= "'$s':[";
+		$options = $tikilib->list_style_options($s);
+		if ($options) {
+			foreach($options as $o) {
+				$js .= "'$o',";
+			}
+			$js = substr($js, 0, strlen($js)-1);
+		}
+		$js .= '],';
+	}
+	$js = substr($js, 0, strlen($js)-1);
+	$js .= '};';
+	$headerlib->add_js($js);
+	
+	// JS to handle theme/option changes client-side
+	$none = tr('None');
+	$headerlib->add_js(<<<JS
+\$jq(document).ready( function() {
+	// pick up theme drop-down change
+	\$jq('#general-theme').change( function() {
+		var ops = style_options[\$jq('#general-theme').val()];
+		if (ops.length > 0) {
+			\$jq('#general-theme-options').empty().attr("disabled","").attr("selectedIndex", 0);
+			\$jq.map(ops, function(o) {
+				\$jq('#general-theme-options').append(\$jq(document.createElement("option")).attr("value",o).text(o));
+			});
+		} else {
+			\$jq('#general-theme-options').empty().attr("disabled","disabled").
+					append(\$jq(document.createElement("option")).attr("value","$none").text("$none"));
+		}
+	});
+	\$jq('#general-theme').change( function() {
+		//alert(\$jq('#general-theme').val());
+	});
+});
+JS
+	);
+}
+
+
 
 // Get list of available slideshow styles
 $slide_styles = array();
