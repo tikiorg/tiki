@@ -2741,13 +2741,14 @@ class TrackerLib extends TikiLib {
 	}
 	/* list all the values of a field
 	 */
-	function list_tracker_field_values($trackerId, $fieldId, $status='o') {
+	function list_tracker_field_values($trackerId, $fieldId, $status='o', $distinct='y') {
 		$mid = '';
 		$bindvars[] = (int)$fieldId;
 		if (!$this->getSqlStatus($status, $mid, $bindvars, $trackerId))
 			return null;
 		$sort_mode = "value_asc";
-		$query = "select distinct(ttif.`value`) from `tiki_tracker_item_fields` ttif, `tiki_tracker_items` tti where tti.`itemId`= ttif.`itemId`and ttif.`fieldId`=? $mid order by ".$this->convert_sortmode($sort_mode);
+		$distinct = $distinct == 'y'?'distinct': '';
+		$query = "select $distinct(ttif.`value`) from `tiki_tracker_item_fields` ttif, `tiki_tracker_items` tti where tti.`itemId`= ttif.`itemId`and ttif.`fieldId`=? $mid order by ".$this->convert_sortmode($sort_mode);
 		$result = $this->query( $query, $bindvars);
 		$ret = array();
 		while ($res = $result->fetchRow()) {

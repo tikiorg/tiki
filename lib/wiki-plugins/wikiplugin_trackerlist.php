@@ -185,6 +185,11 @@ function wikiplugin_trackerlist_info() {
 				'name' => tra('Export Button'),
 				'description' => 'y|n',
 			),
+			'compute' => array(
+				'required' => false,
+				'name' => tra('Compute'),
+				'description' => tra('Sum or average all the values of a field  and displays it at the bottom of the table.').' '.tra('fieldId').'/sum:'.tra('fieldId').'/avg',
+			),
 		),
 	);
 }
@@ -595,6 +600,32 @@ function wikiplugin_trackerlist($data, $params) {
 					$res = $trklib->get_item_nb_attachments($items["data"][$itkey]['itemId']);
 					$items["data"][$itkey]['attachments']  = $res['attachments'];
 				}
+			}
+			if (!empty($compute)) {
+				$fs = preg_split('/ *: */', $compute);
+				foreach ($fs as $fieldId) {
+					if (strstr($fieldId, "/")) {
+						list($fieldId, $oper) = preg_split('/ *\/ */', $fieldId);
+						$oper = strtolower($oper);
+						if ($oper == 'average') {
+							$oper = 'avg';
+						} elseif ($oper != 'sum' && $oper != 'avg') {
+							$oper = 'sum';
+						}
+					} else {
+						$oper = 'sum';
+					}
+					$l = $trklib->list_tracker_field_values($trackerId, $fieldId, $tr_status, 'n');
+					foreach ($l as $i=>$ll) {
+						if (preg_match('/^ *$/', $ll) || !is_numeric($ll))
+							$l[$i] = '0';
+					}
+					eval('$value='.implode('+', $l).';');
+					if ($oper == 'avg')
+						$value = round($value / count($l));
+					$computedFields[$fieldId] = array_merge(array('operator'=>$oper, 'value'=>$value), $passfields[$fieldId]);
+				}
+				$smarty->assign_by_ref('computedFields', $computedFields);
 			}
 			if (!isset($tpl) && !empty($wiki)) {
 				$tpl = "wiki:$wiki";

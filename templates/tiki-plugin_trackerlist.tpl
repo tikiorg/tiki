@@ -34,6 +34,7 @@
 
 {if $showfieldname ne 'n' and empty($tpl)}
 <tr>
+
 {if $checkbox}<th>{$checkbox.title}</td>{/if}
 {if ($showstatus ne 'n') and ($tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y'))}
 	<th class="auto" style="width:20px;">&nbsp;</th>
@@ -62,11 +63,12 @@
 <th>{self_link _sort_arg='tr_sort_mode' _sort_field='lastModif'}{tr}LastModif{/tr}{/self_link}</th>
 {/if}
 {if $tracker_info.useComments eq 'y' and $tracker_info.showComments eq 'y' and $tiki_p_tracker_view_comments ne 'n'}
-<th wstyle="width:5%">{tr}Coms{/tr}</th>
+<th style="width:5%">{tr}Coms{/tr}</th>
 {/if}
 {if $tracker_info.useAttachments eq 'y' and  $tracker_info.showAttachments eq 'y'}
 <th style="width:5%">{tr}atts{/tr}</th>
 {/if}
+
 </tr>
 {/if}
 {/if}
@@ -167,6 +169,25 @@ link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" alt="{tr}List
 {/section}
 
 {if empty($tpl)}
+	{if !empty($computedFields) and $items|@count gt 0}
+		<tr>
+		{if $checkbox}<td></td>{/if}
+		{if ($showstatus ne 'n') and ($tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y'))}<td></td>{/if}
+		{foreach key=jx item=ix from=$fields}
+			{if $ix.isPublic eq 'y' and ($ix.isHidden eq 'n' or $ix.isHidden eq 'c' or $ix.isHidden eq 'p' or $tiki_p_admin_trackers eq 'y') and $ix.type ne 'x' and $ix.type ne 'h' and in_array($ix.fieldId, $listfields) and ($ix.type ne 'p' or $ix.options_array[0] ne 'password') and (empty($ix.visibleBy) or in_array($default_group, $ix.visibleBy) or $tiki_p_admin_trackers eq 'y')}	
+			<td>{if isset($computedFields[$ix.fieldId])}
+					{if $computedFields[$ix.fieldId].operator eq 'avg'}{tr}Average{/tr}{else}{tr}Sum{/tr}{/if}<br />
+					{include file="tracker_item_field_value.tpl" item=$items[user] field_value=$computedFields[$ix.fieldId] list_mode=$list_mode}
+				{/if}
+			</td>
+			{/if}
+		{/foreach}
+		{if $showcreated eq 'y'}<td></td>{/if}
+		{if $showlastmodif eq 'y'}<td></td>{/if}
+		{if $tracker_info.useComments eq 'y' and $tracker_info.showComments eq 'y' and $tiki_p_tracker_view_comments ne 'n'}<td></td>{/if}
+		{if $tracker_info.useAttachments eq 'y' and $tracker_info.showAttachments eq 'y'}<td></td>{/if}
+		</tr>
+	{/if}
 </table>
 {if $items|@count eq 0}
 {tr}No records found{/tr}
