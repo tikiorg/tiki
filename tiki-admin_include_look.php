@@ -138,17 +138,47 @@ $smarty->assign_by_ref( "styles", $styles);
 $smarty->assign('a_style', $a_style);
 $smarty->assign_by_ref( "style_options", $tikilib->list_style_options($a_style));
 
-if ($prefs['feature_jquery']) {
-	// hash of themes and their options
+function getThumbnailFile($inStyle, $inStyleOption) {	// find thumbnail if there is one
+	global $tikidomain;
+
+	$stlstl = split("-|\.", $inStyle);
+	$style_base = $stlstl[0];
+	
+	if (!empty($inStyleOption) && $inStyleOption != tr('None')) {
+		$filename = substr($inStyleOption, 0, strlen($inStyleOption) - 4) . '.png';	// strip off '.css'?
+		$style_base .= '/options';
+	} else {
+		$filename = $style_base . '.png';
+	}
+	if ($tikidomain && is_file('styles/'.$tikidomain.'/'.$style_base.'/'.$filename) ) {
+		return 'styles/'.$tikidomain.'/'.$style_base.'/'.$filename;
+	} else if (is_file('styles/'.$style_base.'/'.$filename)) {
+		return 'styles/'.$style_base.'/'.$filename;
+	} else {
+		return '';
+	}
+}
+
+// find thumbnail if there is one
+$thumbfile = getThumbnailFile($a_style, $prefs['site_style_option']);
+
+if (!empty($thumbfile)) {
+	$smarty->assign('thumbfile', $thumbfile);
+}
+
+if ($prefs['feature_jquery'] == 'y') {
+	// hash of themes and their options and their thumbnail images
 	$js = 'var style_options = {';
 	foreach($styles as $s) {
-		$js .= "'$s':[";
+		$js .= "\n'$s':['" . getThumbnailFile($s, '') . '\',{';
 		$options = $tikilib->list_style_options($s);
 		if ($options) {
 			foreach($options as $o) {
-				$js .= "'$o',";
+				$js .= "'$o':'" . getThumbnailFile($s, $o) . '\',';
 			}
-			$js = substr($js, 0, strlen($js)-1);
+			$js = substr($js, 0, strlen($js)-1) . '}';
+		} else {
+			$js .= '}';
 		}
 		$js .= '],';
 	}
@@ -163,18 +193,31 @@ if ($prefs['feature_jquery']) {
 	// pick up theme drop-down change
 	\$jq('#general-theme').change( function() {
 		var ops = style_options[\$jq('#general-theme').val()];
-		if (ops.length > 0) {
-			\$jq('#general-theme-options').empty().attr("disabled","").attr("selectedIndex", 0);
-			\$jq.map(ops, function(o) {
-				\$jq('#general-theme-options').append(\$jq(document.createElement("option")).attr("value",o).text(o));
-			});
-		} else {
-			\$jq('#general-theme-options').empty().attr("disabled","disabled").
-					append(\$jq(document.createElement("option")).attr("value","$none").text("$none"));
+		var none = true;
+		\$jq('#general-theme-options').empty().attr('disabled','').attr('selectedIndex', 0);
+		\$jq.each(ops[1], function(i, val) {
+			\$jq('#general-theme-options').append(\$jq(document.createElement('option')).attr('value',i).text(i));
+			none = false;
+		});
+		if (none) {
+			\$jq('#general-theme-options').empty().attr('disabled','disabled').
+					append(\$jq(document.createElement('option')).attr('value',"$none").text("$none"));
 		}
 	});
 	\$jq('#general-theme').change( function() {
-		//alert(\$jq('#general-theme').val());
+		var t = \$jq('#general-theme').val();
+		var f = style_options[t][0];
+		if (f) {
+			\$jq('#style_thumb').fadeOut('fast').attr('src', f).fadeIn('fast');
+}
+	});
+	\$jq('#general-theme-options').change( function() {
+		var t = \$jq('#general-theme').val();
+		var o = \$jq('#general-theme-options').val();
+		var f = style_options[t][1][o];
+		if (f) {
+			\$jq('#style_thumb').fadeOut('fast').attr('src', f).fadeIn('fast');
+}
 	});
 });
 JS

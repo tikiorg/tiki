@@ -25,6 +25,7 @@
 				</legend>
 				<div id="theme" style="display:{if isset($smarty.session.tiki_cookie_jar.show_theme) and $smarty.session.tiki_cookie_jar.show_theme neq 'y'}none{else}block{/if};">
 			{/if}
+				{if isset($thumbfile)}<div id="style_thumb_div"><img src={$thumbfile} id="style_thumb" /></div>{/if}
 				<table class="admin">
 					<tr>
 						<td class="form" >
@@ -36,7 +37,7 @@
 								<option value="{$styles[ix]|escape}"{if $a_style eq $styles[ix]} selected="selected"{/if}>{$styles[ix]}</option>
 							{/section}
 							</select>
-							{if $prefs.javascript_enabled eq 'n'}
+							{if $prefs.javascript_enabled eq 'n' or $prefs.feature_jquery eq 'n'}
 								<input type="submit" name="changestyle" value="{tr}Go{/tr}" />
 							{/if}
 	  						{if $prefs.change_theme eq 'y' and ($user_prefs.theme neq '' and $prefs.site_style neq $user_prefs.theme) or ($prefs.style neq '' and $prefs.site_style neq $prefs.style)}
