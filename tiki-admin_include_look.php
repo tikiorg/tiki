@@ -72,6 +72,7 @@ if (isset($_REQUEST["looksetup"])) {
 	'feature_jquery_superfish',
 	'feature_jquery_reflection',
     'feature_jquery_sheet',
+    'feature_ie56_correct_png',
     );
 
     foreach ($pref_toggles as $toggle) {
@@ -105,6 +106,7 @@ if (isset($_REQUEST["looksetup"])) {
     'jquery_effect_tabs',
     'jquery_effect_tabs_direction',
     'jquery_effect_tabs_speed',
+	'available_styles',
     );
 
     foreach ($pref_simple_values as $svitem) {

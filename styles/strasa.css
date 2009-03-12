@@ -61,6 +61,8 @@ option,
 select,
 body.wikitext {background: #F3FCFE; color: #000}
 
+select {margin: 0 2px}
+
 /** html .wikitopline select {font-size: .9em}*/
 input.button {}
 
@@ -396,7 +398,8 @@ div.floatleft {
 	clear: none}
 
 div#sitelogo {
-	width: 66%;
+	position: absolute;
+	top: 10px; left: 10px;
 	margin: auto}
 
 div#sitead {margin: auto}
@@ -427,25 +430,27 @@ div.logged-in {padding-right: 20px}
 #siteloginbar * {white-space: nowrap}
 #siteloginbar form {padding-right: 0}
 
-input[id="sl-login-user"],
-input[id="sl-login-pass"] {
+#sl-login-user,
+#sl-login-pass {
 	background: /*#1b98c6*/transparent;
 	color: #fff;
-	border: 0;
+	border: solid 1px #fff;
 	width: 8em !important}
 	
 #siteloginbar #pass {
  float: right;
  padding-left: 5px}
  
- #siteloginbar .rme {display: inline; margin-left: 1em}
+#siteloginbar .rme {display: inline; margin-left: 1em}
 
 #siteloginbar .register {
 	float: right;
 	height: 24px !important;
+	line-height: 22px;
 	padding-left: 60px;
 	padding-right: 10px;
-	padding-top: 2px;
+	padding-top: 0;
+	margin-top: -1px;
 	background: url(strasa/register.jpg) no-repeat}
 
 *:first-child+html #siteloginbar .register {margin-top: -26px}
@@ -499,7 +504,7 @@ input[id="sl-login-pass"] {
 #tiki-top {
 	text-align: right;
 	margin-right: 40px;
-	padding-top: 20px}
+	}
 
 * html #tiki-top { font-size: 11px }
 #tiki-top a,
@@ -532,23 +537,38 @@ input[name="search"] {}
 #showhide_columns {}
 
 a.flip,
-a.flip:visited,
+a.flip:visited {
+
+}
 .tellafriend a,
 .tellafriend a:visited {
+	background: transparent url(strasa/fold-topright.jpg) 0 0 no-repeat;
+	display: block;
+	float: right;
 	font-size: 80%;
-	color: silver}
+	color: #fff;
+	min-height: 24px; line-height: 22px;
+	padding-right: 1em;
+	width: 16em;
+}
 
-a.flip:hover,
+
 .tellafriend a:hover {
-	color: #006699;
+	color: #fff;
 	text-decoration: none}
 
 a.flip img {display: none}
-.tellafriend {}
+.tellafriend {
+	border-bottom: solid 1px #cce5ff;
+	margin: 4px 0; 
+	min-height: 24px;
+	text-align: right;
+}
+
 .fullscreen .tellafriend {}
 
 /* Also is .content */
-#tiki-center {}
+#tiki-center {clear: both;}
 
 /* IE */
 * html #tiki-center {font-size: 1em}
@@ -585,19 +605,29 @@ a.flip img {display: none}
 /* Text in the top level (visible by default) of the menu */
 .horbaritem a,
 .horbaritem a:visited {
-	padding: 3px;
+	padding: 0 3px;
 	text-decoration: none;
 	font: 1em Verdana, Helvetica, Arial, Sans-Serif;
 	margin: 0}
 	
-#header .horbaritem a {color: #5ae0ff}
+#header .horbaritem a {
+	border-color: transparent; border-style: solid; border-width: 0 1px;
+	color: #5ae0ff; 
+	display: block; 
+	line-height: 97px;
+	min-height: 97px; min-width: 80px;
+	text-align: center}
 
 .horbaritem a:hover {
 	background: #fff;
 	color: #eee !important;
 	text-decoration: none} 
 	
-#header .horbaritem a:hover {color: #fff;background: none}
+#header .horbaritem a:hover {
+	background: url('strasa/headermenuitem-hover.png') bottom center repeat-x;
+	border-color: #336699; border-style: solid; border-width: 0 1px;
+	color: #fff;
+}
 
 * html .horbaritem a {font-size: .8em}
 .mdkverbar {} 
@@ -643,6 +673,7 @@ a.flip img {display: none}
 .mdkitem a:visited {text-decoration: none} 
 
 .mdkitem a:hover {
+	background: transparent url('styles/strasa/headerbg.jpg') repeat-x;
 	color: #fff;
 	text-decoration: none} 
 
@@ -2646,5 +2677,10 @@ div.minichatchans {overflow: auto}
 div.minichatdiv {
 	font-size: .9em;
 	overflow: auto}
+
+/* submit buttons input type="submit" in a container */
+.input_submit_container {
+	padding: 1px;
+}
 
 /* end of file */

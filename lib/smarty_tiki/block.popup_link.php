@@ -7,7 +7,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 function smarty_block_popup_link($params, $content, &$smarty, $repeat) {
-    global $headerlib;
+    global $headerlib, $prefs;
 	static $counter = 0;
 
 	$linkId = 'block-popup-link' . ++$counter;
@@ -16,7 +16,29 @@ function smarty_block_popup_link($params, $content, &$smarty, $repeat) {
     if ( $repeat ) {
 		// Do nothing
 	} else {
-		$headerlib->add_js( <<<JS
+		if ($prefs['feature_jquery'] == 'y') {
+			$headerlib->add_js( <<<JS
+\$jq(document).ready( function() {
+
+	\$jq('#$block').hide();
+	
+	\$jq('#$linkId').click( function() {
+		var block = \$jq('#$block');
+		if( block.css('display') == 'none' ) {
+			var coord = \$jq(this).offset();
+			block.css( 'position', 'absolute' );
+			block.css( 'left', coord.left);
+			block.css( 'top', coord.top + \$jq(this).height() );
+			show( '$block' );
+		} else {
+			hide( '$block' );
+		}
+	});
+} );
+JS
+			);
+		} else if ($prefs['feature_mootools'] == 'y') {
+			$headerlib->add_js( <<<JS
 window.addEvent( 'domready', function( event ) {
 	var link = $('$linkId');
 	var block = $('$block');
@@ -42,8 +64,15 @@ window.addEvent( 'domready', function( event ) {
 	} );
 } );
 JS
- );
-		return '<a id="' . $linkId . '" href="javascript:void(0)">' . $content . '</a>';
+			);
+		}
+		$href = '';
+		if ($prefs['feature_mootools'] == 'y' || $prefs['feature_jquery'] == 'y') {
+			$href = " href=\"javascript:void(0)\"";
+		} else {
+			$href = " href=\"javascript:alert('" . tr('You need either JQuery or MooTools enabled for this feature') . "')\"";
+		}
+		return '<a id="' . $linkId . '"' . $href . '>' . $content . '</a>';
 	}
 }
 

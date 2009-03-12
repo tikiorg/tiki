@@ -226,11 +226,19 @@ class Installer
 
 	function tableExists( $tableName ) // {{{
 	{
+		global $db_tiki;
 		static $list = null;
 		if( is_null( $list ) )
 		{
 			$list = array();
-			$result = $this->query( "show tables" );
+			switch ( $db_tiki ) {
+			    case 'sqlite':
+	    			$result = $this->query( "SELECT name FROM sqlite_master WHERE type = 'table'" );
+		    		break;
+			    default:
+			        $result = $this->query( "show tables" );
+			        break;
+			}
 			while( $row = $result->fetchRow() )
 				$list[] = reset( $row );
 		}

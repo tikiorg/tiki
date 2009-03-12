@@ -59,8 +59,6 @@ if (isset($_REQUEST["loginprefs"])) {
 	simple_set_value('highlight_group');
 	simple_set_value('user_tracker_infos');
 	simple_set_toggle('desactive_login_autocomplete');
-	simple_set_value('available_languages');
-	simple_set_value('available_styles');
 	simple_set_toggle('permission_denied_login_box');
 	simple_set_value('permission_denied_url');
 

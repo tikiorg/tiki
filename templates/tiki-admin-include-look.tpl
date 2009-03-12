@@ -39,41 +39,14 @@
 							{if $prefs.javascript_enabled eq 'n'}
 								<input type="submit" name="changestyle" value="{tr}Go{/tr}" />
 							{/if}
-	  						{if $prefs.change_theme eq 'y'}
-	  							{remarksbox type="warning" title="{tr}Admin{/tr}"}{tr}The Switch Theme Module will override the theme setting if you have it enabled.{/tr}{/remarksbox}
+	  						{if $prefs.change_theme eq 'y' and ($user_prefs.theme neq '' and $prefs.site_style neq $user_prefs.theme) or ($prefs.style neq '' and $prefs.site_style neq $prefs.style)}
+	  							{remarksbox type="warning" title="{tr}Admin{/tr}"}{tr}The "users can change theme" feature will override the theme displayed.{/tr}{/remarksbox}
 							{/if}
 							{if $prefs.site_style != $a_style}
 								{remarksbox type="note" title="{tr}Note{/tr}}{tr}Theme not saved yet - click "Apply"{/tr}{/remarksbox}
 							{/if}
 						</td>
 					</tr>
-					
-<tr>					
-  <td class="form">{tr}Reg users can change theme{/tr}:</td>
-  <td>
-    <table><tr>
-    <td style="width: 20px"><input type="checkbox" name="change_theme" {if $prefs.change_theme eq 'y'}checked="checked"{/if}/></td>
-    <td>
-      <div id="select_available_styles" {if count($prefs.available_styles) > 0 and $prefs.available_styles[0] ne ''}style="display:none;"{else}style="display:block;"{/if}>
-        <a class="link" href="javascript:show('available_styles');hide('select_available_styles');">{tr}Restrict available themes{/tr}</a>
-      </div>
-      <div id="available_styles" {if count($prefs.available_styles) == 0 or $prefs.available_styles[0] eq ''}style="display:none;"{else}style="display:block;"{/if}>
-        {tr}Available styles:{/tr}<br />
-        <select name="available_styles[]" multiple="multiple" size="5">
-		  <option value=''>{tr}All{/tr}</option>
-          {section name=ix loop=$styles}
-            <option value="{$styles[ix]|escape}"
-              {if in_array($styles[ix], $prefs.available_styles)}selected="selected"{/if}>
-              {$styles[ix]}
-            </option>
-          {/section}
-        </select>
-      </div>
-    </td>
-    </tr></table>
-  </td>					
-					</tr>
-					
 					<tr>
 						<td class="form" >
 							<label for="general-theme">{tr}Theme options{/tr}:</label>
@@ -86,6 +59,31 @@
 							{/section}
 							</select>
 						</td>
+					</tr>
+					<tr>					
+  						<td class="form">{tr}Reg users can change theme{/tr}:</td>
+						<td>
+						    <table><tr>
+						    <td style="width: 20px"><input type="checkbox" name="change_theme" {if $prefs.change_theme eq 'y'}checked="checked"{/if}/></td>
+						    <td>
+						      <div id="select_available_styles" {if count($prefs.available_styles) > 0 and $prefs.available_styles[0] ne ''}style="display:none;"{else}style="display:block;"{/if}>
+						        <a class="link" href="javascript:show('available_styles');hide('select_available_styles');">{tr}Restrict available themes{/tr}</a>
+						      </div>
+						      <div id="available_styles" {if count($prefs.available_styles) == 0 or $prefs.available_styles[0] eq ''}style="display:none;"{else}style="display:block;"{/if}>
+						        {tr}Available styles:{/tr}<br />
+						        <select name="available_styles[]" multiple="multiple" size="5">
+								  <option value=''>{tr}All{/tr}</option>
+						          {section name=ix loop=$styles}
+						            <option value="{$styles[ix]|escape}"
+						              {if $prefs.available_styles|count gt 0 and in_array($styles[ix], $prefs.available_styles)}selected="selected"{/if}>
+						              {$styles[ix]}
+						            </option>
+						          {/section}
+						        </select>
+						      </div>
+						    </td>
+						    </tr></table>
+						</td>					
 					</tr>
 					<tr>
 						<td class="form">
@@ -984,6 +982,16 @@
 								<option value="image/bmp" {if $prefs.site_favicon_type eq 'image/bmp'}selected="selected"{/if}>{tr}image/bmp{/tr}</option>
 								<option value="image/x-icon" {if $prefs.site_favicon_type eq 'image/x-icon'}selected="selected"{/if}>{tr}image/x-icon{/tr}</option>
 							</select>
+						</td>
+					</tr>
+					<tr>
+						<td width=30%>
+			        		<label for="feature_ie56_correct_png">{tr}Correct PNG transparency in IE5.5 and IE6 (experimental){/tr}</label>
+						</td>
+						<td width=2%>
+						</td>
+						<td>
+							<input type="checkbox" name="feature_ie56_correct_png" id="feature_ie56_correct_png" {if $prefs.feature_ie56_correct_png eq 'y'}checked="checked"{/if}/>
 						</td>
 					</tr>
 				</table>

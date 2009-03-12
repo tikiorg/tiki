@@ -18,4 +18,42 @@ if ( isset($_SESSION['tiki_cookie_jar']) && isset($_SESSION['tiki_cookie_jar']['
 }
 if ($prefs['javascript_enabled'] != 'y') {
 	$prefs['feature_tabs'] = 'n';
+} else {
+	if ($prefs['feature_ie56_correct_png'] == 'y' && (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 6') !== false) || strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 5')) {
+		$headerlib->add_js(<<<JS
+function correctPNG() // correctly handle PNG transparency in Win IE 5.5 & 6.
+{
+	var arVersion = navigator.appVersion.split("MSIE");
+	var version = parseFloat(arVersion[1]);
+	if ((version >= 5.5) && (document.all && !this.op))
+	{
+		for(var i=0; i < document.images.length; i++)
+		{
+			var img = document.images[i];
+			var imgName = img.src.toUpperCase();
+			if (imgName.substring(imgName.length-3, imgName.length) == "PNG")
+			{
+				var imgID = (img.id) ? "id='" + img.id + "' " : "";
+				var imgClass = (img.className) ? "class='" + img.className + "' " : "";
+				var imgTitle = (img.title) ? "title='" + img.title + "' " : "title='" + img.alt + "' ";
+				var imgStyle = "display:inline-block;" + img.style.cssText;
+				if (img.align == "left") { imgStyle = "float:left;" + imgStyle; }
+				if (img.align == "right") { imgStyle = "float:right;" + imgStyle; }
+				if (img.parentElement.href) { imgStyle = "cursor:hand;" + imgStyle; }
+				var strNewHTML = "<span " + imgID + imgClass + imgTitle
+								+ " style=\"" + "width:" + img.width + "px; height:" + img.height + "px;" + imgStyle + ";"
+								+ "filter:progid:DXImageTransform.Microsoft.AlphaImageLoader"
+								+ "(src=\'" + img.src + "\', sizingMethod='scale');\"></span>";
+				img.outerHTML = strNewHTML;
+				i = i-1;
+			}
+		}
+	}
+}
+if (this.ie56) {
+	window.attachEvent("onload", correctPNG);
+}
+JS
+		);
+	}
 }

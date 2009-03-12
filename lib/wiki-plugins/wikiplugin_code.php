@@ -153,7 +153,7 @@ function wikiplugin_code($data, $params) {
 		.'</pre>';
 
 	if ( isset($caption) ) {
-		$out = '<div class="codecaption">~/np~'.$caption.'~np~</div>'.$out;
+		$out = '<div class="codecaption">'.$caption.'</div>'.$out;
 	}
 
 	return $out;
