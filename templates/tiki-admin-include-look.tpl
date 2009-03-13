@@ -25,8 +25,12 @@
 				</legend>
 				<div id="theme" style="display:{if isset($smarty.session.tiki_cookie_jar.show_theme) and $smarty.session.tiki_cookie_jar.show_theme neq 'y'}none{else}block{/if};">
 			{/if}
-				{if isset($thumbfile)}<div id="style_thumb_div"><img src={$thumbfile} id="style_thumb" /></div>{/if}
 				<table class="admin">
+					{if isset($thumbfile)}<tr>
+						<td colspan="2">
+							<div id="style_thumb_div"><img src={$thumbfile} id="style_thumb" /></div>
+						</td>
+					</tr>{/if}
 					<tr>
 						<td class="form" >
 							<label for="general-theme">{tr}Theme{/tr}:</label>
