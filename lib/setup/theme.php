@@ -43,8 +43,7 @@ if ( $tikidomain and is_file('styles/'.$tikidomain.'/'.$prefs['style']) ) {
 	$headerlib->add_cssfile('styles/'.$prefs['style'], 51);
 }
 
-$stlstl = split("-|\.", $prefs['style']);
-$style_base = $stlstl[0];
+$style_base = $tikilib->get_style_base($prefs['style']);
 
 // Allow to have an ie6.css file for the theme's specific hacks for IE 6
 $style_ie6_css = '';

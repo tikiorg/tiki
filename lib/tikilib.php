@@ -7786,6 +7786,9 @@ window.addEvent('domready', function() {
 			&& file_exists('lang/' . $language . '/language.php');
 	}
 
+	/**
+	 * @return  array of css files in the style dir
+	 */
 	function list_styles() {
 		global $tikidomain;
 
@@ -7830,15 +7833,18 @@ window.addEvent('domready', function() {
 		return $styles;
 	}
 
+	/**
+	 * @param $a_style - main style (e.g. "thenews.css")
+	 * @return array of css files in the style options dir
+	 */
 	function list_style_options($a_style='') {
 		global $tikidomain, $prefs;
 
-		if (!$a_style) {
+		if (empty($a_style)) {
 			$a_style = $prefs['style'];
 		}
-		$stlstl = split("-|\.", $a_style);
-		$style_base = $stlstl[0];
-		if (!$style_base) {
+		$style_base = $this->get_style_base($a_style);
+		if (empty($style_base)) {
 			return false;
 		}
 
@@ -7865,6 +7871,61 @@ window.addEvent('domready', function() {
 		} else {
 			return false;
 		}
+	}
+	
+	/**
+	 * @param $stl - main style (e.g. "thenews.css")
+	 * @return string - style passed in up to - | or . char (e.g. "thenews")
+	 */
+	function get_style_base($stl) {
+		$parts = split("-|\.", $stl);
+		if (count($parts) > 0) {
+			return $parts[0];
+		} else {
+			return '';
+		}
+	}
+	
+	/**
+	 * @param $stl - main style (e.g. "thenews.css" - can be empty to return main styles dir)
+	 * @param $opt - optional option file name (e.g. "purple.css")
+	 * @param $filename - optional filename to look for (e.g. "purple.png")
+	 * @return path to dir or file if found or empty if not - e.g. "styles/mydomain.tld/thenews/options/purple/"
+	 */
+	function get_style_path($stl = '', $opt = '', $filename = '') {
+		global $tikidomain, $prefs;
+		
+		$path = '';
+		$dbase = '';
+		if ($tikidomain && $prefs['tikidomains_share_styles'] != 'y' && is_dir("styles/$tikidomain")) {
+			$dbase = $tikidomain.'/';
+		}
+		
+		$sbase = '';
+		if (!empty($stl)) {
+			$sbase = $this->get_style_base($stl).'/';
+		}
+		$obase = '';
+		if (!empty($opt)) {
+			$obase = 'options/'.substr($opt, 0, strlen($opt) - 4).'/';
+		}
+		
+		if (is_dir('styles/'.$dbase.$sbase)) {
+			if (empty($filename)) {
+				if (is_dir('styles/'.$dbase.$sbase.$obase)) {
+					$path = 'styles/'.$dbase.$sbase.$obase;
+				} else {
+					$path = 'styles/'.$dbase.$sbase;	// fall back to "parent" style dir if no option one
+				}
+			} else {
+				if (is_file('styles/'.$dbase.$sbase.$obase.$filename)) {
+					$path = 'styles/'.$dbase.$sbase.$obase.$filename;
+				} else if (is_file('styles/'.$dbase.$sbase.$filename)) {
+					$path = 'styles/'.$dbase.$sbase.$filename;	// fall back to "parent" style dir if no option one
+				}
+			}
+		}
+		return $path;
 	}
 
 	// Comparison function used to sort languages by their name in the

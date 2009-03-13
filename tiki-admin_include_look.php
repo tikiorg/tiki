@@ -138,25 +138,21 @@ $smarty->assign_by_ref( "styles", $styles);
 $smarty->assign('a_style', $a_style);
 $smarty->assign_by_ref( "style_options", $tikilib->list_style_options($a_style));
 
-function getThumbnailFile($inStyle, $inStyleOption) {	// find thumbnail if there is one
-	global $tikidomain;
+/**
+ * @param $stl - style file name (e.g. thenews.css)
+ * @param $opt - optional option file name
+ * @return string path to thumbnail file
+ */
+function getThumbnailFile($stl, $opt = '') {	// find thumbnail if there is one
+	global $tikilib;
 
-	$stlstl = split("-|\.", $inStyle);
-	$style_base = $stlstl[0];
+	if (!empty($opt) && $opt != tr('None')) {
+		$filename =  eregi_replace('\.css$', '.png', $opt);	// change .css to .png
+	} else {
+		$filename = eregi_replace('\.css$', '.png', $stl);	// change .css to .png
+	}
 	
-	if (!empty($inStyleOption) && $inStyleOption != tr('None')) {
-		$filename = substr($inStyleOption, 0, strlen($inStyleOption) - 4) . '.png';	// strip off '.css'?
-		$style_base .= '/options';
-	} else {
-		$filename = $style_base . '.png';
-	}
-	if ($tikidomain && is_file('styles/'.$tikidomain.'/'.$style_base.'/'.$filename) ) {
-		return 'styles/'.$tikidomain.'/'.$style_base.'/'.$filename;
-	} else if (is_file('styles/'.$style_base.'/'.$filename)) {
-		return 'styles/'.$style_base.'/'.$filename;
-	} else {
-		return '';
-	}
+	return $tikilib->get_style_path($stl, $opt, $filename);
 }
 
 // find thumbnail if there is one

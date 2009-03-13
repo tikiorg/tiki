@@ -66,8 +66,8 @@ if ($prefs['feature_theme_control'] == 'y') {
 			$headerlib->drop_cssfile('styles/'.$prefs['style']);
 			$headerlib->add_cssfile('styles/'.$tc_theme,51);
 		}
-		$stlstl = split("-|\.",$tc_theme);
-		$style_base = $stlstl[0];
+		
+		$style_base = $tikilib->get_style_base($tc_theme);
 	
 		if (empty($tc_theme_option)) {	// special handling for 'None' case
 			if ($tikidomain) {
