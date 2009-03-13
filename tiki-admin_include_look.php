@@ -143,7 +143,7 @@ $smarty->assign_by_ref( "style_options", $tikilib->list_style_options($a_style))
  * @param $opt - optional option file name
  * @return string path to thumbnail file
  */
-function getThumbnailFile($stl, $opt = '') {	// find thumbnail if there is one
+function get_thumbnail_file($stl, $opt = '') {	// find thumbnail if there is one
 	global $tikilib;
 
 	if (!empty($opt) && $opt != tr('None')) {
@@ -151,12 +151,11 @@ function getThumbnailFile($stl, $opt = '') {	// find thumbnail if there is one
 	} else {
 		$filename = eregi_replace('\.css$', '.png', $stl);	// change .css to .png
 	}
-	
 	return $tikilib->get_style_path($stl, $opt, $filename);
 }
 
 // find thumbnail if there is one
-$thumbfile = getThumbnailFile($a_style, $prefs['site_style_option']);
+$thumbfile = get_thumbnail_file($a_style, $prefs['site_style_option']);
 
 if (!empty($thumbfile)) {
 	$smarty->assign('thumbfile', $thumbfile);
@@ -166,11 +165,11 @@ if ($prefs['feature_jquery'] == 'y') {
 	// hash of themes and their options and their thumbnail images
 	$js = 'var style_options = {';
 	foreach($styles as $s) {
-		$js .= "\n'$s':['" . getThumbnailFile($s, '') . '\',{';
+		$js .= "\n'$s':['" . get_thumbnail_file($s, '') . '\',{';
 		$options = $tikilib->list_style_options($s);
 		if ($options) {
 			foreach($options as $o) {
-				$js .= "'$o':'" . getThumbnailFile($s, $o) . '\',';
+				$js .= "'$o':'" . get_thumbnail_file($s, $o) . '\',';
 			}
 			$js = substr($js, 0, strlen($js)-1) . '}';
 		} else {
