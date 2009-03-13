@@ -209,7 +209,7 @@ if ( $isvalid ) {
 		$url = 'tiki-change_password.php?user=' . urlencode($user);
 	} elseif ($isEmailDue) {
 		$userlib->send_confirm_email($user);
-		$userslib->change_user_waiting($user, 'u');
+		$userlib->change_user_waiting($user, 'u');
 		$msg = $smarty->fetch('tiki-login_confirm_email.tpl');
 		$smarty->assign_by_ref('msg', $msg);
 		$smarty->assign('user', '');
