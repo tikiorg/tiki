@@ -601,3 +601,7 @@ span.disabled {
 	opacity: .5;
 	font-style: italic;
 }
+
+#style_thumb_div {
+	text-align: center;
+}

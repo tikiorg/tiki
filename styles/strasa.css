@@ -779,7 +779,7 @@ div.separator, div.separatorline {}
 
 div.option a.linkmenu:hover {}
 a.separator img {}
-.option {padding-left: 16px}
+.option {margin-left: 20px}
 
 div.optionline,
 .option a {}
@@ -802,7 +802,9 @@ a.linkmodule:hover {color: #000000}
 
 /* From Tikineat -- check */
 div.menuSection div.menuSection,
-div.menuSection div.separator {}
+div.menuSection div.separator {
+	margin-left: 16px;
+}
 /* End from Tikineat */
 
 /****** Misc. Global Classes (layout and style) ****/

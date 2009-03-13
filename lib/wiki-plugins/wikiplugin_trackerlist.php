@@ -623,7 +623,7 @@ function wikiplugin_trackerlist($data, $params) {
 					eval('$value='.implode('+', $l).';');
 					if ($oper == 'avg')
 						$value = round($value / count($l));
-					$computedFields[$fieldId] = array_merge(array('operator'=>$oper, 'value'=>$value), $passfields[$fieldId]);
+					$computedFields[$fieldId][] = array_merge(array('operator'=>$oper, 'value'=>$value), $passfields[$fieldId]);
 				}
 				$smarty->assign_by_ref('computedFields', $computedFields);
 			}

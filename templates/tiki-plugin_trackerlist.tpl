@@ -170,14 +170,17 @@ link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" alt="{tr}List
 
 {if empty($tpl)}
 	{if !empty($computedFields) and $items|@count gt 0}
-		<tr>
+		<tr class='compute'>
 		{if $checkbox}<td></td>{/if}
 		{if ($showstatus ne 'n') and ($tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y'))}<td></td>{/if}
 		{foreach key=jx item=ix from=$fields}
 			{if $ix.isPublic eq 'y' and ($ix.isHidden eq 'n' or $ix.isHidden eq 'c' or $ix.isHidden eq 'p' or $tiki_p_admin_trackers eq 'y') and $ix.type ne 'x' and $ix.type ne 'h' and in_array($ix.fieldId, $listfields) and ($ix.type ne 'p' or $ix.options_array[0] ne 'password') and (empty($ix.visibleBy) or in_array($default_group, $ix.visibleBy) or $tiki_p_admin_trackers eq 'y')}	
 			<td>{if isset($computedFields[$ix.fieldId])}
-					{if $computedFields[$ix.fieldId].operator eq 'avg'}{tr}Average{/tr}{else}{tr}Sum{/tr}{/if}<br />
-					{include file="tracker_item_field_value.tpl" item=$items[user] field_value=$computedFields[$ix.fieldId] list_mode=$list_mode}
+					{foreach from=$computedFields[$ix.fieldId] item=computedField name=computedField}
+						 {if $computedField.operator eq 'avg'}{tr}Average{/tr}{else}{tr}Sum{/tr}{/if}<br />
+						 {include file="tracker_item_field_value.tpl" item=$items[user] field_value=$computedField list_mode=$list_mode}
+						 {if !$smarty.foreach.computedField.last}<br />{/if}
+					{/foreach}
 				{/if}
 			</td>
 			{/if}

@@ -60,7 +60,7 @@ function wikiplugin_code($data, $params) {
 	$code = trim($data);
 
 	$parse_wiki = ( isset($wiki) && $wiki == 1 );
-	$escape_html = ( ! isset($ishtml) || $ishtml != 1 );
+	$escape_html = 0;
 
 	// Detect if GeSHI (Generic Syntax Highlighter) is available
 	$geshi_paths = array(
