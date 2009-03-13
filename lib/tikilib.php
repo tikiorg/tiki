@@ -7793,16 +7793,20 @@ window.addEvent('domready', function() {
 		global $tikidomain;
 
 		$sty = array();
-		if (is_dir("styles/")) {
-			$h = opendir("styles/");
+		$style_base_path = $this->get_style_path();	// knows about $tikidomain
+		
+		if ($style_base_path) {
+			$h = opendir($style_base_path);
 			while ($file = readdir($h)) {
-				if (ereg("\.css$", $file)) {
-					$sty[$file] = 1;
+				if (preg_match('/^[^\.](.*?)\.css$/i', $file)) {	// ending in .css not starting with .
+					$sty[] = $file;
 				}
 			}
 			closedir($h);
 		}
-
+		sort($sty);
+		return $sty;
+		
 		/* What is this $tikidomain section?
 		 * Some files that call this method used to list styles without considering
 		 * $tikidomain, now they do. They're listed below:
@@ -7814,23 +7818,11 @@ window.addEvent('domready', function() {
 		 *  modules/mod-switch_theme.php
 		 *
 		 *  lfagundes
+		 *  
+		 *  Tiki 3.0 - now handled by get_style_path()
+		 *  jonnybradley
 		 */
 
-		if ($tikidomain) {
-			if (is_dir("styles/$tikidomain")) {
-				$h = opendir("styles/$tikidomain");
-				while ($file = readdir($h)) {
-					if (strstr($file, ".css") and substr($file,0,1) != '.') {
-						$sty["$file"] = 1;
-					}
-				}
-				closedir($h);
-			}
-		}
-
-		$styles = array_keys($sty);
-		sort($styles);
-		return $styles;
 	}
 
 	/**
@@ -7838,36 +7830,29 @@ window.addEvent('domready', function() {
 	 * @return array of css files in the style options dir
 	 */
 	function list_style_options($a_style='') {
-		global $tikidomain, $prefs;
+		global $prefs;
 
 		if (empty($a_style)) {
 			$a_style = $prefs['style'];
 		}
-		$style_base = $this->get_style_base($a_style);
-		if (empty($style_base)) {
-			return false;
-		}
 
 		$sty = array();
-
-		/* See $tikidomains note in list_styles() above */
-		$tikidomain_str = "$tikidomain/";
-
-		if (is_dir("styles/$tikidomain_str$style_base/options/")) {
-			$h = opendir("styles/$tikidomain_str$style_base/options/");
+		$option_base_path = $this->get_style_path($a_style).'options/';
+		
+		if (is_dir($option_base_path)) {
+			$h = opendir($option_base_path);
 			while ($file = readdir($h)) {
-				if (strstr($file, ".css") and substr($file,0,1) != '.') {
-					$sty["$file"] = 1;
+				if (preg_match('/^[^\.](.*?)\.css$/i', $file)) {	// ending in .css not starting with .
+					$sty[] = $file;
 				}
 			}
 			closedir($h);
 		}
 
-		$styles = array_keys($sty);
-		if (count($styles)) {
-			sort($styles);
-			array_unshift ( $styles, tra('None'));
-			return $styles;
+		if (count($sty)) {
+			sort($sty);
+			array_unshift ( $sty, tra('None'));
+			return $sty;
 		} else {
 			return false;
 		}
@@ -7907,7 +7892,10 @@ window.addEvent('domready', function() {
 		}
 		$obase = '';
 		if (!empty($opt)) {
-			$obase = 'options/'.substr($opt, 0, strlen($opt) - 4).'/';
+			$obase = 'options/';
+			if ($opt != $filename) {	// exception for getting option.css as it doesn't live in it's own dir
+				$obase .= substr($opt, 0, strlen($opt) - 4).'/';
+			}
 		}
 		
 		if (is_dir('styles/'.$dbase.$sbase)) {
