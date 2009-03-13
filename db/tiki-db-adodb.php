@@ -35,38 +35,38 @@ $dsn = "$db_tiki://$user_tiki:$pass_tiki@$host_tiki/$dbs_tiki";
 $dbTiki = &ADONewConnection($db_tiki);
 
 if (!@$dbTiki->Connect($host_tiki, $user_tiki, $pass_tiki, $dbs_tiki)) {
-	$title='Tiki is unable to connect to the database !';
-	$content =	"		<p>The following error message was returned:</p>\n" .
+	$title=tra('Tiki is unable to connect to the database !');
+	$content =	"		<p>".tra("The following error message was returned:")."</p>\n" .
 				"		<strong>\n";
 	$content .= '			'.$dbTiki->ErrorMsg();
 	$content .= "		</strong>\n" .
 				"		<div class=\"wikitext\" style=\"border: solid 1px #ccc; margin: 1em auto; padding: 1em; text-align: left; width: 30%;\">\n" .
-				"			<p>Things to check:</p>\n" .
+				"			<p>".tra("Things to check:")."</p>\n" .
 				"			<ol class=\"fancylist\">\n" .
-				"				<li><p>Is your database up and running?</p></li>\n" .
-				"				<li><p>Are your database login credentials correct?</p></li>\n" .
-				"				<li><p>Did you complete the Tiki Installer?</p></li>\n" .
+				"				<li><p>".tra("Is your database up and running?")."</p></li>\n" .
+				"				<li><p>".tra("Are your database login credentials correct?")."</p></li>\n" .
+				"				<li><p>".tra("Did you complete the <a href='tiki-install.php' >Tiki Installer?")."</a></p></li>\n" .
 				"			</ol>\n" .
 				"		</div>\n" .
-				"		<p>Please see <a href=\"http://doc.tikiwiki.org/\">the documentation</a> for more information.</p>\n";
+				"		<p>".tra("Please see <a href=\"http://doc.tikiwiki.org/\">the documentation</a> for more information.")."</p>\n";
 	$dberror = true;
 	include_once('tiki-install.php');
 }
 
 if (!@$dbTiki->Execute('select `login` from `users_users` limit 1')) {
-	$title='Tiki was unable to retrieve login data from the database !';
-	$content =	"		<p>The following error message was returned:</p>\n" .
+	$title=tra('Tiki was unable to retrieve login data from the database !');
+	$content =	"		<p>".tra("The following error message was returned:")."</p>\n" .
 				"		<strong>\n";
 	$content .= '			'.$dbTiki->ErrorMsg();
 	$content .= "		</strong>\n" .
 				"		<div class=\"wikitext\" style=\"border: solid 1px #ccc; margin: 1em auto; padding: 1em; text-align: left; width: 30%;\">\n" .
-				"			<p>Things to check:</p>\n" .
+				"			<p>".tra("Things to check:")."</p>\n" .
 				"			<ol class=\"fancylist\">\n" .
-				"				<li><p>Are your database login credentials correct?</p></li>\n" .
-				"				<li><p>Did you complete the Tiki Installer?</p></li>\n" .
+				"				<li><p>".tra("Are your database login credentials correct?")."</p></li>\n" .
+				"				<li><p>".tra("Did you complete the <a href='tiki-install.php' >Tiki Installer?")."</a></p></li>\n" .
 				"			</ol>\n" .
 				"		</div>\n" .
-				"		<p>Please see <a href=\"http://doc.tikiwiki.org/\">the documentation</a> for more information.</p>\n";
+				"		<p>".tra("Please see <a href=\"http://doc.tikiwiki.org/\">the documentation</a> for more information.")."</p>\n";
 	$dberror = true;
 	include_once('tiki-install.php');
 }

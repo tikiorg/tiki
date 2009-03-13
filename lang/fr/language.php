@@ -81,6 +81,7 @@ $lang=Array(
 "%A %d of %B, %Y[%H:%M:%S %Z]" => "%A %d %B %Y [%Hh%M]",
 "%B %e" => "%e %B",
 "%H:%M:%S %Z" => "%Hh%M",
+"Things to check" => "Points à contrôler",
 "\$tailtitle" => "\$tailtitle",
 "Female" => "Femme",
 "Male" => "Homme",
