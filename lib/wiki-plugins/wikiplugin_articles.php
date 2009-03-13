@@ -24,7 +24,7 @@ function wikiplugin_articles_info() {
 				'required' => false,
 				'name' => tra('Articles displayed'),
 				'description' => tra('The amount of articles to display in the list.'),
-				'filter' => 'digits',
+				'filter' => 'int',
 			),
 			'topic' => array(
 				'required' => false,
