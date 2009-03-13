@@ -1,4 +1,11 @@
 <?php
+
+/******************************************************************
+ * Use this file to run just a few tests that you care about, instead
+ * of running AllTests.
+ ******************************************************************/
+  
+
 ini_set( 'display_errors', 'on' );
 error_reporting( E_ALL );
 
@@ -23,13 +30,8 @@ class AllTests
     public static function suite()
     {
         $suite = new PHPUnit_Framework_TestSuite('CoreSuite');
-
-        $suite->addTest(JitFilter_AllTests::suite());
-        $suite->addTest(TikiFilter_AllTests::suite());
-        $suite->addTest(DeclFilter_AllTests::suite());
-        $suite->addTest(Multilingual_AllTests::suite());
-        $suite->addTest(WikiParser_AllTests::suite());
-//        $suite->addTest(AcceptanceTests_AllTests::suite());
+        
+        $suite->addTest(AcceptanceTests_AllTests::suite());
         
         return $suite;
     }
