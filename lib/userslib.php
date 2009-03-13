@@ -2763,6 +2763,10 @@ function get_included_groups($group, $recur=true) {
 		if (md5($res['provpass']) == $pass){
 			$query = 'update `users_users` set `provpass`=?, `email_confirm`=?, `unsuccessful_logins`=?, `registrationDate`=? where `login`=? and `provpass`=?';
 			$this->query($query, array('', $tikilib->now, 0, $this->now, $user, $res['provpass']));
+			if (!empty($GLOBALS['user'])) {
+				global $logslib; include_once('lib/logs/logslib.php');
+				$logslib->add_log('login', 'confirm email '.$user);
+			}
 			return true;
 		}
 		return false;
