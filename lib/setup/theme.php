@@ -52,3 +52,9 @@ if ( !empty($prefs['style_option'])) {
 	}
 }
 
+// include optional "custom" cascading stylesheet if there
+$custom_css = $tikilib->get_style_path($prefs['style'], $prefs['style-option'], 'custom.css');;
+if ( !empty($custom_css)) {
+	$headerlib->add_cssfile($custom_css, 53);
+}
+
