@@ -1,7 +1,6 @@
 {if $prefs.art_home_title ne ''}
 <h1>
-{if $prefs.art_home_title eq 'topic' and !empty($topic)}
-{section name=it loop=$topics}{if $topics[it].topicId eq $topic}{tr}{$topics[it].name}{/tr}{/if}{/section}
+{if $prefs.art_home_title eq 'topic' and !empty($topic)}{tr}{$topic}{/tr}
 {elseif $prefs.art_home_title eq 'type' and !empty($type)}{tr}{$type}{/tr}
 {else}{tr}Articles{/tr}{/if}
 </h1>

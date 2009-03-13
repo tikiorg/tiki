@@ -103,19 +103,17 @@ if (isset($_REQUEST["type"])) {
 } else {
 	$type = '';
 }
-$smarty->assign_by_ref('type', $type);
 
 if (isset($_REQUEST["topic"])) {
 	$topic = $_REQUEST["topic"];
  } else {
 	$topic = '';
 }
-if (isset($REQUEST['topicName'])) {
-	$topicName = $REQUEST['topicName'];
+if (isset($_REQUEST['topicName'])) {
+	$topicName = $_REQUEST['topicName'];
  } else {
 	$topicName = '';
  }
-$smarty->assign_by_ref('topic', $topic);
 
 if (isset($_REQUEST["categId"])) {
 	$categId = $_REQUEST["categId"];
@@ -143,9 +141,20 @@ for ($i = 0; $i < $temp_max; $i++) {
 	$comments_objectId = $comments_prefix_var.$comments_object_var;
 	$listpages["data"][$i]["comments_cant"] = $commentslib->count_comments($comments_objectId);
 }
-
-$topics = $artlib->list_topics();
-$smarty->assign_by_ref('topics', $topics);
+	if (!empty($topicName) && !strstr($topicName, '!') && !strstr($topicName, '+')) {
+		$smarty->assign_by_ref('topic', $topicName);
+	} elseif (!empty($topic) &&  is_numeric($topic)) {
+		if (!empty($listpages['data'][0]['topicName']))
+			$smarty->assign_by_ref('topic', $listpages['data'][0]['topicName']);
+		else {
+			$topic_info = $artlib->get_topic($topic);
+			if (isset($topic_info['name']))
+				$smarty->assign_by_ref('topic', $topic_info['name']);
+		}
+	}
+	if (!empty($type) && !strstr($type, '!') && !strstr($type, '+')) {
+		$smarty->assign_by_ref('type', $type);
+	}
 
 $smarty->assign('maxArticles', $prefs['maxArticles']);
 
