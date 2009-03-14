@@ -499,6 +499,9 @@ div.logged-in {padding-right: 20px}
 	font-weight: normal }
 	
 #sitelocbar {float: left; margin: 0 58px;}
+#sitelocbar a {background-color: #cce5ff; color: #0990cc !important; padding: 1px 4px}
+#sitelocbar a:hover {color: #000 !important;}
+
 #customcodewith_ad {width: 400px}
 
 /* #header text selectors, if needed */
