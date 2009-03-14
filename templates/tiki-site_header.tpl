@@ -25,7 +25,7 @@
 	<div id="sitelogo" class="floatleft" {if $prefs.sitelogo_bgcolor ne ''}style="background-color: {$prefs.sitelogo_bgcolor};"{/if}>
 		{if $prefs.sitelogo_src}<a href="./" title="{$prefs.sitelogo_title}"><img src="{$prefs.sitelogo_src}" alt="{$prefs.sitelogo_alt}" style="border: none" /></a>{/if}
 	</div>
-	<div id="sitetitles">
+	<div id="sitetitles" class="floatleft">
 		<div id="sitetitle"><a href="index.php">{$prefs.sitetitle}</a></div>
 		<div id="sitesubtitle">{$prefs.sitesubtitle}</div>
 	</div>
@@ -34,12 +34,12 @@
 		{if $prefs.feature_sitead eq 'y' && ($prefs.sitead_publish eq 'y' or $tiki_p_admin eq 'y')}
 	<div id="sitead" class="floatleft">{eval var=$prefs.sitead}</div>
 		{/if}
-	<div id="sitelogo" class="floatright"{if $prefs.sitelogo_bgcolor ne ''} style="background-color: {$prefs.sitelogo_bgcolor};" {/if}>
-		{if $prefs.sitelogo_src}<a href="./" title="{$prefs.sitelogo_title}"><img src="{$prefs.sitelogo_src}" alt="{$prefs.sitelogo_alt}" style="border: none" /></a>{/if}
-	</div>
-	<div id="sitetitles">
+	<div id="sitetitles" class="floatright">
 		<div id="sitetitle"><a href="index.php">{$prefs.sitetitle}</a></div>
 		<div id="sitesubtitle">{$prefs.sitesubtitle}</div>
+	</div>
+	<div id="sitelogo" class="floatright"{if $prefs.sitelogo_bgcolor ne ''} style="background-color: {$prefs.sitelogo_bgcolor};" {/if}>
+		{if $prefs.sitelogo_src}<a href="./" title="{$prefs.sitelogo_title}"><img src="{$prefs.sitelogo_src}" alt="{$prefs.sitelogo_alt}" style="border: none" /></a>{/if}
 	</div>
 	{/if}
 </div>
@@ -49,10 +49,11 @@
 {if $prefs.feature_sitelogo eq 'y' and $prefs.sitelogo_align eq 'center'}
 <div class="clearfix" id="sioptionscentered">
 	{if $prefs.feature_sitead eq 'y' && ($prefs.sitead_publish eq 'y' or $tiki_p_admin eq 'y')}
-	<div class="floatright"><div id="bannertopright">{banner zone='topright'}</div></div>{/if}
+	<div class="floatright"><div id="bannertopright">{banner zone='topright'}</div></div>
+	{/if}
 	{if $prefs.feature_sitead eq 'y' && ($prefs.sitead_publish eq 'y' or $tiki_p_admin eq 'y')}
-		<div id="sitead" class="floatleft" {*style="width: 300px"*}>{eval var=$prefs.sitead}</div>
-		{/if}
+	<div id="sitead" class="floatleft" {*style="width: 300px"*}>{eval var=$prefs.sitead}</div>
+	{/if}
 	<div id="sitelogo"{if $prefs.sitelogo_bgcolor ne ''} style="background-color: {$prefs.sitelogo_bgcolor};" {/if}>
 		{if $prefs.sitelogo_src}<a href="./" title="{$prefs.sitelogo_title}"><img src="{$prefs.sitelogo_src}" alt="{$prefs.sitelogo_alt}" style="border: none" /></a>{/if}
 	</div>	
