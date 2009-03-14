@@ -33,7 +33,7 @@
 {section name=l loop=$css}
 <div style="padding:4px;">
 <div style="float:right;">{$css[l].id}</div>
-<div class="comment">{$css[l].comment}</div>
+<div class="comment"><em>{$css[l].comment}</em></div>
 {section name=i loop=$css[l].items}
 <div style="font-weight: bold;">{$css[l].items[i]}</div>
 {/section}
