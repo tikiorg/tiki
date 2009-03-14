@@ -5,10 +5,13 @@
 
 /***** XHTML Elements ******/
 
+html {display: block; height: 100%;}
+
 body {
+	background-color: #2e3035;
+	height: 100%;
 	text-align: left;
-	font: 72%/1.4em Verdana, Geneva, Arial, Helvetica, sans-serif;
-	background: #fff}
+	font: 72%/1.4em Verdana, Geneva, Arial, Helvetica, sans-serif;}
 
 html>body {font-size: 76%}
 body.fullscreen {}
@@ -234,28 +237,45 @@ ul.jumplinks a:active {
 	(overrides lite.css) ***/
 
 #main {
-	text-align: left;
-	/*background: #f8f8ff;*/}
+	
+	text-align: left;}
+
+#main[id] {
+	height: auto;
+	min-height: 100%;
+}
 	
 #header {
-	position: relative}
+	height: 10%;
+	min-height: 97px;	
+	position: relative;}
 
 #middle {
+	background: #fff;
+/*	height: 70%;*/
 	padding-top: 40px;
 	padding-bottom: 40px}
 
-#c1c2 {}
-#c1c2 #wrapper {}
+#c1c2 {
+	height: 100%;
+}
+#c1c2 #wrapper {
+	height: 100%;
+}
 
 .fullscreen #col1 {
+	height: 100%;
 	margin-left: 30px !important;
 	margin-right: 30px !important}
 
-#c1c2 #wrapper #col1 {}
+#c1c2 #wrapper #col1 {
+	height: 100%;
+}
 
 #c1c2 #wrapper #col1 .content {
 	/*background: #f8f8ff;
 	color: midnightblue*/
+	height: 100%;
 	margin: 0 20px 20px}
 
 #c1c2 #wrapper .marginleft {margin-left: 240px}
@@ -292,7 +312,9 @@ ul.jumplinks a:active {
 #footer a:link,
 #footer a:visited {}
 #footer a:hover {}
-.footerbgtrap {}
+.footerbgtrap {
+	height: 20%;
+}
 /* end Type 1 layout divs, etc. */
 
 /* Theme-specific custom footer code */
@@ -369,23 +391,31 @@ div#tiki-bot {}
 
 /* Site Header & Identity */
 #header-top {
-	/*height: 97px*/
-	min-height: 97px;
-	background: #1b3c54 url(strasa/headerbg.jpg) repeat-x 0 100%;}
+	color: #fff;
+	height: 97px;
+	background: #1b3c54 url(strasa/headerbg.jpg) repeat-x 0 0;}
 
 #siteheader {
 	text-align: left;
-	background: transparent;
+	background: #fff;
 	vertical-align: middle;
 	padding: 0;
 	margin: 0}
 
-#customcode {
+#customcode, #customcodewith_ad {
+	position: absolute;
 	width: 964px;
 	margin: auto}
+
+#topbar_custom_code {
+	margin: 0 58px;
+}
 	
 div#sioptions {
-	margin: 0 58px}
+	height: 97px;
+	margin: 0 58px;
+	overflow: hidden;
+}
 
 #sioptionscentered {text-align: center}
 
@@ -398,9 +428,9 @@ div.floatleft {
 	clear: none}
 
 div#sitelogo {
-	position: absolute;
-	top: 10px; left: 10px;
-	margin: auto}
+	margin: auto;	
+	overflow: hidden;	
+}
 
 div#sitead {margin: auto}
 #sitead.floatright {padding-right: 100px}
@@ -415,7 +445,8 @@ div#sitead {margin: auto}
 	padding-left: 60px;
 	padding-top: 1px;
 	color: #fff;
-	background: url(strasa/login.jpg) 0 0 no-repeat;}
+	background: transparent url(strasa/login.jpg) 0 0 no-repeat;
+}
 	
 *:first-child+html #siteloginbar { max-width: 650px}
 
@@ -467,19 +498,18 @@ div.logged-in {padding-right: 20px}
 	background: #204c65;
 	font-weight: normal }
 	
-#sitelocbar {float: left}
+#sitelocbar {float: left; margin: 0 58px;}
 #customcodewith_ad {width: 400px}
 
 /* #header text selectors, if needed */
 
-#sitetitles {color: #fff}
+#sitetitles {color: #fff; float: left; height: 97px; line-height: 97px; overflow: hidden; vertical-align: bottom}
 
 #sitetitle,
-#sitesubtitle {font-family: Helvetica, sans-serif;}
+#sitesubtitle {font-family: Helvetica, sans-serif; font-weight: bold}
 
 #sitetitle {
 	font-size: 200%;
-	font-weight: bold;
 	display: inline}
 	
 * html #sitetitle {}
@@ -596,7 +626,13 @@ a.flip img {display: none}
 /****** Menus ******/
 /** PHP Layers Menus **/
 
-.horbar {width: 100%} 
+.horbar {
+position: absolute; z-index: 0;
+top: 0; left: 100%;
+margin: 0 0 0 -50%;
+height: 97px; 
+overflow: auto; 
+white-space: nowrap} 
 
 .horbar table {
 	width: auto;
@@ -605,25 +641,18 @@ a.flip img {display: none}
 /* Text in the top level (visible by default) of the menu */
 .horbaritem a,
 .horbaritem a:visited {
-	padding: 0 3px;
+	padding: 10px 0 0;
 	text-decoration: none;
-	font: 1em Verdana, Helvetica, Arial, Sans-Serif;
-	margin: 0}
-	
-#header .horbaritem a {
+	font: normal 1em Verdana, Helvetica, Arial, Sans-Serif;
+	margin: 0; 
 	border-color: transparent; border-style: solid; border-width: 0 1px;
 	color: #5ae0ff; 
 	display: block; 
-	line-height: 97px;
-	min-height: 97px; min-width: 80px;
+	min-height: 87px; min-width: 80px;
 	text-align: center}
 
 .horbaritem a:hover {
-	background: #fff;
-	color: #eee !important;
-	text-decoration: none} 
-	
-#header .horbaritem a:hover {
+	text-decoration: none; 
 	background: url('strasa/headermenuitem-hover.png') bottom center repeat-x;
 	border-color: #336699; border-style: solid; border-width: 0 1px;
 	color: #fff;
