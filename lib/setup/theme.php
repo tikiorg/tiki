@@ -42,7 +42,7 @@ $headerlib->add_cssfile($tikilib->get_style_path('', '', $prefs['style']), 51);
 $style_base = $tikilib->get_style_base($prefs['style']);
 
 // Allow to have an ie6.css file for the theme's specific hacks for IE 6
-$style_ie6_css = $tikilib->get_style_path($prefs['style'], $prefs['style-option'], 'ie6.css');;
+$style_ie6_css = $tikilib->get_style_path($prefs['style'], $prefs['style_option'], 'ie6.css');;
 
 // include optional "options" cascading stylesheet if set
 if ( !empty($prefs['style_option'])) {
@@ -53,7 +53,7 @@ if ( !empty($prefs['style_option'])) {
 }
 
 // include optional "custom" cascading stylesheet if there
-$custom_css = $tikilib->get_style_path($prefs['style'], $prefs['style-option'], 'custom.css');;
+$custom_css = $tikilib->get_style_path($prefs['style'], $prefs['style_option'], 'custom.css');;
 if ( !empty($custom_css)) {
 	$headerlib->add_cssfile($custom_css, 53);
 }
