@@ -32,17 +32,17 @@
 
 	{section name=l loop=$css}
 	<div style="padding:4px;">
-		<div style="float:right;">{$css[l].id}</div>
-		<div class="comment"><em>{$css[l].comment}</em></div>
+		<div style="float:right;">{$css[l].id|escape}</div>
+		<div class="comment"><em>{$css[l].comment|escape}</em></div>
 		{section name=i loop=$css[l].items}
-		<div style="font-weight: bold;">{$css[l].items[i]}</div>
+		<div style="font-weight: bold;">{$css[l].items[i]|escape}</div>
 		{/section}
 		{foreach item=v key=a from=$css[l].attributes}
-		<div style="margin-left:10px;">{$a|string_format:"%'.-22s"} : {$v|string_format:"%-56.s"}
+		<div style="margin-left:10px;">{$a|string_format:"%'.-22s"|escape} : {$v|string_format:"%-56.s"|escape}
 		{if $v[0] eq "#"}
-			<span style="height:8px;width:30px;background-color:{$v};">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+			<span style="height:8px;width:30px;background-color:{$v|escape};">&nbsp;&nbsp;&nbsp;&nbsp;</span>
 		{elseif $a|truncate:6:"" eq "border"}
-			<span style="height:8px;width:30px;{$a}:{$v};">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+			<span style="height:8px;width:30px;{$a|escape}:{$v|escape};">&nbsp;&nbsp;&nbsp;&nbsp;</span>
 		{/if}
 		</div>
 		{/foreach}
