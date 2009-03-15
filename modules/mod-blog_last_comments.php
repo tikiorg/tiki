@@ -12,7 +12,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 
 global $bloglib;
 include_once ('lib/blogs/bloglib.php');
-$comments = $bloglib->list_blog_post_comments();
+$comments = $bloglib->list_blog_post_comments('y', $module_rows);
 
 $smarty->assign('comments', $comments['data']);
 $smarty->assign('nonums', isset($module_params['nonums']) ? $module_params['nonums'] : 'n');
