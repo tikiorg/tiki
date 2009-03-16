@@ -1,9 +1,9 @@
 {if $prefs.art_home_title ne ''}
-<h1>
+{title help="Articles" admpage="cms"}
 {if $prefs.art_home_title eq 'topic' and !empty($topic)}{tr}{$topic}{/tr}
 {elseif $prefs.art_home_title eq 'type' and !empty($type)}{tr}{$type}{/tr}
 {else}{tr}Articles{/tr}{/if}
-</h1>
+{/title}
 {/if}
 {section name=ix loop=$listpages}
 {if $listpages[ix].disp_article eq 'y'}
