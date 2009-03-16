@@ -261,11 +261,10 @@
 		{capture name=stat}
 		{tr}Rating{/tr}: {$field_value.value|default:"-"}, {tr}Number of voices{/tr}: {$field_value.numvotes|default:"-"}, {tr}Average{/tr}: {$field_value.voteavg|default:"-"}, {tr}Your vote{/tr}: {if $item.my_rate}{$item.my_rate}{else}-{/if}
 		{/capture}
-		<span style="padding-right:2em"><b title="{$smarty.capture.stat}" style="position:absolute">
+		<b title="{$smarty.capture.stat}">
 		{if $field_value.value}{$field_value.voteavg}/{$field_value.value}{else}&nbsp;-&nbsp;{/if}</b>
-		</span>
 		{if $tiki_p_tracker_vote_ratings eq 'y'}
-			{if $item.my_rate}
+			{if !$item.my_rate}
 				<b class="highlight">-</b>
 			{else}
 				<a href="{$smarty.server.PHP_SELF}{if $query_string}?{$query_string}{else}?{/if}

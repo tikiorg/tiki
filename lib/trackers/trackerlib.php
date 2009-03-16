@@ -852,7 +852,7 @@ class TrackerLib extends TikiLib {
 			case 's':
 				$key = 'tracker.'.$trackerId.'.'.$itemId;
 				$fopt['numvotes'] = $this->getOne('select count(*) from `tiki_user_votings` where `id` = ?', array($key));
-				$fopt['voteavg'] = ( $fopt['numvotes'] > 0 ) ? ($fopt['value'] / $fopt['numvotes']) : '0';
+				$fopt['voteavg'] = ( $fopt['numvotes'] > 0 ) ? round(($fopt['value'] / $fopt['numvotes'])) : '0';
 				break;
 			case 'e':
 				global $categlib;
