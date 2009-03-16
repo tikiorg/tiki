@@ -199,7 +199,9 @@ CREATE TABLE tiki_actionlog (
   ip varchar(15) default NULL,
   comment varchar(200) default NULL,
   categId int(12) NOT NULL default '0',
-  PRIMARY KEY (actionId)
+  PRIMARY KEY (actionId),
+  KEY lastModif(lastModif),
+  KEY object(object(100), objectType, action(100))
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS tiki_actionlog_params;
@@ -1416,7 +1418,7 @@ CREATE TABLE tiki_menu_options (
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 INSERT INTO `tiki_menu_options` (`optionId`, `menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (1,42,'o','Home','./',10,'','','',0);
-INSERT INTO `tiki_menu_options` (`optionId`, `menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (3,42,'o','Contact Us','tiki-contact.php',20,'feature_contact','','',0);
+INSERT INTO `tiki_menu_options` (`optionId`, `menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (3,42,'o','Contact Us','tiki-contact.php',20,'feature_contact,feature_messages','','',0);
 INSERT INTO `tiki_menu_options` (`optionId`, `menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (4,42,'o','Stats','tiki-stats.php',23,'feature_stats','tiki_p_view_stats','',0);
 INSERT INTO `tiki_menu_options` (`optionId`, `menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (5,42,'o','Categories','tiki-browse_categories.php',25,'feature_categories','tiki_p_view_categories','',0);
 INSERT INTO `tiki_menu_options` (`optionId`, `menuId`, `type`, `name`, `url`, `position`, `section`, `perm`, `groupname`, `userlevel`) VALUES (6,42,'o','Games','tiki-list_games.php',30,'feature_games','tiki_p_play_games','',0);
@@ -2738,7 +2740,8 @@ CREATE TABLE tiki_wiki_attachments (
   hits int(10) default NULL,
   created int(14) default NULL,
   comment varchar(250) default NULL,
-  PRIMARY KEY (attId)
+  PRIMARY KEY (attId),
+  KEY page (page)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS tiki_zones;
