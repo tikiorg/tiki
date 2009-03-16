@@ -24,6 +24,8 @@
 				<select name="event">
 					<option value="user_registers">{tr}A user registers{/tr}</option>
 					<option value="article_submitted">{tr}A user submits an article{/tr}</option>
+					<option value="article_edited">{tr}A user edits an article{/tr}</option>
+					<option value="article_deleted">{tr}A user deletes an article{/tr}</option>
 					<option value="wiki_page_changes">{tr}Any wiki page is changed{/tr}</option>
 					<option value="wiki_page_changes_incl_minor">{tr}Any wiki page is changed, even minor changes{/tr}</option>
 					<option value="wiki_comment_changes">{tr}A comment in a wiki page is posted or edited{/tr}</option> 

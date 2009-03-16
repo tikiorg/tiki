@@ -444,6 +444,10 @@ class TikiLib extends TikiDB {
 					break;
 				case 'article_submitted':
 				case 'topic_article_created':
+				case 'article_edited':
+				case 'topic_article_edited':
+				case 'article_deleted':
+				case 'topic_article_deleted':
 					global $userlib, $topicId;
 					$res['perm']= ($userlib->user_has_permission($res['user'],'tiki_p_read_article') &&
 							(empty($topicId) || $this->user_has_perm_on_object($res['user'],$topicId,'topic','tiki_p_topic_read')));
