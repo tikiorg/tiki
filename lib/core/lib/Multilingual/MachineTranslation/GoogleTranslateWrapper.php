@@ -57,6 +57,7 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapper {
         $ointegrate = new OIntegrate();
         $oi_result = $ointegrate->performRequest($url);
         $result = $oi_result->data['responseData']['translatedText'];
+        $result = json_decode($result);
    		return $result;
    	}
    	
