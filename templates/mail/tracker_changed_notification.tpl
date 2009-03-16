@@ -13,6 +13,6 @@
 {$mail_data}
 {* {$mail_data|replace:"\n\n":"\n"|replace:":\n":": "} to reduce the number of line *}
 
-{if $mail_attId}
+{if isset($mail_attId)}
 {tr}Download the file at:{/tr}  {$mail_machine_raw}/tiki-download_item_attachment.php?attId={$mail_attId}
 {/if}

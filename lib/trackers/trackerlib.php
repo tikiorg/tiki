@@ -236,8 +236,8 @@ class TrackerLib extends TikiLib {
 			foreach ($watchers as $w) {
 				$mail = new TikiMail($w['user']);
 				$mail->setHeader("From", $prefs['sender_email']);
-				$mail->setSubject($smarty->fetchLang($w['lang'], 'mail/tracker_changed_notification_subject.tpl'));
-				$mail->setText($smarty->fetchLang($w['lang'], 'mail/tracker_changed_notification.tpl'));
+				$mail->setSubject($smarty->fetchLang($w['language'], 'mail/tracker_changed_notification_subject.tpl'));
+				$mail->setText($smarty->fetchLang($w['language'], 'mail/tracker_changed_notification.tpl'));
 				$mail->send(array($w['email']));
 			}
 		}
@@ -290,8 +290,8 @@ class TrackerLib extends TikiLib {
 			foreach ($watchers as $w) {
 				$mail = new TikiMail($w['user']);
 				$mail->setHeader("From", $prefs['sender_email']);
-				$mail->setSubject($smarty->fetchLang($w['lang'], 'mail/tracker_changed_notification_subject.tpl'));
-				$mail->setText($smarty->fetchLang($w['lang'], 'mail/tracker_changed_notification.tpl'));
+				$mail->setSubject($smarty->fetchLang($w['language'], 'mail/tracker_changed_notification_subject.tpl'));
+				$mail->setText($smarty->fetchLang($w['language'], 'mail/tracker_changed_notification.tpl'));
 				$mail->send(array($w['email']));
 			}
 		}
@@ -1801,7 +1801,7 @@ class TrackerLib extends TikiLib {
 	}
 
 	function remove_tracker_item($itemId) {
-		global $user;
+		global $user, $prefs;
 		$query = "select * from `tiki_tracker_items` where `itemId`=?";
 		$result = $this->query($query, array((int) $itemId));
 		$res = $result->fetchRow();
@@ -1826,6 +1826,7 @@ class TrackerLib extends TikiLib {
 			$smarty->assign('mail_itemId', $itemId);
 			$smarty->assign('mail_trackerId', $trackerId);
 			$smarty->assign('mail_trackerName', $trackerName);
+			$smarty->assign('mail_data', '');
 			$foo = parse_url($_SERVER["REQUEST_URI"]);
 			$machine = $this->httpPrefix(). $foo["path"];
 			$smarty->assign('mail_machine', $machine);
@@ -1841,8 +1842,8 @@ class TrackerLib extends TikiLib {
 			foreach ($watchers as $w) {
 				$mail = new TikiMail($w['user']);
 				$mail->setHeader("From", $prefs['sender_email']);
-				$mail->setSubject($smarty->fetchLang($w['lang'], 'mail/tracker_changed_notification_subject.tpl'));
-				$mail->setText($smarty->fetchLang($w['lang'], 'mail/tracker_changed_notification.tpl'));
+				$mail->setSubject($smarty->fetchLang($w['language'], 'mail/tracker_changed_notification_subject.tpl'));
+				$mail->setText($smarty->fetchLang($w['language'], 'mail/tracker_changed_notification.tpl'));
 				$mail->send(array($w['email']));
 			}
 		}
