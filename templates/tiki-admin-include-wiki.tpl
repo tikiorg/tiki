@@ -266,6 +266,15 @@
 </div>
 
 <div class="adminoptionbox">
+	<div class="adminoption"><input type="checkbox" id="wiki_edit_minor" name="wiki_edit_minor" {if $prefs.wiki_edit_minor eq 'y'}checked="checked"{/if}/></div>
+	<div class="adminoptionlabel"><label for="wiki_edit_minor">{tr}Allow minor edits{/tr}.</label>
+	{remarksbox type=note title=Note}{tr}Minor edits do not flag new content for translation and do not send watch notifications.{/tr}.{/remarksbox}
+	{remarksbox type=tip title=Tip}{tr}Only user groups granted the tiki_p_minor permission (and admins) will be able to save minor edits when this is enabled.{/tr}
+	<a class="link" href="tiki-assignpermission.php?type=wiki&amp;group=Registered" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>{/remarksbox}
+	</div>
+</div>
+
+<div class="adminoptionbox">
 	<div class="adminoptionlabel"><label for="feature_wiki_mandatory_category">{tr}Force and limit categorization to within subtree of:{/tr}</label>
 	<select name="feature_wiki_mandatory_category" id="feature_wiki_mandatory_category">
 	<option value="-1" {if $prefs.feature_wiki_mandatory_category eq -1 or $prefs.feature_wiki_mandatory_category eq ''}selected="selected"{/if}>{tr}None{/tr}</option>

@@ -4,7 +4,7 @@
 		<input type="submit" class="wikiaction" onmouseover="return overlib('{tr}Save the page as a partial translation.{/tr}');" onmouseout="nd();" name="partial_save" value="{tr}Partial Translation{/tr}" onclick="needToConfirm=false"/>
 		<input type="submit" class="wikiaction" onmouseover="return overlib('{tr}Save the page as a completed translation.{/tr}');" onmouseout="nd();" name="save" value="{tr}Complete Translation{/tr}" onclick="needToConfirm=false"/>
 	{else}
-		{if $tiki_p_minor eq 'y' and $page|lower ne 'sandbox'}
+		{if $tiki_p_minor eq 'y' and $page|lower ne 'sandbox' and $prefs.wiki_edit_minor neq 'n'}
 		<input type="submit" class="wikiaction" name="minor" onmouseover="return overlib('{tr}Save the page, but do not send notifications and do not count it as new content to be translated.{/tr}');" onmouseout="nd();" value="{tr}Save Minor Edit{/tr}" onclick="needToConfirm=false;" />
 		{/if}
 		<input type="submit" class="wikiaction" onmouseover="return overlib('{tr}Save the page.{/tr}');" onmouseout="nd();" name="save" value="{tr}Save{/tr}" onclick="needToConfirm=false;" />

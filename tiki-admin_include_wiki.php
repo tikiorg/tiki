@@ -180,6 +180,7 @@ if (isset($_REQUEST["wikifeatures"])) {
 	'wiki_edit_section',
 	'feature_actionlog_bytes',
 	'wiki_authors_style_by_page',
+	'wiki_edit_minor',
 	);
 	foreach ($pref_toggles as $toggle) {
 		simple_set_toggle($toggle);
