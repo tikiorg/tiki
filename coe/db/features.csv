@@ -352,7 +352,7 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 431,Proxy Host,1009,,proxy_host,simple,,tiki_p_admin,-9,,,,, 
 432,Long date format,48,,long_date_format,byref,,tiki_p_admin,,,Time+and+Date,Sample: {$now|tiki_long_date},, 
 433,Short date format,48,,short_date_format,byref,,tiki_p_admin,,,Time+and+Date,Sample: {$now|tiki_short_date},, 
-434,Site Title,876,,siteTitle,byref,,tiki_p_admin,,,,Will display in the browser's titlebar. ,,What is difference with sitetitle?
+434,Site Title,876,,browsertitle,byref,,tiki_p_admin,,,,Will display in the browser's titlebar. ,,What is difference with sitetitle?
 435,Short time format,48,,short_time_format,byref,,tiki_p_admin,,,Time+and+Date,Sample: {$now|tiki_short_time},, 
 436,Contact user,1000,,contact_user,simple,,tiki_p_admin,,,,,, 
 437,Store session in database,859,,session_db,flag,,tiki_p_admin,,,,,, 

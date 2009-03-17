@@ -30,8 +30,8 @@ class TWVersion {
 		$this->branch 	= 'unstable';
 
 		// Set everything else, including defaults.
-		$this->version 	= '3.0b0';
-		$this->star		= 'Betelgeuse';
+		$this->version 	= '4.0';
+		$this->star	= 'Aldebaran';
 		$this->release 	= $this->version;
 		$this->releases	= array();
 		$this->ridx 	= array();
@@ -62,7 +62,8 @@ class TWVersion {
 				11=>'Polaris',
 				12=>'Sirius',
 				13=>'Arcturus',
-				14=>'Betelgeuse'
+				14=>'Betelgeuse',
+				15=>'Aldebaran'
 				);
 	}
 
@@ -91,7 +92,8 @@ class TWVersion {
 				16=>'1.9.10.1',
 				17=>'2.0',
 				18=>'2.1',
-				19=>'2.2alpha',
+				19=>'2.2',
+				20=>'3.0beta1'
 				);
 	}
 

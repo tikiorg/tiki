@@ -69,18 +69,18 @@
 {/foreach}
 		{rdelim};
 		myShow = new Slideshow.Fullsize('show', data, {ldelim}
-			controller: true,
+			controller: {$slideshow_controller|default:"true"},
 			hu: '{if $tikiroot neq ""}{$tikiroot}{else}/{/if}',
-			thumbnails: true,
+			thumbnails: {$slideshow_thumbnails|default:"true"},
 			replace: [/\?preview/, '?thumbnail'],
-			overlap: false,
-			delay: 2000,
-			duration: 500,
-			random: false,
-			loop: true,
-			linked: false,
-			fast: false,
-			captions: true,
+			overlap: {$slideshow_overlap|default:"false"},
+			delay: {$slideshow_delay|default:4000},
+			duration: {$slideshow_duration|default:500},
+			random: {$slideshow_random|default:"false"},
+			loop: {$slideshow_loop|default:"true"},
+			linked: {$slideshow_linked|default:"false"},
+			fast: {$slideshow_fast|default:"false"},
+			captions: {$slideshow_captions|default:"true"},
 			adjustheight: -60,
 			adjustwidth: -180
 		{rdelim});
@@ -89,7 +89,9 @@
 	</script>
 </head>
 <body>
+{if ( ! $slideshow_noclose )}
 <div style="position:fixed; top:5px; right:10px;">{button href='#' _onclick='javascript:window.close();' _text="{tr}Close{/tr}"}</div>
+{/if}
 <div id="show" class="slideshow">
 	<div id="images" class="slideshow-images">
 		<img src="{if $tikiroot neq ""}{$tikiroot}{else}/{/if}tiki-download_file.php?preview&amp;fileId={$first}" />

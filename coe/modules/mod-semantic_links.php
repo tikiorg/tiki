@@ -1,5 +1,11 @@
 <?php
 
+//this script may only be included - so its better to die if called directly.
+if ( basename($_SERVER['SCRIPT_NAME']) == basename(__FILE__) ) {
+  header("location: index.php");
+  exit;
+}
+
 ini_set( 'display_errors', 'on' );
 error_reporting(E_ALL);
 

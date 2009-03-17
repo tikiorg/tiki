@@ -30,7 +30,7 @@ function smarty_block_tabs($params, $content, &$smarty) {
 		return;
 	} else {
 		
-		$tabs = split("\|", $content);
+		$tabs = split("\|", trim($content));
 		$ret = '<div class="tabs">
 			';
 		$i = 1;
@@ -39,9 +39,7 @@ function smarty_block_tabs($params, $content, &$smarty) {
 			$max++;
 		}
 		foreach ($tabs as $value) {
-			$ret .= '	<span id="tab'.$i.'" class="tabmark tabinactive">
-					<a href="#content'.$i.'" onclick="javascript:tikitabs('.$i.','.$max.'); return false;">'.$value.'</a>
-				</span>
+			$ret .= '	<span id="tab'.$i.'" class="tabmark tabinactive"><a href="#content'.$i.'" onclick="javascript:tikitabs('.$i.','.$max.'); return false;">'.$value.'</a></span>
 			';
 			$i++;
 		}

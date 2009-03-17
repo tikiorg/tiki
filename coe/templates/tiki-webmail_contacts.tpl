@@ -15,19 +15,8 @@
 
 <h2>{tr}Contacts{/tr}</h2>
 <div align="center">
-<table class="findtable">
-<tr><td>{tr}Find{/tr}</td>
-   <td>
-   <form method="get" action="tiki-webmail_contacts.php">
-     <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}Find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-     <input type="hidden" name="element" value="{$element|escape}" />
-     <input type="hidden" name="section" value="contacts" />
-   </form>
-   </td>
-</tr>
-</table>
+
+{include file='find.tpl' _sort_mode='y'}
 
 {initials_filter_links}
 

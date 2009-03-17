@@ -51,19 +51,7 @@
 
 <h2>{tr}Results{/tr}</h2>
 
-<table class="findtable">
-	<tr>
-		<td class="findtable">{tr}Find{/tr}</td>
-		<td class="findtable">
-			<form method="get" action="tiki-edit_quiz_results.php">
-				<input type="text" name="find" value="{$find|escape}" />
-				<input type="submit" value="{tr}Find{/tr}" name="search" />
-				<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-				<input type="hidden" name="quizId" value="{$quizId|escape}" />
-			</form>
-		</td>
-	</tr>
-</table>
+{include file='find.tpl' _sort_mode='y'}
 
 <table class="normal">
 	<tr>

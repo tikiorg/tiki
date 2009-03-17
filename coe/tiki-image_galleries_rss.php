@@ -10,6 +10,12 @@ require_once ('lib/tikilib.php');
 require_once ('lib/imagegals/imagegallib.php');
 require_once ('lib/rss/rsslib.php');
 
+if ($prefs['feature_galleries'] != 'y') {
+	$smarty->assign('msg', tra("This feature is disabled").": feature_galleries");
+	$smarty->display("error.tpl");
+	die;
+}
+
 if ($prefs['rss_image_galleries'] != 'y') {
         $errmsg=tra("rss feed disabled");
         require_once ('tiki-rss_error.php');

@@ -353,13 +353,12 @@ div#sitead {
 	bottom: 3px;
 	right: 10px;
 	font-size: 1em}
-#siteloginbar * {
-	margin: .2em; padding: .2em;
-}
+
+#siteloginbar * {margin: .2em}
+
  #siteloginbar.logged-in {
 	bottom: 3px;
 }
-
 
 /* tiki-top_bar.tpl - menu and search */
 
@@ -638,7 +637,7 @@ div#tiki-bot {}
 .treemenudiv {
 	display: block;
 	white-space: nowrap;
-}
+	background: #fff}
 
 .phplmnormal,
 a.phplmnormal:hover,
@@ -646,36 +645,42 @@ a.phplm:link,
 a.phplm:visited,
 a.phplm:hover,
 a.phplm:active {
-	font: 100% Verdana, Tahoma, Arial, sans-serif;
-	color: #303030;
+	font-family: Georgia, serif;;
+	color: #005faa;
 	text-decoration: none;
-	font-weight: bold;
+	font-weight: normal;
 }
 
 a.phplm:visited {
-	color: #726461;
+	color: #005faa;
 }
 
 a.phplm:hover {
-	color: #808080;
+	color: #005faa;
+	text-decoration: underline;
+	background: none;
 }
 
 a.phplm:active {
-	color: #ff0000;
+	color: #005faa;
+	font-weight: normal;
 }
 
 a.phplmselected:link,
 a.phplmselected:visited,
 a.phplmselected:hover,
 a.phplmselected:active {
-	font: 100% Verdana, Tahoma, Arial, sans-serif;
-	color: black;
-	text-decoration: underline;
-	font-weight: bold;
+	font: 100% Georgia, serif;;
+	color: #005faa;
+	text-decoration: none;
+	font-weight: normal;
+	background: none;
+	font-style: italic;
 }
 
 a.phplmselected:hover {
-	color: #808080;
+	color: #005faa;
+	text-decoration: underline;
 }
 
 /* cssmenus.css overrides (page controls and menus) */
@@ -697,6 +702,10 @@ a.phplmselected:hover {
 
 * html div.box-CSS_menu ul {margin-left: 0}
 
+.cssmenu li ul,
+.cssmenu_horiz li ul,
+.cssmenu_vert li ul {border: 1px solid #D3D3D3}
+
 .cssmenu_vert li ul {margin-left: 9em !important}
 
 .cssmenu li ul ul {/*left: -999em*/}
@@ -708,7 +717,7 @@ a.phplmselected:hover {
 .cssmenu_vert a {
 	text-decoration: none;
 	display: block;
-	line-height: 1.8em;
+	/*line-height: 1.8em;*/
 	padding: 3px 0 3px 6px}
 	
 .cssmenu a:hover,	
@@ -876,8 +885,9 @@ a.flipmodtitle:hover img {border: 1px solid #AAAAAA !important}
 	border-top: 1px solid #D3D3D3;
 	border-bottom: 1px solid #D3D3D3;
 	padding: 7px;
-	margin: 0;
-}
+	margin: 0}
+	
+.box-data {padding-bottom: 8px}
 
 * html .box-data {
 	padding: 7px 7px 30px 7px;
@@ -887,7 +897,7 @@ a.flipmodtitle:hover img {border: 1px solid #AAAAAA !important}
 .box-data ul {padding-right: .6em}
 
 .box-data ol {padding-left: 2em; margin-top: 0; margin-bottom: 0;}
-.box-data ul {padding-left: 0; margin-top: 0; margin-bottom: 0}
+.box-data ul {padding-left: 1em; margin-top: 0; margin-bottom: 0}
 /* IE */
 * html .box-data ol {margin-left: 0em}
 * html .box-data ul {margin-left: 1em}
@@ -896,9 +906,16 @@ a.flipmodtitle:hover img {border: 1px solid #AAAAAA !important}
 *:first-child+html .box-data ul {margin-left: 1em}
 
 
-.box-data ul li {
-	list-style: square;
-}
+.box-data ul li {list-style: square}
+.cssmenu li, .cssmenu_horiz li, .cssmenu_vert li {list-style: none !important}
+.box-data ul.cssmenu_vert {padding: 0}
+.box-since_last_visit_new div.box-data div {
+text-align: left !important}
+
+.box-since_last_visit_new a.linkmodule b {
+	font-family: Arial,Helvetica,sans-serif;
+	font-size: 85%;
+	text-transform: uppercase}
 
 /** Other boxes **/
 div.cbox {
@@ -977,16 +994,14 @@ table {
 }
 
 table.normal, 
-table.admin,
-table.bloglist {
+table.admin{
 	padding: 0;
 	margin: 0;
 	border-collapse: collapse;
 	width: 100%;
 }
 
-table.normal,
-table.bloglist {
+table.normal {
 	border: solid 1px #909090;
 	border-collapse: collapse;
 }
@@ -998,13 +1013,12 @@ table.admin tr td div#page-bar {
 }
 
 table.normal th {
-	font-size: 1em;
-}
-td {}
+	font-size: 1em}
+	
+td {vertical-align: top}
 * html td {	font-size: 11px}
 
 td.normal,
-td.bloglist,
 .wikitable td,
 td.odd,
 td.even {
@@ -1027,11 +1041,6 @@ th {
 	border-collapse: collapse;
 }
 
-.bloglist td {
-	border: solid 1px #909090;
-	border-collapse: collapse;
-}
-
 td.form {
 	padding: 0.2em;
 }
@@ -1051,8 +1060,7 @@ td.form {
 
 /* Tables (list reduced due to classes not found in files) */
 table.normal, 
-table.admin,
-table.bloglist {
+table.admin {
 	margin: 0;
 	border-collapse: collapse;
 	width: 100%;
@@ -1060,8 +1068,7 @@ table.bloglist {
 table.normalnoborder {
 	width: 100%;
 }
-table.normal,
-table.bloglist {
+table.normal {
 	border: solid 1px #909090;
 	border-collapse: collapse;
 }
@@ -1348,8 +1355,7 @@ img.externallink {
 	
 }
 
-/* Wiki plugins */
-/* Code plugin  */
+/* code examples after uploaded file */
 div.code {
 	font-size: 90%;
 	padding: 3px;
@@ -1358,37 +1364,46 @@ div.code {
 	font-family: "Courier New", Courier, monospace;
 }
 
-.codelisting {
-	font-family: "Courier New", Courier, monospace;
-	padding: 10px;
-	background: #F5F5F5;
-	margin: 4px;
-	border: 1px dashed #ADACAF;
-	overflow: auto; 
-   width: 90%;
-}
 
+/* Wiki plugins */
+
+/* Code plugin  */
 .codecaption {
-	font-size: 90%;
+	font-size: 0.9em;
 	padding: 0 10px;
 	position: relative;
-	bottom: -5px;
+	bottom: -1em;
 	display: inline;
 	border: 1px solid #ADACAF;
 	border-bottom: 0;
-	margin: 0;
+	margin-left: 4px;
+	line-height: 1em;
 	color: #666666;
 	background: #F5F5F5;
 	font-weight: bold;
 }
 
+.codelisting {
+	font-family: "Courier New", Courier, monospace;
+	padding: 10px;
+	background: #F5F5F5;
+	border: 1px dashed #ADACAF;
+	margin-left: 4px;
+	overflow: auto;
+	width: 90%;
+}
+
 /* Quote plugin */
 div.quoteheader {
-	margin-left: 20px;
+	margin-left: 30px;
+	
 }
 
 div.quotebody {
+	margin: 0 15px 10px 30px;
 	font-style: italic;
+	border-left: 5px solid #D3D3D3;
+	padding-left: 6px
 }
 
 table.wikiplugin-split {
@@ -1439,9 +1454,10 @@ ul.toc * {
 .diff div {
 	border-top: 1px solid #A9B8C2;
 }
-.diffheader {
+.diffheader td {
 	background: #A9B8C2;
 	font-weight: bold;
+	width: 50%;
 }
 .diffadded {
 	background: #CCFFCC;
@@ -1530,12 +1546,27 @@ img.articleimage {
 	margin-bottom:10px;
 }
 
-div.articletrailer {text-align: right}
+div.articletrailer {
+	position: relative;
+	text-align: center;
+	margin-top: 1.1em}
+	
+div.articletrailer img {}
 
-div.articletrailer .wikitopline {
-	float: left;
-} 
- 
+div.article .status {
+	position: absolute;
+	left: 0}
+
+div.articletrailer span {
+	display: inline-block;
+	margin: auto;
+	white-space: nowrap}
+
+div.article .actions {
+	position: absolute;
+	right: 0;
+	top: 0}
+
 div.articlebody {
 	font-size: 125%;
 	line-height: 1.5em;
@@ -1742,15 +1773,13 @@ table.commentinfo {}
 
 
 .postbody-title {
-	width: 75%;
-	float: left;
+	width: 100%;
+	float: none;
 	margin-top: 0;
 	margin-bottom: auto;
 	background-color: #E0EAF4; 
 	border-bottom: 1px solid #ACCCDD}
 	
-*:first-child+html .postbody-title {min-width: 74%}
-
 .post .postbody-title .checkbox {float: left}
 
 .post .postbody-title .title {
@@ -2350,6 +2379,14 @@ div.minichatchans {overflow: auto !important}
 div.minichatdiv {
   font-size: .9em;
   overflow: auto !important}
+
+body.tiki_mytiki #tiki-center form {
+	border: 1px solid #aaa;
+	padding: 10px}
+  
+body.tiki_mytiki #tiki-center form table.normal,
+body.tiki_mytiki #tiki-center .normal form {
+	border: none;}
  
 /* end of css file */
 

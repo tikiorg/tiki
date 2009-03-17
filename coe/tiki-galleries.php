@@ -10,8 +10,8 @@
 $section = 'galleries';
 require_once ('tiki-setup.php');
 
-include_once ("lib/imagegals/imagegallib.php");
-include_once ('lib/categories/categlib.php');
+global $imagegallib; include_once ("lib/imagegals/imagegallib.php");
+global $categlib; include_once ('lib/categories/categlib.php');
 include_once ('lib/map/usermap.php');
 
 if ($prefs['feature_galleries'] != 'y') {
@@ -129,7 +129,7 @@ $smarty->assign('showdescription','n');
 $smarty->assign('showcreated','n');
 $smarty->assign('showuser','n');
 $smarty->assign('showhits','y');
-$smarty->assign('showxysize','y');
+$smarty->assign('showxysize','n');
 $smarty->assign('showfilesize','n');
 $smarty->assign('showfilename','n');
 $options_galleryimage=array(tra('first uploaded image') => 'firstu',

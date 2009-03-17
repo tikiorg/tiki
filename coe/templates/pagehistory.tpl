@@ -1,4 +1,4 @@
-{if $diff_style}
+{if $smarty.request.diff_style}
    {if $translation_mode ne 'y'}
      <h2>{tr}Comparing version {$old.version} with version {$new.version}{/tr}</h2>     
    {else}
@@ -33,7 +33,7 @@
       
    {/if}
 
-{/if}
+
 
 {if $diff_style eq "sideview"}
    <tr>
@@ -79,10 +79,9 @@
 </td></tr>
 {/if}
 
-{if $diff_style && $diff_style neq 'unidiff' && $diff_style neq 'sideview'}
+{if $diff_style neq 'unidiff' && $diff_style neq 'sideview'}
   {if $diffdata}{$diffdata}{else}<tr><td colspan="3">{tr}Versions are identical{/tr}</td></tr>{/if}
 {/if}
 
-{if $diff_style}
    </table>
 {/if}

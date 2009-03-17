@@ -5,7 +5,7 @@ function wikiplugin_draw_info()
 	return array(
 		'name' => tra('Draw'),
 		'description' => tra('Displays drawings in the wiki page'),
-		'prefs' => array( 'feature_drawings' ),
+		'prefs' => array( 'feature_drawings', 'wikiplugin_draw' ),
 		'params' => array(
 			'name' => array(
 				'name' => tra('Name'),

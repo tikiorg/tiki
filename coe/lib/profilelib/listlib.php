@@ -59,6 +59,33 @@ class Tiki_Profile_List
 		return true;
 	} // }}}
 
+	function getCategoryList( $source = '' ) // {{{
+	{
+		$category_list = array();
+	
+		$sources = $this->getSources();
+
+		foreach( $sources as $s )
+		{
+			if( $source && $s['url'] != $source )
+                                continue;
+				
+			if( !$s['lastupdate'] )
+                                continue;
+
+                        $fp = fopen( $this->getCacheLocation( $s['url'] ), 'r' );
+
+                        while( false !== $row = fgetcsv( $fp, 200, "\t" ) )
+                        {
+				list( $c, $t, $i ) = $row;
+				if ($c) $category_list[] = $c;
+			}
+		}
+
+		natsort( $category_list );	
+		return( array_unique( $category_list ) );
+	} // }}}
+							
 	function getList( $source = '', $category = '', $profile = '' ) // {{{
 	{
 		$list = array();

@@ -40,3 +40,28 @@ a.admbox.off:hover, a.admbox.off:focus, a.admbox.off:active {
 	border : 2px solid #9f9f9f;
 	color: #333;
 }
+
+/* classes for admin ui revamp */
+.adminoptionbox {
+/*overall box */
+	clear:both;
+	padding: 0.5em;
+	text-align:left;
+	}
+	
+.adminoptionlabel {
+/* text label and text field */
+	text-align:left;
+	}
+	
+.adminoption {
+/*check box */
+	float:left;
+	margin-right:1em;
+	}
+
+.adminoptionboxchild {
+/*sub options */
+	margin-left:3em;
+	clear:both;
+	}

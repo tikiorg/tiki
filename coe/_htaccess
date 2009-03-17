@@ -18,12 +18,18 @@
 <IfModule mod_rewrite.c>
 RewriteEngine On
 
-# rewrite for multitiki sites, when configured as symlinks, not as apache aliases
-RewriteCond %{REQUEST_FILENAME}/ -s [OR]
-RewriteCond %{REQUEST_FILENAME}/ -l [OR]
-RewriteCond %{REQUEST_FILENAME}/ -d
-RewriteRule [^/]$ %{REQUEST_URI}/ [R=301,L]
+# If the URL points to a file then do nothing
+RewriteCond %{REQUEST_FILENAME} -s [OR]
+RewriteCond %{REQUEST_FILENAME} -l [OR]
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule (.*) - [L]
 
+# Tiki 3.0 requires PHP5. If your host doesn't offer PHP5 by default, it's possible that it can be activated by using (uncommenting) the lines below. Check with your host.
+# AddType application/x-httpd-php5 .php
+# AddHandler application/x-httpd-php5 .php
+ 
+ 
 # direct one-word access
 RewriteRule ^(img\/trackers\/.*)		$1		[L]
 RewriteRule ^calendar$             tiki-calendar.php                        [L]
@@ -88,16 +94,16 @@ RewriteRule ^int([0-9]+)           tiki-integrator.php?repID=$1             [QSA
 RewriteRule ^sheet([0-9]+)         tiki-view_sheets.php?sheetId=$1          [QSA,L]
 RewriteRule ^ws([0-9]+)            tiki-workspaces_desktop.php?workspaceId=$1    [QSA,L]
 
-RewriteRule \.(css|gif|jpg|png|php|html|js|htm|shtml|cgi|sql|phtml|txt|ihtml|mpa|mp2|wav|aif|aiff|au|mid|mp3|mp4|m4v|flv|mov|avi|mpg|swf|m4a|pdf|htc|xml)$   -       [L]
-
 RewriteRule ^wiki-([A-Za-z0-9]+)   tiki-index.php?page=$1                   [QSA,L]
 RewriteRule ^page-([A-Za-z0-9]+)   tiki-index.php?page=$1                   [QSA,L]
 RewriteRule ^show:(~?)(.+)$  tiki-slideshow.php?page=$1$2      [QSA,L]
 RewriteRule ^(lib/wiki3d/.+\.jar)$ $1                                       [L]
 RewriteRule     ^(.+)$    tiki-index.php?page=$1                   [QSA,L]
 
-# how to redirect to a wiki page on a not found error: uncomment + adapt the pagename 
-# ErrorDocument 404 tiki-index.php?page=Page+not+found
+# Error pages, handled by Apache (not by TikiWiki)
+# TikiWiki can catch some errors and deal with them by redirecting to a similar page, sending you to the search, etc. However, some errors bypass TikiWiki and must be handled by Apache (ex.: impossiblepagename.php) 
+# To use Apache error handling, uncomment the following line and adapt the page name. You must create the page before trying to use it. 
+# ErrorDocument 404 /tiki-index.php?page=Page+not+found
 
 # to active the error display, uncomment
 #php_flag display_errors on

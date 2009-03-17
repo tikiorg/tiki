@@ -16,7 +16,7 @@
 </div>
 {* The rest determines which page to include using "page" GET parameter. Default : list-sections
 Add a value in first check when you create a new admin page. *}
-{if in_array($adminpage, array("features", "general", "login", "wiki", "gal", "fgal", "cms", "polls", "search", "blogs", "forums", "faqs", "trackers", "webmail", "rss", "directory", "userfiles", "maps", "metatags", "wikiatt","score", "community", "messages", "calendar","intertiki","freetags","gmap", "i18n","wysiwyg","copyright","category", "module", "look", "textarea", "multimedia", "ads", "profiles", "semantic", "plugins", "webservices"))}
+{if in_array($adminpage, array("features", "general", "login", "wiki", "gal", "fgal", "cms", "polls", "search", "blogs", "forums", "faqs", "trackers", "webmail", "rss", "directory", "userfiles", "maps", "metatags", "wikiatt","score", "community", "messages", "calendar","intertiki","freetags","gmap", "i18n","wysiwyg","copyright","category", "module", "look", "textarea", "multimedia", "ads", "profiles", "semantic", "plugins", "webservices", 'sefurl'))}
   {assign var="include" value=$smarty.get.page}
 {else}
   {assign var="include" value="list-sections"}
@@ -30,10 +30,31 @@ Add a value in first check when you create a new admin page. *}
 {/if}
 
 {if $tikifeedback}
-<br /><div class="simplebox highlight">{section name=n loop=$tikifeedback}
-{if strstr($tikifeedback[n].mes, 'disabled')}{icon _id=delete alt="{tr}disabled{/tr}" style="vertical-align:middle"}{else}{icon _id=accept alt="{tr}enabled{/tr}" style="vertical-align:middle"}{/if}
- {$tikifeedback[n].mes}<br />{/section}</div><br />
+	{remarksbox type="note" title="{tr}Note{/tr}"}
+		{cycle values="odd,even" print=false}
+		{tr}The following list of changes has been applied:{/tr}
+		<ul>
+		{section name=n loop=$tikifeedback}
+			<li class="{cycle}">
+				<p>
+			{if $tikifeedback[n].st eq 0}
+				{icon _id=delete alt="{tr}disabled{/tr}" style="vertical-align: middle"}
+			{elseif $tikifeedback[n].st eq 1}
+				{icon _id=accept alt="{tr}enabled{/tr}" style="vertical-align: middle"}
+			{elseif $tikifeedback[n].st eq 2}
+				{icon _id=accept alt="{tr}changed{/tr}" style="vertical-align: middle"}
+			{else}
+				{icon _id=information alt="{tr}information{/tr}" style="vertical-align: middle"}
+			{/if}
+					{if $tikifeedback[n].st ne 3}{tr}preference{/tr} {/if}<strong>{tr}{$tikifeedback[n].mes|stringfix}{/tr}</strong><br />
+					{if $tikifeedback[n].st ne 3}(<em>{tr}preference name:{/tr}</em> {$tikifeedback[n].name}){/if}
+				</p>
+			</li>
+		{/section}
+		</ul>
+	{/remarksbox}
 {/if}
+
 {include file="tiki-admin-include-$include.tpl"}
 
 <br style="clear:both" />
@@ -63,7 +84,6 @@ Add a value in first check when you create a new admin page. *}
 	{tr}Administration features{/tr}:<br />
 	<a href="tiki-adminusers.php">{tr}Users{/tr}</a> 
 	<a href="tiki-admingroups.php">{tr}Groups{/tr}</a> 
-	<a href="tiki-admin.php?page=profiles">{tr}Profiles{/tr}</a>
 	<a href="tiki-admin_security.php">{tr}Security{/tr}</a> 
 	<a href="tiki-admin_system.php">{tr}System{/tr}</a> 
 	<a href="tiki-syslog.php">{tr}SysLogs{/tr}</a> 

@@ -469,7 +469,7 @@ class Comments extends TikiLib {
 	    // Process attachments
 	    if( array_key_exists( 'parts', $output ) && count( $output['parts'] ) > 1 ) {
 		$forum_info = $this->get_forum( $forumId );
-		$errors = aray();
+		$errors = array();
 		foreach( $output['parts'] as $part ) {
 		    if (array_key_exists( 'disposition', $part )) {
 				if ($part['disposition'] == 'attachment') {
@@ -2427,6 +2427,18 @@ class Comments extends TikiLib {
 			$errors[] = tra('Permission denied');
 			return 0;
 		}
+		if ( $forum_info['is_locked'] == 'y' ) {
+			$smarty->assign('msg', tra("This forum is locked"));
+			$smarty->display("error.tpl");
+			die;
+		}
+		$parent_comment_info = $commentslib->get_comment($parent_id);
+		if ( $parent_comment_info['locked'] == 'y' ) {
+			$smarty->assign('msg', tra("This thread is locked"));
+			$smarty->display("error.tpl");
+			die;
+		}
+
 		if (empty($user) && $prefs['feature_antibot'] == 'y' && (!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $params['antibotcode'])) {
 			$errors[] = tra('You have mistyped the anti-bot verification code; please try again.');
 		}
@@ -2589,6 +2601,17 @@ class Comments extends TikiLib {
 				die;
 			}
 		}
+		if ( $this->is_object_locked($comments_objectId) ) {
+			$smarty->assign('msg', tra("Those comments are locked"));
+			$smarty->display("error.tpl");
+			die;
+		}
+		$parent_comment_info = $commentslib->get_comment($parent_id);
+		if ( $parent_comment_info['locked'] == 'y' ) {
+			$smarty->assign('msg', tra("This thread is locked"));
+			$smarty->display("error.tpl");
+			die;
+		}
 				
 		if (empty($user) && $prefs['feature_antibot'] == 'y' && (!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $params['antibotcode'])) {
 			$errors[] = tra('You have mistyped the anti-bot verification code; please try again.');
@@ -2622,6 +2645,7 @@ class Comments extends TikiLib {
 		if (!isset($params['anonymous_email'])) {
 			$params['anonymous_email'] = '';
 		}
+
 		if ( isset($params['comments_reply_threadId']) && ! empty($params['comments_reply_threadId']) ) {
 			$reply_info = $this->get_comment($params['comments_reply_threadId']);
 			$in_reply_to = $reply_info['message_id'];

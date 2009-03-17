@@ -186,10 +186,11 @@ if ($prefs['feature_userPreferences'] == 'y' && isset($_REQUEST["new_prefs"])) {
 	if (isset($_REQUEST["realName"]) && ($prefs['auth_ldap_nameattr'] == '' || $prefs['auth_method'] != 'auth'))
 		$tikilib->set_user_preference($userwatch, 'realName', $_REQUEST["realName"]);
 
-	/* this should be optional
+	if ($prefs['feature_community_gender'] == 'y') {
 	   if (isset($_REQUEST["gender"]))
 	   $tikilib->set_user_preference($userwatch, 'gender', $_REQUEST["gender"]);
-	 */
+	}
+
 
 	if (isset($_REQUEST["homePage"]))
 		$tikilib->set_user_preference($userwatch, 'homePage', $_REQUEST["homePage"]);
@@ -387,6 +388,9 @@ $tikilib->get_user_preference($userwatch, 'minPrio', 3);
 $tikilib->get_user_preference($userwatch, 'theme', '');
 $tikilib->get_user_preference($userwatch, 'language', $prefs['language']);
 $tikilib->get_user_preference($userwatch, 'realName', '');
+if ($prefs['feature_community_gender'] == 'y') {
+	$tikilib->get_user_preference($userwatch, 'gender', 'Hidden');
+}
 $tikilib->get_user_preference($userwatch, 'country', 'Other');
 $tikilib->get_user_preference($userwatch, 'lat', '');
 $tikilib->get_user_preference($userwatch, 'lon', '');

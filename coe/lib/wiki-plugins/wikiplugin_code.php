@@ -60,7 +60,7 @@ function wikiplugin_code($data, $params) {
 	$code = trim($data);
 
 	$parse_wiki = ( isset($wiki) && $wiki == 1 );
-	$escape_html = ( ! isset($ishtml) || $ishtml != 1 );
+	$escape_html = 0;
 
 	// Detect if GeSHI (Generic Syntax Highlighter) is available
 	$geshi_paths = array(
@@ -146,14 +146,14 @@ function wikiplugin_code($data, $params) {
 		$pre_style = 'overflow:auto;';
 	}
 
-	$out = '~np~<pre class="codelisting" dir="'.( (isset($rtl) && $rtl == 1) ? 'rtl' : 'ltr').'" style="'.$pre_style.'">~/np~'
+	$out = '<pre class="codelisting" dir="'.( (isset($rtl) && $rtl == 1) ? 'rtl' : 'ltr').'" style="'.$pre_style.'">'
 		.(( $parse_wiki ) ? '' : '~np~')
 		.$out
 		.(( $parse_wiki ) ? '' : '~/np~')
-		.'~np~</pre>~/np~';
+		.'</pre>';
 
 	if ( isset($caption) ) {
-		$out = '~np~<div class="codecaption">~/np~'.$caption.'~np~</div>~/np~'.$out;
+		$out = '<div class="codecaption">'.$caption.'</div>'.$out;
 	}
 
 	return $out;

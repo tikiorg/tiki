@@ -24,7 +24,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 	if( isset($_POST['config']) ) { // {{{
 		$tikilib->set_preference( 'profile_sources', $_POST['profile_sources'] );
 		$tikilib->set_preference( 'profile_channels', $_POST['profile_channels'] );
-		
+
 		header( 'Location: tiki-admin.php?page=profiles' );
 		exit;
 	} // }}}
@@ -129,6 +129,10 @@ if( isset( $_GET['list'] ) ) { // {{{
 	$smarty->assign( 'repository', $params['repository'] );
 
 	$result = $list->getList( $params['repository'], $params['category'], $params['profile'] );
+
+	$category_list = $list->getCategoryList( $params['repository'] );
+	$smarty->assign( 'category_list', $category_list );	
+
 	$smarty->assign( 'result', $result );
 } // }}}
 
@@ -140,6 +144,8 @@ foreach( $sources as $key => $source )
 
 $smarty->assign( 'sources', $sources );
 $smarty->assign( 'oldSources', $oldSources );
+
+$headerlib->add_cssfile('css/admin.css');
 
 ask_ticket('admin-inc-profiles');
 

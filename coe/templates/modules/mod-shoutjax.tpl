@@ -56,10 +56,9 @@
         {capture name=date}{strip} {* Print date *}
           {$shout_msgs[ix].timestamp|tiki_short_time}, {$shout_msgs[ix].timestamp|tiki_short_date}
         {/strip}{/capture}
-
 	    {* Show user message in style according to 'tooltip' module parameter *}
 	    {assign var=cdate value=$smarty.capture.date}
-	    {if $tooltip == 1}{* TODO: Improve $userlink modifier one day to handle other attibutes better? *}
+	    {if 0 and $tooltip == 1}{* TODO: Improve $userlink modifier one day to handle other attibutes better? *}
           <b>{strip}{$userlink|replace:" class=":" onmouseover='return overlib(\"$cdate\");' onmouseout='nd();' class="}{/strip}</b>:
         {else}
           <b>{strip}{$userlink}{/strip}</b>, {$cdate}:
@@ -67,7 +66,7 @@
         {$shout_msgs[ix].message}
         {if $tiki_p_admin_shoutbox eq 'y' || $user == $shout_msgs[ix].user }
           {if $prefs.feature_ajax == 'y'}
-            [<a onclick="removeShout({$shout_msgs[ix].msgId});return false" href="#" class="linkmodule" onmouseover="return overlib('{tr}Delete{/tr}');" onmouseout="nd();">x</a>|<a href="tiki-shoutbox.php?msgId={$shout_msgs[ix].msgId}" class="linkmodule" onmouseover="return overlib('{tr}Edit{/tr}');" onmouseout="nd();">e</a>]
+            [<a onclick="removeShout({$shout_msgs[ix].msgId});return false" href="#" class="linkmodule tips" title="|{tr}Delete this shout{/tr}">x</a>|<a href="tiki-shoutbox.php?msgId={$shout_msgs[ix].msgId}" class="linkmodule tips" title="|{tr}Edit this shout{/tr}">e</a>]
           {else}
             [<a href="{$shout_ownurl}shout_remove={$shout_msgs[ix].msgId}" class="linkmodule">x</a>|<a href="tiki-shoutbox.php?msgId={$shout_msgs[ix].msgId}" class="linkmodule">e</a>]
           {/if}

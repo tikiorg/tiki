@@ -3,10 +3,27 @@
  * Imports a MediaWiki-style XML dump in tikiwiki.
  *
  * Requires PHP5 DOM extension.
- */
+ *
+ * Requires Text_Wiki libraries. See http://dev.tikiwiki.org/MediaWiki+to+TikiWiki+converter
+ * http://pear.php.net/package/Text_Wiki_Mediawiki
+ * http://pear.php.net/package/Text_Wiki_Tiki
+ *
+ **/
+
+//this script may only be included - so its better to die if called directly.
+if ( basename($_SERVER['SCRIPT_NAME']) == basename(__FILE__) ) {
+  header("location: index.php");
+  exit;
+}
 
 if( phpversion() < '5.0.0' )
 	die( 'PHP 5 Required. Version ' . phpversion() . " detected\n" );
+
+if( !file_exists('Text/Wiki.php') || !file_exists('Text/Wiki/Wiki.php') || !file_exists('Text/Wiki/Mediawiki.php')) {
+	$smarty->assign('msg', tra('Text_Wiki libraries need to be installed. Please see http://dev.tikiwiki.org/MediaWiki+to+TikiWiki+converter'));
+        $smarty->display('error.tpl');
+	die;
+}
 
 # Require Text_Wiki libraries
 

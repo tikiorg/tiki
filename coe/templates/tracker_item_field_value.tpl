@@ -8,7 +8,7 @@
 	{assign var='is_link' value='n'}
 {elseif $field_value.isMain eq 'y'
  and ($tiki_p_view_trackers eq 'y' or $tiki_p_modify_tracker_items eq 'y' or $tiki_p_comment_tracker_items eq 'y'
- or ($tracker_info.writerCanModify eq 'y' and $user and $my eq $user) or ($tracker_info.writerCanModify eq 'y' and $group and $ours eq $group))}
+ or ($tracker_info.writerCanModify eq 'y' and $user and $my eq $user) or ($tracker_info.writerGroupCanModify eq 'y' and $group and $ours eq $group))}
 	{if empty($url) and !empty($item.itemId)}
 		{assign var=urll value="tiki-view_tracker_item.php?itemId=`$item.itemId`&amp;trackerId=`$item.trackerId`&amp;show=view"}
 	{elseif strstr($url, 'itemId') and !empty($item.itemId)}
@@ -28,7 +28,7 @@
 	<a class="tablename" href="{$urll}{if $offset}&amp;offset={$offset}{/if}{if isset($reloff)}&amp;reloff={$reloff}{/if}{if $item_count}&amp;cant={$item_count}{/if}{foreach key=urlkey item=urlval from=$urlquery}{if $urlval}&amp;{$urlkey}={$urlval|escape:"url"}{/if}{/foreach}"{if $showpopup eq 'y'} {popup text=$smarty.capture.popup|escape:"javascript"|escape:"html" fullhtml="1" hauto=true vauto=true sticky=$stickypopup}{/if}>
 {/if}
 {* ******************** field with preprend ******************** *}
-{if ($field_value.type eq 't' or $field_value.type eq 'n' or $field_value.type eq 'c') and !empty($field_value.options_array[2])}
+{if ($field_value.type eq 't' or $field_value.type eq 'n' or $field_value.type eq 'c') and !empty($field_value.options_array[2]) and $field_value.value != ''}
 	<span class="formunit">{$field_value.options_array[2]}</span>
 {/if}
 {if $field_value.type eq 'q' and !empty($field_value.options_array[1])}
@@ -84,7 +84,7 @@
 	{/if}
 
 {* -------------------- empty field -------------------- *}
-{elseif empty($field_value.value) and $field_value.type ne 'U' and $field_value.type ne 's' and $field_value.type ne 'q' and $field_value.type ne 'n' and $field_value.type ne 'C'}
+{elseif empty($field_value.value) and $field_value.value != '0' and $field_value.type ne 'U' and $field_value.type ne 's' and $field_value.type ne 'q' and $field_value.type ne 'n' and $field_value.type ne 'C'}
 	{if $list_mode ne 'csv' and $is_link eq 'y'}&nbsp;{/if} {* to have something to click on *}
 
 {* -------------------- text field, numeric, drop down, radio,user/group/IP selector, autopincrement, dynamic list *}
@@ -96,7 +96,7 @@
 	{/if}
 
 {* -------------------- text field, numeric, drop down, radio,user/group/IP selector, autopincrement, dynamic list *} 
-{elseif $field_value.type eq  't' or $field_value.type eq 'n' or $field_value.type eq 'd' or $field_value.type eq 'D' or $field_value.type eq 'R' or $field_value.type eq 'u' or $field_value.type eq 'g' or $field_value.type eq 'I' or $field_value.type eq 'q' or $field_value.type eq 'w' or $field_value.type eq 'C'}
+{elseif $field_value.type eq  't' or $field_value.type eq 'n' or $field_value.type eq 'd' or $field_value.type eq 'D' or $field_value.type eq 'R' or $field_value.type eq 'u' or $field_value.type eq 'g' or $field_value.type eq 'I' or $field_value.type eq 'q' or $field_value.type eq 'w' or ($field_value.type eq 'C' and $field_value.computedtype ne 'f')}
 	{if $list_mode eq 'y'}
 		{$field_value.value|escape|truncate:255:"..."|default:"&nbsp;"}
 	{elseif $list_mode eq 'csv'}
@@ -194,7 +194,7 @@
 	{/if}
 
 {* -------------------- date -------------------- *}
-{elseif $field_value.type eq 'f' or $field_value.type eq 'j'}
+{elseif $field_value.type eq 'f' or $field_value.type eq 'j' or $field_value.computedtype eq 'f'}
 	{if $field_value.value}
 		{if $field_value.options_array[0] eq 'd'}
 			{$field_value.value|tiki_short_date}
@@ -258,13 +258,15 @@
 	{if $list_mode eq 'csv'}
 		{$field_value.value}
 	{else}
-		<span style="padding-right:2em"><b title="{tr}Rating{/tr}: {$field_value.value|default:"-"}, {tr}Number of voices{/tr}: {$field_value.numvotes|default:"-"}, {tr}Average{/tr}: {$field_value.voteavg|default:"-"}" style="position:absolute">
-		&nbsp;{if $field_value.value >= 0}&nbsp;{/if}{$field_value.value|default:"-"}&nbsp;</b>
+		{capture name=stat}
+		{tr}Rating{/tr}: {$field_value.value|default:"-"}, {tr}Number of voices{/tr}: {$field_value.numvotes|default:"-"}, {tr}Average{/tr}: {$field_value.voteavg|default:"-"}, {tr}Your vote{/tr}: {if $item.my_rate}{$item.my_rate}{else}-{/if}
+		{/capture}
+		<span style="padding-right:2em"><b title="{$smarty.capture.stat}" style="position:absolute">
+		{if $field_value.value}{$field_value.voteavg}/{$field_value.value}{else}&nbsp;-&nbsp;{/if}</b>
 		</span>
 		{if $tiki_p_tracker_vote_ratings eq 'y'}
-			<span><span class="button2">
-			{if $item.my_rate eq NULL}
-				<b class="linkbut highlight">-</b>
+			{if $item.my_rate}
+				<b class="highlight">-</b>
 			{else}
 				<a href="{$smarty.server.PHP_SELF}{if $query_string}?{$query_string}{else}?{/if}
 					trackerId={$item.trackerId}
@@ -274,16 +276,16 @@
 			{/if}
 				{section name=i loop=$field_value.options_array}
 					{if $field_value.options_array[i] eq $item.my_rate}
-						<b class="linkbut highlight">{$field_value.options_array[i]}</b>
+						<b class="highlight">{$field_value.options_array[i]}</b>
 					{else}
 						<a href="{$smarty.server.PHP_SELF}?
 						trackerId={$item.trackerId}
 						&amp;itemId={$item.itemId}
 						&amp;ins_{$field_value.fieldId}={$field_value.options_array[i]}
-						{if $page}&amp;page={$page|escape:url}{/if}">{$field_value.options_array[i]}</a>
+						{if $page}&amp;page={$page|escape:url}{/if}"
+						title="{tr}Click to vote for this value.{/tr} {$smarty.capture.stat}">{$field_value.options_array[i]}</a>
 					{/if}
 				{/section}
-			</span></span>
 		{/if}
 	{/if}
 
@@ -342,7 +344,7 @@
 {/if}
 
 {* ******************** append ******************** *}
-{if ($field_value.type eq 't' or $field_value.type eq 'n' or $field_value.type eq 'c') and $field_value.options_array[3]}
+{if ($field_value.type eq 't' or $field_value.type eq 'n' or $field_value.type eq 'c') and $field_value.options_array[3] and $field_value.value != ''}
 	<span class="formunit">{$field_value.options_array[3]}</span>
 {/if}
 {if $field_value.type eq 'q' and !empty($field_value.options_array[2])}

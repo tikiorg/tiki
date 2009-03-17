@@ -11,5 +11,5 @@ $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
 // setup initial breadcrumb
 $crumbs = array();
-$crumbs[] = new Breadcrumb($prefs['siteTitle'], '', $prefs['tikiIndex']);
+$crumbs[] = new Breadcrumb($prefs['browsertitle'], '', $prefs['tikiIndex']);
 $smarty->assign_by_ref('crumbs', $crumbs);

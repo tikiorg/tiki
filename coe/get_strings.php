@@ -72,9 +72,41 @@ function collect_perms_desc($file)
     $perm_strings[] = $row['permDesc'];
 
   $pstr = fopen($file,'w');
+  if (!$pstr) {
+	  echo "The file $file can not be written";
+  }
   foreach ($perm_strings as $strg)
   {
     fwrite ($pstr,  "{tr}" . $strg . "{/tr}" . "\n");
+  }
+  fclose($pstr);
+}
+
+/**
+  * Reads all the permission descriptions in tikiwiki database and writes
+  *   it to the file $file. All the strings will be surrounded by smarty translate tags
+  *     ex: {tr}preference name{/tr}
+  *
+  * @param $file string: target file for the pref names
+  * @returns: nothing but creates the file with the pref names (take care about the acl's in the target directory !)
+  */
+function collect_prefs_names($file)
+{
+  global $tikilib;
+
+  $result = $tikilib->query("select `name` from `tiki_preferences`");
+
+  $prefs_strings = array();
+  while( $row = $result->fetchRow() )
+    $prefs_strings[] = $row['name'];
+
+  $pstr = fopen($file,'w');
+  if (!$pstr) {
+	  echo "The file $file can not be written";
+  }
+  foreach ($prefs_strings as $strg)
+  {
+    fwrite ($pstr,  "{tr}" . str_replace('_',' ',$strg) . "{/tr}" . "\n");
   }
   fclose($pstr);
 }
@@ -288,12 +320,15 @@ hardwire_file ('./img/flags/flagnames.php');
 
 ## Adding a file in ./temp which contains all the perms descriptions
 ## This file is called permstrings.tpl. The extension has to be .tpl in order to be
-##   taken in charge by the scipt (tpl or php)
+##   taken in charge by the script (tpl or php)
 ## This file is, of course, temporary and will be deleted during the next cache clear !
 
 $permsfile = "./temp/permstrings.tpl";
 $permsstrgs = collect_perms_desc($permsfile);
+$prefsfile = "./temp/prefnames.tpl";
+collect_prefs_names($prefsfile);
 hardwire_file ($permsfile);
+hardwire_file ($prefsfile);
 
 // Sort files to make generated strings appear in language.php in the same 
 // order across different systems
@@ -361,6 +396,9 @@ foreach ($languages as $sel) {
 
   if (!$completion) {
     $fw = fopen("lang/$sel/new_language.php",'w');
+	if (!$fw) {
+		echo "The file lang/$sel/new_language.php can not be written";
+	}
   
     print("&lt;");
     fwrite($fw,"<");
@@ -426,7 +464,11 @@ foreach ($languages as $sel) {
     writeFile_and_User ($fw, "// http://www.neonchart.com/get_strings.php?nohelp&nosections\n");
     writeFile_and_User ($fw, "// Prepare all languages for release\n\n\n");
 
-		writeFile_and_User ($fw, "// ### Note for translators about translation of text ending with colons (':')\n");
+		writeFile_and_User ($fw, "// ### Note for translators about translation of text ending with punctuation\n");
+		writeFile_and_User ($fw, "// ###\n");
+		writeFile_and_User ($fw, "// ### The current list of concerned punctuation can be found in 'lib/init/tra.php'\n");
+		writeFile_and_User ($fw, "// ### On 2009-03-02, it is: (':', '!', ';', '.', ',', '?')\n");
+		writeFile_and_User ($fw, "// ### For clarity, we explain here only for colons: ':' but it is the same for the rest\n");
 		writeFile_and_User ($fw, "// ###\n");
 		writeFile_and_User ($fw, "// ### Short version: it is not a problem that string \"Login:\" has no translation. Only \"Login\" needs to be translated.\n");
 		writeFile_and_User ($fw, "// ###\n");
@@ -702,6 +744,9 @@ foreach ($languages as $sel) {
 
   if ($spelling) {
     $fw = fopen("lang/$sel/spellcheck_me.txt", 'w');
+	if (!$fw) {
+		echo "The file lang/$sel//spellcheck_me.txt can not be written";
+	}
     ksort ($wordlist);
     reset ($wordlist);
     foreach ($wordlist as $word => $dummy) {

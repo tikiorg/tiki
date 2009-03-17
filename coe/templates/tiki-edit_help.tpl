@@ -46,6 +46,7 @@
 <tr><td class="{cycle advance=false}"><strong>{tr}Text box{/tr}</strong></td><td class="{cycle}"> {tr}One carat{/tr} "^". {tr}Creates a box with the data{/tr}. {tr}Example{/tr} "^{tr}Box content{/tr}^"</td></tr>
 <tr><td class="{cycle advance=false}"><strong>{tr}Title bar{/tr}</strong></td><td class="{cycle}"> "-={tr}Title{/tr}=-" {tr}creates a title bar{/tr}.</td></tr>
 <tr><td class="{cycle advance=false}"><strong>{tr}Colored text{/tr}</strong></td><td class="{cycle}"> "~~#FFEE33:{tr}some text{/tr}~~" {tr}or{/tr}  "~~yellow:{tr}some text{/tr}~~". {tr}Will display using the indicated HTML color or color name. Color name can contain two colors separated by a comma. In this case, the first color would be the foreground and the second one the background.{/tr}</td></tr>
+<tr><td width="20%" class="{cycle advance=false}"><strong>{tr}Monospace font{/tr}</strong></td><td class="{cycle}">-+{tr}Code sample{/tr}+- {tr}for{/tr} <code>Code sample</code></td></tr>
 <tr><td class="{cycle advance=false}"><strong>{tr}Lists{/tr}</strong></td><td class="{cycle}"> * {tr}for bullet lists{/tr}, # {tr}for numbered lists{/tr}, ;{tr}Word{/tr}{tr}definition{/tr} {tr}for definiton lists{/tr}</td></tr>
 <tr><td class="{cycle advance=false}"><strong>{tr}Indentation{/tr}</strong></td><td class="{cycle}">+, ++ {tr}Creates an indentation for each plus(useful in list to continue at the same level){/tr}</td></tr>
 <tr><td class="{cycle advance=false}"><strong>{tr}Headings{/tr}</strong></td><td class="{cycle}"> "!", "!!", "!!!" {tr}make headings{/tr}</td></tr>
@@ -104,13 +105,10 @@
 <p>{tr}Note that plugin arguments can be enclosed with double quotes (&quot;); this allows them to contain , or = or &gt;{/tr}.</p>
 <br />
 <table width="95%" class="normal">
-	<tr><th>{tr}Plugin{/tr}</th><th>{tr}Description{/tr}</th></tr>
+	<tr><th>{tr}Description{/tr}</th></tr>
   {cycle values="even,odd" print=false}
   {section name=i loop=$plugins}
     <tr>
-      <td width="20%" class="{cycle advance=false}">
-        <code>{$plugins[i].name}</code>
-      </td>
       <td class="{cycle advance=false}">
         {if $plugins[i].help eq ''}
           {tr}No description available{/tr}

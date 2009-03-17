@@ -125,6 +125,7 @@ input[type=reset] {
 button:hover,
 .button:hover,
 input[type=submit]:hover,
+input[type=reset]:hover,
 .submitbutton:hover,
 .button input:hover {border: 1px solid #B2B2B2}
 
@@ -424,7 +425,7 @@ a.flip img {display: none}
 	border: 1px solid #909090;
 	color: #909090;
 	text-decoration: none;
-	padding: 4px 2px 4px 7px}
+	/*padding: 4px 2px 4px 7px*/}
 
 .mdksubmenu {
 	z-index: 999;
@@ -481,8 +482,8 @@ a.flip img {display: none}
 .treemenudiv {
 	display: block;
 	white-space: nowrap;
-	padding-right: 2em;
-	margin-left: 2em}
+	/*padding-right: 2em;
+	margin-left: 2em*/}
 
 .phplmnormal,
 a.phplmnormal:hover,
@@ -494,9 +495,9 @@ a.phplm:active {
 	color: #F5F5F5;
 	text-decoration: none;
 	font-weight: normal;
-	background: #999}
+	background: #474747}
 
-td.phplmnormal {background: #999}
+td.phplmnormal {background: #474747}
 a.phplm:visited {color: #F5F5F5}
 
 a.phplm:hover {
@@ -515,6 +516,8 @@ a.phplmselected:active {
 	font-weight: normal}
 
 a.phplmselected:hover {color: #AAAAAA}
+
+img.imgs {background: #999}
 
 /** CSS (suckerfish) menus **/
 
@@ -827,7 +830,7 @@ a.flipmodtitle:hover img {border: 1px solid #818181 !important}
 * html .box a.flipmodtitle img {border: none}
 .box-data a.linkmenu {display: block}
 .box-data select {width: 120px}
-.box-data table {margin: auto}
+.box-data table {width: 100%}
 
 .box-data table td {
 	padding: 0.2em;
@@ -1037,6 +1040,7 @@ a.forumnameread {} */
 
 .tabmark {
 	display: inline;
+	white-space: nowrap;
 	font-size: 10px;
 	background: #4E4E4E url(darkroom/button.png);
 	border: 1px solid #666666;
@@ -1390,8 +1394,27 @@ img.articleimage {
 	background: Black;
 	border: 1px solid #989898}
 
-div.articletrailer {text-align: right}
-div.articletrailer .wikitopline {float: left} 
+div.articletrailer {
+	position: relative;
+	text-align: center;
+	margin-top: 1.1em}
+	
+div.articletrailer img {}
+
+div.article .status {
+	position: absolute;
+	left: 0}
+
+div.articletrailer span {
+	display: inline-block;
+	margin: auto;
+	white-space: nowrap}
+
+div.article .actions {
+	position: absolute;
+	right: 0;
+	top: 0}
+
 div.articlebody {}
  
 div.articlesource {
@@ -2409,8 +2432,7 @@ img.icon {border: 0 !important;
 
 div.multiselect {
 	vertical-align: middle;
-	overflow-y: auto;
-	overflow-x: hidden;
+	overflow: auto;
 	height: 5em;
 }
 

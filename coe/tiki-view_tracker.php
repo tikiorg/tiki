@@ -494,7 +494,6 @@ for ($i = 0; $i < $temp_max; $i++) {
 						$fields['data'][$i]['lingualpvalue'][$num]['value'] = $tikilib->parse_data(htmlspecialchars($_REQUEST[$ins_id][$tmplang]));
 
 				}
-				echo 'gggg'.$ins_id;print_r($fields['data'][$i]['lingualvalue']);print_r($_REQUEST);
 				$ins_fields['data'][$i]['lingualpvalue']=$fields['data'][$i]['lingualpvalue'];
 				$ins_fields['data'][$i]['lingualvalue']=$fields['data'][$i]['lingualvalue'];
 			}
@@ -788,7 +787,7 @@ foreach ($listfields as $sfid => $oneitem) {
 		{
 			$listfields[$listfields[$sfid]['options_array'][2]]['http_request'][$i] .=
 				($listfields[$listfields[$sfid]['options_array'][2]]['http_request'][$i] ? "," : "") .
-				 $listfields[$sfid]['options_array'][$i];
+				isset($listfields[$sfid]['options_array'][$i])?$listfields[$sfid]['options_array'][$i]:'';
 		}
 		$listfields[$listfields[$sfid]['options_array'][2]]['http_request'][5] .=
 			($listfields[$listfields[$sfid]['options_array'][2]]['http_request'][5] ? "," : "") .

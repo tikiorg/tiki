@@ -10,7 +10,7 @@
 // RULE2: put array() in default prefs for serialized values
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+if ( basename($_SERVER['SCRIPT_NAME']) == basename(__FILE__) ) {
   header("location: index.php");
   exit;
 }
@@ -48,7 +48,7 @@ function get_default_prefs() {
 		'feature_lastChanges' => 'y',
 		'feature_likePages' => 'n',
 		'feature_listPages' => 'y',
-		'feature_listorphanPages' => 'y',
+		'feature_listorphanPages' => 'n',
 		'feature_page_title' => 'y',
 		'feature_sandbox' => 'n',
 		'feature_warn_on_edit' => 'y',
@@ -76,7 +76,7 @@ function get_default_prefs() {
 		'feature_wiki_paragraph_formatting_add_br' => 'n',
 		'feature_wiki_pictures' => 'y',
 		'feature_wiki_plurals' => 'y',
-		'feature_wiki_print' => 'y',
+		'feature_wiki_print' => 'n',
 		'feature_wiki_protect_email' => 'y',
 		'feature_wiki_rankings' => 'n',
 		'feature_wiki_ratings' => 'n',
@@ -88,7 +88,8 @@ function get_default_prefs() {
 		'feature_wiki_userpage' => 'y',
 		'feature_wiki_userpage_prefix' => 'UserPage',
 		'feature_wiki_usrlock' => 'n',
-		'feature_wiki_save_draft' => 'n', // Broken in 2.0 RC2 http://dev.tikiwiki.org/wish1888
+		'feature_wiki_feedback_polls' => array(),
+		'feature_wiki_save_draft' => 'n',
 		'feature_wikiwords' => 'n',
 		'feature_wikiwords_usedash' => 'y',
 		'feature_wiki_pagealias' => 'y',
@@ -170,7 +171,7 @@ function get_default_prefs() {
 		'wikiplugin_avatar' => 'y',
 		'wikiplugin_back' => 'y',
 		'wikiplugin_backlinks' => 'y',
-                'wikiplugin_banner' => 'n',
+		'wikiplugin_banner' => 'n',
 		'wikiplugin_bloglist' => 'n',
 		'wikiplugin_box' => 'y',
 		'wikiplugin_category' => 'y',
@@ -179,17 +180,21 @@ function get_default_prefs() {
 		'wikiplugin_center' => 'y',
 		'wikiplugin_chart' => 'y',
 		'wikiplugin_code' => 'y',
+		'wikiplugin_content' => 'y',
 		'wikiplugin_cookie' => 'y',
 		'wikiplugin_copyright' => 'y',
 		'wikiplugin_countdown' => 'y',
+		'wikiplugin_dbreport' => 'n',
 		'wikiplugin_div' => 'y',
 		'wikiplugin_dl' => 'y',
+		'wikiplugin_draw' => 'y',
 		'wikiplugin_equation' => 'y',
 		'wikiplugin_events' => 'y',
 		'wikiplugin_example' => 'n',
-                'wikiplugin_fade' => 'y',
+		'wikiplugin_fade' => 'y',
 		'wikiplugin_fancylist' => 'y',
 		'wikiplugin_fancytable' => 'y',
+		'wikiplugin_file' => 'y',
 		'wikiplugin_files' => 'y',
 		'wikiplugin_flash' => 'y',
                 'wikiplugin_footnote' => 'n',
@@ -197,10 +202,13 @@ function get_default_prefs() {
 		'wikiplugin_ftp' => 'n',
 		'wikiplugin_gauge' => 'y',
 		'wikiplugin_googleanalytics' => 'n',
+		'wikiplugin_googledoc' => 'y',
 		'wikiplugin_group' => 'y',
+		'wikiplugin_html' => 'y',
 		'wikiplugin_iframe' => 'n',
 		'wikiplugin_image' => 'y',
 		'wikiplugin_include' => 'y',
+		'wikiplugin_invite' => 'y',
 		'wikiplugin_jabber' => 'n',
 		'wikiplugin_js' => 'n',
 		'wikiplugin_lang' => 'y',
@@ -208,6 +216,7 @@ function get_default_prefs() {
 		'wikiplugin_listpages' => 'y',
 		'wikiplugin_lsdir' => 'n',
 		'wikiplugin_map' => 'y',
+		'wikipuglin_mediaplayer' => 'y',
 		'wikiplugin_miniquiz' => 'y',
 		'wikiplugin_module' => 'y',
 		'wikiplugin_mono' => 'y',
@@ -220,11 +229,14 @@ function get_default_prefs() {
 		'wikiplugin_poll' => 'y',
 		'wikiplugin_proposal' => 'y',
 		'wikiplugin_quote' => 'y',
+		'wikiplugin_rcontent' => 'y',
 		'wikiplugin_redirect' => 'n',
 		'wikiplugin_regex' => 'n',
 		'wikiplugin_remarksbox' => 'y',
 		'wikiplugin_rss' => 'y',
 		'wikiplugin_sf' => 'n',
+		'wiki-plugin_share' => 'y',
+		'wiki-plugin_sharethis' => 'y',
 		'wikiplugin_sheet' => 'y',
 		'wikiplugin_showpages' => 'y',
 		'wikiplugin_skype' => 'y',
@@ -324,7 +336,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_file_galleries_rankings' => 'n',
 		'fgal_enable_auto_indexing' => 'y',
 		'fgal_asynchronous_indexing' => 'y',
-		'fgal_allow_duplicates' => 'n',
+		'fgal_allow_duplicates' => 'different_galleries',
 		'fgal_sort_mode' => '',
 		'feature_file_galleries_author' => 'n',
 		'fgal_list_id' => 'n',
@@ -485,7 +497,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'user_assigned_modules' => 'n',
 		'user_flip_modules' => 'module',
 		'user_show_realnames' => 'n',
-		'feature_mytiki' => 'y',
+		'feature_mytiki' => 'n',
 		'feature_userPreferences' => 'n',
 		'feature_user_bookmarks' => 'n',
 		'feature_tasks' => 'n',
@@ -499,8 +511,10 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_minical' => 'n',
 		'feature_notepad' => 'n',
 		'feature_userfiles' => 'n',
+		'feature_community_gender' => 'n',
 		'feature_community_mouseover' => 'n',
 		'feature_community_mouseover_name' => 'y',
+		'feature_community_mouseover_gender' => 'y',
 		'feature_community_mouseover_picture' => 'y',
 		'feature_community_mouseover_friends' => 'y',
 		'feature_community_mouseover_score' => 'y',
@@ -549,6 +563,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'users_prefs_mytiki_forum_topics' => 'y',
 		'users_prefs_mytiki_forum_replies' => 'y',
 		'users_prefs_realName' => '',
+		'users_prefs_gender' => '',
 		'users_prefs_show_mouseover_user_info' => 'n',
 		'users_prefs_tasks_maxRecords' => '10',
 		'users_prefs_user_dbl' => 'n',
@@ -591,7 +606,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 
 		// search
 		'feature_search_stats' => 'n',
-		'feature_search' => 'y',
+		'feature_search' => 'n',
 		'feature_search_fulltext' => 'y',
 		'feature_search_show_forbidden_obj' => 'n',
 		'feature_search_show_forbidden_cat' => 'n',
@@ -781,13 +796,13 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'login_scr' => 'tiki-login_scr.php',
 		'register_url' => 'tiki-register.php',
 		'error_url' => 'tiki-error.php',
-		'highlight_group' => '',
+		'highlight_group' => '0',
 		'cookie_path' => '/',
 		'cookie_domain' => '',
 		'cookie_name' => 'tikiwiki',
 		'user_tracker_infos' => '',
 		'desactive_login_autocomplete' => 'n',
-		'permission_denied_login_box' => 'y',
+		'permission_denied_login_box' => 'n',
 		'permission_denied_url' => '',
 
 		// intertiki
@@ -892,9 +907,9 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_sitesearch' => 'y',
 		'feature_site_login' => 'n',
 		'feature_sitemenu' => 'n',
-		'feature_topbar_version' => 'y',
-		'feature_topbar_date' => 'y',
-		'feature_topbar_debug' => 'y',
+		'feature_topbar_version' => 'n',
+		'feature_topbar_date' => 'n',
+		'feature_topbar_debug' => 'n',
 		'feature_topbar_id_menu' => '42',
 		'feature_topbar_custom_code' => '',
 		'feature_sitetitle' => 'y',
@@ -940,7 +955,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_actionlog_bytes' => 'n',
 
 		// admin
-		'siteTitle' => 'Tiki 3.0',
+		'browsertitle' => 'Tiki 3.0',
 		'tmpDir' => 'temp',
 
 		// tell a friend
@@ -950,8 +965,8 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_copyright' => 'n',
 		'feature_multimedia' => 'n',
 
-		// swffix
-		'feature_swffix' => 'n',
+		// swfobj
+		'feature_swfobj' => 'n',
 
 		// textarea
 		'feature_smileys' => 'n',
@@ -1040,7 +1055,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_use_quoteplugin' => 'n',
 		'feature_user_watches' => 'n',
 		'feature_group_watches' => 'n',
-		'feature_user_watches_translations' => 'y',
+		'feature_user_watches_translations' => 'n',
 		'feature_workflow' => 'n',
 		'feature_xmlrpc' => 'n',
 		'helpurl' => "http://doc.tikiwiki.org/",
@@ -1133,13 +1148,35 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'thumbSizeYGalleries' => '',
 		'wiki_3d_adjust_camera' => 'true',
 		'wiki_3d_autoload' => '',
-		'feature_sefurl' => 'n',
-		'feature_sefurl_filter' => 'n',
 		'feature_mootools' => 'y', // Needed for shadowbox
 		'javascript_enabled' => 'n',
 		'feature_comments_post_as_anonymous' => 'n',
 		'feature_comments_moderation' => 'n',
 		'feature_template_zoom' => 'y',
+		'feature_ie56_correct_png' => 'n',
+		
+		// JQuery
+		'feature_jquery' => 'y',			// Alternative lib for shadowbox etc
+		'jquery_effect' => '',				// Default effect for general show/hide: ['' | 'slide' | 'fade' | and
+											// see http://docs.jquery.com/UI/Effects: 'blind' | 'clip' | 'explode' etc]
+		'jquery_effect_direction' => '', 	// ['horizontal' | 'vertical' | 'left' | 'right' | 'up' | 'down' ]
+		'jquery_effect_speed' => 'normal', 	// ['slow' | 'normal' | 'fast' | milliseconds (int) ]
+
+		'jquery_effect_tabs' => 'slide',	// Different effect for tabs (['none' | 'normal' (for jq) | 'slide' etc]
+		'jquery_effect_tabs_direction' => 'vertical',
+		'jquery_effect_tabs_speed' => 'fast',
+		
+		'feature_jquery_ui' => 'y',				// include UI lib for more effects
+		'feature_jquery_tooltips' => 'y',		// use JQuery tooltips and override Overlib
+		'feature_jquery_autocomplete' => 'y',	// autocomplete on pages in QuickEdit (more coming soon)
+		'feature_jquery_superfish' => 'y',		// Effects on CSS (Suckerfish) menus
+		'feature_jquery_reflection' => 'y',		// reflection effects on images
+		'feature_jquery_sheet' => 'n',			// spreadsheet TODO: implement
+	
+		// SefUrl
+		'feature_sefurl' => 'n',
+		'feature_sefurl_filter' => 'n',
+		'feature_sefurl_paths' => array(),
 
 		// TikiTests
 		'feature_tikitests' => 'n',
@@ -1164,7 +1201,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'magic_last_load' => 0,
 
 		//groupalert
-		'feature_groupalert' => 'y',
+		'feature_groupalert' => 'n',
 	);
 
 	// spellcheck

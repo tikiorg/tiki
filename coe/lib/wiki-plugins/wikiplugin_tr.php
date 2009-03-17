@@ -19,5 +19,6 @@ function wikiplugin_tr_info() {
 }
 
 function wikiplugin_tr($data) {
-	return tra($data);
+	$return = tra($data);
+	return $return == '_HOMEPAGE_CONTENT_' ? tra($data, 'en') : $return;
 }

@@ -236,9 +236,8 @@ ul.jumplinks a:active {
 	position: relative}
 	
 body.tiki_wiki #c1c2 #wrapper #col1 > .content {position: relative}
-	
-/* body.tiki_wiki #c1c2 #wrapper #col1 > .content {background: none}
-*/
+body.tiki_cms #tiki-center {background: none !important}
+
 #c1c2 #col2 {
 	width: 230px;
 	overflow: visible;}
@@ -641,7 +640,8 @@ div.menuSection div.separator {}
 /* Tree menu (also on Browse Categories */
 .treemenudiv {
 	display: block;
-	white-space: nowrap}
+	white-space: nowrap;
+	background: #ccdceb;}
 
 .phplmnormal,
 a.phplmnormal:hover,
@@ -649,14 +649,19 @@ a.phplm:link,
 a.phplm:visited,
 a.phplm:hover,
 a.phplm:active {
-	font: 100% Verdana, Tahoma, Arial, sans-serif;
-	color: #517ea7;
+	font-family: Verdana, Tahoma, Arial, sans-serif;
+	color: #295c8e;
 	text-decoration: none;
-	font-weight: bold}
+	font-weight: normal}
 
-a.phplm:visited {color: #517ea7}
-a.phplm:hover {color: #82a7c8}
-a.phplm:active {color: #517ea7}
+a.phplm:visited {color: #295c8e}
+
+a.phplm:hover {
+	color: #82a7c8;
+	text-decoration: underline;
+	background: none}
+
+a.phplm:active {color: #82a7c8}
 
 a.phplmselected:link,
 a.phplmselected:visited,
@@ -1085,7 +1090,14 @@ tr.odd {background: #dddfdf}
 tr.even {background: #f0f0f0}
 td.odd {background: #dddfdf}
 td.even {background: #f0f0f0}
-td.third {text-align: center}
+
+.normal td.third {
+	padding: 20px 0 5px 20px;
+	font-weight: bold;
+	font-size: 120%;
+	color: #527DA8;
+	background-color: #F7F7F7;
+}
 
 .normal td,
 td.normal,
@@ -1415,6 +1427,7 @@ div.articletitle {
 span.titlea {
 	display: block;
 	min-height: 26px;
+	background: url(coelesce/tiki-centerbg.jpg) repeat-x;
 	font-size: 1.8em;
 	font-weight: bold;
 	margin: 0;
@@ -1461,8 +1474,27 @@ img.articleimage {
 	padding: 2px 0;
 	margin-bottom: 10px}
 
-div.articletrailer {text-align: right}
-div.articletrailer .status {float: left} 
+div.articletrailer {
+	position: relative;
+	text-align: center;
+	margin-top: 1.1em}
+	
+div.articletrailer img {}
+
+div.article .status {
+	position: absolute;
+	left: 0}
+
+div.articletrailer span {
+	display: inline-block;
+	margin: auto;
+	white-space: nowrap}
+
+div.article .actions {
+	position: absolute;
+	right: 0;
+	top: 0}
+
 div.articlebody {}
 
 div.articlesource {
@@ -1744,7 +1776,7 @@ body.tiki_blogs .post .avatar {
 .forum_actions .headers {vertical-align: bottom}
 .forum_actions .headers .title {
 	float: left;
-	background: honedew;
+	background: #f0f0f0;
 	border: 1px solid #a9a9a9;
 	border-bottom: 0;
 	padding: 1px}

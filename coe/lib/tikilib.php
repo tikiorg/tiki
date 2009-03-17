@@ -1,5 +1,5 @@
 <?php
-// CVS: $Id: tikilib.php,v 1.801.2.90 2008-03-19 18:08:39 sylvieg Exp $
+// CVS: $Id$
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 	header("location: index.php");
@@ -757,15 +757,14 @@ class TikiLib extends TikiDB {
 		$this->compute_quiz_stats();
 		if ($find) {
 			$findesc = '%' . $find . '%';
-
-			$mid = "  `quizName` like ? ";
+			$mid = ' where `quizName` like ? ';
 			$bindvars=array($findesc);
 		} else {
 			$mid = "  ";
 			$bindvars=array();
 		}
 
-		$query = "select * from `tiki_quiz_stats_sum` $mid order by ".$this->convert_sortmode($sort_mode);
+		$query = "select * from `tiki_quiz_stats_sum` $mid order by " . $this->convert_sortmode($sort_mode);
 		$query_cant = "select count(*) from `tiki_quiz_stats_sum` $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
@@ -1778,33 +1777,39 @@ class TikiLib extends TikiDB {
 	}
 
 	/*shared*/
-	function list_received_pages($offset, $maxRecords, $sort_mode = 'pageName_asc', $find='', $type='', $structureName='') {
+	function list_received_pages($offset, $maxRecords, $sort_mode, $find='', $type='', $structureName='') {
 		$bindvars = array();
 		if ($type == 's')
-			$mid = ' `structureName` is not null ';
+			$mid = ' `trp`.`structureName` is not null ';
+			if (!$sort_mode) 
+				$sort_mode = '`structureName_asc';
 		elseif ($type == 'p')
-			$mid = ' `structureName` is null ';
+			$mid = ' `trp`.`structureName` is null ';
+			if (!$sort_mode) 
+				$sort_mode = '`pageName_asc';
 		else
 			$mid = '';
+
 		if ($find) {
 			$findesc = '%'.$find.'%';
 			if ($mid)
 				$mid .= ' and ';
-			$mid .= "(`pagename` like ? or `data` like ?)";
+			$mid .= '(`trp`.`pageName` like ? or `trp`.`structureName` like ? or `trp`.`data` like ?)';
+			$bindvars[] = $findesc;
 			$bindvars[] = $findesc;
 			$bindvars[] = $findesc;
 		}
 		if ($structureName) {
 			if ($mid)
 				$mid .= ' and ';
-			$mid .= ' `structureName`=? ';
+			$mid .= ' `trp`.`structureName`=? ';
 			$bindvars[] = $structureName;
 		}
 		if ($mid)
 			$mid = "where $mid";
 
-		$query = "select trp.*, tp.`pageName` as pageExists from `tiki_received_pages` trp left join `tiki_pages` tp on (tp.`pageName`=trp.`pageName`) $mid order by `structureName` asc, `pos` asc,".$this->convert_sortmode($sort_mode);
-		$query_cant = "select count(*) from `tiki_received_pages` $mid";
+		$query = "select trp.*, tp.`pageName` as pageExists from `tiki_received_pages` trp left join `tiki_pages` tp on (tp.`pageName`=trp.`pageName`) $mid order by `structureName` asc, `pos` asc," . $this->convert_sortmode($sort_mode);
+		$query_cant = "select count(*) from `tiki_received_pages` trp $mid";
 		$result = $this->query($query,$bindvars,$maxRecords,$offset);
 		$cant = $this->getOne($query_cant,$bindvars);
 		$ret = array();
@@ -1865,21 +1870,45 @@ class TikiLib extends TikiDB {
 			if (!$full) {
 				$display = true;
 				if (isset($res['section']) and $res['section']) {
-					$sections = preg_split('/\s*,\s*/',$res['section']);
-					foreach ($sections as $sec) {
-						if (!isset($prefs[$sec]) or $prefs[$sec] != 'y') {
-							$display = false;
-							break;
+					if (strstr($res['section'], '|')) {
+						$display = false;
+						$sections = preg_split('/\s*\|\s*/',$res['section']);
+						foreach ($sections as $sec) {
+							if (!isset($prefs[$sec]) or $prefs[$sec] != 'y') {
+								$display = true;
+								break;
+							}
+						}
+					} else {
+						$display = true;
+						$sections = preg_split('/\s*,\s*/',$res['section']);
+						foreach ($sections as $sec) {
+							if (!isset($prefs[$sec]) or $prefs[$sec] != 'y') {
+								$display = false;
+								break;
+							}
 						}
 					}
 				}
 				if ($display && $tiki_p_admin != 'y') {
 					if (isset($res['perm']) and $res['perm']) {
-						$sections = preg_split('/\s*,\s*/',$res['perm']);
-						foreach ($sections as $sec) {
-							if (!isset($GLOBALS[$sec]) or $GLOBALS[$sec] != 'y') {
-								$display = false;
-								break;
+						if (strstr($res['perm'], '|')) {
+							$display = false;
+							$sections = preg_split('/\s*\|\s*/',$res['perm']);
+							foreach ($sections as $sec) {
+								if (isset($GLOBALS[$sec]) && $GLOBALS[$sec] == 'y') {
+									$display = true;
+									break;
+								}
+							}
+						} else {
+							$sections = preg_split('/\s*,\s*/',$res['perm']);
+							$display = true;
+							foreach ($sections as $sec) {
+								if (!isset($GLOBALS[$sec]) or $GLOBALS[$sec] != 'y') {
+									$display = false;
+									break;
+								}
 							}
 						}
 					}
@@ -2251,7 +2280,7 @@ class TikiLib extends TikiDB {
 					global $cachelib; include_once('lib/cache/cachelib.php');
 				  $cacheName = md5("group:".implode("\n", $this->get_user_groups($user)));
   				$cacheType = 'fgals_perms_'.$galleryId."_";
-					if ($cachelib->isCached($cacheName, $cacheType)) {
+					if ($galleryId > 0 && $cachelib->isCached($cacheName, $cacheType)) {
 						$fgal_perms = unserialize($cachelib->getCached($cacheName, $cacheType));
 					} else {
 						$fgal_perms = array();
@@ -2262,6 +2291,9 @@ class TikiLib extends TikiDB {
 							$res['perms'] = $fgal_perms[$res['id']];
 						} else {
 							$fgal_perms[$res['id']] = $res['perms'] = $this->get_perm_object($res['id'], $object_type, array(), false);
+						}
+						if ($galleryId <=0) {
+							$cachelib->cacheItem($cacheName, serialize($fgal_perms), 'fgals_perms_'.$res['id'].'_');
 						}
 						// Don't return the current item, if :
 						//  the user has no rights to view the file gallery AND no rights to list all galleries (in case it's a gallery)
@@ -2290,7 +2322,8 @@ class TikiLib extends TikiDB {
 
 						$cant++;
 					}
-					$cachelib->cacheItem($cacheName, serialize($fgal_perms), $cacheType);
+					if ($galleryId > 0)
+						$cachelib->cacheItem($cacheName, serialize($fgal_perms), $cacheType);
 					if ( ! $need_everything ) $cant += $offset;
 
 
@@ -5116,7 +5149,7 @@ class TikiLib extends TikiDB {
 			$pluginskiplist = array();
 
 		$matcher_fake = array("~pp~","~np~","&lt;pre&gt;");
-		$matcher = "/\{([A-Z0-9_]+)\(|\{([a-z]+)(\s|\})|~pp~|~np~|&lt;[pP][rR][eE]&gt;/";
+		$matcher = "/\{([A-Z0-9_]+) *\(|\{([a-z]+)(\s|\})|~pp~|~np~|&lt;[pP][rR][eE]&gt;/";
 
 		$plugins = array();
 		preg_match_all( $matcher, $data, $tmp, PREG_SET_ORDER );
@@ -5363,7 +5396,8 @@ class TikiLib extends TikiDB {
 				// ~pp~ type "plugins"
 				$key = "§".md5($this->genPass())."§";
 				$noparsed["key"][] = preg_quote($key);
-				$plugin_data = str_replace('\\','\\\\',$plugin_data);
+				// comment out the following line: create problem with TRACKERLIST and popup because the <\/td> are changed
+				//$plugin_data = str_replace('\\','\\\\',$plugin_data);
 				//if( strstr( $plugin_data, '$' ) ) {
 					//$plugin_data = str_replace('$', '\$', $plugin_data);
 				//}
@@ -5403,6 +5437,23 @@ class TikiLib extends TikiDB {
 							$plugin_indexes[$plugin_name] = 0;
 
 						$current_index = ++$plugin_indexes[$plugin_name];
+						// We store CODE stuff out of the way too, but then process it as a plugin as well.
+						if( preg_match( '/^ *\{CODE\(/', $plugin_start ) ) {
+							$ret = wikiplugin_code($plugin_data, $arguments);
+
+							// Pull the np out.
+							preg_match( "/~np~(.*)~\/np~/s", $ret, $stuff );
+
+							if( count( $stuff ) > 0 ) {
+								$key = "§".md5($this->genPass())."§";
+								$noparsed["key"][] =  preg_quote($key);
+								$noparsed["data"][] = $stuff[1];
+
+								$ret = preg_replace( "/~np~.*~\/np~/s", $key, $ret );
+							}
+
+						} else {
+
 
 						// Handle nested plugins.
 						$this->parse_first($plugin_data, $preparsed, $noparsed, $options, $real_start_diff + $pos+strlen($plugin_start));
@@ -5433,14 +5484,33 @@ class TikiLib extends TikiDB {
 
 							$ret = '~np~' . $smarty->fetch('tiki-plugin_blocked.tpl') . '~/np~';
 						}
-
+						}
 						//echo '<pre>'; debug_print_backtrace(); echo '</pre>';
 						if( $this->plugin_is_editable( $plugin_name ) && (empty($options['print']) || !$options['print']) ) {
 							include_once('lib/smarty_tiki/function.icon.php');
 							global $headerlib, $page;
 							$id = 'plugin-edit-' . $plugin_name . $current_index;
 							$headerlib->add_jsfile( 'tiki-jsplugin.php?plugin=' . urlencode( $plugin_name ) );
-							$headerlib->add_js( "
+							if ($prefs['feature_jquery'] == 'y') {
+								$headerlib->add_js( "
+\$jq(document).ready( function() {
+	if( \$jq('#$id') ) \$jq('#$id').click( function(event) {
+		popup_plugin_form("
+			. json_encode($plugin_name) 
+			. ', ' 
+			. json_encode($current_index) 
+			. ', ' 
+			. json_encode($page) 
+			. ', ' 
+			. json_encode($arguments) 
+			. ', ' 
+			. json_encode(trim(TikiLib::htmldecode($plugin_data))) 
+			. ", event.target);
+	} );
+} );
+" );
+							} else if ($prefs['feature_mootools'] == 'y') {
+								$headerlib->add_js( "
 window.addEvent('domready', function() {
 	if( $('$id') ) $('$id').addEvent( 'click', function(event) {
 		popup_plugin_form("
@@ -5457,6 +5527,7 @@ window.addEvent('domready', function() {
 	} );
 } );
 " );
+							}
 							$ret = '~np~<a id="' .$id. '" style="float:right" href="javascript:void(1)" class="editplugin">'.smarty_function_icon(array('_id'=>'shape_square_edit', 'alt'=>tra('Edit Plugin').':'.$plugin_name), $smarty).'</a>~/np~'.$ret;
 						}
 
@@ -6437,7 +6508,7 @@ window.addEvent('domready', function() {
 		}
 
 		// Replace monospaced text
-		$patterns[] = "/(^|\s)-\+(.*?)\+-/s"; $replace[] = "<code>$2</code>";
+		$patterns[] = "/(^|\s)-\+(.*?)\+-/s"; $replace[] = "$1<code>$2</code>";
 		// Replace bold text
 		$patterns[] = "/__(.*?)__/s"; $replace[] = "<b>$1</b>";
 		// Replace italic text ''it'' or //it//
@@ -6829,8 +6900,9 @@ window.addEvent('domready', function() {
 						//  with images and HTML tags
 						$thisid = ereg_replace('§[a-z0-9]{32}§', '', $title_text);
 						$thisid = ereg_replace('</?[^>]+>', '', $thisid);
-						$thisid = ereg_replace('[^a-zA-Z0-9]+', '_', $thisid);
-						$thisid = ereg_replace('^_', '', $thisid);
+						$thisid = ereg_replace('[^a-zA-Z0-9\:\.\-\_]+', '_', $thisid);
+						$thisid = ereg_replace('^[^a-zA-Z]*', '', $thisid);
+						if (empty($thisid)) $thisid = 'a'.md5($title_text);
 
 						// Add a number to the anchor if it already exists, to avoid duplicated anchors
 						if ( isset($all_anchors[$thisid]) ) {
@@ -7774,7 +7846,7 @@ window.addEvent('domready', function() {
 			return $formatted;
 		}
 		foreach ($languages as $lc) {
-			if (!is_array($prefs['available_languages']) || (!$all and in_array($lc,$prefs['available_languages'])) or $all) {
+			if (empty($prefs['available_languages']) || (!$all and in_array($lc,$prefs['available_languages'])) or $all) {
 				if (isset($langmapping[$lc])) {
 					// known language
 					if ($langmapping[$lc][0] == $langmapping[$lc][1]) {
@@ -8096,7 +8168,14 @@ function get_wiki_section($data, $hdr) {
 	}
 	return (array($start, $end));
 }
-	/* javascript = y or n to force to generate a version with javascript or not, ='' user prefs */
+
+/**
+ * \brief Function to embed a flash object (using JS method by default when JS in user's browser is detected)
+ *
+ * So far it's being called from wikiplugin_flash.php and tiki-edit_banner.php
+ *
+ * @param javascript = y or n to force to generate a version with javascript or not, ='' user prefs
+ */
 	function embed_flash($params, $javascript='', $flashvars = false) {
 		global $prefs;
 		global $headerlib; include_once('lib/headerlib.php');
@@ -8128,16 +8207,16 @@ function get_wiki_section($data, $hdr) {
 				$flashvars = str_replace('\\/', '/', $flashvars);
 			}
 			$js = <<<JS
-swfobject.embedSWF( $movie, $div, $width, $height, $version, '', $flashvars, $params, {} );
+swfobject.embedSWF( $movie, $div, $width, $height, $version, 'lib/swfobject/expressInstall.swf', $flashvars, $params, {} );
 JS;
-			$headerlib->add_jsfile( 'lib/swfobject.js' );
+			$headerlib->add_jsfile( 'lib/swfobject/swfobject.js' );
 			return "<div id=\"$myId\">" . tra('Flash player not available.') . "</div><script type=\"text/javascript\">\n<!--//--><![CDATA[//><!--\n$js\n//--><!]]>\n</script>\n";
 		} else { // link on the movie will not work with IE6
 			extract ($params,EXTR_SKIP);
-			$asetup = "<OBJECT CLASSID=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0\" WIDTH=\"$width\" HEIGHT=\"$height\">";
-			$asetup .= "<PARAM NAME=\"movie\" VALUE=\"$movie\">";
-			$asetup .= "<PARAM NAME=\"quality\" VALUE=\"$quality\">";
-			$asetup .= "<PARAM NAME=\"wmode\" VALUE=\"transparent\">";
+			$asetup = "<object classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0\" width=\"$width\" height=\"$height\">";
+			$asetup .= "<param name=\"movie\" value=\"$movie\" />";
+			$asetup .= "<param name=\"quality\" value=\"$quality\" />";
+			$asetup .= "<param name=\"wmode\" value=\"transparent\" />";
 			$asetup .= "<embed src=\"$movie\" quality=\"$quality\" pluginspage=\"http://www.macromedia.com/go/getflashplayer\" type=\"application/x-shockwave-flash\" width=\"$width\" height=\"$height\" wmode=\"transparent\"></embed></object>";
 			return $asetup;
 		}

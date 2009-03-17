@@ -8,8 +8,8 @@
 
 // Initialization
 require_once ('tiki-setup.php');
-
 include_once ('lib/webmail/webmaillib.php');
+include_once ('lib/webmail/contactlib.php');
 
 $smarty->assign('element', $_REQUEST["element"]);
 

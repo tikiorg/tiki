@@ -18,7 +18,7 @@ if ( isset($_SESSION['try_style']) ) {
 }
 
 if ( ! is_file('styles/'.$prefs['style']) and ! is_file('styles/'.$tikidomain.'/'.$prefs['style']) ) {
-	$prefs['style'] = 'tikineat.css';
+	$prefs['style'] = 'thenews.css';
 }
 
 if ($group_style = $userlib->get_user_group_theme()) {

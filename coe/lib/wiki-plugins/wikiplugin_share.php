@@ -11,7 +11,20 @@
 function wikiplugin_share_help() {
 	return tra("Display a social networking tool.  Requires ADDTHIS, SHARETHIS, or SUBMIT plugin.").":<br />~np~{SHARE(option=>'ADDTHIS'|'SHARETHIS'|'SUBMIT')}{SHARE}~/np~";
 }
-
+function wikiplugin_share_info() {
+	return array(
+		'name' => tra('share'),
+		'description' => tra("Insert a ShareThis Button from www.sharethis.com"),
+		'prefs' => array( 'wikiplugin_share' ),
+		'params' => array(
+			'option' => array(
+				'required' => false,
+				'name' => tra('option'),
+				'description' => 'ADDTHIS|SHARE|SUBMIT'
+		),
+						  )
+	 );
+}
 function wikiplugin_share($data, $params) {
   global $tikilib;
 

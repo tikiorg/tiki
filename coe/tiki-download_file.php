@@ -103,7 +103,7 @@ if (!$skip) {
 
 	if ( !$zip && $tiki_p_admin_file_galleries != 'y' && !$userlib->user_has_perm_on_object($user, $info['galleryId'], 'file gallery', 'tiki_p_download_files')) {
 		$smarty->assign('errortype', 401);
-		$smarty->assign('msg', tra('You can not download files'));
+		$smarty->assign('msg', tra('Permission denied'));
 		$smarty->display('error.tpl');
 		die;
 	}
@@ -169,7 +169,12 @@ if ( ! empty($info['path']) )  {
 }
 
 // ETag: Entity Tag used for strong cache validation.
-$etag = '"' . $md5 . '-' . crc32($md5) . '"';
+if ( ! isset($_GET['display']) || isset($_GET['x']) || isset($_GET['y']) || isset($_GET['scale']) || isset($_GET['max']) || isset($_GET['format']) ) {
+  // if image will be modified, emit a different ETag for modifications.
+  $etag = '"' . $md5 . '-' . crc32($md5) . '-' . crc32( $_GET['x'] . 'x' . $_GET['y'] . 'y' . $_GET['scale'] . 's' . $_GET['max'] . 'm' . $_GET['format'] . 'f' ) . '"';
+} else {
+  $etag = '"' . $md5 . '-' . crc32($md5) . '"';
+}
 header('ETag: '.$etag);
 
 $use_client_cache = false;

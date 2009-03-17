@@ -20,7 +20,7 @@
 {/if}
 {if $user and $prefs.feature_notepad eq 'y' and $tiki_p_notepad eq 'y'}
 <a title="{tr}Save to notepad{/tr}" href="tiki-view_blog_post.php?blogId={$smarty.request.blogId}&amp;postId={$smarty.request.postId}&amp;savenotepad=1">
-	{icon_id='disk' alt='{tr}Save to notepad{/tr}'}
+	{icon _id='disk' alt='{tr}Save to notepad{/tr}'}
 </a>
 {/if}
 			</div>

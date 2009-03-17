@@ -172,4 +172,8 @@ function branch( $source, $branch, $revision )
 	return isset( $f->entry );
 }
 
-?>
+function get_logs( $localPath, $minRevision, $maxRevision = 'HEAD' ) {
+	if ( empty($minRevision) || empty($maxRevision) ) return false;
+	$logs = `svn log -r$maxRevision:$minRevision $localPath`;
+	return $logs;
+}
