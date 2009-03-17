@@ -1,5 +1,5 @@
 {* $Id$ *}
-
+{strip}
 {title help="mods"}{tr}Tikiwiki Mods{/tr}{/title}
 <div class="navbar">
 	{button href="tiki-mods_admin.php" _text="{tr}Mods Configuration{/tr}"}
@@ -281,3 +281,4 @@ function update_button_install() {
 		{/foreach}
 	</table>
 {/if}
+{/strip}
