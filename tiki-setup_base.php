@@ -436,6 +436,7 @@ if( $clean_xss ) {
 	$serverFilter->addStaticKeyFilters( array(
 		'QUERY_STRING' => 'xss',
 		'REQUEST_URI' => 'xss',
+		'PHP_SELF' => 'xss',
 	) );
 }
 $jitServer = new JitFilter( $_SERVER );
