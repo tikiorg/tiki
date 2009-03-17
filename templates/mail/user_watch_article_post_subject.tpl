@@ -1,1 +1,1 @@
-{tr}New article post at %s{/tr}
+{tr}{$mail_action} article post at %s{/tr}

@@ -138,29 +138,24 @@ $smarty->assign_by_ref( "styles", $styles);
 $smarty->assign('a_style', $a_style);
 $smarty->assign_by_ref( "style_options", $tikilib->list_style_options($a_style));
 
-function getThumbnailFile($inStyle, $inStyleOption) {	// find thumbnail if there is one
-	global $tikidomain;
+/**
+ * @param $stl - style file name (e.g. thenews.css)
+ * @param $opt - optional option file name
+ * @return string path to thumbnail file
+ */
+function get_thumbnail_file($stl, $opt = '') {	// find thumbnail if there is one
+	global $tikilib;
 
-	$stlstl = split("-|\.", $inStyle);
-	$style_base = $stlstl[0];
-	
-	if (!empty($inStyleOption) && $inStyleOption != tr('None')) {
-		$filename = substr($inStyleOption, 0, strlen($inStyleOption) - 4) . '.png';	// strip off '.css'?
-		$style_base .= '/options';
+	if (!empty($opt) && $opt != tr('None')) {
+		$filename =  eregi_replace('\.css$', '.png', $opt);	// change .css to .png
 	} else {
-		$filename = $style_base . '.png';
+		$filename = eregi_replace('\.css$', '.png', $stl);	// change .css to .png
 	}
-	if ($tikidomain && is_file('styles/'.$tikidomain.'/'.$style_base.'/'.$filename) ) {
-		return 'styles/'.$tikidomain.'/'.$style_base.'/'.$filename;
-	} else if (is_file('styles/'.$style_base.'/'.$filename)) {
-		return 'styles/'.$style_base.'/'.$filename;
-	} else {
-		return '';
-	}
+	return $tikilib->get_style_path($stl, $opt, $filename);
 }
 
 // find thumbnail if there is one
-$thumbfile = getThumbnailFile($a_style, $prefs['site_style_option']);
+$thumbfile = get_thumbnail_file($a_style, $prefs['site_style_option']);
 
 if (!empty($thumbfile)) {
 	$smarty->assign('thumbfile', $thumbfile);
@@ -170,11 +165,11 @@ if ($prefs['feature_jquery'] == 'y') {
 	// hash of themes and their options and their thumbnail images
 	$js = 'var style_options = {';
 	foreach($styles as $s) {
-		$js .= "\n'$s':['" . getThumbnailFile($s, '') . '\',{';
+		$js .= "\n'$s':['" . get_thumbnail_file($s, '') . '\',{';
 		$options = $tikilib->list_style_options($s);
 		if ($options) {
 			foreach($options as $o) {
-				$js .= "'$o':'" . getThumbnailFile($s, $o) . '\',';
+				$js .= "'$o':'" . get_thumbnail_file($s, $o) . '\',';
 			}
 			$js = substr($js, 0, strlen($js)-1) . '}';
 		} else {

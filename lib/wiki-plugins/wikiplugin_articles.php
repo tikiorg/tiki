@@ -24,24 +24,22 @@ function wikiplugin_articles_info() {
 				'required' => false,
 				'name' => tra('Articles displayed'),
 				'description' => tra('The amount of articles to display in the list.'),
-				'filter' => 'digits',
+				'filter' => 'int',
 			),
 			'topic' => array(
 				'required' => false,
-				'name' => tra('Topic name'),
-				'description' => tra('The name of the topic.'),
-				'filter' => 'topicname',
+				'name' => tra('Topics expression'),
+				'description' => '[!]topic+topic+topic',
 			),
 			'topicId' => array(
 				'required' => false,
-				'name' => tra('Topic ID'),
-				'description' => tra('The ID of the topic.'),
-				'filter' => 'digits',
+				'name' => tra('Topic ID expression'),
+				'description' => '[!]topicId+topicId+topicId',
 			),
 			'type' => array(
 				'required' => false,
-				'name' => tra('Type'),
-				'description' => tra('?'),
+				'name' => tra('Type expression'),
+				'description' => '[!]type+type+type',
 			),
 			'categId' => array(
 				'required' => false,
@@ -86,10 +84,6 @@ function wikiplugin_articles($data,$params) {
 	if(!isset($max)) {$max='3';}
 	if(!isset($start)) {$start='0';}
 
-	// Addes filtering by topic if topic is passed
-	if(isset($topic)) {
-		$topicId = $tikilib->fetchtopicId($topic);
-	}
 	if(!isset($topicId))
 		$topicId='';
 	if(!isset($topic))
@@ -132,17 +126,21 @@ function wikiplugin_articles($data,$params) {
 	}
 	global $artlib; require_once ('lib/articles/artlib.php');
 
-// Unsure of reasoning, but Ive added a isset around here for when Articles plugin is called
-// multiple times on a page. - Damian aka Damosoft
-	If (isset($artlib)) {
-        $topics = $artlib->list_topics();
-        $smarty->assign_by_ref('topics', $topics);}
+	if (!empty($topic) && !strstr($topic, '!') && !strstr($topic, '+')) {
+		$smarty->assign_by_ref('topic', $topic);
+	} elseif (!empty($topicId) &&  is_numeric($topicId)) {
+		if (!empty($listpages['data'][0]['topicName']))
+			$smarty->assign_by_ref('topic', $listpages['data'][0]['topicName']);
+		else {
+			$topic_info = $artlib->get_topic($topicId);
+			if (isset($topic_info['name']))
+				$smarty->assign_by_ref('topic', $topic_info['name']);
+		}
+	}
+	if (!empty($type) && !strstr($type, '!') && !strstr($type, '+')) {
+		$smarty->assign_by_ref('type', $type);
+	}
 
-	If (isset($artlib)) {
-        $type = $artlib->list_types();
-        $smarty->assign_by_ref('type', $type);}		
-		
-	// If there're more records then assign next_offset
 	$smarty->assign_by_ref('listpages', $listpages["data"]);
 
 	if (isset($titleonly) && $titleonly == 'y') {

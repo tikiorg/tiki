@@ -444,6 +444,10 @@ class TikiLib extends TikiDB {
 					break;
 				case 'article_submitted':
 				case 'topic_article_created':
+				case 'article_edited':
+				case 'topic_article_edited':
+				case 'article_deleted':
+				case 'topic_article_deleted':
 					global $userlib, $topicId;
 					$res['perm']= ($userlib->user_has_permission($res['user'],'tiki_p_read_article') &&
 							(empty($topicId) || $this->user_has_perm_on_object($res['user'],$topicId,'topic','tiki_p_topic_read')));
@@ -7786,20 +7790,27 @@ window.addEvent('domready', function() {
 			&& file_exists('lang/' . $language . '/language.php');
 	}
 
+	/**
+	 * @return  array of css files in the style dir
+	 */
 	function list_styles() {
 		global $tikidomain;
 
 		$sty = array();
-		if (is_dir("styles/")) {
-			$h = opendir("styles/");
+		$style_base_path = $this->get_style_path();	// knows about $tikidomain
+		
+		if ($style_base_path) {
+			$h = opendir($style_base_path);
 			while ($file = readdir($h)) {
-				if (ereg("\.css$", $file)) {
-					$sty[$file] = 1;
+				if (preg_match('/^[^\.](.*?)\.css$/i', $file)) {	// ending in .css not starting with .
+					$sty[] = $file;
 				}
 			}
 			closedir($h);
 		}
-
+		sort($sty);
+		return $sty;
+		
 		/* What is this $tikidomain section?
 		 * Some files that call this method used to list styles without considering
 		 * $tikidomain, now they do. They're listed below:
@@ -7811,60 +7822,102 @@ window.addEvent('domready', function() {
 		 *  modules/mod-switch_theme.php
 		 *
 		 *  lfagundes
+		 *  
+		 *  Tiki 3.0 - now handled by get_style_path()
+		 *  jonnybradley
 		 */
 
-		if ($tikidomain) {
-			if (is_dir("styles/$tikidomain")) {
-				$h = opendir("styles/$tikidomain");
-				while ($file = readdir($h)) {
-					if (strstr($file, ".css") and substr($file,0,1) != '.') {
-						$sty["$file"] = 1;
-					}
-				}
-				closedir($h);
-			}
-		}
-
-		$styles = array_keys($sty);
-		sort($styles);
-		return $styles;
 	}
 
+	/**
+	 * @param $a_style - main style (e.g. "thenews.css")
+	 * @return array of css files in the style options dir
+	 */
 	function list_style_options($a_style='') {
-		global $tikidomain, $prefs;
+		global $prefs;
 
-		if (!$a_style) {
+		if (empty($a_style)) {
 			$a_style = $prefs['style'];
-		}
-		$stlstl = split("-|\.", $a_style);
-		$style_base = $stlstl[0];
-		if (!$style_base) {
-			return false;
 		}
 
 		$sty = array();
-
-		/* See $tikidomains note in list_styles() above */
-		$tikidomain_str = "$tikidomain/";
-
-		if (is_dir("styles/$tikidomain_str$style_base/options/")) {
-			$h = opendir("styles/$tikidomain_str$style_base/options/");
+		$option_base_path = $this->get_style_path($a_style).'options/';
+		
+		if (is_dir($option_base_path)) {
+			$h = opendir($option_base_path);
 			while ($file = readdir($h)) {
-				if (strstr($file, ".css") and substr($file,0,1) != '.') {
-					$sty["$file"] = 1;
+				if (preg_match('/^[^\.](.*?)\.css$/i', $file)) {	// ending in .css not starting with .
+					$sty[] = $file;
 				}
 			}
 			closedir($h);
 		}
 
-		$styles = array_keys($sty);
-		if (count($styles)) {
-			sort($styles);
-			array_unshift ( $styles, tra('None'));
-			return $styles;
+		if (count($sty)) {
+			sort($sty);
+			array_unshift ( $sty, tra('None'));
+			return $sty;
 		} else {
 			return false;
 		}
+	}
+	
+	/**
+	 * @param $stl - main style (e.g. "thenews.css")
+	 * @return string - style passed in up to - | or . char (e.g. "thenews")
+	 */
+	function get_style_base($stl) {
+		$parts = split("-|\.", $stl);
+		if (count($parts) > 0) {
+			return $parts[0];
+		} else {
+			return '';
+		}
+	}
+	
+	/**
+	 * @param $stl - main style (e.g. "thenews.css" - can be empty to return main styles dir)
+	 * @param $opt - optional option file name (e.g. "purple.css")
+	 * @param $filename - optional filename to look for (e.g. "purple.png")
+	 * @return path to dir or file if found or empty if not - e.g. "styles/mydomain.tld/thenews/options/purple/"
+	 */
+	function get_style_path($stl = '', $opt = '', $filename = '') {
+		global $tikidomain, $prefs;
+		
+		$path = '';
+		$dbase = '';
+		if ($tikidomain && $prefs['tikidomains_share_styles'] != 'y' && is_dir("styles/$tikidomain")) {
+			$dbase = $tikidomain.'/';
+		}
+		
+		$sbase = '';
+		if (!empty($stl)) {
+			$sbase = $this->get_style_base($stl).'/';
+		}
+		$obase = '';
+		if (!empty($opt)) {
+			$obase = 'options/';
+			if ($opt != $filename) {	// exception for getting option.css as it doesn't live in it's own dir
+				$obase .= substr($opt, 0, strlen($opt) - 4).'/';
+			}
+		}
+		
+		if (is_dir('styles/'.$dbase.$sbase)) {
+			if (empty($filename)) {
+				if (is_dir('styles/'.$dbase.$sbase.$obase)) {
+					$path = 'styles/'.$dbase.$sbase.$obase;
+				} else {
+					$path = 'styles/'.$dbase.$sbase;	// fall back to "parent" style dir if no option one
+				}
+			} else {
+				if (is_file('styles/'.$dbase.$sbase.$obase.$filename)) {
+					$path = 'styles/'.$dbase.$sbase.$obase.$filename;
+				} else if (is_file('styles/'.$dbase.$sbase.$filename)) {
+					$path = 'styles/'.$dbase.$sbase.$filename;	// fall back to "parent" style dir if no option one
+				}
+			}
+		}
+		return $path;
 	}
 
 	// Comparison function used to sort languages by their name in the

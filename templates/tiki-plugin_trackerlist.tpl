@@ -213,7 +213,7 @@ link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" alt="{tr}List
 {else}
 {pagination_links cant=$count_item step=$max offset=$tr_offset offset_arg=tr_offset}{/pagination_links}
 {/if}
-{if $export eq 'y' && $perms.tiki_p_export_tracker eq 'y'}
+{if $export eq 'y' && ($tiki_p_admin_trackers eq 'y' || $perms.tiki_p_export_tracker eq 'y')}
 	{button href="$exportUrl" _text="{tr}Export{/tr}"}
 {/if}
 {/strip}

@@ -156,10 +156,14 @@ function get_default_prefs() {
 		'wikiapproval_prefix' => '*',
 		'wikiapproval_delete_staging' => 'n',
 		'wikiapproval_master_group' => '',
+		'wikiapproval_staging_category' => '',
+		'wikiapproval_approved_category' =>'',
+		'wikiapproval_outofsync_category' => '',
 		'wiki_edit_section' => 'y',
 		'wiki_edit_section_level' => '0',
 		'wiki_edit_plugin' => 'y',
 		'wiki_validate_plugin' => 'y',
+		'wiki_edit_minor' => 'y',
 
 		'wikiplugin_agentinfo' => 'n',
 		'wikiplugin_alink' => 'y',
@@ -941,6 +945,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'use_context_menu_text' => 'y',
 		'feature_site_report' => 'n',
 		'feature_site_send_link' => 'n',
+		'tikidomains_share_styles' => 'n',
 
 		// mods
 		'feature_mods_provider' => 'n',

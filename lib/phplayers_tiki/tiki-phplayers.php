@@ -157,7 +157,7 @@ class TikiPhplayers extends TikiLib {
 		}
 		list($plType, $plClass, $plNew, $plTplFct, $plTpl) = $this->getParamsStyle($style);
 		include_once ("lib/phplayers/lib/PHPLIB.php");
-		include_once ("lib/phplayers_tiki/lib/layersmenu-common.inc.php"); // include Tiki's modified version of that file to keep original intact (luci)
+		include_once ('lib/phplayers_tiki/lib/layersmenu-common.inc.php');
 		include_once ('lib/phplayers/lib/layersmenu.inc.php');
 		include_once ("lib/phplayers/lib/".$plType);
 		global $$plClass;
@@ -166,7 +166,7 @@ class TikiPhplayers extends TikiLib {
 		}
 		$$plClass->setDirrootCommon("lib/phplayers/");
 		$$plClass->setLibjsdir("lib/phplayers/libjs/");
-		$$plClass->setTpldirCommon("lib/phplayers/templates/");
+		$$plClass->setTpldirCommon('../../lib/phplayers_tiki/templates/');
 
 		if ( $style == 'tree' || $style == 'phptree' ) {
 			// Use Tikiwiki icons for tree menus (especially to have famfamfam folders icons)

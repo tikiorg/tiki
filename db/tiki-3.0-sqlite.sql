@@ -228,7 +228,9 @@ CREATE TABLE 'tiki_actionlog' (
   "ip" varchar(15) default NULL,
   "comment" varchar(200) default NULL,
   "categId" bigint NOT NULL default '0',
-  PRIMARY KEY (actionId)
+  PRIMARY KEY (actionId),
+  KEY lastModif(lastModif),
+  KEY object(object(100), objectType, action(100))
 ) ENGINE=MyISAM;
 
 
@@ -1618,7 +1620,7 @@ CREATE UNIQUE INDEX "tiki_menu_options_uniq_menu" ON "tiki_menu_options"("menuId
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (1,42,'o','Home','./',10,'','','',0);
 
-INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (3,42,'o','Contact Us','tiki-contact.php',20,'feature_contact','','',0);
+INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (3,42,'o','Contact Us','tiki-contact.php',20,'feature_contact,feature_messages','','',0);
 
 INSERT INTO "," ("optionId","menuId","type","name","url","position","section","perm","groupname","userlevel") VALUES (4,42,'o','Stats','tiki-stats.php',23,'feature_stats','tiki_p_view_stats','',0);
 
@@ -3316,6 +3318,7 @@ CREATE TABLE 'tiki_wiki_attachments' (
   PRIMARY KEY (attId)
 ) ENGINE=MyISAM ;
 
+CREATE  INDEX "tiki_wiki_attachments_page" ON "tiki_wiki_attachments"("page");
 
 DROP TABLE IF EXISTS 'tiki_zones';
 

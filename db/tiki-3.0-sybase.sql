@@ -291,7 +291,9 @@ CREATE TABLE "tiki_actionlog" (
   "ip" varchar(15) default NULL NULL,
   "comment" varchar(200) default NULL NULL,
   "categId" numeric(12,0) default '0' NOT NULL,
-  PRIMARY KEY (actionId)
+  PRIMARY KEY (actionId),
+  KEY lastModif(lastModif),
+  KEY object(object(100), objectType, action(100))
 ) ENGINE=MyISAM
 go
 
@@ -2098,7 +2100,7 @@ INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`",
 go
 
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (3,42,'o','Contact Us','tiki-contact.php',20,'feature_contact','','',0)
+INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (3,42,'o','Contact Us','tiki-contact.php',20,'feature_contact,feature_messages','','',0)
 go
 
 
@@ -4569,6 +4571,8 @@ CREATE TABLE "tiki_wiki_attachments" (
 go
 
 
+CREATE  INDEX "tiki_wiki_attachments_page" ON "tiki_wiki_attachments"("page")
+go
 
 -- DROP TABLE "tiki_zones"
 go

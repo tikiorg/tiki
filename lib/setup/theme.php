@@ -17,7 +17,7 @@ if ( isset($_SESSION['try_style']) ) {
 	$prefs['style_option'] = $prefs['site_style_option'];
 }
 
-if ( ! is_file('styles/'.$prefs['style']) and ! is_file('styles/'.$tikidomain.'/'.$prefs['style']) ) {
+if ($tikilib->get_style_path('', '', $prefs['style']) == '') {
 	$prefs['style'] = 'thenews.css';
 }
 
@@ -37,28 +37,24 @@ if ( $prefs['transition_style_ver'] == 'css_specified_only' ) {
 
 if ( $transition_style != '' ) $headerlib->add_cssfile('styles/transitions/'.$transition_style,50);
 
-if ( $tikidomain and is_file('styles/'.$tikidomain.'/'.$prefs['style']) ) {
-	$headerlib->add_cssfile('styles/'.$tikidomain.'/'.$prefs['style'], 51);
-} else {
-	$headerlib->add_cssfile('styles/'.$prefs['style'], 51);
-}
+$headerlib->add_cssfile($tikilib->get_style_path('', '', $prefs['style']), 51);
 
-$stlstl = split("-|\.", $prefs['style']);
-$style_base = $stlstl[0];
+$style_base = $tikilib->get_style_base($prefs['style']);
 
 // Allow to have an ie6.css file for the theme's specific hacks for IE 6
-$style_ie6_css = '';
-if ( $tikidomain and is_file('styles/'.$tikidomain.'/'.$style_base.'/ie6.css') ) {
-	$style_ie6_css = 'styles/'.$tikidomain.'/'.$style_base.'/ie6.css';
-} elseif ( is_file('styles/'.$style_base.'/ie6.css') ) {
-	$style_ie6_css = 'styles/'.$style_base.'/ie6.css';
-}
+$style_ie6_css = $tikilib->get_style_path($prefs['style'], $prefs['style_option'], 'ie6.css');;
+
 // include optional "options" cascading stylesheet if set
-if ( isset($prefs['style_option']) && $prefs['style_option'] != '' ) {
-	if ($tikidomain && is_file('styles/'.$tikidomain.'/'.$style_base.'/options/'.$prefs['style_option']) ) {
-		$headerlib->add_cssfile('styles/'.$tikidomain.'/'.$style_base.'/options/'.$prefs['style_option'], 52);
-	} else if (is_file('styles/'.$style_base.'/options/'.$prefs['style_option'])) {
-		$headerlib->add_cssfile('styles/'.$style_base.'/options/'.$prefs['style_option'], 52);
+if ( !empty($prefs['style_option'])) {
+	$style_option_css = $tikilib->get_style_path($prefs['style'], $prefs['style_option'], $prefs['style_option']);
+	if (!empty($style_option_css)) {
+		$headerlib->add_cssfile($style_option_css, 52);
 	}
+}
+
+// include optional "custom" cascading stylesheet if there
+$custom_css = $tikilib->get_style_path($prefs['style'], $prefs['style_option'], 'custom.css');;
+if ( !empty($custom_css)) {
+	$headerlib->add_cssfile($custom_css, 53);
 }
 

@@ -18,7 +18,19 @@ if ( isset($_SESSION['tiki_cookie_jar']) && isset($_SESSION['tiki_cookie_jar']['
 }
 if ($prefs['javascript_enabled'] != 'y') {
 	$prefs['feature_tabs'] = 'n';
-} else {
+	$prefs['feature_jquery'] = 'n';
+	$prefs['feature_mootools'] = 'n';
+	$prefs['feature_shadowbox'] = 'n';
+	
+} else {	// we have JavaScript
+
+	/** Use custom.js in styles or options dir if there **/
+	$custom_js = $tikilib->get_style_path($prefs['style'], $prefs['style_option'], 'custom.js');
+	if (!empty($custom_js)) {
+		$headerlib->add_jsfile($custom_js, 50);
+	}
+	
+	/** PNG transparency fix for IE 5.5 & 6 **/
 	if ($prefs['feature_ie56_correct_png'] == 'y' && (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 6') !== false) || strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 5')) {
 		$headerlib->add_js(<<<JS
 function correctPNG() // correctly handle PNG transparency in Win IE 5.5 & 6.

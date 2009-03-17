@@ -199,7 +199,9 @@ CREATE TABLE tiki_actionlog (
   ip varchar(15) default NULL,
   comment varchar(200) default NULL,
   categId int(12) NOT NULL default '0',
-  PRIMARY KEY (actionId)
+  PRIMARY KEY (actionId),
+  KEY lastModif(lastModif),
+  KEY object(object(100), objectType, action(100))
 ) ENGINE=MyISAM;
 
 DROP TABLE IF EXISTS tiki_actionlog_params;
@@ -2738,7 +2740,8 @@ CREATE TABLE tiki_wiki_attachments (
   hits int(10) default NULL,
   created int(14) default NULL,
   comment varchar(250) default NULL,
-  PRIMARY KEY (attId)
+  PRIMARY KEY (attId),
+  KEY page (page)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
 DROP TABLE IF EXISTS tiki_zones;
