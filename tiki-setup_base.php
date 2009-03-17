@@ -77,9 +77,9 @@ if ($prefs['session_lifetime'] > 0) {
 // is session data  stored in DB or in filesystem?
 if ($prefs['session_db'] == 'y') {
 	if ($api_tiki == 'adodb') {
-		require_once('tikisession-adodb.php');
+		require_once('lib/tikisession-adodb.php');
 	} elseif ($api_tiki == 'pdo') {
-		require_once('tikisession-pdo.php');
+		require_once('lib/tikisession-pdo.php');
 	}
 }
 
