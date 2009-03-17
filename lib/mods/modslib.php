@@ -594,7 +594,7 @@ class ModsLib {
 					foreach($str as $k => $v) $str[$k]=stripslashes($v);
 					$mod=new TikiModAvailable($str[0], $str[1]);
 					$this->types[$mod->type] = true;
-					if ((empty($type) or ($mod->type == $type)) and (empty($find) or (strpos($mode->name,$find) !== false))) {
+					if ((empty($type) or ($mod->type == $type)) and (empty($find) or (strpos($mod->name,$find) !== false))) {
 						$mod->revision=$str[2];
 						$mod->description=$str[3];
 						$mod->licence=$str[4];
