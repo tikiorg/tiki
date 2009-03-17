@@ -44,7 +44,7 @@ $smarty->assign_by_ref('infocals', $rawcals['data']);
 $events = array();
 if (!empty($viewable))
 	$events = $calendarlib->upcoming_events($module_rows,
-		array_intersect(isset($module_params["calendarId"]) ? array($module_params["calendarId"]) : $calIds, $viewable),
+		array_intersect(isset($module_params['calendarId']) ? (is_array($module_params['calendarId'])?$module_params['calendarId']: array($module_params['calendarId'])) : $calIds, $viewable),
 		isset($module_params["maxDays"]) ? (int) $module_params["maxDays"] : 365,
 		'start_asc', 
 		isset($module_params["priorDays"]) ? (int) $module_params["priorDays"] : 0
