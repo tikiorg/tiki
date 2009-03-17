@@ -944,7 +944,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'use_context_menu_text' => 'y',
 		'feature_site_report' => 'n',
 		'feature_site_send_link' => 'n',
-		'tikidomains_share_styles' => 'n',
+		'tikidomains_share_styles' => 'y',
 
 		// mods
 		'feature_mods_provider' => 'n',
