@@ -15,6 +15,11 @@
 {remarksbox type="tip" title="{tr}Tip{/tr}"}
 	{tr}Tiki "mods" are additional features not included in the public release. Learn more at <a target="tikihelp" href="http://mods.tikiwiki.org">mods.tikiwiki.org</a>.{/tr}
 {/remarksbox}
+{remarksbox type="note" title="{tr}Note{/tr}"}
+    {tr}<p><strong>Tiki "mods" are undergoing refubishment.</strong></p>{/tr}
+    {tr}<p>You will probably some find mods shown as being compatible with older versions of Tiki will work with later versions with little or no modification</p>{/tr}
+    {tr}<p><em>Your help is needed! Please visit <a href="http://dev.tikiwiki.org">dev.tikiwiki.org</a> to find out more.</em></p>{/tr}
+{/remarksbox}
 
 {if $iswritable}
 	<div class="simplebox" style="color:#009900;">{icon _id=information style="vertical-align:middle;"} <b>{tr}Attention{/tr}</b><br />{tr}Apache has the right to write in your file tree, which enables the installation, removal or upgrade of packages. When you are done with those operations, think to fix those permissions back to a safe state (by using "./setup.sh" for example).{/tr}</div>
@@ -145,20 +150,27 @@ function update_button_install() {
 {/if}
 
 {if not $installask}
-	{if $display}
-		<form method="get" action="tiki-mods.php">
-			{tr}Find{/tr}
-			<input type="text" name="find" value="{$find|escape}" />
-			<input type="submit" name="f" value="{tr}Find{/tr}" />
-			{tr}in{/tr} <select name="type" onchange="this.form.submit();">
+	<form method="get" action="tiki-mods.php">
+		{tr}Find{/tr}
+		<input type="text" name="find" value="{$find|escape}" />
+		<input type="submit" name="f" value="{tr}Find{/tr}" />
+		{tr}in{/tr} <select name="type" onchange="this.form.submit();">
 			<option value="">{tr}all types{/tr}</option>
 			{foreach key=it item=i from=$types}
-			<option value="{$it|escape}"{if $it eq $type} selected="selected"{/if}>{$it}</option>
+				<option value="{$it|escape}"{if $it eq $type} selected="selected"{/if}>{$it}</option>
 			{/foreach}
-			</select>
-		</form>
-	{else}
-		No mods.
+		</select>
+		{tr}for version{/tr}
+		<select name="version" onchange="this.form.submit();">
+			<option value="">{tr}all versions{/tr}</option>
+			{foreach key=it item=i from=$versions}
+				<option value="{$i|escape}"{if $i eq $version} selected="selected"{/if}>{$it}</option>
+			{/foreach}
+		</select>
+		{tr}or later{/tr}
+	</form>
+	{if !$display}
+		{tr}No mods found.{/tr}
 	{/if}
 	
 	<table cellspacing="0" cellpadding="2" border="0" class="normal">

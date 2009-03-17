@@ -404,10 +404,12 @@ class ModsLib {
 
 	var $feedback_listeners;
 	var $types;
+	var $versions;
 
 	function ModsLib() { 
 		$this->types = array();
 		$this->feedback_listeners = array();
+		$this->versions = array('Unspecified' => -1,'1.x' => 1.0,'1.9.x' => 1.9,'2.x' => 2.0,'3.x' => 3.0, '4.x' => 4.0);
 	}
 
 	function feedback_info($feedback) {

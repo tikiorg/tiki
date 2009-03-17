@@ -69,6 +69,15 @@ if (isset($_REQUEST['type']) and trim($_REQUEST['type'])) {
 $smarty->assign('typearg', $typearg);
 $smarty->assign('type', $type);
 
+if (isset($_REQUEST['version']) and trim($_REQUEST['version'])) {
+	$versionarg = '&amp;version='. urlencode($_REQUEST['version']);
+	$version = $_REQUEST['version'];
+} else {
+	$version = $versionarg = '';
+}
+$smarty->assign('versionarg', $versionarg);
+$smarty->assign('version', $version);
+
 if ($prefs['feature_mods_provider'] == 'y') {
 	if (!is_dir($prefs['mods_dir']."/Dist")) {
 	  mkdir($prefs['mods_dir']."/Dist",02777);
@@ -175,6 +184,7 @@ if ($prefs['feature_mods_provider'] == 'y') {
 }
 
 $types = $modslib->types;
+$versions = $modslib->versions;
 $display = array();
 
 if ($type) {
@@ -195,6 +205,41 @@ if ($type) {
 		}
 	}
 }
+if (!empty($version)) { // filter out other versions
+	$filtered = array();
+	if ($version == -1) {
+		foreach($display as $t=>$ms) {
+			$filtmod = array();
+			foreach($ms as $k => $m) {
+				if (empty($m->version[0])) {
+					$filtmod[$k] = $m;
+				}
+			}
+			if (count(array_keys($filtmod)) > 0) {
+				$filtered[$t] = $filtmod;
+			}
+		}
+	} else {
+		$v = floatval($version);
+		foreach($display as $t=>$ms) {
+			$filtmod = array();
+			foreach($ms as $k => $m) {
+				$mv = floatval($m->version[0]);
+				// TODO - fix the data, but for the mean time...
+				if (strpos($m->version[0], '1.10') !== false || strpos($m->version[0], ' 2 ') !== false) {
+					$mv = 2.0;				// 1.10 was renumbered 2.0 - or version= "Compatible with TikiWiki 2 releases."
+				}
+				if ($mv >= $v) {
+					$filtmod[$k] = $m;
+				}
+			}
+			if (count(array_keys($filtmod)) > 0) {
+				$filtered[$t] = $filtmod;
+			}
+		}
+	}
+	$display = $filtered;
+}
 $smarty->assign('display', $display);
 
 if (isset($_REQUEST['focus'])) {
@@ -211,6 +256,7 @@ $smarty->assign('focus', $focus);
 $smarty->assign('more', $more);
 $smarty->assign('tikifeedback', $feedback);
 $smarty->assign('types', $types);
+$smarty->assign('versions', $versions);
 
 $smarty->assign('mid', 'tiki-mods.tpl');
 $smarty->display("tiki.tpl");
