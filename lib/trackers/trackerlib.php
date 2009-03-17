@@ -1399,19 +1399,19 @@ class TrackerLib extends TikiLib {
 
 
 			    		// Try to find a Subject in $the_data
-			    		$subject_test = preg_match( '/^Subject:\n   .*$/m', $the_data, $matches );
+			    		$subject_test = preg_match( '/^'.tra('Subject', $watcher['language']).'(.*):\n(.*)\n(.*)/m', $the_data, $matches );
+					$subject = '';
 
 			    		if( $subject_test == 1 ) {
-							$subject = preg_replace( '/^Subject:\n   /m', '', $matches[0] );
-							// Remove the subject from $the_data
-							$the_data = preg_replace( '/^Subject:\n   .*$/m', '', $the_data );
+							$subject = $matches[2];
+							if ($matches[3]) $subject .= ','.$matches[3];
 			    		}
 
 			    		$the_data = preg_replace( '/^.+:\n   /m', '', $the_data );
 
 						foreach ($watchers as $watcher) {
 							$mail = new TikiMail($watcher['user']);
-							$mail->setSubject('['.$trackerName.'] '.tra('Tracker was modified at ', $watcher['language']). $_SERVER["SERVER_NAME"]);
+							$mail->setSubject('['.$trackerName.'] '.tra('Subject', $watcher['language']).$subject.' ('.tra('Tracker was modified at ', $watcher['language']). $_SERVER["SERVER_NAME"].')');
 							$mail->setText($the_data);
 
 							if( ! empty( $my_sender ) ) {
