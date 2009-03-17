@@ -146,6 +146,7 @@ make_clean($_POST,get_magic_quotes_gpc());
 make_clean($_COOKIE,get_magic_quotes_gpc());
 make_clean($_SERVER['QUERY_STRING']);
 make_clean($_SERVER['REQUEST_URI']);
+make_clean($_SERVER['PHP_SELF']);
 
 // deal with old request globals
 // Tiki uses them (admin for instance) so compatibility is required
