@@ -39,7 +39,6 @@ class Multilingual_Aligner_SentenceSegmentorTest extends TikiTestCase
    }   
 
    public function test_segmentation_deals_with_several_question_marks() {
-   	  $this->fail("Fix segmentor to deal with multiple dots/question marks/exclamation marks.");
       $text = "hello???? Anybody home?";
       $expSentences = array("hello????", " Anybody home?");
       $this->do_test_basic_segmentation($text, $expSentences, 
@@ -53,7 +52,16 @@ class Multilingual_Aligner_SentenceSegmentorTest extends TikiTestCase
                                      "Segmentation did not deal properly with separation with exclamation mark.");
    }  
    
-   public function test_segmentation_deals_with_exclamation_empty_string() {
+
+   public function test_segmentation_deals_with_mix_of_exclamation_and_question_marks() {
+      $text = "hello?!? Anybody home!";
+      $expSentences = array("hello?!?", " Anybody home!");
+      $this->do_test_basic_segmentation($text, $expSentences, 
+                                     "Segmentation did not deal properly with separation with exclamation mark.");
+   }  
+
+
+   public function test_segmentation_deals_with_empty_string() {
       $text = "";
       $expSentences = array();
       $this->do_test_basic_segmentation($text, $expSentences, 
