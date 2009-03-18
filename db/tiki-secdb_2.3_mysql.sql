@@ -1,7 +1,6 @@
 DELETE FROM `tiki_secdb` WHERE `tiki_version` = '2.3';
 
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('56dfbee045cb8c182d8cd86107c6b34d','./tiki-live_support_transcripts.php','2.3',0);
-INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('56dfbee045cb8c182d8cd86107c6b34d','./tiki-live_support_transcripts.php','2.3',0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('94e9078da38393935daab532ef305267','./tiki-newsreader_groups.php','2.3',0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('85b568ddc6d834c10567a27fca6fa3cb','./tiki-import_mwdump.php','2.3',0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('3e4d26df53cb853f99ff4762276eb08f','./tiki-view_tracker.php','2.3',0);
