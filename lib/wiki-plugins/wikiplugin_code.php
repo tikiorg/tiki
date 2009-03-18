@@ -2,7 +2,7 @@
 // $Id: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_code.php,v 1.22.2.6 2007-11-25 18:21:21 nyloth Exp $
 // Displays a snippet of code
 function wikiplugin_code_help() {
-	$help = tra("Displays a snippet of code").":<br />~np~{CODE(ln=>1,colors=>php|html|sql|javascript|css|java|c|doxygen|delphi|...,caption=>caption text,wrap=>1,wiki=>1,rtl=>1)}".tra("code")."{CODE}~/np~ - ''".tra("note: colors and ln are exclusive")."''";
+	$help = tra("Displays a snippet of code").":<br />~np~{CODE(ln=>1,colors=>php|html|sql|javascript|css|java|c|doxygen|delphi|...,caption=>caption text,wrap=>1,wiki=>1,rtl=>1,ishtml=>1)}".tra("code")."{CODE}~/np~ - ''".tra("note: colors and ln are exclusive. And ishtml allows to escape the special characters, so that html code is shown as is")."''";
 	return tra($help);
 }
 
@@ -12,6 +12,7 @@ function wikiplugin_code($data, $params) {
 	}
 	$code = trim($data);
 	$parse_wiki = ( isset($wiki) && $wiki == 1 );
+	$escape_html = ( ! isset($ishtml) || $ishtml != 1 );
 
 	// Detect if GeSHI (Generic Syntax Highlighter) is available
 	$geshi_paths = array(
@@ -48,6 +49,8 @@ function wikiplugin_code($data, $params) {
 			$out = trim($out);
 		}
 
+		if ( ! $escape_html ) $out = TikiLib::htmldecode($out);
+
 	} elseif ( isset($colors) && ( $colors == 'highlights' || $colors == 'php' ) ) {
 
 		$out = highlight_string(TikiLib::htmldecode($code), true);
@@ -62,6 +65,8 @@ function wikiplugin_code($data, $params) {
 		// Remove spaces after the first tag and before the start of the code
 		$out = ereg_replace("^\s*(<[^>]+>)\n", '\\1', $out);
 		$out = trim($out);
+
+		if ( ! $escape_html ) $out = TikiLib::htmldecode($out);
 
 	} else {
 
@@ -91,6 +96,8 @@ function wikiplugin_code($data, $params) {
 		// If there is no wrapping, display a scrollbar (only if needed) to avoid truncating the text
 		$pre_style = 'overflow:auto;';
 	}
+
+
 
 	$out = '<pre class="codelisting" dir="'.( (isset($rtl) && $rtl == 1) ? 'rtl' : 'ltr').'" style="'.$pre_style.'">'
 		.(( $parse_wiki ) ? '' : '~np~')
