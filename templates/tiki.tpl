@@ -78,7 +78,7 @@
 	<br style="clear:both" />
 		{/if}
 	{/if}
-	</div>>{* -- END of middle -- *}
+	</div>{* -- END of middle -- *}
 </div>{* -- END of main part wrapper -- *}
 {if $prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}
 	{if $prefs.feature_bot_bar eq 'y'}
