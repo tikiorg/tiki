@@ -1,4 +1,4 @@
-{if $prefs.feature_magic eq 'y' and $tiki_p_admin eq 'y' and($prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y')}
+{if $prefs.feature_magic eq 'y' and $tiki_p_admin eq 'y'}
 <div id="adminBar">
 	<ul class="topLevelAdmin">
 	{section name=top loop=$toplevelfeatures}
