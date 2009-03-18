@@ -359,17 +359,15 @@
 
 			{* add here e.g. <option value="categorize" >{tr}categorize{/tr}</option> *}
 		</select>                
-
-		<script type='text/javascript'>
-			<!--
-			// Fake js to allow the use of the <noscript> tag (so non-js-users can still submit)
-			//-->
-		</script>
-
-		<noscript>
-			<input type="submit" value="{tr}OK{/tr}" />
-		</noscript>
 	</p>
+	<script type='text/javascript'>
+		<!--
+		// Fake js to allow the use of the <noscript> tag (so non-js-users can still submit)
+		//-->
+	</script>
+	<noscript>
+		<input type="submit" value="{tr}OK{/tr}" />
+	</noscript>
 {/if}
 
 {if $find && $tiki_p_edit eq 'y' and $pagefound eq 'n'}

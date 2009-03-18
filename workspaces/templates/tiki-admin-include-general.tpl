@@ -28,7 +28,7 @@
             <span>{tr}General Preferences{/tr}</span>
           </a>
         </legend>
-        <div id="content{$focus}" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_content.$focus) and $smarty.session.tiki_cookie_jar.show_content.$focus neq 'y'}none{else}block{/if};">
+        <div id="content{$focus}" style="display:{if isset($smarty.session.tiki_cookie_jar.show_content.$focus) and $smarty.session.tiki_cookie_jar.show_content.$focus neq 'y'}none{else}block{/if};">
       {/if}
 
 <h2>{tr}General Preferences{/tr}</h2>
@@ -208,7 +208,7 @@
             <span>{tr}General Settings{/tr}</span>
           </a>
         </legend>
-        <div id="content{$focus}" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_content.$focus) and $smarty.session.tiki_cookie_jar.show_content.$focus neq 'y'}none{else}block{/if};">
+        <div id="content{$focus}" style="display:{if isset($smarty.session.tiki_cookie_jar.show_content.$focus) and $smarty.session.tiki_cookie_jar.show_content.$focus neq 'y'}none{else}block{/if};">
       {/if}
 		
 <h2>{tr}General Settings{/tr}</h2>
@@ -378,7 +378,7 @@
             <span>{tr}Date and Time Formats{/tr}</span>
           </a>
         </legend>
-        <div id="layout" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_layout) and $smarty.session.tiki_cookie_jar.show_layout neq 'y'}none{else}block{/if};">{/if}
+        <div id="layout" style="display:{if isset($smarty.session.tiki_cookie_jar.show_layout) and $smarty.session.tiki_cookie_jar.show_layout neq 'y'}none{else}block{/if};">{/if}
 
 <h2>{tr}Date and Time Formats{/tr}</h2>
 <div class="adminoptionbox">	  
@@ -435,7 +435,7 @@
             <span>{tr}Change admin password{/tr}</span>
           </a>
         </legend>
-        <div id="adminpass" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_adminpass) and $smarty.session.tiki_cookie_jar.show_adminpass neq 'y'}none{else}block{/if};">{/if}
+        <div id="adminpass" style="display:{if isset($smarty.session.tiki_cookie_jar.show_adminpass) and $smarty.session.tiki_cookie_jar.show_adminpass neq 'y'}none{else}block{/if};">{/if}
 <p>{tr}Change the <strong>Admin</strong> password{/tr}.</p>
 						<div style="float:right;width:150px;margin-left:.5em">
 							<div id="mypassword_text"></div>

@@ -7,7 +7,7 @@
 */
 function wikiplugin_files_help() {
 	return tra("List files in a file gallery (with a category) or in a category or a file gallery od this category.")
-		."<br />~np~{FILES(galleryId=id,categId=id,sort=name_asc,showaction=n,showfind=n)}Title{FILES}~/np~";
+		."<br />~np~{FILES(galleryId=id,categId=id,sort=name_asc,showaction=n,showfind=n,slideshow=n)}Title{FILES}~/np~";
 }
 function wikiplugin_files_info() {
 	return array(
@@ -112,6 +112,11 @@ function wikiplugin_files_info() {
 				'name' => tra('Shows Number of Files'),
 				'description' => 'y|n',
 			),
+			'slideshow' => array(
+				'required' => false,
+				'name' => tra('Shows the slideshow of a gallery'),
+				'description' => 'y|n',
+			),
 	  )
 	 );
 }
@@ -151,6 +156,11 @@ function wikiplugin_files($data, $params) {
 			$p_view_file_gallery = 'y';
 			$p_admin_file_galleries = 'y';
 			$p_edit_gallery_file = 'y';
+		}
+		if (!empty($slideshow) && $slideshow == 'y') {
+			if ($prefs['javascript_enabled'] != 'y') return;
+			if (empty($data)) $data = 'Slideshow';
+			return "~np~<a onclick=\"javascript:window.open('tiki-list_file_gallery.php?galleryId=$galleryId&amp;slideshow','','menubar=no,width=600,height=500,resizable=yes');\" href=\"#\">".tra($data).'</a>~/np~';
 		}
 		$find = isset($_REQUEST['find'])?  $_REQUEST['find']: '';
 		$fs = $tikilib->get_files(0, -1, $sort, $find, $galleryId, false, true);

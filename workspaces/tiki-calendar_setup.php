@@ -242,7 +242,7 @@ if ( $calendarViewMode == 'month' ||
    if ( $viewlist != 'list' ) {
 	   //$viewend += (6 - $TmpWeekday) * $d;
 	$viewend = TikiLib::make_time(
-		0, 0, 0,
+		23, 59, 59,
 	   	TikiLib::date_format("%m", $viewend),
 		TikiLib::date_format("%d", $viewend) + ( 6 - $TmpWeekday ),
 		TikiLib::date_format("%Y", $viewend)

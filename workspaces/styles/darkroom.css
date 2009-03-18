@@ -2432,8 +2432,7 @@ img.icon {border: 0 !important;
 
 div.multiselect {
 	vertical-align: middle;
-	overflow-y: auto;
-	overflow-x: hidden;
+	overflow: auto;
 	height: 5em;
 }
 

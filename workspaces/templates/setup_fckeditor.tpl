@@ -60,22 +60,24 @@ FCKConfig.Plugins.Add( 'CleanHTML', null, _TikiRoot + 'lib/fckeditor_tiki/plugin
 
 FCKConfig.Plugins.Add( 'dragresizetable' );
 
-//----------------------------------------------------
-// ajaxAutoSave plugin
-FCKConfig.Plugins.Add('ajaxAutoSave','en', _TikiRoot + 'lib/fckeditor_tiki/plugins/') ;
+{if $prefs.feature_ajax_autosave eq 'y'}
+   //----------------------------------------------------
+   // ajaxAutoSave plugin
+   FCKConfig.Plugins.Add('ajaxAutoSave','en', _TikiRoot + 'lib/fckeditor_tiki/plugins/') ;
 
-// --- config settings for the ajaxAutoSave plugin ---
-// URL to post to
-FCKConfig.ajaxAutoSaveTargetUrl = '{$tikiroot}tiki-auto_save.php' ;
+   // --- config settings for the ajaxAutoSave plugin ---
+   // URL to post to
+   FCKConfig.ajaxAutoSaveTargetUrl = '{$tikiroot}tiki-auto_save.php' ;
 
-// Enable / Disable Plugin onBeforeUpdate Action
-FCKConfig.ajaxAutoSaveBeforeUpdateEnabled = true ;
+   // Enable / Disable Plugin onBeforeUpdate Action
+   FCKConfig.ajaxAutoSaveBeforeUpdateEnabled = true ;
 
-// RefreshTime
-FCKConfig.ajaxAutoSaveRefreshTime = 30 ;
+   // RefreshTime
+   FCKConfig.ajaxAutoSaveRefreshTime = 30 ;
 
-// Sensitivity to key strokes
-FCKConfig.ajaxAutoSaveSensitivity = 2 ;
+   // Sensitivity to key strokes
+   FCKConfig.ajaxAutoSaveSensitivity = 2 ;
+{/if}
 
 // as tikiwiki, we prefer <br> instead of <p> for newlines
 FCKConfig.EnterMode = 'br' ;			// p | div | br

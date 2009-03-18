@@ -173,6 +173,12 @@ for ($mod_counter = 0; $mod_counter < $temp_max; $mod_counter++) {
 		}
 		$module_rows = $mod_reference["rows"];
 		$smarty->assign_by_ref('module_rows',$mod_reference["rows"]);
+		$cachefile = 'modules/cache/';
+		if ($tikidomain) { $cachefile.= "$tikidomain/"; }
+		$cachefile.= 'mod-' . md5($mod_reference['moduleId'] . '-'.$prefs['language'].'-'.$mod_reference['params']);
+		$nocache = 'templates/modules/mod-' . $mod_reference["name"] . '.tpl.nocache';
+
+		if (!empty($user) || $mod_reference['cache_time'] <=0 || !file_exists($cachefile) || file_exists($nocache)|| (($tikilib->now - filemtime($cachefile)) >= $mod_reference['cache_time'])) {
 			$mod_reference["data"] = '';
 			$smarty->assign_by_ref('module_params', $module_params); // module code can unassign this if it wants to hide params
 			$smarty->assign('module_ord', $mod_reference['ord']);
@@ -200,17 +206,19 @@ for ($mod_counter = 0; $mod_counter < $temp_max; $mod_counter++) {
             unset($info); // clean up when done
 			$smarty->clear_assign('tpl_module_title');
 			$mod_reference["data"] = $data;
-//			if (!file_exists($nocache)) {
-//				$fp = fopen($cachefile, "w+");
-//				fwrite($fp, $data, strlen($data));
-//				fclose ($fp);
-//			}
-//		} else {
-//			$fp = fopen($cachefile, "r");
-//			$data = @fread($fp, filesize($cachefile));
-//			fclose ($fp);
-//			$mod_reference["data"] = $data;
-//		}
+			if (empty($user) && $mod_reference['cache_time'] > 0 && !file_exists($nocache)) {
+				if ($fp = fopen($cachefile, 'w+')) {
+					fwrite($fp, $data, strlen($data));
+					fclose ($fp);
+				}
+			}
+		} else {
+			if ($fp = fopen($cachefile, 'r')) {
+				$data = fread($fp, filesize($cachefile));
+				fclose ($fp);
+				}
+			$mod_reference['data'] = $data;
+		}
 	}
 } // end for
 $smarty->assign_by_ref($these_modules_name, $these_modules);

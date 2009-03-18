@@ -261,7 +261,7 @@ class CategLib extends ObjectLib {
 			return 0;
 		}
 
-		$query = "select o.`objectId` from `tiki_categorized_objects` c, `tiki_objects` o where c.`catObjectId`=o.`objectId` and o.`type`=? and o.`itemId`=?";
+		$query = "select o.`objectId` from `tiki_categorized_objects` c, `tiki_objects` o, `tiki_category_objects` tco where c.`catObjectId`=o.`objectId` and o.`type`=? and o.`itemId`=? and tco.`catObjectId`=c.`catObjectId`";
 		$bindvars = array($type,$itemId);
 		settype($bindvars["1"],"string");
 		$result = $this->query($query,$bindvars);
@@ -279,9 +279,11 @@ class CategLib extends ObjectLib {
 
 		$id = $this->add_object($type, $itemId, $description, $name, $href);
 		
-		$query = "insert into `tiki_categorized_objects` (`catObjectId`) values (?)";
-
-		$this->query($query, array($id));
+		$query = "select `catObjectId` from `tiki_categorized_objects` where `catObjectId`=?";
+		if (!$this->getOne($query, array($id))) {
+			$query = "insert into `tiki_categorized_objects` (`catObjectId`) values (?)";
+			$this->query($query, array($id));
+		}
 		$cachelib->invalidate('allcategs');
 		$cachelib->empty_type_cache('fgals_perms');
 		return $id;

@@ -34,11 +34,11 @@ $jq(document).ready( function() { // JQuery's DOM is ready event - before onload
 	
 	flip = function (foo,style) {
 		if ($jq("#" + foo).css("display") == "none") {
-			show(foo);
-			setCookie('show_' + escape(foo),'y');
+			setSessionVar('show_' + escape(foo),'y');
+			showJQ("#" + foo, jqueryTiki.effect, jqueryTiki.effect_speed, jqueryTiki.effect_direction);
 		} else {
-			hide(foo);
-			setCookie('show_' + escape(foo), 'n');
+			setSessionVar('show_' + escape(foo), 'n');
+			hideJQ("#" + foo, jqueryTiki.effect, jqueryTiki.effect_speed, jqueryTiki.effect_direction);
 		}
 	};
 
@@ -120,6 +120,7 @@ $jq(document).ready( function() { // JQuery's DOM is ready event - before onload
 	// superfish setup (CSS menu effects)
 	if (jqueryTiki.superfish) {
 		$jq('ul.cssmenu_horiz').superfish();
+		$jq('ul.cssmenu_vert').superfish();
 	}
 });		// end $jq(document).ready
 

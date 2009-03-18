@@ -10,9 +10,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-if (!isset($prefs['site_style'])) {	// what am i missing here? shouldn't these get set earlier?
-	$prefs = array_merge($prefs, $tikilib->get_preferences('site_style%'));
-}
 $a_style = $prefs['site_style'];
 
 if (isset($_REQUEST["looksetup"])) {
@@ -48,7 +45,6 @@ if (isset($_REQUEST["looksetup"])) {
     "feature_siteidentity",
 	"feature_siteloclabel",
 	"feature_sitelogo",
-	"feature_sitetitle",
 	"feature_sitesubtitle",
 	"feature_sitenav",
 	"feature_sitesearch",
@@ -76,6 +72,7 @@ if (isset($_REQUEST["looksetup"])) {
 	'feature_jquery_superfish',
 	'feature_jquery_reflection',
     'feature_jquery_sheet',
+    'feature_ie56_correct_png',
     );
 
     foreach ($pref_toggles as $toggle) {
@@ -109,6 +106,7 @@ if (isset($_REQUEST["looksetup"])) {
     'jquery_effect_tabs',
     'jquery_effect_tabs_direction',
     'jquery_effect_tabs_speed',
+	'available_styles',
     );
 
     foreach ($pref_simple_values as $svitem) {
@@ -135,9 +133,93 @@ if (isset($_REQUEST["looksetup"])) {
 	}
 }
 
-$smarty->assign_by_ref( "styles", $tikilib->list_styles());
+$styles = $tikilib->list_styles();
+$smarty->assign_by_ref( "styles", $styles);
 $smarty->assign('a_style', $a_style);
 $smarty->assign_by_ref( "style_options", $tikilib->list_style_options($a_style));
+
+/**
+ * @param $stl - style file name (e.g. thenews.css)
+ * @param $opt - optional option file name
+ * @return string path to thumbnail file
+ */
+function get_thumbnail_file($stl, $opt = '') {	// find thumbnail if there is one
+	global $tikilib;
+
+	if (!empty($opt) && $opt != tr('None')) {
+		$filename =  eregi_replace('\.css$', '.png', $opt);	// change .css to .png
+	} else {
+		$filename = eregi_replace('\.css$', '.png', $stl);	// change .css to .png
+	}
+	return $tikilib->get_style_path($stl, $opt, $filename);
+}
+
+// find thumbnail if there is one
+$thumbfile = get_thumbnail_file($a_style, $prefs['site_style_option']);
+
+if (!empty($thumbfile)) {
+	$smarty->assign('thumbfile', $thumbfile);
+}
+
+if ($prefs['feature_jquery'] == 'y') {
+	// hash of themes and their options and their thumbnail images
+	$js = 'var style_options = {';
+	foreach($styles as $s) {
+		$js .= "\n'$s':['" . get_thumbnail_file($s, '') . '\',{';
+		$options = $tikilib->list_style_options($s);
+		if ($options) {
+			foreach($options as $o) {
+				$js .= "'$o':'" . get_thumbnail_file($s, $o) . '\',';
+			}
+			$js = substr($js, 0, strlen($js)-1) . '}';
+		} else {
+			$js .= '}';
+		}
+		$js .= '],';
+	}
+	$js = substr($js, 0, strlen($js)-1);
+	$js .= '};';
+	$headerlib->add_js($js);
+	
+	// JS to handle theme/option changes client-side
+	$none = tr('None');
+	$headerlib->add_js(<<<JS
+\$jq(document).ready( function() {
+	// pick up theme drop-down change
+	\$jq('#general-theme').change( function() {
+		var ops = style_options[\$jq('#general-theme').val()];
+		var none = true;
+		\$jq('#general-theme-options').empty().attr('disabled','').attr('selectedIndex', 0);
+		\$jq.each(ops[1], function(i, val) {
+			\$jq('#general-theme-options').append(\$jq(document.createElement('option')).attr('value',i).text(i));
+			none = false;
+		});
+		if (none) {
+			\$jq('#general-theme-options').empty().attr('disabled','disabled').
+					append(\$jq(document.createElement('option')).attr('value',"$none").text("$none"));
+		}
+	});
+	\$jq('#general-theme').change( function() {
+		var t = \$jq('#general-theme').val();
+		var f = style_options[t][0];
+		if (f) {
+			\$jq('#style_thumb').fadeOut('fast').attr('src', f).fadeIn('fast');
+}
+	});
+	\$jq('#general-theme-options').change( function() {
+		var t = \$jq('#general-theme').val();
+		var o = \$jq('#general-theme-options').val();
+		var f = style_options[t][1][o];
+		if (f) {
+			\$jq('#style_thumb').fadeOut('fast').attr('src', f).fadeIn('fast');
+}
+	});
+});
+JS
+	);
+}
+
+
 
 // Get list of available slideshow styles
 $slide_styles = array();
@@ -151,13 +233,17 @@ closedir ($h);
 
 $smarty->assign_by_ref("slide_styles", $slide_styles);
 
-if (isset($_REQUEST["looksetup"]) && (isset($_REQUEST["site_style"]) || isset($_REQUEST["site_style_option"]))) {
-	// If the theme has changed, reload the page to use the new theme
-	$location= 'location: tiki-admin.php?page=look';
-	if ($prefs['feature_tabs'] == 'y') {
-		$location .= "&cookietab=".$_COOKIE['tab'];
+if (isset($_REQUEST["looksetup"])) {
+	for ($i = 0; $i < count($tikifeedback); $i++) {
+		if (substr($tikifeedback[$i]['name'], 0, 10) == 'site_style') {	// if site_style or site_style_option
+			// If the theme has changed, reload the page to use the new theme
+			$location= 'location: tiki-admin.php?page=look';
+			if ($prefs['feature_tabs'] == 'y') {
+				$location .= "&cookietab=".$_COOKIE['tab'];
+			}
+			header($location);
+			exit;
+		}
 	}
-	header($location);
-	exit;
 }
 ?>

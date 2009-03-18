@@ -61,6 +61,10 @@ class UsersLib extends TikiLib {
 	    values(?, ?, ?, ?)";
 	$result = $this->query($query, array($groupName, $objectId,
 		    $objectType, $permName));
+	if ($objectType == 'file gallery') {
+		global $cachelib; require_once('lib/cache/cachelib.php');
+		$cachelib->empty_type_cache('fgals_perms_'.$objectId."_");
+	}
 	return true;
     }
 
@@ -87,6 +91,10 @@ class UsersLib extends TikiLib {
 	$bindvars = array($groupName, $objectId, $objectType,
 		$permName);
 	$result = $this->query($query, $bindvars);
+	if ($objectType == 'file gallery') {
+		global $cachelib; require_once('lib/cache/cachelib.php');
+		$cachelib->empty_type_cache('fgals_perms_'.$objectId."_");
+	}
 	return true;
     }
 
@@ -950,7 +958,7 @@ function get_users($offset = 0, $maxRecords = -1, $sort_mode = 'login_asc', $fin
 	// Return an array of users indicating name, email, last changed pages, versions, lastLogin
 
 	//TODO : recurse included groups
-	if($group) {
+	if(!empty($group)) {
 		if (!is_array($group)) {
 			$group = array($group);
 		}
@@ -2755,6 +2763,10 @@ function get_included_groups($group, $recur=true) {
 		if (md5($res['provpass']) == $pass){
 			$query = 'update `users_users` set `provpass`=?, `email_confirm`=?, `unsuccessful_logins`=?, `registrationDate`=? where `login`=? and `provpass`=?';
 			$this->query($query, array('', $tikilib->now, 0, $this->now, $user, $res['provpass']));
+			if (!empty($GLOBALS['user'])) {
+				global $logslib; include_once('lib/logs/logslib.php');
+				$logslib->add_log('login', 'confirm email '.$user);
+			}
 			return true;
 		}
 		return false;

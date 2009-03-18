@@ -54,6 +54,18 @@ $watches['article_submitted'] = array(
 	'url'=>'tiki-list_submissions.php',
 	'object'=>'*'
 );
+$watches['article_edited'] = array(
+	'label'=>tra('A user edits an article'),
+	'type'=>'cms',
+	'url'=>'tiki-list_articles.php',
+	'object'=>'*'
+);
+$watches['article_deleted'] = array(
+	'label'=>tra('A user deletes an article'),
+	'type'=>'cms',
+	'url'=>'tiki-list_submissions.php',
+	'object'=>'*'
+);
 $watches['wiki_page_changes'] = array(
 	'label'=>tra('Any wiki page is changed'),
 	'type'=>'wiki',

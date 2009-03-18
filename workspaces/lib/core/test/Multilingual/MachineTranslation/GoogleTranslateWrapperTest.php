@@ -41,16 +41,22 @@ class Multilingual_MachineTranslation_GoogleTranslateWrapperTest extends TikiTes
    	  $this->assertEquals("Ciao mondo!Come stai?", $translation, "The translation was not correct for text: $text.");
    }
    
-   public function test_translate_text_with_up_to_1800_chars() {
-   	  $text = str_repeat("Hello world! How are you? ",59); //max url: 2065 chars; urlencoded string: 1980 (keep it at 1800 just in case)
+   public function test_translate_text_that_translates_into_accentuated_text() {
+   	  $text = "Nothing in the world is ever completely wrong; even a stopped clock is right twice a day.";
    	  $translation = $this->translator->translateText($text);
-   	  $this->assertEquals(trim(str_repeat("Ciao mondo! Come stai? ",59)), $translation, "The translation was not correct for text of 1800 chars.");
+   	  $this->assertEquals("Niente al mondo è mai completamente sbagliato; fermato anche un orologio è giusto due volte al giorno.", $translation, "The translation was not correct for text that translates into text that contains accentuated chars.");
+   }
+
+   public function test_translate_text_with_up_to_1800_chars() {
+   	  $text = str_repeat("Nothing in the world is ever completely wrong; even a stopped clock is right twice a day. ",19); //max url: 2065 chars; urlencoded string: 1980
+   	  $translation = $this->translator->translateText($text);
+   	  $this->assertEquals(trim(str_repeat("Niente al mondo è mai completamente sbagliato; fermato anche un orologio è giusto due volte al giorno. ",19)), $translation, "The translation was not correct for text of 1800 chars.");
    }
    
-     public function test_translate_text_with_more_than_1800_chars() {
-   	  $text = str_repeat("Hello world! How are you? ",63); 
+   public function test_translate_text_with_more_than_1800_chars() {
+   	  $text = str_repeat("Nothing in the world is ever completely wrong; even a stopped clock is right twice a day. ",24); 
    	  $translation = $this->translator->translateText($text);
-   	  $this->assertEquals(trim(str_repeat("Ciao mondo! Come stai? ",63)), $translation, "The translation was not correct for text of more than 1800 chars.");
+   	  $this->assertEquals(trim(str_repeat("Niente al mondo è mai completamente sbagliato; fermato anche un orologio è giusto due volte al giorno. ",24)), $translation, "The translation was not correct for text of 1800 chars.");
    }
 
    

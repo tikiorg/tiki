@@ -356,10 +356,10 @@ class WikiLib extends TikiLib {
 		return $res;
 	}
 	function get_parse($page, &$canBeRefreshed) {
-		global $prefs;
+		global $prefs, $user;
 		$content = '';
 		$canBeRefreshed = false;
-		if ($prefs['wiki_cache'] > 0) {
+		if ($prefs['wiki_cache'] > 0 && empty($user) ) {
 			$cache_info = $this->get_cache_info($page);
 			if (!empty($cache_info['cache_timestamp']) && $cache_info['cache_timestamp'] + $prefs['wiki_cache'] > $this->now) {
 				$content = $cache_info['cache'];

@@ -194,10 +194,35 @@ function showDetails( id, domain, profile ) { // {{{
 </script>
 {remarksbox type="tip" title="{tr}Tip{/tr}"}<a class="rbox-link" href="http://profiles.tikiwiki.org">{tr}TikiWiki Profiles{/tr}</a>{/remarksbox}
 
+
+
+
 <div class="cbox">
-	<div class="cbox-title">{tr}Profile repository status{/tr}</div>
-	<div class="cbox-data">
-		<table class="normal">
+<table class="admin"><tr><td>
+
+<fieldset><legend>{tr}Repositories{/tr}</legend>
+<form action="tiki-admin.php?page=profiles" method="post">
+<div class="adminoptionbox">
+	<div class="adminoptionlabel"><label for="profile_sources">{tr}Repository URLs{/tr}:</label></div>
+	<div><textarea id="profile_sources" name="profile_sources" rows="5" cols="60" style="width:95%;">{$prefs.profile_sources|escape}</textarea>
+	<br /><em>{tr}Enter multiple repository URLs, one per line{/tr}.</em>
+	</div>
+</div>
+
+<div class="adminoptionbox">
+	<div class="adminoptionlabel"><label for="profile_channels">{tr}Data Channels{/tr}</label>:</div>
+	<div><textarea id="profile_channels" name="profile_channels" rows="5" rows="60" style="width:95%;">{$prefs.profile_channels|escape}</textarea>
+	<br /><em>{tr}Data channels create a named pipe to run profiles from user space. One channel per line. Each line is comma delimited and contain <strong>channel name, domain, profile, allowed groups</strong>. {/tr}</em>
+	<small><a href="http://profiles.tikiwiki.org/Data+Channels">{tr}More information{/tr}</a></small>
+	</div>
+</div>
+
+<div align="center" style="padding:1em;"><input type="submit" name="config" value="{tr}Save{/tr}" /></div>
+
+<div class="adminoptionbox">
+	<div class="adminoptionlabel">{tr}Status{/tr}:</div>
+	<div>
+	<table class="normal">
 			<tr>
 				<th>Profile repository</th>
 				<th>Status</th>
@@ -213,49 +238,38 @@ function showDetails( id, domain, profile ) { // {{{
 		</table>
 	</div>
 </div>
+</form>
+</fieldset>
 
-<div class="cbox">
-	<div class="cbox-title"><a name="profile-results">{tr}Profile list{/tr}</a></div>
-	<div class="cbox-data">
-		<form method="get" action="tiki-admin.php#profile-results">
-			<table class="admin"><tr>
-				<col width="30%"/>
-				<col width="70%"/>
-
-				<tr>
-					<td class="form">{tr}Profile{/tr}:</td>
-					<td><input type="text" name="profile" value="{$profile|escape}"/></td>
-				</tr>
-				<tr>
-					<td class="form">{tr}Category{/tr}:</td>
-					<td>
-						<select name="category">
+<a name='profile-results'></a>
+<fieldset><legend>{tr}Profiles{/tr}</legend>
+<form method="get" action="tiki-admin.php#profile-results">
+<div class="adminoptionbox">
+<div class="adminoptionlabel">{tr}Filter the list of profiles{/tr}:</div>
+<div class="adminoptionboxchild">
+	<div class="adminoptionlabel"><label for="profile">{tr}Profile{/tr}: </label><input type="text" name="profile" id="profile" value="{$profile|escape}" /></div>
+	<div class="adminoptionlabel"><label for="category">{tr}Category{/tr}: </label>
+	<select name="category" id="category">
 							<option value="">All</option>
 							{foreach item=cat from=$category_list}
 					 			<option value="{$cat|escape}"{if $cat eq $category} selected="selected"{/if}>{$cat|escape}</option>
 							{/foreach}
-						</select>
-					</td>
-				</tr>
-			
-				<tr>
-					<td class="form">{tr}Repository{/tr}:</td>
-					<td>
-						<select name="repository">
+	</select>
+	</div>
+	<div class="adminoptionlabel"><label for="repository">{tr}Repository{/tr}: </label>
+	<select name="repository" id="repository">
 							<option value="">All</option>
 							{foreach item=source from=$sources}
 								<option value="{$source.url|escape}"{if $repository eq $source.url} selected="selected"{/if}>{$source.short|escape}</option>
 							{/foreach}
-						</select>
-						<input type="hidden" name="page" value="profiles"/>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="2" class="input_submit_container"><input type="submit" name="list" value="{tr}List{/tr}" /></td>
-				</tr>
-			</table>
-		</form>
-		<table class="normal">
+	</select>
+	</div>
+	<input type="hidden" name="page" value="profiles"/>
+</div>
+<div align="center"><input type="submit" name="list" value="{tr}List{/tr}" /></div>
+</div>
+</form>
+<br />		<table class="normal">
 			<tr>
 				<th>{tr}Profile{/tr}</th>
 				<th>{tr}Repository{/tr}</th>
@@ -268,50 +282,14 @@ function showDetails( id, domain, profile ) { // {{{
 					<td>{$profile.category}</td>
 				</tr>
 			{/foreach}
+			{if $result|@count eq '0'}
+			<tr><td colspan="3" class="odd">{tr}None{/tr}</td></tr>
+			{/if}
 		</table>
-	</div>
-</div>
 
-<div class="cbox">
-	<div class="cbox-title">{tr}Configuration{/tr}</div>
-	<div class="cbox-data">
-		<form action="tiki-admin.php?page=profiles" method="post">
-			<table class="admin"><tr>
-				<col width="30%"/>
-				<col width="70%"/>
-		
-				<tr>
-					<td class="form">
-						{tr}Profile repositories{/tr}:
-						<div>
-							<small>{tr}Profiles can be installed from multiple repositories. Enter one repository URL per line.{/tr}</small>
-						</div>
-					</td>
-					<td>
-						<textarea name="profile_sources" rows="5">{$prefs.profile_sources|escape}</textarea>
-					</td>
-				</tr>
+</fieldset>
 
-				<tr>
-					<td class="form">
-						{tr}Data Channels{/tr}:
-						<div>
-							<small>{tr}Data channels create a named pipe to run profiles from user space. One channel per line. Each line is comma delimited and contain <strong>channel name, domain, profile, allowed groups</strong>. {/tr}</small>
-						</div>
-						<div>
-							<small><a href="http://profiles.tikiwiki.org/Data+Channels">{tr}More information{/tr}</a></small>
-						</div>
-					</td>
-					<td>
-						<textarea name="profile_channels" rows="5">{$prefs.profile_channels|escape}</textarea>
-					</td>
-				</tr>
-				<tr>		
-					<td colspan="2" class="input_submit_container"><input type="submit" name="config" value="{tr}Save{/tr}" /></td>
-				</tr>
-			</table>
-		</form>
-	</div>
+</td></tr></table>
 </div>
 
 <script type="text/javascript">

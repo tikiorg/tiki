@@ -1,31 +1,70 @@
+
+<form action="tiki-admin.php?page=metatags" method="post">
 <div class="cbox">
-<div class="cbox-title">
-  {tr}{$crumbs[$crumb]->description}{/tr}
-  {help crumb=$crumbs[$crumb]}
+<table class="admin"><tr><td>
+<div align="center" style="padding:1em;"><input type="submit" name="metatags" value="{tr}Change Preferences{/tr}" /></div>
+
+<fieldset><legend>{tr}Meta tags{/tr}{if $prefs.feature_help eq 'y'} {help url="Meta+Tags+Config"}{/if}</legend>
+<div class="adminoptionbox">
+	<div class="adminoptionlabel"><label for="metatag_keywords">{tr}Keywords{/tr}:</label><br /> <textarea rows="5" cols="40" id="metatag_keywords" name="metatag_keywords" style="width:95%;">{$prefs.metatag_keywords}</textarea></div>
+
+<div class="adminoptionboxchild">
+<div class="adminoptionbox">
+	<div class="adminoption"><input type="checkbox" id="prefs_metatag_freetags" name="prefs_metatag_freetags" {if $prefs.metatag_freetags eq 'y'}checked="checked" {/if}/></div>
+	<div class="adminoptionlabel"><label for="prefs_metatag_freetags">{tr}Include freetags{/tr}.</label>
+	{if $prefs.feature_freetags ne 'y'}<br />{icon _id=information}{tr}Feature is disabled{/tr}. <a href="tiki-admin.php?page=features" title="{tr}Features{/tr}">{tr}Enable now{/tr}</a>.{/if}
+	</div>
 </div>
-<div class="cbox-data">
-        <form action="tiki-admin.php?page=metatags" method="post">
-        <table class="admin">
-        <tr><td class="form"><b>{tr}Item{/tr}</b></td>
-            <td class="form"><b>{tr}Value{/tr}</b></td>
-        </tr>
-        <tr><td class="form">{tr}Meta Keywords{/tr}:</td><td><input type="text" name="metatag_keywords" value="{$prefs.metatag_keywords}" size="50" /> <br />
-        {tr}Insert freetags in keyword list{/tr} <input type="checkbox" name="prefs_metatag_freetags" {if $prefs.metatag_freetags eq 'y'}checked="checked"{/if}<br />
-        {tr}Use the thread title in Forum pages instead{/tr} <input type="checkbox" name="prefs_metatag_threadtitle" {if $prefs.metatag_threadtitle eq 'y'}checked="checked"{/if}<br />
-        {tr}Use the image title in Image gallery pages instead{/tr} <input type="checkbox" name="prefs_metatag_imagetitle" {if $prefs.metatag_imagetitle eq 'y'}checked="checked"{/if}
-        </td></tr>
-        <tr><td class="form">{tr}Meta Description{/tr}:</td><td><input type="text" name="metatag_description" value="{$prefs.metatag_description}" size="50" /></td></tr>
-        <tr><td class="form">{tr}Meta Author{/tr}:</td><td><input type="text" name="metatag_author" value="{$prefs.metatag_author}" size="50" /></td></tr>
-        <tr><th colspan="3" align="center">{tr}Geourl{/tr}<a target="_blank" href="http://www.geourl.org/">{icon _id='help'}</a></th></tr>
-        <tr><td class="form">{tr}geo.position{/tr}:</td><td><input type="text" name="metatag_geoposition" value="{$prefs.metatag_geoposition}" size="50" /></td></tr>
-        <tr><td class="form">{tr}geo.region{/tr}:</td><td><input type="text" name="metatag_georegion" value="{$prefs.metatag_georegion}" size="50" /></td></tr>
-        <tr><td class="form">{tr}geo.placename{/tr}:</td><td><input type="text" name="metatag_geoplacename" value="{$prefs.metatag_geoplacename}" size="50" /></td></tr>
-        <tr><th colspan="3" align="center">{tr}Robots{/tr}</th></tr>
-        <tr><td class="form">{tr}meta robots{/tr}:</td><td><input type="text" name="adm_metatag_robots" value="{$adm_metatag_robots}" size="50" /></td></tr>
-        <tr><td class="form">{tr}revisit after{/tr}:</td><td><input type="text" name="metatag_revisitafter" value="{$prefs.metatag_revisitafter}" size="50" /></td></tr>
-        <tr><td class="form" colspan="3">&nbsp;</td></tr>
-        <tr><td colspan="3" class="input_submit_container"><input type="submit" name="metatags" value="{tr}Change settings{/tr}" /></td></tr>
-        </table>
-        </form>
+<div class="adminoptionbox">
+	<div class="adminoption"><input type="checkbox" id="prefs_metatag_threadtitle" name="prefs_metatag_threadtitle" {if $prefs.metatag_threadtitle eq 'y'}checked="checked"{/if} /></div>
+	<div class="adminoptionlabel"><label for="prefs_metatag_threadtitle">{tr}Use thread title instead{/tr}.</label>
+	{if $prefs.feature_forums ne 'y'}<br />{icon _id=information}{tr}Feature is disabled{/tr}. <a href="tiki-admin.php?page=features" title="{tr}Features{/tr}">{tr}Enable now{/tr}</a>.{/if}
+	</div>
+</div>
+<div class="adminoptionbox">
+	<div class="adminoption"><input type="checkbox" id="prefs_metatag_imagetitle" name="prefs_metatag_imagetitle" {if $prefs.metatag_imagetitle eq 'y'}checked="checked"{/if} /></div>
+	<div class="adminoptionlabel"><label for="prefs_metatag_imagetitle">{tr}Use image title instead{/tr}.</label>
+	{if $prefs.feature_galleries ne 'y'}<br />{icon _id=information}{tr}Feature is disabled{/tr}. <a href="tiki-admin.php?page=features" title="{tr}Features{/tr}">{tr}Enable now{/tr}</a>.{/if}
+	</div>
+</div>
+
 </div>
 </div>
+
+<div class="adminoptionbox">
+	<div class="adminoptionlabel"><label for="metatag_description">{tr}Description{/tr}:</label><br /> <textarea id="metatag_description" name="metatag_description" value="{$prefs.metatag_description}" rows="5" cols="40" style="width:95%"></textarea></div>
+</div>
+
+<div class="adminoptionbox">
+	<div class="adminoptionlabel"><label for="metatag_author">{tr}Author{/tr}:</label> <input id="metatag_author" type="text" name="metatag_author" value="{$prefs.metatag_author}" size="50" /></div>
+</div>
+</fieldset>
+
+
+<fieldset><legend>{tr}Geo URL{/tr} {if $prefs.feature_help eq 'y'}<a target="_blank" href="http://www.geourl.org/">{icon _id='help'}</a>{/if}</legend>
+<div class="adminoptionbox">
+	<div class="adminoptionlabel"><label for="metatag_geoposition">{tr}geo.position{/tr}:</label> <input type="text" name="metatag_geoposition" id="metatag_geoposition" value="{$prefs.metatag_geoposition}" size="50" /></div>
+</div>
+<div class="adminoptionbox">
+	<div class="adminoptionlabel"><label for="metatag_georegion">{tr}geo.region{/tr}:</label> <input id="metatag_georegion" type="text" name="metatag_georegion" value="{$prefs.metatag_georegion}" size="50" /></div>
+</div>
+<div class="adminoptionbox">
+	<div class="adminoptionlabel"><label for="metatag_geoplacename">{tr}geo.placename{/tr}:</label> <input id="metatag_geoplacename" type="text" name="metatag_geoplacename" value="{$prefs.metatag_geoplacename}" size="50" /></div>
+</div>
+</fieldset>
+
+<fieldset><legend>{tr}Robots{/tr}</legend>
+<div class="adminoptionbox">
+	<div class="adminoptionlabel"><label for="adm_metatag_robots">{tr}Meta robots{/tr}:</label> <input id="adm_metatag_robots" type="text" name="adm_metatag_robots" value="{$adm_metatag_robots}" size="50" /></div>
+</div>
+<div class="adminoptionbox">
+	<div class="adminoptionlabel"><label for="metatag_revisitafter">{tr}Revisit after{/tr}:</label> <input id="metatag_revisitafter" type="text" name="metatag_revisitafter" value="{$prefs.metatag_revisitafter}" size="50" /></div>
+</div>
+</fieldset>
+
+<div align="center" style="padding:1em;"><input type="submit" name="metatags" value="{tr}Change Preferences{/tr}" /></div>
+</td></tr></table>
+</div>
+</form>
+
+

@@ -4,7 +4,7 @@
 	{button href="tiki-admin_survey_questions.php?surveyId=$surveyId" _text="{tr}Add a New Question{/tr}"}
 	{button href="tiki-list_surveys.php" _text="{tr}List surveys{/tr}"}
 	{button href="tiki-survey_stats.php" _text="{tr}Survey Stats{/tr}"}
-	{button href="tiki-survey_stats_survey.php?surveyId=$surveyId" _text="{tr}this survey stats{/tr}"}
+	{button href="tiki-survey_stats_survey.php?surveyId=$surveyId" _text="{tr}This survey stats{/tr}"}
 	{button href="tiki-admin_surveys.php?surveyId=$surveyId" _text="{tr}Edit this Survey{/tr}"}
 	{button href="tiki-admin_surveys.php" _text="{tr}Admin Surveys{/tr}"}
 </div>
@@ -46,18 +46,9 @@
 </table>
 </form>
 <h2>{tr}Questions{/tr}</h2>
-<table class="findtable">
-<tr><td class="findtable">{tr}Find{/tr}</td>
-   <td class="findtable">
-   <form method="get" action="tiki-admin_survey_questions.php">
-     <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}Find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-     <input type="hidden" name="surveyId" value="{$surveyId|escape}" />
-   </form>
-   </td>
-</tr>
-</table>
+
+{include file='find.tpl' _sort_mode='y'}
+
 <table class="normal">
 <tr>
 <th><a href="tiki-admin_survey_questions.php?surveyId={$surveyId}&amp;offset={$offset}&amp;sort_mode={if $sort_mode eq 'questionId_desc'}questionId_asc{else}questionId_desc{/if}">{tr}ID{/tr}</a></th>

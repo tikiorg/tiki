@@ -113,6 +113,9 @@
     {if $prefs.feature_articles eq 'y'}
        <option value="articles">{tr}Articles{/tr}</option>
     {/if}
+	{if $prefs.feature_trackers eq 'y'}
+		<option value="trackers">{tr}Trackers{/tr}</option>
+	{/if}
     </select>
    </span> 
 {else}

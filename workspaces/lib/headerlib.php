@@ -125,13 +125,6 @@ class HeaderLib {
 			}
 		}
 
-		// Handle theme's special CSS file for IE6 hacks
-		if ( $style_ie6_css != '' ) {
-			$back .= "<!--[if IE 6]>\n"
-				.'<link rel="stylesheet" href="'.$style_ie6_css.'" type="text/css" />'."\n"
-				."<![endif]-->\n";
-		}
-
 		if (count($this->css)) {
 			$back.= "<style><!--\n";
 			foreach ($this->css as $x=>$css) {
@@ -142,6 +135,14 @@ class HeaderLib {
 			}
 			$back.= "-->\n</style>\n\n";
 		}
+
+		// Handle theme's special CSS file for IE6 hacks
+			$back .= "<!--[if lt IE 7]>\n"
+					.'<link rel="stylesheet" href="css/ie6.css" type="text/css" />'."\n";
+			if ( $style_ie6_css != '' ) {
+				$back .= '<link rel="stylesheet" href="'.$style_ie6_css.'" type="text/css" />'."\n";
+			}
+			$back .= "<![endif]-->\n";
 
 		if (count($this->jsfiles)) {
 			foreach ($this->jsfiles as $x=>$jsf) {

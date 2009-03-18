@@ -582,27 +582,6 @@ function icntoggle(foo, img) {
   }
 }
 
-//
-// set folder icon state during page load
-//
-function setFolderIcons() {
-  var elements = document.forms[the_form].elements[elements_name];
-
-  var elements_cnt = ( typeof (elements.length) != 'undefined') ? elements.length : 0;
-
-  if (elements_cnt) {
-    for (var i = 0; i < elements_cnt; i++) {
-      elements[i].checked = document.forms[the_form].elements[switcher_name].checked;
-    }
-  } else {
-    elements.checked = document.forms[the_form].elements[switcher_name].checked;
-
-    ;
-  } // end if... else
-
-  return true;
-}     // setFolderIcons()
-
 // Initialize a cross-browser XMLHttpRequest object.
 // The object return has to be sent using send(). More parameters can be
 // given.
@@ -1231,42 +1210,7 @@ function adjustThumbnails() {
 
 // --- end of sorttable ---
 
-function correctPNG() // correctly handle PNG transparency in Win IE 5.5 & 6.
-{
-   var arVersion = navigator.appVersion.split("MSIE")
-   var version = parseFloat(arVersion[1])
-   if ((version >= 5.5) && (document.all && !this.op))
-   {
-      for(var i=0; i<document.images.length; i++)
-      {
-         var img = document.images[i]
-         var imgName = img.src.toUpperCase()
-         if (imgName.substring(imgName.length-3, imgName.length) == "PNG")
-         {
-            var imgID = (img.id) ? "id='" + img.id + "' " : ""
-            var imgClass = (img.className) ? "class='" + img.className + "' " : ""
-            var imgTitle = (img.title) ? "title='" + img.title + "' " : "title='" + img.alt + "' "
-            var imgStyle = "display:inline-block;" + img.style.cssText
-            if (img.align == "left") imgStyle = "float:left;" + imgStyle
-            if (img.align == "right") imgStyle = "float:right;" + imgStyle
-            if (img.parentElement.href) imgStyle = "cursor:hand;" + imgStyle
-            var strNewHTML = "<span " + imgID + imgClass + imgTitle
-            + " style=\"" + "width:" + img.width + "px; height:" + img.height + "px;" + imgStyle + ";"
-            + "filter:progid:DXImageTransform.Microsoft.AlphaImageLoader"
-            + "(src=\'" + img.src + "\', sizingMethod='scale');\"></span>"
-            img.outerHTML = strNewHTML
-            i = i-1
-         }
-      }
-   }
-}
-
 browser();
-
-if (this.iewin) {
-  window.attachEvent("onload", correctPNG);
-
-}
 
 // This was added to allow wiki3d to change url on tiki's window
 window.name = 'tiki';

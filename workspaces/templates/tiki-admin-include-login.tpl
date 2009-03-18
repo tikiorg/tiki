@@ -33,7 +33,7 @@
             <span>{tr}General Preferences{/tr}</span>
           </a>
         </legend>
-        <div id="content{$focus}" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_content.$focus) and $smarty.session.tiki_cookie_jar.show_content.$focus neq 'y'}none{else}block{/if};">
+        <div id="content{$focus}" style="display:{if isset($smarty.session.tiki_cookie_jar.show_content.$focus) and $smarty.session.tiki_cookie_jar.show_content.$focus neq 'y'}none{else}block{/if};">
       {/if}
 
 <div class="adminoptionbox">
@@ -334,7 +334,7 @@ name="eponymousGroups" {if $prefs.eponymousGroups eq 'y'}checked="checked"{/if}/
             <span>{tr}PEAR::Auth{/tr}</span>
           </a>
         </legend>
-        <div id="content{$focus}" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_content.$focus) and $smarty.session.tiki_cookie_jar.show_content.$focus neq 'y'}none{else}block{/if};">
+        <div id="content{$focus}" style="display:{if isset($smarty.session.tiki_cookie_jar.show_content.$focus) and $smarty.session.tiki_cookie_jar.show_content.$focus neq 'y'}none{else}block{/if};">
       {/if}
 <input type="hidden" name="auth_pear" />
 <fieldset><legend>PEAR::Auth {help url="Login+Authentication+Methods"}</legend>
@@ -471,7 +471,7 @@ name="eponymousGroups" {if $prefs.eponymousGroups eq 'y'}checked="checked"{/if}/
             <span>{tr}PAM{/tr}</span>
           </a>
         </legend>
-        <div id="content{$focus}" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_content.$focus) and $smarty.session.tiki_cookie_jar.show_content.$focus neq 'y'}none{else}block{/if};">
+        <div id="content{$focus}" style="display:{if isset($smarty.session.tiki_cookie_jar.show_content.$focus) and $smarty.session.tiki_cookie_jar.show_content.$focus neq 'y'}none{else}block{/if};">
       {/if}
 <input type="hidden" name="auth_pam" />
 <fieldset><legend>{tr}PAM{/tr} {help url="AuthPAM" desc="{tr}PAM{/tr}"}</legend>
@@ -512,7 +512,7 @@ name="eponymousGroups" {if $prefs.eponymousGroups eq 'y'}checked="checked"{/if}/
             <span>{tr}Shibboleth{/tr}</span>
           </a>
         </legend>
-        <div id="content{$focus}" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_content.$focus) and $smarty.session.tiki_cookie_jar.show_content.$focus neq 'y'}none{else}block{/if};">
+        <div id="content{$focus}" style="display:{if isset($smarty.session.tiki_cookie_jar.show_content.$focus) and $smarty.session.tiki_cookie_jar.show_content.$focus neq 'y'}none{else}block{/if};">
       {/if}
 
 <fieldset><legend>{tr}Shibboleth{/tr} {if $prefs.feature_help eq 'y'}{help url="AuthShib" desc="{tr}Shibboleth Authentication {/tr}"}{/if}</legend>
@@ -566,7 +566,7 @@ name="eponymousGroups" {if $prefs.eponymousGroups eq 'y'}checked="checked"{/if}/
             <span>{tr}CAS{/tr}</span>
           </a>
         </legend>
-        <div id="content{$focus}" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_content.$focus) and $smarty.session.tiki_cookie_jar.show_content.$focus neq 'y'}none{else}block{/if};">
+        <div id="content{$focus}" style="display:{if isset($smarty.session.tiki_cookie_jar.show_content.$focus) and $smarty.session.tiki_cookie_jar.show_content.$focus neq 'y'}none{else}block{/if};">
       {/if}
 <input type="hidden" name="auth_cas" />
 <fieldset><legend>{tr}CAS (Central Authentication Service){/tr} {if $prefs.feature_help eq 'y'} {help url="CAS+Authentication"}{/if}</legend>

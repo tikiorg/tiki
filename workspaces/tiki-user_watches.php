@@ -31,8 +31,11 @@ if( $prefs['feature_user_watches_translations'] ) {
 }
 
 $add_options = array();
-if( $prefs['feature_articles'] == 'y' )
-	$add_options['articles_submitted'] = tra('A user submits an article');
+if( $prefs['feature_articles'] == 'y' ) {
+	$add_options['article_submitted'] = tra('A user submits an article');
+	$add_options['article_edited'] = tra('A user edits an article');
+	$add_options['article_deleted'] = tra('A user deletes an article');
+}
 if( $prefs['feature_user_watches_translations'] == 'y' )
 	$add_options['wiki_page_in_lang_created'] = tra('A new page is created in a language');
 
@@ -63,11 +66,23 @@ if (isset($_REQUEST["add"])) {
 	if (isset($_REQUEST['event'])) {
 		switch( $_REQUEST['event'] )
 		{
-		case 'articles_submitted':
+		case 'article_submitted':
 			$watch_object = "*";
 			$watch_type = 'article';
 			$watch_label = '*';
 			$watch_url = "tiki-view_articles.php";
+			break;
+		case 'article_edited':
+			$watch_object = "*";
+			$watch_type = 'article';
+			$watch_label = '*';
+			$watch_url = "tiki-list_articles.php";
+			break;
+		case 'article_deleted':
+			$watch_object = "*";
+			$watch_type = 'article';
+			$watch_label = '*';
+			$watch_url = "tiki-list_articles.php";
 			break;
 		case 'wiki_page_in_lang_created':
 			$watch_object = $langwatch['value'];

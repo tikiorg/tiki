@@ -288,7 +288,9 @@ CREATE TABLE "tiki_actionlog" (
   "ip" varchar(15) default NULL,
   "comment" varchar(200) default NULL,
   "categId" number(12) default '0' NOT NULL,
-  PRIMARY KEY (actionId)
+  PRIMARY KEY (actionId),
+  KEY lastModif(lastModif),
+  KEY object(object(100), objectType, action(100))
 ) ENGINE=MyISAM;
 
 CREATE TRIGGER "tiki_actionlog_trig" BEFORE INSERT ON "tiki_actionlog" REFERENCING NEW AS NEW OLD AS OLD FOR EACH ROW
@@ -1949,9 +1951,9 @@ CREATE TABLE "tiki_menu_options" (
   "name" varchar(200) default NULL,
   "url" varchar(255) default NULL,
   "position" number(4) default NULL,
-  "section" varchar(255) default NULL,
-  "perm" varchar(255) default NULL,
-  "groupname" varchar(255) default NULL,
+  "section" clob default NULL,
+  "perm" clob default NULL,
+  "groupname" clob default NULL,
   "userlevel" number(4) default 0,
   PRIMARY KEY (optionId)
 ) ENGINE=MyISAM  ;
@@ -1965,7 +1967,7 @@ CREATE UNIQUE INDEX "tiki_menu_options_uniq_menu" ON "tiki_menu_options"("menuId
 
 INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (1,42,'o','Home','./',10,'','','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (3,42,'o','Contact Us','tiki-contact.php',20,'feature_contact','','',0);
+INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (3,42,'o','Contact Us','tiki-contact.php',20,'feature_contact,feature_messages','','',0);
 
 INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (4,42,'o','Stats','tiki-stats.php',23,'feature_stats','tiki_p_view_stats','',0);
 
@@ -2127,13 +2129,13 @@ INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`",
 
 INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (82,42,'o','Admin Directory','tiki-directory_admin.php',565,'feature_directory','tiki_p_view_directory,tiki_p_validate_links','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (83,42,'s','File Galleries','tiki-list_file_gallery.php',600,'feature_file_galleries','tiki_p_view_file_gallery','',0);
+INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (83,42,'s','File Galleries','tiki-list_file_gallery.php',600,'feature_file_galleries','tiki-list_file_gallery.php|tiki_p_view_file_gallery|tiki_p_upload_files','',0);
 
 INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (84,42,'o','List Galleries','tiki-list_file_gallery.php',605,'feature_file_galleries','tiki_p_list_file_galleries','',0);
 
 INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (85,42,'o','Rankings','tiki-file_galleries_rankings.php',610,'feature_file_galleries,feature_file_galleries_rankings','tiki_p_list_file_galleries','',0);
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (86,42,'o','Upload File','tiki-upload_file.php',615,'feature_file_galleries','tiki_p_view_file_gallery,tiki_p_upload_files','',0);
+INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (86,42,'o','Upload File','tiki-upload_file.php',615,'feature_file_galleries','tiki_p_upload_files','',0);
 
 INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (87,42,'s','FAQs','tiki-list_faqs.php',650,'feature_faqs','tiki_p_view_faqs','',0);
 
@@ -3939,6 +3941,7 @@ BEGIN
 SELECT "tiki_wiki_attachments_sequ".nextval into :NEW."attId" FROM DUAL;
 END;
 /
+CREATE  INDEX "tiki_wiki_attachments_page" ON "tiki_wiki_attachments"("page");
 
 DROP TABLE "tiki_zones";
 

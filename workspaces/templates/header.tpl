@@ -53,14 +53,13 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 </title>
 
 {if $prefs.site_favicon}<link rel="icon" href="{$prefs.site_favicon}" />{/if}
-<!--[if lt IE 7]> <link rel="StyleSheet" href="css/ie6.css" type="text/css" /> <![endif]-->
 
 {* --- phplayers block --- *}
 {if $prefs.feature_phplayers eq 'y' and isset($phplayers_headers)}{$phplayers_headers}{/if}
 
 {*-- css menus block --*}
 {if $prefs.feature_cssmenus eq 'y'}
-<link rel="StyleSheet" href="css/cssmenus.css" type="text/css"></link>
+<link rel="StyleSheet" href="css/cssmenus.css" type="text/css" />
 {/if}
 
 {* --- universaleditbutton.org --- *}
@@ -132,7 +131,8 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 </script>
 {/if}
 
-{if $prefs.feature_shadowbox eq 'y'}
+{if $prefs.feature_shadowbox eq 'y' and ($prefs.feature_mootools eq "y" or $prefs.feature_jquery eq "y")}
+
 <!-- Includes for Shadowbox script -->
 	<link rel="stylesheet" type="text/css" href="lib/shadowbox/build/css/shadowbox.css" />
 
@@ -153,12 +153,6 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 {elseif $prefs.feature_jquery eq "y"}
 	{literal}
 		$jq(document).ready(function() {
-	{/literal}
-{else}
-	{literal}
-		// *** ERROR *** feature_shadowbox enabled but without feature_mootools or feature_jquery
-		// Dummy function follows to prevent JavaScript errors
-		function shadowbox_dummy_function() {
 	{/literal}
 {/if}
 {literal}

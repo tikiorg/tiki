@@ -672,6 +672,7 @@ class CalendarLib extends TikiLib {
 		if ( $display_tz == '' ) $display_tz = 'UTC';
 		$curtikidate->setTZbyID($display_tz);
 		$curtikidate->setLocalTime($dloop,$mloop,$yloop,0,0,0,0);
+		$listevents = array();
 	
 		// note that number of weeks starts at ZERO (i.e., zero = 1 week to display).
 		for ($i = 0; $i <= $numberofweeks; $i++) {
@@ -716,7 +717,7 @@ class CalendarLib extends TikiLib {
 								$leday_item =& $leday[$key];
 								$leday_item['user'] .= ', '.$lte['user'];
 	
-								if ( ! is_integer($leday_item['action']) ) {
+								if ( !isset($leday_item['action']) || !is_integer($leday_item['action']) ) {
 									$leday_item['action'] = 1;
 								}
 								$leday_item['action']++;
@@ -781,7 +782,7 @@ class CalendarLib extends TikiLib {
 			}
 		}
 
-		if ( $_SESSION['CalendarViewList'] == 'list' ) {
+		if ( isset($_SESSION['CalendarViewList']) && $_SESSION['CalendarViewList'] == 'list' ) {
 			if ( is_array($listtikievents) ) {
 				foreach ( $listtikievents as $le ) {
 					if ( is_array($le) ) {

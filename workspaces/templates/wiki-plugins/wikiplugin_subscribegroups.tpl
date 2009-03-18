@@ -14,7 +14,7 @@
 {if !empty($possiblegroups)}
 <form method="post">
 <select name="assign" onchange="this.form.submit();">
-<option value=""><i>{if isset($subscribe)}{subscribe|escape|{else}{tr}Subscribe to a group{/tr}{/if}</i></option>
+<option value=""><i>{if isset($subscribe)}{$subscribe|escape}{else}{tr}Subscribe to a group{/tr}{/if}</i></option>
 {foreach from=$possiblegroups item=group}
 	{if $group.userChoice eq 'y' and empty($userGroups[$group.groupName])}
 	<option value="{$group.groupName|escape}">{$group.groupName}</option>

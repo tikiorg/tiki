@@ -46,6 +46,7 @@
 					<div class="cbox-data">
 						<textarea rows="10">{$plugin_body|escape}</textarea>
 					</div>
+					</div>
 				{else}
 					<p>{tr}This plugin's body is empty.{/tr}</p>
 				{/if}

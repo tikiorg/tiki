@@ -236,8 +236,8 @@ class TrackerLib extends TikiLib {
 			foreach ($watchers as $w) {
 				$mail = new TikiMail($w['user']);
 				$mail->setHeader("From", $prefs['sender_email']);
-				$mail->setSubject($smarty->fetchLang($w['lang'], 'mail/tracker_changed_notification_subject.tpl'));
-				$mail->setText($smarty->fetchLang($w['lang'], 'mail/tracker_changed_notification.tpl'));
+				$mail->setSubject($smarty->fetchLang($w['language'], 'mail/tracker_changed_notification_subject.tpl'));
+				$mail->setText($smarty->fetchLang($w['language'], 'mail/tracker_changed_notification.tpl'));
 				$mail->send(array($w['email']));
 			}
 		}
@@ -290,8 +290,8 @@ class TrackerLib extends TikiLib {
 			foreach ($watchers as $w) {
 				$mail = new TikiMail($w['user']);
 				$mail->setHeader("From", $prefs['sender_email']);
-				$mail->setSubject($smarty->fetchLang($w['lang'], 'mail/tracker_changed_notification_subject.tpl'));
-				$mail->setText($smarty->fetchLang($w['lang'], 'mail/tracker_changed_notification.tpl'));
+				$mail->setSubject($smarty->fetchLang($w['language'], 'mail/tracker_changed_notification_subject.tpl'));
+				$mail->setText($smarty->fetchLang($w['language'], 'mail/tracker_changed_notification.tpl'));
 				$mail->send(array($w['email']));
 			}
 		}
@@ -852,7 +852,7 @@ class TrackerLib extends TikiLib {
 			case 's':
 				$key = 'tracker.'.$trackerId.'.'.$itemId;
 				$fopt['numvotes'] = $this->getOne('select count(*) from `tiki_user_votings` where `id` = ?', array($key));
-				$fopt['voteavg'] = ( $fopt['numvotes'] > 0 ) ? ($fopt['value'] / $fopt['numvotes']) : '0';
+				$fopt['voteavg'] = ( $fopt['numvotes'] > 0 ) ? round(($fopt['value'] / $fopt['numvotes'])) : '0';
 				break;
 			case 'e':
 				global $categlib;
@@ -1605,9 +1605,7 @@ class TrackerLib extends TikiLib {
 			}
 			$need_reindex[] = $itemId;
 			if (!empty($cats)) {
-				foreach ($cats as $c) {
-					$this->categorized_item($trackerId, $itemId, "item $itemId", $cats);
-				}
+				$this->categorized_item($trackerId, $itemId, "item $itemId", $cats);
 			}
 			$query = "insert into `tiki_tracker_item_fields`(`itemId`,`fieldId`,`value`) values(?,?,?)";
 			$query2 = "update `tiki_tracker_item_fields` set `value`=? where `itemId`=? and `fieldId`=?";
@@ -1621,7 +1619,20 @@ class TrackerLib extends TikiLib {
 						if ($field['type'] == 'p' && $field['options_array'][0] == 'password') {
 							//$userlib->change_user_password($user, $ins_fields['data'][$i]['value']);
 							continue;
-						} elseif ($field['type'] == 'e' or $field['type'] == 's') {
+						} elseif ($field['type'] == 'e') {
+							$cats = split('%%%', trim($data[$i]));
+							if (!empty($cats)) {
+								foreach ($cats as $c) {
+									global $categlib; include_once('lib/categories/categlib.php');
+									if ($cId = $categlib->get_category_id(trim($c)))
+										$catIds[] = $cId;
+								}
+								if (!empty($catIds)) {
+									$this->categorized_item($trackerId, $itemId, "item $itemId", $catIds);
+								}
+							}
+							$data[$i] = '';
+						} elseif ($field['type'] == 's') {
 							$data[$i] = '';
 						} elseif ($field['type'] == 'a') {
 							$data[$i] = preg_replace('/\%\%\%/',"\r\n",$data[$i]);
@@ -1790,7 +1801,7 @@ class TrackerLib extends TikiLib {
 	}
 
 	function remove_tracker_item($itemId) {
-		global $user;
+		global $user, $prefs;
 		$query = "select * from `tiki_tracker_items` where `itemId`=?";
 		$result = $this->query($query, array((int) $itemId));
 		$res = $result->fetchRow();
@@ -1815,6 +1826,7 @@ class TrackerLib extends TikiLib {
 			$smarty->assign('mail_itemId', $itemId);
 			$smarty->assign('mail_trackerId', $trackerId);
 			$smarty->assign('mail_trackerName', $trackerName);
+			$smarty->assign('mail_data', '');
 			$foo = parse_url($_SERVER["REQUEST_URI"]);
 			$machine = $this->httpPrefix(). $foo["path"];
 			$smarty->assign('mail_machine', $machine);
@@ -1830,8 +1842,8 @@ class TrackerLib extends TikiLib {
 			foreach ($watchers as $w) {
 				$mail = new TikiMail($w['user']);
 				$mail->setHeader("From", $prefs['sender_email']);
-				$mail->setSubject($smarty->fetchLang($w['lang'], 'mail/tracker_changed_notification_subject.tpl'));
-				$mail->setText($smarty->fetchLang($w['lang'], 'mail/tracker_changed_notification.tpl'));
+				$mail->setSubject($smarty->fetchLang($w['language'], 'mail/tracker_changed_notification_subject.tpl'));
+				$mail->setText($smarty->fetchLang($w['language'], 'mail/tracker_changed_notification.tpl'));
 				$mail->send(array($w['email']));
 			}
 		}
@@ -1877,10 +1889,10 @@ class TrackerLib extends TikiLib {
 
 		$options=$this->get_tracker_options($trackerId);
 		if (isset ($option) && isset($option['autoCreateCategories']) && $option['autoCreateCategories']=='y') {
-
-		$currentCategId=$categlib->get_category_id("Tracker Item $itemId");
-		$categlib->remove_category($currentCategId);
+			$currentCategId=$categlib->get_category_id("Tracker Item $itemId");
+			$categlib->remove_category($currentCategId);
 		}
+		$this->remove_object("tracker $trackerId", $itemId);
 		return true;
 	}
 
@@ -2730,13 +2742,14 @@ class TrackerLib extends TikiLib {
 	}
 	/* list all the values of a field
 	 */
-	function list_tracker_field_values($trackerId, $fieldId, $status='o') {
+	function list_tracker_field_values($trackerId, $fieldId, $status='o', $distinct='y') {
 		$mid = '';
 		$bindvars[] = (int)$fieldId;
 		if (!$this->getSqlStatus($status, $mid, $bindvars, $trackerId))
 			return null;
 		$sort_mode = "value_asc";
-		$query = "select distinct(ttif.`value`) from `tiki_tracker_item_fields` ttif, `tiki_tracker_items` tti where tti.`itemId`= ttif.`itemId`and ttif.`fieldId`=? $mid order by ".$this->convert_sortmode($sort_mode);
+		$distinct = $distinct == 'y'?'distinct': '';
+		$query = "select $distinct(ttif.`value`) from `tiki_tracker_item_fields` ttif, `tiki_tracker_items` tti where tti.`itemId`= ttif.`itemId`and ttif.`fieldId`=? $mid order by ".$this->convert_sortmode($sort_mode);
 		$result = $this->query( $query, $bindvars);
 		$ret = array();
 		while ($res = $result->fetchRow()) {

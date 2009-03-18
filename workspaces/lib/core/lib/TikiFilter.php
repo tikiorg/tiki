@@ -28,6 +28,9 @@ class TikiFilter
 		case 'digits':
 			require_once 'Zend/Filter/Digits.php';
 			return new Zend_Filter_Digits;
+		case 'int':
+			require_once 'Zend/Filter/Int.php';
+			return new Zend_Filter_Int;
 		case 'username':
 		case 'groupname':
 		case 'pagename':

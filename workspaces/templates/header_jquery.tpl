@@ -11,7 +11,7 @@
 //--><!]]>
 </script>
 {if $prefs.feature_jquery_ui eq 'y'}{* TODO optimise so not including all - maybe - one day *}
-<script type="text/javascript" src="lib/jquery/jquery.ui/ui/minified/jquery.ui.all.min.js"></script>
+<script type="text/javascript" src="lib/jquery/jquery-ui/ui/minified/jquery-ui.min.js"></script>
 {/if}
 {if $prefs.feature_jquery_tooltips eq 'y'}
 <script type="text/javascript" src="lib/jquery/cluetip/jquery.dimensions.js"></script>
