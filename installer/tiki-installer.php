@@ -528,7 +528,7 @@ if ($language != 'en')
 	$smarty->assign('lang', $language);
 
 // Tiki Database schema version
-$tiki_version = '2.2';
+$tiki_version = '2.3';
 $smarty->assign('tiki_version', $tiki_version);
 //$smarty->assign('tiki_version_name', $tiki_version . ' ALPHA');
 $smarty->assign('tiki_version_name', $tiki_version);
