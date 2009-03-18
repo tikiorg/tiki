@@ -19,6 +19,215 @@ When possible, it's also nice to indicate what feature is concerned by the chang
 Before 2.0, there was only [MOD] for both [ENH] and [MOD]:
 
 ----------------------------------------------------------------------
+Version 2.3
+<http://tikiwiki.org/ReleaseNotes23>
+------------------
+
+----------------------------------------------
+r17398 | pkdille | 2009-03-17 17:11:52 +0100 (mar 17 mar 2009) | 1 line
+
+[SEC] Fix XSS vulnerability when attacking through PHP_SELF (bug 2359)
+----------------------------------------------
+r17183 | sylvieg | 2009-03-05 15:45:53 +0100 (jeu 05 mar 2009) | 1 line
+
+[FIX] the norvegian language was only in 1.9
+----------------------------------------------
+r17077 | frank_p | 2009-03-02 17:42:07 +0100 (lun 02 mar 2009) | 1 line
+
+[FIX] typos
+----------------------------------------------
+r16991 | luciash | 2009-02-27 21:01:06 +0100 (ven 27 fév 2009) | 1 line
+
+[FIX] thenews.css: backport of fixes and enhancements from trunk
+----------------------------------------------
+r16868 | luciash | 2009-02-23 17:18:45 +0100 (lun 23 fév 2009) | 1 line
+
+[FIX] quickfix patch to support IE7 columns switching: http://dev.tikiwiki.org/bug2112 (thanks to eromneg) + Id to svn:keywords
+----------------------------------------------
+r16718 | ricks99 | 2009-02-12 13:33:33 +0100 (jeu 12 fév 2009) | 1 line
+
+[FIX]Backported fix from 3.0 to add the missing support for 120x240 and 200x200 ad sizes.
+----------------------------------------------
+r16654 | marclaporte | 2009-02-10 21:59:36 +0100 (mar 10 fév 2009) | 1 line
+
+[FIX] Putting at htmldiff since this is the default in 2.x  In v3.0., it will be configurable by site
+----------------------------------------------
+r16653 | marclaporte | 2009-02-10 21:51:08 +0100 (mar 10 fév 2009) | 1 line
+
+[FIX] Correct link in mail notifications.
+----------------------------------------------
+r16579 | luciash | 2009-02-05 17:32:44 +0100 (jeu 05 fév 2009) | 1 line
+
+[FIX] backport from trunk: basic font-size and bottom border line alignment
+----------------------------------------------
+r16578 | luciash | 2009-02-05 17:29:36 +0100 (jeu 05 fév 2009) | 1 line
+
+[FIX] backport from trunk: do not force font-size + remove debug border colors
+----------------------------------------------
+r16444 | ricks99 | 2009-01-28 13:40:29 +0100 (mer 28 jan 2009) | 1 line
+
+[FIX]fixed usage syntax in help text, fixed display of custom subscribe text
+----------------------------------------------
+r16331 | robferguson | 2009-01-20 17:48:18 +0100 (mar 20 jan 2009) | 1 line
+
+[FIX] reverting commit to wrong branch
+----------------------------------------------
+r16330 | robferguson | 2009-01-20 17:47:59 +0100 (mar 20 jan 2009) | 1 line
+
+[FIX] reverting commit to wrong branch
+----------------------------------------------
+r16328 | robferguson | 2009-01-20 15:39:12 +0100 (mar 20 jan 2009) | 1 line
+
+[ADD] new footnote wikiplugin
+----------------------------------------------
+r16327 | robferguson | 2009-01-20 15:38:33 +0100 (mar 20 jan 2009) | 1 line
+
+[ADD] new footnote wikiplugin
+----------------------------------------------
+r16263 | xavidp | 2009-01-13 15:23:02 +0100 (mar 13 jan 2009) | 1 line
+
+[ENH]Force chmod to 644 the published .tgz seems needed on some servers
+----------------------------------------------
+r16206 | ricks99 | 2009-01-07 21:33:52 +0100 (mer 07 jan 2009) | 1 line
+
+[FIX]to admin the comments, need to check for tiki-p-admin-comments permission -- not tiki-p-admin
+----------------------------------------------
+r16150 | sampaioprimo | 2008-12-28 03:54:16 +0100 (dim 28 déc 2008) | 1 line
+
+pt-br translation
+----------------------------------------------
+r16119 | c_schmitz | 2008-12-20 16:09:15 +0100 (sam 20 déc 2008) | 1 line
+
+[MOD] Removed obsolete <strong> tag in breadcrumbs
+----------------------------------------------
+r16085 | marclaporte | 2008-12-18 17:48:29 +0100 (jeu 18 déc 2008) | 1 line
+
+[FIX] Minor style fixes to TheNews.css  Should these types of corrections just be in Trunk? It has no chance of creating a bug and is making this nice theme more usable. I am worried about merge up though.
+----------------------------------------------
+r16064 | sylvieg | 2008-12-17 00:16:10 +0100 (mer 17 déc 2008) | 1 line
+
+[FIX] contact_anon was turned off each time a feature was changed- backport
+----------------------------------------------
+r15868 | sylvieg | 2008-12-02 14:44:26 +0100 (mar 02 déc 2008) | 1 line
+
+backport: Attachments with same name were overwritting each other
+----------------------------------------------
+r15862 | sylvieg | 2008-12-01 22:38:33 +0100 (lun 01 déc 2008) | 1 line
+
+[MOD] add the indexes in 2.x - I bet a lot of people will forget in the upgrade process
+----------------------------------------------
+r15856 | ricks99 | 2008-12-01 20:11:50 +0100 (lun 01 déc 2008) | 1 line
+
+[FIX]Use the site_crumb_seper from the preferences instead of hardcoding "::"
+----------------------------------------------
+r15827 | sylvieg | 2008-11-30 17:51:50 +0100 (dim 30 nov 2008) | 1 line
+
+[FIX]plugin: bug2178: if plugin file ned readeable ->loop: do not merge
+----------------------------------------------
+r15816 | chibaguy | 2008-11-29 03:47:54 +0100 (sam 29 nov 2008) | 1 line
+
+[FIX] Changed colors to those in trunk thenews.css fix.
+----------------------------------------------
+r15815 | chibaguy | 2008-11-29 03:41:02 +0100 (sam 29 nov 2008) | 1 line
+
+[FIX] Black on black contrast fixed (table class="default" -- is there a reason why this special class is needed?).
+----------------------------------------------
+r15773 | ricks99 | 2008-11-27 01:57:37 +0100 (jeu 27 nov 2008) | 1 line
+
+[FIX]fix xhtml validation 
+----------------------------------------------
+r15772 | ricks99 | 2008-11-27 01:53:32 +0100 (jeu 27 nov 2008) | 1 line
+
+[FIX]correctly span heading type tracker fields, and style as a heading.
+----------------------------------------------
+r15771 | ricks99 | 2008-11-27 01:40:54 +0100 (jeu 27 nov 2008) | 1 line
+
+[FIX]Correctly parse the tracker description, if option is enabled.
+----------------------------------------------
+r15741 | Jyhem | 2008-11-24 15:38:42 +0100 (lun 24 nov 2008) | 1 line
+
+[FIX] When one is not logged in, the meaningful message is to login, not an error. This is the way it used to worked
+----------------------------------------------
+r15682 | marclaporte | 2008-11-19 04:30:13 +0100 (mer 19 nov 2008) | 1 line
+
+[FIX] typo
+----------------------------------------------
+r15661 | sylvieg | 2008-11-17 21:15:00 +0100 (lun 17 nov 2008) | 1 line
+
+backport: check topic perms on article
+----------------------------------------------
+r15660 | sylvieg | 2008-11-17 21:00:46 +0100 (lun 17 nov 2008) | 1 line
+
+backport back: fix itemId in trackerlist
+----------------------------------------------
+r15638 | franck | 2008-11-13 20:37:23 +0100 (jeu 13 nov 2008) | 1 line
+
+[FIX] IMAP support in Pear:auth forogt to update setup/prefs.php with defaults
+----------------------------------------------
+r15634 | franck | 2008-11-13 05:22:02 +0100 (jeu 13 nov 2008) | 1 line
+
+[FIX] re-enable the capability to authenticate using IMAP in Pear:Auth
+----------------------------------------------
+r15622 | sylvieg | 2008-11-12 14:05:06 +0100 (mer 12 nov 2008) | 1 line
+
+[FIX]tracker: backport: to avoid error when emptying visible by/ editable by tracker field
+----------------------------------------------
+r15570 | nyloth | 2008-11-08 10:24:29 +0100 (sam 08 nov 2008) | 1 line
+
+rollback commit 15560 that should have been committed to trunk only
+----------------------------------------------
+r15560 | aproulx | 2008-11-07 15:35:57 +0100 (ven 07 nov 2008) | 1 line
+
+[ADD] adding  parameter to customize menu id and prevent automatic id renaming when a menu is removed
+----------------------------------------------
+r15555 | sylvieg | 2008-11-06 22:45:23 +0100 (jeu 06 nov 2008) | 1 line
+
+[FIX]fgal: was able to see the list of galleries even if no tiki_p_list_file_galleries
+----------------------------------------------
+r15533 | obnoxxx | 2008-11-05 23:59:41 +0100 (mer 05 nov 2008) | 5 lines
+
+[FIX] typo in ouptut in setup.sh
+
+Michael
+
+
+----------------------------------------------
+r15497 | sylvieg | 2008-11-04 14:03:35 +0100 (mar 04 nov 2008) | 1 line
+
+[FIX]tracker: rating was sometimes erasing some other field
+----------------------------------------------
+r15494 | marclaporte | 2008-11-04 05:47:41 +0100 (mar 04 nov 2008) | 1 line
+
+[TEST] Test commit from http://tikiwiki.org/EC2
+----------------------------------------------
+r15269 | ricks99 | 2008-10-23 13:25:42 +0200 (jeu 23 oct 2008) | 1 line
+
+rollback of revision 15263
+----------------------------------------------
+r15264 | ricks99 | 2008-10-22 22:47:04 +0200 (mer 22 oct 2008) | 1 line
+
+[MOD]give users better feedback when filtering page listing
+----------------------------------------------
+r15263 | ricks99 | 2008-10-22 22:40:31 +0200 (mer 22 oct 2008) | 1 line
+
+[MOD]give users an easy way to clear a FIND filter
+----------------------------------------------
+r15257 | sylvieg | 2008-10-22 15:46:04 +0200 (mer 22 oct 2008) | 1 line
+
+indicate that the version is the svn version - otherwise we do not know if it is a released version or a svn one
+----------------------------------------------
+r15221 | sylvieg | 2008-10-19 14:22:39 +0200 (dim 19 oct 2008) | 1 line
+
+[FIX]search: do not search in invalid directory sites in non admin
+----------------------------------------------
+r15194 | lphuberdeau | 2008-10-17 15:48:17 +0200 (ven 17 oct 2008) | 1 line
+
+[REL] SecDB for 2.2
+----------------------------------------------
+r15193 | lphuberdeau | 2008-10-17 15:43:01 +0200 (ven 17 oct 2008) | 1 line
+
+[REL] Pre-release updates
+----------------------------------------------
 Version 2.2
 <http://tikiwiki.org/ReleaseNotes22>
 ------------------
