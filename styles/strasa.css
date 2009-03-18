@@ -186,7 +186,7 @@ span.button {
 form.admin input[name="features"] {margin-bottom: 3px !important}
 select {}
 select[multiple] {height: 10em}
-select[name="theme"] {width: 145px}
+select[name="theme"], select[name="theme-option"] {width: 140px}
 small {font-size: .9em}
 label {margin:0 2px}
 ol {}
