@@ -33,12 +33,12 @@
 	{section name=l loop=$css}
 	<div style="padding:4px;">
 		<div style="float:right;">{$css[l].id|escape}</div>
-		<div class="comment"><em>{$css[l].comment|escape}</em></div>
+		<div class="comment"><pre><em>{$css[l].comment|escape}</em></pre></div>
 		{section name=i loop=$css[l].items}
 		<div style="font-weight: bold;">{$css[l].items[i]|escape}</div>
 		{/section}
 		{foreach item=v key=a from=$css[l].attributes}
-		<div style="margin-left:10px;">{$a|string_format:"%'.-22s"|escape} : {$v|string_format:"%-56.s"|escape}
+		<div style="margin-left:10px;"><code>{$a|string_format:"%'.-22s"|escape} : {$v|string_format:"%-56.s"|escape}</code>
 		{if $v[0] eq "#"}
 			<span style="height:8px;width:30px;background-color:{$v|escape};">&nbsp;&nbsp;&nbsp;&nbsp;</span>
 		{elseif $a|truncate:6:"" eq "border"}
