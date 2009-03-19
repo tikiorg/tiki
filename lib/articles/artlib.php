@@ -79,7 +79,7 @@ class ArtLib extends TikiLib {
 			// TODO refactor
 			$nots = $tikilib->get_event_watches('article_deleted', '*');
 			$nots2 = $tikilib->get_event_watches('topic_article_deleted', $topicId);
-			$smarty->assign('mail_action', tr('Delete'));
+			$smarty->assign('mail_action', 'delete');
 			
 			$nots3 = array();
 			foreach ($nots as $n) {
@@ -257,7 +257,7 @@ class ArtLib extends TikiLib {
 			
 			$nots = $tikilib->get_event_watches('article_edited', '*');
 			$nots2 = $tikilib->get_event_watches('topic_article_edited', $topicId);
-			$smarty->assign('mail_action', tr('Edit'));
+			$smarty->assign('mail_action', 'edit');
 			
 		} else {
 		    // Insert the article
@@ -283,7 +283,7 @@ class ArtLib extends TikiLib {
 			$GLOBALS["topicId"] = $topicId;
 			$nots = $tikilib->get_event_watches('article_submitted', '*');
 			$nots2 = $tikilib->get_event_watches('topic_article_created', $topicId);
-			$smarty->assign('mail_action', tr('New'));
+			$smarty->assign('mail_action', 'new');
 		}
 		
 		$nots3 = array();

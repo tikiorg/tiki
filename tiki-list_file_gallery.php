@@ -897,7 +897,7 @@ if ( isset($_REQUEST['view']) && $_REQUEST['view'] == 'browse') {
 
 if ( $_REQUEST['galleryId'] == 0 ) {
 
-	$smarty->assign('download_path', ( $podCastGallery ? $prefs['fgal_podcast_dir'] : $prefs['fgal_use_dir'] ) );
+	$smarty->assign('download_path', ( (isset($podCastGallery) &&  $podCastGallery)? $prefs['fgal_podcast_dir'] : $prefs['fgal_use_dir'] ) );
 
 	// Add a file hit
 	$statslib->stats_hit($gal_info['name'], 'file gallery', $galleryId);

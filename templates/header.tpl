@@ -7,155 +7,155 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{if !empty($pageLang)}{$pageLang}{else}{$prefs.language}{/if}" lang="{if !empty($pageLang)}{$pageLang}{else}{$prefs.language}{/if}">
-<head>
-{if $base_url and $dir_level gt 0}<base href="{$base_url}"/>{/if}
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="generator" content="TikiWiki CMS/Groupware - http://TikiWiki.org" />
-{if !empty($forum_info.name) & $prefs.metatag_threadtitle eq 'y'}<meta name="keywords" content="{tr}Forum{/tr} {$forum_info.name} {$thread_info.title} {if $prefs.feature_freetags eq 'y'}{foreach from=$freetags.data item=taginfo}{$taginfo.tag} {/foreach}{/if}" />
-{elseif $galleryId ne '' & $prefs.metatag_imagetitle ne 'n'}<meta name="keywords" content="{tr}Images Galleries{/tr} {$title} {if $prefs.feature_freetags eq 'y'}{foreach from=$freetags.data item=taginfo}{$taginfo.tag} {/foreach}{/if}" />
-{elseif $prefs.metatag_keywords ne ''}<meta name="keywords" content="{$prefs.metatag_keywords} {if $prefs.feature_freetags eq 'y'}{foreach from=$freetags.data item=taginfo}{$taginfo.tag} {/foreach}{/if}" />
+	<head>
+{if $base_url and $dir_level gt 0}		<base href="{$base_url}"/>{/if}
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="generator" content="TikiWiki CMS/Groupware - http://TikiWiki.org" />
+{if !empty($forum_info.name) & $prefs.metatag_threadtitle eq 'y'}		<meta name="keywords" content="{tr}Forum{/tr} {$forum_info.name} {$thread_info.title} {if $prefs.feature_freetags eq 'y'}{foreach from=$freetags.data item=taginfo}{$taginfo.tag} {/foreach}{/if}" />
+{elseif $galleryId ne '' & $prefs.metatag_imagetitle ne 'n'}		<meta name="keywords" content="{tr}Images Galleries{/tr} {$title} {if $prefs.feature_freetags eq 'y'}{foreach from=$freetags.data item=taginfo}{$taginfo.tag} {/foreach}{/if}" />
+{elseif $prefs.metatag_keywords ne ''}		<meta name="keywords" content="{$prefs.metatag_keywords} {if $prefs.feature_freetags eq 'y'}{foreach from=$freetags.data item=taginfo}{$taginfo.tag} {/foreach}{/if}" />
 {/if}
-{if $prefs.metatag_author ne ''}<meta name="author" content="{$prefs.metatag_author}" />
+{if $prefs.metatag_author ne ''}		<meta name="author" content="{$prefs.metatag_author}" />
 {/if}
-{if $prefs.metatag_description ne ''}<meta name="description" content="{$prefs.metatag_description}" />
+{if $prefs.metatag_description ne ''}		<meta name="description" content="{$prefs.metatag_description}" />
 {/if}
-{if $prefs.metatag_geoposition ne ''}<meta name="geo.position" content="{$prefs.metatag_geoposition}" />
+{if $prefs.metatag_geoposition ne ''}		<meta name="geo.position" content="{$prefs.metatag_geoposition}" />
 {/if}
-{if $prefs.metatag_georegion ne ''}<meta name="geo.region" content="{$prefs.metatag_georegion}" />
+{if $prefs.metatag_georegion ne ''}		<meta name="geo.region" content="{$prefs.metatag_georegion}" />
 {/if}
-{if $prefs.metatag_geoplacename ne ''}<meta name="geo.placename" content="{$prefs.metatag_geoplacename}" />
+{if $prefs.metatag_geoplacename ne ''}		<meta name="geo.placename" content="{$prefs.metatag_geoplacename}" />
 {/if}
-{if $prefs.metatag_robots ne ''}<meta name="robots" content="{$prefs.metatag_robots}" />
+{if $prefs.metatag_robots ne ''}		<meta name="robots" content="{$prefs.metatag_robots}" />
 {/if}
-{if $prefs.metatag_revisitafter ne ''}<meta name="revisit-after" content="{$prefs.metatag_revisitafter}" />
+{if $prefs.metatag_revisitafter ne ''}		<meta name="revisit-after" content="{$prefs.metatag_revisitafter}" />
 {/if}
 
 {* --- tikiwiki block --- *}
-<script type="text/javascript" src="lib/tiki-js.js"></script>
+		<script type="text/javascript" src="lib/tiki-js.js"></script>
 {include file="bidi.tpl"}
-<title>
-{if isset($trail)}{breadcrumbs type="fulltrail" loc="head" crumbs=$trail}
+		<title>
+{if isset($trail)}			{breadcrumbs type="fulltrail" loc="head" crumbs=$trail}
 {else}
-{$prefs.browsertitle}
-{if !empty($headtitle)} : {$headtitle}
-{elseif !empty($page)} : {if $beingStaged eq 'y' and $prefs.wikiapproval_hideprefix == 'y'}{$approvedPageName|escape}{else}{$page|escape}{/if} {* add $description|escape if you want to put the description + update breadcrumb_build replace return $crumbs->title; with return empty($crumbs->description)? $crumbs->title: $crumbs->description; *}
-{elseif !empty($arttitle)} : {$arttitle}
-{elseif !empty($title)} : {$title}
-{elseif !empty($thread_info.title)} : {$thread_info.title}
-{elseif !empty($post_info.title)} : {$post_info.title}
-{elseif !empty($forum_info.name)} : {$forum_info.name}
-{elseif !empty($categ_info.name)} : {$categ_info.name}
-{elseif !empty($userinfo.login)} : {$userinfo.login}
-{elseif !empty($tracker_item_main_value)} : {$tracker_item_main_value}
-{elseif !empty($tracker_info.name)} : {$tracker_info.name}
+	{$prefs.browsertitle}
+	{if !empty($headtitle)} : {$headtitle}
+	{elseif !empty($page)} : {if $beingStaged eq 'y' and $prefs.wikiapproval_hideprefix == 'y'}{$approvedPageName|escape}{else}{$page|escape}{/if} {* add $description|escape if you want to put the description + update breadcrumb_build replace return $crumbs->title; with return empty($crumbs->description)? $crumbs->title: $crumbs->description; *}
+	{elseif !empty($arttitle)} : {$arttitle}
+	{elseif !empty($title)} : {$title}
+	{elseif !empty($thread_info.title)} : {$thread_info.title}
+	{elseif !empty($post_info.title)} : {$post_info.title}
+	{elseif !empty($forum_info.name)} : {$forum_info.name}
+	{elseif !empty($categ_info.name)} : {$categ_info.name}
+	{elseif !empty($userinfo.login)} : {$userinfo.login}
+	{elseif !empty($tracker_item_main_value)} : {$tracker_item_main_value}
+	{elseif !empty($tracker_info.name)} : {$tracker_info.name}
+	{/if}
 {/if}
-{/if}
-</title>
+		</title>
 
-{if $prefs.site_favicon}<link rel="icon" href="{$prefs.site_favicon}" />{/if}
+{if $prefs.site_favicon}		<link rel="icon" href="{$prefs.site_favicon}" />{/if}
 
 {* --- phplayers block --- *}
-{if $prefs.feature_phplayers eq 'y' and isset($phplayers_headers)}{$phplayers_headers}{/if}
+{if $prefs.feature_phplayers eq 'y' and isset($phplayers_headers)}		{$phplayers_headers}{/if}
 
 {*-- css menus block --*}
 {if $prefs.feature_cssmenus eq 'y'}
-<link rel="StyleSheet" href="css/cssmenus.css" type="text/css" />
+		<link rel="stylesheet" href="css/cssmenus.css" type="text/css" />
 {/if}
 
 {* --- universaleditbutton.org --- *}
 {if ($editable and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox')) or $tiki_p_admin_wiki eq 'y' or $canEditStaging eq 'y'}
-	<link rel="alternate" type="application/x-wiki" title="{tr}Edit this page!{/tr}" href="tiki-editpage.php?page={$page}"/>
+		<link rel="alternate" type="application/x-wiki" title="{tr}Edit this page!{/tr}" href="tiki-editpage.php?page={$page}"/>
 {/if}
 
 {* --- Firefox RSS icons --- *}
 {if $prefs.feature_wiki eq 'y' and $prefs.rss_wiki eq 'y' and $tiki_p_view eq 'y'}
-<link rel="alternate" type="application/rss+xml" title="{tr}RSS Wiki{/tr}" href="tiki-wiki_rss.php?ver={$prefs.rssfeed_default_version}" />
+		<link rel="alternate" type="application/rss+xml" title="{tr}RSS Wiki{/tr}" href="tiki-wiki_rss.php?ver={$prefs.rssfeed_default_version}" />
 {/if}
 {if $prefs.feature_blogs eq 'y' and $prefs.rss_blogs eq 'y' and $tiki_p_read_blog eq 'y'}
-<link rel="alternate" type="application/rss+xml" title="{tr}RSS Blogs{/tr}" href="tiki-blogs_rss.php?ver={$prefs.rssfeed_default_version}" />
+		<link rel="alternate" type="application/rss+xml" title="{tr}RSS Blogs{/tr}" href="tiki-blogs_rss.php?ver={$prefs.rssfeed_default_version}" />
 {/if}
 {if $prefs.feature_articles eq 'y' and $prefs.rss_articles eq 'y' and $tiki_p_read_article eq 'y'}
-<link rel="alternate" type="application/rss+xml" title="{tr}RSS Articles{/tr}" href="tiki-articles_rss.php?ver={$prefs.rssfeed_default_version}" />
+		<link rel="alternate" type="application/rss+xml" title="{tr}RSS Articles{/tr}" href="tiki-articles_rss.php?ver={$prefs.rssfeed_default_version}" />
 {/if}
 {if $prefs.feature_galleries eq 'y' and $prefs.rss_image_galleries eq 'y' and $tiki_p_view_image_gallery eq 'y'}
-<link rel="alternate" type="application/rss+xml" title="{tr}RSS Image Galleries{/tr}" href="tiki-image_galleries_rss.php?ver={$prefs.rssfeed_default_version}" />
+		<link rel="alternate" type="application/rss+xml" title="{tr}RSS Image Galleries{/tr}" href="tiki-image_galleries_rss.php?ver={$prefs.rssfeed_default_version}" />
 {/if}
 {if $prefs.feature_file_galleries eq 'y' and $prefs.rss_file_galleries eq 'y' and $tiki_p_view_file_gallery eq 'y'}
-<link rel="alternate" type="application/rss+xml" title="{tr}RSS File Galleries{/tr}" href="tiki-file_galleries_rss.php?ver={$prefs.rssfeed_default_version}" />
+		<link rel="alternate" type="application/rss+xml" title="{tr}RSS File Galleries{/tr}" href="tiki-file_galleries_rss.php?ver={$prefs.rssfeed_default_version}" />
 {/if}
 {if $prefs.feature_forums eq 'y' and $prefs.rss_forums eq 'y' and $tiki_p_forum_read eq 'y'}
-<link rel="alternate" type="application/rss+xml" title="{tr}RSS Forums{/tr}" href="tiki-forums_rss.php?ver={$prefs.rssfeed_default_version}" />
+		<link rel="alternate" type="application/rss+xml" title="{tr}RSS Forums{/tr}" href="tiki-forums_rss.php?ver={$prefs.rssfeed_default_version}" />
 {/if}
 {if $prefs.feature_maps eq 'y' and $prefs.rss_mapfiles eq 'y' and $tiki_p_map_view eq 'y'}
-<link rel="alternate" type="application/rss+xml" title="{tr}RSS Maps{/tr}" href="tiki-map_rss.php?ver={$prefs.rssfeed_default_version}" />
+		<link rel="alternate" type="application/rss+xml" title="{tr}RSS Maps{/tr}" href="tiki-map_rss.php?ver={$prefs.rssfeed_default_version}" />
 {/if}
 {if $prefs.feature_directory eq 'y' and $prefs.rss_directories eq 'y' and $tiki_p_view_directory eq 'y'}
-<link rel="alternate" type="application/rss+xml" title="{tr}RSS Directories{/tr}" href="tiki-directories_rss.php?ver={$prefs.rssfeed_default_version}" />
+		<link rel="alternate" type="application/rss+xml" title="{tr}RSS Directories{/tr}" href="tiki-directories_rss.php?ver={$prefs.rssfeed_default_version}" />
 {/if}
 
 {if $prefs.feature_calendar eq 'y' and $prefs.rss_calendar eq 'y' and $tiki_p_view_calendar eq 'y'}
-<link rel="alternate" type="application/rss+xml" title="{tr}RSS Calendars{/tr}" href="tiki-calendars_rss.php?ver={$prefs.rssfeed_default_version}" />
+		<link rel="alternate" type="application/rss+xml" title="{tr}RSS Calendars{/tr}" href="tiki-calendars_rss.php?ver={$prefs.rssfeed_default_version}" />
 {/if}
 
 {if $prefs.feature_mootools eq "y"}
-<script type="text/javascript" src="lib/mootools/mootools-1.2-core.js"></script>
-<script type="text/javascript" src="lib/mootools/mootools-1.2-more.js"></script>
-{if $mootools_windoo eq "y"}
-<script type="text/javascript" src="lib/mootools/extensions/windoo/windoo.js"></script>
+		<script type="text/javascript" src="lib/mootools/mootools-1.2-core.js"></script>
+		<script type="text/javascript" src="lib/mootools/mootools-1.2-more.js"></script>
+	{if $mootools_windoo eq "y"}
+		<script type="text/javascript" src="lib/mootools/extensions/windoo/windoo.js"></script>
+	{/if}
+	{if $mootab eq "y"}
+		<script src="lib/mootools/extensions/tabs/SimpleTabs.js" type="text/javascript" ></script> 
+	{/if}
 {/if}
-{if $mootab eq "y"}
-<script src="lib/mootools/extensions/tabs/SimpleTabs.js" type="text/javascript" ></script> 
-{/if}
-{/if}
-{if $prefs.feature_jquery eq "y"}{include file="header_jquery.tpl"}{/if}
+{if $prefs.feature_jquery eq "y"}		{include file="header_jquery.tpl"}{/if}
 
 {if $prefs.feature_swfobj eq "y"}
-<script type="text/javascript" src="lib/swfobject/swfobject.js"></script>
+		<script type="text/javascript" src="lib/swfobject/swfobject.js"></script>
 {/if}
 
-{if $headerlib}{$headerlib->output_headers()}{/if}
+{if $headerlib}		{$headerlib->output_headers()}{/if}
 {if ($mid eq 'tiki-editpage.tpl')}
-<script type="text/javascript">
-<!--//--><![CDATA[//><!--
-{literal}
-  var needToConfirm = true;
-  
-  window.onbeforeunload = confirmExit;
-  function confirmExit()
-  {
-    if (needToConfirm)
-		{/literal}return "{tr interactive='n'}You are about to leave this page. If you have made any changes without Saving, your changes will be lost.  Are you sure you want to exit this page?{/tr}";{literal}
-  }
-{/literal}
-//--><!]]>
-</script>
+		<script type="text/javascript">
+		<!--//--><![CDATA[//><!--
+	{literal}
+			var needToConfirm = true;
+
+			window.onbeforeunload = confirmExit;
+			function confirmExit()
+			{
+				if (needToConfirm)
+	{/literal}			return "{tr interactive='n'}You are about to leave this page. If you have made any changes without Saving, your changes will be lost.  Are you sure you want to exit this page?{/tr}";{literal}
+			}
+	{/literal}
+		//--><!]]>
+		</script>
 {/if}
 
 {if $prefs.feature_shadowbox eq 'y' and ($prefs.feature_mootools eq "y" or $prefs.feature_jquery eq "y")}
 
 <!-- Includes for Shadowbox script -->
-	<link rel="stylesheet" type="text/css" href="lib/shadowbox/build/css/shadowbox.css" />
+		<link rel="stylesheet" type="text/css" href="lib/shadowbox/build/css/shadowbox.css" />
 
-{if $prefs.feature_jquery eq "y"}
-	<script type="text/javascript" src="lib/shadowbox/build/js/adapter/shadowbox-jquery.js" charset="utf-8"></script>
-{elseif $prefs.feature_mootools eq "y"}
-	<script type="text/javascript" src="lib/shadowbox/build/js/adapter/shadowbox-mootools.js" charset="utf-8"></script>
-{/if}
+	{if $prefs.feature_jquery eq "y"}
+		<script type="text/javascript" src="lib/shadowbox/build/js/adapter/shadowbox-jquery.js" charset="utf-8"></script>
+	{elseif $prefs.feature_mootools eq "y"}
+		<script type="text/javascript" src="lib/shadowbox/build/js/adapter/shadowbox-mootools.js" charset="utf-8"></script>
+	{/if}
 
-	<script type="text/javascript" src="lib/shadowbox/build/js/shadowbox.js" charset="utf-8"></script>
+		<script type="text/javascript" src="lib/shadowbox/build/js/shadowbox.js" charset="utf-8"></script>
 
-	<script type="text/javascript">
-<!--//--><![CDATA[//><!--
-{if $prefs.feature_mootools eq "y"}
-	{literal}
+		<script type="text/javascript">
+		<!--//--><![CDATA[//><!--
+	{if $prefs.feature_mootools eq "y"}
+		{literal}
 		window.addEvent('domready', function() {
-	{/literal}
-{elseif $prefs.feature_jquery eq "y"}
-	{literal}
+		{/literal}
+	{elseif $prefs.feature_jquery eq "y"}
+		{literal}
 		$jq(document).ready(function() {
-	{/literal}
-{/if}
-{literal}
+		{/literal}
+	{/if}
+	{literal}
 			var options = {
 				ext: {
 					img:        ['png', 'jpg', 'jpeg', 'gif', 'bmp'],
@@ -169,13 +169,13 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 				overlayBgImage: 'lib/shadowbox/images/overlay-85.png',
 				handleLgImages:     'resize',
 				text: {
-{/literal}
+	{/literal}
 					cancel:   '{tr}Cancel{/tr}',
 					loading:  '{tr}Loading{/tr}',
 					close:    '{tr}\074span class="shortcut"\076C\074/span\076lose{/tr}',
 					next:     '{tr}\074span class="shortcut"\076N\074/span\076ext{/tr}',
 					prev:     '{tr}\074span class="shortcut"\076P\074/span\076revious{/tr}'
-{literal}
+	{literal}
 				},
 				keysClose:          ['c', 27], // c OR esc
 				keysNext:           ['n', 39], // n OR arrow right
@@ -185,25 +185,22 @@ You are most likely wanting to modify the top of your Tiki site. Please consider
 			Shadowbox.init(options);
 		});
 //--><!]]>
-	</script>
-{/literal}
+		</script>
+	{/literal}
 {/if}
-</head>
-<body {if isset($section) and $section eq 'wiki page' and $prefs.user_dbl eq 'y' and $dblclickedit eq 'y' and $tiki_p_edit eq 'y'}ondblclick="location.href='tiki-editpage.php?page={$page|escape:"url"}';"{/if}
- onload="{if $prefs.feature_tabs eq 'y'}tikitabs({if $cookietab neq ''}{$cookietab}{else}1{/if},50);{/if}{if $msgError} javascript:location.hash='msgError'{/if}"
-{if $section or $smarty.session.fullscreen eq 'y'}class="
-{if $section}tiki_{$section}{/if} {if $smarty.session.fullscreen eq 'y'}fullscreen{/if}"{/if}>
-<ul class="jumplinks" style="position:absolute;top:-9000px;left:-9000px;z-index:9;">
- <li><a href="#tiki-center">{tr}Jump to Content{/tr}</a></li>
- {*<li><a href="#nav">{tr}Jump to Navigation{/tr}</a></li>
- <li><a href="#footer">{tr}Jump to Footer{/tr}</a></li>*}
-</ul>
+	</head>
+	<body{if isset($section) and $section eq 'wiki page' and $prefs.user_dbl eq 'y' and $dblclickedit eq 'y' and $tiki_p_edit eq 'y'} ondblclick="location.href='tiki-editpage.php?page={$page|escape:"url"}';"{/if} onload="{if $prefs.feature_tabs eq 'y'}tikitabs({if $cookietab neq ''}{$cookietab}{else}1{/if},50);{/if}{if $msgError} javascript:location.hash='msgError'{/if}"{if $section or $smarty.session.fullscreen eq 'y'} class="{if $section}tiki_{$section}{/if}{if $smarty.session.fullscreen eq 'y'} fullscreen{/if}"{/if}>
+		<ul class="jumplinks" style="position:absolute;top:-9000px;left:-9000px;z-index:9;">
+			<li><a href="#tiki-center">{tr}Jump to Content{/tr}</a></li>
+			{*<li><a href="#nav">{tr}Jump to Navigation{/tr}</a></li>
+			<li><a href="#footer">{tr}Jump to Footer{/tr}</a></li>*}
+		</ul>
 
 {if $prefs.feature_community_mouseover eq 'y'}{popup_init src="lib/overlib.js"}{/if}
 {if $prefs.feature_fullscreen eq 'y' and $filegals_manager eq '' and $print_page ne 'y'}
-{if $smarty.session.fullscreen eq 'y'}
-<a href="{$smarty.server.SCRIPT_NAME}{if $fsquery}?{$fsquery|escape:"url":"UTF-8"}&amp;{else}?{/if}fullscreen=n" class="menulink" id="fullscreenbutton">{icon _id=application_put alt="{tr}Cancel Fullscreen{/tr}"}</a>
-{else}
-<a href="{$smarty.server.SCRIPT_NAME}{if $fsquery}?{$fsquery|escape:"url":"UTF-8"}&amp;{else}?{/if}fullscreen=y" class="menulink" id="fullscreenbutton">{icon _id=application_get alt="{tr}Fullscreen{/tr}"}</a>
-{/if}
+	{if $smarty.session.fullscreen eq 'y'}
+		<a href="{$smarty.server.SCRIPT_NAME}{if $fsquery}?{$fsquery|escape:"url":"UTF-8"}&amp;{else}?{/if}fullscreen=n" class="menulink" id="fullscreenbutton">{icon _id=application_put alt="{tr}Cancel Fullscreen{/tr}"}</a>
+	{else}
+		<a href="{$smarty.server.SCRIPT_NAME}{if $fsquery}?{$fsquery|escape:"url":"UTF-8"}&amp;{else}?{/if}fullscreen=y" class="menulink" id="fullscreenbutton">{icon _id=application_get alt="{tr}Fullscreen{/tr}"}</a>
+	{/if}
 {/if}

@@ -7794,20 +7794,21 @@ window.addEvent('domready', function() {
 	 * @return  array of css files in the style dir
 	 */
 	function list_styles() {
-		global $tikidomain;
+		global $tikidomain, $csslib;
 
 		$sty = array();
 		$style_base_path = $this->get_style_path();	// knows about $tikidomain
 		
 		if ($style_base_path) {
-			$h = opendir($style_base_path);
-			while ($file = readdir($h)) {
-				if (preg_match('/^[^\.](.*?)\.css$/i', $file)) {	// ending in .css not starting with .
-					$sty[] = $file;
-				}
-			}
-			closedir($h);
+			$sty = $csslib->list_css($style_base_path);
 		}
+		
+		if ($tikidomain) {
+			$sty = array_unique(array_merge($sty, $csslib->list_css('styles')));
+		}
+		foreach($sty as &$s) {	// add the .css back onto the end of the style names
+			$s .= '.css';		// i started to change this but it hits too many places
+		}						// Another TODO for 4.0 (sorry)
 		sort($sty);
 		return $sty;
 		
@@ -7834,7 +7835,7 @@ window.addEvent('domready', function() {
 	 * @return array of css files in the style options dir
 	 */
 	function list_style_options($a_style='') {
-		global $prefs;
+		global $prefs, $csslib;
 
 		if (empty($a_style)) {
 			$a_style = $prefs['style'];
@@ -7844,16 +7845,13 @@ window.addEvent('domready', function() {
 		$option_base_path = $this->get_style_path($a_style).'options/';
 		
 		if (is_dir($option_base_path)) {
-			$h = opendir($option_base_path);
-			while ($file = readdir($h)) {
-				if (preg_match('/^[^\.](.*?)\.css$/i', $file)) {	// ending in .css not starting with .
-					$sty[] = $file;
-				}
-			}
-			closedir($h);
+			$sty = $csslib->list_css($option_base_path);
 		}
 
 		if (count($sty)) {
+			foreach($sty as &$s) {	// add .css back as above
+				$s .= '.css';
+			}
 			sort($sty);
 			array_unshift ( $sty, tra('None'));
 			return $sty;
@@ -7882,11 +7880,11 @@ window.addEvent('domready', function() {
 	 * @return path to dir or file if found or empty if not - e.g. "styles/mydomain.tld/thenews/options/purple/"
 	 */
 	function get_style_path($stl = '', $opt = '', $filename = '') {
-		global $tikidomain, $prefs;
-		
+		global $tikidomain;
+
 		$path = '';
 		$dbase = '';
-		if ($tikidomain && $prefs['tikidomains_share_styles'] != 'y' && is_dir("styles/$tikidomain")) {
+		if ($tikidomain && is_dir("styles/$tikidomain")) {
 			$dbase = $tikidomain.'/';
 		}
 		
@@ -7894,6 +7892,10 @@ window.addEvent('domready', function() {
 		if (!empty($stl)) {
 			$sbase = $this->get_style_base($stl).'/';
 		}
+		if (!is_dir('styles/'.$dbase.$sbase)) {	// if the style dir doesn't exist in tikidomain, use root/styles
+			$dbase = '';
+		}
+		
 		$obase = '';
 		if (!empty($opt)) {
 			$obase = 'options/';
@@ -7912,8 +7914,12 @@ window.addEvent('domready', function() {
 			} else {
 				if (is_file('styles/'.$dbase.$sbase.$obase.$filename)) {
 					$path = 'styles/'.$dbase.$sbase.$obase.$filename;
-				} else if (is_file('styles/'.$dbase.$sbase.$filename)) {
-					$path = 'styles/'.$dbase.$sbase.$filename;	// fall back to "parent" style dir if no option one
+				} else if (is_file('styles/'.$dbase.$sbase.$filename)) {	// try "parent" style dir if no option one
+					$path = 'styles/'.$dbase.$sbase.$filename;
+				} else if (is_file('styles/'.$sbase.$obase.$filename)) {	// try non-tikidomain dirs if not found
+					$path = 'styles/'.$sbase.$obase.$filename;
+				} else if (is_file('styles/'.$sbase.$filename)) {
+					$path = 'styles/'.$sbase.$filename;	// fall back to "parent" style dir if no option one
 				}
 			}
 		}

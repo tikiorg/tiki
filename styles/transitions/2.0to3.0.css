@@ -249,14 +249,13 @@ ul.categories li{
 	position: relative;
 	height: 20px;
 	width: 20px;
-	background: url("../../pics/prev.gif") no-repeat;
 }
 #next {
+	margin-left: 30px;
 	float: left;
 	position: relative;
 	height: 20px;
 	width: 20px;
-	background: url("../../pics/next.gif") no-repeat;
 }
 .calbuttonBox {
 	float: left;
@@ -605,3 +604,30 @@ span.disabled {
 #style_thumb_div {
 	text-align: center;
 }
+
+/***** TikiSheet Default Style *****/
+
+table.default thead td,
+table.default tfoot td {
+	font-weight: bold;
+	text-align:	center;
+	background: #ABCDEF;
+	color: #cce5ff}
+
+table.default td {
+	border: solid 1px #A9A9A9;
+	background: white}
+
+/*** blogs modules ***/
+
+/* <small> on these modules contains the blog date
+   and is more readable on separate line */
+
+.box-last_blog_posts small, 
+.box-blog_last_comments small {
+	display: block;
+	font-size: .75em;
+	color: #aaa;
+}
+
+

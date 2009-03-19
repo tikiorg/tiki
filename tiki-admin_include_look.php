@@ -150,6 +150,7 @@ function get_thumbnail_file($stl, $opt = '') {	// find thumbnail if there is one
 		$filename =  eregi_replace('\.css$', '.png', $opt);	// change .css to .png
 	} else {
 		$filename = eregi_replace('\.css$', '.png', $stl);	// change .css to .png
+		$opt = '';
 	}
 	return $tikilib->get_style_path($stl, $opt, $filename);
 }
@@ -203,16 +204,20 @@ if ($prefs['feature_jquery'] == 'y') {
 		var t = \$jq('#general-theme').val();
 		var f = style_options[t][0];
 		if (f) {
-			\$jq('#style_thumb').fadeOut('fast').attr('src', f).fadeIn('fast');
-}
+			\$jq('#style_thumb').fadeOut('fast').attr('src', f).fadeIn('fast').animate({'opacity': 1}, 'fast');
+		} else {
+			\$jq('#style_thumb').animate({'opacity': 0.3}, 'fast');
+		}
 	});
 	\$jq('#general-theme-options').change( function() {
 		var t = \$jq('#general-theme').val();
 		var o = \$jq('#general-theme-options').val();
 		var f = style_options[t][1][o];
 		if (f) {
-			\$jq('#style_thumb').fadeOut('fast').attr('src', f).fadeIn('fast');
-}
+			\$jq('#style_thumb').fadeOut('fast').attr('src', f).fadeIn('fast').animate({'opacity': 1}, 'fast');
+		} else {
+			\$jq('#style_thumb').animate({'opacity': 0.3}, 'fast');
+		}
 	});
 });
 JS

@@ -15,7 +15,7 @@
 		{if $moretooltips ne 'y'}<b>{$comments[ix].title}:</b>{/if}
 		{$comments[ix].commentTitle}
 		{if $module_params.nodate neq 'y'}
-			<small>{$comments[ix].commentDate|tiki_short_datetime}</small>
+			<div class="description">{$comments[ix].commentDate|tiki_short_datetime}</div>
 		{/if}
           </a></li>
     {/section}

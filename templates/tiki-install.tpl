@@ -15,7 +15,6 @@
 {if $install_step eq '0' or !$install_step}
 {* start of installation *}
 <h1>{tr}Welcome{/tr}</h1>
-<div style="float:right;"><img src="img/tiki/tikilogo.png" alt="TikiWiki" /></div>
 <div class="clearfix">
 	<p>{tr}Welcome to the TikiWiki installation and upgrade script.{/tr} {tr}Use this script to install a new TikiWiki database or upgrade your existing database to release{/tr} <strong>{$tiki_version_name}</strong></p>
 	<ul>
