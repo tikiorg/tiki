@@ -733,6 +733,10 @@ $smarty->assign_by_ref('sort_mode', $_REQUEST['sort_mode']);
 if ( ! isset($_REQUEST['find']) ) $_REQUEST['find'] = '';
 $smarty->assign_by_ref('find', $_REQUEST['find']);
 
+if ( isset($_REQUEST['fileId']) ) {
+	$smarty->assign('fileId', $_REQUEST['fileId']);
+}
+
 if (isset($_GET['slideshow'])) {
   $files = $tikilib->get_files(0, -1, $_REQUEST['sort_mode'], $_REQUEST['find'], $_REQUEST['galleryId'] == 0 ? -1 : $_REQUEST['galleryId'], false, false, false, true, false, false, false, true, '', false);
   $smarty->assign('cant', $files['cant']);
@@ -789,38 +793,40 @@ if ( $prefs['feature_theme_control'] == 'y' ) {
 // Watches
 if ( $prefs['feature_user_watches'] == 'y' ) {
 
-	if ( $user && isset($_REQUEST['watch_event']) ) {
-		check_ticket('index');
-		if ( $_REQUEST['watch_action'] == 'add' ) {
-			$tikilib->add_user_watch(
-				$user,
-				$_REQUEST['watch_event'],
-				$_REQUEST['watch_object'],
-				'File Gallery',
-				( isset($_REQUEST['galleryName']) ? $_REQUEST['galleryName'] : '' ),
-				"tiki-list_file_gallery.php?galleryId=$galleryId"
-			);
-		} else {
-			$tikilib->remove_user_watch($user, $_REQUEST['watch_event'], $_REQUEST['watch_object']);
-		}
-	}
-
-	$smarty->assign('user_watching_file_gallery', 'n');
-	if ( $user && $tikilib->user_watches($user, 'file_gallery_changed', $galleryId, 'File Gallery') ) {
-		$smarty->assign('user_watching_file_gallery', 'y');
-	}
-
-	// Check, if the user is watching this file gallery by a category.
-	if ( $prefs['feature_categories'] == 'y' ) {
-		$watching_categories_temp = $categlib->get_watching_categories($galleryId, 'file gallery', $user);
-		$smarty->assign('category_watched', 'n');
-		if ( count($watching_categories_temp) > 0 ) {
-			$smarty->assign('category_watched', 'y');
-			$watching_categories = array();
-			foreach ( $watching_categories_temp as $wct ) {
-				$watching_categories[] = array('categId' => $wct, 'name' => $categlib->get_category_name($wct));
+	if ( ! isset($_REQUEST['fileId']) ) {
+		if ( $user && isset($_REQUEST['watch_event']) ) {
+			check_ticket('index');
+			if ( $_REQUEST['watch_action'] == 'add' ) {
+				$tikilib->add_user_watch(
+					$user,
+					$_REQUEST['watch_event'],
+					$_REQUEST['watch_object'],
+					'File Gallery',
+					( isset($_REQUEST['galleryName']) ? $_REQUEST['galleryName'] : '' ),
+					"tiki-list_file_gallery.php?galleryId=$galleryId"
+				);
+			} else {
+				$tikilib->remove_user_watch($user, $_REQUEST['watch_event'], $_REQUEST['watch_object']);
 			}
-			$smarty->assign('watching_categories', $watching_categories);
+		}
+
+		$smarty->assign('user_watching_file_gallery', 'n');
+		if ( $user && $tikilib->user_watches($user, 'file_gallery_changed', $galleryId, 'File Gallery') ) {
+			$smarty->assign('user_watching_file_gallery', 'y');
+		}
+
+		// Check, if the user is watching this file gallery by a category.
+		if ( $prefs['feature_categories'] == 'y' ) {
+			$watching_categories_temp = $categlib->get_watching_categories($galleryId, 'file gallery', $user);
+			$smarty->assign('category_watched', 'n');
+			if ( count($watching_categories_temp) > 0 ) {
+				$smarty->assign('category_watched', 'y');
+				$watching_categories = array();
+				foreach ( $watching_categories_temp as $wct ) {
+					$watching_categories[] = array('categId' => $wct, 'name' => $categlib->get_category_name($wct));
+				}
+				$smarty->assign('watching_categories', $watching_categories);
+			}
 		}
 	}
 }
@@ -907,8 +913,10 @@ if ( $_REQUEST['galleryId'] == 0 ) {
 	}
 
 } else {
-	// Add a gallery hit
-	$tikilib->add_file_gallery_hit($_REQUEST['galleryId']);
+	if ( ! isset($_REQUEST['fileId']) ) {
+		// Add a gallery hit
+		$tikilib->add_file_gallery_hit($_REQUEST['galleryId']);
+	}
 }
 
 // Get listing display config
