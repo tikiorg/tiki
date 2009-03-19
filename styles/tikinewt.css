@@ -1342,9 +1342,11 @@ html>body .wikitopline table {
 	width: 100%;
 }
 
-#description {
-	margin: 0 10px;
-	font-size: 1.1em;
+div#description,
+.description {
+	display: block;
+	font-size: .95em;
+	font-style: italic;
 	color: #666;
 }
 

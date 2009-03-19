@@ -1149,7 +1149,9 @@ table.admin .tabcontent .cbox {background: transparent}
 
 h1 a.pagetitle {font-size: 1.2em}
 
-div#description {
+div#description,
+.description {
+	display: block;
 	font-size: .95em;
 	font-style: italic}
 
