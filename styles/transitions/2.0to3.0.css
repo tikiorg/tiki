@@ -618,3 +618,16 @@ table.default td {
 	border: solid 1px #A9A9A9;
 	background: white}
 
+/*** blogs modules ***/
+
+/* <small> on these modules contains the blog date
+   and is more readable on separate line */
+
+.box-last_blog_posts small, 
+.box-blog_last_comments small {
+	display: block;
+	font-size: .75em;
+	color: #aaa;
+}
+
+
