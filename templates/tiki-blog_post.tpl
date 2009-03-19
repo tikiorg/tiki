@@ -145,6 +145,7 @@
 <tr><td class="editblogform">&nbsp;</td><td class="editblogform"><input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}" />
 <input type="submit" class="wikiaction" name="preview" value="{tr}Preview{/tr}" />
 <input type="submit" class="wikiaction" name="save_exit" value="{tr}Save and Exit{/tr}" />
+&nbsp;&nbsp;&nbsp;<input type="submit" name="cancel" onclick='document.location="{$referer|escape:'html'}";return false;' value="{tr}Cancel{/tr}"/>
 </td></tr>
 </table>
 </form>

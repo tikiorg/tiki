@@ -131,7 +131,7 @@ class XmlLib extends TikiLib {
 				} elseif (preg_match('|show_image.php\?(.*)|', $match, $m)) {
 					global $imagegallib; include_once('lib/imagegals/imagegallib.php');
 					$img = $this->httprequest($_SERVER['HTTP_HOST'].$tikiroot.$match);
-					parse_str($m[1], $p);
+					$this->parse_str($m[1], $p);
 					if (isset($p['name']) && isset($p['galleryId']))
 						$id = $imagegallib->get_imageid_byname($p['name'], $p['galleryId']);
 					elseif (isset($p['name']))
@@ -146,7 +146,7 @@ class XmlLib extends TikiLib {
 						}
 				} elseif (preg_match('|tiki-download_file.php\?(.*)|', $match, $m)) {
 					$img = $this->httprequest($_SERVER['HTTP_HOST'].$tikiroot.$match);
-					parse_str($m[1], $p);
+					$this->parse_str($m[1], $p);
 					$image = array('where' => 'fgal', 'zip'=>"$dir/images/fgal/".$p['fileId'], 'wiki'=>$match);
 					if (!$this->zip->addFromString($image['zip'], $img)) {
 						$this->errors[] = 'Can not add the image';

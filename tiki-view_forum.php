@@ -132,6 +132,17 @@ if ($tiki_p_admin_forum == 'y') {
 		}
 	}
 
+    if ( isset($_REQUEST['lock']) && isset($_REQUEST['forumId']) ) {
+	check_ticket('view-forum');
+	if ( $_REQUEST['lock'] == 'y' ) {
+		$commentslib->lock_object_thread('forum:'.((int)$_REQUEST['forumId']));
+		$forum_info['is_locked'] = 'y';
+	} elseif ( $_REQUEST['lock'] == 'n' ) {
+		$commentslib->unlock_object_thread('forum:'.((int)$_REQUEST['forumId']));
+		$forum_info['is_locked'] = 'n';
+	}
+    }
+
     if (isset($_REQUEST['locksel_x'])) {
 	if (isset($_REQUEST['forumtopic'])) {
 		check_ticket('view-forum');

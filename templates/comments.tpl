@@ -94,14 +94,27 @@
 
 	{if $forum_mode neq 'y' or $prefs.forum_thread_user_settings eq 'y'}
 	<div class="forum_actions">
-		<div class="headers">
-		{if $tiki_p_admin_comments eq 'y' && $prefs.feature_comments_moderation eq 'y'}
-			<span class="title">{tr}Moderator actions{/tr}</span>
-			<span class="infos">
-				<a class="link" href="tiki-list_comments.php?types_section={$section}&amp;findfilter_approved=n">{tr}queued:{/tr}{$queued}</a>
-			</span>
+		{if $forum_mode neq 'y'}
+			<div class="headers">
+			{if $tiki_p_admin_comments eq 'y' or $tiki_p_lock_comments eq 'y'}
+				<span class="title">{tr}Moderator actions{/tr}</span>
+				<span class="infos">
+				{if $tiki_p_admin_comments eq 'y' and $prefs.feature_comments_moderation eq 'y'}
+					<a class="link" href="tiki-list_comments.php?types_section={$section}&amp;findfilter_approved=n">{tr}queued:{/tr}{$queued}</a>
+					&nbsp;&nbsp;
+				{/if}
+				{if $thread_is_locked eq 'y'}
+					{tr}Comments Locked{/tr}
+					{self_link comments_lock='n' _icon='lock_break'}{tr}Unlock{/tr}{/self_link}
+				{else}
+					{self_link comments_lock='y' _icon='lock_add'}{tr}Lock{/tr}{/self_link}
+				{/if}
+				</span>
+			{elseif $thread_is_locked eq 'y'}
+				<span class="infos">{tr}Comments Locked{/tr}</span>
+			{/if}
+			</div>
 		{/if}
-		</div>
 		<div class="actions">
 			<span class="action">
 
@@ -157,15 +170,6 @@
 	</div>
 	{/if}
 
-{*** Seems buggy (at least when called for a wiki page)
-{if $forum_mode ne 'y'}
-    <th style="text-align: center; vertical-align: middle">
-		<a class="link" href="{$comments_complete_father}comzone=hide">{tr}Hide all{/tr}</a>
-    </th>
-{/if}
-***}
-
-
 	{section name=rep loop=$comments_coms}
 		{include file="comment.tpl" comment=$comments_coms[rep]}
 		{if $thread_style != 'commentStyle_plain'}<br />{/if}
@@ -209,8 +213,19 @@
 
 {/if} {* end read comment *}
 
-{* Post dialog *}	
+{* Post dialog *}
 {if ($tiki_p_forum_post eq 'y' and $forum_mode eq 'y') or ($tiki_p_post_comments eq 'y' and $forum_mode ne 'y')}
+  {if $thread_is_locked eq 'y'}
+	{if $forum_mode eq 'y'}
+		{assign var='lock_text' value="{tr}This thread is locked{/tr}"}
+	{else}
+		{assign var='lock_text' value="{tr}Comments are locked{/tr}"}
+	{/if}
+	{remarksbox type="note" title="{tr}Note{/tr}" icon="lock"}{$lock_text}{/remarksbox}
+  {elseif $forum_mode eq 'y' and $forum_is_locked eq 'y'}
+	{assign var='lock_text' value="{tr}This forum is locked{/tr}"}
+	{remarksbox type="note" title="{tr}Note{/tr}" icon="lock"}{$lock_text}{/remarksbox}
+  {else}
 <div id="form">
 	{if $forum_mode eq 'y'}
 		{if $post_reply > 0 || $edit_reply > 0 || $comment_preview}
@@ -377,7 +392,7 @@
 				<input type="button" name="comments_cancelComment" value="{tr}Cancel{/tr}" onclick="hide('{$postclass}');"/>
 				{elseif $prefs.feature_comments_moderation eq 'y' and $tiki_p_admin_comments neq 'y'}
 					{remarksbox type="note" title="{tr}Note{/tr}"}
-						Your comment will have to be approved by the moderator before it is displayed.
+						{tr}Your comment will have to be approved by the moderator before it is displayed.{/tr}
 					{/remarksbox}	
 				{/if}
 			</td>
@@ -399,7 +414,8 @@
 	{if $forum_mode eq 'y'}
     </div>
 	{/if}
-	</div>	
+	</div>
+  {/if}
 {/if}
 </div>
 {* End of Post dialog *}

@@ -269,13 +269,13 @@
 			<div id="install-link">
 			
 			<p style="text-align:center;"><a class="button" href="javascript:install()">{tr}Reinstall the database{/tr}</a></p>
-			<p style="text-align: center"><img src="img/silk/sticky.png" alt="warning" style="vertical-align:middle"/> <strong>{tr}Warning{/tr}</strong>: {tr}This will destroy your current database{/tr}.</p>
+			<p style="text-align: center"><img src="pics/icons/sticky.png" alt="warning" style="vertical-align:middle"/> <strong>{tr}Warning{/tr}</strong>: {tr}This will destroy your current database{/tr}.</p>
 			</div>
 		    <div id="install-table" style="visibility:hidden">
 			{else}
 		    <div id="install-table">
 			{/if}
-			 {if $tikidb_created}<p style="text-align: center"><img src="img/silk/sticky.png" alt="warning" style="vertical-align:middle"/> <strong>{tr}Warning{/tr}</strong>: {tr}This will destroy your current database{/tr}.</p>{/if}
+			 {if $tikidb_created}<p style="text-align: center"><img src="pics/icons/sticky.png" alt="warning" style="vertical-align:middle"/> <strong>{tr}Warning{/tr}</strong>: {tr}This will destroy your current database{/tr}.</p>{/if}
 			{if $has_internet_connection eq 'y'}
 			  <p>{tr}Create a new database (clean install) with profile{/tr}:</p>
 			<select name="profile" size="{if $profiles}{$profiles|@count}{else}5{/if}">

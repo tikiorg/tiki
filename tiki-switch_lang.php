@@ -26,7 +26,9 @@ if (strstr($orig_url, 'tiki-index.php') || strstr($orig_url, 'tiki-read_article.
 	} else {
 		$txt = substr($txt, 1);
 	}
-	parse_str($txt, $param);
+
+	TikiLib::parse_str($txt, $param);
+
 	if (!empty($param['page_id'])) {
 		$pageId = $param['page_id'];
 		$type = 'wiki page';

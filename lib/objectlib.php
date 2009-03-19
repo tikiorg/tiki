@@ -39,9 +39,8 @@ class ObjectLib extends TikiLib {
 		$description = strip_tags($description);
 		$name = strip_tags($name);
 	
-	    $query = "insert into `tiki_objects`(`type`,`itemId`,`description`,`name`,`href`,`created`,`hits`)
-    values(?,?,?,?,?,?,?)";
-	    $result = $this->query($query,array($type,(string) $itemId,$description,$name,$href,(int) $this->now,0));
+	    $query = "insert into `tiki_objects`(`type`,`itemId`,`description`,`name`,`href`,`created`,`hits`,`comments_locked`) values(?,?,?,?,?,?,?,?)";
+	    $result = $this->query($query,array($type,(string) $itemId,$description,$name,$href,(int) $this->now,0,'n'));
 	    $query = "select `objectId` from `tiki_objects` where `created`=? and `type`=? and `itemId`=?";
 	    $objectId = $this->getOne($query,array((int) $this->now,$type,(string) $itemId));
 	    return $objectId;

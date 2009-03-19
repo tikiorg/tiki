@@ -74,6 +74,11 @@ $smarty->assign('postId', $postId);
 $smarty->assign('data', '');
 $smarty->assign('created', $tikilib->now);
 
+// Exit edit mode (without javascript)
+if ( isset($_REQUEST['cancel']) ) header ("location: tiki-view_blog.php?blogId=$blogId");
+// Exit edit mode (with javascript)
+$smarty->assign('referer', empty($_SERVER['HTTP_REFERER']) ? 'tiki-view_blog.php?blogId='.$blogId : $_SERVER['HTTP_REFERER']);
+
 $blog_data = $bloglib->get_blog($blogId);
 $smarty->assign_by_ref('blog_data', $blog_data);
 

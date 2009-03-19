@@ -8331,6 +8331,26 @@ JS;
 			return $asetup;
 		}
 	}
+
+	// TikiWiki version of parse_str, that:
+	//  - uses a workaround for a bug in PHP 5.2.0
+	//  - Handle the value of magic_quotes_gpc to stripslashes when needed (as already done for GET/POST/... in tiki-setup_base.php)
+	function parse_str($str, &$arr) {
+		parse_str($str, $arr);
+
+		/* From PHP Manual comments (quoting Vladimir Kornea):
+		 *   parse_str() contained a bug (#39763) in PHP 5.2.0 that caused it to apply magic quotes twice.
+		 * This bug was marked as fixed in the release notes of PHP 5.2.1, but there were apparently some
+		 * issues with getting the fix through CVS on time, as our install of PHP 5.2.1 was still affected by it.
+		 */
+		if ( version_compare(PHP_VERSION, '5.2.0', '>=') && version_compare(PHP_VERSION, '5.2.1', '<') ) {
+			$arr = array_map('stripslashes', $arr);
+		}
+
+		// parse_str's behavior also depends on magic_quotes_gpc...
+		global $magic_quotes_gpc;
+		if ( $magic_quotes_gpc ) remove_gpc($arr);
+	}
 }
 // end of class ------------------------------------------------------
 
