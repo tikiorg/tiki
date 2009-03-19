@@ -21,6 +21,8 @@ if ($prefs['javascript_enabled'] != 'y') {
 	$prefs['feature_jquery'] = 'n';
 	$prefs['feature_mootools'] = 'n';
 	$prefs['feature_shadowbox'] = 'n';
+	$prefs['feature_wysiwyg'] = 'n';
+	$prefs['feature_ajax'] = 'n';
 	
 } else {	// we have JavaScript
 
@@ -68,4 +70,7 @@ if (this.ie56) {
 JS
 		);
 	}
+}
+if ($prefs['feature_ajax'] != 'y') {
+	$prefs['feature_ajax_autosave'] = 'n';
 }

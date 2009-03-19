@@ -21,7 +21,7 @@ function smarty_block_textarea($params, $content, &$smarty, $repeat) {
 	global $prefs;
 	if ( $repeat ) return;
 
-	if ( ! isset($params['_quicktags']) ) $params['_quicktags'] = 'n';
+	if ( ! isset($params['_quicktags']) || $prefs['javascript_enabled'] != 'y') $params['_quicktags'] = 'n';
 /*
 	if ( ! isset($params['_wikiparsed']) ) {
 		// Quicktags implies wiki parsing
