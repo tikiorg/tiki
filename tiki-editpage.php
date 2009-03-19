@@ -933,6 +933,9 @@ if (empty($parsed)) {
 		$parsed = $edit_data;
 	}
 }
+if ($page == 'HomePage' && $parsed == '{TR()}_HOMEPAGE_CONTENT_{TR}') {	// default home page contents as defined in tiki-index.php
+	$parsed = tr('_HOMEPAGE_CONTENT_');				// give the user the translated (mark-up) version of it
+}
 $smarty->assign('pagedata', $parsed);
 
 // apply the optional post edit filters before preview
