@@ -17,32 +17,43 @@
 #        want new permissions or modules to appear at upgrade. If there is a chance that 
 #        someone chose to delete something, it should not re-appear at each upgrade. 
 #    - cd db/convertscripts and run convertsqls.sh
-#    - update list of valid releases in tiki-admin_security.php:
-#        array(1=>'1.9.1',2=>'1.9.1.1',3=>'1.9.2',4=>'1.9.3.1', etc etc etc);
 #    - increment version number ($TWV->version) in lib/setup/twversion.class.php
+#    - update version number in installer/tiki-installer.php
 #    - check for PHP syntax errors: find . -type f -name \*.php -exec php -l {} \;  | grep Parse
 #    - commit your changes
 #    - create the checksum file: copy doc/devtools/tiki-create_md5.php in tiki root 
 #        and load that page in your browser
+#    - export secdb MD5 checksums from database using the following commands:
+#      (You have to replace $USER, $DBNAME and $VERSION by the correct values)
+#
+#        echo 'DELETE FROM `tiki_secdb` WHERE `tiki_version` = \'$VERSION\';' > db/tiki-secdb_$VERSION_mysql.sql
+#        echo '' >> db/tiki-secdb_$VERSION_mysql.sql
+#        mysqldump -p -u $USER -cnt --compact --skip-extended-insert $DBNAME tiki_secdb >> db/tiki-secdb_$VERSION_mysql.sql
 #
 # 1/ Create and test pre-release packages by executing the script with the release
-#    version as argument, using the format major.minor.sub 
-#    bash tikirelease.sh 3.0.preRC3 branches/3.0
+#    version as the first argument, using the format major.minor.sub 
+#    and the subversion branch for as the second argument, using the format major.0
 #
-# 2/ Test the produced tarball and share the testing : you need at least 3 install 
+#    Examples:
+#      * major pre-release: bash tikirelease.sh 3.0.preRC3 branches/3.0
+#      * major final release: bash tikirelease.sh 3.0 branches/3.0
+#      * minor release: bash tikirelease.sh 2.3 branches/2.0
+#
+# 2/ Test the produced "tarballs" and share the testing : you need at least 3 install 
 #    from 3 different people
 # 
 # 3/ After testing, tag the release
 #    ex: svn copy https://tikiwiki.svn.sourceforge.net/svnroot/tikiwiki/branches/3.0 https://tikiwiki.svn.sourceforge.net/svnroot/tikiwiki/tags/3.0.RC3
 #    
-# 4/ Build the release tarballs
+# 4/ Build the release "tarballs"
 #    bash tikirelease.sh 3.0.RC3 tags/3.0.RC3
 #    
-# 5/ Test the produced tarball and share the testing : you need at least 3 install 
+# 5/ Test the produced "tarballs" and share the testing : you need at least 3 install 
 #    from 3 different people
 # 
-# 6/ When the tarball is tested once you can copy-paste the produced line to upload
-#    both .gz and .bz2 to sourceforge
+# 6/ When the "tarballs" is tested once you can copy-paste the produced line to upload
+#    the tarballs (.gz .bz2 and .zip) files to sourceforge (take care to replace $SF_LOGIN
+#    by your real sourceforge login in the line you've just copy-pasted)
 #    
 # 7/ If you are release technician on sourceforge, add the files to the repository 
 #    in admin sf section. If you are not, ask a release technician to do it 
@@ -52,15 +63,18 @@
 #    warn everybody.
 #
 # 9/ unless in step 8/ you warned everybody you have now to announce the good news
-#    on devel mailing-list and ask marc to launch the announce-speading process 
+#    on devel mailing-list and ask the TAG (TikiWiki Admin Group) through the admin
+#    mailing-list to launch the announce-speading process 
 #    (Freshmeat, SourceForge and tikiwiki.org (manually for now).
 #
 # post/ After release, update templates/tiki-install.tpl and 
 #       templates/tiki-top_bar.tpl (including templates/styles/*/tiki-top_bar.tpl) 
-#       to next version number with CVS   ex.: 1.9.2 (CVS)  . This helps later on to 
+#       to next version number with SVN   ex.: 1.9.2 (SVN)  . This helps later on to 
 #       know exactly which files were included or not in a release.
 #
-#		- Also, update appropriate tw.o/*.version file with new release version
+#       - Also, update appropriate tw.o/*.version file with new release version
+#       (or ask the TAG to do this)
+#
 #
 #
 # All that process has to be relayed on live irc channel : 
@@ -122,8 +136,8 @@ tar -cjf $MODULE-$VER.tar.bz2 $MODULE-$VER
 zip -r $MODULE-$VER.zip $MODULE-$VER
 
 echo ""
-echo "To upload the archives, copy-paste and exectue the following line at will (depending on SF's mood):"
-echo "cd $WORKDIR/$VER; lftp -u anonymous,release@tikiwiki.org -e 'cd incoming;put $MODULE-$VER.tar.gz;put $MODULE-$VER.tar.bz2;put $MODULE-$VER.zip;quit;' upload.sf.net"
+echo "To upload the 'tarballs', copy-paste and execute the following line (and change '\$SF_LOGIN' by your SF.net login):"
+echo "cd $WORKDIR/$VER; scp $MODULE-$VER.tar.gz $MODULE-$VER.tar.bz2 $MODULE-$VER.zip \$SF_LOGIN@frs.sourceforge.net:uploads"
 echo ""
 
 cd $OLDIR
