@@ -17,8 +17,7 @@
 					{if $module_params.blogid eq ''}{$modLastBlogPosts[ix].blogTitle}: {/if}
 					{$modLastBlogPosts[ix].title}
 					{if $module_params.nodate neq 'y'}
-						<br />
-						<small>{$modLastBlogPosts[ix].created|tiki_short_datetime}</small>
+						<div class="description">{$modLastBlogPosts[ix].created|tiki_short_datetime}</div>
 					{/if}
 				</a>
 			</li>
