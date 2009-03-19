@@ -27,6 +27,11 @@ body {
 	font-size: 80%;
 }
 
+/* workaround for Safari when in FCKEditor */
+html[dir=ltr]>body {
+	display: block;
+}
+
 /* *** THE MAIN LAYOUT *** */
 #header {
 	height: auto;
