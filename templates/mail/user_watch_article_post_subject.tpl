@@ -1,1 +1,3 @@
-{if $mail_action eq 'new'}{tr}New{/tr}{elseif $mail_action eq 'edit'}{tr}Edited{/tr}{elseif $mail_action eq 'delete'}{tr}Deleted{/tr}{/if} {tr}article at{/tr} %s
+{tr}{$mail_action} article post at{/tr} %s {*get_string {tr}New article post at{/tr} *}
+{*get_string {tr}Edited article post at{/tr} *}
+{*get_string {tr}Deleted article post at{/tr} *}
