@@ -629,3 +629,18 @@ small.description {
 	font-style: italic}
 
 
+
+/*** for mods list ***/
+
+td.mods_revision {
+	background-color: #b5cfb5;
+}
+
+td.mods_update {
+	background-color:#dcdeac;
+}
+
+td.mods_hilite {
+	background-color:#;
+}
+
