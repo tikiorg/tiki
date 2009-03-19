@@ -30,16 +30,16 @@
 #    version as argument, using the format major.minor.sub 
 #    php doc/devtools/release.php 2.0 preRC4
 #
-# 2/ Test the produced tarball and share the testing : you need at least 3 install 
+# 2/ Test the produced "tarballs" and share the testing : you need at least 3 installations
 #    from 3 different people
 # 
-# 3/ After testing, tag the release, build the release tarballs
+# 3/ After testing, tag the release, build the release "tarballs"
 #    php doc/devtools/release.php 2.0 RC4
 #    
-# 4/ Test the produced tarball and share the testing : you need at least 3 install 
+# 4/ Test the produced "tarballs" and share the testing : you need at least 3 install 
 #    from 3 different people
 # 
-# 5/ When the tarball is tested, follow the steps to upload on SourceForge:
+# 5/ When the "tarballs" are tested, follow the steps to upload on SourceForge:
 #    http://tinyurl.com/59uubv
 #    
 # 6/ Warn people that do .rpm and ebuilds that the archive is avalaible so they can
@@ -47,15 +47,18 @@
 #    warn everybody.
 #
 # 7/ unless in step 8/ you warned everybody you have now to announce the good news
-#    on devel mailing-list and ask marc to launch the announce-speading process 
+#    on devel mailing-list and ask the TAG (TikiWiki Admin Group) through the admin
+#    mailing-list to launch the announce-speading process 
 #    (Freshmeat, SourceForge and tikiwiki.org (manually for now).
 #
 # post/ After release, update templates/tiki-install.tpl and 
 #       templates/tiki-top_bar.tpl (including templates/styles/*/tiki-top_bar.tpl) 
-#       to next version number with CVS   ex.: 1.9.2 (CVS)  . This helps later on to 
+#       to next version number with SVN   ex.: 1.9.2 (SVN)  . This helps later on to 
 #       know exactly which files were included or not in a release.
 #
-#		- Also, update appropriate tw.o/*.version file with new release version
+#       - Also, update appropriate tw.o/*.version file with new release version
+#       (or ask the TAG to do this)
+#
 #
 #
 # All that process has to be relayed on live irc channel : 
@@ -109,8 +112,8 @@ tar -cjf $MODULE-$VER.tar.bz2 $MODULE-$VER
 zip -r $MODULE-$VER.zip $MODULE-$VER
 
 echo ""
-echo "To upload the archives, copy-paste and exectue the following line at will (depending on SF's mood):"
-echo "cd $WORKDIR/$VER; lftp -u anonymous,release@tikiwiki.org -e 'cd incoming;put $MODULE-$VER.tar.gz;put $MODULE-$VER.tar.bz2;put $MODULE-$VER.zip;quit;' upload.sf.net"
+echo "To upload the 'tarballs', copy-paste and execute the following line (and change '\$SF_LOGIN' by your SF.net login):"
+echo "cd $WORKDIR/$VER; scp $MODULE-$VER.tar.gz $MODULE-$VER.tar.bz2 $MODULE-$VER.zip \$SF_LOGIN@frs.sourceforge.net:uploads"
 echo ""
 
 cd $OLDIR
