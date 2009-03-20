@@ -53,52 +53,10 @@
 		{/if}
 	{/if}
 	{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
-		{popup_link block=page_group_watch}
-			{icon _id=eye_group alt='{tr}Show Group Watches on page{/tr}'}
-		{/popup_link}
-		<div id="page_group_watch" class="popup-group-watch">
-			{foreach from=$grouplist item=g}
-				<div>
-					{if ! in_array( $g, $page_group_watches )}
-						<a href="tiki-index.php?page={$page|escape:'url'}&amp;watch_group={$g|escape:'url'}&amp;watch_event=wiki_page_changed&amp;watch_object={$page|escape:"url"}&amp;watch_action=add{if $structure eq 'y'}&amp;structure={$home_info.pageName|escape:'url'}{/if}" class="icon">
-							{icon _id=eye alt='{tr}Enable Page Monitoring for Group{/tr}'}
-						</a>
-
-						{$g|escape}
-					{else}
-						<a href="tiki-index.php?page={$page|escape:'url'}&amp;watch_group={$g|escape:'url'}&amp;watch_event=wiki_page_changed&amp;watch_object={$page|escape:"url"}&amp;watch_action=remove{if $structure eq 'y'}&amp;structure={$home_info.pageName|escape:'url'}{/if}" class="icon">
-							{icon _id=no_eye alt='{tr}Disable Page Monitoring for Group{/tr}'}
-						</a>
-
-						{$g|escape}
-					{/if}
-				</div>
-			{/foreach}
-		</div>
+		<a href="tiki-object_watches.php?objectId={$page|escape:"url"}&amp;watch_event=wiki_page_changed&amp;objectType=wiki+page&amp;objectName={$page|escape:"url"}&amp;objectHref={'tiki-index.php?page='|cat:$page|escape:"url"}" class="icon">{icon _id='eye_group' alt='{tr}Monitor this Page{/tr}'}</a>
 
 		{if $structure == 'y'}
-			{popup_link block=structure_group_watch}
-				{icon _id=eye_arrow_down alt='{tr}Show Group Watches on structure{/tr}'}
-			{/popup_link}
-			<div id="structure_group_watch" class="popup-group-watch">
-				{foreach from=$grouplist item=g}
-					<div>
-						{if ! in_array( $g, $structure_group_watches )}
-							<a href="tiki-index.php?page={$page|escape:'url'}&amp;watch_group={$g|escape:'url'}&amp;watch_event=structure_changed&amp;watch_object={$page_info.page_ref_id|escape:"url"}&amp;watch_action=add_desc{if $structure eq 'y'}&amp;structure={$home_info.pageName|escape:'url'}{/if}" class="icon">
-								{icon _id=eye_arrow_down alt='{tr}Enable Sub-Structure Monitoring for Group{/tr}'}
-							</a>
-
-							{$g|escape}
-						{else}
-							<a href="tiki-index.php?page={$page|escape:'url'}&amp;watch_group={$g|escape:'url'}&amp;watch_event=structure_changed&amp;watch_object={$page_info.page_ref_id|escape:"url"}&amp;watch_action=remove_desc{if $structure eq 'y'}&amp;structure={$home_info.pageName|escape:'url'}{/if}" class="icon">
-								{icon _id=no_eye_arrow_down alt='{tr}Disable Sub-Structure Monitoring for Group{/tr}'}
-							</a>
-
-							{$g|escape}
-						{/if}
-					</div>
-				{/foreach}
-			</div>
+			<a href="tiki-object_watches.php?objectId={$page_info.page_ref_id|escape:"url"}&amp;watch_event=structure_changed&amp;objectType=structure&amp;objectName={$page|escape:"url"}&amp;objectHref={'tiki-index.php?page_ref_id='|cat:$page_ref_id|escape:"url"}" class="icon">{icon _id=eye_group_arrow_down alt='{tr}Show Group Watches on structure{/tr}'}
 		{/if}
 	{/if}
 			</div><!-- END of icons -->

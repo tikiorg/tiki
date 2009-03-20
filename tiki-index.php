@@ -395,7 +395,7 @@ if ($prefs['feature_user_watches'] == 'y') {
 		if($_REQUEST['watch_action']=='add') {
 			$tikilib->add_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object'],'wiki page',$page,"tiki-index.php?page=$page");
 		} elseif($_REQUEST['watch_action'] == 'add_desc') {
-			$tikilib->add_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object'],'structure',$page,"tiki-index.php?page=$page&amp;structure=$struct");
+			$tikilib->add_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object'],'structure',$page,"tiki-index.php?page=$page&amp;structure=".$_REQUEST['structure']);
 		} elseif($_REQUEST['watch_action'] == 'remove_desc') {
 			$tikilib->remove_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object'],'structure');
 		} else {
@@ -403,23 +403,6 @@ if ($prefs['feature_user_watches'] == 'y') {
 		}
 	}
 }
-
-if ($prefs['feature_group_watches'] == 'y'
-	&& ( $tiki_p_admin == 'y' || $tiki_p_admin_users == 'y' ) ) {
-	if(isset( $_REQUEST['watch_group'] ) && isset($_REQUEST['watch_event'])) {
-		check_ticket('index');
-		if($_REQUEST['watch_action']=='add') {
-			$tikilib->add_group_watch($_REQUEST['watch_group'],$_REQUEST['watch_event'],$_REQUEST['watch_object'],'wiki page',$page,"tiki-index.php?page=$page");
-		} elseif($_REQUEST['watch_action'] == 'add_desc') {
-			$tikilib->add_group_watch($_REQUEST['watch_group'],$_REQUEST['watch_event'],$_REQUEST['watch_object'],'structure',$page,"tiki-index.php?page=$page&amp;structure=$struct");
-		} elseif($_REQUEST['watch_action'] == 'remove_desc') {
-			$tikilib->remove_group_watch($_REQUEST['watch_group'],$_REQUEST['watch_event'],$_REQUEST['watch_object'], 'structure');
-		} else {
-			$tikilib->remove_group_watch($_REQUEST['watch_group'],$_REQUEST['watch_event'],$_REQUEST['watch_object']);
-		}
-	}
-}
-
 
 $sameurl_elements=Array('pageName','page');
 
