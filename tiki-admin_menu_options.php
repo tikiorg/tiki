@@ -59,6 +59,7 @@ if ($_REQUEST["optionId"]) {
 	$info["groupname"] = '';
 	$info["userlevel"] = '';
 	$info["type"] = 'o';
+	$info["icon"] = '';
 	$info["position"] = $maxPos + 2;
 }
 
@@ -67,6 +68,7 @@ $smarty->assign('url', $info["url"]);
 $smarty->assign('section', $info["section"]);
 $smarty->assign('perm', $info["perm"]);
 $smarty->assign('type', $info["type"]);
+$smarty->assign('icon', $info["icon"]);
 $smarty->assign('position', $info["position"]);
 $smarty->assign('groupname', $info["groupname"]);
 $smarty->assign('userlevel', $info["userlevel"]);
@@ -117,7 +119,7 @@ if (isset($_REQUEST["save"])) {
 include_once('lib/modules/modlib.php');
 	check_ticket('admin-menu-options');
 	$menulib->replace_menu_option($_REQUEST["menuId"], $_REQUEST["optionId"], $_REQUEST["name"], $_REQUEST["url"],
-		$_REQUEST["type"], $_REQUEST["position"], $_REQUEST["section"], $_REQUEST["perm"], $_REQUEST["groupname"], $_REQUEST['level']);
+		$_REQUEST["type"], $_REQUEST["position"], $_REQUEST["section"], $_REQUEST["perm"], $_REQUEST["groupname"], $_REQUEST['level'], $_REQUEST['icon']);
 	$modlib->clear_cache();
 	$smarty->clear_cache(null, "menu" . $_REQUEST["menuId"]);
 	$smarty->assign('position', $_REQUEST["position"] + 1);
@@ -129,6 +131,7 @@ include_once('lib/modules/modlib.php');
 	$smarty->assign('groupname', '');
 	$smarty->assign('userlevel', 0);
 	$smarty->assign('type', 'o');
+	$smarty->assign('icon', '');
 }
 
 if (!isset($_REQUEST["sort_mode"])) {

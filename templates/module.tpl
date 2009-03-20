@@ -31,6 +31,14 @@
 					{icon name=$smarty.capture.name class="flipmodimage" _id="module" alt="[{tr}toggle{/tr}]"}
 				</a>
 			</span>
+			<span class="moduleflip moduleflip-vert" id="moduleflip-vert-{$module_name|cat:$module_position|cat:$module_ord|escape}">
+				<a title="{tr}Toggle module contents{/tr}" class="flipmodtitle" href="javascript:flip_class('main','minimize-modules-left','maximize-modules');{if $prefs.feature_phplayers eq 'y' and isset($phplayers_LayersMenu)}moveLayers();{/if}icntoggle('modv-{$module_name|cat:$module_position|cat:$module_ord|escape}','vmodule.png');">
+					{capture name=name}
+						icnmodv-{$module_name|cat:$module_position|cat:$module_ord|escape}
+					{/capture}
+					{icon name=$smarty.capture.name class="flipmodimage" _id="trans" alt="[{tr}Toggle Vertically{/tr}]" _defaultdir="pics"}
+				</a>
+			</span>
 		{/if}
 		</h3>
 	{elseif $module_notitle ne 'y' }

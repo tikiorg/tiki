@@ -1955,6 +1955,7 @@ CREATE TABLE "tiki_menu_options" (
   "perm" clob default NULL,
   "groupname" clob default NULL,
   "userlevel" number(4) default 0,
+  "icon" varchar(200),
   PRIMARY KEY (optionId)
 ) ENGINE=MyISAM  ;
 
@@ -2354,6 +2355,7 @@ CREATE TABLE "tiki_menus" (
   "description" clob,
   "type" char(1) default NULL,
   "icon" varchar(200) default NULL,
+  "use_items_icons" char(1) DEFAULT 'n' NOT NULL,
   PRIMARY KEY (menuId)
 ) ENGINE=MyISAM  ;
 
@@ -5688,6 +5690,51 @@ INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`, `order`
 INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`, `order`) VALUES('tiki-mobile.php', 'mobile', '', 'feature_mobile', 200);
 
 INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`, `order`) VALUES('tiki-sheets.php', 'sheets', '', 'feature_sheet', 200);
+
+
+UPDATE tiki_menu_options SET icon = 'icon-configuration48x48' WHERE name = 'Admin';
+
+UPDATE tiki_menu_options SET icon = 'xfce4-appfinder48x48' WHERE name = 'Search';
+
+UPDATE tiki_menu_options SET icon = 'wikipages48x48' WHERE name = 'Wiki';
+
+UPDATE tiki_menu_options SET icon = 'blogs48x48' WHERE name = 'Blogs';
+
+UPDATE tiki_menu_options SET icon = 'stock_select-color48x48' WHERE name = 'Image Galleries';
+
+UPDATE tiki_menu_options SET icon = 'file-manager48x48' WHERE name = 'File Galleries';
+
+UPDATE tiki_menu_options SET icon = 'stock_bold48x48' WHERE name = 'Articles';
+
+UPDATE tiki_menu_options SET icon = 'stock_index48x48' WHERE name = 'Forums';
+
+UPDATE tiki_menu_options SET icon = 'gnome-settings-font48x48' WHERE name = 'Trackers';
+
+UPDATE tiki_menu_options SET icon = 'users48x48' WHERE name = 'Community';
+
+UPDATE tiki_menu_options SET icon = 'stock_dialog_question48x48' WHERE name = 'FAQs';
+
+UPDATE tiki_menu_options SET icon = 'maps48x48' WHERE name = 'Maps';
+
+UPDATE tiki_menu_options SET icon = 'messages48x48' WHERE name = 'Newsletters';
+
+UPDATE tiki_menu_options SET icon = 'vcard48x48' WHERE name = 'Freetags';
+
+UPDATE tiki_menu_options SET icon = 'date48x48' WHERE name = 'Calendar' AND url = 'tiki-calendar.php';
+
+UPDATE tiki_menu_options SET icon = 'userfiles48x48' WHERE name = 'MyTiki';
+
+UPDATE tiki_menu_options SET icon = '' WHERE name = 'Quizzes';
+
+UPDATE tiki_menu_options SET icon = '' WHERE name = 'Surveys';
+
+UPDATE tiki_menu_options SET icon = '' WHERE name = 'TikiSheet';
+
+UPDATE tiki_menu_options SET icon = '' WHERE name = 'Workflow';
+
+UPDATE tiki_menu_options SET icon = '' WHERE name = 'Charts';
+
+UPDATE tiki_menus SET use_items_icons='y' WHERE menuId=42;
 
 ;
 

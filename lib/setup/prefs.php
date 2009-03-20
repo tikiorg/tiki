@@ -1157,6 +1157,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_comments_post_as_anonymous' => 'n',
 		'feature_comments_moderation' => 'n',
 		'feature_template_zoom' => 'y',
+		'menus_items_icons' => 'n',
 		'feature_ie56_correct_png' => 'n',
 		
 		// JQuery
@@ -1165,7 +1166,6 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 											// see http://docs.jquery.com/UI/Effects: 'blind' | 'clip' | 'explode' etc]
 		'jquery_effect_direction' => '', 	// ['horizontal' | 'vertical' | 'left' | 'right' | 'up' | 'down' ]
 		'jquery_effect_speed' => 'normal', 	// ['slow' | 'normal' | 'fast' | milliseconds (int) ]
-
 		'jquery_effect_tabs' => 'slide',	// Different effect for tabs (['none' | 'normal' (for jq) | 'slide' etc]
 		'jquery_effect_tabs_direction' => 'vertical',
 		'jquery_effect_tabs_speed' => 'fast',
@@ -1200,7 +1200,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 
 		'feature_bidi' => 'n',
 		'feature_lastup' => 'y',
-		'transition_style_ver' => '2.0',
+		'transition_style_ver' => '3.0',
 
 		'magic_last_load' => 0,
 

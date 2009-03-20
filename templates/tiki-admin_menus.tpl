@@ -34,15 +34,36 @@
 </select>
 </td></tr>
 {if $prefs.feature_menusfolderstyle eq 'y'}
-<tr><td class="formcolor">{tr}Folder Icon{/tr}:</td><td><input type="text" name="icon" value="{$info.icon}" style="width:95%" /><br /><em>{tr}Path and filename of closed folder icon{/tr}</em>.
+<tr>
+	<td class="formcolor" rowspan="2">{tr}Icons:{/tr}</td>
+	<td>
+		<div>{tr}Folder Icon{/tr}</div>
+		<input type="text" name="icon" value="{$info.icon}" style="width:95%" /><br /><em>{tr}Path and filename of closed folder icon{/tr}</em>.
 
-{remarksbox type="tip" title="{tr}Note{/tr}"}
-  {tr}To use custom folder icons in menus, enter the path to the icon for the <strong>closed</strong> folder.{/tr} {tr}In the same directory, include an icon for the opened folder.{/tr} {tr}The "opened folder" icon name must be identical to the "closed folder" icon name, prefixed with the letter <strong>o</strong>.{/tr}<hr />
-  For example, the default icon is: pics/icons/folder.png {icon _id="folder"}<br />The name of the "open folder" icon is: pics/icons/ofolder.png {icon _id="ofolder"}
-{/remarksbox}
-</td></tr>
+		{remarksbox type="tip" title="{tr}Note{/tr}"}
+			{tr}To use custom folder icons in menus, enter the path to the icon for the <strong>closed</strong> folder.{/tr} {tr}In the same directory, include an icon for the opened folder.{/tr} {tr}The "opened folder" icon name must be identical to the "closed folder" icon name, prefixed with the letter <strong>o</strong>.{/tr}<hr />
+			For example, the default icon is: pics/icons/folder.png {icon _id="folder"}<br />The name of the "open folder" icon is: pics/icons/ofolder.png {icon _id="ofolder"}
+		{/remarksbox}
+	</td>
+</tr>
 {/if}
-<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
+{if $prefs.menus_items_icons eq 'y'}
+<tr>
+	<td class="formcolor">
+		<label for="use_items_icons">
+			<input type="checkbox" id="use_items_icons" name="use_items_icons"{if $info.use_items_icons eq 'y'} checked="checked"{/if}/>
+			{tr}Configure icons for menu entries{/tr}
+		</label>
+	</td>
+</tr>
+{/if}
+<tr>
+	<td class="formcolor">&nbsp;</td>
+	<td class="formcolor">
+		<input type="submit" name="save" value="{tr}Save{/tr}" />
+		{if $prefs.menus_items_icons neq 'y'}<input type="hidden" name="use_items_icons" value="{$info.use_items_icons}" />{/if}
+	</td>
+</tr>
 </table>
 </form>
 <br /><h2>{tr}Menus{/tr}</h2>

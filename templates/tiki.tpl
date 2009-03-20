@@ -29,7 +29,7 @@
 {if $prefs.feature_ajax eq 'y'}
 	{include file="tiki-ajax_header.tpl"}
 {/if}
-<div id="main">
+<div id="main" class="{cookie_jar name='flip_class_main'}">
 {if $prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}
 	<div class="clearfix" id="header"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
 	{if $prefs.feature_siteidentity eq 'y'}

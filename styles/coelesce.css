@@ -978,14 +978,14 @@ h3.box-title {
 .box-title a,
 .box-title a:link {color: #3f6383}
 
-.box a.flipmodtitle img {display: none}
+.box a.flipmodtitle img {
+	display: none;
+	float: left;
+}
 
 * html .box a.flipmodtitle img,
 .box:hover a.flipmodtitle img {
 	display: block;
-	position: absolute;
-	right: 0;
-	top: 0;
 	border: 1px solid transparent}
 
 * html .box a.flipmodtitle img {border: none}

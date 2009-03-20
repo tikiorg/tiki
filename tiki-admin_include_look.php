@@ -61,6 +61,7 @@ if (isset($_REQUEST["looksetup"])) {
 	"pagination_firstlast",
 	"pagination_icons",
 	"pagination_fastmove_links",
+	"menus_items_icons",
 	"use_context_menu_icon",
 	"use_context_menu_text",
 	"feature_site_report",
