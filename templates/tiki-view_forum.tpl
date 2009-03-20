@@ -418,6 +418,8 @@
 						{icon _id="hot$nticon" alt="{tr}Hot{/tr}$ntalt"}
 					{elseif $comments_coms[ix].type eq 's'}
 						{icon _id="sticky$nticon" alt="{tr}Sticky{/tr}$ntalt"}
+					{elseif $comments_coms[ix].type eq 'l'}
+						{icon _id="locked$nticon" alt="{tr}Locked{/tr}$ntalt"}
 					{/if}
 
 					{if $comments_coms[ix].locked eq 'y'}

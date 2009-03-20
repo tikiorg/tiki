@@ -71,32 +71,32 @@
 						<a class="freetag" href="tiki-browse_freetags.php?tag={$taginfo.tag}">{$taginfo.tag}</a>
 					{/foreach}
 				</div>
+				{/if}
 			{/if}
-		{/if}
 	</div> <!-- posthead -->
 	{*<div class="content">
 	<div class="postbody-content">*}
 		{$listpages[ix].parsed_data}
-			{if $listpages[ix].pages > 1}
-				<a class="link" href="{$listpages[ix].postId|sefurl:blogpost}">
-				{tr}Read more{/tr} ({$listpages[ix].pages} {tr}pages{/tr})</a>
-			{/if}
-			{if $prefs.blogs_feature_copyrights  eq 'y' and $prefs.wikiLicensePage}
-        		{if $prefs.wikiLicensePage == $page}
-        			{if $tiki_p_edit_copyrights eq 'y'}
-						<div class="editdate">
-							{tr}To edit the copyright notices{/tr} 
-							<a href="copyrights.php?page={$copyrightpage}">{tr}Click Here{/tr}</a>.
-						</div>
-					{/if}
-				{else}
+		{if $listpages[ix].pages > 1}
+			<a class="link" href="{$listpages[ix].postId|sefurl:blogpost}">
+			{tr}Read more{/tr} ({$listpages[ix].pages} {tr}pages{/tr})</a>
+		{/if}
+		{if $prefs.blogs_feature_copyrights  eq 'y' and $prefs.wikiLicensePage}
+        	{if $prefs.wikiLicensePage == $page}
+        		{if $tiki_p_edit_copyrights eq 'y'}
 					<div class="editdate">
-						{tr}The content on this page is licensed under the terms of the{/tr} 
-            			<a href="tiki-index.php?page={$prefs.wikiLicensePage}&amp;copyrightpage={$page|escape:"url"}">
-						{$prefs.wikiLicensePage}</a>.
+						{tr}To edit the copyright notices{/tr} 
+						<a href="copyrights.php?page={$copyrightpage}">{tr}Click Here{/tr}</a>.
 					</div>
 				{/if}
+			{else}
+				<div class="editdate">
+					{tr}The content on this page is licensed under the terms of the{/tr} 
+            		<a href="tiki-index.php?page={$prefs.wikiLicensePage}&amp;copyrightpage={$page|escape:"url"}">
+					{$prefs.wikiLicensePage}</a>.
+				</div>
 			{/if}
+		{/if}
 		<div class="postfooter">
 			<div class="status"> {* renamed to match forum footer layout *}
 				<a href='tiki-print_blog_post.php?postId={$listpages[ix].postId}'>{icon _id='printer' alt='{tr}Print{/tr}'}</a>

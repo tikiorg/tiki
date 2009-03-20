@@ -67,10 +67,11 @@ class ArtLib extends TikiLib {
 		return true;
 	}
 
-	function remove_article($articleId) {
+	function remove_article($articleId, $article_data='') {
 		global $smarty, $tikilib, $user;
 		
 		if ($articleId) {
+			if (empty($article_data)) $article_data = $this->get_article($articleId);
 			$query = "delete from `tiki_articles` where `articleId`=?";
 
 			$result = $this->query($query,array($articleId));
@@ -78,8 +79,11 @@ class ArtLib extends TikiLib {
 			
 			// TODO refactor
 			$nots = $tikilib->get_event_watches('article_deleted', '*');
-			$nots2 = $tikilib->get_event_watches('topic_article_deleted', $topicId);
-			$smarty->assign('mail_action', 'delete');
+			if (!empty($article_data['topicId']))
+				$nots2 = $tikilib->get_event_watches('topic_article_deleted', $article_data['topicId']);
+			else
+				$nots2 = array();
+			$smarty->assign('mail_action', 'Delete');
 			
 			$nots3 = array();
 			foreach ($nots as $n) {
@@ -100,7 +104,7 @@ class ArtLib extends TikiLib {
 			    $smarty->assign('mail_postid', $articleId);
 			    $smarty->assign('mail_date', $this->now);
 			    $smarty->assign('mail_user', $user);
-			    $smarty->assign('mail_data', $heading."\n----------------------\n");
+			    $smarty->assign('mail_data', $article_data['heading']."\n----------------------\n");
 			    $foo = parse_url($_SERVER["REQUEST_URI"]);
 			    $machine = $tikilib->httpPrefix(). $foo["path"];
 			    $smarty->assign('mail_machine', $machine);
@@ -257,7 +261,7 @@ class ArtLib extends TikiLib {
 			
 			$nots = $tikilib->get_event_watches('article_edited', '*');
 			$nots2 = $tikilib->get_event_watches('topic_article_edited', $topicId);
-			$smarty->assign('mail_action', 'edit');
+			$smarty->assign('mail_action', 'Edit');
 			
 		} else {
 		    // Insert the article
@@ -283,7 +287,7 @@ class ArtLib extends TikiLib {
 			$GLOBALS["topicId"] = $topicId;
 			$nots = $tikilib->get_event_watches('article_submitted', '*');
 			$nots2 = $tikilib->get_event_watches('topic_article_created', $topicId);
-			$smarty->assign('mail_action', 'new');
+			$smarty->assign('mail_action', 'New');
 		}
 		
 		$nots3 = array();

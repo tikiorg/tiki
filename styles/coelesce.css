@@ -1228,16 +1228,17 @@ h1 a:hover {
 	color: #2d2d2d}
 
 body.tiki_wiki .wikitopline {
-	position: absolute;
-	top: -2em;
-	left: 80px;
+	position: relative;
+	top: -2.2em;
+	right: -9em;
 	width: 70%}
 	
 .wikitopline .content br {display: none}
 .wikiinfo {}
 
 div#description,
-div.description {
+.description {
+	display: block;
 	font-size: .9em;
 	font-style: italic}
 

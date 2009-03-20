@@ -623,11 +623,24 @@ table.default td {
 /* <small> on these modules contains the blog date
    and is more readable on separate line */
 
-.box-last_blog_posts small, 
-.box-blog_last_comments small {
+small.description {
 	display: block;
-	font-size: .75em;
-	color: #aaa;
+	font-size: .95em;
+	font-style: italic}
+
+
+
+/*** for mods list ***/
+
+td.mods_revision {
+	background-color: #b5cfb5;
 }
 
+td.mods_update {
+	background-color:#dcdeac;
+}
+
+td.mods_hilite {
+	background-color:#;
+}
 

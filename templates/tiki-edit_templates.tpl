@@ -30,6 +30,16 @@
 </table>
 {/if}
 {if $mode eq 'editing'}
+    {remarksbox type="warning" title="{tr}Important!{/tr}" highlight="y"}
+	<p>{tr}If you go to edit this (or any other TPL file) file via the Tiki built-in TPL editor below, all the javascript can be sanitized or completely stripped out by Tiki security filtering.{/tr}
+	{tr}This would cause you problems (e.g. menus can stop collapsing/expanding).{/tr}</p>
+
+	<p>{tr}You should only modify default header.tpl and other important files via text code editor, through console, or SSH, or FTP edit commands. And only if you know what you are doing ! ;-){/tr}</p>
+
+	<p>{tr}Maybe You just want to modify the top of your Tiki site?{/tr}<br />
+	{tr}Please consider using the Look &amp; Feel preferences custom code areas or modify tiki-top_bar.tpl which you can do safely via the web-based interface.{/tr}</p>
+    {/remarksbox}
+
 <form action="tiki-edit_templates.php" method="post">
 <textarea name="data" rows="20" cols="80">{$data|escape}</textarea>
 <div align="center">

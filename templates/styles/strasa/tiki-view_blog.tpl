@@ -118,10 +118,10 @@
 			</div>
 			</div>
 		</div>
+	</div>
 	</div> <!-- postbody -->
 </div> <!--blogpost -->
 {/section}
-</div>
 
 {pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
 

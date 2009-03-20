@@ -3,12 +3,12 @@
 {title help="mods"}{tr}Tikiwiki Mods{/tr}{/title}
 <div class="navbar">
 	{button href="tiki-mods_admin.php" _text="{tr}Mods Configuration{/tr}"}
-	{button href="tiki-mods.php?reload=1$findarg$typearg" _text="{tr}Update remote index{/tr}"}
-	{button href="tiki-mods.php?rebuild=1$findarg$typearg" _text="{tr}Rebuild local list{/tr}"}
+	{button href="tiki-mods.php?reload=1$findarg$typearg$versionarg" _text="{tr}Update remote index{/tr}"}
+	{button href="tiki-mods.php?rebuild=1$findarg$typearg$versionarg" _text="{tr}Rebuild local list{/tr}"}
 	{if $prefs.feature_mods_provider eq 'y'}
-		{button href="tiki-mods.php?republishall=1$findarg$typearg" _text="{tr}Republish all{/tr}"}
-		{button href="tiki-mods.php?publishall=1$findarg$typearg" _text="{tr}Publish all{/tr}"}
-		{button href="tiki-mods.php?unpublishall=1$findarg$typearg" _text="{tr}Unpublish all{/tr}"}
+		{button href="tiki-mods.php?republishall=1$findarg$typearg$versionarg" _text="{tr}Republish all{/tr}"}
+		{button href="tiki-mods.php?publishall=1$findarg$typearg$versionarg" _text="{tr}Publish all{/tr}"}
+		{button href="tiki-mods.php?unpublishall=1$findarg$typearg$versionarg" _text="{tr}Unpublish all{/tr}"}
 	{/if}
 </div>
 
@@ -22,9 +22,13 @@
 {/remarksbox}
 
 {if $iswritable}
-	<div class="simplebox" style="color:#009900;">{icon _id=information style="vertical-align:middle;"} <b>{tr}Attention{/tr}</b><br />{tr}Apache has the right to write in your file tree, which enables the installation, removal or upgrade of packages. When you are done with those operations, think to fix those permissions back to a safe state (by using "./setup.sh" for example).{/tr}</div>
+	{remarksbox type="warning" title="{tr}Attention{/tr}"}
+		{tr}Apache has the right to write in your file tree, which enables the installation, removal or upgrade of packages. When you are done with those operations, think to fix those permissions back to a safe state (by using "./setup.sh" for example).{/tr}
+	{/remarksbox}
 {else}
-	<div class="simplebox" style="color:#990000;"><b>{tr}Attention{/tr}</b><br />{tr}To install, remove or upgrade packages you need to give the apache user the right to write files in your web tree (you can use "./setup.sh open" to set it up). After installation you need to remove that permission (using "./setup.sh").{/tr}</div>
+	{remarksbox type="info" title="{tr}Attention{/tr}"}
+		{tr}To install, remove or upgrade packages you need to give the apache user the right to write files in your web tree (you can use "./setup.sh open" to set it up). After installation you need to remove that permission (using "./setup.sh").{/tr}
+	{/remarksbox}
 {/if}
 {if $installask}
 <form method='post' action='?'>
@@ -187,66 +191,67 @@ function update_button_install() {
 					{assign var=mod value=$public.$type.$item->modname}
 					{if $public.$type.$item}
 						{if ModsLib::revision_compare($dist.$mod->revision,$local.$type.$item->revision) < 0}
-							<td style="background:#fcfeac;">
-								<a href="tiki-mods.php?unpublish={$public.$type.$item->modname|escape:"url"}{$findarg}{$typearg}" title="{tr}Unpublish{/tr}">[x]</a>
+							<td class="mods_hilite">
+								<a href="tiki-mods.php?unpublish={$public.$type.$item->modname|escape:"url"}{$findarg}{$typearg}{$versionarg}" title="{tr}Unpublish{/tr}">[x]</a>
 								{if $dist.$mod}
-									<a href="tiki-mods.php?republish={$public.$type.$item->modname|escape:"url"}{$findarg}{$typearg}" title="{tr}Republish{/tr}">{$dist.$mod->revision}&gt;{$local.$type.$item->revision}</a>
+									<a href="tiki-mods.php?republish={$public.$type.$item->modname|escape:"url"}{$findarg}{$typearg}{$versionarg}" title="{tr}Republish{/tr}">{$dist.$mod->revision}&gt;{$local.$type.$item->revision}</a>
 								{/if}
-						{else}
-							<td style="background:#fcfeac;">
-								<a href="tiki-mods.php?unpublish={$public.$type.$item->modname|escape:"url"}{$findarg}{$typearg}" title="{tr}Unpublish{/tr}">[x]</a>
-								{if $dist.$mod}{$dist.$mod->revision}{/if}
-						{/if}
 							</td>
+						{else}
+							<td class="mods_hilite">
+								<a href="tiki-mods.php?unpublish={$public.$type.$item->modname|escape:"url"}{$findarg}{$typearg}{$versionarg}" title="{tr}Unpublish{/tr}">[x]</a>
+								{if $dist.$mod}{$dist.$mod->revision}{/if}
+							</td>
+						{/if}
 					{elseif $local.$type.$item}
-							<td style="background:#ededed;"><a href="tiki-mods.php?publish={$local.$type.$item->modname|escape:"url"}{$findarg}{$typearg}" title="{tr}Publish{/tr}">[+]</a></td>
+						<td class="mods_revision"><a href="tiki-mods.php?publish={$local.$type.$item->modname|escape:"url"}{$findarg}{$typearg}{$versionarg}" title="{tr}Publish{/tr}">[+]</a></td>
 					{else}
-							<td style="background:#ededed;"></td>
+						<td class="mods_revision"></td>
 					{/if}
 				{/if}
 				
 				{if $remote.$type.$item}
 					{if ModsLib::revision_compare($remote.$type.$item->revision, $local.$type.$item->revision) > 0}
-						<td style="background:#fcfeac;">
-							<a href="tiki-mods.php?dl={$remote.$type.$item->modname|escape:"url"}-{$remote.$type.$item->revision}{$findarg}{$typearg}" title="{tr}Download{/tr}">{$remote.$type.$item->revision}</a>
+						<td class="mods_hilite">
+							<a href="tiki-mods.php?dl={$remote.$type.$item->modname|escape:"url"}-{$remote.$type.$item->revision}{$findarg}{$typearg}{$versionarg}" title="{tr}Download{/tr}">{$remote.$type.$item->revision}</a>
 						</td>
 					{else}
-						<td style="background:#acfeac;">
-							<a href="tiki-mods.php?dl={$remote.$type.$item->modname|escape:"url"}-{$remote.$type.$item->revision}{$findarg}{$typearg}" title="{tr}Download{/tr}">{$remote.$type.$item->revision}</a>
+						<td class="mod_hilite">
+							<a href="tiki-mods.php?dl={$remote.$type.$item->modname|escape:"url"}-{$remote.$type.$item->revision}{$findarg}{$typearg}{$versionarg}" title="{tr}Download{/tr}">{$remote.$type.$item->revision}</a>
 						</td>
 					{/if}
 				{else}
-					<td style="background:#dcdcdc;"></td>
+					<td></td>
 				{/if}
 				
 				{if $local.$type.$item}
-					<td><b><a href="tiki-mods.php?focus={$local.$type.$item->modname|escape:"url"}{$findarg}{$typearg}">{$local.$type.$item->name}</a></b></td>
+					<td><b><a href="tiki-mods.php?focus={$local.$type.$item->modname|escape:"url"}{$findarg}{$typearg}{$versionarg}">{$local.$type.$item->name}</a></b></td>
 					<td>{$local.$type.$item->version[0]}</td>
 					<td>{$local.$type.$item->licence}</td>
 					<td>{$local.$type.$item->description}</td>
-						{if $installed.$type.$item} 
-							{if $local.$type.$item->isnewerthan($installed.$type.$item)}
-								<td style="background:#dcdeac;">{$installed.$type.$item->revision}
-									{if $iswritable}<a href="tiki-mods.php?action=upgrade&amp;package={$local.$type.$item->modname|escape:"url"}{$findarg}{$typearg}">-&gt;{$local.$type.$item->revision}</a>{/if}
-								</td>
-							{elseif $remote.$type.$item and $remote.$type.$item->isnewerthan($installed.$type.$item)}
-								<td style="background:#dcdeac;">{$installed.$type.$item->revision}
-									{if $iswritable}<a href="tiki-mods.php?action=upgrade&amp;package={$remote.$type.$item->modname|escape:"url"}{$findarg}{$typearg}">-&gt;{$remote.$type.$item->revision}</a>{/if}
-								</td>
-							{else}
-								<td style="background:#acfeac;">{$installed.$type.$item->revision}</td>
-							{/if}
-						<td style="background:#fcaeac;">{if $iswritable}<a href="tiki-mods.php?action=remove&amp;package={$local.$type.$item->modname|escape:"url"}{$findarg}{$typearg}">{tr}Remove{/tr}</a>{/if}</td>
+					{if $installed.$type.$item} 
+						{if $local.$type.$item->isnewerthan($installed.$type.$item)}
+							<td class="mods_update">{$installed.$type.$item->revision}
+								{if $iswritable}<a href="tiki-mods.php?action=upgrade&amp;package={$local.$type.$item->modname|escape:"url"}{$findarg}{$typearg}{$versionarg}">-&gt;{$local.$type.$item->revision}</a>{/if}
+							</td>
+						{elseif $remote.$type.$item and $remote.$type.$item->isnewerthan($installed.$type.$item)}
+							<td class="mods_update">{$installed.$type.$item->revision}
+								{if $iswritable}<a href="tiki-mods.php?action=upgrade&amp;package={$remote.$type.$item->modname|escape:"url"}{$findarg}{$typearg}{$versionarg}">-&gt;{$remote.$type.$item->revision}</a>{/if}
+							</td>
 						{else}
-						<td></td>
-						<td colspan="3">
-							{if $iswritable}
-								<a href="tiki-mods.php?action=install&amp;package={$local.$type.$item->modname|escape:"url"}{$findarg}{$typearg}">{tr}Install{/tr}</a>
-							{else}
-								<b><s>{tr}Install{/tr}</s></b>
-							{/if}
-						</td>
+							<td class="mod_hilite">{$installed.$type.$item->revision}</td>
 						{/if}
+					<td class="mods_hilite">{if $iswritable}<a href="tiki-mods.php?action=remove&amp;package={$local.$type.$item->modname|escape:"url"}{$findarg}{$typearg}{$versionarg}">{tr}Remove{/tr}</a>{/if}</td>
+					{else}
+					<td></td>
+					<td colspan="3">
+						{if $iswritable}
+							<a href="tiki-mods.php?action=install&amp;package={$local.$type.$item->modname|escape:"url"}{$findarg}{$typearg}{$versionarg}">{tr}Install{/tr}</a>
+						{else}
+							<b><s>{tr}Install{/tr}</s></b>
+						{/if}
+					</td>
+					{/if}
 				{else}
 					<td>{$remote.$type.$item->name}</td>
 					<td>{$remote.$type.$item->version[0]}</td>
@@ -255,7 +260,7 @@ function update_button_install() {
 					<td></td>
 					<td>
 						{if $iswritable}
-							<a href="tiki-mods.php?action=install&amp;package={$remote.$type.$item->modname|escape:"url"}{$findarg}{$typearg}">{tr}Install{/tr}</a>
+							<a href="tiki-mods.php?action=install&amp;package={$remote.$type.$item->modname|escape:"url"}{$findarg}{$typearg}{$versionarg}">{tr}Install{/tr}</a>
 						{else}
 							<b><s>{tr}Install{/tr}</s></b>
 						{/if}
