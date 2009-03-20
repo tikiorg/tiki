@@ -981,7 +981,8 @@ class Comments extends TikiLib {
 	$cant = 0;
 	$off = 0;
 	while ( $res = $result->fetchRow() ) {
-	    if ( $res['forumId'] != '' && $this->user_has_perm_on_object($user, $res['forumId'], 'forum', 'tiki_p_forum_read') ) {
+	    $objperm = $this->get_perm_object($res['forumId'], 'forum', '', false);
+	    if ( $res['forumId'] != '' && $objperm['tiki_p_forum_read'] == 'y' ) {
 		    $cant++; // Count the whole number of forums the user has access to
 		    if ( ( $maxRecords > -1 && $count >= $maxRecords ) || $off++ < $offset ) continue;
 

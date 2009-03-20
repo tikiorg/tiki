@@ -142,6 +142,11 @@ $smarty->assign('activity', $blog_data["activity"]);
 if (isset($_REQUEST["remove"])) {
 	$data = $bloglib->get_post($_REQUEST["remove"]);
 
+	if ($user && $blog_data['public'] == 'y' 
+			&& $tikilib->user_has_perm_on_object($user, $_REQUEST['blogId'], 'blog', 'tiki_p_blog_post') ) {
+		$data["user"] = $user;
+	}
+
 	if ($ownsblog == 'n') {
 		if (!$user || $data["user"] != $user) {
 			if ($tiki_p_blog_admin != 'y') {

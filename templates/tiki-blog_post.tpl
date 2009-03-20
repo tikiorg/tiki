@@ -10,13 +10,16 @@
 			{button href="tiki-blog_post.php?wysiwyg=n" _auto_args='blogId,postId' _text="{tr}Use Normal Editor{/tr}"}
 		{/if}
 	{/if}
-	
+
 	{if $blogId gt 0 }
 		{assign var=thisblog value=$blogId|sefurl:blog}
 		{button href=$thisblog _text="{tr}View Blog{/tr}"}
 	{/if}
-	
-	{button href="tiki-list_blogs.php" _text="{tr}List Blogs{/tr}"}
+
+	{if $blogs|@count gt 1 }
+		{* No need for users to go to log list if they are already looking at the only blog *}
+		{button href="tiki-list_blogs.php" _text="{tr}List Blogs{/tr}"}
+	{/if}
 </div>
 
 {if $contribution_needed eq 'y'}
@@ -26,12 +29,14 @@
 	{include file=tiki-preview_post.tpl}
 {/if}
 
+{if $wysiwyg ne 'y'}
 {remarksbox type="tip" title="{tr}Tip{/tr}"}
   {tr}If you want to use images please save the post first and you will be able to edit/post images. Use the &lt;img&gt; snippet to include uploaded images in the textarea editor or use the image URL to include images using the WYSIWYG editor. {/tr}
   {if $wysiwyg eq 'n' and $prefs.wysiwyg_optional eq 'y'}
     <hr />{tr}Use ...page... to separate pages in a multi-page post{/tr}
   {/if}
 {/remarksbox}
+{/if}
 
 <form enctype="multipart/form-data" name='blogpost' method="post" action="tiki-blog_post.php" id ='editpageform'>
 <input type="hidden" name="wysiwyg" value="{$wysiwyg|escape}" />
@@ -103,7 +108,7 @@
   </td>
 </tr>
 
-{if $postId > 0}
+{if $postId > 0 && $wysiwyg ne 'y'}
 	<tr><td class="editblogform">{tr}Upload image for this post{/tr}</td>
 	<td class="editblogform">
 	<input type="hidden" name="MAX_FILE_SIZE" value="1000000000" />
@@ -131,6 +136,7 @@
 		</td></tr>
 	{/if}
 {/if}
+
 <tr><td class="editblogform">{tr}Mark entry as private:{/tr}</td>
   <td class="editblogform"><input type="checkbox" name="blogpriv" {if $blogpriv eq 'y'}checked="checked"{/if} /></td></tr>
 {if $prefs.blog_spellcheck eq 'y'}
@@ -142,8 +148,9 @@
 {if $prefs.feature_contribution eq 'y'}
 {include file="contribution.tpl"}
 {/if}
-<tr><td class="editblogform">&nbsp;</td><td class="editblogform"><input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}" />
+<tr><td class="editblogform">&nbsp;</td><td class="editblogform">
 <input type="submit" class="wikiaction" name="preview" value="{tr}Preview{/tr}" />
+<input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}" />
 <input type="submit" class="wikiaction" name="save_exit" value="{tr}Save and Exit{/tr}" />
 &nbsp;&nbsp;&nbsp;<input type="submit" name="cancel" onclick='document.location="{$referer|escape:'html'}";return false;' value="{tr}Cancel{/tr}"/>
 </td></tr>

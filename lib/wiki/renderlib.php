@@ -412,15 +412,6 @@ class WikiRenderer
 			}    
 		}    
 
-		if( $prefs['feature_group_watches'] 
-			&& ( $GLOBALS['tiki_p_admin'] == 'y' || $GLOBALS['tiki_p_admin_users'] == 'y' ) ) {
-
-			$this->smartyassign( 'grouplist', $userlib->list_all_groups() );
-			$this->smartyassign( 'page_group_watches', $tikilib->get_groups_watching( 'wiki page', $this->page, 'wiki_page_changed' ) );
-
-			if( $this->structureInfo )
-				$this->smartyassign( 'structure_group_watches', $tikilib->get_groups_watching( 'structure', $this->structureInfo['page_ref_id'], 'structure_changed' ) );
-		}
 	} // }}}
 
 	private function setupCategories() // {{{

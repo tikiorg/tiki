@@ -42,6 +42,9 @@ foreach ($rawcals["data"] as $cal_id=>$cal_data) {
 $smarty->assign_by_ref('infocals', $rawcals['data']);
 
 $events = array();
+if (!empty($module_params['calendarId']) && !is_array($module_params['calendarId']) && !is_numeric($module_params['calendarId'])) {
+	$module_params['calendarId'] = preg_split('/[\|:\&,]/', $module_params['calendarId']);
+}
 if (!empty($viewable))
 	$events = $calendarlib->upcoming_events($module_rows,
 		array_intersect(isset($module_params['calendarId']) ? (is_array($module_params['calendarId'])?$module_params['calendarId']: array($module_params['calendarId'])) : $calIds, $viewable),
