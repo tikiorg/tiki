@@ -13,7 +13,7 @@
 
 {/if}
 {/if}
-<form class="forms" method="get" action="tiki-searchindex.php">
+<form id="search-form" class="forms" method="get" action="tiki-searchindex.php">
     {tr}Find{/tr} <input id="fuser" name="highlight" size="14" type="text" accesskey="s" value="{$words}"/>
 {if $prefs.feature_search_show_object_filter eq 'y'}
 {if ( $searchStyle eq "menu" )}

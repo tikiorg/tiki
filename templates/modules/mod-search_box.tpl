@@ -3,7 +3,7 @@
 {if $prefs.feature_search eq 'y' && $tiki_p_search eq 'y'}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Search{/tr}"}{/if}
 {tikimodule error=$module_params.error title=$tpl_module_title name="search_box" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
-    <form class="forms" method="get" action="tiki-searchresults.php">
+    <form class="forms" id="search-module-form" method="get" action="tiki-searchresults.php">
     <input id="fuser" name="highlight" size="14" type="text" accesskey="s" /> {tr}in:{/tr}<br />
     <select name="where">
     <option value="pages">{tr}Entire Site{/tr}</option>

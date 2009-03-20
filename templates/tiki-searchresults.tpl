@@ -63,7 +63,7 @@
 
 
 {if $prefs.feature_search_show_search_box eq 'y'}
-<form class="forms" method="get" action="tiki-searchresults.php">
+<form id="search-form" class="forms" method="get" action="tiki-searchresults.php">
     {tr}Find{/tr} <input id="fuser" name="highlight" size="14" type="text" accesskey="s" value="{$words}"/>
 		{if !( $searchStyle eq "menu" )} 
 		<label for="boolean">{tr}Advanced search:{/tr}<input type="checkbox" name="boolean"{if $boolean eq 'y'} checked="checked"{/if} /></label>
