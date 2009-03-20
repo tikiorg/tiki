@@ -102,6 +102,12 @@ if (isset($_REQUEST["postId"]) && $_REQUEST["postId"] > 0) {
 		$data["user"] = $user;
 	}
 
+	// If the blog is public and the user has posting permissions then he can edit
+	if ($user && $blog_data['public'] == 'y' 
+			&& $tikilib->user_has_perm_on_object($user, $_REQUEST['blogId'], 'blog', 'tiki_p_blog_post') ) {
+		$data["user"] = $user;
+	}
+
 	if ($data["user"] != $user || !$user) {
 		if ($tiki_p_blog_admin != 'y' && !$tikilib->user_has_perm_on_object($user, $_REQUEST['blogId'], 'blog', 'tiki_p_blog_admin')) {
 			$smarty->assign('errortype', 401);
@@ -262,6 +268,11 @@ if ((isset($_REQUEST["save"]) || isset($_REQUEST['save_exit'])) && !$contributio
 		$blog_data = $tikilib->get_blog($data["blogId"]);
 
 		if ($user && $user == $blog_data["user"]) {
+			$data["user"] = $user;
+		}
+
+		if ($user && $blog_data['public'] == 'y' 
+				&& $tikilib->user_has_perm_on_object($user, $_REQUEST['blogId'], 'blog', 'tiki_p_blog_post') ) {
 			$data["user"] = $user;
 		}
 
