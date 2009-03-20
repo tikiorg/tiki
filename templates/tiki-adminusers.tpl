@@ -261,8 +261,9 @@
 								<br />
 								<select name="checked_groups[]" multiple="multiple" size="20">
 									{section name=ix loop=$all_groups}
-											 
+										{if $all_groups[ix] != 'Anonymous' && $all_groups[ix] != 'Registered'}
 										<option value="{$all_groups[ix]|escape}">{$all_groups[ix]|escape}</option>
+										{/if}
 									{/section}
 								</select>
 								<br />
@@ -273,7 +274,9 @@
 								<br />
 								<select name="checked_group" size="20">
 									{section name=ix loop=$all_groups}
+										{if $all_groups[ix] != 'Anonymous'}
 										<option value="{$all_groups[ix]|escape}" />{$all_groups[ix]|escape}</option>
+										{/if}
 									{/section}
 								</select>
 								<br />
