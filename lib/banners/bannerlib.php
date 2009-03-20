@@ -25,29 +25,18 @@ class BannerLib extends TikiLib {
 		$dw = $map[$this->date_format("%w")];
 
 		$hour = $this->date_format("%H"). $this->date_format("%M");
-		$raw = '';
-		//
-		//
-		$query = "select count(*) from `tiki_banners` where `$dw` = ? and  `hourFrom`<=? and `hourTo`>=? and
-    		( ((`useDates` = ?) and (`fromDate`<=? and `toDate`>=?)) or (`useDates` = ?) ) and
-    		(`impressions`<`maxImpressions` or `maxImpressions`=?) and (`clicks` < `maxClicks` or `maxClicks`=?) and `zone`=?";
-		$bindvars=array('y',$hour,$hour,'y',(int) $this->now,(int) $this->now,'n',-1,-1,$zone);
-		$rows=$this->getOne($query,$bindvars);
-
-		if (!$rows)
-			return false;
-
-		$bid = rand(0, $rows - 1);
-		//print("Rows: $rows bid: $bid");
 
 		$query = "select * from `tiki_banners` where $dw = ? and  `hourFrom`<=? and `hourTo`>=? and
 		( ((`useDates` = ?) and (`fromDate`<=? and `toDate`>=?)) or (`useDates` = ?) ) and
-		(`impressions`<`maxImpressions`  or `maxImpressions`=?) and (`clicks`<`maxClicks` or `maxClicks`=?) and `zone`=?";
-		$result = $this->query($query,$bindvars,1,$bid);
-
-		$res = $result->fetchRow();
+		(`impressions`<`maxImpressions`  or `maxImpressions`=?) and (`clicks`<`maxClicks` or `maxClicks`=?) and `zone`=? order by ".$this->convert_sortmode('random');
+		$bindvars=array('y',$hour,$hour,'y',(int) $this->now,(int) $this->now,'n',-1,-1,$zone);
+		$result = $this->query($query,$bindvars,1,0);
+		if (!($res = $result->fetchRow())) {
+			return false;
+		}
 		$id = $res["bannerId"];
 
+		$raw = '';
 		switch ($res["which"]) {
 		case 'useHTML':
 			$raw = $res["HTMLData"];
@@ -210,7 +199,7 @@ class BannerLib extends TikiLib {
 
                 $bindvars=array($client,$url,$title,$alt,$use,$imageData,$imageType,$imageName,$HTMLData,
                                 $fixedURLData, $textData, $fromDate, $toDate, $useDates,$this->now,$zone,$hourFrom,$hourTo,
-				$mon,$tue,$wed,$thu,$fri,$sat,$sun,$maxImpressions,$maxClicks,$bannerId);
+                                $mon,$tue,$wed,$thu,$fri,$sat,$sun,$maxImpressions,$maxClicks,$bannerId);
 
 				$result = $this->query($query,$bindvars);
 
