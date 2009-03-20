@@ -469,7 +469,7 @@ class Comments extends TikiLib {
 	    // Process attachments
 	    if( array_key_exists( 'parts', $output ) && count( $output['parts'] ) > 1 ) {
 		$forum_info = $this->get_forum( $forumId );
-		$errors = aray();
+		$errors = array();
 		foreach( $output['parts'] as $part ) {
 		    if (array_key_exists( 'disposition', $part )) {
 				if ($part['disposition'] == 'attachment') {
@@ -1306,7 +1306,7 @@ class Comments extends TikiLib {
 	}
 	$res = $result->fetchRow();
 	if($res) { //if there is a comment with that id
-	   $this->add_comments_extras($res, $forum_info);
+		$this->add_comments_extras($res, $forum_info);
 	}
 
 	return $res;
@@ -2403,7 +2403,7 @@ class Comments extends TikiLib {
 		if (empty($user) && $prefs['feature_antibot'] == 'y' && (!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $params['antibotcode'])) {
 			$errors[] = tra('You have mistyped the anti-bot verification code; please try again.');
 		}
-		if ($forum_info['controlFlood'] == 'y' && !$commentslib->user_can_post_to_forum($user, $forumId) ) {
+		if ($forum_info['controlFlood'] == 'y' && !$this->user_can_post_to_forum($user, $forumId) ) {
 			$errors = sprintf(tra('Please wait %d secondes between posts'). $forum_info['floodInterval']);
 		}
 		if ($tiki_p_admin_forum != 'y' && $forum_info['forum_use_password'] != 'n' && $params['password'] != $forum_info['forum_password']) {
@@ -2491,9 +2491,9 @@ class Comments extends TikiLib {
 						// Set watch if requested
 						if ($prefs['feature_user_watches'] == 'y') {
 							if ($user && isset($params['set_thread_watch']) && $params['set_thread_watch'] == 'y') {
-								$tikilib->add_user_watch($user, 'forum_post_thread', $threadId, 'forum topic', $forum_info['name'] . ':' . $params['comments_title'], 'tiki-view_forum_thread.php?forumId=' . $forum_info['forumId'] . '&amp;comments_parentId=' . $threadId);
+								$this->add_user_watch($user, 'forum_post_thread', $threadId, 'forum topic', $forum_info['name'] . ':' . $params['comments_title'], 'tiki-view_forum_thread.php?forumId=' . $forum_info['forumId'] . '&amp;comments_parentId=' . $threadId);
 							} elseif (!empty($params['anonymous_email'])) { // Add an anonymous watch, if email address supplied.
-								$tikilib->add_user_watch($params['anonymous_name']. ' ' . tra('(not registered)', $prefs['site_language']), 'forum_post_thread', $threadId, 'forum topic', $forum_info['name'] . ':' . $params['comments_title'], 'tiki-view_forum_thread.php?forumId=' . $forum_info['forumId'] . '&amp;comments_parentId=' . $threadId, $params['anonymous_email'], isset($prefs['language']) ? $prefs['language'] : '');
+								$this->add_user_watch($params['anonymous_name']. ' ' . tra('(not registered)', $prefs['site_language']), 'forum_post_thread', $threadId, 'forum topic', $forum_info['name'] . ':' . $params['comments_title'], 'tiki-view_forum_thread.php?forumId=' . $forum_info['forumId'] . '&amp;comments_parentId=' . $threadId, $params['anonymous_email'], isset($prefs['language']) ? $prefs['language'] : '');
 							}
 						}
 
@@ -2521,7 +2521,7 @@ class Comments extends TikiLib {
 					$ret = $this->add_thread_attachment($forum_info, $threadId, $errors, $fp, '',	$_FILES['userfile1']['name'], $_FILES['userfile1']['type'],	$_FILES['userfile1']['size'], 0, $qId );
 					fclose($fp);
 				} else {
-					$errors[] = $tikilib->uploaded_file_error($_FILES['userfile1']['error']);
+					$errors[] = $this->uploaded_file_error($_FILES['userfile1']['error']);
 				}
 			} //END ATTACHMENT PROCESSING
 		}
@@ -2595,6 +2595,7 @@ class Comments extends TikiLib {
 		if (!isset($params['anonymous_email'])) {
 			$params['anonymous_email'] = '';
 		}
+
 		if ( isset($params['comments_reply_threadId']) && ! empty($params['comments_reply_threadId']) ) {
 			$reply_info = $this->get_comment($params['comments_reply_threadId']);
 			$in_reply_to = $reply_info['message_id'];
@@ -2657,5 +2658,3 @@ function r_compare_lastPost($ar1, $ar2) {
 	return $ar1['type'] == 's' ? -1 : 1;
     }
 }
-
-?>

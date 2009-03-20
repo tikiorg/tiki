@@ -69,7 +69,7 @@ function verif_url($url, $use_tidy = TRUE) {
 	$headers = http_parse_headers($buffer);
 	if (isset($headers['Set-Cookie'])) {
 		foreach($headers['Set-Cookie'] as $c) {
-    	parse_str($c,$cookies);
+			TikiLib::parse_str($c,$cookies);
 		}
 	}
 
@@ -116,7 +116,7 @@ function verif_url($url, $use_tidy = TRUE) {
 		foreach($cookies_array[1] as $c) {
 			$cookies_tmp .= "&$c";
 		}
-		parse_str($cookies_tmp,$cookies_titi);
+		TikiLib::parse_str($cookies_tmp,$cookies_titi);
 		if (!is_array($cookies)) {
 			$cookies = array();
 		}

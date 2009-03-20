@@ -39,12 +39,8 @@ $tiki_timer->start();
 
 require_once('tiki-setup_base.php');
 
-// TikiTests are PHP5 only
-if ($prefs['feature_tikitests'] == 'y' and version_compare(PHP_VERSION, '5.0.0', '>='))  {
-	require_once('tiki_tests/tikitestslib.php');
-}
+if ( $prefs['feature_tikitests'] == 'y' ) require_once('tiki_tests/tikitestslib.php');
 $crumbs[] = new Breadcrumb($prefs['browsertitle'], '', $prefs['tikiIndex']);
-
 if ( $prefs['site_closed'] == 'y' ) require_once('lib/setup/site_closed.php');
 require_once('lib/setup/error_reporting.php');
 if ( $prefs['feature_bot_bar_debug'] == 'y' || $prefs['use_load_threshold'] == 'y' ) require_once('lib/setup/load_threshold.php');
@@ -149,4 +145,4 @@ $smarty->assign('stay_in_ssl_mode', $stay_in_ssl_mode);
 $smarty->assign('tiki_version', $TWV->version);
 $smarty->assign('tiki_branch', $TWV->branch);
 $smarty->assign('tiki_star', $TWV->star);
-$smarty->assign('tiki_uses_cvs', $TWV->cvs);
+$smarty->assign('tiki_uses_svn', $TWV->svn);

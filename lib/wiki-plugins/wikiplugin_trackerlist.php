@@ -263,7 +263,7 @@ function wikiplugin_trackerlist($data, $params) {
 		
 		//$query_array = array();
 		//$quarray = array();
-		//parse_str($_SERVER['QUERY_STRING'],$query_array);
+		//TikiLib::parse_str($_SERVER['QUERY_STRING'],$query_array);
 
 		if (isset($stickypopup) && $stickypopup == 'y') {
 			$stickypopup = true;

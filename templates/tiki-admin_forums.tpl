@@ -353,7 +353,7 @@
 <form action="#">
 <table class="normal">
 <tr>
-<th>
+<th style="text-align:center">
 {if $channels}
 <script type="text/javascript">
 <!--//--><![CDATA[//><!--

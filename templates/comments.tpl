@@ -157,15 +157,6 @@
 	</div>
 	{/if}
 
-{*** Seems buggy (at least when called for a wiki page)
-{if $forum_mode ne 'y'}
-    <th style="text-align: center; vertical-align: middle">
-		<a class="link" href="{$comments_complete_father}comzone=hide">{tr}Hide all{/tr}</a>
-    </th>
-{/if}
-***}
-
-
 	{section name=rep loop=$comments_coms}
 		{include file="comment.tpl" comment=$comments_coms[rep]}
 		{if $thread_style != 'commentStyle_plain'}<br />{/if}
@@ -377,7 +368,7 @@
 				<input type="button" name="comments_cancelComment" value="{tr}Cancel{/tr}" onclick="hide('{$postclass}');"/>
 				{elseif $prefs.feature_comments_moderation eq 'y' and $tiki_p_admin_comments neq 'y'}
 					{remarksbox type="note" title="{tr}Note{/tr}"}
-						Your comment will have to be approved by the moderator before it is displayed.
+						{tr}Your comment will have to be approved by the moderator before it is displayed.{/tr}
 					{/remarksbox}	
 				{/if}
 			</td>

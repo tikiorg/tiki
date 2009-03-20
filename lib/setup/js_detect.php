@@ -10,13 +10,22 @@
 $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
 // Javascript auto-detection
-if ( isset($_SESSION['tiki_cookie_jar']) && isset($_SESSION['tiki_cookie_jar']['javascript_enabled']) ) {
-	$prefs['javascript_enabled'] = $_SESSION['tiki_cookie_jar']['javascript_enabled'];
+//   (to be able to generate non-javascript code if there is no javascript, when noscript tag is not useful enough)
+//   It uses cookies instead of session vars to keep the correct value after a session timeout
+
+if ( isset($_COOKIE['javascript_enabled']) ) {
+	// Update the pref with the cookie value
+	$prefs['javascript_enabled'] = $_COOKIE['javascript_enabled'];
 } else {
-	// Set a session var to be able to generate non-javascript code if there is no javascript, when noscript tag is not useful enough
-	$headerlib->add_js("setSessionVar('javascript_enabled','y');");
+	// Set the cookie to 'n', through PHP / HTTP headers
+	$prefs['javascript_enabled'] = 'n';
+	setcookie('javascript_enabled', 'n');
 }
-if ($prefs['javascript_enabled'] != 'y') {
+
+if ( $prefs['javascript_enabled'] != 'y' ) {
+	// Set the cookie to 'y', through javascript (will override the above cookie set to 'n' and sent by PHP / HTTP headers)
+	$headerlib->add_js("setCookieBrowser('javascript_enabled','y');");
+
 	$prefs['feature_tabs'] = 'n';
 	$prefs['feature_jquery'] = 'n';
 	$prefs['feature_mootools'] = 'n';

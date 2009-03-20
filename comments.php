@@ -147,7 +147,7 @@ if (!isset($comments_parsed["query"])) {
 	$comments_parsed["query"] = '';
 }
 
-parse_str($comments_parsed["query"], $comments_query);
+TikiLib::parse_str($comments_parsed["query"], $comments_query);
 $comments_father = $comments_parsed["path"];
 
 $comments_complete_father = $comments_father . $comments_t_query;
@@ -173,10 +173,10 @@ if (!isset($_REQUEST["comments_reply_threadId"])) {
 }
 $smarty->assign("comments_reply_threadId", $_REQUEST["comments_reply_threadId"]);
 
+// Include the library for comments (if not included)
 include_once ("lib/commentslib.php");global $dbTiki;
 $commentslib = new Comments($dbTiki);
 
-// Include the library for comments (if not included)
 if (!isset($comments_prefix_var)) {
 	$comments_prefix_var = '';
 }
@@ -185,7 +185,6 @@ if( ! isset( $comments_objectId ) ) {
 	if (!isset($_REQUEST[$comments_object_var])) {
 		die ("The comments_object_var variable cannot be found as a REQUEST variable");
 	}
-
 	$comments_objectId = $comments_prefix_var . $_REQUEST["$comments_object_var"];
 }
 
@@ -293,7 +292,9 @@ if (($tiki_p_vote_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n')
 	}
 }
 
-if ( (!isset($forum_mode) || $forum_mode == 'n') && $tiki_p_admin_comments == 'y' && isset($_REQUEST['comments_approve']) && isset($_REQUEST["comments_threadId"]) ) {
+// Comments Moderation
+if ( (!isset($forum_mode) || $forum_mode == 'n') && $tiki_p_admin_comments == 'y' && isset($_REQUEST["comments_threadId"]) && !empty($_REQUEST['comments_approve']) ) {
+
 	if ( $_REQUEST['comments_approve'] == 'y' ) {
 		$commentslib->approve_comment($_REQUEST["comments_threadId"]);
 	} elseif ( $_REQUEST['comments_approve'] == 'n' ) {

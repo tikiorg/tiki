@@ -19,7 +19,7 @@
 
 {if $tiki_p_admin_forum eq "y"}
   <div class="navbar">
-		{button href="tiki-admin_forums.php?forumId=$forumId" _text="{tr}Edit Forum{/tr}"} 
+	{button href="tiki-admin_forums.php?forumId=$forumId" _text="{tr}Edit Forum{/tr}"} 
   </div>
 {/if}
 
@@ -60,12 +60,6 @@
 </div>
 
 {include file="comments.tpl"}
-
-{**** Seems buggy
-	{if $comments_threshold ne 0}
-	<div style="font-size: smaller;">{$comments_below} {tr}Comments below your current threshold{/tr}</div>
-	{/if}
-****}
 
 <table id="forumjumpto" style="clear:both;" ><tr>
 
