@@ -55,7 +55,7 @@
 	{/if}
 		<div id="mod-{$module_name|cat:$module_position|cat:$module_ord|escape}" style="display: block" class="clearfix box-data">
 {/if}
-{$module_content}
+{$module_content}<!--[if IE]><br class="clear" style="height: 1px !important" /><![endif]-->
 {$module_error}
 {if $module_nobox neq 'y'}
 {if $module_flip eq 'y'}
