@@ -95,6 +95,11 @@ input[type=file],
 input[type=reset],
 select {}
 
+.navbar{
+	margin: 10px 0;
+	line-height: 20px;
+}
+
 span.button {display: inline-block; margin: 2px 1px}
 
 /* Links in buttons */
