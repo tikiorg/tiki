@@ -6,7 +6,11 @@
 
 <h2>{tr}Exterminator of cached content{/tr}</h2>
 <table class="normal">
-<tr><th>{tr}Directory{/tr}</th><th>{tr}Files{/tr}/{tr}Size{/tr}</th><th>{tr}Action{/tr}</th></tr>
+<tr><th>{tr}Directory to exterminate{/tr}</th><th>{tr}Files{/tr}/{tr}Size{/tr}</th><th>{tr}Action{/tr}</th></tr>
+<tr class="form">
+<td class="even" colspan="2"><b>{tr}Clear all Tiki cache{/tr}</b></td>
+<td class="even"><a href="tiki-admin_system.php?do=all" class="link" title="{tr}Empty{/tr}">{icon _id=img/icons/del.gif alt="{tr}Empty{/tr}"}</a></td>
+</tr>
 <tr class="form">
 <td class="odd"><b>./templates_c/</b></td>
 <td class="odd">({$templates_c.cant} {tr}Files{/tr} / {$templates_c.total|kbsize|default:'0 Kb'})</td>
