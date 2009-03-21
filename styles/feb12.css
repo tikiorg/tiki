@@ -748,24 +748,18 @@ div.box {
 
 h3.box-title {
 	display: block;
-	border-bottom: 1px solid #57A5D0;
-	position: relative}
+	border-bottom: 1px solid #57A5D0}
 
-* html h3.box-title {position: static}
-.box a.flipmodtitle img {display: none}
+.box img.flipmodimage {display: none}
 
-* html .box a.flipmodtitle img,
-.box:hover a.flipmodtitle img {
+* html img.flipmodimage,
+.box:hover img.flipmodimage {
 	display: block;
-	position: absolute;
-	right: 0;
-	top: 0;
 	border: 1px solid transparent}
 
-* html .box a.flipmodtitle img {border: none}
-* html #col2 a.flipmodtitle img,
-* html #col3 a.flipmodtitle img {
-	position: static;
+* html .box img.flipmodimage {border: none}
+* html #col2 img.flipmodimage,
+* html #col3 img.flipmodimage {
 	float: right;
 	margin-top: -12px}
 

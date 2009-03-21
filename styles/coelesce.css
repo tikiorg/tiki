@@ -966,30 +966,27 @@ div.box {
 #col2 div.box {width: 205px}
 
 h3.box-title {
-	position: relative;
 	padding-top: 0;
 	padding-left: 15px;
 	margin: 0;
 	font-size: 1.1em;
 	color: #3f6383;
 	border: 1px solid #ebf5fe;
-	border-bottom: 0}
+	border-bottom: 0;
+	height: 18px}
 
 .box-title a,
 .box-title a:link {color: #3f6383}
+h3.box-title span.moduleflip {float: right}
+img.flipmodimage {display: none}
 
-.box a.flipmodtitle img {display: none}
-
-* html .box a.flipmodtitle img,
-.box:hover a.flipmodtitle img {
+* html .box img.flipmodimage,
+.box:hover img.flipmodimage {
 	display: block;
-	position: absolute;
-	right: 0;
-	top: 0;
 	border: 1px solid transparent}
 
-* html .box a.flipmodtitle img {border: none}
-a.flipmodtitle:hover img {border: 1px solid #58A7D2 !important}
+* html .box img.flipmodimage {border: none}
+img.flipmodimage:hover {border: 1px solid #58A7D2 !important}
 #col2 h3.box-title {}
 #col2 .box-title a,
 #col2 .box-title a:link {}

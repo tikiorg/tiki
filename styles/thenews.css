@@ -851,34 +851,29 @@ h3.box-title {
 	font-weight: normal;
 	margin: 0 0 7px 1em;
 	padding: 0;
+	height: 18px;
 	color: black;
 	text-transform: uppercase;
 	font-family: Arial, Helvetica, sans-serif;
 	display: block;
 	font-size: 90%;
-	font-weight: bold;
-	position: relative;
-}
+	font-weight: bold}
 
-* html h3.box-title {position: static}
-.box a.flipmodtitle img {display: none}
+.box img.flipmodimage {display: none}
 
-* html .box a.flipmodtitle img,
-.box:hover a.flipmodtitle img {
+* html .box img.flipmodimage,
+.box:hover img.flipmodimage {
 	display: block;
-	position: absolute;
-	right: 0;
-	top: 0;
 	height: 13px;
 	width: 13px;
 	border: 1px solid transparent;
 	background: #fff}
 	
-* html #col2 a.flipmodtitle img {right: 8px}
-* html #col3 a.flipmodtitle img {right: 20px}
+* html #col2 img.flipmodimage {right: 8px}
+* html #col3 img.flipmodimage {right: 20px}
 
-* html .box a.flipmodtitle img {border: none}
-a.flipmodtitle:hover img {border: 1px solid #AAAAAA !important}
+* html .box img.flipmodimage {border: none}
+img.flipmodimage:hover {border: 1px solid #AAAAAA !important}
 #col2 h3.box-title {}
 
 .opaque {
