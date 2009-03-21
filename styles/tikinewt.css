@@ -727,16 +727,16 @@ div.box-data {
 	font-size: .95em;
 	/*overflow: hidden;*/
 }
-
+/*
 .box-data ol {padding-left: 2em; margin-top: 0; margin-bottom: 0;}
 .box-data ul {padding-left: 0; margin-top: 0; margin-bottom: 0; list-style:none;}
-/* IE */
+ IE 
 * html .box-data ol {margin-left: 0em;}
 * html .box-data ul {margin-left: 0em;}
-/* IE7 */
+IE7 
 *:first-child+html .box-data ol {margin-left: 0em;}
 *:first-child+html .box-data ul {margin-left: 0em;}
-
+*/
 
 td.module {
 	font-size: .95em;
