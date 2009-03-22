@@ -1,4 +1,4 @@
-{title}{tr}Create WebHelp{/tr}{/title}
+<!-- START of {$smarty.template} -->{title}{tr}Create WebHelp{/tr}{/title}
 
 {if  $generated eq 'y'}
 <a class="link" href="whelp/{$dir}/index.html">{tr}You can browse the generated WebHelp here{/tr}</a><br /><br />
@@ -24,4 +24,4 @@
   	<td class="formcolor"><input type="submit" name="create" value="{tr}Create{/tr}" /></td>
   </tr>
 </table>  
-</form>
+</form><!-- END of {$smarty.template} -->

@@ -1,4 +1,4 @@
-{strip}
+<!-- START of {$smarty.template} -->{strip}
 {* $Id$ *}
 {if !empty($popupfields)}{popup_init src="lib/overlib.js"}{/if}
 {if $showtitle eq 'y'}<div class="pagetitle">{$tracker_info.name}</div>{/if}
@@ -216,4 +216,4 @@ link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" alt="{tr}List
 {if $export eq 'y' && ($tiki_p_admin_trackers eq 'y' || $perms.tiki_p_export_tracker eq 'y')}
 	{button href="$exportUrl" _text="{tr}Export{/tr}"}
 {/if}
-{/strip}
+{/strip}<!-- END of {$smarty.template} -->

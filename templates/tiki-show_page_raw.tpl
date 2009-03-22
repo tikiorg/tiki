@@ -1,4 +1,4 @@
-{if $prefs.feature_page_title eq 'y'}<h1><a  href="tiki-backlinks.php?page={$page}" title="{tr}backlinks to{/tr} {$page}" class="pagetitle">{$page}</a></h1>{/if}
+<!-- START of {$smarty.template} -->{if $prefs.feature_page_title eq 'y'}<h1><a  href="tiki-backlinks.php?page={$page}" title="{tr}backlinks to{/tr} {$page}" class="pagetitle">{$page}</a></h1>{/if}
 <div class="wikitext">{$parsed}</div>
 {if isset($prefs.wiki_authors_style) && $prefs.wiki_authors_style eq 'business'}
 <p class="editdate">
@@ -33,4 +33,4 @@
 </p>
 {/if}
 
-{include file=tiki-page_bar.tpl}
+{include file=tiki-page_bar.tpl}<!-- END of {$smarty.template} -->

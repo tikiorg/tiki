@@ -1,4 +1,4 @@
-<div class="cbox">
+<!-- START of {$smarty.template} --><div class="cbox">
 	<div class="cbox-title">{tr}Wiki attachments{/tr}</div>
 	<div class="cbox-data">
 		<div class="admin">
@@ -77,4 +77,4 @@
 			</tr>
 		</table>
 	</div>
-</div>
+</div><!-- END of {$smarty.template} -->

@@ -1,4 +1,4 @@
-{title help="Html+Pages"}{tr}Admin HTML pages{/tr}{/title}
+<!-- START of {$smarty.template} -->{title help="Html+Pages"}{tr}Admin HTML pages{/tr}{/title}
 
 {if $pageName ne ''}
   <div class="navbar">
@@ -130,4 +130,4 @@
   {/section}
 </table>
 
-{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
+{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}<!-- END of {$smarty.template} -->

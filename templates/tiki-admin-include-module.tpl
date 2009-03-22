@@ -1,4 +1,4 @@
-{remarksbox type="tip" title="{tr}Tip{/tr}"}
+<!-- START of {$smarty.template} -->{remarksbox type="tip" title="{tr}Tip{/tr}"}
 {tr}Right &amp; left boxes{/tr}
 <hr />
 <a class="rbox-link" href="tiki-admin_modules.php">{tr}Administer modules{/tr}</a>

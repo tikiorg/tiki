@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 
 {if $cant_pages > 1 or $initial or $find}
 	{initials_filter_links}
@@ -376,4 +376,4 @@
 {if $checkboxes_on eq 'y'}
 </form>
 {/if}
-{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
+{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}<!-- END of {$smarty.template} -->

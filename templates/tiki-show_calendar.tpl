@@ -1,4 +1,4 @@
-{* calendar view to be included both in tiki-calendar.tpl and wikiplugin-calendar *}
+<!-- START of {$smarty.template} -->{* calendar view to be included both in tiki-calendar.tpl and wikiplugin-calendar *}
 <div class="tabrow">
 <table cellpadding="0" cellspacing="0" border="0">
 <tr><td class="middle" nowrap="nowrap" rowspan="2">
@@ -89,4 +89,4 @@ firstDay : {$firstDayofWeek}
 </td></tr>
 </table>
 
-{*-------------------------------------------*}
+{*-------------------------------------------*}<!-- END of {$smarty.template} -->

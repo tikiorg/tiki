@@ -1,1 +1,1 @@
-| {tr}Theme{/tr}: Coelesce
+<!-- START of {$smarty.template} -->| {tr}Theme{/tr}: Coelesce

@@ -1,4 +1,4 @@
-{title help="polls" admpage="polls"}{tr}Polls{/tr}{/title}
+<!-- START of {$smarty.template} -->{title help="polls" admpage="polls"}{tr}Polls{/tr}{/title}
 
 {include file='find.tpl' _sort_mode='y'}
 
@@ -29,4 +29,4 @@
 {/section}
 </table>
 
-{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
+{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}<!-- END of {$smarty.template} -->

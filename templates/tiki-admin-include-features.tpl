@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Please see the <a class='rbox-link' target='tikihelp' href='http://doc.tikiwiki.org/Features'>evaluation of each feature</a> on Tiki's developer site.{/tr}{/remarksbox}
 
@@ -462,4 +462,4 @@
 			<input type="submit" name="features" value="{tr}Apply{/tr}" />
 		</div>
 	</form>
-</div>
+</div><!-- END of {$smarty.template} -->

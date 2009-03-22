@@ -1,4 +1,4 @@
-{title help="Theme+Control"}{tr}Theme Control Center: Sections{/tr}{/title}
+<!-- START of {$smarty.template} -->{title help="Theme+Control"}{tr}Theme Control Center: Sections{/tr}{/title}
 
 <div class="simplebox">
 <b>{tr}Theme is selected as follows{/tr}:</b><br />
@@ -64,4 +64,4 @@
 {/section}
 </table>
 </form>
-<br /> <br /> <br /> 
+<br /> <br /> <br /> <!-- END of {$smarty.template} -->

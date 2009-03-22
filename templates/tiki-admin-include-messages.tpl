@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 
 <div class="cbox">
 	<div class="cbox-title">
@@ -19,4 +19,4 @@
 			</table>
 		</form>
 	</div>
-</div>
+</div><!-- END of {$smarty.template} -->

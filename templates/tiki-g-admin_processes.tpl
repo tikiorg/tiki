@@ -1,4 +1,4 @@
-{popup_init src="lib/overlib.js"}
+<!-- START of {$smarty.template} -->{popup_init src="lib/overlib.js"}
 {*Smarty template*}
 <h1><a class="pagetitle" href="tiki-g-admin_processes.php">{tr}Admin processes{/tr}</a>
 
@@ -185,4 +185,4 @@
 {/section}
 {/if}
 </div>
-</div> 
+</div> <!-- END of {$smarty.template} -->

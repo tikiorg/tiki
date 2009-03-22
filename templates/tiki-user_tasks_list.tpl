@@ -1,4 +1,4 @@
-{*Smarty template*}
+<!-- START of {$smarty.template} -->{*Smarty template*}
 
 
 {* start ************ Task list ***************}

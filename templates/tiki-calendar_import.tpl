@@ -1,4 +1,4 @@
-{popup_init src="lib/overlib.js"}
+<!-- START of {$smarty.template} -->{popup_init src="lib/overlib.js"}
 
 {title}{tr}Calendar import{/tr}{/title}
 

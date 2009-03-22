@@ -1,4 +1,4 @@
-{title url="tiki-directory_ranking.php?sort_mode=$sort_mode"}{tr}Directory ranking{/tr}{/title}
+<!-- START of {$smarty.template} -->{title url="tiki-directory_ranking.php?sort_mode=$sort_mode"}{tr}Directory ranking{/tr}{/title}
 
 {* Display the title using parent *}
 {include file=tiki-directory_bar.tpl}<br /><br />
@@ -37,4 +37,4 @@
 {/section}
 </table>
 
-{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
+{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}<!-- END of {$smarty.template} -->

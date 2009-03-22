@@ -1,4 +1,4 @@
-<div class='opaque'>
+<!-- START of {$smarty.template} --><div class='opaque'>
 <div class='box-title'>{tr}Information{/tr}</div>
 <div class='box-data'>
 {if $showname eq 'y' and $file_info.name neq ''}<i>{$file_info.name}</i><br /><br />{/if}
@@ -11,4 +11,4 @@
 {if $showfilesize eq 'y' and $file_info.filesize neq ''}{tr}Filesize{/tr}: {$file_info.filesize} {tr}bytes{/tr}<br />{/if}
 {if $showhits eq 'y' and $file_info.hits neq ''}{tr}Hits{/tr}: {$file_info.hits}{/if}
 </div>
-</div>
+</div><!-- END of {$smarty.template} -->

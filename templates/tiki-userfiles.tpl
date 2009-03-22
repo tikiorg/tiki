@@ -1,4 +1,4 @@
-{*Smarty template*}
+<!-- START of {$smarty.template} -->{*Smarty template*}
 
 {title help="User+Files"}{tr}User Files{/tr}{/title}
 
@@ -63,4 +63,4 @@
       </td>
     </tr>
   </table>
-</form>
+</form><!-- END of {$smarty.template} -->

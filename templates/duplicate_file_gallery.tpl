@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 {if $tiki_p_create_file_galleries eq 'y'}
 <h2>{tr}Duplicate File Gallery{/tr}</h2>
 <form action="tiki-list_file_gallery.php{if $filegals_manager neq ''}?filegals_manager={$filegals_manager}{/if}" method="post">
@@ -19,4 +19,4 @@
     <tr class="formcolor"><td></td><td><input type="submit" name="duplicate" value="{tr}duplicate{/tr}" /></td></tr>
   </table>
 </form>
-{/if}
+{/if}<!-- END of {$smarty.template} -->

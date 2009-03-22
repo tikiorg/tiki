@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 {* Module layout with controls *}
 {if $module_nobox neq 'y'}
 <div class="box-shadow">
@@ -71,4 +71,4 @@
 		</div>
 	</div>
 </div>
-{/if}
+{/if}<!-- END of {$smarty.template} -->

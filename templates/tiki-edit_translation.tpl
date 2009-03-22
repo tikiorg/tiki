@@ -1,4 +1,4 @@
-{title help="i18n" admpage="i18n"}{tr}Translate:{/tr}&nbsp;{$name}{if isset($languageName)}&nbsp;({$languageName}, {$langpage}){/if}{/title}
+<!-- START of {$smarty.template} -->{title help="i18n" admpage="i18n"}{tr}Translate:{/tr}&nbsp;{$name}{if isset($languageName)}&nbsp;({$languageName}, {$langpage}){/if}{/title}
 
 <div class="navbar">
 	{if $type eq 'wiki page'}
@@ -141,4 +141,4 @@ function validate_translation_request() {
 			<input type="submit" value="{tr}Set Current Page's Language{/tr}"/>
 		</p>
 	</form>
-{/if}
+{/if}<!-- END of {$smarty.template} -->

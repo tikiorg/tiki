@@ -1,4 +1,4 @@
-{title}{tr}Rankings{/tr}{/title}
+<!-- START of {$smarty.template} -->{title}{tr}Rankings{/tr}{/title}
 
 <form action="{$rpage}" method="post">
 <select name="which">
@@ -32,4 +32,4 @@
 </div>
 </div>
 <br />
-{/section}
+{/section}<!-- END of {$smarty.template} -->

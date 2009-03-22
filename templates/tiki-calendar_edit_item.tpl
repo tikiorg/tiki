@@ -1,4 +1,4 @@
-{strip}
+<!-- START of {$smarty.template} -->{strip}
 {title admpage="calendar"}{tr}Calendar Item{/tr}{/title}
 
 <div class="navbar">
@@ -626,4 +626,4 @@ onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;">
 {/if}
 </form>
 </div>
-{/strip}
+{/strip}<!-- END of {$smarty.template} -->

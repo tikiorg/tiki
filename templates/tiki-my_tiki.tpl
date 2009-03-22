@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 
 {title help="MyTiki"}{tr}My Tiki{/tr}{/title}
 
@@ -308,4 +308,4 @@
     {if $smarty.capture.my|strip:'' eq ''}
       {tr}To display the objects you participate:{/tr} <a href="tiki-user_preferences.php?tab3#MyTiki">{tr}My Tiki{/tr}</a>
     {/if}
-{/if}
+{/if}<!-- END of {$smarty.template} -->

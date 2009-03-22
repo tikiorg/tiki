@@ -1,4 +1,4 @@
-{*Smarty template*}
+<!-- START of {$smarty.template} -->{*Smarty template*}
 {* start ************ Task View  ***************}
 
 <span class="titlea">{$info.title|escape}</span>&nbsp;
@@ -107,4 +107,4 @@
 </div>
 <br />
 <br />
-{* end ************ Task list ***************}
+{* end ************ Task list ***************}<!-- END of {$smarty.template} -->

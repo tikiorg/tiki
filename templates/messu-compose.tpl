@@ -1,4 +1,4 @@
-{title help="Inter-User Messages"}{tr}Compose message{/tr}{/title}
+<!-- START of {$smarty.template} -->{title help="Inter-User Messages"}{tr}Compose message{/tr}{/title}
 
 {include file=tiki-mytiki_bar.tpl}
 {include file="messu-nav.tpl"}
@@ -52,4 +52,4 @@
   </table>
 </form>
 {/if}
-<br />
+<br /><!-- END of {$smarty.template} -->

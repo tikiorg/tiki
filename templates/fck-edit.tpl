@@ -1,4 +1,4 @@
-<div class="fckeditzone">
+<!-- START of {$smarty.template} --><div class="fckeditzone">
 {if $fck->Compat} 
 <input type="hidden" id="{$fck->id}" name="{$fck->InstanceName}" value="{$fck->Meat|escape}" style="display:none" />
 <input type="hidden" id="{$fck->id}___Config" value="{$fck->ConfigString}" style="display:none" />
@@ -6,4 +6,4 @@
 {else}
 <textarea id='editwiki' class="wikiedit" name="{$fck->InstanceName}" rows="4" cols="40" style="width:{$fck->Width};height:{$fck->Height};">{$fck->HtmlMeat}</textarea>
 {/if}
-</div>
+</div><!-- END of {$smarty.template} -->

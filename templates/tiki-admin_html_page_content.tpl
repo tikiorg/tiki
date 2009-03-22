@@ -1,4 +1,4 @@
-{title}{tr}Admin HTML Page Dynamic Zones{/tr}{/title}
+<!-- START of {$smarty.template} -->{title}{tr}Admin HTML Page Dynamic Zones{/tr}{/title}
 
 <h2>{tr}Page{/tr}: {$pageName}</h2>
 
@@ -73,4 +73,4 @@
 </div>
 </form>
 
-{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
+{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}<!-- END of {$smarty.template} -->

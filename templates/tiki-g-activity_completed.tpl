@@ -1,4 +1,4 @@
-{popup_init src="lib/overlib.js"}
+<!-- START of {$smarty.template} -->{popup_init src="lib/overlib.js"}
 {*Smarty template*}
 <h1>{tr}Activity completed{/tr}</h1>
 {include file=tiki-g-user_bar.tpl}
@@ -35,4 +35,4 @@
 <input type="hidden" name="iid" value="{$iid}" />
 <input type="hidden" name="__post" value="y" />
 <input type="hidden" name="activityId" value="{$actid}" />
-</form>
+</form><!-- END of {$smarty.template} -->

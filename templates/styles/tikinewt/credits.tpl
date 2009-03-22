@@ -1,1 +1,1 @@
- | {tr}Theme{/tr}: Tikinewt
+<!-- START of {$smarty.template} --> | {tr}Theme{/tr}: Tikinewt

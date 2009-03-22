@@ -1,4 +1,4 @@
-<table cellpadding='0' cellspacing='0'><tr><td>
+<!-- START of {$smarty.template} --><table cellpadding='0' cellspacing='0'><tr><td>
 <div style="height:20px; padding-top:2px; padding-bottom:2px;border:1px solid black; background-color:white; color:black; font-size:10px;">
 <table  cellpadding='0' cellspacing='0'>
 <tr>
@@ -41,4 +41,4 @@
 </tr>
 </table>
 </div>
-</td></tr></table>
+</td></tr></table><!-- END of {$smarty.template} -->

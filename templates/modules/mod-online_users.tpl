@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Online users{/tr}"}{/if}
 {tikimodule error=$module_params.error title=$tpl_module_title name="online_users" flip=$module_params.flip decorations=$module_params.decorations nobox=$modules_params.nobox notitle=$module_params.notitle}

@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 
 <a name="attachments"></a>
 {* Don't even generate DIV if no any needed rights *}
@@ -90,4 +90,4 @@ or (!isset($smarty.session.tiki_cookie_jar.$cookie_key) and $prefs.w_displayed_d
 {/if}
 
 </div>
-{/if}
+{/if}<!-- END of {$smarty.template} -->

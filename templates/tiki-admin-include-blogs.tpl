@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}To add/remove blogs, go to "Create/Edit Blog" under "Blogs" on the application menu, or{/tr} <a class="rbox-link" href="tiki-edit_blog.php">{tr}Click Here{/tr}</a>.{/remarksbox}
 
@@ -155,4 +155,4 @@
         </tr></table>
       </form>
   </div>
-</div>
+</div><!-- END of {$smarty.template} -->

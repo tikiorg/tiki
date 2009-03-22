@@ -1,4 +1,4 @@
-{if !$tidy}
+<!-- START of {$smarty.template} -->{if !$tidy}
 {remarksbox type="warning" title="{tr}Warning{/tr}"}{tr}Tidy extension not present{/tr}{/remarksbox}
 {/if}
 {if $http or $curl}
@@ -26,4 +26,4 @@
 			{button href="tiki_tests/tiki-tests_edit.php?filename=$filename" _text="{tr}Edit the TikiTest{/tr}"}
 		{/if}
 	{/if}
-</div>
+</div><!-- END of {$smarty.template} -->

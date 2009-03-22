@@ -1,4 +1,4 @@
-{if $prefs.javascript_enabled eq 'y'}
+<!-- START of {$smarty.template} -->{if $prefs.javascript_enabled eq 'y'}
 <div class="help" id="tikihelp">
 	<div class="help_icon">
 		<img onclick="javascript:flip('help_sections');" src="pics/help_icon.png">
@@ -17,4 +17,4 @@
 {if $prefs.javascript_enabled eq 'y'}
 	</div>
 </div>
-{/if}
+{/if}<!-- END of {$smarty.template} -->

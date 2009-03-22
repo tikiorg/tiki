@@ -1,4 +1,4 @@
-{* $Id: tiki-site_header.tpl 12554 2008-04-15 23:03:57Z luciash $ *}
+<!-- START of {$smarty.template} -->{* $Id: tiki-site_header.tpl 12554 2008-04-15 23:03:57Z luciash $ *}
 {strip}
 {if $user}
 <div id="siteloginbar" class="logged-in">
@@ -36,4 +36,4 @@
 	{/if}
 {/if}
 </div>
-{/strip}
+{/strip}<!-- END of {$smarty.template} -->

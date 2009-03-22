@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 {* Show Tiki tables *}
 
 {if count($command_result) > 0} {* Can it be == 0 ?? *}

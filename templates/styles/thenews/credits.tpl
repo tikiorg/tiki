@@ -1,1 +1,1 @@
- | {tr}Theme{/tr}: The News
+<!-- START of {$smarty.template} --> | {tr}Theme{/tr}: The News

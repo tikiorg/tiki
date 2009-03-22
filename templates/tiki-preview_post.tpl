@@ -1,4 +1,4 @@
-<h2>{tr}Preview{/tr}: {$page}</h2>
+<!-- START of {$smarty.template} --><h2>{tr}Preview{/tr}: {$page}</h2>
 <div style="text-align:left" class="posthead">
 {if $blog_data.use_title eq 'y'}
 	{$title}<br />

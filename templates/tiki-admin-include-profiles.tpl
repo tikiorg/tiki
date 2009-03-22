@@ -1,4 +1,4 @@
-{* $Id: tiki-admin-include-ads.tpl 12802 2008-05-12 11:06:16Z sylvieg $ *}
+<!-- START of {$smarty.template} -->{* $Id: tiki-admin-include-ads.tpl 12802 2008-05-12 11:06:16Z sylvieg $ *}
 <script type="text/javascript">
 var baseURI = '{$smarty.server.REQUEST_URI}';
 {literal}
@@ -296,4 +296,4 @@ function showDetails( id, domain, profile ) { // {{{
 {foreach item=k from=$oldSources}
 	refreshCache({$k});
 {/foreach}
-</script>
+</script><!-- END of {$smarty.template} -->

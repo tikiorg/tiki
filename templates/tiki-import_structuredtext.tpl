@@ -1,4 +1,4 @@
-{title help="ImportingPagesAdmin"}{tr}Import pages from a Structured Text Dump{/tr}{/title}
+<!-- START of {$smarty.template} -->{title help="ImportingPagesAdmin"}{tr}Import pages from a Structured Text Dump{/tr}{/title}
 
 <form method="post" action="tiki-import_structuredtext.php">
 <table class="normal">
@@ -40,4 +40,4 @@
 {/section}
 </table>
 <br /><br />
-{/if}
+{/if}<!-- END of {$smarty.template} -->

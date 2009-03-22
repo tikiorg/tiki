@@ -1,4 +1,4 @@
-{* 
+<!-- START of {$smarty.template} -->{* 
 $Id$ 
 parameters : id=1
 id is the categId of the parent categ to list

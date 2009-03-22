@@ -1,4 +1,4 @@
-{title help="Shoutbox"}{tr}Admin Shoutbox Words{/tr}{/title}
+<!-- START of {$smarty.template} -->{title help="Shoutbox"}{tr}Admin Shoutbox Words{/tr}{/title}
 
 <h2>{tr}Add Banned Word{/tr}</h2>
 
@@ -31,4 +31,4 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>&nbsp;&nbsp;
 {/section}
 </table>
 
-{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
+{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}<!-- END of {$smarty.template} -->

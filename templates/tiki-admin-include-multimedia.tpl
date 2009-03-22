@@ -1,4 +1,4 @@
-{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}It works with the File Gallery, wiki pages (via a plugin), and a new multimedia tracker item{/tr}{/remarksbox}
+<!-- START of {$smarty.template} -->{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}It works with the File Gallery, wiki pages (via a plugin), and a new multimedia tracker item{/tr}{/remarksbox}
 
 
 <div class="cbox">

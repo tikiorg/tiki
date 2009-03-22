@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 
 <div class="integrated-page">
   {$data}
@@ -23,4 +23,4 @@
 		{button href="tiki-admin_integrator_rules.php?repID=$thisrepID&amp;file=$thisfile" _text="{tr}configure rules{/tr}"}
 		{button href="tiki-admin_integrator.php?action=edit&amp;repID=$thisrepID" _text="{tr}Edit Repository{/tr}"}
 	{/if}
-</div>
+</div><!-- END of {$smarty.template} -->

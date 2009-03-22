@@ -1,4 +1,4 @@
-{title help="Notepad"}{tr}Write a note{/tr}{/title}
+<!-- START of {$smarty.template} -->{title help="Notepad"}{tr}Write a note{/tr}{/title}
 
 {include file=tiki-mytiki_bar.tpl}
 

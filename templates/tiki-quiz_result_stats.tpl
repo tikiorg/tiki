@@ -1,4 +1,4 @@
-{title help="Quiz"}{tr}Quiz result stats{/tr}{/title}
+<!-- START of {$smarty.template} -->{title help="Quiz"}{tr}Quiz result stats{/tr}{/title}
 
 <! -- linkbuttons, they would be better if they had rollover info -->
 

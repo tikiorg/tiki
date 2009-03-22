@@ -1,4 +1,4 @@
-{* $Id$ *}<?xml version="1.0" encoding="UTF-8"?>
+{* $Id$ *}<?xml version="1.0" encoding="UTF-8"?><!-- START of {$smarty.template} -->
 <!DOCTYPE html 
 	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -25,4 +25,4 @@
 {/if}
 {include file="footer.tpl"}
 	</body>
-</html>
+</html><!-- END of {$smarty.template} -->

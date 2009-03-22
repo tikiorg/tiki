@@ -1,4 +1,4 @@
-{title help="Admin+DSN"}{tr}Admin dsn{/tr}{/title}
+<!-- START of {$smarty.template} -->{title help="Admin+DSN"}{tr}Admin dsn{/tr}{/title}
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Admin DSN to define the database to be used by the SQL plugin.{/tr}{/remarksbox}
 
@@ -37,4 +37,4 @@
 {/section}
 </table>
 
-{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
+{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}<!-- END of {$smarty.template} -->

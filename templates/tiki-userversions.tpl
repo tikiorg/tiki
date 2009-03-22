@@ -1,4 +1,4 @@
-<h2>{tr}User_versions_for{/tr}: {$ruser}</h2>
+<!-- START of {$smarty.template} --><h2>{tr}User_versions_for{/tr}: {$ruser}</h2>
 {if $preview}
 <h2>{tr}Version{/tr}: {$version}</h2>
 <div class="wikitext">{$preview.data}</div>
@@ -31,4 +31,4 @@
 </td></tr>
 {/section}
 </table>
-</div>
+</div><!-- END of {$smarty.template} -->

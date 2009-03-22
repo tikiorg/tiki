@@ -1,4 +1,4 @@
-<div class="cbox">
+<!-- START of {$smarty.template} --><div class="cbox">
   <div class="cbox-title">{tr}Google Map setup{/tr}</div>
   <div class="cbox-data">
       <form action="tiki-admin.php?page=gmap" method="post">
@@ -73,4 +73,4 @@ function load() {literal}{{/literal}
 //--><!]]>
 window.onload=load;
 </script>
-{/if}
+{/if}<!-- END of {$smarty.template} -->

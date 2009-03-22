@@ -1,4 +1,4 @@
-{title}{tr}Change password enforced{/tr}{/title}
+<!-- START of {$smarty.template} -->{title}{tr}Change password enforced{/tr}{/title}
 
 <form method="post" action="tiki-change_password.php" >
 {if !empty($smarty.request.actpass)}
@@ -43,4 +43,4 @@
 </tr>  
 </table>
 </form>
-</fieldset>
+</fieldset><!-- END of {$smarty.template} -->

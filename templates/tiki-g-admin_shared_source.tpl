@@ -1,4 +1,4 @@
-{*Smarty template*}
+<!-- START of {$smarty.template} -->{*Smarty template*}
 <h1><a class="pagetitle" href="tiki-g-admin_shared_source.php?pid={$pid}">{tr}Admin process sources{/tr}</a></h1>
 {include file=tiki-g-proc_bar.tpl}
 {if count($errors) > 0}
@@ -85,4 +85,4 @@ Errors:<br />
   </td>
 </tr>
 </table>  
-</form>
+</form><!-- END of {$smarty.template} -->

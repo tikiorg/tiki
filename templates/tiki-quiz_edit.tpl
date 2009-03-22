@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 
 {* Copyright (c) 2004 George G. Geller et. al. *}
 {* All Rights Reserved. See copyright.txt for details and a complete list of authors. *}
@@ -202,4 +202,4 @@
   </table>
 </form>
 
-<!- tiki-quiz_edit end ->
+<!- tiki-quiz_edit end -><!-- END of {$smarty.template} -->

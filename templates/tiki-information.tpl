@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 <div id="tiki-center">
 <br />
 <div class="cbox">
@@ -18,4 +18,4 @@
 	 <a href="{$prefs.tikiIndex}" class="linkmenu">{tr}Return to home page{/tr}</a>
 	</p>
 </div>
-</div>
+</div><!-- END of {$smarty.template} -->

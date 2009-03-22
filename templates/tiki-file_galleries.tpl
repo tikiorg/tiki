@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 {popup_init src="lib/overlib.js"}
 <h1><a class="pagetitle" href="tiki-list_file_gallery.php{if $galleryId}?galleryId={$galleryId}{if isset($edit_mode) and $edit_mode ne 'n'}&amp;edit_mode=1{/if}{if $filegals_manager neq ''}&amp;filegals_manager={$filegals_manager|escape}{/if}{else}{if $filegals_manager neq ''}?filegals_manager={$filegals_manager|escape}{/if}{/if}">{tr}File Galleries{/tr}</a>
 {if $prefs.feature_help eq 'y'}
@@ -49,4 +49,4 @@
 {if $edit_mode ne 'y' and $dup_mode ne 'y'}
 	{include file='find.tpl' find_show_num_rows='y'}
 	{include file='list_file_gallery.tpl'}
-{/if}
+{/if}<!-- END of {$smarty.template} -->

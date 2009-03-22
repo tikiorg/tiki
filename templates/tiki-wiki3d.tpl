@@ -1,4 +1,4 @@
-<html>
+<!-- START of {$smarty.template} --><html>
 
   <body style="margin-top: 0px; margin-left: 0px">
     <applet codebase="./lib/wiki3d" archive="morcego-0.6.0.jar" code="br.arca.morcego.Morcego" width="{$prefs.wiki_3d_width}" height="{$prefs.wiki_3d_height}">
@@ -34,4 +34,4 @@
     </applet>
 
   </body>
-</html>
+</html><!-- END of {$smarty.template} -->

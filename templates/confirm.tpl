@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 <div class="cbox">
 	{if !empty($confirmation_text)}
 		<div class="cbox-title">{icon _id=information style="vertical-align:middle"} {$confirmation_text}</div>
@@ -16,4 +16,4 @@
 			{button href=$prefs.tikiIndex _text="{tr}Return to home page{/tr}"}
 		</form>
 	</div>
-</div>
+</div><!-- END of {$smarty.template} -->

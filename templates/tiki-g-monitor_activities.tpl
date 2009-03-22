@@ -1,4 +1,4 @@
-{popup_init src="lib/overlib.js"}
+<!-- START of {$smarty.template} -->{popup_init src="lib/overlib.js"}
 {*Smarty template*}
 <h1><a class="pagetitle" href="tiki-g-monitor_activities.php">{tr}Monitor Activities{/tr}</a>
 
@@ -170,4 +170,4 @@
 {pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links} 
 {* END OF PAGINATION *}
 
-{include file=tiki-g-monitor_stats.tpl}
+{include file=tiki-g-monitor_stats.tpl}<!-- END of {$smarty.template} -->

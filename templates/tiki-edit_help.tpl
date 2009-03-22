@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 {** \brief Show wiki syntax and plugins help *}
 {* TODO: Add links to add samples to edit form *}
 {add_help show='n' title="{tr}Wiki Help{/tr}" id="wiki_help"}
@@ -121,4 +121,4 @@
   {/section}
 </table>
 {/add_help}
-{/if}
+{/if}<!-- END of {$smarty.template} -->

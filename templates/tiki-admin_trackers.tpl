@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 
 {title help="Trackers" admpage="trackers"}{tr}Admin Trackers{/tr}{/title}
 
@@ -424,4 +424,4 @@ categories = {$catsdump}
 <tr class="formcolor"><td></td><td><input type="submit" name="duplicate" value="{tr}Duplicate Tracker{/tr}" /></td></tr>
 </table>
 </form>
-</div>
+</div><!-- END of {$smarty.template} -->

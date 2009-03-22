@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}
 {tr}To add/remove file galleries, go to "File Galleries" on the application menu, or{/tr} <a class="rbox-link" href="tiki-list_file_gallery.php">{tr}Click Here{/tr}</a>.
@@ -256,4 +256,4 @@
       </table>
     </form>
   </div>
-</div>
+</div><!-- END of {$smarty.template} -->

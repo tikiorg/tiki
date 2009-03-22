@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 
 {title help="Articles"}{tr}Admin Topics{/tr}{/title}
 
@@ -73,4 +73,4 @@
 			<td colspan="5" class="odd">{tr}No records found{/tr}</td>
 		</tr>
 	{/section}
-</table>
+</table><!-- END of {$smarty.template} -->

@@ -1,4 +1,4 @@
-{* $Id: tiki-adminusers.tpl 14918 2008-09-30 15:28:29Z ricks99 $ *}
+<!-- START of {$smarty.template} -->{* $Id: tiki-adminusers.tpl 14918 2008-09-30 15:28:29Z ricks99 $ *}
 {title admpage="general"}{tr}Log SQL{/tr}{/title}
 
 {if $prefs.log_sql ne 'y'}
@@ -29,4 +29,4 @@
 		</tr>
 	{/foreach}
 </table>
-{pagination_links cant=$cant step=$numrows offset=$offset}{/pagination_links}
+{pagination_links cant=$cant step=$numrows offset=$offset}{/pagination_links}<!-- END of {$smarty.template} -->

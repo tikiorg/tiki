@@ -1,1 +1,1 @@
- | {tr}Theme{/tr}: Darkroom
+<!-- START of {$smarty.template} --> | {tr}Theme{/tr}: Darkroom

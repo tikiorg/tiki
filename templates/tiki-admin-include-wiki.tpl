@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use the &quot;Quick Edit&quot; module to easily create or edit wiki pages. Select{/tr} <a class="rbox-link" href="tiki-admin_modules.php">{tr}Admin &gt; Modules{/tr}</a> to add this (or other) modules.{/remarksbox}
 

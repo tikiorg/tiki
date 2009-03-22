@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 
 {title url="tiki-user_information.php?view_user=$userwatch"}{tr}User Information{/tr}{/title}
 
@@ -205,4 +205,4 @@
 </tr>
 {/if}
 </table>
-<br /><br />
+<br /><br /><!-- END of {$smarty.template} -->

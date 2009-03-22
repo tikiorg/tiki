@@ -1,4 +1,4 @@
-{title}{tr}Contacts{/tr}{/title}
+<!-- START of {$smarty.template} -->{title}{tr}Contacts{/tr}{/title}
 
 <div class="navbar">
 	<div style="float:right;margin:5px;">
@@ -261,4 +261,4 @@
 
 {literal}
 	</script>
-{/literal}
+{/literal}<!-- END of {$smarty.template} -->

@@ -1,4 +1,4 @@
-{title help="Directory" url="tiki-directory_admin_related.php?parent=$parent"}{tr}Admin related categories{/tr}{/title}
+<!-- START of {$smarty.template} -->{title help="Directory" url="tiki-directory_admin_related.php?parent=$parent"}{tr}Admin related categories{/tr}{/title}
 
 {* Display the title using parent *}
 {include file=tiki-directory_admin_bar.tpl}
@@ -71,4 +71,4 @@
 </table>
 </form>
 
-{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
+{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}<!-- END of {$smarty.template} -->

@@ -1,4 +1,4 @@
-<!-- StartTikiTestRemoveMe -->
+<!-- START of {$smarty.template} --><!-- StartTikiTestRemoveMe -->
 <div id="tiki-test-topbar" style="background-color:red;" class="clearfix" style="width:100%">
 <table width="100%">
 <tr>
@@ -48,4 +48,4 @@ function tikitest_state(state) {
 {/if}
 //--><!]]>
 </script>
-<!-- EndTikiTestRemoveMe -->
+<!-- EndTikiTestRemoveMe --><!-- END of {$smarty.template} -->

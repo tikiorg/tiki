@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 {* Note: if you edit this file, make sure to make corresponding edits on tiki-edit_submission.tpl*}
 
 {popup_init src="lib/overlib.js"}
@@ -328,4 +328,4 @@
 
 <br />
 
-{include file=tiki-edit_help.tpl}
+{include file=tiki-edit_help.tpl}<!-- END of {$smarty.template} -->

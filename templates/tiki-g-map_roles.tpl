@@ -1,4 +1,4 @@
-{title url="tiki-g-map_roles.php?pid=$pid"}{tr}Map process roles{/tr}{/title}
+<!-- START of {$smarty.template} -->{title url="tiki-g-map_roles.php?pid=$pid"}{tr}Map process roles{/tr}{/title}
 
 {button href="tiki-g-admin_processes.php" _text="{tr}Admin Processes{/tr}"}
 {button href="tiki-g-admin_activities.php?pid=$pid" _text="{tr}Admin Activities{/tr}"}
@@ -134,4 +134,4 @@ Errors:<br />
 {/section}
 {/if}
 </div>
-</div> 
+</div> <!-- END of {$smarty.template} -->

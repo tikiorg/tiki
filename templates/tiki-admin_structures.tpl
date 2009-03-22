@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 {title help="Structures"}{tr}Structures{/tr}{/title}
 
 {if $just_created neq 'n' && $tiki_p_edit_structures == 'y'}
@@ -121,4 +121,4 @@
 </tr>
 </table>
 </form>
-{/if}
+{/if}<!-- END of {$smarty.template} -->

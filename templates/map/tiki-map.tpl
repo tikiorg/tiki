@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 <script src="lib/x/x_core.js"></script>
 <script src="lib/x/x_event.js"></script>
 <script src="lib/x/x_dom.js"></script>

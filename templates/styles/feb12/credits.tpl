@@ -1,1 +1,1 @@
- | {tr}Theme{/tr}: Feb12
+<!-- START of {$smarty.template} --> | {tr}Theme{/tr}: Feb12

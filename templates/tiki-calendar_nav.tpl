@@ -1,4 +1,4 @@
-<center><div class="tabrow"><div class="tabrowRight"></div><div class="tabrowLeft"></div><div class="viewmode"><div class="calbuttonBox"><div class="calbuttonLeft"></div><div class="calbuttonoff"><a href="{$myurl}?viewmode=day&todate={$now}" title="{tr}Today{/tr}">{tr}Today{/tr}</a></div><div class="calbuttonRight"></div></div>
+<!-- START of {$smarty.template} --><center><div class="tabrow"><div class="tabrowRight"></div><div class="tabrowLeft"></div><div class="viewmode"><div class="calbuttonBox"><div class="calbuttonLeft"></div><div class="calbuttonoff"><a href="{$myurl}?viewmode=day&todate={$now}" title="{tr}Today{/tr}">{tr}Today{/tr}</a></div><div class="calbuttonRight"></div></div>
 <div id="prev">
 {if $viewmode eq "day"}
 <a href="{$myurl}?todate={$daybefore}" title="&laquo; {tr}Day{/tr}" class="prev">{icon _id="resultset_previous" alt="{tr}Previous{/tr}"}</a>
@@ -34,4 +34,4 @@
 {elseif $viewmode eq "year"}
 <a href="{$myurl}?todate={$yearafter}" title="{tr}Year{/tr} &raquo;" class="next">{icon _id="resultset_next" alt="{tr}Next{/tr}"}</a>
 {/if}
-</div></div></div></center>
+</div></div></div></center><!-- END of {$smarty.template} -->

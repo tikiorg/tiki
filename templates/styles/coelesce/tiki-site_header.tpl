@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 {* Template for Tikiwiki site identity header *}
 <div id="header-top">
 <div id="login_search">

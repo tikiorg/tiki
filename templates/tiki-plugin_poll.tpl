@@ -1,4 +1,4 @@
-~np~
+<!-- START of {$smarty.template} -->~np~
 <div class="poll">
 <div class="poll-title">
     <strong>{$poll_title}</strong>
@@ -8,4 +8,4 @@
 {include file=tiki-poll.tpl}
 </div>
 </div>
-~/np~
+~/np~<!-- END of {$smarty.template} -->

@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 
 {if $popup}
 <?xml version="1.0" encoding="UTF-8"?>
@@ -199,4 +199,4 @@ var thepix = new Diaporama('thepix', [{$listImgId}], {ldelim}
 
 {if $popup}
 </body></html>
-{/if}
+{/if}<!-- END of {$smarty.template} -->

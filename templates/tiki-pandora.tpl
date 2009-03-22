@@ -1,3 +1,3 @@
-<div id="masterFeatureList">
+<!-- START of {$smarty.template} --><div id="masterFeatureList">
 {$featurelist}
-</div>
+</div><!-- END of {$smarty.template} -->

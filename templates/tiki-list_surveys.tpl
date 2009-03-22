@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 {title help="Surveys"}{tr}Surveys{/tr}{/title}
 
 <div class="navbar">
@@ -57,4 +57,4 @@
 	{/section}
 </table>
 
-{pagination_links cant=$cant_pages step=$maxRecords offset=$offset}{/pagination_links}
+{pagination_links cant=$cant_pages step=$maxRecords offset=$offset}{/pagination_links}<!-- END of {$smarty.template} -->

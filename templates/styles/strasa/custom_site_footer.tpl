@@ -1,4 +1,4 @@
-<div id="custom_site_footer" class="clearfix">
+<!-- START of {$smarty.template} --><div id="custom_site_footer" class="clearfix">
 <div class="fcol1">
 	<img src="styles/strasa/info_icon.png" alt="info_icon" width="46" height="46" /><span class="titlefooter">Heading One</span><br clear="all">
 	<ul>

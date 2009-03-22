@@ -1,4 +1,4 @@
-<html><body>
+<!-- START of {$smarty.template} --><html><body>
 <div style="margin:40px;">
 <h2>{tr}Viewing blog post{/tr}</h2>
 <a class="link" href="tiki-view_blog.php?find={$find}&amp;blogId={$blogId}&amp;offset={$offset}&amp;sort_mode={$sort_mode}">{tr}Return to blog{/tr}</a>
@@ -31,4 +31,4 @@
 </div>
 
 </body>
-</html>
+</html><!-- END of {$smarty.template} -->

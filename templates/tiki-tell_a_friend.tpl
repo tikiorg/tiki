@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 
 {title}
   {if $report eq 'y'}
@@ -83,4 +83,4 @@
       <td class="formcolor"><input type="submit" name="send" value="{tr}Send{/tr}" /></td>
     </tr>
   </table>
-</form>
+</form><!-- END of {$smarty.template} -->

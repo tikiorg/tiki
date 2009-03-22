@@ -1,3 +1,3 @@
-<div align="center">
+<!-- START of {$smarty.template} --><div align="center">
 {include file=modules/mod-login_box.tpl}
-</div>
+</div><!-- END of {$smarty.template} -->

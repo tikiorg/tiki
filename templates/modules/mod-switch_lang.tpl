@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 {strip}
 {* params:
 	mode: 'menu' or 'flags' (default=menu)

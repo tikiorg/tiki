@@ -1,4 +1,4 @@
-{title}{tr}Stats for survey:{/tr}{$survey_info.name}{/title}
+<!-- START of {$smarty.template} -->{title}{tr}Stats for survey:{/tr}{$survey_info.name}{/title}
 
 <div class="navbar">
 	{button href="tiki-list_surveys.php" _text="{tr}List Surveys{/tr}"}
@@ -58,4 +58,4 @@
   {/if}
   </table>
   <br />
-{/section}
+{/section}<!-- END of {$smarty.template} -->

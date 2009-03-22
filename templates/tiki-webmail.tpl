@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 
 {title help=Webmail admpage=webmail}{tr}Webmail{/tr}{/title}
 
@@ -739,4 +739,4 @@
 			</table>
 		</form>
 	{/if}
-{/if}
+{/if}<!-- END of {$smarty.template} -->

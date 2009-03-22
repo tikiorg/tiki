@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 
 {title help="User+Watches"}{tr}User Watches{/tr}{/title}
 
@@ -116,4 +116,4 @@
 {if $watches}
 {tr}Perform action with checked{/tr}: <input type="submit" name="delete" value=" {tr}Delete{/tr} ">
 {/if}
-</form>
+</form><!-- END of {$smarty.template} -->

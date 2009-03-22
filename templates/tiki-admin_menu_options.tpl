@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 {title help="Menus" url="tiki-admin_menu_options.php?menuId=$menuId"}{tr}Admin Menu:{/tr} {$editable_menu_info.name}{/title}
 
 <div class="navbar">
@@ -8,103 +8,158 @@
 	{button href="#import" _text="{tr}Import{/tr}"}
 </div>
 
-<table><tr>
-<td valign="top">
-<table class="normal"><tr><td valign="top" class="odd" colspan="2">
-<h2>{tr}Edit menu options{/tr}</h2>
-<div style="text-align: right;">
-<a href="#" onclick="toggle('weburls');toggle('urltop');hide('show');show('hide');" id="show" style="display:block;">{tr}Show Quick Urls{/tr}</a>
-</div>
-</td>
-<td valign="top" class="even" id="urltop" style="display:none;">
-<h2>{tr}Some useful URLs{/tr}</h2>
-<div style="text-align: right;">
-<a href="#" onclick="toggle('weburls');toggle('urltop');hide('hide');show('show');" id="hide" style="display:none;">{tr}Hide Quick Urls{/tr}</a>
-</div>
-</td>
-</tr>
-<tr><td valign="top" class="odd" colspan="2">
-<form action="tiki-admin_menu_options.php" method="post">
-<input type="hidden" name="optionId" value="{$optionId|escape}" />
-<input type="hidden" name="menuId" value="{$menuId|escape}" />
-<input type="hidden" name="offset" value="{$offset|escape}" />
- {if !empty($nbRecords)}<input type="hidden" name="nbRecords" value="{$nbRecords|escape}" />{/if}
 <table>
-<tr class="formcolor"><td>{tr}Name{/tr}:</td><td colspan="3"><input id="menu_name" type="text" name="name" value="{$name|escape}" size="34" /></td></tr>
-<tr class="formcolor"><td>{tr}URL{/tr}:</td><td colspan="3"><input id="menu_url" type="text" name="url" value="{$url|escape}" size="34" />
-<br /><em>{tr}For wiki page, use ((PageName)).{/tr}</em>
-</td></tr>
-<tr class="formcolor"><td>{tr}Sections{/tr}:</td><td colspan="3"><input id="menu_section" type="text" name="section" value="{$section|escape}" size="34" /><br /><em>{tr}Separate multiple sections with a comma ( , ) for an AND or a vertical bar ( | ) for an OR.{/tr}</em></td></tr>
-<tr class="formcolor"><td>{tr}Permissions{/tr}:</td><td colspan="3"><input id="menu_perm" type="text" name="perm" value="{$perm|escape}" size="34" /><br /><em>{tr}Separate multiple permissions with a comma ( , ) for an AND or a vertical bar ( | ) for an OR.{/tr}</em></td></tr>
-<tr class="formcolor"><td>{tr}Group{/tr}:</td><td colspan="3">
-<select id="menu_groupname" name="groupname[]" size="4" multiple>
-<option value="">&nbsp;</option>
-{foreach key=k item=i from=$option_groups}
-<option value="{$k}" {$i}>{$k}</option>
-{/foreach}
-</select>
+	<tr>
+		<td valign="top">
+			<table class="normal">
+				<tr>
+					<td valign="top" class="odd" colspan="2">
+						<h2>{tr}Edit menu options{/tr}</h2>
+						<div style="text-align: right;">
+							<a href="#" onclick="toggle('weburls');toggle('urltop');hide('show');show('hide');" id="show" style="display:block;">{tr}Show Quick Urls{/tr}</a>
+						</div>
+					</td>
+					<td valign="top" class="even" id="urltop" style="display:none;">
+						<h2>{tr}Some useful URLs{/tr}</h2>
+						<div style="text-align: right;">
+							<a href="#" onclick="toggle('weburls');toggle('urltop');hide('hide');show('show');" id="hide" style="display:none;">{tr}Hide Quick Urls{/tr}</a>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td valign="top" class="odd" colspan="2">
+						<form action="tiki-admin_menu_options.php" method="post">
+							<input type="hidden" name="optionId" value="{$optionId|escape}" />
+							<input type="hidden" name="menuId" value="{$menuId|escape}" />
+							<input type="hidden" name="offset" value="{$offset|escape}" />
+							{if !empty($nbRecords)}<input type="hidden" name="nbRecords" value="{$nbRecords|escape}" />{/if}
+							<table>
+								<tr class="formcolor">
+									<td>{tr}Name{/tr}:</td>
+									<td colspan="3">
+										<input id="menu_name" type="text" name="name" value="{$name|escape}" size="34" />
+									</td>
+								</tr>
+								<tr class="formcolor">
+									<td>{tr}URL{/tr}:</td>
+									<td colspan="3">
+										<input id="menu_url" type="text" name="url" value="{$url|escape}" size="34" />
+										<br /><em>{tr}For wiki page, use ((PageName)).{/tr}</em>
+									</td>
+								</tr>
+								<tr class="formcolor">
+									<td>{tr}Sections{/tr}:</td>
+									<td colspan="3">
+										<input id="menu_section" type="text" name="section" value="{$section|escape}" size="34" /><br />
+										<em>{tr}Separate multiple sections with a comma ( , ) for an AND or a vertical bar ( | ) for an OR.{/tr}</em>
+									</td>
+								</tr>
+								<tr class="formcolor">
+									<td>{tr}Permissions{/tr}:</td>
+									<td colspan="3">
+										<input id="menu_perm" type="text" name="perm" value="{$perm|escape}" size="34" /><br />
+										<em>{tr}Separate multiple permissions with a comma ( , ) for an AND or a vertical bar ( | ) for an OR.{/tr}</em>
+									</td>
+								</tr>
+								<tr class="formcolor">
+									<td>{tr}Group{/tr}:</td>
+									<td colspan="3">
+										<select id="menu_groupname" name="groupname[]" size="4" multiple>
+											<option value="">&nbsp;</option>
+											{foreach key=k item=i from=$option_groups}<option value="{$k}" {$i}>{$k}</option>{/foreach}
+										</select>
 {if $option_groups|@count ge '2'}
-{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple groups.{/tr}<br />{tr}Selecting 2 groups means that the option will be seen if the user belongs to the 2 groups. If you want the 2 groups to see the option, create 2 options with one group each.{/tr}{/remarksbox}
+										{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple groups.{/tr}<br />{tr}Selecting 2 groups means that the option will be seen if the user belongs to the 2 groups. If you want the 2 groups to see the option, create 2 options with one group each.{/tr}{/remarksbox}
 {/if}
-</td></tr>
+									</td>
+								</tr>
 {if $prefs.feature_userlevels eq 'y'}
-<tr class="formcolor"><td>{tr}Level{/tr}:</td><td colspan="3">
-<select name="level">
-<option value="0"{if $level eq 0} selected="selected"{/if}>{tr}All{/tr}</option>
-{foreach key=levn item=lev from=$prefs.userlevels}
-<option value="{$levn}"{if $userlevel eq $levn} selected="selected"{/if}>{$lev}</option>
-{/foreach}
-</select>
-</td>
-</tr>
+								<tr class="formcolor">
+									<td>{tr}Level{/tr}:</td>
+									<td colspan="3">
+										<select name="level">
+											<option value="0"{if $level eq 0} selected="selected"{/if}>{tr}All{/tr}</option>
+											{foreach key=levn item=lev from=$prefs.userlevels}<option value="{$levn}"{if $userlevel eq $levn} selected="selected"{/if}>{$lev}</option>{/foreach}
+										</select>
+									</td>
+								</tr>
 {/if}
-<tr class="formcolor"><td>{tr}Type{/tr}:</td><td>
-<select name="type">
-<option value="o" {if $type eq 'o'}selected="selected"{/if}>{tr}option{/tr}</option>
-<option value="s" {if $type eq 's'}selected="selected"{/if}>{tr}section level 0{/tr}</option>
-<option value='1' {if $type eq '1'}selected="selected"{/if}>{tr}section level 1{/tr}</option>
-<option value='2' {if $type eq '2'}selected="selected"{/if}>{tr}section level 2{/tr}</option>
-<option value='3' {if $type eq '3'}selected="selected"{/if}>{tr}section level 3{/tr}</option>
-<option value="r" {if $type eq 'r'}selected="selected"{/if}>{tr}sorted section level 0{/tr}</option>
-<option value="-" {if $type eq '-'}selected="selected"{/if}>{tr}separator{/tr}</option>
-</select>
-</td>
-<td>{tr}Position{/tr}:</td><td><input type="text" name="position" value="{$position|escape}" size="6" /></td></tr>
-<tr class="formcolor"><td>&nbsp;</td><td colspan="3"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
-</table>
-</form>
-</td>
-<td valign="top" class="even" id="weburls" style="display:none;">
-<table>
-<tr><td>{tr}Home{/tr}: </td><td><select name="wikilinks" onchange="setMenuCon(options[selectedIndex].value);return true;">
-<option value=",,,">{tr}Choose{/tr} ...</option>
-<option value="{$prefs.tikiIndex},{tr}Home Page{/tr}">{tr}Home Page{/tr}</option>
-{if $prefs.home_blog}<option value="{$prefs.home_blog|sefurl:blog},{tr}Home Blog{/tr},feature_blogs,tiki_p_view_blogs">{tr}Home Blog{/tr}</option>{/if}
-{if $prefs.home_gallery}<option value="tiki-browse_gallery.php?galleryId={$prefs.home_gallery},{tr}Home Image Gal{/tr},feature_galleries,tiki_p_view_image_gallery">{tr}Home Image Gallery{/tr}</option>{/if}
-{if $prefs.home_file_gallery}<option value="tiki-list_file_gallery?galleryId={$prefs.home_file_gallery},{tr}Home File Gal{/tr},feature_file_galleries,tiki_p_view_file_gallery">{tr}Home File Gallery{/tr}</option>{/if}]
-</select></td></tr>
-<tr><td>{tr}General{/tr}: </td><td><select name="wikilinks" onchange="setMenuCon(options[selectedIndex].value);return true;">
-<option value=",,,">{tr}Choose{/tr} ...</option>
-{if $prefs.feature_stats eq 'y'}<option value="tiki-stats.php,{tr}Stats{/tr},feature_stats,tiki_p_view_stats">{tr}Stats{/tr}</option>{/if}
-{if $prefs.feature_games eq 'y'}<option value="tiki-list_games.php,{tr}Games{/tr},feature_games,tiki_p_play_games">{tr}Games{/tr}</option>{/if}
-{if $prefs.feature_categories eq 'y'}<option value="tiki-browse_categories.php,{tr}Categories{/tr},feature_categories,tiki_p_view_categories">{tr}Categories{/tr}</option>{/if}
-{if $prefs.feature_userPreferences eq 'y'}<option value="tiki-user_preferences.php,{tr}User preferences{/tr}">{tr}User prefs{/tr}</option>{/if}
-</select></td></tr>
+								<tr class="formcolor">
+									<td>{tr}Type{/tr}:</td>
+									<td>
+										<select name="type">
+											<option value="o" {if $type eq 'o'}selected="selected"{/if}>{tr}option{/tr}</option>
+											<option value="s" {if $type eq 's'}selected="selected"{/if}>{tr}section level 0{/tr}</option>
+											<option value='1' {if $type eq '1'}selected="selected"{/if}>{tr}section level 1{/tr}</option>
+											<option value='2' {if $type eq '2'}selected="selected"{/if}>{tr}section level 2{/tr}</option>
+											<option value='3' {if $type eq '3'}selected="selected"{/if}>{tr}section level 3{/tr}</option>
+											<option value="r" {if $type eq 'r'}selected="selected"{/if}>{tr}sorted section level 0{/tr}</option>
+											<option value="-" {if $type eq '-'}selected="selected"{/if}>{tr}separator{/tr}</option>
+										</select>
+									</td>
+									<td>{tr}Position{/tr}:</td>
+									<td>
+										<input type="text" name="position" value="{$position|escape}" size="6" />
+									</td>
+								</tr>
+								<tr class="formcolor">
+									<td>&nbsp;</td>
+									<td colspan="3">
+										<input type="submit" name="save" value="{tr}Save{/tr}" />
+									</td>
+								</tr>
+							</table>
+						</form>
+					</td>
+					<td valign="top" class="even" id="weburls" style="display:none;">
+						<table>
+							<tr>
+								<td>{tr}Home{/tr}: </td>
+								<td>
+									<select name="wikilinks" onchange="setMenuCon(options[selectedIndex].value);return true;">
+										<option value=",,,">{tr}Choose{/tr} ...</option>
+										<option value="{$prefs.tikiIndex},{tr}Home Page{/tr}">{tr}Home Page{/tr}</option>
+										{if $prefs.home_blog}<option value="{$prefs.home_blog|sefurl:blog},{tr}Home Blog{/tr},feature_blogs,tiki_p_view_blogs">{tr}Home Blog{/tr}</option>{/if}
+										{if $prefs.home_gallery}<option value="tiki-browse_gallery.php?galleryId={$prefs.home_gallery},{tr}Home Image Gal{/tr},feature_galleries,tiki_p_view_image_gallery">{tr}Home Image Gallery{/tr}</option>{/if}
+										{if $prefs.home_file_gallery}<option value="tiki-list_file_gallery?galleryId={$prefs.home_file_gallery},{tr}Home File Gal{/tr},feature_file_galleries,tiki_p_view_file_gallery">{tr}Home File Gallery{/tr}</option>{/if}]
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<td>{tr}General{/tr}: </td>
+									<td>
+										<select name="wikilinks" onchange="setMenuCon(options[selectedIndex].value);return true;">
+											<option value=",,,">{tr}Choose{/tr} ...</option>
+											{if $prefs.feature_stats eq 'y'}<option value="tiki-stats.php,{tr}Stats{/tr},feature_stats,tiki_p_view_stats">{tr}Stats{/tr}</option>{/if}
+											{if $prefs.feature_games eq 'y'}<option value="tiki-list_games.php,{tr}Games{/tr},feature_games,tiki_p_play_games">{tr}Games{/tr}</option>{/if}
+											{if $prefs.feature_categories eq 'y'}<option value="tiki-browse_categories.php,{tr}Categories{/tr},feature_categories,tiki_p_view_categories">{tr}Categories{/tr}</option>{/if}
+											{if $prefs.feature_userPreferences eq 'y'}<option value="tiki-user_preferences.php,{tr}User preferences{/tr}">{tr}User prefs{/tr}</option>{/if}
+										</select>
+									</td>
+								</tr>
 {if $prefs.feature_wiki eq 'y'}
-<tr><td>{tr}Wiki{/tr}: </td><td><select name="wikilinks" onchange="setMenuCon(options[selectedIndex].value);return true;">
-<option value=",,,">{tr}Choose{/tr} ...</option>
-<option value="tiki-index.php,{tr}Wiki Home{/tr},feature_wiki,tiki_p_view">{tr}Wiki Home{/tr}</option>
-<option value="tiki-lastchanges.php,{tr}Last changes{/tr},feature_lastChanges,tiki_p_view">{tr}Last changes{/tr}</option>
-<option value="tiki-wiki_rankings.php,{tr}Rankings{/tr},feature_wiki_rankings,tiki_p_view">{tr}Rankings{/tr}</option>
-<option value="tiki-listpages.php,{tr}List pages{/tr},feature_listPages,tiki_p_view">{tr}List pages{/tr}</option>
-<option value="tiki-index.php?page=SandBox,{tr}Sandbox{/tr},feature_sandbox,tiki_p_view">{tr}Sandbox{/tr}</option>
-</select></td></tr>
+								<tr>
+									<td>{tr}Wiki{/tr}: </td>
+									<td>
+										<select name="wikilinks" onchange="setMenuCon(options[selectedIndex].value);return true;">
+											<option value=",,,">{tr}Choose{/tr} ...</option>
+											<option value="tiki-index.php,{tr}Wiki Home{/tr},feature_wiki,tiki_p_view">{tr}Wiki Home{/tr}</option>
+											<option value="tiki-lastchanges.php,{tr}Last changes{/tr},feature_lastChanges,tiki_p_view">{tr}Last changes{/tr}</option>
+											<option value="tiki-wiki_rankings.php,{tr}Rankings{/tr},feature_wiki_rankings,tiki_p_view">{tr}Rankings{/tr}</option>
+											<option value="tiki-listpages.php,{tr}List pages{/tr},feature_listPages,tiki_p_view">{tr}List pages{/tr}</option>
+											<option value="tiki-index.php?page=SandBox,{tr}Sandbox{/tr},feature_sandbox,tiki_p_view">{tr}Sandbox{/tr}</option>
+										</select>
+									</td>
+								</tr>
 {/if}
 {if $prefs.feature_galleries eq 'y'}
-<tr><td>{tr}Images{/tr}: </td><td><select name="wikilinks" onchange="setMenuCon(options[selectedIndex].value);return true;">
-<option value=",,,">{tr}Choose{/tr} ...</option>
-<option value="tiki-galleries.php,{tr}List galleries{/tr},feature_galleries,tiki_p_view_image_gallery">{tr}List image galleries{/tr}</option>
-<option value="tiki-upload_image.php,{tr}Upload image{/tr},feature_galleries,tiki_p_upload_images">{tr}Upload{/tr}</option>
+								<tr>
+									<td>{tr}Images{/tr}: </td>
+									<td>
+										<select name="wikilinks" onchange="setMenuCon(options[selectedIndex].value);return true;">
+											<option value=",,,">{tr}Choose{/tr} ...</option>
+											<option value="tiki-galleries.php,{tr}List galleries{/tr},feature_galleries,tiki_p_view_image_gallery">{tr}List image galleries{/tr}</option>
+								<option value="tiki-upload_image.php,{tr}Upload image{/tr},feature_galleries,tiki_p_upload_images">{tr}Upload{/tr}</option>
 <option value="tiki-galleries_rankings.php,{tr}Gallery Rankings{/tr},feature_gal_rankings,tiki_p_view_image_gallery">{tr}Rankings{/tr}</option>
 <option value="tiki-browse_gallery.php?galleryId=,{tr}Browse a gallery{/tr},feature_galleries,tiki_p_view_image_gallery">{tr}Browse a gallery{/tr}</option>
 </select></td></tr>
@@ -285,4 +340,4 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
 <input type="hidden" name="menuId" value="{$menuId}" />
 {tr}File{/tr}: <input name="csvfile" type="file" />
 <input type="submit" name="import" value="{tr}Import{/tr}" />
-</form>
+</form><!-- END of {$smarty.template} -->

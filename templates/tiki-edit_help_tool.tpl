@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 <div class="quicktag">
 {literal}
 <script type="text/javascript">
@@ -142,4 +142,4 @@ function openFgalsWindow() {
   <br clear="all" />
 
 </div> <!-- helptool{$qtnum} -->
-</div> <!-- Quicktag -->
+</div> <!-- Quicktag --><!-- END of {$smarty.template} -->

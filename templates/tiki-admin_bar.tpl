@@ -1,4 +1,4 @@
-{if $prefs.feature_magic eq 'y' and $tiki_p_admin eq 'y'}
+<!-- START of {$smarty.template} -->{if $prefs.feature_magic eq 'y' and $tiki_p_admin eq 'y'}
 <div id="adminBar">
 	<ul class="topLevelAdmin">
 	{section name=top loop=$toplevelfeatures}
@@ -27,4 +27,4 @@
 	</ul>
 	{/if}
 </div>
-{/if}
+{/if}<!-- END of {$smarty.template} -->

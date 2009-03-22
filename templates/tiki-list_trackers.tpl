@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 
 {title help="Trackers" admpage="trackers"}{tr}Trackers{/tr}{/title}
 
@@ -43,4 +43,4 @@
 {/section}
 </table>
 <!-- Beginning of the prev/next advance buttons found at bottom of page -->
-{pagination_links cant=$channels_cant step=$prefs.maxRecords offset=$offset}{/pagination_links}
+{pagination_links cant=$channels_cant step=$prefs.maxRecords offset=$offset}{/pagination_links}<!-- END of {$smarty.template} -->

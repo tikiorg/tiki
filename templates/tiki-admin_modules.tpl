@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 {popup_init src="lib/overlib.js"}
 {strip}
 {title help="Modules+Admin" admpage="module"}{tr}Admin Modules{/tr}{/title}
@@ -412,4 +412,4 @@
 </form>
 </fieldset>
 
-{/strip}
+{/strip}<!-- END of {$smarty.template} -->

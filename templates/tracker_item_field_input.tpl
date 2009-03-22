@@ -1,4 +1,4 @@
-{strip}
+<!-- START of {$smarty.template} -->{strip}
 {* param: field_value(id, ins_id, type, value,options_array, http_request,flags,defaultvalue, isMandatory, itemChoice, list, isHidden), tiki_p_.... item(creator, my_rate), input_err, ling, groups, item(creator,rating,trackerId)*}
 
 {* ---- visible admin only ---- *}
@@ -382,4 +382,4 @@
 	{$field_value.value|escape}
 
 {/if}
-{/strip}
+{/strip}<!-- END of {$smarty.template} -->

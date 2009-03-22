@@ -1,4 +1,4 @@
-{title help="Webmail"}{tr}Mail-in accounts{/tr}{/title}
+<!-- START of {$smarty.template} -->{title help="Webmail"}{tr}Mail-in accounts{/tr}{/title}
 
 <table class="normal">
   <tr>
@@ -160,4 +160,4 @@
     </tr>
   </table>
 </form>
-<br /><br />
+<br /><br /><!-- END of {$smarty.template} -->

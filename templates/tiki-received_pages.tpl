@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 
 {title help="Communication+Center"}{tr}Received Pages{/tr}{/title}
 
@@ -197,4 +197,4 @@
 	</table>
 	{tr}Prefix the checked:{/tr}<input type="text" name="prefix" />
 	{tr}Postfix the checked:{/tr}<input type="text" name="postfix" />&nbsp;<input type="submit" value="{tr}OK{/tr}" />
-</form>
+</form><!-- END of {$smarty.template} -->

@@ -1,4 +1,4 @@
-{title}{tr}Submissions{/tr}{/title}
+<!-- START of {$smarty.template} -->{title}{tr}Submissions{/tr}{/title}
 
 <div class="navbar">
 	{button href="tiki-edit_submission.php" _text="{tr}Edit New Submission{/tr}"}
@@ -85,4 +85,4 @@
 	{/section}
 </table>
 
-{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
+{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}<!-- END of {$smarty.template} -->

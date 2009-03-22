@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 {if $prefs.feature_trackers ne 'y'}
 <span class="error">{tr}This feature is disabled{/tr}</span>
 {else}

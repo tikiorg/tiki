@@ -1,4 +1,4 @@
-{title help="Newsletters"}{tr}Newsletters{/tr}{/title}
+<!-- START of {$smarty.template} -->{title help="Newsletters"}{tr}Newsletters{/tr}{/title}
 
 {if $subscribed eq 'y'}
 	<div class="simplebox highlight">
@@ -109,4 +109,4 @@
 	</table>
 
 	{pagination_links cant=$cant offset=$offset step=$maxRecords}{/pagination_links}
-{/if}
+{/if}<!-- END of {$smarty.template} -->

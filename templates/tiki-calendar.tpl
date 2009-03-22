@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 {popup_init src="lib/overlib.js"}
 
 {title admpage="calendar"}
@@ -124,4 +124,4 @@
 		{include file="tiki-calendar_calmode.tpl"}
 	{/if}
 <p>&nbsp;</p>
-</div>
+</div><!-- END of {$smarty.template} -->

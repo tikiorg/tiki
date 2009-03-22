@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 {* look comments in tikiwiki/modules/mod-adsense.php for usage *}
 <div style="text-align: center">
 {if $client}

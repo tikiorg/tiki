@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 <div class="clearfix postbody-title">
 
 	{if $thread_style != 'commentStyle_headers' and $comment.threadId > 0
@@ -96,4 +96,4 @@
 		{include file="comment-footer.tpl"  comment=$comments_coms[rep]}
 	{/if}
 	<br class="clear" />
-</div>
+</div><!-- END of {$smarty.template} -->

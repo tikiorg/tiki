@@ -1,4 +1,4 @@
-{if $prefs.feature_gmap eq 'y'}
+<!-- START of {$smarty.template} -->{if $prefs.feature_gmap eq 'y'}
 
 {title help="gmap"}{tr}Google Map Locator{/tr}{/title}
 {if $watch}({$watch}){/if}

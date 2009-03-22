@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 {if $tiki_p_create_file_galleries eq 'y'}
   {if $individual eq 'y'}
   <br /><a class="fgallink" href="tiki-objectpermissions.php?objectName={$name|escape:"url"}&amp;objectType=file+gallery&amp;permType=file+galleries&amp;objectId={$galleryId}">{tr}There are individual permissions set for this file gallery{/tr}</a>
@@ -115,4 +115,4 @@
     </form>
 	</div>
 <br />
-{/if}
+{/if}<!-- END of {$smarty.template} -->

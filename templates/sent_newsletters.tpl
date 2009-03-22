@@ -1,4 +1,4 @@
-{* url - nlId - sort_mode - find - offset - channels - prev_offset - next_offset - pages_cant *}
+<!-- START of {$smarty.template} -->{* url - nlId - sort_mode - find - offset - channels - prev_offset - next_offset - pages_cant *}
 <div align="center">
 	<table class="findtable">
 		<tr>
@@ -87,4 +87,4 @@
 			{/section}
 		{/if}
 	</div>
-</div>
+</div><!-- END of {$smarty.template} -->

@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 {popup_init src="lib/overlib.js"}
 
 {title help="Categories+Admin" admpage="category"}{tr}Admin Categories{/tr}{/title}
@@ -250,4 +250,4 @@
       </form>
       </div>
     </div>
-{/if}
+{/if}<!-- END of {$smarty.template} -->
