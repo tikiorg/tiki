@@ -729,7 +729,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'rssfeed_creator' => '',
 		'rssfeed_css' => 'y',
 		'rssfeed_publisher' => '',
-		'rssfeed_img' => 'img/tiki.jpg',
+		'rssfeed_img' => 'img/tiki/tikilogo.png',
 		'rss_basic_auth' => 'n',
 
 		// maps
