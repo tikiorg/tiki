@@ -547,7 +547,7 @@ div#tiki-bot {}
 
 /* Text in the top level (visible by default) of the menu */
 .horbaritem a {
-	padding: 4px 3px 4px 1em;
+	padding: 4px 6px;
 	text-decoration: none;
 	font: .9em Verdana, Helvetica, Arial, Sans-Serif;
 	display: block;
@@ -562,6 +562,7 @@ div#tiki-bot {}
 .horbaritem a:visited {
 	
 } 
+.horbaritem img {vertical-align: middle;}
 
 /* IE */
 * html .horbaritem a,
@@ -593,6 +594,7 @@ div#tiki-bot {}
 	background-color: #fff;
 	display: block;
 	border: 1px solid #D3D3D3;
+	border-top: none;
 } 
 
 /* Menu items in drop down frame */
