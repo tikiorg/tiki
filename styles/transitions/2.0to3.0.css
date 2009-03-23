@@ -644,3 +644,9 @@ td.mods_hilite {
 	background-color:#;
 }
 
+/* workaround for Safari when in FCKEditor */
+html[dir=ltr]>body {
+	display: block;
+	margin: 1em .5em;
+}
+

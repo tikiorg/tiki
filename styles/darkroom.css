@@ -18,6 +18,11 @@ body {
 
 html>body {font-size: 74% !important}
 *:first-child+html body {font-size: 72% !important;}
+/* workaround for Safari when in FCKEditor */
+html[dir=ltr]>body {
+	display: block;
+	margin: 1em .5em;
+}
 body.fullscreen { }
 
 a,

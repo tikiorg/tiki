@@ -27,7 +27,13 @@ body {
 html>body {
 	font-size: 0.75em !important;/* redefine the body font-size for all modern browsers - ignored by old IEs */
 }
-	
+
+/* workaround for Safari when in FCKEditor */
+html[dir=ltr]>body {
+	display: block;
+	margin: 1em .5em;
+}
+
 #header {
 	background-color: transparent;
 }

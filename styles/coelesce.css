@@ -12,6 +12,11 @@ body {
 	font-family: Arial, Helvetica, sans-serif;}
 
 html>body {font-size: .7em !important}
+/* workaround for Safari when in FCKEditor */
+html[dir=ltr]>body {
+	display: block;
+	margin: 1em .5em;
+}
 body.fullscreen {}
 
 a,
