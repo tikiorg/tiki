@@ -83,7 +83,7 @@
 	{include file="tiki-top_bar.tpl"}
 </div>
 {* topbar custom code *}
-{if $prefs.feature_siteidentity eq 'y' and $prefs.feature_topbar_custom_code}
+{if $prefs.feature_topbar_custom_code}
 <div class="clearfix" id="topbar_custom_code">
 	{eval var=$prefs.feature_topbar_custom_code}
 </div>
