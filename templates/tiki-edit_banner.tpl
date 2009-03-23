@@ -25,6 +25,9 @@
    <tr><td class="form">{tr}Max impressions{/tr}:</td>
        <td class="form"><input type="text" name="maxImpressions" value="{$maxImpressions|escape}" size="7" /> <i>{tr}-1 for unlimited{/tr}</i></td>
    </tr>
+   <tr><td class="form">{tr}Max impressions for a user{/tr}:</td>
+       <td class="form"><input type="text" name="maxUserImpressions" value="{$maxUserImpressions|escape}" size="7" /> <i>{tr}-1 for unlimited{/tr}</i></td>
+   </tr>
    <tr><td class="form">{tr}Max clicks{/tr}:</td>
        <td class="form"><input type="text" name="maxClicks" value="{$maxClicks|escape}" size="7" /><i>{tr}-1 for unlimited{/tr}</i></td>
    <tr><td class="form">{tr}Zone{/tr}:</td>

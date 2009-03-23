@@ -56,6 +56,7 @@ if (isset($_REQUEST["bannerId"]) && $_REQUEST["bannerId"] > 0) {
 	$smarty->assign('bannerId', $info["bannerId"]);
 	$smarty->assign('client', $info["client"]);
 	$smarty->assign('maxImpressions', $info["maxImpressions"]);
+	$smarty->assign('maxUserImpressions', $info["maxUserImpressions"]);
 	$smarty->assign('maxClicks', $info["maxClicks"]);
 	$smarty->assign('fromDate', $info["fromDate"]);
 	$smarty->assign('toDate', $info["toDate"]);
@@ -110,6 +111,7 @@ if (isset($_REQUEST["bannerId"]) && $_REQUEST["bannerId"] > 0) {
 } else {
 	$smarty->assign('client', '');
 	$smarty->assign('maxImpressions', -1);
+	$smarty->assign('maxUserImpressions', -1);
 	$smarty->assign('maxClicks', -1);
 	$smarty->assign('fromDate', $tikilib->now);
 	$cur_time = explode(',', $tikilib->date_format('%Y,%m,%d,%H,%M,%S', $publishDate));
@@ -161,6 +163,7 @@ if (isset($_REQUEST["save"]) || isset($_REQUEST["create_zone"])) {
 	$smarty->assign('toTime', $_REQUEST["toTimeHour"].':'.$_REQUEST["toTimeMinute"]);
 	$smarty->assign('client', $_REQUEST["client"]);
 	$smarty->assign('maxImpressions', $_REQUEST["maxImpressions"]);
+	$smarty->assign('maxUserImpressions', $_REQUEST["maxUserImpressions"]);
 	$smarty->assign('maxClicks', $_REQUEST["maxClicks"]);
 	$smarty->assign('HTMLData', $_REQUEST["HTMLData"]);
 	$smarty->assign('fixedURLData', $_REQUEST["fixedURLData"]);
@@ -316,7 +319,7 @@ if (isset($_REQUEST["save"]) || isset($_REQUEST["create_zone"])) {
 		$bannerId = $bannerlib->replace_banner($_REQUEST["bannerId"], $_REQUEST["client"], $_REQUEST["url"], '',
 			'', $_REQUEST["use"], $_REQUEST["imageData"], $_REQUEST["imageType"], $_REQUEST["imageName"], $_REQUEST["HTMLData"],
 			$_REQUEST["fixedURLData"], $_REQUEST["textData"], $fromDate, $toDate, $useDates, $Dmon, $Dtue, $Dwed, $Dthu, $Dfri,
-			$Dsat, $Dsun, $fromTime, $toTime, $_REQUEST["maxImpressions"],$_REQUEST["maxClicks"], $_REQUEST["zone"]);
+			$Dsat, $Dsun, $fromTime, $toTime, $_REQUEST["maxImpressions"],$_REQUEST["maxClicks"], $_REQUEST["zone"], $_REQUEST["maxUserImpressions"]);
 
 		header("location:tiki-list_banners.php");
 		
@@ -325,7 +328,7 @@ if (isset($_REQUEST["save"]) || isset($_REQUEST["create_zone"])) {
 
 $zones = $bannerlib->banner_get_zones();
 $smarty->assign_by_ref('zones', $zones);
-$clients = $userlib->get_users(0, -1, 'login_desc', '');
+$clients = $userlib->get_users(0, -1, 'login_asc', '');
 $smarty->assign_by_ref('clients', $clients["data"]);
 
 ask_ticket('edit-banner');

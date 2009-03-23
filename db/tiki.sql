@@ -321,6 +321,7 @@ CREATE TABLE tiki_banners (
   created int(14) default NULL,
   maxImpressions int(8) default NULL,
   impressions int(8) default NULL,
+  maxUserImpressions int(8) default -1,
   maxClicks int(8) default NULL,
   clicks int(8) default NULL,
   zone varchar(40) default NULL,
