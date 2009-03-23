@@ -170,19 +170,6 @@
 						{/if}
 					</td>
 				</tr>
-				<tr>
- 	       <td class="form" >
-						{if $prefs.feature_help eq 'y'}
-							<a href="{$prefs.helpurl}Site+Identity" target="tikihelp" class="tikihelp" title="{tr}Site Identity{/tr}">
-						{/if}
-						{tr}Site Identity{/tr}
-						{if $prefs.feature_help eq 'y'}</a>{/if}
-					</td>
-					<td >
-						<input type="checkbox" name="feature_siteidentity" {if $prefs.feature_siteidentity eq 'y'}checked="checked"{/if}/>
-						{tr}Required for many of the general layout features{/tr}
-					</td>
-				</tr>
 			</table>
 			{if $prefs.feature_tabs neq 'y'}</div>{/if}
 		</fieldset> 

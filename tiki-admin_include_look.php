@@ -42,7 +42,6 @@ if (isset($_REQUEST["looksetup"])) {
 	"layout_section",
 	"feature_sitemycode",
 	"feature_breadcrumbs",
-    "feature_siteidentity",
 	"feature_siteloclabel",
 	"feature_sitelogo",
 	"feature_sitesubtitle",

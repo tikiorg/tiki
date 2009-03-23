@@ -519,7 +519,6 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 605,sitenav,3,,sitenav,special,,tiki_p_admin,50,,,,, 
 606,feature_site_report_email,3,,feature_site_report_email,simple,,tiki_p_admin,18,,,,, 
 608,Max. number of links around the current item,902,,direct_pagination_max_middle_links,simple,,tiki_p_admin,4,,Pagination,,, 
-609,feature_siteidentity,3,,feature_siteidentity,flag,,tiki_p_admin,22,,,,, 
 610,use_context_menu_text,3,,use_context_menu_text,flag,,tiki_p_admin,56,,,,, 
 611,Display 'First' and 'Last' links,902,,pagination_firstlast,flag,,tiki_p_admin,42,,Pagination,,, 
 612,Site Logo,876,,sitelogo_src,simple,,tiki_p_admin,,,,Path to image. ,, 
