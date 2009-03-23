@@ -271,7 +271,7 @@ if ($prefs['feature_user_watches'] == 'y') {
 			$tikilib->add_user_watch($user, $_REQUEST['watch_event'], $_REQUEST['watch_object'], 'blog', $blog_data['title'],
 				"tiki-view_blog.php?blogId=" . $_REQUEST['blogId']);
 		} else {
-			$tikilib->remove_user_watch($user, $_REQUEST['watch_event'], $_REQUEST['watch_object']);
+			$tikilib->remove_user_watch($user, $_REQUEST['watch_event'], $_REQUEST['watch_object'], 'blog');
 		}
 	}
 

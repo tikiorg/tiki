@@ -806,7 +806,7 @@ if ( $prefs['feature_user_watches'] == 'y' ) {
 					"tiki-list_file_gallery.php?galleryId=$galleryId"
 				);
 			} else {
-				$tikilib->remove_user_watch($user, $_REQUEST['watch_event'], $_REQUEST['watch_object']);
+				$tikilib->remove_user_watch($user, $_REQUEST['watch_event'], $_REQUEST['watch_object'], 'File Gallery');
 			}
 		}
 

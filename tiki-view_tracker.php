@@ -546,7 +546,7 @@ if ($prefs['feature_user_watches'] == 'y' and $tiki_p_watch_trackers == 'y') {
 		if ($_REQUEST['watch'] == 'add') {
 			$tikilib->add_user_watch($user, 'tracker_modified', $_REQUEST["trackerId"], 'tracker', $tracker_info['name'],"tiki-view_tracker.php?trackerId=".$_REQUEST["trackerId"]);
 		} else {
-			$tikilib->remove_user_watch($user, 'tracker_modified', $_REQUEST["trackerId"]);
+			$tikilib->remove_user_watch($user, 'tracker_modified', $_REQUEST["trackerId"], 'tracker');
 		}
 	}
 	$smarty->assign('user_watching_tracker', 'n');

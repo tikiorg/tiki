@@ -701,7 +701,7 @@ if($prefs['feature_user_watches'] == 'y' && $user && count($_SESSION['CalendarVi
 		if ($_REQUEST['watch_action'] == 'add') {
 	    	$tikilib->add_user_watch($user, $_REQUEST['watch_event'], $calId, 'calendar', $infocals['data'][$calId]['name'],"tiki-calendar.php?calIds[]=$calId");
 		} else {
-	    	$tikilib->remove_user_watch($user, $_REQUEST['watch_event'], $calId);
+	    	$tikilib->remove_user_watch($user, $_REQUEST['watch_event'], $calId, 'calendar');
 		}
 	}
 	if ($tikilib->user_watches($user,'calendar_changed', $calId, 'calendar')) {
