@@ -970,12 +970,12 @@
 					</tr>
 					<tr>
 						<td width=30%>
-			        		<label for="feature_ie56_correct_png">{tr}Correct PNG transparency in IE5.5 and IE6 (experimental){/tr}</label>
+			        		<label for="feature_iepngfix">{tr}Correct PNG images alpha transparency in IE6 (experimental){/tr}</label>
 						</td>
 						<td width=2%>
 						</td>
 						<td>
-							<input type="checkbox" name="feature_ie56_correct_png" id="feature_ie56_correct_png" {if $prefs.feature_ie56_correct_png eq 'y'}checked="checked"{/if}/>
+							<input type="checkbox" name="feature_iepngfix" id="feature_iepngfix"{if $prefs.feature_iepngfix eq 'y'} checked="checked"{/if} />
 						</td>
 					</tr>
 				</table>

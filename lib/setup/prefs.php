@@ -1156,6 +1156,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_comments_moderation' => 'n',
 		'feature_template_zoom' => 'y',
 		'feature_ie56_correct_png' => 'n',
+		'feature_iepngfix' => 'n',
 		
 		// JQuery
 		'feature_jquery' => 'n',			// Alternative lib for shadowbox etc

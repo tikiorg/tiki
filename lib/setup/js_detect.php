@@ -44,7 +44,7 @@ if ( $prefs['javascript_enabled'] != 'y' ) {
 	/** PNG transparency fix for IE 5.5 & 6 **/
 	if ($prefs['feature_ie56_correct_png'] == 'y' && (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 6') !== false) || strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 5')) {
 		$headerlib->add_js(<<<JS
-function correctPNG() // correctly handle PNG transparency in Win IE 5.5 & 6.
+function correctPNG() // correctly handle PNG transparency in Win IE 5.5 & 6 (warning: breaks menu folders toggling in IE ! TODO: remove this as it doesn't work very well in favour of the other method ?)
 {
 	var arVersion = navigator.appVersion.split("MSIE");
 	var version = parseFloat(arVersion[1]);
@@ -78,6 +78,18 @@ if (this.ie56) {
 }
 JS
 		);
+	} elseif ($prefs['feature_iepngfix'] == 'y' && strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 6') !== false) {
+	/**
+	 * \brief another attempt for PNG alpha transparency fix which seems to not break things, works for IE6 and can be applied even on background positioned images
+	 * 
+	 * is applied explicitly on defined CSS selectors or HTMLDomElement
+	 */
+			$headerlib->add_jsfile('lib/iepngfix/DD_belatedPNG-min.js');
+			$headerlib->add_js(<<<JS
+				DD_belatedPNG.fix('#sitelogo a img'); // list of selectors to fix separated by comma (default is set to fix sitelogo)
+JS
+		);
+			
 	}
 }
 if ($prefs['feature_ajax'] != 'y') {
