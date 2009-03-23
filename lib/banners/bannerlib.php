@@ -191,7 +191,7 @@ class BannerLib extends TikiLib {
 
 	function replace_banner($bannerId, $client, $url, $title = '', $alt = '', $use, $imageData, $imageType, $imageName, $HTMLData,
 		$fixedURLData, $textData, $fromDate, $toDate, $useDates, $mon, $tue, $wed, $thu, $fri, $sat, $sun, $hourFrom, $hourTo,
-		$maxImpressions, $maxClicks,$zone,$maxUserImpressions) {
+		$maxImpressions, $maxClicks,$zone,$maxUserImpressions=-1) {
 		$imageData = urldecode($imageData);
 		//$imageData = '';
 
@@ -234,7 +234,7 @@ class BannerLib extends TikiLib {
 			$query = "insert into `tiki_banners`(`client`, `url`, `title`, `alt`, `which`, `imageData`, `imageType`, `HTMLData`,
                 `fixedURLData`, `textData`, `fromDate`, `toDate`, `useDates`, `mon`, `tue`, `wed`, `thu`, `fri`, `sat`, `sun`,
                 `hourFrom`, `hourTo`, `maxImpressions`,`maxUserImpressions`,`maxClicks`,`created`,`zone`,`imageName`,`impressions`,`clicks`)
-                values(?,?,?,?,?,?,?,?,
+                values(?,?,?,?,?,?,?,?,?,
                 ?,?,?,?,?,?,?,?,?,
                 ?,?,?,?,?,?,?,?,?,?,?,?)";
 
