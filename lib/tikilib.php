@@ -329,7 +329,6 @@ class TikiLib extends TikiDB {
 		while( $row = $result->fetchRow() ) {
 			$groups[] = $row['group'];
 		}
-
 		return $groups;
 	}
 
@@ -1434,14 +1433,16 @@ class TikiLib extends TikiDB {
 			$ret = array();
 			$ret[] = "Anonymous";
 			return $ret;
-		} elseif ($prefs['feature_intertiki'] == 'y' and empty($prefs['feature_intertiki_mymaster']) and strstr($user,'@')) {
+		}
+		if ($prefs['feature_intertiki'] == 'y' and empty($prefs['feature_intertiki_mymaster']) and strstr($user,'@')) {
 			$realm = substr($user,strpos($user,'@')+1);
 			$user = substr($user,0,strpos($user,'@'));
 			if (isset($prefs['interlist'][$realm])) {
 				$groups = $prefs['interlist'][$realm]['groups'].',Anonymous';
 				return split(',',$prefs['interlist'][$realm]['groups']);
 			}
-		} elseif (!isset($this->usergroups_cache[$user])) {
+		}
+		if (!isset($this->usergroups_cache[$user])) {
 			$userid = $this->get_user_id($user);
 			$query = "select `groupName`  from `users_usergroups` where `userId`=?";
 			$result=$this->query($query,array((int) $userid));
