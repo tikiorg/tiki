@@ -34,7 +34,9 @@ if (isset($_REQUEST["textareasetup"])) {
 		"popupLinks",
 		"feature_autolinks",
 		"quicktags_over_textarea",
-	);
+		"feature_wiki_protect_email",
+		"feature_wiki_ext_icon",
+		);
 
 	foreach ($pref_toggles as $toggle) {
 		simple_set_toggle ($toggle);
