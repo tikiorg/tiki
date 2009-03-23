@@ -163,7 +163,7 @@ function get_default_prefs() {
 		'wiki_edit_section_level' => '0',
 		'wiki_edit_plugin' => 'y',
 		'wiki_validate_plugin' => 'y',
-		'wiki_edit_minor' => 'y',
+		'wiki_edit_minor' => 'n',
 
 		'wikiplugin_agentinfo' => 'n',
 		'wikiplugin_alink' => 'y',
