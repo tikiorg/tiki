@@ -485,7 +485,7 @@
 	</form>
 	
 	<h2>{tr}Contacts{/tr}</h2>
-	{include file='find.tpl' _sort_mode='y'}
+	{include file='find.tpl'}
 
 		{initials_filter_links}
 

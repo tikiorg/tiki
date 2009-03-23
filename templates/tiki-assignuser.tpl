@@ -49,7 +49,7 @@
 <br />
 <div align="left"><h2>{tr}Assign User {$assign_user} to Groups{/tr}</h2></div>
 
-{include file='find.tpl' _sort_mode='y' find_show_num_rows='y'}
+{include file='find.tpl' find_show_num_rows='y'}
 
 <table class="normal">
 <tr>
