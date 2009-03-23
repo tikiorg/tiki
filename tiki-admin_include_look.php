@@ -50,7 +50,6 @@ if (isset($_REQUEST["looksetup"])) {
 	"feature_site_login",
 	"feature_sitemenu",
 	"feature_topbar_version",
-	"feature_topbar_date",
 	"feature_topbar_debug",
 	"sitemycode_publish",
 	"feature_bot_logo",

@@ -384,14 +384,6 @@
 							</tr>
 							<tr> 
 								<td class="form">
-									<label for="feature_topbar_date">{tr}Date{/tr}:</label>
-								</td>
-								<td>
-									<input type="checkbox" name="feature_topbar_date" id="feature_topbar_date"{if $prefs.feature_topbar_date eq 'y'} checked="checked"{/if} />
-								</td>
-							</tr>
-							<tr> 
-								<td class="form">
 									<label for="feature_topbar_debug">{tr}Debugger Console{/tr}:</label>
 								</td>
 								<td>

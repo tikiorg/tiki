@@ -529,7 +529,6 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 617,sitead,3,,sitead,simple,,tiki_p_admin,48,,,,, 
 618,Site Search Bar,879,,feature_sitesearch,feature,,tiki_p_admin,,70,,,, 
 619,bot_logo_code,3,,bot_logo_code,simple,,tiki_p_admin,1,,,,, 
-620,Date,3,,feature_topbar_date,flag,,tiki_p_admin,32,651,,Display the current date and time. ,,"Will also provide a link to the calendar, if feature is enabled.  "
 621,Content,875,,sitemycode,special,,tiki_p_admin,,,this is a textarea,,, 
 622,feature_site_report,3,,feature_site_report,flag,,tiki_p_admin,17,,,,, 
 623,Max. number of links after the first or before the last item,902,,direct_pagination_max_ending_links,simple,,tiki_p_admin,3,,Pagination,,, 
