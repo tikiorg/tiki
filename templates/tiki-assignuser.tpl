@@ -48,19 +48,8 @@
 </table>
 <br />
 <div align="left"><h2>{tr}Assign User {$assign_user} to Groups{/tr}</h2></div>
-<table class="findtable">
-<tr><td class="findtable">{tr}Find{/tr}</td>
-   <td class="findtable">
-   <form method="get" action="tiki-assignuser.php">
-     <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}Find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-     {if $assign_user}<input type="hidden" name="assign_user" value="{$assign_user|escape}" />{/if}
-	 {tr}Number of displayed rows{/tr}</td><td  class="findtitle"><input type="text" name="maxRecords" value="{$prefs.maxRecords|escape}" size="3" />
-   </form>
-   </td>
-</tr>
-</table>
+
+{include file='find.tpl' find_show_num_rows='y'}
 
 <table class="normal">
 <tr>

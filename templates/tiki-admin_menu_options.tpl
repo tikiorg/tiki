@@ -231,27 +231,7 @@
 <a name="options"></a>
 <br /><h2>{tr}Menu options{/tr}</h2>
 {if $channels or ($find ne '')}
-  <form method="get" action="tiki-admin_menu_options.php">
-    <table class="findtable">
-      <tr>
-        <td>{tr}Find{/tr}</td>
-        <td>
-          <input type="text" name="find" value="{$find|escape}" />
-          <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-          <input type="hidden" name="menuId" value="{$menuId}" />
-        </td>
-        <td>
-          {tr}Number of lines{/tr}
-        </td>
-        <td>
-          <input type="text" name="nbRecords" value="{if !empty($nbRecords)}{$nbRecords}{else}{$prefs.maxRecords}{/if}" size="3" />
-        </td>
-        <td>
-          <input type="submit" value="{tr}Find{/tr}" name="search" />
-        </td>
-      </tr>
-    </table>
-  </form>
+	{include file='find.tpl' find_show_num_rows='y'}
 {/if}
 
 <form method="get" action="tiki-admin_menu_options.php">

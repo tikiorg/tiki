@@ -6,7 +6,7 @@
 	* filegals_manager      : If value not empty, adds hidden input filegals_manager value=$filegals_manager
 	* _sort_mode             : If value = 'y' adds hidden input sort_mode value=$sort_mode
 
-	* what                  : Change form title. Default value (if $what empty) is "Find". If $what is not empty, the text presented is $what content
+	* whatlabel             : Change form title. Default value (if $whatlabel empty) is "Find". If $whatlabel is not empty, the text presented is $whatlabel content
 	* exact_match           : If set adds exact_match field
 	* types                 : If not empty adds type dropdown whith types array values
 	*		types_tag             : HTML element used to display types ('select' or 'checkbox'). Defaults to 'select'.
@@ -34,10 +34,10 @@
 
 
 	<label class="findtitle" for="findwhat">
-		{if empty($what)}
+		{if empty($whatlabel)}
 			{tr}Find{/tr}
 		{else}
-			{tr}{$what}{/tr}
+			{tr}{$whatlabel}{/tr}
 		{/if}
 		<input type="text" name="find" id="findwhat" value="{$find|escape}" />
 	</label>
