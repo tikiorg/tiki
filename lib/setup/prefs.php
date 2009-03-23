@@ -890,7 +890,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'site_crumb_seper' => '»',
 		'site_nav_seper' => '|',
 		'feature_sitemycode' => 'n',
-		'sitemycode' => '<div align="center"><b>{tr}Here you can (as an admin) place a piece of custom XHTML and/or Smarty code. Be careful and properly close all the tags before you choose to publish ! (Javascript, applets and object tags are stripped out.){/tr}</b></div>', // must be max. 250 chars now unless it'll change in tiki_prefs db table field value from VARCHAR(250) to BLOB by default
+		'sitemycode' => '<div align="center"><b>{tr}Here you can (as an admin) place a piece of custom XHTML and/or Smarty code. Be careful and properly close all the tags before you choose to publish ! {/tr}</b></div>', // must be max. 250 chars now unless it'll change in tiki_prefs db table field value from VARCHAR(250) to BLOB by default
 		'sitemycode_publish' => 'n',
 		'feature_sitelogo' => 'y',
 		'sitelogo_bgcolor' => 'transparent',
