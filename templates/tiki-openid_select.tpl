@@ -1,4 +1,4 @@
-<h1>{tr}Your OpenID identity is valid{/tr}</h1>
+<!-- START of {$smarty.template} --><h1>{tr}Your OpenID identity is valid{/tr}</h1>
 <p>
 	{tr}Your identity gives you access to multiple user accounts.{/tr}
 </p>
@@ -16,4 +16,4 @@
 		<input type="hidden" name="action" value="select"/>
 		<input type="submit" value="{tr}Select{/tr}"/>
 	</fieldset>
-</form>
+</form><!-- END of {$smarty.template} -->

@@ -1,4 +1,4 @@
-{title help="Banners"}{tr}Banner stats{/tr}{/title}
+<!-- START of {$smarty.template} -->{title help="Banners"}{tr}Banner stats{/tr}{/title}
 
 <div class="navbar">
 	{button href="tiki-list_banners.php" _text="{tr}List banners{/tr}"}
@@ -83,4 +83,4 @@
 <div align="center">
 {$raw}
 </div>
-</div>
+</div><!-- END of {$smarty.template} -->

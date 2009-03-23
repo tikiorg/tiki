@@ -1,4 +1,4 @@
-<form method="post" action="tiki-admin.php?page=webservices">
+<!-- START of {$smarty.template} --><form method="post" action="tiki-admin.php?page=webservices">
 	<div class="navbar">
 		{foreach from=$webservices item=name}
 			{button href="tiki-admin.php?page=webservices&amp;name=$name" _text=$name}
@@ -120,4 +120,4 @@
 			</table>
 		{/if}
 	{/if}
-</form>
+</form><!-- END of {$smarty.template} -->

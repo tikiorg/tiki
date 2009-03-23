@@ -1,4 +1,4 @@
-<h2>{tr}Pages like{/tr}:
+<!-- START of {$smarty.template} --><h2>{tr}Pages like{/tr}:
 
 {if $page_exists eq 'n'}
 '{$page}'

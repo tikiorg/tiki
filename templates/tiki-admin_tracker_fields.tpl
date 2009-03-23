@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 
 {title help="Adding+fields+to+a+tracker" url="tiki-admin_tracker_fields.php?trackerId=$trackerId"}{tr}Admin Tracker:{/tr} {$tracker_info.name}{/title}
 

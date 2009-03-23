@@ -1,4 +1,4 @@
-<comment>
+<!-- START of {$smarty.template} --><comment>
 	<title><![CDATA[{$comment.title}]]></title>
 	<user><![CDATA[{$comment.userName}]]></user>
 	<date>{$comment.commentDate}</date>
@@ -6,4 +6,4 @@
 	{foreach from=$comment.replies_info.replies item=comment}
 		{include file="tiki-export_comment_xml.tpl"}
 	{/foreach}
-</comment>
+</comment><!-- END of {$smarty.template} -->

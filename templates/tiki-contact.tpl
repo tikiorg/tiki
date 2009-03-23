@@ -1,4 +1,4 @@
-{title}{tr}Contact us{/tr}{/title}
+<!-- START of {$smarty.template} -->{title}{tr}Contact us{/tr}{/title}
 
 {if $prefs.feature_messages eq 'y' and $tiki_p_messages eq 'y'}
 	{if $message}<br />
@@ -54,4 +54,4 @@
 	{else}
 		<p><a class="link" href="tiki-contact.php">Send another message.</a></p>
 	{/if}
-{/if}
+{/if}<!-- END of {$smarty.template} -->

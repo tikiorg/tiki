@@ -1,4 +1,4 @@
-{remarksbox type="tip" title="{tr}Tip{/tr}"}<a class="rbox-link" href="http://doc.tikiwiki.org/Internationalization">{tr}Internationalization{/tr}</a>{/remarksbox}
+<!-- START of {$smarty.template} -->{remarksbox type="tip" title="{tr}Tip{/tr}"}<a class="rbox-link" href="http://doc.tikiwiki.org/Internationalization">{tr}Internationalization{/tr}</a>{/remarksbox}
 
 <div class="cbox">
   <div class="cbox-title">{tr}I18n setup{/tr}</div>

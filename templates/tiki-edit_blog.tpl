@@ -1,4 +1,4 @@
-{if $blogId > 0}
+<!-- START of {$smarty.template} -->{if $blogId > 0}
   {title help="Blogs" url="tiki-edit_blog.php?blogId=$blogId" admpage="blogs"}{tr}Edit Blog:{/tr} {$title}{/title}
 {else}
   {title help="Blogs"}{tr}Create Blog{/tr}{/title}
@@ -109,4 +109,4 @@
     </tr>
   </table>
 </form>
-<br />
+<br /><!-- END of {$smarty.template} -->

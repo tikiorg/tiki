@@ -1,1 +1,1 @@
-{$leafspace}<ul class="toc">
+<!-- START of {$smarty.template} -->{$leafspace}<ul class="toc"><!-- END of {$smarty.template} -->

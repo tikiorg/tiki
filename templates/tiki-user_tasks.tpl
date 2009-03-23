@@ -1,4 +1,4 @@
-{title help="User+Tasks"}{tr}Tasks{/tr}{/title}
+<!-- START of {$smarty.template} -->{title help="User+Tasks"}{tr}Tasks{/tr}{/title}
 
 {if $prefs.feature_ajax ne 'y' && $prefs.feature_mootools ne 'y'}
   {include file=tiki-mytiki_bar.tpl}
@@ -132,4 +132,4 @@
 
 <br />
 <br />
-{* start ************ Search ***************}
+{* start ************ Search ***************}<!-- END of {$smarty.template} -->

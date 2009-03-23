@@ -1,4 +1,4 @@
-{* $Id$  *}
+<!-- START of {$smarty.template} -->{* $Id$  *}
 
 <h1>{tr}Assign permissions to category{/tr}: &nbsp;<a href="tiki-admin_categories.php?parentId=0">{tr}Top{/tr}</a>
 {section name=x loop=$path}
@@ -80,4 +80,4 @@
 {tr}or{/tr}
 <input type="submit" name="assign" value="{tr}this category only{/tr}" />
 </form>
-<div class="simplebox highlight">{icon _id=information style="vertical-align:middle"} {tr}Assigning permissions for <b>all children</b> is recommended for best performance.{/tr}</div>
+<div class="simplebox highlight">{icon _id=information style="vertical-align:middle"} {tr}Assigning permissions for <b>all children</b> is recommended for best performance.{/tr}</div><!-- END of {$smarty.template} -->

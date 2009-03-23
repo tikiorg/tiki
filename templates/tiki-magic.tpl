@@ -1,4 +1,4 @@
-<div id="magicPanel">
+<!-- START of {$smarty.template} --><div id="magicPanel">
 	<div class="iconbar">
 		<a title="{tr}Refresh{/tr}" href="tiki-magic.php?featurechain={$feature.feature_path|escape:"url"}&amp;refresh=1">{icon _id='arrow_refresh'}</a>
 	</div>
@@ -186,4 +186,4 @@
 		</tr>
 	</table>	
 </form>
-</div>
+</div><!-- END of {$smarty.template} -->

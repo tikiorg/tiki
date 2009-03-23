@@ -1,4 +1,4 @@
-{title}{tr}Search results{/tr}{/title}
+<!-- START of {$smarty.template} -->{title}{tr}Search results{/tr}{/title}
 
 {* The navigation bar *}
 {include file=tiki-directory_bar.tpl}
@@ -61,4 +61,4 @@
 {/section}
 </div>
 
-{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
+{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}<!-- END of {$smarty.template} -->

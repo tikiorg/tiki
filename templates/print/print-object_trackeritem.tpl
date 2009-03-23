@@ -1,4 +1,4 @@
-<h1>{$title|escape}</h1>
+<!-- START of {$smarty.template} --><h1>{$title|escape}</h1>
 <table class="normal">
 	{foreach from=$tracker.fields item=field}
 		<tr class="formcolor">

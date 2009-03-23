@@ -1,4 +1,4 @@
-  <div id ="Browsing" class="cbox">
+<!-- START of {$smarty.template} -->  <div id ="Browsing" class="cbox">
     <div class="cbox-title">
       {tr}Freetag Browsing{/tr}
     </div>
@@ -223,4 +223,4 @@
     </form>
     </div>
   </div>
-{/if}
+{/if}<!-- END of {$smarty.template} -->

@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 
 {title help="Contribution"}{tr}Admin Contributions{/tr}{/title}
 
@@ -68,4 +68,4 @@
 <td colspan="3" class="odd">{tr}No records found{/tr}</td>
 </tr>
 {/section}
-</table>
+</table><!-- END of {$smarty.template} -->

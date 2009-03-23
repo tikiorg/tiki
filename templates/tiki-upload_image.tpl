@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 
 {title help="Image+Galleries"}{tr}Upload Image{/tr}{/title}
 

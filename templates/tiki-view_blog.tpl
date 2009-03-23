@@ -1,4 +1,4 @@
-<div class="breadcrumbs"><a class="link" href="tiki-list_blogs.php">{tr}Blogs{/tr}</a> {$prefs.site_crumb_seper} {$title}</div>
+<!-- START of {$smarty.template} --><div class="breadcrumbs"><a class="link" href="tiki-list_blogs.php">{tr}Blogs{/tr}</a> {$prefs.site_crumb_seper} {$title}</div>
 {if strlen($heading) > 0}
   {eval var=$heading}
 {else}
@@ -133,4 +133,4 @@
   </div>
 
   {include file=comments.tpl}
-{/if}
+{/if}<!-- END of {$smarty.template} -->

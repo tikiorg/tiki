@@ -1,4 +1,4 @@
-{*Smarty template*}
+<!-- START of {$smarty.template} -->{*Smarty template*}
 <h1><a class="pagetitle" href="tiki-newsreader_servers.php">{tr}Configure news servers{/tr}</a>
 
 {if $prefs.feature_help eq 'y'}
@@ -87,4 +87,4 @@
 
 
 </table>
-</form>
+</form><!-- END of {$smarty.template} -->

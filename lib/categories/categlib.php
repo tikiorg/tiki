@@ -1334,7 +1334,7 @@ class CategLib extends ObjectLib {
 	function unwatch_category($user, $categId) {
 		global $tikilib;		
 		
-		$tikilib->remove_user_watch($user, 'category_changed', $categId);
+		$tikilib->remove_user_watch($user, 'category_changed', $categId, 'Category' );
 	}
 
 
@@ -1345,10 +1345,10 @@ class CategLib extends ObjectLib {
 	function unwatch_category_and_descendants($user, $categId) {
 		global $tikilib;		
 		
-		$tikilib->remove_user_watch($user, 'category_changed', $categId);
+		$tikilib->remove_user_watch($user, 'category_changed', $categId, 'Category');
 		$descendants = $this->get_category_descendants($categId);
 		foreach ($descendants as $descendant) {
-			$tikilib->remove_user_watch($user, 'category_changed', $descendant);
+			$tikilib->remove_user_watch($user, 'category_changed', $descendant, 'Category');
 		}
 	}
 

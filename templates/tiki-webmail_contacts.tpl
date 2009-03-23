@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html 
      PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 {* Index we display a wiki page here *}
+<!-- START of {$smarty.template} -->
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
@@ -60,4 +60,4 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>&nbsp;&nbsp;
 </div>
 </div>
 </body>
-</html>
+</html><!-- END of {$smarty.template} -->

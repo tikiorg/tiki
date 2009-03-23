@@ -42,16 +42,13 @@ if (isset($_REQUEST["looksetup"])) {
 	"layout_section",
 	"feature_sitemycode",
 	"feature_breadcrumbs",
-    "feature_siteidentity",
 	"feature_siteloclabel",
 	"feature_sitelogo",
-	"feature_sitesubtitle",
 	"feature_sitenav",
 	"feature_sitesearch",
 	"feature_site_login",
 	"feature_sitemenu",
 	"feature_topbar_version",
-	"feature_topbar_date",
 	"feature_topbar_debug",
 	"sitemycode_publish",
 	"feature_bot_logo",
@@ -73,7 +70,7 @@ if (isset($_REQUEST["looksetup"])) {
 	'feature_jquery_superfish',
 	'feature_jquery_reflection',
     'feature_jquery_sheet',
-    'feature_ie56_correct_png',
+	'feature_iepngfix',
     );
 
     foreach ($pref_toggles as $toggle) {

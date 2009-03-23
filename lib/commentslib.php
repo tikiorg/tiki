@@ -2423,7 +2423,7 @@ class Comments extends TikiLib {
  	 * @return  the threadId
 	 * @return $feedbacks, $errors */
 	function post_in_forum($forum_info, &$params, &$feedbacks, &$errors) {
-		global $tiki_p_admin_forum, $tiki_p_forum_post_topic, $tiki_p_forum_post, $prefs, $user;
+		global $tiki_p_admin_forum, $tiki_p_forum_post_topic, $tiki_p_forum_post, $prefs, $user, $tiki_p_forum_autoapp;
 
 		if (!empty($params['comments_grandParentId'])) {
 			$parent_id = $params['comments_grandParentId'];

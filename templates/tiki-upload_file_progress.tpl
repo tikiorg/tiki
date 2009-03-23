@@ -1,4 +1,4 @@
-{capture name=msg assign=msg}
+<!-- START of {$smarty.template} -->{capture name=msg assign=msg}
 <table border="0" cellspacing="4" cellpadding="4">
 	<tr>
 		<td style="text-align: center">

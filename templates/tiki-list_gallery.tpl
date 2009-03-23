@@ -1,4 +1,4 @@
-{title help="Image+Galleries"}{tr}Browsing Gallery:{/tr}&nbsp;{$name}{/title}
+<!-- START of {$smarty.template} -->{title help="Image+Galleries"}{tr}Browsing Gallery:{/tr}&nbsp;{$name}{/title}
 
 <div class="galdesc">
   {$description}
@@ -53,4 +53,4 @@
 
 {pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
 
-</div>
+</div><!-- END of {$smarty.template} -->

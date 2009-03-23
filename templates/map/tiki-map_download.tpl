@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 
 <h3>{tr}Download Layer{/tr}</h3>
 {if $nodownload}

@@ -1,4 +1,4 @@
-{title url="tiki-directory_add_site.php?parent=$parent"}{tr}Add a new site{/tr}{/title}
+<!-- START of {$smarty.template} -->{title url="tiki-directory_add_site.php?parent=$parent"}{tr}Add a new site{/tr}{/title}
 
 {include file=tiki-directory_bar.tpl}
 
@@ -100,4 +100,4 @@
 			</table>
 	</form>
 	{/if}
-{/if}
+{/if}<!-- END of {$smarty.template} -->

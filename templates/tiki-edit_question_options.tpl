@@ -1,4 +1,4 @@
-{title url="tiki-edit_question_options.php?questionId=$questionId"}{tr}Edit question options{/tr}{/title}
+<!-- START of {$smarty.template} -->{title url="tiki-edit_question_options.php?questionId=$questionId"}{tr}Edit question options{/tr}{/title}
 
 <div class="navbar">
 	{button href="tiki-list_quizzes.php" _text="{tr}List Quizzes{/tr}"} 
@@ -55,4 +55,4 @@
 {/section}
 </table>
 
-{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
+{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}<!-- END of {$smarty.template} -->

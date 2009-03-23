@@ -1,4 +1,4 @@
-{title help="FAQs"}{tr}{$faq_info.title}{/tr}{/title}
+<!-- START of {$smarty.template} -->{title help="FAQs"}{tr}{$faq_info.title}{/tr}{/title}
 <div class="description">{$faq_info.description|escape}</div>
 
 <div class="navbar">
@@ -115,4 +115,4 @@
 || $tiki_p_post_comments == 'y'
 || $tiki_p_edit_comments == 'y')}
 {include file=comments.tpl}
-{/if}
+{/if}<!-- END of {$smarty.template} -->

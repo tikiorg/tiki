@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 {* Template for Tikiwiki site identity header *}
 <div id="header-top">
 {if $prefs.feature_sitemycode eq 'y' && ($prefs.sitemycode_publish eq 'y' or $tiki_p_admin eq 'y')}
@@ -87,4 +87,4 @@
 <div class="clearfix" id="topbar_custom_code">
 	{eval var=$prefs.feature_topbar_custom_code}
 </div>
-{/if}
+{/if}<!-- END of {$smarty.template} -->

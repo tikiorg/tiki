@@ -163,7 +163,7 @@ function get_default_prefs() {
 		'wiki_edit_section_level' => '0',
 		'wiki_edit_plugin' => 'y',
 		'wiki_validate_plugin' => 'y',
-		'wiki_edit_minor' => 'y',
+		'wiki_edit_minor' => 'n',
 
 		'wikiplugin_agentinfo' => 'n',
 		'wikiplugin_alink' => 'y',
@@ -730,7 +730,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'rssfeed_creator' => '',
 		'rssfeed_css' => 'y',
 		'rssfeed_publisher' => '',
-		'rssfeed_img' => 'img/tiki.jpg',
+		'rssfeed_img' => 'img/tiki/tikilogo.png',
 		'rss_basic_auth' => 'n',
 
 		// maps
@@ -891,7 +891,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'site_crumb_seper' => '»',
 		'site_nav_seper' => '|',
 		'feature_sitemycode' => 'n',
-		'sitemycode' => '<div align="center"><b>{tr}Here you can (as an admin) place a piece of custom XHTML and/or Smarty code. Be careful and properly close all the tags before you choose to publish ! (Javascript, applets and object tags are stripped out.){/tr}</b></div>', // must be max. 250 chars now unless it'll change in tiki_prefs db table field value from VARCHAR(250) to BLOB by default
+		'sitemycode' => '<div align="center"><b>{tr}Here you can (as an admin) place a piece of custom XHTML and/or Smarty code. Be careful and properly close all the tags before you choose to publish ! {/tr}</b></div>', // must be max. 250 chars now unless it'll change in tiki_prefs db table field value from VARCHAR(250) to BLOB by default
 		'sitemycode_publish' => 'n',
 		'feature_sitelogo' => 'y',
 		'sitelogo_bgcolor' => 'transparent',
@@ -912,7 +912,6 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_site_login' => 'n',
 		'feature_sitemenu' => 'n',
 		'feature_topbar_version' => 'n',
-		'feature_topbar_date' => 'n',
 		'feature_topbar_debug' => 'n',
 		'feature_topbar_id_menu' => '42',
 		'feature_topbar_custom_code' => '',
@@ -995,7 +994,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'anonCanEdit' => 'n',
 		'cacheimages' => 'n',
 		'cachepages' => 'n',
-		'count_admin_pvs' => 'y',
+		'count_admin_pvs' => 'n',
 		'default_mail_charset' =>'utf-8',
 		'error_reporting_adminonly' => 'y',
 		'error_reporting_level' => 0,
@@ -1159,12 +1158,13 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_template_zoom' => 'y',
 		'menus_items_icons' => 'n',
 		'feature_ie56_correct_png' => 'n',
+		'feature_iepngfix' => 'n',
 		
 		// JQuery
 		'feature_jquery' => 'y',			// Alternative lib for shadowbox etc
 		'jquery_effect' => '',				// Default effect for general show/hide: ['' | 'slide' | 'fade' | and
 											// see http://docs.jquery.com/UI/Effects: 'blind' | 'clip' | 'explode' etc]
-		'jquery_effect_direction' => '', 	// ['horizontal' | 'vertical' | 'left' | 'right' | 'up' | 'down' ]
+		'jquery_effect_direction' => 'vertical', 	// ['horizontal' | 'vertical' | 'left' | 'right' | 'up' | 'down' ]
 		'jquery_effect_speed' => 'normal', 	// ['slow' | 'normal' | 'fast' | milliseconds (int) ]
 		'jquery_effect_tabs' => 'slide',	// Different effect for tabs (['none' | 'normal' (for jq) | 'slide' etc]
 		'jquery_effect_tabs_direction' => 'vertical',

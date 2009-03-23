@@ -1,4 +1,4 @@
-<!-- $Id$ -->
+<!-- START of {$smarty.template} --><!-- $Id$ -->
 {if $prefs.feature_blogposts_pings == 'y' && ($blog_data.allow_comments == 'y' or $blog_data.allow_comments == 't')}
 <!--
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"

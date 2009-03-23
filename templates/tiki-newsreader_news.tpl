@@ -1,4 +1,4 @@
-{title help="newsreader"}{tr}News from{/tr}:{$group}{/title}
+<!-- START of {$smarty.template} -->{title help="newsreader"}{tr}News from{/tr}:{$group}{/title}
 
 {include file=tiki-mytiki_bar.tpl}
 
@@ -44,4 +44,4 @@
 {/if}
 {/if}
 </div>
-</div>
+</div><!-- END of {$smarty.template} -->

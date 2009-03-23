@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 
 {if $prefs.feature_directory eq 'y'}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Directory Stats{/tr}"}{/if}

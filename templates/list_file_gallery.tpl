@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 
 {if ( isset($tree) and count($tree) gt 0 && $tiki_p_list_file_galleries != 'n' && $fgal_options.show_explorer.value eq 'y' && $tiki_p_view_fgal_explorer eq 'y' ) or ( $gallery_path neq '' && $fgal_options.show_path.value eq 'y' && $tiki_p_view_fgal_path eq 'y' ) }
 <div class="fgal_top_bar" style="height:16px; vertical-align:middle">
@@ -130,4 +130,4 @@
       </div>
     </td>
   </tr>
-</table>
+</table><!-- END of {$smarty.template} -->

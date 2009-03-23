@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 {title help="Image+Galleries" admpage="gal"}{tr}Galleries{/tr}{/title}
 {if $tiki_p_create_galleries eq 'y'}
 
@@ -262,4 +262,4 @@
 
 {pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
 
-</div>
+</div><!-- END of {$smarty.template} -->

@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 {title help="Banners"}{tr}Edit or create banners{/tr}{/title}
 
 <div class="navbar">
@@ -176,4 +176,4 @@
 {/section}
 </table>
 </div>
-{/if}
+{/if}<!-- END of {$smarty.template} -->

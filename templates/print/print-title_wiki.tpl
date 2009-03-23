@@ -1,1 +1,1 @@
-{$info.pageName|escape}
+<!-- START of {$smarty.template} -->{$info.pageName|escape}

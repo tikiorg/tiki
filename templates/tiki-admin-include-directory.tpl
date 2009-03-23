@@ -47,4 +47,4 @@
         </tr></table>
       </form>
   </div>
-</div>
+</div><!-- END of {$smarty.template} -->

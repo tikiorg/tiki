@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 
 <!--  start jquery-tiki -->
 <script type="text/javascript" src="lib/jquery/jquery.min.js"></script>
@@ -62,4 +62,4 @@ jqueryTiki.effect_tabs_speed = "{$prefs.jquery_effect_tabs_speed}";
 
 //--><!]]>
 </script>
-<!--  end jquery-tiki -->
+<!--  end jquery-tiki --><!-- END of {$smarty.template} -->

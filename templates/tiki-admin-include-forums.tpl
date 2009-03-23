@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}To add/remove forums, look for "Admin forums" under "Forums" on the application menu, or{/tr} <a class="rbox-link" href="tiki-admin_forums.php">{tr}Click Here{/tr}</a>.{/remarksbox}
 
 <div class="cbox">
@@ -201,4 +201,4 @@
       </table>
     </form>
   </div>
-</div>    
+</div>    <!-- END of {$smarty.template} -->

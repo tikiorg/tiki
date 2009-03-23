@@ -1,4 +1,4 @@
-{title help="Newsletters"}{tr}Sent editions{/tr}{if $nl_info}: {$nl_info.name}{/if}{/title}
+<!-- START of {$smarty.template} -->{title help="Newsletters"}{tr}Sent editions{/tr}{if $nl_info}: {$nl_info.name}{/if}{/title}
 
 <div class="navbar">
 	{button href="tiki-newsletters.php" _text="{tr}List Newsletters{/tr}"}
@@ -63,4 +63,4 @@
       </tr>
     {/section}
   </table>
-{/if}
+{/if}<!-- END of {$smarty.template} -->

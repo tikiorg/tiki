@@ -1,4 +1,4 @@
-<div class="navbar">
+<!-- START of {$smarty.template} --><div class="navbar">
 	{if $mid ne "tiki-directory_browse.tpl"}
 		{button href="tiki-directory_browse.php" _text="{tr}Browse{/tr}"}
 	{/if}
@@ -24,4 +24,4 @@
 			{button href="tiki-directory_admin_categories.php" _text="{tr}Add a Category{/tr}"}
 		{/if}
 	{/if}
-</div>
+</div><!-- END of {$smarty.template} -->

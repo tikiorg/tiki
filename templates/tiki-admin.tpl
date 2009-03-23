@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 {popup_init src="lib/overlib.js"}
 <div id="pageheader">
 {* bother to display this only when breadcrumbs are on *}
@@ -129,4 +129,4 @@ Add a value in first check when you create a new admin page. *}
 	{if $prefs.feature_referer_stats eq 'y'} <a href="tiki-referer_stats.php">{tr}Referer Stats{/tr}</a> {/if}
 	{if $prefs.feature_search eq 'y' and $prefs.feature_search_stats eq 'y'} <a href="tiki-search_stats.php">{tr}Search Stats{/tr}</a>  {/if}
 	{if $prefs.feature_banners eq 'y'} <a href="tiki-list_banners.php">{tr}Banners{/tr}</a> {/if}
-{/remarksbox}
+{/remarksbox}<!-- END of {$smarty.template} -->

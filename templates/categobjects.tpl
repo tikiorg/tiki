@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 
 <div class="catblock clearfix">
   <div class="cattitle">
@@ -23,4 +23,4 @@
     {/foreach}
   </ul>
   </div>
-</div>
+</div><!-- END of {$smarty.template} -->

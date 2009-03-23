@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 {popup_init src="lib/overlib.js"}
 
 {title help="Users+Management" admpage="login" url="tiki-adminusers.php"}{tr}Admin Users{/tr}{/title}
@@ -264,8 +264,9 @@
 								<br />
 								<select name="checked_groups[]" multiple="multiple" size="20">
 									{section name=ix loop=$all_groups}
-											 
+										{if $all_groups[ix] != 'Anonymous' && $all_groups[ix] != 'Registered'}
 										<option value="{$all_groups[ix]|escape}">{$all_groups[ix]|escape}</option>
+										{/if}
 									{/section}
 								</select>
 								<br />
@@ -276,7 +277,9 @@
 								<br />
 								<select name="checked_group" size="20">
 									{section name=ix loop=$all_groups}
+										{if $all_groups[ix] != 'Anonymous'}
 										<option value="{$all_groups[ix]|escape}" />{$all_groups[ix]|escape}</option>
+										{/if}
 									{/section}
 								</select>
 								<br />
@@ -495,4 +498,4 @@
 		</table>
 	</form>
 	{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}You can export users of a group in <a href="tiki-admingroups.php">admin->groups->a_group</a>{/tr}{/remarksbox}
-</div>
+</div><!-- END of {$smarty.template} -->

@@ -1,4 +1,4 @@
-{title}{tr}Approve page changes in staging:{/tr} {$page|escape:"url"}{/title}
+<!-- START of {$smarty.template} -->{title}{tr}Approve page changes in staging:{/tr} {$page|escape:"url"}{/title}
 
 <div class="navbar">
 	{assign var=thispage value=$page|escape:url}
@@ -59,4 +59,4 @@
 </td>
 </tr>
 {/section}
-</table>
+</table><!-- END of {$smarty.template} -->

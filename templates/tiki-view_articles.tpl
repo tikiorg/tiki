@@ -1,4 +1,4 @@
-{if $prefs.art_home_title ne ''}
+<!-- START of {$smarty.template} -->{if $prefs.art_home_title ne ''}
 {title help="Articles" admpage="cms"}
 {if $prefs.art_home_title eq 'topic' and !empty($topic)}{tr}{$topic}{/tr}
 {elseif $prefs.art_home_title eq 'type' and !empty($type)}{tr}{$type}{/tr}
@@ -138,4 +138,4 @@ alt="{if $listpages[ix].show_image_caption and $listpages[ix].image_caption}{$li
 {/if}
 {/section}
 
-{pagination_links cant=$cant step=$maxArticles offset=$offset}{/pagination_links}
+{pagination_links cant=$cant step=$maxArticles offset=$offset}{/pagination_links}<!-- END of {$smarty.template} -->

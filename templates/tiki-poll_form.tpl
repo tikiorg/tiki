@@ -1,4 +1,4 @@
-<h2>{tr}Vote poll{/tr}:</h2>
+<!-- START of {$smarty.template} --><h2>{tr}Vote poll{/tr}:</h2>
 <div align="center">
 {$menu_info.title}<br /><br />
 <div style="text-align:left;width:130px;" class="cbox">

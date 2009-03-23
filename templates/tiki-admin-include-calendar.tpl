@@ -1,4 +1,4 @@
-{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}To add/remove calendars, look for "Calendar" under "Admin" on the application menu, or{/tr} <a class="rbox-link" href="tiki-admin_calendars.php">{tr}Click Here{/tr}</a>.{/remarksbox}
+<!-- START of {$smarty.template} -->{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}To add/remove calendars, look for "Calendar" under "Admin" on the application menu, or{/tr} <a class="rbox-link" href="tiki-admin_calendars.php">{tr}Click Here{/tr}</a>.{/remarksbox}
 
 <div class="cbox">
 <div class="cbox-title">
@@ -88,4 +88,4 @@
 </table>
 </form>
 </div>
-</div>
+</div><!-- END of {$smarty.template} -->

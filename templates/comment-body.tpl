@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 <div class="clearfix content">
 
 	<div class="clearfix author">
@@ -86,4 +86,4 @@
 	<br />
 	{/section}
 </div>
-{/if}
+{/if}<!-- END of {$smarty.template} -->

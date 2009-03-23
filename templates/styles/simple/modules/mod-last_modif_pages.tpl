@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 {if $prefs.feature_wiki eq 'y'}
 	{if $nonums eq 'y'}
 		{eval var="{tr}Last `$module_rows` changes{/tr}" assign="tpl_module_title"}

@@ -102,6 +102,7 @@ if (isset($_REQUEST["features"])) {
 		"feature_minichat",
 		"feature_comments_moderation",
 		"feature_groupalert",
+		"feature_wiki_mindmap",
 	);
 
 	$pref_byref_values = array(

@@ -1,4 +1,4 @@
-{title help="tests"}{tr}TikiTests Replay Configuration{/tr}{/title}
+<!-- START of {$smarty.template} -->{title help="tests"}{tr}TikiTests Replay Configuration{/tr}{/title}
 
 <h2 class='pagetitle'>TikiTest:{$filename}</h2>
 <br/>
@@ -71,4 +71,4 @@
 </table>
 </fieldset>
 {/if}
-{/if}
+{/if}<!-- END of {$smarty.template} -->

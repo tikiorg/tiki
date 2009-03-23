@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 
 {if !isset($tpl_module_title)}{eval assign=tpl_module_title var="{tr}Admin Menu{/tr}"}{/if}
 {tikimodule error=$module_params.error title="{tr}$tpl_module_title{/tr}" name="admin_menu" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}

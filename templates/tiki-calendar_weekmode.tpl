@@ -1,4 +1,4 @@
-<div style="position:relative;padding:0px">
+<!-- START of {$smarty.template} --><div style="position:relative;padding:0px">
 <table border="0" cellpading="0" cellspacing="0" style="width:100%;border-collapse:collapse;border-bottom:1px solid #ccc">
   <tr valign="middle" style="height:36px">
     <td id="topLeft" class="calHeading" width="9%"><strong>{$viewstart|tiki_date_format:"%Y"}</strong></td>
@@ -64,4 +64,4 @@
 		{/if}
 	{/section}
 {/foreach}
-</div>
+</div><!-- END of {$smarty.template} -->

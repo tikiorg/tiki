@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 
 {assign var=escgroup value=$group|escape:url}
 {title help="Permissions+Settings" url="tiki-assignpermission.php?group=$escgroup"}{tr}Assign permissions to group:{/tr} {$group}{/title}
@@ -115,4 +115,4 @@
 <input type="submit" name="allper" value="{tr}Update{/tr}" />
 </form>
 {/remarksbox}
-</div>
+</div><!-- END of {$smarty.template} -->

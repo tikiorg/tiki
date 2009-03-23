@@ -1,4 +1,4 @@
-<table width="100%">
+<!-- START of {$smarty.template} --><table width="100%">
 	<col width="50%"/>
 	<col width="50%"/>
 	<tr>
@@ -106,4 +106,4 @@
 	{else}
 		<p>{tr}No occurences found.{/tr}</p>
 	{/if}
-{/foreach}
+{/foreach}<!-- END of {$smarty.template} -->

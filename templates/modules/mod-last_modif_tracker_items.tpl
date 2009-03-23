@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 
 {if $prefs.feature_trackers eq 'y'}
 {if !isset($tpl_module_title)}

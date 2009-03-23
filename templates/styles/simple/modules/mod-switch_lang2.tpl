@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 
 {tikimodule title="{tr}Language{/tr}: `$prefs.language`" name="switch_lang2"}
 <ul class='floatlist'>

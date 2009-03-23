@@ -698,37 +698,22 @@ h3.box-title {
 	text-align: center;
 	margin: 0;
 	width: 100%;
-	position: relative;
-}
+	height: 16px;}
 
-div.box-title table {
-	width: 100%;
-	padding: 0;
-	margin: 0;
-	border-spacing: 0;
-}
-
-div.box-title table td {
-  text-align: center;
-}
-
-.box a.flipmodtitle img {
+.box img.flipmodimage {
 	display: none;
 }
 
-* html .box a.flipmodtitle img,
-.box:hover a.flipmodtitle img {
+* html .box img.flipmodimage,
+.box:hover img.flipmodimage {
 	display: block;
-	position: absolute;
-	right: 0;
-	top: 0;
 	border: 1px solid transparent;
 	height: 12px;
 	width: 12px}
 
-* html .box a.flipmodtitle img {border: none}
+* html .box img.flipmodimage {border: none}
 
-a.flipmodtitle:hover img {
+img.flipmodimage {
 	background: #DDDDDD;
 	border-right: 1px solid #1D49BB !important;
 	border-bottom: 1px solid #1D49BB !important;
@@ -742,16 +727,16 @@ div.box-data {
 	font-size: .95em;
 	/*overflow: hidden;*/
 }
-
+/*
 .box-data ol {padding-left: 2em; margin-top: 0; margin-bottom: 0;}
 .box-data ul {padding-left: 0; margin-top: 0; margin-bottom: 0; list-style:none;}
-/* IE */
+ IE 
 * html .box-data ol {margin-left: 0em;}
 * html .box-data ul {margin-left: 0em;}
-/* IE7 */
+IE7 
 *:first-child+html .box-data ol {margin-left: 0em;}
 *:first-child+html .box-data ul {margin-left: 0em;}
-
+*/
 
 td.module {
 	font-size: .95em;

@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 <div class="cbox">
 <div class="cbox-title">{tr}InterTiki{/tr}
 {help url="Intertiki" desc="{tr}Intertiki exchange feature{/tr}"}

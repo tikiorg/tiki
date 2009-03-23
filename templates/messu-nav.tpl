@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 
 <div class="navbar">
 	{button href="messu-mailbox.php" _text="{tr}Mailbox{/tr}"}
@@ -14,4 +14,4 @@
   {if $mess_archiveAfter>0}
 		({tr}Auto-archive age for read messages:{/tr} {$mess_archiveAfter} {tr}days{/tr})
   {/if}
-</div>
+</div><!-- END of {$smarty.template} -->

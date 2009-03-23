@@ -98,7 +98,7 @@ function createPage($title,$content){
 			<div id="tiki-mid">
 				<table id="tiki-midtbl" width="100%" cellspacing="0" cellpadding="0" border="0">
 					<tr>
-						<td id="centercolumn" valign="top">
+						<td id="centercolumn" style="text-align:center; vertical-align:top">
 							<h1>$title</h1>
 							$content
 						</td>

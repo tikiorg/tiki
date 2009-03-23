@@ -1,4 +1,4 @@
-{title help="User+Calendar" url="tiki-minical.php?view=$view"}{tr}Mini Calendar{/tr}{/title}
+<!-- START of {$smarty.template} -->{title help="User+Calendar" url="tiki-minical.php?view=$view"}{tr}Mini Calendar{/tr}{/title}
 
 {if $prefs.feature_ajax ne 'y' && $prefs.feature_mootools ne 'y'}
   {include file=tiki-mytiki_bar.tpl}
@@ -226,4 +226,4 @@
 	</td>
   </tr>
 </table>
-</form>
+</form><!-- END of {$smarty.template} -->

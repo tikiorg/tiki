@@ -1,4 +1,4 @@
-{title help="Theme+Control"}{tr}Theme Control Center: Categories{/tr}{/title}
+<!-- START of {$smarty.template} -->{title help="Theme+Control"}{tr}Theme Control Center: Categories{/tr}{/title}
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}To learn more about <a class="rbox-link" target="tikihelp" href="http://themes.tikiwiki.org">themes</a>.{/tr}{/remarksbox}
 
@@ -78,4 +78,4 @@
 </table>
 </form>
 
-{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
+{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}<!-- END of {$smarty.template} -->

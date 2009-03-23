@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 
 {title help="Directory" url="tiki-directory_admin_sites.php?parent=$parent"}{tr}Admin sites{/tr}{/title}
 
@@ -142,4 +142,4 @@
 	{/if}
 </form>
 
-{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
+{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}<!-- END of {$smarty.template} -->

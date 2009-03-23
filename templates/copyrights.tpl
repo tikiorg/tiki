@@ -1,4 +1,4 @@
-<h2>{tr}Copyrights{/tr}: <a href="tiki-index.php?page={$page|escape:"url"}">{$page}</a></h2>
+<!-- START of {$smarty.template} --><h2>{tr}Copyrights{/tr}: <a href="tiki-index.php?page={$page|escape:"url"}">{$page}</a></h2>
 
 <table border="0">
 {section name=i loop=$copyrights}
@@ -30,4 +30,4 @@
     </table><input type="hidden" name="page" value="{$page|escape}" />
 </form>
 </td></tr>
-</table>
+</table><!-- END of {$smarty.template} -->

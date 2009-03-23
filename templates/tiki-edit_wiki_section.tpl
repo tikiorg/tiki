@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 
 {title}{tr}Edit Section:{/tr}&nbsp;{$title}{/title}
 
@@ -46,4 +46,4 @@
 </form>
 {if !$wysiwyg}
  {include file=tiki-edit_help.tpl}
-{/if}
+{/if}<!-- END of {$smarty.template} -->

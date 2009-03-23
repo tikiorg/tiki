@@ -1,4 +1,4 @@
-var _TikiPath = '{$tikipath}' ;
+<!-- START of {$smarty.template} -->var _TikiPath = '{$tikipath}' ;
 var _TikiRoot = '{$tikiroot}' ;
 var _TikiDomain = '{$tikidomain}' ;
 var _TikiBaseHost = '{$base_host}' ;
@@ -81,4 +81,4 @@ FCKConfig.Plugins.Add( 'dragresizetable' );
 
 // as tikiwiki, we prefer <br> instead of <p> for newlines
 FCKConfig.EnterMode = 'br' ;			// p | div | br
-FCKConfig.ShiftEnterMode = 'p' ;	// p | div | br
+FCKConfig.ShiftEnterMode = 'p' ;	// p | div | br<!-- END of {$smarty.template} -->

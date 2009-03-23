@@ -1,4 +1,4 @@
-{*param :  $msgTrackerFilter, $line, $open, $iTrackerFilter, $trackerId, $filters(array(name, format, fieldId, selected, opts)), $showFieldId *}
+<!-- START of {$smarty.template} -->{*param :  $msgTrackerFilter, $line, $open, $iTrackerFilter, $trackerId, $filters(array(name, format, fieldId, selected, opts)), $showFieldId *}
 {strip}
 {if $msgTrackerFilter}
 <div class="simplebox highlight">{$msgTrackerFilter|escape}</div>

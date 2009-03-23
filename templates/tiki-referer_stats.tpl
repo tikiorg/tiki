@@ -1,4 +1,4 @@
-{title help="Referer+Stats"}{tr}Referer stats{/tr}{/title}
+<!-- START of {$smarty.template} -->{title help="Referer+Stats"}{tr}Referer stats{/tr}{/title}
 
 <div class="navbar">
 	{button href="tiki-referer_stats.php?clear=1" _text="{tr}Clear Stats{/tr}"}
@@ -28,4 +28,4 @@
   {/section}
 </table>
 
-{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset }{/pagination_links}
+{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset }{/pagination_links}<!-- END of {$smarty.template} -->

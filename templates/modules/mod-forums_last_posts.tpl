@@ -1,4 +1,4 @@
-{* $Header$ *}
+<!-- START of {$smarty.template} -->{* $Header$ *}
 
 {if $prefs.feature_forums eq 'y'}
 {if !isset($tpl_module_title)}

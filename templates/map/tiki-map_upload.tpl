@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 
 <a class="pagetitle" href="tiki-map_upload.php">Layer Management</a><br /><br />
 <a class="link" href="tiki-map_upload.php?dir={$dir}">

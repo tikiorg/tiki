@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 {title help="QuickTags"}{tr}Admin Quicktags{/tr}{/title}
 
 <h2>{tr}Create/Edit QuickTags{/tr}</h2>

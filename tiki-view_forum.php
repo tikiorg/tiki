@@ -447,7 +447,7 @@ if ($prefs['feature_user_watches'] == 'y') {
 		if ($_REQUEST['watch_action'] == 'add') {
 			$tikilib->add_user_watch($user, $_REQUEST['watch_event'], $_REQUEST['watch_object'], 'forum', $forum_info['name'], "tiki-view_forum.php?forumId=" . $_REQUEST['forumId']);
 		} else {
-			$tikilib->remove_user_watch($user, $_REQUEST['watch_event'], $_REQUEST['watch_object']);
+			$tikilib->remove_user_watch($user, $_REQUEST['watch_event'], $_REQUEST['watch_object'], 'forum');
 		}
     }
 

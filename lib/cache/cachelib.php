@@ -1,5 +1,5 @@
 <?php
-// $Header$
+// $Id$
 
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
@@ -7,10 +7,10 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-/*
-A basic library to handle a cache of some Tiki Objects,
-usage is simple and feel free to improve it
-*/
+/**
+ * \brief A basic library to handle a cache of some Tiki Objects,
+ * usage is simple and feel free to improve it
+ */
 
 class Cachelib {
 

@@ -1,4 +1,4 @@
-{strip}
+<!-- START of {$smarty.template} -->{strip}
 <form method="post">
 <input type="hidden" name="trackerId" value="{$trackerId}" />
 <table class="normal">
@@ -26,4 +26,4 @@
 <tr><td>&nbsp;</td><td><input type="submit" name="filter" value="{tr}Filter{/tr}" /></td></tr>
 </table>
 </form>
-{/strip}
+{/strip}<!-- END of {$smarty.template} -->

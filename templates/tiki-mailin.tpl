@@ -1,3 +1,3 @@
-{title}{tr}Mail-in feature{/tr}{/title}
+<!-- START of {$smarty.template} -->{title}{tr}Mail-in feature{/tr}{/title}
 
-{$content}
+{$content}<!-- END of {$smarty.template} -->

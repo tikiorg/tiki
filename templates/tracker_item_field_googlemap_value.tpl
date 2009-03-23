@@ -1,4 +1,4 @@
-{* $Id: tracker_item_field_value.tpl 14576 2008-09-02 01:19:41Z rischconsulting $ *}
+<!-- START of {$smarty.template} -->{* $Id: tracker_item_field_value.tpl 14576 2008-09-02 01:19:41Z rischconsulting $ *}
 {* idem tracker_item_field with no strip *}
 	{tr}Latitude{/tr} (Y) = {$field_value.y} ; {tr}Longitude{/tr} (X) = {$field_value.x} ; {if $control ne 'n'}Zoom = {$field_value.z}{/if}
 	<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key={$prefs.gmap_key}&amp;sensor=false" type="text/javascript">
@@ -31,4 +31,4 @@
 	window.unload=GUnload;
 	load_googlemap{$field_value.fieldId}_{$item.itemId}();
 	//--><!]]>
-	</script>
+	</script><!-- END of {$smarty.template} -->

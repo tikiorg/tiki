@@ -1,4 +1,4 @@
-{title}{tr}Remove page{/tr}: {$page} ({if $version == 'last'}{tr}Last Version{/tr}{else}{tr}Version{/tr}: {$version}{/if}){/title}
+<!-- START of {$smarty.template} -->{title}{tr}Remove page{/tr}: {$page} ({if $version == 'last'}{tr}Last Version{/tr}{else}{tr}Version{/tr}: {$version}{/if}){/title}
 
 <div class="navbar">
 	{assign var=thispage value=$page|escape:'url'}
@@ -12,4 +12,4 @@
   <input type="hidden" name="version" value="{$version|escape}" />
   <input type="hidden" name="historyId" value="{$historyId|escape}" />
   <input type="submit" name="remove" value="{tr}Remove{/tr}" />
-</form>
+</form><!-- END of {$smarty.template} -->

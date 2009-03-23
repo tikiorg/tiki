@@ -1,4 +1,4 @@
-{if $prefs.feature_bidi eq 'y'}
+<!-- START of {$smarty.template} -->{if $prefs.feature_bidi eq 'y'}
 <table dir="rtl" ><tr><td>
 {/if}
 
@@ -13,4 +13,4 @@
 </div>
 {if $prefs.feature_bidi eq 'y'}
 </td></tr></table>
-{/if}
+{/if}<!-- END of {$smarty.template} -->

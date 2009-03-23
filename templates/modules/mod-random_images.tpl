@@ -1,4 +1,4 @@
-{if $prefs.feature_galleries eq 'y'}
+<!-- START of {$smarty.template} -->{if $prefs.feature_galleries eq 'y'}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Random Images{/tr}"}{/if}
 {tikimodule error=$module_params.error title=$tpl_module_title name="random_images" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
   <div style="text-align:center">

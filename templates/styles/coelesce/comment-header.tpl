@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 {*<div class="clearfix posttop">*}
 	<div class="author_actions">
 	{if $thread_style != 'commentStyle_headers' and $comment.threadId > 0

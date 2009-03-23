@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 {if $do_not_show_login_box ne 'y'}
 <script type="text/javascript">
 <!--//--><![CDATA[//><!--

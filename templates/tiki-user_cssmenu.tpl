@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 {if count($menu_channels) > 0}
 {assign var=opensec value='0'}
 {assign var=sep value=''}
@@ -60,4 +60,4 @@
 {/if}
 
 </ul>
-{/if}
+{/if}<!-- END of {$smarty.template} -->

@@ -1,4 +1,4 @@
-{title help="Menus"}{tr}Admin Menus{/tr}{/title}
+<!-- START of {$smarty.template} -->{title help="Menus"}{tr}Admin Menus{/tr}{/title}
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}
   {tr}To use menus in a <a href="tiki-admin_modules.php">module</a>, <a href="tiki-admin.php?page=siteid">Site identity</a> or a template, use {literal}{menu id=x}{/literal}, where x is the ID of the menu.{/tr}
@@ -98,4 +98,4 @@
 <tr><td class="odd" colspan="5">No records found.</td></tr>
 {/section}
 </table>
-{pagination_links cant=$cant step=$maxRecords offset=$offset }{/pagination_links} 
+{pagination_links cant=$cant step=$maxRecords offset=$offset }{/pagination_links} <!-- END of {$smarty.template} -->

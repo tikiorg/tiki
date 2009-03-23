@@ -1,4 +1,4 @@
-{if $page|lower neq 'sandbox' or $tiki_p_admin eq 'y'}
+<!-- START of {$smarty.template} -->{if $page|lower neq 'sandbox' or $tiki_p_admin eq 'y'}
 	<input type="submit" class="wikiaction" onmouseover="return overlib('{tr}Preview your changes.{/tr}');" onmouseout="nd();" name="preview" value="{tr}Preview{/tr}" onclick="needToConfirm=false;" />
 	{if $translation_mode eq 'y'}
 		<input type="submit" class="wikiaction" onmouseover="return overlib('{tr}Save the page as a partial translation.{/tr}');" onmouseout="nd();" name="partial_save" value="{tr}Partial Translation{/tr}" onclick="needToConfirm=false"/>
@@ -17,4 +17,4 @@
 	{if $page|lower ne 'sandbox'}
 	<input type="submit" class="wikiaction" onmouseover="return overlib('{tr}Cancel the edit, you will lose your changes.{/tr}');" onmouseout="nd();" name="cancel_edit" value="{tr}Cancel Edit{/tr}" onclick="needToConfirm = false;" />
 	{/if}
-{/if}
+{/if}<!-- END of {$smarty.template} -->

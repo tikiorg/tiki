@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 
 {if $prefs.feature_score eq 'y'}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Top users{/tr}"}{/if}

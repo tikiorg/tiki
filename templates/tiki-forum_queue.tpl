@@ -1,4 +1,4 @@
-{popup_init src="lib/overlib.js"}
+<!-- START of {$smarty.template} -->{popup_init src="lib/overlib.js"}
 
 {title help="forums" admpage="forums"}{tr}Message queue for forum{/tr} {$forum_info.name}{/title}
 
@@ -187,4 +187,4 @@
 </form>
 {* END OF LISTING *}
 
-{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
+{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}<!-- END of {$smarty.template} -->

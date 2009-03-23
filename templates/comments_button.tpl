@@ -1,4 +1,4 @@
-{* $Id: tiki-browse_gallery.tpl 15897 2008-12-04 18:42:12Z sylvieg $ *}
+<!-- START of {$smarty.template} -->{* $Id: tiki-browse_gallery.tpl 15897 2008-12-04 18:42:12Z sylvieg $ *}
 {if $comments_cant gt 0}
 	{assign var=thisbuttonclass value='highlight'}
 {else}
@@ -22,4 +22,4 @@
 	{assign var=flip_open value=$prefs.wiki_comments_displayed_default}
 {/if}
 
-{button href="#comments" _flip_id=$thisflipid _class=$thisbuttonclass _text=$thistext _flip_default_open=$flip_open}
+{button href="#comments" _flip_id=$thisflipid _class=$thisbuttonclass _text=$thistext _flip_default_open=$flip_open}<!-- END of {$smarty.template} -->

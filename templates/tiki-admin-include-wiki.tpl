@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use the &quot;Quick Edit&quot; module to easily create or edit wiki pages. Select{/tr} <a class="rbox-link" href="tiki-admin_modules.php">{tr}Admin &gt; Modules{/tr}</a> to add this (or other) modules.{/remarksbox}
 
@@ -102,13 +102,6 @@
 	<div class="adminoptionlabel"><label for="wiki_pagename_strip">{tr}Page name display stripper{/tr}:</label>
 	<input type="text" id="wiki_pagename_strip" name="wiki_pagename_strip" value="{$prefs.wiki_pagename_strip}" size="5" /> <input type="submit" name="setwikiregex" value="{tr}Set{/tr}" />
 	<br /><em>{tr}Enter a character to use as the delimiter when displaying page names. All characters after the delimiter will be stripped when displaying the page name.</em>{/tr}
-	</div>
-</div>
-
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" id="feature_wiki_ext_icon" name="feature_wiki_ext_icon" {if $prefs.feature_wiki_ext_icon eq 'y'}checked="checked"{/if}/></div>
-	<div class="adminoptionlabel"><label for="feature_wiki_ext_icon">{tr}External link icon{/tr}</label>
-		<br /><em>{tr}External links will be identified with{/tr}: </em><img border="0" class="externallink" src="img/icons/external_link.gif" alt=" (external link)" />.
 	</div>
 </div>
 
@@ -613,11 +606,6 @@ name="w_displayed_default" {if $prefs.w_displayed_default eq 'y'} checked="check
 	<div class="adminoption"><input type="checkbox" id="feature_wiki_multiprint" name="feature_wiki_multiprint" {if $prefs.feature_wiki_multiprint eq 'y'}checked="checked"{/if}/></div>
 	<div class="adminoptionlabel"><label for="feature_wiki_multiprint">{tr}MultiPrint{/tr}</label></div>
 </div>
-</div>
-
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" id="feature_wiki_protect_email" name="feature_wiki_protect_email" {if $prefs.feature_wiki_protect_email eq 'y'}checked="checked"{/if}/></div>
-	<div class="adminoptionlabel"><label for="feature_wiki_protect_email">{tr}Protect email against spam{/tr}.</label></div>
 </div>
 
 <div class="adminoptionbox">

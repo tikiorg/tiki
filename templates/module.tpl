@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 {* Module layout with controls *}
 {if $module_nobox neq 'y'}
 <div class="box-shadow">
@@ -42,7 +42,7 @@
 			</span>
 			{/if}
 		{/if}
-		</h3>
+		<!--[if IE]><br class="clear" style="height: 1px !important" /><![endif]--></h3>
 	{elseif $module_notitle ne 'y' }
 		{if $module_flip eq 'y' and $prefs.javascript_enabled ne 'n'}
 			<h3 class="box-title" ondblclick="javascript:icntoggle('mod-{$module_name|cat:$module_position|cat:$module_ord|escape}','module.png');"{if !empty($module_params.color)} style="color:{$module_params.color};"{/if}>
@@ -61,11 +61,11 @@
 				</a>
 			</span>
 		{/if}
-		</h3>
+		<!--[if IE]><br class="clear" style="height: 1px !important" /><![endif]--></h3>
 	{/if}
 		<div id="mod-{$module_name|cat:$module_position|cat:$module_ord|escape}" style="display: block" class="clearfix box-data">
 {/if}
-{$module_content}
+{$module_content}<!--[if IE]><br class="clear" style="height: 1px !important" /><![endif]-->
 {$module_error}
 {if $module_nobox neq 'y'}
 {if $module_flip eq 'y'}
@@ -81,4 +81,4 @@
 		</div>
 	</div>
 </div>
-{/if}
+{/if}<!-- END of {$smarty.template} -->

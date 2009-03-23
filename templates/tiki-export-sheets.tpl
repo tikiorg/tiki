@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="lib/sheet/style.css" type="text/css" />
+<!-- START of {$smarty.template} --><link rel="stylesheet" href="lib/sheet/style.css" type="text/css" />
 
 {title}{tr}{$title}{/tr}{/title}
 
@@ -53,4 +53,4 @@
 		</select>
 		<input type="submit" value="{tr}Export{/tr}" />
 	</form>
-{/if}
+{/if}<!-- END of {$smarty.template} -->

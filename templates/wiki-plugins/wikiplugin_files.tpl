@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/tikiwiki/_mods/wiki-plugins/files/templates/wikiplugin_files.tpl,v 1.1 2008/01/18 22:00:48 sylvieg Exp $ *}
+<!-- START of {$smarty.template} -->{* $Header: /cvsroot/tikiwiki/_mods/wiki-plugins/files/templates/wikiplugin_files.tpl,v 1.1 2008/01/18 22:00:48 sylvieg Exp $ *}
 
 {if $data}<h4>{$data|escape}</h4>{else}
 <h4>

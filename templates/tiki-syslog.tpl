@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 {title help="System+Log"}{tr}Tiki Logs{/tr}{/title}
 
 <div class="navbar">

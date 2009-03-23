@@ -1,4 +1,4 @@
-<div id="siteheader" class="clearfix">
+<!-- START of {$smarty.template} --><div id="siteheader" class="clearfix">
 	<div id="header-top">
 		<div id="sitelogo" style="padding-left: 70px;"><h1><img style="border: medium none ; vertical-align: middle;" alt="{tr}TikiWiki CMS/Groupware{/tr}" src="img/tiki/tiki3.png" />
 	<span style="vertical-align: middle">{tr}Tiki installer{/tr} v{$tiki_version_name} <a title='help' href='http://doc.tikiwiki.org/Installation' target="help"><img style="border: 0" src='img/icons/help.gif' alt="{tr}Help{/tr}" /></a></span></h1>
@@ -564,4 +564,4 @@ others?
 	  	</div>
 </div>
 <hr />
-<p align="center"><a href="http://tikiwiki.org" target="_blank" title="{tr}Powered by{/tr} {tr}TikiWiki CMS/Groupware{/tr} &#169; 2002&#8211;{$smarty.now|date_format:"%Y"} "><img src="img/tiki/tikibutton2.png" alt="Tikiwiki" style="width: 80px; height: 31px; border:0" /></a></p>
+<p align="center"><a href="http://tikiwiki.org" target="_blank" title="{tr}Powered by{/tr} {tr}TikiWiki CMS/Groupware{/tr} &#169; 2002&#8211;{$smarty.now|date_format:"%Y"} "><img src="img/tiki/tikibutton2.png" alt="Tikiwiki" style="width: 80px; height: 31px; border:0" /></a></p><!-- END of {$smarty.template} -->

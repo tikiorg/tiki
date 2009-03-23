@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 {strip}
 {title help="mods"}{tr}Tikiwiki Mods{/tr}{/title}
 <div class="navbar">
@@ -298,4 +298,4 @@ function update_button_install() {
 		{/foreach}
 	</table>
 {/if}
-{/strip}
+{/strip}<!-- END of {$smarty.template} -->

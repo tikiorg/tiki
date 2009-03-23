@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 {title help="Directory"}{tr}Validate sites{/tr}{/title}
 
 {* Display the title using parent *}
@@ -59,4 +59,4 @@ var CHECKBOX_LIST = [{section name=user loop=$items}'sites[{$items[user].siteId}
 {/if}
 </form>
 
-{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
+{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}<!-- END of {$smarty.template} -->

@@ -1,4 +1,4 @@
-{* $Id$ *}
+<!-- START of {$smarty.template} -->{* $Id$ *}
 {popup_init src="lib/overlib.js"}
 {title help="comments"}{$title}{/title}
 
@@ -104,4 +104,4 @@
 </form>
 {/if}
 
-{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
+{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}<!-- END of {$smarty.template} -->
