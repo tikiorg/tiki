@@ -11,7 +11,7 @@
 // Initialization
 require_once ('tiki-setup.php');
 
-$auto_query_args = array('sort_mode', 'offset', 'find', 'assign_user', 'action', 'group', 'set_default', 'default_group', 'login', 'maxRecords');
+$auto_query_args = array('sort_mode', 'offset', 'find', 'assign_user', 'group', 'maxRecords');
 
 if ($tiki_p_admin != 'y' && $tiki_p_admin_users != 'y' && $tiki_p_subscribe_groups != 'y') {
 	$smarty->assign('errortype', 401);

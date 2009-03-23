@@ -10,7 +10,7 @@
 require_once ('tiki-setup.php');
 include_once ('lib/menubuilder/menulib.php');
 
-$auto_query_args = array('menuId','import','export', 'optionId', 'remove', 'up', 'down', 'delsel_x', 'checked', 'save', 'groupname', 'level', 'name', 'url', 'position', 'section', 'type', 'sort_mode', 'offset', 'find', 'maxRecords');
+$auto_query_args = array('menuId', 'optionId', 'checked', 'groupname', 'level', 'name', 'url', 'position', 'section', 'type', 'sort_mode', 'offset', 'find', 'maxRecords');
                                                                              
 
 if ($tiki_p_admin != 'y' && $tiki_p_edit_menu_option != 'y') {

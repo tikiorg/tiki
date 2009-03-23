@@ -11,7 +11,7 @@ require_once ('tiki-setup.php');
 include_once ('lib/commcenter/commlib.php');
 include_once ('lib/wiki/wikilib.php');
 
-$auto_query_args = array('receivedPageId','accept', 'view', 'pageName', 'data', 'comment', 'preview', 'remove', 'save', 'checked', 'prefix', 'postfix', 'sort_mode', 'offset', 'find', 'sort_modes');
+$auto_query_args = array('receivedPageId', 'pageName', 'data', 'comment', 'checked', 'prefix', 'postfix', 'sort_mode', 'offset', 'find', 'sort_modes');
 
 if ($prefs['feature_comm'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_comm");
