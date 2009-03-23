@@ -969,13 +969,20 @@
 						</td>
 					</tr>
 					<tr>
-						<td width=30%>
-			        		<label for="feature_iepngfix">{tr}Correct PNG images alpha transparency in IE6 (experimental){/tr}</label>
-						</td>
-						<td width=2%>
-						</td>
-						<td>
-							<input type="checkbox" name="feature_iepngfix" id="feature_iepngfix"{if $prefs.feature_iepngfix eq 'y'} checked="checked"{/if} />
+						<td colspan="3">
+							<div class="adminoptionbox">	  
+								<div class="checkbox">
+									<input type="checkbox" name="feature_iepngfix" id="feature_iepngfix"{if $prefs.feature_iepngfix eq 'y'} checked="checked"{/if} onclick="flip('iepngfix');" />
+								</div>
+								<label for="feature_iepngfix">{tr}Correct PNG images alpha transparency in IE6 (experimental){/tr}</label>
+								
+								<div id="iepngfix" class="adminoptionboxchild" style="display:{if $prefs.feature_iepngfix eq 'y'}block{else}none{/if};">
+									<label class="above" for="iepngfix_selectors">{tr}List of CSS selectors to be fixed, each selector separated by comma{/tr}</label>
+									<input class="fullwidth" id="iepngfix_selectors" type="text" name="iepngfix_selectors" size="32" value="{$prefs.iepngfix_selectors}" />
+									<label class="above" for="iepngfix_elements">{tr}List of HTMLDomElements to be fixed, each element separated by comma{/tr}</label>
+									<input class="fullwidth" id="iepngfix_elements" type="text" name="iepngfix_elements" size="32" value="{$prefs.iepngfix_elements}" />
+								</div>
+							</div>
 						</td>
 					</tr>
 				</table>

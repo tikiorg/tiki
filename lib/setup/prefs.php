@@ -885,7 +885,8 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'keep_versions' => 1,
 		'feature_custom_home' => 'n',
 
-		// site identity
+		// look and feel
+
 		'feature_siteidentity' => 'y',
 		'site_crumb_seper' => '»',
 		'site_nav_seper' => '|',
@@ -1155,8 +1156,9 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_comments_post_as_anonymous' => 'n',
 		'feature_comments_moderation' => 'n',
 		'feature_template_zoom' => 'y',
-		'feature_ie56_correct_png' => 'n',
 		'feature_iepngfix' => 'n',
+		'iepngfix_selectors' => '#sitelogo a img',
+		'iepngfix_elements' => '',
 		
 		// JQuery
 		'feature_jquery' => 'n',			// Alternative lib for shadowbox etc
