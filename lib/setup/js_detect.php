@@ -41,52 +41,28 @@ if ( $prefs['javascript_enabled'] != 'y' ) {
 		$headerlib->add_jsfile($custom_js, 50);
 	}
 	
-	/** PNG transparency fix for IE 5.5 & 6 **/
-	if ($prefs['feature_ie56_correct_png'] == 'y' && (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 6') !== false) || strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 5')) {
-		$headerlib->add_js(<<<JS
-function correctPNG() // correctly handle PNG transparency in Win IE 5.5 & 6 (warning: breaks menu folders toggling in IE ! TODO: remove this as it doesn't work very well in favour of the other method ?)
-{
-	var arVersion = navigator.appVersion.split("MSIE");
-	var version = parseFloat(arVersion[1]);
-	if ((version >= 5.5) && (document.all && !this.op))
-	{
-		for(var i=0; i < document.images.length; i++)
-		{
-			var img = document.images[i];
-			var imgName = img.src.toUpperCase();
-			if (imgName.substring(imgName.length-3, imgName.length) == "PNG")
-			{
-				var imgID = (img.id) ? "id='" + img.id + "' " : "";
-				var imgClass = (img.className) ? "class='" + img.className + "' " : "";
-				var imgTitle = (img.title) ? "title='" + img.title + "' " : "title='" + img.alt + "' ";
-				var imgStyle = "display:inline-block;" + img.style.cssText;
-				if (img.align == "left") { imgStyle = "float:left;" + imgStyle; }
-				if (img.align == "right") { imgStyle = "float:right;" + imgStyle; }
-				if (img.parentElement.href) { imgStyle = "cursor:hand;" + imgStyle; }
-				var strNewHTML = "<span " + imgID + imgClass + imgTitle
-								+ " style=\"" + "width:" + img.width + "px; height:" + img.height + "px;" + imgStyle + ";"
-								+ "filter:progid:DXImageTransform.Microsoft.AlphaImageLoader"
-								+ "(src=\'" + img.src + "\', sizingMethod='scale');\"></span>";
-				img.outerHTML = strNewHTML;
-				i = i-1;
-			}
-		}
-	}
-}
-if (this.ie56) {
-	window.attachEvent("onload", correctPNG);
-}
-JS
-		);
-	} elseif ($prefs['feature_iepngfix'] == 'y' && strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 6') !== false) {
+	if ($prefs['feature_iepngfix'] == 'y' && strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 6') !== false) {
 	/**
-	 * \brief another attempt for PNG alpha transparency fix which seems to not break things, works for IE6 and can be applied even on background positioned images
+	 * \brief another attempt for PNG alpha transparency fix which seems to work best for IE6 and can be applied even on background positioned images
 	 * 
 	 * is applied explicitly on defined CSS selectors or HTMLDomElement
+	 * 
 	 */
-			$headerlib->add_jsfile('lib/iepngfix/DD_belatedPNG-min.js');
-			$headerlib->add_js(<<<JS
-				DD_belatedPNG.fix('#sitelogo a img'); // list of selectors to fix separated by comma (default is set to fix sitelogo)
+		if (($fixoncss = $prefs['iepngfix_selectors']) == '') {
+			$fixoncss = '#sitelogo a img';
+		}
+		if (($fixondom = $prefs['iepngfix_elements']) != '') {
+			$fixondom = "DD_belatedPNG.fixPng($fixondom); // list of HTMLDomElements to fix separated by commas (default is none)";
+		}
+		if ($prefs['use_minified_scripts'] != 'y') {
+			$scriptpath = 'lib/iepngfix/DD_belatedPNG.js';
+		} else {
+			$scriptpath = 'lib/iepngfix/DD_belatedPNG-min.js';
+		}
+		$headerlib->add_jsfile ($scriptpath, 200);
+		$headerlib->add_js (<<<JS
+			DD_belatedPNG.fix('$fixoncss'); // list of CSS selectors to fix separated by commas (default is set to fix sitelogo)
+			$fixondom
 JS
 		);
 			
