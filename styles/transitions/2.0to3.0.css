@@ -57,13 +57,13 @@ img.icon {
 .post-approved-r { border-left: 3px double red; }
 .post-approved-r .content * { background-image: url(../../img/icons2/dots.gif); }
 
-.post-approved-n .content, .post-approved-r .content,
+/* .post-approved-n .content, .post-approved-r .content,
 .post-approved-n .title, .post-approved-r .title,
 .post-approved-n .postfooter, .post-approved-r .postfooter,
 tr.post-approved-n td span, tr.post-approved-r td span {
 	opacity: 0.5;
 }
-tr.post-approved-n td span, tr.post-approved-r td span { opacity: 0.6; }
+tr.post-approved-n td span, tr.post-approved-r td span { opacity: 0.6; } VALIDATION ERROR */
 
 /* multiselect section for categories for example */
 
@@ -121,8 +121,9 @@ div.multiselect img {
 
 div.multiselect div.selection {
 	display: none;
-	overflow-y: auto;
-	overflow-x: hidden;
+	/*overflow-y: auto;
+	overflow-x: hidden; VALIDATION ERROR */
+	overflow: auto;
 	position: relative;
 	height: auto;
 	max-height: 7em;
@@ -153,8 +154,7 @@ div.multiselect:hover, div.multiselect div.selection:hover {
 /* New Help section */
 div#tikihelp {
 	position:fixed;
-	_position:absolute;
-	right: 0px;
+	right: 0;
 	top: 15%;
 	height: 80%;
 	max-width: 50%;
@@ -164,6 +164,7 @@ div#tikihelp {
 	background-color: transparent;
 	z-index: 2;
 }
+* html div#tikihelp {position: absolute}
 div.help_icon {
 	border: 0;
 	margin: 0;
@@ -452,9 +453,10 @@ ul.categories li{
 }
 #calscreen td {
 	vertical-align: top;
-	*height: 21px; /* fix for IE7 */
-	_height: ; /* fix for IE6 */
+/* *height: 21px;  fix for IE7
+	_height: ; fix for IE6 VALIDATION ERROR*/
 }
+
 #calscreen td a {
 	text-decoration: none;
 }
@@ -525,10 +527,10 @@ p.editdate {
   border: .1em solid #f00 !important;
 }
 
-.box-switch_lang .box-data img.unavailable,
+/*.box-switch_lang .box-data img.unavailable,
 .box-switch_lang .box-data span.unavailable  {
   opacity: .3;
-}
+} VALIDATION ERROR */
 
 /* words */
 
@@ -540,9 +542,9 @@ p.editdate {
   font-weight: bold;
 }
 
-.box-switch_lang .box-data a.unavailable  {
+/*.box-switch_lang .box-data a.unavailable  {
   opacity: .6;
-}
+} VALIDATION ERROR */
 
 .box-switch_lang ul {
 	padding: 0 1em;
@@ -597,7 +599,7 @@ p.editdate {
 /* for admin section */
 
 span.disabled {
-	opacity: .5;
+	/*opacity: .5; VALIDATION ERROR */
 	font-style: italic;
 }
 
@@ -640,9 +642,9 @@ td.mods_update {
 	background-color:#dcdeac;
 }
 
-td.mods_hilite {
+/*td.mods_hilite {
 	background-color:#;
-}
+} MISSING VALUE */
 
 /* workaround for Safari when in FCKEditor */
 html[dir=ltr]>body {
