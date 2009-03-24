@@ -71,6 +71,7 @@ if (isset($_REQUEST["looksetup"])) {
 	'feature_jquery_reflection',
     'feature_jquery_sheet',
 	'feature_iepngfix',
+	'feature_layoutshadows'
     );
 
     foreach ($pref_toggles as $toggle) {

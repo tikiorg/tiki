@@ -187,6 +187,11 @@
 				<table class="admin" width="100%">
 				<tr>
 					<td class="form" colspan="5">
+
+						<input class="checkbox" type="checkbox" name="feature_layoutshadows" id="feature_layoutshadows"{if $prefs.feature_layoutshadows eq 'y'} checked="checked"{/if} />
+						<label for="feature_layoutshadows">{tr}Enable additional general layout layers for shadows, rounded corners or other decorative styling{/tr}</label>
+					
+
 					{* --- Customize Site Header --- *}
 						<fieldset class="admin">
 							<legend>
