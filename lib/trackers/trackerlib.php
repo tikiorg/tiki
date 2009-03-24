@@ -852,7 +852,7 @@ class TrackerLib extends TikiLib {
 			case 's':
 				$key = 'tracker.'.$trackerId.'.'.$itemId;
 				$fopt['numvotes'] = $this->getOne('select count(*) from `tiki_user_votings` where `id` = ?', array($key));
-				$fopt['voteavg'] = ( $fopt['numvotes'] > 0 ) ? round(($fopt['value'] / $fopt['numvotes'])) : '0';
+				$fopt['voteavg'] = ( $fopt['numvotes'] > 0 ) ? round(($fopt['value'] / $fopt['numvotes'])) : '';
 				break;
 			case 'e':
 				global $categlib;
@@ -2348,6 +2348,7 @@ class TrackerLib extends TikiLib {
 			'help'=>tra('<dl>
 				<dt>Function: Allows alphanumeric text input in a one-line field of arbitrary size.
 				<dt>Usage: <strong>samerow,size,prepend,append,max</strong>
+				<dt>Example: 0,80,$,,80
 				<dt>Description:
 				<dd><strong>[samerow]</strong> will display the next field or checkbox in the same row if a 1 is specified;
 				<dd><strong>[size]</strong> is the visible length of the field in characters;
@@ -2362,6 +2363,7 @@ class TrackerLib extends TikiLib {
 			'help'=>tra('<dl>
 				<dt>Function: Allows alphanumeric text input in a multi-line field of arbitrary size.
 				<dt>Usage: <strong>quicktags,width,height,max,listmax,wordmax</strong>
+				<dt>Example: 0,80,5,30,200
 				<dt>Description:
 				<dd><strong>[quicktags]</strong> enables quicktags if a 1 is specified;
 				<dd><strong>[width]</strong> is the width of the box, in chars;
@@ -2377,6 +2379,7 @@ class TrackerLib extends TikiLib {
 			'help'=>tra('<dl>
 				<dt>Function: Provides a checkbox field for yes/no, on/off input.
 				<dt>Usage: <strong>samerow</strong>
+				<dt>Example: 1
 				<dt>Description:
 				<dd><strong>[samerow]</strong> will display the next field on the same row if a 1 is specified.
 				</dl>'));
@@ -2386,6 +2389,7 @@ class TrackerLib extends TikiLib {
 			'help'=>tra('<dl>
 				<dt>Function: Provides a one-line field for numeric input only.  Prepend or append values may be alphanumeric.
 				<dt>Usage: <strong>samerow,size,prepend,append</strong>
+				<dt>Example: 0,60,,hours
 				<dt>Description:
 				<dd><strong>[samerow]</strong> will display the next field or checkbox in the same row if a 1 is specified;
 				<dd><strong>[size]</strong> is the visible size of the field in characters;
@@ -2399,6 +2403,7 @@ class TrackerLib extends TikiLib {
 			'help'=>tra('<dl>
 				<dt>Function: Allows users to select only from a specified set of options in a drop-down bar.
 				<dt>Usage: <strong>list_of_items</strong>
+				<dt>Example: yes,no
 				<dt>Description:
 				<dd><strong>[list_of_items]</strong> is the list of all values you want in the drop-down, separated by commas;
 				<dd>if you wish to specify a default value other than the first item, enter the value twice, consecutively, and it will appear once in the list as the default selection.
@@ -2409,6 +2414,7 @@ class TrackerLib extends TikiLib {
 			'help'=>tra('<dl>
 				<dt>Function: Allows users to select from a specified set of options in a drop-down bar, or provide an alternate selection in a one-line text field.
 				<dt>Usage: <strong>list_of_items</strong>
+				<dt>Example: yes,no
 				<dt>Description:
 				<dd><strong>[list_of_items]</strong> is the list of all values you want in the drop-down, separated by commas;
 				<dd>if you wish to specify a default value other than the first item, enter the value twice, consecutively, and it will appear once in the list as the default selection.
@@ -2419,6 +2425,7 @@ class TrackerLib extends TikiLib {
 			'help'=>tra('<dl>
 				<dt>Function: Provides a multiple-choice-style set of options from which a user may only choose one.
 				<dt>Usage: <strong>list_of_items</strong>
+				<dt>Example: yes,no
 				<dt>Description:
 				<dd><strong>[list of items]</strong> is the list of all values you want in the set, separated by commas;
 				<dd>if you wish to specify a default value other than the first item, enter the value twice, consecutively, and it will appear as the one selected.
@@ -2431,6 +2438,7 @@ class TrackerLib extends TikiLib {
 			'help'=>tra('<dl>
 				<dt>Function: Allows a selection from a specified list of usernames.
 				<dt>Usage: <strong>auto-assign,email_notify</strong>
+				<dt>Example: 1,1
 				<dt>Description:
 				<dd><strong>[auto-assign]</strong> will auto-assign the creator of the item if set to 1, or will set the selection to the user who last modified the item if set to 2, or will give the choice between all the users for other values;
 				<dd><strong>[email_notify]</strong> will send an email to the assigned user when the item is saved;
@@ -2443,6 +2451,7 @@ class TrackerLib extends TikiLib {
 			'help'=>tra('<dl>
 				<dt>Function: Allows a selection from a specified list of usergroups.
 				<dt>Usage: <strong>auto-assign</strong>
+				<dt>Example: 1
 				<dt>Description:
 				<dd><strong>[auto-assign]</strong> will auto-assign the field to the usergroup of the creator if set to 1, or will set the selection to the group of the user who last modified the item if set to 2, or will give the choice between all the groups for other values;
 				<dd>if the user does not have a default group set, the first group the user belongs to will be chosen, otherwise Registered group will be used.
@@ -2453,6 +2462,7 @@ class TrackerLib extends TikiLib {
 			'help'=>tra('<dl>
 				<dt>Function: Provides a field for entering an IP address.
 				<dt>Usage: <strong>auto-assign</strong>
+				<dt>Example: 1
 				<dt>Description:
 				<dd><strong>[auto-assign]</strong> will auto-populate the field with the IP address of the user who created the item if set to 1, or will set the field to the IP of the user who last modified the item if set to 2, or will be a free IP for other values.
 				</dl>'));
@@ -2462,6 +2472,7 @@ class TrackerLib extends TikiLib {
 			'help'=>tra('<dl>
 				<dt>Function: Allows a selection from the list of pages.
 				<dt>Usage: <strong>auto-assign, size, create</strong>
+				<dt>Example: 1
 				<dt>Description:
 				<dd><strong>[auto-assign]</strong> will auto-assign the creator of the item if set to 1
 				<dd><strong>[size]</strong> is the visible input length of the field in characters (<=0 not limited);
@@ -2475,6 +2486,7 @@ class TrackerLib extends TikiLib {
 			'help'=>tra('<dl>
 				<dt>Function: Allows a selection from a specified list of countries.
 				<dt>Usage: <strong>name_flag,sort</strong>
+				<dt>Example: 1,0
 				<dt>Description:
 				<dd><strong>[name_flag]</strong> default is 0 and will display both the country name and its flag, 1 will display only the country name, while 2 will show only the country flag;
 				<dd><strong>[sortorder]</strong> specifies the order the country list should be displayed in, where 0 is the default and sorts according to the translated name, and 1 sorts according to the english name;
@@ -2486,6 +2498,7 @@ class TrackerLib extends TikiLib {
 			'help'=>tra('<dl>
 				<dt>Function: Provides drop-down options to accurately select a date and/or time.
 				<dt>Usage: <strong>datetime,startyear,endyear,blankdate</strong>
+				<dt>Example: d,2000,,blank
 				<dt>Description:
 				<dd><strong>[datetime]</strong> will only allow a date to be selected if set to "d", and allows a full date and time selection if set to "dt", defaulting to "dt";
 				<dd><strong>[startyear]</strong> allows you to specify a custom first year in the date range (eg. 1987), default is current year;
@@ -2502,6 +2515,7 @@ class TrackerLib extends TikiLib {
 			'help'=>tra('<dl>
 				<dt>Function: Provides a javascript graphical date selector to select a date and/or time.
 				<dt>Usage: <strong>datetime</strong>
+				<dt>Example: dt
 				<dt>Description:
 				<dd><strong>[datetime]</strong> will only allow a date to be selected if set to "d", and allows a full date and time selection if set to "dt", defaulting to "dt".
 				</dl>'));
@@ -2510,7 +2524,8 @@ class TrackerLib extends TikiLib {
 			'opt'=>true,
 			'help'=>tra('<dl>
 				<dt>Function: Allows user to upload an image into the tracker item.
-				<dt>Usage: <strong>xListSize,yListSize,xDetailsSize,yDetailsSize,uploadLimitScale</strong>
+				<dt>Usage: <strong>xListSize,yListSize,xDetailsSize,yDetailsSize,uploadLimitScale,shadowBox</strong>
+				<dt>Example: 30,30,100,100,1000,item
 				<dt>Description:
 				<dd><strong>[xListSize]</strong> sets the pixel width of the image in the list view;
 				<dd><strong>[yListSize]</strong> sets the pixel height of the image in the list view;
@@ -2527,6 +2542,7 @@ class TrackerLib extends TikiLib {
 			'help'=>tra('<dl>
 				<dt>Function: ?
 				<dt>Usage: <strong>label,post,tiki-index.php,page:fieldname,highlight=test</strong>
+				<dt>Example: 
 				<dt>Description:
 				<dd><strong>[label]</strong> needs explanation;
 				<dd><strong>[post]</strong> needs explanation;
@@ -2547,6 +2563,7 @@ class TrackerLib extends TikiLib {
 			'help'=>tra('<dl>
 				<dt>Function: Allows insertion of a static block of text into a tracker to augment input fields. (non-editable)
 				<dt>Usage: <strong>wikiparse,max</strong>
+				<dt>Example: 1,20
 				<dt>Description:
 				<dd><strong>[wikiparse]</strong> will allow wiki syntax to be parsed if set to 1, otherwise default is 0 to only support line-breaks;
 				<dd><strong>[max]</strong> is the maximum number of characters that are displayed in list mode;
@@ -2558,6 +2575,7 @@ class TrackerLib extends TikiLib {
 			'help'=>tra('<dl>
 				<dt>Function: Allows one or more categories under a main category to be assigned to the tracker item.
 				<dt>Usage: <strong>parentId,inputtype,selectall</strong>
+				<dt>Example: 12,radio,1
 				<dt>Description:
 				<dd><strong>[parentId]</strong> is the ID of the main category, categories in the list will be children of this;
 				<dd><strong>[inputtype]</strong> is one of [d|m|radio|checkbox], where d is a drop-down list, m is a multiple-selection drop-down list, radio and checkbox are self-explanatory;
@@ -2570,6 +2588,7 @@ class TrackerLib extends TikiLib {
 			'help'=>tra('<dl>
 				<dt>Function: Provides a way to choose a value from another tracker (eventually with a link).
 				<dt>Usage: <strong>trackerId,fieldId,linkToItem,displayedFieldsList</strong>
+				<dt>Example: 3,5,1,6|8
 				<dt>Description:
 				<dd><strong>[trackerId]</strong> is the tracker ID of the fields you want to display;
 				<dd><strong>[fieldId]</strong> is the field in [trackerId] from which you can select a value among all the field values of the items of [trackerId];
@@ -2583,6 +2602,7 @@ class TrackerLib extends TikiLib {
 			'help'=>tra('<dl>
 				<dt>Function: Displays a list of field values from another tracker that has a relation with this tracker(eventually with a link).
 				<dt>Usage: <strong>trackerId,fieldIdThere,fieldIdHere,displayFieldIdThere,linkToItems</strong>
+				<dt>Example: 5,3,4,10|11
 				<dt>Description:
 				<dd><strong>[trackerId]</strong> is the tracker ID of the fields you want to display;
 				<dd><strong>[fieldIdThere]</strong> is the field (multiple fields can be separated with a ":") you want to link with;
@@ -2611,6 +2631,7 @@ class TrackerLib extends TikiLib {
 			'help'=>tra('<dl>
 				<dt>Function: Allows users to enter an email address with option of making it active.
 				<dt>Usage: <strong>link,watchopen,watchpending,watchclosed</strong>
+				<dt>Example: 0,o
 				<dt>Description:
 				<dd><strong>[link]</strong> may be one of [0|1|2] and specifies how to display the email address, defaulting to 0 as plain text, 1 as an encoded hex mailto link, or 2 as a standard mailto link;
 				<dd><strong>[watchopen]</strong> if set to "o" will email the address every time the status of the item changes to open;
@@ -2638,6 +2659,7 @@ class TrackerLib extends TikiLib {
 			'help'=>tra('<dl>
 				<dt>Function: Allows an incrementing value field, or itemId field. (non-editable)
 				<dt>Usage: <strong>start,prepend,append,itemId</strong>
+				<dt>Example: 1,,,itemId
 				<dt>Description:
 				<dd><strong>[start]</strong> is the starting value for the field, defaults to 1;
 				<dd><strong>[prepend]</strong> is text that will be displayed before the field;
@@ -2688,6 +2710,7 @@ class TrackerLib extends TikiLib {
 			'help'=>tra('<dl>
 				<dt>Function: Allows user preference changes from a tracker.
 				<dt>Usage: <strong>type</strong>
+				<dt>Example: password
 				<dt>Description:
 				<dd><strong>[type]</strong> if value is password, will allow to change the user password, if value is email, will display/allow to change the user email;
 				</dl>'));
@@ -2697,6 +2720,7 @@ class TrackerLib extends TikiLib {
 			'help'=>tra('<dl>
 				<dt>Function: Allows a file to be attached to the tracker item.
 				<dt>Usage: <strong>listview</strong>
+				<dt>Example: nu
 				<dt>Description:
 				<dd><strong>[listview]</strong> may be one of [n|t|s|u] on their own or in any combination (n, t, ns, nts), allowing you to see the attachment in the item list view as its name (n), its type (t), its name (n), or display the username of the uploader (u);
 				note that this option will cost an extra query to the database for each attachment and can severely impact performance with several attachments.
