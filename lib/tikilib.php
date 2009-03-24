@@ -1489,6 +1489,10 @@ class TikiLib extends TikiDB {
 		} else $bindvars = array();
 
 		$query = "select * from `tiki_faqs` $mid order by ".$this->convert_sortmode($sort_mode);
+
+		$query_cant = "select count(*) from `tiki_faqs` $mid";
+		$cant = $this->getOne($query_cant,$bindvars);
+
 		$result = $this->query($query, $bindvars, $maxRecords, $offset);
 		$ret = array();
 
@@ -1502,7 +1506,7 @@ class TikiLib extends TikiDB {
 			}		    
 		}
 		$retval['data'] = $ret;
-		$retval['cant'] = count($ret);
+		$retval['cant'] = $cant;
 		return $retval;
 	}
 
