@@ -57,18 +57,16 @@ if (isset($_REQUEST["action"])) {
 			$smarty->display("error.tpl");
 			die;
 		}
-		if ($tiki_p_admin_users == 'y' || array_key_exists($_REQUEST["group"], $groups)) {
+		if ($tiki_p_admin_users == 'y' ||($tiki_p_admin_users == 'y' && array_key_exists($_REQUEST["group"], $groups))) {
 			$userlib->assign_user_to_group($_REQUEST["assign_user"], $_REQUEST["group"]);
 			$logslib->add_log('perms',sprintf("Assigned %s in group %s",$_REQUEST["assign_user"], $_REQUEST["group"]));
 		}			
-	} elseif ($_REQUEST["action"] == 'removegroup') {
+	} elseif ($_REQUEST["action"] == 'removegroup' && ($tiki_p_admin == 'y' || ($tiki_p_admin_users == 'y' && array_key_exists($_REQUEST["group"], $groups)))) {
 		$area = 'deluserfromgroup';
 		if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 			key_check($area);
-			if ($tiki_p_admin_users == 'y' || array_key_exists($_REQUEST["group"], $groups)) {
-				$userlib->remove_user_from_group($_REQUEST["assign_user"], $_REQUEST["group"]);
-				$logslib->add_log('perms',sprintf("Removed %s from group %s",$_REQUEST["assign_user"], $_REQUEST["group"]));
-			}
+			$userlib->remove_user_from_group($_REQUEST["assign_user"], $_REQUEST["group"]);
+			$logslib->add_log('perms',sprintf("Removed %s from group %s",$_REQUEST["assign_user"], $_REQUEST["group"]));
 		} else {
 			key_get($area);
 		}
@@ -112,9 +110,14 @@ if (isset($_REQUEST['maxRecords'])) {
 	$maxRecords = $_REQUEST['maxRecords'];
 }
 
-if ($tiki_p_admin != 'y' && $userChoice != 'y')
+if ($tiki_p_admin != 'y' && $userChoice != 'y') {
 	$ingroups = $userlib->get_user_groups_inclusion($user);
-else
+	foreach ($user_info['groups'] as $grp=>$i) {
+		if (!isset($ingroups[$grp])) {
+			unset($user_info['groups'][$grp]);
+		}
+	}
+} else
 	$ingroups = '';
 $users = $userlib->get_groups($offset, $maxRecords, $sort_mode, $find,'','y', $ingroups, $userChoice);
 
