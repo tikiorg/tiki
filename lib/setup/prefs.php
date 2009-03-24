@@ -1091,6 +1091,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'log_sql' => 'n',
 		'log_sql_perf_min' => '0.05',
 		'log_mail' => 'n',
+		'log_tpl' => 'n',
 
 		'case_patched' => 'n',
 		'site_closed' => 'n',
