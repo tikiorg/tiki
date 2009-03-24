@@ -51,6 +51,7 @@ if (isset($_REQUEST["new_prefs"])) {
         "user_show_realnames",
 		"log_sql",
 		"log_mail",
+		'log_tpl',
 		"smarty_security",
 		"feature_pear_date",
 		"permission_denied_login_box",
