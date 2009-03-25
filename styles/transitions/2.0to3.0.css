@@ -34,12 +34,31 @@ They should be added to themes (possibly with tweaks) to make the theme v3.0 rea
 	margin-top: 1em;
 }
 
-h3.box-title span.moduletitle {
-  float: left;
+h3.box-title {
+	position: relative}
+	
+* html h3.box-title {
+	position: static
 }
-h3.box-title span.moduleflip {
-  float: right;
+	
+.moduleflip {
+	display: none;
+	position: absolute;
+	right: 0;
+	top: 0
 }
+
+* html .moduleflip {
+	position: static;
+	float: right
+}
+
+* html .moduleflip,
+.box:hover .moduleflip {display: block}
+
+.box:hover img.flipmodimage {border: 1px solid transparent}
+* html img.flipmodimage {border: none}
+img.flipmodimage:hover {border: 1px solid #80B1E2 !important}
 
 #shadowbox_content {
 	background: white;

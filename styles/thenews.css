@@ -865,13 +865,26 @@ h3.box-title {
 	font-family: Arial, Helvetica, sans-serif;
 	display: block;
 	font-size: 90%;
-	font-weight: bold}
+	font-weight: bold;
+	position: relative}
 
-.box img.flipmodimage {display: none}
+* html h3.box-title {position: static}
+
+.moduleflip {
+	display: none;
+	position: absolute;
+	right: 0;
+	top: 0}
+
+* html .moduleflip {
+	position: static;
+	float: right}
+
+* html .moduleflip,
+.box:hover .moduleflip {display: block}
 
 * html .box img.flipmodimage,
 .box:hover img.flipmodimage {
-	display: block;
 	height: 13px;
 	width: 13px;
 	border: 1px solid transparent;
@@ -879,7 +892,6 @@ h3.box-title {
 	
 * html #col2 img.flipmodimage {right: 8px}
 * html #col3 img.flipmodimage {right: 20px}
-
 * html .box img.flipmodimage {border: none}
 img.flipmodimage:hover {border: 1px solid #AAAAAA !important}
 #col2 h3.box-title {}

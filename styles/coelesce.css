@@ -983,24 +983,31 @@ h3.box-title {
 	color: #3f6383;
 	border: 1px solid #ebf5fe;
 	border-bottom: 0;
-	height: 18px}
+	height: 18px;
+	position: relative}
+	
+* html h3.box-title {position: static}
 
 .box-title a,
 .box-title a:link {color: #3f6383}
-h3.box-title span.moduleflip {float: right}
-img.flipmodimage {display: none}
 
-* html .box img.flipmodimage,
-.box:hover img.flipmodimage {
-	display: block;
-	border: 1px solid transparent}
+.moduleflip {
+	display: none;
+	position: absolute;
+	right: 0;
+	top: 0}
+	
+* html .moduleflip {
+	position: static;
+	float: right}
 
-* html .box img.flipmodimage {border: none}
+* html .moduleflip,
+.box:hover .moduleflip {display: block}
+
+.box:hover img.flipmodimage {border: 1px solid transparent}
+* html img.flipmodimage {border: none}
 img.flipmodimage:hover {border: 1px solid #58A7D2 !important}
-#col2 h3.box-title {}
-#col2 .box-title a,
-#col2 .box-title a:link {}
-.box-title a:hover {}
+
 .box-data {
 	padding: 10px;
 	border: 1px solid #ebf5fe;
