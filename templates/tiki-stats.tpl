@@ -347,9 +347,9 @@
 		{cycle values="odd,even" print=false advance=false}
 		{section name=i loop=$best_objects_stats}
 			<tr>
-				<td class="{cycle advance=false}">{$best_objects_stats[i]->object}</th>
-				<td class="{cycle advance=false}">{tr}{$best_objects_stats[i]->type}{/tr}</th>
-				<td class="{cycle}">{$best_objects_stats[i]->hits}</th>
+				<td class="{cycle advance=false}">{$best_objects_stats[i]->object}</td>
+				<td class="{cycle advance=false}">{tr}{$best_objects_stats[i]->type}{/tr}</td>
+				<td class="{cycle}">{$best_objects_stats[i]->hits}</td>
 			</tr>
 		{/section}
 	</table>
