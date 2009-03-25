@@ -25,7 +25,7 @@ if (isset($_REQUEST["calprefs"])) {
 	simple_set_toggle('calendar_sticky_popup');
 	simple_set_toggle('calendar_view_tab');
 	simple_set_toggle('feature_jscalendar');
-
+	simple_set_toggle('feature_cal_manual_time');
 	simple_set_value('default_calendars','',true);
 	simple_set_value('calendar_view_mode');
 	simple_set_value('calendar_firstDayofWeek');
@@ -33,6 +33,8 @@ if (isset($_REQUEST["calprefs"])) {
 	simple_set_value('calendar_start_year');
 	simple_set_value('calendar_end_year');
 }
+
+$headerlib->add_cssfile('css/admin.css');
   	 
 ask_ticket('admin-inc-cal'); 	 
 ?>

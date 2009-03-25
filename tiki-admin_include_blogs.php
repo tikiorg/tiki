@@ -71,6 +71,8 @@ if ($prefs['feature_categories'] == 'y') {
 }
 ask_ticket('admin-inc-blogs');
 
+$headerlib->add_cssfile('css/admin.css');
+
 $blogs = $tikilib->list_blogs(0, -1, 'created_desc', '');
 $smarty->assign_by_ref('blogs', $blogs["data"]);
 
