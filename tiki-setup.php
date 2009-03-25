@@ -109,10 +109,7 @@ if( $prefs['feature_magic'] == 'y' && $tiki_p_admin == 'y' ) {
 	$smarty->assign('templatename', $templatename);
 	require_once('tiki-admin_bar.php');
 }
-if ( $prefs['feature_sefurl_filter'] == 'y' ) {
-  require_once ('tiki-sefurl.php');
-  $smarty->register_outputfilter('filter_out_sefurl');
-}
+require_once('lib/setup/smarty.php');
 
 $smarty->assign_by_ref('phpErrors', $phpErrors);
 $smarty->assign_by_ref('num_queries', $num_queries);

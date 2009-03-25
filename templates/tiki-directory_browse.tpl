@@ -1,7 +1,7 @@
 <!-- START of {$smarty.template} -->{* $Id$ *}
 
 {* The heading and category path *}
-{if $prefs.feature_siteidentity ne 'y' or $prefs.feature_breadcrumbs ne 'y'}
+{if $prefs.feature_breadcrumbs ne 'y'}
   {title help="Directory" url="tiki-directory_browse.php?parent=$parent"}{tr}Directory{/tr}{/title}
 {else}
   <div id="pageheader">
@@ -14,7 +14,7 @@
 {include file=tiki-directory_bar.tpl}
 
 {* The category path *}
-{if $prefs.feature_siteidentity ne 'y' or $prefs.feature_breadcrumbs ne 'y'}
+{if $prefs.feature_breadcrumbs ne 'y'}
 <a class="dirlink" href="tiki-directory_browse.php?parent=0">Top</a>{if $parent > 0} >> {/if}{$path}
 {/if}
 <div class="description">{$parent_info.description|escape}</div>

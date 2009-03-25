@@ -405,9 +405,6 @@ if (!isset($_REQUEST["sort_mode"])) {
 
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 
-// If offset is set use it if not then use offset =0
-// use the maxRecords php variable to set the limit
-// if sortMode is not set then use lastModif_desc
 if (!isset($_REQUEST["offset"])) {
 	$offset = 0;
 } else {
@@ -478,24 +475,6 @@ for ($i = 0; $i < $temp_max; $i++) {
 	} else {
 		$galleries["data"][$i]["individual"] = 'n';
 	}
-}
-
-// If there're more records then assign next_offset
-$cant_pages = ceil($galleries["cant"] / $maxRecords);
-$smarty->assign_by_ref('cant_pages', $cant_pages);
-$smarty->assign('actual_page', 1 + ($offset / $maxRecords));
-
-if ($galleries["cant"] > ($offset + $maxRecords)) {
-	$smarty->assign('next_offset', $offset + $maxRecords);
-} else {
-	$smarty->assign('next_offset', -1);
-}
-
-// If offset is > 0 then prev_offset
-if ($offset > 0) {
-	$smarty->assign('prev_offset', $offset - $maxRecords);
-} else {
-	$smarty->assign('prev_offset', -1);
 }
 
 $smarty->assign_by_ref('galleries', $galleries["data"]);

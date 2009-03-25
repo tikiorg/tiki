@@ -22,9 +22,9 @@ if (isset($_REQUEST["new_prefs"])) {
 		foreach ($listgroups['data'] as $gr) {
 			if ($gr['groupName'] == 'Anonymous')
 				continue;
-			if ($gr['registrationChoice'] == 'y' && !in_array($gr['groupName'], $_REQUEST['registration_choices'])) // deselect
+			if ($gr['registrationChoice'] == 'y' && isset($_REQUEST['registration_choices']) && !in_array($gr['groupName'], $_REQUEST['registration_choices'])) // deselect
 				$out[] = $gr['groupName'];
-			elseif ($gr['registrationChoice'] != 'y' && in_array($gr['groupName'], $_REQUEST['registration_choices'])) //select
+			elseif ($gr['registrationChoice'] != 'y' && isset($_REQUEST['registration_choices']) && in_array($gr['groupName'], $_REQUEST['registration_choices'])) //select
 				$in[] = $gr['groupName'];
 		}
 
@@ -51,6 +51,7 @@ if (isset($_REQUEST["new_prefs"])) {
         "user_show_realnames",
 		"log_sql",
 		"log_mail",
+		'log_tpl',
 		"smarty_security",
 		"feature_pear_date",
 		"permission_denied_login_box",

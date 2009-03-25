@@ -15,6 +15,12 @@ body {
 
 *:first-child+html body {font-size: 74% !important}
 
+/* workaround for Safari when in FCKEditor */
+html[dir=ltr]>body {
+	display: block;
+	margin: 1em .5em;
+}
+
 body#fullscreen {background: #fff url(feb12/page.jpg) repeat-x}
 
 a, a:visited { 
@@ -748,23 +754,32 @@ div.box {
 
 h3.box-title {
 	display: block;
-	border-bottom: 1px solid #57A5D0}
+	border-bottom: 1px solid #57A5D0;
+	position: relative}
+	
+* html h3.box-title {position: static}
 
-.box img.flipmodimage {display: none}
+.moduleflip {
+	display: none;
+	position: absolute;
+	right: 0;
+	top: 0}
 
-* html img.flipmodimage,
-.box:hover img.flipmodimage {
-	display: block;
-	border: 1px solid transparent}
+* html .moduleflip {
+	position: static;
+	float: right}
+
+* html .moduleflip,
+.box:hover .moduleflip {display: block}
+
+.box:hover img.flipmodimage {border: 1px solid transparent}
+* html img.flipmodimage {border: none}
 
 * html .box img.flipmodimage {border: none}
 * html #col2 img.flipmodimage,
-* html #col3 img.flipmodimage {
-	float: right;
-	margin-top: -12px}
+* html #col3 img.flipmodimage {margin-top: -12px}
 
-a.flipmodtitle:hover img {
-	border: 1px solid #58A7D2 !important}
+.flipmodimage:hover {border: 1px solid #58A7D2 !important}
 
 #col2 h3.box-title {}
 #col2 .box-title a,

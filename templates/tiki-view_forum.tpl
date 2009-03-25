@@ -4,10 +4,7 @@
 
 {if $forum_info.show_description eq 'y'}
 	<div class="description">{$forum_info.description|nl2br}</div>
-	<br />
 {/if}
-
-<a class="link" href="tiki-forums.php">{tr}Forums{/tr}</a> {$prefs.site_crumb_seper} <a class="link" href="tiki-view_forum.php?forumId={$forumId}">{$forum_info.name}</a>
 
 <div class="navbar">
 	<table width="97%">
@@ -84,9 +81,9 @@
 	</table>
 </div>
 
-{if $unread > 0}
-	<a class='link' href='messu-mailbox.php'>{tr}You have {$unread} unread private messages{/tr}<br /></a>
-{/if}
+<a class="link" href="tiki-forums.php">{tr}Forums{/tr}</a> {$prefs.site_crumb_seper} <a class="link" href="tiki-view_forum.php?forumId={$forumId}">{$forum_info.name}</a>
+
+<br />
 
 {if !empty($errors)}
 	{remarksbox type="warning" title="{tr}Errors{/tr}"}

@@ -538,7 +538,6 @@
 				{/section}
 			{/if}
 		</div>
-	</div>
 {/if}
 
 {if $locSection eq 'compose'}

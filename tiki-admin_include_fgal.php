@@ -126,5 +126,7 @@ include_once('fgal_listing_conf.php');
 $file_galleries = $tikilib->list_visible_file_galleries(0, -1, 'name_desc', 'admin', '');
 $smarty->assign_by_ref('file_galleries', $file_galleries["data"]);
 
+$headerlib->add_cssfile('css/admin.css');
+
 ask_ticket('admin-inc-fgal');
 ?>

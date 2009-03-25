@@ -28,6 +28,8 @@ if (!isset($_REQUEST["menuId"])) {
 	die;
 }
 
+$auto_query_args = array('offset', 'find', 'sort_mode', 'menuId');
+
 if (!empty($_REQUEST['import']) && !empty($_FILES['csvfile']['tmp_name'])) {
 	$menulib->import_menu_options();
 }
@@ -155,11 +157,12 @@ if (isset($_REQUEST["find"])) {
 }
 $smarty->assign('find', $find);
 
-if (!empty($_REQUEST['maxRecords'])) {
+if (isset($_REQUEST['maxRecords'])) {
 	$maxRecords = $_REQUEST['maxRecords'];
+} else {
+	$maxRecords = $prefs['maxRecords'];
 }
 $smarty->assign_by_ref('maxRecords', $maxRecords);
-
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 $allchannels = $menulib->list_menu_options($_REQUEST["menuId"], 0, -1, $sort_mode, $find);
 $allchannels = $menulib->sort_menu_options($allchannels);

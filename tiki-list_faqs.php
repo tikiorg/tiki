@@ -12,6 +12,8 @@ require_once ('tiki-setup.php');
 
 include_once ('lib/faqs/faqlib.php');
 
+$auto_query_args = array('offset', 'find', 'sort_mode', 'faqId');
+
 if ($prefs['feature_faqs'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_faqs");
 
@@ -117,23 +119,6 @@ $smarty->assign('find', $find);
 
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 $channels = $tikilib->list_faqs($offset, $maxRecords, $sort_mode, $find);
-
-$cant_pages = ceil($channels["cant"] / $maxRecords);
-$smarty->assign_by_ref('cant_pages', $cant_pages);
-$smarty->assign('actual_page', 1 + ($offset / $maxRecords));
-
-if ($channels["cant"] > ($offset + $maxRecords)) {
-	$smarty->assign('next_offset', $offset + $maxRecords);
-} else {
-	$smarty->assign('next_offset', -1);
-}
-
-// If offset is > 0 then prev_offset
-if ($offset > 0) {
-	$smarty->assign('prev_offset', $offset - $maxRecords);
-} else {
-	$smarty->assign('prev_offset', -1);
-}
 
 $smarty->assign_by_ref('channels', $channels["data"]);
 $smarty->assign_by_ref('cant', $channels["cant"]);

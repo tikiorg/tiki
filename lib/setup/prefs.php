@@ -886,7 +886,8 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'keep_versions' => 1,
 		'feature_custom_home' => 'n',
 
-		// site identity
+		// look and feel
+
 		'feature_siteidentity' => 'y',
 		'site_crumb_seper' => '»',
 		'site_nav_seper' => '|',
@@ -944,6 +945,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'use_context_menu_text' => 'y',
 		'feature_site_report' => 'n',
 		'feature_site_send_link' => 'n',
+		'feature_layoutshadows' => 'n',
 
 		// mods
 		'feature_mods_provider' => 'n',
@@ -1090,6 +1092,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'log_sql' => 'n',
 		'log_sql_perf_min' => '0.05',
 		'log_mail' => 'n',
+		'log_tpl' => 'n',
 
 		'case_patched' => 'n',
 		'site_closed' => 'n',
@@ -1157,8 +1160,9 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_comments_moderation' => 'n',
 		'feature_template_zoom' => 'y',
 		'menus_items_icons' => 'n',
-		'feature_ie56_correct_png' => 'n',
 		'feature_iepngfix' => 'n',
+		'iepngfix_selectors' => '#sitelogo a img',
+		'iepngfix_elements' => '',
 		
 		// JQuery
 		'feature_jquery' => 'y',			// Alternative lib for shadowbox etc

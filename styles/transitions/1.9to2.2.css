@@ -286,9 +286,9 @@ td.third {
   color: #000;
   width : auto;
   border : 1px solid #666666;
-  border-radius : 10px;
+/*  border-radius : 10px;
   -moz-border-radius : 10px;
-  -khtml-border-radius : 10px;
+  -khtml-border-radius : 10px; VALIDATION ERROR */
   padding : 5px;
 }
 .opaque .box-title,

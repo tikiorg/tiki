@@ -58,7 +58,7 @@ class Breadcrumb {
     /* static */
     function breadcrumb_buildTrail($crumbs, $loc) {
         global $prefs, $info;
-        if( $prefs['feature_siteidentity'] == 'y' && $prefs['feature_breadcrumbs'] == 'y') {
+        if($prefs['feature_breadcrumbs'] == 'y') {
             if ($loc == 'page' && ($prefs['feature_siteloc'] == 'page' || ($prefs['feature_page_title'] == 'y' && $info) ) ) {
                 return _breadcrumb_buildTrail($crumbs);
             } else if (($loc == 'site' || $loc == 'location') && $prefs['feature_siteloc'] == 'y') {
@@ -94,7 +94,7 @@ class Breadcrumb {
             $hiclass = "crumblink";
             break;
         }
-        if ($prefs['feature_siteidentity'] == 'n' || $prefs['feature_breadcrumbs'] == 'n') {
+        if ($prefs['feature_breadcrumbs'] == 'n') {
             $loclass = "crumblink";
             $hiclass = "pagetitle";
         }
@@ -190,11 +190,11 @@ class Breadcrumb {
     function breadcrumb_getTitle($crumbs, $loc) {
         global $prefs, $print_page, $info;
 
-        if ((($prefs['feature_siteidentity'] == 'n') ||  $prefs['feature_breadcrumbs'] == 'n' ) && ($prefs['feature_wiki_description'] == 'y' && $info)) {
+        if ($prefs['feature_breadcrumbs'] == 'n' && ($prefs['feature_wiki_description'] == 'y' && $info)) {
             return _breadcrumb_getTitle($crumbs, $loc);
         } else if ($prefs['feature_breadcrumbs'] == 'n' && $loc == "admin") {
             return _breadcrumb_getTitle($crumbs, $loc);
-        } else if ($prefs['feature_siteidentity'] == 'y' &&  $prefs['feature_breadcrumbs'] == 'y') {
+        } else if ($prefs['feature_breadcrumbs'] == 'y') {
             if ($loc == 'page' && ($prefs['feature_siteloc'] == 'page' || ($prefs['feature_page_title'] == 'y' && $info) ) ) {
                 return _breadcrumb_getTitle($crumbs, $loc);
             } else if (($loc == 'site' || $loc == 'location') && $prefs['feature_siteloc'] == 'y') {
@@ -217,7 +217,7 @@ class Breadcrumb {
     function _breadcrumb_getTitle($crumbs, $loc) {
         global $prefs, $print_page, $info, $structure, $structure_path;
     
-        if ( ($prefs['feature_siteidentity'] == 'n'|| $prefs['feature_breadcrumbs'] == 'n') || $prefs['feature_sitetitle'] == 'title' ) {
+        if ( $prefs['feature_breadcrumbs'] == 'n' || $prefs['feature_sitetitle'] == 'title' ) {
             $ret = '<strong><a title="';
         } else if ( $prefs['feature_sitetitle'] == 'y' ) {
             $class = "pagetitle";
@@ -250,7 +250,7 @@ class Breadcrumb {
         if( $info['flag'] == 'L' && $print_page != 'y' ) {
             $ret .= ' <img src="pics/icons/lock.png" border="0" height="16" width="16" alt="'.tra('locked').'" title="'.tra('locked by').' '.$info['user'].'" />';
         }
-        if( ($prefs['feature_siteidentity'] == 'n' || $prefs['feature_breadcrumbs'] == 'n') || $prefs['feature_sitetitle'] == 'title' ) {
+        if( $prefs['feature_breadcrumbs'] == 'n' || $prefs['feature_sitetitle'] == 'title' ) {
             $ret .= '</strong>';          
         }
         return $ret;
@@ -265,7 +265,7 @@ class Breadcrumb {
     function breadcrumb_getDescription($crumbs, $loc) {
         global $prefs, $info;
         $len = count($crumbs);
-        if ($prefs['feature_siteidentity'] == 'y' && $prefs['feature_breadcrumbs'] == 'y') {
+        if ($prefs['feature_breadcrumbs'] == 'y') {
             if ($loc == 'page' && ($prefs['feature_sitedesc'] == 'page' || ($prefs['feature_wiki_description'] == 'y' && $info) )) {
                 return '<span id="description">'.tra($crumbs[$len-1]->description).'</span>';
             } else if ($loc == 'site' && $prefs['feature_sitedesc'] == 'y' ) {

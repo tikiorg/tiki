@@ -5,22 +5,18 @@
   {if $prefs.feature_forum_topics_archiving eq 'y' && $thread_info.archived eq 'y'}<em>({tr}Archived{/tr})</em>{/if}
 {/title}
 
-{if $unread > 0}
-  <a class='link' href='messu-mailbox.php'>{tr}You have{/tr} {$unread} {tr}unread private messages{/tr}<br /><br /></a>
+{if $tiki_p_admin_forum eq "y"}
+  <div class="navbar">
+		{button href="tiki-admin_forums.php?forumId=$forumId" _text="{tr}Edit Forum{/tr}"} 
+  </div>
 {/if}
 
 {if $post_reported eq 'y'}
-  <br />
+	<br />
 	<div class="simplebox highlight reported_note">
     {icon _id=information style="vertical-align:middle;align=left"} {tr}The post has been reported and will be reviewed by a moderator.{/tr}
-  </div>
+	</div>
 	<br />
-{/if}
-
-{if $tiki_p_admin_forum eq "y"}
-  <div class="navbar">
-	{button href="tiki-admin_forums.php?forumId=$forumId" _text="{tr}Edit Forum{/tr}"} 
-  </div>
 {/if}
 
 <a class="link" href="tiki-forums.php">{tr}Forums{/tr}</a> {$prefs.site_crumb_seper} <a class="link" href="tiki-view_forum.php?forumId={$forumId}">{$forum_info.name}</a>{if $thread_info.topic.threadId} {$prefs.site_crumb_seper} <a class="link" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;forumId={$forumId}&amp;comments_parentId={$thread_info.topic.threadId}">{$thread_info.topic.title}</a>{/if} {$prefs.site_crumb_seper} <a class="link" href="tiki-view_forum_thread.php?topics_offset={$smarty.request.topics_offset}{$topics_sort_mode_param}{$topics_threshold_param}{$topics_find_param}&amp;forumId={$forumId}&amp;comments_parentId={$smarty.request.comments_parentId}">{$thread_info.title}</a>

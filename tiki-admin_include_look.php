@@ -11,6 +11,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 $a_style = $prefs['site_style'];
+$headerlib->add_cssfile('css/admin.css');
 
 if (isset($_REQUEST["looksetup"])) {
     ask_ticket('admin-inc-look');
@@ -71,6 +72,7 @@ if (isset($_REQUEST["looksetup"])) {
 	'feature_jquery_reflection',
     'feature_jquery_sheet',
 	'feature_iepngfix',
+	'feature_layoutshadows'
     );
 
     foreach ($pref_toggles as $toggle) {
@@ -105,6 +107,8 @@ if (isset($_REQUEST["looksetup"])) {
     'jquery_effect_tabs_direction',
     'jquery_effect_tabs_speed',
 	'available_styles',
+	'iepngfix_selectors',
+	'iepngfix_elements'
     );
 
     foreach ($pref_simple_values as $svitem) {

@@ -41,7 +41,7 @@ a.admbox.off:hover, a.admbox.off:focus, a.admbox.off:active {
 	color: #333;
 }
 
-/* classes for admin ui revamp */
+/* classes for admin preferences UI */
 .adminoptionbox {
 /*overall box */
 	clear:both;
@@ -49,13 +49,18 @@ a.admbox.off:hover, a.admbox.off:focus, a.admbox.off:active {
 	text-align:left;
 	}
 	
-.adminoptionlabel {
+.adminoptionbox label, .adminoptionlabel {
 /* text label and text field */
-	text-align:left;
+	text-align: left;
 	}
-	
-.adminoption {
+
+.adminoptionbox label.above {
+	display: block;
+}
+
+.adminoptionbox .checkbox, .adminoption {
 /*check box */
+	display: block;
 	float:left;
 	margin-right:1em;
 	}
@@ -65,3 +70,9 @@ a.admbox.off:hover, a.admbox.off:focus, a.admbox.off:active {
 	margin-left:3em;
 	clear:both;
 	}
+
+.admin input.fullwidth {
+	width: 100%;
+}
+
+

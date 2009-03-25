@@ -14,6 +14,12 @@ body {
 	font: 72%/1.4em Verdana, Geneva, Arial, Helvetica, sans-serif;}
 
 html>body {font-size: 76%}
+/* workaround for Safari when in FCKEditor */
+html[dir=ltr]>body {
+	display: block;
+	margin: 1em .5em;
+}
+
 body.fullscreen {}
 
 a,
@@ -1035,22 +1041,33 @@ div.box {
 
 h3.box-title {
 	padding-top: 4px;
-	padding-left: 10px}
+	padding-left: 10px;
+	position: relative}
+	
+* html h3.box-title {position: static}
 	
 #col2 .box-title {
 	margin-top: 0;
 	margin-bottom: 0}
+	
+.moduleflip {
+	display: none;
+	position: absolute;
+	right: 0;
+	top: 0}
 
-.box img.flipmodimage {display: none}
+* html .moduleflip {
+	position: static;
+	float: right}
 
-* html img.flipmodimage,
-.box:hover img.flipmodimage {
-	display: block;
-	border: 1px solid transparent}
+* html .moduleflip,
+.box:hover .moduleflip {display: block}
 
-* html .box img.flipmodimage {border: none}
+.box:hover img.flipmodimage {border: 1px solid transparent}
+* html img.flipmodimage {border: none}
 img.flipmodimage:hover {border: 1px solid #58A7D2 !important}
 #col2 h3.box-title {}
+
 #col2 .box-title a,
 #col2 .box-title a:link {}
 .box-title a:hover {}

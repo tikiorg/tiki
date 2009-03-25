@@ -19,6 +19,12 @@ body {
 	font-size: 70% !important;
 }
 
+/* workaround for Safari when in FCKEditor */
+html[dir=ltr]>body {
+	display: block;
+	margin: 1em .5em;
+}
+
 #main {}
 
 a,
@@ -698,22 +704,31 @@ h3.box-title {
 	text-align: center;
 	margin: 0;
 	width: 100%;
-	height: 16px;}
+	height: 16px;
+	position: relative}
+	
+* html h3.box-title {position: static}
 
-.box img.flipmodimage {
+.moduleflip {
 	display: none;
-}
+	position: absolute;
+	right: 0;
+	top: 0}
 
-* html .box img.flipmodimage,
-.box:hover img.flipmodimage {
-	display: block;
-	border: 1px solid transparent;
-	height: 12px;
-	width: 12px}
+* html .moduleflip {
+	position: static;
+	float: right}
 
-* html .box img.flipmodimage {border: none}
+* html .moduleflip,
+.box:hover .moduleflip {display: block}
+
+.box:hover img.flipmodimage {border: 1px solid transparent}
+* html img.flipmodimage {border: none}
+
 
 img.flipmodimage {
+	height: 12px;
+	width: 12px;
 	background: #DDDDDD;
 	border-right: 1px solid #1D49BB !important;
 	border-bottom: 1px solid #1D49BB !important;
