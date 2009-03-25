@@ -177,10 +177,8 @@ if ( !isset($_REQUEST["words"]) || empty($_REQUEST["words"]) ) {
 	if ( !method_exists($searchlib,$find_where)) {
 		$find_where = "find_pages";
 	}
-		echo "<pre>-- tiki-searchresults.php: calling method: $find_where</pre>\n";
-
 	$results = $searchlib->$find_where($words, $offset, $maxRecords, $fulltext, $filter, $boolean, $_REQUEST["date"]);
-		echo '<pre>-- tiki-searchresults.php: '; print_r($results); echo "</pre>\n";
+	//	echo '<pre>'; print_r($results);
 
 	$smarty->assign('words', $words);
 }

@@ -14,9 +14,6 @@ class SearchLib extends TikiLib {
 	}
 
 	function register_search($words) {
-	
-	    echo "-- register_search: invoked<br>\n";
-	    
 		$words = addslashes($words);
 
 		$words = preg_split("/\s/", $words);
@@ -60,9 +57,6 @@ class SearchLib extends TikiLib {
  * \return the nb of results + array('name', 'data', 'hits', 'lastModif', 'href', 'pageName', 'relevance'
 **/
 	function _find($h, $words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n',$type='Tiki', $searchDate = 0) {
-
-       echo "<pre>-- _find: \$h="; print_r($h); echo ", \$word='$words', \$offset='$offset', \$maxRecords='$maxRecords', \$fulltext='$fulltext', \$filter="; print_r($filter); echo", \$boolean='$boolean', \$type='$type', \$searchDate='$searchDate'</pre>\n";
-
 		global $tiki_p_admin, $prefs, $userlib, $user, $categlib;
 		    
 		if (!is_object($categlib)) {
@@ -210,7 +204,6 @@ class SearchLib extends TikiLib {
 		}
 
 		if ($fulltext) {
-		    echo "-- _find: \$fulltext is true<br>\n";
 			$words = html_entity_decode($words); // to have the "
 			$qwords = $this->db->quote($words);
 
@@ -225,7 +218,6 @@ class SearchLib extends TikiLib {
 			$sqlFields .= ', ' . $sqlft . ' AS relevance';
 			$orderby = 'relevance desc, ' . $orderby;
 		} else if ($words) {
-		    echo "-- _find: \$fulltext is false<br>\n";
 			$sqlFields .= ', -1 AS relevance';
 
 			$vwords = split(' ', $words);
@@ -254,15 +246,11 @@ class SearchLib extends TikiLib {
 
 		$sql = $sqlFields . $sqlFrom . $sqlJoin . $sqlWhere . $sqlGroup . $sqlHaving . ' ORDER BY ' . $orderby;
 
-        echo "-- _find: query is: '$sql'<br>\n";
-
 		$result = $this->query($sql, $bindVars);
 
 		$cant = $result->numRows();
 
 		if (!$cant && $boolean != 'y') { // no result
-		
-		    echo "-- _find: Did not find hits, so now trying a simple search<br>\n";
 		
 			if ($fulltext && $words) {
 			    // try a simple search
@@ -270,7 +258,6 @@ class SearchLib extends TikiLib {
 
 			    return $this->_find($h, $words, $offset, $maxRecords, false, $filter, $boolean, $type, $searchDate);
 			} else {
-   		        echo "-- _find: \$fulltext && \$words DOES NOT hold, so returning empty results<br>\n";
 
 				return array(
 					'data' => array(),
@@ -307,13 +294,6 @@ class SearchLib extends TikiLib {
 			$ret[] = $r;
 		}
 
-       $final_results = array(
-			'data' => $ret,
-			'cant' => $cant
-		);
-		
-		echo "-- _find: returning \$final_results="; print_r($final_results);
-
 		return array(
 			'data' => $ret,
 			'cant' => $cant
@@ -339,9 +319,6 @@ class SearchLib extends TikiLib {
 			'objectKey' => 'p.`pageName`',
 		);
 		$search_wikis_comments['href'] = $prefs['feature_sefurl'] == 'y'? '%s#comments': 'tiki-index.php?page=%s#comments';
-
-        echo "-- find_wikis: searching in 'Wiki Comment\'<br>\n";
-
 		$rv = $this->_find($search_wikis_comments, $words, $offset, $maxRecords, $fulltext, $filter, $boolean, tra('Wiki Comment'), $searchDate);
 
 		static $search_wikis = array(
@@ -366,8 +343,6 @@ class SearchLib extends TikiLib {
 
 		// that pagerank re-calculation was speed handicap (timex30)
 		//$this->pageRank();
-		
-		echo "-- find_wikis: Now searching in 'Wiki'<br>\n";
 		if (!$rv['cant'])
 			$data = $this->_find($search_wikis, $words, $offset, $maxRecords, $fulltext, $filter, $boolean,tra('Wiki'), $searchDate);
 		else {
@@ -665,9 +640,6 @@ class SearchLib extends TikiLib {
 	}
 
 	function find_pages($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate) {
-
-        echo "-- searchlib.find_pages: invoked<BR>\n";
-
 		$data = array();
 
 		$cant = 0;
