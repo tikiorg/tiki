@@ -1,7 +1,8 @@
 <!-- START of {$smarty.template} -->{* $Id$ *}
 {* Template for Tikiwiki site identity header *}
 <div id="header-top">
-{if $prefs.feature_sitemycode eq 'y' && ($prefs.sitemycode_publish eq 'y' or $tiki_p_admin eq 'y')}
+{* No site logo but custom code *}
+{if $prefs.feature_sitelogo neq 'y' &&  $prefs.feature_sitemycode eq 'y' && ($prefs.sitemycode_publish eq 'y' or $tiki_p_admin eq 'y')}
 	{if $prefs.feature_sitead eq 'y' && ($prefs.sitead_publish eq 'y' or $tiki_p_admin eq 'y')}
 		<div id="sitead" class="floatright">
 			{eval var=$prefs.sitead}
@@ -64,7 +65,7 @@
 </div>
 {/if}
 
-{* No sitelogo but a sitead: ad is centered. *}
+{* No sitelogo, no custom code but a sitead: ad is centered. *}
 {if $prefs.feature_sitelogo eq 'n'}
 	{if $prefs.feature_sitead eq 'y' && ($prefs.sitead_publish eq 'y' or $tiki_p_admin eq 'y')}
 	<div align="center">
