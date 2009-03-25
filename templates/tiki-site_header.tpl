@@ -2,15 +2,15 @@
 {* Template for Tikiwiki site identity header *}
 <div id="header-top">
 {* No site logo but custom code *}
-{if $prefs.feature_sitelogo neq 'y' &&  $prefs.feature_sitemycode eq 'y' && ($prefs.sitemycode_publish eq 'y' or $tiki_p_admin eq 'y')}
-	{if $prefs.feature_sitead eq 'y' && ($prefs.sitead_publish eq 'y' or $tiki_p_admin eq 'y')}
+{if $prefs.feature_sitemycode eq 'y' && ($prefs.sitemycode_publish eq 'y' or $tiki_p_admin eq 'y')}
+	{if $prefs.feature_sitelogo neq 'y' &&  $prefs.feature_sitead eq 'y' && ($prefs.sitead_publish eq 'y' or $tiki_p_admin eq 'y')}
 		<div id="sitead" class="floatright">
 			{eval var=$prefs.sitead}
 		</div>
 		<div id="customcodewith_ad">
 			{eval var=$prefs.sitemycode}{* here will be parsed the 400px-wide custom site header code *}
 		</div>
-		{else}
+	{else}
 		<div id="customcode">
 			{eval var=$prefs.sitemycode}
 		</div>
