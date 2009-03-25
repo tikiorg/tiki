@@ -26,6 +26,8 @@ if (!isset($_REQUEST["menuId"])) {
 	die;
 }
 
+$auto_query_args = array('offset', 'find', 'sort_mode', 'menuId');
+
 if (!empty($_REQUEST['import']) && !empty($_FILES['csvfile']['tmp_name'])) {
 	$menulib->import_menu_options();
 }
@@ -150,18 +152,16 @@ if (isset($_REQUEST["find"])) {
 }
 $smarty->assign('find', $find);
 
-if (isset($_REQUEST['nbRecords'])) {
-	$nbRecords = $_REQUEST['nbRecords'];
-	if ($nbRecords != $maxRecords)
-		$smarty->assign('nbRecords', $_REQUEST['nbRecords']);
+if (isset($_REQUEST['maxRecords'])) {
+	$maxRecords = $_REQUEST['maxRecords'];
 } else {
-	$nbRecords = $maxRecords;
+	$maxRecords = $prefs['maxRecords'];
 }
-
+$smarty->assign_by_ref('maxRecords', $maxRecords);
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 $allchannels = $menulib->list_menu_options($_REQUEST["menuId"], 0, -1, $sort_mode, $find);
 $allchannels = $menulib->sort_menu_options($allchannels);
-$channels = $menulib->list_menu_options($_REQUEST["menuId"], $offset, $nbRecords, $sort_mode, $find, true);
+$channels = $menulib->list_menu_options($_REQUEST["menuId"], $offset, $maxRecords, $sort_mode, $find, true);
 $channels = $menulib->describe_menu_types($channels);
 
 $smarty->assign_by_ref('cant_pages', $channels["cant"]);

@@ -303,7 +303,7 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
 {/if}
 </form>
 
-{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
+{pagination_links cant=$cant_pages step=$maxRecords offset=$offset}{/pagination_links}
 
 <a name="export"></a>
 <h2>{tr}Export CSV data{/tr}</h2>
