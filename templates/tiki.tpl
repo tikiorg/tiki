@@ -28,20 +28,20 @@
 	{include file="tiki-ajax_header.tpl"}
 {/if}
 
-		{if $prefs.feature_layoutshadows}<div id="main-shadow">{$prefs.main_shadow_start}{/if}<div id="main">
+		{if $prefs.feature_layoutshadows eq 'y'}<div id="main-shadow">{$prefs.main_shadow_start}{/if}<div id="main">
 {if ($prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y') }
-			{if $prefs.feature_layoutshadows}<div id="header-shadow">{$prefs.header_shadow_start}{/if}<div class="clearfix" id="header"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
+			{if $prefs.feature_layoutshadows eq 'y'}<div id="header-shadow">{$prefs.header_shadow_start}{/if}<div class="clearfix" id="header"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
 		{* Site header section *}
 				<div class="clearfix" id="siteheader">
 		{include file="tiki-site_header.tpl"}
 				</div>
-			</div>{if $prefs.feature_layoutshadows}{$prefs.header_shadow_end}</div>{/if}
+			</div>{if $prefs.feature_layoutshadows eq 'y'}{$prefs.header_shadow_end}</div>{/if}
 {/if}
 
 {* New admin top bar for 3.0 *}
 {include file="tiki-admin_bar.tpl"}
 
-			{if $prefs.feature_layoutshadows}<div id="middle-shadow">{$prefs.middle_shadow_start}{/if}<div class="clearfix" id="middle">
+			{if $prefs.feature_layoutshadows eq 'y'}<div id="middle-shadow">{$prefs.middle_shadow_start}{/if}<div class="clearfix" id="middle">
 				<div class="clearfix {if $prefs.feature_fullscreen != 'n' and $smarty.session.fullscreen != 'n'}fullscreen{/if}{if $prefs.feature_fullscreen != 'y' and $smarty.session.fullscreen !='n'}nofullscreen{/if}" id="c1c2">
 					<div class="clearfix" id="wrapper">
 						<div id="col1" class="{if $prefs.feature_left_column ne 'n' && $left_modules|@count > 0 && $show_columns.left_modules ne 'n'}marginleft{/if}{if $prefs.feature_right_column ne 'n' && $right_modules|@count > 0 && $show_columns.right_modules ne 'n'} marginright{/if}"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
@@ -104,21 +104,21 @@
 				<br style="clear:both" />
 	{/if}
 {/if}
-			</div>{* -- END of middle -- *}{if $prefs.feature_layoutshadows}{$prefs.middle_shadow_end}</div>{/if}
+			</div>{* -- END of middle -- *}{if $prefs.feature_layoutshadows eq 'y'}{$prefs.middle_shadow_end}</div>{/if}
 
 {if $prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}
 	{if $prefs.feature_bot_bar eq 'y'}
-			{if $prefs.feature_layoutshadows}<div id="footer-shadow">{$prefs.footer_shadow_start}{/if}<div id="footer">
+			{if $prefs.feature_layoutshadows eq 'y'}<div id="footer-shadow">{$prefs.footer_shadow_start}{/if}<div id="footer">
 				<div class="footerbgtrap">
 					<div class="content"{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
 		{include file="tiki-bot_bar.tpl"}
 					</div>
 				</div>
-			</div>{* -- END of footer -- *}{if $prefs.feature_layoutshadows}{$prefs.footer_shadow_end}</div>{/if}
+			</div>{* -- END of footer -- *}{if $prefs.feature_layoutshadows eq 'y'}{$prefs.footer_shadow_end}</div>{/if}
 	{/if}
 {/if}
 
-		</div>{* -- END of main -- *}{if $prefs.feature_layoutshadows}{$prefs.main_shadow_end}</div>{/if}
+		</div>{* -- END of main -- *}{if $prefs.feature_layoutshadows eq 'y'}{$prefs.main_shadow_end}</div>{/if}
 
 {include file="footer.tpl"}
 
