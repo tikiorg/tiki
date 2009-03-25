@@ -11,6 +11,8 @@ $section = 'wiki page';
 require_once ('tiki-setup.php');
 include_once ('lib/structures/structlib.php');
 
+$auto_query_args = array('offset', 'printpages', 'printstructures', 'find');
+
 if ($prefs['feature_wiki_multiprint'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_wiki_multiprint");
 

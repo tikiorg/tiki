@@ -29,18 +29,9 @@
 {/if}
 
 <h2>{tr}Dynamic zones{/tr}</h2>
-<table class="findtable">
-<tr><td class="findtable">{tr}Find{/tr}</td>
-   <td class="findtable">
-   <form method="get" action="tiki-admin_html_page_content.php">
-     <input type="text" name="find" value="{$find|escape}" />
-     <input type="submit" value="{tr}Find{/tr}" name="search" />
-     <input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-     <input type="hidden" name="pageName" value="{$pageName|escape}" />
-   </form>
-   </td>
-</tr>
-</table>
+
+{include file="find.tpl"}
+
 <form action="tiki-admin_html_page_content.php" method="post">
 <input type="hidden" name="pageName" value="{$pageName|escape}" />
 <input type="hidden" name="zone" value="{$zone|escape}" />
