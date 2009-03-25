@@ -543,8 +543,7 @@ class WikiRenderer
 	private function setPref( $name, $value ) // {{{
 	{
 		global $prefs;
-
-		if( $value != $prefs[$name] && ! array_key_exists( $this->prefRestore[$name] = $value ) )
+		if( $value != $prefs[$name] && ! array_key_exists( $name, $this->prefRestore ) )
 			$this->prefRestore[$name] = $value;
 
 		$prefs[$name] = $value;
