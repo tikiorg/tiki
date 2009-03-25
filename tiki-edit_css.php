@@ -88,11 +88,12 @@ if (isset($_REQUEST["edit"])and $_REQUEST["edit"]) {
 
 	$data = '';
 	if ($tikidomain and is_dir("$styledir/$tikidomain")) {
-		$fp = fopen("$styledir/$tikidomain/$editstyle.css", "w");
+		$style = "$styledir/$tikidomain/$editstyle.css";
 	} else {
-		$fp = fopen("$styledir/$editstyle.css", "w");
+		$style = "$styledir/$editstyle.css";
 	}
 
+	$fp = fopen($style, "w");
 	if (!$fp) {
 		$smarty->assign('errortype', 401);
 		$smarty->assign('msg', tra("You do not have permission to write the style sheet"));
@@ -103,6 +104,7 @@ if (isset($_REQUEST["edit"])and $_REQUEST["edit"]) {
 
 	fwrite($fp, $_REQUEST["data"]);
 	fclose ($fp);
+	header("location: tiki-edit_css.php?editstyle=$editstyle");
 } else {
 	$action = 'display';
 
