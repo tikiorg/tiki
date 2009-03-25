@@ -54,6 +54,8 @@ for ($mod_counter = 0; $mod_counter < $temp_max; $mod_counter++) {
 
 	$mod_reference = &$these_modules[$mod_counter];
 	TikiLib::parse_str($mod_reference["params"], $module_params);
+	$module_params['module_position'] = $mod_reference['position'];	// expose pos & ord to module (e.g. r & 2)
+	$module_params['module_ord'] = $mod_reference['ord'];
 	if (!isset($module_params['decorations'])) $module_params['decorations'] = 'y';
 	if (isset($prefs['user_flip_modules']) && $prefs['user_flip_modules'] != 'module')
 		$module_params['flip'] = $prefs['user_flip_modules'];
