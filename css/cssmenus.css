@@ -32,7 +32,7 @@
 	position: relative;
 	height: 100%;
 	list-style: none}
-
+	
 .cssmenu_horiz li:hover,
 .cssmenu_vert li:hover {/*background: #dedede*/}
 
@@ -114,12 +114,11 @@
 .cssmenu_vert a {
 	text-decoration: none;
 	display: block;
-	padding: 3px 3px 3px 6px;
-	/*color: mediumblue*/}
+	padding: 3px 3px 3px 6px}
 	
 * html .cssmenu a,	
 * html .cssmenu_horiz a,
-* html .cssmenu_vert a {padding: 0}
+* html .cssmenu_vert a {}
 
 .cssmenu a:hover,
 .cssmenu_vert a:hover,	
