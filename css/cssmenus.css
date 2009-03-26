@@ -41,7 +41,7 @@
 .cssmenu_horiz ul {
 	position: absolute;
 	left: -999em;
-	z-index: 1901}
+	z-index: 751}
 
 .box-CSS_menu .box-data .cssmenu_vert li ul,
 .cssmenu_vert li ul,
@@ -52,7 +52,7 @@
 
 /*.cssmenu li ul ul {left: -999em}*/
 
-.cssmenu_vert li:hover ul ul {z-index: 1902}	/* z-indexes needed at ui-revamp to prevent hidden dropdowns */
+.cssmenu_vert li:hover ul ul {z-index: 752}	/* z-indexes needed at ui-revamp to prevent hidden dropdowns */
 .cssmenu_horiz li ul ul {margin: -1em 0 0 10em}
 
 /* dropdown menu hide-display */
@@ -106,7 +106,7 @@
 
 .cssmenu li.selectedAscendant,
 .cssmenu_horiz li.selectedAscendant,
-.cssmenu_vert li.selectedAscendant {font-weight: bold}
+.cssmenu_vert li.selectedAscendant {/*font-weight: bold*/}
 
 /* link styles */
 .cssmenu a,	
@@ -138,10 +138,10 @@
 div#col2,
 td#leftcolumn {overflow: visible !important}
 
-.box-data .cssmenu_vert {z-index: 1900}
+.box-data .cssmenu_vert {z-index: 750}
 
 #header .cssmenu_horiz {
-	z-index: 2000;
+	z-index: 800;
 	position: relative}
 
 #header .cssmenu_horiz {}
