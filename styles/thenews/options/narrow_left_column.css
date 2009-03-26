@@ -12,3 +12,9 @@
 #col3 {
 	margin-left: -316px;
 	width: 316px}
+	
+#col2 .cssmenu_vert > li {
+	width: 130px;
+	padding: 0 !important}
+	
+#col2 .cssmenu_vert li ul {margin-left: 130px}

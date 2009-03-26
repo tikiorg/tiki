@@ -710,14 +710,17 @@ a.phplmselected:hover {
 
 * html div.box-CSS_menu ul {margin-left: 0}
 
+#col2 .cssmenu_vert > li {
+	width: 180px;
+	padding: 0 !important}
+
 .cssmenu li ul,
 .cssmenu_horiz li ul,
 .cssmenu_vert li ul {border: 1px solid #D3D3D3}
 
-.cssmenu_vert li ul {margin-left: 9em !important}
-
-.cssmenu li ul ul {/*left: -999em*/}
-
+.cssmenu_vert li ul {margin-left: 9em}
+#col2 .cssmenu_vert li ul {margin-left: 175px}
+#col2 .cssmenu_vert li ul li ul {margin-left: 9em}
 .cssmenu_horiz li ul ul {margin: -1em 0 0 9em}
 
 .cssmenu a,	
