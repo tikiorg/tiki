@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 {title help="Menus" url="tiki-admin_menu_options.php?menuId=$menuId"}{tr}Admin Menu:{/tr} {$editable_menu_info.name}{/title}
 
 <div class="navbar">
@@ -323,4 +323,4 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
 <input type="hidden" name="menuId" value="{$menuId}" />
 {tr}File{/tr}: <input name="csvfile" type="file" />
 <input type="submit" name="import" value="{tr}Import{/tr}" />
-</form><!-- END of {$smarty.template} -->
+</form>

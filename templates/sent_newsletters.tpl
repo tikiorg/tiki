@@ -1,21 +1,7 @@
-<!-- START of {$smarty.template} -->{* url - nlId - sort_mode - find - offset - channels - prev_offset - next_offset - pages_cant *}
-<div align="center">
-	<table class="findtable">
-		<tr>
-			<td class="findtable">{tr}Find{/tr}</td>
-			<td class="findtable">
-				<form method="get" action="{$url}">
-					<input type="text" name="{$cur}_find" value="{$find|escape}" />
-					<input type="hidden" name="{$bak}_find" value="{$find_bak|escape}" />
-					<input type="submit" value="{tr}Find{/tr}" name="search" />
-					<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-					<input type="hidden" name="nlId" value="{$nlId}" />
-					<input type="hidden" name="cookietab" value="{$tab}" />
-				</form>
-			</td>
-		</tr>
-	</table>
 
+<div align="center">
+	{include file='find.tpl'}
+	
 	<table class="normal">
 		<tr>
 			<th>
@@ -87,4 +73,4 @@
 			{/section}
 		{/if}
 	</div>
-</div><!-- END of {$smarty.template} -->
+</div>

@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} --><div id="container" >
+<div id="container" >
 	<div id="tab-block-1" >
 		{if $prefs.feature_userPreferences eq 'y'}
 		<h5><img src="img/mytiki/mytiki.gif" alt="{tr}MyTiki{/tr}" />{tr}MyTiki{/tr}</h5>
@@ -234,4 +234,4 @@ var tabs1 = new SimpleTabs($('tab-block-1'), {
 });
 //--><!]]>
 </script>
-{/literal}<!-- END of {$smarty.template} -->
+{/literal}

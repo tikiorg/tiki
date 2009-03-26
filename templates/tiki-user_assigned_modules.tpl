@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{title help="UserAssignedModules"}{tr}User assigned modules{/tr}{/title}
+{title help="UserAssignedModules"}{tr}User assigned modules{/tr}{/title}
 
 {if $prefs.feature_ajax ne 'y' && $prefs.feature_mootools ne 'y'}
   {include file=tiki-mytiki_bar.tpl}
@@ -112,4 +112,4 @@
 </tr>
 </table>
 </form>
-{/if}<!-- END of {$smarty.template} -->
+{/if}

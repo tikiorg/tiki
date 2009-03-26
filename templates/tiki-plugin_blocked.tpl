@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} --><div class="cbox">
+<div class="cbox">
 <div class="cbox-title">
 	{icon _id=error style="vertical-align:middle"}
 	{if $plugin_status eq 'rejected'}
@@ -62,4 +62,4 @@
 		{/if}
 	{/if}
 </div>
-</div><!-- END of {$smarty.template} -->
+</div>

@@ -1,1 +1,1 @@
-<!-- START of {$smarty.template} -->{$categoryName} ({$categoryLocal}/{$categoryTotal}){* $categoryName, $categoryLocal, $categoryTotal - cerefull don't put space or | in the text*}<!-- END of {$smarty.template} -->
+{$categoryName} ({$categoryLocal}/{$categoryTotal}){* $categoryName, $categoryLocal, $categoryTotal - cerefull don't put space or | in the text*}

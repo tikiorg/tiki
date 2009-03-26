@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *} 
+{* $Id$ *} 
 {if $prefs.feature_ajax == 'y'}
   <script type="text/javascript" src="lib/wiki/wiki-ajax.js"></script>
 {/if}
@@ -259,4 +259,4 @@ must not overlap the wiki content that could contain floated elements *}
 {if !$prefs.page_bar_position or $prefs.page_bar_position eq 'bottom' or $prefs.page_bar_position eq 'both'}
 {include  file=tiki-page_bar.tpl}
 {/if}
-{/if}<!-- END of {$smarty.template} -->
+{/if}

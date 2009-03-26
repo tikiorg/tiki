@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 
 {title help="forums" admpage="forums"}{$forum_info.name}{/title}
 
@@ -633,4 +633,4 @@
 			if (js_anonymous_name) document.getElementById('anonymous_name').value = js_anonymous_name;
 			//--><!]]>
 	</script>
-{/if}<!-- END of {$smarty.template} -->
+{/if}

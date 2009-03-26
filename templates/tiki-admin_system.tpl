@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 
 {title help="System+Admin"}{tr}System Admin{/tr}{/title}
 
@@ -99,4 +99,4 @@
 </table>
 </div>
 {/remarksbox}
-{/if}<!-- END of {$smarty.template} -->
+{/if}

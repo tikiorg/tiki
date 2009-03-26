@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 {if $prefs.feature_ajax eq 'y'}
 
 {$xajax_js}
@@ -9,4 +9,4 @@
 <div id="ajaxLoading">{tr}Loading...{/tr}</div>
 <div id="ajaxDebug"></div>
 
-{/if}<!-- END of {$smarty.template} -->
+{/if}

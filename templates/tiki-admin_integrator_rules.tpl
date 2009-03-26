@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 
 {title help="Integrator"}{tr}Edit Rules for Repository:{/tr} {$name}{/title}
 
@@ -148,4 +148,4 @@
     </tr>
   {/section}
 </table>
-<br /><br /><!-- END of {$smarty.template} -->
+<br /><br />

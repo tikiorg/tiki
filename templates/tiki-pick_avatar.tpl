@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 
 {title}
   {if $user ne $userwatch}
@@ -105,4 +105,4 @@ function subavt() {
 <input class="submitbutton" type="submit" name="upload" value="{tr}Upload{/tr}" />
 </fieldset>
 </form>
-</div><!-- END of {$smarty.template} -->
+</div>

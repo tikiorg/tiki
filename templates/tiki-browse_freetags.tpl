@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 
 {title}{tr}Browse related tags{/tr}{/title}
 
@@ -183,4 +183,4 @@
 		{/section}
 		{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
 	{/if}
-</div><!-- END of {$smarty.template} -->
+</div>

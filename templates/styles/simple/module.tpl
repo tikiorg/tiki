@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$*}
+{* $Id$*}
 {* Module layout with controls *}
 
 <div class="box"><div class="box-title">

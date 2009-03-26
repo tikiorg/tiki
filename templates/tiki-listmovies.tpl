@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 
 {title}{tr}List Movies{/tr}{/title}
 
@@ -32,4 +32,4 @@
       </center>
     </div>
   </div>
-{/if}<!-- END of {$smarty.template} -->
+{/if}

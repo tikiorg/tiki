@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{title help="Theme+Control"}{tr}Theme Control Center: Objects{/tr}{/title}
+{title help="Theme+Control"}{tr}Theme Control Center: Objects{/tr}{/title}
 
 {remarksbox type="notice" title="{tr}Notice{/tr}"}
 <b>{tr}Theme is selected as follows{/tr}:</b><br />
@@ -77,4 +77,4 @@
 </table>
 </form>
 
-{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links} <!-- END of {$smarty.template} -->
+{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links} 

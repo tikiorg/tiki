@@ -1,2 +1,2 @@
-<!-- START of {$smarty.template} -->	</table>
+	</table>
 </div>

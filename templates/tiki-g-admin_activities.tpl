@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{*Smarty template*}
+{*Smarty template*}
 <h1><a class="pagetitle" href="tiki-g-admin_activities.php?pid={$pid}">{tr}Admin process activities{/tr}</a></h1>
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}To learn more about the <a class="rbox-link" target="tikihelp" href="http://workflow.tikiwiki.org">Galaxia workflow engine</a>{/tr}{/remarksbox}
@@ -377,4 +377,4 @@ Errors:<br />
 	</td>
 </tr>
 </table>	
-	<!-- END of {$smarty.template} -->
+	

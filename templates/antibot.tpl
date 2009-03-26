@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} --><!-- antibot.tpl -->
+
 {if empty($user)}
 <tr{if !empty($tr_style)} class="{$tr_style}"{/if}
 >
@@ -11,4 +11,3 @@
 	<td{if !empty($td_style)} class="{$td_style}"{/if}><input type="text" maxlength="8" size="8" name="antibotcode" /></td>
 </tr>
 {/if}
-<!-- {tr}End{/tr}: antibot.tpl --><!-- END of {$smarty.template} -->

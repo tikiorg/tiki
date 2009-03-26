@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 {* ==> put in this file what is not displayed in the layout (javascript, debug..)*}
 {if (! isset($display) or $display eq '')}
 	{if count($phpErrors)}

@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 <script type="text/javascript">
 <!--//--><![CDATA[//><!--
         var articleTypes = new Array();
@@ -15,4 +15,4 @@
 {/foreach}
 //--><!]]>
 </script>
-        <!-- END of {$smarty.template} -->
+        

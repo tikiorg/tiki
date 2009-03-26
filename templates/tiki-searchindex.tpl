@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 {title}{if $words neq '' and !$searchNoResults}{tr}Search results{/tr}{else}{tr}Search{/tr}{/if}{/title}
 
 {if !( $searchStyle eq "menu" )}
@@ -81,4 +81,4 @@
 {pagination_links cant=$cant_results step=$maxRecords offset=$offset}{/pagination_links} 
 {* END OF PAGINATION *}
 
-{/if}<!-- END of {$smarty.template} -->
+{/if}

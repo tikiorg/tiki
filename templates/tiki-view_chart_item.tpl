@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{title help="charts"}{tr}Item information{/tr}{/title}
+{title help="charts"}{tr}Item information{/tr}{/title}
 
 {cycle values="odd,even" print=false}
 <table class="normal">
@@ -83,4 +83,4 @@
 	</td>
 </tr>
 {/if}
-</table><!-- END of {$smarty.template} -->
+</table>

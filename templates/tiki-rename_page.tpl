@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{title}{tr}Rename page:{/tr}&nbsp;{$page}{/title}
+{title}{tr}Rename page:{/tr}&nbsp;{$page}{/title}
 
 <div class="navbar">
 	{assign var=thispage value=$page|escape:url}

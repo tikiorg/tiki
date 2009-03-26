@@ -1,3 +1,3 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 {* placeholder *}
 

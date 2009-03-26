@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} --><h2>{tr}Ical import / Export{/tr}</h2>
+<h2>{tr}Ical import / Export{/tr}</h2>
 <hr />
 <h3>{tr}Select The calendar to export{/tr}</h3>
 <form class="forms" method="get" action="tiki-ical.php">

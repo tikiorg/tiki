@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{title help="Securiy+Admin"}{tr}Security Admin{/tr}{/title}
+{title help="Securiy+Admin"}{tr}Security Admin{/tr}{/title}
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}To <a class="rbox-link" target="tikihelp" href="http://security.tikiwiki.org/tiki-contact.php">report any security issues</a>.{/tr}{/remarksbox}
 

@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{title}{tr}Rollback page{/tr} {$page} {tr}to version{/tr} {$version}{/title}
+{title}{tr}Rollback page{/tr} {$page} {tr}to version{/tr} {$version}{/title}
 
 <form action="tiki-rollback.php?page={$page|escape}&amp;version={$version|escape}&amp;rollback=y" method="post">
   <input type="submit" name="rollback" value="{tr}Rollback{/tr}" />

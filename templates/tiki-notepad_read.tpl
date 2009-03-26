@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{title help="notepad"}{tr}Reading note:{/tr}&nbsp;{$info.name}{/title}
+{title help="notepad"}{tr}Reading note:{/tr}&nbsp;{$info.name}{/title}
 
 {include file=tiki-mytiki_bar.tpl}
 
@@ -41,4 +41,4 @@
 </tr></table>
 <div class="wikitext">
 {$info.parsed}
-</div><!-- END of {$smarty.template} -->
+</div>

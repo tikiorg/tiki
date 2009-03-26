@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{title help="Edit+CSS"}{tr}Edit Style Sheet{/tr}{/title}
+{title help="Edit+CSS"}{tr}Edit Style Sheet{/tr}{/title}
 
 <div class="navbar">
 {if ($prefs.feature_view_tpl eq 'y' || $prefs.feature_edit_templates eq 'y') && $tiki_p_edit_templates == 'y'}
@@ -11,6 +11,7 @@
 {if $action eq "edit"}
 	<input type="text" name="editstyle" value="{$editstyle}" />
 	<input type="submit" name="save" value="{tr}Save{/tr}" />
+	<input type="submit" name="save2" value="{tr}Save{/tr} &amp; {tr}Display{/tr}" />
 	{button  href="tiki-edit_css.php?editstyle=$editstyle" _text="{tr}Cancel{/tr}"}
 	{if $tikidomain}
 		{tr}The file will be saved in:{/tr} styles/{$tikidomain}
@@ -51,4 +52,4 @@
 	{/section}
 {/if}
 
-</form><!-- END of {$smarty.template} -->
+</form>

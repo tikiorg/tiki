@@ -235,7 +235,9 @@ ul.jumplinks a:active {
 	
 #fullscreenbutton:hover {color: #000000}
 
+/* appears on print page */
 #tiki-clean {
+	background-color: #fff;
 	text-align: left;
 	padding: 1em}
 
@@ -255,6 +257,8 @@ ul.jumplinks a:active {
 	height: 10%;
 	min-height: 97px;	
 	position: relative;}
+	
+*:first-child+html #header {background: #fff}
 
 #middle {
 	background: #fff;
@@ -262,34 +266,25 @@ ul.jumplinks a:active {
 	padding-top: 40px;
 	padding-bottom: 40px}
 
-#c1c2 {
-	height: 100%;
-}
-#c1c2 #wrapper {
-	height: 100%;
-}
+#c1c2 {background: #fff}
+#c1c2 #wrapper {}
 
 .fullscreen #col1 {
-	height: 100%;
 	margin-left: 30px !important;
 	margin-right: 30px !important}
-
-#c1c2 #wrapper #col1 {
-	height: 100%;
-}
-
-#c1c2 #wrapper #col1 .content {
-	/*background: #f8f8ff;
-	color: midnightblue*/
-	height: 100%;
-	margin: 0 20px 20px}
-
+	
 #c1c2 #wrapper .marginleft {margin-left: 240px}
 #c1c2 #wrapper .marginright {margin-right: 210px}
 
+#c1c2 #wrapper #col1 {}
+
+#c1c2 #wrapper #col1 #tiki-center {
+	margin-left: 20px;
+	margin-right: 20px}
+
+
 #c1c2 #col2 {
 	width: 240px;
-	overflow: hidden;
 	text-align: right;
 	background: url(strasa/options/cold/box_top.gif) no-repeat 100% 0;
 	padding-top: 5px}
@@ -451,7 +446,7 @@ div#sitead {margin: auto}
 	padding-left: 60px;
 	padding-top: 1px;
 	color: #fff;
-	background: transparent url(strasa/options/cold/login.jpg) 0 0 no-repeat;
+	background: #fff url(strasa/options/cold/login.jpg) 0 0 no-repeat;
 }
 	
 *:first-child+html #siteloginbar { max-width: 650px}

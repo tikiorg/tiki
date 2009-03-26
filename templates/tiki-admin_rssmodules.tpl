@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{title help="RSS+Modules""}{tr}Admin RSS Modules{/tr}{/title}
+{title help="RSS+Modules""}{tr}Admin RSS Modules{/tr}{/title}
 
 {remarksbox type="tip" title="{tr}Tips{/tr}"}{tr}This page is to configure settings of RSS feeds read/imported by Tiki. To generate/export RSS feeds, look for "RSS feeds" on the admin panel, or{/tr} <a class="rbox-link" href="tiki-admin.php?page=rss">{tr}Click Here{/tr}</a>.
 <hr>{tr}To use RSS feeds in a text area (Wiki page, etc), a <a class="rbox-link" href="tiki-admin_modules.php">module</a> or a template, use {literal}{rss id=x}{/literal}, where x is the ID of the RSS feed.{/tr}{/remarksbox}

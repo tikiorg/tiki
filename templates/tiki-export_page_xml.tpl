@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} --><page zip="{$info.zip}">
+<page zip="{$info.zip}">
 <name><![CDATA[{$info.pageName}]]></name>
 {if $info.description}<description><![CDATA[{$info.description}]]></description>{/if}
 {if $info.comment}<comment><![CDATA[{$info.comment}]]></comment>{/if}
@@ -56,4 +56,4 @@
 </history>
 {/if}
 
-</page><!-- END of {$smarty.template} -->
+</page>

@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 {popup_init src="lib/overlib.js"}
 
 {title}
@@ -27,4 +27,4 @@
 	{/if}
 </div>
 
-{include file=list_file_gallery.tpl}<!-- END of {$smarty.template} -->
+{include file=list_file_gallery.tpl}

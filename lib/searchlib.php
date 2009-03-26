@@ -379,7 +379,7 @@ class SearchLib extends TikiLib {
 
 			'permName' => 'tiki_p_view_calendar',
 			'objectType' => 'calendar',
-			'objectKey' => '`viewcalitemId`',
+			'objectKey' => 'c.`calendarId`',
 			'parent' => 'tc.`name` as parentName, concat(\'tiki-calendar.php$calIds[]=\', tc.`calendarId`,\'&todate=\',c.`start`) as parentHref',
 			'parentJoin' => 'LEFT JOIN `tiki_calendars` tc ON tc.`calendarId` = c.`calendarId`',
 		);

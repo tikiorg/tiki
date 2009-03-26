@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{if $close_window eq 'y'}
+{if $close_window eq 'y'}
 <script type="text/javascript">
 <!--//--><![CDATA[//><!--
 close();
@@ -80,4 +80,4 @@ close();
 {$mid_data}
 {else}
 {include file=tiki.tpl}
-{/if}<!-- END of {$smarty.template} -->
+{/if}

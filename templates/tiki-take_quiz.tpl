@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} --><!- templates/tiki-take_quiz.tpl start ->
+<!- templates/tiki-take_quiz.tpl start ->
 <form enctype="multipart/form-data" name="aform" action="tiki-take_quiz.php" method="post">
 <input type="hidden" name="quizId" value="{$quizId|escape}" />
 <input id='timeleft' name="timeleft" type="hidden" value={$quiz_info.timeLimitsec} /><br />
@@ -59,4 +59,4 @@ Supporting Documentation: <input name="question_upload_{$questions[ix].questionI
 </div>
 {/if}
 </form>
-<!- templates/tiki-take_quiz.tpl end -><!-- END of {$smarty.template} -->
+<!- templates/tiki-take_quiz.tpl end ->

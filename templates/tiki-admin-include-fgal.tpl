@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}
@@ -261,4 +261,4 @@
 </td></tr></table>
 </form>
 </div>
-<!-- END of {$smarty.template} -->
+

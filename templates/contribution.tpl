@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 {if $prefs.feature_contribution eq 'y' and count($contributions) gt 0}
 <tr>
 <td class="formcolor">
@@ -27,4 +27,4 @@
 </td></tr>
 {/if}
 
-{/if}<!-- END of {$smarty.template} -->
+{/if}

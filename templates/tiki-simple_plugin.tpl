@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 
 <div class="catlists">
     <div class="cbox-title">{$title}</div>
@@ -13,4 +13,4 @@
             {/section}<br />
         {/foreach}
     </div>
-</div><!-- END of {$smarty.template} -->
+</div>

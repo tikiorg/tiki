@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{*$Id$*}
+{*$Id$*}
 
 <a href="tiki-admin.php?page=general" title="{tr}General{/tr}">{icon _id="pics/large/icon-configuration.png" alt="{tr}General{/tr}" class="reflect" style="float: left; vertical-align: middle" width="32" height="32"}</a>
 
@@ -136,4 +136,4 @@
 {if $prefs.feature_sefurl neq 'n'}
 <a href="tiki-admin.php?page=sefurl" title="{tr}Sef URL{/tr}" class="icon">{icon _id="pics/large/goto.png" alt="{tr}Sef URL{/tr}" class="reflect" style="float: left; vertical-align: middle" width="32" height="32"}</a>
 {/if}
-<br class="clear" /><!-- END of {$smarty.template} -->
+<br class="clear" />

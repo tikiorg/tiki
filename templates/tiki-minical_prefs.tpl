@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{title help="User+Calendar"}{tr}Mini Calendar: Preferences{/tr}{/title}
+{title help="User+Calendar"}{tr}Mini Calendar: Preferences{/tr}{/title}
 
 {include file=tiki-mytiki_bar.tpl}
 
@@ -133,4 +133,4 @@
     {/section}
 </table>
 </div>
-{/if}<!-- END of {$smarty.template} -->
+{/if}

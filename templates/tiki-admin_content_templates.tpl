@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{title help="Content+Templates"}{tr}Admin templates{/tr}{/title}
+{title help="Content+Templates"}{tr}Admin templates{/tr}{/title}
 
 {remarksbox type="tip" title="Tip"}Use the Administration page of each enabled feature to allow the use of content templates.{/remarksbox}
 
@@ -166,4 +166,4 @@
 	{/section}
 </table>
 
-{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}<!-- END of {$smarty.template} -->
+{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}

@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{title}{tr}Support chat transcripts{/tr}{/title}
+{title}{tr}Support chat transcripts{/tr}{/title}
 
 <a class="link" href="tiki-live_support_admin.php">{tr}Back to admin{/tr}</a>
 
@@ -75,4 +75,4 @@
 {/section}
 </table>
 {/if}
- <!-- END of {$smarty.template} -->
+ 

@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} --><h2>{tr}Register as a new user{/tr}</h2>
+<h2>{tr}Register as a new user{/tr}</h2>
 <br />
 {if $showmsg eq 'y'}
 {$msg}

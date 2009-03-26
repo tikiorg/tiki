@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{title help="mods"}{tr}Package Config{/tr}{/title}
+{title help="mods"}{tr}Package Config{/tr}{/title}
 
 <div class="wikitext">
   <h2>

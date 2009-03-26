@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{if $template}
+{if $template}
   {title help="Edit+Templates" url="tiki-edit_templates.php?mode=listing&template=$template"}{tr}Edit template:{/tr} {$template}{/title}
 {else}
   {title help="Edit+Templates"}{tr}Edit templates{/tr}{/title}
@@ -55,4 +55,4 @@
 {/if}
 </div>
 </form>
-{/if}<!-- END of {$smarty.template} -->
+{/if}

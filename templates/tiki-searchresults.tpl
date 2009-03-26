@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 {popup_init src="lib/overlib.js"}
 {if !( $searchNoResults ) }
   {title admpage="search"}{tr}Search results{/tr}{/title}
@@ -179,4 +179,4 @@
 	{/section}
 </div>
 {pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}
-{/if}<!-- END of {$smarty.template} -->
+{/if}

@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{title}{tr}Edit Image{/tr}{/title}
+{title}{tr}Edit Image{/tr}{/title}
 
 <div class="navbar">
 	{button href="tiki-browse_gallery.php" _auto_args='galleryId' _text="{tr}Return to Gallery{/tr}"}
@@ -66,4 +66,4 @@
     </td>
   </tr>
   </table>
-</div><!-- END of {$smarty.template} -->
+</div>

@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* start ************ Edit Form ***************}
+{* start ************ Edit Form ***************}
 <form action="tiki-user_tasks.php" method="post">
 
 <input type="hidden" name="taskId" value="{$taskId|escape}" />

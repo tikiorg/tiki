@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{title}{tr}Admin external wikis{/tr}{/title}
+{title}{tr}Admin external wikis{/tr}{/title}
 
 {if $prefs.feature_help eq 'y'}
 <a href="{$prefs.helpurl}External+Wikis" target="tikihelp" class="tikihelp" title="{tr}Admin External Wikis{/tr}">{icon _id='help'}</a>
@@ -46,4 +46,4 @@
 {/section}
 </table>
 
-{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}<!-- END of {$smarty.template} -->
+{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}

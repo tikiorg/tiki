@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->~np~ {* ~np~ is needed since userlink smarty modifier includes '[' and ']' in date formats, which are parsed as links in wiki syntax. *}
+~np~ {* ~np~ is needed since userlink smarty modifier includes '[' and ']' in date formats, which are parsed as links in wiki syntax. *}
 <table class="userlist">
 <tr>
   <td class="userlistheading"><a class="userlistheading" href="tiki-list_users.php?offset=0&amp;sort_mode={if $sort_mode eq 'login_desc'}login_asc{else}login_desc{/if}">{tr}Login{/tr}</a></td>

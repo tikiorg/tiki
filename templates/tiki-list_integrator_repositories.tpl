@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 
 {title}{tr}Available Repositories{/tr}{/title}
 
@@ -44,4 +44,4 @@
  * <div class='info-panel' id='integrator-no-reps'>...</div>
  *}
 
-{/if}<!-- END of {$smarty.template} -->
+{/if}

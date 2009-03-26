@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 
 {title help="Forums" admpage="forums"}{tr}Admin Forums{/tr}{/title}
 

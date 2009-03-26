@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 
 {title help="Drawings"}{tr}Admin drawings{/tr}{/title}
 
@@ -13,19 +13,8 @@
 {/if}
 
 <h2>{tr}Available drawings{/tr}:</h2>
-<form method="post" action="tiki-admin_drawings.php">
-<input type="hidden" name="ver" value="{$smarty.request.ver|escape}" />
-<input type="hidden" name="offset" value="{$offset|escape}" />
-<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />
-<table class="findtable">
-  <tr>
-    <td class="findtable">{tr}Find{/tr}:</td>
-    <td class="findtable">
-      <input type="text" name="find" value="{$find|escape}" />
-    </td>
-  </tr>
-</table>
-</form>
+{include file='find.tpl'}
+
 <form method="post" action="tiki-admin_drawings.php">
 <input type="hidden" name="ver" value="{$smarty.request.ver|escape}" />
 <input type="hidden" name="offset" value="{$offset|escape}" />
@@ -84,4 +73,4 @@
 </table>
 </form>
 
-{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}<!-- END of {$smarty.template} -->
+{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}

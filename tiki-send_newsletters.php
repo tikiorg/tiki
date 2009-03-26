@@ -14,6 +14,8 @@ $prefs['feature_wiki_protect_email'] = 'n'; //not to alter the email
 
 include_once ('lib/newsletters/nllib.php');
 
+$auto_query_args = array('sort_mode','offset','find', 'nlId', 'cookietab');
+
 $sender_email = $userlib->get_user_email($user);
 
 if ($prefs['feature_newsletters'] != 'y') {

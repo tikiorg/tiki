@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{popup_init src="lib/overlib.js"}
+{popup_init src="lib/overlib.js"}
 {*Smarty template*}
 <h1><a class="pagetitle" href="tiki-g-view_workitem.php?itemId={$smarty.request.itemId}">{tr}Browsing Workitem{/tr}</a>
 </h1>
@@ -52,4 +52,4 @@
 	</td>
 </tr>
 {/foreach}
-</table><!-- END of {$smarty.template} -->
+</table>

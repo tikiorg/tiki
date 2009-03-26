@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{title}{tr}Tag translation{/tr}{if isset($data)}: {$data.pageName}{/if}{/title}
+{title}{tr}Tag translation{/tr}{if isset($data)}: {$data.pageName}{/if}{/title}
 
 {if isset($data)}
 	<div class="navbar">

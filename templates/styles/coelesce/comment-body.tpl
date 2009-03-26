@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 {*<div class="clearfix content">*}
 {if $thread_style != 'commentStyle_headers'}
 {*<div class="clearfix postbody-content">*}

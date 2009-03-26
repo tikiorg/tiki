@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 {if $prefs.gal_image_mouseover neq 'n'}{popup_init src="lib/overlib.js"}{/if}
 
 {title}{tr}Browsing Gallery:{/tr} {$name}{/title}
@@ -226,4 +226,4 @@
   </small>
   </td>
 </tr>
-</table><!-- END of {$smarty.template} -->
+</table>

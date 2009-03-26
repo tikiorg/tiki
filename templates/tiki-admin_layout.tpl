@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{title}{tr}Admin layout{/tr}{/title}
+{title}{tr}Admin layout{/tr}{/title}
 
 <div class="navbar">
 	{button href="tiki-theme_control.php" _text="{tr}Theme control{/tr}"}
@@ -31,4 +31,4 @@
 </div>
 </div>
 <br />    
-{/section}<!-- END of {$smarty.template} -->
+{/section}

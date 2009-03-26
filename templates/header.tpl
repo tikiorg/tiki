@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 {if $base_url and $dir_level gt 0}		<base href="{$base_url}"/>{/if}
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="TikiWiki CMS/Groupware - http://TikiWiki.org" />
@@ -179,4 +179,4 @@
 		</script>
 	{/literal}
 {/if}
-{* END of html head content *}<!-- END of {$smarty.template} -->
+{* END of html head content *}

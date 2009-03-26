@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{strip}
+{strip}
 {* $Id$ *} 
 <a class="linkbut" href="tiki-index.php?page={$params.page|escape:url}
 {if $prefills}

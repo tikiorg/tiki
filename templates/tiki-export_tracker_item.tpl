@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{strip}
+{strip}
 {if $heading ne 'n'}
 {if $showItemId ne 'n'}
 {assign var='comma' value='y'}
@@ -57,4 +57,4 @@
 {/foreach}
 {/if}
 {/strip}
-{/foreach}<!-- END of {$smarty.template} -->
+{/foreach}

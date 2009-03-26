@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{if !empty($calendarId)}
+{if !empty($calendarId)}
 	{title url="tiki-admin_calendars.php?calendarId=$calendarId" admpage="calendar"}{tr}Admin Calendars{/tr}{/title}
 {else}
 	{title url="tiki-admin_calendars.php" admpage="calendar"}{tr}Admin Calendars{/tr}{/title}
@@ -211,4 +211,4 @@
 {tr}Delete events older than:{/tr} <input type="text" name="days" value="0"/> {tr}days{/tr} <input type="submit" name="clean" value="{tr}Delete{/tr}" />
 </form>
 
-</div><!-- END of {$smarty.template} -->
+</div>

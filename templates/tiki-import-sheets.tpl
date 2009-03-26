@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} --><link rel="stylesheet" href="lib/sheet/style.css" type="text/css" />
+<link rel="stylesheet" href="lib/sheet/style.css" type="text/css" />
 
 {title help="Spreadsheet"}{$title}{/title}
 
@@ -62,4 +62,4 @@
 		<input type="hidden" name="handler" value="TikiSheetWikiTableHandler"/>
 		<input type="submit" value="Import"/>
 	</form>
-{/if}<!-- END of {$smarty.template} -->
+{/if}

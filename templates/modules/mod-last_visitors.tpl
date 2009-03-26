@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 
 {if !isset($tpl_module_title)}
 {if $nonums eq 'y'}

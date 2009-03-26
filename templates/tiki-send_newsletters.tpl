@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 {$showBoxCheck}
 
 {title help="Newsletters"}{tr}Send Newsletters{/tr} {if $nlId ne '0'}{$nlName}{/if}{/title}
@@ -321,4 +321,4 @@ function remove_newsletter_file(id) {
 {/literal}
 
 -->
-</script><!-- END of {$smarty.template} -->
+</script>

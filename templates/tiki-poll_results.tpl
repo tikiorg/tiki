@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 
 {title help="polls" admpage="polls"}{tr}Poll Results{/tr}{/title}
 
@@ -151,4 +151,4 @@
   	   {include file=comments_button.tpl}
   </div>
   {include file=comments.tpl}
-{/if}<!-- END of {$smarty.template} -->
+{/if}

@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 
 {title help="Directory" admpage="directory"}{tr}Directory Administration{/tr}{/title}
 

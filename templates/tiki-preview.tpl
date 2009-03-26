@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} --><!-- templates/tiki-preview.tpl start -->
+<!-- templates/tiki-preview.tpl start -->
 <div class="wikipreview">
 <h2>{tr}Preview{/tr} {if $staging_preview eq 'y'}of current staging copy{/if}: {if $beingStaged eq 'y' and $prefs.wikiapproval_hideprefix == 'y'}{$approvedPageName|escape}{else}{$page|escape}{/if}</h2>
 {if $prefs.feature_wiki_description eq 'y'}
@@ -16,4 +16,4 @@
 </div>
 <hr style="clear:both; height:0px;"/> {* Information below the wiki content
 must not overlap the wiki content that could contain floated elements *}
-<!-- templates/tiki-preview.tpl end --><!-- END of {$smarty.template} -->
+<!-- templates/tiki-preview.tpl end -->

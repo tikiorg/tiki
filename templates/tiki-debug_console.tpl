@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 
 {if $tiki_p_admin eq 'y' and $prefs.feature_debug_console eq 'y'}
 <div class="debugconsole" id="debugconsole" style="{$debugconsole_style}">
@@ -53,4 +53,4 @@
 {/section}
 
 </div><!-- debug console -->
-{/if}<!-- END of {$smarty.template} -->
+{/if}

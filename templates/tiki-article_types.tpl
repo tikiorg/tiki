@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 {title url="tiki-article_types.php" help=Articles}{tr}Admin Article Types{/tr}{/title}
 
 <h2>{tr}List of types{/tr}</h2>
@@ -138,4 +138,4 @@
 
 	<h3>{tr}Create a new type{/tr}</h3>
 	<input type="text" name="new_type" /><input type="submit" name="add_type" value="{tr}Create a new type{/tr}" />
-</form><!-- END of {$smarty.template} -->
+</form>

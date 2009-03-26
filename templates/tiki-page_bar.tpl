@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 {strip}
 
 {assign var=thispage value=$page|escape:"url"}
@@ -160,4 +160,4 @@
 	{include file=comments.tpl}
 {/if}
 
-{/strip}<!-- END of {$smarty.template} -->
+{/strip}

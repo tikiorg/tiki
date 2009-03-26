@@ -1,1 +1,1 @@
-<!-- START of {$smarty.template} -->| {tr}Theme{/tr}: Strasa
+| {tr}Theme{/tr}: Strasa

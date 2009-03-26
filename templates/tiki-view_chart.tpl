@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{title help="charts"}{$chart_info.title}{/title}
+{title help="charts"}{$chart_info.title}{/title}
 
 {if $chart_info.hits > 0}
   <small>{tr}viewed{/tr} {$chart_info.hits} {tr}times{/tr}</small>
@@ -118,4 +118,4 @@
 </form>
 </td>
 </tr>
-</table><!-- END of {$smarty.template} -->
+</table>

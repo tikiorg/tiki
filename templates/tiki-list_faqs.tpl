@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{title help="FAQs" admpage="faqs"}{tr}FAQs{/tr}{/title}
+{title help="FAQs" admpage="faqs"}{tr}FAQs{/tr}{/title}
 
 {if $tiki_p_admin_faqs eq 'y'}
   {if $faqId > 0}
@@ -103,4 +103,4 @@
 	{/section}
 </table>
 
-{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}<!-- END of {$smarty.template} -->
+{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}

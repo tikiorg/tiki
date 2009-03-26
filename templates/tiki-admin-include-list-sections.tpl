@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 {*
  * If you want to change this page, check http://www.tikiwiki.org/tiki-index.php?page=AdministrationDev
  * there you"ll find attached a gimp image containing this page with icons in separated layers
@@ -177,4 +177,4 @@
 	</div>
 </div>
 
-{* $Id$ *}<!-- END of {$smarty.template} -->
+{* $Id$ *}

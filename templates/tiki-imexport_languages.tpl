@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{title}{tr}Edit or ex/import Languages{/tr}{/title}
+{title}{tr}Edit or ex/import Languages{/tr}{/title}
 
 <div class="navbar">
 	{button href="tiki-edit_languages.php" _text="{tr}Edit and create Languages{/tr}"}

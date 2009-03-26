@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{if strlen($heading) > 0}
+{if strlen($heading) > 0}
 {eval var=$heading}
 {else}
 {include file="blog-heading.tpl"}

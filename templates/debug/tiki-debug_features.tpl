@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 {* Show features *}
 
 {if count($command_result) > 0} {* Can it be == 0 ?? *}

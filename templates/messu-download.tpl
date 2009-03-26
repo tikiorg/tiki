@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{section name=user loop=$items}
+{section name=user loop=$items}
 From: {$items[user].user_from}
 To: {$items[user].user_to}
 Cc: {$items[user].user_cc}
@@ -14,4 +14,4 @@ Size: {$items[user].len}
 {$items[user].parsed}
 {sectionelse}
 {tr}No messages to download{/tr}
-{/section}<!-- END of {$smarty.template} -->
+{/section}

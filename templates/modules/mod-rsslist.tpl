@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}RSS Feeds{/tr}"}{/if}
+{if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}RSS Feeds{/tr}"}{/if}
 {tikimodule error=$module_params.error title=$tpl_module_title name="rsslist" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
   <div id="rss">
     {if $prefs.feature_wiki eq 'y' and $prefs.rss_wiki eq 'y' and $tiki_p_view eq 'y'}
