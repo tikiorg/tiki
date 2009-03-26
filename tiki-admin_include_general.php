@@ -204,7 +204,5 @@ if ($prefs['home_file_gallery']) {
 $listgroups = $userlib->get_groups(0, -1, 'groupName_desc', '', '', 'n');
 $smarty->assign("listgroups", $listgroups['data']);
 
-$headerlib->add_cssfile('css/admin.css');
-
 ask_ticket('admin-inc-general');
 ?>

@@ -78,7 +78,5 @@ $commentslib = new Comments($dbTiki);
 $forums = $commentslib->list_forums(0, -1, 'name_desc', '');
 $smarty->assign_by_ref('forums', $forums["data"]);
 
-$headerlib->add_cssfile('css/admin.css');
-
 ask_ticket('admin-inc-forums');
 ?>

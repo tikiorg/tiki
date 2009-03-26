@@ -14,8 +14,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 $languages = array();
 $languages = $tikilib->list_languages(false,null,true);
 $smarty->assign_by_ref("languages", $languages);
-
-$headerlib->add_cssfile('css/admin.css');
 	
 if (isset($_REQUEST["i18nsetup"])) {
 ask_ticket('admin-inc-i18n');

@@ -303,7 +303,5 @@ $smarty->assign_by_ref('all_groups', $all_groups);
 $tags = $adminlib->get_tags();
 $smarty->assign_by_ref("tags", $tags);
 
-$headerlib->add_cssfile('css/admin.css');
-
 ask_ticket('admin-inc-wiki');
 ?>

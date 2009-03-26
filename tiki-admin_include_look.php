@@ -11,7 +11,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 $a_style = $prefs['site_style'];
-$headerlib->add_cssfile('css/admin.css');
 
 if (isset($_REQUEST["looksetup"])) {
     ask_ticket('admin-inc-look');

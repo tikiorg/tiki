@@ -298,8 +298,9 @@ if (isset($_REQUEST["page"])) {
 } else {
   $smarty->assign('headtitle', breadcrumb_buildHeadTitle($crumbs));
   $smarty->assign('description', $crumbs[0]->description);
-	$headerlib->add_cssfile('css/admin.css');
 }
+
+$headerlib->add_cssfile('css/admin.css');
 
 if(isset($admintitle)) {
   $admintitle = tra($admintitle);

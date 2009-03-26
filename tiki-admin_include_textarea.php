@@ -61,6 +61,4 @@ if (isset($_REQUEST["textareasetup"])) {
 	}
 }
 
-$headerlib->add_cssfile('css/admin.css');
-
 ?>

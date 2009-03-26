@@ -33,8 +33,6 @@ if (isset($_REQUEST["calprefs"])) {
 	simple_set_value('calendar_start_year');
 	simple_set_value('calendar_end_year');
 }
-
-$headerlib->add_cssfile('css/admin.css');
   	 
 ask_ticket('admin-inc-cal'); 	 
 ?>

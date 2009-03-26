@@ -145,8 +145,6 @@ foreach( $sources as $key => $source )
 $smarty->assign( 'sources', $sources );
 $smarty->assign( 'oldSources', $oldSources );
 
-$headerlib->add_cssfile('css/admin.css');
-
 ask_ticket('admin-inc-profiles');
 
 ?>
