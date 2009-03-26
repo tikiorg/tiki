@@ -33,13 +33,14 @@
 		{query _type='form_input' maxRecords='NULL' type='NULL' types='NULL' find='NULL' topic='NULL' lang='NULL' exact_match='NULL' categId='NULL' filegals_manager='NULL' save='NULL'}
 
 
-	<label class="findtitle" for="findwhat">
+
+	<label class="findtitle">
 		{if empty($whatlabel)}
 			{tr}Find{/tr}
 		{else}
 			{tr}{$whatlabel}{/tr}
 		{/if}
-		<input type="text" name="find" id="findwhat" value="{$find|escape}" />
+		<input type="text" name="find" value="{$find|escape}" />
 	</label>
 
 {if isset($exact_match)}
