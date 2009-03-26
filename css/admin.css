@@ -75,4 +75,9 @@ a.admbox.off:hover, a.admbox.off:focus, a.admbox.off:active {
 	width: 100%;
 }
 
+.half_width {
+	width: 49%;
+	float: left;
+	text-align: left;
+}
 

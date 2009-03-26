@@ -626,11 +626,6 @@ span.disabled {
 	text-align: center;
 }
 
-.half_width {
-	width: 49%;
-	float: left;
-}
-
 /***** TikiSheet Default Style *****/
 
 table.default thead td,
