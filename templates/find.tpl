@@ -4,7 +4,6 @@
 	parameters used in this template:
 
 	* filegals_manager      : If value not empty, adds hidden input filegals_manager value=$filegals_manager
-	* _sort_mode             : If value = 'y' adds hidden input sort_mode value=$sort_mode
 
 	* whatlabel             : Change form title. Default value (if $whatlabel empty) is "Find". If $whatlabel is not empty, the text presented is $whatlabel content
 	* exact_match           : If set adds exact_match field
@@ -21,18 +20,15 @@
 	*		filter_names          : array( filter_field1 => filter_field1_name, ... )
 	*		filter_values         : array( filter_fieldX => filter_fieldX_selected_value, ... )
 	*
-	* Usage examples : {include file='find.tpl' _sort_mode='y'}
+	* Usage examples : {include file='find.tpl'}
 	*                  {include file="find.tpl" find_show_languages='y' find_show_categories='y' find_show_num_rows='y'} 
 *}
 
 <div class="clearfix">
 		<form method="post" action="{$smarty.server.PHP_SELF}" class="findtable">
 		{if $filegals_manager neq ''}<input type="hidden" name="filegals_manager" value="{$filegals_manager|escape}" />{/if}
-		{if $_sort_mode eq 'y'}<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />{/if}
 
 		{query _type='form_input' maxRecords='NULL' type='NULL' types='NULL' find='NULL' topic='NULL' lang='NULL' exact_match='NULL' categId='NULL' filegals_manager='NULL' save='NULL'}
-
-
 
 	<label class="findtitle">
 		{if empty($whatlabel)}

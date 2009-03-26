@@ -46,7 +46,7 @@
 </table>
 </form>
 <br /><h2>{tr}Menus{/tr}</h2>
-{include file='find.tpl' _sort_mode='y'}
+{include file='find.tpl'}
 <table class="normal">
 <tr>
 <th>{self_link _sort_arg='sort_mode' _sort_field='menuId'}{tr}ID{/tr}{/self_link}</th>

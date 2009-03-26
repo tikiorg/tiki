@@ -57,7 +57,7 @@
 <br />
 <h2>{tr}Mail notifications{/tr}</h2>
 {if $channels or ($find ne '')}
-  {include file='find.tpl' _sort_mode='y' find_show_num_rows='y'}
+  {include file='find.tpl' find_show_num_rows='y'}
 {/if}
 <form method="get" action="tiki-admin_notifications.php">
 	<table class="normal">

@@ -9,7 +9,7 @@
 </table>
 </form>
 
-{include file='find.tpl' _sort_mode='y'}
+{include file='find.tpl'}
 
 <table class="normal">
 <tr>

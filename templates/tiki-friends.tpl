@@ -44,7 +44,7 @@
 {/if}
 <p style="font-weight: bold;">{tr}Your friends{/tr}</p>
 
-{include file='find.tpl' _sort_mode='y'}
+{include file='find.tpl'}
 
 <table class="userlist">
 {if $listpages}

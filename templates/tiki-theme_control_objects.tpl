@@ -52,7 +52,7 @@
 
 <h2>{tr}Assigned objects{/tr}</h2>
 
-{include file='find.tpl' _sort_mode='y'}
+{include file='find.tpl'}
 
 <form action="tiki-theme_control_objects.php" method="post">
 <input type="hidden" name="type" value="{$type|escape}" />

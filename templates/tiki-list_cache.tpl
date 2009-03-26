@@ -4,7 +4,7 @@
 	{tr}The cache is used by:{/tr} <a href="tiki-admin.php?page=general">{tr}Use cache for external pages{/tr}</a>
 {/remarksbox}
 
-{include file='find.tpl' _sort_mode='y'}
+{include file='find.tpl'}
 
 {cycle values="odd,even" print=false}
 <table class="normal">

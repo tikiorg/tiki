@@ -37,7 +37,7 @@
 
 <h2>{tr}Messages{/tr}</h2>
 
-{include file='find.tpl' _sort_mode='y'}
+{include file='find.tpl'}
 
 {section name=user loop=$channels}
 <div class="shoutboxmsg">

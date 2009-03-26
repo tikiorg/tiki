@@ -80,7 +80,7 @@
 <br />
 <h2>{tr}HTML pages{/tr}</h2>
 {if $channels}
-  {include file='find.tpl' _sort_mode='y'}
+  {include file='find.tpl'}
 {/if}
 <table class="normal">
   <tr>
