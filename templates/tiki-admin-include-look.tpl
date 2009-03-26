@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 {strip}
 <div class="cbox">
 	<div class="cbox-title">
@@ -1025,4 +1025,4 @@
 		<div class="input_submit_container clear" style="text-align: center"><input type="submit" name="looksetup" value="{tr}Apply{/tr}" /></div>
 	</form>
 </div><!-- cbox end -->
-{/strip}<!-- END of {$smarty.template} -->
+{/strip}

@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{if $prefs.feature_trackers eq 'y'}
+{if $prefs.feature_trackers eq 'y'}
 {if !isset($tpl_module_title)}
 {if $nonums eq 'y'}
 {eval var="{tr}Last `$module_rows` Modified Comments{/tr}" assign="tpl_module_title"}

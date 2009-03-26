@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{title help="User+Bookmarks"}{tr}User Bookmarks{/tr}{/title}
+{title help="User+Bookmarks"}{tr}User Bookmarks{/tr}{/title}
 
 {if $prefs.feature_ajax ne 'y' && $prefs.feature_mootools ne 'y'}
   {include file=tiki-mytiki_bar.tpl}
@@ -104,4 +104,4 @@
     </table>
   </td>
 </tr>
-</table><!-- END of {$smarty.template} -->
+</table>

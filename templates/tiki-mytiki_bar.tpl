@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} --><div class="navbar">
+<div class="navbar">
 
 {if $prefs.feature_userPreferences eq 'y'}
 	{button _icon="img/mytiki/mytiki.gif" _text="{tr}MyTiki{/tr}" href="tiki-my_tiki.php" _menu_text="y"}

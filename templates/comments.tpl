@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 
 {if $forum_mode eq 'y'}
 <div>
@@ -404,4 +404,4 @@ var js_anonymous_name = getCookie('anonymous_name');
 if (js_anonymous_name) document.getElementById('anonymous_name').value = js_anonymous_name;
 //--><!]]>
 </script>
-{/if}<!-- END of {$smarty.template} -->
+{/if}

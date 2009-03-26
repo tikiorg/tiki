@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{title}{tr}Directory batch upload{/tr}{/title}
+{title}{tr}Directory batch upload{/tr}{/title}
 
 <div class="navbar">
 	{if $galleryId ne ''}
@@ -59,4 +59,4 @@
 </select>
 &nbsp;&nbsp;&nbsp;&nbsp; <input type="submit" name="batch_upload" value="{tr}Process files{/tr}" />
 </form>
-<br /><!-- END of {$smarty.template} -->
+<br />

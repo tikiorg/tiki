@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} --><div class="cbox">
+<div class="cbox">
   <div class="cbox-title">
     {tr}{$crumbs[$crumb]->description}{/tr}
     {help crumb=$crumbs[$crumb]}
@@ -15,4 +15,4 @@
     			</table>
 				</form>
 		</div>
-</div><!-- END of {$smarty.template} -->
+</div>

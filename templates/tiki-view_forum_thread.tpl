@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 
 {title help="forums" admpage="forums"}
   {tr}Forum:{/tr}&nbsp;{$forum_info.name}
@@ -97,4 +97,4 @@
 		&nbsp;
 		{/if}
 		</td>
-</tr></table><!-- END of {$smarty.template} -->
+</tr></table>

@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 {* Template for Tikiwiki site identity header *}
 <div id="header-top">
 {* No site logo but custom code *}
@@ -88,4 +88,4 @@
 <div class="clearfix" id="topbar_custom_code">
 	{eval var=$prefs.feature_topbar_custom_code}
 </div>
-{/if}<!-- END of {$smarty.template} -->
+{/if}

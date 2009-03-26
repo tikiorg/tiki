@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* based on $Id$ *}
+{* based on $Id$ *}
 
 {if $prefs.feature_freetags eq 'y' && count($modFreetagsCurrent) gt 0}
   {if !isset($tpl_module_title)}{eval var="{tr}Tags This Page Has{/tr}" assign="tpl_module_title"}{/if}

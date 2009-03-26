@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 {strip}
 {if $user}
 <div id="siteloginbar" class="logged-in">

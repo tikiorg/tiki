@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{$menu_info.title|escape}<br />
+{$menu_info.title|escape}<br />
 <form method="post" action="{$ownurl}">
 <input type="hidden" name="polls_pollId" value="{$menu_info.pollId|escape}" />
 {if $tiki_p_vote_poll ne 'n' && ($user ||  $prefs.feature_poll_anonymous == 'y')}

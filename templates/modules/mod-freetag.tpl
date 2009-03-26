@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 
 {if $prefs.feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y' and $tagid}
 {if !isset($tpl_module_title)}{assign value="{tr}Folksonomy{/tr}" var="tpl_module_title"}{/if}

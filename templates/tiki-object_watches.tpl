@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 {title help="Mail notifications"}{tr}Object Watches:{/tr} {$smarty.request.objectName|escape}{/title}
 
 {if isset($referer)}
@@ -41,4 +41,4 @@
 </table>
 <label><input type="checkbox" id="clickall" title="{tr}Select All{/tr}" onclick="switchCheckboxes(this.form,'checked[]',this.checked)"/>{tr}Select All{/tr}</label>
 <div><input type="submit" name="assign" value="{tr}Assign{/tr}" /></div>
-</form><!-- END of {$smarty.template} -->
+</form>

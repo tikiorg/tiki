@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} --><form action="tiki-admin.php?page=community" method="post">
+<form action="tiki-admin.php?page=community" method="post">
 
 <table class="admin"><tr><td>
 
@@ -128,4 +128,4 @@
       </form>
   </div>
 </div>
-*}<!-- END of {$smarty.template} -->
+*}

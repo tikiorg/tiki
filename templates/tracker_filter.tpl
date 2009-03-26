@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} --><form action="{$smarty.server.PHP_SELF}" method="get">
+<form action="{$smarty.server.PHP_SELF}" method="get">
 <input type="hidden" name="trackerId" value="{$trackerId|escape}" />
 {if $status}<input type="hidden" name="status" value="{$status}" />{/if}
 {if $sort_mode}<input type="hidden" name="sort_mode" value="{$sort_mode}" />{/if}
@@ -99,4 +99,4 @@ fields[{$c}] = '{$fid}';
 </tr>
 </table>
 <div align='left'>{tr}Items found:{/tr} {$item_count}</div>
-</form><!-- END of {$smarty.template} -->
+</form>

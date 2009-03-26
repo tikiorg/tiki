@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* Note: if you edit this file, make sure to make corresponding edits on tiki-edit_article.tpl *}
+{* Note: if you edit this file, make sure to make corresponding edits on tiki-edit_article.tpl *}
 
 {popup_init src="lib/overlib.js"}
 {include file="tiki-articles-js.tpl"}
@@ -285,4 +285,4 @@
 </form>
 
 <br />
-{include file=tiki-edit_help.tpl}<!-- END of {$smarty.template} -->
+{include file=tiki-edit_help.tpl}

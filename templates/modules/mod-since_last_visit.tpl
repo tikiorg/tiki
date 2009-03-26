@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 
 {if $user}
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Since your last visit{/tr}"}{/if}

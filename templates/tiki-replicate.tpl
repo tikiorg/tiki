@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{title help="Replicate"}{tr}Replicate{/tr}{/title}
+{title help="Replicate"}{tr}Replicate{/tr}{/title}
 
 {if $tikifeedback}
   <br />
@@ -47,4 +47,4 @@
 <td width="50%" valign="top">
 <iframe src="http://{$master}/tiki-replicate_console.php" name="{$title|escape}" height="100%" width="100%" align="center" frameborder="0" scrolling="auto" 
 style="border:0"></iframe> 
-</td></tr></table><!-- END of {$smarty.template} -->
+</td></tr></table>

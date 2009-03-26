@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{*<tr{if isset($tr_class)} class="{$tr_class}"{/if}>
+{*<tr{if isset($tr_class)} class="{$tr_class}"{/if}>
   <td class="form">{tr}List authors:{/tr}</td>
   <td>
     <select name="wiki_authors_style">
@@ -27,4 +27,4 @@
       <option value="none"{if $wiki_authors_style eq 'none'} selected="selected"{/if}>{tr}no (disabled){/tr}</option>
     </select> 
 	</div>
-</div><!-- END of {$smarty.template} -->
+</div>

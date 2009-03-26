@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{if $plugins_alias|@count}
+{if $plugins_alias|@count}
 	<div class="input_submit_container">
 		<h2>{tr}Available Alias{/tr}</h2>
 		<form method="post" action="tiki-admin.php?page=plugins">
@@ -210,4 +210,4 @@
 			<td colspan="3"><input type="submit" name="save" value="{tr}Save{/tr}"/></td>
 		</tr>
 	</table>
-</form><!-- END of {$smarty.template} -->
+</form>

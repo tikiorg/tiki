@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} --><a href="javascript:insertAt('{$area_name}','(:biggrin:)');" onclick="needToConfirm = false;"><img src="img/smiles/icon_biggrin.gif" alt="{tr}big grin{/tr}" title="{tr}big grin{/tr}" width="15" height="15" /></a>
+<a href="javascript:insertAt('{$area_name}','(:biggrin:)');" onclick="needToConfirm = false;"><img src="img/smiles/icon_biggrin.gif" alt="{tr}big grin{/tr}" title="{tr}big grin{/tr}" width="15" height="15" /></a>
 <a href="javascript:insertAt('{$area_name}','(:confused:)');" onclick="needToConfirm = false;"><img src="img/smiles/icon_confused.gif" alt="{tr}confused{/tr}" title="{tr}confused{/tr}" width="15" height="15" /></a>
 <a href="javascript:insertAt('{$area_name}','(:cool:)');" onclick="needToConfirm = false;"><img src="img/smiles/icon_cool.gif" alt="{tr}cool{/tr}" title="{tr}cool{/tr}" width="15" height="15" /></a>
 <a href="javascript:insertAt('{$area_name}','(:cry:)');" onclick="needToConfirm = false;"><img src="img/smiles/icon_cry.gif" alt="{tr}cry{/tr}" title="{tr}cry{/tr}" width="15" height="15" /></a>
@@ -21,4 +21,4 @@
 <a href="javascript:insertAt('{$area_name}','(:twisted:)');" onclick="needToConfirm = false;"><img src="img/smiles/icon_twisted.gif" alt="{tr}twisted{/tr}" title="{tr}twisted{/tr}" width="15" height="15" /></a>
 <a href="javascript:insertAt('{$area_name}','(:wink:)');" onclick="needToConfirm = false;"><img src="img/smiles/icon_wink.gif" alt="{tr}wink{/tr}" title="{tr}wink{/tr}" width="15" height="15" /></a>
 <a href="javascript:insertAt('{$area_name}','(:arrow:)');" onclick="needToConfirm = false;"><img src="img/smiles/icon_arrow.gif" alt="{tr}arrow{/tr}" title="{tr}arrow{/tr}" width="15" height="15" /></a>
-<a href="javascript:insertAt('{$area_name}','(:santa:)');" onclick="needToConfirm = false;"><img src="img/smiles/icon_santa.gif" alt="{tr}santa{/tr}" title="{tr}santa{/tr}" width="15" height="15" /></a><!-- END of {$smarty.template} -->
+<a href="javascript:insertAt('{$area_name}','(:santa:)');" onclick="needToConfirm = false;"><img src="img/smiles/icon_santa.gif" alt="{tr}santa{/tr}" title="{tr}santa{/tr}" width="15" height="15" /></a>

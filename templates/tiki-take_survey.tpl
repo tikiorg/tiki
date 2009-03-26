@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{if $error_msg neq ''}
+{if $error_msg neq ''}
 	{remarksbox type="warning" title="{tr}Warning{/tr}"}{$error_msg}{/remarksbox}
 	<br />
 {/if}
@@ -79,4 +79,4 @@
     </div>
   {/section}
 <input type="submit" value="{tr}Send Answers{/tr}" name="ans" />
-</form><!-- END of {$smarty.template} -->
+</form>

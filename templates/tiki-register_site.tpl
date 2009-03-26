@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{if $save eq 'y'}
+{if $save eq 'y'}
   <h2>{tr}Tiki site registered{/tr}</h2>
   {tr}The following site was added and validation by admin may be needed before appearing on the lists{/tr}
   <table class="normal">
@@ -88,4 +88,4 @@
   {/if}
   </div>
 </div>
-{/if}<!-- END of {$smarty.template} -->
+{/if}

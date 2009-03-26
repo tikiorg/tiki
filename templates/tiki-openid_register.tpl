@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 <h1>{tr}Your OpenID identity is valid{/tr}</h1>
 <p>{tr}However, no account is associated to the OpenID identifier.{/tr}</p>
 <table width="100%">
@@ -47,4 +47,4 @@
 			{include file="modules/mod-login_box.tpl"}
 		</td>
 	</tr>
-</table><!-- END of {$smarty.template} -->
+</table>

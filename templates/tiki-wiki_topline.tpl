@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} --><div class="wikitopline" style="clear: both;">
+<div class="wikitopline" style="clear: both;">
 	<div class="content">
 		{if !$hide_page_header}
 		<div class="wikiinfo" style="float: left">
@@ -99,4 +99,4 @@
 {/if} {* <-- end of if $print_page ne 'y' *}
 {/if} {*hide_page_header*}
 	</div> {* div.content *}
-</div> {* div.wikitopline *}<!-- END of {$smarty.template} -->
+</div> {* div.wikitopline *}

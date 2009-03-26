@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 {* test for caps lock*}
 {literal}
 	<script type="text/javascript">
@@ -165,4 +165,4 @@
 		<div class="simplebox">
 	{icon _id=information style="vertical-align:middle" align="left"}{tr}NOTE: Make sure to whitelist this domain to prevent registration emails being canned by your spam filter!{/tr}
 		</div>
-{/if}<!-- END of {$smarty.template} -->
+{/if}

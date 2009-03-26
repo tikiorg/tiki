@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{**
+{**
  * This file is simplified version of header.tpl intended to be used for pages such as popup windows, print page, etc.
  * $Id$
  *
@@ -139,4 +139,4 @@
 onload="{if $prefs.feature_tabs eq 'y'}tikitabs({if $cookietab neq ''}{$cookietab}{else}1{/if},5);{/if}{if $msgError} javascript:location.hash='msgError'{/if}"
 {if $section} class="tiki_{$section}"{/if}>
 
-{if $prefs.feature_community_mouseover eq 'y'}{popup_init src="lib/overlib.js"}{/if}<!-- END of {$smarty.template} -->
+{if $prefs.feature_community_mouseover eq 'y'}{popup_init src="lib/overlib.js"}{/if}

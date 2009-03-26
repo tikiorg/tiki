@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 {popup_init src="lib/overlib.js"}
 
 {title help="Groups+Management" admpage="login"}{tr}Admin groups{/tr}{/title}
@@ -301,4 +301,4 @@ class="prevnext">{tr}All{/tr}</a>
 </table>
 </form>
 </div>
-{/if}<!-- END of {$smarty.template} -->
+{/if}

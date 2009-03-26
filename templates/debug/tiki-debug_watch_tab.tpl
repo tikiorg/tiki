@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 
 <table  id="watchlist">
   <caption> {tr}Watchlist{/tr} </caption>

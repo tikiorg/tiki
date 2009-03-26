@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 
 {title admpage="wiki" help="Using+Wiki+Pages#Last_Changes" url="tiki-lastchanges.php?days=$days"}{tr}Last Changes{/tr}{/title}
 
@@ -81,4 +81,4 @@
 {/section}
 </table>
 
-{pagination_links cant=$cant_records step=$prefs.maxRecords offset=$offset}{/pagination_links}<!-- END of {$smarty.template} -->
+{pagination_links cant=$cant_records step=$prefs.maxRecords offset=$offset}{/pagination_links}

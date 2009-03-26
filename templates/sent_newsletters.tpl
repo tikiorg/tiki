@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->
+
 <div align="center">
 	{include file='find.tpl'}
 	
@@ -73,4 +73,4 @@
 			{/section}
 		{/if}
 	</div>
-</div><!-- END of {$smarty.template} -->
+</div>

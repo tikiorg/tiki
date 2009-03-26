@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{strip}
+{strip}
 
 {if $files[changes].isgal eq 1}
 	{if $files[changes].perms.tiki_p_view_file_gallery eq 'y'}
@@ -136,4 +136,4 @@
 	{/if}
 {/if}
 
-{/strip}<!-- END of {$smarty.template} -->
+{/strip}

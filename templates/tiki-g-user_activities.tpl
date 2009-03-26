@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{*$Id$*}
+{*$Id$*}
 {popup_init src="lib/overlib.js"}
 {*Smarty template*}
 <h1><a class="pagetitle" href="tiki-g-user_activities.php">{tr}User Activities{/tr}</a>
@@ -130,4 +130,4 @@
     </tr>
   </table>
 {/if}
-{* END OF SHOW GRAPH *}<!-- END of {$smarty.template} -->
+{* END OF SHOW GRAPH *}

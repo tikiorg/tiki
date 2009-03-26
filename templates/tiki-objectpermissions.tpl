@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 
 {title help="Permission"}{tr}Assign permissions to {/tr}{tr}{$objectType|escape}{/tr}: {$objectName|escape}{/title}
 
@@ -182,4 +182,4 @@
 {* <a class="trailer" href="#" {popup sticky=true fullhtml="1" hauto=true vauto=true text=$smarty.capture.add_perm|escape:"javascript"|escape:"html"  trigger=onClick} >{tr}Add new Permissions{/tr}</a> *}
 </div>
 </form>
-</fieldset><!-- END of {$smarty.template} -->
+</fieldset>

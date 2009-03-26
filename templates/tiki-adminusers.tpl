@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 {popup_init src="lib/overlib.js"}
 
 {title help="Users+Management" admpage="login" url="tiki-adminusers.php"}{tr}Admin Users{/tr}{/title}
@@ -495,4 +495,4 @@
 		</table>
 	</form>
 	{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}You can export users of a group in <a href="tiki-admingroups.php">admin->groups->a_group</a>{/tr}{/remarksbox}
-</div><!-- END of {$smarty.template} -->
+</div>

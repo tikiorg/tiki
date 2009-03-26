@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id: tiki-listpages.tpl 14254 2008-08-14 15:31:06Z pkdille $ *}
+{* $Id: tiki-listpages.tpl 14254 2008-08-14 15:31:06Z pkdille $ *}
 
 {title}{tr}XML Zip{/tr}{/title}
 
@@ -15,4 +15,4 @@
 <form enctype='multipart/form-data' method="post" action="{$smarty.server.PHP_SELF}">
 	  <input type="file" name="zip" />
 	  <input type="submit" name="import" value="{tr}Import{/tr}"/>	  
-</form><!-- END of {$smarty.template} -->
+</form>

@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 <script type="text/javascript" src="lib/trackers/dynamic_list.js"></script>
 {if !empty($tracker_info.showPopup)}
 {popup_init src="lib/overlib.js"}
@@ -547,4 +547,4 @@ selectValues('trackerIdList={$listfields.$fid.http_request[0]}&fieldlist={$listf
 //--><!]]>
 </script>
 {/if}
-{/foreach}<!-- END of {$smarty.template} -->
+{/foreach}

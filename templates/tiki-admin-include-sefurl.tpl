@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id: tiki-user_information.tpl 16912 2009-02-25 03:38:43Z luciash $ *}
+{* $Id: tiki-user_information.tpl 16912 2009-02-25 03:38:43Z luciash $ *}
 {if $warning}
 {remarksbox type="warning" title="{tr}Warning{/tr}"}
 	{$warning}
@@ -42,4 +42,4 @@
 <div class="heading input_submit_container" style="text-align: center;padding:1em;">
 	 <input type="submit" name="save" value="{tr}Change Preferences{/tr}" />
 </div>
-</form><!-- END of {$smarty.template} -->
+</form>

@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{title help="User+Menu"}{tr}User Menu{/tr}{/title}
+{title help="User+Menu"}{tr}User Menu{/tr}{/title}
 
 {include file=tiki-mytiki_bar.tpl}
 <br />
@@ -60,4 +60,4 @@
 </table>
 </form>
 
-{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}<!-- END of {$smarty.template} -->
+{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}

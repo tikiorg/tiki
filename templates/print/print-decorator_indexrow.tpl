@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} --><tr>
+<tr>
 	<td>{$body}</td>
 	<td>{$index|escape}</td>
 </tr>

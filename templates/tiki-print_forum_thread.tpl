@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 <div style="margin:10px 20px 0px 20px">
 
   {title}{tr}Forum:{/tr}&nbsp;{$forum_info.name}{/title}
@@ -11,4 +11,4 @@
   <p class="editdate">
     {tr}The original document is available at{/tr} <a href="{$base_url}tiki-view_forum_thread.php?{query fullscreen=NULL display=NULL PHPSESSID=NULL}">{$base_url}tiki-view_forum_thread.php?{query fullscreen=NULL display=NULL PHPSESSID=NULL}</a>
   </p>
-</div><!-- END of {$smarty.template} -->
+</div>

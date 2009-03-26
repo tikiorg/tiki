@@ -209,4 +209,4 @@
   </div>
   
 
-</div><!-- END of {$smarty.template} -->
+</div>

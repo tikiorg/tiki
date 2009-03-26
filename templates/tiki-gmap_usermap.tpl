@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{title help="maps"}{tr}Users Map{/tr}{/title}
+{title help="maps"}{tr}Users Map{/tr}{/title}
 
 <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key={$prefs.gmap_key}"></script>
 

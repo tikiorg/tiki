@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 
 {title help="print"}{tr}Print multiple pages{/tr}{/title}
 

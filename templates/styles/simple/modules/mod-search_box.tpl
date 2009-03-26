@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 
 {if $prefs.feature_search eq 'y'}
 {tikimodule title="{tr}Search{/tr}" name="search_box" flip=$module_params.flip decorations=$module_params.decorations notitle=$module_params.notitle}

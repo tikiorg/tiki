@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{if $prefs.feature_left_column eq 'n' and $prefs.feature_right_column eq 'n'}
+{if $prefs.feature_left_column eq 'n' and $prefs.feature_right_column eq 'n'}
   {assign var=xtitle value=1}
 {else} {assign var=xtitle value=0} {/if}
 <table width="100%" cellpadding="0" cellspacing="0" border="0">
@@ -94,4 +94,4 @@
 </div>
 <br />
 {tr}If you can't see the game then you need a flash plugin for your browser{/tr}
-{/if}<!-- END of {$smarty.template} -->
+{/if}

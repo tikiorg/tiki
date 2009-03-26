@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{title help="tests"}{tr}TikiTests Record Configuration{/tr}{/title}
+{title help="tests"}{tr}TikiTests Record Configuration{/tr}{/title}
 
 {include file='tiki-tests_menubar.tpl'}
 
@@ -6,4 +6,4 @@
 	{tr}File Name:{/tr}<input type="text" name="filename" /><br/>
 	{tr}Use Current Session/Logout{/tr}<input type="checkbox" name="current_session" value="y" /><br/>
 	<input type="submit" name="action" value="{tr}Start Recording Test{/tr}" />
-</form><!-- END of {$smarty.template} -->
+</form>

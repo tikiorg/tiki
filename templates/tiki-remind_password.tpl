@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 {title help='Registration' admpage='login'}{tr}I forgot my password{/tr}{/title}
 
 {if $showmsg ne 'n'}
@@ -30,4 +30,4 @@
   </tr>  
   </table>
   </form>
-{/if}<!-- END of {$smarty.template} -->
+{/if}

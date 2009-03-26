@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} --><script type="text/javascript">
+<script type="text/javascript">
 <!--//--><![CDATA[//><!--
 {literal}
 var html = new Array();
@@ -72,4 +72,4 @@ function test_xpath(index) {
 </fieldset>
 <center><input type="submit" name="action" value="{tr}Edit{/tr}" /></center>
 {/if}
-</form><!-- END of {$smarty.template} -->
+</form>

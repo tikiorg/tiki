@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{title help="Blogs"}{$blog_data.title}{/title}
+{title help="Blogs"}{$blog_data.title}{/title}
 <a class="link" href="tiki-list_blogs.php">{tr}Blogs{/tr}</a> {$prefs.site_crumb_seper} <a class="link" href="tiki-view_blog.php?blogId={$post_info.blogId}">{$blog_data.title}</a> {$prefs.site_crumb_seper} {$post_info.title}
 
 <div class="post">

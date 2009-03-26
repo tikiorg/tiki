@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{title url="tiki-edit_programmed_content.php?contentId=$contentId"}{tr}Program dynamic content for block:{/tr} {$contentId}{/title}
+{title url="tiki-edit_programmed_content.php?contentId=$contentId"}{tr}Program dynamic content for block:{/tr} {$contentId}{/title}
 
 <div class="navbar">
 	{button href="?contentId=$contentId" _text="{tr}Create New Block{/tr}"}
@@ -85,4 +85,4 @@
 	{/section}
 </table>
 
-{pagination_links cant=$cant step=$prefs.maxRecords offset=$offset}{/pagination_links}<!-- END of {$smarty.template} -->
+{pagination_links cant=$cant step=$prefs.maxRecords offset=$offset}{/pagination_links}

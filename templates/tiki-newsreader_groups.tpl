@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{*Smarty template*}
+{*Smarty template*}
 <h1><a class="pagetitle" href="tiki-newsreader_groups.php?serverId={$serverId}">{tr}Select news group{/tr}</a></h1>
 {include file=tiki-mytiki_bar.tpl}
 <br /><br />
@@ -19,4 +19,4 @@
 </tr>
 {/foreach}
 </table>
-<br /><br /><!-- END of {$smarty.template} -->
+<br /><br />

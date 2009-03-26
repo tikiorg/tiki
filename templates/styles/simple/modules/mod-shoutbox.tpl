@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 
 {if $prefs.feature_shoutbox eq 'y' and $tiki_p_view_shoutbox eq 'y'}
 	{tikimodule title="{tr}Shoutbox{/tr}" name="shoutbox" flip=$module_params.flip decorations=$module_params.decorations notitle=$module_params.notitle}

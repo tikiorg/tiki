@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{title help="notepad"}{tr}Notes{/tr}{/title}
+{title help="notepad"}{tr}Notes{/tr}{/title}
 
 {if $prefs.feature_ajax ne 'y' && $prefs.feature_mootools ne 'y'}
 	{include file=tiki-mytiki_bar.tpl}
@@ -92,4 +92,4 @@
 			</td>
 		</tr>
 	</table>
-</form><!-- END of {$smarty.template} -->
+</form>

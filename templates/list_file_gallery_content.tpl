@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} --><table class="normal">
+<table class="normal">
   <tr>
   {if $gal_info.show_checked ne 'n' and ($tiki_p_admin_file_galleries eq 'y' or $tiki_p_upload_files eq 'y')}
     {assign var=nbCols value=`$nbCols+1`}
@@ -295,4 +295,4 @@
   </td></tr>
   {/if}
 
-</table><!-- END of {$smarty.template} -->
+</table>

@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{title help="tests"}{tr}TikiTests List{/tr}{/title}
+{title help="tests"}{tr}TikiTests List{/tr}{/title}
 
 {include file='tiki-tests_menubar.tpl'}
 
@@ -22,4 +22,4 @@
 {/foreach}
 </table>
 
-{pagination_links cant=$files_number offset=$offset step=$files_per_page}{/pagination_links}<!-- END of {$smarty.template} -->
+{pagination_links cant=$files_number offset=$offset step=$files_per_page}{/pagination_links}

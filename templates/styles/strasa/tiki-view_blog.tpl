@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} --><a class="link" href="tiki-list_blogs.php">{tr}Blogs{/tr}</a> {$prefs.site_crumb_seper} {$title}
+<a class="link" href="tiki-list_blogs.php">{tr}Blogs{/tr}</a> {$prefs.site_crumb_seper} {$title}
 {if strlen($heading) > 0}
   {eval var=$heading}
 {else}

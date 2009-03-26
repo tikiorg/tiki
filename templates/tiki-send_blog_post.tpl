@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{title help="Blogs"}{tr}Send blog post{/tr}{/title}
+{title help="Blogs"}{tr}Send blog post{/tr}{/title}
 
 <div class="navbar">
 	{button href="tiki-view_blog.php?find=$find&amp;blogId=$blogId&amp;offset=$offset&amp;sort_mode=$sort_mode" _text="{tr}Return to blog{/tr}"}
@@ -58,4 +58,4 @@
 <a href='tiki-print_blog_post.php?postId={$postId}'>{icon _id='printer' alt='{tr}Print{/tr}'}</a>
 <a href='tiki-send_blog_post.php?postId={$postId}'>{icon _id='email' alt='{tr}Email This Post{/tr}'}</a>
 </td></tr></table>
-</div><!-- END of {$smarty.template} -->
+</div>

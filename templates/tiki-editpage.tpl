@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 {popup_init src="lib/overlib.js"}
 {if $prefs.feature_ajax == 'y'}
   <script type="text/javascript" src="lib/wiki/wiki-ajax.js"></script>
@@ -482,4 +482,4 @@ function searchrep() {
 </form>
 <br />
 {include file='tiki-page_bar.tpl'}
-{include file='tiki-edit_help.tpl'}<!-- END of {$smarty.template} -->
+{include file='tiki-edit_help.tpl'}

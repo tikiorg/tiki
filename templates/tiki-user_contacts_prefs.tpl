@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{title help="User+Contacts+Prefs"}{tr}User Contacts Preferences{/tr}{/title}
+{title help="User+Contacts+Prefs"}{tr}User Contacts Preferences{/tr}{/title}
 
 {include file=tiki-mytiki_bar.tpl}
 <div class="navbar">
@@ -102,4 +102,4 @@
 			</div>
 		</td>
 	</tr>
-</table><!-- END of {$smarty.template} -->
+</table>

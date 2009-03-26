@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} --><h2>{tr}Preview{/tr}: {$page}</h2>
+<h2>{tr}Preview{/tr}: {$page}</h2>
 
 <div class="article">
 	<div class="articletitle">
@@ -56,4 +56,4 @@
 	<div class="articlebody">
 		{$parsed_body}
 	</div>
-</div><!-- END of {$smarty.template} -->
+</div>

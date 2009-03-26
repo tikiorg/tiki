@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} --><h2>{tr}My instances{/tr}</h2>
+<h2>{tr}My instances{/tr}</h2>
 <br />
 <table class="normal">
   <tr>
@@ -67,4 +67,4 @@
       <td class="{cycle advance=false}" colspan="6">{tr}No instances found{/tr}</td>
     </tr>	
   {/foreach}
-</table><!-- END of {$smarty.template} -->
+</table>

@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 
 {title help="Hotwords"}{tr}Admin Hotwords{/tr}{/title}
 
@@ -37,4 +37,4 @@ title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
 {/section}
 </table>
 
-{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset }{/pagination_links}<!-- END of {$smarty.template} -->
+{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset }{/pagination_links}

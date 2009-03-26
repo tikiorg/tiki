@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Header$ *}
+{* $Header$ *}
 {* param : popup=y|n, default y *}
 
 {if $module_params.popup ne 'n'}

@@ -50,4 +50,4 @@
 {/section}
 </table>
 
-{pagination_links cant=$cant step=$prefs.maxRecords offset=$offset template='tiki-admin_quicktags_content.tpl' htmlelement='quicktags-content'}{/pagination_links}<!-- END of {$smarty.template} -->
+{pagination_links cant=$cant step=$prefs.maxRecords offset=$offset template='tiki-admin_quicktags_content.tpl' htmlelement='quicktags-content'}{/pagination_links}

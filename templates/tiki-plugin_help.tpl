@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} --><h3>{$plugin.name|escape}
+<h3>{$plugin.name|escape}
 <a href="javascript:void(0)" onclick="needToConfirm=false;popup_plugin_form('{$plugin_name|lower|@addslashes}')">{tr}Insert{/tr}</a>
 {if $plugin.documentation}
 <a href="{$plugin.documentation|escape}">{tr}Documentation{/tr}</a>
@@ -38,4 +38,4 @@
 {/foreach}
 &#125;
 </div>
-{/if}<!-- END of {$smarty.template} -->
+{/if}

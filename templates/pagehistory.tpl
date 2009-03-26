@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{if $smarty.request.diff_style}
+{if $smarty.request.diff_style}
    {if $translation_mode ne 'y'}
      <h2>{tr}Comparing version {$old.version} with version {$new.version}{/tr}</h2>     
    {else}
@@ -84,4 +84,4 @@
 {/if}
 
    </table>
-{/if}<!-- END of {$smarty.template} -->
+{/if}

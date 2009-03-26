@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{popup_init src="lib/overlib.js"}
+{popup_init src="lib/overlib.js"}
 
 {title url="tiki-blog_post.php?blogId=$blogId&postId=$postId"}{if $postId gt 0}{tr}Edit Post{/tr}{else}{tr}Post{/tr}{/if}{/title}
 
@@ -160,4 +160,4 @@
 
 {button href="#edithelp" _onclick="javascript:show('edithelpzone');hide('wikiplhelp-tab');show('wikihelp-tab'); return true;" name="edithelp"	_text="{tr}Wiki Help{/tr}"}
 {button href="#edithelp" _onclick="javascript:show('edithelpzone');hide('wikihelp-tab');show('wikiplhelp-tab'); return true;" name="edithelp" _text="{tr}Plugin Help{/tr}"}
-{include file=tiki-edit_help.tpl}<!-- END of {$smarty.template} -->
+{include file=tiki-edit_help.tpl}

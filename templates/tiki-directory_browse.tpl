@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 
 {* The heading and category path *}
 {if $prefs.feature_breadcrumbs ne 'y'}
@@ -151,4 +151,4 @@
 	</div>
 {/if}
 
-{include file=tiki-directory_footer.tpl}<!-- END of {$smarty.template} -->
+{include file=tiki-directory_footer.tpl}

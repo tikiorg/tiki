@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{strip}
+{strip}
 {title}{tr}Avanced parameters for iCal export{/tr}{/title}
 
 <div class="navbar">
@@ -71,4 +71,4 @@
 </table>
 </form>
 </div>
-{/strip}<!-- END of {$smarty.template} -->
+{/strip}

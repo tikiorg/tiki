@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* based on $Id$ *}
+{* based on $Id$ *}
 
 {if $prefs.feature_wiki eq 'y' && count($modMoreLikeThis) gt 0}
 

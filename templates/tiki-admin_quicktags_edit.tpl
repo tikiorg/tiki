@@ -36,4 +36,4 @@
 </td></tr>
 <tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
 </table>
-</form><!-- END of {$smarty.template} -->
+</form>

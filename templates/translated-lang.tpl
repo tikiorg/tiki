@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* displays a cell with the languages of the translation set *}
+{* displays a cell with the languages of the translation set *}
 	{if isset($trads) && (count($trads) > 1 || $trads[0].langName)}
 		{if $td eq 'y'}<td style="vertical-align:top;text-align: left; width:42px;">{/if}
 		{if isset($verbose) && $verbose eq 'y'}{tr}The main text of this page is available in the following languages{/tr}:{/if}
@@ -58,4 +58,4 @@
 			{/if}
 
 		{if $td eq 'y'}</td>{/if}
-	{/if}<!-- END of {$smarty.template} -->
+	{/if}

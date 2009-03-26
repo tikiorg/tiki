@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{popup_init src="lib/overlib.js"}
+{popup_init src="lib/overlib.js"}
 {*Smarty template*}
 <h1><a class="pagetitle" href="tiki-g-user_instances.php">{tr}User Instances{/tr}</a>
 

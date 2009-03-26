@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} --><div class='opaque' style="position:absolute;left:50%;margin-left:-150px;width:400px">
+<div class='opaque' style="position:absolute;left:50%;margin-left:-150px;width:400px">
 {if $prefs.calendar_sticky_popup eq "y"}
 <div style="float:right">
 	{if $tiki_p_change_events eq 'y'}
@@ -40,4 +40,4 @@
 <div class="statusbox status{$cellstatus}">{if $cellstatus eq 0}{tr}Tentative{/tr}{elseif $cellstatus eq 1}{tr}Confirmed{/tr}{elseif $cellstatus eq 2}{tr}Cancelled{/tr}{/if}</div>
 {/if}
 </div>
-</div><!-- END of {$smarty.template} -->
+</div>

@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 
 {if $prefs.feature_babelfish eq 'y' and $prefs.feature_babelfish_logo eq 'y'}
 
@@ -54,4 +54,4 @@
   {$babelfish_logo}
 </div>
 
-{/if}<!-- END of {$smarty.template} -->
+{/if}

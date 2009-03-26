@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 
 {title help="Articles"}{tr}Admin Topics{/tr}{/title}
 
@@ -25,4 +25,4 @@
 <tr><td class="formcolor">{tr}Add Notification Email{/tr}</td><td class="formcolor"><input type="text" name="email" value="{$email|escape}" />&nbsp;<a href="tiki-admin_notifications.php" title="{tr}Admin notifications{/tr}">{icon _id='wrench' alt="{tr}Admin notifications{/tr}"}</a></td></tr>
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="edittopic" value="{tr}Edit{/tr}" /></td></tr>
 </table>
-</form><!-- END of {$smarty.template} -->
+</form>

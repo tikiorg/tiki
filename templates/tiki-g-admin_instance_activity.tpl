@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{popup_init src="lib/overlib.js"}
+{popup_init src="lib/overlib.js"}
 {*Smarty template*}
 <h1><a class="pagetitle" href="tiki-g-admin_instance.php?iid={$iid}">{tr}Admin instance{/tr}</a>
 </h1>
@@ -100,4 +100,4 @@
 	</tr>
 </table>
 <input type="hidden" name="__post" value="y" />
-</form><!-- END of {$smarty.template} -->
+</form>

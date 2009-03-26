@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 {if !empty($userGroups)}
 {cycle values="odd,even" print=false}
 <table class="normal">

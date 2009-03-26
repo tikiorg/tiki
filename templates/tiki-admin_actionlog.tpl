@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 
 {title help="Action log"}{tr}Action Log{/tr}{/title}
 
@@ -412,4 +412,4 @@
 </table>
 <div class="rbox">{tr}Wiki page actions except viewed will always be recorded but can be not reported{/tr}</div>
 </form>
-</div>{*tab*}<!-- END of {$smarty.template} -->
+</div>{*tab*}

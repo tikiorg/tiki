@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{if count($showstructs) ne 0}
+{if count($showstructs) ne 0}
 <tr class="formcolor">
 	<td>{tr}Structures:{/tr}</td>
 	<td>
@@ -17,4 +17,4 @@
   </div>
   </td>
 </tr>
-{/if}<!-- END of {$smarty.template} -->
+{/if}

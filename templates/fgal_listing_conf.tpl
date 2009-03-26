@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 
 {if is_array($fgal_options) and count($fgal_options) gt 0}
 	{foreach key=key item=item from=$fgal_options}
@@ -32,4 +32,4 @@
 	</td>
 </tr>
 	{/foreach}
-{/if}<!-- END of {$smarty.template} -->
+{/if}

@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 {if $comment.doNotShow != 1 }
 <div class="post {$thread_style}{if $prefs.feature_comments_moderation eq 'y'} post-approved-{$comment.approved}{/if}" id="threadId{$comment.threadId}">
 	<div class="inner"><span class="corners-top"><span></span></span>
@@ -29,4 +29,4 @@
 		</div>
 		{/if}
 	{/foreach}
-{/if}<!-- END of {$smarty.template} -->
+{/if}

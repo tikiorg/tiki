@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 
 {title help="Communication+Center"}{tr}Send objects{/tr}{/title}
 
@@ -141,4 +141,4 @@
 			</table>
 		</div>
 	</div>
-</form><!-- END of {$smarty.template} -->
+</form>

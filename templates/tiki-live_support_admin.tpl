@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{title help="Live+Support"}{tr}Live support system{/tr}{/title}
+{title help="Live+Support"}{tr}Live support system{/tr}{/title}
 
 <div class="navbar">
 	{button	href='#' _onclick="javascript:window.open('tiki-live_support_console.php','','menubar=no,scrollbars=yes,resizable=yes,height=400,width=600');" _text="{tr}Open operator console{/tr}"}

@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} --><form method="post">
+<form method="post">
 <h1>{tr}Enable Features{/tr}</h1>
 <ul>
 {section name=i loop=$features}
@@ -6,4 +6,4 @@
 {/section}
 </ul>
 <input type="submit" name="submit"/>
-</form><!-- END of {$smarty.template} -->
+</form>

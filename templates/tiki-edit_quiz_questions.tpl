@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 
 {* Copyright (c) 2002-2008 *}
 {* All Rights Reserved. See copyright.txt for details and a complete list of authors. *}
@@ -115,4 +115,4 @@
 </table>
 
 {pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
-<!-- tiki-edit_quiz_questions.tpl end --><!-- END of {$smarty.template} -->
+<!-- tiki-edit_quiz_questions.tpl end -->

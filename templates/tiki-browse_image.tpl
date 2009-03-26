@@ -11,7 +11,7 @@
 <body>
 <div id="{$rootid}browse_image">
 {else}
-<!-- START of {$smarty.template} -->
+
   {title}{tr}Browsing Image:{/tr}&nbsp;{$name}{/title}
 <div id="{$rootid}browse_image">
   <div class="navbar">
@@ -198,4 +198,4 @@ var thepix = new Diaporama('thepix', [{$listImgId}], {ldelim}
 
 {if $popup}
 </body></html>
-{/if}<!-- END of {$smarty.template} -->
+{/if}

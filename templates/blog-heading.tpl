@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} --><h1>{$title}</h1>
+<h1>{$title}</h1>
 {if $description neq ""}
   <div class="description">{$description|escape}</div>
 {/if}
@@ -38,4 +38,4 @@
 		{/section}
 	{/if}		
 {/if}
-</div><!-- END of {$smarty.template} -->
+</div>

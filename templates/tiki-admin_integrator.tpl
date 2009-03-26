@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 
 {title help="Integrator"}{tr}Integrator{/tr}{/title}
 
@@ -104,4 +104,4 @@
     </tr>
   {/section}
 </table>
-<br /><br /><!-- END of {$smarty.template} -->
+<br /><br />

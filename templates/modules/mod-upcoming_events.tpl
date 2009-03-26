@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Header$ *}
+{* $Header$ *}
 
 {if $prefs.feature_calendar eq 'y'}
 {if !isset($tpl_module_title)}

@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 
 {if $prefs.feature_featuredLinks eq 'y'}
 	{if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Featured links{/tr}"}{/if}

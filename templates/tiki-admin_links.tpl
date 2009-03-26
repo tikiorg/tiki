@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{title help="FeaturedLinksAdmin"}{tr}Featured links{/tr}{/title}
+{title help="FeaturedLinksAdmin"}{tr}Featured links{/tr}{/title}
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}To use these links, you must assign the featured_links <a class="rbox-link" href="tiki-admin_modules.php">module</a>.{/tr}{/remarksbox}
 
@@ -62,4 +62,4 @@
 </td></tr>
 <tr class="formcolor"><td>&nbsp;</td><td><input type="submit" name="add" value="{tr}Save{/tr}" /></td></tr>
 </table>
-</form><!-- END of {$smarty.template} -->
+</form>

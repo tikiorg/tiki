@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{title help="Inter-User Messages"}{tr}Message Archive{/tr}{/title}
+{title help="Inter-User Messages"}{tr}Message Archive{/tr}{/title}
 
 {include file=tiki-mytiki_bar.tpl}
 {include file="messu-nav.tpl"}
@@ -85,4 +85,4 @@ var CHECKBOX_LIST = [{section name=user loop=$items}'msg[{$items[user].msgId}]'{
 </table>
 </form>
 
-{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}<!-- END of {$smarty.template} -->
+{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}

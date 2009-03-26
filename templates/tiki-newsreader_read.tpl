@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{title help="newsreader"}{tr}Reading article from{/tr}:{$group}{/title}
+{title help="newsreader"}{tr}Reading article from{/tr}:{$group}{/title}
 
 {include file=tiki-mytiki_bar.tpl}
 
@@ -29,4 +29,4 @@
 <tr><td class="formcolor">{tr}Subject{/tr}:</td><td class="formcolor">{$headers.Subject}</td></tr>
 <tr><td colspan="2" style="background-color:white;">{$body}</td></tr>
 </table>
-<br /><br /><br /><!-- END of {$smarty.template} -->
+<br /><br /><br />

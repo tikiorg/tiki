@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} --><script type="text/javascript">
+<script type="text/javascript">
 {literal}
 ttl_showdetails = function( data ) {
 		Shadowbox.open({

@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 {title help="mods"}{tr}Tikiwiki Mods Configuration{/tr}{/title}
 
 <div class="navbar">

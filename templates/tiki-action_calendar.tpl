@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{popup_init src="lib/overlib.js"}
+{popup_init src="lib/overlib.js"}
 <div id="calscreen">
 
 <div style="float:right;margin:5px;">

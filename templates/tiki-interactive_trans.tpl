@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{include file="header_simple.tpl"}
+{include file="header_simple.tpl"}
 		<div class="center itranslator" style="clear: both">
 
 			<h1>{tr}Interactive translator{/tr}</h1>
@@ -43,4 +43,4 @@
 
 		</div>
 	</body>
-</html><!-- END of {$smarty.template} -->
+</html>

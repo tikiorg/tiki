@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 
 <table  id="log" cellspacing="0" cellpadding="0">
   <caption> {tr}Page generation debugging log{/tr} </caption>

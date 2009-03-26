@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{* $Id$ *}
+{* $Id$ *}
 
 {title help="Blogs"}{tr}Blogs{/tr}{/title}
 
@@ -54,4 +54,4 @@
 	{/section}
 </table>
 
-{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}<!-- END of {$smarty.template} -->
+{pagination_links cant=$cant step=$maxRecords offset=$offset}{/pagination_links}

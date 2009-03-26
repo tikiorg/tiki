@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} --><table class="normal">
+<table class="normal">
 	{if $params.caption}
 		<caption>{$params.caption|escape}</caption>
 	{/if}

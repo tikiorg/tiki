@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{title help="Quiz"}{tr}Stats for quiz:{/tr} {$quiz_info.name}{/title}
+{title help="Quiz"}{tr}Stats for quiz:{/tr} {$quiz_info.name}{/title}
 
 <div class="navbar">
 	{button href="tiki-list_quizzes.php" _text="{tr}List Quizzes{/tr}"} 
@@ -101,4 +101,4 @@ Set the names of the table headings to reflect the names of the db
 
 <br />
 {*first section end *}
-{/section}<!-- END of {$smarty.template} -->
+{/section}

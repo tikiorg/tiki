@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} --><div class="calnavigation">
+<div class="calnavigation">
 	{if $calendarViewMode eq 'month'}
 		{$currMonth|tiki_date_format:"%B %Y"}
 	{else}
@@ -79,4 +79,4 @@
 {/section}
   </tr>
 {/section}
-</table><!-- END of {$smarty.template} -->
+</table>

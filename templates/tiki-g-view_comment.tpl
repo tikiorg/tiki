@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{*Smarty template*}
+{*Smarty template*}
 <link rel="StyleSheet"  href="styles/{$prefs.style}" type="text/css" />
 <table class="email">
         <tr>
@@ -23,4 +23,4 @@
 		<input type="button" name="print" value="Close" onclick="{$jClose}" />
 	    </td>
 	</tr>
-</table><!-- END of {$smarty.template} -->
+</table>

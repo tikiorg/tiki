@@ -1,4 +1,4 @@
-<!-- START of {$smarty.template} -->{title help="Spreadsheet"}{$title}{/title}
+{title help="Spreadsheet"}{$title}{/title}
 
 <p>
   {$description}
@@ -163,4 +163,4 @@ function _renValRad( name )
 </form>
 <h2>{tr}Wiki plug-in{/tr}</h2>
 <div id="plugin-desc"></div>
-{/if}<!-- END of {$smarty.template} -->
+{/if}
