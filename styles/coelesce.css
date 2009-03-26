@@ -690,14 +690,32 @@ a.phplmselected:hover {color: #808080}
 	width: 16px;
 	height: 18px}
 	
-/* cssmenus (used by page controls and menus */
+/** CSS (suckerfish) menus **/
 
-* html .cssmenu li {width: 10em}
+.cssmenu li ul,
+.cssmenu_horiz li ul,
+#tiki-top .cssmenu_horiz li ul,
+.cssmenu_vert li ul {border: 1px solid #5a7ea2}
 
-.cssmenu_horiz ul li * {
+.cssmenu_horiz li:hover ul,
+.cssmenu_vert li:hover ul {
+	background: #ccdceb;
+	color: #5a7ea2;}
+
+#col2 .cssmenu_vert > li > ul {margin-left: 180px}
+.cssmenu_vert li {background: #ccdceb}
+
+#col2 .cssmenu_vert > li {
+	width: 186px;
+	padding: 0 !important}
+	
+.cssmenu_horiz ul li {
 	text-align: left;
-	color: #5a7ea2;
-	/*min-width: 10em*/}
+	color: #5a7ea2}
+	
+.cssmenu_horiz li:hover ul li:hover {
+	background: #eff8ff;
+	color: #5a7ea2;}
 
 .cssmenu_horiz li a:link,
 .cssmenu_horiz li a:visited {
@@ -711,38 +729,9 @@ a.phplmselected:hover {color: #808080}
 	font-size: 12px}
 	
 .cssmenu_horiz li.selected > a {background: inherit}
-
-.cssmenu_horiz li:hover ul {
-	border: 0;
-	background: #ccdceb;
-	color: #5a7ea2;}
-
-.cssmenu_horiz li:hover ul li:hover {
-	background: #eff8ff;
-	color: #5a7ea2;}
 	
-.cssmenu_vert li {background: #ccdceb}
-
-.cssmenu_vert li:hover ul {
-	background: #ccdceb;
-	color: #5a7ea2;}
-	
-*:first-child+html .pageactions .cssmenu_horiz li:hover ul {z-index: 300 !important}
-	
-.cssmenu_horiz li:hover ul li:hover {
-	background: #eff8ff;
-	color: #5a7ea2;}
-	
-.cssmenu_horiz li.selected > a {}
-
 .cssmenu_vert li a {
 	padding: 3px 0;
-	position: relative;
-	display: block;
-	font-weight: normal;
-	font-size: 1.2em} 
-
-.cssmenu_vert li a {
 	font-size: 1em;
 	color: #295C83;
 	font-weight: bold;
@@ -750,10 +739,8 @@ a.phplmselected:hover {color: #808080}
 
 .cssmenu_vert li a:hover {
 	color: #82a7c8;
-	text-decoration: underline;
-	/*background: #eff8ff*/} 
+	text-decoration: underline}
 	
-.cssmenu_horiz li.selectedAscendant > a {}
 #tiki-top > .cssmenu_horiz > li:hover { background: url(coelesce/pagebg.jpg) 0 -2px repeat-x }
 
 #tiki-top > .cssmenu_horiz {
@@ -761,10 +748,8 @@ a.phplmselected:hover {color: #808080}
 	border-left: 1px solid #2E5276;
 	border-right: 1px solid #ACC4E0}
 
-#tiki-top .cssmenu_horiz ul li {}
-
-#tiki-top .cssmenu_horiz ul li a { color: #5a7ea2 }
 #tiki-top .cssmenu_horiz ul li:hover {background: #ecf5ff;}
+#tiki-top .cssmenu_horiz ul li a {color: #5a7ea2}
 
 #tiki-top > ul.cssmenu_horiz > li > a {
 	border-left: 1px solid #acc4e0;
@@ -777,9 +762,7 @@ a.phplmselected:hover {color: #808080}
 	padding-top: 10px;
 	padding-bottom: 9px}
 	
-#tiki-top > .cssmenu_horiz > li > a:hover { 
-	/*background: url(coelesce/pagebg.jpg) 0 -2px repeat-x;*/
-	color: #fff}
+#tiki-top > .cssmenu_horiz > li > a:hover {color: #fff}
 
 /****** Misc. Global Classes (layout and style) ****/
 .hidden {
