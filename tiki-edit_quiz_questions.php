@@ -10,7 +10,7 @@
 require_once('tiki-setup.php');
 include_once('lib/quizzes/quizlib.php');
 
-$auto_query_args = array('quizId', 'sort_mode', 'offset', 'find');
+$auto_query_args = array('quizId', 'questionId', 'sort_mode', 'offset', 'find');
 
 if ($prefs['feature_quizzes'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_quizzes");
