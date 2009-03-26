@@ -235,7 +235,9 @@ ul.jumplinks a:active {
 	
 #fullscreenbutton:hover {color: #000000}
 
+/* appears on print page */
 #tiki-clean {
+	background-color: #fff;
 	text-align: left;
 	padding: 1em}
 
