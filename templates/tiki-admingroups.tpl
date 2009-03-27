@@ -35,7 +35,7 @@
 <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $prefs.feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 <h2>{tr}List of existing groups{/tr}</h2>
 
-{include file='find.tpl' _sort_mode='y' find_show_num_rows='y'}
+{include file='find.tpl' find_show_num_rows='y'}
 
 {if $cant_pages > 1 or !empty($initial) or !empty($find)}
 <div align="center">

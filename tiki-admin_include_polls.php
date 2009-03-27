@@ -23,5 +23,7 @@ if (isset($_REQUEST["pollprefs"])) {
 	simple_set_toggle('poll_list_categories');
 	simple_set_toggle('poll_list_objects');
 }
+$headerlib->add_cssfile('css/admin.css');
+
 ask_ticket('admin-inc-polls');
 ?>

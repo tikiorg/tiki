@@ -29,7 +29,7 @@ if (!isset($_REQUEST["sheetId"])) {
 	else
 		$tiki_p_view_sheet = 'n';
 	$smarty->assign('tiki_p_view_sheet', $tiki_p_view_sheet);
-	if ($tiki_p_admin == 'y' || $tiki_p_admin_sheet == 'y' || ($user && $user == $info['author']) || $tikilib->user_has_perm_on_object($user, $_REQUEST['sheetId'], 'sheet', 'tiki_p_edit_sheet'))
+	if ($tiki_p_admin == 'y' || $tiki_p_admin_sheet == 'y' || ($user && $user == $info['author']) || $tikilib->user_has_perm_on_object($user, $_REQUEST['sheetId'], 'sheet', 'tiki_p_edit_sheet', 'tiki_p_edit_categorized'))
 		$tiki_p_edit_sheet = 'y';
 	else
 		$tiki_p_edit_sheet = 'n';

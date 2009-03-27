@@ -83,6 +83,7 @@ if (isset($_REQUEST["freetagsset3d"])) {
 	    $tikilib->set_preference("freetags_3d_adjust_camera", 'false');
 	}
 }
+$headerlib->add_cssfile('css/admin.css');
 
 ask_ticket('admin-inc-freetags');
 ?>

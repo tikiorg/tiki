@@ -72,7 +72,5 @@ if (isset($_REQUEST['import'])) {
 	}
 }
 
-$headerlib->add_cssfile('css/admin.css');
-
 ask_ticket('admin-inc-cms');
 ?>

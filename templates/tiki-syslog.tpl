@@ -20,7 +20,7 @@
   <input type="submit" value="{tr}Clean{/tr}" name="clean" />
 </form>
 
-{include file='find.tpl' _sort_mode='y'}
+{include file='find.tpl'}
 
 <table class="normal">
 <tr>

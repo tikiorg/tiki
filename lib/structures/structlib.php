@@ -825,7 +825,7 @@ function list_structures($offset, $maxRecords, $sort_mode, $find='', $exact_matc
 			} else {
 			  $res['webhelp']='n';
 			}
-			if ( $this->user_has_perm_on_object($user,$res['pageName'],'wiki page','tiki_p_edit') ) {
+			if ( $this->user_has_perm_on_object($user,$res['pageName'],'wiki page','tiki_p_edit', 'tiki_p_edit_categorized') ) {
 				$res['editable']='y';
 			} else {
 				$res['editable']='n';

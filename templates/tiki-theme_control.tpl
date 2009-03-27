@@ -54,7 +54,7 @@
 
 <h2>{tr}Assigned categories{/tr}</h2>
 
-{include file='find.tpl' _sort_mode='y'}
+{include file='find.tpl'}
 
 <form action="tiki-theme_control.php" method="post">
 <table class="normal">

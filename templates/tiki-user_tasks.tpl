@@ -26,7 +26,7 @@
 
 {* start ************ Search  ***************}
 {if (not $show_form)} 
-  {include file='find.tpl' _sort_mode='y'}
+  {include file='find.tpl'}
 {/if}
 
 <span class="taskcount">{$cant}&nbsp;{tr}Tasks{/tr}</span>

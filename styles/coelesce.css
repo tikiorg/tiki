@@ -129,7 +129,7 @@ input[type=submit],
 	cursor: pointer;
 	display: inline;
 	outline: none;
-	/*line-height: 2em*/}
+	}
 	
 * html span.button a {background: #f5f5f5}
 	
@@ -835,7 +835,10 @@ div#debugconsole {}
 .mini {
 	width: 100%;
 	text-align: center;
-	font-size: .9em}
+	font-size: .9em;
+	margin-left: auto;
+	margin-right: auto;
+}
 
 .prevnext {
 	font-size: 1em;
@@ -1290,9 +1293,12 @@ div.split {
 .editdate {}
 
 div#page-bar {
+	width: 100%;
 	display: block;
 	margin-top: 0;
-	float: none}
+	float: none;
+	line-height: 20px;
+	}
 
 #page-bar > span {float: left}
 
@@ -1353,7 +1359,7 @@ div.code {
 	margin: 4px;
 	border: 1px dashed #696969;
 	overflow: auto; 
-   width: 500px}
+	width: 95%}
 
 .codecaption {
 	font-size: 90%;
@@ -1391,7 +1397,9 @@ ul.toc {
 	padding-left: 2em;
 	border-top: 1px dotted #a9a9a9;
 	border-bottom: 1px dotted #a9a9a9;
-	margin-bottom: 4px}
+	margin-bottom: 4px;
+	margin-left: 0px;
+	}
 
 ul.toc * {border: none}
 

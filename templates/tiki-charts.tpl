@@ -4,7 +4,7 @@
 {title}{tr}Charts{/tr}{/title}
 
 {if $items or ($find ne '')}
-  {include file='find.tpl' _sort_mode='y'}
+  {include file='find.tpl'}
 {/if}
 
 <form action="tiki-charts.php" method="post">

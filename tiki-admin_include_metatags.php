@@ -26,7 +26,5 @@ if (isset($_REQUEST["metatags"])) {
 	simple_set_value('metatag_revisitafter');
 } 
 
-$headerlib->add_cssfile('css/admin.css');
-
 ask_ticket('admin-inc-metatags');
 ?>

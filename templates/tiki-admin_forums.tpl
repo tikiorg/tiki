@@ -492,7 +492,7 @@
 <br />
 <h2>{tr}List Forums{/tr}</h2>
 {if $channels or ($find ne '')}
-	{include file='find.tpl' _sort_mode='y'}
+	{include file='find.tpl'}
 {/if}
 
 <form action="#">

@@ -75,4 +75,19 @@ a.admbox.off:hover, a.admbox.off:focus, a.admbox.off:active {
 	width: 100%;
 }
 
+.half_width {
+	width: 49%;
+	float: left;
+	text-align: left;
+}
 
+.admin2cols label {
+	display:block;
+	float:left;
+	width:200px;
+}
+
+.adminnestedbox {
+	float:left;
+	margin-left: 3em;
+}
