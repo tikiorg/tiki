@@ -123,6 +123,7 @@ if ($tiki_p_admin == 'y' && !empty($_REQUEST['refresh_tracker_index_now']) && $_
 	refresh_index('tracker_items');
 	$smarty->assign('refresh_tracker_index_now', $_REQUEST['refresh_tracker_index_now']);
 }
+$headerlib->add_cssfile('css/admin.css');
 
 ask_ticket('admin-inc-search');
 ?>

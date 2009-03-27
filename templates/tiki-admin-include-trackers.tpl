@@ -1,5 +1,104 @@
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}To configure your trackers, look for "Admin trackers" under "Trackers" on the application menu, or{/tr} <a class="rbox-link" href="tiki-admin_trackers.php">{tr}Click Here{/tr}</a>.{/remarksbox}
 
+<form action="tiki-admin.php?page=trackers" method="post">
+<div class="cbox">
+<table class="admin"><tr><td>
+<div style="padding:1em;" align="center"><input type="submit" value="{tr}Change preferences{/tr}" /></div>
+<fieldset><legend>{tr}Attachments{/tr}</legend>
+<div class="adminoptionbox">
+	<div class="adminoptionlabel"><input type="radio" id="store_attachments1" name="t_use_db" value="y" {if $prefs.t_use_db eq 'y'}checked="checked" {/if}onclick="flip('usedirectory');" />&nbsp;<label for="store_attachments1">{tr}Store in database{/tr}.</label></div>
+	<div class="adminoptionlabel"><input type="radio" id="store_attachments2" name="t_use_db" value="n" {if $prefs.t_use_db eq 'n'}checked="checked" {/if}onclick="flip('usedirectory');" />&nbsp;<label for="store_attachments2">{tr}Store in directory{/tr}.</label>
+<div class="adminoptionboxchild" id="usedirectory" style="display:{if $prefs.t_use_db eq 'n'}block{else}none{/if};">
+	<div class="adminoptionlabel"><label for="t_use_dir">{tr}Path{/tr}:</label> <input type="text" id="t_use_dir" name="t_use_dir" value="{$prefs.t_use_dir|escape}" size="50" /></div>
+</div>
+	</div>
+</div>
+<div class="adminoptionbox">
+	<div class="adminoptionlabel">{tr}Tracker attachments{/tr}:
+{if $attachments}
+        <input type="text" name="find" value="{$find|escape}" />
+        <input type="submit" name="action" value="{tr}Find{/tr}" />
+{/if}
+      {cycle values="odd,even" print=false}
+      <table class="normal">
+        <tr>
+          <th>
+            <a href="tiki-admin.php?page=trackers&amp;sort_mode=user_{if $sort_mode eq 'user'}asc{else}desc{/if}">{tr}User{/tr}</a>
+          </th>
+          <th>
+            <a href="tiki-admin.php?page=trackers&amp;sort_mode=filename_{if $sort_mode eq 'filename'}asc{else}desc{/if}">{tr}Name{/tr}</a>
+          </th>
+          <th>
+            <a href="tiki-admin.php?page=trackers&amp;sort_mode=filesize_{if $sort_mode eq 'filesize'}asc{else}desc{/if}">{tr}Size{/tr}</a>
+          </th>
+          <th>
+            <a href="tiki-admin.php?page=trackers&amp;sort_mode=filetype_{if $sort_mode eq 'filetype'}asc{else}desc{/if}">{tr}Type{/tr}</a>
+          </th>
+          <th>
+            <a href="tiki-admin.php?page=trackers&amp;sort_mode=hits_{if $sort_mode eq 'hits'}asc{else}desc{/if}">{tr}dls{/tr}</a>
+          </th>
+          <th>
+            <a href="tiki-admin.php?page=trackers&amp;sort_mode=itemId_{if $sort_mode eq 'itemId'}asc{else}desc{/if}">{tr}Item{/tr}</a>
+          </th>
+          <th>
+            <a href="tiki-admin.php?page=trackers&amp;sort_mode=path_{if $sort_mode eq 'path'}asc{else}desc{/if}">{tr}Storage{/tr}</a>
+          </th>
+          <th>
+            <a href="tiki-admin.php?page=trackers&amp;sort_mode=created_{if $sort_mode eq 'created'}asc{else}desc{/if}">{tr}Created{/tr}</a>
+          </th>
+          <th>&nbsp;</th>
+        </tr>
+        
+        {section name=x loop=$attachements}
+        <tr class={cycle}>
+          <td>{$attachements[x].user}</td>
+          <td>{$attachements[x].filename}</td>
+          <td>{$attachements[x].filesize|kbsize}</td>
+          <td>{$attachements[x].filetype}</td>
+          <td>{$attachements[x].hits}</td>
+          <td>{$attachements[x].itemId}</td>
+          <td>{if $attachements[x].path}file{else}db{/if}</td>
+          <td>{$attachements[x].created|tiki_short_date}</td>
+          <td>
+            <a href="tiki-admin.php?page=trackers&amp;attId={$attachements[x].attId}&amp;action={if $attachements[x].path}move2db{else}move2file{/if}">{tr}Change{/tr}</a>
+          </td>
+        </tr>
+{sectionelse}
+	<tr class="odd"><td colspan="9">{tr}No records{/tr}</td></tr>
+        {/section}
+      </table>
+      
+			{pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
+	</div>
+</div>
+
+</fieldset>
+
+<fieldset><legend>{tr}Mirror Tables{/tr}</legend>
+
+
+
+
+</fieldset>
+
+
+<div style="padding:1em;" align="center"><input type="submit" value="{tr}Change preferences{/tr}" /></div>
+</td></tr></table>
+</div>
+</form>
+
+
+<div class="adminoptionbox">
+	<div class="adminoption"></div>
+	<div class="adminoptionlabel"><label for=""></label></div>
+</div>
+
+
+
+
+
+<hr />
+
 <div class="cbox">
   <div class="cbox-title">{tr}Tracker attachment preferences{/tr}</div>
 
@@ -7,22 +106,6 @@
     <form action="tiki-admin.php?page=trackers" method="post">
       <table class="admin">
         <tr>
-          <td class="form">
-            {tr}Use database to store files{/tr}:
-          </td>
-          <td>
-            <input type="radio" name="t_use_db" value="y" {if $prefs.t_use_db eq 'y'}checked="checked"{/if}/>
-          </td>
-        </tr>
-
-        <tr>
-          <td class="form">
-            {tr}Use a directory to store files{/tr}:</td>
-          <td>
-            <input type="radio" name="t_use_db" value="n" {if $prefs.t_use_db eq 'n'}checked="checked"{/if}/> {tr}Path{/tr}:
-            <br />
-            <input type="text" name="t_use_dir" value="{$prefs.t_use_dir|escape}" size="50" /> 
-          </td>
         </tr>
 
         <tr>
