@@ -81,3 +81,13 @@ a.admbox.off:hover, a.admbox.off:focus, a.admbox.off:active {
 	text-align: left;
 }
 
+.admin2cols label {
+	display:block;
+	float:left;
+	width:200px;
+}
+
+.adminnestedbox {
+	float:left;
+	margin-left: 3em;
+}
