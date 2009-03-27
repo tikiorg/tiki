@@ -1,14 +1,18 @@
-{if $new_page}{tr}The page {$mail_page} was created by {$mail_user} at {$mail_date|tiki_short_datetime}{/tr}
-{else}{tr}The page {$mail_page} was changed by {$mail_user} at {$mail_date|tiki_short_datetime}{/tr}{/if}
+{if $mail_action eq 'new'}{tr}The page {$mail_page} was created by {$mail_user} at {$mail_date|tiki_short_datetime}{/tr}
+{elseif $mail_action eq 'delete'}{tr}The page {$mail_page} was deleted by {$mail_user} at {$mail_date|tiki_short_datetime}{/tr}
+{else}{tr}The page {$mail_page} was changed by {$mail_user} at {$mail_date|tiki_short_datetime}{/tr}
+{/if}
 
 {if $mail_comment}{tr}Comment:{/tr} {$mail_comment}
 {/if}
 {if $mail_contributions}{tr}Contribution{/tr}: {$mail_contributions}{/if}
 
-{tr}You can view the page by following this link:{/tr}
+{if $mail_action eq 'delete'}{tr}The page {$mail_page} was deleted but used to be here:{/tr}
+{else}{tr}You can view the page by following this link:{/tr}
+{/if} 
 {$mail_machine_raw}/tiki-index.php?page={$mail_page|escape:"url"}
 
-{if !$new_page}{tr}You can view a diff back to the previous version by following this link:{/tr} {* Using the full diff syntax so the links are still valid, even after a new version has been made.  -rlpowell *}
+{if $mail_action eq 'edit'}{tr}You can view a diff back to the previous version by following this link:{/tr} {* Using the full diff syntax so the links are still valid, even after a new version has been made.  -rlpowell *}
 {$mail_machine_raw}/tiki-pagehistory.php?page={$mail_page|escape:"url"}&compare=1&oldver={$mail_oldver}&newver={$mail_newver}
 {/if}
 
@@ -48,7 +52,9 @@
 
 
 ***********************************************************
-{tr}The new page content follows below.{/tr}
+{if $mail_action eq 'delete'}{tr}The old page content follows below.{/tr}
+{else}{tr}The new page content follows below.{/tr}
+{/if}
 ***********************************************************
 
 {$mail_pagedata}

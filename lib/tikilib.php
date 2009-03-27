@@ -3671,6 +3671,13 @@ class TikiLib extends TikiDB {
 		} else {
 			$params = '';
 		}
+		//  Deal with mail notifications.
+		include_once('lib/notifications/notificationemaillib.php');
+		$foo = parse_url($_SERVER["REQUEST_URI"]);
+		$machine = $this->httpPrefix(). dirname( $foo["path"] );
+		$page_info = $this->get_page_info($page);
+		sendWikiEmailNotification('wiki_page_deleted', $page, $user, $comment, 1, $page_info['data'], $machine);
+		
 		global $wikilib; include_once('lib/wiki/wikilib.php');
 		global $multilinguallib;
 		if (!is_object($multilinguallib)) {
