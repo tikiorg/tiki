@@ -1,5 +1,8 @@
 {* $Id$ *}
-{title}{if $words neq '' and !$searchNoResults}{tr}Search results{/tr}{else}{tr}Search{/tr}{/if}{/title}
+
+{if !( $searchNoResults ) }
+	{title}{if $words neq ''}{tr}Search results{/tr}{else}{tr}Search{/tr}{/if}{/title}
+{/if}
 
 {if !( $searchStyle eq "menu" )}
 	{if $prefs.feature_search_show_object_filter eq 'y'}
@@ -47,35 +50,30 @@
 </form>
 
 <br />
+
 {if $words neq '' and !$searchNoResults}
 	{tr}Found{/tr} "{$words}" {tr}in{/tr} {$cant_results} {$where2}
-{/if}
-
-{if $words neq ''}
 	<div class="searchresults">
-		{if !($searchNoResults) }
-			<br /><br />
-			{section name=search loop=$results}
-				<b>{tr}{$results[search].location}{/tr}:&nbsp;<a href="{$results[search].href}&amp;highlight={$words}{$results[search].anchor}" class="wiki">{$results[search].pageName|strip_tags|escape}</a> ({tr}Hits{/tr}: {$results[search].hits})</b>
-				{if $prefs.feature_search_fulltext eq 'y'}
-					{if $results[search].relevance <= 0}
-						&nbsp;({tr}Simple search{/tr})
-					{else}
-						&nbsp;({tr}Relevance{/tr}: {$results[search].relevance})
-					{/if}
+		<br /><br />
+		{section name=search loop=$results}
+			<b>{tr}{$results[search].location}{/tr}:&nbsp;<a href="{$results[search].href}&amp;highlight={$words}{$results[search].anchor}" class="wiki">{$results[search].pageName|strip_tags|escape}</a> ({tr}Hits{/tr}: {$results[search].hits})</b>
+			{if $prefs.feature_search_fulltext eq 'y'}
+				{if $results[search].relevance <= 0}
+					&nbsp;({tr}Simple search{/tr})
+				{else}
+					&nbsp;({tr}Relevance{/tr}: {$results[search].relevance})
 				{/if}
-				{if $results[search].type > ''}
-					&nbsp;({$results[search].type})
-				{/if}
-
+			{/if}
+			{if $results[search].type > ''}
+				&nbsp;({$results[search].type})
+			{/if}
 				<br />
-				<div class="searchdesc">{$results[search].data|strip_tags|truncate:250:'...'}</div>
-				<div class="searchdate">{tr}Last modification date{/tr}: {$results[search].lastModif|tiki_long_datetime}</div>
-				<br />
-			{sectionelse}
-				{tr}No pages matched the search criteria{/tr}
-			{/section}
-		{/if}
+			<div class="searchdesc">{$results[search].data|strip_tags|truncate:250:'...'}</div>
+			<div class="searchdate">{tr}Last modification date{/tr}: {$results[search].lastModif|tiki_long_datetime}</div>
+			<br />
+		{sectionelse}
+			{tr}No pages matched the search criteria{/tr}
+		{/section}
 	</div>
 	{pagination_links cant=$cant_results step=$maxRecords offset=$offset}{/pagination_links} 
 {/if}
