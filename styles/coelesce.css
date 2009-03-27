@@ -835,7 +835,10 @@ div#debugconsole {}
 .mini {
 	width: 100%;
 	text-align: center;
-	font-size: .9em}
+	font-size: .9em;
+	margin-left: auto;
+	margin-right: auto;
+}
 
 .prevnext {
 	font-size: 1em;
