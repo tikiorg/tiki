@@ -91,3 +91,8 @@ a.admbox.off:hover, a.admbox.off:focus, a.admbox.off:active {
 	float:left;
 	margin-left: 3em;
 }
+
+.admin legend img, .admin label img {
+	margin-left: 1em;
+	vertical-align: middle;
+}
