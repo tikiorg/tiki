@@ -183,7 +183,9 @@ div#tikihelp {
 	background-color: transparent;
 	z-index: 2;
 }
+
 * html div#tikihelp {position: absolute}
+
 div.help_icon {
 	border: 0;
 	margin: 0;
@@ -244,25 +246,6 @@ ul.categories li{
 	font-size: 120%;
 }
 
-#filtercal {
-	z-index: 200 !important;
-}
-#exportcal {
-	z-index: 200 !important;
-	background: #FFF;
-	position: absolute;
-	border: 1px solid #000;
-	right: 240px;
-}
-#exportcal .caltitle,
-#exportcal .caltoggle,
-#exportcal .calcheckbox {
-	padding: 0 10px;
-}
-#exportcal .calinput {
-	padding: 10px;
-}
-
 #prev {
 	margin-left: 30px;
 	float: left;
@@ -277,70 +260,8 @@ ul.categories li{
 	height: 20px;
 	width: 20px;
 }
-.calbuttonBox {
-	float: left;
-	position: relative;
-	height: 20px;
-	width: 86px;
-}
-.calbuttonon,
-.calbuttonoff {
-	position: absolute;
-	top: 0px;
-	left: 3px;
-	padding-top: 3px;
-	text-align: center;
-	font-size: 12px;
-/*	font-family: Arial, sans-serif;*/
-	height: 20px;
-	width: 80px;
-	border-style: solid;
-	border-color: #999;
-	border-width: 0px;
-}
-/*
-.calbuttonoff a,
-.calbuttonoff a:visited {
-	color: #000;
-}
-*/
-.calbuttonon a {
-	text-decoration: underline;
-}
-.calbuttonLeft {
-	float: left;
-	width: 3px;
-	height: 20px;
-}
-.calbuttonRight {
-	position: absolute;
-	top: 0px;
-	right: 3px;
-	float: right;
-	width: 3px;
-	height: 20px;
-}
-#caltable {
-	border-collapse: collapse;
-	border-bottom: 1px solid #cfd0d0;
-}
-#caltable .days {
-	height: 20px;
-	text-align: center;
-/*	color: #483b3b;*/
-}
-#configlinks {
-	width: 100%;
-/*	background-color: #fff;*/
-	padding: 5px;
-}
-.calnavigation {
-	border-width: 0px;
-	text-align: center;
-	font-weight: bold;
-	padding: 4px;
-/*	color: #e8ffff;*/
-}
+
+
 .button2 .linkbut,
 .button2 .linkbut:visited {
 /*	color: #548ca5;*/
@@ -352,133 +273,14 @@ ul.categories li{
 	background-color: #88b6c3;
 	color: #e8ffff;
 }
-.caldark {
-	background: #e0e0e0;
-	border: 1px dotted #d6dbde;
-}
-.caldark,
-.calfocus,
-.calfocuson {
-	height: 20px;
-}
-.calodd .calfocus,
-.calodd .calfocuson,
-.caleven .calfocus,
-.caleven .calfocuson {
-	background: none;
-	border-width: 0px;
-	padding-top: 2px;
-	padding-left: 2px;
-}
-/*.calodd .calfocus a,
-.calodd .calfocuson a,
-.caleven .calfocus a,
-.caleven .calfocuson a {
-	color: #483b3b;
-}*/
-.calodd,
-.caleven {
-	background: none;
-/*	border-color: #d6dbde;*/
-}
-.caldark .calfocus { background: none; border-width: 0px; }
-.calcontent {
-	padding-right: 0px;
-	padding-left: 0px;
-}
-.calfocuson + .calcontent {
-	background: none;
-}
 
-.Cal,
-.Cal0,
-.Cal1,
-.Cal2 {
-	font-weight: normal;
-	border-width: 1px;
-	border-style: solid;
-}
-.Cal0 a,
-.Cal1 a,
-.Cal2 a {
-	font-weight: normal;
-	text-decoration: none;
-}
-.calfocus a,
-.calfocus a:visited {
-	text-decoration: none;
-	font-weight: normal;
-/*	color: #000000;*/
-}
-
-.Cal {
-	border-color: transparent;
-}
-
-/*.calfocuson {
-	background-color: #ccf;
-}*/
-
+/* NOT FOUND IN SEARCH
 .calHeadingLeft {
 	height: 36px;
 	text-align: center;
 	vertical-align: middle;
-/*	color: #483b3b;
-	border-bottom: 1px #cfd0d0 solid;*/
-}
-.calHeading,
-.calHeadingOn {
-	height: 36px;
-	text-align: center;
-	vertical-align: middle;
-/*	color: #483b3b;
-	border-bottom: 1px #cfd0d0 solid;*/
-}
-.calHeading a,
-.calHeading a:visited {
-/*	color: #483b3b;*/
-	text-decoration: none;
-}
-.calHeadingOn a {
-	color: #06f;
-	text-decoration: none;
-}
-.calHeading a:hover,
-.calHeadingOn a:hover {
-	text-decoration: underline;
-}
-.calHours {
-	vertical-align: middle;
-	text-align: center;
-	border-width: 1px 0px 0px 1px;
-	border-color: #cfd0d0 #e0e0e0;
-	border-style: solid;
-}
-.calDay {
-	padding: 0px;
-	border-width: 0px 1px 1px 1px;
-/*	background-color: #fcfefd;
-	border-color: #cfd0d0 #a1a19f;*/
-	border-style: solid;
-}
-.calWeek {
-	border-width: 1px 1px 0px 1px;
-/*	background-color: #fcfefd;*/
-	border-color: #cfd0d0 #e0e0e0;
-	border-style: solid;
-}
-.opaque .box-title {
-	text-decoration: underline;
-}
-#calscreen td {
-	vertical-align: top;
-/* *height: 21px;  fix for IE7
-	_height: ; fix for IE6 VALIDATION ERROR*/
-}
+} */
 
-#calscreen td a {
-	text-decoration: none;
-}
 div.tabrow {
 	position: relative;
 	left: 0;
@@ -648,8 +450,6 @@ small.description {
 	display: block;
 	font-size: .95em;
 	font-style: italic}
-
-
 
 /*** for mods list ***/
 
