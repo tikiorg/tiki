@@ -208,7 +208,7 @@ function get_default_prefs() {
 		'wikiplugin_googleanalytics' => 'n',
 		'wikiplugin_googledoc' => 'y',
 		'wikiplugin_group' => 'y',
-		'wikiplugin_html' => 'y',
+		'wikiplugin_html' => 'n',
 		'wikiplugin_iframe' => 'n',
 		'wikiplugin_image' => 'y',
 		'wikiplugin_include' => 'y',
