@@ -79,7 +79,7 @@
 
 <!-- begin form for searching questions -->
 <h2>{tr}Questions{/tr}</h2>
-{include file='find.tpl' _sort_mode='y'}
+{include file='find.tpl'}
 
 <table class="normal">
 	<tr>
