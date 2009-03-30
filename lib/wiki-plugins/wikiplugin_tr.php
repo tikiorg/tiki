@@ -11,7 +11,7 @@ function wikiplugin_tr_info() {
 	return array(
 		'name' => tra('Translate'),
 		'description' => tra('Translate a string using Tikiwiki translation table.'),
-		'prefs' => array( 'feature_multilingual', 'wikiplugin_tr' ),
+		'prefs' => array( 'wikiplugin_tr' ),
 		'body' => tra('string'),
 		'params' => array(
 		),
