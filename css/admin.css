@@ -1,3 +1,5 @@
+/* $Id $ */
+
 a.admbox {
 	border : 2px solid #89d;
 	height : 100px;
@@ -81,18 +83,35 @@ a.admbox.off:hover, a.admbox.off:focus, a.admbox.off:active {
 	text-align: left;
 }
 
-.admin2cols label {
-	display:block;
-	float:left;
-	width:200px;
+.width_40em {
+	width: 40em;
 }
 
-.adminnestedbox {
-	float:left;
-	margin-left: 3em;
+.admin2cols label {
+	display: block;
+	float: left;
+	min-width: 20%;
 }
 
 .admin legend img, .admin label img {
 	margin-left: 1em;
 	vertical-align: middle;
+}
+
+.admingroup {
+	border: #aaa 1px solid;
+	margin-bottom: .5em;
+}
+
+.q1 {
+	min-width: 20%;
+	display: block;
+	float: left;
+	clear: none;
+	vertical-align: middle;
+}
+.q234 {
+	min-width: 75%;
+	float: left;
+	clear: none;
 }
