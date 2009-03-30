@@ -5958,7 +5958,7 @@ $lang=Array(
 "Require passcode to register" => "Demande une code pour l'enregistrement",
 "Passcode" => "code",
 "Users must enter this code to register" => "Les utilisateurs devront saisir ce code pour s'enregistrer",
-"Use CAPTCHA to prevent automatic/robot registrations" => "Utilisr CAPTCHA pour se protéger des enregistrements automatiques par des robots",
+"Use CAPTCHA to prevent automatic/robot registrations" => "Utiliser CAPTCHA pour se protéger des enregistrements automatiques par des robots",
 "Requires PHP GD library" => "Nécessite la bibliothèque PHP GD",
 "Use tracker to collect more user information" => "Utiliser les formulaires pour collecter des informations complémentaires sur les utilisateurs",
 "Use the <strong><a href=\"tiki-admingroups.php\" title=\"Admin Groups\">Admin: Groups</a></strong> page to select which tracker and fields to display" => "Utiliser <strong><a href=\"tiki-admingroups.php\" title=\"Administration des groupes\">Administration: Groupes</a></strong> pour sélectionner quel formulaire et champ(s) à afficher",
