@@ -200,25 +200,6 @@ function showDetails( id, domain, profile ) { // {{{
 <div class="cbox">
 <table class="admin"><tr><td>
 
-<fieldset><legend>{tr}Repositories{/tr}</legend>
-<form action="tiki-admin.php?page=profiles" method="post">
-<div class="adminoptionbox">
-	<div class="adminoptionlabel"><label for="profile_sources">{tr}Repository URLs{/tr}:</label></div>
-	<div><textarea id="profile_sources" name="profile_sources" rows="5" cols="60" style="width:95%;">{$prefs.profile_sources|escape}</textarea>
-	<br /><em>{tr}Enter multiple repository URLs, one per line{/tr}.</em>
-	</div>
-</div>
-
-<div class="adminoptionbox">
-	<div class="adminoptionlabel"><label for="profile_channels">{tr}Data Channels{/tr}</label>:</div>
-	<div><textarea id="profile_channels" name="profile_channels" rows="5" rows="60" style="width:95%;">{$prefs.profile_channels|escape}</textarea>
-	<br /><em>{tr}Data channels create a named pipe to run profiles from user space. One channel per line. Each line is comma delimited and contain <strong>channel name, domain, profile, allowed groups</strong>. {/tr}</em>
-	<small><a href="http://profiles.tikiwiki.org/Data+Channels">{tr}More information{/tr}</a></small>
-	</div>
-</div>
-
-<div align="center" style="padding:1em;"><input type="submit" name="config" value="{tr}Save{/tr}" /></div>
-
 <div class="adminoptionbox">
 	<div class="adminoptionlabel">{tr}Status{/tr}:</div>
 	<div>
@@ -288,6 +269,25 @@ function showDetails( id, domain, profile ) { // {{{
 		</table>
 
 </fieldset>
+
+<fieldset><legend>{tr}Repositories{/tr}</legend>
+<form action="tiki-admin.php?page=profiles" method="post">
+<div class="adminoptionbox">
+	<div class="adminoptionlabel"><label for="profile_sources">{tr}Repository URLs{/tr}:</label></div>
+	<div><textarea id="profile_sources" name="profile_sources" rows="5" cols="60" style="width:95%;">{$prefs.profile_sources|escape}</textarea>
+	<br /><em>{tr}Enter multiple repository URLs, one per line{/tr}.</em>
+	</div>
+</div>
+
+<div class="adminoptionbox">
+	<div class="adminoptionlabel"><label for="profile_channels">{tr}Data Channels{/tr}</label>:</div>
+	<div><textarea id="profile_channels" name="profile_channels" rows="5" rows="60" style="width:95%;">{$prefs.profile_channels|escape}</textarea>
+	<br /><em>{tr}Data channels create a named pipe to run profiles from user space. One channel per line. Each line is comma delimited and contain <strong>channel name, domain, profile, allowed groups</strong>. {/tr}</em>
+	<small><a href="http://profiles.tikiwiki.org/Data+Channels">{tr}More information{/tr}</a></small>
+	</div>
+</div>
+
+<div align="center" style="padding:1em;"><input type="submit" name="config" value="{tr}Save{/tr}" /></div>
 
 </td></tr></table>
 </div>
