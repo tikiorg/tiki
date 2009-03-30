@@ -67,6 +67,12 @@ JS
 		);
 			
 	}
+	
+	// ---------------------------------------------------------------
+	// include jquery smarty prefilter if feature enabled
+	if ($prefs['feature_jquery']) {
+		$smarty->load_filter('pre', 'jq');
+	}
 }
 if ($prefs['feature_ajax'] != 'y') {
 	$prefs['feature_ajax_autosave'] = 'n';
