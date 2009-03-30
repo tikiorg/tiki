@@ -1430,8 +1430,7 @@ div.articletitle {
 	margin-bottom:	15px;
 	text-align:	left}
  
-span.titlea {
-	display: block;
+div.articletitle h2 {
 	min-height: 26px;
 	background: url(coelesce/tiki-centerbg.jpg) repeat-x;
 	font-size: 1.8em;
@@ -1440,12 +1439,12 @@ span.titlea {
 	padding-left: 14px;
 	padding-top: 8px}
 	
-span.titlea a:link,
-span.titlea a:visited {
+div.articletitle h2 a:link,
+div.articletitle h2 a:visited {
 	color: #000;
 	text-decoration: none}
 	
-span.titlea a:hover {text-decoration: none}
+div.articletitle h2 a:hover {text-decoration: none}
 .articletitle br {display: none}
 
 span.titleb {
