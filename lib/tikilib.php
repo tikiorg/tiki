@@ -8321,7 +8321,7 @@ function get_wiki_section($data, $hdr) {
 		$params = array_merge( $defaults, $params );
 		
 		if ( ((empty($javascript) && $prefs['javascript_enabled'] == 'y') || $javascript == 'y')) {
-			$myId = ($params['id']) ? ($params['id']) : 'wp-flash-' . md5($params['movie']);
+			$myId = (!empty($params['id'])) ? ($params['id']) : 'wp-flash-' . md5($params['movie']);
 			$movie = '"'.$params['movie'].'"';
 			$div = json_encode( $myId );
 			$width = (int) $params['width'];

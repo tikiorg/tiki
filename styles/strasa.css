@@ -794,7 +794,14 @@ a.phplmselected:hover {color: #808080}
 
 .cssmenu_vert ul a:hover {color: #000000}
 
-#tiki-top .cssmenu_horiz {text-align: left; float: right; margin-right: 100px}
+#tiki-top .cssmenu_horiz {
+	position: absolute;
+	z-index: 0;
+	top: 10px;
+	right: 100px;
+	/*margin: 0 0 0 -50%;*/
+	white-space: nowrap;
+	text-align: left}
 
 /** Links in other menus **/
 div.separator {
@@ -1606,7 +1613,7 @@ div.articletitle {
 	margin-bottom:	15px;
 	text-align:	left}
  
-span.titlea {
+div.articletitle h2 {
 	font-size: 1.5em;
 	font-weight: normal}
 

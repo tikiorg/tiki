@@ -1572,7 +1572,7 @@ div.articletitle {
 	border-top: 1px solid #46596f;
 	clear: both;
 }
-span.titlea {
+div.articletitle h2 {
 	background: #C7D0D9;
 	border: 1px solid #8CACBB;
 	border-left: 0;
@@ -1584,7 +1584,7 @@ span.titlea {
 	border-radius-bottomright: 20px;
 	-moz-border-radius-bottomright: 20px;
 	-khtml-border-radius-bottomright: 20px}
-span.titlea a {text-decoration: none}
+div.articletitle h2 a {text-decoration: none}
 span.titleb,
 span.titleb:after {
 	color: #666666;

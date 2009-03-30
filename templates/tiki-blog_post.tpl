@@ -1,6 +1,6 @@
 {popup_init src="lib/overlib.js"}
 
-{title url="tiki-blog_post.php?blogId=$blogId&postId=$postId"}{if $postId gt 0}{tr}Edit Post{/tr}{else}{tr}Post{/tr}{/if}{/title}
+{title url="tiki-blog_post.php?blogId=$blogId&postId=$postId"}{if $postId gt 0}{tr}Edit Post{/tr}{else}{tr}Post{/tr}{/if} - {$blog_data.title|escape}{/title}
 
 <div class="navbar">
 	{if $prefs.feature_wysiwyg eq 'y' and $prefs.wysiwyg_optional eq 'y'}
@@ -152,6 +152,7 @@
 <input type="submit" class="wikiaction" name="preview" value="{tr}Preview{/tr}" />
 <input type="submit" class="wikiaction" name="save" value="{tr}Save{/tr}" />
 <input type="submit" class="wikiaction" name="save_exit" value="{tr}Save and Exit{/tr}" />
+<input type="hidden" name="referer" value="{$referer|escape}" />
 &nbsp;&nbsp;&nbsp;<input type="submit" name="cancel" onclick='document.location="{$referer|escape:'html'}";return false;' value="{tr}Cancel{/tr}"/>
 </td></tr>
 </table>

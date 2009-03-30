@@ -170,39 +170,93 @@
         <div id="content{$focus}" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_content.$focus) and $smarty.session.tiki_cookie_jar.show_content.$focus neq 'y'}none{else}block{/if};">
 		{/if}
 
-		{remarksbox type="note" title="{tr}About plugin aliases{/tr}"}{tr}Tiki plugin aliases allow you to define your own custom configurations of existing plugins..{/tr}{/remarksbox}
+		{remarksbox type="note" title="{tr}About plugin aliases{/tr}"}{tr}Tiki plugin aliases allow you to define your own custom configurations of existing plugins.<br />Find out more here: {help url="Plugin+Alias"}{/tr}{/remarksbox}
 
+		{* JQuery JS to set up page *}{jq}
+$jq('#content3 legend').click(function(event, hidefirst) {
+	var im = $jq(this).contents("img");
+	if (im.length > 0) { im = im[0]; }
+	if (!typeof this.showing == 'undefined' || !this.showing) {
+		if ($jq(im).length > 0) { $jq(im).attr("src", $jq(im).attr("src").replace("/omodule.", "/module.")); }
+		this.showing = true;
+		if (hidefirst) {
+			$jq(this).nextAll(":not(.hidefirst)").show('fast')
+		} else {
+			$jq(this).nextAll().show('fast')
+		}
+	} else {
+		if ($jq(im).length > 0) { $jq(im).attr("src", $jq(im).attr("src").replace("/module.", "/omodule.")); }
+		this.showing = false;
+		$jq(this).nextAll(":not(.stayopen)").hide('fast')
+	}
+	return false;
+}).css("cursor", "pointer").nextAll(":not(.stayopen)").hide();
+{{if $plugin_admin}{* show gen info and simple params if plugin_admin selected *}}
+$jq('#pluginalias_general legend').trigger('click');
+$jq('#pluginalias_simple_args legend').trigger('click'{{if isset($plugin_admin.params)}, true{/if}});
+$jq('#pluginalias_body legend').trigger('click'{{if isset($plugin_admin.body.params)}, true{/if}});
+$jq('#pluginalias_add').click(function() {
+	window.location.href = window.location.href.replace(/plugin_alias=[^&]*/, 'plugin_alias_new=true');
+});
+{{elseif $plugins_alias}{* or if no plugin_admin and a nice list *}}
+$jq('#pluginalias_general').hide();
+$jq('#pluginalias_simple_args').hide();
+$jq('#pluginalias_doc').hide();
+$jq('#pluginalias_body').hide();
+$jq('#pluginalias_composed_args').hide();
+$jq("[name='save']").hide();
+$jq('#pluginalias_add').click(function() {
+	$jq('#pluginalias_general legend')[0].showing = false;
+	$jq('#pluginalias_general legend').trigger('click');
+	$jq('#pluginalias_simple_args legend')[0].showing = false;
+	$jq('#pluginalias_simple_args legend').trigger('click');
+	$jq('#pluginalias_body legend')[0].showing = false;
+	$jq('#pluginalias_body legend').trigger('click');
+
+	$jq('#pluginalias_general').show();
+	$jq('#pluginalias_simple_args').show();
+	$jq('#pluginalias_doc').show();
+	$jq('#pluginalias_body').show();
+	$jq('#pluginalias_composed_args').show();
+	$jq("[name='save']").show();
+
+	$jq('#pluginalias_available legend')[0].showing = true;
+	$jq('#pluginalias_available legend').trigger('click');
+
+	return false;
+});
+{{else}{* or new view if no plugin_admin and no list TODO? *}}
+{{/if}}
+if (window.location.href.indexOf('plugin_alias_new=true') > -1) {
+	$jq('#pluginalias_add').trigger('click');
+}
+	{/jq}
 		{* from tiki-admin-include-plugins.tpl *}
-
 		{if $plugins_alias|@count}
-			<fieldset>
-				<legend>{tr}Available Alias{/tr}</legend>
+			<fieldset id="pluginalias_available">
+				<legend><strong>{tr}Available Alias{/tr}</strong>{icon _id="omodule"} {icon _id="add" id="pluginalias_add"}</legend>
 				<div class="input_submit_container">
 					{foreach from=$plugins_alias item=name}
 						{assign var=full value='wikiplugin_'|cat:$name}
 						<input type="checkbox" name="enabled[]" value="{$name|escape}" {if $prefs[$full] eq 'y'}checked="checked"{/if}/>
 						<a href="tiki-admin.php?page=textarea&amp;plugin_alias={$name|escape}">{$name|escape}</a>
 					{/foreach}
-					<div>
+					<div align="center">
 						<input type="submit" name="enable" value="{tr}Enable Plugins{/tr}"/>
 					</div>
 				</div>
 			</fieldset>
+			{jq}$jq('#pluginalias_available legend').trigger('click');{/jq}
 		{/if}
-
-		{if $plugin_admin}
-			{button href="tiki-admin.php?page=textarea" _text="{tr}New{/tr}"}
-		{/if}
-
 		<fieldset id="pluginalias_general">
-			<legend>{tr}General Information{/tr}</legend>
+			<legend>{tr}General Information{/tr}{icon _id="omodule"}</legend>
 		
 			<div class="adminoptionbox">
 				<div class="adminoptionlabel">
 					<label for="plugin_alias">{tr}Plugin Name{/tr}:</label>
 					{if $plugin_admin}
 						<input type="hidden" name="plugin_alias" value="{$plugin_admin.plugin_name|escape}"/>
-						{$plugin_admin.plugin_name|escape}
+						<strong>{$plugin_admin.plugin_name|escape}</strong>
 					{else}
 						<input type="text" name="plugin_alias"/>
 					{/if}
@@ -222,7 +276,7 @@
 					<label for="implementation">{tr}Name{/tr}:</label> <input type="text" name="name" value="{$plugin_admin.description.name|escape}"/>
 			</div></div>
 			<div class="adminoptionbox"><div class="adminoptionlabel">
-					<label for="description">{tr}Description{/tr}:</label> <input type="text" name="description" value="{$plugin_admin.description.description|escape}"/>
+					<label for="description">{tr}Description{/tr}:</label> <input type="text" name="description" value="{$plugin_admin.description.description|escape}" class="width_40em"/>
 			</div></div>
 			<div class="adminoptionbox"><div class="adminoptionlabel">
 					<label for="prefs">{tr}Dependencies{/tr}:</label> <input type="text" name="prefs" value="{','|implode:$plugin_admin.description.prefs}"/>
@@ -242,20 +296,49 @@
 					<label for="">{tr}Inline (No Plugin Edit UI){/tr}:</label> <input type="checkbox" name="inline" value="1" {if $plugin_admin.description.inline}checked="checked"{/if}/>
 			</div></div>
 		</fieldset>
+		<fieldset id="pluginalias_simple_args">
+			<legend>{tr}Simple Plugin Arguments{/tr}{icon _id="omodule"} {icon _id="add" id="pluginalias_simple_add"}</legend>
+			{jq}
+$jq('#pluginalias_simple_add').click(function() { $jq('#pluginalias_simple_new').toggle("fast"); return false; });
+{{if $plugin_admin.params}}
+$jq('#pluginalias_doc legend').trigger('click'{{if isset($plugin_admin.description.params)}, true{/if}});
+$jq('#pluginalias_simple_new').hide();
+{{/if}}
+			{/jq}
+			{foreach from=$plugin_admin.params key=token item=value}
+				{if ! $value|is_array}
+					<div class="admingroup adminoptionbox">
+						<div class="adminoptionlabel">
+							<label for="sparams[{$token|escape}][token]">{tr}Argument{/tr}:</label> <input type="text" name="sparams[{$token|escape}][token]" value="{$token|escape}"/>
+							<label for="sparams[{$token|escape}][default]" style="float:none;display:inline">{tr}Default{/tr}:</label> <input type="text" name="sparams[{$token|escape}][default]" value="{$value|escape}"/>
+						</div>
+					</div>
+				{/if}
+			{/foreach}
+			<div class="admingroup adminoptionbox hidefirst" id="pluginalias_simple_new">
+				<div class="adminoptionlabel">
+					<label for="sparams[__NEW__][token]">{tr}New Argument{/tr}:</label>
+					<input type="text" name="sparams[__NEW__][token]" value=""/>
+					<label for="sparams[__NEW__][default]" style="float:none;display:inline">{tr}Default{/tr}:</label>
+					<input type="text" name="sparams[__NEW__][default]" value=""/>
+				</div>
+			</div>
+		</fieldset>
 		<fieldset id="pluginalias_doc">
-			<legend>{tr}Plugin Parameter Documentation{/tr}</legend>
+			<legend>{tr}Plugin Parameter Documentation{/tr}{icon _id="omodule"} {icon _id="add" id="pluginalias_doc_add"}</legend>
+			{jq}$jq('#pluginalias_doc_add').click(function() { $jq('#pluginalias_doc_new').toggle("fast"); return false; });{/jq}
 			
 			{foreach from=$plugin_admin.description.params key=token item=detail}
-				<div class="adminoptionbox">
-					<div class="adminoptionlabel" style="float:left">
+				<div class="clearfix admingroup adminoptionbox{if $token eq '__NEW__'} hidefirst" id="pluginalias_doc_new{/if}">
+					<div class="adminoptionlabel q1">
 						<input type="text" name="input[{$token|escape}][token]" value="{if $token neq '__NEW__'}{$token|escape}{/if}"/>
 					</div>
-					<div class="adminnestedbox">
+					<div class="adminnestedbox q234">
 						<div class="adminoptionlabel">
 							<label for="input[{$token|escape}][name]">{tr}Name{/tr}:</label> <input type="text" name="input[{$token|escape}][name]" value="{$detail.name|escape}"/>
 						</div>
 						<div class="adminoptionlabel">
-							<label for="input[{$token|escape}][description]">{tr}Description{/tr}:</label> <input type="text" name="input[{$token|escape}][description]" value="{$detail.description|escape}"/>
+							<label for="input[{$token|escape}][description]">{tr}Description{/tr}:</label> <input type="text" name="input[{$token|escape}][description]" value="{$detail.description|escape}" class="width_40em"/>
 						</div>
 						<div class="adminoptionlabel">
 							<label for="input[{$token|escape}][required]">{tr}Required{/tr}:</label> <input type="checkbox" name="input[{$token|escape}][required]" value="y"{if $detail.required} checked="checked"{/if}/>
@@ -271,108 +354,103 @@
 			{/foreach}
 		</fieldset>
 		<fieldset id="pluginalias_body">
-			<legend>{tr}Plugin Body{/tr}</legend>
+			<legend>{tr}Plugin Body{/tr}{icon _id="omodule"}</legend>
 
 			<div class="adminoptionbox">
 				<div class="adminoptionlabel">
 					<label for="ignorebody">{tr}Ignore User Input{/tr}:</label> <input type="checkbox" name="ignorebody" value="y" {if $plugin_admin.body.input eq 'ignore'}checked="checked"{/if}/>
 				</div>
 			</div>
-			<div class="adminoptionbox"><div class="adminoptionlabel">
-					<label for="defaultbody">{tr}Default Content{/tr}:</label>
-					<textarea cols="60" rows="12" name="defaultbody">{$plugin_admin.body.default|escape}</textarea>
-			</div></div>
-			<fieldset style="margin-left: 200px">
-				<legend>{tr}Parameters{/tr}</legend>
-				<div class="adminoptionbox">
-					<div class="adminoptionlabel" style="float:left">
-						<input type="text" name="bodyparam[{$token|escape}][token]" value="{if $token neq '__NEW__'}{$token|escape}{/if}"/>
-					</div>
-					
-					<div class="adminnestedbox">
-						{foreach from=$plugin_admin.body.params key=token item=detail}
-							<div class="adminoptionbox">
-								<div class="adminoptionlabel">
-									<label for="bodyparam[{$token|escape}][encoding]">{tr}Encoding{/tr}:</label> 
-									<select name="bodyparam[{$token|escape}][encoding]">
-										{foreach from=','|explode:'none,html,url' item=val}
-											<option value="{$val|escape}" {if $detail.encoding eq $val}selected="selected"{/if}>{$val|escape}</option>
-										{/foreach}
-									</select>
-								</div>
-							</div>
-							<div class="adminoptionbox"><div class="adminoptionlabel">
-									<label for="bodyparam[{$token|escape}][input]">{tr}Argument Source (if different){/tr}:</label> <input type="text" name="bodyparam[{$token|escape}][input]" value="{$detail.input|escape}"/>
-							</div></div>
-							<div class="adminoptionbox"><div class="adminoptionlabel">
-									<label for="bodyparam[{$token|escape}][default]">{tr}Default Value{/tr}:</label> <input type="text" name="bodyparam[{$token|escape}][default]" value="{$detail.default|escape}"/>
-							</div></div>
-						{/foreach}
-					</div>
-				</div>
-			</fieldset>
-		</fieldset>
-		<fieldset id="pluginalias_simple_args">
-			<legend>{tr}Simple Plugin Arguments{/tr}</legend>
-			
-			{foreach from=$plugin_admin.params key=token item=value}
-				{if ! $value|is_array}
-					<div class="adminoptionbox">
-						<div class="adminoptionlabel">
-							<label for="sparams[{$token|escape}][token]">{tr}Argument{/tr}:</label> <input type="text" name="sparams[{$token|escape}][token]" value="{$token|escape}"/>
-							<label for="sparams[{$token|escape}][default]" style="float:none;display:inline">{tr}Default{/tr}:</label> <input type="text" name="sparams[{$token|escape}][default]" value="{$value|escape}"/>
-						</div>
-					</div>
-				{/if}
-			{/foreach}
 			<div class="adminoptionbox">
 				<div class="adminoptionlabel">
-					<label for="sparams[__NEW__][token]">{tr}New Argument{/tr}:</label> <input type="text" name="sparams[__NEW__][token]" value=""/>
-					<label for="sparams[__NEW__][default]" style="float:none;display:inline">{tr}Default{/tr}:</label> <input type="text" name="sparams[__NEW__][default]" value=""/>
+					<label for="defaultbody">{tr}Default Content{/tr}:</label>
+					<textarea cols="60" rows="12" name="defaultbody">{$plugin_admin.body.default|escape}</textarea>
+				</div>
+				<div class="q1">&nbsp;</div>
+				<div class="q234">
+					<fieldset class="stayopen">
+						<legend>{tr}Parameters{/tr}{icon _id="omodule"}{icon _id="add" id="pluginalias_body_add"}</legend>
+						{jq}$jq('#pluginalias_body_add').click(function() { $jq('#pluginalias_body_new').toggle("fast"); return false; });{/jq}
+						
+						{foreach from=$plugin_admin.body.params key=token item=detail}
+							<div class="clearfix admingroup adminoptionbox{if $token eq '__NEW__'} hidefirst" id="pluginalias_body_new{/if}">
+								<div class="q1">
+									<input type="text" name="bodyparam[{$token|escape}][token]" value="{if $token neq '__NEW__'}{$token|escape}{/if}"/>
+								</div>
+								<div class="q234">
+									<div class="adminoptionlabel">
+										<label for="bodyparam[{$token|escape}][encoding]">{tr}Encoding{/tr}:</label> 
+										<select name="bodyparam[{$token|escape}][encoding]">
+											{foreach from=','|explode:'none,html,url' item=val}
+												<option value="{$val|escape}" {if $detail.encoding eq $val}selected="selected"{/if}>{$val|escape}</option>
+											{/foreach}
+										</select>
+									</div>
+									<div class="adminoptionlabel">
+										<label for="bodyparam[{$token|escape}][input]">{tr}Argument Source (if different){/tr}:</label> <input type="text" name="bodyparam[{$token|escape}][input]" value="{$detail.input|escape}"/>
+									</div>
+									<div class="adminoptionlabel">
+										<label for="bodyparam[{$token|escape}][default]">{tr}Default Value{/tr}:</label> <input type="text" name="bodyparam[{$token|escape}][default]" value="{$detail.default|escape}"/>
+									</div>
+								</div>
+							</div>
+						{/foreach}
+					</fieldset>
 				</div>
 			</div>
 		</fieldset>
 		<fieldset id="pluginalias_composed_args">
-			<legend>{tr}Composed Plugin Arguments{/tr}</legend>
+			<legend>{tr}Composed Plugin Arguments{/tr}{icon _id="omodule"} {icon _id="add" id="pluginalias_composed_add"}</legend>
+			{jq}$jq('#pluginalias_composed_add').click(function() { $jq('#pluginalias_composed_new').toggle("fast"); return false; });{/jq}
 
 			{foreach from=$plugin_admin.params key=token item=detail}
 				{if $detail|is_array}
-					<div class="adminoptionbox">
-						<div class="adminoptionlabel" style="float:left">
+					{if !isset($composed_args)}{assign var=composed_args value=true}{/if}
+					<div class="clearfix admingroup adminoptionbox{if $token eq '__NEW__'} hidefirst" id="pluginalias_composed_new{/if}">
+						<div class="adminoptionlabel q1">
 							<input type="text" name="cparams[{$token|escape}][token]" value="{if $token neq '__NEW__'}{$token|escape}{/if}"/>
 						</div>
-						<div class="adminoptionlabel" style="float:left">
-							<label for="cparams[{$token|escape}][pattern]" style="width: auto; margin: 0 2em">{tr}Pattern{/tr}:</label> <input type="text" name="cparams[{$token|escape}][pattern]" value="{$detail.pattern|escape}"/>
+						<div class="q234">
+							<div class="adminoptionlabel">
+								<label for="cparams[{$token|escape}][pattern]">{tr}Pattern{/tr}:</label> <input type="text" name="cparams[{$token|escape}][pattern]" value="{$detail.pattern|escape}"/>
+							</div>
+							<fieldset class="stayopen">
+								<legend>{tr}Parameters{/tr}{icon _id="omodule"} {icon _id="add" id="pluginalias_composed_addparam"}</legend>
+								{jq}$jq('#pluginalias_composed_addparam').click(function() { $jq('#pluginalias_composed_newparam').toggle("fast"); return false; });{/jq}
+								{foreach from=$detail.params key=t item=d}
+									<div class="clearfix admingroup adminoptionbox{if $t eq '__NEW__'} hidefirst" id="pluginalias_composed_newparam{/if}">
+										<div class="q1">
+											<input type="text" name="cparams[{$token|escape}][params][{$t|escape}][token]" value="{if $t neq '__NEW__'}{$t|escape}{/if}"/>
+										</div>
+										<div class="q234">
+											<div class="adminoptionlabel">
+												<label for="cparams[{$token|escape}][pattern]">{tr}Encoding{/tr}:</label>
+												<select name="cparams[{$token|escape}][params][{$t|escape}][encoding]">
+													{foreach from=','|explode:'none,html,url' item=val}
+														<option value="{$val|escape}" {if $d.encoding eq $val}selected="selected"{/if}>{$val|escape}</option>
+													{/foreach}
+												</select>
+											</div>
+											<div class="adminoptionlabel">
+												<label for="cparams[{$token|escape}][params][{$t|escape}][input]">{tr}Argument Source (if different){/tr}:</label> <input type="text" name="cparams[{$token|escape}][params][{$t|escape}][input]" value="{$d.input|escape}"/>
+											</div>
+											<div class="adminoptionlabel">
+												<label for="cparams[{$token|escape}][params][{$t|escape}][input]">{tr}Default Value{/tr}:</label> <input type="text" name="cparams[{$token|escape}][params][{$t|escape}][default]" value="{$d.default|escape}"/>
+											</div>
+										</div>
+									</div>
+								{/foreach}
+							</fieldset>
 						</div>
 					</div>
-					<fieldset style="margin-left: 200px; clear: both">
-						<legend>{tr}Parameters{/tr}</legend>
-						{foreach from=$detail.params key=t item=d}
-							<div class="adminoptionlabel">
-								<input type="text" name="cparams[{$token|escape}][params][{$t|escape}][token]" value="{if $t neq '__NEW__'}{$t|escape}{/if}"/>
-							</div>
-							<div class="adminoptionlabel">
-								<label for="cparams[{$token|escape}][pattern]">{tr}Encoding{/tr}:</label>
-								<select name="cparams[{$token|escape}][params][{$t|escape}][encoding]">
-									{foreach from=','|explode:'none,html,url' item=val}
-										<option value="{$val|escape}" {if $d.encoding eq $val}selected="selected"{/if}>{$val|escape}</option>
-									{/foreach}
-								</select>
-							</div>
-							<div class="adminoptionlabel">
-								<label for="cparams[{$token|escape}][params][{$t|escape}][input]">{tr}Argument Source (if different){/tr}:</label> <input type="text" name="cparams[{$token|escape}][params][{$t|escape}][input]" value="{$d.input|escape}"/>
-							</div>
-							<div class="adminoptionlabel">
-								<label for="cparams[{$token|escape}][params][{$t|escape}][input]">{tr}Default Value{/tr}:</label> <input type="text" name="cparams[{$token|escape}][params][{$t|escape}][default]" value="{$d.default|escape}"/>
-							</div>
-						{/foreach}
-					</fieldset>
 				{/if}
 			{/foreach}
-
+			{if $plugin_admin}{jq}$jq('#pluginalias_composed_args legend').trigger('click'{{if isset($composed_args)}, true{/if}});{/jq}{/if}
 		</fieldset>
 
-		<input type="submit" name="save" value="{tr}Save{/tr}"/>
+		<div align="center">
+			<input type="submit" name="save" value="{tr}Save{/tr}"/>
+		</div>
 
 		{if $prefs.feature_tabs neq 'y'}</div>{/if}
     </fieldset>

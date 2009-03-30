@@ -1520,7 +1520,7 @@ div.articletitle {
 	text-align:	left;
 }
  
-span.titlea {
+div.articletitle h2 {
 	font-size: 200%;
 	font-weight: normal;
 }
