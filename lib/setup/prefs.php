@@ -268,7 +268,7 @@ function get_default_prefs() {
 		'wikiplugin_tr' => 'y',
 		'wikiplugin_usercount' => 'n',
 		'wikiplugin_userlist' => 'n',
-		'wikiplugin_versions' => 'y',
+		'wikiplugin_versions' => 'n',
 		'wikiplugin_vote' => 'y',
 		'wikiplugin_wantedpages' => 'n',
 		'wikiplugin_webservice' => 'n',
