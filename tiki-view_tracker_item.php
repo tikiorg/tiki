@@ -659,7 +659,7 @@ if (!isset($mainfield)) {
 
 if ($textarea_options) {
 	include_once ('lib/quicktags/quicktagslib.php');
-	$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_desc','','wiki');
+	$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_asc','','wiki');
 	$smarty->assign('quicktags', $quicktags["data"]);
 }
 

@@ -699,7 +699,7 @@ function wikiplugin_tracker($data, $params) {
 					} elseif ($f['type'] == 'a') {
 						if ($f['options_array'][0] == 1 && empty($quicktags)) {
 							global $quicktagslib; include_once ('lib/quicktags/quicktagslib.php');
-							$quicktags = $quicktagslib->list_quicktags(0, -1, 'taglabel_desc', '', 'trackers');
+							$quicktags = $quicktagslib->list_quicktags(0, -1, 'taglabel_asc', '', 'trackers');
 							$smarty->assign_by_ref('quicktags', $quicktags['data']);
 						}
 					} elseif ($f['type'] == 'l' && isset($itemId)) {

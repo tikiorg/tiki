@@ -401,7 +401,7 @@ include_once("textareasize.php");
 
 if ($prefs['feature_forum_parse'] == "y") {
 	include_once ('lib/quicktags/quicktagslib.php');
-	$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_desc','','forums');
+	$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_asc','','forums');
 	$smarty->assign_by_ref('quicktags', $quicktags["data"]);
 }
 $smarty->assign('forum_mode', 'y');

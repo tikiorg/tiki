@@ -294,7 +294,7 @@ $smarty->assign_by_ref('urlquery', $urlquery);
 $smarty->assign_by_ref('cant', $channels['cant']);
 
 include_once('lib/quicktags/quicktagslib.php');
-$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_desc','','trackers');
+$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_asc','','trackers');
 $smarty->assign_by_ref('quicktags', $quicktags["data"]);
 
 $allGroups = $userlib->list_all_groups();

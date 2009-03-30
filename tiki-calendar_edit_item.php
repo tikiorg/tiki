@@ -479,7 +479,7 @@ if ($prefs['feature_theme_control'] == 'y') {
 $headerlib->add_cssfile('css/calendar.css',20);
 
 include_once ('lib/quicktags/quicktagslib.php');
-$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_desc','','wiki');
+$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_asc','','wiki');
 $smarty->assign_by_ref('quicktags', $quicktags["data"]);
 include_once("textareasize.php");
 
