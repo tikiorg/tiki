@@ -29,13 +29,17 @@
 <div class="navbar">
 {if $galleryId gt 0}
 
+  {if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
+	<a href="tiki-object_watches.php?objectId={$galleryId|escape:"url"}&amp;watch_event=file_gallery_changed&amp;objectType=File+Gallery&amp;objectName={$gal_info.name|escape:"url"}&amp;objectHref={'tiki-list_file_gallery.php?galleryId='|cat:$galleryId|escape:"url"}" class="icon">{icon _id='eye_group' alt='{tr}Monitor this Gallery{/tr}' align='right'}</a>
+  {/if}
+
   {if $user and $prefs.feature_user_watches eq 'y'}
     {if $user_watching_file_gallery eq 'n'}
       {self_link galleryName=$name watch_event='file_gallery_changed' watch_object=$galleryId watch_action='add'}{icon _id='eye' align='right' alt="{tr}Monitor this Gallery{/tr}"}{/self_link}
     {else}
       {self_link galleryName=$name watch_event='file_gallery_changed' watch_object=$galleryId watch_action='remove'}{icon _id='no_eye' align='right' alt="{tr}Stop Monitoring this Gallery{/tr}"}{/self_link}
     {/if}
-  {/if}  
+  {/if} 
   {if $prefs.rss_file_gallery eq 'y'}
     {if $gal_info.type eq "podcast" or $gal_info.type eq "vidcast"}
       <a href="tiki-file_gallery_rss.php?galleryId={$galleryId}&amp;ver=PODCAST">
