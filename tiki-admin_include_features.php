@@ -103,6 +103,7 @@ if (isset($_REQUEST["features"])) {
 		"feature_comments_moderation",
 		"feature_groupalert",
 		"feature_wiki_mindmap",
+		"use_minified_scripts",
 	);
 
 	$pref_byref_values = array(
