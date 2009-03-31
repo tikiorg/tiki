@@ -52,6 +52,7 @@
 <input type="hidden" name="type" value="{$type|escape}" />
 <input type="submit" name="update" value="{tr}Update{/tr}" /><br />
 <table class="sortable" id="assignperms" width="100%">
+<thead>
 <tr>
 <th>&nbsp;</th>
 <th>{tr}Name{/tr}</th>
@@ -59,6 +60,8 @@
 <th>{tr}Type{/tr}</th>
 <th>{tr}desc{/tr}</th>
 </tr>
+</thead>
+<tbody>
 {cycle values="odd,even" print=false}
 {section name=user loop=$perms}
 <tr>
@@ -82,6 +85,7 @@
 {tr}{$perms[user].permDesc}{/tr}</td>
 </tr>
 {/section}
+</tbody>
 </table>
 <input type="submit" name="update" value="{tr}Update{/tr}" />
 <br/>

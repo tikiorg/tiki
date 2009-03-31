@@ -52,11 +52,14 @@
 <br />
 <h2>{tr}Templates compiler{/tr}</h2>
 <table class="sortable" id="templatecompiler" width="100%">
+<thead>
 <tr>
 <th>{tr}Language{/tr}</th>
 <th>{tr}Pages{/tr}/{tr}Size{/tr}</th>
 <th>{tr}Action{/tr}</th>
 </tr>
+</thead>
+<tbody>
 {cycle values="even,odd" print=false}
 {foreach key=key item=item from=$templates}
 <tr class="form">
@@ -65,6 +68,7 @@
 <td class="{cycle advance=false}"><a href="tiki-admin_system.php?compiletemplates={$key}" class="link">{tr}Compile{/tr}</a></td>
 </tr>
 {/foreach}
+</tbody>
 </table>
 {/if}
 <br />
