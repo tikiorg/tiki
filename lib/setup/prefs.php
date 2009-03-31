@@ -1161,6 +1161,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_iepngfix' => 'n',
 		'iepngfix_selectors' => '#sitelogo a img',
 		'iepngfix_elements' => '',
+		'use_minified_scripts' => 'y',		// for debugging
 		
 		// JQuery
 		'feature_jquery' => 'n',			// Alternative lib for shadowbox etc
@@ -1179,6 +1180,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_jquery_superfish' => 'y',		// Effects on CSS (Suckerfish) menus
 		'feature_jquery_reflection' => 'y',		// reflection effects on images
 		'feature_jquery_sheet' => 'n',			// spreadsheet TODO: implement
+		'feature_jquery_tablesorter' => 'y',	// sortable tables ([will] override existing)
 	
 		// SefUrl
 		'feature_sefurl' => 'n',
