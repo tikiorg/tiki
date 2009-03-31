@@ -30,10 +30,6 @@
         </legend>
         <div id="content{$focus}" style="display:{if isset($smarty.session.tiki_cookie_jar.show_content.$focus) and $smarty.session.tiki_cookie_jar.show_content.$focus neq 'y'}none{else}block{/if};">
       {/if}
-
-<h2>{tr}General Preferences{/tr}</h2>
-
-
     <fieldset>
 	<legend>{tr}Release Check{/tr}</legend>
 
@@ -160,7 +156,7 @@
 		<option value="2047" {if $prefs.error_reporting_level eq 2047}selected="selected"{/if}>{tr}Report all PHP errors{/tr}</option>
 		<option value="2039" {if $prefs.error_reporting_level eq 2039}selected="selected"{/if}>{tr}Report all errors except notices{/tr}</option>
 	</select>
-	<div class="adminoptionboxchildh">
+	<div class="adminoptionboxchild">
 		<div class="adminoption"><input type="checkbox" id="error_reporting_adminonly" name="error_reporting_adminonly"{if $prefs.error_reporting_adminonly eq 'y'} checked="checked"{/if} /></div>
 		<div class="adminoptionlabel"><label for="error_reporting_adminonly">{tr}Visible to Admin only{/tr}.</label></div>
 <br />
@@ -174,14 +170,15 @@
 </div>
 <div class="adminoptionbox">	  
 	<div class="adminoption"><input type="checkbox" id="log_sql" name="log_sql"{if $prefs.log_sql eq 'y'} checked="checked"{/if} onclick="flip('log_sql_queries');" /></div>
-	<div class="adminoptionlabel"><label for="log_sql">{tr}Log SQL{/tr}.</label></div>
-</div>
-<div id="log_sql_queries" class="adminoptionboxchild"  style="display:{if $prefs.log_sql eq 'y'}display{else}none{/if};">
+	<div class="adminoptionlabel"><label for="log_sql">{tr}Log SQL{/tr}.</label>
+<div id="log_sql_queries" class="adminoptionboxchild" style="display:{if $prefs.log_sql eq 'y'}display{else}none{/if};">
 {tr}Log queries using more than{/tr} <input type="text" name="log_sql_perf_min" value="{$prefs.log_sql_perf_min}" size="5" /> {tr}seconds{/tr}<br /><em>{tr}This may impact performance{/tr}.</em>
+</div>
+	</div>
 </div>
 <div class="adminoptionbox">	  
 	<div class="adminoption"><input type="checkbox" id="log_tpl" name="log_tpl"{if $prefs.log_tpl eq 'y'} checked="checked"{/if}" /></div>
-	<div class="adminoptionlabel"><label for="log_tpl">{tr}Log start and end of each smarty templates as an html comment{/tr}.</label></div>
+	<div class="adminoptionlabel"><label for="log_tpl">{tr}Add HTML comment at start and end of each Smarty template (TPL){/tr}.</label></div>
 </div>
 </fieldset>
 
@@ -215,7 +212,6 @@
         <div id="content{$focus}" style="display:{if isset($smarty.session.tiki_cookie_jar.show_content.$focus) and $smarty.session.tiki_cookie_jar.show_content.$focus neq 'y'}none{else}block{/if};">
       {/if}
 		
-<h2>{tr}General Settings{/tr}</h2>
 <fieldset><legend>{tr}Site Access{/tr}</legend>
 <div class="adminoptionbox">
 <div class="adminoption"><input type="checkbox" name="site_closed" id="general-access" {if $prefs.site_closed eq 'y'}checked="checked" {/if}onclick="flip('close_site_message');" /></div>
@@ -384,7 +380,6 @@
         </legend>
         <div id="layout" style="display:{if isset($smarty.session.tiki_cookie_jar.show_layout) and $smarty.session.tiki_cookie_jar.show_layout neq 'y'}none{else}block{/if};">{/if}
 
-<h2>{tr}Date and Time Formats{/tr}</h2>
 <div class="adminoptionbox">	  
 	<div class="adminoptionlabel"><label for="general-timezone">{tr}Default timezone{/tr}:</label><br />
 		<select name="server_timezone" id="general-timezone">
