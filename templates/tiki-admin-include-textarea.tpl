@@ -279,6 +279,9 @@ if (window.location.href.indexOf('plugin_alias_new=true') > -1) {
 					<label for="description">{tr}Description{/tr}:</label> <input type="text" name="description" value="{$plugin_admin.description.description|escape}" class="width_40em"/>
 			</div></div>
 			<div class="adminoptionbox"><div class="adminoptionlabel">
+					<label for="prefs">{tr}Body Label{/tr}:</label> <input type="text" name="body" value="{$plugin_admin.description.body|escape}"/>
+			</div></div>
+			<div class="adminoptionbox"><div class="adminoptionlabel">
 					<label for="prefs">{tr}Dependencies{/tr}:</label> <input type="text" name="prefs" value="{','|implode:$plugin_admin.description.prefs}"/>
 			</div></div>
 			<div class="adminoptionbox"><div class="adminoptionlabel">
@@ -338,7 +341,7 @@ $jq('#pluginalias_simple_new').hide();
 							<label for="input[{$token|escape}][name]">{tr}Name{/tr}:</label> <input type="text" name="input[{$token|escape}][name]" value="{$detail.name|escape}"/>
 						</div>
 						<div class="adminoptionlabel">
-							<label for="input[{$token|escape}][description]">{tr}Description{/tr}:</label> <input type="text" name="input[{$token|escape}][description]" value="{$detail.description|escape}" class="width_40em"/>
+							<label for="input[{$token|escape}][description]">{tr}Description{/tr}:</label> <input type="text" name="input[{$token|escape}][description]" value="{$detail.description|escape}" class="width_30em"/>
 						</div>
 						<div class="adminoptionlabel">
 							<label for="input[{$token|escape}][required]">{tr}Required{/tr}:</label> <input type="checkbox" name="input[{$token|escape}][required]" value="y"{if $detail.required} checked="checked"{/if}/>
