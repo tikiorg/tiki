@@ -53,7 +53,11 @@
 <script src="lib/mootools/extensions/tabs/SimpleTabs.js" type="text/javascript" ></script> 
 {/if}
 {/if}
-{if $prefs.feature_jquery eq "y"}{include file="header_jquery.tpl"}{/if}
+{if $prefs.feature_jquery eq "y"}
+	{include file="header_jquery.tpl"}
+{elseif $prefs.javascript_enabled eq "y"}
+	<script type="text/javascript" src="lib/tiki-js-sorttable.js"></script>
+{/if}
 
 {if $prefs.feature_swfobj eq "y"}
 <script type="text/javascript" src="lib/swfobject/swfobject.js"></script>
