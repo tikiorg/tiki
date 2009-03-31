@@ -3821,6 +3821,7 @@ $lang=Array(
 "Forums last topics" => "Derniers sujets de forum",
 "Topic date" => "Date du sujet",
 "Forums last posts" => "Derniers articles de forum",
+"Filter Posts" => "Filtrer les articles",
 "Forums most read topics" => "Sujets de forums les plus lus",
 "Reads" => "Lectures",
 "Forums best topics" => "Sujets de forums les plus populaires",

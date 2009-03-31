@@ -510,9 +510,21 @@
 	<br />
 {/if}
 
-<table >
-	<tr>
-		<td style="text-align:left;">
+<div id="page-bar">
+	{button href="javascript:flip('filteroptions');" _flip_id="filteroptions" _text="{tr}Filter Posts{/tr}"}
+	{if $prefs.feature_forum_quickjump eq 'y' and count($all_forums) > 1}
+		<form id='quick' method="post" action="tiki-view_forum.php" style="float:right;">
+			<small>{tr}Jump to forum{/tr}:</small>
+			<select name="forumId" onchange="javascript:document.getElementById('quick').submit();">
+				{section name=ix loop=$all_forums}
+					<option value="{$all_forums[ix].forumId|escape}" {if $all_forums[ix].forumId eq $forumId}selected="selected"{/if}>{$all_forums[ix].name}</option>
+				{/section}
+			</select>
+		</form>
+	{/if}
+</div>
+
+<div id="filteroptions" style="display:none;">
 			<form id='time_control' method="post" action="tiki-view_forum.php">
 				{if $comments_offset neq 0 }
 					<input type="hidden" name="comments_offset" value="{$comments_offset|escape}" />
@@ -526,6 +538,11 @@
 				<input type="hidden" name="thread_sort_mode" value="{$thread_sort_mode|escape}" />
 				<input type="hidden" name="forumId" value="{$forumId|escape}" />
 				<table>
+					<tr>
+						<th colspan="2">
+							{tr}Posts Filtering{/tr}
+						</th>
+					</tr>
 					<tr>
 						<th>
 							<label for="filter_time">{tr}Last post date{/tr}</label>
@@ -595,24 +612,7 @@
 				</tr>
 				</table>
 			</form>
-		</td>
-		<td style="text-align:right;">
-			{if $prefs.feature_forum_quickjump eq 'y' and count($all_forums) > 1}
-				<form id='quick' method="post" action="tiki-view_forum.php">
-					<small>{tr}Jump to forum{/tr}:</small>
-					<select name="forumId" onchange="javascript:document.getElementById('quick').submit();">
-						{section name=ix loop=$all_forums}
-							<option value="{$all_forums[ix].forumId|escape}" {if $all_forums[ix].forumId eq $forumId}selected="selected"{/if}>{$all_forums[ix].name}</option>
-						{/section}
-					</select>
-				</form>
-			{else}
-				&nbsp;
-			{/if}
-		</td>
-	</tr>
-</table>
-
+</div>
 {if empty($user)}
 	<script type="text/javascript">
 		<!--//--><![CDATA[//><!--
