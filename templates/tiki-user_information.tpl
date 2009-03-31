@@ -29,6 +29,8 @@
   <tr><td class="form">{tr}Last login{/tr}:</td><td>{$userinfo.lastLogin|tiki_short_datetime}</td></tr>
 {if $email_isPublic neq 'n'}
   <tr><td class="form">{tr}Email{/tr}:</td><td>{$userinfo.email}</td></tr>
+{elseif $email_isPublic eq 'n' and $tiki_p_admin eq 'y'}
+  <tr><td class="form">{tr}Email{/tr}:</td><td>{$userinfo.email|escape} <i>{tr}(non public){/tr}</i></td></tr>
 {/if}  
 {if !empty($country) and $country != 'Other'}
   <tr><td class="form">{tr}Country{/tr}:</td><td>{$userinfo.login|countryflag} {tr}{$country|stringfix}{/tr}</td></tr>
