@@ -1,4 +1,5 @@
-{*<tr{if isset($tr_class)} class="{$tr_class}"{/if}>
+{if $style eq 'tr'}
+<tr{if isset($tr_class)} class="{$tr_class}"{/if}>
   <td class="form">{tr}List authors:{/tr}</td>
   <td>
     <select name="wiki_authors_style">
@@ -13,7 +14,8 @@
     </select> 
   </td>
 </tr>
-*}
+
+{else}
 <div class="adminoptionbox">
 	<div class="adminoptionlabel"><label for="wiki_authors_style">{tr}List authors:{/tr}</label> <a class="link" href="tiki-assignpermission.php?type=wiki&amp;group=Anonymous" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>
 	<select name="wiki_authors_style" id="wiki_authors_style">
@@ -28,3 +30,4 @@
     </select> 
 	</div>
 </div>
+{/if}

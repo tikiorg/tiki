@@ -468,7 +468,7 @@ function searchrep() {
   {include file="contribution.tpl"}
 {/if}
 {if $tiki_p_admin_wiki eq 'y' && $prefs.wiki_authors_style_by_page eq 'y'}
-  {include file='wiki_authors_style.tpl' tr_class='formcolor' wiki_authors_style_site='y'}
+  {include file='wiki_authors_style.tpl' tr_class='formcolor' wiki_authors_style_site='y' style='tr'}
 {/if}
 {if $prefs.wiki_actions_bar neq 'top'}
 <tr class="formcolor"><td colspan="2" style="text-align:center;">
