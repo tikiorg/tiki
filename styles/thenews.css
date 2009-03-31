@@ -745,6 +745,10 @@ a.phplmselected:hover {
 
 #tiki-top > .cssmenu_horiz > li > a {
 	border-right: 1px solid #aaa}
+	
+.sf-sub-indicator {
+	background: url(thenews/arrows-005faa.png) no-repeat -10px -100px; /* 8-bit indexed alpha png. IE6 gets solid image only; */}
+
 
 /** Links in other menus **/
 div.separator,
