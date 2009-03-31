@@ -66,7 +66,7 @@
 </div>
 
 <div class="adminoptionbox">
-	<div class="adminoptionlabel"><label for="fgal_podcast_dir">{tr}Podcast directory{/tr}; </label><input id="fgal_podcast_dir" type="text" name="fgal_podcast_dir" value="{$prefs.fgal_podcast_dir|escape}" size="50" /><br /><em>{tr}The server must be able to read/write the directory.{/tr} {tr}Required for podcasts.{/tr}</em></div>
+	<div class="adminoptionlabel"><label for="fgal_podcast_dir">{tr}Podcast directory{/tr}: </label><input id="fgal_podcast_dir" type="text" name="fgal_podcast_dir" value="{$prefs.fgal_podcast_dir|escape}" size="50" /><br /><em>{tr}The server must be able to read/write the directory.{/tr} {tr}Required for podcasts.{/tr}</em></div>
 </div>
 
 <input type="hidden" name="filegalfeatures" />
