@@ -23,13 +23,13 @@
 <div class="adminoptionbox">
 	<div class="adminoption"><input type="checkbox" id="wiki_feature_copyrights" name="wiki_feature_copyrights" {if $prefs.wiki_feature_copyrights eq 'y'}checked="checked"{/if}/></div>
 	<div class="adminoptionlabel"><label for="wiki_feature_copyrights">{tr}Wiki{/tr}</label>
-	{if $prefs.feature_wiki eq 'y'}{icon _id=information} {tr}Feature disabled{/tr}. <a href="tiki-admin.php?page=features" title="{tr}Feature{/tr}">{tr}Enable now{/tr}</a>.{/if}	
+	{if $prefs.feature_wiki ne'y'}{icon _id=information} {tr}Feature disabled{/tr}. <a href="tiki-admin.php?page=features" title="{tr}Feature{/tr}">{tr}Enable now{/tr}</a>.{/if}	
 	</div>
 </div>
 <div class="adminoptionbox">
 	<div class="adminoption"><input type="checkbox" id="articles_feature_copyrights" name="articles_feature_copyrights" {if $prefs.articles_feature_copyrights eq 'y'}checked="checked"{/if}/></div>
 	<div class="adminoptionlabel"><label for="articles_feature_copyrights">{tr}Articles{/tr}</label>
-	{if $prefs.feature_articles eq 'y'}{icon _id=information} {tr}Feature disabled{/tr}. <a href="tiki-admin.php?page=features" title="{tr}Feature{/tr}">{tr}Enable now{/tr}</a>.{/if}
+	{if $prefs.feature_articles ne 'y'}{icon _id=information} {tr}Feature disabled{/tr}. <a href="tiki-admin.php?page=features" title="{tr}Feature{/tr}">{tr}Enable now{/tr}</a>.{/if}
 	</div>
 </div>
 <div class="adminoptionbox">
