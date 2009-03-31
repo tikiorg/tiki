@@ -551,11 +551,13 @@ div.logged-in {padding-right: 20px}
 	float: right}
 
 #sitesearchbar {
-	float: right;
-	padding-right: 4px;
+	position: absolute;
+	right: 10px;
+	bottom: 38px;
 	text-align: right;
 	display: block;
-	margin: 0}
+	color: #fff;
+	font-size: 93%}
 
 input#fuser,
 select[name="where"],
