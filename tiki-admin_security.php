@@ -128,6 +128,11 @@ if($prefs['wikiplugin_js']=='y') {
      'message' => tra('The "js Wikiplugin" is activated. It can be used by wiki editors to use Javascript, which can be used to do all kind of nasty things like cross site scripting attacks, etc.'));
 }
 
+if($prefs['wikiplugin_jq']=='y') {
+   $tikisettings['wikiplugin_jq']=array('risk' => tra('unsafe'),'setting' => tra('on'),
+     'message' => tra('The "JQ Wikiplugin" is activated. It can be used by wiki editors to use Javascript, which can be used to do all kind of nasty things like cross site scripting attacks, etc.'));
+}
+
 if($prefs['wikiplugin_redirect']=='y') {
    $tikisettings['wikiplugin_redirect']=array('risk' => tra('unsafe'),'setting' => tra('on'),
      'message' => tra('The "Redirect Wikiplugin" is activated. It can be used by wiki editors for cross site scripting attacks.'));
