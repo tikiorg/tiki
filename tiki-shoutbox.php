@@ -1,6 +1,6 @@
 <?php
 
-// $Id: /cvsroot/tikiwiki/tiki/tiki-shoutbox.php,v 1.18.2.1 2008-02-14 11:10:14 sylvieg Exp $
+// $Id$
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -95,9 +95,9 @@ if (isset($_REQUEST["find"])) {
 	$find = '';
 }
 
-/* additions for ajax (shoutjax) */
+/* additions for ajax (formerly shoutjax) */
 
-function processShout($formValues, $destDiv = 'mod-shoutjax') {
+function processShout($formValues, $destDiv = 'mod-shoutbox') {
 	global $shoutboxlib, $user, $smarty, $prefs, $ajaxlib, $tiki_p_admin_shoutbox;
 	
 	if (array_key_exists('shout_msg',$formValues) && strlen($formValues['shout_msg']) > 2) {
@@ -114,10 +114,10 @@ function processShout($formValues, $destDiv = 'mod-shoutjax') {
 		}
 	}
 
-	$ajaxlib->registerTemplate('mod-shoutjax.tpl');
+	$ajaxlib->registerTemplate('mod-shoutbox.tpl');
 	
 	include('lib/wiki-plugins/wikiplugin_module.php');
-	$data = wikiplugin_module('', Array('module'=>'shoutjax','max'=>10,'np'=>0,'nobox'=>'y','notitle'=>'y'));
+	$data = wikiplugin_module('', Array('module'=>'shoutbox','max'=>10,'np'=>0,'nobox'=>'y','notitle'=>'y'));
 	$objResponse = new xajaxResponse();
 	$objResponse->assign($destDiv,"innerHTML",$data);
 	return $objResponse;
@@ -127,7 +127,7 @@ if ($prefs['feature_ajax'] == 'y') {
 	global $ajaxlib;
 	include_once('lib/ajax/ajaxlib.php');
 	$ajaxlib->registerFunction('processShout');
-	$ajaxlib->registerTemplate('mod-shoutjax.tpl');
+	$ajaxlib->registerTemplate('mod-shoutbox.tpl');
 	$ajaxlib->processRequests();
 
 
