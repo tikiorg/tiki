@@ -2415,9 +2415,9 @@ div.multiselect {
 * html .calodd {padding: 0}
 .caleven {background: #dcdcdc}
 * html .caleven {padding: 0}
-.caldark {background: #223845}
+.caldark {background: #cce5ff}
 * html .caldark {padding: 0}
-.caldark .calfocus {background: #223845}
+.caldark .calfocus {background: #cce5ff}
 .daterow {}
 .daterow:hover {}
 
