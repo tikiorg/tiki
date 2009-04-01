@@ -109,8 +109,7 @@ button,
 input[type=submit],
 .button input,
 .submitbutton,
-.calbuttonoff,
-.calbuttonon {
+.calbuttonBox a {
 	font-family: Verdana, Helvetica, Geneva, Arial, sans-serif;
 	font-size: .95em;
 	font-weight: bold;
@@ -151,7 +150,8 @@ input[type=submit],
 button:hover,
 input[type=submit]:hover,
 .button input:hover,
-.submitbutton:hover {background: white}
+.submitbutton:hover,
+.calbuttonBox a:hover {background: white}
 
 /* * html .findtable input {font-size: 1em}*/
 form.admin input[name="features"] {margin-bottom: 3px !important}
@@ -2204,14 +2204,16 @@ div.multiselect {
 #caltable .calfocus a,
 #caltable .calfocuson a {text-decoration:none}
 
-div.tabrow {height: 24px !important}
-
+div.tabrow {/*height: 24px !important*/}
+.calbuttonon a {color: #295C8E}
 .calHeading,
 .calHeadingOn {
 	background: #c3d3e5;
 	color: #517ea7;
 	font-weight: bold;
 	height: 24px !important}
+	
+.calHeadingOn {background: #ccdceb}
 
 .day,
 .day:visited {}

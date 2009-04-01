@@ -63,7 +63,7 @@
 
 	</div>
 
-	<br />
+
 
 	<div class="navbar" align="right">
 		{if $user and $prefs.feature_user_watches eq 'y'}

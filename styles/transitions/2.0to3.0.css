@@ -261,7 +261,6 @@ ul.categories li{
 	width: 20px;
 }
 
-
 .button2 .linkbut,
 .button2 .linkbut:visited {
 /*	color: #548ca5;*/
@@ -272,38 +271,6 @@ ul.categories li{
 #disp_trig {
 	background-color: #88b6c3;
 	color: #e8ffff;
-}
-
-/* NOT FOUND IN SEARCH
-.calHeadingLeft {
-	height: 36px;
-	text-align: center;
-	vertical-align: middle;
-} */
-
-div.tabrow {
-	position: relative;
-	left: 0;
-	font-size: 1em;
-	height: 24px !important;
-	width: 720px;
-/*	padding-top:11px;*/
-}
-.tabrowLeft {
-	position: absolute;
-	top: 0;
-	left: 0;
-	float: left;
-	width: 23px;
-	height: 24px !important;
-}
-.tabrowRight {
-	position:absolute;
-	top: 0;
-	right: 0;
-	float: left;
-	width: 30px;
-	height: 24px !important;
 }
 
 img {border: 0}

@@ -131,7 +131,13 @@ input[type=password] {
 }
 
 /* all button variations */
-input.button, button, .submitbutton, .button input, .button, input.wikiaction {
+input.button,
+button,
+.submitbutton,
+.button input,
+.button,
+input.wikiaction,
+.calbuttonBox {
 	border: solid 1px #aaa; 
 	background: #fbfbfb;
 	color: #000;
@@ -156,23 +162,26 @@ button:hover,
 input[type=submit]:hover,
 .submitbutton:hover,
 .button input:hover,
-.button:hover {
+.button:hover,
+.calbuttonBox a:hover {
 	cursor: pointer;
 	background: #E6E6F8;
 }
 
-span.button {
+span.button,
+.calbuttonBox {
 	display: inline-block;
 	margin: 1px 2px;
 	padding: 2px}
 
-span.button a {
+span.button a,
+.calbuttonBox a {
 	color: #000;
 	text-transform: uppercase;
-	font-family: Arial, Helvetica, sans-serif;
-	/*font-size: 80%*/}
+	font-family: Arial, Helvetica, sans-serif}
 
-span.button a:hover {text-decoration: none}
+span.button a:hover,
+.calbuttonBox a:hover {text-decoration: none}
 
 #col2 input[type=text] {width: 95%}
 
@@ -2241,6 +2250,9 @@ Caltrack a:visited {color: #00BD02}
 .box-data td a.today {
 	background: #D4D0C8;
 	border: solid 1px #696969}
+
+.calbuttonon a,
+.calHeadingOn a {font-weight: bold}
 
 /*****  Polls  *****/
 div.pollresults {margin-top: 5px;font-size: 1.2em;padding: 0 5px;}

@@ -127,9 +127,11 @@ input[type=submit],
 .submitbutton,
 .button input,
 input[type=reset],
-span.button {
+span.button,
+.calbuttonBox {
 	vertical-align: middle;	
 	margin: 2px;
+	padding: 0 4px;
 	background: url(feb12/header.jpg) repeat-x 0 -2px;
 	border: 1px solid #5aa5cf;
 	color: #F5F5F5;
@@ -141,7 +143,8 @@ button:hover,
 input[type=submit]:hover,
 .submitbutton:hover,
 .button input:hover,
-span.button:hover {
+span.button:hover,
+.calbuttonBox:hover {
 	background: url(feb12/header.jpg) repeat-x 0 -15px;
 	cursor: pointer}
 	
@@ -1945,6 +1948,14 @@ div.gallerypath a:hover {}
 .date {}
 
 .calfocuson + .calcontent {background: #a8cce2}
+
+.calbuttonBox a {
+	color: #F5F5F5;
+	text-decoration: none}
+
+.calHeadingOn a {
+	color: #794A93 !important;
+	text-decoration: none}
 
 /*****  Polls  *****/
 div.pollresults {
