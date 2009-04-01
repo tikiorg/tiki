@@ -4772,6 +4772,9 @@ class TikiLib extends TikiDB {
 				if ( $value == '' ) {
 					$prefs['style_option'] = $prefs['site_style_option'];
 					$_SESSION['s_prefs']['style_option'] = $prefs['site_style_option'];
+				} else if ( $value == 'None' ) {
+					$prefs['style_option'] = '';
+					$_SESSION['s_prefs']['style_option'] = '';
 				}
 			} elseif ( $value == '' ) {
 				if ( in_array($name, $user_overrider_prefs) ) {
