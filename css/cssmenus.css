@@ -157,9 +157,11 @@ td#leftcolumn {overflow: visible !important}
 	width: 10px;
 	height: 10px;
 	text-indent: -999em;
-	overflow: hidden;margin-top: -4px;
+	overflow: hidden;
 	background: url(../lib/jquery/superfish/images/arrows-ffffff.png)  no-repeat -10px -100px; /* 8-bit indexed alpha png. IE6 gets solid image only; */}
 
+.cssmenu_vert .sf-sub-indicator,
+.cssmenu_horiz ul .sf-sub-indicator {margin-top: -5px}	
 a > .sf-sub-indicator {  /* give all except IE6 the correct values */
 	top: .8em;
 	background-position: 0 -100px; /* use translucent arrow for modern browsers*/
@@ -169,9 +171,9 @@ a:focus > .sf-sub-indicator,
 a:hover > .sf-sub-indicator,
 a:active > .sf-sub-indicator,
 li:hover > a > .sf-sub-indicator,
-li.sfHover > a > .sf-sub-indicator {margin-top: -4px;
-	background-position: -10px -100px; /* arrow hovers for modern browsers*/
+li.sfHover > a > .sf-sub-indicator {background-position: -10px -100px; /* arrow hovers for modern browsers*/
 }
+
 
 /* point right for anchors in subs */
 .cssmenu_horiz ul .sf-sub-indicator,
