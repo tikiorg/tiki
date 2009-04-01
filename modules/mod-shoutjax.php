@@ -1,5 +1,5 @@
 <?php
-/* $Id:  $
+/* $Id$
  *
  * Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
  * All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -72,7 +72,7 @@ if ($prefs['feature_shoutbox'] == 'y' && $tiki_p_view_shoutbox == 'y') {
 			$shout_father.= '?';
 		}
 	} else {	// $prefs['feature_ajax'] == 'y'
-		$shout_father = 'tiki-shoutjax.php?';
+		$shout_father = 'tiki-shoutbox.php?';
 	}
 
 	global $smarty;
@@ -96,7 +96,7 @@ if ($prefs['feature_shoutbox'] == 'y' && $tiki_p_view_shoutbox == 'y') {
 
 	if ($tiki_p_post_shoutbox == 'y') {
 		if ($prefs['feature_ajax'] == 'y') {
-			if (!isset($_REQUEST['xajax'])) {	// *slight* hack here - xajaxRequestUri needs to be set to tiki-shoutjax.php in JS before calling the func
+			if (!isset($_REQUEST['xajax'])) {	// xajaxRequestUri needs to be set to tiki-shoutbox.php in JS before calling the func
 				$ajaxlib->registerFunction('processShout');
 			}
 		} else {

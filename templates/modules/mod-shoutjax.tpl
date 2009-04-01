@@ -13,7 +13,7 @@
 				xajax.$('shout_remove').value || xajax.$('shout_edit').value) {
 			xajax.$('shout_send').disabled=true;
 			xajax.$('shout_send').value="{/literal}{$waittext}{literal}";
-			xajax.config.requestURI = "tiki-shoutjax.php";
+			xajax.config.requestURI = "tiki-shoutbox.php";
 			xajax_processShout(xajax.getFormValues(fm), "{/literal}mod-shoutjax{$module_position}{$module_ord}{literal}");
 			return false;
 		} else {
