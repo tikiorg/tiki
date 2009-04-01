@@ -497,9 +497,11 @@ class NlLib extends TikiLib {
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
-			$res['tiki_p_admin_newsletters'] = $tikilib->user_has_perm_on_object($user, $res['nlId'], 'newsletter', 'tiki_p_admin_newsletters')? 'y': 'n';
-			$res['tiki_p_send_newsletters'] = $tikilib->user_has_perm_on_object($user, $res['nlId'], 'newsletter', 'tiki_p_send_newsletters')? 'y': 'n';
-			$res['tiki_p_subscribe_newsletters'] = $tikilib->user_has_perm_on_object($user, $res['nlId'], 'newsletter', 'tiki_p_subscribe_newsletters')? 'y': 'n';
+	    $objperm = $this->get_perm_object($res['nlId'], 'newsletter', '', false);
+			$res['tiki_p_admin_newsletters'] = $objperm['tiki_p_admin_newsletters'];
+			$res['tiki_p_send_newsletters'] = $objperm['tiki_p_send_newsletters'];
+			$res['tiki_p_subscribe_newsletters'] = $objperm['tiki_p_subscribe_newsletters'];
+
 			if (!empty($perms)) {
 				$hasPerm = false;
 				if (is_array($perms)) {
