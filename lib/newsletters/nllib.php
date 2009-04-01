@@ -114,80 +114,126 @@ class NlLib extends TikiLib {
 
 	function get_all_subscribers($nlId, $genUnsub) {
 		global $userlib;
-			/* cleaning */
-		if ($genUnsub == "y") {	
-			$query = "delete from `tiki_newsletter_subscriptions` where `nlId`=? and `isUser`=? and `valid` != ?";
-			$result = $this->query($query, array((int)$nlId, 'g','x'));
-		}
-			/* get the root groups */
+		$return = array();
+		$all_users = array();
+		$group_users = array();
+		$included_users = array();
+
+		// Get list of the root groups (groups explicitely subscribed to this newsletter)
+		//
+		$groups = array();
 		$query = "select `groupName` from `tiki_newsletter_groups` where `nlId`=?";
 		$result = $this->query($query, array((int)$nlId));
-		$ret = array();
-		$groups =array();
-		while ($res = $result->fetchRow()) {
+		while ( $res = $result->fetchRow() ) {
 			$groups = array_merge($groups, array($res["groupName"]), $this->get_included_groups($res["groupName"]));
 		}
-		 	/* users already in or unsubscribed */
-		$query = "select * from `tiki_newsletter_subscriptions` where `nlId`=? and `isUser`!='g'";
-		$result = $this->query($query, array((int)$nlId));
-		$out = array();
-		$in = array();
-		$inEmail = array();
-		$potential = array();
-		while ($res = $result->fetchRow()) {
-			if ($res["valid"] == "x" || $res["valid"] == "n")
-				$out[] = $res["email"];
-			elseif ($res["isUser"] == "n" && $res["valid"] == "y") {
-				$inEmail[] = $res["email"]; 
-				$ret[] = array("login"=>"", "email"=>$res["email"], "code"=>$res["code"]);
-			} elseif ($res["isUser"] == "y" && $res["valid"] == "y") {
-				$potential[] = $res;
-			}
-		}
-		foreach ($potential as $res) {
-			$in[] = $res["email"];
-			$email = $userlib->get_user_email($res["email"]);
-			if (!in_array($email, $inEmail) && !in_array($email, $out))
-				$ret[] = array("login"=>$res["email"], "email"=>$email, "code"=>$res["code"]);
-		}
 
-                $query = "select * from tiki_newsletter_subscriptions where isUser=? and valid=?";
-		$result = $this->query($query, array('g', 'x'));
-		$unsub_groupusers = array();
-		while($res = $result->fetchRow()) {
-			$unsub_groupusers[] = $res['email'];
-		}
-		
-			/* potential users */
-		if (count($groups) > 0) {
+		// If some groups are subscribed to this newsletter, get the list of users from those groups to be able to add them as subscribers
+		// + Generate a random code (to allow users to unsubscribe) for users who don't already have one
+		//
+		if ( count($groups) > 0 ) {
 			$mid = " and (".implode(" or ",array_fill(0,count($groups),"`groupName`=?")).")";
-			$query = "select  distinct uu.`login`, uu.`email` from `users_users` uu, `users_usergroups` ug where uu.`userId`=ug.`userId` ".$mid; 
+			$query = "select distinct uu.`login`, uu.`email` from `users_users` uu, `users_usergroups` ug where uu.`userId`=ug.`userId` ".$mid; 
 			$result = $this->query($query, $groups);
-			while ($res = $result->fetchRow()) {
-				if (!in_array($res["login"], $in) && !in_array($res["login"], $out) && !in_array($res["email"], $inEmail) && !in_array($res['login'], $unsub_groupusers)) {
-					if ($genUnsub == "y") {
-						$query = "insert into `tiki_newsletter_subscriptions`(`nlId`,`email`,`code`,`valid`,`subscribed`,`isUser`) values(?,?,?,?,?,?)";
-						$code = $this->genRandomString($res["login"]);
-						$this->query($query,array((int)$nlId,$res["login"],$code,'y',(int)$this->now,'g'));
-						$res["code"] = $code;
-					}
-					$ret[] = $res;
-					$in[] = $res['login'];
+			while ( $res = $result->fetchRow() ) {
+				if ( empty($res['email']) ) continue;
+				$all_users[$res['email']] = array(
+					'nlId' => (int)$nlId,
+					'email' => $res['email'],
+					'code' => $this->genRandomString($res['login']),
+					'valid' => 'y',
+					'subscribed' => $this->now,
+					'isUser' => 'g',
+					'db_email' => $res['login'],
+					'included' => 'n'
+				);
+				$group_users[] = $res['login'];
+			}
+		}
+		unset($groups);
+
+		// Add subscribers that comes from included newsletters (only if their email is not already in the current list)
+		//   Those users need to be saved in database for the current newsletter, in order to allow them to unsubscribe to this newsletter only
+		//   (This implies to generate a new unsubscription code for the current newsletter)
+		//
+		$incnl = $this->list_newsletter_included($nlId);
+		foreach ( $incnl as $incid => $incname ) {
+			$incall = $this->get_all_subscribers($incid, $genUnsub);
+			foreach ( $incall as $res ) {
+				if ( empty($all_users[$res['email']]) ) {
+					$res['code'] = $this->genRandomString($res['db_email']);
+					$res['included'] = 'y';
+					$all_users[$res['email']] = $res;
+					$included_users[] = $res['db_email'];
 				}
 			}
 		}
 
-		$incnl = $this->list_newsletter_included($nlId);
-		foreach ($incnl as $incid=>$incname) {
-			$incall = $this->get_all_subscribers($incid,$genUnsub);
-			foreach ($incall as $res) {
-				if (!in_array($res["login"], $in) && !in_array($res["login"], $out) && !in_array($res["email"], $inEmail) && !in_array($res['login'], $unsub_groupusers)) {
-					$ret[] = $res;
+		// Retrieve current subscribers of the list (into $all_users array)
+		// Do not keep subscribers that are:
+		//   - not valid (valid = n)
+		//   - or that comes from a tiki group (isUser = g)
+		//     except those who explicitely unsubscribed themselves (valid = x), in order to keep this information and not add this user again later
+		//     except those who are still in a subscribed group ($group_users)
+		//   - or an included newsletter (included = y)
+		//     except those who explicitely unsubscribed themselves (valid = x), in order to keep this information and not add this user again later
+		//     except those who are still in an included newsletter ($included_users)
+		//
+		//   Note: users from included newsletters or groups (see above) are replaced by current subscribers to keep their code of unsubscription
+		//
+		$query = "select * from `tiki_newsletter_subscriptions` where `nlId`=?";
+		$result = $this->query($query, array((int)$nlId));
+		while ( $res = $result->fetchRow() ) {
+			if ( ( $res['included'] != 'y' || $res['valid'] == 'x' ) && ((
+					$res['valid'] != 'n' && ( $res['isUser'] != 'g' || $res['valid'] == 'x' ) )
+					|| ( $res['isUser'] == 'g' && in_array($res['email'], $group_users) )
+				)
+				|| ( $res['included'] == 'y' && in_array($res['email'], $included_users) )
+			) {
+				$res['db_email'] = $res['email'];
+
+				// Update e-mails of tiki users (directly included or included via a group)
+				// When the e-mail already exists for another subscriber, keep the other subscriber
+				//   (e.g. to keep information of users that subscribed themselves)
+				//
+				if ( $res['isUser'] == 'y' || $res['isUser'] == 'g' ) {
+					$res['email'] = $userlib->get_user_email($res['db_email']);
+				}
+
+				// Add new subscribers to $all_users, or replace the information that was already there from group users
+				//   In case of valid users from included newsletters, update everything except the unsubscribe code
+				if ( $res['included'] == 'y' && $res['valid'] == 'y' ) {
+					$all_users[$res['email']]['code'] = $res['code'];
+				} else {
+					$all_users[$res['email']] = $res;
 				}
 			}
 		}
-//{echo "<pre>Subscribers:$nlId";print_r($ret); echo "</pre>"; }
-		return $ret;
+
+		// Update database if requested
+		//
+		if ( $genUnsub ) {
+			$this->query('DELETE FROM `tiki_newsletter_subscriptions` WHERE `nlId`=?', array((int)$nlId));
+			$query = "INSERT INTO `tiki_newsletter_subscriptions` (`nlId`,`email`,`code`,`valid`,`subscribed`,`isUser`,`included`) VALUES (?,?,?,?,?,?,?)";
+			foreach ( $all_users as $res ) {
+				$this->query($query, array(
+					(int)$nlId,
+					$res['db_email'],
+					$res['code'],
+					$res['valid'],
+					$res['subscribed'],
+					$res['isUser'],
+					$res['included']
+				));
+			}
+		}
+
+		// Only send the newsletter to valid and confirmed emails (valid=y)
+		foreach ( $all_users as $r ) {
+			if ( $r['valid'] == 'y' ) $return[] = $r;
+		}
+
+		return $return;
 	}
 
 	function remove_newsletter_subscription($nlId, $email, $isUser) {
@@ -232,8 +278,8 @@ class NlLib extends TikiLib {
 			$foo = parse_url($_SERVER["REQUEST_URI"]);
 			$foopath = preg_replace('/tiki-admin_newsletter_subscriptions.php/', 'tiki-newsletters.php', $foo["path"]);
 			$url_subscribe = $tikilib->httpPrefix(). $foopath;
-			$query = "insert into `tiki_newsletter_subscriptions`(`nlId`,`email`,`code`,`valid`,`subscribed`,`isUser`) values(?,?,?,?,?,?)";
-			$result = $this->query($query,array((int)$nlId,$add,$code,'n',(int)$this->now,$isUser));
+			$query = "insert into `tiki_newsletter_subscriptions`(`nlId`,`email`,`code`,`valid`,`subscribed`,`isUser`,`included`) values(?,?,?,?,?,?,?)";
+			$result = $this->query($query,array((int)$nlId,$add,$code,'n',(int)$this->now,$isUser,'n'));
 			// Now send an email to the address with the confirmation instructions
 			$smarty->assign('info', $info);
 			$smarty->assign('mail_date', $this->now);
@@ -252,8 +298,8 @@ class NlLib extends TikiLib {
 				return false;
 			return true;
 		} else {
-			$query = "insert into `tiki_newsletter_subscriptions`(`nlId`,`email`,`code`,`valid`,`subscribed`,`isUser`) values(?,?,?,?,?,?)";
-			$result = $this->query($query,array((int)$nlId,$add,$code,'y',(int)$this->now,$isUser));
+			$query = "insert into `tiki_newsletter_subscriptions`(`nlId`,`email`,`code`,`valid`,`subscribed`,`isUser`,`included`) values(?,?,?,?,?,?,?)";
+			$result = $this->query($query,array((int)$nlId,$add,$code,'y',(int)$this->now,$isUser,'n'));
 		}
 		/*$this->update_users($nlId);*/
 		return false;
@@ -312,10 +358,11 @@ class NlLib extends TikiLib {
 		$info = $this->get_newsletter($res["nlId"]);
 		$smarty->assign('info', $info);
 		$smarty->assign('code', $res["code"]);
-		if ($res["isUser"] == 'g')
+		if ( $res["isUser"] == 'g' || $res["included"] == 'y' ) {
 			$query = "update `tiki_newsletter_subscriptions` set `valid`='x' where `code`=?";
-		else
+		} else {
 			$query = "delete from `tiki_newsletter_subscriptions` where `code`=?";
+		}
 		$result = $this->query($query,array($code), -1, -1, false);
 		// Now send a bye bye email
 		$smarty->assign('mail_date', $this->now);
