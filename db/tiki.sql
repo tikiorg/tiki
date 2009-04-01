@@ -1679,6 +1679,7 @@ CREATE TABLE tiki_newsletter_subscriptions (
   valid char(1) default NULL,
   subscribed int(14) default NULL,
   isUser char(1) NOT NULL default 'n',
+  included char(1) NOT NULL default 'n',
   PRIMARY KEY (nlId,email,isUser)
 ) ENGINE=MyISAM;
 
