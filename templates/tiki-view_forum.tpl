@@ -37,7 +37,7 @@
 			
 			<td style="text-align:right;">
 				{if $prefs.rss_forum eq 'y'}
-					<a href="tiki-forum_rss.php?forumId={$forumId}"><img src='img/rss.png' alt='{tr}RSS feed{/tr}' title='{tr}RSS feed{/tr}' /></a>
+					<a href="tiki-forum_rss.php?forumId={$forumId}" title='{tr}RSS feed{/tr}'>{icon _id="feed" alt='{tr}RSS feed{/tr}'}</a>
 				{/if}
 
 				{if $user and $prefs.feature_user_watches eq 'y'}
@@ -54,6 +54,12 @@
 					{else}
 						<a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic_and_thread&amp;watch_object={$forumId}&amp;watch_action=remove" title='{tr}Stop Monitoring Topics and Threads of this Forum{/tr}'>{icon _id='no_eye' alt='{tr}Stop Monitoring Topics and Threads of this Forum{/tr}'}</a>
 					{/if}
+				{/if}
+				{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
+					<a href="tiki-object_watches.php?objectId={$forumId|escape:"url"}&amp;watch_event=forum_post_topic&amp;objectType=forum&amp;objectName={$forum_info.name|escape:"url"}&amp;objectHref={'tiki-view_forum.php?forumId='|cat:$forumId|escape:"url"}" class="icon">{icon _id='eye_group' alt='{tr}Group Monitor Topics of this Forum{/tr}'}</a>
+				{/if}
+				{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
+					<a href="tiki-object_watches.php?objectId={$forumId|escape:"url"}&amp;watch_event=forum_post_topic_and_thread&amp;objectType=forum&amp;objectName={$forum_info.name|escape:"url"}&amp;objectHref={'tiki-view_forum.php?forumId='|cat:$forumId|escape:"url"}" class="icon">{icon _id='eye_group' alt='{tr}Group Monitor Topics and Threads of this Forum{/tr}'}</a>
 				{/if}
 
 				<div class="navbar" align="right" >

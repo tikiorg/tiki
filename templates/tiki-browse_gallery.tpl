@@ -40,11 +40,14 @@
 		{button href="tiki-image_gallery_rss.php?galleryId=$galleryId" _text="{tr}RSS{/tr}"}
 	{/if}
 	
+	{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
+		<a href="tiki-object_watches.php?objectId={$galleryId|escape:"url"}&amp;watch_event=image_gallery_changed&amp;objectType=image+gallery&amp;objectName={$name|escape:"url"}&amp;objectHref={'tiki-browse_gallery.php?galleryId='|cat:$galleryId|escape:"url"}" class="icon">{icon _id='eye_group' alt='{tr}Group Monitor{/tr}' align='right' hspace="1"}</a>
+	{/if}
 	{if $user and $prefs.feature_user_watches eq 'y'}
 		{if $user_watching_gal eq 'n'}
-			<a href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;watch_event=image_gallery_changed&amp;watch_object={$galleryId}&amp;watch_action=add" title="{tr}Monitor this Gallery{/tr}" class="icon">{icon _id='eye' alt="{tr}Monitor this Gallery{/tr}"}</a>
+			<a href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;watch_event=image_gallery_changed&amp;watch_object={$galleryId}&amp;watch_action=add" title="{tr}Monitor this Gallery{/tr}" class="icon">{icon _id='eye' alt="{tr}Monitor this Gallery{/tr}" align='right' hspace="1"}</a>
 		{else}
-			<a href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;watch_event=image_gallery_changed&amp;watch_object={$galleryId}&amp;watch_action=remove" title="{tr}Stop Monitoring this Gallery{/tr}" class="icon">{icon _id='no_eye' alt="{tr}Stop Monitoring this Gallery{/tr}"}</a>
+			<a href="tiki-browse_gallery.php?galleryId={$galleryId}&amp;watch_event=image_gallery_changed&amp;watch_object={$galleryId}&amp;watch_action=remove" title="{tr}Stop Monitoring this Gallery{/tr}" class="icon">{icon _id='no_eye' alt="{tr}Stop Monitoring this Gallery{/tr}" align='right' hspace="1"}</a>
 		{/if}
 	{/if}
 </div>
