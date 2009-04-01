@@ -394,6 +394,7 @@ div.help_section {
 
 #col2 .box {
 	background: #e5e5e5;
+	border-bottom: 1px solid #ccc;
 }
 
 #col3 .box {
