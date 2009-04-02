@@ -2240,6 +2240,10 @@ class Comments extends TikiLib {
 			global $contributionlib;require_once('lib/contribution/contributionlib.php');
 			$contributionlib->remove_comment($res['threadId']);
 		}
+		$query = "delete from `tiki_user_watches` where `object`=? and `type`= ?";
+		$this->query($query, array((int)$threadId, 'forum topic'));
+		$query = "delete from `tiki_group_watches` where `object`=? and `type`= ?";
+		$this->query($query, array((int)$threadId, 'forum topic'));
 	}
 	
 	$query = "delete from `tiki_comments` where `threadId`=? or `parentId`=?";
