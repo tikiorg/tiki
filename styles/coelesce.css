@@ -1025,7 +1025,14 @@ div.cbox {
 	background: #ccdceb;
 	color: #607999;
 	font-weight: bold;
+	line-height: 1em;
 	padding: 2px}
+
+.cbox-title img,
+	.pagetitle img {
+	margin-left: 5px;
+	vertical-align: middle;
+}
 
 .cboxlink {}
 .cbox-data {background: #f5f5f5}
@@ -1204,6 +1211,7 @@ body.tiki_wiki_page #comments {padding: 1em }
 
 h1.pagetitle {
 	background: url(coelesce/tiki-centerbg.jpg) repeat-x;
+	line-height: 36px;
 	color: #2d2d2d}
 
 h1.pagetitle a,
