@@ -1,5 +1,11 @@
 {title help="Newsletters"}{tr}Newsletters{/tr}{/title}
 
+{if $tiki_p_admin_newsletters eq "y"}
+	<div class="navbar">
+		{button href="tiki-admin_newsletters.php" _text="{tr}Admin Newsletters{/tr}"}
+	</div>
+{/if}
+
 {if $subscribed eq 'y'}
 	<div class="simplebox highlight">
 		{tr}Thanks for your subscription. You will receive an email soon to confirm your subscription. No newsletters will be sent to you until the subscription is confirmed.{/tr}
@@ -34,15 +40,15 @@
 {/if}
 
 {if $subscribe eq 'y'}
+	<h2>
+		{tr}Subscribe to Newsletter{/tr}
+	</h2>
 	<form method="post" action="tiki-newsletters.php">
 		<input type="hidden" name="nlId" value="{$nlId|escape}" />
 		<table class="normal">
 			<tr>
-				<th colspan="2">{tr}Subscribe to Newsletter{/tr}</th>
-			</tr>
-			<tr>
 				<td class="even">{tr}Name{/tr}:</td>
-				<th class="even">{$nl_info.name|escape}</th>
+				<td class="even"><strong>{$nl_info.name|escape}</strong></td>
 			</tr>
 			<tr>
 				<td class="even">{tr}Description{/tr}:</td>
@@ -52,14 +58,16 @@
 				{if $tiki_p_subscribe_email eq 'y' and (($nl_info.allowAnySub eq 'y' and $user) || !$user)}
 					<tr>
 						<td class="even">{tr}Email:{/tr}</td>
-						<td class="even"><input type="text" name="email" value="{$email|escape}" /></td>
+						<td class="even"><input type="text" name="email" size="40" value="{$email|escape}" /></td>
 					</tr>
 				{else}
 					<input type="hidden" name="email" value="{$email|escape}" />
 				{/if}
 				<tr>
 					<td class="even">&nbsp;</td>
-					<td class="even"><input type="submit" name="subscribe" value="{tr}Subscribe to this Newsletter{/tr}" /></td>
+					<td class="even">
+						<input type="submit" name="subscribe" value="{tr}Subscribe to this Newsletter{/tr}" />
+					</td>
 				</tr>
 			{/if}
 		</table>
@@ -92,11 +100,12 @@
 						{if $channels[user].tiki_p_subscribe_newsletters eq 'y'}
 							<a class="link" href="tiki-newsletters.php?nlId={$channels[user].nlId}&amp;info=1" title="{tr}Subscribe to Newsletter{/tr}">{icon _id='group' alt="{tr}Subscribe to Newsletter{/tr}"}</a>
 						{/if}
-						{if $channels[user].tiki_p_admin_newsletters eq 'y'}
-							&nbsp;<a class="link" href="tiki-admin_newsletters.php?nlId={$channels[user].nlId}" title="{tr}Admin{/tr}">{icon _id='page_edit' alt="{tr}Admin{/tr}"}</a>
-						{/if}
 						{if $channels[user].tiki_p_send_newsletters eq 'y'}
 							&nbsp;<a class="link" href="tiki-send_newsletters.php?nlId={$channels[user].nlId}" title="{tr}Send Newsletter{/tr}">{icon _id='email' alt="{tr}Send Newsletter{/tr}"}</a>
+						{/if}
+						{if $channels[user].tiki_p_admin_newsletters eq 'y'}
+							&nbsp;<a class="link" href="tiki-admin_newsletters.php?nlId={$channels[user].nlId}"
+							title="{tr}Admin{/tr}">{icon _id='wrench' alt="{tr}Admin{/tr}"}</a>
 						{/if}
 					</td>
 				</tr>
