@@ -668,7 +668,7 @@ class WikiLib extends TikiLib {
       else {
 		if ($prefs['feature_wiki_userpage'] == 'y' and strcasecmp(substr($page, 0, strlen($prefs['feature_wiki_userpage_prefix'])), $prefs['feature_wiki_userpage_prefix']) == 0 and strcasecmp($page, $prefs['feature_wiki_userpage_prefix'].$user) != 0)
 			return false;
-		if (!$this->user_has_perm_on_object($user,$page,'wiki page','tiki_p_edit'))
+		if (!$this->user_has_perm_on_object($user,$page,'wiki page','tiki_p_edit', 'tiki_p_edit_categorized'))
 			return false;
 		return ($this->is_locked($page, $info) == null || $user == $this->is_locked($page, $info))? true : false;
 	}

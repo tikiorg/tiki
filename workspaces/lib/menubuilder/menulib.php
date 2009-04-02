@@ -52,16 +52,16 @@ class MenuLib extends TikiLib {
 		return $retval;
 	}
 
-	function replace_menu($menuId, $name, $description='', $type='d', $icon=null) {
+	function replace_menu($menuId, $name, $description='', $type='d', $icon=null, $use_items_icons='n') {
 		// Check the name
 		if (isset($menuId) and $menuId > 0) {
-			$query = "update `tiki_menus` set `name`=?,`description`=?,`type`=?, `icon`=? where `menuId`=?";
-			$bindvars = array($name,$description,$type,$icon,(int)$menuId);
+			$query = "update `tiki_menus` set `name`=?,`description`=?,`type`=?, `icon`=?, `use_items_icons`=? where `menuId`=?";
+			$bindvars = array($name,$description,$type,$icon,$use_items_icons,(int)$menuId);
 			$this->empty_menu_cache($menuId);
 		} else {
 			// was: replace into. probably we need a delete here
-			$query = "insert into `tiki_menus` (`name`,`description`,`type`,`icon`) values(?,?,?,?)";
-			$bindvars = array($name,$description,$type,$icon);
+			$query = "insert into `tiki_menus` (`name`,`description`,`type`,`icon`,`use_items_icons`) values(?,?,?,?,?)";
+			$bindvars = array($name,$description,$type,$icon,$use_items_icons);
 		}
 
 		$result = $this->query($query,$bindvars);
@@ -75,13 +75,13 @@ class MenuLib extends TikiLib {
 		return $max;
 	}
 
-	function replace_menu_option($menuId, $optionId, $name, $url, $type='o', $position=1, $section='', $perm='', $groupname='', $level=0) {
+	function replace_menu_option($menuId, $optionId, $name, $url, $type='o', $position=1, $section='', $perm='', $groupname='', $level=0, $icon='') {
 		if ($optionId) {
-			$query = "update `tiki_menu_options` set `name`=?,`url`=?,`type`=?,`position`=?,`section`=?,`perm`=?,`groupname`=?,`userlevel`=?  where `optionId`=?";
-			$bindvars=array($name,$url,$type,(int)$position,$section,$perm,$groupname,$level,$optionId);
+			$query = "update `tiki_menu_options` set `name`=?,`url`=?,`type`=?,`position`=?,`section`=?,`perm`=?,`groupname`=?,`userlevel`=?,`icon`=?  where `optionId`=?";
+			$bindvars=array($name,$url,$type,(int)$position,$section,$perm,$groupname,$level,$icon,$optionId);
 		} else {
-			$query = "insert into `tiki_menu_options`(`menuId`,`name`,`url`,`type`,`position`,`section`,`perm`,`groupname`,`userlevel`) values(?,?,?,?,?,?,?,?,?)";
-			$bindvars=array((int)$menuId,$name,$url,$type,(int)$position,$section,$perm,$groupname,$level);
+			$query = "insert into `tiki_menu_options`(`menuId`,`name`,`url`,`type`,`position`,`section`,`perm`,`groupname`,`userlevel`,`icon`) values(?,?,?,?,?,?,?,?,?,?)";
+			$bindvars=array((int)$menuId,$name,$url,$type,(int)$position,$section,$perm,$groupname,$level,$icon);
 		}
 
 		$this->empty_menu_cache($menuId);
@@ -202,7 +202,7 @@ class MenuLib extends TikiLib {
 		while ( $res = $result->fetchRow() ) {
 			$p = parse_url($res['url']);
 	  		if ( $p['path'] == 'tiki-index.php' ) {
-				parse_str($p['query'], $p);
+				$this->parse_str($p['query'], $p);
 				if ( $p['page'] == $oldName ) {
 					$url = str_replace($oldName, $newName, $res['url']);
 					$this->query($query, array($url, $res['optionId']));

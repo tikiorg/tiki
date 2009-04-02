@@ -142,6 +142,11 @@ $smarty->assign('activity', $blog_data["activity"]);
 if (isset($_REQUEST["remove"])) {
 	$data = $bloglib->get_post($_REQUEST["remove"]);
 
+	if ($user && $blog_data['public'] == 'y' 
+			&& $tikilib->user_has_perm_on_object($user, $_REQUEST['blogId'], 'blog', 'tiki_p_blog_post') ) {
+		$data["user"] = $user;
+	}
+
 	if ($ownsblog == 'n') {
 		if (!$user || $data["user"] != $user) {
 			if ($tiki_p_blog_admin != 'y') {
@@ -205,33 +210,15 @@ for ($i = 0; $i < $temp_max; $i++) {
 	if ($prefs['feature_freetags'] == 'y') {     // And get the Tags for the posts
 		$listpages["data"][$i]["freetags"] = $freetaglib->get_tags_on_object($listpages["data"][$i]["postId"], "blog post");
 	}
-
 }
 
 $maxRecords = $blog_data["maxPosts"];
-$cant_pages = ceil($listpages["cant"] / $maxRecords);
-$smarty->assign_by_ref('cant_pages', $cant_pages);
-$smarty->assign('actual_page', 1 + ($offset / $maxRecords));
 $smarty->assign('maxRecords', $maxRecords);
-
-if ($listpages["cant"] > ($offset + $maxRecords)) {
-	$smarty->assign('next_offset', $offset + $maxRecords);
-} else {
-	$smarty->assign('next_offset', -1);
-}
-
-// If offset is > 0 then prev_offset
-if ($offset > 0) {
-	$smarty->assign('prev_offset', $offset - $maxRecords);
-} else {
-	$smarty->assign('prev_offset', -1);
-}
 
 // If there're more records then assign next_offset
 $smarty->assign_by_ref('listpages', $listpages["data"]);
 $smarty->assign_by_ref('cant', $listpages["cant"]);
 
-//print_r($listpages["data"]);
 if ($prefs['feature_blog_comments'] == 'y') {
 	$comments_per_page = $prefs['blog_comments_per_page'];
 
@@ -266,7 +253,7 @@ if ($prefs['feature_user_watches'] == 'y') {
 			$tikilib->add_user_watch($user, $_REQUEST['watch_event'], $_REQUEST['watch_object'], 'blog', $blog_data['title'],
 				"tiki-view_blog.php?blogId=" . $_REQUEST['blogId']);
 		} else {
-			$tikilib->remove_user_watch($user, $_REQUEST['watch_event'], $_REQUEST['watch_object']);
+			$tikilib->remove_user_watch($user, $_REQUEST['watch_event'], $_REQUEST['watch_object'], 'blog');
 		}
 	}
 

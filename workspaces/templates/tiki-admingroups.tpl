@@ -35,7 +35,7 @@
 <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $prefs.feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 <h2>{tr}List of existing groups{/tr}</h2>
 
-{include file='find.tpl' _sort_mode='y' find_show_num_rows='y'}
+{include file='find.tpl' find_show_num_rows='y'}
 
 {if $cant_pages > 1 or !empty($initial) or !empty($find)}
 <div align="center">
@@ -69,7 +69,7 @@ class="prevnext">{tr}All{/tr}</a>
 <tr class="{cycle}">
 <td style="width: 20px;"><a class="link" href="tiki-admingroups.php?group={$users[user].groupName|escape:"url"}" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a></td>
 <td><a class="link" href="tiki-admingroups.php?group={$users[user].groupName|escape:"url"}{if $prefs.feature_tabs ne 'y'}#2{/if}" title="{tr}Edit{/tr}">{$users[user].groupName}</a></td>
-<td>{tr}{$users[user].groupDesc}{/tr}</td>
+<td>{tr}{$users[user].groupDesc|nl2br}{/tr}</td>
 <td>
 {section name=ix loop=$users[user].included}
 {$users[user].included[ix]}<br />

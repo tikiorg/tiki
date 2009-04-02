@@ -8,7 +8,7 @@
 
 <h2>{tr}Quizzes{/tr}</h2>
 {if $channels}
-	{include file='find.tpl' _sort_mode='y'}
+	{include file='find.tpl'}
 {/if}
 
 <table class="normal">

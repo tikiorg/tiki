@@ -4,7 +4,7 @@
 	{button href="tiki-referer_stats.php?clear=1" _text="{tr}Clear Stats{/tr}"}
 </div>
 
-{include file='find.tpl' _sort_mode='y'}
+{include file='find.tpl'}
 
 <table class="normal">
   <tr>

@@ -179,6 +179,10 @@
 <div id="log_sql_queries" class="adminoptionboxchild"  style="display:{if $prefs.log_sql eq 'y'}display{else}none{/if};">
 {tr}Log queries using more than{/tr} <input type="text" name="log_sql_perf_min" value="{$prefs.log_sql_perf_min}" size="5" /> {tr}seconds{/tr}<br /><em>{tr}This may impact performance{/tr}.</em>
 </div>
+<div class="adminoptionbox">	  
+	<div class="adminoption"><input type="checkbox" id="log_tpl" name="log_tpl"{if $prefs.log_tpl eq 'y'} checked="checked"{/if}" /></div>
+	<div class="adminoptionlabel"><label for="log_tpl">{tr}Log start and end of each smarty templates as an html comment{/tr}.</label></div>
+</div>
 </fieldset>
 
 <fieldset><legend>{tr}CSRF Security{/tr} {if $prefs.feature_help eq 'y'} {help url="Security"}{/if}</legend>

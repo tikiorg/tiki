@@ -30,7 +30,7 @@
 <div id="content{cycle name=content assign=focustab}{$focustab}"{if $prefs.feature_tabs eq 'y'} class="tabcontent" style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 <h2>{tr}Trackers{/tr}</h2>
 {if ($channels) or ($find)}
-  {include file='find.tpl' _sort_mode='y' filters=''}
+  {include file='find.tpl' filters=''}
   {if ($find) and ($channels)}
     <p>{tr}Found{/tr} {$channels|@count} {tr}trackers{/tr}:</p>
   {/if}

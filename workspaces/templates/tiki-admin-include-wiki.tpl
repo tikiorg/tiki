@@ -105,13 +105,6 @@
 	</div>
 </div>
 
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" id="feature_wiki_ext_icon" name="feature_wiki_ext_icon" {if $prefs.feature_wiki_ext_icon eq 'y'}checked="checked"{/if}/></div>
-	<div class="adminoptionlabel"><label for="feature_wiki_ext_icon">{tr}External link icon{/tr}</label>
-		<br /><em>{tr}External links will be identified with{/tr}: </em><img border="0" class="externallink" src="img/icons/external_link.gif" alt=" (external link)" />.
-	</div>
-</div>
-
 {include file='wiki_authors_style.tpl' wiki_authors_style=$prefs.wiki_authors_style}
 
 <div class="adminoptionboxchild">
@@ -268,8 +261,8 @@
 <div class="adminoptionbox">
 	<div class="adminoption"><input type="checkbox" id="wiki_edit_minor" name="wiki_edit_minor" {if $prefs.wiki_edit_minor eq 'y'}checked="checked"{/if}/></div>
 	<div class="adminoptionlabel"><label for="wiki_edit_minor">{tr}Allow minor edits{/tr}.</label>
-	{remarksbox type=note title=Note}{tr}Minor edits do not flag new content for translation and do not send watch notifications.{/tr}.{/remarksbox}
-	{remarksbox type=tip title=Tip}{tr}Only user groups granted the tiki_p_minor permission (and admins) will be able to save minor edits when this is enabled.{/tr}
+	{remarksbox type=note title=Note}{tr}Minor edits do not flag new content for translation and do not send watch notifications.{/tr}.<br />
+	{tr}Only user groups granted the tiki_p_minor permission (and admins) will be able to save minor edits when this is enabled.{/tr}
 	<a class="link" href="tiki-assignpermission.php?type=wiki&amp;group=Registered" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>{/remarksbox}
 	</div>
 </div>
@@ -613,11 +606,6 @@ name="w_displayed_default" {if $prefs.w_displayed_default eq 'y'} checked="check
 	<div class="adminoption"><input type="checkbox" id="feature_wiki_multiprint" name="feature_wiki_multiprint" {if $prefs.feature_wiki_multiprint eq 'y'}checked="checked"{/if}/></div>
 	<div class="adminoptionlabel"><label for="feature_wiki_multiprint">{tr}MultiPrint{/tr}</label></div>
 </div>
-</div>
-
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" id="feature_wiki_protect_email" name="feature_wiki_protect_email" {if $prefs.feature_wiki_protect_email eq 'y'}checked="checked"{/if}/></div>
-	<div class="adminoptionlabel"><label for="feature_wiki_protect_email">{tr}Protect email against spam{/tr}.</label></div>
 </div>
 
 <div class="adminoptionbox">

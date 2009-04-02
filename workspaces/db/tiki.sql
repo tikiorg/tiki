@@ -321,6 +321,7 @@ CREATE TABLE tiki_banners (
   created int(14) default NULL,
   maxImpressions int(8) default NULL,
   impressions int(8) default NULL,
+  maxUserImpressions int(8) default -1,
   maxClicks int(8) default NULL,
   clicks int(8) default NULL,
   zone varchar(40) default NULL,
@@ -553,6 +554,7 @@ CREATE TABLE tiki_objects (
   name varchar(200) default NULL,
   href varchar(200) default NULL,
   hits int(8) default NULL,
+  comments_locked char(1) NOT NULL default 'n',
   PRIMARY KEY (objectId),
   KEY (type, objectId),
   KEY (itemId, type)
@@ -699,6 +701,7 @@ CREATE TABLE tiki_comments (
   comment_rating tinyint(2) default NULL,
   archived char(1) default NULL,
   approved char(1) NOT NULL default 'y',
+  locked char(1) NOT NULL default 'n',
   PRIMARY KEY (threadId),
   UNIQUE KEY no_repeats (parentId, userName(40), title(100), commentDate, message_id(40), in_reply_to(40)),
   KEY title (title),
@@ -1413,6 +1416,7 @@ CREATE TABLE tiki_menu_options (
   perm text default NULL,
   groupname text default NULL,
   userlevel int(4) default 0,
+  icon varchar(200),
   PRIMARY KEY (optionId),
   UNIQUE KEY uniq_menu (menuId,name(30),url(50),position,section(60),perm(50),groupname(50))
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
@@ -1615,6 +1619,7 @@ CREATE TABLE tiki_menus (
   description text,
   type char(1) default NULL,
   icon varchar(200) default NULL,
+  use_items_icons char(1) NOT NULL DEFAULT 'n',
   PRIMARY KEY (menuId)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 ;
 
@@ -1679,6 +1684,7 @@ CREATE TABLE tiki_newsletter_subscriptions (
   valid char(1) default NULL,
   subscribed int(14) default NULL,
   isUser char(1) NOT NULL default 'n',
+  included char(1) NOT NULL default 'n',
   PRIMARY KEY (nlId,email,isUser)
 ) ENGINE=MyISAM;
 
@@ -3246,7 +3252,6 @@ INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('image','{img src= width= height= align= desc= link= }','pics/icons/picture.png','wiki');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('list bullets', '*text', 'pics/icons/text_list_bullets.png', 'wiki');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('list numbers', '#text', 'pics/icons/text_list_numbers.png', 'wiki');
-INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('Email Address','[mailto:text|text]','pics/icons/email.png','wiki');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('Deleted','--text--','pics/icons/text_strikethrough.png','wiki');
 
 # maps
@@ -3295,7 +3300,6 @@ INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('colored text','~~#FF0000:text~~','pics/icons/palette.png','trackers');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('dynamic variable','%text%','pics/icons/book_open.png','trackers');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('image','{img src= width= height= align= desc= link= }','pics/icons/picture.png','trackers');
-INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('Email Address','[mailto:text|text]','pics/icons/email.png','trackers');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('Deleted','--text--','pics/icons/text_strikethrough.png','trackers');
 
 # blogs
@@ -3316,7 +3320,6 @@ INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('colored text','~~#FF0000:text~~','pics/icons/palette.png','blogs');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('dynamic variable','%text%','pics/icons/book_open.png','blogs');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('image','{img src= width= height= align= desc= link= }','pics/icons/picture.png','blogs');
-INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('Email Address','[mailto:text|text]','pics/icons/email.png','blogs');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('Deleted','--text--','pics/icons/text_strikethrough.png','blogs');
 
 # calendar
@@ -3357,7 +3360,6 @@ INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('colored text','~~#FF0000:text~~','pics/icons/palette.png','articles');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('dynamic variable','%text%','pics/icons/book_open.png','articles');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('image','{img src= width= height= align= desc= link= }','pics/icons/picture.png','articles');
-INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('Email Address','[mailto:text|text]','pics/icons/email.png','articles');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('Deleted','--text--','pics/icons/text_strikethrough.png','articles');
 
 # faqs
@@ -3378,7 +3380,6 @@ INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('colored text','~~#FF0000:text~~','pics/icons/palette.png','faqs');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('dynamic variable','%text%','pics/icons/book_open.png','faqs');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('image','{img src= width= height= align= desc= link= }','pics/icons/picture.png','faqs');
-INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('Email Address','[mailto:text|text]','pics/icons/email.png','faqs');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('Deleted','--text--','pics/icons/text_strikethrough.png','faqs');
 
 # forums
@@ -3399,7 +3400,6 @@ INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('colored text','~~#FF0000:text~~','pics/icons/palette.png','forums');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('dynamic variable','%text%','pics/icons/book_open.png','forums');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('image','{img src= width= height= align= desc= link= }','pics/icons/picture.png','forums');
-INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('Email Address','[mailto:text|text]','pics/icons/email.png','forums');
 INSERT INTO tiki_quicktags (taglabel, taginsert, tagicon, tagcategory) VALUES ('Deleted','--text--','pics/icons/text_strikethrough.png','forums');
 
 # Translated objects table
@@ -3812,3 +3812,26 @@ INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`, `order`
 INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`, `order`) VALUES('tiki-list_trackers.php', 'trackers', '', 'feature_trackers', 200);
 INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`, `order`) VALUES('tiki-mobile.php', 'mobile', '', 'feature_mobile', 200);
 INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`, `order`) VALUES('tiki-sheets.php', 'sheets', '', 'feature_sheet', 200);
+
+UPDATE tiki_menu_options SET icon = 'icon-configuration48x48' WHERE name = 'Admin';
+UPDATE tiki_menu_options SET icon = 'xfce4-appfinder48x48' WHERE name = 'Search';
+UPDATE tiki_menu_options SET icon = 'wikipages48x48' WHERE name = 'Wiki';
+UPDATE tiki_menu_options SET icon = 'blogs48x48' WHERE name = 'Blogs';
+UPDATE tiki_menu_options SET icon = 'stock_select-color48x48' WHERE name = 'Image Galleries';
+UPDATE tiki_menu_options SET icon = 'file-manager48x48' WHERE name = 'File Galleries';
+UPDATE tiki_menu_options SET icon = 'stock_bold48x48' WHERE name = 'Articles';
+UPDATE tiki_menu_options SET icon = 'stock_index48x48' WHERE name = 'Forums';
+UPDATE tiki_menu_options SET icon = 'gnome-settings-font48x48' WHERE name = 'Trackers';
+UPDATE tiki_menu_options SET icon = 'users48x48' WHERE name = 'Community';
+UPDATE tiki_menu_options SET icon = 'stock_dialog_question48x48' WHERE name = 'FAQs';
+UPDATE tiki_menu_options SET icon = 'maps48x48' WHERE name = 'Maps';
+UPDATE tiki_menu_options SET icon = 'messages48x48' WHERE name = 'Newsletters';
+UPDATE tiki_menu_options SET icon = 'vcard48x48' WHERE name = 'Freetags';
+UPDATE tiki_menu_options SET icon = 'date48x48' WHERE name = 'Calendar' AND url = 'tiki-calendar.php';
+UPDATE tiki_menu_options SET icon = 'userfiles48x48' WHERE name = 'MyTiki';
+UPDATE tiki_menu_options SET icon = '' WHERE name = 'Quizzes';
+UPDATE tiki_menu_options SET icon = '' WHERE name = 'Surveys';
+UPDATE tiki_menu_options SET icon = '' WHERE name = 'TikiSheet';
+UPDATE tiki_menu_options SET icon = '' WHERE name = 'Workflow';
+UPDATE tiki_menu_options SET icon = '' WHERE name = 'Charts';
+UPDATE tiki_menus SET use_items_icons='y' WHERE menuId=42;

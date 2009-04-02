@@ -11,7 +11,7 @@ $section = 'newsletters';
 require_once ('tiki-setup.php');
 include_once ('lib/newsletters/nllib.php');
 
-$auto_query_args = array('sort_mode', 'offset', 'find', 'nlId', 'remove', 'email', 'subuser', 'group', 'included', 'valid', 'confirmEmail', 'addemail', 'add', 'addall', 'addbatch', 'addgroup', 'addincluded', 'export', 'sort_mode_g', 'offset_g', 'find_g');
+$auto_query_args = array('sort_mode', 'offset', 'find', 'nlId', 'sort_mode_g', 'offset_g', 'find_g');
 
 if ($prefs['feature_newsletters'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_newsletters");

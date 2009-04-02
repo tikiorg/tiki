@@ -208,8 +208,11 @@ class SearchLib extends TikiLib {
 			$qwords = $this->db->quote($words);
 
 			$sqlft = 'MATCH(' . join(',', $h['search']). ') AGAINST (' . $qwords ;
-			if ($boolean == 'y')
+			if ($boolean == 'y') {
 				$sqlft .= ' IN BOOLEAN MODE';
+		    } else {
+		        $sqlft .= ' IN NATURAL LANGUAGE MODE';
+		    }
 			$sqlft .= ')';
 			$sqlWhere .= ' AND ' . $sqlft ;
 			$sqlFields .= ', ' . $sqlft . ' AS relevance';
@@ -248,13 +251,19 @@ class SearchLib extends TikiLib {
 		$cant = $result->numRows();
 
 		if (!$cant && $boolean != 'y') { // no result
-			if ($fulltext && $words) // try a simple search
-				return $this->_find($h, $words, $offset, $maxRecords, false, $filter, $boolean, $type, $searchDate);
-			else
+		
+			if ($fulltext && $words) {
+			    // try a simple search
+   		        echo "-- _find: \$fulltext && \$words holds, so actually trying the search<br>\n";
+
+			    return $this->_find($h, $words, $offset, $maxRecords, false, $filter, $boolean, $type, $searchDate);
+			} else {
+
 				return array(
 					'data' => array(),
 					'cant' => 0
 				);
+			}
 		}
 
 		$result = $this->query($sql, $bindVars, $maxRecords, $offset);
@@ -370,7 +379,7 @@ class SearchLib extends TikiLib {
 
 			'permName' => 'tiki_p_view_calendar',
 			'objectType' => 'calendar',
-			'objectKey' => '`viewcalitemId`',
+			'objectKey' => 'c.`calendarId`',
 			'parent' => 'tc.`name` as parentName, concat(\'tiki-calendar.php$calIds[]=\', tc.`calendarId`,\'&todate=\',c.`start`) as parentHref',
 			'parentJoin' => 'LEFT JOIN `tiki_calendars` tc ON tc.`calendarId` = c.`calendarId`',
 		);

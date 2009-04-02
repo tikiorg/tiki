@@ -885,6 +885,12 @@ if( isset( $_REQUEST['translation_critical'] ) ) {
 	$smarty->assign( 'translation_critical', 0 );
 }
 
+if ($page == 'HomePage' && $edit_data == '{TR()}_HOMEPAGE_CONTENT_{TR}') {	// default home page contents as defined in tiki-index.php
+	$edit_data = tr('_HOMEPAGE_CONTENT_');				// give the user the translated (mark-up) version of it
+	if ($_SESSION['wysiwyg'] == 'y' ) {
+		$_REQUEST['mode_wysiwyg'] = true;
+	}
+}
 // Parse (or not) $edit_data into $parsed
 // Handles switching editor modes
 if (isset($_REQUEST['mode_normal'])) {
@@ -908,7 +914,7 @@ if (isset($_REQUEST['mode_normal'])) {
 	$editplugin = $prefs['wiki_edit_plugin'];
 	$prefs['wiki_edit_plugin'] = 'n';		// and the external link icons
 	$edit_data = preg_replace('/(!!*)[\+\-]/m','$1', $edit_data);		// remove show/hide headings
-	$parsed = $tikilib->parse_data($edit_data,array('absolute_links'=>true, 'noparseplugins'=>true,'noheaderinc'=>true));
+	$parsed = $tikilib->parse_data($edit_data,array('absolute_links'=>true, 'parseimgonly'=>true,'noheaderinc'=>true));
 	$parsed = preg_replace('/<span class=\"img\">(.*?)<\/span>/im','$1', $parsed);					// remove spans round img's
 	$parsed = preg_replace("/src=\"img\/smiles\//im","src=\"".$tikiroot."img/smiles/", $parsed);	// fix smiley src's
 	$parsed = str_replace( 

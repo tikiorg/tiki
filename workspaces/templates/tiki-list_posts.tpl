@@ -9,7 +9,7 @@
 </div>
 
 {if $listpages or ($find ne '')}
-  {include file='find.tpl' _sort_mode='y'}
+  {include file='find.tpl'}
 {/if}
 
 <table class="normal">

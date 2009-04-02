@@ -546,7 +546,7 @@ if ($prefs['feature_user_watches'] == 'y' and $tiki_p_watch_trackers == 'y') {
 		if ($_REQUEST['watch'] == 'add') {
 			$tikilib->add_user_watch($user, 'tracker_modified', $_REQUEST["trackerId"], 'tracker', $tracker_info['name'],"tiki-view_tracker.php?trackerId=".$_REQUEST["trackerId"]);
 		} else {
-			$tikilib->remove_user_watch($user, 'tracker_modified', $_REQUEST["trackerId"]);
+			$tikilib->remove_user_watch($user, 'tracker_modified', $_REQUEST["trackerId"], 'tracker');
 		}
 	}
 	$smarty->assign('user_watching_tracker', 'n');
@@ -764,7 +764,7 @@ if ($tracker_info['useComments'] == 'y' && ($tracker_info['showComments'] == 'y'
 		if ($tracker_info['showComments'] == 'y') {
 			$items['data'][$itkey]['comments'] = $trklib->get_item_nb_comments($items['data'][$itkey]['itemId']);
 		}
-		if ($tracker_info['showLastComment'] == 'y') {
+		if (isset($tracker_info['showLastComment']) && $tracker_info['showLastComment'] == 'y') {
 			$l = $trklib->list_item_comments($items['data'][$itkey]['itemId'], 0, 1, 'posted_desc');
 			$items['data'][$itkey]['lastComment'] = !empty($l['cant'])? $l['data'][0]: '';
 		}

@@ -813,6 +813,7 @@ if ($_REQUEST["itemId"]) {
 				} else {
 					if (!isset($info["$fid"])) $info["$fid"] = '';
 				}
+
 				if ($fields["data"][$i]["type"] == 'e') {
 					global $categlib; include_once('lib/categories/categlib.php');
 					$k = $fields["data"][$i]['options_array'][0];
@@ -1011,6 +1012,9 @@ if ($_REQUEST["itemId"]) {
 				if (!empty($ins_fields['data'][$i]['value'])) {
 					$ins_fields['data'][$i]['info'] = $trklib->get_item_attachment($ins_fields['data'][$i]['value']);
 				}
+			} elseif ($fields['data'][$i]['type'] == 's' && $fields['data'][$i]['name'] == 'Rating') {
+					$ins_fields['data'][$i]['numvotes'] = $tikilib->getOne('select count(*) from `tiki_user_votings` where `id` = ?', array('tracker.'.$_REQUEST['trackerId'].'.'.$_REQUEST['itemId']));
+					$ins_fields['data'][$i]['voteavg'] = ( $ins_fields['data'][$i]['numvotes'] > 0 ) ? round(($ins_fields['data'][$i]['value'] / $ins_fields['data'][$i]['numvotes'])) : '';
 			}
 			if ($fields['data'][$i]['isMain'] == 'y')
 				$smarty->assign('tracker_item_main_value', $ins_fields['data'][$i]['value']);
@@ -1075,7 +1079,8 @@ if ($prefs['feature_user_watches'] == 'y' and $tiki_p_watch_trackers == 'y') {
     if ($_REQUEST['watch'] == 'add') {
       $tikilib->add_user_watch($user, 'tracker_item_modified', $_REQUEST["itemId"], 'tracker '.$_REQUEST["trackerId"], $tracker_info['name'],"tiki-view_tracker_item.php?trackerId=".$_REQUEST["trackerId"]."&amp;itemId=".$_REQUEST["itemId"]);
     } else {
-      $tikilib->remove_user_watch($user, 'tracker_item_modified', $_REQUEST["itemId"]);
+			$remove_watch_tracker_type = 'tracker ' . $_REQUEST['trackerId'];
+      $tikilib->remove_user_watch($user, 'tracker_item_modified', $_REQUEST["itemId"], $remove_watch_tracker_type);
     }
   }
   $smarty->assign('user_watching_tracker', 'n');

@@ -11,7 +11,7 @@ require_once ('tiki-setup.php');
 include_once ('lib/commcenter/commlib.php');
 include_once ('lib/wiki/wikilib.php');
 
-$auto_query_args = array('receivedPageId','accept', 'view', 'pageName', 'data', 'comment', 'preview', 'remove', 'save', 'checked', 'prefix', 'postfix', 'sort_mode', 'offset', 'find', 'sort_modes');
+$auto_query_args = array('receivedPageId', 'sort_mode', 'offset', 'find', 'sort_modes');
 
 if ($prefs['feature_comm'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_comm");
@@ -134,23 +134,6 @@ $smarty->assign('find', $find);
 
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 $channels = $tikilib->list_received_pages($offset, $maxRecords, $sort_mode, $find, 'p');
-
-$cant_pages = ceil($channels["cant"] / $maxRecords);
-$smarty->assign_by_ref('cant_pages', $cant_pages);
-$smarty->assign('actual_page', 1 + ($offset / $maxRecords));
-
-if ($channels["cant"] > ($offset + $maxRecords)) {
-	$smarty->assign('next_offset', $offset + $maxRecords);
-} else {
-	$smarty->assign('next_offset', -1);
-}
-
-// If offset is > 0 then prev_offset
-if ($offset > 0) {
-	$smarty->assign('prev_offset', $offset - $maxRecords);
-} else {
-	$smarty->assign('prev_offset', -1);
-}
 
 $smarty->assign_by_ref('channels', $channels["data"]);
 $smarty->assign_by_ref('cant', $channels['cant']);

@@ -15,6 +15,12 @@ body {
 
 *:first-child+html body {font-size: 74% !important}
 
+/* workaround for Safari when in FCKEditor */
+html[dir=ltr]>body {
+	display: block;
+	margin: 1em .5em;
+}
+
 body#fullscreen {background: #fff url(feb12/page.jpg) repeat-x}
 
 a, a:visited { 
@@ -750,27 +756,30 @@ h3.box-title {
 	display: block;
 	border-bottom: 1px solid #57A5D0;
 	position: relative}
-
+	
 * html h3.box-title {position: static}
-.box a.flipmodtitle img {display: none}
 
-* html .box a.flipmodtitle img,
-.box:hover a.flipmodtitle img {
-	display: block;
+.moduleflip {
+	display: none;
 	position: absolute;
 	right: 0;
-	top: 0;
-	border: 1px solid transparent}
+	top: 0}
 
-* html .box a.flipmodtitle img {border: none}
-* html #col2 a.flipmodtitle img,
-* html #col3 a.flipmodtitle img {
+* html .moduleflip {
 	position: static;
-	float: right;
-	margin-top: -12px}
+	float: right}
 
-a.flipmodtitle:hover img {
-	border: 1px solid #58A7D2 !important}
+* html .moduleflip,
+.box:hover .moduleflip {display: block}
+
+.box:hover img.flipmodimage {border: 1px solid transparent}
+* html img.flipmodimage {border: none}
+
+* html .box img.flipmodimage {border: none}
+* html #col2 img.flipmodimage,
+* html #col3 img.flipmodimage {margin-top: -12px}
+
+.flipmodimage:hover {border: 1px solid #58A7D2 !important}
 
 #col2 h3.box-title {}
 #col2 .box-title a,
@@ -1047,8 +1056,10 @@ h1 a.pagetitle:hover {text-decoration: none}
 
 .wikitopline {}
 
-#description {
-	font-size: .9em;
+div#description,
+.description {
+	display: block;
+	font-size: .95em;
 	font-style: italic}
 
 #pageid {
@@ -1231,7 +1242,7 @@ div.articletitle {
 	margin-bottom:	15px;
 	text-align:	left}
  
-span.titlea {
+div.articletitle h2 {
 	font-size: 1.5em;
 	font-weight: normal}
 

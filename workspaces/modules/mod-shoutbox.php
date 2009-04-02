@@ -15,7 +15,7 @@ if ($prefs['feature_shoutbox'] == 'y' && $tiki_p_view_shoutbox == 'y') {
 	$setup_parsed_uri = parse_url($_SERVER["REQUEST_URI"]);
 
 	if (isset($setup_parsed_uri["query"])) {
-		parse_str($setup_parsed_uri["query"], $sht_query);
+		TikiLib::parse_str($setup_parsed_uri["query"], $sht_query);
 	} else {
 		$sht_query = array();
 	}

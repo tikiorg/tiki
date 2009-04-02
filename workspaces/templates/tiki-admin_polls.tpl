@@ -54,7 +54,7 @@
 
 <h2>{tr}Polls{/tr}</h2>
 {if $channels or ($find ne '')}
-  {include file='find.tpl' _sort_mode='y'}
+  {include file='find.tpl'}
 {/if}
 <table class="normal">
 <tr>

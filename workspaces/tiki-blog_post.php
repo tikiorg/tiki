@@ -74,6 +74,11 @@ $smarty->assign('postId', $postId);
 $smarty->assign('data', '');
 $smarty->assign('created', $tikilib->now);
 
+// Exit edit mode (without javascript)
+if ( isset($_REQUEST['cancel']) ) header ("location: tiki-view_blog.php?blogId=$blogId");
+// Exit edit mode (with javascript)
+$smarty->assign('referer', !empty($_REQUEST['referer'])?$_REQUEST['referer']: (empty($_SERVER['HTTP_REFERER']) ? 'tiki-view_blog.php?blogId='.$blogId : $_SERVER['HTTP_REFERER']));
+
 $blog_data = $bloglib->get_blog($blogId);
 $smarty->assign_by_ref('blog_data', $blog_data);
 
@@ -94,6 +99,12 @@ if (isset($_REQUEST["postId"]) && $_REQUEST["postId"] > 0) {
 
 	// If the user owns the weblog then he can edit
 	if ($user && $user == $blog_data["user"]) {
+		$data["user"] = $user;
+	}
+
+	// If the blog is public and the user has posting permissions then he can edit
+	if ($user && $blog_data['public'] == 'y' 
+			&& $tikilib->user_has_perm_on_object($user, $_REQUEST['blogId'], 'blog', 'tiki_p_blog_post') ) {
 		$data["user"] = $user;
 	}
 
@@ -257,6 +268,11 @@ if ((isset($_REQUEST["save"]) || isset($_REQUEST['save_exit'])) && !$contributio
 		$blog_data = $tikilib->get_blog($data["blogId"]);
 
 		if ($user && $user == $blog_data["user"]) {
+			$data["user"] = $user;
+		}
+
+		if ($user && $blog_data['public'] == 'y' 
+				&& $tikilib->user_has_perm_on_object($user, $_REQUEST['blogId'], 'blog', 'tiki_p_blog_post') ) {
 			$data["user"] = $user;
 		}
 

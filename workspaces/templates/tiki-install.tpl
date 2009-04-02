@@ -15,7 +15,6 @@
 {if $install_step eq '0' or !$install_step}
 {* start of installation *}
 <h1>{tr}Welcome{/tr}</h1>
-<div style="float:right;"><img src="img/tiki/tikilogo.png" alt="TikiWiki" /></div>
 <div class="clearfix">
 	<p>{tr}Welcome to the TikiWiki installation and upgrade script.{/tr} {tr}Use this script to install a new TikiWiki database or upgrade your existing database to release{/tr} <strong>{$tiki_version_name}</strong></p>
 	<ul>
@@ -270,13 +269,13 @@
 			<div id="install-link">
 			
 			<p style="text-align:center;"><a class="button" href="javascript:install()">{tr}Reinstall the database{/tr}</a></p>
-			<p style="text-align: center"><img src="img/silk/sticky.png" alt="warning" style="vertical-align:middle"/> <strong>{tr}Warning{/tr}</strong>: {tr}This will destroy your current database{/tr}.</p>
+			<p style="text-align: center"><img src="pics/icons/sticky.png" alt="warning" style="vertical-align:middle"/> <strong>{tr}Warning{/tr}</strong>: {tr}This will destroy your current database{/tr}.</p>
 			</div>
 		    <div id="install-table" style="visibility:hidden">
 			{else}
 		    <div id="install-table">
 			{/if}
-			 {if $tikidb_created}<p style="text-align: center"><img src="img/silk/sticky.png" alt="warning" style="vertical-align:middle"/> <strong>{tr}Warning{/tr}</strong>: {tr}This will destroy your current database{/tr}.</p>{/if}
+			 {if $tikidb_created}<p style="text-align: center"><img src="pics/icons/sticky.png" alt="warning" style="vertical-align:middle"/> <strong>{tr}Warning{/tr}</strong>: {tr}This will destroy your current database{/tr}.</p>{/if}
 			{if $has_internet_connection eq 'y'}
 			  <p>{tr}Create a new database (clean install) with profile{/tr}:</p>
 			<select name="profile" size="{if $profiles}{$profiles|@count}{else}5{/if}">

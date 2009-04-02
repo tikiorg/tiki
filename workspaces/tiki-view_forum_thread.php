@@ -96,6 +96,15 @@ $smarty->assign('forumId', $_REQUEST["forumId"]);
 include_once ("lib/commentslib.php");
 $commentslib = new Comments($dbTiki);
 
+if ( isset($_REQUEST['lock']) ) {
+	check_ticket('view-forum');
+	if ( $_REQUEST['lock'] == 'y' ) {
+		$commentslib->lock_comment($_REQUEST["comments_parentId"]);
+	} elseif ( $_REQUEST['lock'] == 'n' ) {
+		$commentslib->unlock_comment($_REQUEST["comments_parentId"]);
+	}
+}
+
 $commentslib->comment_add_hit($_REQUEST["comments_parentId"]);
 $commentslib->mark_comment($user, $_REQUEST['forumId'], $_REQUEST["comments_parentId"]);
 
@@ -268,7 +277,7 @@ if (!empty($thread_info['parentId'])) {
 	$thread_info['topic'] = $commentslib->get_comment($thread_info['parentId'], null, $forum_info);
 }
 
-if ($tiki_p_admin_forum != 'y' && $thread_info['type'] == 'l') {
+if ($tiki_p_admin_forum != 'y' && $thread_info['locked'] == 'y') {
 	$tiki_p_forum_post = 'n';
 	$smarty->assign('tiki_p_forum_post', 'n');
 }
@@ -320,7 +329,7 @@ if ($prefs['feature_user_watches'] == 'y') {
 	if ($_REQUEST['watch_action'] == 'add') {
 	    $tikilib->add_user_watch($user, $_REQUEST['watch_event'], $_REQUEST['watch_object'], 'forum topic', $forum_info['name'] . ':' . $thread_info['title'], "tiki-view_forum_thread.php?forumId=" . $_REQUEST['forumId'] . "&amp;comments_parentId=" . $_REQUEST['comments_parentId']);
 	} else {
-	    $tikilib->remove_user_watch($user, $_REQUEST['watch_event'], $_REQUEST['watch_object']);
+	    $tikilib->remove_user_watch($user, $_REQUEST['watch_event'], $_REQUEST['watch_object'], 'forum topic');
 	}
     }
 

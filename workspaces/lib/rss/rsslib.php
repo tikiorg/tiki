@@ -546,8 +546,10 @@ class RSSLib extends TikiLib {
 	}
 
 	/* refresh content of a certain rss feed */
-	function refresh_rss_module($rssId) {
-		$info = $this->get_rss_module($rssId);
+	function refresh_rss_module($rssId, $info='') {
+		if (empty($info)) {
+			$info = $this->get_rss_module($rssId);
+		}
 		if ($info) {
 			if (($gotit = $this->httprequest($info['url'])) !== false) {
 				$data = $this->rss_iconv($gotit);
@@ -600,7 +602,7 @@ class RSSLib extends TikiLib {
 
 		// cache too old, get data from feed and update cache
 		if (($info["lastUpdated"] + $info["refresh"] < $this->now) || ($info["content"]=="") || $refresh) {
-			$data = $this->refresh_rss_module($rssId);
+			$data = $this->refresh_rss_module($rssId, $info);
 		}
 
 		// get from cache

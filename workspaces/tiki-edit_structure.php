@@ -118,7 +118,7 @@ if (isset($_REQUEST["sremove"])) {
 	if ($_REQUEST['watch_action'] == 'add' && !empty($_REQUEST['page'])) {
 		$tikilib->add_user_watch($user, 'structure_changed', $_REQUEST['watch_object'],'structure',$page,"tiki-index.php?page_ref_id=".$_REQUEST['watch_object']);
 	} elseif ($_REQUEST['watch_action'] == 'remove') {
-		$tikilib->remove_user_watch($user, 'structure_changed', $_REQUEST['watch_object']);
+		$tikilib->remove_user_watch($user, 'structure_changed', $_REQUEST['watch_object'], 'structure');
 	}
 }
 

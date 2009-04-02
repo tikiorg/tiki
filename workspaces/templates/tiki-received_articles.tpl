@@ -5,8 +5,7 @@
 {if $preview eq 'y'}
 	<h2>{tr}Preview{/tr}</h2>
 	<div class="articletitle">
-		<span class="titlea">{$title}</span>
-		<br />
+		<h2>{$title}</h2>
 		<span class="titleb">{tr}By:{/tr} {$authorName} {tr}on:{/tr} {$publishDate|tiki_short_datetime} (0 {tr}Reads{/tr})</span>
 	</div>
 	<div class="articleheading">
@@ -172,7 +171,7 @@
 
 <div align="center">
 	{if $channels or $find ne ''}
-		{include file='find.tpl' _sort_mode='y'}
+		{include file='find.tpl'}
 	{/if}
 
 	<table class="normal">

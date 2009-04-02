@@ -12,6 +12,7 @@ class AcceptanceTests_AllTests
         $suite = new PHPUnit_Framework_TestSuite('AcceptanceTestsSuite');
 
         $suite->addTestSuite('AcceptanceTests_SearchTest');
+        $suite->addTestSuite('AcceptanceTests_MultilingualTest');
 
         return $suite;
     }

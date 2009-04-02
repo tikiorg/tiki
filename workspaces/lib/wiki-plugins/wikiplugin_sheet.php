@@ -36,20 +36,58 @@ function wikiplugin_sheet_info() {
 }
 
 function wikiplugin_sheet($data, $params) {
-	global $dbTiki, $tikilib, $tiki_p_edit_sheet, $tiki_p_admin_sheet, $tiki_p_admin, $prefs;
+	global $dbTiki, $tiki_p_edit_sheet, $tiki_p_edit, $tiki_p_admin_sheet, $tiki_p_admin, $prefs, $user, $sheetlib, $page, $tikilib;
 	extract ($params,EXTR_SKIP);
-	$tikilib = &new TikiLib( $dbTiki );
-
-	if (!isset($id)) {
-		return ("<b>missing id parameter for plugin</b><br />");
-	}
-
-	if ($prefs['feature_sheet'] != 'y') {
-		return ("<b>feature_sheet disabled.</b><br />");
-	}
 
 	if( !class_exists( 'TikiSheet' ) )
 		require "lib/sheet/grid.php";
+
+	static $index = 0;
+	++$index;
+
+	if (!isset($id)) {
+		if( $tiki_p_edit_sheet != 'y' || $tiki_p_edit != 'y' ) {
+			return ("<b>missing id parameter for plugin</b><br />");
+		} else {
+			if( isset( $_POST['create_sheet'], $_POST['index'] ) && $index == $_POST['index'] ) {
+				// Create a new sheet and rewrite page
+				$sheetId = $sheetlib->replace_sheet( null, tra('New sheet in page: ') . $page, '', $user );
+				$page = htmlentities($page);
+				$content = htmlentities($data);
+				$formId = "form$index";
+				return <<<EOF
+~np~
+<form id="$formId" method="post" action="tiki-wikiplugin_edit.php">
+<div>
+	<input type="hidden" name="page" value="$page"/>
+	<input type="hidden" name="content" value="$data"/>
+	<input type="hidden" name="index" value="$index"/>
+	<input type="hidden" name="type" value="sheet"/>
+	<input type="hidden" name="params[id]" value="$sheetId"/>
+</div>
+</form>
+<script type="text/javascript">
+document.getElementById('$formId').submit();
+</script>
+~/np~
+EOF;
+			} else {
+				$intro = tra('Incomplete call to plugin: No target sheet.');
+				$label = tra('Create new sheet');
+				return <<<EOF
+~np~
+<form method="post" action="">
+	<p>$intro</p>
+	<p>
+		<input type="submit" name="create_sheet" value="$label"/>
+		<input type="hidden" name="index" value="$index"/>
+	</p>
+</form>
+~/np~
+EOF;
+			}
+		}
+	}
 
 	// Build required objects
 	$sheet = &new TikiSheet;

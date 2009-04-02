@@ -235,8 +235,13 @@ function sendWikiEmailNotification($event, $pageName, $edit_user, $edit_comment,
 	    $smarty->assign('mail_machine_raw', $tikilib->httpPrefix(). implode('/', $parts));
 	    $smarty->assign_by_ref('mail_pagedata', $edit_data);
 	    $smarty->assign_by_ref('mail_diffdata', $diff);
-	    if ($event == 'wiki_page_created')
-		$smarty->assign('new_page', 'y');
+	    if ($event == 'wiki_page_created') {
+			$smarty->assign('mail_action', 'new');
+	    } else if ($event == 'wiki_page_deleted') {
+	    	$smarty->assign('mail_action', 'delete');
+	    } else {
+	    	$smarty->assign('mail_action', 'edit');
+	    }
 
 	    foreach ($nots as $not) {
 		if (isset($not['hash']))

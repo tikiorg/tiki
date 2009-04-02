@@ -10,7 +10,7 @@
 require_once ('tiki-setup.php');
 include_once ('lib/menubuilder/menulib.php');
 
-$auto_query_args = array('menuId','import','export', 'optionId', 'remove', 'up', 'down', 'delsel_x', 'checked', 'save', 'groupname', 'level', 'name', 'url', 'position', 'section', 'type', 'sort_mode', 'offset', 'find', 'maxRecords');
+$auto_query_args = array('menuId', 'optionId', 'checked', 'groupname', 'level', 'name', 'url', 'position', 'section', 'type', 'sort_mode', 'offset', 'find', 'maxRecords');
                                                                              
 
 if ($tiki_p_admin != 'y' && $tiki_p_edit_menu_option != 'y') {
@@ -27,6 +27,8 @@ if (!isset($_REQUEST["menuId"])) {
 	$smarty->display("error.tpl");
 	die;
 }
+
+$auto_query_args = array('offset', 'find', 'sort_mode', 'menuId');
 
 if (!empty($_REQUEST['import']) && !empty($_FILES['csvfile']['tmp_name'])) {
 	$menulib->import_menu_options();
@@ -59,6 +61,7 @@ if ($_REQUEST["optionId"]) {
 	$info["groupname"] = '';
 	$info["userlevel"] = '';
 	$info["type"] = 'o';
+	$info["icon"] = '';
 	$info["position"] = $maxPos + 2;
 }
 
@@ -67,6 +70,7 @@ $smarty->assign('url', $info["url"]);
 $smarty->assign('section', $info["section"]);
 $smarty->assign('perm', $info["perm"]);
 $smarty->assign('type', $info["type"]);
+$smarty->assign('icon', $info["icon"]);
 $smarty->assign('position', $info["position"]);
 $smarty->assign('groupname', $info["groupname"]);
 $smarty->assign('userlevel', $info["userlevel"]);
@@ -117,7 +121,7 @@ if (isset($_REQUEST["save"])) {
 include_once('lib/modules/modlib.php');
 	check_ticket('admin-menu-options');
 	$menulib->replace_menu_option($_REQUEST["menuId"], $_REQUEST["optionId"], $_REQUEST["name"], $_REQUEST["url"],
-		$_REQUEST["type"], $_REQUEST["position"], $_REQUEST["section"], $_REQUEST["perm"], $_REQUEST["groupname"], $_REQUEST['level']);
+		$_REQUEST["type"], $_REQUEST["position"], $_REQUEST["section"], $_REQUEST["perm"], $_REQUEST["groupname"], $_REQUEST['level'], $_REQUEST['icon']);
 	$modlib->clear_cache();
 	$smarty->clear_cache(null, "menu" . $_REQUEST["menuId"]);
 	$smarty->assign('position', $_REQUEST["position"] + 1);
@@ -129,6 +133,7 @@ include_once('lib/modules/modlib.php');
 	$smarty->assign('groupname', '');
 	$smarty->assign('userlevel', 0);
 	$smarty->assign('type', 'o');
+	$smarty->assign('icon', '');
 }
 
 if (!isset($_REQUEST["sort_mode"])) {
@@ -152,11 +157,12 @@ if (isset($_REQUEST["find"])) {
 }
 $smarty->assign('find', $find);
 
-if (!empty($_REQUEST['maxRecords'])) {
+if (isset($_REQUEST['maxRecords'])) {
 	$maxRecords = $_REQUEST['maxRecords'];
+} else {
+	$maxRecords = $prefs['maxRecords'];
 }
 $smarty->assign_by_ref('maxRecords', $maxRecords);
-
 $smarty->assign_by_ref('sort_mode', $sort_mode);
 $allchannels = $menulib->list_menu_options($_REQUEST["menuId"], 0, -1, $sort_mode, $find);
 $allchannels = $menulib->sort_menu_options($allchannels);

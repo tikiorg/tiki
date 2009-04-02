@@ -134,7 +134,7 @@
 <div align="center">
 {if $galleries or ($find ne '')}
 
-{include file='find.tpl' _sort_mode='y'}
+{include file='find.tpl'}
 
 <div>
 <form action="tiki-galleries.php" method="get">

@@ -404,10 +404,12 @@ class ModsLib {
 
 	var $feedback_listeners;
 	var $types;
+	var $versions;
 
 	function ModsLib() { 
 		$this->types = array();
 		$this->feedback_listeners = array();
+		$this->versions = array('Unspecified' => -1,'1.x' => 1.0,'1.9.x' => 1.9,'2.x' => 2.0,'3.x' => 3.0, '4.x' => 4.0);
 	}
 
 	function feedback_info($feedback) {
@@ -592,7 +594,7 @@ class ModsLib {
 					foreach($str as $k => $v) $str[$k]=stripslashes($v);
 					$mod=new TikiModAvailable($str[0], $str[1]);
 					$this->types[$mod->type] = true;
-					if ((empty($type) or ($mod->type == $type)) and (empty($find) or (strpos($mode->name,$find) !== false))) {
+					if ((empty($type) or ($mod->type == $type)) and (empty($find) or (strpos($mod->name,$find) !== false))) {
 						$mod->revision=$str[2];
 						$mod->description=$str[3];
 						$mod->licence=$str[4];

@@ -23,6 +23,12 @@ html>body {
 	text-align: left;
 }
 
+/* workaround for Safari when in FCKEditor */
+html[dir=ltr]>body {
+	display: block;
+	margin: 1em .5em;
+}
+
 body.fullscreen {}
 
 a,
@@ -547,7 +553,7 @@ div#tiki-bot {}
 
 /* Text in the top level (visible by default) of the menu */
 .horbaritem a {
-	padding: 4px 3px 4px 1em;
+	padding: 4px 6px;
 	text-decoration: none;
 	font: .9em Verdana, Helvetica, Arial, Sans-Serif;
 	display: block;
@@ -562,6 +568,7 @@ div#tiki-bot {}
 .horbaritem a:visited {
 	
 } 
+.horbaritem img {vertical-align: middle;}
 
 /* IE */
 * html .horbaritem a,
@@ -593,6 +600,7 @@ div#tiki-bot {}
 	background-color: #fff;
 	display: block;
 	border: 1px solid #D3D3D3;
+	border-top: none;
 } 
 
 /* Menu items in drop down frame */
@@ -702,14 +710,17 @@ a.phplmselected:hover {
 
 * html div.box-CSS_menu ul {margin-left: 0}
 
+#col2 .cssmenu_vert > li {
+	width: 180px;
+	padding: 0 !important}
+
 .cssmenu li ul,
 .cssmenu_horiz li ul,
 .cssmenu_vert li ul {border: 1px solid #D3D3D3}
 
-.cssmenu_vert li ul {margin-left: 9em !important}
-
-.cssmenu li ul ul {/*left: -999em*/}
-
+.cssmenu_vert li ul {margin-left: 9em}
+#col2 .cssmenu_vert li ul {margin-left: 175px}
+#col2 .cssmenu_vert li ul li ul {margin-left: 9em}
 .cssmenu_horiz li ul ul {margin: -1em 0 0 9em}
 
 .cssmenu a,	
@@ -851,34 +862,41 @@ h3.box-title {
 	font-weight: normal;
 	margin: 0 0 7px 1em;
 	padding: 0;
+	height: 18px;
 	color: black;
 	text-transform: uppercase;
 	font-family: Arial, Helvetica, sans-serif;
 	display: block;
 	font-size: 90%;
 	font-weight: bold;
-	position: relative;
-}
+	position: relative}
 
 * html h3.box-title {position: static}
-.box a.flipmodtitle img {display: none}
 
-* html .box a.flipmodtitle img,
-.box:hover a.flipmodtitle img {
-	display: block;
+.moduleflip {
+	display: none;
 	position: absolute;
 	right: 0;
-	top: 0;
+	top: 0}
+
+* html .moduleflip {
+	position: static;
+	float: right}
+
+* html .moduleflip,
+.box:hover .moduleflip {display: block}
+
+* html .box img.flipmodimage,
+.box:hover img.flipmodimage {
 	height: 13px;
 	width: 13px;
 	border: 1px solid transparent;
 	background: #fff}
 	
-* html #col2 a.flipmodtitle img {right: 8px}
-* html #col3 a.flipmodtitle img {right: 20px}
-
-* html .box a.flipmodtitle img {border: none}
-a.flipmodtitle:hover img {border: 1px solid #AAAAAA !important}
+* html #col2 img.flipmodimage {right: 8px}
+* html #col3 img.flipmodimage {right: 20px}
+* html .box img.flipmodimage {border: none}
+img.flipmodimage:hover {border: 1px solid #AAAAAA !important}
 #col2 h3.box-title {}
 
 .opaque {
@@ -1200,10 +1218,11 @@ h1 a.pagetitle {
 	font-size: 1.2em;
 }
 
-span#description {
-	font-size: .9em;
-	font-style: italic;
-}
+div#description,
+.description {
+	display: block;
+	font-size: .95em;
+	font-style: italic}
 
 #pageid {
 	float: left;
@@ -1501,7 +1520,7 @@ div.articletitle {
 	text-align:	left;
 }
  
-span.titlea {
+div.articletitle h2 {
 	font-size: 200%;
 	font-weight: normal;
 }

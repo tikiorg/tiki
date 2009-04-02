@@ -110,7 +110,8 @@ class Smarty_Tikiwiki extends Smarty {
 			}
 			$data = $this->fetch($tpl, $_smarty_cache_id, $_smarty_compile_id);//must get the mid because the modules can overwrite smarty variables
 			$this->assign('mid_data', $data);
-			include_once('tiki-modules.php');
+			if ($prefs['feature_fullscreen'] != 'y' || empty($_SESSION['fullscreen']) || $_SESSION['fullscreen'] != 'y')
+				include_once('tiki-modules.php');
 			if ($prefs['feature_ajax'] == 'y' && $_smarty_display ) {
 				$ajaxlib->processRequests();
 			}

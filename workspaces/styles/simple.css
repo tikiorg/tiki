@@ -27,7 +27,13 @@ body {
 html>body {
 	font-size: 0.75em !important;/* redefine the body font-size for all modern browsers - ignored by old IEs */
 }
-	
+
+/* workaround for Safari when in FCKEditor */
+html[dir=ltr]>body {
+	display: block;
+	margin: 1em .5em;
+}
+
 #header {
 	background-color: transparent;
 }
@@ -1003,5 +1009,18 @@ a.icon,
 img.icon {
 	border: 0 !important;
 	background: transparent}
+
+/***** TikiSheet Default Style *****/
+
+table.default thead td,
+table.default tfoot td {
+	font-weight: bold;
+	text-align:	center;
+	background: #ABCDEF;
+	color: #cce5ff}
+
+table.default td {
+	border: solid 1px #A9A9A9;
+	background: white}
 
 /* end of css file */

@@ -221,7 +221,7 @@ if($prefs['feature_user_watches'] == 'y') {
 		if($_REQUEST['watch_action']=='add') {
 	    	$tikilib->add_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object'],'image gallery',$gal_info['name'],'tiki-browse_gallery.php?galleryId='.$_REQUEST['galleryId']);
 		} else {
-	    	$tikilib->remove_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object']);
+	    	$tikilib->remove_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object'], 'image gallery');
 		}
     }
     $smarty->assign('user_watching_gal','n');

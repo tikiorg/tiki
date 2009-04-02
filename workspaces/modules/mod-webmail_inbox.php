@@ -25,13 +25,13 @@ if ($tiki_p_use_webmail != 'y') {
 }
 
 if ($prefs['feature_ajax'] == "y") {
-	require_once ('lib/ajax/ajaxlib.php');
+	// this includes what we need for ajax
+	require_once ("tiki-webmail_ajax.php");
 }
+
 global $webmaillib, $dbTiki;
 if (!isset($webmaillib)) { include_once ('lib/webmail/webmaillib.php'); }
 require_once ("lib/webmail/net_pop3.php");
-//require_once ("lib/mail/mimelib.php");
-//include_once ("lib/webmail/class.rc4crypt.php");
 include_once ("lib/webmail/tikimaillib.php");
 
 
@@ -53,7 +53,9 @@ function webmail_refresh() {
 	}
 
 	$smarty->assign('current', $current);
-	$smarty->assign('autoRefresh',$current['autoRefresh']);
+	if ($current['autoRefresh'] > 0) {
+		$smarty->assign('autoRefresh',$current['autoRefresh']);
+	}
 	$smarty->assign('flagsPublic',$current['flagsPublic']);
 	$pop3 = new Net_POP3();
 	
@@ -168,7 +170,7 @@ function webmail_refresh() {
 
 }
 
-if (isset($_REQUEST['refresh_mail'])) {
+if (isset($_REQUEST['refresh_mail']) || (isset($_REQUEST['xjxfun']) && $_REQUEST['xjxfun'] == 'refreshWebmail')) {	// YUK!
 	webmail_refresh();
 }
 
@@ -181,14 +183,4 @@ $module_rows = count($webmail_list);
 $smarty->assign('module_rows', $module_rows);
 if (isset($module_params['title'])) {
 	$smarty->assign('tpl_module_title', $module_params['title']);
-}
-
-if ($prefs['feature_ajax'] == "y") {
-	function mod_webmail_ajax() {
-	    global $ajaxlib, $xajax;
-	    $ajaxlib->registerTemplate("modules/mod-webmail_inbox.tpl");
-		$ajaxlib->registerFunction("loadComponent");
-	    $ajaxlib->processRequests();
-	}
-	mod_webmail_ajax();
 }

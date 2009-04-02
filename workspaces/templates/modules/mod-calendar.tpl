@@ -41,7 +41,7 @@ $parsed = parse_url($_SERVER["REQUEST_URI"]);
 if (!isset($parsed["query"])) {
   $parsed["query"]='';
 }
-parse_str($parsed["query"],$query);
+TikiLib::parse_str($parsed["query"],$query);
 unset($query["day"]);
 unset($query["mon"]);
 unset($query["year"]);

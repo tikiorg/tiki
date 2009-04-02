@@ -55,7 +55,7 @@
 <h2>{tr}RSS channels{/tr}</h2>
 <div align="center">
 {if $channels or ($find ne '')}
-  {include file='find.tpl' _sort_mode='y'}
+  {include file='find.tpl'}
 {/if}
 <table class="normal">
 <tr>

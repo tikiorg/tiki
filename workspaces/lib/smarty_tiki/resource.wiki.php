@@ -32,7 +32,11 @@ function smarty_resource_wiki_timestamp($page, &$tpl_timestamp, &$smarty) {
 	if (empty($info)) {
 		return false;
 	}
-	$tpl_timestamp = $info['lastModif'];
+	if (preg_match("/\{([A-Z0-9_]+) */", $info['data'])) { // there are some plugins - so it can be risky to cache the page
+		$tpl_timestamp = $tikilib->now;
+	} else {
+		$tpl_timestamp = $info['lastModif'];
+	}
 	return true;
 }
 

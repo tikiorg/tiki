@@ -293,8 +293,8 @@ a.phplmselected:hover {
 .cssmenu ul,
 .cssmenu_vert li ul,
 .cssmenu_horiz li ul {
-	border: 1px solid #08698f;
-	background: #212121;
+	border: 1px solid #a9a9a9;
+	background: #4c4c4c;
 }
 
 .cssmenu_vert li ul {
@@ -338,7 +338,7 @@ a.phplmselected:hover {
 /** Links in other menus **/
 
 div.separator {
-	border-top: 1px solid #555555;
+	border-top: 1px solid #696969;
 }
 
 .separator a:link,

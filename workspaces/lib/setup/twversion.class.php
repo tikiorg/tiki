@@ -20,7 +20,7 @@ class TWVersion {
 	var $ridx;			// Associative array pointing versions to release index
 	var $vidx;			// Index where this version appears in releases array
 	var $star;			// Star being used for this version tree
-	var $cvs;			// Is this a cvs version or a package?
+	var $svn;			// Is this a Subversion version or a package?
 
 	function TWVersion() {
 		// Set the development branch.  Valid are:
@@ -37,8 +37,8 @@ class TWVersion {
 		$this->ridx 	= array();
 		$this->vidx 	= 0;
 
-		// Check for CVS or not
-		$this->cvs	= is_dir('CVS') ? 'y' : 'n';
+		// Check for Subversion or not
+		$this->svn	= is_dir('.svn') ? 'y' : 'n';
 	}
 
 	function getBaseVersion()

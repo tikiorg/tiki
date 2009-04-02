@@ -511,7 +511,7 @@ class QuizLib extends TikiLib {
 		if ($find) {
 			$findesc = '%' . $find . '%';
 
-			$mid = " where `questionId`=? and `option` ? ";
+			$mid = " where `questionId`=? and `optionText` like ? ";
 			$bindvars=array((int)$questionId,$findesc);
 		} else {
 			$mid = " where `questionId`=? ";

@@ -42,16 +42,13 @@ if (isset($_REQUEST["looksetup"])) {
 	"layout_section",
 	"feature_sitemycode",
 	"feature_breadcrumbs",
-    "feature_siteidentity",
 	"feature_siteloclabel",
 	"feature_sitelogo",
-	"feature_sitesubtitle",
 	"feature_sitenav",
 	"feature_sitesearch",
 	"feature_site_login",
 	"feature_sitemenu",
 	"feature_topbar_version",
-	"feature_topbar_date",
 	"feature_topbar_debug",
 	"sitemycode_publish",
 	"feature_bot_logo",
@@ -61,6 +58,7 @@ if (isset($_REQUEST["looksetup"])) {
 	"pagination_firstlast",
 	"pagination_icons",
 	"pagination_fastmove_links",
+	"menus_items_icons",
 	"use_context_menu_icon",
 	"use_context_menu_text",
 	"feature_site_report",
@@ -72,7 +70,8 @@ if (isset($_REQUEST["looksetup"])) {
 	'feature_jquery_superfish',
 	'feature_jquery_reflection',
     'feature_jquery_sheet',
-    'feature_ie56_correct_png',
+	'feature_iepngfix',
+	'feature_layoutshadows'
     );
 
     foreach ($pref_toggles as $toggle) {
@@ -107,6 +106,8 @@ if (isset($_REQUEST["looksetup"])) {
     'jquery_effect_tabs_direction',
     'jquery_effect_tabs_speed',
 	'available_styles',
+	'iepngfix_selectors',
+	'iepngfix_elements'
     );
 
     foreach ($pref_simple_values as $svitem) {
@@ -150,6 +151,7 @@ function get_thumbnail_file($stl, $opt = '') {	// find thumbnail if there is one
 		$filename =  eregi_replace('\.css$', '.png', $opt);	// change .css to .png
 	} else {
 		$filename = eregi_replace('\.css$', '.png', $stl);	// change .css to .png
+		$opt = '';
 	}
 	return $tikilib->get_style_path($stl, $opt, $filename);
 }
@@ -203,16 +205,20 @@ if ($prefs['feature_jquery'] == 'y') {
 		var t = \$jq('#general-theme').val();
 		var f = style_options[t][0];
 		if (f) {
-			\$jq('#style_thumb').fadeOut('fast').attr('src', f).fadeIn('fast');
-}
+			\$jq('#style_thumb').fadeOut('fast').attr('src', f).fadeIn('fast').animate({'opacity': 1}, 'fast');
+		} else {
+			\$jq('#style_thumb').animate({'opacity': 0.3}, 'fast');
+		}
 	});
 	\$jq('#general-theme-options').change( function() {
 		var t = \$jq('#general-theme').val();
 		var o = \$jq('#general-theme-options').val();
 		var f = style_options[t][1][o];
 		if (f) {
-			\$jq('#style_thumb').fadeOut('fast').attr('src', f).fadeIn('fast');
-}
+			\$jq('#style_thumb').fadeOut('fast').attr('src', f).fadeIn('fast').animate({'opacity': 1}, 'fast');
+		} else {
+			\$jq('#style_thumb').animate({'opacity': 0.3}, 'fast');
+		}
 	});
 });
 JS

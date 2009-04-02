@@ -5,7 +5,7 @@ require_once 'PHPUnit/Extensions/SeleniumTestCase.php';
 class  AcceptanceTests_SearchTest extends PHPUnit_Extensions_SeleniumTestCase
 {
 
-    public function testRememberToReactivateAllTestsInSearchTest() {
+    public function ___testRememberToReactivateAllTestsInSearchTest() {
        $this->fail("Don't forget to do this");
     }
 
@@ -14,7 +14,7 @@ class  AcceptanceTests_SearchTest extends PHPUnit_Extensions_SeleniumTestCase
         $this->_assertSearchFormIsWellFormed();
     }    
     
-    public function ___testFillSearchFormAndSubmit() {
+    public function testFillSearchFormAndSubmit() {
         $query = 'feature';
         $this->_searchFor($query);
         $this->_assertSearchResultsWere(array(0 => "HomePage", 1 => 'Multilingual Test Page 1', 2 => 'Another page containing the word feature'), 
@@ -22,7 +22,7 @@ class  AcceptanceTests_SearchTest extends PHPUnit_Extensions_SeleniumTestCase
     }
     
     
-    public function ___testSearchIsCaseInsensitive() {
+    public function testSearchIsCaseInsensitive() {
        $query = 'hello';
        $this->_searchFor($query);
        $this->_assertSearchResultsWere(array(0 => "test page for search 1", 
@@ -58,16 +58,16 @@ class  AcceptanceTests_SearchTest extends PHPUnit_Extensions_SeleniumTestCase
 
     private function _assertSearchFormIsWellFormed() {
     
-        echo "-- _assertSearchFormIsWellFormed: content of active page is: \n";
-        echo $this->getHTMLSource();
+//        echo "-- _assertSearchFormIsWellFormed: content of active page is: \n";
+//        echo $this->getHtmlSource();
     
-        $this->assertElementPresent("xpath=//form[@id='search-form']", 
+        $this->assertElementPresent("xpath=//form[@id='search-module-form']", 
                                     "Search form was not present");
-        $this->assertElementPresent("xpath=//form[@id='search-form']/input[@name='highlight']",
+        $this->assertElementPresent("xpath=//form[@id='search-module-form']/input[@name='highlight']",
                                     "Search query field was not present");
-        $this->assertElementPresent("xpath=//form[@id='search-form']/span/select[@name='where']",
+        $this->assertElementPresent("xpath=//form[@id='search-module-form']/select[@name='where']",
                                     "Picklist for where to search was not present");
-        $this->assertElementPresent("xpath=//form[@id='search-form']/input[@type='submit']",
+        $this->assertElementPresent("xpath=//form[@id='search-module-form']/input[@type='submit']",
                                     "Submit button for search form was not present");
     }
      

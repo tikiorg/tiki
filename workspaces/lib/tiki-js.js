@@ -480,7 +480,16 @@ function flip_thumbnail_status(id) {
   }
 }
 
+function flip_class(itemid, class1, class2) {
+	var elem = document.getElementById(itemid);
+	if (elem && typeof elem != 'undefined') {
+		elem.className = elem.className == class1 ? class2 : class1;
+		setCookie('flip_class_' + itemid, elem.className);
+	}
+}
+
 function tikitabs(focus,max) {
+  var didit = false, didone = false;
   for (var i = 1; i <= max; i++) {
     var tabname = 'tab' + i;
     var content = 'content' + i;
@@ -491,13 +500,21 @@ function tikitabs(focus,max) {
         setCookie('tab',focus);
         document.getElementById(tabname).className = 'tabmark';
         document.getElementById(tabname).className += ' tabactive';
+        didit = true;
       } else {
         //hide(tabname);
         hide(content);
         document.getElementById(tabname).className = 'tabmark';
         document.getElementById(tabname).className += ' tabinactive';
       }
+      if (!didone) { didone = true; }
     }
+  }
+  if (didone && !didit) {
+	  show('content1');
+	  setCookie('tab',1);
+	  document.getElementById('tab1').className = 'tabmark';
+	  document.getElementById('tab1').className += ' tabactive';
   }
 }
 
@@ -565,7 +582,7 @@ function setsectionstate(foo, def, img) {
 }
 
 function icntoggle(foo, img) {
-    if (!img) {
+  if (!img) {
     if (document.getElementsByName('icn' + foo)[0].src.search(/[\\\/]/))
       img = document.getElementsByName('icn' + foo)[0].src.replace(/.*[\\\/]([^\\\/]*)$/, "$1");
     else

@@ -12,6 +12,11 @@ body {
 	font-family: Arial, Helvetica, sans-serif;}
 
 html>body {font-size: .7em !important}
+/* workaround for Safari when in FCKEditor */
+html[dir=ltr]>body {
+	display: block;
+	margin: 1em .5em;
+}
 body.fullscreen {}
 
 a,
@@ -36,11 +41,6 @@ h1 {
 	
 * html h1 {margin-bottom: auto}
 	
-body.tiki_wiki h1 {
-	/*display: inline;
-	float: left;
-	clear: none*/}
-
 h2 {font-size: 1.5em}
 h3 {font-size: 1.4em}
 h4 {font-size: 1.3em}
@@ -95,6 +95,11 @@ input[type=file],
 input[type=reset],
 select {}
 
+.navbar{
+	margin: 10px 0;
+	line-height: 20px;
+}
+
 span.button {display: inline-block; margin: 2px 1px}
 
 /* Links in buttons */
@@ -119,7 +124,7 @@ input[type=submit],
 	cursor: pointer;
 	display: inline;
 	outline: none;
-	/*line-height: 2em*/}
+	}
 	
 * html span.button a {background: #f5f5f5}
 	
@@ -235,8 +240,9 @@ ul.jumplinks a:active {
 	margin-right: 30px;
 	position: relative}
 	
-body.tiki_wiki #c1c2 #wrapper #col1 > .content {position: relative}
-body.tiki_cms #tiki-center {background: none !important}
+body.tiki_wiki_page #c1c2 #wrapper #col1 > .content {position: relative}
+body.tiki_cms #c1c2 #wrapper #col1 #tiki-center,
+body.tiki_wiki_page #c1c2 #wrapper #col1 #tiki-center {background: none !important}
 
 #c1c2 #col2 {
 	width: 230px;
@@ -680,14 +686,32 @@ a.phplmselected:hover {color: #808080}
 	width: 16px;
 	height: 18px}
 	
-/* cssmenus (used by page controls and menus */
+/** CSS (suckerfish) menus **/
 
-* html .cssmenu li {width: 10em}
+.cssmenu li ul,
+.cssmenu_horiz li ul,
+#tiki-top .cssmenu_horiz li ul,
+.cssmenu_vert li ul {border: 1px solid #5a7ea2}
 
-.cssmenu_horiz ul li * {
+.cssmenu_horiz li:hover ul,
+.cssmenu_vert li:hover ul {
+	background: #ccdceb;
+	color: #5a7ea2;}
+
+#col2 .cssmenu_vert > li > ul {margin-left: 180px}
+.cssmenu_vert li {background: #ccdceb}
+
+#col2 .cssmenu_vert > li {
+	width: 186px;
+	padding: 0 !important}
+	
+.cssmenu_horiz ul li {
 	text-align: left;
-	color: #5a7ea2;
-	/*min-width: 10em*/}
+	color: #5a7ea2}
+	
+.cssmenu_horiz li:hover ul li:hover {
+	background: #eff8ff;
+	color: #5a7ea2;}
 
 .cssmenu_horiz li a:link,
 .cssmenu_horiz li a:visited {
@@ -701,38 +725,9 @@ a.phplmselected:hover {color: #808080}
 	font-size: 12px}
 	
 .cssmenu_horiz li.selected > a {background: inherit}
-
-.cssmenu_horiz li:hover ul {
-	border: 0;
-	background: #ccdceb;
-	color: #5a7ea2;}
-
-.cssmenu_horiz li:hover ul li:hover {
-	background: #eff8ff;
-	color: #5a7ea2;}
 	
-.cssmenu_vert li {background: #ccdceb}
-
-.cssmenu_vert li:hover ul {
-	background: #ccdceb;
-	color: #5a7ea2;}
-	
-*:first-child+html .pageactions .cssmenu_horiz li:hover ul {z-index: 300 !important}
-	
-.cssmenu_horiz li:hover ul li:hover {
-	background: #eff8ff;
-	color: #5a7ea2;}
-	
-.cssmenu_horiz li.selected > a {}
-
 .cssmenu_vert li a {
 	padding: 3px 0;
-	position: relative;
-	display: block;
-	font-weight: normal;
-	font-size: 1.2em} 
-
-.cssmenu_vert li a {
 	font-size: 1em;
 	color: #295C83;
 	font-weight: bold;
@@ -740,10 +735,8 @@ a.phplmselected:hover {color: #808080}
 
 .cssmenu_vert li a:hover {
 	color: #82a7c8;
-	text-decoration: underline;
-	/*background: #eff8ff*/} 
+	text-decoration: underline}
 	
-.cssmenu_horiz li.selectedAscendant > a {}
 #tiki-top > .cssmenu_horiz > li:hover { background: url(coelesce/pagebg.jpg) 0 -2px repeat-x }
 
 #tiki-top > .cssmenu_horiz {
@@ -751,10 +744,8 @@ a.phplmselected:hover {color: #808080}
 	border-left: 1px solid #2E5276;
 	border-right: 1px solid #ACC4E0}
 
-#tiki-top .cssmenu_horiz ul li {}
-
-#tiki-top .cssmenu_horiz ul li a { color: #5a7ea2 }
 #tiki-top .cssmenu_horiz ul li:hover {background: #ecf5ff;}
+#tiki-top .cssmenu_horiz ul li a {color: #5a7ea2}
 
 #tiki-top > ul.cssmenu_horiz > li > a {
 	border-left: 1px solid #acc4e0;
@@ -767,9 +758,7 @@ a.phplmselected:hover {color: #808080}
 	padding-top: 10px;
 	padding-bottom: 9px}
 	
-#tiki-top > .cssmenu_horiz > li > a:hover { 
-	/*background: url(coelesce/pagebg.jpg) 0 -2px repeat-x;*/
-	color: #fff}
+#tiki-top > .cssmenu_horiz > li > a:hover {color: #fff}
 
 /****** Misc. Global Classes (layout and style) ****/
 .hidden {
@@ -842,7 +831,10 @@ div#debugconsole {}
 .mini {
 	width: 100%;
 	text-align: center;
-	font-size: .9em}
+	font-size: .9em;
+	margin-left: auto;
+	margin-right: auto;
+}
 
 .prevnext {
 	font-size: 1em;
@@ -966,34 +958,38 @@ div.box {
 #col2 div.box {width: 205px}
 
 h3.box-title {
-	position: relative;
 	padding-top: 0;
 	padding-left: 15px;
 	margin: 0;
 	font-size: 1.1em;
 	color: #3f6383;
 	border: 1px solid #ebf5fe;
-	border-bottom: 0}
+	border-bottom: 0;
+	height: 18px;
+	position: relative}
+	
+* html h3.box-title {position: static}
 
 .box-title a,
 .box-title a:link {color: #3f6383}
 
-.box a.flipmodtitle img {display: none}
-
-* html .box a.flipmodtitle img,
-.box:hover a.flipmodtitle img {
-	display: block;
+.moduleflip {
+	display: none;
 	position: absolute;
 	right: 0;
-	top: 0;
-	border: 1px solid transparent}
+	top: 0}
+	
+* html .moduleflip {
+	position: static;
+	float: right}
 
-* html .box a.flipmodtitle img {border: none}
-a.flipmodtitle:hover img {border: 1px solid #58A7D2 !important}
-#col2 h3.box-title {}
-#col2 .box-title a,
-#col2 .box-title a:link {}
-.box-title a:hover {}
+* html .moduleflip,
+.box:hover .moduleflip {display: block}
+
+.box:hover img.flipmodimage {border: 1px solid transparent}
+* html img.flipmodimage {border: none}
+img.flipmodimage:hover {border: 1px solid #58A7D2 !important}
+
 .box-data {
 	padding: 10px;
 	border: 1px solid #ebf5fe;
@@ -1204,7 +1200,11 @@ table.admin div#content1 div.tabcontent div.cbox {background: transparent}
 
 /***** Wiki *****/
 
-body.tiki_wiki #comments {padding: 1em }
+body.tiki_wiki_page #comments {padding: 1em }
+
+h1.pagetitle {
+	background: url(coelesce/tiki-centerbg.jpg) repeat-x;
+	color: #2d2d2d}
 
 h1.pagetitle a,
 h1.pagetitle a:visited,
@@ -1227,17 +1227,18 @@ h1 a:hover {
 	text-decoration: none;
 	color: #2d2d2d}
 
-body.tiki_wiki .wikitopline {
-	position: absolute;
-	top: -2em;
-	left: 80px;
+body.tiki_wiki_page .wikitopline {
+	position: relative;
+	top: -2.2em;
+	right: -9em;
 	width: 70%}
 	
 .wikitopline .content br {display: none}
 .wikiinfo {}
 
 div#description,
-div.description {
+.description {
+	display: block;
 	font-size: .9em;
 	font-style: italic}
 
@@ -1292,9 +1293,12 @@ div.split {
 .editdate {}
 
 div#page-bar {
+	width: 100%;
 	display: block;
 	margin-top: 0;
-	float: none}
+	float: none;
+	line-height: 20px;
+	}
 
 #page-bar > span {float: left}
 
@@ -1355,7 +1359,7 @@ div.code {
 	margin: 4px;
 	border: 1px dashed #696969;
 	overflow: auto; 
-   width: 500px}
+	width: 95%}
 
 .codecaption {
 	font-size: 90%;
@@ -1393,7 +1397,9 @@ ul.toc {
 	padding-left: 2em;
 	border-top: 1px dotted #a9a9a9;
 	border-bottom: 1px dotted #a9a9a9;
-	margin-bottom: 4px}
+	margin-bottom: 4px;
+	margin-left: 0px;
+	}
 
 ul.toc * {border: none}
 
@@ -1424,8 +1430,7 @@ div.articletitle {
 	margin-bottom:	15px;
 	text-align:	left}
  
-span.titlea {
-	display: block;
+div.articletitle h2 {
 	min-height: 26px;
 	background: url(coelesce/tiki-centerbg.jpg) repeat-x;
 	font-size: 1.8em;
@@ -1434,12 +1439,12 @@ span.titlea {
 	padding-left: 14px;
 	padding-top: 8px}
 	
-span.titlea a:link,
-span.titlea a:visited {
+div.articletitle h2 a:link,
+div.articletitle h2 a:visited {
 	color: #000;
 	text-decoration: none}
 	
-span.titlea a:hover {text-decoration: none}
+div.articletitle h2 a:hover {text-decoration: none}
 .articletitle br {display: none}
 
 span.titleb {
@@ -2467,7 +2472,7 @@ table.default tfoot td {
 
 table.default td {
 	border: solid 1px #A9A9A9;
-	background: black}
+	background: white}
 
 .highlight_word_0{
 	color: #ffff66;

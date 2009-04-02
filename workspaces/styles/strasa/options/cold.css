@@ -94,11 +94,11 @@ ul.jumplinks a:active {
 }
 
 #c1c2 #col2 {
-	background: url(strasa/box_top.gif) no-repeat 100% 0;
+	background: url(cold/box_top.gif) no-repeat 100% 0;
 }
 
 #c1c2 #col2 .content {
-	background: url(strasa/box_bottom.gif) no-repeat 0 100%;
+	background: url(cold/box_bottom.gif) no-repeat 0 100%;
 }
 
 #col3 .content {
@@ -151,15 +151,15 @@ ul.jumplinks a:active {
 
 /* Site Header & Identity */
 #header-top {
-	background: #1b3c54 url(strasa/headerbg.jpg) repeat-x 0 100%;
+	background: #1b3c54 url(cold/headerbg.jpg) repeat-x 0 100%;
 }
 
 #siteloginbar {
-	background: url(strasa/login.jpg) 0 0 no-repeat;
+	background: url(cold/login.jpg) 0 0 no-repeat;
 }
 
 #siteloginbar .register {
-	background: url(strasa/register.jpg) no-repeat;
+	background: url(cold/register.jpg) no-repeat;
 }
 
 #siteloginbar input.wikiaction {
@@ -190,7 +190,7 @@ ul.jumplinks a:active {
 
 .tellafriend a,
 .tellafriend a:visited {
-	background: transparent url(strasa/fold-topright.jpg) 0 0 no-repeat;
+	background: transparent url(cold/fold-topright.jpg) 0 0 no-repeat;
 	color: #fff;
 }
 
@@ -224,7 +224,7 @@ ul.jumplinks a:active {
 }
 
 #header .horbaritem a:hover {
-	background: url('strasa/headermenuitem-hover.png') bottom center repeat-x;
+	background: url('cold/headermenuitem-hover.png') bottom center repeat-x;
 	border-color: #336699;
 	color: #fff;
 }
@@ -239,7 +239,7 @@ ul.jumplinks a:active {
 }
 
 .mdkitem a:hover {
-	background: transparent url('styles/strasa/headerbg.jpg') repeat-x;
+	background: transparent url('styles/cold/headerbg.jpg') repeat-x;
 	color: #fff;
 }
 

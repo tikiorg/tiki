@@ -34,7 +34,7 @@
 </form>
 <h2>{tr}Menus{/tr}</h2>
 
-{include file='find.tpl' _sort_mode='y'}
+{include file='find.tpl'}
 
 <form action="tiki-usermenu.php" method="post">
 <table class="normal">

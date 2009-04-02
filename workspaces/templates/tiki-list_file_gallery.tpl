@@ -22,7 +22,7 @@
 
 {if $edit_mode neq 'y' and $gal_info.description neq ''}
   <div class="description">
-    {$gal_info.description|escape}
+    {$gal_info.description|escape|nl2br}
   </div>
 {/if}
 

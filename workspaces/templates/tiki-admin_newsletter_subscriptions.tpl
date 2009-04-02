@@ -132,7 +132,7 @@
 	<input type="hidden" name="nlId" value="{$nlId|escape}" /> 
 	<table class="normal">
 		<tr>
-			<td class="formcolor">&nbsp;</td>
+			<td class="formcolor" width="30%">&nbsp;</td>
 			<td class="formcolor" colspan="2">
 				<input type="submit" name="export" value="{tr}Export{/tr}" />
 			</td>
@@ -237,7 +237,7 @@
 {/if}
 {* /included------------------------------------ *}
 
-{include file='find.tpl' _sort_mode='y'}
+{include file='find.tpl'}
 
 <table class="normal">
 	<tr>

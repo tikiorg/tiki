@@ -98,6 +98,7 @@
   {cycle values="odd,even" print=false}
   {section name=changes loop=$files}
   
+  {if ( ( ! isset($fileId) ) || $fileId == 0 ) || ( $fileId == $files[changes].id ) }
     {if ( $prefs.use_context_menu_icon eq 'y' or $prefs.use_context_menu_text eq 'y' ) and $gal_info.show_action neq 'y'}
       {capture name=over_actions}{strip}
       <div class='opaque'>
@@ -281,6 +282,7 @@
   </tr>
   {cycle print=false}
 
+  {/if}
   {sectionelse}
   <tr><td colspan="{$nbCols}">
     <b>{tr}No records found{/tr}</b>

@@ -132,6 +132,17 @@ if ($tiki_p_admin_forum == 'y') {
 		}
 	}
 
+    if ( isset($_REQUEST['lock']) && isset($_REQUEST['forumId']) ) {
+	check_ticket('view-forum');
+	if ( $_REQUEST['lock'] == 'y' ) {
+		$commentslib->lock_object_thread('forum:'.((int)$_REQUEST['forumId']));
+		$forum_info['is_locked'] = 'y';
+	} elseif ( $_REQUEST['lock'] == 'n' ) {
+		$commentslib->unlock_object_thread('forum:'.((int)$_REQUEST['forumId']));
+		$forum_info['is_locked'] = 'n';
+	}
+    }
+
     if (isset($_REQUEST['locksel_x'])) {
 	if (isset($_REQUEST['forumtopic'])) {
 		check_ticket('view-forum');
@@ -436,7 +447,7 @@ if ($prefs['feature_user_watches'] == 'y') {
 		if ($_REQUEST['watch_action'] == 'add') {
 			$tikilib->add_user_watch($user, $_REQUEST['watch_event'], $_REQUEST['watch_object'], 'forum', $forum_info['name'], "tiki-view_forum.php?forumId=" . $_REQUEST['forumId']);
 		} else {
-			$tikilib->remove_user_watch($user, $_REQUEST['watch_event'], $_REQUEST['watch_object']);
+			$tikilib->remove_user_watch($user, $_REQUEST['watch_event'], $_REQUEST['watch_object'], 'forum');
 		}
     }
 

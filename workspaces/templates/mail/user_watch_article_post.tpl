@@ -1,7 +1,10 @@
 {* $Id$ *}
-{tr}{$mail_action} article post: {$mail_title} by {$mail_user} at {$mail_date|tiki_short_datetime}{/tr}
+{tr}{$mail_action} article post{/tr}: {tr}{$mail_title} by {$mail_user} at{/tr} {$mail_date|tiki_short_datetime}
+{*get_strings {tr}New article post:{/tr} *}
+{*get_strings {tr}Edited article post:{/tr} *}
+{*get_strings {tr}Deleted article post:{/tr} *}
 
-{if $mail_action neq tr('Delete')}{tr}View the article at:{/tr}
+{if $mail_action neq 'Delete'}{tr}View the article at:{/tr}
 {$mail_machine_raw}/{$mail_postid|sefurl:article}
 {/if}
 {if $mail_user ne 'admin'}

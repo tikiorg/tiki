@@ -4,10 +4,7 @@
 
 {if $forum_info.show_description eq 'y'}
 	<div class="description">{$forum_info.description|nl2br}</div>
-	<br />
 {/if}
-
-<a class="link" href="tiki-forums.php">{tr}Forums{/tr}</a> {$prefs.site_crumb_seper} <a class="link" href="tiki-view_forum.php?forumId={$forumId}">{$forum_info.name}</a>
 
 <div class="navbar">
 	<table width="97%">
@@ -25,7 +22,6 @@
 				{* No need for users to go to forum list if they are already looking at the only forum BUT note that all_forums only defined with quickjump feature *}
 					{button href="tiki-forums.php" _text="{tr}Forum List{/tr}"}
 				{/if}
-
 				{if $tiki_p_admin_forum eq 'y'}
 					{button href="tiki-admin_forums.php?forumId=$thisforum_info" _text="{tr}Edit Forum{/tr}"}
 				{/if}
@@ -43,7 +39,15 @@
 				{if $prefs.rss_forum eq 'y'}
 					<a href="tiki-forum_rss.php?forumId={$forumId}"><img src='img/rss.png' alt='{tr}RSS feed{/tr}' title='{tr}RSS feed{/tr}' /></a>
 				{/if}
-				
+
+				{if $tiki_p_forum_lock eq 'y'}
+					{if $forum_info.is_locked eq 'y'}
+						{self_link lock='n' _icon='lock_break' _alt="{tr}Unlock{/tr}"}{/self_link}
+					{else}
+						{self_link lock='y' _icon='lock_add' _alt="{tr}Lock{/tr}"}{/self_link}
+					{/if}
+				{/if}
+
 				{if $user and $prefs.feature_user_watches eq 'y'}
 					{if $user_watching_forum eq 'n'}
 						<a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic&amp;watch_object={$forumId}&amp;watch_action=add" title='{tr}Monitor Topics of this Forum{/tr}'>{icon _id='eye' alt='{tr}Monitor Topics of this Forum{/tr}'}</a>
@@ -77,9 +81,9 @@
 	</table>
 </div>
 
-{if $unread > 0}
-	<a class='link' href='messu-mailbox.php'>{tr}You have {$unread} unread private messages{/tr}<br /></a>
-{/if}
+<a class="link" href="tiki-forums.php">{tr}Forums{/tr}</a> {$prefs.site_crumb_seper} <a class="link" href="tiki-view_forum.php?forumId={$forumId}">{$forum_info.name}</a>
+
+<br />
 
 {if !empty($errors)}
 	{remarksbox type="warning" title="{tr}Errors{/tr}"}
@@ -159,7 +163,6 @@
 									<option value="a" {if $comment_topictype eq 'a'}selected="selected"{/if}>{tr}announce{/tr}</option>
 									<option value="h" {if $comment_topictype eq 'h'}selected="selected"{/if}>{tr}hot{/tr}</option>
 									<option value="s" {if $comment_topictype eq 's'}selected="selected"{/if}>{tr}sticky{/tr}</option>
-									<option value="l" {if $comment_topictype eq 'l'}selected="selected"{/if}>{tr}locked{/tr}</option>
 								</select>
 							{/if}
 							{if $forum_info.topic_smileys eq 'y'}
@@ -285,7 +288,7 @@
 
 {if $prefs.feature_forum_content_search eq 'y' and $prefs.feature_search eq 'y'}
 	<div class="findtable">
-		<form class="forms" method="get" action="{if $prefs.feature_forum_local_tiki_search eq 'y'}tiki-searchindex.php{else}tiki-searchresults.php{/if}">
+		<form id="search-form" class="forms" method="get" action="{if $prefs.feature_forum_local_tiki_search eq 'y'}tiki-searchindex.php{else}tiki-searchresults.php{/if}">
 				<input name="highlight" size="30" type="text" />
 				<input type="hidden" name="where" value="forums" />
 				<input type="hidden" name="forumId" value="{$forum_info.forumId}" />
@@ -400,20 +403,26 @@
 					</td>
 				{/if}	
 				<td style="text-align:center;" class="{cycle advance=false}">
+					{if $newtopic neq ''}
+						{assign var=nticon value=$newtopic}
+						{assign var=ntalt value="-{tr}New{/tr}"}
+					{/if}
 					{if $comments_coms[ix].type eq 'n'}
-						<img src="img/silk/page{$newtopic}.png" alt="{tr}Normal{/tr}" title="{tr}Normal{/tr}{if $newtopic}-{tr}New{/tr}{/if}" />
+						{icon _id="page$nticon" alt="{tr}Normal{/tr}$ntalt"}
+					{elseif $comments_coms[ix].type eq 'a'}
+						{icon _id="announce$nticon" alt="{tr}Announce{/tr}$ntalt"}
+					{elseif $comments_coms[ix].type eq 'h'}
+						{icon _id="hot$nticon" alt="{tr}Hot{/tr}$ntalt"}
+					{elseif $comments_coms[ix].type eq 's'}
+						{icon _id="sticky$nticon" alt="{tr}Sticky{/tr}$ntalt"}
+					{elseif $comments_coms[ix].type eq 'l'}
+						{icon _id="locked$nticon" alt="{tr}Locked{/tr}$ntalt"}
 					{/if}
-					{if $comments_coms[ix].type eq 'a'}
-						<img src="img/silk/announce{$newtopic}.png" alt="{tr}Announce{/tr}" title="{tr}Announce{/tr}{if $newtopic}-{tr}New{/tr}{/if}" />
-					{/if}
-					{if $comments_coms[ix].type eq 'h'}
-						<img src="img/silk/hot{$newtopic}.png" alt="{tr}Hot{/tr}" title="{tr}Hot{/tr}{if $newtopic}-{tr}New{/tr}{/if}" />
-					{/if}
-					{if $comments_coms[ix].type eq 's'}
-						<img src="img/silk/sticky{$newtopic}.png" alt="{tr}Sticky{/tr}" title="{tr}Sticky{/tr}{if $newtopic}-{tr}New{/tr}{/if}" />
-					{/if}
-					{if $comments_coms[ix].type eq 'l'}
-						<img src="img/silk/locked{$newtopic}.png" alt="{tr}Locked{/tr}" title="{tr}Locked{/tr}{if $newtopic}-{tr}New{/tr}{/if}" />
+
+					{if $comments_coms[ix].locked eq 'y'}
+						{icon _id="lock" alt="{tr}Locked{/tr}"}
+					{elseif $forum_info.is_locked eq 'y'}
+						{icon _id="lock_red" alt="{tr}Forum Lock{/tr}"}
 					{/if}
 				</td>
 				{if $forum_info.topic_smileys eq 'y'}
@@ -433,8 +442,6 @@
 							{$comments_coms[ix].summary|truncate:240:"...":true}
 						</div>
 					{/if}
-				</td>
-
 				</td>
 				{if $forum_info.topics_list_replies eq 'y'}
 					<td style="text-align:right;" class="{cycle advance=false}">{$comments_coms[ix].replies}</td>
@@ -466,7 +473,7 @@
 						&nbsp;
 					{/if}
 
-					{if $tiki_p_admin_forum eq 'y' or ($comments_coms[ix].userName == $user && $tiki_p_forum_post eq 'y') }
+					{if ( $tiki_p_admin_forum eq 'y' or ($comments_coms[ix].userName == $user && $tiki_p_forum_post eq 'y') ) and $forum_info.is_locked neq 'y' and $comments_coms[ix].locked neq 'y'}
 						<a href="tiki-view_forum.php?openpost=1&amp;comments_threadId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}" class="admlink">{icon _id='page_edit'}</a>
 					{/if}
 

@@ -126,7 +126,7 @@ function smarty_block_self_link($params, $content, &$smarty, $repeat = false) {
 
 			$ret = "<a $link>".$content.'</a>';
 
-			if ( !empty($params['_sort_field']) && !empty($params['_disabled']) ) {
+			if ( !empty($params['_sort_field']) ) {
 				require_once $smarty->_get_plugin_filepath('function', 'show_sort');
 				$ret .= "<a $link style='text-decoration:none;'>".smarty_function_show_sort(
 						array('sort' => $params['_sort_arg'], 'var' => $params['_sort_field']),

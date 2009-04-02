@@ -51,7 +51,7 @@
 
 <h2>{tr}Results{/tr}</h2>
 
-{include file='find.tpl' _sort_mode='y'}
+{include file='find.tpl'}
 
 <table class="normal">
 	<tr>

@@ -168,10 +168,8 @@ if (isset($_REQUEST["wikifeatures"])) {
 	'feature_wiki_make_structure',
 	'feature_wiki_categorize_structure',
 	'feature_create_webhelp',
-	'feature_wiki_ext_icon',
 	'wiki_edit_plugin',
 	'feature_wiki_userpage',
-	'feature_wiki_protect_email',
 	'feature_wiki_1like_redirection',
 	'feature_wiki_show_hide_before',
 	'feature_wiki_allowhtml',
@@ -304,8 +302,6 @@ $smarty->assign_by_ref('all_groups', $all_groups);
 
 $tags = $adminlib->get_tags();
 $smarty->assign_by_ref("tags", $tags);
-
-$headerlib->add_cssfile('css/admin.css');
 
 ask_ticket('admin-inc-wiki');
 ?>

@@ -13,10 +13,9 @@
 		<div class="articletopline">{$topline}</div>
 	{/if}
 	<div class="articletitle">
-		<span class="titlea">
+		<h2>
 			{$arttitle}
-		</span>
-		<br />
+		</h2>
 		{if $show_subtitle eq 'y' and $subtitle}
 			<div class="articlesubtitle">{$subtitle}</div>
 		{/if}

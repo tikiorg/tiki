@@ -19,6 +19,12 @@ body {
 	font-size: 70% !important;
 }
 
+/* workaround for Safari when in FCKEditor */
+html[dir=ltr]>body {
+	display: block;
+	margin: 1em .5em;
+}
+
 #main {}
 
 a,
@@ -698,37 +704,31 @@ h3.box-title {
 	text-align: center;
 	margin: 0;
 	width: 100%;
-	position: relative;
-}
+	height: 16px;
+	position: relative}
+	
+* html h3.box-title {position: static}
 
-div.box-title table {
-	width: 100%;
-	padding: 0;
-	margin: 0;
-	border-spacing: 0;
-}
-
-div.box-title table td {
-  text-align: center;
-}
-
-.box a.flipmodtitle img {
+.moduleflip {
 	display: none;
-}
-
-* html .box a.flipmodtitle img,
-.box:hover a.flipmodtitle img {
-	display: block;
 	position: absolute;
 	right: 0;
-	top: 0;
-	border: 1px solid transparent;
+	top: 0}
+
+* html .moduleflip {
+	position: static;
+	float: right}
+
+* html .moduleflip,
+.box:hover .moduleflip {display: block}
+
+.box:hover img.flipmodimage {border: 1px solid transparent}
+* html img.flipmodimage {border: none}
+
+
+img.flipmodimage {
 	height: 12px;
-	width: 12px}
-
-* html .box a.flipmodtitle img {border: none}
-
-a.flipmodtitle:hover img {
+	width: 12px;
 	background: #DDDDDD;
 	border-right: 1px solid #1D49BB !important;
 	border-bottom: 1px solid #1D49BB !important;
@@ -742,16 +742,16 @@ div.box-data {
 	font-size: .95em;
 	/*overflow: hidden;*/
 }
-
+/*
 .box-data ol {padding-left: 2em; margin-top: 0; margin-bottom: 0;}
 .box-data ul {padding-left: 0; margin-top: 0; margin-bottom: 0; list-style:none;}
-/* IE */
+ IE 
 * html .box-data ol {margin-left: 0em;}
 * html .box-data ul {margin-left: 0em;}
-/* IE7 */
+IE7 
 *:first-child+html .box-data ol {margin-left: 0em;}
 *:first-child+html .box-data ul {margin-left: 0em;}
-
+*/
 
 td.module {
 	font-size: .95em;
@@ -1342,9 +1342,11 @@ html>body .wikitopline table {
 	width: 100%;
 }
 
-#description {
-	margin: 0 10px;
-	font-size: 1.1em;
+div#description,
+.description {
+	display: block;
+	font-size: .95em;
+	font-style: italic;
 	color: #666;
 }
 
@@ -1570,7 +1572,7 @@ div.articletitle {
 	border-top: 1px solid #46596f;
 	clear: both;
 }
-span.titlea {
+div.articletitle h2 {
 	background: #C7D0D9;
 	border: 1px solid #8CACBB;
 	border-left: 0;
@@ -1582,7 +1584,7 @@ span.titlea {
 	border-radius-bottomright: 20px;
 	-moz-border-radius-bottomright: 20px;
 	-khtml-border-radius-bottomright: 20px}
-span.titlea a {text-decoration: none}
+div.articletitle h2 a {text-decoration: none}
 span.titleb,
 span.titleb:after {
 	color: #666666;
