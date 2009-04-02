@@ -528,7 +528,6 @@ class TikiLib extends TikiDB {
 				}
 			}
 		}
-		echo '<pre>'.$event.$object; print_r($ret); echo '</pre>';
 		return $ret;
 	}
 
