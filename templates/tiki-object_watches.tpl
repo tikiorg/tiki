@@ -24,6 +24,7 @@
 <form method="post" action="{$smarty.server.REQUEST_URI}">
 <input type="hidden" name="referer" value="{$referer|escape}" />
 <div><input type="submit" name="assign" value="{tr}Assign{/tr}" /></div>
+<p>{tr}Watching Groups:{/tr} {$group_watches|@count}</p>
 <table class="normal">
 	<tr>
 		<th>{tr}Watch{/tr}</th>
