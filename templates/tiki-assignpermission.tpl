@@ -75,7 +75,7 @@
 				<th>{tr}Name{/tr}</th>
 				<th {if $advanced_features ne 'y'}style="display:none;"{else}style="display:block;"{/if}>{tr}level{/tr}</th>
 				<th>{tr}Type{/tr}</th>
-				<th>{tr}desc{/tr}</th>
+				<th>{tr}Desc{/tr}</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -84,7 +84,7 @@
 				<tr>
 					<td class="{cycle advance=false}">
 						<input type="hidden" name="permName[{$perms[user].permName}]" />
-						<input type="checkbox" name="perm[{$perms[user].permName}]" 
+						<input type="checkbox" name="perm[{$perms[user].permName}]"
 						{assign var=has_inherited_one_perm value='n'}
 						{assign var=has_inherited_perm value=''}
 						{foreach key=gr item=it from=$inherited_groups_perms}
@@ -118,37 +118,37 @@
 		</tbody>
 	</table>
 	<input type="submit" name="update" value="{tr}Update{/tr}" />
-	<br/>
-	{remarksbox type="warning" title="{tr}Advanced feature{/tr}"}
-		{tr}Level configuration{/tr}:
-		{if $advanced_features ne 'y'}
-			<a href="tiki-assignpermission.php?find={$find}&amp;type={$type}&amp;group={$group|escape:url}&amp;sort_mode={$sort_mode}&amp;advanced_features=y">{tr}Show{/tr}</a>
-		{else}
-			<a href="tiki-assignpermission.php?find={$find}&amp;type={$type}&amp;group={$group|escape:url}&amp;sort_mode={$sort_mode}">{tr}Hide{/tr}</a>
-		{/if}
 </form>
-<div {if $advanced_features ne 'y'}style="display:none;"{else}style="display:block;"{/if}>
-	<h2>{tr}Create level{/tr}</h2>
-	<form method="post" action="tiki-assignpermission.php">
-		<input type="hidden" name="group" value="{$group|escape}" />
-		<input type="hidden" name="type" value="{$type|escape}" />
-		{tr}Create level{/tr}: <input type="text" name="level" /><input type="submit" name="createlevel" value="{tr}Create{/tr}" />
-		<input type="submit" name="createlevel" value="{tr}Create{/tr}" />
-	</form>
-	<br />
-	<br />
-	<form method="post" action="tiki-assignpermission.php">
-		<input type="hidden" name="group" value="{$group|escape}" />
-		<input type="hidden" name="type" value="{$type|escape}" />
-		<select name="oper">
-			<option value="assign">{tr}Assign{/tr}</option>
-			<option value="remove">{tr}Remove{/tr}</option>
-		</select>
-		{tr}all permissions in level{/tr}:  
-		<select name="level[]" multiple="multiple" size="5">
-			{html_options output=$levels values=$levels selected=$perms[user].level}
-		</select>
-		<input type="submit" name="allper" value="{tr}Update{/tr}" />
-	</form>
-	{/remarksbox}
-</div>
+<br/>
+{remarksbox type="warning" title="{tr}Advanced feature{/tr}"}
+	{tr}Level configuration{/tr}:
+	{if $advanced_features ne 'y'}
+		<a href="tiki-assignpermission.php?find={$find}&amp;type={$type}&amp;group={$group|escape:url}&amp;sort_mode={$sort_mode}&amp;advanced_features=y">{tr}Show{/tr}</a>
+	{else}
+		<a href="tiki-assignpermission.php?find={$find}&amp;type={$type}&amp;group={$group|escape:url}&amp;sort_mode={$sort_mode}">{tr}Hide{/tr}</a>
+	{/if}
+	<div {if $advanced_features ne 'y'}style="display:none;"{else}style="display:block;"{/if}>
+		<h2>{tr}Create level{/tr}</h2>
+		<form method="post" action="tiki-assignpermission.php">
+			<input type="hidden" name="group" value="{$group|escape}" />
+			<input type="hidden" name="type" value="{$type|escape}" />
+			{tr}Create level{/tr}: <input type="text" name="level" />
+			<input type="submit" name="createlevel" value="{tr}Create{/tr}" />
+		</form>
+		<br />
+		<br />
+		<form method="post" action="tiki-assignpermission.php">
+			<input type="hidden" name="group" value="{$group|escape}" />
+			<input type="hidden" name="type" value="{$type|escape}" />
+			<select name="oper">
+				<option value="assign">{tr}Assign{/tr}</option>
+				<option value="remove">{tr}Remove{/tr}</option>
+			</select>
+			{tr}all permissions in level{/tr}: 
+			<select name="level[]" multiple="multiple" size="5">
+				{html_options output=$levels values=$levels selected=$perms[user].level}
+			</select>
+			<input type="submit" name="allper" value="{tr}Update{/tr}" />
+		</form>
+	</div>
+{/remarksbox}
