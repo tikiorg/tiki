@@ -49,7 +49,7 @@
 		{/if}
 	
 		{if $user and $prefs.feature_user_watches eq 'y' and $display eq ''}
-		{if $forum_mode eq 'y'}
+		{if $forum_mode eq 'y' and $first eq 'y'}
 		{if $user_watching_topic eq 'n'}
 			{self_link watch_event='forum_post_thread' watch_object=$comments_parentId watch_action='add' _icon='eye' _alt='{tr}Monitor this Topic{/tr}' _title='{tr}Monitor this Topic{/tr}'}{/self_link}
 		{else}
