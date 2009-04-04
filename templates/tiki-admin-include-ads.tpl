@@ -1,6 +1,6 @@
 {* $Id$ *}
 {remarksbox type="tip" title="{tr}Tip{/tr}"}
-	{tr}Select <a href="http://127.0.0.1/branches/tiki-list_banners.php" title="Banners">Admin &gt; Banners</a> from the menu to create and edit banner zones.{/tr}
+	{tr}Select <a href="tiki-list_banners.php" title="Banners">Admin &gt; Banners</a> from the menu to create and edit banner zones.{/tr}
 {/remarksbox}
 
 <form action="tiki-admin.php?page=ads"  onreset="return(confirm('{tr}Cancel Edit{/tr}'))" class="admin" method="post">
