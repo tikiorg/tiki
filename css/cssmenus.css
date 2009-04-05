@@ -42,17 +42,19 @@
 	position: absolute;
 	left: -999em;
 	z-index: 751}
+	
+.box-data .cssmenu_vert {padding-right: 0 !important}
 
 .cssmenu_vert li ul,
 .cssmenu_vert li.sfhover ul { /* second-level lists */
-	margin-left: 11em;
-	margin-top: -1.35em;
+	margin-left: 10.9em;
+	margin-top: -1.5em;
 	/*padding-bottom: 1px; enable border to show */}
 
 /*.cssmenu li ul ul {left: -999em}*/
 
 .cssmenu_vert li:hover ul ul {z-index: 752}	/* z-indexes needed at ui-revamp to prevent hidden dropdowns */
-.cssmenu_horiz li ul ul {margin: -1em 0 0 10em}
+.cssmenu_horiz li ul ul {margin: -1.5em 0 0 10.9em}
 
 /* dropdown menu hide-display */
 .cssmenu li:hover ul ul,
