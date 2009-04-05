@@ -73,17 +73,19 @@
 			</span>
 		</div>
 		<div class="actions">
-			<span class="action">
-				{tr}Move to topic:{/tr}
-				<select name="moveto">
-				{section name=ix loop=$topics}
-					{if $topics[ix].threadId ne $comments_parentId}
-					<option value="{$topics[ix].threadId|escape}">{$topics[ix].title}</option>
-					{/if}
-				{/section}
-				</select>
-				<input type="submit" name="movesel" value="{tr}Move{/tr}" />
-			</span>
+			{if $topics|@count > 1}
+				<span class="action">
+					{tr}Move to topic:{/tr}
+					<select name="moveto">
+					{section name=ix loop=$topics}
+						{if $topics[ix].threadId ne $comments_parentId}
+						<option value="{$topics[ix].threadId|escape}">{$topics[ix].title}</option>
+						{/if}
+					{/section}
+					</select>
+					<input type="submit" name="movesel" value="{tr}Move{/tr}" />
+				</span>
+			{/if}
 
 			<span class="action">
 				<input type="submit" name="delsel" value="{tr}Delete Selected{/tr}" />

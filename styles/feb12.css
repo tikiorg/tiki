@@ -104,7 +104,7 @@ textarea,
 body.wikitext {
 	color: #333;
 	background: #fff;
-	font-size: 1.3em}
+	font-size: 125%}
 
 input[type=checkbox],
 input[type=radio] {border: 0}
@@ -127,9 +127,11 @@ input[type=submit],
 .submitbutton,
 .button input,
 input[type=reset],
-span.button {
+span.button,
+.calbuttonBox {
 	vertical-align: middle;	
 	margin: 2px;
+	padding: 0 4px;
 	background: url(feb12/header.jpg) repeat-x 0 -2px;
 	border: 1px solid #5aa5cf;
 	color: #F5F5F5;
@@ -141,7 +143,8 @@ button:hover,
 input[type=submit]:hover,
 .submitbutton:hover,
 .button input:hover,
-span.button:hover {
+span.button:hover,
+.calbuttonBox:hover {
 	background: url(feb12/header.jpg) repeat-x 0 -15px;
 	cursor: pointer}
 	
@@ -322,9 +325,9 @@ div.floatleft {
 	margin: auto !important;
 	padding-top: 20px}
 
-div#sitead {margin: auto}
-#sitead.floatright {padding-right: 100px}
-#sitead.floatleft {padding-left: 100px}
+div#sitead {margin: auto; margin-top: 10px}
+#sitead.floatright {padding-right: 40px}
+#sitead.floatleft {padding-left: 40px}
 #sioptionscentered #sitead.floatleft {padding-left: 10px}
 .floatright img {margin-right: 40px}
 #bannertopright { padding-right: 1em }
@@ -573,7 +576,8 @@ a.phplmselected:hover {color: #006699}
 
 .csmenu ul li,
 .cssmenu_horiz ul li,
-.cssmenu_vert ul li {border-top: 1px solid #57A5D0}
+.cssmenu_vert ul li {
+	border-top: 1px solid #57A5D0}
 
 .cssmenu_vert li ul,
 .cssmenu_horiz li ul {
@@ -586,6 +590,8 @@ a.phplmselected:hover {color: #006699}
 .cssmenu_vert ul a {
 	padding: 6px;
 	color: #000}
+	
+#tiki-top > .cssmenu_horiz {margin-left: 20px}
 
 #tiki-top > .cssmenu_horiz > li > a {
 	padding: 8px 3px;
@@ -609,6 +615,15 @@ a.phplmselected:hover {color: #006699}
 #tiki-top .cssmenu_horiz ul li a:hover {
 	color: #993300;
 	text-decoration: none}
+	
+#col2 .cssmenu_vert > li {
+	width: 192px;
+	padding: 0 !important}
+
+#col2 .cssmenu_vert li {padding: 0}
+
+#col2 .cssmenu_vert > li > ul {margin-left: 192px}
+
 
 /** Links in other menus **/
 div.separator, div.separatorline {color: #794a93}
@@ -1945,6 +1960,14 @@ div.gallerypath a:hover {}
 .date {}
 
 .calfocuson + .calcontent {background: #a8cce2}
+
+.calbuttonBox a {
+	color: #F5F5F5;
+	text-decoration: none}
+
+.calHeadingOn a {
+	color: #794A93 !important;
+	text-decoration: none}
 
 /*****  Polls  *****/
 div.pollresults {

@@ -114,8 +114,7 @@ input[type=reset],
 input[type=submit],
 span.button input,
 .submitbutton,
-.calbuttonoff,
-.calbuttonon {
+.calbuttonBox {
 	font-family: Verdana, Helvetica, Geneva, Arial, sans-serif;
 	font-size: 94%;
 	font-weight: normal;
@@ -137,7 +136,8 @@ button:hover,
 input[type=reset]:hover,
 input[type=submit]:hover,
 .button input:hover,
-.submitbutton:hover {
+.submitbutton:hover,
+.calbuttonBox:hover {
 	background-color: #1e7ea6;
 	color: #fff;
 	text-decoration: none}
@@ -292,7 +292,7 @@ ul.jumplinks a:active {
 	text-align: left;
 	margin-left: 58px;
 	padding-bottom: 5px;	
-	background: url(strasa/options/cold/box_bottom.gif) no-repeat 0 100%}
+	background: #8ea2b4 url(strasa/options/cold/box_bottom.gif) no-repeat 0 100%}
 
 #col3 {
 	margin-left: -210px;
@@ -551,11 +551,13 @@ div.logged-in {padding-right: 20px}
 	float: right}
 
 #sitesearchbar {
-	float: right;
-	padding-right: 4px;
+	position: absolute;
+	right: 10px;
+	bottom: 38px;
 	text-align: right;
 	display: block;
-	margin: 0}
+	color: #fff;
+	font-size: 93%}
 
 input#fuser,
 select[name="where"],
@@ -1034,7 +1036,13 @@ ul.categories li {
 div.box {
 	overflow: hidden}
 	
-#col2 .box {background: #cce5ff}
+#col2 .box {
+	background: #cce5ff;
+	border-bottom: 2px ridge #bed8f1;
+}
+#col2 .content > .box-shadow:last-child > .box {
+	border-bottom: none;
+}
 
 #col3 .box {
 	border-bottom: 1px solid #cfcfcf;
@@ -2376,68 +2384,9 @@ div.multiselect {
 	border-color: #cfd0d0 #e0e0e0;
 	border-style: solid}
 	
-#prev {
-	margin-left: 30px;
-	float: left;
-	position: relative;
-	height: 20px;
-	width: 20px;
-	background: url("../../pics/prev.gif") no-repeat}
-
-#next {
-	float: left;
-	position: relative;
-	height: 20px;
-	width: 20px;
-	background: url("../../pics/next.gif") no-repeat}
-
-.calbuttonBox {
-	float: left;
-	position: relative;
-	height: 20px;
-	width: 86px;
-	font-family: Verdana, Helvetica, Geneva, Arial, sans-serif;
-	font-size: 94%;
-	font-weight: normal;
-	color: #fff;
-	background: #1d9ccf;
-	border: 1px solid;
-	border-color: #41cbe7 #223845 #223845 #41cbe7;
-/*	padding: 1px 4px;
-	margin-right: 1px;*/
-	text-decoration: none;
-	white-space: nowrap;
-	cursor: pointer;
-	}
-
-.calbuttonon,
-.calbuttonoff {
-	position: absolute;
-	top: 0;
-	left: 3px;
-	padding-top: 3px;
-	text-align: center;
-	font-size: 1em;
-	height: 100%;
-	width: 100%;
-	border: 0}
-
-
-.calbuttonon a,
-.calbuttonoff a { color: #fff; text-decoration: none}
-
-.calbuttonLeft {
-	float: left;
-	width: 3px;
-	height: 20px}
-
-.calbuttonRight {
-	position: absolute;
-	top: 0;
-	right: 3px;
-	float: right;
-	width: 3px;
-	height: 20px}
+.calbuttonBox {margin-right: 3px}
+.calbuttonBox a {color: #fff}
+.calbuttonon a {font-weight: bold}
 
 #caltable .calfocuson,
 .box-data td.fc a.today,
@@ -2472,9 +2421,9 @@ div.multiselect {
 * html .calodd {padding: 0}
 .caleven {background: #dcdcdc}
 * html .caleven {padding: 0}
-.caldark {background: #223845}
+.caldark {background: #cce5ff}
 * html .caldark {padding: 0}
-.caldark .calfocus {background: #223845}
+.caldark .calfocus {background: #cce5ff}
 .daterow {}
 .daterow:hover {}
 

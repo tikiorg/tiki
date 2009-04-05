@@ -58,7 +58,8 @@ input[type=submit],
 span.button input,
 .submitbutton,
 .calbuttonoff,
-.calbuttonon {
+.calbuttonon,
+#siteloginbar input.wikiaction {
 	color: #fff;
 	background: #565656;
 	border-color: #878787 #343434 #343434 #878787;
@@ -69,7 +70,8 @@ button:hover,
 input[type=reset]:hover,
 input[type=submit]:hover,
 .button input:hover,
-.submitbutton:hover {
+.submitbutton:hover,
+#siteloginbar input.wikiaction:hover {
 	background-color: #333333;
 	color: #fff;
 }
@@ -79,7 +81,8 @@ button:active,
 input[type=reset]:active,
 input[type=submit]:active,
 .button input:active,
-.submitbutton:active {
+.submitbutton:active,
+#siteloginbar input.wikiaction:active {
 	border-color: #223845 #41cbe7 #41cbe7 #223845;
 }
 
@@ -147,8 +150,6 @@ ul.jumplinks a:active {
 	color: #fff;
 }
 
-/*** Error page ***/
-
 /* Site Header & Identity */
 #header-top {
 	background: #111111 url('mono/headerbg.jpg') repeat-x 0 100%;
@@ -160,10 +161,6 @@ ul.jumplinks a:active {
 
 #siteloginbar .register {
 	background: url('mono/register.jpg') no-repeat;
-}
-
-#siteloginbar input.wikiaction {
-	background: #204c65;
 }
 
 /* #header text selectors, if needed */
@@ -397,15 +394,14 @@ div.help_section {
 
 #col2 .box {
 	background: #e5e5e5;
+	border-bottom: 1px solid #ccc;
 }
 
 #col3 .box {
 	border-bottom: 1px solid #cfcfcf;
 }
 
-.box a.flipmodtitle img {
-	display: none;
-}
+.box a.flipmodtitle img {}
 
 a.flipmodtitle:hover img {
 	border: 1px #cccccc solid !important;
@@ -1027,11 +1023,11 @@ div.multiselect {
 }
 
 .caldark {
-	background: #223845;
+	background: #e5e5e5;
 }
 
 .caldark .calfocus {
-	background: #223845;
+	background: #e5e5e5;
 }
 
 /*****  Polls  *****/

@@ -348,7 +348,7 @@ $plugins = $wikilib->list_plugins(true);
 $smarty->assign_by_ref('plugins', $plugins);
 
 include_once ('lib/quicktags/quicktagslib.php');
-$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_desc','','blogs');
+$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_asc','','blogs');
 $smarty->assign_by_ref('quicktags', $quicktags["data"]);
 if ($prefs['feature_contribution'] == 'y') {
 	include_once('contribution.php');

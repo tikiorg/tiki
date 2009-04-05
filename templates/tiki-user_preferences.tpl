@@ -30,7 +30,6 @@
 <h2>{tr}Personal Information{/tr}</h2>
 <form action="tiki-user_preferences.php" method="post">
   <input type="hidden" name="view_user" value="{$userwatch|escape}" />
-  <input type="hidden" name="user" value="{$userwatch|escape}" />
 
   {cycle values="odd,even" print=false}
   <table class="normal">

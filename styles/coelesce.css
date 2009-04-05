@@ -109,8 +109,7 @@ button,
 input[type=submit],
 .button input,
 .submitbutton,
-.calbuttonoff,
-.calbuttonon {
+.calbuttonBox a {
 	font-family: Verdana, Helvetica, Geneva, Arial, sans-serif;
 	font-size: .95em;
 	font-weight: bold;
@@ -151,7 +150,8 @@ input[type=submit],
 button:hover,
 input[type=submit]:hover,
 .button input:hover,
-.submitbutton:hover {background: white}
+.submitbutton:hover,
+.calbuttonBox a:hover {background: white}
 
 /* * html .findtable input {font-size: 1em}*/
 form.admin input[name="features"] {margin-bottom: 3px !important}
@@ -320,8 +320,8 @@ div#sitelogo {
 	/*margin: auto;*/}
 
 div#sitead {margin: auto}
-#sitead.floatright {padding-right: 100px}
-#sitead.floatleft {padding-left: 100px}
+#sitead.floatright {padding-right: 40px}
+#sitead.floatleft {padding-left: 40px}
 #sioptionscentered #sitead.floatleft {padding-left: 10px}
 .floatright img {}
 
@@ -348,7 +348,7 @@ div#sitead {margin: auto}
 	text-align: left;
 	/*max-width: 380px;
 	min-width: 340px;*/
-	width: 200px;
+	width: 380px;
 	background: url(coelesce/search_wide.jpg) no-repeat;
 	padding-left: 15px;
 	color: #517ea7;}
@@ -421,7 +421,7 @@ input[id="sl-login-pass"] {}
 /* #header text selectors, if needed */
 
 #sitetitles {
-	margin-top: 30px;
+	/*margin-top: 30px;*/
 	margin-left: 40px}
 
 #sitetitle,
@@ -699,7 +699,9 @@ a.phplmselected:hover {color: #808080}
 	color: #5a7ea2;}
 
 #col2 .cssmenu_vert > li > ul {margin-left: 180px}
-.cssmenu_vert li {background: #ccdceb}
+
+.cssmenu_vert,
+.cssmenu_vert li {background: #ccdceb !important}
 
 #col2 .cssmenu_vert > li {
 	width: 186px;
@@ -1004,6 +1006,7 @@ img.flipmodimage:hover {border: 1px solid #58A7D2 !important}
 .box-data ul {padding-left: .5em; margin-top: 0; margin-bottom: 0; list-style: none;}
 * html .box-data ol {margin-left: 0em}
 * html .box-data ul {margin-left: 1em}
+.box-data ul.cssmenu_vert {padding-left: 0}
 *:first-child+html .box-data ol {margin-left: 0}
 *:first-child+html .box-data ul {margin-left: 1em}
 .box-footer {}
@@ -1025,7 +1028,14 @@ div.cbox {
 	background: #ccdceb;
 	color: #607999;
 	font-weight: bold;
+	line-height: 1em;
 	padding: 2px}
+
+.cbox-title img,
+	.pagetitle img {
+	margin-left: 5px;
+	vertical-align: middle;
+}
 
 .cboxlink {}
 .cbox-data {background: #f5f5f5}
@@ -1204,6 +1214,7 @@ body.tiki_wiki_page #comments {padding: 1em }
 
 h1.pagetitle {
 	background: url(coelesce/tiki-centerbg.jpg) repeat-x;
+	line-height: 36px;
 	color: #2d2d2d}
 
 h1.pagetitle a,
@@ -2204,14 +2215,16 @@ div.multiselect {
 #caltable .calfocus a,
 #caltable .calfocuson a {text-decoration:none}
 
-div.tabrow {height: 24px !important}
-
+div.tabrow {/*height: 24px !important*/}
+.calbuttonon a {color: #295C8E}
 .calHeading,
 .calHeadingOn {
 	background: #c3d3e5;
 	color: #517ea7;
 	font-weight: bold;
 	height: 24px !important}
+	
+.calHeadingOn {background: #ccdceb}
 
 .day,
 .day:visited {}

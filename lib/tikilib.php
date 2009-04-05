@@ -528,7 +528,6 @@ class TikiLib extends TikiDB {
 				}
 			}
 		}
-
 		return $ret;
 	}
 
@@ -1480,34 +1479,42 @@ class TikiLib extends TikiDB {
 	// Functions for FAQs ////
 	/*shared*/
 	function list_faqs($offset, $maxRecords, $sort_mode, $find) {
+	  $mid = '';
+	  if ( $find ) {
+		$findesc = '%' . $find . '%';
+		$mid = ' where (`title` like ? or `description` like ?)';
+		$bindvars = array($findesc, $findesc);
+	  } else $bindvars = array();
 
-		$mid = '';
-		if ( $find ) {
-			$findesc = '%' . $find . '%';
-			$mid = ' where (`title` like ? or `description` like ?)';
-			$bindvars = array($findesc, $findesc);
-		} else $bindvars = array();
+	  $query = "select `faqId` from `tiki_faqs` $mid";
+	  $result = $this->query($query, $bindvars);
+	  $res = $ret = $retids = array();
+	  $n=0;
 
-		$query = "select * from `tiki_faqs` $mid order by ".$this->convert_sortmode($sort_mode);
-
-		$query_cant = "select count(*) from `tiki_faqs` $mid";
-		$cant = $this->getOne($query_cant,$bindvars);
-
-		$result = $this->query($query, $bindvars, $maxRecords, $offset);
-		$ret = array();
-
-		while ( $res = $result->fetchRow() ) {
-			global $user;
-			$add = $this->user_has_perm_on_object($user, $res['faqId'], 'faq', 'tiki_p_view_faqs');
-			if ($add) {
-				$res['suggested'] = $this->getOne('select count(*) from `tiki_suggested_faq_questions` where `faqId`=?', array((int) $res['faqId']));
-				$res['questions'] = $this->getOne('select count(*) from `tiki_faq_questions` where `faqId`=?', array((int) $res['faqId']));
-				$ret[] = $res;		    
-			}		    
+	  while ( $res = $result->fetchRow() ) {
+		global $user;
+		$objperm = $this->get_perm_object($res['faqId'], 'faq', '', false);
+		if ($objperm['tiki_p_view_faqs'] == 'y') {
+		  if (($maxRecords == -1) || (($n>=$offset) && ($n < ($offset + $maxRecords)))) {
+			$retids[] = $res['faqId'];
+		  }
+		  $n++;
 		}
-		$retval['data'] = $ret;
-		$retval['cant'] = $cant;
-		return $retval;
+	  }
+
+	  if ($n > 0) {
+		$query = "select  * from `tiki_faqs` where faqId in (" . implode(',',$retids) . ") order by " . $this->convert_sortmode($sort_mode);
+		$result = $this->query($query);
+		while ( $res = $result->fetchRow() ) {
+		  $res['suggested'] = $this->getOne('select count(*) from `tiki_suggested_faq_questions` where `faqId`=?', array((int) $res['faqId']));
+		  $res['questions'] = $this->getOne('select count(*) from `tiki_faq_questions` where `faqId`=?', array((int) $res['faqId']));
+		  $ret[] = $res;
+		}
+	  }
+
+	  $retval['data'] = $ret;
+	  $retval['cant'] = $n;
+	  return $retval;
 	}
 
 	/*shared */
@@ -4772,6 +4779,9 @@ class TikiLib extends TikiDB {
 				if ( $value == '' ) {
 					$prefs['style_option'] = $prefs['site_style_option'];
 					$_SESSION['s_prefs']['style_option'] = $prefs['site_style_option'];
+				} else if ( $value == 'None' ) {
+					$prefs['style_option'] = '';
+					$_SESSION['s_prefs']['style_option'] = '';
 				}
 			} elseif ( $value == '' ) {
 				if ( in_array($name, $user_overrider_prefs) ) {
@@ -5549,7 +5559,7 @@ class TikiLib extends TikiDB {
 	} );
 	" );
 								}
-								$ret = '~np~<a id="' .$id. '" style="float:right" href="javascript:void(1)" class="editplugin">'.smarty_function_icon(array('_id'=>'shape_square_edit', 'alt'=>tra('Edit Plugin').':'.$plugin_name), $smarty).'</a>~/np~'.$ret;
+								$ret = '~np~<a id="' .$id. '" style="float:right" href="javascript:void(1)" class="editplugin">'.smarty_function_icon(array('_id'=>'shape_square_edit', 'alt'=>tra('Edit Plugin').':'.$plugin_name), $smarty)."</a>~/np~\n".$ret; // \n is necessary for plugin that includes wiki syntax like ! that must begin at the beginning of the line
 							}
 	
 						} else {

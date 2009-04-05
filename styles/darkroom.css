@@ -102,7 +102,8 @@ input[type=password] {
 button,
 .button,
 .submitbutton,
-.button input {
+.button input,
+.calbuttonBox {
 	background:#4E4E4E url(darkroom/button.png) top left repeat-x;
 	color:#B2B2B2;
 	font-weight: bold;
@@ -132,7 +133,8 @@ button:hover,
 input[type=submit]:hover,
 input[type=reset]:hover,
 .submitbutton:hover,
-.button input:hover {border: 1px solid #B2B2B2}
+.button input:hover,
+.calbuttonBox:hover {border: 1px solid #B2B2B2}
 
 .button a:hover {text-decoration: none}
 .button {font-size: 0.8em;}
@@ -2142,7 +2144,10 @@ Caltrack a:visited {color: #00BD02}
 	font-size: 90%;
 	background: #3F3F3F}
 .calbuttonon a { text-decoration: underline;}
-.calHeadingOn a { text-decoration: underline;}
+
+.calHeadingOn a {
+	text-decoration: underline !important;
+	color: #D8D8D8 !important;}
 
 .opaque {
 	font-size: .9em;
@@ -2196,6 +2201,9 @@ Caltrack a:visited {color: #00BD02}
 * html .calodd {padding: 0}
 .caleven {background: #696969}
 * html .caleven {padding: 0}
+
+.calHours,
+.calWeek {border-color: #a9a9a9}
 
 .caldark {
 	background: #3F3F3F;

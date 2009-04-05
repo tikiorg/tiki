@@ -1700,7 +1700,7 @@ class Comments extends TikiLib {
 	    $query = "select `message_id` from `tiki_comments` where `threadId` = ?";
 	    $parent_message_id = $this->getOne($query, array( $parentId ) );
 
-	    $query = "select tc1.`threadId`, tc1.`object`, tc1.`objectType`, tc1.`parentId`, tc1.`userName`, tc1.`commentDate`, tc1.`hits`, tc1.`type`, tc1.`points`, tc1.`votes`, tc1.`average`, tc1.`title`, tc1.`data`, tc1.`hash`, tc1.`user_ip`, tc1.`summary`, tc1.`smiley`, tc1.`message_id`, tc1.`in_reply_to`, tc1.`comment_rating`, tc1.`locked`  from `tiki_comments` as tc1
+	    $query = "select tc2.`threadId`, tc1.`object`, tc1.`objectType`, tc1.`parentId`, tc1.`userName`, tc1.`commentDate`, tc1.`hits`, tc1.`type`, tc1.`points`, tc1.`votes`, tc1.`average`, tc1.`title`, tc1.`data`, tc1.`hash`, tc1.`user_ip`, tc1.`summary`, tc1.`smiley`, tc1.`message_id`, tc1.`in_reply_to`, tc1.`comment_rating`, tc1.`approved`, tc1.`locked`  from `tiki_comments` as tc1
 		left outer join `tiki_comments` as tc2 on tc1.`in_reply_to` = tc2.`message_id`
 		and tc1.`parentId` = ?
 		and tc2.`parentId` = ?
@@ -2275,6 +2275,10 @@ class Comments extends TikiLib {
 			global $contributionlib;require_once('lib/contribution/contributionlib.php');
 			$contributionlib->remove_comment($res['threadId']);
 		}
+		$query = "delete from `tiki_user_watches` where `object`=? and `type`= ?";
+		$this->query($query, array((int)$threadId, 'forum topic'));
+		$query = "delete from `tiki_group_watches` where `object`=? and `type`= ?";
+		$this->query($query, array((int)$threadId, 'forum topic'));
 	}
 	
 	$query = "delete from `tiki_comments` where `threadId`=? or `parentId`=?";
@@ -2535,7 +2539,7 @@ class Comments extends TikiLib {
 
 						 // Deal with mail notifications.
 						include_once('lib/notifications/notificationemaillib.php');
-						sendForumEmailNotification('forum_post_topic', $params['forumId'], $forum_info, $params['comments_title'], $params['comments_data'], $user, $params['comments_title'], $message_id, $in_reply_to, $threadId, isset($params['comments_parentId'])?$params['comments_parentId']: 0, isset($params['contributions'])? $params['contributions']: '' );
+						sendForumEmailNotification(empty($params['comments_reply_threadId'])?'forum_post_topic':'forum_post_thread', $params['forumId'], $forum_info, $params['comments_title'], $params['comments_data'], $user, $params['comments_title'], $message_id, $in_reply_to, isset($params['comments_parentId'])?$params['comments_parentId']: $threadId, isset($params['comments_parentId'])?$params['comments_parentId']: 0, isset($params['contributions'])? $params['contributions']: '' );
 						// Set watch if requested
 						if ($prefs['feature_user_watches'] == 'y') {
 							if ($user && isset($params['set_thread_watch']) && $params['set_thread_watch'] == 'y') {

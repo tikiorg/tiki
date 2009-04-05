@@ -94,14 +94,7 @@
 </div>
 	</div>
 </div>
-{* already on admin: features page
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" name="feature_user_watches_translations" id="feature_user_watches_translations"
-			{if $prefs.feature_user_watches_translations eq 'y'}checked="checked"{/if}/></div>
-	<div class="adminoptionlabel"><label for="feature_user_watches_translations">{tr}User watches translations{/tr}</label>
-	</div>
-</div>
-*}
+
 <div class="adminoptionbox">
 	<div class="adminoption"><input type="checkbox" name="feature_translation" id="feature_translation"
 			{if $prefs.feature_translation eq 'y'}checked="checked"{/if}/></div>

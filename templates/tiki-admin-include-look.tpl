@@ -731,6 +731,17 @@
 							<input type="checkbox" name="feature_jquery_sheet" {if $prefs.feature_jquery_sheet eq 'y'}checked="checked"{/if}/>
 						</td>
 					</tr>
+					<tr>
+						<td width=30%>
+							<label for="feature_jquery_tablesorter">{tr}JQuery Sortable Tables{/tr}</label>
+						</td>
+						<td width=2%>
+							{help url="JQuery#TableSorter" desc="{tr}JQuery Sortable Tables{/tr}"}
+						</td>
+						<td>
+							<input type="checkbox" name="feature_jquery_tablesorter" {if $prefs.feature_jquery_tablesorter eq 'y'}checked="checked"{/if}/>
+						</td>
+					</tr>
 				</table>
 			</fieldset>
 			<fieldset class="admin">

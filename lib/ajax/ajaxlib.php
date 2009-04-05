@@ -176,8 +176,6 @@ function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user 
 		require_once $smarty->_get_plugin_filepath('function', 'show_help');
 		$content .= smarty_function_show_help(null,$smarty); 
 
-		$objResponse->Assign($htmlElementId, "innerHTML", $content);
-
 		// Handle TikiTabs in order to display only the current tab in the XAJAX response
 		// This has to be done here, since it is tikitabs() is usually called when loading the <body> tag
 		//   which is not done again when replacing content by the XAJAX response
@@ -188,6 +186,43 @@ function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user 
 			$tab = ( $cookietab != '' ) ? (int)$cookietab : 1;
 			$objResponse->script("tikitabs($tab,$max_tikitabs);");
 		}
+		
+		// take out javascript from the html response because it needs to be sent specifically as javascript
+		// using $objResponse->script($s) below
+		
+		preg_match_all('/(?:<script.*type=[\'"]?text\/javascript[\'"]?.*>\s*?)(.*)(?:\s*<\/script>)/Umis', $content, $jsarr);
+		if (count($jsarr) > 1 && is_array($jsarr[1])) {
+			$js = preg_replace('/\s*?<\!--\/\/--><\!\[CDATA\[\/\/><\!--\s*?/Umis', '', $jsarr[1]);	// strip out CDATA XML wrapper if there
+			$js = preg_replace('/\s*?\/\/--><\!\]\]>\s*?/Umis', '', $js);
+			
+			// change 'function fName (' to 'fName = function(' (as it seems to work then)
+			$js = preg_replace('/function (.*)\(/Umis', "$1 = function(", $js);
+			//taginsert = function (
+
+			$js_script = array_merge($js_script, $js);
+		}
+		// this is very probably possible as a single regexp, maybe a preg_replace_callback
+		// but it was stopping the CDATA group being returned (and life's too short ;)
+		// the one below should work afaics but just doesn't! :(
+		// preg_match_all('/<script.*type=[\'"]?text\/javascript[\'"]?.*>(\s*<\!--\/\/--><\!\[CDATA\[\/\/><\!--)?\s*?(.*)(\s*\/\/--><\!\]\]>\s*)?<\/script>/imsU', $content, $js);
+
+		// do included files too...
+		$js_files = array();
+		preg_match_all('/<script[^>]*src=[\'"]??(.*)[\'"]??>\s*<\/script>/Umis', $content, $jsarr);
+		if (count($jsarr) > 1 && is_array($jsarr[1])) {
+			$js =  $jsarr[1];
+			$js_files = array_merge($js_files, $js);
+		}
+		
+		if (preg_match('/overlib\(/Umis', $content)) {
+			$js_files[] = 'lib/overlib.js';	// just for now... (it stops the JS error on rollover but the tooltip doesn't appear - TODO replace with JQuery tips)
+		}
+
+		// now remove all the js from the source
+		$content = preg_replace('/\s*<script.*javascript.*>.*\/script>\s*/Umis', '', $content);
+
+		// attach the cleaned xhtml to the response
+		$objResponse->Assign($htmlElementId, "innerHTML", $content);
 
 	} elseif ( $ajaxlib->templateIsRegistered('confirm.tpl') ) {
 		global $area;
@@ -219,14 +254,29 @@ function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user 
 	}
 	$objResponse->script("var xajax.config.requestURI =\"".$ajaxlib->sRequestURI."\";\n");
 	if (sizeof($js_script)) {
-	foreach($js_script as $s) {
-		$objResponse->script($s);
+		foreach($js_script as $s) {
+			if (trim($s) != '') {
+				$objResponse->script($s);
+			}
+		}
+		if ($prefs['feature_ajax_autosave'] == 'y') {
+			$objResponse->call("auto_save");
+		}
 	}
-		$objResponse->call("auto_save");
+	//$objResponse->includeScript("tiki-jsplugin.php");
+	$js_files[] = 'tiki-jsplugin.php';
+	
+	if (sizeof($js_files)) {
+		foreach($js_files as $f) {
+			if (trim($f) != '') {
+				$objResponse->includeScript($f);
+			}
+		}
 	}
-	$objResponse->includeScript("tiki-jsplugin.php");
 
 	return $objResponse;
 }
 
-require_once("lib/ajax/autosave.php");
+if ($prefs['feature_ajax_autosave'] == 'y') {
+	require_once("lib/ajax/autosave.php");
+}

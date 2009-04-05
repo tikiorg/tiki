@@ -42,18 +42,19 @@
 	position: absolute;
 	left: -999em;
 	z-index: 751}
+	
+.box-data .cssmenu_vert {padding-right: 0 !important}
 
-.box-CSS_menu .box-data .cssmenu_vert li ul,
 .cssmenu_vert li ul,
 .cssmenu_vert li.sfhover ul { /* second-level lists */
-	margin-left: 11em;
-	margin-top: -1.35em;
+	margin-left: 10.9em;
+	margin-top: -1.5em;
 	/*padding-bottom: 1px; enable border to show */}
 
 /*.cssmenu li ul ul {left: -999em}*/
 
 .cssmenu_vert li:hover ul ul {z-index: 752}	/* z-indexes needed at ui-revamp to prevent hidden dropdowns */
-.cssmenu_horiz li ul ul {margin: -1em 0 0 10em}
+.cssmenu_horiz li ul ul {margin: -1.5em 0 0 10.9em}
 
 /* dropdown menu hide-display */
 .cssmenu li:hover ul ul,
@@ -126,15 +127,6 @@
 
 * html .cssmenu li ul a {background: none}
 
-/* Top-item (menuSection) link background arrow img */
-.cssmenu_vert .menuSection > a,
-.cssmenu_vert .menuSection > a:hover,
-.menuSection1 > a,
-.menuSection2 > a,
-.menuSection3 > a {background: url(../lib/phplayers/images/forward-galaxy.png) 94% center no-repeat !important}
-
-.cssmenu_horiz .menuSection0 > a {background: url(../lib/phplayers/images/down-galaxy.png)  85% 65% no-repeat}
-
 div#col2,
 td#leftcolumn {overflow: visible !important}
 
@@ -152,14 +144,73 @@ td#leftcolumn {overflow: visible !important}
 #header ul.cssmenu_horiz li ul a {}
 #header .cssmenu_horiz ul li a:hover {}
 
-/* Special case in left column (to adjust menu width to column width)
-.box-CSS_menu .cssmenu_vert,
-.box-CSS_menu .cssmenu_vert > li { width: 172px }
-
-.box-CSS_menu .cssmenu_vert li { padding:0 }
-.box-CSS_menu .cssmenu_vert > li > ul > li > ul {margin-left: 9em }
-.box-CSS_menu .cssmenu_vert > li > ul {margin-left: 172px}
-.box-CSS_menu .cssmenu_vert li:hover { background: #b2b2b2 }
-.box-CSS_menu .cssmenu_vert li:hover > a { color: #303030 }
-*/
 * html h3.box-title {position: static}
+
+/*** arrows (from lib/jquery/superfish css )**/
+.cssmenu_horiz a.sf-with-ul,
+.cssmenu_vert a.sf-with-ul {
+	min-width: 1px; /* trigger IE7 hasLayout so spans position accurately */
+}
+.sf-sub-indicator {
+	position: absolute;
+	display:	block;
+	right: .75em;
+	top: 1.05em; /* IE6 only */
+	width: 10px;
+	height: 10px;
+	text-indent: -999em;
+	overflow: hidden;
+	background: url(../lib/jquery/superfish/images/arrows-ffffff.png)  no-repeat -10px -100px; /* 8-bit indexed alpha png. IE6 gets solid image only; */}
+
+.cssmenu_vert .sf-sub-indicator,
+.cssmenu_horiz ul .sf-sub-indicator {margin-top: -5px}	
+a > .sf-sub-indicator {  /* give all except IE6 the correct values */
+	top: .8em;
+	background-position: 0 -100px; /* use translucent arrow for modern browsers*/
+}
+/* apply hovers to modern browsers */
+a:focus > .sf-sub-indicator,
+a:hover > .sf-sub-indicator,
+a:active > .sf-sub-indicator,
+li:hover > a > .sf-sub-indicator,
+li.sfHover > a > .sf-sub-indicator {background-position: -10px -100px; /* arrow hovers for modern browsers*/
+}
+
+
+/* point right for anchors in subs */
+.cssmenu_horiz ul .sf-sub-indicator,
+.cssmenu_vert ul .sf-sub-indicator { background-position:  -10px 0; }
+.cssmenu_horiz ul a > .sf-sub-indicator,
+.cssmenu_vert ul a > .sf-sub-indicator { background-position:  0 0; }
+/* apply hovers to modern browsers */
+.cssmenu_horiz ul a:focus > .sf-sub-indicator,
+.cssmenu_vert ul a:focus > .sf-sub-indicator,
+.cssmenu_horiz ul a:hover > .sf-sub-indicator,
+.cssmenu_vert ul a:hover > .sf-sub-indicator,
+.cssmenu_horiz ul a:active > .sf-sub-indicator,
+.cssmenu_vert ul a:active > .sf-sub-indicator,
+.cssmenu_horiz ul li:hover > a > .sf-sub-indicator,
+.cssmenu_vert ul li:hover > a > .sf-sub-indicator,
+.cssmenu_horiz ul li.sfHover > a > .sf-sub-indicator
+.cssmenu_vert ul li.sfHover > a > .sf-sub-indicator {
+	background-position: -10px 0; /* arrow hovers for modern browsers*/
+}
+
+/*** shadows for all but IE6 ***/
+.sf-shadow ul {
+	background:	url(../lib/jquery/superfish/images/shadow.png) no-repeat bottom right}
+
+.sf-shadow ul.sf-shadow-off {
+	background: transparent}
+
+/*** alter arrow directions ***/
+.cssmenu_vert .sf-sub-indicator { background-position: -10px 0; } /* IE6 gets solid image only */
+.cssmenu_vert a > .sf-sub-indicator { background-position: 0 0; } /* use translucent arrow for modern browsers*/
+
+/* hover arrow direction for modern browsers*/
+.cssmenu_vert a:focus > .sf-sub-indicator,
+.cssmenu_vert a:hover > .sf-sub-indicator,
+.cssmenu_vert a:active > .sf-sub-indicator,
+.cssmenu_vert li:hover > a > .sf-sub-indicator,
+.cssmenu_vert li.sfHover > a > .sf-sub-indicator {
+	background-position: -10px 0; /* arrow hovers for modern browsers*/}

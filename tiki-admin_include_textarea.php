@@ -100,6 +100,14 @@ if( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 			),
 		);
 
+		if( ! empty( $_POST['body'] ) ) {
+			$info['description']['body'] = $_POST['body'];
+		}
+
+		if( $_POST['validate'] == 'none' ) {
+			unset( $info['description']['validate'] );
+		}
+
 		if( empty($_POST['prefs']) )
 			$temp = array( "wikiplugin_{$_POST['plugin_alias']}" );
 		else

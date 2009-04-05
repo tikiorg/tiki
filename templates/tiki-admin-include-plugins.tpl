@@ -51,6 +51,10 @@
 			<td colspan="2"><input type="text" name="description" value="{$plugin.description.description|escape}"/></td>
 		</tr>
 		<tr>
+			<td>{tr}Body Label{/tr}</td>
+			<td colspan="2"><input type="text" name="body" value="{$plugin.description.body|escape}"/></td>
+		</tr>
+		<tr>
 			<td>{tr}Dependencies{/tr}</td>
 			<td colspan="2"><input type="text" name="prefs" value="{','|implode:$plugin.description.prefs}"/></td>
 		</tr>

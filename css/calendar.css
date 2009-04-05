@@ -2,6 +2,43 @@
 #calendar {
 }
 
+
+div.tabrow {
+	position: relative;
+	left: 0;
+	font-size: 1em;
+	height: 24px !important;
+/*	width: 720px;*/
+	padding-top: 11px;
+}
+.tabrowLeft {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 23px;
+	height: 24px !important;
+}
+.tabrowRight {
+	position:absolute;
+	top: 0;
+	right: 0;
+	width: 30px;
+	height: 24px !important;
+}
+
+.tabrow {
+	margin : 0;
+	font-size : 11px;
+	padding : 1px 10px 4px 10px;
+	clear: both;
+}
+.tabrow a {
+	text-decoration : none;
+}
+.tabrow .viewmode { float: left; }
+.tabrow .jscalrow { float: right; white-space: nowrap; cursor: pointer; }
+.tabrow .daterow { border : 1px #ddd; }
+
 .calHeading,
 .calHeadingOn {
 	height: 36px;
@@ -12,16 +49,16 @@
 }
 .calHeading a,
 .calHeading a:visited {
-/*	color: #483b3b;*/
-	text-decoration: none;
+/*	color: #483b3b; let theme handle links
+	text-decoration: none;*/
 }
 .calHeadingOn a {
-	color: #06f;
-	text-decoration: none;
+	/*color: #06f;
+	text-decoration: none;*/
 }
 .calHeading a:hover,
 .calHeadingOn a:hover {
-	text-decoration: underline;
+	/*text-decoration: underline;*/
 }
 .calHours {
 	vertical-align: middle;
@@ -280,18 +317,6 @@
 	color : #000000;
 	font-weight : normal;
 }
-.tabrow {
-	margin : 0;
-	font-size : 11px;
-	padding : 1px 10px 4px 10px;
-	clear: both;
-}
-.tabrow a {
-	text-decoration : none;
-}
-.tabrow .viewmode { float: left; }
-.tabrow .jscalrow { float: right; white-space: nowrap; cursor: pointer; }
-.tabrow .daterow { border : 1px #ddd; }
 
 .calnavigation {
 	border-width: 0;
@@ -481,47 +506,8 @@ a.viewmodeoff img {
 	padding: 10px;
 }
 .calbuttonBox {
-	float: left;
-	position: relative;
-	height: 20px;
-	width: 86px;
-}
-.calbuttonon,
-.calbuttonoff {
-	position: absolute;
-	top: 0px;
-	left: 3px;
-	padding-top: 3px;
-	text-align: center;
-	font-size: 12px;
-/*	font-family: Arial, sans-serif;*/
-	height: 20px;
-	width: 80px;
-	border-style: solid;
-	border-color: #999;
-	border-width: 0px;
-}
-/*
-.calbuttonoff a,
-.calbuttonoff a:visited {
-	color: #000;
-}
-*/
-.calbuttonon a {
-	text-decoration: underline;
-}
-.calbuttonLeft {
-	float: left;
-	width: 3px;
-	height: 20px;
-}
-.calbuttonRight {
-	position: absolute;
-	top: 0px;
-	right: 3px;
-	float: right;
-	width: 3px;
-	height: 20px;
+	/*float: left;
+	position: relative;*/
 }
 
 .statusbox {
@@ -555,11 +541,10 @@ a.addevent:hover { border-bottom:0px; }
 .calfocuson + .calcontent {background: none; }
 .html_select_time { white-space: nowrap; }
 
-.tabrow {  }
 .tabrowLeft {  }
 .tabrowRight {  }
 .viewmode {width: 100%; text-align: center}
-.viewmode div {display: inline-block}
+.viewmode div {display: inline}
 .calbuttonBox {  }
 .calbuttonLeft {  }
 .calbuttonRight {  }

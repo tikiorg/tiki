@@ -397,15 +397,14 @@ div.help_section {
 
 #col2 .box {
 	background: #cce5ff;
+	border-bottom: 1px solid #bed8f1;
 }
 
 #col3 .box {
 	border-bottom: 1px solid #cfcfcf;
 }
 
-.box a.flipmodtitle img {
-	display: none;
-}
+.box a.flipmodtitle img {}
 
 a.flipmodtitle:hover img {
 	border: 1px solid #58A7D2 !important;

@@ -496,7 +496,7 @@ $plugins = $wikilib->list_plugins(true);
 $smarty->assign_by_ref('plugins', $plugins);
 
 include_once ('lib/quicktags/quicktagslib.php');
-$quicktags = $quicktagslib->list_quicktags(0,100,'taglabel_desc','','articles');
+$quicktags = $quicktagslib->list_quicktags(0,100,'taglabel_asc','','articles');
 $smarty->assign_by_ref('quicktags', $quicktags["data"]);
 
 ask_ticket('edit-article');

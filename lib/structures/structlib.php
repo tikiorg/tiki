@@ -359,8 +359,9 @@ class StructLib extends TikiLib {
   */
 	function s_get_structure_info($page_ref_id) {
 		$parent_id = $this->getOne('select `parent_id` from `tiki_structures` where `page_ref_id`=?', array((int)$page_ref_id));
-		if (!$parent_id)
+		if (!$parent_id) {
 			return $this->s_get_page_info($page_ref_id);
+		}
 		return $this->s_get_structure_info($parent_id);
 	}
   /**Returns an array of info about the parent
@@ -490,7 +491,7 @@ class StructLib extends TikiLib {
 					)
 				WHERE
 					parent_id = ?
-				";
+				order by ".$this->convert_sortmode('pos_'.$order);
 				$args[] = (int) $id;
 			}
 			$result = $this->query($query, $args);
