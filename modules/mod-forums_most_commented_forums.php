@@ -5,7 +5,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
-
+global $smarty;
 global $ranklib; include_once ('lib/rankings/ranklib.php');
 
 $ranking = $ranklib->forums_ranking_most_commented_forum($module_rows);

@@ -5,7 +5,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
-
+global $smarty;
 if( $prefs['feature_mootools'] == 'y' ) {
 	global $headerlib;
 	$headerlib->add_jsfile( 'lib/mootools/Observer.js' );

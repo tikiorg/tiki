@@ -7,7 +7,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
-global $prefs, $user;
+global $prefs, $user, $tikilib, $smarty;
 global $logslib; require_once('lib/logs/logslib.php');
 global $categlib; require_once('lib/categories/categlib.php');
   

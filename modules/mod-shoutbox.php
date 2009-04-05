@@ -28,8 +28,8 @@ if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== false) {
   exit;
 }
 
-require_once ('lib/tikilib.php');
-global $shoutboxlib, $prefs, $tiki_p_view_shoutbox, $tiki_p_admin_shoutbox, $tiki_p_post_shoutbox, $base_url;
+global $tikilib; require_once ('lib/tikilib.php');
+global $shoutboxlib, $prefs, $tiki_p_view_shoutbox, $tiki_p_admin_shoutbox, $tiki_p_post_shoutbox, $base_url, $smarty;
 include_once ('lib/shoutbox/shoutboxlib.php');
 
 function doProcessShout($inFormValues) {

@@ -4,6 +4,7 @@
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
 }
+global $smarty;
 global $userlib;include_once('lib/userslib.php');
 
 $last_visitors= $userlib->get_users(0,$module_rows,'currentLogin_desc');

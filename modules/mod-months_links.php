@@ -6,7 +6,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 	exit;
 }
 
-global $prefs, $sections;
+global $prefs, $sections, $smarty;
 
 $link = '';
 if ( isset($module_params['feature'])

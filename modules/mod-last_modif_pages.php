@@ -5,7 +5,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
-
+global $tikilib, $smarty;
 // Parameter absurl set if the last_modif_pages url is absolute or not [y|n].
 // If not set, default = relative
 

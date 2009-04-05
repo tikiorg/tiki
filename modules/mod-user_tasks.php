@@ -6,7 +6,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-global $user, $tasklib;
+global $user, $tasklib, $tikilib, $smarty;
 include_once('lib/tasks/tasklib.php');
 
 if ($user && isset($prefs['feature_tasks']) && $prefs['feature_tasks'] == 'y' && isset($tiki_p_tasks) && $tiki_p_tasks == 'y') {

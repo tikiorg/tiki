@@ -6,7 +6,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-global $dbTiki;
+global $dbTiki, $smarty;
 global $freetaglib;
 global $tiki_p_freetags_tag, $tiki_p_edit, $tiki_p_view;
 

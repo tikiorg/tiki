@@ -5,7 +5,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
-
+global $tikilib, $smarty;
 $online_users = $tikilib->get_online_users();
 
 $smarty->assign('online_users', $online_users);

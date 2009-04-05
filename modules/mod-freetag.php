@@ -7,7 +7,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 global $sections,$section;
-global $userlib;
+global $userlib, $smarty;
 
 $userid = $userlib->get_user_id($user);
 $smarty->assign('userid',$userid);

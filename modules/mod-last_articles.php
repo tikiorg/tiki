@@ -12,6 +12,7 @@ if (!function_exists('mod_last_articles_help')) {
 		return "type=Article|Event|...&topicId=1&topic=xx&categId=1&lang=en&showImg=width&showDate=y&showHeading=chars";
 	}
 }
+global $tikilib, $smarty;
 // Parameter absurl set if the last_article url is absolute or not [y|n].
 // If not set, default = relative
 
