@@ -84,16 +84,16 @@ if( !( is_numeric( $_GET['w'] )
 switch( $_GET['t'] )
 {
 case 'png':
-	$renderer = &new GD_GRenderer( $_GET['w'], $_GET['h'] );
+	$renderer = new GD_GRenderer( $_GET['w'], $_GET['h'] );
 	break;
 case 'pdf':
-	$renderer = &new PDFLib_GRenderer( $_GET['p'], $_GET['o'] );
+	$renderer = new PDFLib_GRenderer( $_GET['p'], $_GET['o'] );
 	break;
 default:
 	die;
 }
 
-$graph = &new MultilineGraphic;
+$graph = new MultilineGraphic;
 $graph->setTitle( $_GET['title'] );
 
 $size = ($_GET['max'] - $_GET['min']) / $_GET['s'];
