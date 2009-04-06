@@ -37,6 +37,15 @@
 		<a href="{$smarty.server.PHP_SELF}?{query archive="y"}" title="{tr}Archive{/tr}">{icon _id='package' alt='{tr}Archive{/tr}'}</a>
 			{/if}
 		{/if}
+
+		{if $tiki_p_forum_lock eq 'y'}
+			{if $thread_info.locked eq 'y'}
+				{self_link lock='n' _icon='lock_break' _alt="{tr}Unlock{/tr}"}{/self_link}
+			{else}
+				{self_link lock='y' _icon='lock_add' _alt="{tr}Lock{/tr}"}{/self_link}
+			{/if}
+		{/if}
+
 	</span>
 </div>
 

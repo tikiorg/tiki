@@ -40,6 +40,14 @@
 					<a href="tiki-forum_rss.php?forumId={$forumId}" title='{tr}RSS feed{/tr}'>{icon _id="feed" alt='{tr}RSS feed{/tr}'}</a>
 				{/if}
 
+				{if $tiki_p_forum_lock eq 'y'}
+					{if $forum_info.is_locked eq 'y'}
+						{self_link lock='n' _icon='lock_break' _alt="{tr}Unlock{/tr}"}{/self_link}
+					{else}
+						{self_link lock='y' _icon='lock_add' _alt="{tr}Lock{/tr}"}{/self_link}
+					{/if}
+				{/if}
+
 				{if $user and $prefs.feature_user_watches eq 'y'}
 					{if $user_watching_forum eq 'n'}
 						<a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic&amp;watch_object={$forumId}&amp;watch_action=add" title='{tr}Monitor Topics of this Forum{/tr}'>{icon _id='eye' alt='{tr}Monitor Topics of this Forum{/tr}'}</a>
@@ -161,7 +169,6 @@
 									<option value="a" {if $comment_topictype eq 'a'}selected="selected"{/if}>{tr}announce{/tr}</option>
 									<option value="h" {if $comment_topictype eq 'h'}selected="selected"{/if}>{tr}hot{/tr}</option>
 									<option value="s" {if $comment_topictype eq 's'}selected="selected"{/if}>{tr}sticky{/tr}</option>
-									<option value="l" {if $comment_topictype eq 'l'}selected="selected"{/if}>{tr}locked{/tr}</option>
 								</select>
 							{/if}
 							{if $forum_info.topic_smileys eq 'y'}
@@ -417,6 +424,12 @@
 					{elseif $comments_coms[ix].type eq 'l'}
 						{icon _id="locked$nticon" alt="{tr}Locked{/tr}$ntalt"}
 					{/if}
+
+					{if $comments_coms[ix].locked eq 'y'}
+						{icon _id="lock" alt="{tr}Locked{/tr}"}
+					{elseif $forum_info.is_locked eq 'y'}
+						{icon _id="lock_red" alt="{tr}Forum Lock{/tr}"}
+					{/if}
 				</td>
 				{if $forum_info.topic_smileys eq 'y'}
 					<td style="text-align:center;" class="{cycle advance=false}">
@@ -466,7 +479,7 @@
 						&nbsp;
 					{/if}
 
-					{if $tiki_p_admin_forum eq 'y' or ($comments_coms[ix].userName == $user && $tiki_p_forum_post eq 'y') }
+					{if ( $tiki_p_admin_forum eq 'y' or ($comments_coms[ix].userName == $user && $tiki_p_forum_post eq 'y') ) and $forum_info.is_locked neq 'y' and $comments_coms[ix].locked neq 'y'}
 						<a href="tiki-view_forum.php?openpost=1&amp;comments_threadId={$comments_coms[ix].threadId}&amp;forumId={$forum_info.forumId}&amp;comments_threshold={$comments_threshold}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}" class="admlink">{icon _id='page_edit'}</a>
 					{/if}
 
