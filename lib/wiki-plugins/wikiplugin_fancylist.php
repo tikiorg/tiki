@@ -11,27 +11,46 @@ function wikiplugin_fancylist_info() {
 		'prefs' => array('wikiplugin_fancylist'),
 		'body' => tra('One item per line starting with anything followed by ")".'),
 		'params' => array(
+			 'div' => array(
+			 	'required' => false,
+				'name' => tra('Use div'),
+				'description' => tra('Use div instead of ol'),
+			 ),
+																		 
 		),
 	);
 }
 
 function wikiplugin_fancylist($data, $params) {
 	global $tikilib;
-
 	global $replacement;
-	if (isset($param))
+	if (isset($params)){
+
 		extract ($params,EXTR_SKIP);
-	$result = '<ol class="fancylist">';
+		}
+		if(isset($div)){
+			$result = '<div class="fancylist">';
+			$count=1;
+		}else{
+			$result = '<ol class="fancylist">';
+			}
 	// split data by lines (trimed whitespace from start and end)
 	$lines = split("\n", trim($data));
-
 	foreach ($lines as $line) {
 		// replace all before and including the ")"
 		$part = preg_replace("/[\w]+\)(.*)/", "$1", $line);
-		$result .= '<li><p>' . $part . '</p></li>';
+      	if(isset($div)){
+		$result .= '<div><span class='.count.'>'.$count.'</span><p>' . $part . '</p></div>';
+		$count++;
+	}else{
+                $result .= '<li><p>' . $part . '</p></li>';				
+		}
 	}
-
-	$result .= '</ol>';
+	if(isset($div)){
+		$result .= '</div>';
+	}else{
+	 	$result .= '</ol>';
+	}
 	return $result;
 }
 
