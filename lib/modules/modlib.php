@@ -182,7 +182,47 @@ class ModLib extends TikiLib {
 		}
 		closedir($h);
 	}
-
+	/* @param module_info = info of a module
+	 * @param user_groups = list of groups of a user
+	 * @param user = the user
+	 */
+	function check_groups($module_info, $user, $user_groups) {
+		global $prefs;
+		$pass = 'y';
+		if ($user != 'admin' && $prefs['modallgroups'] != 'y') {
+			if ($module_info['groups']) {
+				$module_groups = unserialize($module_info['groups']);
+			} else {
+				$module_groups = array();
+			}
+			$pass = 'n';
+			if ($prefs['modseparateanon'] !== 'y') {
+				foreach ($module_groups as $mod_group) {
+					if (in_array($mod_group, $user_groups)) {
+						$pass = 'y';
+						break; 
+					}
+				}
+			} else {
+				if(!$user) { 
+					if (in_array('Anonymous', $module_groups)) {
+						$pass = 'y';
+					}
+				} else { 
+					foreach ($module_groups as $mod_group) {
+						if ($mod_group === 'Anonymous') { 
+							continue; 
+						}
+						if (in_array($mod_group, $user_groups)) {
+							$pass = 'y';
+							break;
+						}
+					}
+				}
+			}
+		}
+		return $pass;
+	}
 }
 global $dbTiki;
 $modlib = new ModLib($dbTiki);
