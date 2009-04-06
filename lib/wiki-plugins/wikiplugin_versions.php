@@ -33,17 +33,17 @@ function wikiplugin_versions_info() {
 			'nav' => array(
 				'required' => false,
 				'name' => tra('Navigation'),
-				'description' => 'y|n',
+				'description' => 'y|n - '.tr('Displays a navigation box that allows users to select a specific version to display.'),
 			),
 			'title' => array(
 				'required' => false,
 				'name' => tra('Title'),
-				'description' => 'y|n',
+				'description' => 'y|n - '.tr('Display the current version name as the title. Note: Do not work when nav=>y'),
 			),
-			'defaults' => array(
+			'default' => array(
 				'required' => false,
-				'name' => tra('Navigation'),
-				'description' => tra('?'),
+				'name' => tra('Default'),
+				'description' => tr('Specifies version label to show when displaying the page for the first time. e.g. \'Default\''),
 			),
 		),
 	);
@@ -86,7 +86,7 @@ function wikiplugin_versions($data, $params) {
 	}
 
 	if ($p == 0) {
-		if (strpos($data,'---(')) {
+		if (strpos($data,'---(') !== false) {
 			$data = substr($data,0,strpos($data,'---('));
 		}
 		if ($nav == 'n' and $title == 'y') { $data = "<b class='versiontitle'>". $default .'</b>'.$data; }
@@ -96,10 +96,9 @@ function wikiplugin_versions($data, $params) {
 			$data = substr($data,strpos($data,'---('.$v[1][$p-1]));
 			$data = preg_replace('/\)---*[\r\n]*/',"</b>\n","<b class='versiontitle'>". substr($data,4));
 		} else {
-			$data = substr($data,strpos($data,'---('.$v[1][$p-1]));
-			$data = preg_replace('/.*\)---*[\r\n]*/',"", substr($data,4));
+			$data = preg_replace('/(?:.*---\('.$v[1][$p-1].'\)-{3,}?[\r\n]*?)(.*?)(?:---\(.*)/mis',"$1", $data);
 		}
-		if (strpos($data,'---(')) {
+		if (strpos($data,'---(') !== false) {
 			$data = substr($data,0,strpos($data,'---('));
 		}
 	}
@@ -117,15 +116,15 @@ function wikiplugin_versions($data, $params) {
 			}
 			if ($type == 'host') {
 				$vv = preg_replace('/[^a-z0-9]/','',strtolower($version));
-				$navbar.= ' <span class="button2'.$high.'"><a href="http://'. $vv .'.'. preg_replace("/".$v[1][$p]."/","",$_SERVER['SERVER_NAME']) . preg_replace("~(\?|&)tikiversion=[^&]*~","",$_SERVER['REQUEST_URI']) .'" class="linkbut">'. $ver .'</a></span>';
+				$navbar.= ' <span class="button'.$high.'"><a href="http://'. $vv .'.'. preg_replace("/".$v[1][$p]."/","",$_SERVER['SERVER_NAME']) . preg_replace("~(\?|&)tikiversion=[^&]*~","",$_SERVER['REQUEST_URI']) .'" class="linkbut">'. $ver .'</a></span>';
 			} else {
-				$navbar.= ' <span class="button2'.$high.'"><a href="';
-				if (strpos($_SERVER['REQUEST_URI'],'?')) { 
+				$navbar.= ' <span class="button'.$high.'"><a href="';
+				if (strpos($_SERVER['REQUEST_URI'],'?') !== false) { 
 					$navb = preg_replace("~(\?|&)tikiversion=[^&]*~","",$_SERVER['REQUEST_URI']);
 				} else {
 					$navb = $_SERVER['REQUEST_URI'];
 				}
-				if (strpos($navb,'?')) {
+				if (strpos($navb,'?') !== false) {
 					$navbar.= "$navb&";
 				} else {
 					$navbar.= "$navb?";
@@ -136,9 +135,9 @@ function wikiplugin_versions($data, $params) {
 		
 		if (!$highed) { $high = " highlight"; } else { $high = ''; }
 		if ($type == 'host') {
-			$navbar = '<span class="button2'.$high.'"><a href="http://'. preg_replace("/".$v[1][$p]."/","",$_SERVER['SERVER_NAME']) . preg_replace("~(\?|&)tikiversion=[^&]*~","",$_SERVER['REQUEST_URI']) .'" class="linkbut">'.$default.'</a></span>'.$navbar;
+			$navbar = '<span class="button'.$high.'"><a href="http://'. preg_replace("/".$v[1][$p]."/","",$_SERVER['SERVER_NAME']) . preg_replace("~(\?|&)tikiversion=[^&]*~","",$_SERVER['REQUEST_URI']) .'" class="linkbut">'.$default.'</a></span>'.$navbar;
 		} else {
-			$navbar = '<span class="button2'.$high.'"><a href="'. preg_replace("~(\?|&)tikiversion=[^&]*~","",$_SERVER['REQUEST_URI']) .'" class="linkbut">'.$default.'</a></span>'.$navbar;
+			$navbar = '<span class="button'.$high.'"><a href="'. preg_replace("~(\?|&)tikiversion=[^&]*~","",$_SERVER['REQUEST_URI']) .'" class="linkbut">'.$default.'</a></span>'.$navbar;
 		}
 		$data = '<div class="versions"><div class="versionav">'.$navbar."</div><div>\n".$data."</div>\n</div>";
 	}
