@@ -2427,7 +2427,7 @@ class Comments extends TikiLib {
  	 * @return  the threadId
 	 * @return $feedbacks, $errors */
 	function post_in_forum($forum_info, &$params, &$feedbacks, &$errors) {
-		global $tiki_p_admin_forum, $tiki_p_forum_post_topic, $tiki_p_forum_post, $prefs, $user, $tiki_p_forum_autoapp;
+		global $smarty, $tiki_p_admin_forum, $tiki_p_forum_post_topic, $tiki_p_forum_post, $prefs, $user, $tiki_p_forum_autoapp;
 
 		if (!empty($params['comments_grandParentId'])) {
 			$parent_id = $params['comments_grandParentId'];
@@ -2614,16 +2614,18 @@ class Comments extends TikiLib {
 				die;
 			}
 		}
-		if ( $this->is_object_locked($comments_objectId) ) {
-			$smarty->assign('msg', tra("Those comments are locked"));
-			$smarty->display("error.tpl");
-			die;
-		}
-		$parent_comment_info = $this->get_comment($parent_id);
-		if ( $parent_comment_info['locked'] == 'y' ) {
-			$smarty->assign('msg', tra("This thread is locked"));
-			$smarty->display("error.tpl");
-			die;
+		if ( $prefs['feature_comments_locking'] == 'y' ) {
+			if ( $this->is_object_locked($comments_objectId) ) {
+				$smarty->assign('msg', tra("Those comments are locked"));
+				$smarty->display("error.tpl");
+				die;
+			}
+			$parent_comment_info = $this->get_comment($parent_id);
+			if ( $parent_comment_info['locked'] == 'y' ) {
+				$smarty->assign('msg', tra("This thread is locked"));
+				$smarty->display("error.tpl");
+				die;
+			}
 		}
 				
 		if (empty($user) && $prefs['feature_antibot'] == 'y' && (!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $params['antibotcode'])) {

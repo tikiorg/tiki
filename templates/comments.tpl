@@ -105,14 +105,16 @@
 					<a class="link" href="tiki-list_comments.php?types_section={$section}&amp;findfilter_approved=n">{tr}queued:{/tr}{$queued}</a>
 					&nbsp;&nbsp;
 				{/if}
-				{if $thread_is_locked eq 'y'}
-					{tr}Comments Locked{/tr}
-					{self_link comments_lock='n' _icon='lock_break'}{tr}Unlock{/tr}{/self_link}
-				{else}
-					{self_link comments_lock='y' _icon='lock_add'}{tr}Lock{/tr}{/self_link}
+				{if $prefs.feature_comments_locking eq 'y'}
+					{if $thread_is_locked eq 'y'}
+						{tr}Comments Locked{/tr}
+						{self_link comments_lock='n' _icon='lock_break'}{tr}Unlock{/tr}{/self_link}
+					{else}
+						{self_link comments_lock='y' _icon='lock_add'}{tr}Lock{/tr}{/self_link}
+					{/if}
 				{/if}
 				</span>
-			{elseif $thread_is_locked eq 'y'}
+			{elseif $thread_is_locked eq 'y' and $prefs.feature_comments_locking eq 'y'}
 				<span class="infos">{tr}Comments Locked{/tr}</span>
 			{/if}
 			</div>
@@ -217,7 +219,7 @@
 
 {* Post dialog *}
 {if ($tiki_p_forum_post eq 'y' and $forum_mode eq 'y') or ($tiki_p_post_comments eq 'y' and $forum_mode ne 'y')}
-  {if $thread_is_locked eq 'y'}
+  {if ( $forum_mode eq 'y' or $prefs.feature_comments_locking eq 'y' ) and $thread_is_locked eq 'y'}
 	{if $forum_mode eq 'y'}
 		{assign var='lock_text' value="{tr}This thread is locked{/tr}"}
 	{else}

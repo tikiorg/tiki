@@ -101,6 +101,7 @@ if (isset($_REQUEST["features"])) {
 		"feature_magic",
 		"feature_minichat",
 		"feature_comments_moderation",
+		"feature_comments_locking",
 		"feature_groupalert",
 		"feature_wiki_mindmap",
 		"use_minified_scripts",
