@@ -5484,37 +5484,37 @@ class TikiLib extends TikiDB {
 								}
 	
 							} else {
-	
-	
-							// Handle nested plugins.
-							$this->parse_first($plugin_data, $preparsed, $noparsed, $options, $real_start_diff + $pos+strlen($plugin_start));
-	
-							if( true === $status = $this->plugin_can_execute( $plugin_name, $plugin_data, $arguments ) ) {
-								$ret = $this->plugin_execute( $plugin_name, $plugin_data, $arguments, $real_start_diff + $pos+strlen($plugin_start), false, $options);
-							} else {
-								global $tiki_p_plugin_viewdetail, $tiki_p_plugin_preview, $tiki_p_plugin_approve;
-								$details = $tiki_p_plugin_viewdetail == 'y' && $status != 'rejected';
-								$preview = $tiki_p_plugin_preview == 'y' && $details;
-								$approve = $tiki_p_plugin_approve == 'y' && $details;
-	
-								if( $status != 'rejected' ) {
-									$smarty->assign( 'plugin_fingerprint', $status );
-									$status = 'pending';
+
+
+								// Handle nested plugins.
+								$this->parse_first($plugin_data, $preparsed, $noparsed, $options, $real_start_diff + $pos+strlen($plugin_start));
+
+								if( true === $status = $this->plugin_can_execute( $plugin_name, $plugin_data, $arguments ) ) {
+									$ret = $this->plugin_execute( $plugin_name, $plugin_data, $arguments, $real_start_diff + $pos+strlen($plugin_start), false, $options);
+								} else {
+									global $tiki_p_plugin_viewdetail, $tiki_p_plugin_preview, $tiki_p_plugin_approve;
+									$details = $tiki_p_plugin_viewdetail == 'y' && $status != 'rejected';
+									$preview = $tiki_p_plugin_preview == 'y' && $details;
+									$approve = $tiki_p_plugin_approve == 'y' && $details;
+
+									if( $status != 'rejected' ) {
+										$smarty->assign( 'plugin_fingerprint', $status );
+										$status = 'pending';
+									}
+
+									$smarty->assign( 'plugin_name', $plugin_name );
+									$smarty->assign( 'plugin_index', $current_index );
+
+									$smarty->assign( 'plugin_status', $status );
+									$smarty->assign( 'plugin_details', $details );
+									$smarty->assign( 'plugin_preview', $preview );
+									$smarty->assign( 'plugin_approve', $approve );
+
+									$smarty->assign( 'plugin_body', $plugin_data );
+									$smarty->assign( 'plugin_args', $arguments );
+
+									$ret = '~np~' . $smarty->fetch('tiki-plugin_blocked.tpl') . '~/np~';
 								}
-	
-								$smarty->assign( 'plugin_name', $plugin_name );
-								$smarty->assign( 'plugin_index', $current_index );
-	
-								$smarty->assign( 'plugin_status', $status );
-								$smarty->assign( 'plugin_details', $details );
-								$smarty->assign( 'plugin_preview', $preview );
-								$smarty->assign( 'plugin_approve', $approve );
-	
-								$smarty->assign( 'plugin_body', $plugin_data );
-								$smarty->assign( 'plugin_args', $arguments );
-	
-								$ret = '~np~' . $smarty->fetch('tiki-plugin_blocked.tpl') . '~/np~';
-							}
 							}
 							//echo '<pre>'; debug_print_backtrace(); echo '</pre>';
 							if( $this->plugin_is_editable( $plugin_name ) && (empty($options['print']) || !$options['print']) ) {
