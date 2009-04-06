@@ -2067,7 +2067,7 @@ div.multiselect {
 	/*overflow-y: auto;
 	overflow-x: hidden;*/
 	overflow: auto;
-	height: 5em;
+	height: auto;
 	width: 100%;
 	border: 1px solid #696969}
 

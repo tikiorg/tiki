@@ -2456,7 +2456,7 @@ img.icon {border: 0 !important;
 div.multiselect {
 	vertical-align: middle;
 	overflow: auto;
-	height: 5em;
+	height: auto;
 }
 
 div.multiselect div.odd {background: #292929}

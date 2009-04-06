@@ -80,6 +80,24 @@ else {
 		}
 	}
 
+	include_once ('lib/tree/categ_browse_tree.php');
+	$tree_nodes = array();
+	foreach ($categories as $c) {
+		if (isset($c['name']) || $c['parentId'] != 0) {
+			$tree_nodes[] = array(
+				'id' => $c['categId'],
+				'parent' => $c['parentId'],
+				'data' => '<span class="tips" title="'.$c['description'].'"><input type=checkbox name="cat_categories[]" value=' . $c['categId'] . ($c['incat'] == 'y' ? ' checked=checked' : '') . '/> ' . $c['name'] . '</span>'
+			);
+			if ($c['parentId'] == 0) {
+				$tree_nodes[count($tree_nodes) - 1]['data'] = '<strong>'.$tree_nodes[count($tree_nodes) - 1]['data'].'</strong>';
+			}
+		}
+	}
+	$tm = new CatBrowseTreeMaker("categorize");
+	$res = $tm->make_tree(0, $tree_nodes);
+	$smarty->assign('cat_tree', $res);
+	
 	if (!empty($cats))
 		$smarty->assign('catsdump', implode(',',$cats));
 	$smarty->assign_by_ref('categories', $categories);

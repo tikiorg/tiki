@@ -2894,7 +2894,7 @@ div.multiselect {
 	vertical-align: middle;
 	overflow-y: auto;
 	overflow-x: hidden;
-	height: 5em;
+	height: auto;
 	width: 100%;
 	border: 1px solid black;
 }
