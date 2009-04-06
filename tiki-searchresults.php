@@ -14,7 +14,7 @@ require_once ('lib/searchlib.php');
 $auto_query_args = array('initial','maxRecords','sort_mode','find','lang','highlight','where', 'words', 'boolean');
 $smarty->assign('headtitle',tra('Search results'));
 
-$searchlib = &new SearchLib($tikilib->db);
+$searchlib = new SearchLib($tikilib->db);
 
 if ($prefs['feature_search'] != 'y') {
 	$smarty->assign('msg', tra("This feature is disabled").": feature_search");
@@ -22,12 +22,14 @@ if ($prefs['feature_search'] != 'y') {
 	$smarty->display("error.tpl");
 	die;
 }
+
 if ($tiki_p_search != 'y') {
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg',tra('Permission denied'));
 	$smarty->display('error.tpl');
 	die;
 }
+
 if(isset($_REQUEST["highlight"]) && !empty($_REQUEST["highlight"])) {
 	$_REQUEST["words"] = $_REQUEST["highlight"];
 }

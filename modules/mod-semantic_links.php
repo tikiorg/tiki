@@ -10,6 +10,7 @@ ini_set( 'display_errors', 'on' );
 error_reporting(E_ALL);
 
 if( isset($page) && !empty($page) ) {
+	global $smarty;
 	global $semanticlib;
 	require_once( 'lib/wiki/semanticlib.php' );
 

@@ -6,7 +6,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 	exit;
 }
 
-global $prefs, $tiki_p_view_calendar, $tiki_p_admin_calendars;
+global $prefs, $tiki_p_view_calendar, $tiki_p_admin_calendars, $tikilib, $smarty;
 if ( $prefs['feature_calendar'] == 'y' ) {
 
 	global $calendarlib; include_once('lib/calendar/calendarlib.php');

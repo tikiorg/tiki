@@ -13,5 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 * - blogid : if it is set, the list is filtered for that blogId, -1 = show posts
 *   from  all blogs
 */
+global $tikilib, $smarty;
+
 $ranking = $tikilib->list_posts(0, $module_rows, 'created_desc', '', (isset($module_params["blogid"]) ? $module_params["blogid"] : -1 ) );
 $smarty->assign('modLastBlogPosts', $ranking["data"]);

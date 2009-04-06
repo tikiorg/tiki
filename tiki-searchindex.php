@@ -12,7 +12,7 @@ require_once ('tiki-setup.php');
 require_once ('lib/search/searchlib.php'); 
 // note: lib/search/searchlib.php is new. the old one was lib/searchlib.php
 
-$searchlib = &new SearchLib($tikilib->db);
+$searchlib = new SearchLib($tikilib->db);
 $auto_query_args = array('highlight','where');
 
 if (isset($_REQUEST["highlight"]) && !empty($_REQUEST["highlight"])) {

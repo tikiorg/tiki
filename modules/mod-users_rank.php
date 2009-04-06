@@ -5,7 +5,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
-global $prefs;
+global $prefs, $tikilib, $smarty;
 
 if ($prefs['feature_score'] == 'y') {
 	$users_rank = $tikilib->rank_users($module_rows);

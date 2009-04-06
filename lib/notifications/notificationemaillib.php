@@ -84,7 +84,7 @@ function sendForumEmailNotification($event, $object, $forum_info, $title, $data,
 	$defaultLanguage = $prefs['site_language'];
 
 	// Users watching this forum or this post
-	if ($prefs['feature_user_watches'] == 'y') {
+	if ($prefs['feature_user_watches'] == 'y' || $prefs['feature_group_watches'] == 'y') {
 		$nots = $tikilib->get_event_watches($event, $event == 'forum_post_topic'? $forum_info['forumId']: $threadId, $forum_info);
 		for ($i = count($nots) - 1; $i >=0; --$i) {
 			$nots[$i]['language'] = $tikilib->get_user_preference($nots[$i]['user'], "language", $defaultLanguage);

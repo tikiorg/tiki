@@ -5,8 +5,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
-
-require_once ('lib/tikilib.php'); # httpScheme()
+global $tikilib, $smarty;
 
 global $bookmarklib, $imagegallib, $user, $prefs, $tiki_p_create_bookmarks;
 include_once ('lib/bookmarks/bookmarklib.php');

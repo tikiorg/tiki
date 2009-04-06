@@ -13,7 +13,7 @@ if (!function_exists("categories_help")) {
 	}
 }
 
-global $prefs, $tiki_p_view_categories;
+global $prefs, $tiki_p_view_categories, $smarty;
 
 if ($prefs['feature_categories'] != 'y') {
 	$module_params['error'] = tra("This feature is disabled").": feature_categories";

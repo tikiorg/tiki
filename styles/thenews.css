@@ -953,7 +953,7 @@ div.cbox {
 	background: #EBEBEB;
 	margin-bottom: 4px;
 	border: 1px solid #aaa;
-}
+	overflow: hidden}
 
 .cbox-title {
 	border-bottom: 1px solid #aaa;
@@ -975,7 +975,7 @@ div.cbox {
 
 .cbox-data {
 	padding: 3px;
-}
+	overflow: hidden}
 
 /* rbox: remarks box (note/warning/tip/comment) */
 .rbox {
