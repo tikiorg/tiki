@@ -1,8 +1,16 @@
 {* $Id$ *}
 <div class="clearfix postbody-title">
+	{if $prefs.feature_comments_locking neq 'y' or
+		( $forum_mode neq 'y' and $comment.locked neq 'y' and $thread_is_locked neq 'y' )
+		or ( $forum_mode eq 'y' and $comment.locked neq 'y' and $thread_is_locked neq 'y' )
+	}
+		{assign var='this_is_locked' value='n'}
+	{else}
+		{assign var='this_is_locked' value='y'}
+	{/if}
 
-	{if $thread_style != 'commentStyle_headers' and $comment.threadId > 0
-		and $forum_mode neq 'y' || ( $forum_mode eq 'y' and $forumId > 0 and $comments_parentId > 0 )
+	{if $thread_style != 'commentStyle_headers' and $this_is_locked eq 'n' and $comment.threadId > 0
+		and ( $forum_mode neq 'y' || ( $forum_mode eq 'y' and $forumId > 0 and $comments_parentId > 0 ) )
 	}
 	<div class="actions">
 		{if $forum_mode neq 'y' && $prefs.feature_comments_moderation eq 'y' && $tiki_p_admin_comments eq 'y' && $comment.approved eq 'n'}

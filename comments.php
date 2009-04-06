@@ -302,6 +302,15 @@ if ( (!isset($forum_mode) || $forum_mode == 'n') && $tiki_p_admin_comments == 'y
 	}
 }
 
+// Comments and Forum Locking
+if ( $prefs['feature_comments_locking'] == 'y' && ! empty($_REQUEST['comments_lock']) && ! empty($comments_objectId) && ( ! isset($forum_mode) || $forum_mode == 'n' ) && $tiki_p_lock_comments == 'y' ) {
+	if ( $_REQUEST['comments_lock'] == 'y' ) {
+		$commentslib->lock_object_thread($comments_objectId);
+	} elseif ( $_REQUEST['comments_lock'] == 'n' ) {
+		$commentslib->unlock_object_thread($comments_objectId);
+	}
+}
+
 if (($tiki_p_remove_comments == 'y' && (!isset($forum_mode) || $forum_mode == 'n'))
 		|| (isset($forum_mode) && $forum_mode =='y' && $tiki_p_admin_forum == 'y' ) ) {
 	if (isset($_REQUEST["comments_remove"]) && isset($_REQUEST["comments_threadId"])) {
@@ -487,6 +496,18 @@ if (isset($_REQUEST["comments_parentId"]) &&
 		 isset($_REQUEST['post_reply']))) {
 	$parent_com = $commentslib->get_comment($_REQUEST["comments_parentId"]);
 	$smarty->assign_by_ref('parent_com', $parent_com);
+}
+
+// Get comments / forum lock status
+if ( isset($forum_mode) && $forum_mode == 'y' ) {
+	$thread_is_locked = ( ! empty($comments_objectId) && $commentslib->is_object_locked($comments_objectId) ) ? 'y' : 'n';
+	$forum_is_locked = $thread_is_locked;
+	$thread_is_locked = $comment_info['locked'];
+	$smarty->assign('forum_is_locked', $forum_is_locked);
+	$smarty->assign('thread_is_locked', $thread_is_locked);
+} elseif ( $prefs['feature_comments_locking'] == 'y' ) {
+	$thread_is_locked = ( ! empty($comments_objectId) && $commentslib->is_object_locked($comments_objectId) ) ? 'y' : 'n';
+	$smarty->assign('thread_is_locked', $thread_is_locked);
 }
 
 if (!empty($_REQUEST['post_reply'])) {
