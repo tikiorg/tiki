@@ -1096,7 +1096,9 @@ img.flipmodimage:hover {border: 1px solid #58A7D2 !important}
 	height: 16px}
 	
 /** Other boxes **/
-div.cbox {border: 1px solid #1b3a50}
+div.cbox {
+	border: 1px solid #1b3a50;
+	overflow: hidden}
 
 .cbox-title {
 	font-size: 1em;
@@ -1112,7 +1114,9 @@ div.cbox {border: 1px solid #1b3a50}
 .cbox-title a:hover {color: #fff; text-decoration: none}
 
 .cboxlink {}
-.cbox-data {padding: 4px}
+.cbox-data {
+	padding: 4px;
+	overflow: hidden}
 
 .rbox {
 	margin: 0.2em 0 0.4em;
