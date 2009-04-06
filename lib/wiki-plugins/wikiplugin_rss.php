@@ -46,19 +46,22 @@ function wikiplugin_rss_info() {
 
 function rss_sort($a,$b) {
 	if (isset($a["pubDate"])) {
-  	$datea=strtotime($a["pubDate"]);
+	$datea=strtotime($a["pubDate"]);
 	} else {
 		$datea=time();
 	}
 	if (isset($b["pubDate"])) {
-  	$dateb=strtotime($b["pubDate"]);
+		$dateb=strtotime($b["pubDate"]);
 	} else {
 		$dateb=time();
 	}	
-	if ($datea<$dateb) {
-		return true;
+	
+	if ($datea==$dateb) {
+		return 0;
+	} elseif ($datea>$dateb) {
+		return -1;
 	} else {
-		return false;
+		return 1;
 	}
 }
 
@@ -81,7 +84,7 @@ function wikiplugin_rss($data,$params) {
 	if ( ! isset($author) ) { $author = 0; }
 
 	$ids = explode(':', $id);
-  
+
 	$repl = '';		
 	$items = array();
 	foreach ( $ids as $val ) {
@@ -98,7 +101,11 @@ function wikiplugin_rss($data,$params) {
 		$items = array_slice($items, 1);
 	}
 
-	usort($items, 'rss_sort');
+	// No need to waste time sorting with only one feed
+	if( count( $ids ) > 1 ) {
+		usort($items, 'rss_sort');
+	}
+
 	if ( count($ids) > 1 ) {
 		$items = array_slice($items, count($ids));
 	}
@@ -108,7 +115,7 @@ function wikiplugin_rss($data,$params) {
 	$repl .= '<ul class="rsslist">';
 	for ( $j = 0 ; $j < $max ; $j++ ) {
 
-		$repl .= '<li  class="rssitem"><a target="_blank" href="'.$items[$j]['link'].'">'.TikiLib::htmldecode($items[$j]['title']).'</a>';
+		$repl .= '<li class="rssitem"><a target="_blank" href="'.$items[$j]['link'].'">'.TikiLib::htmldecode($items[$j]['title']).'</a>';
 
 		if ( $author == 1 || $date == 1 ) {
 			$repl_author = '';
