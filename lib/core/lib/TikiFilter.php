@@ -46,6 +46,7 @@ class TikiFilter
 			require_once 'TikiFilter/PreventXss.php';
 			return new TikiFilter_PreventXss;
 		case 'wikicontent':
+		case 'rawhtml_unsafe':
 			require_once 'TikiFilter/RawUnsafe.php';
 			return new TikiFilter_RawUnsafe;
 		case 'email':
