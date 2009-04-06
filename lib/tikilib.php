@@ -5773,10 +5773,14 @@ class TikiLib extends TikiDB {
 			) {
 				if( $tiki_p_plugin_approve == 'y' ) {
 					if( isset( $_POST['plugin_accept'] ) ) {
+						global $page;
 						$this->plugin_fingerprint_store( $fingerprint, 'accept' );
+						$this->invalidate_cache( $page );
 						return true;
 					} elseif( isset( $_POST['plugin_reject'] ) ) {
+						global $page;
 						$this->plugin_fingerprint_store( $fingerprint, 'reject' );
+						$this->invalidate_cache( $page );
 						return 'rejected';
 					}
 				} 
