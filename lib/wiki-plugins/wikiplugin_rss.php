@@ -106,9 +106,7 @@ function wikiplugin_rss($data,$params) {
 		usort($items, 'rss_sort');
 	}
 
-	if ( count($ids) > 1 ) {
-		$items = array_slice($items, count($ids));
-	}
+	$items = array_slice($items, 0, $max);
 
 	if ( count($items) < $max ) $max = count($items);
 
