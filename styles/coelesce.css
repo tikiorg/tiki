@@ -421,8 +421,10 @@ input[id="sl-login-pass"] {}
 /* #header text selectors, if needed */
 
 #sitetitles {
-	/*margin-top: 30px;*/
-	margin-left: 40px}
+	font : 1.2em Arial;
+	font-weight: bold;
+	display: inline;
+	}
 
 #sitetitle,
 #sitesubtitle {
@@ -444,7 +446,9 @@ input[id="sl-login-pass"] {}
 	 
 #sitesubtitle {
 	color: white;
-	font-size: 1.4em}
+	font-size: 1.6em;
+	font-weight: normal;
+	}
 
 #header a,
 #header a:visited {}
@@ -455,7 +459,6 @@ input[id="sl-login-pass"] {}
 
 #tiki-top {
 	background: url(coelesce/pagebg.jpg) repeat-x;
-	height: 32px;
 	padding-top: 2px}
 
 * html #tiki-top { font-size: 11px }
