@@ -323,7 +323,7 @@ class Tiki_Profile
 			foreach( $value as $v )
 				$array = array_merge( $array, $this->traverseForRequiredInput( $v ) );
 		elseif( preg_match( self::INFO_REQUEST, $value, $parts ) )
-			$array[$parts[1]] = $parts[2];
+			$array[$parts[1]] = $parts[4];
 
 		return $array;
 	} // }}}
