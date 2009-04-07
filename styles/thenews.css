@@ -319,9 +319,7 @@ ul.jumplinks a:focus, ul.jumplinks a:active {
 	background: transparent;
 	vertical-align: middle;
 	padding-top: 6px;
-	margin: 0;
-	position: relative;
-}
+	margin: 0}
 
 div#sioptions {padding: 1em}
 

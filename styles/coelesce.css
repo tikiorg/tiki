@@ -462,6 +462,9 @@ input[id="sl-login-pass"] {}
 	padding-top: 2px}
 
 * html #tiki-top { font-size: 11px }
+*:first-child+html #tiki-top {
+	height: 32px}
+
 #tiki-top a {}
 #tiki-top table {width: auto}
 

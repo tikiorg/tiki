@@ -206,7 +206,7 @@ ul.jumplinks a:focus, ul.jumplinks a:active {
 	margin: 0;
 	font-size: 1em}
 
-#header {text-align:left}
+#header {text-align: left}
 
 #middle {
 	text-align: left;
@@ -277,8 +277,7 @@ div#tiki-main #tikimidtbl {
 	text-align: left;
 	background: transparent;
 	vertical-align: middle;
-	margin: 0;
-	position: relative}
+	margin: 0}
 
 div#sioptions {
 	padding-left: 0;
@@ -359,7 +358,6 @@ input[id="sl-login-pass"] {font-size: 1.1em}
 /* tiki-top_bar.tpl - menu and search */
 
 #tiki-top {
-	position: relative;
 	border-top: 1px solid #818181;
 	height: 34px;
 	background: url(darkroom/button.png) repeat-x}
