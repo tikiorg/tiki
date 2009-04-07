@@ -70,10 +70,10 @@
 							</div>
 {/if}
 
-							<div id="tiki-center" {*id needed for ajax editpage link*} class="clearfix content">
+							{if $prefs.feature_layoutshadows eq 'y'}<div id="tiki-center-shadow">{$prefs.center_shadow_start}{/if}<div id="tiki-center" {*id needed for ajax editpage link*} class="clearfix content">
 {$mid_data}
 {show_help}
-							</div>
+							</div>{if $prefs.feature_layoutshadows eq 'y'}{$prefs.center_shadow_end}</div>{/if}
 						</div>
 					</div>
 
