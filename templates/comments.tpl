@@ -236,7 +236,7 @@
 			{* posting, editing or previewing a reply: show form *}
 <div id='{$postclass}open' class="threadpost">
 		{else}
-<input type="button" name="comments_postComment" value="{tr}New Reply{/tr}" onclick="flip('{$postclass}');"/>
+<input type="button" name="comments_postComment" value="{tr}New Reply{/tr}" onclick="flip('{$postclass}');" />
 <div id='{$postclass}' class="threadpost">
 		{/if}
 	{/if}
@@ -343,8 +343,8 @@
 			</td>
 			<td class="formcolor">
 				<textarea id="editpost2" name="comments_data" rows="{$rows}" cols="{$cols}">{if $prefs.feature_forum_replyempty ne 'y' || $edit_reply > 0 || $comment_preview eq 'y'}{$comment_data|escape}{/if}</textarea>
-				<input type="hidden" name="rows" value="{$rows}"/>
-				<input type="hidden" name="cols" value="{$cols}"/>
+				<input type="hidden" name="rows" value="{$rows}" />
+				<input type="hidden" name="cols" value="{$cols}" />
 			</td>
 		</tr>
 
@@ -393,7 +393,7 @@
 				<input type="submit" name="comments_postComment_anonymous" value="{tr}Post as Anonymous{/tr}" />
 				{/if}
 				{if $forum_mode eq 'y'}
-				<input type="button" name="comments_cancelComment" value="{tr}Cancel{/tr}" onclick="hide('{$postclass}');"/>
+				<input type="button" name="comments_cancelComment" value="{tr}Cancel{/tr}" onclick="hide('{$postclass}');" />
 				{elseif $prefs.feature_comments_moderation eq 'y' and $tiki_p_admin_comments neq 'y'}
 					{remarksbox type="note" title="{tr}Note{/tr}"}
 						{tr}Your comment will have to be approved by the moderator before it is displayed.{/tr}
