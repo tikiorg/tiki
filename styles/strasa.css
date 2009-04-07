@@ -244,7 +244,6 @@ ul.jumplinks a:active {
 	(overrides lite.css) ***/
 
 #main {
-	
 	text-align: left;}
 
 #main[id] {
@@ -253,10 +252,12 @@ ul.jumplinks a:active {
 }
 	
 #header {
-	height: 10%;
-	min-height: 97px;	
+	min-height: 121px;	
 	position: relative;}
 	
+* html #header {height: 121px}
+
+* html #header,
 *:first-child+html #header {background: #fff}
 
 #middle {
@@ -395,7 +396,7 @@ div#tiki-bot {}
 #header-top {
 	color: #fff;
 	height: 97px;
-	background: #1b3c54 url(strasa/options/cold/headerbg.jpg) repeat-x 0 0;}
+	background: #214d68 url(strasa/options/cold/headerbg.jpg) repeat-x 0 100%}
 
 #siteheader {
 	text-align: left;
@@ -449,8 +450,9 @@ div#sitead {margin: auto}
 	color: #fff;
 	background: #fff url(strasa/options/cold/login.jpg) 0 0 no-repeat;
 }
-	
-*:first-child+html #siteloginbar { max-width: 650px}
+
+* html #siteloginbar {width: 650px}
+*:first-child+html #siteloginbar {max-width: 650px}
 
 div.logged-in {padding-right: 20px}
 	
@@ -485,8 +487,6 @@ div.logged-in {padding-right: 20px}
 	padding-top: 0;
 	margin-top: -1px;
 	background: url(strasa/options/cold/register.jpg) no-repeat}
-
- /* #siteloginbar.logged-in {bottom: 120px} */
 
 #bannertopright {  }
 
