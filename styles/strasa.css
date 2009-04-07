@@ -13,11 +13,11 @@ body {
 	font: 72%/1.4em Verdana, Geneva, Arial, Helvetica, sans-serif;}
 
 html>body {font-size: 76%}
+
 /* workaround for Safari when in FCKEditor */
 html[dir=ltr]>body {
 	display: block;
-	margin: 1em .5em;
-}
+	margin: 1em .5em}
 
 body.fullscreen {}
 
@@ -890,7 +890,11 @@ div#edithelpzone {display: none}
 	height: 0;
 	clear: both;
 	visibility: hidden}
-
+	
+.clearfix {display: inline-block}
+/* Hide from IE Mac \*/
+.clearfix {display: block}
+/* End hide from IE Mac */
 * html .clearfix {height: 1%}
 #overdiv table {width: auto !important}
 .attention {color: red}
