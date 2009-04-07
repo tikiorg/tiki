@@ -13,7 +13,7 @@
 		<th>{tr}Action{/tr}</th>
 	</tr>
 	<tr class="{cycle advance=false}">
-		<td colspan="2"><b>{tr}Clear all Tiki cache{/tr}</b></td>
+		<td colspan="2"><b>{tr}Clear all Tiki caches{/tr}</b></td>
 		<td><a href="tiki-admin_system.php?do=all" class="link" title="{tr}Empty{/tr}">{icon _id=img/icons/del.gif alt="{tr}Empty{/tr}"}</a></td>
 	</tr>
 	<tr class="{cycle advance=false}">
