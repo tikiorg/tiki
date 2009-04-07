@@ -71,7 +71,8 @@ if (isset($_REQUEST["looksetup"])) {
     'feature_jquery_sheet',
 	'feature_jquery_tablesorter',
 	'feature_iepngfix',
-	'feature_layoutshadows'
+	'feature_layoutshadows',
+	'useGroupTheme'
     );
 
     foreach ($pref_toggles as $toggle) {

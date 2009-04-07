@@ -92,6 +92,14 @@
 					</tr>
 					<tr>
 						<td class="form">
+							<label for="useGroupTheme">{tr}Each group can have its theme{/tr}:</label>
+						</td>
+						<td>
+							<input type="checkbox" name="useGroupTheme" id="useGroupTheme" {if $prefs.useGroupTheme eq 'y'}checked="checked"{/if}/>
+						</td>
+					</tr>
+					<tr>
+						<td class="form">
 							<label for="general-slideshows">{tr}Slideshows theme{/tr}:</label>
 						</td>
 						<td>
