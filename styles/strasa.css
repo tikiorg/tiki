@@ -264,6 +264,8 @@ ul.jumplinks a:active {
 /*	height: 70%;*/
 	padding-top: 40px;
 	padding-bottom: 40px}
+	
+*:first-child+html #middle {padding-top: 65px}
 
 #c1c2 {background: #fff}
 #c1c2 #wrapper {}
@@ -484,9 +486,7 @@ div.logged-in {padding-right: 20px}
 	margin-top: -1px;
 	background: url(strasa/options/cold/register.jpg) no-repeat}
 
-*:first-child+html #siteloginbar .register {margin-top: -26px}
-
-/* #siteloginbar.logged-in {bottom: 120px} */
+ /* #siteloginbar.logged-in {bottom: 120px} */
 
 #bannertopright {  }
 
@@ -558,6 +558,8 @@ div.logged-in {padding-right: 20px}
 	display: block;
 	color: #fff;
 	font-size: 93%}
+	
+*:first-child+html #sitesearchbar {bottom: 10px}
 
 input#fuser,
 select[name="where"],
@@ -573,8 +575,13 @@ input[name="search"] {}
 
 a.flip,
 a.flip:visited {
+	color: #cce5ff;
+	font-size: 90%}
+	
+a.flip:hover {
+	color: #006699;
+	text-decoration: none}
 
-}
 .tellafriend a,
 .tellafriend a:visited {
 	background: transparent url(strasa/options/cold/fold-topright.jpg) 0 0 no-repeat;
