@@ -126,6 +126,7 @@ if ( isset($_REQUEST['intertiki']) and in_array($_REQUEST['intertiki'], array_ke
 		} else {
 			$user_details = unserialize($response_value->scalarval());
 		}
+		$user = $user_details['info']['login']; // use the correct caps
 
 		if (!$userlib->user_exists($user)) {
 		    if ($userlib->add_user($user, '', $user_details['info']['email'])) {
