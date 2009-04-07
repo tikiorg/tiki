@@ -89,6 +89,9 @@
 		<link rel="alternate" type="application/rss+xml" title="{tr}RSS Calendars{/tr}" href="tiki-calendars_rss.php?ver={$prefs.rssfeed_default_version}" />
 {/if}
 
+{if $prefs.feature_jquery neq "y" and $prefs.javascript_enabled eq "y"}
+	<script type="text/javascript" src="lib/tiki-js-sorttable.js"></script>
+{/if}
 {if $prefs.feature_mootools eq "y"}
 		<script type="text/javascript" src="lib/mootools/mootools-1.2-core.js"></script>
 		<script type="text/javascript" src="lib/mootools/mootools-1.2-more.js"></script>
@@ -101,8 +104,6 @@
 {/if}
 {if $prefs.feature_jquery eq "y"}
 	{include file="header_jquery.tpl"}
-{elseif $prefs.javascript_enabled eq "y"}
-	<script type="text/javascript" src="lib/tiki-js-sorttable.js"></script>
 {/if}
 
 {if $prefs.feature_swfobj eq "y"}
