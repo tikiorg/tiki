@@ -558,8 +558,6 @@ div.logged-in {padding-right: 20px}
 	display: block;
 	color: #fff;
 	font-size: 93%}
-	
-*:first-child+html #sitesearchbar {bottom: 10px}
 
 input#fuser,
 select[name="where"],
