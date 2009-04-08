@@ -768,7 +768,7 @@ function wikiplugin_tracker($data, $params) {
 						}
 						$back .= ">".wikiplugin_tracker_name($f['fieldId'], $f['name'], $field_errors);
 						if ($showmandatory == 'y' and $f['isMandatory'] == 'y') {
-							$back.= "&nbsp;<b>*</b>&nbsp;";
+							$back.= "&nbsp;<span class='mandatory_star'>*</span>&nbsp;";
 							$onemandatory = true;
 						}
 						$back.= "</td><td>";
@@ -817,7 +817,7 @@ function wikiplugin_tracker($data, $params) {
 			}
 			$back .= "<input type='submit' name='action' value='".tra($action)."' />";
 			if ($showmandatory == 'y' and $onemandatory) {
-				$back.= "<br /><i>".tra("Fields marked with a * are mandatory.")."</i>";
+				$back.= "<br /><span class='mandatory_note'>".tra("Fields marked with a * are mandatory.")."</span>";
 			}
 			if (empty($tpl) && empty($wiki)) {
 				$back.= "</td></tr>";
