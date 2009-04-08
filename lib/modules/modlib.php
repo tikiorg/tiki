@@ -6,7 +6,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-include_once('lib/usermodules/usermoduleslib.php');
+global $usermoduleslib; include_once('lib/usermodules/usermoduleslib.php');
 
 class ModLib extends TikiLib {
 	function ModLib($db) {
