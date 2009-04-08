@@ -2441,6 +2441,16 @@ body.tiki_mytiki #tiki-center form {
 body.tiki_mytiki #tiki-center form table.normal,
 body.tiki_mytiki #tiki-center .normal form {
 	border: none;}
- 
+
+/* wikiplugin tracker */
+span.mandatory_star {
+	font-weight: bold;
+	color: red;	
+}
+span.mandatory_note{
+	display: block;
+	font-style: italic;
+	margin-top: 10px;
+}
 /* end of css file */
 
