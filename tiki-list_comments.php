@@ -132,8 +132,8 @@ if (isset($_REQUEST["find"])) {
 }
 $smarty->assign_by_ref('find', $find);
 
+if ( ! isset($_REQUEST['findfilter_approved']) ) $_REQUEST['findfilter_approved'] = '';
 if ( $prefs['feature_comments_moderation'] == 'y' ) {
-	if ( ! isset($_REQUEST['findfilter_approved']) ) $_REQUEST['findfilter_approved'] = '';
 	$filter_values = array('approved' => $_REQUEST['findfilter_approved']);
 	$filter_names = array('approved' => tra('Approved Status'));
 	$filters = array('approved' => array('n' => tra('Queued'), 'y' => tra('Approved'), 'r' => tra('Rejected')));
