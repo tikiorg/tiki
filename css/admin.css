@@ -119,3 +119,5 @@ a.admbox.off:hover, a.admbox.off:focus, a.admbox.off:active {
 	float: left;
 	clear: none;
 }
+
+div.adminanchors a {float: left}

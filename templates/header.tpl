@@ -1,5 +1,5 @@
 {* $Id$ *}
-{if $base_url and $dir_level gt 0}		<base href="{$base_url}"/>{/if}
+{if $base_url and $dir_level gt 0}		<base href="{$base_url}" />{/if}
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="generator" content="TikiWiki CMS/Groupware - http://TikiWiki.org" />
 {if !empty($forum_info.name) & $prefs.metatag_threadtitle eq 'y'}		<meta name="keywords" content="{tr}Forum{/tr} {$forum_info.name} {$thread_info.title} {if $prefs.feature_freetags eq 'y'}{foreach from=$freetags.data item=taginfo}{$taginfo.tag} {/foreach}{/if}" />
@@ -55,7 +55,7 @@
 
 {* --- universaleditbutton.org --- *}
 {if ($editable and ($tiki_p_edit eq 'y' or $page|lower eq 'sandbox')) or $tiki_p_admin_wiki eq 'y' or $canEditStaging eq 'y'}
-		<link rel="alternate" type="application/x-wiki" title="{tr}Edit this page!{/tr}" href="tiki-editpage.php?page={$page}"/>
+		<link rel="alternate" type="application/x-wiki" title="{tr}Edit this page!{/tr}" href="tiki-editpage.php?page={$page}" />
 {/if}
 
 {* --- Firefox RSS icons --- *}
@@ -88,6 +88,9 @@
 		<link rel="alternate" type="application/rss+xml" title="{tr}RSS Calendars{/tr}" href="tiki-calendars_rss.php?ver={$prefs.rssfeed_default_version}" />
 {/if}
 
+{if $prefs.feature_jquery neq "y" and $prefs.javascript_enabled eq "y"}
+	<script type="text/javascript" src="lib/tiki-js-sorttable.js"></script>
+{/if}
 {if $prefs.feature_mootools eq "y"}
 		<script type="text/javascript" src="lib/mootools/mootools-1.2-core.js"></script>
 		<script type="text/javascript" src="lib/mootools/mootools-1.2-more.js"></script>
@@ -100,8 +103,6 @@
 {/if}
 {if $prefs.feature_jquery eq "y"}
 	{include file="header_jquery.tpl"}
-{elseif $prefs.javascript_enabled eq "y"}
-	<script type="text/javascript" src="lib/tiki-js-sorttable.js"></script>
 {/if}
 
 {if $prefs.feature_swfobj eq "y"}

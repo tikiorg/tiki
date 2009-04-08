@@ -1,8 +1,9 @@
 {* $Id$ *}
 {*<div class="clearfix posttop">*}
 	<div class="author_actions">
-	{if $thread_style != 'commentStyle_headers' and $comment.threadId > 0
-	and $forum_mode neq 'y' || ( $forum_mode eq 'y' and $forumId > 0 and $comments_parentId > 0 )}
+	{if $thread_style != 'commentStyle_headers' and $comment.threadId > 0 and $thread_is_locked neq 'y' and $comment.locked neq 'y'
+		and ( $forum_mode neq 'y' || ( $forum_mode eq 'y' and $forumId > 0 and $comments_parentId > 0 and $thread_is_locked neq 'y' and $forum_is_locked neq 'y' ) )
+	}
 		<div class="actions">
 		{if $forum_mode neq 'y' && $prefs.feature_comments_moderation eq 'y' && $tiki_p_admin_comments eq 'y' && $comment.approved eq 'n'}
 			{self_link comments_approve='y' comments_threadId=$comment.threadId _icon='comment_approve'}{tr}Approve{/tr}{/self_link}

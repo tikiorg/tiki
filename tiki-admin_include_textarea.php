@@ -59,6 +59,9 @@ if (isset($_REQUEST["textareasetup"])) {
 	foreach ($pref_simple_values as $svitem) {
 		simple_set_value ($svitem);
 	}
+
+	foreach( glob( 'temp/cache/wikiplugin_*' ) as $file )
+		unlink( $file );
 }
 
 // from tiki-admin_include_textarea.php
@@ -77,6 +80,9 @@ if( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 		foreach( $pluginsAlias as $name ) {
 			$tikilib->set_preference( "wikiplugin_$name", in_array( $name, $_POST['enabled'] ) ? 'y' : 'n' );
 		}
+
+		foreach( glob( 'temp/cache/wikiplugin_*' ) as $file )
+			unlink( $file );
 	}
 
 	if( isset( $_POST['save'] ) && ! in_array($_POST['plugin_alias'], $pluginsReal) ) {

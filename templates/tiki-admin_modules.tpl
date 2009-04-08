@@ -294,7 +294,7 @@
   </td>
 </tr>
 {/if}
-{if $rss}
+{if $rsss}
 <tr>
   <td class="form">
     {tr}RSS Modules{/tr}:

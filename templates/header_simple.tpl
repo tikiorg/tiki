@@ -44,6 +44,9 @@
 {if $prefs.site_favicon}<link rel="icon" href="{$prefs.site_favicon}" />{/if}
 <!--[if lt IE 7]> <link rel="StyleSheet" href="css/ie6.css" type="text/css" /> <![endif]-->
 
+{if $prefs.feature_jquery neq "y" and $prefs.javascript_enabled eq "y"}
+	<script type="text/javascript" src="lib/tiki-js-sorttable.js"></script>
+{/if}
 {if $prefs.feature_mootools eq "y"}
 <script type="text/javascript" src="lib/mootools/mootools.js"></script>
 {if $mootools_windoo eq "y"}
@@ -55,8 +58,6 @@
 {/if}
 {if $prefs.feature_jquery eq "y"}
 	{include file="header_jquery.tpl"}
-{elseif $prefs.javascript_enabled eq "y"}
-	<script type="text/javascript" src="lib/tiki-js-sorttable.js"></script>
 {/if}
 
 {if $prefs.feature_swfobj eq "y"}

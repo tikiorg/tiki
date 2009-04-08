@@ -90,7 +90,7 @@ div.multiselect {
 	vertical-align: middle;
 	padding: 0;
 	border:1px solid #80B1E2;
-	height: 1.5em;
+	height: auto;
 	overflow: visible;
 }
 div.multiselect table{
@@ -134,6 +134,15 @@ div.multiselect ul {
 	margin:0;
 	padding:0;
 }
+div.multiselect li {
+	margin-left: 3em;
+}
+div.multiselect  ul.root > li {
+	margin: 0 2em 0 .5em;
+	display: block;
+	float: left;
+}
+
 div.multiselect img {
 	vertical-align: middle;
 }

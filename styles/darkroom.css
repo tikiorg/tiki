@@ -206,7 +206,7 @@ ul.jumplinks a:focus, ul.jumplinks a:active {
 	margin: 0;
 	font-size: 1em}
 
-#header {text-align:left}
+#header {text-align: left}
 
 #middle {
 	text-align: left;
@@ -277,8 +277,7 @@ div#tiki-main #tikimidtbl {
 	text-align: left;
 	background: transparent;
 	vertical-align: middle;
-	margin: 0;
-	position: relative}
+	margin: 0}
 
 div#sioptions {
 	padding-left: 0;
@@ -344,6 +343,8 @@ div#sitead {
 	bottom: 2px;
 	right: 10px;
 	font-size: 90%}
+	
+* html #siteloginbar {position: absolute; top: 10px; right: 10px  }
 
 #siteloginbar.logged-in {
 	bottom: 2px;
@@ -358,6 +359,7 @@ input[id="sl-login-pass"] {font-size: 1.1em}
 
 #tiki-top {
 	border-top: 1px solid #818181;
+	height: 34px;
 	background: url(darkroom/button.png) repeat-x}
 
 #tiki-top table {
@@ -418,7 +420,9 @@ a.flip img {display: none}
 
 .horbar {
 	margin-left: 0;
-	margin-bottom: 0px}
+	margin-bottom: 0;
+	float: left;
+	clear: none;}
 
 .horbar table {
 	width: auto;
@@ -581,7 +585,7 @@ img.imgs {background: #999}
 .cssmenu_vert li:hover > a {color: #303030}
 
 #tiki-top > .cssmenu_horiz > li {
-	background: inherit;
+	background: url(darkroom/button.png) repeat-x;
 	width: 10em}
 
 #tiki-top > .cssmenu_horiz > li > a {
@@ -704,7 +708,11 @@ div#edithelpzone {display: none}
     height: 0; 
     clear: both; 
     visibility: hidden}
-
+	
+.clearfix {display: inline-block}
+/* Hide from IE Mac \*/
+.clearfix {display: block}
+/* End hide from IE Mac */
 * html .clearfix {height: 1%}
 #overdiv table {width: auto !important}
 .attention {color: red}
@@ -802,10 +810,11 @@ div.box {
 	background: #292929;
 	margin-bottom: 8px;
 	padding-bottom: 2px;
-	width: 190px}
+	width: 190px;
+	overflow: hidden}
 
 h3.box-title {
-	overflow: hidden;
+	display: block;
 	color:#9D9D9D;
 	font-size:1.4em;
 	font-weight:bold;
@@ -2456,7 +2465,7 @@ img.icon {border: 0 !important;
 div.multiselect {
 	vertical-align: middle;
 	overflow: auto;
-	height: 5em;
+	height: auto;
 }
 
 div.multiselect div.odd {background: #292929}

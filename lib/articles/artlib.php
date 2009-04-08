@@ -233,7 +233,7 @@ class ArtLib extends TikiLib {
 	$heading, $body, $publishDate, $expireDate, $user, $articleId, $image_x, $image_y, $type, 
 	$topline, $subtitle, $linkto, $image_caption, $lang, $rating = 0, $isfloat = 'n', $emails='', $from='') {
 		
-		global $topicId, $smarty, $tikilib;
+		global $smarty, $tikilib;
 		
 		if ($expireDate < $publishDate) {
 		    $expireDate = $publishDate;

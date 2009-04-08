@@ -4199,6 +4199,7 @@ $lang=Array(
 // "For the 'multiple choices of thumbnail from a file gallery' type, options are: Gallery ID. Example: 4" => "For the 'multiple choices of thumbnail from a file gallery' type, options are: Gallery ID. Example: 4",
 // "Directory to exterminate" => "Directory to exterminate",
 // "Clear all Tiki cache" => "Clear all Tiki cache",
+// "Clear all Tiki caches" => "Clear all Tiki cache",
 // "All user prefs sessions" => "All user prefs sessions",
 // "Directories to save" => "Directories to save",
 // "Full Path to the Zip File" => "Full Path to the Zip File",

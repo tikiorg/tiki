@@ -13,11 +13,11 @@ body {
 	font: 72%/1.4em Verdana, Geneva, Arial, Helvetica, sans-serif;}
 
 html>body {font-size: 76%}
+
 /* workaround for Safari when in FCKEditor */
 html[dir=ltr]>body {
 	display: block;
-	margin: 1em .5em;
-}
+	margin: 1em .5em}
 
 body.fullscreen {}
 
@@ -244,7 +244,6 @@ ul.jumplinks a:active {
 	(overrides lite.css) ***/
 
 #main {
-	
 	text-align: left;}
 
 #main[id] {
@@ -253,10 +252,12 @@ ul.jumplinks a:active {
 }
 	
 #header {
-	height: 10%;
-	min-height: 97px;	
+	min-height: 121px;	
 	position: relative;}
 	
+* html #header {height: 121px}
+
+* html #header,
 *:first-child+html #header {background: #fff}
 
 #middle {
@@ -264,6 +265,8 @@ ul.jumplinks a:active {
 /*	height: 70%;*/
 	padding-top: 40px;
 	padding-bottom: 40px}
+	
+*:first-child+html #middle {padding-top: 65px}
 
 #c1c2 {background: #fff}
 #c1c2 #wrapper {}
@@ -393,7 +396,7 @@ div#tiki-bot {}
 #header-top {
 	color: #fff;
 	height: 97px;
-	background: #1b3c54 url(strasa/options/cold/headerbg.jpg) repeat-x 0 0;}
+	background: #214d68 url(strasa/options/cold/headerbg.jpg) repeat-x 0 100%}
 
 #siteheader {
 	text-align: left;
@@ -447,8 +450,9 @@ div#sitead {margin: auto}
 	color: #fff;
 	background: #fff url(strasa/options/cold/login.jpg) 0 0 no-repeat;
 }
-	
-*:first-child+html #siteloginbar { max-width: 650px}
+
+* html #siteloginbar {width: 650px}
+*:first-child+html #siteloginbar {max-width: 650px}
 
 div.logged-in {padding-right: 20px}
 	
@@ -483,10 +487,6 @@ div.logged-in {padding-right: 20px}
 	padding-top: 0;
 	margin-top: -1px;
 	background: url(strasa/options/cold/register.jpg) no-repeat}
-
-*:first-child+html #siteloginbar .register {margin-top: -26px}
-
-/* #siteloginbar.logged-in {bottom: 120px} */
 
 #bannertopright {  }
 
@@ -573,8 +573,13 @@ input[name="search"] {}
 
 a.flip,
 a.flip:visited {
+	color: #cce5ff;
+	font-size: 90%}
+	
+a.flip:hover {
+	color: #006699;
+	text-decoration: none}
 
-}
 .tellafriend a,
 .tellafriend a:visited {
 	background: transparent url(strasa/options/cold/fold-topright.jpg) 0 0 no-repeat;
@@ -633,11 +638,14 @@ a.flip img {display: none}
 
 .horbar {
 position: absolute; z-index: 0;
-top: 0; left: 100%;
+top: 10px; left: 100%;
 margin: 0 0 0 -50%;
-height: 97px; 
-overflow: auto; 
-white-space: nowrap} 
+white-space: nowrap}
+
+* html .horbar {
+	top: 10px;
+	left: auto;
+	right: 40px}
 
 .horbar table {
 	width: auto;
@@ -646,24 +654,27 @@ white-space: nowrap}
 /* Text in the top level (visible by default) of the menu */
 .horbaritem a,
 .horbaritem a:visited {
-	padding: 10px 0 0;
+	padding: 3px 3px 6px 3px;
 	text-decoration: none;
 	font: normal 1em Verdana, Helvetica, Arial, Sans-Serif;
 	margin: 0; 
 	border-color: transparent; border-style: solid; border-width: 0 1px;
 	color: #5ae0ff; 
-	display: block; 
-	min-height: 87px; min-width: 80px;
 	text-align: center}
 
 .horbaritem a:hover {
 	text-decoration: none; 
 	background: url(strasa/options/cold/headermenuitem-hover.png) bottom center repeat-x;
-	border-color: #336699; border-style: solid; border-width: 0 1px;
+	border-color: #336699;
+	border-style: solid;
+	border-width: 0 1px;
 	color: #fff;
 }
 
-* html .horbaritem a {font-size: .8em}
+* html .horbaritem a {
+	font-size: 1em;
+	border-color: #224a5f}
+
 .mdkverbar {} 
 
 .mdksubmenu {
@@ -672,7 +683,9 @@ white-space: nowrap}
 	left: 0;
 	top: 0;
 	visibility: hidden;
-	margin-top: 0}
+	margin-top: 3px}
+	
+* html .mdksubmenu {margin-top: 0}
 
 .mdksubmenu table {width: auto} 
 
@@ -693,18 +706,15 @@ white-space: nowrap}
 	top: 5px;
 	right: 12px} 
 
-.mdkitem a {
+.mdkitem a,
+.mdkitem a:link,
+.mdkitem a:visited {
 	color: #5ae0ff;
-	padding: 3px;
+	padding: 2px 3px;
 	position: relative;
 	display: block;
-	font-weight: normal} 
-
-.mdkitem a:link {
 	font-weight: normal;
 	text-decoration: none} 
-
-.mdkitem a:visited {text-decoration: none} 
 
 .mdkitem a:hover {
 	background: transparent url(styles/strasa/options/cold/headerbg.jpg) repeat-x;
@@ -885,7 +895,11 @@ div#edithelpzone {display: none}
 	height: 0;
 	clear: both;
 	visibility: hidden}
-
+	
+.clearfix {display: inline-block}
+/* Hide from IE Mac \*/
+.clearfix {display: block}
+/* End hide from IE Mac */
 * html .clearfix {height: 1%}
 #overdiv table {width: auto !important}
 .attention {color: red}
@@ -2200,7 +2214,7 @@ div.multiselect {
 	/*overflow-y: auto;
 	overflow-x: hidden;*/
 	overflow: auto;
-	height: 5em;
+	height: auto;
 	width: 100%;
 	border: 1px solid #696969}
 

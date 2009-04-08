@@ -21,6 +21,8 @@ fieldset {
 	border: solid 1px #444444;
 }
 
+legend {color: #444444} /* IE7 */
+
 input,
 textarea,
 option,
@@ -152,7 +154,7 @@ ul.jumplinks a:active {
 
 /* Site Header & Identity */
 #header-top {
-	background: #111111 url('mono/headerbg.jpg') repeat-x 0 100%;
+	background: #444444 url('mono/headerbg.jpg') repeat-x 0 100%;
 }
 
 #siteloginbar {
@@ -182,8 +184,16 @@ ul.jumplinks a:active {
 }
 
 #tiki-top a:hover {
-	color: #fff;
-}
+	color: #fff}
+
+a.flip,
+a.flip:visited {
+	color: #e5e5e5;
+	font-size: 90%}
+	
+a.flip:hover {
+	color: #666666;
+	text-decoration: none}
 
 .tellafriend a,
 .tellafriend a:visited {

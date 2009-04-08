@@ -319,9 +319,7 @@ ul.jumplinks a:focus, ul.jumplinks a:active {
 	background: transparent;
 	vertical-align: middle;
 	padding-top: 6px;
-	margin: 0;
-	position: relative;
-}
+	margin: 0}
 
 div#sioptions {padding: 1em}
 
@@ -719,18 +717,35 @@ a.phplmselected:hover {
 
 * html div.box-CSS_menu ul {margin-left: 0}
 
-#col2 .cssmenu_vert > li {
+#col2 .cssmenu_vert,
+#col2 .cssmenu_vert li {
 	width: 180px;
 	padding: 0 !important}
+
+#col2 .cssmenu_vert ul,
+#col2 .cssmenu_vert li ul li {width: 9em}
 
 .cssmenu li ul,
 .cssmenu_horiz li ul,
 .cssmenu_vert li ul {border: 1px solid #D3D3D3}
 
+.cssmenu_vert li ul,
+.cssmenu_vert li.sfhover ul {margin-top: -1.3em}
+
 .cssmenu_vert li ul {margin-left: 9em}
 #col2 .cssmenu_vert li ul {margin-left: 175px}
 #col2 .cssmenu_vert li ul li ul {margin-left: 9em}
 .cssmenu_horiz li ul ul {margin: -1em 0 0 9em}
+
+* html #col2 .cssmenu_vert,
+* html #col2 .cssmenu_vert li {
+	margin-left: 0;
+	padding-left: 0;
+	width: 160px}
+	
+* html #col2 .cssmenu_vert li ul {margin-left: 160px}
+
+*:first-child+html #col2 .cssmenu_vert {margin-left: 0}
 
 .cssmenu a,	
 .cssmenu_horiz a,
@@ -772,10 +787,10 @@ a.separator img {}
 	background: transparent url('../img/icons2/corner-dots.gif') center left no-repeat;
 	padding: 0.2em 0.2em 0.2em 1.6em;
 }
-/* selected menu item */
-.selected {
-	font-weight: bold;
-}
+
+.selected {font-weight: bold}
+.selected ul li a {font-weight: normal}
+
 div.optionline,
 .option a {}
 .option a:link,
@@ -812,9 +827,12 @@ div#attzoneopen,
 div#comzoneopen {	display: block; margin-top: 10px;}
 div#edithelpzone {	display: none;}
 #rules-copy-panel {	display: none;}
-.clear, #clear {	clear: both;}
-.clearfix:after {    content: ".";display: block;height: 0;clear: both;visibility: hidden;}
-/* IE */
+.clear, #clear { clear: both;}
+.clearfix:after { content: ".";display: block;height: 0;clear: both;visibility: hidden;}
+.clearfix {display: inline-block}
+/* Hide from IE Mac \*/
+.clearfix {display: block}
+/* End hide from IE Mac */
 * html .clearfix {	height: 1%;}
 #overdiv table {	width: auto !important;}
 .attention {	color: red;}
@@ -894,7 +912,8 @@ h3.box-title {
 
 * html .moduleflip {
 	position: static;
-	float: right}
+	float: right;
+	margin-top: -16px}
 
 * html .moduleflip,
 .box:hover .moduleflip {display: block}

@@ -25,9 +25,9 @@ function taginsert(area_name,tagid)
   </a>
   <br /><br />
 { /if}
-{*get_strings {tr}bold{/tr}
-              {tr}italic{/tr}
-              {tr}underline{/tr}
+{*get_strings {tr}text, bold{/tr}
+              {tr}text, italic{/tr}
+              {tr}text, underline{/tr}
               {tr}table{/tr}
               {tr}table new{/tr}
               {tr}external link{/tr}
@@ -38,11 +38,11 @@ function taginsert(area_name,tagid)
               {tr}rss feed{/tr}
               {tr}dynamic content{/tr}
               {tr}tagline{/tr}
-              {tr}hr{/tr}
+              {tr}horizontal rule{/tr}
               {tr}center text{/tr}
               {tr}colored text{/tr}
               {tr}dynamic variable{/tr}
-              {tr}Image{/tr}
+              {tr}image{/tr}
               {tr}New wms Metadata{/tr}
               {tr}New Class{/tr}
               {tr}New Projection{/tr}
@@ -55,6 +55,10 @@ function taginsert(area_name,tagid)
               {tr}New Web{/tr}
               {tr}New Outputformat{/tr}
               {tr}New Mapfile{/tr} 
+              {tr}Add image from File Gallery{/tr} 
+              {tr}quote{/tr} 
+              {tr}code{/tr} 
+              {tr}flash{/tr} 
               *}
 <div id='helptool{$qtnum}'
   {assign var=show value="show_helptool"|cat:$qtnum}
@@ -96,7 +100,7 @@ function openFgalsWindow() {
 //--><!]]>
 </script>
     {/literal}
-    <a title="{tr}Add Image from File Gallery{/tr}" href="#" onclick="needToConfirm=false; openFgalsWindow();return false;">{icon _id='image' alt='{tr}Add Image from File Gallery{/tr}'}</a>
+    <a title="{tr}Add Image from File Gallery{/tr}" href="#" onclick="needToConfirm=false; openFgalsWindow();return false;">{icon _id='pictures' alt='{tr}Add Image from File Gallery{/tr}'}</a>
     {if (!isset($zoom_mode) || $zoom_mode eq 'n') and $prefs.quicktags_over_textarea neq 'y'}{cycle name='cycle'|cat:$qtnum}{/if}
   {/if}
 

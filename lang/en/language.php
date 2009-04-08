@@ -5522,6 +5522,7 @@ $lang=Array(
 // "Exterminator of cached content" => "Exterminator of cached content",
 // "Directory to exterminate" => "Directory to exterminate",
 // "Clear all Tiki cache" => "Clear all Tiki cache",
+// "Clear all Tiki caches" => "Clear all Tiki cache",
 // "Empty" => "Empty",
 // "All user prefs sessions" => "All user prefs sessions",
 // "Directories to save" => "Directories to save",

@@ -64,7 +64,7 @@
 
 {if $prefs.feature_search_show_search_box eq 'y'}
 <form id="search-form" class="forms" method="get" action="tiki-searchresults.php">
-    {tr}Find{/tr} <input id="fuser" name="highlight" size="14" type="text" accesskey="s" value="{$words}"/>
+    {tr}Find{/tr} <input id="fuser" name="highlight" size="14" type="text" accesskey="s" value="{$words}" />
 		{if !( $searchStyle eq "menu" )} 
 		<label for="boolean">{tr}Advanced search:{/tr}<input type="checkbox" name="boolean"{if $boolean eq 'y'} checked="checked"{/if} /></label>
 		{add_help show='y' title="{tr}Advanced Search Help{/tr}" id="advanced_search_help"}
@@ -123,7 +123,7 @@
 	{if $forumId}<input type="hidden" name="forumId" value="{$forumId}" />{/if}
 {/if}
 {/if}
-    <input type="submit" class="wikiaction" name="search" value="{tr}Go{/tr}"/>
+    <input type="submit" class="wikiaction" name="search" value="{tr}Go{/tr}" />
 </form>
 {/if}
 

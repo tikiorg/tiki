@@ -696,7 +696,11 @@ div#edithelpzone {display: none}
 	height: 0;
 	clear: both;
 	visibility: hidden}
-
+	
+.clearfix {display: inline-block}
+/* Hide from IE Mac \*/
+.clearfix {display: block}
+/* End hide from IE Mac */
 * html .clearfix {height: 1%}
 #overdiv table {width: auto !important}
 .attention {color: red}
