@@ -3,7 +3,7 @@
 <!--  start jquery-tiki -->
 <script type="text/javascript" src="lib/jquery/jquery{$minified}.js"></script>
 <script type="text/javascript" src="lib/jquery_tiki/tiki-jquery.js"></script>
-{if $prefs.feature_jquery_ui eq 'y' or $prefs.feature_jquery_tooltips eq 'y' or $prefs.feature_jquery_autocomplete eq 'y' or $prefs.feature_jquery_superfish eq 'y' or $prefs.feature_jquery_reflection eq 'y'}
+{if $prefs.feature_jquery_ui eq 'y' or $prefs.feature_jquery_tooltips eq 'y' or $prefs.feature_jquery_autocomplete eq 'y' or $prefs.feature_jquery_superfish eq 'y' or $prefs.feature_jquery_reflection eq 'y' or $prefs.feature_jquery_cycle eq 'y'}
 <script type="text/javascript">
 <!--//--><![CDATA[//><!--
 // Save $ if it's used for moo {* note: add plugins between this block and the Restore $ *}
@@ -40,6 +40,9 @@
 <script type="text/javascript" src="lib/jquery/tablesorter/jquery.tablesorter{$minified}.js"></script>
 <script type="text/javascript" src="lib/jquery/tablesorter/addons/pager/jquery.tablesorter.pager.js"></script>
 {/if}
+{if $prefs.feature_jquery_cycle eq 'y'}
+<script type="text/javascript" src="lib/jquery/malsup-cycle/jquery.cycle.all{$minified}.js"></script>
+{/if}
 <script type="text/javascript">
 <!--//--><![CDATA[//><!--
 // Restore $
@@ -58,6 +61,7 @@ jqueryTiki.autocomplete = {if $prefs.feature_jquery_autocomplete eq 'y'}true{els
 jqueryTiki.superfish = {if $prefs.feature_jquery_superfish eq 'y'}true{else}false{/if};
 jqueryTiki.replection = {if $prefs.feature_jquery_reflection eq 'y'}true{else}false{/if};
 jqueryTiki.tablesorter = {if $prefs.feature_jquery_tablesorter eq 'y'}true{else}false{/if};
+jqueryTiki.cycle = {if $prefs.feature_jquery_cycle eq 'y'}true{else}false{/if};
 
 jqueryTiki.effect = "{$prefs.jquery_effect}";				// Default effect
 jqueryTiki.effect_direction = "{$prefs.jquery_effect_direction}";	// 'horizontal' | 'vertical' etc

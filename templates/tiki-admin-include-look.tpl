@@ -750,6 +750,17 @@
 							<input type="checkbox" name="feature_jquery_tablesorter" {if $prefs.feature_jquery_tablesorter eq 'y'}checked="checked"{/if}/>
 						</td>
 					</tr>
+					<tr>
+						<td width=30%>
+							<label for="feature_jquery_cycle">{tr}JQuery Cycle (slideshow){/tr}</label>
+						</td>
+						<td width=2%>
+							{help url="JQuery#Cycle" desc="{tr}JQuery Cycle (slideshow){/tr}"}
+						</td>
+						<td>
+							<input type="checkbox" name="feature_jquery_cycle" {if $prefs.feature_jquery_cycle eq 'y'}checked="checked"{/if}/>
+						</td>
+					</tr>
 				</table>
 			</fieldset>
 			<fieldset class="admin">
