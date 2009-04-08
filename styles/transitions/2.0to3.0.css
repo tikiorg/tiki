@@ -18,8 +18,8 @@ They should be added to themes (possibly with tweaks) to make the theme v3.0 rea
 
 .plugin-form-float {
 	position: fixed;
-	left: 15%;
-	right: 15%;
+	left: 5%;
+	right: 365px;
 	top: 10%;
 	max-height: 80%;
 	overflow: auto;
