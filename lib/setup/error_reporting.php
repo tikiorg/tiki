@@ -8,15 +8,23 @@
 
 //this script may only be included - so its better to die if called directly.
 $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
+echo $fujbar;
+if ( $prefs['error_reporting_level'] == 2047 && $prefs['error_reporting_adminonly'] == 'y' ) {
+	$prefs['error_reporting_level'] = ( $tiki_p_admin == 'y' ) ? 2047 : 0; // 2047 means E_ALL in PHP < 5.2.x (if we support PHP >= 5.2 only, 6143 should be used instead)
+} elseif ( $prefs['error_reporting_level'] == 2039 ) {
+	$prefs['error_reporting_level'] = ( $tiki_p_admin == 'y' ) ? 2039 : 0; // should mean E_ALL & ~E_NOTICE
+}
 
-if ( $prefs['error_reporting_level'] == 1 ) {
-	$prefs['error_reporting_level'] = ( $tiki_p_admin == 'y' ) ? E_ALL : 0;
-} elseif ( $prefs['error_reporting_adminonly'] == 'y' and $tiki_p_admin != 'y' ) {
+if ( $prefs['error_reporting_adminonly'] == 'y' and $tiki_p_admin != 'y' ) {
 	$prefs['error_reporting_level'] = 0;
 }
-if ($prefs['error_reporting_level']) {
-	@ini_set('display_error', 1);//just in case the server allows it
+
+if ($prefs['error_reporting_level'] != 0) {
+	ini_set('display_errors', 1); // just in case the server allows it
+} else {
+	$prefs['error_reporting_level'] = 0;
 }
+
 error_reporting($prefs['error_reporting_level']);
 
 if ( $prefs['log_sql'] == 'y' ) {
