@@ -21,7 +21,7 @@ if ($tikilib->get_style_path('', '', $prefs['style']) == '') {
 	$prefs['style'] = 'thenews.css';
 }
 
-if ($group_style = $userlib->get_user_group_theme()) {
+if ( $prefs['useGroupTheme'] == 'y' && $group_style = $userlib->get_user_group_theme()) {
 	$prefs['style'] = $group_style;
 	$smarty->assign_by_ref('group_style', $group_style);
 }
