@@ -609,7 +609,6 @@ $lang=Array(
 "feature_search_stats" => "搜索状态特性",
 "feature_sheet" => "工作表特性",
 "feature_shoutbox" => "布告栏特性",
-"feature_siteidentity" => "网站标记特性",
 "feature_smileys" => "表情特性",
 "feature_stats" => "状态特性",
 "feature_surveys" => "调查特性",
