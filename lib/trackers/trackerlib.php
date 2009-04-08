@@ -1386,6 +1386,17 @@ class TrackerLib extends TikiLib {
 					}
 				} else {
 			    		// Use simple email
+					$foo = parse_url($_SERVER["REQUEST_URI"]);
+					$machine = $this->httpPrefix(). $foo["path"];
+					$parts = explode('/', $foo['path']);
+					if (count($parts) > 1) {
+						unset ($parts[count($parts) - 1]);
+					}
+					$machine = $this->httpPrefix(). implode('/', $parts);
+					if (!$itemId) {
+						$itemId = $new_itemId;
+					}
+					$the_data = tra('View the tracker item at:')." $machine/tiki-view_tracker_item.php?itemId=$itemId\n\n" . $the_data;
 
 			    		global $userlib;
 
@@ -1411,7 +1422,7 @@ class TrackerLib extends TikiLib {
 
 						foreach ($watchers as $watcher) {
 							$mail = new TikiMail($watcher['user']);
-							$mail->setSubject('['.$trackerName.'] '.tra('Subject', $watcher['language']).$subject.' ('.tra('Tracker was modified at ', $watcher['language']). $_SERVER["SERVER_NAME"].')');
+							$mail->setSubject('['.$trackerName.']'.$subject.' ('.tra('Tracker was modified at ', $watcher['language']). $_SERVER["SERVER_NAME"].')');
 							$mail->setText($the_data);
 
 							if( ! empty( $my_sender ) ) {
