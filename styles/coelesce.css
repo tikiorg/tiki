@@ -2404,10 +2404,10 @@ div.messureadbody {
 
 .plugin-form-float {
 	position: fixed;
-	left: 15%;
-	right: 15%;
-	top: 10%;
-	max-height: 80%;
+	left: 5%;
+	right: 365px;
+	top: 5%;
+	max-height: 90%;
 	overflow: auto;
 	background: #f5f5f5;
 	padding: 10px;
