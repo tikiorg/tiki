@@ -113,7 +113,7 @@ class NlLib extends TikiLib {
 	}
 
 	function get_all_subscribers($nlId, $genUnsub) {
-		global $userlib;
+		global $userlib, $prefs, $user;
 		$return = array();
 		$all_users = array();
 		$group_users = array();
@@ -136,7 +136,11 @@ class NlLib extends TikiLib {
 			$query = "select distinct uu.`login`, uu.`email` from `users_users` uu, `users_usergroups` ug where uu.`userId`=ug.`userId` ".$mid; 
 			$result = $this->query($query, $groups);
 			while ( $res = $result->fetchRow() ) {
-				if ( empty($res['email']) ) continue;
+				if ( empty($res['email']) ) {
+					if ( $prefs['login_is_email'] == 'y' && $user != 'admin' ) {
+						$res['email'] = $res['login'];
+					} else continue;
+				}
 				$all_users[$res['email']] = array(
 					'nlId' => (int)$nlId,
 					'email' => $res['email'],
