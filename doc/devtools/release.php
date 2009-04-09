@@ -15,12 +15,12 @@ Examples:
 Notes:
 	Subreleases begining with pre will not be tagged.
 " );
-
+/*
 if( has_uncommited_changes( '.' ) )
 	die( "Uncommited changes exist in the working folder.\n" );
 
 update_working_copy( '.' );
-
+*/
 if( $_SERVER['argc'] == 2 )
 	$_SERVER['argv'][] = '';
 
@@ -83,7 +83,7 @@ else
 
 	$revision = (int) get_info( ROOT )->entry->commit['revision'];
 
-	`svn copy $fb -r$revision $ft -m "[REL] Tagging release"`;
+//	`svn copy $fb -r$revision $ft -m "[REL] Tagging release"`;
 
 	`bash $script $packageVersion $tag`;
 
@@ -129,7 +129,7 @@ function md5_check_dir($root,$dir,$fp,$version) { // save all files in $result
 }
 
 function check_php_syntax(&$dir, &$error_msg) {
-  print ".";
+  print "."; usleep (100000);
   $d = dir($dir);
 
   while (false !== ($e = $d->read())) {
