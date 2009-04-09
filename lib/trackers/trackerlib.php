@@ -1280,9 +1280,9 @@ class TrackerLib extends TikiLib {
 									$new_value = $value;
 								}
 								if ($old_value != $new_value) {
-									$the_data .= "$name" . ":\n ".tra("Old:")." $old_value\n ".tra("New:")." $new_value\n\n";
+									$the_data .= "[$name]:\n-".tra("Old")."-:\n$old_value\n\n*".tra("New")."*:\n$new_value\n----------\n";
 								} else {
-									$the_data .= "$name ".tra('(unchanged)') . ":\n $new_value\n\n";
+									$the_data .= "[$name] ".tra('(unchanged)').":\n$new_value\n----------\n";
 								}
 							}
 
@@ -1296,7 +1296,7 @@ class TrackerLib extends TikiLib {
 								} else {
 									$new_value = $value;
 								}
-								$the_data .= "$name".":\n   $new_value\n\n";
+								$the_data .= "[$name]:\n$new_value\n----------\n";
 							}
 							$query = "insert into `tiki_tracker_item_fields`(`itemId`,`fieldId`,`value`) values(?,?,?)";
 							$this->query($query,array((int) $itemId,(int) $fieldId,(string)$value));
@@ -1308,7 +1308,7 @@ class TrackerLib extends TikiLib {
 							} else {
 								$new_value = $value;
 							}
-							$the_data .= "$name".":\n   $new_value\n\n";
+							$the_data .= "[$name]:\n$new_value\n----------\n";
 						}
 
 						$query = "insert into `tiki_tracker_item_fields`(`itemId`,`fieldId`,`value`) values(?,?,?)";
