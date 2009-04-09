@@ -129,7 +129,7 @@ function md5_check_dir($root,$dir,$fp,$version) { // save all files in $result
 }
 
 function check_php_syntax(&$dir, &$error_msg) {
-  print ".";
+  print "."; usleep (100000);
   $d = dir($dir);
 
   while (false !== ($e = $d->read())) {
