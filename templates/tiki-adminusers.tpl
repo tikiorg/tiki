@@ -419,6 +419,15 @@
 					</td>
 				</tr>
 			{/if}
+			{if $userinfo.login neq 'admin'}
+				<tr class="formcolor">
+					<td>{tr}Must Validate Email{/tr}:</td>
+					<td>
+						<input type="checkbox" name="need_email_validation" {if $prefs.validateUsers eq 'y' or $prefs.validateRegistration eq 'y'}checked="checked" {/if}/> 
+						{tr}User must validate its email{/tr}.
+					</td>
+				</tr>
+			{/if}
 			{if $userinfo.userId != 0}
 				<tr class="formcolor">
 					<td>{tr}Created{/tr}:</td>

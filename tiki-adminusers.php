@@ -178,8 +178,22 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 				}
 				if ($prefs['login_is_email'] == 'y' and empty($_REQUEST['email']))
 					$_REQUEST['email'] = $_REQUEST['name'];
-				if ($userlib->add_user($_REQUEST["name"], $_REQUEST["pass"], $_REQUEST["email"], '', $pass_first_login)) {
+
+				$send_validation_email = false;
+				if ( isset($_REQUEST['need_email_validation']) && $_REQUEST['need_email_validation'] == 'on' ) {
+					$send_validation_email = true;
+					$apass = addslashes(md5($tikilib->genPass()));
+				}
+
+				if ( $userlib->add_user(
+					$_REQUEST["name"],
+					( $send_validation_email ? $apass : $_REQUEST["pass"] ),
+					$_REQUEST["email"],
+					( $send_validation_email ? $_REQUEST["pass"] : '' ),
+					$pass_first_login
+				) ) {
 					$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("New %s created with %s %s."),tra("user"),tra("username"),$_REQUEST["name"]));
+					if ( $send_validation_email ) $userlib->send_validation_email($_REQUEST['name'], $apass, $_REQUEST['email']);
 					$cookietab = '1';
 					$_REQUEST['find'] = $_REQUEST["name"];
 				} else {

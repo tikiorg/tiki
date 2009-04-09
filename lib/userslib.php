@@ -2657,9 +2657,8 @@ function get_included_groups($group, $recur=true) {
 	function send_validation_email($name, $apass, $email, $again='', $second='', $chosenGroup='') {
 		global $tikilib, $prefs, $smarty;
 		$foo = parse_url($_SERVER['REQUEST_URI']);
-		$foo1 = str_replace('tiki-register', 'tiki-login_validate',$foo['path']);
-		$foo1 = str_replace('tiki-remind_password', 'tiki-login_validate',$foo1);
-		$machine = $tikilib->httpPrefix().$foo1;
+		$foo1 = str_replace(array('tiki-register', 'tiki-remind_password', 'tiki-adminusers'), 'tiki-login_validate', $foo['path']);
+		$machine = $tikilib->httpPrefix() . $foo1;
 		$smarty->assign('mail_machine',$machine);
 		$smarty->assign('mail_site', $_SERVER['SERVER_NAME']);
 		$smarty->assign('mail_user', $name);
