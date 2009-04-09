@@ -31,7 +31,7 @@ html[dir=ltr]>body {
 
 body.fullscreen {}
 
-a,
+a, a:link,
 a:visited {
 	color: #005faa;
 	text-decoration: none;
@@ -1104,7 +1104,7 @@ td.form {
 .forumform td {
 	border: 1px solid #9D9DA1;
 	background: #E0DFE3;
-}
+	padding: 3px}
 
 /** Specific Tables **/
 
