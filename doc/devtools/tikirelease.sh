@@ -23,10 +23,11 @@
 #    - commit your changes
 #    - create the checksum file: copy doc/devtools/tiki-create_md5.php in tiki root 
 #        and load that page in your browser
+#    - Empty the existing tiki-secdb database table
 #    - export secdb MD5 checksums from database using the following commands:
 #      (You have to replace $USER, $DBNAME and $VERSION by the correct values)
 #
-#        echo 'DELETE FROM `tiki_secdb` WHERE `tiki_version` = \'$VERSION\';' > db/tiki-secdb_$VERSION_mysql.sql
+#        echo "DELETE FROM tiki_secdb WHERE tiki_version = '$VERSION';" > db/tiki-secdb_$VERSION_mysql.sql
 #        echo '' >> db/tiki-secdb_$VERSION_mysql.sql
 #        mysqldump -p -u $USER -cnt --compact --skip-extended-insert $DBNAME tiki_secdb >> db/tiki-secdb_$VERSION_mysql.sql
 #
