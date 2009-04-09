@@ -15,12 +15,12 @@ Examples:
 Notes:
 	Subreleases begining with pre will not be tagged.
 " );
-/*
+
 if( has_uncommited_changes( '.' ) )
 	die( "Uncommited changes exist in the working folder.\n" );
 
 update_working_copy( '.' );
-*/
+
 if( $_SERVER['argc'] == 2 )
 	$_SERVER['argv'][] = '';
 
@@ -83,7 +83,7 @@ else
 
 	$revision = (int) get_info( ROOT )->entry->commit['revision'];
 
-//	`svn copy $fb -r$revision $ft -m "[REL] Tagging release"`;
+	`svn copy $fb -r$revision $ft -m "[REL] Tagging release"`;
 
 	`bash $script $packageVersion $tag`;
 
