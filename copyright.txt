@@ -1489,8 +1489,8 @@ SF Role: Developer
 Nickname: nyloth
 Name: Patrice W.
 First Commit: 2006-11-09
-Last Commit: 2008-11-08
-Number of Commits: 642
+Last Commit: 2009-04-09
+Number of Commits: 644
 SF Role: Developer
 
 Nickname: obnoxxx
@@ -1600,8 +1600,8 @@ Name: Phil Jollans
 
 Nickname: pkdille
 First Commit: 2007-03-14
-Last Commit: 2009-03-17
-Number of Commits: 349
+Last Commit: 2009-03-18
+Number of Commits: 354
 SF Role: Developer
 
 Nickname: plillevold
@@ -1917,8 +1917,8 @@ SF Role: Developer
 Nickname: sylvieg
 Name: Sylvie Greverend
 First Commit: 2003-05-28
-Last Commit: 2009-03-05
-Number of Commits: 2948
+Last Commit: 2009-04-03
+Number of Commits: 2949
 SF Role: Developer
 
 Nickname: syracine
@@ -2088,8 +2088,8 @@ SF Role: Developer
 Nickname: xavidp
 Name: Xavier de Pedro
 First Commit: 2005-07-08
-Last Commit: 2009-01-13
-Number of Commits: 61
+Last Commit: 2009-03-18
+Number of Commits: 62
 SF Role: All-Hands Person
 
 Nickname: xbtheria

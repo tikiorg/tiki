@@ -19,6 +19,48 @@ When possible, it's also nice to indicate what feature is concerned by the chang
 Before 2.0, there was only [MOD] for both [ENH] and [MOD]:
 
 ----------------------------------------------------------------------
+Version 2.4
+<http://tikiwiki.org/ReleaseNotes24>
+------------------
+
+----------------------------------------------
+r17883 | nyloth | 2009-04-09 14:43:25 +0200 (jeu 09 avr 2009) | 1 line
+
+[SEC] better secure PHP_SELF and REQUEST_URI
+----------------------------------------------
+r17774 | sylvieg | 2009-04-03 18:52:55 +0200 (ven 03 avr 2009) | 1 line
+
+reverse 15741: to have login errors at least(in 3, all the errortypes have been propagated
+----------------------------------------------
+r17463 | nyloth | 2009-03-19 17:18:29 +0100 (jeu 19 mar 2009) | 2 lines
+
+[FIX] release process: update release instructions for 2.x releases
+----------------------------------------------
+r17432 | xavidp | 2009-03-18 14:07:45 +0100 (mer 18 mar 2009) | 1 line
+
+[ENH] plugin code allows ishtml param to show special chars as they are - backported from a sylvieg hack in 3 - thanks sylvieg! 
+----------------------------------------------
+r17421 | pkdille | 2009-03-18 11:35:43 +0100 (mer 18 mar 2009) | 1 line
+
+[REL] SecDB for 2.3
+----------------------------------------------
+r17418 | pkdille | 2009-03-18 11:12:42 +0100 (mer 18 mar 2009) | 1 line
+
+[REL] change version in tiki-installer too
+----------------------------------------------
+r17417 | pkdille | 2009-03-18 11:04:38 +0100 (mer 18 mar 2009) | 1 line
+
+[FIX] secdb file...
+----------------------------------------------
+r17416 | pkdille | 2009-03-18 10:44:12 +0100 (mer 18 mar 2009) | 1 line
+
+[REL] SecDB for 2.3
+----------------------------------------------
+r17415 | pkdille | 2009-03-18 10:07:37 +0100 (mer 18 mar 2009) | 1 line
+
+[REL] Pre-release updates
+
+----------------------------------------------------------------------
 Version 2.3
 <http://tikiwiki.org/ReleaseNotes23>
 ------------------
