@@ -1396,7 +1396,6 @@ class TrackerLib extends TikiLib {
 					if (!$itemId) {
 						$itemId = $new_itemId;
 					}
-					$the_data = tra('View the tracker item at:')." $machine/tiki-view_tracker_item.php?itemId=$itemId\n\n" . $the_data;
 
 			    		global $userlib;
 
@@ -1410,7 +1409,7 @@ class TrackerLib extends TikiLib {
 
 
 			    		// Try to find a Subject in $the_data
-			    		$subject_test = preg_match( '/^'.tra('Subject', $watcher['language']).'(.*):\n(.*)\n(.*)/m', $the_data, $matches );
+			    		$subject_test = preg_match( '/^'.'Subject', '(.*):\n(.*)\n(.*)/m', $the_data, $matches );
 					$subject = '';
 
 			    		if( $subject_test == 1 ) {
@@ -1423,8 +1422,7 @@ class TrackerLib extends TikiLib {
 						foreach ($watchers as $watcher) {
 							$mail = new TikiMail($watcher['user']);
 							$mail->setSubject('['.$trackerName.']'.$subject.' ('.tra('Tracker was modified at ', $watcher['language']). $_SERVER["SERVER_NAME"].')');
-							$mail->setText($the_data);
-
+							$mail->setText(tra('View the tracker item at:', $watcher['language'])."  $machine/tiki-view_tracker_item.php?itemId=$itemId\n\n" . $the_data);
 							if( ! empty( $my_sender ) ) {
 								$mail->setHeader("From", $my_sender);
 							}
