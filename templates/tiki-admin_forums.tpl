@@ -542,6 +542,14 @@
 				<td class="{cycle}">
 					<a class="link" href="tiki-view_forum.php?forumId={$channels[user].forumId}" title="{tr}View{/tr}">{icon _id='table' alt="{tr}View{/tr}"}</a>
 
+{if $tiki_p_forum_lock eq 'y'}
+  {if $channels[user].is_locked eq 'y'}
+    {self_link _icon='lock_break' _alt="{tr}Unlock{/tr}" lock='n' forumId=$channels[user].forumId}{/self_link}
+  {else}
+    {self_link _icon='lock_add' _alt="{tr}Lock{/tr}" lock='y' forumId=$channels[user].forumId}{/self_link}
+  {/if}
+{/if}
+
 					{if ($tiki_p_admin eq 'y') or (($channels[user].individual eq 'n') and ($tiki_p_admin_forum eq 'y')) or ($channels[user].individual_tiki_p_admin_forum eq 'y')}
 						<a class="link" href="tiki-admin_forums.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;forumId={$channels[user].forumId}" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
 
