@@ -336,7 +336,6 @@ INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) V
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('5bf95be4697477f6a46b47a77f1207ca', './tiki-admin_notifications.php', '3.0beta2', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('a16cd73fac342a1353bda3c2902d64b4', './tiki-list_cache.php', '3.0beta2', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('4d4e2e3664864205aeeeafb8c1a11f03', './tiki-login_openid.php', '3.0beta2', 0);
-INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('b165c34706bc7ec50fa4676e2d2d2ae8', './test.php', '3.0beta2', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('769d771f2e432d60ed19fa56cbc5139e', './maps/index.php', '3.0beta2', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('f22847e1db95ee3f7806dbc6f20f1512', './tiki-create_webhelp.php', '3.0beta2', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('395d6a77eb376a6977e14e587f18fa1c', './tiki-searchindex.php', '3.0beta2', 0);
@@ -3547,7 +3546,7 @@ INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) V
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('498d81485240697ee073438f3bc3c29e', './tiki-admin_charts.php', '3.0beta2', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('eb52a2c81d0d1425156dfe87aeef3e3c', './tiki-friends.php', '3.0beta2', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('67a40e3b8c024cb82b3a6af290a110f3', './tiki-directory_admin_related.php', '3.0beta2', 0);
-INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('f39d20a442d4f8dc6e77fd4365930df8', './installer/tiki-installer.php', '3.0beta2', 0);
+INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('b4782627ce382711e8fd45e8452873f5', './installer/tiki-installer.php', '3.0beta2', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('9ca659ef4a21eea40446fc872327cd7e', './installer/shell.php', '3.0beta2', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('98cb1b7e3754699725f4eb6e6295f14f', './installer/installlib.php', '3.0beta2', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('89c0fedb5ef34c9e08de13d314df4be7', './installer/index.php', '3.0beta2', 0);
