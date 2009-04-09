@@ -183,8 +183,8 @@ div.multiselect:hover, div.multiselect div.selection:hover {
 div#tikihelp {
 	position:fixed;
 	right: 0;
-	top: 15%;
-	height: 80%;
+	top: 3px;
+	height: 95%;
 	max-width: 50%;
 	padding:0;
 	margin:0;
@@ -215,13 +215,13 @@ div.help_section_select {
 	margin: 2px;
 }
 div.help_sections {
+	width : 360px;
 	padding:  2px;
 	background-color: #AAC9E9;
 	max-height : 95%;
 	overflow: auto;
 }
 div.help_section {
-	width : 340px;
 	margin: 5px;
 	padding: 5px;
 	background-color: white;
