@@ -1195,7 +1195,7 @@ td {vertical-align: top}
 .editblogform td,
 .editfgalform td,
 .comform td,
-.forumform td {}
+.forumform td {padding: 3px}
 
 table.email {}
 table.email td.body {}

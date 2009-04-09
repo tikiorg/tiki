@@ -1137,6 +1137,8 @@ th, table.normal td.heading {
 	background: #c3d3e5;
 	min-height: 32px;
 	text-align: center}
+	
+.formcolor td {padding: 3px}
 
 /* cells in tracker items display */
 td.formlabel {}
