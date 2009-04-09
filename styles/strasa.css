@@ -1015,7 +1015,7 @@ div.help_section_select {
 div.help_sections {
 	padding:  2px;
 	background: white;
-	max-height : 500px;
+	max-height : 95%;
 	overflow: auto}
 
 div.help_section {
