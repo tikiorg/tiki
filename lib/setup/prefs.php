@@ -1215,6 +1215,14 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 
 		//groupalert
 		'feature_groupalert' => 'n',
+
+		'zend_mail_handler' => 'sendmail',
+		'zend_mail_smtp_server' => '',
+		'zend_mail_smtp_auth' => '',
+		'zend_mail_smtp_user' => '',
+		'zend_mail_smtp_pass' => '',
+		'zend_mail_smtp_port' => 25,
+		'zend_mail_smtp_security' => '',
 	);
 
 	// spellcheck

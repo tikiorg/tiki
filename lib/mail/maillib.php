@@ -47,4 +47,65 @@ function encode_headers($in_str, $charset) {
    }
    return $out_str;
 }// end function encode_headers
+
+function tiki_mail_setup() {
+	static $done = false;
+	if( $done ) {
+		return;
+	}
+
+	require_once 'lib/core/lib/Zend/Mail.php';
+
+	global $prefs;
+	if( $prefs['zend_mail_handler'] == 'smtp' ) {
+		require_once 'lib/core/lib/Zend/Mail/Transport/Smtp.php';
+		$options = array();
+
+		if( $prefs['zend_mail_smtp_auth'] ) {
+			$options['auth'] = $prefs['zend_mail_smtp_auth'];
+			$options['username'] = $prefs['zend_mail_smtp_user'];
+			$options['password'] = $prefs['zend_mail_smtp_pass'];
+		}
+
+		if( $prefs['zend_mail_smtp_port'] ) {
+			$options['port'] = $prefs['zend_mail_smtp_port'];
+		}
+
+		if( $prefs['zend_mail_smtp_security'] ) {
+			$options['ssl'] = $prefs['zend_mail_smtp_security'];
+		}
+
+		$transport = new Zend_Mail_Transport_Smtp( $prefs['zend_mail_smtp_server'], $options );
+		Zend_Mail::setDefaultTransport( $transport );
+	}
+
+	$done = true;
+}
+
+function tiki_get_basic_mail() {
+	tiki_mail_setup();
+
+	return new Zend_Mail();
+}
+
+function tiki_get_admin_mail() {
+	global $prefs;
+
+	$mail = tiki_get_basic_mail();
+	$mail->setFrom( $prefs['sender_email'], $prefs['browsertitle'] );
+
+	return $mail;
+}
+
+function tiki_send_admin_mail( $email, $recipientName, $subject, $textBody ) {
+	$mail = tiki_get_admin_mail();
+
+	$mail->addTo( $email, $recipientName );
+
+	$mail->setSubject( $subject );
+	$mail->setBodyText( $textBody );
+
+	$mail->send();
+}
+
 ?>

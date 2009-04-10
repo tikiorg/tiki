@@ -146,6 +146,44 @@
 		<option value="LF" {if $prefs.mail_crlf eq "LF"}selected="selected"{/if}>LF {tr}(some Unix MTA){/tr}</option>
 	</select>
 </div>
+<div class="adminoptionbox"><label for="zend_mail_handler">Mail Sender</label>
+	<select name="zend_mail_handler" id="zend_mail_handler" onchange="if( this.value == 'smtp' ) show('smtp_options'); else hide('smtp_options');">
+		<option value="sendmail" {if $prefs.zend_mail_handler eq 'sendmail'}selected="selected"{/if}>{tr}Sendmail{/tr}</option>
+		<option value="smtp" {if $prefs.zend_mail_handler eq 'smtp'}selected="selected"{/if}>{tr}SMTP{/tr}</option>
+	</select>
+</div>
+<div class="adminoptionboxchild" id="smtp_options" {if $prefs.zend_mail_handler neq 'smtp'} style="display: none;" {/if}>
+	<div class="adminoptionbox"><label for="zend_mail_smtp_server">SMTP Server</label>
+		<input type="text" name="zend_mail_smtp_server" id="zend_mail_smtp_server" value="{$prefs.zend_mail_smtp_server|escape}"/>
+	</div>
+	<div class="adminoptionbox"><label for="zend_mail_smtp_auth">Authentication</label>
+		<select name="zend_mail_smtp_auth" id="zend_mail_smtp_auth" onchange="if( this.value == '' ) hide('smtp_auth_options'); else show('smtp_auth_options');">
+			<option value="" {if $prefs.zend_mail_smtp_auth eq ''}selected="selected"{/if}>{tr}None{/tr}</option>
+			<option value="login" {if $prefs.zend_mail_smtp_auth eq 'login'}selected="selected"{/if}>LOGIN</option>
+			<option value="plain" {if $prefs.zend_mail_smtp_auth eq 'plain'}selected="selected"{/if}>PLAIN</option>
+			<option value="crammd5" {if $prefs.zend_mail_smtp_auth eq 'crammd5'}selected="selected"{/if}>CRAM-MD5</option>
+		</select>
+	</div>
+	<div class="adminoptionboxchild" id="smtp_auth_options" {if $prefs.zend_mail_smtp_auth eq ''} style="display: none;" {/if}>
+		<p>{tr}These values will be stored in plain text in the database.{/tr}</p>
+		<div class="adminoptionbox"><label for="zend_mail_smtp_user">Username</label>
+			<input type="text" name="zend_mail_smtp_user" id="zend_mail_smtp_user" value="{$prefs.zend_mail_smtp_user|escape}"/>
+		</div>
+		<div class="adminoptionbox"><label for="zend_mail_smtp_pass">Password</label>
+			<input type="password" name="zend_mail_smtp_pass" id="zend_mail_smtp_pass" value="{$prefs.zend_mail_smtp_pass|escape}"/>
+		</div>
+	</div>
+	<div class="adminoptionbox"><label for="zend_mail_smtp_port">{tr}Port{/tr}</label>
+		<input type="text" name="zend_mail_smtp_port" id="zend_mail_smtp_port" value="{$prefs.zend_mail_smtp_port|escape}"/>
+	</div>
+	<div class="adminoptionbox"><label for="zend_mail_smtp_security">{tr}Security{/tr}</label>
+		<select name="zend_mail_smtp_security" id="zend_mail_smtp_security">
+			<option value="" {if $prefs.zend_mail_smtp_security eq ''}selected="selected"{/if}>{tr}None{/tr}</option>
+			<option value="ssl" {if $prefs.zend_mail_smtp_security eq 'ssl'}selected="selected"{/if}>SSL</option>
+			<option value="tls" {if $prefs.zend_mail_smtp_security eq 'tls'}selected="selected"{/if}>TLS</option>
+		</select>
+	</div>
+</div>
 </fieldset>
 
 <fieldset><legend>{tr}Logging and Reporting{/tr}</legend>
