@@ -37,7 +37,7 @@ function get_default_prefs() {
 		'tiki_version_check_frequency' => 604800,
 		'lastUpdatePrefs' => 1,
 
-		'feature_print_indexed' => 'y',
+		'feature_print_indexed' => 'n',  //Still needs to be in admin panel somwhere
 
 		// wiki
 		'feature_wiki' => 'y',
