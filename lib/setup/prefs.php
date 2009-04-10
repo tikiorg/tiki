@@ -889,7 +889,6 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 
 		// look and feel
 
-		'feature_siteidentity' => 'y',
 		'site_crumb_seper' => '»',
 		'site_nav_seper' => '|',
 		'feature_sitemycode' => 'n',
@@ -1185,6 +1184,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_jquery_reflection' => 'y',		// reflection effects on images
 		'feature_jquery_sheet' => 'n',			// spreadsheet TODO: implement
 		'feature_jquery_tablesorter' => 'y',	// sortable tables ([will] override existing)
+		'feature_jquery_cycle' => 'y',			// slideshow lib
 	
 		// SefUrl
 		'feature_sefurl' => 'n',

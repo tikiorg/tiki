@@ -62,7 +62,11 @@ if (isset($_REQUEST['page_id'])) {
 $use_best_language = false;
 
 if ((!isset($_REQUEST['page']) || $_REQUEST['page'] == '') and !isset($_REQUEST['page_ref_id'])) {
-	$access->display_error( '', tra('No name indicated for wiki page'));
+	if ($tiki_p_view == 'n') {
+		$access->display_error( $page, tra('Permission denied you cannot view this page'), '403');
+	} else {
+		$access->display_error( '', tra('No name indicated for wiki page'));
+	}
 }
 $use_best_language = $use_best_language || isset($_REQUEST['bl']) || isset($_REQUEST['best_lang']) || isset($_REQUEST['switchLang']);
 

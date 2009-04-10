@@ -928,7 +928,7 @@ div.help_section_select {
 div.help_sections {
 	padding:  2px;
 	background: white;
-	max-height : 500px;
+	max-height : 95%;
 	overflow: auto}
 
 div.help_section {
@@ -1137,6 +1137,8 @@ th, table.normal td.heading {
 	background: #c3d3e5;
 	min-height: 32px;
 	text-align: center}
+	
+.formcolor td {padding: 3px}
 
 /* cells in tracker items display */
 td.formlabel {}
@@ -2404,10 +2406,10 @@ div.messureadbody {
 
 .plugin-form-float {
 	position: fixed;
-	left: 15%;
-	right: 15%;
-	top: 10%;
-	max-height: 80%;
+	left: 5%;
+	right: 365px;
+	top: 5%;
+	max-height: 90%;
 	overflow: auto;
 	background: #f5f5f5;
 	padding: 10px;

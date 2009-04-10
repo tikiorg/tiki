@@ -747,7 +747,11 @@ if (isset($_GET['slideshow'])) {
   $smarty->assign('firstId',current($filesid));
   $smarty->assign('show_find', 'n');
   $smarty->assign('direct_pagination', 'y');
-  $smarty->display('file_gallery_slideshow.tpl');
+	if ($prefs['feature_jquery'] == 'y') {
+		$smarty->display('tiki-file_gallery_slideshow.tpl');
+	} else if ($prefs['feature_mootools'] == 'y') {
+		$smarty->display('file_gallery_slideshow.tpl');
+	}
   die();
 } else {
 	// Get list of files in the gallery

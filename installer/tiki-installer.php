@@ -209,9 +209,9 @@ function isWindows() {
 	return $windows;
 }
 
-class Smarty_Tikiwiki extends Smarty {
+class Smarty_Tikiwiki_Installer extends Smarty {
 
-	function Smarty_Tikiwiki() {
+	function Smarty_Tikiwiki_Installer() {
 		$this->template_dir = "templates/";
 		$this->compile_dir = "templates_c/";
 		$this->config_dir = "configs/";
@@ -507,7 +507,7 @@ $cachelib->empty_full_cache();
 $_SESSION["install-logged-$multi"] = 'y';
 
 // Init smarty
-$smarty = new Smarty_Tikiwiki();
+$smarty = new Smarty_Tikiwiki_Installer();
 $smarty->load_filter('pre', 'tr');
 $smarty->load_filter('output', 'trimwhitespace');
 $smarty->assign('mid', 'tiki-install.tpl');
@@ -520,7 +520,7 @@ if ($language != 'en')
 // Tiki Database schema version
 $tiki_version = '4.0';
 $smarty->assign('tiki_version', $tiki_version);
-$smarty->assign('tiki_version_name', $tiki_version . ' BETA1');
+$smarty->assign('tiki_version_name', $tiki_version . ' BETA2');
 
 // Available DB Servers
 $dbservers = array();

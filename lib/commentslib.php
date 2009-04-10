@@ -700,7 +700,7 @@ class Comments extends TikiLib {
 	    a.`summary`,a.`smiley`,a.`message_id`,a.`in_reply_to`,a.`comment_rating`,a.`locked`, ".
 		$this->ifNull("a.`archived`", "'n'")." as `archived`,".
 		$this->ifNull("max(b.`commentDate`)","a.`commentDate`")." as `lastPost`,".
-	    $this->ifNull("a.`type`", "'s'")." as `sticky`,
+	    $this->ifNull("a.`type`='s'", 'false')." as `sticky`,
 	    count(b.`threadId`) as `replies`
 		from `tiki_comments` a left join `tiki_comments` b 
 		on b.`parentId`=a.`threadId`

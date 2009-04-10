@@ -6319,7 +6319,7 @@ class TikiLib extends TikiDB {
 		if (!$simple_wiki) {
 			// Replace colors ~~foreground[,background]:text~~
 			// must be done before []as the description may contain color change
-			$data = preg_replace("/\~\~([^\:\,]+)(,([^\:]+))?:([^\~]+)\~\~/", "<span style=\"color:$1; background:$3\">$4</span>", $data);
+			$data = preg_replace("/\~\~([^\:\,]+)(,([^\:]+))?:(.*)\~\~/u", "<span style=\"color:$1; background:$3\">$4</span>", $data);
 		}
 		// This section matches [...].
 		// Added handling for [[foo] sections.  -rlpowell
@@ -7431,7 +7431,7 @@ class TikiLib extends TikiDB {
 	/** Update a wiki page
 		@param array $hash- lock_it,contributions, contributors
 	 **/
-	function update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip, $description = '', $minor = false, $lang='', $is_html=false, $hash=null, $saveLastModif=null, $wysiwyg='', $wiki_authors_style) {
+	function update_page($pageName, $edit_data, $edit_comment, $edit_user, $edit_ip, $edit_description = '', $minor = false, $lang='', $is_html=false, $hash=null, $saveLastModif=null, $wysiwyg='', $wiki_authors_style) {
 		global $smarty, $prefs, $dbTiki, $histlib, $quantifylib;
 		include_once ("lib/wiki/histlib.php");
 		include_once ("lib/commentslib.php");
@@ -7472,12 +7472,8 @@ class TikiLib extends TikiDB {
 		if (!$user) $user = 'anonymous';
 		$ip = $info["ip"];
 		$comment = $info["comment"];
+		$description = $info['description'];
 		$data = $info["data"];
-		// WARNING: POTENTIAL BUG
-		// The line below is not consistent with the rest of Tiki
-		// (I commented it out so it can be further examined by CVS change control)
-		//$pageName=addslashes($pageName);
-		// But this should work (comment added by redflo):
 		$version = $old_version + 1;
 
 		if( $prefs['quantify_changes'] == 'y' && $prefs['feature_multilingual'] == 'y' ) {
@@ -7497,7 +7493,7 @@ class TikiLib extends TikiDB {
 			$saveLastModif = $this->now;
 		}
 
-		$bindvars = array($description,$edit_data,$edit_comment,(int) $saveLastModif,$version,$edit_user,$edit_ip,(int)strlen($data),$html,$wysiwyg, $wiki_authors_style);
+		$bindvars = array($edit_description,$edit_data,$edit_comment,(int) $saveLastModif,$version,$edit_user,$edit_ip,(int)strlen($data),$html,$wysiwyg, $wiki_authors_style);
 		if ($lang) {
 			$mid .= ', `lang`=? ';
 			$bindvars[] = $lang;
@@ -7560,7 +7556,7 @@ class TikiLib extends TikiDB {
 		}
 
 		// This if no longer checks for minor-ness of the change; sendWikiEmailNotification does that.
-		if( $prefs['feature_wiki_history_full'] == 'y' || $data != $edit_data || $description != $info["description"] || $comment != $edit_comment ) {
+		if( $prefs['feature_wiki_history_full'] == 'y' || $data != $edit_data || $description != $edit_description || $comment != $edit_comment ) {
 			if (strtolower($pageName) != 'sandbox') {
 				$query = "insert into `tiki_history`(`pageName`, `version`, `lastModif`, `user`, `ip`, `comment`, `data`, `description`,`is_html`)
 					values(?,?,?,?,?,?,?,?,?)";
@@ -7573,14 +7569,6 @@ class TikiLib extends TikiDB {
 					$historyId = $this->getOne($query, array($pageName,(int) $old_version));
 					$contributionlib->change_assigned_contributions($pageName, 'wiki page', $historyId, 'history', '', $pageName.'/'.$old_version, "tiki-pagehistory.php?page=$pageName&preview=$old_version");
 				}
-
-				/* the following doesn't work because tiki dies if the above query fails
-					 if (!$result) {
-					 $query2 = "delete from `tiki_history` where `pageName`=? and `version`=?";
-					 $result = $this->query($query2,array($pageName,(int) $version));
-					 $result = $this->query($query,array($pageName,(int) $version,(int) $lastModif,$user,$ip,$comment,$data,$description));
-					 }
-				 */
 			}
 			if (strtolower($pageName) != 'sandbox') {
 				global $logslib; include_once('lib/logs/logslib.php');

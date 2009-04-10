@@ -26,6 +26,7 @@ html[dir=ltr]>body {
 body.fullscreen { }
 
 a,
+a:link,
 a:visited {
 	color: #D8D8D8;
 	font-weight: bold;
@@ -113,6 +114,8 @@ button,
 	vertical-align: middle;
 	cursor: pointer;
 	white-space: nowrap}
+.calbuttonBox{float: left; margin:0 2px 0 2px;}
+#next { margin-left:0;}
 
 #page-bar .button {margin: 0 2px;}
 
@@ -981,7 +984,9 @@ td.even {
 .editblogform td,
 .editfgalform td,
 .comform td,
-.forumform td {background: #292929}
+.forumform td {
+	background: #292929;
+	padding: 3px}
 
 /* table.email {}
 table.email td.body {}

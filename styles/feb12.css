@@ -23,7 +23,7 @@ html[dir=ltr]>body {
 
 body#fullscreen {background: #fff url(feb12/page.jpg) repeat-x}
 
-a, a:visited { 
+a, a:link, a:visited { 
 	background: inherit;
 	color: #4A6493;
 	text-decoration: none}
@@ -936,7 +936,8 @@ td.form {
 .comform td,
 .forumform td {
 	border: 1px solid #a5acb2;
-	background: #a8cce2}
+	background: #a8cce2;
+	padding: 3px}
 
 /** Tabs **/
 .tabs {

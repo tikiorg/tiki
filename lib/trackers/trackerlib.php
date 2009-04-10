@@ -3,15 +3,15 @@
  * Tracker Library
  *
  * $Id$
- * Functions to support accessing and process the Trackers.
+ * \brief Functions to support accessing and processing of the Trackers.
  *
- * @package		TikiWiki
- * @subpackage	Trackers
+ * @package		Tiki
+ * @subpackage		Trackers
  * @author		Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
- * @copyright	Copyright (c) 2002-2008  All Rights Reserved.
- * 				See copyright.txt for details and a complete list of authors.
+ * @copyright		Copyright (c) 2002-2009, All Rights Reserved.
+ * 			See copyright.txt for details and a complete list of authors.
  * @license		LGPL - See license.txt for details.
- * @version		SVN: $Rev$
+ * @version		SVN $Rev$
  * @filesource
  * @link		http://dev.tikiwiki.org/Trackers
  * @since		Always
@@ -1280,9 +1280,9 @@ class TrackerLib extends TikiLib {
 									$new_value = $value;
 								}
 								if ($old_value != $new_value) {
-									$the_data .= "$name" . ":\n ".tra("Old:")." $old_value\n ".tra("New:")." $new_value\n\n";
+									$the_data .= "[$name]:\n-".tra("Old", $watcher['language'])."-:\n$old_value\n\n*".tra("New", $watcher['language'])."*:\n$new_value\n----------\n";
 								} else {
-									$the_data .= "$name ".tra('(unchanged)') . ":\n $new_value\n\n";
+									$the_data .= "[$name] ".tra('(unchanged)', $watcher['language']).":\n$new_value\n----------\n";
 								}
 							}
 
@@ -1296,7 +1296,7 @@ class TrackerLib extends TikiLib {
 								} else {
 									$new_value = $value;
 								}
-								$the_data .= "$name".":\n   $new_value\n\n";
+								$the_data .= "[$name]:\n$new_value\n----------\n";
 							}
 							$query = "insert into `tiki_tracker_item_fields`(`itemId`,`fieldId`,`value`) values(?,?,?)";
 							$this->query($query,array((int) $itemId,(int) $fieldId,(string)$value));
@@ -1308,7 +1308,7 @@ class TrackerLib extends TikiLib {
 							} else {
 								$new_value = $value;
 							}
-							$the_data .= "$name".":\n   $new_value\n\n";
+							$the_data .= "[$name]:\n$new_value\n----------\n";
 						}
 
 						$query = "insert into `tiki_tracker_item_fields`(`itemId`,`fieldId`,`value`) values(?,?,?)";
@@ -1386,6 +1386,16 @@ class TrackerLib extends TikiLib {
 					}
 				} else {
 			    		// Use simple email
+					$foo = parse_url($_SERVER["REQUEST_URI"]);
+					$machine = $this->httpPrefix(). $foo["path"];
+					$parts = explode('/', $foo['path']);
+					if (count($parts) > 1) {
+						unset ($parts[count($parts) - 1]);
+					}
+					$machine = $this->httpPrefix(). implode('/', $parts);
+					if (!$itemId) {
+						$itemId = $new_itemId;
+					}
 
 			    		global $userlib;
 
@@ -1399,7 +1409,7 @@ class TrackerLib extends TikiLib {
 
 
 			    		// Try to find a Subject in $the_data
-			    		$subject_test = preg_match( '/^'.tra('Subject', $watcher['language']).'(.*):\n(.*)\n(.*)/m', $the_data, $matches );
+			    		$subject_test = preg_match( '/^'.'Subject', '(.*):\n(.*)\n(.*)/m', $the_data, $matches );
 					$subject = '';
 
 			    		if( $subject_test == 1 ) {
@@ -1411,9 +1421,8 @@ class TrackerLib extends TikiLib {
 
 						foreach ($watchers as $watcher) {
 							$mail = new TikiMail($watcher['user']);
-							$mail->setSubject('['.$trackerName.'] '.tra('Subject', $watcher['language']).$subject.' ('.tra('Tracker was modified at ', $watcher['language']). $_SERVER["SERVER_NAME"].')');
-							$mail->setText($the_data);
-
+							$mail->setSubject('['.$trackerName.']'.$subject.' ('.tra('Tracker was modified at ', $watcher['language']). $_SERVER["SERVER_NAME"].')');
+							$mail->setText(tra('View the tracker item at:', $watcher['language'])."  $machine/tiki-view_tracker_item.php?itemId=$itemId\n\n" . $the_data);
 							if( ! empty( $my_sender ) ) {
 								$mail->setHeader("From", $my_sender);
 							}

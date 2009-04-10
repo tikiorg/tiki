@@ -41,8 +41,9 @@
   {if $tiki_p_admin_categories eq 'y'}
     <a href="tiki-admin_categories.php" class="link">{tr}Admin Categories{/tr}</a>
   {/if}
-  </div>
-  </div>
+    </div> {* end .clear *}
+   </div> {* end #multiselect *}
+  </div> {* end #categorizator *}
 	{if $notable neq 'y'}
   </td>
 </tr>

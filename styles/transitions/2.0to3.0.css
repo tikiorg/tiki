@@ -18,15 +18,16 @@ They should be added to themes (possibly with tweaks) to make the theme v3.0 rea
 
 .plugin-form-float {
 	position: fixed;
-	left: 15%;
-	right: 15%;
-	top: 10%;
-	max-height: 80%;
+	left: 5%;
+	right: 365px;
+	top: 5%;
+	max-height: 90%;
 	overflow: auto;
 	background: white;
 	color: black;
 	padding: 10px;
 	border: solid 2px black;
+	z-index: 10;
 }
 
 .icon_edit_section {
@@ -183,8 +184,8 @@ div.multiselect:hover, div.multiselect div.selection:hover {
 div#tikihelp {
 	position:fixed;
 	right: 0;
-	top: 15%;
-	height: 80%;
+	top: 3px;
+	height: 95%;
 	max-width: 50%;
 	padding:0;
 	margin:0;
@@ -215,13 +216,13 @@ div.help_section_select {
 	margin: 2px;
 }
 div.help_sections {
+	width : 360px;
 	padding:  2px;
 	background-color: #AAC9E9;
-	height : 100%;
+	max-height : 95%;
 	overflow: auto;
 }
 div.help_section {
-	width : 340px;
 	margin: 5px;
 	padding: 5px;
 	background-color: white;
@@ -450,4 +451,13 @@ html[dir=ltr]>body {
 
 /* wikiplugin edit */
 .wikiplugin_edit textarea {width: 100%; height: 200px}
-
+/* wikiplugin tracker */
+.mandatory_star {
+	font-weight: bold;
+	color: red;	
+}
+.mandatory_note{
+	display: block;
+	font-style: italic;
+	margin-top: 10px;
+}

@@ -43,8 +43,7 @@ class HistLib extends TikiLib {
 		    $comment = $info["comment"];
 		    $data = $info["data"];
 		    $description = $info["description"];
-			$query = "insert into `tiki_history`(`pageName`, `version`, `lastModif`, `user`, `ip`, `comment`, `data`, `description`)
-		    			values(?,?,?,?,?,?,?,?)";
+				$query = "insert into `tiki_history`(`pageName`, `version`, `lastModif`, `user`, `ip`, `comment`, `data`, `description`) values(?,?,?,?,?,?,?,?)";
 		    $this->query($query,array($page,(int) $old_version,(int) $lastModif,$user,$ip,$comment,$data,$description));
 		}
 		
@@ -63,9 +62,8 @@ class HistLib extends TikiLib {
 			$res["lastModif"] = time();
 			$res["comment"] = $res["comment"] . " [" . tra("rollback version ") . $version . "]"; 		
 		}
-		$query
-			= "update `tiki_pages` set `data`=?,`lastModif`=?,`user`=?,`comment`=?,`version`=`version`+1,`ip`=? where `pageName`=?";
-		$result = $this->query($query,array($res["data"],$res["lastModif"],$res["user"],$res["comment"],$res["ip"],$page));
+		$query = "update `tiki_pages` set `data`=?,`lastModif`=?,`user`=?,`comment`=?,`version`=`version`+1,`ip`=?, `description`=? where `pageName`=?";
+		$result = $this->query($query,array($res['data'], $res['lastModif'], $res['user'], $res['comment'], $res['ip'], $res['description'], $page));
 		$query = "delete from `tiki_links` where `fromPage` = ?";
 		$result = $this->query($query,array($page));
 		$this->clear_links($page);
@@ -75,9 +73,6 @@ class HistLib extends TikiLib {
 			$this->replace_link($page, $a_page);
 		}
 
-		//$query="delete from `tiki_history` where `pageName`='$page' and version='$version'";
-		//$result=$this->query($query);
-		//
 		global $prefs;
 		if ($prefs['feature_actionlog'] == 'y') {
 			global $logslib; include_once('lib/logs/logslib.php');

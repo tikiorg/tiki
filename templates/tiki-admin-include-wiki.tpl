@@ -240,7 +240,7 @@
 
 <div class="adminoptionbox">
 	<div class="adminoption"><input type="checkbox" id="feature_wiki_allowhtml" name="feature_wiki_allowhtml" {if $prefs.feature_wiki_allowhtml eq 'y'}checked="checked"{/if}/></div>
-	<div class="adminoptionlabel"><label for="feature_wiki_allowhtml">{tr}Allow HTML{/tr}.</label></div>
+	<div class="adminoptionlabel"><label for="feature_wiki_allowhtml">{tr}Allow HTML{/tr}</label></div>
 </div>
 
 <div class="adminoptionbox">

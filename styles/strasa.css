@@ -1015,7 +1015,7 @@ div.help_section_select {
 div.help_sections {
 	padding:  2px;
 	background: white;
-	max-height : 500px;
+	max-height : 95%;
 	overflow: auto}
 
 div.help_section {
@@ -1195,7 +1195,7 @@ td {vertical-align: top}
 .editblogform td,
 .editfgalform td,
 .comform td,
-.forumform td {}
+.forumform td {padding: 3px}
 
 table.email {}
 table.email td.body {}
@@ -2581,10 +2581,10 @@ div.messureadbody {
 
 .plugin-form-float {
 	position: fixed;
-	left: 15%;
-	right: 15%;
-	top: 10%;
-	max-height: 80%;
+	left: 5%;
+	right: 365px;
+	top: 5%;
+	max-height: 90%;
 	overflow: auto;
 	background: #F3FCFE;
 	padding: 10px;
