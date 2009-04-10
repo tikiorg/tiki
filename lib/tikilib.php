@@ -4113,10 +4113,8 @@ class TikiLib extends TikiDB {
 				$cacheUserPerm[$keyCache] = false;
 				return (FALSE);
 			}
-			if ($is_categorized && !empty($categperm) && $$categperm == 'y') {
-				$cacheUserPerm[$keyCache] = true;
-				return (TRUE);
-			}
+			// Above detects failure due to mismatched Category perm, else check user perms.
+			//
 			// if it has no category perms or the user does not have
 			// the perms, continue to check individual perms!
 		}
