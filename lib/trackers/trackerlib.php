@@ -3,15 +3,15 @@
  * Tracker Library
  *
  * $Id$
- * Functions to support accessing and process the Trackers.
+ * \brief Functions to support accessing and processing of the Trackers.
  *
- * @package		TikiWiki
- * @subpackage	Trackers
+ * @package		Tiki
+ * @subpackage		Trackers
  * @author		Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
- * @copyright	Copyright (c) 2002-2008  All Rights Reserved.
- * 				See copyright.txt for details and a complete list of authors.
+ * @copyright		Copyright (c) 2002-2009, All Rights Reserved.
+ * 			See copyright.txt for details and a complete list of authors.
  * @license		LGPL - See license.txt for details.
- * @version		SVN: $Rev$
+ * @version		SVN $Rev$
  * @filesource
  * @link		http://dev.tikiwiki.org/Trackers
  * @since		Always
@@ -1280,9 +1280,9 @@ class TrackerLib extends TikiLib {
 									$new_value = $value;
 								}
 								if ($old_value != $new_value) {
-									$the_data .= "[$name]:\n-".tra("Old")."-:\n$old_value\n\n*".tra("New")."*:\n$new_value\n----------\n";
+									$the_data .= "[$name]:\n-".tra("Old", $watcher['language'])."-:\n$old_value\n\n*".tra("New", $watcher['language'])."*:\n$new_value\n----------\n";
 								} else {
-									$the_data .= "[$name] ".tra('(unchanged)').":\n$new_value\n----------\n";
+									$the_data .= "[$name] ".tra('(unchanged)', $watcher['language']).":\n$new_value\n----------\n";
 								}
 							}
 
