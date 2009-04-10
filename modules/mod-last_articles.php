@@ -1,6 +1,17 @@
 <?php
 // $Id$
 
+// Copyright (c) 2002-2009, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+// All Rights Reserved. See copyright.txt for details and a complete list of authors.
+// Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
+
+/**
+ * Show recent articles.
+ *
+ * 2009-04-10	SEWilco
+ * Add 'offset' parameter in case starting at zero is not wanted.
+ **/
+
 //this script may only be included - so its better to die if called directly.
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
@@ -31,8 +42,10 @@ if (isset($module_params['showImg'])) {
 if (isset($module_params['showDate']) && $module_params['showDate'] == 'y') {
 	$smarty->assign('showDate','y');
 }
+$offset = isset($module_params['offset']) ? $module_params['offset']+0 : '0';
+$smarty->assign('offset',$offset);
 
-$ranking = $tikilib->list_articles(0,$module_rows,'publishDate_desc', '', '', date("U"), '', $mod_type, $mod_topicId, 'y', $mod_topic, $categId, '', '', $l);
+$ranking = $tikilib->list_articles($offset,$module_rows,'publishDate_desc', '', date("U"), '', $mod_type, $mod_topicId, 'y', $mod_topic, $categId, '', '', $l);
 if (isset($module_params['showHeading']) && $module_params['showHeading'] != 'n') {
 	if ($module_params['showHeading'] == 'y')
 		$module_params['showHeading'] = -1;
@@ -47,3 +60,4 @@ $smarty->assign('absurl', isset($module_params["absurl"]) ? $module_params["absu
 $module_rows = count($ranking["data"]);
 $smarty->assign('module_rows', $module_rows);
 
+?>
