@@ -67,14 +67,14 @@ foreach ($rawcals["data"] as $cal_id=>$cal_data) {
 		} else {
 			$cal_data["tiki_p_view_calendar"] = 'n';
 		}
-		if ($userlib->user_has_perm_on_object($user, $cal_id, 'calendar', 'tiki_p_add_events')) {
+		if ($userlib->user_has_perm_on_object($user, $cal_id, 'calendar', 'tiki_p_add_events', 'tiki_p_edit_categorized')) {
 			$cal_data["tiki_p_add_events"] = 'y';
 			$tiki_p_add_events = "y";
 			$smarty->assign("tiki_p_add_events", "y");
 		} else {
 			$cal_data["tiki_p_add_events"] = 'n';
 		}
-		if ($userlib->user_has_perm_on_object($user, $cal_id, 'calendar', 'tiki_p_change_events')) {
+		if ($userlib->user_has_perm_on_object($user, $cal_id, 'calendar', 'tiki_p_change_events', 'tiki_p_edit_categorized')) {
 			$cal_data["tiki_p_change_events"] = 'y';
 		} else {
 			$cal_data["tiki_p_change_events"] = 'n';

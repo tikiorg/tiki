@@ -143,7 +143,7 @@ if (isset($_REQUEST["remove"])) {
 	$data = $bloglib->get_post($_REQUEST["remove"]);
 
 	if ($user && $blog_data['public'] == 'y' 
-			&& $tikilib->user_has_perm_on_object($user, $_REQUEST['blogId'], 'blog', 'tiki_p_blog_post') ) {
+		&& $tikilib->user_has_perm_on_object($user, $_REQUEST['blogId'], 'blog', 'tiki_p_blog_post', 'tiki_p_edit_categorized' ) ) {
 		$data["user"] = $user;
 	}
 
