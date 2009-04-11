@@ -472,11 +472,11 @@ a.flip img {display: none}
 .mdkitem a:visited  {
 	color: #A6A68D;
 	font-size: 1em;
-	padding: 5px 2px 5px 8px;
+	padding: 4px 8px;
 	position: relative;
 	display: block}
-
-.mdksubframe .mdkitem a:hover {
+	
+.mdkitem a:hover {
 	text-decoration: none;
 	color: #303030;
 	background: #B2B2B2}
@@ -564,7 +564,8 @@ img.imgs {background: #999}
 .cssmenu_horiz a,
 .cssmenu_vert a {
 	text-decoration: none;
-	font-weight: normal;
+	font-weight: bold;
+	color: #A6A68D;
 	display: block;
 	text-decoration: none;
 	padding: 3px 0 3px 6px}
