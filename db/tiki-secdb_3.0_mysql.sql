@@ -1322,7 +1322,7 @@ INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) V
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('b9593375c99ac187fd44a5338e4fcfdd', './lib/tail/index.php', '3.0beta3', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('faeed11a7b7cdfaecd035d325563fb6d', './lib/shoutbox/index.php', '3.0beta3', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('d099eb5d4bded2b6857245ce28505eb9', './lib/shoutbox/shoutboxlib.php', '3.0beta3', 0);
-INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('f93b01d004a1201ba793e298b92b4266', './lib/tikilib.php', '3.0beta3', 0);
+INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('c1bb2172953e718dc6e6885b15dc0adf', './lib/tikilib.php', '3.0beta3', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('642ebff413e67aec2bb14343145824cc', './lib/mime/mimelib.php', '3.0beta3', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('713bc89f7f4890adf33e00d01c736f32', './lib/mime/mimeextensions.php', '3.0beta3', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('c37c5ced2a11f7952eb2446b2ecd3365', './lib/mime/index.php', '3.0beta3', 0);
