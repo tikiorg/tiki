@@ -608,7 +608,7 @@ div.menuSection div.separator {}
 	top: 0;
 	background: white;
 	visibility: hidden;
-	margin-top: 4px}
+	margin-top: 0}
 
 .mdksubmenu table {width: auto} 
 
@@ -616,7 +616,7 @@ div.menuSection div.separator {}
 	z-index: 1000;
 	position: relative;
 	display: block;
-	border: 0;
+	border: 1px solid #5a7ea2;
 	background: #ccdceb}
 	
 .mdkitem {
@@ -626,7 +626,7 @@ div.menuSection div.separator {}
 
 .mdkitem .mdkfwdarr {
 	position: absolute;
-	top: 5px;
+	top: 7px;
 	right: 12px} 
 
 .mdkitem a {
@@ -740,10 +740,12 @@ a.phplmselected:hover {color: #808080}
 	color: #295C83;
 	font-weight: bold;
 	text-decoration: none} 
+	
+.cssmenu_vert .sf-sub-indicator {background: url(coelesce/arrows-295c8e.png) no-repeat -10px -100px; /* 8-bit indexed alpha png. IE6 gets solid image only; */}
 
 .cssmenu_vert li a:hover {
 	color: #82a7c8;
-	text-decoration: underline}
+	text-decoration: none}
 	
 #tiki-top > .cssmenu_horiz > li:hover { background: url(coelesce/pagebg.jpg) 0 -2px repeat-x }
 
