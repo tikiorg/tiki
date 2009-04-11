@@ -5329,7 +5329,7 @@ class TikiLib extends TikiDB {
 				$params_string = '';
 			}
 
-			$value = rtrim( $value, ', ' );
+			$value = rtrim( $value, "\n\t\r\0, " );
 			$arguments[$name] = $value;
 		}
 
