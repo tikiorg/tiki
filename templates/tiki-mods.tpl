@@ -23,7 +23,7 @@
 
 {if $iswritable}
 	{remarksbox type="warning" title="{tr}Attention{/tr}"}
-		{tr}Apache has the right to write in your file tree, which enables the installation, removal or upgrade of packages. When you are done with those operations, think to fix those permissions back to a safe state (by using "./setup.sh" for example).{/tr}
+		{tr}Apache has the right to write in your file tree, which enables the installation, removal or upgrade of packages. When you are done with those operations, think to fix those permissions back to a safe state (by using "sh setup.sh" for example).{/tr}
 	{/remarksbox}
 {else}
 	{remarksbox type="info" title="{tr}Attention{/tr}"}
