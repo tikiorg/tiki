@@ -6,7 +6,7 @@ define( 'ROOT', realpath( TOOLS . '/../..' ) );
 require_once TOOLS . '/svntools.php';
 
 if( $_SERVER['argc'] <= 1 )
-	die( "Usage: php doc/devtools/release.php <version-number> [ <subrelease> ]
+	die( "Usage: php doc/devtools/release.php [ --nocheck ] <version-number> [ <subrelease> ]
 Examples:
 	php doc/devtools/release.php 2.0 preRC3
 	php doc/devtools/release.php 2.0 RC3
@@ -16,7 +16,19 @@ Notes:
 	Subreleases begining with pre will not be tagged.
 " );
 
-if( has_uncommited_changes( '.' ) )
+$noCheck = false;
+$argv = array();
+foreach ( $_SERVER['argv'] as $arg ) {
+	if ( $arg == '--nocheck' ) {
+		$noCheck = true;
+		continue;
+	}
+	$argv[] = $arg;
+}
+$_SERVER['argv'] = $argv;
+unset($argv);
+
+if( ! $noCheck && has_uncommited_changes( '.' ) )
 	die( "Uncommited changes exist in the working folder.\n" );
 
 update_working_copy( '.' );
@@ -29,10 +41,12 @@ list( $script, $version, $subrelease ) = $_SERVER['argv'];
 if( ! preg_match( "/^\d+\.\d+$/", $version ) )
 	die( "Version number should be in X.X format.\n" );
 
-print "\nChecking syntax of all PHP files\n";
-$error_msg = '';
-$dir = '.';
-check_php_syntax( $dir, $error_msg ) or die( $error_msg );
+if ( ! $noCheck ) {
+	print "\nChecking syntax of all PHP files\n";
+	$error_msg = '';
+	$dir = '.';
+	check_php_syntax( $dir, $error_msg ) or die( $error_msg );
+}
 
 $isPre = strpos( $subrelease, 'pre' ) === 0;
 
