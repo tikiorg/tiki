@@ -30,7 +30,7 @@ INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) V
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('d9abcab237eb7bf449478016f4822a4a', './modules/mod-freetags_most_popular.php', '3.0beta3', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('f12650e1b54416b5d5a53a455b2fb0cd', './modules/mod-user_blogs.php', '3.0beta3', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('a29ced118aecd4b0ce4dd4a3109ffddd', './modules/mod-top_articles.php', '3.0beta3', 0);
-INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('7280b5af656c0a1b46bb1e0bc597155b', './modules/mod-adsense.php', '3.0beta3', 0);
+INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('9462638cfbcb7b69717bdd9d9db70cb0', './modules/mod-adsense.php', '3.0beta3', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('44849c83481acb0cad5e6588900f849b', './modules/mod-online_users.php', '3.0beta3', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('038ac072c7409f867ba508a71356c5bd', './modules/mod-whats_related.php', '3.0beta3', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('1f144bf76a24f5c26ff07f033a9938b9', './modules/mod-top_active_blogs.php', '3.0beta3', 0);
