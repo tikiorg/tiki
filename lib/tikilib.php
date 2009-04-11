@@ -4113,8 +4113,13 @@ class TikiLib extends TikiDB {
 				$cacheUserPerm[$keyCache] = false;
 				return (FALSE);
 			}
-			// Above detects failure due to mismatched Category perm, else check user perms.
-			//
+			// Proposed by sewilco: Put this block into a comment 
+			// if you want Do not ignore Group perm on categorized object.
+			if ($is_categorized && !empty($categperm) && $$categperm == 'y') {
+				$cacheUserPerm[$keyCache] = true;
+				return (TRUE);
+			}
+			
 			// if it has no category perms or the user does not have
 			// the perms, continue to check individual perms!
 		}
