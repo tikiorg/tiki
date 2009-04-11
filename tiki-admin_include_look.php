@@ -81,6 +81,7 @@ if (isset($_REQUEST["looksetup"])) {
     }
 
     $pref_simple_values = array(
+	"maxRecords",
 	"sitelogo_src",
 	"sitelogo_bgcolor",
 	"sitelogo_bgstyle",

@@ -631,6 +631,11 @@
 							<legend>
 								<a href="#" title="{tr}Top{/tr}"><span>{tr}Pagination links{/tr}</span></a>
 							</legend>
+
+							<div class="adminoptionbox">	  
+							<div class="adminoptionlabel"><label for="general-max_records">{tr}Maximum number of records in listings{/tr}:</label> <input size="5" type="text" name="maxRecords" id="general-max_records" value="{$prefs.maxRecords|escape}" /></div>
+							</div>
+
 							<input type="checkbox" name="nextprev_pagination" id="nextprev_pagination" {if $prefs.nextprev_pagination eq 'y'}checked="checked"{/if}/>
 							<label for="nextprev_pagination">{tr}Use relative (next / previous) pagination links{/tr}</label>
 							<hr />

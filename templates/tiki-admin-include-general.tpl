@@ -312,9 +312,6 @@
 	<div class="adminoptionlabel"><label for="general-send_email">{tr}Sender email{/tr}:</label><br /><input type="text" name="sender_email" id="general-send_email" value="{$prefs.sender_email|escape}" size="50" /></div>
 </div>
 <div class="adminoptionbox">	  
-	<div class="adminoptionlabel"><label for="general-max_records">{tr}Maximum number of records in listings{/tr}:</label> <input size="5" type="text" name="maxRecords" id="general-max_records" value="{$prefs.maxRecords|escape}" /></div>
-</div>
-<div class="adminoptionbox">	  
 	<div class="adminoption"><input type="checkbox" name="feature_help" id="feature_help" {if $prefs.feature_help eq 'y'}checked="checked" {/if}onclick="flip('use_help_system');" /></div>
 	<div class="adminoptionlabel"><label for="feature_help">{tr}Help System{/tr}:</label>{if $prefs.feature_help eq 'y'}{help url="Documentation"}{/if}</div>
 	<div align="left" id="use_help_system" style="display:{if $prefs.feature_help eq 'y'}block{else}none{/if};" class="adminoptionboxchild">
