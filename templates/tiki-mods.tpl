@@ -27,7 +27,7 @@
 	{/remarksbox}
 {else}
 	{remarksbox type="info" title="{tr}Attention{/tr}"}
-		{tr}To install, remove or upgrade packages you need to give the apache user the right to write files in your web tree (you can use "./setup.sh open" to set it up). After installation you need to remove that permission (using "./setup.sh").{/tr}
+		{tr}To install, remove or upgrade packages you need to give the apache user the right to write files in your web tree (you can use "sh setup.sh open" to set it up). After installation you need to remove that permission (using "sh setup.sh").{/tr}
 	{/remarksbox}
 {/if}
 {if $installask}
