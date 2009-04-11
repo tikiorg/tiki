@@ -553,6 +553,7 @@ CREATE TABLE tiki_objects (
   name varchar(200) default NULL,
   href varchar(200) default NULL,
   hits int(8) default NULL,
+  comments_locked char(1) NOT NULL default 'n',
   PRIMARY KEY (objectId),
   KEY (type, objectId),
   KEY (itemId, type)
@@ -699,6 +700,7 @@ CREATE TABLE tiki_comments (
   comment_rating tinyint(2) default NULL,
   archived char(1) default NULL,
   approved char(1) NOT NULL default 'y',
+  locked char(1) NOT NULL default 'n',
   PRIMARY KEY (threadId),
   UNIQUE KEY no_repeats (parentId, userName(40), title(100), commentDate, message_id(40), in_reply_to(40)),
   KEY title (title),

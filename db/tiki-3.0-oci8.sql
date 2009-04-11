@@ -762,6 +762,7 @@ CREATE TABLE "tiki_objects" (
   "name" varchar(200) default NULL,
   "href" varchar(200) default NULL,
   "hits" number(8) default NULL,
+  "comments_locked" char(1) default 'n' NOT NULL,
   PRIMARY KEY (objectId),
   KEY (type, objectId),
   KEY (itemId, type)
@@ -962,6 +963,7 @@ CREATE TABLE "tiki_comments" (
   "comment_rating" number(2) default NULL,
   "archived" char(1) default NULL,
   "approved" char(1) default 'y' NOT NULL,
+  "locked" char(1) default 'n' NOT NULL,
   PRIMARY KEY (threadId)
 ) ENGINE=MyISAM  ;
 

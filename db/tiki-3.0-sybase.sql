@@ -797,6 +797,7 @@ CREATE TABLE "tiki_objects" (
   "name" varchar(200) default NULL NULL,
   "href" varchar(200) default NULL NULL,
   "hits" numeric(8,0) default NULL NULL,
+  "comments_locked" char(1) default 'n' NOT NULL,
   PRIMARY KEY (objectId),
   KEY (type, objectId),
   KEY (itemId, type)
@@ -1015,6 +1016,7 @@ CREATE TABLE "tiki_comments" (
   "comment_rating" numeric(2,0) default NULL NULL,
   "archived" char(1) default NULL NULL,
   "approved" char(1) default 'y' NOT NULL,
+  "locked" char(1) default 'n' NOT NULL,
   PRIMARY KEY (threadId)
 ) ENGINE=MyISAM  
 go
