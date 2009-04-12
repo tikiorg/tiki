@@ -895,50 +895,6 @@ img.icon {
 input#findwhat {} /* text input */
 div.findsubmit {}
 
-/* New Help section */
-div#tikihelp {
-	position: fixed;
-	right: 0;
-	top: 15%;
-	max-height: 85%;
-	max-width: 350px;
-	padding: 0;
-	margin: 0;
-	border: none;
-	background: transparent}
-
-* html div#tikihelp {position: absolute}
-
-div.help_icon {
-	border: 0;
-	margin: 0;
-	padding: 0}
-
-div.help_icon img{
-	vertical-align: middle;
-	border: 0;
-	margin: 0;
-	padding: 0}
-
-div.help_section_select {
-	font-weight : bold;
-	font-size: 120%;
-	background: white;
-	width: 340px;
-	margin: 2px}
-
-div.help_sections {
-	padding:  2px;
-	background: white;
-	max-height : 95%;
-	overflow: auto}
-
-div.help_section {
-	width: 340px;
-	margin: 5px;
-	padding: 5px;
-	background: #f5f5f5}
-	
 #site_report {text-align: center}
 
 #site_report a {
