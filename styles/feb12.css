@@ -111,9 +111,8 @@ input[type=radio] {border: 0}
 
 input[type=text],
 input[type=password] {
-	font-size: 0.9em;
-	width: 120px}
-
+	font-size: 0.9em}
+	
 input[type=submit],
 .submitbutton,
 input[type=file],
