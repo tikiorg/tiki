@@ -458,7 +458,7 @@ a.flip img {display: none}
 .horbaritem a:link,
 .horbaritem a:visited {
 	display: block;
-	padding: 8px 0 8px 5px;
+	padding: 8px 8px;
 	text-decoration: none;
 	font: 14px Verdana, Helvetica, Arial, Sans-Serif;
 	color: white;
@@ -502,11 +502,15 @@ a.flip img {display: none}
 	border-top: 1px solid #57A5D0;
 	position: relative;
 	text-align: left;
-	white-space: nowrap} 
+	white-space: nowrap}
+	
+.mdkverbar .mdkitem {border-top: none}
+.mdkverbar .mdkitem:hover {background: #97c0da}
+.mdkverbar .mdksubmenu .mdkitem {border-top: 1px solid #57A5D0}
 
 .mdkitem .mdkfwdarr {
 	position: absolute;
-	top: 5px;
+	top: 10px;
 	right: 12px} 
 
 .mdkitem a {
@@ -514,8 +518,9 @@ a.flip img {display: none}
 	position: relative;
 	display: block;
 	font-weight: normal;
-	color: /*#487384*/black;
-	font-size: 1.2em} 
+	color: #487384} 
+	
+.mdksubmenu .mdkitem a {font-size: 1.2em}
 
 .mdkitem a:link {
 	font-weight: normal;
@@ -588,7 +593,7 @@ a.phplmselected:hover {color: #006699}
 .cssmenu_horiz ul a,
 .cssmenu_vert ul a {
 	padding: 6px;
-	color: #000}
+	color: #487384}
 	
 #tiki-top > .cssmenu_horiz {margin-left: 20px}
 
@@ -618,11 +623,10 @@ a.phplmselected:hover {color: #006699}
 #col2 .cssmenu_vert > li {
 	width: 192px;
 	padding: 0 !important}
-
+	
+#col2 .cssmenu_vert > li:hover {background: #97c0da}
 #col2 .cssmenu_vert li {padding: 0}
-
 #col2 .cssmenu_vert > li > ul {margin-left: 192px}
-
 
 /** Links in other menus **/
 div.separator, div.separatorline {color: #794a93}
