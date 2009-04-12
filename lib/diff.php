@@ -16,7 +16,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 // FIXME: possibly remove assert()'s for production version?
 
 // PHP3 does not have assert()
-define('USE_ASSERTS', function_exists('assert'));
+define('USE_ASSERTS',false);  // should only ba acitvated for debug purposes - otherwise could cause blank screen problems
 
       
 /**
