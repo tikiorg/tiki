@@ -194,7 +194,6 @@ function get_default_prefs() {
 		'wikiplugin_draw' => 'y',
 		'wikiplugin_equation' => 'n',
 		'wikiplugin_events' => 'y',
-		'wikiplugin_example' => 'n',
 		'wikiplugin_fade' => 'y',
 		'wikiplugin_fancylist' => 'y',
 		'wikiplugin_fancytable' => 'y',

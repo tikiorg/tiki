@@ -822,7 +822,6 @@ feature_id,feature_name,parent_id,status,setting_name,type,template,permission,o
 934,Definition List,913,,wikiplugin_dl,flag,,tiki_p_admin,,,,,, 
 935,Equation,913,,wikiplugin_equation,flag,,tiki_p_admin,,,,,, 
 936,Events,913,,wikiplugin_events,flag,,tiki_p_admin,,,,,, 
-937,Example,913,,wikiplugin_example,flag,,tiki_p_admin,,,,,, 
 938,Fancy Table,913,,wikiplugin_fancytable,flag,,tiki_p_admin,,,,,, 
 939,Flash video,913,,wikiplugin_flash,flag,,tiki_p_admin,,,,,, 
 940,Gauge,913,,wikiplugin_gauge,flag,,tiki_p_admin,,,,,, 
