@@ -518,9 +518,10 @@ if ($language != 'en')
 	$smarty->assign('lang', $language);
 
 // Tiki Database schema version
-$tiki_version = '3.0';
-$smarty->assign('tiki_version', $tiki_version);
-$smarty->assign('tiki_version_name', $tiki_version . ' BETA2');
+include_once ('lib/setup/twversion.class.php');
+$TWV = new TWVersion();
+$smarty->assign('tiki_version_name', preg_replace('/^(\d+\.\d+)([^\d])/', '\1 \2', $TWV->version));
+unset($TWV);
 
 // Available DB Servers
 $dbservers = array();
