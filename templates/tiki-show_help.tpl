@@ -10,7 +10,7 @@
 		<img {if $prefs.javascript_enabled eq 'y'}onclick="javascript:flip('{$help.id}');"{/if} src="pics/icons/add.png">
 		{$help.title}
 		</div>
-		<div {if $prefs.javascript_enabled eq 'y'}class="help_section" id="{$help.id}" style="display:none"{/if}>
+		<div {if $prefs.javascript_enabled eq 'y'}class="help_section" id="{$help.id}" style="display:all"{/if}>
 		{$help.content}
 		</div>
 	{/foreach}

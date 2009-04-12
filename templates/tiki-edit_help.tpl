@@ -96,10 +96,8 @@
 {tr}numeric between ~ for html numeric characters entity{/tr}</td></tr>
 <tr><td class="{cycle advance=false}"><strong>{tr}Misc{/tr}</strong></td><td class="{cycle}">"{literal}{cookie}, {poll}{/literal}"</td></tr>
 </table>
-{/add_help}
 
 {if count($plugins) ne 0}
-{add_help show='n' title="{tr}Plugin Help{/tr}" id="plugins_help"}
 <h3>{tr}Plugins{/tr}{if $prefs.feature_help eq 'y'} <a href="{$prefs.helpurl}Plugins" target="tikihelp" class="tikihelp" title="{tr}Quicktags{/tr}">{icon _id='help' style="vertical-align:middle"}</a>
 {/if}</h3>
 <p>{tr}Note that plugin arguments can be enclosed with double quotes (&quot;); this allows them to contain , or = or &gt;{/tr}.</p>
@@ -125,5 +123,5 @@
   {cycle print=false}
   {/section}
 </table>
-{/add_help}
 {/if}
+{/add_help}
