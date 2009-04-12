@@ -7,7 +7,7 @@
     {breadcrumbs type="pagetitle" loc="page" crumbs=$crumbs}
 {/if}
 {if $db_requires_update}
-	<div class="simplebox highlight">{tr}Your database requires an update to match the current TikiWiki version. Please proceed to <a href="tiki-install.php">the installer</a>. Incorrect database version may create occasional errors.{/tr}</div>
+	<div class="simplebox highlight">{tr}Your database requires an update to match the current TikiWiki version. Please proceed to <a href="tiki-install.php">the installer</a>. Using Tiki with an incorrect database version usually provoke errors.{/tr}</div>
 {/if}
 {**
  * Page Title as h1 goes here
