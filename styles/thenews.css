@@ -549,8 +549,7 @@ div#tiki-bot {}
 .horbar {
 		bottom: 0;
 		border-bottom: 1px solid #D3D3D3; border-top: 1px solid #fff;
-		position: relative;
-		width: 100%;
+		position: relative
 } 
 
 .horbar table {

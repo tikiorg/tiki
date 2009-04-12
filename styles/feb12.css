@@ -448,7 +448,7 @@ a.flip img {display: none}
 /****** Menus ******/
 /** PHP Layers Menus **/
 
-.horbar {width: 100%} 
+.horbar {}
 
 .horbar table {
 	width: auto;
