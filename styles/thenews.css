@@ -1067,6 +1067,7 @@ table.normal th {
 td {vertical-align: top}
 * html td {	font-size: 11px}
 
+table.normal td,
 td.normal,
 .wikitable td,
 td.odd,

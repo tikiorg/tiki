@@ -970,6 +970,7 @@ table.admin tr td div#page-bar {}
 td {vertical-align: top}
 * html td { font-size: 11px}
 
+table.normal td,
 td.normal,
 td.bloglist,
 .wikitable td,
