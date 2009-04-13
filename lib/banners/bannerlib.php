@@ -65,9 +65,9 @@ class BannerLib extends TikiLib {
 				while (!feof($fp)) {
 					$raw .= fread($fp, 4096);
 				}
+				fclose ($fp);
 			}
 
-			fclose ($fp);
 			break;
 
 		case 'useText':
