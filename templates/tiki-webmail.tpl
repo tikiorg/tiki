@@ -37,7 +37,7 @@
 {if $locSection eq 'settings'}
 	{if $tiki_p_admin_personal_webmail eq 'y' or $tiki_p_admin_group_webmail eq 'y'}
 		{if $conmsg ne ""}
-			<div class="simplebox error">{tr}There was an error connecting to your e-maill account.{/tr} {$conmsg}</div>
+			<div class="simplebox error">{tr}There was an error connecting to your e-mail account.{/tr} {$conmsg}</div>
 		{/if}
 
 		<h2>{if $accountId eq ''}{tr}Add a new{/tr}{else}{tr}Edit this{/tr}{/if} {tr} mail account{/tr}</h2>

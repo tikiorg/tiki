@@ -35,7 +35,7 @@
 			<option value="" disabled="disabled" selected="selected">{tr}None{/tr}</option>
               {/section}
 	</select>
-{if $blogs}<input type="submit" name="blogset" value="{trSet{/tr}" />
+{if $blogs}<input type="submit" name="blogset" value="{tr}Set{/tr}" />
 {else}<a href="tiki-edit_blog.php" class="button" title="{tr}Create a blog{/tr}"> {tr}Create a blog{/tr} </a> {/if}
 	</div>
 </div>
