@@ -50,7 +50,7 @@ function wikiplugin_trackerstat_info() {
 			),
 			'show_link' => array(
 				'required' => false,
-				'name' => tra('Sow link to tiki-view_tracker'),
+				'name' => tra('Show link to tiki-view_tracker'),
 				'description' => 'y|n',
 			),
 		),
