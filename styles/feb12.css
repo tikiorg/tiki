@@ -598,7 +598,7 @@ a.phplmselected:hover {color: #006699}
 #tiki-top > .cssmenu_horiz {margin-left: 20px}
 
 #tiki-top > .cssmenu_horiz > li > a {
-	padding: 8px 3px;
+	padding: 8px 1em;
 	text-decoration: none;
 	font: 14px Verdana, Helvetica, Arial, Sans-Serif;
 	color: white;
@@ -608,6 +608,8 @@ a.phplmselected:hover {color: #006699}
 	font-size: 14px;
 	padding: 6px 3px;
 	display: block}
+	
+#tiki-top > .cssmenu_horiz > li.menuSection > a {padding-right: 2.6em}
 
 #tiki-top > .cssmenu_horiz > li:hover {
 	background: url(feb12/pagebg.jpg) repeat-x;

@@ -588,8 +588,7 @@ img.imgs {background: #999}
 .cssmenu_vert li:hover > a {color: #303030}
 
 #tiki-top > .cssmenu_horiz > li {
-	background: url(darkroom/button.png) repeat-x;
-	width: 10em}
+	background: url(darkroom/button.png) repeat-x}
 
 #tiki-top > .cssmenu_horiz > li > a {
 	border: 1px solid transparent;
@@ -597,7 +596,9 @@ img.imgs {background: #999}
 	color: #A6A68D;
 	font-weight: bold;
 	font-size: 12px;
-	padding: 6px 2px 6px 8px}
+	padding: 6px 1em}
+	
+#tiki-top > .cssmenu_horiz > li.menuSection > a {padding-right: 2.6em}
 
 #tiki-top > .cssmenu_horiz > li > a:hover {
 	border: 1px solid #909090;

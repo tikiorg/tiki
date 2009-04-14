@@ -13,7 +13,8 @@
 
 .cssmenu ul,
 .cssmenu li,
-.cssmenu_horiz li,
+.cssmenu_horiz ul,
+.cssmenu_horiz ul li,
 .cssmenu_vert,
 .cssmenu_vert ul,
 .cssmenu_vert li {width: 11em}
@@ -135,6 +136,9 @@ td#leftcolumn {overflow: visible !important}
 #header .cssmenu_horiz {
 	z-index: 800;
 	position: relative}
+	
+.cssmenu_horiz > li a {padding-right: 12px}
+.cssmenu_horiz > li.menuSection a {padding-right: 24px}
 
 #header .cssmenu_horiz {}
 #header .cssmenu_horiz > li {}

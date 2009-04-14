@@ -814,6 +814,8 @@ a.phplmselected:hover {color: #808080}
 	/*margin: 0 0 0 -50%;*/
 	white-space: nowrap;
 	text-align: left}
+	
+.cssmenu_horiz > li.menuSection > a {padding-right: 2.6em}
 
 /** Links in other menus **/
 div.separator {

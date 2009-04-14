@@ -697,21 +697,25 @@ a.phplmselected:hover {color: #808080}
 .cssmenu li ul,
 .cssmenu_horiz li ul,
 #tiki-top .cssmenu_horiz li ul,
-.cssmenu_vert li ul {border: 1px solid #5a7ea2}
+.cssmenu_vert li ul {
+	border: 1px solid #5a7ea2;
+	margin-left: 11em}
 
 .cssmenu_horiz li:hover ul,
 .cssmenu_vert li:hover ul {
 	background: #ccdceb;
 	color: #5a7ea2;}
 
-#col2 .cssmenu_vert > li > ul {margin-left: 180px}
+#col2 .cssmenu_vert li ul {margin-left: 180px}
+#col2 .cssmenu_vert li ul li ul { margin-left: 11em}
 
 .cssmenu_vert,
 .cssmenu_vert li {background: #ccdceb !important}
 
-#col2 .cssmenu_vert > li {
-	width: 186px;
-	padding: 0 !important}
+#col2 .cssmenu_vert li {
+	width: 180px}
+	
+#col2 .cssmenu_vert li ul li {width: 11em}
 	
 .cssmenu_horiz ul li {
 	text-align: left;
@@ -760,8 +764,9 @@ a.phplmselected:hover {color: #808080}
 #tiki-top > ul.cssmenu_horiz > li > a {
 	border-left: 1px solid #acc4e0;
 	border-right: 1px solid #2e5276;
-	padding-top: 9px;
-	padding-bottom: 10px}
+	padding: 9px 1em 10px 1em}
+	
+#tiki-top > ul.cssmenu_horiz > li.menuSection > a {padding-right: 2.6em}
 	
 #tiki-top > ul.cssmenu_horiz > li > ul> a {
 	background: #ccdceb;
@@ -1019,14 +1024,14 @@ img.flipmodimage:hover {border: 1px solid #58A7D2 !important}
 
 .box-data ol,
 .box-data ul {padding-right: .6em}
-
+/*
 .box-data ol {padding-left: 2em; margin-top: 0; margin-bottom: 0}
 .box-data ul {padding-left: .5em; margin-top: 0; margin-bottom: 0; list-style: none;}
 * html .box-data ol {margin-left: 0em}
 * html .box-data ul {margin-left: 1em}
 .box-data ul.cssmenu_vert {padding-left: 0}
 *:first-child+html .box-data ol {margin-left: 0}
-*:first-child+html .box-data ul {margin-left: 1em}
+*:first-child+html .box-data ul {margin-left: 1em}*/
 .box-footer {}
 
 /* Check on this ?? */
