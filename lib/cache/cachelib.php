@@ -100,7 +100,7 @@ class Cachelib {
 	$back = array();
 	$all = opendir($path);
 	while ($file = readdir($all)) {
-		if (is_dir($path.'/'.$file) and $file <> ".." and $file <> "." and $file <> "CVS") {
+		if (is_dir($path.'/'.$file) and $file <> ".." and $file <> "." and $file <> "CVS" and $file <> ".svn" ) {
 			$du = $this->du($path.'/'.$file);
 			$total+= $du['total'];
 			$cant+= $du['cant'];
