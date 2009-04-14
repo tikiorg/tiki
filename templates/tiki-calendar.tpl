@@ -74,7 +74,7 @@
 				{tr}Watched by categories{/tr}:
 				{section name=i loop=$watching_categories}
 					{assign var=thiswatchingcateg value=$watching_categories[i].categId}
-					{button href="tiki-browse_categories?parentId=$thiswatchingcateg" _text=$watching_categories[i].name}
+					{button href="tiki-browse_categories.php?parentId=$thiswatchingcateg" _text=$watching_categories[i].name}
 					&nbsp;
 				{/section}
 			{/if}	
