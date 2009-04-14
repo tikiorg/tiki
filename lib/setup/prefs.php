@@ -1189,6 +1189,8 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_sefurl' => 'n',
 		'feature_sefurl_filter' => 'n',
 		'feature_sefurl_paths' => array(),
+		'feature_sefurl_title_article' =>'n',
+		'feature_sefurl_title_blog' =>'n',
 
 		// TikiTests
 		'feature_tikitests' => 'n',

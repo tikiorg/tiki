@@ -472,6 +472,10 @@ class BlogLib extends TikiLib {
 		$query = "update `tiki_blogs` set `activity`=? where `blogId`=?";
 		$result = $this->query($query,array($activity,(int) $blogId));
 	}
+	function get_title($blogId) {
+		$query = 'select `title` from `tiki_blogs` where `blogId`=?';
+		return $this->getOne($query, array((int)$blogId));
+	}
 }
 global $dbTiki;
 $bloglib = new BlogLib($dbTiki);
