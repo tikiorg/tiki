@@ -607,7 +607,7 @@ if (!file_exists($local)) {
 		$dbcon = false;
 		$smarty->assign('dbcon', 'n');
 	} else {
-		$dbTiki = &ADONewConnection($db_tiki);
+		$dbTiki = ADONewConnection($db_tiki);
 
 		if (!$dbTiki->Connect($host_tiki, $user_tiki, $pass_tiki, $dbs_tiki)) {
 			$dbcon = false;
