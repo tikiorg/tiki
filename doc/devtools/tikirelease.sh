@@ -52,12 +52,10 @@
 #    mailing-list to launch the announce-speading process 
 #    (Freshmeat, SourceForge and tikiwiki.org (manually for now).
 #
-# post/ After release, update templates/tiki-install.tpl and 
-#       templates/tiki-top_bar.tpl (including templates/styles/*/tiki-top_bar.tpl) 
-#       to next version number with SVN   ex.: 1.9.2 (SVN)  . This helps later on to 
-#       know exactly which files were included or not in a release.
+# post/ After release, update to next version number with SVN   ex.: 1.9.2 (SVN)  .
+#	This helps later on to know exactly which files were included or not in a release.
 #
-#       - Also, update appropriate tw.o/*.version file with new release version
+#       - Also, update appropriate http://tikiwiki.org/stable.version file with new release version
 #       (or ask the TAG to do this)
 #
 #
