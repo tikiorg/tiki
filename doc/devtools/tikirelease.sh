@@ -24,7 +24,8 @@
 #    - in lib/setup/twversion.class.php
 #      - increment the version number in the constructor
 #      - update list of valid releases in getVersions()
-#    - commit your changes
+#    - commit your changes with this commit message (change $VERSION by the version of the release):
+#	[REL] Preparing $VERSION release
 #
 # 1/ Create and test pre-release packages by executing the script with the release
 #    version as argument, using the format major.minor.sub 
