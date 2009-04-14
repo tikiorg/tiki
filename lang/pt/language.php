@@ -5051,6 +5051,7 @@ $lang=Array(
 // "Editable by" => "Editable by",
 // "Field is mandatory" => "Field is mandatory",
 // "Description text is tiki-parsed" => "Description text is tiki-parsed",
+// "Description text is wiki-parsed" => "Description text is tiki-parsed",
 // "Error message" => "Error message",
 // "Searchable" => "Searchable",
 // "Import/Export Trackers Fields" => "Import/Export Trackers Fields",

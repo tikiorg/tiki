@@ -748,6 +748,7 @@ $lang=Array(
 "Please wait.." => "Attendez, SVP",
 "Since your last visit.." => "Depuis votre dernière visite",
 "Description text is tiki-parsed" => "Analyser le texte comme un format wiki",
+"Description text is wiki-parsed" => "Analyser le texte comme un format wiki",
 "Choose a field .." => "Choisir un champ ..",
 "Geourl" => "Geourl",
 "Antarctica" => "Antartique",

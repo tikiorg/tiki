@@ -103,7 +103,7 @@
 	{include file=tiki-edit_help_tool.tpl qtnum="staticText" area_name="staticTextArea"}
 	</div>
 {/if}
-</td><td><div id='zDescription' {if $type eq 'S'}style="display:none;"{else}style="display:block;"{/if}style="display:block;" >{if $type ne 'S'}{tr}Description text is tiki-parsed:{/tr} <input type="checkbox" name="descriptionIsParsed" {if $descriptionIsParsed eq 'y'}checked="checked"{/if} />{/if}
+</td><td><div id='zDescription' {if $type eq 'S'}style="display:none;"{else}style="display:block;"{/if}style="display:block;" >{if $type ne 'S'}{tr}Description text is wiki-parsed:{/tr} <input type="checkbox" name="descriptionIsParsed" {if $descriptionIsParsed eq 'y'}checked="checked"{/if} />{/if}
 <textarea style="width:95%;" rows="4" name="description">{$description|escape}</textarea></div>
 <div id='zStaticText' {if $type neq 'S'}style="display:none;"{/if}>
 {if $prefs.quicktags_over_textarea eq 'y'}

@@ -4817,6 +4817,7 @@ $lang=Array(
 // "Visible by" => "Visible by",
 // "Editable by" => "Editable by",
 // "Description text is tiki-parsed" => "Description text is tiki-parsed",
+// "Description text is wiki-parsed" => "Description text is tiki-parsed",
 // "Error message" => "Error message",
 // "Check the box to re-import in this tracker and change the fields" => "Check the box to re-import in this tracker and change the fields",
 // "Uncheck the box to import in another database" => "Uncheck the box to import in another database",
