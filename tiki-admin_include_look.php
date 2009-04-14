@@ -56,6 +56,7 @@ if (isset($_REQUEST["looksetup"])) {
 	'direct_pagination',
 	"nextprev_pagination",
 	"pagination_firstlast",
+	"pagination_hide_if_one_page",
 	"pagination_icons",
 	"pagination_fastmove_links",
 	"use_context_menu_icon",
