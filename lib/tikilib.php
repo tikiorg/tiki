@@ -5540,7 +5540,7 @@ class TikiLib extends TikiDB {
 					. ', ' 
 					. json_encode($arguments) 
 					. ', ' 
-					. json_encode(trim(TikiLib::htmldecode($plugin_data))) 
+					. json_encode(TikiLib::htmldecode($plugin_data)) 
 					. ", event.target);
 			} );
 		}
@@ -5561,7 +5561,7 @@ class TikiLib extends TikiDB {
 					. ', ' 
 					. json_encode($arguments) 
 					. ', ' 
-					. json_encode(trim(TikiLib::htmldecode($plugin_data))) 
+					. json_encode(TikiLib::htmldecode($plugin_data)) 
 					. ", event.target);
 			} );
 		}
