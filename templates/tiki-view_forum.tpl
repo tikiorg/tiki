@@ -100,7 +100,7 @@
 	{/remarksbox}
 {/if}
 {if !empty($feedbacks)}
-	{remarksbox type="feddback"}
+	{remarksbox type="feedback"}
 		{foreach from=$feedbacks item=feedback name=feedback}
 			{$feedback|escape}
 			{if !$smarty.foreach.feedback.first}<br />{/if}
