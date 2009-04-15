@@ -27,7 +27,20 @@
 <table class="admin"><tr><td>
 <div style="padding:1em;" align="center"><input type="submit" value="{tr}Change preferences{/tr}" /></div>
 <input type="hidden" name="i18nsetup" />
-<fieldset><legend>{tr}Internationalization{/tr} {if $prefs.feature_help eq 'y'} {help url="i18n"}{/if}</legend>
+{if $prefs.feature_tabs eq 'y' and $prefs.feature_multilingual eq 'y' and $prefs.lang_use_db ne 'y'}
+	{assign var=tabs value='y'}
+{else}
+	{assign var=tabs value='n'}
+{/if}
+
+{if $tabs eq 'y'}
+	{tabs}{strip}{tr}Internationalization{/tr}|{tr}Babelfish links{/tr}|{tr}Customized String Translation{/tr}{/strip}{/tabs}
+{/if}
+
+<fieldset{if $tabs eq 'y'} id="content1" class="tabcontent" style="clear:both;display:block;"{/if}>
+{if $tabs ne 'y'}
+	<legend>{tr}Internationalization{/tr}</legend>
+{/if}
 <div class="adminoptionbox">
 	<div class="adminoptionlabel"><label for="general-lang">{tr}Default language{/tr}:</label>
 	<select name="language" id="general-lang">
@@ -148,7 +161,11 @@
 
 </fieldset>
 
-<fieldset><legend>{tr}Babelfish links{/tr}</legend>
+{*------------------------------- Babelfish ----------------------------- *}
+<fieldset{if $tabs eq 'y'} id="content2" class="tabcontent" style="clear:both;display:none;"{/if}>
+{if $tabs ne 'y'}
+	<legend>{tr}Babelfish links{/tr}</legend>
+{/if}
 <div class="adminoptionbox">
 	<div class="adminoption"><input type="checkbox" name="feature_babelfish" id="feature_babelfish"
 			{if $prefs.feature_babelfish eq 'y'}checked="checked"{/if}/></div>
@@ -158,6 +175,47 @@
 	<div class="adminoption"><input type="checkbox" name="feature_babelfish_logo" id="feature_babelfish_logo"
 			{if $prefs.feature_babelfish_logo eq 'y'}checked="checked"{/if}/></div>
 	<div class="adminoptionlabel"><label for="feature_babelfish_logo">Translation logos</label></div>
+</div>
+</fieldset>
+
+{*----------------------------------- Custom translation --------------------*}
+<fieldset{if $tabs eq 'y'} id="content3" class="tabcontent" style="clear:both;display:none;"{/if}>
+{if $tabs ne 'y'}
+	<legend>{tr}Customized String Translation{/tr}</legend>
+{/if}
+<div class="adminoptionbox">
+	{if empty($custom_lang)}
+		<select name="custom_lang" id="custom_lang_select">
+			{section name=ix loop=$languages}
+				<option value="{$languages[ix].value|escape}"
+					{if (empty($custom_lang) && $languages[ix].value eq $prefs.site_language) || (!empty($custom_lang) && $languages[ix].value eq $custom_lang)} selected="selected"{/if}>
+					{$languages[ix].name|escape}
+				</option>
+			{/section}
+		</select>
+		<input type="submit" name="custom" value="{tr}Edit{/tr}" />
+	{else}
+		{if !empty($custom_error)}
+			{remarksbox type="error"}
+				{if $custom_error eq 'param'}
+					{tr}Incorrect param{/tr}
+				{elseif $custom_error eq 'parse'}
+					{tr}Syntax error{/tr}
+				{else}
+					{tr}Cannot open this file:{/tr} {$custom_file}
+				{/if}
+			{/remarksbox}
+		{/if}
+		<h2>
+		{section name=ix loop=$languages}
+			{if $languages[ix].value eq $custom_lang}{$languages[ix].name|escape}{/if}
+		{/section}
+		</h2>
+		<input type="hidden" name="custom_lang" value="{$custom_lang|escape}" />
+		<textarea rows="40" cols="80" name="custom_translation">{$custom_translation|escape}</textarea>
+		<br />
+		<input type="submit" name="custom_save" value="{tr}Save{/tr}" />
+	{/if}
 </div>
 </fieldset>
 
