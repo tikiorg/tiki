@@ -7798,7 +7798,7 @@ $lang=Array(
 "<b>Topline</b>=small line above Title" => "<b>Surtitre</b>=petite ligne au-dessus du titre",
 "<b>Subtitle</b>=small line below Title" => "<b>Sous_titre</b>=petite ligne en dessous du titre",
 "<b>Source</b>=URL to article source" => "<b>Source</b>=URL vers le source de l'article",
-"Submit Article" => "Soumettre l'article",
+"Submit Article" => "Soumettre un article",
 "Auto-Approve Article" => "Auto-approuver l'article",
 "Template listing" => "Liste des gabarits",
 "Available templates" => "Gabarits disponibles",
