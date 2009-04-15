@@ -133,7 +133,8 @@ class Tiki_Profile_Installer
 
 	function install( Tiki_Profile $profile ) // {{{
 	{
-		global $smarty;
+		global $cachelib;
+		require_once 'lib/cache/cachelib.php';
 
 		if( ! $profiles = $this->getInstallOrder( $profile ) )
 			return false;
@@ -141,7 +142,7 @@ class Tiki_Profile_Installer
 		foreach( $profiles as $p )
 			$this->doInstall( $p );
 		
-		$smarty->clear_compiled_tpl();
+		$cachelib->empty_full_cache();
 		return true;
 	} // }}}
 
