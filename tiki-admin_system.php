@@ -18,6 +18,7 @@ $done = '';
 $output = '';
 $buf = '';
 
+global $cachelib; include_once('lib/cache/cachelib.php');
 if (isset($_GET['do'])) {
 	if ($_GET['do'] == 'all') {
 		$cachelib->erase_dir_content("templates_c/$tikidomain");
