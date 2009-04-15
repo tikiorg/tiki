@@ -100,14 +100,18 @@ select {}
 	line-height: 20px;
 }
 
-span.button {display: inline-block; margin: 2px 1px}
+span.button {
+	display: inline-block;
+	margin: 1px 2px;
+	padding: 2px}
 
 /* Links in buttons */
-.button a,
-.button a:visited,
+span.button a,
+span.button a:visited,
 button,
+input[type=reset],
 input[type=submit],
-.button input,
+span.button input,
 .submitbutton,
 .calbuttonBox a {
 	font-family: Verdana, Helvetica, Geneva, Arial, sans-serif;
@@ -116,14 +120,11 @@ input[type=submit],
 	color: #449cd0;
 	background: #f5f5f5;
 	border: 1px solid #c5c5c5;
-	padding: 0 4px;
+	padding: 1px 4px;
 	margin-right: 1px;
 	text-decoration: none;
 	white-space: nowrap;
-	cursor: pointer;
-	display: inline;
-	outline: none;
-	}
+	cursor: pointer}
 	
 * html span.button a {background: #f5f5f5}
 	
@@ -148,10 +149,13 @@ input[type=submit],
 
 .button a:hover,
 button:hover,
+input[type=reset]:hover,
 input[type=submit]:hover,
 .button input:hover,
 .submitbutton:hover,
 .calbuttonBox a:hover {background: white}
+
+div.iconmenu {display: inline}
 
 /* * html .findtable input {font-size: 1em}*/
 form.admin input[name="features"] {margin-bottom: 3px !important}
@@ -303,21 +307,23 @@ div#tiki-bot {}
 
 div#sioptions {
 	width: 100%;
-	margin: 0}
+	padding: 0}
 
 #sioptionscentered {text-align: center}
 
 div.floatright {
 	float: right;
-	clear: none}
+	clear: none;
+	margin-right: 8px}
 
 div.floatleft {
 	float: left;
-	clear: none}
+	clear: none;
+	margin-left: 8px}
 
 div#sitelogo {
 	width: 50%;
-	/*margin: auto;*/}
+	padding-top: 8px;}
 
 div#sitead {margin: auto}
 #sitead.floatright {padding-right: 40px}
@@ -421,15 +427,15 @@ input[id="sl-login-pass"] {}
 /* #header text selectors, if needed */
 
 #sitetitles {
-	font : 1.2em Arial;
-	font-weight: bold;
 	display: inline;
-	}
+	margin-top: 2em}
 
 #sitetitle,
 #sitesubtitle {
 	display: inline;
-	white-space: nowrap;}
+	white-space: nowrap;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;}
 
 #sitetitle {
 	color: #9eb8d5;
@@ -772,6 +778,9 @@ a.phplmselected:hover {color: #808080}
 	
 #tiki-top > .cssmenu_horiz > li > a:hover {color: #fff}
 
+.cssmenu_horiz ul .sf-sub-indicator,
+.cssmenu_vert ul .sf-sub-indicator {background: url(coelesce/arrows-467aa7.png) no-repeat}
+
 /****** Misc. Global Classes (layout and style) ****/
 .hidden {
 	position: absolute;
@@ -1050,18 +1059,18 @@ div.cbox {
 	color: #607999;
 	font-weight: bold;
 	line-height: 1em;
-	padding: 2px}
+	padding: 2px 3px}
 
 .cbox-title img,
-	.pagetitle img {
+.pagetitle img {
 	margin-left: 5px;
-	vertical-align: middle;
-}
+	vertical-align: middle}
 
 .cboxlink {}
 .cbox-data {
 	background: #f5f5f5;
-	overflow: hidden}
+	overflow: hidden;
+	padding: 2px 3px}
 
 .rbox {
 	margin: 5px 10px 5px;
@@ -1135,7 +1144,7 @@ td.bloglist,
 td.odd,
 td.even {
 	margin: 0;
-	padding: 2px;
+	padding: 3px;
 	vertical-align: top}
 
  /* headings */
