@@ -9,7 +9,7 @@
 // Initialization
 $section = 'newsletters';
 require_once ('tiki-setup.php');
-@ini_set('max_execution_time', 0); //will not work in safe_mode is on
+@ini_set('max_execution_time', 0); //will not work if safe_mode is on
 $prefs['feature_wiki_protect_email'] = 'n'; //not to alter the email
 
 include_once ('lib/newsletters/nllib.php');
@@ -66,8 +66,7 @@ if ($_REQUEST["nlId"]) {
 	}
 	$smarty->assign('info', $info);
 }else{
-	//No newsletter selected -> Check if the textarea for the first
-	//as to be displayed
+	//No newsletter selected -> Check if the textarea for the first has to be displayed
 	$smarty->assign('allowTxt', $newsletters['data'][0]['allowTxt']);	
 }
 
@@ -137,12 +136,15 @@ foreach($newsletterfiles_post as $k => $id) {
 
 if (!empty($_FILES) && !empty($_FILES['newsletterfile'])) {
 	foreach ($_FILES['newsletterfile']['name'] as $i => $v) {
-		$newsletterfiles[]=array('name' => $_FILES['newsletterfile']['name'][$i],
-								 'type' => $_FILES['newsletterfile']['type'][$i],
-								 'path' => $_FILES['newsletterfile']['tmp_name'][$i],
-								 'error' => $_FILES['newsletterfile']['error'][$i],
-								 'size' => $_FILES['newsletterfile']['size'][$i],
-								 'savestate' => 'phptmp');
+		if ( $_FILES['newsletterfile']['error'][$i] == UPLOAD_ERR_OK ) {
+				$newsletterfiles[]=array(
+									'name' => $_FILES['newsletterfile']['name'][$i],
+									'type' => $_FILES['newsletterfile']['type'][$i],
+									'path' => $_FILES['newsletterfile']['tmp_name'][$i],
+									'error' => $_FILES['newsletterfile']['error'][$i],
+									'size' => $_FILES['newsletterfile']['size'][$i],
+									'savestate' => 'phptmp');
+		}
 	}
 }
 
@@ -167,9 +169,6 @@ foreach($info['files'] as $k => $newsletterfile) {
 $smarty->assign('preview', 'n');
 if (isset($_REQUEST["preview"])) {
 	$smarty->assign('preview', 'y');
-	//if (eregi("\<[ \t]*html[ \t\>]",  $_REQUEST["data"]))  // html newsletter - this will be the text sent with the html part
-	//	$smarty->assign('txt', nl2br(strip_tags($_REQUEST["data"])));
-	//TODO: the sent text version is not pretty: the text must be a textarea
 	if (isset($_REQUEST["subject"])) {
 		$info["subject"] = $_REQUEST["subject"];
 	} else {
@@ -194,7 +193,7 @@ if (isset($_REQUEST["preview"])) {
 	if (!empty($_REQUEST["usedTpl"])) {
 		$smarty->assign('dataparsed', (($info['wikiparse'] == 'y')?$tikilib->parse_data($info["data"], array('absolute_links' => true)): $info['data']));
 		$smarty->assign('subject', $info["subject"]);
-		$info["dataparsed"]  = $smarty->fetch("newsletters/".$_REQUEST["usedTpl"]);
+		$info["dataparsed"] = $smarty->fetch("newsletters/".$_REQUEST["usedTpl"]);
 	        if (stristr($info['dataparsed'], "<body") === false) {
         	        $info['dataparsed'] = "<html><body>".$info['dataparsed']."</body></html>";
         	}
@@ -248,8 +247,7 @@ $smarty->assign('emited', 'n');
 if (!empty($_REQUEST['datatxt']))
    $txt = $_REQUEST['datatxt'];
 if (empty($txt)&&!empty($_REQUEST["data"])) {
-	//No txt message is explicitely provided -> 
-	//Create one with the html Version & remove Wiki tags
+	//No txt message is explicitely provided -> Create one with the html Version & remove Wiki tags
 	$txt = strip_tags(str_replace(array("\r\n","&nbsp;") , array("\n"," ") , $_REQUEST["data"]));
 	$txt=preg_replace('/^!!!(.*?)$/m',"\n$1\n",$txt);
 	$txt=preg_replace('/^!!(.*?)$/m',"\n$1\n",$txt);
@@ -271,7 +269,7 @@ if (isset($_REQUEST["send"])) {
 	}
 	$sent = array();
 	$unsubmsg = '';
-	$errors =  array();
+	$errors = array();
 
 	if (isset($_REQUEST['errorEditionId'])) {
 		$users = $nllib->get_edition_errors($_REQUEST['errorEditionId']);
@@ -290,7 +288,7 @@ if (isset($_REQUEST["send"])) {
 	}
 
 	foreach ($users as $us) {
-		$userEmail  = $us["login"];
+		$userEmail = $us["login"];
 		$email = $us["email"];
 		if (!preg_match('/([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+/', trim($email))) {
 			$errors[] = array("user"=>$userEmail, "email"=>$email, "msg"=>tra("invalid email"));
@@ -309,7 +307,7 @@ if (isset($_REQUEST["send"])) {
 			$userEmail = '';
 		}
 		$mail->setFrom($sender_email);
-		$mail->setSubject($_REQUEST["subject"]); // htmlMimeMail memorised the encoded subject 
+		$mail->setSubject($_REQUEST["subject"]); // htmlMimeMail memorised the encoded subject
 		$languageEmail = ! $userEmail ? $prefs['site_language'] : $tikilib->get_user_preference($userEmail, "language", $prefs['site_language']);
 		if ($nl_info["unsubMsg"] == 'y') {
 			$unsubmsg = $nllib->get_unsub_msg($_REQUEST["nlId"], $email, $languageEmail, $us["code"], $userEmail);
