@@ -527,8 +527,14 @@ class SearchLib extends TikiLib {
 			'objectType' => 'blog',
 			'objectKey' => '`blogId`',
 		);
+		$res = $this->_find($search_blogs, $words, $offset, $maxRecords, $fulltext, $filter, $boolean, tra('Blog'), $searchDate);
+		global $user, $smarty;
+		include_once('tiki-sefurl.php');
+		foreach ($res['data'] as $i=>$r) {
+			$res['data'][$i]['href'] = filter_out_sefurl($r['href'], $smarty, 'blog', $res['pageName']);
+		}
 
-		return $this->_find($search_blogs, $words, $offset, $maxRecords, $fulltext, $filter, $boolean, tra('Blog'), $searchDate);
+		return $res;
 	}
 
 	function find_articles($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate) {
@@ -556,10 +562,12 @@ class SearchLib extends TikiLib {
 
 		$res = $this->_find($search_articles, $words, $offset, $maxRecords, $fulltext, $filter, $boolean, tra('Article'), $searchDate);
 		$ret = array('cant'=>$res['cant'], 'data'=>array());
-		global $user;
+		global $user, $smarty;
+		include_once('tiki-sefurl.php');
 		foreach ($res['data'] as $r) {
 			if (empty($r['name']) || $this->user_has_perm_on_object($user, $r['name'], 'topic', 'tiki_p_topic_read')) {
 				$r['name'] = $r['pageName'];
+				$r['href'] = filter_out_sefurl($r['href'], $smarty, 'article', $r['pageName']);
 				$ret['data'][] = $r;
 			} else {
 				--$ret['cant'];

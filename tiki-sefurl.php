@@ -13,7 +13,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 define('PATTERN_TO_CLEAN_TEXT', '/[^0-9a-zA-Z_]/');
 define('CLEAN_CHAR', '-');
 define('TITLE_SEPARATOR', '-');
-function filter_out_sefurl($tpl_output, &$smarty, $type=null) {
+function filter_out_sefurl($tpl_output, &$smarty, $type=null, $title=null) {
 	global $sefurl_regex_out, $tikilib, $prefs;
 
 	if ($prefs['feature_sefurl'] != 'y') {
@@ -42,14 +42,16 @@ function filter_out_sefurl($tpl_output, &$smarty, $type=null) {
 	if ($type == 'article' && $prefs['feature_sefurl_title_article'] == 'y') {
 		global $artlib; include_once('lib/articles/artlib.php');
 		if (preg_match('/articleId=([0-9]+)/', $tpl_output, $matches)) {
-			$title = $artlib->get_title($matches[1]);
+			if (empty($title))
+				$title = $artlib->get_title($matches[1]);
 			$title = preg_replace(PATTERN_TO_CLEAN_TEXT, CLEAN_CHAR, $title);
 		}
 	}
 	if ($type == 'blog' && $prefs['feature_sefurl_title_blog'] == 'y') {
 		global $bloglib; include_once('lib/blogs/bloglib.php');
 		if (preg_match('/blogId=([0-9]+)/', $tpl_output, $matches)) {
-			$title = $bloglib->get_title($matches[1]);
+			if (empty($title))
+				$title = $bloglib->get_title($matches[1]);
 			$title = preg_replace(PATTERN_TO_CLEAN_TEXT, CLEAN_CHAR, $title);
 		}
 	}
