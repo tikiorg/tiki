@@ -150,6 +150,11 @@ class Tiki_Profile_Installer
 		return array_key_exists( $profile->getProfileKey(), $this->installed );
 	} // }}}
 
+	function isKeyInstalled( $domain, $profile ) // {{{
+	{
+		return array_key_exists( Tiki_Profile::getProfileKeyFor( $domain, $profile ), $this->installed );
+	} // }}}
+
 	function isInstallable( Tiki_Profile $profile ) // {{{
 	{
 		foreach( $profile->getObjects() as $object )

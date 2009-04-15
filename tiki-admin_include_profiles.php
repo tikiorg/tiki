@@ -12,6 +12,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
+require_once 'lib/profilelib/profilelib.php';
+require_once 'lib/profilelib/installlib.php';
 require_once 'lib/profilelib/listlib.php';
 
 $list = new Tiki_Profile_List;
@@ -30,18 +32,18 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 	} // }}}
 
 	if( isset($_POST['forget'], $_POST['pp'], $_POST['pd']) ) { // {{{
-		require_once 'lib/profilelib/profilelib.php';
 
 		$profile = Tiki_Profile::fromNames( $_POST['pd'], $_POST['pp'] );
 		$profile->removeSymbols();
+
+		$installer = new Tiki_Profile_Installer;
+		$installer->install( $profile );
 		
 		header( 'Location: ' . $_SERVER['REQUEST_URI'] );
 		exit;
 	} // }}}
 
 	if( isset($_POST['install'], $_POST['pd'], $_POST['pp']) ) { // {{{
-		require_once 'lib/profilelib/profilelib.php';
-		require_once 'lib/profilelib/installlib.php';
 
 		$data = array();
 		foreach( $_POST as $key => $value )
@@ -73,8 +75,6 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 	} // }}}
 
 	if( isset( $_GET['getinfo'], $_GET['pd'], $_GET['pp'] ) ) { // {{{
-		require_once 'lib/profilelib/profilelib.php';
-		require_once 'lib/profilelib/installlib.php';
 
 		$installer = new Tiki_Profile_Installer;
 
