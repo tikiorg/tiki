@@ -696,10 +696,9 @@ a.phplmselected:hover {color: #808080}
 
 .cssmenu li ul,
 .cssmenu_horiz li ul,
-#tiki-top .cssmenu_horiz li ul,
-.cssmenu_vert li ul {
-	border: 1px solid #5a7ea2;
-	margin-left: 11em}
+.cssmenu_vert li ul {border: 1px solid #5a7ea2}
+
+.cssmenu_vert li ul {margin-left: 11em}
 
 .cssmenu_horiz li:hover ul,
 .cssmenu_vert li:hover ul {
@@ -712,9 +711,7 @@ a.phplmselected:hover {color: #808080}
 .cssmenu_vert,
 .cssmenu_vert li {background: #ccdceb !important}
 
-#col2 .cssmenu_vert li {
-	width: 180px}
-	
+#col2 .cssmenu_vert li {width: 180px}
 #col2 .cssmenu_vert li ul li {width: 11em}
 	
 .cssmenu_horiz ul li {
@@ -739,7 +736,7 @@ a.phplmselected:hover {color: #808080}
 .cssmenu_horiz li.selected > a {background: inherit}
 	
 .cssmenu_vert li a {
-	padding: 3px 0;
+	padding: 3px 6px;
 	font-size: 1em;
 	color: #295C83;
 	font-weight: bold;
