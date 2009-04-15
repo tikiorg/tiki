@@ -553,7 +553,7 @@ div.logged-in {padding-right: 20px}
 #sitesearchbar {
 	position: absolute;
 	right: 10px;
-	bottom: 38px;
+	top: 65px;
 	text-align: right;
 	display: block;
 	color: #fff;
