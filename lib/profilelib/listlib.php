@@ -13,9 +13,11 @@ class Tiki_Profile_List
 			{
 				$file = $this->getCacheLocation( $source );
 				$last = $this->getCacheLastUpdate( $source );
+				$short = dirname($source);
 				$sources[] = array(
 					'url' => $source,
-					'short' => dirname($source),
+					'domain' => (0===strpos($short,'http://')) ? substr($short, 7) : $short,
+					'short' => $short,
 					'status' => ($last && filesize($file)) ? 'open' : 'closed',
 					'lastupdate' => $last,
 					'formatted' => $last ? date( 'Y-m-d H:i:s', $last ) : '' );
@@ -88,6 +90,7 @@ class Tiki_Profile_List
 							
 	function getList( $source = '', $category = '', $profile = '' ) // {{{
 	{
+		$installer = new Tiki_Profile_Installer;
 		$list = array();
 
 		$sources = $this->getSources();
@@ -123,9 +126,10 @@ class Tiki_Profile_List
 				else
 				{
 					$list[$key] = array(
-						'domain' => $s['short'],
+						'domain' => $s['domain'],
 						'category' => $c,
 						'name' => $i,
+						'installed' => $installer->isKeyInstalled( $s['domain'], $i ),
 					);
 				}
 			}

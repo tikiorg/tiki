@@ -11,10 +11,15 @@ function wikiplugin_fancylist_info() {
 		'prefs' => array('wikiplugin_fancylist'),
 		'body' => tra('One item per line starting with anything followed by ")".'),
 		'params' => array(
-			 'div' => array(
+		 	'div' => array(
 			 	'required' => false,
 				'name' => tra('Use div'),
 				'description' => tra('Use div instead of ol'),
+			 ),
+		 	'class' => array(
+			 	'required' => false,
+				'name' => tra('Class'),
+				'description' => tra('CSS class of the fancylist'),
 			 ),
 																		 
 		),
@@ -29,10 +34,10 @@ function wikiplugin_fancylist($data, $params) {
 		extract ($params,EXTR_SKIP);
 		}
 		if(isset($div)){
-			$result = '<div class="fancylist">';
+			$result = '<div class="fancylist'.($class ? " $class" : "").'">';
 			$count=1;
 		}else{
-			$result = '<ol class="fancylist">';
+			$result = '<ol class="fancylist'.($class ? " $class" : "").'">';
 			}
 	// split data by lines (trimed whitespace from start and end)
 	$lines = split("\n", trim($data));

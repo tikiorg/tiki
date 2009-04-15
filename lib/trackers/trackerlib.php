@@ -998,7 +998,7 @@ class TrackerLib extends TikiLib {
 			$remain_categs = array_diff($old_categs, $new_categs, $del_categs);
 		}
 		if (!empty($oldStatus) || !empty($status)) {
-			$the_data = tra('Status:').' ';
+			$the_data = '-[Status]-: ';
 			$statusTypes = $this->status_types();
 			if (isset($oldStatus) && $oldStatus != $status) {
 				$the_data .= $statusTypes[$oldStatus]['label'] . ' -> ';
@@ -1193,21 +1193,21 @@ class TrackerLib extends TikiLib {
 					$my_remain_categs = array_intersect($remain_categs, $my_categs);
 
 					if (sizeof($my_new_categs) + sizeof($my_del_categs) == 0) {
-							$the_data .= "$name ".tra('(unchanged)') . ":\n";
+							$the_data .= "$name -[(unchanged)]-:\n";
 					} else {
 							$the_data .= "$name :\n";
 					}
 
 					if (sizeof($my_new_categs) > 0) {
-							$the_data .= "  " . tra("Added:") . "\n";
+							$the_data .= "  -[Added]-:\n";
 							$the_data .= $this->_describe_category_list($my_new_categs);
 					}
 					if (sizeof($my_del_categs) > 0) {
-							$the_data .= "  " . tra("Removed:") . "\n";
+							$the_data .= "  -[Removed]-:\n";
 							$the_data .= $this->_describe_category_list($my_del_categs);
 					}
 					if (sizeof($my_remain_categs) > 0) {
-							$the_data .= "  " . tra("Remaining:") . "\n";
+							$the_data .= "  -[Remaining]-:\n";
 							$the_data .= $this->_describe_category_list($my_remain_categs);
 					}
 					$the_data .= "\n";
@@ -1280,9 +1280,16 @@ class TrackerLib extends TikiLib {
 									$new_value = $value;
 								}
 								if ($old_value != $new_value) {
-									$the_data .= "[$name]:\n-".tra("Old", $watcher['language'])."-:\n$old_value\n\n*".tra("New", $watcher['language'])."*:\n$new_value\n----------\n";
+									// split old value by lines
+									$lines = split("\n", $old_value);
+									// mark every old value line with standard email reply character
+									$old_value_lines = '';
+									foreach ($lines as $line) {
+										$old_value_lines .= '> '.$line;
+									}
+									$the_data .= "[-[$name]-]:\n--[Old]--:\n$old_value_lines\n\n*-[New]-*:\n$new_value\n----------\n";
 								} else {
-									$the_data .= "[$name] ".tra('(unchanged)', $watcher['language']).":\n$new_value\n----------\n";
+									$the_data .= "[-[$name]-] -[(unchanged)]-:\n$new_value\n----------\n";
 								}
 							}
 
@@ -1296,7 +1303,7 @@ class TrackerLib extends TikiLib {
 								} else {
 									$new_value = $value;
 								}
-								$the_data .= "[$name]:\n$new_value\n----------\n";
+								$the_data .= "[-[$name]-]:\n$new_value\n----------\n";
 							}
 							$query = "insert into `tiki_tracker_item_fields`(`itemId`,`fieldId`,`value`) values(?,?,?)";
 							$this->query($query,array((int) $itemId,(int) $fieldId,(string)$value));
@@ -1308,7 +1315,7 @@ class TrackerLib extends TikiLib {
 							} else {
 								$new_value = $value;
 							}
-							$the_data .= "[$name]:\n$new_value\n----------\n";
+							$the_data .= "[-[$name]-]:\n$new_value\n----------\n";
 						}
 
 						$query = "insert into `tiki_tracker_item_fields`(`itemId`,`fieldId`,`value`) values(?,?,?)";
@@ -1408,25 +1415,44 @@ class TrackerLib extends TikiLib {
 						}
 
 
-			    		// Try to find a Subject in $the_data
-			    		$subject_test = preg_match( '/^'.'Subject', '(.*):\n(.*)\n(.*)/m', $the_data, $matches );
-					$subject = '';
+			    	// Try to find a Subject in $the_data looking for strings marked "-[Subject]-" TODO: remove the tra (language translation by submitter)
+			    	$the_string = '/^\[-\['.tra('Subject').'\]-\] -\[[^\]]*\]-:\n(.*)/m';
+			    	$subject_test_unchanged = preg_match( $the_string, $the_data, $unchanged_matches );
+			    	$the_string = '/^\[-\['.tra('Subject').'\]-\]:\n(.*)\n(.*)\n\n(.*)\n(.*)/m';
+			    	$subject_test_changed = preg_match( $the_string, $the_data, $matches );
+						$subject = '';
 
-			    		if( $subject_test == 1 ) {
-							$subject = $matches[2];
-							if ($matches[3]) $subject .= ','.$matches[3];
-			    		}
+			    	if( $subject_test_unchanged == 1 ) {
+							$subject = $unchanged_matches[1];
+			    	}
+			    	if( $subject_test_changed == 1 ) {
+							$subject = $matches[1].' '.$matches[2].' '.$matches[3].' '.$matches[4];
+			    	}
 
-			    		$the_data = preg_replace( '/^.+:\n   /m', '', $the_data );
-
+						$i = 0;
 						foreach ($watchers as $watcher) {
 							$mail = new TikiMail($watcher['user']);
-							$mail->setSubject('['.$trackerName.']'.$subject.' ('.tra('Tracker was modified at ', $watcher['language']). $_SERVER["SERVER_NAME"].')');
-							$mail->setText(tra('View the tracker item at:', $watcher['language'])."  $machine/tiki-view_tracker_item.php?itemId=$itemId\n\n" . $the_data);
+							// first we look for strings marked "-[...]-" to translate by watcher language
+							$translate_strings[$i] = preg_match_all( '/-\[([^\]]*)\]-/', $the_data, $tra_matches );
+							$watcher_subject = $subject;
+							$watcher_data = $the_data;
+							if ($translate_strings[$i] > 0) {
+								foreach ($tra_matches[1] as $match) {
+									// now we replace the marked strings with correct translations
+									$tra_replace = tra($match, $watcher['language']);
+									$tra_match = "/-\[".preg_quote($match)."\]-/m";
+									$watcher_subject = preg_replace($tra_match, $tra_replace, $watcher_subject);
+									$watcher_data = preg_replace($tra_match, $tra_replace, $watcher_data);
+								}
+							}
+
+							$mail->setSubject('['.$trackerName.'] '.str_replace('> ','',$watcher_subject).' ('.tra('Tracker was modified at ', $watcher['language']). $_SERVER["SERVER_NAME"].' '.tra('by', $watcher['language']).' '.$user.')');
+							$mail->setText(tra('View the tracker item at:', $watcher['language'])."  $machine/tiki-view_tracker_item.php?itemId=$itemId\n\n" . $watcher_data);
 							if( ! empty( $my_sender ) ) {
 								$mail->setHeader("From", $my_sender);
 							}
 							$mail->send(array($watcher['email']));
+							$i++;
 						}
 				}
 			}

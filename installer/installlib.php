@@ -25,9 +25,12 @@ class Installer
 		$dbversion_tiki = $TWV->getBaseVersion();
 
 		$this->runFile( dirname(__FILE__) . '/../db/tiki-'.$dbversion_tiki.'-'.$db_tiki.'.sql' );
+		$this->buildPatchList();
+		$this->buildScriptList();
 
 		// Base SQL file contains the distribution tiki patches up to this point
-		foreach( $this->patches as $patch ) {
+		$patches = $this->patches;
+		foreach( $patches as $patch ) {
 			if( preg_match( '/_tiki$/', $patch ) ) {
 				$this->recordPatch( $patch );
 			}
@@ -193,6 +196,8 @@ class Installer
 
 	function buildPatchList() // {{{
 	{
+		$this->patches = array();
+
 		$files = glob( dirname(__FILE__) . '/schema/*_*.sql' );
 		foreach( $files as $file ) {
 			$filename = basename( $file );
@@ -244,6 +249,11 @@ class Installer
 		}
 
 		return in_array( $tableName, $list );
+	} // }}}
+
+	function requiresUpdate() // {{{
+	{
+		return count( $this->patches ) > 0 ;
 	} // }}}
 }
 

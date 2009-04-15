@@ -401,6 +401,11 @@ if(isset($helpUrl)) $smarty->assign_by_ref('sectionhelp', $helpUrl);
 if(isset($description)) $smarty->assign('description', $description);
 $smarty->assign('trail', $crumbs);
 $smarty->assign('crumb', count($crumbs)-1);
+
+include_once ('installer/installlib.php');
+$installer = new Installer;
+$smarty->assign('db_requires_update', $installer->requiresUpdate());
+
 $smarty->display("tiki.tpl");
 
 ?>

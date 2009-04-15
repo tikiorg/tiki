@@ -681,6 +681,10 @@ $show_expdate, $show_reads, $show_size, $show_topline, $show_subtitle, $show_lin
 			return false;
 		}
 	}
+	function get_title($articleId) {
+		$query = 'select `title` from `tiki_articles` where `articleId`=?';
+		return $this->getOne($query, array((int)$articleId));
+	}
 
 }
 

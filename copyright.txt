@@ -12,7 +12,7 @@ This is how we implement the Tikiwiki Social Contract.
 http://dev.tikiwiki.org/SocialContract
 
 List of members of the Community
-As of 2009-04-09, the community has:
+As of 2009-04-11, the community has:
   * 436 members on Sourceforge,
   * 201 of those people who made at least one code commit
 
@@ -1183,8 +1183,8 @@ Name: Jon
 Nickname: lphuberdeau
 Name: Louis-Philippe Huberdeau
 First Commit: 2004-04-10
-Last Commit: 2009-04-06
-Number of Commits: 902
+Last Commit: 2009-04-10
+Number of Commits: 907
 SF Role: Developer
 
 Nickname: lrargerich
@@ -1205,8 +1205,8 @@ SF Role: Developer
 Nickname: luciash
 Name: luciash d' being
 First Commit: 2003-08-05
-Last Commit: 2009-04-09
-Number of Commits: 533
+Last Commit: 2009-04-10
+Number of Commits: 535
 SF Role: Developer
 
 Nickname: lueders
@@ -1250,8 +1250,8 @@ SF Role: Developer
 Nickname: marclaporte
 Name: Marc Laporte
 First Commit: 2003-11-28
-Last Commit: 2009-04-09
-Number of Commits: 345
+Last Commit: 2009-04-10
+Number of Commits: 348
 SF Role: Project Manager
 
 Nickname: marcmont
@@ -1535,8 +1535,8 @@ SF Role: Developer
 Nickname: nyloth
 Name: Patrice W.
 First Commit: 2006-11-09
-Last Commit: 2009-04-09
-Number of Commits: 1140
+Last Commit: 2009-04-11
+Number of Commits: 1144
 SF Role: Developer
 
 Nickname: obnoxxx
@@ -1662,8 +1662,8 @@ Number of Commits: 1
 
 Nickname: pkdille
 First Commit: 2007-03-14
-Last Commit: 2009-04-09
-Number of Commits: 629
+Last Commit: 2009-04-10
+Number of Commits: 638
 SF Role: Developer
 
 Nickname: plillevold
@@ -1783,8 +1783,8 @@ SF Role: Developer
 Nickname: ricks99
 Name: rick
 First Commit: 2007-07-19
-Last Commit: 2009-04-07
-Number of Commits: 243
+Last Commit: 2009-04-10
+Number of Commits: 244
 SF Role: Developer
 
 Nickname: ripero
@@ -1907,8 +1907,8 @@ Number of Commits: 461
 Nickname: sewilco
 Name: Scot Wilcoxon
 First Commit: 2008-09-18
-Last Commit: 2009-03-19
-Number of Commits: 45
+Last Commit: 2009-04-10
+Number of Commits: 47
 SF Role: Developer
 
 Nickname: sghane
@@ -1994,8 +1994,8 @@ SF Role: Developer
 Nickname: sylvieg
 Name: Sylvie Greverend
 First Commit: 2003-05-28
-Last Commit: 2009-04-09
-Number of Commits: 4245
+Last Commit: 2009-04-10
+Number of Commits: 4247
 SF Role: Developer
 
 Nickname: syracine

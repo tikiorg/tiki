@@ -69,7 +69,6 @@ if (isset($_REQUEST["new_prefs"])) {
         "site_crumb_seper",
         "site_nav_seper",
         "contact_user",
-        "maxRecords",
         "sender_email",
         "system_os",
         "error_reporting_level",

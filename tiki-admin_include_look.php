@@ -56,6 +56,7 @@ if (isset($_REQUEST["looksetup"])) {
 	'direct_pagination',
 	"nextprev_pagination",
 	"pagination_firstlast",
+	"pagination_hide_if_one_page",
 	"pagination_icons",
 	"pagination_fastmove_links",
 	"menus_items_icons",
@@ -82,6 +83,7 @@ if (isset($_REQUEST["looksetup"])) {
     }
 
     $pref_simple_values = array(
+	"maxRecords",
 	"sitelogo_src",
 	"sitelogo_bgcolor",
 	"sitelogo_bgstyle",

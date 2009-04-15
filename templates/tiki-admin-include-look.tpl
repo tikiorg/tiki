@@ -631,6 +631,11 @@
 							<legend>
 								<a href="#" title="{tr}Top{/tr}"><span>{tr}Pagination links{/tr}</span></a>
 							</legend>
+
+							<div class="adminoptionbox">	  
+							<div class="adminoptionlabel"><label for="general-max_records">{tr}Maximum number of records in listings{/tr}:</label> <input size="5" type="text" name="maxRecords" id="general-max_records" value="{$prefs.maxRecords|escape}" /></div>
+							</div>
+
 							<input type="checkbox" name="nextprev_pagination" id="nextprev_pagination" {if $prefs.nextprev_pagination eq 'y'}checked="checked"{/if}/>
 							<label for="nextprev_pagination">{tr}Use relative (next / previous) pagination links{/tr}</label>
 							<hr />
@@ -645,6 +650,8 @@
 							<label for="pagination_firstlast">{tr}Display 'First' and 'Last' links{/tr}</label><br />
 							<input type="checkbox" name="pagination_fastmove_links" id="pagination_fastmove_links" {if $prefs.pagination_fastmove_links eq 'y'}checked="checked"{/if}/>
 							<label for="pagination_fastmove_links">{tr}Display fast move links (by 10 percent of the total number of pages) {/tr}</label><br />
+							<input type="checkbox" name="pagination_hide_if_one_page" id="pagination_hide_if_one_page" {if $prefs.pagination_hide_if_one_page eq 'y'}checked="checked"{/if}/>
+							<label for="pagination_hide_if_one_page">{tr}Hide pagination when there is only one page{/tr}</label><br />
 							<input type="checkbox" name="pagination_icons" id="pagination_icons" {if $prefs.pagination_icons eq 'y'}checked="checked"{/if}/>
 							<label for="pagination_icons">{tr}Use Icons{/tr}</label><br />
 						</fieldset>

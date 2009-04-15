@@ -2843,7 +2843,7 @@ class TikiLib extends TikiDB {
 		$ret = array();
 
 		while ($res = $result->fetchRow()) {
-			if( (!empty($user) and $user == $res['user']) || $tiki_p_blog_admin == 'y' || ($res['public'] == 'y' && $this->user_has_perm_on_object($user, $res['blogId'], 'blog', 'tiki_p_blog_post')))
+			if( (!empty($user) and $user == $res['user']) || $tiki_p_blog_admin == 'y' || ($res['public'] == 'y' && $this->user_has_perm_on_object($user, $res['blogId'], 'blog', 'tiki_p_blog_post', 'tiki_p_edit_categorized')))
 				$ret[] = $res;
 		}
 		return $ret;
@@ -4113,10 +4113,13 @@ class TikiLib extends TikiDB {
 				$cacheUserPerm[$keyCache] = false;
 				return (FALSE);
 			}
+			// Proposed by sewilco: Put this block into a comment 
+			// if you want Do not ignore Group perm on categorized object.
 			if ($is_categorized && !empty($categperm) && $$categperm == 'y') {
 				$cacheUserPerm[$keyCache] = true;
 				return (TRUE);
 			}
+			
 			// if it has no category perms or the user does not have
 			// the perms, continue to check individual perms!
 		}
@@ -5326,7 +5329,7 @@ class TikiLib extends TikiDB {
 				$params_string = '';
 			}
 
-			$value = rtrim( $value, ', ' );
+			$value = rtrim( $value, "\n\t\r\0, " );
 			$arguments[$name] = $value;
 		}
 
@@ -5494,8 +5497,8 @@ class TikiLib extends TikiDB {
 								} else {
 									global $tiki_p_plugin_viewdetail, $tiki_p_plugin_preview, $tiki_p_plugin_approve;
 									$details = $tiki_p_plugin_viewdetail == 'y' && $status != 'rejected';
-									$preview = $tiki_p_plugin_preview == 'y' && $details;
-									$approve = $tiki_p_plugin_approve == 'y' && $details;
+									$preview = $tiki_p_plugin_preview == 'y' && $details && ! $options['preview_mode'];
+									$approve = $tiki_p_plugin_approve == 'y' && $details && ! $options['preview_mode'];
 
 									if( $status != 'rejected' ) {
 										$smarty->assign( 'plugin_fingerprint', $status );
@@ -5525,41 +5528,47 @@ class TikiLib extends TikiDB {
 								if ($prefs['feature_jquery'] == 'y') {
 									$headerlib->add_js( "
 	\$jq(document).ready( function() {
-		if( \$jq('#$id') ) \$jq('#$id').click( function(event) {
-			popup_plugin_form("
-				. json_encode($plugin_name) 
-				. ', ' 
-				. json_encode($current_index) 
-				. ', ' 
-				. json_encode($page) 
-				. ', ' 
-				. json_encode($arguments) 
-				. ', ' 
-				. json_encode(trim(TikiLib::htmldecode($plugin_data))) 
-				. ", event.target);
-		} );
+		if( \$jq('#$id') ) {
+			show('$id');
+			\$jq('#$id').click( function(event) {
+				popup_plugin_form("
+					. json_encode($plugin_name) 
+					. ', ' 
+					. json_encode($current_index) 
+					. ', ' 
+					. json_encode($page) 
+					. ', ' 
+					. json_encode($arguments) 
+					. ', ' 
+					. json_encode(TikiLib::htmldecode($plugin_data)) 
+					. ", event.target);
+			} );
+		}
 	} );
 	" );
 								} else if ($prefs['feature_mootools'] == 'y') {
 									$headerlib->add_js( "
 	window.addEvent('domready', function() {
-		if( $('$id') ) $('$id').addEvent( 'click', function(event) {
-			popup_plugin_form("
-				. json_encode($plugin_name) 
-				. ', ' 
-				. json_encode($current_index) 
-				. ', ' 
-				. json_encode($page) 
-				. ', ' 
-				. json_encode($arguments) 
-				. ', ' 
-				. json_encode(trim(TikiLib::htmldecode($plugin_data))) 
-				. ", event.target);
-		} );
+		if( $('$id') ) {
+			show('$id');
+			$('$id').addEvent( 'click', function(event) {
+				popup_plugin_form("
+					. json_encode($plugin_name) 
+					. ', ' 
+					. json_encode($current_index) 
+					. ', ' 
+					. json_encode($page) 
+					. ', ' 
+					. json_encode($arguments) 
+					. ', ' 
+					. json_encode(TikiLib::htmldecode($plugin_data)) 
+					. ", event.target);
+			} );
+		}
 	} );
 	" );
 								}
-								$ret = '~np~<a id="' .$id. '" style="float:right" href="javascript:void(1)" class="editplugin">'.smarty_function_icon(array('_id'=>'shape_square_edit', 'alt'=>tra('Edit Plugin').':'.$plugin_name), $smarty)."</a>~/np~\n".$ret; // \n is necessary for plugin that includes wiki syntax like ! that must begin at the beginning of the line
+								$ret = '~np~<a id="' .$id. '" style="float:right; display:none;" href="javascript:void(1)" class="editplugin">'.smarty_function_icon(array('_id'=>'shape_square_edit', 'alt'=>tra('Edit Plugin').':'.$plugin_name), $smarty)."</a>~/np~\n".$ret; // \n is necessary for plugin that includes wiki syntax like ! that must begin at the beginning of the line
 							}
 	
 						} else {
@@ -6181,6 +6190,7 @@ class TikiLib extends TikiDB {
 		$options['page'] = isset($options['page']) ? $options['page'] : $page;
 		$options['print'] = isset($options['print']) ? $options['print'] : false;
 		$options['parseimgonly'] = isset($options['parseimgonly']) ? $options['parseimgonly'] : false;
+		$options['preview_mode'] = isset($options['preview_mode']) ? (bool)$options['preview_mode'] : false;
 		
 		
 		// if simple_wiki is true, disable some wiki syntax

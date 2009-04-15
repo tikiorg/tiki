@@ -10,6 +10,7 @@ function wikiplugin_mouseover_help() {
 function wikiplugin_mouseover_info() {
 	return array(
 		'name' => tra('Mouse Over'),
+		'documentation' => 'PluginMouseover',
 		'description' => tra('Create a mouseover feature on some text'),
 		'prefs' => array( 'wikiplugin_mouseover' ),
 		'body' => tra('Mouseover text if param label exists. Page text if text param exists'),

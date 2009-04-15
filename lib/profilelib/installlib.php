@@ -17,6 +17,7 @@ class Tiki_Profile_Installer
 		'plugin_alias' => 'Tiki_Profile_InstallHandler_PluginAlias',
 		'webservice' => 'Tiki_Profile_InstallHandler_Webservice',
 		'webservice_template' => 'Tiki_Profile_InstallHandler_WebserviceTemplate',
+		'rss' => 'Tiki_Profile_InstallHandler_Rss',
 	);
 
 	private static $typeMap = array(
@@ -132,7 +133,8 @@ class Tiki_Profile_Installer
 
 	function install( Tiki_Profile $profile ) // {{{
 	{
-		global $smarty;
+		global $cachelib;
+		require_once 'lib/cache/cachelib.php';
 
 		if( ! $profiles = $this->getInstallOrder( $profile ) )
 			return false;
@@ -140,13 +142,18 @@ class Tiki_Profile_Installer
 		foreach( $profiles as $p )
 			$this->doInstall( $p );
 		
-		$smarty->clear_compiled_tpl();
+		$cachelib->empty_full_cache();
 		return true;
 	} // }}}
 
 	function isInstalled( Tiki_Profile $profile ) // {{{
 	{
 		return array_key_exists( $profile->getProfileKey(), $this->installed );
+	} // }}}
+
+	function isKeyInstalled( $domain, $profile ) // {{{
+	{
+		return array_key_exists( Tiki_Profile::getProfileKeyFor( $domain, $profile ), $this->installed );
 	} // }}}
 
 	function isInstallable( Tiki_Profile $profile ) // {{{
@@ -1305,6 +1312,58 @@ class Tiki_Profile_InstallHandler_WebserviceTemplate extends Tiki_Profile_Instal
 		$template->save();
 
 		return $template->name;
+	}
+} // }}}
+
+class Tiki_Profile_InstallHandler_Rss extends Tiki_Profile_InstallHandler // {{{
+{
+	function getData()
+	{
+		if( $this->data )
+			return $this->data;
+
+		$data = $this->obj->getData();
+		$data = Tiki_Profile::convertLists( $data, array(
+			'show' => 'y',
+		), true );
+
+		$defaults = array(
+			'description' => null,
+			'refresh' => 30,
+		);
+
+		$data = array_merge(
+			$defaults,
+			$data
+		);
+
+		return $this->data = $data;
+	}
+
+	function canInstall()
+	{
+		$data = $this->getData();
+
+		if( ! isset( $data['name'], $data['url'] ) )
+			return false;
+
+		return true;
+	}
+
+	function _install()
+	{
+		global $rsslib;
+		$data = $this->getData();
+
+		$this->replaceReferences( $data );
+
+		require_once 'lib/rss/rsslib.php';
+
+		if( $rsslib->replace_rss_module( 0, $data['name'], $data['description'], $data['url'], $data['refresh'], $data['show_title'], $data['show_publication_date'] ) ) {
+
+			$id = (int) $rsslib->getOne("SELECT MAX(rssId) FROM tiki_rss_modules");
+			return $id;
+		}
 	}
 } // }}}
 

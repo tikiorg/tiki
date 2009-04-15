@@ -518,19 +518,20 @@ if ($language != 'en')
 	$smarty->assign('lang', $language);
 
 // Tiki Database schema version
-$tiki_version = '4.0';
-$smarty->assign('tiki_version', $tiki_version);
-$smarty->assign('tiki_version_name', $tiki_version . ' BETA2');
+include_once ('lib/setup/twversion.class.php');
+$TWV = new TWVersion();
+$smarty->assign('tiki_version_name', preg_replace('/^(\d+\.\d+)([^\d])/', '\1 \2', $TWV->version));
+unset($TWV);
 
 // Available DB Servers
 $dbservers = array();
-if ( function_exists('mysqli_connect') ) $dbservers['mysqli'] = 'MySQL Improved (mysqli). Requires MySQL 4.1+';
-if ( function_exists('mysql_connect') ) $dbservers['mysql'] = 'MySQL classic (mysql)';
-if ( function_exists('pg_connect') ) $dbservers['pgsql'] = 'PostgeSQL 7.2+';
-if ( function_exists('oci_connect') ) $dbservers['oci8'] = 'Oracle';
-if ( function_exists('sybase_connect') ) $dbservers['sybase'] = 'Sybase';
-if ( function_exists('sqlite_open') ) $dbservers['sqlite'] = 'SQLLite';
-if ( function_exists('mssql_connect') ) $dbservers['mssql'] = 'MSSQL';
+if ( function_exists('mysqli_connect') ) $dbservers['mysqli'] = tra('MySQL Improved (mysqli). Requires MySQL 4.1+');
+if ( function_exists('mysql_connect') ) $dbservers['mysql'] = tra('MySQL classic (mysql)');
+if ( function_exists('pg_connect') ) $dbservers['pgsql'] = tra('PostgeSQL 7.2+');
+if ( function_exists('oci_connect') ) $dbservers['oci8'] = tra('Oracle');
+if ( function_exists('sybase_connect') ) $dbservers['sybase'] = tra('Sybase');
+if ( function_exists('sqlite_open') ) $dbservers['sqlite'] = tra('SQLLite');
+if ( function_exists('mssql_connect') ) $dbservers['mssql'] = tra('MSSQL');
 $smarty->assign_by_ref('dbservers', $dbservers);
 
 $errors = '';
@@ -606,7 +607,7 @@ if (!file_exists($local)) {
 		$dbcon = false;
 		$smarty->assign('dbcon', 'n');
 	} else {
-		$dbTiki = &ADONewConnection($db_tiki);
+		$dbTiki = ADONewConnection($db_tiki);
 
 		if (!$dbTiki->Connect($host_tiki, $user_tiki, $pass_tiki, $dbs_tiki)) {
 			$dbcon = false;

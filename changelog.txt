@@ -23,6 +23,82 @@ Version 3.0
 ------------------
 
 ----------------------------------------------
+r17921 | nyloth | 2009-04-11 09:10:27 +0200 (Sat, 11 Apr 2009) | 1 line
+
+[FIX] fix tiki.sql for comments locking which was causing troubles on fresh installs
+----------------------------------------------
+r17920 | sylvieg | 2009-04-10 23:43:23 +0200 (Fri, 10 Apr 2009) | 1 line
+
+[FIX]perm: tiki_p_blog_post, tiki_p_add_events, tiki_p_upload_images, tiki_p_remove are more related to tiki_p_edit_categorized than tiki_p_view_categorized
+----------------------------------------------
+r17919 | lphuberdeau | 2009-04-10 23:00:45 +0200 (Fri, 10 Apr 2009) | 1 line
+
+[FIX] Rebuild patch list after clean install to make sure they are all recorded during reinstall and add DB out of date notification in admin panel
+----------------------------------------------
+r17917 | sylvieg | 2009-04-10 22:18:49 +0200 (Fri, 10 Apr 2009) | 1 line
+
+[FIX] reverse 17912 and fix it correctly
+----------------------------------------------
+r17916 | sewilco | 2009-04-10 21:56:52 +0200 (Fri, 10 Apr 2009) | 1 line
+
+[FIX] Do not ignore Group perm on categorized object.
+----------------------------------------------
+r17914 | marclaporte | 2009-04-10 20:43:01 +0200 (Fri, 10 Apr 2009) | 1 line
+
+[FIX] feature_print_indexed is a new feature, never should have been activated by default
+----------------------------------------------
+r17913 | lphuberdeau | 2009-04-10 19:55:14 +0200 (Fri, 10 Apr 2009) | 1 line
+
+[FIX] Avoid name conflicts
+----------------------------------------------
+r17912 | lphuberdeau | 2009-04-10 19:52:14 +0200 (Fri, 10 Apr 2009) | 1 line
+
+[FIX] Bad method names cause crashes
+----------------------------------------------
+r17911 | sewilco | 2009-04-10 18:10:07 +0200 (Fri, 10 Apr 2009) | 1 line
+
+[ENH] add "offset" parameter so article list doesnt have to start at first one.
+----------------------------------------------
+r17909 | luciash | 2009-04-10 11:58:12 +0200 (Fri, 10 Apr 2009) | 1 line
+
+[FIX] tracker email notification: translations by watcher language
+----------------------------------------------
+r17908 | marclaporte | 2009-04-10 07:20:39 +0200 (Fri, 10 Apr 2009) | 1 line
+
+[FIX] Restore file which seems to have been deleted accidentally in revision 17868
+----------------------------------------------
+r17907 | marclaporte | 2009-04-10 07:16:40 +0200 (Fri, 10 Apr 2009) | 1 line
+
+[FIX] After saving a page, can use edit plugin interface without the .rbox-title that overlaps
+----------------------------------------------
+r17905 | pkdille | 2009-04-10 01:00:19 +0200 (Fri, 10 Apr 2009) | 1 line
+
+[REL] SecDB for 3.0beta2
+----------------------------------------------
+r17903 | pkdille | 2009-04-10 00:53:20 +0200 (Fri, 10 Apr 2009) | 1 line
+
+[FIX] release.php: wait between each directory for php -l
+----------------------------------------------
+r17902 | pkdille | 2009-04-10 00:45:10 +0200 (Fri, 10 Apr 2009) | 1 line
+
+[REL] update version in tiki-installer
+----------------------------------------------
+r17901 | pkdille | 2009-04-10 00:29:23 +0200 (Fri, 10 Apr 2009) | 1 line
+
+[REL] SecDB for 3.0beta2
+----------------------------------------------
+r17897 | pkdille | 2009-04-09 23:40:04 +0200 (Thu, 09 Apr 2009) | 1 line
+
+[REL] SecDB for 3.0beta2
+----------------------------------------------
+r17896 | luciash | 2009-04-09 23:26:59 +0200 (Thu, 09 Apr 2009) | 1 line
+
+[ENH] tracker email notification: highlight item names and New: changes and better look of the notification mail for readability
+----------------------------------------------
+r17895 | nyloth | 2009-04-09 23:16:03 +0200 (Thu, 09 Apr 2009) | 1 line
+
+[REL] Preparing 3.0beta2 release
+----------------------------------------------
 r17893 | sylvieg | 2009-04-09 19:12:52 +0200 (Thu, 09 Apr 2009) | 1 line
 
 [FIX]tracker: fix language of the tracker notification message

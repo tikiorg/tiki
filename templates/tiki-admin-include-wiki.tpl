@@ -49,33 +49,6 @@
 </div>
 
 
-<fieldset><legend>{tr}Wiki syntax{/tr}{if $prefs.feature_help eq 'y'} {help url="Wiki+Syntax"}{/if}</legend>
-
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" id="feature_wiki_paragraph_formatting" name="feature_wiki_paragraph_formatting" {if $prefs.feature_wiki_paragraph_formatting eq 'y'}checked="checked" {/if}onclick="flip('usewikiparaformat');" /></div>
-	<div class="adminoptionlabel"><label for="feature_wiki_paragraph_formatting">{tr}Wiki paragraph formatting{/tr}</label></div>
-<div class="adminoptionboxchild" id="usewikiparaformat" style="display:{if $prefs.feature_wiki_paragraph_formatting eq 'y'}block{else}none{/if};">
-	<div class="adminoption"><input type="checkbox" id="feature_wiki_paragraph_formatting_add_br" name="feature_wiki_paragraph_formatting_add_br" {if $prefs.feature_wiki_paragraph_formatting_add_br eq 'y'}checked="checked"{/if}/></div>
-	<div class="adminoptionlabel"><label for="feature_wiki_paragraph_formatting_add_br">{tr}...but still create line breaks within paragraphs{/tr}.</label></div>
-</div>
-</div>
-
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" id="feature_wiki_monosp" name="feature_wiki_monosp" {if $prefs.feature_wiki_monosp eq 'y'}checked="checked"{/if}/></div>
-	<div class="adminoptionlabel"><label for="feature_wiki_monosp">{tr}Automonospaced text{/tr}</label></div>
-</div>
-
-<div class="adminoptionbox">
-	<div class="adminoptionlabel"><label for="feature_wiki_tables">{tr}Tables syntax{/tr}:</label>
-	<select name="feature_wiki_tables" id="feature_wiki_tables">
-    <option value="old" {if $prefs.feature_wiki_tables eq 'old'}selected="selected"{/if}>{tr}|| for rows{/tr}</option>
-    <option value="new" {if $prefs.feature_wiki_tables eq 'new'}selected="selected"{/if}>{tr}&lt;return&gt; for rows{/tr}</option>
-    </select>
-	</div>
-</div>
-
-</fieldset>
-		
 <fieldset><legend>{tr}Page display{/tr}</legend>
 
 <div class="adminoptionbox">

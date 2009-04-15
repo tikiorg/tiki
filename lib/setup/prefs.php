@@ -37,7 +37,7 @@ function get_default_prefs() {
 		'tiki_version_check_frequency' => 604800,
 		'lastUpdatePrefs' => 1,
 
-		'feature_print_indexed' => 'y',
+		'feature_print_indexed' => 'n',  //Still needs to be in admin panel somwhere
 
 		// wiki
 		'feature_wiki' => 'y',
@@ -194,7 +194,6 @@ function get_default_prefs() {
 		'wikiplugin_draw' => 'y',
 		'wikiplugin_equation' => 'n',
 		'wikiplugin_events' => 'y',
-		'wikiplugin_example' => 'n',
 		'wikiplugin_fade' => 'y',
 		'wikiplugin_fancylist' => 'y',
 		'wikiplugin_fancytable' => 'y',
@@ -559,6 +558,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'users_prefs_mess_sendReadStatus' => 'n',
 		'users_prefs_minPrio' => '3',
 		'users_prefs_mytiki_blogs' => 'y',
+		'users_prefs_mytiki_articles' => 'y',
 		'users_prefs_mytiki_gals' => 'y',
 		'users_prefs_mytiki_items' => 'y',
 		'users_prefs_mytiki_msgs' => 'y',
@@ -987,6 +987,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'direct_pagination' => 'y',
 		'nextprev_pagination' => 'y',
 		'pagination_firstlast' => 'y',
+		'pagination_hide_if_one_page' => 'y',
 		'pagination_icons' => 'y',
 		'pagination_fastmove_links' => 'y',
 		'direct_pagination_max_middle_links' => 2,
@@ -1190,6 +1191,8 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_sefurl' => 'n',
 		'feature_sefurl_filter' => 'n',
 		'feature_sefurl_paths' => array(),
+		'feature_sefurl_title_article' =>'n',
+		'feature_sefurl_title_blog' =>'n',
 
 		// TikiTests
 		'feature_tikitests' => 'n',

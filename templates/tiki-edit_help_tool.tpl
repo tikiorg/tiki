@@ -94,7 +94,7 @@ function openFgalsWindow() {
 	if(fgals_window && fgals_window.document) {
 		fgals_window.focus();
 	} else {{/literal}
-		fgals_window=window.open('{$url_path}tiki-list_file_gallery.php?view=browse&galleryId=1&filegals_manager={$area_name}','_blank','menubar=1,scrollbars=1,resizable=1,height=500,width=800,left=50,top=50');
+		fgals_window=window.open('{filegal_manager_url area_name=$area_name}','_blank','menubar=1,scrollbars=1,resizable=1,height=500,width=800,left=50,top=50');
 	{literal}}
 }
 //--><!]]>

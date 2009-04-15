@@ -73,7 +73,7 @@
   <td class="{cycle advance=false}">{$sheets[changes].author}</td>
   <td class="{cycle}">
   {if $chart_enabled eq 'y'}
-    <a class="gallink" href="tiki-graph_sheet.php?sheetId={$sheets[changes].sheetId}"><img src='pics/icons2/chart_curve.png' width='16' height='16' alt='{tr}Graph{/tr}' title='{tr}Graph{/tr}' /></a>
+    <a class="gallink" href="tiki-graph_sheet.php?sheetId={$sheets[changes].sheetId}"><img src='pics/icons/chart_curve.png' width='16' height='16' alt='{tr}Graph{/tr}' title='{tr}Graph{/tr}' /></a>
   {/if}
   {if $tiki_p_view_sheet_history eq 'y'}
     <a class="gallink" href="tiki-history_sheets.php?offset={$offset}&amp;sort_mode={$sort_mode}&amp;sheetId={$sheets[changes].sheetId}">{icon _id='application_form_magnify' alt='{tr}History{/tr}'}</a>

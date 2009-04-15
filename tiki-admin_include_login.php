@@ -165,6 +165,7 @@ if (isset($_REQUEST['users_defaults'])) {
 		'users_prefs_allowMsgs',
 		'users_prefs_mytiki_pages',
 		'users_prefs_mytiki_blogs',
+		'users_prefs_mytiki_articles',		
 		'users_prefs_mytiki_gals',
 		'users_prefs_mytiki_msgs',
 		'users_prefs_mytiki_tasks',

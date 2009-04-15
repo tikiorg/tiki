@@ -100,14 +100,18 @@ select {}
 	line-height: 20px;
 }
 
-span.button {display: inline-block; margin: 2px 1px}
+span.button {
+	display: inline-block;
+	margin: 1px 2px;
+	padding: 2px}
 
 /* Links in buttons */
-.button a,
-.button a:visited,
+span.button a,
+span.button a:visited,
 button,
+input[type=reset],
 input[type=submit],
-.button input,
+span.button input,
 .submitbutton,
 .calbuttonBox a {
 	font-family: Verdana, Helvetica, Geneva, Arial, sans-serif;
@@ -116,14 +120,11 @@ input[type=submit],
 	color: #449cd0;
 	background: #f5f5f5;
 	border: 1px solid #c5c5c5;
-	padding: 0 4px;
+	padding: 1px 4px;
 	margin-right: 1px;
 	text-decoration: none;
 	white-space: nowrap;
-	cursor: pointer;
-	display: inline;
-	outline: none;
-	}
+	cursor: pointer}
 	
 * html span.button a {background: #f5f5f5}
 	
@@ -148,10 +149,13 @@ input[type=submit],
 
 .button a:hover,
 button:hover,
+input[type=reset]:hover,
 input[type=submit]:hover,
 .button input:hover,
 .submitbutton:hover,
 .calbuttonBox a:hover {background: white}
+
+div.iconmenu {display: inline}
 
 /* * html .findtable input {font-size: 1em}*/
 form.admin input[name="features"] {margin-bottom: 3px !important}
@@ -303,21 +307,23 @@ div#tiki-bot {}
 
 div#sioptions {
 	width: 100%;
-	margin: 0}
+	padding: 0}
 
 #sioptionscentered {text-align: center}
 
 div.floatright {
 	float: right;
-	clear: none}
+	clear: none;
+	margin-right: 8px}
 
 div.floatleft {
 	float: left;
-	clear: none}
+	clear: none;
+	margin-left: 8px}
 
 div#sitelogo {
 	width: 50%;
-	/*margin: auto;*/}
+	padding-top: 8px;}
 
 div#sitead {margin: auto}
 #sitead.floatright {padding-right: 40px}
@@ -421,15 +427,15 @@ input[id="sl-login-pass"] {}
 /* #header text selectors, if needed */
 
 #sitetitles {
-	font : 1.2em Arial;
-	font-weight: bold;
 	display: inline;
-	}
+	margin-top: 2em}
 
 #sitetitle,
 #sitesubtitle {
 	display: inline;
-	white-space: nowrap;}
+	white-space: nowrap;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;}
 
 #sitetitle {
 	color: #9eb8d5;
@@ -608,7 +614,7 @@ div.menuSection div.separator {}
 	top: 0;
 	background: white;
 	visibility: hidden;
-	margin-top: 4px}
+	margin-top: 0}
 
 .mdksubmenu table {width: auto} 
 
@@ -616,7 +622,7 @@ div.menuSection div.separator {}
 	z-index: 1000;
 	position: relative;
 	display: block;
-	border: 0;
+	border: 1px solid #5a7ea2;
 	background: #ccdceb}
 	
 .mdkitem {
@@ -626,7 +632,7 @@ div.menuSection div.separator {}
 
 .mdkitem .mdkfwdarr {
 	position: absolute;
-	top: 5px;
+	top: 7px;
 	right: 12px} 
 
 .mdkitem a {
@@ -696,22 +702,23 @@ a.phplmselected:hover {color: #808080}
 
 .cssmenu li ul,
 .cssmenu_horiz li ul,
-#tiki-top .cssmenu_horiz li ul,
 .cssmenu_vert li ul {border: 1px solid #5a7ea2}
+
+.cssmenu_vert li ul {margin-left: 11em}
 
 .cssmenu_horiz li:hover ul,
 .cssmenu_vert li:hover ul {
 	background: #ccdceb;
 	color: #5a7ea2;}
 
-#col2 .cssmenu_vert > li > ul {margin-left: 180px}
+#col2 .cssmenu_vert li ul {margin-left: 180px}
+#col2 .cssmenu_vert li ul li ul { margin-left: 11em}
 
 .cssmenu_vert,
 .cssmenu_vert li {background: #ccdceb !important}
 
-#col2 .cssmenu_vert > li {
-	width: 186px;
-	padding: 0 !important}
+#col2 .cssmenu_vert li {width: 180px}
+#col2 .cssmenu_vert li ul li {width: 11em}
 	
 .cssmenu_horiz ul li {
 	text-align: left;
@@ -735,15 +742,17 @@ a.phplmselected:hover {color: #808080}
 .cssmenu_horiz li.selected > a {background: inherit}
 	
 .cssmenu_vert li a {
-	padding: 3px 0;
+	padding: 3px 6px;
 	font-size: 1em;
 	color: #295C83;
 	font-weight: bold;
 	text-decoration: none} 
+	
+.cssmenu_vert .sf-sub-indicator {background: url(coelesce/arrows-295c8e.png) no-repeat -10px -100px; /* 8-bit indexed alpha png. IE6 gets solid image only; */}
 
 .cssmenu_vert li a:hover {
 	color: #82a7c8;
-	text-decoration: underline}
+	text-decoration: none}
 	
 #tiki-top > .cssmenu_horiz > li:hover { background: url(coelesce/pagebg.jpg) 0 -2px repeat-x }
 
@@ -758,8 +767,9 @@ a.phplmselected:hover {color: #808080}
 #tiki-top > ul.cssmenu_horiz > li > a {
 	border-left: 1px solid #acc4e0;
 	border-right: 1px solid #2e5276;
-	padding-top: 9px;
-	padding-bottom: 10px}
+	padding: 9px 1em 10px 1em}
+	
+#tiki-top > ul.cssmenu_horiz > li.menuSection > a {padding-right: 2.6em}
 	
 #tiki-top > ul.cssmenu_horiz > li > ul> a {
 	background: #ccdceb;
@@ -767,6 +777,9 @@ a.phplmselected:hover {color: #808080}
 	padding-bottom: 9px}
 	
 #tiki-top > .cssmenu_horiz > li > a:hover {color: #fff}
+
+.cssmenu_horiz ul .sf-sub-indicator,
+.cssmenu_vert ul .sf-sub-indicator {background: url(coelesce/arrows-467aa7.png) no-repeat}
 
 /****** Misc. Global Classes (layout and style) ****/
 .hidden {
@@ -895,48 +908,53 @@ div.findsubmit {}
 
 /* New Help section */
 div#tikihelp {
-	position: fixed;
+	position:fixed;
 	right: 0;
-	top: 15%;
-	max-height: 85%;
-	max-width: 350px;
-	padding: 0;
-	margin: 0;
+	top: 3px;
+	height: 95%;
+	max-width: 50%;
+	padding:0;
+	margin:0;
 	border: none;
-	background: transparent}
+	background-color: transparent;
+	z-index: 2;
+}
 
 * html div#tikihelp {position: absolute}
 
 div.help_icon {
 	border: 0;
 	margin: 0;
-	padding: 0}
-
+	padding: 0;
+}
 div.help_icon img{
 	vertical-align: middle;
 	border: 0;
 	margin: 0;
-	padding: 0}
-
+	padding: 0;
+}
 div.help_section_select {
 	font-weight : bold;
 	font-size: 120%;
-	background: white;
-	width: 340px;
-	margin: 2px}
-
+	background-color : #E7E9EA;
+	color: black;
+	width: 100%;
+	margin: 2px;
+}
 div.help_sections {
+	width : 360px;
 	padding:  2px;
-	background: white;
+	background-color: #AAC9E9;
 	max-height : 95%;
-	overflow: auto}
-
+	overflow: auto;
+}
 div.help_section {
-	width: 340px;
 	margin: 5px;
 	padding: 5px;
-	background: #f5f5f5}
-	
+	background-color: white;
+	color: black;
+}
+
 #site_report {text-align: center}
 
 #site_report a {
@@ -1012,14 +1030,14 @@ img.flipmodimage:hover {border: 1px solid #58A7D2 !important}
 
 .box-data ol,
 .box-data ul {padding-right: .6em}
-
+/*
 .box-data ol {padding-left: 2em; margin-top: 0; margin-bottom: 0}
 .box-data ul {padding-left: .5em; margin-top: 0; margin-bottom: 0; list-style: none;}
 * html .box-data ol {margin-left: 0em}
 * html .box-data ul {margin-left: 1em}
 .box-data ul.cssmenu_vert {padding-left: 0}
 *:first-child+html .box-data ol {margin-left: 0}
-*:first-child+html .box-data ul {margin-left: 1em}
+*:first-child+html .box-data ul {margin-left: 1em}*/
 .box-footer {}
 
 /* Check on this ?? */
@@ -1041,18 +1059,18 @@ div.cbox {
 	color: #607999;
 	font-weight: bold;
 	line-height: 1em;
-	padding: 2px}
+	padding: 2px 3px}
 
 .cbox-title img,
-	.pagetitle img {
+.pagetitle img {
 	margin-left: 5px;
-	vertical-align: middle;
-}
+	vertical-align: middle}
 
 .cboxlink {}
 .cbox-data {
 	background: #f5f5f5;
-	overflow: hidden}
+	overflow: hidden;
+	padding: 2px 3px}
 
 .rbox {
 	margin: 5px 10px 5px;
@@ -1126,7 +1144,7 @@ td.bloglist,
 td.odd,
 td.even {
 	margin: 0;
-	padding: 2px;
+	padding: 3px;
 	vertical-align: top}
 
  /* headings */
@@ -2413,6 +2431,7 @@ div.messureadbody {
 	overflow: auto;
 	background: #f5f5f5;
 	padding: 10px;
+	z-index: 10;
 	border: solid 2px #696969}
 
 .icon_edit_section {float: right}

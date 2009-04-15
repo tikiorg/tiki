@@ -940,7 +940,7 @@ $smarty->assign('pagedata', $parsed);
 // apply the optional post edit filters before preview
 if(isset($_REQUEST["preview"]) || ($prefs['wiki_spellcheck'] == 'y' && isset($_REQUEST["spellcheck"]) && $_REQUEST["spellcheck"] == 'on')) {
 	$parsed = $tikilib->apply_postedit_handlers($parsed);
-	$parsed = $tikilib->parse_data($parsed, array('is_html' => $is_html));
+	$parsed = $tikilib->parse_data($parsed, array('is_html' => $is_html, 'preview_mode'=>true));
 } else {
 	$parsed = "";
 }

@@ -10,8 +10,12 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 	header("location: index.php");
 	exit;
 }
-function filter_out_sefurl($tpl_output, &$smarty, $type=null) {
+define('PATTERN_TO_CLEAN_TEXT', '/[^0-9a-zA-Z_]/');
+define('CLEAN_CHAR', '-');
+define('TITLE_SEPARATOR', '-');
+function filter_out_sefurl($tpl_output, &$smarty, $type=null, $title=null) {
 	global $sefurl_regex_out, $tikilib, $prefs;
+
 	if ($prefs['feature_sefurl'] != 'y') {
 		return $tpl_output;
 	}
@@ -33,11 +37,25 @@ function filter_out_sefurl($tpl_output, &$smarty, $type=null) {
 			$sefurl_regex_out = unserialize($cachelib->getCached('sefurl_regex_out'));
 		}
 	}
-	foreach ($prefs['feature_sefurl_paths'] as $path) {
-		if (isset($_REQUEST[$path])) {
-			$tpl_output = $_REQUEST[$path]."/$tpl_output";
+
+	$title = '';
+	if ($type == 'article' && $prefs['feature_sefurl_title_article'] == 'y') {
+		global $artlib; include_once('lib/articles/artlib.php');
+		if (preg_match('/articleId=([0-9]+)/', $tpl_output, $matches)) {
+			if (empty($title))
+				$title = $artlib->get_title($matches[1]);
+			$title = preg_replace(PATTERN_TO_CLEAN_TEXT, CLEAN_CHAR, $title);
 		}
 	}
+	if ($type == 'blog' && $prefs['feature_sefurl_title_blog'] == 'y') {
+		global $bloglib; include_once('lib/blogs/bloglib.php');
+		if (preg_match('/blogId=([0-9]+)/', $tpl_output, $matches)) {
+			if (empty($title))
+				$title = $bloglib->get_title($matches[1]);
+			$title = preg_replace(PATTERN_TO_CLEAN_TEXT, CLEAN_CHAR, $title);
+		}
+	}
+
 	foreach ($sefurl_regex_out as $regex) {
 		if (empty($type) || $type == $regex['type']) {
 			// if a question mark in pattern, deal with possible additional terms
@@ -46,6 +64,16 @@ function filter_out_sefurl($tpl_output, &$smarty, $type=null) {
 				$tpl_output = preg_replace( '/'.$regex['left'].'&/', $regex['right'].'?&', $tpl_output );
 			}
 			$tpl_output = preg_replace( '/'.$regex['left'].'/', $regex['right'], $tpl_output );
+		}
+	}
+	$tpl_output = urlencode($tpl_output);
+
+	if (!empty($title)) {
+		$tpl_output .= TITLE_SEPARATOR.$title;
+	}
+	foreach ($prefs['feature_sefurl_paths'] as $path) {
+		if (isset($_REQUEST[$path])) {
+			$tpl_output = urlencode($_REQUEST[$path])."/$tpl_output";
 		}
 	}
 	return $tpl_output;

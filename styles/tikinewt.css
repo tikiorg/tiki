@@ -28,10 +28,10 @@ html[dir=ltr]>body {
 #main {}
 
 a,
+a:link,
 a:visited {
 	color: #225566;
-	font-weight: bold;
-  outline: none;
+	font-weight: bold
 }
 
 a:hover {
@@ -462,8 +462,11 @@ div#tiki-main #tikimidtbl {
 
 .horbar table {
 	width: auto;
-	float: left;
-}
+	float: left}
+	
+.horbaritem {
+	padding: 2px 6px;
+	border-right: 1px solid #8cacbb}
 
 * html .horbaritem a {
 	font-size: .8em;

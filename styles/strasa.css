@@ -553,7 +553,7 @@ div.logged-in {padding-right: 20px}
 #sitesearchbar {
 	position: absolute;
 	right: 10px;
-	bottom: 38px;
+	top: 65px;
 	text-align: right;
 	display: block;
 	color: #fff;
@@ -814,6 +814,8 @@ a.phplmselected:hover {color: #808080}
 	/*margin: 0 0 0 -50%;*/
 	white-space: nowrap;
 	text-align: left}
+	
+.cssmenu_horiz > li.menuSection > a {padding-right: 2.6em}
 
 /** Links in other menus **/
 div.separator {
@@ -982,48 +984,53 @@ div.findsubmit {}
 
 /* New Help section */
 div#tikihelp {
-	position: fixed;
+	position:fixed;
 	right: 0;
-	top: 15%;
-	max-height: 85%;
-	max-width: 350px;
-	padding: 0;
-	margin: 0;
+	top: 3px;
+	height: 95%;
+	max-width: 50%;
+	padding:0;
+	margin:0;
 	border: none;
-	background: transparent}
+	background-color: transparent;
+	z-index: 2;
+}
 
 * html div#tikihelp {position: absolute}
 
 div.help_icon {
 	border: 0;
 	margin: 0;
-	padding: 0}
-
-div.help_icon img {
+	padding: 0;
+}
+div.help_icon img{
 	vertical-align: middle;
 	border: 0;
 	margin: 0;
-	padding: 0}
-
+	padding: 0;
+}
 div.help_section_select {
 	font-weight : bold;
 	font-size: 120%;
-	background: white;
-	width: 340px;
-	margin: 2px}
-
+	background-color : #E7E9EA;
+	color: black;
+	width: 100%;
+	margin: 2px;
+}
 div.help_sections {
+	width : 360px;
 	padding:  2px;
-	background: white;
+	background-color: #AAC9E9;
 	max-height : 95%;
-	overflow: auto}
-
+	overflow: auto;
+}
 div.help_section {
-	width: 340px;
 	margin: 5px;
 	padding: 5px;
-	background: #F3FCFE}
-	
+	background-color: white;
+	color: black;
+}
+
 #site_report {text-align: center}
 
 #site_report a {
@@ -2588,6 +2595,7 @@ div.messureadbody {
 	overflow: auto;
 	background: #F3FCFE;
 	padding: 10px;
+	z-index: 10;
 	border: solid 2px #696969}
 
 .icon_edit_section {float: right}

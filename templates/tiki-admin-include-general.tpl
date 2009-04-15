@@ -59,7 +59,8 @@
 
     <fieldset>
 	<legend>{tr}Site Identity{/tr}</legend>
-	<div style="text-align: left"><label for="browsertitle">{tr}Browser title{/tr}:</label> <input type="text" name="browsertitle" id="browsertitle" value="{$prefs.browsertitle|escape}" size="50" /></div>
+	<div style="text-align: left"><label for="browsertitle">{tr}Browser title{/tr}:</label> <input type="text" name="browsertitle" id="browsertitle" value="{$prefs.browsertitle|escape}" size="80" /></div>
+	<div style="text-align: left"><label for="general-send_email">{tr}Sender email{/tr}:</label> <input type="text" name="sender_email" id="general-send_email" value="{$prefs.sender_email|escape}" size="80" /></div>
 
 	<div class="adminoptionbox">{tr}Go to <a href="tiki-admin.php?page=look" title=""><strong>Look &amp; Feel</strong></a> section for additional site related customization preferences{/tr}.</div>
     </fieldset>
@@ -345,12 +346,6 @@
 </div>
 <div class="adminoptionbox">	  
 	<div class="adminoptionlabel"><label for="general-temp">{tr}Temporary directory{/tr}:</label><br /><input type="text" name="tmpDir" id="general-temp" value="{$prefs.tmpDir|escape}" size="50" /></div>
-</div>
-<div class="adminoptionbox">	  
-	<div class="adminoptionlabel"><label for="general-send_email">{tr}Sender email{/tr}:</label><br /><input type="text" name="sender_email" id="general-send_email" value="{$prefs.sender_email|escape}" size="50" /></div>
-</div>
-<div class="adminoptionbox">	  
-	<div class="adminoptionlabel"><label for="general-max_records">{tr}Maximum number of records in listings{/tr}:</label> <input size="5" type="text" name="maxRecords" id="general-max_records" value="{$prefs.maxRecords|escape}" /></div>
 </div>
 <div class="adminoptionbox">	  
 	<div class="adminoption"><input type="checkbox" name="feature_help" id="feature_help" {if $prefs.feature_help eq 'y'}checked="checked" {/if}onclick="flip('use_help_system');" /></div>

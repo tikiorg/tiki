@@ -88,7 +88,7 @@
 		<link rel="alternate" type="application/rss+xml" title="{tr}RSS Calendars{/tr}" href="tiki-calendars_rss.php?ver={$prefs.rssfeed_default_version}" />
 {/if}
 
-{if $prefs.feature_jquery neq "y" and $prefs.javascript_enabled eq "y"}
+{if ($prefs.feature_jquery neq "y" or $prefs.feature_jquery_tablesorter neq "y") and $prefs.javascript_enabled eq "y"}
 	<script type="text/javascript" src="lib/tiki-js-sorttable.js"></script>
 {/if}
 {if $prefs.feature_mootools eq "y"}

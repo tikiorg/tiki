@@ -23,11 +23,11 @@
 
 {if $iswritable}
 	{remarksbox type="warning" title="{tr}Attention{/tr}"}
-		{tr}Apache has the right to write in your file tree, which enables the installation, removal or upgrade of packages. When you are done with those operations, think to fix those permissions back to a safe state (by using "./setup.sh" for example).{/tr}
+		{tr}Apache has the right to write in your file tree, which enables the installation, removal or upgrade of packages. When you are done with those operations, think to fix those permissions back to a safe state (by using "sh setup.sh" for example).{/tr}
 	{/remarksbox}
 {else}
 	{remarksbox type="info" title="{tr}Attention{/tr}"}
-		{tr}To install, remove or upgrade packages you need to give the apache user the right to write files in your web tree (you can use "./setup.sh open" to set it up). After installation you need to remove that permission (using "./setup.sh").{/tr}
+		{tr}To install, remove or upgrade packages you need to give the apache user the right to write files in your web tree (you can use "sh setup.sh open" to set it up). After installation you need to remove that permission (using "sh setup.sh").{/tr}
 	{/remarksbox}
 {/if}
 {if $installask}

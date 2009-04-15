@@ -45,7 +45,7 @@ class BannerLib extends TikiLib {
 
 		$query = "select * from `tiki_banners` where $dw = ? and  `hourFrom`<=? and `hourTo`>=? and
 		( ((`useDates` = ?) and (`fromDate`<=? and `toDate`>=?)) or (`useDates` = ?) ) and
-		(`impressions`<`maxImpressions`  or `maxImpressions`=?) and (`clicks`<`maxClicks` or `maxClicks`=?) and `zone`=? $mid order by ".$this->convert_sortmode('random');
+		(`impressions`<`maxImpressions`  or `maxImpressions`=?) and (`clicks`<`maxClicks` or `maxClicks`=? or `maxClicks` is NULL) and `zone`=? order by ".$this->convert_sortmode('random');
 		$result = $this->query($query,$bindvars,1,0);
 		if (!($res = $result->fetchRow())) {
 			return false;
@@ -81,9 +81,9 @@ class BannerLib extends TikiLib {
 				while (!feof($fp)) {
 					$raw .= fread($fp, 4096);
 				}
+				fclose ($fp);
 			}
 
-			fclose ($fp);
 			break;
 
 		case 'useText':

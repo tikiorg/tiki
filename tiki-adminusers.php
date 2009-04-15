@@ -460,17 +460,19 @@ if (isset($_REQUEST["user"]) and $_REQUEST["user"]) {
 				$smarty->display("error.tpl");
 				die;
 			} 
-			$polerr = $userlib->check_password_policy($_POST["pass"]);
-			if ( strlen($polerr)>0 ) {
-				$smarty->assign('msg',$polerr);
-			    $smarty->display("error.tpl");
-			    die;
-			}
-			if ($userlib->change_user_password($userinfo['login'], $_POST['pass'])) {
-				$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s modified successfully."),tra("password")));
-				$logslib->add_log('adminusers','changed password for '.$_POST['name']);
-			} else {
-				$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s modification failed."),tra("password")));
+			if ($tiki_p_admin == 'y' || $userinfo['login'] == $user) {
+				$polerr = $userlib->check_password_policy($_POST["pass"]);
+				if ( strlen($polerr)>0 ) {
+					$smarty->assign('msg',$polerr);
+					$smarty->display("error.tpl");
+					die;
+				}
+				if ($userlib->change_user_password($userinfo['login'], $_POST['pass'])) {
+					$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s modified successfully."),tra("password")));
+					$logslib->add_log('adminusers','changed password for '.$_POST['name']);
+				} else {
+					$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s modification failed."),tra("password")));
+				}
 			}
 		}
 		if ($userinfo['email'] != $_POST['email']) {

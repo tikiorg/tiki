@@ -36,6 +36,9 @@ if (isset($_REQUEST["textareasetup"])) {
 		"quicktags_over_textarea",
 		"feature_wiki_protect_email",
 		"feature_wiki_ext_icon",
+		"feature_wiki_paragraph_formatting",
+		"feature_wiki_paragraph_formatting_add_br",
+		"feature_wiki_monosp",
 		);
 
 	foreach ($pref_toggles as $toggle) {
@@ -54,6 +57,7 @@ if (isset($_REQUEST["textareasetup"])) {
 		"default_rows_textarea_comment",
 		"default_rows_textarea_forum",
 		"default_rows_textarea_forumthread",
+		"feature_wiki_tables",
 	);
 
 	foreach ($pref_simple_values as $svitem) {

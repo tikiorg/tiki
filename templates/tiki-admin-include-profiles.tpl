@@ -71,7 +71,7 @@ function showDetails( id, domain, profile ) { // {{{
 					form.appendChild(p);
 					submit.type = 'submit';
 					submit.name = 'forget';
-					submit.value = 'Forget Past Installation';
+					submit.value = 'Forget and Reinstall';
 					p.appendChild(submit);
 					pd.type = 'hidden';
 					pd.name = 'pd';
@@ -219,8 +219,6 @@ function showDetails( id, domain, profile ) { // {{{
 		</table>
 	</div>
 </div>
-</form>
-</fieldset>
 
 <a name='profile-results'></a>
 <fieldset><legend>{tr}Profiles{/tr}</legend>
@@ -258,7 +256,7 @@ function showDetails( id, domain, profile ) { // {{{
 			</tr>
 			{foreach key=k item=profile from=$result}
 				<tr id="profile-{$k}">
-					<td><a href="javascript:showDetails( 'profile-{$k}', '{$profile.domain|escape}', '{$profile.name|escape}' )">{$profile.name|escape}</a></td>
+					<td><a href="javascript:showDetails( 'profile-{$k}', '{$profile.domain|escape}', '{$profile.name|escape}' )">{$profile.name|escape}</a>{if $profile.installed} <em>{tr}installed{/tr}</em>{/if}</td>
 					<td>{$profile.domain}</td>
 					<td>{$profile.category}</td>
 				</tr>
@@ -288,6 +286,8 @@ function showDetails( id, domain, profile ) { // {{{
 </div>
 
 <div align="center" style="padding:1em;"><input type="submit" name="config" value="{tr}Save{/tr}" /></div>
+</form>
+</fieldset>
 
 </td></tr></table>
 </div>

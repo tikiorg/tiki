@@ -164,7 +164,7 @@ if (getCookie("fgalKeepOpen")) {
   {if $category_watched eq 'y'}
     {tr}Watched by categories{/tr}:
     {section name=i loop=$watching_categories}
-      {button _text=$watching_categories[i].name href="tiki-browse_categories?parentId=`$watching_categories[i].categId`"}
+      {button _text=$watching_categories[i].name href="tiki-browse_categories.php?parentId=`$watching_categories[i].categId`"}
     {/section}
   {/if}			
 </div>
