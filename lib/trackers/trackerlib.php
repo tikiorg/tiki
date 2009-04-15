@@ -1414,40 +1414,44 @@ class TrackerLib extends TikiLib {
 						}
 
 
-			    		// Try to find a Subject in $the_data looking for strings marked "-[Subject]-" TODO: remove the tra (language translation by submitter)
-			    		$the_string = '/^\[-\['.tra('Subject').'\]-\] -\[[^\]]*\]-:\n(.*)/m';
-			    		$subject_test_unchanged = preg_match( $the_string, $the_data, $unchanged_matches );
-			    		$the_string = '/^\[-\['.tra('Subject').'\]-\]:\n(.*)\n(.*)\n\n(.*)\n(.*)/m';
-			    		$subject_test_changed = preg_match( $the_string, $the_data, $matches );
-					$subject = '';
+			    	// Try to find a Subject in $the_data looking for strings marked "-[Subject]-" TODO: remove the tra (language translation by submitter)
+			    	$the_string = '/^\[-\['.tra('Subject').'\]-\] -\[[^\]]*\]-:\n(.*)/m';
+			    	$subject_test_unchanged = preg_match( $the_string, $the_data, $unchanged_matches );
+			    	$the_string = '/^\[-\['.tra('Subject').'\]-\]:\n(.*)\n(.*)\n\n(.*)\n(.*)/m';
+			    	$subject_test_changed = preg_match( $the_string, $the_data, $matches );
+						$subject = '';
 
-			    		if( $subject_test_unchanged == 1 ) {
-								$subject = $unchanged_matches[1];
-			    		}
-			    		if( $subject_test_changed == 1 ) {
-								$subject = $matches[1].' '.$matches[2].' '.$matches[3].' '.$matches[4];
-			    		}
+			    	if( $subject_test_unchanged == 1 ) {
+							$subject = $unchanged_matches[1];
+			    	}
+			    	if( $subject_test_changed == 1 ) {
+							$subject = $matches[1].' '.$matches[2].' '.$matches[3].' '.$matches[4];
+			    	}
 
-			    		//$the_data = preg_replace( '/^.+:\n   /m', '', $the_data ); // unnecessary ?
-
+						$i = 0;
 						foreach ($watchers as $watcher) {
+							$mail = new TikiMail($watcher['user']);
 							// first we look for strings marked "-[...]-" to translate by watcher language
-							$translate_strings = preg_match_all( '/-\[([^\]]*)\]-/', $the_data, $tra_matches );
-							if ($translate_strings > 0) {
+							$translate_strings[$i] = preg_match_all( '/-\[([^\]]*)\]-/', $the_data, $tra_matches );
+							$watcher_subject = $subject;
+							$watcher_data = $the_data;
+							if ($translate_strings[$i] > 0) {
 								foreach ($tra_matches[1] as $match) {
+									// now we replace the marked strings with correct translations
 									$tra_replace = tra($match, $watcher['language']);
-									$tra_match = "/-\[".preg_quote($match)."\]-/";
-									$the_data = preg_replace($tra_match, $tra_replace, $the_data);
+									$tra_match = "/-\[".preg_quote($match)."\]-/m";
+									$watcher_subject = preg_replace($tra_match, $tra_replace, $watcher_subject);
+									$watcher_data = preg_replace($tra_match, $tra_replace, $watcher_data);
 								}
 							}
 
-							$mail = new TikiMail($watcher['user']);
-							$mail->setSubject('['.$trackerName.'] '.$subject.' ('.tra('Tracker was modified at ', $watcher['language']). $_SERVER["SERVER_NAME"].' '.tra('by', $watcher['language']).' '.$user.')');
-							$mail->setText(tra('View the tracker item at:', $watcher['language'])."  $machine/tiki-view_tracker_item.php?itemId=$itemId\n\n" . $the_data);
+							$mail->setSubject('['.$trackerName.'] '.str_replace('> ','',$watcher_subject).' ('.tra('Tracker was modified at ', $watcher['language']). $_SERVER["SERVER_NAME"].' '.tra('by', $watcher['language']).' '.$user.')');
+							$mail->setText(tra('View the tracker item at:', $watcher['language'])."  $machine/tiki-view_tracker_item.php?itemId=$itemId\n\n" . $watcher_data);
 							if( ! empty( $my_sender ) ) {
 								$mail->setHeader("From", $my_sender);
 							}
 							$mail->send(array($watcher['email']));
+							$i++;
 						}
 				}
 			}
