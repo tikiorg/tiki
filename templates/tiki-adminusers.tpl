@@ -367,7 +367,7 @@
 						<i>{tr}Tikiwiki is configured to delegate the password managment to LDAP through PEAR Auth.{/tr}</i>
 					</td>
 				</tr>
-			{else}
+			{elseif empty($userinfo) || $tiki_p_admin eq 'y' || $userinfo.login eq $user}
 				<tr class="formcolor">
 					<td>{tr}Password{/tr}:</td>
 					<td>
