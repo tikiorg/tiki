@@ -244,7 +244,7 @@ class Breadcrumb {
 					$wiki_strip = '~'. preg_quote($prefs['wiki_pagename_strip']).'[a-zA-Z0-9]*$~';
 					$ret .= tra(preg_replace($wiki_strip,'',$crumbs[$len-1]->title)).'</a>';
 				} else {
-        	$ret .= tra($crumbs[$len-1]->title).'</a>';
+					$ret .= htmlentities(tra($crumbs[$len-1]->title)).'</a>';
 				}
         $ret .= help_doclink(array('crumb'=>$crumbs[$len-1]));
         if( $info['flag'] == 'L' && $print_page != 'y' ) {
