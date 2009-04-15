@@ -1283,6 +1283,7 @@ class TrackerLib extends TikiLib {
 									// split old value by lines
 									$lines = split("\n", $old_value);
 									// mark every old value line with standard email reply character
+									$old_value_lines = '';
 									foreach ($lines as $line) {
 										$old_value_lines .= '> '.$line;
 									}
