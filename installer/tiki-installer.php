@@ -525,13 +525,13 @@ unset($TWV);
 
 // Available DB Servers
 $dbservers = array();
-if ( function_exists('mysqli_connect') ) $dbservers['mysqli'] = 'MySQL Improved (mysqli). Requires MySQL 4.1+';
-if ( function_exists('mysql_connect') ) $dbservers['mysql'] = 'MySQL classic (mysql)';
-if ( function_exists('pg_connect') ) $dbservers['pgsql'] = 'PostgeSQL 7.2+';
-if ( function_exists('oci_connect') ) $dbservers['oci8'] = 'Oracle';
-if ( function_exists('sybase_connect') ) $dbservers['sybase'] = 'Sybase';
-if ( function_exists('sqlite_open') ) $dbservers['sqlite'] = 'SQLLite';
-if ( function_exists('mssql_connect') ) $dbservers['mssql'] = 'MSSQL';
+if ( function_exists('mysqli_connect') ) $dbservers['mysqli'] = tra('MySQL Improved (mysqli). Requires MySQL 4.1+');
+if ( function_exists('mysql_connect') ) $dbservers['mysql'] = tra('MySQL classic (mysql)');
+if ( function_exists('pg_connect') ) $dbservers['pgsql'] = tra('PostgeSQL 7.2+');
+if ( function_exists('oci_connect') ) $dbservers['oci8'] = tra('Oracle');
+if ( function_exists('sybase_connect') ) $dbservers['sybase'] = tra('Sybase');
+if ( function_exists('sqlite_open') ) $dbservers['sqlite'] = tra('SQLLite');
+if ( function_exists('mssql_connect') ) $dbservers['mssql'] = tra('MSSQL');
 $smarty->assign_by_ref('dbservers', $dbservers);
 
 $errors = '';
