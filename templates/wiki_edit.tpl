@@ -34,7 +34,7 @@
 	{tr}If you want the saved version instead of the autosaved one{/tr}&nbsp;{self_link noautosave='y' _ajax='n'}{tr}Click Here{/tr}{/self_link}
 	{/remarksbox}
 	{/if} 
-	<textarea id="{$textarea_id|default:editwiki}" class="{$textarea_class|default:wikiedit}" name="{$textarea_name|default:edit}"{$textarea_attributes}>{$smarty.capture.autosave|escape}</textarea>
+	<textarea id="{$textarea_id|default:editwiki}" class="{$textarea_class|default:wikiedit}" name="{$textarea_name|default:edit}"{$textarea_attributes}>{$smarty.capture.autosave}</textarea>
 	{if $prefs.feature_ajax eq 'y' && $prefs.feature_ajax_autosave eq 'y'}
 		<!-- autosave -->
 		<script type='text/javascript'>
