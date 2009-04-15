@@ -11,6 +11,7 @@ include_once ('lib/userslib.php');
 include_once ('lib/userprefs/scrambleEmail.php');
 include_once ('lib/feedcreator/feedcreator.class.php');
 
+global $dbTiki;
 $userslib = new Userslib($dbTiki);
 
 global $rss_cache_time;
@@ -670,7 +671,7 @@ class RSSLib extends TikiLib {
 		return $xmlstr;
 	}
 }
-global $dbTiki;
+global $dbTiki, $rsslib;
 $rsslib = new RSSLib($dbTiki);
 
 ?>

@@ -17,6 +17,7 @@ class Tiki_Profile_Installer
 		'plugin_alias' => 'Tiki_Profile_InstallHandler_PluginAlias',
 		'webservice' => 'Tiki_Profile_InstallHandler_Webservice',
 		'webservice_template' => 'Tiki_Profile_InstallHandler_WebserviceTemplate',
+		'rss' => 'Tiki_Profile_InstallHandler_Rss',
 	);
 
 	private static $typeMap = array(
@@ -1305,6 +1306,58 @@ class Tiki_Profile_InstallHandler_WebserviceTemplate extends Tiki_Profile_Instal
 		$template->save();
 
 		return $template->name;
+	}
+} // }}}
+
+class Tiki_Profile_InstallHandler_Rss extends Tiki_Profile_InstallHandler // {{{
+{
+	function getData()
+	{
+		if( $this->data )
+			return $this->data;
+
+		$data = $this->obj->getData();
+		$data = Tiki_Profile::convertLists( $data, array(
+			'show' => 'y',
+		), true );
+
+		$defaults = array(
+			'description' => null,
+			'refresh' => 30,
+		);
+
+		$data = array_merge(
+			$defaults,
+			$data
+		);
+
+		return $this->data = $data;
+	}
+
+	function canInstall()
+	{
+		$data = $this->getData();
+
+		if( ! isset( $data['name'], $data['url'] ) )
+			return false;
+
+		return true;
+	}
+
+	function _install()
+	{
+		global $rsslib;
+		$data = $this->getData();
+
+		$this->replaceReferences( $data );
+
+		require_once 'lib/rss/rsslib.php';
+
+		if( $rsslib->replace_rss_module( 0, $data['name'], $data['description'], $data['url'], $data['refresh'], $data['show_title'], $data['show_publication_date'] ) ) {
+
+			$id = (int) $rsslib->getOne("SELECT MAX(rssId) FROM tiki_rss_modules");
+			return $id;
+		}
 	}
 } // }}}
 

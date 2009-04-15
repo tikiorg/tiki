@@ -219,8 +219,6 @@ function showDetails( id, domain, profile ) { // {{{
 		</table>
 	</div>
 </div>
-</form>
-</fieldset>
 
 <a name='profile-results'></a>
 <fieldset><legend>{tr}Profiles{/tr}</legend>
@@ -288,6 +286,8 @@ function showDetails( id, domain, profile ) { // {{{
 </div>
 
 <div align="center" style="padding:1em;"><input type="submit" name="config" value="{tr}Save{/tr}" /></div>
+</form>
+</fieldset>
 
 </td></tr></table>
 </div>
