@@ -39,7 +39,15 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 		$installer = new Tiki_Profile_Installer;
 		$installer->install( $profile );
 		
-		header( 'Location: ' . $_SERVER['REQUEST_URI'] );
+		if( $target = $profile->getInstructionPage() ) {
+			global $wikilib; require_once 'lib/wiki/wikilib.php';
+
+			$target = $wikilib->sefurl( $target );
+		} else {
+			$target = $_SERVER['REQUEST_URI'];
+		}
+		
+		header( 'Location: ' . $target );
 		exit;
 	} // }}}
 
@@ -55,8 +63,15 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 
 		$profile = Tiki_Profile::fromNames( $_POST['pd'], $_POST['pp'] );
 		$installer->install( $profile );
+		if( $target = $profile->getInstructionPage() ) {
+			global $wikilib; require_once 'lib/wiki/wikilib.php';
+
+			$target = $wikilib->sefurl( $target );
+		} else {
+			$target = $_SERVER['REQUEST_URI'];
+		}
 		
-		header( 'Location: ' . $_SERVER['REQUEST_URI'] );
+		header( 'Location: ' . $target );
 		exit;
 	} // }}}
 

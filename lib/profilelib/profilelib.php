@@ -437,6 +437,13 @@ class Tiki_Profile
 		}
 	} // }}}
 
+	function getInstructionPage() // {{{
+	{
+		if( isset( $this->data['instructions'] ) ) {
+			return $this->data['instructions'];
+		}
+	} // }}}
+
 	function getPreferences() // {{{
 	{
 		$prefs = array();
