@@ -2032,7 +2032,6 @@ class TrackerLib extends TikiLib {
 				$this->query($query,array($name,$description,$descriptionIsParsed,(int)$this->now,(int) $trackerId));
 			}
 		} else {
-			$this->query("delete from `tiki_trackers` where `name`=?",array($name),-1,-1,false);
 			$query = "insert into `tiki_trackers`(`name`,`description`,`descriptionIsParsed`,`created`,`lastModif`) values(?,?,?,?,?)";
 			$this->query($query,array($name,$description,$descriptionIsParsed,(int) $this->now,(int) $this->now));
 			$trackerId = $this->getOne("select max(`trackerId`) from `tiki_trackers` where `name`=? and `created`=?",array($name,(int) $this->now));

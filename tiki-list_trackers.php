@@ -106,6 +106,8 @@ if ($offset > 0) {
 
 include_once('tiki-section_options.php');
 
+var_dump($channels);
+
 $smarty->assign_by_ref('channels', $channels["data"]);
 $smarty->assign('channels_cant', $channels["cant"]);
 ask_ticket('list-trackers');
