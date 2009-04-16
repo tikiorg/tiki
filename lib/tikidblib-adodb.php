@@ -163,6 +163,13 @@ function sql_error($query, $values, $result) {
     // only for debugging.
     //trigger_error($ADODB_LASTDB . " error:  " . $this->db->ErrorMsg(). " in query:<br />" . $query . "<br />", E_USER_WARNING);
     $outp = "<div class='simplebox'><b>".htmlspecialchars(tra("An error occured in a database query!"))."</b></div>";
+
+	include_once ('installer/installlib.php');
+	$installer = new Installer;
+	if( $installer->requiresUpdate() ) {
+		$outp.= '<div class="simplebox highlight">' . tra('Your database requires an update to match the current TikiWiki version. Please proceed to <a href="tiki-install.php">the installer</a>. Using Tiki with an incorrect database version usually provoke errors.') . '</div>';
+	}
+
     $outp.= "<br /><table class='form'>";
     $outp.= "<tr class='heading'><td colspan='2'>Context:</td></tr>";
     $outp.= "<tr class='formcolor'><td>File</td><td>".htmlspecialchars(basename($_SERVER['SCRIPT_NAME']))."</td></tr>";

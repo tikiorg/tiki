@@ -167,6 +167,13 @@ class TikiDB {
 		trigger_error($this->driver . " error:  " . htmlspecialchars($this->sql_error_msg). " in query:<br /><pre>\n" . htmlspecialchars($query) . "\n</pre><br />", E_USER_WARNING);
 		// only for debugging.
 		$outp = "<div class='simplebox'><b>".htmlspecialchars(tra("An error occured in a database query!"))."</b></div>";
+
+		include_once ('installer/installlib.php');
+		$installer = new Installer;
+		if( $installer->requiresUpdate() ) {
+			$outp.= '<div class="simplebox highlight">' . tra('Your database requires an update to match the current TikiWiki version. Please proceed to <a href="tiki-install.php">the installer</a>. Using Tiki with an incorrect database version usually provoke errors.') . '</div>';
+		}
+
 		$outp.= "<br /><table class='form'>";
 		$outp.= "<tr class='heading'><td colspan='2'>Context:</td></tr>";
 		$outp.= "<tr class='formcolor'><td>File</td><td>".htmlspecialchars(basename($_SERVER['SCRIPT_NAME']))."</td></tr>";
