@@ -105,8 +105,8 @@
 <td class="formcolor">{tr}Column{/tr}:</td>
 <td class="formcolor">
 <select name="position">
-{if $prefs.feature_left_column ne 'n"}<option value="l">{tr}Left{/tr}</option>{/if}
-{if $prefs.feature_right_column ne 'n"}<option value="r">{tr}Right{/tr}</option>{/if}
+{if $prefs.feature_left_column ne 'n'}<option value="l">{tr}Left{/tr}</option>{/if}
+{if $prefs.feature_right_column ne 'n'}<option value="r">{tr}Right{/tr}</option>{/if}
 </select>
 </td>
 </tr>
