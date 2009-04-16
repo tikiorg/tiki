@@ -11,17 +11,22 @@
 <h2>{tr}User assigned modules{/tr}</h2>
 <table >
 <tr>
+	{if $prefs.feature_left_column ne 'n' || count($modules_l) > 0}
 	<td >
 	<b>{tr}Left column{/tr}</b>
 	{if $prefs.feature_left_column eq 'n' and count($modules_l) > 0}<br /><span class="highlight">{tr}The column is disabled{/tr}</span>{/if}
 	</td>
+	{/if}
+	{if $prefs.feature_right_column ne 'n' || count($modules_r) > 0}
 	<td >
 	<b>{tr}Right column{/tr}</b>
 	{if $prefs.feature_right_column eq 'n' and count($modules_r) > 0}<br /><span class="highlight">{tr}The column is disabled{/tr}</span>{/if}
 	</td>
+	{/if}
 </tr>
 <tr>
 	<!-- left column -->
+	{if $prefs.feature_left_column ne 'n' || count($modules_l) > 0}
 	<td>
 		<table  class="normal">
 			<tr>
@@ -48,8 +53,10 @@
 			{/section}
 		</table>
 	</td>
+	{/if}
 	
 	<!-- right column -->
+	{if $prefs.feature_right_column ne 'n' || count($modules_r) > 0}
 	<td >
 		<table  class="normal">
 			<tr>
@@ -76,6 +83,7 @@
 			{/section}
 		</table>
 	</td>
+	{/if}
 </tr>
 </table>
 
@@ -97,8 +105,8 @@
 <td class="formcolor">{tr}Column{/tr}:</td>
 <td class="formcolor">
 <select name="position">
-<option value="l">{tr}Left{/tr}</option>
-<option value="r">{tr}Right{/tr}</option>
+{if $prefs.feature_left_column ne 'n"}<option value="l">{tr}Left{/tr}</option>{/if}
+{if $prefs.feature_right_column ne 'n"}<option value="r">{tr}Right{/tr}</option>{/if}
 </select>
 </td>
 </tr>
