@@ -18,6 +18,9 @@ class Tiki_Profile_Installer
 		'webservice' => 'Tiki_Profile_InstallHandler_Webservice',
 		'webservice_template' => 'Tiki_Profile_InstallHandler_WebserviceTemplate',
 		'rss' => 'Tiki_Profile_InstallHandler_Rss',
+		'topic' => 'Tiki_Profile_InstallHandler_Topic',
+		'article_type' => 'Tiki_Profile_InstallHandler_ArticleType',
+		'article' => 'Tiki_Profile_InstallHandler_Article',
 	);
 
 	private static $typeMap = array(
@@ -1336,6 +1339,7 @@ class Tiki_Profile_InstallHandler_Rss extends Tiki_Profile_InstallHandler // {{{
 			$defaults,
 			$data
 		);
+		$data = Tiki_Profile::convertYesNo( $data );
 
 		return $this->data = $data;
 	}
@@ -1367,6 +1371,189 @@ class Tiki_Profile_InstallHandler_Rss extends Tiki_Profile_InstallHandler // {{{
 	}
 } // }}}
 
+class Tiki_Profile_InstallHandler_Topic extends Tiki_Profile_InstallHandler // {{{
+{
+	function getData()
+	{
+		if( $this->data )
+			return $this->data;
+
+		$data = $this->obj->getData();
+		$data = Tiki_Profile::convertYesNo( $data );
+
+		return $this->data = $data;
+	}
+
+	function canInstall()
+	{
+		$data = $this->getData();
+
+		if( ! isset( $data['name'] ) )
+			return false;
+
+		return true;
+	}
+
+	function _install()
+	{
+		global $artlib;
+		$data = $this->getData();
+
+		$this->replaceReferences( $data );
+
+		require_once 'lib/articles/artlib.php';
+
+		$id = $artlib->add_topic( $data['name'], null, null, null, null );
+
+		return $id;
+	}
+} // }}}
+
+class Tiki_Profile_InstallHandler_ArticleType extends Tiki_Profile_InstallHandler // {{{
+{
+	function getData()
+	{
+		if( $this->data )
+			return $this->data;
+
+		$data = $this->obj->getData();
+		$data = Tiki_Profile::convertLists( $data, array(
+			'show' => 'y',
+			'allow' => 'y',
+		), true );
+		$data = Tiki_Profile::convertYesNo( $data );
+
+		return $this->data = $data;
+	}
+
+	function canInstall()
+	{
+		$data = $this->getData();
+
+		if( ! isset( $data['name'] ) )
+			return false;
+
+		return true;
+	}
+
+	function _install()
+	{
+		global $artlib;
+		$data = $this->getData();
+
+		$this->replaceReferences( $data );
+
+		require_once 'lib/articles/artlib.php';
+
+		$converter = new Tiki_Profile_ValueMapConverter( array( 'y' => 'on' ) );
+
+		if( ! $artlib->get_type( $data['name'] ) ) {
+			$artlib->add_type( $data['name'] );
+		}
+		
+		$artlib->edit_type( 
+			$data['name'],
+			$converter->convert( $data['allow_ratings'] ),
+			$converter->convert( $data['show_pre_publication'] ),
+			$converter->convert( $data['show_post_expire'] ),
+			$converter->convert( $data['show_heading_only'] ),
+			$converter->convert( $data['allow_comments'] ),
+			$converter->convert( $data['allow_comments_rating_article'] ),
+			$converter->convert( $data['show_image'] ),
+			$converter->convert( $data['show_avatar'] ),
+			$converter->convert( $data['show_author'] ),
+			$converter->convert( $data['show_publication_date'] ),
+			$converter->convert( $data['show_expiration_date'] ),
+			$converter->convert( $data['show_reads'] ),
+			$converter->convert( $data['show_size'] ),
+			$converter->convert( $data['show_topline'] ),
+			$converter->convert( $data['show_subtitle'] ),
+			$converter->convert( $data['show_link_to'] ),
+			$converter->convert( $data['show_image_caption'] ),
+			$converter->convert( $data['show_language'] ),
+			$converter->convert( $data['allow_creator_edit'] )
+		);
+
+		return $data['name'];
+	}
+} // }}}
+
+class Tiki_Profile_InstallHandler_Article extends Tiki_Profile_InstallHandler // {{{
+{
+	function getData()
+	{
+		if( $this->data )
+			return $this->data;
+
+		$data = $this->obj->getData();
+
+		$defaults = array(
+			'author' => 'Anonymous',
+			'heading' => '',
+			'publish_date' => time(),
+			'expire_date' => time() + 3600*24*30,
+			'type' => 'Article',
+			'topline' => '',
+			'subtitle' => '',
+			'link_to' => '',
+			'language' => 'en',
+		);
+
+		$data = array_merge( $defaults, $data );
+
+		return $this->data = $data;
+	}
+
+	function canInstall()
+	{
+		$data = $this->getData();
+
+		if( ! isset( $data['title'], $data['topic'], $data['body'] ) )
+			return false;
+
+		return true;
+	}
+
+	function _install()
+	{
+		global $artlib;
+		$data = $this->getData();
+
+		$this->replaceReferences( $data );
+
+		require_once 'lib/articles/artlib.php';
+
+		$dateConverter = new Tiki_Profile_DateConverter;
+
+		$id = $artlib->replace_article( 
+			$data['title'],
+			$data['author'],
+			$data['topic'],
+			'n',
+			null,
+			null,
+			null,
+			null,
+			$data['heading'],
+			$data['body'],
+			$dateConverter->convert( $data['publication_date'] ),
+			$dateConverter->convert( $data['expiration_date'] ),
+			'admin',
+			0,
+			0,
+			0,
+			$data['type'],
+			$data['topline'],
+			$data['subtitle'],
+			$data['link_to'],
+			null,
+			$data['language']
+		);
+
+		return $id;
+	}
+} // }}}
+
 interface Tiki_Profile_Converter
 {
 	function convert( $value );
@@ -1376,6 +1563,9 @@ class Tiki_Profile_DateConverter // {{{
 {
 	function convert( $value )
 	{
+		if( is_int( $value ) )
+			return $value;
+
 		$time = strtotime( $value );
 		if( $time !== false )
 			return $time;
