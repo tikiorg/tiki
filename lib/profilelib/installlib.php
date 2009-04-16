@@ -874,7 +874,6 @@ class Tiki_Profile_InstallHandler_Module extends Tiki_Profile_InstallHandler // 
 		);
 
 		$data['groups'] = serialize( $data['groups'] );
-		$data['params'] = http_build_query( $data['params'], '', '&' );
 
 		return $this->data = $data;
 	}
@@ -897,6 +896,8 @@ class Tiki_Profile_InstallHandler_Module extends Tiki_Profile_InstallHandler // 
 		$data['position'] = ($data['position'] == 'left') ? 'l' : 'r';
 
 		$this->replaceReferences( $data );
+
+		$data['params'] = http_build_query( $data['params'], '', '&' );
 		
 		return $modlib->assign_module( 0, $data['name'], null, $data['position'], $data['order'], $data['cache'], $data['rows'], $data['groups'], $data['params'] );
 	}
