@@ -13,9 +13,11 @@
 <tr>
 	<td >
 	<b>{tr}Left column{/tr}</b>
+	{if $prefs.feature_left_column eq 'n' and count($modules_l) > 0}<br /><span class="highlight">{tr}The column is disabled{/tr}</span>{/if}
 	</td>
 	<td >
 	<b>{tr}Right column{/tr}</b>
+	{if $prefs.feature_right_column eq 'n' and count($modules_r) > 0}<br /><span class="highlight">{tr}The column is disabled{/tr}</span>{/if}
 	</td>
 </tr>
 <tr>
@@ -35,7 +37,9 @@
 				<td class="{cycle}">
 				  <a class="link" href="tiki-user_assigned_modules.php?up={$modules_l[ix].moduleId}">{icon _id='resultset_up'}</a>
   				  <a class="link" href="tiki-user_assigned_modules.php?down={$modules_l[ix].moduleId}">{icon _id='resultset_down'}</a>
-  				  <a class="link" href="tiki-user_assigned_modules.php?right={$modules_l[ix].moduleId}">{icon _id='resultset_next' alt='{tr}Right{/tr}' title='{tr}Move to Right Column{/tr}'}</a>
+				  {if $prefs.feature_right_column ne 'n'}
+  				  	  <a class="link" href="tiki-user_assigned_modules.php?right={$modules_l[ix].moduleId}">{icon _id='resultset_next' alt='{tr}Right{/tr}' title='{tr}Move to Right Column{/tr}'}</a>
+				  {/if}
 				  {if $modules_l[ix].name ne 'application_menu' and $modules_l[ix].name ne 'login_box' and $modules_l[ix].type ne 'P'}
   					<a class="link" href="tiki-user_assigned_modules.php?unassign={$modules_l[ix].moduleId}">{icon _id='cross' alt='{tr}Unassign{/tr}'}</a> 
   				  {/if}
@@ -61,7 +65,9 @@
 				<td class="{cycle}">
 				  <a class="link" href="tiki-user_assigned_modules.php?up={$modules_r[ix].moduleId}">{icon _id='resultset_up'}</a>
   				  <a class="link" href="tiki-user_assigned_modules.php?down={$modules_r[ix].moduleId}">{icon _id='resultset_down'}</a>
-  				  <a class="link" href="tiki-user_assigned_modules.php?left={$modules_r[ix].moduleId}">{icon _id='resultset_previous' alt='{tr}Left{/tr}' title='{tr}Move to Left Column{/tr}'}</a>
+				  {if $prefs.feature_left_column ne 'n'}
+  				  	  <a class="link" href="tiki-user_assigned_modules.php?left={$modules_r[ix].moduleId}">{icon _id='resultset_previous' alt='{tr}Left{/tr}' title='{tr}Move to Left Column{/tr}'}</a>
+				  {/if}
 				  {if $modules_r[ix].name ne 'application_menu' and $modules_r[ix].name ne 'login_box' and $modules_r[ix].type ne 'P'}
   					<a class="link" href="tiki-user_assigned_modules.php?unassign={$modules_r[ix].moduleId}">{icon _id='cross' alt='{tr}Unassign{/tr}'}</a> 
   				  {/if}
