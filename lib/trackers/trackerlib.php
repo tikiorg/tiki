@@ -333,6 +333,7 @@ class TrackerLib extends TikiLib {
 	}
 
 	function list_last_comments($trackerId = 0, $itemId = 0, $offset, $maxRecords) {
+		global $user;
 	    $mid = "1=1";
 	    $bindvars = array();
 
@@ -347,7 +348,10 @@ class TrackerLib extends TikiLib {
 		$query_cant = "select count(*) from `tiki_tracker_item_comments` t left join `tiki_tracker_items` a on t.`itemId`=a.`itemId` where $mid and a.`trackerId`=? order by t.`posted` desc";
 	    }
 	    else {
-		$query = "select * from `tiki_tracker_item_comments` where $mid order by `posted` desc";
+			if (!$this->user_has_perm_on_object($user, $trackerId, 'tracker', 'tiki_p_view_trackers') ) {
+				return array('cant'=>0);
+			}
+		$query = "select t.*, a.`trackerId` from `tiki_tracker_item_comments` t left join `tiki_tracker_items` a on t.`itemId`=a.`itemId` where $mid order by `posted` desc";
 		$query_cant = "select count(*) from `tiki_tracker_item_comments` where $mid";
 	    }
 	    $result = $this->query($query,$bindvars,$maxRecords,$offset);
@@ -355,6 +359,10 @@ class TrackerLib extends TikiLib {
 	    $ret = array();
 
 	    while ($res = $result->fetchRow()) {
+			if (!$trackerId && !$this->user_has_perm_on_object($user, $res['trackerId'], 'tracker', 'tiki_p_view_trackers') ) {
+				--$cant;
+				continue;
+			}
 		$res["parsed"] = nl2br($res["data"]);
 		$ret[] = $res;
 	    }
