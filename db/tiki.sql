@@ -3823,3 +3823,15 @@ INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`, `order`
 INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`, `order`) VALUES('tiki-list_trackers.php', 'trackers', '', 'feature_trackers', 200);
 INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`, `order`) VALUES('tiki-mobile.php', 'mobile', '', 'feature_mobile', 200);
 INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`, `order`) VALUES('tiki-sheets.php', 'sheets', '', 'feature_sheet', 200);
+
+DROP TABLE tiki_plugin_security;
+CREATE TABLE tiki_plugin_security (
+	fingerprint VARCHAR(200) NOT NULL PRIMARY KEY,
+	status VARCHAR(10) NOT NULL,
+	approval_by VARCHAR(200) NULL,
+	last_update TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	last_objectType VARCHAR(20) NOT NULL,
+	last_objectId VARCHAR(200) NOT NULL,
+	KEY last_object (last_objectType, last_objectId)
+);
+
