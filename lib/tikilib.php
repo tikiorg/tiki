@@ -5857,6 +5857,20 @@ class TikiLib extends TikiDB {
 				array( $fp, $type, $user, $objectType, $objectId ) );
 	}
 
+	function plugin_clear_fingerprint( $fp ) {
+		$this->query( "DELETE FROM tiki_plugin_security WHERE fingerprint = ?", array( $fp ) );
+	}
+
+	function list_plugins_pending_approval() {
+		$result = $this->query("SELECT fingerprint, last_update, last_objectType, last_objectId FROM tiki_plugin_security WHERE status = 'pending' ORDER BY last_update DESC");
+
+		$list = array();
+		while( $row = $result->fetchRow() )
+			$list[] = $row;
+
+		return $list;
+	}
+
 	function plugin_fingerprint( $name, $meta, $data, $args ) {
 		$validate = $meta['validate'];
 		if( $validate == 'all' || $validate == 'body' )
