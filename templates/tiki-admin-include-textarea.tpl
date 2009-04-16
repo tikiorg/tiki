@@ -251,7 +251,10 @@ $jq('#pluginalias_add').click(function() {
 
 	return false;
 });
-{{else}{* or new view if no plugin_admin and no list TODO? *}}
+{{else}{* or new view if no plugin_admin and no list *}}
+	$jq('#pluginalias_general legend').trigger('click');
+	$jq('#pluginalias_simple_args legend').trigger('click');
+	$jq('#pluginalias_body legend').trigger('click');
 {{/if}}
 if (window.location.href.indexOf('plugin_alias_new=true') > -1) {
 	$jq('#pluginalias_add').trigger('click');
