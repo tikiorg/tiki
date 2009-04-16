@@ -12,8 +12,12 @@ function taginsert(area_name,tagid)
   tag[{$quicktags[qtg].tagId}]='{$quicktags[qtg].taginsert|escape:"javascript"}';
   {/section}
 //done
-{literal}  
-  insertAt(area_name,tag[tagid]);
+{literal} 
+	if (tag[tagid].indexOf("popup_plugin_form") == 0)  {
+		eval(tag[tagid]);
+	} else {
+		insertAt(area_name,tag[tagid]);
+	}
 }
 //--><!]]>
 </script>
