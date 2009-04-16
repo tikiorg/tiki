@@ -133,7 +133,13 @@
 {if $prefs.feature_webservices neq 'n'}
 <a href="tiki-admin.php?page=webservices" title="{tr}Webservices{/tr}" class="icon">{icon _id="pics/large/webservices.png" alt="{tr}Webservices{/tr}" class="reflect" style="float: left; vertical-align: middle" width="32" height="32"}</a>
 {/if}
-{if $prefs.feature_sefurl neq 'n'}
+
+{if $prefs.feature_sefurl eq 'y'}
 <a href="tiki-admin.php?page=sefurl" title="{tr}Sef URL{/tr}" class="icon">{icon _id="pics/large/goto.png" alt="{tr}Sef URL{/tr}" class="reflect" style="float: left; vertical-align: middle" width="32" height="32"}</a>
+{/if}
+
+{* SEE the prefs system for allowing workspaces in tiki *}
+{if $prefs.feature_workspaces neq 'n'}
+<a href="tiki-admin.php?page=workspaces" title="{tr}Workspaces{/tr}" class="icon">{icon _id="pics/large/workspaces.png" alt="{tr}Workspaces{/tr}" class="reflect" style="float: left; vertical-align: middle" width="32" height="32"}</a>
 {/if}
 <br class="clear" />

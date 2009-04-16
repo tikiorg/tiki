@@ -1,4 +1,4 @@
-sec{* $Id$ *}
+{* $Id: *}
 {popup_init src="lib/overlib.js"}
 <div id="pageheader">
 {* bother to display this only when breadcrumbs are on *}

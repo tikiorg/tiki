@@ -1210,6 +1210,11 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 
 		//groupalert
 		'feature_groupalert' => 'n',
+		
+
+		//Workspaces
+		'feature_workspaces' => 'n',
+		'workspaces_url' => '',	
 	);
 
 	// spellcheck
