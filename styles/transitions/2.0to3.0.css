@@ -27,7 +27,7 @@ They should be added to themes (possibly with tweaks) to make the theme v3.0 rea
 	color: black;
 	padding: 10px;
 	border: solid 2px black;
-	z-index: 10;
+	z-index: 1000;
 }
 
 .icon_edit_section {
