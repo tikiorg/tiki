@@ -93,7 +93,7 @@
 				</div>{* -- END of c1c2 -- *}
 {if $prefs.feature_fullscreen != 'y' or $smarty.session.fullscreen != 'y'}
 	{if $prefs.feature_right_column ne 'n' && $right_modules|@count > 0 && $show_columns.right_modules ne 'n'}
-				<div class="clearfix" id="col3"{if $prefs.feature_right_column eq 'user'} style="display:{if isset($cookie.show_rightcolumn) and $cookie.show_rightcolumn ne 'y'} none{else} table-cell; <!--[if IE 6]>display: block;<![endif]-->{/if}"{/if}{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
+				<div class="clearfix" id="col3"{if $prefs.feature_right_column eq 'user'} style="display:{if isset($cookie.show_rightcolumn) and $cookie.show_rightcolumn ne 'y'} none{elseif isset($ie6)} block{else} table-cell{/if};"{/if}{if $prefs.feature_bidi eq 'y'} dir="rtl"{/if}>
 					<h2 class="hidden">Sidebar</h2>
 					<div class="content">
 		{section name=homeix loop=$right_modules}
