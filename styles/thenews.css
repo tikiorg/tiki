@@ -474,6 +474,21 @@ a.flip img {
 	margin-right: -1px;
 	padding: .8em;
 }
+/* give every div in #tiki-center some padding */
+#tiki-center div {
+	padding: 3px 2px;
+}
+/* little margin for all images in #tiki-center */
+#tiki-center img {
+	margin: 1px;
+}
+/* do not apply it on phplm tree in categories */
+#tiki-center .phplmnormal div {
+	padding: 0;
+}
+#tiki-center .phplmnormal img {
+	margin: 0;
+}
 
 /* IE */
 * html #tiki-center {
