@@ -2790,6 +2790,11 @@ class TrackerLib extends TikiLib {
 		$result = $this->getOne($query, array((int)$itemId, "y"));
 		return $result;
 	}
+	function get_main_field($trackerId) {
+		$query = 'select `fieldId` from `tiki_tracker_fields` where `isMain`=? and `trackerId`=?';
+		return $this->getOne($query, array('y', $trackerId));
+	}
+		
 	function categorized_item($trackerId, $itemId, $mainfield, $ins_categs) {
 		global $categlib; include_once('lib/categories/categlib.php');
 		$cat_type = "tracker $trackerId";
