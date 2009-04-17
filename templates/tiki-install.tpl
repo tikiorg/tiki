@@ -288,7 +288,7 @@
 			</select>
 			 <p>{tr}See the documentation for <a target="_blank" href="http://profiles.tikiwiki.org/Profiles_in_30_installer" class="link" title="Description of available profiles.">descriptions of the available profiles.{/tr}</a></p>
 			{else}
-			  <p style="text-align:center; color:red">{tr}No Internet Connection has been found.{/tr}</p>
+			  <p style="text-align:center; color:red">{tr}The installer could not connect to the Profiles repository.{/tr}</p>
 			  <p style="text-align:center">{tr}The default installation profile will be used.{/tr}</p>
 			<input type="hidden" name="profile" value="" />
 			{/if}
