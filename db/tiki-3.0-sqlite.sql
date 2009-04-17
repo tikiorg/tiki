@@ -5034,7 +5034,7 @@ INSERT INTO "," ("left","right","type","feature","order") VALUES ('tiki-mobile.p
 INSERT INTO "," ("left","right","type","feature","order") VALUES ('tiki-sheets.php', 'sheets', '', 'feature_sheet', 200);
 
 
-DROP TABLE tiki_plugin_security;
+DROP TABLE IF EXISTS 'tiki_plugin_security';
 
 CREATE TABLE 'tiki_plugin_security' (
   "fingerprint" VARCHAR(200) NOT NULL PRIMARY KEY,

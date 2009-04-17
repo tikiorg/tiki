@@ -7570,7 +7570,7 @@ go
 
 
 
-DROP TABLE "tiki_plugin_security"
+-- DROP TABLE "tiki_plugin_security"
 go
 
 
