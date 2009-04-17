@@ -66,7 +66,7 @@ function filter_out_sefurl($tpl_output, &$smarty, $type=null, $title=null) {
 			$tpl_output = preg_replace( '/'.$regex['left'].'/', $regex['right'], $tpl_output );
 		}
 	}
-	$tpl_output = urlencode($tpl_output);
+	$tpl_output = str_replace('%2B', '+', urlencode($tpl_output));
 
 	if (!empty($title)) {
 		$tpl_output .= TITLE_SEPARATOR.$title;
