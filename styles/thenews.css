@@ -357,7 +357,7 @@ div#sitead {
 #bannertopright {padding-right: 1em}
 #sitelocbar {
 	float: left;
-	padding-left: 10px;
+	padding: 2px 2px 3px 10px;
 }
 
 #siteloginbar {
