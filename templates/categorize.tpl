@@ -10,8 +10,8 @@
 {button href="#" _flip_id='categorizator' _class='link' _text='{tr}Select Categories{/tr}' _flip_default_open='n'}
   <div id="categorizator" name="categorizator" style="display:{if isset($smarty.session.tiki_cookie_jar.show_categorizator) and $smarty.session.tiki_cookie_jar.show_categorizator eq 'y'}block{else}none{/if};">
 {/if}
+  <div class="multiselect">
   {if count($categories) gt 0}
-    <div class="multiselect">
 {strip}
 	{if isset($cat_tree) }
 		{$cat_tree}
@@ -33,13 +33,16 @@
 {/strip}
     <input type="hidden" name="cat_categorize" value="on" />
 	<div class="clear">
-		<input type="checkbox" name="cat_clearall" value="on" {if $prefs.javascript_enabled eq 'y'}onclick="switchCheckboxes(this.form,'cat_categories[]',false);"{/if} />{tr}Clear all Categories{/tr}<br/>
+	{if $tiki_p_admin_categories eq 'y'}
+    	<div class="floatright"><a href="tiki-admin_categories.php" class="link">{tr}Admin Categories{/tr} {icon _id='wrench'}</a></div>
+	{/if}
+	<input type="checkbox" name="cat_clearall" value="on" {if $prefs.javascript_enabled eq 'y'}onclick="switchCheckboxes(this.form,'cat_categories[]',this.checked);"{/if} />{tr}Select/deselect all categories{/tr}
   {else}
 	<div class="clear">
-    {tr}No categories defined{/tr} <br />
-  {/if}
-  {if $tiki_p_admin_categories eq 'y'}
-    <a href="tiki-admin_categories.php" class="link">{tr}Admin Categories{/tr}</a>
+ 	{if $tiki_p_admin_categories eq 'y'}
+    <div class="floatright"><a href="tiki-admin_categories.php" class="link">{tr}Admin Categories{/tr} {icon _id='wrench'}</a></div>
+ 	{/if}
+    {tr}No categories defined{/tr}
   {/if}
     </div> {* end .clear *}
    </div> {* end #multiselect *}

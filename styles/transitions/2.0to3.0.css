@@ -139,7 +139,7 @@ div.multiselect li {
 	margin-left: 3em;
 }
 div.multiselect  ul.root > li {
-	margin: 0 2em 0 .5em;
+	margin: 0 1em 0.5em .5em;
 	display: block;
 	float: left;
 }

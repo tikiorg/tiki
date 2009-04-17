@@ -1,6 +1,6 @@
 <?php
 
-// $Id: /cvsroot/tikiwiki/tiki/categorize_list.php,v 1.30.2.5 2007-12-19 22:50:15 sylvieg Exp $
+// $Id$
 
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
@@ -80,7 +80,7 @@ else {
 		}
 	}
 
-	include_once ('lib/tree/categ_browse_tree.php');
+	include_once ('lib/tree/categ_picker_tree.php');
 	$tree_nodes = array();
 	foreach ($categories as $c) {
 		if (isset($c['name']) || $c['parentId'] != 0) {
@@ -94,7 +94,7 @@ else {
 			}
 		}
 	}
-	$tm = new CatBrowseTreeMaker("categorize");
+	$tm = new CatPickerTreeMaker("categorize");
 	$res = $tm->make_tree(0, $tree_nodes);
 	$smarty->assign('cat_tree', $res);
 	
