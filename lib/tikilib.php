@@ -5805,33 +5805,70 @@ class TikiLib extends TikiDB {
 	}
 
 	function plugin_fingerprint_check( $fp ) {
-		global $prefs;
+		$limit = date( 'Y-m-d H:i:s', time() - 15*24*3600 );
+		$result = $this->query( "SELECT status, IF(status='pending' AND last_update < ?, 'old', '') flag FROM tiki_plugin_security WHERE fingerprint = ?",
+			array( $limit, $fp ) );
 
-		if( ! isset( $prefs['plugin_fingerprints'] ) )
-			return '';
+		$needUpdate = false;
 
-		$data = unserialize( $prefs['plugin_fingerprints'] );
+		if( $row = $result->fetchRow() ) {
+			$status = $row['status'];
+			$flag = $row['flag'];
 
-		if( isset( $data[$fp] ) )
-			return $data[$fp];
-		else
-			return '';
+			if( $status == 'accept' || $status == 'reject' )
+				return $status;
+
+			if( $flag == 'old' )
+				$needUpdate = true;
+		} else {
+			$needUpdate = true;
+		}
+
+		if( $needUpdate ) {
+			global $page;
+			if( $page ) {
+				$objectType = 'wiki page';
+				$objectId = $page;
+			} else {
+				$objectType = '';
+				$objectId = '';
+			}
+
+			$this->query( "DELETE FROM tiki_plugin_security WHERE fingerprint = ?", array( $fp ) );
+			$this->query( "INSERT INTO tiki_plugin_security (fingerprint, status, last_objectType, last_objectId) VALUES(?, ?, ?, ?)",
+				array( $fp, 'pending', $objectType, $objectId ) );
+		}
+
+		return '';
 	}
 
 	function plugin_fingerprint_store( $fp, $type ) {
-		global $prefs, $user;
-		$date = date( 'Y-m-d H:i:s' );
+		global $prefs, $user, $page;
+		if( $page ) {
+			$objectType = 'wiki page';
+			$objectId = $page;
+		} else {
+			$objectType = '';
+			$objectId = '';
+		}
 
-		if( ! isset( $prefs['plugin_fingerprints'] ) )
-			$data = array();
-		else
-			$data = unserialize( $prefs['plugin_fingerprints'] );
+		$this->query( "DELETE FROM tiki_plugin_security WHERE fingerprint = ?", array( $fp ) );
+		$this->query( "INSERT INTO tiki_plugin_security (fingerprint, status, approval_by, last_objectType, last_objectId) VALUES(?, ?, ?, ?, ?)",
+				array( $fp, $type, $user, $objectType, $objectId ) );
+	}
 
-		if( ! is_array( $data ) )
-			$data = array();
+	function plugin_clear_fingerprint( $fp ) {
+		$this->query( "DELETE FROM tiki_plugin_security WHERE fingerprint = ?", array( $fp ) );
+	}
 
-		$data[$fp] = "$type/$date/$user";
-		$this->set_preference( 'plugin_fingerprints', serialize( $data ) );
+	function list_plugins_pending_approval() {
+		$result = $this->query("SELECT fingerprint, last_update, last_objectType, last_objectId FROM tiki_plugin_security WHERE status = 'pending' ORDER BY last_update DESC");
+
+		$list = array();
+		while( $row = $result->fetchRow() )
+			$list[] = $row;
+
+		return $list;
 	}
 
 	function plugin_fingerprint( $name, $meta, $data, $args ) {

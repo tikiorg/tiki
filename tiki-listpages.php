@@ -71,7 +71,7 @@ if ( !empty($_REQUEST['submit_mult']) && isset($_REQUEST["checked"]) ) {
 			global $wikilib; include_once('lib/wiki/wikilib.php');
 			foreach ($_REQUEST["checked"] as $check) {
 				$info = $tikilib->get_page_info($check);
-				if ($info['flag'] != 'L' && ($tiki_p_admin_wiki == 'y' || $tikilib->user_has_perm_on_object($user, $check, 'wiki page', 'tiki_p_lock'))) {
+				if ($info['flag'] != 'L' && ($tiki_p_admin_wiki == 'y' || $tikilib->user_has_perm_on_object($user, $check, 'wiki page', 'tiki_p_lock', 'tiki_p_edit_categorized'))) {
 					$wikilib->lock_page($check);
 					}	
 			}

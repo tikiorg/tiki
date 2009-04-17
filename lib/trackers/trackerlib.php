@@ -333,6 +333,7 @@ class TrackerLib extends TikiLib {
 	}
 
 	function list_last_comments($trackerId = 0, $itemId = 0, $offset, $maxRecords) {
+		global $user;
 	    $mid = "1=1";
 	    $bindvars = array();
 
@@ -347,7 +348,10 @@ class TrackerLib extends TikiLib {
 		$query_cant = "select count(*) from `tiki_tracker_item_comments` t left join `tiki_tracker_items` a on t.`itemId`=a.`itemId` where $mid and a.`trackerId`=? order by t.`posted` desc";
 	    }
 	    else {
-		$query = "select * from `tiki_tracker_item_comments` where $mid order by `posted` desc";
+			if (!$this->user_has_perm_on_object($user, $trackerId, 'tracker', 'tiki_p_view_trackers') ) {
+				return array('cant'=>0);
+			}
+		$query = "select t.*, a.`trackerId` from `tiki_tracker_item_comments` t left join `tiki_tracker_items` a on t.`itemId`=a.`itemId` where $mid order by `posted` desc";
 		$query_cant = "select count(*) from `tiki_tracker_item_comments` where $mid";
 	    }
 	    $result = $this->query($query,$bindvars,$maxRecords,$offset);
@@ -355,6 +359,10 @@ class TrackerLib extends TikiLib {
 	    $ret = array();
 
 	    while ($res = $result->fetchRow()) {
+			if (!$trackerId && !$this->user_has_perm_on_object($user, $res['trackerId'], 'tracker', 'tiki_p_view_trackers') ) {
+				--$cant;
+				continue;
+			}
 		$res["parsed"] = nl2br($res["data"]);
 		$ret[] = $res;
 	    }
@@ -2032,7 +2040,6 @@ class TrackerLib extends TikiLib {
 				$this->query($query,array($name,$description,$descriptionIsParsed,(int)$this->now,(int) $trackerId));
 			}
 		} else {
-			$this->query("delete from `tiki_trackers` where `name`=?",array($name),-1,-1,false);
 			$query = "insert into `tiki_trackers`(`name`,`description`,`descriptionIsParsed`,`created`,`lastModif`) values(?,?,?,?,?)";
 			$this->query($query,array($name,$description,$descriptionIsParsed,(int) $this->now,(int) $this->now));
 			$trackerId = $this->getOne("select max(`trackerId`) from `tiki_trackers` where `name`=? and `created`=?",array($name,(int) $this->now));
@@ -2783,6 +2790,11 @@ class TrackerLib extends TikiLib {
 		$result = $this->getOne($query, array((int)$itemId, "y"));
 		return $result;
 	}
+	function get_main_field($trackerId) {
+		$query = 'select `fieldId` from `tiki_tracker_fields` where `isMain`=? and `trackerId`=?';
+		return $this->getOne($query, array('y', $trackerId));
+	}
+		
 	function categorized_item($trackerId, $itemId, $mainfield, $ins_categs) {
 		global $categlib; include_once('lib/categories/categlib.php');
 		$cat_type = "tracker $trackerId";

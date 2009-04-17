@@ -122,10 +122,6 @@
 <a href="tiki-admin.php?page=intertiki" title="{tr}Intertiki{/tr}" class="icon">{icon _id="pics/large/intertiki.png" alt="{tr}InterTiki{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}</a>
 {/if}
 
-{if $prefs.feature_plugins neq 'n'}
-<a href="tiki-admin.php?page=plugins" title="{tr}Plugin aliases{/tr}" class="icon">{icon _id="pics/large/stock_line-in.png" alt="{tr}Plugin aliases{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}</a>
-{/if}
-
 {if $prefs.feature_semantic neq 'n'}
 <a href="tiki-admin.php?page=semantic" title="{tr}Semantic wiki links{/tr}" class="icon">{icon _id="pics/large/semantic.png" alt="{tr}Semantic links{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}</a>
 {/if}

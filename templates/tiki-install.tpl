@@ -16,11 +16,11 @@
 {* start of installation *}
 <h1>{tr}Welcome{/tr}</h1>
 <div class="clearfix">
-	<p>{tr}Welcome to the TikiWiki installation and upgrade script.{/tr} {tr}Use this script to install a new TikiWiki database or upgrade your existing database to release{/tr} <strong>{$tiki_version_name}</strong></p>
+	<p>{tr}Welcome to the Tiki installation and upgrade script.{/tr} {tr}Use this script to install a new Tiki database or upgrade your existing database to release{/tr} <strong>{$tiki_version_name}</strong></p>
 	<ul>
 		<li>{tr}For the latest information about this release, please read the{/tr} <a href="http://tikiwiki.org/ReleaseNotes{$tiki_version_name|urlencode}" target="_blank">{tr}Release Notes{/tr}</a>.</li>
 		<li>{tr}For complete documentation, please visit{/tr} <a href="http://doc.tikiwiki.org" target="_blank">http://doc.tikiwiki.org</a>.</li>
-		<li>{tr}For more information about TikiWiki, please visit{/tr} <a href="http://tikiwiki.org" target="_blank">http://tikiwiki.org</a>.</li>
+		<li>{tr}For more information about Tiki, please visit{/tr} <a href="http://tikiwiki.org" target="_blank">http://tikiwiki.org</a>.</li>
 	</ul>
 
 	<form action="tiki-install.php" method="post">
@@ -46,7 +46,7 @@
 
 {elseif $install_step eq '1'}
 <h1>{tr}Read the License{/tr}</h1>
-<p>{tr}TikiWiki is software distributed under the LGPL license.{/tr} {tr} <a href="http://creativecommons.org/licenses/LGPL/2.1/" target="_blank">Here is a human-readable summary of the license below, including many translations.</a>{/tr}</p>
+<p>{tr}Tiki is software distributed under the LGPL license.{/tr} {tr} <a href="http://creativecommons.org/licenses/LGPL/2.1/" target="_blank">Here is a human-readable summary of the license below, including many translations.</a>{/tr}</p>
 <div align="center" style="margin-top:1em;">
 <iframe src="license.txt" width="700px" height="400px"> </iframe>
 	<form action="tiki-install.php" method="post">
@@ -61,7 +61,7 @@
 <h1>{tr}Review the System Requirements{/tr}</h1>
 <div style="float:left;width:60px"><img src="img/webmail/compose.gif" alt="{tr}Review{/tr}" /></div>
 <div class="clearfix">
-	<p>{tr}Before installing TikiWiki, <a href="http://doc.tikiwiki.org/tiki-index.php?page=Requirements+and+Setup&bl=y" target="_blank">review the documentation</a> and confirm that your system meets the minimum requirements.{/tr}</p>
+	<p>{tr}Before installing Tiki, <a href="http://doc.tikiwiki.org/tiki-index.php?page=Requirements+and+Setup&bl=y" target="_blank">review the documentation</a> and confirm that your system meets the minimum requirements.{/tr}</p>
 	<p>{tr}This installer will perform some basic checks automatically.{/tr}</p>
 	<br />
 	<h2>{tr}Memory{/tr}</h2>
@@ -73,7 +73,7 @@
 	<div style="border-style: solid; border-width: 1; padding: 5px; background: #FF0000">
 		<p align="center"><img src="pics/icons/delete.png" alt="{tr}Alert{/tr}" style="vertical-align:middle" /> {tr}Tiki has detected your PHP memory limit at:{/tr} {$php_memory_limit|kbsize:true:0}</p>
 	</div>
-	<p>{tr}TikiWiki requires <strong>at least</strong> 32MB of PHP memory for script execution.{/tr} {tr}Allocating too little memory will cause TikiWiki to display blank pages.{/tr}</p>
+	<p>{tr}Tiki requires <strong>at least</strong> 32MB of PHP memory for script execution.{/tr} {tr}Allocating too little memory will cause Tiki to display blank pages.{/tr}</p>
 	<p>{tr}To change the memory limit, use the <strong>memory_limit</strong> key in your <strong>php.ini </strong> file (for example: memory_limit = 32M) and restart your webserver.{/tr}</p>
 
 {else}
@@ -88,9 +88,9 @@
 
 	<br />
 	<h2>{tr}Mail{/tr}</h2>
-	<p>{tr}TikiWiki uses the PHP <strong>mail</strong> function to send email notifications and messages.{/tr}</p>
+	<p>{tr}Tiki uses the PHP <strong>mail</strong> function to send email notifications and messages.{/tr}</p>
 {if $perform_mail_test ne 'y'}
-	<p>{tr}To test your system configuration, TikiWiki will attempt to send a test message to info@tikiwiki.org.{/tr}</p>
+	<p>{tr}To test your system configuration, Tiki will attempt to send a test message to info@tikiwiki.org.{/tr}</p>
 	<div align="center">
 	<form action="tiki-install.php#mail" method="post">
 		<input type="hidden" name="install_step" value="2" />
@@ -126,7 +126,7 @@
 	</div>
 	<p>&nbsp;</p>
 {/if}
-	<p>{tr}TikiWiki uses the GD library to process images for the Image Gallery and CAPTCHA support.{/tr}</p>
+	<p>{tr}Tiki uses the GD library to process images for the Image Gallery and CAPTCHA support.{/tr}</p>
 </div>
 
 <div align="center" style="margin-top:1em;">
@@ -143,7 +143,7 @@
 <h1>{tr}Set the Database Connection{/tr}</h1>
 <div style="float:left; width:60px"><img src="pics/large/stock_line-in48x48.png" alt="{tr}Database{/tr}" /></div>
 <div class="clearfix">
-	<p>{tr}TikiWiki requires an active database connection.{/tr} {tr}You must create the database and user <em>before</em> completing this page.{/tr}</p>
+	<p>{tr}Tiki requires an active database connection.{/tr} {tr}You must create the database and user <em>before</em> completing this page.{/tr}</p>
 {if $dbcon ne 'y'}
 	<div align="center" style="padding:1em">
 		<img src="pics/icons/delete.png" alt="{tr}Alert{/tr}" style="vertical-align:middle" /> <span style="font-weight:bold">{tr}Tiki cannot find a database connection.{/tr}</span> {tr}This is normal for a new installation.{/tr}
@@ -288,7 +288,7 @@
 			</select>
 			 <p>{tr}See the documentation for <a target="_blank" href="http://profiles.tikiwiki.org/Profiles_in_30_installer" class="link" title="Description of available profiles.">descriptions of the available profiles.{/tr}</a></p>
 			{else}
-			  <p style="text-align:center; color:red">{tr}No Internet Connection has been found.{/tr}</p>
+			  <p style="text-align:center; color:red">{tr}The installer could not connect to the Profiles repository.{/tr}</p>
 			  <p style="text-align:center">{tr}The default installation profile will be used.{/tr}</p>
 			<input type="hidden" name="profile" value="" />
 			{/if}
@@ -334,11 +334,11 @@
 <h1>{if isset($smarty.post.update)}{tr}Review the Upgrade{/tr}{else}{tr}Review the Installation{/tr}{/if}</h1>
 		<div style="margin: 10px 0 5px 0; border: solid 1px #000; padding: 5px; background: #a9ff9b;">
 		<p style="text-align:center; font-size: large;">{if isset($smarty.post.update)}{tr}Upgrade complete{/tr}{else}{tr}Installation complete{/tr}{/if}.</p>
-		<p>{tr}Your database has been configured and Tikiwiki is ready to run!{/tr} 
+		<p>{tr}Your database has been configured and Tiki is ready to run!{/tr} 
       {if isset($smarty.post.scratch)}
         {tr}If this is your first install, your admin password is <strong>admin</strong>.{/tr}
       {/if} 
-      {tr}You can now log in into Tikiwiki as user <strong>admin</strong> and start configuring the application.{/tr}
+      {tr}You can now log in into Tiki as user <strong>admin</strong> and start configuring the application.{/tr}
 		</p>
 		</div>
 {if $installer->success|@count gt 0}
@@ -383,7 +383,7 @@
 
 {if isset($htaccess_error)}
 <h3><img src="pics/icons/information.png" alt="{tr}Note{/tr}" style="vertical-align:middle"/> {tr}Security{/tr}</h3>
-{tr}To secure your TikiWiki installation - and if you are using Apache web server - you should rename the <span style="font-weight:bold">_htaccess</span> file to <span style="font-weight:bold">.htaccess</span> (this file is in the main directory).{/tr}
+{tr}To secure your Tiki installation - and if you are using Apache web server - you should rename the <span style="font-weight:bold">_htaccess</span> file to <span style="font-weight:bold">.htaccess</span> (this file is in the main directory).{/tr}
 {/if}
 
 <p>&nbsp;</p>
@@ -460,15 +460,15 @@
 </form>
 
 {elseif $install_step eq '7'}
-<h1>{tr}Enter Your TikiWiki{/tr}</h1>
+<h1>{tr}Enter Your Tiki{/tr}</h1>
 <div style="float:left; width:60px"><img src="pics/large/stock_quit48x48.png" alt="{tr}Login{/tr}" /></div>
 <div class="clearfix">
-	<p>{tr}The installation is complete!{/tr} {tr}Your database has been configured and Tikiwiki is ready to run.{/tr} </p>
-	<p>{tr}TikiWiki is an opensource project, <em>you</em> can <a href='http://info.tikiwiki.org/Join+the+Community' target='_blank'>join the community</a> and help <a href='http://info.tikiwiki.org/tiki-index.php?page=Develop+Tiki' target='_blank'>develop Tiki</a>.{/tr} </p>
+	<p>{tr}The installation is complete!{/tr} {tr}Your database has been configured and Tiki is ready to run.{/tr} </p>
+	<p>{tr}Tiki is an opensource project, <em>you</em> can <a href='http://info.tikiwiki.org/Join+the+Community' target='_blank'>join the community</a> and help <a href='http://info.tikiwiki.org/tiki-index.php?page=Develop+Tiki' target='_blank'>develop Tiki</a>.{/tr} </p>
 	<p>
 {if isset($smarty.post.scratch)}	{tr}If this is your first install, your admin password is <strong>admin</strong>.{/tr} 
 {/if} 
-	{tr}You can now log in into Tikiwiki as user <strong>admin</strong> and start configuring the application.{/tr}
+	{tr}You can now log in into Tiki as user <strong>admin</strong> and start configuring the application.{/tr}
 	</p>
 
 {if isset($smarty.post.scratch)}
@@ -482,8 +482,8 @@
 {/if}
 
 {if $tikidb_is20}
-		<span class="button"><a href="tiki-install.php?lockenter">{tr}Enter TikiWiki and Lock Installer{/tr} ({tr}Recommended{/tr})</a></span>
-		<span class="button"><a href="tiki-index.php">{tr}Enter TikiWiki Without Locking Installer{/tr}</a></span>
+		<span class="button"><a href="tiki-install.php?lockenter">{tr}Enter Tiki and Lock Installer{/tr} ({tr}Recommended{/tr})</a></span>
+		<span class="button"><a href="tiki-index.php">{tr}Enter Tiki Without Locking Installer{/tr}</a></span>
 {/if}
 
 </div>
@@ -528,7 +528,7 @@
 				<h3 class="box-title"><img src="pics/icons/information.png" alt="{tr}Information{/tr}" style="vertical-align:middle" /> {tr}Upgrade{/tr}</h3>
 				<div class="clearfix box-data">
 				{tr}Are you upgrading an existing Tiki site?{/tr}
-				{tr}Go directly to the <strong>Install/Upgrade Profile</strong> step.{/tr}
+				{tr}Go directly to the <strong>Install/Upgrade</strong> step.{/tr}
 				</div>
 			</div>
 		</div>
@@ -547,10 +547,10 @@
 					<li>{if $install_step eq '1'}<strong>{else}<a href="tiki-install.php?install_step=1{if $multi}&multi={$multi}{/if}{if $lang}&lang={$lang}{/if}" title="{tr}Read the License{/tr}">{/if}{tr}Read the License{/tr}{if $install_step eq '1'}</strong>{else}</a>{/if}</li>
 					<li>{if $install_step eq '2'}<strong>{elseif $install_step ge '3' or $dbcon eq 'y'}<a href="tiki-install.php?install_step=2{if $multi}&multi={$multi}{/if}{if $lang}&lang={$lang}{/if}" title="{tr}Review the System Requirements{/tr}">{/if}{tr}Review the System Requirements{/tr}{if $install_step eq '2'}</strong>{elseif $install_step ge '3' or $dbcon eq 'y'}</a>{/if}</li>
 					<li>{if $install_step eq '3'}<strong>{elseif $dbcon eq 'y'}<a href="tiki-install.php?install_step=3{if $multi}&multi={$multi}{/if}{if $lang}&lang={$lang}{/if}" title="{tr}Database Connection{/tr}">{/if}{if $dbcon eq 'y'}{tr}Reset the Database Connection{/tr}{else}Database Connection{/if}{if $install_step eq '3'}</strong>{elseif $dbcon eq 'y'}</a>{/if}</li>
-					<li>{if $install_step eq '4'}<strong>{elseif $dbcon eq 'y' or isset($smarty.post.scratch) or isset($smarty.post.update)}<a href="tiki-install.php?install_step=4{if $multi}&multi={$multi}{/if}{if $lang}&lang={$lang}{/if}" title="{if $tikidb_created}{tr}Install/Upgrade Profile{/tr}{else}{tr}Install Profile{/tr}{/if}">{/if}{if $tikidb_created}{tr}Install/Upgrade Profile{/tr}{else}{tr}Install Profile{/tr}{/if}{if $install_step eq '4'}</strong>{elseif ($dbcon eq 'y') or (isset($smarty.post.scratch)) or (isset($smarty.post.update))}</a>{/if}</li>
+					<li>{if $install_step eq '4'}<strong>{elseif $dbcon eq 'y' or isset($smarty.post.scratch) or isset($smarty.post.update)}<a href="tiki-install.php?install_step=4{if $multi}&multi={$multi}{/if}{if $lang}&lang={$lang}{/if}" title="{if $tikidb_created}{tr}Install/Upgrade{/tr}{else}{tr}Install Profile{/tr}{/if}">{/if}{if $tikidb_created}{tr}Install/Upgrade{/tr}{else}{tr}Install Profile{/tr}{/if}{if $install_step eq '4'}</strong>{elseif ($dbcon eq 'y') or (isset($smarty.post.scratch)) or (isset($smarty.post.update))}</a>{/if}</li>
 					<li>{if $install_step eq '5'}<strong>{elseif $tikidb_is20}<a href="tiki-install.php?install_step=5{if $multi}&multi={$multi}{/if}{if $lang}&lang={$lang}{/if}" title="{if isset($smarty.post.update)}{tr}Review the Upgrade{/tr}{else}{tr}Review the Installation{/tr}{/if}">{/if}{if isset($smarty.post.update)}{tr}Review the Upgrade{/tr}{else}{tr}Review the Installation{/tr}{/if}{if $install_step eq '5'}</strong>{elseif $tikidb_is20}</a>{/if}</li>
 					<li>{if $install_step eq '6'}<strong>{elseif $tikidb_is20 and !isset($smarty.post.update)}<a href="tiki-install.php?install_step=6{if $multi}&multi={$multi}{/if}{if $lang}&lang={$lang}{/if}" title="{tr}Configure the General Settings{/tr}">{/if}{tr}Configure the General Settings{/tr}{if $install_step eq '6'}</strong>{elseif $tikidb_is20 and !isset($smarty.post.update)}</a>{/if}</li>
-					<li>{if $install_step eq '7'}<strong>{elseif $tikidb_is20}<a href="tiki-install.php?install_step=7{if $multi}&multi={$multi}{/if}{if $lang}&lang={$lang}{/if}" title="{tr}Enter Your TikiWiki{/tr}">{/if}{tr}Enter Your TikiWiki{/tr}{if $install_step eq '7'}</strong>{elseif $tikidb_is20}</a>{/if}</li>
+					<li>{if $install_step eq '7'}<strong>{elseif $tikidb_is20}<a href="tiki-install.php?install_step=7{if $multi}&multi={$multi}{/if}{if $lang}&lang={$lang}{/if}" title="{tr}Enter Your Tiki{/tr}">{/if}{tr}Enter Your Tiki{/tr}{if $install_step eq '7'}</strong>{elseif $tikidb_is20}</a>{/if}</li>
 				</ol>
 				</div>
 			</div>
@@ -559,7 +559,7 @@
 			<div class="box">
 				<h3 class="box-title">{tr}Help{/tr}</h3>
 				<div class="clearfix box-data">
-				<p><img src="favicon.png" alt="{tr}TikiWiki{/tr}" style="vertical-align:middle" /> <a href="http://tikiwiki.org" target="_blank">{tr}TikiWiki Web Site{/tr}</a></p>
+				<p><img src="favicon.png" alt="{tr}Tiki Icon{/tr}" style="vertical-align:middle" /> <a href="http://tikiwiki.org" target="_blank">{tr}TikiWiki Project Web Site{/tr}</a></p>
 				<p><img src="pics/icons/book_open.png" alt="{tr}Documentation{/tr}" style="vertical-align:middle" /> <a href="http://doc.tikiwiki.org" target="_blank">{tr}Documentation{/tr}</a></p>
 				<p><img src="pics/icons/group.png" alt="{tr}Forums{/tr}" style="vertical-align:middle" /> <a href="http://tikiwiki.org/forums" target="_blank">{tr}Support Forums{/tr}</a></p>
 				</div>
@@ -571,4 +571,4 @@
 	  	</div>
 </div>
 <hr />
-<p align="center"><a href="http://tikiwiki.org" target="_blank" title="{tr}Powered by{/tr} {tr}TikiWiki CMS/Groupware{/tr} &#169; 2002&#8211;{$smarty.now|date_format:"%Y"} "><img src="img/tiki/tikibutton2.png" alt="{tr}TikiWiki{/tr}" style="width:80px; height:31px; border:0" /></a></p>
+<p align="center"><a href="http://tikiwiki.org" target="_blank" title="{tr}Powered by{/tr} {tr}TikiWiki CMS/Groupware Project{/tr} &#169; 2002&#8211;{$smarty.now|date_format:"%Y"} "><img src="img/tiki/tikibutton2.png" alt="{tr}Powered by TikiWiki{/tr}" style="width:80px; height:31px; border:0" /></a></p>

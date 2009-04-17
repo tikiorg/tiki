@@ -197,6 +197,9 @@
 		{/if}
 
 		{remarksbox type="note" title="{tr}About plugin aliases{/tr}"}{tr}Tiki plugin aliases allow you to define your own custom configurations of existing plugins.<br />Find out more here: {help url="Plugin+Alias"}{/tr}{/remarksbox}
+		{if $prefs.feature_jquery neq 'y'}
+			{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}This page is designed to work with JQuery {icon _id="arrow_right" href="tiki-admin.php?page=features"}{/tr}{/remarksbox}
+		{/if}
 
 		{* JQuery JS to set up page *}{jq}
 $jq('#content3 legend').click(function(event, hidefirst) {
@@ -251,7 +254,10 @@ $jq('#pluginalias_add').click(function() {
 
 	return false;
 });
-{{else}{* or new view if no plugin_admin and no list TODO? *}}
+{{else}{* or new view if no plugin_admin and no list *}}
+	$jq('#pluginalias_general legend').trigger('click');
+	$jq('#pluginalias_simple_args legend').trigger('click');
+	$jq('#pluginalias_body legend').trigger('click');
 {{/if}}
 if (window.location.href.indexOf('plugin_alias_new=true') > -1) {
 	$jq('#pluginalias_add').trigger('click');

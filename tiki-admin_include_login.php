@@ -142,7 +142,6 @@ if (isset($_REQUEST['users_defaults'])) {
 
 	// numerical and text values
 	$_prefs = array(
-		'users_prefs_theme',
 		'users_prefs_userbreadCrumb',
 		'users_prefs_language',
 		'users_prefs_display_timezone',

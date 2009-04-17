@@ -643,7 +643,7 @@ class WikiLib extends TikiLib {
 			$ret = array();
 
 			while ($res = $result->fetchRow()) {
-				if ($tikilib->user_has_perm_on_object($user, $res['page'], 'wiki page', 'tiki_p_view'))
+				if ($tikilib->user_has_perm_on_object($user, $res['pageName'], 'wiki page', 'tiki_p_view'))
 					$ret[] = $res["pageName"];
 			}
 

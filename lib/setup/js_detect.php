@@ -41,31 +41,35 @@ if ( $prefs['javascript_enabled'] != 'y' ) {
 		$headerlib->add_jsfile($custom_js, 50);
 	}
 	
-	if ($prefs['feature_iepngfix'] == 'y' && strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 6') !== false) {
-	/**
-	 * \brief another attempt for PNG alpha transparency fix which seems to work best for IE6 and can be applied even on background positioned images
-	 * 
-	 * is applied explicitly on defined CSS selectors or HTMLDomElement
-	 * 
-	 */
-		if (($fixoncss = $prefs['iepngfix_selectors']) == '') {
-			$fixoncss = '#sitelogo a img';
-		}
-		if (($fixondom = $prefs['iepngfix_elements']) != '') {
-			$fixondom = "DD_belatedPNG.fixPng($fixondom); // list of HTMLDomElements to fix separated by commas (default is none)";
-		}
-		if ($prefs['use_minified_scripts'] != 'n') {
-			$scriptpath = 'lib/iepngfix/DD_belatedPNG.js';
-		} else {
-			$scriptpath = 'lib/iepngfix/DD_belatedPNG-min.js';
-		}
-		$headerlib->add_jsfile ($scriptpath, 200);
-		$headerlib->add_js (<<<JS
-			DD_belatedPNG.fix('$fixoncss'); // list of CSS selectors to fix separated by commas (default is set to fix sitelogo)
-			$fixondom
+	if (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 6') !== false) {
+		
+		$smarty->assign('ie6', true);
+		
+		if ($prefs['feature_iepngfix'] == 'y') {
+			/**
+			 * \brief another attempt for PNG alpha transparency fix which seems to work best for IE6 and can be applied even on background positioned images
+			 * 
+			 * is applied explicitly on defined CSS selectors or HTMLDomElement
+			 * 
+			 */
+			if (($fixoncss = $prefs['iepngfix_selectors']) == '') {
+				$fixoncss = '#sitelogo a img';
+			}
+			if (($fixondom = $prefs['iepngfix_elements']) != '') {
+				$fixondom = "DD_belatedPNG.fixPng($fixondom); // list of HTMLDomElements to fix separated by commas (default is none)";
+			}
+			if ($prefs['use_minified_scripts'] != 'n') {
+				$scriptpath = 'lib/iepngfix/DD_belatedPNG.js';
+			} else {
+				$scriptpath = 'lib/iepngfix/DD_belatedPNG-min.js';
+			}
+			$headerlib->add_jsfile ($scriptpath, 200);
+			$headerlib->add_js (<<<JS
+DD_belatedPNG.fix('$fixoncss'); // list of CSS selectors to fix separated by commas (default is set to fix sitelogo)
+$fixondom
 JS
-		);
-			
+			);
+		}
 	}
 	
 	// ---------------------------------------------------------------

@@ -357,7 +357,7 @@ div#sitead {
 #bannertopright {padding-right: 1em}
 #sitelocbar {
 	float: left;
-	padding-left: 10px;
+	padding: 2px 2px 3px 10px;
 }
 
 #siteloginbar {
@@ -474,6 +474,21 @@ a.flip img {
 	margin-right: -1px;
 	padding: .8em;
 }
+/* give every div in #tiki-center some padding */
+#tiki-center div {
+	padding: 3px 2px;
+}
+/* little margin for all images in #tiki-center */
+#tiki-center img {
+	margin: 1px;
+}
+/* do not apply it on phplm tree in categories */
+#tiki-center .phplmnormal div {
+	padding: 0;
+}
+#tiki-center .phplmnormal img {
+	margin: 0;
+}
 
 /* IE */
 * html #tiki-center {
@@ -511,7 +526,8 @@ a.flip img {
  	text-align: center;
  	font-size: .9em;
 	border-top: 1px solid #999999;
-	margin-top: -1px;
+	position: relative;
+	top: -1px;
  }
 
 #footer .content {

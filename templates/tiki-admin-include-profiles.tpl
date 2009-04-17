@@ -180,6 +180,7 @@ function showDetails( id, domain, profile ) { // {{{
 				body.style.borderStyle = 'solid';
 				body.style.borderWidth = '2px';
 				body.style.borderColor = 'black';
+				body.style.padding = '8px';
 
 				cell.appendChild( body );
 
