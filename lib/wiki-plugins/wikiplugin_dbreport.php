@@ -1385,6 +1385,7 @@ function wikiplugin_dbreport_info() {
 		'description' => tra('Run a database report'),
 		'prefs' => array('wikiplugin_dbreport'),
 		'body' => tra('report definition'),
+		'validate' => 'all',
 		'params' => array(
 			'dsn' => array(
 				'required' => false,
