@@ -12,7 +12,7 @@
   {if $module_params.nonums != 'y'}<ol>{else}<ul>{/if}
    {section name=ix loop=$modLastItems}
    <li>
-	<a class="linkmodule" href="tiki-view_tracker_item.php?itemId={$modLastItems[ix].itemId}&amp;trackerId={$modLastItems[ix].trackerId}">
+	<a class="linkmodule" href="tiki-view_tracker_item.php?itemId={$modLastItems[ix].itemId}">
 	{$modLastItems[ix].subject}
           </a>
 	 </li>
