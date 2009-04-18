@@ -62,7 +62,7 @@ if ($tiki_p_admin_calendar == 'y') {
 $caladd = array();
 $rawcals = $calendarlib->list_calendars();
 if ($rawcals['cant'] == 0 && $tiki_p_admin_calendar == 'y') {
-	$smarty->assign('msg', tra('You need to create one calendar'));
+	$smarty->assign('msg', tra('You need to <a href="tiki-admin_calendars.php">create a calendar</a>'));
 	$smarty->display("error.tpl");
 	die;
 }
@@ -479,7 +479,7 @@ if ($prefs['feature_theme_control'] == 'y') {
 $headerlib->add_cssfile('css/calendar.css',20);
 
 include_once ('lib/quicktags/quicktagslib.php');
-$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_desc','','wiki');
+$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_asc','','wiki');
 $smarty->assign_by_ref('quicktags', $quicktags["data"]);
 include_once("textareasize.php");
 

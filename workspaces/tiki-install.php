@@ -47,7 +47,7 @@ if ( file_exists( 'db/local.php' ) ) {
 
 	include('db/local.php');
 	include_once('lib/adodb/adodb.inc.php');
-	$dbTiki = &ADONewConnection($db_tiki);
+	$dbTiki = ADONewConnection($db_tiki);
 
 	if( isset( $_POST['dbuser'], $_POST['dbpass'] ) )
 	{

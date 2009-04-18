@@ -245,30 +245,32 @@ if (isset($_REQUEST['import']) && isset($_FILES['csvlist']['tmp_name'])) {
 		$smarty->display('error.tpl');
 		die;
 	}
-	if ($fields[0]!='category' && $fields[1]!='description' && $fields[2]!='parent') {
+	if ($fields[0]!='category' || $fields[1]!='description' || $fields[2]!='parent') {
 		$smarty->assign('msg', tra('The file does not have the required header:').' category, description, parent');
 		$smarty->display('error.tpl');
 		die;
 	}
 	while (!feof($fhandle)) {
 		$data = fgetcsv($fhandle, 1000);
-		$temp_max = count($fields);
-		if (strtolower($data[2]) != 'top' && !empty($data[2])) {
-			$parentId = $categlib->get_category_id($data[2]);
-			if (empty($parentId)) {
-				$smarty->assign('msg', tra('Incorrect param').' '.$data[2]);
-				$smarty->display('error.tpl');
-				die;
+		if (!empty($data)) {
+			$temp_max = count($fields);
+			if ($temp_max > 1 && strtolower($data[2]) != 'top' && !empty($data[2])) {
+				$parentId = $categlib->get_category_id($data[2]);
+				if (empty($parentId)) {
+					$smarty->assign('msg', tra('Incorrect param').' '.$data[2]);
+					$smarty->display('error.tpl');
+					die;
+				}
+			} else {
+				$parentId = 0;
 			}
-		} else {
-			$parentId = 0;
-		}
-		if (!$categlib->exist_child_category($parentId, $data[0])) {
-			$newcategId = $categlib->add_category($parentId, $data[0], $data[1]);
-			if (empty($newcategId)) {
-				$smarty->assign('msg', tra('Incorrect param').' '.$data[0]);
-				$smarty->display('error.tpl');
-				die;
+			if (!$categlib->exist_child_category($parentId, $data[0])) {
+				$newcategId = $categlib->add_category($parentId, $data[0], $data[1]);
+				if (empty($newcategId)) {
+					$smarty->assign('msg', tra('Incorrect param').' '.$data[0]);
+					$smarty->display('error.tpl');
+					die;
+				}
 			}
 		}
 	}

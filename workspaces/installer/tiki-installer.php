@@ -209,9 +209,9 @@ function isWindows() {
 	return $windows;
 }
 
-class Smarty_Tikiwiki extends Smarty {
+class Smarty_Tikiwiki_Installer extends Smarty {
 
-	function Smarty_Tikiwiki() {
+	function Smarty_Tikiwiki_Installer() {
 		$this->template_dir = "templates/";
 		$this->compile_dir = "templates_c/";
 		$this->config_dir = "configs/";
@@ -507,7 +507,7 @@ $cachelib->empty_full_cache();
 $_SESSION["install-logged-$multi"] = 'y';
 
 // Init smarty
-$smarty = new Smarty_Tikiwiki();
+$smarty = new Smarty_Tikiwiki_Installer();
 $smarty->load_filter('pre', 'tr');
 $smarty->load_filter('output', 'trimwhitespace');
 $smarty->assign('mid', 'tiki-install.tpl');
@@ -518,19 +518,20 @@ if ($language != 'en')
 	$smarty->assign('lang', $language);
 
 // Tiki Database schema version
-$tiki_version = '4.0';
-$smarty->assign('tiki_version', $tiki_version);
-$smarty->assign('tiki_version_name', $tiki_version . ' BETA1');
+include_once ('lib/setup/twversion.class.php');
+$TWV = new TWVersion();
+$smarty->assign('tiki_version_name', preg_replace('/^(\d+\.\d+)([^\d])/', '\1 \2', $TWV->version));
+unset($TWV);
 
 // Available DB Servers
 $dbservers = array();
-if ( function_exists('mysqli_connect') ) $dbservers['mysqli'] = 'MySQL Improved (mysqli). Requires MySQL 4.1+';
-if ( function_exists('mysql_connect') ) $dbservers['mysql'] = 'MySQL classic (mysql)';
-if ( function_exists('pg_connect') ) $dbservers['pgsql'] = 'PostgeSQL 7.2+';
-if ( function_exists('oci_connect') ) $dbservers['oci8'] = 'Oracle';
-if ( function_exists('sybase_connect') ) $dbservers['sybase'] = 'Sybase';
-if ( function_exists('sqlite_open') ) $dbservers['sqlite'] = 'SQLLite';
-if ( function_exists('mssql_connect') ) $dbservers['mssql'] = 'MSSQL';
+if ( function_exists('mysqli_connect') ) $dbservers['mysqli'] = tra('MySQL Improved (mysqli). Requires MySQL 4.1+');
+if ( function_exists('mysql_connect') ) $dbservers['mysql'] = tra('MySQL classic (mysql)');
+if ( function_exists('pg_connect') ) $dbservers['pgsql'] = tra('PostgeSQL 7.2+');
+if ( function_exists('oci_connect') ) $dbservers['oci8'] = tra('Oracle');
+if ( function_exists('sybase_connect') ) $dbservers['sybase'] = tra('Sybase');
+if ( function_exists('sqlite_open') ) $dbservers['sqlite'] = tra('SQLLite');
+if ( function_exists('mssql_connect') ) $dbservers['mssql'] = tra('MSSQL');
 $smarty->assign_by_ref('dbservers', $dbservers);
 
 $errors = '';
@@ -606,7 +607,7 @@ if (!file_exists($local)) {
 		$dbcon = false;
 		$smarty->assign('dbcon', 'n');
 	} else {
-		$dbTiki = &ADONewConnection($db_tiki);
+		$dbTiki = ADONewConnection($db_tiki);
 
 		if (!$dbTiki->Connect($host_tiki, $user_tiki, $pass_tiki, $dbs_tiki)) {
 			$dbcon = false;
@@ -690,6 +691,13 @@ if ( $admin_acc == 'n' ) $_SESSION["install-logged-$multi"] = 'y';
 $smarty->assign('dbdone', 'n');
 $smarty->assign('logged', $logged);
 
+if ( $install_step == '4' || $install_step == '5' ) {
+	require_once 'lib/profilelib/profilelib.php';
+	$remote_profile_test = Tiki_Profile::fromNames( 'http://profiles.tikiwiki.org', 'Small_Organization_Web_Presence' );
+	$has_internet_connection = empty($remote_profile_test) ? 'n' : 'y';
+	$smarty->assign('has_internet_connection', $has_internet_connection);
+}
+
 if ( isset($dbTiki) && is_object($dbTiki) && isset($_SESSION["install-logged-$multi"]) && $_SESSION["install-logged-$multi"] == 'y' ) {
 	$smarty->assign('logged', 'y');
 
@@ -712,7 +720,7 @@ if ( isset($dbTiki) && is_object($dbTiki) && isset($_SESSION["install-logged-$mu
 		$installer = new Tiki_Profile_Installer;
 		//$installer->setUserData( $data ); // TODO
 
-		if ( $has_internet_connection && isset($_REQUEST['profile']) and !empty($_REQUEST['profile']) ) {
+		if ( $has_internet_connection == 'y' && isset($_REQUEST['profile']) and !empty($_REQUEST['profile']) ) {
 			if ( $_REQUEST['profile'] == 'Small_Organization_Web_Presence' ) {
 				$profile = $remote_profile_test;
 			} else {
@@ -761,7 +769,6 @@ $smarty->assign_by_ref('tikifeedback', $tikifeedback);
 
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
-
 //  Sytem requirements test. 
 if ($install_step == '2') {
 
@@ -785,12 +792,6 @@ if ($install_step == '2') {
 		} else {
 		$gd_test = 'n'; }
 	$smarty->assign('gd_test', $gd_test);
-	
-} elseif ( $install_step == '4' ) {
-	require_once 'lib/profilelib/profilelib.php';
-	$remote_profile_test = Tiki_Profile::fromNames( 'http://profiles.tikiwiki.org', 'Small_Organization_Web_Presence' );
-	$has_internet_connection = empty($remote_profile_test) ? 'n' : 'y';
-	$smarty->assign('has_internet_connection', $has_internet_connection);
 }
 
 // write general settings

@@ -16,16 +16,21 @@ if ($tiki_script_filename !== false) {
 	$tiki_script_filename .= '/index.php';
 } else {
 	// Note: need to susbsitute \ for / for windows.
-	$tiki_script_filename =
-		str_replace('\\','/',realpath($_SERVER['SCRIPT_FILENAME']));
+	$tiki_script_filename = $_SERVER['SCRIPT_FILENAME'];
 
 	// On some systems, SCRIPT_FILENAME contains the full path to the cgi script
 	// that calls the script we are looking for. In this case, we have to
 	// fallback to PATH_TRANSLATED. This one may be wrong on some systems, this
 	// is why SCRIPT_FILENAME is tried first.
+	//
+	// Note that PATH_TRANSLATED is not always set on PHP5, so try to get first value of get_included_files() in this case
+	//
 	if ( substr($tiki_script_filename, 0, strlen($tiki_setup_dir)) != $tiki_setup_dir ) {
 		// Note: need to susbsitute \ for / for windows.
-		$tiki_script_filename = str_replace('\\','/',realpath($_SERVER['PATH_TRANSLATED']));	}
+		$tiki_script_filename = empty($_SERVER['PATH_TRANSLATED']) ? current(get_included_files()) : $_SERVER['PATH_TRANSLATED'];
+	}
+
+	$tiki_script_filename = str_replace('\\', '/', realpath($tiki_script_filename));
 }
 $tmp = dirname(str_replace($tiki_setup_dir,'',$tiki_script_filename));
 

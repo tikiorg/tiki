@@ -1,5 +1,4 @@
-DELETE FROM `tiki_secdb` WHERE `tiki_version` = '3.0beta1';
-
+DELETE FROM `tiki_secdb` WHERE `tiki_version` = '3.0beta2';
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('2917b0a8594d84f4480a24888a5ea56b', './tiki-print_indexed.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('dae282a7f5f905b62c7a19d926570aeb', './tiki-directory_ranking.php', '3.0beta1', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('776e9ba48a2ed83997f692620baacb04', './tiki-g-monitor_processes.php', '3.0beta1', 0);

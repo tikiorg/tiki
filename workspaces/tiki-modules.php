@@ -8,6 +8,7 @@
 //this script may only be included - so its better to die if called directly.
 //smarty is not there - we need setup
 require_once('tiki-setup.php');
+global $modlib; include_once('lib/modules/modlib.php');
 global $access;
 $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
 
@@ -20,11 +21,7 @@ clearstatcache();
 if ($user != 'admin') {
 	$user_groups = $tikilib->get_user_groups($user);
 } else {
-	$allgroups = $userlib->list_all_groups();
 	$user_groups = array();
-	foreach ($allgroups as $grp) {
-		$user_groups[] = $grp;
-	}
 }
 
 // additional module zones added to this array will be exposed to tiki.tpl
@@ -108,37 +105,8 @@ for ($mod_counter = 0; $mod_counter < $temp_max; $mod_counter++) {
 			}
 		}
 	}
-	if ($pass == 'y' && $prefs['modallgroups'] != 'y') {
-		if ($mod_reference["groups"]) {
-			$module_groups = unserialize($mod_reference["groups"]);
-		} else {
-			$module_groups = array();
-		}
-		$pass = 'n';
-		if ($prefs['modseparateanon'] !== 'y') {
-			foreach ($module_groups as $mod_group) {
-				if (in_array($mod_group, $user_groups)) {
-					$pass = 'y';
-					break; 
-				}
-			}
-		} else {
-			if(!$user) { 
-				if (in_array("Anonymous", $module_groups)) {
-					$pass = 'y';
-				}
-			} else { 
-				foreach ($module_groups as $mod_group) {
-					if ($mod_group === "Anonymous") { 
-						continue; 
-					}
-					if (in_array($mod_group,$user_groups)) {
-						$pass = 'y';
-						break;
-					}
-				}
-			}
-		}
+	if ($pass == 'y') {
+		$pass = $modlib->check_groups($mod_reference, $user, $user_groups);
 	}
 	if ($pass == 'y' && isset($module_params['creator']) && $section == 'wiki page' && isset($page)) {
 		if (!$page_info = $tikilib->get_page_info($page)) {
@@ -161,66 +129,10 @@ for ($mod_counter = 0; $mod_counter < $temp_max; $mod_counter++) {
 		}
 	}
 	if ($pass == 'y') {
-		if (isset($module_params['title'])) { 
-			$smarty->assign('tpl_module_title',tra($module_params['title'])); 
-		} else {
-			$smarty->clear_assign('tpl_module_title');
-		}
 		$show_columns[$these_modules_name] = 'y';
-		$template = 'modules/mod-' . $mod_reference["name"] . '.tpl';
-		$phpfile = 'modules/mod-' . $mod_reference["name"] . '.php';
-
-		if (!$mod_reference["rows"]) {
-			$mod_reference["rows"] = 10;
-		}
 		$module_rows = $mod_reference["rows"];
-		$smarty->assign_by_ref('module_rows',$mod_reference["rows"]);
-		$cachefile = 'modules/cache/';
-		if ($tikidomain) { $cachefile.= "$tikidomain/"; }
-		$cachefile.= 'mod-' . md5($mod_reference['moduleId'] . '-'.$prefs['language'].'-'.$mod_reference['params']);
-		$nocache = 'templates/modules/mod-' . $mod_reference["name"] . '.tpl.nocache';
-
-		if (!empty($user) || $mod_reference['cache_time'] <=0 || !file_exists($cachefile) || file_exists($nocache)|| (($tikilib->now - filemtime($cachefile)) >= $mod_reference['cache_time'])) {
-			$mod_reference["data"] = '';
-			$smarty->assign_by_ref('module_params', $module_params); // module code can unassign this if it wants to hide params
-			$smarty->assign('module_ord', $mod_reference['ord']);
-			$smarty->assign('module_position', $mod_reference['position']);
-			$smarty->assign('moduleId', $mod_reference['moduleId']);
-			if (file_exists($phpfile)) {
-				include ($phpfile);
-			}
-			if (file_exists("templates/".$template)) {
-				$data = $smarty->fetch($template);
-			} else {
-				$info = $tikilib->get_user_module($mod_reference['name']);
-				if (!empty($info)) {
-					$smarty->assign('user_title', tra($info["title"]));
-					if (isset($info['parse']) && $info["parse"] == 'y')
-						$info["data"] = $tikilib->parse_data($info["data"]);
-					$smarty->assign_by_ref('user_data', $info["data"]);
-					$smarty->assign_by_ref('user_module_name', $info["name"]);
-					$data = $smarty->fetch('modules/user_module.tpl');
-				} else {
-					$data = '';
-				}
-			}
-            $smarty->assign('module_params',array()); // ensure params not available outside current module
-            unset($info); // clean up when done
-			$smarty->clear_assign('tpl_module_title');
-			$mod_reference["data"] = $data;
-			if (empty($user) && $mod_reference['cache_time'] > 0 && !file_exists($nocache)) {
-				if ($fp = fopen($cachefile, 'w+')) {
-					fwrite($fp, $data, strlen($data));
-					fclose ($fp);
-				}
-			}
-		} else {
-			if ($fp = fopen($cachefile, 'r')) {
-				$data = fread($fp, filesize($cachefile));
-				fclose ($fp);
-				}
-			$mod_reference['data'] = $data;
-		}
+		include ('tiki-module.php');// this should go in a function when module code will have all the include/global
+		$mod_reference['data'] = $data;
 	}
 } // end for
 $smarty->assign_by_ref($these_modules_name, $these_modules);
