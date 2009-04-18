@@ -450,7 +450,8 @@ html[dir=ltr]>body {
 }
 
 /* wikiplugin edit */
-.wikiplugin_edit textarea {width: 100%; height: 200px}
+.wikiplugin_edit textarea {width: 99%; height: 150px}
+
 /* wikiplugin tracker */
 .mandatory_star {
 	font-weight: bold;
