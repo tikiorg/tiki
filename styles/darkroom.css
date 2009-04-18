@@ -9,6 +9,7 @@
 
 
 /***** XHTML Elements ******/ 
+html {background-color: #474747}
 
 body {
 	background: #000000;
@@ -37,7 +38,6 @@ a:hover {
 	text-decoration: underline}
 
 caption {font-weight: bold}
-/*div {}*/
 
 h1, h2, h3, h4 {
 	color: #999980;
