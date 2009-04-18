@@ -378,7 +378,6 @@
 
 </div>
 {/if}
-<p><a href="tiki-install.php?install_step=4" title="{tr}Go back and run another install/upgrade script{/tr}">{tr}Go back and run another install/upgrade script.{/tr}</a></p>
 
 
 {if isset($htaccess_error)}
