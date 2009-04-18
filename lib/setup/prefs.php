@@ -222,7 +222,7 @@ function get_default_prefs() {
 		'wikipuglin_mediaplayer' => 'y',
 		'wikiplugin_miniquiz' => 'y',
 		'wikiplugin_module' => 'y',
-		'wikiplugin_mono' => 'y',
+		'wikiplugin_mono' => 'n',
 		'wikiplugin_mouseover' => 'y',
                 'wikiplugin_mwtable' => 'y',
 		'wikiplugin_myspace' => 'n',
