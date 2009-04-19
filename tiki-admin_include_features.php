@@ -119,7 +119,7 @@ if (isset($_REQUEST["features"])) {
 		byref_set_value ($britem);
 	}
 
-	$smarty->clear_compiled_tpl();
+	$cachelib->empty_full_cache();
 
 }
 
