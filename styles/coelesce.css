@@ -2230,6 +2230,7 @@ div.multiselect {
 
 .opaque .box-title {border-bottom: 1px solid #ccdceb}
 .opaque a {text-decoration: none}
+.opaque .iconmenu {display: block}
 .searchresults {display: inline}
 
 .calnavigation a:hover {background: red}
