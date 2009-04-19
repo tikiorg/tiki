@@ -1,5 +1,5 @@
 <?php
-/* $Header: /cvsroot/tikiwiki/_mods/wiki-plugins/js/wiki-plugins/wikiplugin_js.php,v 1.3 2007/03/27 14:23:57 sylvieg Exp $
+/* $Id$
  * file = external javascript file
  * data is the javascript code
  * if you need the data to be interpreted before the file use the JS plugin 2 times
