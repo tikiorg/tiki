@@ -40,8 +40,9 @@ function wikiplugin_redirect($data, $params) {
 	if ((isset($_REQUEST['redirectpage']))) {
 		$areturn = "REDIRECT plugin: redirect loop detected!";
 	} else {
+		/* SEO: Redirect with HTTP status 301 - Moved Permanently than default 302 - Found */
 		if (isset($page)) {
-			header("Location: tiki-index.php?page=$page&redirectpage=".$_REQUEST['page']);
+			header("Location: tiki-index.php?page=$page&redirectpage=".$_REQUEST['page'], true, 301);
 			exit;
 		}
 		if (isset($url)) {
