@@ -74,6 +74,11 @@ else
 print "\n";
 passthru( "php get_strings.php quiet" );
 `svn ci -m "[REL] Update language.php files for $secdbVersion"`;
+$removeFiles = glob('lang/*/old.php');
+$removeFiles[] = 'temp/permstrings.tpl';
+$removeFiles[] = 'temp/prefnames.tpl';
+foreach ( $removeFiles as $rf ) unlink($rf);
+unset($removeFiles);
 
 if ( ! $noCheck ) {
 	print "\nChecking syntax of all PHP files\n";
