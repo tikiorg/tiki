@@ -1566,7 +1566,7 @@ div.articletopline {
 }
 
 div.articletitle {
-	margin-top: 6px;
+	margin-top: 0;
 	margin-bottom:	15px;
 	text-align:	left;
 }
@@ -1574,6 +1574,7 @@ div.articletitle {
 div.articletitle h2 {
 	font-size: 200%;
 	font-weight: normal;
+	margin: 0;
 }
 
 span.titleb {

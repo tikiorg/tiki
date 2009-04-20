@@ -1391,7 +1391,8 @@ div.articletitle {
  
 div.articletitle h2 {
 	font-size: 1.6em;
-	font-weight: bold}
+	font-weight: bold;
+	margin: 0}
 
 span.titleb {font-size: 1.0em} 
 
