@@ -41,6 +41,11 @@ list( $script, $version, $subrelease ) = $_SERVER['argv'];
 if( ! preg_match( "/^\d+\.\d+$/", $version ) )
 	die( "Version number should be in X.X format.\n" );
 
+print "\n";
+passthru( "php get_strings.php quiet" );
+
+`svn ci -m "[REL] Update language.php files for $secdbVersion"`;
+
 if ( ! $noCheck ) {
 	print "\nChecking syntax of all PHP files\n";
 	$error_msg = '';
