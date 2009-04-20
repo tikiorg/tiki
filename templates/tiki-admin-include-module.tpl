@@ -18,7 +18,6 @@
 	<div class="adminoptionlabel"><label for="user_assigned_modules">{tr}Users can configure modules{/tr}.</label>{if $prefs.feature_help eq 'y'} {help url="Users+Configure+Modules"}{/if}</div>
 </div>
 <div class="adminoptionbox">
-	<div class="adminoption"></div>
 	<div class="adminoptionlabel"><label for="">{tr}Users can shade modules{/tr}:</label> <select name="user_flip_modules">
 		<option value="y" {if $prefs.user_flip_modules eq 'y'}selected="selected"{/if}>{tr}Always{/tr}</option>
 		<option value="module" {if $prefs.user_flip_modules eq 'module'}selected="selected"{/if}>{tr}Module decides{/tr}</option>
