@@ -12,7 +12,7 @@ This is how we implement the Tikiwiki Social Contract.
 http://dev.tikiwiki.org/SocialContract
 
 List of members of the Community
-As of 2009-04-21, the community has:
+As of 2009-04-22, the community has:
   * 436 members on Sourceforge,
   * 202 of those people who made at least one code commit
 
@@ -1997,8 +1997,8 @@ SF Role: Developer
 Nickname: sylvieg
 Name: Sylvie Greverend
 First Commit: 2003-05-28
-Last Commit: 2009-04-21
-Number of Commits: 4295
+Last Commit: 2009-04-22
+Number of Commits: 4297
 SF Role: Developer
 
 Nickname: syracine

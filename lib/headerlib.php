@@ -98,7 +98,7 @@ class HeaderLib {
 	}
 
 	function output_headers() {
-		global $style_ie6_css, $prefs;
+		global $style_ie6_css, $style_ie7_css, $prefs;
 
 		ksort($this->jsfiles);
 		ksort($this->js);
