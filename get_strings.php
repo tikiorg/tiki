@@ -119,9 +119,9 @@ function collect_perms_desc($file)
   */
 function collect_prefs_names($file) {
 
+  global $tikilib;
   if ( isset($tikilib) ) {
 
-    global $tikilib;
     $prefs_strings = array();
     $result = $tikilib->query("select `name` from `tiki_preferences`");
     while ( $row = $result->fetchRow() ) $prefs_strings[] = $row['name'];
