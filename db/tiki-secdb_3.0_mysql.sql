@@ -1502,7 +1502,7 @@ INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) V
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('6ed9c0bff8f4b0d20f847d2ca80668ad', './lib/commcenter/index.php', '3.0beta4', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('18082ea05964ca390071ffb8094a4e91', './lib/stats/index.php', '3.0beta4', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('f361debdd6f4498726fad1516b2e227a', './lib/stats/statslib.php', '3.0beta4', 0);
-INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('5d7347211eeba8d2e939910ee0006ac4', './lib/headerlib.php', '3.0beta4', 0);
+INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('57857718c8476d8a3a38d2a918d61f41', './lib/headerlib.php', '3.0beta4', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('7c7a5089af6e6560aecefeb1316b7af5', './lib/webmail/mail.php', '3.0beta4', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('f27fa75debd7e3c097f5e6357050d373', './lib/webmail/tikimaillib.php', '3.0beta4', 0);
 INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('ba21fd2939fefe668a7016ab5f5b5a49', './lib/webmail/htmlMimeMail.php', '3.0beta4', 0);
