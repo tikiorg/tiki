@@ -1182,7 +1182,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_jquery_superfish' => 'y',		// Effects on CSS (Suckerfish) menus
 		'feature_jquery_reflection' => 'y',		// reflection effects on images
 		'feature_jquery_sheet' => 'n',			// spreadsheet TODO: implement
-		'feature_jquery_tablesorter' => 'y',	// sortable tables ([will] override existing)
+		'feature_jquery_tablesorter' => 'n',	// sortable tables ([will] override existing)
 		'feature_jquery_cycle' => 'y',			// slideshow lib
 	
 		// SefUrl
