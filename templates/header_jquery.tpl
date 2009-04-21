@@ -21,7 +21,7 @@
 {/if}
 {if $prefs.feature_jquery_autocomplete eq 'y'}
 <script type="text/javascript" src="lib/jquery/jquery-autocomplete/lib/jquery.ajaxQueue.js"></script>
-<script type="text/javascript" src="lib/jquery/jquery-autocomplete/lib/jquery.bgiframe{$minified}.js"></script>
+<script type="text/javascript" src="lib/jquery/jquery-autocomplete/lib/jquery.bgiframe.min.js"></script>
 <script type="text/javascript" src="lib/jquery/jquery-autocomplete/jquery.autocomplete{$minified}.js"></script>
 <link rel="stylesheet" href="lib/jquery/jquery-autocomplete/jquery.autocomplete.css" type="text/css" /> 
 {/if}
