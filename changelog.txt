@@ -23,6 +23,14 @@ Version 3.0
 ------------------
 
 ----------------------------------------------
+r18143 | sylvieg | 2009-04-22 00:53:00 +0200 (Wed, 22 Apr 2009) | 1 line
+
+oops: forgot a file for commit 15076(move the translation of the enumeration from php to smarty)
+----------------------------------------------
+r18142 | sylvieg | 2009-04-22 00:46:02 +0200 (Wed, 22 Apr 2009) | 1 line
+
+global
+----------------------------------------------
 r18137 | nyloth | 2009-04-21 23:29:42 +0200 (Tue, 21 Apr 2009) | 1 line
 
 more french translations (mainly for the installer)
