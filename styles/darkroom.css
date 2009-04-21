@@ -646,7 +646,7 @@ div.option:active {
 	background: #B2B2B2}
 
 .linkmenu, .rsslink,
-.linkmenu:visited, .rsslink:visited {
+.rsslink:visited {
 	font-size: .95em;
 	text-decoration: none;
 	font-weight: normal}
@@ -2474,11 +2474,13 @@ div.multiselect {
 	vertical-align: middle;
 	overflow: auto;
 	height: auto;
+	border: 1px solid #606060;
 }
 
-div.multiselect div.odd {background: #292929}
-div.multiselect div.even {background: #3F3F3F}
+div.multiselect li.odd {background: #3F3F3F; color: white;}
+div.multiselect li.even {background: #3F3F3F; color: white;}
 .help_section table { color: white; }
 .button .iconmenu {display:inline;}
 .categflipper { float:right;}
+
 /* end of css file */
