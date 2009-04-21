@@ -5568,7 +5568,7 @@ class TikiLib extends TikiDB {
 	} );
 	" );
 								}
-								$ret = '~np~<a id="' .$id. '" style="float:right; display:none;" href="javascript:void(1)" class="editplugin">'.smarty_function_icon(array('_id'=>'shape_square_edit', 'alt'=>tra('Edit Plugin').':'.$plugin_name), $smarty)."</a>~/np~\n".$ret; // \n is necessary for plugin that includes wiki syntax like ! that must begin at the beginning of the line
+								$ret = $ret.'~np~<a id="' .$id. '" href="javascript:void(1)" class="editplugin">'.smarty_function_icon(array('_id'=>'shape_square_edit', 'alt'=>tra('Edit Plugin').':'.$plugin_name), $smarty)."</a>~/np~";
 							}
 	
 						} else {
