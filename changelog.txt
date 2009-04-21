@@ -23,6 +23,124 @@ Version 3.0
 ------------------
 
 ----------------------------------------------
+r18137 | nyloth | 2009-04-21 23:29:42 +0200 (Tue, 21 Apr 2009) | 1 line
+
+more french translations (mainly for the installer)
+----------------------------------------------
+r18136 | nyloth | 2009-04-21 23:28:02 +0200 (Tue, 21 Apr 2009) | 1 line
+
+[FIX] admin menu: update strings in admin_menu.tpl to reflect the strings used in the database menu (for get_strings)
+----------------------------------------------
+r18135 | nyloth | 2009-04-21 23:26:43 +0200 (Tue, 21 Apr 2009) | 2 lines
+
+[FIX] installer: allow translation of profile names + remove old smarty code for the length of the list of profiles + don't move to top of page when clicking on 'help' icons that displays detailed explanations.
+
+----------------------------------------------
+r18134 | marclaporte | 2009-04-21 23:26:26 +0200 (Tue, 21 Apr 2009) | 1 line
+
+[FIX] fix doc link
+----------------------------------------------
+r18133 | marclaporte | 2009-04-21 23:01:57 +0200 (Tue, 21 Apr 2009) | 1 line
+
+[FIX] Fix links to documentation for Galaxia Workflow
+----------------------------------------------
+r18132 | marclaporte | 2009-04-21 22:21:10 +0200 (Tue, 21 Apr 2009) | 1 line
+
+[FIX] Correct two broken links
+----------------------------------------------
+r18131 | sylvieg | 2009-04-21 21:52:18 +0200 (Tue, 21 Apr 2009) | 1 line
+
+[FIX]menu: prefer to have an url on Admin section
+----------------------------------------------
+r18130 | jonnybradley | 2009-04-21 20:19:41 +0200 (Tue, 21 Apr 2009) | 1 line
+
+[FIX] Deactivate feature_jquery_tablesorter by default (unfinished feature)
+----------------------------------------------
+r18129 | jonnybradley | 2009-04-21 20:14:33 +0200 (Tue, 21 Apr 2009) | 1 line
+
+[FIX] No non-minified version of this file in autocomplete libs
+----------------------------------------------
+r18128 | marclaporte | 2009-04-21 19:17:40 +0200 (Tue, 21 Apr 2009) | 1 line
+
+[FIX] activating __smarty_notice_reporting__ by default, as this is more sensible default as a suboption of general error reporting (which remains off by default). So Smarty reporting only happens if general reporting is on.
+----------------------------------------------
+r18127 | marclaporte | 2009-04-21 19:03:06 +0200 (Tue, 21 Apr 2009) | 1 line
+
+[FIX] __ Each group can have its theme__ should be in relevant profiles, but not in barebones install.
+----------------------------------------------
+r18126 | chibaguy | 2009-04-21 17:49:34 +0200 (Tue, 21 Apr 2009) | 1 line
+
+[NEW] Global IE7 stylesheet (alternative to IE7-targetting hacks in regular stylesheets).
+----------------------------------------------
+r18125 | chibaguy | 2009-04-21 17:45:57 +0200 (Tue, 21 Apr 2009) | 1 line
+
+[ENH] Add conditional comment for ie7.css and enable theme ie7.css files, same as for IE6.
+----------------------------------------------
+r18124 | sylvieg | 2009-04-21 17:01:55 +0200 (Tue, 21 Apr 2009) | 1 line
+
+[FIX]wysiwyg: do not show smileys as not working+ fck has its own smileys
+----------------------------------------------
+r18123 | nyloth | 2009-04-21 15:42:29 +0200 (Tue, 21 Apr 2009) | 1 line
+
+[ENH] release copyright script: be able to use this script through an http proxy using the new '--tcpproxy' param.
+----------------------------------------------
+r18122 | sylvieg | 2009-04-21 15:37:11 +0200 (Tue, 21 Apr 2009) | 1 line
+
+[MOD]lang: check the syntax of the custom.php and displays an error (todo: find out how to get the eval error)
+----------------------------------------------
+r18121 | sylvieg | 2009-04-21 13:57:12 +0200 (Tue, 21 Apr 2009) | 1 line
+
+[MOD]darkroom: do not use a special visited font in menu + less contrast for categorizator
+----------------------------------------------
+r18120 | pkdille | 2009-04-21 13:57:08 +0200 (Tue, 21 Apr 2009) | 1 line
+
+[FIX] get_strings: global tikilib was at the wrong place
+----------------------------------------------
+r18119 | sylvieg | 2009-04-21 13:41:09 +0200 (Tue, 21 Apr 2009) | 1 line
+
+[FIX]rollback 17760: now the edit button is in the text on the right of the plugin
+----------------------------------------------
+r18118 | sylvieg | 2009-04-21 13:32:23 +0200 (Tue, 21 Apr 2009) | 1 line
+
+[FIX]fullscreen: url like tiki-index.php?page=xxx must not haev the = escaped
+----------------------------------------------
+r18116 | nyloth | 2009-04-21 09:54:06 +0200 (Tue, 21 Apr 2009) | 1 line
+
+[FIX] breadcrumbs: titles on admin pages were using wrong encoding, which was generating weird characters in french for example
+----------------------------------------------
+r18115 | sylvieg | 2009-04-21 00:04:28 +0200 (Tue, 21 Apr 2009) | 1 line
+
+[FIX]fullscreen: url like tiki-index.php?page=xxx must not haev the = escaped
+----------------------------------------------
+r18114 | sylvieg | 2009-04-20 23:55:13 +0200 (Mon, 20 Apr 2009) | 1 line
+
+[FIX]to avoid double declaration
+----------------------------------------------
+r18113 | ricks99 | 2009-04-20 21:53:07 +0200 (Mon, 20 Apr 2009) | 1 line
+
+[ENH]Use icons instead of text
+----------------------------------------------
+r18112 | ricks99 | 2009-04-20 20:15:24 +0200 (Mon, 20 Apr 2009) | 1 line
+
+[FIX]removed empty div
+----------------------------------------------
+r18111 | ricks99 | 2009-04-20 20:02:55 +0200 (Mon, 20 Apr 2009) | 1 line
+
+[ENH]allow for manual installation - link to do page (at step 4), better explanation of htaccess file (step 6).
+----------------------------------------------
+r18109 | nyloth | 2009-04-20 15:37:58 +0200 (Mon, 20 Apr 2009) | 1 line
+
+[FIX] release script: remove temporary files and backup files of get_strings.php to avoid them in the secdb step
+----------------------------------------------
+r18106 | nyloth | 2009-04-20 15:16:26 +0200 (Mon, 20 Apr 2009) | 2 lines
+
+[REL] Preparing 3.0beta4 release
+
+----------------------------------------------
+r18105 | nyloth | 2009-04-20 15:10:14 +0200 (Mon, 20 Apr 2009) | 1 line
+
+french translations for last updates of the installer
+----------------------------------------------
 r18104 | nyloth | 2009-04-20 14:18:49 +0200 (Mon, 20 Apr 2009) | 1 line
 
 [FIX] installer: missing tr for a string
