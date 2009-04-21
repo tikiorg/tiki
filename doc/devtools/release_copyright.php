@@ -6,8 +6,23 @@ define( 'SF_TW_MEMBERS_URL', 'http://sourceforge.net/project/memberlist.php?grou
 
 require_once TOOLS . '/svntools.php';
 
+$proxyContext = '';
+$argv = array();
+foreach ( $_SERVER['argv'] as $arg ) {
+	if ( strlen($arg) > 11 && substr($arg, 0, 11) == '--tcpproxy=' ) {
+		$proxyContext = stream_context_create( array( 'http' => array(
+			'proxy' => 'tcp://' . substr($arg, 11),
+			'request_fulluri' => true
+		) ) );
+		continue;
+	}
+	$argv[] = $arg;
+}
+$_SERVER['argv'] = $argv;
+unset($argv);
+
 if( $_SERVER['argc'] <= 1 )
-	die( "Usage: php doc/devtools/release_copyright.php <version-number>
+	die( "Usage: php doc/devtools/release_copyright.php [--tcpproxy=HOST_DOMAIN:PORT] <version-number>
 Example:
 	php doc/devtools/release_copyright.php 2.0
 " );
@@ -115,10 +130,12 @@ function get_contributors_data($path, &$contributors, $minRevision, $maxRevision
 }
 
 function get_contributors_sf_data(&$contributors) {
+	global $proxyContext;
 	$members = '';
 	$matches = array();
 	$userParsedInfo = array();
-	$html = file_get_contents(SF_TW_MEMBERS_URL);
+
+	$html = empty($proxyContext) ? file_get_contents(SF_TW_MEMBERS_URL) : file_get_contents(SF_TW_MEMBERS_URL, 0, $proxyContext);
 
 	if ( !empty($html) && preg_match('/(<table.*<\/\s*table>)/sim', $html, $matches) ) {
 		$usersInfo = array();
