@@ -1,5 +1,5 @@
 <?php
-// $Id: $
+// $Id$
 if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
@@ -157,6 +157,12 @@ class HeaderLib {
 					.'<link rel="stylesheet" href="css/ie6.css" type="text/css" />'."\n";
 			if ( $style_ie6_css != '' ) {
 				$back .= '<link rel="stylesheet" href="'.$style_ie6_css.'" type="text/css" />'."\n";
+			}
+			$back .= "<![endif]-->\n";
+			$back .= "<!--[if IE 7]>\n"
+					.'<link rel="stylesheet" href="css/ie7.css" type="text/css" />'."\n";
+			if ( $style_ie7_css != '' ) {
+				$back .= '<link rel="stylesheet" href="'.$style_ie7_css.'" type="text/css" />'."\n";
 			}
 			$back .= "<![endif]-->\n";
 
