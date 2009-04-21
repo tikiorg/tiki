@@ -1942,7 +1942,8 @@ class TikiLib extends TikiDB {
 				}
 				if ($display) {
 					$pos = $res['position'];
-					$ret["$pos"] = $res;
+					if (empty($ret[$pos]) || empty($ret[$pos]['url']))
+						$ret[$pos] = $res;
 				}
 			} else {
 				$ret[] = $res;
