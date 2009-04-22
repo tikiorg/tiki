@@ -48,7 +48,7 @@ function capLock(e){
 		</form>
 	  {/if}
       {elseif $prefs.auth_method eq 'cas' && $showloginboxes neq 'y'}
-		<b><a class="linkmodule" href="tiki-login.php?user">{tr}Login through CAS{/tr}</a></b>
+		<b><a class="linkmodule" href="tiki-login.php?cas=y">{tr}Login through CAS{/tr}</a></b>
 		{if $prefs.cas_skip_admin eq 'y'}
 		<br /><a class="linkmodule" href="tiki-login_scr.php?user=admin">{tr}Login as admin{/tr}</a>
       {/if}

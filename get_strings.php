@@ -72,12 +72,31 @@ $addPHPslashes = Array ("\n" => '\n',
 function collect_perms_desc($file)
 {
   global $tikilib;
+  if ( isset($tikilib) ) {
 
   $result = $tikilib->query("SELECT DISTINCT(permDesc) FROM users_permissions ORDER BY permDesc");
 
   $perm_strings = array();
   while( $row = $result->fetchRow() )
     $perm_strings[] = $row['permDesc'];
+
+  } elseif ( is_readable('db/tiki.sql') ) {
+
+    // Used when called in $script_mode if no DB has been found
+    $matches = array();
+    preg_match_all(
+      '/insert\s+into\s+\`?users_permissions\s*\([^\)]+\)\s*values\s*\(\'(tiki_p_[^\'"]+)\',\s*\'(.*)\',/Uim',
+      file_get_contents('db/tiki.sql'),
+      $matches
+    );
+    foreach ( $matches[2] as $permDesc ) {
+      $perm_strings[] = str_replace("\'", "'", $permDesc);
+    }
+    unset($matches);
+
+  } else {
+    die('File db/tiki.sql is missing');
+  }
 
   $pstr = fopen($file,'w');
   if (!$pstr) {
@@ -91,22 +110,30 @@ function collect_perms_desc($file)
 }
 
 /**
-  * Reads all the permission descriptions in tikiwiki database and writes
-  *   it to the file $file. All the strings will be surrounded by smarty translate tags
+  * Get all preferences names from get_default_prefs() function or reads them all from tikiwiki database
+  * and writes it to the file $file. All the strings will be surrounded by smarty translate tags
   *     ex: {tr}preference name{/tr}
   *
   * @param $file string: target file for the pref names
   * @returns: nothing but creates the file with the pref names (take care about the acl's in the target directory !)
   */
-function collect_prefs_names($file)
-{
+function collect_prefs_names($file) {
+
   global $tikilib;
+  if ( isset($tikilib) ) {
 
-  $result = $tikilib->query("select `name` from `tiki_preferences`");
+    $prefs_strings = array();
+    $result = $tikilib->query("select `name` from `tiki_preferences`");
+    while ( $row = $result->fetchRow() ) $prefs_strings[] = $row['name'];
 
-  $prefs_strings = array();
-  while( $row = $result->fetchRow() )
-    $prefs_strings[] = $row['name'];
+  } elseif ( function_exists('get_default_prefs') ) {
+
+    // Used when called in $script_mode if no DB has been found
+    $prefs_strings = array_keys(get_default_prefs());
+
+  } else {
+    die("No 'get_default_prefs' function is available");
+  }
 
   $pstr = fopen($file,'w');
   if (!$pstr) {
@@ -266,13 +293,19 @@ function formatted_print($string) {
 
 if ( $script_mode ) {
 
-	require_once('lib/setup/timer.class.php');
-	$tiki_timer = new timer();
-	$tiki_timer->start();
+	if ( ! $quiet ) {
+		require_once('lib/setup/timer.class.php');
+		$tiki_timer = new timer();
+		$tiki_timer->start();
+	}
 
-	require_once('db/tiki-db.php');
-	require_once('lib/tikidblib.php');
-	$tikilib = new TikiDB($dbTiki);
+	if ( file_exists('db/local.php') ) {
+		require_once('db/tiki-db.php');
+		require_once('lib/tikidblib.php');
+		$tikilib = new TikiDB($dbTiki);
+	} else {
+		require_once('lib/setup/prefs.php'); // Used to get default prefs
+	}
 
 	$_REQUEST = array();
 	for ( $k = 1 ; $k < $_SERVER['argc'] ; $k++ ) {
@@ -302,7 +335,7 @@ $completion = isset($_REQUEST['completion']) && $_REQUEST['completion']=='y';
 if ( ! $completion && ! $quiet ) {
 	formatted_print("Initialization time: " . $tiki_timer->elapsed() . " seconds\n");
 }
-$tiki_timer->start("files");
+if ( ! $quiet ) $tiki_timer->start("files");
 
 $comments = isset ($_REQUEST['comments']);
 $close    = isset ($_REQUEST['close'])  || $comments;
@@ -371,7 +404,7 @@ if ((!isset($_REQUEST["sort"]) || $_REQUEST["sort"] != 'n') && ! $completion) {
 	if ( ! $quiet ) formatted_print( count($files) . " items done.\nTiki directory parsed in: " . $tiki_timer->stop("files") . " seconds\n\n" );
 	flush();
 }
-$tiki_timer->start("processing");
+if ( ! $quiet ) $tiki_timer->start("processing");
 
 if ( $completion ) {
 	if ( $script_mode ) {

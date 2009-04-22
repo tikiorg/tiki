@@ -23,6 +23,813 @@ Version 3.0
 ------------------
 
 ----------------------------------------------
+r18143 | sylvieg | 2009-04-22 00:53:00 +0200 (Wed, 22 Apr 2009) | 1 line
+
+oops: forgot a file for commit 15076(move the translation of the enumeration from php to smarty)
+----------------------------------------------
+r18142 | sylvieg | 2009-04-22 00:46:02 +0200 (Wed, 22 Apr 2009) | 1 line
+
+global
+----------------------------------------------
+r18137 | nyloth | 2009-04-21 23:29:42 +0200 (Tue, 21 Apr 2009) | 1 line
+
+more french translations (mainly for the installer)
+----------------------------------------------
+r18136 | nyloth | 2009-04-21 23:28:02 +0200 (Tue, 21 Apr 2009) | 1 line
+
+[FIX] admin menu: update strings in admin_menu.tpl to reflect the strings used in the database menu (for get_strings)
+----------------------------------------------
+r18135 | nyloth | 2009-04-21 23:26:43 +0200 (Tue, 21 Apr 2009) | 2 lines
+
+[FIX] installer: allow translation of profile names + remove old smarty code for the length of the list of profiles + don't move to top of page when clicking on 'help' icons that displays detailed explanations.
+
+----------------------------------------------
+r18134 | marclaporte | 2009-04-21 23:26:26 +0200 (Tue, 21 Apr 2009) | 1 line
+
+[FIX] fix doc link
+----------------------------------------------
+r18133 | marclaporte | 2009-04-21 23:01:57 +0200 (Tue, 21 Apr 2009) | 1 line
+
+[FIX] Fix links to documentation for Galaxia Workflow
+----------------------------------------------
+r18132 | marclaporte | 2009-04-21 22:21:10 +0200 (Tue, 21 Apr 2009) | 1 line
+
+[FIX] Correct two broken links
+----------------------------------------------
+r18131 | sylvieg | 2009-04-21 21:52:18 +0200 (Tue, 21 Apr 2009) | 1 line
+
+[FIX]menu: prefer to have an url on Admin section
+----------------------------------------------
+r18130 | jonnybradley | 2009-04-21 20:19:41 +0200 (Tue, 21 Apr 2009) | 1 line
+
+[FIX] Deactivate feature_jquery_tablesorter by default (unfinished feature)
+----------------------------------------------
+r18129 | jonnybradley | 2009-04-21 20:14:33 +0200 (Tue, 21 Apr 2009) | 1 line
+
+[FIX] No non-minified version of this file in autocomplete libs
+----------------------------------------------
+r18128 | marclaporte | 2009-04-21 19:17:40 +0200 (Tue, 21 Apr 2009) | 1 line
+
+[FIX] activating __smarty_notice_reporting__ by default, as this is more sensible default as a suboption of general error reporting (which remains off by default). So Smarty reporting only happens if general reporting is on.
+----------------------------------------------
+r18127 | marclaporte | 2009-04-21 19:03:06 +0200 (Tue, 21 Apr 2009) | 1 line
+
+[FIX] __ Each group can have its theme__ should be in relevant profiles, but not in barebones install.
+----------------------------------------------
+r18126 | chibaguy | 2009-04-21 17:49:34 +0200 (Tue, 21 Apr 2009) | 1 line
+
+[NEW] Global IE7 stylesheet (alternative to IE7-targetting hacks in regular stylesheets).
+----------------------------------------------
+r18125 | chibaguy | 2009-04-21 17:45:57 +0200 (Tue, 21 Apr 2009) | 1 line
+
+[ENH] Add conditional comment for ie7.css and enable theme ie7.css files, same as for IE6.
+----------------------------------------------
+r18124 | sylvieg | 2009-04-21 17:01:55 +0200 (Tue, 21 Apr 2009) | 1 line
+
+[FIX]wysiwyg: do not show smileys as not working+ fck has its own smileys
+----------------------------------------------
+r18123 | nyloth | 2009-04-21 15:42:29 +0200 (Tue, 21 Apr 2009) | 1 line
+
+[ENH] release copyright script: be able to use this script through an http proxy using the new '--tcpproxy' param.
+----------------------------------------------
+r18122 | sylvieg | 2009-04-21 15:37:11 +0200 (Tue, 21 Apr 2009) | 1 line
+
+[MOD]lang: check the syntax of the custom.php and displays an error (todo: find out how to get the eval error)
+----------------------------------------------
+r18121 | sylvieg | 2009-04-21 13:57:12 +0200 (Tue, 21 Apr 2009) | 1 line
+
+[MOD]darkroom: do not use a special visited font in menu + less contrast for categorizator
+----------------------------------------------
+r18120 | pkdille | 2009-04-21 13:57:08 +0200 (Tue, 21 Apr 2009) | 1 line
+
+[FIX] get_strings: global tikilib was at the wrong place
+----------------------------------------------
+r18119 | sylvieg | 2009-04-21 13:41:09 +0200 (Tue, 21 Apr 2009) | 1 line
+
+[FIX]rollback 17760: now the edit button is in the text on the right of the plugin
+----------------------------------------------
+r18118 | sylvieg | 2009-04-21 13:32:23 +0200 (Tue, 21 Apr 2009) | 1 line
+
+[FIX]fullscreen: url like tiki-index.php?page=xxx must not haev the = escaped
+----------------------------------------------
+r18116 | nyloth | 2009-04-21 09:54:06 +0200 (Tue, 21 Apr 2009) | 1 line
+
+[FIX] breadcrumbs: titles on admin pages were using wrong encoding, which was generating weird characters in french for example
+----------------------------------------------
+r18115 | sylvieg | 2009-04-21 00:04:28 +0200 (Tue, 21 Apr 2009) | 1 line
+
+[FIX]fullscreen: url like tiki-index.php?page=xxx must not haev the = escaped
+----------------------------------------------
+r18114 | sylvieg | 2009-04-20 23:55:13 +0200 (Mon, 20 Apr 2009) | 1 line
+
+[FIX]to avoid double declaration
+----------------------------------------------
+r18113 | ricks99 | 2009-04-20 21:53:07 +0200 (Mon, 20 Apr 2009) | 1 line
+
+[ENH]Use icons instead of text
+----------------------------------------------
+r18112 | ricks99 | 2009-04-20 20:15:24 +0200 (Mon, 20 Apr 2009) | 1 line
+
+[FIX]removed empty div
+----------------------------------------------
+r18111 | ricks99 | 2009-04-20 20:02:55 +0200 (Mon, 20 Apr 2009) | 1 line
+
+[ENH]allow for manual installation - link to do page (at step 4), better explanation of htaccess file (step 6).
+----------------------------------------------
+r18109 | nyloth | 2009-04-20 15:37:58 +0200 (Mon, 20 Apr 2009) | 1 line
+
+[FIX] release script: remove temporary files and backup files of get_strings.php to avoid them in the secdb step
+----------------------------------------------
+r18106 | nyloth | 2009-04-20 15:16:26 +0200 (Mon, 20 Apr 2009) | 2 lines
+
+[REL] Preparing 3.0beta4 release
+
+----------------------------------------------
+r18105 | nyloth | 2009-04-20 15:10:14 +0200 (Mon, 20 Apr 2009) | 1 line
+
+french translations for last updates of the installer
+----------------------------------------------
+r18104 | nyloth | 2009-04-20 14:18:49 +0200 (Mon, 20 Apr 2009) | 1 line
+
+[FIX] installer: missing tr for a string
+----------------------------------------------
+r18103 | nyloth | 2009-04-20 13:45:53 +0200 (Mon, 20 Apr 2009) | 1 line
+
+[REL] SecDB for 3.0beta4
+----------------------------------------------
+r18102 | nyloth | 2009-04-20 13:45:12 +0200 (Mon, 20 Apr 2009) | 1 line
+
+[REL] Update language.php files for 3.0beta4
+----------------------------------------------
+r18101 | nyloth | 2009-04-20 13:33:38 +0200 (Mon, 20 Apr 2009) | 1 line
+
+[FIX] release script: fix commit message of the update of language.php files
+----------------------------------------------
+r18100 | nyloth | 2009-04-20 13:29:52 +0200 (Mon, 20 Apr 2009) | 1 line
+
+[ENH] release: automatically update language.php files when running release.php
+----------------------------------------------
+r18099 | nyloth | 2009-04-20 13:27:23 +0200 (Mon, 20 Apr 2009) | 1 line
+
+[MOD] get_strings: to add it to the release script, allow running get_strings.php on a checkout, without a tiki installation (no database). In this case, it uses default prefs from lib/setup/prefs.php which has also been changed to be called without tikilib if needed.
+----------------------------------------------
+r18098 | nyloth | 2009-04-20 13:20:12 +0200 (Mon, 20 Apr 2009) | 1 line
+
+[FIX] typo in a french translation
+----------------------------------------------
+r18097 | chibaguy | 2009-04-20 09:58:58 +0200 (Mon, 20 Apr 2009) | 1 line
+
+[FIX] Removed excess white space caused by switching article title from div to h2. 
+----------------------------------------------
+r18096 | chibaguy | 2009-04-19 17:40:10 +0200 (Sun, 19 Apr 2009) | 1 line
+
+[FIX] Move print, etc. icons from center to right side.
+----------------------------------------------
+r18095 | chibaguy | 2009-04-19 15:32:33 +0200 (Sun, 19 Apr 2009) | 1 line
+
+[FIX] Missing property for file gallery Actions popup contents (thanks to spoonypjk for spotting problem).
+----------------------------------------------
+r18094 | luciash | 2009-04-19 14:04:44 +0200 (Sun, 19 Apr 2009) | 1 line
+
+Id to svn:keywords, removed svn:executable (there's no need to have this file executable)
+----------------------------------------------
+r18093 | luciash | 2009-04-19 13:41:34 +0200 (Sun, 19 Apr 2009) | 1 line
+
+just Id to svn:keywords, \brief and @author
+----------------------------------------------
+r18092 | luciash | 2009-04-19 13:32:33 +0200 (Sun, 19 Apr 2009) | 1 line
+
+[MOD] redirect plugin - SEO: Redirect with HTTP status 301 - Moved Permanently rather than the default response by header("Location: ") which is 302 - Found
+----------------------------------------------
+r18091 | marclaporte | 2009-04-19 09:43:43 +0200 (Sun, 19 Apr 2009) | 1 line
+
+[FIX] update installation docs
+----------------------------------------------
+r18090 | marclaporte | 2009-04-19 08:37:20 +0200 (Sun, 19 Apr 2009) | 1 line
+
+[FIX] Using Tiki's cache clearing mechanism which preserves .svn files, and not smarty
+----------------------------------------------
+r18089 | marclaporte | 2009-04-19 06:16:45 +0200 (Sun, 19 Apr 2009) | 1 line
+
+[FIX] Adding link to doc.tikiwiki.org only if feature_help is on.
+----------------------------------------------
+r18088 | chibaguy | 2009-04-19 05:50:54 +0200 (Sun, 19 Apr 2009) | 1 line
+
+[KIL] Not needed; new method for arrows.
+----------------------------------------------
+r18087 | marclaporte | 2009-04-19 05:45:05 +0200 (Sun, 19 Apr 2009) | 1 line
+
+[FIX] Improve UI of edit help. 1- Merge quicktags & wiki syntax in one section which reduces duplication. 2- Move less important comment about paragraph format to the bottom
+----------------------------------------------
+r18086 | chibaguy | 2009-04-18 16:44:05 +0200 (Sat, 18 Apr 2009) | 1 line
+
+[FIX] #tiki-center's position:relative causing hover popup dislocation, and no longer needed due to changed page-top background method.
+----------------------------------------------
+r18085 | luciash | 2009-04-18 15:46:35 +0200 (Sat, 18 Apr 2009) | 1 line
+
+[KIL] Simple theme: removing unmaintained theme before 3.0 release
+----------------------------------------------
+r18084 | luciash | 2009-04-18 15:45:27 +0200 (Sat, 18 Apr 2009) | 1 line
+
+[KIL] Simple theme: removing unmaintained theme before 3.0 release
+----------------------------------------------
+r18083 | luciash | 2009-04-18 15:37:21 +0200 (Sat, 18 Apr 2009) | 1 line
+
+[FIX] darkroom theme: specify background-color for html to match theme colors because some browsers display it system default (white or light grey) after the footer ends
+----------------------------------------------
+r18081 | marclaporte | 2009-04-18 10:37:44 +0200 (Sat, 18 Apr 2009) | 1 line
+
+With automatic upgrade and SecDB loaded automatically, there is no reason anymore to go back. And if someone did, they can use left-hand menu.
+----------------------------------------------
+r18080 | marclaporte | 2009-04-18 04:45:06 +0200 (Sat, 18 Apr 2009) | 1 line
+
+[FIX] Fix version number when using __lastup__
+----------------------------------------------
+r18079 | marclaporte | 2009-04-18 03:13:19 +0200 (Sat, 18 Apr 2009) | 1 line
+
+[FX] Propagating search filter settings to modules.
+----------------------------------------------
+r18078 | marclaporte | 2009-04-18 02:58:19 +0200 (Sat, 18 Apr 2009) | 1 line
+
+[MOD] Turning off mono plugin, by default, because it's not, errr, of the highest quality :-)
+----------------------------------------------
+r18077 | marclaporte | 2009-04-18 02:52:06 +0200 (Sat, 18 Apr 2009) | 1 line
+
+[FIX] cosmetic improvements to edit plugin interface.
+----------------------------------------------
+r18076 | marclaporte | 2009-04-18 02:46:22 +0200 (Sat, 18 Apr 2009) | 1 line
+
+[FIX] cosmetic improvements to edit plugin interface.
+----------------------------------------------
+r18074 | sylvieg | 2009-04-17 22:15:45 +0200 (Fri, 17 Apr 2009) | 1 line
+
+[FIX]sefurl: keep the space as + - ex: lang[]=en&lang[]=fr et space -> lang%255B%255D%253Den%2526lang%255B%255D%253Dfr+et+spaces
+----------------------------------------------
+r18073 | sylvieg | 2009-04-17 21:43:47 +0200 (Fri, 17 Apr 2009) | 1 line
+
+[FIX]perms: tiki_p_lock is more a tiki_p_edit_categorized than a tiki_p_view_categorized
+----------------------------------------------
+r18072 | marclaporte | 2009-04-17 20:36:28 +0200 (Fri, 17 Apr 2009) | 1 line
+
+[FIX] link to doc
+----------------------------------------------
+r18071 | jonnybradley | 2009-04-17 20:21:56 +0200 (Fri, 17 Apr 2009) | 5 lines
+
+[ENH] Cosmetic improvements to category picker - feedback welcome
+
+(Only in transitions CSS so far)
+
+
+----------------------------------------------
+r18070 | marclaporte | 2009-04-17 20:05:38 +0200 (Fri, 17 Apr 2009) | 1 line
+
+[FIX] Adding more security to two plugins.
+----------------------------------------------
+r18069 | marclaporte | 2009-04-17 20:03:06 +0200 (Fri, 17 Apr 2009) | 1 line
+
+[FIX] dos2unix 
+----------------------------------------------
+r18068 | marclaporte | 2009-04-17 19:53:43 +0200 (Fri, 17 Apr 2009) | 1 line
+
+[FIX] Adding padding to make profiles installer nicer.
+----------------------------------------------
+r18067 | jonnybradley | 2009-04-17 18:42:56 +0200 (Fri, 17 Apr 2009) | 2 lines
+
+[MOD] Added new Smarty var $ie6 if IE6 browser detected and changed #col3 inline CSS style in tiki.tpl to suit
+
+----------------------------------------------
+r18066 | marclaporte | 2009-04-17 18:06:57 +0200 (Fri, 17 Apr 2009) | 1 line
+
+[FIX] shorter URLs for 2 tracker modules, __like in since your last visit__ module 
+----------------------------------------------
+r18065 | sylvieg | 2009-04-17 17:14:18 +0200 (Fri, 17 Apr 2009) | 1 line
+
+[FIX]include plugin: the max_times was preventing to load more than 5 times the same page but with start and end different..... now test on start and end too -> perhaps max_times must be ignored if start and end are specified
+----------------------------------------------
+r18064 | marclaporte | 2009-04-17 16:59:58 +0200 (Fri, 17 Apr 2009) | 1 line
+
+[FIX] Avoir error message on install. Thanks Matthew.
+----------------------------------------------
+r18063 | sylvieg | 2009-04-17 16:27:26 +0200 (Fri, 17 Apr 2009) | 1 line
+
+[FIX]sefurl: take away accent
+----------------------------------------------
+r18062 | sylvieg | 2009-04-17 15:24:37 +0200 (Fri, 17 Apr 2009) | 1 line
+
+[FIX]perm: module last_tracker_items and last_modif_tracker_items checks perms on tracker + kill duplicate  code + new param sort_mode + new param fieldId
+----------------------------------------------
+r18061 | luciash | 2009-04-17 14:57:16 +0200 (Fri, 17 Apr 2009) | 1 line
+
+.plugin-form-float must be above everything (set z-index to 1000)
+----------------------------------------------
+r18060 | luciash | 2009-04-17 14:34:41 +0200 (Fri, 17 Apr 2009) | 1 line
+
+better message than "No Internet Connection has been found" when the installer cannot connect to the profiles repository for some reason (e.g. xmlrpc missing)
+----------------------------------------------
+r18059 | luciash | 2009-04-17 14:02:46 +0200 (Fri, 17 Apr 2009) | 1 line
+
+extending the note that php tags in tpl require PHP Smarty secure mode off
+----------------------------------------------
+r18058 | luciash | 2009-04-17 13:30:16 +0200 (Fri, 17 Apr 2009) | 1 line
+
+tiki installer: replaced "Profile" from "Install/Upgrade" strings to prevent confusion (we don't upgrade only profiles), some simpification changes of "TikiWiki" to "Tiki" where appropriate
+----------------------------------------------
+r18057 | luciash | 2009-04-17 13:12:25 +0200 (Fri, 17 Apr 2009) | 1 line
+
+[FIX] thenews: align the top line of #footer nicely with bottom lines of columns
+----------------------------------------------
+r18056 | luciash | 2009-04-17 12:58:06 +0200 (Fri, 17 Apr 2009) | 1 line
+
+[ENH] #sitelocbar: nicer padding
+----------------------------------------------
+r18055 | luciash | 2009-04-17 12:49:31 +0200 (Fri, 17 Apr 2009) | 1 line
+
+[FIX] thenews theme: give every div in #tiki-center some padding and little margin to images by default
+----------------------------------------------
+r18054 | luciash | 2009-04-17 11:44:45 +0200 (Fri, 17 Apr 2009) | 1 line
+
+[FIX] tiki setup: this is all ugly hardcoded html but the opening tags could match their closing tags at least
+----------------------------------------------
+r18053 | luciash | 2009-04-17 11:41:26 +0200 (Fri, 17 Apr 2009) | 1 line
+
+[MOD] match the tiki 3.0 logo
+----------------------------------------------
+r18052 | nyloth | 2009-04-17 11:41:05 +0200 (Fri, 17 Apr 2009) | 10 lines
+
+[ENH] translations: get_strings.php can now be called as a script in command line, without authentication.
+
+Usage example:
+  php5 get_strings.php completion lang=fr
+
++ New param 'quiet' to reduce the verbosity (keeping only most important info), especially useful in command line
+
+Note: This enhencement has mainly been done to call get_strings.php directly from the release scripts, in order to release up-to-date files to simplify the work of translators.
+
+
+----------------------------------------------
+r18051 | marclaporte | 2009-04-17 10:04:25 +0200 (Fri, 17 Apr 2009) | 1 line
+
+[FIX] Ephemerides is a deleted feature. Remove some traces.
+----------------------------------------------
+r18050 | sylvieg | 2009-04-17 00:50:20 +0200 (Fri, 17 Apr 2009) | 1 line
+
+[FIX]perm: mod-tracker_comment->todo perm on item+numrows to be satisfied
+----------------------------------------------
+r18049 | sylvieg | 2009-04-16 22:39:14 +0200 (Thu, 16 Apr 2009) | 1 line
+
+[FIX]wiki: check perm on like pages
+----------------------------------------------
+r18048 | sylvieg | 2009-04-16 22:30:23 +0200 (Thu, 16 Apr 2009) | 1 line
+
+[FIX]prefs: users_prefs_theme seems not ot be used
+----------------------------------------------
+r18046 | lphuberdeau | 2009-04-16 20:42:16 +0200 (Thu, 16 Apr 2009) | 1 line
+
+[NEW] Forum handler for profiles
+----------------------------------------------
+r18045 | sylvieg | 2009-04-16 20:20:57 +0200 (Thu, 16 Apr 2009) | 1 line
+
+[MOD]modules: do not allow to move a module in a column when the column is not displayed
+----------------------------------------------
+r18044 | sylvieg | 2009-04-16 20:08:23 +0200 (Thu, 16 Apr 2009) | 1 line
+
+[MOD]modules: do not allow to move a module in a column when the column is not displayed
+----------------------------------------------
+r18043 | jonnybradley | 2009-04-16 19:52:15 +0200 (Thu, 16 Apr 2009) | 2 lines
+
+[MOD] Advisory "tip" on plugin aliases tab if feature_jquery disabled 
+
+----------------------------------------------
+r18042 | jonnybradley | 2009-04-16 19:41:57 +0200 (Thu, 16 Apr 2009) | 2 lines
+
+[FIX] Plugin alias admin: Show new plugin alias form when none exist to edit
+
+----------------------------------------------
+r18041 | jonnybradley | 2009-04-16 19:21:26 +0200 (Thu, 16 Apr 2009) | 2 lines
+
+[KIL] Removal of admin/plugins (aliases) as that is now a tab on admin/textarea
+
+----------------------------------------------
+r18040 | lphuberdeau | 2009-04-16 19:16:40 +0200 (Thu, 16 Apr 2009) | 1 line
+
+[Oops]
+----------------------------------------------
+r18039 | lphuberdeau | 2009-04-16 19:15:17 +0200 (Thu, 16 Apr 2009) | 1 line
+
+[FIX] Don't remove trackers with the same name
+----------------------------------------------
+r18036 | jonnybradley | 2009-04-16 18:39:46 +0200 (Thu, 16 Apr 2009) | 1 line
+
+[MOD] Sync DB files
+----------------------------------------------
+r18035 | jonnybradley | 2009-04-16 18:30:18 +0200 (Thu, 16 Apr 2009) | 1 line
+
+[KIL] Remove old 'Email Address' QuickTags
+----------------------------------------------
+r18034 | jonnybradley | 2009-04-16 18:22:02 +0200 (Thu, 16 Apr 2009) | 2 lines
+
+[ENH] Use popup_plugin_form for QuickTags that use plugins (quote, flash, code and image)
+
+----------------------------------------------
+r18033 | lphuberdeau | 2009-04-16 18:10:51 +0200 (Thu, 16 Apr 2009) | 1 line
+
+[FIX] Concatenation done before reference replacement
+----------------------------------------------
+r18032 | jonnybradley | 2009-04-16 18:02:07 +0200 (Thu, 16 Apr 2009) | 3 lines
+
+[FIX] Don't try to (jquery) animate the edit help panel as sometimes it wasn't resizing properly
+(combination of right hand position and max-width a percentage, i think)
+
+----------------------------------------------
+r18031 | lphuberdeau | 2009-04-16 17:49:52 +0200 (Thu, 16 Apr 2009) | 1 line
+
+[MOD] Report database out of date when an SQL query error occurs
+----------------------------------------------
+r18030 | lphuberdeau | 2009-04-16 17:43:33 +0200 (Thu, 16 Apr 2009) | 1 line
+
+[NEW] Article handler for profiles
+----------------------------------------------
+r18029 | lphuberdeau | 2009-04-16 16:36:01 +0200 (Thu, 16 Apr 2009) | 1 line
+
+[FIX] Adding tiki_plugin_security to default install
+----------------------------------------------
+r18028 | lphuberdeau | 2009-04-16 16:27:46 +0200 (Thu, 16 Apr 2009) | 1 line
+
+[NEW] Page listing plugins pending approval
+----------------------------------------------
+r18027 | sylvieg | 2009-04-16 16:13:00 +0200 (Thu, 16 Apr 2009) | 1 line
+
+[FIX]translation: Do not know if 17114 must to be rolled back. all the : have been changed to &nbsp;: but RE: is translating RE&nbsp;: and then is escaped. Change this one just for now
+----------------------------------------------
+r18026 | lphuberdeau | 2009-04-16 15:19:47 +0200 (Thu, 16 Apr 2009) | 1 line
+
+[MOD] Moving plugin validation to its own table to ease auditing
+----------------------------------------------
+r18025 | sylvieg | 2009-04-16 14:19:15 +0200 (Thu, 16 Apr 2009) | 1 line
+
+[FIX]title: the escape of & in look & feel is done in breadcrumb lib
+----------------------------------------------
+r18024 | chibaguy | 2009-04-16 04:43:41 +0200 (Thu, 16 Apr 2009) | 1 line
+
+[FIX] Non-validating CSS for IE6 replaced with conditional comment.
+----------------------------------------------
+r18022 | sylvieg | 2009-04-16 00:29:47 +0200 (Thu, 16 Apr 2009) | 1 line
+
+sefurl
+----------------------------------------------
+r18021 | lphuberdeau | 2009-04-15 23:25:59 +0200 (Wed, 15 Apr 2009) | 1 line
+
+[FIX] Use tiki's clear function instead of smarty's
+----------------------------------------------
+r18020 | sylvieg | 2009-04-15 22:39:02 +0200 (Wed, 15 Apr 2009) | 1 line
+
+re-rollback 18013 17997: <textarea must be escaped, {textarea must not
+----------------------------------------------
+r18019 | lphuberdeau | 2009-04-15 22:28:54 +0200 (Wed, 15 Apr 2009) | 1 line
+
+[NEW] Allow profiles to specify an instruction page to redirect to after installation
+----------------------------------------------
+r18018 | lphuberdeau | 2009-04-15 22:08:44 +0200 (Wed, 15 Apr 2009) | 1 line
+
+[MOD] Indicate which profiles are installed in the listing and replace forget option with reinsall
+----------------------------------------------
+r18017 | marclaporte | 2009-04-15 21:45:12 +0200 (Wed, 15 Apr 2009) | 1 line
+
+[FIX] Instructions for robots were not identical with and without slash. To avoid this in the future, I reordered the instructions. Related: http://dev.tikiwiki.org/wish442
+----------------------------------------------
+r18016 | lphuberdeau | 2009-04-15 21:43:20 +0200 (Wed, 15 Apr 2009) | 1 line
+
+[NEW] Adding RSS profile handler
+----------------------------------------------
+r18015 | marclaporte | 2009-04-15 21:39:56 +0200 (Wed, 15 Apr 2009) | 1 line
+
+[FIX] fix doc
+----------------------------------------------
+r18014 | marclaporte | 2009-04-15 21:38:56 +0200 (Wed, 15 Apr 2009) | 1 line
+
+[MOD] Moving wiki syntax from __wiki__ admin panel to __text area__ admin panel. Someone could be using Tiki without the wiki engine and still need to configure wiki syntax.
+----------------------------------------------
+r18013 | sylvieg | 2009-04-15 21:38:08 +0200 (Wed, 15 Apr 2009) | 1 line
+
+rollback 17007: to have back html like '<a>' when editing a user module -> lang[]=en&lang[]=fr sitll not working in a wiki page
+----------------------------------------------
+r18012 | sylvieg | 2009-04-15 21:27:27 +0200 (Wed, 15 Apr 2009) | 1 line
+
+sefurl
+----------------------------------------------
+r18009 | marclaporte | 2009-04-15 20:20:26 +0200 (Wed, 15 Apr 2009) | 1 line
+
+[FIX] Custom Home: removing specific references to version numbers or image gallery ID. This feature is a candidate for being pulled out eventually as you can do everything in a wiki page nowadays. Could be useful for Splash pages with totally different layout if it wasn't using tiki.tpl
+----------------------------------------------
+r18008 | sylvieg | 2009-04-15 19:46:02 +0200 (Wed, 15 Apr 2009) | 1 line
+
+[MOD]lang: to be able to modifiy custom.php file directly from the api
+----------------------------------------------
+r18006 | lphuberdeau | 2009-04-15 19:34:40 +0200 (Wed, 15 Apr 2009) | 1 line
+
+[FIX] Do not return to top when clicking the details button
+----------------------------------------------
+r18005 | lphuberdeau | 2009-04-15 19:16:37 +0200 (Wed, 15 Apr 2009) | 1 line
+
+[FIX] Preserve line breaks
+----------------------------------------------
+r18004 | lphuberdeau | 2009-04-15 19:16:04 +0200 (Wed, 15 Apr 2009) | 1 line
+
+[FIX] Plugin edit submission should not rely on a javascript error to work
+----------------------------------------------
+r18003 | jonnybradley | 2009-04-15 19:11:14 +0200 (Wed, 15 Apr 2009) | 1 line
+
+[FIX] Include old "sorttable" JS file if feature_jquery_tablesorter not enabled
+----------------------------------------------
+r18001 | lphuberdeau | 2009-04-15 18:42:48 +0200 (Wed, 15 Apr 2009) | 1 line
+
+[MOD] Do not display approve and preview in plugin approval in preview mode (not usable) and only show plugin edit if javascript is enabled
+----------------------------------------------
+r18000 | sylvieg | 2009-04-15 17:34:19 +0200 (Wed, 15 Apr 2009) | 1 line
+
+[FIX]users: a tiki_p_admin_junior can not change password of other users
+----------------------------------------------
+r17999 | nyloth | 2009-04-15 16:22:05 +0200 (Wed, 15 Apr 2009) | 1 line
+
+[FIX] installer: change strings that was too much splitted in order to have full sentences that could really be translated + french translation of the installer
+----------------------------------------------
+r17998 | sylvieg | 2009-04-15 16:11:26 +0200 (Wed, 15 Apr 2009) | 1 line
+
+[MOD]categ: put a class on the flipper to be able to be able to style (like put on the right
+----------------------------------------------
+r17997 | sylvieg | 2009-04-15 15:42:59 +0200 (Wed, 15 Apr 2009) | 1 line
+
+[FIX]wiki: to have a data like lang[]=en&lang[]=fr - please test to see if no side effect
+----------------------------------------------
+r17996 | sylvieg | 2009-04-15 15:27:45 +0200 (Wed, 15 Apr 2009) | 1 line
+
+[FIX]wiki: to have a page with name like  lang[]=en&lang[]=fr correctlly displayed
+----------------------------------------------
+r17995 | aproulx | 2009-04-15 15:27:31 +0200 (Wed, 15 Apr 2009) | 1 line
+
+[ADD] class param for fancylist and correction on tiki-articles.php (committed by mistake last week)
+----------------------------------------------
+r17994 | luciash | 2009-04-15 14:47:26 +0200 (Wed, 15 Apr 2009) | 1 line
+
+for now just replace the strings in $mail_data marked to be translated by watcher language when simple email notification format not set in tracker, TODO: capture and translate them in smarty tpls too
+----------------------------------------------
+r17992 | luciash | 2009-04-15 14:14:55 +0200 (Wed, 15 Apr 2009) | 1 line
+
+[FIX] simple tracker notifications: translate e-mails correctly by watcher language (TODO: make it cacheable/use smarty template to improve performance)
+----------------------------------------------
+r17991 | luciash | 2009-04-15 11:30:15 +0200 (Wed, 15 Apr 2009) | 1 line
+
+[FIX] simple tracker notification: bring the unchanged Subject back, TODO: remove the rest of tra(), (still no idea where the notification mail gets the field names translated in)
+----------------------------------------------
+r17990 | pkdille | 2009-04-15 10:35:58 +0200 (Wed, 15 Apr 2009) | 1 line
+
+[FIX] + [MOD] filegal_manager: The default behaviour was to open the file gallery 1 (since r17715) which may not exist. Now, if there's only one filegal, the filegal_manager opens it. If there are more than one, the fgal_manager opens the list of gals.
+----------------------------------------------
+r17989 | Jyhem | 2009-04-15 10:15:00 +0200 (Wed, 15 Apr 2009) | 1 line
+
+[ENH] Text improvement:  Cosmetic fixes (thanks, Marc)
+----------------------------------------------
+r17988 | pkdille | 2009-04-15 10:14:25 +0200 (Wed, 15 Apr 2009) | 1 line
+
+[FIX] send newsletters: better test on uploaded files to avoid errors (eg. if file field is empty)
+----------------------------------------------
+r17987 | chibaguy | 2009-04-15 10:03:18 +0200 (Wed, 15 Apr 2009) | 1 line
+
+[FIX] Search bar can't be positioned relative to #header-top bottom because activating topbar custom code pulls search bar down onto login form.
+----------------------------------------------
+r17986 | chibaguy | 2009-04-15 08:59:32 +0200 (Wed, 15 Apr 2009) | 1 line
+
+[ENH] Site header, menu, My Tiki, etc. improvements.
+----------------------------------------------
+r17985 | chibaguy | 2009-04-15 06:34:35 +0200 (Wed, 15 Apr 2009) | 1 line
+
+[FIX] Horizontal suckerfish dropdown offset, other small padding improvements.
+----------------------------------------------
+r17984 | marclaporte | 2009-04-15 01:12:02 +0200 (Wed, 15 Apr 2009) | 1 line
+
+[FIX] For MyTiki articles to be treated the same way as blogs, tasks, etc.
+----------------------------------------------
+r17983 | marclaporte | 2009-04-14 23:59:10 +0200 (Tue, 14 Apr 2009) | 1 line
+
+[FIX] cached file count shouldn't include svn files
+----------------------------------------------
+r17982 | marclaporte | 2009-04-14 23:13:04 +0200 (Tue, 14 Apr 2009) | 1 line
+
+[FIX] templates_c cache clearing was deleting .svn info
+----------------------------------------------
+r17981 | marclaporte | 2009-04-14 21:48:04 +0200 (Tue, 14 Apr 2009) | 1 line
+
+[FIX] Cosmetic fix in validation email.
+----------------------------------------------
+r17980 | marclaporte | 2009-04-14 21:45:54 +0200 (Tue, 14 Apr 2009) | 1 line
+
+[FIX]  People don't care to know what Tiki is in their registration email. Can cause confusion about site.
+----------------------------------------------
+r17979 | marclaporte | 2009-04-14 20:42:01 +0200 (Tue, 14 Apr 2009) | 1 line
+
+[FIX] fix broken link to image
+----------------------------------------------
+r17978 | sylvieg | 2009-04-14 19:48:14 +0200 (Tue, 14 Apr 2009) | 1 line
+
+[MOD]sefurl: option to create url like article1-title bag1-title
+----------------------------------------------
+r17977 | marclaporte | 2009-04-14 19:47:12 +0200 (Tue, 14 Apr 2009) | 1 line
+
+[FIX] Update post-release instructions. Do we still want, for example, to call it 1.9.2 (SVN) until it's official at 1.9.2?
+----------------------------------------------
+r17976 | sylvieg | 2009-04-14 18:20:30 +0200 (Tue, 14 Apr 2009) | 1 line
+
+[FIX]per: tiki_p_blog_post is more like a tiki_p_edit_categorized that a tiki_p_view_categorized
+----------------------------------------------
+r17975 | sylvieg | 2009-04-14 17:34:17 +0200 (Tue, 14 Apr 2009) | 1 line
+
+[MOD]sefurl: urlencode + the title article option (setting still not to be committed)
+----------------------------------------------
+r17974 | sylvieg | 2009-04-14 17:10:18 +0200 (Tue, 14 Apr 2009) | 1 line
+
+reference
+----------------------------------------------
+r17973 | sylvieg | 2009-04-14 16:11:32 +0200 (Tue, 14 Apr 2009) | 1 line
+
+admin page
+----------------------------------------------
+r17971 | chibaguy | 2009-04-14 13:15:17 +0200 (Tue, 14 Apr 2009) | 1 line
+
+[ENH] No need for suckerfish horizontal menu top items to have explicit width, so menu width can be reduced; also minor adjustments for IE.
+----------------------------------------------
+r17970 | marclaporte | 2009-04-14 12:32:16 +0200 (Tue, 14 Apr 2009) | 1 line
+
+[ENH] Adding 4 new profiles. They are still being worked on. Company_Intranet is a good example.
+----------------------------------------------
+r17969 | marclaporte | 2009-04-14 12:02:25 +0200 (Tue, 14 Apr 2009) | 1 line
+
+[FIX] Save user a click until calendar is created.
+----------------------------------------------
+r17968 | nyloth | 2009-04-14 11:40:26 +0200 (Tue, 14 Apr 2009) | 2 lines
+
+[FIX][NEW] pagination: do not display "Page 1/1" by default when there is only one page in results. Add an option "pagination_hide_if_one_page" with a checkbox 'Hide pagination when there is only one page' in admin look panel.
+
+----------------------------------------------
+r17967 | nyloth | 2009-04-14 11:37:54 +0200 (Tue, 14 Apr 2009) | 1 line
+
+[MOD] precision in tikirelease doc
+----------------------------------------------
+r17966 | Jyhem | 2009-04-14 11:07:52 +0200 (Tue, 14 Apr 2009) | 1 line
+
+[ENH] Text improvement:  Technical accuracy (thanks, Gary)
+----------------------------------------------
+r17965 | marclaporte | 2009-04-14 09:49:34 +0200 (Tue, 14 Apr 2009) | 1 line
+
+[FIX] Fix broken links to category browser.
+----------------------------------------------
+r17964 | pkdille | 2009-04-13 23:10:50 +0200 (Mon, 13 Apr 2009) | 1 line
+
+[MOD] some french translations
+----------------------------------------------
+r17961 | sylvieg | 2009-04-13 18:11:24 +0200 (Mon, 13 Apr 2009) | 1 line
+
+[FIX]banner: default maxClicks in db has been set to NULL :-(
+----------------------------------------------
+r17960 | sylvieg | 2009-04-13 17:24:05 +0200 (Mon, 13 Apr 2009) | 1 line
+
+[FIX]banner: site banner are not depending on custom code when no logo
+----------------------------------------------
+r17958 | chibaguy | 2009-04-13 14:51:01 +0200 (Mon, 13 Apr 2009) | 1 line
+
+[ENH] A little padding in table.normal td (as for example in view tracker).
+----------------------------------------------
+r17957 | chibaguy | 2009-04-13 12:00:10 +0200 (Mon, 13 Apr 2009) | 1 line
+
+[FIX] Horizontal PHP Layers menu padding and border on right side of item.
+----------------------------------------------
+r17956 | pkdille | 2009-04-13 08:38:17 +0200 (Mon, 13 Apr 2009) | 1 line
+
+[LANG] get_strings on all language files
+----------------------------------------------
+r17955 | marclaporte | 2009-04-13 00:25:59 +0200 (Mon, 13 Apr 2009) | 1 line
+
+[FIX] Update link.
+----------------------------------------------
+r17954 | xavidp | 2009-04-12 18:08:39 +0200 (Sun, 12 Apr 2009) | 1 line
+
+installation / update process translated
+----------------------------------------------
+r17952 | chibaguy | 2009-04-12 12:53:57 +0200 (Sun, 12 Apr 2009) | 1 line
+
+[FIX] 100% wide .horbar caused it to not share line with searchbar in IE7.
+----------------------------------------------
+r17951 | marclaporte | 2009-04-12 10:33:07 +0200 (Sun, 12 Apr 2009) | 1 line
+
+[FIX] Restoring help_section specific styles for 2 themes. Now identical to transition styles but the could diverge later. Thanks Gary and Pkdille
+----------------------------------------------
+r17950 | nyloth | 2009-04-12 10:31:24 +0200 (Sun, 12 Apr 2009) | 1 line
+
+[FIX] installer: use the version available in lib/setup/twversion.class.php instead of an hardcoded version, to have only only central place to update when releasing
+----------------------------------------------
+r17949 | chibaguy | 2009-04-12 10:27:54 +0200 (Sun, 12 Apr 2009) | 1 line
+
+[ENH] Improved phplayers and css menu details.
+----------------------------------------------
+r17948 | marclaporte | 2009-04-12 10:26:39 +0200 (Sun, 12 Apr 2009) | 1 line
+
+[FIX] Making edit help more intuitive and to handle better if javascript is not available.  1- If javacript is available, removing the plugin examples in listing on the right-hand side. Why?  1- This section is not very large and already contains quite a bit on info. 2- We keep the description and this should be sufficient for users to know if they are interested or not in each plugin. 3- If they are interested and javascript is available, they click insert and they get a very nice form where they just fill in the boxes.  This is so much better than old way of doing, which was to copy-paste sample plugin code and to fiddle in the wiki page. If javascript is not available, all the information is below the wiki edit box, much like 2.x 
+----------------------------------------------
+r17947 | marclaporte | 2009-04-12 10:07:05 +0200 (Sun, 12 Apr 2009) | 1 line
+
+[FIX] Doc link for Mouseovr plugin
+----------------------------------------------
+r17946 | chibaguy | 2009-04-12 09:42:13 +0200 (Sun, 12 Apr 2009) | 1 line
+
+[FIX] input[type=text] px width made some inputs too narrow.
+----------------------------------------------
+r17945 | marclaporte | 2009-04-12 09:26:07 +0200 (Sun, 12 Apr 2009) | 1 line
+
+[DEL] Removing wikiplugin_example.php because 1- It doesn't work  2- We have enoigh plugins to serve as examples. Thanks pkdille.
+----------------------------------------------
+r17944 | marclaporte | 2009-04-12 09:12:57 +0200 (Sun, 12 Apr 2009) | 1 line
+
+[DEL] Removing wikiplugin_example.php because 1- It doesn't work  2- We have enoigh plugins to serve as examples.
+----------------------------------------------
+r17943 | marclaporte | 2009-04-12 07:52:28 +0200 (Sun, 12 Apr 2009) | 1 line
+
+[FIX] Making edit help more intuitive 1- Merging two help boxes into one. Why? Two help boxes is confusing and plugins are just advanced wiki syntax anyway. 2- Help now open in one click instead of two
+----------------------------------------------
+r17942 | marclaporte | 2009-04-12 07:11:32 +0200 (Sun, 12 Apr 2009) | 1 line
+
+[FIX] Removing specific style info for help_sections as it's better to rely on the one in transition
+----------------------------------------------
+r17941 | marclaporte | 2009-04-12 06:57:39 +0200 (Sun, 12 Apr 2009) | 1 line
+
+[FIX] To avoid messages similar to about __This edit session will expire in 300 minutes. Preview or Save your work to restart the edit session timer. __ to overlap above this edit plugin helper.
+----------------------------------------------
+r17939 | marclaporte | 2009-04-12 05:10:17 +0200 (Sun, 12 Apr 2009) | 1 line
+
+[MOD] Planning 3.0Beta4
+----------------------------------------------
+r17938 | marclaporte | 2009-04-12 04:52:51 +0200 (Sun, 12 Apr 2009) | 1 line
+
+[ENH] Adding an admin quicklink to activate/deactivate plugins
+----------------------------------------------
+r17937 | marclaporte | 2009-04-12 04:50:15 +0200 (Sun, 12 Apr 2009) | 1 line
+
+[MOD] Preparing for an eventual Beta4 
+----------------------------------------------
+r17936 | marclaporte | 2009-04-12 02:35:20 +0200 (Sun, 12 Apr 2009) | 1 line
+
+[FIX] Improving the installer 1-Link to human-readable and translations. 2-centering so continue button doesn't look out of place
+----------------------------------------------
+r17935 | marclaporte | 2009-04-12 01:32:01 +0200 (Sun, 12 Apr 2009) | 1 line
+
+[FIX] Correcting instructions. We used to have to have fix and open. I am not sure how relevant this is anymore.
+----------------------------------------------
+r17934 | marclaporte | 2009-04-12 01:28:26 +0200 (Sun, 12 Apr 2009) | 1 line
+
+[FIX] Correcting instructions
+----------------------------------------------
+r17933 | marclaporte | 2009-04-12 01:22:29 +0200 (Sun, 12 Apr 2009) | 1 line
+
+[FIX] Move __Sender email__ to better place in admin panel. This setting is very important.
+----------------------------------------------
+r17932 | marclaporte | 2009-04-12 00:45:17 +0200 (Sun, 12 Apr 2009) | 1 line
+
+[FIX] Moving __Maximum number of records in listings__ next to pagination settings.
+----------------------------------------------
+r17930 | nyloth | 2009-04-11 17:49:57 +0200 (Sat, 11 Apr 2009) | 1 line
+
+[REL] SecDB for 3.0beta3
+----------------------------------------------
+r17929 | chibaguy | 2009-04-11 17:13:44 +0200 (Sat, 11 Apr 2009) | 1 line
+
+[ENH] Minor menu improvements.
+----------------------------------------------
+r17928 | chibaguy | 2009-04-11 16:57:19 +0200 (Sat, 11 Apr 2009) | 1 line
+
+[ENH] Menu contrast and hover improvements.
+----------------------------------------------
+r17927 | sylvieg | 2009-04-11 16:12:44 +0200 (Sat, 11 Apr 2009) | 1 line
+
+[FIX]plugin: trim also at the end of each param cr... a plugin can be on multiple line
+----------------------------------------------
+r17926 | sylvieg | 2009-04-11 13:09:11 +0200 (Sat, 11 Apr 2009) | 1 line
+
+rollback 17916 - this change is topo dangerous in a prelease
+----------------------------------------------
+r17925 | nyloth | 2009-04-11 10:43:14 +0200 (Sat, 11 Apr 2009) | 1 line
+
+[REL] SecDB for 3.0beta3
+----------------------------------------------
+r17924 | nyloth | 2009-04-11 10:41:29 +0200 (Sat, 11 Apr 2009) | 1 line
+
+[FIX] fix typo in mod-adsense.php
+----------------------------------------------
+r17923 | nyloth | 2009-04-11 10:36:09 +0200 (Sat, 11 Apr 2009) | 1 line
+
+[REL] SecDB for 3.0beta3
+----------------------------------------------
+r17922 | nyloth | 2009-04-11 09:47:27 +0200 (Sat, 11 Apr 2009) | 2 lines
+
+[REL] Preparing 3.0beta3 release
+----------------------------------------------
 r17921 | nyloth | 2009-04-11 09:10:27 +0200 (Sat, 11 Apr 2009) | 1 line
 
 [FIX] fix tiki.sql for comments locking which was causing troubles on fresh installs

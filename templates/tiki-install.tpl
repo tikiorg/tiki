@@ -168,7 +168,7 @@
 	</div>
 {/section}
 {/if}
-	<p>{tr}Use this page to create a new database connection.{/tr}</p>
+	<p>{tr}Use this page to create a new database connection, or use the <a href="http://doc.tikiwiki.org/Manual+Installation" title="manual installation">manual installation process</a>.{/tr} <a href="http://doc.tikiwiki.org/Manual+Installation" target="_blank" title="{tr}Help{/tr}"><img src="pics/icons/help.png" alt="{tr}Help{/tr}" /></a></p>
 	<form action="tiki-install.php" method="post">
 		<input type="hidden" name="install_step" value="4" />
 {if $multi}		<input type="hidden" name="multi" value="{$multi}" />{/if}
@@ -182,7 +182,7 @@
 {foreach key=dsn item=dbname from=$dbservers}
 				<option value="{$dsn}">{$dbname}</option>
 {/foreach}
-			</select> <a href="#" onclick="flip('db_help');" title="{tr}Help{/tr}"><img src="pics/icons/help.png" alt="{tr}Help{/tr}" /></a>
+			</select> <a href="javascript:void(0)" onclick="flip('db_help');" title="{tr}Help{/tr}"><img src="pics/icons/help.png" alt="{tr}Help{/tr}" /></a>
 			<div style="display:none" id="db_help">
 				<p>{tr}Select the type of database to use with Tiki.{/tr}</p>
 				<p>{tr}Only databases supported by your PHP installation are listed here. If your database is not in the list, try to install the appropriate PHP extension.{/tr}</p>
@@ -192,7 +192,7 @@
 		<div style="padding:5px">
 			<label for="host">{tr}Host name:{/tr}</label>
 			<div style="margin-left:1em">
-			<input type="text" name="host" id="host" value="{if isset($smarty.request.host)}{$smarty.request.host|escape:"html"}{else}localhost{/if}" size="40" /> <a href="#" onclick="flip('host_help');" title="{tr}Help{/tr}"><img src="pics/icons/help.png" alt="{tr}Help{/tr}" /></a>
+			<input type="text" name="host" id="host" value="{if isset($smarty.request.host)}{$smarty.request.host|escape:"html"}{else}localhost{/if}" size="40" /> <a href="javascript:void(0)" onclick="flip('host_help');" title="{tr}Help{/tr}"><img src="pics/icons/help.png" alt="{tr}Help{/tr}" /></a>
 			<br /><em>{tr}Enter the host name or IP for your database.{/tr}</em>
 			<div style="display:none;" id="host_help">
 				<p>{tr}Use <strong>localhost</strong> if the database is running on the same machine as Tiki.{/tr} {tr}For SQLite, enter the path and filename to your database file.{/tr}</p>
@@ -202,7 +202,7 @@
 		<div style="padding:5px;">
 			<label for="name">{tr}Database name:{/tr}</label>
 			<div style="margin-left:1em;">
-			<input type="text" id="name" name="name" size="40" value="{$smarty.request.name|escape:"html"}" /> <a href="#" onclick="flip('name_help');" title="{tr}Help{/tr}"><img src="pics/icons/help.png" alt="{tr}Help{/tr}" /></a>
+			<input type="text" id="name" name="name" size="40" value="{$smarty.request.name|escape:"html"}" /> <a href="javascript:void(0)" onclick="flip('name_help');" title="{tr}Help{/tr}"><img src="pics/icons/help.png" alt="{tr}Help{/tr}" /></a>
 		
 			<br /><em>{tr}Enter the name of the database that Tiki will use.{/tr}</em> 
 			<div style="margin-left:1em;display:none;" id="name_help">
@@ -278,13 +278,13 @@
 			 {if $tikidb_created}<p style="text-align:center"><img src="pics/icons/sticky.png" alt="{tr}Warning{/tr}" style="vertical-align:middle"/> <strong>{tr}Warning:{/tr}</strong> {tr}This will destroy your current database.{/tr}</p>{/if}
 			{if $has_internet_connection eq 'y'}
 			  <p>{tr}Create a new database (clean install) with profile:{/tr}</p>
-			<select name="profile" size="{if $profiles}{$profiles|@count}{else}5{/if}">
-			<option value="" selected="selected">Bare-bones default install</option>
-			<option value="Personal_Blog_and_Profile">Personal Blog and Profile</option>
-			<option value="Small_Organization_Web_Presence">Small Organization Web Presence</option>
-			<option value="Company_Intranet">Company Intranet</option>
-			<option value="Customer_Extranet">Customer Extranet</option>
-			<option value="Collaborative_Community">Collaborative community</option>
+			<select name="profile" size="6">
+			<option value="" selected="selected">{tr}Bare-bones default install{/tr}</option>
+			<option value="Personal_Blog_and_Profile">{tr}Personal Blog and Profile{/tr}</option>
+			<option value="Small_Organization_Web_Presence">{tr}Small Organization Web Presence{/tr}</option>
+			<option value="Company_Intranet">{tr}Company Intranet{/tr}</option>
+			<option value="Customer_Extranet">{tr}Customer Extranet{/tr}</option>
+			<option value="Collaborative_Community">{tr}Collaborative community{/tr}</option>
 			</select>
 			 <p>{tr}See the documentation for <a target="_blank" href="http://profiles.tikiwiki.org/Profiles_in_30_installer" class="link" title="Description of available profiles.">descriptions of the available profiles.{/tr}</a></p>
 			{else}
@@ -378,12 +378,11 @@
 
 </div>
 {/if}
-<p><a href="tiki-install.php?install_step=4" title="{tr}Go back and run another install/upgrade script{/tr}">{tr}Go back and run another install/upgrade script.{/tr}</a></p>
-
 
 {if isset($htaccess_error)}
-<h3><img src="pics/icons/information.png" alt="{tr}Note{/tr}" style="vertical-align:middle"/> {tr}Security{/tr}</h3>
-{tr}To secure your Tiki installation - and if you are using Apache web server - you should rename the <span style="font-weight:bold">_htaccess</span> file to <span style="font-weight:bold">.htaccess</span> (this file is in the main directory).{/tr}
+<h3>{tr}.htaccess File{/tr} <a title="{tr}Help{/tr}" href="http://doc.tikiwiki.org/Installation" target="help"><img style="border:0" src='img/icons/help.gif' alt="{tr}Help{/tr}" /></a></h3>
+{tr}We recommend enabling the <strong>.htaccess</strong> file for your Tiki{/tr}. {tr}This will enable you to use SEFURLs (search engine friendly URLs) and help improve site security{/tr}. 
+<p>{tr}To enable this file, simply rename the <strong>_htaccess</strong> file (located in the main directory of your Tiki installation) to <strong>.htaccess</strong>.{/tr}</p>
 {/if}
 
 <p>&nbsp;</p>
@@ -546,7 +545,7 @@
 					<li>{if $install_step eq '0'}<strong>{else}<a href="tiki-install.php?reset=y{if $multi}&multi={$multi}{/if}{if $lang}&lang={$lang}{/if}" title="{tr}Welcome{/tr} / {tr}Restart the installer.{/tr}">{/if}{tr}Welcome{/tr}{if $install_step eq '0'}</strong>{else}</a>{/if}</li>
 					<li>{if $install_step eq '1'}<strong>{else}<a href="tiki-install.php?install_step=1{if $multi}&multi={$multi}{/if}{if $lang}&lang={$lang}{/if}" title="{tr}Read the License{/tr}">{/if}{tr}Read the License{/tr}{if $install_step eq '1'}</strong>{else}</a>{/if}</li>
 					<li>{if $install_step eq '2'}<strong>{elseif $install_step ge '3' or $dbcon eq 'y'}<a href="tiki-install.php?install_step=2{if $multi}&multi={$multi}{/if}{if $lang}&lang={$lang}{/if}" title="{tr}Review the System Requirements{/tr}">{/if}{tr}Review the System Requirements{/tr}{if $install_step eq '2'}</strong>{elseif $install_step ge '3' or $dbcon eq 'y'}</a>{/if}</li>
-					<li>{if $install_step eq '3'}<strong>{elseif $dbcon eq 'y'}<a href="tiki-install.php?install_step=3{if $multi}&multi={$multi}{/if}{if $lang}&lang={$lang}{/if}" title="{tr}Database Connection{/tr}">{/if}{if $dbcon eq 'y'}{tr}Reset the Database Connection{/tr}{else}Database Connection{/if}{if $install_step eq '3'}</strong>{elseif $dbcon eq 'y'}</a>{/if}</li>
+					<li>{if $install_step eq '3'}<strong>{elseif $dbcon eq 'y'}<a href="tiki-install.php?install_step=3{if $multi}&multi={$multi}{/if}{if $lang}&lang={$lang}{/if}" title="{tr}Database Connection{/tr}">{/if}{if $dbcon eq 'y'}{tr}Reset the Database Connection{/tr}{else}{tr}Database Connection{/tr}{/if}{if $install_step eq '3'}</strong>{elseif $dbcon eq 'y'}</a>{/if}</li>
 					<li>{if $install_step eq '4'}<strong>{elseif $dbcon eq 'y' or isset($smarty.post.scratch) or isset($smarty.post.update)}<a href="tiki-install.php?install_step=4{if $multi}&multi={$multi}{/if}{if $lang}&lang={$lang}{/if}" title="{if $tikidb_created}{tr}Install/Upgrade{/tr}{else}{tr}Install Profile{/tr}{/if}">{/if}{if $tikidb_created}{tr}Install/Upgrade{/tr}{else}{tr}Install Profile{/tr}{/if}{if $install_step eq '4'}</strong>{elseif ($dbcon eq 'y') or (isset($smarty.post.scratch)) or (isset($smarty.post.update))}</a>{/if}</li>
 					<li>{if $install_step eq '5'}<strong>{elseif $tikidb_is20}<a href="tiki-install.php?install_step=5{if $multi}&multi={$multi}{/if}{if $lang}&lang={$lang}{/if}" title="{if isset($smarty.post.update)}{tr}Review the Upgrade{/tr}{else}{tr}Review the Installation{/tr}{/if}">{/if}{if isset($smarty.post.update)}{tr}Review the Upgrade{/tr}{else}{tr}Review the Installation{/tr}{/if}{if $install_step eq '5'}</strong>{elseif $tikidb_is20}</a>{/if}</li>
 					<li>{if $install_step eq '6'}<strong>{elseif $tikidb_is20 and !isset($smarty.post.update)}<a href="tiki-install.php?install_step=6{if $multi}&multi={$multi}{/if}{if $lang}&lang={$lang}{/if}" title="{tr}Configure the General Settings{/tr}">{/if}{tr}Configure the General Settings{/tr}{if $install_step eq '6'}</strong>{elseif $tikidb_is20 and !isset($smarty.post.update)}</a>{/if}</li>

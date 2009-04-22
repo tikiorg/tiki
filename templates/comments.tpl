@@ -349,10 +349,11 @@
 		</tr>
 
 		{if $forum_mode == "y" and (($forum_info.att eq 'att_all') or ($forum_info.att eq 'att_admin' and ($tiki_p_admin_forum eq 'y'  or $forum_info.moderator == $user)) or ($forum_info.att eq 'att_perm' and $tiki_p_forum_attach eq 'y'))}
+		{assign var='can_attach_file' value='y'}
 		<tr>
 			<td class="formcolor">{tr}Attach file{/tr}</td>
 			<td class="formcolor">
-				<input type="hidden" name="MAX_FILE_SIZE" value="{$forum_info.att_max_size|escape}" /><input name="userfile1" type="file" />{tr}Maximum size:{/tr} {$forum_info.att_max_size|kbsize}
+				<input type="hidden" name="MAX_FILE_SIZE" value="{$forum_info.att_max_size|escape}" /><input id="userfile1" name="userfile1" type="file" />{tr}Maximum size:{/tr} {$forum_info.att_max_size|kbsize}
 			</td>
 		</tr>
 		{/if}
@@ -387,7 +388,18 @@
 			</td>
 
 			<td class="formcolor">
-				<input type="submit" name="comments_previewComment" value="{tr}Preview{/tr}" {if empty($user)}onclick="setCookie('anonymous_name',document.getElementById('anonymous_name').value);"{/if} />
+				<input type="submit" name="comments_previewComment" value="{tr}Preview{/tr}"
+				{if ( isset($can_attach_file) && $can_attach_file eq 'y' ) or empty($user)}{strip}
+					{assign var='file_preview_warning' value='{tr}Please note that the preview does not keep the attached file which you will have to choose before posting.{/tr}'}
+					onclick="
+					{if empty($user)}
+						setCookie('anonymous_name',document.getElementById('anonymous_name').value);
+					{/if}
+					{if isset($can_attach_file) && $can_attach_file eq 'y'}
+						if (document.getElementById('userfile1').value) alert('{$file_preview_warning|escape:"javascript"}');
+					{/if}
+					"
+				{/strip}{/if} />
 				<input type="submit" name="comments_postComment" value="{tr}Post{/tr}" {if empty($user)}onclick="setCookie('anonymous_name',document.getElementById('anonymous_name').value);"{/if} />
 				{if !empty($user) && $prefs.feature_comments_post_as_anonymous eq 'y'}
 				<input type="submit" name="comments_postComment_anonymous" value="{tr}Post as Anonymous{/tr}" />

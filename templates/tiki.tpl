@@ -14,8 +14,8 @@
 {if $prefs.feature_community_mouseover eq 'y'}		{popup_init src="lib/overlib.js"}{/if}
 
 {if $prefs.feature_fullscreen eq 'y' and $filegals_manager eq '' and $print_page ne 'y'}
-	{if $smarty.session.fullscreen eq 'y'}	<a href="{$smarty.server.SCRIPT_NAME}{if $fsquery}?{$fsquery|escape:"url":"UTF-8"}&amp;{else}?{/if}fullscreen=n" class="menulink" id="fullscreenbutton">{icon _id=application_put alt="{tr}Cancel Fullscreen{/tr}"}</a>
-	{else}	<a href="{$smarty.server.SCRIPT_NAME}{if $fsquery}?{$fsquery|escape:"url":"UTF-8"}&amp;{else}?{/if}fullscreen=y" class="menulink" id="fullscreenbutton">{icon _id=application_get alt="{tr}Fullscreen{/tr}"}</a>
+	{if $smarty.session.fullscreen eq 'y'}	<a href="{$smarty.server.SCRIPT_NAME}{if $fsquery}?{$fsquery|escape}&amp;{else}?{/if}fullscreen=n" class="menulink" id="fullscreenbutton">{icon _id=application_put alt="{tr}Cancel Fullscreen{/tr}"}</a>
+	{else}	<a href="{$smarty.server.SCRIPT_NAME}{if $fsquery}?{$fsquery}&amp;{else}?{/if}fullscreen=y" class="menulink" id="fullscreenbutton">{icon _id=application_get alt="{tr}Fullscreen{/tr}"}</a>
 	{/if}
 {/if}
 

@@ -47,7 +47,7 @@
 				({$size} bytes)
 			{/if}
 		</span>
-		
+		<div class="actions">
 		{if $prefs.feature_multilingual eq 'y' and $show_lang eq 'y' and $lang and $prefs.show_available_translations eq 'y'}
 			{include file="translated-lang.tpl" td='y' type='article'}
 		{/if}
@@ -66,8 +66,9 @@
 		{if $tiki_p_remove_article eq 'y'}
 			<a class="icon" href="tiki-list_articles.php?remove={$articleId}">{icon _id='cross' alt='{tr}Remove{/tr}'}</a>
 		{/if}
+		</div>
 	</div>
-
+	<br class="clear" />
 	<div class="articleheading">
 		<table cellpadding="0" cellspacing="0">
 			<tr>

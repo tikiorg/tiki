@@ -32,6 +32,7 @@ global $tikilib; require_once ('lib/tikilib.php');
 global $shoutboxlib, $prefs, $tiki_p_view_shoutbox, $tiki_p_admin_shoutbox, $tiki_p_post_shoutbox, $base_url, $smarty;
 include_once ('lib/shoutbox/shoutboxlib.php');
 
+if (!function_exists('doProcessShout')) {
 function doProcessShout($inFormValues) {
 	global $shoutboxlib, $user, $smarty, $prefs;
 	
@@ -43,6 +44,7 @@ function doProcessShout($inFormValues) {
 			$shoutboxlib->replace_shoutbox(0, $user, $inFormValues['shout_msg']);
 		}
 	}
+}
 }
 
 if ($prefs['feature_ajax'] == 'y') {

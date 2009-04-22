@@ -682,17 +682,6 @@
 				<table>
 					<tr>
 						<td width=30%>
-							<label for="feature_jquery_ui">{tr}JQuery UI{/tr}</label>
-						</td>
-						<td width=2%>
-							{help url="JQuery#UI" desc="{tr}JQuery UI: More JQuery functionality{/tr}"}
-						</td>
-						<td>
-							<input type="checkbox" name="feature_jquery_ui" {if $prefs.feature_jquery_ui eq 'y'}checked="checked"{/if}/>
-						</td>
-					</tr>
-					<tr>
-						<td width=30%>
 							<label for="feature_jquery_tooltips">{tr}JQuery Tooltips{/tr}</label>
 						</td>
 						<td width=2%>
@@ -737,6 +726,34 @@
 					</tr>
 					<tr>
 						<td width=30%>
+							<label for="feature_jquery_cycle">{tr}JQuery Cycle (slideshow){/tr}</label>
+						</td>
+						<td width=2%>
+							{help url="JQuery#Cycle" desc="{tr}JQuery Cycle (slideshow){/tr}"}
+						</td>
+						<td>
+							<input type="checkbox" name="feature_jquery_cycle" {if $prefs.feature_jquery_cycle eq 'y'}checked="checked"{/if}/>
+						</td>
+					</tr>
+					<tr>
+						<td colspan=3>
+							<hr />
+							<em>{tr}For future use{/tr}</em>
+						</td>
+					</tr>
+					<tr>
+						<td width=30%>
+							<label for="feature_jquery_ui">{tr}JQuery UI{/tr}</label>
+						</td>
+						<td width=2%>
+							{help url="JQuery#UI" desc="{tr}JQuery UI: More JQuery functionality{/tr}"}
+						</td>
+						<td>
+							<input type="checkbox" name="feature_jquery_ui" {if $prefs.feature_jquery_ui eq 'y'}checked="checked"{/if}/>
+						</td>
+					</tr>
+					<tr>
+						<td width=30%>
 							<label for="feature_jquery_sheet">{tr}JQuery Sheet{/tr}</label>
 						</td>
 						<td width=2%>
@@ -755,17 +772,6 @@
 						</td>
 						<td>
 							<input type="checkbox" name="feature_jquery_tablesorter" {if $prefs.feature_jquery_tablesorter eq 'y'}checked="checked"{/if}/>
-						</td>
-					</tr>
-					<tr>
-						<td width=30%>
-							<label for="feature_jquery_cycle">{tr}JQuery Cycle (slideshow){/tr}</label>
-						</td>
-						<td width=2%>
-							{help url="JQuery#Cycle" desc="{tr}JQuery Cycle (slideshow){/tr}"}
-						</td>
-						<td>
-							<input type="checkbox" name="feature_jquery_cycle" {if $prefs.feature_jquery_cycle eq 'y'}checked="checked"{/if}/>
 						</td>
 					</tr>
 				</table>
@@ -792,7 +798,7 @@
 					              {tr}Slide{/tr}</option>
 					            <option value="fade" {if $prefs.jquery_effect eq 'fade'}selected="selected"{/if}>
 					              {tr}Fade{/tr}</option>
-					            {if $prefs.feature_jquery eq 'y'}
+					            {if $prefs.feature_jquery_ui eq 'y'}
 					            <option value="blind_ui" {if $prefs.jquery_effect eq 'blind_ui'}selected="selected"{/if}>
 					              {tr}Blind (UI){/tr}</option>
 					            <option value="clip_ui" {if $prefs.jquery_effect eq 'clip_ui'}selected="selected"{/if}>
@@ -875,7 +881,7 @@
 					              {tr}Slide{/tr}</option>
 					            <option value="fade" {if $prefs.jquery_effect_tabs eq 'fade'}selected="selected"{/if}>
 					              {tr}Fade{/tr}</option>
-					            {if $prefs.feature_jquery eq 'y'}
+					            {if $prefs.feature_jquery_ui eq 'y'}
 					            <option value="blind_ui" {if $prefs.jquery_effect_tabs eq 'blind_ui'}selected="selected"{/if}>
 					              {tr}Blind (UI){/tr}</option>
 					            <option value="clip_ui" {if $prefs.jquery_effect_tabs eq 'clip_ui'}selected="selected"{/if}>

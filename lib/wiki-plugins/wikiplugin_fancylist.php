@@ -37,7 +37,7 @@ function wikiplugin_fancylist($data, $params) {
 			$result = '<div class="fancylist'.($class ? " $class" : "").'">';
 			$count=1;
 		}else{
-			$result = '<ol class="fancylist'.($class ? " $class" : "").'">';
+			$result = '<ol class="fancylist'.(isset($class) ? " $class" : "").'">';
 			}
 	// split data by lines (trimed whitespace from start and end)
 	$lines = split("\n", trim($data));

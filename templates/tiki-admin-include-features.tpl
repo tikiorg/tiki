@@ -190,11 +190,11 @@
 					</div>
 					<div class="half_width">
 						<span class="checkbox"><input type="checkbox" name="feature_comments_moderation" {if $prefs.feature_comments_moderation eq 'y'}checked="checked"{/if}/></span>
-						<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Comments+Moderation" target="tikihelp" class="tikihelp" title="{tr}Comments Moderation{/tr}">{/if} {tr}Comments Moderation{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
+						<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Comments" target="tikihelp" class="tikihelp" title="{tr}Comments Moderation{/tr}">{/if} {tr}Comments Moderation{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
 					</div>
 					<div class="half_width">
 						<span class="checkbox"><input type="checkbox" name="feature_comments_locking" {if $prefs.feature_comments_locking eq 'y'}checked="checked"{/if}/></span>
-						<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Comments+Locking" target="tikihelp" class="tikihelp" title="{tr}Comments Locking{/tr}">{/if} {tr}Comments Locking{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
+						<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Comments" target="tikihelp" class="tikihelp" title="{tr}Comments Locking{/tr}">{/if} {tr}Comments Locking{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
 					</div>
 				</div>
 			</fieldset>
@@ -299,7 +299,7 @@
 						<span class="description">{tr}These features have critical faults - not recommended{/tr}</span>
 						<div class="half_width">
 							<span class="checkbox"><input type="checkbox" name="feature_ajax_autosave" {if $prefs.feature_ajax_autosave eq 'y'}checked="checked"{/if}/></span>
-							<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Ajax auto-save" target="tikihelp" class="tikihelp" title="{tr}Ajax{/tr}: {tr}Ajax auto-save{/tr}">{/if} {tr}Ajax auto-save{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
+							<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Lost+Edit+Protection" target="tikihelp" class="tikihelp" title="{tr}Ajax{/tr}: {tr}Ajax auto-save{/tr}">{/if} {tr}Ajax auto-save{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
 						</div>
 						<div class="half_width">
 							<span class="checkbox"><input type="checkbox" name="feature_charts"	{if $prefs.feature_charts eq 'y'}checked="checked"{/if}/></span>

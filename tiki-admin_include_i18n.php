@@ -66,9 +66,10 @@ if (!empty($_REQUEST['custom_save']) && !empty($_REQUEST['custom_lang'])) {
 	}
 	if (!$ok) {
 		$smarty->assign('custom_error', 'param');
-/*	} elseif (!eval(str_replace(array('<?php','?>'), '', $_REQUEST['custom_translation']))) {
+	} elseif (eval(str_replace(array('<?php','?>'), '', $_REQUEST['custom_translation'])) === false) {
+		$smarty->assign_by_ref('custom_lang', $_REQUEST['custom_lang']);
+		$smarty->assign_by_ref('custom_translation', $_REQUEST['custom_translation']);
 		$smarty->assign('custom_error', 'parse');
-*/
 	} else {
 		$custom_file = 'lang/'.$_REQUEST['custom_lang'].'/';
 		if (!empty($tikidomain)) $custom_file .= "$tikidomain/";
