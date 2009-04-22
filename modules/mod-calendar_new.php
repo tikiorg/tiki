@@ -19,7 +19,10 @@ if ( $prefs['feature_calendar'] == 'y' ) {
 	if (empty($module_params['calIds'])) {
 		if (!empty($_SESSION['CalendarViewGroups'])) {
 			$module_params['calIds'] = $_SESSION['CalendarViewGroups'];
-		} elseif (!empty($prefs['default_calendars'])) {
+		} elseif ( $prefs['feature_default_calendars'] == 'n' ) {
+			$module_params['calIds'] = $calendarlib->list_calendars();
+			$module_params['calIds'] = array_keys($module_params['calIds']['data']);
+		} elseif ( ! empty($prefs['default_calendars']) ) {
 			$module_params['calIds'] = $_SESSION['CalendarViewGroups'] = is_array($prefs['default_calendars']) ? $prefs['default_calendars'] : unserialize($prefs['default_calendars']);
 		} else {
 			$module_params['calIds'] = array();

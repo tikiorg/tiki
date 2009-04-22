@@ -667,6 +667,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 
 		// calendar
 		'feature_calendar' => 'n',
+		'feature_default_calendars' => 'n',
 		'calendar_sticky_popup' => 'y',
 		'default_calendars' => array(),
 		'calendar_view_mode' => 'month',

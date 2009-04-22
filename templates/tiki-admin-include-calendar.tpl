@@ -8,14 +8,18 @@
 <div class="adminoptionbox">
 	<div class="adminoptionlabel">{tr}Default calendars to display{/tr}:
 	{if $rawcals|@count ge '1'}
-<div class="adminoptionboxchild">
+	<div class="adminoptionlabel"><input type="radio" id="feature_default_calendars1" name="feature_default_calendars" value="n"
+              {if $prefs.feature_default_calendars neq 'y'}checked="checked"{/if} onclick="flip('default_calendars');" /><label for="feature_default_calendars1">{tr}All calendars{/tr}</label></div>
+	<div class="adminoptionlabel"><input type="radio" id="feature_default_calendars2" name="feature_default_calendars" value="y"
+            {if $prefs.feature_default_calendars eq 'y'}checked="checked"{/if} onclick="flip('default_calendars');" /><label for="feature_default_calendars2">{tr}A subset of available calendars{/tr}</label></div>
+	<div class="adminoptionboxchild" id="default_calendars" style="display:{if $prefs.feature_default_calendars neq 'y'}none{else}block{/if};">
 	{foreach item=k from=$rawcals}
-	<div class="adminoption">
-		<div class="adminoption"><input type="checkbox" name="default_calendars[]" id="{$k.calendarId}" value="{$k.calendarId}" {if in_array($k.calendarId,$prefs.site_default_calendars)}checked="checked"{/if} /></div>
-		<div class="adminoptionlabel"><label for="{$k.calendarId}">{$k.name}</div>
+		<div class="adminoption">
+			<div class="adminoption"><input type="checkbox" name="default_calendars[]" id="{$k.calendarId}" value="{$k.calendarId}" {if in_array($k.calendarId,$prefs.site_default_calendars)}checked="checked"{/if} /></div>
+			<div class="adminoptionlabel"><label for="{$k.calendarId}">{$k.name}</div>
+		</div>
+	{/foreach}
 	</div>
-{/foreach}
-</div>
 	{else}{tr}None{/tr} <a href="tiki-admin_calendars.php" class="button" title="{tr}Create calendar{/tr}.">{tr}Create calendar{/tr}.</a>
 	{/if}
 </div>
