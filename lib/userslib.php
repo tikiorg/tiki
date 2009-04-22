@@ -1008,6 +1008,7 @@ function get_users($offset = 0, $maxRecords = -1, $sort_mode = 'login_asc', $fin
 	    }
 	    $res["groups"] = $groups;
 	    $res["age"] = $this->now - $res["registrationDate"];
+            $res['user_information'] = $this->get_user_preference($user, 'user_information', 'public');
 
 	    $ret[] = $res;
 	}
