@@ -23,6 +23,13 @@ setcookie($user_cookie_site, '', -3600, $cookie_path, $prefs['cookie_domain']);
 $userlib->delete_user_cookie($user);
 $userlib->user_logout($user);
 $logslib->add_log('login','logged out');		
+
+if ( $phpcas_enabled == 'y' && $prefs['auth_method'] == 'cas' && $user != 'admin' && $user != '' ) {
+	require_once('lib/phpcas/source/CAS/CAS.php');
+	phpCAS::client($prefs['cas_version'], ''.$prefs['cas_hostname'], (int) $prefs['cas_port'], ''.$prefs['cas_path']);
+	phpCAS::logout();
+}
+
 session_unregister ('user');
 unset ($_SESSION[$user_cookie_site]);
 session_destroy();
@@ -30,12 +37,6 @@ session_destroy();
 /* change group home page or desactivate if no page is set */
 if ( ($groupHome = $userlib->get_group_home('Anonymous')) != '' ) $url = ( preg_match('/^(\/|https?:)/', $groupHome) ) ? $groupHome : 'tiki-index.php?page='.$groupHome;
 else $url = $prefs['site_tikiIndex'];
-
-if ($phpcas_enabled == 'y' and $prefs['auth_method'] == 'cas' and $user != 'admin') {
-	require_once('phpcas/source/CAS/CAS.php');
-	phpCAS::client($prefs['cas_version'], ''.$prefs['cas_hostname'], (int) $prefs['cas_port'], ''.$prefs['cas_path']);
-	phpCAS::logout();
-}
 
 // RFC 2616 defines that the 'Location' HTTP headerconsists of an absolute URI
 if ( ! eregi('^https?\:', $url) ) {
@@ -45,4 +46,3 @@ if ( ! eregi('^https?\:', $url) ) {
 if ( SID ) $url .= '?'.SID;
 header('Location: '.$url);
 exit;
-?>
