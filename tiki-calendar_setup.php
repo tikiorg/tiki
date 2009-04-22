@@ -172,7 +172,7 @@ $smarty->assign('viewday', $focus_day);
 $smarty->assign('viewyear', $focus_year);
 
 // calculate timespan for sql query
-if ($viewlist == 'list') {
+if ($viewlist == 'list' && empty($_REQUEST['viewmode'])) {
 	$daystart = $focusdate;
 } elseif ($calendarViewMode == 'month' || $calendarViewMode == 'quarter' || $calendarViewMode == 'semester') {
 	$daystart = TikiLib::make_time(0,0,0, $focus_month, 1, $focus_year);
