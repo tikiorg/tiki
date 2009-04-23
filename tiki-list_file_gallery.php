@@ -111,7 +111,7 @@ if ( $tiki_p_admin_file_galleries == 'y' ) {
 		if (isset($_REQUEST['file'])) {
 			foreach ( array_values($_REQUEST['file']) as $file ) {
 				if ($info = $filegallib->get_file_info($file)) {
-					$filegallib->remove_file($info, $user, $gal_info);
+					$filegallib->remove_file($info, $gal_info);
 				}
 			}
 		}
@@ -234,7 +234,7 @@ if ( ! empty($_REQUEST['remove']) ) {
 	$area = 'delfile';
 	if ( $prefs['feature_ticketlib2'] != 'y' or ( isset($_POST['daconfirm'] ) and isset($_SESSION["ticket_$area"])) ) {
 		key_check($area);
-		$filegallib->remove_file($info, $user, $gal_info);
+		$filegallib->remove_file($info, $gal_info);
 	} else {
 		key_get($area, tra('Remove file: ').(!empty($info['name'])?$info['name'].' - ':'').$info['filename']);
 	}
@@ -746,7 +746,7 @@ if (isset($_GET['slideshow'])) {
 	$files = $tikilib->get_files($_REQUEST['offset'], $_REQUEST['maxRecords'], $_REQUEST['sort_mode'], $_REQUEST['find'], $_REQUEST['galleryId'], true, true);
 	$smarty->assign_by_ref('files', $files['data']);
 	$smarty->assign('cant', $files['cant']);
-  $smarty->assign('mid','tiki-list_file_gallery.tpl');
+	$smarty->assign('mid','tiki-list_file_gallery.tpl');
 }
 
 // Browse view
