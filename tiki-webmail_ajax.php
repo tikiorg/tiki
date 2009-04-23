@@ -15,21 +15,24 @@ if (!isset($_REQUEST['xjxfun'])) {	// don't do all this when actually on an ajax
 	// set up xajax javascript
 	$module_position = $module_params['module_position'];
 	$module_ord = $module_params['module_ord'];
+	
 	$msg = tr('Contacting mail server');
-	if (!isset($module_params["autoloaddelay"])) {
-		$module_params["autoloaddelay"] = 2;
-	}
-	$auto_load_scr =  $module_params["autoloaddelay"] > -1 ? 'setTimeout("doRefreshWebmail()", ' . ($module_params["autoloaddelay"] * 1000) . ');' : '';
 	$headerlib->add_js( <<<JS
-function doRefreshWebmail() {
+function doRefreshWebmail(reload) {
 	xajax.config.requestURI = "tiki-webmail_ajax.php";	// tell it where to send the request
 	xajax.config.statusMessages = true;
 	xajax.config.waitCursor = false;
-	xajax_refreshWebmail("mod-webmail_inbox$module_position$module_ord");
+	xajax_refreshWebmail("mod-webmail_inbox$module_position$module_ord", reload);
 	\$jq('#webmail_refresh_icon').hide();
 	\$jq('#webmail_refresh_busy').show();
 	\$jq('#webmail_refresh_message').text('$msg');
 	\$jq('#webmail_refresh_message').show();
+	if (typeof autoRefresh != 'undefined') {
+		setTimeout("doRefreshWebmail()", autoRefresh);
+	}
+}
+function doReloadWebmail() {
+	doRefreshWebmail(true);
 }
 function initWebmail() {
 	\$jq('#webmail_refresh_busy').hide();
@@ -43,21 +46,21 @@ function initWebmail() {
 \$jq('document').ready( function() {
 	\$jq('#webmail_refresh_busy').hide();
 	\$jq('#webmail_refresh_message').hide();
-	$auto_load_scr
 });
 JS
 	);
 }
 
-function refreshWebmail($destDiv = 'mod-webmail_inbox', $repeatSeconds = 0) {
+function refreshWebmail($destDiv = 'mod-webmail_inbox', $inReload = false) {
 	global $user, $smarty, $prefs, $ajaxlib;
+
 	include('lib/wiki-plugins/wikiplugin_module.php');
-	$data = wikiplugin_module('', Array('module'=>'webmail_inbox','max'=>10,'np'=>0,'nobox'=>'y','notitle'=>'y'));
+	$data = wikiplugin_module('', Array('module'=>'webmail_inbox','max' => 10,'np' => 0,'nobox' => 'y','notitle' => 'y', 'reload' => $inReload ? 'y' : 'n'));
 	$objResponse = new xajaxResponse();
 	$objResponse->script('setTimeout("initWebmail()",1000)');
-	if ($repeatSeconds > 0) {
-		$objResponse->script("setTimeout('doRefreshWebmail()',$repeatSeconds)");
-	}
+	//if ($repeatSeconds > 0) {
+	//	$objResponse->script("setTimeout('doRefreshWebmail()',$repeatSeconds)");
+	//}
 	$objResponse->assign($destDiv,"innerHTML",$data);
 	return $objResponse;
 }
