@@ -131,13 +131,15 @@ class FileGalLib extends TikiLib {
 		$this->query($query,array($gallery,$file));
 	}
 
-	function remove_file_gallery($id, $galleryId=0) {
+	function remove_file_gallery($id, $galleryId=0, $recurse = true) {
 		global $prefs;
+		$id = (int)$id;
 
 		if (empty($galleryId)) {
 			$info = $this->get_file_info($id);
 			$galleryId = $info['galleryId'];
 		}
+
 		global $cachelib; require_once("lib/cache/cachelib.php");
 		$cachelib->empty_type_cache('fgals_perms_'.$id."_");
 		$cachelib->empty_type_cache('fgals_perms_'.$info['galleryId']."_");
@@ -151,7 +153,6 @@ class FileGalLib extends TikiLib {
 
 		$query = "select `path` from `tiki_files` where `galleryId`=?";
 		$result = $this->query($query,array($id));
-
 		while ($res = $result->fetchRow()) {
 			$path = $res["path"];
 
@@ -165,6 +166,16 @@ class FileGalLib extends TikiLib {
 		$query = "delete from `tiki_files` where `galleryId`=?";
 		$result = $this->query($query,array($id));
 		$this->remove_object('file gallery', $id);
+
+		// If $recurse, also recursively remove children galleries
+		if ( $recurse ) {
+			$result = $this->query('SELECT `galleryId` FROM `tiki_file_galleries` WHERE `parentId`=?', array($id));
+			while ( $res = $result->fetchRow() ) {
+				if ( $res['galleryId'] <= 0 ) continue;
+				$this->remove_file_gallery($res['galleryId'], $id, true);
+			}
+		}
+
 		return true;
 	}
 
