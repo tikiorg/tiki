@@ -32,7 +32,7 @@ class Image extends ImageAbstract {
 		if (!$this->loaded && $this->havegd) {
 			if (!empty($this->filename)) {
 				$this->format = strtolower(substr($image, strrpos($image, '.') + 1));
-				list($width, $height, $type) = getimagesize($this->filename);
+				list($this->width, $this->height, $type) = getimagesize($this->filename);
 				if (function_exists("image_type_to_extension")) {
 					$this->format = image_type_to_extension($type,false);
 				} else {
