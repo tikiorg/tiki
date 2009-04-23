@@ -50,7 +50,7 @@ if (!empty($_REQUEST['remove'])) {
 	$area = 'delfile';
 	if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
 		key_check($area);
-		$filegallib->remove_file($removeInfo, $user, $gal_info);
+		$filegallib->remove_file($removeInfo, $gal_info);
 	} else {
 		key_get($area, ($removeInfo['archiveId']? tra('Remove archive: '): tra('Remove file gallery: ')).(!empty($removeInfo['name'])?$removeInfo['name'].' - ':'').$removeInfo['filename']);
 	}
@@ -63,7 +63,7 @@ if (isset($_REQUEST['delsel_x']) && !empty($_REQUEST['file'])) {
 			$smarty->display('error.tpl');
 			die;
 		}		
-		$filegallib->remove_file($removeInfo, $user, $gal_info);		
+		$filegallib->remove_file($removeInfo, $gal_info);		
 	}
 }
 

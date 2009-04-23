@@ -551,7 +551,7 @@ img.imgs {background: #999}
 	margin-top: -1.35em;
 	padding-bottom: 1px;}
 
-#col2 .cssmenu_vert > li > ul {margin-left: 172px}
+#col2 .cssmenu_vert > li > ul {margin-left: 172px;}
 
 .cssmenu li ul,
 .cssmenu_horiz li ul,
@@ -814,8 +814,7 @@ div.box {
 	background: #292929;
 	margin-bottom: 8px;
 	padding-bottom: 2px;
-	width: 190px;
-	overflow: hidden}
+	width: 190px;}
 
 h3.box-title {
 	display: block;

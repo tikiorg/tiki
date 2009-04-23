@@ -19,6 +19,9 @@
 .cssmenu_vert ul,
 .cssmenu_vert li {width: 11em}
 
+*:first-child+html body .cssmenu_horiz li {width: 11em}
+* html .cssmenu_horiz li {width: 11em }
+
 .cssmenu li,
 .cssmenu_horiz li,
 .cssmenu_vert,
@@ -47,7 +50,8 @@
 .box-data .cssmenu_vert {padding-right: 0 !important}
 
 .cssmenu_vert li ul,
-.cssmenu_vert li.sfhover ul { /* second-level lists */
+.cssmenu_vert li.sfhover ul,
+.box-data .cssmenu_vert li ul { /* second-level lists */
 	margin-left: 10.9em;
 	margin-top: -1.5em;
 	/*padding-bottom: 1px; enable border to show */}
@@ -145,7 +149,7 @@ td#leftcolumn {overflow: visible !important}
 #header .cssmenu_horiz > li > a {}
 #header .cssmenu_horiz > li > a:hover {}
 #header .cssmenu_horiz li:hover {}
-#header ul.cssmenu_horiz li ul a {}
+#header .cssmenu_horiz li ul a {}
 #header .cssmenu_horiz ul li a:hover {}
 
 * html h3.box-title {position: static}
