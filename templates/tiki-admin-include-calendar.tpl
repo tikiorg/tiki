@@ -15,7 +15,7 @@
 	<div class="adminoptionboxchild" id="default_calendars" style="display:{if $prefs.feature_default_calendars neq 'y'}none{else}block{/if};">
 	{foreach item=k from=$rawcals}
 		<div class="adminoption">
-			<div class="adminoption"><input type="checkbox" name="default_calendars[]" id="{$k.calendarId}" value="{$k.calendarId}" {if in_array($k.calendarId,$prefs.site_default_calendars)}checked="checked"{/if} /></div>
+			<div class="adminoption"><input type="checkbox" name="default_calendars[]" id="{$k.calendarId}" value="{$k.calendarId}" {*{if in_array($k.calendarId,$prefs.site_default_calendars)}checked="checked"{/if}*} /></div>
 			<div class="adminoptionlabel"><label for="{$k.calendarId}">{$k.name}</div>
 		</div>
 	{/foreach}
