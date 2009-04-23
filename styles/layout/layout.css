@@ -664,7 +664,7 @@ div.cbox {overflow: hidden}
 .rbox-data {
 	overflow: hidden;
 	padding: 1px 3px;
-	background: #fff}
+	/*background: #fff*/}
 
 .rbox-title {
 	display: inline-block;
@@ -673,14 +673,15 @@ div.cbox {overflow: hidden}
 	position: relative;
 	bottom: -1px;
 	padding: 3px;
-	/*border: 1px solid #708090;
-	border-bottom: 0*/}
+	background: yellow;
+	border: 1px solid yellow;
+	border-bottom: 0}
 	
 .rbox-data {
 	position: relative;
 	z-index: 0;
 	padding: 0 3px 3px 3px;
-	/*border: 1px solid #708090*/}
+	border: 1px solid yellow}
 
 .comment .rbox-title,
 .comment .rbox-data {}
@@ -1334,6 +1335,8 @@ div.gallerypath a:hover {}
 	padding-left: 2px;
 	padding-right: 2px}
 	
+.opaque {border: 1px solid yellow}
+.opaque .box-title {border-bottom: 1px solid yellow}
 .opaque .iconmenu {display: block}
 
 /***** Trackers (etc.) *****/

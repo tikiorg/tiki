@@ -77,7 +77,7 @@ form {
 	margin: 0;
 	padding: 0}
 	
-legend {  }
+legend {color: #333}
 
 button {}
 button:hover {cursor: pointer}
@@ -104,7 +104,7 @@ textarea,
 body.wikitext {
 	color: #333;
 	background: #fff;
-	font-size: 125%}
+	font-size: 1em}
 
 input[type=checkbox],
 input[type=radio] {border: 0}
@@ -309,7 +309,7 @@ div#tiki-bot {}
 	padding-bottom: 0;
 	margin: 0}
 
-div#sioptions {margin: 0}
+div#sioptions {margin: 0; padding-top: 10px}
 #sioptionscentered {text-align: center}
 
 div.floatright {
@@ -346,25 +346,30 @@ div#sitead {margin: auto; margin-top: 10px}
 
 input[id="sl-login-user"],
 input[id="sl-login-pass"] {}
+#siteloginbar div {text-align: right}
 #sitelocbar {float: left}
 	
 /* #header text selectors */
-
-#sitetitle,
-#sitesubtitle {
-	color: #A7A7A7;
-	font-weight: 400;
-	letter-spacing: -2px;
+#sitetitles {
+	color: #052653;
+	font-weight: bold;
 	margin: 0;
-	padding: 0;
+	padding-top: 10px;
 	padding-left: 20px}
 
 #sitetitle {
 	font-size: 2.2em;
-	/*padding-top: 30px;*/
+	/*height: 2.2em;
+	padding-top: 30px;*/
 	padding-bottom: 14px}
 
-* html #sitetitle { padding-top: 20px }
+* html #sitetitle {padding-top: 20px}
+
+#sitetitle a,
+#sitetitle a:link,
+#sitetitle a:visited {
+	color: #052653;
+	text-decoration: none}
 
 #customcodewith_ad #sitetitle,
 #customcodewith_ad #sitesubtitle { max-width: 300px }
