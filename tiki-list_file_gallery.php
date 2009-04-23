@@ -111,10 +111,6 @@ if ( $tiki_p_admin_file_galleries == 'y' ) {
 		if (isset($_REQUEST['file'])) {
 			foreach ( array_values($_REQUEST['file']) as $file ) {
 				if ($info = $filegallib->get_file_info($file)) {
-					$smarty->assign('fileId', $file);
-					$smarty->assign_by_ref('filename', $info['filename']);
-					$smarty->assign_by_ref('fname', $info['name']);
-					$smarty->assign_by_ref('fdescription', $info['description']);
 					$filegallib->remove_file($info, $user, $gal_info);
 				}
 			}
@@ -238,15 +234,7 @@ if ( ! empty($_REQUEST['remove']) ) {
 	$area = 'delfile';
 	if ( $prefs['feature_ticketlib2'] != 'y' or ( isset($_POST['daconfirm'] ) and isset($_SESSION["ticket_$area"])) ) {
 		key_check($area);
-
-		//Watches
-		$smarty->assign('fileId', $_REQUEST['remove']);
-		$smarty->assign_by_ref('filename', $info['filename']);
-		$smarty->assign_by_ref('fname', $info['name']);
-		$smarty->assign_by_ref('fdescription', $info['description']);
-
 		$filegallib->remove_file($info, $user, $gal_info);
-
 	} else {
 		key_get($area, tra('Remove file: ').(!empty($info['name'])?$info['name'].' - ':'').$info['filename']);
 	}
