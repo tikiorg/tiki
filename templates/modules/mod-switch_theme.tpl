@@ -15,7 +15,7 @@
 		{/section}
 		</select>{if $style_options}
 		<select name="theme-option" id="general-theme-options" onchange="this.form.submit();">
-			<option value="" style="font-style:italic;border-bottom:1px dashed #666;">{tr}Site default{/tr}</option>
+			{*<option value="" style="font-style:italic;border-bottom:1px dashed #666;">{tr}Site default{/tr}</option>*}
 		{section name=ix loop=$style_options}
 			<option value="{$style_options[ix]|escape}"{if $prefs.style_option eq $style_options[ix]} selected="selected"{/if}>{$style_options[ix]|truncate:15|replace:'.css':''|ucwords}</option>
 		{/section}
