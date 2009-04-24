@@ -7588,17 +7588,11 @@ class TikiLib extends TikiDB {
 				$oktodel = $saveLastModif - ($keep * 24 * 3600);
 				$query = "select `pageName` ,`version`, `historyId` from `tiki_history` where `pageName`=? and `lastModif`<=? order by `lastModif` asc";
 				$result = $this->query($query,array($pageName,$oktodel),$nb - $maxversions);
-				$toelim = $result->numRows();
-
 				while ($res = $result->fetchRow()) {
 					$page = $res["pageName"];
 					$version = $res["version"];
-					$query = "delete from `tiki_history` where `pageName`=? and `version`=?";
-					$this->query($query,array($pageName,$version));
-					if ($prefs['feature_contribution'] == 'y') {
-						global $contributionlib; include_once('lib/contribution/contributionlib.php');
-						$contributionlib->remove_history($res['historyId']);
-					}
+					
+					$histlib->remove_version($res['pageName'], $res['version']);
 				}
 			}
 		}
