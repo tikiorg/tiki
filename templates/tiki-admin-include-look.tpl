@@ -120,6 +120,7 @@
 								<option value="css_specified_only" {if $prefs.transition_style_ver eq 'css_specified_only'}selected="selected"{/if}>{tr}Use @version:x.x specified in theme css or none if not specified{/tr}</option>
 								<option value="1.9" {if $prefs.transition_style_ver eq '1.9'}selected="selected"{/if}>{tr}Use @version:x.x specified in theme css or 1.9 if not specified{/tr}</option>
 								<option value="2.0" {if $prefs.transition_style_ver eq '2.0'}selected="selected"{/if}>{tr}Use @version:x.x specified in theme css or 2.0 if not specified{/tr}</option>
+								<option value="3.0" {if $prefs.transition_style_ver eq '3.0'}selected="selected"{/if}>{tr}Use @version:x.x specified in theme css or 3.0 if not specified{/tr}</option>
 							</select>
 						</td>
 					</tr>
