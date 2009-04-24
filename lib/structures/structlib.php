@@ -1003,6 +1003,37 @@ function list_structures($offset, $maxRecords, $sort_mode, $find='', $exact_matc
 		$this->query($query, array($structure_id, $pos+1, $page_ref_id));
 	}
   }
+  /* transform a structure into a menu */
+  function to_menu($channels, $sectionLevel=0) {
+	  $options = array();
+	  $cant = 0;
+	  foreach ($channels as $channel) {
+		  if (empty($channel['sub'])) {
+			  if (isset($options[$cant-1]['sectionLevel'])) {
+				  $level = $options[$cant-1]['sectionLevel'];
+				  while ($level-- > $sectionLevel) {
+					  $options[]= array('type' => '-', 'sectionLevel'=>$level);
+					  ++$cant;
+				  }
+			  }
+		  }
+		  $option['name'] = $channel['pageName'];
+		  $option['type'] = empty($channel['sub'])? 'o': ($sectionLevel?$sectionLevel:'s');
+		  $option['url'] = 'tiki-index.php?page_ref_id='.$channel['page_ref_id'];
+		  $option['canonic'] = '(('.$channel['pageName'].'))';
+		  $option['sefurl'] = $channel['pageName'];
+		  $option['position'] = $cant;
+		  $option['sectionLevel'] = $sectionLevel;
+		  ++$cant;
+		  $options[] = $option;
+		  if (!empty($channel['sub'])) {
+			  $oSub =  $this->to_menu($channel['sub'], $sectionLevel+1);
+			  $cant += $oSub['cant'];
+			  $options = array_merge($options, $oSub['data']);
+		  }
+	  }
+	  return array('data'=>$options, 'cant'=>$cant);
+  }
 }
 global $dbTiki;
 $structlib = new StructLib($dbTiki);
