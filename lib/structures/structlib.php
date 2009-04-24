@@ -1004,7 +1004,7 @@ function list_structures($offset, $maxRecords, $sort_mode, $find='', $exact_matc
 	}
   }
   /* transform a structure into a menu */
-  function to_menu($channels, $sectionLevel=0) {
+  function to_menu($channels, $sectionLevel=0, $cumul=0) {
 	  $options = array();
 	  $cant = 0;
 	  foreach ($channels as $channel) {
@@ -1022,12 +1022,12 @@ function list_structures($offset, $maxRecords, $sort_mode, $find='', $exact_matc
 		  $option['url'] = 'tiki-index.php?page_ref_id='.$channel['page_ref_id'];
 		  $option['canonic'] = '(('.$channel['pageName'].'))';
 		  $option['sefurl'] = $channel['pageName'];
-		  $option['position'] = $cant;
+		  $option['position'] = $cant + $cumul;
 		  $option['sectionLevel'] = $sectionLevel;
 		  ++$cant;
 		  $options[] = $option;
 		  if (!empty($channel['sub'])) {
-			  $oSub =  $this->to_menu($channel['sub'], $sectionLevel+1);
+			  $oSub =  $this->to_menu($channel['sub'], $sectionLevel+1, $cant);
 			  $cant += $oSub['cant'];
 			  $options = array_merge($options, $oSub['data']);
 		  }
