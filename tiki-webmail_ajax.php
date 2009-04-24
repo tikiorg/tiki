@@ -17,7 +17,7 @@ if (!isset($_REQUEST['xjxfun'])) {	// don't do all this when actually on an ajax
 	$module_ord = $module_params['module_ord'];
 	$divId = "mod-webmail_inbox$module_position$module_ord";
 	
-	$msg = tr('Contacting mail server');
+	$msg = tr('Checking...');
 	
 	$headerlib->add_js( <<<JS
 function doRefreshWebmail(reload) {

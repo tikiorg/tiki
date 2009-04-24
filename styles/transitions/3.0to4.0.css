@@ -107,6 +107,17 @@ They should be added to themes (possibly with tweaks) to make the theme v4.0 rea
 
 /* webmail & groupmail */
 
+.webmail_item {
+	font-size: .8em;
+	border: #999 solid 1px;
+	margin: 1px 0;
+	padding: 0 1px;
+}
+
+.webmail_refresh_message {
+	font-size: .9em;
+}
+
 .mod_webmail_list .even {
 
 }
@@ -120,13 +131,6 @@ They should be added to themes (possibly with tweaks) to make the theme v4.0 rea
 	border: #666 solid 1px;
 	display: inline-block;
 	padding: 0 2px;
-}
-
-.webmail_item {
-	font-size: .8em;
-	border: #999 solid 1px;
-	margin: 1px 0;
-	padding: 0 1px;
 }
 
 .webmail_read {

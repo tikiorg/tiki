@@ -15,15 +15,15 @@
 <form action="javascript:void(null);" onsubmit="return submitWebmail();" name="webmail_form">
 	<div class="mod_webmail_heading">
 		<div class="floatright">
-			{icon _id='resultset_first' class=''}
+			{*icon _id='resultset_first' class=''*}
 			{icon _id='resultset_previous' class=''}
 			{icon _id='resultset_next' class=''}
-			{icon _id='resultset_last' class=''}
+			{*icon _id='resultset_last' class=''*}
 		</div>
 		{if $prefs.feature_ajax}
 			<a title="{tr}Refresh{/tr}" {ajax_href template="modules/mod-webmail_inbox.tpl" htmlelement="mod-webmail_inbox$module_position$module_ord"|escape function="doReloadWebmail"}tiki-webmail_ajax.php{/ajax_href}>
-				{icon _id='arrow_refresh' class='webmail_refresh_icon'}
-				{icon _id='img/spinner.gif' class='webmail_refresh_busy' style='display:none'}
+				{icon _id='arrow_refresh' class='webmail_refresh_icon icon'}
+				{icon _id='img/spinner.gif' class='webmail_refresh_busy icon' style='display:none'}
 			</a>
 			<span class='webmail_refresh_message' style='display:none'></span>
 		{else}

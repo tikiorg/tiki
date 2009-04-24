@@ -54,6 +54,7 @@ $webmail_reload = (isset($module_params["reload"]) && $module_params['reload'] =
 global $webmail_list;
 $webmail_list = array();
 
+if (!function_exists('webmail_refresh')) {
 function webmail_refresh() {	// called in ajax mode
 	global $webmaillib, $headerlib, $user, $smarty, $webmail_list, $webmail_account, $webmail_reload, $module_params;
 	
@@ -207,6 +208,7 @@ function webmail_refresh() {	// called in ajax mode
 	
 	}		// endif no cached list of timed out
 }
+}	// endif function_exists 'webmail_refresh'
 
 if (isset($_REQUEST['refresh_mail']) || (isset($_REQUEST['xjxfun']) && $_REQUEST['xjxfun'] == 'refreshWebmail')) {	// YUK!
 	webmail_refresh();
