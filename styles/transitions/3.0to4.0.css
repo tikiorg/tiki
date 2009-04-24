@@ -104,3 +104,38 @@ They should be added to themes (possibly with tweaks) to make the theme v4.0 rea
 .minimize-modules-right #col3 .cssmenu_vert li.menuLevel0 > ul {
         margin-right: 55px;
 }
+
+/* webmail & groupmail */
+
+.mod_webmail_list .even {
+
+}
+
+.mod_webmail_list .odd {
+	background-color: #eee;
+}
+
+.mod_webmail_list .button {
+	background-color: #fff;
+	border: #666 solid 1px;
+	display: inline-block;
+	padding: 0 2px;
+}
+
+.webmail_item {
+	font-size: .8em;
+	border: #999 solid 1px;
+	margin: 1px 0;
+	padding: 0 1px;
+}
+
+.webmail_read {
+	background-color: #aaa;
+}
+.webmail_flagged {
+	
+}
+.webmail_replied {
+	background-color: #888;
+} 
+
