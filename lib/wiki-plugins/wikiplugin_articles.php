@@ -109,7 +109,7 @@ function wikiplugin_articles($data,$params) {
 	include_once("lib/commentslib.php");
 	$commentslib = new Comments($dbTiki);
 	
-	$listpages = $tikilib->list_articles($start, $max, 'publishDate_desc', '', 0, $tikilib->now, 'admin', $type, $topicId, 'y', $topic, $categId, '', '', $lang);
+	$listpages = $tikilib->list_articles($start, $max, $sort, '', 0, $tikilib->now, 'admin', $type, $topicId, 'y', $topic, $categId, '', '', $lang);
  	if ($prefs['feature_multilingual'] == 'y') {
 		global $multilinguallib;
 		include_once("lib/multilingual/multilinguallib.php");
