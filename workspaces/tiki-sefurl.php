@@ -48,6 +48,21 @@ function filter_out_sefurl($tpl_output, &$smarty, $type=null) {
 			$tpl_output = preg_replace( '/'.$regex['left'].'/', $regex['right'], $tpl_output );
 		}
 	}
+<<<<<<< .working
+=======
+	$tpl_output = str_replace('%2B', '+', urlencode($tpl_output));
+
+	if (!empty($title)) {
+		$tpl_output .= TITLE_SEPARATOR.$title;
+	}
+	if (is_array($prefs['feature_sefurl_paths'])) {
+		foreach ($prefs['feature_sefurl_paths'] as $path) {
+			if (isset($_REQUEST[$path])) {
+				$tpl_output = urlencode($_REQUEST[$path])."/$tpl_output";
+			}
+		}
+	}
+>>>>>>> .merge-right.r18200
 	return $tpl_output;
 }
 

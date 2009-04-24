@@ -10,10 +10,13 @@
 $bypass_siteclose_check = 'y';
 require_once('tiki-setup.php');
 
-if ( ! (isset($_REQUEST['user']) or isset($_REQUEST['username'])) ) {
+if ( isset($_REQUEST['cas']) && $_REQUEST['cas'] == 'y' && $prefs['auth_method'] == 'cas' ) {
+	$_REQUEST['user'] = '';
+} elseif ( ! (isset($_REQUEST['user']) or isset($_REQUEST['username'])) ) {
 	header('Location: '.$base_url.'tiki-login_scr.php');
 	die;
 }
+
 $smarty->assign('errortype', 'login'); // to avoid any redirection to the login box if error
 // Alert user if cookies are switched off
 if ( ini_get('session.use_cookies') == 1 && ! isset($_COOKIE['PHPSESSID']) ) {

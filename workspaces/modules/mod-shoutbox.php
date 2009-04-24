@@ -11,6 +11,7 @@ require_once ('lib/tikilib.php');
 global $shoutboxlib, $prefs, $tiki_p_view_shoutbox, $tiki_p_admin_shoutbox, $tiki_p_post_shoutbox;
 include_once ('lib/shoutbox/shoutboxlib.php');
 
+<<<<<<< .working
 if ($prefs['feature_shoutbox'] == 'y' && $tiki_p_view_shoutbox == 'y') {
 	$setup_parsed_uri = parse_url($_SERVER["REQUEST_URI"]);
 
@@ -18,7 +19,21 @@ if ($prefs['feature_shoutbox'] == 'y' && $tiki_p_view_shoutbox == 'y') {
 		TikiLib::parse_str($setup_parsed_uri["query"], $sht_query);
 	} else {
 		$sht_query = array();
+=======
+if (!function_exists('doProcessShout')) {
+function doProcessShout($inFormValues) {
+	global $shoutboxlib, $user, $smarty, $prefs;
+	
+	if (array_key_exists('shout_msg',$inFormValues) && strlen($inFormValues['shout_msg']) > 2) {
+		if (empty($user) && $prefs['feature_antibot'] == 'y' && (!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $inFormValues['antibotcode'])) {
+			$smarty->assign('shout_error', tra('You have mistyped the anti-bot verification code; please try again.'));
+			$smarty->assign_by_ref('shout_msg', $inFormValues['shout_msg']);
+		} else {
+			$shoutboxlib->replace_shoutbox(0, $user, $inFormValues['shout_msg']);
+		}
+>>>>>>> .merge-right.r18200
 	}
+}
 
 	$shout_father = $setup_parsed_uri["path"];
 

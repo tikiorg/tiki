@@ -112,6 +112,7 @@
 								<option value="css_specified_only" {if $prefs.transition_style_ver eq 'css_specified_only'}selected="selected"{/if}>{tr}Use @version:x.x specified in theme css or none if not specified{/tr}</option>
 								<option value="1.9" {if $prefs.transition_style_ver eq '1.9'}selected="selected"{/if}>{tr}Use @version:x.x specified in theme css or 1.9 if not specified{/tr}</option>
 								<option value="2.0" {if $prefs.transition_style_ver eq '2.0'}selected="selected"{/if}>{tr}Use @version:x.x specified in theme css or 2.0 if not specified{/tr}</option>
+								<option value="3.0" {if $prefs.transition_style_ver eq '3.0'}selected="selected"{/if}>{tr}Use @version:x.x specified in theme css or 3.0 if not specified{/tr}</option>
 							</select>
 						</td>
 					</tr>
@@ -667,17 +668,6 @@
 				<table>
 					<tr>
 						<td width=30%>
-							<label for="feature_jquery_ui">{tr}JQuery UI{/tr}</label>
-						</td>
-						<td width=2%>
-							{help url="JQuery#UI" desc="{tr}JQuery UI: More JQuery functionality{/tr}"}
-						</td>
-						<td>
-							<input type="checkbox" name="feature_jquery_ui" {if $prefs.feature_jquery_ui eq 'y'}checked="checked"{/if}/>
-						</td>
-					</tr>
-					<tr>
-						<td width=30%>
 							<label for="feature_jquery_tooltips">{tr}JQuery Tooltips{/tr}</label>
 						</td>
 						<td width=2%>
@@ -722,6 +712,36 @@
 					</tr>
 					<tr>
 						<td width=30%>
+							<label for="feature_jquery_cycle">{tr}JQuery Cycle (slideshow){/tr}</label>
+						</td>
+						<td width=2%>
+							{help url="JQuery#Cycle" desc="{tr}JQuery Cycle (slideshow){/tr}"}
+						</td>
+						<td>
+							<input type="checkbox" name="feature_jquery_cycle" {if $prefs.feature_jquery_cycle eq 'y'}checked="checked"{/if}/>
+						</td>
+					</tr>
+<<<<<<< .working
+=======
+					<tr>
+						<td colspan=3>
+							<hr />
+							<em>{tr}For future use{/tr}</em>
+						</td>
+					</tr>
+					<tr>
+						<td width=30%>
+							<label for="feature_jquery_ui">{tr}JQuery UI{/tr}</label>
+						</td>
+						<td width=2%>
+							{help url="JQuery#UI" desc="{tr}JQuery UI: More JQuery functionality{/tr}"}
+						</td>
+						<td>
+							<input type="checkbox" name="feature_jquery_ui" {if $prefs.feature_jquery_ui eq 'y'}checked="checked"{/if}/>
+						</td>
+					</tr>
+					<tr>
+						<td width=30%>
 							<label for="feature_jquery_sheet">{tr}JQuery Sheet{/tr}</label>
 						</td>
 						<td width=2%>
@@ -729,6 +749,18 @@
 						</td>
 						<td>
 							<input type="checkbox" name="feature_jquery_sheet" {if $prefs.feature_jquery_sheet eq 'y'}checked="checked"{/if}/>
+						</td>
+					</tr>
+>>>>>>> .merge-right.r18200
+					<tr>
+						<td width=30%>
+							<label for="feature_jquery_tablesorter">{tr}JQuery Sortable Tables{/tr}</label>
+						</td>
+						<td width=2%>
+							{help url="JQuery#TableSorter" desc="{tr}JQuery Sortable Tables{/tr}"}
+						</td>
+						<td>
+							<input type="checkbox" name="feature_jquery_tablesorter" {if $prefs.feature_jquery_tablesorter eq 'y'}checked="checked"{/if}/>
 						</td>
 					</tr>
 				</table>
@@ -755,7 +787,7 @@
 					              {tr}Slide{/tr}</option>
 					            <option value="fade" {if $prefs.jquery_effect eq 'fade'}selected="selected"{/if}>
 					              {tr}Fade{/tr}</option>
-					            {if $prefs.feature_jquery eq 'y'}
+					            {if $prefs.feature_jquery_ui eq 'y'}
 					            <option value="blind_ui" {if $prefs.jquery_effect eq 'blind_ui'}selected="selected"{/if}>
 					              {tr}Blind (UI){/tr}</option>
 					            <option value="clip_ui" {if $prefs.jquery_effect eq 'clip_ui'}selected="selected"{/if}>
@@ -838,7 +870,7 @@
 					              {tr}Slide{/tr}</option>
 					            <option value="fade" {if $prefs.jquery_effect_tabs eq 'fade'}selected="selected"{/if}>
 					              {tr}Fade{/tr}</option>
-					            {if $prefs.feature_jquery eq 'y'}
+					            {if $prefs.feature_jquery_ui eq 'y'}
 					            <option value="blind_ui" {if $prefs.jquery_effect_tabs eq 'blind_ui'}selected="selected"{/if}>
 					              {tr}Blind (UI){/tr}</option>
 					            <option value="clip_ui" {if $prefs.jquery_effect_tabs eq 'clip_ui'}selected="selected"{/if}>

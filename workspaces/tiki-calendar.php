@@ -141,6 +141,7 @@ $smarty->assign('modifTab', $modifTab);
 $smarty->assign('now', $tikilib->now);
 
 // set up list of groups
+$use_default_calendars = false;
 if (isset($_REQUEST["calIds"])and is_array($_REQUEST["calIds"])and count($_REQUEST["calIds"])) {
 	$_SESSION['CalendarViewGroups'] = array_intersect($_REQUEST["calIds"], $listcals);
 	if ( !empty($user) ) $tikilib->set_user_preference($user,'default_calendars',serialize($_SESSION['CalendarViewGroups']));
@@ -148,11 +149,23 @@ if (isset($_REQUEST["calIds"])and is_array($_REQUEST["calIds"])and count($_REQUE
 	$_SESSION['CalendarViewGroups'] = array_intersect(array($_REQUEST["calIds"]), $listcals);
 	if ( !empty($user) ) $tikilib->set_user_preference($user,'default_calendars',serialize($_SESSION['CalendarViewGroups']));
 } elseif (!isset($_SESSION['CalendarViewGroups']) || !empty($_REQUEST['allCals'])) {
-	$_SESSION['CalendarViewGroups'] = array_intersect(is_array($prefs['default_calendars']) ? $prefs['default_calendars'] : unserialize($prefs['default_calendars']),$listcals);
+	$use_default_calendars = true;
 } elseif (isset($_REQUEST["refresh"])and !isset($_REQUEST["calIds"])) {
 	$_SESSION['CalendarViewGroups'] = array();
 } elseif ( ! empty($user) || ! isset($_SESSION['CalendarViewGroups']) ) {
-	$_SESSION['CalendarViewGroups'] = array_intersect(is_array($prefs['default_calendars']) ? $prefs['default_calendars'] : unserialize($prefs['default_calendars']), $listcals);
+	$use_default_calendars = true;
+}
+
+if ( $use_default_calendars ) {
+	if ( $prefs['feature_default_calendars'] == 'y' ) {
+		$_SESSION['CalendarViewGroups'] = array_intersect(is_array($prefs['default_calendars']) ? $prefs['default_calendars'] : unserialize($prefs['default_calendars']), $listcals);
+	} elseif ( ! empty($user) ) {
+		$user_default_calendars = $tikilib->get_user_preference($user, 'default_calendars', $listcals);
+		if ( is_string($user_default_calendars) ) $user_default_calendars = unserialize($user_default_calendars);
+		$_SESSION['CalendarViewGroups'] = $user_default_calendars;
+	} else {
+		$_SESSION['CalendarViewGroups'] = $listcals;
+	}
 }
 
 $smarty->assign('displayedcals', $_SESSION['CalendarViewGroups']);

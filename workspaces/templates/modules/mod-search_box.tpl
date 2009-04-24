@@ -4,7 +4,11 @@
 {if !isset($tpl_module_title)}{assign var=tpl_module_title value="{tr}Search{/tr}"}{/if}
 {tikimodule error=$module_params.error title=$tpl_module_title name="search_box" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
     <form class="forms" id="search-module-form" method="get" action="tiki-searchresults.php">
-    <input id="fuser" name="highlight" size="14" type="text" accesskey="s" /> {tr}in:{/tr}<br />
+    <input id="fuser" name="highlight" size="14" type="text" accesskey="s" /> 
+	
+ 	{if $prefs.feature_search_show_object_filter eq 'y'}
+
+	{tr}in:{/tr}<br />
     <select name="where">
     <option value="pages">{tr}Entire Site{/tr}</option>
     {if $prefs.feature_wiki eq 'y'}
@@ -37,6 +41,9 @@
     <option value="trackers">{tr}Trackers{/tr}</option>
     {/if}
     </select>
+	
+    {/if}
+	
     <input type="submit" class="wikiaction" name="search" value="{tr}Go{/tr}"/> 
     </form>
 {/tikimodule}

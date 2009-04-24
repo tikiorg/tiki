@@ -41,13 +41,6 @@ list( $script, $version, $subrelease ) = $_SERVER['argv'];
 if( ! preg_match( "/^\d+\.\d+$/", $version ) )
 	die( "Version number should be in X.X format.\n" );
 
-if ( ! $noCheck ) {
-	print "\nChecking syntax of all PHP files\n";
-	$error_msg = '';
-	$dir = '.';
-	check_php_syntax( $dir, $error_msg ) or die( $error_msg );
-}
-
 $isPre = strpos( $subrelease, 'pre' ) === 0;
 
 if( $isPre )
@@ -76,6 +69,22 @@ else
 	$tag = "tags/$version$subrelease";
 	$packageVersion = "$version.$pre$subrelease";
 	$secdbVersion = "$version$subrelease";
+}
+
+print "\n";
+passthru( "php get_strings.php quiet" );
+`svn ci -m "[REL] Update language.php files for $secdbVersion"`;
+$removeFiles = glob('lang/*/old.php');
+$removeFiles[] = 'temp/permstrings.tpl';
+$removeFiles[] = 'temp/prefnames.tpl';
+foreach ( $removeFiles as $rf ) unlink($rf);
+unset($removeFiles);
+
+if ( ! $noCheck ) {
+	print "\nChecking syntax of all PHP files\n";
+	$error_msg = '';
+	$dir = '.';
+	check_php_syntax( $dir, $error_msg ) or die( $error_msg );
 }
 
 write_secdb( ROOT . "/db/tiki-secdb_{$version}_mysql.sql", ROOT, $secdbVersion );

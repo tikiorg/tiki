@@ -98,7 +98,7 @@ class HeaderLib {
 	}
 
 	function output_headers() {
-		global $style_ie6_css, $prefs;
+		global $style_ie6_css, $style_ie7_css, $prefs;
 
 		ksort($this->jsfiles);
 		ksort($this->js);
@@ -157,6 +157,12 @@ class HeaderLib {
 					.'<link rel="stylesheet" href="css/ie6.css" type="text/css" />'."\n";
 			if ( $style_ie6_css != '' ) {
 				$back .= '<link rel="stylesheet" href="'.$style_ie6_css.'" type="text/css" />'."\n";
+			}
+			$back .= "<![endif]-->\n";
+			$back .= "<!--[if IE 7]>\n"
+					.'<link rel="stylesheet" href="css/ie7.css" type="text/css" />'."\n";
+			if ( $style_ie7_css != '' ) {
+				$back .= '<link rel="stylesheet" href="'.$style_ie7_css.'" type="text/css" />'."\n";
 			}
 			$back .= "<![endif]-->\n";
 

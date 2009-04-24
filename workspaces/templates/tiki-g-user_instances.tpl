@@ -4,7 +4,7 @@
 
   
       {if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}GalaxiaUserInstances" target="tikihelp" class="tikihelp" title="{tr}Galaxia User Instances{/tr}">
+<a href="{$prefs.helpurl}Workflow" target="tikihelp" class="tikihelp" title="{tr}Galaxia User Instances{/tr}">
 <img src="img/icons/help.gif" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
 
 

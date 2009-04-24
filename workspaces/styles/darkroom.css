@@ -9,6 +9,7 @@
 
 
 /***** XHTML Elements ******/ 
+html {background-color: #474747}
 
 body {
 	background: #000000;
@@ -36,7 +37,6 @@ a:hover {
 	text-decoration: underline}
 
 caption {font-weight: bold}
-/*div {}*/
 
 h1, h2, h3, h4 {
 	color: #999980;
@@ -543,7 +543,7 @@ img.imgs {background: #999}
 	margin-top: -1.35em;
 	padding-bottom: 1px;}
 
-#col2 .cssmenu_vert > li > ul {margin-left: 172px}
+#col2 .cssmenu_vert > li > ul {margin-left: 172px;}
 
 .cssmenu li ul,
 .cssmenu_horiz li ul,
@@ -636,7 +636,7 @@ div.option:active {
 	background: #B2B2B2}
 
 .linkmenu, .rsslink,
-.linkmenu:visited, .rsslink:visited {
+.rsslink:visited {
 	font-size: .95em;
 	text-decoration: none;
 	font-weight: normal}
@@ -800,7 +800,11 @@ div.box {
 	background: #292929;
 	margin-bottom: 8px;
 	padding-bottom: 2px;
+<<<<<<< .working
 	width: 190px}
+=======
+	width: 190px;}
+>>>>>>> .merge-right.r18200
 
 h3.box-title {
 	overflow: hidden;
@@ -1373,7 +1377,8 @@ div.articletitle {
  
 div.articletitle h2 {
 	font-size: 1.6em;
-	font-weight: bold}
+	font-weight: bold;
+	margin: 0}
 
 span.titleb {font-size: 1.0em} 
 
@@ -2449,10 +2454,12 @@ div.multiselect {
 	vertical-align: middle;
 	overflow: auto;
 	height: 5em;
+	border: 1px solid #606060;
 }
 
-div.multiselect div.odd {background: #292929}
-div.multiselect div.even {background: #3F3F3F}
+div.multiselect li.odd {background: #3F3F3F; color: white;}
+div.multiselect li.even {background: #3F3F3F; color: white;}
 .help_section table { color: white; }
 .button .iconmenu {display:inline;}
+
 /* end of css file */

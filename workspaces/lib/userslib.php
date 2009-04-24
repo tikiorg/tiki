@@ -705,7 +705,7 @@ class UsersLib extends TikiLib {
 		}
 
 		// import phpCAS lib
-		require_once('phpcas/source/CAS/CAS.php');
+		require_once('lib/phpcas/source/CAS/CAS.php');
 
 		phpCAS::setDebug();
 
@@ -1008,6 +1008,7 @@ function get_users($offset = 0, $maxRecords = -1, $sort_mode = 'login_asc', $fin
 	    }
 	    $res["groups"] = $groups;
 	    $res["age"] = $this->now - $res["registrationDate"];
+            $res['user_information'] = $this->get_user_preference($user, 'user_information', 'public');
 
 	    $ret[] = $res;
 	}
@@ -2267,10 +2268,10 @@ function get_included_groups($group, $recur=true) {
 	* returns an empty string if password is ok, or the error string otherwise
 	*/
 	function check_password_policy($pass) {
-		global $prefs;
+		global $prefs, $user;
 
-		//Validate password here
-		if ( strlen($pass)<$prefs['min_pass_length'] ) {
+		// Validate password here
+		if ( ( $prefs['auth_method'] != 'cas' || $user == 'admin' ) && strlen($pass) < $prefs['min_pass_length'] ) {
 			return tra("Password should be at least").' '.$prefs['min_pass_length'].' '.tra("characters long");
 		}
 

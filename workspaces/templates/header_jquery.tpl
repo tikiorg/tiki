@@ -14,15 +14,22 @@
 <script type="text/javascript" src="lib/jquery/jquery-ui/ui/minified/jquery-ui.min.js"></script>
 {/if}
 {if $prefs.feature_jquery_tooltips eq 'y'}
-<script type="text/javascript" src="lib/jquery/cluetip/jquery.dimensions.js"></script>
-<script type="text/javascript" src="lib/jquery/cluetip/jquery.hoverIntent.js"></script>
+<script type="text/javascript" src="lib/jquery/cluetip/lib/jquery.hoverIntent.js"></script>
+<script type="text/javascript" src="lib/jquery/cluetip/lib/jquery.bgiframe.min.js"></script>
 <script type="text/javascript" src="lib/jquery/cluetip/jquery.cluetip.js"></script>
 <link rel="stylesheet" href="lib/jquery/cluetip/jquery.cluetip.css" type="text/css" /> 
 {/if}
 {if $prefs.feature_jquery_autocomplete eq 'y'}
 <script type="text/javascript" src="lib/jquery/jquery-autocomplete/lib/jquery.ajaxQueue.js"></script>
+<<<<<<< .working
 <script type="text/javascript" src="lib/jquery/jquery-autocomplete/lib/jquery.bgiframe.min.js"></script>
 <script type="text/javascript" src="lib/jquery/jquery-autocomplete/jquery.autocomplete.min.js"></script>
+=======
+{if $prefs.feature_jquery_tooltips neq 'y'}
+<script type="text/javascript" src="lib/jquery/jquery-autocomplete/lib/jquery.bgiframe.min.js"></script>
+{/if}
+<script type="text/javascript" src="lib/jquery/jquery-autocomplete/jquery.autocomplete{$minified}.js"></script>
+>>>>>>> .merge-right.r18200
 <link rel="stylesheet" href="lib/jquery/jquery-autocomplete/jquery.autocomplete.css" type="text/css" /> 
 {/if}
 {if $prefs.feature_jquery_superfish eq 'y'}

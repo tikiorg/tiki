@@ -3,7 +3,7 @@
 <h1><a class="pagetitle" href="tiki-g-monitor_instances.php">{tr}Monitor Instances{/tr}</a>
 
       {if $prefs.feature_help eq 'y'}
-<a href="{$prefs.helpurl}GalaxiaMonitorInstances" target="tikihelp" class="tikihelp" title="{tr}Galaxia Monitor Instances{/tr}">
+<a href="{$prefs.helpurl}Workflow" target="tikihelp" class="tikihelp" title="{tr}Galaxia Monitor Instances{/tr}">
 <img src="img/icons/help.gif" class="icon" height="16" width="16" alt='{tr}Help{/tr}' /></a>{/if}
 
       {if $prefs.feature_view_tpl eq 'y'}

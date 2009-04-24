@@ -1935,7 +1935,8 @@ class TikiLib extends TikiDB {
 				}
 				if ($display) {
 					$pos = $res['position'];
-					$ret["$pos"] = $res;
+					if (empty($ret[$pos]) || empty($ret[$pos]['url']))
+						$ret[$pos] = $res;
 				}
 			} else {
 				$ret[] = $res;
@@ -5549,7 +5550,11 @@ class TikiLib extends TikiDB {
 	} );
 	" );
 								}
+<<<<<<< .working
 								$ret = '~np~<a id="' .$id. '" style="float:right" href="javascript:void(1)" class="editplugin">'.smarty_function_icon(array('_id'=>'shape_square_edit', 'alt'=>tra('Edit Plugin').':'.$plugin_name), $smarty).'</a>~/np~'.$ret;
+=======
+								$ret = $ret.'~np~<a id="' .$id. '" href="javascript:void(1)" class="editplugin">'.smarty_function_icon(array('_id'=>'shape_square_edit', 'alt'=>tra('Edit Plugin').':'.$plugin_name), $smarty)."</a>~/np~";
+>>>>>>> .merge-right.r18200
 							}
 	
 						} else {
@@ -8370,6 +8375,21 @@ JS;
 		// parse_str's behavior also depends on magic_quotes_gpc...
 		global $magic_quotes_gpc;
 		if ( $magic_quotes_gpc ) remove_gpc($arr);
+	}
+
+	function bindvars_to_sql_in(&$bindvars, $remove_duplicates = false, $cast_to_int = false) {
+		if ( ! is_array($bindvars) ) return false;
+		$query = ' IN (';
+		$bindvars2 = array();
+		foreach ( $bindvars as $id ) {
+			if ( $cast_to_int ) $id = (int)$id;
+			if ( $remove_duplicates && in_array($id, $bindvars2) ) continue;
+			$bindvars2[] = $id;
+			if ( $query == '' ) $query .= ',';
+			$query .= '?';
+		}
+		if ( $remove_duplicates ) $bindvars = $bindvars2;
+		return ' IN (' . $query . ')';
 	}
 }
 // end of class ------------------------------------------------------
