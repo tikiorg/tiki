@@ -13,6 +13,12 @@
 	</div>
 {/if}
 
+{if $upload_err_msg neq ''}
+	{remarksbox type="warning" title="{tr}Warning{/tr}" icon="error"}
+		{$upload_err_msg}
+	{/remarksbox}
+{/if}
+
 {assign var=area_name value="editwiki"}
 {if $emited eq 'y'}
 	{remarksbox type="note" title="{tr}Notice{/tr}" icon="lock"}

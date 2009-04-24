@@ -8227,15 +8227,24 @@ class TikiLib extends TikiDB {
 		return $retval;
 	}
 
-	/* get explicit message on upload problem */
+	/**
+	  *  Returns explicit message on upload problem
+	  *
+	  *	@params: $iError: php status of the file uploading (documented in http://uk2.php.net/manual/en/features.file-upload.errors.php )
+	  *
+	  */
 	function uploaded_file_error($iError) {
 		switch($iError) {
-			case 0: return tra('You are not allowed to upload this type of file.');
-			case 1: return tra('Cannot upload this file maximum upload size exceeded').'(upload_max_filesize)';
-			case 2: return tra('Cannot upload this file maximum upload size exceeded');
-			case 3: return tra('The file you are trying upload was only partially uploaded.');
-			case 4: return tra('You must select a file.');
-			default: return tra('The file you are trying upload was only partially uploaded.');
+			case UPLOAD_ERR_OK: return tra('The file was uploaded with success.');
+			case UPLOAD_ERR_INI_SIZE : return tra('The uploaded file exceeds the upload_max_filesize directive in php.ini.');
+			case UPLOAD_ERR_FORM_SIZE: return tra('The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form.');
+			case UPLOAD_ERR_PARTIAL: return tra('The file you are trying upload was only partially uploaded.');
+			case UPLOAD_ERR_NO_FILE: return tra('No file was uploaded. Was a file selected ?');
+			case UPLOAD_ERR_NO_TMP_DIR: return tra('A temporary folder is missing.');
+			case UPLOAD_ERR_CANT_WRITE: return tra('Failed to write file to disk.');
+			case UPLOAD_ERR_EXTENSION: return tra('File upload stopped by extension.');
+
+			default: return tra('Unknown error.');
 		}
 	}
 
