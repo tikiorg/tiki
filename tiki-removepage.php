@@ -77,7 +77,7 @@ if (isset($_REQUEST["remove"])) {
 		if ($version == "last") {
 			$wikilib->remove_last_version($_REQUEST["page"]);
 		} else {
-			$histlib->remove_version($_REQUEST['page'], $_REQUEST['version'], '', $_REQUEST['historyId']);
+			$histlib->remove_version($_REQUEST['page'], $_REQUEST['version'], $_REQUEST['historyId']);
 		}
 
 		header ("location: tiki-index.php");
