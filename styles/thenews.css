@@ -801,7 +801,7 @@ div.separatorline {}
 div.option a.linkmenu:hover {}
 a.separator img {}
 /* menu option */
-.option {
+.option, .optionline {
 	background: transparent url('../img/icons2/corner-dots.gif') center left no-repeat;
 	padding: 0.2em 0.2em 0.2em 1.6em;
 }
