@@ -308,7 +308,9 @@ div#sioptions {
 	width: 100%;
 	padding: 0}
 
-#sioptionscentered {text-align: center}
+#sioptionscentered {
+	text-align: center
+	margin: 1em}
 
 div.floatright {
 	float: right;
@@ -351,14 +353,12 @@ div#sitead {margin: auto}
 	margin-top: 3px;
 	height: 33px;
 	text-align: left;
-	/*max-width: 380px;
-	min-width: 340px;*/
-	width: 380px;
+	width: 342px;
 	background: url(coelesce/search_wide.jpg) no-repeat;
 	padding-left: 15px;
 	color: #517ea7;}
 	
-#sitesearchbar > .wrapper {
+#sitesearchbar .wrapper {
 	height: 33px;
 	background: url(coelesce/search_wide.jpg) 100% 0 no-repeat;
 	margin: 0;
@@ -426,21 +426,35 @@ input[id="sl-login-pass"] {}
 /* #header text selectors, if needed */
 
 #sitetitles {
-	display: inline;
-	margin-top: 2em}
+	margin-top: 20px;
+	margin-left: 16px}
+
+* html #sitetitles {margin-top: 6px}
 
 #sitetitle,
 #sitesubtitle {
 	display: inline;
 	white-space: nowrap;
 	font-family: Arial, Helvetica, sans-serif;
-	font-weight: bold;}
+	font-weight: bold;
+	margin:0;
+	padding:0}
+	
+* html #sitetitle,
+* html #sitesubtitle {
+	display: block}
 
 #sitetitle {
 	color: #9eb8d5;
-	font-size: 4em}
+	font-size: 3em}
 
-* html #sitetitle {}
+* html #sitetitle {
+	font-size: 30px;
+	height: 30px }
+
+* html #sitesubtitle {
+	font-size: 14px;
+	height: 18px}
 
 #sitetitle a,
 #sitetitle a:link,
