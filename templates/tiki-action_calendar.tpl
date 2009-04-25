@@ -37,13 +37,9 @@
 
 {if $viewlist eq 'list'}
 {include file="tiki-calendar_listmode.tpl"'}
-
-{elseif $viewmode eq 'day'}
-{include file="tiki-calendar_daymode.tpl"}
-
 {else}
 {include file="tiki-calendar_calmode.tpl"}
-
 {/if}
+
 </div>
 

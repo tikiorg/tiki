@@ -1,13 +1,24 @@
 <div class='opaque' style="position:absolute;left:50%;margin-left:-150px;width:400px">
-{if $prefs.calendar_sticky_popup eq "y"}
-<div style="float:right">
-	{if $tiki_p_change_events eq 'y'}
-	<a href="tiki-calendar_edit_item.php?calitemId={$cellid}">{icon _id="page_edit" alt="{tr}Edit event{/tr}"}</a>
-	<a href="tiki-calendar_edit_item.php?calitemId={$cellid}&amp;delete=y">{icon _id="cross" alt="{tr}Delete event{/tr}"}</a>
+{if $calendar_type eq "tiki_actions"}
+	<div class='box-title'><a href="{$item_url}">{$cellhead}</a>
+	{if $infocals.$cellcalendarId.custompriorities eq 'y' and $cellprio}
+		<span class='calprio{$cellprio}' id='calprio'>{$cellprio}</span>
 	{/if}
-	<a href="tiki-calendar_edit_item.php?viewcalitemId={$cellid}">{icon _id="magnifier" alt="{tr}View event{/tr}"}</a>
-	<a href="#" onClick="nd();nd();return false;">{icon _id="minus_small" alt="{tr}Close{/tr}" width="11" height="8"}</a>
-</div>
+	{if $prefs.calendar_sticky_popup eq "y"}
+		<span style="right:2px; position:absolute">
+			<a href="javascript:void(0)" onClick="nd();nd();return false;">{icon _id="minus_small" alt="{tr}Close{/tr}" width="11" height="8"}</a>
+		</span>
+	{/if}
+	</div>
+{elseif $prefs.calendar_sticky_popup eq "y"}
+	<div style="float:right">
+		{if $tiki_p_change_events eq 'y'}
+			<a href="tiki-calendar_edit_item.php?calitemId={$cellid}">{icon _id="page_edit" alt="{tr}Edit event{/tr}"}</a>
+			<a href="tiki-calendar_edit_item.php?calitemId={$cellid}&amp;delete=y">{icon _id="cross" alt="{tr}Delete event{/tr}"}</a>
+		{/if}
+		<a href="tiki-calendar_edit_item.php?viewcalitemId={$cellid}">{icon _id="magnifier" alt="{tr}View event{/tr}"}</a>
+		<a href="javascript:void(0)" onClick="nd();nd();return false;">{icon _id="minus_small" alt="{tr}Close{/tr}" width="11" height="8"}</a>
+	</div>
 {/if}
 <strong{if $cellstatus eq '2'} style="text-decoration:line-through"{/if}>
 {if $allday}

@@ -1,5 +1,5 @@
 <div class="clearfix tabrow"><div class="tabrowRight"></div><div class="tabrowLeft"></div>
-<div class="viewmode"><div class="calbuttonBox"><div class="calbuttonLeft"></div><div class="calbuttonoff"><a href="{$myurl}?viewmode=day&todate={$now}" title="{tr}Today{/tr}">{tr}Today{/tr}</a></div><div class="calbuttonRight"></div></div>
+<div class="viewmode">{if $calendar_type eq "tiki_actions"}<div></div>{else}<div class="calbuttonBox"><div class="calbuttonLeft"></div><div class="calbuttonoff"><a href="{$myurl}?viewmode=day&todate={$now}" title="{tr}Today{/tr}">{tr}Today{/tr}</a></div><div class="calbuttonRight"></div></div>{/if}
 <div id="prev">
 {if $viewmode eq "day"}
 <a href="{$myurl}?todate={$daybefore}" title="&laquo; {tr}Day{/tr}" class="prev">{icon _id="resultset_previous" alt="{tr}Previous{/tr}"}</a>
@@ -15,7 +15,9 @@
 <a href="{$myurl}?todate={$yearbefore}" title="&laquo; {tr}Year{/tr}" class="prev">{icon _id="resultset_previous" alt="{tr}Previous{/tr}"}</a>
 {/if}
 </div>
+{if $calendar_type neq "tiki_actions"}
 <div class="calbuttonBox calbutton{if $viewmode eq 'day'}on{else}off{/if}"><a href="{$myurl}?viewmode=day" title="{tr}Day{/tr}">{tr}Day{/tr}</a></div>
+{/if}
 <div class="calbuttonBox calbutton{if $viewmode eq 'week'}on{else}off{/if}"><a href="{$myurl}?viewmode=week" title="{tr}Week{/tr}">{tr}Week{/tr}</a></div>
 <div class="calbuttonBox calbutton{if $viewmode eq 'month'}on{else}off{/if}"><a href="{$myurl}?viewmode=month" title="{tr}Month{/tr}">{tr}Month{/tr}</a></div>
 <div class="calbuttonBox calbutton{if $viewmode eq 'quarter'}on{else}off{/if}"><a href="{$myurl}?viewmode=quarter" title="{tr}Quarter{/tr}">{tr}Quarter{/tr}</a></div>
