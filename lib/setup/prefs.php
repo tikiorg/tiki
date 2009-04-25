@@ -208,7 +208,7 @@ function get_default_prefs() {
 		'wikiplugin_group' => 'y',
 		'wikiplugin_html' => 'n',
 		'wikiplugin_iframe' => 'n',
-		'wikiplugin_image' => 'y',
+		'wikiplugin_image' => 'n',    // Experimental, may supercede img in 4.0
 		'wikiplugin_include' => 'y',
 		'wikiplugin_jabber' => 'n',
 		'wikiplugin_js' => 'n',
@@ -218,7 +218,7 @@ function get_default_prefs() {
 		'wikiplugin_listpages' => 'n',
 		'wikiplugin_lsdir' => 'n',
 		'wikiplugin_map' => 'y',
-		'wikipluglin_mediaplayer' => 'y',
+		'wikiplugin_mediaplayer' => 'y',
 		'wikiplugin_miniquiz' => 'y',
 		'wikiplugin_module' => 'y',
 		'wikiplugin_mono' => 'n',
@@ -226,7 +226,7 @@ function get_default_prefs() {
                 'wikiplugin_mwtable' => 'y',
 		'wikiplugin_myspace' => 'n',
 		'wikiplugin_objecthits' => 'n',
-		'wikiplugin_picture' => 'y',
+		'wikiplugin_picture' => 'n',  // Old syntax for images
 		'wikiplugin_pluginmanager' => 'n',
 		'wikiplugin_poll' => 'y',
 		'wikiplugin_proposal' => 'n',
