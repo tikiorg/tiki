@@ -562,11 +562,7 @@ div#tiki-bot {}
 	
 /****** Menus ******/
 
-.horbar {
-		bottom: 0;
-		border-bottom: 1px solid #D3D3D3; border-top: 1px solid #fff;
-		position: relative
-} 
+.horbar {float: left} 
 
 .horbar table {
 	width: auto;
@@ -575,7 +571,7 @@ div#tiki-bot {}
 
 /* Text in the top level (visible by default) of the menu */
 .horbaritem a {
-	padding: 4px 6px;
+	padding: 6px 6px;
 	text-decoration: none;
 	font: .9em Verdana, Helvetica, Arial, Sans-Serif;
 	display: block;
