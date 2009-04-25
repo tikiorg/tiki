@@ -1526,8 +1526,8 @@ class Tiki_Profile_InstallHandler_Article extends Tiki_Profile_InstallHandler //
 		$defaults = array(
 			'author' => 'Anonymous',
 			'heading' => '',
-			'publish_date' => time(),
-			'expire_date' => time() + 3600*24*30,
+			'publication_date' => time(),
+			'expiration_date' => time() + 3600*24*30,
 			'type' => 'Article',
 			'topline' => '',
 			'subtitle' => '',
