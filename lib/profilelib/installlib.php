@@ -693,6 +693,13 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler /
 		$this->replaceReferences( $this->content );
 		$this->replaceReferences( $this->lang );
 
+		error_reporting(E_ALL);
+		ini_set('display_errors','on');
+		if( strpos( $this->content, 'wikidirect:' ) === 0 ) {
+			$pageName = substr( $this->content, strlen('wikidirect:') );
+			$this->content = $this->obj->getPageContent( $pageName );
+		}
+
 		if( $this->mode == 'create' ) {
 			if( $tikilib->create_page( $this->name, 0, $this->content, time(), tra('Created by profile installer'), 'admin', '0.0.0.0', $this->description, $this->lang ) )
 				return $this->name;
