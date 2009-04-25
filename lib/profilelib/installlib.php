@@ -865,6 +865,7 @@ class Tiki_Profile_InstallHandler_Module extends Tiki_Profile_InstallHandler // 
 		$defaults = array(
 			'cache' => 0,
 			'rows' => 10,
+			'custom' => null,
 			'groups' => array(),
 			'params' => array(),
 		);
@@ -900,6 +901,11 @@ class Tiki_Profile_InstallHandler_Module extends Tiki_Profile_InstallHandler // 
 
 		$data['params'] = http_build_query( $data['params'], '', '&' );
 		
+		if( $data['custom'] )
+		{
+			$modlib->replace_user_module( $data['name'], $data['name'], (string) $data['custom'] );
+		}
+
 		return $modlib->assign_module( 0, $data['name'], null, $data['position'], $data['order'], $data['cache'], $data['rows'], $data['groups'], $data['params'] );
 	}
 } // }}}
