@@ -54,7 +54,7 @@ class Tiki_Profile_Installer
 		global $tikilib;
 
 		$result = $tikilib->query( "SELECT DISTINCT domain, profile FROM tiki_profile_symbols" );
-		while( $row = $result->fetchRow() )
+		if ( $result ) while( $row = $result->fetchRow() )
 			$this->installed[Tiki_Profile::getProfileKeyFor( $row['domain'], $row['profile'] )] = true;
 	} // }}}
 
