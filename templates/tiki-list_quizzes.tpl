@@ -1,14 +1,17 @@
 {* $Id$ *}
 {title help="Quiz"}{tr}Quizzes{/tr}{/title}
 
-{if $tiki_p_view_quiz_stats eq 'y'}
-	<div class="navbar">
-		{button href="tiki-quiz_stats.php" _text="{tr}Quiz Stats{/tr}"}
-	</div>
-
-	{if $channels or ($find ne '')}
-		{include file='find.tpl'}
+<div class="navbar">
+	{if $tiki_p_admin_quizzes eq 'y'}
+			{button href="tiki-edit_quiz.php" _text="{tr}Admin Quizzes{/tr}"}
 	{/if}
+	{if $tiki_p_view_quiz_stats eq 'y'}
+		{button href="tiki-quiz_stats.php" _text="{tr}Quiz Stats{/tr}"}
+	{/if}
+</div>
+
+{if $channels or ($find ne '')}
+	{include file='find.tpl'}
 {/if}
 
 <table class="normal">
