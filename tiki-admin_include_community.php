@@ -25,10 +25,6 @@ if (isset($_REQUEST["userfeatures"])) {
 	simple_set_toggle("feature_community_mouseover_email");
 	simple_set_toggle("feature_community_mouseover_lastlogin");
 	simple_set_toggle("feature_community_mouseover_distance");
-}
-
-if (isset($_REQUEST["userlistfeatures"])) {
-	check_ticket('admin-inc-community');
 	simple_set_toggle("feature_community_list_name");
 	simple_set_toggle("feature_community_list_score");
 	simple_set_toggle("feature_community_list_country");
