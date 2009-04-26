@@ -14,46 +14,23 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-if ( $prefs['feature_copyright'] != 'y' )
-{
-	$smarty->assign('msg', tra("This feature is disabled").": feature_copyright");
-        $smarty->display("error.tpl");
-        die;
-
-}
-if (isset($_REQUEST["setcopyright"])) {
+if ( isset($_REQUEST["setcopyright"]) ) {
         check_ticket('admin-inc-copyright');
-        if (isset($_REQUEST["wiki_feature_copyrights"]) && $_REQUEST["wiki_feature_copyrights"] == "on") {
-                $tikilib->set_preference("wiki_feature_copyrights", 'y');
-        } else {
-                $tikilib->set_preference("wiki_feature_copyrights", 'n');
-        }
-       if (isset($_REQUEST["blogues_feature_copyrights"]) && $_REQUEST["blogues_feature_copyrights"] == "on") {
-                $tikilib->set_preference("blogues_feature_copyrights", 'y');
-        } else {
-                $tikilib->set_preference("blogues_feature_copyrights", 'n');
-        }
- 	if (isset($_REQUEST["faqs_feature_copyrights"]) && $_REQUEST["faqs_feature_copyrights"] == "on") {
-                $tikilib->set_preference("faqs_feature_copyrights", 'y');
-        } else {
-                $tikilib->set_preference("faqs_feature_copyrights", 'n');
-        }
-       if (isset($_REQUEST["articles_feature_copyrights"]) && $_REQUEST["articles_feature_copyrights"] == "on") {
-                $tikilib->set_preference("articles_feature_copyrights", 'y');
-        } else {
-                $tikilib->set_preference("articles_feature_copyrights", 'n');
-        }
 
-        if (isset($_REQUEST["wikiLicensePage"])) {
-                $tikilib->set_preference("wikiLicensePage", $_REQUEST["wikiLicensePage"]);
-        }
+	$pref_toggles = array(
+		"wiki_feature_copyrights",
+		"blogues_feature_copyrights",
+		"faqs_feature_copyrights",
+		"articles_feature_copyrights",
+	);
 
-        if (isset($_REQUEST["wikiSubmitNotice"])) {
-                $tikilib->set_preference("wikiSubmitNotice", $_REQUEST["wikiSubmitNotice"]);
-        }
+	$pref_byref_values = array(
+		"wikiLicensePage",
+		"wikiSubmitNotice",
+	);
+
+	foreach ($pref_toggles as $toggle) simple_set_toggle ($toggle);
+	foreach ($pref_byref_values as $value) byref_set_value ($value);
 }
-
-
 
 ask_ticket('admin-inc-copyright');
-?>

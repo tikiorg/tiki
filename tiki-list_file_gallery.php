@@ -126,7 +126,6 @@ if ( $tiki_p_admin_file_galleries == 'y' ) {
 		check_ticket('fgal');
 		if (isset($_REQUEST['file'])) {
 			foreach ( array_values($_REQUEST['file']) as $file ) {
-				// To move a topic you just have to change the object
 				$filegallib->set_file_gallery($file, $_REQUEST['moveto']);
 			}
 		}

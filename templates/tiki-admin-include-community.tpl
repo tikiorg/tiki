@@ -99,7 +99,7 @@
 {/if}
 </fieldset>
 
-<div align="center" style="margin:1em;"><input type="submit" name="userlistfeatures" value=" {tr}Change Preferences{/tr} " class="button" /></div>
+<div align="center" style="margin:1em;"><input type="submit" name="userfeatures" value=" {tr}Change Preferences{/tr} " class="button" /></div>
 
 </td></tr></table>
 

@@ -724,15 +724,23 @@ class Tiki_Profile_Object
 		elseif( 0 === strpos( $data, 'wikicontent:' ) )
 		{
 			$pageName = substr( $data, strlen('wikicontent:') );
-			$exportUrl = dirname( $this->profile->url ) . '/tiki-export_wiki_pages.php?'
-				. http_build_query( array( 'page' => $pageName ) );
-
-			$content = tiki_get_remote_file( $exportUrl );
-			$content = str_replace( "\r", '', $content );
-			$begin = strpos( $content, "\n\n" );
-			if( $begin !== false )
-				$data = substr( $content, $begin + 2 );
+			$data = $this->getPageContent( $pageName );
 		}
+	} // }}}
+
+	public function getPageContent( $pageName ) // {{{
+	{
+		$exportUrl = dirname( $this->profile->url ) . '/tiki-export_wiki_pages.php?'
+			. http_build_query( array( 'page' => $pageName ) );
+
+		$content = tiki_get_remote_file( $exportUrl );
+		$content = str_replace( "\r", '', $content );
+		$begin = strpos( $content, "\n\n" );
+
+		if( $begin !== false )
+			return substr( $content, $begin + 2 );
+		else
+			return null;
 	} // }}}
 
 	function __get( $name ) // {{{

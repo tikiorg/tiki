@@ -54,7 +54,7 @@ class Tiki_Profile_Installer
 		global $tikilib;
 
 		$result = $tikilib->query( "SELECT DISTINCT domain, profile FROM tiki_profile_symbols" );
-		while( $row = $result->fetchRow() )
+		if ( $result ) while( $row = $result->fetchRow() )
 			$this->installed[Tiki_Profile::getProfileKeyFor( $row['domain'], $row['profile'] )] = true;
 	} // }}}
 
@@ -693,6 +693,13 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler /
 		$this->replaceReferences( $this->content );
 		$this->replaceReferences( $this->lang );
 
+		error_reporting(E_ALL);
+		ini_set('display_errors','on');
+		if( strpos( $this->content, 'wikidirect:' ) === 0 ) {
+			$pageName = substr( $this->content, strlen('wikidirect:') );
+			$this->content = $this->obj->getPageContent( $pageName );
+		}
+
 		if( $this->mode == 'create' ) {
 			if( $tikilib->create_page( $this->name, 0, $this->content, time(), tra('Created by profile installer'), 'admin', '0.0.0.0', $this->description, $this->lang ) )
 				return $this->name;
@@ -865,6 +872,7 @@ class Tiki_Profile_InstallHandler_Module extends Tiki_Profile_InstallHandler // 
 		$defaults = array(
 			'cache' => 0,
 			'rows' => 10,
+			'custom' => null,
 			'groups' => array(),
 			'params' => array(),
 		);
@@ -900,6 +908,11 @@ class Tiki_Profile_InstallHandler_Module extends Tiki_Profile_InstallHandler // 
 
 		$data['params'] = http_build_query( $data['params'], '', '&' );
 		
+		if( $data['custom'] )
+		{
+			$modlib->replace_user_module( $data['name'], $data['name'], (string) $data['custom'] );
+		}
+
 		return $modlib->assign_module( 0, $data['name'], null, $data['position'], $data['order'], $data['cache'], $data['rows'], $data['groups'], $data['params'] );
 	}
 } // }}}
@@ -1520,8 +1533,8 @@ class Tiki_Profile_InstallHandler_Article extends Tiki_Profile_InstallHandler //
 		$defaults = array(
 			'author' => 'Anonymous',
 			'heading' => '',
-			'publish_date' => time(),
-			'expire_date' => time() + 3600*24*30,
+			'publication_date' => time(),
+			'expiration_date' => time() + 3600*24*30,
 			'type' => 'Article',
 			'topline' => '',
 			'subtitle' => '',

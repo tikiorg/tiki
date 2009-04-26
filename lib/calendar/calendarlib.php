@@ -756,6 +756,9 @@ class CalendarLib extends TikiLib {
 							}
 							$lte['description'] = $desc;
 						}
+
+						$smarty->assign('calendar_type', ( $myurl == 'tiki-action_calendar.php' ? 'tiki_actions' : 'calendar' ) );
+						$smarty->assign_by_ref('item_url', $lte["url"]);
 						$smarty->assign_by_ref('cellhead', $lte["head"]);
 						$smarty->assign_by_ref('cellprio', $lte["prio"]);
 						$smarty->assign_by_ref('cellcalname', $lte["calname"]);

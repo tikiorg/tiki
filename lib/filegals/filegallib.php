@@ -174,7 +174,10 @@ class FileGalLib extends TikiLib {
 	}
 
 	function move_file_gallery($galleryId, $new_parent_id) {
-		if ( (int)$galleryId <= 0 || (int)$new_parent_id != 0 ) return false;
+		if ( (int)$galleryId <= 0 || (int)$new_parent_id == 0 ) return false;
+
+		global $cachelib; require_once("lib/cache/cachelib.php");
+		$cachelib->empty_type_cache($this->get_all_galleries_cache_type());
 
 		return $this->query(
 			'update `tiki_file_galleries` set `parentId`=? where `galleryId`=?',

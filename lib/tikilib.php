@@ -3941,11 +3941,18 @@ class TikiLib extends TikiDB {
 			$mid = '';
 		}
 
+		$distinct = '';
 		if (!empty($filter)) {
 			$tmp_mid = array();
 			foreach ($filter as $type=>$val) {
 				if ($type == 'categId') {
-					$join_tables .= " inner join `tiki_objects` as tob on (tob.`itemId`= tp.`pageName` and tob.`type`= ?) inner join `tiki_category_objects` as tc on (tc.`catObjectId`=tob.`objectId` and tc.`categId` IN(" . implode(', ', array_fill(0, count( (array) $val ), '?')) . ")) ";
+					$cat_count = count( (array) $val );
+					$join_tables .= " inner join `tiki_objects` as tob on (tob.`itemId`= tp.`pageName` and tob.`type`= ?) inner join `tiki_category_objects` as tc on (tc.`catObjectId`=tob.`objectId` and tc.`categId` IN(" . implode(', ', array_fill(0, $cat_count, '?')) . ")) ";
+
+					if( $cat_count > 1 ) {
+						$distinct = ' DISTINCT ';
+					}
+
 					$join_bindvars = array_merge(array('wiki page'), (array) $val);
 				} elseif ($type == 'lang') {
 					$tmp_mid[] = 'tp.`lang`=?';
@@ -3992,7 +3999,7 @@ class TikiLib extends TikiDB {
 			$bindvars = empty($bindvars)? $join_bindvars : array_merge($join_bindvars, $bindvars);
 		}
 
-		$query = "select "
+		$query = "select $distinct"
 			.( $onlyCant ? "tp.`pageName`" : "tp.* ".$select )
 			." from `tiki_pages` as tp $join_tables $mid order by ".$this->convert_sortmode($sort_mode);
 
