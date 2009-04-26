@@ -181,11 +181,11 @@ ul.jumplinks a:active {
 
 #tiki-top a,
 #tiki-top a:visited {
-	color: #5AE0FF;
+	color: #1E7EA6;
 }
 
 #tiki-top a:hover {
-	color: #fff;
+	color: #1E7EA6;
 }
 
 .tellafriend a,
@@ -293,8 +293,8 @@ a.phplmselected:hover {
 .cssmenu ul,
 .cssmenu_vert li ul,
 .cssmenu_horiz li ul {
-	border: 1px solid #08698f;
-	background: #1b3a50;
+	border: 1px solid #aaa;
+	background: #f5f5f5;
 }
 
 .cssmenu_vert li ul {
@@ -303,8 +303,9 @@ a.phplmselected:hover {
 }
 
 .cssmenu_horiz li:hover {
-	background: #1b3a50;
+	background: #CCE5FF;
 }
+
 
 .cssmenu_ver li:hover {
 	background: none;
@@ -484,15 +485,15 @@ td.third {}
 
 th,
 table.normal td.heading {
-	color: #5ae0ff;
-	background: #1b3a50;
+	color: #fff;
+	background: #1E7EA6;
 }
 
 th a:link,
 th a:visited,
 td.heading a:link,
 td.heading a:visited {
-	color: #5ae0ff;
+	color: #fff;
 }
 
 a.tablename,
