@@ -4005,7 +4005,7 @@ class TikiLib extends TikiDB {
 			if( $initial ) {
 				$valid = false;
 				foreach( (array) $initial as $candidate ) {
-					if( strpos( $res['pageName'], $candidate ) === 0 ) {
+					if( stripos( $res['pageName'], $candidate ) === 0 ) {
 						$valid = true;
 						break;
 					}
