@@ -87,7 +87,7 @@ Add a value in first check when you create a new admin page. *}
 	<a href="tiki-adminusers.php">{tr}Users{/tr}</a> 
 	<a href="tiki-admingroups.php">{tr}Groups{/tr}</a> 
 	<a href="tiki-admin_security.php">{tr}Security{/tr}</a> 
-	<a href="tiki-admin_system.php">{tr}System{/tr}</a> 
+	<a href="tiki-admin_system.php">{tr}TikiCache/System{/tr}</a> 
 	<a href="tiki-syslog.php">{tr}SysLogs{/tr}</a> 
 	<a href="tiki-phpinfo.php">{tr}phpinfo{/tr}</a> 
 	<a href="tiki-mods.php">{tr}Mods{/tr}</a>
