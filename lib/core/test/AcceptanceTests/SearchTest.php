@@ -2,19 +2,22 @@
 
 require_once 'PHPUnit/Extensions/SeleniumTestCase.php';
 
-class  AcceptanceTests_SearchTest extends PHPUnit_Extensions_SeleniumTestCase
+class  AcceptanceTests_SearchTest extends TikiSeleniumTestCase
 {
 
     public function ___testRememberToReactivateAllTestsInSearchTest() {
-       $this->fail("Don't forget to do this");
+       	$this->fail("Don't forget to do this");
     }
-
+    
     public function testSearchFormIsWellFormed() {
-        $this->open('http://localhost/tiki-trunk/tiki-index.php');
-        $this->_assertSearchFormIsWellFormed();
+       	$this->openTikiPage('tiki-index.php');
+       	$this->logInIfNecessaryAs('admin');
+       	$this->_assertSearchFormIsWellFormed();
     }    
     
     public function testFillSearchFormAndSubmit() {
+    	$this->openTikiPage('tiki-index.php');
+    	$this->logInIfNecessaryAs('admin');
         $query = 'feature';
         $this->_searchFor($query);
         $this->_assertSearchResultsWere(array(0 => "HomePage", 1 => 'Multilingual Test Page 1', 2 => 'Another page containing the word feature'), 
@@ -23,6 +26,8 @@ class  AcceptanceTests_SearchTest extends PHPUnit_Extensions_SeleniumTestCase
     
     
     public function testSearchIsCaseInsensitive() {
+       $this->openTikiPage('tiki-index.php');
+       $this->logInIfNecessaryAs('admin');	
        $query = 'hello';
        $this->_searchFor($query);
        $this->_assertSearchResultsWere(array(0 => "test page for search 1", 
@@ -30,7 +35,9 @@ class  AcceptanceTests_SearchTest extends PHPUnit_Extensions_SeleniumTestCase
                                         $query, "Bad list of search results for query '$query'. Search should have been case insensitive.");
     }
     
-    public function ___testByDefaultSearchLooksForAnyOfTheQueryTerms() {
+    public function testByDefaultSearchLooksForAnyOfTheQueryTerms() {
+       $this->openTikiPage('tiki-index.php');
+       $this->logInIfNecessaryAs('admin');
        $query = 'hello world';
        $this->_searchFor($query);
        $this->_assertSearchResultsWere(array(0 => "test page for search 1", 
@@ -46,29 +53,33 @@ class  AcceptanceTests_SearchTest extends PHPUnit_Extensions_SeleniumTestCase
 
     protected function setUp()
     {
-           $this->setBrowser('*firefox C:\Program Files\Mozilla Firefox\firefox.exe');
-           $this->setBrowserUrl('http://www.example.com/');
+//		$this->printImportantMessageForTestUsers();
+		$this->setBrowser('*firefox C:\Program Files\Mozilla Firefox\firefox.exe');
+        $this->setBrowserUrl('http://localhost/');
+        $this->restoreDB(get_class($this));
     }
 
+    public function printImportantMessageForTestUsers() {
+       die("SearchTest will not work unless:\n".
+                   "- the name of the Tiki db is 'tiki_db_for_acceptance_tests' and \n".
+				   "- the file 'searchTestDump.sql' (not in svn, due to its size) is copied in the mySql data directory.\n" .
+				   "Comment out the call to printImportantMessageForTestUsers() in SearchTest::setUp() to run the tests.\n");
+    }
+
+
     private function _searchFor($query) {
-        $this->open('http://localhost/tiki-trunk/tiki-index.php');
-        $this->type("xpath=//form[@id='search-form']/input[@name='highlight']", $query);
-        $this->clickAndWait("xpath=//form[@id='search-form']/input[@type='submit']");
+ 		$this->type('fuser', $query);
+    	$this->clickAndWait('search');
     }
 
     private function _assertSearchFormIsWellFormed() {
     
-//        echo "-- _assertSearchFormIsWellFormed: content of active page is: \n";
-//        echo $this->getHtmlSource();
-    
-        $this->assertElementPresent("xpath=//form[@id='search-module-form']", 
+        $this->assertElementPresent("xpath=//form[@id='search-form']", 
                                     "Search form was not present");
-        $this->assertElementPresent("xpath=//form[@id='search-module-form']/input[@name='highlight']",
-                                    "Search query field was not present");
-        $this->assertElementPresent("xpath=//form[@id='search-module-form']/select[@name='where']",
-                                    "Picklist for where to search was not present");
-        $this->assertElementPresent("xpath=//form[@id='search-module-form']/input[@type='submit']",
-                                    "Submit button for search form was not present");
+        $this->assertElementPresent("fuser", 
+                                    "Search input field not present");
+        $this->assertElementPresent("xpath=//div[@id='sitesearchbar']", 
+                                    "Site search bar was not present");
     }
      
     private function _assertSearchResultsWere($listOfHits, $query, $message) {
