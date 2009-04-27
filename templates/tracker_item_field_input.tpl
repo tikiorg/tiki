@@ -261,13 +261,14 @@
 	{else}
 		{assign var=time value=$field_value.value}
 	{/if}
-	{if $field_value.options_array[0] eq 'd'}
+	{if $field_value.options_array[0] ne 't'}
 		{if $field_value.isMandatory ne 'y' and (isset($field_value.options_array[3]) and $field_value.options_array[3] eq 'blank')}
 			{html_select_date prefix=$field_value.ins_id time=$time start_year=$start end_year=$end field_order=$prefs.display_field_order all_empty=" "}
 		{else}
 			{html_select_date prefix=$field_value.ins_id time=$time start_year=$start end_year=$end field_order=$prefs.display_field_order}
 		{/if}
-	{else}
+	{/if}
+	{if $field_value.options_array[0] ne 'd'}
 		{tr}at{/tr} {html_select_time prefix=$field_value.ins_id time=$time display_seconds=false}
 	{/if}
 
