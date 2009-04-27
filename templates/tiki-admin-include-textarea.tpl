@@ -233,7 +233,6 @@ $jq('#pluginalias_simple_args').hide();
 $jq('#pluginalias_doc').hide();
 $jq('#pluginalias_body').hide();
 $jq('#pluginalias_composed_args').hide();
-$jq("[name='save']").hide();
 $jq('#pluginalias_add').click(function() {
 	$jq('#pluginalias_general legend')[0].showing = false;
 	$jq('#pluginalias_general legend').trigger('click');
@@ -247,7 +246,6 @@ $jq('#pluginalias_add').click(function() {
 	$jq('#pluginalias_doc').show();
 	$jq('#pluginalias_body').show();
 	$jq('#pluginalias_composed_args').show();
-	$jq("[name='save']").show();
 
 	$jq('#pluginalias_available legend')[0].showing = true;
 	$jq('#pluginalias_available legend').trigger('click');
@@ -482,10 +480,6 @@ $jq('#pluginalias_simple_new').hide();
 			{/foreach}
 			{if $plugin_admin}{jq}$jq('#pluginalias_composed_args legend').trigger('click'{{if isset($composed_args)}, true{/if}});{/jq}{/if}
 		</fieldset>
-
-		<div align="center">
-			<input type="submit" name="save" value="{tr}Save{/tr}"/>
-		</div>
 
 		{if $prefs.feature_tabs neq 'y'}</div>{/if}
     </fieldset>

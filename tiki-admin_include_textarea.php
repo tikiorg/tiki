@@ -19,7 +19,7 @@ foreach( $tikilib->plugin_get_list() as $name ) {
 
 $smarty->assign( 'plugins', $plugins );
 
-if (isset($_REQUEST["textareasetup"])) {
+if (isset($_REQUEST["textareasetup"]) && (!isset($_COOKIE['tab']) || $_COOKIE['tab'] != 3)) {	// tab=3 is plugins alias tab (TODO improve) 
 	ask_ticket('admin-inc-textarea');
 
 	$pref_toggles = array(
@@ -89,7 +89,7 @@ if( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 			unlink( $file );
 	}
 
-	if( isset( $_POST['save'] ) && ! in_array($_POST['plugin_alias'], $pluginsReal) ) {
+	if( isset( $_POST['textareasetup'] ) && ! in_array($_POST['plugin_alias'], $pluginsReal) && isset($_REQUEST["plugin_alias"]) && (!isset($_COOKIE['tab']) || $_COOKIE['tab'] == 3)) {	// tab=3 is plugins alias tab (TODO improve) 
 		$info = array(
 			'implementation' => $_POST['implementation'],
 			'description' => array(
