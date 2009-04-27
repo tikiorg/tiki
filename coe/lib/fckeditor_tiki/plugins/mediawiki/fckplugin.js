@@ -207,7 +207,7 @@ FCK.DataProcessor =
 		em		: [ "''", "''" ],
 		u		: [ "===", "===" ],
 		pre		: [ "~pp~", "~/pp~" ],
-		p		: [ '\n', '\n' ],
+		p		: [ '', '\n' ],
 		h1		: [ '-== ', '==-' ],
 		h2		: [ '! ', '' ],
 		h3		: [ '!! ', '' ],
@@ -338,7 +338,7 @@ FCK.DataProcessor =
 							this._AppendChildNodes( htmlNode, stringBuilder, prefix ) ;
 
 							if ( isFirstLevel && stringBuilder[ stringBuilder.length - 1 ] != "\n" ) {
-								stringBuilder.push( '\n' ) ;
+								//stringBuilder.push( '\n' ) ;
 							}
 
 							break ;
@@ -458,8 +458,10 @@ FCK.DataProcessor =
 							if( stringBuilder.length > 1)
 							{
 								var sLastStr = stringBuilder[ stringBuilder.length - 1 ] ;
+/*
 								if ( sLastStr != ";" && sLastStr != ":" && sLastStr != "#" && sLastStr != "*" )
  									stringBuilder.push( '\n' + prefix ) ;
+*/
 							}
 							stringBuilder.push( ':' ) ;
 							this._AppendChildNodes( htmlNode, stringBuilder, prefix + ":" ) ;
@@ -468,52 +470,25 @@ FCK.DataProcessor =
 							
 						case 'table' :
 
-							var attribs = this._GetAttributesStr( htmlNode ) ;
-
-							stringBuilder.push( '\n{|' ) ;
-							if ( attribs.length > 0 )
-								stringBuilder.push( attribs ) ;
-							stringBuilder.push( '\n' ) ;
-
-							if ( htmlNode.caption && htmlNode.caption.innerHTML.length > 0 )
-							{
-								stringBuilder.push( '|+ ' ) ;
-								this._AppendChildNodes( htmlNode.caption, stringBuilder, prefix ) ;
-								stringBuilder.push( '\n' ) ;
-							}
+							stringBuilder.push( '\n||' ) ;
 
 							for ( var r = 0 ; r < htmlNode.rows.length ; r++ )
 							{
-								attribs = this._GetAttributesStr( htmlNode.rows[r] ) ;
-
-								stringBuilder.push( '|-' ) ;
-								if ( attribs.length > 0 )
-									stringBuilder.push( attribs ) ;
-								stringBuilder.push( '\n' ) ;
 
 								for ( var c = 0 ; c < htmlNode.rows[r].cells.length ; c++ )
 								{
-									attribs = this._GetAttributesStr( htmlNode.rows[r].cells[c] ) ;
-
-									if ( htmlNode.rows[r].cells[c].tagName.toLowerCase() == "th" )
-										stringBuilder.push( '!' ) ; 
-									else
-										stringBuilder.push( '|' ) ;
-
-									if ( attribs.length > 0 )
-										stringBuilder.push( attribs + ' |' ) ;
-
-									stringBuilder.push( ' ' ) ;
-
 									this._IsInsideCell = true ;
 									this._AppendChildNodes( htmlNode.rows[r].cells[c], stringBuilder, prefix ) ;
 									this._IsInsideCell = false ;
 
-									stringBuilder.push( '\n' ) ;
+									if (c < (htmlNode.rows[r].cells.length -1))
+										stringBuilder.push( '|' ) ;
 								}
+								if (r < (htmlNode.rows.length -1))
+									stringBuilder.push( '\n' ) ;
 							}
 
-							stringBuilder.push( '|}\n' ) ;
+							stringBuilder.push( '||\n' ) ;
 
 							break ;
 

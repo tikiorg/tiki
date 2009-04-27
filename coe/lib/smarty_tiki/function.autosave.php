@@ -11,6 +11,12 @@ function smarty_function_autosave($params, &$smarty)
 	global $user;
 	global $tikilib;
 	global $js_script;
+	global $prefs;
+
+	if ($prefs['feature_ajax_autosave'] != 'y') {
+		return $params['default'];	
+	}
+
 	$user_agent = $_SERVER['HTTP_USER_AGENT'];
 	$user_ip = $tikilib->get_ip_address();
 	$request_uri = $_SERVER['REQUEST_URI'];

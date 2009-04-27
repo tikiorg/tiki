@@ -6515,7 +6515,7 @@ window.addEvent('domready', function() {
 		$patterns[] = "/\'\'(.*?)\'\'/s"; $replace[] = "<i>$1</i>";
 		$patterns[] = "/(?<!:)\/\/(.*?)(?<!:)\/\//s"; $replace[] = "<i>$1</i>";
 		// Replace definition lists
-		$patterns[] = "/^;([^:]*):([^\/\/].*)/s"; $replace[] = "<dl><dt>$1</dt><dd>$2</dd></dl>";
+		$patterns[] = "/^;([^:]*):([^\/\/].*)/m"; $replace[] = "<dl><dt>$1</dt><dd>$2</dd></dl>";
 		$patterns[] = "/^;(<a [^<]*<\/a>):([^\/\/].*)/s"; $replace[] = "<dl><dt>$1</dt><dd>$2</dd></dl>";
 
 		$data = preg_replace($patterns,$replace,$data);

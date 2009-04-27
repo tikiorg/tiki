@@ -33,6 +33,11 @@
           </tr>
           
           <tr>
+            <td class="form"><label for="wysiwyg_htmltowiki">{tr}HTML is converted to wiki syntax{/tr}:</label></td>
+            <td><input type="checkbox" name="wysiwyg_htmltowiki" id="wysiwyg_htmltowiki" {if $prefs.wysiwyg_htmltowiki eq 'y'}checked="checked"{/if} /></td>
+          </tr>
+          
+          <tr>
             <td class="form"><label for="wysiwyg_toolbar_skin">{tr}Toolbar skin{/tr}:</label></td>
             <td>
               <select name="wysiwyg_toolbar_skin" id="wysiwyg_toolbar_skin">

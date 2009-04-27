@@ -20,6 +20,7 @@ if (isset($_REQUEST["wysiwygfeatures"])) {
 		'wysiwyg_memo',
 		"wysiwyg_wiki_parsed",
 		"wysiwyg_wiki_semi_parsed",
+		"wysiwyg_htmltowiki",
 	);
 	if (isset($_REQUEST['restore']) && $_REQUEST['restore'] == 'on') {
 		$tikilib->delete_preference('wysiwyg_toolbar');

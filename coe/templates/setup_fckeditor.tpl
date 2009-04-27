@@ -91,7 +91,9 @@ FCKConfig.mwScriptPath = '' ;
 // Setup the editor toolbar.
 FCKConfig.ToolbarSets['Tiki'] = [
 	['Source'],
+{if $prefs.feature_ajax_autosave eq 'y'}
 	['ajaxAutoSave'],
+{/if}
 	['Cut','Copy','Paste',/*'PasteText','PasteWord',*/'-','Print'],
 	['Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat'],
 	['SpecialChar','Table','Image','Rule'],
@@ -106,6 +108,7 @@ FCKConfig.ToolbarSets['Tiki'] = [
 	['FitWindow','-','About']
 ] ;
 
+{if $prefs.wysiwyg_htmltowiki eq 'y'}
 // Load the extension plugins.
 FCKConfig.Plugins.Add( 'mediawiki', 'en,pl',  _TikiRoot + 'lib/fckeditor_tiki/plugins/') ;
 
@@ -192,4 +195,4 @@ FCKConfig.EditorAreaStyles = '\
 	height: 15px; \
 } \
 ' ;
-
+{/if}

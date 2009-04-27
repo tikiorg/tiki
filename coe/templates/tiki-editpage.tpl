@@ -291,7 +291,11 @@ window.onload = timeIt;
 </tr>
 <tr><td colspan="2">
 {editform Meat=$smarty.capture.autosave InstanceName='edit' ToolbarSet="Tiki"}
-<input type="hidden" name="wysiwyg" value="y" />
+	{if $prefs.wysiwyg_htmltowiki eq 'y'}
+		<input type="hidden" name="wysiwyg" value="n" />
+	{else}
+		<input type="hidden" name="wysiwyg" value="y" />
+	{/if}
 {/if}
 </td></tr>
 {if $prefs.feature_wiki_replace eq 'y'}
