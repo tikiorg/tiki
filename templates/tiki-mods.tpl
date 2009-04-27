@@ -18,7 +18,7 @@
 {remarksbox type="note" title="{tr}Note{/tr}"}
     {tr}<p><strong>Tiki "mods" are undergoing refubishment.</strong></p>{/tr}
     {tr}<p>You will probably some find mods shown as being compatible with older versions of Tiki will work with later versions with little or no modification</p>{/tr}
-    {tr}<p><em>Your help is needed! Please visit <a href="http://dev.tikiwiki.org">dev.tikiwiki.org</a> to find out more.</em></p>{/tr}
+    {tr}<p><em>Your help is needed! Please visit <a href="http://dev.tikiwiki.org/tiki-index.php?page=Mods">dev.tikiwiki.org</a> to find out more.</em></p>{/tr}
 {/remarksbox}
 
 {if $iswritable}
