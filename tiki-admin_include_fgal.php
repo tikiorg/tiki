@@ -74,6 +74,9 @@ if (isset($_REQUEST["filegallistprefs"])) {
 
 	simple_set_toggle('fgal_show_explorer');
 	simple_set_toggle('fgal_show_path');
+	simple_set_toggle('fgal_show_slideshow');
+
+	simple_set_value('fgal_default_view');
 }
 
 if (isset($_REQUEST["filegalcomprefs"])) {
