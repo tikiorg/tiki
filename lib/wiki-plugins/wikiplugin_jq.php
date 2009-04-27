@@ -15,7 +15,7 @@ function wikiplugin_jq_info() {
 	return array(
 		'name' => tra('JQuery'),
 		'documentation' => 'PluginJQ',
-		'description' => tra('Insert JQuery javascript code. Requires feature_jquery'),
+		'description' => tra('Insert JQuery javascript code. Requires feature_jquery').tra(' (experimental - may change in future versions)'),
 		'prefs' => array( 'wikiplugin_jq' ),
 		'body' => tra('JQuery Code'),
 		'validate' => 'all',
