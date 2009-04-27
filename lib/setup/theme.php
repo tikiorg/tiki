@@ -17,13 +17,12 @@ if ( isset($_SESSION['try_style']) ) {
 	$prefs['style_option'] = $prefs['site_style_option'];
 }
 
-if ($tikilib->get_style_path('', '', $prefs['style']) == '') {
-	$prefs['style'] = 'thenews.css';
-}
-
 if ( $prefs['useGroupTheme'] == 'y' && $group_style = $userlib->get_user_group_theme()) {
 	$prefs['style'] = $group_style;
 	$smarty->assign_by_ref('group_style', $group_style);
+}
+if ($tikilib->get_style_path('', '', $prefs['style']) == '') {
+	$prefs['style'] = 'thenews.css';
 }
 		
 include_once("lib/csslib.php");
