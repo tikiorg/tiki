@@ -1027,7 +1027,7 @@ function list_structures($offset, $maxRecords, $sort_mode, $find='', $exact_matc
 		  ++$cant;
 		  $options[] = $option;
 		  if (!empty($channel['sub'])) {
-			  $oSub =  $this->to_menu($channel['sub'], $sectionLevel+1, $cant);
+			  $oSub =  $this->to_menu($channel['sub'], $sectionLevel+1, $cant+$cumul);
 			  $cant += $oSub['cant'];
 			  $options = array_merge($options, $oSub['data']);
 		  }
