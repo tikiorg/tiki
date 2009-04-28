@@ -1061,10 +1061,6 @@ div.box {
 	background: #cce5ff;
 	border-bottom: 2px ridge #bed8f1;
 }
-#col2 .content > .box-shadow:last-child > .box {
-	border-bottom: none;
-}
-
 #col3 .box {
 	border-bottom: 1px solid #cfcfcf;
 	/*margin-bottom: 10px*/ }
