@@ -84,7 +84,7 @@ function wikiplugin_versions($data, $params) {
 	} else {
 		$p = 0;
 	}
-
+if (!isset($_REQUEST['preview'])){
 	if ($p == 0) {
 		if (strpos($data,'---(') !== false) {
 			$data = substr($data,0,strpos($data,'---('));
@@ -106,7 +106,7 @@ function wikiplugin_versions($data, $params) {
 			$data = substr($data,0,strpos($data,'---('));
 		}
 	}
-	
+}	
 	if ($nav == 'y') {
 		$highed = false;
 		for ($i=0;$i<count($v[1]);$i++) {
