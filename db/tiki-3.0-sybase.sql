@@ -1341,6 +1341,8 @@ CREATE TABLE "tiki_file_galleries" (
   "show_files" char(1) default NULL NULL,
   "show_explorer" char(1) default NULL NULL,
   "show_path" char(1) default NULL NULL,
+  "show_slideshow" char(1) default NULL NULL,
+  "default_view" varchar(20) default NULL NULL,
   PRIMARY KEY (galleryId)
 ) ENGINE=MyISAM  
 go
