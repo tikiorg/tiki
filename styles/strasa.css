@@ -451,7 +451,7 @@ div#sitead {margin: auto}
 	background: #fff url(strasa/login.jpg) 0 0 no-repeat;
 }
 
-* html #siteloginbar {width: 650px}
+* html #siteloginbar {text-align: right}
 *:first-child+html #siteloginbar {max-width: 650px}
 
 div.logged-in {padding-right: 20px}
