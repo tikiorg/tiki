@@ -3579,21 +3579,6 @@ class TikiLib extends TikiDB {
 		return $id;
 	}
 
-	function vote_page($page, $points) {
-		$query = "update `pages`
-			set `points`=`points`+$points, `votes`=`votes`+1
-			where `pageName`=?";
-		$result = $this->query($query, array( $page ));
-	}
-
-	function get_votes($page) {
-		$query = "select `points` ,`votes`
-			from `pages` where `pageName`=?";
-		$result = $this->query($query, array( $page ));
-		$res = $result->fetchRow();
-		return $res;
-	}
-
 	// This funcion return the $limit most accessed pages
 	// it returns pageName and hits for each page
 	function get_top_pages($limit) {
@@ -8602,16 +8587,6 @@ function detect_browser_language() {
 	}
 
 	return $aproximate_lang;
-}
-
-function alterprefs() {
-	global $tikilib;
-	if (!$tikilib->query( "ALTER TABLE `tiki_preferences` MODIFY `value` BLOB", array())) {
-		$smarty->assign("msg", tra('Altering database table failed'));
-		$smarty->display("error.tpl");
-		die;
-	}
-	return true;
 }
 
 function validate_email($email,$checkserver='n') {
