@@ -149,6 +149,19 @@ function merge( $localPath, $source, $from, $to )
 	file_put_contents( 'svn-commit.tmp', $message );
 }
 
+function commit( $msg, $displaySuccess = true, $dieOnRemainingChanges = true )
+{
+	$msg = escapeshellarg( $msg );
+	`svn ci -m "$msg"`;
+
+	if ( $dieOnRemainingChanges && has_uncommited_changes('.') ) {
+		error("Commit seems to have failed. Uncommited changes exist in the working folder.\n");
+	} else {
+		$revision = (int) get_info('.')->entry->commit['revision'];
+		info("Commited revision $revision.");
+	}
+}
+
 function incorporate( $working, $source )
 {
 	$working = escapeshellarg( $working );
