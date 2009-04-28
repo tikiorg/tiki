@@ -1694,37 +1694,46 @@ class TikiLib extends TikiDB {
 		return $result;
 	}
 
-	/*shared*/
 	function list_all_forum_topics($offset, $maxRecords, $sort_mode, $find) {
-		$bindvars = array("forum",0);
+		$bindvars = array('forum', 0);
 		if ($find) {
-			$findesc = '%'.$find.'%';
-			$mid = " and (`title` like ? or `data` like ?)";
-			$bindvars[] = $findesc;
-			$bindvars[] = $findesc;
+		  $findesc = '%' . $find . '%';
+		  $mid = " and (`title` like ? or `data` like ?)";
+		  $bindvars[] = $findesc;
+		  $bindvars[] = $findesc;
 		} else {
-			$mid = "";
+		  $mid = '';
 		}
 
-		$query = "select * from `tiki_comments`,`tiki_forums` ";
-		$query.= " where `object`=`forumId` and `objectType`=? and `parentId`=? $mid order by ".$this->convert_sortmode($sort_mode);
-		$query_cant = "select count(*) from `tiki_comments`,`tiki_forums` ";
-		$query_cant.= " where `object`=`forumId` and `objectType`=? and `parentId`=? $mid";
-		$result = $this->query($query,$bindvars,$maxRecords,$offset);
-		$cant = $this->getOne($query_cant,$bindvars);
-		$ret = array();
+		$query = 'select threadId, forumId from `tiki_comments`,`tiki_forums`'
+			  . " where `object`=`forumId` and `objectType`=? and `parentId`=? $mid order by " . $this->convert_sortmode($sort_mode);
+		$result = $this->query($query, $bindvars);
+		$res = $ret = $retids = array();
+		$n = 0;
 
-		while ($res = $result->fetchRow()) {
-			global $user;
-			$add=$this->user_has_perm_on_object($user,$res['forumId'],'forums','tiki_p_forum_read');
-
-			if ($add) {
-				$ret[] = $res;
-			}
+		while ( $res = $result->fetchRow() ) {
+		  global $user;
+		  $objperm = $this->get_perm_object($res['forumId'], 'forums', '', false);
+		  if ($objperm['tiki_p_forum_read'] == 'y') {
+			if (($maxRecords == -1) || (($n >= $offset) && ($n < ($offset + $maxRecords)))) {
+			$retids[] = $res['threadId'];
+		  }
+		  $n++;
+		  }
 		}
+		
+		if ( $n > 0 ) {
+		  $query = 'select * from `tiki_comments`'
+			  . ' where `threadId` in (' . implode(',', $retids) . ') order by ' . $this->convert_sortmode($sort_mode);
+		  $result = $this->query($query);
+		  while ( $res = $result->fetchRow() ) {
+			$ret[] = $res;
+		  }
+		}
+
 		$retval = array();
-		$retval["data"] = $ret;
-		$retval["cant"] = $cant;
+		$retval['data'] = $ret;
+		$retval['cant'] = $n;
 		return $retval;
 	}
 
@@ -2762,33 +2771,34 @@ class TikiLib extends TikiDB {
 	}
 
 	// BLOG METHODS ////
-	/*shared*/
 	function list_blogs($offset = 0, $maxRecords = -1, $sort_mode = 'created_desc', $find = '') {
 
 		if ($find) {
 			$findesc = '%' . $find . '%';
 
-			$mid = " where (`title` like ? or `description` like ?) ";
-			$bindvars=array($findesc,$findesc);
+			$mid = ' where (`title` like ? or `description` like ?) ';
+			$bindvars = array($findesc, $findesc);
 		} else {
 			$mid = '';
-			$bindvars=array();
+			$bindvars = array();
 		}
-		$query = "select * from `tiki_blogs` $mid order by ".$this->convert_sortmode($sort_mode);
-		$result = $this->query($query,$bindvars);
+		$query = "select * from `tiki_blogs` $mid order by " . $this->convert_sortmode($sort_mode);
+		$result = $this->query($query, $bindvars);
 		$ret = array();
 		$cant = 0;
 		$nb = 0;
 		$i = 0;
 		while ($res = $result->fetchRow()) {
 			global $user;
-			if ($this->user_has_perm_on_object($user,$res['blogId'],'blog','tiki_p_read_blog')) {
-				++$cant;
-				if ($maxRecords == - 1 || ($i >= $offset && $nb < $maxRecords)) {
+			if ($objperm = $this->get_perm_object($res['blogId'], 'blog', '', false)) {
+				if ( $objperm['tiki_p_read_blog'] == 'y' ) {
+				  ++$cant;
+				  if ($maxRecords == - 1 || ($i >= $offset && $nb < $maxRecords)) {
 					$ret[] = $res;
 					++$nb;
-				}
+				  }
 				++$i;
+			  }
 			}
 		}
 		$retval = array();
