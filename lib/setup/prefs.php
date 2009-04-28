@@ -364,6 +364,8 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'fgal_list_lockedby' => 'a',
 		'fgal_show_path' => 'y',
 		'fgal_show_explorer' => 'y',
+		'fgal_show_slideshow' => 'n',
+		'fgal_default_view' => 'list',
 		'fgal_limit_hits_per_file' => 'n',
 		'fgal_prevent_negative_score' => 'n',
 

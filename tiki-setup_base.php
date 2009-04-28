@@ -45,8 +45,8 @@ require_once("lib/tikiticketlib.php");
 require_once("db/tiki-db.php");
 require_once("setup_smarty.php"); 
 require_once("lib/tikilib.php");
-require_once("lib/cache/cachelib.php");
-require_once("lib/logs/logslib.php");
+global $cachelib; require_once("lib/cache/cachelib.php");
+global $logslib; require_once("lib/logs/logslib.php");
 include_once('lib/init/tra.php');
 $tikilib = new TikiLib($dbTiki);
 
@@ -329,8 +329,7 @@ if (isset($_SESSION["$user_cookie_site"])) {
 	// Example : If using the same PHP SESSION cookies for more than one tiki.
 	$user_details = $userlib->get_user_details($user);
 	if ( ! is_array($user_details) || ! is_array($user_details['info']) || (int)$user_details['info']['lastLogin'] <= 0 ) {
-		global $cachelib;
-		require_once("lib/cache/cachelib.php");
+		global $cachelib; require_once("lib/cache/cachelib.php");
 		$cachelib->invalidate('user_details_'.$user);
 		$user_details = $userlib->get_user_details($user);
 		if ( ! is_array($user_details) || ! is_array($user_details['info'])) {

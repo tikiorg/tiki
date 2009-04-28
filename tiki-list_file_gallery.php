@@ -48,6 +48,8 @@ if ( ! isset($_REQUEST['galleryId']) || $_REQUEST['galleryId'] == 0 ) {
 			'show_files' => $prefs['fgal_list_files'],
 			'show_explorer' => $prefs['fgal_show_explorer'],
 			'show_path' => $prefs['fgal_show_path'],
+			'show_slideshow' => $prefs['fgal_show_slideshow'],
+			'default_view' => $prefs['fgal_default_view'],
 			'show_hits' => $prefs['fgal_list_hits'],
 			'show_lockedby' => $prefs['fgal_list_lockedby'],
 			'show_checked' => 'y',
@@ -427,7 +429,9 @@ if ( isset($_REQUEST['edit']) ) {
 			'show_comment' => $_REQUEST['fgal_list_comment'],
 			'show_files' => $_REQUEST['fgal_list_files'],
 			'show_explorer' => ( isset($_REQUEST['fgal_show_explorer']) ? 'y' : 'n' ),
-			'show_path' => ( isset($_REQUEST['fgal_show_path']) ? 'y' : 'n' )
+			'show_path' => ( isset($_REQUEST['fgal_show_path']) ? 'y' : 'n' ),
+			'show_slideshow' => ( isset($_REQUEST['fgal_show_slideshow']) ? 'y' : 'n' ),
+			'default_view' => $_REQUEST['fgal_default_view']
 		);
 		$fgal_diff = array_diff_assoc($gal_info,$old_gal_info);
 		unset($fgal_diff['created']);
@@ -734,11 +738,12 @@ if (isset($_GET['slideshow'])) {
   $smarty->assign('firstId',current($filesid));
   $smarty->assign('show_find', 'n');
   $smarty->assign('direct_pagination', 'y');
-	if ($prefs['feature_jquery'] == 'y') {
-		$smarty->display('tiki-file_gallery_slideshow.tpl');
-	} else if ($prefs['feature_mootools'] == 'y') {
+	//if ($prefs['feature_mootools'] == 'y') {
 		$smarty->display('file_gallery_slideshow.tpl');
-	}
+	//} else if ($prefs['feature_jquery'] == 'y') {
+	// commented out for release 3.0 as it's not ready yet - TODO for 3.1 or 4
+	//	$smarty->display('tiki-file_gallery_slideshow.tpl');
+	//}
   die();
 } else {
 	// Get list of files in the gallery
@@ -749,9 +754,6 @@ if (isset($_GET['slideshow'])) {
 }
 
 // Browse view
-
-// Find the lenght of the longest file name
-$smarty->assign('view', isset($_REQUEST['view']) ? $_REQUEST['view'] : 'list' );
 $smarty->assign('thumbnail_size', 120);
 $smarty->assign('show_details', isset($_REQUEST['show_details']) ? $_REQUEST['show_details'] : 'n' );
 
@@ -912,6 +914,7 @@ if ( $_REQUEST['galleryId'] == 0 ) {
 
 // Get listing display config
 include_once('fgal_listing_conf.php');
+$smarty->assign('view', isset($_REQUEST['view']) ? $_REQUEST['view'] : $fgal_options['default_view']['value'] );
 
 // Display the template
 if ( isset($_REQUEST['filegals_manager']) && $_REQUEST['filegals_manager'] != '' ) {
@@ -920,4 +923,3 @@ if ( isset($_REQUEST['filegals_manager']) && $_REQUEST['filegals_manager'] != ''
 } else {
 	$smarty->display('tiki.tpl');
 }
-?>

@@ -288,14 +288,14 @@ ul.jumplinks a:active {
 #c1c2 #col2 {
 	width: 240px;
 	text-align: right;
-	background: url(strasa/options/cold/box_top.gif) no-repeat 100% 0;
+	background: url(strasa/box_top.gif) no-repeat 100% 0;
 	padding-top: 5px}
 
 #c1c2 #col2 .content {
 	text-align: left;
 	margin-left: 58px;
 	padding-bottom: 5px;	
-	background: #8ea2b4 url(strasa/options/cold/box_bottom.gif) no-repeat 0 100%}
+	background: #8ea2b4 url(strasa/box_bottom.gif) no-repeat 0 100%}
 
 #col3 {
 	margin-left: -210px;
@@ -396,7 +396,7 @@ div#tiki-bot {}
 #header-top {
 	color: #fff;
 	height: 97px;
-	background: #214d68 url(strasa/options/cold/headerbg.jpg) repeat-x 0 100%}
+	background: #214d68 url(strasa/headerbg.jpg) repeat-x 0 100%}
 
 #siteheader {
 	text-align: left;
@@ -448,10 +448,10 @@ div#sitead {margin: auto}
 	padding-left: 60px;
 	padding-top: 1px;
 	color: #fff;
-	background: #fff url(strasa/options/cold/login.jpg) 0 0 no-repeat;
+	background: #fff url(strasa/login.jpg) 0 0 no-repeat;
 }
 
-* html #siteloginbar {width: 650px}
+* html #siteloginbar {text-align: right}
 *:first-child+html #siteloginbar {max-width: 650px}
 
 div.logged-in {padding-right: 20px}
@@ -486,7 +486,7 @@ div.logged-in {padding-right: 20px}
 	padding-right: 10px;
 	padding-top: 0;
 	margin-top: -1px;
-	background: url(strasa/options/cold/register.jpg) no-repeat}
+	background: url(strasa/register.jpg) no-repeat}
 
 #bannertopright {  }
 
@@ -582,7 +582,7 @@ a.flip:hover {
 
 .tellafriend a,
 .tellafriend a:visited {
-	background: transparent url(strasa/options/cold/fold-topright.jpg) 0 0 no-repeat;
+	background: transparent url(strasa/fold-topright.jpg) 0 0 no-repeat;
 	display: block;
 	float: right;
 	font-size: 80%;
@@ -664,7 +664,7 @@ white-space: nowrap}
 
 .horbaritem a:hover {
 	text-decoration: none; 
-	background: url(strasa/options/cold/headermenuitem-hover.png) bottom center repeat-x;
+	background: url(strasa/headermenuitem-hover.png) bottom center repeat-x;
 	border-color: #336699;
 	border-style: solid;
 	border-width: 0 1px;
@@ -717,7 +717,7 @@ white-space: nowrap}
 	text-decoration: none} 
 
 .mdkitem a:hover {
-	background: transparent url(styles/strasa/options/cold/headerbg.jpg) repeat-x;
+	background: transparent url(styles/strasa/headerbg.jpg) repeat-x;
 	color: #fff;
 	text-decoration: none} 
 
@@ -1061,10 +1061,6 @@ div.box {
 	background: #cce5ff;
 	border-bottom: 2px ridge #bed8f1;
 }
-#col2 .content > .box-shadow:last-child > .box {
-	border-bottom: none;
-}
-
 #col3 .box {
 	border-bottom: 1px solid #cfcfcf;
 	/*margin-bottom: 10px*/ }
@@ -1803,7 +1799,7 @@ body.tiki_blogs div.author_actions {
 	
 body.tiki_blogs .author_actions .actions {
 	float: right;
-	background: url(strasa/options/cold/login.jpg) no-repeat 100% 0; 
+	background: url(strasa/login.jpg) no-repeat 100% 0; 
 	text-align: right;
 	min-height: 24px}
 	
@@ -1856,7 +1852,7 @@ body.tiki_forums table.normal {margin: auto}
 
 .post .postbody-title {
 	display: block;
-	background: #1b3c54 url(strasa/options/cold/headerbg.jpg) repeat-x 0 100%}
+	background: #1b3c54 url(strasa/headerbg.jpg) repeat-x 0 100%}
 
 .post .postbody-title .checkbox {float: left}
 
@@ -1899,7 +1895,7 @@ body.tiki_forums table.normal {margin: auto}
 	padding-left: 60px;
 	padding-top: 1px;
 	color: #fff;
-	background: url(strasa/options/cold/login.jpg) 0 0 no-repeat;}
+	background: url(strasa/login.jpg) 0 0 no-repeat;}
 
 .commentStyle_headers .author_info {float: left}
 

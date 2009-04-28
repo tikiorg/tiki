@@ -7,7 +7,9 @@
     {breadcrumbs type="pagetitle" loc="page" crumbs=$crumbs}
 {/if}
 {if $db_requires_update}
-	<div class="simplebox highlight">{tr}Your database requires an update to match the current TikiWiki version. Please proceed to <a href="tiki-install.php">the installer</a>. Using Tiki with an incorrect database version usually provoke errors.{/tr}</div>
+	{remarksbox type="warning" title="{tr}Database Version Problem{/tr}"}
+	{tr}Your database requires an update to match the current TikiWiki version. Please proceed to <a href="tiki-install.php">the installer</a>. Using Tiki with an incorrect database version usually provoke errors.{/tr}
+	{/remarksbox}
 {/if}
 {**
  * Page Title as h1 goes here
@@ -87,7 +89,7 @@ Add a value in first check when you create a new admin page. *}
 	<a href="tiki-adminusers.php">{tr}Users{/tr}</a> 
 	<a href="tiki-admingroups.php">{tr}Groups{/tr}</a> 
 	<a href="tiki-admin_security.php">{tr}Security{/tr}</a> 
-	<a href="tiki-admin_system.php">{tr}System{/tr}</a> 
+	<a href="tiki-admin_system.php">{tr}TikiCache/System{/tr}</a> 
 	<a href="tiki-syslog.php">{tr}SysLogs{/tr}</a> 
 	<a href="tiki-phpinfo.php">{tr}phpinfo{/tr}</a> 
 	<a href="tiki-mods.php">{tr}Mods{/tr}</a>

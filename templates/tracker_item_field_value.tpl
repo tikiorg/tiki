@@ -53,7 +53,7 @@
 			{if $field_value.options_array[4] eq '1' and $showlinks ne 'n' and $list_mode ne 'csv' and !empty($field_value.options_array[0]) and !empty($tid)}
 				<a href="tiki-view_tracker_item.php?itemId={$tid}&amp;trackerId={$field_value.options_array[0]}">
 			{/if}
-			{if $list_mode eq 'y'}
+			{if $list_mode eq 'y' and $field_value.otherField.type eq 't'}
 				{$tlabel|truncate:255:"..."}
 			{else}
 				{$tlabel}

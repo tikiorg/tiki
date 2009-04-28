@@ -458,6 +458,7 @@ class StructLib extends TikiLib {
 	// it's used only in {toc} thing hardcoded in parse tikilib->parse -- (mose)
 	// the $tocPrefix can be used to Prefix a subtree as it would start from a given number (e.g. 2.1.3)
 	function build_subtree_toc($id,$slide=false,$order='asc',$tocPrefix='') {
+		global $user, $tikilib;
 		$ret = array();
 		$cant = $this->getOne('select count(*) from `tiki_structures` where `parent_id`=?',array((int)$id));
 		if ($cant) {
@@ -497,6 +498,9 @@ class StructLib extends TikiLib {
 			$result = $this->query($query, $args);
 			$prefix=1;
 			while ($res = $result->fetchRow()) {
+				if (!$tikilib->user_has_perm_on_object($user, $res['pageName'], 'wiki page', 'tiki_p_view' ) ) {
+					continue;
+				}
 				$res['prefix']=($tocPrefix=='')?'':"$tocPrefix.";
 				$res['prefix'].=$prefix;
 				$prefix++;

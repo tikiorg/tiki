@@ -345,7 +345,7 @@ a.phplmselected:hover {
 /** Links in other menus **/
 
 div.separator {
-	border-top: 1px solid #696969;
+	border-top: 1px solid #ccc;
 }
 
 .separator a:link,
@@ -404,7 +404,7 @@ div.help_section {
 
 #col2 .box {
 	background: #e5e5e5;
-	border-bottom: 1px solid #ccc;
+	border-bottom: 1px solid #aaa;
 }
 
 #col3 .box {
