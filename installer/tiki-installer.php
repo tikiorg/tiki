@@ -774,7 +774,7 @@ if ($install_step == '2') {
 
 	if (($_REQUEST['perform_mail_test']) == 'y') {
 
-	$sentmail = mail("info@tikiwiki.org","Mail test","Mail test");
+	$sentmail = mail("mailtest@tikiwiki.org","Mail test","Mail test");
 	if($sentmail){
 		$mail_test = 'y'; } else {
 		$mail_test = 'n'; }
