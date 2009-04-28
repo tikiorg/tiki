@@ -1058,7 +1058,7 @@ a.forumnameread {} */
 	top: -2px}
 
 [class].tabactive {top: -1px}
-.tabactive a {background: #696969}
+.tabactive a {background: #232323}
 
 .tabinactive {
 	border: solid 1px #666 !important;
@@ -1102,7 +1102,7 @@ a.forumnameread {} */
 	margin: 5px;
 	margin-top: 0;
 	border: 1px solid #666666;
-	background-color: #696969}
+	background-color: #232323}
 
 .tabcontent table {
 	margin: 1% auto 2% auto;
