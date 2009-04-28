@@ -51,10 +51,21 @@ function smarty_function_menu($params, &$smarty)
 	global $cachelib; include_once('lib/cache/cachelib.php');
 	$cacheName = isset($prefs['mylevel']) ? $prefs['mylevel'] : 0;
 	$cacheName .= '_'.$prefs['language'].'_'.md5(implode("\n", $tikilib->get_user_groups($user)));
-	$cacheType = 'menu_'.$id.'_';
+	if (isset($structureId)) {
+		$cacheType = 'structure_'.$structureId;
+	} else {
+		$cacheType = 'menu_'.$id.'_';
+	}
 
 	if ( $cachelib->isCached($cacheName, $cacheType) ) {
 		list($menu_info, $channels) = unserialize($cachelib->getCached($cacheName, $cacheType));
+	} elseif (isset($structureId)) {
+		global $structlib; include_once('lib/structures/structlib.php');
+		$channels = $structlib->build_subtree_toc($structureId);
+		$structure_info =  $structlib->s_get_page_info($structureId);
+		$channels = $structlib->to_menu($channels, empty($structure_info['page_alias'])? $structure_info['pageName']: $structure_info['page_alias']);
+		$menu_info = array('type'=>'d', 'menuId'=> "s_$structureId");
+		//echo '<pre>'; print_r($channels); echo '</pre>';
 	} else {
 		$menu_info = $tikilib->get_menu($id);
 		$channels = $tikilib->list_menu_options($id,0,-1,'position_asc','','',isset($prefs['mylevel'])?$prefs['mylevel']:0);

@@ -1008,7 +1008,9 @@ function list_structures($offset, $maxRecords, $sort_mode, $find='', $exact_matc
 	}
   }
   /* transform a structure into a menu */
-  function to_menu($channels, $sectionLevel=0, $cumul=0) {
+  function to_menu($channels, $structure, $sectionLevel=0, $cumul=0) {
+	  global $smarty;
+	  include_once('lib/smarty_tiki/function.sefurl.php');
 	  $options = array();
 	  $cant = 0;
 	  foreach ($channels as $channel) {
@@ -1023,15 +1025,15 @@ function list_structures($offset, $maxRecords, $sort_mode, $find='', $exact_matc
 		  }
 		  $option['name'] = $channel['pageName'];
 		  $option['type'] = empty($channel['sub'])? 'o': ($sectionLevel?$sectionLevel:'s');
-		  $option['url'] = 'tiki-index.php?page_ref_id='.$channel['page_ref_id'];
+		  $option['url'] = smarty_function_sefurl(array('page'=>$channel['pageName'], 'structure'=>$structure, 'page_ref_id'=>$channel['page_ref_id'], 'sefurl'=>'n'), $smarty);
 		  $option['canonic'] = '(('.$channel['pageName'].'))';
-		  $option['sefurl'] = $channel['pageName'];
+		  $option['sefurl'] = smarty_function_sefurl(array('page'=>$channel['pageName'], 'structure'=>$structure, 'page_ref_id'=>$channel['page_ref_id']), $smarty);
 		  $option['position'] = $cant + $cumul;
 		  $option['sectionLevel'] = $sectionLevel;
 		  ++$cant;
 		  $options[] = $option;
 		  if (!empty($channel['sub'])) {
-			  $oSub =  $this->to_menu($channel['sub'], $sectionLevel+1, $cant+$cumul);
+			  $oSub =  $this->to_menu($channel['sub'], $structure, $sectionLevel+1, $cant+$cumul);
 			  $cant += $oSub['cant'];
 			  $options = array_merge($options, $oSub['data']);
 		  }
