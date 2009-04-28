@@ -168,7 +168,7 @@
 	</div>
 {/section}
 {/if}
-	<p>{tr}Use this page to create a new database connection, or use the <a href="http://doc.tikiwiki.org/Manual+Installation" title="manual installation">manual installation process</a>.{/tr} <a href="http://doc.tikiwiki.org/Manual+Installation" target="_blank" title="{tr}Help{/tr}"><img src="pics/icons/help.png" alt="{tr}Help{/tr}" /></a></p>
+	<p>{tr}Use this page to create a new database connection, or use the <a href="http://doc.tikiwiki.org/Manual+Installation" target="_blank" title="manual installation">manual installation process</a>.{/tr} <a href="http://doc.tikiwiki.org/Manual+Installation" target="_blank" title="{tr}Help{/tr}"><img src="pics/icons/help.png" alt="{tr}Help{/tr}" /></a></p>
 	<form action="tiki-install.php" method="post">
 		<input type="hidden" name="install_step" value="4" />
 {if $multi}		<input type="hidden" name="multi" value="{$multi}" />{/if}
