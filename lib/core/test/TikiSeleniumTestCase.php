@@ -17,9 +17,9 @@ class TikiSeleniumTestCase extends PHPUnit_Extensions_SeleniumTestCase {
        $this->open("http://localhost/tiki-trunk/$tikiPage");
     }
     
-    public function restoreDB($test_name) {
+    public function restoreDBforThisTest() {
     	$dbRestorer = new TikiAcceptanceTestDBRestorer();
-    	$dbRestorer->restoreDB($test_name);
+    	$dbRestorer->restoreDB($this->current_test_db);
     }
     
     public function logInIfNecessaryAs($my_user) {

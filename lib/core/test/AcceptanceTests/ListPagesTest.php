@@ -5,7 +5,7 @@ require_once 'PHPUnit/Extensions/SeleniumTestCase.php';
 
 class  AcceptanceTests_ListPagesTest extends TikiSeleniumTestCase
 {
-
+	
     public function testListPagesTableIsWellFormed() {
         $this->openTikiPage('tiki-listpages.php');
         $this->_assertListPagesTableIsWellFormed();
@@ -56,10 +56,11 @@ class  AcceptanceTests_ListPagesTest extends TikiSeleniumTestCase
 
     protected function setUp()
     {
-    	$this->printImportantMessageForTestUsers();
+   	    $this->printImportantMessageForTestUsers();
         $this->setBrowser('*firefox C:\Program Files\Mozilla Firefox\firefox.exe');
         $this->setBrowserUrl('http://localhost/');
-		$this->restoreDB(get_class($this));         
+        $this->current_test_db = "listPagesTestDump.sql";
+        $this->restoreDBforThisTest();         
     }
     
     public function printImportantMessageForTestUsers() {

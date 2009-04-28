@@ -15,14 +15,10 @@
 		private $tiki_test_db_pwd = "tiki";
 		private $mysql_data_dir = "";
    		private $tiki_schema_file_start = "dump_schema_tiki_start.txt";
-   		private $tiki_restore_db_file_name = "tiki_testdb_restore_file.sql"; 
+   		private $tiki_restore_db_file_name = "tiki_testdb_restore_file.sql";
+   		private $tiki_bare_bones_db_dump = "bareBonesDBDump.sql"; 
    		
-   		private $test_db_dump_files = array (
-   			"AcceptanceTests_ListPagesTest" => "listPagesTestDump.sql",
-   			"AcceptanceTests_MultilingualTest" => "multilingualTestDump.sql", 
-   			"AcceptanceTests_SearchTest" => "searchTestDump.sql"
-   		);
-   		
+  		
    		function __construct() {
    			$this->mysql_data_dir = $this->set_mysql_data_dir();
    		}
@@ -55,12 +51,11 @@
    		function create_dump_file($dump_file) {
   			chdir($this->mysql_data_dir);
  			echo "\nDumping the whole tiki database: ";
-			$begTime = microtime();
+			$begTime = microtime(true);
 		
 			$mysqldump_command_line = "mysqldump --user=$this->tiki_test_db_user --password=$this->tiki_test_db_pwd $this->tiki_test_db > $dump_file";
-			exec($mysqldump_command_line); 
-			
-			echo (microtime() -$begTime)." sec\n";
+			shell_exec($mysqldump_command_line); 
+			echo (microtime(true) -$begTime)." sec\n";
 		    return true;  			
    		}
    		
@@ -68,10 +63,10 @@
    		function create_start_schema_files() {
   			chdir($this->mysql_data_dir);
  			echo "\n\rDumping start tables and times from information_schema: ";
-			$begTime = microtime();
+			$begTime = microtime(true);
 			$mysql_select_from_schema_command = "echo select TABLE_NAME,UPDATE_TIME from information_schema.TABLES WHERE TABLE_SCHEMA='tiki' | mysql --user=$this->tiki_test_db_user --password=$this->tiki_test_db_pwd > $this->tiki_schema_file_start";
 		    exec($mysql_select_from_schema_command);
-		    echo (microtime() -$begTime)." sec\n";
+		    echo (microtime(true) - $begTime)." sec\n";
 		    return true;  			
    		}
    		
@@ -80,32 +75,31 @@
    			$this->create_start_schema_files();
    		}
    		
-   		function restoreDB($tiki_test) {
+   		function restoreDB($tiki_test_db_dump) {
 			global $last_restored;
 			chdir($this->mysql_data_dir);
-			$tiki_test_db_dump = $this->test_db_dump_files[$tiki_test];
+//			$tiki_test_db_dump = $this->test_db_dump_files[$tiki_test];
 			if (!file_exists($tiki_test_db_dump)) {
    				die ("The initial database dump was not created. You need to create it first before you can restore it. Call TikiAcceptanceTestDBRestorer::create_dump_file()");
    			}
-			if ($last_restored == $tiki_test) {
+			if ($last_restored == $tiki_test_db_dump) {
 				//restore only the changed tables
-				$date = getdate();
-   				$timestamp = $date[0];
+//				$date = getdate();
+//   				$timestamp = $date[0];
    			
-   				$tiki_schema_file_end = "dump_schema_tiki_end_$timestamp.txt";
+   				$tiki_schema_file_end = "dump_schema_tiki_end.txt";
 			
 		    	//GET THE CURRENT TABLES
 		    	echo "\n\rDumping end tables and times from information_schema: ";
-				$begTime = microtime();
+				$begTime = microtime(true);
 			
 		    	$mysql_select_from_schema_command = "echo select TABLE_NAME,UPDATE_TIME from information_schema.TABLES WHERE TABLE_SCHEMA='tiki' | mysql --user=$this->tiki_test_db_user --password=$this->tiki_test_db_pwd > $tiki_schema_file_end";
-		    	exec($mysql_select_from_schema_command);
-		    
-		   		echo (microtime() -$begTime)." sec";
+		    	shell_exec($mysql_select_from_schema_command);
+		   		echo (microtime(true) -$begTime)." sec";
 		    
 		    	//COMPARE THE START AND END DUMPS
 		    	echo "\n\rCompare start and end tables and times from information_schema: ";
-				$begTime = microtime();
+				$begTime = microtime(true);
 			
 		    	$start_file_lines = file($this->tiki_schema_file_start, FILE_IGNORE_NEW_LINES);
 				$end_file_lines = file($tiki_schema_file_end, FILE_IGNORE_NEW_LINES);
@@ -114,10 +108,10 @@
 				//GET ONLY TABLE_NAMES THAT CHANGED
 				array_walk($diff, 'TikiAcceptanceTestDBRestorer::get_table_name');
 		    
-		    	echo (microtime() -$begTime)." sec";
+		    	echo (microtime(true) -$begTime)." sec";
 		    
 		    	echo "\n\rCreate restore sql file: ";
-				$begTime = microtime();
+				$begTime = microtime(true);
 					
 		    	$tiki_test_db_dump_as_string = file_get_contents($this->tiki_test_db_dump);
 			
@@ -132,22 +126,22 @@
 				}
 				fclose($tiki_restore_db_file);
 			
-				echo (microtime() -$begTime)." sec";
+				echo (microtime(true) -$begTime)." sec";
 			
 				echo "\n\rRestore original database: ";
-				$begTime = microtime();
+				$begTime = microtime(true);
 			
 				//RESTORE THE ORIGINAL DATABASE
 				$mysql_restore_db_command = "mysql --user=$this->tiki_test_db_user --password=$this->tiki_test_db_pwd $this->tiki_test_db < $this->tiki_restore_db_file_name";
-		    	exec($mysql_restore_db_command);
-		    	echo (microtime() -$begTime)." sec"; 
-				$last_restored = $tiki_test;
+		    	shell_exec($mysql_restore_db_command);
+		    	echo (microtime(true) -$begTime)." sec"; 
+				$last_restored = $tiki_test_db_dump;
 			} else {
 				//restore the whole database				
 				$mysql_restore_db_command = "mysql --user=$this->tiki_test_db_user --password=$this->tiki_test_db_pwd $this->tiki_test_db < $tiki_test_db_dump";
-		    	exec($mysql_restore_db_command);
+		    	shell_exec($mysql_restore_db_command);
 		    	$this->create_testdb_dump_and_start_schema_files();
-		    	$last_restored = $tiki_test;
+		    	$last_restored = $tiki_test_db_dump;
 			}
    		}
    		
@@ -156,12 +150,16 @@
 			$table_name_date_time = $matches[1]; 
 		}
    		
+   		function restoreBareBonesDB() {
+   			$mysql_restore_db_command = "mysql --user=$this->tiki_test_db_user --password=$this->tiki_test_db_pwd $this->tiki_test_db < $this->tiki_bare_bones_db_dump";
+		    shell_exec($mysql_restore_db_command);
+   		}
    		
    }
    
    
    
 //   $test_TikiAcceptanceTestDBRestorer = new TikiAcceptanceTestDBRestorer();
-//   $test_TikiAcceptanceTestDBRestorer->create_dump_file("searchTestDump.sql");
+//   $test_TikiAcceptanceTestDBRestorer->create_dump_file("multilingualTestDump.sql");
 
 ?>

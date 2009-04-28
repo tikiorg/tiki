@@ -56,7 +56,8 @@ class  AcceptanceTests_SearchTest extends TikiSeleniumTestCase
 		$this->printImportantMessageForTestUsers();
 		$this->setBrowser('*firefox C:\Program Files\Mozilla Firefox\firefox.exe');
         $this->setBrowserUrl('http://localhost/');
-        $this->restoreDB(get_class($this));
+        $this->current_test_db = "searchTestDump.sql";
+        $this->restoreDBforThisTest();
     }
 
     public function printImportantMessageForTestUsers() {
