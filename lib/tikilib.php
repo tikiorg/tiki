@@ -3971,6 +3971,9 @@ class TikiLib extends TikiDB {
 					$tmp_mid[] = "( (tro.traId IS NULL AND tp.lang != ?) OR tro.traId NOT IN(SELECT traId FROM tiki_translated_objects WHERE lang = ?))";
 					$bindvars[] = $val;
 					$bindvars[] = $val;
+				} elseif ($type == 'structure_orphans') {
+					$join_tables .= " left join `tiki_structures` as tss on (tss.`page_id` = tp.`page_id`) ";
+					$tmp_mid[] = "(tss.page_ref_id is null)";
 				}
 			}
 			if (!empty($tmp_mid)) {

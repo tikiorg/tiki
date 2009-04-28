@@ -754,7 +754,11 @@ name="w_displayed_default" {if $prefs.w_displayed_default eq 'y'} checked="check
 
 <div class="adminoptionbox">
 	<div class="adminoption"><input type="checkbox" id='feature_listorphanPages' name="feature_listorphanPages" {if $prefs.feature_listorphanPages eq 'y'}checked="checked"{/if}/></div>
-	<div class="adminoptionlabel"><label for="feature_listorphanPages">{tr}Orphan page{/tr} </label></div>
+	<div class="adminoptionlabel"><label for="feature_listorphanPages">{tr}Orphan pages{/tr} </label></div>
+</div>
+<div class="adminoptionbox">
+	<div class="adminoption"><input type="checkbox" id='feature_listorphanStructure' name="feature_listorphanStructure" {if $prefs.feature_listorphanStructure eq 'y'}checked="checked"{/if}/></div>
+	<div class="adminoptionlabel"><label for="feature_listorphanStructure">{tr}Pages not in structure{/tr} </label></div>
 </div>	 
 
 <div class="adminoptionbox">
