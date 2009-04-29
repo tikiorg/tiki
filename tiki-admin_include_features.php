@@ -35,7 +35,7 @@ if (isset($_REQUEST["features"])) {
 		"feature_debug_console",
 		"feature_directory",
 		"feature_drawings",
-		"feature_events",
+		"feature_events", //2009-04-29 marclaporte: can we remove this?
 		"feature_faqs",
 		"feature_featuredLinks",
 		"feature_file_galleries",
