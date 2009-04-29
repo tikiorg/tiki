@@ -39,6 +39,19 @@ class TikiSeleniumTestCase extends PHPUnit_Extensions_SeleniumTestCase {
         }
     }
     
+
+    public function assertSelectElementDoesNotContainItems($selectElementID, $expItems, $message) {
+        $this->assertElementPresent($selectElementID, "$message\nMarkup element '$selectElementID' did not exist");
+        $gotItemsText = $this->getSelectOptions($selectElementID);
+        $expItemsText = array_keys($expItems);
+//        $this->assertEquals($gotItemsText, $expItemsText, "$message\nItems in the Select element '$selectElementID' were wrong.");                                    
+        foreach ($expItems as $anItem => $anItemValue) {
+           $thisItemElementID = "$selectElementID/option[@value='$anItemValue']";
+           $this->assertFalse($this->isElementPresent($thisItemElementID));
+        }
+    }
+
+
     private function _login_as($user) {
     	$password = $this->user_credentials[$user];
 		$this->type("login-user", $user);

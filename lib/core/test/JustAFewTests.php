@@ -32,9 +32,9 @@ class AllTests
         $suite = new PHPUnit_Framework_TestSuite('HandpickedTests');
         
 //        $suite->addTest(AcceptanceTests_AllTests::suite());
-//        $suite->addTestSuite('AcceptanceTests_MultilingualTest');
-        $suite->addTestSuite('AcceptanceTests_ListPagesTest');
-        $suite->addTestSuite('AcceptanceTests_SearchTest');
+//        $suite->addTestSuite('AcceptanceTests_ListPagesTest');
+//        $suite->addTestSuite('AcceptanceTests_SearchTest');
+        $suite->addTestSuite('AcceptanceTests_MultilingualTest');
             
         return $suite;
         
