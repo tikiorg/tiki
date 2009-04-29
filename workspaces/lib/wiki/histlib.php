@@ -11,8 +11,11 @@ class HistLib extends TikiLib {
 		$this->TikiLib($db);
 	}
 
-	// Removes a specific version of a page
-	function remove_version($page, $version, $comment = '', $historyId = '') {
+	/* 
+		*	Removes a specific version of a page
+		*
+		*/
+	function remove_version($page, $version, $historyId = '') {
 		global $prefs;
 		if ($prefs['feature_contribution'] == 'y') {
 			global $contributionlib; include_once('lib/contribution/contributionlib.php');

@@ -24,6 +24,7 @@ if (isset($_REQUEST["wysiwygfeatures"])) {
 	if (isset($_REQUEST['restore']) && $_REQUEST['restore'] == 'on') {
 		$tikilib->delete_preference('wysiwyg_toolbar');
 	} else {
+		$_REQUEST['wysiwyg_toolbar'] = str_replace("\r", '', $_REQUEST['wysiwyg_toolbar']);
 		simple_set_value('wysiwyg_toolbar');
 	}
 

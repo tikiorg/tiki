@@ -1,6 +1,8 @@
 <div class="calnavigation">
 	{if $calendarViewMode eq 'month'}
 		{$currMonth|tiki_date_format:"%B %Y"}
+	{elseif $calendarViewMode eq 'week'}
+		{$daystart|tiki_date_format:"{tr}%m/%d{/tr}/%Y"} - {$dayend|tiki_date_format:"{tr}%m/%d{/tr}/%Y"}
 	{else}
 		{$daystart|tiki_date_format:"%B %Y"} - {$dayend|tiki_date_format:"%B %Y"}
 	{/if}
@@ -29,11 +31,13 @@
 		  <td class="calfocus{if $cell[w][d].day eq $focuscell}on{/if}" style="width:50%;text-align:left">
 			<a href="{$myurl}?todate={$cell[w][d].day}" title="{tr}Change Focus{/tr}" style="font-size:11px">{$cell[w][d].day|tiki_date_format:$short_format_day}</a>
 		  </td>
+		  {if $myurl neq "tiki-action_calendar.php"}
 		  <td class="calfocus{if $cell[w][d].day eq $focuscell}on{/if}" style="width:50%;text-align:right">
 			{if $tiki_p_add_events eq 'y' and count($listcals) > 0}
 			<a href="tiki-calendar_edit_item.php?todate={$cell[w][d].day}{if $displayedcals|@count eq 1}&amp;calendarId={$displayedcals[0]}{/if}" title="{tr}Add Event{/tr}" class="addevent">{icon _id='calendar_add' alt="{tr}+{/tr}" title="{tr}Add Event{/tr}"}</a>
 			{/if}
 		  </td>
+		  {/if}
 		</tr>
 	  </table>
 	  <table border="0" cellpadding="0" cellspacing="0" style="width:100%;">
@@ -49,7 +53,8 @@
 			{else}
 				{popup vauto=true hauto=true sticky=false fullhtml="1" text=$over|escape:"javascript"|escape:"html"}
 			{/if}>
-			{if $cell[w][d].items[item].startTimeStamp >= $cell[w][d].day or $smarty.section.d.index eq '0' or $cell[w][d].firstDay}
+
+			{if $myurl eq "tiki-action_calendar.php" or ($cell[w][d].items[item].startTimeStamp >= $cell[w][d].day or $smarty.section.d.index eq '0' or $cell[w][d].firstDay)}
 		<a style="padding:1px 3px;{if $cell[w][d].items[item].status eq '2'}text-decoration:line-through;{/if}"
 			{if $myurl eq "tiki-action_calendar.php"}
 				{if $cell[w][d].items[item].modifiable eq "y" || $cell[w][d].items[item].visible eq 'y'}href="{$cell[w][d].items[item].url}"{/if}

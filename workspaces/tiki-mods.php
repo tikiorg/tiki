@@ -229,6 +229,9 @@ if (!empty($version)) { // filter out other versions
 				if (strpos($m->version[0], '1.10') !== false || strpos($m->version[0], ' 2 ') !== false) {
 					$mv = 2.0;				// 1.10 was renumbered 2.0 - or version= "Compatible with TikiWiki 2 releases."
 				}
+				if (strpos($m->version[0], ' 3 ') !== false || strpos($m->version[0], ' 3+') !== false) {
+					$mv = 3.0;				// e.g. version= "Compatible with TikiWiki 3 releases." or "3+"
+				}
 				if ($mv >= $v) {
 					$filtmod[$k] = $m;
 				}

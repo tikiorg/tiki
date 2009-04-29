@@ -7,6 +7,7 @@ function wikiplugin_dl_help() {
 function wikiplugin_dl_info() {
 	return array(
 		'name' => tra('Definition List'),
+		'documentation' => 'PluginDL',
 		'description' => tra("Creates a definition list"),
 		'prefs' => array('wikiplugin_dl'),
 		'body' => tra('One entry per line. Each line is in "Term: Definition" format.'),

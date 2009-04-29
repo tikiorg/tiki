@@ -84,8 +84,8 @@ for ($index = 0; $index < count($arrayTrackerId); $index++)
 			} else {
 				$selbool = "false,false";
 			}
-			echo "sel[$index][$i+1]= new Option('" . $items["data"][$i]['field_values'][0]['value'] .
-				 "','" . $items["data"][$i]['field_values'][0]['value'] . "'," . $selbool . ");\n";
+			echo "sel[$index][$i+1]= new Option('" . str_replace("'", "\\'", $items["data"][$i]['field_values'][0]['value']) .
+				"','" . str_replace("'", "\\'", $items["data"][$i]['field_values'][0]['value']) . "'," . $selbool . ");\n";
 		}
 		if ( $isSelected == false && $selected != '') {
 			echo "sel[$index][$i+1]= new Option('" . $selected . "','" . $selected . "',true,true);\n";

@@ -32,12 +32,17 @@ $jq(document).ready( function() { // JQuery's DOM is ready event - before onload
 	
 	// flip function... unfortunately didn't use show/hide (ay?)
 	flip = function (foo,style) {
-		if ($jq("#" + foo).css("display") == "none") {
-			setSessionVar('show_' + escape(foo),'y');
-			showJQ("#" + foo, jqueryTiki.effect, jqueryTiki.effect_speed, jqueryTiki.effect_direction);
+		if (style && style != 'block' || foo == 'help_sections') {
+			$jq("#" + foo).toggle();	// inlines don't animate reliably (yet) (also help)
 		} else {
-			setSessionVar('show_' + escape(foo), 'n');
-			hideJQ("#" + foo, jqueryTiki.effect, jqueryTiki.effect_speed, jqueryTiki.effect_direction);
+			if ($jq("#" + foo).css("display") == "none") {
+				setSessionVar('show_' + escape(foo), 'y');
+				showJQ("#" + foo, jqueryTiki.effect, jqueryTiki.effect_speed, jqueryTiki.effect_direction);
+			}
+			else {
+				setSessionVar('show_' + escape(foo), 'n');
+				hideJQ("#" + foo, jqueryTiki.effect, jqueryTiki.effect_speed, jqueryTiki.effect_direction);
+			}
 		}
 	};
 
@@ -76,13 +81,8 @@ $jq(document).ready( function() { // JQuery's DOM is ready event - before onload
 	
 	// tooltip functions and setup
 	if (jqueryTiki.tooltips) {	// apply "cluetips" to all .tips class anchors
-<<<<<<< .working
-		$jq('a.tips').cluetip({splitTitle: '|', showTitle: false, width: '150px', cluezIndex: 400});
-		$jq('a.titletips').cluetip({splitTitle: '|', cluezIndex: 400});
-=======
 		$jq('.tips').cluetip({splitTitle: '|', showTitle: false, width: '150px', cluezIndex: 400});
 		$jq('.titletips').cluetip({splitTitle: '|', cluezIndex: 400});
->>>>>>> .merge-right.r18200
 		$jq('.tikihelp').cluetip({splitTitle: ':', width: '150px', cluezIndex: 400});
 	}
 	
@@ -90,13 +90,19 @@ $jq(document).ready( function() { // JQuery's DOM is ready event - before onload
 	if (jqueryTiki.superfish) {
 		$jq('ul.cssmenu_horiz').superfish({
 			animation: {opacity:'show', height:'show'},	// fade-in and slide-down animation
-			speed: 'fast',					// faster animation speed
-			autoArrows: false				// disable generation of arrow mark-up
+			speed: 'fast'								// faster animation speed
 		});
 		$jq('ul.cssmenu_vert').superfish({
 			animation: {opacity:'show', height:'show'},	// fade-in and slide-down animation
-			speed: 'fast',					// faster animation speed
-			autoArrows: false				// disable generation of arrow mark-up
+			speed: 'fast'								// faster animation speed
+		});
+	}
+	
+	// tablesorter setup (sortable tables?)
+	if (jqueryTiki.tablesorter) {
+		$jq('.sortable').tablesorter({
+			widthFixed: true							// ??
+//			widgets: ['zebra'],							// stripes (coming soon)
 		});
 	}
 });		// end $jq(document).ready

@@ -66,7 +66,7 @@
 {/if}
 
 {* No sitelogo, no custom code but a sitead: ad is centered. *}
-{if $prefs.feature_sitelogo eq 'n'}
+{if $prefs.feature_sitelogo eq 'n' and !($prefs.feature_sitemycode eq 'y' && ($prefs.sitemycode_publish eq 'y' or $tiki_p_admin eq 'y'))}
 	{if $prefs.feature_sitead eq 'y' && ($prefs.sitead_publish eq 'y' or $tiki_p_admin eq 'y')}
 	<div align="center">
 	{eval var=$prefs.sitead}</div>

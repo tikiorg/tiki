@@ -27,6 +27,7 @@ html[dir=ltr]>body {
 body.fullscreen { }
 
 a,
+a:link,
 a:visited {
 	color: #D8D8D8;
 	font-weight: bold;
@@ -95,14 +96,14 @@ input[type=password] {
 	border: solid 1px #aaa;
 	background: #292929;
 	color: #F5F5F5;
-	width: 120px;
 	font-size: 0.9em;
 	cursor: text}
 
 button,
 .button,
 .submitbutton,
-.button input {
+.button input,
+.calbuttonBox {
 	background:#4E4E4E url(darkroom/button.png) top left repeat-x;
 	color:#B2B2B2;
 	font-weight: bold;
@@ -112,6 +113,8 @@ button,
 	vertical-align: middle;
 	cursor: pointer;
 	white-space: nowrap}
+.calbuttonBox{float: left; margin:0 2px 0 2px;}
+#next { margin-left:0;}
 
 #page-bar .button {margin: 0 2px;}
 
@@ -132,7 +135,8 @@ button:hover,
 input[type=submit]:hover,
 input[type=reset]:hover,
 .submitbutton:hover,
-.button input:hover {border: 1px solid #B2B2B2}
+.button input:hover,
+.calbuttonBox:hover {border: 1px solid #B2B2B2}
 
 .button a:hover {text-decoration: none}
 .button {font-size: 0.8em;}
@@ -204,7 +208,7 @@ ul.jumplinks a:focus, ul.jumplinks a:active {
 	margin: 0;
 	font-size: 1em}
 
-#header {text-align:left}
+#header {text-align: left}
 
 #middle {
 	text-align: left;
@@ -275,8 +279,7 @@ div#tiki-main #tikimidtbl {
 	text-align: left;
 	background: transparent;
 	vertical-align: middle;
-	margin: 0;
-	position: relative}
+	margin: 0}
 
 div#sioptions {
 	padding-left: 0;
@@ -342,6 +345,8 @@ div#sitead {
 	bottom: 2px;
 	right: 10px;
 	font-size: 90%}
+	
+* html #siteloginbar {position: absolute; top: 10px; right: 10px  }
 
 #siteloginbar.logged-in {
 	bottom: 2px;
@@ -356,6 +361,7 @@ input[id="sl-login-pass"] {font-size: 1.1em}
 
 #tiki-top {
 	border-top: 1px solid #818181;
+	height: 34px;
 	background: url(darkroom/button.png) repeat-x}
 
 #tiki-top table {
@@ -416,7 +422,9 @@ a.flip img {display: none}
 
 .horbar {
 	margin-left: 0;
-	margin-bottom: 0px}
+	margin-bottom: 0;
+	float: left;
+	clear: none;}
 
 .horbar table {
 	width: auto;
@@ -463,11 +471,11 @@ a.flip img {display: none}
 .mdkitem a:visited  {
 	color: #A6A68D;
 	font-size: 1em;
-	padding: 5px 2px 5px 8px;
+	padding: 4px 8px;
 	position: relative;
 	display: block}
-
-.mdksubframe .mdkitem a:hover {
+	
+.mdkitem a:hover {
 	text-decoration: none;
 	color: #303030;
 	background: #B2B2B2}
@@ -555,7 +563,8 @@ img.imgs {background: #999}
 .cssmenu_horiz a,
 .cssmenu_vert a {
 	text-decoration: none;
-	font-weight: normal;
+	font-weight: bold;
+	color: #A6A68D;
 	display: block;
 	text-decoration: none;
 	padding: 3px 0 3px 6px}
@@ -579,8 +588,7 @@ img.imgs {background: #999}
 .cssmenu_vert li:hover > a {color: #303030}
 
 #tiki-top > .cssmenu_horiz > li {
-	background: inherit;
-	width: 10em}
+	background: url(darkroom/button.png) repeat-x}
 
 #tiki-top > .cssmenu_horiz > li > a {
 	border: 1px solid transparent;
@@ -588,7 +596,9 @@ img.imgs {background: #999}
 	color: #A6A68D;
 	font-weight: bold;
 	font-size: 12px;
-	padding: 6px 2px 6px 8px}
+	padding: 6px 1em}
+	
+#tiki-top > .cssmenu_horiz > li.menuSection > a {padding-right: 2.6em}
 
 #tiki-top > .cssmenu_horiz > li > a:hover {
 	border: 1px solid #909090;
@@ -702,7 +712,11 @@ div#edithelpzone {display: none}
     height: 0; 
     clear: both; 
     visibility: hidden}
-
+	
+.clearfix {display: inline-block}
+/* Hide from IE Mac \*/
+.clearfix {display: block}
+/* End hide from IE Mac */
 * html .clearfix {height: 1%}
 #overdiv table {width: auto !important}
 .attention {color: red}
@@ -800,14 +814,10 @@ div.box {
 	background: #292929;
 	margin-bottom: 8px;
 	padding-bottom: 2px;
-<<<<<<< .working
-	width: 190px}
-=======
 	width: 190px;}
->>>>>>> .merge-right.r18200
 
 h3.box-title {
-	overflow: hidden;
+	display: block;
 	color:#9D9D9D;
 	font-size:1.4em;
 	font-weight:bold;
@@ -960,6 +970,7 @@ table.admin tr td div#page-bar {}
 td {vertical-align: top}
 * html td { font-size: 11px}
 
+table.normal td,
 td.normal,
 td.bloglist,
 .wikitable td,
@@ -974,7 +985,9 @@ td.even {
 .editblogform td,
 .editfgalform td,
 .comform td,
-.forumform td {background: #292929}
+.forumform td {
+	background: #292929;
+	padding: 3px}
 
 /* table.email {}
 table.email td.body {}
@@ -1045,7 +1058,7 @@ a.forumnameread {} */
 	top: -2px}
 
 [class].tabactive {top: -1px}
-.tabactive a {background: #696969}
+.tabactive a {background: #232323}
 
 .tabinactive {
 	border: solid 1px #666 !important;
@@ -1089,7 +1102,7 @@ a.forumnameread {} */
 	margin: 5px;
 	margin-top: 0;
 	border: 1px solid #666666;
-	background-color: #696969}
+	background-color: #232323}
 
 .tabcontent table {
 	margin: 1% auto 2% auto;
@@ -2147,7 +2160,10 @@ Caltrack a:visited {color: #00BD02}
 	font-size: 90%;
 	background: #3F3F3F}
 .calbuttonon a { text-decoration: underline;}
-.calHeadingOn a { text-decoration: underline;}
+
+.calHeadingOn a {
+	text-decoration: underline !important;
+	color: #D8D8D8 !important;}
 
 .opaque {
 	font-size: .9em;
@@ -2201,6 +2217,9 @@ Caltrack a:visited {color: #00BD02}
 * html .calodd {padding: 0}
 .caleven {background: #696969}
 * html .caleven {padding: 0}
+
+.calHours,
+.calWeek {border-color: #a9a9a9}
 
 .caldark {
 	background: #3F3F3F;
@@ -2453,7 +2472,7 @@ img.icon {border: 0 !important;
 div.multiselect {
 	vertical-align: middle;
 	overflow: auto;
-	height: 5em;
+	height: auto;
 	border: 1px solid #606060;
 }
 
@@ -2461,5 +2480,6 @@ div.multiselect li.odd {background: #3F3F3F; color: white;}
 div.multiselect li.even {background: #3F3F3F; color: white;}
 .help_section table { color: white; }
 .button .iconmenu {display:inline;}
+.categflipper { float:right;}
 
 /* end of css file */

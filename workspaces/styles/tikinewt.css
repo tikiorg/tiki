@@ -92,15 +92,10 @@ div#tiki-main {
 
 /***** XHTML Elements (other than body tag) ******/
 a,
+a:link,
 a:visited {
 	color: #225566;
-<<<<<<< .working
-	font-weight: bold;
-  outline: none;
-}
-=======
 	text-decoration: none}
->>>>>>> .merge-right.r18200
 
 a:hover {
 	color: #2a547b;
@@ -330,21 +325,11 @@ div#sitelogo {
 .horbar {
 	margin-left: 0;
 	text-align: left;
-<<<<<<< .working
-	color: #6D809F;
-}
-
-.horbar table {
-	width: auto;
-	float: left;
-}
-=======
 	color: #6D809F}
 	
 .horbaritem {
 	padding: 2px 6px;
 	border-right: 1px solid #8cacbb}
->>>>>>> .merge-right.r18200
 
 * html .horbaritem a {font-size: .8em}
 .mdkverbar {margin: 0}
@@ -437,32 +422,10 @@ div.menuSection div.separator {padding-left: 5px}
 	font-size: .95em;
 	text-decoration: none}
 
-<<<<<<< .working
-.floatlist li {
-	float: left;
-}
-div#attzone, div#comzone {	display: none;	margin-top: 10px;}
-div#attzoneopen, div#comzoneopen {display: block; margin-top: 10px;}
-div#edithelpzone {display: none;}
-#rules-copy-panel {display: none;}
-.clear, #clear {clear: both !important;}
-br.clear {clear: both; height: 0}
-.clearfix:after {
-    content: "."; 
-    display: block; 
-    height: 0; 
-    clear: both; 
-    visibility: hidden;
-}
-/* Hides from IE-mac \*/
-* html .clearfix {height: 1%;}
-/* End hide from IE-mac */
-=======
 .optionline {
 	border-top: 1px dashed #8cacbb;
 	margin-top: 2px;
 	padding-top: 2px}
->>>>>>> .merge-right.r18200
 
 /***** Misc. Center Col. *****/
 #showhide_columns {margin: 3px 3px -1px 3px}
@@ -668,7 +631,7 @@ td {
 .forumform td {
 	border: 1px solid #8cacbb;
 	background: #dee7ec;
-}
+	padding: 3px}
 
 /** Specific Tables **/
 table.normal, 
@@ -1739,19 +1702,8 @@ table.default td {
 /***** Admin *****/
 div.adminanchors {background: #e9ecef !important}
 
-<<<<<<< .working
-div.multiselect {
-	vertical-align: middle;
-	overflow-y: auto;
-	overflow-x: hidden;
-	height: 5em;
-	width: 100%;
-	border: 1px solid black;
-}
-=======
 /***** Ajax, jquery. etc. *****/
 /***** Ajax *****/
->>>>>>> .merge-right.r18200
 
 .tab-wrapper {border: 1px solid #eee} 
 

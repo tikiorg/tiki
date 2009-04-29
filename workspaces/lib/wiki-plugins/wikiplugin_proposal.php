@@ -11,6 +11,7 @@ function wikiplugin_proposal_help() {
 function wikiplugin_proposal_info() {
 	return array(
 		'name' => tra('Proposal'),
+		'documentation' => 'PluginProposal',			
 		'description' => tra('Provides a widget for users to vote on a proposal and view the current decision.'),
 		'prefs' => array( 'wikiplugin_proposal' ),
 		'body' => tra('The list of votes casted. One vote per line. Either 0, +1 or -1 followed by a username.'),

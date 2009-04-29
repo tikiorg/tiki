@@ -144,6 +144,14 @@ if (!empty($_FILES) && !empty($_FILES['newsletterfile'])) {
 									'error' => $_FILES['newsletterfile']['error'][$i],
 									'size' => $_FILES['newsletterfile']['size'][$i],
 									'savestate' => 'phptmp');
+		}	else {
+
+			$smarty->assign('upload_err_msg', tra('A problem occured during file uploading')
+																. '<br />'
+																. tra('File which was causing trouble was at rank') . '&nbsp;' . ($i + 1)
+																. '<br />' 
+																. tra('The error was:') . '&nbsp;<strong>' . $tikilib->uploaded_file_error($_FILES['newsletterfile']['error'][$i]) . '</strong>'
+											);
 		}
 	}
 }

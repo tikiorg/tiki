@@ -16,6 +16,7 @@ function wikiplugin_back_help() {
 function wikiplugin_back_info() {
     return array(
         'name' => tra('Back'),
+		'documentation' => 'PluginBack',
         'description' => tra('Displays a link that allows to go back in the browser history'),
         'prefs' => array( 'wikiplugin_back' ),
         'params' => array(),

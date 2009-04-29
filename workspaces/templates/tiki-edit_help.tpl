@@ -2,10 +2,10 @@
 {** \brief Show wiki syntax and plugins help *}
 {* TODO: Add links to add samples to edit form *}
 
-{add_help show='n' title="{tr}Wiki Help{/tr}" id="wiki_help"}
+{add_help show='y' title="{tr}Wiki Help{/tr}" id="wiki_help"}
 
 {if $prefs.feature_help eq 'y'} 
-<p>{tr}For more information, please see <a href="{$prefs.helpurl}Wiki+Page+Editor" target="tikihelp" class="tikihelp">Wiki Page Editor</a>{/tr} & <a href="{$prefs.helpurl}Wiki+Syntax" target="tikihelp" class="tikihelp" title="{tr}Wiki Syntax{/tr}">{tr}Wiki Syntax{/tr}</a>
+<p>{tr}For more information, please see <a href="{$prefs.helpurl}Wiki+Page+Editor" target="tikihelp" class="tikihelp" title="{tr}Wiki Page Editor{/tr}: {tr}More help on editing wiki pages{/tr}">Wiki Page Editor</a>{/tr} & <a href="{$prefs.helpurl}Wiki+Syntax" target="tikihelp" class="tikihelp" title="{tr}Wiki Syntax{/tr}: {tr}The syntax system used for creating pages in TikiWiki{/tr}">{tr}Wiki Syntax{/tr}</a>
 </p>
 {/if}
  
@@ -74,7 +74,6 @@
 {tr}numeric between ~ for html numeric characters entity{/tr}</td></tr>
 <tr><td class="{cycle advance=false}"><strong>{tr}Misc{/tr}</strong></td><td class="{cycle}">"{literal}{cookie}, {poll}{/literal}"</td></tr>
 </table>
-{/add_help}
 
 {if $prefs.feature_wiki_paragraph_formatting eq 'y' }
 <p>{tr}Because the Wiki paragraph formatting feature is on, all groups of non-blank lines are collected into paragraphs.  Lines can be of any length, and will be wrapped together with the next line.  Paragraphs are separated by blank lines.{/tr}</p>
@@ -82,11 +81,17 @@
 <p>{tr}Because the Wiki paragraph formatting feature is off, each line will be presented as you write it.  This means that if you want paragraphs to be wrapped properly, a paragraph should be all together on one line.{/tr}</p>
 {/if}
 
+{/add_help}
 {if count($plugins) ne 0}
-{add_help show='n' title="{tr}Plugin Help{/tr}" id="plugins_help"}
-<h3>{tr}Plugins{/tr}{if $prefs.feature_help eq 'y'} <a href="{$prefs.helpurl}Plugins" target="tikihelp" class="tikihelp" title="{tr}Quicktags{/tr}">{icon _id='help' style="vertical-align:middle"}</a>
+{add_help show='n' title="{tr}Plugin Help{/tr}" id="plugin_help"}
+<h3>{tr}Plugins{/tr}{if $prefs.feature_help eq 'y'} <a href="{$prefs.helpurl}Plugins" target="tikihelp" class="tikihelp" title="{tr}Plugins{/tr}:{tr}Wiki plugins extend the function of wiki syntax with more specialized commands.{/tr}">{icon _id='help' style="vertical-align:middle"}</a>
 {/if}</h3>
 <p>{tr}Note that plugin arguments can be enclosed with double quotes (&quot;); this allows them to contain , or = or &gt;{/tr}.</p>
+
+{if $tiki_p_admin eq 'y'}
+<a href="tiki-admin.php?page=textarea" target="tikihelp" class="tikihelp">Activate/deactivate plugins</a>
+{/if}
+
 <br />
 <table width="95%" class="normal">
 	<tr><th>{tr}Description{/tr}</th></tr>

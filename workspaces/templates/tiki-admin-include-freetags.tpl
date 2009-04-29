@@ -145,13 +145,13 @@
 	<div class="adminoptionlabel"><label for="freetags_3d_navigation_depth">{tr}Navigation depth{/tr}: <input type="text" name="freetags_3d_navigation_depth" id="freetags_3d_navigation_depth" value="{$prefs.freetags_3d_navigation_depth|escape}" size="2" /></label></div>
 </div>
 <div class="adminoptionbox">
-	<div class="adminoptionlabel"><label for="freetags_3d_node_size">{tr}Node size{/tr}: </label><input type="text" name="freetags_3d_node_size" id="freetags_3d_node_size" value="{$prefs.freetags_3d_node_size|default:"30"}" size="2" /></div>
+	<div class="adminoptionlabel"><label for="freetags_3d_node_size">{tr}Node size{/tr}: </label><input type="text" name="freetags_3d_node_size" id="freetags_3d_node_size" value="{$prefs.freetags_3d_node_size}" size="2" /></div>
 </div>
 <div class="adminoptionbox">
-	<div class="adminoptionlabel"><label for="freetags_3d_text_size">{tr}Text size{/tr}: </label><input type="text" name="freetags_3d_text_size" id="freetags_3d_text_size" value="{$prefs.freetags_3d_text_size|default:"40"}" size="3" /></div>
+	<div class="adminoptionlabel"><label for="freetags_3d_text_size">{tr}Text size{/tr}: </label><input type="text" name="freetags_3d_text_size" id="freetags_3d_text_size" value="{$prefs.freetags_3d_text_size}" size="3" /></div>
 </div>
 <div class="adminoptionbox">
-	<div class="adminoptionlabel"><label for="freetags_3d_spring_size">{tr}Spring (connection) size{/tr}: <input type="text" name="freetags_3d_spring_size" id="freetags_3d_spring_size" value="{$prefs.freetags_3d_spring_size|default:"100"}" size="3" /></label></div>
+	<div class="adminoptionlabel"><label for="freetags_3d_spring_size">{tr}Spring (connection) size{/tr}: <input type="text" name="freetags_3d_spring_size" id="freetags_3d_spring_size" value="{$prefs.freetags_3d_spring_size}" size="3" /></label></div>
 </div>
 <div class="adminoptionbox">
 	<div class="adminoptionlabel"><label for="freetags_3d_existing_page_color">{tr}Node color{/tr}: <input type="text" name="freetags_3d_existing_page_color" id="freetags_3d_existing_page_color" value="{$prefs.freetags_3d_existing_page_color|escape}" size="7" /></label></div>
@@ -164,10 +164,10 @@
 	<div class="adminoptionlabel"><label for="freetags_3d_adjust_camera">{tr}Camera distance adjusted relative to nearest node{/tr}.</label></div>
 </div>
 <div class="adminoptionbox">
-	<div class="adminoptionlabel"><label for="freetags_3d_camera_distance">{tr}Camera distance{/tr}: </label><input type="text" name="freetags_3d_camera_distance" id="freetags_3d_camera_distance" value="{$prefs.freetags_3d_camera_distance|default:"200"}" size="3" /></div>
+	<div class="adminoptionlabel"><label for="freetags_3d_camera_distance">{tr}Camera distance{/tr}: </label><input type="text" name="freetags_3d_camera_distance" id="freetags_3d_camera_distance" value="{$prefs.freetags_3d_camera_distance}" size="3" /></div>
 </div>
 <div class="adminoptionbox">
-	<div class="adminoptionlabel"><label for="freetags_3d_fov">{tr}Field of view{/tr}: </label><input type="text" name="freetags_3d_fov" id="freetags_3d_fov" value="{$prefs.freetags_3d_fov|default:"250"}" size="3" /></div>
+	<div class="adminoptionlabel"><label for="freetags_3d_fov">{tr}Field of view{/tr}: </label><input type="text" name="freetags_3d_fov" id="freetags_3d_fov" value="{$prefs.freetags_3d_fov}" size="3" /></div>
 </div>
 <div class="adminoptionbox">
 	<div class="adminoptionlabel"><label for="freetags_3d_feed_animation_interval">{tr}Feed animation interval (milisecs){/tr}: <input type="text" id="freetags_3d_feed_animation_interval" name="freetags_3d_feed_animation_interval" value="{$prefs.freetags_3d_feed_animation_interval|escape}" size="4" /></label></div>
@@ -176,19 +176,19 @@
 
 <fieldset><legend>{tr}Physics engine{/tr}</legend>
 <div class="adminoptionbox">
-	<div class="adminoptionlabel"><label for="freetags_3d_friction_constant">{tr}Friction constant{/tr}:</label> <input type="text" name="freetags_3d_friction_constant" id="freetags_3d_friction_constant" value="{$prefs.freetags_3d_friction_constant|default:"0.4f"}" size="7" /></div>
+	<div class="adminoptionlabel"><label for="freetags_3d_friction_constant">{tr}Friction constant{/tr}:</label> <input type="text" name="freetags_3d_friction_constant" id="freetags_3d_friction_constant" value="{$prefs.freetags_3d_friction_constant}" size="7" /></div>
 </div>
 <div class="adminoptionbox">
-	<div class="adminoptionlabel"><label for="freetags_3d_elastic_constant">{tr}Elastic constant{/tr}: </label><input type="text" name="freetags_3d_elastic_constant" id="freetags_3d_elastic_constant" value="{$prefs.freetags_3d_elastic_constant|default:"0.5f"}" size="7" /></div>
+	<div class="adminoptionlabel"><label for="freetags_3d_elastic_constant">{tr}Elastic constant{/tr}: </label><input type="text" name="freetags_3d_elastic_constant" id="freetags_3d_elastic_constant" value="{$prefs.freetags_3d_elastic_constant}" size="7" /></div>
 </div>
 <div class="adminoptionbox">
-	<div class="adminoptionlabel"><label for="freetags_3d_eletrostatic_constant">{tr}Eletrostatic constant{/tr}: </label><input type="text" name="freetags_3d_eletrostatic_constant" id="freetags_3d_eletrostatic_constant" value="{$prefs.freetags_3d_eletrostatic_constant|default:"1000f"}" size="7" /></div>
+	<div class="adminoptionlabel"><label for="freetags_3d_eletrostatic_constant">{tr}Eletrostatic constant{/tr}: </label><input type="text" name="freetags_3d_eletrostatic_constant" id="freetags_3d_eletrostatic_constant" value="{$prefs.freetags_3d_eletrostatic_constant}" size="7" /></div>
 </div>
 <div class="adminoptionbox">
-	<div class="adminoptionlabel"><label for="freetags_3d_node_mass">{tr}Node mass{/tr}: </label><input type="text" name="freetags_3d_node_mass" id="freetags_3d_node_mass" value="{$prefs.freetags_3d_node_mass|default:"5"}" size="7" /></div>
+	<div class="adminoptionlabel"><label for="freetags_3d_node_mass">{tr}Node mass{/tr}: </label><input type="text" name="freetags_3d_node_mass" id="freetags_3d_node_mass" value="{$prefs.freetags_3d_node_mass}" size="7" /></div>
 </div>
 <div class="adminoptionbox">
-	<div class="adminoptionlabel"><label for="freetags_3d_node_charge">{tr}Node charge{/tr}: </label><input type="text" name="freetags_3d_node_charge" id="freetags_3d_node_charge" value="{$prefs.freetags_3d_node_charge|default:"1"}" size="7" /></div>
+	<div class="adminoptionlabel"><label for="freetags_3d_node_charge">{tr}Node charge{/tr}: </label><input type="text" name="freetags_3d_node_charge" id="freetags_3d_node_charge" value="{$prefs.freetags_3d_node_charge}" size="7" /></div>
 </div>
 </fieldset>
 {*      <tr>

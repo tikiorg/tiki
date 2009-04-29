@@ -16,6 +16,8 @@ return tra("Takes regex expressions and parses the content between the REGEX tag
 function wikiplugin_regex_info() {
 	return array(
 		'name' => tra('Regular Expression'),
+		'documentation' => 'PluginRegex',
+		'validate' => 'all',		
 		'description' => tra('Takes regex expressions and parses the content between REGEX tags and replaces the text.'),
 		'prefs' => array( 'wikiplugin_regex' ),
 		'body' => tra('one data per line'),

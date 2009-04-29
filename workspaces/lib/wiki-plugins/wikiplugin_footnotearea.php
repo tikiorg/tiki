@@ -14,7 +14,7 @@ function wikiplugin_footnotearea_help() {
 function wikiplugin_footnotearea_info() {
 	return array(
 		'name' => tra( 'Footnotearea' ),
-		'documentation' => 'Footnotearea',
+		'documentation' => 'PluginFootnoteArea',
 		'description' => tra( 'Inserts a section for collected footnotes within the wiki page.' ),
 		'prefs' => array('wikiplugin_footnotearea'),
 		'params' => array(),

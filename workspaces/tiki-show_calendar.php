@@ -238,6 +238,7 @@ for ($i = 0; $i <= $numberofweeks; $i++) {
 				$le['modifiable'] = isset($modifiable) && in_array($le['calendarId'], $modifiable)? "y": "n";
 				$leday["{$le['time']}$e"] = $le;
 
+				$smarty->assign_by_ref('calendar_type', 'calendar');
 				$smarty->assign_by_ref('cellhead', $le["head"]);
 				$smarty->assign_by_ref('cellprio', $le["prio"]);
 				$smarty->assign_by_ref('cellcalname', $le["calname"]);
@@ -259,6 +260,7 @@ for ($i = 0; $i <= $numberofweeks; $i++) {
 			foreach ($listtikievents["$dday"] as $lte) {
 				$leday["{$lte['time']}$e"] = $lte;
 
+				$smarty->assign_by_ref('calendar_type', 'tiki_actions');
 				$smarty->assign_by_ref('cellhead', $lte["head"]);
 				$smarty->assign_by_ref('cellprio', $lte["prio"]);
 				$smarty->assign_by_ref('cellcalname', $lte["calname"]);

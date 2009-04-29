@@ -317,6 +317,7 @@ $registeredIndexes = array();
 	}
 	$smarty->assign('cellparticipants', $cellparticipants);
 
+	$smarty->assign('calendar_type', 'calendar');
         $smarty->assign('show_calname', $lec['show_calname']);
         $smarty->assign('show_description', $lec['show_description']);
         $smarty->assign('show_location', $lec['show_location']);

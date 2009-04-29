@@ -174,7 +174,10 @@ class FileGalLib extends TikiLib {
 	}
 
 	function move_file_gallery($galleryId, $new_parent_id) {
-		if ( (int)$galleryId <= 0 || (int)$new_parent_id != 0 ) return false;
+		if ( (int)$galleryId <= 0 || (int)$new_parent_id == 0 ) return false;
+
+		global $cachelib; require_once("lib/cache/cachelib.php");
+		$cachelib->empty_type_cache($this->get_all_galleries_cache_type());
 
 		return $this->query(
 			'update `tiki_file_galleries` set `parentId`=? where `galleryId`=?',
@@ -213,7 +216,7 @@ class FileGalLib extends TikiLib {
 			`user`=?, `lockable`=?, `show_lockedby`=?, `archives`=?, `sort_mode`=?,
 			`show_modified`=?, `show_creator`=?, `show_author`=?, `subgal_conf`=?,
 			`show_last_user`=?, `show_comment`=?, `show_files`=?, `show_explorer`=?,
-			`show_path`=? where `galleryId`=?";
+			`show_path`=?, `show_slideshow`=?, `default_view`=? where `galleryId`=?";
 
 			$bindvars=array(trim($fgal_info['name']), (int) $fgal_info['maxRows'],
 			$fgal_info['description'], (int) $this->now, $fgal_info['public'],
@@ -228,7 +231,8 @@ class FileGalLib extends TikiLib {
 			$fgal_info['show_author'], $fgal_info['subgal_conf'],
 			$fgal_info['show_last_user'], $fgal_info['show_comment'],
 			$fgal_info['show_files'], $fgal_info['show_explorer'],
-			$fgal_info['show_path'], (int)$fgal_info['galleryId']);
+			$fgal_info['show_path'], $fgal_info['show_slideshow'],
+			$fgal_info['default_view'], (int)$fgal_info['galleryId']);
 
 			$result = $this->query($query,$bindvars);
 
@@ -246,8 +250,8 @@ class FileGalLib extends TikiLib {
 			`show_hits`, `max_desc`, `type`, `parentId`, `lockable`, `show_lockedby`,
 			`archives`, `sort_mode`, `show_modified`, `show_creator`, `show_author`,
 			`subgal_conf`, `show_last_user`, `show_comment`, `show_files`,
-			`show_explorer`, `show_path`) values (?,?,?,?,?,?,?,?,?,?,
-			?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			`show_explorer`, `show_path`, `show_slideshow`, `default_view`)
+			values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 			$bindvars=array($fgal_info['name'], $fgal_info['description'], (int)
 			$this->now, $fgal_info['user'], (int) $this->now, (int)
@@ -261,7 +265,8 @@ class FileGalLib extends TikiLib {
 			$fgal_info['show_creator'], $fgal_info['show_author'],
 			$fgal_info['subgal_conf'], $fgal_info['show_last_user'],
 			$fgal_info['show_comment'], $fgal_info['show_files'],
-			$fgal_info['show_explorer'], $fgal_info['show_path']);
+			$fgal_info['show_explorer'], $fgal_info['show_path'],
+			$fgal_info['show_slideshow'], $fgal_info['default_view']);
 
 			$result = $this->query($query,$bindvars);
 			$galleryId = $this->getOne("select max(`galleryId`) from

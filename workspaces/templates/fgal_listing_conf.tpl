@@ -2,10 +2,22 @@
 
 {if is_array($fgal_options) and count($fgal_options) gt 0}
 	{foreach key=key item=item from=$fgal_options}
+		{if $key eq 'default_view'}
+<tr class="formcolor">
+	<td>{$item.name}</td>
+	<td>
+		<select name="fgal_{$key}">
+			<option value="list"{if $item.value eq 'list'} selected="selected"{/if}>{tr}List{/tr}</option>
+			<option value="browse"{if $item.value eq 'browse'} selected="selected"{/if}>{tr}Browse{/tr}</option>
+		</select>
+	</td>
+</tr>
+		{else}
 <tr class="formcolor">
 	<td>{$item.name}</td>
 	<td><input type="checkbox" name="fgal_{$key}" {if $item.value eq 'y'}checked="checked"{/if}/></td>
 </tr>
+		{/if}
 	{/foreach}
 {/if}
 

@@ -13,11 +13,11 @@ body {
 	font: 72%/1.4em Verdana, Geneva, Arial, Helvetica, sans-serif;}
 
 html>body {font-size: 76%}
+
 /* workaround for Safari when in FCKEditor */
 html[dir=ltr]>body {
 	display: block;
-	margin: 1em .5em;
-}
+	margin: 1em .5em}
 
 body.fullscreen {}
 
@@ -114,8 +114,7 @@ input[type=reset],
 input[type=submit],
 span.button input,
 .submitbutton,
-.calbuttonoff,
-.calbuttonon {
+.calbuttonBox {
 	font-family: Verdana, Helvetica, Geneva, Arial, sans-serif;
 	font-size: 94%;
 	font-weight: normal;
@@ -137,7 +136,8 @@ button:hover,
 input[type=reset]:hover,
 input[type=submit]:hover,
 .button input:hover,
-.submitbutton:hover {
+.submitbutton:hover,
+.calbuttonBox:hover {
 	background-color: #1e7ea6;
 	color: #fff;
 	text-decoration: none}
@@ -244,7 +244,6 @@ ul.jumplinks a:active {
 	(overrides lite.css) ***/
 
 #main {
-	
 	text-align: left;}
 
 #main[id] {
@@ -253,10 +252,12 @@ ul.jumplinks a:active {
 }
 	
 #header {
-	height: 10%;
-	min-height: 97px;	
+	min-height: 121px;	
 	position: relative;}
 	
+* html #header {height: 121px}
+
+* html #header,
 *:first-child+html #header {background: #fff}
 
 #middle {
@@ -264,6 +265,8 @@ ul.jumplinks a:active {
 /*	height: 70%;*/
 	padding-top: 40px;
 	padding-bottom: 40px}
+	
+*:first-child+html #middle {padding-top: 65px}
 
 #c1c2 {background: #fff}
 #c1c2 #wrapper {}
@@ -285,14 +288,14 @@ ul.jumplinks a:active {
 #c1c2 #col2 {
 	width: 240px;
 	text-align: right;
-	background: url(strasa/options/cold/box_top.gif) no-repeat 100% 0;
+	background: url(strasa/box_top.gif) no-repeat 100% 0;
 	padding-top: 5px}
 
 #c1c2 #col2 .content {
 	text-align: left;
 	margin-left: 58px;
 	padding-bottom: 5px;	
-	background: url(strasa/options/cold/box_bottom.gif) no-repeat 0 100%}
+	background: #8ea2b4 url(strasa/box_bottom.gif) no-repeat 0 100%}
 
 #col3 {
 	margin-left: -210px;
@@ -393,7 +396,7 @@ div#tiki-bot {}
 #header-top {
 	color: #fff;
 	height: 97px;
-	background: #1b3c54 url(strasa/options/cold/headerbg.jpg) repeat-x 0 0;}
+	background: #214d68 url(strasa/headerbg.jpg) repeat-x 0 100%}
 
 #siteheader {
 	text-align: left;
@@ -445,10 +448,11 @@ div#sitead {margin: auto}
 	padding-left: 60px;
 	padding-top: 1px;
 	color: #fff;
-	background: #fff url(strasa/options/cold/login.jpg) 0 0 no-repeat;
+	background: #fff url(strasa/login.jpg) 0 0 no-repeat;
 }
-	
-*:first-child+html #siteloginbar { max-width: 650px}
+
+* html #siteloginbar {text-align: right}
+*:first-child+html #siteloginbar {max-width: 650px}
 
 div.logged-in {padding-right: 20px}
 	
@@ -482,11 +486,7 @@ div.logged-in {padding-right: 20px}
 	padding-right: 10px;
 	padding-top: 0;
 	margin-top: -1px;
-	background: url(strasa/options/cold/register.jpg) no-repeat}
-
-*:first-child+html #siteloginbar .register {margin-top: -26px}
-
-/* #siteloginbar.logged-in {bottom: 120px} */
+	background: url(strasa/register.jpg) no-repeat}
 
 #bannertopright {  }
 
@@ -551,11 +551,13 @@ div.logged-in {padding-right: 20px}
 	float: right}
 
 #sitesearchbar {
-	float: right;
-	padding-right: 4px;
+	position: absolute;
+	right: 10px;
+	top: 65px;
 	text-align: right;
 	display: block;
-	margin: 0}
+	color: #fff;
+	font-size: 93%}
 
 input#fuser,
 select[name="where"],
@@ -571,11 +573,16 @@ input[name="search"] {}
 
 a.flip,
 a.flip:visited {
+	color: #cce5ff;
+	font-size: 90%}
+	
+a.flip:hover {
+	color: #006699;
+	text-decoration: none}
 
-}
 .tellafriend a,
 .tellafriend a:visited {
-	background: transparent url(strasa/options/cold/fold-topright.jpg) 0 0 no-repeat;
+	background: transparent url(strasa/fold-topright.jpg) 0 0 no-repeat;
 	display: block;
 	float: right;
 	font-size: 80%;
@@ -631,11 +638,14 @@ a.flip img {display: none}
 
 .horbar {
 position: absolute; z-index: 0;
-top: 0; left: 100%;
+top: 10px; left: 100%;
 margin: 0 0 0 -50%;
-height: 97px; 
-overflow: auto; 
-white-space: nowrap} 
+white-space: nowrap}
+
+* html .horbar {
+	top: 10px;
+	left: auto;
+	right: 40px}
 
 .horbar table {
 	width: auto;
@@ -644,24 +654,27 @@ white-space: nowrap}
 /* Text in the top level (visible by default) of the menu */
 .horbaritem a,
 .horbaritem a:visited {
-	padding: 10px 0 0;
+	padding: 3px 3px 6px 3px;
 	text-decoration: none;
 	font: normal 1em Verdana, Helvetica, Arial, Sans-Serif;
 	margin: 0; 
 	border-color: transparent; border-style: solid; border-width: 0 1px;
 	color: #5ae0ff; 
-	display: block; 
-	min-height: 87px; min-width: 80px;
 	text-align: center}
 
 .horbaritem a:hover {
 	text-decoration: none; 
-	background: url(strasa/options/cold/headermenuitem-hover.png) bottom center repeat-x;
-	border-color: #336699; border-style: solid; border-width: 0 1px;
+	background: url(strasa/headermenuitem-hover.png) bottom center repeat-x;
+	border-color: #336699;
+	border-style: solid;
+	border-width: 0 1px;
 	color: #fff;
 }
 
-* html .horbaritem a {font-size: .8em}
+* html .horbaritem a {
+	font-size: 1em;
+	border-color: #224a5f}
+
 .mdkverbar {} 
 
 .mdksubmenu {
@@ -670,7 +683,9 @@ white-space: nowrap}
 	left: 0;
 	top: 0;
 	visibility: hidden;
-	margin-top: 0}
+	margin-top: 3px}
+	
+* html .mdksubmenu {margin-top: 0}
 
 .mdksubmenu table {width: auto} 
 
@@ -691,21 +706,18 @@ white-space: nowrap}
 	top: 5px;
 	right: 12px} 
 
-.mdkitem a {
+.mdkitem a,
+.mdkitem a:link,
+.mdkitem a:visited {
 	color: #5ae0ff;
-	padding: 3px;
+	padding: 2px 3px;
 	position: relative;
 	display: block;
-	font-weight: normal} 
-
-.mdkitem a:link {
 	font-weight: normal;
 	text-decoration: none} 
 
-.mdkitem a:visited {text-decoration: none} 
-
 .mdkitem a:hover {
-	background: transparent url(styles/strasa/options/cold/headerbg.jpg) repeat-x;
+	background: transparent url(styles/strasa/headerbg.jpg) repeat-x;
 	color: #fff;
 	text-decoration: none} 
 
@@ -802,6 +814,8 @@ a.phplmselected:hover {color: #808080}
 	/*margin: 0 0 0 -50%;*/
 	white-space: nowrap;
 	text-align: left}
+	
+.cssmenu_horiz > li.menuSection > a {padding-right: 2.6em}
 
 /** Links in other menus **/
 div.separator {
@@ -883,7 +897,11 @@ div#edithelpzone {display: none}
 	height: 0;
 	clear: both;
 	visibility: hidden}
-
+	
+.clearfix {display: inline-block}
+/* Hide from IE Mac \*/
+.clearfix {display: block}
+/* End hide from IE Mac */
 * html .clearfix {height: 1%}
 #overdiv table {width: auto !important}
 .attention {color: red}
@@ -966,48 +984,53 @@ div.findsubmit {}
 
 /* New Help section */
 div#tikihelp {
-	position: fixed;
+	position:fixed;
 	right: 0;
-	top: 15%;
-	max-height: 85%;
-	max-width: 350px;
-	padding: 0;
-	margin: 0;
+	top: 3px;
+	height: 95%;
+	max-width: 50%;
+	padding:0;
+	margin:0;
 	border: none;
-	background: transparent}
+	background-color: transparent;
+	z-index: 2;
+}
 
 * html div#tikihelp {position: absolute}
 
 div.help_icon {
 	border: 0;
 	margin: 0;
-	padding: 0}
-
-div.help_icon img {
+	padding: 0;
+}
+div.help_icon img{
 	vertical-align: middle;
 	border: 0;
 	margin: 0;
-	padding: 0}
-
+	padding: 0;
+}
 div.help_section_select {
 	font-weight : bold;
 	font-size: 120%;
-	background: white;
-	width: 340px;
-	margin: 2px}
-
+	background-color : #E7E9EA;
+	color: black;
+	width: 100%;
+	margin: 2px;
+}
 div.help_sections {
+	width : 360px;
 	padding:  2px;
-	background: white;
-	max-height : 500px;
-	overflow: auto}
-
+	background-color: #AAC9E9;
+	max-height : 95%;
+	overflow: auto;
+}
 div.help_section {
-	width: 340px;
 	margin: 5px;
 	padding: 5px;
-	background: #F3FCFE}
-	
+	background-color: white;
+	color: black;
+}
+
 #site_report {text-align: center}
 
 #site_report a {
@@ -1034,8 +1057,10 @@ ul.categories li {
 div.box {
 	overflow: hidden}
 	
-#col2 .box {background: #cce5ff}
-
+#col2 .box {
+	background: #cce5ff;
+	border-bottom: 2px ridge #bed8f1;
+}
 #col3 .box {
 	border-bottom: 1px solid #cfcfcf;
 	/*margin-bottom: 10px*/ }
@@ -1088,7 +1113,9 @@ img.flipmodimage:hover {border: 1px solid #58A7D2 !important}
 	height: 16px}
 	
 /** Other boxes **/
-div.cbox {border: 1px solid #1b3a50}
+div.cbox {
+	border: 1px solid #1b3a50;
+	overflow: hidden}
 
 .cbox-title {
 	font-size: 1em;
@@ -1104,7 +1131,9 @@ div.cbox {border: 1px solid #1b3a50}
 .cbox-title a:hover {color: #fff; text-decoration: none}
 
 .cboxlink {}
-.cbox-data {padding: 4px}
+.cbox-data {
+	padding: 4px;
+	overflow: hidden}
 
 .rbox {
 	margin: 0.2em 0 0.4em;
@@ -1169,7 +1198,7 @@ td {vertical-align: top}
 .editblogform td,
 .editfgalform td,
 .comform td,
-.forumform td {}
+.forumform td {padding: 3px}
 
 table.email {}
 table.email td.body {}
@@ -1770,7 +1799,7 @@ body.tiki_blogs div.author_actions {
 	
 body.tiki_blogs .author_actions .actions {
 	float: right;
-	background: url(strasa/options/cold/login.jpg) no-repeat 100% 0; 
+	background: url(strasa/login.jpg) no-repeat 100% 0; 
 	text-align: right;
 	min-height: 24px}
 	
@@ -1823,7 +1852,7 @@ body.tiki_forums table.normal {margin: auto}
 
 .post .postbody-title {
 	display: block;
-	background: #1b3c54 url(strasa/options/cold/headerbg.jpg) repeat-x 0 100%}
+	background: #1b3c54 url(strasa/headerbg.jpg) repeat-x 0 100%}
 
 .post .postbody-title .checkbox {float: left}
 
@@ -1866,7 +1895,7 @@ body.tiki_forums table.normal {margin: auto}
 	padding-left: 60px;
 	padding-top: 1px;
 	color: #fff;
-	background: url(strasa/options/cold/login.jpg) 0 0 no-repeat;}
+	background: url(strasa/login.jpg) 0 0 no-repeat;}
 
 .commentStyle_headers .author_info {float: left}
 
@@ -2189,7 +2218,7 @@ div.multiselect {
 	/*overflow-y: auto;
 	overflow-x: hidden;*/
 	overflow: auto;
-	height: 5em;
+	height: auto;
 	width: 100%;
 	border: 1px solid #696969}
 
@@ -2377,68 +2406,9 @@ div.multiselect {
 	border-color: #cfd0d0 #e0e0e0;
 	border-style: solid}
 	
-#prev {
-	margin-left: 30px;
-	float: left;
-	position: relative;
-	height: 20px;
-	width: 20px;
-	background: url("../../pics/prev.gif") no-repeat}
-
-#next {
-	float: left;
-	position: relative;
-	height: 20px;
-	width: 20px;
-	background: url("../../pics/next.gif") no-repeat}
-
-.calbuttonBox {
-	float: left;
-	position: relative;
-	height: 20px;
-	width: 86px;
-	font-family: Verdana, Helvetica, Geneva, Arial, sans-serif;
-	font-size: 94%;
-	font-weight: normal;
-	color: #fff;
-	background: #1d9ccf;
-	border: 1px solid;
-	border-color: #41cbe7 #223845 #223845 #41cbe7;
-/*	padding: 1px 4px;
-	margin-right: 1px;*/
-	text-decoration: none;
-	white-space: nowrap;
-	cursor: pointer;
-	}
-
-.calbuttonon,
-.calbuttonoff {
-	position: absolute;
-	top: 0;
-	left: 3px;
-	padding-top: 3px;
-	text-align: center;
-	font-size: 1em;
-	height: 100%;
-	width: 100%;
-	border: 0}
-
-
-.calbuttonon a,
-.calbuttonoff a { color: #fff; text-decoration: none}
-
-.calbuttonLeft {
-	float: left;
-	width: 3px;
-	height: 20px}
-
-.calbuttonRight {
-	position: absolute;
-	top: 0;
-	right: 3px;
-	float: right;
-	width: 3px;
-	height: 20px}
+.calbuttonBox {margin-right: 3px}
+.calbuttonBox a {color: #fff}
+.calbuttonon a {font-weight: bold}
 
 #caltable .calfocuson,
 .box-data td.fc a.today,
@@ -2473,9 +2443,9 @@ div.multiselect {
 * html .calodd {padding: 0}
 .caleven {background: #dcdcdc}
 * html .caleven {padding: 0}
-.caldark {background: #223845}
+.caldark {background: #cce5ff}
 * html .caldark {padding: 0}
-.caldark .calfocus {background: #223845}
+.caldark .calfocus {background: #cce5ff}
 .daterow {}
 .daterow:hover {}
 
@@ -2615,13 +2585,14 @@ div.messureadbody {
 
 .plugin-form-float {
 	position: fixed;
-	left: 15%;
-	right: 15%;
-	top: 10%;
-	max-height: 80%;
+	left: 5%;
+	right: 365px;
+	top: 5%;
+	max-height: 90%;
 	overflow: auto;
 	background: #F3FCFE;
 	padding: 10px;
+	z-index: 10;
 	border: solid 2px #696969}
 
 .icon_edit_section {float: right}
