@@ -39,6 +39,7 @@ function wikiplugin_equation_info() {
 }
 
 function wikiplugin_equation($data, $params) {
+	if (empty($data)) return '';
     extract ($params, EXTR_SKIP);
     if (empty($size)) $size = 100;
 
