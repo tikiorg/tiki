@@ -27,7 +27,7 @@
 			'name' => tra('Title Search'),
 			'documentation' => 'PluginTitleSearch',
 			'description' => tra('Search wiki page titles.'),
-			'prefs' => array( 'wikiplugin_titlesearch' ),
+			'prefs' => array( 'feature_wiki', 'wikiplugin_titlesearch' ),
 			'params' => array(
 				'search' => array(
 					'required' => true,
