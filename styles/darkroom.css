@@ -2481,5 +2481,5 @@ div.multiselect li.even {background: #3F3F3F; color: white;}
 .help_section table { color: white; }
 .button .iconmenu {display:inline;}
 .categflipper { float:right;}
-
+.box-data .selected {font-style: italic;}
 /* end of css file */
