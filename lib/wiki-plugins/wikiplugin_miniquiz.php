@@ -45,7 +45,7 @@ function rcmp($a, $b) { return mt_rand(-1, 1); }
 function shuf(&$ar) { srand((double) microtime() * 10000000); uksort($ar, "rcmp"); }
 
 function wikiplugin_miniquiz($data, $params) {
-  global $tikilib, $user, $group, $prefs;
+  global $tikilib, $user, $group, $prefs, $smarty;
 	global $trklib; include_once('lib/trackers/trackerlib.php');
 	extract ($params,EXTR_SKIP);
 
