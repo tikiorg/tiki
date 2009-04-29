@@ -149,7 +149,7 @@
 <tr><td class="formcolor">
 <a {popup text="{tr}Params: specific params to the module and/or general params ('lang', 'flip', 'title', 'decorations', 'section', 'overflow', 'page', 'nobox', 'bgcolor', 'color', 'theme', 'notitle', 'nopage'). Separator between params:'&amp;'. E.g. maxlen=15&amp;nonums=y.{/tr}" width=200 center=true}>{tr}Parameters{/tr}</a>
 </td><td class="formcolor"><textarea name="assign_params" rows="1" cols="60" >{$assign_params|escape}</textarea>
-{help url="Module+Parameters}
+{help url="Module+Parameters"}
 </td></tr>
 <tr><td class="formcolor">{tr}Groups{/tr}</td><td class="formcolor">
 {remarksbox type="tip" title="Tip"}{tr}Use Ctrl+Click to select multiple groups.{/tr}{/remarksbox}
