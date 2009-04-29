@@ -1,11 +1,11 @@
 <h3>{$plugin.name|escape}
 {if $prefs.javascript_enabled eq 'y'}
-	<a href="javascript:void(0)" onclick="needToConfirm=false;popup_plugin_form('{$plugin_name|lower|@addslashes}')">{icon _id=page_edit text="{tr}Insert{/tr}"}</a>
+	<a href="javascript:void(0)" onclick="needToConfirm=false;popup_plugin_form('{$plugin_name|lower|@addslashes}')">{icon _id="pics/icons/comment_add.png" text="{tr}Insert{/tr}"}</a>
 {/if}
 
 {if $prefs.feature_help eq 'y'}
 	{if $plugin.documentation}
-		<a href="{$plugin.documentation|escape}">{icon _id=help}</a>
+		<a href="{$plugin.documentation|escape}" onclick="needToConfirm=false;" target="tikihelp" class="tikihelp">{icon _id=help}</a>
 	{/if}
 {/if}
 
