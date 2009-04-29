@@ -90,21 +90,33 @@
 	<h2>{tr}Mail{/tr}</h2>
 	<p>{tr}Tiki uses the PHP <strong>mail</strong> function to send email notifications and messages.{/tr}</p>
 {if $perform_mail_test ne 'y'}
-	<p>{tr}To test your system configuration, Tiki will attempt to send a test message to info@tikiwiki.org.{/tr}</p>
-	<div align="center">
+	<p>{tr}To test your system configuration, Tiki will attempt to send a test message to you.{/tr}</p>
+	<div>
 	<form action="tiki-install.php#mail" method="post">
+		<div style="padding:1em 7em;">
+			<label for="admin_email_test">{tr}Test email:{/tr}</label>
+			<input type="text" size="40" name="email_test_to" id="email_test_to" value="{if isset($email_test_to)}{$email_test_to}{/if}"/>
+			{if isset($email_test_err)}<span class="attention"><em>{$email_test_err}</em></span>
+			{else}<em>{tr}Email address to send test to.{/tr}</em>{/if}
+			<br /><br />
+			<input type="checkbox" name="email_test_cc" checked="checked" value="1" />
+			<em>{tr}Copy test mail to {/tr} {$email_test_tw}?</em>
+		</div>
 		<input type="hidden" name="install_step" value="2" />
 		<input type="hidden" name="perform_mail_test" value="y" />
-		<input type="submit" value=" {tr}Send Test Message{/tr} " />
+		<div align="center">
+			<input type="submit" value=" {tr}Send Test Message{/tr} " />
+		</div>
 {if $multi}		<input type="hidden" name="multi" value="{$multi}" />{/if}
 {if $lang}		<input type="hidden" name="lang" value="{$lang}" />{/if}
+		
 	</form>
 	</div>
 {else}
 	
 {if $mail_test eq 'y'}
 	<div style="border: solid 1px #000; padding: 5px; background: #a9ff9b;">
-		<p align="center"><img src="pics/icons/accept.png" alt="{tr}Success{/tr}" style="vertical-align:middle" /> {tr}Tiki was able to send a test message to info@tikiwiki.org.{/tr}</p>
+		<p align="center"><img src="pics/icons/accept.png" alt="{tr}Success{/tr}" style="vertical-align:middle" /> {tr}Tiki was able to send a test message to {$email_test_to}.{/tr}</p>
 	</div>
 	<p>&nbsp;</p>
 {else}
