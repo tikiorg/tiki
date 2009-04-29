@@ -824,7 +824,6 @@ if ($install_step == '2') {
 			$smarty->assign('mail_test', $mail_test);
 			$smarty->assign('perform_mail_test', 'y');
 			
-			unset($TWV);
 		}
 	}
 
@@ -839,6 +838,8 @@ if ($install_step == '2') {
 		$gd_test = 'n'; }
 	$smarty->assign('gd_test', $gd_test);
 }
+
+unset($TWV);
 
 // write general settings
 if (($_REQUEST['general_settings']) == 'y') {

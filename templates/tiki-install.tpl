@@ -116,7 +116,7 @@
 	
 {if $mail_test eq 'y'}
 	<div style="border: solid 1px #000; padding: 5px; background: #a9ff9b;">
-		<p align="center"><img src="pics/icons/accept.png" alt="{tr}Success{/tr}" style="vertical-align:middle" /> {tr}Tiki was able to send a test message to {$email_test_to}.{/tr}</p>
+		<p align="center"><img src="pics/icons/accept.png" alt="{tr}Success{/tr}" style="vertical-align:middle" /> {tr}Tiki was able to send a test message to{/tr} {$email_test_to}.</p>
 	</div>
 	<p>&nbsp;</p>
 {else}
