@@ -10,6 +10,7 @@ function wikiplugin_ftp_help() {
 function wikiplugin_ftp_info() {
 	return array(
 		'name' => tra('ftp'),
+		'documentation' => 'PluginFTP',
 		'description' => tra('Download box for a file on ftp server.'),
 		'prefs' => array( 'wikiplugin_ftp' ),
 		'validate' => 'all',

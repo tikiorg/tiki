@@ -25,6 +25,7 @@
 	function wikiplugin_titlesearch_info() {
 		return array(
 			'name' => tra('Title Search'),
+			'documentation' => 'PluginTitleSearch',
 			'description' => tra('Search wiki page titles.'),
 			'prefs' => array( 'wikiplugin_titlesearch' ),
 			'params' => array(

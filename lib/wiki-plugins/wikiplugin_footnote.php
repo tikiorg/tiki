@@ -14,7 +14,7 @@ function wikiplugin_footnote_help() {
 function wikiplugin_footnote_info() {
 	return array(
 		'name' => tra( 'Footnote' ),
-		'documentation' => 'Footnote',
+		'documentation' => 'PluginFootnote',
 		'description' => tra( 'Inserts a superscripted footnote number next to text and takes in footnote as parameter.' ),
 		'prefs' => array('wikiplugin_footnote'),
 		'body' => tra('The footnote'),

@@ -3,6 +3,7 @@
 function wikiplugin_content_info() {
 	return array(
 		'name' => tra( 'Dynamic Content' ),
+		'documentation' => 'PluginContent',		
 		'description' => tra( 'Includes content from the dynamic content system.' ),
 		'prefs' => array( 'feature_dynamic_content', 'wikiplugin_content' ),
 		'params' => array(

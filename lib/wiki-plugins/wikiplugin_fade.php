@@ -4,6 +4,7 @@ function wikiplugin_fade_info()
 {
 	return array(
 		'name' => tra('Fade'),
+		'documentation' => 'PluginFade',		
 		'description' => tra('Displays a label. On click, the block of content will fade in and fade out.'),
 		'prefs' => array('wikiplugin_fade'),
 		'body' => tra('Wiki syntax containing the text to display.'),

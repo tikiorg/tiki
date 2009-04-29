@@ -12,6 +12,7 @@ function wikiplugin_redirect_help() {
 function wikiplugin_redirect_info() {
 	return array(
 		'name' => tra('Redirect'),
+		'documentation' => 'PluginRedirect',			
 		'description' => tra('Redirect the user to a wiki page or generic URL.'),
 		'prefs' => array( 'wikiplugin_redirect' ),
 		'validate' => 'arguments',
