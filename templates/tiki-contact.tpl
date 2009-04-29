@@ -52,6 +52,6 @@
 		<h2>{tr}Contact us by email{/tr}</h2>
 		{tr}Click here to send us an email{/tr}: {mailto address="$email" encode="javascript" extra='class="link"'}
 	{else}
-		<p><a class="link" href="tiki-contact.php">Send another message.</a></p>
+		<p><a class="link" href="tiki-contact.php">{tr}Send another message{/tr}</a></p>
 	{/if}
 {/if}
