@@ -12,6 +12,7 @@ function wikiplugin_ftp_info() {
 		'name' => tra('ftp'),
 		'description' => tra('Download box for a file on ftp server.'),
 		'prefs' => array( 'wikiplugin_ftp' ),
+		'validate' => 'all',
 		'body' => tra('file name'),
 		'params' => array(
 			'server' => array(
