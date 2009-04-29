@@ -14,6 +14,7 @@ function wikiplugin_share_help() {
 function wikiplugin_share_info() {
 	return array(
 		'name' => tra('share'),
+		'documentation' => 'PluginShare',		
 		'description' => tra("Insert a ShareThis Button from www.sharethis.com"),
 		'prefs' => array( 'wikiplugin_share' ),
 		'params' => array(
