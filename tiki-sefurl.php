@@ -55,6 +55,16 @@ function filter_out_sefurl($tpl_output, &$smarty, $type=null, $title=null) {
 			$title = preg_replace(PATTERN_TO_CLEAN_TEXT, CLEAN_CHAR, $tikilib->take_away_accent($title));
 		}
 	}
+	if ($type == 'blogpost' && $prefs['feature_sefurl_title_blog'] == 'y') {
+		global $bloglib; include_once('lib/blogs/bloglib.php');
+		if (preg_match('/postId=([0-9]+)/', $tpl_output, $matches)) {
+			if (empty($title)) {
+				if ($post_info = $bloglib->get_post($matches[1]))
+					$title = $post_info['title'];
+			}
+			$title = preg_replace(PATTERN_TO_CLEAN_TEXT, CLEAN_CHAR, $tikilib->take_away_accent($title));
+		}
+	}
 
 	foreach ($sefurl_regex_out as $regex) {
 		if (empty($type) || $type == $regex['type']) {

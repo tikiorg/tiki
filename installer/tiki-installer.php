@@ -521,7 +521,6 @@ if ($language != 'en')
 include_once ('lib/setup/twversion.class.php');
 $TWV = new TWVersion();
 $smarty->assign('tiki_version_name', preg_replace('/^(\d+\.\d+)([^\d])/', '\1 \2', $TWV->version));
-unset($TWV);
 
 // Available DB Servers
 $dbservers = array();
@@ -769,17 +768,64 @@ $smarty->assign_by_ref('tikifeedback', $tikifeedback);
 
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
+$email_test_tw = 'mailtest@tikiwiki.org';
+$smarty->assign('email_test_tw', $email_test_tw);
+
 //  Sytem requirements test. 
 if ($install_step == '2') {
 
 	if (($_REQUEST['perform_mail_test']) == 'y') {
 
-	$sentmail = mail("info@tikiwiki.org","Mail test","Mail test");
-	if($sentmail){
-		$mail_test = 'y'; } else {
-		$mail_test = 'n'; }
-	$smarty->assign('mail_test', $mail_test);
-	$smarty->assign('perform_mail_test', 'y');
+		$email_test_to = $email_test_tw;
+		$email_test_headers = '';
+		$email_test_ready = true;
+
+		if (!empty($_REQUEST['email_test_to'])) {
+			$email_test_to =  $_REQUEST['email_test_to'];
+			
+			if ($_REQUEST['email_test_cc'] == '1') {
+				$email_test_headers .= "Cc: $email_test_tw\n";
+			}
+
+			// check email address format
+			include_once('lib/core/lib/Zend/Validate/EmailAddress.php');
+			$validator = new Zend_Validate_EmailAddress();
+			if (!$validator->isValid($email_test_to)) {
+				$smarty->assign('email_test_err', tra('Email address not valid, test mail not sent'));
+				$smarty->assign('perform_mail_test', 'n');
+				$email_test_ready = false;
+			}
+		} else {	// no email supplied, check copy checkbox
+			if ($_REQUEST['email_test_cc'] != '1') {
+				$smarty->assign('email_test_err', tra('Email address empty and "copy" checkbox not set, test mail not sent'));
+				$smarty->assign('perform_mail_test', 'n');
+				$email_test_ready = false;
+			}
+		}
+		$smarty->assign('email_test_to', $email_test_to);
+		
+		if ($email_test_ready) {	// so send the mail
+			$email_test_headers .= 'From: noreply@tikiwiki.org' . "\n";	// needs a valid sender
+			$email_test_headers .= 'Reply-to: '. $email_test_to . "\n";
+			$email_test_headers .= 'X-Mailer: Tiki/'.$TWV->version.' - PHP/' . phpversion() . "\n";
+			$email_test_subject = tra('Test mail from Tiki installer ').$TWV->version;
+			$email_test_body = tra("Congratulations!\n\nYour server can send emails.\n\n");
+			$email_test_body .= "\t".tra('Tiki version:').' '.$TWV->version . "\n";
+			$email_test_body .= "\t".tra('PHP version:').' '.phpversion() . "\n";
+			$email_test_body .= "\t".tra('Server:').' '.(empty($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_ADDR'] : $_SERVER['SERVER_NAME']) . "\n";
+			$email_test_body .= "\t".tra('Sent:').' '.date(DATE_RFC822) . "\n";
+			
+			$sentmail = mail($email_test_to, $email_test_subject, $email_test_body, $email_test_headers);
+			if($sentmail){
+				$mail_test = 'y';
+			} else {
+				$mail_test = 'n';
+			}
+			$smarty->assign('mail_test', $mail_test);
+			$smarty->assign('perform_mail_test', 'y');
+			
+			unset($TWV);
+		}
 	}
 
 	$php_memory_limit = return_bytes(ini_get('memory_limit'));

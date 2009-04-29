@@ -4,7 +4,8 @@ function wikiplugin_cookie_info()
 {
 	return array(
 		'name' => tra('Cookie'),
-		'description' => tra('?'),
+		'documentation' => 'PluginCookie',
+		'description' => tra('Also known as Fortune cookies or Taglines'),
 		'prefs' => array( 'wikiplugin_cookie' ),
 		'params' => array(
 		),

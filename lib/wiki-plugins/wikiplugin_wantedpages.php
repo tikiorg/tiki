@@ -38,6 +38,7 @@ function wikiplugin_wantedpages_help() {
 function wikiplugin_wantedpages_info() {
 	return array(
 		'name' => tra('Wanted Pages'),
+		'documentation' => 'PluginWantedPages',		
 		'description' => tra("Lists ''wanted'' wiki pages"),
 		'prefs' => array( 'wikiplugin_wantedpages' ),
 		'body' => tra('Custom level regex. A custom filter for wanted pages to be listed (only used when level=>custom).

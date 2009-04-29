@@ -13,6 +13,7 @@ function wikiplugin_userlist_help() {
 function wikiplugin_userlist_info() {
 	return array(
 		'name' => tra('User List'),
+		'documentation' => 'PluginUserList',
 		'description' => tra('Displays a list of registered users'),
 		'prefs' => array( 'wikiplugin_userlist' ),
 		'body' => tra('Login Filter'),

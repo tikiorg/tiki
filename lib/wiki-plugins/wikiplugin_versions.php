@@ -84,7 +84,7 @@ function wikiplugin_versions($data, $params) {
 	} else {
 		$p = 0;
 	}
-
+if (!isset($_REQUEST['preview'])){
 	if ($p == 0) {
 		if (strpos($data,'---(') !== false) {
 			$data = substr($data,0,strpos($data,'---('));
@@ -96,13 +96,17 @@ function wikiplugin_versions($data, $params) {
 			$data = substr($data,strpos($data,'---('.$v[1][$p-1]));
 			$data = preg_replace('/\)---*[\r\n]*/',"</b>\n","<b class='versiontitle'>". substr($data,4));
 		} else {
-			$data = preg_replace('/(?:.*---\('.$v[1][$p-1].'\)-{3,}?[\r\n]*?)(.*?)(?:---\(.*)/mis',"$1", $data);
+			// can't get it to work as a single preg_match_all, so...
+			preg_match_all("/(^|---\([^\(]*\)---*\s)/",$data,$t, PREG_OFFSET_CAPTURE);
+			$start = $t[0][$p][1] + strlen($t[0][$p][0]);
+			$end   = $p + 1 < count($t[0]) ? $t[0][$p+1][1] : strlen($data);
+			$data = substr($data, $start, $end);
 		}
 		if (strpos($data,'---(') !== false) {
 			$data = substr($data,0,strpos($data,'---('));
 		}
 	}
-	
+}	
 	if ($nav == 'y') {
 		$highed = false;
 		for ($i=0;$i<count($v[1]);$i++) {

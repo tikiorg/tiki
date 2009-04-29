@@ -11,6 +11,7 @@ function wikiplugin_bloglist_help() {
 function wikiplugin_bloglist_info() {
 	return array(
 		'name' => tra('Blog List'),
+		'documentation' => 'PluginBlogList',		
 		'description' => tra('Use BLOGLIST to include posts from a blog.'),
 		'prefs' => array( 'feature_blogs', 'wikiplugin_bloglist' ),
 		'params' => array(
