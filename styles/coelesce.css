@@ -309,7 +309,7 @@ div#sioptions {
 	padding: 0}
 
 #sioptionscentered {
-	text-align: center
+	text-align: center;
 	margin: 1em}
 
 div.floatright {
@@ -324,7 +324,7 @@ div.floatleft {
 
 div#sitelogo {
 	width: 50%;
-	padding-top: 8px;}
+	padding-top: 8px}
 
 div#sitead {margin: auto}
 #sitead.floatright {padding-right: 40px}
@@ -337,6 +337,7 @@ div#sitead {margin: auto}
 	position: absolute;
 	right: 30px;
 	bottom: 12px;
+	width: 450px;
 	text-align: right;
 	color: #fff}
 	
@@ -426,8 +427,7 @@ input[id="sl-login-pass"] {}
 /* #header text selectors, if needed */
 
 #sitetitles {
-	margin-top: 20px;
-	margin-left: 16px}
+	color: #fff; float: left; height: 97px; line-height: 97px; overflow: hidden; vertical-align: bottom}
 
 * html #sitetitles {margin-top: 6px}
 
@@ -438,7 +438,8 @@ input[id="sl-login-pass"] {}
 	font-family: Arial, Helvetica, sans-serif;
 	font-weight: bold;
 	margin:0;
-	padding:0}
+	padding:0;
+	margin-bottom: 30px}
 	
 * html #sitetitle,
 * html #sitesubtitle {
@@ -446,11 +447,10 @@ input[id="sl-login-pass"] {}
 
 #sitetitle {
 	color: #9eb8d5;
-	font-size: 3em}
+	font-size: 34px;
+	display: inline}
 
-* html #sitetitle {
-	font-size: 30px;
-	height: 30px }
+* html #sitetitle {height: 34px }
 
 * html #sitesubtitle {
 	font-size: 14px;
@@ -464,10 +464,11 @@ input[id="sl-login-pass"] {}
 	 text-decoration: none}
 	 
 #sitesubtitle {
+	display: inline;
+	margin-left: 14px;
 	color: white;
-	font-size: 1.6em;
-	font-weight: normal;
-	}
+	font-size: 14px;
+	font-weight: normal}
 
 #header a,
 #header a:visited {}
