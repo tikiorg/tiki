@@ -471,8 +471,6 @@ html[dir=ltr]>body {
 	margin: 1em .5em;
 }
 
-<<<<<<< .working
-=======
 /* wikiplugin edit */
 .wikiplugin_edit textarea {width: 99%; height: 150px}
 
@@ -486,4 +484,3 @@ html[dir=ltr]>body {
 	font-style: italic;
 	margin-top: 10px;
 }
->>>>>>> .merge-right.r18200

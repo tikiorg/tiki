@@ -22,9 +22,7 @@ function wikiplugin_fancylist($data, $params) {
 	global $replacement;
 	if (isset($param))
 		extract ($params,EXTR_SKIP);
-<<<<<<< .working
 	$result = '<ol class="fancylist">';
-=======
 		}
 		if(isset($div)){
 			$result = '<div class="fancylist'.($class ? " $class" : "").'">';
@@ -32,7 +30,6 @@ function wikiplugin_fancylist($data, $params) {
 		}else{
 			$result = '<ol class="fancylist'.(isset($class) ? " $class" : "").'">';
 			}
->>>>>>> .merge-right.r18200
 	// split data by lines (trimed whitespace from start and end)
 	$lines = split("\n", trim($data));
 

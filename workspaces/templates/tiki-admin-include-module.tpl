@@ -50,9 +50,6 @@
       </form>
 
 </div>
-<<<<<<< .working
-
-=======
 <div class="adminoptionbox">
 	<div class="adminoption"><input type="checkbox" id="user_assigned_modules" name="user_assigned_modules" {if $prefs.user_assigned_modules eq 'y'}checked="checked"{/if}/></div>
 	<div class="adminoptionlabel"><label for="user_assigned_modules">{tr}Users can configure modules{/tr}.</label>{if $prefs.feature_help eq 'y'} {help url="Users+Configure+Modules"}{/if}</div>
