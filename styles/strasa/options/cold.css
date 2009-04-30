@@ -511,7 +511,7 @@ th a:link,
 th a:visited,
 td.heading a:link,
 td.heading a:visited {
-	color: #fff;
+	color: #000;
 }
 
 a.tablename,
