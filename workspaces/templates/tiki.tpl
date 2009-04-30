@@ -1,4 +1,4 @@
-<<<<<<< .working
+
 {* $Id: tiki.tpl 12618 2008-04-21 05:43:35Z chibaguy $ *}{include file="header.tpl"}
 =======
 {* $Id$ *}
@@ -22,7 +22,7 @@
 	{/if}
 {/if}
 
->>>>>>> .merge-right.r18200
+
 {* TikiTest ToolBar *}
 {if $prefs.feature_tikitests eq 'y' and $tikitest_state neq 0}
 {include file="tiki-tests_topbar.tpl"}
