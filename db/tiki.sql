@@ -2786,6 +2786,7 @@ INSERT INTO users_grouppermissions (groupName,permName) VALUES('Anonymous','tiki
 
 DROP TABLE IF EXISTS users_groups;
 CREATE TABLE users_groups (
+  id int(11) NOT NULL auto_increment,
   groupName varchar(255) NOT NULL default '',
   groupDesc varchar(255) default NULL,
   groupHome varchar(255),
@@ -2798,8 +2799,9 @@ CREATE TABLE users_groups (
   userChoice char(1) default NULL,
   groupDefCat int(12) default 0,
   groupTheme varchar(255) default '',
-  PRIMARY KEY (groupName(30))
-) ENGINE=MyISAM;
+  PRIMARY KEY id,
+  UNIQUE KEY groupName (groupName)
+) ENGINE=MyISAM, AUTO_INCREMENT=1;
 
 DROP TABLE IF EXISTS users_objectpermissions;
 CREATE TABLE users_objectpermissions (
