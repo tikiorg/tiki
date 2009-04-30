@@ -11,7 +11,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  * - css = use suckerfish menu
  * - type = vert|horiz
  * - id = menu ID (mandatory)
- * - translation = y|n , n means no option translation (default y)
+ * - tr = y|n , n means no option translation (default y)
  * - menu_cookie=y|n (default y)
  */
 function smarty_function_menu($params, &$smarty)

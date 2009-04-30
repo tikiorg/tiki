@@ -530,8 +530,10 @@ function setfoldericonstate(foo) {
  * def: menu type (e:extended, c:collapsed, f:fixed)
  * the menu is collapsed function of its cookie: if no cookie is set, the def is used
  */
-function setfolderstate(foo, def, img) {
-  var status = getCookie(foo, "menu", "o");
+function setfolderstate(foo, def, img, status) {
+	if (!status) {
+		status = getCookie(foo, "menu", "o");
+	}
     if (!img) {
     if (document.getElementsByName('icn' + foo)[0].src.search(/[\\\/]/))
       img = document.getElementsByName('icn' + foo)[0].src.replace(/.*[\\\/]([^\\\/]*)$/, "$1");
@@ -565,8 +567,10 @@ function setheadingstate(foo) {
   }
 }
 
-function setsectionstate(foo, def, img) {
-  var status = getCookie(foo, "menu", "o");
+function setsectionstate(foo, def, img, status) {
+	if (!status) {
+		status = getCookie(foo, "menu", "o");
+	}
   if (status == "o") {
     show(foo);
     if (img) src = "o" + img;

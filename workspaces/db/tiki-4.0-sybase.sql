@@ -291,7 +291,9 @@ CREATE TABLE "tiki_actionlog" (
   "ip" varchar(15) default NULL NULL,
   "comment" varchar(200) default NULL NULL,
   "categId" numeric(12,0) default '0' NOT NULL,
-  PRIMARY KEY (actionId)
+  PRIMARY KEY (actionId),
+  KEY lastModif(lastModif),
+  KEY object(object(100), objectType, action(100))
 ) ENGINE=MyISAM
 go
 
@@ -460,6 +462,7 @@ CREATE TABLE "tiki_banners" (
   "created" numeric(14,0) default NULL NULL,
   "maxImpressions" numeric(8,0) default NULL NULL,
   "impressions" numeric(8,0) default NULL NULL,
+  "maxUserImpressions" numeric(8,0) default -1,
   "maxClicks" numeric(8,0) default NULL NULL,
   "clicks" numeric(8,0) default NULL NULL,
   "zone" varchar(40) default NULL NULL,
@@ -795,6 +798,7 @@ CREATE TABLE "tiki_objects" (
   "name" varchar(200) default NULL NULL,
   "href" varchar(200) default NULL NULL,
   "hits" numeric(8,0) default NULL NULL,
+  "comments_locked" char(1) default 'n' NOT NULL,
   PRIMARY KEY (objectId),
   KEY (type, objectId),
   KEY (itemId, type)
@@ -1013,6 +1017,7 @@ CREATE TABLE "tiki_comments" (
   "comment_rating" numeric(2,0) default NULL NULL,
   "archived" char(1) default NULL NULL,
   "approved" char(1) default 'y' NOT NULL,
+  "locked" char(1) default 'n' NOT NULL,
   PRIMARY KEY (threadId)
 ) ENGINE=MyISAM  
 go
@@ -1337,6 +1342,8 @@ CREATE TABLE "tiki_file_galleries" (
   "show_files" char(1) default NULL NULL,
   "show_explorer" char(1) default NULL NULL,
   "show_path" char(1) default NULL NULL,
+  "show_slideshow" char(1) default NULL NULL,
+  "default_view" varchar(20) default NULL NULL,
   PRIMARY KEY (galleryId)
 ) ENGINE=MyISAM  
 go
@@ -2082,10 +2089,11 @@ CREATE TABLE "tiki_menu_options" (
   "name" varchar(200) default NULL NULL,
   "url" varchar(255) default NULL NULL,
   "position" numeric(4,0) default NULL NULL,
-  "section" varchar(255) default NULL NULL,
-  "perm" varchar(255) default NULL NULL,
-  "groupname" varchar(255) default NULL NULL,
+  "section" text default NULL NULL,
+  "perm" text default NULL NULL,
+  "groupname" text default NULL NULL,
   "userlevel" numeric(4,0) default 0,
+  "icon" varchar(200) default '',
   PRIMARY KEY (optionId)
 ) ENGINE=MyISAM  
 go
@@ -2098,7 +2106,7 @@ INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`",
 go
 
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (3,42,'o','Contact Us','tiki-contact.php',20,'feature_contact','','',0)
+INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (3,42,'o','Contact Us','tiki-contact.php',20,'feature_contact,feature_messages','','',0)
 go
 
 
@@ -2422,7 +2430,7 @@ INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`",
 go
 
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (83,42,'s','File Galleries','tiki-list_file_gallery.php',600,'feature_file_galleries','tiki_p_view_file_gallery','',0)
+INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (83,42,'s','File Galleries','tiki-list_file_gallery.php',600,'feature_file_galleries','tiki-list_file_gallery.php|tiki_p_view_file_gallery|tiki_p_upload_files','',0)
 go
 
 
@@ -2434,7 +2442,7 @@ INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`",
 go
 
 
-INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (86,42,'o','Upload File','tiki-upload_file.php',615,'feature_file_galleries','tiki_p_view_file_gallery,tiki_p_upload_files','',0)
+INSERT INTO "," ("`optionId`","`menuId`","`type`","`name`","`url`","`position`","`section`","`perm`","`groupname`","`userlevel`") VALUES (86,42,'o','Upload File','tiki-upload_file.php',615,'feature_file_galleries','tiki_p_upload_files','',0)
 go
 
 
@@ -2862,6 +2870,7 @@ CREATE TABLE "tiki_menus" (
   "description" text default '',
   "type" char(1) default NULL NULL,
   "icon" varchar(200) default NULL NULL,
+  "use_items_icons" char(1) DEFAULT 'n' NOT NULL,
   PRIMARY KEY (menuId)
 ) ENGINE=MyISAM  
 go
@@ -2967,6 +2976,7 @@ CREATE TABLE "tiki_newsletter_subscriptions" (
   "valid" char(1) default NULL NULL,
   "subscribed" numeric(14,0) default NULL NULL,
   "isUser" char(1) default 'n' NOT NULL,
+  "included" char(1) default 'n' NOT NULL,
   PRIMARY KEY (nlId,email,isUser)
 ) ENGINE=MyISAM
 go
@@ -4569,6 +4579,8 @@ CREATE TABLE "tiki_wiki_attachments" (
 go
 
 
+CREATE  INDEX "tiki_wiki_attachments_page" ON "tiki_wiki_attachments"("page")
+go
 
 -- DROP TABLE "tiki_zones"
 go
@@ -4632,6 +4644,7 @@ go
 
 
 CREATE TABLE "users_groups" (
+  "id" numeric(11 ,0) identity,
   "groupName" varchar(255) default '' NOT NULL,
   "groupDesc" varchar(255) default NULL NULL,
   "groupHome" varchar(255) default '',
@@ -4644,11 +4657,13 @@ CREATE TABLE "users_groups" (
   "userChoice" char(1) default NULL NULL,
   "groupDefCat" numeric(12,0) default 0,
   "groupTheme" varchar(255) default '',
-  PRIMARY KEY (groupName(30))
-) ENGINE=MyISAM
+  PRIMARY KEY id
+) ENGINE=MyISAM, 
 go
 
 
+CREATE UNIQUE INDEX "users_groups_groupName" ON "users_groups"("groupName")
+go
 
 -- DROP TABLE "users_objectpermissions"
 go
@@ -5935,19 +5950,19 @@ CREATE  INDEX "tiki_quicktags_taglabel" ON "tiki_quicktags"("taglabel")
 go
 
 -- wiki
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('text, bold','__text__','pics/icons/text_bold.png','wiki')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('  text, bold','__text__','pics/icons/text_bold.png','wiki')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('text, italic','\'\'text\'\'','pics/icons/text_italic.png','wiki')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('  text, italic','\'\'text\'\'','pics/icons/text_italic.png','wiki')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('text, underline','===text===','pics/icons/text_underline.png','wiki')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('  text, underline','===text===','pics/icons/text_underline.png','wiki')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('table new','||r1c1|r1c2\nr2c1|r2c2||','pics/icons/table.png','wiki')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('table new','||r1c1|r1c2|r1c3\nr2c1|r2c2|r2c3\nr3c1|r3c2|r3c3||','pics/icons/table.png','wiki')
 go
 
 
@@ -5959,15 +5974,15 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('heading1','!text','pics/icons/text_heading_1.png','wiki')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' heading1','!text','pics/icons/text_heading_1.png','wiki')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('heading2','!!text','pics/icons/text_heading_2.png','wiki')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' heading2','!!text','pics/icons/text_heading_2.png','wiki')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('heading3','!!!text','pics/icons/text_heading_3.png','wiki')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' heading3','!!!text','pics/icons/text_heading_3.png','wiki')
 go
 
 
@@ -5983,7 +5998,7 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('hr','---','pics/icons/page.png','wiki')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' horizontal rule','---','pics/icons/page.png','wiki')
 go
 
 
@@ -5991,15 +6006,15 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('colored text','~~--FF0000:text~~','pics/icons/palette.png','wiki')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' colored text','~~--FF0000:text~~','pics/icons/palette.png','wiki')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('dynamic variable','%text%','pics/icons/book_open.png','wiki')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('dynamic variable','%text%','pics/icons/database_gear.png','wiki')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('image','{img src= width= height= align= desc= link= }','pics/icons/picture.png','wiki')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('image','popup_plugin_form("img")','pics/icons/picture.png','wiki')
 go
 
 
@@ -6011,11 +6026,19 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('Email Address','[mailto:text|text]','pics/icons/email.png','wiki')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' deleted','--text--','pics/icons/text_strikethrough.png','wiki')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('Deleted','--text--','pics/icons/text_strikethrough.png','wiki')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('quote','popup_plugin_form("quote")','pics/icons/quotes.png','wiki')
+go
+
+
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('code','popup_plugin_form("code")','pics/icons/page_white_code.png','wiki')
+go
+
+
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('flash','popup_plugin_form("flash")','pics/icons/page_white_actionscript.png','wiki')
 go
 
 
@@ -6071,15 +6094,15 @@ go
 
 
 -- newsletters
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('bold','__text__','pics/icons/text_bold.png','newsletters')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('  text, bold','__text__','pics/icons/text_bold.png','newsletters')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('italic','\'\'text\'\'','pics/icons/text_italic.png','newsletters')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('  text, italic','\'\'text\'\'','pics/icons/text_italic.png','newsletters')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('underline','===text===','pics/icons/text_underline.png','newsletters')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('  text, underline','===text===','pics/icons/text_underline.png','newsletters')
 go
 
 
@@ -6087,19 +6110,19 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('heading1','!text','pics/icons/text_heading_1.png','newsletters')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' heading1','!text','pics/icons/text_heading_1.png','newsletters')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('heading2','!!text','pics/icons/text_heading_2.png','newsletters')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' heading2','!!text','pics/icons/text_heading_2.png','newsletters')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('heading3','!!!text','pics/icons/text_heading_3.png','newsletters')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' heading3','!!!text','pics/icons/text_heading_3.png','newsletters')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('hr', '---', 'pics/icons/page.png', 'newsletters')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' horizontal rule', '---', 'pics/icons/page.png', 'newsletters')
 go
 
 
@@ -6107,33 +6130,33 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('colored text','~~--FF0000:text~~','pics/icons/palette.png','newsletters')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' colored text','~~--FF0000:text~~','pics/icons/palette.png','newsletters')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('image','{img src= width= height= align= desc= link= }','pics/icons/picture.png','newsletters')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('image','popup_plugin_form("img")','pics/icons/picture.png','newsletters')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('Deleted','--text--','pics/icons/text_strikethrough.png','newsletters')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' deleted','--text--','pics/icons/text_strikethrough.png','newsletters')
 go
 
 
 
 -- trackers
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('bold','__text__','pics/icons/text_bold.png','trackers')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('  text, bold','__text__','pics/icons/text_bold.png','trackers')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('italic','\'\'text\'\'','pics/icons/text_italic.png','trackers')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('  text, italic','\'\'text\'\'','pics/icons/text_italic.png','trackers')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('underline','===text===','pics/icons/text_underline.png','trackers')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('  text, underline','===text===','pics/icons/text_underline.png','trackers')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('table new','||r1c1|r1c2\nr2c1|r2c2||','pics/icons/table.png','trackers')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('table new','||r1c1|r1c2|r1c3\nr2c1|r2c2|r2c3\nr3c1|r3c2|r3c3||','pics/icons/table.png','trackers')
 go
 
 
@@ -6145,15 +6168,15 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('heading1','!text','pics/icons/text_heading_1.png','trackers')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' heading1','!text','pics/icons/text_heading_1.png','trackers')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('heading2','!!text','pics/icons/text_heading_2.png','trackers')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' heading2','!!text','pics/icons/text_heading_2.png','trackers')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('heading3','!!!text','pics/icons/text_heading_3.png','trackers')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' heading3','!!!text','pics/icons/text_heading_3.png','trackers')
 go
 
 
@@ -6169,7 +6192,7 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('hr','---','pics/icons/page.png','trackers')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' horizontal rule','---','pics/icons/page.png','trackers')
 go
 
 
@@ -6177,41 +6200,49 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('colored text','~~--FF0000:text~~','pics/icons/palette.png','trackers')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' colored text','~~--FF0000:text~~','pics/icons/palette.png','trackers')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('dynamic variable','%text%','pics/icons/book_open.png','trackers')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('dynamic variable','%text%','pics/icons/database_gear.png','trackers')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('image','{img src= width= height= align= desc= link= }','pics/icons/picture.png','trackers')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('image','popup_plugin_form("img")','pics/icons/picture.png','trackers')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('Email Address','[mailto:text|text]','pics/icons/email.png','trackers')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' deleted','--text--','pics/icons/text_strikethrough.png','trackers')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('Deleted','--text--','pics/icons/text_strikethrough.png','trackers')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('quote','popup_plugin_form("quote")','pics/icons/quotes.png','trackers')
+go
+
+
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('code','popup_plugin_form("code")','pics/icons/page_white_code.png','trackers')
+go
+
+
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('flash','popup_plugin_form("flash")','pics/icons/page_white_actionscript.png','trackers')
 go
 
 
 
 -- blogs
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('bold','__text__','pics/icons/text_bold.png','blogs')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('  text, bold','__text__','pics/icons/text_bold.png','blogs')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('italic','\'\'text\'\'','pics/icons/text_italic.png','blogs')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('  text, italic','\'\'text\'\'','pics/icons/text_italic.png','blogs')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('underline','===text===','pics/icons/text_underline.png','blogs')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('  text, underline','===text===','pics/icons/text_underline.png','blogs')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('table new','||r1c1|r1c2\nr2c1|r2c2||','pics/icons/table.png','blogs')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('table new','||r1c1|r1c2|r1c3\nr2c1|r2c2|r2c3\nr3c1|r3c2|r3c3||','pics/icons/table.png','blogs')
 go
 
 
@@ -6223,15 +6254,15 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('heading1','!text','pics/icons/text_heading_1.png','blogs')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' heading1','!text','pics/icons/text_heading_1.png','blogs')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('heading2','!!text','pics/icons/text_heading_2.png','blogs')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' heading2','!!text','pics/icons/text_heading_2.png','blogs')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('heading3','!!!text','pics/icons/text_heading_3.png','blogs')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' heading3','!!!text','pics/icons/text_heading_3.png','blogs')
 go
 
 
@@ -6247,7 +6278,7 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('hr','---','pics/icons/page.png','blogs')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' horizontal rule','---','pics/icons/page.png','blogs')
 go
 
 
@@ -6255,41 +6286,49 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('colored text','~~--FF0000:text~~','pics/icons/palette.png','blogs')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' colored text','~~--FF0000:text~~','pics/icons/palette.png','blogs')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('dynamic variable','%text%','pics/icons/book_open.png','blogs')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('dynamic variable','%text%','pics/icons/database_gear.png','blogs')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('image','{img src= width= height= align= desc= link= }','pics/icons/picture.png','blogs')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('image','popup_plugin_form("img")','pics/icons/picture.png','blogs')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('Email Address','[mailto:text|text]','pics/icons/email.png','blogs')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' deleted','--text--','pics/icons/text_strikethrough.png','blogs')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('Deleted','--text--','pics/icons/text_strikethrough.png','blogs')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('quote','popup_plugin_form("quote")','pics/icons/quotes.png','blogs')
+go
+
+
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('code','popup_plugin_form("code")','pics/icons/page_white_code.png','blogs')
+go
+
+
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('flash','popup_plugin_form("flash")','pics/icons/page_white_actionscript.png','blogs')
 go
 
 
 
 -- calendar
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('bold','__text__','pics/icons/text_bold.png','calendar')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('  text, bold','__text__','pics/icons/text_bold.png','calendar')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('italic','\'\'text\'\'','pics/icons/text_italic.png','calendar')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('  text, italic','\'\'text\'\'','pics/icons/text_italic.png','calendar')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('underline','===text===','pics/icons/text_underline.png','calendar')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('  text, underline','===text===','pics/icons/text_underline.png','calendar')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('table new','||r1c1|r1c2\nr2c1|r2c2||','pics/icons/table.png','calendar')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('table new','||r1c1|r1c2|r1c3\nr2c1|r2c2|r2c3\nr3c1|r3c2|r3c3||','pics/icons/table.png','calendar')
 go
 
 
@@ -6301,15 +6340,15 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('heading1','!text','pics/icons/text_heading_1.png','calendar')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' heading1','!text','pics/icons/text_heading_1.png','calendar')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('heading2','!!text','pics/icons/text_heading_2.png','calendar')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' heading2','!!text','pics/icons/text_heading_2.png','calendar')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('heading3','!!!text','pics/icons/text_heading_3.png','calendar')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' heading3','!!!text','pics/icons/text_heading_3.png','calendar')
 go
 
 
@@ -6325,7 +6364,7 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('hr','---','pics/icons/page.png','calendar')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' horizontal rule','---','pics/icons/page.png','calendar')
 go
 
 
@@ -6333,37 +6372,37 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('colored text','~~--FF0000:text~~','pics/icons/palette.png','calendar')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' colored text','~~--FF0000:text~~','pics/icons/palette.png','calendar')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('dynamic variable','%text%','pics/icons/book_open.png','calendar')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('dynamic variable','%text%','pics/icons/database_gear.png','calendar')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('image','{img src= width= height= align= desc= link= }','pics/icons/picture.png','calendar')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('image','popup_plugin_form("img")','pics/icons/picture.png','calendar')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('Deleted','--text--','pics/icons/text_strikethrough.png','calendar')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' deleted','--text--','pics/icons/text_strikethrough.png','calendar')
 go
 
 
 
 -- articles
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('bold','__text__','pics/icons/text_bold.png','articles')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('  text, bold','__text__','pics/icons/text_bold.png','articles')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('italic','\'\'text\'\'','pics/icons/text_italic.png','articles')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('  text, italic','\'\'text\'\'','pics/icons/text_italic.png','articles')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('underline','===text===','pics/icons/text_underline.png','articles')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('  text, underline','===text===','pics/icons/text_underline.png','articles')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('table new','||r1c1|r1c2\nr2c1|r2c2||','pics/icons/table.png','articles')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('table new','||r1c1|r1c2|r1c3\nr2c1|r2c2|r2c3\nr3c1|r3c2|r3c3||','pics/icons/table.png','articles')
 go
 
 
@@ -6375,15 +6414,15 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('heading1','!text','pics/icons/text_heading_1.png','articles')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' heading1','!text','pics/icons/text_heading_1.png','articles')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('heading2','!!text','pics/icons/text_heading_2.png','articles')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' heading2','!!text','pics/icons/text_heading_2.png','articles')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('heading3','!!!text','pics/icons/text_heading_3.png','articles')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' heading3','!!!text','pics/icons/text_heading_3.png','articles')
 go
 
 
@@ -6399,7 +6438,7 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('hr','---','pics/icons/page.png','articles')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' horizontal rule','---','pics/icons/page.png','articles')
 go
 
 
@@ -6407,41 +6446,49 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('colored text','~~--FF0000:text~~','pics/icons/palette.png','articles')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' colored text','~~--FF0000:text~~','pics/icons/palette.png','articles')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('dynamic variable','%text%','pics/icons/book_open.png','articles')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('dynamic variable','%text%','pics/icons/database_gear.png','articles')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('image','{img src= width= height= align= desc= link= }','pics/icons/picture.png','articles')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('image','popup_plugin_form("img")','pics/icons/picture.png','articles')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('Email Address','[mailto:text|text]','pics/icons/email.png','articles')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' deleted','--text--','pics/icons/text_strikethrough.png','articles')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('Deleted','--text--','pics/icons/text_strikethrough.png','articles')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('quote','popup_plugin_form("quote")','pics/icons/quotes.png','articles')
+go
+
+
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('code','popup_plugin_form("code")','pics/icons/page_white_code.png','articles')
+go
+
+
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('flash','popup_plugin_form("flash")','pics/icons/page_white_actionscript.png','articles')
 go
 
 
 
 -- faqs
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('bold','__text__','pics/icons/text_bold.png','faqs')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('  text, bold','__text__','pics/icons/text_bold.png','faqs')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('italic','\'\'text\'\'','pics/icons/text_italic.png','faqs')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('  text, italic','\'\'text\'\'','pics/icons/text_italic.png','faqs')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('underline','===text===','pics/icons/text_underline.png','faqs')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('  text, underline','===text===','pics/icons/text_underline.png','faqs')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('table new','||r1c1|r1c2\nr2c1|r2c2||','pics/icons/table.png','faqs')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('table new','||r1c1|r1c2|r1c3\nr2c1|r2c2|r2c3\nr3c1|r3c2|r3c3||','pics/icons/table.png','faqs')
 go
 
 
@@ -6453,15 +6500,15 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('heading1','!text','pics/icons/text_heading_1.png','faqs')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' heading1','!text','pics/icons/text_heading_1.png','faqs')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('heading2','!!text','pics/icons/text_heading_2.png','faqs')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' heading2','!!text','pics/icons/text_heading_2.png','faqs')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('heading3','!!!text','pics/icons/text_heading_3.png','faqs')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' heading3','!!!text','pics/icons/text_heading_3.png','faqs')
 go
 
 
@@ -6477,7 +6524,7 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('hr','---','pics/icons/page.png','faqs')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' horizontal rule','---','pics/icons/page.png','faqs')
 go
 
 
@@ -6485,41 +6532,37 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('colored text','~~--FF0000:text~~','pics/icons/palette.png','faqs')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' colored text','~~--FF0000:text~~','pics/icons/palette.png','faqs')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('dynamic variable','%text%','pics/icons/book_open.png','faqs')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('dynamic variable','%text%','pics/icons/database_gear.png','faqs')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('image','{img src= width= height= align= desc= link= }','pics/icons/picture.png','faqs')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('image','popup_plugin_form("img")','pics/icons/picture.png','faqs')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('Email Address','[mailto:text|text]','pics/icons/email.png','faqs')
-go
-
-
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('Deleted','--text--','pics/icons/text_strikethrough.png','faqs')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' deleted','--text--','pics/icons/text_strikethrough.png','faqs')
 go
 
 
 
 -- forums
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('bold','__text__','pics/icons/text_bold.png','forums')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('  text, bold','__text__','pics/icons/text_bold.png','forums')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('italic','\'\'text\'\'','pics/icons/text_italic.png','forums')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('  text, italic','\'\'text\'\'','pics/icons/text_italic.png','forums')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('underline','===text===','pics/icons/text_underline.png','forums')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('  text, underline','===text===','pics/icons/text_underline.png','forums')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('table new','||r1c1|r1c2\nr2c1|r2c2||','pics/icons/table.png','forums')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('table new','||r1c1|r1c2|r1c3\nr2c1|r2c2|r2c3\nr3c1|r3c2|r3c3||','pics/icons/table.png','forums')
 go
 
 
@@ -6531,15 +6574,15 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('heading1','!text','pics/icons/text_heading_1.png','forums')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' heading1','!text','pics/icons/text_heading_1.png','forums')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('heading2','!!text','pics/icons/text_heading_2.png','forums')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' heading2','!!text','pics/icons/text_heading_2.png','forums')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('heading3','!!!text','pics/icons/text_heading_3.png','forums')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' heading3','!!!text','pics/icons/text_heading_3.png','forums')
 go
 
 
@@ -6555,7 +6598,7 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('hr','---','pics/icons/page.png','forums')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' horizontal rule','---','pics/icons/page.png','forums')
 go
 
 
@@ -6563,23 +6606,31 @@ INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VA
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('colored text','~~--FF0000:text~~','pics/icons/palette.png','forums')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' colored text','~~--FF0000:text~~','pics/icons/palette.png','forums')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('dynamic variable','%text%','pics/icons/book_open.png','forums')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('dynamic variable','%text%','pics/icons/database_gear.png','forums')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('image','{img src= width= height= align= desc= link= }','pics/icons/picture.png','forums')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('image','popup_plugin_form("img")','pics/icons/picture.png','forums')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('Email Address','[mailto:text|text]','pics/icons/email.png','forums')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES (' deleted','--text--','pics/icons/text_strikethrough.png','forums')
 go
 
 
-INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('Deleted','--text--','pics/icons/text_strikethrough.png','forums')
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('quote','popup_plugin_form("quote")','pics/icons/quotes.png','forums')
+go
+
+
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('code','popup_plugin_form("code")','pics/icons/page_white_code.png','forums')
+go
+
+
+INSERT INTO "tiki_quicktags" ("taglabel","taginsert","tagicon","tagcategory") VALUES ('flash','popup_plugin_form("flash")','pics/icons/page_white_actionscript.png','forums')
 go
 
 
@@ -7529,6 +7580,114 @@ go
 INSERT INTO `tiki_sefurl_regex_out` (`left`, `right`, `type`, `feature`, `order`) VALUES('tiki-sheets.php', 'sheets', '', 'feature_sheet', 200)
 go
 
+
+
+UPDATE tiki_menu_options SET icon = 'icon-configuration48x48' WHERE name = 'Admin'
+go
+
+
+UPDATE tiki_menu_options SET icon = 'xfce4-appfinder48x48' WHERE name = 'Search'
+go
+
+
+UPDATE tiki_menu_options SET icon = 'wikipages48x48' WHERE name = 'Wiki'
+go
+
+
+UPDATE tiki_menu_options SET icon = 'blogs48x48' WHERE name = 'Blogs'
+go
+
+
+UPDATE tiki_menu_options SET icon = 'stock_select-color48x48' WHERE name = 'Image Galleries'
+go
+
+
+UPDATE tiki_menu_options SET icon = 'file-manager48x48' WHERE name = 'File Galleries'
+go
+
+
+UPDATE tiki_menu_options SET icon = 'stock_bold48x48' WHERE name = 'Articles'
+go
+
+
+UPDATE tiki_menu_options SET icon = 'stock_index48x48' WHERE name = 'Forums'
+go
+
+
+UPDATE tiki_menu_options SET icon = 'gnome-settings-font48x48' WHERE name = 'Trackers'
+go
+
+
+UPDATE tiki_menu_options SET icon = 'users48x48' WHERE name = 'Community'
+go
+
+
+UPDATE tiki_menu_options SET icon = 'stock_dialog_question48x48' WHERE name = 'FAQs'
+go
+
+
+UPDATE tiki_menu_options SET icon = 'maps48x48' WHERE name = 'Maps'
+go
+
+
+UPDATE tiki_menu_options SET icon = 'messages48x48' WHERE name = 'Newsletters'
+go
+
+
+UPDATE tiki_menu_options SET icon = 'vcard48x48' WHERE name = 'Freetags'
+go
+
+
+UPDATE tiki_menu_options SET icon = 'date48x48' WHERE name = 'Calendar' AND url = 'tiki-calendar.php'
+go
+
+
+UPDATE tiki_menu_options SET icon = 'userfiles48x48' WHERE name = 'MyTiki'
+go
+
+
+UPDATE tiki_menu_options SET icon = '' WHERE name = 'Quizzes'
+go
+
+
+UPDATE tiki_menu_options SET icon = '' WHERE name = 'Surveys'
+go
+
+
+UPDATE tiki_menu_options SET icon = '' WHERE name = 'TikiSheet'
+go
+
+
+UPDATE tiki_menu_options SET icon = '' WHERE name = 'Workflow'
+go
+
+
+UPDATE tiki_menu_options SET icon = '' WHERE name = 'Charts'
+go
+
+
+UPDATE tiki_menus SET use_items_icons='y' WHERE menuId=42
+go
+
+
+
+-- DROP TABLE "tiki_plugin_security"
+go
+
+
+CREATE TABLE "tiki_plugin_security" (
+  "fingerprint" VARCHAR(200) NOT NULL PRIMARY KEY,
+  "status" VARCHAR(10) NOT NULL,
+  "approval_by" VARCHAR(200) NULL,
+  "last_update" TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+  "last_objectType" VARCHAR(20) NOT NULL,
+  "last_objectId" VARCHAR(200) NOT NULL
+)
+go
+
+
+CREATE  INDEX "tiki_plugin_security_last_object" ON "tiki_plugin_security"("last_objectType" "last_objectId")
+go
 
 
 go
