@@ -785,12 +785,12 @@ class TrackerLib extends TikiLib {
 			else
 				$ret[$kx] = $res;
 		}
-
 		$retval = array();
 		$retval['data'] = array_values($ret);
 		$retval['cant'] = $cant;
 		return $retval;
 	}
+	/* listfields fieldId=>ooptions */
 	function get_item_fields($trackerId, $itemId, $listfields, &$itemUser) {
 		global $prefs, $user, $tiki_p_admin_trackers;
 		$fields = array();
@@ -969,6 +969,13 @@ class TrackerLib extends TikiLib {
 		include_once('lib/categories/categlib.php');
 		include_once('lib/notifications/notificationlib.php');
 		$fil = array();
+		if (!empty($itemId)) { // prefill with current value - in case a computed use some other fields
+			$query = 'select `value`, `fieldId` from `tiki_tracker_item_fields` where `itemId`=?';
+			$result = $this->query($query, array($itemId));
+			while ($res = $result->fetchRow()) {
+				$fil[$res['fieldId']] = $res['value'];
+			}
+		}
 
 		if (empty($tracker_info)) {
 			$tracker_info = $this->get_tracker($trackerId);
