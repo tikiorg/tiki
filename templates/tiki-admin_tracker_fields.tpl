@@ -17,6 +17,9 @@
 {else}
 <h2>{tr}Edit tracker field{/tr}</h2>
 {/if}
+{if $error}
+	{remarksbox  type="warning" title="{tr}Errors{/tr}"}{tr}{$error}{/tr}{/remarksbox}
+{/if}
 <form action="tiki-admin_tracker_fields.php" method="post">
 {if $find}<input type="hidden" name="find" value="{$find|escape}" />{/if}
 {if $max and $max ne $prefs.maxRecords}<input type="hidden" name="max" value="{$max|escape}" />{/if}
