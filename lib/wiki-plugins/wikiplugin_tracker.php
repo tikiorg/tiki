@@ -513,7 +513,10 @@ function wikiplugin_tracker($data, $params) {
 					$filter = &$flds['data'];
 				}
 				if (!empty($filter)) {
-					$flds['data'] = $trklib->get_item_fields($trackerId, $itemId, $filter, $itemUser);
+					foreach ($filter as $f) {
+						$filter2[$f['fieldId']] = $f;
+					}
+					$flds['data'] = $trklib->get_item_fields($trackerId, $itemId, $filter2, $itemUser);
 
 				}
 
