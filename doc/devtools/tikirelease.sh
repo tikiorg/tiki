@@ -1,71 +1,12 @@
 #!/bin/sh
 # $Id$
 #
-# ===========================================================
-# IMPORTANT NOTE : This script should not be called manually.
-#   It is called by doc/devtools/release.php
-# ===========================================================
+# ==========================================================================
+# IMPORTANT NOTE : This script must NOT be called directly !!!
+#   It is used by the main release script (doc/devtools/release.php)
+#   To get the Tiki release HOWTO, try: php doc/devtools/release.php --howto
+# ==========================================================================
 #
-# HOWTO release Tikiwiki ?
-# --------------------------
-# 
-# pre/
-#    - run doc/devtools/release_changelog.php to update changelog.txt and check the diff with the last version
-#    - run doc/devtools/release_copyright.php to update copyright.txt and check the diff with the last version
-#    - update README
-#    - Test the whole Installer and check if everything is OK
-#    - run doc/devtools/securitycheck.php and check each "potentially unsafe" file.
-#    - run doc/devtools/diffsql.sh to make sure tiki.sql and upgrade script from 
-#        previous version give the same db structure (but not necessarily the same data).
-#        The upgrade script is designed to be ran again & again. Specifically, we don't 
-#        want new permissions or modules to appear at upgrade. If there is a chance that 
-#        someone chose to delete something, it should not re-appear at each upgrade. 
-#    - cd db/convertscripts and run convertsqls.sh
-#    - in lib/setup/twversion.class.php
-#      - increment the version number in the constructor
-#      - update list of valid releases in getVersions()
-#    - commit your changes with this commit message (change $VERSION by the version of the release):
-#	[REL] Preparing $VERSION release
-#
-# 1/ Create and test pre-release packages by executing the script with the release
-#    version as argument, using the format major.minor.sub 
-#    php doc/devtools/release.php 2.0 preRC4
-#
-# 2/ Test the produced "tarballs" and share the testing : you need at least 3 installations
-#    from 3 different people
-# 
-# 3/ After testing, tag the release, build the release "tarballs"
-#    php doc/devtools/release.php 2.0 RC4
-#    
-# 4/ Test the produced "tarballs" and share the testing : you need at least 3 install 
-#    from 3 different people
-# 
-# 5/ When the "tarballs" are tested, follow the steps to upload on SourceForge:
-#    http://tinyurl.com/59uubv
-#    
-# 6/ Warn people that do .rpm and ebuilds that the archive is avalaible so they can
-#    complete the packaging process with new files. If you don't know who does that,
-#    warn everybody.
-#
-# 7/ unless in step 8/ you warned everybody you have now to announce the good news
-#    on devel mailing-list and ask the TAG (TikiWiki Admin Group) through the admin
-#    mailing-list to launch the announce-speading process 
-#    (Freshmeat, SourceForge and tikiwiki.org (manually for now).
-#
-# post/ After release, update to next version number with SVN   ex.: 1.9.2 (SVN)  .
-#	This helps later on to know exactly which files were included or not in a release.
-#
-#       - Also, update appropriate http://tikiwiki.org/stable.version file with new release version
-#       (or ask the TAG to do this)
-#
-#
-#
-# All that process has to be relayed on live irc channel : 
-# irc://irc.freenode.net/#tikiwiki
-#
-# ############################################################
-# start of configuration
-# change here what you need to fit your environment
 
 SVNROOT="https://tikiwiki.svn.sourceforge.net/svnroot/tikiwiki"
 WORKDIR="/home/$USER/tikipack"

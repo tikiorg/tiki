@@ -152,14 +152,12 @@ function merge( $localPath, $source, $from, $to )
 function commit( $msg, $displaySuccess = true, $dieOnRemainingChanges = true )
 {
 	$msg = escapeshellarg( $msg );
-	`svn ci -m "$msg"`;
+	`svn ci -m $msg`;
 
-	if ( $dieOnRemainingChanges && has_uncommited_changes('.') ) {
+	if ( $dieOnRemainingChanges && has_uncommited_changes('.') )
 		error("Commit seems to have failed. Uncommited changes exist in the working folder.\n");
-	} else {
-		$revision = (int) get_info('.')->entry->commit['revision'];
-		info("Commited revision $revision.");
-	}
+
+	return (int) get_info('.')->entry->commit['revision'];
 }
 
 function incorporate( $working, $source )
