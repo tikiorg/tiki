@@ -212,7 +212,7 @@ $sort_mode eq 'created_desc'}created_asc{else}created_desc{/if}">{tr}Created{/tr
 <td  style="text-align:center;">{if $tracker_info.showComments eq 'y'}{$items[user].comments}{/if}{if $tracker_info.showComments eq 'y' and $tracker_info.showLastComment eq 'y'}<br />{/if}{if $tracker_info.showLastComment eq 'y' and !empty($items[user].lastComment)}{$items[user].lastComment.user|escape}-{$items[user].lastComment.posted|tiki_short_date}{/if}</td>
 {/if}
 {if $tracker_info.useAttachments eq 'y' and $tracker_info.showAttachments eq 'y'}
-<td style="text-align:center;"><a href="tiki-view_tracker_item.php?itemId={$items[user].itemId}&amp;show=att{if $offset}&amp;offset={$offset}{/if}{foreach key=urlkey item=urlval from=$urlquery}{if $urlval}&amp;{$urlkey}={$urlval|escape:"url"}{/if}{/foreach}{section name=mix loop=$fields}{if $fields[mix].value}&amp;{$fields[mix].name}={$fields[mix].value}{/if}{/section}"
+<td style="text-align:center;"><a href="tiki-view_tracker_item.php?itemId={$items[user].itemId}&amp;show=att{if $offset}&amp;offset={$offset}{/if}{foreach key=urlkey item=urlval from=$urlquery}{if $urlval}&amp;{$urlkey}={$urlval|escape:"url"}{/if}{/foreach}"
 link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" alt="{tr}List Attachments{/tr}"
 /></a> {$items[user].attachments}</td>
 {if $tiki_p_admin_trackers eq 'y'}<td  style="text-align:center;">{$items[user].hits}</td>{/if}
