@@ -1,7 +1,7 @@
 <div id="siteheader" class="clearfix">
 	<div id="header-top">
 		<div id="sitelogo" style="padding-left:70px"><h1><img style="border:medium none; vertical-align:middle" alt="{tr}TikiWiki CMS/Groupware{/tr}" src="img/tiki/tiki3.png" />
-			<span style="vertical-align:middle">{tr}Tiki installer{/tr} v{$tiki_version_name} <a title="{tr}Help{/tr}" href="http://doc.tikiwiki.org/Installation" target="help"><img style="border:0" src='img/icons/help.gif' alt="{tr}Help{/tr}" /></a></span></h1>
+			<span style="vertical-align:middle">{tr}Tiki installer{/tr} v{$tiki_version_name} <a title="{tr}Help{/tr}" href="http://doc.tikiwiki.org/Installation" target="help"><img style="border:0" src='pics/icons/help.png' alt="{tr}Help{/tr}" /></a></span></h1>
 		</div>
 	</div>
 </div>
@@ -392,7 +392,7 @@
 {/if}
 
 {if isset($htaccess_error)}
-<h3>{tr}.htaccess File{/tr} <a title="{tr}Help{/tr}" href="http://doc.tikiwiki.org/Installation" target="help"><img style="border:0" src='img/icons/help.gif' alt="{tr}Help{/tr}" /></a></h3>
+<h3>{tr}.htaccess File{/tr} <a title="{tr}Help{/tr}" href="http://doc.tikiwiki.org/Installation" target="help"><img style="border:0" src='pics/icons/help.png' alt="{tr}Help{/tr}" /></a></h3>
 {tr}We recommend enabling the <strong>.htaccess</strong> file for your Tiki{/tr}. {tr}This will enable you to use SEFURLs (search engine friendly URLs) and help improve site security{/tr}. 
 <p>{tr}To enable this file, simply rename the <strong>_htaccess</strong> file (located in the main directory of your Tiki installation) to <strong>.htaccess</strong>.{/tr}</p>
 {/if}
@@ -507,7 +507,7 @@
 {if $virt}
 		<div class="box-shadow">
 			<div class="box">
-				<h3 class="box-title">{tr}MultiTiki Setup{/tr} <a title="{tr}Help{/tr}" href="http://doc.tikiwiki.org/MultiTiki" target="help"><img style="border:0" src="img/icons/help.gif" alt="{tr}Help{/tr}" /></a></h3>
+				<h3 class="box-title">{tr}MultiTiki Setup{/tr} <a title="{tr}Help{/tr}" href="http://doc.tikiwiki.org/MultiTiki" target="help"><img style="border:0" src="pics/icons/help.png" alt="{tr}Help{/tr}" /></a></h3>
 				<div class="clearfix box-data">
 				<div><a href="tiki-install.php">{tr}Default Installation{/tr}</a></div>
 {foreach key=k item=i from=$virt}
