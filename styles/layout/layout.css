@@ -21,7 +21,9 @@ html[dir=ltr]>body {
 	display: block;
 	margin: 1em .5em}
 
-body.fullscreen {}
+body.fullscreen {
+	text-align: left;
+	background: #fff}
 
 fieldset {
 	margin-bottom: 2px;
@@ -73,6 +75,23 @@ span.button input,
 	padding: 0 4px}
 	
 div.iconmenu {display: inline}
+select[multiple] {height: 10em}
+label {cursor: pointer}
+input[type=checkbox],
+input[type=radio] {border: 0}
+* html .findtable input {font-size: 1em}
+
+form {
+	margin: 0;
+	padding: 0}
+
+hr {
+	width: 100%;
+	height: 1px;
+	background: red;
+	border-width: 0;
+	padding: 0;
+	color: red}
 
 /***** Site Header & Identity *****/
 #header-top {position: relative}
@@ -180,7 +199,11 @@ div#sitead {margin: auto}
 	text-align: right;
 	display: block;
 	margin: 0}
-
+	
+#sitesearchbar form {}	
+input#text
+input.wikiaction {}
+#sitesearchbar form button {}
 input#fuser,
 select[name="where"],
 input[name="search"] {}
@@ -195,7 +218,8 @@ input[name="search"] {}
 
 .horbar table {
 	width: auto;
-	text-align: left}
+	text-align: left;
+	white-space: nowrap}
 
 .horbaritem {}
 	
@@ -214,7 +238,7 @@ input[name="search"] {}
 
 .mdksubmenu table {width: auto} 
 
-.mdksubframe {
+.mdksubframe { /*decorate*/
 	z-index: 1000;
 	position: relative;
 	display: block}
@@ -313,10 +337,12 @@ a.flip:visited,
 .tellafriend a:visited {}
 
 a.flip:hover,
-.tellafriend a:hover {}
+.tellafriend a:hover {
+	font-size: 80%;
+	text-decoration: none}
 
 a.flip img {display: none}
-.tellafriend {}
+.tellafriend {text-align: right}
 
 .fullscreen .tellafriend {
 	margin-right: 100px;
@@ -335,7 +361,6 @@ div#loadstats {}
 .error,
 #error {}
 
-/* display PHP/Smarty errors on top */
 #show-errors-button {z-index: 1024}
 #errors {z-index: 1023}
 
@@ -589,12 +614,11 @@ div.help_section {
 /** Modules **/
 .box-shadow {}
 
-div.box {
-	overflow: hidden;
-	margin-bottom: 1.5em}
+div.box {overflow: hidden}
 
 h3.box-title {
 	position: relative;
+	display: block;
 	padding-top: 0}
 
 .box-title a,
@@ -718,19 +742,19 @@ table.normalnoborder {width: 100%}
 table.admin tr td div#page-bar {}
 
 td.normal,
+.normal td,
 .wikitable td,
 td.odd,
 td.even,
-td.form {
+td.form,
+.formcolor td,
+.editblogform td {
 	margin: 0;
-	padding: 0.2em;
+	padding: 3px;
 	vertical-align: top}
 
 * html td {font-size: 11px}
 th {}
-
-.formcolor td,
-.editblogform td {}
 
 table.email {}
 table.email td.body {}
@@ -788,11 +812,12 @@ td.form {padding: 0.2em}
 	display: inline;
 	margin: 0;
 	margin-right: 5px;
-	padding: 1px 0}
+	padding: 1px 0;
+	cursor: pointer}
 	
 .tabmark a {
 	border-bottom :0;
-	padding: 1px 5px 1px 5px;
+	padding: 1px 5px;
 	text-decoration: none}
 
 .tabmark a:active {}
@@ -879,7 +904,7 @@ body.tiki_wiki #comments {padding: 1em }
 table.wikitable {}
 td.wikicell {}
 div.split {clear: both}
-.editdate {}
+.editdate {padding-bottom: 5px}
 
 div#page-bar {
 	display: block;
@@ -1036,6 +1061,7 @@ div.articletrailer {
 	margin-top: 1.1em}
 	
 div.articletrailer img {}
+div.articletrailer .wikitopline {float: left}
 
 div.article .status {
 	position: absolute;
@@ -1052,7 +1078,12 @@ div.article .actions {
 	top: 0}
 
 div.articlebody {}
-div.articlesource {}
+
+div.articlesource {
+	margin-top: 5px;
+	font-style: italic;
+	font-size: 90%}
+
 div.articletrailer .wikitopline {}
 
 /***** Blogs *****/
