@@ -1135,6 +1135,8 @@ div.cbox {
 	padding: 4px;
 	overflow: hidden}
 
+.cbox-data table {border-collapse: collapse}
+	
 .rbox {
 	margin: 0.2em 0 0.4em;
 	text-align: left}
