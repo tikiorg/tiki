@@ -23,6 +23,403 @@ Version 3.0
 ------------------
 
 ----------------------------------------------
+r18369 | luciash | 2009-05-02 13:06:00 -0700 (Sat, 02 May 2009) | 1 line
+
+parse error fix: missing comma
+----------------------------------------------
+r18367 | luciash | 2009-05-02 12:25:49 -0700 (Sat, 02 May 2009) | 1 line
+
+[DEL] removing unused workspaces images (again) from Tiki before 3.0
+----------------------------------------------
+r18366 | luciash | 2009-05-02 12:10:00 -0700 (Sat, 02 May 2009) | 1 line
+
+[FIX] installer: use the help.png icon as everywhere else in Tiki instead of the M$ copyrighted one
+----------------------------------------------
+r18365 | changi67 | 2009-05-02 10:51:14 -0700 (Sat, 02 May 2009) | 1 line
+
+French Translation
+----------------------------------------------
+r18364 | luciash | 2009-05-02 09:49:20 -0700 (Sat, 02 May 2009) | 1 line
+
+[FIX] some mascara to improve watch icons
+----------------------------------------------
+r18363 | chibaguy | 2009-05-02 09:33:29 -0700 (Sat, 02 May 2009) | 1 line
+
+[FIX] Avoid transparent border backgrounds in popups.
+----------------------------------------------
+r18361 | luciash | 2009-05-02 09:17:15 -0700 (Sat, 02 May 2009) | 1 line
+
+[FIX] wikiplugin edit: use rather the cross icon from default iconset than the weird fullscreen_minimize icon to close the helper
+----------------------------------------------
+r18360 | luciash | 2009-05-02 09:03:46 -0700 (Sat, 02 May 2009) | 1 line
+
+[FIX] better icon for plugin edit
+----------------------------------------------
+r18359 | chibaguy | 2009-05-02 08:57:06 -0700 (Sat, 02 May 2009) | 1 line
+
+[FIX] A little more padding in .tabcontent.
+----------------------------------------------
+r18358 | gezzzan | 2009-05-02 08:56:07 -0700 (Sat, 02 May 2009) | 1 line
+
+latest HUN translation
+----------------------------------------------
+r18357 | chibaguy | 2009-05-02 08:47:08 -0700 (Sat, 02 May 2009) | 1 line
+
+[FIX] Catching up with corresponding changes in strasa.css.
+----------------------------------------------
+r18356 | chibaguy | 2009-05-02 08:29:43 -0700 (Sat, 02 May 2009) | 1 line
+
+[FIX] More selectors added.
+----------------------------------------------
+r18355 | luciash | 2009-05-02 08:10:07 -0700 (Sat, 02 May 2009) | 1 line
+
+[FIX] distinguish whole page edit icon from section edit icon
+----------------------------------------------
+r18354 | chibaguy | 2009-05-02 07:18:11 -0700 (Sat, 02 May 2009) | 1 line
+
+[FIX] Avoid scrollbar on post titles.
+----------------------------------------------
+r18353 | luciash | 2009-05-02 06:58:43 -0700 (Sat, 02 May 2009) | 1 line
+
+[FIX] Strasa theme: polishing graphics + some adjustments to article titleb and action icons padding
+----------------------------------------------
+r18352 | luciash | 2009-05-02 06:10:35 -0700 (Sat, 02 May 2009) | 1 line
+
+[FIX] Strasa theme: menu arrows transparent now to display nicely in right column menus too
+----------------------------------------------
+r18351 | chibaguy | 2009-05-02 05:51:36 -0700 (Sat, 02 May 2009) | 1 line
+
+[FIX] Better separation between articles, etc.
+----------------------------------------------
+r18349 | sylvieg | 2009-05-01 14:36:24 -0700 (Fri, 01 May 2009) | 1 line
+
+[FIX]tracker: do not show file field is no perm to attach
+----------------------------------------------
+r18348 | sylvieg | 2009-05-01 12:58:19 -0700 (Fri, 01 May 2009) | 1 line
+
+[FIX]tracker: warning if use an attachment field when tracker does not use attachement
+----------------------------------------------
+r18347 | sylvieg | 2009-05-01 12:30:55 -0700 (Fri, 01 May 2009) | 1 line
+
+[FIX]tracker: strange characters after attach file in tracker_view_tracker via a field - no idea why the fields were needed in the url
+----------------------------------------------
+r18345 | sylvieg | 2009-05-01 09:18:41 -0700 (Fri, 01 May 2009) | 1 line
+
+[FIX]tracker: a computed field can use some fields that are not in th REQUEST - so prefill the computed array on what exists in the database
+----------------------------------------------
+r18341 | nyloth | 2009-05-01 06:43:55 -0700 (Fri, 01 May 2009) | 11 lines
+
+[ENH] release scripts: lot of improvements for main release script (doc/devtools/release.php). Main changes are:
+  * main script now handles update of changelog.txt, copyright.txt and README files (with their own steps and report)
+  * interactive mode is a bit more intelligent and don't propose to commit if there is no changes
+  * using the php program that called the release script, instead of just 'php'
+  * now propose to delete the tag if it already exists (useful if a particular release gone wrong and has to be redone quickly)
+  * PHP syntax check should not fail on Segfaults anymore and now displays a percentage progression
+  * new option --http-proxy=HOST:PORT to be able to release behind a proxy (used to get info on sourceforge, not for subversion)
+  * update of the release HOWTO, now displayed by using:
+      php doc/devtools/release.php --howto
+
+
+----------------------------------------------
+r18340 | sylvieg | 2009-05-01 05:27:37 -0700 (Fri, 01 May 2009) | 1 line
+
+[FIX]module: assign button ion tab2 must go in tab1
+----------------------------------------------
+r18331 | changi67 | 2009-04-30 13:33:05 -0700 (Thu, 30 Apr 2009) | 1 line
+
+One shot of get_string to add new text
+----------------------------------------------
+r18330 | changi67 | 2009-04-30 13:29:33 -0700 (Thu, 30 Apr 2009) | 1 line
+
+French translation
+----------------------------------------------
+r18329 | fantoms | 2009-04-30 13:02:27 -0700 (Thu, 30 Apr 2009) | 1 line
+
+[fix] bug which uses wrong perm instead of $tiki_p_articles_admin_topics
+----------------------------------------------
+r18327 | Jyhem | 2009-04-30 08:19:57 -0700 (Thu, 30 Apr 2009) | 1 line
+
+[FIX] Same buttons as in tiki-view_forum
+----------------------------------------------
+r18326 | pkdille | 2009-04-30 08:00:13 -0700 (Thu, 30 Apr 2009) | 1 line
+
+[FIX] view forum: Do not go in edit mode after a topic deletion (thks nyloth)
+----------------------------------------------
+r18325 | aproulx | 2009-04-30 07:31:02 -0700 (Thu, 30 Apr 2009) | 1 line
+
+[ADD] info for the ne parameter css_id
+----------------------------------------------
+r18323 | ricks99 | 2009-04-30 07:05:16 -0700 (Thu, 30 Apr 2009) | 1 line
+
+[FIX]re-added the missing user preferences. moved from old admin: login to admin: community.
+----------------------------------------------
+r18322 | sylvieg | 2009-04-30 06:13:27 -0700 (Thu, 30 Apr 2009) | 1 line
+
+[FIX]structure: a better fix as the pos can have other hole
+----------------------------------------------
+r18321 | sylvieg | 2009-04-30 06:04:29 -0700 (Thu, 30 Apr 2009) | 1 line
+
+[FIX]structure: a bug somewhere creates 2 first nodes with the same pos 2. If the node is moved up and as no previous node, force it to be on pos 1
+----------------------------------------------
+r18320 | chibaguy | 2009-04-30 00:41:52 -0700 (Thu, 30 Apr 2009) | 1 line
+
+[FIX] Link in table heading, contrast.
+----------------------------------------------
+r18319 | chibaguy | 2009-04-30 00:18:17 -0700 (Thu, 30 Apr 2009) | 1 line
+
+[FIX] Horizontal suckerfish menu top item width reduced for IE6 (was wasted space).
+----------------------------------------------
+r18318 | chibaguy | 2009-04-30 00:01:23 -0700 (Thu, 30 Apr 2009) | 1 line
+
+[FIX] Some improvements in Strasa cold theme option.
+----------------------------------------------
+r18317 | chibaguy | 2009-04-29 20:55:52 -0700 (Wed, 29 Apr 2009) | 1 line
+
+[FIX] Strasa sitetitles style used here to fix partial display of site title in IE7.
+----------------------------------------------
+r18314 | sylvieg | 2009-04-29 12:36:48 -0700 (Wed, 29 Apr 2009) | 1 line
+
+[FIX]tracker: sort the dynamic list values
+----------------------------------------------
+r18313 | sylvieg | 2009-04-29 09:55:09 -0700 (Wed, 29 Apr 2009) | 1 line
+
+[FIX]menu: let & and + to be compared to &amp; and '+'
+----------------------------------------------
+r18312 | sylvieg | 2009-04-29 09:51:27 -0700 (Wed, 29 Apr 2009) | 1 line
+
+[FIX]darkroom: to have the selected effect in tiki menu like in css menu
+----------------------------------------------
+r18311 | Jyhem | 2009-04-29 09:51:15 -0700 (Wed, 29 Apr 2009) | 1 line
+
+[FIX] This only appears in an email, so &nbsp; is inappropriate
+----------------------------------------------
+r18310 | marclaporte | 2009-04-29 09:18:50 -0700 (Wed, 29 Apr 2009) | 1 line
+
+[FIX] fixing feature check from something that doesn't exist, to my best guess. Someone who uses this feature, please test and report if this is the right behavior.
+----------------------------------------------
+r18306 | jonnybradley | 2009-04-29 07:59:08 -0700 (Wed, 29 Apr 2009) | 2 lines
+
+[FIX] unset($TWV) call moved outside conditional and $email_test_to var moved outside translated string (thanks Nyloth)
+
+----------------------------------------------
+r18305 | jonnybradley | 2009-04-29 07:46:50 -0700 (Wed, 29 Apr 2009) | 2 lines
+
+[FIX] Missing global
+
+----------------------------------------------
+r18304 | jonnybradley | 2009-04-29 07:46:35 -0700 (Wed, 29 Apr 2009) | 2 lines
+
+[FIX] Return early with warning about missing required params
+
+----------------------------------------------
+r18303 | jonnybradley | 2009-04-29 07:45:48 -0700 (Wed, 29 Apr 2009) | 1 line
+
+[FIX] Return if no $data (stops letexrender blowing up)
+----------------------------------------------
+r18302 | jonnybradley | 2009-04-29 07:44:55 -0700 (Wed, 29 Apr 2009) | 2 lines
+
+[FIX] Missing global (and parameter info) fixed
+
+----------------------------------------------
+r18301 | marclaporte | 2009-04-29 07:14:49 -0700 (Wed, 29 Apr 2009) | 1 line
+
+[FIX] Missing doc link
+----------------------------------------------
+r18298 | sylvieg | 2009-04-29 06:56:00 -0700 (Wed, 29 Apr 2009) | 1 line
+
+[FIX]sefurl: sefurl on blogpost + some optimisation
+----------------------------------------------
+r18296 | marclaporte | 2009-04-29 06:31:23 -0700 (Wed, 29 Apr 2009) | 1 line
+
+[FIX] link to documentation
+----------------------------------------------
+r18295 | marclaporte | 2009-04-29 05:52:32 -0700 (Wed, 29 Apr 2009) | 1 line
+
+[FIX] Adding feature checks on some plugins.
+----------------------------------------------
+r18294 | marclaporte | 2009-04-29 05:25:59 -0700 (Wed, 29 Apr 2009) | 1 line
+
+[FIX] Deactivating some plugins on bare-bones installs. They should be turned on in relevant profiles.
+----------------------------------------------
+r18293 | marclaporte | 2009-04-29 05:24:33 -0700 (Wed, 29 Apr 2009) | 1 line
+
+question about feature_events
+----------------------------------------------
+r18292 | jonnybradley | 2009-04-29 05:08:28 -0700 (Wed, 29 Apr 2009) | 3 lines
+
+[FIX] Allow installer mail-sending test to be sent to the user so they can tell if it worked.
+Also (optionally) copies mailtest@tikiwiki.org which sends a welcome mail.
+
+----------------------------------------------
+r18291 | luciash | 2009-04-29 05:08:24 -0700 (Wed, 29 Apr 2009) | 1 line
+
+[FIX] tikibuttons to match the Tiki 3.0 logo style
+----------------------------------------------
+r18290 | marclaporte | 2009-04-29 05:02:08 -0700 (Wed, 29 Apr 2009) | 1 line
+
+[FIX] Security and documentation links on various plugins 
+----------------------------------------------
+r18288 | marclaporte | 2009-04-29 04:47:09 -0700 (Wed, 29 Apr 2009) | 1 line
+
+[FIX] PluginEvents: 1- feature_events doesn't seem to do anything/exist, so removing from conditions 2- Adding link to documentation
+----------------------------------------------
+r18286 | marclaporte | 2009-04-29 03:23:40 -0700 (Wed, 29 Apr 2009) | 1 line
+
+[FIX] Better image link, because it can be overriden by icon themes. tks Nyloth
+----------------------------------------------
+r18285 | marclaporte | 2009-04-29 02:45:20 -0700 (Wed, 29 Apr 2009) | 1 line
+
+[FIX] plugin help 1- making link to documentation open in a new window and not lose current edit 2- change insert icon totemplates/tiki-plugin_help.tpl 
+----------------------------------------------
+r18283 | marclaporte | 2009-04-29 01:25:41 -0700 (Wed, 29 Apr 2009) | 1 line
+
+[FIX] Better documentation for module parameters
+----------------------------------------------
+r18282 | marclaporte | 2009-04-29 00:30:26 -0700 (Wed, 29 Apr 2009) | 1 line
+
+[FIX] Adding more security on a few plugins
+----------------------------------------------
+r18280 | sylvieg | 2009-04-28 14:45:14 -0700 (Tue, 28 Apr 2009) | 1 line
+
+[FIX]sefurl: more sefurls for structure + clean the code by centralizing the construction of the url in a smarty fucntion
+----------------------------------------------
+r18279 | sylvieg | 2009-04-28 14:34:55 -0700 (Tue, 28 Apr 2009) | 1 line
+
+[FIX]banner: not to have 2 banners if no logo + cutom code
+----------------------------------------------
+r18278 | changi67 | 2009-04-28 14:28:58 -0700 (Tue, 28 Apr 2009) | 1 line
+
+French translation : 80%
+----------------------------------------------
+r18276 | sylvieg | 2009-04-28 14:23:18 -0700 (Tue, 28 Apr 2009) | 1 line
+
+rollback 17960
+----------------------------------------------
+r18275 | luciash | 2009-04-28 13:54:34 -0700 (Tue, 28 Apr 2009) | 1 line
+
+no change, code indentation only
+----------------------------------------------
+r18273 | ricks99 | 2009-04-28 09:28:43 -0700 (Tue, 28 Apr 2009) | 1 line
+
+[MOD]change mail test email. now uses autoresponder. sender's email is *not* maintained or saved
+----------------------------------------------
+r18272 | sylvieg | 2009-04-28 09:06:14 -0700 (Tue, 28 Apr 2009) | 1 line
+
+[MOD]tracker: mandatory class around input for mandatory fields
+----------------------------------------------
+r18271 | ricks99 | 2009-04-28 08:55:59 -0700 (Tue, 28 Apr 2009) | 1 line
+
+[FIX]show all versions during preview
+----------------------------------------------
+r18269 | jonnybradley | 2009-04-28 08:21:20 -0700 (Tue, 28 Apr 2009) | 4 lines
+
+[FIX] Now works as advertised with the simple example on http://doc.tikiwiki.org/PluginVersions (tested locally - needs more real world testing)
+Not changed nav=n mode as i don't understand it (the code or the intention)
+Needs a proper overhaul IMHO
+
+----------------------------------------------
+r18268 | sylvieg | 2009-04-28 08:09:48 -0700 (Tue, 28 Apr 2009) | 1 line
+
+[FIX]structure: check perm on page when fetching a structure + backport a routine from trunk
+----------------------------------------------
+r18267 | nyloth | 2009-04-28 07:43:34 -0700 (Tue, 28 Apr 2009) | 1 line
+
+[ENH] release script: add an interactive mode, new options and more checks
+----------------------------------------------
+r18266 | nyloth | 2009-04-28 07:41:45 -0700 (Tue, 28 Apr 2009) | 2 lines
+
+[FIX] update db creation files
+
+----------------------------------------------
+r18265 | marclaporte | 2009-04-28 07:25:52 -0700 (Tue, 28 Apr 2009) | 1 line
+
+[FIX]
+----------------------------------------------
+r18263 | sylvieg | 2009-04-28 06:42:43 -0700 (Tue, 28 Apr 2009) | 1 line
+
+[MOD]darkroom: go for a darker background in tabs to have an easier text reading
+----------------------------------------------
+r18261 | marclaporte | 2009-04-28 04:38:50 -0700 (Tue, 28 Apr 2009) | 1 line
+
+[FIX] fix URL to release notes
+----------------------------------------------
+r18260 | jonnybradley | 2009-04-28 03:56:14 -0700 (Tue, 28 Apr 2009) | 2 lines
+
+[CSS] Lighter menu separators and slightly darker module separators
+
+----------------------------------------------
+r18258 | jonnybradley | 2009-04-28 03:23:26 -0700 (Tue, 28 Apr 2009) | 3 lines
+
+[FIX] Removing last-child selector on col2 module boxes as it's for CSS 3 only
+Was causing problems on IE6 especially (and not validating for CSS 2.1)
+
+----------------------------------------------
+r18255 | chibaguy | 2009-04-28 01:24:09 -0700 (Tue, 28 Apr 2009) | 1 line
+
+[FIX] In lieu of a better solution to white-background tiki-top displaying against dark site header, let login bar be full width. Not identical to strasa in modern browsers, but ok.
+----------------------------------------------
+r18253 | sylvieg | 2009-04-27 15:19:21 -0700 (Mon, 27 Apr 2009) | 1 line
+
+[FIX]tracker: fix dynamic list iitem with value containing a quote
+----------------------------------------------
+r18252 | sylvieg | 2009-04-27 14:54:08 -0700 (Mon, 27 Apr 2009) | 1 line
+
+[FIX]tracker: do not truncate an items list field that is not a text (otherwise it can truncate the html
+----------------------------------------------
+r18249 | sylvieg | 2009-04-27 13:00:07 -0700 (Mon, 27 Apr 2009) | 1 line
+
+[FIX]date: show date if no option to date field
+----------------------------------------------
+r18246 | jonnybradley | 2009-04-27 10:14:10 -0700 (Mon, 27 Apr 2009) | 3 lines
+
+[FIX] Removed confusing 'Save' button from plugin aliases form
+'Change preferences' button works for this tab just like the others now
+
+----------------------------------------------
+r18245 | jonnybradley | 2009-04-27 09:22:25 -0700 (Mon, 27 Apr 2009) | 3 lines
+
+[FIX] Replacing missing '>' closing script tag (my bad - r17713)
+Was causing IE JS errors with shoutbox module
+
+----------------------------------------------
+r18244 | sylvieg | 2009-04-27 08:40:43 -0700 (Mon, 27 Apr 2009) | 1 line
+
+[FIX]theme: the group theme can be wrong (after upgrade if =old theme)
+----------------------------------------------
+r18243 | jonnybradley | 2009-04-27 08:15:36 -0700 (Mon, 27 Apr 2009) | 3 lines
+
+[FIX] Added 'experimental' etc warnings to some plugins' descriptions.
+Added a couple of help tips to the tpl and restored separation between wiki and plugin help sections for (slightly) easier navigation.
+
+----------------------------------------------
+r18242 | sylvieg | 2009-04-27 07:52:38 -0700 (Mon, 27 Apr 2009) | 1 line
+
+[FIX]wiki: list pages on initial must be case insentitive
+----------------------------------------------
+r18241 | jonnybradley | 2009-04-27 07:13:00 -0700 (Mon, 27 Apr 2009) | 2 lines
+
+[FIX] Switch theme now resets theme option to site default when choosing 'site default' or changing themes (via switch theme module)
+
+----------------------------------------------
+r18240 | xavidp | 2009-04-27 07:12:46 -0700 (Mon, 27 Apr 2009) | 1 line
+
+[FIX] some more strings translated
+----------------------------------------------
+r18239 | jonnybradley | 2009-04-27 06:56:17 -0700 (Mon, 27 Apr 2009) | 2 lines
+
+[FIX] Mods version filter now picks up ' 3 ' or ' 3+' anywhere in version field
+
+----------------------------------------------
+r18236 | jonnybradley | 2009-04-27 05:29:26 -0700 (Mon, 27 Apr 2009) | 3 lines
+
+[FIX] Disable unfinished JQuery replacement for FileGals Slideshow for release.
+Also, it doesn't need mootools feature check as it contains it's own version of the library
+
+----------------------------------------------
+r18235 | nyloth | 2009-04-27 04:23:12 -0700 (Mon, 27 Apr 2009) | 1 line
+
+[FIX] filegals: make slideshow optional (was a blocker for 3.0) + default view as an option
+----------------------------------------------
 r18143 | sylvieg | 2009-04-22 00:53:00 +0200 (Wed, 22 Apr 2009) | 1 line
 
 oops: forgot a file for commit 15076(move the translation of the enumeration from php to smarty)
