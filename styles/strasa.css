@@ -1359,7 +1359,7 @@ a.forumnameread { color: #006699}
 .tabcontent {
 	z-index: 200;
 	position: relative;
-	padding: 32px 2px 2px 2px;
+	padding: 32px 6px;
 	margin: 5px;
 	margin-top: 0;
 	background: #cce5ff;
