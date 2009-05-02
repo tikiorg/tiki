@@ -381,8 +381,8 @@ ul.jumplinks a:active {
 	color: #fff;
 	text-decoration: none}
 
-/*** Error page ***/
-div#tiki-main #tiki-top {}
+/*** Print page ***/
+div#tiki-main {background: #fff}
 div#tiki-mid {}
 
 /* To center cbox */
@@ -1631,25 +1631,59 @@ ul.toc * {border: none}
 
 /***** Articles ****/
 
-div.article {margin-bottom: 40px}
+div.article {
+	border: solid 1px #a9a9a9;
+	border-top: solid 1px gray;
+	margin: 0;
+	margin-top: 5px;
+	padding: 0;
+	background: #fff;
+	font-size: 1.1em;
+	margin-bottom: 40px}
 
 div.articletopline {
+	background: #223543;
+	color: #fff;
 	font-size: 90%;
-	font-style: italic}
+	font-style: italic;
+	padding-left: 6px}
 
-div.articletitle {
-	margin-top: 6px;
-	margin-bottom:	15px;
-	text-align:	left}
+div.articletitle {}
  
 div.articletitle h2 {
-	font-size: 1.5em;
-	font-weight: normal;
+	background: #1b3c54 url(strasa/headerbg.jpg) repeat-x 0 100%;
+	color: #fff;
+	padding: 10px 5px;
 	margin: 0}
+	
+div.articletitle h2 a {
+	color: #fff;
+	font-weight: bold;
+	/*padding: 10px 5px*/}
+	
+div.articletitle h2 a:hover {text-decoration: none}
 
-span.titleb {font-size: 1.0em} 
-div.articlesubtitle {font-size: 0.9em}
-div.articleheading {margin-top: 6px}
+span.titleb {
+	display: block;
+	float: right;
+	clear: both;
+	font-size: 80%;
+	font-style: italic;
+	height: 24px;
+	padding-left: 60px;
+	padding-top: 1px;
+	color: #fff;
+	background: url(strasa/login.jpg) 0 0 no-repeat;}
+	
+div.articlesubtitle {
+	margin-top: -1px;
+	padding-left: 6px;
+	font-size: 0.9em;
+	background: #262d35;
+	color: #fff}
+
+div.articletitle br {clear: both }
+div.articleheading {margin-top: 6px; padding: 4px}
 
 div.articleheadingtext {}
 
@@ -1693,7 +1727,7 @@ div.article .actions {
 	right: 0;
 	top: 0}
 
-div.articlebody {}
+div.articlebody {padding: 6px}
 
 div.articlesource {
 	margin-top: 5px;
