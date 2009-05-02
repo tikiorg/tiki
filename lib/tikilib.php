@@ -7081,7 +7081,7 @@ class TikiLib extends TikiDB {
 							if (!empty($options['page'])) {
 								$button .= 'page='.urlencode($options['page']).'&amp;';
 							}
-							$button .= 'hdr='.$nb_hdrs.'">'.smarty_function_icon(array('_id'=>'page_edit', 'alt'=>tra('Edit Section')), $smarty).'</a></div>';
+							$button .= 'hdr='.$nb_hdrs.'">'.smarty_function_icon(array('_id'=>'page_edit_section', 'alt'=>tra('Edit Section')), $smarty).'</a></div>';
 						} else {
 							$button = '';
 						}
