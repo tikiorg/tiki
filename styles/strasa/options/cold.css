@@ -717,7 +717,16 @@ ul.toc {
 }
 
 /***** Articles ****/
+div.articletitle h2 {
+	background: #f5f5f5 url(cold/headerbg.jpg) repeat-x 0 100%;
+	color: #000;
+	padding: 10px 5px;
+	margin: 0}
 
+div.articletitle h2 a,
+div.articletitle h2 a:visited {
+	color: #000;
+	text-decoration: none}
 
 /***** Blogs *****/
 
@@ -745,24 +754,25 @@ body.tiki_blogs .author_actions .actions {
 }
 
 .post .postbody-title {
-	background: #1b3c54 url(strasa/headerbg.jpg) repeat-x 0 100%;
+	background: #f5f5f5 url(cold/headerbg.jpg) repeat-x 0 100%;
+	
 }
 
 .post .postbody-title .title {
-	color: #fff;
+	color: #000;
 }
 
 .post .postbody-title .title a.link {
-	color: #fff;
+	color: #000;
 }
 
 .post .author_info a:link,
 .post .author_info a:visited {
-	color: #fff;
+	color: #000;
 }
 
 .post .author_info {
-	color: #fff;
+	color: #000;
 	background: url(strasa/login.jpg) 0 0 no-repeat;
 }
 
