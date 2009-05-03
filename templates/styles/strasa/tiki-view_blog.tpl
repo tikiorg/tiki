@@ -116,9 +116,9 @@
 					{/if}
 				{/if}
 			</div>
-			</div>
+
 		</div>
-	</div>
+
 	</div> <!-- postbody -->
 </div> <!--blogpost -->
 {/section}
