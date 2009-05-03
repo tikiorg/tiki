@@ -2949,14 +2949,6 @@ INSERT INTO "tiki_modules" ("name","position","ord","cache_time","params","group
 go
 
 
-INSERT INTO "tiki_modules" ("name","position","ord","cache_time","groups") VALUES ('quick_edit','l',2,0,'a:1:{i:0;s:6:\"Admins\";}')
-go
-
-
-INSERT INTO "tiki_modules" ("name","position","ord","cache_time","groups") VALUES ('since_last_visit_new','r',40,0,'a:1:{i:0;s:6:\"Admins\";}')
-go
-
-
 
 -- DROP TABLE "tiki_newsletter_subscriptions"
 go
