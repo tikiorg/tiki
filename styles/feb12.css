@@ -339,6 +339,9 @@ div#sitead {margin: auto; margin-top: 10px}
 	right: 3px;
 	color: #f5f5f5}
 	
+/* give every sub-element of #siteloginbar some padding */
+#siteloginbar * {padding: 2px;}
+	
 #siteloginbar a:link,
 #siteloginbar a:visited {
 	color: #fff;
