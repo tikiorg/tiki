@@ -23,6 +23,9 @@ define( 'LICENSE_FILENAME', 'license.txt' );
 
 require_once TOOLS . '/svntools.php';
 
+if ( version_compare(PHP_VERSION, '5.0.0', '<') )
+	error("You need PHP version 5 or more to run this script\n");
+
 $phpCommand = isset($_SERVER['_']) ? $_SERVER['_'] : 'php';
 $phpCommandArguments = implode(' ', $_SERVER['argv']);
 
