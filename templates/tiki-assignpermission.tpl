@@ -1,7 +1,7 @@
 {* $Id$ *}
 
 {assign var=escgroup value=$group|escape:url}
-{title help="Permissions+Settings" url="tiki-assignpermission.php?group=$escgroup"}{tr}Assign permissions to group:{/tr} {$group}{/title}
+{title help="Permission" url="tiki-assignpermission.php?group=$escgroup"}{tr}Assign permissions to group:{/tr} {$group}{/title}
 
 <div class="navbar">
 	{if $tiki_p_admin eq 'y'} {* only full admins can manage groups, not tiki_p_admin_users *}
