@@ -8593,7 +8593,8 @@ function detect_browser_language() {
 }
 
 function validate_email($email,$checkserver='n') {
-	$valid_syntax = eregi("^[_a-z0-9\+\.\-]+@[_a-z0-9\.\-]+\.[a-z]{2,4}$",$email);
+	global $prefs;
+	$valid_syntax = eregi($prefs['valid_email_regex'], $email);
 	if (!$valid_syntax) {
 		return false;
 	} elseif ($checkserver == 'y') {
