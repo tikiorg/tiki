@@ -1932,6 +1932,7 @@ body.tiki_forums table.normal {margin: auto}
 	color: #fff;
 	background: url(strasa/login.jpg) 0 0 no-repeat;}
 
+.post .author_info .author_posts {color: #000}
 .commentStyle_headers .author_info {float: left}
 
 .post .postbody-title .actions {
