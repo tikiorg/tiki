@@ -295,7 +295,6 @@
 			<option value="Personal_Blog_and_Profile">{tr}Personal Blog and Profile{/tr}</option>
 			<option value="Small_Organization_Web_Presence">{tr}Small Organization Web Presence{/tr}</option>
 			<option value="Company_Intranet">{tr}Company Intranet{/tr}</option>
-			<option value="Customer_Extranet">{tr}Customer Extranet{/tr}</option>
 			<option value="Collaborative_Community">{tr}Collaborative community{/tr}</option>
 			</select>
 			 <p>{tr}See the documentation for <a target="_blank" href="http://profiles.tikiwiki.org/Profiles_in_30_installer" class="link" title="Description of available profiles.">descriptions of the available profiles.{/tr}</a></p>
