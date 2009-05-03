@@ -48,7 +48,7 @@
 <h1>{tr}Read the License{/tr}</h1>
 <p>{tr}Tiki is software distributed under the LGPL license.{/tr} {tr} <a href="http://creativecommons.org/licenses/LGPL/2.1/" target="_blank">Here is a human-readable summary of the license below, including many translations.</a>{/tr}</p>
 <div align="center" style="margin-top:1em;">
-<iframe src="license.txt" width="700px" height="400px"> </iframe>
+<iframe src="license.txt" width="700px" height="300px"> </iframe>
 	<form action="tiki-install.php" method="post">
 {if $multi}			<input type="hidden" name="multi" value="{$multi}" />{/if}
 {if $lang}			<input type="hidden" name="lang" value="{$lang}" />{/if}
@@ -87,7 +87,7 @@
 {/if}			
 
 	<br />
-	<h2>{tr}Mail{/tr}</h2>
+	<h2>{tr}Mail{/tr}</h2><A NAME="mail"></A>
 	<p>{tr}Tiki uses the PHP <strong>mail</strong> function to send email notifications and messages.{/tr}</p>
 {if $perform_mail_test ne 'y'}
 	<p>{tr}To test your system configuration, Tiki will attempt to send a test message to you.{/tr}</p>
