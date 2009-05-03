@@ -10,20 +10,20 @@
 
 <div class="adminoptionboxchild">
 <div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" id="prefs_metatag_freetags" name="prefs_metatag_freetags" {if $prefs.metatag_freetags eq 'y'}checked="checked" {/if}/></div>
-	<div class="adminoptionlabel"><label for="prefs_metatag_freetags">{tr}Include freetags{/tr}.</label>
+	<div class="adminoption"><input type="checkbox" id="metatag_freetags" name="metatag_freetags" {if $prefs.metatag_freetags eq 'y'}checked="checked" {/if}/></div>
+	<div class="adminoptionlabel"><label for="metatag_freetags">{tr}Include freetags{/tr}.</label>
 	{if $prefs.feature_freetags ne 'y'}<br />{icon _id=information}{tr}Feature is disabled{/tr}. <a href="tiki-admin.php?page=features" title="{tr}Features{/tr}">{tr}Enable now{/tr}</a>.{/if}
 	</div>
 </div>
 <div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" id="prefs_metatag_threadtitle" name="prefs_metatag_threadtitle" {if $prefs.metatag_threadtitle eq 'y'}checked="checked"{/if} /></div>
-	<div class="adminoptionlabel"><label for="prefs_metatag_threadtitle">{tr}Use thread title instead{/tr}.</label>
+	<div class="adminoption"><input type="checkbox" id="metatag_threadtitle" name="metatag_threadtitle" {if $prefs.metatag_threadtitle eq 'y'}checked="checked"{/if} /></div>
+	<div class="adminoptionlabel"><label for="metatag_threadtitle">{tr}Use thread title instead{/tr}.</label>
 	{if $prefs.feature_forums ne 'y'}<br />{icon _id=information}{tr}Feature is disabled{/tr}. <a href="tiki-admin.php?page=features" title="{tr}Features{/tr}">{tr}Enable now{/tr}</a>.{/if}
 	</div>
 </div>
 <div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" id="prefs_metatag_imagetitle" name="prefs_metatag_imagetitle" {if $prefs.metatag_imagetitle eq 'y'}checked="checked"{/if} /></div>
-	<div class="adminoptionlabel"><label for="prefs_metatag_imagetitle">{tr}Use image title instead{/tr}.</label>
+	<div class="adminoption"><input type="checkbox" id="metatag_imagetitle" name="metatag_imagetitle" {if $prefs.metatag_imagetitle eq 'y'}checked="checked"{/if} /></div>
+	<div class="adminoptionlabel"><label for="metatag_imagetitle">{tr}Use image title instead{/tr}.</label>
 	{if $prefs.feature_galleries ne 'y'}<br />{icon _id=information}{tr}Feature is disabled{/tr}. <a href="tiki-admin.php?page=features" title="{tr}Features{/tr}">{tr}Enable now{/tr}</a>.{/if}
 	</div>
 </div>
@@ -32,7 +32,7 @@
 </div>
 
 <div class="adminoptionbox">
-	<div class="adminoptionlabel"><label for="metatag_description">{tr}Description{/tr}:</label><br /> <textarea id="metatag_description" name="metatag_description" value="{$prefs.metatag_description}" rows="5" cols="40" style="width:95%"></textarea></div>
+	<div class="adminoptionlabel"><label for="metatag_description">{tr}Description{/tr}:</label><br /> <textarea id="metatag_description" name="metatag_description" rows="5" cols="40" style="width:95%">{$prefs.metatag_description}</textarea></div>
 </div>
 
 <div class="adminoptionbox">
@@ -55,7 +55,7 @@
 
 <fieldset><legend>{tr}Robots{/tr}</legend>
 <div class="adminoptionbox">
-	<div class="adminoptionlabel"><label for="adm_metatag_robots">{tr}Meta robots{/tr}:</label> <input id="adm_metatag_robots" type="text" name="adm_metatag_robots" value="{$adm_metatag_robots}" size="50" /></div>
+	<div class="adminoptionlabel"><label for="adm_metatag_robots">{tr}Meta robots{/tr}:</label> <input id="adm_metatag_robots" type="text" name="metatag_robots" value="{$prefs.metatag_robots}" size="50" /></div>
 </div>
 <div class="adminoptionbox">
 	<div class="adminoptionlabel"><label for="metatag_revisitafter">{tr}Revisit after{/tr}:</label> <input id="metatag_revisitafter" type="text" name="metatag_revisitafter" value="{$prefs.metatag_revisitafter}" size="50" /></div>

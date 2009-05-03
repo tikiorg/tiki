@@ -444,7 +444,7 @@ name="eponymousGroups" {if $prefs.eponymousGroups eq 'y'}checked="checked"{/if}/
 </div>
 <div class="adminoptionbox">
 	<div class="adminoptionlabel"><label for="auth_ldap_memberisdn">{tr}Member is DN{/tr}:</label>
-	<input type="text" id="auth_ldap_memberisdn" name="auth_ldap_memberisdn" value="{$prefs.auth_ldap_memberisdn|escape}" />
+	<input type="checkbox" id="auth_ldap_memberisdn" name="auth_ldap_memberisdn" {if $prefs.auth_ldap_memberisdn eq 'y'}checked="checked"{/if} />
 	</div>
 </div>
 </fieldset>

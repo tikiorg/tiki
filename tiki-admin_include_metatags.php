@@ -14,9 +14,9 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 if (isset($_REQUEST["metatags"])) {
 	check_ticket('admin-inc-metatags');
 	simple_set_value('metatag_keywords');
-	simple_set_value('metatag_threadtitle');
-	simple_set_value('metatag_imagetitle');
-	simple_set_value('metatag_freetags');
+	simple_set_toggle('metatag_threadtitle');
+	simple_set_toggle('metatag_imagetitle');
+	simple_set_toggle('metatag_freetags');
 	simple_set_value('metatag_description');
 	simple_set_value('metatag_author');
 	simple_set_value('metatag_geoposition');
