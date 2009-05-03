@@ -23,6 +23,9 @@ define( 'LICENSE_FILENAME', 'license.txt' );
 
 require_once TOOLS . '/svntools.php';
 
+$phpCommand = isset($_SERVER['_']) ? $_SERVER['_'] : 'php';
+$phpCommandArguments = implode(' ', $_SERVER['argv']);
+
 if ( ! ( $options = get_options() ) || $options['help'] )
 	display_usage();
 
@@ -32,7 +35,6 @@ if ( $options['howto'] )
 if ( ! $options['no-check-svn'] && has_uncommited_changes('.') )
 	error("Uncommited changes exist in the working folder.\n");
 
-$phpCommand = isset($_SERVER['_']) ? $_SERVER['_'] : 'php';
 list( $script, $version, $subrelease ) = $_SERVER['argv'];
 
 if ( ! preg_match("/^\d+\.\d+$/", $version) )
@@ -137,21 +139,24 @@ if ( $isPre ) {
 		echo color("\nMake sure these tarballs are tested by at least 3 different people.\n\n", 'cyan');
 	} else echo color("This was the last step.\n", 'cyan');
 } else {
-	$fb = full( $branch );
-	$ft = full( $tag );
 
-	$tagAlreadyExists = isset(get_info($ft)->entry);
-	if ( $tagAlreadyExists && important_step("The Tag '$tag' already exists: Delete the existing tag in order to create a new one") ) {
-		`svn rm $ft -m "[REL] Deleting tag '$tag' in order to create a new one"`;
-		$tagAlreadyExists = false;
-		info(">> Tag '$tag' deleted.");
-	}
+	if ( ! $options['no-tagging'] ) {
+		$fb = full( $branch );
+		$ft = full( $tag );
 
-	if ( ! $tagAlreadyExists ) {
-		$revision = (int) get_info( ROOT )->entry->commit['revision'];
-		if ( ! $options['no-tagging'] && important_step("Tag release using branch '$branch' at revision $revision") ) {
-			`svn copy $fb -r$revision $ft -m "[REL] Tagging release"`;
-			info(">> Tag '$tag' created.");
+		$tagAlreadyExists = isset(get_info($ft)->entry);
+		if ( $tagAlreadyExists && important_step("The Tag '$tag' already exists: Delete the existing tag in order to create a new one") ) {
+			`svn rm $ft -m "[REL] Deleting tag '$tag' in order to create a new one"`;
+			$tagAlreadyExists = false;
+			info(">> Tag '$tag' deleted.");
+		}
+
+		if ( ! $tagAlreadyExists ) {
+			$revision = (int) get_info( ROOT )->entry->commit['revision'];
+			if ( important_step("Tag release using branch '$branch' at revision $revision") ) {
+				`svn copy $fb -r$revision $ft -m "[REL] Tagging release"`;
+				info(">> Tag '$tag' created.");
+			}
 		}
 	}
 
@@ -164,9 +169,20 @@ if ( $isPre ) {
 // Helper functions
 
 function write_secdb( $file, $root, $version ) {
-	$fp = fopen( $file, 'w+' );
-	fwrite( $fp, "DELETE FROM `tiki_secdb` WHERE `tiki_version` = '$version';\n\n" );
-	md5_check_dir( $root, $root, $fp, $version );
+	if ( ! ($fp = @fopen($file, 'w+')) ) {
+		error('The SecDB file "' . $file . '" is not writable or can\'t be created.');
+		die;
+	}
+
+	$queries = array();
+	md5_check_dir( $root, $root, $version, $queries );
+
+	if ( ! empty($queries) ) {
+		sort($queries);
+		fwrite( $fp, "DELETE FROM `tiki_secdb` WHERE `tiki_version` = '$version';\n\n" );
+		foreach ( $queries as $q ) fwrite( $fp, "$q\n" );
+	}
+
 	fclose( $fp );
 
 	if ( $file_exists = file_exists($file) ) {
@@ -178,20 +194,33 @@ function write_secdb( $file, $root, $version ) {
 	}
 }
 
-function md5_check_dir($root,$dir,$fp,$version) { // save all files in $result
+function md5_check_dir($root, $dir, $version, &$queries) {
 	$d = dir($dir);
 	while (false !== ($e = $d->read())) {
 		$entry = $dir . '/' . $e;
 		if ( is_dir($entry) ) {
 			// do not descend and no CVS/Subversion files
 			if ( $e != '..' && $e != '.' && $e != 'CVS' && $e != '.svn' && $entry!='./templates_c') {
-				md5_check_dir($root, $entry, $fp, $version);
+				md5_check_dir($root, $entry, $version, $queries);
 			}
 		} else {
 			if ( substr($e, -4, 4) == ".php" && realpath( $entry ) != __FILE__ && $entry != './db/local.php' ) {
-				$file = mysql_real_escape_string( '.' . substr( $entry, strlen( $root ) ) );
+				$file = '.' . substr( $entry, strlen( $root ) );
+
+				if ( ! preg_match('/^[a-zA-Z0-9\/ _+.-]+$/', $file)
+					&& ( ! function_exists('mysql_real_escape_string') || ! ( $file = @mysql_real_escape_string($file) ) )
+				) {
+					global $phpCommand, $phpCommandArguments;
+					error("SecDB step failed because some filenames need escaping but no MySQL connection has been found."
+						. "\nTry this command line instead (replace HOST, USER and PASS by a valid MySQL host, user and password) :"
+						. "\n\n\t" . $phpCommand
+						. " -d mysql.default_host=HOST -d mysql.default_user=USER -d mysql.default_password=PASS "
+						. $phpCommandArguments . "\n"
+					);
+				}
+
 				$hash = md5_file($entry);
-				fwrite( $fp, "INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('$hash', '$file', '$version', 0);\n" );
+				$queries[] = "INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('$file', '$hash', '$version', 0);";
 			}
 		}
 	}
@@ -327,7 +356,16 @@ function important_step($msg, $increment_step = true, $commit_msg = false) {
 		$do_step = true;
 	} else {
 		important("\n$step) $msg?");
-		$c = readline('[Y/n/q/?] ');
+
+		$prompt = '[Y/n/q/?] ';
+		if ( function_exists('readline') ) {
+			// readline function requires php readline extension...
+			$c = readline($prompt);
+		} else {
+			echo $prompt;
+			$c = rtrim( fgets( STDIN ), "\n" );
+		}
+
 		switch ( strtolower($c) ) {
 			case 'y': case '':
 				$do_step = true;
@@ -601,6 +639,9 @@ function get_contributors_sf_data(&$contributors) {
 	$members = '';
 	$matches = array();
 	$userParsedInfo = array();
+
+	if ( ! function_exists('iconv') )
+		error("PHP 'iconv' function is not available on this system. Impossible to get SF.net data.");
 
 	$html = $options['http-proxy'] ? file_get_contents(SF_TW_MEMBERS_URL, 0, $options['http-proxy']) : file_get_contents(SF_TW_MEMBERS_URL);
 
