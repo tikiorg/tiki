@@ -32,6 +32,9 @@ if ( ! ( $options = get_options() ) || $options['help'] )
 if ( $options['howto'] )
 	display_howto();
 
+if ( ! check_svn_version() )
+	error("You need the subversion 'svn' program at least at version " . SVN_MIN_VERSION . "\n");
+
 if ( ! $options['no-check-svn'] && has_uncommited_changes('.') )
 	error("Uncommited changes exist in the working folder.\n");
 
