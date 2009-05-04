@@ -1464,7 +1464,7 @@ class TrackerLib extends TikiLib {
 							$mail->setSubject('['.$trackerName.'] '.str_replace('> ','',$watcher_subject).' ('.tra('Tracker was modified at ', $watcher['language']). $_SERVER["SERVER_NAME"].' '.tra('by', $watcher['language']).' '.$user.')');
 							$mail->setText(tra('View the tracker item at:', $watcher['language'])."  $machine/tiki-view_tracker_item.php?itemId=$itemId\n\n" . $watcher_data);
 							if( ! empty( $my_sender ) ) {
-								$mail->setHeader("From", $my_sender);
+								$mail->setHeader("Reply-To", $my_sender);
 							}
 							$mail->send(array($watcher['email']));
 							$i++;
