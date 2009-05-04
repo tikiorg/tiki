@@ -3917,7 +3917,7 @@ class TikiLib extends TikiDB {
 			$bindvars = $find;
 		} elseif (is_string($find) && !empty($find)) { // or a string
 			if (!$exact_match && $find) {
-				$find = preg_replace("/(\w+)/","%\\1%",$find);
+				$find = preg_replace("/([^\s]+)/","%\\1%",$find);
 				$f = preg_split("/[\s]+/",$find,-1,PREG_SPLIT_NO_EMPTY);
 				if (empty($f)) {//look for space...
 					$mid = " where `pageName` like '%$find%'";
