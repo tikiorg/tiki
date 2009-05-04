@@ -1,20 +1,34 @@
-{title}{tr}Change password enforced{/tr}{/title}
+{if isset($new_user_validation) && $new_user_validation eq 'y'}
+	{title}{tr}Your account has been validated.{/tr}<br />{tr}You have to choose a password to use this account.{/tr}{/title}
+{else}
+	{assign var='new_user_validation' value='n'}
+	{title}{tr}Change password enforced{/tr}{/title}
+{/if}
 
 <form method="post" action="tiki-change_password.php" >
-{if !empty($smarty.request.actpass)}
-<input type="hidden" name="actpass" value="{$smarty.request.actpass|escape}" />
+{if !empty($oldpass) and $new_user_validation eq 'y'}
+	<input type="hidden" name="oldpass" value="{$oldpass|escape}" />
+{elseif !empty($smarty.request.actpass)}
+	<input type="hidden" name="actpass" value="{$smarty.request.actpass|escape}" />
 {/if}
-<fieldset><legend>{tr}Change your password{/tr}</legend>
+<fieldset>{if $new_user_validation neq 'y'}<legend>{tr}Change your password{/tr}</legend>{/if}
 <table class="form">
 <tr>
   <td class="formcolor">{tr}Username{/tr}:</td>
-  <td class="formcolor"><input type="text" name="user" value="{$userlogin|escape}" /></td>
+  <td class="formcolor">
+	{if $new_user_validation eq 'y'}
+		<input type="hidden" name="user" value="{$userlogin|escape}" />
+		<b>{$userlogin}</b>
+	{else}
+		<input type="text" name="user" value="{$userlogin|escape}" />
+	{/if}
+  </td>
 </tr>
-{if empty($smarty.request.actpass)}
+{if empty($smarty.request.actpass) and $new_user_validation neq 'y'}
 <tr>
   <td class="formcolor">{tr}Old password{/tr}:</td>
   <td class="formcolor"><input type="password" name="oldpass" value="{$oldpass|escape}" /></td>
-</tr>	
+</tr>
 {/if}     
 <tr>
   <td class="formcolor">{tr}New password{/tr}:</td>

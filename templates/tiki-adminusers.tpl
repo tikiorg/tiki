@@ -323,7 +323,7 @@
 	{else}
 		<h2>{tr}Add a New User{/tr}</h2>
 	{/if}
-	<form action="tiki-adminusers.php" method="post" enctype="multipart/form-data" name="RegForm">
+	<form action="tiki-adminusers.php" method="post" enctype="multipart/form-data" name="RegForm" autocomplete="off">
 		<table class="normal">
 			<tr class="formcolor">
 				<td>
@@ -404,9 +404,9 @@
 				</tr>
 				{if $userinfo.login neq 'admin'}
 					<tr class="formcolor">
-						<td>{tr}Must Change Password{/tr}:</td>
+						<td>&nbsp;</td>
 						<td>
-							<input type="checkbox" name="pass_first_login" /> 
+							<input type="checkbox" name="pass_first_login"{if $userinfo.pass_confirm eq '0'} checked="checked"{/if} /> 
 							{tr}User must change password at first login{/tr}.
 						</td>
 					</tr>
@@ -423,10 +423,10 @@
 			{/if}
 			{if $userinfo.login neq 'admin'}
 				<tr class="formcolor">
-					<td>{tr}Must Validate Email{/tr}:</td>
+					<td>&nbsp;</td>
 					<td>
-						<input type="checkbox" name="need_email_validation" {if $prefs.validateUsers eq 'y' or $prefs.validateRegistration eq 'y'}checked="checked" {/if}/> 
-						{tr}User must validate its email{/tr}.
+						<input type="checkbox" name="need_email_validation" {if ($userinfo.login eq '' and ($prefs.validateUsers eq 'y' or $prefs.validateRegistration eq 'y')) or $userinfo.provpass neq ''}checked="checked" {/if}/> 
+						{tr}Send an email to the user in order to allow him to validate his account.{/tr}
 					</td>
 				</tr>
 			{/if}
