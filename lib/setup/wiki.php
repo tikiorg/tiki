@@ -74,6 +74,6 @@ if (strstr($_SERVER['SCRIPT_NAME'], 'tiki-index.php') || strstr($_SERVER['SCRIPT
 	}
 
 	if ($check && !$tikilib->page_exists($_REQUEST['page'])) {
-		$tikilib->create_page($_REQUEST['page'], 0,'{TR()}_HOMEPAGE_CONTENT_{TR}',$tikilib->now,'Tiki initialization', 'admin', '0.0.0.0', '', 'en', false, null, 'n', '');
+		$tikilib->create_page($_REQUEST['page'], 0,tra('_HOMEPAGE_CONTENT_'),$tikilib->now,'Tiki initialization', 'admin', '0.0.0.0', '', 'en', false, null, 'n', '');
 	}
 }

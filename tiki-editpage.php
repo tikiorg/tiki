@@ -881,12 +881,6 @@ if( isset( $_REQUEST['translation_critical'] ) ) {
 	$smarty->assign( 'translation_critical', 0 );
 }
 
-if ($page == 'HomePage' && $edit_data == '{TR()}_HOMEPAGE_CONTENT_{TR}') {	// default home page contents as defined in tiki-index.php
-	$edit_data = tr('_HOMEPAGE_CONTENT_');				// give the user the translated (mark-up) version of it
-	if ($_SESSION['wysiwyg'] == 'y' ) {
-		$_REQUEST['mode_wysiwyg'] = true;
-	}
-}
 // Parse (or not) $edit_data into $parsed
 // Handles switching editor modes
 if (isset($_REQUEST['mode_normal'])) {
