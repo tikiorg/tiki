@@ -2663,7 +2663,7 @@ class TikiLib extends TikiDB {
 		include_once('lib/userprefs/userprefslib.php');
 
 		$bindvars = array();
-		if ($prefs['feature_friends'] == 'y') {
+		if ($prefs['feature_friends'] == 'y' && !$include_prefs) {
 			$bindvars[] = $user;
 		}
 		if ( $find ) {
@@ -2721,7 +2721,7 @@ class TikiLib extends TikiDB {
 		if ( $sort_mode != '' ) $sort_mode = 'order by '.$sort_mode;
 
 		// Need to use a subquery to avoid bad results when using a limit and an offset, with at least MySQL
-		if ($prefs['feature_friends'] == 'y') {
+		if ($prefs['feature_friends'] == 'y' && !$include_prefs) {
 			$query = "select * from (select u.* $pref_field, f.`friend` from `users_users` u $pref_join $find_join left join `tiki_friends` as f on (u.`login` = f.`friend` and f.`user`=?) $pref_where $sort_mode) as tab";
 		} else {
 			$query = "select u.* $pref_field  from `users_users` u $pref_join $find_join $pref_where $sort_mode";
