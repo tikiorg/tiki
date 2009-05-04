@@ -2,7 +2,7 @@
 {if $prefs.javascript_enabled eq 'y'}
 <div class="help" id="tikihelp">
 	<div class="help_icon">
-		<img onclick="javascript:flip('help_sections');" src="pics/help_icon.png" alt="{tr}Help{/tr}" title="{tr}Help{/tr}" />
+		<a href="#" onclick="javascript:flip('help_sections'); return false"><strong>{tr}Help{/tr}</strong>{icon class="arrow" _id="pics/next_anim.gif" alt="»" }{icon _id="pics/help_icon.png" alt="{tr}Help{/tr}: {tr}Click Here{/tr}" width="48" height="48" }</a>
 	</div>
 	<div class="help_sections" id="help_sections" style="display:none">
 {/if}
