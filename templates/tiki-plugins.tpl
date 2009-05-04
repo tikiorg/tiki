@@ -1,4 +1,9 @@
-{title url="tiki-plugins.php"}{tr}Plugin Approval{/tr}{/title}
+{title url="tiki-plugins.php" help="Wiki+Plugins"}{tr}Plugin Approval{/tr}{/title}
+
+{remarksbox type="tip" title="{tr}Tip{/tr}"}
+{tr}About WikiPlugins and security: Make sure to only grant the "tiki_p_plugin_approve" permission to trusted editors.{/tr} {tr}You can deactivate risky plugins at (<a href="tiki-admin.php?page=textarea">tiki-admin.php?page=textarea</a>).{/tr}
+{/remarksbox}
+
 
 {if $plugin_list}
 	<form method="post" action="">
