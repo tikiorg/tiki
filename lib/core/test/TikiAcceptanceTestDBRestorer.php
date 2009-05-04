@@ -160,6 +160,6 @@
    
    
 //   $test_TikiAcceptanceTestDBRestorer = new TikiAcceptanceTestDBRestorer();
-//   $test_TikiAcceptanceTestDBRestorer->create_dump_file("multilingualTestDump.sql");
+//   $test_TikiAcceptanceTestDBRestorer->create_dump_file("listPagesTestDump.sql");
 
 ?>

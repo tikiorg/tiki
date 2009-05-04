@@ -16,11 +16,13 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
         
    public function testHomePageIsMultilingual() {
    		$this->openTikiPage('tiki-index.php');
+   		$this->logInIfNecessaryAs('admin');
    		$this->assertLanguagePicklistHasLanguages(array('English' => 'HomePage'));
    }
     
     public function testMultilingualPageDisplaysLanguagePicklist() {
        	$this->openTikiPage('tiki-index.php?page=Multilingual+Test+Page+1');
+       	$this->logInIfNecessaryAs('admin');
        	$this->assertLanguagePicklistHasLanguages(array('English' => 'Multilingual Test Page 1', 
                                                     'Français' => 'Page de test multilingue 1'));                                                    
     }
@@ -28,6 +30,7 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
   	
   	public function testLanguageLinkLeadsToTranslatedPageInThatLanguage() {
   		$this->openTikiPage('tiki-index.php?page=Multilingual+Test+Page+1');
+  		$this->logInIfNecessaryAs('admin');
   		$this->select("page", "label=Français");
     	$this->waitForPageToLoad("30000");
     	$this->assertTrue(preg_match('/page=Page\+de\+test\+multilingue\+1/', $this->getLocation()) == 1);
@@ -36,6 +39,7 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
   	
   	public function testTranslateOptionAppearsOnlyWhenLoggedIn() {
   		$this->openTikiPage('tiki-index.php');
+  		$this->logOutIfNecessary();
   		$this->assertLanguagePicklistHasNoTranslateOption();
   		$this->logInIfNecessaryAs('admin');
   		$this->assertLanguagePicklistHasTranslateOption();
@@ -61,6 +65,25 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
 					  "English should not have been present in the list of languages.");
   	}
     
+    public function __testCannotGiveATranslationTheNameOfAnExistingPage() {
+    	//NB. This is in fact wrong. If you have similar languages, say English and British English, 
+    	//or Serbian (latin alphabet) and Croatian, the title of the page is bound to be the same. Here we force
+    	//the translator to add a language tag to the title only to have the unique page name
+    	//A multilingual system should add a language ID to the page name without the user's 
+    	//intervention.
+    	$this->openTikiPage('tiki-index.php?page=Multilingual+Test+Page+1');
+    	$this->logInIfNecessaryAs('admin');
+    	$this->select("page", "label=Français");
+    	$this->waitForPageToLoad("30000");
+    	$this->clickAndWait("link=Translate");
+    	print $this->getHtmlSource();
+    	$this->select("language_list", "label=English British (en-uk)");
+    	$this->type("translation_name", "Multilingual Test Page 1");
+    	$this->clickAndWait("//input[@value='Create translation']");
+        $this->assertTrue($this->isTextPresent("Page already exists. Go back and choose a different name."));
+    }
+    
+    
    
     /**************************************
      * Helper methods
@@ -72,6 +95,7 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
         $this->setBrowserUrl('http://localhost/');
         $this->current_test_db = "multilingualTestDump.sql";
         $this->restoreDBforThisTest();
+        $this->printImportantMessageForTestUsers();
     }
     
     public function printImportantMessageForTestUsers() {

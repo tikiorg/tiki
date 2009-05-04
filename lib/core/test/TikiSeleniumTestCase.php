@@ -28,7 +28,21 @@ class TikiSeleniumTestCase extends PHPUnit_Extensions_SeleniumTestCase {
     	}
     }
     
+    public function logOutIfNecessary() {
+    	if ($this->isElementPresent("link=logout")){
+    		$this->clickAndWait("link=logout");
+    	}
+    }
+    
     public function assertSelectElementContainsItems($selectElementID, $expItems, $message) {
+        $this->assertElementPresent($selectElementID, "$message\nMarkup element '$selectElementID' did not exist");
+        foreach ($expItems as $anItem => $anItemValue) {
+           $thisItemElementID = "$selectElementID/option[@value='$anItemValue']";
+           $this->assertElementPresent($thisItemElementID);
+        }
+    }
+    
+    public function assertSelectElementContainsAllTheItems($selectElementID, $expItems, $message) {
         $this->assertElementPresent($selectElementID, "$message\nMarkup element '$selectElementID' did not exist");
         $gotItemsText = $this->getSelectOptions($selectElementID);
         $expItemsText = array_keys($expItems);
@@ -38,7 +52,6 @@ class TikiSeleniumTestCase extends PHPUnit_Extensions_SeleniumTestCase {
            $this->assertElementPresent($thisItemElementID);
         }
     }
-    
 
     public function assertSelectElementDoesNotContainItems($selectElementID, $expItems, $message) {
         $this->assertElementPresent($selectElementID, "$message\nMarkup element '$selectElementID' did not exist");
@@ -53,13 +66,15 @@ class TikiSeleniumTestCase extends PHPUnit_Extensions_SeleniumTestCase {
 
 
     private function _login_as($user) {
-    	$password = $this->user_credentials[$user];
-		$this->type("login-user", $user);
-    	$this->type("login-pass", $password);
-    	$this->clickAndWait("login");
-		if ($this->isTextPresent("Invalid password")) {
-			return false;
-		}
+    	if ($this->isElementPresent("login-user")){
+	    	$password = $this->user_credentials[$user];
+			$this->type("login-user", $user);
+    		$this->type("login-pass", $password);
+    		$this->clickAndWait("login");
+			if ($this->isTextPresent("Invalid password")) {
+				return false;
+			}
+    	}
 		return true;
 	}
 } 
