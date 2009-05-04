@@ -582,6 +582,7 @@ $lang=Array(
 "To add new options to the menu set the optionId field to 0. To remove an option set the remove field to 'y'" => "Pour ajouter de nouvelles options au menu, positionnez le champ optionId à 0. Pour retirer une option, positionnez le champ suppression à 'y'",
 "To use a menu in a tiki format" => "Pour utiliser un menu dans un format tiki",
 "To use menu in a css/suckerfish format" => "Pour utiliser un menu dans un format css/suckerfish",
+"To customizing the menu's css id (#id):" => "Pour personnaliser l'identifiant css du menu (#id) :",
 "Leave box empty for deleting an option" => "Laisser la boite vide pour supprimer une option",
 "Answer is mandatory" => "Réponse obligatoire",
 "The file will be saved in" => "Le fichier sera enregistré dans",
