@@ -121,12 +121,13 @@ select {
 	font-size: 1.0em;
 	vertical-align: middle}
 
+span.button a,
+span.button a:visited,
 button,
-input[type=submit],
-.submitbutton,
-.button input,
 input[type=reset],
-span.button,
+input[type=submit],
+span.button input,
+.submitbutton,
 .calbuttonBox {
 	vertical-align: middle;	
 	margin: 2px;
@@ -134,34 +135,37 @@ span.button,
 	background: url(feb12/header.jpg) repeat-x 0 -2px;
 	border: 1px solid #5aa5cf;
 	color: #F5F5F5;
-	font-size: 80%}
+	font-size: 80%;
+	line-height: 200%;
+	cursor: pointer}
 	
 *:first-child+html input {font-weight: normal}
 
+.button a:hover,
 button:hover,
+input[type=reset]:hover,
 input[type=submit]:hover,
-.submitbutton:hover,
 .button input:hover,
-span.button:hover,
-.calbuttonBox:hover {
-	background: url(feb12/header.jpg) repeat-x 0 -15px;
-	cursor: pointer}
-	
-span.button {
-	margin: 1px 2px;
-	padding: 0 2px}
+.submitbutton:hover,
+.calbuttonBox:hover,
+#highlight,
+.highlight {
+	background: url(feb12/header.jpg) repeat-x 0 100%;
+	color: #F5F5F5;
+	text-decoration: none}
 
-span.button a,
-span.button a:visited {color: #F5F5F5}
+* html input[type=reset]:hover,
+* html input[type=submit]:hover {
+	background: url(feb12/header.jpg) repeat-x 0 100%;
+	color: #F5F5F5;
+	cursor: pointer}
 
 * html span.button a,
 * html span.button a:visited {background: url(feb12/header.jpg) repeat-x 0 -2px}
 
 * html span.button a:hover {
 	color: #F5F5F5;
-	background: url(feb12/header.jpg) repeat-x 0 -15px}
-
-span.button a:hover {text-decoration: none}
+	background: url(feb12/header.jpg) repeat-x 0 100%}
 
 input[type=checkbox] {border: 0}
 * html .findtable input {font-size: 1em}
@@ -717,9 +721,6 @@ div#edithelpzone {display: none}
 * html .clearfix {height: 1%}
 #overdiv table {width: auto !important}
 .attention {color: red}
-
-.highlight,
-#highlight  {}
 
 .openid_url {
 	background: #fff url(../../img/icons/login-OpenID-bg.gif) no-repeat;
