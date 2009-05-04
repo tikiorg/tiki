@@ -619,8 +619,8 @@ a.phplmselected:hover {color: #006699}
 	
 #tiki-top > .cssmenu_horiz > li.menuSection > a {padding-right: 2.6em}
 
-#tiki-top > .cssmenu_horiz > li:hover {
-	background: url(feb12/pagebg.jpg) repeat-x;
+#tiki-top .cssmenu_horiz li.menuLevel0:hover {
+	background: url(feb12/header.jpg) repeat-x 0 100%;
 	color: #eee !important;
 	text-decoration: none}
 	
