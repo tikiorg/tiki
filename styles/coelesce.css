@@ -427,9 +427,9 @@ input[id="sl-login-pass"] {}
 /* #header text selectors, if needed */
 
 #sitetitles {
-	color: #fff; float: left; height: 97px; line-height: 97px; overflow: hidden; vertical-align: bottom}
+	color: #fff; display: inline-block; height: 97px; line-height: 97px; overflow: hidden; vertical-align: bottom}
 
-* html #sitetitles {margin-top: 6px}
+* html #sitetitles {display: inline; margin-top: 6px}
 
 #sitetitle,
 #sitesubtitle {
