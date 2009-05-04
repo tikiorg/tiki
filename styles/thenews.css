@@ -2248,7 +2248,7 @@ Caltrack a:visited {color: #00BD02}
 
 .caldark .calfocus { background: inherit }
 
-.calfocuson + .calcontent { background: #e6eff8 }
+.calodd .calfocuson, .caleven .calfocuson , .calfocuson + .calcontent { background: #e6eff8 }
 
 .calprio1 a,
 .calprio2 a,
