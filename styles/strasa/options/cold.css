@@ -717,6 +717,11 @@ ul.toc {
 }
 
 /***** Articles ****/
+div.articletopline,
+div.articlesubtitle {
+	background: #f5f5f5;
+	color: #000}
+	
 div.articletitle h2 {
 	background: #f5f5f5 url(cold/headerbg.jpg) repeat-x 0 100%;
 	color: #000;
