@@ -46,6 +46,7 @@ $smarty->assign('daysnames',$daysnames);
 $smarty->assign('monthnames',$monthnames);
 
 $smarty->assign('edit',false);
+$smarty->assign('recurrent', '');
 $hours_minmax = '';
 
 if ($tiki_p_admin_calendar == 'y') {
@@ -379,6 +380,24 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
 	$save['parsedName'] = $tikilib->parse_data($save['name']);
 	$id = $save['calitemId'];
 	$calitem = $save;
+
+	$recurrence = array(
+		'weekly' => isset($_POST['recurrenceType']) && $_POST['recurrenceType'] = 'weekly',
+		'weekday' => isset($_POST['weekday']) ? $_POST['weekday'] : '',
+		'monthly' => isset($_POST['recurrenceType']) && $_POST['recurrenceType'] = 'monthly',
+		'dayOfMonth' => isset($_POST['dayOfMonth']) ? $_POST['dayOfMonth'] : '',
+		'yearly' => isset($_POST['recurrenceType']) && $_POST['recurrenceType'] = 'yearly',
+		'dateOfYear_day' => isset($_POST['dateOfYear_day']) ? $_POST['dateOfYear_day'] : '',
+		'dateOfYear_month' => isset($_POST['dateOfYear_month']) ? $_POST['dateOfYear_month'] : '',
+		'startPeriod' => isset($_POST['startPeriod']) ? $_POST['startPeriod'] : '',
+		'nbRecurrences' => isset($_POST['nbRecurrences']) ? $_POST['nbRecurrences'] : '',
+		'endPeriod' => isset($_POST['endPeriod']) ? $_POST['endPeriod'] : ''
+	);	
+	if ( isset($_POST['recurrent']) && $_POST['recurrent'] == 1 ) {
+		$smarty->assign('recurrent', $_POST['recurrent']);
+	}
+	$smarty->assign_by_ref('recurrence', $recurrence);
+	
 	$calendar = $calendarlib->get_calendar($calitem['calendarId']);
 	$smarty->assign('edit',true);
 	$smarty->assign('preview', isset($_REQUEST['preview']));
