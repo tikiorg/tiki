@@ -356,7 +356,7 @@ div#sitead {margin: auto}
 	text-align: left;
 	width: 342px;
 	background: url(coelesce/search_wide.jpg) no-repeat;
-	padding-left: 15px;
+	padding: 0 0 0 15px;
 	color: #517ea7;}
 	
 #sitesearchbar .wrapper {
