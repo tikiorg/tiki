@@ -400,7 +400,7 @@ class SearchLib extends TikiLib {
 
 	function find_faqs($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate) {
 		$search_faqs = array(
-			'from' => '`tiki_faqs` f , `tiki_faq_questions` q',
+			'from' => '`tiki_faq_questions` q, `tiki_faqs` f',
 			'name' => 'f.`title`',
 			'data' => 'f.`description`',
 			'hits' => 'f.`hits`',
