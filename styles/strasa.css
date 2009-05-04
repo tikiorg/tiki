@@ -908,7 +908,7 @@ div#edithelpzone {display: none}
 .attention {color: red}
 
 .highlight,
-#highlight {}
+#highlight { background-color: #f2cd5e }
 
 .openid_url {
 	background: #fff url(../../img/icons/login-OpenID-bg.gif) no-repeat;
