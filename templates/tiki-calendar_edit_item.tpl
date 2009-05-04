@@ -88,7 +88,7 @@
 	<input type="hidden" name="recurrent" value="1"/>
 		{tr}This event depends on a recurrence rule{/tr}
 	{else}
-<input type="checkbox" id="id_recurrent" name="recurrent" value="1" onClick="javascript: toggle('recurrenceRules');"{if $calitem.recurrenceId gt 0}checked="checked"{/if}/><label for="id_recurrent">{tr}This event depends on a recurrence rule{/tr}</label>
+<input type="checkbox" id="id_recurrent" name="recurrent" value="1" onClick="toggle('recurrenceRules');toggle('startdate');toggle('enddate');"{if $calitem.recurrenceId gt 0}checked="checked"{/if}/><label for="id_recurrent">{tr}This event depends on a recurrence rule{/tr}</label>
 	{/if}
 {else}
 	<span class="summary">{if $calitem.recurrenceId gt 0}{tr}This event depends on a recurrence rule{/tr}{else}{tr}This event is not recurrent{/tr}{/if}</span>
@@ -248,13 +248,13 @@
 				<a href="#" onclick="document.f.Time_Hour.selectedIndex=(document.f.Time_Hour.selectedIndex+1);">{icon _id='plus_small' align='left' width='11' height='8'}</a>
 			{/if}
 			</td>
-			<td rowspan="2" style="border:0;padding-top:2px;vertical-align:middle">
+			<td rowspan="2" style="border:0;padding-top:2px;vertical-align:middle"><div style="display:block" id="startdate">
 			{if $prefs.feature_jscalendar eq 'y' and $prefs.javascript_enabled eq 'y'}
 				{jscalendar id="start" date=$calitem.start fieldname="save[date_start]" align="Bc" showtime='n'}
 			{else}
 				{html_select_date prefix="start_date_" time=$calitem.start field_order=$prefs.display_field_order start_year=$prefs.calendar_start_year end_year=$prefs.calendar_end_year}
 			{/if}
-			</td>
+			</div></td>
 			<td style="border:0;padding-top:2px;vertical-align:middle">
 				<span id="starttimehourplus" style="display: {if $calitem.allday} none {else} inline {/if}"><a href="#" onclick="document.f.start_Hour.selectedIndex=(document.f.start_Hour.selectedIndex+1);">{icon _id='plus_small' align='left' width='11' height='8'}</a></span>
 			</td>
@@ -313,20 +313,21 @@
 	<td>{tr}End{/tr}</td><td>
 	{if $edit}
 		<input type="hidden" name="save[end_or_duration]" value="end" id="end_or_duration" />
-		<table cellpadding="0" cellspacing="0" border="0" id="end_date">
+		<div id="end_date" style="display:block"> {* the display:block inline style used here is needed to make toggle() function work properly *}
+		<table cellpadding="0" cellspacing="0" border="0">
 		<tr>
 			<td style="border:0;padding-top:2px;vertical-align:middle">
 			{if $prefs.feature_jscalendar neq 'y' or $prefs.javascript_enabled neq 'y'}
 				<span id="endtimehourplus" style="display: {if $calitem.allday} none {else} inline {/if}"><a href="#" onclick="document.f.Time_Hour.selectedIndex=(document.f.Time_Hour.selectedIndex+1);">{icon _id='plus_small' align='left' width='11' height='8'}</a></span>
 			{/if}
 			</td>
-			<td rowspan="2" style="border:0;vertical-align:middle">
+			<td rowspan="2" style="border:0;vertical-align:middle"><div style="display:block" id="enddate">
 			{if $prefs.feature_jscalendar eq 'y' and $prefs.javascript_enabled eq 'y'}
 				{jscalendar id="end" date=$calitem.end fieldname="save[date_end]" align="Bc" showtime='n'}
 			{else}
 				{html_select_date prefix="end_date_" time=$calitem.end field_order=$prefs.display_field_order  start_year=$prefs.calendar_start_year end_year=$prefs.calendar_end_year}
 			{/if}
-			</td>
+			</div></td>
 			<td style="border:0;padding-top:2px;vertical-align:middle">
 				<span id="endtimehourplus" style="display: {if $calitem.allday} none {else} inline {/if}"><a href="#" onclick="document.f.end_Hour.selectedIndex=(document.f.end_Hour.selectedIndex+1);">{icon _id='plus_small' align='left' width='11' height='8'}</a></span>
 			</td>
@@ -354,8 +355,10 @@
 		</td>
 	</tr>
 </table>
+</div>
 
-<table cellpadding="0" cellspacing="0" border="0" style="display:none;" id="end_duration">
+<div id="end_duration" style="display:none;">
+<table cellpadding="0" cellspacing="0" border="0">
 	<tr>
 		<td style="border:0;padding-top:2px;vertical-align:middle">
 			<span id="durhourplus" style="display: {if $calitem.allday} none {else} inline {/if}"><a href="#" onclick="document.f.duration_Hour.selectedIndex=(document.f.duration_Hour.selectedIndex+1);">{icon _id='plus_small' align='left' width='11' height='8'}</a></span>
@@ -379,6 +382,7 @@
 		</td>
 	</tr>
 </table>
+</div>
 {else}
     {if $calitem.allday}
         {if $calitem.end}<abbr class="dtend" title="{$calitem.end|tiki_short_date}">{/if}{$calitem.end|tiki_long_date}{if $calitem.end}</abbr>{/if}
