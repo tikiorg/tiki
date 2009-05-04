@@ -16,9 +16,9 @@
 	{tr}Tiki "mods" are additional features not included in the public release. Learn more at <a target="tikihelp" href="http://mods.tikiwiki.org">mods.tikiwiki.org</a>.{/tr}
 {/remarksbox}
 {remarksbox type="note" title="{tr}Note{/tr}"}
-    {tr}<p><strong>Tiki "mods" are undergoing refubishment.</strong></p>{/tr}
-    {tr}<p>You will probably some find mods shown as being compatible with older versions of Tiki will work with later versions with little or no modification</p>{/tr}
-    {tr}<p><em>Your help is needed! Please visit <a href="http://dev.tikiwiki.org/tiki-index.php?page=Mods">dev.tikiwiki.org</a> to find out more.</em></p>{/tr}
+	<p><strong>{tr}Tiki "mods" are undergoing refurbishment.{/tr}</strong></p>
+	<p>{tr}You will probably some find mods shown as being compatible with older versions of Tiki will work with later versions with little or no modification.{/tr}</p>
+	<p><em>{tr}Your help is needed! Please visit <a href="http://dev.tikiwiki.org/tiki-index.php?page=Mods">dev.tikiwiki.org</a> to find out more.{/tr}</em></p>
 {/remarksbox}
 
 {if $iswritable}
