@@ -399,7 +399,7 @@
 <p>&nbsp;</p>
 <div align="center">
 <form action="tiki-install.php" method="post">
-	<input type="hidden" name="install_step" value="{if isset($smarty.post.update)}7{else}6{/if}" />
+	<input type="hidden" name="install_step" value="6" />
 	<input type="submit" value=" {tr}Continue{/tr} " />
 {if $multi}		<input type="hidden" name="multi" value="{$multi}" />{/if}
 {if $lang}		<input type="hidden" name="lang" value="{$lang}" />{/if}
@@ -454,7 +454,7 @@
 <br />
 <fieldset><legend>{tr}Administrator{/tr}</legend>
 <div style="padding:5px"><label for="admin_email">{tr}Admin email:{/tr}</label>
-	<div style="margin-left:1em"><input type="text" size="40" name="admin_email" id="admin_email" />
+	<div style="margin-left:1em"><input type="text" size="40" name="admin_email" id="admin_email" value="{if isset($admin_email)}{$admin_email}{/if}" />
 	<br /><em>{tr}This is the email address for your administrator account.{/tr}</em></div>
 </div>
 </fieldset>

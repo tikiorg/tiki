@@ -25,6 +25,7 @@ require_once ( 'lib/smarty/libs/Smarty.class.php');
 require_once ('installer/installlib.php');
 
 $commands = array();
+$prefs = array();
 ini_set('magic_quotes_runtime',0);
 
 // Which step of the installer
@@ -424,6 +425,33 @@ function has_admin() {
         }
 }
 
+function get_admin_email( $dbTiki ) {
+	$query = "SELECT `email` FROM `users_users` WHERE `userId`=1";
+	@$result = $dbTiki->Execute($query);
+
+	if ( $result && $res = $result->fetchRow() ) {
+		return $res['email'];
+	}
+
+	return false;
+}
+
+function update_preferences( $dbTiki, &$prefs ) {
+	$query = "SELECT `name`, `value` FROM `tiki_preferences`";
+	@$result = $dbTiki->Execute($query);
+
+	if ( $result ) {
+		while ( $res = $result->fetchRow() ) {
+			if ( ! isset($prefs[$res['name']]) ) {
+				$prefs[$res['name']] = $res['value'];
+			}
+		}
+		return true;
+	}
+
+	return false;
+}
+
 function load_sql_scripts() {
 	global $smarty;
 	global $dbversion_tiki;
@@ -569,6 +597,7 @@ define('ADODB_CASE_ASSOC', 2); // typo in adodb's driver for sybase?
 include_once ('lib/adodb/adodb.inc.php');
 
 include('lib/tikilib.php');
+
 // Get list of available languages
 $languages = array();
 $languages = TikiLib::list_languages(false,null,true);
@@ -670,9 +699,13 @@ if ((!$dbcon or (isset($_REQUEST['resetdb']) and $_REQUEST['resetdb']=='y' &&
 	}
 }
 
-if( $dbcon )
-{
-	$smarty->assign( 'tikidb_created',  has_tiki_db( $dbTiki ) );
+if ( $dbcon ) {
+	$has_tiki_db = has_tiki_db( $dbTiki );
+	$smarty->assign( 'tikidb_created', $has_tiki_db );
+	if ( $install_step == '6' && $has_tiki_db ) {
+		update_preferences( $dbTiki, $prefs );
+		$smarty->assign( 'admin_email', get_admin_email( $dbTiki ) );
+	}
 	$smarty->assign( 'tikidb_is20',  has_tiki_db_20( $dbTiki ) );
 }
 
@@ -842,11 +875,22 @@ if ($install_step == '2') {
 unset($TWV);
 
 // write general settings
-if (($_REQUEST['general_settings']) == 'y') {
-global $dbTiki;
-$query = "INSERT INTO `tiki_preferences` (`name`, `value`) VALUES ('browsertitle', '".$_REQUEST['browsertitle']."'), ('sender_email', '".$_REQUEST['sender_email']."'), ('https_login', '".$_REQUEST['https_login']."'), ('https_port', '".$_REQUEST['https_port']."'), ('feature_swtich_ssl_mode', '".$_REQUEST['feature_switch_ssl_mode']."'), ('feature_show_stay_in_ssl_mode', '".$_REQUEST['feature_show_stay_in_ssl_mode']."'), ('language', '".$language."')";
-$query .= ";UPDATE  `users_users` SET  `email` =  '".$_REQUEST['admin_email']."' WHERE  `users_users`.`userId` =1";
-$dbTiki->Execute($query);
+if ( $_REQUEST['general_settings'] == 'y' ) {
+	global $dbTiki;
+	$switch_ssl_mode = ( isset($_REQUEST['feature_switch_ssl_mode']) && $_REQUEST['feature_switch_ssl_mode'] == 'on' ) ? 'y' : 'n';
+	$show_stay_in_ssl_mode = ( isset($_REQUEST['feature_show_stay_in_ssl_mode']) && $_REQUEST['feature_show_stay_in_ssl_mode'] == 'on' ) ? 'y' : 'n';
+
+	$query = "INSERT INTO `tiki_preferences` (`name`, `value`) VALUES"
+		. " ('browsertitle', '" . $_REQUEST['browsertitle'] . "'),"
+		. " ('sender_email', '" . $_REQUEST['sender_email'] . "'),"
+		. " ('https_login', '" . $_REQUEST['https_login'] . "'),"
+		. " ('https_port', '" . $_REQUEST['https_port'] . "'),"
+		. " ('feature_switch_ssl_mode', '$switch_ssl_mode'),"
+		. " ('feature_show_stay_in_ssl_mode', '$show_stay_in_ssl_mode'),"
+		. " ('language', '$language')";
+	$query .= "; UPDATE `users_users` SET `email` = '".$_REQUEST['admin_email']."' WHERE `users_users`.`userId`=1";
+
+	$dbTiki->Execute($query);
 }
 
 
@@ -864,5 +908,3 @@ $mid_data = $smarty->fetch('tiki-install.tpl');
 $smarty->assign('mid_data', $mid_data);
 
 $smarty->display("tiki-print.tpl");
-
-?>
