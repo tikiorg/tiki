@@ -385,7 +385,7 @@ div#sitead {
 
 #sitesearchbar {
 	float: right;
-	padding-right: 4px;
+	padding: 0 4px 0 0;
 	text-align: right;
 	display: block;
 	margin: 0;
@@ -780,7 +780,7 @@ a.phplmselected:hover {
 
 #tiki-top > .cssmenu_horiz > li > a {
 	border-right: 1px solid #aaa;
-	padding-right: 1em}
+	padding: 8px 1em}
 	
 #tiki-top > .cssmenu_horiz > li.menuSection > a {padding-right: 2.6em}
 	
