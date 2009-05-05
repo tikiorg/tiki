@@ -126,7 +126,7 @@ span.button input,
 	margin-right: 1px;
 	text-decoration: none;
 	white-space: nowrap;
-	cursor: pointer;}
+	cursor: pointer}
 
 /*.button a,
 .button a:visited {padding: 1px 4px}*/
@@ -147,7 +147,12 @@ button:active,
 input[type=reset]:active,
 input[type=submit]:active,
 .button input:active,
-.submitbutton:active {border-color: #223845 #41cbe7 #41cbe7 #223845;  }
+.submitbutton:active,
+span.highlight a:link,
+span.highlight a:visited {
+	border-color: #223845 #41cbe7 #41cbe7 #223845;
+	background: #5cbdef !important;
+	color: #000 !important}
 
 
 div.iconmenu {display: inline}
@@ -908,7 +913,8 @@ div#edithelpzone {display: none}
 .attention {color: red}
 
 .highlight,
-#highlight { background-color: #f2cd5e }
+#highlight {background: #5cbdef}
+span.highlight {background: inherit}
 
 .openid_url {
 	background: #fff url(../../img/icons/login-OpenID-bg.gif) no-repeat;
@@ -995,7 +1001,7 @@ div#tikihelp {
 	padding:0;
 	margin:0;
 	background-color: transparent;
-	z-index: 2;
+	z-index: 820;
 	overflow: hidden;
 }
 
@@ -1624,7 +1630,21 @@ div.quotebody {
 	padding-left: 6px
 }
 
-table.wikiplugin-split {border: none}
+table.wikiplugin-split {border: none; width: 100%}
+table.wikiplugin-split .codelisting {width: 95%}
+
+/* Versions plugin */
+#tiki-center .versionav {
+	padding: 0;
+	border: 0;
+	margin-bottom: -1px}
+	
+.versionav .button {margin-bottom: 0}
+
+#tiki-center .versioncontent {
+	border: 1px solid #aaa;
+	background: #fff;
+	padding: 1em}
 
 /** Wiki tocs **/
 div.tocnav {
