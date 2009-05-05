@@ -36,7 +36,7 @@ function smarty_block_add_help($params, $content, &$smarty, &$repeat) {
 		if ($prefs['feature_shadowbox'] == 'y' and ($prefs['feature_jquery'] == 'y' || $prefs['feature_mootools'] == 'y')) {
 			require_once $smarty->_get_plugin_filepath('function', 'icon');
 			$self_link_params['_id'] = 'help';
-			return '<a href="#'.$section['id'].'" rel="shadowbox;title='.$params['title'].';width=640;height=480;">'.smarty_function_icon($self_link_params,$smarty).'</a>';
+			return '<a href="#'.$section['id'].'" rel="shadowbox[add_help];title='.$params['title'].';">'.smarty_function_icon($self_link_params,$smarty).'</a>';
 		} else {
 			$self_link_params['_onclick'] = "javascript:show('help_sections');show('".$section['id']."');return false";
 			return smarty_block_self_link($self_link_params,"",$smarty);
