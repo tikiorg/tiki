@@ -2220,18 +2220,18 @@ td.calodd, td.caleven {border: 1px solid #999999}
 .calodd, .caleven {border: none}
 .calodd {background: #474747}
 * html .calodd {padding: 0}
-.caleven {background: #696969}
+.caleven {background: #3F3F3F}
 * html .caleven {padding: 0}
 
 .calHours,
 .calWeek {border-color: #a9a9a9}
 
 .caldark {
-	background: #3F3F3F;
+	background: #696969;
 	border: 1px solid #999999}
 
 * html .caldark {padding: 0}
-.caldark .calfocus {background: #3F3F3F}
+.caldark .calfocus {background: #696969}
 
 .daterow {
 	margin: 2px;
