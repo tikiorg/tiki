@@ -2142,6 +2142,8 @@ Caltrack a:visited {color: #00BD02}
 	font-size: 90%;
 	background: #F3E498}
 
+td.calodd, td.caleven {border: 1px solid #999999}
+
 .calfocuson a {}
 
 .calprio1 a,
