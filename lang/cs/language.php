@@ -1,4 +1,5 @@
 <?php // -*- coding:utf-8 -*-
+$lang=Array(
 // "Cookies must be allowed to vote" => "Cookies must be allowed to vote",
 // "This forum is flat and doesn't allow replies to other replies" => "This forum is flat and doesn't allow replies to other replies",
 // "Tiki is unable to connect to the database " => "Tiki is unable to connect to the database ",
