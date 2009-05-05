@@ -166,8 +166,12 @@
         <div id="content{$focus}" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_content.$focus) and $smarty.session.tiki_cookie_jar.show_content.$focus neq 'y'}none{else}block{/if};">
 		{/if}
 		
-		{remarksbox type="note" title="{tr}About plugins{/tr}"}{tr}Tiki plugins add functionality to wiki pages, artcles and blogs etc. You can enable and disable them here.{/tr}{/remarksbox}
+		{remarksbox type="note" title="{tr}About plugins{/tr}"}{tr}Tiki plugins add functionality to wiki pages, artcles and blogs etc. You can enable and disable them below.{/tr}
+		{tr}You can approve plugin use at <a href="tiki-plugins.php">tiki-plugins.php</a>.{/tr}		
+		{/remarksbox}
 
+
+		
 		{foreach from=$plugins key=plugin item=info}
 			<div class="adminoptionbox">
 				{assign var=pref value=wikiplugin_$plugin}

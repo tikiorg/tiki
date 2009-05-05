@@ -705,7 +705,25 @@ ul.toc {
 }
 
 /***** Articles ****/
+div.articletopline,
+div.articlesubtitle {
+	background: #343434;
+	color: #fff}
+	
+div.articletitle h2 {
+	background: #f5f5f5 url(mono/headerbg.jpg) repeat-x 0 100%;
+	color: #fff;
+	padding: 10px 5px;
+	margin: 0}
 
+div.articletitle h2 a,
+div.articletitle h2 a:visited {
+	color: #fff;
+	text-decoration: none}
+	
+span.titleb {
+	color: #fff;
+	background: url('mono/login.jpg') 0 0 no-repeat;}
 
 /***** Blogs *****/
 

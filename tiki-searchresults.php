@@ -167,6 +167,8 @@ if (isset($_REQUEST['boolean']) && ($_REQUEST['boolean'] == 'on' || $_REQUEST['b
 	$boolean = 'n';
 }
 $smarty->assign_by_ref('boolean', $boolean);
+if (!isset($_REQUEST['date']))
+	$_REQUEST['date'] = 0;
 $smarty->assign('date',$_REQUEST['date']);
 
 // Build the query using words

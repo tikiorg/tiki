@@ -348,6 +348,9 @@ div#sitead {
 	
 * html #siteloginbar {position: absolute; top: 10px; right: 10px  }
 
+/* give every sub-element of #siteloginbar some padding */
+#siteloginbar * {padding: 2px;}
+
 #siteloginbar.logged-in {
 	bottom: 2px;
 }
@@ -2135,9 +2138,11 @@ Caltrack a:visited {color: #00BD02}
 
 #calscreen .calfocus a {color: #F5F5F5}
 
-.calfocuson {
+.calodd .calfocuson, .caleven .calfocuson, .calfocuson {
 	font-size: 90%;
-	background: #F3E498}
+	background: #292929}
+
+td.calodd, td.caleven {border: 1px solid #999999}
 
 .calfocuson a {}
 
@@ -2215,18 +2220,18 @@ Caltrack a:visited {color: #00BD02}
 .calodd, .caleven {border: none}
 .calodd {background: #474747}
 * html .calodd {padding: 0}
-.caleven {background: #696969}
+.caleven {background: #3F3F3F}
 * html .caleven {padding: 0}
 
 .calHours,
 .calWeek {border-color: #a9a9a9}
 
 .caldark {
-	background: #3F3F3F;
+	background: #696969;
 	border: 1px solid #999999}
 
 * html .caldark {padding: 0}
-.caldark .calfocus {background: #3F3F3F}
+.caldark .calfocus {background: #696969}
 
 .daterow {
 	margin: 2px;
@@ -2481,5 +2486,5 @@ div.multiselect li.even {background: #3F3F3F; color: white;}
 .help_section table { color: white; }
 .button .iconmenu {display:inline;}
 .categflipper { float:right;}
-
+.box-data .selected {font-style: italic;}
 /* end of css file */

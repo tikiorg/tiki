@@ -1,12 +1,42 @@
 <?php
 
+// ** This is the main script to release Tiki **
+//
+// To get the Tiki release HOWTO, try:
+//    php doc/devtools/release.php --howto
+//
+// You can also get a detailed help on this script with:
+//    php doc/devtools/release.php --help
+//
+
 define( 'TOOLS', dirname(__FILE__) );
 define( 'ROOT', realpath( TOOLS . '/../..' ) );
 
+define( 'CHANGELOG_FILENAME', 'changelog.txt' );
+define( 'CHANGELOG', ROOT . '/' . CHANGELOG_FILENAME );
+define( 'COPYRIGHTS_FILENAME', 'copyright.txt' );
+define( 'COPYRIGHTS', ROOT . '/' . COPYRIGHTS_FILENAME );
+define( 'SF_TW_MEMBERS_URL', 'http://sourceforge.net/project/memberlist.php?group_id=64258' );
+define( 'README_FILENAME', 'README' );
+define( 'README', ROOT . '/' . README_FILENAME );
+define( 'LICENSE_FILENAME', 'license.txt' );
+
 require_once TOOLS . '/svntools.php';
+
+if ( version_compare(PHP_VERSION, '5.0.0', '<') )
+	error("You need PHP version 5 or more to run this script\n");
+
+$phpCommand = isset($_SERVER['_']) ? $_SERVER['_'] : 'php';
+$phpCommandArguments = implode(' ', $_SERVER['argv']);
 
 if ( ! ( $options = get_options() ) || $options['help'] )
 	display_usage();
+
+if ( $options['howto'] )
+	display_howto();
+
+if ( ! check_svn_version() )
+	error("You need the subversion 'svn' program at least at version " . SVN_MIN_VERSION . "\n");
 
 if ( ! $options['no-check-svn'] && has_uncommited_changes('.') )
 	error("Uncommited changes exist in the working folder.\n");
@@ -25,18 +55,19 @@ if ( $isPre ) {
 }
 $mainversion = $version{0} . '.0';
 
-echo color("\nTiki release process started for version '$version.$subrelease'\n", 'cyan');
+echo color("\nTiki release process started for version '$version" . ( $subrelease ? " $subrelease" : '' ) . "'\n", 'cyan');
 if ( $isPre )
 	echo color("The script is running in 'pre-release' mode, which means that no subversion tag will be created.\n", 'yellow');
 
-if ( important_step('Update working copy to the last revision') ) {
+if ( ! $options['no-first-update'] && important_step('Update working copy to the last revision') ) {
+	echo "Update in progress...";
 	update_working_copy('.');
 
-	if ( has_uncommited_changes('.') )
-		error("Uncommited changes exist in the working folder.\n");
+	if ( ! $options['no-check-svn'] && has_uncommited_changes('.') )
+		error("\rUncommited changes exist in the working folder.\n");
 
 	$revision = (int) get_info('.')->entry->commit['revision'];
-	info(">> Checkout updated to revision $revision.");
+	info("\r>> Checkout updated to revision $revision.");
 }
 
 if ( empty($subrelease) ) {
@@ -53,16 +84,47 @@ if ( empty($subrelease) ) {
 	$secdbVersion = "$version$subrelease";
 }
 
+if ( ! $options['no-readme-update'] && important_step("Update '" . README_FILENAME . "' file") ) {
+	update_readme_file($packageVersion, $version);
+	info('>> ' . README_FILENAME . ' file updated.');
+	important_step('Commit updated ' . README_FILENAME . ' file', true, "[REL] Update " . README_FILENAME . " file for $secdbVersion");
+}
+
 if ( ! $options['no-lang-update'] && important_step("Update language files") ) {
-	passthru("php get_strings.php quiet");
+	passthru("$phpCommand get_strings.php quiet");
 	$removeFiles = glob('lang/*/old.php');
 	$removeFiles[] = 'temp/permstrings.tpl';
 	$removeFiles[] = 'temp/prefnames.tpl';
 	foreach ( $removeFiles as $rf ) unlink($rf);
 	unset($removeFiles);
 	info('>> Language files updated and temporary files removed.');
-	if ( important_step("Commit updated language files") )
-		commit("[REL] Update language.php files for $secdbVersion");
+	important_step('Commit updated language files', true, "[REL] Update language.php files for $secdbVersion");
+}
+
+if ( ! $options['no-changelog-update'] && important_step("Update '" . CHANGELOG_FILENAME . "' file (using final version number '$version')") ) {
+	if ( $ucf = update_changelog_file($mainversion) ) {
+		if ( $ucf['nbCommits'] == 0 ) {
+			info('>> Changelog updated (last commits were already inside)');
+		} else {
+			if ( $ucf['sameFinalVersion'] ) {
+				info(">> There were already some commits for the same final version number in the changelog. Merging them with the new ones.");
+			}
+			info(">> Changelog updated with {$ucf['nbCommits']} new commits (revision {$ucf['firstRevision']} to {$ucf['lastRevision']}), excluding duplicates, merges and release-related commits.");
+		}
+		important_step("Commit new " . CHANGELOG_FILENAME, true, "[REL] Update " . CHANGELOG_FILENAME . " for $secdbVersion");
+	} else error('Changelog update failed.');
+	unset($ucf);
+}
+
+$nbCommiters = 0;
+if ( ! $options['no-copyright-update'] && important_step("Update '" . COPYRIGHTS_FILENAME . "' file (using final version number '$version')") ) {
+	if ( $ucf = update_copyright_file($mainversion) ) {
+		info("\r>> Copyrights updated: "
+			. ( $ucf['newContributors'] == 0 ? 'No new contributor, ' : "+{$ucf['newContributors']} contributor(s), " )
+			. ( $ucf['newCommits'] == 0 ? 'No new commit' : "+{$ucf['newCommits']} commit(s)" )
+		);
+		important_step("Commit new " . COPYRIGHTS_FILENAME, true, "[REL] Update " . COPYRIGHTS_FILENAME . " for $secdbVersion");
+	} else error('Copyrights update failed.');
 }
 
 if ( ! $options['no-check-php'] && important_step("Check syntax of all PHP files") ) {
@@ -74,26 +136,37 @@ if ( ! $options['no-check-php'] && important_step("Check syntax of all PHP files
 
 if ( ! $options['no-secdb'] && important_step("Generate SecDB file 'db/tiki-secdb_{$version}_mysql.sql'") ) {
 	write_secdb( ROOT . "/db/tiki-secdb_{$version}_mysql.sql", ROOT, $secdbVersion );
-	if ( important_step("Commit SecDB file") )
-		commit("[REL] SecDB for $secdbVersion");
+	important_step("Commit SecDB file", true, "[REL] SecDB for $secdbVersion");
 }
 
 if ( $isPre ) {
-	if ( important_step("Build packages files (based on the branch)") ) {
+	if ( ! $options['no-packaging'] && important_step("Build packages files (based on the branch)") ) {
 		build_packages($packageVersion, $branch);
 		echo color("\nMake sure these tarballs are tested by at least 3 different people.\n\n", 'cyan');
 	} else echo color("This was the last step.\n", 'cyan');
 } else {
-	$fb = full( $branch );
-	$ft = full( $tag );
-	$revision = (int) get_info( ROOT )->entry->commit['revision'];
 
-	if ( important_step("Tag release using branch '$branch' at revision $revision") ) {
-		`svn copy $fb -r$revision $ft -m "[REL] Tagging release"`;
-		info('>> Tag created.');
+	if ( ! $options['no-tagging'] ) {
+		$fb = full( $branch );
+		$ft = full( $tag );
+
+		$tagAlreadyExists = isset(get_info($ft)->entry);
+		if ( $tagAlreadyExists && important_step("The Tag '$tag' already exists: Delete the existing tag in order to create a new one") ) {
+			`svn rm $ft -m "[REL] Deleting tag '$tag' in order to create a new one"`;
+			$tagAlreadyExists = false;
+			info(">> Tag '$tag' deleted.");
+		}
+
+		if ( ! $tagAlreadyExists ) {
+			$revision = (int) get_info( ROOT )->entry->commit['revision'];
+			if ( important_step("Tag release using branch '$branch' at revision $revision") ) {
+				`svn copy $fb -r$revision $ft -m "[REL] Tagging release"`;
+				info(">> Tag '$tag' created.");
+			}
+		}
 	}
 
-	if ( important_step("Build packages files (based on the '$tag' tag)") ) {
+	if ( ! $options['no-packaging'] && important_step("Build packages files (based on the '$tag' tag)") ) {
 		build_packages($packageVersion, $tag);
 		echo color("\nUpload the files on SourceForge.\nInstructions can be found here: http://tinyurl.com/59uubv\n\n", 'cyan');
 	} else echo color("This was the last step.\n", 'cyan');
@@ -102,9 +175,20 @@ if ( $isPre ) {
 // Helper functions
 
 function write_secdb( $file, $root, $version ) {
-	$fp = fopen( $file, 'w+' );
-	fwrite( $fp, "DELETE FROM `tiki_secdb` WHERE `tiki_version` = '$version';\n\n" );
-	md5_check_dir( $root, $root, $fp, $version );
+	if ( ! ($fp = @fopen($file, 'w+')) ) {
+		error('The SecDB file "' . $file . '" is not writable or can\'t be created.');
+		die;
+	}
+
+	$queries = array();
+	md5_check_dir( $root, $root, $version, $queries );
+
+	if ( ! empty($queries) ) {
+		sort($queries);
+		fwrite( $fp, "DELETE FROM `tiki_secdb` WHERE `tiki_version` = '$version';\n\n" );
+		foreach ( $queries as $q ) fwrite( $fp, "$q\n" );
+	}
+
 	fclose( $fp );
 
 	if ( $file_exists = file_exists($file) ) {
@@ -116,20 +200,33 @@ function write_secdb( $file, $root, $version ) {
 	}
 }
 
-function md5_check_dir($root,$dir,$fp,$version) { // save all files in $result
+function md5_check_dir($root, $dir, $version, &$queries) {
 	$d = dir($dir);
 	while (false !== ($e = $d->read())) {
 		$entry = $dir . '/' . $e;
 		if ( is_dir($entry) ) {
 			// do not descend and no CVS/Subversion files
 			if ( $e != '..' && $e != '.' && $e != 'CVS' && $e != '.svn' && $entry!='./templates_c') {
-				md5_check_dir($root, $entry, $fp, $version);
+				md5_check_dir($root, $entry, $version, $queries);
 			}
 		} else {
 			if ( substr($e, -4, 4) == ".php" && realpath( $entry ) != __FILE__ && $entry != './db/local.php' ) {
-				$file = mysql_real_escape_string( '.' . substr( $entry, strlen( $root ) ) );
+				$file = '.' . substr( $entry, strlen( $root ) );
+
+				if ( ! preg_match('/^[a-zA-Z0-9\/ _+.-]+$/', $file)
+					&& ( ! function_exists('mysql_real_escape_string') || ! ( $file = @mysql_real_escape_string($file) ) )
+				) {
+					global $phpCommand, $phpCommandArguments;
+					error("SecDB step failed because some filenames need escaping but no MySQL connection has been found."
+						. "\nTry this command line instead (replace HOST, USER and PASS by a valid MySQL host, user and password) :"
+						. "\n\n\t" . $phpCommand
+						. " -d mysql.default_host=HOST -d mysql.default_user=USER -d mysql.default_password=PASS "
+						. $phpCommandArguments . "\n"
+					);
+				}
+
 				$hash = md5_file($entry);
-				fwrite( $fp, "INSERT INTO `tiki_secdb` (`md5_value`, `filename`, `tiki_version`, `severity`) VALUES('$hash', '$file', '$version', 0);\n" );
+				$queries[] = "INSERT INTO `tiki_secdb` (`filename`, `md5_value`, `tiki_version`, `severity`) VALUES('$file', '$hash', '$version', 0);";
 			}
 		}
 	}
@@ -143,32 +240,58 @@ function build_packages($releaseVersion, $svnRelativePath) {
 	passthru( "ls ~/tikipack/$releaseVersion" );
 }
 
-function check_php_syntax(&$dir, &$error_msg) {
-	print "."; usleep (100000);
+function get_php_files_list($dir, &$entries) {
 	$d = dir($dir);
-
-	while (false !== ($e = $d->read())) {
-		$entry = $dir.'/'.$e;
-		if(is_dir($entry)) {
-			if($e != '..' && $e != '.' && $e != 'CVS' && $e != '.svn' && $entry!='./templates_c') { // do not descend and no CVS/Subversion files
-				if ( ! check_php_syntax($entry, $error_msg) ) return false;
+	while ( false !== ($e = $d->read()) ) {
+		$entry = $dir . '/' . $e;
+		if ( is_dir($entry) ) {
+			// do not descend and no CVS/Subversion files
+			if ( $e != '..' && $e != '.' && $e != 'CVS' && $e != '.svn' && $entry != './templates_c' ) {
+				if ( ! get_php_files_list($entry, $entries) ) return false;
 			}
-		} else {
-			if ( substr($e,-4,4) == ".php" && realpath( $entry ) != __FILE__ ) {
-				$return_var = 0;
-				$output = null;
-				exec("php -l $entry", $output, $return_var);
-				if ( $return_var !== 0 ) {
-					$error_msg = "\nParsing error in '$entry' ($return_var)\n";
-					return false;
-				}
-			}
+		} elseif ( substr($e,-4,4) == ".php" && realpath( $entry ) != __FILE__ ) {
+			$entries[] = $entry;
 		}
 	}
-
 	$d->close();
-	unset($return_var, $output, $entry, $d);
+	return true;
+}
 
+function display_progress_percentage($alreadyDone, $toDo, $message) {
+	$onePercent = round($toDo / 100);
+	if ( $alreadyDone % $onePercent === 0 || $alreadyDone == $toDo ) {
+		$percentage = ( $alreadyDone == $toDo ) ? 100 : min(100, $alreadyDone / $onePercent);
+		printf("\r$message", min(100, $percentage));
+	}
+}
+
+function check_php_syntax(&$dir, &$error_msg, $retry = 10) {
+	global $phpCommand;
+
+	$entries = array();
+	get_php_files_list($dir, $entries);
+
+	$nbEntries = count($entries);
+	for ( $i = 0 ; $i < $nbEntries ; $i++ ) {
+		display_progress_percentage($i, $nbEntries, '%d%% of files passed the syntax check');
+		$return_var = 0;
+		$output = null;
+		exec("$phpCommand -l {$entries[$i]} 2>&1", $output, $return_var);
+		$fullOutput = implode("\n", $output);
+		if ( strpos($fullOutput, 'Segmentation fault') !== false ) {
+			// If php -l command segfaults, wait and retry (it seems to happen quite often on some environments for this command)
+			print "\r[Retrying due to a Segfault...]";
+			sleep(1);
+			$i--;
+		} elseif ( $return_var !== 0 ) {
+			$fullOutput = trim($fullOutput);
+			$error_msg = ( $fullOutput == '' ) ? "\nParsing error in '{$entries[$i]}' ($return_var)\n" : "\n$fullOutput";
+			return false;
+		}
+		unset($output, $return_var);
+	}
+
+	echo "\n";
 	return true;
 }
 
@@ -177,18 +300,33 @@ function get_options() {
 
 	$argv = array();
 	$options = array(
+		'howto' => false,
 		'help' => false,
+		'http-proxy' => false,
 		'no-check-svn' => false,
 		'no-check-php' => false,
+		'no-first-update' => false,
+		'no-readme-update' => false,
 		'no-lang-update' => false,
+		'no-changelog-update' => false,
+		'no-copyright-update' => false,
 		'no-secdb' => false,
+		'no-packaging' => false,
+		'no-tagging' => false,
 		'force-yes' => false
 	);
 
 	foreach ( $_SERVER['argv'] as $arg ) {
 		if ( substr($arg, 0, 2) == '--' ) {
 			if ( ( $opt = substr($arg, 2) ) != '' && isset($options[$opt]) ) {
-				$options[substr($arg, 2)] = true;
+				$options[$opt] = true;
+			} elseif ( substr($arg, 2, 11) == 'http-proxy=' ) {
+				if ( ( $proxy = substr($arg, 13) ) != '' ) {
+					$options[substr($arg, 2, 10)] = stream_context_create( array( 'http' => array(
+						'proxy' => 'tcp://' . $proxy,
+						'request_fulluri' => true
+					) ) );
+				} else $options[substr($arg, 2, 10)] = true;
 			} else {
 				error("Unknown option $arg. Try using --help option.\n");
 			}
@@ -199,58 +337,463 @@ function get_options() {
 	$_SERVER['argv'] = $argv;
 	unset($argv);
 
+	if ( $options['http-proxy'] === true )
+		error("The --http-proxy option need a value. Use it this way: --http-proxy=HOST_DOMAIN:PORT_NUMBER");
+
 	if ( $_SERVER['argc'] == 2 )
 		$_SERVER['argv'][] = '';
 
 	return $options;
 }
 
-function important_step($msg, $increment_step = true) {
+function important_step($msg, $increment_step = true, $commit_msg = false) {
 	global $options;
 	static $step = 0;
+
+	// Auto-Skip the step if this is a commit step and if there is nothing to commit
+	if ( $commit_msg && ! has_uncommited_changes('.') ) return false;
+
+	// Increment step number if needed
 	if ( $increment_step ) $step++;
 
+	$do_step = false;
 	if ( $options['force-yes'] ) {
 		important("\n$step) $msg...");
-		return true;
+		$do_step = true;
 	} else {
 		important("\n$step) $msg?");
-		$c = readline('[Y/n/q] ');
+
+		$prompt = '[Y/n/q/?] ';
+		if ( function_exists('readline') ) {
+			// readline function requires php readline extension...
+			$c = readline($prompt);
+		} else {
+			echo $prompt;
+			$c = rtrim( fgets( STDIN ), "\n" );
+		}
+
 		switch ( strtolower($c) ) {
 			case 'y': case '':
-				return true;
+				$do_step = true;
 				break;
 			case 'n':
 				info(">> Skipping step $step.");
-				return false;
+				$do_step = false;
 				break;
 			case 'q':
 				die;
 				break;
 			default:
-				info(">> Unknown answer '$c'. You have to type 'y' (Yes), 'n' (No) or 'q' (Quit) and press Enter.");
+				if ( $c != '?' ) info(color(">> Unknown answer '$c'.", 'red'));
+				info(">> You have to type 'y' (Yes), 'n' (No) or 'q' (Quit) and press Enter.");
 				return important_step($msg, false);
 		}
 	}
+
+	if ( $commit_msg && $do_step && $revision = commit($commit_msg) )
+		info(">> Commited revision $revision.");
+
+	return $do_step;
+}
+
+function update_changelog_file($newVersion) {
+	if ( ! is_readable(CHANGELOG) || ! is_writable(CHANGELOG) || ! ($handle = @fopen(CHANGELOG, "r")) ) {
+		error('The changelog file "' . CHANGELOG . '" is not readable or writable.');
+		die;
+	}
+	
+	$isNewMajorVersion = substr($newVersion, -1) == 0;
+	$releaseNotesURL = '<http://tikiwiki.org/ReleaseNotes'.str_replace('.', '', $newVersion).'>';
+	$parseLogs = $sameFinalVersion = $skipBuffer = false;
+	$lastReleaseMajorNumber = -1;
+	$minRevision = $currentParsedRevision = 0;
+	$lastReleaseLogs = array();
+	$versionMatches = array();
+	$newChangelog = '';
+	$newChangelogEnd = '';
+	
+	if ( $handle ) {
+		while ( ! feof($handle) ) {
+			$buffer = fgets($handle);
+			if ( empty($buffer) ) continue;
+	
+			if ( preg_match('/^Version (\d+)\.(\d+)/', $buffer, $versionMatches) ) {
+				if ( $versionMatches[1].'.'.$versionMatches[2] == $newVersion ) {
+					// The changelog file already contains log for the same final version
+					$sameFinalVersion = true;
+					$skipBuffer = true;
+				}
+				$parseLogs = true;
+				$lastReleaseMajorNumber = $versionMatches[1];
+/*				if ( $lastReleaseMajorNumber == 0 || $parseLogs ) {
+					$parseLogs = (
+						$lastReleaseMajorNumber == 0
+						|| ( ! $isNewMajorVersion && $lastReleaseMajorNumber == 0 )
+						|| ( $isNewMajorVersion && $versionMatches[1] == $lastReleaseMajorNumber )
+					);
+					$lastReleaseMajorNumber = $versionMatches[1];
+					if ( $parseLogs ) $minRevision = 0;
+				}
+*/
+			} elseif ( $parseLogs ) {
+				$matches = array();
+				if ( preg_match('/^r(\d+) \|/', $buffer, $matches) ) {
+					$skipBuffer = false;
+					if ( $minRevision == 0 ) {
+						$minRevision = (int)$matches[1];
+					}
+					$currentParsedRevision = (int)$matches[1];
+				} elseif ( ! $skipBuffer && $currentParsedRevision > 0 && $buffer[0] != '-' ) {
+					if ( isset( $lastReleaseLogs[$currentParsedRevision] ) ) {
+						$lastReleaseLogs[$currentParsedRevision] .= $buffer;
+					} else {
+						$lastReleaseLogs[$currentParsedRevision] = $buffer;
+					}
+				}
+			}
+			if ( ! $skipBuffer ) {
+				if ( $lastReleaseMajorNumber == -1 ) {
+					$newChangelog .= $buffer;
+				} else {
+					$newChangelogEnd .= $buffer;
+				}
+			}
+		}
+		fclose($handle);
+	}
+
+	$newChangelog .= <<<EOS
+Version $newVersion
+$releaseNotesURL
+------------------
+
+----------------------------------------------
+
+EOS;
+
+	$return = array('nbCommits' => 0, 'sameFinalVersion' => $sameFinalVersion);
+	$matches = array();
+	if ( $minRevision > 0 ) {
+		if ( preg_match_all('/^r(\d+) \|.*\n\n(.*)\-{46}/Ums', get_logs('.', $minRevision), $matches, PREG_SET_ORDER) ) {
+			foreach ( $matches as $logEntry ) {
+
+				// Do not keep merges and release-related logs
+				$commitFlag = substr(trim($logEntry[2]), 0, 5);
+				if ( $commitFlag == '[MRG]' || $commitFlag == '[REL]' ) continue;
+
+				// Add log entries only if they were not already listed (same revision number or same log message) in the previous version
+				if ( ! isset($lastReleaseLogs[$logEntry[1]]) && ! in_array("\n".$logEntry[2], $lastReleaseLogs) ) {
+					$newChangelog .= $logEntry[0]."\n";
+
+					$lastReleaseLogs[] = "\n".$logEntry[2];
+					if ( $return['nbCommits'] == 0 ) $return['firstRevision'] = $logEntry[1];
+					$return['lastRevision'] = $logEntry[1];
+					$return['nbCommits']++;
+				}
+			}
+		}
+	}
+
+	return file_put_contents(CHANGELOG, $newChangelog . $newChangelogEnd) ? $return : false;
+}
+
+function update_copyright_file($newVersion) {
+	if ( ! is_readable(COPYRIGHTS) || ! is_writable(COPYRIGHTS) ) {
+		error('The copyright file "' . COPYRIGHTS . '" is not readable or writable.');
+		die;
+	}
+
+	global $nbCommiters;
+	$nbCommiters = 0;
+	$contributors = array();
+	$repositoryInfo = get_info(TIKISVN);
+
+	$oldContributors = parse_copyrights();
+	get_contributors_data(TIKISVN, $contributors, 1, (int)$repositoryInfo->entry->commit['revision']);
+	ksort($contributors);
+
+	$totalContributors = count($contributors);
+	$now = gmdate('Y-m-d');
+
+	$copyrights = <<<EOS
+Tiki Copyright
+----------------
+
+The following list attempts to gather the copyright holders for tikiwiki
+as of version $newVersion.
+
+Accounts listed below with commits have contributed source code to CVS or SVN. 
+Please note that even more people contributed on various other aspects (documentation, 
+bug reporting, testing, etc.)
+
+This is how we implement the Tikiwiki Social Contract.
+http://dev.tikiwiki.org/SocialContract
+
+List of members of the Community
+As of $now, the community has:
+  * $totalContributors members on Sourceforge,
+  * $nbCommiters of those people who made at least one code commit
+
+This list is automatically generated and alphabetically sorted
+from subversion repository by the following script:
+  doc/devtools/release_copyright.php
+
+Counting the commits is not as trivial as it may sound. If your number of commits
+seems incorrect, it could be that the script is not detecting them all. This 
+has been reported especially for commits early on in the project. Nonetheless, 
+the list provides a general idea.
+
+====================================================================
+
+EOS;
+
+	$return = array('newCommits' => 0, 'newContributors' => 0);
+	foreach ( $contributors as $author => $infos ) {
+		if ( isset($oldContributors[$author]) ) {
+			if ( $oldContributors[$author] != $infos ) {
+				// Quickfix to keep old dates which may be different due to which timezone is used
+				if ( isset($oldContributors[$author]['First Commit']) ) {
+					$infos['First Commit'] = $oldContributors[$author]['First Commit'];
+					if ( $oldContributors[$author]['Number of Commits'] == $infos['Number of Commits'] ) {
+						$infos['Last Commit'] = $oldContributors[$author]['Last Commit'];
+					}
+				}
+				if ( isset($infos['Number of Commits']) ) {
+					if ( isset($oldContributors[$author]['Number of Commits']) ) {
+						$return['newCommits'] += ( $infos['Number of Commits'] - $oldContributors[$author]['Number of Commits'] );
+					}
+				}
+			}
+		} else {
+			$return['newContributors']++;
+		}
+		$copyrights .= "\nNickname: $author";
+		$orderedKeys = array('Name', 'First Commit', 'Last Commit', 'Number of Commits', 'SF Role');
+		foreach ( $orderedKeys as $k ) {
+			if ( empty($infos[$k]) || ( $k == 'Name' && $infos[$k] == $author ) ) continue;
+			$copyrights .= "\n$k: " . $infos[$k];
+		}
+		$copyrights .= "\n";
+	}
+
+	return file_put_contents(COPYRIGHTS, $copyrights) ? $return : false;
+}
+
+function parse_copyrights() {
+	if ( ! $copyrights = @file(COPYRIGHTS) ) return false;
+
+	$return = array();
+	$curNickname = '';
+
+	foreach ( $copyrights as $line ) {
+		if ( empty($line) ) continue;
+		if ( substr($line, 0, 10) == 'Nickname: ' ) {
+			$curNickname = rtrim(substr($line, 10));
+			$return[$curNickname] = array();
+		} elseif ( $curNickname != '' && ( $pos = strpos($line, ':') ) !== false ) {
+			$return[$curNickname][substr($line, 0, $pos)] = rtrim(substr($line, $pos + 2));
+		}
+	}
+
+	return $return;
+}
+
+function get_contributors_data($path, &$contributors, $minRevision, $maxRevision, $step = 5000) {
+	global $nbCommiters;
+
+	if ( empty($contributors) ) {
+		get_contributors_sf_data($contributors);
+		info(">> Retrieved members list from Sourceforge.");
+	}
+
+	$minByStep = max($maxRevision - $step, $minRevision);
+	$lastLogRevision = $maxRevision;
+	echo "\rRetrieving logs from revision $minByStep to $maxRevision ...\t\t\t";
+	$logs = get_logs( $path, $minByStep, $maxRevision);
+	if ( preg_match_all('/^r(\d+) \|\s([^\|]+)\s\|\s(\d+-\d+-\d+)\s.*\n\n(.*)\-+\n/Ums', $logs, $matches, PREG_SET_ORDER) ) {
+		foreach ( $matches as $logEntry ) {
+			if ( $lastLogRevision > 0 && $logEntry[1] != $lastLogRevision - 1 && $lastLogRevision != $maxRevision ) {
+				print "\nProblem with commit ".( $lastLogRevision - 1 )."\n (trying {$logEntry[1]} after $lastLogRevision)";
+				die;
+			}
+			$lastLogRevision = $logEntry[1];
+			$author = strtolower($logEntry[2]);
+
+			// Remove empty author or authors like (no author), which may be translated depending on server locales
+			if ( empty( $author ) || $author{0} == '(' ) continue;
+
+			if ( !isset($contributors[$author]) ) $contributors[$author] = array();
+
+			$contributors[$author]['Author'] = $logEntry[2];
+			$contributors[$author]['First Commit'] = $logEntry[3];
+
+			if ( isset($contributors[$author]['Number of Commits']) ) {
+				$contributors[$author]['Number of Commits']++;
+			} else {
+				$contributors[$author]['Last Commit'] = $logEntry[3];
+				$nbCommiters++;
+				$contributors[$author]['Number of Commits'] = 1;
+			}
+		}
+	}
+	if ( $lastLogRevision > $minRevision ) get_contributors_data($path, $contributors, $minRevision, $lastLogRevision - 1, $step);
+	return $contributors;
+}
+
+function get_contributors_sf_data(&$contributors) {
+	global $options;
+	$members = '';
+	$matches = array();
+	$userParsedInfo = array();
+
+	if ( ! function_exists('iconv') )
+		error("PHP 'iconv' function is not available on this system. Impossible to get SF.net data.");
+
+	$html = $options['http-proxy'] ? file_get_contents(SF_TW_MEMBERS_URL, 0, $options['http-proxy']) : file_get_contents(SF_TW_MEMBERS_URL);
+
+	if ( !empty($html) && preg_match('/(<table.*<\/\s*table>)/sim', $html, $matches) ) {
+		$usersInfo = array();
+		if ( preg_match_all('/<tr[^>]*>'.str_repeat('\s*<td[^>]*>(.*)<\/td>\s*',4).'<\/\s*tr>/Usim', $matches[0], $usersInfo, PREG_SET_ORDER) ) {
+			foreach ( $usersInfo as $k => $userInfo ) {
+				$userInfo = array_map('trim', array_map('strip_tags', $userInfo));
+				$user = strtolower($userInfo['2']);
+				if ( empty($user) ) continue;
+				$contributors[$user] = array(
+					'Name' => html_entity_decode(iconv("ISO-8859-15", "UTF-8", $userInfo['1']), ENT_COMPAT, 'UTF-8'),
+					'SF Role' => $userInfo['3']
+				);
+			}
+		}
+	} else {
+		error('Impossible to get SF.net users information. If you need to use a web proxy, try the --http-proxy option.');
+		die;
+	}
+}
+
+function update_readme_file($releaseVersion, $mainVersion) {
+	if ( ! is_readable(README) || ! is_writable(README) ) {
+		error('The README file "' . README . '" is not readable or writable.');
+		die;
+	}
+
+	$year = gmdate('Y');
+	$copyrights_file = COPYRIGHTS_FILENAME;
+	$license_file = LICENSE_FILENAME;
+
+	$readme = <<<EOF
+Tiki! The wiki with a lot of features!
+Version $releaseVersion
+
+
+DOCUMENTATION
+
+* The documentation for $mainVersion version is under construction on http://doc.tikiwiki.org.
+  You're encouraged to contribute.
+
+* It is highly recommended that you refer to the online documentation:
+* http://doc.tikiwiki.org/Installation for a setup guide
+* http://doc.tikiwiki.org/Install+Problems for what to do in case of problems
+
+* Notes about the releases are accessible from http://tikiwiki.org/TikiReleases
+* Tikiwiki has an active IRC channel, #tikiwiki on irc.freenode.net
+
+
+INSTALLATION
+
+* There is a file INSTALL in this directory with notes on how to setup and
+  configure Tiki. Again, see http://doc.tikiwiki.org/InstallTiki for the latest install help.
+
+
+COPYRIGHT
+
+Copyright (c) 2002-$year, Luis Argerich, Garland Foster, Eduardo Polidor, et. al. All
+Rights Reserved. See $copyrights_file for details and a complete list of authors.
+Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See $license_file for details.
+
+... Have fun!
+
+EOF;
+
+	return (bool)file_put_contents(README, $readme);
 }
 
 function display_usage() {
-	die( "Usage: php doc/devtools/release.php [ Options ] <version-number> [ <subrelease> ]
+	echo "Usage: php doc/devtools/release.php [ Options ] <version-number> [ <subrelease> ]
 Examples:
 	php doc/devtools/release.php 2.0 preRC3
 	php doc/devtools/release.php 2.0 RC3
 	php doc/devtools/release.php 2.0
 
 Options:
+	--howto			: display the Tiki release HOWTO
 	--help			: display this help
+	--http-proxy=HOST:PORT	: use an http proxy to get copyright data on sourceforge
 	--no-check-svn		: do not check if there is uncommited changes on the checkout used for the release
 	--no-check-php		: do not check syntax of all PHP files
+	--no-first-update	: do not svn update the checkout used for the release as the first step
+	--no-readme-update	: do not update the '" . README_FILENAME . "' file
 	--no-lang-update	: do not update lang/*/language.php files
+	--no-changelog-update	: do not update the '" . CHANGELOG_FILENAME . "' file
+	--no-copyright-update	: do not update the '" . COPYRIGHTS_FILENAME . "' file
 	--no-secdb		: do not update SecDB footprints
+	--no-packaging		: do not build packages files
+	--no-tagging		: do not tag the release on the remote svn repository
 	--force-yes		: disable the interactive mode (same as replying 'y' to all steps)
 
 Notes:
 	Subreleases begining with 'pre' will not be tagged.
-" );
+";
+	die;
 }
 
+function display_howto() {
+	echo <<<EOS
+--------------------------
+   HOWTO release Tiki
+--------------------------
+
+1/ Preliminary manual tasks
+   - Test the whole Installer and check if everything is OK
+   - run doc/devtools/securitycheck.php and check each "potentially unsafe" file.
+   - cd db/convertscripts and run convertsqls.sh
+   - in lib/setup/twversion.class.php
+     - increment the version number in the constructor
+     - update list of valid releases in getVersions()
+   - commit your changes with this commit message (change \$VERSION by the version of the release):
+	[REL] Preparing \$VERSION release
+
+2/ Create and test pre-release packages by executing the script with the release
+   version as argument, using the format major.minor.sub 
+   Use the --help option of the release script for advanced help on options (like using a web proxy)
+
+   >>  php doc/devtools/release.php 3.0 preRC4
+
+3/ Test the produced "tarballs" and share the testing
+   In case of a major version (x.0), you need at least 3 installations from 3 different people
+
+4/ After testing, launch the release script and follow the answer 'y' to every steps
+   ( This will make automated tests, update README / copyrights / changelog / languages files,
+       tag the release, build the release "tarballs" ... )
+
+   >>  php doc/devtools/release.php 3.0 RC4
+   
+5/ Test the produced "tarballs" and share the testing
+   In case of a major version (x.0), you need at least 3 installations from 3 different people
+
+6/ When the "tarballs" are tested, follow the steps to upload on SourceForge:
+   http://tinyurl.com/59uubv
+
+7/ Announce the good news on devel mailing-list
+   and ask the TAG (TikiWiki Admin Group) through the admin mailing-list
+   to launch the announce-speading process (Freshmeat, SourceForge and tikiwiki.org (manually for now).
+
+post/
+   Update appropriate http://tikiwiki.org/stable.version file with new release version
+   (or ask the TAG to do this)
+
+All that process has to be relayed on live irc channel : 
+irc://irc.freenode.net/#tikiwiki
+
+EOS;
+	exit;
+}

@@ -1,17 +1,18 @@
 {title help="Menus"}{tr}Admin Menus{/tr}{/title}
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}
-  {tr}To use menus in a <a href="tiki-admin_modules.php">module</a>, <a href="tiki-admin.php?page=siteid">Site identity</a> or a template, use {literal}{menu id=x}{/literal}, where x is the ID of the menu.{/tr}
-  <hr />
-  {tr}To use <a target="tikihelp" href="http://phplayersmenu.sourceforge.net/">phplayersmenu</a>, you can use one of the three following syntaxes:{/tr} 
-  <ul>
-    <li>{literal}{phplayers id=X}{/literal}</li>
-    <li>{literal}{phplayers id=X type=horiz}{/literal}</li>
-    <li>{literal}{phplayers id=X type=vert}{/literal}</li>
-  </ul>
-  {tr}This will work well (or not!) depending on your theme. To learn more about <a target="tikihelp" href="http://themes.tikiwiki.org">themes</a>{/tr}<br />
-  {tr}To use a menu in a tiki format:{/tr} {literal}{menu id=X}{/literal}<br />
-  {tr}To use menu in a css/suckerfish format:{/tr} {literal}{menu id=X css=y}{/literal}
+	{tr}To use menus in a <a href="tiki-admin_modules.php">module</a>, <a href="tiki-admin.php?page=siteid">Site identity</a> or a template, use {literal}{menu id=x}{/literal}, where x is the ID of the menu.{/tr}
+	<hr />
+	{tr}To use <a target="tikihelp" href="http://phplayersmenu.sourceforge.net/">phplayersmenu</a>, you can use one of the three following syntaxes:{/tr}
+	<ul>
+		<li>{literal}{phplayers id=X}{/literal}</li>
+		<li>{literal}{phplayers id=X type=horiz}{/literal}</li>
+		<li>{literal}{phplayers id=X type=vert}{/literal}</li>
+	</ul>
+	{tr}This will work well (or not!) depending on your theme. To learn more about <a target="tikihelp" href="http://themes.tikiwiki.org">themes</a>{/tr}<br />
+	{tr}To use a menu in a tiki format:{/tr} {literal}{menu id=X}{/literal}<br />
+	{tr}To use menu in a css/suckerfish format:{/tr} {literal}{menu id=X css=y}{/literal}<br />
+	{tr}To customizing the menu's css id (#id):{/tr} {literal}{menu id=X css_id=custom_name}{/literal}
 {/remarksbox}
 
 {if $menuId > 0}

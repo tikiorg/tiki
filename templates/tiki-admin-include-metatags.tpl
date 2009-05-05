@@ -10,19 +10,20 @@
 
 <div class="adminoptionboxchild">
 <div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" id="prefs_metatag_freetags" name="prefs_metatag_freetags" {if $prefs.metatag_freetags eq 'y'}checked="checked" {/if}/></div>
-	<div class="adminoptionlabel"><label for="prefs_metatag_freetags">{tr}Include freetags{/tr}.</label>
+<div class="adminoption"><input type="checkbox" id="metatag_freetags" name="metatag_freetags" 
+		{if $prefs.metatag_freetags eq 'y'} checked="checked" {/if} /></div>
+	<div class="adminoptionlabel"><label for="metatag_freetags">{tr}Include freetags{/tr}.</label>
 	{if $prefs.feature_freetags ne 'y'}<br />{icon _id=information}{tr}Feature is disabled{/tr}. <a href="tiki-admin.php?page=features" title="{tr}Features{/tr}">{tr}Enable now{/tr}</a>.{/if}
 	</div>
 </div>
 <div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" id="prefs_metatag_threadtitle" name="prefs_metatag_threadtitle" {if $prefs.metatag_threadtitle eq 'y'}checked="checked"{/if} /></div>
+	<div class="adminoption"><input type="checkbox" id="metatag_threadtitle" name="metatag_threadtitle" {if $prefs.metatag_threadtitle eq 'y'}checked="checked"{/if} /></div>
 	<div class="adminoptionlabel"><label for="prefs_metatag_threadtitle">{tr}Use thread title instead{/tr}.</label>
 	{if $prefs.feature_forums ne 'y'}<br />{icon _id=information}{tr}Feature is disabled{/tr}. <a href="tiki-admin.php?page=features" title="{tr}Features{/tr}">{tr}Enable now{/tr}</a>.{/if}
 	</div>
 </div>
 <div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" id="prefs_metatag_imagetitle" name="prefs_metatag_imagetitle" {if $prefs.metatag_imagetitle eq 'y'}checked="checked"{/if} /></div>
+	<div class="adminoption"><input type="checkbox" id="metatag_imagetitle" name="metatag_imagetitle" {if $prefs.metatag_imagetitle eq 'y'}checked="checked"{/if} /></div>
 	<div class="adminoptionlabel"><label for="prefs_metatag_imagetitle">{tr}Use image title instead{/tr}.</label>
 	{if $prefs.feature_galleries ne 'y'}<br />{icon _id=information}{tr}Feature is disabled{/tr}. <a href="tiki-admin.php?page=features" title="{tr}Features{/tr}">{tr}Enable now{/tr}</a>.{/if}
 	</div>

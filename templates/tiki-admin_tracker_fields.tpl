@@ -17,6 +17,9 @@
 {else}
 <h2>{tr}Edit tracker field{/tr}</h2>
 {/if}
+{if $error}
+	{remarksbox  type="warning" title="{tr}Errors{/tr}"}{tr}{$error}{/tr}{/remarksbox}
+{/if}
 <form action="tiki-admin_tracker_fields.php" method="post">
 {if $find}<input type="hidden" name="find" value="{$find|escape}" />{/if}
 {if $max and $max ne $prefs.maxRecords}<input type="hidden" name="max" value="{$max|escape}" />{/if}
@@ -45,7 +48,7 @@
 
 {if $prefs.feature_help eq 'y'}
 <a href="{$prefs.helpurl}Tracker+Field+Type" target="tikihelp" class="tikihelp" title="{tr}Trackers{/tr}">
-<img src="img/icons/help.gif" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
+{icon _id='help' alt='{tr}help{/tr}'}</a>{/if}
 
 <div  id='z' {if $showit}style="display:block;"{else}style="display:none;"{/if}><input type="text" name="options" value="{$options|escape}" size="50" /></div>
 </td></tr>

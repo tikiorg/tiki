@@ -1,7 +1,7 @@
 <div id="siteheader" class="clearfix">
 	<div id="header-top">
 		<div id="sitelogo" style="padding-left:70px"><h1><img style="border:medium none; vertical-align:middle" alt="{tr}TikiWiki CMS/Groupware{/tr}" src="img/tiki/tiki3.png" />
-			<span style="vertical-align:middle">{tr}Tiki installer{/tr} v{$tiki_version_name} <a title="{tr}Help{/tr}" href="http://doc.tikiwiki.org/Installation" target="help"><img style="border:0" src='img/icons/help.gif' alt="{tr}Help{/tr}" /></a></span></h1>
+			<span style="vertical-align:middle">{tr}Tiki installer{/tr} v{$tiki_version_name} <a title="{tr}Help{/tr}" href="http://doc.tikiwiki.org/Installation" target="help"><img style="border:0" src='pics/icons/help.png' alt="{tr}Help{/tr}" /></a></span></h1>
 		</div>
 	</div>
 </div>
@@ -48,7 +48,7 @@
 <h1>{tr}Read the License{/tr}</h1>
 <p>{tr}Tiki is software distributed under the LGPL license.{/tr} {tr} <a href="http://creativecommons.org/licenses/LGPL/2.1/" target="_blank">Here is a human-readable summary of the license below, including many translations.</a>{/tr}</p>
 <div align="center" style="margin-top:1em;">
-<iframe src="license.txt" width="700px" height="400px"> </iframe>
+<iframe src="license.txt" width="700px" height="300px"> </iframe>
 	<form action="tiki-install.php" method="post">
 {if $multi}			<input type="hidden" name="multi" value="{$multi}" />{/if}
 {if $lang}			<input type="hidden" name="lang" value="{$lang}" />{/if}
@@ -87,7 +87,7 @@
 {/if}			
 
 	<br />
-	<h2>{tr}Mail{/tr}</h2>
+	<h2>{tr}Mail{/tr}</h2><A NAME="mail"></A>
 	<p>{tr}Tiki uses the PHP <strong>mail</strong> function to send email notifications and messages.{/tr}</p>
 {if $perform_mail_test ne 'y'}
 	<p>{tr}To test your system configuration, Tiki will attempt to send a test message to you.{/tr}</p>
@@ -116,7 +116,7 @@
 	
 {if $mail_test eq 'y'}
 	<div style="border: solid 1px #000; padding: 5px; background: #a9ff9b;">
-		<p align="center"><img src="pics/icons/accept.png" alt="{tr}Success{/tr}" style="vertical-align:middle" /> {tr}Tiki was able to send a test message to {$email_test_to}.{/tr}</p>
+		<p align="center"><img src="pics/icons/accept.png" alt="{tr}Success{/tr}" style="vertical-align:middle" /> {tr}Tiki was able to send a test message to{/tr} {$email_test_to}.</p>
 	</div>
 	<p>&nbsp;</p>
 {else}
@@ -295,7 +295,6 @@
 			<option value="Personal_Blog_and_Profile">{tr}Personal Blog and Profile{/tr}</option>
 			<option value="Small_Organization_Web_Presence">{tr}Small Organization Web Presence{/tr}</option>
 			<option value="Company_Intranet">{tr}Company Intranet{/tr}</option>
-			<option value="Customer_Extranet">{tr}Customer Extranet{/tr}</option>
 			<option value="Collaborative_Community">{tr}Collaborative community{/tr}</option>
 			</select>
 			 <p>{tr}See the documentation for <a target="_blank" href="http://profiles.tikiwiki.org/Profiles_in_30_installer" class="link" title="Description of available profiles.">descriptions of the available profiles.{/tr}</a></p>
@@ -392,7 +391,7 @@
 {/if}
 
 {if isset($htaccess_error)}
-<h3>{tr}.htaccess File{/tr} <a title="{tr}Help{/tr}" href="http://doc.tikiwiki.org/Installation" target="help"><img style="border:0" src='img/icons/help.gif' alt="{tr}Help{/tr}" /></a></h3>
+<h3>{tr}.htaccess File{/tr} <a title="{tr}Help{/tr}" href="http://doc.tikiwiki.org/Installation" target="help"><img style="border:0" src='pics/icons/help.png' alt="{tr}Help{/tr}" /></a></h3>
 {tr}We recommend enabling the <strong>.htaccess</strong> file for your Tiki{/tr}. {tr}This will enable you to use SEFURLs (search engine friendly URLs) and help improve site security{/tr}. 
 <p>{tr}To enable this file, simply rename the <strong>_htaccess</strong> file (located in the main directory of your Tiki installation) to <strong>.htaccess</strong>.{/tr}</p>
 {/if}
@@ -507,7 +506,7 @@
 {if $virt}
 		<div class="box-shadow">
 			<div class="box">
-				<h3 class="box-title">{tr}MultiTiki Setup{/tr} <a title="{tr}Help{/tr}" href="http://doc.tikiwiki.org/MultiTiki" target="help"><img style="border:0" src="img/icons/help.gif" alt="{tr}Help{/tr}" /></a></h3>
+				<h3 class="box-title">{tr}MultiTiki Setup{/tr} <a title="{tr}Help{/tr}" href="http://doc.tikiwiki.org/MultiTiki" target="help"><img style="border:0" src="pics/icons/help.png" alt="{tr}Help{/tr}" /></a></h3>
 				<div class="clearfix box-data">
 				<div><a href="tiki-install.php">{tr}Default Installation{/tr}</a></div>
 {foreach key=k item=i from=$virt}

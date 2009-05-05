@@ -2690,7 +2690,7 @@ class TikiLib extends TikiDB {
 		include_once('lib/userprefs/userprefslib.php');
 
 		$bindvars = array();
-		if ($prefs['feature_friends'] == 'y') {
+		if ($prefs['feature_friends'] == 'y' && !$include_prefs) {
 			$bindvars[] = $user;
 		}
 		if ( $find ) {
@@ -2748,7 +2748,7 @@ class TikiLib extends TikiDB {
 		if ( $sort_mode != '' ) $sort_mode = 'order by '.$sort_mode;
 
 		// Need to use a subquery to avoid bad results when using a limit and an offset, with at least MySQL
-		if ($prefs['feature_friends'] == 'y') {
+		if ($prefs['feature_friends'] == 'y' && !$include_prefs) {
 			$query = "select * from (select u.* $pref_field, f.`friend` from `users_users` u $pref_join $find_join left join `tiki_friends` as f on (u.`login` = f.`friend` and f.`user`=?) $pref_where $sort_mode) as tab";
 		} else {
 			$query = "select u.* $pref_field  from `users_users` u $pref_join $find_join $pref_where $sort_mode";
@@ -3930,7 +3930,7 @@ class TikiLib extends TikiDB {
 			$bindvars = $find;
 		} elseif (is_string($find) && !empty($find)) { // or a string
 			if (!$exact_match && $find) {
-				$find = preg_replace("/(\w+)/","%\\1%",$find);
+				$find = preg_replace("/([^\s]+)/","%\\1%",$find);
 				$f = preg_split("/[\s]+/",$find,-1,PREG_SPLIT_NO_EMPTY);
 				if (empty($f)) {//look for space...
 					$mid = " where `pageName` like '%$find%'";
@@ -7097,7 +7097,7 @@ class TikiLib extends TikiDB {
 							if (!empty($options['page'])) {
 								$button .= 'page='.urlencode($options['page']).'&amp;';
 							}
-							$button .= 'hdr='.$nb_hdrs.'">'.smarty_function_icon(array('_id'=>'page_edit', 'alt'=>tra('Edit Section')), $smarty).'</a></div>';
+							$button .= 'hdr='.$nb_hdrs.'">'.smarty_function_icon(array('_id'=>'page_edit_section', 'alt'=>tra('Edit Section')), $smarty).'</a></div>';
 						} else {
 							$button = '';
 						}

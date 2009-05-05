@@ -19,7 +19,7 @@ that plugin is not finished !! -- mose
 // Valid      indicates that the tracker item is to be used as a quiz item
 
 function wikiplugin_miniquiz_help() {
-	$help = tra("Displays an miniquiz").":\n";
+	$help = tra("Displays a miniquiz").":\n";
 	$help.= "~np~{MINIQUIZ(trackerId=>1)}Instructions::Feedback{MINIQUIZ}~/np~";
 	return $help;
 }
@@ -45,7 +45,7 @@ function rcmp($a, $b) { return mt_rand(-1, 1); }
 function shuf(&$ar) { srand((double) microtime() * 10000000); uksort($ar, "rcmp"); }
 
 function wikiplugin_miniquiz($data, $params) {
-  global $tikilib, $user, $group, $prefs;
+  global $tikilib, $user, $group, $prefs, $smarty;
 	global $trklib; include_once('lib/trackers/trackerlib.php');
 	extract ($params,EXTR_SKIP);
 

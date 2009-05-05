@@ -14,7 +14,7 @@ if ( $prefs['feature_calendar'] == 'y' ) {
 	global $headerlib; $headerlib->add_cssfile('css/calendar.css',20);
 	global $calendarViewMode;
 
-	$calendarViewMode = 'month';
+	$_REQUEST['viewmode'] = 'month';
 	$group_by = 'day';
 	if (empty($module_params['calIds'])) {
 		if (!empty($_SESSION['CalendarViewGroups'])) {

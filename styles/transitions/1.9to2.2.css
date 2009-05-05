@@ -121,7 +121,6 @@ div#ajaxLoading {
 	border-bottom: 1px solid #ACCCDD;
 	margin-bottom: 4px;
 	height: 100%;
-	overflow: auto;
 	padding-top: 2px;
 }
 .post .postbody-title .checkbox { float: left; }
@@ -253,13 +252,13 @@ padding-left: 18px;
 /* Style for navbar buttons 
  *  This class has to be added in the main style sheet */
 #highlight  {
-	background-color : #eeee99 !important;
+	background-color : #eeee99;
 }
 
 /* Style for error or warning announces
  *  This class has to be added in the main style sheet */
 .error, #error{
-	background-color: #ee9999 !important;
+	background-color: #ee9999;
 	color: #000000;
 }
 

@@ -1,5 +1,6 @@
 <?php
 
+define( 'SVN_MIN_VERSION', 1.3 );
 define( 'TIKISVN', 'https://tikiwiki.svn.sourceforge.net/svnroot/tikiwiki' );
 
 function full( $relative ) { return TIKISVN . "/$relative"; }
@@ -22,6 +23,8 @@ function color( $string, $color )
 function error( $message ) { die( color( $message, 'red' ) . "\n" ); }
 function info( $message ) { echo $message . "\n"; }
 function important( $message ) { echo color($message, 'green') . "\n"; }
+
+function check_svn_version() { return (float)trim(`svn --version --quiet 2> /dev/null`) > SVN_MIN_VERSION; }
 
 function get_info( $path )
 {
@@ -152,14 +155,12 @@ function merge( $localPath, $source, $from, $to )
 function commit( $msg, $displaySuccess = true, $dieOnRemainingChanges = true )
 {
 	$msg = escapeshellarg( $msg );
-	`svn ci -m "$msg"`;
+	`svn ci -m $msg`;
 
-	if ( $dieOnRemainingChanges && has_uncommited_changes('.') ) {
+	if ( $dieOnRemainingChanges && has_uncommited_changes('.') )
 		error("Commit seems to have failed. Uncommited changes exist in the working folder.\n");
-	} else {
-		$revision = (int) get_info('.')->entry->commit['revision'];
-		info("Commited revision $revision.");
-	}
+
+	return (int) get_info('.')->entry->commit['revision'];
 }
 
 function incorporate( $working, $source )

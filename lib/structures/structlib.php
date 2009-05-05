@@ -169,6 +169,9 @@ class StructLib extends TikiLib {
 			$query = 'update `tiki_structures` set `pos`=? where `page_ref_id`=?';
 			$this->query($query,array((int)$res['pos'], (int)$page_info['page_ref_id']) );
 			$this->query($query,array((int)$page_info['pos'], (int)$res['page_ref_id']) );
+		} elseif ($page_info['pos'] > 1) { // a bug occured - try to fix
+			$query = 'update `tiki_structures` set `pos`=? where `page_ref_id`=?';
+			$this->query($query,array($page_info['pos']-1, (int)$page_info['page_ref_id']) );
 		}
 	}
   /** \brief Create a structure entry with the given name

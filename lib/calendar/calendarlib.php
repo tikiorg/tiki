@@ -283,7 +283,7 @@ class CalendarLib extends TikiLib {
 				}
 
 				/* $i is timestamp unix of the beginning of a day */
-				$j = is_array($ret[$i]) ? count($ret[$i]) : 0;
+				$j = (isset($ret[$i]) && is_array($ret[$i])) ? count($ret[$i]) : 0;
 
 				$ret[$i][$j] = $res;
 				$ret[$i][$j]['head'] = $head;

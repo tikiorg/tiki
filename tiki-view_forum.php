@@ -294,23 +294,6 @@ if ($user) {
 	$smarty->assign_by_ref('userinfo',$userinfo);
 }
 
-if ($_REQUEST["comments_threadId"] > 0) {
-    $comment_info = $commentslib->get_comment($_REQUEST["comments_threadId"]);
-
-    $smarty->assign('comment_title', isset($_REQUEST['comments_title']) ? $_REQUEST['comments_title'] : $comment_info['title']);
-    $smarty->assign('comment_data', isset($_REQUEST['comments_data']) ? $_REQUEST['comments_data'] : $comment_info['data']);
-    $smarty->assign('comment_topictype', isset($_REQUEST['comment_topictype']) ? $_REQUEST['comment_topictype'] : $comment_info["type"]);
-    $smarty->assign('comment_topicsummary', isset($_REQUEST["comment_topicsummary"]) ? $_REQUEST["comment_topicsummary"] : $comment_info["summary"]);
-    $smarty->assign('comment_topicsmiley', $comment_info["smiley"]);
-} else {
-    $smarty->assign('comment_title', isset($_REQUEST["comments_title"]) ? $_REQUEST["comments_title"] : '');
-    $smarty->assign('comment_data', isset($_REQUEST["comments_data"]) ? $_REQUEST["comments_data"] : '');
-    $smarty->assign('comment_topictype', isset($_REQUEST["comment_topictype"]) ? $_REQUEST["comment_topictype"] : '');
-    $smarty->assign('comment_topictype', 'n');
-    $smarty->assign('comment_topicsummary', '');
-    $smarty->assign('comment_topicsmiley', '');
-}
-
 if (isset($_REQUEST["comments_remove"]) && isset($_REQUEST["comments_threadId"]))
 {
     if ($tiki_p_admin_forum == 'y'
@@ -335,6 +318,24 @@ if (isset($_REQUEST["comments_remove"]) && isset($_REQUEST["comments_threadId"])
         $smarty->display("error.tpl");
         die;
     }
+		unset($_REQUEST["comments_threadId"]);
+}
+
+if ($_REQUEST["comments_threadId"] > 0) {
+		$comment_info = $commentslib->get_comment($_REQUEST["comments_threadId"]);
+
+		$smarty->assign('comment_title', isset($_REQUEST['comments_title']) ? $_REQUEST['comments_title'] : $comment_info['title']);
+		$smarty->assign('comment_data', isset($_REQUEST['comments_data']) ? $_REQUEST['comments_data'] : $comment_info['data']);
+		$smarty->assign('comment_topictype', isset($_REQUEST['comment_topictype']) ? $_REQUEST['comment_topictype'] : $comment_info["type"]);
+		$smarty->assign('comment_topicsummary', isset($_REQUEST["comment_topicsummary"]) ? $_REQUEST["comment_topicsummary"] : $comment_info["summary"]);
+		$smarty->assign('comment_topicsmiley', $comment_info["smiley"]);
+} else {
+		$smarty->assign('comment_title', isset($_REQUEST["comments_title"]) ? $_REQUEST["comments_title"] : '');
+		$smarty->assign('comment_data', isset($_REQUEST["comments_data"]) ? $_REQUEST["comments_data"] : '');
+		$smarty->assign('comment_topictype', isset($_REQUEST["comment_topictype"]) ? $_REQUEST["comment_topictype"] : '');
+		$smarty->assign('comment_topictype', 'n');
+		$smarty->assign('comment_topicsummary', '');
+		$smarty->assign('comment_topicsmiley', '');
 }
 
 $smarty->assign('comment_preview', 'n');

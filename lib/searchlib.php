@@ -409,7 +409,7 @@ class SearchLib extends TikiLib {
 
 	function find_faqs($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate) {
 		$search_faqs = array(
-			'from' => '`tiki_faqs` f , `tiki_faq_questions` q',
+			'from' => '`tiki_faq_questions` q, `tiki_faqs` f',
 			'name' => 'f.`title`',
 			'data' => 'f.`description`',
 			'hits' => 'f.`hits`',
@@ -641,7 +641,7 @@ class SearchLib extends TikiLib {
 			$search_trackers['filter'] .= " AND tti.`status` != 'p'";
 		$ret = $this->_find($search_trackers, $words, $offset, $maxRecords, $fulltext, $filter, $boolean, tra('Tracker item'), $searchDate);
 		foreach ($ret['data'] as $i=>$res) {
-			$ret['data'][$i]['pageName'] = '(#'.$res['pageName'].')'.$trklib->get_isMain_value($res['hits'], $res['pageName']);
+			$ret['data'][$i]['pageName'] = '(#'.$res['pageName'].') '.$trklib->get_isMain_value($res['hits'], $res['pageName']);
 			$ret['data'][$i]['hits'] = 'Unknown'; 
 		}
 		return $ret;

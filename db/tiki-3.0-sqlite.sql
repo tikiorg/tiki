@@ -2071,13 +2071,7 @@ CREATE TABLE 'tiki_modules' (
 CREATE  INDEX "tiki_modules_positionType" ON "tiki_modules"("position" "type");
 CREATE  INDEX "tiki_modules_moduleId" ON "tiki_modules"("moduleId");
 
-INSERT INTO "tiki_modules" ("name","position","ord","cache_time","groups") VALUES ('login_box','r',1,0,'a:2:{i:0;s:10:"Registered";i:1;s:9:"Anonymous";}');
-
 INSERT INTO "tiki_modules" ("name","position","ord","cache_time","params","groups") VALUES ('mnu_application_menu','l',1,0,'flip=y','a:2:{i:0;s:10:"Registered";i:1;s:9:"Anonymous";}');
-
-INSERT INTO "tiki_modules" ("name","position","ord","cache_time","groups") VALUES ('quick_edit','l',2,0,'a:1:{i:0;s:6:\"Admins\";}');
-
-INSERT INTO "tiki_modules" ("name","position","ord","cache_time","groups") VALUES ('since_last_visit_new','r',40,0,'a:1:{i:0;s:6:\"Admins\";}');
 
 
 DROP TABLE IF EXISTS 'tiki_newsletter_subscriptions';
