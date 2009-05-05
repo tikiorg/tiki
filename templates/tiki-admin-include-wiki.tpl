@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use the &quot;Quick Edit&quot; module to easily create or edit wiki pages. Select{/tr} <a class="rbox-link" href="tiki-admin_modules.php">{tr}Admin &gt; Modules{/tr}</a> to add this (or other) modules.{/remarksbox}
+{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use the 'Quick Edit' module to easily create or edit wiki pages.{/tr} {tr}Select <a class="rbox-link" href="tiki-admin_modules.php">Admin &gt; Modules</a> to add this (or other) modules.{/tr}{/remarksbox}
 
 <form action="tiki-admin.php?page=wiki" method="post">
 <div class="cbox">
