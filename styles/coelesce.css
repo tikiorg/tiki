@@ -350,25 +350,26 @@ div#sitead {margin: auto}
 #sitesearchbar {
 	display: block;
 	float: right;
-	margin: 0;
-	margin-top: 3px;
+	margin: 3px 0 0 0;
+	padding: 0 0 0 15px;
 	height: 33px;
 	text-align: left;
-	width: 342px;
 	background: url(coelesce/search_wide.jpg) no-repeat;
-	padding: 0 0 0 15px;
 	color: #517ea7;}
 	
 #sitesearchbar .wrapper {
 	height: 33px;
 	background: url(coelesce/search_wide.jpg) 100% 0 no-repeat;
 	margin: 0;
-	padding: 0}
+	padding: 0 35px 0 0;
+	}
 
 #sitesearchbar form {
 	padding-top: 8px;
 	margin-right: 8px;
-	font-size: 12px}
+	font-size: 12px;
+	white-space: nowrap;
+	}
 
 #sitesearchbar form input.wikiaction {}
 	
