@@ -1,13 +1,4 @@
-<div class="calnavigation">
-	{if $calendarViewMode eq 'month'}
-		{$currMonth|tiki_date_format:"%B %Y"}
-	{elseif $calendarViewMode eq 'week'}
-		{$daystart|tiki_date_format:"{tr}%m/%d{/tr}/%Y"} - {$dayend|tiki_date_format:"{tr}%m/%d{/tr}/%Y"}
-	{else}
-		{$daystart|tiki_date_format:"%B %Y"} - {$dayend|tiki_date_format:"%B %Y"}
-	{/if}
-</div>
-
+{* $id$ *}
 <table border="0" cellpading="0" cellspacing="0" style="width:100%;border-collapse:collapse">
   <tr valign="middle" style="height:36px">
 <td width="1%" class="weeks"></td>

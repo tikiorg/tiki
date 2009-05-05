@@ -38,3 +38,15 @@
 <a href="{$myurl}?todate={$yearafter}" title="{tr}Year{/tr} &raquo;" class="next">{icon _id="resultset_next" alt="{tr}Next{/tr}"}</a>
 {/if}
 </div></div></div><br style="clear:both" />
+
+{if $viewlist ne 'list' or $prefs.calendar_list_begins_focus ne 'y'}
+	<div class="calnavigation">
+		{if $calendarViewMode eq 'month'}
+			{$currMonth|tiki_date_format:"%B %Y"}
+		{elseif $calendarViewMode eq 'week'}
+			{$daystart|tiki_date_format:"{tr}%m/%d{/tr}/%Y"} - {$dayend|tiki_date_format:"{tr}%m/%d{/tr}/%Y"}
+		{else}
+			{$daystart|tiki_date_format:"%B %Y"} - {$dayend|tiki_date_format:"%B %Y"}
+		{/if}
+	</div>
+{/if}

@@ -698,6 +698,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_action_calendar' => 'n',
 		'calendar_start_year' => '+0',
 		'calendar_end_year' => '+3',
+		'calendar_list_begins_focus' => 'n',
 
 		// dates
 		'server_timezone' => isset($tikidate) ? $tikidate->getTimezoneId() : 'UTC',
