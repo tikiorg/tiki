@@ -895,7 +895,7 @@ a.tikihelp:hover {
 div#tikihelp {
 	position: fixed;
 	right: 0;
-	top: 125px;
+	top: 25px;
 	height: 75%;
 	max-width: 50%;
 	padding: 0;
