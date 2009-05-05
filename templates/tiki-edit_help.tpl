@@ -2,7 +2,7 @@
 {** \brief Show wiki syntax and plugins help *}
 {* TODO: Add links to add samples to edit form *}
 
-{add_help show='y' title="{tr}Wiki Help{/tr}" id="wiki_help"}
+{add_help show='n' title="{tr}Wiki Help{/tr}" id="wiki_help"}
 
 {if $prefs.feature_help eq 'y'} 
 <p>{tr}For more information, please see <a href="{$prefs.helpurl}Wiki+Page+Editor" target="tikihelp" class="tikihelp" title="{tr}Wiki Page Editor{/tr}: {tr}More help on editing wiki pages{/tr}">Wiki Page Editor</a>{/tr} & <a href="{$prefs.helpurl}Wiki+Syntax" target="tikihelp" class="tikihelp" title="{tr}Wiki Syntax{/tr}: {tr}The syntax system used for creating pages in TikiWiki{/tr}">{tr}Wiki Syntax{/tr}</a>
@@ -82,6 +82,7 @@
 {/if}
 
 {/add_help}
+
 {if count($plugins) ne 0}
 {add_help show='n' title="{tr}Plugin Help{/tr}" id="plugin_help"}
 <h3>{tr}Plugins{/tr}{if $prefs.feature_help eq 'y'} <a href="{$prefs.helpurl}Plugins" target="tikihelp" class="tikihelp" title="{tr}Plugins{/tr}:{tr}Wiki plugins extend the function of wiki syntax with more specialized commands.{/tr}">{icon _id='help' style="vertical-align:middle"}</a>
