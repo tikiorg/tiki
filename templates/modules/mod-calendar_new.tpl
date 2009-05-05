@@ -22,7 +22,7 @@
 {else}
 {cycle values="caldark" print=false}
 {/if}
-<td class="{if $day_cursor eq $day_today && $month_cursor eq $month_today}calfocuson{else}{cycle advance=false}{/if}" width="14%" style="text-align:center; font-size:0.8em; {if $day_cursor eq $focusday && $month_cursor eq $focusmonth}background-color: #8DF378; border-bottom: 2px solid green;{/if}">
+<td class="{if $cell[w][d].day eq $smarty.session.CalendarFocusDate}calfocuson{else}{cycle advance=false}{/if}" width="14%" style="text-align:center; font-size:0.8em;">
 
 {if isset($cell[w][d].items[0])}{assign var=over value=$cell[w][d].items[0].over}{else}{assign var=over value=""}{/if}
 {if $month_cursor neq $focusmonth }

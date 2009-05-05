@@ -2189,7 +2189,7 @@ td.calodd, td.caleven {border: 1px solid #999999}
 #caltable .calfocuson,
 .box-data td.fc a.today,
 .box-data td a.today {
-	background: #474747;
+	background: #292929       ;
 	border: solid 1px #696969}
 
 #caltable .calfocuson a {color: #D8D8D8}
