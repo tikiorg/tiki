@@ -191,7 +191,7 @@ div#tikihelp {
 	margin:0;
 	border: none;
 	background-color: transparent;
-	z-index: 2;
+	z-index: 20;
 }
 
 * html div#tikihelp {position: absolute}
