@@ -2138,7 +2138,7 @@ Caltrack a:visited {color: #00BD02}
 
 #calscreen .calfocus a {color: #F5F5F5}
 
-.calfocuson {
+.calodd .calfocuson, .caleven .calfocuson, .calfocuson {
 	font-size: 90%;
 	background: #F3E498}
 
