@@ -118,7 +118,7 @@ span.button input,
 	font-size: .95em;
 	font-weight: bold;
 	color: #449cd0;
-	background: #f5f5f5;
+	background: #ededed;
 	border: 1px solid #c5c5c5;
 	padding: 1px 4px;
 	margin-right: 1px;
@@ -134,16 +134,6 @@ span.button input,
 	border: 0;
 	padding: 0 4px}
 
-	/*
-*:first-child+html .button a,
-*:first-child+html .button a:visited,
-*:first-child+html button,
-*:first-child+html input[type=submit],
-*:first-child+html .button input,
-*:first-child+html .submitbutton,
-*:first-child+html .calbuttonoff,
-*:first-child+html .calbuttonon {line-height: 1em}*/
-
 .button a,
 .button a:visited {padding: 1px 4px}
 
@@ -154,6 +144,18 @@ input[type=submit]:hover,
 .button input:hover,
 .submitbutton:hover,
 .calbuttonBox a:hover {background: white}
+
+.button a:active,	
+button:active,
+input[type=reset]:active,
+input[type=submit]:active,
+.button input:active,
+.submitbutton:active,
+span.highlight a:link,
+span.highlight a:visited {
+	color: #449cd0;
+	background: #dbdbdb;
+	border: 1px solid #527ca6;}
 
 div.iconmenu {display: inline}
 
@@ -932,7 +934,7 @@ div#tikihelp {
 	margin:0;
 	border: none;
 	background-color: transparent;
-	z-index: 2;
+	z-index: 820;
 }
 
 * html div#tikihelp {position: absolute}
@@ -1117,7 +1119,12 @@ div.cbox {
 
 .warning  .rbox-title {}
 .warning .rbox-data {}
-div.simplebox {}
+
+div.simplebox {
+	border: 1px solid #527ca6;;
+	background: #fff;
+	padding: 1em}
+
 .highlight {}
 
 /***** Tables, Tabs and Lists ****/
@@ -1434,6 +1441,19 @@ div.code {
 div.quoteheader {margin-left: 20px}
 div.quotebody {font-style: italic}
 table.wikiplugin-split {border: none}
+
+/* Versions plugin */
+#tiki-center .versionav {
+	padding: 0;
+	border: 0;
+	margin-bottom: -1px}
+	
+.versionav .button {margin-bottom: 0}
+
+#tiki-center .versioncontent {
+	border: 1px solid #527ca6;
+	background: #fff;
+	padding: 1em}
 
 /** Wiki tocs **/
 div.tocnav {
