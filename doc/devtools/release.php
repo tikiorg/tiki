@@ -215,10 +215,7 @@ function important_step($msg, $increment_step = true) {
 		return true;
 	} else {
 		important("\n$step) $msg?");
-		echo "[Y/n/q] ";
-		$f=popen("read; echo \$REPLY","r");
-		$c=fgets($f,100);
-		pclose($f);
+		$c = readline('[Y/n/q] ');
 		switch ( strtolower($c) ) {
 			case 'y': case '':
 				return true;
