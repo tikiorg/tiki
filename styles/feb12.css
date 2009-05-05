@@ -166,6 +166,17 @@ input[type=submit]:hover,
 * html span.button a:hover {
 	color: #F5F5F5;
 	background: url(feb12/header.jpg) repeat-x 0 100%}
+	
+.button a:active,	
+button:active,
+input[type=reset]:active,
+input[type=submit]:active,
+.button input:active,
+.submitbutton:active,
+span.highlight a:link,
+span.highlight a:visited {
+	background: url(feb12/columnbg.jpg) 0 100%;
+	color: #000}
 
 input[type=checkbox] {border: 0}
 * html .findtable input {font-size: 1em}
@@ -774,6 +785,53 @@ a.tikihelp:hover {
 #rss img {vertical-align: middle}
 div.adminanchors {background: #4179AA !important}
 
+/* New Help section */
+div#tikihelp {
+	position: fixed;
+	right: 0;
+	top: 125px;
+	height: 75%;
+	max-width: 50%;
+	padding: 0;
+	margin: 0;
+	border: none;
+	background: transparent;
+	z-index: 820}
+
+* html div#tikihelp {position: absolute}
+
+div.help_icon {
+	border: 0;
+	margin: 0;
+	padding: 0}
+
+div.help_icon img{
+	vertical-align: middle;
+	border: 0;
+	margin: 0;
+	padding: 0}
+
+div.help_section_select {
+	font-weight : bold;
+	font-size: 120%;
+	background-color : #E7E9EA;
+	color: black;
+	width: 100%;
+	margin: 2px}
+
+div.help_sections {
+	width : 360px;
+	padding:  2px;
+	background-color: #AAC9E9;
+	max-height : 95%;
+	overflow: auto}
+
+div.help_section {
+	margin: 5px;
+	padding: 5px;
+	background-color: white;
+	color: black}
+
 /**** Boxes *****/
 /** Modules **/
 
@@ -1053,30 +1111,6 @@ div.content .tabs {}
 .tab-menu li img {
 	vertical-align: middle}
 
-span#tab1 {background: #F5F5F5}
-span#tab2 {background: #ECECEC}
-span#tab3 {background: #DCDCDC}
-
-#content1,
-#content2,
-#content3 {
-	border-top: 1px solid #A9A9A9;
-	border-left: 1px solid #A9A9A9;
-	border-right: 1px solid #696969;
-	border-bottom: 1px solid #696969}
-
-#content1 {
-	padding: 10px;
-	background: #F5F5F5}
-
-#content2 {
-	padding: 5px;
-	background: #ECECEC}
-
-#content3 {
-	padding: 5px;
-	background: #DCDCDC}
-
 table.admin div#content1 div.tabcontent div.cbox {background-color: transparent}
 
 /*** Feature-specific selectors ***/
@@ -1228,6 +1262,19 @@ div.code {
 div.quoteheader {margin-left: 20px}
 div.quotebody {font-style: italic}
 table.wikiplugin-split {border: none}
+
+/* Versions plugin */
+#tiki-center .versionav {
+	padding: 0;
+	border: 0;
+	margin-bottom: -1px}
+	
+.versionav .button {margin-bottom: 0}
+
+#tiki-center .versioncontent {
+	border: 1px solid #aaa;
+	background: #fff;
+	padding: 1em}
 
 /** Wiki tocs **/
 div.tocnav {
