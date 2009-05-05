@@ -809,6 +809,55 @@ div.adminanchors {}
 #rss img {vertical-align: middle}
 #rss small {font-size: 1em}
 
+/* New Help section */
+div#tikihelp {
+	position: fixed;
+	right: 0;
+	top: 125px;
+	height: 75%;
+	max-width: 50%;
+	padding: 0;
+	margin: 0;
+	border: none;
+	background: transparent;
+	z-index: 20;
+}
+
+* html div#tikihelp {position: absolute}
+
+div.help_icon {
+	border: 0;
+	margin: 0;
+	padding: 0;
+}
+div.help_icon img{
+	vertical-align: middle;
+	border: 0;
+	margin: 0;
+	padding: 0;
+}
+div.help_section_select {
+	font-weight : bold;
+	font-size: 120%;
+	background-color : #E7E9EA;
+	color: black;
+	width: 100%;
+	margin: 2px;
+}
+div.help_sections {
+	width : 360px;
+	padding:  2px;
+	background-color: #AAC9E9;
+	max-height : 95%;
+	overflow: auto;
+}
+div.help_section {
+	margin: 5px;
+	padding: 5px;
+	background-color: white;
+	color: black;
+}
+
 /**** Boxes *****/
 /** Modules **/
 .box-shadow {}
@@ -1334,6 +1383,19 @@ div.quotebody {
 	color: #F5F5F5}
 
 table.wikiplugin-split {border: none}
+
+/* Versions plugin */
+#tiki-center .versionav {
+	padding: 0;
+	border: 0;
+	margin-bottom: -1px}
+	
+.versionav .button {margin-bottom: 0}
+
+#tiki-center .versioncontent {
+	border: 1px solid #818181;
+	background: #3f3f3f;
+	padding: 1em}
 
 /** Wiki tocs **/
 div.tocnav {
