@@ -892,9 +892,9 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 
 		// html header
 		'metatag_keywords' => '',
-		'metatag_threadtitle' => '',
-		'metatag_imagetitle' => '',
-		'metatag_freetags' => '',
+		'metatag_threadtitle' => 'n',
+		'metatag_imagetitle' => 'n',
+		'metatag_freetags' => 'n',
 		'metatag_description' => '',
 		'metatag_author' => '',
 		'metatag_geoposition' => '',
@@ -1172,7 +1172,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'iepngfix_selectors' => '#sitelogo a img',
 		'iepngfix_elements' => '',
 		'use_minified_scripts' => 'y',		// for debugging
-		
+
 		// JQuery
 		'feature_jquery' => 'n',			// Alternative lib for shadowbox etc
 		'jquery_effect' => '',				// Default effect for general show/hide: ['' | 'slide' | 'fade' | and
@@ -1183,7 +1183,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'jquery_effect_tabs' => 'slide',	// Different effect for tabs (['none' | 'normal' (for jq) | 'slide' etc]
 		'jquery_effect_tabs_direction' => 'vertical',
 		'jquery_effect_tabs_speed' => 'fast',
-		
+
 		'feature_jquery_ui' => 'n',				// include UI lib for more effects
 		'feature_jquery_tooltips' => 'y',		// use JQuery tooltips and override Overlib
 		'feature_jquery_autocomplete' => 'y',	// autocomplete on pages in QuickEdit (more coming soon)
@@ -1192,7 +1192,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_jquery_sheet' => 'n',			// spreadsheet TODO: implement
 		'feature_jquery_tablesorter' => 'n',	// sortable tables ([will] override existing)
 		'feature_jquery_cycle' => 'y',			// slideshow lib
-	
+
 		// SefUrl
 		'feature_sefurl' => 'n',
 		'feature_sefurl_filter' => 'n',
