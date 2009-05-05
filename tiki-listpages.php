@@ -11,7 +11,7 @@ $section = 'wiki page';
 require_once('tiki-setup.php');
 require_once('lib/ajax/ajaxlib.php');
 
-$auto_query_args = array('initial','maxRecords','sort_mode','find','lang','langOrphan');
+$auto_query_args = array('initial','maxRecords','sort_mode','find','lang','langOrphan', 'findfilter_orphan');
 
 $smarty->assign('headtitle',tra('Pages'));
 
