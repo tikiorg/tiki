@@ -191,9 +191,8 @@ div#tikihelp {
 	margin:0;
 	border: none;
 	background-color: transparent;
-	z-index: 20;
+	z-index: 820;
 }
-
 * html div#tikihelp {position: absolute}
 
 div.help_icon {
