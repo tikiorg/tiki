@@ -20,7 +20,7 @@ if ( $prefs['feature_calendar'] == 'y' ) {
 	if (isset($_REQUEST['todate'])) $save_todate = $_REQUEST['todate'];
 	if (isset($module_params['month_delta'])) {
 		$_REQUEST['viewmode'] = 'month';
-		$focusdate = $tikilib->now;
+		include('tiki-calendar_setup.php');
 		list($focus_day, $focus_month, $focus_year) = array(
 															TikiLib::date_format("%d", $focusdate),
 															TikiLib::date_format("%m", $focusdate),
