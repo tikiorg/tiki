@@ -914,6 +914,10 @@ img.icon {
 	vertical-align: middle;
 	margin: 0 1px}
 
+.findtitle, .findexactmatch, .findnumrows, .findtypes, .findlang {
+	white-space: nowrap;
+}
+
 .findtitle input {margin-left: 2px}
 
 .top_actions {
