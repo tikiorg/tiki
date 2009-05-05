@@ -74,6 +74,16 @@ span.button input,
 	border: 0;
 	padding: 0 4px}
 	
+.button a:hover,
+button:hover,
+input[type=reset]:hover,
+input[type=submit]:hover,
+.button input:hover,
+.submitbutton:hover,
+.calbuttonBox:hover,
+.highlight,
+#highlight {}
+	
 div.iconmenu {display: inline}
 select[multiple] {height: 10em}
 label {cursor: pointer}
@@ -450,9 +460,6 @@ div#edithelpzone {display: none}
 #overdiv table {width: auto !important}
 .attention {color: red}
 
-.highlight,
-#highlight {}
-
 .openid_url {
 	background: #fff url(../../img/icons/login-OpenID-bg.gif) no-repeat;
 	padding-left: 18px}
@@ -566,7 +573,7 @@ div#tikihelp {
 	margin:0;
 	border: none;
 	background: transparent;
-	z-index: 2}
+	z-index: 20}
 
 * html div#tikihelp {position: absolute}
 
