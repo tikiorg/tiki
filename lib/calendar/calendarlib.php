@@ -768,6 +768,7 @@ class CalendarLib extends TikiLib {
 						$smarty->assign('cellid', "");
 						$smarty->assign_by_ref('celldescription', $lte["description"]);
 						$smarty->assign('show_description', $lte["show_description"]);
+						$smarty->assign_by_ref('calendarGroupByItem', $calendarGroupByItem);
 	
 						if ( ! isset($leday[$key]["over"]) ) {
 							$leday[$key]["over"] = '';
