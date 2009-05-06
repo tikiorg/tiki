@@ -20,7 +20,7 @@
 		<a href="javascript:void(0)" onClick="nd();nd();return false;">{icon _id="minus_small" alt="{tr}Close{/tr}" width="11" height="8"}</a>
 	</div>
 {/if}
-{if $calendarGroupByItem ne 'y'}
+{if $group_by_item ne 'y'}
 <strong{if $cellstatus eq '2'} style="text-decoration:line-through"{/if}>
 {if $allday}
 	{tr}All-Day{/tr}

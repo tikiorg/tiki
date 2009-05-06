@@ -47,9 +47,10 @@ if ( $prefs['feature_calendar'] == 'y' ) {
 			unset($module_params['calIds'][$i]);
 		}
 	}
+	$_REQUEST['gbi'] = 'y';
 	include('tiki-calendar_setup.php');
 
-	$tc_infos = $calendarlib->getCalendar($module_params['calIds'], $viewstart, $viewend, $group_by, 'events', 'y');
+	$tc_infos = $calendarlib->getCalendar($module_params['calIds'], $viewstart, $viewend, $group_by);
 
 	foreach ( $tc_infos as $tc_key => $tc_val ) {
         	$smarty->assign($tc_key, $tc_val);

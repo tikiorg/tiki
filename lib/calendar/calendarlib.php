@@ -656,7 +656,7 @@ class CalendarLib extends TikiLib {
 		$query = "delete from `tiki_calendar_items` where ".implode(' and ', $mid);
 		$tikilib->query($query, $bindvars);
 	}
-	function getCalendar($calIds, &$viewstart, &$viewend, $group_by = '', $item_name = 'events', $calendarGroupByItem='y') {
+	function getCalendar($calIds, &$viewstart, &$viewend, $group_by = '', $item_name = 'events') {
 		global $user, $prefs, $smarty;
 
 		// Global vars used by tiki-calendar_setup.php (this has to be changed)
@@ -703,7 +703,7 @@ class CalendarLib extends TikiLib {
 	
 					foreach ( $listtikievents["$dday"] as $lte ) {
 						$lte['desc_name'] = $lte['name'];
-						if ( $calendarGroupByItem != 'n' ) {
+						if ( $group_by_item != 'n' ) {
 							if ( $group_by != 'day' ) $key = $lte['id'].'|'.$lte['type'];
 							if ( ! isset($leday[$key]) ) {
 								$leday[$key] = $lte;
@@ -770,7 +770,6 @@ class CalendarLib extends TikiLib {
 						$smarty->assign('cellid', "");
 						$smarty->assign_by_ref('celldescription', $lte["description"]);
 						$smarty->assign('show_description', $lte["show_description"]);
-						$smarty->assign_by_ref('calendarGroupByItem', $calendarGroupByItem);
 	
 						if ( ! isset($leday[$key]["over"]) ) {
 							$leday[$key]["over"] = '';
