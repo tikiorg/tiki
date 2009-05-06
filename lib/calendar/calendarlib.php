@@ -654,7 +654,7 @@ class CalendarLib extends TikiLib {
 		$query = "delete from `tiki_calendar_items` where ".implode(' and ', $mid);
 		$tikilib->query($query, $bindvars);
 	}
-	function getCalendar($calIds, &$viewstart, &$viewend, $group_by = '', $item_name = 'events') {
+	function getCalendar($calIds, &$viewstart, &$viewend, $group_by = '', $item_name = 'events', $calendarGroupByItem='y') {
 		global $user, $prefs, $smarty;
 
 		// Global vars used by tiki-calendar_setup.php (this has to be changed)
