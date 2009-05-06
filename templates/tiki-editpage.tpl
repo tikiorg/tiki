@@ -127,7 +127,7 @@ window.onload = timeIt;
 
 </div>
 {/if}
-<form  enctype="multipart/form-data" method="post" action="tiki-editpage.php" id='editpageform' name='editpageform'>
+<form  enctype="multipart/form-data" method="post" action="tiki-editpage.php?page={$page|escape}" id='editpageform' name='editpageform'>
 
 {if $diff_style}
 <select name="diff_style">
@@ -147,7 +147,6 @@ window.onload = timeIt;
 <input type="submit" class="wikiaction" onmouseover="return overlib('{tr}Change the style used to display differences to be translated.{/tr}');" onmouseout="nd();" name="preview" value="{tr}Change diff styles{/tr}" onclick="needToConfirm=false;" />
 {/if}
 
-<input type="hidden" name="page" value="{$page|escape}" />
 <input type="hidden" name="clock" value="{$edittimeout}" />
 {if $page_ref_id}
   <input type="hidden" name="page_ref_id" value="{$page_ref_id}" />
@@ -290,7 +289,7 @@ window.onload = timeIt;
 </td>
 </tr>
 <tr><td colspan="2">
-{editform Meat=$smarty.capture.autosave InstanceName='edit' ToolbarSet="Tiki"}
+{editform Meat=$smarty.capture.autosave InstanceName='editwiki' ToolbarSet="Tiki"}
 <input type="hidden" name="wysiwyg" value="y" />
 {/if}
 </td></tr>
