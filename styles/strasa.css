@@ -1014,6 +1014,9 @@ div.help_icon {
 	height: 48px;
 	text-align: right;
 }
+div.help_icon a:hover {
+  text-decoration: none;
+}
 div.help_icon img{
 	vertical-align: middle;
 	border: 0;

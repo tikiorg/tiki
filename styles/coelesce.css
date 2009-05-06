@@ -952,6 +952,9 @@ div.help_icon {
 	margin: 0;
 	padding: 0;
 }
+div.help_icon a:hover {
+	text-decoration: none;
+}
 div.help_icon img{
 	vertical-align: middle;
 	border: 0;
@@ -2316,6 +2319,7 @@ div.tabrow {/*height: 24px !important*/}
 	background: #c3d3e5;
 	color: #4a6a90}
 
+a.viewthisday:hover { border-bottom: 0 none; }
 .addevent {padding: 0 5px; float: right}
 * html .addevent {padding: 0}
 .calodd, .caleven { border: 1px solid #a9a9a9}

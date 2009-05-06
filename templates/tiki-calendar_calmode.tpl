@@ -27,7 +27,7 @@
 			{if $tiki_p_add_events eq 'y' and count($listcals) > 0}
 			<a href="tiki-calendar_edit_item.php?todate={$cell[w][d].day}{if $displayedcals|@count eq 1}&amp;calendarId={$displayedcals[0]}{/if}" title="{tr}Add Event{/tr}" class="addevent">{icon _id='calendar_add' alt="{tr}+{/tr}" title="{tr}Add Event{/tr}"}</a>
 			{/if}
-			<a href="tiki-calendar.php?viewmode=day&amp;todate={$cell[w][d].day}{if $displayedcals|@count eq 1}&amp;calendarId={$displayedcals[0]}{/if}" title="{tr}View this Day{/tr}">{icon _id='img/icons/external_link.gif' width=7 height=8 alt="{tr}o{/tr}" title="{tr}View this Day{/tr}"}</a>
+			<a class="viewthisday" href="tiki-calendar.php?viewmode=day&amp;todate={$cell[w][d].day}{if $displayedcals|@count eq 1}&amp;calendarId={$displayedcals[0]}{/if}" title="{tr}View this Day{/tr}">{icon _id='img/icons/external_link.gif' width=7 height=8 alt="{tr}o{/tr}" title="{tr}View this Day{/tr}"}</a>
 		  </td>
 		  {/if}
 		</tr>

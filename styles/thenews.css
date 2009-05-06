@@ -912,6 +912,9 @@ div.help_icon {
 	margin: 0;
 	padding: 0;
 }
+div.help_icon a:hover {
+  text-decoration: none;
+}
 div.help_icon img{
 	vertical-align: middle;
 	border: 0;
