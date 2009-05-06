@@ -39,8 +39,8 @@
 {/if}
 </div></div></div><br style="clear:both" />
 
-{if $viewlist ne 'list' or $prefs.calendar_list_begins_focus ne 'y'}
-	<div class="calnavigation">
+<div class="calnavigation">
+	 {if $viewlist ne 'list' or $prefs.calendar_list_begins_focus ne 'y'}
 		{if $calendarViewMode eq 'month'}
 			{$currMonth|tiki_date_format:"%B %Y"}
 		{elseif $calendarViewMode eq 'week'}
@@ -48,5 +48,7 @@
 		{else}
 			{$daystart|tiki_date_format:"%B %Y"} - {$dayend|tiki_date_format:"%B %Y"}
 		{/if}
-	</div>
-{/if}
+	{else}
+		{$daystart|tiki_date_format:"{tr}%m/%d{/tr}/%Y"} - {$dayend|tiki_date_format:"{tr}%m/%d{/tr}/%Y"}
+	{/if}
+</div>
