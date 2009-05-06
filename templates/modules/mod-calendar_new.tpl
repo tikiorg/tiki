@@ -12,10 +12,10 @@
 {section name=w loop=$cell}
 <tr>
 {section name=d loop=$weekdays}
-{assign var=day_cursor value=$cell[w][d].day|date_format:"%d"}
-{assign var=month_cursor value=$cell[w][d].day|date_format:"%m"}
-{assign var=day_today value=$smarty.now|date_format:"%d"}
-{assign var=month_today value=$smarty.now|date_format:"%m"}
+{assign var=day_cursor value=$cell[w][d].day|tiki_date_format:"%d"}
+{assign var=month_cursor value=$cell[w][d].day|tiki_date_format:"%m"}
+{assign var=day_today value=$smarty.now|tiki_date_format:"%d"}
+{assign var=month_today value=$smarty.now|tiki_date_format:"%m"}
 
 {if $cell[w][d].focus}
 {cycle values="calodd,caleven" print=false}
