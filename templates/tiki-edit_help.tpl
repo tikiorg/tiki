@@ -18,7 +18,7 @@
 {if $wysiwyg ne 'y' or ($wysiwyg eq 'y' and $prefs.wysiwyg_wiki_parsed eq 'y')}
 <tr><td width="20%" class="{cycle advance=false}"><img src='pics/icons/text_bold.png' alt='' /> <strong>{tr}Bold text{/tr}</strong></td><td class="{cycle}"> 2 {tr}underscores{/tr} "_". {tr}Example{/tr} __{tr}text{/tr}__ = <strong>text</strong></td></tr>
 <tr><td width="20%" class="{cycle advance=false}"><img src='pics/icons/text_italic.png' alt='' /> <strong>{tr}Italic text{/tr}</strong></td><td class="{cycle}"> 2 {tr}single quotes{/tr} "'".  {tr}Example{/tr} ''{tr}text{/tr}'' = <em>text</em></td></tr>
-<tr><td class="{cycle advance=false}"><img src='pics/icons/text_align_center.png' alt='' /> <strong>{tr}Centered text{/tr}</strong></td><td class="{cycle}"> 2 {tr}colons{/tr} ":". {tr}Example{/tr} ::{tr}some text{/tr}:</td></tr>
+<tr><td class="{cycle advance=false}"><img src='pics/icons/text_align_center.png' alt='' /> <strong>{tr}Centered text{/tr}</strong></td><td class="{cycle}"> 2 {tr}colons{/tr} ":". {tr}Example{/tr} ::{tr}some text{/tr}::</td></tr>
 <tr><td class="{cycle advance=false}"><img src='pics/icons/text_underline.png' alt='' /> <strong>{tr}Underlined text{/tr}</strong></td><td class="{cycle}"> 3 {tr}equals{/tr} "=". {tr}Example{/tr} ==={tr}text{/tr}===</td></tr>
 <tr><td class="{cycle advance=false}"><img src='pics/icons/text_strikethrough.png' alt='' /> <strong>{tr}Deleted text{/tr}</strong></td><td class="{cycle}"> {tr}2 dashes{/tr} "-". {tr}Example{/tr} --{tr}text{/tr}--</td></tr>
 <tr><td class="{cycle advance=false}"><img src='pics/icons/box.png' alt='' /> <strong>{tr}Text box{/tr}</strong></td><td class="{cycle}"> {tr}One carat{/tr} "^". {tr}Creates a box with the data{/tr}. {tr}Example{/tr} "^{tr}Box content{/tr}^"</td></tr>
