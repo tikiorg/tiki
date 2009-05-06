@@ -430,9 +430,13 @@ input[id="sl-login-pass"] {}
 /* #header text selectors, if needed */
 
 #sitetitles {
-	color: #fff; display: inline-block; height: 97px; line-height: 97px; overflow: hidden; vertical-align: bottom}
-
-* html #sitetitles {display: inline; margin-top: 6px}
+	color: #fff;
+	display: inline;
+	height: 97px;
+	margin-top: 6px;
+	overflow: hidden;
+	vertical-align: bottom;
+	}
 
 #sitetitle,
 #sitesubtitle {
