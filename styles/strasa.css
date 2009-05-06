@@ -1590,13 +1590,27 @@ div#helptool {}
 
 /* Wiki plugins */
 
-/* Code plugin  */
+
 div.code {
 	font-size: 90%;
 	padding: 3px;
 	border: 1px dashed #a9a9a9;
 	background: #F5F5F5;
 	font-family: "Courier New", Courier, monospace}
+
+/* Code plugin  */
+.codecaption {
+	font-size: 90%;
+	padding: 0 10px;
+	position: relative;
+	bottom: -5px;
+	display: inline;
+	border: 1px solid #696969;
+	border-bottom: 0;
+	margin-left: 4px;
+	color: #696969;
+	background: #F5F5F5;
+	font-weight: bold}
 
 .codelisting {
 	font-family: "Courier New", Courier, monospace;
@@ -1607,18 +1621,6 @@ div.code {
 	overflow: auto; 
    width: 500px}
 
-.codecaption {
-	font-size: 90%;
-	padding: 0 10px;
-	position: relative;
-	bottom: -5px;
-	display: inline;
-	border: 1px solid #696969;
-	border-bottom: 0;
-	margin: 0;
-	color: #696969;
-	background: #F5F5F5;
-	font-weight: bold}
 
 /* Quote plugin */
 div.quoteheader {
