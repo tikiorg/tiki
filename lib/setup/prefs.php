@@ -269,7 +269,7 @@ function get_default_prefs() {
 		'wikiplugin_trackerprefill' => 'y',
 		'wikiplugin_trackerstat' => 'y',
 		'wikiplugin_translated' => 'y',
-		'wikiplugin_tr' => 'y',
+		'wikiplugin_tr' => 'n',
 		'wikiplugin_usercount' => 'n',
 		'wikiplugin_userlist' => 'n',
 		'wikiplugin_versions' => 'n',
