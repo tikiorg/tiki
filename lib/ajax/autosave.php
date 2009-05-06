@@ -28,7 +28,7 @@ function auto_save_log($id, $request = "") {
 }
 
 function auto_save($id, $data, $referer = "") {
-	auto_save_log($id, $referer);
+	//auto_save_log($id, $referer);
 	file_put_contents(auto_save_name($id, $referer),rawurldecode($data));
 	return new xajaxResponse();
 }
