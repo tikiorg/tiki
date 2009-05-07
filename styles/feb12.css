@@ -141,7 +141,7 @@ span.button input,
 	
 *:first-child+html input {font-weight: normal}
 
-.button a:hover,
+span.button a:hover,
 button:hover,
 input[type=reset]:hover,
 input[type=submit]:hover,
