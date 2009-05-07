@@ -708,7 +708,7 @@ class CalendarLib extends TikiLib {
 							if ( ! isset($leday[$key]) ) {
 								$leday[$key] = $lte;
 								if ( $group_by == 'day' ) {
-									$leday[$key]['description'] = array($lte['where'] => array($lte['group_description']));
+									$leday[$key]['description'] = array($lte['where'] => (isset($lte['show_location']) && $lte['show_location'] == 'y')? array($lte['group_description']):'');
 									$leday[$key]['head'] = TikiLib::date_format($prefs['short_date_format'], $cell[$i][$w]['day']);
 								} else {
 									$leday[$key]['description'] = ' - <b>'.$lte['when'].'</b> : '.tra($lte['action']).' '.$lte['description'];
