@@ -135,7 +135,7 @@ FCKToolbarButton.prototype.Click = function()
 			case 'Italic' 		: oDoc.FCKeditorInsertTags ('\'\'', '\'\'', 'Italic text', document) ; CMode = true ; break ;
 			case 'Underline' 	: oDoc.FCKeditorInsertTags ('===', '===', 'Underlined text', document) ; CMode = true ; break ;
 			case 'StrikeThrough': oDoc.FCKeditorInsertTags ('--', '--', 'Strikethrough text', document) ; CMode = true ; break ;
-			case 'Link' 		: oDoc.FCKeditorInsertTags ('[[', ']]', 'Internal link', document) ; CMode = true ; break ;
+			case 'Link' 		: oDoc.FCKeditorInsertTags ('((', '))', 'Internal link', document) ; CMode = true ; break ;
 		}
 	}
 	
@@ -386,14 +386,40 @@ FCK.DataProcessor =
 							break;
 						case 'a' :
 
+/*
 							var pipeline = true;
 							// Get the actual Link href.
 							var href = htmlNode.getAttribute( '_fcksavedurl' ) ;
 							var hrefType		= htmlNode.getAttribute( '_fck_mw_type' ) || '' ;
 							
 							if ( href == null )
+*/
 								href = htmlNode.getAttribute( 'href' , 2 ) || '' ;
+								descr = htmlNode.innerHTML || '' ;
 
+								if ( href.StartsWith('tiki-index.php') ) {
+									if ( href.match(/.*\#(.+)$/) )
+										anchor = href.replace(/.*\#(.+)$/,'$1');
+									else
+										anchor = '';
+									page = href.replace(/tiki-index.php\?.*page=([^&#]+).*/,'$1');
+									stringBuilder.push( '((' + page ) ;
+									if ( anchor != '' ) {
+										stringBuilder.push( '|#'+ anchor ) ;
+									}
+									if ( descr != '' && descr != page ) {
+										stringBuilder.push( '|' + descr ) ;
+									}
+									stringBuilder.push( '))' ) ;
+								} else if ( href.StartsWith('http://') ) {
+									if ( href != descr )
+										stringBuilder.push( '[' + href + '|' + descr + ']' ) ;
+									else
+										stringBuilder.push( '[' + href + ']' ) ;
+								}
+
+
+/*
 							var isWikiUrl = true ;
 							
 							if ( hrefType == "media" )
@@ -428,6 +454,7 @@ FCK.DataProcessor =
 								this._AppendChildNodes( htmlNode, stringBuilder, prefix ) ;
 							}
 							stringBuilder.push( isWikiUrl ? ']]' : ']' ) ;
+*/
 
 							break ;
 							
