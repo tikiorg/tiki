@@ -175,13 +175,13 @@ ul.jumplinks a:active {
 
 /* #header text selectors, if needed */
 #sitetitles {
-	color: #fff;
+	color: #294050;
 }
 
 #sitetitle a,
 #sitetitle a:link,
 #sitetitle a:hover {
-	color: #fff;
+	color: #294050;
 }
 
 /* tiki-top_bar.tpl - menu and search */
