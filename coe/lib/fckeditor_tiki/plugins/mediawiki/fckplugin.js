@@ -387,7 +387,9 @@ FCK.DataProcessor =
 							}
 							if ( htmlNode.style.cssText.match(/color *: *([^; ]+)[ ;]?/) ) {
 								color = htmlNode.style.cssText.replace(/color *: *([^; ]+)[ ;]?/,'$1');
-								stringBuilder.push( '~~' + color + ':' + htmlNode.innerHTML + '~~');
+								stringBuilder.push( '~~' + color + ':' )
+								this._AppendChildNodes( htmlNode, stringBuilder, prefix ) ;
+								stringBuilder.push( '~~' );
 							}
 							break;
 						case 'a' :
