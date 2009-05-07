@@ -1,7 +1,11 @@
 {* $Id: mod-calendar_new.tpl 12242 2008-03-30 13:22:01Z luciash $ *}
 {tikimodule error=$module_params.error title=$module_params.title name=$module_params.name flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
 {popup_init src="lib/overlib.js"}
-<div style="text-align:center; font-size:110%" class='cal_title'>{tr}{$focusdate|tiki_date_format:"%B"|ucfirst}{/tr}</div>
+<div style="text-align:center; font-size:110%" class="cal_title">
+	<a href="tiki-calendar.php?todate={$focusdate}&amp;viewmode={$viewmode}">
+	 	{tr}{$focusdate|tiki_date_format:"%B"|ucfirst}{/tr}
+	</a>
+</div>
 <table cellpadding="0" cellspacing="0" border="0" id="caltable" style="text-align:center;">
 <tr>
 {section name=dn loop=$daysnames}
