@@ -298,7 +298,7 @@ class CalendarLib extends TikiLib {
 				/*	'time' => $tstart, /* user time */
 				/*	'end' => $tend, /* user time */
 
-				$ret[$i][$j]['group_description'] = $res['name'].', '.$head;
+				$ret[$i][$j]['group_description'] = $res['name'].'<span class="calgrouptime">, '.$head.'</span>';
 			}
 		}
 		return $ret;
@@ -708,7 +708,7 @@ class CalendarLib extends TikiLib {
 							if ( ! isset($leday[$key]) ) {
 								$leday[$key] = $lte;
 								if ( $group_by == 'day' ) {
-									$leday[$key]['description'] = array($lte['where'] => (isset($lte['show_location']) && $lte['show_location'] == 'y')? array($lte['group_description']):'');
+									$leday[$key]['description'] = array($lte['where'] => array($lte['group_description']));
 									$leday[$key]['head'] = TikiLib::date_format($prefs['short_date_format'], $cell[$i][$w]['day']);
 								} else {
 									$leday[$key]['description'] = ' - <b>'.$lte['when'].'</b> : '.tra($lte['action']).' '.$lte['description'];
@@ -753,7 +753,9 @@ class CalendarLib extends TikiLib {
 								foreach ( $desc_items as $desc_item ) {
 									if ( $desc != '' ) $desc .= '<br />';
 									$desc .= '- '.$desc_item;
-									if ( $desc_where != '' ) $desc .= ' <i>['.$desc_where.']</i>';
+									if (!empty($lte['show_location']) && $lte['show_location'] == 'y' && $desc_where != '' ) {
+										$desc .= ' <i>['.$desc_where.']</i>';
+									}
 								}
 							}
 							$lte['description'] = $desc;
