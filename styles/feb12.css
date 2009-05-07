@@ -1317,7 +1317,7 @@ ul.toc * {border: none}
 
 /* Articles */
 
-div.article {margin-bottom: 40px}
+div.article {padding-bottom: 40px}
 
 div.articletopline {
 	font-size: 90%;
@@ -1333,6 +1333,7 @@ div.articletitle h2 {
 	font-weight: normal;
 	margin: 0}
 
+.wikitext .articletitle h2 {font-size: 1.3em}
 span.titleb {font-size: 1.0em} 
 div.articlesubtitle {font-size: 0.9em}
 div.articleheading {margin-top: 6px}
@@ -1360,7 +1361,7 @@ img.articleimage {
 div.articletrailer {
 	position: relative;
 	text-align: center;
-	margin-top: 1.1em}
+	margin-top: 0.8em}
 	
 div.articletrailer img {}
 
