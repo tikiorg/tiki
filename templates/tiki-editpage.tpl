@@ -361,7 +361,7 @@ function searchrep() {
 {/if}
 
 {if $page|lower neq 'sandbox'}
-<tr class="formcolor" id="input_edit_summary" style="vertical-align: center"><td style="width: 25%">{tr}Edit Comment{/tr}:</td><td><input style="width:98%;" class="wikiedit" type="text" name="comment" value="{$commentdata|escape}" /></td></tr>
+<tr class="formcolor" id="input_edit_summary" style="vertical-align: middle"><td style="width: 25%">{tr}Edit Comment{/tr}:</td><td><input style="width:98%;" class="wikiedit" type="text" name="comment" value="{$commentdata|escape}" /></td></tr>
 {if $show_watch eq 'y'}
 	<tr class="formcolor"><td>{tr}Monitor this page{/tr}:</td><td><input type="checkbox" name="watch" value="1"{if $watch_checked eq 'y'} checked="checked"{/if} /></td></tr>
 {/if}
