@@ -207,6 +207,7 @@ FCK.DataProcessor =
 		em		: [ "''", "''" ],
 		u		: [ "===", "===" ],
 		pre		: [ "~pp~", "~/pp~" ],
+		code		: [ "-+", "+-" ],
 		p		: [ '', '\n' ],
 		h1		: [ '-== ', '==-' ],
 		h2		: [ '! ', '' ],
@@ -382,6 +383,11 @@ FCK.DataProcessor =
 							var plugin_content = htmlNode.getAttribute( '_plugin' , 2 ) ;
 							if ( plugin_content ) {
 								stringBuilder.push( urldecode(plugin_content) ) ;
+								break;
+							}
+							if ( htmlNode.style.cssText.match(/color *: *([^; ]+)[ ;]?/) ) {
+								color = htmlNode.style.cssText.replace(/color *: *([^; ]+)[ ;]?/,'$1');
+								stringBuilder.push( '~~' + color + ':' + htmlNode.innerHTML + '~~');
 							}
 							break;
 						case 'a' :
