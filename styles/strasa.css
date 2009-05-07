@@ -451,7 +451,7 @@ div#sitead {margin: auto}
 	font-size: 90%;
 	height: 24px;
 	line-height: 24px;
-	padding: 0px 0px 0px 60px;
+	padding-left: 60px;
 	color: #fff;
 	background: #fff url(strasa/login.jpg) 0 0 no-repeat;
 }
