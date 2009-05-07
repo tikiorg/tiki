@@ -12,7 +12,7 @@ body {
 	text-align: left;
 	font: 72%/1.4em Verdana, Geneva, Arial, Helvetica, sans-serif;}
 
-html>body {font-size: 76%}
+html>body {font-size: 12px}
 
 /* workaround for Safari when in FCKEditor */
 html[dir=ltr]>body {
@@ -518,8 +518,9 @@ div.logged-in {padding-right: 20px}
 #sitesubtitle {font-family: Helvetica, sans-serif; font-weight: bold}
 
 #sitetitle {
-	font-size: 200%;
-	display: inline}
+	font-size: 220%;
+	display: inline;
+	letter-spacing: -0.05em}
 	
 * html #sitetitle {}
 
@@ -531,7 +532,8 @@ div.logged-in {padding-right: 20px}
 
 #sitesubtitle {
 	font-size: 110%;
-	display: inline}
+	display: inline;
+	margin-left: 0.2em}
 
 #header a,
 #header a:visited {}
@@ -1603,9 +1605,9 @@ div.code {
 	font-size: 90%;
 	padding: 0 10px;
 	position: relative;
-	bottom: -5px;
+	bottom: -6px;
 	display: inline;
-	border: 1px solid #696969;
+	border: 1px dashed #696969;
 	border-bottom: 0;
 	margin-left: 4px;
 	color: #696969;
@@ -1619,7 +1621,7 @@ div.code {
 	margin: 4px;
 	border: 1px dashed #696969;
 	overflow: auto; 
-   width: 500px}
+	width: 90%}
 
 
 /* Quote plugin */
