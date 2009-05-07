@@ -45,7 +45,7 @@
             <option value="-1" {if $parentId == -1} selected="selected"{/if}>{tr}none{/tr}</option>
             {foreach from=$all_galleries key=key item=item}
 							{if $galleryId neq $item.id}
-              <option value="{$item.id}" {if $parentId == $item.id} selected="selected"{/if}>{$item.name|escape}</option>
+              <option value="{$item.id}" {if $parentId == $item.id} selected="selected"{/if}>{if $item.parentName}{$item.parentName|escape} > {/if}{$item.name|escape}</option>
 							{/if}
             {/foreach}
           </select>
