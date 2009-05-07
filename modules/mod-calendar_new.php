@@ -48,6 +48,7 @@ if ( $prefs['feature_calendar'] == 'y' ) {
 		}
 	}
 	$_REQUEST['gbi'] = 'y';
+	$_REQUEST['viewlist'] = 'table';
 	include('tiki-calendar_setup.php');
 
 	$tc_infos = $calendarlib->getCalendar($module_params['calIds'], $viewstart, $viewend, $group_by);
