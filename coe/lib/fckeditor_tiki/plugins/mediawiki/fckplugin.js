@@ -387,7 +387,7 @@ FCK.DataProcessor =
 							}
 							if ( htmlNode.style.cssText.match(/color *: *([^; ]+)[ ;]?/) ) {
 								color = htmlNode.style.cssText.replace(/color *: *([^; ]+)[ ;]?/,'$1');
-								stringBuilder.push( '~~' + color + ':' )
+								stringBuilder.push( '~~' + color + ':' );
 								this._AppendChildNodes( htmlNode, stringBuilder, prefix ) ;
 								stringBuilder.push( '~~' );
 							}
@@ -416,16 +416,22 @@ FCK.DataProcessor =
 										stringBuilder.push( '|#'+ anchor ) ;
 									}
 									if ( descr != '' && descr != page ) {
-										stringBuilder.push( '|' + descr ) ;
+										stringBuilder.push( '|' );
+										this._AppendChildNodes( htmlNode, stringBuilder, prefix ) ;
 									}
 									stringBuilder.push( '))' ) ;
 								} else if ( href.StartsWith('http://') ) {
-									if ( href != descr )
-										stringBuilder.push( '[' + href + '|' + descr + ']' ) ;
-									else
-										stringBuilder.push( '[' + href + ']' ) ;
+									stringBuilder.push( '[' + href ) ;
+									rel = htmlNode.getAttribute( 'rel' , 2 ) || '' ;
+									rel = rel.replace(/ *external */,'');
+									if ( href != descr ) {
+										stringBuilder.push( '|' ) ;
+										this._AppendChildNodes( htmlNode, stringBuilder, prefix ) ;
+									}
+									if ( rel != '' )
+										stringBuilder.push( '|' + rel ) ;
+									stringBuilder.push( ']' ) ;
 								}
-
 
 /*
 							var isWikiUrl = true ;
