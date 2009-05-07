@@ -1,18 +1,18 @@
 <div class="clearfix tabrow"><div class="tabrowRight"></div><div class="tabrowLeft"></div>
-<div class="viewmode">{if $calendar_type eq "tiki_actions"}<div></div>{else}<div class="calbuttonBox"><div class="calbuttonLeft"></div><div class="calbuttonoff"><a href="{$myurl}?viewmode=day&todate={$now}" title="{tr}Today{/tr}">{tr}Today{/tr}</a></div><div class="calbuttonRight"></div></div>{/if}
+<div class="viewmode">{if $calendar_type eq "tiki_actions"}<div></div>{else}<div class="calbuttonBox"><div class="calbuttonLeft"></div><div class="calbuttonoff"><a href="{$myurl}?viewmode=day&focus={$now}" title="{tr}Today{/tr}">{tr}Today{/tr}</a></div><div class="calbuttonRight"></div></div>{/if}
 <div id="prev">
 {if $viewmode eq "day"}
-<a href="{$myurl}?todate={$daybefore}" title="&laquo; {tr}Day{/tr}" class="prev">{icon _id="resultset_previous" alt="{tr}Previous{/tr}"}</a>
+<a href="{$myurl}?todate={$daybefore}&amp;viewmode={$viewmode}" title="&laquo; {tr}Day{/tr}" class="prev">{icon _id="resultset_previous" alt="{tr}Previous{/tr}"}</a>
 {elseif $viewmode eq "week"}
-<a href="{$myurl}?todate={$weekbefore}" title="&laquo; {tr}Week{/tr}" class="prev">{icon _id="resultset_previous" alt="{tr}Previous{/tr}"}</a>
+<a href="{$myurl}?todate={$weekbefore}&amp;viewmode={$viewmode}" title="&laquo; {tr}Week{/tr}" class="prev">{icon _id="resultset_previous" alt="{tr}Previous{/tr}"}</a>
 {elseif $viewmode eq "month"}
-<a href="{$myurl}?todate={$monthbefore}" title="&laquo; {tr}Month{/tr}" class="prev">{icon _id="resultset_previous" alt="{tr}Previous{/tr}"}</a>
+<a href="{$myurl}?todate={$monthbefore}&amp;viewmode={$viewmode}" title="&laquo; {tr}Month{/tr}" class="prev">{icon _id="resultset_previous" alt="{tr}Previous{/tr}"}</a>
 {elseif $viewmode eq "quarter"}
-<a href="{$myurl}?todate={$quarterbefore}" title="&laquo; {tr}Quarter{/tr}" class="prev">{icon _id="resultset_previous" alt="{tr}Previous{/tr}"}</a>
+<a href="{$myurl}?todate={$quarterbefore}&amp;viewmode={$viewmode}" title="&laquo; {tr}Quarter{/tr}" class="prev">{icon _id="resultset_previous" alt="{tr}Previous{/tr}"}</a>
 {elseif $viewmode eq "semester"}
-<a href="{$myurl}?todate={$semesterbefore}" title="&laquo; {tr}Semester{/tr}" class="prev">{icon _id="resultset_previous" alt="{tr}Previous{/tr}"}</a>
+<a href="{$myurl}?todate={$semesterbefore}&amp;viewmode={$viewmode}" title="&laquo; {tr}Semester{/tr}" class="prev">{icon _id="resultset_previous" alt="{tr}Previous{/tr}"}</a>
 {elseif $viewmode eq "year"}
-<a href="{$myurl}?todate={$yearbefore}" title="&laquo; {tr}Year{/tr}" class="prev">{icon _id="resultset_previous" alt="{tr}Previous{/tr}"}</a>
+<a href="{$myurl}?todate={$yearbefore}&amp;viewmode={$viewmode}" title="&laquo; {tr}Year{/tr}" class="prev">{icon _id="resultset_previous" alt="{tr}Previous{/tr}"}</a>
 {/if}
 </div>
 {if $calendar_type neq "tiki_actions"}
@@ -25,20 +25,21 @@
 <div class="calbuttonBox calbutton{if $viewmode eq 'year'}on{else}off{/if}"><a href="{$myurl}?viewmode=year" title="{tr}Year{/tr}">{tr}Year{/tr}</a></div>
 <div id="next">
 {if $viewmode eq "day"}
-<a href="{$myurl}?todate={$dayafter}" title="{tr}Day{/tr} &raquo;" class="next">{icon _id="resultset_next" alt="{tr}Next{/tr}"}</a>
+<a href="{$myurl}?todate={$dayafter}&amp;viewmode={$viewmode}" title="{tr}Day{/tr} &raquo;" class="next">{icon _id="resultset_next" alt="{tr}Next{/tr}"}</a>
 {elseif $viewmode eq "week"}
-<a href="{$myurl}?todate={$weekafter}" title="{tr}Week{/tr} &raquo;" class="next">{icon _id="resultset_next" alt="{tr}Next{/tr}"}</a>
+<a href="{$myurl}?todate={$weekafter}&amp;viewmode={$viewmode}" title="{tr}Week{/tr} &raquo;" class="next">{icon _id="resultset_next" alt="{tr}Next{/tr}"}</a>
 {elseif $viewmode eq "month"}
-<a href="{$myurl}?todate={$monthafter}" title="{tr}Month{/tr}&raquo;" class="next">{icon _id="resultset_next" alt="{tr}Next{/tr}"}</a>
+<a href="{$myurl}?todate={$monthafter}&amp;viewmode={$viewmode}" title="{tr}Month{/tr}&raquo;" class="next">{icon _id="resultset_next" alt="{tr}Next{/tr}"}</a>
 {elseif $viewmode eq "quarter"}
-<a href="{$myurl}?todate={$quarterafter}" title="{tr}Quarter{/tr} &raquo;" class="next">{icon _id="resultset_next" alt="{tr}Next{/tr}"}</a>
+<a href="{$myurl}?todate={$quarterafter}&amp;viewmode={$viewmode}" title="{tr}Quarter{/tr} &raquo;" class="next">{icon _id="resultset_next" alt="{tr}Next{/tr}"}</a>
 {elseif $viewmode eq "semester"}
-<a href="{$myurl}?todate={$semesterafter}" title="{tr}Semester{/tr} &raquo;" class="next">{icon _id="resultset_next" alt="{tr}Next{/tr}"}</a>
+<a href="{$myurl}?todate={$semesterafter}&amp;viewmode={$viewmode}" title="{tr}Semester{/tr} &raquo;" class="next">{icon _id="resultset_next" alt="{tr}Next{/tr}"}</a>
 {elseif $viewmode eq "year"}
-<a href="{$myurl}?todate={$yearafter}" title="{tr}Year{/tr} &raquo;" class="next">{icon _id="resultset_next" alt="{tr}Next{/tr}"}</a>
+<a href="{$myurl}?todate={$yearafter}&amp;viewmode={$viewmode}" title="{tr}Year{/tr} &raquo;" class="next">{icon _id="resultset_next" alt="{tr}Next{/tr}"}</a>
 {/if}
 </div></div></div><br style="clear:both" />
 
+{if $viewmode ne 'day'}
 <div class="calnavigation">
 	 {if $viewlist ne 'list' or $prefs.calendar_list_begins_focus ne 'y'}
 		{if $calendarViewMode eq 'month'}
@@ -52,3 +53,4 @@
 		{$daystart|tiki_date_format:"{tr}%m/%d{/tr}/%Y"} - {$dayend|tiki_date_format:"{tr}%m/%d{/tr}/%Y"}
 	{/if}
 </div>
+{/if}
