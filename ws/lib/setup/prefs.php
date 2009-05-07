@@ -862,6 +862,9 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'categorypath_excluded' => '',
 		'categories_used_in_tpl' => 'n',
 
+		// Workspaces
+		'feature_workspaces' => 'n',
+
 		// games
 		'feature_games' => 'n',
 

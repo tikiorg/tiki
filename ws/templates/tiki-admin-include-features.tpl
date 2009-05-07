@@ -96,6 +96,12 @@
 						<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Categories" target="tikihelp" class="tikihelp" title="{tr}Categories{/tr}">{/if} {tr}Categories{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
 					</div>
 					<div class="half_width">
+						<span class="checkbox"><input type="checkbox" name="feature_workspaces"	{if $prefs.feature_workspaces
+						eq 'y'}checked="checked"{/if}/></span>
+						<span class="label"> {if $prefs.feature_workspaces eq 'y'}<a href="{$prefs.helpurl}Workspaces"
+						target="tikihelp" class="tikihelp" title="{tr}Workspaces{/tr}">{/if}{tr}Workspaces{/tr}{if $prefs.feature_help eq 'y'}</a>{/if}</span>
+					</div>
+					<div class="half_width">
 						<span class="checkbox"><input type="checkbox" name="feature_score" {if $prefs.feature_score eq 'y'}checked="checked"{/if} /></span>
 						<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Score" target="tikihelp" class="tikihelp" title="{tr}Score{/tr}: {tr}Score{/tr}">{/if} {tr}Score{/tr}{if $prefs.feature_help eq 'y'}</a>{/if}</span>
 					</div>
