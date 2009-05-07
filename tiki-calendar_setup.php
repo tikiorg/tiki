@@ -225,18 +225,18 @@ if ( $calendarViewMode == 'month' ||
    }
    // this is the last day of $focus_month
    if ($viewlist == 'list' && $prefs['calendar_list_begins_focus'] == 'y')
-	   $d = $focus_day;
+	   $df = $focus_day;
    else
-	   $d = 1;
+	   $df = 1;
 	   
    if ($calendarViewMode == 'month') {
-     $viewend = TikiLib::make_time(0,0,0,$focus_month + 1, $d, $focus_year);
+     $viewend = TikiLib::make_time(0,0,0,$focus_month + 1, $df, $focus_year);
    } elseif ($calendarViewMode == 'quarter') {
-     $viewend = TikiLib::make_time(0,0,0,$focus_month + 3, $d, $focus_year);
+     $viewend = TikiLib::make_time(0,0,0,$focus_month + 3, $df, $focus_year);
    } elseif ($calendarViewMode == 'semester') {
-     $viewend = TikiLib::make_time(0,0,0,$focus_month + 6, $d, $focus_year);
+     $viewend = TikiLib::make_time(0,0,0,$focus_month + 6, $df, $focus_year);
    } elseif ($calendarViewMode == 'year') {
-     $viewend = TikiLib::make_time(0,0,0,1, $d, $focus_year+1);
+     $viewend = TikiLib::make_time(0,0,0,1, $df, $focus_year+1);
    } else {
      $viewend = TikiLib::make_time(0,0,0,$focus_month + 1, 0, $focus_year);
    }
