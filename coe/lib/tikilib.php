@@ -5486,7 +5486,7 @@ class TikiLib extends TikiDB {
 						}
 						}
 						//echo '<pre>'; debug_print_backtrace(); echo '</pre>';
-						if( $this->plugin_is_editable( $plugin_name ) && (empty($options['print']) || !$options['print']) ) {
+						if( $option['fck'] == 'n' && $this->plugin_is_editable( $plugin_name ) && (empty($options['print']) || !$options['print'] ) ) {
 							include_once('lib/smarty_tiki/function.icon.php');
 							global $headerlib, $page;
 							$id = 'plugin-edit-' . $plugin_name . $current_index;
@@ -5823,6 +5823,7 @@ window.addEvent('domready', function() {
 	}
 
 	function plugin_execute( $name, $data = '', $args = array(), $offset = 0, $validationPerformed = false, $parseOptions = array() ) {
+		global $prefs;
 		if( ! $this->plugin_exists( $name, true ) )
 			return false;
 
@@ -5856,14 +5857,14 @@ window.addEvent('domready', function() {
 			}
 		}
 
-		if (isset($parseOptions['fck']) and $parseOptions['fck'] == 'y' ) {
+		if ($prefs['wysiwyg_htmltowiki'] == 'y' and isset($parseOptions['fck']) and $parseOptions['fck'] == 'y' ) {
 			$ret = '{'.strtoupper($name).' (';
 			if (!empty($args)) {
 				foreach( $args as $argKey => $argValue ) {
 					$ret .= $argKey.'="'.$argValue.'" ';
 				}
 			}
-			$ret .= ')}'.$data.'{/'.strtoupper($name).'}';
+			$ret .= ')}'.$data.'{'.strtoupper($name).'}';
 			//return '<span _fckfakelement="true" _fck_true_content="'.htmlspecialchars($ret,'UTF-8').'">Tiki Plugin '.$name.'</span>';
 			return '<span _plugin="'.urlencode($ret).'">Tiki Plugin '.$name.'</span>';
 		}

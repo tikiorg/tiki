@@ -921,8 +921,13 @@ if (isset($_REQUEST['mode_normal'])) {
 	$prefs['wiki_edit_section'] = $secedit;
 	$prefs['feature_wiki_ext_icon'] = $exticons;
 	$prefs['wiki_edit_plugin'] = $editplugin;
-	$is_html = false;
-	$info['is_html'] = false;
+	if ($prefs['wysiwyg_htmltowiki'] == 'y') {
+		$is_html = false;
+		$info['is_html'] = false;
+	} else {
+		$is_html = true;
+		$info['is_html'] = true;
+	}
 	$info['wysiwyg'] = true;
 	$smarty->assign('allowhtml','y');
 }
