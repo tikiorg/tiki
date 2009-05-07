@@ -21,33 +21,39 @@
 	</div>
 {/if}
 
+
+
+
 {section name=ix loop=$listpages}
 <div class="post">
-{if $prefs.feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y'}
-				{if $listpages[ix].freetags.data|@count >0}
-				<div class="freetaglist">
-					{foreach from=$listpages[ix].freetags.data item=taginfo}
-						<a class="freetag" href="tiki-browse_freetags.php?tag={$taginfo.tag}">{$taginfo.tag}</a>
-					{/foreach}
-				</div>
-			{/if}
+
+
+	{if $prefs.feature_freetags eq 'y' and $tiki_p_view_freetags eq 'y'}
+					{if $listpages[ix].freetags.data|@count >0}
+					<div class="freetaglist">
+						{foreach from=$listpages[ix].freetags.data item=taginfo}
+							<a class="freetag" href="tiki-browse_freetags.php?tag={$taginfo.tag}">{$taginfo.tag}</a>
+						{/foreach}
+					</div>
+				    {/if}
+	{/if}
+			
 	<div class="clearfix postbody">
 		
 		<div class="clearfix postbody-title">
 		{if $show_avatar eq 'y'}
 						{$listpages[ix].avatar}
-					{/if}
+		{/if}
 			<div class="title">
 
 			{if $use_title eq 'y'}
 					<h2>{$listpages[ix].title}</h2>
-				{else}
+			{else}
 					<h2>{$listpages[ix].created|tiki_short_datetime}</h2>
-				{/if}
-			</div>
-	  
+			{/if}
+
+			</div>		
 			
-		{/if}
 	</div> <!-- posthead -->
 	<div class="author_actions clearfix">
 			<div class="actions">
