@@ -459,8 +459,6 @@ div#sitead {margin: auto}
 * html #siteloginbar {text-align: right}
 *:first-child+html #siteloginbar {max-width: 650px}
 
-div.logged-in {padding-right: 20px}
-	
 #siteloginbar a,
 #siteloginbar a:visited,
 #siteloginbar a:hover {
@@ -502,7 +500,16 @@ div.logged-in {padding-right: 20px}
 	color: #5ae0ff;
 	font-size: 90%;
 	background: #204c65;
-	font-weight: normal }
+	font-weight: normal}
+	
+div.logged-in {padding-right: 20px}
+
+* html .logged-in {
+	color: #5ae0ff !important;
+	background: none !important}
+
+* html .logged-in a,
+* html .logged-in a:visited {color: #5ae0ff !important}
 	
 #sitelocbar {float: left; margin: 0 58px;}
 #sitelocbar a {background-color: #cce5ff; color: #0990cc !important; padding: 1px 4px}
@@ -1971,7 +1978,6 @@ body.tiki_forums table.normal {margin: auto}
 .post .author_info a:link,
 .post .author_info a:visited {color: #fff}
 
-.post .author_info .icons {display: block}
 .post .author_info .icons .actions {margin-right: 10px}
 .post .author_post_info_on {font-style: italic}
 
@@ -1980,7 +1986,7 @@ body.tiki_forums table.normal {margin: auto}
 	float: right;
 	font-size: 90%;
 	font-style: italic;
-	height: 24px;
+	min-height: 24px;
 	padding-left: 60px;
 	padding-top: 1px;
 	color: #fff;
@@ -1990,10 +1996,16 @@ body.tiki_forums table.normal {margin: auto}
 .commentStyle_headers .author_info {float: left}
 
 .post .postbody-title .actions {
+	text-align: right;
 	float: right;
-	font-size: 1em;
+	color: #fff;
+	font-size: 80%;
+	font-style: italic;
 	padding-top: 4px;
 	padding-right: 4px}
+	
+.post .postbody-title .actions a,
+.post .postbody-title .actions a:visited {color: #fff}
 
 .postbody-content {padding: 6px}
 .post .postbody .attachments {
