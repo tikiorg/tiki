@@ -25,13 +25,15 @@ function smarty_function_icon($params, &$smarty) {
 
 	$serialized_params = serialize($params);
 	if ( isset($_SESSION['icons'][$serialized_params]) ) {
-		if ( !empty($_SESSION['icons_theme']) && $_SESSION['icons_theme'] == $prefs['style'] ) {
+		if ( !empty($_SESSION['icons_theme']) && $_SESSION['icons_theme'] == $prefs['style'] &&
+				!empty($_SESSION['icons_theme_option']) && $_SESSION['icons_theme_option'] == $prefs['style_option']) {
 			return $_SESSION['icons'][$serialized_params];
 		} else {
 			unset($_SESSION['icons']);
 		}
 	}
 	$_SESSION['icons_theme'] = $prefs['style'];
+	$_SESSION['icons_theme_option'] = $prefs['style_option'];
 
 	$basedirs = array('pics/icons', 'images', 'img/icons', 'pics/icons/mime');
 	$icons_extension = '.png';
@@ -77,7 +79,7 @@ function smarty_function_icon($params, &$smarty) {
 	if ( ! eregi('^[a-z0-9_-]+$', $params['_id']) )
 		return;
 
-	global $prefs, $style_base, $tikidomain, $tikipath, $url_path, $base_url;
+	global $url_path, $base_url, $tikilib;
 
 	// Include smarty functions used below
 	require_once $smarty->_get_plugin_filepath('function', 'html_image');
@@ -94,16 +96,11 @@ function smarty_function_icon($params, &$smarty) {
 			switch ( $k ) {
 			case '_id':
 				$v = $icons_basedir.$v.$icons_extension;
-				if ( isset($style_base) ) {
-					if ( $tikidomain and file_exists($tikipath."/styles/$tikidomain/$style_base/$v") ) {
-						$params['file'] = "styles/$tikidomain/$style_base/$v";
-					} elseif ( $tikidomain and file_exists($tikipath."/styles/$tikidomain/$v") ) {
-						$params['file'] = "$tikidomain/$v";
-					} elseif ( file_exists($tikipath."/styles/$style_base/$v") ) {
-						$params['file'] = "styles/$style_base/$v";
-					} else {
-						$params['file'] = $v;
-					}
+				$v2 = $tikilib->get_style_path($prefs['style'], $prefs['style_option'], $v);
+				if (!empty($v2)) {
+					$params['file'] = $v2;
+				} else {
+					$params['file'] = $v;
 				}
 				break;
 			case '_type':
