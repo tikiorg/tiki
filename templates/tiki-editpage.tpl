@@ -58,7 +58,7 @@ window.onload = timeIt;
 	{if $beingStaged eq 'y' and $prefs.wikiapproval_hideprefix == 'y'}{assign var=pp value=$approvedPageName}{else}{assign var=pp value=$page}{/if}
 	{title}{if isset($hdr) && $prefs.wiki_edit_section eq 'y'}{tr}Edit Section{/tr}{else}{tr}Edit{/tr}{/if}: {$pp|escape}{if $pageAlias ne ''}&nbsp;({$pageAlias|escape}){/if}{/title}
 {else}
-   {title}{tr}Update '{$page}' based on '{$source_page}'{/tr}{/title}
+   {title}{tr}Update '{$page}'{/tr}{/title}
 {/if}
    
 {if $beingStaged eq 'y'}
