@@ -1796,3 +1796,9 @@ ALTER TABLE users_users ADD email_confirm int(14) default NULL AFTER pass_confir
 ALTER TABLE `tiki_tracker_items` ADD index trackerId (trackerId);
 ALTER TABLE `tiki_tracker_fields` ADD index trackerId (trackerId);
 ALTER TABLE `tiki_tracker_item_attachments` ADD index itemId (itemId);
+
+#2009-05-08 sampaioprimo
+SELECT (@fgcant:=count(*)) FROM users_grouppermissions WHERE permName = 'tiki_p_list_file_galleries';
+INSERT INTO `users_grouppermissions` SELECT groupName, 'tiki_p_list_file_galleries', '' FROM `users_grouppermissions` WHERE permName =  'tiki_p_view_file_gallery' AND @fgcant = 0;
+SELECT (@fgcant:=count(*)) FROM users_grouppermissions WHERE permName = 'tiki_p_list_image_galleries';
+INSERT INTO `users_grouppermissions` SELECT groupName, 'tiki_p_list_image_galleries', '' FROM `users_grouppermissions` WHERE permName = 'tiki_p_view_image_gallery' AND @fgcant = 0;
