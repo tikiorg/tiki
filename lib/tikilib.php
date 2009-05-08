@@ -7298,8 +7298,8 @@ class TikiLib extends TikiDB {
 			}
 		}
 		$data = $new_data.$data;
-		// Add icon to edit the text before the first section
-		if ($prefs['wiki_edit_section'] == 'y' && isset($section) && $section == 'wiki page' && $tiki_p_edit == 'y' && (empty($options['print']) || !$options['print']) ){
+		// Add icon to edit the text before the first section (if there is some)
+		if ($prefs['wiki_edit_section'] == 'y' && isset($section) && $section == 'wiki page' && $tiki_p_edit == 'y' && (empty($options['print']) || !$options['print'])  && strpos($data, '<div class="icon_edit_section">') != 0){
 			global $smarty;
 			include_once('lib/smarty_tiki/function.icon.php');
 			$button = '<div class="icon_edit_section"><a href="tiki-editpage.php?';
