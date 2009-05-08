@@ -31,7 +31,7 @@ function doRefreshWebmail(reload) {
 		\$jq('#$divId .webmail_refresh_message').text('$msg');
 		\$jq('#$divId .webmail_refresh_message').show();
 	}
-	if (typeof autoRefresh != 'undefined') {
+	if (typeof autoRefresh != 'undefined' && typeof doRefreshWebmail == 'function') {
 		setTimeout("doRefreshWebmail()", autoRefresh);
 	}
 }
