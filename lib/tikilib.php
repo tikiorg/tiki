@@ -5540,6 +5540,8 @@ class TikiLib extends TikiDB {
 			show('$id');
 			\$jq('#$id').click( function(event) {
 				popup_plugin_form("
+					. json_encode('editwiki')
+					. ', '
 					. json_encode($plugin_name) 
 					. ', ' 
 					. json_encode($current_index) 
