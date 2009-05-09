@@ -185,6 +185,8 @@ div#page-bar table, div#page-bar td, div#page-bar tr {
 
 span.button a,
 span.button a:visited,
+span.button2 a,
+span.button2 a:visited,
 button,
 input[type=reset],
 input[type=submit],
@@ -233,6 +235,7 @@ span.button input,
 	padding: 0 4px}
 
 span.button a:hover,
+span.button2 a:hover,
 button:hover,
 input[type=reset]:hover,
 input[type=submit]:hover,

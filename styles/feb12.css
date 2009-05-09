@@ -123,6 +123,8 @@ select {
 
 span.button a,
 span.button a:visited,
+span.button2 a,
+span.button2 a:visited,
 button,
 input[type=reset],
 input[type=submit],
@@ -142,6 +144,7 @@ span.button input,
 *:first-child+html input {font-weight: normal}
 
 span.button a:hover,
+span.button2 a:hover,
 button:hover,
 input[type=reset]:hover,
 input[type=submit]:hover,

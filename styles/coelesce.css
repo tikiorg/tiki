@@ -108,6 +108,8 @@ span.button {
 /* Links in buttons */
 span.button a,
 span.button a:visited,
+span.button2 a,
+span.button2 a:visited,
 button,
 input[type=reset],
 input[type=submit],
@@ -138,6 +140,7 @@ span.button input,
 .button a:visited {padding: 1px 4px}
 
 .button a:hover,
+.button2 a:hover,
 button:hover,
 input[type=reset]:hover,
 input[type=submit]:hover,
@@ -146,6 +149,7 @@ input[type=submit]:hover,
 .calbuttonBox a:hover {background: white}
 
 .button a:active,	
+.button2 a:active,	
 button:active,
 input[type=reset]:active,
 input[type=submit]:active,

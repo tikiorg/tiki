@@ -49,6 +49,8 @@ span.button {
 /* Links in buttons */
 span.button a,
 span.button a:visited,
+span.button2 a,
+span.button2 a:visited,
 button,
 input[type=reset],
 input[type=submit],
@@ -76,6 +78,7 @@ span.button input,
 	padding: 0 4px}
 	
 .button a:hover,
+.button2 a:hover,
 button:hover,
 input[type=reset]:hover,
 input[type=submit]:hover,
@@ -83,7 +86,8 @@ input[type=submit]:hover,
 .submitbutton:hover,
 .calbuttonBox:hover {}
 
-.button a:active,	
+.button a:active,
+.button2 a:active,
 button:active,
 input[type=reset]:active,
 input[type=submit]:active,
@@ -91,6 +95,8 @@ input[type=submit]:active,
 .submitbutton:active,
 span.highlight a:link,
 span.highlight a:visited {  }
+
+span.button2 {margin-right: 5px}
 	
 div.iconmenu {display: inline}
 select[multiple] {height: 10em}
