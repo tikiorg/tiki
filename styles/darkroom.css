@@ -1,5 +1,5 @@
 /*
- * The Darkroom_3 theme for TikiWiki CMS/Groupware.
+ * The Darkroom theme for TikiWiki CMS/Groupware.
  * Released under the LGPL license. For use with default Tiki templates.
  * Imports lite/lite.css. Be sure the file is available for proper layout. 
  * For more information on Darkroom, please visit http://themes.tikiwiki.org.
@@ -105,7 +105,7 @@ button,
 .submitbutton,
 .button input,
 .calbuttonBox {
-	background:#4E4E4E url(darkroom_3/button.png) top left repeat-x;
+	background:#4E4E4E url(darkroom/button.png) top left repeat-x;
 	color:#B2B2B2;
 	font-weight: bold;
 	border: 1px solid transparent;
@@ -122,7 +122,7 @@ button,
 /* do not put this rule with button rule for IE6 */
 input[type=submit],
 input[type=reset] {
-	background:#4E4E4E url(darkroom_3/button.png) top left repeat-x;
+	background:#4E4E4E url(darkroom/button.png) top left repeat-x;
 	color:#B2B2B2;
 	font-weight: bold;
 	border: 1px solid transparent;
@@ -367,7 +367,7 @@ input[id="sl-login-pass"] {font-size: 1.1em}
 #tiki-top {
 	border-top: 1px solid #818181;
 	height: 34px;
-	background: url(darkroom_3/button.png) repeat-x}
+	background: url(darkroom/button.png) repeat-x}
 
 #tiki-top table {
 	width: auto;
@@ -593,7 +593,7 @@ img.imgs {background: #999}
 .cssmenu_vert li:hover > a {color: #303030}
 
 #tiki-top > .cssmenu_horiz > li {
-	background: url(darkroom_3/button.png) repeat-x}
+	background: url(darkroom/button.png) repeat-x}
 
 #tiki-top > .cssmenu_horiz > li > a {
 	border: 1px solid transparent;
@@ -1129,7 +1129,7 @@ a.forumnameread {} */
 	display: inline;
 	white-space: nowrap;
 	font-size: 10px;
-	background: #4E4E4E url(darkroom_3/button.png);
+	background: #4E4E4E url(darkroom/button.png);
 	border: 1px solid #666666;
 	border-bottom: 1px solid #696969;
 	margin: 0;
@@ -1212,7 +1212,7 @@ form.admin legend.heading a:hover span {} */
 	text-decoration: none;
 	border: 1px solid transparent;
 	border-top: 1px solid #818181;
-	background: url(darkroom_3/button.png) repeat-x;
+	background: url(darkroom/button.png) repeat-x;
 	height: 28px;
 	margin-bottom: 5px} 
 
@@ -1273,7 +1273,7 @@ a.wiki {text-decoration: underline}
 .wikitext ol { }
 
 .titlebar {
-	background:#4E4E4E url(darkroom_3/button.png) top left repeat-x;
+	background:#4E4E4E url(darkroom/button.png) top left repeat-x;
 	color:#B2B2B2;
 	font-weight: bold;
 	border-top: 1px solid #818181;
@@ -1526,7 +1526,7 @@ div.articlesource {
 	font-size: 90%}
  
 div.articletrailer .wikitopline {
-	background: #4E4E4E url(darkroom_3/button.png) top left repeat-x;
+	background: #4E4E4E url(darkroom/button.png) top left repeat-x;
 	width: 100%}
 
 /***** Blogs *****/
@@ -1593,7 +1593,7 @@ body.tiki_blogs .post .title {
 
 /*div.posthead h3*/
 body.tiki_blogs .post .title h2 {
-	background: #343434 url(darkroom_3/button.png) repeat-x;
+	background: #343434 url(darkroom/button.png) repeat-x;
 	color: #D8D8D8;
 	text-align: left;
 	margin-bottom: 10px;
@@ -1716,7 +1716,7 @@ table.commentinfo {background: #F0F0F0}
 		
 .post .postbody-title {
 	background-color: inherit;
-	background: #343434 url(darkroom_3/button.png) repeat-x;
+	background: #343434 url(darkroom/button.png) repeat-x;
 	border-bottom: 0;
 	overflow: hidden;
 	color: #D8D8D8}
@@ -2303,7 +2303,7 @@ td.calodd, td.caleven {border: 1px solid #999999}
 .daterow {
 	margin: 2px;
 	padding: 0 4px;
-	background:#4E4E4E url(darkroom_3/button.png) top left repeat-x;
+	background:#4E4E4E url(darkroom/button.png) top left repeat-x;
 	color:#B2B2B2;
 	font-weight: bold;
 	border: 1px solid #3F3F3F;

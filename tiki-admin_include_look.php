@@ -144,7 +144,7 @@ $smarty->assign('a_style', $a_style);
 $smarty->assign_by_ref( "style_options", $tikilib->list_style_options($a_style));
 
 /**
- * @param $stl - style file name (e.g. thenews_3.css)
+ * @param $stl - style file name (e.g. thenews.css)
  * @param $opt - optional option file name
  * @return string path to thumbnail file
  */

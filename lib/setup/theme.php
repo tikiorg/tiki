@@ -22,7 +22,7 @@ if ( $prefs['useGroupTheme'] == 'y' && $group_style = $userlib->get_user_group_t
 	$smarty->assign_by_ref('group_style', $group_style);
 }
 if ($tikilib->get_style_path('', '', $prefs['style']) == '') {
-	$prefs['style'] = 'thenews_3.css';
+	$prefs['style'] = 'thenews.css';
 }
 		
 include_once("lib/csslib.php");

@@ -7910,7 +7910,7 @@ class TikiLib extends TikiDB {
 	}
 
 	/**
-	 * @param $a_style - main style (e.g. "thenews_3.css")
+	 * @param $a_style - main style (e.g. "thenews.css")
 	 * @return array of css files in the style options dir
 	 */
 	function list_style_options($a_style='') {
@@ -7940,8 +7940,8 @@ class TikiLib extends TikiDB {
 	}
 	
 	/**
-	 * @param $stl - main style (e.g. "thenews_3.css")
-	 * @return string - style passed in up to - | or . char (e.g. "thenews_3")
+	 * @param $stl - main style (e.g. "thenews.css")
+	 * @return string - style passed in up to - | or . char (e.g. "thenews")
 	 */
 	function get_style_base($stl) {
 		$parts = split("-|\.", $stl);
@@ -7953,10 +7953,10 @@ class TikiLib extends TikiDB {
 	}
 	
 	/**
-	 * @param $stl - main style (e.g. "thenews_3.css" - can be empty to return main styles dir)
+	 * @param $stl - main style (e.g. "thenews.css" - can be empty to return main styles dir)
 	 * @param $opt - optional option file name (e.g. "purple.css")
 	 * @param $filename - optional filename to look for (e.g. "purple.png")
-	 * @return path to dir or file if found or empty if not - e.g. "styles/mydomain.tld/thenews_3/options/purple/"
+	 * @return path to dir or file if found or empty if not - e.g. "styles/mydomain.tld/thenews/options/purple/"
 	 */
 	function get_style_path($stl = '', $opt = '', $filename = '') {
 		global $tikidomain;

@@ -45,7 +45,7 @@ if ( $result === FALSE ) {
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>Error: Unable to connect to the database !</title>
-	<link rel="stylesheet" href="styles/thenews_3.css" type="text/css">
+	<link rel="stylesheet" href="styles/thenews.css" type="text/css">
 </head>
 <body >
 	<div id="tiki-main">

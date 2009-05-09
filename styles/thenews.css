@@ -1,5 +1,5 @@
 /* 
- * The News 3 theme for Tiki CMS/Groupware -- uses the layout methods of litecss,
+ * The News theme for Tiki CMS/Groupware -- uses the layout methods of litecss,
  * source ordered layout solution by luci (http://sourceforge.net/projects/litecss).
  * For more information, please visit http://themes.tikiwiki.org or http://zukakakina.com.
  * Released under LPGL license. */
@@ -787,7 +787,7 @@ a.phplmselected:hover {
 #tiki-top > .cssmenu_horiz > li.menuSection > a {padding-right: 2.6em}
 	
 .sf-sub-indicator {
-	background: url(thenews_3/arrows-005faa.png) no-repeat -10px -100px; /* 8-bit indexed alpha png. IE6 gets solid image only; */}
+	background: url(thenews/arrows-005faa.png) no-repeat -10px -100px; /* 8-bit indexed alpha png. IE6 gets solid image only; */}
 
 
 /** Links in other menus **/

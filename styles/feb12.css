@@ -1,4 +1,4 @@
-/* Feb12_3 theme for TikiWiki CMS/Groupware, released under LGPL license.
+/* Feb12 theme for TikiWiki CMS/Groupware, released under LGPL license.
  * See http://themes.tikwiki.org for more information. -- */
 
  @import "lite/lite.css"; /* here we import *lite as the base */
@@ -21,7 +21,7 @@ html[dir=ltr]>body {
 	margin: 1em .5em;
 }
 
-body#fullscreen {background: #fff url(feb12_3/page.jpg) repeat-x}
+body#fullscreen {background: #fff url(feb12/page.jpg) repeat-x}
 
 a, a:link, a:visited { 
 	background: inherit;
@@ -134,7 +134,7 @@ span.button input,
 	vertical-align: middle;	
 	margin: 2px;
 	padding: 0 4px;
-	background: url(feb12_3/header.jpg) repeat-x 0 -2px;
+	background: url(feb12/header.jpg) repeat-x 0 -2px;
 	border: 1px solid #5aa5cf;
 	color: #F5F5F5;
 	font-size: 80%;
@@ -153,22 +153,22 @@ input[type=submit]:hover,
 .calbuttonBox:hover,
 #highlight,
 .highlight {
-	background: url(feb12_3/header.jpg) repeat-x 0 100%;
+	background: url(feb12/header.jpg) repeat-x 0 100%;
 	color: #F5F5F5;
 	text-decoration: none}
 
 * html input[type=reset]:hover,
 * html input[type=submit]:hover {
-	background: url(feb12_3/header.jpg) repeat-x 0 100%;
+	background: url(feb12/header.jpg) repeat-x 0 100%;
 	color: #F5F5F5;
 	cursor: pointer}
 
 * html span.button a,
-* html span.button a:visited {background: url(feb12_3/header.jpg) repeat-x 0 -2px}
+* html span.button a:visited {background: url(feb12/header.jpg) repeat-x 0 -2px}
 
 * html span.button a:hover {
 	color: #F5F5F5;
-	background: url(feb12_3/header.jpg) repeat-x 0 100%}
+	background: url(feb12/header.jpg) repeat-x 0 100%}
 	
 .button a:active,	
 button:active,
@@ -178,7 +178,7 @@ input[type=submit]:active,
 .submitbutton:active,
 span.highlight a:link,
 span.highlight a:visited {
-	background: url(feb12_3/columnbg.jpg) 0 100%;
+	background: url(feb12/columnbg.jpg) 0 100%;
 	color: #000}
 
 input[type=checkbox] {border: 0}
@@ -248,7 +248,7 @@ ul.jumplinks a:focus, ul.jumplinks a:active {
 	text-align: left;
 	position: static}
 
-#middle {background: #fff url(feb12_3/page.jpg) repeat-x;}
+#middle {background: #fff url(feb12/page.jpg) repeat-x;}
 
 #c1c2 {
 	text-align: left;
@@ -276,7 +276,7 @@ ul.jumplinks a:focus, ul.jumplinks a:active {
 #c1c2 #col2 {
 	width: 240px;
 	overflow: visible;
-	background: #A8CCE2 url(feb12_3/columnbg.jpg) repeat-x}
+	background: #A8CCE2 url(feb12/columnbg.jpg) repeat-x}
 
 #c1c2 #col2 .content {padding: 1em}
 
@@ -315,7 +315,7 @@ div#tiki-bot {}
 /* Site Header & Identity */
 
 #header-top {
-	background: url(feb12_3/header.jpg) repeat-x bottom;
+	background: url(feb12/header.jpg) repeat-x bottom;
 	min-height: 98px;
 	position: relative}
 
@@ -407,7 +407,7 @@ input[id="sl-login-pass"] {}
 /* tiki-top_bar.tpl - menu and search */
 
 #tiki-top {
-	background: url(feb12_3/header.jpg) repeat-x;
+	background: url(feb12/header.jpg) repeat-x;
 	color: #F5F5F5;
 	height: 34px;
 	padding-top: 3px;
@@ -495,7 +495,7 @@ a.flip img {display: none}
 * html .horbaritem a:visited {font-size: 1.3em }
 
 .horbaritem a:hover {
-	background: url(feb12_3/header.jpg) 0 -40px repeat-x;
+	background: url(feb12/header.jpg) 0 -40px repeat-x;
 	color: #eee !important;
 	text-decoration: none} 
 
@@ -522,7 +522,7 @@ a.flip img {display: none}
 	position: relative;
 	display: block;
 	border: 1px solid #8CACBB;
-	background: #A8CCE2 url(feb12_3/columnbg.jpg) repeat-x} 
+	background: #A8CCE2 url(feb12/columnbg.jpg) repeat-x} 
 
 .mdkitem {
 	border-top: 1px solid #57A5D0;
@@ -638,7 +638,7 @@ a.phplmselected:hover {color: #006699}
 #tiki-top > .cssmenu_horiz > li.menuSection > a {padding-right: 2.6em}
 
 #tiki-top .cssmenu_horiz li.menuLevel0:hover {
-	background: url(feb12_3/header.jpg) repeat-x 0 100%;
+	background: url(feb12/header.jpg) repeat-x 0 100%;
 	color: #eee !important;
 	text-decoration: none}
 	
