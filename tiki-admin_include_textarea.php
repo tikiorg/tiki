@@ -70,13 +70,18 @@ if (isset($_REQUEST["textareasetup"]) && (!isset($_COOKIE['tab']) || $_COOKIE['t
 
 // from tiki-admin_include_textarea.php
 
-$cacheToInvalidate = array( 'plugindesc' );
-
 global $tikilib;
 $pluginsAlias = $tikilib->plugin_get_list( false, true );
 $pluginsReal = $tikilib->plugin_get_list( true, false );
 
 if( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
+
+	$cacheToInvalidate = array( 'plugindesc' );
+	global $cachelib; require_once("lib/cache/cachelib.php");
+	foreach ($cacheToInvalidate as $c) {
+       	 	$cachelib->invalidate($c);
+	}
+
 	if( isset( $_POST['enable'] ) ) {
 		if( ! is_array( $_POST['enabled'] ) )
 			$_POST['enabled'] = array();
