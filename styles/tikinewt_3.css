@@ -1,4 +1,4 @@
-/* Tikinewt theme stylesheet (tikinewt.css);
+/* Tikinewt 3 theme stylesheet (tikinewt_3.css);
  (imports lite.css and layout.css) 
 
 	Theme CSS is comprised of these sections:
@@ -322,7 +322,7 @@ div#sitelogo {
 
 .cssmenu_horiz li ul ul {margin: -1em 0 0 11em}
 #tiki-top > ul.cssmenu_horiz > li > a {font-weight: bold}
-.sf-sub-indicator {background: url(tikinewt/arrows-6d819d.png) no-repeat -10px -100px}
+.sf-sub-indicator {background: url(tikinewt_3/arrows-6d819d.png) no-repeat -10px -100px}
 
 /** PHP Layers Menus **/
 .horbar {

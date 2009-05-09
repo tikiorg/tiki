@@ -539,7 +539,7 @@ $smarty = new Smarty_Tikiwiki_Installer();
 $smarty->load_filter('pre', 'tr');
 $smarty->load_filter('output', 'trimwhitespace');
 $smarty->assign('mid', 'tiki-install.tpl');
-$smarty->assign('style', 'thenews.css');
+$smarty->assign('style', 'thenews_3.css');
 $smarty->assign('virt',$virt);
 $smarty->assign('multi', $multi);
 if ($language != 'en')
@@ -895,7 +895,7 @@ if ( $_REQUEST['general_settings'] == 'y' ) {
 
 
 include "lib/headerlib.php";
-$headerlib->add_cssfile('styles/thenews.css');
+$headerlib->add_cssfile('styles/thenews_3.css');
 $smarty->assign_by_ref('headerlib',$headerlib);
 
 $smarty->assign('install_step', $install_step);
