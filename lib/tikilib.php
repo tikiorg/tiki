@@ -5528,11 +5528,13 @@ class TikiLib extends TikiDB {
 								}
 							}
 							//echo '<pre>'; debug_print_backtrace(); echo '</pre>';
+							global $headerlib;
+							$headerlib->add_jsfile( 'tiki-jsplugin.php' );
 							if( $this->plugin_is_editable( $plugin_name ) && (empty($options['print']) || !$options['print']) ) {
 								include_once('lib/smarty_tiki/function.icon.php');
-								global $headerlib, $page;
+								global $page;
 								$id = 'plugin-edit-' . $plugin_name . $current_index;
-								$headerlib->add_jsfile( 'tiki-jsplugin.php?plugin=' . urlencode( $plugin_name ) );
+						
 								if ($prefs['feature_jquery'] == 'y') {
 									$headerlib->add_js( "
 	\$jq(document).ready( function() {
