@@ -76,10 +76,10 @@ $pluginsReal = $tikilib->plugin_get_list( true, false );
 
 if( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 
-	$cacheToInvalidate = array( 'plugindesc' );
 	global $cachelib; require_once("lib/cache/cachelib.php");
-	foreach ($cacheToInvalidate as $c) {
-       	 	$cachelib->invalidate($c);
+	foreach ($tikilib->list_languages() as $tlang) {
+		$cachetag = 'plugindesc' . $tlang['value'];
+		$cachelib->invalidate($cachetag);
 	}
 
 	if( isset( $_POST['enable'] ) ) {

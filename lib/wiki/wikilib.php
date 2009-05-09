@@ -734,7 +734,8 @@ class WikiLib extends TikiLib {
 		if ($with_help) {
 			global $cachelib, $headerlib;
 			$headerlib->add_jsfile( 'tiki-jsplugin.php' );
-			if (!$cachelib->isCached('plugindesc')) {
+			$cachetag = 'plugindesc' . $this->get_language();
+			if (!$cachelib->isCached( $cachetag ) ) {
 				$list = $this->plugin_get_list();
 
 				$plugins = array();
@@ -745,9 +746,9 @@ class WikiLib extends TikiLib {
 					if( $enabled )
 						$plugins[] = $pinfo;
 				}
-				$cachelib->cacheItem("plugindesc",serialize($plugins));
+				$cachelib->cacheItem($cachetag,serialize($plugins));
 			} else {
-				$plugins = unserialize($cachelib->getCached("plugindesc"));
+				$plugins = unserialize($cachetag);
 			}
 			return $plugins;
 		} else {
