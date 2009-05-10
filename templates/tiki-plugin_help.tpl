@@ -1,6 +1,6 @@
 {* $Id$ *}
 <h3>{$plugin.name|escape}
-{if $prefs.javascript_enabled eq 'y'}
+{if $prefs.javascript_enabled eq 'y' && $area_name}
 	<a href="javascript:void(0);{if $prefs.feature_shadowbox eq 'y' and ($prefs.feature_jquery eq 'y' or $prefs.feature_mootools eq 'y')}javascript:Shadowbox.close();{/if}" onclick="needToConfirm=false;popup_plugin_form('{$area_name}','{$plugin_name|lower|@addslashes}')">{icon _id="comment_add" text="{tr}Insert{/tr}"}</a>
 {/if}
 
