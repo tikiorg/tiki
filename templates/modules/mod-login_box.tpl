@@ -108,9 +108,9 @@ function capLock(e){
 		  </div>
           {if $prefs.rememberme ne 'disabled'}
             {if $prefs.rememberme eq 'always'}
-              <input type="hidden" name="rme" id="login-remember" value="on" />
+              <input type="hidden" name="rme" class="login-remember" value="on" />
             {else}
-              <div style="text-align: center"><input type="checkbox" name="rme" id="login-remember" value="on" /><label for="login-remember">{tr}Remember me{/tr}</label> ({tr}for{/tr} {if $prefs.remembertime eq 300}5 {tr}minutes{/tr}{elseif $prefs.remembertime eq 900}15 {tr}minutes{/tr}{elseif $prefs.remembertime eq 1800}30 {tr}minutes{/tr}{elseif $prefs.remembertime eq 3600}1 {tr}hour{/tr}{elseif $prefs.remembertime eq 7200}2 {tr}hours{/tr}{elseif $prefs.remembertime eq 36000}10 {tr}hours{/tr}{elseif $prefs.remembertime eq 72000}20 {tr}hours{/tr}{elseif $prefs.remembertime eq 86400} 1 {tr}day{/tr}{elseif $prefs.remembertime eq 604800}1 {tr}week{/tr}{elseif $prefs.remembertime eq 2629743}1 {tr}month{/tr}{elseif $prefs.remembertime eq 31556926}1 {tr}year{/tr}{/if})
+              <div style="text-align: center"><input type="checkbox" name="rme" class="login-remember" value="on" /><label for="login-remember">{tr}Remember me{/tr}</label> ({tr}for{/tr} {if $prefs.remembertime eq 300}5 {tr}minutes{/tr}{elseif $prefs.remembertime eq 900}15 {tr}minutes{/tr}{elseif $prefs.remembertime eq 1800}30 {tr}minutes{/tr}{elseif $prefs.remembertime eq 3600}1 {tr}hour{/tr}{elseif $prefs.remembertime eq 7200}2 {tr}hours{/tr}{elseif $prefs.remembertime eq 36000}10 {tr}hours{/tr}{elseif $prefs.remembertime eq 72000}20 {tr}hours{/tr}{elseif $prefs.remembertime eq 86400} 1 {tr}day{/tr}{elseif $prefs.remembertime eq 604800}1 {tr}week{/tr}{elseif $prefs.remembertime eq 2629743}1 {tr}month{/tr}{elseif $prefs.remembertime eq 31556926}1 {tr}year{/tr}{/if})
 			  </div>
             {/if}
           {/if}

@@ -18,7 +18,7 @@
 			{if $prefs.rememberme eq 'always'}<input type="hidden" name="rme" value="on" />
 			{elseif $prefs.rememberme eq 'all'}
 				<span class="rme">
-					<label for="login-remember">{tr}Remember me{/tr}</label><input type="checkbox" name="rme" id="login-remember" value="on" checked="checked" />
+					<label for="login-remember">{tr}Remember me{/tr}</label><input type="checkbox" name="rme" class="login-remember" value="on" checked="checked" />
 				</span>
 			{/if}
 			{if $prefs.change_password eq 'y' and $prefs.forgotPass eq 'y'}
