@@ -541,6 +541,10 @@ if ($prefs['feature_contribution'] == 'y') {
 		include_once('contribution.php');
 }
 
+global $wikilib; include_once('lib/wiki/wikilib.php');
+$plugins = $wikilib->list_plugins(true, 'editpost');
+$smarty->assign_by_ref('plugins', $plugins);
+
 ask_ticket('view-forum');
 
 // Display the template
