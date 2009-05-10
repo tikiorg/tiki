@@ -443,6 +443,7 @@ input[id="sl-login-pass"] {}
 	color: #fff;
 	display: inline;
 	height: 97px;
+	line-height: 97px;
 	margin-top: 6px;
 	overflow: hidden;
 	vertical-align: bottom;
