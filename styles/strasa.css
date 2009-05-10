@@ -118,7 +118,7 @@ span.button input,
 .submitbutton,
 .calbuttonBox {
 	font-family: Verdana, Helvetica, Geneva, Arial, sans-serif;
-	font-size: 94%;
+	font-size: 11px;
 	font-weight: normal;
 	color: #fff;
 	background: #1d9ccf;
@@ -440,7 +440,8 @@ div.floatleft {
 	clear: none}
 
 div#sitelogo {
-	margin: auto;	
+	margin: auto;
+	padding-top: 8px;
 	overflow: hidden;	
 }
 
@@ -523,7 +524,7 @@ div.logged-in {padding-right: 20px}
 
 /* #header text selectors, if needed */
 
-#sitetitles {color: #fff; float: left; height: 97px; line-height: 97px; overflow: hidden; vertical-align: bottom}
+#sitetitles {color: #fff; display: inline; height: 97px; line-height: 97px; overflow: hidden; vertical-align: bottom}
 
 #sitetitle,
 #sitesubtitle {font-family: Helvetica, sans-serif; font-weight: bold}
@@ -1875,8 +1876,10 @@ span.posthead {
 body.tiki_blogs .post .title {margin-top: 0}
 
 body.tiki_blogs .postbody-title {
+	background:#1B3C54 url(strasa/headerbg.jpg);
 	float: none;
 	width: 100%;
+	min-width: 100%; /* IE7 */
 	min-height: 46px;
 	border: 0}
 	
@@ -1909,7 +1912,7 @@ body.tiki_blogs .author_info {min-height: 24px}
 * html body.tiki_blogs .author_info {height: 24px}
 body.tiki_blogs .author_info img {vertical-align: top}
 
-.postbody-title {border: 0}	
+body.tiki_blogs .postbody-title {border: 0}	
 
 body.tiki_blogs .postbody .postfooter {
 	width: 100%;
@@ -1934,8 +1937,7 @@ body.tiki_forums table.normal {margin: auto}
 	margin: 0;
 	margin-top: 5px;
 	padding: 0;
-	background: #fff;
-	font-size: 1.1em}
+	background: #fff}
 	
 * html .post .postbody {font-size: 11px}
 
