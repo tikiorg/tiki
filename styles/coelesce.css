@@ -3,7 +3,6 @@
  * original design by Patrick Allard. Distributed under the LGPL license. 
  * This is a *litecss-based theme, so import lite/lite.css. */
  @import "lite/lite.css"; 
- @import "layout/layout.css"; 
  
 /***** XHTML Elements ******/
 
@@ -333,7 +332,7 @@ div#sitelogo {
 	padding-top: 8px;
 	white-space: nowrap;
 	overflow: hidden;
-	}
+}
 
 div#sitead {margin: auto}
 #sitead.floatright {padding-right: 40px}
@@ -353,10 +352,7 @@ div#sitead {margin: auto}
 #login_search a,
 #login_search a:visited {color: #fff}
 	
-#siteloginbar {
-	display: inline;
-	bottom: 35px;
-	}
+#siteloginbar * {display: inline}
 #login_language {display: none/*inline*/}
 
 #sitesearchbar {
@@ -444,9 +440,13 @@ input[id="sl-login-pass"] {}
 	display: inline;
 	height: 97px;
 	line-height: 97px;
-	margin-top: 6px;
 	overflow: hidden;
 	vertical-align: bottom;
+	}
+
+* html #sitetitles {
+	display: inline;
+	margin-top: 6px;
 	}
 
 #sitetitle,
@@ -458,7 +458,8 @@ input[id="sl-login-pass"] {}
 	margin:0;
 	padding:0;
 	margin-bottom: 30px}
-	
+	}
+
 #sitetitle {
 	color: #9eb8d5;
 	font-size: 34px;
