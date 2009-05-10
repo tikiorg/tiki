@@ -81,10 +81,10 @@
 <p>{tr}Because the Wiki paragraph formatting feature is off, each line will be presented as you write it.  This means that if you want paragraphs to be wrapped properly, a paragraph should be all together on one line.{/tr}</p>
 {/if}
 
-{/add_help}
+
 
 {if count($plugins) ne 0}
-{add_help show='n' title="{tr}Plugin Help{/tr}" id="plugin_help"}
+
 <h3>{tr}Plugins{/tr}{if $prefs.feature_help eq 'y'} <a href="{$prefs.helpurl}Plugins" target="tikihelp" class="tikihelp" title="{tr}Plugins{/tr}:{tr}Wiki plugins extend the function of wiki syntax with more specialized commands.{/tr}">{icon _id='help' style="vertical-align:middle"}</a>
 {/if}</h3>
 <p>{tr}Note that plugin arguments can be enclosed with double quotes (&quot;); this allows them to contain , or = or &gt;{/tr}.</p>
@@ -110,5 +110,7 @@
   {cycle print=false}
   {/section}
 </table>
-{/add_help}
+
 {/if}
+
+{/add_help}
