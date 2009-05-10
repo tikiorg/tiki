@@ -1316,7 +1316,10 @@ if ($prefs['feature_categories'] == 'y') {
 		}
 	}
 }
+
+$smarty->assign('area_name', 'editwiki');
 $plugins = $wikilib->list_plugins(true);
+
 $smarty->assign_by_ref('plugins', $plugins);
 $smarty->assign('showstructs', array());
 if ($structlib->page_is_in_structure($_REQUEST["page"])) {
