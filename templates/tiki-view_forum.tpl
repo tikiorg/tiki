@@ -640,3 +640,4 @@
 			//--><!]]>
 	</script>
 {/if}
+{include file=tiki-edit_help.tpl}
