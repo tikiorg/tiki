@@ -425,3 +425,5 @@ categories = {$catsdump}
 </table>
 </form>
 </div>
+
+{include file=tiki-edit_help.tpl}

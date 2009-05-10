@@ -111,3 +111,5 @@
 		{/if}
 		</td>
 </tr></table>
+
+{if $prefs.feature_forum_parse == 'y'}{include file=tiki-edit_help.tpl}{/if}

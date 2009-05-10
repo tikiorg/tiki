@@ -631,3 +631,5 @@ onchange="this.style.bacgroundColor='#'+this.selectedIndex.value;">
 </form>
 </div>
 {/strip}
+
+{include file=tiki-edit_help.tpl}

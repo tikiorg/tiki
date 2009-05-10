@@ -543,3 +543,4 @@ selectValues('trackerIdList={$cur_field.http_request[0]}&amp;fieldlist={$cur_fie
 </script>
 {/if}
 {/foreach}
+{if $show_wiki_help == 'y'}{include file='tiki-edit_help.tpl'}{/if}

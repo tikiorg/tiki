@@ -316,6 +316,7 @@ $tabi = 1;
 $itemUser = $trklib->get_item_creator($_REQUEST['trackerId'], $_REQUEST['itemId']);
 $smarty->assign_by_ref('itemUser', $itemUser);
 
+$plugins_loaded = false;
 foreach($xfields["data"] as $i=>$array) {
 	$fid = $xfields["data"][$i]["fieldId"];
 
@@ -486,7 +487,7 @@ foreach($xfields["data"] as $i=>$array) {
 				$fields["data"][$i]["value"] = '';
 			}
 
-		} elseif ($fields["data"][$i]["type"] == 'a' )	{
+		} elseif ($fields["data"][$i]["type"] == 'a' )	{ 
 		if (isset($_REQUEST["$ins_id"])) {
 			$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];
 		} else {
@@ -504,6 +505,13 @@ foreach($xfields["data"] as $i=>$array) {
 		}
 		if ($fields["data"][$i]["options_array"][0])	{
 			$textarea_options = true;
+			if (!$plugins_loaded) {
+				global $wikilib; include_once('lib/wiki/wikilib.php');
+                        	$plugins = $wikilib->list_plugins(true, 'area_' . $fields["data"][$i]["fieldId"]);
+                        	$smarty->assign_by_ref('plugins', $plugins);
+				$plugins_loaded = 'y';
+				$smarty->assign('show_wiki_help', 'y');
+			}
 		}
 		if ($fields["data"][$i]["isMultilingual"]=='y') {
 			$ins_fields["data"][$i]['isMultilingual']='y';
