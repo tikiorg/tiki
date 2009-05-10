@@ -748,7 +748,7 @@ class WikiLib extends TikiLib {
 				}
 				$cachelib->cacheItem($cachetag,serialize($plugins));
 			} else {
-				$plugins = unserialize($cachetag);
+				$plugins = unserialize($cachelib->getCached($cachetag));
 			}
 			return $plugins;
 		} else {
