@@ -289,7 +289,7 @@ window.onload = timeIt;
 </td>
 </tr>
 <tr><td colspan="2">
-{editform Meat=$smarty.capture.autosave InstanceName='editwiki' ToolbarSet="Tiki"}
+{editform Meat=$smarty.capture.autosave InstanceName='edit' ToolbarSet="Tiki"}
 <input type="hidden" name="wysiwyg" value="y" />
 {/if}
 </td></tr>
