@@ -197,8 +197,8 @@
 					</div> 
 				</div>	
 				<div class="adminoptionbox">
-				        <div class="adminoption"><input type="checkbox" id="wikiplugininline_{$plugin|escape}" name="wikiplugininline_{$plugin|escape}" {if $prefs[$pref_inline] eq 'y'}checked="checked" {/if}/>
-                                        </div> 
+				        {if !$plugins.$plugin.inline}<div class="adminoption"><input type="checkbox" id="wikiplugininline_{$plugin|escape}" name="wikiplugininline_{$plugin|escape}" {if $prefs[$pref_inline] eq 'y'}checked="checked" {/if}/>
+                                        </div>{/if} 
 					<div class="adminoptionlabel"><label for="wikiplugininline_{$plugin|escape}">{if $plugins.$plugin.inline}The edit plugin icon is not supported for this plugin{else}{tr}Disable edit plugin icon (make plugin inline){/tr}{/if}</label>
 					</div> 
 				</div>
