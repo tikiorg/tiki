@@ -199,6 +199,9 @@ function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user 
 			$js = preg_replace('/function (.*)\(/Umis', "$1 = function(", $js);
 			//taginsert = function (
 
+			if (!isset($js_script)) {
+				$js_script = array();
+			}
 			$js_script = array_merge($js_script, $js);
 		}
 		// this is very probably possible as a single regexp, maybe a preg_replace_callback
