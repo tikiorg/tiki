@@ -114,7 +114,7 @@ button,
 	vertical-align: middle;
 	cursor: pointer;
 	white-space: nowrap}
-.calbuttonBox{float: left; margin:0 2px 0 2px;}
+.calbuttonBox{margin:0 2px 0 2px;}
 #next { margin-left:0;}
 
 #page-bar .button {margin: 0 2px;}
