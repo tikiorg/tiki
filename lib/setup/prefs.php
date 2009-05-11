@@ -347,6 +347,7 @@ function get_default_prefs() {
 		'wikiplugininline_picture' => 'n',  // Old syntax for images
 		'wikiplugininline_pluginmanager' => 'n',
 		'wikiplugininline_poll' => 'n',
+		'wikiplugininline_profile' => 'n',
 		'wikiplugininline_proposal' => 'n',
 		'wikiplugininline_quote' => 'n',
 		'wikiplugininline_rcontent' => 'n',
