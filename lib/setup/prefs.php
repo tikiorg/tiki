@@ -235,7 +235,7 @@ function get_default_prefs() {
 		'wikiplugin_picture' => 'n',  // Old syntax for images
 		'wikiplugin_pluginmanager' => 'n',
 		'wikiplugin_poll' => 'y',
-		'wikiplugin_profile' => 'n',		
+		'wikiplugin_profile' => 'y',		
 		'wikiplugin_proposal' => 'n',
 		'wikiplugin_quote' => 'y',
 		'wikiplugin_rcontent' => 'y',
