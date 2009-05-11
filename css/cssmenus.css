@@ -20,7 +20,6 @@
 .cssmenu_vert li {width: 11em}
 
 *:first-child+html body .cssmenu_horiz li {width: 11em}
-* html .cssmenu_horiz li {width: 9em }
 
 .cssmenu li,
 .cssmenu_horiz li,
