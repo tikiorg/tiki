@@ -871,7 +871,8 @@ div.box {
 	background: #292929;
 	margin-bottom: 8px;
 	padding-bottom: 2px;
-	width: 190px;}
+	overflow: hidden;
+	width: 190px}
 
 h3.box-title {
 	display: block;

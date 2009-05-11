@@ -10,8 +10,6 @@ body {
 	font: normal 75%/1.5em 'Trebuchet MS', sans-serif;
 	color: #333;
 	background: #fff}
-	
-/*html>body {font-size: 75% !important}*/
 
 *:first-child+html body {font-size: 74% !important}
 
@@ -244,9 +242,8 @@ ul.jumplinks a:focus, ul.jumplinks a:active {
 #main {font-size: 1.24em}
 
 #header {
-	/*height: 137px;*/
 	text-align: left;
-	position: static}
+	/*position: static*/}
 
 #middle {background: #fff url(feb12/page.jpg) repeat-x;}
 
@@ -318,6 +315,8 @@ div#tiki-bot {}
 	background: url(feb12/header.jpg) repeat-x bottom;
 	min-height: 98px;
 	position: relative}
+	
+* html #header-top {height: 98px}
 
 #siteheader {
 	text-align: left;
@@ -846,8 +845,9 @@ div.help_section {
 div.box {
 	overflow: hidden;
 	margin-bottom: 1.5em}
-	
-.wikitext div.box {width: 220px }
+
+* html div.box {width: 200px}
+.wikitext div.box {width: 95%}
 
 h3.box-title {
 	display: block;

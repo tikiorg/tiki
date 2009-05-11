@@ -959,6 +959,9 @@ div.box {
 	margin: 9px;
 }
 
+* html #col2 div.box,
+* html #col3 div.box {width: 181px}
+
 h3.box-title {
 	font-weight: normal;
 	margin: 0 0 7px 1em;

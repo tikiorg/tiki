@@ -331,8 +331,13 @@ div.floatleft {
 div#sitelogo {
 	padding-top: 8px;
 	white-space: nowrap;
-	overflow: hidden;
+	overflow: hidden
 }
+
+@media all and (min-width:0px) { [id$="sitelogo"] {
+	border: 1px solid transparent;
+	position: relative;
+	} }
 
 div#sitead {margin: auto}
 #sitead.floatright {padding-right: 40px}
@@ -448,6 +453,12 @@ input[id="sl-login-pass"] {}
 	display: inline;
 	margin-top: 6px;
 	}
+
+@media all and (min-width:0px) { [id$="sitetitles"] {
+	background: yellow;
+	position: absolute;
+	top: 30px;
+	} }
 
 #sitetitle,
 #sitesubtitle {
@@ -1019,10 +1030,9 @@ div.box {
 	border: 1px solid #527ca6;
 	margin-top: -1px;
 	text-align: left;
-	overflow: visible}
+	overflow: hidden}
 	
-#col3 div.box,
-#col2 div.box {width: 205px}
+* html div.box {width: 205px !important}
 
 h3.box-title {
 	padding-top: 0;
