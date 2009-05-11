@@ -1179,11 +1179,12 @@ function get_objects_with_tag_combo($tagArray, $type='', $thisUser = '', $offset
     
 	function cleanup_tags() {
 		$this->query( "
-			DELETE FROM tiki_freetagged_objects WHERE tagId NOT IN(SELECT tagId FROM tiki_freetags)" );
+			DELETE FROM `tiki_freetagged_objects` WHERE `tagId` NOT IN(SELECT `tagId` FROM `tiki_freetags`)" );
+		$this->query('delete tfo from `tiki_freetagged_objects` tfo left join `tiki_objects` tob on (tob.`objectId`=tfo.`objectId`) where tob.`objectId` is null');
 		$this->query( "
-			DELETE FROM tiki_freetags 
-			WHERE tagId NOT IN(SELECT tagId FROM tiki_freetagged_objects)
-				AND tagId NOT IN(SELECT objId FROM tiki_translated_objects WHERE type = 'freetag')" );
+			DELETE FROM `tiki_freetags` 
+			WHERE `tagId` NOT IN(SELECT `tagId` FROM `tiki_freetagged_objects`)
+				AND `tagId` NOT IN(SELECT `objId` FROM `tiki_translated_objects` WHERE type = 'freetag')" );
 	    return true;
 	 }
 
