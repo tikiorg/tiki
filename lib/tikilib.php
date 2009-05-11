@@ -5468,7 +5468,12 @@ class TikiLib extends TikiDB {
 	
 					// Construct argument list array
 					$arguments = $plugins['arguments'];
-	
+
+					if (count($arguments) == 0) {
+                        //TODO HACK: See bug 2499 http://dev.tikiwiki.org/tiki-view_tracker_item.php?itemId=2499
+						$arguments = array('' => '');
+					}
+
 					if ($this->plugin_exists( $plugin_name )) {
 	
 						if( $this->plugin_enabled( $plugin_name ) ) {
@@ -5530,7 +5535,7 @@ class TikiLib extends TikiDB {
 							//echo '<pre>'; debug_print_backtrace(); echo '</pre>';
 							global $headerlib;
 							$headerlib->add_jsfile( 'tiki-jsplugin.php' );
-							if( $this->plugin_is_editable( $plugin_name ) && (empty($options['preview_mode']) || !$options['preview_mode']) && (empty($options['print']) || !$options['print']) ) {	
+							if( $this->plugin_is_editable( $plugin_name ) && (empty($options['preview_mode']) || !$options['preview_mode']) && (empty($options['print']) || !$options['print']) ) {
 								include_once('lib/smarty_tiki/function.icon.php');
 								global $page;
 								$id = 'plugin-edit-' . $plugin_name . $current_index;
