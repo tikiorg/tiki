@@ -5,6 +5,8 @@ function wikiplugin_profile_info() {
 		'name' => tra('Profile Installer'),
 		'description' => tra('Adds controls required to install a profile.'),
 		'prefs' => array( 'wikiplugin_profile' ),
+		'validate' => 'all',
+		'inline' => true,
 		'params' => array(
 			'domain' => array(
 				'required' => false,
