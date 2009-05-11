@@ -214,6 +214,7 @@ function get_default_prefs() {
 		'wikiplugin_group' => 'y',
 		'wikiplugin_html' => 'n',
 		'wikiplugin_iframe' => 'n',
+		'wikiplugin_img' => 'y',
 		'wikiplugin_image' => 'n',    // Experimental, may supercede img in 4.0
 		'wikiplugin_include' => 'y',
 		'wikiplugin_invite' => 'y',
@@ -271,7 +272,7 @@ function get_default_prefs() {
 		'wikiplugin_trackerprefill' => 'y',
 		'wikiplugin_trackerstat' => 'y',
 		'wikiplugin_translated' => 'y',
-		'wikiplugin_tr' => 'y',
+		'wikiplugin_tr' => 'n',
 		'wikiplugin_usercount' => 'n',
 		'wikiplugin_userlist' => 'n',
 		'wikiplugin_versions' => 'n',
@@ -700,6 +701,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_action_calendar' => 'n',
 		'calendar_start_year' => '+0',
 		'calendar_end_year' => '+3',
+		'calendar_list_begins_focus' => 'n',
 
 		// dates
 		'server_timezone' => isset($tikidate) ? $tikidate->getTimezoneId() : 'UTC',
@@ -894,9 +896,9 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 
 		// html header
 		'metatag_keywords' => '',
-		'metatag_threadtitle' => '',
-		'metatag_imagetitle' => '',
-		'metatag_freetags' => '',
+		'metatag_threadtitle' => 'n',
+		'metatag_imagetitle' => 'n',
+		'metatag_freetags' => 'n',
 		'metatag_description' => '',
 		'metatag_author' => '',
 		'metatag_geoposition' => '',
@@ -920,7 +922,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'sitelogo_bgstyle' => '',
 		'sitelogo_align' => 'left',
 		'sitelogo_title' => 'Tikiwiki powered site',
-		'sitelogo_src' => 'img/tiki/tiki3.png',
+		'sitelogo_src' => '',
 		'sitelogo_alt' => 'Site Logo',
 		'feature_siteloc' => 'y',
 		'feature_sitenav' => 'n',
@@ -1186,7 +1188,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'jquery_effect_tabs' => 'slide',	// Different effect for tabs (['none' | 'normal' (for jq) | 'slide' etc]
 		'jquery_effect_tabs_direction' => 'vertical',
 		'jquery_effect_tabs_speed' => 'fast',
-		
+
 		'feature_jquery_ui' => 'n',				// include UI lib for more effects
 		'feature_jquery_tooltips' => 'y',		// use JQuery tooltips and override Overlib
 		'feature_jquery_autocomplete' => 'y',	// autocomplete on pages in QuickEdit (more coming soon)
@@ -1195,7 +1197,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_jquery_sheet' => 'n',			// spreadsheet TODO: implement
 		'feature_jquery_tablesorter' => 'n',	// sortable tables ([will] override existing)
 		'feature_jquery_cycle' => 'y',			// slideshow lib
-	
+
 		// SefUrl
 		'feature_sefurl' => 'n',
 		'feature_sefurl_filter' => 'n',

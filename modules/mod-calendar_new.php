@@ -14,7 +14,21 @@ if ( $prefs['feature_calendar'] == 'y' ) {
 	global $headerlib; $headerlib->add_cssfile('css/calendar.css',20);
 	global $calendarViewMode;
 
-	$_REQUEST['viewmode'] = 'month';
+	if (isset($_REQUEST['viewmode'])) $save_viewmode = $_REQUEST['viewmode'];
+	if (!empty($module_params['viewmode']))
+		$_REQUEST['viewmode'] = $module_params['viewmode'];
+	if (isset($_REQUEST['todate'])) $save_todate = $_REQUEST['todate'];
+	if (isset($module_params['month_delta'])) {
+		$_REQUEST['viewmode'] = 'month';
+		include('tiki-calendar_setup.php');
+		list($focus_day, $focus_month, $focus_year) = array(
+															TikiLib::date_format("%d", $focusdate),
+															TikiLib::date_format("%m", $focusdate),
+															TikiLib::date_format("%Y", $focusdate)
+															);
+		$_REQUEST['todate'] = TikiLib::make_time(0,0,0,$focus_month+$module_params['month_delta'],1,$focus_year);
+	}
+
 	$group_by = 'day';
 	if (empty($module_params['calIds'])) {
 		if (!empty($_SESSION['CalendarViewGroups'])) {
@@ -33,6 +47,8 @@ if ( $prefs['feature_calendar'] == 'y' ) {
 			unset($module_params['calIds'][$i]);
 		}
 	}
+	$_REQUEST['gbi'] = 'y';
+	$_REQUEST['viewlist'] = 'table';
 	include('tiki-calendar_setup.php');
 
 	$tc_infos = $calendarlib->getCalendar($module_params['calIds'], $viewstart, $viewend, $group_by);
@@ -47,5 +63,14 @@ if ( $prefs['feature_calendar'] == 'y' ) {
 	$smarty->assign('daformat2', $tikilib->get_long_date_format());
 	$smarty->assign('var', '');
 	$smarty->assign('myurl', 'tiki-calendar.php');
+	if (isset($save_viewmode)) {
+		$_REQUEST['viewmode'] = $save_viewmode;
+	} else {
+		unset($_REQUEST['viewmode']);
+	}
+	if (isset($save_todate)) {
+		$_REQUEST['todate'] = $save_todate;
+	} else {
+		unset($_REQUEST['todate']);
+	}
 }
-

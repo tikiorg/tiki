@@ -452,7 +452,7 @@ div.simplebox {
 	background: #fff;
 }
 
-.highlight {
+.highlight {background: #e5e5e5;
 }
 
 /***** Tables, Tabs and Lists ****/
@@ -750,6 +750,7 @@ body.tiki_blogs .author_actions .actions {
 	background: #fff !important;
 }
 
+body.tiki_blogs .postbody-title,
 .post .postbody-title {
 	background: #111111 url('mono/headerbg.jpg') repeat-x 0 100%;
 }

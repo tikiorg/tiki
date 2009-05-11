@@ -85,7 +85,7 @@
 	<select name="users_prefs_mailCharset" id="users_prefs_mailCharset">
   <option value=''>{tr}default{/tr}</option>
    {section name=ix loop=$mailCharsets}
-      <option value="{$mailCharsets[ix]|escape}" {if $users_prefs_mailCharset eq $mailCharsets[ix]}selected="selected"{/if}>{$mailCharsets[ix]}</option>
+      <option value="{$mailCharsets[ix]|escape}" {if $prefs.users_prefs_mailCharset eq $mailCharsets[ix]|escape}selected="selected"{/if}>{$mailCharsets[ix]}</option>
    {/section}
   </select>
 	</div>
@@ -97,7 +97,7 @@
 <option value='' >{tr}default{/tr}</option>
 {section name=ix loop=$styles}
 	{if count($prefs.available_styles) == 0 || in_array($styles[ix], $prefs.available_styles)}
-        <option value="{$styles[ix]|escape}" {if $users_prefs_theme eq $styles[ix]}selected="selected"{/if}>{$styles[ix]}</option>
+        <option value="{$styles[ix]|escape}" {if $users_prefs_theme eq $styles[ix]|escape}selected="selected"{/if}>{$styles[ix]}</option>
 	{/if}
 {/section}
 </select>

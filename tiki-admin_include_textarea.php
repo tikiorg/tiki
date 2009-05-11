@@ -39,6 +39,7 @@ if (isset($_REQUEST["textareasetup"]) && (!isset($_COOKIE['tab']) || $_COOKIE['t
 		"feature_wiki_paragraph_formatting",
 		"feature_wiki_paragraph_formatting_add_br",
 		"feature_wiki_monosp",
+		"wiki_edit_plugin",
 		);
 
 	foreach ($pref_toggles as $toggle) {
@@ -46,9 +47,13 @@ if (isset($_REQUEST["textareasetup"]) && (!isset($_COOKIE['tab']) || $_COOKIE['t
 	}
 
 	foreach( $plugins as $key => $info ) {
-		$key = 'wikiplugin_' . $key;
+		$key_inline = 'wikiplugininline_' . $key;
+		$key = 'wikiplugin_' . $key; 
 		if( in_array( $key, $info['prefs'] ) ) {
 			simple_set_toggle( $key );
+			if( !isset( $info['inline'] ) || !$info['inline'] ) {
+				simple_set_toggle( $key_inline ); 
+			}
 		}
 	}
 
@@ -70,13 +75,18 @@ if (isset($_REQUEST["textareasetup"]) && (!isset($_COOKIE['tab']) || $_COOKIE['t
 
 // from tiki-admin_include_textarea.php
 
-$cacheToInvalidate = array( 'plugindesc' );
-
 global $tikilib;
 $pluginsAlias = $tikilib->plugin_get_list( false, true );
 $pluginsReal = $tikilib->plugin_get_list( true, false );
 
 if( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
+
+	global $cachelib; require_once("lib/cache/cachelib.php");
+	foreach ($tikilib->list_languages() as $tlang) {
+		$cachetag = 'plugindesc' . $tlang['value'];
+		$cachelib->invalidate($cachetag);
+	}
+
 	if( isset( $_POST['enable'] ) ) {
 		if( ! is_array( $_POST['enabled'] ) )
 			$_POST['enabled'] = array();

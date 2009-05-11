@@ -10,8 +10,6 @@ body {
 	font: normal 75%/1.5em 'Trebuchet MS', sans-serif;
 	color: #333;
 	background: #fff}
-	
-/*html>body {font-size: 75% !important}*/
 
 *:first-child+html body {font-size: 74% !important}
 
@@ -123,6 +121,8 @@ select {
 
 span.button a,
 span.button a:visited,
+span.button2 a,
+span.button2 a:visited,
 button,
 input[type=reset],
 input[type=submit],
@@ -141,7 +141,8 @@ span.button input,
 	
 *:first-child+html input {font-weight: normal}
 
-.button a:hover,
+span.button a:hover,
+span.button2 a:hover,
 button:hover,
 input[type=reset]:hover,
 input[type=submit]:hover,
@@ -166,6 +167,17 @@ input[type=submit]:hover,
 * html span.button a:hover {
 	color: #F5F5F5;
 	background: url(feb12/header.jpg) repeat-x 0 100%}
+	
+.button a:active,	
+button:active,
+input[type=reset]:active,
+input[type=submit]:active,
+.button input:active,
+.submitbutton:active,
+span.highlight a:link,
+span.highlight a:visited {
+	background: url(feb12/columnbg.jpg) 0 100%;
+	color: #000}
 
 input[type=checkbox] {border: 0}
 * html .findtable input {font-size: 1em}
@@ -230,9 +242,8 @@ ul.jumplinks a:focus, ul.jumplinks a:active {
 #main {font-size: 1.24em}
 
 #header {
-	/*height: 137px;*/
 	text-align: left;
-	position: static}
+	/*position: static*/}
 
 #middle {background: #fff url(feb12/page.jpg) repeat-x;}
 
@@ -304,6 +315,8 @@ div#tiki-bot {}
 	background: url(feb12/header.jpg) repeat-x bottom;
 	min-height: 98px;
 	position: relative}
+	
+* html #header-top {height: 98px}
 
 #siteheader {
 	text-align: left;
@@ -774,6 +787,56 @@ a.tikihelp:hover {
 #rss img {vertical-align: middle}
 div.adminanchors {background: #4179AA !important}
 
+/* New Help section */
+div#tikihelp {
+	position: fixed;
+	right: 0;
+	top: 125px;
+	height: 75%;
+	max-width: 50%;
+	padding: 0;
+	margin: 0;
+	border: none;
+	background: transparent;
+	z-index: 820}
+
+* html div#tikihelp {position: absolute}
+
+div.help_icon {
+	border: 0;
+	margin: 0;
+	padding: 0}
+
+div.help_icon a:hover {
+  text-decoration: none;}
+
+div.help_icon img{
+	vertical-align: middle;
+	border: 0;
+	margin: 0;
+	padding: 0}
+
+div.help_section_select {
+	font-weight : bold;
+	font-size: 120%;
+	background-color : #E7E9EA;
+	color: black;
+	width: 100%;
+	margin: 2px}
+
+div.help_sections {
+	width : 360px;
+	padding:  2px;
+	background-color: #AAC9E9;
+	max-height : 95%;
+	overflow: auto}
+
+div.help_section {
+	margin: 5px;
+	padding: 5px;
+	background-color: white;
+	color: black}
+
 /**** Boxes *****/
 /** Modules **/
 
@@ -782,8 +845,9 @@ div.adminanchors {background: #4179AA !important}
 div.box {
 	overflow: hidden;
 	margin-bottom: 1.5em}
-	
-.wikitext div.box {width: 220px }
+
+* html div.box {width: 200px}
+.wikitext div.box {width: 95%}
 
 h3.box-title {
 	display: block;
@@ -1053,30 +1117,6 @@ div.content .tabs {}
 .tab-menu li img {
 	vertical-align: middle}
 
-span#tab1 {background: #F5F5F5}
-span#tab2 {background: #ECECEC}
-span#tab3 {background: #DCDCDC}
-
-#content1,
-#content2,
-#content3 {
-	border-top: 1px solid #A9A9A9;
-	border-left: 1px solid #A9A9A9;
-	border-right: 1px solid #696969;
-	border-bottom: 1px solid #696969}
-
-#content1 {
-	padding: 10px;
-	background: #F5F5F5}
-
-#content2 {
-	padding: 5px;
-	background: #ECECEC}
-
-#content3 {
-	padding: 5px;
-	background: #DCDCDC}
-
 table.admin div#content1 div.tabcontent div.cbox {background-color: transparent}
 
 /*** Feature-specific selectors ***/
@@ -1229,6 +1269,19 @@ div.quoteheader {margin-left: 20px}
 div.quotebody {font-style: italic}
 table.wikiplugin-split {border: none}
 
+/* Versions plugin */
+#tiki-center .versionav {
+	padding: 0;
+	border: 0;
+	margin-bottom: -1px}
+	
+.versionav .button {margin-bottom: 0}
+
+#tiki-center .versioncontent {
+	border: 1px solid #aaa;
+	background: #fff;
+	padding: 1em}
+
 /** Wiki tocs **/
 div.tocnav {
 	background: #EBEBEB;
@@ -1267,7 +1320,7 @@ ul.toc * {border: none}
 
 /* Articles */
 
-div.article {margin-bottom: 40px}
+div.article {padding-bottom: 40px}
 
 div.articletopline {
 	font-size: 90%;
@@ -1283,6 +1336,7 @@ div.articletitle h2 {
 	font-weight: normal;
 	margin: 0}
 
+.wikitext .articletitle h2 {font-size: 1.3em}
 span.titleb {font-size: 1.0em} 
 div.articlesubtitle {font-size: 0.9em}
 div.articleheading {margin-top: 6px}
@@ -1310,7 +1364,7 @@ img.articleimage {
 div.articletrailer {
 	position: relative;
 	text-align: center;
-	margin-top: 1.1em}
+	margin-top: 0.8em}
 	
 div.articletrailer img {}
 

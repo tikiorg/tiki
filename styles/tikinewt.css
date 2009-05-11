@@ -185,6 +185,8 @@ div#page-bar table, div#page-bar td, div#page-bar tr {
 
 span.button a,
 span.button a:visited,
+span.button2 a,
+span.button2 a:visited,
 button,
 input[type=reset],
 input[type=submit],
@@ -233,6 +235,7 @@ span.button input,
 	padding: 0 4px}
 
 span.button a:hover,
+span.button2 a:hover,
 button:hover,
 input[type=reset]:hover,
 input[type=submit]:hover,
@@ -775,7 +778,7 @@ td.third {
 
 .tabs {
 	border-bottom: solid 1px #225566 !important;
-	margin-top: 10px !important; 
+	margin: 10px 1px 0 0 !important;
 	padding: 0 !important}
 
 .tabmark {
@@ -825,7 +828,8 @@ td.third {
 	border-top: none !important;
 	padding: 6px 2px 2px 2px;
 	background: #eee;
-	text-align: center}
+	text-align: center;
+    margin-top: 0px !important;}
 
 .tabcontent table {
 	margin: 1% auto 2% auto;

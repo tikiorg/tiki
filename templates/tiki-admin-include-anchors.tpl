@@ -12,7 +12,7 @@
 
 <a href="tiki-admin.php?page=i18n" title="{tr}i18n{/tr}" class="icon">{icon _id="pics/large/i18n.png" alt="{tr}i18n{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}</a>
 
-<a href="tiki-admin.php?page=textarea" title="{tr}Text area{/tr}" class="icon">{icon _id="img/icons/admin_textarea.png" alt="{tr}Text area{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}</a>      
+<a href="tiki-admin.php?page=textarea" title="{tr}Editing and Plugins{/tr}" class="icon">{icon _id="img/icons/admin_textarea.png" alt="{tr}Text area{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}</a>      
 
 <a href="tiki-admin.php?page=module" title="{tr}Module{/tr}" class="icon">{icon _id="pics/large/display-capplet.png" alt="{tr}Module{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}</a>   
 

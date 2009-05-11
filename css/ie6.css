@@ -6,3 +6,10 @@ form.upform { width: 100px; }
 .cssmenu { border-bottom: 1px solid #bbb}
 
 .box a.flipmodtitle img { position: static !important; }
+
+/* prevent css menu dropdowns from displaying under tabs and tab content */
+.tabs,
+.tabactive,
+.tabinactive {position: static}
+	
+.tabcontent {z-index: none; position: static}

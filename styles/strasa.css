@@ -12,7 +12,7 @@ body {
 	text-align: left;
 	font: 72%/1.4em Verdana, Geneva, Arial, Helvetica, sans-serif;}
 
-html>body {font-size: 76%}
+html>body {font-size: 12px}
 
 /* workaround for Safari when in FCKEditor */
 html[dir=ltr]>body {
@@ -109,6 +109,8 @@ select {}
 /* Links in buttons */
 span.button a,
 span.button a:visited,
+span.button2 a,
+span.button2 a:visited,
 button,
 input[type=reset],
 input[type=submit],
@@ -116,7 +118,7 @@ span.button input,
 .submitbutton,
 .calbuttonBox {
 	font-family: Verdana, Helvetica, Geneva, Arial, sans-serif;
-	font-size: 94%;
+	font-size: 11px;
 	font-weight: normal;
 	color: #fff;
 	background: #1d9ccf;
@@ -126,12 +128,13 @@ span.button input,
 	margin-right: 1px;
 	text-decoration: none;
 	white-space: nowrap;
-	cursor: pointer;}
+	cursor: pointer}
 
 /*.button a,
 .button a:visited {padding: 1px 4px}*/
 
 .button a:hover,
+.button2 a:hover,
 button:hover,
 input[type=reset]:hover,
 input[type=submit]:hover,
@@ -143,11 +146,17 @@ input[type=submit]:hover,
 	text-decoration: none}
 
 .button a:active,	
+.button2 a:active,	
 button:active,
 input[type=reset]:active,
 input[type=submit]:active,
 .button input:active,
-.submitbutton:active {border-color: #223845 #41cbe7 #41cbe7 #223845;  }
+.submitbutton:active,
+span.highlight a:link,
+span.highlight a:visited {
+	border-color: #223845 #41cbe7 #41cbe7 #223845;
+	background: #5cbdef !important;
+	color: #000 !important}
 
 
 div.iconmenu {display: inline}
@@ -295,7 +304,7 @@ ul.jumplinks a:active {
 	text-align: left;
 	margin-left: 58px;
 	padding-bottom: 5px;	
-	background: #8ea2b4 url(strasa/box_bottom.gif) no-repeat 0 100%}
+	background: url(strasa/box_bottom.gif) no-repeat 0 100%}
 
 #col3 {
 	margin-left: -210px;
@@ -431,7 +440,8 @@ div.floatleft {
 	clear: none}
 
 div#sitelogo {
-	margin: auto;	
+	margin: auto;
+	padding-top: 8px;
 	overflow: hidden;	
 }
 
@@ -445,8 +455,8 @@ div#sitead {margin: auto}
 	float: right;
 	font-size: 90%;
 	height: 24px;
+	line-height: 24px;
 	padding-left: 60px;
-	padding-top: 1px;
 	color: #fff;
 	background: #fff url(strasa/login.jpg) 0 0 no-repeat;
 }
@@ -454,8 +464,6 @@ div#sitead {margin: auto}
 * html #siteloginbar {text-align: right}
 *:first-child+html #siteloginbar {max-width: 650px}
 
-div.logged-in {padding-right: 20px}
-	
 #siteloginbar a,
 #siteloginbar a:visited,
 #siteloginbar a:hover {
@@ -486,7 +494,7 @@ div.logged-in {padding-right: 20px}
 	padding-left: 60px;
 	padding-right: 10px;
 	padding-top: 0;
-	margin-top: -1px;
+	margin-top: 0;
 	background: url(strasa/register.jpg) no-repeat}
 
 #bannertopright {  }
@@ -497,7 +505,16 @@ div.logged-in {padding-right: 20px}
 	color: #5ae0ff;
 	font-size: 90%;
 	background: #204c65;
-	font-weight: normal }
+	font-weight: normal}
+	
+div.logged-in {padding-right: 20px}
+
+* html .logged-in {
+	color: #5ae0ff !important;
+	background: none !important}
+
+* html .logged-in a,
+* html .logged-in a:visited {color: #5ae0ff !important}
 	
 #sitelocbar {float: left; margin: 0 58px;}
 #sitelocbar a {background-color: #cce5ff; color: #0990cc !important; padding: 1px 4px}
@@ -507,14 +524,15 @@ div.logged-in {padding-right: 20px}
 
 /* #header text selectors, if needed */
 
-#sitetitles {color: #fff; float: left; height: 97px; line-height: 97px; overflow: hidden; vertical-align: bottom}
+#sitetitles {color: #fff; display: inline; height: 97px; line-height: 97px; overflow: hidden; vertical-align: bottom}
 
 #sitetitle,
 #sitesubtitle {font-family: Helvetica, sans-serif; font-weight: bold}
 
 #sitetitle {
-	font-size: 200%;
-	display: inline}
+	font-size: 220%;
+	display: inline;
+	letter-spacing: -0.05em}
 	
 * html #sitetitle {}
 
@@ -526,7 +544,8 @@ div.logged-in {padding-right: 20px}
 
 #sitesubtitle {
 	font-size: 110%;
-	display: inline}
+	display: inline;
+	margin-left: 0.2em}
 
 #header a,
 #header a:visited {}
@@ -908,7 +927,8 @@ div#edithelpzone {display: none}
 .attention {color: red}
 
 .highlight,
-#highlight { background-color: #f2cd5e }
+#highlight {background: #5cbdef}
+span.highlight {background: inherit}
 
 .openid_url {
 	background: #fff url(../../img/icons/login-OpenID-bg.gif) no-repeat;
@@ -995,7 +1015,7 @@ div#tikihelp {
 	padding:0;
 	margin:0;
 	background-color: transparent;
-	z-index: 2;
+	z-index: 820;
 	overflow: hidden;
 }
 
@@ -1007,6 +1027,9 @@ div.help_icon {
 	padding: 0;
 	height: 48px;
 	text-align: right;
+}
+div.help_icon a:hover {
+  text-decoration: none;
 }
 div.help_icon img{
 	vertical-align: middle;
@@ -1021,7 +1044,7 @@ div.help_sections {
 	background-color: #006699;
 	width: 100%;
 	height: 400px;
-	overflow: hidden;
+	overflow: auto;
 }
 div.help_section_select {
 	font-weight : bold;
@@ -1041,7 +1064,7 @@ div.help_section {
 	background-color: white;
 	color: black;
 	font-size: 0.8em;
-	height: 350px;
+	/*height: 100%;*/
 	overflow: auto;
 }
 div.help_section * {
@@ -1078,6 +1101,10 @@ div.box {
 	background: #cce5ff;
 	border-bottom: 2px ridge #bed8f1;
 }
+
+* html #col2 .box,
+* html #col3 .box {width: 181px}
+
 #col3 .box {
 	border-bottom: 1px solid #cfcfcf;
 	/*margin-bottom: 10px*/ }
@@ -1581,13 +1608,27 @@ div#helptool {}
 
 /* Wiki plugins */
 
-/* Code plugin  */
+
 div.code {
 	font-size: 90%;
 	padding: 3px;
 	border: 1px dashed #a9a9a9;
 	background: #F5F5F5;
 	font-family: "Courier New", Courier, monospace}
+
+/* Code plugin  */
+.codecaption {
+	font-size: 90%;
+	padding: 0 10px;
+	position: relative;
+	bottom: -6px;
+	display: inline;
+	border: 1px dashed #696969;
+	border-bottom: 0;
+	margin-left: 4px;
+	color: #696969;
+	background: #F5F5F5;
+	font-weight: bold}
 
 .codelisting {
 	font-family: "Courier New", Courier, monospace;
@@ -1596,20 +1637,8 @@ div.code {
 	margin: 4px;
 	border: 1px dashed #696969;
 	overflow: auto; 
-   width: 500px}
+	width: 90%}
 
-.codecaption {
-	font-size: 90%;
-	padding: 0 10px;
-	position: relative;
-	bottom: -5px;
-	display: inline;
-	border: 1px solid #696969;
-	border-bottom: 0;
-	margin: 0;
-	color: #696969;
-	background: #F5F5F5;
-	font-weight: bold}
 
 /* Quote plugin */
 div.quoteheader {
@@ -1624,7 +1653,21 @@ div.quotebody {
 	padding-left: 6px
 }
 
-table.wikiplugin-split {border: none}
+table.wikiplugin-split {border: none; width: 100%}
+table.wikiplugin-split .codelisting {width: 95%}
+
+/* Versions plugin */
+#tiki-center .versionav {
+	padding: 0;
+	border: 0;
+	margin-bottom: -1px}
+	
+.versionav .button {margin-bottom: 0}
+
+#tiki-center .versioncontent {
+	border: 1px solid #aaa;
+	background: #fff;
+	padding: 1em}
 
 /** Wiki tocs **/
 div.tocnav {
@@ -1837,8 +1880,10 @@ span.posthead {
 body.tiki_blogs .post .title {margin-top: 0}
 
 body.tiki_blogs .postbody-title {
+	background:#1B3C54 url(strasa/headerbg.jpg);
 	float: none;
 	width: 100%;
+	min-width: 100%; /* IE7 */
 	min-height: 46px;
 	border: 0}
 	
@@ -1871,7 +1916,7 @@ body.tiki_blogs .author_info {min-height: 24px}
 * html body.tiki_blogs .author_info {height: 24px}
 body.tiki_blogs .author_info img {vertical-align: top}
 
-.postbody-title {border: 0}	
+body.tiki_blogs .postbody-title {border: 0}	
 
 body.tiki_blogs .postbody .postfooter {
 	width: 100%;
@@ -1896,8 +1941,7 @@ body.tiki_forums table.normal {margin: auto}
 	margin: 0;
 	margin-top: 5px;
 	padding: 0;
-	background: #fff;
-	font-size: 1.1em}
+	background: #fff}
 	
 * html .post .postbody {font-size: 11px}
 
@@ -1944,7 +1988,6 @@ body.tiki_forums table.normal {margin: auto}
 .post .author_info a:link,
 .post .author_info a:visited {color: #fff}
 
-.post .author_info .icons {display: block}
 .post .author_info .icons .actions {margin-right: 10px}
 .post .author_post_info_on {font-style: italic}
 
@@ -1953,7 +1996,7 @@ body.tiki_forums table.normal {margin: auto}
 	float: right;
 	font-size: 90%;
 	font-style: italic;
-	height: 24px;
+	min-height: 24px;
 	padding-left: 60px;
 	padding-top: 1px;
 	color: #fff;
@@ -1963,10 +2006,16 @@ body.tiki_forums table.normal {margin: auto}
 .commentStyle_headers .author_info {float: left}
 
 .post .postbody-title .actions {
+	text-align: right;
 	float: right;
-	font-size: 1em;
+	color: #fff;
+	font-size: 80%;
+	font-style: italic;
 	padding-top: 4px;
 	padding-right: 4px}
+	
+.post .postbody-title .actions a,
+.post .postbody-title .actions a:visited {color: #fff}
 
 .postbody-content {padding: 6px}
 .post .postbody .attachments {

@@ -40,9 +40,11 @@
 		{/if}
 
 		{if $viewlist eq 'list'}
-			{button href="?viewlist=table" _text="{tr}Calendar View{/tr}"}
+			{capture name=href}?viewlist=table{if $smarty.request.todate}&amp;todate={$smarty.request.todate}{/if}{/capture}
+			{button href="`$smarty.capture.href`" _text="{tr}Calendar View{/tr}"}
 		{else}
-			{button href="?viewlist=list" _text="{tr}List View{/tr}"}
+			{capture name=href}?viewlist=list{if $smarty.request.todate}&amp;todate={$smarty.request.todate}{/if}{/capture}
+			{button href="`$smarty.capture.href`" _text="{tr}List View{/tr}"}
 		{/if}
 
 		{if count($listcals) >= 1}

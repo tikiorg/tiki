@@ -20,7 +20,6 @@
 .cssmenu_vert li {width: 11em}
 
 *:first-child+html body .cssmenu_horiz li {width: 11em}
-* html .cssmenu_horiz li {width: 9em }
 
 .cssmenu li,
 .cssmenu_horiz li,
@@ -141,8 +140,9 @@ td#leftcolumn {overflow: visible !important}
 	z-index: 800;
 	position: relative}
 	
-.cssmenu_horiz > li a {padding-right: 12px}
-.cssmenu_horiz > li.menuSection a {padding-right: 24px}
+.cssmenu_horiz li.menuLevel0 a {padding-right: 12px}
+.cssmenu_horiz li.menuSection a {padding-right: 24px}
+.cssmenu_horiz li.menuLevel1 a {padding-right: 12px}
 
 #header .cssmenu_horiz {}
 #header .cssmenu_horiz > li {}

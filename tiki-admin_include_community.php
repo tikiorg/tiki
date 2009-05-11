@@ -15,20 +15,28 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 if (isset($_REQUEST["userfeatures"])) {
 	check_ticket('admin-inc-community');
 	simple_set_toggle("feature_community_gender");
+
 	simple_set_toggle("feature_community_mouseover");
 	simple_set_toggle("feature_community_mouseover_name");
 	simple_set_toggle("feature_community_mouseover_gender");
 	simple_set_toggle("feature_community_mouseover_picture");
-	simple_set_toggle("feature_community_mouseover_friends");
+
+	if($prefs['feature_friends'] == 'y'){
+		simple_set_toggle("feature_community_mouseover_friends");
+	}
+
 	simple_set_toggle("feature_community_mouseover_score");
 	simple_set_toggle("feature_community_mouseover_country");
 	simple_set_toggle("feature_community_mouseover_email");
 	simple_set_toggle("feature_community_mouseover_lastlogin");
 	simple_set_toggle("feature_community_mouseover_distance");
-	simple_set_toggle("feature_community_list_name");
-	simple_set_toggle("feature_community_list_score");
-	simple_set_toggle("feature_community_list_country");
-	simple_set_toggle("feature_community_list_distance");
+
+	if($prefs['feature_friends'] == 'y'){
+		simple_set_toggle("feature_community_list_name");
+		simple_set_toggle("feature_community_list_score");
+		simple_set_toggle("feature_community_list_country");
+		simple_set_toggle("feature_community_list_distance");
+	}
 	simple_set_value("user_list_order");
 }
 
@@ -38,42 +46,62 @@ if (isset($_REQUEST['users_defaults'])) {
 	check_ticket('admin-inc-login');
 
 	// numerical and text values
+
 	$_prefs = array(
+		'users_prefs_mess_maxRecords',
+		'users_prefs_mess_archiveAfter',
+		'users_prefs_minPrio',
 		'users_prefs_userbreadCrumb',
 		'users_prefs_language',
 		'users_prefs_display_timezone',
 		'users_prefs_user_information',
 		'users_prefs_mailCharset',
-		'users_prefs_mess_maxRecords',
-		'users_prefs_minPrio',
-		'users_prefs_user_dbl',
 		'users_prefs_diff_versions',
-		'users_prefs_mess_archiveAfter',
 		'users_prefs_tasks_maxRecords'
 	);
+
 	foreach($_prefs as $pref) {
 		simple_set_value($pref);
 	}
 
 	// boolean values
-	$_prefs = array(
-		'users_prefs_show_mouseover_user_info',
-		'users_prefs_allowMsgs',
-		'users_prefs_mytiki_pages',
-		'users_prefs_mytiki_blogs',
-		'users_prefs_mytiki_articles',		
-		'users_prefs_mytiki_gals',
-		'users_prefs_mytiki_msgs',
-		'users_prefs_mytiki_tasks',
-		'users_prefs_mytiki_items',
-		'users_prefs_mytiki_workflow',
-		'users_prefs_mytiki_forum_topics',
-		'users_prefs_mytiki_forum_replies',
-		'users_prefs_mess_sendReadStatus'
-	);
-	foreach($_prefs as $pref) {
-		simple_set_toggle($pref);
+
+	if($prefs['feature_wiki'] == 'y'){
+		simple_set_toggle("users_prefs_user_dbl");
 	}
+	if($prefs['feature_community_mouseover'] == 'y'){
+		simple_set_toggle("users_prefs_show_mouseover_user_info");
+	}
+	if($prefs['feature_messages'] == 'y' && $tiki_p_messages == 'y'){
+		simple_set_toggle("users_prefs_allowMsgs");
+		simple_set_toggle("users_prefs_mess_sendReadStatus");
+	}
+	if($prefs['feature_wiki'] == 'y'){
+		simple_set_toggle("users_prefs_mytiki_pages");
+	}
+	if($prefs['feature_blogs'] == 'y'){
+		simple_set_toggle("users_prefs_mytiki_blogs");
+	}
+	if($prefs['feature_galleries'] == 'y'){
+		simple_set_toggle("users_prefs_mytiki_gals");
+	}
+	if($prefs['feature_messages'] == 'y' && $tiki_p_messages == 'y'){
+		simple_set_toggle("users_prefs_mytiki_msgs");
+	}
+	if($prefs['feature_tasks'] == 'y' && $tiki_p_tasks =='y'){
+		simple_set_toggle("users_prefs_mytiki_tasks");
+	}
+	if($prefs['feature_forums'] == 'y'){
+		simple_set_toggle("users_prefs_mytiki_forum_topics");
+		simple_set_toggle("users_prefs_mytiki_forum_replies");
+	}
+	if($prefs['feature_trackers'] == 'y'){
+		simple_set_toggle("users_prefs_mytiki_items");
+	}
+	if($prefs['feature_workflow'] == 'y' && $tiki_p_use_workflow == 'y'){
+		simple_set_toggle("users_prefs_mytiki_items");
+	}
+
 }
 
 

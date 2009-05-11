@@ -108,6 +108,8 @@ span.button {
 /* Links in buttons */
 span.button a,
 span.button a:visited,
+span.button2 a,
+span.button2 a:visited,
 button,
 input[type=reset],
 input[type=submit],
@@ -118,7 +120,7 @@ span.button input,
 	font-size: .95em;
 	font-weight: bold;
 	color: #449cd0;
-	background: #f5f5f5;
+	background: #ededed;
 	border: 1px solid #c5c5c5;
 	padding: 1px 4px;
 	margin-right: 1px;
@@ -134,26 +136,30 @@ span.button input,
 	border: 0;
 	padding: 0 4px}
 
-	/*
-*:first-child+html .button a,
-*:first-child+html .button a:visited,
-*:first-child+html button,
-*:first-child+html input[type=submit],
-*:first-child+html .button input,
-*:first-child+html .submitbutton,
-*:first-child+html .calbuttonoff,
-*:first-child+html .calbuttonon {line-height: 1em}*/
-
 .button a,
 .button a:visited {padding: 1px 4px}
 
 .button a:hover,
+.button2 a:hover,
 button:hover,
 input[type=reset]:hover,
 input[type=submit]:hover,
 .button input:hover,
 .submitbutton:hover,
 .calbuttonBox a:hover {background: white}
+
+.button a:active,	
+.button2 a:active,	
+button:active,
+input[type=reset]:active,
+input[type=submit]:active,
+.button input:active,
+.submitbutton:active,
+span.highlight a:link,
+span.highlight a:visited {
+	color: #449cd0;
+	background: #dbdbdb;
+	border: 1px solid #527ca6;}
 
 div.iconmenu {display: inline}
 
@@ -323,8 +329,15 @@ div.floatleft {
 	margin-left: 8px}
 
 div#sitelogo {
-	width: 50%;
-	padding-top: 8px}
+	padding-top: 8px;
+	white-space: nowrap;
+	overflow: hidden
+}
+
+@media all and (min-width:0px) { [id$="sitelogo"] {
+	border: 1px solid transparent;
+	position: relative;
+	} }
 
 div#sitead {margin: auto}
 #sitead.floatright {padding-right: 40px}
@@ -350,25 +363,26 @@ div#sitead {margin: auto}
 #sitesearchbar {
 	display: block;
 	float: right;
-	margin: 0;
-	margin-top: 3px;
+	margin: 3px 0 0 0;
+	padding: 0 0 0 15px;
 	height: 33px;
 	text-align: left;
-	width: 342px;
 	background: url(coelesce/search_wide.jpg) no-repeat;
-	padding: 0 0 0 15px;
 	color: #517ea7;}
 	
 #sitesearchbar .wrapper {
 	height: 33px;
 	background: url(coelesce/search_wide.jpg) 100% 0 no-repeat;
 	margin: 0;
-	padding: 0}
+	padding: 0 35px 0 0;
+	}
 
 #sitesearchbar form {
 	padding-top: 8px;
 	margin-right: 8px;
-	font-size: 12px}
+	font-size: 12px;
+	white-space: nowrap;
+	}
 
 #sitesearchbar form input.wikiaction {}
 	
@@ -427,9 +441,24 @@ input[id="sl-login-pass"] {}
 /* #header text selectors, if needed */
 
 #sitetitles {
-	color: #fff; display: inline-block; height: 97px; line-height: 97px; overflow: hidden; vertical-align: bottom}
+	color: #fff;
+	display: inline;
+	height: 97px;
+	line-height: 97px;
+	overflow: hidden;
+	vertical-align: bottom;
+	}
 
-* html #sitetitles {display: inline; margin-top: 6px}
+* html #sitetitles {
+	display: inline;
+	margin-top: 6px;
+	}
+
+@media all and (min-width:0px) { [id$="sitetitles"] {
+	background: yellow;
+	position: absolute;
+	top: 30px;
+	} }
 
 #sitetitle,
 #sitesubtitle {
@@ -439,11 +468,8 @@ input[id="sl-login-pass"] {}
 	font-weight: bold;
 	margin:0;
 	padding:0;
-	margin-bottom: 30px}
-	
-* html #sitetitle,
-* html #sitesubtitle {
-	display: block}
+	margin-bottom: 30px;
+	}
 
 #sitetitle {
 	color: #9eb8d5;
@@ -721,12 +747,15 @@ a.phplmselected:hover {color: #808080}
 .cssmenu_vert li ul {margin-left: 11em}
 
 .cssmenu_horiz li:hover ul,
-.cssmenu_vert li:hover ul {
+.cssmenu_vert li:hover ul,
+.cssmenu_horiz li.sfhover ul,
+.cssmenu_vert li.sfhover ul {
 	background: #ccdceb;
 	color: #5a7ea2;}
 
-#col2 .cssmenu_vert li ul {margin-left: 180px}
-#col2 .cssmenu_vert li ul li ul { margin-left: 11em}
+#col2 .cssmenu_vert {width: 180px}
+#col2 .cssmenu_vert li ul {margin-left: 177px}
+#col2 .cssmenu_vert li ul li ul {margin-left: 11em}
 
 .cssmenu_vert,
 .cssmenu_vert li {background: #ccdceb !important}
@@ -738,7 +767,8 @@ a.phplmselected:hover {color: #808080}
 	text-align: left;
 	color: #5a7ea2}
 	
-.cssmenu_horiz li:hover ul li:hover {
+.cssmenu_horiz li:hover ul li:hover,
+.cssmenu_horiz li.sfhover ul li.sfhover {
 	background: #eff8ff;
 	color: #5a7ea2;}
 
@@ -746,7 +776,7 @@ a.phplmselected:hover {color: #808080}
 .cssmenu_horiz li a:visited {
 	white-space: nowrap;
 	display: block;
-	padding: 6px 10px;
+	padding: 6px 1em;
 	font-weight: bold;
 	text-decoration: none;
 	background: inherit;
@@ -761,34 +791,37 @@ a.phplmselected:hover {color: #808080}
 	color: #295C83;
 	font-weight: bold;
 	text-decoration: none} 
-	
-.cssmenu_vert .sf-sub-indicator {background: url(coelesce/arrows-295c8e.png) no-repeat -10px -100px; /* 8-bit indexed alpha png. IE6 gets solid image only; */}
+
+.sf-sub-indicator {background: url(coelesce/arrows-295c8e.png) no-repeat -10px -100px; /* 8-bit indexed alpha png. IE6 gets solid image only; */}
 
 .cssmenu_vert li a:hover {
 	color: #82a7c8;
 	text-decoration: none}
 	
-#tiki-top > .cssmenu_horiz > li:hover { background: url(coelesce/pagebg.jpg) 0 -2px repeat-x }
+#tiki-top .cssmenu_horiz li:hover,
+#tiki-top .cssmenu_horiz li.sfhover {background: url(coelesce/pagebg.jpg) 0 -2px repeat-x }
 
 #tiki-top > .cssmenu_horiz {
 	padding-left: 20px;
 	border-left: 1px solid #2E5276;
 	border-right: 1px solid #ACC4E0}
 
-#tiki-top .cssmenu_horiz ul li:hover {background: #ecf5ff;}
+#tiki-top .cssmenu_horiz ul li:hover,
+#tiki-top .cssmenu_horiz ul li.sfhover {background: #ecf5ff;}
+
 #tiki-top .cssmenu_horiz ul li a {color: #5a7ea2}
 
-#tiki-top > ul.cssmenu_horiz > li > a {
+#tiki-top .cssmenu_horiz li a {
 	border-left: 1px solid #acc4e0;
 	border-right: 1px solid #2e5276;
 	padding: 9px 1em 10px 1em}
 	
-#tiki-top > ul.cssmenu_horiz > li.menuSection > a {padding-right: 2.6em}
-	
-#tiki-top > ul.cssmenu_horiz > li > ul> a {
-	background: #ccdceb;
-	padding-top: 10px;
-	padding-bottom: 9px}
+#tiki-top .cssmenu_horiz li.menuSection a {padding-right: 2.6em}
+
+#tiki-top .cssmenu_horiz li.menuLevel1 a {
+	border: 0;
+	padding: 6px 1em;
+	background: #ccdceb}
 	
 #tiki-top > .cssmenu_horiz > li > a:hover {color: #fff}
 
@@ -911,6 +944,10 @@ img.icon {
 	vertical-align: middle;
 	margin: 0 1px}
 
+.findtitle, .findexactmatch, .findnumrows, .findtypes, .findlang {
+	white-space: nowrap;
+}
+
 .findtitle input {margin-left: 2px}
 
 .top_actions {
@@ -931,7 +968,7 @@ div#tikihelp {
 	margin:0;
 	border: none;
 	background-color: transparent;
-	z-index: 2;
+	z-index: 820;
 }
 
 * html div#tikihelp {position: absolute}
@@ -940,6 +977,9 @@ div.help_icon {
 	border: 0;
 	margin: 0;
 	padding: 0;
+}
+div.help_icon a:hover {
+	text-decoration: none;
 }
 div.help_icon img{
 	vertical-align: middle;
@@ -997,10 +1037,9 @@ div.box {
 	border: 1px solid #527ca6;
 	margin-top: -1px;
 	text-align: left;
-	overflow: visible}
+	overflow: hidden}
 	
-#col3 div.box,
-#col2 div.box {width: 205px}
+* html div.box {width: 205px !important}
 
 h3.box-title {
 	padding-top: 0;
@@ -1116,7 +1155,12 @@ div.cbox {
 
 .warning  .rbox-title {}
 .warning .rbox-data {}
-div.simplebox {}
+
+div.simplebox {
+	border: 1px solid #527ca6;;
+	background: #fff;
+	padding: 1em}
+
 .highlight {}
 
 /***** Tables, Tabs and Lists ****/
@@ -1169,6 +1213,9 @@ th, table.normal td.heading {
 	background: #c3d3e5;
 	min-height: 32px;
 	text-align: center}
+	
+* html th,
+* html table.normal td.heading {height: 32px}
 	
 .formcolor td {padding: 3px}
 
@@ -1434,6 +1481,19 @@ div.quoteheader {margin-left: 20px}
 div.quotebody {font-style: italic}
 table.wikiplugin-split {border: none}
 
+/* Versions plugin */
+#tiki-center .versionav {
+	padding: 0;
+	border: 0;
+	margin-bottom: -1px}
+	
+.versionav .button {margin-bottom: 0}
+
+#tiki-center .versioncontent {
+	border: 1px solid #527ca6;
+	background: #fff;
+	padding: 1em}
+
 /** Wiki tocs **/
 div.tocnav {
 	background: #EBEBEB;
@@ -1493,6 +1553,8 @@ div.articletitle h2 {
 	margin: 0;
 	padding-left: 14px;
 	padding-top: 8px}
+	
+* html div.articletitle h2 {height: 26px}
 	
 div.articletitle h2 a:link,
 div.articletitle h2 a:visited {
@@ -2252,7 +2314,7 @@ div.multiselect {
 #caltable .calfocuson,
 .box-data td.fc a.today,
 .box-data td a.today {
-	background: #D4D0C8;
+	background: #8DF378;
 	border: solid 1px #696969}
 
 #caltable .calfocuson a {color: #000}
@@ -2287,6 +2349,7 @@ div.tabrow {/*height: 24px !important*/}
 	background: #c3d3e5;
 	color: #4a6a90}
 
+a.viewthisday:hover { border-bottom: 0 none; }
 .addevent {padding: 0 5px; float: right}
 * html .addevent {padding: 0}
 .calodd, .caleven { border: 1px solid #a9a9a9}

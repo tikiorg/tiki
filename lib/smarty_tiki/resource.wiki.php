@@ -14,15 +14,13 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  * -------------------------------------------------------------
  */
 function smarty_resource_wiki_source($page, &$tpl_source, &$smarty) {
-	global $tikilib, $user;
-	if (!$tikilib->user_has_perm_on_object($user, $page, 'wiki page', 'tiki_p_use_as_template')) {
-		return false;
-	}
+	global $tikilib;
+
 	$info = $tikilib->get_page_info($page);
 	if (empty($info)) {
 		return false;
 	}
-	$tpl_source = $tikilib->parse_data($info['data'], array('is_html' => $info['is_html']));
+	$tpl_source = $tikilib->parse_data($info['data'], array('is_html' => $info['is_html'], 'print'=>'y'));
 	return true;
 }
 

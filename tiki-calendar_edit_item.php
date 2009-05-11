@@ -311,7 +311,7 @@ if (isset($_POST['act'])) {
 				}
 				$calRecurrence->setUser($save['user']);
 				$calRecurrence->save($_POST['affect'] == 'all');
-				header('Location: tiki-calendar.php');
+				header('Location: tiki-calendar.php?todate='.$save['start']);
 				die;
 			}
 		} else {
@@ -327,7 +327,7 @@ if (isset($_POST['act'])) {
 				$groupalertlib->Notify($_REQUEST['listtoalert'],"tiki-calendar_edit_item.php?viewcalitemId=".$calitemId);
 			}
 
-			header('Location: tiki-calendar.php');
+			header('Location: tiki-calendar.php?todate='.$save['start']);
 			die;
 		}
 	}
@@ -337,9 +337,10 @@ if (isset($_REQUEST["delete"]) and ($_REQUEST["delete"]) and isset($_REQUEST["ca
   $area = 'delcalevent';
   if ($prefs['feature_ticketlib2'] != 'y' or (isset($_POST['daconfirm']) and isset($_SESSION["ticket_$area"]))) {
     key_check($area);
+	$calitem = $calendarlib->get_item($_REQUEST['calitemId']);
     $calendarlib->drop_item($user, $_REQUEST["calitemId"]);
     $_REQUEST["calitemId"] = 0;
-		header('Location: tiki-calendar.php');
+		header('Location: tiki-calendar.php?todate='.$calitem['start']);
 		die;
   } else {
     key_get($area);
@@ -524,6 +525,11 @@ function edit_calendar_ajax() {
 }
 edit_calendar_ajax();
 }
+
+global $wikilib; include_once('lib/wiki/wikilib.php');
+$plugins = $wikilib->list_plugins(true, 'editwiki');
+$smarty->assign_by_ref('plugins', $plugins);
+
 $smarty->assign('impossibleDates',$impossibleDates);
 $smarty->assign('mid', 'tiki-calendar_edit_item.tpl');
 $smarty->display("tiki.tpl");

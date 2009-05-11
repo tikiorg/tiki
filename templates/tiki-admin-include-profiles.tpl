@@ -206,9 +206,9 @@ function showDetails( id, domain, profile ) { // {{{
 	<div>
 	<table class="normal">
 			<tr>
-				<th>Profile repository</th>
-				<th>Status</th>
-				<th>Last update</th>
+				<th>{tr}Profile repository{/tr}</th>
+				<th>{tr}Status{/tr}</th>
+				<th>{tr}Last update{/tr}</th>
 			</tr>
 			{foreach key=k item=entry from=$sources}
 				<tr>
@@ -230,7 +230,7 @@ function showDetails( id, domain, profile ) { // {{{
 	<div class="adminoptionlabel"><label for="profile">{tr}Profile{/tr}: </label><input type="text" name="profile" id="profile" value="{$profile|escape}" /></div>
 	<div class="adminoptionlabel"><label for="category">{tr}Category{/tr}: </label>
 	<select name="category" id="category">
-							<option value="">All</option>
+							<option value="">{tr}All{/tr}</option>
 							{foreach item=cat from=$category_list}
 					 			<option value="{$cat|escape}"{if $cat eq $category} selected="selected"{/if}>{$cat|escape}</option>
 							{/foreach}
@@ -238,7 +238,7 @@ function showDetails( id, domain, profile ) { // {{{
 	</div>
 	<div class="adminoptionlabel"><label for="repository">{tr}Repository{/tr}: </label>
 	<select name="repository" id="repository">
-							<option value="">All</option>
+							<option value="">{tr}All{/tr}</option>
 							{foreach item=source from=$sources}
 								<option value="{$source.url|escape}"{if $repository eq $source.url} selected="selected"{/if}>{$source.short|escape}</option>
 							{/foreach}

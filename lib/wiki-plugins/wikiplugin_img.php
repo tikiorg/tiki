@@ -5,7 +5,7 @@ function wikiplugin_img_info()
 	return array(
 		'name' => tra( 'Img' ),
 		'description' => tra( 'Displays an image.' ),
-		'prefs' => array(),
+		'prefs' => array( 'wikiplugin_img' ),
 		'params' => array(
 			'src' => array(
 				'required' => false,

@@ -222,7 +222,7 @@ class MenuLib extends TikiLib {
 			return false;
 		}
 		$url = urldecode($_SERVER['REQUEST_URI']);
-		$option['url'] = str_replace('+', ' ', str_replace('&amp;', '&', $option['url']));
+		$option['url'] = str_replace('+', ' ', str_replace('&amp;', '&', urldecode($option['url'])));
 		if (preg_match('/.*tiki.index.php$/', $url)) {
 			global $wikilib; include_once('lib/wiki/wikilib.php');
 			$homePage = $wikilib->get_default_wiki_page();

@@ -37,6 +37,14 @@
 	</div>
 </div>
 <div class="adminoptionbox">
+	<div class="adminoptionlabel"><label for="calendar_list_begins_focus">{tr}View list begins{/tr}:</label> 
+	<select name="calendar_list_begins_focus" id="calendar_list_begins_focus">
+		<option value="y" {if $prefs.calendar_list_begins_focus eq 'y'}selected="selected"{/if}>{tr}Focus Date{/tr}</option>
+		<option value="n" {if $prefs.calendar_list_begins_focus eq 'n'}selected="selected"{/if}>{tr}Period beginning{/tr}</option>
+	</select>
+	</div>
+</div>
+<div class="adminoptionbox">
 	<div class="adminoptionlabel"><label for="calendar_firstDayofWeek">{tr}First day of the week{/tr}: </label>
 	<select name="calendar_firstDayofWeek" id="calendar_firstDayofWeek">
 <option value="6"{if $prefs.calendar_firstDayofWeek eq "6"} selected="selected"{/if}>{tr}Saturday{/tr}</option>

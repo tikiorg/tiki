@@ -101,6 +101,7 @@ input[type=password] {
 
 button,
 .button,
+.button2,
 .submitbutton,
 .button input,
 .calbuttonBox {
@@ -113,7 +114,7 @@ button,
 	vertical-align: middle;
 	cursor: pointer;
 	white-space: nowrap}
-.calbuttonBox{float: left; margin:0 2px 0 2px;}
+.calbuttonBox{margin:0 2px 0 2px;}
 #next { margin-left:0;}
 
 #page-bar .button {margin: 0 2px;}
@@ -132,6 +133,7 @@ input[type=reset] {
 
 button:hover,
 .button:hover,
+.button2:hover,
 input[type=submit]:hover,
 input[type=reset]:hover,
 .submitbutton:hover,
@@ -809,6 +811,58 @@ div.adminanchors {}
 #rss img {vertical-align: middle}
 #rss small {font-size: 1em}
 
+/* New Help section */
+div#tikihelp {
+	position: fixed;
+	right: 0;
+	top: 125px;
+	height: 75%;
+	max-width: 50%;
+	padding: 0;
+	margin: 0;
+	border: none;
+	background: transparent;
+	z-index: 20;
+}
+
+* html div#tikihelp {position: absolute}
+
+div.help_icon {
+	border: 0;
+	margin: 0;
+	padding: 0;
+}
+div.help_icon a:hover {
+  text-decoration: none;
+}
+div.help_icon img{
+	vertical-align: middle;
+	border: 0;
+	margin: 0;
+	padding: 0;
+}
+div.help_section_select {
+	font-weight : bold;
+	font-size: 120%;
+	background-color : #E7E9EA;
+	color: black;
+	width: 100%;
+	margin: 2px;
+}
+div.help_sections {
+	width : 360px;
+	padding:  2px;
+	background-color: #AAC9E9;
+	max-height : 95%;
+	overflow: auto;
+}
+div.help_section {
+	margin: 5px;
+	padding: 5px;
+	background-color: white;
+	color: black;
+}
+
 /**** Boxes *****/
 /** Modules **/
 .box-shadow {}
@@ -817,7 +871,8 @@ div.box {
 	background: #292929;
 	margin-bottom: 8px;
 	padding-bottom: 2px;
-	width: 190px;}
+	overflow: hidden;
+	width: 190px}
 
 h3.box-title {
 	display: block;
@@ -1334,6 +1389,19 @@ div.quotebody {
 	color: #F5F5F5}
 
 table.wikiplugin-split {border: none}
+
+/* Versions plugin */
+#tiki-center .versionav {
+	padding: 0;
+	border: 0;
+	margin-bottom: -1px}
+	
+.versionav .button {margin-bottom: 0}
+
+#tiki-center .versioncontent {
+	border: 1px solid #818181;
+	background: #3f3f3f;
+	padding: 1em}
 
 /** Wiki tocs **/
 div.tocnav {
@@ -2189,7 +2257,7 @@ td.calodd, td.caleven {border: 1px solid #999999}
 #caltable .calfocuson,
 .box-data td.fc a.today,
 .box-data td a.today {
-	background: #474747;
+	background: #292929       ;
 	border: solid 1px #696969}
 
 #caltable .calfocuson a {color: #D8D8D8}

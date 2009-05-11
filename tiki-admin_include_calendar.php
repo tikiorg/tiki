@@ -33,6 +33,7 @@ if (isset($_REQUEST["calprefs"])) {
 	simple_set_value('calendar_timespan');
 	simple_set_value('calendar_start_year');
 	simple_set_value('calendar_end_year');
+	simple_set_value('calendar_list_begins_focus');
 }
   	 
 ask_ticket('admin-inc-cal'); 	 

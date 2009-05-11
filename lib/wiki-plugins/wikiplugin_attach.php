@@ -1,5 +1,5 @@
 <?php
-// $Id: /cvsroot/tikiwiki/tiki/lib/wiki-plugins/wikiplugin_attach.php,v 1.19.2.3 2008-02-27 15:18:49 nyloth Exp $
+// $Id$
 // Displays an attachment or a list of attachments
 // Currently works with wiki pages and tracker items.
 // Parameters:
@@ -224,7 +224,7 @@ function wikiplugin_attach($data, $params) {
 			}
 
 		if(isset($image) and $image ) {
-			$link = '<img src="tiki-download_wiki_attachment.php?attId='.$atts['data'][$n]['attId'].$url.'" class="wiki"';
+			$link.= '<img src="tiki-download_wiki_attachment.php?attId='.$atts['data'][$n]['attId'].$url.'" class="wiki"';
 			$link.= ' alt="';
 			if (empty($showdesc) || empty($atts['data'][$n]['comment'])) {
 				$link.= $atts['data'][$n]['filename'];
@@ -236,7 +236,7 @@ function wikiplugin_attach($data, $params) {
 			}
 			$link.= '"/>';
 		} else {
-			$link = '<a href="tiki-download_wiki_attachment.php?attId='.$atts['data'][$n]['attId'].$url.'&amp;download=y" class="wiki"';
+			$link.= '<a href="tiki-download_wiki_attachment.php?attId='.$atts['data'][$n]['attId'].$url.'&amp;download=y" class="wiki"';
 			$link.= ' title="';
 
 			if (empty($showdesc) || empty($atts['data'][$n]['comment'])) {
@@ -276,8 +276,9 @@ function wikiplugin_attach($data, $params) {
 
 			$link.= '</a>';
 
+			$pageall = strip_tags($atts['data'][$n]['page']);
 			if( isset( $all ) )	{
-				$link .= " From Page ((" . $atts['data'][$n]['page'] . "))";
+				$link.= " attached to ".'<a title="'.$pageall.'" href="'.$pageall.'" class="wiki">'.$pageall.'</a>';
 			}
 
 		}
@@ -290,7 +291,11 @@ function wikiplugin_attach($data, $params) {
 		}
 	}
 
-	$separator = " ";
+	if ( isset( $bullets ) && $bullets ) {
+		$separator = "\n";
+	} else {
+		$separator = "<br />\n";
+	}
 
 	if( !empty( $inline ) && !empty($data) ) {
 		if( array_key_exists( 1, $out ) ) {

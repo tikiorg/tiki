@@ -14,6 +14,7 @@ function taginsert(area_name,tagid)
 //done
 {literal} 
 	if (tag[tagid].indexOf("popup_plugin_form") == 0)  {
+		tag[tagid] = tag[tagid].replace("popup_plugin_form(", "popup_plugin_form('"+area_name+"',");
 		eval(tag[tagid]);
 	} else {
 		insertAt(area_name,tag[tagid]);

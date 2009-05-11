@@ -272,7 +272,9 @@ class CalendarLib extends TikiLib {
 			$tend = TikiLib::date_format("%H%M", $res["end"]);
 			for ( $i = $dstart; $i <= $dend; $i = TikiLib::make_time(0, 0, 0, $mloop, ++$dloop, $yloop) ) {
 				/* $head is in user time */
-				if ($dstart == $dend) {
+				if ($res['allday'] == '1') {
+					$head = tra('All Day');
+				} elseif ($dstart == $dend) {
 					$head = TikiLib::date_format($prefs['short_time_format'], $res["start"]). " - " . TikiLib::date_format($prefs['short_time_format'], $res["end"]);
 				} elseif ($i == $dstart) {
 					$head = TikiLib::date_format($prefs['short_time_format'], $res["start"]). " ...";
@@ -296,7 +298,7 @@ class CalendarLib extends TikiLib {
 				/*	'time' => $tstart, /* user time */
 				/*	'end' => $tend, /* user time */
 
-				$ret[$i][$j]['group_description'] = $res['name'].', '.$head;
+				$ret[$i][$j]['group_description'] = $res['name'].'<span class="calgrouptime">, '.$head.'</span>';
 			}
 		}
 		return $ret;
@@ -701,7 +703,7 @@ class CalendarLib extends TikiLib {
 	
 					foreach ( $listtikievents["$dday"] as $lte ) {
 						$lte['desc_name'] = $lte['name'];
-						if ( $calendarGroupByItem != 'n' ) {
+						if ( $group_by_item != 'n' ) {
 							if ( $group_by != 'day' ) $key = $lte['id'].'|'.$lte['type'];
 							if ( ! isset($leday[$key]) ) {
 								$leday[$key] = $lte;
@@ -751,7 +753,9 @@ class CalendarLib extends TikiLib {
 								foreach ( $desc_items as $desc_item ) {
 									if ( $desc != '' ) $desc .= '<br />';
 									$desc .= '- '.$desc_item;
-									if ( $desc_where != '' ) $desc .= ' <i>['.$desc_where.']</i>';
+									if (!empty($lte['show_location']) && $lte['show_location'] == 'y' && $desc_where != '' ) {
+										$desc .= ' <i>['.$desc_where.']</i>';
+									}
 								}
 							}
 							$lte['description'] = $desc;
