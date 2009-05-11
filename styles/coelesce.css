@@ -1207,6 +1207,9 @@ th, table.normal td.heading {
 	min-height: 32px;
 	text-align: center}
 	
+* html th,
+* html table.normal td.heading {height: 32px}
+	
 .formcolor td {padding: 3px}
 
 /* cells in tracker items display */
@@ -1543,6 +1546,8 @@ div.articletitle h2 {
 	margin: 0;
 	padding-left: 14px;
 	padding-top: 8px}
+	
+* html div.articletitle h2 {height: 26px}
 	
 div.articletitle h2 a:link,
 div.articletitle h2 a:visited {
