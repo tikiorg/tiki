@@ -5770,6 +5770,23 @@ class TikiLib extends TikiDB {
 		return true;
 	}
 
+	function plugin_is_inline( $name ) {
+		if( ! $meta = $this->plugin_info( $name ) )
+			return true; // Legacy plugins always inline 
+
+		global $prefs;
+
+		$inline = false;
+		if( isset( $meta['inline'] ) && $meta['inline'] ) 
+			return true; 
+
+		$inline_pref = 'wikiplugininline_' .  $name;
+		if( isset( $prefs[ $inline_pref ] ) && $prefs[ $inline_pref ] == 'y' )
+			return true;	
+
+		return false;
+	}
+
 	function plugin_can_execute( $name, $data = '', $args = array() ) {
 		global $prefs;
 
@@ -6018,7 +6035,7 @@ class TikiLib extends TikiDB {
 		$info = $this->plugin_info( $name );
 
 		return $info && $tiki_p_edit == 'y' && $prefs['wiki_edit_plugin'] == 'y'
-			&& ( ! isset($info['inline']) || ! $info['inline'] );
+			&& !$this->plugin_is_inline( $name ) ;
 	}
 
 	function quotesplit( $splitter=',', $repl_string ) {

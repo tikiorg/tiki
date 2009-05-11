@@ -39,6 +39,7 @@ if (isset($_REQUEST["textareasetup"]) && (!isset($_COOKIE['tab']) || $_COOKIE['t
 		"feature_wiki_paragraph_formatting",
 		"feature_wiki_paragraph_formatting_add_br",
 		"feature_wiki_monosp",
+		"wiki_edit_plugin",
 		);
 
 	foreach ($pref_toggles as $toggle) {
@@ -46,9 +47,13 @@ if (isset($_REQUEST["textareasetup"]) && (!isset($_COOKIE['tab']) || $_COOKIE['t
 	}
 
 	foreach( $plugins as $key => $info ) {
-		$key = 'wikiplugin_' . $key;
+		$key_inline = 'wikiplugininline_' . $key;
+		$key = 'wikiplugin_' . $key; 
 		if( in_array( $key, $info['prefs'] ) ) {
 			simple_set_toggle( $key );
+			if( !isset( $info['inline'] ) || !$info['inline'] ) {
+				simple_set_toggle( $key_inline ); 
+			}
 		}
 	}
 
