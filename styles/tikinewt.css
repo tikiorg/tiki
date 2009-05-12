@@ -256,7 +256,11 @@ label {cursor: pointer}
 #header a,
 #header a:visited {text-decoration: none}
 
-#header-top {position: relative}
+#header-top {
+	position: relative;	
+	height: 50px;
+	padding-top: 2px;
+}
 
 #siteheader {
 	text-align: left;

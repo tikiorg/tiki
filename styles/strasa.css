@@ -461,7 +461,12 @@ div#sitead {margin: auto}
 	background: #fff url(strasa/login.jpg) 0 0 no-repeat;
 }
 
-* html #siteloginbar {text-align: right}
+* html #siteloginbar {
+	text-align: right;
+	width: 100%;
+	padding: 0;
+	background: #fff url(strasa/loginlong.jpg) 0 0 no-repeat}
+
 *:first-child+html #siteloginbar {max-width: 650px}
 
 #siteloginbar a,

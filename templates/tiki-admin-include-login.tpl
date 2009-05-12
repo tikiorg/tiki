@@ -276,6 +276,9 @@ name="eponymousGroups" {if $prefs.eponymousGroups eq 'y'}checked="checked"{/if}/
 <div class="adminoptionbox">
 	<div class="adminoption"><input type="checkbox" id="feature_clear_passwords" name="feature_clear_passwords" {if $prefs.feature_clear_passwords eq 'y'}checked="checked" {/if}onclick="flip('remindpassword');flip('remindpassword2');" /></div>
 	<div class="adminoptionlabel"><label for="feature_clear_passwords">{tr}Store password as plain text{/tr}.</label></div>
+	{if $prefs.feature_clear_passwords eq 'y'}
+		{remarksbox type='warning' title='Security risk'}{tr}Store passwords in plain text is activated. You should never set this unless you know what you are doing.{/tr}{/remarksbox}
+	{/if}
 </div>
 
 <div class="adminoptionbox">

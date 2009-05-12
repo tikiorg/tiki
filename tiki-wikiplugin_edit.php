@@ -102,7 +102,9 @@ while( true )
 		// If parameters are provided, rebuild the parameter line
 		if( isset( $_POST['params'] ) && is_array( $_POST['params'] ) )
 		{
-			$values = array_intersect_key( $_POST['params'], $meta['params'] );
+		  // $values was relaxed to accept any argument rather than those defined up front 
+		  // in the plugin's parameter list. This facilitates the use of modules as plugins.
+		        $values = $_POST['params'];
 
 			$parts = array();
 			foreach( $values as $key => $value )

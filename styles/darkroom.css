@@ -275,7 +275,11 @@ div#tiki-main #tikimidtbl {
 
 /* Site Header & Identity */
 
-#header-top {position: relative} 
+#header-top {
+	position: relative;
+	height: 50px;
+	padding-top: 2px;
+} 
 
 #siteheader {
 	text-align: left;
@@ -816,7 +820,7 @@ div#tikihelp {
 	position: fixed;
 	right: 0;
 	top: 125px;
-	height: 75%;
+	height: auto; /* if there was height specified it covered the right column content "invisibly" making part of it unclickable (from strasa) */
 	max-width: 50%;
 	padding: 0;
 	margin: 0;
@@ -831,6 +835,8 @@ div.help_icon {
 	border: 0;
 	margin: 0;
 	padding: 0;
+	height: 48px;
+	text-align: right;
 }
 div.help_icon a:hover {
   text-decoration: none;
@@ -855,6 +861,7 @@ div.help_sections {
 	background-color: #AAC9E9;
 	max-height : 95%;
 	overflow: auto;
+	height: 400px;
 }
 div.help_section {
 	margin: 5px;

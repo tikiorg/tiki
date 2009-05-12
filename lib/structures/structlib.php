@@ -140,7 +140,7 @@ class StructLib extends TikiLib {
 			$this->query($query, array((int)$previous['page_ref_id'], (int)$pos, (int)$page_ref_id));
 			//Remove the space created by the demotion			
 			$query = "update `tiki_structures` set `pos`=`pos`-1 where `pos`>? and `parent_id`=?";
-			$this->query($query,array((int)$parent_info["pos"], (int)$parent_info["parent_id"]));  
+			$this->query($query,array((int)$page_info["pos"], (int)$page_info["parent_id"])); 
 			if ($prefs['feature_user_watches'] == 'y') {
 				include_once('lib/notifications/notificationemaillib.php');
 				sendStructureEmailNotification(array('action'=>'move_down', 'page_ref_id'=>$page_ref_id, 'parent_id'=>$previous['page_ref_id']));
@@ -254,7 +254,7 @@ class StructLib extends TikiLib {
       $level++;
     }
 		//Get all child nodes for this page_ref_id
-    $query = 'select `page_ref_id`, `page_alias`, `pageName`, `flag`, `user`';
+    $query = 'select `page_ref_id`, `page_alias`, `pageName`, `flag`, `user`, `pos` as db_pos ';
     $query .= 'from `tiki_structures` ts, `tiki_pages` tp ';
     $query .= 'where ts.`page_id` = tp.`page_id` and `parent_id`=? order by `pos` asc';
 		$result = $this->query($query,array((int)$page_ref_id));
@@ -263,6 +263,7 @@ class StructLib extends TikiLib {
 		while ($res = $result->fetchRow()) {
       //Add
       $aux['first']       = ($pos == 1);
+	  $aux['db_pos'] = $res['db_pos'];
       $aux['last']        = false;
       $aux['page_ref_id'] = $res['page_ref_id'];
       $aux['pageName']    = $res['pageName'];

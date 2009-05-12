@@ -350,16 +350,11 @@ div.menuSection div.separator {}
 /* centercolumn */
 #showhide_columns {}
 *:first-child+html #showhide_columns {}
-
-.tellafriend {
-	font-size: 80%;
-	text-align: right}
 	
 a.flip,
 a.flip:visited,
 .tellafriend a,
-.tellafriend a:visited {}
-
+.tellafriend a:visited,
 a.flip:hover,
 .tellafriend a:hover {
 	font-size: 80%;
@@ -583,7 +578,7 @@ div#tikihelp {
 	position: fixed;
 	right: 0;
 	top: 3px;
-	height: 95%;
+	height: auto; /* if there was height specified it covered the right column content "invisibly" making part of it unclickable (from strasa) */
 	max-width: 50%;
 	padding: 0;
 	margin: 0;
@@ -596,7 +591,9 @@ div#tikihelp {
 div.help_icon {
 	border: 0;
 	margin: 0;
-	padding: 0}
+	padding: 0;
+	height: 48px;
+	text-align: right}
 
 div.help_icon img {
 	vertical-align: middle;
@@ -617,7 +614,8 @@ div.help_sections {
 	padding:  2px;
 	background: #aac9e9;
 	max-height : 95%;
-	overflow: auto}
+	overflow: auto;
+	height: 400px}
 
 div.help_section {
 	margin: 5px;
@@ -829,6 +827,8 @@ table.admin {
 
 table.normalnoborder {width: 100%}
 table.admin tr td div#page-bar {}
+
+td {vertical-align: top}
 
 td.normal,
 .normal td,
@@ -1259,7 +1259,7 @@ body.tiki_blogs .author_info {}
 body.tiki_blogs .postbody-title {}
 * html .postbody table {}
 
-body.tiki_blogs div.postfooter {
+body.tiki_blogs .post .postfooter {
 	clear: both;
 	float: right;
 	margin-bottom: 2em}
@@ -1471,7 +1471,7 @@ div.thumbdescription span.thumbinfoname {}
 a.namealias {}
 div.gallerypath, div.gallerypath a {}
 div.gallerypath a:hover {}
-.fgalexplorer {border: 1px solid yellow}
+.fgalexplorer {/*border: 1px solid yellow*/}
 
 .fgallisting table td {
 	padding-left: 2px;
@@ -1653,7 +1653,7 @@ ul.catitems li a.link {}
 .freetagitemlist div.type {
 	font-weight: bold;
 	font-size: 0.8em;
-	margin-left: 10p}
+	margin-left: 10px}
 
 a.freetag,
 a.freetag:hover {/* freetags.css (line 8)*/

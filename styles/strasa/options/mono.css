@@ -54,37 +54,40 @@ input#search {
 /* Links in buttons */
 span.button a,
 span.button a:visited,
+span.button2 a,
+span.button2 a:visited,
 button,
 input[type=reset],
 input[type=submit],
 span.button input,
 .submitbutton,
-.calbuttonoff,
-.calbuttonon,
-#siteloginbar input.wikiaction {
+.calbuttonBox {
 	color: #fff;
 	background: #565656;
 	border-color: #878787 #343434 #343434 #878787;
 }
 
 .button a:hover,
+.button2 a:hover,
 button:hover,
 input[type=reset]:hover,
 input[type=submit]:hover,
 .button input:hover,
 .submitbutton:hover,
-#siteloginbar input.wikiaction:hover {
+.calbuttonBox:hover {
 	background-color: #333333;
 	color: #fff;
 }
 
 .button a:active,	
+.button2 a:active,	
 button:active,
 input[type=reset]:active,
 input[type=submit]:active,
 .button input:active,
 .submitbutton:active,
-#siteloginbar input.wikiaction:active {
+span.highlight a:link,
+span.highlight a:visited {
 	border-color: #223845 #41cbe7 #41cbe7 #223845;
 }
 
@@ -160,6 +163,11 @@ ul.jumplinks a:active {
 #siteloginbar {
 	background: url('mono/login.jpg') 0 0 no-repeat;
 }
+
+* html #siteloginbar {
+	text-align: right;
+	width: 100%;
+	background: #fff url(mono/loginlong.jpg) 0 0 no-repeat}
 
 #siteloginbar .register {
 	background: url('mono/register.jpg') no-repeat;

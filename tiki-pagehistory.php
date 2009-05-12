@@ -128,14 +128,14 @@ if (isset($preview)) {
 		$preview = $rversion;
 	}
 	if ($preview == $info["version"] || $preview == 0 ) {
-		$previewd = $tikilib->parse_data($info["data"]);
+		$previewd = $tikilib->parse_data($info["data"], array('preview_mode' => true));
 		$smarty->assign_by_ref('previewd', $previewd);
 		$smarty->assign('preview', $info['version']);
 	}
 	else {
 		$version = $histlib->get_version($page, $preview);
 		if ($version) {
-			$previewd = $tikilib->parse_data($version["data"]);
+			$previewd = $tikilib->parse_data($version["data"], array('preview_mode' => true));
 			$smarty->assign_by_ref('previewd', $previewd);
 			$smarty->assign('preview', $preview);
 		}

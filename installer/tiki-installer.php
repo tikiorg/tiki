@@ -16,6 +16,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 error_reporting (E_ALL);
+// Try to set a longer execution time for the installer
+ini_set('max_execution_time','3600');
 
 require_once( 'tiki-filter-base.php' );
 
