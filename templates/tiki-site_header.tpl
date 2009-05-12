@@ -82,6 +82,7 @@
 {* navbar and search *}
 <div class="clearfix" id="tiki-top">
 	{include file="tiki-top_bar.tpl"}
+<!--[if IE 7]><br style="clear:both; height: 0" /> <![endif]-->
 </div>
 {* topbar custom code *}
 {if $prefs.feature_topbar_custom_code}
