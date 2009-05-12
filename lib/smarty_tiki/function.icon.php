@@ -64,7 +64,7 @@ function smarty_function_icon($params, &$smarty) {
 	if ( ! eregi('^[a-z0-9_-]+$', $params['_id']) )
 		return;
 
-	global $url_path, $base_url, $tikilib;
+	global $url_path, $base_url, $tikipath, $tikilib;
 
 	// Include smarty functions used below
 	require_once $smarty->_get_plugin_filepath('function', 'html_image');
