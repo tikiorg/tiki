@@ -279,6 +279,9 @@
 </fieldset>
 
 <fieldset><legend>{tr}Session{/tr}</legend>
+{remarksbox type="note" title="{tr}Advanced configuration warning{/tr}"}
+{tr}Note that storing session data in the database is an advanced systems administration option, and is for admins who have comprehensive access and understanding of the database, in order to deal with any unexpected effects.{/tr}
+{/remarksbox}
 <div class="adminoptionbox">	  
 	<div class="adminoption"><input type="checkbox" name="session_db" id="general-session_db" {if $prefs.session_db eq 'y'}checked="checked" {/if}/></div>
 	<div class="adminoptionlabel"><label for="general-session_db">{tr}Store session data in database{/tr}.</label></div>
