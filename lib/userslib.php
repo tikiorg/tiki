@@ -771,9 +771,12 @@ class UsersLib extends TikiLib {
 	$a->username = $user;
 	$a->password = $pass;
 	$a->status = AUTH_LOGIN_OK;
-
+	
 	// check if the login correct
 	$a->login();
+	//teste
+	////echo 'login';	
+	//teste
 	switch ($a->getStatus()) {
 		case AUTH_LOGIN_OK:
 			// Retrieve LDAP information to update user data a bit later (when he will be completely validated or auto-created)
@@ -1269,6 +1272,7 @@ function get_included_groups($group, $recur=true) {
 			$this->query("update `tiki_pages` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_pages` set `creator`=? where `creator`=?", array($to,$from));
 			$this->query("update `tiki_page_footnotes` set `user`=? where `user`=?", array($to,$from));
+			$this->query("update `tiki_newsletters` set `author`=? where `author`=?", array($to,$from));			
 			$this->query("update `tiki_newsreader_servers` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_newsreader_marks` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_minical_events` set `user`=? where `user`=?", array($to,$from));
@@ -1302,6 +1306,7 @@ function get_included_groups($group, $recur=true) {
 			$this->query("update `tiki_calendar_roles` set `username`=? where `username`=?", array($to,$from));
 			$this->query("update `tiki_calendar_items` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_blogs` set `user`=? where `user`=?", array($to,$from));
+			$this->query("update `tiki_blog_posts` set `user`=? where `user`=?", array($to,$from));			
 			$this->query("update `tiki_banning` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_banners` set `client`=? where `client`=?", array($to,$from));
 			$this->query("update `tiki_articles` set `author`=? where `author`=?", array($to,$from));
@@ -1320,7 +1325,24 @@ function get_included_groups($group, $recur=true) {
 			$this->query("update `tiki_friendship_requests` set `userFrom`=? where `userFrom`=?", array($to,$from));
 			$this->query("update `tiki_friendship_requests` set `userTo`=? where `userTo`=?", array($to,$from));
 			$this->query("update `tiki_freetagged_objects` set `user`=? where `user`=?", array($to,$from));
-
+			
+			$this->query("update `tiki_tracker_item_comments` set `user`=? where `user`=?", array($to,$from));
+			
+			$result =  $this->query("select `fieldId`, `itemChoices` from `tiki_tracker_fields` where `type`='u'");
+		
+			while($res = $result->fetchRow()) 
+			{			
+				$this->query("update `tiki_tracker_item_fields` set `value`=? where `value`=? and `fieldId`=?", array($to,$from,$res['fieldId']));
+				
+				$u = ($res['itemChoices'] != '' ) ? unserialize($res['itemChoices']) : array();
+				
+				if($value=array_search($from, $u))
+				{
+					$u[$value] = $to ;
+					$u = serialize($u);
+					$this->query("update `tiki_tracker_fields` set `itemChoices`=? where `fieldId`=?", array($u,$res['fieldId']));
+				}				
+			}
 			$cachelib->invalidate('userslist');
 			return true;
 		} else {
