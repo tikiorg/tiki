@@ -31,7 +31,7 @@ function smarty_block_add_help($params, $content, &$smarty, &$repeat) {
 
 	if (!isset($params['show']) or $params['show'] == 'y') {
 		require_once $smarty->_get_plugin_filepath('block', 'self_link');
-		$self_link_params['_alt'] = $params['title'];
+		$self_link_params['alt'] = $params['title'];
 		$self_link_params['_icon'] = 'help';
 		if ($prefs['feature_shadowbox'] == 'y' and ($prefs['feature_jquery'] == 'y' || $prefs['feature_mootools'] == 'y')) {
 			require_once $smarty->_get_plugin_filepath('function', 'icon');
