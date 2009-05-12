@@ -18,7 +18,9 @@ function capLock(e){
 {tikimodule error=$module_params.error title=$tpl_module_title name="login_box" flip=$module_params.flip decorations=$module_params.decorations nobox=$module_params.nobox notitle=$module_params.notitle}
     {if $user}
       <div>{tr}Logged in as{/tr}: <span style="white-space: nowrap">{$user|userlink}</span></div>
-      <div style="text-align: center"><span class="button2"><a class="linkmodule" href="tiki-logout.php">{tr}Logout{/tr}</a></span></div>
+      <div style="text-align: center;">
+				{button href="tiki-logout.php" _text="{tr}Logout{/tr}"}
+			</div>
       {if $tiki_p_admin eq 'y'}
         <form action="{if $prefs.https_login eq 'encouraged' || $prefs.https_login eq 'required' || $prefs.https_login eq 'force_nocheck'}{$base_url_https}{/if}{$prefs.login_url}" method="post"{if $prefs.desactive_login_autocomplete eq 'y'} autocomplete="off"{/if}>
          <fieldset>
@@ -26,9 +28,9 @@ function capLock(e){
           <label for="login-switchuser">{tr}User{/tr}:</label>
           <input type="hidden" name="su" value="1" />
           <input type="text" name="username" id="login-switchuser" size="{if empty($module_params.input_size)}15{else}{$module_params.input_size}{/if}" />
-{if $prefs.feature_help eq 'y'}
-		 {help url="Switch+User" desc="{tr}Help{/tr}"}
-{/if}
+					{if $prefs.feature_help eq 'y'}
+						{help url="Switch+User" desc="{tr}Help{/tr}"}
+					{/if}
           <div style="text-align: center"><button type="submit" name="actsu">{tr}Switch{/tr}</button></div>
          </fieldset>
         </form>
