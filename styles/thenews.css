@@ -108,7 +108,7 @@ label,
 textarea,
 option,
 select {
-	margin: 0.2em;
+	margin: 1px;
 	vertical-align: middle;
 }
 
