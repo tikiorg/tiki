@@ -5,7 +5,7 @@
 {foreach from=$blogItems item=blogItem}
 	<tr class="{cycle}">
 		<td>{$blogItem.created|tiki_short_date}</td>
-		<td><a class="link" href="{$blogItem.postId|sefurl:blogpost}">{$blogItem.title|escape}</a></td>
+		<td><a class="link" href="{$blogItem.postId|sefurl:blogpost}">{$blogItem.title}</a></td>
 		<td>{$blogItem.user|username}</td>
 	</tr>
 {/foreach}
