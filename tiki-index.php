@@ -39,6 +39,8 @@ include_once('lib/ajax/ajaxlib.php');
 require_once ("lib/wiki/wiki-ajax.php");
 require_once ("lib/wiki/renderlib.php");
 
+$auto_query_args = array('page','best_lang','bl','page_id','pagenum','page_ref_id','mode','sort_mode');
+
 if ($prefs['feature_categories'] == 'y') {
 	global $categlib;
 	if (!is_object($categlib)) {

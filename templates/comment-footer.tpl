@@ -50,14 +50,27 @@
 			or ( $forum_mode eq 'y' and $tiki_p_forum_post eq 'y' and ( $forum_is_locked neq 'y' or $prefs.feature_comments_locking neq 'y' ) ) )
 		}
 			{if $forum_mode neq 'y'}
-				<span class="button2"><a href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_reply_threadId={$comment.threadId}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}&amp;comments_grandParentId={$comment.parentId}&amp;comments_parentId={$comment.threadId}&amp;thread_style={$thread_style}&amp;post_reply=1#form">{tr}Reply{/tr}</a></span>
+				{button href="?post_reply=1&comments_threshold=`$comments_threshold`&comments_reply_threadId=`$comment.threadId`&comments_offset=`$comments_offset`&thread_sort_mode=`$thread_sort_mode`&comments_per_page=`$comments_per_page`&comments_grandParentId=`$comment.parentId`&comments_parentId=`$comment.threadId`&thread_style=`$thread_style`#form"
+								_auto_args='*'
+								_ajax='n'
+								_text="{tr}Reply{/tr}"
+				}
+								
 			{else}
 				{if $first eq 'y'}
-				<span class="button2"><a href="#form">{tr}Reply{/tr}</a></span>
+					{button href="#form" _text="{tr}Reply{/tr}"}
 				{elseif $comments_grandParentId}
-				<span class="button2"><a href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_reply_threadId={$comment.threadId}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}&amp;comments_grandParentId={$comments_grandParentId}&amp;comments_parentId={$comments_grandParentId}&amp;thread_style={$thread_style}&amp;post_reply=1#form">{tr}Reply{/tr}</a></span>
+					{button href="?post_reply=1&comments_threshold=`$comments_threshold`&comments_reply_threadId=`$comment.threadId`&comments_offset=`$comments_offset`&thread_sort_mode=`$thread_sort_mode`&comments_per_page=`$comments_per_page`&comments_grandParentId=`$comment_grandParentId`&comments_parentId=`$comments_grandParentId`&thread_style=`$thread_style`#form"
+								_auto_args='*'
+								_ajax='n'
+								_text="{tr}Reply{/tr}"
+					}
 				{elseif $forum_info.is_flat neq 'y'}
-				<span class="button2"><a href="{$comments_complete_father}comments_threshold={$comments_threshold}&amp;comments_reply_threadId={$comment.threadId}&amp;comments_offset={$comments_offset}&amp;thread_sort_mode={$thread_sort_mode}&amp;comments_per_page={$comments_per_page}&amp;comments_grandParentId={$comment.parentId}&amp;comments_parentId={$comment.parentId}&amp;thread_style={$thread_style}&amp;post_reply=1#form">{tr}Reply{/tr}</a></span>
+					{button href="?post_reply=1&comments_threshold=`$comments_threshold`&comments_reply_threadId=`$comment.threadId`&comments_offset=`$comments_offset`&thread_sort_mode=`$thread_sort_mode`&comments_per_page=`$comments_per_page`&comments_grandParentId=`$comment.parentId`&comments_parentId=`$comment.parentId`&thread_style=`$thread_style`#form"
+								_auto_args='*'
+								_ajax='n'
+								_text="{tr}Reply{/tr}"
+					}
 				{/if}
 			{/if}
 		{/if}
