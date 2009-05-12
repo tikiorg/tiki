@@ -275,7 +275,11 @@ div#tiki-main #tikimidtbl {
 
 /* Site Header & Identity */
 
-#header-top {position: relative} 
+#header-top {
+	position: relative;
+	height: 50px;
+	padding-top: 2px;
+} 
 
 #siteheader {
 	text-align: left;
