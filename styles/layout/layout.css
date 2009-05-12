@@ -350,16 +350,11 @@ div.menuSection div.separator {}
 /* centercolumn */
 #showhide_columns {}
 *:first-child+html #showhide_columns {}
-
-.tellafriend {
-	font-size: 80%;
-	text-align: right}
 	
 a.flip,
 a.flip:visited,
 .tellafriend a,
-.tellafriend a:visited {}
-
+.tellafriend a:visited,
 a.flip:hover,
 .tellafriend a:hover {
 	font-size: 80%;
@@ -833,6 +828,8 @@ table.admin {
 table.normalnoborder {width: 100%}
 table.admin tr td div#page-bar {}
 
+td {vertical-align: top}
+
 td.normal,
 .normal td,
 .wikitable td,
@@ -1262,7 +1259,7 @@ body.tiki_blogs .author_info {}
 body.tiki_blogs .postbody-title {}
 * html .postbody table {}
 
-body.tiki_blogs div.postfooter {
+body.tiki_blogs .post .postfooter {
 	clear: both;
 	float: right;
 	margin-bottom: 2em}
@@ -1474,7 +1471,7 @@ div.thumbdescription span.thumbinfoname {}
 a.namealias {}
 div.gallerypath, div.gallerypath a {}
 div.gallerypath a:hover {}
-.fgalexplorer {border: 1px solid yellow}
+.fgalexplorer {/*border: 1px solid yellow*/}
 
 .fgallisting table td {
 	padding-left: 2px;
