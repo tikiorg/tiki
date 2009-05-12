@@ -6036,10 +6036,10 @@ class TikiLib extends TikiDB {
 	}
 
 	function plugin_is_editable( $name ) {
-		global $tiki_p_edit, $prefs;
+		global $tiki_p_edit, $prefs, $section;
 		$info = $this->plugin_info( $name );
-
-		return $info && $tiki_p_edit == 'y' && $prefs['wiki_edit_plugin'] == 'y'
+		// note that for 3.0 the plugin editor only works in wiki pages, but could be extended later
+		return $section == 'wiki page' && $info && $tiki_p_edit == 'y' && $prefs['wiki_edit_plugin'] == 'y'
 			&& !$this->plugin_is_inline( $name ) ;
 	}
 
