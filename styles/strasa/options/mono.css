@@ -164,6 +164,11 @@ ul.jumplinks a:active {
 	background: url('mono/login.jpg') 0 0 no-repeat;
 }
 
+* html #siteloginbar {
+	text-align: right;
+	width: 100%;
+	background: #fff url(mono/loginlong.jpg) 0 0 no-repeat}
+
 #siteloginbar .register {
 	background: url('mono/register.jpg') no-repeat;
 }
