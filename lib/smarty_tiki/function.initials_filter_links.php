@@ -11,7 +11,7 @@ function smarty_function_initials_filter_links($params, &$smarty) {
 	$sep = ' . ';
 	$default_type = 'absolute_path';
 	if ( ! isset($params['_initial']) ) $params['_initial'] = 'initial';
-	$current_initial = isset($params['initial']) && isset($_REQUEST[$params['initial']]) ? $_REQUEST[$params['initial']] : '';
+	$current_initial = isset($_REQUEST[$params['_initial']]) ? $_REQUEST[$params['_initial']] : '';
 	if ( ! isset($params['_htmlelement']) ) $params['_htmlelement'] = 'tiki-center';
 	if ( ! isset($params['_template']) ) $params['_template'] = basename($_SERVER['PHP_SELF'], '.php').'.tpl';
 	if ( ! isset($params['_class']) ) $params['_class'] = 'prevnext';
@@ -33,7 +33,7 @@ function smarty_function_initials_filter_links($params, &$smarty) {
 
 	foreach ( array('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z') as $i ) {
 		if ( $current_initial == $i ) {
-			$html .= "\n".'<span class="button2"><span class="linkbuton">'.strtoupper($i).'</span></span>'.$sep;
+			$html .= "\n" . '<span class="highlight">' . strtoupper($i) . '</span>' . $sep;
 		} else {
 			$html .= "\n".str_replace( $params['_initial'].'=X', $params['_initial'].'='.$i, $tag_start).strtoupper($i).'</a>'.$sep;
 		}
@@ -42,7 +42,3 @@ function smarty_function_initials_filter_links($params, &$smarty) {
 	
 	return '<div class="alphafilter">'.$html.'</div>';
 }
-
-
-
-?>
