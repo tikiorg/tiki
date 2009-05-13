@@ -1116,6 +1116,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'default_rows_textarea_comment' => '6',
 		'default_rows_textarea_forum' => '20',
 		'default_rows_textarea_forumthread' => '10',
+		'feature_floating_help' => 'y',
 
 		// pagination
 		'direct_pagination' => 'y',
