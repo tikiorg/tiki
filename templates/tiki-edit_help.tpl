@@ -97,7 +97,7 @@
 <table width="95%" class="normal">
 	<tr><th>{tr}Description{/tr}</th></tr>
   {cycle values="even,odd" print=false}
-  {section name=i loop=$plugins}
+  {section name=i loop=$plugins}    {* To modify the template of below: tiki-plugin_help.tpl *}
     <tr>
       <td class="{cycle advance=false}">
         {if $plugins[i].help eq ''}
