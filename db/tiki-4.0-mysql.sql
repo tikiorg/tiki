@@ -469,7 +469,7 @@ CREATE TABLE tiki_calendar_items (
   locationId int(14) default NULL,
   categoryId int(14) default NULL,
   nlId int(12) NOT NULL default '0',
-  priority enum('1','2','3','4','5','6','7','8','9') NOT NULL default '1',
+  priority enum('0', '1','2','3','4','5','6','7','8','9') default '0',
   status enum('0','1','2') NOT NULL default '0',
   url varchar(255) default NULL,
   lang char(16) NOT NULL default 'en',
@@ -1673,10 +1673,7 @@ CREATE TABLE tiki_modules (
   KEY moduleId (moduleId)
 ) ENGINE=MyISAM;
 
-INSERT INTO tiki_modules (name,position,ord,cache_time,groups) VALUES ('login_box','r',1,0,'a:2:{i:0;s:10:"Registered";i:1;s:9:"Anonymous";}');
 INSERT INTO tiki_modules (name,position,ord,cache_time,params,groups) VALUES ('mnu_application_menu','l',1,0,'flip=y','a:2:{i:0;s:10:"Registered";i:1;s:9:"Anonymous";}');
-INSERT INTO tiki_modules (name,position,ord,cache_time,groups) VALUES ('quick_edit','l',2,0,'a:1:{i:0;s:6:\"Admins\";}');
-INSERT INTO tiki_modules (name,position,ord,cache_time,groups) VALUES ('since_last_visit_new','r',40,0,'a:1:{i:0;s:6:\"Admins\";}');
 
 DROP TABLE IF EXISTS tiki_newsletter_subscriptions;
 CREATE TABLE tiki_newsletter_subscriptions (

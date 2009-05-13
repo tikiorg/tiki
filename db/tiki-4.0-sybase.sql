@@ -674,7 +674,7 @@ CREATE TABLE "tiki_calendar_items" (
   "locationId" numeric(14,0) default NULL NULL,
   "categoryId" numeric(14,0) default NULL NULL,
   "nlId" numeric(12,0) default '0' NOT NULL,
-  "priority" varchar(3) default '1' NOT NULL CHECK ("priority" IN ('1','2','3','4','5','6','7','8','9')),
+  "priority" varchar(4) default '0' CHECK ("priority" IN ('0', '1','2','3','4','5','6','7','8','9')),
   "status" varchar(3) default '0' NOT NULL CHECK ("status" IN ('0','1','2')),
   "url" varchar(255) default NULL NULL,
   "lang" char(16) default 'en' NOT NULL,
@@ -2948,19 +2948,7 @@ go
 CREATE  INDEX "tiki_modules_moduleId" ON "tiki_modules"("moduleId")
 go
 
-INSERT INTO "tiki_modules" ("name","position","ord","cache_time","groups") VALUES ('login_box','r',1,0,'a:2:{i:0;s:10:"Registered";i:1;s:9:"Anonymous";}')
-go
-
-
 INSERT INTO "tiki_modules" ("name","position","ord","cache_time","params","groups") VALUES ('mnu_application_menu','l',1,0,'flip=y','a:2:{i:0;s:10:"Registered";i:1;s:9:"Anonymous";}')
-go
-
-
-INSERT INTO "tiki_modules" ("name","position","ord","cache_time","groups") VALUES ('quick_edit','l',2,0,'a:1:{i:0;s:6:\"Admins\";}')
-go
-
-
-INSERT INTO "tiki_modules" ("name","position","ord","cache_time","groups") VALUES ('since_last_visit_new','r',40,0,'a:1:{i:0;s:6:\"Admins\";}')
 go
 
 
