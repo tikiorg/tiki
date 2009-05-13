@@ -25,7 +25,10 @@ function smarty_resource_wiki_source($page, &$tpl_source, &$smarty) {
 }
 
 function smarty_resource_wiki_timestamp($page, &$tpl_timestamp, &$smarty) {
-	global $tikilib;
+	global $tikilib, $user;
+	if (!$tikilib->user_has_perm_on_object($user, $page, 'wiki page', 'tiki_p_use_as_template')) {
+		return 'Permission denied';
+	}
 	$info = $tikilib->get_page_info($page);
 	if (empty($info)) {
 		return false;
