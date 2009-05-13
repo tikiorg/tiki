@@ -8,11 +8,11 @@
 {/if}
 	{foreach item=help from=$help_sections}
 		<div class="help_section_select">
-			<a href="#{$help.id}"{if $prefs.javascript_enabled eq 'y' && $prefs.feature_floating_help eq 'y'} onclick="javascript:flip('{$help.id}'); return false" title="{tr}toggle{/tr}"{/if}><img src="pics/icons/add.png" alt="{tr}toggle{/tr}" />
+			<a href="#{$help.id}"{if $prefs.javascript_enabled eq 'y'} onclick="javascript:flip('{$help.id}'); return false" title="{tr}toggle{/tr}"{/if}><img src="pics/icons/add.png" alt="{tr}toggle{/tr}" />
 			{$help.title}</a>
 			{if $prefs.feature_shadowbox eq 'y' and ($prefs.feature_jquery eq 'y' or $prefs.feature_mootools eq 'y')}<a href="#{$help.id}" onclick="javascript:flip('help_sections'); return false" rel="shadowbox[help];title={tr}Help{/tr}: {$help.title}">{icon _id="arrow_out" alt="{tr}Fullscreen{/tr}"}</a>{/if}
 		</div>
-		<div {if $prefs.javascript_enabled eq 'y' && $prefs.feature_floating_help eq 'y'}class="help_section" id="{$help.id}" style="display:block"{/if}>
+		<div {if $prefs.javascript_enabled eq 'y'}class="help_section" id="{$help.id}" style="display:block"{/if}>
 		{$help.content}
 		</div>
 	{/foreach}
