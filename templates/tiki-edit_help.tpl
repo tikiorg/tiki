@@ -66,7 +66,6 @@
 "{literal}~--~{/literal}" &mdash;,
 "{literal}~bs~{/literal}" &#92;,
 {tr}numeric between ~ for html numeric characters entity{/tr}</td></tr>
-<tr><td class="{cycle}"><strong>{tr}Misc{/tr}</strong> <br/>"{literal}{cookie}, {poll}{/literal}"</td></tr>
 </table>
 
 {if $prefs.feature_wiki_paragraph_formatting eq 'y' }
