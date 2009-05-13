@@ -5500,8 +5500,9 @@ class TikiLib extends TikiDB {
 								}
 	
 							} else {
-
-
+								
+								// save plugin_data for plugin edit JS later (needs to not be plugin-parsed)
+								$plugin_data_saved = $plugin_data;
 								// Handle nested plugins.
 								$this->parse_first($plugin_data, $preparsed, $noparsed, $options, $real_start_diff + $pos+strlen($plugin_start));
 
@@ -5557,7 +5558,7 @@ class TikiLib extends TikiDB {
 					. ', ' 
 					. json_encode($arguments) 
 					. ', ' 
-					. json_encode(TikiLib::htmldecode($plugin_data)) 
+					. json_encode(TikiLib::htmldecode($plugin_data_saved)) 
 					. ", event.target);
 			} );
 		}
