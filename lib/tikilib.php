@@ -817,8 +817,6 @@ class TikiLib extends TikiDB {
 			global $user;
 			$add=$this->user_has_perm_on_object($user,$res['trackerId'],'tracker','tiki_p_view_trackers');
 			if ($add) {
-				$qu = "select count(*) from`tiki_tracker_items` where `trackerId`=? ";
-				$res['items'] = $this->getOne($qu,array((int)$res['trackerId']));
 				$ret[] = $res;
 				$list[$res['trackerId']] = $res['name'];
 			}
