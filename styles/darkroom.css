@@ -2320,7 +2320,8 @@ td.calodd, td.caleven {border: 1px solid #999999}
 .daterow:hover {border: 1px solid #aaa}
 
 a.viewmodeon img.icon {border: white solid 1px !important;padding:0 0 0 2px;}
-
+.tabrow .viewmode { float: left; }
+.viewmode div {display: inline;}
 /*****  Polls  *****/
 
 div.pollresults {
