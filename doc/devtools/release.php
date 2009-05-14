@@ -303,6 +303,7 @@ function get_options() {
 		'howto' => false,
 		'help' => false,
 		'http-proxy' => false,
+		'no-commit' => false,
 		'no-check-svn' => false,
 		'no-check-php' => false,
 		'no-first-update' => false,
@@ -315,6 +316,18 @@ function get_options() {
 		'no-tagging' => false,
 		'force-yes' => false
 	);
+
+	// Environment variables provide default values for parameter options. e.g. export TIKI_NO_SECDB=true
+	$prefix = "TIKI-";
+	foreach ( $options as $option => $optValue) {
+	  $envOption = $prefix.$option;
+	  $envOption = str_replace("-", "_", $envOption);
+	  $envValue = $_ENV[$envOption];
+
+	  if (isset($envValue)) {
+	    $options[$option] = $envValue;
+	  }
+	}
 
 	foreach ( $_SERVER['argv'] as $arg ) {
 		if ( substr($arg, 0, 2) == '--' ) {
@@ -356,6 +369,11 @@ function important_step($msg, $increment_step = true, $commit_msg = false) {
 	// Increment step number if needed
 	if ( $increment_step ) $step++;
 
+	if ( $commit_msg && $options['no-commit'] ) {
+	  print "Skipping actual commit ('$commit_msg') because no-commit = true\n";
+	  return;
+	}
+
 	$do_step = false;
 	if ( $options['force-yes'] ) {
 		important("\n$step) $msg...");
@@ -390,8 +408,9 @@ function important_step($msg, $increment_step = true, $commit_msg = false) {
 		}
 	}
 
-	if ( $commit_msg && $do_step && $revision = commit($commit_msg) )
-		info(">> Commited revision $revision.");
+	if ( $commit_msg && $do_step ) {
+	  $revision = commit($commit_msg) && info(">> Commited revision $revision.");
+	}
 
 	return $do_step;
 }
