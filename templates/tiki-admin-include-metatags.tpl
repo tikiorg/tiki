@@ -55,9 +55,10 @@
 </fieldset>
 
 <fieldset><legend>{tr}Robots{/tr}</legend>
+{* Need to show site_metatag_robots as real metatags are overridden at runtime  *}
 <div class="adminoptionbox">
-	<div class="adminoptionlabel"><label for="adm_metatag_robots">{tr}Meta robots{/tr}:</label> <input id="adm_metatag_robots" type="text" name="adm_metatag_robots" value="{$adm_metatag_robots}" size="50" /></div>
-</div>
+	<div class="adminoptionlabel"><label for="metatag_robots">{tr}Meta robots{/tr}:</label> <input id="metatag_robots" type="text" name="metatag_robots" value="{$prefs.site_metatag_robots}" size="50" /></div>
+</div> 
 <div class="adminoptionbox">
 	<div class="adminoptionlabel"><label for="metatag_revisitafter">{tr}Revisit after{/tr}:</label> <input id="metatag_revisitafter" type="text" name="metatag_revisitafter" value="{$prefs.metatag_revisitafter}" size="50" /></div>
 </div>
