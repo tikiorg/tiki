@@ -34,7 +34,10 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
   		$this->select("page", "label=Français");
     	$this->waitForPageToLoad("30000");
     	$this->assertTrue(preg_match('/page=Page\+de\+test\+multilingue\+1/', $this->getLocation()) == 1);
-    	$this->assertElementPresent("link=Page de test multilingue 1");	
+    	$this->assertElementPresent("link=Page de test multilingue 1");
+    	$this->assertLanguagePicklistHasLanguages(array('Français' => 'Page de test multilingue 1', 
+													'English' => 'Multilingual Test Page 1' 
+                                                    ));	
   	}
   	
   	public function testTranslateOptionAppearsOnlyWhenLoggedIn() {
@@ -65,7 +68,7 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
 					  "English should not have been present in the list of languages.");
   	}
     
-    public function __testCannotGiveATranslationTheNameOfAnExistingPage() {
+    public function testCannotGiveATranslationTheNameOfAnExistingPage() {
     	//NB. This is in fact wrong. If you have similar languages, say English and British English, 
     	//or Serbian (latin alphabet) and Croatian, the title of the page is bound to be the same. Here we force
     	//the translator to add a language tag to the title only to have the unique page name
@@ -76,14 +79,36 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
     	$this->select("page", "label=Français");
     	$this->waitForPageToLoad("30000");
     	$this->clickAndWait("link=Translate");
-    	print $this->getHtmlSource();
     	$this->select("language_list", "label=English British (en-uk)");
     	$this->type("translation_name", "Multilingual Test Page 1");
     	$this->clickAndWait("//input[@value='Create translation']");
         $this->assertTrue($this->isTextPresent("Page already exists. Go back and choose a different name."));
+        
+        
     }
     
-    
+    public function testShouldNotChangeLanguageOfThePageInCaseCreateTranslationFails() {
+    	//In case when a page already exists create translation gives an error message which is ok.
+    	//But it shouldn't change the language of the existing page to the language chosen for translation. 
+    	$this->openTikiPage('tiki-index.php?page=Multilingual+Test+Page+1');
+    	$this->logInIfNecessaryAs('admin');
+    	$this->select("page", "label=Français");
+    	$this->waitForPageToLoad("30000");
+    	$this->clickAndWait("link=Translate");
+    	$this->select("language_list", "label=English British (en-uk)");
+    	$this->type("translation_name", "Multilingual Test Page 1");
+    	$this->clickAndWait("//input[@value='Create translation']");
+        $this->assertTrue($this->isTextPresent("Page already exists. Go back and choose a different name."));
+        $this->clickAndWait("link=Go back");
+    	$this->clickAndWait("link=View Page");
+    	//A bug: instead of English it shows English British although the page was not created
+       	$this->assertLanguagePicklistHasLanguages(array('Français' => 'Page de test multilingue 1', 
+													'English' => 'Multilingual Test Page 1' 
+                                                    ));                                                    
+       	$this->assertLanguagePicklistDoesNotHaveLanguages(array('English British' => 'Multilingual Test Page 1' 
+                                                    ));                                                    
+    }
+ 
    
     /**************************************
      * Helper methods
@@ -110,7 +135,13 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
     public function assertLanguagePicklistHasLanguages($expAvailableLanguages) {
         $this->assertSelectElementContainsItems("xpath=//select[@name='page' and @onchange='quick_switch_language( this )']",
                   $expAvailableLanguages, 
-                  "Language picklist was wrong.");           
+                  "Language picklist was wrong. It should have contained ".$this->implode_with_key(",", $expAvailableLanguages)." but didn't.");           
+    }
+    
+    public function assertLanguagePicklistDoesNotHaveLanguages($expAvailableLanguages) {
+    	$this->assertSelectElementDoesNotContainItems("xpath=//select[@name='page' and @onchange='quick_switch_language( this )']",
+                  $expAvailableLanguages, 
+                  "Language picklist was wrong. It contained ".$this->implode_with_key(",", $expAvailableLanguages)." but shouldn't.");
     }
     
     public function assertLanguagePicklistHasTranslateOption() {
@@ -122,5 +153,7 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
         $this->assertFalse($this->isElementPresent("xpath=//select[@name='page' and @onchange='quick_switch_language( this )']/option[@value='_translate_']",
                   "Translate option was present."));           
     }
+    
+    
 }
 ?>

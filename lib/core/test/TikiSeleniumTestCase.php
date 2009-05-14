@@ -36,7 +36,9 @@ class TikiSeleniumTestCase extends PHPUnit_Extensions_SeleniumTestCase {
     
     public function assertSelectElementContainsItems($selectElementID, $expItems, $message) {
         $this->assertElementPresent($selectElementID, "$message\nMarkup element '$selectElementID' did not exist");
+        $selectElementLabels = 	$this->getSelectOptions($selectElementID);
         foreach ($expItems as $anItem => $anItemValue) {
+           $this->assertTrue(in_array($anItem, $selectElementLabels), "$message\n$anItem is not in the select element list");		
            $thisItemElementID = "$selectElementID/option[@value='$anItemValue']";
            $this->assertElementPresent($thisItemElementID);
         }
@@ -77,5 +79,12 @@ class TikiSeleniumTestCase extends PHPUnit_Extensions_SeleniumTestCase {
     	}
 		return true;
 	}
+
+
+	public function implode_with_key($glue = null, $pieces, $hifen = '=>') {
+        $return = null;
+        foreach ($pieces as $tk => $tv) $return .= $glue.$tk.$hifen.$tv;
+        return substr($return,1);
+    }
 } 
 ?>
