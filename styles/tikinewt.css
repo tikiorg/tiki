@@ -20,8 +20,7 @@
 			others follow Layout) *****/
 body {
 	background: #e9ecef;
-	font-family: Verdana, Helvetica, Geneva, Arial, sans-serif;
-	font-size: 70% !important;
+	font: 76%/1.6 Corbel, "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", "Bitstream Vera Sans", "Liberation Sans", Verdana, sans-serif;
 	color: #000}
 
 *:first-child+html body {font-size: 70%}
@@ -258,9 +257,12 @@ label {cursor: pointer}
 
 #header-top {
 	position: relative;	
-	height: 50px;
-	padding-top: 2px;
-}
+	min-height: 50px;
+	padding-top: 2px}
+	
+#header-top[id] {
+	height: auto;
+	min-height: 50px}
 
 #siteheader {
 	text-align: left;

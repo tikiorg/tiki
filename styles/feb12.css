@@ -313,10 +313,12 @@ div#tiki-bot {}
 
 #header-top {
 	background: url(feb12/header.jpg) repeat-x bottom;
-	min-height: 98px;
+	height: 98px;
 	position: relative}
 	
-* html #header-top {height: 98px}
+#header-top[id] {
+	height: auto;
+	min-height: 98px}
 
 #siteheader {
 	text-align: left;
