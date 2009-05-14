@@ -105,6 +105,7 @@ if (isset($_REQUEST["features"])) {
 		"feature_groupalert",
 		"feature_wiki_mindmap",
 		"use_minified_scripts",
+		'feature_print_indexed',
 	);
 
 	$pref_byref_values = array(

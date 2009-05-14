@@ -151,6 +151,10 @@
 {/if}	
 	
 	</div>
+	<div class="adminoption"><input type="checkbox" name="feature_multilingual_one_page" id="feature_multilingual_one_page"{if $prefs.feature_multilingual_one_page eq 'y'}checked="checked"{/if}/></div>
+	<div class="adminoptionlabel">
+		<label for="feature_multilingual_one_page">{tr}Multilingual One Page feature{/tr}.
+		{icon _id="error"} <em>{tr}Experimental{/tr}</em></label>{if $prefs.feature_help eq 'y'} {help url="Multilingual+One+Page"}{/if}</div>
 </div>
 
 

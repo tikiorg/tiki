@@ -278,6 +278,10 @@
 							<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}MindMap" target="tikihelp" class="tikihelp" title="{tr}Mindmap{/tr}">{/if} {tr}Mindmap{/tr} {if $prefs.feature_help eq 'y'}</a>{/if} </span>
 						</div>
 						<div class="half_width">
+							<span class="checkbox"><input type="checkbox" name="feature_print_indexed" {if $prefs.feature_print_indexed eq 'y'}checked="checked"{/if}/></span>
+							<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Print+Indexed" target="tikihelp" class="tikihelp" title="{tr}Print Indexed{/tr}: {tr}Print Indexed{/tr}">{/if} {tr}Print Indexed{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
+						</div>
+						<div class="half_width">
 							 <span class="checkbox"><input type="checkbox" name="feature_sefurl" {if $prefs.feature_sefurl eq 'y'}checked="checked"{/if}/></span>
 							 <span class="label">{if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Rewrite+Rules" target="tikihelp" class="tikihelp" title="{tr}SEFURL{/tr}">{/if} {tr}Search engine friendly url{/tr}{if $prefs.feature_help eq 'y'}</a>{/if}</span>
 						</div>
