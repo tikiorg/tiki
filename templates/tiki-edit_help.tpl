@@ -45,7 +45,7 @@
 <tr><td class="{cycle}"><strong>{tr}Drawings{/tr}</strong> <br/> {literal}{{/literal}draw name=foo} {tr}creates the editable drawing foo{/tr}</td></tr>
 {/if}
 <tr><td class="{cycle}"><strong>{tr}Multi-page pages{/tr}</strong> <br/>{tr}Use{/tr} ...page... {tr}to separate pages{/tr}</td></tr>
-<tr><td class="{cycle}"><strong><img src='pics/icons/database_gear.png' alt='' />{tr}Dynamic variables{/tr}</strong> <br/> %{tr}Name{/tr}% {tr}Inserts an editable variable{/tr}</td></tr>
+<tr><td class="{cycle}"><strong><img src='pics/icons/database_gear.png' alt='' /> {tr}Dynamic variables{/tr}</strong> <br/> %{tr}Name{/tr}% {tr}Inserts an editable variable{/tr}</td></tr>
 <tr><td class="{cycle}"><strong>{tr}Non parsed sections{/tr}</strong> <br/> ~np~ {tr}data{/tr} ~/np~ {tr}Prevents wiki parsing of the enclosed data.{/tr}</td></tr>
 <tr><td class="{cycle}"><strong>{tr}Preformated sections{/tr}</strong> <br/> {tr}~pp~ data ~/pp~ Displays preformated text/code; no Wiki processing is done inside these sections (as with np), and the spacing is fixed (no word wrapping is done).  ~pre~ data ~/pre~ also displayes preformatted text with fixed spacing, but wiki processing still occurs on the text.{/tr}</td></tr>
 <tr><td class="{cycle}"><strong>{tr}Comments{/tr}</strong> <br/> {tr}~tc~ Tiki Comment ~/tc~ makes a Tiki comment.  It will be completely removed from the display, but saved in the file for future reference.  ~hc~ HTML Comment ~/hc~ makes an HTML comment.  It will be inserted as a comment in the output HTML; these are not normally displayed in browsers, but can be seen using "View Source" or similar.{/tr}</td></tr>
