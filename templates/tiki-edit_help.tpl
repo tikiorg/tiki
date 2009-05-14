@@ -26,7 +26,7 @@
 <tr><td width="20%" class="{cycle}"><strong>{tr}Monospace font{/tr}</strong> <br/>-+{tr}Code sample{/tr}+- {tr}for{/tr} <code>Code sample</code></td></tr>
 <tr><td class="{cycle}"><img src='pics/icons/text_list_bullets.png' alt='' /> <img src='pics/icons/text_list_numbers.png' alt='' /> <strong>{tr}Lists{/tr}</strong> <br/> * {tr}for bullet lists{/tr}, # {tr}for numbered lists{/tr}, ;{tr}Word{/tr}:{tr}definition{/tr} {tr}for definiton lists{/tr}</td></tr>
 <tr><td class="{cycle}"><strong>{tr}Indentation{/tr}</strong> <br/>+, ++ {tr}Creates an indentation for each plus(useful in list to continue at the same level){/tr}</td></tr>
-<tr><td class="{cycle}"><img src='pics/icons/text_heading_1.png' alt='' /><img src='pics/icons/text_heading_2.png' alt='' /><img src='pics/icons/text_heading_3.png' alt='' /> <strong>{tr}Headings{/tr}</strong> <br/> !, !!, !!! </td></tr>
+<tr><td class="{cycle}"><img src='pics/icons/text_heading_1.png' alt='' /><img src='pics/icons/text_heading_2.png' alt='' /><img src='pics/icons/text_heading_3.png' alt='' /> <strong>{tr}Headings{/tr}</strong> <br/> !heading1, !!heading2, !!!heading3 </td></tr>
 <tr><td class="{cycle}"><strong>{tr}Show/Hide{/tr}</strong> <br/> !+, !!- {tr}show/hide heading section. + (shown) or - (hidden) by default{/tr}.</td></tr>
 <tr><td class="{cycle}"><strong>{tr}Autonumbered Headings{/tr}</strong> <br/> !#, !!#, !+#, !-# ... </td></tr>
 {if $prefs.feature_wiki_tables eq 'new'}
