@@ -8422,6 +8422,7 @@ $lang=Array(
 "for definiton lists" => "defincíciós listákhoz",
 "Indentation" => "Behúzás",
 "Creates an indentation for each plus(useful in list to continue at the same level)" => "Minden + jellel eggyel beljebb húzza (hasznos listázások ugyanazon szinten történő folytatására)",
+"Creates an indentation for each plus (useful in list to continue at the same level)" => "Minden + jellel eggyel beljebb húzza (hasznos listázások ugyanazon szinten történő folytatására)",
 "Headings" => "Címsorok",
 "make headings" => "címsorokat hoz létre",
 "Show/Hide" => "Megjelenítés/Elrejtés",

@@ -3206,6 +3206,7 @@ $lang=Array(
 // "Code sample" => "Code sample",
 // "Indentation" => "Indentation",
 // "Creates an indentation for each plus(useful in list to continue at the same level)" => "Creates an indentation for each plus(useful in list to continue at the same level)",
+// "Creates an indentation for each plus (useful in list to continue at the same level)" => "Creates an indentation for each plus(useful in list to continue at the same level)",
 // "Headings" => "Headings",
 // "make headings" => "make headings",
 // "show/hide heading section. + (shown) or - (hidden) by default" => "show/hide heading section. + (shown) or - (hidden) by default",

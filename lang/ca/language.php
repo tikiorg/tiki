@@ -9889,6 +9889,7 @@ $lang=Array(
 "for definiton lists" => "per a llistes de definicions",
 "Indentation" => "Sagnat",
 "Creates an indentation for each plus(useful in list to continue at the same level)" => "Crea un sagnat de text per a cada més (útil en llistes per continuar amb la numeració més avall)",
+"Creates an indentation for each plus (useful in list to continue at the same level)" => "Crea un sagnat de text per a cada més (útil en llistes per continuar amb la numeració més avall)",
 "Headings" => "Capçaleres (o Títols)",
 "make headings" => "fes estils de títol",
 "Show/Hide" => "Mostra/Amaga",

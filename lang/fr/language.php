@@ -8305,6 +8305,7 @@ $lang=Array(
 "for numbered lists" => "pour une liste numérotée",
 "for definiton lists" => "pour une définition",
 "Creates an indentation for each plus(useful in list to continue at the same level)" => "Ajoute un niveau d'indentation pour chaque plus (utile dans une liste pour pouvoir poursuivre au même niveau)",
+"Creates an indentation for each plus (useful in list to continue at the same level)" => "Ajoute un niveau d'indentation pour chaque plus (utile dans une liste pour pouvoir poursuivre au même niveau)",
 "Tables" => "Tableaux",
 "row" => "rangée",
 "Title bar" => "Barre de titre",

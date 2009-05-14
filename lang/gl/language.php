@@ -5704,6 +5704,7 @@ $lang=Array(
 // "Code sample" => "Code sample",
 // "Indentation" => "Indentation",
 // "Creates an indentation for each plus(useful in list to continue at the same level)" => "Creates an indentation for each plus(useful in list to continue at the same level)",
+// "Creates an indentation for each plus (useful in list to continue at the same level)" => "Creates an indentation for each plus(useful in list to continue at the same level)",
 // "make headings" => "make headings",
 // "Autonumbered Headings" => "Autonumbered Headings",
 // "make autonumbered headings" => "make autonumbered headings",
