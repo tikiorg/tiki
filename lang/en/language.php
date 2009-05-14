@@ -9280,7 +9280,7 @@ Setup to help subject experts and enthusiasts work together to build a Knowledge
 
 __Personal Blog and Profile__ ([tiki-admin.php?profile=&category=Featured+profiles&repository=http%3a%2f%2fprofiles.tikiwiki.org%2fprofiles&preloadlist=y&page=profiles&list=List#profile-results|install profile now])
 Setup with many cool features to help you integrate the Social Web and establish a strong presence in the Blogosphere
-*BLog (Full set of blog related features)
+*Blog (Full set of blog related features)
 *Image Gallery
 *Calendar
 *Twitter Integration
