@@ -231,7 +231,7 @@
 					</div>
 					<div class="half_width">
 						<span class="checkbox"><input type="checkbox" name="feature_floating_help" {if $prefs.feature_floating_help eq 'y'}checked="checked"{/if}/></span>
-						<span class="label">{tr}Floating help aka the Big Bleu Help Icon{/tr}</span>
+						<span class="label">{tr}Floating help aka the Big Blue Help Icon{/tr}</span>
 					</div>
 				</div>
 			</fieldset>
