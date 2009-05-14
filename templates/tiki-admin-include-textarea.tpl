@@ -40,6 +40,11 @@
 </div>
 
 <div class="adminoptionbox">
+        <div class="adminoption"><input type="checkbox" id="feature_floating_help" name="feature_floating_help" {if $prefs.feature_floating_help eq 'y'}checked="checked" {/if}/> </div>
+        <div class="adminoptionlabel"><label for="feature_floating_help">{tr}Floating edit help{/tr} </label>{if $prefs.feature_floating_help eq 'y'} {/if}</div>
+</div>
+
+<div class="adminoptionbox">
 	<div class="adminoption"><input type="checkbox" id="feature_smileys" name="feature_smileys" {if $prefs.feature_smileys eq 'y'}checked="checked" {/if}/> </div>
 	<div class="adminoptionlabel"><label for="feature_smileys">{tr}Smileys{/tr} </label>{if $prefs.feature_help eq 'y'} {help url="Smiley"}{/if}</div>
 </div>
@@ -168,7 +173,7 @@
 		
 		{remarksbox type="note" title="{tr}About plugins{/tr}"}{tr}Tiki plugins add functionality to wiki pages, articles and blogs etc. You can enable and disable them below.{/tr}
 		{tr}You can approve plugin use at <a href="tiki-plugins.php">tiki-plugins.php</a>.{/tr}		
-		{tr}The edit plugin icon is an easy way for users to edit the parameters of each plugin in wiki pages, articles and blogs etc. It can be disabled for individual plugins below{/tr} 	
+		{tr}The edit plugin icon is an easy way for users to edit the parameters of each plugin in wiki pages. It can be disabled for individual plugins below.{/tr} 	
 
 		{/remarksbox}
 
@@ -176,7 +181,7 @@
 		<legend>{tr}Edit plugin icons{/tr}</legend>
 		<div class="adminoptionbox">
 			<div class="adminoption"><input type="checkbox" id="wiki_edit_plugin" name="wiki_edit_plugin" {if $prefs.wiki_edit_plugin eq 'y'}checked="checked"{/if}/></div> 
-				<div class="adminoptionlabel"><label for="wiki_edit_plugin">{tr}Enable edit plugin icons{/tr} {tr}(experimental - not comprehensively tested with all plugins){/tr}</label></div>
+				<div class="adminoptionlabel"><label for="wiki_edit_plugin">{tr}Enable edit plugin icons{/tr} {tr}(experimental - not comprehensively tested and requires new JQuery feature){/tr}</label></div>
 		</div>
 		</fieldset>
 		<fieldset class="admin">

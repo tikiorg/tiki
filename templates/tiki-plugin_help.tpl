@@ -1,7 +1,9 @@
 {* $Id$ *}
-<h3>{$plugin.name|escape}
+
+<b>{$plugin.name|escape}</b>
+
 {if $prefs.javascript_enabled eq 'y' && $area_name}
-	<a href="javascript:void(0);{if $prefs.feature_shadowbox eq 'y' and ($prefs.feature_jquery eq 'y' or $prefs.feature_mootools eq 'y')}javascript:Shadowbox.close();{/if}" onclick="needToConfirm=false;popup_plugin_form('{$area_name}','{$plugin_name|lower|@addslashes}')">{icon _id="comment_add" text="{tr}Insert{/tr}"}</a>
+	<a href="javascript:void(0);{if $prefs.feature_shadowbox eq 'y' and ($prefs.feature_jquery eq 'y' or $prefs.feature_mootools eq 'y')}javascript:Shadowbox.close();{/if}" onclick="needToConfirm=false;popup_plugin_form('{$area_name}','{$plugin_name|lower|@addslashes}')">{icon _id="plugin_add" text="{tr}Insert{/tr}"}</a>
 {/if}
 
 {if $prefs.feature_help eq 'y'}
@@ -10,7 +12,6 @@
 	{/if}
 {/if}
 
-</h3>
 
 <div class="plugin-desc">
 	{$plugin.description}

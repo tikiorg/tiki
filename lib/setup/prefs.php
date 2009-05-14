@@ -194,7 +194,7 @@ function get_default_prefs() {
 		'wikiplugin_copyright' => 'y',
 		'wikiplugin_countdown' => 'n',
 		'wikiplugin_dbreport' => 'n',
-		'wikiplugin_div' => 'y',
+		'wikiplugin_div' => 'n',
 		'wikiplugin_dl' => 'y',
 		'wikiplugin_draw' => 'y',
 		'wikiplugin_equation' => 'n',
@@ -256,11 +256,11 @@ function get_default_prefs() {
 		'wikiplugin_split' => 'y',
 		'wikiplugin_sql' => 'n',
 		'wikiplugin_sub' => 'y',
-		'wikiplugin_subscribegroup' => 'y',
-		'wikiplugin_subscribegroups' => 'y',
+		'wikiplugin_subscribegroup' => 'n',
+		'wikiplugin_subscribegroups' => 'n',
 		'wikiplugin_sup' => 'y',
 		'wikiplugin_survey' => 'y',
-		'wikiplugin_tag' => 'y',
+		'wikiplugin_tag' => 'n',
 		'wikiplugin_thumb' => 'y',
 		'wikiplugin_titlesearch' => 'n',
 		'wikiplugin_toc' => 'y',
@@ -1027,15 +1027,21 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 
 		'site_crumb_seper' => '»',
 		'site_nav_seper' => '|',
-		'feature_sitemycode' => 'n',
-		'sitemycode' => '<div align="center"><b>{tr}Here you can (as an admin) place a piece of custom XHTML and/or Smarty code. Be careful and properly close all the tags before you choose to publish ! {/tr}</b></div>', // must be max. 250 chars now unless it'll change in tiki_prefs db table field value from VARCHAR(250) to BLOB by default
-		'sitemycode_publish' => 'n',
+		'feature_sitemycode' => 'y',
+		'sitemycode' => '{if $user eq "admin"}
+<div style="align: left; padding-left: 15px;">
+<a class="link" href="tiki-admin.php?page=look">
+{tr}Modify the look & feel (logo, theme, etc.){/tr}
+</a>
+</div>
+{/if}', // must be max. 250 chars now unless it'll change in tiki_prefs db table field value from VARCHAR(250) to BLOB by default
+		'sitemycode_publish' => 'y',
 		'feature_sitelogo' => 'y',
 		'sitelogo_bgcolor' => 'transparent',
 		'sitelogo_bgstyle' => '',
 		'sitelogo_align' => 'left',
 		'sitelogo_title' => 'Tikiwiki powered site',
-		'sitelogo_src' => '',
+		'sitelogo_src' => 'img/tiki/tiki3.png',
 		'sitelogo_alt' => 'Site Logo',
 		'feature_siteloc' => 'y',
 		'feature_sitenav' => 'n',
@@ -1118,6 +1124,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'default_rows_textarea_comment' => '6',
 		'default_rows_textarea_forum' => '20',
 		'default_rows_textarea_forumthread' => '10',
+		'feature_floating_help' => 'y',
 
 		// pagination
 		'direct_pagination' => 'y',

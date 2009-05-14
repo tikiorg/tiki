@@ -4,7 +4,8 @@ function wikiplugin_file_info()
 {
 	return array(
 		'name' => tra( 'File' ),
-		'description' => tra("Displays a file attachment or a list of them"),
+		'documentation' => 'PluginFile',
+		'description' => tra("Displays a link to an attachment to a wiki page and can display an image attachment. "),
 		'prefs' => array( 'feature_wiki_attachments', 'wikiplugin_file' ),
 		'inline' => true,
 		'params' => array(
