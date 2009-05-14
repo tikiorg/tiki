@@ -9904,6 +9904,7 @@ $lang=Array(
 "Wiki References" => "Referències del Wiki",
 "JoinCapitalizedWords or use" => "AjuntarParaulesEnMajúscula o usar",
 "page|desc" => "pàg|desc",
+"page|description" => "pàg|desc",
 "for wiki references" => "per referències del wiki",
 "page|#anchor" => "pàgina|#àncora",
 "page|#anchor|desc" => "pàgina|#àncora|descripció",

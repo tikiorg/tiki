@@ -9583,6 +9583,7 @@ $lang=Array(
 "Wiki References" => "Wiki referanser",
 "JoinCapitalizedWords or use" => "SettSammenOrdMedStoreBokstaver eller bruk",
 "page|desc" => "side|beskrivelse",
+"page|description" => "side|beskrivelse",
 "for wiki references" => "som wiki refererer",
 "SomeName" => "EttNavn",
 "prevents referencing" => "forhindrer referanser",

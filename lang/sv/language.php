@@ -9547,6 +9547,7 @@ $lang=Array(
 "Wiki References" => "Allmänningens Referenser",
 "JoinCapitalizedWords or use" => "SammanSattaOrdMedVersaler eller använd",
 "page|desc" => "sida|beskrivning",
+"page|description" => "sida|beskrivning",
 "for wiki references" => "som allmänningsreferenser",
 "SomeName" => "NågotNamn",
 "prevents referencing" => "förhindrar refererande",

@@ -9400,6 +9400,7 @@ $lang=Array(
 "Wiki References" => "Wiki referense",
 "JoinCapitalizedWords or use" => "SpojiteKapitalizovaneReči ili koristite",
 "page|desc" => "strana|opis",
+"page|description" => "strana|opis",
 "for wiki references" => "za wiki referense",
 "SomeName" => "NekoIme",
 "prevents referencing" => "isključi referense",

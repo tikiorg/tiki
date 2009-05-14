@@ -9414,6 +9414,7 @@ $lang=Array(
 "Wiki References" => "مرجع‌هاي ويكي",
 "JoinCapitalizedWords or use" => "كلمات با حروف بزرگ را ادغام كن و يا از اين استفاده كن",
 "page|desc" => "صفحه|توضحيات",
+"page|description" => "صفحه|توضحيات",
 "for wiki references" => "براي مراجع ويكي",
 "SomeName" => "نامي",
 "prevents referencing" => "ممانعت از ارجاع‌دهي",

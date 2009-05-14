@@ -6771,6 +6771,7 @@ $lang=Array(
 // "Wiki References" => "Wiki References",
 // "JoinCapitalizedWords or use" => "JoinCapitalizedWords or use",
 // "page|desc" => "page|desc",
+// "page|description" => "page|desc",
 // "for wiki references" => "for wiki references",
 // "page|#anchor" => "page|#anchor",
 // "page|#anchor|desc" => "page|#anchor|desc",

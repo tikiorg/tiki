@@ -9263,6 +9263,7 @@ $lang=Array(
 "Wiki References" => "Wiki-Referenzen",
 "JoinCapitalizedWords or use" => "ZusammenGrossKleinSchreibung oder benutzen Sie",
 "page|desc" => "Seite|Beschr.",
+"page|description" => "Seite|Beschr.",
 "for wiki references" => "f&uuml;r Wiki-Referenzen",
 "SomeName" => "EinName",
 "prevents referencing" => "verhindert Referenzierung",

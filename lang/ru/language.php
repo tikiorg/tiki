@@ -9472,6 +9472,7 @@ $lang=Array(
 "Wiki References" => "Ссылки Wiki",
 "JoinCapitalizedWords or use" => "СоединяйтеСловаСБольшойБуквы или используйте",
 "page|desc" => "стр.|описание",
+"page|description" => "стр.|описание",
 "for wiki references" => "для ссылок внутри Wiki",
 "SomeName" => "ЧьёТоИмя",
 "prevents referencing" => "запрещает создание ссылки",

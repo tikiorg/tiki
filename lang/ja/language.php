@@ -8089,6 +8089,7 @@ $lang=Array(
 "Wiki References" => "Wiki References",
 "JoinCapitalizedWords or use" => "JoinCapitalizedWords or use",
 "page|desc" => "page|desc",
+"page|description" => "page|desc",
 "for wiki references" => "for wiki references",
 "SomeName" => "SomeName",
 "prevents referencing" => "prevents referencing",

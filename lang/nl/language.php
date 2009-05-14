@@ -9267,6 +9267,7 @@ $lang=Array(
 "Wiki References" => "Wikireferenties",
 "JoinCapitalizedWords or use" => "SchrijfWoordenMetHoofdlettersAaneen of gebruik",
 "page|desc" => "pagina|omschr.",
+"page|description" => "pagina|omschr.",
 "for wiki references" => "voor wikireferenties",
 "SomeName" => "EenNaam",
 "prevents referencing" => "vermijd referenties",

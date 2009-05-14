@@ -9464,6 +9464,7 @@ $lang=Array(
 "makes a horizontal rule" => "створює горизонтальну риску",
 "Wiki References" => "Установки Вікі",
 "page|desc" => "стор|опис",
+"page|description" => "стор|опис",
 "for wiki references" => "для установок вікі",
 "External links" => "Зовнішні посилання",
 "displays an image" => "показує зображення",

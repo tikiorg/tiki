@@ -9321,6 +9321,7 @@ $lang=Array(
 "Wiki References" => "Referencias Wiki",
 "JoinCapitalizedWords or use" => "XuntarPalabrasEnMaiúsculas ou usar",
 "page|desc" => "páxina|desc",
+"page|description" => "páxina|desc",
 "for wiki references" => "para referencias no wiki",
 "SomeName" => "AlgúnNome",
 "prevents referencing" => "impide facer referencia",

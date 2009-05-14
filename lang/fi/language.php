@@ -9595,6 +9595,7 @@ $lang=Array(
 "Wiki References" => "Wiki Suositukset",
 "JoinCapitalizedWords or use" => "JoinCapitalizedWords tai käytä",
 "page|desc" => "sivu|kuvaus",
+"page|description" => "sivu|kuvaus",
 "for wiki references" => "wiki suosituksia varten",
 "SomeName" => "JokuNimi",
 "prevents referencing" => "estää suositukset",

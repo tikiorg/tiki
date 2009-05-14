@@ -9570,6 +9570,7 @@ $lang=Array(
 "Wiki References" => "Wiki 參考",
 "JoinCapitalizedWords or use" => "連在一起的大寫字或使用",
 "page|desc" => "頁面|描述",
+"page|description" => "頁面|描述",
 "for wiki references" => "表示 wiki 參考",
 "SomeName" => "某個名稱",
 "prevents referencing" => "表示不參考",

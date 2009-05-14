@@ -10114,6 +10114,7 @@ $lang=Array(
 "Wiki References" => "Wiki文档参考",
 "JoinCapitalizedWords or use" => "连在一起的大写词汇或使用",
 "page|desc" => "页面|描述",
+"page|description" => "页面|描述",
 "for wiki references" => "表示Wiki文档参考",
 "SomeName" => "某个名称",
 "prevents referencing" => "表示不参考",

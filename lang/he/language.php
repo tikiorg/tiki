@@ -9468,6 +9468,7 @@ $lang=Array(
 "Wiki References" => "קישורי ויקי",
 "JoinCapitalizedWords or use" => "באנגלית אפשר EnglishLikeThis או ",
 "page|desc" => "שם עמוד|תיאור",
+"page|description" => "שם עמוד|תיאור",
 "for wiki references" => "לקישור ויקי כלשהו, כאשר ",
 "SomeName" => "SomeEnglishName",
 "prevents referencing" => "מונע קישור ויקי באנגלית.",

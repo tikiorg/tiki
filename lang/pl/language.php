@@ -9786,6 +9786,7 @@ $lang=Array(
 "Wiki References" => "Odsyłacze Wiki",
 "JoinCapitalizedWords or use" => "ZlepWyrazyRozpoczynaneWielkimiLiterami lub użyj",
 "page|desc" => "strona|opis",
+"page|description" => "strona|opis",
 "for wiki references" => "dla odsyłaczy wiki",
 "SomeName" => "PewnaNazwa",
 "prevents referencing" => "zapobiega tworzeniu odsyłacza",

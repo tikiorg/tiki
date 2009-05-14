@@ -8438,6 +8438,7 @@ $lang=Array(
 "Wiki References" => "Wiki hivatkozások",
 "JoinCapitalizedWords or use" => "NagybetűsSzavakEgyesítése vagy használjuk az",
 "page|desc" => "oldalnév|megjelenő leírás",
+"page|description" => "oldalnév|megjelenő leírás",
 "for wiki references" => "formátumot wiki hivatkozásokhoz",
 "page|#anchor" => "oldal|#horgony",
 "page|#anchor|desc" => "oldal|#horgony|leírás",

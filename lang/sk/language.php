@@ -9387,6 +9387,7 @@ $lang=Array(
 "Wiki References" => "Wiki referencie",
 "JoinCapitalizedWords or use" => "SpojSlovaSVelkymiPismenami alebo použi",
 "page|desc" => "stránka|popis",
+"page|description" => "stránka|popis",
 "for wiki references" => "pre wiki referencie",
 "SomeName" => "NejakéMeno",
 "External links" => "Externé odkazy",

@@ -9478,6 +9478,7 @@ $lang=Array(
 "Wiki References" => "Wiki Referencer",
 "JoinCapitalizedWords or use" => "SammensætOrdMedStoreBogstaver eller brug",
 "page|desc" => "side|beskrivelse",
+"page|description" => "side|beskrivelse",
 "for wiki references" => "til wiki referencer",
 "SomeName" => "EtNavn",
 "prevents referencing" => "forhindrer referencer",

@@ -9661,6 +9661,7 @@ $lang=Array(
 "Wiki References" => "Olketa Reference blong Wiki",
 "JoinCapitalizedWords or use" => "Olketa JoinCapitalizedWod o ius",
 "page|desc" => "pej|desc",
+"page|description" => "pej|desc",
 "for wiki references" => "fo olketa wiki reference",
 "SomeName" => "SamfalaNem",
 "prevents referencing" => "no letem fo mekem referencing",

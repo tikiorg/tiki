@@ -6992,6 +6992,7 @@ $lang=Array(
 "makes a horizontal rule" => "vytvoří horizontální čáru",
 "JoinCapitalizedWords or use" => "SpojenáSlovaZačínajícíVelkýmiPísmeny nebo použijte",
 "page|desc" => "stránka|popis",
+"page|description" => "stránka|popis",
 "SomeName" => "NějakýNázev",
 "External links" => "Externí odkazy",
 "displays an image" => "zobrazí obrázek",

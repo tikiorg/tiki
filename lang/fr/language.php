@@ -3865,6 +3865,7 @@ $lang=Array(
 "Client" => "Client",
 "ex" => "ex",
 "page|desc" => "page|desc",
+"page|description" => "page|desc",
 "Indentation" => "Indentation",
 "col" => "col",
 "table" => "table",
