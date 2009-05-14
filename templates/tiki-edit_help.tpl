@@ -37,7 +37,13 @@
 <tr><td class="{cycle}"><img src='pics/icons/page.png' alt='' /> <strong>{tr}Horizontal rule{/tr}</strong> <br/>-<em></em>-<em></em>-<em></em>- </td></tr>
 {/if}{* wysiwyg *}
 
-<tr><td class="{cycle}"><img src='pics/icons/page_link.png' alt='' /> <strong>{tr}Wiki References{/tr}</strong> <br/> {tr}JoinCapitalizedWords or use{/tr} (({tr}page{/tr})) {tr}or{/tr} (({tr}page|desc{/tr})) {tr}for wiki references{/tr}, (({tr}page|#anchor{/tr})) {tr}or{/tr} (({tr}page|#anchor|desc{/tr})) {tr}for wiki heading/anchor references{/tr}, )){tr}SomeName{/tr}(( {tr}prevents referencing{/tr}</td></tr>
+<tr><td class="{cycle}"><img src='pics/icons/page_link.png' alt='' /> <strong>{tr}Wiki References{/tr}</strong> <br/> {if $prefs.feature_wikiwords eq 'y'}{tr}JoinCapitalizedWords or use{/tr} {/if}(({tr}page{/tr})) {tr}or{/tr} (({tr}page|desc{/tr})) {tr}for wiki references{/tr}
+{if $prefs.wikiplugin_alink eq 'y'}
+, (({tr}page|#anchor{/tr})) {tr}or{/tr} (({tr}page|#anchor|desc{/tr})) {tr}for wiki heading/anchor references{/tr}
+{/if}
+{if $prefs.feature_wikiwords eq 'y'}, )){tr}SomeName{/tr}(( {tr}prevents referencing{/tr}{/if}
+</td></tr>
+
 <tr><td class="{cycle}"><img src='pics/icons/world_link.png' alt='' /> <strong>{tr}External links{/tr}</strong> <br/> {tr}use square brackets for an external link: [URL], [URL|link_description],[URL|link_description|relation] or [URL|description|relation|nocache] (that last prevents the local Wiki from caching the linked page; relation can be used to insert rel attribute for the link - useful e.g. for shadowbox).{/tr}<br />
 {tr}For an external Wiki, use ExternalWikiName:PageName or ((External Wiki Name: Page Name)){/tr}</td></tr>
 <tr><td class="{cycle}"><strong>{tr}Line break{/tr}</strong> <br/>%%% {tr}(very useful especially in tables){/tr}</td></tr>
