@@ -9249,6 +9249,67 @@ $lang=Array(
 // "The TikiTest Replay File is Empty" => "The TikiTest Replay File is Empty",
 // "TikiTest Replay" => "TikiTest Replay",
 // "The page is empty" => "The page is empty",
-"_HOMEPAGE_CONTENT_" => "\n!Congratulations\nThis is the default ))HomePage(( for your Tiki. If you are seeing this page, your installation was successful.\n\nYou can change this page after logging in. Please review the [http://doc.tikiwiki.org/wiki+syntax|wiki syntax] for editing details.\n\n\n!!{img src=pics/icons/star.png alt=\"Star\"} Get started.\nTo begin configuring your site:\n{FANCYLIST()}\n1) Log in as the __admin__ with password __admin__.\n2) Change the admin password.\n3) Enable specific Tiki features.\n4) Configure the features.\n{FANCYLIST}\n\n!!{img src=pics/icons/help.png alt=\"Help\"} Need help?\nFor more information:\n*[http://info.tikiwiki.org/Learn+More|Learn more about TikiWiki].\n*[http://info.tikiwiki.org/Help+Others|Get help], including the [http://doc.tikiwiki.org|official documentation] and [http://www.tikiwiki.org/forums|support forums].\n*[http://info.tikiwiki.org/Join+the+community|Join the TikiWiki community].\n",
+"_HOMEPAGE_CONTENT_" => "{GROUP(groups=Admins)}
+!Thank you for installing Tiki.
+
+The entire Tiki Community would like to thank you and help you get introduced to Tiki.
+
+!How To Get Started
+Tiki has more than 1000 features and settings.
+
+This allows you to create both very simple and complex websites.
+
+We understand that so many features might seem overwhelming at first. This is why we offer you two different ways to __Get Started__ with Tiki.
+
+{SPLIT()}
+-=Easy Setup using Profiles=-
+!![tiki-admin.php?profile=&category=Featured+profiles&repository=http%3a%2f%2fprofiles.tikiwiki.org%2fprofiles&preloadlist=y&page=profiles&list=List#profile-results|Get Started using Profiles]
+__Who Should Use This__
+*You want to get started quickly
+*You don't feel like learning the Admin Panel right away
+*You want to quickly test out some of Tiki's Features
+
+!!Featured Profiles
+
+__Collaborative Community__ ([tiki-admin.php?profile=&category=Featured+profiles&repository=http%3a%2f%2fprofiles.tikiwiki.org%2fprofiles&preloadlist=y&page=profiles&list=List#profile-results|install profile now])
+Setup to help subject experts and enthusiasts work together to build a Knowledge Base
+*Staging and Approval of Wiki Editing
+*Personal Member Spaces
+*Forums
+*Blogs
+
+__Personal Blog and Profile__ ([tiki-admin.php?profile=&category=Featured+profiles&repository=http%3a%2f%2fprofiles.tikiwiki.org%2fprofiles&preloadlist=y&page=profiles&list=List#profile-results|install profile now])
+Setup with many cool features to help you integrate the Social Web and establish a strong presence in the Blogosphere
+*BLog (Full set of blog related features)
+*Image Gallery
+*Calendar
+*Twitter Integration
+*Video Log
+
+__Company Intranet__ ([tiki-admin.php?profile=&category=Featured+profiles&repository=http%3a%2f%2fprofiles.tikiwiki.org%2fprofiles&preloadlist=y&page=profiles&list=List#profile-results|install profile now])
+Setup for a Corporate Intranet of a typical medium-sized business.
+*Company News Articles
+*Executive Blog
+*File Repository & Management
+*Collaborative Wiki
+
+__Small Organization Web Presence__ ([tiki-admin.php?profile=&category=Featured+profiles&repository=http%3a%2f%2fprofiles.tikiwiki.org%2fprofiles&preloadlist=y&page=profiles&list=List#profile-results|install profile now])
+Setup for a Web Presence of a typical small business or non-profit.
+*Company News & Updates
+*Highlight Company's Products and Services
+*File Gallery (great for Media Kit)
+*Contact Form
+---
+-=Manual Setup using Admin Panel=-
+!![tiki-admin.php|Get Started using Admin Panel]
+__Who Should Use This__
+*You are familiar with software Admin Panels
+*You enjoy exploring and playing with many options
+*You already know Tiki
+
+
+{SPLIT}
+{ELSE}
+\n!Congratulations\nThis is the default ))HomePage(( for your Tiki. If you are seeing this page, your installation was successful.\n\nYou can change this page after logging in. Please review the [http://doc.tikiwiki.org/wiki+syntax|wiki syntax] for editing details.\n\n\n!!{img src=pics/icons/star.png alt=\"Star\"} Get started.\nTo begin configuring your site:\n{FANCYLIST()}\n1) Log in as the __admin__ with password __admin__.\n2) Change the admin password.\n3) Enable specific Tiki features.\n4) Configure the features.\n{FANCYLIST}\n\n!!{img src=pics/icons/help.png alt=\"Help\"} Need help?\nFor more information:\n*[http://info.tikiwiki.org/Learn+More|Learn more about TikiWiki].\n*[http://info.tikiwiki.org/Help+Others|Get help], including the [http://doc.tikiwiki.org|official documentation] and [http://www.tikiwiki.org/forums|support forums].\n*[http://info.tikiwiki.org/Join+the+community|Join the TikiWiki community].\n{GROUP}",
 "###end###"=>"###end###");
 ?>
