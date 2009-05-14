@@ -15,26 +15,26 @@
 </tr>
 {cycle values="odd,even" print=false}
 {if $wysiwyg ne 'y' or ($wysiwyg eq 'y' and $prefs.wysiwyg_wiki_parsed eq 'y')}
-<tr><td width="20%" class="{cycle}"><img src='pics/icons/text_bold.png' alt='' /> <strong>{tr}Bold text{/tr}</strong> <br/> 2 {tr}underscores{/tr} "_". {tr}Example{/tr} __{tr}text{/tr}__ = <strong>text</strong></td></tr>
-<tr><td width="20%" class="{cycle}"><img src='pics/icons/text_italic.png' alt='' /> <strong>{tr}Italic text{/tr}</strong> <br/> 2 {tr}single quotes{/tr} "'".  {tr}Example{/tr} ''{tr}text{/tr}'' = <em>text</em></td></tr>
-<tr><td class="{cycle}"><img src='pics/icons/text_align_center.png' alt='' /> <strong>{tr}Centered text{/tr}</strong> <br/> 2 {tr}colons{/tr} ":". {tr}Example{/tr} ::{tr}some text{/tr}::</td></tr>
-<tr><td class="{cycle}"><img src='pics/icons/text_underline.png' alt='' /> <strong>{tr}Underlined text{/tr}</strong> <br/> 3 {tr}equals{/tr} "=". {tr}Example{/tr} ==={tr}text{/tr}===</td></tr>
-<tr><td class="{cycle}"><img src='pics/icons/text_strikethrough.png' alt='' /> <strong>{tr}Deleted text{/tr}</strong> <br/> {tr}2 dashes{/tr} "-". {tr}Example{/tr} --{tr}text{/tr}--</td></tr>
-<tr><td class="{cycle}"><img src='pics/icons/box.png' alt='' /> <strong>{tr}Text box{/tr}</strong> <br/> {tr}One carat{/tr} "^". {tr}Creates a box with the data{/tr}. {tr}Example{/tr} ^{tr}Box content{/tr}^</td></tr>
-<tr><td class="{cycle}"><img src='pics/icons/text_padding_top.png' alt='' /> <strong>{tr}Title bar{/tr}</strong> <br/> -={tr}Title{/tr}=- {tr}creates a title bar{/tr}.</td></tr>
-<tr><td class="{cycle}"><img src='pics/icons/palette.png' alt='' /> <strong>{tr}Colored text{/tr}</strong> <br/> ~~#FFEE33:{tr}some text{/tr}~~ {tr}or{/tr}  ~~yellow:{tr}some text{/tr}~~. {tr}Will display using the indicated HTML color or color name. Color name can contain two colors separated by a comma. In this case, the first color would be the foreground and the second one the background.{/tr}</td></tr>
+<tr><td width="20%" class="{cycle}"><img src='pics/icons/text_bold.png' alt='' /> <strong>{tr}Bold text{/tr}</strong> <br/> __{tr}text{/tr}__ </td></tr>
+<tr><td width="20%" class="{cycle}"><img src='pics/icons/text_italic.png' alt='' /> <strong>{tr}Italic text{/tr}</strong> <br/> 2 {tr}single quotes{/tr} (').  ''{tr}text{/tr}'' </td></tr>
+<tr><td class="{cycle}"><img src='pics/icons/text_align_center.png' alt='' /> <strong>{tr}Centered text{/tr}</strong> <br/> ::{tr}text{/tr}::</td></tr>
+<tr><td class="{cycle}"><img src='pics/icons/text_underline.png' alt='' /> <strong>{tr}Underlined text{/tr}</strong> <br/>  ==={tr}text{/tr}===</td></tr>
+<tr><td class="{cycle}"><img src='pics/icons/text_strikethrough.png' alt='' /> <strong>{tr}Deleted text{/tr}</strong> <br/> {tr}2 dashes{/tr} "-".  --{tr}text{/tr}--</td></tr>
+<tr><td class="{cycle}"><img src='pics/icons/box.png' alt='' /> <strong>{tr}Text box{/tr}</strong> <br/> {tr}One carat{/tr} "^". {tr}Creates a box with the data{/tr}.  ^{tr}Box content{/tr}^</td></tr>
+<tr><td class="{cycle}"><img src='pics/icons/text_padding_top.png' alt='' /> <strong>{tr}Title bar{/tr}</strong> <br/> -={tr}Title{/tr}=- </td></tr>
+<tr><td class="{cycle}"><img src='pics/icons/palette.png' alt='' /> <strong>{tr}Colored text{/tr}</strong> <br/> ~~#FFEE33:{tr}text{/tr}~~ {tr}or{/tr}  ~~yellow:{tr}text{/tr}~~. {tr}Will display using the indicated HTML color or color name. Color name can contain two colors separated by a comma. In this case, the first color would be the foreground and the second one the background.{/tr}</td></tr>
 <tr><td width="20%" class="{cycle}"><strong>{tr}Monospace font{/tr}</strong> <br/>-+{tr}Code sample{/tr}+- {tr}for{/tr} <code>Code sample</code></td></tr>
 <tr><td class="{cycle}"><img src='pics/icons/text_list_bullets.png' alt='' /> <img src='pics/icons/text_list_numbers.png' alt='' /> <strong>{tr}Lists{/tr}</strong> <br/> * {tr}for bullet lists{/tr}, # {tr}for numbered lists{/tr}, ;{tr}Word{/tr}:{tr}definition{/tr} {tr}for definiton lists{/tr}</td></tr>
 <tr><td class="{cycle}"><strong>{tr}Indentation{/tr}</strong> <br/>+, ++ {tr}Creates an indentation for each plus(useful in list to continue at the same level){/tr}</td></tr>
-<tr><td class="{cycle}"><img src='pics/icons/text_heading_1.png' alt='' /><img src='pics/icons/text_heading_2.png' alt='' /><img src='pics/icons/text_heading_3.png' alt='' /> <strong>{tr}Headings{/tr}</strong> <br/> !, !!, !!! {tr}make headings{/tr}</td></tr>
+<tr><td class="{cycle}"><img src='pics/icons/text_heading_1.png' alt='' /><img src='pics/icons/text_heading_2.png' alt='' /><img src='pics/icons/text_heading_3.png' alt='' /> <strong>{tr}Headings{/tr}</strong> <br/> !, !!, !!! </td></tr>
 <tr><td class="{cycle}"><strong>{tr}Show/Hide{/tr}</strong> <br/> !+, !!- {tr}show/hide heading section. + (shown) or - (hidden) by default{/tr}.</td></tr>
-<tr><td class="{cycle}"><strong>{tr}Autonumbered Headings{/tr}</strong> <br/> !#, !!#, !+#, !-# ... {tr}make autonumbered headings{/tr}</td></tr>
+<tr><td class="{cycle}"><strong>{tr}Autonumbered Headings{/tr}</strong> <br/> !#, !!#, !+#, !-# ... </td></tr>
 {if $prefs.feature_wiki_tables eq 'new'}
-<tr><td class="{cycle}"><img src='pics/icons/table.png' alt='' /> <strong>{tr}Tables{/tr}</strong> <br/> ||{tr}row{/tr}1-{tr}col{/tr}1|{tr}row{/tr}1-{tr}col{/tr}2|{tr}row{/tr}1-{tr}col{/tr}3<br />{tr}row{/tr}2-{tr}col{/tr}1|{tr}row{/tr}2-{tr}col{/tr}2|{tr}row{/tr}2-{tr}col{/tr}3|| {tr}creates a table{/tr}</td></tr>
+<tr><td class="{cycle}"><img src='pics/icons/table.png' alt='' /> <strong>{tr}Tables{/tr}</strong> <br/> ||{tr}row{/tr}1-{tr}col{/tr}1|{tr}row{/tr}1-{tr}col{/tr}2|{tr}row{/tr}1-{tr}col{/tr}3<br />{tr}row{/tr}2-{tr}col{/tr}1|{tr}row{/tr}2-{tr}col{/tr}2|{tr}row{/tr}2-{tr}col{/tr}3||</td></tr>
 {else}
-<tr><td class="{cycle}"><img src='pics/icons/table.png' alt='' /> <strong>{tr}Tables{/tr}</strong> <br/> ||{tr}row{/tr}1-{tr}col{/tr}1|{tr}row{/tr}1-{tr}col{/tr}2|{tr}row{/tr}1-{tr}col{/tr}3||{tr}row{/tr}2-{tr}col{/tr}1|{tr}row{/tr}2-{tr}col{/tr}2|{tr}row{/tr}2-{tr}col{/tr}3|| {tr}creates a table{/tr}</td></tr>
+<tr><td class="{cycle}"><img src='pics/icons/table.png' alt='' /> <strong>{tr}Tables{/tr}</strong> <br/> ||{tr}row{/tr}1-{tr}col{/tr}1|{tr}row{/tr}1-{tr}col{/tr}2|{tr}row{/tr}1-{tr}col{/tr}3||{tr}row{/tr}2-{tr}col{/tr}1|{tr}row{/tr}2-{tr}col{/tr}2|{tr}row{/tr}2-{tr}col{/tr}3||</td></tr>
 {/if}
-<tr><td class="{cycle}"><img src='pics/icons/page.png' alt='' /> <strong>{tr}Horizontal rule{/tr}</strong> <br/>-<em></em>-<em></em>-<em></em>- {tr}makes a horizontal rule{/tr}</td></tr>
+<tr><td class="{cycle}"><img src='pics/icons/page.png' alt='' /> <strong>{tr}Horizontal rule{/tr}</strong> <br/>-<em></em>-<em></em>-<em></em>- </td></tr>
 {/if}{* wysiwyg *}
 
 <tr><td class="{cycle}"><img src='pics/icons/page_link.png' alt='' /> <strong>{tr}Wiki References{/tr}</strong> <br/> {tr}JoinCapitalizedWords or use{/tr} (({tr}page{/tr})) {tr}or{/tr} (({tr}page|desc{/tr})) {tr}for wiki references{/tr}, (({tr}page|#anchor{/tr})) {tr}or{/tr} (({tr}page|#anchor|desc{/tr})) {tr}for wiki heading/anchor references{/tr}, )){tr}SomeName{/tr}(( {tr}prevents referencing{/tr}</td></tr>
