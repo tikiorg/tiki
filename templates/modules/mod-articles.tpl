@@ -14,8 +14,14 @@
  {if $module_params.nonums != 'y'}</ol>{else}</ul>{/if}
 {if $module_params.more eq 'y'}
 	<div class="more">
-		 {assign var=sep value='?'}
-		 <span class="button2"><a href="tiki-view_articles.php{if $module_params.topicId}{$sep}topic={$module_params.topicId}{assign var=sep value='&amp;'}{/if}{if $module_params.topic}{$sep}topicName={$module_params.topic|escape:url}{assign var=sep value='&amp;'}{/if}{if $module_params.categId}{$sep}categId={$module_params.categId}{assign var=sep value='&amp;'}{/if}{if $module_params.type}{$sep}type={$module_params.type|escape:url}{assign var=sep value='&amp;'}{/if}{if $module_params.lang}{$sep}lang={$module_params.lang|escape:url}{assign var=sep value='&amp;'}{/if}">{tr}More...{/tr}</a></span>
+		{assign var=queryArgs value=''}
+		{foreach from=$urlParams item=urlParam key=urlParamKey}
+			{if !empty($urlParam) and !empty($module_params[$urlParamKey])}
+				{if empty($queryArgs)}{assign var=queryArgs value='?'}{else}{assign var=queryArgs value="$queryArgs&amp;"}{/if}
+				{assign var=queryArgs value="$queryArgs$urlParam=`$module_params[$urlParamKey]`"}
+			{/if}
+		{/foreach}
+		{button href="tiki-view_articles.php$queryArgs" _text="{tr}More...{/tr}"}
 	</div>
 {/if}
 {/tikimodule}
