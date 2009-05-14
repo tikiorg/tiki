@@ -245,6 +245,11 @@
 
 {elseif $install_step eq '4'}
 <h1>{if $tikidb_created}{tr}Install &amp; Update Profile{/tr}{else}{tr}Install Profile{/tr}{/if}</h1>
+{if $max_exec_set_failed eq 'y'}
+{remarksbox type="warning" title="{tr}Warning{/tr}"}
+{tr}Failed to set max_execution_time to 0 for PHP. You may experience problems when creating/upgrading the database on a slow system. This will manitest itself by a blank page.{/tr}
+{/remarksbox}
+{/if}
 <div style="float:left; width:60px"><img src="pics/large/profiles48x48.png" alt="{tr}Profiles{/tr}" /></div>
 <div class="clearfix">
 <p>

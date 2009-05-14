@@ -81,7 +81,8 @@ function smarty_function_icon($params, &$smarty) {
 			switch ( $k ) {
 			case '_id':
 				$v = $icons_basedir.$v.$icons_extension;
-				$v2 = $tikilib->get_style_path($prefs['style'], $prefs['style_option'], $v);
+				if ($tikilib != NULL)
+					$v2 = $tikilib->get_style_path($prefs['style'], $prefs['style_option'], $v);
 				if (!empty($v2)) {
 					$params['file'] = $v2;
 				} else {

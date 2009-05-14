@@ -10402,5 +10402,6 @@ $lang=Array(
 "You need one of the extension pecl HTTP or Curl to replay the TikiTest" => "L'extension pecl HTTP ou Curl est requise pour rejouer le Tikitest",
 "TikiTest Replay" => "Rejouer TikiTest",
 "The page is empty" => "La page est vide",
+"Failed to set max_execution_time to 0 for PHP. You may experience problems when creating/upgrading the database on a slow system. This will manitest itself by a blank page." => "Impossible d'alonger la durée max_execution_time dans PHP. Vous pouvez rencontrer des problèmes lors de la création ou la mise à jour de la base de données sur des systèmes lents. Vous obtiendrez alors une page blanche.",
 "###end###"=>"###end###");
 ?>
