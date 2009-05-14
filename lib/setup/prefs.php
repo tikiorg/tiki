@@ -1033,7 +1033,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 </a>
 </div>
 {/if}', // must be max. 250 chars now unless it'll change in tiki_prefs db table field value from VARCHAR(250) to BLOB by default
-		'sitemycode_publish' => 'y',
+		'sitemycode_publish' => 'n',
 		'feature_sitelogo' => 'y',
 		'sitelogo_bgcolor' => 'transparent',
 		'sitelogo_bgstyle' => '',
