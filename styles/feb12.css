@@ -112,7 +112,6 @@ input[type=password] {
 	font-size: 0.9em}
 	
 input[type=submit],
-.submitbutton,
 input[type=file],
 input[type=reset],
 select {
@@ -121,13 +120,10 @@ select {
 
 span.button a,
 span.button a:visited,
-span.button2 a,
-span.button2 a:visited,
 button,
 input[type=reset],
 input[type=submit],
 span.button input,
-.submitbutton,
 .calbuttonBox {
 	vertical-align: middle;	
 	margin: 2px;
@@ -142,12 +138,10 @@ span.button input,
 *:first-child+html input {font-weight: normal}
 
 span.button a:hover,
-span.button2 a:hover,
 button:hover,
 input[type=reset]:hover,
 input[type=submit]:hover,
 .button input:hover,
-.submitbutton:hover,
 .calbuttonBox:hover,
 #highlight,
 .highlight {
@@ -173,7 +167,6 @@ button:active,
 input[type=reset]:active,
 input[type=submit]:active,
 .button input:active,
-.submitbutton:active,
 span.highlight a:link,
 span.highlight a:visited {
 	background: url(feb12/columnbg.jpg) 0 100%;
@@ -1211,10 +1204,6 @@ ul.floatleft li {
 
 .editdate ul.floatleft {margin-top: 8px}
 
-span.button2,
-div.button2,
-.button3 {margin-right: 5px}
- 
 div.cache { }
 div.cachedpage { }
 .wikicache, .wikicache:visited { }
