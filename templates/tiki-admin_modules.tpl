@@ -333,7 +333,7 @@
 
 
   </td><td class="form">
-	<a {popup text="Params: id= structureId= css= link_on_section=y type=vert|horiz translate=y|n" width=100 center=true}>{icon _id='help'}</a>  </td>
+	<a {popup text="Params: id= structureId= css= link_on_section=y type=vert|horiz translate=y|n" width=100 center=true menu_cookie=y|n}>{icon _id='help'}</a>  </td>
 </tr>
 {if $prefs.feature_phplayers eq "y"}
 <tr>
