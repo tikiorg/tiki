@@ -2945,7 +2945,7 @@ go
 CREATE  INDEX "tiki_modules_moduleId" ON "tiki_modules"("moduleId")
 go
 
-INSERT INTO "tiki_modules" ("name","position","ord","cache_time","params","groups") VALUES ('mnu_application_menu','l',1,0,'flip=y','a:2:{i:0;s:10:"Registered";i:1;s:9:"Anonymous";}')
+INSERT INTO "tiki_modules" ("name","position","ord","cache_time","params","groups") VALUES ('mnu_application_menu','l',30,0,'flip=y','a:1:{i:0;s:10:"Registered";}')
 go
 
 

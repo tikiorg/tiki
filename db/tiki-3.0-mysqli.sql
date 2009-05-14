@@ -1670,7 +1670,7 @@ CREATE TABLE tiki_modules (
   KEY moduleId (moduleId)
 ) ENGINE=MyISAM;
 
-INSERT INTO tiki_modules (name,position,ord,cache_time,params,groups) VALUES ('mnu_application_menu','l',1,0,'flip=y','a:2:{i:0;s:10:"Registered";i:1;s:9:"Anonymous";}');
+INSERT INTO tiki_modules (name,position,ord,cache_time,params,groups) VALUES ('mnu_application_menu','l',30,0,'flip=y','a:1:{i:0;s:10:"Registered";}');
 
 DROP TABLE IF EXISTS tiki_newsletter_subscriptions;
 CREATE TABLE tiki_newsletter_subscriptions (
