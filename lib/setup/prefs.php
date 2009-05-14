@@ -1025,9 +1025,15 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 
 		'site_crumb_seper' => '»',
 		'site_nav_seper' => '|',
-		'feature_sitemycode' => 'n',
-		'sitemycode' => '<div align="center"><b>{tr}Here you can (as an admin) place a piece of custom XHTML and/or Smarty code. Be careful and properly close all the tags before you choose to publish ! {/tr}</b></div>', // must be max. 250 chars now unless it'll change in tiki_prefs db table field value from VARCHAR(250) to BLOB by default
-		'sitemycode_publish' => 'n',
+		'feature_sitemycode' => 'y',
+		'sitemycode' => '{if $user eq "admin"}
+<div style="align: left; padding-left: 15px;">
+<a class="link" href="tiki-admin.php?page=look">
+{tr}Modify the look & feel (logo, theme, etc.){/tr}
+</a>
+</div>
+{/if}', // must be max. 250 chars now unless it'll change in tiki_prefs db table field value from VARCHAR(250) to BLOB by default
+		'sitemycode_publish' => 'y',
 		'feature_sitelogo' => 'y',
 		'sitelogo_bgcolor' => 'transparent',
 		'sitelogo_bgstyle' => '',
