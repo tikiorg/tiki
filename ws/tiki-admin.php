@@ -290,7 +290,13 @@ if (isset($_REQUEST["page"])) {
 		$description = 'Search engine friendly url';
 		$helpUrl = 'Rewrite+Rules';
 		include_once ('tiki-admin_include_sefurl.php');
+	} else if ($adminPage == 'workspaces') {
+		$admintitle = 'Workspaces Beta';
+		$description = 'Workspaces Beta for Tiki 4.0';
+		$helpUrl = 'Workspaces';
+		include_once ('tiki-admin_include_workspaces.php');
 	}
+	
 
 	$url = 'tiki-admin.php'.'?page='.$adminPage;
 	if (!$helpUrl) {$helpUrl = ucfirst($adminPage)."+Config";}

@@ -864,6 +864,8 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 
 		// Workspaces
 		'feature_workspaces' => 'n',
+		'feature_workspaces_init' => 'n',
+		'workspace_id' => '',
 
 		// games
 		'feature_games' => 'n',

@@ -132,4 +132,7 @@
 {if $prefs.feature_sefurl neq 'n'}
 <a href="tiki-admin.php?page=sefurl" title="{tr}Sef URL{/tr}" class="icon">{icon _id="pics/large/goto.png" alt="{tr}Sef URL{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}</a>
 {/if}
+{if $prefs.feature_workspaces eq 'y'}
+<a href="tiki-admin.php?page=workspaces" title="{tr}Workspaces{/tr}" class="icon">{icon_id="pics/large/workspaces.png" alt="{tr}Workspaces{/tr} class="reflect" style="vertical-align: middle" width="32" height="32"}</a>
+{/if}
 <br class="clear" />
