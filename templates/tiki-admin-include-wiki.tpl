@@ -530,6 +530,11 @@ name="w_displayed_default" {if $prefs.w_displayed_default eq 'y'} checked="check
 	<div class="adminoptionlabel"><label for="feature_create_webhelp">{tr}Create webhelp from structure:{/tr}</label></div>
 </div>
 
+<div class="adminoptionbox">
+	<div class="adminoption"><input type="checkbox" id="page_n_times_in_a_structure" name="page_n_times_in_a_structure" {if $prefs.page_n_times_in_a_structure eq 'y'}checked="checked"{/if}/></div>
+	<div class="adminoptionlabel"><label for="page_n_times_in_a_structure">{tr}A page can occur multiple times in a structure:{/tr}</label></div>
+</div>
+
 </div>	
 </div>
 
