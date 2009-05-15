@@ -10305,5 +10305,6 @@ $lang=Array(
 "You need one of the extension pecl HTTP or Curl to replay the TikiTest" => "L'extension pecl HTTP ou Curl est requise pour rejouer le Tikitest",
 "TikiTest Replay" => "Rejouer TikiTest",
 "The page is empty" => "La page est vide",
+"If you want to upgrade from a previous Tiki release, ensure that you have read and understood the <a href=\"http://doc.tikiwiki.org/Upgrade\" target=\"_blank\">Upgrade instructions</a>" => "Si vous voulez installer une nouvelle version de Tiki, assurez vous d'avoir lu et compris les <a href=\"http://doc.tikiwiki.org/Upgrade\" target=\"_blank\">instructions de mise à niveau</a>",
 "###end###"=>"###end###");
 ?>
