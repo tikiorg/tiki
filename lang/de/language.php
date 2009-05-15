@@ -10539,5 +10539,6 @@ $lang=Array(
 "Last pages" => "Letzte Seiten",
 "Tiki RSS feed for the wiki pages" => "Tiki RSS Wiki Feed",
 "Last modifications to the Wiki." => "Zuletzt ge&auml;nderte Wikiseiten.",
+"If you want to upgrade from a previous Tiki release, ensure that you have read and understood the <a href=\"http://doc.tikiwiki.org/Upgrade\" target=\"_blank\">Upgrade instructions</a>" =>  "Bevor sie ihre Tiki Installation aktualisieren, lesen sie bitte die <a href=\"http://doc.tikiwiki.org/Upgrade\" target=\"_blank\">Upgrade-Anweisungen</a>",
 "###end###"=>"###end###");
 ?>
