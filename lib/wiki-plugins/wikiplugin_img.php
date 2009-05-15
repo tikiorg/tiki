@@ -89,6 +89,8 @@ function wikiplugin_img( $data, $params, $offset, $parseOptions )
 	$imgdata["usemap"] = '';
 	$imgdata["class"] = '';
 
+	// strip single quotes from params () to preserve 2.x {img} behaviour
+	$params = preg_replace("/^'(.*)'$/", '$1', $params);
 	$imgdata = array_merge( $imgdata, $params );
 
 	// Support both 'link' and 'lnk' syntax
