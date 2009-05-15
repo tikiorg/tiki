@@ -15,19 +15,15 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 include_once ('lib/categories/categlib.php');
 include_once ('tiki_admin.php');
 
-class Workspacelib {
-
+class Workspacelib 
+{
 	function init_ws ($newName)
 	{
-		if (!$categlib->get_category_id($newName)=NULL)
+		if (empty($categlib->get_category_id($newName)))
 		{
-			$categlib->add_category(0,$newName,'Workspaces Container Category');
-			$wsContainer = $categlib->get_category_id($newName);
-			return $wsContainer;
+			return $wsContainer = $categlib->add_category(0,$newName,'Workspaces Container Category');
 		}
 		else
-			return -1;
-				
+			return -1; //Error
 	}
-
 }
