@@ -1,4 +1,4 @@
-{tr}A new message was posted to forum{/tr}: {$mail_forum}
+{if $new_topic}{tr}A new topic was posted to forum{/tr}:{else}{tr}A new message was posted to forum{/tr}:{/if} {$mail_forum}
 
 {if $new_topic}{tr}New topic:{/tr}{else}{tr}Topic:{/tr}{/if} {$mail_topic}
 {tr}Author{/tr}: {$mail_author}
