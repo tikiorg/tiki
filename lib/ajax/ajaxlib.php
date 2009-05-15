@@ -218,7 +218,9 @@ function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user 
 		}
 		
 		if (preg_match('/overlib\(/Umis', $content)) {
-			$js_files[] = 'lib/overlib.js';	// just for now... (it stops the JS error on rollover but the tooltip doesn't appear - TODO replace with JQuery tips)
+			//array_unshift($js_files, 'lib/overlib.js');	// just for now... (it stops the JS error on rollover but the tooltip doesn't appear - TODO replace with JQuery tips)
+			$js_script[] = file_get_contents('lib/overlib.js');
+			$content = '<div id="overDiv" style="position: absolute; visibility: hidden; z-index:1000;"></div>'.$content;
 		}
 
 		// now remove all the js from the source
@@ -251,6 +253,16 @@ function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user 
 		$objResponse->alert(sprintf(tra("Template %s not registered"),$template));
 	}
 
+	$js_files[] = 'tiki-jsplugin.php';
+	
+	if (sizeof($js_files)) {
+		foreach($js_files as $f) {
+			if (trim($f) != '') {
+				$objResponse->includeScript($f);
+			}
+		}
+	}
+
 	$objResponse->script("hide('ajaxLoading');");
 	if ($prefs['feature_shadowbox'] == 'y') {
 		$objResponse->script("Shadowbox.init({ skipSetup: true }); Shadowbox.setup();");
@@ -264,16 +276,6 @@ function loadComponent($template, $htmlElementId, $max_tikitabs = 0, $last_user 
 		}
 		if ($prefs['feature_ajax_autosave'] == 'y') {
 			$objResponse->call("auto_save");
-		}
-	}
-	//$objResponse->includeScript("tiki-jsplugin.php");
-	$js_files[] = 'tiki-jsplugin.php';
-	
-	if (sizeof($js_files)) {
-		foreach($js_files as $f) {
-			if (trim($f) != '') {
-				$objResponse->includeScript($f);
-			}
 		}
 	}
 
