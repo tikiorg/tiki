@@ -108,7 +108,73 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
        	$this->assertLanguagePicklistDoesNotHaveLanguages(array('English British' => 'Multilingual Test Page 1' 
                                                     ));                                                    
     }
+    
+    
+    public function testUpToDatenessIs100percentForTheCompletelyTranslatedPages(){
+    	$this->openTikiPage('tiki-index.php?page=Page+de+test+multilingue+1');
+    	$this->logInIfNecessaryAs('admin');
+    	$this->assertTextPresent("Up-to-date-ness: 100%");
+    	$this->assertTextPresent("Equivalent translations: Multilingual Test Page 1 (en)");
+    }
  
+
+    public function testUponAddingNewContentTranslationsThatNeedImprovementAppears() {
+    	$this->openTikiPage('tiki-index.php?page=Multilingual+Test+Page+1');
+    	$this->logInIfNecessaryAs('admin');
+    	$this->clickAndWait("link=Edit");
+    	$this->type("editwiki", "This is the first multilingual test page.\n\nAdding some text yet to be translated.");
+    	$this->clickAndWait("save");
+        $this->click("link=More...");
+        $this->assertTextPresent("Translations that need improvement: None match your preferred languages.\n More... Page de test multilingue 1 (fr)");
+        $this->assertElementPresent("link=Page de test multilingue 1");
+        $this->clickAndWait("link=Page de test multilingue 1");
+		//assert that up-to-dateness is now less than 100%
+    	$this->assertRegExp("/Up-to-date-ness: [0-9]{2}%/", $this->getText("//div[@id='mod-translationr10']/div[1]"), "Up-to-dateness should have been less than 100%.");
+    	$this->assertTextPresent("Better translations: Multilingual Test Page 1 (en)");
+    }
+    
+    public function testCompleteTranslationBringsBackUpToDatenessTo100() {
+    	$this->openTikiPage('tiki-index.php?page=Multilingual+Test+Page+1');
+    	$this->logInIfNecessaryAs('admin');
+    	$this->clickAndWait("link=Edit");
+    	$this->type("editwiki", "This is the first multilingual test page.\n\nAdding some text yet to be translated.");
+    	$this->clickAndWait("save");
+        $this->click("link=More...");
+   		$this->clickAndWait("//img[@alt='update it']");
+    	$this->type("editwiki", "Ceci est la première page multilingue de test.\n\nAjout du texte à traduire.");
+    	$this->clickAndWait("save");
+    	$this->assertTextPresent("Up-to-date-ness: 100%");
+    	$this->assertTextPresent("Equivalent translations: Multilingual Test Page 1 (en)");
+    	$this->clickAndWait("link=Multilingual Test Page 1");
+    	$this->assertTextPresent("Up-to-date-ness: 100%");
+    }
+    
+    public function testPartialTranslationBringsUpUpToDatenessPourcentage() {
+		$this->openTikiPage('tiki-index.php?page=Multilingual+Test+Page+1');
+    	$this->logInIfNecessaryAs('admin');
+    	$this->clickAndWait("link=Edit");
+    	$this->type("editwiki", "This is the first multilingual test page.\n\nAdding some text yet to be translated.");
+    	$this->clickAndWait("save");
+        $this->click("link=More...");
+        $this->clickAndWait("link=Page de test multilingue 1");
+        $this->assertRegExp("/Up-to-date-ness: [0-9]{2}%/", $this->getText("//div[@id='mod-translationr10']/div[1]"));
+        if (preg_match("/Up-to-date-ness: ([0-9]{2})%/", $this->getText("//div[@id='mod-translationr10']/div[1]"), $matches)) {
+        	$first_percentage = $matches[1];
+        }
+   		$this->clickAndWait("//img[@alt='update from it']");
+    	$this->type("editwiki", "Ceci est la première page multilingue de test.\n\nAjout du texte à traduire.");
+    	$this->clickAndWait("partial_save");
+    	$this->assertRegExp("/Up-to-date-ness: [0-9]{2}%/", $this->getText("//div[@id='mod-translationr10']/div[1]"));
+    	if (preg_match("/Up-to-date-ness: ([0-9]{2})%/", $this->getText("//div[@id='mod-translationr10']/div[1]"), $matches)) {
+        	$second_percentage = $matches[1];
+        }
+    	$this->assertTrue($second_percentage > $first_percentage, "Up-to-dateness should have been higher than $first_percentage. It was $second_percentage.");
+    }
+    
+    
+    
+     
+    
    
     /**************************************
      * Helper methods
@@ -116,11 +182,11 @@ class  AcceptanceTests_MultilingualTest extends TikiSeleniumTestCase
 
     protected function setUp()
     {
+        $this->printImportantMessageForTestUsers();
         $this->setBrowser('*firefox C:\Program Files\Mozilla Firefox\firefox.exe');
         $this->setBrowserUrl('http://localhost/');
         $this->current_test_db = "multilingualTestDump.sql";
         $this->restoreDBforThisTest();
-        $this->printImportantMessageForTestUsers();
     }
     
     public function printImportantMessageForTestUsers() {
