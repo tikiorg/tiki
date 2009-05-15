@@ -55,6 +55,13 @@ if ( $isPre ) {
 }
 $mainversion = $version{0} . '.0';
 
+include_once('lib/setup/twversion.class.php');
+$check_version = strtolower($version.$subrelease);
+$TWV = new TWVersion();
+if ( strtolower($TWV->version) != $check_version ) {
+	error("The version in the code ".strtolower($TWV->version)." differs from the version provided to the script $check_version.\nThe version should be modified in lib/setup/twversion.class.php to match the released version.");
+}
+
 echo color("\nTiki release process started for version '$version" . ( $subrelease ? " $subrelease" : '' ) . "'\n", 'cyan');
 if ( $isPre )
 	echo color("The script is running in 'pre-release' mode, which means that no subversion tag will be created.\n", 'yellow');
