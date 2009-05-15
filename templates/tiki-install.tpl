@@ -254,7 +254,8 @@
 <div class="clearfix">
 <p>
 {if $tikidb_created}
-	{tr}Select the installation (or upgrade) profile to use. This profile will populate (or upgrade) the database.{/tr}
+	{tr}Select the installation (or upgrade) profile to use. This profile will populate (or upgrade) the database.{/tr}<br/><br/>
+	{tr}If you want to upgrade from a previous Tiki release, ensure that you have read and understood the <a href="http://doc.tikiwiki.org/Upgrade" target="_blank">Upgrade instructions</a>.{/tr}
 {else}
 	{tr}Select the installation profile to use. This profile will populate the database.{/tr}
 {/if}
