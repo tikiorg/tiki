@@ -235,7 +235,7 @@ function md5_check_dir($root, $dir, $version, &$queries) {
 
 function build_packages($releaseVersion, $svnRelativePath) {
 	$script = TOOLS . '/tikirelease.sh';
-	`bash $script $releaseVersion $svnRelativePath`;
+	`bash -x "$script" $releaseVersion $svnRelativePath`;
 	info(">> Packages files have been built in ~/tikipack/$releaseVersion :\n");
 	passthru( "ls ~/tikipack/$releaseVersion" );
 }
@@ -747,6 +747,7 @@ Options:
 	--howto			: display the Tiki release HOWTO
 	--help			: display this help
 	--http-proxy=HOST:PORT	: use an http proxy to get copyright data on sourceforge
+	--no-commit		: do not commit any changes back to SVN
 	--no-check-svn		: do not check if there is uncommited changes on the checkout used for the release
 	--no-check-php		: do not check syntax of all PHP files
 	--no-first-update	: do not svn update the checkout used for the release as the first step

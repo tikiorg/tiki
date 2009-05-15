@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -x
 # $Id$
 #
 # This script does an export of a given subversion tree and creates a set of
@@ -26,7 +26,7 @@ echo "Usage: tikirelease.sh <release-version> <svn-relative-path>"
 	exit 0
 fi
 
-OLDIR=`pwd`
+OLDIR="`pwd`"
 VER=$1
 RELTAG=$2
 
@@ -73,6 +73,6 @@ echo "To upload the 'tarballs', copy-paste and execute the following line (and c
 echo "cd $WORKDIR/$VER; scp $MODULE-$VER.tar.gz $MODULE-$VER.tar.bz2 $MODULE-$VER.zip \$SF_LOGIN@frs.sourceforge.net:uploads"
 echo ""
 
-cd $OLDIR
+cd "$OLDIR"
 
 echo "Done."
