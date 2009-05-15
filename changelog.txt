@@ -23,38 +23,6 @@ Version 3.0
 ------------------
 
 ----------------------------------------------
-r18801 | mrjc | 2009-05-14 20:13:28 -0400 (Thu, 14 May 2009) | 1 line
-
-allows for pwd with spaces in (for my mac)
-----------------------------------------------
-r18762 | mrjc | 2009-05-14 06:55:21 -0400 (Thu, 14 May 2009) | 1 line
-
-Brought forward from trunk --no-commit and more descriptive packaging (I had meant to put it on 3.0 in the first place!)
-----------------------------------------------
-r18388 | nyloth | 2009-05-03 09:45:25 -0400 (Sun, 03 May 2009) | 2 lines
-
-[FIX] release script: quit release script with an error if PHP version is less than 5
-
-----------------------------------------------
-r18387 | nyloth | 2009-05-03 09:42:07 -0400 (Sun, 03 May 2009) | 2 lines
-
-[FIX] release script: quit the release script with an error if subversion requirements are not ok.
-
-----------------------------------------------
-r18386 | nyloth | 2009-05-03 09:25:00 -0400 (Sun, 03 May 2009) | 7 lines
-
-[FIX] release script: some small fixes and improvements:
-  * Fix --no-tagging option to also skip the existing tag check and tag deletion
-  * Avoid usage of 'mysql_real_escape_string' function if not needed when escaping filenames for SecDB
-    If some filenames have to be escaped with this function, exist gracefully with a useful error message if no DB connection can be made
-  * If PHP 'readline' extension is not available, fallback to a code that uses fgets instead
-  * When parsing members data from SF.net, die with an error if 'iconv' is not available on the system
-
-----------------------------------------------
-r18369 | luciash | 2009-05-02 13:06:00 -0700 (Sat, 02 May 2009) | 1 line
-
-parse error fix: missing comma
-----------------------------------------------
 r18367 | luciash | 2009-05-02 12:25:49 -0700 (Sat, 02 May 2009) | 1 line
 
 [DEL] removing unused workspaces images (again) from Tiki before 3.0
