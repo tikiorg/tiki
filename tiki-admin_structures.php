@@ -134,6 +134,8 @@ $alert_in_st = array();
 $alert_categorized = array();
 $alert_to_remove_cats = array();
 $alert_to_remove_extra_cats = array();
+$cat_type='wiki page';
+$cat_objid = '';
 $smarty->assign('just_created', 'n');
 if (isset($_REQUEST["create"])) {
 	check_ticket('admin-structures');

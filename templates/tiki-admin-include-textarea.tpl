@@ -40,11 +40,6 @@
 </div>
 
 <div class="adminoptionbox">
-        <div class="adminoption"><input type="checkbox" id="feature_floating_help" name="feature_floating_help" {if $prefs.feature_floating_help eq 'y'}checked="checked" {/if}/> </div>
-        <div class="adminoptionlabel"><label for="feature_floating_help">{tr}Floating edit help{/tr} </label>{if $prefs.feature_floating_help eq 'y'} {/if}</div>
-</div>
-
-<div class="adminoptionbox">
 	<div class="adminoption"><input type="checkbox" id="feature_smileys" name="feature_smileys" {if $prefs.feature_smileys eq 'y'}checked="checked" {/if}/> </div>
 	<div class="adminoptionlabel"><label for="feature_smileys">{tr}Smileys{/tr} </label>{if $prefs.feature_help eq 'y'} {help url="Smiley"}{/if}</div>
 </div>

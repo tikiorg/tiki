@@ -143,6 +143,8 @@ if( isset( $_GET['list'] ) ) { // {{{
 	$smarty->assign( 'profile', $params['profile'] );
 	$smarty->assign( 'repository', $params['repository'] );
 
+	if ( $_GET['preloadlist'] && $params['repository'] ) 
+		$list->refreshCache( $params['repository'] );
 	$result = $list->getList( $params['repository'], $params['category'], $params['profile'] );
 
 	$category_list = $list->getCategoryList( $params['repository'] );

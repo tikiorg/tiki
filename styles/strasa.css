@@ -400,6 +400,10 @@ div#tiki-bot {}
 	height: 97px;
 	background: #214d68 url(strasa/headerbg.jpg) repeat-x 0 100%}
 
+#header-top[id] {
+	height: auto;
+	min-height: 97px}
+
 #siteheader {
 	text-align: left;
 	background: #fff;
@@ -417,7 +421,6 @@ div#tiki-bot {}
 }
 	
 div#sioptions {
-	height: 97px;
 	margin: 0 58px;
 	overflow: hidden;
 }

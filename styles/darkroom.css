@@ -277,6 +277,10 @@ div#tiki-main #tikimidtbl {
 	padding-top: 2px;
 } 
 
+#header-top {
+	height: auto;
+	min-height: 50px}
+
 #siteheader {
 	text-align: left;
 	background: transparent;

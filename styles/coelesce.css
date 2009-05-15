@@ -292,9 +292,11 @@ div#tiki-bot {}
 #header-top {
 	position: relative;
 	background: url(coelesce/pagebg.jpg) repeat-x bottom;
-	min-height: 80px}
+	height: 80px}
 	
-* html #header-top {height: 80px}
+#header-top[id] {
+	height: auto;
+	min-height: 80px}
 
 #siteheader {
 	text-align: left;

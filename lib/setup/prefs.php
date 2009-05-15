@@ -1035,7 +1035,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 </a>
 </div>
 {/if}', // must be max. 250 chars now unless it'll change in tiki_prefs db table field value from VARCHAR(250) to BLOB by default
-		'sitemycode_publish' => 'y',
+		'sitemycode_publish' => 'n',
 		'feature_sitelogo' => 'y',
 		'sitelogo_bgcolor' => 'transparent',
 		'sitelogo_bgstyle' => '',
@@ -1401,7 +1401,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 
 // Initialize prefs for which we want to use the site value (they will be prefixed with 'site_')
 // ( this is also used in tikilib, not only when reloading prefs )
-$user_overrider_prefs = array('language', 'style', 'userbreadCrumb', 'tikiIndex', 'wikiHomePage','default_calendars');
+$user_overrider_prefs = array('language', 'style', 'userbreadCrumb', 'tikiIndex', 'wikiHomePage','default_calendars', 'metatag_robots');
 
 // Check if prefs needs to be reloaded
 if (isset($_SESSION['s_prefs'])) {

@@ -16,9 +16,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 error_reporting (E_ALL);
-// Try to set a longer execution time for the installer
-ini_set('max_execution_time','3600');
-
 require_once( 'tiki-filter-base.php' );
 
 // Define and load Smarty components
@@ -547,6 +544,13 @@ $smarty->assign('multi', $multi);
 if ($language != 'en')
 	$smarty->assign('lang', $language);
 
+// Try to set a longer execution time for the installer
+@ini_set('max_execution_time','0');
+$max_execution_time = ini_get('max_execution_time');
+if ($max_execution_time != 0) {
+	$smarty->assign('max_exec_set_failed', 'y');	
+}
+
 // Tiki Database schema version
 include_once ('lib/setup/twversion.class.php');
 $TWV = new TWVersion();
@@ -898,7 +902,28 @@ if ( $_REQUEST['general_settings'] == 'y' ) {
 
 
 include "lib/headerlib.php";
-$headerlib->add_cssfile('styles/thenews.css');
+$headerlib->add_cssfile('styles/strasa.css');
+$headerlib->add_cssfile('styles/strasa/options/cold.css');
+$headerlib->add_css('
+html {
+	background-color: #fff;
+}
+#centercolumn {
+	padding: 4em 10em;
+}
+#sitelogo h1, #tiki-clean {
+	margin: 0;
+	padding: 0;
+	color: #000;
+}
+.box-data ol, .box-data ul {
+	margin: 0;
+	padding: 0 0 0 2em;
+}
+.box-data ol strong {
+	color: #024;
+}
+');
 $smarty->assign_by_ref('headerlib',$headerlib);
 
 $smarty->assign('install_step', $install_step);

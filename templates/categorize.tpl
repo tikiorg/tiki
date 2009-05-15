@@ -36,7 +36,7 @@
 	{if $tiki_p_admin_categories eq 'y'}
     	<div class="floatright"><a href="tiki-admin_categories.php" class="link">{tr}Admin Categories{/tr} {icon _id='wrench'}</a></div>
 	{/if}
-	<input type="checkbox" name="cat_clearall" value="on" {if $prefs.javascript_enabled eq 'y'}onclick="switchCheckboxes(this.form,'cat_categories[]',this.checked);"{/if} />{tr}Select/deselect all categories{/tr}
+	<input type="checkbox" name="cat_toggleall" value="on" {if $prefs.javascript_enabled eq 'y'}onclick="switchCheckboxes(this.form,'cat_categories[]',this.checked);"{/if} />{tr}Select/deselect all categories{/tr}
   {else}
 	<div class="clear">
  	{if $tiki_p_admin_categories eq 'y'}

@@ -40,7 +40,6 @@ if (isset($_REQUEST["textareasetup"]) && (!isset($_COOKIE['tab']) || $_COOKIE['t
 		"feature_wiki_paragraph_formatting_add_br",
 		"feature_wiki_monosp",
 		"wiki_edit_plugin",
-		"feature_floating_help",
 		);
 
 	foreach ($pref_toggles as $toggle) {

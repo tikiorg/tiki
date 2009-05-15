@@ -107,6 +107,8 @@ hr {
 	border-width: 0;
 	padding: 0;
 	color: red}
+	
+img {border: 0}
 
 /***** Site Header & Identity *****/
 #header-top {position: relative}
@@ -737,7 +739,7 @@ div.minichatdiv {overflow: auto}
 .box-switch_lang ul {padding: 0 1em}
 
 /** Other boxes **/
-div.cbox {
+.cbox {
 	overflow: hidden;
 	border: 1px solid yellow;
 	background: white;
@@ -1598,18 +1600,20 @@ td.categobjectsdataodd {}
 	font-weight: bold;
 	list-style: none}
 
-ul.catfeatures li {}
+.catfeatures li {
+	display: inline;
+	margin-right: 7px}
 
 .catitems {
 	margin-left: 0;
 	padding: 0;
 	list-style: none}
 
-ul.catitems li {
+.catitems li {
 	display: inline;
 	margin-right: 7px}
 
-ul.catitems li a.link {}
+.catitems li a.link {}
 
 /***** Tags (freetags) *****/
 .freetaglist {
