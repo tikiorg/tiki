@@ -1487,7 +1487,7 @@ Nickname: mrjc
 Name: Martin RJ. Cleaver
 First Commit: 2009-05-11
 Last Commit: 2009-05-14
-Number of Commits: 5
+Number of Commits: 8
 
 Nickname: musus
 First Commit: 2003-12-18
