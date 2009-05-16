@@ -82,9 +82,21 @@ $pluginsReal = $tikilib->plugin_get_list( true, false );
 if( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 
 	global $cachelib; require_once("lib/cache/cachelib.php");
+	$areanames = array(
+		'editwiki',
+		'editpost',
+		'editpost2',
+		'blogedit',
+		'faqans',
+		'body',
+		'description',
+		'trackerDescription'
+	);
 	foreach ($tikilib->list_languages() as $tlang) {
-		$cachetag = 'plugindesc' . $tlang['value'];
-		$cachelib->invalidate($cachetag);
+		foreach ($areanames as $an) {
+			$cachetag = 'plugindesc' . $tlang['value'] . $an;
+			$cachelib->invalidate($cachetag);
+		}
 	}
 
 	if( isset( $_POST['enable'] ) ) {
