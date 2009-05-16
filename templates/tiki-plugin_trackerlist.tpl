@@ -30,6 +30,7 @@
 {if ($showstatus ne 'n') and ($tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y'))}
 	<th class="auto" style="width:20px;">&nbsp;</th>
 {/if}
+{if $showitemrank eq 'y'}<th>{tr}Rank{/tr}</th>{/if}
 
 {foreach key=jx item=ix from=$fields}
 {if $ix.isPublic eq 'y' and ($ix.isHidden eq 'n' or $ix.isHidden eq 'c' or $ix.isHidden eq 'p' or $tiki_p_admin_trackers eq 'y') and $ix.type ne 'x' and $ix.type ne 'h' and in_array($ix.fieldId, $listfields) and ($ix.type ne 'p' or $ix.options_array[0] ne 'password') and (empty($ix.visibleBy) or in_array($default_group, $ix.visibleBy) or $tiki_p_admin_trackers eq 'y')}
@@ -95,6 +96,9 @@
 {assign var=ustatus value=$items[user].status|default:"c"}
 {html_image file=$status_types.$ustatus.image title=$status_types.$ustatus.label alt=$status_types.$ustatus.label}
 </td>
+{/if}
+{if $showitemrank eq 'y'}
+<td>{math equation="x+y" x=$smarty.section.user.rownum y=$tr_offset}</td>
 {/if}
 
 {* ------------------------------------ *}
