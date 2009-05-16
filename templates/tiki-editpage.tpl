@@ -58,7 +58,7 @@ window.onload = timeIt;
 	{if $beingStaged eq 'y' and $prefs.wikiapproval_hideprefix == 'y'}{assign var=pp value=$approvedPageName}{else}{assign var=pp value=$page}{/if}
 	{title}{if isset($hdr) && $prefs.wiki_edit_section eq 'y'}{tr}Edit Section{/tr}{else}{tr}Edit{/tr}{/if}: {$pp|escape}{if $pageAlias ne ''}&nbsp;({$pageAlias|escape}){/if}{/title}
 {else}
-   {title}{tr}Update '{$page}' based on '{$source_page}'{/tr}{/title}
+   {title}{tr}Update '{$page}'{/tr}{/title}
 {/if}
    
 {if $beingStaged eq 'y'}
@@ -127,7 +127,7 @@ window.onload = timeIt;
 
 </div>
 {/if}
-<form  enctype="multipart/form-data" method="post" action="tiki-editpage.php" id='editpageform' name='editpageform'>
+<form  enctype="multipart/form-data" method="post" action="tiki-editpage.php?page={$page|escape}" id='editpageform' name='editpageform'>
 
 {if $diff_style}
 <select name="diff_style">
@@ -147,7 +147,6 @@ window.onload = timeIt;
 <input type="submit" class="wikiaction" onmouseover="return overlib('{tr}Change the style used to display differences to be translated.{/tr}');" onmouseout="nd();" name="preview" value="{tr}Change diff styles{/tr}" onclick="needToConfirm=false;" />
 {/if}
 
-<input type="hidden" name="page" value="{$page|escape}" />
 <input type="hidden" name="clock" value="{$edittimeout}" />
 {if $page_ref_id}
   <input type="hidden" name="page_ref_id" value="{$page_ref_id}" />
@@ -281,8 +280,8 @@ window.onload = timeIt;
 <input type="hidden" name="cols" value="{$cols}"/>
 <input type="hidden" name="wysiwyg" value="n" />
 {else}
-{capture name=autosave}{if $prefs.feature_ajax eq 'y'}{autosave test='n' id='edit' default=$pagedata preview=$preview}{else}{$pagedata}{/if}{/capture}
-  {if $prefs.feature_ajax eq 'y' and $noautosave neq 'y' and $has_autosave eq 'y'}
+{capture name=autosave}{if $prefs.feature_ajax eq 'y' and $prefs.feature_ajax_autosave eq 'y' and $noautosave neq 'y'}{autosave test='n' id='edit' default=$pagedata preview=$preview}{else}{$pagedata}{/if}{/capture}
+  {if $prefs.feature_ajax eq 'y' and $prefs.feature_ajax_autosave eq 'y' and $noautosave neq 'y' and $has_autosave eq 'y'}
   {remarksbox type="warning" title="{tr}AutoSave{/tr}"}
   {tr}If you want the saved version instead of the autosaved one{/tr}&nbsp;{self_link noautosave='y' _ajax='n'}{tr}Click Here{/tr}{/self_link}
   {/remarksbox}
@@ -362,7 +361,7 @@ function searchrep() {
 {/if}
 
 {if $page|lower neq 'sandbox'}
-<tr class="formcolor" id="input_edit_summary" style="vertical-align: center"><td style="width: 25%">{tr}Edit Comment{/tr}:</td><td><input style="width:98%;" class="wikiedit" type="text" name="comment" value="{$commentdata|escape}" /></td></tr>
+<tr class="formcolor" id="input_edit_summary" style="vertical-align: middle"><td style="width: 25%">{tr}Edit Comment{/tr}:</td><td><input style="width:98%;" class="wikiedit" type="text" name="comment" value="{$commentdata|escape}" /></td></tr>
 {if $show_watch eq 'y'}
 	<tr class="formcolor"><td>{tr}Monitor this page{/tr}:</td><td><input type="checkbox" name="watch" value="1"{if $watch_checked eq 'y'} checked="checked"{/if} /></td></tr>
 {/if}

@@ -14,53 +14,41 @@ if (isset($_REQUEST['noautosave'])) {
 	$smarty->assign('noautosave',$_REQUEST['noautosave']=='y');
 }
 
-function auto_save($id, $data, $referer = "") {
-	global $user,$tikilib;
+function auto_save_name($id, $request = "") {
+	global $user;
 	$user_agent = $_SERVER['HTTP_USER_AGENT'];
-	$user_ip = $tikilib->get_ip_address();
-	if ($referer == "") {
-		$referer = preg_replace("/(\?|\&)noautosave=y/","",$_SERVER['REQUEST_URI']);
-	}
-	$file_name = md5("$user:$user_ip:$referer:$id");
+	$referer = preg_replace("/(\?|\&)noautosave=y/","",$request != "" ? $request : $_SERVER['REQUEST_URI']);
+	return "temp/cache/wiki-".md5("$user:$referer:$id");
+}
+function auto_save_log($id, $request = "") {
+	global $user;
+	$user_agent = $_SERVER['HTTP_USER_AGENT'];
+	$referer = preg_replace("/(\?|\&)noautosave=y/","",$request != "" ? $request : $_SERVER['REQUEST_URI']);
+	file_put_contents("temp/cache/log-".md5("$user:$referer:$id"),"$user:$referer:$id");
+}
 
-	file_put_contents("temp/cache/wiki-$file_name",rawurldecode($data));
-//	file_put_contents("temp/cache/log-$file_name","$user:$user_ip:$referer:$id");
+function auto_save($id, $data, $referer = "") {
+	//auto_save_log($id, $referer);
+	file_put_contents(auto_save_name($id, $referer),rawurldecode($data));
 	return new xajaxResponse();
 }
 
 function remove_save($id) {
-	global $user;
-	$user_agent = $_SERVER['HTTP_USER_AGENT'];
-	$user_ip = $tikilib->get_ip_address();
-	$request_uri = preg_replace("/(\?|\&)noautosave=y/","",$_SERVER['REQUEST_URI']);
-	$file_name = md5("$user:$user_ip:$request_uri:$id");
-	if (file_exists("temp/cache/wiki-$file_name")) {
-		unlink("temp/cache/wiki-$file_name");
-//		file_put_contents("temp/cache/log_del-$file_name","$user:$user_ip:$referer:$id");
-//	} else {
-//		file_put_contents("temp/cache/log_nodel-$file_name","$user:$user_ip:$referer:$id");
+	$file_name = auto_save_name($id);
+	if (file_exists($file_name)) {
+		unlink($file_name);
 	}
 	return new xajaxResponse();
 }
 
 function has_autosave($id) {
-	global $user;
-	$user_agent = $_SERVER['HTTP_USER_AGENT'];
-	$user_ip = $tikilib->get_ip_address();
-	$request_uri = preg_replace("/(?|&)noautosave='y'/","",$_SERVER['REQUEST_URI']);
-	$file_name = md5("$user:$user_ip:$request_uri:$id");
-	
-	return file_exists("temp/cache/wiki-$file_name");
+	return file_exists(auto_save_name($id));
 }
 
 function get_autosave($id) {
-	global $user;
-	$user_agent = $_SERVER['HTTP_USER_AGENT'];
-	$user_ip = $tikilib->get_ip_address();
-	$request_uri = preg_replace("/(?|&)noautosave='y'/","",$_SERVER['REQUEST_URI']);
-	$file_name = md5("$user:$user_ip:$request_uri:$id");
-	if (file_exists("temp/cache/wiki-$file_name")) {
-		return file_get_contents("temp/cache/wiki-$file_name");
+	$file_name = auto_save_name($id);
+	if (file_exists($file_name)) {
+		return file_get_contents($file_name);
 	} else {
 		return "";
 	}

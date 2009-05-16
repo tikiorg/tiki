@@ -19,7 +19,7 @@ that plugin is not finished !! -- mose
 // Valid      indicates that the tracker item is to be used as a quiz item
 
 function wikiplugin_miniquiz_help() {
-	$help = tra("Displays an miniquiz").":\n";
+	$help = tra("Displays a miniquiz").":\n";
 	$help.= "~np~{MINIQUIZ(trackerId=>1)}Instructions::Feedback{MINIQUIZ}~/np~";
 	return $help;
 }

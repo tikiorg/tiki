@@ -147,11 +147,15 @@ class TikiDate {
 	}
 
 	function setTZbyID($tz_id) {
-		$this->date->setTimeZone(new DateTimeZone($tz_id));
+		if (!empty($tz_id)) {
+			$this->date->setTimeZone(new DateTimeZone($tz_id));
+		}
 	}
 
 	function convertTZbyID($tz_id) {
-		$this->date->setTimeZone(new DateTimeZone($tz_id));
+		if (!empty($tz_id)) {
+			$this->date->setTimeZone(new DateTimeZone($tz_id));
+		}
 	}
 
 	function getTimezoneId() {

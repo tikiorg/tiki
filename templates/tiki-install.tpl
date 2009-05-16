@@ -1,7 +1,7 @@
 <div id="siteheader" class="clearfix">
 	<div id="header-top">
 		<div id="sitelogo" style="padding-left:70px"><h1><img style="border:medium none; vertical-align:middle" alt="{tr}TikiWiki CMS/Groupware{/tr}" src="img/tiki/tiki3.png" />
-			<span style="vertical-align:middle">{tr}Tiki installer{/tr} v{$tiki_version_name} <a title="{tr}Help{/tr}" href="http://doc.tikiwiki.org/Installation" target="help"><img style="border:0" src='img/icons/help.gif' alt="{tr}Help{/tr}" /></a></span></h1>
+			<span style="vertical-align:middle">{tr}Tiki installer{/tr} v{$tiki_version_name} <a title="{tr}Help{/tr}" href="http://doc.tikiwiki.org/Installation" target="help"><img style="border:0" src='pics/icons/help.png' alt="{tr}Help{/tr}" /></a></span></h1>
 		</div>
 	</div>
 </div>
@@ -48,7 +48,7 @@
 <h1>{tr}Read the License{/tr}</h1>
 <p>{tr}Tiki is software distributed under the LGPL license.{/tr} {tr} <a href="http://creativecommons.org/licenses/LGPL/2.1/" target="_blank">Here is a human-readable summary of the license below, including many translations.</a>{/tr}</p>
 <div align="center" style="margin-top:1em;">
-<iframe src="license.txt" width="700px" height="400px"> </iframe>
+<iframe src="license.txt" width="700px" height="300px"> </iframe>
 	<form action="tiki-install.php" method="post">
 {if $multi}			<input type="hidden" name="multi" value="{$multi}" />{/if}
 {if $lang}			<input type="hidden" name="lang" value="{$lang}" />{/if}
@@ -87,7 +87,7 @@
 {/if}			
 
 	<br />
-	<h2>{tr}Mail{/tr}</h2>
+	<h2>{tr}Mail{/tr}</h2><A NAME="mail"></A>
 	<p>{tr}Tiki uses the PHP <strong>mail</strong> function to send email notifications and messages.{/tr}</p>
 {if $perform_mail_test ne 'y'}
 	<p>{tr}To test your system configuration, Tiki will attempt to send a test message to you.{/tr}</p>
@@ -245,11 +245,17 @@
 
 {elseif $install_step eq '4'}
 <h1>{if $tikidb_created}{tr}Install &amp; Update Profile{/tr}{else}{tr}Install Profile{/tr}{/if}</h1>
+{if $max_exec_set_failed eq 'y'}
+{remarksbox type="warning" title="{tr}Warning{/tr}"}
+{tr}Failed to set max_execution_time to 0 for PHP. You may experience problems when creating/upgrading the database on a slow system. This will manitest itself by a blank page.{/tr}
+{/remarksbox}
+{/if}
 <div style="float:left; width:60px"><img src="pics/large/profiles48x48.png" alt="{tr}Profiles{/tr}" /></div>
 <div class="clearfix">
 <p>
 {if $tikidb_created}
-	{tr}Select the installation (or upgrade) profile to use. This profile will populate (or upgrade) the database.{/tr}
+	{tr}Select the installation (or upgrade) profile to use. This profile will populate (or upgrade) the database.{/tr}<br/><br/>
+	{tr}If you want to upgrade from a previous Tiki release, ensure that you have read and understood the <a href="http://doc.tikiwiki.org/Upgrade" target="_blank">Upgrade instructions</a>.{/tr}
 {else}
 	{tr}Select the installation profile to use. This profile will populate the database.{/tr}
 {/if}
@@ -295,7 +301,6 @@
 			<option value="Personal_Blog_and_Profile">{tr}Personal Blog and Profile{/tr}</option>
 			<option value="Small_Organization_Web_Presence">{tr}Small Organization Web Presence{/tr}</option>
 			<option value="Company_Intranet">{tr}Company Intranet{/tr}</option>
-			<option value="Customer_Extranet">{tr}Customer Extranet{/tr}</option>
 			<option value="Collaborative_Community">{tr}Collaborative community{/tr}</option>
 			</select>
 			 <p>{tr}See the documentation for <a target="_blank" href="http://profiles.tikiwiki.org/Profiles_in_30_installer" class="link" title="Description of available profiles.">descriptions of the available profiles.{/tr}</a></p>
@@ -392,7 +397,7 @@
 {/if}
 
 {if isset($htaccess_error)}
-<h3>{tr}.htaccess File{/tr} <a title="{tr}Help{/tr}" href="http://doc.tikiwiki.org/Installation" target="help"><img style="border:0" src='img/icons/help.gif' alt="{tr}Help{/tr}" /></a></h3>
+<h3>{tr}.htaccess File{/tr} <a title="{tr}Help{/tr}" href="http://doc.tikiwiki.org/Installation" target="help"><img style="border:0" src='pics/icons/help.png' alt="{tr}Help{/tr}" /></a></h3>
 {tr}We recommend enabling the <strong>.htaccess</strong> file for your Tiki{/tr}. {tr}This will enable you to use SEFURLs (search engine friendly URLs) and help improve site security{/tr}. 
 <p>{tr}To enable this file, simply rename the <strong>_htaccess</strong> file (located in the main directory of your Tiki installation) to <strong>.htaccess</strong>.{/tr}</p>
 {/if}
@@ -400,7 +405,7 @@
 <p>&nbsp;</p>
 <div align="center">
 <form action="tiki-install.php" method="post">
-	<input type="hidden" name="install_step" value="{if isset($smarty.post.update)}7{else}6{/if}" />
+	<input type="hidden" name="install_step" value="6" />
 	<input type="submit" value=" {tr}Continue{/tr} " />
 {if $multi}		<input type="hidden" name="multi" value="{$multi}" />{/if}
 {if $lang}		<input type="hidden" name="lang" value="{$lang}" />{/if}
@@ -455,7 +460,7 @@
 <br />
 <fieldset><legend>{tr}Administrator{/tr}</legend>
 <div style="padding:5px"><label for="admin_email">{tr}Admin email:{/tr}</label>
-	<div style="margin-left:1em"><input type="text" size="40" name="admin_email" id="admin_email" />
+	<div style="margin-left:1em"><input type="text" size="40" name="admin_email" id="admin_email" value="{if isset($admin_email)}{$admin_email}{/if}" />
 	<br /><em>{tr}This is the email address for your administrator account.{/tr}</em></div>
 </div>
 </fieldset>
@@ -507,7 +512,7 @@
 {if $virt}
 		<div class="box-shadow">
 			<div class="box">
-				<h3 class="box-title">{tr}MultiTiki Setup{/tr} <a title="{tr}Help{/tr}" href="http://doc.tikiwiki.org/MultiTiki" target="help"><img style="border:0" src="img/icons/help.gif" alt="{tr}Help{/tr}" /></a></h3>
+				<h3 class="box-title">{tr}MultiTiki Setup{/tr} <a title="{tr}Help{/tr}" href="http://doc.tikiwiki.org/MultiTiki" target="help"><img style="border:0" src="pics/icons/help.png" alt="{tr}Help{/tr}" /></a></h3>
 				<div class="clearfix box-data">
 				<div><a href="tiki-install.php">{tr}Default Installation{/tr}</a></div>
 {foreach key=k item=i from=$virt}
@@ -540,6 +545,11 @@
 				<div class="clearfix box-data">
 				{tr}Are you upgrading an existing Tiki site?{/tr}
 				{tr}Go directly to the <strong>Install/Upgrade</strong> step.{/tr}
+				{if $dbcon eq 'y' or isset($smarty.post.scratch) or isset($smarty.post.update)}
+					<a href="tiki-install.php?install_step=4{if $multi}&multi={$multi}{/if}{if $lang}&lang={$lang}{/if}" title="{tr}Install/Upgrade{/tr}">
+							<img src="pics/icons/arrow_right.png" height=16 width=16/>
+					</a>
+				{/if}
 				</div>
 			</div>
 		</div>
@@ -558,7 +568,7 @@
 					<li>{if $install_step eq '1'}<strong>{else}<a href="tiki-install.php?install_step=1{if $multi}&multi={$multi}{/if}{if $lang}&lang={$lang}{/if}" title="{tr}Read the License{/tr}">{/if}{tr}Read the License{/tr}{if $install_step eq '1'}</strong>{else}</a>{/if}</li>
 					<li>{if $install_step eq '2'}<strong>{elseif $install_step ge '3' or $dbcon eq 'y'}<a href="tiki-install.php?install_step=2{if $multi}&multi={$multi}{/if}{if $lang}&lang={$lang}{/if}" title="{tr}Review the System Requirements{/tr}">{/if}{tr}Review the System Requirements{/tr}{if $install_step eq '2'}</strong>{elseif $install_step ge '3' or $dbcon eq 'y'}</a>{/if}</li>
 					<li>{if $install_step eq '3'}<strong>{elseif $dbcon eq 'y'}<a href="tiki-install.php?install_step=3{if $multi}&multi={$multi}{/if}{if $lang}&lang={$lang}{/if}" title="{tr}Database Connection{/tr}">{/if}{if $dbcon eq 'y'}{tr}Reset the Database Connection{/tr}{else}{tr}Database Connection{/tr}{/if}{if $install_step eq '3'}</strong>{elseif $dbcon eq 'y'}</a>{/if}</li>
-					<li>{if $install_step eq '4'}<strong>{elseif $dbcon eq 'y' or isset($smarty.post.scratch) or isset($smarty.post.update)}<a href="tiki-install.php?install_step=4{if $multi}&multi={$multi}{/if}{if $lang}&lang={$lang}{/if}" title="{if $tikidb_created}{tr}Install/Upgrade{/tr}{else}{tr}Install Profile{/tr}{/if}">{/if}{if $tikidb_created}{tr}Install/Upgrade{/tr}{else}{tr}Install Profile{/tr}{/if}{if $install_step eq '4'}</strong>{elseif ($dbcon eq 'y') or (isset($smarty.post.scratch)) or (isset($smarty.post.update))}</a>{/if}</li>
+					<li>{if $install_step eq '4'}<strong>{elseif $dbcon eq 'y' or isset($smarty.post.scratch) or isset($smarty.post.update)}<a href="tiki-install.php?install_step=4{if $multi}&multi={$multi}{/if}{if $lang}&lang={$lang}{/if}" title="{if $tikidb_created}{tr}Install/Upgrade{/tr}{else}{tr}Install Profile{/tr}{/if}">{/if}{if $tikidb_created}<em>{tr}Install/Upgrade{/tr}</em>{else}{tr}Install Profile{/tr}{/if}{if $install_step eq '4'}</strong>{elseif ($dbcon eq 'y') or (isset($smarty.post.scratch)) or (isset($smarty.post.update))}</a>{/if}</li>
 					<li>{if $install_step eq '5'}<strong>{elseif $tikidb_is20}<a href="tiki-install.php?install_step=5{if $multi}&multi={$multi}{/if}{if $lang}&lang={$lang}{/if}" title="{if isset($smarty.post.update)}{tr}Review the Upgrade{/tr}{else}{tr}Review the Installation{/tr}{/if}">{/if}{if isset($smarty.post.update)}{tr}Review the Upgrade{/tr}{else}{tr}Review the Installation{/tr}{/if}{if $install_step eq '5'}</strong>{elseif $tikidb_is20}</a>{/if}</li>
 					<li>{if $install_step eq '6'}<strong>{elseif $tikidb_is20 and !isset($smarty.post.update)}<a href="tiki-install.php?install_step=6{if $multi}&multi={$multi}{/if}{if $lang}&lang={$lang}{/if}" title="{tr}Configure the General Settings{/tr}">{/if}{tr}Configure the General Settings{/tr}{if $install_step eq '6'}</strong>{elseif $tikidb_is20 and !isset($smarty.post.update)}</a>{/if}</li>
 					<li>{if $install_step eq '7'}<strong>{elseif $tikidb_is20}<a href="tiki-install.php?install_step=7{if $multi}&multi={$multi}{/if}{if $lang}&lang={$lang}{/if}" title="{tr}Enter Your Tiki{/tr}">{/if}{tr}Enter Your Tiki{/tr}{if $install_step eq '7'}</strong>{elseif $tikidb_is20}</a>{/if}</li>

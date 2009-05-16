@@ -5,12 +5,17 @@ function wikiplugin_img_info()
 	return array(
 		'name' => tra( 'Img' ),
 		'description' => tra( 'Displays an image.' ),
-		'prefs' => array(),
+		'prefs' => array( 'wikiplugin_img' ),
 		'params' => array(
 			'src' => array(
 				'required' => false,
 				'name' => tra('Image Source'),
 				'description' => tra('Full URL to the image to display.'),
+			),
+			'alt' => array(
+				'required' => false,
+				'name' => tra('Alternate Text'),
+				'description' => tra('Alternate text to display if impossible to load the image.'),
 			),
 			'height' => array(
 				'required' => false,
@@ -51,11 +56,6 @@ function wikiplugin_img_info()
 				'required' => false,
 				'name' => tra('Description'),
 				'description' => tra('Image description to display on the page.'),
-			),
-			'alt' => array(
-				'required' => false,
-				'name' => tra('Alternate Text'),
-				'description' => tra('Alternate text to display if impossible to load the image.'),
 			),
 			'usemap' => array(
 				'required' => false,

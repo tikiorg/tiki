@@ -1,13 +1,4 @@
-<div class="calnavigation">
-	{if $calendarViewMode eq 'month'}
-		{$currMonth|tiki_date_format:"%B %Y"}
-	{elseif $calendarViewMode eq 'week'}
-		{$daystart|tiki_date_format:"{tr}%m/%d{/tr}/%Y"} - {$dayend|tiki_date_format:"{tr}%m/%d{/tr}/%Y"}
-	{else}
-		{$daystart|tiki_date_format:"%B %Y"} - {$dayend|tiki_date_format:"%B %Y"}
-	{/if}
-</div>
-
+{* $id$ *}
 <table border="0" cellpading="0" cellspacing="0" style="width:100%;border-collapse:collapse">
   <tr valign="middle" style="height:36px">
 <td width="1%" class="weeks"></td>
@@ -28,14 +19,15 @@
 	<td id="row_{$smarty.section.w.index}_{$smarty.section.d.index}" class="{cycle}" style="padding:0px">
 	  <table border="0" cellpadding="0" cellspacing="0" style="width:100%">
 		<tr valign="top">
-		  <td class="calfocus{if $cell[w][d].day eq $focuscell}on{/if}" style="width:50%;text-align:left">
-			<a href="{$myurl}?todate={$cell[w][d].day}" title="{tr}Change Focus{/tr}" style="font-size:11px">{$cell[w][d].day|tiki_date_format:$short_format_day}</a>
+		  <td class="calfocus{if $cell[w][d].day eq $smarty.session.CalendarFocusDate}on{/if}" style="width:50%;text-align:left">
+			<a href="{$myurl}?focus={$cell[w][d].day}" title="{tr}Change Focus{/tr}" style="font-size:11px">{$cell[w][d].day|tiki_date_format:$short_format_day}</a>
 		  </td>
 		  {if $myurl neq "tiki-action_calendar.php"}
-		  <td class="calfocus{if $cell[w][d].day eq $focuscell}on{/if}" style="width:50%;text-align:right">
+		  <td class="calfocus{if $cell[w][d].day eq $smarty.session.CalendarFocusDate}on{/if}" style="width:50%;text-align:right">
 			{if $tiki_p_add_events eq 'y' and count($listcals) > 0}
 			<a href="tiki-calendar_edit_item.php?todate={$cell[w][d].day}{if $displayedcals|@count eq 1}&amp;calendarId={$displayedcals[0]}{/if}" title="{tr}Add Event{/tr}" class="addevent">{icon _id='calendar_add' alt="{tr}+{/tr}" title="{tr}Add Event{/tr}"}</a>
 			{/if}
+			<a class="viewthisday" href="tiki-calendar.php?viewmode=day&amp;todate={$cell[w][d].day}{if $displayedcals|@count eq 1}&amp;calendarId={$displayedcals[0]}{/if}" title="{tr}View this Day{/tr}">{icon _id='img/icons/external_link.gif' width=7 height=8 alt="{tr}o{/tr}" title="{tr}View this Day{/tr}"}</a>
 		  </td>
 		  {/if}
 		</tr>
@@ -47,7 +39,7 @@
 	{assign var=calendarId value=$cell[w][d].items[item].calendarId}
 		<tr valign="top">
 {if is_array($cell[w][d].items[item])}
-			<td class="Cal{$cell[w][d].items[item].type} calId{$cell[w][d].items[item].calendarId}" style="padding:0px;height:14px;background-color:#{$infocals.$calendarId.custombgcolor};border-color:#{$infocals.$calendarId.customfgcolor};opacity:{if $cell[w][d].items[item].status eq '0'}0.6{else}0.8{/if};filter:Alpha(opacity={if $cell[w][d].items[item].status eq '0'}60{else}80{/if});text-align:center;border-width:1px {if $cell[w][d].items[item].endTimeStamp <= ($cell[w][d].day + 86400)}1{else}0{/if}px 1px {if $cell[w][d].items[item].startTimeStamp >= $cell[w][d].day}1{else}0{/if}px;cursor:pointer"
+			<td class="Cal{$cell[w][d].items[item].type} calId{$cell[w][d].items[item].calendarId}" style="padding:0px;height:14px;background-color:#{$infocals.$calendarId.custombgcolor};border-color:#{$infocals.$calendarId.customfgcolor};opacity:{if $cell[w][d].items[item].status eq '0'}0.6{else}0.8{/if};filter:Alpha(opacity={if $cell[w][d].items[item].status eq '0'}60{else}80{/if});text-align:left;border-width:1px {if $cell[w][d].items[item].endTimeStamp <= ($cell[w][d].day + 86400)}1{else}0{/if}px 1px {if $cell[w][d].items[item].startTimeStamp >= $cell[w][d].day}1{else}0{/if}px;cursor:pointer"
 			{if $prefs.calendar_sticky_popup eq 'y'}
 				{popup vauto=true hauto=true sticky=true fullhtml="1" trigger="onClick" text=$over|escape:"javascript"|escape:"html"}
 			{else}

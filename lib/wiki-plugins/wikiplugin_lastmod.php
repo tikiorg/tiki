@@ -39,7 +39,7 @@ function wikiplugin_lastmod($data, $params) {
 
 	}
 
-	$lastmod = $tikilib->date_format( "%a, %e %b %Y %H:%M:%S %0", $tikilib->page_exists_modtime($page) );
+	$lastmod = $tikilib->date_format( "%a, %e %b %Y %H:%M:%S %Z", $tikilib->page_exists_modtime($page) );
 
 	return $lastmod;
 

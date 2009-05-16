@@ -1,5 +1,6 @@
 <?php
 
+define( 'SVN_MIN_VERSION', 1.3 );
 define( 'TIKISVN', 'https://tikiwiki.svn.sourceforge.net/svnroot/tikiwiki' );
 
 function full( $relative ) { return TIKISVN . "/$relative"; }
@@ -22,6 +23,8 @@ function color( $string, $color )
 function error( $message ) { die( color( $message, 'red' ) . "\n" ); }
 function info( $message ) { echo $message . "\n"; }
 function important( $message ) { echo color($message, 'green') . "\n"; }
+
+function check_svn_version() { return (float)trim(`svn --version --quiet 2> /dev/null`) > SVN_MIN_VERSION; }
 
 function get_info( $path )
 {

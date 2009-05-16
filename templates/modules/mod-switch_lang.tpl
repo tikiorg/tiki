@@ -12,8 +12,8 @@
 	{/if}
 	{section name=ix loop=$languages}
 		{if $languages[ix].value eq $prefs.language and isset($languages[ix].name)}
-			{assign var='name' value=$languages[ix].name|escape}
-			{assign var=tpl_module_title value="$prefix&nbsp;$name"}
+			{assign var='langname' value=$languages[ix].name|escape}
+			{assign var=tpl_module_title value="$prefix&nbsp;$langname"}
 		{/if}
 	{/section}
 	{if !isset($tpl_module_title)}
@@ -27,13 +27,13 @@
 {if $module_params.mode eq 'flags'}
 	{section name=ix loop=$languages}
 		{assign var='val' value=$languages[ix].value|escape}
-		{assign var='name' value=$languages[ix].name|escape}
+		{assign var='langname' value=$languages[ix].name|escape}
 		{assign var='flag' value=$languages[ix].flag|escape}
 		{assign var='class' value=$languages[ix].class|escape}
 		{if $flag neq ''}
-			{icon href="tiki-switch_lang.php?language=$val" alt="$name" title="$name" _id="img/flags/$flag.gif" _type="absolute_uri" height=11 class="icon $class" }
+			{icon href="tiki-switch_lang.php?language=$val" alt="$langname" title="$langname" _id="img/flags/$flag.gif" _type="absolute_uri" height=11 class="icon $class" }
 		{else}
-			{button _text="$name" href="tiki-switch_lang.php?language=$val" _title="$name" _class="$class" }
+			{button _text="$langname" href="tiki-switch_lang.php?language=$val" _title="$langname" _class="$class" }
 		{/if}
 	{/section}
 {elseif $module_params.mode eq 'words'}

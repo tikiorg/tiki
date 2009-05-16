@@ -626,6 +626,7 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler /
 	private $description;
 	private $name;
 	private $lang;
+	private $translations;
 
 	private $mode = 'create_or_update';
 	private $exists;
@@ -647,6 +648,10 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler /
 			$this->content = $data['content'];
 		if( array_key_exists( 'mode', $data ) )
 			$this->mode = $data['mode'];
+		if( $this->lang
+			&& array_key_exists( 'translations', $data )
+			&& is_array( $data['translations'] ) )
+			$this->translations = $data['translations'];
 	}
 
 	function canInstall()
@@ -692,18 +697,15 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler /
 		$this->replaceReferences( $this->description );
 		$this->replaceReferences( $this->content );
 		$this->replaceReferences( $this->lang );
+		$this->replaceReferences( $this->translations );
 
-		error_reporting(E_ALL);
-		ini_set('display_errors','on');
 		if( strpos( $this->content, 'wikidirect:' ) === 0 ) {
 			$pageName = substr( $this->content, strlen('wikidirect:') );
 			$this->content = $this->obj->getPageContent( $pageName );
 		}
 
 		if( $this->mode == 'create' ) {
-			if( $tikilib->create_page( $this->name, 0, $this->content, time(), tra('Created by profile installer'), 'admin', '0.0.0.0', $this->description, $this->lang ) )
-				return $this->name;
-			else
+			if( ! $tikilib->create_page( $this->name, 0, $this->content, time(), tra('Created by profile installer'), 'admin', '0.0.0.0', $this->description, $this->lang ) )
 				return null;
 		} else {
 			$info = $tikilib->get_page_info( $this->name, true, true );
@@ -719,8 +721,21 @@ class Tiki_Profile_InstallHandler_WikiPage extends Tiki_Profile_InstallHandler /
 			}
 
 			$tikilib->update_page( $this->name, $this->content, tra('Page updated by profile installer'), 'admin', '0.0.0.0', $this->description, false, $this->lang );
-			return $this->name;
 		}
+
+		global $multilinguallib;
+		require_once 'lib/multilingual/multilinguallib.php';
+
+		$current = $tikilib->get_page_id_from_name( $this->name );
+		foreach( $this->translations as $targetName ) {
+			$target = $tikilib->get_page_info( $targetName );
+
+			if( $target && $target['lang'] && $target['lang'] != $this->lang ) {
+				$multilinguallib->insertTranslation( 'wiki page', $current, $this->lang, $target['page_id'], $target['lang'] );
+			}
+		}
+
+		return $this->name;
 	}
 } // }}}
 
@@ -912,6 +927,12 @@ class Tiki_Profile_InstallHandler_Module extends Tiki_Profile_InstallHandler // 
 		{
 			$modlib->replace_user_module( $data['name'], $data['name'], (string) $data['custom'] );
 		}
+
+		if ( is_null($data['params']) )
+                {
+                        // Needed on some versions of php to make sure null is not passed all the way to query as a parameter, since params field in db cannot be null
+                        $data['params'] = '';
+                }
 
 		return $modlib->assign_module( 0, $data['name'], null, $data['position'], $data['order'], $data['cache'], $data['rows'], $data['groups'], $data['params'] );
 	}

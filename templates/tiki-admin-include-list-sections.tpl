@@ -33,7 +33,7 @@
     </a>	
 	
     <a href="tiki-admin.php?page=look" class="admbox" style="background-image: url('pics/large/gnome-settings-background48x48.png')">
-      <img src="pics/trans.png" alt="{tr}Look &amp; Feel{/tr}" title="{tr}Customize look and feel of your Tiki{/tr}" /><span>{tr}Look &amp; Feel{/tr}</span>
+      <img src="pics/trans.png" alt="{tr}Look &amp; Feel{/tr}" title="{tr}Customize look and feel of your Tiki{/tr}" /><span>{tr}Look and Feel{/tr}</span>
     </a>
 
     <a href="tiki-admin.php?page=i18n" class="admbox" style="background-image: url('pics/large/i18n48x48.png')">
@@ -41,7 +41,7 @@
     </a>
 
 	<a href="tiki-admin.php?page=textarea" class="admbox" style="background-image: url('img/icons/admin_textarea.png')">
-      <img src="pics/trans.png" alt="{tr}Text Area{/tr}" title="{tr}Text Area{/tr}" /><span>{tr}Text Area{/tr}</span>
+      <img src="pics/trans.png" alt="{tr}Text Area{/tr}" title="{tr}Text Area{/tr}" /><span>{tr}Editing and Plugins{/tr}</span>
     </a>
 
     <a href="tiki-admin.php?page=module" class="admbox" style="background-image: url('pics/large/display-capplet48x48.png')">

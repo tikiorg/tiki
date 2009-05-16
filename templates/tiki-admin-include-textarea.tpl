@@ -166,22 +166,46 @@
         <div id="content{$focus}" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_content.$focus) and $smarty.session.tiki_cookie_jar.show_content.$focus neq 'y'}none{else}block{/if};">
 		{/if}
 		
-		{remarksbox type="note" title="{tr}About plugins{/tr}"}{tr}Tiki plugins add functionality to wiki pages, artcles and blogs etc. You can enable and disable them here.{/tr}{/remarksbox}
+		{remarksbox type="note" title="{tr}About plugins{/tr}"}{tr}Tiki plugins add functionality to wiki pages, articles and blogs etc. You can enable and disable them below.{/tr}
+		{tr}You can approve plugin use at <a href="tiki-plugins.php">tiki-plugins.php</a>.{/tr}		
+		{tr}The edit plugin icon is an easy way for users to edit the parameters of each plugin in wiki pages. It can be disabled for individual plugins below.{/tr} 	
 
+		{/remarksbox}
+
+		<fieldset class="admin">
+		<legend>{tr}Edit plugin icons{/tr}</legend>
+		<div class="adminoptionbox">
+			<div class="adminoption"><input type="checkbox" id="wiki_edit_plugin" name="wiki_edit_plugin" {if $prefs.wiki_edit_plugin eq 'y'}checked="checked"{/if}/></div> 
+				<div class="adminoptionlabel"><label for="wiki_edit_plugin">{tr}Enable edit plugin icons{/tr} {tr}(experimental - not comprehensively tested and requires new JQuery feature){/tr}</label></div>
+		</div>
+		</fieldset>
+		<fieldset class="admin">
+                <legend>{tr}Plugins{/tr}</legend>
 		{foreach from=$plugins key=plugin item=info}
-			<div class="adminoptionbox">
-				{assign var=pref value=wikiplugin_$plugin}
-				{if in_array( $pref, $info.prefs)}
-					<div class="adminoption"><input type="checkbox" id="wikiplugin_{$plugin|escape}" name="wikiplugin_{$plugin|escape}" {if $prefs[$pref] eq 'y'}checked="checked" {/if}/>
-					</div>
-				{/if}
-					<div class="adminoptionlabel"><label for="wikiplugin_{$plugin|escape}">{$info.name|escape}</label>
-						{if $prefs.feature_help eq 'y'} {help url="Plugin$plugin"}{/if}
-						<br /><strong>{$plugin|escape}</strong>: {$info.description|escape}
-					</div>
+			<fieldset class="admin">
+                	<legend>{$info.name|escape}</legend>
+			<div class="adminoptionbox">	 
+			<strong>{$plugin|escape}</strong>: {$info.description|escape}{assign var=pref value=wikiplugin_$plugin} {if $prefs.feature_help eq 'y'} {help url="Plugin$plugin"}{/if}
 			</div>
+			{if in_array( $pref, $info.prefs)}
+				<div class="adminoptionbox"> 
+				{assign var=pref value=wikiplugin_$plugin}
+				{assign var=pref_inline value=wikiplugininline_$plugin}	
+					<div class="adminoption"><input type="checkbox" id="wikiplugin_{$plugin|escape}" name="wikiplugin_{$plugin|escape}" {if $prefs[$pref] eq 'y'}checked="checked" {/if}/> 
+					</div> 
+					<div class="adminoptionlabel"><label for="wikiplugin_{$plugin|escape}">{tr}Enable{/tr}</label>
+					</div> 
+				</div>	
+				<div class="adminoptionbox">
+				        {if !$plugins.$plugin.inline}<div class="adminoption"><input type="checkbox" id="wikiplugininline_{$plugin|escape}" name="wikiplugininline_{$plugin|escape}" {if $prefs[$pref_inline] eq 'y'}checked="checked" {/if}/>
+                                        </div>{/if} 
+					<div class="adminoptionlabel"><label for="wikiplugininline_{$plugin|escape}">{if $plugins.$plugin.inline}The edit plugin icon is not supported for this plugin{else}{tr}Disable edit plugin icon (make plugin inline){/tr}{/if}</label>
+					</div> 
+				</div>
+			{/if} 
+			</fieldset>
 		{/foreach}
-
+		</fieldset>
 		{if $prefs.feature_tabs neq 'y'}</div>{/if}
     </fieldset>
 

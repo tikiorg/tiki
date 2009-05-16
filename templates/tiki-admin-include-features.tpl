@@ -229,6 +229,10 @@
 						<span class="checkbox"><input type="checkbox" name="feature_mootools" {if $prefs.feature_mootools eq 'y'}checked="checked"{/if}/></span>
 						<span class="label"> <a href="{$prefs.helpurl}Mootools" target="tikihelp" class="tikihelp" title="{tr}Mootools{/tr}"> {tr}Mootools{/tr}</a></span>
 					</div>
+					<div class="half_width">
+						<span class="checkbox"><input type="checkbox" name="feature_floating_help" {if $prefs.feature_floating_help eq 'y'}checked="checked"{/if}/></span>
+						<span class="label">{tr}Floating help aka the Big Blue Help Icon{/tr}</span>
+					</div>
 				</div>
 			</fieldset>
 				
@@ -278,6 +282,10 @@
 							<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}MindMap" target="tikihelp" class="tikihelp" title="{tr}Mindmap{/tr}">{/if} {tr}Mindmap{/tr} {if $prefs.feature_help eq 'y'}</a>{/if} </span>
 						</div>
 						<div class="half_width">
+							<span class="checkbox"><input type="checkbox" name="feature_print_indexed" {if $prefs.feature_print_indexed eq 'y'}checked="checked"{/if}/></span>
+							<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Print+Indexed" target="tikihelp" class="tikihelp" title="{tr}Print Indexed{/tr}: {tr}Print Indexed{/tr}">{/if} {tr}Print Indexed{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
+						</div>
+						<div class="half_width">
 							 <span class="checkbox"><input type="checkbox" name="feature_sefurl" {if $prefs.feature_sefurl eq 'y'}checked="checked"{/if}/></span>
 							 <span class="label">{if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Rewrite+Rules" target="tikihelp" class="tikihelp" title="{tr}SEFURL{/tr}">{/if} {tr}Search engine friendly url{/tr}{if $prefs.feature_help eq 'y'}</a>{/if}</span>
 						</div>
@@ -293,14 +301,14 @@
 							<span class="checkbox"><input type="checkbox" name="feature_wysiwyg" {if $prefs.feature_wysiwyg eq 'y'}checked="checked"{/if}/></span>
 							<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Wysiwyg+Editor" target="tikihelp" class="tikihelp" title="{tr}Wysiwyg editor{/tr}: {tr}Wysiwyg editor{/tr}">{/if} {tr}Wysiwyg editor{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
 						</div>
-					</fieldset>
-					<fieldset>
-						<legend class="heading">{icon _id="exclamation"}<span>{tr}Malfunctioning{/tr}</span></legend>
-						<span class="description">{tr}These features have critical faults - not recommended{/tr}</span>
 						<div class="half_width">
 							<span class="checkbox"><input type="checkbox" name="feature_ajax_autosave" {if $prefs.feature_ajax_autosave eq 'y'}checked="checked"{/if}/></span>
 							<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Lost+Edit+Protection" target="tikihelp" class="tikihelp" title="{tr}Ajax{/tr}: {tr}Ajax auto-save{/tr}">{/if} {tr}Ajax auto-save{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
 						</div>
+					</fieldset>
+					<fieldset>
+						<legend class="heading">{icon _id="exclamation"}<span>{tr}Malfunctioning{/tr}</span></legend>
+						<span class="description">{tr}These features have critical faults - not recommended{/tr}</span>
 						<div class="half_width">
 							<span class="checkbox"><input type="checkbox" name="feature_charts"	{if $prefs.feature_charts eq 'y'}checked="checked"{/if}/></span>
 							<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Charts" target="tikihelp" class="tikihelp" title="{tr}Charts{/tr}">{/if} {tr}Charts{/tr} {if $prefs.feature_help eq 'y'}</a>{/if} </span>
@@ -411,7 +419,7 @@
 					</div>
 					<div class="half_width">
 						<span class="checkbox"><input type="checkbox" name="feature_group_watches" {if $prefs.feature_group_watches eq 'y'}checked="checked"{/if}/></span>
-						<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}User+Watches" target="tikihelp" class="tikihelp" title="{tr}User Watches{/tr}">{/if} {tr}Group Watches{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
+						<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}Group+Watches" target="tikihelp" class="tikihelp" title="{tr}Group Watches{/tr}">{/if} {tr}Group Watches{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
 					</div>
 					<div class="half_width">
 						<span class="checkbox"><input type="checkbox" name="feature_user_watches_translations"	{if $prefs.feature_user_watches_translations eq 'y'}checked="checked"{/if}/></span>

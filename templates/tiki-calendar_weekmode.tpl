@@ -3,9 +3,9 @@
   <tr valign="middle" style="height:36px">
     <td id="topLeft" class="calHeading" width="9%"><strong>{$viewstart|tiki_date_format:"%Y"}</strong></td>
 {section name=dn loop=$daysnames}
-    <td id="top_{$smarty.section.dn.index}" class="calHeading{if $focuscell eq $viewWeekDays[dn]}On{/if}" width="13%">
+    <td id="top_{$smarty.section.dn.index}" class="calHeading{if $smarty.session.CalendarFocusDate eq $viewWeekDays[dn]}On{/if}" width="13%">
 	  <a href="{$myurl}?viewmode=day&amp;todate={$viewWeekDays[dn]}" title="{tr}View this Day{/tr}">{$daysnames[dn]}</a><br />
-	  <strong><a href="{$myurl}?todate={$viewWeekDays[dn]}" title="{tr}Change Focus{/tr}">{$viewWeekDays[dn]|tiki_date_format:$short_format_day}</a></strong>
+	  <strong><a href="{$myurl}?focus={$viewWeekDays[dn]}&amp;viewmode=week" title="{tr}Change Focus{/tr}">{$viewWeekDays[dn]|tiki_date_format:$short_format_day}</a></strong>
 	  {if $tiki_p_add_events eq 'y' and count($listcals) > 0}<a href="tiki-calendar_edit_item.php?todate={$viewWeekDays[dn]}{if $displayedcals|@count eq 1}&amp;calendarId={$displayedcals[0]}{/if}" title="{tr}Add Event{/tr}">{icon _id='calendar_add' alt="{tr}+{/tr}"}</a>{/if}
 	</td>
 {/section}
@@ -44,7 +44,7 @@
 			{/if}
 		    ><img src="pics/icons/more_info.gif" alt="{tr}Details{/tr}" /></a>
 		  </span>
-	  	  <abbr class="dtstart" title="{$event.startTimeStamp|isodate}" {if $event.status eq '2'}style="text-decoration:line-through"{/if}>{$event.name}</abbr>
+	  	  <abbr class="dtstart" title="{if $event.result.allday eq '1'}{tr}All Day{/tr}{else}{$event.startTimeStamp|isodate}{/if}" {if $event.status eq '2'}style="text-decoration:line-through"{/if}>{$event.name}</abbr>
 	  </div>
 		{/if}
 			{/section}

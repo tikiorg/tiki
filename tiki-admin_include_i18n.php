@@ -33,6 +33,7 @@ ask_ticket('admin-inc-i18n');
 		"feature_babelfish",
 		"feature_babelfish_logo",
 		'show_available_translations',
+		'feature_multilingual_one_page',
     );
 
 

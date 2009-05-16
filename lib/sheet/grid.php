@@ -726,8 +726,8 @@ class TikiSheetFormHandler extends TikiSheetDataHandler
 		{
 			for( $x = 0; $sheet->getColumnCount() > $x; $x++ )
 			{
-				$calc = $sheet->calcGrid[$y][$x];
-				$value = $sheet->dataGrid[$y][$x];
+				$calc = str_replace('\n', ' ', $sheet->calcGrid[$y][$x]);
+				$value = str_replace('\n', ' ', $sheet->dataGrid[$y][$x]);
 				$width = $sheet->cellInfo[$y][$x]['width'];
 				$height = $sheet->cellInfo[$y][$x]['height'];
 				$format = $sheet->cellInfo[$y][$x]['format'];

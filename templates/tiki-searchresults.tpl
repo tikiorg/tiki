@@ -1,7 +1,7 @@
 {* $Id$ *}
 {popup_init src="lib/overlib.js"}
 {if !( $searchNoResults ) }
-  {title admpage="search"}{tr}Search results{/tr}{/title}
+  {title admpage="search" help="Search+User"}{tr}Search results{/tr}{/title}
 {/if}
 
 
@@ -64,18 +64,19 @@
 
 {if $prefs.feature_search_show_search_box eq 'y'}
 <form class="forms" method="get" action="tiki-searchresults.php">
-    {tr}Find{/tr} <input id="fuser" name="highlight" size="14" type="text" accesskey="s" value="{$words}" />
+    <label class="searchhighlight" for="highlight">{tr}Find{/tr} <input id="fuser" name="highlight" size="14" type="text" accesskey="s" value="{$words}" /></label>
 		{if !( $searchStyle eq "menu" )} 
-		<label for="boolean">{tr}Advanced search:{/tr}<input type="checkbox" name="boolean"{if $boolean eq 'y'} checked="checked"{/if} /></label>
-		{add_help show='y' title="{tr}Advanced Search Help{/tr}" id="advanced_search_help"}
+		<label class="searchboolean" for="boolean">{tr}Advanced search:{/tr}<input type="checkbox" name="boolean"{if $boolean eq 'y'} checked="checked"{/if} /></label>
+		{add_help show='n' title="{tr}Help{/tr}" id="advanced_search_help"}
 			{$smarty.capture.advanced_search_help}
 		{/add_help}
-		<label for="date">{tr}Date Search:{/tr}
+		<label class="searchdate" for="date">{tr}Date Search:{/tr}
 		<select name="date" onchange="javascript:submit()">
 		{section name=date start=0 loop=12 step=1}	
 		<option value="{$smarty.section.date.index}" {if $smarty.section.date.index eq $date}selected="selected"{/if}>{if $smarty.section.date.index eq 0}{tr}All dates{/tr}{else}{$smarty.section.date.index} {tr}Month{/tr}{/if}</option>
 		{/section}
 		</select>
+		</label>
 		{/if}
 
 {if $prefs.feature_search_show_object_filter eq 'y'}
@@ -123,7 +124,7 @@
 	{if $forumId}<input type="hidden" name="forumId" value="{$forumId}" />{/if}
 {/if}
 {/if}
-    <input type="submit" class="wikiaction" name="search" value="{tr}Go{/tr}" />
+    <label class="searchsubmit"><input type="submit" class="wikiaction" name="search" value="{tr}Go{/tr}" /></label>
 </form>
 {/if}
 

@@ -583,6 +583,10 @@ include_once ("categorize_list.php");
 
 ask_ticket('admin-trackers');
 
+global $wikilib; include_once('lib/wiki/wikilib.php');
+$plugins = $wikilib->list_plugins(true, 'trackerDescription');
+$smarty->assign_by_ref('plugins', $plugins);
+
 // disallow robots to index page:
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 

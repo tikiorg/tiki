@@ -252,13 +252,13 @@ padding-left: 18px;
 /* Style for navbar buttons 
  *  This class has to be added in the main style sheet */
 #highlight  {
-	background-color : #eeee99 !important;
+	background-color : #eeee99;
 }
 
 /* Style for error or warning announces
  *  This class has to be added in the main style sheet */
 .error, #error{
-	background-color: #ee9999 !important;
+	background-color: #ee9999;
 	color: #000000;
 }
 

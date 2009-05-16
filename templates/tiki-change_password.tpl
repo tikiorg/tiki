@@ -8,7 +8,7 @@
 <table class="form">
 <tr>
   <td class="formcolor">{tr}Username{/tr}:</td>
-  <td class="formcolor"><input type="text" name="user" value="{$userlogin|escape}" /></td>
+  <td class="formcolor"><input type="text" name="user" value="{$userlogin|escape}" {if $userlogin}readonly="readonly"{/if} /></td>
 </tr>
 {if empty($smarty.request.actpass)}
 <tr>

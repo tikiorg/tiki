@@ -45,6 +45,7 @@ function filter_out_sefurl($tpl_output, &$smarty, $type=null, $title=null) {
 			if (empty($title))
 				$title = $artlib->get_title($matches[1]);
 			$title = preg_replace(PATTERN_TO_CLEAN_TEXT, CLEAN_CHAR, $tikilib->take_away_accent($title));
+			$title = preg_replace('/'.CLEAN_CHAR.CLEAN_CHAR.'+/', '-', $title);
 		}
 	}
 	if ($type == 'blog' && $prefs['feature_sefurl_title_blog'] == 'y') {
@@ -53,6 +54,7 @@ function filter_out_sefurl($tpl_output, &$smarty, $type=null, $title=null) {
 			if (empty($title))
 				$title = $bloglib->get_title($matches[1]);
 			$title = preg_replace(PATTERN_TO_CLEAN_TEXT, CLEAN_CHAR, $tikilib->take_away_accent($title));
+			$title = preg_replace('/'.CLEAN_CHAR.CLEAN_CHAR.'+/', '-', $title);
 		}
 	}
 	if ($type == 'blogpost' && $prefs['feature_sefurl_title_blog'] == 'y') {
@@ -63,6 +65,7 @@ function filter_out_sefurl($tpl_output, &$smarty, $type=null, $title=null) {
 					$title = $post_info['title'];
 			}
 			$title = preg_replace(PATTERN_TO_CLEAN_TEXT, CLEAN_CHAR, $tikilib->take_away_accent($title));
+			$title = preg_replace('/'.CLEAN_CHAR.CLEAN_CHAR.'+/', '-', $title);
 		}
 	}
 
@@ -70,13 +73,12 @@ function filter_out_sefurl($tpl_output, &$smarty, $type=null, $title=null) {
 		if (empty($type) || $type == $regex['type']) {
 			// if a question mark in pattern, deal with possible additional terms
 			// The '?&' isn't pretty but seems to work.
-			if( strpos($regex['left'],'?') !== FALSE ) {
-				$tpl_output = preg_replace( '/'.$regex['left'].'&/', $regex['right'].'?&', $tpl_output );
-			}
+			//if( strpos($regex['left'],'?') !== FALSE ) {
+			//	$tpl_output = preg_replace( '/'.$regex['left'].'&/', $regex['right'].'?&', $tpl_output );
+			//}
 			$tpl_output = preg_replace( '/'.$regex['left'].'/', $regex['right'], $tpl_output );
 		}
 	}
-	$tpl_output = str_replace('%2B', '+', urlencode($tpl_output));
 
 	if (!empty($title)) {
 		$tpl_output .= TITLE_SEPARATOR.$title;

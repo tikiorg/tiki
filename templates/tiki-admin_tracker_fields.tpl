@@ -48,7 +48,7 @@
 
 {if $prefs.feature_help eq 'y'}
 <a href="{$prefs.helpurl}Tracker+Field+Type" target="tikihelp" class="tikihelp" title="{tr}Trackers{/tr}">
-<img src="img/icons/help.gif" height="16" width="16" alt='{tr}help{/tr}' /></a>{/if}
+{icon _id='help' alt='{tr}help{/tr}'}</a>{/if}
 
 <div  id='z' {if $showit}style="display:block;"{else}style="display:none;"{/if}><input type="text" name="options" value="{$options|escape}" size="50" /></div>
 </td></tr>

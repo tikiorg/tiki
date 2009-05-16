@@ -324,3 +324,4 @@ function remove_newsletter_file(id) {
 
 -->
 </script>
+{include file=tiki-edit_help.tpl}

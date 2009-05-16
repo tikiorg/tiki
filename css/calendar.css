@@ -505,10 +505,6 @@ a.viewmodeoff img {
 #exportcal .calinput {
 	padding: 10px;
 }
-.calbuttonBox {
-	/*float: left;
-	position: relative;*/
-}
 
 .statusbox {
 	margin-bottom : 1px;
@@ -543,12 +539,22 @@ a.addevent:hover { border-bottom:0px; }
 
 .tabrowLeft {  }
 .tabrowRight {  }
-.viewmode {width: 100%; text-align: center}
+
+.viewmode {
+	line-height: 1em;
+	width: 100%;
+	text-align: center;
+	}
+
 .viewmode div {display: inline}
 .calbuttonBox {  }
 .calbuttonLeft {  }
 .calbuttonRight {  }
-.calbuttonoff {  }
-#prev {  }
-#next {  }
+
+.calbuttonoff , 
+.calbuttonon , 
+a.prev img ,
+a.next img {
+	vertical-align: middle;  
+}
 

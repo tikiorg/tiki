@@ -13,7 +13,8 @@ html {}
 body {
 	margin: 0;
 	padding: 0;
-	text-align: left}
+	text-align: left;
+	width: 100%}
 
 html>body {}
 
@@ -48,6 +49,8 @@ span.button {
 /* Links in buttons */
 span.button a,
 span.button a:visited,
+span.button2 a,
+span.button2 a:visited,
 button,
 input[type=reset],
 input[type=submit],
@@ -74,6 +77,23 @@ span.button input,
 	border: 0;
 	padding: 0 4px}
 	
+.button a:hover,
+button:hover,
+input[type=reset]:hover,
+input[type=submit]:hover,
+.button input:hover,
+.submitbutton:hover,
+.calbuttonBox:hover {}
+
+.button a:active,
+button:active,
+input[type=reset]:active,
+input[type=submit]:active,
+.button input:active,
+.submitbutton:active,
+span.highlight a:link,
+span.highlight a:visited {  }
+
 div.iconmenu {display: inline}
 select[multiple] {height: 10em}
 label {cursor: pointer}
@@ -92,6 +112,8 @@ hr {
 	border-width: 0;
 	padding: 0;
 	color: red}
+	
+img {border: 0}
 
 /***** Site Header & Identity *****/
 #header-top {position: relative}
@@ -185,7 +207,7 @@ div#sitead {margin: auto}
 #header a:hover {}
 
 #tiki-top {}
-* html #tiki-top { font-size: 11px }
+* html #tiki-top {font-size: 11px}
 #tiki-top a {}
 
 #tiki-top table {
@@ -326,16 +348,11 @@ div.menuSection div.separator {}
 /* centercolumn */
 #showhide_columns {}
 *:first-child+html #showhide_columns {}
-
-.tellafriend {
-	font-size: 80%;
-	text-align: right}
 	
 a.flip,
 a.flip:visited,
 .tellafriend a,
-.tellafriend a:visited {}
-
+.tellafriend a:visited,
 a.flip:hover,
 .tellafriend a:hover {
 	font-size: 80%;
@@ -358,8 +375,11 @@ a.flip img {display: none}
 	
 #credits {display: inline}
 div#loadstats {}
+
 .error,
-#error {}
+#error {
+	background: yellow;
+	color: red}
 
 #show-errors-button {z-index: 1024}
 #errors {z-index: 1023}
@@ -372,7 +392,8 @@ ul.jumplinks {
 ul.jumplinks,
 .jumplinks {
 	position: absolute;
-	top: -9000px; left: -9000px;
+	top: -9000px;
+	left: -9000px;
 	z-index: 9}
 
 ul.jumplinks a:focus,
@@ -450,9 +471,6 @@ div#edithelpzone {display: none}
 #overdiv table {width: auto !important}
 .attention {color: red}
 
-.highlight,
-#highlight {}
-
 .openid_url {
 	background: #fff url(../../img/icons/login-OpenID-bg.gif) no-repeat;
 	padding-left: 18px}
@@ -461,7 +479,7 @@ div#edithelpzone {display: none}
 	font-size: .95em;
 	text-decoration: none}
 
-.bannertext:hover {color: #9400ed}
+.bannertext:hover {}
 
 div.imagerank {margin: 10px 5px}
 
@@ -534,7 +552,8 @@ img.icon {
 	margin: 0 1px}
 
 .findtitle input {margin-left: 2px}
-.findtable ul {list-style-type: none}
+.findtable ul {list-style: none}
+.findtable ul li {float: left}
 
 .top_actions {
 	text-align: right;
@@ -542,9 +561,6 @@ img.icon {
 
 input#findwhat {}
 div.findsubmit {}
-
-.findtable ul {list-style: none}
-.findtable ul li {float: left}
 
 ul.categories{
 	margin: 0;
@@ -560,20 +576,22 @@ div#tikihelp {
 	position: fixed;
 	right: 0;
 	top: 3px;
-	height: 95%;
+	height: auto; /* if there was height specified it covered the right column content "invisibly" making part of it unclickable (from strasa) */
 	max-width: 50%;
-	padding:0;
-	margin:0;
+	padding: 0;
+	margin: 0;
 	border: none;
 	background: transparent;
-	z-index: 2}
+	z-index: 820}
 
 * html div#tikihelp {position: absolute}
 
 div.help_icon {
 	border: 0;
 	margin: 0;
-	padding: 0}
+	padding: 0;
+	height: 48px;
+	text-align: right}
 
 div.help_icon img {
 	vertical-align: middle;
@@ -587,14 +605,15 @@ div.help_section_select {
 	background: #e7e9ea;
 	color: #000;
 	width: 100%;
-	margin: 2px;}
+	margin: 2px}
 
 div.help_sections {
 	width: 360px;
 	padding:  2px;
 	background: #aac9e9;
 	max-height : 95%;
-	overflow: auto;}
+	overflow: auto;
+	height: 400px}
 
 div.help_section {
 	margin: 5px;
@@ -609,6 +628,32 @@ div.help_section {
 	border-right: 1px solid #696969;
 	padding: 0 5px;
 	font-size: smaller}
+	
+.plugin-desc {padding: 5px}
+
+.plugin-sample {
+	padding: 5px;
+	font-family: monospace}
+
+.plugin-sample .plugin-param {padding-left: 15px}
+
+.plugin-form-float {
+	position: fixed;
+	left: 5%;
+	right: 365px;
+	top: 5%;
+	max-height: 90%;
+	overflow: auto;
+	background: white;
+	color: black;
+	padding: 10px;
+	border: solid 2px black;
+	z-index: 1000}
+
+.icon_edit_section {
+	float: right;
+	margin-top: 1em}
+
 
 /***** Boxes *****/
 /** Modules **/
@@ -622,7 +667,7 @@ h3.box-title {
 	padding-top: 0}
 
 .box-title a,
-.box-title a:link {  }
+.box-title a:link {}
 
 * html h3.box-title {position: static}
 
@@ -655,8 +700,16 @@ h3.box-title {
 .box-data ol,
 .box-data ul {padding-right: .6em}
 
-.box-data ol {padding-left: 2em; margin-top: 0; margin-bottom: 0;}
-.box-data ul {padding-left: 0; margin-top: 0; margin-bottom: 0}
+.box-data ol {
+	padding-left: 2em;
+	margin-top: 0;
+	margin-bottom: 0}
+
+.box-data ul {
+	padding-left: 0;
+	margin-top: 0;
+	margin-bottom: 0}
+
 * html .box-data ol {margin-left: 0}
 * html .box-data ul {margin-left: 1em}
 *:first-child+html .box-data ol {margin-left: 0}
@@ -676,11 +729,36 @@ div.minichatchans {overflow: auto}
 .minichat {overflow: auto}
 div.minichatdiv {overflow: auto}
 
+/* mod-switch_lang */
+.box-switch_lang .box-data img {
+	padding: .2em;
+	vertical-align: middle}
+
+.box-switch_lang .box-data img.highlight {
+	padding: .1em;
+	border: .1em solid #f00}
+
+.box-switch_lang .box-data span.highlight {border: .1em solid #f00}
+.box-switch_lang li {list-style: none}
+.box-switch_lang .box-data a.highlight {font-weight: bold}
+.box-switch_lang ul {padding: 0 1em}
+
 /** Other boxes **/
-div.cbox {overflow: hidden}
-.cbox-title {}
+.cbox {
+	overflow: hidden;
+	border: 1px solid yellow;
+	background: white;
+	color: black}
+
+.cbox-title {
+	border-bottom: 1px solid yellow;
+	padding: 3px 3px 0 3px}
+
 .cboxlink {}
-.cbox-data {overflow: hidden}
+
+.cbox-data {
+	overflow: hidden;
+	padding: 0 3px 3px 3px}
 
 .rbox {margin: 1em .3em 2em .3em}
 	
@@ -688,7 +766,7 @@ div.cbox {overflow: hidden}
 .rbox-data {
 	overflow: hidden;
 	padding: 1px 3px;
-	/*background: #fff*/}
+	border: 1px solid yellow}
 
 .rbox-title {
 	display: inline-block;
@@ -701,11 +779,14 @@ div.cbox {overflow: hidden}
 	border: 1px solid yellow;
 	border-bottom: 0}
 	
+.rbox img {
+	padding-right: 3px;
+	vertical-align: middle}
+	
 .rbox-data {
 	position: relative;
 	z-index: 0;
-	padding: 0 3px 3px 3px;
-	border: 1px solid yellow}
+	padding: 0 3px 3px 3px}
 
 .comment .rbox-title,
 .comment .rbox-data {}
@@ -716,11 +797,15 @@ div.cbox {overflow: hidden}
 .tip .rbox-title,
 .tip .rbox-data {}
 
-.warning  .rbox-title {}
+.warning .rbox-title {}
 .warning .rbox-data {}
 
-div.simplebox {}
-.highlight {}
+div.simplebox {
+	color: green;
+	background: silver;
+	border: 1px solid green}
+
+.highlight {background: aqua}
 
 /***** Tables, Tabs ****/
 /** Tables **/
@@ -740,6 +825,8 @@ table.admin {
 
 table.normalnoborder {width: 100%}
 table.admin tr td div#page-bar {}
+
+td {vertical-align: top}
 
 td.normal,
 .normal td,
@@ -879,7 +966,7 @@ div.description {display: block}
 	float: right;
 	font-size: small}
 
-.categpath {}
+.categpath {display: block}
 .wikiactions {white-space: nowrap !important}
 
 .wikiactions .icons,
@@ -925,7 +1012,7 @@ div.cachedpage {}
 
 #wikihelp-tab table td {padding: 2px}
 textarea.wikiedit {font-size: 1.0em}
-p.editdate {}
+p.editdate {padding-top: 10px}
 img.externallink {}
 
 /* Needed esp. for light-on-dark theme */
@@ -938,7 +1025,8 @@ div#helptool {}
 table.wikiplugin-split {
 	border: none;
 	clear: both}
-	
+
+table.wikiplugin-split .codelisting {width: 95%}
 div.box-minichat {width: 100%}
 div.minichatchans {overflow: auto}
 .minichat {overflow: auto}
@@ -946,8 +1034,13 @@ div.minichatchans {overflow: auto}
 div.minichatdiv {
 	font-size: .9em;
 	overflow: auto}
+	
+/* wikiplugin_footnotearea */
+.footnotearea {
+	margin-top: 2em;
+	font-size: 0.9em}
 
-/* for wikiplugin_fancylist */
+/* wikiplugin_fancylist */
 .wikitext .fancylist {
 	margin: .5em 0;
 	padding: 0}
@@ -970,6 +1063,17 @@ div.minichatdiv {
 
 [class].wikitext .fancylist li p {margin-left: -3px}
 
+/* Versions plugin */
+#tiki-center .versionav {
+	padding: 0;
+	border: 0;
+	margin-bottom: -1px}
+	
+.versionav .button {margin-bottom: 0}
+
+#tiki-center .versioncontent {
+	padding: 1em}
+	
 /* wikiplugin edit */
 .wikiplugin_edit textarea {width: 99%; height: 150px}
 
@@ -1025,6 +1129,8 @@ ul.toc * {border: none}
 
 .diffbody {background: #f2f4f5}
 .diffchar {color: red}
+
+.plugin-desc {padding: 5px}
 
 /***** Articles ****/
 div.article {margin-bottom: 40px}
@@ -1130,9 +1236,12 @@ a.blogt:hover {}
 
 div.postinfo a.linkmodule {}
 .postinfo div {margin-top: 30%}
-/*
-.small {}
-*/
+
+small.description {
+	display: block;
+	font-size: .95em;
+	font-style: italic}
+
 div.posthead {
 	text-align: left;
 	padding: 3px}
@@ -1148,7 +1257,7 @@ body.tiki_blogs .author_info {}
 body.tiki_blogs .postbody-title {}
 * html .postbody table {}
 
-body.tiki_blogs div.postfooter {
+body.tiki_blogs .post .postfooter {
 	clear: both;
 	float: right;
 	margin-bottom: 2em}
@@ -1315,7 +1424,7 @@ img.athumb {
 	border: 0;
 	margin: auto}
 
-.caption {color: black}
+.caption {}
 p.norecords {font-weight: bold}
 
 div.imagetitle {
@@ -1360,14 +1469,25 @@ div.thumbdescription span.thumbinfoname {}
 a.namealias {}
 div.gallerypath, div.gallerypath a {}
 div.gallerypath a:hover {}
-/*.fgalexplorer {border: 1px solid dimgray}*/
+.fgalexplorer {/*border: 1px solid yellow*/}
 
 .fgallisting table td {
 	padding-left: 2px;
 	padding-right: 2px}
 	
-.opaque {border: 1px solid yellow}
-.opaque .box-title {border-bottom: 1px solid yellow}
+.opaque {
+	border: 1px solid yellow;
+	background: white;
+	color: black}
+	
+opaque .box-title,
+.opaque .box-data {width: auto}
+
+.opaque .box-title {
+	border-bottom: 1px solid yellow;
+	padding: 3px 3px 0 3px}
+	
+.opaque .box-data {padding: 0 3px 3px 3px}
 .opaque .iconmenu {display: block}
 
 /***** Trackers (etc.) *****/
@@ -1384,9 +1504,77 @@ div.gallerypath a:hover {}
 /* also for categorize.tpl */
 div.multiselect {
 	vertical-align: middle;
+	padding: 0;
+	border:1px solid #80B1E2;
+	height: auto;
+	overflow: visible}
+
+div.multiselect table {width: 100%}
+
+div.multiselect div.option {
+	white-space: nowrap;
+	width: 33.33%;
+	display: inline-block;
+	overflow: hidden;
+	margin: -1px}
+
+div.multiselect div.selection span {display: inline}
+
+div.multiselect li.odd,
+div.multiselect div.odd {
+	color: black;
+	background: #F4F6F7}
+
+div.multiselect li.odd:hover,
+div.multiselect div.odd:hover {background: #FFF7E6}
+
+div.multiselect li.even,
+div.multiselect div.even {
+	color: black;
+	background: #E7E9EA}
+
+div.multiselect div.even:hover,
+div.multiselect div.even:hover {background: #F0F2F3}
+
+div.multiselect div.odd,
+div.multiselect div.even {border: 1px solid #80B1E2}
+
+div.multiselect ul {
+	list-style-image: none;
+	list-style-position: outside;
+	list-style-type: none;
+	text-align: left;
+	white-space: nowrap;
+	margin: 0;
+	padding: 0}
+
+div.multiselect li {margin-left: 3em}
+
+div.multiselect  ul.root > li {
+	margin: 0 1em 0.5em .5em;
+	display: block;
+	float: left}
+
+div.multiselect img {vertical-align: middle}
+
+div.multiselect div.selection {
+	display: none;
 	overflow: auto;
-	height: 5em;
-	width: 100%}
+	position: relative;
+	height: auto;
+	max-height: 7em;
+	z-index: 1000;
+	width: 100%;
+	left: -1px;
+	border: 1px solid #80B1E2;
+	background: #fff;
+	float: left;
+	margin: 0;
+	padding: 0}
+
+div.multiselect:hover,
+div.multiselect div.selection:hover {border: 1px solid #80B1E2}
+
 	
 /***** Categories, Tags *****/
 table.tcategpath {}
@@ -1417,25 +1605,56 @@ td.categobjectsdataodd {}
 	font-weight: bold;
 	list-style: none}
 
-ul.catfeatures li {}
+.catfeatures li {
+	display: inline;
+	margin-right: 7px}
 
 .catitems {
 	margin-left: 0;
 	padding: 0;
 	list-style: none}
 
-ul.catitems li {
+.catitems li {
 	display: inline;
 	margin-right: 7px}
 
-ul.catitems li a.link {}
+.catitems li a.link {}
 
 /***** Tags (freetags) *****/
 .freetaglist {
 	padding: 0 20px 8px;
 	text-align: right}
 
-div.freetagitemlist {}
+.freetagsearch {
+  margin: 10px 0;
+  text-align: center}
+
+.freetagskeywords {margin: 10px 0}
+.freetaglist a {text-decoration: none}
+.freetagsort {margin: 10px 0}
+
+.freetagresult {
+	margin-left: 10%;
+	width: 70%}
+
+.freetagitemlist {
+	margin-top: 10px;
+	padding: 0;
+	text-align: left}
+
+.freetagitemlist h3 {
+	margin: 0;
+	padding: 0}
+
+.freetagitemlist a {text-decoration: none}
+.freetagitemlist img {float: right}
+.freetagitemlist a:hover {text-decoration: none}
+
+.freetagitemlist div.type {
+	font-weight: bold;
+	font-size: 0.8em;
+	margin-left: 10px}
+
 a.freetag,
 a.freetag:hover {/* freetags.css (line 8)*/
 	background: none;
@@ -1503,6 +1722,10 @@ div.freetagObjectName a {text-decoration: none}
 	text-align: right}
 a.freetag {} /* articles... */
 
+.morcego_embedded {
+	border: 1px solid yellow;
+	text-align: center}
+
 /*****  Polls  *****/
 div.pollresults {}
 table.pollresults {width: 100%}
@@ -1544,10 +1767,6 @@ div.shoutboxmodmsg {
 textarea.tshoutbox{
 	font-size: .95em;
 	width: 90%}
-
-/*.wiki-table {} NOT FOUND IN TPLS.
-.wiki-tr-a td {border: 0}
-.wiki-tr-b td {border: 0} */
 
 /***** Directory *****/
 div.dircategs {font-size: 95%}
@@ -1635,6 +1854,7 @@ table.default td {}
 	in theme stylesheets.  */
 
 /***** Admin *****/
+
 div.adminanchors {}
 
 .highlight_word_0{
@@ -1677,6 +1897,17 @@ a.admbox.off:hover,
 a.admbox.off:focus,
 a.admbox.off:active {border: 1px solid #a9a9a9}
 
+span.disabled {font-style: italic}
+#style_thumb_div {text-align: center}
+
+td.mods_revision {
+	background: #b5cfb5;
+	color: #000}
+
+td.mods_update {
+	background:#dcdeac;
+	color: #000}
+
 /***** Ajax, jquery. etc. *****/
 /***** Ajax *****/
 div#ajaxLoading {
@@ -1705,7 +1936,32 @@ div#ajaxLoading {
 	white-space: normal !important;
 	padding: 5px 0 4px 8px}
 	
-#shadowbox_content {background: #f5f5f5}
+#shadowbox_content {
+	background: #f5f5f5;
+	color: #000}
+
+/* Cluetip - JQuery tooltips
+   =cluetipClass: 'default' */
+
+.cluetip-default {
+	background: #BED8F1;
+	color: #000}
+
+.cluetip-default #cluetip-outer {background: #BED8F1}
+.cluetip-default h3#cluetip-title {
+	background: #1B3A50;
+	color: #fff}
+
+.cluetip-default #cluetip-title a {
+	color: #BED8F1;
+	font-size: 0.95em}
+  
+.cluetip-default #cluetip-inner {padding: .9em}
+
+.cluetip-default div#cluetip-close { 
+	text-align: right;
+	margin: -10px 0 0 0;
+	color: #900}
 	
 /* MyTiki Preferences Ajax */
 .tab-wrapper {padding: 0}

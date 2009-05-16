@@ -2663,7 +2663,7 @@ class TikiLib extends TikiDB {
 		include_once('lib/userprefs/userprefslib.php');
 
 		$bindvars = array();
-		if ($prefs['feature_friends'] == 'y') {
+		if ($prefs['feature_friends'] == 'y' && !$include_prefs) {
 			$bindvars[] = $user;
 		}
 		if ( $find ) {
@@ -2721,7 +2721,7 @@ class TikiLib extends TikiDB {
 		if ( $sort_mode != '' ) $sort_mode = 'order by '.$sort_mode;
 
 		// Need to use a subquery to avoid bad results when using a limit and an offset, with at least MySQL
-		if ($prefs['feature_friends'] == 'y') {
+		if ($prefs['feature_friends'] == 'y' && !$include_prefs) {
 			$query = "select * from (select u.* $pref_field, f.`friend` from `users_users` u $pref_join $find_join left join `tiki_friends` as f on (u.`login` = f.`friend` and f.`user`=?) $pref_where $sort_mode) as tab";
 		} else {
 			$query = "select u.* $pref_field  from `users_users` u $pref_join $find_join $pref_where $sort_mode";
@@ -3917,7 +3917,7 @@ class TikiLib extends TikiDB {
 			$bindvars = $find;
 		} elseif (is_string($find) && !empty($find)) { // or a string
 			if (!$exact_match && $find) {
-				$find = preg_replace("/(\w+)/","%\\1%",$find);
+				$find = preg_replace("/([^\s]+)/","%\\1%",$find);
 				$f = preg_split("/[\s]+/",$find,-1,PREG_SPLIT_NO_EMPTY);
 				if (empty($f)) {//look for space...
 					$mid = " where `pageName` like '%$find%'";
@@ -5468,7 +5468,12 @@ class TikiLib extends TikiDB {
 	
 					// Construct argument list array
 					$arguments = $plugins['arguments'];
-	
+
+					if (count($arguments) == 0) {
+                        //TODO HACK: See bug 2499 http://dev.tikiwiki.org/tiki-view_tracker_item.php?itemId=2499
+						$arguments = array('' => '');
+					}
+
 					if ($this->plugin_exists( $plugin_name )) {
 	
 						if( $this->plugin_enabled( $plugin_name ) ) {
@@ -5495,8 +5500,9 @@ class TikiLib extends TikiDB {
 								}
 	
 							} else {
-
-
+								
+								// save plugin_data for plugin edit JS later (needs to not be plugin-parsed)
+								$plugin_data_saved = $plugin_data;
 								// Handle nested plugins.
 								$this->parse_first($plugin_data, $preparsed, $noparsed, $options, $real_start_diff + $pos+strlen($plugin_start));
 
@@ -5528,11 +5534,13 @@ class TikiLib extends TikiDB {
 								}
 							}
 							//echo '<pre>'; debug_print_backtrace(); echo '</pre>';
-							if( $this->plugin_is_editable( $plugin_name ) && (empty($options['print']) || !$options['print']) ) {
+							global $headerlib;
+							$headerlib->add_jsfile( 'tiki-jsplugin.php' );
+							if( $this->plugin_is_editable( $plugin_name ) && (empty($options['preview_mode']) || !$options['preview_mode']) && (empty($options['print']) || !$options['print']) ) {
 								include_once('lib/smarty_tiki/function.icon.php');
-								global $headerlib, $page;
+								global $page;
 								$id = 'plugin-edit-' . $plugin_name . $current_index;
-								$headerlib->add_jsfile( 'tiki-jsplugin.php?plugin=' . urlencode( $plugin_name ) );
+						
 								if ($prefs['feature_jquery'] == 'y') {
 									$headerlib->add_js( "
 	\$jq(document).ready( function() {
@@ -5540,6 +5548,8 @@ class TikiLib extends TikiDB {
 			show('$id');
 			\$jq('#$id').click( function(event) {
 				popup_plugin_form("
+					. json_encode('editwiki')
+					. ', '
 					. json_encode($plugin_name) 
 					. ', ' 
 					. json_encode($current_index) 
@@ -5548,7 +5558,7 @@ class TikiLib extends TikiDB {
 					. ', ' 
 					. json_encode($arguments) 
 					. ', ' 
-					. json_encode(TikiLib::htmldecode($plugin_data)) 
+					. json_encode(TikiLib::htmldecode($plugin_data_saved)) 
 					. ", event.target);
 			} );
 		}
@@ -5561,6 +5571,8 @@ class TikiLib extends TikiDB {
 			show('$id');
 			$('$id').addEvent( 'click', function(event) {
 				popup_plugin_form("
+					. json_encode('editwiki')
+					. ', '
 					. json_encode($plugin_name) 
 					. ', ' 
 					. json_encode($current_index) 
@@ -5569,7 +5581,7 @@ class TikiLib extends TikiDB {
 					. ', ' 
 					. json_encode($arguments) 
 					. ', ' 
-					. json_encode(TikiLib::htmldecode($plugin_data)) 
+					. json_encode(TikiLib::htmldecode($plugin_data_saved)) 
 					. ", event.target);
 			} );
 		}
@@ -5762,6 +5774,23 @@ class TikiLib extends TikiDB {
 					return false;
 
 		return true;
+	}
+
+	function plugin_is_inline( $name ) {
+		if( ! $meta = $this->plugin_info( $name ) )
+			return true; // Legacy plugins always inline 
+
+		global $prefs;
+
+		$inline = false;
+		if( isset( $meta['inline'] ) && $meta['inline'] ) 
+			return true; 
+
+		$inline_pref = 'wikiplugininline_' .  $name;
+		if( isset( $prefs[ $inline_pref ] ) && $prefs[ $inline_pref ] == 'y' )
+			return true;	
+
+		return false;
 	}
 
 	function plugin_can_execute( $name, $data = '', $args = array() ) {
@@ -6008,11 +6037,11 @@ class TikiLib extends TikiDB {
 	}
 
 	function plugin_is_editable( $name ) {
-		global $tiki_p_edit, $prefs;
+		global $tiki_p_edit, $prefs, $section;
 		$info = $this->plugin_info( $name );
-
-		return $info && $tiki_p_edit == 'y' && $prefs['wiki_edit_plugin'] == 'y'
-			&& ( ! isset($info['inline']) || ! $info['inline'] );
+		// note that for 3.0 the plugin editor only works in wiki pages, but could be extended later
+		return $section == 'wiki page' && $info && $tiki_p_edit == 'y' && $prefs['wiki_edit_plugin'] == 'y'
+			&& !$this->plugin_is_inline( $name ) ;
 	}
 
 	function quotesplit( $splitter=',', $repl_string ) {
@@ -7074,7 +7103,7 @@ class TikiLib extends TikiDB {
 										);
 						//}
 						global $tiki_p_edit, $section;
-						if ($prefs['wiki_edit_section'] == 'y' && $section == 'wiki page' && $tiki_p_edit == 'y' and ( $prefs['wiki_edit_section_level'] == 0 or $hdrlevel <= $prefs['wiki_edit_section_level']) ){
+						if ($prefs['wiki_edit_section'] == 'y' && $section == 'wiki page' && $tiki_p_edit == 'y' and ( $prefs['wiki_edit_section_level'] == 0 or $hdrlevel <= $prefs['wiki_edit_section_level']) && (empty($options['print']) || !$options['print']) ){
 							global $smarty;
 							include_once('lib/smarty_tiki/function.icon.php');
 							$button = '<div class="icon_edit_section"><a href="tiki-editpage.php?';
@@ -7298,15 +7327,15 @@ class TikiLib extends TikiDB {
 			}
 		}
 		$data = $new_data.$data;
-		// Add icon to edit the text before the first section
-		if ($prefs['wiki_edit_section'] == 'y' && isset($section) && $section == 'wiki page' && $tiki_p_edit == 'y' ){
+		// Add icon to edit the text before the first section (if there is some)
+		if ($prefs['wiki_edit_section'] == 'y' && isset($section) && $section == 'wiki page' && $tiki_p_edit == 'y' && (empty($options['print']) || !$options['print'])  && strpos($data, '<div class="icon_edit_section">') != 0){
 			global $smarty;
 			include_once('lib/smarty_tiki/function.icon.php');
 			$button = '<div class="icon_edit_section"><a href="tiki-editpage.php?';
 			if (!empty($options['page'])) {
 				$button .= 'page='.urlencode($options['page']).'&amp;';
 			}
-			$button .= 'hdr=0">'.smarty_function_icon(array('_id'=>'page_edit', 'alt'=>tra('Edit Section')), $smarty).'</a></div>';
+			$button .= 'hdr=0">'.smarty_function_icon(array('_id'=>'page_edit_section', 'alt'=>tra('Edit Section')), $smarty).'</a></div>';
 			$data = $button.$data;
 		}
 	}

@@ -284,7 +284,7 @@
 	<table class="normal">
 		<tr>
 			<td class="formcolor">
-				<label for="comments-title">{tr}Title{/tr} <span class="attention">({tr}required{/tr})</span>: </label>
+				<label for="comments-title">{tr}Title{/tr} <span class="attention">({tr}required{/tr})</span> </label>
 			</td>
 			<td class="formcolor">
 				<input type="text" size="50" name="comments_title" id="comments-title" value="{$comment_title|escape}" />
@@ -333,7 +333,7 @@
 
 		<tr>
 			<td class="formcolor">
-				<label for="editpost2">{if $forum_mode eq 'y'}{tr}Reply{/tr}{else}{tr}Comment{/tr}{/if}</label>
+				<label for="editpost2">{if $forum_mode eq 'y'}{tr}Reply{/tr}{else}{tr}Comment{/tr} <span class="attention">({tr}required{/tr})</span>{/if}</label>
 				<br /><br />
 				{include file="textareasize.tpl" area_name='editpost2' formId='editpostform'}
 				<br /><br />

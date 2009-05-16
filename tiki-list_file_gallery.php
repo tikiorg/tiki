@@ -277,6 +277,12 @@ if ( isset($_REQUEST['edit_mode']) and $_REQUEST['edit_mode'] ) {
 
 	// Edit a file
 	if ( isset($_REQUEST['fileId']) && $_REQUEST['fileId'] > 0 ) {
+		if ($tiki_p_edit_gallery_file != 'y') {
+			$smarty->assign('errortype', 401);
+			$smarty->assign('msg', tra('Permission denied'));
+			$smarty->display('error.tpl');
+			die;
+		}
 		$info = $filegallib->get_file_info($_REQUEST['fileId']);
 
 		$smarty->assign('fileId', $_REQUEST['fileId']);
@@ -299,6 +305,11 @@ if ( isset($_REQUEST['edit_mode']) and $_REQUEST['edit_mode'] ) {
 			$smarty->assign('sortorder', 'created');
 			$smarty->assign('sortdirection', 'desc');
 		}
+	} elseif ($tiki_p_create_file_galleries != 'y') {
+		$smarty->assign('errortype', 401);
+		$smarty->assign('msg', tra('Permission denied'));
+		$smarty->display('error.tpl');
+		die;
 	}
 
 // Duplicate mode

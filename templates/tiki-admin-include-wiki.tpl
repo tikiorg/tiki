@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use the &quot;Quick Edit&quot; module to easily create or edit wiki pages. Select{/tr} <a class="rbox-link" href="tiki-admin_modules.php">{tr}Admin &gt; Modules{/tr}</a> to add this (or other) modules.{/remarksbox}
+{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use the 'Quick Edit' module to easily create or edit wiki pages.{/tr} {tr}Select <a class="rbox-link" href="tiki-admin_modules.php">Admin &gt; Modules</a> to add this (or other) modules.{/tr}{/remarksbox}
 
 <form action="tiki-admin.php?page=wiki" method="post">
 <div class="cbox">
@@ -204,11 +204,6 @@
 <div class="adminoptionbox">
 	<div class="adminoption"><input type="checkbox" id="feature_wiki_footnotes" name="feature_wiki_footnotes" {if $prefs.feature_wiki_footnotes eq 'y'}checked="checked" {/if}/></div>
 	<div class="adminoptionlabel"><label for="feature_wiki_footnotes">{tr}Footnotes{/tr}</label> <a class="link" href="tiki-assignpermission.php?type=wiki&amp;group=Anonymous" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a></div>
-</div>
-
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" id="wiki_edit_plugin" name="wiki_edit_plugin" {if $prefs.wiki_edit_plugin eq 'y'}checked="checked"{/if}/></div>
-	<div class="adminoptionlabel"><label for="wiki_edit_plugin">{tr}Edit plugin icon{/tr}</label></div>
 </div>
 
 <div class="adminoptionbox">

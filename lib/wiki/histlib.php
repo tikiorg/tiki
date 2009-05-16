@@ -333,8 +333,8 @@ function histlib_helper_setup_diff( $page, $oldver, $newver )
 	}
 	$smarty->assign('diff_style', $_REQUEST["diff_style"]);
 	if ($_REQUEST["diff_style"] == "sideview") {
-		$old["data"] = $tikilib->parse_data($old["data"]);
-		$new["data"] = $tikilib->parse_data($new["data"]);
+		$old["data"] = $tikilib->parse_data($old["data"], array('preview_mode' => true));
+		$new["data"] = $tikilib->parse_data($new["data"], array('preview_mode' => true));
 	} else {
 		require_once('lib/diff/difflib.php');
 		if ($info['is_html'] == 1 and $_REQUEST["diff_style"] != "htmldiff") {
@@ -351,7 +351,7 @@ function histlib_helper_setup_diff( $page, $oldver, $newver )
 
 			$prefs['wiki_edit_plugin'] = 'n';
 			$prefs['wiki_edit_section'] = 'n';
-			$parse_options = array('is_html' => ($old['is_html'] == 1), 'noheadinc' => true);
+			$parse_options = array('is_html' => ($old['is_html'] == 1), 'noheadinc' => true, 'preview_mode' => true);
 			$old["data"] = $tikilib->parse_data($old["data"], $parse_options);
 
 			$parse_options = array('is_html' => ($new['is_html'] == 1), 'noheadinc' => true);
