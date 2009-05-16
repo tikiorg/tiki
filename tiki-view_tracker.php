@@ -837,8 +837,9 @@ foreach ($fields['data'] as $it) {
 }
 }
 
-if ($items['data']) {
+if (isset($tracker_info['useRatings']) && $tracker_info['useRatings'] == 'y' && $items['data']) {
 	foreach ($items['data'] as $f=>$v) {
+		echo 'sdfsdf';
 		$items['data'][$f]['my_rate'] = $tikilib->get_user_vote("tracker.".$_REQUEST["trackerId"].'.'.$items['data'][$f]['itemId'],$user);
 	}
 }
