@@ -791,6 +791,8 @@ function display_howto() {
    - Test the whole Installer and check if everything is OK
    - run doc/devtools/securitycheck.php and check each "potentially unsafe" file.
    - cd db/convertscripts and run convertsqls.sh
+   --- Check that you do not have spurious quote marks in your db/*.sql file
+   --- the string \" should not appear, if it does, ask nyloth or nkoth3 on IRC
    - in lib/setup/twversion.class.php
      - increment the version number in the constructor
      - update list of valid releases in getVersions()
