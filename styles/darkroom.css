@@ -1093,7 +1093,7 @@ td.form {
 /* Needed for light-on-dark theme */
 div.quicktag {}
 div.quicktag img,
-#wikihelp-tab td img {background: #292929}
+#wikihelp-tab td img {background: #e4e4e4}
 div#helptool {}
 
 /* links to view an object from a table listing objects can be generalized to this link */
@@ -1318,6 +1318,7 @@ td.wikicell {
 	border-bottom: 1px solid #A9A9A9}
 
 .editdate {padding-bottom: 5px; padding-top: 5px}
+#textarea-toolbar {background: #e4e4e4/* url(darkroom/button.png) repeat-x*/}
 
 div#page-bar {
 	display: block;
