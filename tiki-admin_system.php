@@ -24,6 +24,7 @@ if (isset($_GET['do'])) {
 		$cachelib->erase_dir_content("templates_c/$tikidomain");
 		$cachelib->erase_dir_content("temp/cache/$tikidomain");
 		$cachelib->erase_dir_content("modules/cache/$tikidomain");
+		$tikilib->set_lastUpdatePrefs();
 		$logslib->add_log('system','erased all Tiki cache content');
 	} elseif ($_GET['do'] == 'templates_c') {
 		$cachelib->erase_dir_content("templates_c/$tikidomain");

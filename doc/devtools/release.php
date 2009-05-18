@@ -242,7 +242,14 @@ function md5_check_dir($root, $dir, $version, &$queries) {
 
 function build_packages($releaseVersion, $svnRelativePath) {
 	$script = TOOLS . '/tikirelease.sh';
-	`bash -x "$script" $releaseVersion $svnRelativePath`;
+	if ($options['-debug-packaging']) {
+	   $debugflag = '-x';
+	} else {
+	   $debugflag = '';
+	}
+	$cmd = "/bin/sh ".$debugflag." ".$script." ".$releaseVersion." ".$svnRelativePath;
+	info("Running $cmd:\n"); 
+	`$cmd`;
 	info(">> Packages files have been built in ~/tikipack/$releaseVersion :\n");
 	passthru( "ls ~/tikipack/$releaseVersion" );
 }
@@ -321,7 +328,8 @@ function get_options() {
 		'no-secdb' => false,
 		'no-packaging' => false,
 		'no-tagging' => false,
-		'force-yes' => false
+		'force-yes' => false,
+		'debug-packaging' => false
 	);
 
 	// Environment variables provide default values for parameter options. e.g. export TIKI_NO_SECDB=true
@@ -766,7 +774,7 @@ Options:
 	--no-packaging		: do not build packages files
 	--no-tagging		: do not tag the release on the remote svn repository
 	--force-yes		: disable the interactive mode (same as replying 'y' to all steps)
-
+	--debug-packaging	: run tikirelease.sh with the -x option.
 Notes:
 	Subreleases begining with 'pre' will not be tagged.
 ";

@@ -823,7 +823,7 @@ name="w_displayed_default" {if $prefs.w_displayed_default eq 'y'} checked="check
 </div>
 
 <div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" id="wiki_list_status' name="wiki_list_status" {if $prefs.wiki_list_status eq 'y'}checked="checked"{/if} /></div>
+	<div class="adminoption"><input type="checkbox" id="wiki_list_status" name="wiki_list_status" {if $prefs.wiki_list_status eq 'y'}checked="checked"{/if} /></div>
 	<div class="adminoptionlabel"><label for="wiki_list_status">{tr}Status{/tr}</label></div>
 </div>
 

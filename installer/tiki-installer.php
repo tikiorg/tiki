@@ -931,6 +931,9 @@ $smarty->assign('install_type', $install_type);
 $smarty->assign_by_ref('prefs', $prefs);
 $smarty->assign('detected_https',$_SERVER["HTTPS"]);
 
+if (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 6') !== false) {
+	$smarty->assign('ie6', true);
+}
 
 $mid_data = $smarty->fetch('tiki-install.tpl');
 $smarty->assign('mid_data', $mid_data);
