@@ -726,7 +726,6 @@ DOCUMENTATION
 
 * It is highly recommended that you refer to the online documentation:
 * http://doc.tikiwiki.org/Installation for a setup guide
-* http://doc.tikiwiki.org/Install+Problems for what to do in case of problems
 
 * Notes about the releases are accessible from http://tikiwiki.org/TikiReleases
 * Tikiwiki has an active IRC channel, #tikiwiki on irc.freenode.net
@@ -788,7 +787,10 @@ function display_howto() {
 --------------------------
 
 1/ Preliminary manual tasks
-   - Test the whole Installer and check if everything is OK
+   - run the tiki installer and correct anything obviously wrong
+   - the "function update_readme_file" in this script will output to the top-level README:
+   -- check if anyone has committed anything manually to README that needs to be brought back into this script
+   -- check links
    - run doc/devtools/securitycheck.php and check each "potentially unsafe" file.
    - cd db/convertscripts and run convertsqls.sh
    --- Check that you do not have spurious quote marks in your db/*.sql file
