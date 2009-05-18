@@ -165,6 +165,12 @@ class HeaderLib {
 				$back .= '<link rel="stylesheet" href="'.$style_ie7_css.'" type="text/css" />'."\n";
 			}
 			$back .= "<![endif]-->\n";
+			$back .= "<!--[if IE 8]>\n"
+                                        .'<link rel="stylesheet" href="css/ie8.css" type="text/css" />'."\n";
+                        if ( $style_ie8_css != '' ) {
+                                $back .= '<link rel="stylesheet" href="'.$style_ie8_css.'" type="text/css" />'."\n";
+                        }
+                        $back .= "<![endif]-->\n";
 
 		if (count($this->jsfiles)) {
 			foreach ($this->jsfiles as $x=>$jsf) {
