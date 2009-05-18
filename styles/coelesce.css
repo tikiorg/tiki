@@ -359,7 +359,6 @@ div#sitead {margin: auto}
 #login_search a,
 #login_search a:visited {color: #fff}
 	
-#siteloginbar * {display: inline}
 #login_language {display: none/*inline*/}
 
 #sitesearchbar {
@@ -368,10 +367,13 @@ div#sitead {margin: auto}
 	margin: 3px 0 0 0;
 	padding: 0 0 0 15px;
 	height: 33px;
+	min-width: 180px;
 	text-align: left;
 	background: url(coelesce/search_wide.jpg) no-repeat;
 	color: #517ea7;}
 	
+* html #sitesearchbar {width: 180px}
+
 #sitesearchbar .wrapper {
 	height: 33px;
 	background: url(coelesce/search_wide.jpg) 100% 0 no-repeat;
