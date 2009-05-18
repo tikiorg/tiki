@@ -516,3 +516,17 @@ div #page-bar
 .blogactions {
 	float:right;
 }
+
+.clearfix:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden}
+	
+.clearfix {display: inline-block}
+/* Hide from IE Mac \*/
+.clearfix {display: block}
+/* End hide from IE Mac */
+
+* html .clearfix {height: 1px}
