@@ -5498,6 +5498,10 @@ class TikiLib extends TikiDB {
 								$plugin_indexes[$plugin_name] = 0;
 	
 							$current_index = ++$plugin_indexes[$plugin_name];
+
+							// save plugin_data for plugin edit JS later (needs to not be plugin-parsed)
+							$plugin_data_saved = $plugin_data;
+
 							// We store CODE stuff out of the way too, but then process it as a plugin as well.
 							if( preg_match( '/^ *\{CODE\(/', $plugin_start ) ) {
 								$ret = wikiplugin_code($plugin_data, $arguments);
@@ -5515,8 +5519,6 @@ class TikiLib extends TikiDB {
 	
 							} else {
 								
-								// save plugin_data for plugin edit JS later (needs to not be plugin-parsed)
-								$plugin_data_saved = $plugin_data;
 								// Handle nested plugins.
 								$this->parse_first($plugin_data, $preparsed, $noparsed, $options, $real_start_diff + $pos+strlen($plugin_start));
 
