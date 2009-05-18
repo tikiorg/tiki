@@ -52,21 +52,12 @@ $thirdpartyLibs = array(
 */
 
 /*
-DONE
- ./tiki-channel.php
- ./tiki-view_cache.php
- ./tiki-handlers.php
- ./tiki-wap.php
-
+The following need to be added as features
 FIX LATER
  ./tiki-login_openid.php
 
-
-
-
-
-Deliberately public.
-./tiki-change_password.php
+The following are DELIBERATELY PUBLIC.
+ ./tiki-change_password.php
  ./tiki-confirm_user_email.php
  ./tiki-cookie-jar.php
  ./tiki-error_simple.php
@@ -79,27 +70,21 @@ Deliberately public.
  ./tiki-register_ajax.php
 
 
-BROKEN: fix check checker to accept access->check_permissions() also that it loads tikisetup.php
+The following do actually have features, but the fix check checker 
+needs to be changed to accept access->check_permissions() so that also that it loads tikisetup.php
  ./tiki-mindmap.php
  ./tiki-orphan_pages.php
-
-public ./tiki-plugins.php
-public ./tiki-print_indexed.php - already check_fretaure
-
+ ./tiki-plugins.php
+ ./tiki-print_indexed.php
 
 
-REFACTOR TO A LIB
+The following need to be refactored to a lib
  ./tiki-testGD.php
  ./tiki-special_chars.php
 
 
-Need a feature_mobile for this one
-
-
-
-Should be secured:
-* tiki-remote_backup.php 
-
+The following needs to be secured in a way other than "die"
+ ./tiki-remote_backup.php 
 
 */
 
