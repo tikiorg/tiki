@@ -67,10 +67,12 @@
 		{/if}
   </tr>
 
+{assign var=section_old value=""}
 {section name=user loop=$channels}
 {cycle values="odd,even" print=false}
 {assign var=section value=$channels[user].section}
-{if $section ne ""}
+{if $section ne $section_old}
+  {assign var=section_old value=$section}
 	{if ($tiki_p_admin eq 'y' or $tiki_p_admin_forum eq 'y')} 
 		<tr>
 			<td class="third" colspan="7">{$section}</td>

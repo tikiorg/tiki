@@ -1,6 +1,6 @@
 <div id="siteheader" class="clearfix">
 	<div id="header-top">
-		<div id="sitelogo" style="padding-left:70px"><h1><img style="border:medium none; vertical-align:middle" alt="{tr}TikiWiki CMS/Groupware{/tr}" src="img/tiki/tiki3.png" />
+		<div id="sitelogo" style="padding-left:70px"><h1><img style="border:medium none; vertical-align:middle" alt="{tr}TikiWiki CMS/Groupware{/tr}" src="img/tiki/tiki3.{if isset($ie6)}gif{else}png{/if}" />
 			<span style="vertical-align:middle">{tr}Tiki installer{/tr} v{$tiki_version_name} <a title="{tr}Help{/tr}" href="http://doc.tikiwiki.org/Installation" target="help"><img style="border:0" src='pics/icons/help.png' alt="{tr}Help{/tr}" /></a></span></h1>
 		</div>
 	</div>
@@ -254,7 +254,8 @@
 <div class="clearfix">
 <p>
 {if $tikidb_created}
-	{tr}Select the installation (or upgrade) profile to use. This profile will populate (or upgrade) the database.{/tr}
+	{tr}Select the installation (or upgrade) profile to use. This profile will populate (or upgrade) the database.{/tr}<br/><br/>
+	{tr}If you want to upgrade from a previous Tiki release, ensure that you have read and understood the <a href="http://doc.tikiwiki.org/Upgrade" target="_blank">Upgrade instructions</a>.{/tr}
 {else}
 	{tr}Select the installation profile to use. This profile will populate the database.{/tr}
 {/if}

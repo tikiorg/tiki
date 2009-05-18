@@ -1,0 +1,16 @@
+
+#header-top {
+	height: 111px;
+}
+
+
+#siteloginbar {
+	position: absolute;
+	right: 0;
+	top: 111px;
+}
+
+#siteloginbar label, #siteloginbar input, #siteloginbar .pass {
+	position: relative;
+	top: -26px;
+}

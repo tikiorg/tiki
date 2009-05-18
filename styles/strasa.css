@@ -401,8 +401,8 @@ div#tiki-bot {}
 	background: #214d68 url(strasa/headerbg.jpg) repeat-x 0 100%}
 
 #header-top[id] {
-	height: auto;
-	min-height: 97px}
+	min-height: 108px
+}
 
 #siteheader {
 	text-align: left;
@@ -1935,8 +1935,6 @@ body.tiki_forums table.normal {margin: auto}
 
 .post .postbody {
 	clear: both;
-	width: 100%;
-	min-width: 100%;
 	border: solid 1px #a9a9a9;
 	border-top: solid 1px gray;
 	margin: 0;

@@ -5850,7 +5850,8 @@ $lang=Array(
 // "Inserts an editable variable" => "Inserts an editable variable",
 // "use square brackets for an external link: [URL], [URL|link_description],[URL|link_description|relation] or [URL|description|relation|nocache] (that last prevents the local Wiki from caching the linked page; relation can be used to insert rel attribute for the link - useful e.g. for shadowbox)" => "use square brackets for an external link: [URL], [URL|link_description],[URL|link_description|relation] or [URL|description|relation|nocache] (that last prevents the local Wiki from caching the linked page; relation can be used to insert rel attribute for the link - useful e.g. for shadowbox)",
 // "For an external Wiki, use ExternalWikiName:PageName or ((External Wiki Name: Page Name))" => "For an external Wiki, use ExternalWikiName:PageName or ((External Wiki Name: Page Name))",
-// "anchor" => "anchor",
+// "page|#anchor" => "page|#anchor",
+// "page|#anchor|desc" => "page|#anchor|desc",
 // "for wiki heading/anchor references" => "for wiki heading/anchor references",
 // "Indentation" => "Indentation",
 // "Creates an indentation for each plus(useful in list to continue at the same level)" => "Creates an indentation for each plus(useful in list to continue at the same level)",
@@ -10538,5 +10539,6 @@ $lang=Array(
 "Last pages" => "Letzte Seiten",
 "Tiki RSS feed for the wiki pages" => "Tiki RSS Wiki Feed",
 "Last modifications to the Wiki." => "Zuletzt ge&auml;nderte Wikiseiten.",
+"If you want to upgrade from a previous Tiki release, ensure that you have read and understood the <a href=\"http://doc.tikiwiki.org/Upgrade\" target=\"_blank\">Upgrade instructions</a>" =>  "Bevor sie ihre Tiki Installation aktualisieren, lesen sie bitte die <a href=\"http://doc.tikiwiki.org/Upgrade\" target=\"_blank\">Upgrade-Anweisungen</a>",
 "###end###"=>"###end###");
 ?>

@@ -33,7 +33,7 @@
 </div>
 
 <div class="adminoptionbox">
-	<div class="adminoptionlabel"><label for="metatag_description">{tr}Description{/tr}:</label><br /> <textarea id="metatag_description" name="metatag_description" value="{$prefs.metatag_description}" rows="5" cols="40" style="width:95%"></textarea></div>
+	<div class="adminoptionlabel"><label for="metatag_description">{tr}Description{/tr}:</label><br /> <textarea id="metatag_description" name="metatag_description" rows="5" cols="40" style="width:95%">{$prefs.metatag_description}</textarea></div>
 </div>
 
 <div class="adminoptionbox">

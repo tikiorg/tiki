@@ -73,12 +73,13 @@ function filter_out_sefurl($tpl_output, &$smarty, $type=null, $title=null) {
 		if (empty($type) || $type == $regex['type']) {
 			// if a question mark in pattern, deal with possible additional terms
 			// The '?&' isn't pretty but seems to work.
-			if( strpos($regex['left'],'?') !== FALSE ) {
-				$tpl_output = preg_replace( '/'.$regex['left'].'&/', $regex['right'].'?&', $tpl_output );
-			}
+			//if( strpos($regex['left'],'?') !== FALSE ) {
+			//	$tpl_output = preg_replace( '/'.$regex['left'].'&/', $regex['right'].'?&', $tpl_output );
+			//}
 			$tpl_output = preg_replace( '/'.$regex['left'].'/', $regex['right'], $tpl_output );
 		}
 	}
+
 	if (!empty($title)) {
 		$tpl_output .= TITLE_SEPARATOR.$title;
 	}
