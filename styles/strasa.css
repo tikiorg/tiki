@@ -408,8 +408,8 @@ div#tiki-bot {}
 	background: #214d68 url(strasa/headerbg.jpg) repeat-x 0 100%}
 
 #header-top[id] {
-/*	height: auto; MRJC - ie7 fix*/
-	min-height: 111px}
+	min-height: 108px
+}
 
 #siteheader {
 	text-align: left;

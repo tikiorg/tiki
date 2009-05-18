@@ -1,6 +1,12 @@
+
 #header-top {
 	height: 97px;
 }
+
+#header-top[id] {
+	height: 111px;
+}
+
 
 #siteloginbar {
 	position: absolute;
