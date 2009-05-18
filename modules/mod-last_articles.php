@@ -8,8 +8,6 @@
 /**
  * Show recent articles.
  *
- * 2009-04-10	SEWilco
- * Add 'offset' parameter in case starting at zero is not wanted.
  **/
 
 //this script may only be included - so its better to die if called directly.
@@ -35,7 +33,6 @@ $urlParams = array(
 	'lang' => 'lang',
 	'showImg' => NULL,
 	'showDate' => NULL,
-	'offset' => NULL,
 	'showHeading' => NULL,
 	'nonums' => NULL,
 	'absurl' => NULL
@@ -46,7 +43,7 @@ foreach ( $urlParams as $p => $v ) {
 	$$p = isset($module_params[$p]) ? $module_params[$p] : '';
 }
 
-$offset = (int) $offset;
+$offset = (int) $module_params['offset'];
 if ( $absurl == '' ) $absurl = 'n';
 if ( $nonums == '' ) $nonums = 'n';
 if ( $showHeading != 'n') {
