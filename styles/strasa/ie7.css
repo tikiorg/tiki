@@ -1,9 +1,5 @@
 
 #header-top {
-	height: 97px;
-}
-
-#header-top[id] {
 	height: 111px;
 }
 
@@ -11,7 +7,7 @@
 #siteloginbar {
 	position: absolute;
 	right: 0;
-	top: 97px;
+	top: 111px;
 }
 
 #siteloginbar label, #siteloginbar input, #siteloginbar .pass {
