@@ -23,6 +23,11 @@ Version 3.0
 ------------------
 
 ----------------------------------------------
+r18914 | nkoth | 2009-05-19 08:04:41 -0400 (Tue, 19 May 2009) | 2 lines
+
+[FIX] set proper branch in version checker
+
+----------------------------------------------
 r18902 | mrjc | 2009-05-18 20:00:14 -0400 (Mon, 18 May 2009) | 1 line
 
 [DOC] updated release instructions
