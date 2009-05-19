@@ -801,6 +801,7 @@ function display_howto() {
    - in lib/setup/twversion.class.php
      - increment the version number in the constructor
      - update list of valid releases in getVersions()
+     - change the version branch to "unstable", "stable", or "head" as explained in that file
    - commit your changes with this commit message (change \$VERSION by the version of the release):
 	[REL] Preparing \$VERSION release
 
