@@ -207,7 +207,7 @@ function sql_error($query, $values, $result) {
 	
     $outp.= "<tr class='heading'><td colspan='2'>Built query was probably:</td></tr><tr class='formcolor'><td colspan='2'>".htmlspecialchars($q)."</td></tr>\n";
 
-    if (function_exists('xdebug_get_function_stack')) {
+    if (function_exists('xdebug_get_function_stack') && $prefs['debug_ignore_xdebug'] != 'y') {
 	function mydumpstack($stack) {
 	    $o='';
 	    foreach($stack as $line) {
