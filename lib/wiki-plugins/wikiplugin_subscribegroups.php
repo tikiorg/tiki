@@ -62,7 +62,7 @@ function wikiplugin_subscribegroups($data, $params) {
 		$groups = explode(':',$groups);
 	}
 	if (!empty($including)) {
-		$groups = get_including_groups($including);
+		$groups = $userlib->get_including_groups($including);
 	}
 	if ($group) {
 		if ($group == 'Anonymous' || $group == 'Registered') {
