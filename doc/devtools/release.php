@@ -727,24 +727,27 @@ DOCUMENTATION
 * It is highly recommended that you refer to the online documentation:
 * http://doc.tikiwiki.org/Installation for a setup guide
 
-* Notes about the releases are accessible from http://tikiwiki.org/TikiReleases
+* Notes about this release are accessible from http://tikiwiki.org/ReleaseNotes30
 * Tikiwiki has an active IRC channel, #tikiwiki on irc.freenode.net
-
 
 INSTALLATION
 
 * There is a file INSTALL in this directory with notes on how to setup and
-  configure Tiki. Again, see http://doc.tikiwiki.org/InstallTiki for the latest install help.
+  configure Tiki. Again, see http://doc.tikiwiki.org/Installation for the latest install help.
 
+UPGRADES
+
+* Read the online instructions if you want to upgrade you tiki from a previous release http://doc.tikiwiki.org/Upgrade
 
 COPYRIGHT
 
-Copyright (c) 2002-$year, Luis Argerich, Garland Foster, Eduardo Polidor, et. al. All
-Rights Reserved. See $copyrights_file for details and a complete list of authors.
+Copyright (c) 2002-$year, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+All Rights Reserved. See $copyrights_file for details and a complete list of authors.
 Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See $license_file for details.
 
 ... Have fun!
 
+Note to Tiki developers: update this text through release.php.
 EOF;
 
 	return (bool)file_put_contents(README, $readme);
