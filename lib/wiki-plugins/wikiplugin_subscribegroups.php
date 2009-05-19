@@ -19,10 +19,25 @@ function wikiplugin_subscribegroups_info() {
 				'name' => tra('Subscribe'),
 				'description' => tra('text'),
 			),
+			'showsubscribe' => array(
+				'required' => false, 
+				'name' => tra('Show subscribe box'),
+				'description' => 'y|n',
+			),
+			'showdefault' => array(
+				'required' => false, 
+				'name' => tra('Show default setting and buttons'),
+				'description' => 'y|n',
+			),
 			'groups' => array(
-				'required' => true,
+				'required' => false,
 				'name' => tra('Groups'),
 				'description' => tra('Colon separated list of groups.'),
+			),
+			'including' => array(
+				'required' => false,
+				'name' => tra('Including group'),
+				'description' => tra('Group'),
 			),
 		),
 	);
@@ -45,6 +60,9 @@ function wikiplugin_subscribegroups($data, $params) {
 
 	if (!empty($groups)) {
 		$groups = explode(':',$groups);
+	}
+	if (!empty($including)) {
+		$groups = get_including_groups($including);
 	}
 	if ($group) {
 		if ($group == 'Anonymous' || $group == 'Registered') {
@@ -69,6 +87,11 @@ function wikiplugin_subscribegroups($data, $params) {
 	if (!empty($_REQUEST['unassign']) && isset($userGroups[$group])) {
 		$userlib->remove_user_from_group($user, $group);
 	}
+	if (!empty($_REQUEST['default']) && isset($userGroups[$_REQUEST['default']])) {
+		$userlib->set_default_group($user, $_REQUEST['default']);
+		global $group;
+		$group = $_REQUEST['default'];
+	}
 	$userGroups = $userlib->get_user_groups_inclusion($user);
 	if (isset($userGroups['Anonymous'])) {
 		unset($userGroups['Anonymous']);
@@ -91,11 +114,21 @@ function wikiplugin_subscribegroups($data, $params) {
 		}
 	}
 
-	if (isset($subscribe)){
+	if (isset($subscribe)) {
 		$smarty->assign_by_ref('subscribe', $subscribe);
 	} else {
 		$smarty->assign('subscribe', '');
 	}
+	if (isset($showsubscribe) && $showsubscribe == 'n') {
+		$smarty->assign('showsubscribe', 'n');
+	} else {
+		$smarty->assign('showsubscribe', 'y');
+	}
+	if (isset($showdefault) && $showdefault == 'y') {
+		$smarty->assign('showdefault', 'y');
+	} else {
+		$smarty->assign('showdefault', 'n');
+	}	
 	$smarty->assign_by_ref('userGroups', $userGroups);
 	$smarty->assign_by_ref('possiblegroups', $possiblegroups['data']);
 	$data = $smarty->fetch('wiki-plugins/wikiplugin_subscribegroups.tpl');
