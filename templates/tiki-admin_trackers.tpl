@@ -127,8 +127,22 @@
 {/if}
 
 {if $prefs.groupTracker eq 'y'}
-<tr class="formcolor"><td><label for="autoCreateGroup">{tr}Create a group for each item{/tr}</label></td><td>
-<input type="checkbox" id="autoCreateGroup" name="autoCreateGroup" {if $autoCreateGroup eq 'y' }checked="checked"{/if} /></td></tr>
+<tr class="formcolor">
+	<td><label for="autoCreateGroup">{tr}Create a group for each item{/tr}</label></td>
+	<td>
+		<input type="checkbox" id="autoCreateGroup" name="autoCreateGroup" {if $info.autoCreateGroup eq 'y' }checked="checked"{/if}  onclick="toggleTrTd('autoCreateGroupOptions');"/>
+	</td>
+<tr class="formcolor" id="autoCreateGroupOptions"{if $info.autoCreateGroup ne 'y' and $prefs.javascript_enabled eq 'y'} style="display:none;"{/if}>
+	<td></td>
+	<td><label for="autoCreateGroupInc">{tr}Groups will include{/tr}</label>
+		<select id="autoCreateGroupInc" name="autoCreateGroupInc">
+			<option value="">{tr}None{/tr}</option>
+			{foreach item=gr from=$all_groupIds}
+				<option value="{$gr.id|escape}" {if $gr.id eq $info.autoCreateGroupInc} selected="selected"{/if}>{$gr.groupName|truncate:"52":" ..."}</option>
+			{/foreach}
+		</select>
+	</td>
+</tr>
 {/if}
 
 {if $prefs.trk_with_mirror_tables eq 'y'}
@@ -243,11 +257,11 @@ for a tracker and they must be valid in SQL{/tr}</em>
 	<td>{tr}Tracker items allow comments?{/tr}</td>
 	<td><input type="checkbox" name="useComments" {if $useComments eq 'y'}checked="checked"{/if} onclick="toggleTrTd('commentsoptions');toggleTrTd('commentsoptions2');" /></td>
 </tr>
-<tr class="formcolor" id="commentsoptions" {if $useComments ne 'y'}style="display:none;"{/if}>
+<tr class="formcolor" id="commentsoptions" {if $useComments ne 'y'and $prefs.javascript_enabled eq 'y'}style="display:none;"{/if}>
 		<td class="sub">{tr}and display comments in listing?{/tr}</td>
 		<td><input type="checkbox" name="showComments" {if $showComments eq 'y'}checked="checked"{/if} /></td>
 </tr>
-<tr class="formcolor" id="commentsoptions2" {if $useComments ne 'y'}style="display:none;"{/if}>
+<tr class="formcolor" id="commentsoptions2" {if $useComments ne 'y' and $prefs.javascript_enabled eq 'y'}style="display:none;"{/if}>
 		<td class="sub">{tr}and display last comment user/date?{/tr}</td>
 		<td><input type="checkbox" name="showLastComment" {if $showLastComment eq 'y'}checked="checked"{/if} /></td>
 </tr>
@@ -255,11 +269,11 @@ for a tracker and they must be valid in SQL{/tr}</em>
 <td>{tr}Tracker items allow attachments?{/tr}</td>
 <td><input type="checkbox" name="useAttachments" {if $useAttachments eq 'y'}checked="checked"{/if} onclick="toggleTrTd('attachmentsoptions');toggleTrTd('attachmentsconf');" /></td>
 </tr>
-<tr class="formcolor" id="attachmentsoptions" {if $useAttachments ne 'y'}style="display:none;"{/if}>
+<tr class="formcolor" id="attachmentsoptions" {if $useAttachments ne 'y' and $prefs.javascript_enabled eq 'y'}style="display:none;"{/if}>
 		<td class="sub">{tr}and display attachments in listing?{/tr}</td>
 		<td><input type="checkbox" name="showAttachments" {if $showAttachments eq 'y'}checked="checked"{/if} /></td>
 </tr>
-<tr class="formcolor" id="attachmentsconf" {if $useAttachments ne 'y'}style="display:none;"{/if}>
+<tr class="formcolor" id="attachmentsconf" {if $useAttachments ne 'y' and $prefs.javascript_enabled eq 'y'}style="display:none;"{/if}>
 	<td class="sub" colspan="5">
 {tr}Attachment display options (Use numbers to order items, 0 will not be displayed, and negative values display in popups){/tr}
 <table class="normal">

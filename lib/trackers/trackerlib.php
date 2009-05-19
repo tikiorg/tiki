@@ -1478,14 +1478,14 @@ class TrackerLib extends TikiLib {
 		$result = $this->query($query,array((int)$cant_items,(int) $this->now,(int) $trackerId));
 
 		if ($prefs['groupTracker'] == 'y' && isset($tracker_info['autoCreateGroup']) && $tracker_info['autoCreateGroup'] == 'y' && empty($itemId)) {
-			$groupName = $tracker_info['name'].' '.$new_itemId;
+			$groupName = $this->groupName($tracker_info, $new_itemId, $groupInc);
 			if (!empty($creatorGroupFieldId)) {
 				$query = 'update `tiki_tracker_item_fields` set `value`=? where `itemId`=? and `fieldId`=?';
 				$this->query($query, array($groupName, $new_itemId, $creatorGroupFieldId));
 			}
 			if ($userlib->add_group($groupName, $tracker_info['description'], '', 0, $trackerId, '', '', 0, '', '', $creatorGroupFieldId)) {
-				if ($userlib->group_exists($tracker_info['name'])) {
-					$userlib->group_inclusion($groupName, $tracker_info['name']);
+				if (!empty($tracker_info['autoCreateGroupInc'])) {
+					$userlib->group_inclusion($groupName, $groupInc);
 				}
 			}
 			$userlib->assign_user_to_group($user, $groupName);
@@ -1532,6 +1532,17 @@ class TrackerLib extends TikiLib {
 		}
 
 		return $itemId;
+	}
+
+	function groupName($tracker_info, $itemId, &$groupInc) {
+		if (empty($tracker_info['autoCreateGroupInc'])) {
+			$groupName = $tracker_info['name'];
+		} else {
+			global $userlib;
+			$group_info = $userlib->get_groupId_info($tracker_info['autoCreateGroupInc']);
+			$groupInc = $groupName = $group_info['groupName'];
+		}
+		return "$groupName $itemId";
 	}
 
 	function _format_data($field, $data) {
@@ -1946,6 +1957,11 @@ class TrackerLib extends TikiLib {
 			$categlib->remove_category($currentCategId);
 		}
 		$this->remove_object("tracker $trackerId", $itemId);
+		if (isset($options['autoCreateGroup']) && $options['autoCreateGroup'] == 'y') {
+			global $userlib;
+			$groupName = $this->groupName($options, $itemId, $groupInc);
+			$userlib->remove_group($groupName);
+		}
 		return true;
 	}
 

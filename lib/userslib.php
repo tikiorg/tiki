@@ -1171,6 +1171,20 @@ function get_included_groups($group, $recur=true) {
 			return unserialize($cachelib->getCached("grouplist"));
 		}
 	}
+	function list_all_groupIds() {
+		global $cachelib;
+		if (!$cachelib->isCached("groupIdlist")) {
+			$groups = array();
+			$result = $this->query("select `id`, `groupName` from `users_groups` order by `groupName`", array());
+			while ($res = $result->fetchRow()) {
+				$groups[] = $res;
+			}
+			$cachelib->cacheItem("groupIdlist",serialize($groups));
+			return $groups;
+		} else {
+			return unserialize($cachelib->getCached("groupIdlist"));
+		}
+	}
 
 	function list_can_include_groups($group) {
 
@@ -1904,6 +1918,15 @@ function get_included_groups($group, $recur=true) {
 	$res["perms"] = $perms;
 	return $res;
     }
+	function get_groupId_info($groupId) {
+	$query = "select * from `users_groups` where `id`=?";
+
+	$result = $this->query($query, array($groupId));
+	$res = $result->fetchRow();
+	$perms = $this->get_group_permissions($res['groupName']);
+	$res["perms"] = $perms;
+	return $res;
+    }
 
     function assign_user_to_group($user, $group) {
 	global $cachelib; require_once("lib/cache/cachelib.php");
@@ -2342,8 +2365,10 @@ function get_included_groups($group, $recur=true) {
 
 		global $cachelib;
 		$cachelib->invalidate('grouplist');
+		$cachelib->invalidate('groupIdlist');
 
-		return true;
+		$query = "select `id` from `users_groups` where groupName=?";
+		return $this->getOne($query, array($group));
 	}
 
 	function change_group($olgroup,$group,$desc,$home,$utracker=0,$gtracker=0,$ufield=0,$gfield=0,$rufields='',$userChoice='',$defcat=0,$theme='') {
