@@ -315,7 +315,7 @@
 		<h2>{tr}Edit user{/tr}: {$userinfo.login}</h2>
 		{if $userinfo.login ne 'admin'}
 			{assign var=thisloginescaped value=$userinfo.login|escape:'url'}
-			{button href="tiki-assignuser.php?assign_user=$thisloginescaped" _text="{tr}Assign user to Groups{/tr}"}
+			{button href="tiki-assignuser.php?assign_user=$thisloginescaped" _auto_args=" " _text="{tr}Assign user to Groups{/tr}"}
 		{/if}
 	{else}
 		<h2>{tr}Add a New User{/tr}</h2>
