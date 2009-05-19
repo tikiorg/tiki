@@ -1,4 +1,5 @@
 <?php
+  // analyse_file_path groups files by type, e.g. library, etc.
 
 
 // Usage:
@@ -12,19 +13,86 @@ if( isset( $_SERVER['REQUEST_METHOD'] ) ) die;
 
 // Add the imported libraries located in lib/
 $thirdpartyLibs = array(
-	'pear',
-	'phplayers',
-	'jgraphpad',
-	'smarty',
-	'adodb',
-	'pdflib',
+	'\./lib/pear.*',
+	'\./lib/Galaxia.*',
+	'\./lib/phplayers.*',
+	'\./lib/jgraphpad.*',
+	'\./lib/smarty.*',
+	'\./lib/adodb.*',
+	'\./lib/debug.*',
+	'\./lib/diff.*',
+	'\./lib/pdflib.*',
+	'\./lib/fckeditor/.*',
+	'\./lib/graph-engine/.*',
+	'\./lib/core/lib/Zend.*',
+	'\./lib/htmlparser/,*',
+	'\./lib/htmlpurifier/,*',
+	'\./lib/hawhaw.*',
+	'\./lib/ical.*',
+	'\./lib/images.*',
+	'\./lib/feedcreator.*',
+	'\./lib/sheet.*',
+	'\./lib/Horde/Yaml.*',
+	'\./lib/ajax/xajax/.*',
+	'\./lib/core/lib/DeclFilter.*',
+	'\./lib/core/lib/JitFilter.*',
+	'\./lib/core/lib/Multilingual.*',
+        '\./lib/core/lib/TikiFilter.*',
+	'\./lib/core/lib/WikiParser.*',
+	'\./lib/core/test/.*',
+	'\./lib/core/lib/WikiParser.*',
+	'\./lib.*', /* as per NKO 4:18 19-MAY-09 */
 );
 
+/* NOt in build
+        '\./lib/core/test/.*',
+	'\./db/convertscripts/.*',
+	'\./doc/devtools/.*', 
+	'\./db/local.php/.*', 
+*/
+
+/*
+The following need to be added as features
+FIX LATER
+ ./tiki-login_openid.php
+
+The following are DELIBERATELY PUBLIC.
+ ./tiki-change_password.php
+ ./tiki-confirm_user_email.php
+ ./tiki-cookie-jar.php
+ ./tiki-error_simple.php
+ ./tiki-information.php
+ ./tiki-install.php
+ ./tiki-install_disable.php
+ ./tiki-jsplugin.php
+ ./tiki-live_support_chat_frame.php
+ ./tiki-login_scr.php
+ ./tiki-register_ajax.php
+
+
+The following do actually have features, but the fix check checker 
+needs to be changed to accept access->check_permissions() so that also that it loads tikisetup.php
+ ./tiki-mindmap.php
+ ./tiki-orphan_pages.php
+ ./tiki-plugins.php
+ ./tiki-print_indexed.php
+
+
+The following need to be refactored to a lib
+ ./tiki-testGD.php
+ ./tiki-special_chars.php
+
+
+The following needs to be secured in a way other than "die"
+ ./tiki-remote_backup.php 
+
+*/
+
 $safePaths = array(
-	'wiki-plugins',
-	'wiki-plugins-dist',
-	'tree',
-	'phplayers_tiki',
+	'\./lib/wiki-plugins.*',
+	'\./lib/wiki-plugins-dist.*',
+	'\./lib/tree.*',
+	'\./lib/phplayers_tiki.*',
 );
 
 if( !file_exists( 'tiki-setup.php' ) )
@@ -104,6 +172,7 @@ function tikisetup_pattern() // {{{
 
 function scanfiles( $folder, &$files ) // {{{
 {
+  global $filesHash;
 	$handle = opendir( $folder );
 	if( !$handle )
 	{
@@ -121,10 +190,27 @@ function scanfiles( $folder, &$files ) // {{{
 
 		if( is_dir( $path ) )
 			scanfiles( $path, $files );
-		else
-			$files[] = analyse_file_path( $path );
+		else {
+		  $analysis = analyse_file_path( $path );
+		  $files[] = $analysis;
+		  $filesHash[$path] = $analysis;
+		}
 	}
 } // }}}
+
+// TODO This is an inefficient function, but more flexible than in_array
+function regex_match ( $path, $regex_possibles ) {
+  //  print "Checking $path in ".join($regex_possibles, ",")."\n";
+
+  foreach ($regex_possibles as $possible)  {
+    //    print "Matching $path against $possible\n";
+    if (preg_match( '%'.$possible.'%', $path)) {
+      //print "Matches $possible\n\n";
+      return true;
+    }
+  }
+  return false;
+}
 
 function analyse_file_path( $path ) // {{{
 {
@@ -151,10 +237,9 @@ function analyse_file_path( $path ) // {{{
 			$type = 'wikiplugin';
 		elseif( strpos( $path, './lib/' ) === 0 )
 		{
-			$parts = explode( '/', $path );
-			if( in_array( $parts[2], $thirdpartyLibs ) )
+			if( regex_match( $path, $thirdpartyLibs ) )
 				$type = '3dparty';
-			elseif( in_array( $parts[2], $safePaths ) )
+			elseif( regex_match( $path, $safePaths ) )
 				$type = 'safe';
 			else
 				$type = 'lib';
@@ -197,18 +282,55 @@ function analyse_file_path( $path ) // {{{
 
 function perform_feature_check( &$file ) // {{{
 {
-	$index = array();
+  global $features;
+        $index = array();
 	$feature_pattern = feature_pattern( $index );
 	$index = (array) $index;
+	$path =  $file['path'] ;
 
-	preg_match_all( $feature_pattern, get_content( $file['path'] ), $parts );
+	preg_match_all( $feature_pattern, get_content($path), $parts );
 
-	$features = array();
+	$featuresInFile = array();
 	foreach( $index as $i )
-		$features = array_merge( $features, $parts[$i] );
+		$featuresInFile = array_merge( $features, $parts[$i] );
 
-	$features = array_unique( $features );
-	$file['features'] = $features;
+	$featuresInFile = array_unique( $featuresInFile );
+	$file['features'] = $featuresInFile;
+	//	var_dump($featuresInFile);
+	/*
+	 This data structure seems to be typical, and very confusing.
+	 An array of 3, with the zeroth element being a named element whose value is an array of one element.
+	 other elements being named, not numbered
+
+	 1array(3) { 
+	 2  ["feature_directory"]=> 
+	 3  array(1) { 
+	 4    [0]=> 
+	 5    string(28) "./tiki-directory_ranking.php" 
+	 6  } 
+	 7  [0]=> 
+	 8  string(18) "feature_html_pages" 
+	 9  [1]=> 
+	 10  string(21) "feature_theme_control" 
+	 11}
+	*/
+	/*
+	// store, for each feature, which files are involved
+	foreach ( $featuresInFile as $feature) {
+	  if (is_string($feature)) {
+	    if (preg_match('/feature/', $feature)) {
+	      // SMELL sure to be a better way to do this.
+	      //print "Listing as feature $feature\n";
+	      $featuresListed = (array) $features[$feature];
+	      array_push($featuresListed, $path);
+	      $features[$feature] = $featuresListed;
+	    }
+	  // TODO SMELL: this regex should not be necessary, it should only contain features at this point.
+	  // SMELL: it will also miss some vital elements.
+	  }
+	}
+	*/
+	return $featuresInFile;
 } // }}}
 
 function perform_permission_check( &$file ) // {{{
@@ -274,9 +396,21 @@ function perform_extract_skip_check( &$file ) // {{{
 
 } // }}}
 
+
+/* Build Files structures */
+// a hash of filenames, each element is a hash of attributes of that file
+$filesHash = array(); 
+
+// a hash of features, each element is a hash of filenames that use that feature
+$features = array();
+
+// note: the files[0..N] is intended to be replaced by the above hash.
 $files = array();
+
+// build these two files structures
 scanfiles( '.', $files );
 
+/* Iterate each file, and perform checks */
 $unsafe = array();
 foreach( $files as $key=>$dummy )
 {
@@ -329,8 +463,13 @@ usort( $unsafe, 'sort_cb' );
 To be safe, files must have either an include only check, block web access, have a feature check or have a permission check.
 </p>
 <ol>
-	<?php foreach( $unsafe as $file ): ?>
-	<li><a href="<?php echo htmlentities( substr( $file['path'], 2 ) ) ?>"><?php echo htmlentities( $file['path'] ) ?></a></li>
+	<?php foreach( $unsafe as $unsafeUrlAndFile ): 
+	  $pathname = $unsafeUrlAndFile['path'];
+$url = substr( $unsafeUrlAndFile['path'], 2 );
+$fileRecord = $filesHash[$pathname];
+$fileType = $fileRecord['type'];
+	  ?>
+	<li> <?php echo $fileType; ?> <a href="<?php echo htmlentities( $url ) ?>"><?php echo htmlentities( $pathname ) ?></a></li>
 	<?php endforeach; ?>
 </ol>
 <h1>All files</h1>
@@ -370,5 +509,16 @@ To be safe, files must have either an include only check, block web access, have
 		<?php endif; ?>
 	</tbody>
 </table>
+
+	<?php foreach($features as $featureKey => $featureValue) {
+	  print "$featureKey :\n";
+	  foreach ($featureValue as $file) {
+	    print "<li>$file</li>";
+	  }
+	  print "<br/><br/>\n";
+	} ?>
+
 </body>
 </html>
+
+<!-- If you see this in your terminal window it's because you didn't read the usage. See the start of the file. -->

@@ -23,6 +23,154 @@ Version 3.0
 ------------------
 
 ----------------------------------------------
+r18914 | nkoth | 2009-05-19 08:04:41 -0400 (Tue, 19 May 2009) | 2 lines
+
+[FIX] set proper branch in version checker
+
+----------------------------------------------
+r18902 | mrjc | 2009-05-18 20:00:14 -0400 (Mon, 18 May 2009) | 1 line
+
+[DOC] updated release instructions
+----------------------------------------------
+r18900 | mrjc | 2009-05-18 19:08:47 -0400 (Mon, 18 May 2009) | 1 line
+
+[DOC] Merged back Xavi's doc changes as per marclaporte's email Mon, May 18, 2009 at 6:49 PM
+----------------------------------------------
+r18894 | mrjc | 2009-05-18 18:02:53 -0400 (Mon, 18 May 2009) | 1 line
+
+[DOC] updating documentation re: weird SQL quote problem after convertsqls.sh
+----------------------------------------------
+r18893 | mrjc | 2009-05-18 17:52:45 -0400 (Mon, 18 May 2009) | 1 line
+
+[ENH] better comments - functionally same
+----------------------------------------------
+r18892 | mrjc | 2009-05-18 17:32:10 -0400 (Mon, 18 May 2009) | 1 line
+
+Changes to allow lookup by pathname, and accepted as 3rd party many other libs. Built part of new feature to aggregate files according to which feature the file contributes to, but this is disabled as it has a bug (introduces 'Array' into the last column of the table)
+----------------------------------------------
+r18891 | mrjc | 2009-05-18 17:27:48 -0400 (Mon, 18 May 2009) | 1 line
+
+With nkoth3, added missing permissions and feature checks
+----------------------------------------------
+r18884 | chibaguy | 2009-05-18 10:29:06 -0400 (Mon, 18 May 2009) | 1 line
+
+[FIX] Bad QuickTags background contrast.
+----------------------------------------------
+r18880 | sylvieg | 2009-05-18 06:37:48 -0400 (Mon, 18 May 2009) | 1 line
+
+typo thx geoff
+----------------------------------------------
+r18879 | chibaguy | 2009-05-18 05:28:51 -0400 (Mon, 18 May 2009) | 1 line
+
+[FIX] Site header search form width reduced (expands as needed); #siteloginbar's  second div display:inline removed to allow more logical line break (after submit button).
+----------------------------------------------
+r18878 | nkoth | 2009-05-18 04:58:38 -0400 (Mon, 18 May 2009) | 2 lines
+
+[FIX] The existing UI suggests that clearing all caches includes clearing user prefs sessions, and should in fact do so
+
+----------------------------------------------
+r18877 | chibaguy | 2009-05-18 04:27:14 -0400 (Mon, 18 May 2009) | 1 line
+
+[FIX] Wide pages caused in IE8 by 100%-wide div.postbody (blogs and forums).
+----------------------------------------------
+r18875 | pkdille | 2009-05-18 00:23:21 -0400 (Mon, 18 May 2009) | 1 line
+
+[FIX] tiki-forums: fix the sections in list forums (broken in r16691)
+----------------------------------------------
+r18874 | mrjc | 2009-05-17 22:42:44 -0400 (Sun, 17 May 2009) | 1 line
+
+Empty ie8 hacks file
+----------------------------------------------
+r18873 | mrjc | 2009-05-17 21:45:27 -0400 (Sun, 17 May 2009) | 1 line
+
+Hopefully the last ie7 fix. Thanks to jonny for pointing out ie7 hacks file doesn't need [id]
+----------------------------------------------
+r18872 | nkoth | 2009-05-17 21:42:29 -0400 (Sun, 17 May 2009) | 2 lines
+
+[FIX][ENH] ie7.css was not working properly for individual theme before. Also allow ie8.css
+
+----------------------------------------------
+r18871 | mrjc | 2009-05-17 21:04:33 -0400 (Sun, 17 May 2009) | 1 line
+
+header height fixes - pushing to ie7.css
+----------------------------------------------
+r18870 | mrjc | 2009-05-17 20:52:54 -0400 (Sun, 17 May 2009) | 1 line
+
+temp fix for ie7
+----------------------------------------------
+r18869 | jonnybradley | 2009-05-17 20:39:08 -0400 (Sun, 17 May 2009) | 2 lines
+
+[FIX] Tentative fix for login bar in Strasa on IE7
+
+----------------------------------------------
+r18868 | marclaporte | 2009-05-17 19:22:26 -0400 (Sun, 17 May 2009) | 1 line
+
+[MOD] Changing from time and date to date only for last blog posts module. 1- This makes the module have way too much clutter. 2- time is available on mouse-over, so it's duplicate info.  3- People typically post less than once per day so it's not relevant, and even if it was posts, are in chronological order anyway.   Blog profile is now good with this.  
+----------------------------------------------
+r18867 | xavidp | 2009-05-17 16:36:52 -0400 (Sun, 17 May 2009) | 1 line
+
+[FIX] Homepage_content updated to latest content from English language.php, and some some more strings translated for the latest install process, + a few more things
+----------------------------------------------
+r18866 | xavidp | 2009-05-17 16:35:30 -0400 (Sun, 17 May 2009) | 1 line
+
+[FIX] some more typos and consistancy changes to strings
+----------------------------------------------
+r18865 | xavidp | 2009-05-17 15:47:00 -0400 (Sun, 17 May 2009) | 1 line
+
+[FIX]Usability fix: custom.php_example files added, as in the fr lang, to help admins find out how to add customizations through that file
+----------------------------------------------
+r18864 | xavidp | 2009-05-17 15:45:40 -0400 (Sun, 17 May 2009) | 1 line
+
+[FIX]Typo
+----------------------------------------------
+r18863 | xavidp | 2009-05-17 15:36:58 -0400 (Sun, 17 May 2009) | 1 line
+
+[FIX]HOMEPAGE_CONTENT updated to meet latest english homepage (much better nowadays, imho). Thanks Pascal St-Jean for that
+----------------------------------------------
+r18862 | jonnybradley | 2009-05-17 11:54:05 -0400 (Sun, 17 May 2009) | 2 lines
+
+[FIX] IE6 #siteloginbar positioning fix
+
+----------------------------------------------
+r18861 | jonnybradley | 2009-05-17 11:01:13 -0400 (Sun, 17 May 2009) | 2 lines
+
+[FIX] Use transparent GIF for installer tiki3 logo on IE6
+
+----------------------------------------------
+r18860 | mrjc | 2009-05-17 10:59:42 -0400 (Sun, 17 May 2009) | 1 line
+
+added --debug-packaging: run tikirelease.sh with the -x option.
+----------------------------------------------
+r18853 | nkoth | 2009-05-16 13:05:51 -0400 (Sat, 16 May 2009) | 2 lines
+
+[FIX] plugin help not refreshed on plugin on/off changes 
+
+----------------------------------------------
+r18851 | nkoth | 2009-05-16 08:38:24 -0400 (Sat, 16 May 2009) | 2 lines
+
+[FIX] remove debug code
+
+----------------------------------------------
+r18849 | sylvieg | 2009-05-16 08:03:38 -0400 (Sat, 16 May 2009) | 1 line
+
+[FIX]tracker: do not look for voting if tracker does not use voting-> save one query per items
+----------------------------------------------
+r18848 | sylvieg | 2009-05-16 06:30:30 -0400 (Sat, 16 May 2009) | 1 line
+
+[FIX]tracker: 'edit field' button must not have sort_mode param transmitted
+----------------------------------------------
+r18845 | xavidp | 2009-05-15 12:33:11 -0400 (Fri, 15 May 2009) | 1 line
+
+[FIX] Upgrade instructions tip added to the installer, and translated to Spanish 
+----------------------------------------------
+r18844 | xavidp | 2009-05-15 12:32:24 -0400 (Fri, 15 May 2009) | 1 line
+
+[FIX] Upgrade instructions tip added to the installer, and translated to German (thx FrankP_german)
+----------------------------------------------
+r18843 | xavidp | 2009-05-15 12:29:58 -0400 (Fri, 15 May 2009) | 1 line
+
+[FIX] Upgrade instructions tip added to the installer, and translated to French (thx Sylvieg)
+----------------------------------------------
 r18811 | sept_7 | 2009-05-15 10:19:02 +0200 (ven. 15 mai 2009) | 2 lines
 
 [FIX] release script : avoir shipping the wrong version of Tiki

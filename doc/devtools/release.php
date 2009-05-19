@@ -726,26 +726,28 @@ DOCUMENTATION
 
 * It is highly recommended that you refer to the online documentation:
 * http://doc.tikiwiki.org/Installation for a setup guide
-* http://doc.tikiwiki.org/Install+Problems for what to do in case of problems
 
-* Notes about the releases are accessible from http://tikiwiki.org/TikiReleases
+* Notes about this release are accessible from http://tikiwiki.org/ReleaseNotes30
 * Tikiwiki has an active IRC channel, #tikiwiki on irc.freenode.net
-
 
 INSTALLATION
 
 * There is a file INSTALL in this directory with notes on how to setup and
-  configure Tiki. Again, see http://doc.tikiwiki.org/InstallTiki for the latest install help.
+  configure Tiki. Again, see http://doc.tikiwiki.org/Installation for the latest install help.
 
+UPGRADES
+
+* Read the online instructions if you want to upgrade your Tiki from a previous release http://doc.tikiwiki.org/Upgrade
 
 COPYRIGHT
 
-Copyright (c) 2002-$year, Luis Argerich, Garland Foster, Eduardo Polidor, et. al. All
-Rights Reserved. See $copyrights_file for details and a complete list of authors.
+Copyright (c) 2002-$year, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+All Rights Reserved. See $copyrights_file for details and a complete list of authors.
 Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See $license_file for details.
 
 ... Have fun!
 
+Note to Tiki developers: update this text through release.php.
 EOF;
 
 	return (bool)file_put_contents(README, $readme);
@@ -788,12 +790,18 @@ function display_howto() {
 --------------------------
 
 1/ Preliminary manual tasks
-   - Test the whole Installer and check if everything is OK
+   - run the tiki installer and correct anything obviously wrong
+   - the "function update_readme_file" in this script will output to the top-level README:
+   -- check if anyone has committed anything manually to README that needs to be brought back into this script
+   -- check links
    - run doc/devtools/securitycheck.php and check each "potentially unsafe" file.
    - cd db/convertscripts and run convertsqls.sh
+   --- Check that you do not have spurious quote marks in your db/*.sql file
+   --- the string \" should not appear, if it does, ask nyloth or nkoth3 on IRC
    - in lib/setup/twversion.class.php
      - increment the version number in the constructor
      - update list of valid releases in getVersions()
+     - change the version branch to "unstable", "stable", or "head" as explained in that file
    - commit your changes with this commit message (change \$VERSION by the version of the release):
 	[REL] Preparing \$VERSION release
 
