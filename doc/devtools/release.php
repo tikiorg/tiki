@@ -737,7 +737,7 @@ INSTALLATION
 
 UPGRADES
 
-* Read the online instructions if you want to upgrade you tiki from a previous release http://doc.tikiwiki.org/Upgrade
+* Read the online instructions if you want to upgrade your Tiki from a previous release http://doc.tikiwiki.org/Upgrade
 
 COPYRIGHT
 
