@@ -6577,7 +6577,7 @@ window.addEvent('domready', function() {
 
 	function parse_data_process_maketoc( &$data, $options) {
 
-		global $prefs;
+		global $prefs, $smarty;
 
 		if ( $options['fck'] == 'y' ) {
 			$need_maketoc = false ;
