@@ -341,7 +341,6 @@ FCK.DataProcessor =
 							if ( isFirstLevel && stringBuilder[ stringBuilder.length - 1 ] != "\n" ) {
 								//stringBuilder.push( '\n' ) ;
 							}
-							stringBuilder.push( '\n' ) ;
 
 							break ;
 
@@ -481,7 +480,7 @@ FCK.DataProcessor =
 									this._IsInsideCell = false ;
 
 									if (c < (htmlNode.rows[r].cells.length -1))
-										stringBuilder.push( '|' ) ;
+										stringBuilder.push( ' |' ) ;
 								}
 								if (r < (htmlNode.rows.length -1))
 									stringBuilder.push( '\n' ) ;
