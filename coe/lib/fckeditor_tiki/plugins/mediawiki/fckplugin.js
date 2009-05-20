@@ -341,6 +341,7 @@ FCK.DataProcessor =
 							if ( isFirstLevel && stringBuilder[ stringBuilder.length - 1 ] != "\n" ) {
 								//stringBuilder.push( '\n' ) ;
 							}
+							stringBuilder.push( '\n' ) ;
 
 							break ;
 

@@ -5528,6 +5528,7 @@ window.addEvent('domready', function() {
 } );
 " );
 							}
+							include_once('lib/smarty_tiki/function.icon.php');
 							$ret = '~np~<a id="' .$id. '" style="float:right" href="javascript:void(1)" class="editplugin">'.smarty_function_icon(array('_id'=>'shape_square_edit', 'alt'=>tra('Edit Plugin').':'.$plugin_name), $smarty).'</a>~/np~'.$ret;
 						}
 
@@ -6940,6 +6941,7 @@ window.addEvent('domready', function() {
 							if (!empty($options['page'])) {
 								$button .= 'page='.urlencode($options['page']).'&amp;';
 							}
+							include_once('lib/smarty_tiki/function.icon.php');
 							$button .= 'hdr='.$nb_hdrs.'">'.smarty_function_icon(array('_id'=>'page_edit', 'alt'=>tra('Edit Section')), $smarty).'</a></div>';
 						} else {
 							$button = '';
