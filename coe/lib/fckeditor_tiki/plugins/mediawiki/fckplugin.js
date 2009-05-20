@@ -390,85 +390,42 @@ FCK.DataProcessor =
 								stringBuilder.push( '~~' + color + ':' );
 								this._AppendChildNodes( htmlNode, stringBuilder, prefix ) ;
 								stringBuilder.push( '~~' );
+								break;
 							}
+							this._AppendChildNodes( htmlNode, stringBuilder, prefix ) ;
 							break;
 						case 'a' :
 
-/*
-							var pipeline = true;
-							// Get the actual Link href.
-							var href = htmlNode.getAttribute( '_fcksavedurl' ) ;
-							var hrefType		= htmlNode.getAttribute( '_fck_mw_type' ) || '' ;
-							
-							if ( href == null )
-*/
-								href = htmlNode.getAttribute( 'href' , 2 ) || '' ;
-								descr = htmlNode.innerHTML || '' ;
+							href = htmlNode.getAttribute( 'href' , 2 ) || '' ;
+							descr = htmlNode.innerHTML || '' ;
 
-								if ( href.StartsWith('tiki-index.php') ) {
-									if ( href.match(/.*\#(.+)$/) )
-										anchor = href.replace(/.*\#(.+)$/,'$1');
-									else
-										anchor = '';
-									page = href.replace(/tiki-index.php\?.*page=([^&#]+).*/,'$1');
-									stringBuilder.push( '((' + page ) ;
-									if ( anchor != '' ) {
-										stringBuilder.push( '|#'+ anchor ) ;
-									}
-									if ( descr != '' && descr != page ) {
-										stringBuilder.push( '|' );
-										this._AppendChildNodes( htmlNode, stringBuilder, prefix ) ;
-									}
-									stringBuilder.push( '))' ) ;
-								} else if ( href.StartsWith('http://') ) {
-									stringBuilder.push( '[' + href ) ;
-									rel = htmlNode.getAttribute( 'rel' , 2 ) || '' ;
-									rel = rel.replace(/ *external */,'');
-									if ( href != descr ) {
-										stringBuilder.push( '|' ) ;
-										this._AppendChildNodes( htmlNode, stringBuilder, prefix ) ;
-									}
-									if ( rel != '' )
-										stringBuilder.push( '|' + rel ) ;
-									stringBuilder.push( ']' ) ;
+							if ( href.StartsWith('tiki-index.php') ) {
+								if ( href.match(/.*\#(.+)$/) )
+									anchor = href.replace(/.*\#(.+)$/,'$1');
+								else
+									anchor = '';
+								page = href.replace(/tiki-index.php\?.*page=([^&#]+).*/,'$1');
+								stringBuilder.push( '((' + page ) ;
+								if ( anchor != '' ) {
+									stringBuilder.push( '|#'+ anchor ) ;
 								}
-
-/*
-							var isWikiUrl = true ;
-							
-							if ( hrefType == "media" )
-								stringBuilder.push( '[[Media:' ) ;
-							else if ( htmlNode.className == "extiw" )
-							{
-								stringBuilder.push( '[[' ) ;
-								var isWikiUrl = true;
+								if ( descr != '' && descr != page ) {
+									stringBuilder.push( '|' );
+									this._AppendChildNodes( htmlNode, stringBuilder, prefix ) ;
+								}
+								stringBuilder.push( '))' ) ;
+							} else if ( href.StartsWith('http://') ) {
+								stringBuilder.push( '[' + href ) ;
+								rel = htmlNode.getAttribute( 'rel' , 2 ) || '' ;
+								rel = rel.replace(/ *external */,'');
+								if ( href != descr ) {
+									stringBuilder.push( '|' ) ;
+									this._AppendChildNodes( htmlNode, stringBuilder, prefix ) ;
+								}
+								if ( rel != '' )
+									stringBuilder.push( '|' + rel ) ;
+								stringBuilder.push( ']' ) ;
 							}
-							else
-							{
-								var isWikiUrl = !( href.StartsWith( 'mailto:' ) || /^\w+:\/\//.test( href ) ) ;
-								stringBuilder.push( isWikiUrl ? '[[' : '[' ) ;
-							}
-							//#2223
-							if (htmlNode.getAttribute( '_fcknotitle' ) && htmlNode.getAttribute( '_fcknotitle' ) == "true")
-							{
-								var testInner = FCKConfig.ProtectedSource.Revert(htmlNode.innerHTML, 0);
-								if (href.toLowerCase().StartsWith( 'category:' )) testInner = 'Category:'+testInner;
-								testInner = testInner.replace(/&amp;/, "&") 
-								if ( testInner == FCKConfig.ProtectedSource.Revert(href, 0) ) pipeline = false;
-							}
-							if (href.toLowerCase().StartsWith( 'rtecolon' ))		//change 'rtecolon=' => ':' in links
-							{
-								stringBuilder.push(':');
-								href = href.substring(8);
-							}
-							stringBuilder.push( href ) ;
-							if ( pipeline && htmlNode.innerHTML != '[n]' && (!isWikiUrl || href != htmlNode.innerHTML || !href.toLowerCase().StartsWith("category:")))
-							{
-								stringBuilder.push( isWikiUrl? '|' : ' ' ) ;
-								this._AppendChildNodes( htmlNode, stringBuilder, prefix ) ;
-							}
-							stringBuilder.push( isWikiUrl ? ']]' : ']' ) ;
-*/
 
 							break ;
 							

@@ -5858,19 +5858,23 @@ window.addEvent('domready', function() {
 		}
 
 		if ($prefs['wysiwyg_htmltowiki'] == 'y' and isset($parseOptions['fck']) and $parseOptions['fck'] == 'y' ) {
-			$ret = '{'.strtoupper($name).' (';
+			$fck_editor_plugin = '{'.strtoupper($name).' (';
 			if (!empty($args)) {
 				foreach( $args as $argKey => $argValue ) {
-					$ret .= $argKey.'="'.$argValue.'" ';
+					$fck_editor_plugin .= $argKey.'="'.$argValue.'" ';
 				}
 			}
-			$ret .= ')}'.$data.'{'.strtoupper($name).'}';
+			$fck_editor_plugin .= ')}'.$data.'{'.strtoupper($name).'}';
 			//return '<span _fckfakelement="true" _fck_true_content="'.htmlspecialchars($ret,'UTF-8').'">Tiki Plugin '.$name.'</span>';
-			return '<span _plugin="'.urlencode($ret).'">Tiki Plugin '.$name.'</span>';
+			//return '<span _plugin="'.urlencode($fck_editor_plugin).'">Tiki Plugin '.$name.'</span>';
 		}
 
 		if( function_exists( $func_name ) ) {
-			return $func_name( $data, $args, $offset, $parseOptions );
+			if ($prefs['wysiwyg_htmltowiki'] == 'y' and isset($parseOptions['fck']) and $parseOptions['fck'] == 'y' ) {
+				return '<span _plugin="'.urlencode($fck_editor_plugin).'">'.$func_name( $data, $args, $offset, $parseOptions ).'</span>';
+			} else {
+				return $func_name( $data, $args, $offset, $parseOptions );
+			}
 		} elseif( $info = $this->plugin_alias_info( $name ) ) {
 			$name = $info['implementation'];
 
@@ -5902,7 +5906,11 @@ window.addEvent('domready', function() {
 				}
 			}
 
-			return $this->plugin_execute( $name, $data, $params, $offset, true, $parseOptions );
+			if ($prefs['wysiwyg_htmltowiki'] == 'y' and isset($parseOptions['fck']) and $parseOptions['fck'] == 'y' ) {
+				return '<span _plugin="'.urlencode($fck_editor_plugin).'">'.$this->plugin_execute( $name, $data, $params, $offset, true, $parseOptions ).'</span>';
+			} else {
+				return $this->plugin_execute( $name, $data, $params, $offset, true, $parseOptions );
+			}
 		}
 	}
 
