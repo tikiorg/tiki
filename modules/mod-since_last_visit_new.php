@@ -388,7 +388,7 @@ function since_last_visit_new($user, $params = null) {
 				if (!isset($counta[$res['trackerId']])) $counta[$res['trackerId']] = 0;
 
 				// Pull Tracker Name
-				if (!isset($tracker_name[$res['trackerId']])) {
+				if ($res['trackerId'] > 0 && !isset($tracker_name[$res['trackerId']])) {
 					$query = "select `name` from `tiki_trackers` where `trackerId` = ?";
 					$tracker_name[$res['trackerId']] = $tikilib->getOne($query, $res['trackerId']);
 				}
