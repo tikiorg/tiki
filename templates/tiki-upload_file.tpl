@@ -262,7 +262,7 @@
 	{/if}
 	<br />
 	{remarksbox type="note"}
-		{tr}Maximum file size is limited to:{/tr}
+		{tr}Maximum file size is around:{/tr}
 		{if $tiki_p_admin eq 'y'}<a title="{$max_upload_size_comment}">{/if}
 			{$max_upload_size|kbsize:true:0}
 		{if $tiki_p_admin eq 'y'}</a>{/if}
