@@ -274,6 +274,20 @@ if (isset($_REQUEST["save"])) {
 	} else {
 		$tracker_options['autoCreateGroup'] = 'n';
 	}
+	if (isset($_REQUEST['autoAssignCreatorGroup'])
+		&& ($_REQUEST['autoAssignCreatorGroup'] == 'on'
+			or $_REQUEST['autoAssignCreatorGroup'] == 'y')) {
+		$tracker_options['autoAssignCreatorGroup'] = 'y';
+	} else {
+		$tracker_options['autoAssignCreatorGroup'] = 'n';
+	}
+	if (isset($_REQUEST['autoAssignCreatorGroupDefault'])
+		&& ($_REQUEST['autoAssignCreatorGroupDefault'] == 'on'
+			or $_REQUEST['autoAssignCreatorGroupDefault'] == 'y')) {
+		$tracker_options['autoAssignCreatorGroupDefault'] = 'y';
+	} else {
+		$tracker_options['autoAssignCreatorGroupDefault'] = 'n';
+	}
 	if (isset($_REQUEST["oneUserItem"])
 		&& ($_REQUEST["oneUserItem"] == 'on'
 			or $_REQUEST["oneUserItem"] == 'y')) {

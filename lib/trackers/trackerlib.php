@@ -1488,8 +1488,12 @@ class TrackerLib extends TikiLib {
 					$userlib->group_inclusion($groupName, $groupInc);
 				}
 			}
-			$userlib->assign_user_to_group($user, $groupName);
-			//$userlib->set_default_group($user, $groupName);
+			if ($tracker_info['autoAssignCreatorGroup'] == 'y') {
+				$userlib->assign_user_to_group($user, $groupName);
+			}
+			if ($tracker_info['autoAssignCreatorGroupDefault'] == 'y') {
+				$userlib->set_default_group($user, $groupName);
+			}
 		}
 
 		if (!$itemId) $itemId = $new_itemId;
