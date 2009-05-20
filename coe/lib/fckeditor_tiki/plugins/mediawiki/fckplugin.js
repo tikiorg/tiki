@@ -214,12 +214,12 @@ FCK.DataProcessor =
 		strike	:	["--","--" ],
 		del		:	["--","--" ],
 		p			: [ '', '\n' ],
-		h1		: [ '-== ', '==-' ],
-		h2		: [ '! ', '' ],
-		h3		: [ '!! ', '' ],
-		h4		: [ '!!! ', '' ],
-		h5		: [ '!!!! ', '' ],
-		h6		: [ '!!!!! ', '' ],
+		h1		: [ '! ', '\n' ],
+		h2		: [ '!! ', '\n' ],
+		h3		: [ '!!! ', '\n' ],
+		h4		: [ '!!!! ', '\n' ],
+		h5		: [ '!!!!! ', '\n' ],
+		h6		: [ '!!!!!! ', '\n' ],
 		br		: [ '\n', null, true ],
 		hr		: [ '---', null, true ]
 	} ,
@@ -337,6 +337,13 @@ FCK.DataProcessor =
 				{
 					switch ( sNodeName )
 					{
+						case 'div':
+							if (htmlNode.className == 'titlebar' ) {
+								stringBuilder.push( '-=' ) ;
+								this._AppendChildNodes( htmlNode, stringBuilder, prefix ) ;
+								stringBuilder.push( '=-\n' ) ;
+								break;
+							}
 						case 'ol' :
 						case 'ul' :
 							var isFirstLevel = !htmlNode.parentNode.nodeName.IEquals( 'ul', 'ol', 'li', 'dl', 'dt', 'dd' ) ;
