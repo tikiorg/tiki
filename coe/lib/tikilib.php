@@ -7167,6 +7167,7 @@ window.addEvent('domready', function() {
 			if (!empty($options['page'])) {
 				$button .= 'page='.urlencode($options['page']).'&amp;';
 			}
+			include_once('lib/smarty_tiki/function.icon.php');
 			$button .= 'hdr=0">'.smarty_function_icon(array('_id'=>'page_edit', 'alt'=>tra('Edit Section')), $smarty).'</a></div>';
 			$data = $button.$data;
 		}
