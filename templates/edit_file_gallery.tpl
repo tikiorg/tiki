@@ -12,7 +12,7 @@
        <span style="float:right; margin-bottom: -1em"><input type="submit" value="{tr}Save{/tr}" name="edit" />&nbsp;<input type="checkbox" name="viewitem" checked="checked"/> {tr}View inserted gallery{/tr}</span>
 			<div class="tabs" style="clear: both;">
 				<span id="tab1" class="tabmark tabactive"><a href="javascript:tikitabs(1,3);">{tr}Properties{/tr}</a></span>
-				<span id="tab2" class="tabmark tabactive"><a href="javascript:tikitabs(2,3);">{tr}Display Properties{/tr}</a></span>
+				<span id="tab2" class="tabmark tabinactive"><a href="javascript:tikitabs(2,3);">{tr}Display Properties{/tr}</a></span>
 			</div>
 			{else}
        <div class="input_submit_container" style="text-align: right"><input type="submit" value="{tr}Save{/tr}" name="edit" />&nbsp;<input type="checkbox" name="viewitem" checked="checked"/> {tr}View inserted gallery{/tr}</div>
