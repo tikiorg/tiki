@@ -29,6 +29,11 @@ function wikiplugin_subscribegroups_info() {
 				'name' => tra('Show default setting and buttons'),
 				'description' => 'y|n',
 			),
+			'showgroupdescription' => array(
+				'required' => false, 
+				'name' => tra('Show group description'),
+				'description' => 'y|n',
+			),
 			'groups' => array(
 				'required' => false,
 				'name' => tra('Groups'),
@@ -108,12 +113,15 @@ function wikiplugin_subscribegroups($data, $params) {
 	}
 
 	$possiblegroups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n', '', 'y');
+	$groupDescs = array();
 	foreach ($possiblegroups['data'] as $key=>$g) {
+		if (isset($showgroupdescription) && $showgroupdescription == 'y') {
+			$groupDescs[$g['groupName']] = $g['groupDesc'];
+		}
 		if (!empty($userGroups[$g['groupName']]) || (!empty($groups) && !in_array($g['groupName'], $groups))) {
 			unset($possiblegroups['data'][$key]);
 		}
 	}
-
 	if (isset($subscribe)) {
 		$smarty->assign_by_ref('subscribe', $subscribe);
 	} else {
@@ -128,7 +136,13 @@ function wikiplugin_subscribegroups($data, $params) {
 		$smarty->assign('showdefault', 'y');
 	} else {
 		$smarty->assign('showdefault', 'n');
-	}	
+	}
+	if (isset($showgroupdescription) && $showgroupdescription == 'y') {
+		$smarty->assign_by_ref('groupDescs', $groupDescs);
+		$smarty->assign('showgroupdescription', 'y');
+	} else {
+		$smarty->assign('showgroupdescription', 'n');
+	}
 	$smarty->assign_by_ref('userGroups', $userGroups);
 	$smarty->assign_by_ref('possiblegroups', $possiblegroups['data']);
 	$data = $smarty->fetch('wiki-plugins/wikiplugin_subscribegroups.tpl');

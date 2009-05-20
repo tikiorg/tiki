@@ -7,6 +7,7 @@
 	<td class="{cycle advance=false}">
 		{if $type eq 'included'}<i>{$gr|escape}</i>{else}{$gr|escape}{/if}
 		{if $showdefault eq 'y' and $default_group eq $gr}{icon _id='group' alt='{tr}Your default group{/tr}'}{/if}
+		{if $showgroupdescription eq 'y'}<div style="margin-left:10px">{$groupDescs.$gr|escape}</div>{/if}
 	</td>
 	<td class="{cycle}">
 		{if $type ne 'included'}
@@ -27,7 +28,10 @@
 <option value=""><i>{if !empty($subscribe)}{$subscribe|escape}{else}{tr}Subscribe to a group{/tr}{/if}</i></option>
 {foreach from=$possiblegroups item=gr}
 	{if $gr.userChoice eq 'y' and empty($userGroups[$gr.groupName])}
-	<option value="{$gr.groupName|escape}">{$gr.groupName}</option>
+	<option value="{$gr.groupName|escape}">
+			{$gr.groupName|escape}
+			{if $showgroupdescription eq 'y' and !empty($gr.groupDesc)} ({$gr.groupDesc|escape}){/if}
+	</option>
 	{/if}
 {/foreach}
 </select>
