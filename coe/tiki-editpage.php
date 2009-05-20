@@ -893,7 +893,11 @@ if (isset($_REQUEST['mode_normal'])) {
 	// Parsing page data as first time seeing html page in normal editor
 	$smarty->assign('msg', "Parsing html to wiki");
 	$parsed = '';
-	$parsed = parse_html($edit_data);
+	if ($prefs['wysiwyg_htmltowiki'] == 'y') {
+		$parsed = ($edit_data);
+	} else {
+		$parsed = parse_html($edit_data);
+	}
 	$parsed = preg_replace('/\{img src=.*?img\/smiles\/.*? alt=([\w\-]*?)\}/im','(:$1:)', $parsed);	// "unfix" smilies
 	$parsed = preg_replace('/%%%/m',"\n", $parsed);													// newlines
 	$is_html = false;
