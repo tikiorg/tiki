@@ -343,7 +343,7 @@ FCK.DataProcessor =
 
 							this._AppendChildNodes( htmlNode, stringBuilder, prefix ) ;
 
-							if ( isFirstLevel && stringBuilder[ stringBuilder.length - 1 ] != "\n" ) {
+							if ( isFirstLevel && ! stringBuilder[ stringBuilder.length - 1 ].Trim().EndsWith("\n") ) {
 								stringBuilder.push( '\n' ) ;
 							}
 
@@ -354,7 +354,7 @@ FCK.DataProcessor =
 							if( stringBuilder.length > 1)
 							{
 								var sLastStr = stringBuilder[ stringBuilder.length - 1 ] ;
-								if ( sLastStr != ";" && sLastStr != ":" && sLastStr != "#" && sLastStr != "*")
+								if ( sLastStr != ";" && sLastStr != ":" && sLastStr != "#" && sLastStr != "*" && sLastStr != '\n' )
  									stringBuilder.push( '\n' + prefix ) ;
 							}
 							
