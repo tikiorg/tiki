@@ -44,6 +44,11 @@ function wikiplugin_subscribegroups_info() {
 				'name' => tra('Including group'),
 				'description' => tra('Group'),
 			),
+			'defaulturl' => array(
+				'required' => false,
+				'name' => tra('Url'),
+				'description' => tra('After changing default'),
+			),
 		),
 	);
 }
@@ -94,6 +99,10 @@ function wikiplugin_subscribegroups($data, $params) {
 		$userlib->set_default_group($user, $_REQUEST['default']);
 		global $group;
 		$group = $_REQUEST['default'];
+		if (isset($urldefault)) {
+			header("Location: $urldefault");
+			die;
+		}
 	}
 	$userGroups = $userlib->get_user_groups_inclusion($user);
 	if (isset($userGroups['Anonymous'])) {
@@ -138,6 +147,9 @@ function wikiplugin_subscribegroups($data, $params) {
 	} else {
 		$smarty->assign('showgroupdescription', 'n');
 	}
+	if (!empty($defaulturl)) {
+		$smarty->assign('defaulturl', $defaulturl);
+	}   
 	$all = array();
 	foreach ($allGroups['data'] as $gr) {
 		if (isset($userGroups[$gr['groupName']]) || in_array($gr['groupName'], $possibleGroups))

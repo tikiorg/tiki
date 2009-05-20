@@ -15,7 +15,7 @@
 		{if $type ne 'included' and $allGroups.$gr.userChoice eq 'y'}
 			<a href="{$smarty.server.REQUEST_URI}{if strstr($smarty.server.REQUEST_URI, '?')}&amp;{else}?{/if}unassign={$gr|escape:'url'}">{icon _id='cross' alt='{tr}Unsubscribe{/tr}'}</a>
 		{/if}
-		{if $showdefault eq 'y' and  $default_group ne $gr}
+		{if $showdefault eq 'y' and ($default_group ne $gr or !empty($defaulturl))}
 			<a href="{$smarty.server.REQUEST_URI}{if strstr($smarty.server.REQUEST_URI, '?')}&amp;{else}?{/if}default={$gr|escape:'url'}" title="{tr}Change default group{/tr}">{icon _id='group' alt='{tr}Change default group{/tr}'}</a>
 		{/if}
 	</td>
