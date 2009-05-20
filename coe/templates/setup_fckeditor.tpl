@@ -9,7 +9,13 @@ var _FileBrowserExtension     = 'php' ;
 FCKConfig.BodyClass = 'wikitext';
 FCKConfig.FontNames = 'sans serif;serif;monospace;Arial;Comic Sans MS;Courier New;Tahoma;Times New Roman;Verdana' ;
 
-FCKConfig.ToolbarSets["Tiki3"] = [ 
+FCKConfig.ToolbarSets["Tiki"] = [ 
+{if $prefs.wysiwyg_htmltowiki eq 'y'}
+	['Source'],
+{/if}
+{if $prefs.feature_ajax_autosave eq 'y'}
+	['ajaxAutoSave'],
+{/if}
 {foreach item=it from=$toolbar name=lines}
   {foreach item=i from=$it name=item}
   [{foreach item=m from=$i name=im}'{$m}'{if $smarty.foreach.im.index+1 ne $smarty.foreach.im.total},{/if}{/foreach}]{if $smarty.foreach.lines.index+1 ne $smarty.foreach.lines.total},{/if}
@@ -87,26 +93,6 @@ FCKConfig.Plugins.Add( 'dragresizetable' );
 // When using the modified image dialog you must set this variable. It must
 // correspond to $wgScriptPath in LocalSettings.php.
 FCKConfig.mwScriptPath = '' ;     
-
-// Setup the editor toolbar.
-FCKConfig.ToolbarSets['Tiki'] = [
-	['Source'],
-{if $prefs.feature_ajax_autosave eq 'y'}
-	['ajaxAutoSave'],
-{/if}
-	['Cut','Copy','Paste',/*'PasteText','PasteWord',*/'-','Print'],
-	['Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat'],
-	['SpecialChar','Table','Image','Rule'],
-//	['MW_Template','MW_Special','MW_Ref','MW_References','MW_Math'],
-	'/',
-	['FontFormat'],
-	['Bold','Italic','Underline','StrikeThrough','-','Subscript','Superscript'],
-	['OrderedList','UnorderedList','-','Blockquote'],
-//	['JustifyLeft','JustifyCenter','JustifyRight','JustifyFull'],
-	['Link','Unlink','Anchor'],
-//	['TextColor','BGColor'],
-	['FitWindow','-','About']
-] ;
 
 {if $prefs.wysiwyg_htmltowiki eq 'y'}
 // Load the extension plugins.

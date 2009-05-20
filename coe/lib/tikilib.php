@@ -6511,10 +6511,17 @@ window.addEvent('domready', function() {
 		if (!$simple_wiki) {
 			// Replace boxes
 			$patterns[] = "/\^([^\^]+)\^/s"; $replace[] = "<div class=\"simplebox\">$1</div>";
+			if ( $options['fck'] == 'y' ) {
+			// Underlined text
+			$patterns[] = "/===(.+?)===/s"; $replace[] =  "<u>$1</u>";
+			// Center text
+			$patterns[] = "/::(.+?)::/s"; $replace[] = "<center>$1</center>";
+			} else {
 			// Underlined text
 			$patterns[] = "/===(.+?)===/s"; $replace[] =  "<span style=\"text-decoration:underline;\">$1</span>";
 			// Center text
 			$patterns[] = "/::(.+?)::/s"; $replace[] = "<div style=\"text-align: center;\">$1</div>";
+			}
 		}
 
 		// Replace monospaced text

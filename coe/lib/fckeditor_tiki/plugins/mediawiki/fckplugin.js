@@ -206,6 +206,9 @@ FCK.DataProcessor =
 		i		: [ "''", "''" ],
 		em		: [ "''", "''" ],
 		u		: [ "===", "===" ],
+		sub		: [ "{SUB()}", "{SUB}" ],
+		sup		: [ "{SUP()}", "{SUP}" ],
+		center		: [ "::", "::" ],
 		pre		: [ "~pp~", "~/pp~" ],
 		code		: [ "-+", "+-" ],
 		strike	:	["--","--" ],
@@ -341,7 +344,7 @@ FCK.DataProcessor =
 							this._AppendChildNodes( htmlNode, stringBuilder, prefix ) ;
 
 							if ( isFirstLevel && stringBuilder[ stringBuilder.length - 1 ] != "\n" ) {
-								//stringBuilder.push( '\n' ) ;
+								stringBuilder.push( '\n' ) ;
 							}
 
 							break ;
