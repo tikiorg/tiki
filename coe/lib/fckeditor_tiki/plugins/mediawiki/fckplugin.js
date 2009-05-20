@@ -208,7 +208,9 @@ FCK.DataProcessor =
 		u		: [ "===", "===" ],
 		pre		: [ "~pp~", "~/pp~" ],
 		code		: [ "-+", "+-" ],
-		p		: [ '', '\n' ],
+		strike	:	["--","--" ],
+		del		:	["--","--" ],
+		p			: [ '', '\n' ],
 		h1		: [ '-== ', '==-' ],
 		h2		: [ '! ', '' ],
 		h3		: [ '!! ', '' ],
@@ -486,7 +488,7 @@ FCK.DataProcessor =
 									stringBuilder.push( '\n' ) ;
 							}
 
-							stringBuilder.push( '||\n' ) ;
+							stringBuilder.push( '||' ) ;
 
 							break ;
 
