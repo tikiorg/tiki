@@ -1080,6 +1080,9 @@ function get_included_groups($group, $recur=true) {
 	$query = "delete from `users_usergroups` where `userId` = ? and
 		`groupName` = ?";
 	$result = $this->query($query, array($userid, $group));
+	$query = "update `users_users` set `default_group`=? where `login`=? and `default_group`=?";
+	$this->query($query, array('Registered', $user, $group));
+	$_SESSION['u_info']['group'] = 'Registered';
     }
 
     function remove_user_from_all_groups($user) {
@@ -1378,7 +1381,9 @@ function get_included_groups($group, $recur=true) {
 	$query[] = "delete from `tiki_newsletter_groups` where `groupName` = ?";
 	$query[] = "delete from `tiki_newsreader_marks` where `groupName` = ?";
 	$query[] = "delete from `tiki_group_watches` where `group` = ?";
-	foreach ( $query as $q ) $this->query($q, array($group));
+	foreach ( $query as $q )
+		$this->query($q, array($group));
+	$this->query("update `users_users` set `default_group`=? where `default_group`=?", array('Registered', $group));
 
 	global $cachelib;
 	$cachelib->invalidate('grouplist');

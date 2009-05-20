@@ -46,7 +46,7 @@ function wikiplugin_subscribegroups_info() {
 function wikiplugin_subscribegroups($data, $params) {
 	global $tiki_p_subscribe_groups, $userlib, $user, $smarty;
 	if ($tiki_p_subscribe_groups != 'y' || empty($user)) {
-		return '';
+		return tra('Permission denied');
 	}
 	extract ($params, EXTR_SKIP);
 

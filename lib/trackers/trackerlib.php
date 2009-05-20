@@ -1483,7 +1483,10 @@ class TrackerLib extends TikiLib {
 				$query = 'update `tiki_tracker_item_fields` set `value`=? where `itemId`=? and `fieldId`=?';
 				$this->query($query, array($groupName, $new_itemId, $creatorGroupFieldId));
 			}
-			if ($userlib->add_group($groupName, $tracker_info['description'], '', 0, $trackerId, '', '', 0, '', '', $creatorGroupFieldId)) {
+			$desc = $this->get_isMain_value($trackerId, $new_itemId);
+			if (empty($desc))
+				$desc = $tracker_info['description'];
+			if ($userlib->add_group($groupName, $desc, '', 0, $trackerId, '', 'y', 0, '', '', $creatorGroupFieldId)) {
 				if (!empty($tracker_info['autoCreateGroupInc'])) {
 					$userlib->group_inclusion($groupName, $groupInc);
 				}
@@ -1493,6 +1496,7 @@ class TrackerLib extends TikiLib {
 			}
 			if ($tracker_info['autoAssignCreatorGroupDefault'] == 'y') {
 				$userlib->set_default_group($user, $groupName);
+				$_SESSION['u_info']['group'] = $groupName;
 			}
 		}
 
