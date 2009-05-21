@@ -6,46 +6,27 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 global $smarty, $tikilib, $user;
 
-$smarty->assign('module_title', isset($module_params["title"]) ? $module_params["title"] : tra("Articles"));
+$smarty->assign('module_title', isset($module_params['title']) ? $module_params['title'] : tra('Articles'));
+$urlParams = array(
+	'topicId' => 'topic',
+	'topic' => 'topicName',
+	'categId' => 'categId',
+	'type' => 'type',
+	'lang' => 'lang',
+	'start' => null,
+	'sort' => null
+);
 
-if (isset($module_params["type"])) {
-	$type = $module_params["type"];
-} else {
-	$type = '';
+foreach ( $urlParams as $p => $v ) {
+	if ( isset($$p) ) continue;
+	$$p = isset($module_params[$p]) ? $module_params[$p] : '';
 }
-if (isset($module_params["topicId"])) {
-	$topicId = $module_params["topicId"];
-} else {
-	$topicId = '';
-}
-if (isset($module_params["topic"])) {
-	$topic = $module_params["topic"];
-} else {
-	$topic = '';
-}
-if (isset($module_params["start"])) {
-	$start = $module_params["start"];
-} else {
-	$start = isset($start) ? $start : 0;
-}
-if (isset($module_params['sort'])) {
-	$sort = $module_params['sort'];
-} else {
-	$sort = 'publishDate_desc';
-}
-if (isset($module_params['lang'])) {
-	$lang = $module_params['lang'];
-} else {
-	$lang = '';
-}
-if (isset($module_params['categId'])) {
-	$categId = $module_params['categId'];
-} else {
-	$categId = '';
-}
+if ( $start == '' ) $start = 0;
+if ( $sort == '' ) $sort = 'publishDate_desc';
 
 $ranking = $tikilib->list_articles($start, $module_rows, $sort, '', '', '', $user, $type, $topicId, 'y', $topic, $categId, '', '', $lang);
 
+$smarty->assign_by_ref('urlParams', $urlParams);
 $smarty->assign('modArticles', $ranking["data"]);
 if (isset($module_params['title'])) {
 	$smarty->assign('tpl_module_title', $module_params['title']);
