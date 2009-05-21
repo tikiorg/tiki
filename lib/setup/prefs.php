@@ -1296,6 +1296,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'iepngfix_selectors' => '#sitelogo a img',
 		'iepngfix_elements' => '',
 		'use_minified_scripts' => 'y',		// for debugging
+		'debug_ignore_xdebug' => 'n',
 
 		// JQuery
 		'feature_jquery' => 'n',			// Alternative lib for shadowbox etc

@@ -488,6 +488,10 @@
 						<span class="checkbox"><input type="checkbox" name="use_minified_scripts" {if $prefs.use_minified_scripts eq 'y'}checked="checked"{/if}/></span>
 						<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}MinifiedScripts" target="tikihelp" class="tikihelp" title="{tr}Use Minified Scripts{/tr}">{/if} {tr}Use Minified Scripts{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
 					</div>
+					<div style="width: 49%; text-align: left; float: left">
+						<span class="checkbox"><input type="checkbox" name="debug_ignore_xdebug" {if $prefs.debug_ignore_xdebug eq 'y'}checked="checked"{/if}/></span>
+						<span class="label"> {if $prefs.feature_help eq 'y'}<a href="{$prefs.helpurl}DebugIgnoreXDebug" target="tikihelp" class="tikihelp" title="{tr}Ignore XDebug: Don't use XDebug debugging info if installed. Try this if you use xdebug and are geting blank pages.{/tr}">{/if} {tr}Ignore XDebug{/tr} {if $prefs.feature_help eq 'y'}</a>{/if}</span>
+					</div>
 
 				</div>
 			</fieldset>
