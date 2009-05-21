@@ -961,7 +961,7 @@ div.description {display: block}
 	float: right;
 	font-size: small}
 
-.categpath {display: block}
+a.categpath {display: inline}
 .wikiactions {white-space: nowrap !important}
 
 .wikiactions .icons,
