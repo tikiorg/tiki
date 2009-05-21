@@ -24,7 +24,7 @@
 				<table class="admin">
 					{if isset($thumbfile)}<tr>
 						<td colspan="2">
-							<div id="style_thumb_div"><img src={$thumbfile} id="style_thumb" /></div>
+							<div id="style_thumb_div"><img src="{$thumbfile}" id="style_thumb" /></div>
 						</td>
 					</tr>{/if}
 					<tr>
