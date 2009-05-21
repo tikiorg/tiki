@@ -70,7 +70,7 @@
 			{/if}
 		{/if}
 
-		{if $prefs.feature_likePages eq 'y'}
+		{if $prefs.feature_likePages eq 'y' and $tiki_p_wiki_view_similar eq 'y'}
 			{button href="tiki-likepages.php?page=$thispage" _text="{tr}Similar{/tr}"}
 		{/if}
 
