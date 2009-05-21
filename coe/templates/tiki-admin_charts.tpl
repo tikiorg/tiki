@@ -114,7 +114,7 @@
 
 <h2>{tr}Charts{/tr}</h2>
 
-{include file='find.tpl' _sort_mode='y'}
+{include file='find.tpl'}
 
 <form action="tiki-admin_charts.php" method="post">
 <input type="hidden" name="offset" value="{$offset|escape}" />

@@ -61,6 +61,16 @@ if (isset($_REQUEST["intertikiserver"])) {
 		$newhost["{$_REQUEST['newhost']['key']}"] = $_REQUEST['newhost'];
 		$_REQUEST['known_hosts'] += $newhost;
 	}
+	if ( !empty($_REQUEST['known_hosts']) ) {
+		foreach ( $_REQUEST['known_hosts'] as $k => $v ) {
+			if ( empty($_REQUEST['known_hosts'][$k]['name'])
+				&& empty($_REQUEST['known_hosts'][$k]['key'])
+				&& empty($_REQUEST['known_hosts'][$k]['ip'])
+				&& empty($_REQUEST['known_hosts'][$k]['contact'])
+			) unset($_REQUEST['known_hosts'][$k]);
+		}
+	}
+
 	simple_set_value('known_hosts');
 }
 

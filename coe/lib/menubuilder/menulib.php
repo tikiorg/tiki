@@ -52,16 +52,16 @@ class MenuLib extends TikiLib {
 		return $retval;
 	}
 
-	function replace_menu($menuId, $name, $description='', $type='d', $icon=null) {
+	function replace_menu($menuId, $name, $description='', $type='d', $icon=null, $use_items_icons='n') {
 		// Check the name
 		if (isset($menuId) and $menuId > 0) {
-			$query = "update `tiki_menus` set `name`=?,`description`=?,`type`=?, `icon`=? where `menuId`=?";
-			$bindvars = array($name,$description,$type,$icon,(int)$menuId);
+			$query = "update `tiki_menus` set `name`=?,`description`=?,`type`=?, `icon`=?, `use_items_icons`=? where `menuId`=?";
+			$bindvars = array($name,$description,$type,$icon,$use_items_icons,(int)$menuId);
 			$this->empty_menu_cache($menuId);
 		} else {
 			// was: replace into. probably we need a delete here
-			$query = "insert into `tiki_menus` (`name`,`description`,`type`,`icon`) values(?,?,?,?)";
-			$bindvars = array($name,$description,$type,$icon);
+			$query = "insert into `tiki_menus` (`name`,`description`,`type`,`icon`,`use_items_icons`) values(?,?,?,?,?)";
+			$bindvars = array($name,$description,$type,$icon,$use_items_icons);
 		}
 
 		$result = $this->query($query,$bindvars);
@@ -75,13 +75,13 @@ class MenuLib extends TikiLib {
 		return $max;
 	}
 
-	function replace_menu_option($menuId, $optionId, $name, $url, $type='o', $position=1, $section='', $perm='', $groupname='', $level=0) {
+	function replace_menu_option($menuId, $optionId, $name, $url, $type='o', $position=1, $section='', $perm='', $groupname='', $level=0, $icon='') {
 		if ($optionId) {
-			$query = "update `tiki_menu_options` set `name`=?,`url`=?,`type`=?,`position`=?,`section`=?,`perm`=?,`groupname`=?,`userlevel`=?  where `optionId`=?";
-			$bindvars=array($name,$url,$type,(int)$position,$section,$perm,$groupname,$level,$optionId);
+			$query = "update `tiki_menu_options` set `name`=?,`url`=?,`type`=?,`position`=?,`section`=?,`perm`=?,`groupname`=?,`userlevel`=?,`icon`=?  where `optionId`=?";
+			$bindvars=array($name,$url,$type,(int)$position,$section,$perm,$groupname,$level,$icon,$optionId);
 		} else {
-			$query = "insert into `tiki_menu_options`(`menuId`,`name`,`url`,`type`,`position`,`section`,`perm`,`groupname`,`userlevel`) values(?,?,?,?,?,?,?,?,?)";
-			$bindvars=array((int)$menuId,$name,$url,$type,(int)$position,$section,$perm,$groupname,$level);
+			$query = "insert into `tiki_menu_options`(`menuId`,`name`,`url`,`type`,`position`,`section`,`perm`,`groupname`,`userlevel`,`icon`) values(?,?,?,?,?,?,?,?,?,?)";
+			$bindvars=array((int)$menuId,$name,$url,$type,(int)$position,$section,$perm,$groupname,$level,$icon);
 		}
 
 		$this->empty_menu_cache($menuId);
@@ -222,13 +222,17 @@ class MenuLib extends TikiLib {
 			return false;
 		}
 		$url = urldecode($_SERVER['REQUEST_URI']);
+		$option['url'] = str_replace('+', ' ', str_replace('&amp;', '&', urldecode($option['url'])));
+		if (strstr($option['url'], 'structure=') && !strstr($url, 'structure=')) { // try to find al the occurence of the page in structures
+			$option['url'] = preg_replace('/&structure=.*/', '', $option['url']);
+		}
 		if (preg_match('/.*tiki.index.php$/', $url)) {
 			global $wikilib; include_once('lib/wiki/wikilib.php');
 			$homePage = $wikilib->get_default_wiki_page();
 			$url .= "?page=$homePage";
 		}
 		if ($prefs['feature_sefurl'] == 'y' && !empty($option['sefurl'])) {
-			$pos = strpos($url, '/'. urldecode($option['sefurl']));
+			$pos = strpos($url, '/'. urldecode($option['sefurl'])); // position in $url
 			$lg = 1 + strlen($option['sefurl']);
 		} else {
 			$pos = strpos(strtolower($url), strtolower($option['url']));

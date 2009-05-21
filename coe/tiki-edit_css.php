@@ -82,17 +82,18 @@ if (isset($_REQUEST["edit"])and $_REQUEST["edit"]) {
 	} else {
 		$data = load_css2_file("$styledir/$editstyle.css", $styledir);
 	}
-} elseif (isset($_REQUEST["save"])and $_REQUEST["save"]) {
+} elseif ((isset($_REQUEST["save"]) and $_REQUEST["save"]) or (isset($_REQUEST["save2"]) and $_REQUEST["save2"])) {
 	check_ticket('edit-css');
-	$action = 'display';
+	$action = 'edit';
 
 	$data = '';
 	if ($tikidomain and is_dir("$styledir/$tikidomain")) {
-		$fp = fopen("$styledir/$tikidomain/$editstyle.css", "w");
+		$style = "$styledir/$tikidomain/$editstyle.css";
 	} else {
-		$fp = fopen("$styledir/$editstyle.css", "w");
+		$style = "$styledir/$editstyle.css";
 	}
 
+	$fp = fopen($style, "w");
 	if (!$fp) {
 		$smarty->assign('errortype', 401);
 		$smarty->assign('msg', tra("You do not have permission to write the style sheet"));
@@ -103,6 +104,12 @@ if (isset($_REQUEST["edit"])and $_REQUEST["edit"]) {
 
 	fwrite($fp, $_REQUEST["data"]);
 	fclose ($fp);
+	if ($_REQUEST["save2"]) {
+		$action = 'display';
+		header("location: tiki-edit_css.php?editstyle=$editstyle");
+	} else {
+		header("location: tiki-edit_css.php?editstyle=$editstyle&edit=".tra('Edit')."");
+	}
 } else {
 	$action = 'display';
 

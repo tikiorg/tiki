@@ -30,7 +30,7 @@
 <div id="content{cycle name=content assign=focustab}{$focustab}"{if $prefs.feature_tabs eq 'y'} class="tabcontent" style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 <h2>{tr}Trackers{/tr}</h2>
 {if ($channels) or ($find)}
-  {include file='find.tpl' _sort_mode='y' filters=''}
+  {include file='find.tpl' filters=''}
   {if ($find) and ($channels)}
     <p>{tr}Found{/tr} {$channels|@count} {tr}trackers{/tr}:</p>
   {/if}
@@ -107,7 +107,7 @@
 <tr class="formcolor">
   <td>{tr}Description{/tr}:</td>
 	<td>
-	{tr}Description text is tiki-parsed:{/tr} <input type="checkbox" name="descriptionIsParsed" {if $descriptionIsParsed eq 'y'}checked="checked"{/if} onclick="toggleBlock('trackerDesc');" />
+	{tr}Description text is wiki-parsed:{/tr} <input type="checkbox" name="descriptionIsParsed" {if $descriptionIsParsed eq 'y'}checked="checked"{/if} onclick="toggleBlock('trackerDesc');" />
 	<div id="trackerDesc" style="display:none;" >
 		{include file=tiki-edit_help_tool.tpl qtnum="trackerDesc" area_name="trackerDescription"}
 		{if $descriptionIsParsed eq 'y'}<script language="javascript">
@@ -127,8 +127,34 @@
 {/if}
 
 {if $prefs.groupTracker eq 'y'}
-<tr class="formcolor"><td><label for="autoCreateGroup">{tr}Create a group for each item{/tr}</label></td><td>
-<input type="checkbox" id="autoCreateGroup" name="autoCreateGroup" {if $autoCreateGroup eq 'y' }checked="checked"{/if} /></td></tr>
+<tr class="formcolor">
+	<td><label for="autoCreateGroup">{tr}Create a group for each item{/tr}</label></td>
+	<td>
+		<input type="checkbox" id="autoCreateGroup" name="autoCreateGroup" {if $info.autoCreateGroup eq 'y' }checked="checked"{/if}  onclick="toggleTrTd('autoCreateGroupOptions');toggleTrTd('autoCreateGroupOptions2');toggleTrTd('autoCreateGroupOptions3');"/>
+	</td>
+<tr class="formcolor" id="autoCreateGroupOptions"{if $info.autoCreateGroup ne 'y' and $prefs.javascript_enabled eq 'y'} style="display:none;"{/if}>
+	<td></td>
+	<td><label for="autoCreateGroupInc">{tr}Groups will include{/tr}</label>
+		<select id="autoCreateGroupInc" name="autoCreateGroupInc">
+			<option value="">{tr}None{/tr}</option>
+			{foreach item=gr from=$all_groupIds}
+				<option value="{$gr.id|escape}" {if $gr.id eq $info.autoCreateGroupInc} selected="selected"{/if}>{$gr.groupName|truncate:"52":" ..."}</option>
+			{/foreach}
+		</select>
+	</td>
+</tr>
+<tr class="formcolor" id="autoCreateGroupOptions2"{if $info.autoCreateGroup ne 'y' and $prefs.javascript_enabled eq 'y'} style="display:none;"{/if}>
+	<td></td>
+	<td><label for="autoAssignCreatorGroup">{tr}Creator is assigned to the group{/tr}</label>
+		<input type="checkbox" name="autoAssignCreatorGroup" id="autoAssignCreatorGroup" {if $info.autoAssignCreatorGroup eq 'y'}checked="checked"{/if} />
+	</td>
+</tr>
+<tr class="formcolor" id="autoCreateGroupOptions3"{if $info.autoCreateGroup ne 'y' and $prefs.javascript_enabled eq 'y'} style="display:none;"{/if}>
+	<td></td>
+	<td><label for="autoAssignCreatorGroupDefault">{tr}and it becomes his default group{/tr}</label>
+		<input type="checkbox" name="autoAssignCreatorGroupDefault" id="autoAssignCreatorGroupDefaujlt" {if $info.autoAssignCreatorGroupDefault eq 'y'}checked="checked"{/if} />
+	</td>
+</tr>
 {/if}
 
 {if $prefs.trk_with_mirror_tables eq 'y'}
@@ -243,11 +269,11 @@ for a tracker and they must be valid in SQL{/tr}</em>
 	<td>{tr}Tracker items allow comments?{/tr}</td>
 	<td><input type="checkbox" name="useComments" {if $useComments eq 'y'}checked="checked"{/if} onclick="toggleTrTd('commentsoptions');toggleTrTd('commentsoptions2');" /></td>
 </tr>
-<tr class="formcolor" id="commentsoptions" {if $useComments ne 'y'}style="display:none;"{/if}>
+<tr class="formcolor" id="commentsoptions" {if $useComments ne 'y'and $prefs.javascript_enabled eq 'y'}style="display:none;"{/if}>
 		<td class="sub">{tr}and display comments in listing?{/tr}</td>
 		<td><input type="checkbox" name="showComments" {if $showComments eq 'y'}checked="checked"{/if} /></td>
 </tr>
-<tr class="formcolor" id="commentsoptions2" {if $useComments ne 'y'}style="display:none;"{/if}>
+<tr class="formcolor" id="commentsoptions2" {if $useComments ne 'y' and $prefs.javascript_enabled eq 'y'}style="display:none;"{/if}>
 		<td class="sub">{tr}and display last comment user/date?{/tr}</td>
 		<td><input type="checkbox" name="showLastComment" {if $showLastComment eq 'y'}checked="checked"{/if} /></td>
 </tr>
@@ -255,11 +281,11 @@ for a tracker and they must be valid in SQL{/tr}</em>
 <td>{tr}Tracker items allow attachments?{/tr}</td>
 <td><input type="checkbox" name="useAttachments" {if $useAttachments eq 'y'}checked="checked"{/if} onclick="toggleTrTd('attachmentsoptions');toggleTrTd('attachmentsconf');" /></td>
 </tr>
-<tr class="formcolor" id="attachmentsoptions" {if $useAttachments ne 'y'}style="display:none;"{/if}>
+<tr class="formcolor" id="attachmentsoptions" {if $useAttachments ne 'y' and $prefs.javascript_enabled eq 'y'}style="display:none;"{/if}>
 		<td class="sub">{tr}and display attachments in listing?{/tr}</td>
 		<td><input type="checkbox" name="showAttachments" {if $showAttachments eq 'y'}checked="checked"{/if} /></td>
 </tr>
-<tr class="formcolor" id="attachmentsconf" {if $useAttachments ne 'y'}style="display:none;"{/if}>
+<tr class="formcolor" id="attachmentsconf" {if $useAttachments ne 'y' and $prefs.javascript_enabled eq 'y'}style="display:none;"{/if}>
 	<td class="sub" colspan="5">
 {tr}Attachment display options (Use numbers to order items, 0 will not be displayed, and negative values display in popups){/tr}
 <table class="normal">
@@ -393,7 +419,7 @@ categories = {$catsdump}
 <tr class="formcolor">
 	<td>{tr}Description{/tr}</td>
 	<td colspan="2">
-		{tr}Description text is tiki-parsed:{/tr} <input type="checkbox" name="duplicateDescriptionIsParsed" {if $descriptionIsParsed eq 'y'}checked="checked"{/if} onclick="toggleBlock('duplicateTrackerDesc');" />
+		{tr}Description text is wiki-parsed:{/tr} <input type="checkbox" name="duplicateDescriptionIsParsed" {if $descriptionIsParsed eq 'y'}checked="checked"{/if} onclick="toggleBlock('duplicateTrackerDesc');" />
 		<div id="duplicateTrackerDesc" style="display:none;" >
 			{include file=tiki-edit_help_tool.tpl qtnum="duplicateTrackerDesc" area_name="duplicateTrackerDescription"}
 			{if $descriptionIsParsed eq 'y'}<script language="javascript">
@@ -425,3 +451,5 @@ categories = {$catsdump}
 </table>
 </form>
 </div>
+
+{include file=tiki-edit_help.tpl}

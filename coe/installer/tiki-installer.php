@@ -16,7 +16,6 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 }
 
 error_reporting (E_ALL);
-
 require_once( 'tiki-filter-base.php' );
 
 // Define and load Smarty components
@@ -25,6 +24,7 @@ require_once ( 'lib/smarty/libs/Smarty.class.php');
 require_once ('installer/installlib.php');
 
 $commands = array();
+$prefs = array();
 ini_set('magic_quotes_runtime',0);
 
 // Which step of the installer
@@ -209,9 +209,9 @@ function isWindows() {
 	return $windows;
 }
 
-class Smarty_Tikiwiki extends Smarty {
+class Smarty_Tikiwiki_Installer extends Smarty {
 
-	function Smarty_Tikiwiki() {
+	function Smarty_Tikiwiki_Installer() {
 		$this->template_dir = "templates/";
 		$this->compile_dir = "templates_c/";
 		$this->config_dir = "configs/";
@@ -424,6 +424,33 @@ function has_admin() {
         }
 }
 
+function get_admin_email( $dbTiki ) {
+	$query = "SELECT `email` FROM `users_users` WHERE `userId`=1";
+	@$result = $dbTiki->Execute($query);
+
+	if ( $result && $res = $result->fetchRow() ) {
+		return $res['email'];
+	}
+
+	return false;
+}
+
+function update_preferences( $dbTiki, &$prefs ) {
+	$query = "SELECT `name`, `value` FROM `tiki_preferences`";
+	@$result = $dbTiki->Execute($query);
+
+	if ( $result ) {
+		while ( $res = $result->fetchRow() ) {
+			if ( ! isset($prefs[$res['name']]) ) {
+				$prefs[$res['name']] = $res['value'];
+			}
+		}
+		return true;
+	}
+
+	return false;
+}
+
 function load_sql_scripts() {
 	global $smarty;
 	global $dbversion_tiki;
@@ -507,7 +534,7 @@ $cachelib->empty_full_cache();
 $_SESSION["install-logged-$multi"] = 'y';
 
 // Init smarty
-$smarty = new Smarty_Tikiwiki();
+$smarty = new Smarty_Tikiwiki_Installer();
 $smarty->load_filter('pre', 'tr');
 $smarty->load_filter('output', 'trimwhitespace');
 $smarty->assign('mid', 'tiki-install.tpl');
@@ -517,20 +544,27 @@ $smarty->assign('multi', $multi);
 if ($language != 'en')
 	$smarty->assign('lang', $language);
 
+// Try to set a longer execution time for the installer
+@ini_set('max_execution_time','0');
+$max_execution_time = ini_get('max_execution_time');
+if ($max_execution_time != 0) {
+	$smarty->assign('max_exec_set_failed', 'y');	
+}
+
 // Tiki Database schema version
-$tiki_version = '4.0';
-$smarty->assign('tiki_version', $tiki_version);
-$smarty->assign('tiki_version_name', $tiki_version . ' BETA1');
+include_once ('lib/setup/twversion.class.php');
+$TWV = new TWVersion();
+$smarty->assign('tiki_version_name', preg_replace('/^(\d+\.\d+)([^\d])/', '\1 \2', $TWV->version));
 
 // Available DB Servers
 $dbservers = array();
-if ( function_exists('mysqli_connect') ) $dbservers['mysqli'] = 'MySQL Improved (mysqli). Requires MySQL 4.1+';
-if ( function_exists('mysql_connect') ) $dbservers['mysql'] = 'MySQL classic (mysql)';
-if ( function_exists('pg_connect') ) $dbservers['pgsql'] = 'PostgeSQL 7.2+';
-if ( function_exists('oci_connect') ) $dbservers['oci8'] = 'Oracle';
-if ( function_exists('sybase_connect') ) $dbservers['sybase'] = 'Sybase';
-if ( function_exists('sqlite_open') ) $dbservers['sqlite'] = 'SQLLite';
-if ( function_exists('mssql_connect') ) $dbservers['mssql'] = 'MSSQL';
+if ( function_exists('mysqli_connect') ) $dbservers['mysqli'] = tra('MySQL Improved (mysqli). Requires MySQL 4.1+');
+if ( function_exists('mysql_connect') ) $dbservers['mysql'] = tra('MySQL classic (mysql)');
+if ( function_exists('pg_connect') ) $dbservers['pgsql'] = tra('PostgeSQL 7.2+');
+if ( function_exists('oci_connect') ) $dbservers['oci8'] = tra('Oracle');
+if ( function_exists('sybase_connect') ) $dbservers['sybase'] = tra('Sybase');
+if ( function_exists('sqlite_open') ) $dbservers['sqlite'] = tra('SQLLite');
+if ( function_exists('mssql_connect') ) $dbservers['mssql'] = tra('MSSQL');
 $smarty->assign_by_ref('dbservers', $dbservers);
 
 $errors = '';
@@ -569,6 +603,7 @@ define('ADODB_CASE_ASSOC', 2); // typo in adodb's driver for sybase?
 include_once ('lib/adodb/adodb.inc.php');
 
 include('lib/tikilib.php');
+
 // Get list of available languages
 $languages = array();
 $languages = TikiLib::list_languages(false,null,true);
@@ -606,7 +641,7 @@ if (!file_exists($local)) {
 		$dbcon = false;
 		$smarty->assign('dbcon', 'n');
 	} else {
-		$dbTiki = &ADONewConnection($db_tiki);
+		$dbTiki = ADONewConnection($db_tiki);
 
 		if (!$dbTiki->Connect($host_tiki, $user_tiki, $pass_tiki, $dbs_tiki)) {
 			$dbcon = false;
@@ -670,9 +705,13 @@ if ((!$dbcon or (isset($_REQUEST['resetdb']) and $_REQUEST['resetdb']=='y' &&
 	}
 }
 
-if( $dbcon )
-{
-	$smarty->assign( 'tikidb_created',  has_tiki_db( $dbTiki ) );
+if ( $dbcon ) {
+	$has_tiki_db = has_tiki_db( $dbTiki );
+	$smarty->assign( 'tikidb_created', $has_tiki_db );
+	if ( $install_step == '6' && $has_tiki_db ) {
+		update_preferences( $dbTiki, $prefs );
+		$smarty->assign( 'admin_email', get_admin_email( $dbTiki ) );
+	}
 	$smarty->assign( 'tikidb_is20',  has_tiki_db_20( $dbTiki ) );
 }
 
@@ -689,6 +728,13 @@ if ( $admin_acc == 'n' ) $_SESSION["install-logged-$multi"] = 'y';
 
 $smarty->assign('dbdone', 'n');
 $smarty->assign('logged', $logged);
+
+if ( $install_step == '4' || $install_step == '5' ) {
+	require_once 'lib/profilelib/profilelib.php';
+	$remote_profile_test = Tiki_Profile::fromNames( 'http://profiles.tikiwiki.org', 'Small_Organization_Web_Presence' );
+	$has_internet_connection = empty($remote_profile_test) ? 'n' : 'y';
+	$smarty->assign('has_internet_connection', $has_internet_connection);
+}
 
 if ( isset($dbTiki) && is_object($dbTiki) && isset($_SESSION["install-logged-$multi"]) && $_SESSION["install-logged-$multi"] == 'y' ) {
 	$smarty->assign('logged', 'y');
@@ -712,7 +758,7 @@ if ( isset($dbTiki) && is_object($dbTiki) && isset($_SESSION["install-logged-$mu
 		$installer = new Tiki_Profile_Installer;
 		//$installer->setUserData( $data ); // TODO
 
-		if ( $has_internet_connection && isset($_REQUEST['profile']) and !empty($_REQUEST['profile']) ) {
+		if ( $has_internet_connection == 'y' && isset($_REQUEST['profile']) and !empty($_REQUEST['profile']) ) {
 			if ( $_REQUEST['profile'] == 'Small_Organization_Web_Presence' ) {
 				$profile = $remote_profile_test;
 			} else {
@@ -761,18 +807,64 @@ $smarty->assign_by_ref('tikifeedback', $tikifeedback);
 
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
+$email_test_tw = 'mailtest@tikiwiki.org';
+$smarty->assign('email_test_tw', $email_test_tw);
 
 //  Sytem requirements test. 
 if ($install_step == '2') {
 
 	if (($_REQUEST['perform_mail_test']) == 'y') {
 
-	$sentmail = mail("info@tikiwiki.org","Mail test","Mail test");
-	if($sentmail){
-		$mail_test = 'y'; } else {
-		$mail_test = 'n'; }
-	$smarty->assign('mail_test', $mail_test);
-	$smarty->assign('perform_mail_test', 'y');
+		$email_test_to = $email_test_tw;
+		$email_test_headers = '';
+		$email_test_ready = true;
+
+		if (!empty($_REQUEST['email_test_to'])) {
+			$email_test_to =  $_REQUEST['email_test_to'];
+			
+			if ($_REQUEST['email_test_cc'] == '1') {
+				$email_test_headers .= "Cc: $email_test_tw\n";
+			}
+
+			// check email address format
+			include_once('lib/core/lib/Zend/Validate/EmailAddress.php');
+			$validator = new Zend_Validate_EmailAddress();
+			if (!$validator->isValid($email_test_to)) {
+				$smarty->assign('email_test_err', tra('Email address not valid, test mail not sent'));
+				$smarty->assign('perform_mail_test', 'n');
+				$email_test_ready = false;
+			}
+		} else {	// no email supplied, check copy checkbox
+			if ($_REQUEST['email_test_cc'] != '1') {
+				$smarty->assign('email_test_err', tra('Email address empty and "copy" checkbox not set, test mail not sent'));
+				$smarty->assign('perform_mail_test', 'n');
+				$email_test_ready = false;
+			}
+		}
+		$smarty->assign('email_test_to', $email_test_to);
+		
+		if ($email_test_ready) {	// so send the mail
+			$email_test_headers .= 'From: noreply@tikiwiki.org' . "\n";	// needs a valid sender
+			$email_test_headers .= 'Reply-to: '. $email_test_to . "\n";
+			$email_test_headers .= "Content-type: text/plain; charset=utf-8\n";
+			$email_test_headers .= 'X-Mailer: Tiki/'.$TWV->version.' - PHP/' . phpversion() . "\n";
+			$email_test_subject = tra('Test mail from Tiki installer ').$TWV->version;
+			$email_test_body = tra("Congratulations!\n\nYour server can send emails.\n\n");
+			$email_test_body .= "\t".tra('Tiki version:').' '.$TWV->version . "\n";
+			$email_test_body .= "\t".tra('PHP version:').' '.phpversion() . "\n";
+			$email_test_body .= "\t".tra('Server:').' '.(empty($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_ADDR'] : $_SERVER['SERVER_NAME']) . "\n";
+			$email_test_body .= "\t".tra('Sent:').' '.date(DATE_RFC822) . "\n";
+			
+			$sentmail = mail($email_test_to, $email_test_subject, $email_test_body, $email_test_headers);
+			if($sentmail){
+				$mail_test = 'y';
+			} else {
+				$mail_test = 'n';
+			}
+			$smarty->assign('mail_test', $mail_test);
+			$smarty->assign('perform_mail_test', 'y');
+			
+		}
 	}
 
 	$php_memory_limit = return_bytes(ini_get('memory_limit'));
@@ -785,25 +877,53 @@ if ($install_step == '2') {
 		} else {
 		$gd_test = 'n'; }
 	$smarty->assign('gd_test', $gd_test);
-	
-} elseif ( $install_step == '4' ) {
-	require_once 'lib/profilelib/profilelib.php';
-	$remote_profile_test = Tiki_Profile::fromNames( 'http://profiles.tikiwiki.org', 'Small_Organization_Web_Presence' );
-	$has_internet_connection = empty($remote_profile_test) ? 'n' : 'y';
-	$smarty->assign('has_internet_connection', $has_internet_connection);
 }
 
+unset($TWV);
+
 // write general settings
-if (($_REQUEST['general_settings']) == 'y') {
-global $dbTiki;
-$query = "INSERT INTO `tiki_preferences` (`name`, `value`) VALUES ('browsertitle', '".$_REQUEST['browsertitle']."'), ('sender_email', '".$_REQUEST['sender_email']."'), ('https_login', '".$_REQUEST['https_login']."'), ('https_port', '".$_REQUEST['https_port']."'), ('feature_swtich_ssl_mode', '".$_REQUEST['feature_switch_ssl_mode']."'), ('feature_show_stay_in_ssl_mode', '".$_REQUEST['feature_show_stay_in_ssl_mode']."'), ('language', '".$language."'), ('site_language', '".$language."')";
-$query .= ";UPDATE  `users_users` SET  `email` =  '".$_REQUEST['admin_email']."' WHERE  `users_users`.`userId` =1";
-$dbTiki->Execute($query);
+if ( $_REQUEST['general_settings'] == 'y' ) {
+	global $dbTiki;
+	$switch_ssl_mode = ( isset($_REQUEST['feature_switch_ssl_mode']) && $_REQUEST['feature_switch_ssl_mode'] == 'on' ) ? 'y' : 'n';
+	$show_stay_in_ssl_mode = ( isset($_REQUEST['feature_show_stay_in_ssl_mode']) && $_REQUEST['feature_show_stay_in_ssl_mode'] == 'on' ) ? 'y' : 'n';
+
+	$query = "INSERT INTO `tiki_preferences` (`name`, `value`) VALUES"
+		. " ('browsertitle', '" . $_REQUEST['browsertitle'] . "'),"
+		. " ('sender_email', '" . $_REQUEST['sender_email'] . "'),"
+		. " ('https_login', '" . $_REQUEST['https_login'] . "'),"
+		. " ('https_port', '" . $_REQUEST['https_port'] . "'),"
+		. " ('feature_switch_ssl_mode', '$switch_ssl_mode'),"
+		. " ('feature_show_stay_in_ssl_mode', '$show_stay_in_ssl_mode'),"
+		. " ('language', '$language')";
+	$query .= "; UPDATE `users_users` SET `email` = '".$_REQUEST['admin_email']."' WHERE `users_users`.`userId`=1";
+
+	$dbTiki->Execute($query);
 }
 
 
 include "lib/headerlib.php";
-$headerlib->add_cssfile('styles/thenews.css');
+$headerlib->add_cssfile('styles/strasa.css');
+$headerlib->add_cssfile('styles/strasa/options/cold.css');
+$headerlib->add_css('
+html {
+	background-color: #fff;
+}
+#centercolumn {
+	padding: 4em 10em;
+}
+#sitelogo h1, #tiki-clean {
+	margin: 0;
+	padding: 0;
+	color: #000;
+}
+.box-data ol, .box-data ul {
+	margin: 0;
+	padding: 0 0 0 2em;
+}
+.box-data ol strong {
+	color: #024;
+}
+');
 $smarty->assign_by_ref('headerlib',$headerlib);
 
 $smarty->assign('install_step', $install_step);
@@ -811,10 +931,11 @@ $smarty->assign('install_type', $install_type);
 $smarty->assign_by_ref('prefs', $prefs);
 $smarty->assign('detected_https',$_SERVER["HTTPS"]);
 
+if (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 6') !== false) {
+	$smarty->assign('ie6', true);
+}
 
 $mid_data = $smarty->fetch('tiki-install.tpl');
 $smarty->assign('mid_data', $mid_data);
 
 $smarty->display("tiki-print.tpl");
-
-?>

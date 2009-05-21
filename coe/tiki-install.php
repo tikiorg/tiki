@@ -47,7 +47,7 @@ if ( file_exists( 'db/local.php' ) ) {
 
 	include('db/local.php');
 	include_once('lib/adodb/adodb.inc.php');
-	$dbTiki = &ADONewConnection($db_tiki);
+	$dbTiki = ADONewConnection($db_tiki);
 
 	if( isset( $_POST['dbuser'], $_POST['dbpass'] ) )
 	{
@@ -65,6 +65,7 @@ if ( installer_is_accessible() ) {
 } else {
 	$title='Tiki Installer Security Precaution';
 	$content='
+							<p>&nbsp;</p>
 							<p>You are attempting to run the Tiki Installer. For your protection, this installer can be used only by a site administrator.</p>
 							<p>To verify that you are a site administrator, enter your <strong><em>database</em></strong> credentials (database username and password) here.</p>
 							<p>If you have forgotten your database credentials, find the directory where you have unpacked your Tiki and have a look inside the <strong><code>db</code></strong> folder into the <strong><code>local.php</code></strong> file.</p>
@@ -72,7 +73,8 @@ if ( installer_is_accessible() ) {
 								<p><label for="dbuser">Database username</label>: <input type="text" name="dbuser"/></p>
 								<p><label for="dbpass">Database password</label>: <input type="password" name="dbpass"/></p>
 								<p><input type="submit" value=" Validate and Continue "/></p>
-							</form>';
+							</form>
+							<p>&nbsp;</p>';
 	createPage($title,$content);
 }
 
@@ -85,7 +87,15 @@ function createPage($title,$content){
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<link type="text/css" href="styles/thenews.css" rel="stylesheet" />
+		<link type="text/css" href="styles/strasa.css" rel="stylesheet" />
+		<style type="text/css" media="screen">
+html {
+	background-color: #fff;
+}
+#centercolumn {
+	padding: 4em 10em;
+}
+		</style>
 		<title>$title</title>
 	</head>
 	<body class="tiki_wiki" style="text-align: center;">
@@ -98,7 +108,7 @@ function createPage($title,$content){
 			<div id="tiki-mid">
 				<table id="tiki-midtbl" width="100%" cellspacing="0" cellpadding="0" border="0">
 					<tr>
-						<td id="centercolumn" valign="top">
+						<td id="centercolumn" style="text-align:center; vertical-align:top">
 							<h1>$title</h1>
 							$content
 						</td>

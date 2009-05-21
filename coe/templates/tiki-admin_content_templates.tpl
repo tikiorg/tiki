@@ -117,7 +117,7 @@
 
 <h2>{tr}Templates{/tr}</h2>
 {if $channels or ($find ne '')}
-	{include file='find.tpl' _sort_mode='y'}
+	{include file='find.tpl'}
 {/if}
 
 <table class="normal">
@@ -141,7 +141,7 @@
 				{section name=ix loop=$channels[user].sections}
 					{$channels[user].sections[ix]} 
 					<a title="{tr}Delete{/tr}" class="link" href="tiki-admin_content_templates.php?removesection={$channels[user].sections[ix]}&amp;rtemplateId={$channels[user].templateId}" 
-						{icon _id='cross' alt='{tr}Delete{/tr}'}
+						{icon _id='cross' alt='{tr}Remove section{/tr}'}
 					</a>
 					&nbsp;&nbsp;
 				{/section}
@@ -167,3 +167,4 @@
 </table>
 
 {pagination_links cant=$cant_pages step=$prefs.maxRecords offset=$offset}{/pagination_links}
+{include file=tiki-edit_help.tpl}

@@ -104,7 +104,7 @@ function batchImportUsers() {
 			continue;
 		}
 		if (!$exist) {
-			$pass_first_login = (isset($_REQUEST['pass_first_login']) && $_REQUEST['pass_first_login'] == 'on') ? true: false;
+			$pass_first_login = ( isset($_REQUEST['pass_first_login']) && $_REQUEST['pass_first_login'] == 'on' );
 			$userlib->add_user($u['login'], $u['password'], $u['email'], '', $pass_first_login);
 			$logslib->add_log('users',sprintf(tra("Created account %s <%s>"),$u['login'], $u['email']));
 		}
@@ -168,7 +168,7 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 			} elseif (!empty($prefs['username_pattern']) && !preg_match($prefs['username_pattern'], $_REQUEST['name'])) {
 				$tikifeedback[] = array('num'=>1,'mes'=>tra("User login contains invalid characters"));
 			} else {
-				$pass_first_login = (isset($_REQUEST['pass_first_login']) && $_REQUEST['pass_first_login'] == 'on') ? true: false;
+				$pass_first_login = ( isset($_REQUEST['pass_first_login']) && $_REQUEST['pass_first_login'] == 'on' );
 
 				$polerr = $userlib->check_password_policy($_POST["pass"]);
 				if ( strlen($polerr)>0 ) {
@@ -178,8 +178,30 @@ if (isset($_REQUEST['batch']) && is_uploaded_file($_FILES['csvlist']['tmp_name']
 				}
 				if ($prefs['login_is_email'] == 'y' and empty($_REQUEST['email']))
 					$_REQUEST['email'] = $_REQUEST['name'];
-				if ($userlib->add_user($_REQUEST["name"], $_REQUEST["pass"], $_REQUEST["email"], '', $pass_first_login)) {
+
+				$send_validation_email = false;
+				if ( isset($_REQUEST['need_email_validation']) && $_REQUEST['need_email_validation'] == 'on' ) {
+					$send_validation_email = true;
+					$apass = addslashes(md5($tikilib->genPass()));
+				}
+
+				if ( $userlib->add_user(
+					$_REQUEST["name"],
+					( $send_validation_email ? $apass : $_REQUEST["pass"] ),
+					$_REQUEST["email"],
+					( $send_validation_email ? $_REQUEST["pass"] : '' ),
+					$pass_first_login
+				) ) {
 					$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("New %s created with %s %s."),tra("user"),tra("username"),$_REQUEST["name"]));
+					if ( $send_validation_email ) {
+
+						// No need to send credentials in mail if the user is forced to choose a new password after validation
+						$realpass = $pass_first_login ? '' : $_REQUEST["pass"];
+
+						$userlib->send_validation_email(
+							$_REQUEST['name'], $apass, $_REQUEST['email'], '', '', '', 'user_creation_validation_mail', $realpass
+						);
+					}
 					$cookietab = '1';
 					$_REQUEST['find'] = $_REQUEST["name"];
 				} else {
@@ -446,17 +468,19 @@ if (isset($_REQUEST["user"]) and $_REQUEST["user"]) {
 				$smarty->display("error.tpl");
 				die;
 			} 
-			$polerr = $userlib->check_password_policy($_POST["pass"]);
-			if ( strlen($polerr)>0 ) {
-				$smarty->assign('msg',$polerr);
-			    $smarty->display("error.tpl");
-			    die;
-			}
-			if ($userlib->change_user_password($userinfo['login'], $_POST['pass'])) {
-				$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s modified successfully."),tra("password")));
-				$logslib->add_log('adminusers','changed password for '.$_POST['name']);
-			} else {
-				$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s modification failed."),tra("password")));
+			if ($tiki_p_admin == 'y' || $userinfo['login'] == $user) {
+				$polerr = $userlib->check_password_policy($_POST["pass"]);
+				if ( strlen($polerr)>0 ) {
+					$smarty->assign('msg',$polerr);
+					$smarty->display("error.tpl");
+					die;
+				}
+				if ($userlib->change_user_password($userinfo['login'], $_POST['pass'])) {
+					$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s modified successfully."),tra("password")));
+					$logslib->add_log('adminusers','changed password for '.$_POST['name']);
+				} else {
+					$tikifeedback[] = array('num'=>0,'mes'=>sprintf(tra("%s modification failed."),tra("password")));
+				}
 			}
 		}
 		if ($userinfo['email'] != $_POST['email']) {

@@ -10,21 +10,22 @@ function wikiplugin_mouseover_help() {
 function wikiplugin_mouseover_info() {
 	return array(
 		'name' => tra('Mouse Over'),
+		'documentation' => 'PluginMouseover',
 		'description' => tra('Create a mouseover feature on some text'),
 		'prefs' => array( 'wikiplugin_mouseover' ),
 		'body' => tra('Mouseover text if param label exists. Page text if text param exists'),
 		'params' => array(
-			'url' => array(
-				'required' => false,
-				'name' => tra('URL'),
-				'description' => tra('Destination link when moused-over text is clicked. Use http:// for external links'),
-				'filter' => 'url',
-			),
 			'label' => array(
 				'required' => true,
 				'name' => tra('Label'),
 				'description' => tra('Text displayed on the page. The body is the mouseover content'),
 				'filter' => 'striptags',
+			),
+			'url' => array(
+				'required' => false,
+				'name' => tra('URL'),
+				'description' => tra('Destination link when moused-over text is clicked. Use http:// for external links'),
+				'filter' => 'url',
 			),
 			'text' => array(
 				'required' => false,

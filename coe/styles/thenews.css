@@ -23,9 +23,15 @@ html>body {
 	text-align: left;
 }
 
+/* workaround for Safari when in FCKEditor */
+html[dir=ltr]>body {
+	display: block;
+	margin: 1em .5em;
+}
+
 body.fullscreen {}
 
-a,
+a, a:link,
 a:visited {
 	color: #005faa;
 	text-decoration: none;
@@ -106,7 +112,7 @@ label,
 textarea,
 option,
 select {
-	margin: 0.2em;
+	margin: 1px;
 	vertical-align: middle;
 }
 
@@ -125,7 +131,12 @@ input[type=password] {
 }
 
 /* all button variations */
-input.button, button, .submitbutton, .button input, .button, input.wikiaction {
+input.button,
+button,
+.button input,
+.button,
+input.wikiaction,
+.calbuttonBox {
 	border: solid 1px #aaa; 
 	background: #fbfbfb;
 	color: #000;
@@ -148,25 +159,27 @@ input[type=reset] {
 input.button:hover,
 button:hover,
 input[type=submit]:hover,
-.submitbutton:hover,
 .button input:hover,
-.button:hover {
+.button:hover,
+.calbuttonBox a:hover {
 	cursor: pointer;
 	background: #E6E6F8;
 }
 
-span.button {
+span.button,
+.calbuttonBox {
 	display: inline-block;
 	margin: 1px 2px;
 	padding: 2px}
 
-span.button a {
+span.button a,
+.calbuttonBox a {
 	color: #000;
 	text-transform: uppercase;
-	font-family: Arial, Helvetica, sans-serif;
-	/*font-size: 80%*/}
+	font-family: Arial, Helvetica, sans-serif}
 
-span.button a:hover {text-decoration: none}
+span.button a:hover,
+.calbuttonBox a:hover {text-decoration: none}
 
 #col2 input[type=text] {width: 95%}
 
@@ -303,10 +316,8 @@ ul.jumplinks a:focus, ul.jumplinks a:active {
 	text-align: left;
 	background: transparent;
 	vertical-align: middle;
-	padding-top: 6px;
-	margin: 0;
-	position: relative;
-}
+	padding-top: 26px;
+	margin: 0}
 
 div#sioptions {padding: 1em}
 
@@ -344,7 +355,7 @@ div#sitead {
 #bannertopright {padding-right: 1em}
 #sitelocbar {
 	float: left;
-	padding-left: 10px;
+	padding: 2px 2px 3px 10px;
 }
 
 #siteloginbar {
@@ -372,7 +383,7 @@ div#sitead {
 
 #sitesearchbar {
 	float: right;
-	padding-right: 4px;
+	padding: 0 4px 0 0;
 	text-align: right;
 	display: block;
 	margin: 0;
@@ -461,6 +472,21 @@ a.flip img {
 	margin-right: -1px;
 	padding: .8em;
 }
+/* give every div in #tiki-center some padding */
+#tiki-center div {
+	padding: 3px 2px;
+}
+/* little margin for all images in #tiki-center */
+#tiki-center img {
+	margin: 1px;
+}
+/* do not apply it on phplm tree in categories */
+#tiki-center .phplmnormal div {
+	padding: 0;
+}
+#tiki-center .phplmnormal img {
+	margin: 0;
+}
 
 /* IE */
 * html #tiki-center {
@@ -498,7 +524,8 @@ a.flip img {
  	text-align: center;
  	font-size: .9em;
 	border-top: 1px solid #999999;
-	margin-top: -1px;
+	position: relative;
+	top: -1px;
  }
 
 #footer .content {
@@ -533,12 +560,7 @@ div#tiki-bot {}
 	
 /****** Menus ******/
 
-.horbar {
-		bottom: 0;
-		border-bottom: 1px solid #D3D3D3; border-top: 1px solid #fff;
-		position: relative;
-		width: 100%;
-} 
+.horbar {float: left} 
 
 .horbar table {
 	width: auto;
@@ -547,7 +569,7 @@ div#tiki-bot {}
 
 /* Text in the top level (visible by default) of the menu */
 .horbaritem a {
-	padding: 4px 3px 4px 1em;
+	padding: 6px 6px;
 	text-decoration: none;
 	font: .9em Verdana, Helvetica, Arial, Sans-Serif;
 	display: block;
@@ -562,6 +584,7 @@ div#tiki-bot {}
 .horbaritem a:visited {
 	
 } 
+.horbaritem img {vertical-align: middle;}
 
 /* IE */
 * html .horbaritem a,
@@ -593,6 +616,7 @@ div#tiki-bot {}
 	background-color: #fff;
 	display: block;
 	border: 1px solid #D3D3D3;
+	border-top: none;
 } 
 
 /* Menu items in drop down frame */
@@ -687,30 +711,50 @@ a.phplmselected:hover {
 .cssmenu_vert,
 .cssmenu_vert ul,
 .cssmenu li,
-.cssmenu_horiz li,
+.cssmenu_horiz ul li,
 .cssmenu_vert li,
 .cssmenu li ul,
 .cssmenu_vert li ul,
 .cssmenu_horiz li ul {
-	width: 9em;
+	width: 11em;
 	background: #fff}
 
 [class].cssmenu_horiz li ul {
 	width: auto;
-	min-width: 9em;
+	min-width: 11em;
 }
 
 * html div.box-CSS_menu ul {margin-left: 0}
+
+#col2 .cssmenu_vert,
+#col2 .cssmenu_vert li {
+	width: 180px;
+	padding: 0 !important}
+
+#col2 .cssmenu_vert ul,
+#col2 .cssmenu_vert li ul li {width: 11em}
 
 .cssmenu li ul,
 .cssmenu_horiz li ul,
 .cssmenu_vert li ul {border: 1px solid #D3D3D3}
 
-.cssmenu_vert li ul {margin-left: 9em !important}
+.cssmenu_vert li ul,
+.cssmenu_vert li.sfhover ul {margin-top: -1.3em}
 
-.cssmenu li ul ul {/*left: -999em*/}
+.cssmenu_vert li ul {margin-left: 11em}
+#col2 .cssmenu_vert li ul {margin-left: 175px}
+#col2 .cssmenu_vert li ul li ul {margin-left: 11em}
+.cssmenu_horiz li ul ul {margin: -1em 0 0 11em}
 
-.cssmenu_horiz li ul ul {margin: -1em 0 0 9em}
+* html #col2 .cssmenu_vert,
+* html #col2 .cssmenu_vert li {
+	margin-left: 0;
+	padding-left: 0;
+	width: 160px}
+	
+* html #col2 .cssmenu_vert li ul {margin-left: 160px}
+
+*:first-child+html #col2 .cssmenu_vert {margin-left: 0}
 
 .cssmenu a,	
 .cssmenu_horiz a,
@@ -718,7 +762,7 @@ a.phplmselected:hover {
 	text-decoration: none;
 	display: block;
 	/*line-height: 1.8em;*/
-	padding: 3px 0 3px 6px}
+	padding: 5px 6px}
 	
 .cssmenu a:hover,	
 .cssmenu_horiz a:hover,
@@ -729,11 +773,18 @@ a.phplmselected:hover {
 
 #tiki-top .cssmenu_horiz {
 	float: left;
-	margin-left: 9px
+	margin-left: 11px
 }
 
 #tiki-top > .cssmenu_horiz > li > a {
-	border-right: 1px solid #aaa}
+	border-right: 1px solid #aaa;
+	padding: 8px 1em}
+	
+#tiki-top > .cssmenu_horiz > li.menuSection > a {padding-right: 2.6em}
+	
+.sf-sub-indicator {
+	background: url(thenews/arrows-005faa.png) no-repeat -10px -100px; /* 8-bit indexed alpha png. IE6 gets solid image only; */}
+
 
 /** Links in other menus **/
 div.separator,
@@ -744,14 +795,15 @@ div.separatorline {}
 div.option a.linkmenu:hover {}
 a.separator img {}
 /* menu option */
-.option {
+.option, .optionline {
 	background: transparent url('../img/icons2/corner-dots.gif') center left no-repeat;
-	padding: 0.2em 0.2em 0.2em 1.6em;
+	padding: 0.2em 0 0.2em 1.6em;
 }
-/* selected menu item */
-.selected {
-	font-weight: bold;
-}
+.box .menuSection {padding-left: 5px;}
+
+.selected {font-weight: bold}
+.selected ul li a {font-weight: normal}
+
 div.optionline,
 .option a {}
 .option a:link,
@@ -788,9 +840,12 @@ div#attzoneopen,
 div#comzoneopen {	display: block; margin-top: 10px;}
 div#edithelpzone {	display: none;}
 #rules-copy-panel {	display: none;}
-.clear, #clear {	clear: both;}
-.clearfix:after {    content: ".";display: block;height: 0;clear: both;visibility: hidden;}
-/* IE */
+.clear, #clear { clear: both;}
+.clearfix:after { content: ".";display: block;height: 0;clear: both;visibility: hidden;}
+.clearfix {display: inline-block}
+/* Hide from IE Mac \*/
+.clearfix {display: block}
+/* End hide from IE Mac */
 * html .clearfix {	height: 1%;}
 #overdiv table {	width: auto !important;}
 .attention {	color: red;}
@@ -834,6 +889,62 @@ a.tikihelp:hover {
 	vertical-align: text-top;
 }
 
+/* New Help section */
+div#tikihelp {
+	position: fixed;
+	right: 0;
+	top: 25px;
+	height: auto; /* if there was height specified it covered the right column content "invisibly" making part of it unclickable (from strasa) */
+	max-width: 50%;
+	padding: 0;
+	margin: 0;
+	border: none;
+	background: transparent;
+	z-index: 820;
+}
+
+* html div#tikihelp {position: absolute}
+
+div.help_icon {
+	border: 0;
+	margin: 0;
+	padding: 0;
+	height: 48px;
+	text-align: right;
+}
+div.help_icon a:hover {
+  text-decoration: none;
+}
+div.help_icon img{
+	vertical-align: middle;
+	border: 0;
+	margin: 0;
+	padding: 0;
+}
+div.help_section_select {
+	font-weight : bold;
+	font-size: 120%;
+	background-color : #E7E9EA;
+	color: black;
+	width: 100%;
+	margin: 2px;
+}
+div.help_sections {
+	width : 360px;
+	padding:  2px;
+	background-color: #AAC9E9;
+	max-height : 95%;
+	overflow: auto;
+	height: 400px;
+}
+div.help_section {
+	margin: 5px;
+	padding: 5px;
+	background-color: white;
+	color: black;
+}
+
+
 /** Admin pages **/
 /* overrides inline css */
 div.adminanchors {background: #F0F4F5 !important; border: 1px solid #999999}
@@ -847,38 +958,49 @@ div.box {
 	margin: 9px;
 }
 
+* html #col2 div.box,
+* html #col3 div.box {width: 181px}
+
 h3.box-title {
 	font-weight: normal;
 	margin: 0 0 7px 1em;
 	padding: 0;
+	height: 18px;
 	color: black;
 	text-transform: uppercase;
 	font-family: Arial, Helvetica, sans-serif;
 	display: block;
 	font-size: 90%;
 	font-weight: bold;
-	position: relative;
-}
+	position: relative}
 
 * html h3.box-title {position: static}
-.box a.flipmodtitle img {display: none}
 
-* html .box a.flipmodtitle img,
-.box:hover a.flipmodtitle img {
-	display: block;
+.moduleflip {
+	display: none;
 	position: absolute;
 	right: 0;
-	top: 0;
+	top: 0}
+
+* html .moduleflip {
+	position: static;
+	float: right;
+	margin-top: -16px}
+
+* html .moduleflip,
+.box:hover .moduleflip {display: block}
+
+* html .box img.flipmodimage,
+.box:hover img.flipmodimage {
 	height: 13px;
 	width: 13px;
 	border: 1px solid transparent;
 	background: #fff}
 	
-* html #col2 a.flipmodtitle img {right: 8px}
-* html #col3 a.flipmodtitle img {right: 20px}
-
-* html .box a.flipmodtitle img {border: none}
-a.flipmodtitle:hover img {border: 1px solid #AAAAAA !important}
+* html #col2 img.flipmodimage {right: 8px}
+* html #col3 img.flipmodimage {right: 20px}
+* html .box img.flipmodimage {border: none}
+img.flipmodimage:hover {border: 1px solid #AAAAAA !important}
 #col2 h3.box-title {}
 
 .opaque {
@@ -922,7 +1044,7 @@ div.cbox {
 	background: #EBEBEB;
 	margin-bottom: 4px;
 	border: 1px solid #aaa;
-}
+	overflow: hidden}
 
 .cbox-title {
 	border-bottom: 1px solid #aaa;
@@ -944,7 +1066,7 @@ div.cbox {
 
 .cbox-data {
 	padding: 3px;
-}
+	overflow: hidden}
 
 /* rbox: remarks box (note/warning/tip/comment) */
 .rbox {
@@ -1018,6 +1140,7 @@ table.normal th {
 td {vertical-align: top}
 * html td {	font-size: 11px}
 
+table.normal td,
 td.normal,
 .wikitable td,
 td.odd,
@@ -1054,7 +1177,7 @@ td.form {
 .forumform td {
 	border: 1px solid #9D9DA1;
 	background: #E0DFE3;
-}
+	padding: 3px}
 
 /** Specific Tables **/
 
@@ -1200,10 +1323,11 @@ h1 a.pagetitle {
 	font-size: 1.2em;
 }
 
-span#description {
-	font-size: .9em;
-	font-style: italic;
-}
+div#description,
+.description {
+	display: block;
+	font-size: .95em;
+	font-style: italic}
 
 #pageid {
 	float: left;
@@ -1327,11 +1451,6 @@ ul.floatleft li {
 	margin-top: 8px;
 }
 
-span.button2,
-div.button2, .button3 {
-	margin-right: 5px;
-}
- 
 div.cache {}
 div.cachedpage {}
 .wikicache, .wikicache:visited {}
@@ -1409,6 +1528,20 @@ div.quotebody {
 table.wikiplugin-split {
 	border: none;
 }
+
+/* Versions plugin */
+#tiki-center .versionav {
+	padding: 0;
+	border: 0;
+	margin-bottom: -1px}
+	
+.versionav .button {margin-bottom: 0}
+
+#tiki-center .versioncontent {
+	border: 1px solid #aaa;
+	background: #fff;
+	padding: 1em}
+
 /** Wiki tocs **/
 div.tocnav {
 	background: #EBEBEB;
@@ -1496,14 +1629,15 @@ div.articletopline {
 }
 
 div.articletitle {
-	margin-top: 6px;
+	margin-top: 0;
 	margin-bottom:	15px;
 	text-align:	left;
 }
  
-span.titlea {
+div.articletitle h2 {
 	font-size: 200%;
 	font-weight: normal;
+	margin: 0;
 }
 
 span.titleb {
@@ -2180,7 +2314,7 @@ Caltrack a:visited {color: #00BD02}
 
 .caldark .calfocus { background: inherit }
 
-.calfocuson + .calcontent { background: #e6eff8 }
+.calodd .calfocuson, .caleven .calfocuson , .calfocuson + .calcontent { background: #e6eff8 }
 
 .calprio1 a,
 .calprio2 a,
@@ -2218,6 +2352,9 @@ Caltrack a:visited {color: #00BD02}
 .box-data td a.today {
 	background: #D4D0C8;
 	border: solid 1px #696969}
+
+.calbuttonon a,
+.calHeadingOn a {font-weight: bold}
 
 /*****  Polls  *****/
 div.pollresults {margin-top: 5px;font-size: 1.2em;padding: 0 5px;}
@@ -2387,6 +2524,16 @@ body.tiki_mytiki #tiki-center form {
 body.tiki_mytiki #tiki-center form table.normal,
 body.tiki_mytiki #tiki-center .normal form {
 	border: none;}
- 
+
+/* wikiplugin tracker */
+.mandatory_star {
+	font-weight: bold;
+	color: red;	
+}
+.mandatory_note{
+	display: block;
+	font-style: italic;
+	margin-top: 10px;
+}
 /* end of css file */
 

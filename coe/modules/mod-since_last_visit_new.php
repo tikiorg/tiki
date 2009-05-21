@@ -12,7 +12,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
 	header("location: index.php");
 	exit;
 }
-
+global $smarty;
 require_once('lib/smarty_tiki/modifier.userlink.php');
 
 if (!function_exists('mod_since_last_visit_new_help')) {
@@ -23,6 +23,8 @@ if (!function_exists('mod_since_last_visit_new_help')) {
 
 if (!function_exists('since_last_visit_new')) {
 function since_last_visit_new($user, $params = null) {
+	global $smarty;
+	include_once('tiki-sefurl.php');
 	if (!$user) return false;
 
 	global $tikilib, $userlib, $prefs;
@@ -56,17 +58,17 @@ function since_last_visit_new($user, $params = null) {
 		case "article":
 			$perm = 'tiki_p_read_article';
 			$ret["items"]["comments"]["list"][$count]["href"]
-				= "tiki-read_article.php?articleId=" . $res["object"];
+				= filter_out_sefurl('tiki-read_article.php?articleId=' . $res['object'], $smarty, 'article', $res['title']);
 			break;
 		case "post":
 			$perm = 'tiki_p_read_blog';
 			$ret["items"]["comments"]["list"][$count]["href"]
-				= "tiki-view_blog_post.php?postId=" . $res["object"];
+				= filter_out_sefurl('tiki-view_blog_post.php?postId=' . $res['object'], $smarty, 'blogpost', $res['title']);
 			break;
 		case "blog":
 			$perm = 'tiki_p_read_blog';
 			$ret["items"]["comments"]["list"][$count]["href"]
-				= "tiki-view_blog.php?blogId=" . $res["object"];
+				= filter_out_sefurl('tiki-view_blog.php?blogId=' . $res['object'], $smarty, 'blog', $res['title']);
 			break;
 		case "faq":
 			$perm = 'tiki_p_view_faqs';
@@ -177,7 +179,7 @@ function since_last_visit_new($user, $params = null) {
 		$count = 0;
 		while ($res = $result->fetchRow()) {
 			if ($userlib->user_has_perm_on_object($user,$res['articleId'], 'article', 'tiki_p_read_article')) {
-				$ret["items"]["articles"]["list"][$count]["href"]  = "tiki-read_article.php?articleId=" . $res["articleId"];
+				$ret["items"]["articles"]["list"][$count]["href"]  = filter_out_sefurl('tiki-read_article.php?articleId=' . $res['articleId'], $smarty, 'article', $res['title']);
 				$ret["items"]["articles"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["publishDate"]) ." ". tra("by") ." ". $res["authorName"];
 				$ret["items"]["articles"]["list"][$count]["label"] = $res["title"]; 
 				$count++;
@@ -221,7 +223,7 @@ function since_last_visit_new($user, $params = null) {
 		$count = 0;
 		while ($res = $result->fetchRow()) {
 			if ($userlib->user_has_perm_on_object($user,$res['blogId'], 'blog', 'tiki_p_read_blog')) {
-				$ret["items"]["blogs"]["list"][$count]["href"]  = "tiki-view_blog.php?blogId=" . $res["blogId"];
+				$ret["items"]["blogs"]["list"][$count]["href"]  = filter_out_sefurl('tiki-view_blog.php?blogId=' . $res['blogId'], $smarty, 'blog', $res['title']);
 				$ret["items"]["blogs"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["created"]) ." ". tra("by") ." ". $res["user"];
 				$ret["items"]["blogs"]["list"][$count]["label"] = $res["title"]; 
 				$count++;
@@ -239,7 +241,7 @@ function since_last_visit_new($user, $params = null) {
 		$count = 0;
 		while ($res = $result->fetchRow()) {
 			if ($userlib->user_has_perm_on_object($user,$res['blogId'], 'blog', 'tiki_p_read_blog')) {
-				$ret["items"]["blogPosts"]["list"][$count]["href"]  = "tiki-view_blog_post.php?blogId=" . $res["blogId"] . "&postId=" . $res["postId"];
+				$ret["items"]["blogPosts"]["list"][$count]["href"]  = filter_out_sefurl('tiki-view_blog_post.php?postId=' . $res['postId'], $smarty, 'blogpost', $res['title']);
 				$ret["items"]["blogPosts"]["list"][$count]["title"] = $tikilib->get_short_datetime($res["created"]) ." ". tra("by") ." ". $res["user"];
 				$ret["items"]["blogPosts"]["list"][$count]["label"] = $res["title"]; 
 				$count++;
@@ -386,7 +388,7 @@ function since_last_visit_new($user, $params = null) {
 				if (!isset($counta[$res['trackerId']])) $counta[$res['trackerId']] = 0;
 
 				// Pull Tracker Name
-				if (!isset($tracker_name[$res['trackerId']])) {
+				if ($res['trackerId'] > 0 && !isset($tracker_name[$res['trackerId']])) {
 					$query = "select `name` from `tiki_trackers` where `trackerId` = ?";
 					$tracker_name[$res['trackerId']] = $tikilib->getOne($query, $res['trackerId']);
 				}

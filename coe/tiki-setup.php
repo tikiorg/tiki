@@ -1,6 +1,6 @@
 <?php
 
-// $Id: /cvsroot/tikiwiki/tiki/tiki-setup.php,v 1.474.2.11 2008-03-20 19:35:06 kerrnel22 Exp $
+// $Id$
 // Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
@@ -109,10 +109,7 @@ if( $prefs['feature_magic'] == 'y' && $tiki_p_admin == 'y' ) {
 	$smarty->assign('templatename', $templatename);
 	require_once('tiki-admin_bar.php');
 }
-if ( $prefs['feature_sefurl_filter'] == 'y' ) {
-  require_once ('tiki-sefurl.php');
-  $smarty->register_outputfilter('filter_out_sefurl');
-}
+require_once('lib/setup/smarty.php');
 
 $smarty->assign_by_ref('phpErrors', $phpErrors);
 $smarty->assign_by_ref('num_queries', $num_queries);
@@ -145,4 +142,4 @@ $smarty->assign('stay_in_ssl_mode', $stay_in_ssl_mode);
 $smarty->assign('tiki_version', $TWV->version);
 $smarty->assign('tiki_branch', $TWV->branch);
 $smarty->assign('tiki_star', $TWV->star);
-$smarty->assign('tiki_uses_cvs', $TWV->cvs);
+$smarty->assign('tiki_uses_svn', $TWV->svn);

@@ -1,7 +1,7 @@
 {*Smarty template*}
 {* start ************ Task View  ***************}
 
-<span class="titlea">{$info.title|escape}</span>&nbsp;
+<h2>{$info.title|escape}</h2>&nbsp;
 
 {if ($info.user eq $user) or ($info.creator eq $user) or ($admin_mode)} 
 

@@ -146,8 +146,11 @@
 </td></tr>
 <tr><td class="formcolor">{tr}Cache Time{/tr} ({tr}secs{/tr})</td><td class="formcolor"><input type="text" name="assign_cache" value="{$assign_cache|escape}" /></td></tr>
 <tr><td class="formcolor">{tr}Rows{/tr}</td><td class="formcolor"><input type="text" name="assign_rows" value="{$assign_rows|escape}" /></td></tr>
-<tr><td class="formcolor">{tr}Parameters{/tr}</td><td class="formcolor"><textarea name="assign_params" rows="1" cols="60" >{$assign_params|escape}</textarea>
-<a {popup text="{tr}Params: specific params to the module and/or general params ('lang', 'flip', 'title', 'decorations', 'section', 'overflow', 'page', 'nobox', 'bgcolor', 'color', 'theme', 'notitle', 'nopage'). Separator between params:'&amp;'. E.g. maxlen=15&amp;nonums=y.{/tr}" width=200 center=true}>{icon _id='help' style="vertical-align:middle"}</a></td></tr>
+<tr><td class="formcolor">
+<a {popup text="{tr}Params: specific params to the module and/or general params ('lang', 'flip', 'title', 'decorations', 'section', 'overflow', 'page', 'nobox', 'bgcolor', 'color', 'theme', 'notitle', 'nopage'). Separator between params:'&amp;'. E.g. maxlen=15&amp;nonums=y.{/tr}" width=200 center=true}>{tr}Parameters{/tr}</a>
+</td><td class="formcolor"><textarea name="assign_params" rows="1" cols="60" >{$assign_params|escape}</textarea>
+{help url="Module+Parameters"}
+</td></tr>
 <tr><td class="formcolor">{tr}Groups{/tr}</td><td class="formcolor">
 {remarksbox type="tip" title="Tip"}{tr}Use Ctrl+Click to select multiple groups.{/tr}{/remarksbox}
 <select multiple="multiple" name="groups[]">
@@ -196,7 +199,7 @@
 <td class="{cycle advance=false}">{$user_modules[user].name|escape}</td>
 <td class="{cycle advance=false}">{$user_modules[user].title|escape}</td>
 <td class="{cycle}"><a class="link" href="tiki-admin_modules.php?um_edit={$user_modules[user].name|escape:'url'}&amp;cookietab=2#editcreate" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
-             <a class="link" href="tiki-admin_modules.php?edit_assign={$user_modules[user].name|escape:'url'}#assign" title="{tr}Assign{/tr}">{icon _id='add' alt='{tr}Assign{/tr}'}</a>
+             <a class="link" href="tiki-admin_modules.php?edit_assign={$user_modules[user].name|escape:'url'}&amp;cookietab=1#assign" title="{tr}Assign{/tr}">{icon _id='add' alt='{tr}Assign{/tr}'}</a>
              <a class="link" href="tiki-admin_modules.php?um_remove={$user_modules[user].name|escape:'url'}&amp;cookietab=2" title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a></td>
 </tr>
 {sectionelse}
@@ -294,7 +297,7 @@
   </td>
 </tr>
 {/if}
-{if $rss}
+{if $rsss}
 <tr>
   <td class="form">
     {tr}RSS Modules{/tr}:
@@ -330,7 +333,7 @@
 
 
   </td><td class="form">
-	<a {popup text="Params: id= css= link_on_section=y type=vert|horiz translate=y|n" width=100 center=true}>{icon _id='help'}</a>  </td>
+	<a {popup text="Params: id= structureId= css= link_on_section=y type=vert|horiz translate=y|n  menu_cookie=y|n" width=100 center=true}>{icon _id='help'}</a>  </td>
 </tr>
 {if $prefs.feature_phplayers eq "y"}
 <tr>
@@ -406,7 +409,7 @@
 
 </td></tr>
 <tr><td colspan="2" class="odd">{tr}Data{/tr}<br />
-{textarea name='um_data' id='um_data' rows="6" cols="80" _quicktags='y' _zoom='n'}{$um_data|escape}{/textarea}<br />
+{textarea name='um_data' id='um_data' rows="6" cols="80" _quicktags='y' _zoom='n'}{$um_data}{/textarea}<br />
 <input type="submit" name="um_update" value="{if $um_title eq ''}{tr}Create{/tr}{else}{tr}Save{/tr}{/if}" /></td></tr>
 </table>
 </form>

@@ -28,13 +28,13 @@
 	{/if}
 	{if $zoom_mode eq 'n' and $prefs.quicktags_over_textarea neq 'y'}</td><td style="border:0;">{/if}
 	<!--autosave -->
-	{capture name=autosave}{if $prefs.feature_ajax eq 'y'}{autosave id=$textarea_id|default:editwiki default=$pagedata preview=$preview}{else}{$pagedata}{/if}{/capture}
-	{if $prefs.feature_ajax eq 'y' and $noautosave neq 'y' and $has_autosave eq 'y'} 
+	{capture name=autosave}{if $prefs.feature_ajax eq 'y' and $prefs.feature_ajax_autosave eq 'y' and $noautosave neq 'y'}{autosave id=$textarea_id|default:editwiki default=$pagedata preview=$preview}{else}{$pagedata}{/if}{/capture}
+	{if $prefs.feature_ajax eq 'y' and $prefs.feature_ajax_autosave eq 'y' and $noautosave neq 'y' and $has_autosave eq 'y'} 
 	{remarksbox type="warning" title="{tr}AutoSave{/tr}"}
 	{tr}If you want the saved version instead of the autosaved one{/tr}&nbsp;{self_link noautosave='y' _ajax='n'}{tr}Click Here{/tr}{/self_link}
 	{/remarksbox}
 	{/if} 
-	<textarea id="{$textarea_id|default:editwiki}" class="{$textarea_class|default:wikiedit}" name="{$textarea_name|default:edit}"{$textarea_attributes}>{$smarty.capture.autosave}</textarea>
+	<textarea id="{$textarea_id|default:editwiki}" class="{$textarea_class|default:wikiedit}" name="{$textarea_name|default:edit}"{$textarea_attributes}>{$smarty.capture.autosave|escape}</textarea>
 	{if $prefs.feature_ajax eq 'y' && $prefs.feature_ajax_autosave eq 'y'}
 		<!-- autosave -->
 		<script type='text/javascript'>

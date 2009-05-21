@@ -50,6 +50,10 @@
 <option value="{$events[ix]|escape}" {if $events[ix] eq $smarty.request.event}selected="selected"{/if}>
 	{if $events[ix] eq 'article_submitted'}
 		{tr}A user submits an article{/tr}
+	{elseif $events[ix] eq 'article_edited'}
+		{tr}A user edited an article{/tr}
+	{elseif $events[ix] eq 'article_deleted'}
+		{tr}A user deleted an article{/tr}
 	{elseif $events[ix] eq 'blog_post'}
 		{tr}A user submits a blog post{/tr}
 	{elseif $events[ix] eq 'forum_post_thread'}
@@ -86,6 +90,10 @@
 <td class="{cycle advance=false}">
 	{if $watches[ix].event eq 'article_submitted'}
 		{tr}A user submits an article{/tr}
+	{elseif $watches[ix].event eq 'article_edited'}
+		{tr}A user edits an article{/tr}
+	{elseif $watches[ix].event eq 'article_deleted'}
+		{tr}A user deletes an article{/tr}
 	{elseif $watches[ix].event eq 'blog_post'}
 		{tr}A user submits a blog post{/tr}
 	{elseif $watches[ix].event eq 'forum_post_thread'}

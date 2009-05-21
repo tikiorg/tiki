@@ -15,16 +15,7 @@
 {if $shownbitems eq 'y'}<div class="nbitems">{tr}Items found:{/tr} {$count_item}</div>{/if}
 
 {if $cant_pages > 1 or $tr_initial or $showinitials eq 'y'}
-<div align="center">
-{section name=ini loop=$initials}
-{if $tr_initial and $initials[ini] eq $tr_initial}
-<span class="button2">{$initials[ini]|capitalize}</span> . 
-{else}
-{self_link _class="prevnext" tr_initial=$intials[ini]}{$initials[ini]}{/self_link}
-{/if}
-{/section}
-{self_link _class="prevnext" tr_initial=''}{tr}All{/tr}{/self_link}
-</div>
+	{initials_filter_links _initial='tr_initial'}
 {/if}
 
 {if $checkbox && $items|@count gt 0}<form method="post" action="{$checkbox.action}">{/if}
@@ -39,6 +30,7 @@
 {if ($showstatus ne 'n') and ($tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y'))}
 	<th class="auto" style="width:20px;">&nbsp;</th>
 {/if}
+{if $showitemrank eq 'y'}<th>{tr}Rank{/tr}</th>{/if}
 
 {foreach key=jx item=ix from=$fields}
 {if $ix.isPublic eq 'y' and ($ix.isHidden eq 'n' or $ix.isHidden eq 'c' or $ix.isHidden eq 'p' or $tiki_p_admin_trackers eq 'y') and $ix.type ne 'x' and $ix.type ne 'h' and in_array($ix.fieldId, $listfields) and ($ix.type ne 'p' or $ix.options_array[0] ne 'password') and (empty($ix.visibleBy) or in_array($default_group, $ix.visibleBy) or $tiki_p_admin_trackers eq 'y')}
@@ -104,6 +96,9 @@
 {assign var=ustatus value=$items[user].status|default:"c"}
 {html_image file=$status_types.$ustatus.image title=$status_types.$ustatus.label alt=$status_types.$ustatus.label}
 </td>
+{/if}
+{if $showitemrank eq 'y'}
+<td>{math equation="x+y" x=$smarty.section.user.rownum y=$tr_offset}</td>
 {/if}
 
 {* ------------------------------------ *}
@@ -173,6 +168,7 @@ link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" alt="{tr}List
 		<tr class='compute'>
 		{if $checkbox}<td></td>{/if}
 		{if ($showstatus ne 'n') and ($tracker_info.showStatus eq 'y' or ($tracker_info.showStatusAdminOnly eq 'y' and $tiki_p_admin_trackers eq 'y'))}<td></td>{/if}
+		{if $showitemrank eq 'y'}<td></td>{/if}
 		{foreach key=jx item=ix from=$fields}
 			{if $ix.isPublic eq 'y' and ($ix.isHidden eq 'n' or $ix.isHidden eq 'c' or $ix.isHidden eq 'p' or $tiki_p_admin_trackers eq 'y') and $ix.type ne 'x' and $ix.type ne 'h' and in_array($ix.fieldId, $listfields) and ($ix.type ne 'p' or $ix.options_array[0] ne 'password') and (empty($ix.visibleBy) or in_array($default_group, $ix.visibleBy) or $tiki_p_admin_trackers eq 'y')}	
 			<td>{if isset($computedFields[$ix.fieldId])}
@@ -213,7 +209,7 @@ link="{tr}List Attachments{/tr}"><img src="img/icons/folderin.gif" alt="{tr}List
 {else}
 {pagination_links cant=$count_item step=$max offset=$tr_offset offset_arg=tr_offset}{/pagination_links}
 {/if}
-{if $export eq 'y' && $perms.tiki_p_export_tracker eq 'y'}
+{if $export eq 'y' && ($tiki_p_admin_trackers eq 'y' || $perms.tiki_p_export_tracker eq 'y')}
 	{button href="$exportUrl" _text="{tr}Export{/tr}"}
 {/if}
 {/strip}

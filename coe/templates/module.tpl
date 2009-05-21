@@ -1,7 +1,7 @@
 {* $Id$ *}
 {* Module layout with controls *}
 {if $module_nobox neq 'y'}
-<div class="box-shadow">
+{if $prefs.feature_layoutshadows}<div class="box-shadow">{$prefs.box_shadow_start}{/if}
 	<div class="box box-{$module_name|escape}"{if $module_params.overflow == 'y'} style="overflow:visible !important"{/if}>
 	{if $module_decorations ne 'n'}
 		<h3 class="box-title clearfix"{if !empty($module_params.bgcolor)} style="background-color:{$module_params.bgcolor};"{/if}>
@@ -31,8 +31,18 @@
 					{icon name=$smarty.capture.name class="flipmodimage" _id="module" alt="[{tr}toggle{/tr}]"}
 				</a>
 			</span>
+			{if $prefs.menus_items_icons eq 'y'}
+			<span class="moduleflip moduleflip-vert" id="moduleflip-vert-{$module_name|cat:$module_position|cat:$module_ord|escape}">
+				<a title="{tr}Toggle module contents{/tr}" class="flipmodtitle" href="javascript:flip_class('main','minimize-modules-left','maximize-modules');{if $prefs.feature_phplayers eq 'y' and isset($phplayers_LayersMenu)}moveLayers();{/if}icntoggle('modv-{$module_name|cat:$module_position|cat:$module_ord|escape}','vmodule.png');">
+					{capture name=name}
+						icnmodv-{$module_name|cat:$module_position|cat:$module_ord|escape}
+					{/capture}
+					{icon name=$smarty.capture.name class="flipmodimage" _id="trans" alt="[{tr}Toggle Vertically{/tr}]" _defaultdir="pics"}
+				</a>
+			</span>
+			{/if}
 		{/if}
-		</h3>
+		<!--[if IE]><br class="clear" style="height: 1px !important" /><![endif]--></h3>
 	{elseif $module_notitle ne 'y' }
 		{if $module_flip eq 'y' and $prefs.javascript_enabled ne 'n'}
 			<h3 class="box-title" ondblclick="javascript:icntoggle('mod-{$module_name|cat:$module_position|cat:$module_ord|escape}','module.png');"{if !empty($module_params.color)} style="color:{$module_params.color};"{/if}>
@@ -51,11 +61,11 @@
 				</a>
 			</span>
 		{/if}
-		</h3>
+		<!--[if IE]><br class="clear" style="height: 1px !important" /><![endif]--></h3>
 	{/if}
 		<div id="mod-{$module_name|cat:$module_position|cat:$module_ord|escape}" style="display: block" class="clearfix box-data">
 {/if}
-{$module_content}
+{$module_content}<!--[if IE]><br class="clear" style="height: 1px !important" /><![endif]-->
 {$module_error}
 {if $module_nobox neq 'y'}
 {if $module_flip eq 'y'}
@@ -70,5 +80,5 @@
 
 		</div>
 	</div>
-</div>
+{if $prefs.feature_layoutshadows}{$prefs.box_shadow_end}</div>{/if}
 {/if}

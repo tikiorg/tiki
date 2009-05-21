@@ -57,6 +57,7 @@
         {if !empty($sort_mode)}<input type="hidden" name="sort_mode" value="{$sort_mode|escape}" />{/if}
         {if isset($file_info)}<input type="hidden" name="fileId" value="{$file_info.fileId|escape}" />{/if}
         {if isset($page)}<input type="hidden" name="page" value="{$page|escape}" />{/if}
+        {if isset($view)}<input type="hidden" name="view" value="{$view|escape}" />{/if}
       
         {assign var=nbCols value=0}
         {assign var=other_columns value=''}

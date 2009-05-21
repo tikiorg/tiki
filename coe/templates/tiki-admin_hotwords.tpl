@@ -14,7 +14,7 @@
 
 <h2>{tr}Hotwords{/tr}</h2>
 {if $words}
-  {include file='find.tpl' _sort_mode='y'}
+  {include file='find.tpl'}
 {/if}
 <table class="normal">
 <tr>

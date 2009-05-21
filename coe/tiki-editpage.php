@@ -60,16 +60,12 @@ if (isset($_REQUEST['save']) && (!$user || $user == 'anonymous') && $prefs['feat
 
 $smarty->assign( 'translation_mode', (isNewTranslationMode() || isUpdateTranslationMode()) ?'y':'n' );
 
-// If from quickedit module and page is blank, tell user -- instead of editing the default page
-if ((isset($_REQUEST["quickedit"])) && ($_REQUEST["page"] == '')) {
+// If page is blank (from quickedit module or wherever) tell user -- instead of editing the default page
+// Dont get the page from default HomePage if not set (surely this would always be an error?)
+if (empty($_REQUEST["page"])) { 
 	$smarty->assign('msg', tra("You must specify a page name, it will be created if it doesn't exist."));
 	$smarty->display("error.tpl");
 	die;
-}
-
-// Get the page from the request var or default it to HomePage
-if (!isset($_REQUEST["page"]) || $_REQUEST["page"] == '') { 
-	$_REQUEST['page'] = $wikilib->get_default_wiki_page();
 }
 
 if ($prefs['feature_wikiapproval'] == 'y' && substr($_REQUEST['page'], 0, strlen($prefs['wikiapproval_prefix'])) != $prefs['wikiapproval_prefix'] && isset($prefs['wikiapproval_master_group']) && !in_array($prefs['wikiapproval_master_group'], $tikilib->get_user_groups($user))) {
@@ -949,7 +945,7 @@ $smarty->assign('pagedata', $parsed);
 // apply the optional post edit filters before preview
 if(isset($_REQUEST["preview"]) || ($prefs['wiki_spellcheck'] == 'y' && isset($_REQUEST["spellcheck"]) && $_REQUEST["spellcheck"] == 'on')) {
 	$parsed = $tikilib->apply_postedit_handlers($parsed);
-	$parsed = $tikilib->parse_data($parsed, array('is_html' => $is_html));
+	$parsed = $tikilib->parse_data($parsed, array('is_html' => $is_html, 'preview_mode'=>true));
 } else {
 	$parsed = "";
 }
@@ -1331,7 +1327,9 @@ if ($prefs['feature_categories'] == 'y') {
 		}
 	}
 }
-$plugins = $wikilib->list_plugins(true);
+
+$plugins = $wikilib->list_plugins(true, 'editwiki');
+
 $smarty->assign_by_ref('plugins', $plugins);
 $smarty->assign('showstructs', array());
 if ($structlib->page_is_in_structure($_REQUEST["page"])) {
@@ -1358,7 +1356,7 @@ if ($prefs['wiki_feature_copyrights'] == 'y' && $tiki_p_edit_copyrights == 'y') 
 $defaultRows = $prefs['default_rows_textarea_wiki'];
 include_once("textareasize.php");
 include_once ('lib/quicktags/quicktagslib.php');
-$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_desc','','wiki');
+$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_asc','','wiki');
 $smarty->assign_by_ref('quicktags', $quicktags["data"]);
 $smarty->assign('quicktagscant', $quicktags["cant"]);
 if (!$user or $user == 'anonymous') {

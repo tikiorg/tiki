@@ -37,6 +37,8 @@ function wikiplugin_module_info() {
 		'documentation' => 'PluginModule',
 		'description' => tra("Displays a module inlined in page. More parameters can be added, not supported by UI."),
 		'prefs' => array( 'wikiplugin_module' ),
+		'validate' => 'all',
+		'extraparams' =>true,
 		'params' => array(
 			'module' => array(
 				'required' => true,

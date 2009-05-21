@@ -272,7 +272,9 @@ class CalendarLib extends TikiLib {
 			$tend = TikiLib::date_format("%H%M", $res["end"]);
 			for ( $i = $dstart; $i <= $dend; $i = TikiLib::make_time(0, 0, 0, $mloop, ++$dloop, $yloop) ) {
 				/* $head is in user time */
-				if ($dstart == $dend) {
+				if ($res['allday'] == '1') {
+					$head = tra('All Day');
+				} elseif ($dstart == $dend) {
 					$head = TikiLib::date_format($prefs['short_time_format'], $res["start"]). " - " . TikiLib::date_format($prefs['short_time_format'], $res["end"]);
 				} elseif ($i == $dstart) {
 					$head = TikiLib::date_format($prefs['short_time_format'], $res["start"]). " ...";
@@ -283,7 +285,7 @@ class CalendarLib extends TikiLib {
 				}
 
 				/* $i is timestamp unix of the beginning of a day */
-				$j = is_array($ret[$i]) ? count($ret[$i]) : 0;
+				$j = (isset($ret[$i]) && is_array($ret[$i])) ? count($ret[$i]) : 0;
 
 				$ret[$i][$j] = $res;
 				$ret[$i][$j]['head'] = $head;
@@ -296,7 +298,7 @@ class CalendarLib extends TikiLib {
 				/*	'time' => $tstart, /* user time */
 				/*	'end' => $tend, /* user time */
 
-				$ret[$i][$j]['group_description'] = $res['name'].', '.$head;
+				$ret[$i][$j]['group_description'] = $res['name'].'<span class="calgrouptime">, '.$head.'</span>';
 			}
 		}
 		return $ret;
@@ -672,6 +674,7 @@ class CalendarLib extends TikiLib {
 		if ( $display_tz == '' ) $display_tz = 'UTC';
 		$curtikidate->setTZbyID($display_tz);
 		$curtikidate->setLocalTime($dloop,$mloop,$yloop,0,0,0,0);
+		$listevents = array();
 	
 		// note that number of weeks starts at ZERO (i.e., zero = 1 week to display).
 		for ($i = 0; $i <= $numberofweeks; $i++) {
@@ -700,7 +703,7 @@ class CalendarLib extends TikiLib {
 	
 					foreach ( $listtikievents["$dday"] as $lte ) {
 						$lte['desc_name'] = $lte['name'];
-						if ( $calendarGroupByItem != 'n' ) {
+						if ( $group_by_item != 'n' ) {
 							if ( $group_by != 'day' ) $key = $lte['id'].'|'.$lte['type'];
 							if ( ! isset($leday[$key]) ) {
 								$leday[$key] = $lte;
@@ -716,7 +719,7 @@ class CalendarLib extends TikiLib {
 								$leday_item =& $leday[$key];
 								$leday_item['user'] .= ', '.$lte['user'];
 	
-								if ( ! is_integer($leday_item['action']) ) {
+								if ( !isset($leday_item['action']) || !is_integer($leday_item['action']) ) {
 									$leday_item['action'] = 1;
 								}
 								$leday_item['action']++;
@@ -750,11 +753,16 @@ class CalendarLib extends TikiLib {
 								foreach ( $desc_items as $desc_item ) {
 									if ( $desc != '' ) $desc .= '<br />';
 									$desc .= '- '.$desc_item;
-									if ( $desc_where != '' ) $desc .= ' <i>['.$desc_where.']</i>';
+									if (!empty($lte['show_location']) && $lte['show_location'] == 'y' && $desc_where != '' ) {
+										$desc .= ' <i>['.$desc_where.']</i>';
+									}
 								}
 							}
 							$lte['description'] = $desc;
 						}
+
+						$smarty->assign('calendar_type', ( $myurl == 'tiki-action_calendar.php' ? 'tiki_actions' : 'calendar' ) );
+						$smarty->assign_by_ref('item_url', $lte["url"]);
 						$smarty->assign_by_ref('cellhead', $lte["head"]);
 						$smarty->assign_by_ref('cellprio', $lte["prio"]);
 						$smarty->assign_by_ref('cellcalname', $lte["calname"]);
@@ -781,7 +789,7 @@ class CalendarLib extends TikiLib {
 			}
 		}
 
-		if ( $_SESSION['CalendarViewList'] == 'list' ) {
+		if ( isset($_SESSION['CalendarViewList']) && $_SESSION['CalendarViewList'] == 'list' ) {
 			if ( is_array($listtikievents) ) {
 				foreach ( $listtikievents as $le ) {
 					if ( is_array($le) ) {

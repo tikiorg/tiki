@@ -265,5 +265,6 @@
 </table>
 </form>
 
+{include file=tiki-edit_help.tpl}
 {* end ************ Edit Form ***************}
 

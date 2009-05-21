@@ -165,10 +165,10 @@
 					<td class="formcolor">&nbsp;</td>
 					<td class="formcolor">
 						<input type="submit" name="upload" value="{tr}Upload{/tr}" />
-						<span class="rbox-data">{tr}Note: Maximum image size is limited to{/tr} {$max_upload_size|kbsize}</span>
 					</td>
 				</tr>
 			</table>
+			{remarksbox type="note"}{tr}Maximum file size is around:{/tr} {if $tiki_p_admin eq 'y'}<a title="{$max_upload_size_comment}">{/if}{$max_upload_size|kbsize:true:0}{if $tiki_p_admin eq 'y'}</a>{/if}{/remarksbox}
 		</form>
 	</div>
 {else}

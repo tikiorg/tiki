@@ -1,11 +1,107 @@
 /* hack for IE http://www.wellstyled.com/css-underscore-hack.html */
 #calendar {
 }
-.Cal0, .Cal1, .Cal2 {
-	color : #425262;
-	font-size : 10px;
-	padding-right : 0px;
+
+
+div.tabrow {
+	position: relative;
+	left: 0;
+	font-size: 1em;
+	height: 24px !important;
+/*	width: 720px;*/
+	padding-top: 11px;
 }
+.tabrowLeft {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 23px;
+	height: 24px !important;
+}
+.tabrowRight {
+	position:absolute;
+	top: 0;
+	right: 0;
+	width: 30px;
+	height: 24px !important;
+}
+
+.tabrow {
+	margin : 0;
+	font-size : 11px;
+	padding : 1px 10px 4px 10px;
+	clear: both;
+}
+.tabrow a {
+	text-decoration : none;
+}
+.tabrow .viewmode { float: left; }
+.tabrow .jscalrow { float: right; white-space: nowrap; cursor: pointer; }
+.tabrow .daterow { border : 1px #ddd; }
+
+.calHeading,
+.calHeadingOn {
+	height: 36px;
+	text-align: center;
+	vertical-align: middle;
+/*	color: #483b3b;
+	border-bottom: 1px #cfd0d0 solid;*/
+}
+.calHeading a,
+.calHeading a:visited {
+/*	color: #483b3b; let theme handle links
+	text-decoration: none;*/
+}
+.calHeadingOn a {
+	/*color: #06f;
+	text-decoration: none;*/
+}
+.calHeading a:hover,
+.calHeadingOn a:hover {
+	/*text-decoration: underline;*/
+}
+.calHours {
+	vertical-align: middle;
+	text-align: center;
+	border-width: 1px 0 0 1px;
+	border-color: #cfd0d0 #e0e0e0;
+	border-style: solid;
+}
+.calDay {
+	padding: 0;
+	border-width: 0 1px 1px 1px;
+/*	background-color: #fcfefd;
+	border-color: #cfd0d0 #a1a19f;*/
+	border-style: solid;
+}
+.calWeek {
+	border-width: 1px 1px 0 1px;
+/*	background-color: #fcfefd;*/
+	border-color: #cfd0d0 #e0e0e0;
+	border-style: solid;
+}
+
+.Cal {
+	font-weight: normal;
+	border-color: transparent;
+}
+
+.Cal0, .Cal1, .Cal2 {
+	color: #425262;
+	font-size: 10px;
+	padding-right: 0;
+	font-weight: normal;
+	border-width: 1px;
+	border-style: solid;
+}
+
+.Cal0 a,
+.Cal1 a,
+.Cal2 a {
+	font-weight: normal;
+	text-decoration: none;
+}
+
 .Cal0:before {
 	content : "? ";
 }
@@ -32,7 +128,8 @@
 	font-size : 9px;
 	background : transparent;
 }
-.calfocus a {
+.calfocus a,
+.calfocus a:visited {
 	text-decoration : none;
 	font-weight : normal;
 	color : #000000;
@@ -220,24 +317,15 @@
 	color : #000000;
 	font-weight : normal;
 }
-.tabrow {
-	margin : 0;
-	font-size : 11px;
-	padding : 1px 10px 4px 10px;
-	clear: both;
-}
-.tabrow a {
-	text-decoration : none;
-}
-.tabrow .viewmode { float: left; }
-.tabrow .jscalrow { float: right; white-space: nowrap; cursor: pointer; }
-.tabrow .daterow { border : 1px #ddd; }
+
 .calnavigation {
-	text-align : center;
-	font-size : 1.1em;
+	border-width: 0;
+	padding: 4px;
+	text-align: center;
+	font-size: 1.1em;
 	font-weight : bold;
 	clear: both;
-	vertical-align : middle;
+	vertical-align: middle;
 	margin: 7px 0;
 }
 .calnavigation a {
@@ -270,9 +358,12 @@ td.middle {
 .opaque .box-data {
 	width: auto;
 }
+
 .calcontent {
 	min-height: 60px;
 	height: auto;
+	padding-right: 0;
+	padding-left: 0;
 }
 
 * html .calcontent {
@@ -305,8 +396,13 @@ a.viewmodeoff img {
 * html a.viewmodeoff img {
 	padding-left : 0;
 }
-
+#caltable {
+	border-collapse: collapse;
+	border-bottom: 1px solid #cfd0d0;
+}
 #caltable .days {
+	height: 20px;
+	text-align: center;
 	border : 0;
 	border-bottom : 1px solid #999;
 }
@@ -325,6 +421,12 @@ a.viewmodeoff img {
 	float : right;
 }
 
+.caldark,
+.calfocus,
+.calfocuson {
+	height: 20px;
+}
+
 .calodd {
 	background : #cde;
 }
@@ -334,9 +436,35 @@ a.viewmodeoff img {
 }
 
 .caldark {
-	background : #eee;
+	background: #e0e0e0; /* #eee */
+	border: 1px dotted #d6dbde;
 }
 
+.calodd,
+.caleven {
+	background: none;
+}
+
+.calodd .calfocus,
+.calodd .calfocuson,
+.caleven .calfocus,
+.caleven .calfocuson {
+	background: none;
+	border-width: 0;
+	padding-top: 2px;
+	padding-left: 2px;
+}
+
+.caldark .calfocus {
+	background: none;
+	border-width: 0;
+}
+
+#configlinks {
+	width: 100%;
+/*	background-color: #fff;*/
+	padding: 5px;
+}
 * html .addevent,
 * html .calodd,
 * html .caleven,
@@ -359,6 +487,25 @@ a.viewmodeoff img {
 #filtercal .calinput {
 	padding : 10px;
 }
+
+#exportcal {
+	z-index: 200 !important;
+	background: #FFF;
+	position: absolute;
+	border: 1px solid #000;
+	right: 240px;
+}
+
+#exportcal .caltitle,
+#exportcal .caltoggle,
+#exportcal .calcheckbox {
+	padding: 0 10px;
+}
+
+#exportcal .calinput {
+	padding: 10px;
+}
+
 .statusbox {
 	margin-bottom : 1px;
 	width : 120px;
@@ -375,6 +522,8 @@ a.viewmodeoff img {
 select[name=start_Hour], select[name=start_Minute], select[name=end_Hour], select[name=end_Minute] { min-width: 40px; }
 #caltable, #calscreen table.normal { clear: both; border-collapse: collapse; margin-top: 5px; width: 100%; font-size: 11px;}
 #caltable td { padding: 2px; }
+#calscreen td {vertical-align: top;}
+#calscreen td a {text-decoration: none;}
 .days { font-size : 11px; font-weight: bold; color: #555555; }
 .calodd, .caleven { border: 1px solid #8CACBB; }
 .calfocus a:hover { background: transparent; border-bottom: 2px solid #8CACBB; }
@@ -385,18 +534,27 @@ a.addevent:hover { border-bottom:0px; }
 .caldark a { display: none; }
 .caldark { border: 1px dotted #8CACBB; background: transparent; }
 .caldark .calfocus { background: #def; }
-.calfocuson + .calcontent { background: #f1e5ae; }
+.calfocuson + .calcontent {background: none; }
 .html_select_time { white-space: nowrap; }
 
-.tabrow {  }
 .tabrowLeft {  }
 .tabrowRight {  }
-.viewmode {width: 100%; text-align: center}
-.viewmode div {display: inline-block}
+
+.viewmode {
+	line-height: 1em;
+	width: 100%;
+	text-align: center;
+	}
+
+.viewmode div {display: inline}
 .calbuttonBox {  }
 .calbuttonLeft {  }
 .calbuttonRight {  }
-.calbuttonoff {  }
-#prev {  }
-#next {  }
+
+.calbuttonoff , 
+.calbuttonon , 
+a.prev img ,
+a.next img {
+	vertical-align: middle;  
+}
 

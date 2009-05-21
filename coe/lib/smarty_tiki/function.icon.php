@@ -17,20 +17,23 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  *  - _menu_text: if set to 'y', will use the 'title' argument as text after the icon and place the whole content between div tags with a 'icon_menu' class (not compatible with '_notag' param set to 'y').
  *  - _menu_icon: if set to 'n', will not show icon image when _menu_text is 'y'.
  *  - _confirm: text to use in a popup requesting the user to confirm it's action (yet only available with javascript)
+ *  - _defaultdir: directory to use when the _id param does not include the path
  */
 function smarty_function_icon($params, &$smarty) {
-	if ( ! is_array($params) || ! isset($params['_id']) ) return;
+	if ( ! is_array($params) ) $params = array();
 	global $prefs;
 
 	$serialized_params = serialize($params);
 	if ( isset($_SESSION['icons'][$serialized_params]) ) {
-		if ( !empty($_SESSION['icons_theme']) && $_SESSION['icons_theme'] == $prefs['style'] ) {
+		if ( !empty($_SESSION['icons_theme']) && $_SESSION['icons_theme'] == $prefs['style'] &&
+				!empty($_SESSION['icons_theme_option']) && $_SESSION['icons_theme_option'] == $prefs['style_option']) {
 			return $_SESSION['icons'][$serialized_params];
 		} else {
 			unset($_SESSION['icons']);
 		}
 	}
 	$_SESSION['icons_theme'] = $prefs['style'];
+	$_SESSION['icons_theme_option'] = $prefs['style_option'];
 
 	$basedirs = array('pics/icons', 'images', 'img/icons', 'pics/icons/mime');
 	$icons_extension = '.png';
@@ -43,6 +46,20 @@ function smarty_function_icon($params, &$smarty) {
 	$menu_icon = true;
 	$confirm = '';
 	$html = '';
+
+	if ( empty($params['_id']) ) {
+		if ( isset($params['_defaultdir']) && $params['_defaultdir'] == 'pics/large' ) {
+			$params['_id'] = 'green_question48x48';
+		} else {
+			$params['_id'] = 'green_question';
+		}
+	}
+	if ( ! empty($params['_defaultdir']) ) {
+		array_unshift($basedirs, $params['_defaultdir']);
+		if ( $params['_defaultdir'] == 'pics/large' ) {
+			$default_width = $default_height = ( strpos($params['_id'], '48x48') !== false ) ? 48 : 32;
+		}
+	}
 
 	// Handle _ids that contains the real filename and path
 	if ( strpos($params['_id'], '/') !== false || strpos($params['_id'], '.') !== false ) {
@@ -62,7 +79,7 @@ function smarty_function_icon($params, &$smarty) {
 	if ( ! eregi('^[a-z0-9_-]+$', $params['_id']) )
 		return;
 
-	global $prefs, $style_base, $tikidomain, $tikipath, $url_path, $base_url;
+	global $url_path, $base_url, $tikipath, $tikilib;
 
 	// Include smarty functions used below
 	require_once $smarty->_get_plugin_filepath('function', 'html_image');
@@ -79,16 +96,12 @@ function smarty_function_icon($params, &$smarty) {
 			switch ( $k ) {
 			case '_id':
 				$v = $icons_basedir.$v.$icons_extension;
-				if ( isset($style_base) ) {
-					if ( $tikidomain and file_exists($tikipath."/styles/$tikidomain/$style_base/$v") ) {
-						$params['file'] = "styles/$tikidomain/$style_base/$v";
-					} elseif ( $tikidomain and file_exists($tikipath."/styles/$tikidomain/$v") ) {
-						$params['file'] = "$tikidomain/$v";
-					} elseif ( file_exists($tikipath."/styles/$style_base/$v") ) {
-						$params['file'] = "styles/$style_base/$v";
-					} else {
-						$params['file'] = $v;
-					}
+				if ($tikilib != NULL)
+					$v2 = $tikilib->get_style_path($prefs['style'], $prefs['style_option'], $v);
+				if (!empty($v2)) {
+					$params['file'] = $v2;
+				} else {
+					$params['file'] = $v;
 				}
 				break;
 			case '_type':

@@ -56,30 +56,34 @@ button,
 input[type=reset],
 input[type=submit],
 span.button input,
-.submitbutton,
 .calbuttonoff,
 .calbuttonon {
-	color: #fff;
-	background: #1d9ccf;
-	border-color: #41cbe7 #223845 #223845 #41cbe7;
-}
+	color: #4c4c4c;
+	font-weight: bold;
+	border: 1px solid #acacac;
+	background: #f5f5f5 url(cold/headerbg.jpg) repeat-x 0 100%}
+
+* html input[type=reset],
+* html input[type=submit] {
+	color: #4c4c4c;
+	font-weight: bold;
+	border: 1px solid #acacac;
+	background: #f5f5f5 url(cold/headerbg.jpg) repeat-x 0 100%}
 
 .button a:hover,
 button:hover,
 input[type=reset]:hover,
 input[type=submit]:hover,
-.button input:hover,
-.submitbutton:hover {
-	background-color: #1e7ea6;
-	color: #fff;
-}
-
+.button input:hover {
+	background: #f5f5f5 url(cold/headerbg.jpg) repeat-x 0 100%;
+	background-position: 105%;
+	color: #757575}
+		
 .button a:active,	
 button:active,
 input[type=reset]:active,
 input[type=submit]:active,
-.button input:active,
-.submitbutton:active {
+.button input:active {
 	border-color: #223845 #41cbe7 #41cbe7 #223845;
 }
 
@@ -94,11 +98,11 @@ ul.jumplinks a:active {
 }
 
 #c1c2 #col2 {
-	background: url(strasa/box_top.gif) no-repeat 100% 0;
+	background: url(cold/box_top.gif) no-repeat 100% 0;
 }
 
 #c1c2 #col2 .content {
-	background: url(strasa/box_bottom.gif) no-repeat 0 100%;
+	background: url(cold/box_bottom.gif) no-repeat 0 100%;
 }
 
 #col3 .content {
@@ -151,15 +155,20 @@ ul.jumplinks a:active {
 
 /* Site Header & Identity */
 #header-top {
-	background: #1b3c54 url(strasa/headerbg.jpg) repeat-x 0 100%;
+	background: #f5f5f5 url(cold/headerbg.jpg) repeat-x 0 100%;
 }
 
 #siteloginbar {
-	background: url(strasa/login.jpg) 0 0 no-repeat;
+	background: url(cold/login.jpg) 0 0 no-repeat;
 }
 
+* html #siteloginbar {
+	text-align: right;
+	width: 100%;
+	background: #fff url(cold/loginlong.jpg) 0 0 no-repeat}
+
 #siteloginbar .register {
-	background: url(strasa/register.jpg) no-repeat;
+	background: url(cold/register.jpg) no-repeat;
 }
 
 #siteloginbar input.wikiaction {
@@ -168,29 +177,36 @@ ul.jumplinks a:active {
 
 /* #header text selectors, if needed */
 #sitetitles {
-	color: #fff;
+	color: #294050;
 }
 
 #sitetitle a,
 #sitetitle a:link,
 #sitetitle a:hover {
-	color: #fff;
+	color: #294050;
 }
 
 /* tiki-top_bar.tpl - menu and search */
 
 #tiki-top a,
 #tiki-top a:visited {
-	color: #5AE0FF;
+	color: #1E7EA6;
 }
 
 #tiki-top a:hover {
-	color: #fff;
+	color: #1E7EA6;
 }
+
+#sitesearchbar {color: #000}
+
+a.flip,
+a.flip:visited {color: #b5dde9}
+	
+a.flip:hover {color: #006699}
 
 .tellafriend a,
 .tellafriend a:visited {
-	background: transparent url(strasa/fold-topright.jpg) 0 0 no-repeat;
+	background: transparent url(cold/fold-topright.jpg) 0 0 no-repeat;
 	color: #fff;
 }
 
@@ -224,7 +240,7 @@ ul.jumplinks a:active {
 }
 
 #header .horbaritem a:hover {
-	background: url('strasa/headermenuitem-hover.png') bottom center repeat-x;
+	background: url('cold/headermenuitem-hover.png') bottom center repeat-x;
 	border-color: #336699;
 	color: #fff;
 }
@@ -239,7 +255,7 @@ ul.jumplinks a:active {
 }
 
 .mdkitem a:hover {
-	background: transparent url('styles/strasa/headerbg.jpg') repeat-x;
+	background: transparent url('styles/cold/headerbg.jpg') repeat-x;
 	color: #fff;
 }
 
@@ -293,8 +309,8 @@ a.phplmselected:hover {
 .cssmenu ul,
 .cssmenu_vert li ul,
 .cssmenu_horiz li ul {
-	border: 1px solid #08698f;
-	background: #1b3a50;
+	border: 1px solid #aaa;
+	background: #f5f5f5;
 }
 
 .cssmenu_vert li ul {
@@ -303,8 +319,9 @@ a.phplmselected:hover {
 }
 
 .cssmenu_horiz li:hover {
-	background: #1b3a50;
+	background: #CCE5FF;
 }
+
 
 .cssmenu_ver li:hover {
 	background: none;
@@ -397,15 +414,14 @@ div.help_section {
 
 #col2 .box {
 	background: #cce5ff;
+	border-bottom: 1px solid #bed8f1;
 }
 
 #col3 .box {
 	border-bottom: 1px solid #cfcfcf;
 }
 
-.box a.flipmodtitle img {
-	display: none;
-}
+.box a.flipmodtitle img {}
 
 a.flipmodtitle:hover img {
 	border: 1px solid #58A7D2 !important;
@@ -414,21 +430,23 @@ a.flipmodtitle:hover img {
 /** Other boxes **/
 
 div.cbox {
-	border: 1px solid #1b3a50;
+	border: 1px solid #acacac;
 }
 
 .cbox-title {
-	color: #5ae0ff;
-	background: #1b3a50;
+	color: black;
+	background: #f5f5f5 url(cold/headerbg.jpg) repeat-x 0 100%;
 }
 
 .cbox-title a:link,
 .cbox-title a:visited {
-	color: #5ae0ff;
+	color: black;
+	text-decoration: none;
 }
 
 .cbox-title a:hover {
-	color: #fff;
+	color: black;
+	text-decoration: underline
 }
 
 .rbox-title {
@@ -451,6 +469,8 @@ div.simplebox {
 
 /***** Tables, Tabs and Lists ****/
 /** Tables **/
+table.normal, 
+table.admin {border: 1px solid #acacac}
 
 tr.odd {
 	background: #f0f0f0;
@@ -485,15 +505,15 @@ td.third {}
 
 th,
 table.normal td.heading {
-	color: #5ae0ff;
-	background: #1b3a50;
+	color: black;
+	background: #f5f5f5 url(cold/headerbg.jpg) repeat-x 0 100%;
 }
 
 th a:link,
 th a:visited,
 td.heading a:link,
 td.heading a:visited {
-	color: #5ae0ff;
+	color: #000;
 }
 
 a.tablename,
@@ -699,7 +719,21 @@ ul.toc {
 }
 
 /***** Articles ****/
+div.articletopline,
+div.articlesubtitle {
+	background: #f5f5f5;
+	color: #000}
+	
+div.articletitle h2 {
+	background: #f5f5f5 url(cold/headerbg.jpg) repeat-x 0 100%;
+	color: #000;
+	padding: 10px 5px;
+	margin: 0}
 
+div.articletitle h2 a,
+div.articletitle h2 a:visited {
+	color: #000;
+	text-decoration: none}
 
 /***** Blogs *****/
 
@@ -727,25 +761,26 @@ body.tiki_blogs .author_actions .actions {
 }
 
 .post .postbody-title {
-	background: #1b3c54 url(strasa/headerbg.jpg) repeat-x 0 100%;
+	background: #f5f5f5 url(cold/headerbg.jpg) repeat-x 0 100%;
+	
 }
 
 .post .postbody-title .title {
-	color: #fff;
+	color: #000;
 }
 
 .post .postbody-title .title a.link {
-	color: #fff;
+	color: #000;
 }
 
 .post .author_info a:link,
 .post .author_info a:visited {
-	color: #fff;
+	color: #000;
 }
 
 .post .author_info {
-	color: #fff;
-	background: url(strasa/login.jpg) 0 0 no-repeat;
+	color: #000;
+	background: url(cold/login.jpg) 0 0 no-repeat;
 }
 
 .post .postbody .attachments {

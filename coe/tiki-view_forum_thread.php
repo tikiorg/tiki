@@ -329,7 +329,7 @@ if ($prefs['feature_user_watches'] == 'y') {
 	if ($_REQUEST['watch_action'] == 'add') {
 	    $tikilib->add_user_watch($user, $_REQUEST['watch_event'], $_REQUEST['watch_object'], 'forum topic', $forum_info['name'] . ':' . $thread_info['title'], "tiki-view_forum_thread.php?forumId=" . $_REQUEST['forumId'] . "&amp;comments_parentId=" . $_REQUEST['comments_parentId']);
 	} else {
-	    $tikilib->remove_user_watch($user, $_REQUEST['watch_event'], $_REQUEST['watch_object']);
+	    $tikilib->remove_user_watch($user, $_REQUEST['watch_event'], $_REQUEST['watch_object'], 'forum topic');
 	}
     }
 
@@ -410,7 +410,7 @@ include_once("textareasize.php");
 
 if ($prefs['feature_forum_parse'] == "y") {
 	include_once ('lib/quicktags/quicktagslib.php');
-	$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_desc','','forums');
+	$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_asc','','forums');
 	$smarty->assign_by_ref('quicktags', $quicktags["data"]);
 }
 $smarty->assign('forum_mode', 'y');
@@ -427,6 +427,12 @@ if ($prefs['feature_actionlog'] == 'y') {
 }
 
 ask_ticket('view-forum');
+
+if ($prefs['feature_forum_parse'] == 'y') {
+	global $wikilib; include_once('lib/wiki/wikilib.php');
+	$plugins = $wikilib->list_plugins(true, 'editpost2');
+	$smarty->assign_by_ref('plugins', $plugins);
+}
 
 // Display the template
 if ( isset($_REQUEST['display']) ) {

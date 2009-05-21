@@ -61,7 +61,7 @@ if ($output["data"]=="EMPTY") {
 			continue;
 		$fields[$f['fieldId']] = $f;
 	}
-	$tmp = $trklib->list_items($_REQUEST[$id], 0, $prefs['max_rss_tracker'], $dateId.'_desc', $fields);
+	$tmp = $trklib->list_items($_REQUEST[$id], 0, $prefs['max_rss_tracker'], $dateId.'_asc', $fields);
 	foreach ($tmp["data"] as $data) {
 		$data[$titleId] = tra('Tracker item:').' #'.$data["$urlparam"];
 		$data[$descId] = '';

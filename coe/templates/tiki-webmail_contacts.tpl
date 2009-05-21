@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html 
      PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 {* Index we display a wiki page here *}
+
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
@@ -16,7 +16,7 @@
 <h2>{tr}Contacts{/tr}</h2>
 <div align="center">
 
-{include file='find.tpl' _sort_mode='y'}
+{include file='find.tpl'}
 
 {initials_filter_links}
 

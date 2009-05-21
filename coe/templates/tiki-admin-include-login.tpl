@@ -108,7 +108,7 @@
 
 <div class="adminoptionbox">
 	<div class="adminoptionlabel"><label for="registration_choices">{tr}Users can select a group to join at registration{/tr}:</label>
-	<br /><em>{tr}By default, new users automatically the Registered group{/tr}.</em></div>
+	<br /><em>{tr}By default, new users automatically join the Registered group{/tr}.</em></div>
 	<div class="adminoptionlabel">
 	<select id="registration_choices" name="registration_choices[]" multiple="multiple" size="5" style="width:95%;">
 {foreach key=g item=gr from=$listgroups}
@@ -132,7 +132,7 @@
 </div>
 
 <div class="adminoptionbox">
-	<div class="adminoptionlabel"><label for="unsuccessful_logins">{tr}Re-validate user by email after{/tr}</label> <input id="unsuccessful_logins" type="text" name="unsuccessful_logins" size="5"  value="{$prefs.unsuccessful_logins|escape}" /> {tr}unsuccessful login attempts{/tr}.
+	<div class="adminoptionlabel"><label for="unsuccessful_logins">{tr}Re-validate user by email after{/tr}</label> <input id="unsuccessful_logins" type="text" name="unsuccessful_logins" size="5" value="{$prefs.unsuccessful_logins|escape}" /> {tr}unsuccessful login attempts{/tr}.
 	<br /><em>{tr}Use <strong>-1</strong> for never{/tr}.</em></div>
 </div>
 
@@ -276,6 +276,9 @@ name="eponymousGroups" {if $prefs.eponymousGroups eq 'y'}checked="checked"{/if}/
 <div class="adminoptionbox">
 	<div class="adminoption"><input type="checkbox" id="feature_clear_passwords" name="feature_clear_passwords" {if $prefs.feature_clear_passwords eq 'y'}checked="checked" {/if}onclick="flip('remindpassword');flip('remindpassword2');" /></div>
 	<div class="adminoptionlabel"><label for="feature_clear_passwords">{tr}Store password as plain text{/tr}.</label></div>
+	{if $prefs.feature_clear_passwords eq 'y'}
+		{remarksbox type='warning' title='Security risk'}{tr}Store passwords in plain text is activated. You should never set this unless you know what you are doing.{/tr}{/remarksbox}
+	{/if}
 </div>
 
 <div class="adminoptionbox">
@@ -410,19 +413,19 @@ name="eponymousGroups" {if $prefs.eponymousGroups eq 'y'}checked="checked"{/if}/
 </div>
 <div class="adminoptionbox">
 	<div class="adminoptionlabel"><label for="auth_ldap_userattr">{tr}User attribute{/tr}:</label>
-	<input type="text" name="auth_ldap_userattr" id="auth_ldap_userattr"  value="{$prefs.auth_ldap_userattr|escape}" />
+	<input type="text" name="auth_ldap_userattr" id="auth_ldap_userattr" value="{$prefs.auth_ldap_userattr|escape}" />
 	</div>
 </div>
 <div class="adminoptionbox">
 	<div class="adminoptionlabel"><label for="auth_ldap_useroc">{tr}User OC{/tr}:</label>
-	<input type="text" name="auth_ldap_useroc" id="auth_ldap_useroc"  value="{$prefs.auth_ldap_useroc|escape}" />
+	<input type="text" name="auth_ldap_useroc" id="auth_ldap_useroc" value="{$prefs.auth_ldap_useroc|escape}" />
 	</div>
 </div>
 </fieldset>
 <fieldset><legend>{tr}LDAP Group{/tr}</legend>
 <div class="adminoptionbox">
 	<div class="adminoptionlabel"><label for="auth_ldap_groupdn">{tr}Group DN{/tr}:</label>
-	<input type="text" name="auth_ldap_groupdn" id="auth_ldap_groupdn"  value="{$prefs.auth_ldap_groupdn|escape}" />
+	<input type="text" name="auth_ldap_groupdn" id="auth_ldap_groupdn" value="{$prefs.auth_ldap_groupdn|escape}" />
 	</div>
 </div>
 <div class="adminoptionbox">
@@ -444,7 +447,7 @@ name="eponymousGroups" {if $prefs.eponymousGroups eq 'y'}checked="checked"{/if}/
 </div>
 <div class="adminoptionbox">
 	<div class="adminoptionlabel"><label for="auth_ldap_memberisdn">{tr}Member is DN{/tr}:</label>
-	<input type="text" id="auth_ldap_memberisdn" name="auth_ldap_memberisdn" value="{$prefs.auth_ldap_memberisdn|escape}" />
+	<input type="checkbox" id="auth_ldap_memberisdn" name="auth_ldap_memberisdn" {if $prefs.auth_ldap_memberisdn eq 'y'}checked="checked"{/if} />
 	</div>
 </div>
 </fieldset>
@@ -621,8 +624,8 @@ name="eponymousGroups" {if $prefs.eponymousGroups eq 'y'}checked="checked"{/if}/
 			<div class="heading input_submit_container" style="text-align: center;padding:1em;">
 				<input type="submit" value="{tr}Change preferences{/tr}" />
 			</div>
- 
-	  
+
+
 		</form>
 </td></tr></table>
 </div>

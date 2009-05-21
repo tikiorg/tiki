@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-{title help="print"}{tr}Print multiple pages{/tr}{/title}
+{title}{tr}Print multiple pages{/tr}{/title}
 
 {include file='find.tpl'}
 

@@ -222,6 +222,7 @@ if(isset($_REQUEST['register']) && !empty($_REQUEST['name']) && (isset($_REQUEST
 		$tikilib->set_user_preference($_REQUEST['name'], 'allowMsgs', $prefs['users_prefs_allowMsgs']);
 		$tikilib->set_user_preference($_REQUEST['name'], 'mytiki_pages', $prefs['users_prefs_mytiki_pages']);
 		$tikilib->set_user_preference($_REQUEST['name'], 'mytiki_blogs',$prefs['users_prefs_mytiki_blogs']);
+		$tikilib->set_user_preference($_REQUEST['name'], 'mytiki_articles',$prefs['users_prefs_mytiki_articles']);
 		$tikilib->set_user_preference($_REQUEST['name'], 'mytiki_gals', $prefs['users_prefs_mytiki_gals']);
 		$tikilib->set_user_preference($_REQUEST['name'], 'mytiki_msgs', $prefs['users_prefs_mytiki_msgs']);
 		$tikilib->set_user_preference($_REQUEST['name'], 'mytiki_tasks', $prefs['users_prefs_mytiki_tasks']);

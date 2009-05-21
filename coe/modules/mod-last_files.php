@@ -10,7 +10,7 @@ if (!function_exists('mod_last_files_help')) {
 		return 'galleryId=id1:id2,nonums=y|n';
 	}
 }
-
+global $smarty;
 if (isset($module_params["galleryId"])) {
 	if (strstr($module_params['galleryId'], ':')) {
 		$ranking = $tikilib->get_files(0, $module_rows, 'created_desc', '', explode(':',$module_params['galleryId']));

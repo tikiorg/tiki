@@ -4,7 +4,7 @@
 
 {$cant_users} {if !$find}{tr}users registered{/tr}{else} {tr}Users{/tr} {tr}like{/tr} "{$find}"{/if}
 
-{include file='find.tpl' _sort_mode='y'}
+{include file='find.tpl'}
 
 <table bgcolor="#ffffff" class="normal">
 <tr>

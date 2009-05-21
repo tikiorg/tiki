@@ -16,6 +16,8 @@ function wikiplugin_html_info() {
 		'description' => tra('Include literal HTML in a Wiki page'),
 		'prefs' => array('wikiplugin_html'),
 		'body' => tra('HTML code'),
+		'validate' => 'all',
+		'filter' => 'rawhtml_unsafe',
 		'params' => array(
 			'wiki' => array(
 				'required' => false,

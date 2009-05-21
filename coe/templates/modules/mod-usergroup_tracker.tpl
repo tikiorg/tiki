@@ -22,9 +22,9 @@
 <div>{tr}Group informations{/tr}:</div>
 <div class="box-data">
 {if $prefs.groupTracker}
-&nbsp;&nbsp;<a href="tiki-view_tracker_item.php?view=+group" class="linkmodule">{$group}</a>
+&nbsp;&nbsp;<a href="tiki-view_tracker_item.php?view=+group" class="linkmodule">{$default_group}</a>
 {else}
-{$group}
+{$default_group}
 {/if}
 </div>
 {/if}

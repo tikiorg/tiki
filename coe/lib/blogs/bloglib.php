@@ -160,7 +160,7 @@ class BlogLib extends TikiLib {
 		return $retval;
 	}
 
-	function list_blog_post_comments($approved = 'y') {
+	function list_blog_post_comments($approved = 'y', $maxRecords = -1) {
 		global $user;
 
 		$query = "SELECT b.`title`, b.`postId`, c.`threadId`, c.`title` as commentTitle, `commentDate`, `userName` FROM `tiki_comments` c, `tiki_blog_posts` b WHERE `objectType`='post' AND b.`postId`=c.`object`";
@@ -174,7 +174,7 @@ class BlogLib extends TikiLib {
 		}
 
 		$query .= " ORDER BY `commentDate` desc";
-		$result = $this->query($query, $bindvars);
+		$result = $this->query($query, $bindvars, $maxRecords);
 
 		$ret = array();
 		while ( $res = $result->fetchRow() ) {
@@ -471,6 +471,10 @@ class BlogLib extends TikiLib {
 		// Update tiki_blogs with activity information
 		$query = "update `tiki_blogs` set `activity`=? where `blogId`=?";
 		$result = $this->query($query,array($activity,(int) $blogId));
+	}
+	function get_title($blogId) {
+		$query = 'select `title` from `tiki_blogs` where `blogId`=?';
+		return $this->getOne($query, array((int)$blogId));
 	}
 }
 global $dbTiki;

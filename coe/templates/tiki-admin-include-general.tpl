@@ -30,10 +30,6 @@
         </legend>
         <div id="content{$focus}" style="display:{if isset($smarty.session.tiki_cookie_jar.show_content.$focus) and $smarty.session.tiki_cookie_jar.show_content.$focus neq 'y'}none{else}block{/if};">
       {/if}
-
-<h2>{tr}General Preferences{/tr}</h2>
-
-
     <fieldset>
 	<legend>{tr}Release Check{/tr}</legend>
 
@@ -63,7 +59,8 @@
 
     <fieldset>
 	<legend>{tr}Site Identity{/tr}</legend>
-	<div style="text-align: left"><label for="browsertitle">{tr}Browser title{/tr}:</label> <input type="text" name="browsertitle" id="browsertitle" value="{$prefs.browsertitle|escape}" size="50" /></div>
+	<div style="text-align: left"><label for="browsertitle">{tr}Browser title{/tr}:</label> <input type="text" name="browsertitle" id="browsertitle" value="{$prefs.browsertitle|escape}" size="80" /></div>
+	<div style="text-align: left"><label for="general-send_email">{tr}Sender email{/tr}:</label> <input type="text" name="sender_email" id="general-send_email" value="{$prefs.sender_email|escape}" size="80" /></div>
 
 	<div class="adminoptionbox">{tr}Go to <a href="tiki-admin.php?page=look" title=""><strong>Look &amp; Feel</strong></a> section for additional site related customization preferences{/tr}.</div>
     </fieldset>
@@ -150,6 +147,44 @@
 		<option value="LF" {if $prefs.mail_crlf eq "LF"}selected="selected"{/if}>LF {tr}(some Unix MTA){/tr}</option>
 	</select>
 </div>
+<div class="adminoptionbox"><label for="zend_mail_handler">Mail Sender</label>
+	<select name="zend_mail_handler" id="zend_mail_handler" onchange="if( this.value == 'smtp' ) show('smtp_options'); else hide('smtp_options');">
+		<option value="sendmail" {if $prefs.zend_mail_handler eq 'sendmail'}selected="selected"{/if}>{tr}Sendmail{/tr}</option>
+		<option value="smtp" {if $prefs.zend_mail_handler eq 'smtp'}selected="selected"{/if}>{tr}SMTP{/tr}</option>
+	</select>
+</div>
+<div class="adminoptionboxchild" id="smtp_options" {if $prefs.zend_mail_handler neq 'smtp'} style="display: none;" {/if}>
+	<div class="adminoptionbox"><label for="zend_mail_smtp_server">SMTP Server</label>
+		<input type="text" name="zend_mail_smtp_server" id="zend_mail_smtp_server" value="{$prefs.zend_mail_smtp_server|escape}"/>
+	</div>
+	<div class="adminoptionbox"><label for="zend_mail_smtp_auth">Authentication</label>
+		<select name="zend_mail_smtp_auth" id="zend_mail_smtp_auth" onchange="if( this.value == '' ) hide('smtp_auth_options'); else show('smtp_auth_options');">
+			<option value="" {if $prefs.zend_mail_smtp_auth eq ''}selected="selected"{/if}>{tr}None{/tr}</option>
+			<option value="login" {if $prefs.zend_mail_smtp_auth eq 'login'}selected="selected"{/if}>LOGIN</option>
+			<option value="plain" {if $prefs.zend_mail_smtp_auth eq 'plain'}selected="selected"{/if}>PLAIN</option>
+			<option value="crammd5" {if $prefs.zend_mail_smtp_auth eq 'crammd5'}selected="selected"{/if}>CRAM-MD5</option>
+		</select>
+	</div>
+	<div class="adminoptionboxchild" id="smtp_auth_options" {if $prefs.zend_mail_smtp_auth eq ''} style="display: none;" {/if}>
+		<p>{tr}These values will be stored in plain text in the database.{/tr}</p>
+		<div class="adminoptionbox"><label for="zend_mail_smtp_user">Username</label>
+			<input type="text" name="zend_mail_smtp_user" id="zend_mail_smtp_user" value="{$prefs.zend_mail_smtp_user|escape}"/>
+		</div>
+		<div class="adminoptionbox"><label for="zend_mail_smtp_pass">Password</label>
+			<input type="password" name="zend_mail_smtp_pass" id="zend_mail_smtp_pass" value="{$prefs.zend_mail_smtp_pass|escape}"/>
+		</div>
+	</div>
+	<div class="adminoptionbox"><label for="zend_mail_smtp_port">{tr}Port{/tr}</label>
+		<input type="text" name="zend_mail_smtp_port" id="zend_mail_smtp_port" value="{$prefs.zend_mail_smtp_port|escape}"/>
+	</div>
+	<div class="adminoptionbox"><label for="zend_mail_smtp_security">{tr}Security{/tr}</label>
+		<select name="zend_mail_smtp_security" id="zend_mail_smtp_security">
+			<option value="" {if $prefs.zend_mail_smtp_security eq ''}selected="selected"{/if}>{tr}None{/tr}</option>
+			<option value="ssl" {if $prefs.zend_mail_smtp_security eq 'ssl'}selected="selected"{/if}>SSL</option>
+			<option value="tls" {if $prefs.zend_mail_smtp_security eq 'tls'}selected="selected"{/if}>TLS</option>
+		</select>
+	</div>
+</div>
 </fieldset>
 
 <fieldset><legend>{tr}Logging and Reporting{/tr}</legend>
@@ -160,7 +195,7 @@
 		<option value="2047" {if $prefs.error_reporting_level eq 2047}selected="selected"{/if}>{tr}Report all PHP errors{/tr}</option>
 		<option value="2039" {if $prefs.error_reporting_level eq 2039}selected="selected"{/if}>{tr}Report all errors except notices{/tr}</option>
 	</select>
-	<div class="adminoptionboxchildh">
+	<div class="adminoptionboxchild">
 		<div class="adminoption"><input type="checkbox" id="error_reporting_adminonly" name="error_reporting_adminonly"{if $prefs.error_reporting_adminonly eq 'y'} checked="checked"{/if} /></div>
 		<div class="adminoptionlabel"><label for="error_reporting_adminonly">{tr}Visible to Admin only{/tr}.</label></div>
 <br />
@@ -174,10 +209,15 @@
 </div>
 <div class="adminoptionbox">	  
 	<div class="adminoption"><input type="checkbox" id="log_sql" name="log_sql"{if $prefs.log_sql eq 'y'} checked="checked"{/if} onclick="flip('log_sql_queries');" /></div>
-	<div class="adminoptionlabel"><label for="log_sql">{tr}Log SQL{/tr}.</label></div>
-</div>
-<div id="log_sql_queries" class="adminoptionboxchild"  style="display:{if $prefs.log_sql eq 'y'}display{else}none{/if};">
+	<div class="adminoptionlabel"><label for="log_sql">{tr}Log SQL{/tr}.</label>
+<div id="log_sql_queries" class="adminoptionboxchild" style="display:{if $prefs.log_sql eq 'y'}display{else}none{/if};">
 {tr}Log queries using more than{/tr} <input type="text" name="log_sql_perf_min" value="{$prefs.log_sql_perf_min}" size="5" /> {tr}seconds{/tr}<br /><em>{tr}This may impact performance{/tr}.</em>
+</div>
+	</div>
+</div>
+<div class="adminoptionbox">	  
+	<div class="adminoption"><input type="checkbox" id="log_tpl" name="log_tpl"{if $prefs.log_tpl eq 'y'} checked="checked"{/if}" /></div>
+	<div class="adminoptionlabel"><label for="log_tpl">{tr}Add HTML comment at start and end of each Smarty template (TPL){/tr}.</label></div>
 </div>
 </fieldset>
 
@@ -211,7 +251,6 @@
         <div id="content{$focus}" style="display:{if isset($smarty.session.tiki_cookie_jar.show_content.$focus) and $smarty.session.tiki_cookie_jar.show_content.$focus neq 'y'}none{else}block{/if};">
       {/if}
 		
-<h2>{tr}General Settings{/tr}</h2>
 <fieldset><legend>{tr}Site Access{/tr}</legend>
 <div class="adminoptionbox">
 <div class="adminoption"><input type="checkbox" name="site_closed" id="general-access" {if $prefs.site_closed eq 'y'}checked="checked" {/if}onclick="flip('close_site_message');" /></div>
@@ -278,6 +317,13 @@
 </fieldset>
 
 <fieldset><legend>{tr}Session{/tr}</legend>
+{remarksbox type="note" title="{tr}Advanced configuration warning{/tr}"}
+{tr}Note that storing session data in the database is an advanced systems administration option, and is for admins who have comprehensive access and understanding of the database, in order to deal with any unexpected effects.{/tr}
+{/remarksbox}
+{if $prefs.session_db ne 'y'}
+<div style="padding:.5em;" align="left">{icon _id=information style="vertical-align:middle"} {tr}Enabling this feature will immediately log you out when you save this preference.{/tr} {if $prefs.forgotPass ne 'y'}If there is a chance you have forgotten your password, enable "Forget password" feature.<a href="tiki-admin.php?page=features" title="{tr}Features{/tr}">{tr}Enable now{/tr}</a>.{/if}
+</div>
+{/if}
 <div class="adminoptionbox">	  
 	<div class="adminoption"><input type="checkbox" name="session_db" id="general-session_db" {if $prefs.session_db eq 'y'}checked="checked" {/if}/></div>
 	<div class="adminoptionlabel"><label for="general-session_db">{tr}Store session data in database{/tr}.</label></div>
@@ -307,12 +353,6 @@
 </div>
 <div class="adminoptionbox">	  
 	<div class="adminoptionlabel"><label for="general-temp">{tr}Temporary directory{/tr}:</label><br /><input type="text" name="tmpDir" id="general-temp" value="{$prefs.tmpDir|escape}" size="50" /></div>
-</div>
-<div class="adminoptionbox">	  
-	<div class="adminoptionlabel"><label for="general-send_email">{tr}Sender email{/tr}:</label><br /><input type="text" name="sender_email" id="general-send_email" value="{$prefs.sender_email|escape}" size="50" /></div>
-</div>
-<div class="adminoptionbox">	  
-	<div class="adminoptionlabel"><label for="general-max_records">{tr}Maximum number of records in listings{/tr}:</label> <input size="5" type="text" name="maxRecords" id="general-max_records" value="{$prefs.maxRecords|escape}" /></div>
 </div>
 <div class="adminoptionbox">	  
 	<div class="adminoption"><input type="checkbox" name="feature_help" id="feature_help" {if $prefs.feature_help eq 'y'}checked="checked" {/if}onclick="flip('use_help_system');" /></div>
@@ -380,7 +420,6 @@
         </legend>
         <div id="layout" style="display:{if isset($smarty.session.tiki_cookie_jar.show_layout) and $smarty.session.tiki_cookie_jar.show_layout neq 'y'}none{else}block{/if};">{/if}
 
-<h2>{tr}Date and Time Formats{/tr}</h2>
 <div class="adminoptionbox">	  
 	<div class="adminoptionlabel"><label for="general-timezone">{tr}Default timezone{/tr}:</label><br />
 		<select name="server_timezone" id="general-timezone">

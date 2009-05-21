@@ -1,6 +1,10 @@
 {strip}
 {* param: field_value(id, ins_id, type, value,options_array, http_request,flags,defaultvalue, isMandatory, itemChoice, list, isHidden), tiki_p_.... item(creator, my_rate), input_err, ling, groups, item(creator,rating,trackerId)*}
 
+{if $field_value.isMandatory eq 'y'}
+	<span class="mandatory_field">
+{/if}
+
 {* ---- visible admin only ---- *}
 {if $field_value.isHidden eq 'y' and $tiki_p_admin_trackers ne 'y'}
 
@@ -32,15 +36,15 @@
 		{foreach key=id item=one from=$field_value.list}
 			{if ( ! isset($field_value.itemChoices) || $field_value.itemChoices|@count eq 0 || in_array($one, $field_value.itemChoices) )}
 				{if $field_value.options_array[0] ne '2'}
-					<option value="{$one|escape}"{if $one eq $field_value.value} selected="selected"{/if}>{$one}</option>
+					<option value="{$one|escape}"{if $one eq $field_value.value} selected="selected"{/if}>{$one|username}</option>
 				{else}
-					<option value="{$one|escape}"{if $one eq $user} selected="selected"{/if}>{$one}</option>
+					<option value="{$one|escape}"{if $one eq $user} selected="selected"{/if}>{$one|username}</option>
 				{/if}
 			{/if}
 		{/foreach}
 		</select>
 	{else}
-		{$user|escape}
+		{$user|escape|username}
 	{/if}
 
 {* -------------------- IP selector -------------------- *}
@@ -261,13 +265,14 @@
 	{else}
 		{assign var=time value=$field_value.value}
 	{/if}
-	{if $field_value.options_array[0] eq 'd'}
+	{if $field_value.options_array[0] ne 't'}
 		{if $field_value.isMandatory ne 'y' and (isset($field_value.options_array[3]) and $field_value.options_array[3] eq 'blank')}
 			{html_select_date prefix=$field_value.ins_id time=$time start_year=$start end_year=$end field_order=$prefs.display_field_order all_empty=" "}
 		{else}
 			{html_select_date prefix=$field_value.ins_id time=$time start_year=$start end_year=$end field_order=$prefs.display_field_order}
 		{/if}
-	{else}
+	{/if}
+	{if $field_value.options_array[0] ne 'd'}
 		{tr}at{/tr} {html_select_time prefix=$field_value.ins_id time=$time display_seconds=false}
 	{/if}
 
@@ -382,4 +387,9 @@
 	{$field_value.value|escape}
 
 {/if}
+
+{if $field_value.isMandatory eq 'y'}
+	</span>
+{/if}
+
 {/strip}

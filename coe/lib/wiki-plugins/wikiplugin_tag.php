@@ -15,6 +15,7 @@ function wikiplugin_tag_info() {
 		'documentation' => 'PluginTag',
 		'description' => tra('Displays the text between an html tag'),
 		'prefs' => array( 'wikiplugin_tag' ),
+		'validate' => 'all',
 		'body' => tra('text'),
 		'params' => array(
 			'tag' => array(

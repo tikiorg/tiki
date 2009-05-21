@@ -33,7 +33,7 @@
     </a>	
 	
     <a href="tiki-admin.php?page=look" class="admbox" style="background-image: url('pics/large/gnome-settings-background48x48.png')">
-      <img src="pics/trans.png" alt="{tr}Look &amp; Feel{/tr}" title="{tr}Customize look and feel of your Tiki{/tr}" /><span>{tr}Look &amp; Feel{/tr}</span>
+      <img src="pics/trans.png" alt="{tr}Look &amp; Feel{/tr}" title="{tr}Customize look and feel of your Tiki{/tr}" /><span>{tr}Look and Feel{/tr}</span>
     </a>
 
     <a href="tiki-admin.php?page=i18n" class="admbox" style="background-image: url('pics/large/i18n48x48.png')">
@@ -41,7 +41,7 @@
     </a>
 
 	<a href="tiki-admin.php?page=textarea" class="admbox" style="background-image: url('img/icons/admin_textarea.png')">
-      <img src="pics/trans.png" alt="{tr}Text Area{/tr}" title="{tr}Text Area{/tr}" /><span>{tr}Text Area{/tr}</span>
+      <img src="pics/trans.png" alt="{tr}Text Area{/tr}" title="{tr}Text Area{/tr}" /><span>{tr}Editing and Plugins{/tr}</span>
     </a>
 
     <a href="tiki-admin.php?page=module" class="admbox" style="background-image: url('pics/large/display-capplet48x48.png')">
@@ -158,11 +158,7 @@
 	<a href="tiki-admin.php?page=intertiki" class="admbox{if $prefs.feature_intertiki ne 'y'} off{/if}" style="background-image: url('pics/large/intertiki48x48.png')">
       <img src="pics/trans.png" alt="{tr}InterTiki{/tr}" title="{tr}InterTiki{/tr}{if $prefs.feature_intertiki ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}InterTiki{/tr}</span>
     </a>
-	{* TODO: these new features seem not to have feature prefs - eg $prefs.feature_profiles so are on by default for now *}
-	<a href="tiki-admin.php?page=plugins" class="admbox{if $prefs.feature_plugins eq 'n'} off{/if}" style="background-image: url('pics/large/stock_line-in48x48.png')">
-      <img src="pics/trans.png" alt="{tr}Plugin aliases{/tr}" title="{tr}Plugin aliases{/tr}{if $prefs.feature_plugins eq 'n'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Plugin aliases{/tr}</span>
-    </a>
-
+	{* TODO: these features (semantic & webservices) seem not to have feature prefs - eg $prefs.feature_semantic so are on by default for now *}
 	<a href="tiki-admin.php?page=semantic" class="admbox{if $prefs.feature_semantic eq 'n'} off{/if}" style="background-image: url('pics/large/semantic48x48.png')">
       <img src="pics/trans.png" alt="{tr}Semantic{/tr}" title="{tr}Semantic wiki links{/tr}{if $prefs.feature_semantic eq 'n'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Semantic links{/tr}</span>
     </a>

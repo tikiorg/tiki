@@ -1,7 +1,7 @@
 <?php
 
 // $Id$
-// Copyright (c) 2002-2007, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
+// Copyright (c) 2002-2009, Luis Argerich, Garland Foster, Eduardo Polidor, et. al.
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for
 // details.
@@ -121,7 +121,7 @@ class TikiSetup extends TikiInit {
 
             print "
 <html><body>
-<h2><font color='red'>Tikiwiki is not properly set up:</font></h1>
+<h2><font color='red'>Tiki is not properly set up:</font></h2>
 <pre>
 $errors
 ";

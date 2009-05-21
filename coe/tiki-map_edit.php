@@ -254,7 +254,7 @@ if($prefs['feature_user_watches'] == 'y') {
 	  if($_REQUEST['watch_action']=='add') {
 	    $tikilib->add_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object'],'Map',$_REQUEST['watch_object'],"tiki-map.php?mapfile=".$_REQUEST['watch_object']);
 	  } else {
-	    $tikilib->remove_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object']);
+	    $tikilib->remove_user_watch($user,$_REQUEST['watch_event'],$_REQUEST['watch_object'], 'map');
 	  }
 	}
 
@@ -277,7 +277,7 @@ $smarty->assign('url_browse', $tikilib->httpPrefix(). $foo1);
 include_once("textareasize.php");
 
 include_once ('lib/quicktags/quicktagslib.php');
-$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_desc','','maps');
+$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_asc','','maps');
 $smarty->assign_by_ref('quicktags', $quicktags["data"]);
 $smarty->assign('quicktagscant', $quicktags["cant"]);
 

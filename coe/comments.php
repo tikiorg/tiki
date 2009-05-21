@@ -303,8 +303,7 @@ if ( (!isset($forum_mode) || $forum_mode == 'n') && $tiki_p_admin_comments == 'y
 }
 
 // Comments and Forum Locking
-if ( ! empty($_REQUEST['comments_lock']) && ! empty($comments_objectId) && ( ! isset($forum_mode) || $forum_mode == 'n' ) && $tiki_p_lock_comments == 'y'
-) {
+if ( $prefs['feature_comments_locking'] == 'y' && ! empty($_REQUEST['comments_lock']) && ! empty($comments_objectId) && ( ! isset($forum_mode) || $forum_mode == 'n' ) && $tiki_p_lock_comments == 'y' ) {
 	if ( $_REQUEST['comments_lock'] == 'y' ) {
 		$commentslib->lock_object_thread($comments_objectId);
 	} elseif ( $_REQUEST['comments_lock'] == 'n' ) {
@@ -500,13 +499,16 @@ if (isset($_REQUEST["comments_parentId"]) &&
 }
 
 // Get comments / forum lock status
-$thread_is_locked = ( ! empty($comments_objectId) && $commentslib->is_object_locked($comments_objectId) ) ? 'y' : 'n';
 if ( isset($forum_mode) && $forum_mode == 'y' ) {
+	$thread_is_locked = ( ! empty($comments_objectId) && $commentslib->is_object_locked($comments_objectId) ) ? 'y' : 'n';
 	$forum_is_locked = $thread_is_locked;
 	$thread_is_locked = $comment_info['locked'];
 	$smarty->assign('forum_is_locked', $forum_is_locked);
+	$smarty->assign('thread_is_locked', $thread_is_locked);
+} elseif ( $prefs['feature_comments_locking'] == 'y' ) {
+	$thread_is_locked = ( ! empty($comments_objectId) && $commentslib->is_object_locked($comments_objectId) ) ? 'y' : 'n';
+	$smarty->assign('thread_is_locked', $thread_is_locked);
 }
-$smarty->assign('thread_is_locked', $thread_is_locked);
 
 if (!empty($_REQUEST['post_reply'])) {
 	$smarty->assign('post_reply', $_REQUEST['post_reply']);

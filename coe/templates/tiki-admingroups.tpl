@@ -35,7 +35,7 @@
 <div id="content{cycle name=content assign=focustab}{$focustab}" class="tabcontent"{if $prefs.feature_tabs eq 'y'} style="display:{if $focustab eq $cookietab}block{else}none{/if};"{/if}>
 <h2>{tr}List of existing groups{/tr}</h2>
 
-{include file='find.tpl' _sort_mode='y' find_show_num_rows='y'}
+{include file='find.tpl' find_show_num_rows='y'}
 
 {if $cant_pages > 1 or !empty($initial) or !empty($find)}
 <div align="center">
@@ -69,7 +69,7 @@ class="prevnext">{tr}All{/tr}</a>
 <tr class="{cycle}">
 <td style="width: 20px;"><a class="link" href="tiki-admingroups.php?group={$users[user].groupName|escape:"url"}" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a></td>
 <td><a class="link" href="tiki-admingroups.php?group={$users[user].groupName|escape:"url"}{if $prefs.feature_tabs ne 'y'}#2{/if}" title="{tr}Edit{/tr}">{$users[user].groupName}</a></td>
-<td>{tr}{$users[user].groupDesc}{/tr}</td>
+<td>{tr}{$users[user].groupDesc|nl2br}{/tr}</td>
 <td>
 {section name=ix loop=$users[user].included}
 {$users[user].included[ix]}<br />
@@ -118,12 +118,13 @@ class="prevnext">{tr}All{/tr}</a>
 <br />&quot;{$groupname|default:"Group"}&quot; {tr}will have all the permissions of the included groups{/tr}.
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use Ctrl+Click to select multiple groups.{/tr}{/remarksbox}
 </td></tr>
-<tr class="formcolor"><td><label for="groups_home">{tr}Group Homepage{/tr}:
-</label></td><td><input type="text" size="40" name="home" id="groups_home" value="{$grouphome|escape}" {if $prefs.useGroupHome ne 'y'}disabled="disabled" {/if}/>
-<br />{tr}Use wiki page name or full URL{/tr}. {tr}For other Tiki features, use relative links (such as <em>http:tiki-forums.php</em>).{/tr}
-{if $prefs.useGroupHome ne 'y'}<div><br />{icon _id=information style="vertical-align:middle"}{tr}Feature is disabled.{/tr} <a href="tiki-admin.php?page=general">{tr}Enable now.{/tr}</a></div>{/if}
+{if $prefs.useGroupHome eq 'y'}
+	<tr class="formcolor"><td><label for="groups_home">{tr}Group Homepage{/tr}:
+	</label></td><td><input type="text" size="40" name="home" id="groups_home" value="{$grouphome|escape}" {if $prefs.useGroupHome ne 'y'}disabled="disabled" {/if}/>
+	{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use wiki page name or full URL{/tr}. {tr}For other Tiki features, use relative links (such as <em>http:tiki-forums.php</em>).{/tr}{/remarksbox}
 
 </td></tr>
+{/if}
 {if $prefs.feature_categories eq 'y'}
 <tr class="formcolor"><td><label for="groups_defcat">{tr}Default category assigned to uncategorized objects edited by a user with this default group{/tr}:</label>
   	 </td><td>
@@ -135,7 +136,8 @@ class="prevnext">{tr}All{/tr}</a>
   	         {/section}
   	 </select>
   	 </td></tr>
-{/if} 	 
+{/if}
+{if $prefs.useGroupTheme eq 'y'}
   	 <tr class="formcolor"><td><label for="groups_theme">{tr}Group Theme{/tr}:</label>
   	 </td><td>
   	 <select name="theme" id="groups_theme" multiple="multiple" size="4">
@@ -147,6 +149,7 @@ class="prevnext">{tr}All{/tr}</a>
   	             {/section}
   	 </select>
   	 </td></tr>
+{/if}
 {if $prefs.groupTracker eq 'y'}
 <tr class="formcolor"><td><label for="groupTracker">{tr}Group Information Tracker{/tr}</label></td><td>
 <select name="groupstracker">

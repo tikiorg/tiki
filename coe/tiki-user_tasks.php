@@ -60,7 +60,7 @@ if (!isset($_REQUEST['taskId'])){
 
 include_once ('lib/quicktags/quicktagslib.php');
 // The quicktags presented in the user tasks are the wiki-quicktags !
-$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_desc','','wiki');
+$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_asc','','wiki');
 $smarty->assign_by_ref('quicktags', $quicktags["data"]);
 $smarty->assign('quicktagscant', $quicktags["cant"]);
 
@@ -339,6 +339,9 @@ if (isset($_REQUEST['tiki_view_mode']) and $_REQUEST['tiki_view_mode'] == 'view'
 if (isset($_REQUEST['tiki_view_mode']) and $_REQUEST['tiki_view_mode'] == 'edit') {
 	$show_form = true;
 	$smarty->assign('show_form', $show_form);
+	global $wikilib; include_once('lib/wiki/wikilib.php');
+	$plugins = $wikilib->list_plugins(true, 'description');
+	$smarty->assign_by_ref('plugins', $plugins);
 }
 
 if (isset($_REQUEST['preview'])) {

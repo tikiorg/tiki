@@ -34,6 +34,7 @@ function wiki_last_comments($limit)
     return $ret;
 }
 }
+global $smarty;
 
 $comments = wiki_last_comments($module_rows);
 $smarty->assign('comments', $comments);

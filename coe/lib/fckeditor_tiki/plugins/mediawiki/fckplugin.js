@@ -293,6 +293,7 @@ FCK.DataProcessor =
 					var basic0 = basicElement[0];
 					var basic1 = basicElement[1];
 
+/*
 					if ( ( basicElement[0] == "''" || basicElement[0] == "'''" ) && stringBuilder.length > 2 )
 					{
 						var pr1 = stringBuilder[stringBuilder.length-1];
@@ -311,6 +312,7 @@ FCK.DataProcessor =
 							}
 						}
 					}
+*/
 
 					if ( basic0 )
 						stringBuilder.push( basic0 ) ;
@@ -322,10 +324,10 @@ FCK.DataProcessor =
 						this._AppendChildNodes( htmlNode, stringBuilder, prefix ) ;
 						// only empty element inside, remove it to avoid quotes
 						if ( ( stringBuilder.length == len || (stringBuilder.length == len + 1 && !stringBuilder[len].length) ) 
-							&& basicElement[0].charAt(0) == "'")
+							 )
 						{
 							stringBuilder.pop();
-							stringBuilder.pop();
+							stringBuilder.push( '\n' ) ;
 							return;
 						}
 					}

@@ -104,7 +104,7 @@
 <th><a href="tiki-admin_actionlog.php?startDate={$startDate}&amp;endDate={$endDate}&amp;sort_mode=del_{if $sort_mode eq 'del_desc'}asc{else}desc{/if}{$url}">-{if $unit eq 'kb'}{tr}kb{/tr}{else}{tr}bytes{/tr}{/if}</a></th>
 {if $prefs.feature_contribution eq 'y'}<th>{tr}contribution{/tr}</th>{/if}
 {if $prefs.feature_contributor_wiki eq 'y'}<th>{tr}contributor{/tr}</th>{/if}
-{if $prefs.feature_contribution eq 'y' and $tiki_p_admin eq 'y'}<th>&nbsp;</th>{/if}
+{if $tiki_p_admin eq 'y' and ($prefs.feature_contribution eq 'y' or $prefs.feature_categories eq 'y')}<th>{tr}Action{/tr}</th>{/if}
 </tr>
 {cycle values="even,odd" print=false}
 {section name=ix loop=$actionlogs}
@@ -133,7 +133,14 @@
 {/section}
 </td>
 {/if}
-{if $prefs.feature_contribution eq 'y' and $tiki_p_admin eq 'y'}<td class="{cycle advance=false}">{if $actionlogs[ix].actionId}<a class="link" href="tiki-admin_actionlog.php?actionId={$actionlogs[ix].actionId}&amp;startDate={$startDate}&amp;endDate={$endDate}#action" title="{tr}Edit Contribution{/tr}">{icon _id='page_edit'}</a>{else}&nbsp;{/if}</td>{/if}
+{if $tiki_p_admin eq 'y' and ($prefs.feature_contribution eq 'y' or $prefs.feature_categories eq 'y')}
+	<td class="{cycle advance=false}">
+		{if $actionlogs[ix].actionId}
+			<a class="link" href="tiki-admin_actionlog.php?actionId={$actionlogs[ix].actionId}&amp;startDate={$startDate}&amp;endDate={$endDate}#action" title="{tr}Edit{/tr}">{icon _id='page_edit'}</a>
+			{self_link _class='link' remove='y' actionId=$actionlogs[ix].actionId _icon='cross' _title="{tr}Remove{/tr}"}{/self_link}
+		{/if}
+	</td>
+{/if}
 {/if}
 <!-- {cycle} -->
 </tr>
@@ -153,7 +160,12 @@
 {if $endDate}<input type="hidden" name="endDate" value="{$endDate}" />{/if}
 {$action.action} / {$action.objectType} / {$action.object} 
 <table class="normal">
-{include file="contribution.tpl" section=$action.objectType}
+{if $prefs.feature_contribution eq 'y'}
+	{include file="contribution.tpl" section=$action.objectType}
+{/if}
+{if $prefs.feature_categories eq 'y'}
+	{include file="categorize.tpl"}
+{/if}
 <tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="saveAction" value="{tr}Save Action{/tr}" /></td></tr>
 </table>
 </form>

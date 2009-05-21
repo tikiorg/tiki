@@ -42,7 +42,7 @@ Step two: run setup.sh to set permissions
 
 Run .setup and follow the instructions
 
-# sh ./setup.sh
+# sh setup.sh
 
 
 

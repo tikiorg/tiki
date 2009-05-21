@@ -1,8 +1,16 @@
 {* $Id$ *}
 <div class="clearfix postbody-title">
+	{if $prefs.feature_comments_locking neq 'y' or
+		( $forum_mode neq 'y' and $comment.locked neq 'y' and $thread_is_locked neq 'y' )
+		or ( $forum_mode eq 'y' and $comment.locked neq 'y' and $thread_is_locked neq 'y' )
+	}
+		{assign var='this_is_locked' value='n'}
+	{else}
+		{assign var='this_is_locked' value='y'}
+	{/if}
 
-	{if $thread_style != 'commentStyle_headers' and $comment.threadId > 0 and $thread_is_locked neq 'y' and $comment.locked neq 'y'
-		and ( $forum_mode neq 'y' || ( $forum_mode eq 'y' and $forumId > 0 and $comments_parentId > 0 and $thread_is_locked neq 'y' and $forum_is_locked neq 'y' ) )
+	{if $thread_style != 'commentStyle_headers' and $this_is_locked eq 'n' and $comment.threadId > 0
+		and ( $forum_mode neq 'y' || ( $forum_mode eq 'y' and $forumId > 0 and $comments_parentId > 0 ) )
 	}
 	<div class="actions">
 		{if $forum_mode neq 'y' && $prefs.feature_comments_moderation eq 'y' && $tiki_p_admin_comments eq 'y' && $comment.approved eq 'n'}
@@ -49,18 +57,21 @@
 		{/if}
 	
 		{if $user and $prefs.feature_user_watches eq 'y' and $display eq ''}
-		{if $forum_mode eq 'y'}
+		{if $forum_mode eq 'y' and $first eq 'y'}
 		{if $user_watching_topic eq 'n'}
 			{self_link watch_event='forum_post_thread' watch_object=$comments_parentId watch_action='add' _icon='eye' _alt='{tr}Monitor this Topic{/tr}' _title='{tr}Monitor this Topic{/tr}'}{/self_link}
 		{else}
 			{self_link watch_event='forum_post_thread' watch_object=$comments_parentId watch_action='remove' _icon='no_eye' _alt='{tr}Stop Monitoring this Topic{/tr}' _title='{tr}Stop Monitoring this Topic{/tr}'}{/self_link}
+		{/if}
+		{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
+			<a href="tiki-object_watches.php?objectId={$comments_parentId|escape:"url"}&amp;watch_event=forum_post_thread&amp;objectType=forum&amp;objectName={$comment.title|escape:"url"}&amp;objectHref={'tiki-view_forum_thread.php?comments_parentId='|cat:$comments_parentId|cat:'&forumId='|cat:$forumId|escape:"url"}" class="icon">{icon _id='eye_group' alt='{tr}Group Monitor{/tr}'}</a>
 		{/if}
 		{/if}
 		<br />
 		{if $category_watched eq 'y'}
 			{tr}Watched by categories{/tr}:
 			{section name=i loop=$watching_categories}
-				<a href="tiki-browse_categories?parentId={$watching_categories[i].categId}" class="icon">{$watching_categories[i].name}</a>&nbsp;
+				<a href="tiki-browse_categories.php?parentId={$watching_categories[i].categId}" class="icon">{$watching_categories[i].name}</a>&nbsp;
 			{/section}
 		{/if}	
 		{/if}

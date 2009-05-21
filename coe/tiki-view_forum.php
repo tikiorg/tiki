@@ -294,23 +294,6 @@ if ($user) {
 	$smarty->assign_by_ref('userinfo',$userinfo);
 }
 
-if ($_REQUEST["comments_threadId"] > 0) {
-    $comment_info = $commentslib->get_comment($_REQUEST["comments_threadId"]);
-
-    $smarty->assign('comment_title', isset($_REQUEST['comments_title']) ? $_REQUEST['comments_title'] : $comment_info['title']);
-    $smarty->assign('comment_data', isset($_REQUEST['comments_data']) ? $_REQUEST['comments_data'] : $comment_info['data']);
-    $smarty->assign('comment_topictype', isset($_REQUEST['comment_topictype']) ? $_REQUEST['comment_topictype'] : $comment_info["type"]);
-    $smarty->assign('comment_topicsummary', isset($_REQUEST["comment_topicsummary"]) ? $_REQUEST["comment_topicsummary"] : $comment_info["summary"]);
-    $smarty->assign('comment_topicsmiley', $comment_info["smiley"]);
-} else {
-    $smarty->assign('comment_title', isset($_REQUEST["comments_title"]) ? $_REQUEST["comments_title"] : '');
-    $smarty->assign('comment_data', isset($_REQUEST["comments_data"]) ? $_REQUEST["comments_data"] : '');
-    $smarty->assign('comment_topictype', isset($_REQUEST["comment_topictype"]) ? $_REQUEST["comment_topictype"] : '');
-    $smarty->assign('comment_topictype', 'n');
-    $smarty->assign('comment_topicsummary', '');
-    $smarty->assign('comment_topicsmiley', '');
-}
-
 if (isset($_REQUEST["comments_remove"]) && isset($_REQUEST["comments_threadId"]))
 {
     if ($tiki_p_admin_forum == 'y'
@@ -335,6 +318,24 @@ if (isset($_REQUEST["comments_remove"]) && isset($_REQUEST["comments_threadId"])
         $smarty->display("error.tpl");
         die;
     }
+		unset($_REQUEST["comments_threadId"]);
+}
+
+if ($_REQUEST["comments_threadId"] > 0) {
+		$comment_info = $commentslib->get_comment($_REQUEST["comments_threadId"]);
+
+		$smarty->assign('comment_title', isset($_REQUEST['comments_title']) ? $_REQUEST['comments_title'] : $comment_info['title']);
+		$smarty->assign('comment_data', isset($_REQUEST['comments_data']) ? $_REQUEST['comments_data'] : $comment_info['data']);
+		$smarty->assign('comment_topictype', isset($_REQUEST['comment_topictype']) ? $_REQUEST['comment_topictype'] : $comment_info["type"]);
+		$smarty->assign('comment_topicsummary', isset($_REQUEST["comment_topicsummary"]) ? $_REQUEST["comment_topicsummary"] : $comment_info["summary"]);
+		$smarty->assign('comment_topicsmiley', $comment_info["smiley"]);
+} else {
+		$smarty->assign('comment_title', isset($_REQUEST["comments_title"]) ? $_REQUEST["comments_title"] : '');
+		$smarty->assign('comment_data', isset($_REQUEST["comments_data"]) ? $_REQUEST["comments_data"] : '');
+		$smarty->assign('comment_topictype', isset($_REQUEST["comment_topictype"]) ? $_REQUEST["comment_topictype"] : '');
+		$smarty->assign('comment_topictype', 'n');
+		$smarty->assign('comment_topicsummary', '');
+		$smarty->assign('comment_topicsmiley', '');
 }
 
 $smarty->assign('comment_preview', 'n');
@@ -447,7 +448,7 @@ if ($prefs['feature_user_watches'] == 'y') {
 		if ($_REQUEST['watch_action'] == 'add') {
 			$tikilib->add_user_watch($user, $_REQUEST['watch_event'], $_REQUEST['watch_object'], 'forum', $forum_info['name'], "tiki-view_forum.php?forumId=" . $_REQUEST['forumId']);
 		} else {
-			$tikilib->remove_user_watch($user, $_REQUEST['watch_event'], $_REQUEST['watch_object']);
+			$tikilib->remove_user_watch($user, $_REQUEST['watch_event'], $_REQUEST['watch_object'], 'forum');
 		}
     }
 
@@ -526,7 +527,7 @@ include_once("textareasize.php");
 
 if ($prefs['feature_forum_parse'] == "y") {
 	include_once ('lib/quicktags/quicktagslib.php');
-	$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_desc','', 'forums');
+	$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_asc','', 'forums');
 	$smarty->assign_by_ref('quicktags', $quicktags["data"]);
 }
 
@@ -538,6 +539,12 @@ if ($prefs['feature_mobile'] =='y' && isset($_REQUEST['mode']) && $_REQUEST['mod
 if ($prefs['feature_contribution'] == 'y') {
 		$contributionItemId = $_REQUEST['comments_threadId'];
 		include_once('contribution.php');
+}
+
+if ($prefs['feature_forum_parse'] == 'y') {
+	global $wikilib; include_once('lib/wiki/wikilib.php');
+	$plugins = $wikilib->list_plugins(true, 'editpost');
+	$smarty->assign_by_ref('plugins', $plugins);
 }
 
 ask_ticket('view-forum');

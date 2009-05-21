@@ -20,8 +20,8 @@ and general web applications.
 Download!
 </div>
 <div class="cbox-data">
-Our latest stable release is Tiki 1.8 -Polaris- you can download
-Tiki from <a class="link" href="http://www.sourceforge.net/projects/tikiwiki/">Sourceforge</a>
+You can download Tiki from 
+<a class="link" href="http://www.sourceforge.net/projects/tikiwiki/">Sourceforge</a>
 </div>
 </div>
 
@@ -64,7 +64,7 @@ Testing Tiki
 <ol>
 <li>Test the wiki following this <a href="tiki-index.php" class="link">link</a></li>
 <li>Visit the <a href="tiki-forums.php" class="link">forums</a>, write a topic or reply to an existing topic if you want</li>
-<li>At the <a href="tiki-galleries.php" class="link">images galleries</a> section you can see some images try <a href="tiki-upload_image.php?galleryId=2" class="link">uploading images</a> to our public gallery</li>
+<li>At the <a href="tiki-galleries.php" class="link">images galleries</a> section you can see some images try <a href="tiki-upload_image.php" class="link">uploading images</a></li>
 <li>Visit the <a href="tiki-browse_categories.php" class="link">category browser</a> to test the tiki categorizing system</li>
 <li>From the <a href="tiki-list_games.php" class="link">games</a> section you can play some flash games</li>
 <li>If you are not logged you can <a href="tiki-register.php" class="link">register</a> as a new user and test features available to registered users

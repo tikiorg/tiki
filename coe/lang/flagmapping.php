@@ -30,7 +30,7 @@ $flagmapping = array(
     'hr' 	=> array(  'Croatia'),
     'it' 	=> array(  'Italy'),
     'ja' 	=> array(  'Japan'),
-    'ko' 	=> array(  'Korea'),
+    'ko' 	=> array(  ''),
     'hu' 	=> array(  'Hungary'),
     'nl' 	=> array(  'Netherlands'),
     'no' 	=> array(  'Norway'),
@@ -45,6 +45,6 @@ $flagmapping = array(
     'sv' 	=> array(  'Sweden'),
     'tv' 	=> array(  'Tuvalu'),
     'tw' 	=> array(  'Taiwan'),
-    'uk' 	=> array(  'Ukrain')
+    'uk' 	=> array(  'Ukraine')
 );
 ?>

@@ -4,10 +4,7 @@
 
 {if $forum_info.show_description eq 'y'}
 	<div class="description">{$forum_info.description|nl2br}</div>
-	<br />
 {/if}
-
-<a class="link" href="tiki-forums.php">{tr}Forums{/tr}</a> {$prefs.site_crumb_seper} <a class="link" href="tiki-view_forum.php?forumId={$forumId}">{$forum_info.name}</a>
 
 <div class="navbar">
 	<table width="97%">
@@ -40,7 +37,7 @@
 			
 			<td style="text-align:right;">
 				{if $prefs.rss_forum eq 'y'}
-					<a href="tiki-forum_rss.php?forumId={$forumId}"><img src='img/rss.png' alt='{tr}RSS feed{/tr}' title='{tr}RSS feed{/tr}' /></a>
+					<a href="tiki-forum_rss.php?forumId={$forumId}" title='{tr}RSS feed{/tr}'>{icon _id="feed" alt='{tr}RSS feed{/tr}'}</a>
 				{/if}
 
 				{if $tiki_p_forum_lock eq 'y'}
@@ -66,13 +63,19 @@
 						<a href="tiki-view_forum.php?forumId={$forumId}&amp;watch_event=forum_post_topic_and_thread&amp;watch_object={$forumId}&amp;watch_action=remove" title='{tr}Stop Monitoring Topics and Threads of this Forum{/tr}'>{icon _id='no_eye' alt='{tr}Stop Monitoring Topics and Threads of this Forum{/tr}'}</a>
 					{/if}
 				{/if}
+				{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
+					<a href="tiki-object_watches.php?objectId={$forumId|escape:"url"}&amp;watch_event=forum_post_topic&amp;objectType=forum&amp;objectName={$forum_info.name|escape:"url"}&amp;objectHref={'tiki-view_forum.php?forumId='|cat:$forumId|escape:"url"}" class="icon">{icon _id='eye_group' alt='{tr}Group Monitor Topics of this Forum{/tr}'}</a>
+				{/if}
+				{if $prefs.feature_group_watches eq 'y' and ( $tiki_p_admin_users eq 'y' or $tiki_p_admin eq 'y' )}
+					<a href="tiki-object_watches.php?objectId={$forumId|escape:"url"}&amp;watch_event=forum_post_topic_and_thread&amp;objectType=forum&amp;objectName={$forum_info.name|escape:"url"}&amp;objectHref={'tiki-view_forum.php?forumId='|cat:$forumId|escape:"url"}" class="icon">{icon _id='eye_group' alt='{tr}Group Monitor Topics and Threads of this Forum{/tr}'}</a>
+				{/if}
 
 				<div class="navbar" align="right" >
 					{if $user and $prefs.feature_user_watches eq 'y'}
 						{if $category_watched eq 'y'}
 							{tr}Watched by categories{/tr}:
 							{section name=i loop=$watching_categories}
-								<a href="tiki-browse_categories?parentId={$watching_categories[i].categId}">{$watching_categories[i].name}</a>
+								<a href="tiki-browse_categories.php?parentId={$watching_categories[i].categId}">{$watching_categories[i].name}</a>
 								&nbsp;
 							{/section}
 						{/if}	
@@ -84,9 +87,9 @@
 	</table>
 </div>
 
-{if $unread > 0}
-	<a class='link' href='messu-mailbox.php'>{tr}You have {$unread} unread private messages{/tr}<br /></a>
-{/if}
+<a class="link" href="tiki-forums.php">{tr}Forums{/tr}</a> {$prefs.site_crumb_seper} <a class="link" href="tiki-view_forum.php?forumId={$forumId}">{$forum_info.name}</a>
+
+<br />
 
 {if !empty($errors)}
 	{remarksbox type="warning" title="{tr}Errors{/tr}"}
@@ -97,7 +100,7 @@
 	{/remarksbox}
 {/if}
 {if !empty($feedbacks)}
-	{remarksbox type="feddback"}
+	{remarksbox type="feedback"}
 		{foreach from=$feedbacks item=feedback name=feedback}
 			{$feedback|escape}
 			{if !$smarty.foreach.feedback.first}<br />{/if}
@@ -291,7 +294,7 @@
 
 {if $prefs.feature_forum_content_search eq 'y' and $prefs.feature_search eq 'y'}
 	<div class="findtable">
-		<form class="forms" method="get" action="{if $prefs.feature_forum_local_tiki_search eq 'y'}tiki-searchindex.php{else}tiki-searchresults.php{/if}">
+		<form id="search-form" class="forms" method="get" action="{if $prefs.feature_forum_local_tiki_search eq 'y'}tiki-searchindex.php{else}tiki-searchresults.php{/if}">
 				<input name="highlight" size="30" type="text" />
 				<input type="hidden" name="where" value="forums" />
 				<input type="hidden" name="forumId" value="{$forum_info.forumId}" />
@@ -418,6 +421,8 @@
 						{icon _id="hot$nticon" alt="{tr}Hot{/tr}$ntalt"}
 					{elseif $comments_coms[ix].type eq 's'}
 						{icon _id="sticky$nticon" alt="{tr}Sticky{/tr}$ntalt"}
+					{elseif $comments_coms[ix].type eq 'l'}
+						{icon _id="locked$nticon" alt="{tr}Locked{/tr}$ntalt"}
 					{/if}
 
 					{if $comments_coms[ix].locked eq 'y'}
@@ -524,9 +529,21 @@
 	<br />
 {/if}
 
-<table >
-	<tr>
-		<td style="text-align:left;">
+<div id="page-bar">
+	{button href="javascript:flip('filteroptions');" _flip_id="filteroptions" _text="{tr}Filter Posts{/tr}"}
+	{if $prefs.feature_forum_quickjump eq 'y' and count($all_forums) > 1}
+		<form id='quick' method="post" action="tiki-view_forum.php" style="float:right;">
+			<small>{tr}Jump to forum{/tr}:</small>
+			<select name="forumId" onchange="javascript:document.getElementById('quick').submit();">
+				{section name=ix loop=$all_forums}
+					<option value="{$all_forums[ix].forumId|escape}" {if $all_forums[ix].forumId eq $forumId}selected="selected"{/if}>{$all_forums[ix].name}</option>
+				{/section}
+			</select>
+		</form>
+	{/if}
+</div>
+
+<div id="filteroptions" style="display:none;">
 			<form id='time_control' method="post" action="tiki-view_forum.php">
 				{if $comments_offset neq 0 }
 					<input type="hidden" name="comments_offset" value="{$comments_offset|escape}" />
@@ -540,6 +557,11 @@
 				<input type="hidden" name="thread_sort_mode" value="{$thread_sort_mode|escape}" />
 				<input type="hidden" name="forumId" value="{$forumId|escape}" />
 				<table>
+					<tr>
+						<th colspan="2">
+							{tr}Posts Filtering{/tr}
+						</th>
+					</tr>
 					<tr>
 						<th>
 							<label for="filter_time">{tr}Last post date{/tr}</label>
@@ -609,24 +631,7 @@
 				</tr>
 				</table>
 			</form>
-		</td>
-		<td style="text-align:right;">
-			{if $prefs.feature_forum_quickjump eq 'y' and count($all_forums) > 1}
-				<form id='quick' method="post" action="tiki-view_forum.php">
-					<small>{tr}Jump to forum{/tr}:</small>
-					<select name="forumId" onchange="javascript:document.getElementById('quick').submit();">
-						{section name=ix loop=$all_forums}
-							<option value="{$all_forums[ix].forumId|escape}" {if $all_forums[ix].forumId eq $forumId}selected="selected"{/if}>{$all_forums[ix].name}</option>
-						{/section}
-					</select>
-				</form>
-			{else}
-				&nbsp;
-			{/if}
-		</td>
-	</tr>
-</table>
-
+</div>
 {if empty($user)}
 	<script type="text/javascript">
 		<!--//--><![CDATA[//><!--
@@ -635,3 +640,4 @@
 			//--><!]]>
 	</script>
 {/if}
+{if $prefs.feature_forum_parse == 'y'}{include file=tiki-edit_help.tpl}{/if}

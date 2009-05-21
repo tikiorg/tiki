@@ -218,7 +218,9 @@
 							<a class="link" href="tiki-user_preferences.php?userId={$users[user].userId}" title="{tr}Change user preferences{/tr}: {$users[user].user}">{icon _id='wrench' alt="{tr}Change user preferences{/tr}: `$users[user].user`"}</a>
 						{/if}
 
-						<a class="link" href="tiki-user_information.php?userId={$users[user].userId}" title="{tr}User Information{/tr}: {$users[user].user}">{icon _id='help' alt="{tr}User Information{/tr}: `$users[user].user`"}</a>
+						{if $tiki_p_admin eq 'y' or $users[user].user eq $user or $users[user].user_information neq 'private'}
+							<a class="link" href="tiki-user_information.php?userId={$users[user].userId}" title="{tr}User Information{/tr}: {$users[user].user}">{icon _id='help' alt="{tr}User Information{/tr}: `$users[user].user`"}</a>
+						{/if}
 	
 						{if $users[user].user ne 'admin'}
 							<a class="link" href="{$smarty.server.PHP_SELF}?{query action=delete user=$users[user].user}" title="{tr}Delete{/tr}">{icon _id='cross' alt='{tr}Delete{/tr}'}</a>
@@ -264,8 +266,9 @@
 								<br />
 								<select name="checked_groups[]" multiple="multiple" size="20">
 									{section name=ix loop=$all_groups}
-											 
+										{if $all_groups[ix] != 'Anonymous' && $all_groups[ix] != 'Registered'}
 										<option value="{$all_groups[ix]|escape}">{$all_groups[ix]|escape}</option>
+										{/if}
 									{/section}
 								</select>
 								<br />
@@ -276,7 +279,9 @@
 								<br />
 								<select name="checked_group" size="20">
 									{section name=ix loop=$all_groups}
+										{if $all_groups[ix] != 'Anonymous'}
 										<option value="{$all_groups[ix]|escape}" />{$all_groups[ix]|escape}</option>
+										{/if}
 									{/section}
 								</select>
 								<br />
@@ -313,12 +318,12 @@
 		<h2>{tr}Edit user{/tr}: {$userinfo.login}</h2>
 		{if $userinfo.login ne 'admin'}
 			{assign var=thisloginescaped value=$userinfo.login|escape:'url'}
-			{button href="tiki-assignuser.php?assign_user=$thisloginescaped" _text="{tr}Assign user to Groups{/tr}"}
+			{button href="tiki-assignuser.php?assign_user=$thisloginescaped" _auto_args=" " _text="{tr}Assign user to Groups{/tr}"}
 		{/if}
 	{else}
 		<h2>{tr}Add a New User{/tr}</h2>
 	{/if}
-	<form action="tiki-adminusers.php" method="post" enctype="multipart/form-data" name="RegForm">
+	<form action="tiki-adminusers.php" method="post" enctype="multipart/form-data" name="RegForm" autocomplete="off">
 		<table class="normal">
 			<tr class="formcolor">
 				<td>
@@ -367,7 +372,7 @@
 						<i>{tr}Tikiwiki is configured to delegate the password managment to LDAP through PEAR Auth.{/tr}</i>
 					</td>
 				</tr>
-			{else}
+			{elseif empty($userinfo) || $tiki_p_admin eq 'y' || $userinfo.login eq $user}
 				<tr class="formcolor">
 					<td>{tr}Password{/tr}:</td>
 					<td>
@@ -399,9 +404,9 @@
 				</tr>
 				{if $userinfo.login neq 'admin'}
 					<tr class="formcolor">
-						<td>{tr}Must Change Password{/tr}:</td>
+						<td>&nbsp;</td>
 						<td>
-							<input type="checkbox" name="pass_first_login" /> 
+							<input type="checkbox" name="pass_first_login"{if $userinfo.pass_confirm eq '0'} checked="checked"{/if} /> 
 							{tr}User must change password at first login{/tr}.
 						</td>
 					</tr>
@@ -413,6 +418,15 @@
 					<td>{tr}Email{/tr}:</td>
 					<td>
 						<input type="text" name="email" size="30" value="{$userinfo.email|escape}" />
+					</td>
+				</tr>
+			{/if}
+			{if $userinfo.login neq 'admin'}
+				<tr class="formcolor">
+					<td>&nbsp;</td>
+					<td>
+						<input type="checkbox" name="need_email_validation" {if ($userinfo.login eq '' and ($prefs.validateUsers eq 'y' or $prefs.validateRegistration eq 'y')) or $userinfo.provpass neq ''}checked="checked" {/if}/> 
+						{tr}Send an email to the user in order to allow him to validate his account.{/tr}
 					</td>
 				</tr>
 			{/if}

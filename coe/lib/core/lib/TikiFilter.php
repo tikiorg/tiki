@@ -28,6 +28,9 @@ class TikiFilter
 		case 'digits':
 			require_once 'Zend/Filter/Digits.php';
 			return new Zend_Filter_Digits;
+		case 'int':
+			require_once 'Zend/Filter/Int.php';
+			return new Zend_Filter_Int;
 		case 'username':
 		case 'groupname':
 		case 'pagename':
@@ -43,6 +46,7 @@ class TikiFilter
 			require_once 'TikiFilter/PreventXss.php';
 			return new TikiFilter_PreventXss;
 		case 'wikicontent':
+		case 'rawhtml_unsafe':
 			require_once 'TikiFilter/RawUnsafe.php';
 			return new TikiFilter_RawUnsafe;
 		case 'email':

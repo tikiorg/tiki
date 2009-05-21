@@ -186,21 +186,7 @@ $preparsed = array();
 $noparsed = array();
 $tikilib->parse_first( $info["data"], $preparsed, $noparsed );
 
-if ($prefs['wiki_cache'] > 0) {
-	$cache_info = $wikilib->get_cache_info($page);
-
-	if ($cache_info['cache_timestamp'] + $prefs['wiki_cache'] > $tikilib->now) {
-		$pdata = $cache_info['cache'];
-
-		$smarty->assign('cached_page', 'y');
-	} else {
-		$pdata = $tikilib->parse_data($info["data"]);
-
-		$wikilib->update_cache($page, $pdata);
-	}
-} else {
-	$pdata = $tikilib->parse_data($info["data"]);
-}
+$pdata = $wikilib->get_parse($page, $canBeRefreshed);
 
 $pdata = str_replace('tiki-index.php', 'tiki-index_p.php', $pdata);
 

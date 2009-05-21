@@ -14,25 +14,30 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  * -------------------------------------------------------------
  */
 function smarty_resource_wiki_source($page, &$tpl_source, &$smarty) {
-	global $tikilib, $user;
-	if (!$tikilib->user_has_perm_on_object($user, $page, 'wiki page', 'tiki_p_use_as_template')) {
-		return false;
-	}
+	global $tikilib;
+
 	$info = $tikilib->get_page_info($page);
 	if (empty($info)) {
 		return false;
 	}
-	$tpl_source = $tikilib->parse_data($info['data'], array('is_html' => $info['is_html']));
+	$tpl_source = $tikilib->parse_data($info['data'], array('is_html' => $info['is_html'], 'print'=>'y'));
 	return true;
 }
 
 function smarty_resource_wiki_timestamp($page, &$tpl_timestamp, &$smarty) {
-	global $tikilib;
+	global $tikilib, $user;
+	if (!$tikilib->user_has_perm_on_object($user, $page, 'wiki page', 'tiki_p_use_as_template')) {
+		return 'Permission denied';
+	}
 	$info = $tikilib->get_page_info($page);
 	if (empty($info)) {
 		return false;
 	}
-	$tpl_timestamp = $info['lastModif'];
+	if (preg_match("/\{([A-Z0-9_]+) */", $info['data'])) { // there are some plugins - so it can be risky to cache the page
+		$tpl_timestamp = $tikilib->now;
+	} else {
+		$tpl_timestamp = $info['lastModif'];
+	}
 	return true;
 }
 

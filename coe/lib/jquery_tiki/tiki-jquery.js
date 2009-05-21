@@ -31,37 +31,27 @@ $jq(document).ready( function() { // JQuery's DOM is ready event - before onload
 	};
 	
 	// flip function... unfortunately didn't use show/hide (ay?)
-	
 	flip = function (foo,style) {
-		if ($jq("#" + foo).css("display") == "none") {
-			setSessionVar('show_' + escape(foo),'y');
-			showJQ("#" + foo, jqueryTiki.effect, jqueryTiki.effect_speed, jqueryTiki.effect_direction);
+		if (style && style != 'block' || foo == 'help_sections' || foo == 'fgalexplorer') {	// TODO find a better way?
+			$jq("#" + foo).toggle();	// inlines don't animate reliably (yet) (also help)
+			if ($jq("#" + foo).css('display') == 'none') {
+				setSessionVar('show_' + escape(foo), 'n');
+			} else {
+				setSessionVar('show_' + escape(foo), 'y');
+			}
 		} else {
-			setSessionVar('show_' + escape(foo), 'n');
-			hideJQ("#" + foo, jqueryTiki.effect, jqueryTiki.effect_speed, jqueryTiki.effect_direction);
+			if ($jq("#" + foo).css("display") == "none") {
+				setSessionVar('show_' + escape(foo), 'y');
+				showJQ("#" + foo, jqueryTiki.effect, jqueryTiki.effect_speed, jqueryTiki.effect_direction);
+			}
+			else {
+				setSessionVar('show_' + escape(foo), 'n');
+				hideJQ("#" + foo, jqueryTiki.effect, jqueryTiki.effect_speed, jqueryTiki.effect_direction);
+			}
 		}
 	};
 
-	/* toggle CSS (tableless) layout columns
-	 * won't animate nicely - one TODO for 4.0
-	toggleCols = function (id,zeromargin,maincol) {	// TODO (it properly!)
-		var showit = 'show_' + escape(id);
-		if (!zeromargin) zeromargin = '';
-		if (!id) id = '';
-		if (!maincol) maincol = 'col1';
-		if (document.getElementById(id).style.display == "none") {
-			show(id);
-			setCookie(showit,'y');
-		} else {
-			hide(id);
-			setCookie(showit,'n');
-		}
-	}; */
-
-
-	
 	// handle JQ effects
-	
 	showJQ = function (selector, effect, speed, dir) {
 		if (effect == 'none') {
 			$jq(selector).show();
@@ -96,31 +86,29 @@ $jq(document).ready( function() { // JQuery's DOM is ready event - before onload
 	
 	// tooltip functions and setup
 	if (jqueryTiki.tooltips) {	// apply "cluetips" to all .tips class anchors
-		$jq('a.tips').cluetip({splitTitle: '|', showTitle: false, width: '150px', cluezIndex: 400});
-		$jq('a.titletips').cluetip({splitTitle: '|', cluezIndex: 400});
-		
-		/* overrides for overlib tooltips
-		 * another one TODO for 4.0?
-		overlib = function(data) {
-			$jq().mousemove(function(e) {
-				$jq().cluetip({splitTitle: '|', showTitle: false, width: '150px', cluezIndex: 400, tracking: true});
-				$jq().cluetipContents = data;
-				$jq().cluetip.activate;
-				// just doesn't appear...
-			});
-			
-		};
-		nd = function() {
-			// remove the tooltip
-			$jq().cluetip.inactivate;
-			$jq().unbind("mousemove", e);
-		};*/
+		$jq('.tips').cluetip({splitTitle: '|', showTitle: false, width: '150px', cluezIndex: 400});
+		$jq('.titletips').cluetip({splitTitle: '|', cluezIndex: 400});
+		$jq('.tikihelp').cluetip({splitTitle: ':', width: '150px', cluezIndex: 400});
 	}
 	
 	// superfish setup (CSS menu effects)
 	if (jqueryTiki.superfish) {
-		$jq('ul.cssmenu_horiz').superfish();
-		$jq('ul.cssmenu_vert').superfish();
+		$jq('ul.cssmenu_horiz').superfish({
+			animation: {opacity:'show', height:'show'},	// fade-in and slide-down animation
+			speed: 'fast'								// faster animation speed
+		});
+		$jq('ul.cssmenu_vert').superfish({
+			animation: {opacity:'show', height:'show'},	// fade-in and slide-down animation
+			speed: 'fast'								// faster animation speed
+		});
+	}
+	
+	// tablesorter setup (sortable tables?)
+	if (jqueryTiki.tablesorter) {
+		$jq('.sortable').tablesorter({
+			widthFixed: true							// ??
+//			widgets: ['zebra'],							// stripes (coming soon)
+		});
 	}
 });		// end $jq(document).ready
 

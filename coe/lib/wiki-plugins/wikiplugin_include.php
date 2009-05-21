@@ -73,19 +73,22 @@ function wikiplugin_include($data, $params) {
 	if (!isset($page)) {
 		return ("<b>missing page for plugin INCLUDE</b><br />");
 	}
-    if ( isset($included_pages[$page]) ) {
-        if ( $included_pages[$page]>=$max_times ) {
+	$memo = $page;
+	if (isset($start)) $memo .= "/$start";
+	if (isset($end)) $memo .= "/$end";
+    if ( isset($included_pages[$memo]) ) {
+        if ( $included_pages[$memo]>=$max_times ) {
             return '';
         }
-        $included_pages[$page]++;
+        $included_pages[$memo]++;
     } else {
-        $included_pages[$page] = 1;
+        $included_pages[$memo] = 1;
         // only evaluate permission the first time round
         // evaluate if object or system permissions enables user to see the included page
     	$data = $tikilib->get_page_info($page);
 	$perms = $tikilib->get_perm_object($page, 'wiki page', $data, false);
         if ($perms['tiki_p_view'] != 'y') {
-            $included_pages[$page] = $max_times;
+            $included_pages[$memo] = $max_times;
     //		I think is safer to show nothing instead of a message saying that a page can't be accessed
     //		$text="<b>User $user has no permission to access $page</b><br />";
             $text="";

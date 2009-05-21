@@ -4,7 +4,7 @@ class Multilingual_Aligner_SentenceSegmentor {
 
    public function segment($text) {
    
-      $sentences_and_separators = preg_split('/([\.\!\?]|\n\s*\n|\n(?=\*))/', $text, -1, PREG_SPLIT_DELIM_CAPTURE);
+      $sentences_and_separators = preg_split('/([\.\!\?]+|\n\s*\n|\n(?=\*))/', $text, -1, PREG_SPLIT_DELIM_CAPTURE);
       $sentences = array();
       $ii = 0;
       // Concatenate each sentence with the separator that follows it.

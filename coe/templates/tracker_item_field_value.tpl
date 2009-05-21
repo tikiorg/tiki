@@ -53,7 +53,7 @@
 			{if $field_value.options_array[4] eq '1' and $showlinks ne 'n' and $list_mode ne 'csv' and !empty($field_value.options_array[0]) and !empty($tid)}
 				<a href="tiki-view_tracker_item.php?itemId={$tid}&amp;trackerId={$field_value.options_array[0]}">
 			{/if}
-			{if $list_mode eq 'y'}
+			{if $list_mode eq 'y' and $field_value.otherField.type eq 't'}
 				{$tlabel|truncate:255:"..."}
 			{else}
 				{$tlabel}
@@ -98,11 +98,19 @@
 {* -------------------- text field, numeric, drop down, radio,user/group/IP selector, autopincrement, dynamic list *} 
 {elseif $field_value.type eq  't' or $field_value.type eq 'n' or $field_value.type eq 'd' or $field_value.type eq 'D' or $field_value.type eq 'R' or $field_value.type eq 'u' or $field_value.type eq 'g' or $field_value.type eq 'I' or $field_value.type eq 'q' or $field_value.type eq 'w' or ($field_value.type eq 'C' and $field_value.computedtype ne 'f')}
 	{if $list_mode eq 'y'}
-		{$field_value.value|escape|truncate:255:"..."|default:"&nbsp;"}
+		{if $field_value.type eq 'u' }
+			{$field_value.value|escape|truncate:255:"..."|default:"&nbsp;"|username}			
+		{else}			
+			{$field_value.value|escape|truncate:255:"..."|default:"&nbsp;"}
+		{/if}		
 	{elseif $list_mode eq 'csv'}
 		{$field_value.value}
 	{else}
-		{$field_value.value|escape}
+		{if $field_value.type eq 'u' }
+			{$field_value.value|escape|username}
+		{else}
+			{$field_value.value|escape}
+		{/if}		
 	{/if}
 
 
@@ -155,7 +163,11 @@
 			{$field_value.info.filename|iconify}&nbsp;
 		{/if}
 	{/if}
-	<a href="tiki-download_item_attachment.php?attId={$field_value.value}" title="{tr}Download{/tr}">{icon _id='disk' alt="{tr}Download{/tr}"}</a>
+	{if $list_mode eq 'csv'}
+		{$field_value.value}
+	{else} 
+		<a href="tiki-download_item_attachment.php?attId={$field_value.value}" title="{tr}Download{/tr}">{icon _id='disk' alt="{tr}Download{/tr}"}</a>
+	{/if}
 
 {* -------------------- preference -------------------- *}
 {elseif $field_value.type eq 'p'}
@@ -261,11 +273,10 @@
 		{capture name=stat}
 		{tr}Rating{/tr}: {$field_value.value|default:"-"}, {tr}Number of voices{/tr}: {$field_value.numvotes|default:"-"}, {tr}Average{/tr}: {$field_value.voteavg|default:"-"}, {tr}Your vote{/tr}: {if $item.my_rate}{$item.my_rate}{else}-{/if}
 		{/capture}
-		<span style="padding-right:2em"><b title="{$smarty.capture.stat}" style="position:absolute">
+		<b title="{$smarty.capture.stat}">
 		{if $field_value.value}{$field_value.voteavg}/{$field_value.value}{else}&nbsp;-&nbsp;{/if}</b>
-		</span>
 		{if $tiki_p_tracker_vote_ratings eq 'y'}
-			{if $item.my_rate}
+			{if !$item.my_rate}
 				<b class="highlight">-</b>
 			{else}
 				<a href="{$smarty.server.PHP_SELF}{if $query_string}?{$query_string}{else}?{/if}

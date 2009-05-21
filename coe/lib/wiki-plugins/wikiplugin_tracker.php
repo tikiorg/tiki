@@ -291,6 +291,8 @@ function wikiplugin_tracker($data, $params) {
 							elseif ($flds['data'][$cpt]['type'] == 'I')
 								$_REQUEST['track'][$fl['fieldId']] = $tikilib->get_ip_address();
 						}
+					} elseif ($flds['data'][$cpt]['type'] == 'C' && empty($_REQUEST['track'][$fl['fieldId']])) {
+						$_REQUEST['track'][$fl['fieldId']] = '';
 					} elseif ($flds['data'][$cpt]['type'] == 'f') {
 						$ins_id = 'track_'.$fl['fieldId'];
 						if (isset($_REQUEST[$ins_id.'Day'])) {
@@ -511,7 +513,10 @@ function wikiplugin_tracker($data, $params) {
 					$filter = &$flds['data'];
 				}
 				if (!empty($filter)) {
-					$flds['data'] = $trklib->get_item_fields($trackerId, $itemId, $filter, $itemUser);
+					foreach ($filter as $f) {
+						$filter2[$f['fieldId']] = $f;
+					}
+					$flds['data'] = $trklib->get_item_fields($trackerId, $itemId, $filter2, $itemUser);
 
 				}
 
@@ -699,7 +704,7 @@ function wikiplugin_tracker($data, $params) {
 					} elseif ($f['type'] == 'a') {
 						if ($f['options_array'][0] == 1 && empty($quicktags)) {
 							global $quicktagslib; include_once ('lib/quicktags/quicktagslib.php');
-							$quicktags = $quicktagslib->list_quicktags(0, -1, 'taglabel_desc', '', 'trackers');
+							$quicktags = $quicktagslib->list_quicktags(0, -1, 'taglabel_asc', '', 'trackers');
 							$smarty->assign_by_ref('quicktags', $quicktags['data']);
 						}
 					} elseif ($f['type'] == 'l' && isset($itemId)) {
@@ -766,7 +771,7 @@ function wikiplugin_tracker($data, $params) {
 						}
 						$back .= ">".wikiplugin_tracker_name($f['fieldId'], $f['name'], $field_errors);
 						if ($showmandatory == 'y' and $f['isMandatory'] == 'y') {
-							$back.= "&nbsp;<b>*</b>&nbsp;";
+							$back.= "&nbsp;<strong class='mandatory_star'>*</strong>&nbsp;";
 							$onemandatory = true;
 						}
 						$back.= "</td><td>";
@@ -815,7 +820,7 @@ function wikiplugin_tracker($data, $params) {
 			}
 			$back .= "<input type='submit' name='action' value='".tra($action)."' />";
 			if ($showmandatory == 'y' and $onemandatory) {
-				$back.= "<br /><i>".tra("Fields marked with a * are mandatory.")."</i>";
+				$back.= "<em class='mandatory_note'>".tra("Fields marked with a * are mandatory.")."</em>";
 			}
 			if (empty($tpl) && empty($wiki)) {
 				$back.= "</td></tr>";

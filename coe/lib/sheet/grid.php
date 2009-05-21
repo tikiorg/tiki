@@ -726,8 +726,8 @@ class TikiSheetFormHandler extends TikiSheetDataHandler
 		{
 			for( $x = 0; $sheet->getColumnCount() > $x; $x++ )
 			{
-				$calc = $sheet->calcGrid[$y][$x];
-				$value = $sheet->dataGrid[$y][$x];
+				$calc = str_replace('\n', ' ', $sheet->calcGrid[$y][$x]);
+				$value = str_replace('\n', ' ', $sheet->dataGrid[$y][$x]);
 				$width = $sheet->cellInfo[$y][$x]['width'];
 				$height = $sheet->cellInfo[$y][$x]['height'];
 				$format = $sheet->cellInfo[$y][$x]['format'];
@@ -1860,7 +1860,7 @@ class SheetLib extends TikiLib
 			if ($tikilib->user_has_perm_on_object($user, $row['sheetId'], 'sheet', 'tiki_p_view_sheet')) {
 				if ($userlib->object_has_one_permission($row['sheetId'], 'sheet'))
 					$row['individual'] = 'y';
-				$row['tiki_p_edit_sheet'] = ($user && $user == $row['author']) || $tikilib->user_has_perm_on_object($user, $row['sheetId'], 'sheet', 'tiki_p_edit_sheet')?'y': 'n';
+				$row['tiki_p_edit_sheet'] = ($user && $user == $row['author']) || $tikilib->user_has_perm_on_object($user, $row['sheetId'], 'sheet', 'tiki_p_edit_sheet', 'tiki_p_edit_categorized')?'y': 'n';
 				$results['data'][] = $row;
 			}
 		}

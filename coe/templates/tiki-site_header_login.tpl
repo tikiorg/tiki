@@ -28,7 +28,7 @@
 			{/if}
 			{if $prefs.allowRegister eq 'y'}
 				<span class="register">
-					<a href="tiki-register.php" title="{tr}Click here to register{/tr}">{tr}Register{/tr}</a>
+					&nbsp;<a href="tiki-register.php" title="{tr}Click here to register{/tr}">{tr}Register{/tr}</a>
 				</span>
 			{/if}		
 			</div>

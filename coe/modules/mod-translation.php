@@ -6,7 +6,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-global $pivotLanguage;
+global $pivotLanguage, $tikilib, $smarty;
 
 if( ! function_exists( 'filter_languages_from_pivot' ) ) {
 	function filter_languages_from_pivot( $langInfo )

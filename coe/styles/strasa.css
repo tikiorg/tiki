@@ -1,16 +1,24 @@
 /* Strasa theme for TikiWiki CMS/Groupware, design by Patrick Allard,
-   released under LPGL license. For more information, visit http://themes.tikiwiki.org. */
+   released under LGPL license. For more information, visit http://themes.tikiwiki.org. */
 
  @import "lite/lite.css"; /* here we import *lite as the base */
 
 /***** XHTML Elements ******/
 
-body {
-	text-align: left;
-	font: 72%/1.4em Verdana, Geneva, Arial, Helvetica, sans-serif;
-	background: #fff}
+html {background-color: #2e3035; display: block; height: 100%;}
 
-html>body {font-size: 76%}
+body {
+	background-color: #fff;
+	text-align: left;
+	font: 72%/1.4em Verdana, Geneva, Arial, Helvetica, sans-serif;}
+
+html>body {font-size: 12px}
+
+/* workaround for Safari when in FCKEditor */
+html[dir=ltr]>body {
+	display: block;
+	margin: 1em .5em}
+
 body.fullscreen {}
 
 a,
@@ -105,11 +113,9 @@ button,
 input[type=reset],
 input[type=submit],
 span.button input,
-.submitbutton,
-.calbuttonoff,
-.calbuttonon {
+.calbuttonBox {
 	font-family: Verdana, Helvetica, Geneva, Arial, sans-serif;
-	font-size: 94%;
+	font-size: 11px;
 	font-weight: normal;
 	color: #fff;
 	background: #1d9ccf;
@@ -119,7 +125,7 @@ span.button input,
 	margin-right: 1px;
 	text-decoration: none;
 	white-space: nowrap;
-	cursor: pointer;}
+	cursor: pointer}
 
 /*.button a,
 .button a:visited {padding: 1px 4px}*/
@@ -129,7 +135,7 @@ button:hover,
 input[type=reset]:hover,
 input[type=submit]:hover,
 .button input:hover,
-.submitbutton:hover {
+.calbuttonBox:hover {
 	background-color: #1e7ea6;
 	color: #fff;
 	text-decoration: none}
@@ -139,7 +145,11 @@ button:active,
 input[type=reset]:active,
 input[type=submit]:active,
 .button input:active,
-.submitbutton:active {border-color: #223845 #41cbe7 #41cbe7 #223845;  }
+span.highlight a:link,
+span.highlight a:visited {
+	border-color: #223845 #41cbe7 #41cbe7 #223845;
+	background: #5cbdef !important;
+	color: #000 !important}
 
 
 div.iconmenu {display: inline}
@@ -183,7 +193,7 @@ span.button {
 form.admin input[name="features"] {margin-bottom: 3px !important}
 select {}
 select[multiple] {height: 10em}
-select[name="theme"] {width: 145px}
+select[name="theme"], select[name="theme-option"] {width: 140px}
 small {font-size: .9em}
 label {margin:0 2px}
 ol {}
@@ -226,7 +236,9 @@ ul.jumplinks a:active {
 	
 #fullscreenbutton:hover {color: #000000}
 
+/* appears on print page */
 #tiki-clean {
+	background-color: #fff;
 	text-align: left;
 	padding: 1em}
 
@@ -234,36 +246,49 @@ ul.jumplinks a:active {
 	(overrides lite.css) ***/
 
 #main {
-	text-align: left;
-	/*background: #f8f8ff;*/}
+	text-align: left;}
+
+#main[id] {
+	height: auto;
+	min-height: 100%;
+}
 	
 #header {
-	position: relative}
+	min-height: 121px;	
+	position: relative;}
+	
+* html #header {height: 121px}
+
+* html #header,
+*:first-child+html #header {background: #fff}
 
 #middle {
+	background: #fff;
+/*	height: 70%;*/
 	padding-top: 40px;
 	padding-bottom: 40px}
+	
+*:first-child+html #middle {padding-top: 65px}
 
-#c1c2 {}
+#c1c2 {background: #fff}
 #c1c2 #wrapper {}
 
 .fullscreen #col1 {
 	margin-left: 30px !important;
 	margin-right: 30px !important}
-
-#c1c2 #wrapper #col1 {}
-
-#c1c2 #wrapper #col1 .content {
-	/*background: #f8f8ff;
-	color: midnightblue*/
-	margin: 0 20px 20px}
-
+	
 #c1c2 #wrapper .marginleft {margin-left: 240px}
 #c1c2 #wrapper .marginright {margin-right: 210px}
 
+#c1c2 #wrapper #col1 {}
+
+#c1c2 #wrapper #col1 #tiki-center {
+	margin-left: 20px;
+	margin-right: 20px}
+
+
 #c1c2 #col2 {
 	width: 240px;
-	overflow: hidden;
 	text-align: right;
 	background: url(strasa/box_top.gif) no-repeat 100% 0;
 	padding-top: 5px}
@@ -292,7 +317,9 @@ ul.jumplinks a:active {
 #footer a:link,
 #footer a:visited {}
 #footer a:hover {}
-.footerbgtrap {}
+.footerbgtrap {
+	height: 20%;
+}
 /* end Type 1 layout divs, etc. */
 
 /* Theme-specific custom footer code */
@@ -356,8 +383,8 @@ ul.jumplinks a:active {
 	color: #fff;
 	text-decoration: none}
 
-/*** Error page ***/
-div#tiki-main #tiki-top {}
+/*** Print page ***/
+div#tiki-main {background: #fff}
 div#tiki-mid {}
 
 /* To center cbox */
@@ -369,23 +396,34 @@ div#tiki-bot {}
 
 /* Site Header & Identity */
 #header-top {
-	/*height: 97px*/
-	min-height: 97px;
-	background: #1b3c54 url(strasa/headerbg.jpg) repeat-x 0 100%;}
+	color: #fff;
+	height: 97px;
+	background: #214d68 url(strasa/headerbg.jpg) repeat-x 0 100%}
+
+#header-top[id] {
+	min-height: 108px
+}
 
 #siteheader {
 	text-align: left;
-	background: transparent;
+	background: #fff;
 	vertical-align: middle;
 	padding: 0;
 	margin: 0}
 
-#customcode {
+#customcode, #customcodewith_ad {
+	position: absolute;
 	width: 964px;
 	margin: auto}
+
+#topbar_custom_code {
+	margin: 0 58px;
+}
 	
 div#sioptions {
-	margin: 0 58px}
+	margin: 0 58px;
+	overflow: hidden;
+}
 
 #sioptionscentered {text-align: center}
 
@@ -398,9 +436,10 @@ div.floatleft {
 	clear: none}
 
 div#sitelogo {
-	position: absolute;
-	top: 10px; left: 10px;
-	margin: auto}
+	margin: auto;
+	padding-top: 8px;
+	overflow: hidden;	
+}
 
 div#sitead {margin: auto}
 #sitead.floatright {padding-right: 100px}
@@ -412,15 +451,20 @@ div#sitead {margin: auto}
 	float: right;
 	font-size: 90%;
 	height: 24px;
+	line-height: 24px;
 	padding-left: 60px;
-	padding-top: 1px;
 	color: #fff;
-	background: url(strasa/login.jpg) 0 0 no-repeat;}
-	
-*:first-child+html #siteloginbar { max-width: 650px}
+	background: #fff url(strasa/login.jpg) 0 0 no-repeat;
+}
 
-div.logged-in {padding-right: 20px}
-	
+* html #siteloginbar {
+	text-align: right;
+	width: 100%;
+	padding: 0;
+	background: #fff url(strasa/loginlong.jpg) 0 0 no-repeat}
+
+*:first-child+html #siteloginbar {max-width: 650px}
+
 #siteloginbar a,
 #siteloginbar a:visited,
 #siteloginbar a:hover {
@@ -441,7 +485,8 @@ div.logged-in {padding-right: 20px}
  float: right;
  padding-left: 5px}
  
-#siteloginbar .rme {display: inline; margin-left: 1em}
+#siteloginbar .rme,
+#siteloginbar .pass {display: inline; margin-left: 1em}
 
 #siteloginbar .register {
 	float: right;
@@ -450,12 +495,8 @@ div.logged-in {padding-right: 20px}
 	padding-left: 60px;
 	padding-right: 10px;
 	padding-top: 0;
-	margin-top: -1px;
+	margin-top: 0;
 	background: url(strasa/register.jpg) no-repeat}
-
-*:first-child+html #siteloginbar .register {margin-top: -26px}
-
-/* #siteloginbar.logged-in {bottom: 120px} */
 
 #bannertopright {  }
 
@@ -465,22 +506,34 @@ div.logged-in {padding-right: 20px}
 	color: #5ae0ff;
 	font-size: 90%;
 	background: #204c65;
-	font-weight: normal }
+	font-weight: normal}
 	
-#sitelocbar {float: left}
+div.logged-in {padding-right: 20px}
+
+* html .logged-in {
+	color: #5ae0ff !important;
+	background: none !important}
+
+* html .logged-in a,
+* html .logged-in a:visited {color: #5ae0ff !important}
+	
+#sitelocbar {float: left; margin: 0 58px;}
+#sitelocbar a {background-color: #cce5ff; color: #0990cc !important; padding: 1px 4px}
+#sitelocbar a:hover {color: #000 !important;}
+
 #customcodewith_ad {width: 400px}
 
 /* #header text selectors, if needed */
 
-#sitetitles {color: #fff}
+#sitetitles {color: #fff; display: inline; height: 97px; line-height: 97px; overflow: hidden; vertical-align: bottom}
 
 #sitetitle,
-#sitesubtitle {font-family: Helvetica, sans-serif;}
+#sitesubtitle {font-family: Helvetica, sans-serif; font-weight: bold}
 
 #sitetitle {
-	font-size: 200%;
-	font-weight: bold;
-	display: inline}
+	font-size: 220%;
+	display: inline;
+	letter-spacing: -0.05em}
 	
 * html #sitetitle {}
 
@@ -492,7 +545,8 @@ div.logged-in {padding-right: 20px}
 
 #sitesubtitle {
 	font-size: 110%;
-	display: inline}
+	display: inline;
+	margin-left: 0.2em}
 
 #header a,
 #header a:visited {}
@@ -518,11 +572,13 @@ div.logged-in {padding-right: 20px}
 	float: right}
 
 #sitesearchbar {
-	float: right;
-	padding-right: 4px;
+	position: absolute;
+	right: 10px;
+	top: 65px;
 	text-align: right;
 	display: block;
-	margin: 0}
+	color: #fff;
+	font-size: 93%}
 
 input#fuser,
 select[name="where"],
@@ -538,8 +594,13 @@ input[name="search"] {}
 
 a.flip,
 a.flip:visited {
+	color: #cce5ff;
+	font-size: 90%}
+	
+a.flip:hover {
+	color: #006699;
+	text-decoration: none}
 
-}
 .tellafriend a,
 .tellafriend a:visited {
 	background: transparent url(strasa/fold-topright.jpg) 0 0 no-repeat;
@@ -596,7 +657,16 @@ a.flip img {display: none}
 /****** Menus ******/
 /** PHP Layers Menus **/
 
-.horbar {width: 100%} 
+.horbar {
+position: absolute; z-index: 0;
+top: 10px; left: 100%;
+margin: 0 0 0 -50%;
+white-space: nowrap}
+
+* html .horbar {
+	top: 10px;
+	left: auto;
+	right: 40px}
 
 .horbar table {
 	width: auto;
@@ -605,31 +675,27 @@ a.flip img {display: none}
 /* Text in the top level (visible by default) of the menu */
 .horbaritem a,
 .horbaritem a:visited {
-	padding: 0 3px;
+	padding: 3px 3px 6px 3px;
 	text-decoration: none;
-	font: 1em Verdana, Helvetica, Arial, Sans-Serif;
-	margin: 0}
-	
-#header .horbaritem a {
+	font: normal 1em Verdana, Helvetica, Arial, Sans-Serif;
+	margin: 0; 
 	border-color: transparent; border-style: solid; border-width: 0 1px;
 	color: #5ae0ff; 
-	display: block; 
-	line-height: 97px;
-	min-height: 97px; min-width: 80px;
 	text-align: center}
 
 .horbaritem a:hover {
-	background: #fff;
-	color: #eee !important;
-	text-decoration: none} 
-	
-#header .horbaritem a:hover {
-	background: url('strasa/headermenuitem-hover.png') bottom center repeat-x;
-	border-color: #336699; border-style: solid; border-width: 0 1px;
+	text-decoration: none; 
+	background: url(strasa/headermenuitem-hover.png) bottom center repeat-x;
+	border-color: #336699;
+	border-style: solid;
+	border-width: 0 1px;
 	color: #fff;
 }
 
-* html .horbaritem a {font-size: .8em}
+* html .horbaritem a {
+	font-size: 1em;
+	border-color: #224a5f}
+
 .mdkverbar {} 
 
 .mdksubmenu {
@@ -638,7 +704,9 @@ a.flip img {display: none}
 	left: 0;
 	top: 0;
 	visibility: hidden;
-	margin-top: 0}
+	margin-top: 3px}
+	
+* html .mdksubmenu {margin-top: 0}
 
 .mdksubmenu table {width: auto} 
 
@@ -659,21 +727,18 @@ a.flip img {display: none}
 	top: 5px;
 	right: 12px} 
 
-.mdkitem a {
+.mdkitem a,
+.mdkitem a:link,
+.mdkitem a:visited {
 	color: #5ae0ff;
-	padding: 3px;
+	padding: 2px 3px;
 	position: relative;
 	display: block;
-	font-weight: normal} 
-
-.mdkitem a:link {
 	font-weight: normal;
 	text-decoration: none} 
 
-.mdkitem a:visited {text-decoration: none} 
-
 .mdkitem a:hover {
-	background: transparent url('styles/strasa/headerbg.jpg') repeat-x;
+	background: transparent url(styles/strasa/headerbg.jpg) repeat-x;
 	color: #fff;
 	text-decoration: none} 
 
@@ -762,7 +827,16 @@ a.phplmselected:hover {color: #808080}
 
 .cssmenu_vert ul a:hover {color: #000000}
 
-#tiki-top .cssmenu_horiz {text-align: left; float: right; margin-right: 100px}
+#tiki-top .cssmenu_horiz {
+	position: absolute;
+	z-index: 10;
+	top: 10px;
+	right: 100px;
+	/*margin: 0 0 0 -50%;*/
+	white-space: nowrap;
+	text-align: left}
+	
+.cssmenu_horiz > li.menuSection > a {padding-right: 2.6em}
 
 /** Links in other menus **/
 div.separator {
@@ -844,13 +918,18 @@ div#edithelpzone {display: none}
 	height: 0;
 	clear: both;
 	visibility: hidden}
-
+	
+.clearfix {display: inline-block}
+/* Hide from IE Mac \*/
+.clearfix {display: block}
+/* End hide from IE Mac */
 * html .clearfix {height: 1%}
 #overdiv table {width: auto !important}
 .attention {color: red}
 
 .highlight,
-#highlight {}
+#highlight {background: #5cbdef}
+span.highlight {background: inherit}
 
 .openid_url {
 	background: #fff url(../../img/icons/login-OpenID-bg.gif) no-repeat;
@@ -927,48 +1006,72 @@ div.findsubmit {}
 
 /* New Help section */
 div#tikihelp {
-	position: fixed;
+	position:fixed;
 	right: 0;
-	top: 15%;
-	max-height: 85%;
-	max-width: 350px;
-	padding: 0;
-	margin: 0;
-	border: none;
-	background: transparent}
+	top: 125px;
+	width : 340px;
+	height: auto; /* if there was height specified it covered the right column content "invisibly" making part of it unclickable */
+	max-height: 450px;
+	max-width: 50%;
+	padding:0;
+	margin:0;
+	background-color: transparent;
+	z-index: 820;
+	overflow: hidden;
+}
 
 * html div#tikihelp {position: absolute}
 
 div.help_icon {
 	border: 0;
 	margin: 0;
-	padding: 0}
-
-div.help_icon img {
+	padding: 0;
+	height: 48px;
+	text-align: right;
+}
+div.help_icon a:hover {
+  text-decoration: none;
+}
+div.help_icon img{
 	vertical-align: middle;
 	border: 0;
 	margin: 0;
-	padding: 0}
-
+	padding: 0;
+}
+div.help_sections {
+	border: solid 1px #006699;
+	padding: 0;
+	margin: 0;
+	background-color: #006699;
+	width: 100%;
+	height: 400px;
+	overflow: auto;
+}
 div.help_section_select {
 	font-weight : bold;
-	font-size: 120%;
-	background: white;
-	width: 340px;
-	margin: 2px}
-
-div.help_sections {
-	padding:  2px;
-	background: white;
-	max-height : 500px;
-	overflow: auto}
-
+	font-size: 12px;
+	background-color : #E7E9EA;
+	color: black;
+	width: 100%;
+	height: 20px;
+	margin: 0;
+}
+div.help_section_select * {
+	vertical-align: middle;
+}
 div.help_section {
-	width: 340px;
-	margin: 5px;
+	margin: 0;
 	padding: 5px;
-	background: #F3FCFE}
-	
+	background-color: white;
+	color: black;
+	font-size: 0.8em;
+	/*height: 100%;*/
+	overflow: auto;
+}
+div.help_section * {
+	vertical-align: middle;
+}
+
 #site_report {text-align: center}
 
 #site_report a {
@@ -995,35 +1098,47 @@ ul.categories li {
 div.box {
 	overflow: hidden}
 	
-#col2 .box {background: #cce5ff}
+#col2 .box {
+	background: #cce5ff;
+	border-bottom: 2px ridge #bed8f1;
+}
+
+* html #col2 .box,
+* html #col3 .box {width: 181px}
 
 #col3 .box {
 	border-bottom: 1px solid #cfcfcf;
 	/*margin-bottom: 10px*/ }
 
 h3.box-title {
-	position: relative;
 	padding-top: 4px;
-	padding-left: 10px}
+	padding-left: 10px;
+	position: relative}
 	
-#col2 .box-title {margin-top: 0; margin-bottom: 0}
-
-.box-title a,
-.box-title a:link {  }
-
-.box a.flipmodtitle img {display: none}
-
-* html .box a.flipmodtitle img,
-.box:hover a.flipmodtitle img {
-	display: block;
+* html h3.box-title {position: static}
+	
+#col2 .box-title {
+	margin-top: 0;
+	margin-bottom: 0}
+	
+.moduleflip {
+	display: none;
 	position: absolute;
 	right: 0;
-	top: 0;
-	border: 1px solid transparent}
+	top: 0}
 
-* html .box a.flipmodtitle img {border: none}
-a.flipmodtitle:hover img {border: 1px solid #58A7D2 !important}
+* html .moduleflip {
+	position: static;
+	float: right}
+
+* html .moduleflip,
+.box:hover .moduleflip {display: block}
+
+.box:hover img.flipmodimage {border: 1px solid transparent}
+* html img.flipmodimage {border: none}
+img.flipmodimage:hover {border: 1px solid #58A7D2 !important}
 #col2 h3.box-title {}
+
 #col2 .box-title a,
 #col2 .box-title a:link {}
 .box-title a:hover {}
@@ -1043,7 +1158,9 @@ a.flipmodtitle:hover img {border: 1px solid #58A7D2 !important}
 	height: 16px}
 	
 /** Other boxes **/
-div.cbox {border: 1px solid #1b3a50}
+div.cbox {
+	border: 1px solid #1b3a50;
+	overflow: hidden}
 
 .cbox-title {
 	font-size: 1em;
@@ -1059,8 +1176,12 @@ div.cbox {border: 1px solid #1b3a50}
 .cbox-title a:hover {color: #fff; text-decoration: none}
 
 .cboxlink {}
-.cbox-data {padding: 4px}
+.cbox-data {
+	padding: 4px;
+	overflow: hidden}
 
+.cbox-data table {border-collapse: collapse}
+	
 .rbox {
 	margin: 0.2em 0 0.4em;
 	text-align: left}
@@ -1124,7 +1245,7 @@ td {vertical-align: top}
 .editblogform td,
 .editfgalform td,
 .comform td,
-.forumform td {}
+.forumform td {padding: 3px}
 
 table.email {}
 table.email td.body {}
@@ -1285,7 +1406,7 @@ a.forumnameread { color: #006699}
 .tabcontent {
 	z-index: 200;
 	position: relative;
-	padding: 32px 2px 2px 2px;
+	padding: 32px 6px;
 	margin: 5px;
 	margin-top: 0;
 	background: #cce5ff;
@@ -1369,7 +1490,8 @@ a.pagetitle:hover {
 .wikitopline {}
 
 div#description,
-div.description {
+.description {
+	display: block;
 	font-size: .9em;
 	font-style: italic}
 
@@ -1487,13 +1609,27 @@ div#helptool {}
 
 /* Wiki plugins */
 
-/* Code plugin  */
+
 div.code {
 	font-size: 90%;
 	padding: 3px;
 	border: 1px dashed #a9a9a9;
 	background: #F5F5F5;
 	font-family: "Courier New", Courier, monospace}
+
+/* Code plugin  */
+.codecaption {
+	font-size: 90%;
+	padding: 0 10px;
+	position: relative;
+	bottom: -6px;
+	display: inline;
+	border: 1px dashed #696969;
+	border-bottom: 0;
+	margin-left: 4px;
+	color: #696969;
+	background: #F5F5F5;
+	font-weight: bold}
 
 .codelisting {
 	font-family: "Courier New", Courier, monospace;
@@ -1502,25 +1638,37 @@ div.code {
 	margin: 4px;
 	border: 1px dashed #696969;
 	overflow: auto; 
-   width: 500px}
+	width: 90%}
 
-.codecaption {
-	font-size: 90%;
-	padding: 0 10px;
-	position: relative;
-	bottom: -5px;
-	display: inline;
-	border: 1px solid #696969;
-	border-bottom: 0;
-	margin: 0;
-	color: #696969;
-	background: #F5F5F5;
-	font-weight: bold}
 
 /* Quote plugin */
-div.quoteheader {margin-left: 20px}
-div.quotebody {font-style: italic}
-table.wikiplugin-split {border: none}
+div.quoteheader {
+	margin-left: 30px;
+	
+}
+
+div.quotebody {
+	margin: 0 15px 10px 30px;
+	font-style: italic;
+	border-left: 5px solid #D3D3D3;
+	padding-left: 6px
+}
+
+table.wikiplugin-split {border: none; width: 100%}
+table.wikiplugin-split .codelisting {width: 95%}
+
+/* Versions plugin */
+#tiki-center .versionav {
+	padding: 0;
+	border: 0;
+	margin-bottom: -1px}
+	
+.versionav .button {margin-bottom: 0}
+
+#tiki-center .versioncontent {
+	border: 1px solid #aaa;
+	background: #fff;
+	padding: 1em}
 
 /** Wiki tocs **/
 div.tocnav {
@@ -1556,24 +1704,58 @@ ul.toc * {border: none}
 
 /***** Articles ****/
 
-div.article {margin-bottom: 40px}
+div.article {
+	border: solid 1px #a9a9a9;
+	border-top: solid 1px gray;
+	margin: 0;
+	margin-top: 5px;
+	padding: 0;
+	background: #fff;
+	font-size: 1.1em;
+	margin-bottom: 40px}
 
 div.articletopline {
+	background: #223543;
+	color: #fff;
 	font-size: 90%;
-	font-style: italic}
+	font-style: italic;
+	padding-left: 6px}
 
-div.articletitle {
-	margin-top: 6px;
-	margin-bottom:	15px;
-	text-align:	left}
+div.articletitle {}
  
-span.titlea {
-	font-size: 1.5em;
-	font-weight: normal}
+div.articletitle h2 {
+	background: #1b3c54 url(strasa/headerbg.jpg) repeat-x 0 100%;
+	color: #fff;
+	padding: 10px 5px;
+	margin: 0}
+	
+div.articletitle h2 a {
+	color: #fff;
+	font-weight: bold;
+	/*padding: 10px 5px*/}
+	
+div.articletitle h2 a:hover {text-decoration: none}
 
-span.titleb {font-size: 1.0em} 
-div.articlesubtitle {font-size: 0.9em}
-div.articleheading {margin-top: 6px}
+span.titleb {
+	display: block;
+	float: right;
+	clear: both;
+	font-size: 80%;
+	font-style: italic;
+	min-height: 24px; line-height: 24px;
+	padding: 0px 10px 0px 60px;
+	color: #fff;
+	background: #2598c5 url(strasa/login.jpg) left bottom no-repeat;}
+	
+div.articlesubtitle {
+	margin-top: -1px;
+	padding-left: 6px;
+	font-size: 0.9em;
+	background: #262d35;
+	color: #fff}
+
+div.articletitle br {clear: both }
+div.articleheading {margin-top: 6px; padding: 4px}
 
 div.articleheadingtext {}
 
@@ -1614,10 +1796,10 @@ div.articletrailer span {
 
 div.article .actions {
 	position: absolute;
-	right: 0;
-	top: 0}
+	right: 0; top: 0;
+	padding: 2px 1px}
 
-div.articlebody {}
+div.articlebody {padding: 6px}
 
 div.articlesource {
 	margin-top: 5px;
@@ -1699,8 +1881,10 @@ span.posthead {
 body.tiki_blogs .post .title {margin-top: 0}
 
 body.tiki_blogs .postbody-title {
+	background:#1B3C54 url(strasa/headerbg.jpg);
 	float: none;
 	width: 100%;
+	min-width: 100%; /* IE7 */
 	min-height: 46px;
 	border: 0}
 	
@@ -1733,7 +1917,7 @@ body.tiki_blogs .author_info {min-height: 24px}
 * html body.tiki_blogs .author_info {height: 24px}
 body.tiki_blogs .author_info img {vertical-align: top}
 
-.postbody-title {border: 0}	
+body.tiki_blogs .postbody-title {border: 0}	
 
 body.tiki_blogs .postbody .postfooter {
 	width: 100%;
@@ -1751,15 +1935,12 @@ body.tiki_forums table.normal {margin: auto}
 
 .post .postbody {
 	clear: both;
-	width: 100%;
-	min-width: 100%;
 	border: solid 1px #a9a9a9;
 	border-top: solid 1px gray;
 	margin: 0;
 	margin-top: 5px;
 	padding: 0;
-	background: #fff;
-	font-size: 1.1em}
+	background: #fff}
 	
 * html .post .postbody {font-size: 11px}
 
@@ -1806,7 +1987,6 @@ body.tiki_forums table.normal {margin: auto}
 .post .author_info a:link,
 .post .author_info a:visited {color: #fff}
 
-.post .author_info .icons {display: block}
 .post .author_info .icons .actions {margin-right: 10px}
 .post .author_post_info_on {font-style: italic}
 
@@ -1815,19 +1995,26 @@ body.tiki_forums table.normal {margin: auto}
 	float: right;
 	font-size: 90%;
 	font-style: italic;
-	height: 24px;
+	min-height: 24px;
 	padding-left: 60px;
 	padding-top: 1px;
 	color: #fff;
 	background: url(strasa/login.jpg) 0 0 no-repeat;}
 
+.post .author_info .author_posts {color: #000}
 .commentStyle_headers .author_info {float: left}
 
 .post .postbody-title .actions {
+	text-align: right;
 	float: right;
-	font-size: 1em;
+	color: #fff;
+	font-size: 80%;
+	font-style: italic;
 	padding-top: 4px;
 	padding-right: 4px}
+	
+.post .postbody-title .actions a,
+.post .postbody-title .actions a:visited {color: #fff}
 
 .postbody-content {padding: 6px}
 .post .postbody .attachments {
@@ -2142,7 +2329,7 @@ div.multiselect {
 	/*overflow-y: auto;
 	overflow-x: hidden;*/
 	overflow: auto;
-	height: 5em;
+	height: auto;
 	width: 100%;
 	border: 1px solid #696969}
 
@@ -2330,68 +2517,9 @@ div.multiselect {
 	border-color: #cfd0d0 #e0e0e0;
 	border-style: solid}
 	
-#prev {
-	margin-left: 30px;
-	float: left;
-	position: relative;
-	height: 20px;
-	width: 20px;
-	background: url("../../pics/prev.gif") no-repeat}
-
-#next {
-	float: left;
-	position: relative;
-	height: 20px;
-	width: 20px;
-	background: url("../../pics/next.gif") no-repeat}
-
-.calbuttonBox {
-	float: left;
-	position: relative;
-	height: 20px;
-	width: 86px;
-	font-family: Verdana, Helvetica, Geneva, Arial, sans-serif;
-	font-size: 94%;
-	font-weight: normal;
-	color: #fff;
-	background: #1d9ccf;
-	border: 1px solid;
-	border-color: #41cbe7 #223845 #223845 #41cbe7;
-/*	padding: 1px 4px;
-	margin-right: 1px;*/
-	text-decoration: none;
-	white-space: nowrap;
-	cursor: pointer;
-	}
-
-.calbuttonon,
-.calbuttonoff {
-	position: absolute;
-	top: 0;
-	left: 3px;
-	padding-top: 3px;
-	text-align: center;
-	font-size: 1em;
-	height: 100%;
-	width: 100%;
-	border: 0}
-
-
-.calbuttonon a,
-.calbuttonoff a { color: #fff; text-decoration: none}
-
-.calbuttonLeft {
-	float: left;
-	width: 3px;
-	height: 20px}
-
-.calbuttonRight {
-	position: absolute;
-	top: 0;
-	right: 3px;
-	float: right;
-	width: 3px;
-	height: 20px}
+.calbuttonBox {margin-right: 3px}
+.calbuttonBox a {color: #fff}
+.calbuttonon a {font-weight: bold}
 
 #caltable .calfocuson,
 .box-data td.fc a.today,
@@ -2426,9 +2554,9 @@ div.multiselect {
 * html .calodd {padding: 0}
 .caleven {background: #dcdcdc}
 * html .caleven {padding: 0}
-.caldark {background: #223845}
+.caldark {background: #cce5ff}
 * html .caldark {padding: 0}
-.caldark .calfocus {background: #223845}
+.caldark .calfocus {background: #cce5ff}
 .daterow {}
 .daterow:hover {}
 
@@ -2568,13 +2696,14 @@ div.messureadbody {
 
 .plugin-form-float {
 	position: fixed;
-	left: 15%;
-	right: 15%;
-	top: 10%;
-	max-height: 80%;
+	left: 5%;
+	right: 365px;
+	top: 5%;
+	max-height: 90%;
 	overflow: auto;
 	background: #F3FCFE;
 	padding: 10px;
+	z-index: 10;
 	border: solid 2px #696969}
 
 .icon_edit_section {float: right}
@@ -2619,7 +2748,7 @@ table.default tfoot td {
 
 table.default td {
 	border: solid 1px #A9A9A9;
-	background: black}
+	background: white}
 
 
 .highlight_word_0{

@@ -33,17 +33,17 @@ function wikiplugin_versions_info() {
 			'nav' => array(
 				'required' => false,
 				'name' => tra('Navigation'),
-				'description' => 'y|n',
+				'description' => 'y|n - '.tr('Displays a navigation box that allows users to select a specific version to display.'),
 			),
 			'title' => array(
 				'required' => false,
 				'name' => tra('Title'),
-				'description' => 'y|n',
+				'description' => 'y|n - '.tr('Display the current version name as the title. Note: Do not work when nav=>y'),
 			),
-			'defaults' => array(
+			'default' => array(
 				'required' => false,
-				'name' => tra('Navigation'),
-				'description' => tra('?'),
+				'name' => tra('Default'),
+				'description' => tr('Specifies version label to show when displaying the page for the first time. e.g. \'Default\''),
 			),
 		),
 	);
@@ -84,9 +84,9 @@ function wikiplugin_versions($data, $params) {
 	} else {
 		$p = 0;
 	}
-
+if (!isset($_REQUEST['preview'])){
 	if ($p == 0) {
-		if (strpos($data,'---(')) {
+		if (strpos($data,'---(') !== false) {
 			$data = substr($data,0,strpos($data,'---('));
 		}
 		if ($nav == 'n' and $title == 'y') { $data = "<b class='versiontitle'>". $default .'</b>'.$data; }
@@ -96,14 +96,17 @@ function wikiplugin_versions($data, $params) {
 			$data = substr($data,strpos($data,'---('.$v[1][$p-1]));
 			$data = preg_replace('/\)---*[\r\n]*/',"</b>\n","<b class='versiontitle'>". substr($data,4));
 		} else {
-			$data = substr($data,strpos($data,'---('.$v[1][$p-1]));
-			$data = preg_replace('/.*\)---*[\r\n]*/',"", substr($data,4));
+			// can't get it to work as a single preg_match_all, so...
+			preg_match_all("/(^|---\([^\(]*\)---*\s)/",$data,$t, PREG_OFFSET_CAPTURE);
+			$start = $t[0][$p][1] + strlen($t[0][$p][0]);
+			$end   = $p + 1 < count($t[0]) ? $t[0][$p+1][1] : strlen($data);
+			$data = substr($data, $start, $end);
 		}
-		if (strpos($data,'---(')) {
+		if (strpos($data,'---(') !== false) {
 			$data = substr($data,0,strpos($data,'---('));
 		}
 	}
-	
+}	
 	if ($nav == 'y') {
 		$highed = false;
 		for ($i=0;$i<count($v[1]);$i++) {
@@ -117,15 +120,15 @@ function wikiplugin_versions($data, $params) {
 			}
 			if ($type == 'host') {
 				$vv = preg_replace('/[^a-z0-9]/','',strtolower($version));
-				$navbar.= ' <span class="button2'.$high.'"><a href="http://'. $vv .'.'. preg_replace("/".$v[1][$p]."/","",$_SERVER['SERVER_NAME']) . preg_replace("~(\?|&)tikiversion=[^&]*~","",$_SERVER['REQUEST_URI']) .'" class="linkbut">'. $ver .'</a></span>';
+				$navbar.= ' <span class="button'.$high.'"><a href="http://'. $vv .'.'. preg_replace("/".$v[1][$p]."/","",$_SERVER['SERVER_NAME']) . preg_replace("~(\?|&)tikiversion=[^&]*~","",$_SERVER['REQUEST_URI']) .'" class="linkbut">'. $ver .'</a></span>';
 			} else {
-				$navbar.= ' <span class="button2'.$high.'"><a href="';
-				if (strpos($_SERVER['REQUEST_URI'],'?')) { 
+				$navbar.= ' <span class="button'.$high.'"><a href="';
+				if (strpos($_SERVER['REQUEST_URI'],'?') !== false) { 
 					$navb = preg_replace("~(\?|&)tikiversion=[^&]*~","",$_SERVER['REQUEST_URI']);
 				} else {
 					$navb = $_SERVER['REQUEST_URI'];
 				}
-				if (strpos($navb,'?')) {
+				if (strpos($navb,'?') !== false) {
 					$navbar.= "$navb&";
 				} else {
 					$navbar.= "$navb?";
@@ -136,11 +139,11 @@ function wikiplugin_versions($data, $params) {
 		
 		if (!$highed) { $high = " highlight"; } else { $high = ''; }
 		if ($type == 'host') {
-			$navbar = '<span class="button2'.$high.'"><a href="http://'. preg_replace("/".$v[1][$p]."/","",$_SERVER['SERVER_NAME']) . preg_replace("~(\?|&)tikiversion=[^&]*~","",$_SERVER['REQUEST_URI']) .'" class="linkbut">'.$default.'</a></span>'.$navbar;
+			$navbar = '<span class="button'.$high.'"><a href="http://'. preg_replace("/".$v[1][$p]."/","",$_SERVER['SERVER_NAME']) . preg_replace("~(\?|&)tikiversion=[^&]*~","",$_SERVER['REQUEST_URI']) .'" class="linkbut">'.$default.'</a></span>'.$navbar;
 		} else {
-			$navbar = '<span class="button2'.$high.'"><a href="'. preg_replace("~(\?|&)tikiversion=[^&]*~","",$_SERVER['REQUEST_URI']) .'" class="linkbut">'.$default.'</a></span>'.$navbar;
+			$navbar = '<span class="button'.$high.'"><a href="'. preg_replace("~(\?|&)tikiversion=[^&]*~","",$_SERVER['REQUEST_URI']) .'" class="linkbut">'.$default.'</a></span>'.$navbar;
 		}
-		$data = '<div class="versions"><div class="versionav">'.$navbar."</div><div>\n".$data."</div>\n</div>";
+		$data = '<div class="versions"><div class="versionav">'.$navbar.'</div><div class="versioncontent">'.$data."</div>\n</div>";
 	}
 
 	return $data;

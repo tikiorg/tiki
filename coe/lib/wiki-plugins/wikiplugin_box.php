@@ -41,12 +41,12 @@ function wikiplugin_box_info() {
 			'align' => array(
 				'required' => false,
 				'name' => tra('Text Alignment'),
-				'description' => tra('left|right|center'),
+				'description' => 'left|right|center',
 			),
 			'float' => array(
 				'required' => false,
 				'name' => tra('Float Position'),
-				'description' => tra('left|right, for box with width lesser than 100%, make text wrap around the box.'),
+				'description' => 'left|right' . ', ' . tra('for box with width lesser than 100%, make text wrap around the box.'),
 			),
 			'class' => array(
 				'required' => false,

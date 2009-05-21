@@ -1,17 +1,18 @@
 {title help="Menus"}{tr}Admin Menus{/tr}{/title}
 
 {remarksbox type="tip" title="{tr}Tip{/tr}"}
-  {tr}To use menus in a <a href="tiki-admin_modules.php">module</a>, <a href="tiki-admin.php?page=siteid">Site identity</a> or a template, use {literal}{menu id=x}{/literal}, where x is the ID of the menu.{/tr}
-  <hr />
-  {tr}To use <a target="tikihelp" href="http://phplayersmenu.sourceforge.net/">phplayersmenu</a>, you can use one of the three following syntaxes:{/tr} 
-  <ul>
-    <li>{literal}{phplayers id=X}{/literal}</li>
-    <li>{literal}{phplayers id=X type=horiz}{/literal}</li>
-    <li>{literal}{phplayers id=X type=vert}{/literal}</li>
-  </ul>
-  {tr}This will work well (or not!) depending on your theme. To learn more about <a target="tikihelp" href="http://themes.tikiwiki.org">themes</a>{/tr}<br />
-  {tr}To use a menu in a tiki format:{/tr} {literal}{menu id=X}{/literal}<br />
-  {tr}To use menu in a css/suckerfish format:{/tr} {literal}{menu id=X css=y}{/literal}
+	{tr}To use menus in a <a href="tiki-admin_modules.php">module</a>, <a href="tiki-admin.php?page=siteid">Site identity</a> or a template, use {literal}{menu id=x}{/literal}, where x is the ID of the menu.{/tr}
+	<hr />
+	{tr}To use <a target="tikihelp" href="http://phplayersmenu.sourceforge.net/">phplayersmenu</a>, you can use one of the three following syntaxes:{/tr}
+	<ul>
+		<li>{literal}{phplayers id=X}{/literal}</li>
+		<li>{literal}{phplayers id=X type=horiz}{/literal}</li>
+		<li>{literal}{phplayers id=X type=vert}{/literal}</li>
+	</ul>
+	{tr}This will work well (or not!) depending on your theme. To learn more about <a target="tikihelp" href="http://themes.tikiwiki.org">themes</a>{/tr}<br />
+	{tr}To use a menu in a tiki format:{/tr} {literal}{menu id=X}{/literal}<br />
+	{tr}To use menu in a css/suckerfish format:{/tr} {literal}{menu id=X css=y}{/literal}<br />
+	{tr}To customizing the menu's css id (#id):{/tr} {literal}{menu id=X css_id=custom_name}{/literal}
 {/remarksbox}
 
 {if $menuId > 0}
@@ -34,19 +35,40 @@
 </select>
 </td></tr>
 {if $prefs.feature_menusfolderstyle eq 'y'}
-<tr><td class="formcolor">{tr}Folder Icon{/tr}:</td><td><input type="text" name="icon" value="{$info.icon}" style="width:95%" /><br /><em>{tr}Path and filename of closed folder icon{/tr}</em>.
+<tr>
+	<td class="formcolor" rowspan="2">{tr}Icons:{/tr}</td>
+	<td>
+		<div>{tr}Folder Icon{/tr}</div>
+		<input type="text" name="icon" value="{$info.icon}" style="width:95%" /><br /><em>{tr}Path and filename of closed folder icon{/tr}</em>.
 
-{remarksbox type="tip" title="{tr}Note{/tr}"}
-  {tr}To use custom folder icons in menus, enter the path to the icon for the <strong>closed</strong> folder.{/tr} {tr}In the same directory, include an icon for the opened folder.{/tr} {tr}The "opened folder" icon name must be identical to the "closed folder" icon name, prefixed with the letter <strong>o</strong>.{/tr}<hr />
-  For example, the default icon is: pics/icons/folder.png {icon _id="folder"}<br />The name of the "open folder" icon is: pics/icons/ofolder.png {icon _id="ofolder"}
-{/remarksbox}
-</td></tr>
+		{remarksbox type="tip" title="{tr}Note{/tr}"}
+			{tr}To use custom folder icons in menus, enter the path to the icon for the <strong>closed</strong> folder.{/tr} {tr}In the same directory, include an icon for the opened folder.{/tr} {tr}The "opened folder" icon name must be identical to the "closed folder" icon name, prefixed with the letter <strong>o</strong>.{/tr}<hr />
+			For example, the default icon is: pics/icons/folder.png {icon _id="folder"}<br />The name of the "open folder" icon is: pics/icons/ofolder.png {icon _id="ofolder"}
+		{/remarksbox}
+	</td>
+</tr>
 {/if}
-<tr><td class="formcolor">&nbsp;</td><td class="formcolor"><input type="submit" name="save" value="{tr}Save{/tr}" /></td></tr>
+{if $prefs.menus_items_icons eq 'y'}
+<tr>
+	<td class="formcolor">
+		<label for="use_items_icons">
+			<input type="checkbox" id="use_items_icons" name="use_items_icons"{if $info.use_items_icons eq 'y'} checked="checked"{/if}/>
+			{tr}Configure icons for menu entries{/tr}
+		</label>
+	</td>
+</tr>
+{/if}
+<tr>
+	<td class="formcolor">&nbsp;</td>
+	<td class="formcolor">
+		<input type="submit" name="save" value="{tr}Save{/tr}" />
+		{if $prefs.menus_items_icons neq 'y'}<input type="hidden" name="use_items_icons" value="{$info.use_items_icons}" />{/if}
+	</td>
+</tr>
 </table>
 </form>
 <br /><h2>{tr}Menus{/tr}</h2>
-{include file='find.tpl' _sort_mode='y'}
+{include file='find.tpl'}
 <table class="normal">
 <tr>
 <th>{self_link _sort_arg='sort_mode' _sort_field='menuId'}{tr}ID{/tr}{/self_link}</th>

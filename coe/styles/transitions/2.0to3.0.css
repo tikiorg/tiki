@@ -18,15 +18,16 @@ They should be added to themes (possibly with tweaks) to make the theme v3.0 rea
 
 .plugin-form-float {
 	position: fixed;
-	left: 15%;
-	right: 15%;
-	top: 10%;
-	max-height: 80%;
+	left: 5%;
+	right: 365px;
+	top: 5%;
+	max-height: 90%;
 	overflow: auto;
 	background: white;
 	color: black;
 	padding: 10px;
 	border: solid 2px black;
+	z-index: 1000;
 }
 
 .icon_edit_section {
@@ -34,12 +35,31 @@ They should be added to themes (possibly with tweaks) to make the theme v3.0 rea
 	margin-top: 1em;
 }
 
-h3.box-title span.moduletitle {
-  float: left;
+h3.box-title {
+	position: relative}
+	
+* html h3.box-title {
+	position: static
 }
-h3.box-title span.moduleflip {
-  float: right;
+	
+.moduleflip {
+	display: none;
+	position: absolute;
+	right: 0;
+	top: 0
 }
+
+* html .moduleflip {
+	position: static;
+	float: right
+}
+
+* html .moduleflip,
+.box:hover .moduleflip {display: block}
+
+.box:hover img.flipmodimage {border: 1px solid transparent}
+* html img.flipmodimage {border: none}
+img.flipmodimage:hover {border: 1px solid #80B1E2 !important}
 
 #shadowbox_content {
 	background: white;
@@ -57,13 +77,13 @@ img.icon {
 .post-approved-r { border-left: 3px double red; }
 .post-approved-r .content * { background-image: url(../../img/icons2/dots.gif); }
 
-.post-approved-n .content, .post-approved-r .content,
+/* .post-approved-n .content, .post-approved-r .content,
 .post-approved-n .title, .post-approved-r .title,
 .post-approved-n .postfooter, .post-approved-r .postfooter,
 tr.post-approved-n td span, tr.post-approved-r td span {
 	opacity: 0.5;
 }
-tr.post-approved-n td span, tr.post-approved-r td span { opacity: 0.6; }
+tr.post-approved-n td span, tr.post-approved-r td span { opacity: 0.6; } VALIDATION ERROR */
 
 /* multiselect section for categories for example */
 
@@ -71,7 +91,7 @@ div.multiselect {
 	vertical-align: middle;
 	padding: 0;
 	border:1px solid #80B1E2;
-	height: 1.5em;
+	height: auto;
 	overflow: visible;
 }
 div.multiselect table{
@@ -115,14 +135,24 @@ div.multiselect ul {
 	margin:0;
 	padding:0;
 }
+div.multiselect li {
+	margin-left: 3em;
+}
+div.multiselect  ul.root > li {
+	margin: 0 1em 0.5em .5em;
+	display: block;
+	float: left;
+}
+
 div.multiselect img {
 	vertical-align: middle;
 }
 
 div.multiselect div.selection {
 	display: none;
-	overflow-y: auto;
-	overflow-x: hidden;
+	/*overflow-y: auto;
+	overflow-x: hidden; VALIDATION ERROR */
+	overflow: auto;
 	position: relative;
 	height: auto;
 	max-height: 7em;
@@ -153,21 +183,27 @@ div.multiselect:hover, div.multiselect div.selection:hover {
 /* New Help section */
 div#tikihelp {
 	position:fixed;
-	_position:absolute;
-	right: 0px;
-	top: 15%;
-	height: 80%;
+	right: 0;
+	top: 3px;
+	height: auto; /* if there was height specified it covered the right column content "invisibly" making part of it unclickable (from strasa) */
 	max-width: 50%;
 	padding:0;
 	margin:0;
 	border: none;
 	background-color: transparent;
-	z-index: 2;
+	z-index: 820;
 }
+* html div#tikihelp {position: absolute}
+
 div.help_icon {
 	border: 0;
 	margin: 0;
 	padding: 0;
+	height: 48px;
+	text-align: right;
+}
+div.help_icon a:hover {
+	text-decoration: none;
 }
 div.help_icon img{
 	vertical-align: middle;
@@ -184,13 +220,14 @@ div.help_section_select {
 	margin: 2px;
 }
 div.help_sections {
+	width : 360px;
 	padding:  2px;
 	background-color: #AAC9E9;
-	height : 100%;
+	max-height : 95%;
 	overflow: auto;
+	height: 400px;
 }
 div.help_section {
-	width : 340px;
 	margin: 5px;
 	padding: 5px;
 	background-color: white;
@@ -224,264 +261,9 @@ ul.categories li{
 	font-size: 120%;
 }
 
-#filtercal {
-	z-index: 200 !important;
-}
-#exportcal {
-	z-index: 200 !important;
-	background: #FFF;
-	position: absolute;
-	border: 1px solid #000;
-	right: 240px;
-}
-#exportcal .caltitle,
-#exportcal .caltoggle,
-#exportcal .calcheckbox {
-	padding: 0 10px;
-}
-#exportcal .calinput {
-	padding: 10px;
-}
-
-#prev {
-	margin-left: 30px;
-	float: left;
-	position: relative;
-	height: 20px;
-	width: 20px;
-	background: url("../../pics/prev.gif") no-repeat;
-}
-#next {
-	float: left;
-	position: relative;
-	height: 20px;
-	width: 20px;
-	background: url("../../pics/next.gif") no-repeat;
-}
-.calbuttonBox {
-	float: left;
-	position: relative;
-	height: 20px;
-	width: 86px;
-}
-.calbuttonon,
-.calbuttonoff {
-	position: absolute;
-	top: 0px;
-	left: 3px;
-	padding-top: 3px;
-	text-align: center;
-	font-size: 12px;
-/*	font-family: Arial, sans-serif;*/
-	height: 20px;
-	width: 80px;
-	border-style: solid;
-	border-color: #999;
-	border-width: 0px;
-}
-/*
-.calbuttonoff a,
-.calbuttonoff a:visited {
-	color: #000;
-}
-*/
-.calbuttonon a {
-	text-decoration: underline;
-}
-.calbuttonLeft {
-	float: left;
-	width: 3px;
-	height: 20px;
-}
-.calbuttonRight {
-	position: absolute;
-	top: 0px;
-	right: 3px;
-	float: right;
-	width: 3px;
-	height: 20px;
-}
-#caltable {
-	border-collapse: collapse;
-	border-bottom: 1px solid #cfd0d0;
-}
-#caltable .days {
-	height: 20px;
-	text-align: center;
-/*	color: #483b3b;*/
-}
-#configlinks {
-	width: 100%;
-/*	background-color: #fff;*/
-	padding: 5px;
-}
-.calnavigation {
-	border-width: 0px;
-	text-align: center;
-	font-weight: bold;
-	padding: 4px;
-/*	color: #e8ffff;*/
-}
-.button2 .linkbut,
-.button2 .linkbut:visited {
-/*	color: #548ca5;*/
-	padding: 3px 5px;
-/*	background-color: #dfeaf0;*/
-	border-width: 0px;
-}
 #disp_trig {
 	background-color: #88b6c3;
 	color: #e8ffff;
-}
-.caldark {
-	background: #e0e0e0;
-	border: 1px dotted #d6dbde;
-}
-.caldark,
-.calfocus,
-.calfocuson {
-	height: 20px;
-}
-.calodd .calfocus,
-.calodd .calfocuson,
-.caleven .calfocus,
-.caleven .calfocuson {
-	background: none;
-	border-width: 0px;
-	padding-top: 2px;
-	padding-left: 2px;
-}
-/*.calodd .calfocus a,
-.calodd .calfocuson a,
-.caleven .calfocus a,
-.caleven .calfocuson a {
-	color: #483b3b;
-}*/
-.calodd,
-.caleven {
-	background: none;
-/*	border-color: #d6dbde;*/
-}
-.caldark .calfocus { background: none; border-width: 0px; }
-.calcontent {
-	padding-right: 0px;
-	padding-left: 0px;
-}
-.calfocuson + .calcontent {
-	background: none;
-}
-
-.Cal,
-.Cal0,
-.Cal1,
-.Cal2 {
-	font-weight: normal;
-	border-width: 1px;
-	border-style: solid;
-}
-.Cal0 a,
-.Cal1 a,
-.Cal2 a {
-	font-weight: normal;
-	text-decoration: none;
-}
-.calfocus a,
-.calfocus a:visited {
-	text-decoration: none;
-	font-weight: normal;
-/*	color: #000000;*/
-}
-
-.Cal {
-	border-color: transparent;
-}
-
-/*.calfocuson {
-	background-color: #ccf;
-}*/
-
-.calHeadingLeft {
-	height: 36px;
-	text-align: center;
-	vertical-align: middle;
-/*	color: #483b3b;
-	border-bottom: 1px #cfd0d0 solid;*/
-}
-.calHeading,
-.calHeadingOn {
-	height: 36px;
-	text-align: center;
-	vertical-align: middle;
-/*	color: #483b3b;
-	border-bottom: 1px #cfd0d0 solid;*/
-}
-.calHeading a,
-.calHeading a:visited {
-/*	color: #483b3b;*/
-	text-decoration: none;
-}
-.calHeadingOn a {
-	color: #06f;
-	text-decoration: none;
-}
-.calHeading a:hover,
-.calHeadingOn a:hover {
-	text-decoration: underline;
-}
-.calHours {
-	vertical-align: middle;
-	text-align: center;
-	border-width: 1px 0px 0px 1px;
-	border-color: #cfd0d0 #e0e0e0;
-	border-style: solid;
-}
-.calDay {
-	padding: 0px;
-	border-width: 0px 1px 1px 1px;
-/*	background-color: #fcfefd;
-	border-color: #cfd0d0 #a1a19f;*/
-	border-style: solid;
-}
-.calWeek {
-	border-width: 1px 1px 0px 1px;
-/*	background-color: #fcfefd;*/
-	border-color: #cfd0d0 #e0e0e0;
-	border-style: solid;
-}
-.opaque .box-title {
-	text-decoration: underline;
-}
-#calscreen td {
-	vertical-align: top;
-	*height: 21px; /* fix for IE7 */
-	_height: ; /* fix for IE6 */
-}
-#calscreen td a {
-	text-decoration: none;
-}
-div.tabrow {
-	position: relative;
-	left: 0;
-	font-size: 1em;
-	height: 24px !important;
-	width: 720px;
-/*	padding-top:11px;*/
-}
-.tabrowLeft {
-	position: absolute;
-	top: 0;
-	left: 0;
-	float: left;
-	width: 23px;
-	height: 24px !important;
-}
-.tabrowRight {
-	position:absolute;
-	top: 0;
-	right: 0;
-	float: left;
-	width: 30px;
-	height: 24px !important;
 }
 
 img {border: 0}
@@ -526,10 +308,10 @@ p.editdate {
   border: .1em solid #f00 !important;
 }
 
-.box-switch_lang .box-data img.unavailable,
+/*.box-switch_lang .box-data img.unavailable,
 .box-switch_lang .box-data span.unavailable  {
   opacity: .3;
-}
+} VALIDATION ERROR */
 
 /* words */
 
@@ -541,9 +323,9 @@ p.editdate {
   font-weight: bold;
 }
 
-.box-switch_lang .box-data a.unavailable  {
+/*.box-switch_lang .box-data a.unavailable  {
   opacity: .6;
-}
+} VALIDATION ERROR */
 
 .box-switch_lang ul {
 	padding: 0 1em;
@@ -574,6 +356,7 @@ p.editdate {
 
 .cluetip-default {
   background-color: #BED8F1;
+  color: #000;
 }
 .cluetip-default #cluetip-outer {
   background-color: #BED8F1;
@@ -598,10 +381,67 @@ p.editdate {
 /* for admin section */
 
 span.disabled {
-	opacity: .5;
+	/*opacity: .5; VALIDATION ERROR */
 	font-style: italic;
 }
 
 #style_thumb_div {
 	text-align: center;
+}
+
+/***** TikiSheet Default Style *****/
+
+table.default thead td,
+table.default tfoot td {
+	font-weight: bold;
+	text-align:	center;
+	background: #ABCDEF;
+	color: #cce5ff}
+
+table.default td {
+	border: solid 1px #A9A9A9;
+	background: white}
+
+/*** blogs modules ***/
+
+/* <small> on these modules contains the blog date
+   and is more readable on separate line */
+
+small.description {
+	display: block;
+	font-size: .95em;
+	font-style: italic}
+
+/*** for mods list ***/
+
+td.mods_revision {
+	background-color: #b5cfb5;
+}
+
+td.mods_update {
+	background-color:#dcdeac;
+}
+
+/*td.mods_hilite {
+	background-color:#;
+} MISSING VALUE */
+
+/* workaround for Safari when in FCKEditor */
+html[dir=ltr]>body {
+	display: block;
+	margin: 1em .5em;
+}
+
+/* wikiplugin edit */
+.wikiplugin_edit textarea {width: 99%; height: 150px}
+
+/* wikiplugin tracker */
+.mandatory_star {
+	font-weight: bold;
+	color: red;	
+}
+.mandatory_note{
+	display: block;
+	font-style: italic;
+	margin-top: 10px;
 }

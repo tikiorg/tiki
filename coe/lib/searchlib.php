@@ -208,8 +208,11 @@ class SearchLib extends TikiLib {
 			$qwords = $this->db->quote($words);
 
 			$sqlft = 'MATCH(' . join(',', $h['search']). ') AGAINST (' . $qwords ;
-			if ($boolean == 'y')
+			if ($boolean == 'y') {
 				$sqlft .= ' IN BOOLEAN MODE';
+		    } else {
+		        $sqlft .= ' IN NATURAL LANGUAGE MODE';
+		    }
 			$sqlft .= ')';
 			$sqlWhere .= ' AND ' . $sqlft ;
 			$sqlFields .= ', ' . $sqlft . ' AS relevance';
@@ -248,13 +251,19 @@ class SearchLib extends TikiLib {
 		$cant = $result->numRows();
 
 		if (!$cant && $boolean != 'y') { // no result
-			if ($fulltext && $words) // try a simple search
-				return $this->_find($h, $words, $offset, $maxRecords, false, $filter, $boolean, $type, $searchDate);
-			else
+		
+			if ($fulltext && $words) {
+			    // try a simple search
+   		        echo "-- _find: \$fulltext && \$words holds, so actually trying the search<br>\n";
+
+			    return $this->_find($h, $words, $offset, $maxRecords, false, $filter, $boolean, $type, $searchDate);
+			} else {
+
 				return array(
 					'data' => array(),
 					'cant' => 0
 				);
+			}
 		}
 
 		$result = $this->query($sql, $bindVars, $maxRecords, $offset);
@@ -370,7 +379,7 @@ class SearchLib extends TikiLib {
 
 			'permName' => 'tiki_p_view_calendar',
 			'objectType' => 'calendar',
-			'objectKey' => '`viewcalitemId`',
+			'objectKey' => 'c.`calendarId`',
 			'parent' => 'tc.`name` as parentName, concat(\'tiki-calendar.php$calIds[]=\', tc.`calendarId`,\'&todate=\',c.`start`) as parentHref',
 			'parentJoin' => 'LEFT JOIN `tiki_calendars` tc ON tc.`calendarId` = c.`calendarId`',
 		);
@@ -400,7 +409,7 @@ class SearchLib extends TikiLib {
 
 	function find_faqs($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate) {
 		$search_faqs = array(
-			'from' => '`tiki_faqs` f , `tiki_faq_questions` q',
+			'from' => '`tiki_faq_questions` q, `tiki_faqs` f',
 			'name' => 'f.`title`',
 			'data' => 'f.`description`',
 			'hits' => 'f.`hits`',
@@ -527,8 +536,14 @@ class SearchLib extends TikiLib {
 			'objectType' => 'blog',
 			'objectKey' => '`blogId`',
 		);
+		$res = $this->_find($search_blogs, $words, $offset, $maxRecords, $fulltext, $filter, $boolean, tra('Blog'), $searchDate);
+		global $user, $smarty;
+		include_once('tiki-sefurl.php');
+		foreach ($res['data'] as $i=>$r) {
+			$res['data'][$i]['href'] = filter_out_sefurl($r['href'], $smarty, 'blog', $res['pageName']);
+		}
 
-		return $this->_find($search_blogs, $words, $offset, $maxRecords, $fulltext, $filter, $boolean, tra('Blog'), $searchDate);
+		return $res;
 	}
 
 	function find_articles($words = '', $offset = 0, $maxRecords = -1, $fulltext = false, $filter='', $boolean='n', $searchDate) {
@@ -556,10 +571,12 @@ class SearchLib extends TikiLib {
 
 		$res = $this->_find($search_articles, $words, $offset, $maxRecords, $fulltext, $filter, $boolean, tra('Article'), $searchDate);
 		$ret = array('cant'=>$res['cant'], 'data'=>array());
-		global $user;
+		global $user, $smarty;
+		include_once('tiki-sefurl.php');
 		foreach ($res['data'] as $r) {
 			if (empty($r['name']) || $this->user_has_perm_on_object($user, $r['name'], 'topic', 'tiki_p_topic_read')) {
 				$r['name'] = $r['pageName'];
+				$r['href'] = filter_out_sefurl($r['href'], $smarty, 'article', $r['pageName']);
 				$ret['data'][] = $r;
 			} else {
 				--$ret['cant'];
@@ -624,7 +641,7 @@ class SearchLib extends TikiLib {
 			$search_trackers['filter'] .= " AND tti.`status` != 'p'";
 		$ret = $this->_find($search_trackers, $words, $offset, $maxRecords, $fulltext, $filter, $boolean, tra('Tracker item'), $searchDate);
 		foreach ($ret['data'] as $i=>$res) {
-			$ret['data'][$i]['pageName'] = '(#'.$res['pageName'].')'.$trklib->get_isMain_value($res['hits'], $res['pageName']);
+			$ret['data'][$i]['pageName'] = '(#'.$res['pageName'].') '.$trklib->get_isMain_value($res['hits'], $res['pageName']);
 			$ret['data'][$i]['hits'] = 'Unknown'; 
 		}
 		return $ret;

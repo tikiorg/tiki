@@ -24,6 +24,7 @@ function wikiplugin_equation_help() {
 function wikiplugin_equation_info() {
 	return array(
 		'name' => tra('Equation'),
+		'documentation' => 'PluginEquation',
 		'description' => tra('Renders an equation written in LaTeX syntax as an image.'),
 		'prefs' => array('wikiplugin_equation'),
 		'body' => tra('equation'),
@@ -38,11 +39,12 @@ function wikiplugin_equation_info() {
 }
 
 function wikiplugin_equation($data, $params) {
+	if (empty($data)) return '';
     extract ($params, EXTR_SKIP);
     if (empty($size)) $size = 100;
 
-    include_once("equation/class.latexrender.php");
     $latexrender_path = getcwd() . "/lib/equation"; 
+    include_once($latexrender_path . "/class.latexrender.php");
     $latexrender_path_http = "lib/equation";
     $latex = new LatexRender($latexrender_path."/pictures",$latexrender_path_http."/pictures",$latexrender_path."/tmp");
     $latex->_formula_density = 120 * $size / 100;

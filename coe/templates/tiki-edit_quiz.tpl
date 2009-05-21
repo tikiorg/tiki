@@ -157,7 +157,7 @@
 <!-- begin form for searching quizzes -->
 
 <h2>{tr}Quizzes{/tr}</h2>
-{include file='find.tpl' _sort_mode='y'}
+{include file='find.tpl'}
 
 <!-- begin table for displaying quiz data -->
 <table class="normal">

@@ -79,7 +79,7 @@
     &nbsp;<a href="tiki-phpinfo.php" class="linkmenu">{tr}phpinfo{/tr}</a><br />
     &nbsp;<a href="tiki-admin_dsn.php" class="linkmenu">{tr}Admin dsn{/tr}</a><br />
     &nbsp;<a href="tiki-admin_external_wikis.php" class="linkmenu">{tr}External Wikis{/tr}</a><br />
-    &nbsp;<a href="tiki-admin_system.php" class="linkmenu">{tr}System Admin{/tr}</a><br />
+    &nbsp;<a href="tiki-admin_system.php" class="linkmenu">{tr}Tiki Cache/Sys Admin{/tr}</a><br />
     &nbsp;<a href="tiki-admin_security.php" class="linkmenu">{tr}Security Admin{/tr}</a><br />
     {/if}
     {if $tiki_p_admin_code_hilight eq 'y'}

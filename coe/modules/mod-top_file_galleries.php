@@ -5,7 +5,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
-
+global $tikilib, $smarty;
 $ranking = $tikilib->list_visible_file_galleries(0, $module_rows, 'hits_desc', 'admin', '');
 
 $smarty->assign('modTopFileGalleries', $ranking["data"]);

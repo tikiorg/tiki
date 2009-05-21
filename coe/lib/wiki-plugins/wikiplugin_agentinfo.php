@@ -15,11 +15,18 @@ function wikiplugin_agentinfo_info() {
 		'documentation' => 'PluginAgentinfo',
 		'description' => tra( 'Displays various information about the client.' ),
 		'prefs' => array('wikiplugin_agentinfo'),
-		'params' => array(),
+		'params' => array(
+			'info' => array(
+				'required' => false,
+				'name' => tra('Info'),
+				'description' => tra('Info required - IP|SVRSW|BROWSER'),
+			),
+		),
 	);
 }
 
 function wikiplugin_agentinfo($data, $params) {
+	global $tikilib;
 	
 	extract ($params,EXTR_SKIP);
 

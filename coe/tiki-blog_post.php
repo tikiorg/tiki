@@ -50,8 +50,8 @@ if ( count($blogs) == 0 ) {
 $smarty->assign('blogId', $blogId);
 
 // Now check permissions to access this page
-if (!($tiki_p_blog_admin == 'y' || (!empty($blogId) && $tiki_p_blog_post == 'y') || (!empty($blogId) && $blog_data['public']== 'y' && $tikilib->user_has_perm_on_object($user, $blogId, 'blog', 'tiki_p_blog_post')))) {
-$msg="tiki_p_blog_admin: $tiki_p_blog_admin -- blogId: $blogId -- tiki_p_blog_post: $tiki_p_blog_post -- blog_data(public): ".$blog_data['public']." -- tikilib: ".$tikilib->user_has_perm_on_object($user, $blogId, 'blog', 'tiki_p_blog_post')." -- user: $user ";
+if (!($tiki_p_blog_admin == 'y' || (!empty($blogId) && $tiki_p_blog_post == 'y') || (!empty($blogId) && $blog_data['public']== 'y' && $tikilib->user_has_perm_on_object($user, $blogId, 'blog', 'tiki_p_blog_post', 'tiki_p_edit_categorized')))) {
+	$msg="tiki_p_blog_admin: $tiki_p_blog_admin -- blogId: $blogId -- tiki_p_blog_post: $tiki_p_blog_post -- blog_data(public): ".$blog_data['public']." -- tikilib: ".$tikilib->user_has_perm_on_object($user, $blogId, 'blog', 'tiki_p_blog_post', 'tiki_p_edit_categorized')." -- user: $user ";
 	$smarty->assign('errortype', 401);
 	$smarty->assign('msg', tra("Permission denied you cannot post"));
 
@@ -77,7 +77,7 @@ $smarty->assign('created', $tikilib->now);
 // Exit edit mode (without javascript)
 if ( isset($_REQUEST['cancel']) ) header ("location: tiki-view_blog.php?blogId=$blogId");
 // Exit edit mode (with javascript)
-$smarty->assign('referer', empty($_SERVER['HTTP_REFERER']) ? 'tiki-view_blog.php?blogId='.$blogId : $_SERVER['HTTP_REFERER']);
+$smarty->assign('referer', !empty($_REQUEST['referer'])?$_REQUEST['referer']: (empty($_SERVER['HTTP_REFERER']) ? 'tiki-view_blog.php?blogId='.$blogId : $_SERVER['HTTP_REFERER']));
 
 $blog_data = $bloglib->get_blog($blogId);
 $smarty->assign_by_ref('blog_data', $blog_data);
@@ -99,6 +99,12 @@ if (isset($_REQUEST["postId"]) && $_REQUEST["postId"] > 0) {
 
 	// If the user owns the weblog then he can edit
 	if ($user && $user == $blog_data["user"]) {
+		$data["user"] = $user;
+	}
+
+	// If the blog is public and the user has posting permissions then he can edit
+	if ($user && $blog_data['public'] == 'y' 
+		&& $tikilib->user_has_perm_on_object($user, $_REQUEST['blogId'], 'blog', 'tiki_p_blog_post', 'tiki_p_edit_categorized') ) {
 		$data["user"] = $user;
 	}
 
@@ -265,6 +271,11 @@ if ((isset($_REQUEST["save"]) || isset($_REQUEST['save_exit'])) && !$contributio
 			$data["user"] = $user;
 		}
 
+		if ($user && $blog_data['public'] == 'y' 
+			&& $tikilib->user_has_perm_on_object($user, $_REQUEST['blogId'], 'blog', 'tiki_p_blog_post', 'tiki_p_edit_categorized') ) {
+			$data["user"] = $user;
+		}
+
 		if ($data["user"] != $user || !$user) {
 			if ($tiki_p_blog_admin != 'y') {
 				$smarty->assign('errortype', 401);
@@ -333,11 +344,11 @@ include_once ('tiki-section_options.php');
 include_once("textareasize.php");
 
 global $wikilib; include_once('lib/wiki/wikilib.php');
-$plugins = $wikilib->list_plugins(true);
+$plugins = $wikilib->list_plugins(true, 'blogedit');
 $smarty->assign_by_ref('plugins', $plugins);
 
 include_once ('lib/quicktags/quicktagslib.php');
-$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_desc','','blogs');
+$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_asc','','blogs');
 $smarty->assign_by_ref('quicktags', $quicktags["data"]);
 if ($prefs['feature_contribution'] == 'y') {
 	include_once('contribution.php');

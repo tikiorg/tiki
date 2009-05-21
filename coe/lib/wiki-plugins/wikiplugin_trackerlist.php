@@ -85,6 +85,11 @@ function wikiplugin_trackerlist_info() {
 				'name' => tra('Show Field Name'),
 				'description' => 'y|n',
 			),
+			'showitemrank' => array(
+				'required' => false,
+				'name' => tra('Show Item Rank'),
+				'description' => 'y|n',
+			),
 			'status' => array(
 				'required' => false,
 				'name' => tra('Status Filter'),
@@ -307,6 +312,11 @@ function wikiplugin_trackerlist($data, $params) {
 		}
 		$smarty->assign_by_ref('showfieldname', $showfieldname);
 
+		if (!isset($showitemrank)) {
+			$showitemrank = 'n';
+		}
+		$smarty->assign_by_ref('showitemrank', $showitemrank);
+
 		if (!isset($status)) {
 			$status = "o";
 		}
@@ -416,7 +426,7 @@ function wikiplugin_trackerlist($data, $params) {
 				$exactvalue[] = isset($view)? (empty($user)?'Anonymous':$user): $view_user;
 			}
 		}
-		if (isset($view) && $view == 'page' && $_REQUEST['page']) {
+		if (isset($view) && $view == 'page' && isset($_REQUEST['page'])) {
 			if ($f = $trklib->get_field_id_from_type($trackerId, 'k')) {
 				$filterfield[] = $f;
 				$filtervalue[] = '';

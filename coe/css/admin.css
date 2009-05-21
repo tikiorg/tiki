@@ -1,3 +1,5 @@
+/* $Id $ */
+
 a.admbox {
 	border : 2px solid #89d;
 	height : 100px;
@@ -41,7 +43,7 @@ a.admbox.off:hover, a.admbox.off:focus, a.admbox.off:active {
 	color: #333;
 }
 
-/* classes for admin ui revamp */
+/* classes for admin preferences UI */
 .adminoptionbox {
 /*overall box */
 	clear:both;
@@ -49,13 +51,18 @@ a.admbox.off:hover, a.admbox.off:focus, a.admbox.off:active {
 	text-align:left;
 	}
 	
-.adminoptionlabel {
+.adminoptionbox label, .adminoptionlabel {
 /* text label and text field */
-	text-align:left;
+	text-align: left;
 	}
-	
-.adminoption {
+
+.adminoptionbox label.above {
+	display: block;
+}
+
+.adminoptionbox .checkbox, .adminoption {
 /*check box */
+	display: block;
 	float:left;
 	margin-right:1em;
 	}
@@ -65,3 +72,52 @@ a.admbox.off:hover, a.admbox.off:focus, a.admbox.off:active {
 	margin-left:3em;
 	clear:both;
 	}
+
+.admin input.fullwidth {
+	width: 100%;
+}
+
+.half_width {
+	width: 49%;
+	float: left;
+	text-align: left;
+}
+
+.width_40em {
+	width: 40em;
+}
+
+.width_30em {
+	width: 30em;
+}
+
+.admin2cols label {
+	display: block;
+	float: left;
+	min-width: 20%;
+}
+
+.admin legend img, .admin label img {
+	margin-left: 1em;
+	vertical-align: middle;
+}
+
+.admingroup {
+	border: #aaa 1px solid;
+	margin-bottom: .5em;
+}
+
+.q1 {
+	min-width: 20%;
+	display: block;
+	float: left;
+	clear: none;
+	vertical-align: middle;
+}
+.q234 {
+	min-width: 75%;
+	float: left;
+	clear: none;
+}
+
+div.adminanchors a {float: left}

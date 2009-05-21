@@ -337,7 +337,7 @@ class UsersLib extends TikiLib {
 
 	// if we aren't using LDAP this will be quick
 	// if we are using tiki auth or if we're using an alternative auth except for admin
-	if ((!$auth_pear && !$auth_pam && !$auth_cas && !$auth_shib) || ((($auth_pear && $skip_admin) || ($auth_shib && $shib_skip_admin) || ($auth_pam && $pam_skip_admin) || ($auth_cas && $cas_skip_admin)) && $user == "admin") || ($auth_pear && $prefs['auth_create_user_tiki'] == 'y' && $userTiki)) {
+	if ((!$auth_pear && !$auth_pam && !$auth_cas && !$auth_shib) || ((($auth_pear && $skip_admin) || ($auth_shib && $shib_skip_admin) || ($auth_pam && $pam_skip_admin) || ($auth_cas && $cas_skip_admin)) && $user == "admin")) {
 	    // if the user verified ok, log them in
 	    if ($userTiki)  //user validated in tiki, update lastlogin and be done
 		return array($this->update_lastlogin($user), $user, $result);
@@ -705,7 +705,7 @@ class UsersLib extends TikiLib {
 		}
 
 		// import phpCAS lib
-		require_once('phpcas/source/CAS/CAS.php');
+		require_once('lib/phpcas/source/CAS/CAS.php');
 
 		phpCAS::setDebug();
 
@@ -771,9 +771,12 @@ class UsersLib extends TikiLib {
 	$a->username = $user;
 	$a->password = $pass;
 	$a->status = AUTH_LOGIN_OK;
-
+	
 	// check if the login correct
 	$a->login();
+	//teste
+	////echo 'login';	
+	//teste
 	switch ($a->getStatus()) {
 		case AUTH_LOGIN_OK:
 			// Retrieve LDAP information to update user data a bit later (when he will be completely validated or auto-created)
@@ -1008,6 +1011,7 @@ function get_users($offset = 0, $maxRecords = -1, $sort_mode = 'login_asc', $fin
 	    }
 	    $res["groups"] = $groups;
 	    $res["age"] = $this->now - $res["registrationDate"];
+            $res['user_information'] = $this->get_user_preference($user, 'user_information', 'public');
 
 	    $ret[] = $res;
 	}
@@ -1076,6 +1080,9 @@ function get_included_groups($group, $recur=true) {
 	$query = "delete from `users_usergroups` where `userId` = ? and
 		`groupName` = ?";
 	$result = $this->query($query, array($userid, $group));
+	$query = "update `users_users` set `default_group`=? where `login`=? and `default_group`=?";
+	$this->query($query, array('Registered', $user, $group));
+	$_SESSION['u_info']['group'] = 'Registered';
     }
 
     function remove_user_from_all_groups($user) {
@@ -1165,6 +1172,20 @@ function get_included_groups($group, $recur=true) {
 			return $groups;
 		} else {
 			return unserialize($cachelib->getCached("grouplist"));
+		}
+	}
+	function list_all_groupIds() {
+		global $cachelib;
+		if (!$cachelib->isCached("groupIdlist")) {
+			$groups = array();
+			$result = $this->query("select `id`, `groupName` from `users_groups` order by `groupName`", array());
+			while ($res = $result->fetchRow()) {
+				$groups[] = $res;
+			}
+			$cachelib->cacheItem("groupIdlist",serialize($groups));
+			return $groups;
+		} else {
+			return unserialize($cachelib->getCached("groupIdlist"));
 		}
 	}
 
@@ -1268,6 +1289,7 @@ function get_included_groups($group, $recur=true) {
 			$this->query("update `tiki_pages` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_pages` set `creator`=? where `creator`=?", array($to,$from));
 			$this->query("update `tiki_page_footnotes` set `user`=? where `user`=?", array($to,$from));
+			$this->query("update `tiki_newsletters` set `author`=? where `author`=?", array($to,$from));			
 			$this->query("update `tiki_newsreader_servers` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_newsreader_marks` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_minical_events` set `user`=? where `user`=?", array($to,$from));
@@ -1301,6 +1323,7 @@ function get_included_groups($group, $recur=true) {
 			$this->query("update `tiki_calendar_roles` set `username`=? where `username`=?", array($to,$from));
 			$this->query("update `tiki_calendar_items` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_blogs` set `user`=? where `user`=?", array($to,$from));
+			$this->query("update `tiki_blog_posts` set `user`=? where `user`=?", array($to,$from));			
 			$this->query("update `tiki_banning` set `user`=? where `user`=?", array($to,$from));
 			$this->query("update `tiki_banners` set `client`=? where `client`=?", array($to,$from));
 			$this->query("update `tiki_articles` set `author`=? where `author`=?", array($to,$from));
@@ -1319,7 +1342,24 @@ function get_included_groups($group, $recur=true) {
 			$this->query("update `tiki_friendship_requests` set `userFrom`=? where `userFrom`=?", array($to,$from));
 			$this->query("update `tiki_friendship_requests` set `userTo`=? where `userTo`=?", array($to,$from));
 			$this->query("update `tiki_freetagged_objects` set `user`=? where `user`=?", array($to,$from));
-
+			
+			$this->query("update `tiki_tracker_item_comments` set `user`=? where `user`=?", array($to,$from));
+			
+			$result =  $this->query("select `fieldId`, `itemChoices` from `tiki_tracker_fields` where `type`='u'");
+		
+			while($res = $result->fetchRow()) 
+			{			
+				$this->query("update `tiki_tracker_item_fields` set `value`=? where `value`=? and `fieldId`=?", array($to,$from,$res['fieldId']));
+				
+				$u = ($res['itemChoices'] != '' ) ? unserialize($res['itemChoices']) : array();
+				
+				if($value=array_search($from, $u))
+				{
+					$u[$value] = $to ;
+					$u = serialize($u);
+					$this->query("update `tiki_tracker_fields` set `itemChoices`=? where `fieldId`=?", array($u,$res['fieldId']));
+				}				
+			}
 			$cachelib->invalidate('userslist');
 			return true;
 		} else {
@@ -1341,7 +1381,9 @@ function get_included_groups($group, $recur=true) {
 	$query[] = "delete from `tiki_newsletter_groups` where `groupName` = ?";
 	$query[] = "delete from `tiki_newsreader_marks` where `groupName` = ?";
 	$query[] = "delete from `tiki_group_watches` where `group` = ?";
-	foreach ( $query as $q ) $this->query($q, array($group));
+	foreach ( $query as $q )
+		$this->query($q, array($group));
+	$this->query("update `users_users` set `default_group`=? where `default_group`=?", array('Registered', $group));
 
 	global $cachelib;
 	$cachelib->invalidate('grouplist');
@@ -1881,6 +1923,15 @@ function get_included_groups($group, $recur=true) {
 	$res["perms"] = $perms;
 	return $res;
     }
+	function get_groupId_info($groupId) {
+	$query = "select * from `users_groups` where `id`=?";
+
+	$result = $this->query($query, array($groupId));
+	$res = $result->fetchRow();
+	$perms = $this->get_group_permissions($res['groupName']);
+	$res["perms"] = $perms;
+	return $res;
+    }
 
     function assign_user_to_group($user, $group) {
 	global $cachelib; require_once("lib/cache/cachelib.php");
@@ -1998,7 +2049,7 @@ function get_included_groups($group, $recur=true) {
 		$this->query($query, array($who, NULL, NULL, $user));
 	}
 
-    function add_user($user, $pass, $email, $provpass = '',$pass_first_login=false, $valid=NULL, $openid_url=NULL) {
+    function add_user($user, $pass, $email, $provpass = '', $pass_first_login = false, $valid = NULL, $openid_url = NULL) {
 	global $tikilib, $cachelib, $prefs;
 
 	if ($this->user_exists($user) || empty($user) || (!empty($prefs['username_pattern']) && !preg_match($prefs['username_pattern'], $user)) || strtolower($user) == 'anonymous' || strtolower($user) == 'registered') {
@@ -2267,10 +2318,10 @@ function get_included_groups($group, $recur=true) {
 	* returns an empty string if password is ok, or the error string otherwise
 	*/
 	function check_password_policy($pass) {
-		global $prefs;
+		global $prefs, $user;
 
-		//Validate password here
-		if ( strlen($pass)<$prefs['min_pass_length'] ) {
+		// Validate password here
+		if ( ( $prefs['auth_method'] != 'cas' || $user == 'admin' ) && strlen($pass) < $prefs['min_pass_length'] ) {
 			return tra("Password should be at least").' '.$prefs['min_pass_length'].' '.tra("characters long");
 		}
 
@@ -2319,8 +2370,10 @@ function get_included_groups($group, $recur=true) {
 
 		global $cachelib;
 		$cachelib->invalidate('grouplist');
+		$cachelib->invalidate('groupIdlist');
 
-		return true;
+		$query = "select `id` from `users_groups` where groupName=?";
+		return $this->getOne($query, array($group));
 	}
 
 	function change_group($olgroup,$group,$desc,$home,$utracker=0,$gtracker=0,$ufield=0,$gfield=0,$rufields='',$userChoice='',$defcat=0,$theme='') {
@@ -2654,12 +2707,11 @@ function get_included_groups($group, $recur=true) {
 		while ($res = $result->fetchRow()) { $ret[] = $res['type']; }
 		return $ret;
 	}
-	function send_validation_email($name, $apass, $email, $again='', $second='', $chosenGroup='') {
+	function send_validation_email($name, $apass, $email, $again='', $second='', $chosenGroup='', $mailTemplate = '', $pass = '') {
 		global $tikilib, $prefs, $smarty;
 		$foo = parse_url($_SERVER['REQUEST_URI']);
-		$foo1 = str_replace('tiki-register', 'tiki-login_validate',$foo['path']);
-		$foo1 = str_replace('tiki-remind_password', 'tiki-login_validate',$foo1);
-		$machine = $tikilib->httpPrefix().$foo1;
+		$foo1 = str_replace(array('tiki-register', 'tiki-remind_password', 'tiki-adminusers'), 'tiki-login_validate', $foo['path']);
+		$machine = $tikilib->httpPrefix() . $foo1;
 		$smarty->assign('mail_machine',$machine);
 		$smarty->assign('mail_site', $_SERVER['SERVER_NAME']);
 		$smarty->assign('mail_user', $name);
@@ -2717,16 +2769,18 @@ function get_included_groups($group, $recur=true) {
 				}
 			}
 		} elseif ($prefs['validateUsers'] == 'y') {
-			$mail_data = $smarty->fetch('mail/user_validation_mail.tpl');
+			if ( $mailTemplate == '' ) $mailTemplate = 'user_validation_mail';
+			$smarty->assign('mail_pass', $pass);
+			$mail_data = $smarty->fetch("mail/$mailTemplate.tpl");
 			$mail = new TikiMail();
 			$mail->setText($mail_data);
-			$mail_data = $smarty->fetch('mail/user_validation_mail_subject.tpl');
+			$mail_data = $smarty->fetch("mail/{$mailTemplate}_subject.tpl");
 			$mail->setSubject($mail_data);
 			if (!$mail->send(array($email))) {
 				$smarty->assign('msg', tra("The registration mail can't be sent. Contact the administrator"));
 				return false;
 			} elseif (empty($again)) {
-				$smarty->assign('msg',$smarty->fetch('mail/user_validation_msg.tpl'));
+				$smarty->assign('msg', $smarty->fetch('mail/user_validation_msg.tpl'));
 			} else {
 				$smarty->assign('msg', tra('You must validate your account first. An email has been sent to you'));
 			}

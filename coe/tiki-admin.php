@@ -246,7 +246,7 @@ if (isset($_REQUEST["page"])) {
 		$helpUrl = "Module";
 		include_once ('tiki-admin_include_module.php');
 	} else if ($adminPage == "look") {
-		$admintitle = "Look &amp; Feel";//get_strings tra("Look &amp; Feel")
+		$admintitle = "Look & Feel";//get_strings tra("Look & Feel")
 		$description = "Customize look and feel of your Tiki";//get_strings tra("Customize look and feel of your Tiki")
 		$helpUrl = "Look+and+Feel+admin";
 		include_once ('tiki-admin_include_look.php');
@@ -298,8 +298,9 @@ if (isset($_REQUEST["page"])) {
 } else {
   $smarty->assign('headtitle', breadcrumb_buildHeadTitle($crumbs));
   $smarty->assign('description', $crumbs[0]->description);
-	$headerlib->add_cssfile('css/admin.css');
 }
+
+$headerlib->add_cssfile('css/admin.css');
 
 if(isset($admintitle)) {
   $admintitle = tra($admintitle);
@@ -371,7 +372,7 @@ if ($prefs['feature_version_checks'] == 'y') {
 			$smarty->assign('tiki_release', $TWV->version);
 		}
 		$tikilib->set_preference('tiki_needs_upgrade', $prefs['tiki_needs_upgrade']);
-		$smarty->assign('tiki_needs_upgrade', $$prefs['tiki_needs_upgrade']);
+		$smarty->assign('tiki_needs_upgrade', $prefs['tiki_needs_upgrade']);
 	} else {
 		$tiki_needs_upgrade = $tikilib->get_preference("tiki_needs_upgrade", "n");
 		$smarty->assign('tiki_needs_upgrade', $tiki_needs_upgrade);
@@ -400,6 +401,11 @@ if(isset($helpUrl)) $smarty->assign_by_ref('sectionhelp', $helpUrl);
 if(isset($description)) $smarty->assign('description', $description);
 $smarty->assign('trail', $crumbs);
 $smarty->assign('crumb', count($crumbs)-1);
+
+include_once ('installer/installlib.php');
+$installer = new Installer;
+$smarty->assign('db_requires_update', $installer->requiresUpdate());
+
 $smarty->display("tiki.tpl");
 
 ?>

@@ -33,6 +33,8 @@ if (!isset($_REQUEST["pageName"])) {
 	die;
 }
 
+$auto_query_args = array('find','offset','pageName','sort_mode');
+
 $smarty->assign('pageName', $_REQUEST["pageName"]);
 
 if (!isset($_REQUEST["zone"])) {

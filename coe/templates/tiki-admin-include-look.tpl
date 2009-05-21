@@ -1,10 +1,6 @@
 {* $Id$ *}
 {strip}
 <div class="cbox">
-	<div class="cbox-title">
-	{tr}{$crumbs[$crumb]->title}{/tr}
-	{help crumb=$crumbs[$crumb]}</div>
-
 	<form action="tiki-admin.php?page=look"  id="look" name="look" onreset="return(confirm('{tr}Cancel Edit{/tr}'))"  class="admin" method="post">
 		<div class="heading input_submit_container" style="text-align: right">
 			<input type="submit" name="looksetup" value="{tr}Apply{/tr}" />
@@ -25,8 +21,12 @@
 				</legend>
 				<div id="theme" style="display:{if isset($smarty.session.tiki_cookie_jar.show_theme) and $smarty.session.tiki_cookie_jar.show_theme neq 'y'}none{else}block{/if};">
 			{/if}
-				{if isset($thumbfile)}<div id="style_thumb_div"><img src={$thumbfile} id="style_thumb" /></div>{/if}
 				<table class="admin">
+					{if isset($thumbfile)}<tr>
+						<td colspan="2">
+							<div id="style_thumb_div"><img src={$thumbfile} id="style_thumb" /></div>
+						</td>
+					</tr>{/if}
 					<tr>
 						<td class="form" >
 							<label for="general-theme">{tr}Theme{/tr}:</label>
@@ -88,6 +88,14 @@
 					</tr>
 					<tr>
 						<td class="form">
+							<label for="useGroupTheme">{tr}Each group can have its theme{/tr}:</label>
+						</td>
+						<td>
+							<input type="checkbox" name="useGroupTheme" id="useGroupTheme" {if $prefs.useGroupTheme eq 'y'}checked="checked"{/if}/>
+						</td>
+					</tr>
+					<tr>
+						<td class="form">
 							<label for="general-slideshows">{tr}Slideshows theme{/tr}:</label>
 						</td>
 						<td>
@@ -108,6 +116,7 @@
 								<option value="css_specified_only" {if $prefs.transition_style_ver eq 'css_specified_only'}selected="selected"{/if}>{tr}Use @version:x.x specified in theme css or none if not specified{/tr}</option>
 								<option value="1.9" {if $prefs.transition_style_ver eq '1.9'}selected="selected"{/if}>{tr}Use @version:x.x specified in theme css or 1.9 if not specified{/tr}</option>
 								<option value="2.0" {if $prefs.transition_style_ver eq '2.0'}selected="selected"{/if}>{tr}Use @version:x.x specified in theme css or 2.0 if not specified{/tr}</option>
+								<option value="3.0" {if $prefs.transition_style_ver eq '3.0'}selected="selected"{/if}>{tr}Use @version:x.x specified in theme css or 3.0 if not specified{/tr}</option>
 							</select>
 						</td>
 					</tr>
@@ -166,19 +175,6 @@
 						{/if}
 					</td>
 				</tr>
-				<tr>
- 	       <td class="form" >
-						{if $prefs.feature_help eq 'y'}
-							<a href="{$prefs.helpurl}Site+Identity" target="tikihelp" class="tikihelp" title="{tr}Site Identity{/tr}">
-						{/if}
-						{tr}Site Identity{/tr}
-						{if $prefs.feature_help eq 'y'}</a>{/if}
-					</td>
-					<td >
-						<input type="checkbox" name="feature_siteidentity" {if $prefs.feature_siteidentity eq 'y'}checked="checked"{/if}/>
-						{tr}Required for many of the general layout features{/tr}
-					</td>
-				</tr>
 			</table>
 			{if $prefs.feature_tabs neq 'y'}</div>{/if}
 		</fieldset> 
@@ -196,6 +192,11 @@
 				<table class="admin" width="100%">
 				<tr>
 					<td class="form" colspan="5">
+
+						<input class="checkbox" type="checkbox" name="feature_layoutshadows" id="feature_layoutshadows"{if $prefs.feature_layoutshadows eq 'y'} checked="checked"{/if} />
+						<label for="feature_layoutshadows">{tr}Enable additional general layout layers for shadows, rounded corners or other decorative styling{/tr}</label>
+					
+
 					{* --- Customize Site Header --- *}
 						<fieldset class="admin">
 							<legend>
@@ -389,14 +390,6 @@
 								</td>
 								<td>
 									<input type="checkbox" name="feature_topbar_version" id="feature_topbar_version"{if $prefs.feature_topbar_version eq 'y'} checked="checked"{/if} />
-								</td>
-							</tr>
-							<tr> 
-								<td class="form">
-									<label for="feature_topbar_date">{tr}Date{/tr}:</label>
-								</td>
-								<td>
-									<input type="checkbox" name="feature_topbar_date" id="feature_topbar_date"{if $prefs.feature_topbar_date eq 'y'} checked="checked"{/if} />
 								</td>
 							</tr>
 							<tr> 
@@ -635,6 +628,11 @@
 							<legend>
 								<a href="#" title="{tr}Top{/tr}"><span>{tr}Pagination links{/tr}</span></a>
 							</legend>
+
+							<div class="adminoptionbox">	  
+							<div class="adminoptionlabel"><label for="general-max_records">{tr}Maximum number of records in listings{/tr}:</label> <input size="5" type="text" name="maxRecords" id="general-max_records" value="{$prefs.maxRecords|escape}" /></div>
+							</div>
+
 							<input type="checkbox" name="nextprev_pagination" id="nextprev_pagination" {if $prefs.nextprev_pagination eq 'y'}checked="checked"{/if}/>
 							<label for="nextprev_pagination">{tr}Use relative (next / previous) pagination links{/tr}</label>
 							<hr />
@@ -649,6 +647,8 @@
 							<label for="pagination_firstlast">{tr}Display 'First' and 'Last' links{/tr}</label><br />
 							<input type="checkbox" name="pagination_fastmove_links" id="pagination_fastmove_links" {if $prefs.pagination_fastmove_links eq 'y'}checked="checked"{/if}/>
 							<label for="pagination_fastmove_links">{tr}Display fast move links (by 10 percent of the total number of pages) {/tr}</label><br />
+							<input type="checkbox" name="pagination_hide_if_one_page" id="pagination_hide_if_one_page" {if $prefs.pagination_hide_if_one_page eq 'y'}checked="checked"{/if}/>
+							<label for="pagination_hide_if_one_page">{tr}Hide pagination when there is only one page{/tr}</label><br />
 							<input type="checkbox" name="pagination_icons" id="pagination_icons" {if $prefs.pagination_icons eq 'y'}checked="checked"{/if}/>
 							<label for="pagination_icons">{tr}Use Icons{/tr}</label><br />
 						</fieldset>
@@ -677,17 +677,6 @@
 				 	 {remarksbox type="warning" title="{tr}Warning{/tr}"}{tr}Requires jquery feature{/tr}</em>{icon _id="arrow_right" href="tiki-admin.php?page=features"}{/remarksbox}
 				{/if}
 				<table>
-					<tr>
-						<td width=30%>
-							<label for="feature_jquery_ui">{tr}JQuery UI{/tr}</label>
-						</td>
-						<td width=2%>
-							{help url="JQuery#UI" desc="{tr}JQuery UI: More JQuery functionality{/tr}"}
-						</td>
-						<td>
-							<input type="checkbox" name="feature_jquery_ui" {if $prefs.feature_jquery_ui eq 'y'}checked="checked"{/if}/>
-						</td>
-					</tr>
 					<tr>
 						<td width=30%>
 							<label for="feature_jquery_tooltips">{tr}JQuery Tooltips{/tr}</label>
@@ -734,6 +723,34 @@
 					</tr>
 					<tr>
 						<td width=30%>
+							<label for="feature_jquery_cycle">{tr}JQuery Cycle (slideshow){/tr}</label>
+						</td>
+						<td width=2%>
+							{help url="JQuery#Cycle" desc="{tr}JQuery Cycle (slideshow){/tr}"}
+						</td>
+						<td>
+							<input type="checkbox" name="feature_jquery_cycle" {if $prefs.feature_jquery_cycle eq 'y'}checked="checked"{/if}/>
+						</td>
+					</tr>
+					<tr>
+						<td colspan=3>
+							<hr />
+							<em>{tr}For future use{/tr}</em>
+						</td>
+					</tr>
+					<tr>
+						<td width=30%>
+							<label for="feature_jquery_ui">{tr}JQuery UI{/tr}</label>
+						</td>
+						<td width=2%>
+							{help url="JQuery#UI" desc="{tr}JQuery UI: More JQuery functionality{/tr}"}
+						</td>
+						<td>
+							<input type="checkbox" name="feature_jquery_ui" {if $prefs.feature_jquery_ui eq 'y'}checked="checked"{/if}/>
+						</td>
+					</tr>
+					<tr>
+						<td width=30%>
 							<label for="feature_jquery_sheet">{tr}JQuery Sheet{/tr}</label>
 						</td>
 						<td width=2%>
@@ -741,6 +758,17 @@
 						</td>
 						<td>
 							<input type="checkbox" name="feature_jquery_sheet" {if $prefs.feature_jquery_sheet eq 'y'}checked="checked"{/if}/>
+						</td>
+					</tr>
+					<tr>
+						<td width=30%>
+							<label for="feature_jquery_tablesorter">{tr}JQuery Sortable Tables{/tr}</label>
+						</td>
+						<td width=2%>
+							{help url="JQuery#TableSorter" desc="{tr}JQuery Sortable Tables{/tr}"}
+						</td>
+						<td>
+							<input type="checkbox" name="feature_jquery_tablesorter" {if $prefs.feature_jquery_tablesorter eq 'y'}checked="checked"{/if}/>
 						</td>
 					</tr>
 				</table>
@@ -767,7 +795,7 @@
 					              {tr}Slide{/tr}</option>
 					            <option value="fade" {if $prefs.jquery_effect eq 'fade'}selected="selected"{/if}>
 					              {tr}Fade{/tr}</option>
-					            {if $prefs.feature_jquery eq 'y'}
+					            {if $prefs.feature_jquery_ui eq 'y'}
 					            <option value="blind_ui" {if $prefs.jquery_effect eq 'blind_ui'}selected="selected"{/if}>
 					              {tr}Blind (UI){/tr}</option>
 					            <option value="clip_ui" {if $prefs.jquery_effect eq 'clip_ui'}selected="selected"{/if}>
@@ -850,7 +878,7 @@
 					              {tr}Slide{/tr}</option>
 					            <option value="fade" {if $prefs.jquery_effect_tabs eq 'fade'}selected="selected"{/if}>
 					              {tr}Fade{/tr}</option>
-					            {if $prefs.feature_jquery eq 'y'}
+					            {if $prefs.feature_jquery_ui eq 'y'}
 					            <option value="blind_ui" {if $prefs.jquery_effect_tabs eq 'blind_ui'}selected="selected"{/if}>
 					              {tr}Blind (UI){/tr}</option>
 					            <option value="clip_ui" {if $prefs.jquery_effect_tabs eq 'clip_ui'}selected="selected"{/if}>
@@ -986,13 +1014,30 @@
 						</td>
 					</tr>
 					<tr>
+						<td colspan="3">
+							<div class="adminoptionbox">	  
+								<div class="checkbox">
+									<input type="checkbox" name="feature_iepngfix" id="feature_iepngfix"{if $prefs.feature_iepngfix eq 'y'} checked="checked"{/if} onclick="flip('iepngfix');" />
+								</div>
+								<label for="feature_iepngfix">{tr}Correct PNG images alpha transparency in IE6 (experimental){/tr}</label>
+								
+								<div id="iepngfix" class="adminoptionboxchild" style="display:{if $prefs.feature_iepngfix eq 'y'}block{else}none{/if};">
+									<label class="above" for="iepngfix_selectors">{tr}List of CSS selectors to be fixed, each selector separated by comma{/tr}</label>
+									<input class="fullwidth" id="iepngfix_selectors" type="text" name="iepngfix_selectors" size="32" value="{$prefs.iepngfix_selectors}" />
+									<label class="above" for="iepngfix_elements">{tr}List of HTMLDomElements to be fixed, each element separated by comma{/tr}</label>
+									<input class="fullwidth" id="iepngfix_elements" type="text" name="iepngfix_elements" size="32" value="{$prefs.iepngfix_elements}" />
+								</div>
+							</div>
+						</td>
+					</tr>
+					<tr>
 						<td width=30%>
-			        		<label for="feature_ie56_correct_png">{tr}Correct PNG transparency in IE5.5 and IE6 (experimental){/tr}</label>
+			        		<label for="menus_items_icons">{tr}Allow users to define icons for menus entries{/tr}</label>
 						</td>
 						<td width=2%>
 						</td>
 						<td>
-							<input type="checkbox" name="feature_ie56_correct_png" id="feature_ie56_correct_png" {if $prefs.feature_ie56_correct_png eq 'y'}checked="checked"{/if}/>
+							<input type="checkbox" name="menus_items_icons" id="menus_items_icons" {if $prefs.menus_items_icons eq 'y'}checked="checked"{/if}/>
 						</td>
 					</tr>
 				</table>

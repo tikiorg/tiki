@@ -25,13 +25,15 @@ if (isset($_REQUEST["calprefs"])) {
 	simple_set_toggle('calendar_sticky_popup');
 	simple_set_toggle('calendar_view_tab');
 	simple_set_toggle('feature_jscalendar');
-
+	simple_set_toggle('feature_cal_manual_time');
+	simple_set_value('feature_default_calendars');
 	simple_set_value('default_calendars','',true);
 	simple_set_value('calendar_view_mode');
 	simple_set_value('calendar_firstDayofWeek');
 	simple_set_value('calendar_timespan');
 	simple_set_value('calendar_start_year');
 	simple_set_value('calendar_end_year');
+	simple_set_value('calendar_list_begins_focus');
 }
   	 
 ask_ticket('admin-inc-cal'); 	 

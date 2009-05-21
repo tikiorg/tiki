@@ -15,7 +15,7 @@
 	</script>
 {/literal}
 
-{title help='Registration' admpage='login'}{tr}Registration{/tr}{/title}
+{title admpage='login'}{tr}Registration{/tr}{/title}
 	
 	<div class="simplebox highlight" id="divRegCapson" style="visibility:hidden">{icon _id=error style="vertical-align:middle"} {tr}CapsLock is on.{/tr}</div>
 

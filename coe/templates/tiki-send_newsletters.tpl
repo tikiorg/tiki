@@ -13,12 +13,18 @@
 	</div>
 {/if}
 
+{if $upload_err_msg neq ''}
+	{remarksbox type="warning" title="{tr}Warning{/tr}" icon="error"}
+		{$upload_err_msg}
+	{/remarksbox}
+{/if}
+
 {assign var=area_name value="editwiki"}
 {if $emited eq 'y'}
-	<div class="simplebox highlight">
+	{remarksbox type="note" title="{tr}Notice{/tr}" icon="lock"}
 		{tr}The newsletter was sent to {$sent} email addresses{/tr}
-		<br /><br />
-	</div>
+	{/remarksbox}
+	
 	{if $errors}
 		<span class="attention">{tr}Errors detected{/tr}<br /></span>
 		<table class="normal">
@@ -244,13 +250,15 @@
 				<tr class="formcolor">
 					<td class="formcolor">&nbsp;</td>
 					<td class="formcolor">
-						<input type="submit" name="preview" value="{tr}Preview{/tr}" />&nbsp;<input type="submit" name="save_only" value="{tr}Save as Draft{/tr}" />
+						<input type="submit" name="preview" value="{tr}Preview{/tr}" />
+						&nbsp;
+						<input type="submit" name="save_only" value="{tr}Save as Draft{/tr}" />
 					</td>
 				</tr>
 
 				<tr>
 					<td class="formcolor">&nbsp;</td>
-					<td class="formcolor">&nbsp;<input type="submit" name="save" value="{tr}Send Newsletters{/tr}" /></td>
+					<td class="formcolor">&nbsp;<input type="submit" name="save" value="{tr}Send Newsletter{/tr}" /></td>
 				</tr>
 			</table>
 		</form>
@@ -322,3 +330,4 @@ function remove_newsletter_file(id) {
 
 -->
 </script>
+{include file=tiki-edit_help.tpl}

@@ -24,6 +24,7 @@ function lograw($file,$line) {
 }
 
 function logit($file,$txt,$user,$code,$from) {
+	global $tikilib;
 	$line = $tikilib->get_ip_address()." - $user - ". date('[m/d/Y:H:i:s]')." \"$txt\" $code \"$from\"";
 	lograw($file,$line);
 }
@@ -53,7 +54,8 @@ function validate($params) {
 	
 	if (!isset($prefs['known_hosts'][$key]) or $prefs['known_hosts'][$key]['ip'] != $tikilib->get_ip_address()) {
 		$msg = tra('Invalid server key');
-		if ($prefs['intertiki_errfile']) logit($prefs['intertiki_errfile'],$msg,$key,INTERTIKI_BADKEY,$prefs['known_hosts'][$key]['name']);
+		if (!empty($prefs['intertiki_errfile']))
+			logit($prefs['intertiki_errfile'],$msg,$key,INTERTIKI_BADKEY,$prefs['known_hosts'][$key]['name']);
 		$logslib->add_log('intertiki',$msg.' from '.$prefs['known_hosts'][$key]['name'],$login);
 		return new XML_RPC_Response(0, 101, $msg);
 	}

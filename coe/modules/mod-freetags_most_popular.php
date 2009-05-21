@@ -6,7 +6,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-global $prefs, $tiki_p_view_freetags;
+global $prefs, $tiki_p_view_freetags, $smarty;
 if ($prefs['feature_freetags'] != 'y') {
 	$smarty->assign('module_error', tra("This feature is disabled").": feature_freetags");
 } elseif ($tiki_p_view_freetags != 'y') {

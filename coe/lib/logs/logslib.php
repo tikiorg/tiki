@@ -608,12 +608,21 @@ class LogsLib extends TikiLib {
 	}
 	return $csv;
 	}
-	function get_action_params($actionId, $name) {
-		$query = "select `value` from `tiki_actionlog_params` where `actionId`=? and `name`=?";
-		$result = $this->query($query, array($actionId, $name));
-		$ret = array();
-		while ($res = $result->fetchRow()) {
-			$ret[] = $res['value'];
+	function get_action_params($actionId, $name='') {
+		if (empty($name)) {
+			$query = "select * from `tiki_actionlog_params` where `actionId`=?";
+			$result = $this->query($query, array($actionId));
+			$ret = array();
+			while ($res = $result->fetchRow()) {
+				$ret[] = $res;
+			}
+		} else {
+			$query = "select `value` from `tiki_actionlog_params` where `actionId`=? and `name`=?";
+			$result = $this->query($query, array($actionId, $name));
+			$ret = array();
+			while ($res = $result->fetchRow()) {
+				$ret[] = $res['value'];
+			}
 		}
 		return $ret;
 	}
@@ -631,6 +640,10 @@ class LogsLib extends TikiLib {
 		$this->query($query, array("old=$oldName&amp;", $oldName, $objectType, 'comment' , '%old=%'));
 		$query = "update `tiki_actionlog`set `object`=? where `object`=? and (`objectType`=? or `objectType`= ?)";
 		$this->query($query, array($newName, $oldName, $objectType, 'comment'));
+	}
+	function update_category($actionId, $categId) {
+		$query = "update `tiki_actionlog` set `categId`=? where `actionId`=?";
+		$this->query($query, array($categId, $actionId));
 	}
 	function get_info_action($actionId) {
 		$query = "select * from `tiki_actionlog`where `actionId`= ?";
@@ -1059,6 +1072,12 @@ class LogsLib extends TikiLib {
 	}
 	return $actions;
 	} // end of get_more_info($actions)
+	function remove_action($actionId) {
+		$query = 'delete from `tiki_actionlog` where `actionId`=?';
+		$this->query($query, array($actionId));
+		$query = 'delete from `tiki_actionlog_params` where `actionId`=?';
+		$this->query($query, array($actionId));
+	}
 }
 global $dbTiki;
 $logslib = new LogsLib($dbTiki);

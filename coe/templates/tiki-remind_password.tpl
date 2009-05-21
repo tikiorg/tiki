@@ -1,5 +1,5 @@
 {* $Id$ *}
-{title help='Registration' admpage='login'}{tr}I forgot my password{/tr}{/title}
+{title admpage='login'}{tr}I forgot my password{/tr}{/title}
 
 {if $showmsg ne 'n'}
   {if $showmsg eq 'e'}<span class="warn">{icon _id=exclamation alt="{tr}Error{/tr}" style="vertical-align:middle;align:left;"}{else}{icon _id=accept alt="{tr}OK{/tr}" style="vertical-align:middle;align:left;"} {/if} 

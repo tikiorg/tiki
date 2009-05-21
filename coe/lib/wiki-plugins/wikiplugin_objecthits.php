@@ -12,6 +12,7 @@ function wikiplugin_objecthits_help() {
 function wikiplugin_objecthits_info() {
 	return array(
 		'name' => tra('Object Hits'),
+		'documentation' => 'PluginObjectHits',			
 		'description' => tra("Displays object hit info by object and days"),
 		'prefs' => array( 'wikiplugin_objecthits' ),
 		'params' => array(

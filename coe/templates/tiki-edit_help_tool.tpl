@@ -12,8 +12,13 @@ function taginsert(area_name,tagid)
   tag[{$quicktags[qtg].tagId}]='{$quicktags[qtg].taginsert|escape:"javascript"}';
   {/section}
 //done
-{literal}  
-  insertAt(area_name,tag[tagid]);
+{literal} 
+	if (tag[tagid].indexOf("popup_plugin_form") == 0)  {
+		tag[tagid] = tag[tagid].replace("popup_plugin_form(", "popup_plugin_form('"+area_name+"',");
+		eval(tag[tagid]);
+	} else {
+		insertAt(area_name,tag[tagid]);
+	}
 }
 //--><!]]>
 </script>
@@ -25,9 +30,9 @@ function taginsert(area_name,tagid)
   </a>
   <br /><br />
 { /if}
-{*get_strings {tr}bold{/tr}
-              {tr}italic{/tr}
-              {tr}underline{/tr}
+{*get_strings {tr}text, bold{/tr}
+              {tr}text, italic{/tr}
+              {tr}text, underline{/tr}
               {tr}table{/tr}
               {tr}table new{/tr}
               {tr}external link{/tr}
@@ -38,11 +43,11 @@ function taginsert(area_name,tagid)
               {tr}rss feed{/tr}
               {tr}dynamic content{/tr}
               {tr}tagline{/tr}
-              {tr}hr{/tr}
+              {tr}horizontal rule{/tr}
               {tr}center text{/tr}
               {tr}colored text{/tr}
               {tr}dynamic variable{/tr}
-              {tr}Image{/tr}
+              {tr}image{/tr}
               {tr}New wms Metadata{/tr}
               {tr}New Class{/tr}
               {tr}New Projection{/tr}
@@ -55,6 +60,10 @@ function taginsert(area_name,tagid)
               {tr}New Web{/tr}
               {tr}New Outputformat{/tr}
               {tr}New Mapfile{/tr} 
+              {tr}Add image from File Gallery{/tr} 
+              {tr}quote{/tr} 
+              {tr}code{/tr} 
+              {tr}flash{/tr} 
               *}
 <div id='helptool{$qtnum}'
   {assign var=show value="show_helptool"|cat:$qtnum}
@@ -90,13 +99,13 @@ function openFgalsWindow() {
 	if(fgals_window && fgals_window.document) {
 		fgals_window.focus();
 	} else {{/literal}
-		fgals_window=window.open('{$url_path}tiki-list_file_gallery.php?filegals_manager={$area_name}','_blank','menubar=1,scrollbars=1,resizable=1,height=500,width=800,left=50,top=50');
+		fgals_window=window.open('{filegal_manager_url area_name=$area_name}','_blank','menubar=1,scrollbars=1,resizable=1,height=500,width=800,left=50,top=50');
 	{literal}}
 }
 //--><!]]>
 </script>
     {/literal}
-    <a title="{tr}Add another image{/tr}" href="#" onclick="needToConfirm=false; openFgalsWindow();return false;">{icon _id='image' alt='{tr}Add another image{/tr}'}</a>
+    <a title="{tr}Add Image from File Gallery{/tr}" href="#" onclick="needToConfirm=false; openFgalsWindow();return false;">{icon _id='pictures' alt='{tr}Add Image from File Gallery{/tr}'}</a>
     {if (!isset($zoom_mode) || $zoom_mode eq 'n') and $prefs.quicktags_over_textarea neq 'y'}{cycle name='cycle'|cat:$qtnum}{/if}
   {/if}
 

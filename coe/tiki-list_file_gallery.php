@@ -48,6 +48,8 @@ if ( ! isset($_REQUEST['galleryId']) || $_REQUEST['galleryId'] == 0 ) {
 			'show_files' => $prefs['fgal_list_files'],
 			'show_explorer' => $prefs['fgal_show_explorer'],
 			'show_path' => $prefs['fgal_show_path'],
+			'show_slideshow' => $prefs['fgal_show_slideshow'],
+			'default_view' => $prefs['fgal_default_view'],
 			'show_hits' => $prefs['fgal_list_hits'],
 			'show_lockedby' => $prefs['fgal_list_lockedby'],
 			'show_checked' => 'y',
@@ -111,11 +113,7 @@ if ( $tiki_p_admin_file_galleries == 'y' ) {
 		if (isset($_REQUEST['file'])) {
 			foreach ( array_values($_REQUEST['file']) as $file ) {
 				if ($info = $filegallib->get_file_info($file)) {
-					$smarty->assign('fileId', $file);
-					$smarty->assign_by_ref('filename', $info['filename']);
-					$smarty->assign_by_ref('fname', $info['name']);
-					$smarty->assign_by_ref('fdescription', $info['description']);
-					$filegallib->remove_file($info, $user, $gal_info);
+					$filegallib->remove_file($info, $gal_info);
 				}
 			}
 		}
@@ -130,7 +128,6 @@ if ( $tiki_p_admin_file_galleries == 'y' ) {
 		check_ticket('fgal');
 		if (isset($_REQUEST['file'])) {
 			foreach ( array_values($_REQUEST['file']) as $file ) {
-				// To move a topic you just have to change the object
 				$filegallib->set_file_gallery($file, $_REQUEST['moveto']);
 			}
 		}
@@ -238,15 +235,7 @@ if ( ! empty($_REQUEST['remove']) ) {
 	$area = 'delfile';
 	if ( $prefs['feature_ticketlib2'] != 'y' or ( isset($_POST['daconfirm'] ) and isset($_SESSION["ticket_$area"])) ) {
 		key_check($area);
-
-		//Watches
-		$smarty->assign('fileId', $_REQUEST['remove']);
-		$smarty->assign_by_ref('filename', $info['filename']);
-		$smarty->assign_by_ref('fname', $info['name']);
-		$smarty->assign_by_ref('fdescription', $info['description']);
-
-		$filegallib->remove_file($info, $user, $gal_info);
-
+		$filegallib->remove_file($info, $gal_info);
 	} else {
 		key_get($area, tra('Remove file: ').(!empty($info['name'])?$info['name'].' - ':'').$info['filename']);
 	}
@@ -288,6 +277,12 @@ if ( isset($_REQUEST['edit_mode']) and $_REQUEST['edit_mode'] ) {
 
 	// Edit a file
 	if ( isset($_REQUEST['fileId']) && $_REQUEST['fileId'] > 0 ) {
+		if ($tiki_p_edit_gallery_file != 'y') {
+			$smarty->assign('errortype', 401);
+			$smarty->assign('msg', tra('Permission denied'));
+			$smarty->display('error.tpl');
+			die;
+		}
 		$info = $filegallib->get_file_info($_REQUEST['fileId']);
 
 		$smarty->assign('fileId', $_REQUEST['fileId']);
@@ -310,6 +305,11 @@ if ( isset($_REQUEST['edit_mode']) and $_REQUEST['edit_mode'] ) {
 			$smarty->assign('sortorder', 'created');
 			$smarty->assign('sortdirection', 'desc');
 		}
+	} elseif ($tiki_p_create_file_galleries != 'y') {
+		$smarty->assign('errortype', 401);
+		$smarty->assign('msg', tra('Permission denied'));
+		$smarty->display('error.tpl');
+		die;
 	}
 
 // Duplicate mode
@@ -440,7 +440,9 @@ if ( isset($_REQUEST['edit']) ) {
 			'show_comment' => $_REQUEST['fgal_list_comment'],
 			'show_files' => $_REQUEST['fgal_list_files'],
 			'show_explorer' => ( isset($_REQUEST['fgal_show_explorer']) ? 'y' : 'n' ),
-			'show_path' => ( isset($_REQUEST['fgal_show_path']) ? 'y' : 'n' )
+			'show_path' => ( isset($_REQUEST['fgal_show_path']) ? 'y' : 'n' ),
+			'show_slideshow' => ( isset($_REQUEST['fgal_show_slideshow']) ? 'y' : 'n' ),
+			'default_view' => $_REQUEST['fgal_default_view']
 		);
 		$fgal_diff = array_diff_assoc($gal_info,$old_gal_info);
 		unset($fgal_diff['created']);
@@ -733,6 +735,10 @@ $smarty->assign_by_ref('sort_mode', $_REQUEST['sort_mode']);
 if ( ! isset($_REQUEST['find']) ) $_REQUEST['find'] = '';
 $smarty->assign_by_ref('find', $_REQUEST['find']);
 
+if ( isset($_REQUEST['fileId']) ) {
+	$smarty->assign('fileId', $_REQUEST['fileId']);
+}
+
 if (isset($_GET['slideshow'])) {
   $files = $tikilib->get_files(0, -1, $_REQUEST['sort_mode'], $_REQUEST['find'], $_REQUEST['galleryId'] == 0 ? -1 : $_REQUEST['galleryId'], false, false, false, true, false, false, false, true, '', false);
   $smarty->assign('cant', $files['cant']);
@@ -743,20 +749,22 @@ if (isset($_GET['slideshow'])) {
   $smarty->assign('firstId',current($filesid));
   $smarty->assign('show_find', 'n');
   $smarty->assign('direct_pagination', 'y');
-  $smarty->display('file_gallery_slideshow.tpl');
+	//if ($prefs['feature_mootools'] == 'y') {
+		$smarty->display('file_gallery_slideshow.tpl');
+	//} else if ($prefs['feature_jquery'] == 'y') {
+	// commented out for release 3.0 as it's not ready yet - TODO for 3.1 or 4
+	//	$smarty->display('tiki-file_gallery_slideshow.tpl');
+	//}
   die();
 } else {
 	// Get list of files in the gallery
 	$files = $tikilib->get_files($_REQUEST['offset'], $_REQUEST['maxRecords'], $_REQUEST['sort_mode'], $_REQUEST['find'], $_REQUEST['galleryId'], true, true);
 	$smarty->assign_by_ref('files', $files['data']);
 	$smarty->assign('cant', $files['cant']);
-  $smarty->assign('mid','tiki-list_file_gallery.tpl');
+	$smarty->assign('mid','tiki-list_file_gallery.tpl');
 }
 
 // Browse view
-
-// Find the lenght of the longest file name
-$smarty->assign('view', isset($_REQUEST['view']) ? $_REQUEST['view'] : 'list' );
 $smarty->assign('thumbnail_size', 120);
 $smarty->assign('show_details', isset($_REQUEST['show_details']) ? $_REQUEST['show_details'] : 'n' );
 
@@ -789,38 +797,40 @@ if ( $prefs['feature_theme_control'] == 'y' ) {
 // Watches
 if ( $prefs['feature_user_watches'] == 'y' ) {
 
-	if ( $user && isset($_REQUEST['watch_event']) ) {
-		check_ticket('index');
-		if ( $_REQUEST['watch_action'] == 'add' ) {
-			$tikilib->add_user_watch(
-				$user,
-				$_REQUEST['watch_event'],
-				$_REQUEST['watch_object'],
-				'File Gallery',
-				( isset($_REQUEST['galleryName']) ? $_REQUEST['galleryName'] : '' ),
-				"tiki-list_file_gallery.php?galleryId=$galleryId"
-			);
-		} else {
-			$tikilib->remove_user_watch($user, $_REQUEST['watch_event'], $_REQUEST['watch_object']);
-		}
-	}
-
-	$smarty->assign('user_watching_file_gallery', 'n');
-	if ( $user && $tikilib->user_watches($user, 'file_gallery_changed', $galleryId, 'File Gallery') ) {
-		$smarty->assign('user_watching_file_gallery', 'y');
-	}
-
-	// Check, if the user is watching this file gallery by a category.
-	if ( $prefs['feature_categories'] == 'y' ) {
-		$watching_categories_temp = $categlib->get_watching_categories($galleryId, 'file gallery', $user);
-		$smarty->assign('category_watched', 'n');
-		if ( count($watching_categories_temp) > 0 ) {
-			$smarty->assign('category_watched', 'y');
-			$watching_categories = array();
-			foreach ( $watching_categories_temp as $wct ) {
-				$watching_categories[] = array('categId' => $wct, 'name' => $categlib->get_category_name($wct));
+	if ( ! isset($_REQUEST['fileId']) ) {
+		if ( $user && isset($_REQUEST['watch_event']) ) {
+			check_ticket('index');
+			if ( $_REQUEST['watch_action'] == 'add' ) {
+				$tikilib->add_user_watch(
+					$user,
+					$_REQUEST['watch_event'],
+					$_REQUEST['watch_object'],
+					'File Gallery',
+					( isset($_REQUEST['galleryName']) ? $_REQUEST['galleryName'] : '' ),
+					"tiki-list_file_gallery.php?galleryId=$galleryId"
+				);
+			} else {
+				$tikilib->remove_user_watch($user, $_REQUEST['watch_event'], $_REQUEST['watch_object'], 'File Gallery');
 			}
-			$smarty->assign('watching_categories', $watching_categories);
+		}
+
+		$smarty->assign('user_watching_file_gallery', 'n');
+		if ( $user && $tikilib->user_watches($user, 'file_gallery_changed', $galleryId, 'File Gallery') ) {
+			$smarty->assign('user_watching_file_gallery', 'y');
+		}
+
+		// Check, if the user is watching this file gallery by a category.
+		if ( $prefs['feature_categories'] == 'y' ) {
+			$watching_categories_temp = $categlib->get_watching_categories($galleryId, 'file gallery', $user);
+			$smarty->assign('category_watched', 'n');
+			if ( count($watching_categories_temp) > 0 ) {
+				$smarty->assign('category_watched', 'y');
+				$watching_categories = array();
+				foreach ( $watching_categories_temp as $wct ) {
+					$watching_categories[] = array('categId' => $wct, 'name' => $categlib->get_category_name($wct));
+				}
+				$smarty->assign('watching_categories', $watching_categories);
+			}
 		}
 	}
 }
@@ -897,7 +907,7 @@ if ( isset($_REQUEST['view']) && $_REQUEST['view'] == 'browse') {
 
 if ( $_REQUEST['galleryId'] == 0 ) {
 
-	$smarty->assign('download_path', ( $podCastGallery ? $prefs['fgal_podcast_dir'] : $prefs['fgal_use_dir'] ) );
+	$smarty->assign('download_path', ( (isset($podCastGallery) &&  $podCastGallery)? $prefs['fgal_podcast_dir'] : $prefs['fgal_use_dir'] ) );
 
 	// Add a file hit
 	$statslib->stats_hit($gal_info['name'], 'file gallery', $galleryId);
@@ -907,12 +917,15 @@ if ( $_REQUEST['galleryId'] == 0 ) {
 	}
 
 } else {
-	// Add a gallery hit
-	$tikilib->add_file_gallery_hit($_REQUEST['galleryId']);
+	if ( ! isset($_REQUEST['fileId']) ) {
+		// Add a gallery hit
+		$tikilib->add_file_gallery_hit($_REQUEST['galleryId']);
+	}
 }
 
 // Get listing display config
 include_once('fgal_listing_conf.php');
+$smarty->assign('view', isset($_REQUEST['view']) ? $_REQUEST['view'] : $fgal_options['default_view']['value'] );
 
 // Display the template
 if ( isset($_REQUEST['filegals_manager']) && $_REQUEST['filegals_manager'] != '' ) {
@@ -921,4 +934,3 @@ if ( isset($_REQUEST['filegals_manager']) && $_REQUEST['filegals_manager'] != ''
 } else {
 	$smarty->display('tiki.tpl');
 }
-?>

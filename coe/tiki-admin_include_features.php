@@ -35,7 +35,7 @@ if (isset($_REQUEST["features"])) {
 		"feature_debug_console",
 		"feature_directory",
 		"feature_drawings",
-		"feature_events",
+		"feature_events", //2009-04-29 marclaporte: can we remove this?
 		"feature_faqs",
 		"feature_featuredLinks",
 		"feature_file_galleries",
@@ -101,7 +101,13 @@ if (isset($_REQUEST["features"])) {
 		"feature_magic",
 		"feature_minichat",
 		"feature_comments_moderation",
+		"feature_comments_locking",
 		"feature_groupalert",
+		"feature_wiki_mindmap",
+		"use_minified_scripts",
+		"feature_print_indexed",
+		"feature_floating_help",
+		'debug_ignore_xdebug',
 	);
 
 	$pref_byref_values = array(
@@ -116,7 +122,7 @@ if (isset($_REQUEST["features"])) {
 		byref_set_value ($britem);
 	}
 
-	$smarty->clear_compiled_tpl();
+	$cachelib->empty_full_cache();
 
 }
 

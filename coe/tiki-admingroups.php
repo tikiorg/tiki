@@ -143,6 +143,7 @@ if (isset($_REQUEST['clean'])) {
 	global $cachelib;require_once("lib/cache/cachelib.php");
 	check_ticket('admin-groups');
 	$cachelib->invalidate('grouplist');
+	$cachelib->invalidate('groupIdlist');
 }
 if (!isset($_REQUEST["numrows"])) {
 	$numrows = $maxRecords;

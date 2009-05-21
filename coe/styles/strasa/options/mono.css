@@ -21,6 +21,8 @@ fieldset {
 	border: solid 1px #444444;
 }
 
+legend {color: #444444} /* IE7 */
+
 input,
 textarea,
 option,
@@ -56,9 +58,7 @@ button,
 input[type=reset],
 input[type=submit],
 span.button input,
-.submitbutton,
-.calbuttonoff,
-.calbuttonon {
+.calbuttonBox {
 	color: #fff;
 	background: #565656;
 	border-color: #878787 #343434 #343434 #878787;
@@ -69,7 +69,7 @@ button:hover,
 input[type=reset]:hover,
 input[type=submit]:hover,
 .button input:hover,
-.submitbutton:hover {
+.calbuttonBox:hover {
 	background-color: #333333;
 	color: #fff;
 }
@@ -79,7 +79,8 @@ button:active,
 input[type=reset]:active,
 input[type=submit]:active,
 .button input:active,
-.submitbutton:active {
+span.highlight a:link,
+span.highlight a:visited {
 	border-color: #223845 #41cbe7 #41cbe7 #223845;
 }
 
@@ -147,23 +148,22 @@ ul.jumplinks a:active {
 	color: #fff;
 }
 
-/*** Error page ***/
-
 /* Site Header & Identity */
 #header-top {
-	background: #111111 url('mono/headerbg.jpg') repeat-x 0 100%;
+	background: #444444 url('mono/headerbg.jpg') repeat-x 0 100%;
 }
 
 #siteloginbar {
 	background: url('mono/login.jpg') 0 0 no-repeat;
 }
 
+* html #siteloginbar {
+	text-align: right;
+	width: 100%;
+	background: #fff url(mono/loginlong.jpg) 0 0 no-repeat}
+
 #siteloginbar .register {
 	background: url('mono/register.jpg') no-repeat;
-}
-
-#siteloginbar input.wikiaction {
-	background: #204c65;
 }
 
 /* #header text selectors, if needed */
@@ -185,8 +185,16 @@ ul.jumplinks a:active {
 }
 
 #tiki-top a:hover {
-	color: #fff;
-}
+	color: #fff}
+
+a.flip,
+a.flip:visited {
+	color: #e5e5e5;
+	font-size: 90%}
+	
+a.flip:hover {
+	color: #666666;
+	text-decoration: none}
 
 .tellafriend a,
 .tellafriend a:visited {
@@ -293,8 +301,8 @@ a.phplmselected:hover {
 .cssmenu ul,
 .cssmenu_vert li ul,
 .cssmenu_horiz li ul {
-	border: 1px solid #08698f;
-	background: #212121;
+	border: 1px solid #a9a9a9;
+	background: #4c4c4c;
 }
 
 .cssmenu_vert li ul {
@@ -338,7 +346,7 @@ a.phplmselected:hover {
 /** Links in other menus **/
 
 div.separator {
-	border-top: 1px solid #555555;
+	border-top: 1px solid #ccc;
 }
 
 .separator a:link,
@@ -397,15 +405,14 @@ div.help_section {
 
 #col2 .box {
 	background: #e5e5e5;
+	border-bottom: 1px solid #aaa;
 }
 
 #col3 .box {
 	border-bottom: 1px solid #cfcfcf;
 }
 
-.box a.flipmodtitle img {
-	display: none;
-}
+.box a.flipmodtitle img {}
 
 a.flipmodtitle:hover img {
 	border: 1px #cccccc solid !important;
@@ -446,7 +453,7 @@ div.simplebox {
 	background: #fff;
 }
 
-.highlight {
+.highlight {background: #e5e5e5;
 }
 
 /***** Tables, Tabs and Lists ****/
@@ -699,7 +706,25 @@ ul.toc {
 }
 
 /***** Articles ****/
+div.articletopline,
+div.articlesubtitle {
+	background: #343434;
+	color: #fff}
+	
+div.articletitle h2 {
+	background: #f5f5f5 url(mono/headerbg.jpg) repeat-x 0 100%;
+	color: #fff;
+	padding: 10px 5px;
+	margin: 0}
 
+div.articletitle h2 a,
+div.articletitle h2 a:visited {
+	color: #fff;
+	text-decoration: none}
+	
+span.titleb {
+	color: #fff;
+	background: url('mono/login.jpg') 0 0 no-repeat;}
 
 /***** Blogs *****/
 
@@ -726,6 +751,7 @@ body.tiki_blogs .author_actions .actions {
 	background: #fff !important;
 }
 
+body.tiki_blogs .postbody-title,
 .post .postbody-title {
 	background: #111111 url('mono/headerbg.jpg') repeat-x 0 100%;
 }
@@ -1027,11 +1053,11 @@ div.multiselect {
 }
 
 .caldark {
-	background: #223845;
+	background: #e5e5e5;
 }
 
 .caldark .calfocus {
-	background: #223845;
+	background: #e5e5e5;
 }
 
 /*****  Polls  *****/

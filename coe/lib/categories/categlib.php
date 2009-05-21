@@ -279,9 +279,11 @@ class CategLib extends ObjectLib {
 
 		$id = $this->add_object($type, $itemId, $description, $name, $href);
 		
-		$query = "insert into `tiki_categorized_objects` (`catObjectId`) values (?)";
-
-		$this->query($query, array($id));
+		$query = "select `catObjectId` from `tiki_categorized_objects` where `catObjectId`=?";
+		if (!$this->getOne($query, array($id))) {
+			$query = "insert into `tiki_categorized_objects` (`catObjectId`) values (?)";
+			$this->query($query, array($id));
+		}
 		$cachelib->invalidate('allcategs');
 		$cachelib->empty_type_cache('fgals_perms');
 		return $id;
@@ -1332,7 +1334,7 @@ class CategLib extends ObjectLib {
 	function unwatch_category($user, $categId) {
 		global $tikilib;		
 		
-		$tikilib->remove_user_watch($user, 'category_changed', $categId);
+		$tikilib->remove_user_watch($user, 'category_changed', $categId, 'Category' );
 	}
 
 
@@ -1343,10 +1345,10 @@ class CategLib extends ObjectLib {
 	function unwatch_category_and_descendants($user, $categId) {
 		global $tikilib;		
 		
-		$tikilib->remove_user_watch($user, 'category_changed', $categId);
+		$tikilib->remove_user_watch($user, 'category_changed', $categId, 'Category');
 		$descendants = $this->get_category_descendants($categId);
 		foreach ($descendants as $descendant) {
-			$tikilib->remove_user_watch($user, 'category_changed', $descendant);
+			$tikilib->remove_user_watch($user, 'category_changed', $descendant, 'Category');
 		}
 	}
 

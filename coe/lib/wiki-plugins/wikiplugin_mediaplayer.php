@@ -6,7 +6,7 @@ function wikiplugin_mediaplayer_help() {
 function wikiplugin_mediaplayer_info() {
 	return array(
 				 'name' => tra('Mediaplayer'),
-				 'documentation' => 'See http://flash-mp3-player.net/  http://flv-player.net/, http://code.google.com/p/mp3player for additional parameters',
+				 'documentation' => 'PluginMediaplayer',
 				 'description' => 'Simple mp3 or flv Player',
 				 'extraparams' =>true,
 				 'prefs' => array( 'wikiplugin_mediaplayer' ),

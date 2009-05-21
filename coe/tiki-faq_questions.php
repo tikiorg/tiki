@@ -136,10 +136,15 @@ $smarty->assign_by_ref('suggested', $suggested["data"]);
 
 include_once("textareasize.php");
 include_once ('lib/quicktags/quicktagslib.php');
-$quicktags = $quicktagslib->list_quicktags(0,20,'taglabel_desc','','faqs');
+$quicktags = $quicktagslib->list_quicktags(0,20,'taglabel_asc','','faqs');
 $smarty->assign_by_ref('quicktags', $quicktags["data"]);
 include_once ('tiki-section_options.php');
 ask_ticket('faq-questions');
+
+
+global $wikilib; include_once('lib/wiki/wikilib.php');
+$plugins = $wikilib->list_plugins(true, 'faqans');
+$smarty->assign_by_ref('plugins', $plugins);
 
 // Display the template
 $smarty->assign('mid', 'tiki-faq_questions.tpl');

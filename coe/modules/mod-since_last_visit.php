@@ -5,7 +5,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   header("location: index.php");
   exit;
 }
-
+global $tikilib, $smarty;
 $nvi_info = $tikilib->get_news_from_last_visit($user);
 
 $smarty->assign('nvi_info', $nvi_info);

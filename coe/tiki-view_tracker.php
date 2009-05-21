@@ -200,7 +200,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 	} else {
 		$creatorSelector = false;
 	}
-	if (($xfields["data"][$i]['isTblVisible'] == 'y' or $xfields["data"][$i]['isSearchable'] == 'y' or in_array($fid, $popupFields))
+	if (($xfields["data"][$i]['isTblVisible'] == 'y' or in_array($fid, $popupFields))
 		and ($xfields["data"][$i]['isHidden'] == 'n' or $xfields["data"][$i]['isHidden'] == 'p' or $tiki_p_admin_trackers == 'y' or ($xfields["data"][$i]['type'] == 's' and $xfields['data'][$i]['name'] == 'Rating' and $tiki_p_tracker_view_ratings == 'y'))
 		) {
 
@@ -512,7 +512,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 }
 if ($textarea_options) {
 	global $quicktagslib; include_once ('lib/quicktags/quicktagslib.php');
-	$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_desc','','trackers');
+	$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_asc','','trackers');
 	$smarty->assign_by_ref('quicktags', $quicktags["data"]);
 }
 
@@ -546,7 +546,7 @@ if ($prefs['feature_user_watches'] == 'y' and $tiki_p_watch_trackers == 'y') {
 		if ($_REQUEST['watch'] == 'add') {
 			$tikilib->add_user_watch($user, 'tracker_modified', $_REQUEST["trackerId"], 'tracker', $tracker_info['name'],"tiki-view_tracker.php?trackerId=".$_REQUEST["trackerId"]);
 		} else {
-			$tikilib->remove_user_watch($user, 'tracker_modified', $_REQUEST["trackerId"]);
+			$tikilib->remove_user_watch($user, 'tracker_modified', $_REQUEST["trackerId"], 'tracker');
 		}
 	}
 	$smarty->assign('user_watching_tracker', 'n');
@@ -764,7 +764,7 @@ if ($tracker_info['useComments'] == 'y' && ($tracker_info['showComments'] == 'y'
 		if ($tracker_info['showComments'] == 'y') {
 			$items['data'][$itkey]['comments'] = $trklib->get_item_nb_comments($items['data'][$itkey]['itemId']);
 		}
-		if ($tracker_info['showLastComment'] == 'y') {
+		if (isset($tracker_info['showLastComment']) && $tracker_info['showLastComment'] == 'y') {
 			$l = $trklib->list_item_comments($items['data'][$itkey]['itemId'], 0, 1, 'posted_desc');
 			$items['data'][$itkey]['lastComment'] = !empty($l['cant'])? $l['data'][0]: '';
 		}
@@ -775,6 +775,33 @@ if ($tracker_info['useAttachments'] == 'y' && $tracker_info['showAttachments'] =
 		$res = $trklib->get_item_nb_attachments($items["data"][$itkey]['itemId']);
 		$items["data"][$itkey]['attachments']  = $res['attachments'];
 		$items["data"][$itkey]['hits'] = $res['hits'];
+	}
+}
+for ($i = 0; $i < count($xfields['data']); $i++) {
+	$fid = $xfields["data"][$i]["fieldId"];
+	if ($xfields["data"][$i]['isSearchable'] == 'y' and !isset($listfields[$fid])
+		and ($xfields["data"][$i]['isHidden'] == 'n' or $xfields["data"][$i]['isHidden'] == 'p' or $tiki_p_admin_trackers == 'y' or ($xfields["data"][$i]['type'] == 's' and $xfields['data'][$i]['name'] == 'Rating' and $tiki_p_tracker_view_ratings == 'y'))
+		) {
+
+		$listfields[$fid]['type'] = $xfields["data"][$i]["type"];
+		$listfields[$fid]['name'] = $xfields["data"][$i]["name"];
+		$listfields[$fid]['options'] = $xfields["data"][$i]["options"];
+		$listfields[$fid]['options_array'] = $xfields["data"][$i]['options_array'];
+		$listfields[$fid]['isMain'] = $xfields["data"][$i]["isMain"];
+		$listfields[$fid]['isTblVisible'] = $xfields["data"][$i]["isTblVisible"];
+		$listfields[$fid]['isHidden'] = $xfields["data"][$i]["isHidden"];
+		$listfields[$fid]['isSearchable'] = $xfields["data"][$i]["isSearchable"];
+		$listfields[$fid]['isMandatory'] = $xfields["data"][$i]["isMandatory"];
+		$listfields[$fid]['description'] = $xfields["data"][$i]["description"];
+		$listfields[$fid]['visibleBy'] = $xfields['data'][$i]['visibleBy'];
+		$listfields[$fid]['editableBy'] = $xfields['data'][$i]['editableBy'];
+
+		if ($listfields[$fid]['type'] == 'e' && $prefs['feature_categories'] == 'y') { //category
+			$parentId = $listfields[$fid]['options_array'][0];
+		    $listfields[$fid]['categories'] = $categlib->get_child_categories($parentId);
+		}
+		if (isset($xfields['data'][$i]['otherField']))
+			$listfields[$fid]['otherField'] = $xfields['data'][$i]['otherField'];
 	}
 }
 
@@ -837,7 +864,7 @@ foreach ($fields['data'] as $it) {
 }
 }
 
-if ($items['data']) {
+if (isset($tracker_info['useRatings']) && $tracker_info['useRatings'] == 'y' && $items['data']) {
 	foreach ($items['data'] as $f=>$v) {
 		$items['data'][$f]['my_rate'] = $tikilib->get_user_vote("tracker.".$_REQUEST["trackerId"].'.'.$items['data'][$f]['itemId'],$user);
 	}

@@ -8,8 +8,9 @@
 
 // Initialization
 require_once ('tiki-setup.php');
-
 include_once ('lib/drawings/drawlib.php');
+
+$auto_query_args = array('sort_mode','offset','find', 'ver');
 
 if ($prefs['feature_drawings'] != 'y') {
 	$smarty->assign('msg', tra('This feature is disabled').': feature_drawings');

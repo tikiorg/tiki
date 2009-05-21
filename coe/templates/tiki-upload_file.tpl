@@ -69,7 +69,7 @@
 					<div style="{if $prefs.javascript_enabled eq 'y'}display:none;{/if}" id="uploadinfos{$uploads[ix].fileId}">
 						{tr}You can download this file using{/tr}: <div class="code"><a class="link" href="{$uploads[ix].dllink}">{$uploads[ix].dllink}</a></div>
 						{tr}You can link to the file from a Wiki page using{/tr}: <div class="code">[tiki-download_file.php?fileId={$uploads[ix].fileId}|{$uploads[ix].name} ({$uploads[ix].size|kbsize})]</div>
-						{tr}You can display an image in a Wiki page using{/tr}: <div class="code">&#x7b;img src="tiki-download_file.php?fileId={$uploads[ix].fileId}&amp;thumbnail=y" link="{$uploads[ix].dllink}" alt="{$uploads[ix].name} ({$uploads[ix].size|kbsize})"}</div>
+						{tr}You can display an image in a Wiki page using{/tr}: <div class="code">&#x7b;img src="tiki-download_file.php?fileId={$uploads[ix].fileId}&amp;preview" link="{$uploads[ix].dllink}" alt="{$uploads[ix].name} ({$uploads[ix].size|kbsize})"}</div>
 						{tr}You can link to the file from an HTML page using{/tr}: <div class="code">&lt;a href="{$uploads[ix].dllink}"&gt;{$uploads[ix].name} ({$uploads[ix].size|kbsize})&lt;/a&gt;</div>
 					</div>
 				</td>
@@ -236,7 +236,7 @@
 	{$upload_str}
 	{if $editFileId}
 		{include file=categorize.tpl notable='y'}<br/>
-		<input class="submitbutton" name="upload" type="submit" value="{tr}Save{/tr}"/>
+		<input name="upload" type="submit" value="{tr}Save{/tr}"/>
 	{/if}
 	{if $prefs.javascript_enabled neq 'y' and !$editFileId}
 	{$upload_str}
@@ -251,8 +251,8 @@
 	<hr class="clear"/>
 	<div id="page_bar">
 	{if $prefs.javascript_enabled eq 'y'  and  !$editFileId}
-	<input class="submitbutton" type="button" onclick="upload('0', 'loader_0')" value="{tr}Upload{/tr}"/>
-			<input class="submitbutton" type="button" onclick="javascript:add_upload_file('multiple_upload')" value="{tr lang=$lang}Add File{/tr}"/>
+			<input type="button" onclick="upload('0', 'loader_0')" value="{tr}Upload{/tr}"/>
+			<input type="button" onclick="javascript:add_upload_file('multiple_upload')" value="{tr lang=$lang}Add File{/tr}"/>
 	{/if}
 	</div>
 	</div>
@@ -262,7 +262,7 @@
 	{/if}
 	<br />
 	{remarksbox type="note"}
-		{tr}Maximum file size is limited to:{/tr}
+		{tr}Maximum file size is around:{/tr}
 		{if $tiki_p_admin eq 'y'}<a title="{$max_upload_size_comment}">{/if}
 			{$max_upload_size|kbsize:true:0}
 		{if $tiki_p_admin eq 'y'}</a>{/if}

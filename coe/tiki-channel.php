@@ -5,6 +5,13 @@ require_once 'lib/profilelib/profilelib.php';
 require_once 'lib/profilelib/installlib.php';
 require_once 'lib/profilelib/channellib.php';
 
+if ($tiki_p_admin != 'y') {
+  $smarty->assign('errortype', 401);
+  $smarty->assign('msg', tra("You do not have permission to use this feature"));
+  $smarty->display("error.tpl");
+  die;
+}
+
 if( ! isset($_REQUEST['channels']) || ! is_array($_REQUEST['channels']) ) {
 	$access->display_error( 'tiki-channel.php', tra('Invalid request. Expecting channels array.') );
 }

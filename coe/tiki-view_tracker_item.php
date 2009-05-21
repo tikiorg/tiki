@@ -301,7 +301,7 @@ if ($tiki_p_view_trackers != 'y' and $tracker_info["writerCanModify"] != 'y' and
 	$smarty->display("error.tpl");
 	die;
 }
-if ($tiki_p_admin_trackers != 'y') {
+if ($tiki_p_admin_trackers != 'y' && $prefs['feature_categories'] == 'y') {
 	$itemPerms = $categlib->get_object_categories_perms($user, 'tracker '.$_REQUEST['trackerId'], $_REQUEST['itemId']);
 	if (isset($itemPerms['tiki_p_view_categorized']) && $itemPerms['tiki_p_view_categorized'] == 'n') {
 		$smarty->assign('errortype', 401);
@@ -325,6 +325,7 @@ $tabi = 1;
 $itemUser = $trklib->get_item_creator($_REQUEST['trackerId'], $_REQUEST['itemId']);
 $smarty->assign_by_ref('itemUser', $itemUser);
 
+$plugins_loaded = false;
 foreach($xfields["data"] as $i=>$array) {
 	$fid = $xfields["data"][$i]["fieldId"];
 
@@ -495,7 +496,7 @@ foreach($xfields["data"] as $i=>$array) {
 				$fields["data"][$i]["value"] = '';
 			}
 
-		} elseif ($fields["data"][$i]["type"] == 'a' )	{
+		} elseif ($fields["data"][$i]["type"] == 'a' )	{ 
 		if (isset($_REQUEST["$ins_id"])) {
 			$ins_fields["data"][$i]["value"] = $_REQUEST["$ins_id"];
 		} else {
@@ -513,6 +514,13 @@ foreach($xfields["data"] as $i=>$array) {
 		}
 		if ($fields["data"][$i]["options_array"][0])	{
 			$textarea_options = true;
+			if (!$plugins_loaded) {
+				global $wikilib; include_once('lib/wiki/wikilib.php');
+                        	$plugins = $wikilib->list_plugins(true, 'area_' . $fields["data"][$i]["fieldId"]);
+                        	$smarty->assign_by_ref('plugins', $plugins);
+				$plugins_loaded = 'y';
+				$smarty->assign('show_wiki_help', 'y');
+			}
 		}
 		if ($fields["data"][$i]["isMultilingual"]=='y') {
 			$ins_fields["data"][$i]['isMultilingual']='y';
@@ -668,7 +676,7 @@ if (!isset($mainfield)) {
 
 if ($textarea_options) {
 	include_once ('lib/quicktags/quicktagslib.php');
-	$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_desc','','wiki');
+	$quicktags = $quicktagslib->list_quicktags(0,-1,'taglabel_asc','','wiki');
 	$smarty->assign('quicktags', $quicktags["data"]);
 }
 
@@ -813,6 +821,7 @@ if ($_REQUEST["itemId"]) {
 				} else {
 					if (!isset($info["$fid"])) $info["$fid"] = '';
 				}
+
 				if ($fields["data"][$i]["type"] == 'e') {
 					global $categlib; include_once('lib/categories/categlib.php');
 					$k = $fields["data"][$i]['options_array'][0];
@@ -1011,6 +1020,9 @@ if ($_REQUEST["itemId"]) {
 				if (!empty($ins_fields['data'][$i]['value'])) {
 					$ins_fields['data'][$i]['info'] = $trklib->get_item_attachment($ins_fields['data'][$i]['value']);
 				}
+			} elseif ($fields['data'][$i]['type'] == 's' && $fields['data'][$i]['name'] == 'Rating') {
+					$ins_fields['data'][$i]['numvotes'] = $tikilib->getOne('select count(*) from `tiki_user_votings` where `id` = ?', array('tracker.'.$_REQUEST['trackerId'].'.'.$_REQUEST['itemId']));
+					$ins_fields['data'][$i]['voteavg'] = ( $ins_fields['data'][$i]['numvotes'] > 0 ) ? round(($ins_fields['data'][$i]['value'] / $ins_fields['data'][$i]['numvotes'])) : '';
 			}
 			if ($fields['data'][$i]['isMain'] == 'y')
 				$smarty->assign('tracker_item_main_value', $ins_fields['data'][$i]['value']);
@@ -1075,7 +1087,8 @@ if ($prefs['feature_user_watches'] == 'y' and $tiki_p_watch_trackers == 'y') {
     if ($_REQUEST['watch'] == 'add') {
       $tikilib->add_user_watch($user, 'tracker_item_modified', $_REQUEST["itemId"], 'tracker '.$_REQUEST["trackerId"], $tracker_info['name'],"tiki-view_tracker_item.php?trackerId=".$_REQUEST["trackerId"]."&amp;itemId=".$_REQUEST["itemId"]);
     } else {
-      $tikilib->remove_user_watch($user, 'tracker_item_modified', $_REQUEST["itemId"]);
+			$remove_watch_tracker_type = 'tracker ' . $_REQUEST['trackerId'];
+      $tikilib->remove_user_watch($user, 'tracker_item_modified', $_REQUEST["itemId"], $remove_watch_tracker_type);
     }
   }
   $smarty->assign('user_watching_tracker', 'n');

@@ -700,7 +700,7 @@ class Comments extends TikiLib {
 	    a.`summary`,a.`smiley`,a.`message_id`,a.`in_reply_to`,a.`comment_rating`,a.`locked`, ".
 		$this->ifNull("a.`archived`", "'n'")." as `archived`,".
 		$this->ifNull("max(b.`commentDate`)","a.`commentDate`")." as `lastPost`,".
-	    $this->ifNull("a.`type`", "'s'")." as `sticky`,
+	    $this->ifNull("a.`type`='s'", 'false')." as `sticky`,
 	    count(b.`threadId`) as `replies`
 		from `tiki_comments` a left join `tiki_comments` b 
 		on b.`parentId`=a.`threadId`
@@ -981,7 +981,8 @@ class Comments extends TikiLib {
 	$cant = 0;
 	$off = 0;
 	while ( $res = $result->fetchRow() ) {
-	    if ( $res['forumId'] != '' && $this->user_has_perm_on_object($user, $res['forumId'], 'forum', 'tiki_p_forum_read') ) {
+	    $objperm = $this->get_perm_object($res['forumId'], 'forum', '', false);
+	    if ( $res['forumId'] != '' && $objperm['tiki_p_forum_read'] == 'y' ) {
 		    $cant++; // Count the whole number of forums the user has access to
 		    if ( ( $maxRecords > -1 && $count >= $maxRecords ) || $off++ < $offset ) continue;
 
@@ -1699,7 +1700,7 @@ class Comments extends TikiLib {
 	    $query = "select `message_id` from `tiki_comments` where `threadId` = ?";
 	    $parent_message_id = $this->getOne($query, array( $parentId ) );
 
-	    $query = "select tc1.`threadId`, tc1.`object`, tc1.`objectType`, tc1.`parentId`, tc1.`userName`, tc1.`commentDate`, tc1.`hits`, tc1.`type`, tc1.`points`, tc1.`votes`, tc1.`average`, tc1.`title`, tc1.`data`, tc1.`hash`, tc1.`user_ip`, tc1.`summary`, tc1.`smiley`, tc1.`message_id`, tc1.`in_reply_to`, tc1.`comment_rating`, tc1.`locked`  from `tiki_comments` as tc1
+	    $query = "select tc1.`threadId`, tc1.`object`, tc1.`objectType`, tc1.`parentId`, tc1.`userName`, tc1.`commentDate`, tc1.`hits`, tc1.`type`, tc1.`points`, tc1.`votes`, tc1.`average`, tc1.`title`, tc1.`data`, tc1.`hash`, tc1.`user_ip`, tc1.`summary`, tc1.`smiley`, tc1.`message_id`, tc1.`in_reply_to`, tc1.`comment_rating`, tc1.`approved`, tc1.`locked`  from `tiki_comments` as tc1
 		left outer join `tiki_comments` as tc2 on tc1.`in_reply_to` = tc2.`message_id`
 		and tc1.`parentId` = ?
 		and tc2.`parentId` = ?
@@ -1980,6 +1981,14 @@ class Comments extends TikiLib {
 	if ( empty($objectId) ) return false;
 	$object = explode( ":", $objectId, 2);
 	if ( count($object) < 2 ) return false;
+
+	// Add object if not already exists, because it's currently only done when using categories feature
+	// We suppose it's already done when unlocking the object, because it is needed to be locked
+	if ( $status == 'y' ) {
+		global $objectlib; require_once('lib/objectlib.php');
+		$objectlib->add_object($object[0], $object[1]);
+	}
+
 	$query = "UPDATE `tiki_objects` SET `comments_locked`=? WHERE `Type`=? AND `itemId`=?";
 	return $this->query($query, array( $status, $object[0], $object[1] ));
     }
@@ -2266,6 +2275,10 @@ class Comments extends TikiLib {
 			global $contributionlib;require_once('lib/contribution/contributionlib.php');
 			$contributionlib->remove_comment($res['threadId']);
 		}
+		$query = "delete from `tiki_user_watches` where `object`=? and `type`= ?";
+		$this->query($query, array((int)$threadId, 'forum topic'));
+		$query = "delete from `tiki_group_watches` where `object`=? and `type`= ?";
+		$this->query($query, array((int)$threadId, 'forum topic'));
 	}
 	
 	$query = "delete from `tiki_comments` where `threadId`=? or `parentId`=?";
@@ -2414,7 +2427,7 @@ class Comments extends TikiLib {
  	 * @return  the threadId
 	 * @return $feedbacks, $errors */
 	function post_in_forum($forum_info, &$params, &$feedbacks, &$errors) {
-		global $tiki_p_admin_forum, $tiki_p_forum_post_topic, $tiki_p_forum_post, $prefs, $user;
+		global $smarty, $tiki_p_admin_forum, $tiki_p_forum_post_topic, $tiki_p_forum_post, $prefs, $user, $tiki_p_forum_autoapp;
 
 		if (!empty($params['comments_grandParentId'])) {
 			$parent_id = $params['comments_grandParentId'];
@@ -2432,7 +2445,7 @@ class Comments extends TikiLib {
 			$smarty->display("error.tpl");
 			die;
 		}
-		$parent_comment_info = $commentslib->get_comment($parent_id);
+		$parent_comment_info = $this->get_comment($parent_id);
 		if ( $parent_comment_info['locked'] == 'y' ) {
 			$smarty->assign('msg', tra("This thread is locked"));
 			$smarty->display("error.tpl");
@@ -2442,7 +2455,7 @@ class Comments extends TikiLib {
 		if (empty($user) && $prefs['feature_antibot'] == 'y' && (!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $params['antibotcode'])) {
 			$errors[] = tra('You have mistyped the anti-bot verification code; please try again.');
 		}
-		if ($forum_info['controlFlood'] == 'y' && !$commentslib->user_can_post_to_forum($user, $forumId) ) {
+		if ($forum_info['controlFlood'] == 'y' && !$this->user_can_post_to_forum($user, $forumId) ) {
 			$errors = sprintf(tra('Please wait %d secondes between posts'). $forum_info['floodInterval']);
 		}
 		if ($tiki_p_admin_forum != 'y' && $forum_info['forum_use_password'] != 'n' && $params['password'] != $forum_info['forum_password']) {
@@ -2526,13 +2539,13 @@ class Comments extends TikiLib {
 
 						 // Deal with mail notifications.
 						include_once('lib/notifications/notificationemaillib.php');
-						sendForumEmailNotification('forum_post_topic', $params['forumId'], $forum_info, $params['comments_title'], $params['comments_data'], $user, $params['comments_title'], $message_id, $in_reply_to, $threadId, isset($params['comments_parentId'])?$params['comments_parentId']: 0, isset($params['contributions'])? $params['contributions']: '' );
+						sendForumEmailNotification(empty($params['comments_reply_threadId'])?'forum_post_topic':'forum_post_thread', $params['forumId'], $forum_info, $params['comments_title'], $params['comments_data'], $user, $params['comments_title'], $message_id, $in_reply_to, isset($params['comments_parentId'])?$params['comments_parentId']: $threadId, isset($params['comments_parentId'])?$params['comments_parentId']: 0, isset($params['contributions'])? $params['contributions']: '' );
 						// Set watch if requested
 						if ($prefs['feature_user_watches'] == 'y') {
 							if ($user && isset($params['set_thread_watch']) && $params['set_thread_watch'] == 'y') {
-								$tikilib->add_user_watch($user, 'forum_post_thread', $threadId, 'forum topic', $forum_info['name'] . ':' . $params['comments_title'], 'tiki-view_forum_thread.php?forumId=' . $forum_info['forumId'] . '&amp;comments_parentId=' . $threadId);
+								$this->add_user_watch($user, 'forum_post_thread', $threadId, 'forum topic', $forum_info['name'] . ':' . $params['comments_title'], 'tiki-view_forum_thread.php?forumId=' . $forum_info['forumId'] . '&amp;comments_parentId=' . $threadId);
 							} elseif (!empty($params['anonymous_email'])) { // Add an anonymous watch, if email address supplied.
-								$tikilib->add_user_watch($params['anonymous_name']. ' ' . tra('(not registered)', $prefs['site_language']), 'forum_post_thread', $threadId, 'forum topic', $forum_info['name'] . ':' . $params['comments_title'], 'tiki-view_forum_thread.php?forumId=' . $forum_info['forumId'] . '&amp;comments_parentId=' . $threadId, $params['anonymous_email'], isset($prefs['language']) ? $prefs['language'] : '');
+								$this->add_user_watch($params['anonymous_name']. ' ' . tra('(not registered)', $prefs['site_language']), 'forum_post_thread', $threadId, 'forum topic', $forum_info['name'] . ':' . $params['comments_title'], 'tiki-view_forum_thread.php?forumId=' . $forum_info['forumId'] . '&amp;comments_parentId=' . $threadId, $params['anonymous_email'], isset($prefs['language']) ? $prefs['language'] : '');
 							}
 						}
 
@@ -2560,7 +2573,7 @@ class Comments extends TikiLib {
 					$ret = $this->add_thread_attachment($forum_info, $threadId, $errors, $fp, '',	$_FILES['userfile1']['name'], $_FILES['userfile1']['type'],	$_FILES['userfile1']['size'], 0, $qId );
 					fclose($fp);
 				} else {
-					$errors[] = $tikilib->uploaded_file_error($_FILES['userfile1']['error']);
+					$errors[] = $this->uploaded_file_error($_FILES['userfile1']['error']);
 				}
 			} //END ATTACHMENT PROCESSING
 		}
@@ -2601,16 +2614,19 @@ class Comments extends TikiLib {
 				die;
 			}
 		}
-		if ( $this->is_object_locked($comments_objectId) ) {
-			$smarty->assign('msg', tra("Those comments are locked"));
-			$smarty->display("error.tpl");
-			die;
-		}
-		$parent_comment_info = $commentslib->get_comment($parent_id);
-		if ( $parent_comment_info['locked'] == 'y' ) {
-			$smarty->assign('msg', tra("This thread is locked"));
-			$smarty->display("error.tpl");
-			die;
+
+		if ( $prefs['feature_comments_locking'] == 'y' ) {
+			if ( $this->is_object_locked($comments_objectId) ) {
+				$smarty->assign('msg', tra("Those comments are locked"));
+				$smarty->display("error.tpl");
+				die;
+			}
+			$parent_comment_info = $this->get_comment($parent_id);
+			if ( $parent_comment_info['locked'] == 'y' ) {
+				$smarty->assign('msg', tra("This thread is locked"));
+				$smarty->display("error.tpl");
+				die;
+			}
 		}
 				
 		if (empty($user) && $prefs['feature_antibot'] == 'y' && (!isset($_SESSION['random_number']) || $_SESSION['random_number'] != $params['antibotcode'])) {

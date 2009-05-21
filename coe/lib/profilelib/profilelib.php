@@ -323,7 +323,7 @@ class Tiki_Profile
 			foreach( $value as $v )
 				$array = array_merge( $array, $this->traverseForRequiredInput( $v ) );
 		elseif( preg_match( self::INFO_REQUEST, $value, $parts ) )
-			$array[$parts[1]] = $parts[2];
+			$array[$parts[1]] = $parts[4];
 
 		return $array;
 	} // }}}
@@ -434,6 +434,13 @@ class Tiki_Profile
 
 			if( count( $needles ) )
 				$data = str_replace( $needles, $replacements, $data );
+		}
+	} // }}}
+
+	function getInstructionPage() // {{{
+	{
+		if( isset( $this->data['instructions'] ) ) {
+			return $this->data['instructions'];
 		}
 	} // }}}
 
@@ -717,15 +724,23 @@ class Tiki_Profile_Object
 		elseif( 0 === strpos( $data, 'wikicontent:' ) )
 		{
 			$pageName = substr( $data, strlen('wikicontent:') );
-			$exportUrl = dirname( $this->profile->url ) . '/tiki-export_wiki_pages.php?'
-				. http_build_query( array( 'page' => $pageName ) );
-
-			$content = tiki_get_remote_file( $exportUrl );
-			$content = str_replace( "\r", '', $content );
-			$begin = strpos( $content, "\n\n" );
-			if( $begin !== false )
-				$data = substr( $content, $begin + 2 );
+			$data = $this->getPageContent( $pageName );
 		}
+	} // }}}
+
+	public function getPageContent( $pageName ) // {{{
+	{
+		$exportUrl = dirname( $this->profile->url ) . '/tiki-export_wiki_pages.php?'
+			. http_build_query( array( 'page' => $pageName ) );
+
+		$content = tiki_get_remote_file( $exportUrl );
+		$content = str_replace( "\r", '', $content );
+		$begin = strpos( $content, "\n\n" );
+
+		if( $begin !== false )
+			return substr( $content, $begin + 2 );
+		else
+			return null;
 	} // }}}
 
 	function __get( $name ) // {{{

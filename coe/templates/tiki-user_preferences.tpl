@@ -30,7 +30,6 @@
 <h2>{tr}Personal Information{/tr}</h2>
 <form action="tiki-user_preferences.php" method="post">
   <input type="hidden" name="view_user" value="{$userwatch|escape}" />
-  <input type="hidden" name="user" value="{$userwatch|escape}" />
 
   {cycle values="odd,even" print=false}
   <table class="normal">
@@ -184,8 +183,7 @@
         </select>
       </td>
     </tr>
-    
-    {if $prefs.change_theme eq 'y' && (isset($group_style) and $group_style eq '')}
+    {if $prefs.change_theme eq 'y' && empty($group_style)}
       <tr>
         <td class="{cycle advance=false}">{tr}Theme{/tr}:</td>
         <td class="{cycle}">

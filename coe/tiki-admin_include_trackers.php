@@ -93,6 +93,8 @@ if (isset($_REQUEST["all2db"])) {
 $attachements = $trklib->list_all_attachements($offset,$maxRecords,$sort_mode,$find);
 $smarty->assign_by_ref('cant_pages', $attachements['cant']);
 
+$headerlib->add_cssfile('css/admin.css');
+
 $smarty->assign_by_ref('attachements', $attachements['data']);
 $urlquery['find'] = $find;
 $urlquery['page'] = 'trackers';

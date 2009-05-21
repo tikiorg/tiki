@@ -797,7 +797,8 @@ function _postParse(
 		$this->tree[$cnt]['parsed_title'] = ($this->tree[$cnt]['title'] == '') ? '' : ' title="' . stripslashes($this->tree[$cnt]['title']) . '"';
 
 		$fooimg = $this->icondir . $this->tree[$cnt]['icon'];
-		if ($this->tree[$cnt]['icon'] != '' && (substr($this->tree[$cnt]['icon'], 0, 7) == 'http://' || substr($this->tree[$cnt]['icon'], 0, 8) == 'https://')) {
+		//if ($this->tree[$cnt]['icon'] != '' && (substr($this->tree[$cnt]['icon'], 0, 7) == 'http://' || substr($this->tree[$cnt]['icon'], 0, 8) == 'https://')) { // Changed original conditions to allow relative URLs for icons
+		if ($this->tree[$cnt]['icon'] != '') {
 			$this->tree[$cnt]['parsed_icon'] = $this->tree[$cnt]['icon'];
 			if ($this->issetIconsize) {
 				$this->tree[$cnt]['iconwidth'] = $this->iconsize['width'];

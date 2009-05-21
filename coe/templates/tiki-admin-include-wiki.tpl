@@ -1,6 +1,6 @@
 {* $Id$ *}
 
-{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use the &quot;Quick Edit&quot; module to easily create or edit wiki pages. Select{/tr} <a class="rbox-link" href="tiki-admin_modules.php">{tr}Admin &gt; Modules{/tr}</a> to add this (or other) modules.{/remarksbox}
+{remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Use the 'Quick Edit' module to easily create or edit wiki pages.{/tr} {tr}Select <a class="rbox-link" href="tiki-admin_modules.php">Admin &gt; Modules</a> to add this (or other) modules.{/tr}{/remarksbox}
 
 <form action="tiki-admin.php?page=wiki" method="post">
 <div class="cbox">
@@ -49,33 +49,6 @@
 </div>
 
 
-<fieldset><legend>{tr}Wiki syntax{/tr}{if $prefs.feature_help eq 'y'} {help url="Wiki+Syntax"}{/if}</legend>
-
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" id="feature_wiki_paragraph_formatting" name="feature_wiki_paragraph_formatting" {if $prefs.feature_wiki_paragraph_formatting eq 'y'}checked="checked" {/if}onclick="flip('usewikiparaformat');" /></div>
-	<div class="adminoptionlabel"><label for="feature_wiki_paragraph_formatting">{tr}Wiki paragraph formatting{/tr}</label></div>
-<div class="adminoptionboxchild" id="usewikiparaformat" style="display:{if $prefs.feature_wiki_paragraph_formatting eq 'y'}block{else}none{/if};">
-	<div class="adminoption"><input type="checkbox" id="feature_wiki_paragraph_formatting_add_br" name="feature_wiki_paragraph_formatting_add_br" {if $prefs.feature_wiki_paragraph_formatting_add_br eq 'y'}checked="checked"{/if}/></div>
-	<div class="adminoptionlabel"><label for="feature_wiki_paragraph_formatting_add_br">{tr}...but still create line breaks within paragraphs{/tr}.</label></div>
-</div>
-</div>
-
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" id="feature_wiki_monosp" name="feature_wiki_monosp" {if $prefs.feature_wiki_monosp eq 'y'}checked="checked"{/if}/></div>
-	<div class="adminoptionlabel"><label for="feature_wiki_monosp">{tr}Automonospaced text{/tr}</label></div>
-</div>
-
-<div class="adminoptionbox">
-	<div class="adminoptionlabel"><label for="feature_wiki_tables">{tr}Tables syntax{/tr}:</label>
-	<select name="feature_wiki_tables" id="feature_wiki_tables">
-    <option value="old" {if $prefs.feature_wiki_tables eq 'old'}selected="selected"{/if}>{tr}|| for rows{/tr}</option>
-    <option value="new" {if $prefs.feature_wiki_tables eq 'new'}selected="selected"{/if}>{tr}&lt;return&gt; for rows{/tr}</option>
-    </select>
-	</div>
-</div>
-
-</fieldset>
-		
 <fieldset><legend>{tr}Page display{/tr}</legend>
 
 <div class="adminoptionbox">
@@ -102,13 +75,6 @@
 	<div class="adminoptionlabel"><label for="wiki_pagename_strip">{tr}Page name display stripper{/tr}:</label>
 	<input type="text" id="wiki_pagename_strip" name="wiki_pagename_strip" value="{$prefs.wiki_pagename_strip}" size="5" /> <input type="submit" name="setwikiregex" value="{tr}Set{/tr}" />
 	<br /><em>{tr}Enter a character to use as the delimiter when displaying page names. All characters after the delimiter will be stripped when displaying the page name.</em>{/tr}
-	</div>
-</div>
-
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" id="feature_wiki_ext_icon" name="feature_wiki_ext_icon" {if $prefs.feature_wiki_ext_icon eq 'y'}checked="checked"{/if}/></div>
-	<div class="adminoptionlabel"><label for="feature_wiki_ext_icon">{tr}External link icon{/tr}</label>
-		<br /><em>{tr}External links will be identified with{/tr}: </em><img border="0" class="externallink" src="img/icons/external_link.gif" alt=" (external link)" />.
 	</div>
 </div>
 
@@ -241,13 +207,8 @@
 </div>
 
 <div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" id="wiki_edit_plugin" name="wiki_edit_plugin" {if $prefs.wiki_edit_plugin eq 'y'}checked="checked"{/if}/></div>
-	<div class="adminoptionlabel"><label for="wiki_edit_plugin">{tr}Edit plugin icon{/tr}</label></div>
-</div>
-
-<div class="adminoptionbox">
 	<div class="adminoption"><input type="checkbox" id="feature_wiki_allowhtml" name="feature_wiki_allowhtml" {if $prefs.feature_wiki_allowhtml eq 'y'}checked="checked"{/if}/></div>
-	<div class="adminoptionlabel"><label for="feature_wiki_allowhtml">{tr}Allow HTML{/tr}.</label></div>
+	<div class="adminoptionlabel"><label for="feature_wiki_allowhtml">{tr}Allow HTML{/tr}</label></div>
 </div>
 
 <div class="adminoptionbox">
@@ -262,6 +223,15 @@
 		</select>
 	</div>
 </div>
+	</div>
+</div>
+
+<div class="adminoptionbox">
+	<div class="adminoption"><input type="checkbox" id="wiki_edit_minor" name="wiki_edit_minor" {if $prefs.wiki_edit_minor eq 'y'}checked="checked"{/if}/></div>
+	<div class="adminoptionlabel"><label for="wiki_edit_minor">{tr}Allow minor edits{/tr}.</label>
+	{remarksbox type=note title=Note}{tr}Minor edits do not flag new content for translation and do not send watch notifications.{/tr}.<br />
+	{tr}Only user groups granted the tiki_p_minor permission (and admins) will be able to save minor edits when this is enabled.{/tr}
+	<a class="link" href="tiki-assignpermission.php?type=wiki&amp;group=Registered" title="{tr}Permission{/tr}">{icon _id="key" alt="{tr}Permission{/tr}"}</a>{/remarksbox}
 	</div>
 </div>
 
@@ -560,6 +530,11 @@ name="w_displayed_default" {if $prefs.w_displayed_default eq 'y'} checked="check
 	<div class="adminoptionlabel"><label for="feature_create_webhelp">{tr}Create webhelp from structure:{/tr}</label></div>
 </div>
 
+<div class="adminoptionbox">
+	<div class="adminoption"><input type="checkbox" id="page_n_times_in_a_structure" name="page_n_times_in_a_structure" {if $prefs.page_n_times_in_a_structure eq 'y'}checked="checked"{/if}/></div>
+	<div class="adminoptionlabel"><label for="page_n_times_in_a_structure">{tr}A page can occur multiple times in a structure:{/tr}</label></div>
+</div>
+
 </div>	
 </div>
 
@@ -604,11 +579,6 @@ name="w_displayed_default" {if $prefs.w_displayed_default eq 'y'} checked="check
 	<div class="adminoption"><input type="checkbox" id="feature_wiki_multiprint" name="feature_wiki_multiprint" {if $prefs.feature_wiki_multiprint eq 'y'}checked="checked"{/if}/></div>
 	<div class="adminoptionlabel"><label for="feature_wiki_multiprint">{tr}MultiPrint{/tr}</label></div>
 </div>
-</div>
-
-<div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" id="feature_wiki_protect_email" name="feature_wiki_protect_email" {if $prefs.feature_wiki_protect_email eq 'y'}checked="checked"{/if}/></div>
-	<div class="adminoptionlabel"><label for="feature_wiki_protect_email">{tr}Protect email against spam{/tr}.</label></div>
 </div>
 
 <div class="adminoptionbox">
@@ -784,7 +754,11 @@ name="w_displayed_default" {if $prefs.w_displayed_default eq 'y'} checked="check
 
 <div class="adminoptionbox">
 	<div class="adminoption"><input type="checkbox" id='feature_listorphanPages' name="feature_listorphanPages" {if $prefs.feature_listorphanPages eq 'y'}checked="checked"{/if}/></div>
-	<div class="adminoptionlabel"><label for="feature_listorphanPages">{tr}Orphan page{/tr} </label></div>
+	<div class="adminoptionlabel"><label for="feature_listorphanPages">{tr}Orphan pages{/tr} </label></div>
+</div>
+<div class="adminoptionbox">
+	<div class="adminoption"><input type="checkbox" id='feature_listorphanStructure' name="feature_listorphanStructure" {if $prefs.feature_listorphanStructure eq 'y'}checked="checked"{/if}/></div>
+	<div class="adminoptionlabel"><label for="feature_listorphanStructure">{tr}Pages not in structure{/tr} </label></div>
 </div>	 
 
 <div class="adminoptionbox">
@@ -858,7 +832,7 @@ name="w_displayed_default" {if $prefs.w_displayed_default eq 'y'} checked="check
 </div>
 
 <div class="adminoptionbox">
-	<div class="adminoption"><input type="checkbox" id="wiki_list_status' name="wiki_list_status" {if $prefs.wiki_list_status eq 'y'}checked="checked"{/if} /></div>
+	<div class="adminoption"><input type="checkbox" id="wiki_list_status" name="wiki_list_status" {if $prefs.wiki_list_status eq 'y'}checked="checked"{/if} /></div>
 	<div class="adminoptionlabel"><label for="wiki_list_status">{tr}Status{/tr}</label></div>
 </div>
 

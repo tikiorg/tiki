@@ -6,6 +6,11 @@
     {breadcrumbs type="trail" loc="page" crumbs=$crumbs}
     {breadcrumbs type="pagetitle" loc="page" crumbs=$crumbs}
 {/if}
+{if $db_requires_update}
+	{remarksbox type="warning" title="{tr}Database Version Problem{/tr}"}
+	{tr}Your database requires an update to match the current TikiWiki version. Please proceed to <a href="tiki-install.php">the installer</a>. Using Tiki with an incorrect database version usually provoke errors.{/tr}
+	{/remarksbox}
+{/if}
 {**
  * Page Title as h1 goes here
  *}
@@ -22,7 +27,7 @@ Add a value in first check when you create a new admin page. *}
   {assign var="include" value="list-sections"}
 {/if}
 {if $include != "list-sections"}
-  <div class="simplebox adminanchors" >{include file="tiki-admin-include-anchors.tpl"}</div>
+  <div class="simplebox adminanchors clearfix" >{include file="tiki-admin-include-anchors.tpl"}</div>
 {/if}
 
 {if $feature_version_checks eq 'y' and $prefs.tiki_needs_upgrade eq 'y'}
@@ -73,7 +78,6 @@ Add a value in first check when you create a new admin page. *}
 	{/if}
 	{if $prefs.feature_live_support eq 'y'} <a href="tiki-live_support_admin.php">{tr}Live Support{/tr}</a> {/if}
 	{if $prefs.feature_charts eq 'y'} <a href="tiki-admin_charts.php">{tr}Charts{/tr}</a> {/if}
-	{if $feature_eph eq 'y'} <a href="tiki-eph_admin.php">{tr}Ephemerides{/tr}</a> {/if}
 	{if $prefs.feature_workflow eq 'y'} <a href="tiki-g-admin_processes.php">{tr}Workflow{/tr}</a> {/if}
 	{* TODO: to be fixed {if $prefs.feature_debug_console eq 'y'} <a href="javascript:toggle("debugconsole")">{tr}(debug){/tr}</a> 
 	{/if} *}
@@ -85,7 +89,7 @@ Add a value in first check when you create a new admin page. *}
 	<a href="tiki-adminusers.php">{tr}Users{/tr}</a> 
 	<a href="tiki-admingroups.php">{tr}Groups{/tr}</a> 
 	<a href="tiki-admin_security.php">{tr}Security{/tr}</a> 
-	<a href="tiki-admin_system.php">{tr}System{/tr}</a> 
+	<a href="tiki-admin_system.php">{tr}TikiCache/System{/tr}</a> 
 	<a href="tiki-syslog.php">{tr}SysLogs{/tr}</a> 
 	<a href="tiki-phpinfo.php">{tr}phpinfo{/tr}</a> 
 	<a href="tiki-mods.php">{tr}Mods{/tr}</a>

@@ -41,7 +41,7 @@ if ($tiki_p_edit_structures == 'y') {
 if (isset($_REQUEST['rremove'])) {
   $area = 'delstruct';
   $structure_info = $structlib->s_get_structure_info($_REQUEST['rremove']);
-	if (!$tikilib->user_has_perm_on_object($user,$structure_info["pageName"],'wiki page','tiki_p_edit')) {
+	if (!$tikilib->user_has_perm_on_object($user,$structure_info["pageName"],'wiki page','tiki_p_edit', 'tiki_p_edit_categorized')) {
 		$smarty->assign('errortype', 401);
 		$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
 		$smarty->display("error.tpl");
@@ -58,7 +58,7 @@ if (isset($_REQUEST['rremove'])) {
 if (isset($_REQUEST['rremovex'])) {
   $area = 'delstructandpages';
   $structure_info = $structlib->s_get_structure_info($_REQUEST['rremovex']);
-	if (!$tikilib->user_has_perm_on_object($user,$structure_info["pageName"],'wiki page','tiki_p_edit')) {
+	if (!$tikilib->user_has_perm_on_object($user,$structure_info["pageName"],'wiki page','tiki_p_edit', 'tiki_p_edit_categorized')) {
 		$smarty->assign('errortype', 401);
 		$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
 		$smarty->display("error.tpl");
@@ -119,7 +119,7 @@ $smarty->assign('askremove', 'n');
 if (isset($_REQUEST['remove'])) {
 	check_ticket('admin-structures');
 	$structure_info = $structlib->s_get_structure_info($_REQUEST['remove']);
-	if (!$tikilib->user_has_perm_on_object($user,$structure_info["pageName"],'wiki page','tiki_p_edit')) {
+	if (!$tikilib->user_has_perm_on_object($user,$structure_info["pageName"],'wiki page','tiki_p_edit', 'tiki_p_edit_categorized')) {
 		$smarty->assign('errortype', 401);
 		$smarty->assign('msg', tra("Permission denied you cannot edit this page"));
 		$smarty->display("error.tpl");
@@ -134,6 +134,8 @@ $alert_in_st = array();
 $alert_categorized = array();
 $alert_to_remove_cats = array();
 $alert_to_remove_extra_cats = array();
+$cat_type='wiki page';
+$cat_objid = '';
 $smarty->assign('just_created', 'n');
 if (isset($_REQUEST["create"])) {
 	check_ticket('admin-structures');

@@ -73,17 +73,19 @@
 			</span>
 		</div>
 		<div class="actions">
-			<span class="action">
-				{tr}Move to topic:{/tr}
-				<select name="moveto">
-				{section name=ix loop=$topics}
-					{if $topics[ix].threadId ne $comments_parentId}
-					<option value="{$topics[ix].threadId|escape}">{$topics[ix].title}</option>
-					{/if}
-				{/section}
-				</select>
-				<input type="submit" name="movesel" value="{tr}Move{/tr}" />
-			</span>
+			{if $topics|@count > 1}
+				<span class="action">
+					{tr}Move to topic:{/tr}
+					<select name="moveto">
+					{section name=ix loop=$topics}
+						{if $topics[ix].threadId ne $comments_parentId}
+						<option value="{$topics[ix].threadId|escape}">{$topics[ix].title}</option>
+						{/if}
+					{/section}
+					</select>
+					<input type="submit" name="movesel" value="{tr}Move{/tr}" />
+				</span>
+			{/if}
 
 			<span class="action">
 				<input type="submit" name="delsel" value="{tr}Delete Selected{/tr}" />
@@ -103,14 +105,16 @@
 					<a class="link" href="tiki-list_comments.php?types_section={$section}&amp;findfilter_approved=n">{tr}queued:{/tr}{$queued}</a>
 					&nbsp;&nbsp;
 				{/if}
-				{if $thread_is_locked eq 'y'}
-					{tr}Comments Locked{/tr}
-					{self_link comments_lock='n' _icon='lock_break'}{tr}Unlock{/tr}{/self_link}
-				{else}
-					{self_link comments_lock='y' _icon='lock_add'}{tr}Lock{/tr}{/self_link}
+				{if $prefs.feature_comments_locking eq 'y'}
+					{if $thread_is_locked eq 'y'}
+						{tr}Comments Locked{/tr}
+						{self_link comments_lock='n' _icon='lock_break'}{tr}Unlock{/tr}{/self_link}
+					{else}
+						{self_link comments_lock='y' _icon='lock_add'}{tr}Lock{/tr}{/self_link}
+					{/if}
 				{/if}
 				</span>
-			{elseif $thread_is_locked eq 'y'}
+			{elseif $thread_is_locked eq 'y' and $prefs.feature_comments_locking eq 'y'}
 				<span class="infos">{tr}Comments Locked{/tr}</span>
 			{/if}
 			</div>
@@ -215,7 +219,7 @@
 
 {* Post dialog *}
 {if ($tiki_p_forum_post eq 'y' and $forum_mode eq 'y') or ($tiki_p_post_comments eq 'y' and $forum_mode ne 'y')}
-  {if $thread_is_locked eq 'y'}
+  {if ( $forum_mode eq 'y' or $prefs.feature_comments_locking eq 'y' ) and $thread_is_locked eq 'y'}
 	{if $forum_mode eq 'y'}
 		{assign var='lock_text' value="{tr}This thread is locked{/tr}"}
 	{else}
@@ -232,7 +236,7 @@
 			{* posting, editing or previewing a reply: show form *}
 <div id='{$postclass}open' class="threadpost">
 		{else}
-<input type="button" name="comments_postComment" value="{tr}New Reply{/tr}" onclick="flip('{$postclass}');"/>
+<input type="button" name="comments_postComment" value="{tr}New Reply{/tr}" onclick="flip('{$postclass}');" />
 <div id='{$postclass}' class="threadpost">
 		{/if}
 	{/if}
@@ -280,7 +284,7 @@
 	<table class="normal">
 		<tr>
 			<td class="formcolor">
-				<label for="comments-title">{tr}Title{/tr} <span class="attention">({tr}required{/tr})</span>: </label>
+				<label for="comments-title">{tr}Title{/tr} <span class="attention">({tr}required{/tr})</span> </label>
 			</td>
 			<td class="formcolor">
 				<input type="text" size="50" name="comments_title" id="comments-title" value="{$comment_title|escape}" />
@@ -329,7 +333,7 @@
 
 		<tr>
 			<td class="formcolor">
-				<label for="editpost2">{if $forum_mode eq 'y'}{tr}Reply{/tr}{else}{tr}Comment{/tr}{/if}</label>
+				<label for="editpost2">{if $forum_mode eq 'y'}{tr}Reply{/tr}{else}{tr}Comment{/tr} <span class="attention">({tr}required{/tr})</span>{/if}</label>
 				<br /><br />
 				{include file="textareasize.tpl" area_name='editpost2' formId='editpostform'}
 				<br /><br />
@@ -339,16 +343,17 @@
 			</td>
 			<td class="formcolor">
 				<textarea id="editpost2" name="comments_data" rows="{$rows}" cols="{$cols}">{if $prefs.feature_forum_replyempty ne 'y' || $edit_reply > 0 || $comment_preview eq 'y'}{$comment_data|escape}{/if}</textarea>
-				<input type="hidden" name="rows" value="{$rows}"/>
-				<input type="hidden" name="cols" value="{$cols}"/>
+				<input type="hidden" name="rows" value="{$rows}" />
+				<input type="hidden" name="cols" value="{$cols}" />
 			</td>
 		</tr>
 
 		{if $forum_mode == "y" and (($forum_info.att eq 'att_all') or ($forum_info.att eq 'att_admin' and ($tiki_p_admin_forum eq 'y'  or $forum_info.moderator == $user)) or ($forum_info.att eq 'att_perm' and $tiki_p_forum_attach eq 'y'))}
+		{assign var='can_attach_file' value='y'}
 		<tr>
 			<td class="formcolor">{tr}Attach file{/tr}</td>
 			<td class="formcolor">
-				<input type="hidden" name="MAX_FILE_SIZE" value="{$forum_info.att_max_size|escape}" /><input name="userfile1" type="file" />{tr}Maximum size:{/tr} {$forum_info.att_max_size|kbsize}
+				<input type="hidden" name="MAX_FILE_SIZE" value="{$forum_info.att_max_size|escape}" /><input id="userfile1" name="userfile1" type="file" />{tr}Maximum size:{/tr} {$forum_info.att_max_size|kbsize}
 			</td>
 		</tr>
 		{/if}
@@ -383,13 +388,24 @@
 			</td>
 
 			<td class="formcolor">
-				<input type="submit" name="comments_previewComment" value="{tr}Preview{/tr}" {if empty($user)}onclick="setCookie('anonymous_name',document.getElementById('anonymous_name').value);"{/if} />
+				<input type="submit" name="comments_previewComment" value="{tr}Preview{/tr}"
+				{if ( isset($can_attach_file) && $can_attach_file eq 'y' ) or empty($user)}{strip}
+					{assign var='file_preview_warning' value='{tr}Please note that the preview does not keep the attached file which you will have to choose before posting.{/tr}'}
+					onclick="
+					{if empty($user)}
+						setCookie('anonymous_name',document.getElementById('anonymous_name').value);
+					{/if}
+					{if isset($can_attach_file) && $can_attach_file eq 'y'}
+						if (document.getElementById('userfile1').value) alert('{$file_preview_warning|escape:"javascript"}');
+					{/if}
+					"
+				{/strip}{/if} />
 				<input type="submit" name="comments_postComment" value="{tr}Post{/tr}" {if empty($user)}onclick="setCookie('anonymous_name',document.getElementById('anonymous_name').value);"{/if} />
 				{if !empty($user) && $prefs.feature_comments_post_as_anonymous eq 'y'}
 				<input type="submit" name="comments_postComment_anonymous" value="{tr}Post as Anonymous{/tr}" />
 				{/if}
 				{if $forum_mode eq 'y'}
-				<input type="button" name="comments_cancelComment" value="{tr}Cancel{/tr}" onclick="hide('{$postclass}');"/>
+				<input type="button" name="comments_cancelComment" value="{tr}Cancel{/tr}" onclick="hide('{$postclass}');" />
 				{elseif $prefs.feature_comments_moderation eq 'y' and $tiki_p_admin_comments neq 'y'}
 					{remarksbox type="note" title="{tr}Note{/tr}"}
 						{tr}Your comment will have to be approved by the moderator before it is displayed.{/tr}

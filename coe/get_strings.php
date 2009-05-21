@@ -37,12 +37,20 @@
 
  * \param verbose=y  : Display content of language files as they are created.
 
+ * \param quiet  : Do not display listing all files even if completion != y
+
  */
 
 
 
 ////////////////////////////////////////////////////////////////////////////
 /// functions
+
+// Only accept to call this script:
+// - through command line interface
+// - through the web interface if authenticated as an admin
+//
+$script_mode = ! isset( $_SERVER['REQUEST_METHOD'] ) && isset($_SERVER['argc']);
 
 $punctuations = array(':', '!', ';', '.', ',', '?'); // Modify lib/init/tra.php accordingly
 $addPHPslashes = Array ("\n" => '\n',
@@ -64,12 +72,31 @@ $addPHPslashes = Array ("\n" => '\n',
 function collect_perms_desc($file)
 {
   global $tikilib;
+  if ( isset($tikilib) ) {
 
   $result = $tikilib->query("SELECT DISTINCT(permDesc) FROM users_permissions ORDER BY permDesc");
 
   $perm_strings = array();
   while( $row = $result->fetchRow() )
     $perm_strings[] = $row['permDesc'];
+
+  } elseif ( is_readable('db/tiki.sql') ) {
+
+    // Used when called in $script_mode if no DB has been found
+    $matches = array();
+    preg_match_all(
+      '/insert\s+into\s+\`?users_permissions\s*\([^\)]+\)\s*values\s*\(\'(tiki_p_[^\'"]+)\',\s*\'(.*)\',/Uim',
+      file_get_contents('db/tiki.sql'),
+      $matches
+    );
+    foreach ( $matches[2] as $permDesc ) {
+      $perm_strings[] = str_replace("\'", "'", $permDesc);
+    }
+    unset($matches);
+
+  } else {
+    die('File db/tiki.sql is missing');
+  }
 
   $pstr = fopen($file,'w');
   if (!$pstr) {
@@ -83,22 +110,30 @@ function collect_perms_desc($file)
 }
 
 /**
-  * Reads all the permission descriptions in tikiwiki database and writes
-  *   it to the file $file. All the strings will be surrounded by smarty translate tags
+  * Get all preferences names from get_default_prefs() function or reads them all from tikiwiki database
+  * and writes it to the file $file. All the strings will be surrounded by smarty translate tags
   *     ex: {tr}preference name{/tr}
   *
   * @param $file string: target file for the pref names
   * @returns: nothing but creates the file with the pref names (take care about the acl's in the target directory !)
   */
-function collect_prefs_names($file)
-{
+function collect_prefs_names($file) {
+
   global $tikilib;
+  if ( isset($tikilib) ) {
 
-  $result = $tikilib->query("select `name` from `tiki_preferences`");
+    $prefs_strings = array();
+    $result = $tikilib->query("select `name` from `tiki_preferences`");
+    while ( $row = $result->fetchRow() ) $prefs_strings[] = $row['name'];
 
-  $prefs_strings = array();
-  while( $row = $result->fetchRow() )
-    $prefs_strings[] = $row['name'];
+  } elseif ( function_exists('get_default_prefs') ) {
+
+    // Used when called in $script_mode if no DB has been found
+    $prefs_strings = array_keys(get_default_prefs());
+
+  } else {
+    die("No 'get_default_prefs' function is available");
+  }
 
   $pstr = fopen($file,'w');
   if (!$pstr) {
@@ -155,17 +190,17 @@ function removephpslashes ($string) {
   return strtr ($string, $removePHPslashes);
 }
 
-function hardwire_file ($file)
-{
-  global $files, $completion;
-  $files[] = $file;
-  if (!$completion)
-	  print "File (hardwired): $file<br />";
+function hardwire_file ($file) {
+	global $files, $completion, $script_mode, $quiet;
+	$files[] = $file;
+	if ( ! $completion && ! $quiet ) {
+		formatted_print("File (hardwired): $file\n");
+	}
 }
 
 function collect_files ($dir)
 {
-  global $files, $completion;
+  global $files, $completion, $script_mode, $quiet;
  
   $handle = opendir ($dir);
   while (false !== ($file = readdir ($handle))) {
@@ -182,9 +217,10 @@ function collect_files ($dir)
 
     $filepath = $dir . '/' . $file;
     if (preg_match ("/.*\.(tpl|php)$/", $file)) {
-	  if (!$completion)
-		  print("File: $filepath<br />");
-      $files[] = $filepath; 
+	    if ( ! $completion && ! $quiet ) {
+		    formatted_print("File: $filepath\n");
+	    }
+	    $files[] = $filepath; 
     }
     else {
       if (is_dir ($filepath)) {
@@ -214,9 +250,11 @@ function addToWordlist (&$wordlist, &$sentence) {
 
 
 function writeFile_and_User (&$fd, $outstring) {
-	global $verbose;
-  if($verbose == 'y') print (nl2br(htmlspecialchars($outstring)));
-  fwrite ($fd, $outstring);
+	global $verbose, $script_mode;
+	if ( $verbose ) {
+		formatted_print($outstring);
+	}
+	fwrite ($fd, $outstring);
 }
 
 function writeTranslationPair (&$fd, &$key, &$val) {
@@ -246,14 +284,41 @@ function leven($key, $dictionary, $closeEnglish) {
 	  else
 	    return '';
 }
+
+function formatted_print($string) {
+	global $script_mode;
+	print $script_mode ? $string : nl2br( htmlspecialchars( $string ) );
+}
 ////////////////////////////////////////////////////////////////////////////
 
-require_once('tiki-setup.php');
+if ( $script_mode ) {
 
-if($tiki_p_admin != 'y') {
-  die("You need to be admin to run this script");
+	if ( ! $quiet ) {
+		require_once('lib/setup/timer.class.php');
+		$tiki_timer = new timer();
+		$tiki_timer->start();
+	}
+
+	if ( file_exists('db/local.php') ) {
+		require_once('db/tiki-db.php');
+		require_once('lib/tikidblib.php');
+		$tikilib = new TikiDB($dbTiki);
+	} else {
+		require_once('lib/setup/prefs.php'); // Used to get default prefs
+	}
+
+	$_REQUEST = array();
+	for ( $k = 1 ; $k < $_SERVER['argc'] ; $k++ ) {
+		list($key, $value) = split('=', $_SERVER['argv'][$k], 2);
+		$_REQUEST[$key] = $value ? $value : 'y';
+	}
+
+} else {
+	require_once('tiki-setup.php');
+	if ( $tiki_p_admin != 'y' ) die("You need to be admin to run this script");
 }
 
+if ( ! $script_mode ) {
 echo '<!DOCTYPE html
         PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -263,11 +328,14 @@ echo '<!DOCTYPE html
 </head>
 <body>
 ';
+}
 
+$quiet = isset ($_REQUEST['quiet']);
 $completion = isset($_REQUEST['completion']) && $_REQUEST['completion']=='y';
-if (!$completion)
-	echo "Initialization time: ", $tiki_timer->elapsed(), " seconds<br />\n";
-$tiki_timer->start("files");
+if ( ! $completion && ! $quiet ) {
+	formatted_print("Initialization time: " . $tiki_timer->elapsed() . " seconds\n");
+}
+if ( ! $quiet ) $tiki_timer->start("files");
 
 $comments = isset ($_REQUEST['comments']);
 $close    = isset ($_REQUEST['close'])  || $comments;
@@ -277,17 +345,16 @@ $spelling = isset ($_REQUEST['spelling']);
 $group_w  = isset ($_REQUEST['groupwrite']);
 $tagunused= isset ($_REQUEST['tagunused']);
 $verbose  = isset ($_REQUEST['verbose']);
-
 $nohelp     = isset ($_REQUEST['nohelp']);
 $nosections = isset ($_REQUEST['nosections']);
 
 // Get the language(s)
 $languages = Array();
-print("Languages: ");
+formatted_print("Languages: ");
 if (isset ($_REQUEST["lang"])) {
   $lang = $_REQUEST["lang"];
   $languages[] = $lang;
-  print ("$lang");  
+  formatted_print("$lang");  
 }
 else {
   $handle=opendir ('lang');
@@ -296,24 +363,22 @@ else {
       continue;
     if( is_dir( "lang/$lang" ) && is_file( "lang/$lang/language.php" ) )
     {
-	print("$lang ");  
+	formatted_print("$lang ");  
 	$languages[] = $lang;
     }
   }
   closedir ($handle);
-}    	
-print("<br />");  
-
+}
 
 $files = Array();
-
-$wordlist = Array ();
+$wordlist = Array();
 
 ## When collecting files we need to add a file since the directory which it
 ## is placed in is excluded. We should keep hardwiring to a minimum.
 ## In a normal case a file that should be translated should not exist in
 ## a (sub)directory that is excluded. In this (unfortunate) case it seems that
 ## the files are placed in a logical location.
+if ( ! $completion ) formatted_print("\n" . ( $quiet ? "Parsing Tiki files..." : '' ) );
 collect_files ('.');
 hardwire_file ('./lang/langmapping.php');
 hardwire_file ('./img/flags/flagnames.php');
@@ -332,29 +397,33 @@ hardwire_file ($prefsfile);
 
 // Sort files to make generated strings appear in language.php in the same 
 // order across different systems
-if ((!isset($_REQUEST["sort"]) || $_REQUEST["sort"] != 'n') && !$completion) {
-	echo "Sorting files...";
+if ((!isset($_REQUEST["sort"]) || $_REQUEST["sort"] != 'n') && ! $completion) {
+	formatted_print("\nSorting files... ");
 	flush();
 	sort($files);
-	echo count($files), " items done.<br />\nTiki directory parsed in: ", $tiki_timer->stop("files"), " seconds<br />\n<br />\n";
+	if ( ! $quiet ) formatted_print( count($files) . " items done.\nTiki directory parsed in: " . $tiki_timer->stop("files") . " seconds\n\n" );
 	flush();
 }
-$tiki_timer->start("processing");
+if ( ! $quiet ) $tiki_timer->start("processing");
 
-if ( $completion) {
-    echo "<table border='1'>";
-      echo "<tr>";
-        echo "<td><b>Language</b></td>";
-        echo "<td><b>Completion</b></td>";
-        echo "<td><b>Translated</b></td>";
-        echo "<td><b>To Translate</b></td>";
-        echo "<td><b>Unused</b></td>";
-      echo "</tr>";
-  }
+if ( $completion ) {
+	if ( $script_mode ) {
+		echo "\n\nLanguage | Completion | Translated | To Translate | Unused";
+	} else {
+		echo "<table border='1'>";
+		echo "<tr>";
+		echo "<td><b>Language</b></td>";
+		echo "<td><b>Completion</b></td>";
+		echo "<td><b>Translated</b></td>";
+		echo "<td><b>To Translate</b></td>";
+		echo "<td><b>Unused</b></td>";
+		echo "</tr>";
+	}
+}
 
 $oldEndMarker = '##end###';
 $endMarker = '###end###';
-foreach ($languages as $sel) {
+foreach ($languages as $ksel => $sel) {
   unset ($lang);
   unset ($to_translate);
   unset ($translated); 
@@ -375,6 +444,10 @@ foreach ($languages as $sel) {
     unset ($lang);
   }
 
+  if ( $quiet && ! $completion ) {
+	if ( $ksel == 0 ) formatted_print("\nUpdating language files:");
+	formatted_print(" $sel");
+  }
   require("lang/$sel/language.php");
 
   if (isset ($lang[$oldEndMarker])) {
@@ -396,11 +469,9 @@ foreach ($languages as $sel) {
 
   if (!$completion) {
     $fw = fopen("lang/$sel/new_language.php",'w');
-	if (!$fw) {
-		echo "The file lang/$sel/new_language.php can not be written";
-	}
+    if ( ! $fw ) die("\nThe file lang/$sel/new_language.php can not be written\n");
   
-    print("&lt;");
+    if ( $verbose ) formatted_print('<');
     fwrite($fw,"<");
     writeFile_and_User ($fw, "?php");
     // The comment coding:utf-8 is for the benefit of emacs
@@ -623,15 +694,23 @@ foreach ($languages as $sel) {
     }
   }
 
-  if ($completion) {
-    echo "<tr>";
-      echo "<td style='text-align:center;'>$sel</td>";
-      echo "<td style='text-align:center;'>" . round((count($translated)*100)/(count($translated)+count($to_translate))) . '%' . "</td>";
-      echo "<td style='text-align:right;'>" . count($translated)    . "</td>";
-      echo "<td style='text-align:right;'>" . count($to_translate)  . "</td>";
-      echo "<td style='text-align:right;'>" . count ($unused)       . "</td>";
-    echo "</tr>";
-    continue;
+  if ( $completion ) {
+	if ( $script_mode ) {
+		echo "\n" . $sel;
+		echo " | " . round((count($translated)*100)/(count($translated)+count($to_translate))) . '%';
+		echo " | " . count($translated);
+		echo " | " . count($to_translate);
+		echo " | " . count ($unused);
+	} else {
+		echo "<tr>";
+		echo "<td style='text-align:center;'>$sel</td>";
+		echo "<td style='text-align:center;'>" . round((count($translated)*100)/(count($translated)+count($to_translate))) . '%' . "</td>";
+		echo "<td style='text-align:right;'>" . count($translated)    . "</td>";
+		echo "<td style='text-align:right;'>" . count($to_translate)  . "</td>";
+		echo "<td style='text-align:right;'>" . count ($unused)       . "</td>";
+		echo "</tr>";
+	}
+	continue;
   }
 
   unset ($unused['']);
@@ -738,15 +817,13 @@ foreach ($languages as $sel) {
     }
   }
   writeFile_and_User ($fw, '"'.$endMarker.'"=>"'.$endMarker.'");'."\n");
-  print ("?&gt;<br />\n");  
+  if ( $verbose ) formatted_print("?>\n");  
   fwrite ($fw, '?>'."\n");  
   fclose ($fw);
 
   if ($spelling) {
     $fw = fopen("lang/$sel/spellcheck_me.txt", 'w');
-	if (!$fw) {
-		echo "The file lang/$sel//spellcheck_me.txt can not be written";
-	}
+    if ( ! $fw ) die("The file lang/$sel//spellcheck_me.txt can not be written");
     ksort ($wordlist);
     reset ($wordlist);
     foreach ($wordlist as $word => $dummy) {
@@ -768,12 +845,13 @@ foreach ($languages as $sel) {
     umask($old_umask); // Reset umask back to original value
   }
 }
-if (!$completion) {
-	echo "Processing time: ", $tiki_timer->stop("processing"), " seconds<br />\n";
-	echo "Total time spent: ", $tiki_timer->elapsed(), " seconds<br />\n";
-} else {
+if ( ! $completion && ! $quiet ) {
+	formatted_print("\nProcessing time: " . $tiki_timer->stop("processing") . " seconds");
+	formatted_print("\nTotal time spent: " . $tiki_timer->elapsed() . " seconds\n");
+} elseif ( $completion && ! $script_mode ) {
 	echo "</table>";
+} else {
+	echo "\n";
 }
 
-echo '</body>';
-?>
+if ( ! $script_mode ) echo '</body>';

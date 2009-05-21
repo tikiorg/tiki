@@ -21,8 +21,7 @@ function get_default_prefs() {
 		return $prefs;
 
 	global $cachelib;
-	if( $cachelib->isCached("tiki_default_preferences_cache") )
-	{
+	if( isset($cachelib) && $cachelib->isCached("tiki_default_preferences_cache") ) {
 		$prefs = unserialize( $cachelib->getCached("tiki_default_preferences_cache") );
 		return $prefs;
 	}
@@ -37,7 +36,7 @@ function get_default_prefs() {
 		'tiki_version_check_frequency' => 604800,
 		'lastUpdatePrefs' => 1,
 
-		'feature_print_indexed' => 'y',
+		'feature_print_indexed' => 'n',  //Still needs to be in admin panel somwhere
 
 		// wiki
 		'feature_wiki' => 'y',
@@ -49,6 +48,7 @@ function get_default_prefs() {
 		'feature_likePages' => 'n',
 		'feature_listPages' => 'y',
 		'feature_listorphanPages' => 'n',
+		'feature_listorphanStructure' => 'n',
 		'feature_page_title' => 'y',
 		'feature_sandbox' => 'n',
 		'feature_warn_on_edit' => 'y',
@@ -154,23 +154,32 @@ function get_default_prefs() {
 		'feature_wiki_watch_structure' => 'n',
 		'feature_wikiapproval' => 'n',
 		'wikiapproval_prefix' => '*',
+		'wikiapproval_hideprefix' => 'n',
 		'wikiapproval_delete_staging' => 'n',
 		'wikiapproval_master_group' => '',
+		'wikiapproval_staging_category' => '0',
+		'wikiapproval_approved_category' => '0',
+		'wikiapproval_outofsync_category' => '0',
+		'wikiapproval_block_editapproved' => 'n',
+		'wikiapproval_sync_categories' => 'n',
+		'wikiapproval_update_freetags' => 'n',
+		'wikiapproval_combine_freetags' => 'n',
 		'wiki_edit_section' => 'y',
 		'wiki_edit_section_level' => '0',
-		'wiki_edit_plugin' => 'y',
+		'wiki_edit_plugin' => 'n',
 		'wiki_validate_plugin' => 'y',
+		'wiki_edit_minor' => 'n',
 
 		'wikiplugin_agentinfo' => 'n',
-		'wikiplugin_alink' => 'y',
-		'wikiplugin_aname' => 'y',
-		'wikiplugin_annotation' => 'y',
+		'wikiplugin_alink' => 'n',
+		'wikiplugin_aname' => 'n',
+		'wikiplugin_annotation' => 'n',
 		'wikiplugin_article' => 'y',
 		'wikiplugin_articles' => 'y',
 		'wikiplugin_attach' => 'y',
-		'wikiplugin_avatar' => 'y',
-		'wikiplugin_back' => 'y',
-		'wikiplugin_backlinks' => 'y',
+		'wikiplugin_avatar' => 'n',
+		'wikiplugin_back' => 'n',
+		'wikiplugin_backlinks' => 'n',
 		'wikiplugin_banner' => 'n',
 		'wikiplugin_bloglist' => 'n',
 		'wikiplugin_box' => 'y',
@@ -181,53 +190,55 @@ function get_default_prefs() {
 		'wikiplugin_chart' => 'y',
 		'wikiplugin_code' => 'y',
 		'wikiplugin_content' => 'y',
-		'wikiplugin_cookie' => 'y',
+		'wikiplugin_cookie' => 'n',
 		'wikiplugin_copyright' => 'y',
-		'wikiplugin_countdown' => 'y',
+		'wikiplugin_countdown' => 'n',
 		'wikiplugin_dbreport' => 'n',
-		'wikiplugin_div' => 'y',
+		'wikiplugin_div' => 'n',
 		'wikiplugin_dl' => 'y',
 		'wikiplugin_draw' => 'y',
-		'wikiplugin_equation' => 'y',
+		'wikiplugin_equation' => 'n',
 		'wikiplugin_events' => 'y',
-		'wikiplugin_example' => 'n',
 		'wikiplugin_fade' => 'y',
 		'wikiplugin_fancylist' => 'y',
 		'wikiplugin_fancytable' => 'y',
 		'wikiplugin_file' => 'y',
 		'wikiplugin_files' => 'y',
 		'wikiplugin_flash' => 'y',
-                'wikiplugin_footnote' => 'n',
-                'wikiplugin_footnotearea' => 'n',
+		'wikiplugin_footnote' => 'n',
+		'wikiplugin_footnotearea' => 'n',
 		'wikiplugin_ftp' => 'n',
-		'wikiplugin_gauge' => 'y',
+		'wikiplugin_gauge' => 'n',
 		'wikiplugin_googleanalytics' => 'n',
-		'wikiplugin_googledoc' => 'y',
+		'wikiplugin_googledoc' => 'n',
 		'wikiplugin_group' => 'y',
-		'wikiplugin_html' => 'y',
+		'wikiplugin_html' => 'n',
 		'wikiplugin_iframe' => 'n',
-		'wikiplugin_image' => 'y',
+		'wikiplugin_img' => 'y',
+		'wikiplugin_image' => 'n',    // Experimental, may supercede img in 4.0
 		'wikiplugin_include' => 'y',
 		'wikiplugin_invite' => 'y',
 		'wikiplugin_jabber' => 'n',
 		'wikiplugin_js' => 'n',
+		'wikiplugin_jq' => 'n',
 		'wikiplugin_lang' => 'y',
-		'wikiplugin_lastmod' => 'y',
-		'wikiplugin_listpages' => 'y',
+		'wikiplugin_lastmod' => 'n',
+		'wikiplugin_listpages' => 'n',
 		'wikiplugin_lsdir' => 'n',
 		'wikiplugin_map' => 'y',
-		'wikipuglin_mediaplayer' => 'y',
+		'wikiplugin_mediaplayer' => 'y',
 		'wikiplugin_miniquiz' => 'y',
 		'wikiplugin_module' => 'y',
-		'wikiplugin_mono' => 'y',
+		'wikiplugin_mono' => 'n',
 		'wikiplugin_mouseover' => 'y',
-                'wikiplugin_mwtable' => 'y',
-		'wikiplugin_myspace' => 'y',
-		'wikiplugin_objecthits' => 'y',
-		'wikiplugin_picture' => 'y',
+		'wikiplugin_mwtable' => 'n',
+		'wikiplugin_myspace' => 'n',
+		'wikiplugin_objecthits' => 'n',
+		'wikiplugin_picture' => 'n',  // Old syntax for images
 		'wikiplugin_pluginmanager' => 'n',
 		'wikiplugin_poll' => 'y',
-		'wikiplugin_proposal' => 'y',
+		'wikiplugin_profile' => 'n',		
+		'wikiplugin_proposal' => 'n',
 		'wikiplugin_quote' => 'y',
 		'wikiplugin_rcontent' => 'y',
 		'wikiplugin_redirect' => 'n',
@@ -235,21 +246,21 @@ function get_default_prefs() {
 		'wikiplugin_remarksbox' => 'y',
 		'wikiplugin_rss' => 'y',
 		'wikiplugin_sf' => 'n',
-		'wiki-plugin_share' => 'y',
-		'wiki-plugin_sharethis' => 'y',
+		'wikiplugin_share' => 'n',
+		'wikiplugin_sharethis' => 'n',
 		'wikiplugin_sheet' => 'y',
-		'wikiplugin_showpages' => 'y',
-		'wikiplugin_skype' => 'y',
+		'wikiplugin_showpages' => 'n',
+		'wikiplugin_skype' => 'n',
 		'wikiplugin_snarf' => 'n',
 		'wikiplugin_sort' => 'y',
 		'wikiplugin_split' => 'y',
 		'wikiplugin_sql' => 'n',
 		'wikiplugin_sub' => 'y',
-		'wikiplugin_subscribegroup' => 'y',
-		'wikiplugin_subscribegroups' => 'y',
+		'wikiplugin_subscribegroup' => 'n',
+		'wikiplugin_subscribegroups' => 'n',
 		'wikiplugin_sup' => 'y',
 		'wikiplugin_survey' => 'y',
-		'wikiplugin_tag' => 'y',
+		'wikiplugin_tag' => 'n',
 		'wikiplugin_thumb' => 'y',
 		'wikiplugin_titlesearch' => 'n',
 		'wikiplugin_toc' => 'y',
@@ -262,14 +273,127 @@ function get_default_prefs() {
 		'wikiplugin_trackerprefill' => 'y',
 		'wikiplugin_trackerstat' => 'y',
 		'wikiplugin_translated' => 'y',
-		'wikiplugin_tr' => 'y',
+		'wikiplugin_tr' => 'n',
 		'wikiplugin_usercount' => 'n',
 		'wikiplugin_userlist' => 'n',
-		'wikiplugin_versions' => 'y',
+		'wikiplugin_versions' => 'n',
 		'wikiplugin_vote' => 'y',
-		'wikiplugin_wantedpages' => 'y',
+		'wikiplugin_wantedpages' => 'n',
 		'wikiplugin_webservice' => 'n',
 		'wikiplugin_youtube' => 'y',
+
+		// Inline wiki plugins have their edit plugin icon disabled
+		'wikiplugininline_agentinfo' => 'n',
+		'wikiplugininline_alink' => 'n',
+		'wikiplugininline_aname' => 'n',
+		'wikiplugininline_annotation' => 'n',
+		'wikiplugininline_article' => 'n',
+		'wikiplugininline_articles' => 'n',
+		'wikiplugininline_attach' => 'n',
+		'wikiplugininline_avatar' => 'n',
+		'wikiplugininline_back' => 'n',
+		'wikiplugininline_backlinks' => 'n',
+		'wikiplugininline_banner' => 'n',
+		'wikiplugininline_bloglist' => 'n',
+		'wikiplugininline_box' => 'n',
+		'wikiplugininline_category' => 'n',
+		'wikiplugininline_catorphans' => 'n',
+		'wikiplugininline_catpath' => 'n',
+		'wikiplugininline_center' => 'n',
+		'wikiplugininline_chart' => 'n',
+		'wikiplugininline_code' => 'n',
+		'wikiplugininline_content' => 'n',
+		'wikiplugininline_cookie' => 'n',
+		'wikiplugininline_copyright' => 'n',
+		'wikiplugininline_countdown' => 'n',
+		'wikiplugininline_dbreport' => 'n',
+		'wikiplugininline_div' => 'n',
+		'wikiplugininline_dl' => 'n',
+		'wikiplugininline_draw' => 'n',
+		'wikiplugininline_equation' => 'n',
+		'wikiplugininline_events' => 'n',
+		'wikiplugininline_fade' => 'n',
+		'wikiplugininline_fancylist' => 'n',
+		'wikiplugininline_fancytable' => 'n',
+		'wikiplugininline_file' => 'y',
+		'wikiplugininline_files' => 'n',
+		'wikiplugininline_flash' => 'n',
+                'wikiplugininline_footnote' => 'n',
+                'wikiplugininline_footnotearea' => 'n',
+		'wikiplugininline_ftp' => 'n',
+		'wikiplugininline_gauge' => 'n',
+		'wikiplugininline_googleanalytics' => 'n',
+		'wikiplugininline_googledoc' => 'n',
+		'wikiplugininline_group' => 'y',
+		'wikiplugininline_html' => 'n',
+		'wikiplugininline_iframe' => 'n',
+		'wikiplugininline_img' => 'n',
+		'wikiplugininline_image' => 'n',    // Experimental, may supercede img in 4.0
+		'wikiplugininline_include' => 'n',
+		'wikiplugininline invite' => 'n',
+		'wikiplugininline_jabber' => 'n',
+		'wikiplugininline_js' => 'n',
+		'wikiplugininline_jq' => 'n',
+		'wikiplugininline_lang' => 'n',
+		'wikiplugininline_lastmod' => 'n',
+		'wikiplugininline_listpages' => 'n',
+		'wikiplugininline_lsdir' => 'n',
+		'wikiplugininline_map' => 'n',
+		'wikiplugininline_mediaplayer' => 'n',
+		'wikiplugininline_miniquiz' => 'n',
+		'wikiplugininline_module' => 'n',
+		'wikiplugininline_mono' => 'n',
+		'wikiplugininline_mouseover' => 'n',
+		'wikiplugininline_mwtable' => 'n',
+		'wikiplugininline_myspace' => 'n',
+		'wikiplugininline_objecthits' => 'n',
+		'wikiplugininline_picture' => 'n',  // Old syntax for images
+		'wikiplugininline_pluginmanager' => 'n',
+		'wikiplugininline_poll' => 'n',
+		'wikiplugininline_profile' => 'n',
+		'wikiplugininline_proposal' => 'n',
+		'wikiplugininline_quote' => 'n',
+		'wikiplugininline_rcontent' => 'n',
+		'wikiplugininline_redirect' => 'n',
+		'wikiplugininline_regex' => 'n',
+		'wikiplugininline_remarksbox' => 'n',
+		'wikiplugininline_rss' => 'n',
+		'wikiplugininline_sf' => 'n',
+		'wikiplugininline_share' => 'n',
+		'wikiplugininline_sharethis' => 'n',
+		'wikiplugininline_sheet' => 'n',
+		'wikiplugininline_showpages' => 'n',
+		'wikiplugininline_skype' => 'n',
+		'wikiplugininline_snarf' => 'n',
+		'wikiplugininline_sort' => 'n',
+		'wikiplugininline_split' => 'n',
+		'wikiplugininline_sql' => 'n',
+		'wikiplugininline_sub' => 'n',
+		'wikiplugininline_subscribegroup' => 'n',
+		'wikiplugininline_subscribegroups' => 'n',
+		'wikiplugininline_sup' => 'n',
+		'wikiplugininline_survey' => 'n',
+		'wikiplugininline_tag' => 'n',
+		'wikiplugininline_thumb' => 'n',
+		'wikiplugininline_titlesearch' => 'n',
+		'wikiplugininline_toc' => 'n',
+		'wikiplugininline_topfriends' => 'n',
+		'wikiplugininline_trackerfilter' => 'n',
+		'wikiplugininline_trackeritemfield' => 'y',
+		'wikiplugininline_trackerlist' => 'n',
+		'wikiplugininline_trackertimeline' => 'n',
+		'wikiplugininline_tracker' => 'n',
+		'wikiplugininline_trackerprefill' => 'n',
+		'wikiplugininline_trackerstat' => 'n',
+		'wikiplugininline_translated' => 'n',
+		'wikiplugininline_tr' => 'n',
+		'wikiplugininline_usercount' => 'n',
+		'wikiplugininline_userlist' => 'n',
+		'wikiplugininline_versions' => 'n',
+		'wikiplugininline_vote' => 'n',
+		'wikiplugininline_wantedpages' => 'n',
+		'wikiplugininline_webservice' => 'n',
+		'wikiplugininline_youtube' => 'n',
 
 		// webservices
 		'webservice_consume_defaultcache' => 300, // 5 min
@@ -328,7 +452,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'fgal_match_regex' => '',
 		'fgal_nmatch_regex' => '',
 		'fgal_use_dir' => '',
-		'fgal_podcast_dir' => 'files',
+		'fgal_podcast_dir' => 'files/',
 		'feature_file_galleries_comments' => 'n',
 		'file_galleries_comments_default_ordering' => 'points_desc',
 		'file_galleries_comments_per_page' => 10,
@@ -355,6 +479,8 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'fgal_list_lockedby' => 'a',
 		'fgal_show_path' => 'y',
 		'fgal_show_explorer' => 'y',
+		'fgal_show_slideshow' => 'n',
+		'fgal_default_view' => 'list',
 		'fgal_limit_hits_per_file' => 'n',
 		'fgal_prevent_negative_score' => 'n',
 
@@ -471,6 +597,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'art_view_reads' => 'y',
 		'art_view_size' => 'y',
 		'art_view_img' => 'y',
+		'art_list_lang' => 'n',
 		'feature_article_comments' => 'n',
 		'article_comments_default_ordering' => 'points_desc',
 		'article_comments_per_page' => 10,
@@ -492,7 +619,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 
 		// user
 		'feature_userlevels' => 'n',
-		'userlevels' => array('1'=>tra('Simple'),'2'=>tra('Advanced')),
+		'userlevels' => function_exists('tra') ? array('1'=>tra('Simple'),'2'=>tra('Advanced')) : array('1'=>'Simple','2'=>'Advanced'),
 		'userbreadCrumb' => 4,
 		'user_assigned_modules' => 'n',
 		'user_flip_modules' => 'module',
@@ -533,7 +660,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'login_is_email' => 'n',
 		'validateUsers' => 'y',
 		'validateEmail' => 'n',
-		'forgotPass' => 'n',
+		'forgotPass' => 'y',
 		'change_password' => 'y',
 		'available_languages' => array(),
 		'available_styles' => array(),
@@ -554,6 +681,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'users_prefs_mess_sendReadStatus' => 'n',
 		'users_prefs_minPrio' => '3',
 		'users_prefs_mytiki_blogs' => 'y',
+		'users_prefs_mytiki_articles' => 'y',
 		'users_prefs_mytiki_gals' => 'y',
 		'users_prefs_mytiki_items' => 'y',
 		'users_prefs_mytiki_msgs' => 'y',
@@ -599,6 +727,18 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'freetags_3d_feed_animation_interval' => 500,
 		'freetags_3d_existing_page_color' => '#00CC55',
 		'freetags_3d_missing_page_color' => '#FF5555',
+		'freetags_3d_autoload' => 'false',
+		'freetags_3d_camera_distance' => '200',
+		'freetags_3d_elastic_constant' => '0.5f',
+		'freetags_3d_eletrostatic_constant' => '1000f',
+		'freetags_3d_fov' => '250',
+		'freetags_3d_friction_constant' => '0.4f',
+		'freetags_3d_node_charge' => '1',
+		'freetags_3d_node_mass' => '5',
+		'freetags_3d_node_size' => '30',
+		'freetags_3d_spring_size' => '100',
+		'freetags_3d_text_size' => '40',
+		'freetags_3d_adjust_camera' => 'false',
 		'freetags_multilingual' => 'n',
 		'morelikethis_algorithm' => 'basic',
 		'morelikethis_basic_mincommon' => '2',
@@ -664,6 +804,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 
 		// calendar
 		'feature_calendar' => 'n',
+		'feature_default_calendars' => 'n',
 		'calendar_sticky_popup' => 'y',
 		'default_calendars' => array(),
 		'calendar_view_mode' => 'month',
@@ -674,9 +815,10 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_action_calendar' => 'n',
 		'calendar_start_year' => '+0',
 		'calendar_end_year' => '+3',
+		'calendar_list_begins_focus' => 'n',
 
 		// dates
-		'server_timezone' => $tikidate->getTimezoneId(),
+		'server_timezone' => isset($tikidate) ? $tikidate->getTimezoneId() : 'UTC',
 		'long_date_format' => '%A %d of %B, %Y',
 		'long_time_format' => '%H:%M:%S %Z',
 		'short_date_format' => '%a %d of %b, %Y',
@@ -726,7 +868,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'rssfeed_creator' => '',
 		'rssfeed_css' => 'y',
 		'rssfeed_publisher' => '',
-		'rssfeed_img' => 'img/tiki.jpg',
+		'rssfeed_img' => 'img/tiki/tikilogo.png',
 		'rss_basic_auth' => 'n',
 
 		// maps
@@ -743,14 +885,14 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_gmap' => 'n',
 		'gmap_defaultx' => '0',
 		'gmap_defaulty' => '0',
-		'gmap_defaultz' => '0',
+		'gmap_defaultz' => '1',
 		'gmap_key' => '',
 
 		// auth
 		'allowRegister' => 'n',
 		'eponymousGroups' => 'n',
 		'useRegisterPasscode' => 'n',
-		'registerPasscode' => md5($tikilib->genPass()),
+		'registerPasscode' => isset($tikilib) ? md5($tikilib->genPass()) : md5(mt_rand()),
 		'rememberme' => 'disabled',
 		'remembertime' => 7200,
 		'remembermethod' => '',	// '' = IP based (default) | 'simple' = unique id based
@@ -809,11 +951,11 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_intertiki' => 'n',
 		'feature_intertiki_server' => 'n',
 		'feature_intertiki_slavemode' => 'n',
-		'interlist' => array(''),
+		'interlist' => array(),
 		'feature_intertiki_mymaster' => '',
 		'feature_intertiki_import_preferences' => 'n',
 		'feature_intertiki_import_groups' => 'n',
-		'known_hosts' => array(''),
+		'known_hosts' => array(),
 		'tiki_key' => '',
 		'intertiki_logfile' => '',
 		'intertiki_errfile' => '',
@@ -868,9 +1010,9 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 
 		// html header
 		'metatag_keywords' => '',
-		'metatag_threadtitle' => '',
-		'metatag_imagetitle' => '',
-		'metatag_freetags' => '',
+		'metatag_threadtitle' => 'n',
+		'metatag_imagetitle' => 'n',
+		'metatag_freetags' => 'n',
 		'metatag_description' => '',
 		'metatag_author' => '',
 		'metatag_geoposition' => '',
@@ -882,12 +1024,18 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'keep_versions' => 1,
 		'feature_custom_home' => 'n',
 
-		// site identity
-		'feature_siteidentity' => 'y',
+		// look and feel
+
 		'site_crumb_seper' => '»',
 		'site_nav_seper' => '|',
-		'feature_sitemycode' => 'n',
-		'sitemycode' => '<div align="center"><b>{tr}Here you can (as an admin) place a piece of custom XHTML and/or Smarty code. Be careful and properly close all the tags before you choose to publish ! (Javascript, applets and object tags are stripped out.){/tr}</b></div>', // must be max. 250 chars now unless it'll change in tiki_prefs db table field value from VARCHAR(250) to BLOB by default
+		'feature_sitemycode' => 'y',
+		'sitemycode' => '{if $user eq "admin"}
+<div style="align: left; padding-left: 15px;">
+<a class="link" href="tiki-admin.php?page=look">
+{tr}Modify the look & feel (logo, theme, etc.){/tr}
+</a>
+</div>
+{/if}', // must be max. 250 chars now unless it'll change in tiki_prefs db table field value from VARCHAR(250) to BLOB by default
 		'sitemycode_publish' => 'n',
 		'feature_sitelogo' => 'y',
 		'sitelogo_bgcolor' => 'transparent',
@@ -905,10 +1053,9 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'feature_breadcrumbs' => 'n',
 		'feature_siteloclabel' => 'y',
 		'feature_sitesearch' => 'y',
-		'feature_site_login' => 'n',
+		'feature_site_login' => 'y',
 		'feature_sitemenu' => 'n',
 		'feature_topbar_version' => 'n',
-		'feature_topbar_date' => 'n',
 		'feature_topbar_debug' => 'n',
 		'feature_topbar_id_menu' => '42',
 		'feature_topbar_custom_code' => '',
@@ -941,6 +1088,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'use_context_menu_text' => 'y',
 		'feature_site_report' => 'n',
 		'feature_site_send_link' => 'n',
+		'feature_layoutshadows' => 'n',
 
 		// mods
 		'feature_mods_provider' => 'n',
@@ -977,11 +1125,13 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'default_rows_textarea_comment' => '6',
 		'default_rows_textarea_forum' => '20',
 		'default_rows_textarea_forumthread' => '10',
+		'feature_floating_help' => 'y',
 
 		// pagination
 		'direct_pagination' => 'y',
 		'nextprev_pagination' => 'y',
 		'pagination_firstlast' => 'y',
+		'pagination_hide_if_one_page' => 'y',
 		'pagination_icons' => 'y',
 		'pagination_fastmove_links' => 'y',
 		'direct_pagination_max_middle_links' => 2,
@@ -991,7 +1141,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'anonCanEdit' => 'n',
 		'cacheimages' => 'n',
 		'cachepages' => 'n',
-		'count_admin_pvs' => 'y',
+		'count_admin_pvs' => 'n',
 		'default_mail_charset' =>'utf-8',
 		'error_reporting_adminonly' => 'y',
 		'error_reporting_level' => 0,
@@ -1074,10 +1224,11 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'session_lifetime' => 0,
 		'shoutbox_autolink' => 'n',
 		'show_comzone' => 'n',
-		'system_os' => TikiSetup::os(),
+		'system_os' => class_exists('TikiSetup') ? TikiSetup::os() : 'unix',
 		'tikiIndex' => 'tiki-index.php',
 		'urlIndex' => '',
 		'useGroupHome' => 'n',
+		'useGroupTheme' => 'n',
 		'useUrlIndex' => 'n',
 		'use_proxy' => 'n',
 		'user_list_order' => 'score_desc',
@@ -1087,6 +1238,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'log_sql' => 'n',
 		'log_sql_perf_min' => '0.05',
 		'log_mail' => 'n',
+		'log_tpl' => 'n',
 
 		'case_patched' => 'n',
 		'site_closed' => 'n',
@@ -1096,33 +1248,22 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'site_busy_msg' => 'Server is currently too busy; please come back later.',
 
 		'bot_logo_code' => '',
-		'feature_blogposts_pings' => '',
+		'feature_blogposts_pings' => 'n',
 		'feature_create_webhelp' => 'n',
-		'feature_forums_search' => '',
-		'feature_forums_tiki_search' => '',
+		'page_n_times_in_a_structure' => 'n',
+		'feature_forums_search' => 'n',
 		'feature_trackbackpings' => 'n',
 		'feature_wiki_ext_icon' => 'y',
 		'feature_wiki_mandatory_category' => -1,
-		'freetags_3d_autoload' => '',
-		'freetags_3d_camera_distance' => '',
-		'freetags_3d_elastic_constant' => '',
-		'freetags_3d_eletrostatic_constant' => '',
-		'freetags_3d_fov' => '',
-		'freetags_3d_friction_constant' => '',
-		'freetags_3d_node_charge' => '',
-		'freetags_3d_node_mass' => '',
-		'freetags_3d_node_size' => '',
-		'freetags_3d_spring_size' => '',
-		'freetags_3d_text_size' => '',
 		'feature_intertiki_imported_groups' => '',
 		'feature_wiki_history_ip' => 'n',
-		'pam_create_user_tiki' => '',
+		'pam_create_user_tiki' => 'n',
 		'pam_service' => '',
-		'pam_skip_admin' => '',
+		'pam_skip_admin' => 'n',
 		'shib_affiliation' => '',
-		'shib_create_user_tiki' => '',
+		'shib_create_user_tiki' => 'n',
 		'shib_group' => 'Shibboleth',
-		'shib_skip_admin' => '',
+		'shib_skip_admin' => 'n',
 		'shib_usegroup' => 'n',
 		'wiki_3d_camera_distance' => '200',
 		'wiki_3d_elastic_constant' => '0.3f',
@@ -1134,11 +1275,10 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'wiki_3d_node_size' => '15',
 		'wiki_3d_spring_size' => '100',
 		'wiki_3d_text_size' => '20',
-		'articles_feature_copyrights' => '',
-		'blogues_feature_copyrights' => '',
-		'faqs_feature_copyrights' => '',
+		'articles_feature_copyrights' => 'n',
+		'blogues_feature_copyrights' => 'n',
+		'faqs_feature_copyrights' => 'n',
 		'feature_contributor_wiki' => '',
-		'freetags_3d_adjust_camera' => '',
 		'https_login_required' => '',
 		'maxRowsGalleries' => '',
 		'replimaster' => '',
@@ -1152,31 +1292,41 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'javascript_enabled' => 'n',
 		'feature_comments_post_as_anonymous' => 'n',
 		'feature_comments_moderation' => 'n',
+		'feature_comments_locking' => 'n',
 		'feature_template_zoom' => 'y',
-		'feature_ie56_correct_png' => 'n',
+		'menus_items_icons' => 'n',
+		'feature_iepngfix' => 'n',
+		'iepngfix_selectors' => '#sitelogo a img',
+		'iepngfix_elements' => '',
+		'use_minified_scripts' => 'y',		// for debugging
+		'valid_email_regex' => '^[_a-z0-9\+\.\-]+@[_a-z0-9\.\-]+\.[a-z]{2,4}$',
+		'debug_ignore_xdebug' => 'n',
 		
 		// JQuery
 		'feature_jquery' => 'y',			// Alternative lib for shadowbox etc
 		'jquery_effect' => '',				// Default effect for general show/hide: ['' | 'slide' | 'fade' | and
 											// see http://docs.jquery.com/UI/Effects: 'blind' | 'clip' | 'explode' etc]
-		'jquery_effect_direction' => '', 	// ['horizontal' | 'vertical' | 'left' | 'right' | 'up' | 'down' ]
+		'jquery_effect_direction' => 'vertical', 	// ['horizontal' | 'vertical' | 'left' | 'right' | 'up' | 'down' ]
 		'jquery_effect_speed' => 'normal', 	// ['slow' | 'normal' | 'fast' | milliseconds (int) ]
-
 		'jquery_effect_tabs' => 'slide',	// Different effect for tabs (['none' | 'normal' (for jq) | 'slide' etc]
 		'jquery_effect_tabs_direction' => 'vertical',
 		'jquery_effect_tabs_speed' => 'fast',
-		
-		'feature_jquery_ui' => 'y',				// include UI lib for more effects
+
+		'feature_jquery_ui' => 'n',				// include UI lib for more effects
 		'feature_jquery_tooltips' => 'y',		// use JQuery tooltips and override Overlib
 		'feature_jquery_autocomplete' => 'y',	// autocomplete on pages in QuickEdit (more coming soon)
 		'feature_jquery_superfish' => 'y',		// Effects on CSS (Suckerfish) menus
 		'feature_jquery_reflection' => 'y',		// reflection effects on images
 		'feature_jquery_sheet' => 'n',			// spreadsheet TODO: implement
-	
+		'feature_jquery_tablesorter' => 'n',	// sortable tables ([will] override existing)
+		'feature_jquery_cycle' => 'y',			// slideshow lib
+
 		// SefUrl
 		'feature_sefurl' => 'n',
 		'feature_sefurl_filter' => 'n',
 		'feature_sefurl_paths' => array(),
+		'feature_sefurl_title_article' =>'n',
+		'feature_sefurl_title_blog' =>'n',
 
 		// TikiTests
 		'feature_tikitests' => 'n',
@@ -1196,12 +1346,20 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 
 		'feature_bidi' => 'n',
 		'feature_lastup' => 'y',
-		'transition_style_ver' => '2.0',
+		'transition_style_ver' => '3.0',
 
 		'magic_last_load' => 0,
 
 		//groupalert
 		'feature_groupalert' => 'n',
+
+		'zend_mail_handler' => 'sendmail',
+		'zend_mail_smtp_server' => '',
+		'zend_mail_smtp_auth' => '',
+		'zend_mail_smtp_user' => '',
+		'zend_mail_smtp_pass' => '',
+		'zend_mail_smtp_port' => 25,
+		'zend_mail_smtp_security' => '',
 	);
 
 	// spellcheck
@@ -1228,7 +1386,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 	elseif ( ! is_file($prefs['site_favicon']) )
 		$prefs['site_favicon'] = false;
 
-	$_SESSION['tmpDir'] = TikiInit::tempdir(); //??
+	$_SESSION['tmpDir'] = class_exists('TikiInit') ? TikiInit::tempdir() : '/tmp';
 
 	$prefs['feature_bidi'] = 'n';
 	$prefs['feature_lastup'] = 'y';
@@ -1240,13 +1398,13 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		}
 	}
 
-	$cachelib->cacheItem("tiki_default_preferences_cache",serialize($prefs));
+	if ( isset($cachelib) ) $cachelib->cacheItem("tiki_default_preferences_cache",serialize($prefs));
 	return $prefs;
 }
 
 // Initialize prefs for which we want to use the site value (they will be prefixed with 'site_')
 // ( this is also used in tikilib, not only when reloading prefs )
-$user_overrider_prefs = array('language', 'style', 'userbreadCrumb', 'tikiIndex', 'wikiHomePage','default_calendars');
+$user_overrider_prefs = array('language', 'style', 'userbreadCrumb', 'tikiIndex', 'wikiHomePage','default_calendars', 'metatag_robots');
 
 // Check if prefs needs to be reloaded
 if (isset($_SESSION['s_prefs'])) {
@@ -1272,7 +1430,7 @@ $defaults = get_default_prefs();
 // Set default prefs only if needed
 if ( ! $_SESSION['need_reload_prefs'] ) {
 	$modified = $_SESSION['s_prefs'];
-} else {
+} elseif ( isset($tikilib) ) {
 
 	// Find which preferences need to be serialized/unserialized, based on the default values (those with arrays as values)
 	if ( ! isset($_SESSION['serialized_prefs']) ) {
@@ -1302,12 +1460,13 @@ if ( ! $_SESSION['need_reload_prefs'] ) {
 	$_SESSION['s_prefs'] = $modified;
 }
 
-$prefs = array_merge( $defaults, $modified );
+$prefs = empty($modified) ? $defaults : array_merge( $defaults, $modified );
 
-// Assign the prefs array in smarty, by reference
-$smarty->assign_by_ref('prefs', $prefs);
+if ( isset($smarty) ) {
+	// Assign the prefs array in smarty, by reference
+	$smarty->assign_by_ref('prefs', $prefs);
 
-// Define the special maxRecords global var
-$maxRecords = $prefs['maxRecords'];
-$smarty->assign_by_ref('maxRecords', $maxRecords);
-
+	// Define the special maxRecords global var
+	$maxRecords = $prefs['maxRecords'];
+	$smarty->assign_by_ref('maxRecords', $maxRecords);
+}

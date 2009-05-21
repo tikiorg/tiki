@@ -52,7 +52,10 @@ if ($calendarViewMode == 'day') {
 		$dayitems['mins'] = substr($dayitems['time'],2);
 		$hrows["$rawhour"][] = $dayitems;
 	}
+} else {
+	$smarty->assign('currMonth', $focusdate);
 }
+
 $smarty->assign('hrows', $hrows);
 $smarty->assign('hours', $hours);
 
@@ -60,7 +63,8 @@ $smarty->assign('var', '');
 $smarty->assign('daformat2', $tikilib->get_long_date_format());
 $smarty->assign('myurl', $myurl);
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
+$smarty->assign('calendarViewMode',$calendarViewMode);
+$smarty->assign('calendar_type', 'tiki_actions');
 
 $smarty->assign('mid', 'tiki-action_calendar.tpl');
 $smarty->display("tiki.tpl");
-?>
