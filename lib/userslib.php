@@ -760,6 +760,8 @@ class UsersLib extends TikiLib {
 	// attributes to fetch
 	$options['attributes'] = array();
 	if ( $nameattr = $prefs['auth_ldap_nameattr'] ) $options['attributes'][] = $nameattr;
+	if ( $countryattr = $prefs['auth_ldap_countryattr'] ) $options['attributes'][] = $countryattr;
+	if ( $emailattr = $prefs['auth_ldap_emailattr'] ) $options['attributes'][] = $emailattr;
 
 	// set the Auth options
 	//$a = new Auth('LDAP', $options, '', false, $user, $pass);
@@ -778,6 +780,9 @@ class UsersLib extends TikiLib {
 		case AUTH_LOGIN_OK:
 			// Retrieve LDAP information to update user data a bit later (when he will be completely validated or auto-created)
 			if ( $nameattr != '' ) $user_ldap_attributes['auth_ldap_nameattr'] = $a->getAuthData($nameattr);
+			if ( $countryattr != '' ) $user_ldap_attributes['auth_ldap_countryattr'] = $a->getAuthData($countryattr);
+			if ( $emailattr != '' ) $user_ldap_attributes['auth_ldap_emailattr'] = $a->getAuthData($emailattr);
+
 			return USER_VALID;
 
 		case AUTH_USER_NOT_FOUND:

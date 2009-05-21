@@ -400,6 +400,16 @@ name="eponymousGroups" {if $prefs.eponymousGroups eq 'y'}checked="checked"{/if}/
 	</div>
 </div>
 <div class="adminoptionbox">
+	<div class="adminoptionlabel"><label for="auth_ldap_countryattr">{tr}Country attribute{/tr}:</label>
+	<input type="text" id="auth_ldap_countryattr" name="auth_ldap_countryattr" value="{$prefs.auth_ldap_countryattr|escape}" />
+	</div>
+</div>
+<div class="adminoptionbox">
+	<div class="adminoptionlabel"><label for="auth_ldap_emailattr">{tr}E-mail attribute{/tr}:</label>
+	<input type="text" id="auth_ldap_emailattr" name="auth_ldap_emailattr" value="{$prefs.auth_ldap_emailattr|escape}" />
+	</div>
+</div>
+<div class="adminoptionbox">
 	<div class="adminoptionlabel"><label for="auth_ldap_basedn">{tr}Base DN{/tr}:</label>
 	<input type="text" name="auth_ldap_basedn" id="auth_ldap_basedn" value="{$prefs.auth_ldap_basedn|escape}" />
 	</div>
