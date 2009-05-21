@@ -195,7 +195,11 @@ function wikiplugin_trackerlist_info() {
 				'name' => tra('Compute'),
 				'description' => tra('Sum or average all the values of a field  and displays it at the bottom of the table.').' '.tra('fieldId').'/sum:'.tra('fieldId').'/avg',
 			),
-		),
+			'silent' => array(
+				'required' => false,
+				'name' => tra('Silent'),
+				'description' => tra('Show nothing if no items'),
+			),		),
 	);
 }
 
@@ -592,6 +596,9 @@ function wikiplugin_trackerlist($data, $params) {
 
 		if (count($passfields)) {
 			$items = $trklib->list_items($trackerId, $tr_offset, $max, $tr_sort_mode, $passfields, $filterfield, $filtervalue, $tr_status, $tr_initial, $exactvalue, $filter);
+			if ($silent == 'y' && empty($items['cant'])) {
+				return;
+			}
 
 			if ($items['cant'] == 1 && isset($goIfOne) && ($goIfOne == 'y' || $goIfOne == 1)) {
 				header('Location: tiki-view_tracker_item.php?itemId='.$items['data'][0]['itemId'].'&amp;trackerId='.$items['data'][0]['trackerId']);
