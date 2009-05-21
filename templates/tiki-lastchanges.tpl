@@ -23,6 +23,9 @@
 
 {if $lastchanges or ($find ne '')}
 	{include file='find.tpl'}
+	{if $findwhat != ""}
+		{button href="tiki-lastchanges.php" _text="{tr}Search by Date{/tr}"}
+	{/if}
 {/if}
 
 <br />
