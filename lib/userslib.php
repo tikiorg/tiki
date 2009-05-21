@@ -2004,7 +2004,7 @@ function get_included_groups($group, $recur=true) {
 		$this->query($query, array($who, NULL, NULL, $user));
 	}
 
-    function add_user($user, $pass, $email, $provpass = '',$pass_first_login=false, $valid=NULL, $openid_url=NULL) {
+    function add_user($user, $pass, $email, $provpass = '', $pass_first_login = false, $valid = NULL, $openid_url = NULL) {
 	global $tikilib, $cachelib, $prefs;
 
 	if ($this->user_exists($user) || empty($user) || (!empty($prefs['username_pattern']) && !preg_match($prefs['username_pattern'], $user)) || strtolower($user) == 'anonymous' || strtolower($user) == 'registered') {
@@ -2660,12 +2660,11 @@ function get_included_groups($group, $recur=true) {
 		while ($res = $result->fetchRow()) { $ret[] = $res['type']; }
 		return $ret;
 	}
-	function send_validation_email($name, $apass, $email, $again='', $second='', $chosenGroup='') {
+	function send_validation_email($name, $apass, $email, $again='', $second='', $chosenGroup='', $mailTemplate = '', $pass = '') {
 		global $tikilib, $prefs, $smarty;
 		$foo = parse_url($_SERVER['REQUEST_URI']);
-		$foo1 = str_replace('tiki-register', 'tiki-login_validate',$foo['path']);
-		$foo1 = str_replace('tiki-remind_password', 'tiki-login_validate',$foo1);
-		$machine = $tikilib->httpPrefix().$foo1;
+		$foo1 = str_replace(array('tiki-register', 'tiki-remind_password', 'tiki-adminusers'), 'tiki-login_validate', $foo['path']);
+		$machine = $tikilib->httpPrefix() . $foo1;
 		$smarty->assign('mail_machine',$machine);
 		$smarty->assign('mail_site', $_SERVER['SERVER_NAME']);
 		$smarty->assign('mail_user', $name);
@@ -2723,16 +2722,18 @@ function get_included_groups($group, $recur=true) {
 				}
 			}
 		} elseif ($prefs['validateUsers'] == 'y') {
-			$mail_data = $smarty->fetch('mail/user_validation_mail.tpl');
+			if ( $mailTemplate == '' ) $mailTemplate = 'user_validation_mail';
+			$smarty->assign('mail_pass', $pass);
+			$mail_data = $smarty->fetch("mail/$mailTemplate.tpl");
 			$mail = new TikiMail();
 			$mail->setText($mail_data);
-			$mail_data = $smarty->fetch('mail/user_validation_mail_subject.tpl');
+			$mail_data = $smarty->fetch("mail/{$mailTemplate}_subject.tpl");
 			$mail->setSubject($mail_data);
 			if (!$mail->send(array($email))) {
 				$smarty->assign('msg', tra("The registration mail can't be sent. Contact the administrator"));
 				return false;
 			} elseif (empty($again)) {
-				$smarty->assign('msg',$smarty->fetch('mail/user_validation_msg.tpl'));
+				$smarty->assign('msg', $smarty->fetch('mail/user_validation_msg.tpl'));
 			} else {
 				$smarty->assign('msg', tra('You must validate your account first. An email has been sent to you'));
 			}
