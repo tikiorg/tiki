@@ -1122,7 +1122,7 @@ function get_included_groups($group, $recur=true) {
 		$bindvars[] = 'y';
 	}
 
-	$query = "select `groupName` , `groupDesc`, `registrationChoice`, `userChoice` from `users_groups` $mid order by ".$this->convert_sortmode($sort_mode);
+	$query = "select * from `users_groups` $mid order by ".$this->convert_sortmode($sort_mode);
 	$query_cant = "select count(*) from `users_groups` $mid";
 	$result = $this->query($query, $bindvars, $maxRecords, $offset);
 	$cant = $this->getOne($query_cant, $bindvars);

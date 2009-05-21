@@ -44,6 +44,11 @@ function wikiplugin_subscribegroups_info() {
 				'name' => tra('Including group'),
 				'description' => tra('Group'),
 			),
+			'defaulturl' => array(
+				'required' => false,
+				'name' => tra('Url'),
+				'description' => tra('After changing default'),
+			),
 		),
 	);
 }
@@ -76,15 +81,13 @@ function wikiplugin_subscribegroups($data, $params) {
 		if (!($info = $userlib->get_group_info($group))) {
 			return tra('Incorrect param');
 		}
-		if ($info['userChoice'] != 'y') {
+		if ($info['userChoice'] != 'y') { // limit to userchoice
 			return tra('Permission denied');
 		}
 		if (!empty($groups) && !in_array($group, $groups)) {// limit the group to the groups params
 			$group = '';
 		}
 	}
-
-	$userGroups = $userlib->get_user_groups_inclusion($user);
 
 	if (!empty($_REQUEST['assign']) && !isset($userGroups[$group])) {
 		$userlib->assign_user_to_group($user, $group);
@@ -96,6 +99,10 @@ function wikiplugin_subscribegroups($data, $params) {
 		$userlib->set_default_group($user, $_REQUEST['default']);
 		global $group;
 		$group = $_REQUEST['default'];
+		if (isset($urldefault)) {
+			header("Location: $urldefault");
+			die;
+		}
 	}
 	$userGroups = $userlib->get_user_groups_inclusion($user);
 	if (isset($userGroups['Anonymous'])) {
@@ -104,7 +111,7 @@ function wikiplugin_subscribegroups($data, $params) {
 	if (isset($userGroups['Registered'])) {
 		unset($userGroups['Registered']);
 	}
-	if (!empty($groups)) {
+	if (isset($groups)) {
 		foreach ($userGroups as $g=>$type) {
 			if (!in_array($g, $groups)) {
 				unset($userGroups[$g]);
@@ -112,14 +119,11 @@ function wikiplugin_subscribegroups($data, $params) {
 		}
 	}
 
-	$possiblegroups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n', '', 'y');
-	$groupDescs = array();
-	foreach ($possiblegroups['data'] as $key=>$g) {
-		if (isset($showgroupdescription) && $showgroupdescription == 'y') {
-			$groupDescs[$g['groupName']] = $g['groupDesc'];
-		}
-		if (!empty($userGroups[$g['groupName']]) || (!empty($groups) && !in_array($g['groupName'], $groups))) {
-			unset($possiblegroups['data'][$key]);
+	$allGroups = $userlib->get_groups(0, -1, 'groupName_asc', '', '', 'n', '', 'y');
+	$possibleGroups = array();
+	foreach ($allGroups['data'] as $gr) {
+		if ($gr['userChoice'] == 'y' && (empty($groups) || in_array($gr['groupName'], $groups)) && !isset($userGroups[$gr['groupName']]) && $gr['groupName'] != 'Registered' && $gr['groupName'] != 'Anonymous') {
+			$possibleGroups[] = $gr['groupName'];
 		}
 	}
 	if (isset($subscribe)) {
@@ -143,8 +147,17 @@ function wikiplugin_subscribegroups($data, $params) {
 	} else {
 		$smarty->assign('showgroupdescription', 'n');
 	}
+	if (!empty($defaulturl)) {
+		$smarty->assign('defaulturl', $defaulturl);
+	}   
+	$all = array();
+	foreach ($allGroups['data'] as $gr) {
+		if (isset($userGroups[$gr['groupName']]) || in_array($gr['groupName'], $possibleGroups))
+			$all[$gr['groupName']] = $gr;
+	}
 	$smarty->assign_by_ref('userGroups', $userGroups);
-	$smarty->assign_by_ref('possiblegroups', $possiblegroups['data']);
+	$smarty->assign_by_ref('possibleGroups', $possibleGroups);
+	$smarty->assign_by_ref('allGroups', $all);
 	$data = $smarty->fetch('wiki-plugins/wikiplugin_subscribegroups.tpl');
 	return $data;
 }
