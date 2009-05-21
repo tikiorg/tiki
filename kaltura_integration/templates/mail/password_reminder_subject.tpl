@@ -1,0 +1,1 @@
+{tr}Your Tiki account information for %s{/tr}
