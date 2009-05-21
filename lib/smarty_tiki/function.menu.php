@@ -63,7 +63,7 @@ function smarty_function_menu($params, &$smarty)
 		global $structlib; include_once('lib/structures/structlib.php');
 		$channels = $structlib->build_subtree_toc($structureId);
 		$structure_info =  $structlib->s_get_page_info($structureId);
-		$channels = $structlib->to_menu($channels, empty($structure_info['page_alias'])? $structure_info['pageName']: $structure_info['page_alias']);
+		$channels = $structlib->to_menu($channels, $structure_info['pageName']);
 		$menu_info = array('type'=>'d', 'menuId'=> "s_$structureId");
 		//echo '<pre>'; print_r($channels); echo '</pre>';
 	} else {
