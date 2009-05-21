@@ -200,7 +200,7 @@ for ($i = 0; $i < $temp_max; $i++) {
 	} else {
 		$creatorSelector = false;
 	}
-	if (($xfields["data"][$i]['isTblVisible'] == 'y' or $xfields["data"][$i]['isSearchable'] == 'y' or in_array($fid, $popupFields))
+	if (($xfields["data"][$i]['isTblVisible'] == 'y' or in_array($fid, $popupFields))
 		and ($xfields["data"][$i]['isHidden'] == 'n' or $xfields["data"][$i]['isHidden'] == 'p' or $tiki_p_admin_trackers == 'y' or ($xfields["data"][$i]['type'] == 's' and $xfields['data'][$i]['name'] == 'Rating' and $tiki_p_tracker_view_ratings == 'y'))
 		) {
 
@@ -775,6 +775,33 @@ if ($tracker_info['useAttachments'] == 'y' && $tracker_info['showAttachments'] =
 		$res = $trklib->get_item_nb_attachments($items["data"][$itkey]['itemId']);
 		$items["data"][$itkey]['attachments']  = $res['attachments'];
 		$items["data"][$itkey]['hits'] = $res['hits'];
+	}
+}
+for ($i = 0; $i < count($xfields['data']); $i++) {
+	$fid = $xfields["data"][$i]["fieldId"];
+	if ($xfields["data"][$i]['isSearchable'] == 'y' and !isset($listfields[$fid])
+		and ($xfields["data"][$i]['isHidden'] == 'n' or $xfields["data"][$i]['isHidden'] == 'p' or $tiki_p_admin_trackers == 'y' or ($xfields["data"][$i]['type'] == 's' and $xfields['data'][$i]['name'] == 'Rating' and $tiki_p_tracker_view_ratings == 'y'))
+		) {
+
+		$listfields[$fid]['type'] = $xfields["data"][$i]["type"];
+		$listfields[$fid]['name'] = $xfields["data"][$i]["name"];
+		$listfields[$fid]['options'] = $xfields["data"][$i]["options"];
+		$listfields[$fid]['options_array'] = $xfields["data"][$i]['options_array'];
+		$listfields[$fid]['isMain'] = $xfields["data"][$i]["isMain"];
+		$listfields[$fid]['isTblVisible'] = $xfields["data"][$i]["isTblVisible"];
+		$listfields[$fid]['isHidden'] = $xfields["data"][$i]["isHidden"];
+		$listfields[$fid]['isSearchable'] = $xfields["data"][$i]["isSearchable"];
+		$listfields[$fid]['isMandatory'] = $xfields["data"][$i]["isMandatory"];
+		$listfields[$fid]['description'] = $xfields["data"][$i]["description"];
+		$listfields[$fid]['visibleBy'] = $xfields['data'][$i]['visibleBy'];
+		$listfields[$fid]['editableBy'] = $xfields['data'][$i]['editableBy'];
+
+		if ($listfields[$fid]['type'] == 'e' && $prefs['feature_categories'] == 'y') { //category
+			$parentId = $listfields[$fid]['options_array'][0];
+		    $listfields[$fid]['categories'] = $categlib->get_child_categories($parentId);
+		}
+		if (isset($xfields['data'][$i]['otherField']))
+			$listfields[$fid]['otherField'] = $xfields['data'][$i]['otherField'];
 	}
 }
 
