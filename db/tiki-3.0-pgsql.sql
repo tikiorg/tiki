@@ -524,7 +524,7 @@ CREATE TABLE "tiki_calendar_items" (
   "locationId" bigint default NULL,
   "categoryId" bigint default NULL,
   "nlId" bigint NOT NULL default '0',
-  "priority" varchar(3) CHECK ("priority" IN ('1','2','3','4','5','6','7','8','9')) NOT NULL default '1',
+  "priority" varchar(4) CHECK ("priority" IN ('0', '1','2','3','4','5','6','7','8','9')) default '0',
   "status" varchar(3) CHECK ("status" IN ('0','1','2')) NOT NULL default '0',
   "url" varchar(255) default NULL,
   "lang" char(16) NOT NULL default 'en',
