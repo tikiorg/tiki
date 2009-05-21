@@ -830,32 +830,43 @@ class TikiLib extends TikiDB {
 		return $retval;
 	}
 
-	/*shared*/
 	function list_surveys($offset, $maxRecords, $sort_mode, $find) {
 		if ($find) {
-			$findesc = '%' . $find . '%';
-			$mid = " where (`name` like ? or `description` like ?)";
-			$bindvars=array($findesc,$findesc);
+		  $findesc = '%' . $find . '%';
+		  $mid = " where (`name` like ? or `description` like ?)";
+		  $bindvars=array($findesc, $findesc);
 		} else {
-			$mid = " ";
-			$bindvars=array();
+		  $mid = '';
+		  $bindvars=array();
 		}
-		$query = "select * from `tiki_surveys` $mid order by ".$this->convert_sortmode($sort_mode);
-		$query_cant = "select count(*) from `tiki_surveys` $mid";
-		$result = $this->query($query,$bindvars,$maxRecords,$offset);
-		$cant = $this->getOne($query_cant,$bindvars);
-		$ret = array();
-		while ($res = $result->fetchRow()) {
-			global $user;
-			$add=$this->user_has_perm_on_object($user,$res['surveyId'],'survey',array('tiki_p_take_survey','tiki_p_view_survey_stats'));
-			if ($add) {
-				$res["questions"] = $this->getOne("select count(*) from `tiki_survey_questions` where `surveyId`=?",array((int) $res["surveyId"]));
-				$ret[] = $res;
+
+		$query = "select `surveyId` from `tiki_surveys` $mid";
+		$result = $this->query($query, $bindvars);
+		$res = $ret = $retids = array();
+		$n = 0;
+
+		while ( $res = $result->fetchRow() ) {
+		  global $user;
+		  $objperm = $this->get_perm_object( $res['surveyId'], 'survey', '', false );
+		  if ( $objperm['tiki_p_take_survey'] ) {
+			if ( ($maxRecords == -1) || (($n >= $offset) && ($n < ($offset + $maxRecords))) ) {
+			  $retids[] = $res['surveyId'];
 			}
+			$n++;
+		  }
 		}
+		if ( $n > 0 ) {
+		  $query = 'select * from `tiki_surveys` where `surveyId` in (' . implode(',',$retids) . ') order by ' . $this->convert_sortmode($sort_mode);
+		  $result = $this->query($query);
+		  while ( $res = $result->fetchRow() ) {
+			$res["questions"] = $this->getOne( 'select count(*) from `tiki_survey_questions` where `surveyId`=?', array( (int) $res['surveyId']) );
+			$ret[] = $res;
+		  }
+		} 
+		
 		$retval = array();
 		$retval["data"] = $ret;
-		$retval["cant"] = $cant;
+		$retval["cant"] = $n;
 		return $retval;
 	}
 
