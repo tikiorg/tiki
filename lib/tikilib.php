@@ -722,35 +722,43 @@ class TikiLib extends TikiDB {
 		}
 	}
 
-	/*shared*/
-	function list_quizzes($offset, $maxRecords, $sort_mode, $find) {
+	function list_quizzes($offset, $maxRecords, $sort_mode = 'name_desc', $find) {
 		$bindvars = array();
-		$mid = "";
+		$mid = '';
 		if ($find) {
 			$findesc = '%' . $find . '%';
-
 			$mid = " where (`name` like ? or `description` like ?)";
-			$bindvars = array($findesc,$findesc);
+			$bindvars = array($findesc, $findesc);
 		}
 
-		$query = "select * from `tiki_quizzes` $mid order by ".$this->convert_sortmode($sort_mode);
-		$query_cant = "select count(*) from `tiki_quizzes` $mid";
-		$result = $this->query($query,$bindvars,$maxRecords,$offset);
-		$cant = $this->getOne($query_cant,$bindvars);
-		$ret = array();
+		$query = "select `quizId` from `tiki_quizzes` $mid";
+		$result = $this->query($query, $bindvars);
+		$res = $ret = $retids = array();
+		$n = 0;
 
-		while ($res = $result->fetchRow()) {
+		while ( $res = $result->fetchRow() ) {
 			global $user;
-			$add=$this->user_has_perm_on_object($user,$res['quizId'],'quiz',array('tiki_p_take_quiz'));
-			if ($add) {
-				$res["questions"] = $this->getOne("select count(*) from `tiki_quiz_questions` where `quizId`=?",array((int) $res["quizId"]));
-				$res["results"] = $this->getOne("select count(*) from `tiki_quiz_results` where `quizId`=?",array((int) $res["quizId"]));
+			$objperm = $this->get_perm_object($res['quizId'], 'quizzes', '', false);
+
+			if ( $objperm['tiki_p_take_quiz'] == 'y' ) {
+				if ( ($maxRecords == -1) || (($n >= $offset) && ($n < ($offset + $maxRecords))) ) {
+					$retids[] = $res['quizId'];
+				}
+				$n++;
+			}
+		}
+
+		if ($n > 0) {
+		  $query = 'select * from `tiki_quizzes` where quizId in (' . implode(',', $retids) . ') order by ' . $this->convert_sortmode($sort_mode);
+		  $result = $this->query($query);
+		  while ( $res = $result->fetchRow() ) {
+				$res['questions'] = $this->getOne('select count(*) from `tiki_quiz_questions` where `quizId`=?', array( (int) $res['quizId'] ));
+				$res['results'] = $this->getOne('select count(*) from `tiki_quiz_results` where `quizId`=?', array( (int) $res['quizId'] ));
 				$ret[] = $res;
 			}
 		}
-		$retval = array();
-		$retval["data"] = $ret;
-		$retval["cant"] = $cant;
+		$retval['data'] = $ret;
+		$retval['cant'] = $n;
 		return $retval;
 	}
 
@@ -1477,7 +1485,6 @@ class TikiLib extends TikiDB {
 	}
 
 	// Functions for FAQs ////
-	/*shared*/
 	function list_faqs($offset, $maxRecords, $sort_mode, $find) {
 	  $mid = '';
 	  if ( $find ) {
