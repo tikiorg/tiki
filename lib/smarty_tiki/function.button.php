@@ -12,6 +12,7 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  * params will be used as params for as smarty self_link params, except those special params specific to smarty button :
  *	- _text: Text that will be shown in the button
  *	- _auto_args: comma separated list of URL arguments that will be kept from _REQUEST (like $auto_query_args)
+ *                    You can also use _auto_args='*' to specify that every arguments listed in the global var $auto_query_args has to be kept from URL
  *	- _flip_id: id HTML atribute of the element to show/hide (for type 'flip'). This will automatically generate an 'onclick' attribute that will use tiki javascript function flip() to show/hide some content.
  *	- _flip_hide_text: if set to 'n', do not display a '(Hide)' suffix after _text when status is not 'hidden'
  *	- _flip_default_open: if set to 'y', the flip is open by default (if no cookie jar)
@@ -90,6 +91,12 @@ function smarty_function_button($params, &$smarty) {
 
 		$url_args = array();
 		if ( ! empty($params['href']) ) {
+
+			// Handle anchors
+			if (strstr($params['href'], '#'))
+				list($params['href'], $params['_anchor']) = explode('#', $params['href'], 2);
+
+			// Handle script and URL arguments
 			if ( ( $pos = strpos($params['href'], '?') ) !== false ) {
 				$params['_script'] = substr($params['href'], 0, $pos);
 				TikiLib::parse_str($tikilib->htmldecode(substr($params['href'], $pos+1)), $url_args);
@@ -97,13 +104,16 @@ function smarty_function_button($params, &$smarty) {
 			} else {
 				$params['_script'] = $params['href'];
 			}
+
 			unset($params['href']);
 		}
 
 		$auto_query_args_orig = $auto_query_args;
 		if ( !empty($params['_auto_args']) ) {
-			if ( !isset($auto_query_args) ) $auto_query_args = null;
-			$auto_query_args = explode(',', $params['_auto_args']);
+			if ( $params['_auto_args'] != '*' ) {
+				if ( !isset($auto_query_args) ) $auto_query_args = null;
+				$auto_query_args = explode(',', $params['_auto_args']);
+			}
 		} else {
 			$params['_noauto'] = 'y';
 		}
