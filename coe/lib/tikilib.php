@@ -3418,7 +3418,7 @@ class TikiLib extends TikiDB {
 
 		/// Match things like [...], but ignore things like [[foo].
 		// -Robin
-		if (preg_match_all("/(?<!\[)\[([^\[\|\]]+)(\||\])/", $data, $r1)) {
+		if (preg_match_all("/(?<!\[)\[([^\[\|\]]+)(?:\|?[^\[\|\]]+){0,2}\]/", $data, $r1)) {
 			$res = $r1[1];
 			$links = array_unique($res);
 		}
@@ -7880,7 +7880,8 @@ class TikiLib extends TikiDB {
 	 * @return  array of css files in the style dir
 	 */
 	function list_styles() {
-		global $tikidomain, $csslib;
+		global $tikidomain;
+		global $csslib; include_once("lib/csslib.php");
 
 		$sty = array();
 		$style_base_path = $this->get_style_path();	// knows about $tikidomain
@@ -7921,7 +7922,8 @@ class TikiLib extends TikiDB {
 	 * @return array of css files in the style options dir
 	 */
 	function list_style_options($a_style='') {
-		global $prefs, $csslib;
+		global $prefs;
+		global $csslib; include_once ("lib/csslib.php");
 
 		if (empty($a_style)) {
 			$a_style = $prefs['style'];

@@ -98,7 +98,6 @@ if (isset($_REQUEST["looksetup"])) {
 	"feature_topbar_custom_code",
 	"sitenav",
 	"bot_logo_code",
-	"transition_style_ver",
 	"direct_pagination_max_middle_links",
 	"direct_pagination_max_ending_links",
 	'feature_site_report_email',

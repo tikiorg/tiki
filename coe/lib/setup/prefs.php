@@ -929,6 +929,8 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'auth_ldap_adminpass' => '',
 		'auth_ldap_version' => 3,
 		'auth_ldap_nameattr' => 'displayName',
+		'auth_ldap_countryattr' => '',
+		'auth_ldap_emailattr' => '',
 		'https_login' => 'allowed',
 		'feature_show_stay_in_ssl_mode' => 'y',
 		'feature_switch_ssl_mode' => 'n',
@@ -1346,7 +1348,6 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 
 		'feature_bidi' => 'n',
 		'feature_lastup' => 'y',
-		'transition_style_ver' => '3.0',
 
 		'magic_last_load' => 0,
 
