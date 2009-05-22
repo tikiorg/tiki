@@ -2798,7 +2798,7 @@ CREATE TABLE users_groups (
   groupTheme varchar(255) default '',
   PRIMARY KEY id,
   UNIQUE KEY groupName (groupName)
-) ENGINE=MyISAM, AUTO_INCREMENT=1;
+) ENGINE=MyISAM AUTO_INCREMENT=1;
 
 DROP TABLE IF EXISTS users_objectpermissions;
 CREATE TABLE users_objectpermissions (
