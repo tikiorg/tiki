@@ -10,9 +10,9 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
  * filegal_manager_url: Return the URL of the filegal manager, that goes to the list of filegalleries or inside a gallery if there is only one gallery
  */
 function smarty_function_filegal_manager_url($params, &$smarty) {
-	global $tikilib, $url_path;
+	global $tikilib, $tikiroot_relative;
 
-	$return = $url_path . 'tiki-list_file_gallery.php?view=browse';
+	$return = $tikiroot_relative . 'tiki-list_file_gallery.php?view=browse';
 	$fgals = $tikilib->list_file_galleries();
 
 	if ( $fgals['cant'] == 1 ) {
