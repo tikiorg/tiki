@@ -107,20 +107,6 @@
 						</td>
 					</tr>
 					<tr>
-    	   		<td class="form">
-							<label for="transition_style_ver">{tr}Use transition style sheet from version{/tr}:</label>
-						</td>
-						<td>
-							<select name="transition_style_ver" id="transition_style_ver">
-								<option value="none" {if $prefs.transition_style_ver eq 'none'}selected="selected"{/if}>{tr}Never use transition css{/tr}</option>
-								<option value="css_specified_only" {if $prefs.transition_style_ver eq 'css_specified_only'}selected="selected"{/if}>{tr}Use @version:x.x specified in theme css or none if not specified{/tr}</option>
-								<option value="1.9" {if $prefs.transition_style_ver eq '1.9'}selected="selected"{/if}>{tr}Use @version:x.x specified in theme css or 1.9 if not specified{/tr}</option>
-								<option value="2.0" {if $prefs.transition_style_ver eq '2.0'}selected="selected"{/if}>{tr}Use @version:x.x specified in theme css or 2.0 if not specified{/tr}</option>
-								<option value="3.0" {if $prefs.transition_style_ver eq '3.0'}selected="selected"{/if}>{tr}Use @version:x.x specified in theme css or 3.0 if not specified{/tr}</option>
-							</select>
-						</td>
-					</tr>
-					<tr>
 						<td class="form">
 							{if $prefs.feature_help eq 'y'}
 							<a href="{$prefs.helpurl}Edit+CSS" target="tikihelp" class="tikihelp" title="{tr}Edit CSS{/tr}">

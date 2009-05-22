@@ -1348,7 +1348,6 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 
 		'feature_bidi' => 'n',
 		'feature_lastup' => 'y',
-		'transition_style_ver' => '3.0',
 
 		'magic_last_load' => 0,
 

@@ -7915,7 +7915,8 @@ class TikiLib extends TikiDB {
 	 * @return  array of css files in the style dir
 	 */
 	function list_styles() {
-		global $tikidomain, $csslib;
+		global $tikidomain;
+		global $csslib; include_once("lib/csslib.php");
 
 		$sty = array();
 		$style_base_path = $this->get_style_path();	// knows about $tikidomain
@@ -7956,7 +7957,8 @@ class TikiLib extends TikiDB {
 	 * @return array of css files in the style options dir
 	 */
 	function list_style_options($a_style='') {
-		global $prefs, $csslib;
+		global $prefs;
+		global $csslib; include_once ("lib/csslib.php");
 
 		if (empty($a_style)) {
 			$a_style = $prefs['style'];

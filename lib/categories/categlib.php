@@ -1078,9 +1078,7 @@ class CategLib extends ObjectLib {
 					}
 				}
 				$smarty->assign('catp',array_reverse($catp,true));
-				// hard coded line break removed and span.categpath defined as display:block in transitions/2.0to3.0.css
-				// to preserve previous behaviour (all aligned left on separate lines)
-				$catpath.= $smarty->fetch('categpath.tpl');
+				$catpath .= $smarty->fetch('categpath.tpl');
 			}
 			return $catpath;
     }
