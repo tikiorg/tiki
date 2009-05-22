@@ -98,11 +98,19 @@
 {* -------------------- text field, numeric, drop down, radio,user/group/IP selector, autopincrement, dynamic list *} 
 {elseif $field_value.type eq  't' or $field_value.type eq 'n' or $field_value.type eq 'd' or $field_value.type eq 'D' or $field_value.type eq 'R' or $field_value.type eq 'u' or $field_value.type eq 'g' or $field_value.type eq 'I' or $field_value.type eq 'q' or $field_value.type eq 'w' or ($field_value.type eq 'C' and $field_value.computedtype ne 'f')}
 	{if $list_mode eq 'y'}
-		{$field_value.value|escape|truncate:255:"..."|default:"&nbsp;"}
+		{if $field_value.type eq 'u' }
+			{$field_value.value|username|truncate:255:"..."|escape|default:"&nbsp;"}
+		{else}			
+			{$field_value.value|truncate:255:"..."|escape|default:"&nbsp;"}
+		{/if}		
 	{elseif $list_mode eq 'csv'}
 		{$field_value.value}
 	{else}
-		{$field_value.value|escape}
+		{if $field_value.type eq 'u' }
+			{$field_value.value|username|escape}
+		{else}
+			{$field_value.value|escape}
+		{/if}		
 	{/if}
 
 
