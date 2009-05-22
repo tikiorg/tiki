@@ -5314,7 +5314,7 @@ class TikiLib extends TikiDB {
 			$value = '';
 
 			// Consider =>
-			if( $params_string{$pos + 1} == '>' )
+			if( isset($params_string{$pos + 1}) && $params_string{$pos + 1} == '>' )
 				$pos++;
 
 			// Cut off the name part

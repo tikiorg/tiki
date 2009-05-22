@@ -596,7 +596,7 @@ function wikiplugin_trackerlist($data, $params) {
 
 		if (count($passfields)) {
 			$items = $trklib->list_items($trackerId, $tr_offset, $max, $tr_sort_mode, $passfields, $filterfield, $filtervalue, $tr_status, $tr_initial, $exactvalue, $filter);
-			if ($silent == 'y' && empty($items['cant'])) {
+			if (isset($silent) && $silent == 'y' && empty($items['cant'])) {
 				return;
 			}
 
