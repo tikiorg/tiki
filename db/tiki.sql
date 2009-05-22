@@ -2796,7 +2796,7 @@ CREATE TABLE users_groups (
   userChoice char(1) default NULL,
   groupDefCat int(12) default 0,
   groupTheme varchar(255) default '',
-  PRIMARY KEY id,
+  PRIMARY KEY (id),
   UNIQUE KEY groupName (groupName)
 ) ENGINE=MyISAM AUTO_INCREMENT=1;
 
