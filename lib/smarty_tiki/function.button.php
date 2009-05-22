@@ -117,13 +117,6 @@ function smarty_function_button($params, &$smarty) {
 			$params['_noauto'] = 'y';
 		}
 
-		if (is_array($auto_query_args)) {
-			foreach ($auto_query_args as $arg) {
-				if (isset($_REQUEST[$arg])) {
-					$params[$arg] = $_REQUEST[$arg];
-				}
-			}
-		}
 		$html = smarty_block_self_link(
 				$params,
 				$params['_text'],
