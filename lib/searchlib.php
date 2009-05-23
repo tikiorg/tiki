@@ -208,11 +208,8 @@ class SearchLib extends TikiLib {
 			$qwords = $this->db->quote($words);
 
 			$sqlft = 'MATCH(' . join(',', $h['search']). ') AGAINST (' . $qwords ;
-			if ($boolean == 'y') {
+			if ($boolean == 'y')
 				$sqlft .= ' IN BOOLEAN MODE';
-		    } else {
-		        $sqlft .= ' IN NATURAL LANGUAGE MODE';
-		    }
 			$sqlft .= ')';
 			$sqlWhere .= ' AND ' . $sqlft ;
 			$sqlFields .= ', ' . $sqlft . ' AS relevance';
@@ -252,10 +249,7 @@ class SearchLib extends TikiLib {
 
 		if (!$cant && $boolean != 'y') { // no result
 		
-			if ($fulltext && $words) {
-			    // try a simple search
-   		        echo "-- _find: \$fulltext && \$words holds, so actually trying the search<br>\n";
-
+			if ($fulltext && $words) { // try a simple search
 			    return $this->_find($h, $words, $offset, $maxRecords, false, $filter, $boolean, $type, $searchDate);
 			} else {
 
