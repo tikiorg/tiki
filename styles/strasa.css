@@ -1398,9 +1398,9 @@ a.forumnameread { color: #006699}
  	top: -1px !important;
 }
 
-.tabinactive a {
-	color: #fff;
-}
+.tabinactive a,
+.tabinactive a:visited {
+	color: #fff}
 
 [class].tabinactive {
 	top: 0px !important
