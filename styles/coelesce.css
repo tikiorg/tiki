@@ -1290,6 +1290,12 @@ a.forumnameread { color: #517ea7}
 
 .tabinactive {border: 0 transparent !important}
 
+.tabinactive a,
+* html .tabinactive a:visited {
+	color: #fff}
+	
+* html .tabinactive a:hover {color: #5a7ea2}
+
 .tabcontent {
 	z-index: 200;
 	position: relative;
