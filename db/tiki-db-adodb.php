@@ -32,7 +32,7 @@ if (preg_match('/^adodb$/i', $api_tiki)) {
 
 $dsn = "$db_tiki://$user_tiki:$pass_tiki@$host_tiki/$dbs_tiki";
 //$dsn = "mysql://$user_tiki@$pass_tiki(localhost)/$dbs_tiki";
-$dbTiki = &ADONewConnection($db_tiki);
+$dbTiki = ADONewConnection($db_tiki);
 
 if (!@$dbTiki->Connect($host_tiki, $user_tiki, $pass_tiki, $dbs_tiki)) {
 	$title=tra('Tiki is unable to connect to the database !');
