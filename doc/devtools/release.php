@@ -11,6 +11,7 @@
 
 define( 'TOOLS', dirname(__FILE__) );
 define( 'ROOT', realpath( TOOLS . '/../..' ) );
+define( 'TEMP_DIR', 'temp' );
 
 define( 'CHANGELOG_FILENAME', 'changelog.txt' );
 define( 'CHANGELOG', ROOT . '/' . CHANGELOG_FILENAME );
@@ -20,6 +21,13 @@ define( 'SF_TW_MEMBERS_URL', 'http://sourceforge.net/project/memberlist.php?grou
 define( 'README_FILENAME', 'README' );
 define( 'README', ROOT . '/' . README_FILENAME );
 define( 'LICENSE_FILENAME', 'license.txt' );
+
+// Display all errors and warnings, including strict level
+define( 'ERROR_REPORTING_LEVEL', E_ALL | E_STRICT );
+error_reporting( ERROR_REPORTING_LEVEL );
+
+// Exclude some third party libs when displaying warnings from the PHP syntax check, because we can't fix it directly by the way.
+define( 'PHP_WARNINGS_EXLUDE_PATTERN', '#lib/(pear|ajax|adodb)#' );
 
 require_once TOOLS . '/svntools.php';
 
@@ -100,8 +108,8 @@ if ( ! $options['no-readme-update'] && important_step("Update '" . README_FILENA
 if ( ! $options['no-lang-update'] && important_step("Update language files") ) {
 	passthru("$phpCommand get_strings.php quiet");
 	$removeFiles = glob('lang/*/old.php');
-	$removeFiles[] = 'temp/permstrings.tpl';
-	$removeFiles[] = 'temp/prefnames.tpl';
+	$removeFiles[] = TEMP_DIR . '/permstrings.tpl';
+	$removeFiles[] = TEMP_DIR . '/prefnames.tpl';
 	foreach ( $removeFiles as $rf ) unlink($rf);
 	unset($removeFiles);
 	info('>> Language files updated and temporary files removed.');
@@ -137,8 +145,14 @@ if ( ! $options['no-copyright-update'] && important_step("Update '" . COPYRIGHTS
 if ( ! $options['no-check-php'] && important_step("Check syntax of all PHP files") ) {
 	$error_msg = '';
 	$dir = '.';
-	check_php_syntax($dir, $error_msg) or error($error_msg);
+	check_php_syntax($dir, $error_msg, $options['no-check-php-warnings']) or error($error_msg);
 	info('>> Current PHP code successfully passed the syntax check.');
+}
+
+if ( ! $options['no-check-smarty'] && important_step("Check syntax of all Smarty templates") ) {
+	$error_msg = '';
+	check_smarty_syntax($error_msg) or error($error_msg);
+	info('>> Current Smarty code successfully passed the syntax check.');
 }
 
 if ( ! $options['no-secdb'] && important_step("Generate SecDB file 'db/tiki-secdb_{$version}_mysql.sql'") ) {
@@ -182,11 +196,7 @@ if ( $isPre ) {
 // Helper functions
 
 function write_secdb( $file, $root, $version ) {
-	if ( ! ($fp = @fopen($file, 'w+')) ) {
-		error('The SecDB file "' . $file . '" is not writable or can\'t be created.');
-		die;
-	}
-
+	$fp = @fopen($file, 'w+') or error('The SecDB file "' . $file . '" is not writable or can\'t be created.');
 	$queries = array();
 	md5_check_dir( $root, $root, $version, $queries );
 
@@ -254,16 +264,16 @@ function build_packages($releaseVersion, $svnRelativePath) {
 	passthru( "ls ~/tikipack/$releaseVersion" );
 }
 
-function get_php_files_list($dir, &$entries) {
+function get_files_list($dir, &$entries, $regexp_pattern) {
 	$d = dir($dir);
 	while ( false !== ($e = $d->read()) ) {
 		$entry = $dir . '/' . $e;
 		if ( is_dir($entry) ) {
 			// do not descend and no CVS/Subversion files
 			if ( $e != '..' && $e != '.' && $e != 'CVS' && $e != '.svn' && $entry != './templates_c' ) {
-				if ( ! get_php_files_list($entry, $entries) ) return false;
+				if ( ! get_files_list($entry, $entries, $regexp_pattern) ) return false;
 			}
-		} elseif ( substr($e,-4,4) == ".php" && realpath( $entry ) != __FILE__ ) {
+		} elseif ( preg_match($regexp_pattern, $e) && realpath($entry) != __FILE__ ) {
 			$entries[] = $entry;
 		}
 	}
@@ -272,35 +282,96 @@ function get_php_files_list($dir, &$entries) {
 }
 
 function display_progress_percentage($alreadyDone, $toDo, $message) {
-	$onePercent = round($toDo / 100);
+	$onePercent = ceil($toDo / 100);
 	if ( $alreadyDone % $onePercent === 0 || $alreadyDone == $toDo ) {
-		$percentage = ( $alreadyDone == $toDo ) ? 100 : min(100, $alreadyDone / $onePercent);
-		printf("\r$message", min(100, $percentage));
+		$percentage = ( $alreadyDone >= $toDo - $onePercent ) ? 100 : min(100, $alreadyDone / $onePercent);
+		printf("\r$message", $percentage);
 	}
 }
 
-function check_php_syntax(&$dir, &$error_msg, $retry = 10) {
-	global $phpCommand;
+function check_smarty_syntax(&$error_msg) {
+	global $tikidomain, $prefs, $smarty;
+	$tikidomain = '';
+
+	// Initialize $prefs with some variables needed by the tra() function and smarty autosave plugin
+	$prefs = array(
+		'lang_use_db' => 'n',
+		'language' => 'en',
+		'site_language' => 'en',
+		'feature_ajax' => 'n'
+	);
+
+	// Load Tiki Smarty
+	require_once 'setup_smarty.php';
+
+	$templates_dir = $smarty->template_dir;
+	$templates_dir_length = strlen($templates_dir);
+	if ( $templates_dir_length > 1 && $templates_dir{$templates_dir_length - 1} == '/' )
+		$templates_dir = substr($templates_dir, 0, --$templates_dir_length);
+	$temp_compile_file = TEMP_DIR . 'smarty_compiled_content';
 
 	$entries = array();
-	get_php_files_list($dir, $entries);
+	get_files_list($templates_dir, $entries, '/\.tpl$/');
 
 	$nbEntries = count($entries);
 	for ( $i = 0 ; $i < $nbEntries ; $i++ ) {
-		display_progress_percentage($i, $nbEntries, '%d%% of files passed the syntax check');
+		display_progress_percentage($i, $nbEntries, '%d%% of files passed the Smarty syntax check');
+
+		ob_start();
+		$template_file = substr($entries[$i], $templates_dir_length + 1);
+		$smarty->_compile_resource($template_file, $temp_compile_file);
+		$compilation_output = ob_get_clean();
+
+		unlink($temp_compile_file);
+
+		if ( ! empty($compilation_output) ) {
+			$error_msg = "\nError while compiling {$entries[$i]}."
+				. "\nThis may happen if one of the tiki smarty plugins (located in lib/smarty_tiki)"
+				. " used in the template outputs something when loaded (using php include)."
+				. "\nFor example, a white space after the PHP closing TAG of a smarty plugin can cause this."
+				. trim($compilation_output);
+			return false;
+		}
+	}
+
+	echo "\n";
+	return true;
+}
+
+function check_php_syntax(&$dir, &$error_msg, $hide_php_warnings, $retry = 10) {
+	global $phpCommand;
+	$checkPhpCommand = $phpCommand . ( ERROR_REPORTING_LEVEL > 0 ? ' -d error_reporting=' . (int)ERROR_REPORTING_LEVEL : '' );
+
+	$entries = array();
+	get_files_list($dir, $entries, '/\.php$/');
+
+	$nbEntries = count($entries);
+	for ( $i = 0 ; $i < $nbEntries ; $i++ ) {
+		display_progress_percentage($i, $nbEntries, '%d%% of files passed the PHP syntax check');
 		$return_var = 0;
 		$output = null;
-		exec("$phpCommand -l {$entries[$i]} 2>&1", $output, $return_var);
+		exec("$checkPhpCommand -l {$entries[$i]} 2>&1", $output, $return_var);
 		$fullOutput = implode("\n", $output);
+
 		if ( strpos($fullOutput, 'Segmentation fault') !== false ) {
 			// If php -l command segfaults, wait and retry (it seems to happen quite often on some environments for this command)
-			print "\r[Retrying due to a Segfault...]";
+			echo "\r[Retrying due to a Segfault...]";
 			sleep(1);
 			$i--;
 		} elseif ( $return_var !== 0 ) {
+			// Handle PHP errors
 			$fullOutput = trim($fullOutput);
-			$error_msg = ( $fullOutput == '' ) ? "\nParsing error in '{$entries[$i]}' ($return_var)\n" : "\n$fullOutput";
+			$error_msg = ( $fullOutput == '' ) ? "\nPHP Parsing error in '{$entries[$i]}' ($return_var)\n" : "\n$fullOutput";
 			return false;
+		} elseif ( ! $hide_php_warnings && ( $nb_lines = count($output) ) > 1 && ! preg_match(PHP_WARNINGS_EXLUDE_PATTERN, $entries[$i]) ) {
+			// Handle PHP warnings / notices (this just displays a yellow warning, it doesn't return false or an error_msg)
+			echo "\r";
+			foreach ( $output as $k => $line ) {
+				// Remove empty lines and last line (because in case of a simple warning, the last line simply says 'No syntax errors...')
+				if ( trim($line) == '' || $k == $nb_lines - 1 ) continue;
+				echo color("$line\n", 'yellow');
+			}
+			display_progress_percentage($i, $nbEntries, '%d%% of files passed the PHP syntax check');
 		}
 		unset($output, $return_var);
 	}
@@ -320,6 +391,8 @@ function get_options() {
 		'no-commit' => false,
 		'no-check-svn' => false,
 		'no-check-php' => false,
+		'no-check-php-warnings' => false,
+		'no-check-smarty' => false,
 		'no-first-update' => false,
 		'no-readme-update' => false,
 		'no-lang-update' => false,
@@ -337,9 +410,8 @@ function get_options() {
 	foreach ( $options as $option => $optValue) {
 	  $envOption = $prefix.$option;
 	  $envOption = str_replace("-", "_", $envOption);
-	  $envValue = $_ENV[$envOption];
-
-	  if (isset($envValue)) {
+	  if ( isset($_ENV[$envOption]) ) {
+	    $envValue = $_ENV[$envOption];
 	    $options[$option] = $envValue;
 	  }
 	}
@@ -431,10 +503,8 @@ function important_step($msg, $increment_step = true, $commit_msg = false) {
 }
 
 function update_changelog_file($newVersion) {
-	if ( ! is_readable(CHANGELOG) || ! is_writable(CHANGELOG) || ! ($handle = @fopen(CHANGELOG, "r")) ) {
+	if ( ! is_readable(CHANGELOG) || ! is_writable(CHANGELOG) || ! ($handle = @fopen(CHANGELOG, "r")) )
 		error('The changelog file "' . CHANGELOG . '" is not readable or writable.');
-		die;
-	}
 	
 	$isNewMajorVersion = substr($newVersion, -1) == 0;
 	$releaseNotesURL = '<http://tikiwiki.org/ReleaseNotes'.str_replace('.', '', $newVersion).'>';
@@ -532,10 +602,8 @@ EOS;
 }
 
 function update_copyright_file($newVersion) {
-	if ( ! is_readable(COPYRIGHTS) || ! is_writable(COPYRIGHTS) ) {
+	if ( ! is_readable(COPYRIGHTS) || ! is_writable(COPYRIGHTS) )
 		error('The copyright file "' . COPYRIGHTS . '" is not readable or writable.');
-		die;
-	}
 
 	global $nbCommiters;
 	$nbCommiters = 0;
@@ -714,6 +782,9 @@ function update_readme_file($releaseVersion, $mainVersion) {
 	$copyrights_file = COPYRIGHTS_FILENAME;
 	$license_file = LICENSE_FILENAME;
 
+	$release_notes_url = 'http://tikiwiki.org/ReleaseNotes' . str_replace('.', '', $mainVersion);
+	// For example, Tiki 3.x release notes are on http://tikiwiki.org/ReleaseNotes30
+
 	$readme = <<<EOF
 Tiki! The wiki with a lot of features!
 Version $releaseVersion
@@ -727,7 +798,7 @@ DOCUMENTATION
 * It is highly recommended that you refer to the online documentation:
 * http://doc.tikiwiki.org/Installation for a setup guide
 
-* Notes about this release are accessible from http://tikiwiki.org/ReleaseNotes30
+* Notes about this release are accessible from $release_notes_url
 * Tikiwiki has an active IRC channel, #tikiwiki on irc.freenode.net
 
 INSTALLATION
@@ -767,6 +838,8 @@ Options:
 	--no-commit		: do not commit any changes back to SVN
 	--no-check-svn		: do not check if there is uncommited changes on the checkout used for the release
 	--no-check-php		: do not check syntax of all PHP files
+	--no-check-php-warnings	: do not display PHP warnings and notices during the PHP syntax check
+	--no-check-smarty	: do not check syntax of all Smarty templates
 	--no-first-update	: do not svn update the checkout used for the release as the first step
 	--no-readme-update	: do not update the '" . README_FILENAME . "' file
 	--no-lang-update	: do not update lang/*/language.php files
