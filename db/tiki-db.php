@@ -9,10 +9,6 @@ if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== false) {
 
 require_once('lib/init/initlib.php');
 
-// Define and load Smarty components
-define('SMARTY_DIR', "lib/smarty/libs/");
-require_once ( 'lib/smarty/libs/Smarty.class.php');
-
 // Define lang and load translation functions
 if (!empty($_REQUEST['lang'])) {
 	$language = $prefs['site_language'] = $prefs['language'] = $_REQUEST['lang'];
@@ -90,8 +86,9 @@ if (is_file('db/virtuals.inc')) {
 		$tikidomain = $multi;
 	}
 }
-$re = include($local_php);
-if ( $re === FALSE) {
+$re = false;
+if ( file_exists($local_php) ) $re = include($local_php);
+if ( $re === false ) {
 	header('location: tiki-install.php');
 	exit;
 }
