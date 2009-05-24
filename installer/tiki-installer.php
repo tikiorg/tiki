@@ -545,8 +545,8 @@ $smarty->load_filter('pre', 'tr');
 $smarty->load_filter('output', 'trimwhitespace');
 $smarty->assign('mid', 'tiki-install.tpl');
 $smarty->assign('style', 'thenews.css');
-$smarty->assign('virt',$virt);
-$smarty->assign('multi', $multi);
+$smarty->assign('virt', isset($virt) ? $virt : null );
+$smarty->assign('multi', isset($multi) ? $multi : null );
 if ($language != 'en')
 	$smarty->assign('lang', $language);
 
