@@ -43,7 +43,7 @@ class TikiInit {
 /** Return ';' if windows otherwise ':'
   * \static
   */
-	function pathSeparator() {
+	static function pathSeparator() {
 		static $separator;
 		if (!isset($separator)) {
 			if (strtoupper(substr(PHP_OS, 0, 3)) == 'WIN') {
@@ -59,7 +59,7 @@ class TikiInit {
 /** Prepend $path to the include path
   * \static
   */
-	function prependIncludePath($path) {
+	static function prependIncludePath($path) {
 		$include_path = ini_get('include_path');
 		if ($include_path) {
 			$include_path = $path . TikiInit::pathSeparator(). $include_path;
@@ -76,7 +76,7 @@ class TikiInit {
 /** Append $path to the include path
   * \static
   */
-	function appendIncludePath($path) {
+	static function appendIncludePath($path) {
 		$include_path = ini_get('include_path');
 		if ($include_path) {
 			$include_path .= TikiInit::pathSeparator(). $path;
@@ -109,6 +109,7 @@ class TikiInit {
 
 function tiki_error_handling($errno, $errstr, $errfile, $errline) {
 	global $prefs,$tiki_p_admin,$phpErrors;
+
 	$err[E_ERROR]           = 'E_ERROR';
 	$err[E_CORE_ERROR]      = 'E_CORE_ERROR';
 	$err[E_USER_ERROR]      = 'E_USER_ERROR';
@@ -120,6 +121,17 @@ function tiki_error_handling($errno, $errstr, $errfile, $errline) {
 	$err[E_PARSE]           = 'E_PARSE';
 	$err[E_NOTICE]          = 'E_NOTICE';
 	$err[E_USER_NOTICE]     = 'E_USER_NOTICE';
+	$err[E_STRICT]          = 'E_STRICT';
+
+	if ( !defined('E_RECOVERABLE_ERROR') ) define('E_RECOVERABLE_ERROR', 4096);
+	$err[E_RECOVERABLE_ERROR] = 'E_RECOVERABLE_ERROR';
+
+	if ( !defined('E_DEPRECATED') ) define('E_DEPRECATED', 8192);
+	$err[E_DEPRECATED] = 'E_DEPRECATED';
+
+	if ( !defined('E_USER_DEPRECATED') ) define('E_USER_DEPRECATED', 16384);
+	$err[E_USER_DEPRECATED] = 'E_USER_DEPRECATED';
+
 	if (!empty($prefs['error_reporting_level']) and $prefs['error_reporting_level']) {
 		$errfile = basename($errfile);
 		switch ($errno) {
@@ -132,6 +144,7 @@ function tiki_error_handling($errno, $errstr, $errfile, $errline) {
 		case E_USER_WARNING:
 		case E_COMPILE_WARNING:
 		case E_PARSE:
+		case E_RECOVERABLE_ERROR:
 			if ($prefs['error_reporting_level'] == 2047 or $prefs['error_reporting_level'] == 2039 or ($prefs['error_reporting_level'] == 1 and $tiki_p_admin == 'y')) {
 				$back = "<div style='padding:4px;border:1px solid #000;background-color:#F66;font-size:10px;'>";
 				$back.= "<b>PHP (".PHP_VERSION.") ERROR (".$err[$errno]."):</b><br />";
@@ -144,6 +157,9 @@ function tiki_error_handling($errno, $errstr, $errfile, $errline) {
 			break;
 		case E_NOTICE:
 		case E_USER_NOTICE:
+		case E_STRICT:
+		case E_DEPRECATED:
+		case E_USER_DEPRECATED:
 			if ($prefs['error_reporting_level'] == '2047' and $tiki_p_admin == 'y') {
 				if ($prefs['smarty_notice_reporting'] != 'y' && strstr($errfile, '.tpl.php'))
 					break;
@@ -161,5 +177,3 @@ function tiki_error_handling($errno, $errstr, $errfile, $errline) {
 	}
 }
 set_error_handler("tiki_error_handling");
-
-?>

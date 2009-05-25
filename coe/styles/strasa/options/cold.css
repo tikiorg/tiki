@@ -154,7 +154,10 @@ ul.jumplinks a:active {
 /*** Error page ***/
 
 /* Site Header & Identity */
-#header-top {
+div#sioptions,
+#sioptionscentered,
+#customcode,
+#customcodewith_ad {
 	background: #f5f5f5 url(cold/headerbg.jpg) repeat-x 0 100%;
 }
 
@@ -760,6 +763,7 @@ body.tiki_blogs .author_actions .actions {
 	background: #fff !important;
 }
 
+body.tiki_blogs .postbody-title,
 .post .postbody-title {
 	background: #f5f5f5 url(cold/headerbg.jpg) repeat-x 0 100%;
 	

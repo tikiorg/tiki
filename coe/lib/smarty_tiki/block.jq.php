@@ -1,8 +1,11 @@
 <?php
-// $Id: $
+// $Id$
 
 //this script may only be included - so its better to die if called directly.
-global $access; $access->check_script($_SERVER["SCRIPT_NAME"],basename(__FILE__));
+if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
+  header("location: index.php");
+  exit;
+}
 
 /**
  * \brief Smarty {jq} block handler

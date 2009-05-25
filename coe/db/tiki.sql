@@ -2349,7 +2349,7 @@ CREATE TABLE tiki_tracker_fields (
   trackerId int(12) NOT NULL default '0',
   name varchar(255) default NULL,
   options text,
-  type char(15) default NULL,
+  type varchar(15) default NULL,
   isMain char(1) default NULL,
   isTblVisible char(1) default NULL,
   position int(4) default NULL,
@@ -2796,9 +2796,9 @@ CREATE TABLE users_groups (
   userChoice char(1) default NULL,
   groupDefCat int(12) default 0,
   groupTheme varchar(255) default '',
-  PRIMARY KEY id,
+  PRIMARY KEY (id),
   UNIQUE KEY groupName (groupName)
-) ENGINE=MyISAM, AUTO_INCREMENT=1;
+) ENGINE=MyISAM AUTO_INCREMENT=1;
 
 DROP TABLE IF EXISTS users_objectpermissions;
 CREATE TABLE users_objectpermissions (

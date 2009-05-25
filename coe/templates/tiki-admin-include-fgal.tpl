@@ -37,7 +37,7 @@
 <div class="adminoptionbox">
 	<div class="adminoptionlabel"><label for="ix">{tr}Home Gallery (main gallery){/tr}</label>
 	<select name="home_file_gallery">
-              {section name=ix loop=$file_galleries id="ix"}
+              {section name=ix loop=$file_galleries}
                 <option value="{$file_galleries[ix].galleryId|escape}" {if $file_galleries[ix].galleryId eq $prefs.home_file_gallery}selected="selected"{/if}>{$file_galleries[ix].name|truncate:20:"...":true}</option>
 			  {sectionelse}
 			  <option value="">{tr}None{/tr}</option>

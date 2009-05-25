@@ -24,8 +24,14 @@ require_once ( 'lib/smarty/libs/Smarty.class.php');
 require_once ('installer/installlib.php');
 
 $commands = array();
-$prefs = array();
-ini_set('magic_quotes_runtime',0);
+@ini_set('magic_quotes_runtime',0);
+
+// Initialize $prefs and force some values for the installer
+$prefs = array(
+	// tra() should not use $tikilib because this lib is not available in every steps of the installer
+	//  and because we want to be sure that translations of the installer are the original ones, even for an upgrade
+	'lang_use_db' => 'n' 
+);
 
 // Which step of the installer
 if (empty($_REQUEST['install_step'])) {
@@ -539,8 +545,8 @@ $smarty->load_filter('pre', 'tr');
 $smarty->load_filter('output', 'trimwhitespace');
 $smarty->assign('mid', 'tiki-install.tpl');
 $smarty->assign('style', 'thenews.css');
-$smarty->assign('virt',$virt);
-$smarty->assign('multi', $multi);
+$smarty->assign('virt', isset($virt) ? $virt : null );
+$smarty->assign('multi', isset($multi) ? $multi : null );
 if ($language != 'en')
 	$smarty->assign('lang', $language);
 

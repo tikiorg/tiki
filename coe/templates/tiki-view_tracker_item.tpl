@@ -291,7 +291,7 @@ style="background-image:url('{$stdata.image}');background-repeat:no-repeat;paddi
 {if $cur_field.isMandatory ne 'y'}<option value="">{tr}None{/tr}</option>{/if}
 {foreach key=id item=one from=$users}
 {if ( ! isset($cur_field.itemChoices) || $cur_field.itemChoices|@count eq 0 || in_array($one, $cur_field.itemChoices) ) }
-<option value="{$one|escape}" {if ($cur_field.options_array[0] eq '2' and $one eq $user) or ($cur_field.options_array[0] ne '2' and $cur_field.value eq $one) or ($cur_field.isMandatory eq 'y' and empty($cur_field.value) and $one eq $user)}selected="selected"{/if}>{$one|escape|username}</option>
+<option value="{$one|escape}" {if ($cur_field.options_array[0] eq '2' and $one eq $user) or ($cur_field.options_array[0] ne '2' and $cur_field.value eq $one) or ($cur_field.isMandatory eq 'y' and empty($cur_field.value) and $one eq $user)}selected="selected"{/if}>{$one|username|escape}</option>
 {/if}
 {/foreach}
 </select>

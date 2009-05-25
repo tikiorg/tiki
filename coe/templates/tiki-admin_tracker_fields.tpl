@@ -63,7 +63,7 @@
 {sortlinks case=false}
 {foreach key=choice_k item=choice_i from=$fi.itemChoicesList}
 {$choice_k}
-<option value="{$choice_k|escape}"{if !empty($itemChoices) and in_array($choice_k, $itemChoices)} selected="selected"{/if}>{tr}{$choice_i|username}{/tr}</option>
+<option value="{$choice_k|escape}"{if !empty($itemChoices) and in_array($choice_k, $itemChoices)} selected="selected"{/if}>{if $type eq 'u'}{$choice_i|username|escape}{else}{tr}{$choice_i}{/tr}{/if}</option>
 {/foreach}
 {/sortlinks}
 </select>
