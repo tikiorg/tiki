@@ -5308,7 +5308,6 @@ $lang=Array(
 "PhpLayers Dynamic menus" => "Menus dynamiques PhpLayers",
 "Fullscreen" => "Plein écran",
 "Allow users to activate fullscreen mode" => "Autoriser les utilisateurs à activer le mode plein écran",
-"Floating help aka the Big Blue Help Icon" => "Le panneau d'aide alias « le gros icone d'aide bleu »",
 "Experimental Features" => "Fonctionnalités expérimentales",
 "HTML Purifier" => "Purificateur HTML",
 "HTML Purifier (Content is cleaned to XHTML 1.1 Strict on each save)" => "HTML Purifier (Le contenu est nettoyé en XHTML 1.1 Strict à chaque enregistrement)",

@@ -143,5 +143,3 @@
 {else}
 <h2>{tr}No suggested questions{/tr}</h2>
 {/if}
-
-{include file=tiki-edit_help.tpl}

@@ -1001,70 +1001,55 @@ div.findsubmit {}
 
 /* New Help section */
 div#tikihelp {
-	position:fixed;
+	position: fixed;
 	right: 0;
-	top: 125px;
-	width : 340px;
-	height: auto; /* if there was height specified it covered the right column content "invisibly" making part of it unclickable */
-	max-height: 450px;
+	top: 0;
+	height: auto; /* if there was height specified it covered the right column content "invisibly" making part of it unclickable (from strasa) */
 	max-width: 50%;
-	padding:0;
-	margin:0;
-	background-color: transparent;
+	padding: 0;
+	margin: 0;
+	border: none;
+	background: transparent;
 	z-index: 820;
-	overflow: hidden;
+	height: 100%;
 }
 
-* html div#tikihelp {position: absolute}
+* html div#tikihelp {
+	position: absolute;
+}
 
-div.help_icon {
-	border: 0;
-	margin: 0;
-	padding: 0;
-	height: 48px;
-	text-align: right;
-}
-div.help_icon a:hover {
-  text-decoration: none;
-}
-div.help_icon img{
+.help_title { float: left }
+
+.help_close_icon,
+.help_fullscreen_icon {
+	float: right;
 	vertical-align: middle;
-	border: 0;
-	margin: 0;
-	padding: 0;
 }
-div.help_sections {
-	border: solid 1px #006699;
-	padding: 0;
-	margin: 0;
-	background-color: #006699;
-	width: 100%;
-	height: 400px;
-	overflow: auto;
-}
+.help_fullscreen_icon { margin-right: 8px }
+.help_close_icon { margin-right: 20px }
+
 div.help_section_select {
 	font-weight : bold;
-	font-size: 12px;
-	background-color : #E7E9EA;
-	color: black;
+	font-size: 120%;
+	background: #e7e9ea;
+	color: #000;
 	width: 100%;
-	height: 20px;
-	margin: 0;
+	padding: 2px;
 }
-div.help_section_select * {
-	vertical-align: middle;
-}
-div.help_section {
-	margin: 0;
-	padding: 5px;
-	background-color: white;
-	color: black;
-	font-size: 0.8em;
-	/*height: 100%;*/
+
+div.help_sections {
+	width: 360px;
+	padding:  2px;
+	background: #aac9e9;
 	overflow: auto;
+	height: 100%;
 }
-div.help_section * {
-	vertical-align: middle;
+
+div.help_section {
+	margin: 5px;
+	padding: 5px;
+	background: #fff;
+	color: #000;
 }
 
 #site_report {text-align: center}

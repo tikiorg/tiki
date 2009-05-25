@@ -15,9 +15,10 @@
 {if $prefs.feature_ajax eq 'y'}
 {include file="tiki-ajax_header.tpl"}
 {/if}
-			<div id="tiki-center">
-			{$mid_data}
-      </div>
+	<div id="tiki-center">
+		{$mid_data}
+		{show_help}
+	</div>
 			
 {if $prefs.feature_bidi eq 'y'}
 </div>

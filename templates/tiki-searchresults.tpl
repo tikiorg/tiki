@@ -67,7 +67,7 @@
     <label class="searchhighlight" for="highlight">{tr}Find{/tr} <input id="fuser" name="highlight" size="14" type="text" accesskey="s" value="{$words}" /></label>
 		{if !( $searchStyle eq "menu" )} 
 		<label class="searchboolean" for="boolean">{tr}Advanced search:{/tr}<input type="checkbox" name="boolean"{if $boolean eq 'y'} checked="checked"{/if} /></label>
-		{add_help show='n' title="{tr}Help{/tr}" id="advanced_search_help"}
+		{add_help show='y' title="{tr}Help{/tr}" id="advanced_search_help"}
 			{$smarty.capture.advanced_search_help}
 		{/add_help}
 		<label class="searchdate" for="date">{tr}Date Search:{/tr}

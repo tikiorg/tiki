@@ -44,6 +44,3 @@
 </td></tr>
 </table>
 </form>
-{if !$wysiwyg}
- {include file=tiki-edit_help.tpl}
-{/if}
