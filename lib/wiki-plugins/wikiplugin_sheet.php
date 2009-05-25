@@ -90,9 +90,9 @@ EOF;
 	}
 
 	// Build required objects
-	$sheet = &new TikiSheet;
-	$db = &new TikiSheetDatabaseHandler( $id );
-	$out = &new TikiSheetOutputHandler( $data );
+	$sheet = new TikiSheet;
+	$db = new TikiSheetDatabaseHandler( $id );
+	$out = new TikiSheetOutputHandler( $data );
 
 	// Fetch sheet from database
 	$sheet->import( $db );
