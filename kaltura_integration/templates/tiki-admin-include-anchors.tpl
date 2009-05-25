@@ -42,6 +42,10 @@
 <a href="tiki-admin.php?page=cms" title="{tr}Articles{/tr}" class="icon">{icon _id="pics/large/stock_bold.png" alt="{tr}Articles{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}</a>
 {/if}
 
+{if $prefs.feature_kaltura eq 'y'}
+<a href="tiki-admin.php?page=Kaltura" title="{tr}Kaltura{/tr}" class="icon"><img class="icon" src="pics/large/kaltura48x48.png" alt="{tr}Kaltura{/tr}" width="32" height="32" /></a>
+{/if}
+
 {if $prefs.feature_forums eq 'y'}
 <a href="tiki-admin.php?page=forums" title="{tr}Forums{/tr}" class="icon">{icon _id="pics/large/stock_index.png" alt="{tr}Forums{/tr}" class="reflect" style="vertical-align: middle" width="32" height="32"}</a>
 {/if}

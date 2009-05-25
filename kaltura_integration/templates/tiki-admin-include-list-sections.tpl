@@ -170,6 +170,10 @@
 	<a href="tiki-admin.php?page=sefurl" class="admbox{if $prefs.feature_sefurl eq 'n'} off{/if}" style="background-image: url('pics/large/goto48x48.png')">
       <img src="pics/trans.png" alt="{tr}Search engine friendly url{/tr}" title="{tr}Search engine friendly url{/tr}{if $prefs.feature_sefurl eq 'n'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Search engine friendly url{/tr}</span>
     </a>
+        
+        <a href="tiki-admin.php?page=kaltura" class="admbox{if $prefs.feature_kaltura ne 'y'} off{/if}" style="background-image: url('pics/large/kaltura48x48.png')">
+          <img src="pics/trans.png" alt="{tr}Kaltura{/tr}" title="{tr}Kaltura{/tr}{if $prefs.feature_kaltura ne 'y'} ({tr}Disabled{/tr}){/if}" /><span>{tr}Kaltura{/tr}</span>
+    </a>
 	</div>
 </div>
 

@@ -237,7 +237,7 @@ function get_default_prefs() {
 		'wikiplugin_picture' => 'n',  // Old syntax for images
 		'wikiplugin_pluginmanager' => 'n',
 		'wikiplugin_poll' => 'y',
-		'wikiplugin_profile' => 'n',		
+		'wikiplugin_profile' => 'n',
 		'wikiplugin_proposal' => 'n',
 		'wikiplugin_quote' => 'y',
 		'wikiplugin_rcontent' => 'y',
@@ -1137,6 +1137,14 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'direct_pagination_max_middle_links' => 2,
 		'direct_pagination_max_ending_links' => 0,
 
+		// kaltura
+		'feature_kaltura' => 'y',
+
+
+
+
+
+
 		// unsorted features
 		'anonCanEdit' => 'n',
 		'cacheimages' => 'n',
@@ -1301,7 +1309,7 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		'use_minified_scripts' => 'y',		// for debugging
 		'valid_email_regex' => '^[_a-z0-9\+\.\-]+@[_a-z0-9\.\-]+\.[a-z]{2,4}$',
 		'debug_ignore_xdebug' => 'n',
-		
+
 		// JQuery
 		'feature_jquery' => 'y',			// Alternative lib for shadowbox etc
 		'jquery_effect' => '',				// Default effect for general show/hide: ['' | 'slide' | 'fade' | and

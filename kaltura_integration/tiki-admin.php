@@ -290,6 +290,11 @@ if (isset($_REQUEST["page"])) {
 		$description = 'Search engine friendly url';
 		$helpUrl = 'Rewrite+Rules';
 		include_once ('tiki-admin_include_sefurl.php');
+	} else if ($adminPage == "kaltura") {
+		$admintitle = "Kaltura";//get_strings tra("Kaltura")
+		$helpUrl = "Kaltura+Config";
+		$description = "Kaltura settings";//get_strings tra("Kaltura settings")
+		include_once ('tiki-admin_include_kaltura.php');
 	}
 
 	$url = 'tiki-admin.php'.'?page='.$adminPage;
