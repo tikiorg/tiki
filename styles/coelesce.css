@@ -696,7 +696,7 @@ div.menuSection div.separator {}
 .treemenudiv {
 	display: block;
 	white-space: nowrap;
-	background: #ccdceb;}
+	}
 
 .phplmnormal,
 a.phplmnormal:hover,
@@ -1953,7 +1953,13 @@ textarea#editpost2 {
 .subcomment { margin-left: 10px}
 
 /* Help box*/
-div.commentsedithelp { background: #ffcfcf; color: #2d2d2d; border: 1px solid #ff0000; text-align: center; font-weight: bold}
+div.commentsedithelp { 
+	background: #ffcfcf; 
+	color: #2d2d2d; 
+	border: 1px solid #ff0000; 
+	text-align: center; 
+	font-weight: bold;
+	}
 
 /***** Categories *****/
 
@@ -1972,30 +1978,52 @@ td.categobjectsdataeven,
 td.categobjectsdataodd {}
 
 .catname {}
-.catblock {}
-.catlists {}
+.catblock {
+	padding: 5px;
+	margin-bottom: 3px;
+	min-width: 100%;
+	}
+
+.cattitle {
+	padding: 3px 5px 9px 5px;
+	display:inline;
+	border-top: 1px solid #D7D7D7;
+	border-left: 1px solid #D7D7D7;
+	border-right: 1px solid #D7D7D7;
+	border-bottom: 1px solid #EDEDED;
+	background: #EDEDED;
+	}
+
+.catlists {
+	margin-top: 8px;
+	border: 1px solid #D7D7D7;
+	background: #EDEDED;
+	}
+
 .catlists:hover {}
-.cattitle {}
 .catlists a.link {}
 .catlists a.link:hover {}
 
 .catfeatures {
-	margin-left: 0;
+	margin: 5px;
 	padding: 0;
-	font-weight: bold;
-	list-style: none}
+	list-style: none;
+	}
 
 ul.catfeatures li {}
 
 .catitems {
-	margin-left: 0;
+	margin-left: 10px;
 	padding: 0;
 	font-weight: bold;
-	list-style: none}
+	list-style: none;
+	}
 
 ul.catitems li {
 	display: inline;
-	margin-right: 7px}
+	margin-right: 7px;
+	white-space : nowrap;
+	}
 
 ul.catitems li a.link {}
 
