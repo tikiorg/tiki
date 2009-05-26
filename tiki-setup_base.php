@@ -43,7 +43,6 @@ ini_set('allow_call_time_pass_reference','On');
 require_once("lib/setup/compat.php");
 require_once("lib/tikiticketlib.php");
 require_once("db/tiki-db.php");
-require_once("setup_smarty.php"); 
 require_once("lib/tikilib.php");
 global $cachelib; require_once("lib/cache/cachelib.php");
 global $logslib; require_once("lib/logs/logslib.php");
@@ -94,6 +93,9 @@ if ( $prefs['sessions_silent'] == 'disabled' or !empty($_COOKIE) ) {
 	// enabing silent sessions mean a session is only started when a cookie is presented
 	session_start();
 }
+
+// Smarty needs session since 2.6.25
+require_once("setup_smarty.php"); 
 
 // Check if phpCAS mods is installed 
 $phpcas_enabled = is_file('lib/phpcas/source/CAS/CAS.php') ? 'y' : 'n';

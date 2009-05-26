@@ -23,6 +23,7 @@ require_once(SMARTY_DIR.'Smarty.class.php');
 class Smarty_Tikiwiki extends Smarty {
 	
 	function Smarty_Tikiwiki($tikidomain = '') {
+		parent::Smarty();
 		if ($tikidomain) { $tikidomain.= '/'; }
 		$this->template_dir = 'templates/';
 		$this->compile_dir = "templates_c/$tikidomain";
