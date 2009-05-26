@@ -126,10 +126,13 @@ if (isset($_REQUEST["features"])) {
 }
 
 if (!empty($_REQUEST['tabs'])) {
-	$smarty->assign('tabs', $_REQUEST['tabs']=='on'?'n':'');
+	$_SESSION["tabbed_admin_features"] = $_REQUEST['tabs']=='on'?'n':'' ;
 } else {
-	$smarty->assign('tabs', '');
+	if( $_REQUEST["feature_tabs"] ) {	// Verifies that form was submitted
+		$_SESSION["tabbed_admin_features"] = '' ;
+	}
 }
+$smarty->assign('tabs', $_SESSION["tabbed_admin_features"]);
 
 $smarty->assign('php_major_version', substr(PHP_VERSION, 0, strpos(PHP_VERSION, '.')));
 
