@@ -58,6 +58,11 @@ function wikiplugin_tracker_info() {
 				'name' => tra('URL'),
 				'description' => tra('Url used for the field links'),
 			),
+			'target' => array(
+				'required' => false,
+				'name' => '_blank|_self|_parent|_top',
+				'description' => tra('Url target'),
+			),
 			'values' => array(
 				'required' => false,
 				'name' => tra('Values'),
@@ -458,6 +463,8 @@ function wikiplugin_tracker($data, $params) {
 						$mail->setHeader('From', $emailOptions[0]);
 						$mail->send($emailOptions[1]);
 					}
+					if (!empty($target))
+						header('Window-target: _blank');//'.$target);
 					if (empty($url)) {
 						if (!empty($page)) {
 							$url = "tiki-index.php?page=".urlencode($page)."&ok=y&trackit=$trackerId";
