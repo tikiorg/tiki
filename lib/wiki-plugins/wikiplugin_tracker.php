@@ -698,9 +698,15 @@ function wikiplugin_tracker($data, $params) {
 					} elseif ($f['type'] == 'u') {
 						if ($perms['tiki_p_admin_trackers'] == 'y' || ($f['options_array'][0] != 1 && $f['options_array'][0] != 2))
 							$flds['data'][$i]['list'] = $userlib->list_all_users();
+						elseif ($f['options_array'][0] == 1)
+							$flds['data'][$i]['value'] == $user;
 					} elseif ($f['type'] == 'g') {
-						if ($perms['tiki_p_admin_trackers'] == 'y' || $f['options_array'][0] != 1 && $f['options_array'][0] != 2)
+						if ($perms['tiki_p_admin_trackers'] == 'y' || ($f['options_array'][0] != 1 && $f['options_array'][0] != 2)) {
 							$flds['data'][$i]['list'] = $userlib->list_all_groups();
+						} elseif ($f['options_array'][0] == 1) {
+							global $group;
+							$flds['data'][$i]['value'] == $group;
+						}
 					} elseif ($f['type'] == 'e') {
 						global $categlib; include_once('lib/categories/categlib.php');
 						$flds['data'][$i]['list'] = $categlib->get_child_categories($f["options_array"][0]);
