@@ -8051,7 +8051,7 @@ class TikiLib extends TikiDB {
 
 	// Comparison function used to sort languages by their name in the
 	// current locale.
-	function formatted_language_compare($a, $b) {
+	static function formatted_language_compare($a, $b) {
 		return strcmp($a['name'], $b['name']);
 	}
 	// Returns a list of languages formatted as a twodimensionel array
