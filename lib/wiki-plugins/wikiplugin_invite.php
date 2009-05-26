@@ -6,7 +6,18 @@ function wikiplugin_invite_info() {
 		'description' => tra( 'Invite an email in groups.' ),
 		'prefs' => array( 'wikiplugin_invite' ),
 		'body' => tra('Confirmation message after posting form'),
-		'params' => array()
+		'params' => array(
+			'including' => array(
+				'required' => false,
+				'name' => tra('Including group'),
+				'description' => tra('Group'),
+			),
+			'defaultgroup' => array(
+				'required' => false,
+				'name' => tra('Default group'),
+				'description' => tra('Group'),
+			),
+		)
 	);
 }
 function wikiplugin_invite( $data, $params) {
@@ -16,6 +27,14 @@ function wikiplugin_invite( $data, $params) {
 		return;
 	}
 	$userGroups = $userlib->get_user_groups_inclusion($user);
+	if (!empty($params['including'])) {
+		$groups = $userlib->get_including_groups($params['including']);
+		foreach ($userGroups as $gr=>$inc) {
+			if (!in_array($gr, $groups)) {
+				unset($userGroups[$gr]);
+			}
+		}
+	}
 	$errors = array();
 	$feedbacks = array();
 	if (isset($_REQUEST['invite'])) {
@@ -75,6 +94,7 @@ function wikiplugin_invite( $data, $params) {
 			if (!empty($_REQUEST['message'])) $smarty->assign_by_ref('message', $_REQUEST['message']);
 		}	
 	}
+	$smarty->assign_by_ref('params', $params);
 	$smarty->assign_by_ref('userGroups', $userGroups);
 	return '~np~'.$smarty->fetch('wiki-plugins/wikiplugin_invite.tpl').'~/np~';
 }
