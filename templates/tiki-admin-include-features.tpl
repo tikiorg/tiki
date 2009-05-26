@@ -3,7 +3,6 @@
 {remarksbox type="tip" title="{tr}Tip{/tr}"}{tr}Please see the <a class='rbox-link' target='tikihelp' href='http://doc.tikiwiki.org/Features'>evaluation of each feature</a> on Tiki's developer site.{/tr}{/remarksbox}
 
 <div class="cbox">
-	<div class="cbox-title">{tr}{$crumbs[$crumb]->title}{/tr} {help crumb=$crumbs[$crumb]}</div>
 		<form class="admin" id="features" name="features" action="tiki-admin.php?page=features" method="post">
 			<div class="heading input_submit_container" style="text-align: right">
         {if $prefs.feature_tabs eq 'y'}

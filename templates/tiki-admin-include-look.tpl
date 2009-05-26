@@ -1,10 +1,6 @@
 {* $Id$ *}
 {strip}
 <div class="cbox">
-	<div class="cbox-title">
-	{tr}{$crumbs[$crumb]->title}{/tr}
-	{help crumb=$crumbs[$crumb]}</div>
-
 	<form action="tiki-admin.php?page=look"  id="look" name="look" onreset="return(confirm('{tr}Cancel Edit{/tr}'))"  class="admin" method="post">
 		<div class="heading input_submit_container" style="text-align: right">
 			<input type="submit" name="looksetup" value="{tr}Apply{/tr}" />
