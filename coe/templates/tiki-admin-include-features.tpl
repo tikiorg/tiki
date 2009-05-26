@@ -228,10 +228,6 @@
 						<span class="checkbox"><input type="checkbox" name="feature_mootools" {if $prefs.feature_mootools eq 'y'}checked="checked"{/if}/></span>
 						<span class="label"> <a href="{$prefs.helpurl}Mootools" target="tikihelp" class="tikihelp" title="{tr}Mootools{/tr}"> {tr}Mootools{/tr}</a></span>
 					</div>
-					<div class="half_width">
-						<span class="checkbox"><input type="checkbox" name="feature_floating_help" {if $prefs.feature_floating_help eq 'y'}checked="checked"{/if}/></span>
-						<span class="label">{tr}Floating help aka the Big Blue Help Icon{/tr}</span>
-					</div>
 				</div>
 			</fieldset>
 				

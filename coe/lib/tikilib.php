@@ -7784,7 +7784,7 @@ class TikiLib extends TikiDB {
 		return $tikilib->date_format($format, $timestamp, $_user, $input_format, false);
 	}
 
-	function date_format($format, $timestamp = false, $_user = false, $input_format = DATE_FORMAT_UNIXTIME, $is_strftime_format = true) {
+	static function date_format($format, $timestamp = false, $_user = false, $input_format = DATE_FORMAT_UNIXTIME, $is_strftime_format = true) {
 		global $tikidate, $tikilib;
 		if ( ! $timestamp ) {
 			$timestamp = time();
@@ -8432,7 +8432,7 @@ JS;
 	// TikiWiki version of parse_str, that:
 	//  - uses a workaround for a bug in PHP 5.2.0
 	//  - Handle the value of magic_quotes_gpc to stripslashes when needed (as already done for GET/POST/... in tiki-setup_base.php)
-	function parse_str($str, &$arr) {
+	static function parse_str($str, &$arr) {
 		parse_str($str, $arr);
 
 		/* From PHP Manual comments (quoting Vladimir Kornea):

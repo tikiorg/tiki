@@ -31,7 +31,7 @@ class TikiInit {
 /** Return true if windows, otherwise false
   * \static
   */
-	function isWindows() {
+	static function isWindows() {
 		static $windows;
 		if (!isset($windows)) {
 			$windows = strtoupper(substr(PHP_OS, 0, 3)) == 'WIN';

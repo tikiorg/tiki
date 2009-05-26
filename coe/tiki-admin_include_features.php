@@ -106,7 +106,6 @@ if (isset($_REQUEST["features"])) {
 		"feature_wiki_mindmap",
 		"use_minified_scripts",
 		"feature_print_indexed",
-		"feature_floating_help",
 		'debug_ignore_xdebug',
 	);
 

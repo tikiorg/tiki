@@ -696,7 +696,7 @@ div.menuSection div.separator {}
 .treemenudiv {
 	display: block;
 	white-space: nowrap;
-	background: #ccdceb;}
+	}
 
 .phplmnormal,
 a.phplmnormal:hover,
@@ -956,57 +956,55 @@ div.findsubmit {}
 
 /* New Help section */
 div#tikihelp {
-	position:fixed;
+	position: fixed;
 	right: 0;
-	top: 3px;
+	top: 0;
 	height: auto; /* if there was height specified it covered the right column content "invisibly" making part of it unclickable (from strasa) */
 	max-width: 50%;
-	padding:0;
-	margin:0;
+	padding: 0;
+	margin: 0;
 	border: none;
-	background-color: transparent;
+	background: transparent;
 	z-index: 820;
+	height: 100%;
 }
 
-* html div#tikihelp {position: absolute}
+* html div#tikihelp {
+	position: absolute;
+}
 
-div.help_icon {
-	border: 0;
-	margin: 0;
-	padding: 0;
-	height: 48px;
-	text-align: right;
-}
-div.help_icon a:hover {
-	text-decoration: none;
-}
-div.help_icon img{
+.help_title { float: left }
+
+.help_close_icon,
+.help_fullscreen_icon {
+	float: right;
 	vertical-align: middle;
-	border: 0;
-	margin: 0;
-	padding: 0;
 }
+.help_fullscreen_icon { margin-right: 8px }
+.help_close_icon { margin-right: 20px }
+
 div.help_section_select {
 	font-weight : bold;
 	font-size: 120%;
-	background-color : #E7E9EA;
-	color: black;
+	background: #e7e9ea;
+	color: #000;
 	width: 100%;
-	margin: 2px;
+	padding: 2px;
 }
+
 div.help_sections {
-	width : 360px;
+	width: 360px;
 	padding:  2px;
-	background-color: #AAC9E9;
-	max-height : 95%;
+	background: #aac9e9;
 	overflow: auto;
-	height: 400px;
+	height: 100%;
 }
+
 div.help_section {
 	margin: 5px;
 	padding: 5px;
-	background-color: white;
-	color: black;
+	background: #fff;
+	color: #000;
 }
 
 #site_report {text-align: center}
@@ -1955,7 +1953,13 @@ textarea#editpost2 {
 .subcomment { margin-left: 10px}
 
 /* Help box*/
-div.commentsedithelp { background: #ffcfcf; color: #2d2d2d; border: 1px solid #ff0000; text-align: center; font-weight: bold}
+div.commentsedithelp { 
+	background: #ffcfcf; 
+	color: #2d2d2d; 
+	border: 1px solid #ff0000; 
+	text-align: center; 
+	font-weight: bold;
+	}
 
 /***** Categories *****/
 
@@ -1974,30 +1978,52 @@ td.categobjectsdataeven,
 td.categobjectsdataodd {}
 
 .catname {}
-.catblock {}
-.catlists {}
+.catblock {
+	padding: 5px;
+	margin-bottom: 3px;
+	min-width: 100%;
+	}
+
+.cattitle {
+	padding: 3px 5px 9px 5px;
+	display:inline;
+	border-top: 1px solid #D7D7D7;
+	border-left: 1px solid #D7D7D7;
+	border-right: 1px solid #D7D7D7;
+	border-bottom: 1px solid #EDEDED;
+	background: #EDEDED;
+	}
+
+.catlists {
+	margin-top: 8px;
+	border: 1px solid #D7D7D7;
+	background: #EDEDED;
+	}
+
 .catlists:hover {}
-.cattitle {}
 .catlists a.link {}
 .catlists a.link:hover {}
 
 .catfeatures {
-	margin-left: 0;
+	margin: 5px;
 	padding: 0;
-	font-weight: bold;
-	list-style: none}
+	list-style: none;
+	}
 
 ul.catfeatures li {}
 
 .catitems {
-	margin-left: 0;
+	margin-left: 10px;
 	padding: 0;
 	font-weight: bold;
-	list-style: none}
+	list-style: none;
+	}
 
 ul.catitems li {
 	display: inline;
-	margin-right: 7px}
+	margin-right: 7px;
+	white-space : nowrap;
+	}
 
 ul.catitems li a.link {}
 

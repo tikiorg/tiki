@@ -1,4 +1,3 @@
-{* start ************ Edit Form ***************}
 <form action="tiki-user_tasks.php" method="post">
 
 <input type="hidden" name="taskId" value="{$taskId|escape}" />
@@ -264,7 +263,3 @@
   </tr>
 </table>
 </form>
-
-{include file=tiki-edit_help.tpl}
-{* end ************ Edit Form ***************}
-

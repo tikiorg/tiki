@@ -485,4 +485,3 @@ function searchrep() {
 </form>
 <br />
 {include file='tiki-page_bar.tpl'}
-{include file='tiki-edit_help.tpl'}

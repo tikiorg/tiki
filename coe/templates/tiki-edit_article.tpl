@@ -327,5 +327,3 @@
 </form>
 
 <br />
-
-{include file=tiki-edit_help.tpl}
