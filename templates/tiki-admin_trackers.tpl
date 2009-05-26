@@ -130,7 +130,7 @@
 <tr class="formcolor">
 	<td><label for="autoCreateGroup">{tr}Create a group for each item{/tr}</label></td>
 	<td>
-		<input type="checkbox" id="autoCreateGroup" name="autoCreateGroup" {if $info.autoCreateGroup eq 'y' }checked="checked"{/if}  onclick="toggleTrTd('autoCreateGroupOptions');toggleTrTd('autoCreateGroupOptions2');toggleTrTd('autoCreateGroupOptions3');"/>
+		<input type="checkbox" id="autoCreateGroup" name="autoCreateGroup" {if $info.autoCreateGroup eq 'y' }checked="checked"{/if}  onclick="toggleTrTd('autoCreateGroupOptions');toggleTrTd('autoCreateGroupOptions2');toggleTrTd('autoCreateGroupOptions3');toggleTrTd('autoCreateGroupOptions4');"/>
 	</td>
 <tr class="formcolor" id="autoCreateGroupOptions"{if $info.autoCreateGroup ne 'y' and $prefs.javascript_enabled eq 'y'} style="display:none;"{/if}>
 	<td></td>
@@ -152,7 +152,13 @@
 <tr class="formcolor" id="autoCreateGroupOptions3"{if $info.autoCreateGroup ne 'y' and $prefs.javascript_enabled eq 'y'} style="display:none;"{/if}>
 	<td></td>
 	<td><label for="autoAssignCreatorGroupDefault">{tr}and it becomes his default group{/tr}</label>
-		<input type="checkbox" name="autoAssignCreatorGroupDefault" id="autoAssignCreatorGroupDefaujlt" {if $info.autoAssignCreatorGroupDefault eq 'y'}checked="checked"{/if} />
+		<input type="checkbox" name="autoAssignCreatorGroupDefault" id="autoAssignCreatorGroupDefault" {if $info.autoAssignCreatorGroupDefault eq 'y'}checked="checked"{/if} />
+	</td>
+</tr>
+<tr class="formcolor" id="autoCreateGroupOptions4"{if $info.autoCreateGroup ne 'y' and $prefs.javascript_enabled eq 'y'} style="display:none;"{/if}>
+	<td></td>
+	<td><label for="autoAssignGroupItem">{tr}and it becomes the new item group creator{/tr}</label>
+		<input type="checkbox" name="autoAssignGroupItem" id="autoAssignGroupItem" {if $info.autoAssignGroupItem eq 'y'}checked="checked"{/if} />
 	</td>
 </tr>
 {/if}
