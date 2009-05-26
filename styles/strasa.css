@@ -274,8 +274,6 @@ ul.jumplinks a:active {
 /*	height: 70%;*/
 	padding-top: 40px;
 	padding-bottom: 40px}
-	
-*:first-child+html #middle {padding-top: 65px}
 
 #c1c2 {background: #fff}
 #c1c2 #wrapper {}
@@ -404,11 +402,6 @@ div#tiki-bot {}
 /* Site Header & Identity */
 #header-top {
 	color: #fff;
-	height: 97px;
-	background: #214d68 url(strasa/headerbg.jpg) repeat-x 0 100%}
-
-#header-top[id] {
-	min-height: 108px
 }
 
 #siteheader {
@@ -419,20 +412,22 @@ div#tiki-bot {}
 	margin: 0}
 
 #customcode, #customcodewith_ad {
-	position: absolute;
-	width: 964px;
-	margin: auto}
+	background: #214d68 url(strasa/headerbg.jpg) repeat-x 0 100%;
+}
 
 #topbar_custom_code {
 	margin: 0 58px;
 }
 	
 div#sioptions {
-	margin: 0 58px;
-	overflow: hidden;
+	background: #214d68 url(strasa/headerbg.jpg) repeat-x 0 100%;
+	padding: 0 58px;
 }
 
-#sioptionscentered {text-align: center}
+#sioptionscentered {
+	text-align: center;
+	background: #214d68 url(strasa/headerbg.jpg) repeat-x 0 100%;
+}
 
 div.floatright {
 	float: right;
@@ -470,7 +465,7 @@ div#sitead {margin: auto}
 	padding: 0;
 	background: #fff url(strasa/loginlong.jpg) 0 0 no-repeat}
 
-*:first-child+html #siteloginbar {max-width: 650px}
+*:first-child+html #siteloginbar {text-align: right}
 
 #siteloginbar a,
 #siteloginbar a:visited,
