@@ -218,6 +218,7 @@ function isWindows() {
 class Smarty_Tikiwiki_Installer extends Smarty {
 
 	function Smarty_Tikiwiki_Installer() {
+		parent::Smarty();
 		$this->template_dir = "templates/";
 		$this->compile_dir = "templates_c/";
 		$this->config_dir = "configs/";

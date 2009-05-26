@@ -89,6 +89,11 @@ input[type=submit]:active,
 span.highlight a:link,
 span.highlight a:visited {  }
 
+span.highlight {
+	background: aqua;
+	padding: 0 !important;
+	margin: 0}
+
 div.iconmenu {display: inline}
 select[multiple] {height: 10em}
 label {cursor: pointer}
@@ -667,21 +672,26 @@ h3.box-title {
 .box-title a,
 .box-title a:link {}
 
-* html h3.box-title {position: static}
+* html h3.box-title {
+	position: static;
+	padding-right: 18px}
 
-.moduleflip {
+.moduleflip,
+.wikitext .box-title span img.flipmodimage {
 	display: none !important;
 	position: absolute;
 	right: 0;
 	top: 0}
 
-* html .moduleflip {
+* html .moduleflip,
+* html .wikitext .box-title span img.flipmodimage {
 	position: static;
 	float: right;
 	margin-top: -16px}
 
 * html .moduleflip,
-.box:hover .moduleflip {display: block !important}
+.box:hover .moduleflip,
+.wikitext .box:hover .box-title span img.flipmodimage {display: block !important}
 
 .box:hover img.flipmodimage {border: 1px solid transparent}
 * html img.flipmodimage {border: none}
@@ -695,6 +705,7 @@ h3.box-title {
 .box-data table {width: 100%}
 * html .box-data table {width: 95%}
 .box-data a.linkmenu {display: block}
+
 .box-data ol,
 .box-data ul {padding-right: .6em}
 
@@ -722,10 +733,13 @@ h3.box-title {
 	height: 16px}
 	
 /* MiniChat  */
+div.minichatdiv {
+	font-size: .9em;
+	overflow: auto}
+
 div.box-minichat {width: 100%}
 div.minichatchans {overflow: auto}
 .minichat {overflow: auto}
-div.minichatdiv {overflow: auto}
 
 /* mod-switch_lang */
 .box-switch_lang .box-data img {
@@ -801,9 +815,8 @@ div.minichatdiv {overflow: auto}
 div.simplebox {
 	color: green;
 	background: silver;
-	border: 1px solid green}
-
-.highlight {background: aqua}
+	border: 1px solid green;
+	padding: 3px}
 
 /***** Tables, Tabs ****/
 /** Tables **/
@@ -823,7 +836,6 @@ table.admin {
 
 table.normalnoborder {width: 100%}
 table.admin tr td div#page-bar {}
-
 td {vertical-align: top}
 
 td.normal,
@@ -839,7 +851,6 @@ td.form,
 	vertical-align: top}
 
 * html td {font-size: 11px}
-th {}
 
 table.email {}
 table.email td.body {}
@@ -870,7 +881,7 @@ td.even {
 	border-collapse: collapse}
 
 /* Headings */
-th, table.normal td.heading {text-align: center}
+th, td.heading {text-align: center}
 
 form.admin {}
 form.admin fieldset {}
@@ -925,6 +936,9 @@ td.form {padding: 0.2em}
 	
 [class].tabinactive {top: -2px !important}
 
+.tabinactive a,
+.tabinactive a:visited {}
+
 .tabcontent {
 	z-index: 1;
 	position: relative;
@@ -964,8 +978,6 @@ div.description {display: block}
 	float: right;
 	font-size: small}
 
-span.categpath {display: block}
-a.categpath {display: inline}
 .wikiactions {white-space: nowrap !important}
 
 .wikiactions .icons,
@@ -1026,14 +1038,7 @@ table.wikiplugin-split {
 	clear: both}
 
 table.wikiplugin-split .codelisting {width: 95%}
-div.box-minichat {width: 100%}
-div.minichatchans {overflow: auto}
-.minichat {overflow: auto}
 
-div.minichatdiv {
-	font-size: .9em;
-	overflow: auto}
-	
 /* wikiplugin_footnotearea */
 .footnotearea {
 	margin-top: 2em;
@@ -1265,10 +1270,12 @@ body.tiki_blogs .post .postfooter {
 body.tiki_forums table.normal {margin: auto}
 #forumpost {display: none}
 #forumpostopen {display: block}
-.post {width: 100%}
+.post {/*width: 100%*/}
 
 .post .postbody {
 	clear: both;
+	/*width: 100%;
+	min-width: 100%;*/
 	margin: 0;
 	margin-top: 5px;
 	padding: 0}
@@ -1279,9 +1286,9 @@ body.tiki_forums table.normal {margin: auto}
 	float: left;
 	padding: 0 3px 3px 3px;
 	margin: 0;
-	width: 100%;
+	/*width: 100%;
 	min-width: 100%;
-	height: 100%;
+	height: 100%;*/
 	text-align: left}
 	
 .post .postbody .content p {}
@@ -1297,6 +1304,11 @@ body.tiki_forums table.normal {margin: auto}
 .postbody-title .title h2 {}
 .postbody-title .title h3 {  }
 .post .postbody-title .title a.link {}
+
+.title .freetaglist,
+.title a.freetag,
+.title a.freetag:visited {/*color: #fff*/}
+
 .postbody-title .title br.clear {}
 .post .author_actions {}
 
@@ -1316,7 +1328,7 @@ body.tiki_forums table.normal {margin: auto}
 .commentStyle_headers .author_info {float: left}
 .post .postbody-title .actions {float: right}
 
-.postbody-content {min-width: 100%; margin: 5px}
+.postbody-content {margin: 5px}
 .post .postbody .attachments {
 	clear: both;
 	margin-top: 5px}
@@ -1574,9 +1586,12 @@ div.multiselect div.selection:hover {border: 1px solid #80B1E2}
 
 	
 /***** Categories, Tags *****/
+.treetitle {}
+.treenode {}
+span.categpath {display: block}
+a.categpath {display: inline}
 table.tcategpath {}
 td.tdcategpath {}
-.categpath {}
 table.subcats {}
 td.tdsubcat {}
 .categlink {}
@@ -1604,10 +1619,11 @@ td.categobjectsdataodd {}
 
 .catfeatures li {
 	display: inline;
-	margin-right: 7px}
+	margin-right: 7px;
+	text-transform: capitalize;}
 
 .catitems {
-	margin-left: 0;
+	margin-left: 15px;
 	padding: 0;
 	list-style: none}
 

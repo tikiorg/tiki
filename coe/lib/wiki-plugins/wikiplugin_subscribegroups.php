@@ -95,16 +95,16 @@ function wikiplugin_subscribegroups($data, $params) {
 	if (!empty($_REQUEST['unassign']) && isset($userGroups[$group])) {
 		$userlib->remove_user_from_group($user, $group);
 	}
+	$userGroups = $userlib->get_user_groups_inclusion($user);
 	if (!empty($_REQUEST['default']) && isset($userGroups[$_REQUEST['default']])) {
 		$userlib->set_default_group($user, $_REQUEST['default']);
 		global $group;
 		$group = $_REQUEST['default'];
-		if (isset($urldefault)) {
-			header("Location: $urldefault");
+		if (isset($defaulturl)) {
+			header("Location: $defaulturl");
 			die;
 		}
 	}
-	$userGroups = $userlib->get_user_groups_inclusion($user);
 	if (isset($userGroups['Anonymous'])) {
 		unset($userGroups['Anonymous']);
 	}
