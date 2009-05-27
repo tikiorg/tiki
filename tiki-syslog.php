@@ -56,4 +56,3 @@ $smarty->assign_by_ref('cant', $list['cant']);
 $smarty->assign_by_ref('maxRecords', $maxRecords);
 $smarty->assign('mid', 'tiki-syslog.tpl');
 $smarty->display('tiki.tpl');
-?>

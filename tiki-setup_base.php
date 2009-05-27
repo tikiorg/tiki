@@ -528,5 +528,3 @@ $smarty->assign("tikidomain", $tikidomain);
 $smarty->assign('debugconsole_style',
 	isset($_COOKIE["debugconsole"]) && ($_COOKIE["debugconsole"] == 'o') ? 'display:block;' : 'display:none;'
 );
-
-?>

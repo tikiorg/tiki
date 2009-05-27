@@ -224,5 +224,3 @@ $smarty->assign('searchNoResults', !isset($_REQUEST['words']) );       // false 
 // $smarty->assign('searchStyle', 'menu');           // buttons is default
 // $smarty->assign('searchOrientation', 'horiz');    // vert is default 
 $smarty->display("tiki.tpl");
-
-?>

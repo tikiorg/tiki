@@ -208,5 +208,3 @@ $smarty->assign('mid', 'tiki-searchindex.tpl');
 // $smarty->assign('searchStyle', 'menu');           // buttons is default
 // $smarty->assign('searchOrientation', 'horiz');    // vert is default 
 $smarty->display("tiki.tpl");
-
-?>
