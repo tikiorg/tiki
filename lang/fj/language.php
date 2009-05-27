@@ -8270,4 +8270,3 @@ $lang=Array(
 "The uploaded file ist not recognized as a image" => "The uploaded file is not recognized as an image",
 "No url indicated" => "No URL indicated",
 "###end###"=>"###end###");
-?>

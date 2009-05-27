@@ -9335,4 +9335,3 @@ $lang=Array(
 "Top pages" => "最熱門頁面",
 "Last pages" => "最新頁面",
 "###end###"=>"###end###");
-?>

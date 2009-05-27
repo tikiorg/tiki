@@ -9709,4 +9709,3 @@ $lang=Array(
 "Tiki RSS feed for the wiki pages" => "Tiki RSS-invoer voor de wiki pagina\\'s",
 "Last modifications to the Wiki." => "Laatste wijzigingen aan het Wiki.",
 "###end###"=>"###end###");
-?>

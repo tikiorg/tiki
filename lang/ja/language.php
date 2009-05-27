@@ -9215,4 +9215,3 @@ $lang=Array(
 "Top pages" => "トップ・ページ",
 "Last pages" => "最近のページ",
 "###end###"=>"###end###");
-?>

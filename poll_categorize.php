@@ -37,4 +37,3 @@ if ($prefs['feature_polls'] == 'y') {
 		$polllib->poll_categorize($catObjectId,$_REQUEST["olpoll"],	$olpoll['title']);
 	}
 }
-?>

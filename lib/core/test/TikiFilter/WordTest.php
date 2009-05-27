@@ -11,5 +11,3 @@ class TikiFilter_WordTest extends TikiTestCase
 		$this->assertEquals( '123ab_c', $filter->filter('-123 ab_c') );
 	}
 }
-
-?>

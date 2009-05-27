@@ -10207,4 +10207,3 @@ $lang=Array(
 "Error deleting the file" => "Erro ao deletar o arquivo",
 "The page is empty" => "A página está vazia",
 "###end###"=>"###end###");
-?>

@@ -199,5 +199,3 @@ class DCSLib extends TikiLib {
 }
 global $dbTiki;
 $dcslib = new DCSLib($dbTiki);
-
-?>

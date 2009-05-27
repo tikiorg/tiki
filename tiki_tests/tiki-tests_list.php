@@ -70,7 +70,4 @@ $smarty->assign("files_number",$files_number);
 $smarty->assign("files_per_page",$files_per_page);
 $smarty->assign('title',tra("TikiTest List"));
 $smarty->assign("mid","tiki-tests_list.tpl");
-
 $smarty->display("tiki.tpl");
-
-?>

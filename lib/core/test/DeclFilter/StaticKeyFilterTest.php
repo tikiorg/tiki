@@ -35,5 +35,3 @@ class DeclFilter_StaticKeyFilterTest extends TikiTestCase
 		$this->assertEquals( $data['foo'], '123abc' );
 	}
 }
-
-?>

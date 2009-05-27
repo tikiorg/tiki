@@ -8263,4 +8263,3 @@ $lang=Array(
 "Colored text" => "Coloured text",
 "%m/%d/%Y [%H:%M]" => "%d/%m/%Y [%H:%M]",
 "###end###"=>"###end###");
-?>

@@ -774,5 +774,3 @@ class FileGalLib extends TikiLib {
 }
 global $dbTiki;
 $filegallib = new FileGalLib($dbTiki);
-
-?>

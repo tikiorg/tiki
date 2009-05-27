@@ -10095,4 +10095,3 @@ $lang=Array(
 "Top pages" => "热门页面",
 "Last pages" => "最近页面",
 "###end###"=>"###end###");
-?>

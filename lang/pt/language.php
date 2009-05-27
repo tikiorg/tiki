@@ -9710,4 +9710,3 @@ $lang=Array(
 "Top pages" => "Páginas mais populares",
 "Last pages" => "Páginas recentes",
 "###end###"=>"###end###");
-?>

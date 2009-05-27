@@ -66,5 +66,3 @@ if (isset($_FILES['filepath']) && is_uploaded_file($_FILES['filepath']['tmp_name
 	fclose ($fw);
 	fclose ($fw2);
 }
-
-?>

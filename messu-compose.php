@@ -234,5 +234,3 @@ ask_ticket('messu-compose');
 include_once ('tiki-mytiki_shared.php');
 
 $smarty->display("tiki.tpl");
-
-?>

@@ -98,5 +98,3 @@ foreach($urls as $url) {
 	}
 	$count++;
 }
-
-?>

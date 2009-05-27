@@ -15,5 +15,3 @@ function post_20090416_plugin_security_tiki( $installer )
 		$installer->query( "DELETE FROM tiki_preferences WHERE name = 'plugin_fingerprints'" );
 	}
 }
-
-?>

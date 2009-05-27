@@ -9,5 +9,3 @@ abstract class DeclFilter_UnsetRule implements DeclFilter_Rule
 		unset($data[$key]);
 	}
 }
-
-?>

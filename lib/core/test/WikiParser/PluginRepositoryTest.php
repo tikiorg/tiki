@@ -36,5 +36,3 @@ class WikiParser_PluginRepositoryTest extends TikiTestCase
 		$this->assertEquals( array( 'foo' ), $repository->getList() );
 	}
 }
-
-?>

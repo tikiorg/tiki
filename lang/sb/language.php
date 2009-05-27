@@ -9377,4 +9377,3 @@ $lang=Array(
 "Top pages" => "Olketa Top pej",
 "Last pages" => "Olketa las pej",
 "###end###"=>"###end###");
-?>

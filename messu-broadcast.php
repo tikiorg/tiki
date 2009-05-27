@@ -166,5 +166,3 @@ include_once ('tiki-section_options.php');
 
 include_once ('tiki-mytiki_shared.php');
 $smarty->display("tiki.tpl");
-
-?>

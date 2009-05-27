@@ -9,5 +9,3 @@ class TikiFilter_Word extends Zend_Filter_PregReplace
 		parent::__construct( '/\W+/', '' );
 	}
 }
-
-?>

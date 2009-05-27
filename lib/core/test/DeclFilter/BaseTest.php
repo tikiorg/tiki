@@ -74,5 +74,3 @@ class DeclFilter_BaseTest extends TikiTestCase
 		$this->assertEquals( $data['hello'], '123' );
 	}
 }
-
-?>

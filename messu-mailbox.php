@@ -199,5 +199,3 @@ $smarty->assign("mootab",'y');
 }
 $smarty->assign('mid', 'messu-mailbox.tpl');
 $smarty->display("tiki.tpl");
-
-?>

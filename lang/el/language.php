@@ -8439,4 +8439,3 @@ $lang=Array(
 "Last pages" => "Τελευταίες σελίδες",
 "Last modifications to the Wiki." => "Τελευταίες αλλαγές στο wiki",
 "###end###"=>"###end###");
-?>

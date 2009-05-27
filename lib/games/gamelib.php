@@ -43,5 +43,3 @@ class GameLib extends TikiLib {
 }
 global $dbTiki;
 $gamelib = new GameLib($dbTiki);
-
-?>

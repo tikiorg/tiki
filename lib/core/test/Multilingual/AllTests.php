@@ -17,5 +17,3 @@ class Multilingual_AllTests
         return $suite;
     }
 }
-
-?>
