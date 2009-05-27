@@ -749,5 +749,3 @@ class Tiki_Profile_Object
 			return $this->data['data'][$name];
 	} // }}}
 }
-
-?>

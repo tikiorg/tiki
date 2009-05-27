@@ -1828,5 +1828,3 @@ class Tiki_Profile_ValueMapConverter // {{{
 		}
 	}
 } // }}}
-
-?>

@@ -440,8 +440,5 @@ class RegistrationLib extends TikiLib {
         ask_ticket('register');
     }
 }
-  
 global $dbTiki;
 $registrationlib= new RegistrationLib($dbTiki);
-
-?>

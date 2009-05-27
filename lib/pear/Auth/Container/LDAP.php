@@ -762,5 +762,3 @@ class Auth_Container_LDAP extends Auth_Container
     // }}}
 
 }
-
-?>
