@@ -172,5 +172,3 @@ class BookmarkLib extends TikiLib {
 }
 global $dbTiki;
 $bookmarklib = new BookmarkLib($dbTiki);
-
-?>

@@ -690,5 +690,3 @@ $show_expdate, $show_reads, $show_size, $show_topline, $show_subtitle, $show_lin
 
 global $dbTiki;
 $artlib = new ArtLib($dbTiki);
-
-?>
