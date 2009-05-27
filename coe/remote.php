@@ -175,5 +175,3 @@ function get_user_info($params) {
 	$ret['email'] = new XML_RPC_Value($email, "string");
 	return new XML_RPC_Response(new XML_RPC_Value($ret, "struct"));
 }
-
-?>

@@ -89,6 +89,4 @@ class MapLib {
 	}
 	
 }
-
 $maplib = new MapLib();
-?>

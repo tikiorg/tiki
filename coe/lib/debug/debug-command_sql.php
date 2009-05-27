@@ -108,5 +108,3 @@ class DbgSQLQuery extends DebuggerCommand {
 function dbg_command_factory_sql() {
 	return new DbgSQLQuery();
 }
-
-?>

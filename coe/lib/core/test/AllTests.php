@@ -34,5 +34,3 @@ class AllTests
         return $suite;
     }
 }
-
-?>

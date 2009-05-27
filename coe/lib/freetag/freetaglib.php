@@ -1326,7 +1326,5 @@ function get_objects_with_tag_combo($tagArray, $type='', $thisUser = '', $offset
 		$this->cleanup_tags();
 	}
 }
-
 global $dbTiki;
 $freetaglib = new FreetagLib($dbTiki);
-?>

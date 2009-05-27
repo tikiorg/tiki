@@ -109,5 +109,3 @@ include_once ('tiki-section_options.php');
 include_once ('tiki-mytiki_shared.php');
 $smarty->assign('mid', 'messu-read.tpl');
 $smarty->display("tiki.tpl");
-
-?>

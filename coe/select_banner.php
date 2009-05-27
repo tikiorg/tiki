@@ -29,5 +29,3 @@ if ($prefs['feature_banners'] != 'y') {
 }
 $banner = $bannerlib->select_banner($_REQUEST["zone"]);
 print ($banner);
-
-?>

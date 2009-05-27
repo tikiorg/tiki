@@ -21,5 +21,3 @@ class JitFilter_Element
 		return $this->filter( $name );
 	}
 }
-
-?>

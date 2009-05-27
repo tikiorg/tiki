@@ -813,5 +813,3 @@ class CalendarLib extends TikiLib {
 }
 global $dbTiki;
 $calendarlib = new CalendarLib($dbTiki);
-
-?>

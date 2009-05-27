@@ -22,5 +22,3 @@ class DeclFilter_KeyPatternUnsetRule extends DeclFilter_UnsetRule
 		return false;
 	}
 }
-
-?>

@@ -58,5 +58,3 @@ class WikiParser_PluginArgumentParser
 		return $arguments;
 	}
 }
-
-?>

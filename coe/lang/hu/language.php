@@ -9451,4 +9451,3 @@ $lang=Array(
 "Top pages" => "Leglátogatottabb oldalak",
 "Last pages" => "Legutóbbi oldalak",
 "###end###"=>"###end###");
-?>

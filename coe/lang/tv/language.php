@@ -8314,4 +8314,3 @@ $lang=Array(
 "The passwords don't match" => "Se pau te password",
 "You are not permitted to remove someone else\\'s post!" => "E se talia ke fakaseai ne koe a te post ate suaa tino!",
 "###end###"=>"###end###");
-?>

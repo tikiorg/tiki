@@ -9144,4 +9144,3 @@ $lang=Array(
 "Top pages" => "Najlepsze strony",
 "Last pages" => "Ostatnie strony",
 "###end###"=>"###end###");
-?>

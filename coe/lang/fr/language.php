@@ -9208,4 +9208,3 @@ $lang=Array(
 "TikiTest Replay" => "Rejouer TikiTest",
 "The page is empty" => "La page est vide",
 "###end###"=>"###end###");
-?>

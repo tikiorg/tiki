@@ -196,5 +196,3 @@ class CommLib extends TikiLib {
 }
 global $dbTiki;
 $commlib = new CommLib($dbTiki);
-
-?>

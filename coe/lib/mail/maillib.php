@@ -107,5 +107,3 @@ function tiki_send_admin_mail( $email, $recipientName, $subject, $textBody ) {
 
 	$mail->send();
 }
-
-?>

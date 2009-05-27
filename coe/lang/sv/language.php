@@ -9510,4 +9510,3 @@ $lang=Array(
 "Top pages" => "Bästa sidor",
 "Last pages" => "Senaste sidor",
 "###end###"=>"###end###");
-?>

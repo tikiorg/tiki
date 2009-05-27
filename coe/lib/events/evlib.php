@@ -327,5 +327,3 @@ class EvLib extends TikiLib {
 }
 global $dbTiki;
 $evlib = new EvLib($dbTiki);
-
-?>

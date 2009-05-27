@@ -59,5 +59,3 @@ if ($prefs['feature_categories'] == 'y') {
 	$smarty->assign_by_ref('categories', $categories["data"]);
 
 }
-
-?>

@@ -40,4 +40,3 @@ while ($r = mysql_fetch_row($results)) {
 }
 fclose($fmif);
 fclose($fmid);
-?>

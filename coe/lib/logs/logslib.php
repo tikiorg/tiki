@@ -1081,5 +1081,3 @@ class LogsLib extends TikiLib {
 }
 global $dbTiki;
 $logslib = new LogsLib($dbTiki);
-
-?>

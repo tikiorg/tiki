@@ -10902,4 +10902,3 @@ $lang=Array(
 "Tiki RSS feed for the wiki pages" => "Alimentació RSS del Tiki per a planes wiki",
 "Last modifications to the Wiki." => "Darreres modificacions al Wiki.",
 "###end###"=>"###end###");
-?>

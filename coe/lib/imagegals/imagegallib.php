@@ -2224,5 +2224,3 @@ $thumbSizeY,$public,0,$visible,$sortorder,$sortdirection,$galleryimage,(int)$par
 global $dbTiki;
 global $imagegallib;
 $imagegallib = new ImageGalsLib($dbTiki);
-
-?>

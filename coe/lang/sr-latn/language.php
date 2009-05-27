@@ -9356,4 +9356,3 @@ $lang=Array(
 "Top pages" => "Top strane",
 "Last pages" => "Zadnje strane",
 "###end###"=>"###end###");
-?>

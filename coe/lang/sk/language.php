@@ -9159,4 +9159,3 @@ $lang=Array(
 "Top pages" => "Top stránky",
 "Last pages" => "Posledné stránky",
 "###end###"=>"###end###");
-?>

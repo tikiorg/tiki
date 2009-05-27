@@ -9377,4 +9377,3 @@ $lang=Array(
 "Top pages" => "Topp sider",
 "Last pages" => "Siste sider",
 "###end###"=>"###end###");
-?>

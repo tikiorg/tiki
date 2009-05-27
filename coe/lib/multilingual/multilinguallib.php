@@ -733,4 +733,3 @@ class MultilingualLib extends TikiLib {
 }
 global $dbTiki;
 $multilinguallib = new MultilingualLib($dbTiki);
-?>

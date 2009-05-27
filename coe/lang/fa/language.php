@@ -9863,4 +9863,3 @@ $lang=Array(
 "Tiki RSS feed for the wiki pages" => "تغذيه‌ي RSS تيكي براي صفحات ويكي",
 "Last modifications to the Wiki." => "آخرين تغييرات ويكي",
 "###end###"=>"###end###");
-?>

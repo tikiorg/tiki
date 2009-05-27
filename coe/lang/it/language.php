@@ -9288,4 +9288,3 @@ $lang=Array(
 "You are not permitted to remove someone else\\'s post!" => "Non hai il permesso di modificare il messaggio di un altro!",
 "No thread indicated" => "Nessun thread specificato",
 "###end###"=>"###end###");
-?>

@@ -45,7 +45,6 @@ $user_tiki   = 'myuser';
 $pass_tiki   = 'mypass';
 $dbs_tiki    = 'mytiki';
 $api_tiki    = 'adodb';
-?>
 
 ** Multi-tiki
 **************************************

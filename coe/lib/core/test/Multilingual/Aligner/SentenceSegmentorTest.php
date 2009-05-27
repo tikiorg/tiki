@@ -112,5 +112,3 @@ class Multilingual_Aligner_SentenceSegmentorTest extends TikiTestCase
                           "Got      Sentences: $got_sentences_as_string\n");      
    }
 }
-
-?>

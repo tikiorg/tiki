@@ -64,5 +64,3 @@ class DbgFeatures extends DebuggerCommand {
 function dbg_command_factory_features() {
 	return new DbgFeatures();
 }
-
-?>

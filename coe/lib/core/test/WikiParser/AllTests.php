@@ -19,5 +19,3 @@ class WikiParser_AllTests
         return $suite;
     }
 }
-
-?>

@@ -36,5 +36,3 @@ class DeclFilter_KeyPatternUnsetTest extends TikiTestCase
 		$this->assertEquals( $data['foo'], '123abc' );
 	}
 }
-
-?>

@@ -1550,10 +1550,5 @@ class CategLib extends ObjectLib {
 	}
 	
 }
-
-
-
 global $dbTiki;
 $categlib = new CategLib($dbTiki);
-
-?>

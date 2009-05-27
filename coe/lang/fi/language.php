@@ -10136,4 +10136,3 @@ $lang=Array(
 "Tiki RSS feed for the wiki pages" => "RSS syöte sivuston sivuille",
 "Last modifications to the Wiki." => "Viimeiset muutokset sivustolla.",
 "###end###"=>"###end###");
-?>

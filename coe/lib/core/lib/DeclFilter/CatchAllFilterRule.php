@@ -22,5 +22,3 @@ class DeclFilter_CatchAllFilterRule extends DeclFilter_FilterRule
 		return $this->filter;
 	}
 }
-
-?>

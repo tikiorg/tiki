@@ -871,5 +871,3 @@ class FCKXmlDocument
 		$this->_CurrentNode->Value .= $data ;
 	}
 }
-
-?>

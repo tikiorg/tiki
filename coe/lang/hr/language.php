@@ -9229,4 +9229,3 @@ $lang=Array(
 "Top pages" => "Naj stranice",
 "Last pages" => "Zadnje stranice",
 "###end###"=>"###end###");
-?>

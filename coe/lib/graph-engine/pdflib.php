@@ -362,5 +362,3 @@ class PDFLib_GRenderer extends GRenderer // {{{1
 		return $size;
 	}
 } // }}}1
-
-?>
