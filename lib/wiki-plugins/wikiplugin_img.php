@@ -181,5 +181,3 @@ function wikiplugin_img( $data, $params, $offset, $parseOptions )
 
 	return $repl;
 }
-
-?>

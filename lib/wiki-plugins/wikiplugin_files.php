@@ -293,4 +293,3 @@ function wikiplugin_files($data, $params) {
 	$smarty->assign_by_ref('show_find', $showfind);
 	return '~np~'.$smarty->fetch('wiki-plugins/wikiplugin_files.tpl').'~/np~';
 }
-?>

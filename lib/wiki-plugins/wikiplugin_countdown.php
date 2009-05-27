@@ -70,5 +70,3 @@ function wikiplugin_countdown($data, $params) {
 	$ret = "$days ".tra("days").", $hours ".tra("hours").", $mins ".tra("minutes")." ".tra("and")." $secs ".tra("seconds")." $data";
 	return $ret;
 }
-
-?>

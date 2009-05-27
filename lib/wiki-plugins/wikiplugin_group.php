@@ -89,5 +89,3 @@ function wikiplugin_group($data, $params) {
 		
 	return $data;
 }
-
-?>

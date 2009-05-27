@@ -37,4 +37,3 @@ function wikiplugin_js($data, $params) {
 	}
 	return $ret;
 }
-?>

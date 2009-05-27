@@ -39,4 +39,3 @@ function wikiplugin_back($data, $params) {
     
     return $begin . $content  . $end;
 }
-?>

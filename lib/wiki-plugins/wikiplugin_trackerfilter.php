@@ -288,4 +288,3 @@ function wikiplugin_trackerFilter_get_filters($trackerId=0, $listfields='', $for
 	}
 	return $filters;
 }
-?>

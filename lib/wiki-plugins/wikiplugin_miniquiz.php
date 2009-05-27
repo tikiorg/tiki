@@ -164,5 +164,3 @@ function wikiplugin_miniquiz($data, $params) {
 	}
 	return $back;
 }
-
-?>
