@@ -1,4 +1,4 @@
-{title}{tr}Approve page changes in staging:{/tr} {$page|escape:"url"}{/title}
+{title}{tr}Approve page changes in staging:{/tr} {$page|escape}{/title}
 
 <div class="navbar">
 	{assign var=thispage value=$page|escape:url}
