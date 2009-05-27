@@ -113,5 +113,3 @@ include_once('tiki-section_options.php');
 // Display the template
 $smarty->assign('mid', 'tiki-newsletter_archives.tpl');
 $smarty->display("tiki.tpl");
-
-?>

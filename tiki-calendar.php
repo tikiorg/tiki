@@ -770,4 +770,3 @@ else {
 $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 $smarty->display("tiki.tpl");
-?>

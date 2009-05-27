@@ -126,5 +126,3 @@ include_once('fgal_listing_conf.php');
 
 $smarty->assign('mid', 'tiki-file_archives.tpl');
 $smarty->display("tiki.tpl");
-
-?>

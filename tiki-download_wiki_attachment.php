@@ -57,5 +57,3 @@ if ($info["path"]) {
 	header("Content-Length: ". $info[ "filesize" ] );
 	echo "$content";
 }
-
-?>

@@ -407,5 +407,3 @@ $installer = new Installer;
 $smarty->assign('db_requires_update', $installer->requiresUpdate());
 
 $smarty->display("tiki.tpl");
-
-?>

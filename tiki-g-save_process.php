@@ -37,5 +37,3 @@ header ('Content-type: text/xml');
 echo ('<?xml version="1.0"?>');
 $data = $processManager->serialize_process($_REQUEST['pid']);
 echo $data;
-
-?>

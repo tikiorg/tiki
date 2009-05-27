@@ -53,5 +53,3 @@ ask_ticket('sheet');
 // Display the template
 $smarty->assign('mid', 'tiki-history-sheets.tpl');
 $smarty->display("tiki.tpl");
-
-?>

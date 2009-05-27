@@ -163,5 +163,3 @@ $smarty->assign( 'sources', $sources );
 $smarty->assign( 'oldSources', $oldSources );
 
 ask_ticket('admin-inc-profiles');
-
-?>

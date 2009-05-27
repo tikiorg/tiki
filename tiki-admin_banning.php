@@ -129,5 +129,3 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 $smarty->assign('mid', 'tiki-admin_banning.tpl');
 $smarty->display("tiki.tpl");
-
-?>

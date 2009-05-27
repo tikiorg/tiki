@@ -259,5 +259,3 @@ if ($prefs['feature_actionlog'] == 'y') {
 // Display the template
 $smarty->assign('mid', 'tiki-list_gallery.tpl');
 $smarty->display("tiki.tpl");
-
-?>

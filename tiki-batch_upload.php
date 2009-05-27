@@ -291,5 +291,3 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 // Display the template
 $smarty->assign('mid', 'tiki-batch_upload.tpl');
 $smarty->display("tiki.tpl");
-
-?>

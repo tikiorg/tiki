@@ -65,5 +65,3 @@ ask_ticket('dir-ranking');
 // Display the template
 $smarty->assign('mid', 'tiki-directory_ranking.tpl');
 $smarty->display("tiki.tpl");
-
-?>

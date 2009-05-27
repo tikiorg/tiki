@@ -319,5 +319,3 @@ $smarty->assign('pdf_export', file_exists('lib/mozilla2ps/mod_urltopdf.php') ? '
 // Display the template
 $smarty->assign('mid', 'tiki-admin_structures.tpl');
 $smarty->display("tiki.tpl");
-
-?>

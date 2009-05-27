@@ -87,4 +87,3 @@ if (isset($_REQUEST["ogr2ogr"])) {
 }
 
 $smarty->assign('map_error', $map_error);
-?>

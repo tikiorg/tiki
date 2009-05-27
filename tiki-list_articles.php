@@ -166,5 +166,3 @@ ask_ticket('list-articles');
 // Display the template
 $smarty->assign('mid', 'tiki-list_articles.tpl');
 $smarty->display("tiki.tpl");
-
-?>

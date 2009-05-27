@@ -24,5 +24,3 @@ if($tiki_p_admin_banners != 'y') {
 // Display the template
 $smarty->assign('mid', 'tiki-edit_banner.tpl');
 $smarty->display("tiki.tpl");
-
-?>

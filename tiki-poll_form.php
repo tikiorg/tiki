@@ -52,5 +52,3 @@ ask_ticket('poll-form');
 $smarty->assign('title', $poll_info['title']);
 $smarty->assign('mid', 'tiki-poll_form.tpl');
 $smarty->display("tiki.tpl");
-
-?>

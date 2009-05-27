@@ -25,4 +25,3 @@ if (isset($prefs['gmap_key']) and strlen($prefs['gmap_key']) == '86') {
 	$smarty->assign('show_map','n');
 }
 ask_ticket('admin-inc-gmap');
-?>

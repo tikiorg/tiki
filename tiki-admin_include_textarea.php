@@ -244,5 +244,3 @@ if( isset($_REQUEST['plugin_alias']) && $pluginInfo = $tikilib->plugin_alias_inf
 
 $smarty->assign( 'plugins_alias', $pluginsAlias );
 $smarty->assign( 'plugins_real', $pluginsReal );
-
-?>

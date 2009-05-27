@@ -1410,4 +1410,3 @@ $smarty->assign('showtags', 'n');
 $smarty->assign('qtnum', '1');
 $smarty->assign('qtcycle', '');
 $smarty->display("tiki.tpl");
-?>

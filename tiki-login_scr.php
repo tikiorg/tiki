@@ -22,5 +22,3 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 $smarty->assign('mid', 'tiki-login.tpl');
 $smarty->display("tiki.tpl");
-
-?>

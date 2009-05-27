@@ -296,5 +296,3 @@ if (isset($_REQUEST["mapfile"])) {
 // Get templates from the templates/modules directory
 $smarty->assign('mid', 'map/tiki-map_edit.tpl');
 $smarty->display("tiki.tpl");
-
-?>

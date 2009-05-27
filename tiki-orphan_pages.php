@@ -11,4 +11,3 @@ $access->check_feature( array( 'feature_wiki', 'feature_listorphanPages' ) );
 
 $listpages_orphans = true;
 include('tiki-listpages.php');
-?>

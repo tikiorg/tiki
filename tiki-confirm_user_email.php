@@ -27,4 +27,3 @@ if (isset($_REQUEST['user']) && isset($_REQUEST['pass'])) {
 
 $smarty->assign('msg', tra('Problem. Try to log in again to receive new confirmation instructions.'));
 $smarty->display('error.tpl');
-?>

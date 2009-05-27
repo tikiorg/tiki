@@ -264,5 +264,3 @@ $smarty->assign('versions', $versions);
 
 $smarty->assign('mid', 'tiki-mods.tpl');
 $smarty->display("tiki.tpl");
-
-?>

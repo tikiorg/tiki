@@ -37,4 +37,3 @@ if (isset($_REQUEST["calprefs"])) {
 }
   	 
 ask_ticket('admin-inc-cal'); 	 
-?>

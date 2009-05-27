@@ -363,5 +363,3 @@ if (empty($myurl))
 	$myurl = 'tiki-calendar.php';
 $jscal_url = "$myurl?todate=%s";
 $smarty->assign('jscal_url', $jscal_url);
-//echo "view ".date('r', $viewstart).'-'.date('r', $viewend).'<br>'.'db '.date('r', $daystart).'-'.date('r', $dayend);
-?>
