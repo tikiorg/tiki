@@ -80,5 +80,3 @@ class TikiDate extends Date {
 		return $GLOBALS['_DATE_TIMEZONE_DATA'];
 	}
 }
-
-?>

@@ -482,5 +482,3 @@ class PEAR_Builder extends PEAR_Common
 
     // }}}
 }
-
-?>

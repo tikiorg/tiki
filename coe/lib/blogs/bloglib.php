@@ -479,5 +479,3 @@ class BlogLib extends TikiLib {
 }
 global $dbTiki;
 $bloglib = new BlogLib($dbTiki);
-
-?>

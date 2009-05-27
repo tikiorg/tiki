@@ -17,6 +17,11 @@ function wikiplugin_invite_info() {
 				'name' => tra('Default group'),
 				'description' => tra('Group'),
 			),
+			'itemId' => array(
+				'required' => false,
+				'name' => tra('Default group'),
+				'description' => tra('Group from the item group selector / creator field'),
+			),
 		)
 	);
 }
@@ -93,6 +98,14 @@ function wikiplugin_invite( $data, $params) {
 			if (!empty($_REQUEST['groups'])) $smarty->assign_by_ref('groups', $_REQUEST['groups']);
 			if (!empty($_REQUEST['message'])) $smarty->assign_by_ref('message', $_REQUEST['message']);
 		}	
+	}
+	if (!empty($_REQUEST['itemId'])) {
+		$params['itemId'] = $_REQUEST['itemId'];
+	}
+	if (!empty($params['itemId'])) {
+		global $trklib; include_once('lib/trackers/trackerlib.php');
+		$item = $trklib->get_tracker_item($params['itemId']);
+		$params['defaultgroup'] = $trklib->get_item_group_creator($item['trackerId'], $params['itemId']);
 	}
 	$smarty->assign_by_ref('params', $params);
 	$smarty->assign_by_ref('userGroups', $userGroups);

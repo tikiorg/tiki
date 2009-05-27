@@ -6,7 +6,13 @@ $force_no_compression = true;
 $skip = false;
 
 if ( isset($_GET['fileId']) && isset($_GET['thumbnail']) && isset($_COOKIE['PHPSESSID']) && count($_GET) == 2 ) {
+
+	$tikiroot = dirname($_SERVER['PHP_SELF']);
+	$session_params = session_get_cookie_params();
+	session_set_cookie_params($session_params['lifetime'],$tikiroot);
+	unset($session_params);
 	session_start();
+
 	if ( isset($_SESSION['allowed'][$_GET['fileId']]) ) {
 		include('db/tiki-db.php');
 		include('lib/tikidblib.php');

@@ -83,5 +83,3 @@ class rc4crypt {
 		return $cipher;
 	}
 }
-
-?>

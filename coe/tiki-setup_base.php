@@ -91,6 +91,9 @@ if ( isset($_GET['PHPSESSID']) && $_SERVER['REMOTE_ADDR'] == '127.0.0.1' ) {
 }
 if ( $prefs['sessions_silent'] == 'disabled' or !empty($_COOKIE) ) {
 	// enabing silent sessions mean a session is only started when a cookie is presented
+	$session_params = session_get_cookie_params();
+	session_set_cookie_params($session_params['lifetime'],$tikiroot);
+	unset($session_params);
 	session_start();
 }
 

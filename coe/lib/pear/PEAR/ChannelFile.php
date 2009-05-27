@@ -1612,4 +1612,3 @@ class PEAR_ChannelFile {
         return time();
     }
 }
-?>

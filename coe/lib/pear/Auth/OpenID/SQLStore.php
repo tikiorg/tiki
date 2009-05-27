@@ -565,5 +565,3 @@ class Auth_OpenID_SQLStore extends Auth_OpenID_OpenIDStore {
         return $num;
     }
 }
-
-?>

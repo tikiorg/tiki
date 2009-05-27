@@ -446,5 +446,3 @@ class AdminLib extends TikiLib {
 }
 global $dbTiki;
 $adminlib = new AdminLib($dbTiki);
-
-?>

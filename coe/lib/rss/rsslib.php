@@ -673,5 +673,3 @@ class RSSLib extends TikiLib {
 }
 global $dbTiki, $rsslib;
 $rsslib = new RSSLib($dbTiki);
-
-?>

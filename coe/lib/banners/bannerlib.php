@@ -292,5 +292,3 @@ class BannerLib extends TikiLib {
 }
 global $dbTiki;
 $bannerlib = new BannerLib($dbTiki);
-
-?>

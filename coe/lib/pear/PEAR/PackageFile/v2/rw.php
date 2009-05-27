@@ -1600,4 +1600,3 @@ class PEAR_PackageFile_v2_rw extends PEAR_PackageFile_v2
         unset($this->_packageInfo['changelog']);
     }
 }
-?>

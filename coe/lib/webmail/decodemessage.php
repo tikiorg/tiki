@@ -333,5 +333,3 @@ class DecodeMessage{
     return ereg_replace("[<>]","",$this->Headers("Message-ID"));
   }
 };
-
-?>

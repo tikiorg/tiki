@@ -250,4 +250,3 @@ class PEAR_Installer_Role
         return true;
     }
 }
-?>

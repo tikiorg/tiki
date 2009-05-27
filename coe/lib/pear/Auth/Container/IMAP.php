@@ -207,4 +207,3 @@ class Auth_Container_IMAP extends Auth_Container
     // }}}
 
 }
-?>

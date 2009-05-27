@@ -480,6 +480,4 @@ class Net_URL
 
         return $this->options[$optionName];
     }
-
 }
-?>

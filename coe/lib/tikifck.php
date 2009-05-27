@@ -69,4 +69,3 @@ class TikiFCK {
     return strtr($valueToEncode, $chars);
   }
 }
-?>

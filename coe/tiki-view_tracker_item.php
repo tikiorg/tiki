@@ -639,7 +639,7 @@ foreach($xfields["data"] as $i=>$array) {
 
 if (isset($tracker_info["authorgroupfield"])) {
 	$tracker_info['authorgroup'] = $trklib->get_item_value($_REQUEST["trackerId"],$_REQUEST["itemId"],$tracker_info["authorgroupfield"]);
-	if ($tracker_info['authorgroup'] == $group) {
+	if (in_array($tracker_info['authorgroup'], $tikilib->get_user_groups($user))) {
 		$tiki_p_modify_tracker_items = 'y';
 		$smarty->assign("tiki_p_modify_tracker_items","y");
 		$tiki_p_attach_trackers = 'y';

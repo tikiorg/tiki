@@ -41,6 +41,10 @@ if( file_exists( 'db/lock' ) ) {
 	createPage($title,$content);
 }
 
+$tikiroot = dirname($_SERVER['PHP_SELF']);
+$session_params = session_get_cookie_params();
+session_set_cookie_params($session_params['lifetime'],$tikiroot);
+unset($session_params);
 session_start();
 
 if ( file_exists( 'db/local.php' ) ) {

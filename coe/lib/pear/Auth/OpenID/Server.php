@@ -1746,5 +1746,3 @@ class Auth_OpenID_Server {
         return $this->decoder->decode($query);
     }
 }
-
-?>

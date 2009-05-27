@@ -1047,4 +1047,3 @@ function list_structures($offset, $maxRecords, $sort_mode, $find='', $exact_matc
 }
 global $dbTiki;
 $structlib = new StructLib($dbTiki);
-?>

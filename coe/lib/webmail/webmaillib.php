@@ -261,7 +261,4 @@ class WebMailLib extends TikiLib {
 		return $res;
 	}
 } # class WebMailLib
-
 $webmaillib = new WebMailLib($dbTiki);
-
-?>

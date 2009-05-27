@@ -79,5 +79,3 @@ class ExportLib extends TikiLib {
 }
 global $dbTiki;
 $exportlib = new ExportLib($dbTiki);
-
-?>

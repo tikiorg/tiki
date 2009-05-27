@@ -525,5 +525,3 @@ class Auth_Yadis_Discovery {
         }
     }
 }
-
-?>

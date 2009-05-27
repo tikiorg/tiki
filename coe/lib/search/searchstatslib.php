@@ -44,5 +44,3 @@ class SearchStatsLib extends TikiLib {
 }
 global $dbTiki;
 $searchstatslib = new SearchStatsLib($dbTiki);
-
-?>

@@ -631,4 +631,3 @@ class PEAR_Validate
         return true;
     }
 }
-?>
