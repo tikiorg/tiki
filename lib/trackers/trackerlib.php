@@ -3111,6 +3111,7 @@ class TrackerLib extends TikiLib {
 		while ($res = $result->fetchRow()) {
 			$field_value = $this->get_tracker_field($res['fieldId']);
 			$field_value['value'] = $res['value'];
+			$field_value['showlinks'] = 'n';
 			$smarty->assign('field_value', $field_value);
 			$ret[$res['itemId']] = $smarty->fetch('tracker_item_field_value.tpl');
 			if (is_array($finalFields) && count($finalFields)) {
