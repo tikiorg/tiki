@@ -125,15 +125,6 @@ if (isset($_REQUEST["features"])) {
 
 }
 
-if (!empty($_REQUEST['tabs'])) {
-	$_SESSION["tabbed_admin_features"] = $_REQUEST['tabs']=='on'?'n':'' ;
-} else {
-	if( !empty($_REQUEST["feature_tabs"]) ) {	// Verifies that form was submitted
-		$_SESSION["tabbed_admin_features"] = '' ;
-	}
-}
-$smarty->assign('tabs', empty($_SESSION["tabbed_admin_features"])?'':'n');
-
 $smarty->assign('php_major_version', substr(PHP_VERSION, 0, strpos(PHP_VERSION, '.')));
 
 ask_ticket('admin-inc-features');
