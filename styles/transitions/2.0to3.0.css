@@ -261,13 +261,6 @@ ul.categories li{
 	font-size: 120%;
 }
 
-.button2 .linkbut,
-.button2 .linkbut:visited {
-/*	color: #548ca5;*/
-	padding: 3px 5px;
-/*	background-color: #dfeaf0;*/
-	border-width: 0px;
-}
 #disp_trig {
 	background-color: #88b6c3;
 	color: #e8ffff;

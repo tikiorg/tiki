@@ -236,7 +236,7 @@
 	{$upload_str}
 	{if $editFileId}
 		{include file=categorize.tpl notable='y'}<br/>
-		<input class="submitbutton" name="upload" type="submit" value="{tr}Save{/tr}"/>
+		<input name="upload" type="submit" value="{tr}Save{/tr}"/>
 	{/if}
 	{if $prefs.javascript_enabled neq 'y' and !$editFileId}
 	{$upload_str}
@@ -251,8 +251,8 @@
 	<hr class="clear"/>
 	<div id="page_bar">
 	{if $prefs.javascript_enabled eq 'y'  and  !$editFileId}
-	<input class="submitbutton" type="button" onclick="upload('0', 'loader_0')" value="{tr}Upload{/tr}"/>
-			<input class="submitbutton" type="button" onclick="javascript:add_upload_file('multiple_upload')" value="{tr lang=$lang}Add File{/tr}"/>
+			<input type="button" onclick="upload('0', 'loader_0')" value="{tr}Upload{/tr}"/>
+			<input type="button" onclick="javascript:add_upload_file('multiple_upload')" value="{tr lang=$lang}Add File{/tr}"/>
 	{/if}
 	</div>
 	</div>

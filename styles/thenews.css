@@ -133,10 +133,8 @@ input[type=password] {
 /* all button variations */
 input.button,
 button,
-.submitbutton,
 .button input,
 .button,
-.button2,
 input.wikiaction,
 .calbuttonBox {
 	border: solid 1px #aaa; 
@@ -161,10 +159,8 @@ input[type=reset] {
 input.button:hover,
 button:hover,
 input[type=submit]:hover,
-.submitbutton:hover,
 .button input:hover,
 .button:hover,
-.button2:hover,
 .calbuttonBox a:hover {
 	cursor: pointer;
 	background: #E6E6F8;
@@ -1455,11 +1451,6 @@ ul.floatleft li {
 	margin-top: 8px;
 }
 
-span.button2,
-div.button2, .button3 {
-	margin-right: 5px;
-}
- 
 div.cache {}
 div.cachedpage {}
 .wikicache, .wikicache:visited {}

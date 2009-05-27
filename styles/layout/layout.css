@@ -49,13 +49,10 @@ span.button {
 /* Links in buttons */
 span.button a,
 span.button a:visited,
-span.button2 a,
-span.button2 a:visited,
 button,
 input[type=reset],
 input[type=submit],
 span.button input,
-.submitbutton,
 .calbuttonBox a {
 	padding: 1px 4px;
 	margin-right: 1px;
@@ -82,7 +79,6 @@ button:hover,
 input[type=reset]:hover,
 input[type=submit]:hover,
 .button input:hover,
-.submitbutton:hover,
 .calbuttonBox:hover {}
 
 .button a:active,
@@ -90,7 +86,6 @@ button:active,
 input[type=reset]:active,
 input[type=submit]:active,
 .button input:active,
-.submitbutton:active,
 span.highlight a:link,
 span.highlight a:visited {  }
 
