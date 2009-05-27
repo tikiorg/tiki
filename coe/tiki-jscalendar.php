@@ -16,4 +16,3 @@ if ( $prefs['feature_jscalendar'] == 'y' && $prefs['javascript_enabled'] == 'y' 
 		$smarty->assign('jscalendar_langfile', array_shift($jslang));
 	}
 }
-?>

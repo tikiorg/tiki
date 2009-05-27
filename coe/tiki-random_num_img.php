@@ -39,5 +39,3 @@ function get_random() {
 	# return a 5 digit value
 	return rand(10000, 99999);
 }
-
-?>

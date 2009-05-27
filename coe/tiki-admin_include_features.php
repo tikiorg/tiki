@@ -137,4 +137,3 @@ $smarty->assign('tabs', empty($_SESSION["tabbed_admin_features"])?'':'n');
 $smarty->assign('php_major_version', substr(PHP_VERSION, 0, strpos(PHP_VERSION, '.')));
 
 ask_ticket('admin-inc-features');
-?>

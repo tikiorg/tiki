@@ -135,5 +135,3 @@ ask_ticket('list-blogs');
 // Display the template
 $smarty->assign('mid', 'tiki-list_blogs.tpl');
 $smarty->display("tiki.tpl");
-
-?>

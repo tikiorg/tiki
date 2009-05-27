@@ -23,5 +23,3 @@ Pass: <input type="password" name="pass" size="20" /><br />
 <input type="submit" name="login" value="login" /></form>';
 
 echo '<p><a href="javascript:history.back()">Go back</a></p></pre></body></html>';
-
-?>

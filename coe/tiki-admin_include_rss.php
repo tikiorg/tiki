@@ -44,4 +44,3 @@ if (isset($_REQUEST['rss'])) {
 }
 
 ask_ticket('admin-inc-rss');
-?>

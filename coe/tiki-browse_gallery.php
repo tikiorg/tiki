@@ -398,5 +398,3 @@ if ($prefs['feature_actionlog'] == 'y') {
 
 $smarty->assign('mid', 'tiki-browse_gallery.tpl');
 $smarty->display("tiki.tpl");
-
-?>

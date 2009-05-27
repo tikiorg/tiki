@@ -198,4 +198,3 @@ if ( isset($_REQUEST['filegals_manager']) && $_REQUEST['filegals_manager'] != ''
 }  else {
 	$smarty->display("tiki.tpl");
 }
-?>

@@ -687,5 +687,3 @@ function wikiplugin_trackerlist($data, $params) {
 	}
 	return $back;
 }
-
-?>

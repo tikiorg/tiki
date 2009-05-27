@@ -90,5 +90,3 @@ ask_ticket('list-banners');
 // Display the template
 $smarty->assign('mid', 'tiki-list_banners.tpl');
 $smarty->display("tiki.tpl");
-
-?>

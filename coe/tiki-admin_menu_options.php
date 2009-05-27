@@ -186,5 +186,3 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 // Display the template
 $smarty->assign('mid', 'tiki-admin_menu_options.tpl');
 $smarty->display("tiki.tpl");
-
-?>

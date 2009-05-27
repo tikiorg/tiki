@@ -153,5 +153,3 @@ mytiki_ajax();
 }
 $smarty->assign('mid', 'tiki-my_tiki.tpl');
 $smarty->display("tiki.tpl");
-
-?>

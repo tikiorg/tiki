@@ -1606,5 +1606,3 @@ function wikiplugin_dbreport($data, $params) {
 	// return the result
 	return $ret;
 }
-
-?>

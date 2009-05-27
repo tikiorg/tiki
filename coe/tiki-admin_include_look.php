@@ -266,4 +266,3 @@ if (isset($_REQUEST["looksetup"])) {
 		}
 	}
 }
-?>

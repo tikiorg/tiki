@@ -108,5 +108,3 @@ EOF;
 	
 	return $ret;
 }
-
-?>

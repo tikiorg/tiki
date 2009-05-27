@@ -468,4 +468,3 @@ if ($prefs['javascript_enabled'] != 'y' or !isset($_REQUEST["upload"])) {
 		$smarty->display("tiki.tpl");
 	}
 }
-?>

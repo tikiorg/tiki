@@ -37,4 +37,3 @@ if (isset($_REQUEST["wysiwygfeatures"])) {
 }
 
 ask_ticket('admin-inc-wysiwyg');
-?>

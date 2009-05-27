@@ -132,8 +132,9 @@ function tiki_error_handling($errno, $errstr, $errfile, $errline) {
 	if ( !defined('E_USER_DEPRECATED') ) define('E_USER_DEPRECATED', 16384);
 	$err[E_USER_DEPRECATED] = 'E_USER_DEPRECATED';
 
-	if (!empty($prefs['error_reporting_level']) and $prefs['error_reporting_level']) {
-		$errfile = basename($errfile);
+	if ( ! empty($prefs['error_reporting_level']) and $prefs['error_reporting_level'] ) {
+		global $tikipath;
+		$errfile = str_replace($tikipath, '', $errfile);
 		switch ($errno) {
 		case E_ERROR:
 		case E_CORE_ERROR:
@@ -160,7 +161,7 @@ function tiki_error_handling($errno, $errstr, $errfile, $errline) {
 		case E_STRICT:
 		case E_DEPRECATED:
 		case E_USER_DEPRECATED:
-			if ($prefs['error_reporting_level'] == '2047' and $tiki_p_admin == 'y') {
+			if ( $prefs['error_reporting_level'] == '2047' and $tiki_p_admin == 'y' and ! preg_match(THIRD_PARTY_LIBS_PATTERN, $errfile) ) {
 				if ($prefs['smarty_notice_reporting'] != 'y' && strstr($errfile, '.tpl.php'))
 					break;
 				$back = "<div style='padding:4px;border:1px solid #000;background-color:#FF6;font-size:10px;'>";

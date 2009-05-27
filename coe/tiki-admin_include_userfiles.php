@@ -20,4 +20,3 @@ if (isset($_REQUEST["userfilesprefs"])) {
 	$tikilib->set_preference("userfiles_quota", $_REQUEST["userfiles_quota"]);
 }
 ask_ticket('admin-inc-userfiles');
-?>

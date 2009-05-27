@@ -87,5 +87,3 @@ ask_ticket('fgal-rankings');
 // Display the template
 $smarty->assign('mid', 'tiki-ranking.tpl');
 $smarty->display("tiki.tpl");
-
-?>

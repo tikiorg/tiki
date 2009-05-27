@@ -21,4 +21,3 @@ include_once ('tiki-mailin-code.php');
 $smarty->assign('content', $content);
 $smarty->assign('mid', 'tiki-mailin.tpl');
 $smarty->display("tiki.tpl");
-?>

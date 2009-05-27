@@ -94,5 +94,3 @@ function wikiplugin_box($data, $params) {
 	//$data = $tikilib->parse_data($data);
 	return $begin . $data . $end;
 }
-
-?>

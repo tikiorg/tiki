@@ -94,5 +94,3 @@ ask_ticket('quiz-res-stats');
 
 $smarty->assign('mid', 'tiki-quiz_result_stats.tpl');
 $smarty->display("tiki.tpl");
-
-?>

@@ -39,4 +39,3 @@ Tiki installer failed to rename <b>tiki-install.php</b>.  Please remove or renam
 	}
 	die;
 }
-?>

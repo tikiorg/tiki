@@ -148,5 +148,3 @@ ask_ticket('shoutbox');
 // Display the template
 $smarty->assign('mid', 'tiki-shoutbox.tpl');
 $smarty->display("tiki.tpl");
-
-?>

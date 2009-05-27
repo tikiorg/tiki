@@ -112,5 +112,3 @@ ask_ticket('categpermission');
 
 $smarty->assign('mid', 'tiki-categpermissions.tpl');
 $smarty->display("tiki.tpl");
-
-?>

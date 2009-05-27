@@ -274,5 +274,3 @@ if ($prefs['feature_ajax'] == 'y') {
 
 $smarty->assign('mid','tiki-register.tpl');
 $smarty->display("tiki.tpl");
-
-?>

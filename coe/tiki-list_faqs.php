@@ -132,5 +132,3 @@ ask_ticket('list-faqs');
 // Display the template
 $smarty->assign('mid', 'tiki-list_faqs.tpl');
 $smarty->display("tiki.tpl");
-
-?>

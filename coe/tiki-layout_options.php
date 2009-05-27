@@ -21,5 +21,3 @@ $smarty->assign('feature_top_bar', $$section_top_bar);
 $smarty->assign('feature_bot_bar', $$section_bot_bar);
 $smarty->assign('feature_left_column', $$section_left_column);
 $smarty->assign('feature_right_column', $$section_right_column);
-
-?>

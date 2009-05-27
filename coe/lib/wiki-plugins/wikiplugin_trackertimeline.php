@@ -282,5 +282,3 @@ function wp_ttl_genlayout( $start, $end, $full, $type ) {
 
 	return $layout;
 }
-
-?>

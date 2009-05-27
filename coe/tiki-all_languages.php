@@ -74,5 +74,3 @@ $smarty->assign( 'excluded', $excluded );
 $smarty->assign( 'content', array_reverse( $contents ) );
 $smarty->assign( 'mid', 'tiki-all_languages.tpl' );
 $smarty->display( 'tiki.tpl' );
-
-?>

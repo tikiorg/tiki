@@ -186,5 +186,3 @@ function _wikiplugin_chart_uri( $params, $renderer )
 	
 	return 'tiki-graph_sheet.php?' . implode( '&', $array );
 }
-
-?>

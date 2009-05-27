@@ -231,5 +231,3 @@ $result = $sharethiscode;
 return $result;
 
 }
-
-?>

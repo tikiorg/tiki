@@ -135,5 +135,3 @@ function wikiplugin_events($data,$params) {
 	$repl .= '</table>';
 	return $repl;
 }
-
-?>

@@ -211,4 +211,3 @@ $listgroups = $userlib->get_groups(0, -1, 'groupName_desc', '', '', 'n');
 $smarty->assign("listgroups", $listgroups['data']);
 
 ask_ticket('admin-inc-general');
-?>

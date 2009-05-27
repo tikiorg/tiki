@@ -533,4 +533,3 @@ $smarty->assign_by_ref('plugins', $plugins);
 $smarty->assign('impossibleDates',$impossibleDates);
 $smarty->assign('mid', 'tiki-calendar_edit_item.tpl');
 $smarty->display("tiki.tpl");
-?>

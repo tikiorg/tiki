@@ -73,4 +73,3 @@ if (isset($_REQUEST['import'])) {
 }
 
 ask_ticket('admin-inc-cms');
-?>

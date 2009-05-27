@@ -78,4 +78,3 @@ $smarty->assign('save','y');
 // Display the template
 $smarty->assign('mid','tiki-register_site.tpl');
 $smarty->display("tiki.tpl");
-?>

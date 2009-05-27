@@ -147,5 +147,3 @@ foreach($chans as $chan) {
 
 echo "minichatlasttimeout = $lasttimeout;\n";
 if (!isset($_REQUEST['msg'])) echo "setTimeout('minichat_update()', $lasttimeout);\n";
-
-?>

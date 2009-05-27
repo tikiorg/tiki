@@ -356,5 +356,3 @@ if( isset( $_GET['action'] ) )
 }
 else
 	runAuth();
-
-?>

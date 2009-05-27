@@ -63,5 +63,3 @@ ask_ticket('news-groups');
 
 $smarty->assign('mid', 'tiki-newsreader_groups.tpl');
 $smarty->display("tiki.tpl");
-
-?>

@@ -955,5 +955,3 @@ function wikiplugin_image( $data, $params, $offset, $parseOptions='' ) {
 	}
 	return $repl;
 }
-
-?>

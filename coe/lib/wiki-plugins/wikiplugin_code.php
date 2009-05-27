@@ -158,5 +158,3 @@ function wikiplugin_code($data, $params) {
 
 	return $out;
 }
-
-?>

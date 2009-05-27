@@ -89,5 +89,3 @@ function wikiplugin_webservice( $data, $params ) {
 		return '^' . tra('Missing parameters') . '^';
 	}
 }
-
-?>

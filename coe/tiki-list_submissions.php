@@ -103,5 +103,3 @@ ask_ticket('list-submissions');
 // Display the template
 $smarty->assign('mid', 'tiki-list_submissions.tpl');
 $smarty->display("tiki.tpl");
-
-?>

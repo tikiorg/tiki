@@ -89,5 +89,3 @@ if (isset($_REQUEST['view'])) {
 // Display the template
 $smarty->assign('mid', 'tiki-live_support_transcripts.tpl');
 $smarty->display("tiki.tpl");
-
-?>

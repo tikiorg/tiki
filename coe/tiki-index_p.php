@@ -267,5 +267,3 @@ wiki_ajax();
 // Display the Index Template
 $smarty->assign('dblclickedit', 'y');
 $smarty->display("tiki-index_p.tpl");
-
-?>

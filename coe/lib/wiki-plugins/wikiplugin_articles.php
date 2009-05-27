@@ -150,4 +150,3 @@ function wikiplugin_articles($data,$params) {
 	}
 	//return str_replace("\n","",$smarty->fetch('tiki-view_articles.tpl')); // this considers the hour in the header like a link
 }
-?>

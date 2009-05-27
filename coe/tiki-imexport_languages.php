@@ -116,5 +116,3 @@ $smarty->assign('metatag_robots', 'NOINDEX, NOFOLLOW');
 
 $smarty->assign('mid', 'tiki-imexport_languages.tpl');
 $smarty->display("tiki.tpl");
-
-?>

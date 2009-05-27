@@ -189,5 +189,3 @@ function wikiplugin_module($data, $params) {
 
 	return $data;
 }
-
-?>

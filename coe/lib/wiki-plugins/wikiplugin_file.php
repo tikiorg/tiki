@@ -67,5 +67,3 @@ function wikiplugin_file( $data, $params )
 
 	return $tikilib->plugin_execute( 'attach', $middle, $forward );
 }
-
-?>

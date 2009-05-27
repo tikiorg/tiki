@@ -89,5 +89,3 @@ function wikiplugin_map($data, $params) {
 	}
 	return $map;
 }
-
-?>

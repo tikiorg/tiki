@@ -315,4 +315,3 @@ if ( ! empty($multiprint_pages) ) {
 		$smarty->display("tiki.tpl");
 	}
 }
-?>

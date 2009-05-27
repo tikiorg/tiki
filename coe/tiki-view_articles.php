@@ -169,5 +169,3 @@ ask_ticket('view_article');
 // Display the template
 $smarty->assign('mid', 'tiki-view_articles.tpl');
 $smarty->display("tiki.tpl");
-
-?>
