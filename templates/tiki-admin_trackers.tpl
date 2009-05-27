@@ -158,7 +158,13 @@
 <tr class="formcolor" id="autoCreateGroupOptions4"{if $info.autoCreateGroup ne 'y' and $prefs.javascript_enabled eq 'y'} style="display:none;"{/if}>
 	<td></td>
 	<td><label for="autoAssignGroupItem">{tr}and it becomes the new item group creator{/tr}</label>
-		<input type="checkbox" name="autoAssignGroupItem" id="autoAssignGroupItem" {if $info.autoAssignGroupItem eq 'y'}checked="checked"{/if} />
+		<input type="checkbox" name="autoAssignGroupItem" id="autoAssignGroupItem" {if $info.autoAssignGroupItem eq 'y'}checked="checked"{/if} onclick="toggleTrTd('autoCreateGroupOptions5');"/>
+	</td>
+</tr>
+<tr class="formcolor" id="autoCreateGroupOptions5"{if ($info.autoCreateGroup ne 'y' or $info.autoAssignGroupItem ne 'y') and $prefs.javascript_enabled eq 'y'} style="display:none;"{/if}>
+	<td></td>
+	<td><label for="autoCopyGroup">{tr}But copy the default group in this fiedlId before updating the group{/tr}</label>
+		<input type="text" name="autoCopyGroup" id="autoCopyGroup" value="{$info.autoCopyGroup}" />
 	</td>
 </tr>
 {/if}

@@ -1479,7 +1479,12 @@ class TrackerLib extends TikiLib {
 
 		if ($prefs['groupTracker'] == 'y' && isset($tracker_info['autoCreateGroup']) && $tracker_info['autoCreateGroup'] == 'y' && empty($itemId)) {
 			$groupName = $this->groupName($tracker_info, $new_itemId, $groupInc);
-			if (!empty($creatorGroupFieldId) && $tracker_info['autoCreateGroupItem'] == 'y') {
+			if (!empty($creatorGroupFieldId) && !empty($tracker_info['autoAssignGroupItem']) && $tracker_info['autoAssignGroupItem'] == 'y') {
+				if (!empty($tracker_info['autoCopyGroup'])) {
+					global $group;
+					$query = "insert into `tiki_tracker_item_fields`(`itemId`,`fieldId`,`value`) values(?,?,?)";
+					$this->query($query, array($new_itemId, $tracker_info['autoCopyGroup'], $group));
+				}
 				$query = 'update `tiki_tracker_item_fields` set `value`=? where `itemId`=? and `fieldId`=?';
 				$this->query($query, array($groupName, $new_itemId, $creatorGroupFieldId));
 			}

@@ -315,6 +315,11 @@ if (isset($_REQUEST["save"])) {
 	} else {
 		$tracker_options['autoCreateGroupInc'] = $_REQUEST['autoCreateGroupInc'];
 	}
+	if (empty($_REQUEST['autoCopyGroup'])) {
+		$tracker_options['autoCopyGroup'] = 0;
+	} else {
+		$tracker_options['autoCopyGroup'] = $_REQUEST['autoCopyGroup'];
+	}
 	if (isset($_REQUEST["defaultStatus"])
 		&& $_REQUEST["defaultStatus"]) {
 		if (is_array($_REQUEST["defaultStatus"])) {
