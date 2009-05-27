@@ -157,5 +157,3 @@ $smarty->assign("mootab",'y');
 // Display the template
 $smarty->assign('mid', 'tiki-user_bookmarks.tpl');
 $smarty->display("tiki.tpl");
-
-?>

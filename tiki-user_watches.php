@@ -170,5 +170,3 @@ $smarty->assign("mootab",'y');
 
 $smarty->assign('mid', 'tiki-user_watches.tpl');
 $smarty->display("tiki.tpl");
-
-?>

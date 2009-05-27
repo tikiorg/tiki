@@ -182,5 +182,3 @@ $smarty->assign("mootab",'y');
 }
 $smarty->assign('mid', 'tiki-userfiles.tpl');
 $smarty->display("tiki.tpl");
-
-?>
