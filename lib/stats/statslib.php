@@ -245,5 +245,3 @@ class StatsLib extends TikiLib {
 }
 global $dbTiki;
 $statslib = new StatsLib($dbTiki);
-
-?>

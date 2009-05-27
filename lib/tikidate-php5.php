@@ -174,5 +174,3 @@ class Date_Calc {
 		return cal_days_in_month(CAL_GREGORIAN, $month, $year);
 	}
 }
-
-?>

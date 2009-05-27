@@ -3160,5 +3160,3 @@ if ( $prefs['trk_with_mirror_tables'] == 'y' ) {
 else {
 	$trklib = new TrackerLib($dbTiki);
 }
-
-?>

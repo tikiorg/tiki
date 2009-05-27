@@ -195,5 +195,3 @@ function my_warning_handler($warning )
 {
     printf( "**** WARNING **** : %s<br />", $warning );
 }
-
-?>

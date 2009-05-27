@@ -8673,7 +8673,6 @@ function tiki_get_remote_file( $url ) {
 		return false;
 	}
 }
-
 /* Editor configuration
 	 Local Variables:
 	 tab-width: 4
@@ -8681,4 +8680,3 @@ function tiki_get_remote_file( $url ) {
 End:
  * vim: fdm=marker tabstop=4 shiftwidth=4 noet:
  */
-?>

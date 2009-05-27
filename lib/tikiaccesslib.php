@@ -383,7 +383,4 @@ class TikiAccessLib extends TikiLib {
 		}
 	}
 }
-
 $access = new TikiAccessLib($dbTiki);
-
-?>

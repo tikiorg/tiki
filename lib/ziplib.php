@@ -980,7 +980,6 @@ function ParseMimeifiedPages($data) {
 
 	return array($page);
 }
-
 // Local Variables:
 // mode: php
 // tab-width: 8
@@ -988,5 +987,3 @@ function ParseMimeifiedPages($data) {
 // c-hanging-comment-ender-p: nil
 // indent-tabs-mode: nil
 // End:   
-
-?>

@@ -1021,5 +1021,3 @@ class WikiUnifiedDiffFormatter extends WikiDiffFormatter
 	return "@@ -$xbeg$xlen +$ybeg$ylen @@";
       }
 }
-
-?>

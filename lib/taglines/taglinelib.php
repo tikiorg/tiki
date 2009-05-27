@@ -72,5 +72,3 @@ class TagLineLib extends TikiLib {
 }
 global $dbTiki;
 $taglinelib = new TagLineLib($dbTiki);
-
-?>
