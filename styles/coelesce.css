@@ -1040,6 +1040,7 @@ div.box {
 	border: 1px solid #527ca6;
 	margin-top: -1px;
 	text-align: left;
+	overflow: hidden;
 	}
 	
 * html div.box {width: 205px !important}
