@@ -4,7 +4,7 @@
 
 {if $field_value.type ne 'x'}
 {* ******************** link to the item ******************** *}
-{if $showlinks ne 'y'}
+{if $showlinks ne 'y' or (isset($field_value.showlinks) and $field_value.showlinks eq 'n')}
 	{assign var='is_link' value='n'}
 {elseif $field_value.isMain eq 'y'
  and ($tiki_p_view_trackers eq 'y' or $tiki_p_modify_tracker_items eq 'y' or $tiki_p_comment_tracker_items eq 'y'
