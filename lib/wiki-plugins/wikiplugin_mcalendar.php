@@ -221,5 +221,3 @@ function wikiplugin_mcalendar($data, $params) {
 
 	return $out;
 }
-
-?>
