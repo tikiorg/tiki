@@ -68,5 +68,3 @@ function getSubGraph($params) {
     
     return new XML_RPC_Response(new XML_RPC_Value($response, "struct"));
 }
-
-?>
