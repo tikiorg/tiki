@@ -376,5 +376,3 @@ function histlib_strip_irrelevant( $data )
 	$data = preg_replace( "/<(h1|h2|h3|h4|h5|h6|h7)\s+([^\\\\>]+)>/i", '<$1>', $data );
 	return $data;
 }
-
-?>

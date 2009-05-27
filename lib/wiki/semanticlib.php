@@ -306,5 +306,3 @@ class SemanticLib
 
 global $semanticlib;
 $semanticlib = new SemanticLib;
-
-?>
