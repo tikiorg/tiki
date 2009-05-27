@@ -76,5 +76,3 @@ if (!isset($_REQUEST['xjxfun'])) {
 }
 $ajaxlib->registerFunction('refreshWebmail');
 $ajaxlib->processRequests();
-
-?>

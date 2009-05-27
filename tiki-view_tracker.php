@@ -878,5 +878,3 @@ ask_ticket('view-trackers');
 // Display the template
 $smarty->assign('mid', 'tiki-view_tracker.tpl');
 $smarty->display("tiki.tpl");
-//echo "<!-- ";var_dump($filtervalue); echo " -->";
-?>

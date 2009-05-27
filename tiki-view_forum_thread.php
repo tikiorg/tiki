@@ -469,5 +469,3 @@ if ( isset($_REQUEST['display']) ) {
 	$smarty->assign('mid', 'tiki-view_forum_thread.tpl');
 	$smarty->display('tiki.tpl');
 }
-
-?>

@@ -52,5 +52,3 @@ $smarty->assign('ggcacheurl', $ggcacheurl);
 $smarty->assign_by_ref('info', $info);
 $smarty->assign('mid', 'tiki-view_cache.tpl');
 $smarty->display('tiki-view_cache.tpl');
-
-?>

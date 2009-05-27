@@ -58,5 +58,3 @@ header ("Content-type: $type");
 //header( "Content-Disposition: attachment; filename=$file" );
 header ("Content-Disposition: inline; filename=$file");
 echo "$content";
-
-?>

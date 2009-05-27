@@ -35,5 +35,3 @@ $text3 = new HAW_text(
 $TikiPage->add_text($text3);
 
 $TikiPage->create_page();
-
-?>

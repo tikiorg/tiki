@@ -870,5 +870,3 @@ $smarty->assign("mootab",'y');
 }
 $smarty->assign('mid', 'tiki-webmail.tpl');
 $smarty->display("tiki.tpl");
-
-?>
