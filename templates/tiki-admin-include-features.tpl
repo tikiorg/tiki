@@ -14,7 +14,7 @@
  * The following section is typically for features that act like Tikiwiki
  * sections and add a configuration icon to the sections list
  *}
-{tabs name="{tr}Main Features{/tr}"}
+{tab name="{tr}Main Features{/tr}"}
 				<div class="admin clearfix">
 {* ---------- Main features ------------ *}
 					<div class="half_width">
