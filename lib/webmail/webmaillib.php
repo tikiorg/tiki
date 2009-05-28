@@ -261,7 +261,7 @@ class WebMailLib extends TikiLib {
 		return $res;
 	}
 	
-	function refresh_mailbox($user, $accountid, $reload = false) {
+	function refresh_mailbox($user, $accountid, $reload) {
 		global $webmail_account;	// TODO remove global
 		
 		if (!empty($accountid)) {
@@ -283,27 +283,47 @@ class WebMailLib extends TikiLib {
 		
 		$serialized_params = $webmail_account['accountId'].':'.$webmail_account['user'].':'.$webmail_account['account'];
 		
-		if (!$reload && isset($_SESSION['webmailinbox'][$serialized_params]) && isset($_SESSION['webmailinbox'][$serialized_params]['timestamp']) && $_SESSION['webmailinbox'][$serialized_params]['timestamp'] >  $timeout) {
+		if (isset($_SESSION['webmailinbox'][$serialized_params]) && ((!isset($reload) || !$reload) || (isset($_SESSION['webmailinbox'][$serialized_params]['timestamp']) && $_SESSION['webmailinbox'][$serialized_params]['timestamp'] >  $timeout))) {
 			$webmail_list = $_SESSION['webmailinbox'][$serialized_params]['webmail_list'];
 		
 		} else {	// no cached list or timed out
-	
+
+			require_once('lib/core/lib/Zend/Log.php');
+//			require_once('lib/core/lib/Zend/Log/Writer/Stream.php');
+//			$writer = new Zend_Log_Writer_Stream('/tmp/zend.log');
+			require_once('lib/core/lib/Zend/Log/Writer/Null.php');
+			$writer = new Zend_Log_Writer_Null;						// stub disabling logging - still needs to be faster...
+			$logger = new Zend_Log($writer);
+			$ts = microtime(true);
+			$logger->log('Init mail process '.$ts, Zend_Log::INFO);
+			
 			// get mail the zend way
-			require_once('lib/core/lib/Zend/Mail/Storage/Pop3.php');
 			
 			// connecting with Pop3
-			$mail = new Zend_Mail_Storage_Pop3(
-				array('host'     => $webmail_account["pop"],
-		              'user'     => $webmail_account["username"],
-		              'password' => $webmail_account["pass"]));
+			require_once('lib/core/lib/Zend/Mail/Storage/Pop3.php');
+			try {
+				$mail = new Zend_Mail_Storage_Pop3(
+					array('host'     => $webmail_account["pop"],
+			              'user'     => $webmail_account["username"],
+			              'password' => $webmail_account["pass"]));
+			} catch (Exception $e) {
+				// do something better with the error
+				$logger->log('Zend_Mail_Storage_Pop3 failed: '.$e->messsage.' '.(microtime(true)-$ts), Zend_Log::INFO);
+				return Array();
+			}
 			
 			if (empty($mail)) {
 				return Array();
 			}
+			$logger->log('Got mails '.count($mail).' '.(microtime(true)-$ts), Zend_Log::INFO);
 			
 			$webmail_list = array();
-			
+						
 			foreach ($mail as $messageNum => $message) {
+			//for ($messageNum = 1; $messageNum <= count($mail); $messageNum++) {
+			//	$message = $mail[$messageNum];  (no quicker)
+			
+				$logger->log('Start mail process '.$messageNum.' '.(microtime(true)-$ts), Zend_Log::INFO);
 				$headers = $message->getHeaders();		// quicker than the Zend accessors?
 				$wmail = Array();	// Tiki Webmail row
 				
@@ -313,6 +333,7 @@ class WebMailLib extends TikiLib {
 				$wmail['date'] = $headers['date'];
 				$wmail["timestamp"] = strtotime($headers['date']);
 				
+				$mail->noop(); // keep alive
 				$from = preg_split('/[<>]/', $wmail['from'], -1,PREG_SPLIT_NO_EMPTY);
 				$wmail['sender']['name'] = $from[0];
 				$wmail['sender']['email'] = $from[1];
@@ -328,8 +349,8 @@ class WebMailLib extends TikiLib {
 //				$l = $pop3->_cmdList($i);
 //				$wmail['size'] = $l['size'];
 
-				if (!empty($headers['messageId'])) {
-					$wmail['realmsgid'] = ereg_replace('[<>]','', $headers['messageId']);
+				if (!empty($headers['message-id'])) {
+					$wmail['realmsgid'] = ereg_replace('[<>]','', $headers['message-id']);
 				} else {
 					$wmail['realmsgid'] = $wmail['timestamp'].'.'.$wmail['sender']['email'];	// TODO better?
 				}
@@ -339,17 +360,20 @@ class WebMailLib extends TikiLib {
 				}
 				$wmail['subject'] = htmlspecialchars($wmail['subject']);
 					
-					
 				$wmail['msgid'] = $messageNum;
 				$webmail_list[] = $wmail;
-				if ($messageNum > 90) {
-					$a = 1;
-				}
+//				if ($messageNum > count($mail) - 1) {
+//					$a = 1;	// for debugging
+//				}
+				$mail->noop(); // keep alive
+				
+				$logger->log('End mail process   '.$messageNum.' '.(microtime(true)-$ts), Zend_Log::INFO);
 			}
 				
 			$_SESSION['webmailinbox'][$serialized_params]['webmail_list'] = $webmail_list;
 			$_SESSION['webmailinbox'][$serialized_params]['timestamp'] = time();
-	
+			
+			$mail->close();
 		}		// endif no cached list of timed out
 	
 		return $webmail_list;

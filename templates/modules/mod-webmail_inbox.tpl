@@ -69,7 +69,15 @@
 					</a>
 				{elseif $module_params.mode eq 'groupmail'}
 					<span class="mod_webmail_date">{$date_short}</span>&nbsp;
-					<a class="button mod_webmail_action" onclick="doTakeWebmail({$webmail_list[ix].msgid})" href="#">{tr}TAKE{/tr}</a>&nbsp;
+					{if !empty($webmail_list[ix].operator)}
+						{if $webmail_list[ix].operator eq $user}
+							<a class="button mod_webmail_action mod_webmail_taken" onclick="doPutBackWebmail({$webmail_list[ix].msgid})" href="#">{$webmail_list[ix].operator}</a>&nbsp;
+						{else}
+							<a class="button mod_webmail_action mod_webmail_taken" href="#">$webmail_list[ix].operator|userlink</a>&nbsp;
+						{/if}
+					{else}
+						<a class="button mod_webmail_action" onclick="doTakeWebmail({$webmail_list[ix].msgid})" href="#">{tr}TAKE{/tr}</a>&nbsp;
+					{/if}
 					<span class="mod_webmail_from">{$sender.email|truncate:17:"...":true}</span>
 					<a class="clearfix linkmodule tips300 webmail_subject" href="tiki-webmail.php?locSection=read&amp;msgid={$webmail_list[ix].msgid}"
 							title="<span class='webmail_tip_title'><strong>{$subject}</strong><br />{tr}From{/tr}: <em>{$sender.name}</em> <tt>&amp;lt;{$sender.email}&amp;gt;</tt></span>|({$date_value})">

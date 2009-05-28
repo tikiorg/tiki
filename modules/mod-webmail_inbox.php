@@ -1,8 +1,8 @@
 <?php
 
 //this script may only be included - so its better to die if called directly.
-if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
-  header("location: index.php");
+if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== false) {
+  header('location: index.php');
   exit;
 }
 
@@ -24,19 +24,20 @@ if ($tiki_p_use_webmail != 'y') {
 	return;
 }
 
-if ($prefs['feature_ajax'] == "y") {
+if ($prefs['feature_ajax'] == 'y') {
 	// this includes what we need for ajax
-	require_once ("tiki-webmail_ajax.php");
+	require_once ('tiki-webmail_ajax.php');
 }
 
-global $webmaillib, $headerlib, $user, $webmail_reload, $webmail_start, $smarty, $dbTiki;
+global $webmaillib, $trklib, $headerlib, $user, $webmail_reload, $webmail_start, $smarty, $dbTiki;
 if (!isset($webmaillib)) { include_once ('lib/webmail/webmaillib.php'); }
-require_once ("lib/webmail/net_pop3.php");
-include_once ("lib/webmail/tikimaillib.php");
+require_once ('lib/webmail/net_pop3.php');
+include_once ('lib/webmail/tikimaillib.php');
+if (!isset($trklib)) { include_once('lib/trackers/trackerlib.php'); }
 
 
 // get autoRefresh val from account so it can go into the page JS
-if (isset($module_params["accountid"])) {
+if (isset($module_params['accountid'])) {
 	$webmail_account = $webmaillib->get_webmail_account($user, $module_params['accountid']);
 } else {
 	$webmail_account = $webmaillib->get_current_webmail_account($user);
@@ -53,9 +54,9 @@ global $webmail_list_page;
 
 if (!function_exists('webmail_refresh')) {
 function webmail_refresh() {	// called in ajax mode
-	global $webmaillib, $user, $smarty, $webmail_list_page, $webmail_account, $webmail_reload, $webmail_start, $module_params;
+	global $webmaillib, $user, $smarty, $webmail_list_page, $webmail_account, $webmail_reload, $webmail_start, $module_params, $trklib;
 	
-	$accountid = isset($module_params["accountid"]) ? $module_params['accountid'] : 0;
+	$accountid = isset($module_params['accountid']) ? $module_params['accountid'] : 0;
 	
 	$webmail_list = $webmaillib->refresh_mailbox($user, $accountid, $webmail_reload);
 	
@@ -72,16 +73,22 @@ function webmail_refresh() {	// called in ajax mode
 
 	$upperlimit = $webmail_start;
 	$smarty->assign('start', $webmail_start);
-	$numshow = $webmail_account["msgs"];
+	$numshow = $webmail_account['msgs'];
 	
 	$webmail_list_page = Array();
 	
 	for ($i = $webmail_start - 1; $i > 0 && $i > $upperlimit - $numshow; $i--) {
 		$a_mail = $webmail_list[$i];
-		$webmaillib->replace_webmail_message($webmail_account["accountId"], $user, $a_mail["realmsgid"]);
-		list($a_mail["isRead"], $a_mail["isFlagged"], $a_mail["isReplied"]) = $webmaillib->get_mail_flags($webmail_account["accountId"], $user, $a_mail["realmsgid"]);
+		$webmaillib->replace_webmail_message($webmail_account['accountId'], $user, $a_mail['realmsgid']);
+		list($a_mail['isRead'], $a_mail['isFlagged'], $a_mail['isReplied']) = $webmaillib->get_mail_flags($webmail_account['accountId'], $user, $a_mail['realmsgid']);
 		
 		// handle take/taken operator here
+		$itemid = $trklib->get_item_id( $module_params['trackerId'], $module_params['messageFId'], $a_mail['realmsgid']);
+		if ($itemid > 0) {
+			$a_mail['operator'] = $trklib->get_item_value($module_params['trackerId'], $itemid, $module_params['operatorFId']);
+		} else {
+			$a_mail['operator'] = '';
+		}
 		
 		$webmail_list_page[] = $a_mail;
 	}
@@ -93,11 +100,11 @@ function webmail_refresh() {	// called in ajax mode
 	}
 	$showstart = $mailsum - $upperlimit + 1;
 	$showend = $mailsum - $lowerlimit;
-	$smarty->assign('showstart', $showstart);
-	$smarty->assign('showend', $showend);
-	$smarty->assign('total', $mailsum);
-	$smarty->assign('current', $webmail_account);
-	$smarty->assign('flagsPublic',$webmail_account['flagsPublic']);
+//	$smarty->assign('showstart', $showstart);
+//	$smarty->assign('showend', $showend);
+//	$smarty->assign('total', $mailsum);
+//	$smarty->assign('current', $webmail_account);
+//	$smarty->assign('flagsPublic',$webmail_account['flagsPublic']);
 	
 	
 	if ($lowerlimit > 0) {
@@ -117,20 +124,20 @@ function webmail_refresh() {	// called in ajax mode
 		$smarty->assign('prevstart', '');
 	}
 
-	if ($_REQUEST["start"] <> $mailsum) {
-		$smarty->assign('first', $mailsum);
-	} else {
-		$smarty->assign('first', '');
-	}
-
-	// Now calculate the last message block
-	$last = $mailsum % $numshow;
-
-	if ($_REQUEST["start"] <> $last) {
-		$smarty->assign('last', $last);
-	} else {
-		$smarty->assign('last', '');
-	}
+//	if ($_REQUEST['start'] <> $mailsum) {
+//		$smarty->assign('first', $mailsum);
+//	} else {
+//		$smarty->assign('first', '');
+//	}
+//
+//	// Now calculate the last message block
+//	$last = $mailsum % $numshow;
+//
+//	if ($_REQUEST['start'] <> $last) {
+//		$smarty->assign('last', $last);
+//	} else {
+//		$smarty->assign('last', '');
+//	}
 	
 }
 }	// endif function_exists 'webmail_refresh'
@@ -139,16 +146,16 @@ if (isset($_REQUEST['refresh_mail']) || (isset($_REQUEST['xjxfun']) && $_REQUEST
 	webmail_refresh();
 }
 
-$module_params["autoloaddelay"] = isset($module_params["autoloaddelay"]) ? isset($module_params["autoloaddelay"]) : 1;
-if ($module_params["autoloaddelay"] > -1) {
+$module_params['autoloaddelay'] = isset($module_params['autoloaddelay']) ? isset($module_params['autoloaddelay']) : 1;
+if ($module_params['autoloaddelay'] > -1) {
 	$headerlib->add_js('setTimeout("doRefreshWebmail()", '.($module_params["autoloaddelay"] * 1000).');');
 }
 
 $smarty->assign('webmail_list', $webmail_list_page);
 
 $smarty->assign_by_ref('module_params', $module_params); // re-assigning this to cater for AJAX reloads
-$smarty->assign('maxlen', isset($module_params["maxlen"]) ? $module_params["maxlen"] : 30);
-$smarty->assign('nonums', isset($module_params["nonums"]) ? $module_params["nonums"] : 'n');
+$smarty->assign('maxlen', isset($module_params['maxlen']) ? $module_params['maxlen'] : 30);
+$smarty->assign('nonums', isset($module_params['nonums']) ? $module_params['nonums'] : 'n');
 $smarty->assign('request_uri', strpos($_SERVER['REQUEST_URI'], '?') === false ? $_SERVER['REQUEST_URI'].'?' : $_SERVER['REQUEST_URI'].'&');
 $module_rows = count($webmail_list);
 $smarty->assign('module_rows', $module_rows);

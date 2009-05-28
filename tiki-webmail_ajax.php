@@ -19,8 +19,6 @@ if (!isset($_REQUEST['xjxfun'])) {	// "normal" (non-AJAX) page load
 	$ajaxlib->registerTemplate('modules/mod-webmail_inbox.tpl');
 	
 	$_SESSION['webmailinbox'][$divId]['module_params'] = $module_params;
-
-	$msg = tr('Checking').'...';
 	
 	// set up xajax javascript
 	$headerlib->add_js( "
@@ -31,34 +29,18 @@ function doTakeWebmail(messageID) {
 	xajax.config.statusMessages = true;
 	xajax.config.waitCursor = false;
 	xajax_takeGroupMail('$divId', messageID);
-	\$jq('#$divId .webmail_refresh_icon').hide();
-	\$jq('#$divId .webmail_refresh_busy').show();
-	\$jq('#$divId .webmail_refresh_message').text('$msg');
+	showWebmailMessage('".tra('Taking')."...');
 	\$jq('#$divId .webmail_refresh_message').show();
+}
 
-
-/*	var data = new Array();
-	data['channels'] = new Array();
-	data['channels'][0] = new Array();
-	data['channels'][0]['channel_name']= 'groupmail_ticket_create';
-	data['channels'][0]['trackerid']	= '12';
-	data['channels'][0]['fromid']		= '42';
-	data['channels'][0]['userid']		= '43';
-	data['channels'][0]['subjectid']	= '44';
-	data['channels'][0]['from']		= 'jonny@nospaces.net';
-	data['channels'][0]['user']		= 'admin';
-	data['channels'][0]['subject']	='here is the subject!';
+function doPutBackWebmail(messageID) {
 	
-	data['return_uri'] = '/aptana/tiki-trunk/tiki-view_tracker.php?trackerId=12';
-	
-	var str = \$jq.param(data);
-	
-	\$jq.post( 'tiki-channel.php', str,
-	//\$jq().load( 'tiki-channel.php', data,
-		function(data){
-//			location.href = '/aptana/tiki-trunk/tiki-view_tracker.php?trackerId=12';
-		});
-*/
+	xajax.config.requestURI = 'tiki-webmail_ajax.php';	// tell it where to send the request
+	xajax.config.statusMessages = true;
+	xajax.config.waitCursor = false;
+	xajax_putBackGroupMail('$divId', messageID);
+	showWebmailMessage('".tra('Putting back')."...');
+	\$jq('#$divId .webmail_refresh_message').show();
 }
 
 function doRefreshWebmail(start, reload) {
@@ -67,10 +49,7 @@ function doRefreshWebmail(start, reload) {
 		xajax.config.statusMessages = true;
 		xajax.config.waitCursor = false;
 		xajax_refreshWebmail('$divId', start, reload);
-		\$jq('#$divId .webmail_refresh_icon').hide();
-		\$jq('#$divId .webmail_refresh_busy').show();
-		\$jq('#$divId .webmail_refresh_message').text('$msg');
-		\$jq('#$divId .webmail_refresh_message').show();
+		showWebmailMessage('".tra('Checking')."...');
 	}
 	if (typeof autoRefresh != 'undefined' && typeof doRefreshWebmail == 'function') {
 		setTimeout('doRefreshWebmail()', autoRefresh);
@@ -78,8 +57,7 @@ function doRefreshWebmail(start, reload) {
 }
 
 function initWebmail() {
-	\$jq('#$divId .webmail_refresh_busy').hide();
-	\$jq('#$divId .webmail_refresh_icon').show();
+	clearWebmailMessage();
 	\$jq('#$divId .mod_webmail_list').show('slow');
 	if (jqueryTiki.tooltips) {
 		//\$jq('a.tips').cluetip({splitTitle: '|', showTitle: false, width: '150px', cluezIndex: 400});
@@ -88,9 +66,22 @@ function initWebmail() {
 	}
 }
 
-\$jq('document').ready( function() {
+function clearWebmailMessage() {
 	\$jq('#$divId .webmail_refresh_busy').hide();
+	\$jq('#$divId .webmail_refresh_icon').show();
 	\$jq('#$divId .webmail_refresh_message').hide();
+	\$jq('#$divId .webmail_refresh_message').text('');
+}
+
+function showWebmailMessage(inMsg) {
+	\$jq('#$divId .webmail_refresh_icon').hide();
+	\$jq('#$divId .webmail_refresh_busy').show();
+	\$jq('#$divId .webmail_refresh_message').text(inMsg);
+	\$jq('#$divId .webmail_refresh_message').show();
+}
+
+\$jq('document').ready( function() {
+	clearWebmailMessage();
 	\$jq('#$divId .mod_webmail_list').hide();
 });
 ");
@@ -100,26 +91,26 @@ function initWebmail() {
 }
 
 function refreshWebmail($destDiv = 'mod-webmail_inbox', $inStart = 0, $inReload = false) {
-	global $user, $smarty, $prefs, $ajaxlib;
+	global $user, $smarty, $prefs, $ajaxlib, $module_params;
 	
 	if (isset($_SESSION['webmailinbox'][$destDiv]['module_params'])) {
-		$params = $_SESSION['webmailinbox'][$destDiv]['module_params'];
+		$module_params = $_SESSION['webmailinbox'][$destDiv]['module_params'];
 	} else {
-		$params = Array();	// TODO error?
+		$module_params = Array();	// TODO error?
 	}
 	if ($inReload) {
-		$params['reload'] = 'y';
+		$module_params['reload'] = 'y';
 	}
-	$params['nobox'] = 'y';
-	$params['notitle'] = 'y';
-	$params['np'] = '0';
-	$params['module'] = 'webmail_inbox';
+	$module_params['nobox'] = 'y';
+	$module_params['notitle'] = 'y';
+	$module_params['np'] = '0';
+	$module_params['module'] = 'webmail_inbox';
 	if ($inStart > 0) {
 		$_SESSION['webmailinbox'][$destDiv]['start'] = $inStart;
 	}
 	
 	include('lib/wiki-plugins/wikiplugin_module.php');
-	$data = wikiplugin_module('', $params);
+	$data = wikiplugin_module('', $module_params);
 	$objResponse = new xajaxResponse();
 	$objResponse->script('setTimeout("initWebmail()",1000)');
 	
@@ -128,18 +119,18 @@ function refreshWebmail($destDiv = 'mod-webmail_inbox', $inStart = 0, $inReload 
 }
 
 function takeGroupMail($destDiv = 'mod-webmail_inbox', $msgId) {
-	global $prefs, $trklib, $user, $webmaillib, $dbTiki;
+	global $prefs, $trklib, $user, $webmaillib, $dbTiki, $module_params;
 	
 	if (!isset($webmaillib)) { include_once ('lib/webmail/webmaillib.php'); }
 	if (!isset($trklib)) { include_once('lib/trackers/trackerlib.php'); }
 
 	if (isset($_SESSION['webmailinbox'][$destDiv]['module_params'])) {
-		$params = $_SESSION['webmailinbox'][$destDiv]['module_params'];
+		$module_params = $_SESSION['webmailinbox'][$destDiv]['module_params'];
 	} else {
-		$params = Array();	// TODO error?
+		$module_params = Array();	// TODO error?
 	}
-	$accountid = isset($params["accountid"]) ? $params['accountid'] : 0;
-	$ls = $webmaillib->refresh_mailbox($user, $accountid);
+	$accountid = isset($module_params["accountid"]) ? $module_params['accountid'] : 0;
+	$ls = $webmaillib->refresh_mailbox($user, $accountid, false);
 	
 	$m = $ls[$msgId - 1];
 	$from		= $m['sender']['email'];
@@ -147,11 +138,11 @@ function takeGroupMail($destDiv = 'mod-webmail_inbox', $msgId) {
 	$realmsgid	= $m['realmsgid'];
 	
 	// maybe a pref?
-	$trackerId	= $params['trackerId'];	//12;
-	$fromFId = $params['fromFId'];	//42;
-	$operatorFId = $params['operatorFId'];	//43;
-	$subjectFId = $params['subjectFId'];	//44;
-	$messageFId = $params['messageFId'];	//45;
+	$trackerId	= $module_params['trackerId'];	//12;
+	$fromFId = $module_params['fromFId'];	//42;
+	$operatorFId = $module_params['operatorFId'];	//43;
+	$subjectFId = $module_params['subjectFId'];	//44;
+	$messageFId = $module_params['messageFId'];	//45;
 	
 	$items['data'][0]['fieldId'] = $fromFId;
 	$items['data'][0]['type'] = 't';
@@ -173,6 +164,33 @@ function takeGroupMail($destDiv = 'mod-webmail_inbox', $msgId) {
 	return $objResponse;
 }
 
+function putBackGroupMail($destDiv = 'mod-webmail_inbox', $msgId) {
+	global $prefs, $trklib, $user, $webmaillib, $dbTiki, $module_params;
+	
+	if (!isset($webmaillib)) { include_once ('lib/webmail/webmaillib.php'); }
+	if (!isset($trklib)) { include_once('lib/trackers/trackerlib.php'); }
+
+	if (isset($_SESSION['webmailinbox'][$destDiv]['module_params'])) {
+		$module_params = $_SESSION['webmailinbox'][$destDiv]['module_params'];
+	} else {
+		$module_params = Array();	// TODO error?
+	}
+	$accountid = isset($module_params["accountid"]) ? $module_params['accountid'] : 0;
+	$ls = $webmaillib->refresh_mailbox($user, $accountid, false);
+	
+	$m = $ls[$msgId - 1];
+	
+	$itemid = $trklib->get_item_id( $module_params['trackerId'], $module_params['messageFId'], $m['realmsgid']);
+	if ($itemid > 0 && $user == $trklib->get_item_value($module_params['trackerId'], $itemid, $module_params['operatorFId'])) {	// simple security check
+		$trklib->remove_tracker_item($itemid);
+	}
+	
+	$objResponse = new xajaxResponse();
+	$objResponse->script('doRefreshWebmail();');
+	return $objResponse;
+}
+
 $ajaxlib->registerFunction('refreshWebmail');
 $ajaxlib->registerFunction('takeGroupMail');
+$ajaxlib->registerFunction('putBackGroupMail');
 $ajaxlib->processRequests();
