@@ -27,7 +27,7 @@ class WebMailLib extends TikiLib {
 //		}
 		
 //		$query = "delete from `tiki_webmail_messages` where `accountId`=? and `mailId`=? and `user`=?";
-		$query = "delete from `tiki_webmail_messages` where `mailId`=?";
+		$query = "delete from `tiki_webmail_messages` where `mailId`=?";	// FIXME - looks like this deletes other users' messages - $msgid is the index in a single mailbox afaik (jonnyb)
 		$result = $this->query($query, array($msgid));
 	}
 
@@ -259,6 +259,100 @@ class WebMailLib extends TikiLib {
 
 		$res = $result->fetchRow();
 		return $res;
+	}
+	
+	function refresh_mailbox($user, $accountid, $reload = false) {
+		global $webmail_account;	// TODO remove global
+		
+		if (!empty($accountid)) {
+			$webmail_account = $this->get_webmail_account($user, $accountid);
+		} else {
+			$webmail_account = $this->get_current_webmail_account($user);
+		}
+		
+		if (empty($webmail_account)) {
+			return Array();
+		}
+		
+		// start getting mail
+		
+		$timeout = -1;
+		if ($webmail_account['autoRefresh'] > 0) {
+			$timeout = time() - $webmail_account['autoRefresh'];
+		}
+		
+		$serialized_params = $webmail_account['accountId'].':'.$webmail_account['user'].':'.$webmail_account['account'];
+		
+		if (!$reload && isset($_SESSION['webmailinbox'][$serialized_params]) && isset($_SESSION['webmailinbox'][$serialized_params]['timestamp']) && $_SESSION['webmailinbox'][$serialized_params]['timestamp'] >  $timeout) {
+			$webmail_list = $_SESSION['webmailinbox'][$serialized_params]['webmail_list'];
+		
+		} else {	// no cached list or timed out
+	
+			// get mail the zend way
+			require_once('lib/core/lib/Zend/Mail/Storage/Pop3.php');
+			
+			// connecting with Pop3
+			$mail = new Zend_Mail_Storage_Pop3(
+				array('host'     => $webmail_account["pop"],
+		              'user'     => $webmail_account["username"],
+		              'password' => $webmail_account["pass"]));
+			
+			if (empty($mail)) {
+				return Array();
+			}
+			
+			$webmail_list = array();
+			
+			foreach ($mail as $messageNum => $message) {
+				$headers = $message->getHeaders();		// quicker than the Zend accessors?
+				$wmail = Array();	// Tiki Webmail row
+				
+				$wmail['from'] = $headers['from'];
+				$wmail['to'] = $headers['to'];
+				$wmail['subject'] = decode_subject_utf8($headers['subject']);
+				$wmail['date'] = $headers['date'];
+				$wmail["timestamp"] = strtotime($headers['date']);
+				
+				$from = preg_split('/[<>]/', $wmail['from'], -1,PREG_SPLIT_NO_EMPTY);
+				$wmail['sender']['name'] = $from[0];
+				$wmail['sender']['email'] = $from[1];
+				if (empty($wmail['sender']['email'])) {
+					$wmail['sender']['email'] = $wmail['sender']['name'];
+				} else if (!strstr($wmail['sender']['email'], '@')) {
+					$e = $wmail['sender']['name'];
+					$wmail['sender']['name'] = $wmail['sender']['email'];
+					$wmail['sender']['email'] =  $wmail['sender']['name'];
+				}
+				$wmail['sender']['name'] = htmlspecialchars($wmail['sender']['name']);
+
+//				$l = $pop3->_cmdList($i);
+//				$wmail['size'] = $l['size'];
+
+				if (!empty($headers['messageId'])) {
+					$wmail['realmsgid'] = ereg_replace('[<>]','', $headers['messageId']);
+				} else {
+					$wmail['realmsgid'] = $wmail['timestamp'].'.'.$wmail['sender']['email'];	// TODO better?
+				}
+				
+				if (empty($wmail['subject'])) {
+					$wmail['subject'] = '[' . tra('No subject'). ']';
+				}
+				$wmail['subject'] = htmlspecialchars($wmail['subject']);
+					
+					
+				$wmail['msgid'] = $messageNum;
+				$webmail_list[] = $wmail;
+				if ($messageNum > 90) {
+					$a = 1;
+				}
+			}
+				
+			$_SESSION['webmailinbox'][$serialized_params]['webmail_list'] = $webmail_list;
+			$_SESSION['webmailinbox'][$serialized_params]['timestamp'] = time();
+	
+		}		// endif no cached list of timed out
+	
+		return $webmail_list;
 	}
 } # class WebMailLib
 $webmaillib = new WebMailLib($dbTiki);
