@@ -12,7 +12,8 @@ if (strpos($_SERVER['SCRIPT_NAME'],basename(__FILE__)) !== FALSE) {
   exit;
 }
 
-require_once(SMARTY_DIR.'Smarty.class.php');
+require_once 'lib/setup/third_party.php';
+require_once SMARTY_DIR.'Smarty.class.php';
 
 class Smarty_Tikiwiki extends Smarty {
 	
