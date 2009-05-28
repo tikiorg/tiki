@@ -11,7 +11,7 @@
 {/if}
 
 {if $find ne '' and $listpages|@count ne '0'}
-	<p>{tr}Found{/tr} &quot;{$find}&quot {tr}in{/tr} {$listpages|@count} {tr}pages{/tr}.</p>
+	<p>{tr}Found{/tr} &quot;{$find}&quot; {tr}in{/tr} {$listpages|@count} {tr}pages{/tr}.</p>
 {/if}
 
 
