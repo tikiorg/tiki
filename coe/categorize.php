@@ -41,6 +41,10 @@ if ($prefs['feature_categories'] == 'y') {
 			$_REQUEST['cat_categories'][] = $prefs['wikiapproval_outofsync_category'];	
 		}
 	}
+	if ($prefs["feature_wikiapproval"] == 'y' && $cat_type == 'wiki page' && substr($cat_objid, 0, strlen($prefs['wikiapproval_prefix'])) != $prefs['wikiapproval_prefix'] && in_array($prefs['wikiapproval_staging_category'], $_REQUEST['cat_categories']) && in_array($prefs['wikiapproval_approved_category'], $_REQUEST['cat_categories'])) {
+		// Drop the staging category if page without staging prefix is attempted to be categorized in both staging category and approved category
+		$_REQUEST['cat_categories'] = array_diff($_REQUEST['cat_categories'],Array($prefs['wikiapproval_staging_category']));
+	}
 	$categlib->update_object_categories(isset($_REQUEST['cat_categories'])?$_REQUEST['cat_categories']:'', $cat_objid, $cat_type, $cat_desc, $cat_name, $cat_href);
 
 	$cats = $categlib->get_object_categories($cat_type, $cat_objid);
