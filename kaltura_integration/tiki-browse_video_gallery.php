@@ -10,6 +10,7 @@
 $section = 'galleries';
 require_once ('tiki-setup.php');
 
+include_once ("lib/kaltura/includes.php");
 include_once ("lib/videogals/videogallib.php");
 include_once ('lib/stats/statslib.php');
 
@@ -124,10 +125,7 @@ if ($_REQUEST["galleryId"] != 0) {
 	$gal_info['showcreated'] ='n';
 	$gal_info['showuser'] ='n';
 	$gal_info['showhits'] ='y';
-	$gal_info['showxysize'] ='y';
-	$gal_info['showfilesize'] ='n';
-	$gal_info['showfilename'] ='n';
-	$gal_info['defaultscale'] ='o';
+
 
 }
 
@@ -141,14 +139,7 @@ $smarty->assign_by_ref('showdescription', $gal_info['showdescription']);
 $smarty->assign_by_ref('showcreated', $gal_info['showcreated']);
 $smarty->assign_by_ref('showuser', $gal_info['showuser']);
 $smarty->assign_by_ref('showhits', $gal_info['showhits']);
-$smarty->assign_by_ref('showxysize', $gal_info['showxysize']);
-$smarty->assign_by_ref('showfilesize', $gal_info['showfilesize']);
-$smarty->assign_by_ref('showfilename', $gal_info['showfilename']);
 
-if ($prefs['preset_galleries_info'] == 'y' && $prefs['scaleSizeGalleries'] > 0) {
-     $gal_info['defaultscale'] = $prefs['scaleSizeGalleries'];
-}
-$smarty->assign_by_ref('defaultscale', $gal_info['defaultscale']);
 
 $videogallib->add_gallery_hit($_REQUEST["galleryId"]);
 
@@ -262,7 +253,7 @@ if ($_REQUEST["galleryId"] == 0) {
 } else {
 	$info = $videogallib->get_gallery($_REQUEST["galleryId"]);
 
-	$nextscaleinfo = $videogallib->get_gallery_next_scale($_REQUEST["galleryId"]);
+
 }
 
 if (empty($info['maxRows']) || $info['maxRows'] < 0)
@@ -270,12 +261,6 @@ if (empty($info['maxRows']) || $info['maxRows'] < 0)
 
 if (empty($info['rowImages']) || $info['rowImages'] < 0)
 	$info['rowImages'] = 5;
-
-if (!isset($nextscaleinfo['scale'])) {
-	$nextscaleinfo['scale'] = 0;
-
-	$nextscaleinfo['scale'] = 0;
-}
 
 //print $info["rowImages"] ;
 $maxImages = $info["maxRows"] * $info["rowImages"];
@@ -287,7 +272,7 @@ $smarty->assign_by_ref('thy', $info["thumbSizeY"]);
 $smarty->assign_by_ref('name', $info["name"]);
 $smarty->assign('title', $info["name"]);
 $smarty->assign_by_ref('description', $info["description"]);
-$smarty->assign_by_ref('nextscale', $nextscaleinfo['scale']);
+
 
 // Can we rotate images
 if ($videogallib->canrotate) {
@@ -332,6 +317,27 @@ $subgals = $videogallib->get_subgalleries($offset, $maxImages, $sort_mode, '', $
 $remainingImages = $maxImages-count($subgals['data']);
 $newoffset = $offset -$subgals['cant'];
 $images = $videogallib->get_images($newoffset, $remainingImages, $sort_mode, $find, $_REQUEST["galleryId"]);
+$videos = $videogallib->get_videos($newoffset, $remainingImages, $sort_mode, $find, $_REQUEST["galleryId"]);
+
+$conf = kaltura_init_config();
+
+$kuser = new KalturaSessionUser();
+$kuser->userId = "123";
+$cl = new KalturaClient($conf);
+
+
+$res =$cl->start($user, $conf->secret);
+
+for($i=0;$i<=count($videos['data'])-1;$i++){
+
+	$entry_id=$videos['data'][$i]['entryId'];
+	print $entry_id;
+	$res = $cl->getEntry ( $kuser , $entry_id);
+	$videos['data'][$i]= array_merge($videos['data'][$i],$res['result']['entry']);
+
+}
+
+print_r($videos);
 //get categories for each images
 global $objectlib;
 if ($prefs['feature_categories'] == 'y') {
@@ -350,6 +356,7 @@ $smarty->assign('num_objects',count($subgals['data'])+count($images['data']));
 $smarty->assign('num_subgals',count($subgals['data']));
 $smarty->assign('num_images',count($images['data']));
 
+$smarty->assign_by_ref('videos', $videos["data"]);
 $smarty->assign_by_ref('images', $images["data"]);
 $smarty->assign('cant', $subgals['cant']+ $images['cant']);
 $smarty->assign_by_ref('subgals', $subgals['data']);
