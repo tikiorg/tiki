@@ -384,7 +384,7 @@
 {elseif $field_value.type eq 'q'}
 	<input type="hidden" name="track[{$field_value.fieldId}]" />
 	<input type="hidden" name="{$field_value.ins_id}" value="{$field_field.value|escape}" />
-	{$field_value.value|escape}
+	{include file="tracker_item_field_value.tpl"}
 
 {/if}
 
