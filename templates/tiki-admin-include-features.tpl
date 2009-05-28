@@ -15,7 +15,7 @@
  * sections and add a configuration icon to the sections list
  *}
 {tabs name="{tr}Main Features{/tr}"}
-				<div class="admin">
+				<div class="admin clearfix">
 {* ---------- Main features ------------ *}
 					<div class="half_width">
 						<span class="checkbox"><input type="checkbox" name="feature_wiki" {if $prefs.feature_wiki eq 'y'}checked="checked"{/if}/></span>
