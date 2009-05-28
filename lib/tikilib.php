@@ -1444,7 +1444,7 @@ class TikiLib extends TikiDB {
 
 	/*shared*/
 	function get_user_groups($user) {
-		global $prefs;
+		global $prefs, $userlib;
 		if (!$user) {
 			$ret = array();
 			$ret[] = "Anonymous";
@@ -1465,7 +1465,7 @@ class TikiLib extends TikiDB {
 			$ret = array();
 			while ($res = $result->fetchRow()) {
 				$ret[] = $res["groupName"];
-				$included = $this->get_included_groups($res["groupName"]);
+				$included = $userlib->get_included_groups($res["groupName"]);
 				$ret = array_merge($ret, $included);
 			}
 			$ret[] = "Registered";
