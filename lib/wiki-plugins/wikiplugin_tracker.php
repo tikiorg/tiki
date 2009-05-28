@@ -477,6 +477,9 @@ function wikiplugin_tracker($data, $params) {
 							return '';
 						}
 					} else {
+						if (strstr($url, 'itemId')) {
+							$url = str_replace('itemId', 'itemId='.$rid, $url);
+						}
 						header("Location: $url");
 						die;
 					}
