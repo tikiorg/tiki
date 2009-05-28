@@ -677,7 +677,7 @@ name="w_displayed_default" {if $prefs.w_displayed_default eq 'y'} checked="check
 	</div>
 </div>
 <div class="adminoptionbox">
-	<div class="adminoptionlabel"><label for="wikiapproval_approved_category">{tr}Approved{/tr}:</label>
+	<div class="adminoptionlabel"><label for="wikiapproval_approved_category">{tr}Approved{/tr} {tr}(mandatory for feature to work){/tr}:</label>
 	<select name="wikiapproval_approved_category" id="wikiapproval_approved_category">
 	<option value="0" {if $prefs.feature_wikiapproval_approved_category eq 0}selected="selected"{/if}>{tr}None{/tr}</option>
 	{section name=ix loop=$catree}	
