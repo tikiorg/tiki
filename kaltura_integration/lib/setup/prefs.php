@@ -1387,6 +1387,14 @@ Style,FontName,FontSize,-,TextColor,BGColor,-,Source",
 		$prefs['cas_path'] = '';
 	}
 
+
+	//Kaltura Video Galleries
+
+	$prefs['maxRowsGalleries'] = '';
+	$prefs['rowVideosGalleries'] = '';
+	$prefs['thumbSizeXVideoGalleries'] = '';
+	$prefs['thumbSizeYGalleries'] = '';
+
 	// Special default values
 
 	if ( is_file('styles/'.$tikidomain.'/'.$prefs['site_favicon']) )

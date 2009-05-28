@@ -7,8 +7,8 @@ if (strpos($_SERVER["SCRIPT_NAME"],basename(__FILE__)) !== false) {
   exit;
 }
 
-class VideoGalsLib extends TikiLib {
-	function VideoGalsLib($db) {
+class ImageGalsLib extends TikiLib {
+	function ImageGalsLib($db) {
 		global $prefs;
 
 		$this->TikiLib($db);
@@ -289,7 +289,7 @@ class VideoGalsLib extends TikiLib {
 				$reason = imagick_failedreason($handle);
 
 				$description = imagick_faileddescription($handle);
-				// todo: Build in error handler in imagegallib
+				// todo: Build in error handler in videogallib
 				exit;
 			}
 		} else if ($this->uselib == "gd") {
@@ -514,14 +514,14 @@ class VideoGalsLib extends TikiLib {
 		global $prefs, $user;
 
 		if ($prefs['count_admin_pvs'] == 'y' || $user != 'admin') {
-			$query = "update `tiki_galleries_videos` set `hits`=`hits`+1 where `galleryId`=?";
+			$query = "update `tiki_galleries_video` set `hits`=`hits`+1 where `galleryId`=?";
 
 			$result = $this->query($query,array((int) $id));
 		}
 
 		if ($prefs['feature_score'] == 'y') {
 		    $this->score_event($user, 'igallery_see', $id);
-		    $query = "select `user` from `tiki_galleries_videos` where `galleryId`=?";
+		    $query = "select `user` from `tiki_galleries_video` where `galleryId`=?";
 		    $owner = $this->getOne($query, array((int)$id));
 		    $this->score_event($owner, 'igallery_seen', "$user:$id");
 		}
@@ -881,7 +881,7 @@ class VideoGalsLib extends TikiLib {
 			$result = $this->query($query,array((int)$imageId,(int)$t_data['xsize'],(int)$t_data['ysize'],'t',(int)$size,$t_type,$filename,$t_data['data']));
 		}
 
-		$query = "update `tiki_galleries_videos` set `lastModif`=? where `galleryId`=?";
+		$query = "update `tiki_galleries_video` set `lastModif`=? where `galleryId`=?";
 		$result = $this->query($query,array((int)$this->now,(int)$galleryId));
 
 		if ($prefs['feature_score'] == 'y') {
@@ -1014,6 +1014,46 @@ class VideoGalsLib extends TikiLib {
 		return $retval;
 	}
 
+	function get_videos($offset, $maxRecords, $sort_mode, $find, $galleryId = -1) {
+
+		if ($find) {
+			$findesc = '%' . $find . '%';
+
+			$mid = " and (`name` like ? or `description` like ?)";
+			$bindvars=array($findesc,$findesc);
+		} else {
+			$mid = "";
+			$bindvars=array();
+		}
+
+		if ($galleryId != -1 && is_numeric($galleryId)) {
+			$mid .= " and i.`galleryId`=? ";
+			$bindvars[]=(int) $galleryId;
+		} else if ($galleryId == -1) {//don't show system gallery
+			$mid .= 'and i.`galleryId`!=? ';
+			$bindvars[] = 0;
+		}
+		$query_cant = "select count(*) from `tiki_videos` i  where 1 $mid";
+		$cant = $this->getOne($query_cant, $bindvars);
+
+
+		$query = "select i.`videoId` ,i.`entryId` from `tiki_videos` i where i.`galleryId`=?";
+		$bindvars[] = 'o';
+		$result = $this->query($query,array((int)$galleryId,$bindvars,$maxRecords,$offset));
+		$ret = array();
+
+		while ($res = $result->fetchRow()) {
+
+			$ret[] = $res;
+
+		}
+
+		$retval = array();
+		$retval["data"] = $ret;
+		$retval["cant"] = $cant;
+		return $retval;
+	}
+
         function get_subgalleries($offset, $maxRecords, $sort_mode, $find, $galleryId = -1) {
 
 		if ($sort_mode == '')
@@ -1035,28 +1075,28 @@ class VideoGalsLib extends TikiLib {
 	       		g.`created`,g.`lastModif`,g.`visible`,g.`theme`,g.`user`,
        			g.`hits`,g.`maxRows`,g.`rowImages`,g.`thumbSizeX`,
 	 		g.`thumbSizeY`,g.`public`,g.`sortorder`,g.`sortdirection`,
-			g.`galleryimage`,g.`parentgallery`,count(i.`imageId`) as images
-			from `tiki_galleries_videos` g, `tiki_images` i
+			g.`parentgallery`,count(i.`imageId`) as images
+			from `tiki_galleries_video` g, `tiki_images` i
 			where i.`galleryId`=g.`galleryId` and
                  	`parentgallery`=? $mid group by
 			g.`galleryId`, g.`name`,g.`description`,
 			g.`created`,g.`lastModif`,g.`visible`,g.`theme`,g.`user`,
 			g.`hits`,g.`maxRows`,g.`rowImages`,g.`thumbSizeX`,
 			g.`thumbSizeY`,g.`public`,g.`sortorder`,g.`sortdirection`,
-			g.`galleryimage`,g.`parentgallery`
+			g.`parentgallery`
                 order by ".$this->convert_sortmode($sort_mode);
                 $result = $this->query($query,$bindvars,$maxRecords,$offset);
                 $ret = array();
 
                 while ($res = $result->fetchRow()) {
 			// get the number of the gallery representation image
-			$res['imageId']=$this->get_gallery_image($res['galleryId'],$res['galleryimage']);
+			//$res['imageId']=$this->get_gallery_image($res['galleryId'],$res['galleryimage']);
                         $ret[] = $res;
                 }
 
                 $retval = array();
                 $retval["data"] = $ret;
-                $query_cant = "select count(*) from `tiki_galleries_videos` where `parentgallery`=? $mid";
+                $query_cant = "select count(*) from `tiki_galleries_video` where `parentgallery`=? $mid";
                 $cant = $this->getOne($query_cant,$bindvars);
                 $retval["cant"] = $cant;
                 return $retval;
@@ -1088,7 +1128,7 @@ class VideoGalsLib extends TikiLib {
 			case 'first':
 			    if (!$sort_mode) {
     				// first image in default gallery sortorder
-    				$query2='select `sortorder`,`sortdirection` from `tiki_galleries_videos` where `galleryId`=?';
+    				$query2='select `sortorder`,`sortdirection` from `tiki_galleries_video` where `galleryId`=?';
     				$result=$this->query($query2,$bindvars);
     				$res = $result->fetchRow();
     				$sort_mode=$res['sortorder'].'_'.$res['sortdirection'];
@@ -1110,7 +1150,7 @@ class VideoGalsLib extends TikiLib {
 			        $sort_mode = $invsor[0] . '_' . ($invsor[1] == 'asc' ? 'desc' : 'asc');
 			    } else {
     				// last image in default gallery sortorder
-    				$query2='select `sortorder`,`sortdirection` from `tiki_galleries_videos` where `galleryId`=?';
+    				$query2='select `sortorder`,`sortdirection` from `tiki_galleries_video` where `galleryId`=?';
     				$result=$this->query($query2,$bindvars);
     				$res = $result->fetchRow();
     				if($res['sortdirection'] == 'asc') {
@@ -1130,7 +1170,7 @@ class VideoGalsLib extends TikiLib {
 				break;
 			case 'default':
 				//check gallery settings and re-run this function
-				$query='select `galleryimage` from `tiki_galleries_videos` where `galleryId`=?';
+				$query='select `galleryimage` from `tiki_galleries_video` where `galleryId`=?';
 				$rule=$this->getOne($query,array($galleryId));
 				$imageId=$this->get_gallery_image($galleryId,$rule);
 				break;
@@ -1293,7 +1333,7 @@ class VideoGalsLib extends TikiLib {
 	    $ret["imageId"] = $res["imageId"];
 	    $ret["name"] = $res["name"];
 	    $ret["description"] = $res["description"];
-	    $query = "select `name`  from `tiki_galleries_videos` where `galleryId` = ?";
+	    $query = "select `name`  from `tiki_galleries_video` where `galleryId` = ?";
 	    $ret["gallery"] = $this->getOne($query,array((int)$res["galleryId"]));
 	} else {
 	    $ret["galleryId"] = 0;
@@ -1349,8 +1389,8 @@ class VideoGalsLib extends TikiLib {
 	    // If sort mode is versions then offset is 0, maxRecords is -1 (again) and sort_mode is nil
 	    // If sort mode is links then offset is 0, maxRecords is -1 (again) and sort_mode is nil
 	    // If sort mode is backlinks then offset is 0, maxRecords is -1 (again) and sort_mode is nil
-	    $query = "select g.*, a.`name` as parentgalleryName from `tiki_galleries_videos` g left join `tiki_galleries_videos` a on g.`parentgallery` = a.`galleryId` $whuser order by ".$this->convert_sortmode($sort_mode);
-	    $query_cant = "select count(*) from `tiki_galleries_videos` g $whuser";
+	    $query = "select g.*, a.`name` as parentgalleryName from `tiki_galleries_video` g left join `tiki_galleries_video` a on g.`parentgallery` = a.`galleryId` $whuser order by ".$this->convert_sortmode($sort_mode);
+	    $query_cant = "select count(*) from `tiki_galleries_video` g $whuser";
 	    $result = $this->query($query,$bindvars,$maxRecords,$offset);
 	    $cant = $this->getOne($query_cant,$bindvars);
 	    $ret = array();
@@ -1423,8 +1463,8 @@ class VideoGalsLib extends TikiLib {
 	    // If sort mode is versions then offset is 0, maxRecords is -1 (again) and sort_mode is nil
 	    // If sort mode is links then offset is 0, maxRecords is -1 (again) and sort_mode is nil
 	    // If sort mode is backlinks then offset is 0, maxRecords is -1 (again) and sort_mode is nil
-	    $query = "select * from `tiki_galleries_videos` where `visible`=? $whuser order by ".$this->convert_sortmode($sort_mode);
-	    $query_cant = "select count(*) from `tiki_galleries_videos` where `visible`=? $whuser";
+	    $query = "select * from `tiki_galleries_video` where `visible`=? $whuser order by ".$this->convert_sortmode($sort_mode);
+	    $query_cant = "select count(*) from `tiki_galleries_video` where `visible`=? $whuser";
 	    $result = $this->query($query,$bindvars,$maxRecords,$offset);
 	    $cant = $this->getOne($query_cant,$bindvars);
 	    $ret = array();
@@ -1474,14 +1514,14 @@ class VideoGalsLib extends TikiLib {
 	}
 
     function get_gallery($id) {
-	$query = "select * from `tiki_galleries_videos` where `galleryId`=?";
+	$query = "select * from `tiki_galleries_video` where `galleryId`=?";
 	$result = $this->query($query,array((int) $id));
 	$res = $result->fetchRow();
 	return $res;
     }
 
 	function get_gallery_owner($galleryId) {
-		$query = "select `user` from `tiki_galleries_videos` where `galleryId`=?";
+		$query = "select `user` from `tiki_galleries_video` where `galleryId`=?";
 
 		$user = $this->getOne($query,array((int)$galleryId));
 		return $user;
@@ -1769,12 +1809,12 @@ $galleryimage='first',$parentgallery=-1,$showname='y',$showimageid='n',$showdesc
 
 		// check if the gallery already exists. if yes: do update, if no: update it
 		if ($galleryId<1)
-		$galleryId = $this->getOne("select `galleryId` from `tiki_galleries_videos` where `name`=? and `parentgallery`=?",array($name,$parentgallery));
+		$galleryId = $this->getOne("select `galleryId` from `tiki_galleries_video` where `name`=? and `parentgallery`=?",array($name,$parentgallery));
 
 		if ($galleryId > 0) {
 			//$res = $result->fetchRow();
 			//if( ($user == 'admin') || ($res["user"]==$user) ) {
-			$query = "update `tiki_galleries_videos` set `name`=?,`visible`=?, `geographic`=?,`maxRows`=? , `rowImages`=?,
+			$query = "update `tiki_galleries_video` set `name`=?,`visible`=?, `geographic`=?,`maxRows`=? , `rowImages`=?,
                 `thumbSizeX`=?, `thumbSizeY`=?, `description`=?, `theme`=?,
                 `lastModif`=?, `public`=?, `sortorder`=?, `sortdirection`=?, `galleryimage`=?,
 		`parentgallery`=?,`showname`=?,`showimageid`=?,`showcategories`=?,`showdescription`=?,
@@ -1787,12 +1827,12 @@ $this->query($query,array($name,$visible,$geographic,(int)$maxRows,(int)$rowImag
 		} else {
 			// Create a new record
 			$query = "insert into
-`tiki_galleries_videos`(`name`,`description`,`theme`,`created`,`user`,`lastModif`,`maxRows`,`rowImages`,`thumbSizeX`,`thumbSizeY`,`public`,`hits`,`visible`,`sortorder`,`sortdirection`,`galleryimage`,`parentgallery`,`showname`,`showimageid`,`showdescription`,`showcategories`,`showcreated`,`showuser`,`showhits`,`showxysize`,`showfilesize`,`showfilename`,`defaultscale`,`geographic`)
-values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+`tiki_galleries_video`(`name`,`description`,`theme`,`created`,`user`,`lastModif`,`maxRows`,`rowImages`,`thumbSizeX`,`thumbSizeY`,`public`,`hits`,`visible`,`sortorder`,`sortdirection`,`parentgallery`,`showname`,`showimageid`,`showdescription`,`showcategories`,`showcreated`,`showuser`,`showhits`)
+values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			$bindvars=array($name,$description,$theme,(int) $this->now,$user,(int) $this->now,(int) $maxRows,(int) $rowImages,(int) $thumbSizeX,(int)
-$thumbSizeY,$public,0,$visible,$sortorder,$sortdirection,$galleryimage,(int)$parentgallery,$showname,$showimageid,$showdescription,$showcategories,$showcreated,$showuser,$showhits,$showxysize,$showfilesize,$showfilename,$defaultscale,$geographic);
+$thumbSizeY,$public,0,$visible,$sortorder,$sortdirection,(int)$parentgallery,$showname,$showimageid,$showdescription,$showcategories,$showcreated,$showuser,$showhits);
 			$result = $this->query($query,$bindvars);
-			$galleryId = $this->getOne("select max(`galleryId`) from `tiki_galleries_videos` where `name`=? and `created`=?",array($name,(int) $this->now));
+			$galleryId = $this->getOne("select max(`galleryId`) from `tiki_galleries_video` where `name`=? and `created`=?",array($name,(int) $this->now));
 
 			if ($prefs['feature_score'] == 'y') {
 			    $this->score_event($user, 'igallery_new');
@@ -1808,9 +1848,9 @@ $thumbSizeY,$public,0,$visible,$sortorder,$sortdirection,$galleryimage,(int)$par
 	}
 
 	function add_gallery_scale($galleryId, $scale) {
-	        $old_scale = $this->getOne("select scale from tiki_galleries_scales where galleryId = ? AND scale = ?", array((int)$galleryId, (int)$scale));
+	        $old_scale = $this->getOne("select scale from tiki_galleries_video_scales where galleryId = ? AND scale = ?", array((int)$galleryId, (int)$scale));
 		if ($scale != $old_scale) {
-		    $query = "insert into `tiki_galleries_scales`(`galleryId`,`scale`)
+		    $query = "insert into `tiki_galleries_video_scales`(`galleryId`,`scale`)
             values(?,?)";
 		    $result = $this->query($query,array((int)$galleryId,(int)$scale));
 		}
@@ -1823,7 +1863,7 @@ $thumbSizeY,$public,0,$visible,$sortorder,$sortdirection,$galleryimage,(int)$par
                         $mid = " and `scale`=? ";
                         $bindvars[]=(int) $scale;
                 }
-                $query = "delete from `tiki_galleries_scales` where
+                $query = "delete from `tiki_galleries_video_scales` where
             `galleryId`=? $mid";
                 $result = $this->query($query,$bindvars);
         }
@@ -1873,7 +1913,7 @@ $thumbSizeY,$public,0,$visible,$sortorder,$sortdirection,$galleryimage,(int)$par
 			$this->remove_object('image', $res["imageId"]);
 		}
 
-		$query = "delete from `tiki_galleries_videos` where `galleryId`=?";
+		$query = "delete from `tiki_galleries_video` where `galleryId`=?";
 		$result = $this->query($query,array((int) $id));
 		$query = "delete from `tiki_images` where `galleryId`=?";
 		$result = $this->query($query,array((int) $id));
@@ -1888,7 +1928,7 @@ $thumbSizeY,$public,0,$visible,$sortorder,$sortdirection,$galleryimage,(int)$par
 	}
 
 	function get_gallery_scale_info($id) {
-		$query = "select * from `tiki_galleries_scales` where `galleryId`=?
+		$query = "select * from `tiki_galleries_video_scales` where `galleryId`=?
               order by `scale` asc";
 
 		$result = $this->query($query,array((int) $id));
@@ -1902,7 +1942,7 @@ $thumbSizeY,$public,0,$visible,$sortorder,$sortdirection,$galleryimage,(int)$par
 	}
 
 	function get_gallery_next_scale($id, $scale= 0) {
-		$query = "select * from `tiki_galleries_scales` where `galleryId`=?
+		$query = "select * from `tiki_galleries_video_scales` where `galleryId`=?
               and `scale` > ? order by `scale` asc";
 		$result = $this->query($query,array((int) $id,(int) $scale));
 		$res = $result->fetchRow();
@@ -1910,7 +1950,7 @@ $thumbSizeY,$public,0,$visible,$sortorder,$sortdirection,$galleryimage,(int)$par
 	}
 
 	function get_gallery_default_scale($id) {
-		$query = "select `defaultscale` from `tiki_galleries_videos` where `galleryId`=?";
+		$query = "select `defaultscale` from `tiki_galleries_video` where `galleryId`=?";
 		$ret=$this->getOne($query,array((int) $id));
 		return $ret;
 	}
@@ -1918,7 +1958,7 @@ $thumbSizeY,$public,0,$visible,$sortorder,$sortdirection,$galleryimage,(int)$par
 	function get_gallery_prevnext_scale($id,$currentscale) {
 		$ret=array();
 		$bindvars=array((int) $id, (int) $currentscale);
-		$query = 'select `scale` from `tiki_galleries_scales` where `galleryId`=? ';
+		$query = 'select `scale` from `tiki_galleries_video_scales` where `galleryId`=? ';
 		$query2 =$query.'and `scale`>? order by `scale` asc';
 		$ret['nextscale']=$this->getOne($query2,$bindvars);
 		$query2 =$query.'and `scale`<? order by `scale` desc';
@@ -2223,6 +2263,11 @@ $thumbSizeY,$public,0,$visible,$sortorder,$sortdirection,$galleryimage,(int)$par
 }
 global $dbTiki;
 global $videogallib;
-$videogallib = new VideoGalsLib($dbTiki);
+$videogallib = new ImageGalsLib($dbTiki);
 
 ?>
+
+
+
+
+
