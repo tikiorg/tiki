@@ -29,7 +29,7 @@ if ($prefs['feature_ajax'] == "y") {
 	require_once ("tiki-webmail_ajax.php");
 }
 
-global $webmaillib, $dbTiki, $headerlib, $user, $headerlib, $webmail_reload;
+global $webmaillib, $headerlib, $user, $webmail_reload, $webmail_start, $smarty, $dbTiki;
 if (!isset($webmaillib)) { include_once ('lib/webmail/webmaillib.php'); }
 require_once ("lib/webmail/net_pop3.php");
 include_once ("lib/webmail/tikimaillib.php");
@@ -45,168 +45,93 @@ if (isset($module_params["accountid"])) {
 if ($webmail_account && $webmail_account['autoRefresh'] > 0) {
 	$headerlib->add_js('var autoRefresh = '.($webmail_account['autoRefresh'] * 1000).';');
 }
-$webmail_reload = (isset($module_params["reload"]) && $module_params['reload'] == 'y'); 
+$webmail_reload = (isset($module_params['reload']) && $module_params['reload'] == 'y');
+$webmail_start = isset($_SESSION['webmailinbox'][$module_params['module_id']]['start']) ? $_SESSION['webmailinbox'][$module_params['module_id']]['start'] : 0;
 
-//$no_contact_instance = true;  //This prevents the lib from setting $contactlib
-//include_once ('lib/webmail/contactlib.php');
-//$contactlib = new ContactLib($dbTiki);
 
-global $webmail_list;
-$webmail_list = array();
+global $webmail_list_page;
 
 if (!function_exists('webmail_refresh')) {
 function webmail_refresh() {	// called in ajax mode
-	global $webmaillib, $headerlib, $user, $smarty, $webmail_list, $webmail_account, $webmail_reload, $module_params;
+	global $webmaillib, $user, $smarty, $webmail_list_page, $webmail_account, $webmail_reload, $webmail_start, $module_params;
+	
+	$accountid = isset($module_params["accountid"]) ? $module_params['accountid'] : 0;
+	
+	$webmail_list = $webmaillib->refresh_mailbox($user, $accountid, $webmail_reload);
 	
 	if (!$webmail_account) {
-		if (isset($module_params["accountid"])) {
-			$webmail_account = $webmaillib->get_webmail_account($user, $module_params['accountid']);
-		} else {
-			$webmail_account = $webmaillib->get_current_webmail_account($user);
-		}
-	}
-	if (!$webmail_account) {
 		$smarty->assign('tpl_module_title', tra('Webmail error'));
-		$smarty->assign('error', 'No accounts set up');
+		$smarty->assign('error', tra('No accounts set up'));
 		return;
 	}
 	
+	$mailsum = count($webmail_list);
+	
+	if ($webmail_start < 1 || $webmail_start > $mailsum)
+		$webmail_start = $mailsum;
+
+	$upperlimit = $webmail_start;
+	$smarty->assign('start', $webmail_start);
+	$numshow = $webmail_account["msgs"];
+	
+	$webmail_list_page = Array();
+	
+	for ($i = $webmail_start - 1; $i > 0 && $i > $upperlimit - $numshow; $i--) {
+		$a_mail = $webmail_list[$i];
+		$webmaillib->replace_webmail_message($webmail_account["accountId"], $user, $a_mail["realmsgid"]);
+		list($a_mail["isRead"], $a_mail["isFlagged"], $a_mail["isReplied"]) = $webmaillib->get_mail_flags($webmail_account["accountId"], $user, $a_mail["realmsgid"]);
+		
+		// handle take/taken operator here
+		
+		$webmail_list_page[] = $a_mail;
+	}
+	
+	$lowerlimit = $i;
+
+	if ($lowerlimit < 0) {
+		$lowerlimit = 0;
+	}
+	$showstart = $mailsum - $upperlimit + 1;
+	$showend = $mailsum - $lowerlimit;
+	$smarty->assign('showstart', $showstart);
+	$smarty->assign('showend', $showend);
+	$smarty->assign('total', $mailsum);
 	$smarty->assign('current', $webmail_account);
 	$smarty->assign('flagsPublic',$webmail_account['flagsPublic']);
 	
-	// start get mail - TODO refactor into $webmaillib
 	
-	$timeout = -1;
-	if ($webmail_account['autoRefresh'] > 0) {
-		$timeout = time() - $webmail_account['autoRefresh'];
+	if ($lowerlimit > 0) {
+		$smarty->assign('nextstart', $lowerlimit);
+	} else {
+		$smarty->assign('nextstart', '');
+	}
+
+	if ($upperlimit <> $mailsum) {
+		$prevstart = $upperlimit + $numshow;
+
+		if ($prevstart > $mailsum)
+			$prevstart = $mailsum;
+
+		$smarty->assign('prevstart', $prevstart);
+	} else {
+		$smarty->assign('prevstart', '');
+	}
+
+	if ($_REQUEST["start"] <> $mailsum) {
+		$smarty->assign('first', $mailsum);
+	} else {
+		$smarty->assign('first', '');
+	}
+
+	// Now calculate the last message block
+	$last = $mailsum % $numshow;
+
+	if ($_REQUEST["start"] <> $last) {
+		$smarty->assign('last', $last);
+	} else {
+		$smarty->assign('last', '');
 	}
 	
-	$serialized_params = $webmail_account['accountId'].':'.$webmail_account['user'].':'.$webmail_account['account'];
-	
-	if (!$webmail_reload && isset($_SESSION['webmailbox'][$serialized_params]) && isset($_SESSION['webmailbox'][$serialized_params]['timestamp']) && $_SESSION['webmailbox'][$serialized_params]['timestamp'] >  $timeout) {
-		$webmail_list = $_SESSION['webmailbox'][$serialized_params]['webmail_list'];
-	
-	} else {	// no cached list of timed out
-
-		// start getting mail
-		$pop3 = new Net_POP3();
-		
-		$r1 = $pop3->connect($webmail_account["pop"]);
-		$r2 = $pop3->login($webmail_account["username"], $webmail_account["pass"]);
-	
-		if ($r1 !== true || $r2 !== true) {
-			$msg = "";
-			if ($r1 !== true){
-				$msg .= tra('The connection failed, so check the server names.');
-			} else {
-				$msg .=  tra('The connection was OK.');
-				if (get_class($r2) == 'PEAR_Error'){
-					$msg .= tra(' But the login failed, so check the Username and Password.');
-				};
-			};
-			$smarty->assign('error', $msg);
-			$smarty->assign('tpl_module_title', tra('Webmail error'));
-			return;
-		}
-	
-		$mailsum = $pop3->numMsg();
-	
-		$numshow = $webmail_account["msgs"];
-	
-		if (isset($_REQUEST["start"]) && $_REQUEST["start"] > $mailsum)
-			$_REQUEST["start"] = $mailsum;
-		if (!isset($_REQUEST["start"]))
-			$_REQUEST["start"] = $mailsum;
-	
-		$upperlimit = $_REQUEST["start"];
-		$smarty->assign('start', $_REQUEST["start"]);
-	
-		for ($i = $upperlimit; $i > 0 && count($webmail_list) < $numshow; $i--) {
-			if (isset($_REQUEST["filter"])) {
-				$aux = $filtered[$i];
-			} else {
-				$aux = $pop3->getParsedHeaders($i);
-				$mail = preg_split('/[<>]/', $aux["From"], -1,PREG_SPLIT_NO_EMPTY);
-				$aux["sender"]["name"] = $mail[0];
-				$aux["sender"]["email"] = $mail[1];
-				if (empty($aux["sender"]["email"])) {
-					$aux["sender"]["email"] = $aux["sender"]["name"];
-				} else if (!strstr($aux["sender"]["email"], '@')) {
-					$e = $aux["sender"]["name"];
-					$aux["sender"]["name"] = $aux["sender"]["email"];
-					$aux["sender"]["email"] =  $aux["sender"]["name"];
-				}
-				$aux["subject"] = decode_subject_utf8($aux["Subject"] );
-				$aux["timestamp"] = strtotime($aux['Date']);
-				$l = $pop3->_cmdList($i);
-				$aux["size"] = $l["size"];
-				$aux["realmsgid"] = ereg_replace("[<>]","",$aux["Message-ID"]);
-				$webmaillib->replace_webmail_message($webmail_account["accountId"], $user, $aux["realmsgid"]);
-				list($aux["isRead"], $aux["isFlagged"], $aux["isReplied"]) = $webmaillib->get_mail_flags($webmail_account["accountId"], $user, $aux["realmsgid"]);
-	
-				$aux["sender"]["name"] = htmlspecialchars($aux["sender"]["name"]);
-	
-				if (empty($aux["subject"])) {
-					$aux["subject"] = '[' . tra('No subject'). ']';
-				}
-	
-				$aux["subject"] = htmlspecialchars($aux["subject"]);
-			}
-			$aux["msgid"] = $i;
-			$webmail_list[] = $aux;
-		}
-
-		$pop3->disconnect();
-		
-		$_SESSION['webmailbox'][$serialized_params]['webmail_list'] = $webmail_list;
-		$_SESSION['webmailbox'][$serialized_params]['timestamp'] = time();
-
-
-
-		$lowerlimit = $i;
-	
-		if ($lowerlimit < 0)
-			$lowerlimit = 0;
-	
-		$showstart = $mailsum - $upperlimit + 1;
-		$showend = $mailsum - $lowerlimit;
-		$smarty->assign('showstart', $showstart);
-		$smarty->assign('showend', $showend);
-		$smarty->assign('total', $mailsum);
-	
-		if ($lowerlimit > 0) {
-			$smarty->assign('nextstart', $lowerlimit);
-		} else {
-			$smarty->assign('nextstart', '');
-		}
-	
-		if ($upperlimit <> $mailsum) {
-			$prevstart = $upperlimit + $numshow;
-	
-			if ($prevstart > $mailsum)
-				$prevstart = $mailsum;
-	
-			$smarty->assign('prevstart', $prevstart);
-		} else {
-			$smarty->assign('prevstart', '');
-		}
-	
-		if ($_REQUEST["start"] <> $mailsum) {
-			$smarty->assign('first', $mailsum);
-		} else {
-			$smarty->assign('first', '');
-		}
-	
-		// Now calculate the last message block
-		$last = $mailsum % $numshow;
-	
-		if ($_REQUEST["start"] <> $last) {
-			$smarty->assign('last', $last);
-		} else {
-			$smarty->assign('last', '');
-		}
-	
-	}		// endif no cached list of timed out
 }
 }	// endif function_exists 'webmail_refresh'
 
@@ -219,8 +144,9 @@ if ($module_params["autoloaddelay"] > -1) {
 	$headerlib->add_js('setTimeout("doRefreshWebmail()", '.($module_params["autoloaddelay"] * 1000).');');
 }
 
-$smarty->assign('webmail_list', $webmail_list);
+$smarty->assign('webmail_list', $webmail_list_page);
 
+$smarty->assign_by_ref('module_params', $module_params); // re-assigning this to cater for AJAX reloads
 $smarty->assign('maxlen', isset($module_params["maxlen"]) ? $module_params["maxlen"] : 30);
 $smarty->assign('nonums', isset($module_params["nonums"]) ? $module_params["nonums"] : 'n');
 $smarty->assign('request_uri', strpos($_SERVER['REQUEST_URI'], '?') === false ? $_SERVER['REQUEST_URI'].'?' : $_SERVER['REQUEST_URI'].'&');

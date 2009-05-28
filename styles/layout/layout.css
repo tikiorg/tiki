@@ -2014,6 +2014,34 @@ div#ajaxLoading {
 
 /***** New (unsorted) *****/
 
+/* webmail & groupmail */
+
+.webmail_item {
+	font-size: .9em;
+	border: #999 solid 1px;
+	margin: 1px 0;
+	padding: 0 1px;}
+
+.webmail_refresh_message {
+	font-size: .8em;}
+
+.mod_webmail_list .even {}
+
+.mod_webmail_list .odd {
+	background-color: #eee;}
+
+.mod_webmail_list .button {
+	background-color: #fff;
+	border: #666 solid 1px;
+	display: inline-block;
+	padding: 0 2px;}
+
+.mod_webmail_list .webmail_read {background-color: #aaa;}
+
+.mod_webmail_list .webmail_flagged {}
+
+.mod_webmail_list .webmail_replied {background-color: #888;} 
+
 /***** End New (unsorted) *****/
 
 /* End of File */
