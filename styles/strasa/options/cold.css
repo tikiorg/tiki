@@ -1157,11 +1157,6 @@ table.default tfoot td {
 	color: #cce5ff;
 }
 
-table.default td {
-	border: solid 1px #A9A9A9;
-	background: black;
-}
-
 .highlight_word_0 {
 	color: #ffff66;
 	background: #223845;
