@@ -1282,7 +1282,8 @@ class TrackerLib extends TikiLib {
 
 					$is_visible = !isset($ins_fields["data"][$i]["isHidden"]) || $ins_fields["data"][$i]["isHidden"] == 'n';
 
-					if ($itemId) {
+					if ($itemId && $ins_fields['data'][$i]['type'] == 'q') { // do not change autoincrement of an item
+					} elseif ($itemId) {
 						$result = $this->query('select `value` from `tiki_tracker_item_fields` where `itemId`=? and `fieldId`=?',array((int) $itemId,(int) $fieldId));
 						if ($row = $result->fetchRow()) {
 							if ($is_visible) {
