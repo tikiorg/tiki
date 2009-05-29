@@ -261,6 +261,12 @@ class WebMailLib extends TikiLib {
 		return $res;
 	}
 	
+	/**
+	 * @param $user			current user
+	 * @param $accountid	can be 0
+	 * @param $reload		force reload from mail server?
+	 * @return array		of partial message headers
+	 */
 	function refresh_mailbox($user, $accountid, $reload) {
 		global $webmail_account;	// TODO remove global
 		
@@ -378,5 +384,113 @@ class WebMailLib extends TikiLib {
 	
 		return $webmail_list;
 	}
+	
+	/**
+	 * @param $user			current user
+	 * @param $accountid	can be 0
+	 * @param $msgId		message to get
+	 * @return string		the message body
+	 */
+	function get_mail_content($user, $accountid, $msgId) {
+		global $webmail_account;	// TODO remove global and refactor
+		
+		if (!empty($accountid)) {
+			$webmail_account = $this->get_webmail_account($user, $accountid);
+		} else {
+			$webmail_account = $this->get_current_webmail_account($user);
+		}
+		
+		if (empty($webmail_account)) {
+			return '';
+		}
+		
+		// get single mail			
+		// connecting with Pop3
+		require_once('lib/core/lib/Zend/Mail/Storage/Pop3.php');
+		try {
+			$mail = new Zend_Mail_Storage_Pop3(
+				array('host'     => $webmail_account["pop"],
+		              'user'     => $webmail_account["username"],
+		              'password' => $webmail_account["pass"]));
+		} catch (Exception $e) {
+			// do something better with the error
+			return '';
+		}
+		
+		if (empty($mail)) {
+			return '';
+		}
+		
+//		$message = $mail[$msgId];
+//		$cont = $message->getContent();
+//		
+//		$ct = $message->contentType;
+//		if (preg_match('/boundary=[\'"](.*)[\'"]/', $ct, $m) == 1) {
+//			$boundary = $m[1];
+//			include_once('lib/core/lib/Zend/Mime/Message.php');
+//			$zmm = Zend_Mime_Message::createFromMessage($cont, $boundary);
+//		}
+				
+		// output first text/plain part - from http://framework.zend.com/manual/en/zend.mail.read.html
+		$foundPart = null;
+		foreach (new RecursiveIteratorIterator($mail->getMessage($msgId)) as $part) {
+		    try {
+		        if (strtok($part->contentType, ';') == 'text/plain') {
+		            $foundPart = $part;
+		            break;
+		        }
+		    } catch (Zend_Mail_Exception $e) {
+		        // ignore
+		    }
+		}
+		$c = '';
+		if (!empty($foundPart)) {
+			$c = $foundPart->getContent();
+			$enc = $foundPart->contentTransferEncoding;
+			if (!empty($enc)) {
+				$c = $this->decodeBody($c, $enc);
+			}
+//			if ($enc = 'quoted-printable') {
+//				include_once('lib/core/lib/Zend/Mime/Decode.php');
+//				ini_set('iconv.internal_encoding', 'UTF-8');
+//				$c = Zend_Mime_Decode::decodeQuotedPrintable($c);
+//			}
+		} else {
+			$message = $mail[$msgId];
+			$c = $message->getContent();
+			$enc = '';
+		}
+
+//		require_once ("lib/mail/mimelib.php");	// Can't seem to get anything in Zend to do this :(
+//		$c = mime::decodeBody($c, $enc);		// blows up on quoted-printable :(
+		
+		return $c;
+	}
+	
+	// WARNING - copied from mimelib - temp fix
+	function decodeBody($input, $encoding = '7bit') {
+		switch ($encoding) {
+		case '7bit':
+			return $input;
+			break;
+		case 'quoted-printable':
+			$input = preg_replace("/=\r?\n/", '', $input);
+			if (preg_match_all('/=[A-Z0-9]{2}/', $input, $matches)) {
+				$matches = array_unique($matches[0]);
+				foreach ($matches as $value) {
+					$input = str_replace($value, chr(hexdec(substr($value, 1))), $input);
+				}
+			}
+			return $input;
+			break;
+		case 'base64':
+			return base64_decode($input);
+			break;
+		default:
+			return $input;
+		}
+	}
+
+	
 } # class WebMailLib
 $webmaillib = new WebMailLib($dbTiki);

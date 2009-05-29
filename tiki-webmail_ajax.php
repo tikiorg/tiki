@@ -131,36 +131,33 @@ function takeGroupMail($destDiv = 'mod-webmail_inbox', $msgId) {
 	}
 	$accountid = isset($module_params["accountid"]) ? $module_params['accountid'] : 0;
 	$ls = $webmaillib->refresh_mailbox($user, $accountid, false);
+	$cont = $webmaillib->get_mail_content($user, $accountid, $msgId);
 	
 	$m = $ls[$msgId - 1];
 	$from		= $m['sender']['email'];
 	$subject	= $m['subject'];
 	$realmsgid	= $m['realmsgid'];
 	
-	// maybe a pref?
-	$trackerId	= $module_params['trackerId'];	//12;
-	$fromFId = $module_params['fromFId'];	//42;
-	$operatorFId = $module_params['operatorFId'];	//43;
-	$subjectFId = $module_params['subjectFId'];	//44;
-	$messageFId = $module_params['messageFId'];	//45;
-	
-	$items['data'][0]['fieldId'] = $fromFId;
+	$items['data'][0]['fieldId'] = $module_params['fromFId'];
 	$items['data'][0]['type'] = 't';
 	$items['data'][0]['value'] = $from;
-	$items['data'][1]['fieldId'] = $operatorFId;
+	$items['data'][1]['fieldId'] = $module_params['operatorFId'];
 	$items['data'][1]['type'] = 'u';
 	$items['data'][1]['value'] = $user;
-	$items['data'][2]['fieldId'] = $subjectFId;
+	$items['data'][2]['fieldId'] = $module_params['subjectFId'];
 	$items['data'][2]['type'] = 't';
 	$items['data'][2]['value'] = $subject;
-	$items['data'][3]['fieldId'] = $messageFId;
+	$items['data'][3]['fieldId'] = $module_params['messageFId'];
 	$items['data'][3]['type'] = 't';
 	$items['data'][3]['value'] = $realmsgid;
+	$items['data'][4]['fieldId'] = $module_params['contentFId'];
+	$items['data'][4]['type'] = 'a';
+	$items['data'][4]['value'] = '~pp~'.htmlentities($cont).'~/pp~';	// sigh - no option for non-wiki text :(
 	
-	$trklib->replace_item($trackerId, 0, $items);
+	$trklib->replace_item($module_params['trackerId'], 0, $items);
 	
 	$objResponse = new xajaxResponse();
-	$objResponse->redirect("tiki-view_tracker.php?trackerId=$trackerId");
+	$objResponse->redirect('tiki-view_tracker.php?trackerId='.$module_params['trackerId']);
 	return $objResponse;
 }
 
