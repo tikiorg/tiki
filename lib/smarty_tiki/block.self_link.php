@@ -68,7 +68,7 @@ function smarty_block_self_link($params, $content, &$smarty, $repeat = false) {
 		if ( $params['_tag'] == 'y' ) {
 
 			if ( empty($params['_disabled']) ) {
-				if ( $params['_ajax'] == 'y' && $params['_script'] == '' ) {
+				if ( $params['_ajax'] == 'y' && $params['_script'] == '' && empty($params['_anchor']) ) {
 					require_once $smarty->_get_plugin_filepath('block', 'ajax_href');
 					if ( ! isset($params['_htmlelement']) ) $params['_htmlelement'] = 'tiki-center';
 					if ( ! isset($params['_template']) ) {
