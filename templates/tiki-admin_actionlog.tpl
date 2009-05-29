@@ -4,7 +4,7 @@
 
 {tabset name="admin_actionlog"}
 
-{tab name="Report"}
+{tab name="{tr}Report{/tr}"}
 	<form method="get" action="tiki-admin_actionlog.php#Report">
 		<h2>{tr}Filter{/tr}</h2>
 		{if empty($nbViewedConfs)}
@@ -577,7 +577,7 @@
 
 
 {* -------------------------------------------------- tab with setting --- *}
-{tab name="settings"}
+{tab name="{tr}Settings{/tr}"}
 	<a name="Setting" />
 	<h2>{tr}Setting{/tr}</h2>
 	<form method="post" action="tiki-admin_actionlog.php">
