@@ -449,7 +449,7 @@
 {/tab}
 {/tabset}
 
-		<div class="input_submit_container"style="margin-top: 5px; text-align: center">
+		<div class="input_submit_container" style="margin-top: 5px; text-align: center">
 			<input type="submit" name="features" value="{tr}Apply{/tr}" />
 		</div>
 	</form>

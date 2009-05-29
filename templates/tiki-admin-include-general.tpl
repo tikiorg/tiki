@@ -1,35 +1,15 @@
 {* $Id$ *}
 
 <div class="cbox">
-
-<table class="admin"><tr><td>
 		<form action="tiki-admin.php?page=general" class="admin" method="post">
 		<input type="hidden" name="new_prefs" />
 		
 			<div class="heading input_submit_container" style="text-align: center;padding:1em;">
 				<input type="submit" value="{tr}Change preferences{/tr}" />
 			</div>
+{tabset name="admin_general"}
+	{tab name="{tr}General Preferences{/tr}"}
 
-{if $prefs.feature_tabs eq 'y'}
-			{tabs}{strip}
-				{tr}General Preferences{/tr}|
-				{tr}General Settings{/tr}|
-				{tr}Date and Time Formats{/tr}|
-				{tr}Admin Password{/tr}
-			{/strip}{/tabs}
-{/if}
-
-      {cycle name=content values="1,2,3,4,5" print=false advance=false reset=true}
-
-    <fieldset{if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}"{/if}>
-      {if $prefs.feature_tabs neq 'y'}
-        <legend class="heading">
-          <a href="#content{cycle name=content assign=focus}{$focus}" onclick="flip('content{$focus}'); return false;">
-            <span>{tr}General Preferences{/tr}</span>
-          </a>
-        </legend>
-        <div id="content{$focus}" style="display:{if isset($smarty.session.tiki_cookie_jar.show_content.$focus) and $smarty.session.tiki_cookie_jar.show_content.$focus neq 'y'}none{else}block{/if};">
-      {/if}
     <fieldset>
 	<legend>{tr}Release Check{/tr}</legend>
 
@@ -216,7 +196,7 @@
 	</div>
 </div>
 <div class="adminoptionbox">	  
-	<div class="adminoption"><input type="checkbox" id="log_tpl" name="log_tpl"{if $prefs.log_tpl eq 'y'} checked="checked"{/if}" /></div>
+	<div class="adminoption"><input type="checkbox" id="log_tpl" name="log_tpl"{if $prefs.log_tpl eq 'y'} checked="checked"{/if} /></div>
 	<div class="adminoptionlabel"><label for="log_tpl">{tr}Add HTML comment at start and end of each Smarty template (TPL){/tr}.</label></div>
 </div>
 </fieldset>
@@ -236,21 +216,9 @@
 
 <div class="adminoptionbox">{tr}See <a href="tiki-admin_security.php" title="Security"><strong>Admin &gt; Security Admin</strong></a> for additional security settings{/tr}.</div>
 </fieldset>
+	{/tab}
 
-      {if $prefs.feature_tabs neq 'y'}</div>{/if}
-    </fieldset>
-
-
-    <fieldset{if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}"{/if}>
-      {if $prefs.feature_tabs neq 'y'}
-        <legend class="heading" id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}">
-          <a href="#content{cycle name=content assign=focus}{$focus}" onclick="flip('content{$focus}'); return false;">
-            <span>{tr}General Settings{/tr}</span>
-          </a>
-        </legend>
-        <div id="content{$focus}" style="display:{if isset($smarty.session.tiki_cookie_jar.show_content.$focus) and $smarty.session.tiki_cookie_jar.show_content.$focus neq 'y'}none{else}block{/if};">
-      {/if}
-		
+	{tab name="{tr}General Settings{/tr}"}
 <fieldset><legend>{tr}Site Access{/tr}</legend>
 <div class="adminoptionbox">
 <div class="adminoption"><input type="checkbox" name="site_closed" id="general-access" {if $prefs.site_closed eq 'y'}checked="checked" {/if}onclick="flip('close_site_message');" /></div>
@@ -402,24 +370,9 @@
 	<div class="adminoptionlabel"><label for="site_nav_seper">{tr}Choices{/tr}:</label> <input type="text" name="site_nav_seper" id="site_nav_seper" value="{$prefs.site_nav_seper}" size="5" maxlength="8" /><br /><em>{tr}Examples{/tr}: &nbsp; | &nbsp; / &nbsp; &brvbar; &nbsp; :</em></div>
 </div>
 </fieldset>
+	{/tab}
 
-
-
-      {if $prefs.feature_tabs neq 'y'}</div>{/if}
-    </fieldset>
-      
-    
-      
-    
-    <fieldset{if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}"{/if}>
-      {if $prefs.feature_tabs neq 'y'}
-        <legend class="heading" id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}">
-          <a href="#layout" onclick="flip('layout'); return false;">
-            <span>{tr}Date and Time Formats{/tr}</span>
-          </a>
-        </legend>
-        <div id="layout" style="display:{if isset($smarty.session.tiki_cookie_jar.show_layout) and $smarty.session.tiki_cookie_jar.show_layout neq 'y'}none{else}block{/if};">{/if}
-
+	{tab name="{tr}Date and Time Formats{/tr}"}
 <div class="adminoptionbox">	  
 	<div class="adminoptionlabel"><label for="general-timezone">{tr}Default timezone{/tr}:</label><br />
 		<select name="server_timezone" id="general-timezone">
@@ -463,18 +416,9 @@
 <div class="adminoptionbox">	
 {assign var="fcnlink" value="http://www.php.net/manual/en/function.strftime.php"}
 <a class="link" target="strftime" href="{$fcnlink}">{tr}Date and Time Format Help{/tr}</a>{if $prefs.feature_help eq 'y'} {help url="Date+and+Time"}{/if}</div>
+	{/tab}
 
-      {if $prefs.feature_tabs neq 'y'}</div>{/if}
-    </fieldset>
-    
-    <fieldset{if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}"{/if}>
-      {if $prefs.feature_tabs neq 'y'}
-        <legend class="heading" id="tab{cycle name=tabs advance=false assign=tabi}{$tabi}">
-          <a href="#adminpass" onclick="flip('adminpass'); return false;">
-            <span>{tr}Change admin password{/tr}</span>
-          </a>
-        </legend>
-        <div id="adminpass" style="display:{if isset($smarty.session.tiki_cookie_jar.show_adminpass) and $smarty.session.tiki_cookie_jar.show_adminpass neq 'y'}none{else}block{/if};">{/if}
+	{tab name="{tr}Change admin password{/tr}"}
 <p>{tr}Change the <strong>Admin</strong> password{/tr}.</p>
 						<div style="float:right;width:150px;margin-left:.5em">
 							<div id="mypassword_text"></div>
@@ -499,15 +443,11 @@
 <div style="padding:1em;" align="center">
 	<input type="submit" name="newadminpass" value="{tr}Change password{/tr}" />
 </div>
-
-
-
-      {if $prefs.feature_tabs neq 'y'}</div>{/if}
-    </fieldset>
+	{/tab}
+{/tabset}
 			<div class="heading input_submit_container" style="text-align: center;padding:1em;">
 				<input type="submit" value="{tr}Change preferences{/tr}" />
 			</div>
     
     </form>
-</td></tr></table>
 </div>

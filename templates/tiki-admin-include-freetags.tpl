@@ -1,26 +1,8 @@
 <form action="tiki-admin.php?page=freetags" method="post">
 <div class="cbox">
-<table class="admin"><tr><td>
 <div style="padding:1em;" align="center"><input type="submit" value="{tr}Change preferences{/tr}" /></div>
-{if $prefs.feature_tabs eq 'y'}
-			{tabs}{strip}
-				{tr}General Settings{/tr}|
-				{tr}3D Tag Browser{/tr}
-			{/strip}{/tabs}
-{/if}
-
-{cycle name=content values="1,2" print=false advance=false reset=true}
-
-    <fieldset{if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}"{/if}>
-      {if $prefs.feature_tabs neq 'y'}
-        <legend class="heading">
-          <a href="#content{cycle name=content assign=focus}{$focus}" onclick="flip('content{$focus}'); return false;">
-            <span>{tr}General Settings{/tr}</span>
-          </a>
-        </legend>
-        <div id="content{$focus}" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_content.$focus) and $smarty.session.tiki_cookie_jar.show_content.$focus neq 'y'}none{else}block{/if};">
-      {/if}
-
+{tabset name="admin_freetags"} 
+	{tab name="{tr}General Settings{/tr}"}
 <fieldset><legend>{tr}Freetags{/tr}{if $prefs.feature_help eq 'y'} {help url="Freetags+Config"}{/if}</legend>
 <input type="hidden" name="freetagsfeatures" />
 <div class="adminoptionbox">
@@ -67,15 +49,15 @@
 </div>
 <div class="adminoptionbox">
 <input type="hidden" name="morelikethisoptions" />
-	<div class="adminoptionlabel"><label for="">{tr}&quot;More Like This&quot; algorithm{/tr}:</label> 
-	<select name="morelikethis_algorithm" onchange="flip('basicalgorithm');">			
+	<div class="adminoptionlabel"><label for="morelikethis_algorithm">{tr}&quot;More Like This&quot; algorithm{/tr}:</label> 
+	<select name="morelikethis_algorithm" id="morelikethis_algorithm" onchange="flip('basicalgorithm');">			
 	        <option value="basic"{if $prefs.morelikethis_algorithm eq 'basic' or ! $prefs.morelikethis_algorithm} selected="selected"{/if}>{tr}basic{/tr}</option>
 	        <option value="weighted"{if $prefs.morelikethis_algorithm eq 'weighted'} selected="selected"{/if}>{tr}weighted{/tr}</option>
 	      </select></div>
 </div>
 <div class="adminoptionboxchild" id="basicalgorithm" style="display:{if $prefs.morelikethis_algorithm eq 'basic' or ! $prefs.morelikethis_algorithm}block{else}none{/if};">
-	<div class="adminoptionlabel"><label for="">{tr}Minimum amount of tags in common{/tr}: </label>
-	<select name="morelikethis_basic_mincommon">
+	<div class="adminoptionlabel"><label for="morelikethis_basic_mincommon">{tr}Minimum amount of tags in common{/tr}: </label>
+	<select name="morelikethis_basic_mincommon" id="morelikethis_basic_mincommon">
 	        <option value="1"{if $prefs.morelikethis_basic_mincommon eq '1'} selected="selected"{/if}>1</option>
 	        <option value="2"{if $prefs.morelikethis_basic_mincommon eq '2' or ! $prefs.morelikethis_basic_mincommon} selected="selected"{/if}>2</option>
 	        <option value="3"{if $prefs.morelikethis_basic_mincommon eq '3'} selected="selected"{/if}>3</option>
@@ -103,22 +85,10 @@
 <fieldset><legend>{tr}Tag Management{/tr}</legend>
 <div class="adminoptionbox">
 	<div class="adminoptionlabel"><div align="center"><input type="submit" value="{tr}Cleanup unused tags{/tr}" name="cleanup" /></div></div></div>
-</div>
 </fieldset>
+	{/tab}
 
-     {if $prefs.feature_tabs neq 'y'}</div>{/if}
-    </fieldset>
-
-    <fieldset{if $prefs.feature_tabs eq 'y'} class="tabcontent" id="content{cycle name=content assign=focustab}{$focustab}"{/if}>
-      {if $prefs.feature_tabs neq 'y'}
-        <legend class="heading">
-          <a href="#content{cycle name=content assign=focus}{$focus}" onclick="flip('content{$focus}'); return false;">
-            <span>{tr}3D Tag Browser{/tr}</span>
-          </a>
-        </legend>
-        <div id="content{$focus}" style="display:{if !isset($smarty.session.tiki_cookie_jar.show_content.$focus) and $smarty.session.tiki_cookie_jar.show_content.$focus neq 'y'}none{else}block{/if};">
-      {/if}
-
+	{tab name="{tr}3D Tag Browser{/tr}"}
 <input type="hidden" name="freetagsset3d" />	
 {if $prefs.feature_morcego ne "y"}
 <div class="adminoptionbox">
@@ -201,11 +171,9 @@
       </tr> *}
 
 </div>
-
-	  {if $prefs.feature_tabs neq 'y'}</div>{/if}
-    </fieldset>
+	{/tab}
+{/tabset}
 
 <div style="padding:1em;" align="center"><input type="submit" value="{tr}Change preferences{/tr}" /></div>
-</td></tr></table>
 </div>
 </form>
